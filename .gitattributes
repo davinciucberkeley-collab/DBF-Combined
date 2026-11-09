@@ -20,3 +20,7 @@ cad/mesh/*.[sS][tT][lL]    !filter !diff !merge -text
 # Exception: the review page's Downloads section links the drawing set PDF directly (0.3 MB). GitHub Pages serves
 # LFS files as pointer text, so keep it as an ordinary blob.
 cad/drawings/DBF-DRW-001.PDF !filter !diff !merge -text
+
+# Exception: build/test animations under redesign/ are embedded in web pages (manual, viewer). GitHub Pages serves
+# LFS files as pointer text, so keep them as ordinary blobs. Keep each clip short and small (target < 3 MB).
+redesign/**/*.[mM][pP]4    !filter !diff !merge -text

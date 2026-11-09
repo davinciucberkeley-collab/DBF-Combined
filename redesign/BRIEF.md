@@ -45,6 +45,7 @@ connected structurally *and* (where relevant) electrically/thermally; interfaces
 | Tooling: aircraft web viewer | `redesign/viewer/` |
 | Tooling: build-manual kit | `redesign/manual-kit/` |
 | Configuration study | `redesign/config-study/` |
+| Visual designer (design system) | `redesign/design-system/` — **every visual output (pages, viewers, renders, diagrams, docs) follows it once it exists** |
 
 To change something you don't own (a shared parameter, another subsystem's interface), add an entry to
 `<your folder>/CHANGE-REQUESTS.md` (what, why, numbers). The integrator resolves them. Never edit another folder.
@@ -80,6 +81,17 @@ Fusion is not installed on the orchestrator's machine. CAD is therefore **Python
 - `parts.csv`, `interfaces.json`, `params.json` (local), `fusion/<name>.py`
 - `BUILD.md` — numbered build steps (tools, fixtures, cure times, checks after each step).
 - `CHANGE-REQUESTS.md` if you need anything from others.
+
+## Animations (build and test instructions)
+Where a still image is not enough, the build and test instructions get a short animation, rendered in Blender from
+the same geometry as the CAD (Blender 4.2.3 encodes MP4/H.264 itself; no extra software). Use one when motion is the
+point: a part sliding/rotating into place, fastener insertion order, wing removal for transport, control-surface or
+tilt throws and clearance, harness routing through a structure, connector mating, a test setup (thrust stand, CG
+balance, range check) and the flight-test sequence (hover → transition → cruise → land). Rules: 3–10 s loops, one
+idea per clip, same camera/style as the stills (design system), highlighted moving parts, ghosted context, a poster
+frame (PNG) for print, ≤ 1080p and < 3 MB each (MP4 H.264, plus WebM if small), embedded in HTML as
+autoplay-muted-loop with controls. Videos under `redesign/` are stored as normal Git blobs (not LFS) so GitHub Pages
+can serve them — keep them small. Don't animate what a still shows well.
 
 ## Rules
 - No secrets in files. Do not install software; Python 3 standard library only (run with `python -I`).
