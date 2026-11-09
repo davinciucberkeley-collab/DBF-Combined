@@ -24,7 +24,7 @@ The review is generated from the project's own analysis, CAD and simulation outp
 ## Operating Context
 
 - Delivered as a **shared link**: the published page, or the standalone `VTOL-Review.html` opened from File Explorer. Clients read it on their own screens.
-- Read alongside the GitHub repo `Dalcouffe1/Design-Build-Fly`, which holds the sources.
+- Read alongside the GitHub repo `davinciucberkeley-collab/DBF-VTOL`, which holds the sources (moved from `Dalcouffe1/Design-Build-Fly` on 2026-10-19).
 - The review is regenerated whenever the design changes: sizing (`analysis/sizing.mjs`), then the CAD (`cad/build.ps1`, SOLIDWORKS 2025 via its API), then the simulation (`cad/Sim.exe`), then `node review/build.mjs`.
 - The house structure for the document is set in `docs/reference/REVIEW-STYLE.md`: numbered sections, KPI strip, requirement status chips, source citations, open and blocking decision cards, and a "What the team must measure" box in each technical section.
 
@@ -39,6 +39,10 @@ The review is generated from the project's own analysis, CAD and simulation outp
 - Interactive content: sortable tables, sensitivity sliders, charts drawn from the live sizing model, the trade-study chart, and a rotatable SOLIDWORKS model viewer with every part and fastener.
 - Companion pages in the same style, generated from the repo Markdown: the build manual (DBF-MAN-001, `build-manual.html`) and the test plan (DBF-TP-001, `test-plan.html`). The review links to them and to the shop files (cut, print and wiring lists, templates, parameter file).
 - Terminology: MTOW, T/W, QuadPlane, C0–C3 concepts, R-numbered requirements, M-numbered measurements, EST for estimates.
+- Sibling pages built from the same repo, each with its own audience (listed with their published links in the README under "Published versions"):
+  - **Inventory & Electrical Overview** (DBF-INV-001, `Inventory-Overview.html`, built by `inventory/build_overview.mjs`): for the build team. Purchasing, stock, kits, fabrication, electrical architecture and wiring blueprint DBF-ELE-001, print tolerances, the Autodesk Fusion model with every fastener and live joint animations, and the alternative designs A1–A3. It is pinned to the v0.3.1 inputs in `inventory/v031/` until the inventory and the Fusion model are migrated to v0.4.0.
+  - **Concept Models** (`Concept-Models.html`, built by `concepts/build.mjs`): eleven literature concepts as illustrative 3D models on the C0 envelope; not CAD.
+  - **Browser flight sim** (`sim/`): a demonstration only, outside the engineering scope.
 
 ## Brand Commitments
 
@@ -56,6 +60,9 @@ The review is generated from the project's own analysis, CAD and simulation outp
 - Build, test and flight software: `docs/build/`, `docs/test/`, `firmware/` (parameter file checked; SITL scenarios run).
 - Configuration trade study: `analysis/tradestudy.json`, `docs/research/configurations.md`.
 - Independent check: `analysis/verify.py`.
+- Inventory and electrical: `inventory/inventory.json` (master list, live copy in the team Google Sheet), `inventory/electrical/` (components, wiring), `docs/research/electrical-architecture.md`.
+- Fusion model (v0.3.1 geometry): `fusion/` build scripts, `inventory/fusion/` (STEP, .f3d, meshes, kinematics, animations), `inventory/hardware/` (hardware schedule of 613 pieces, mechanisms, print tolerances), `docs/research/hardware-schedule.md`, `docs/research/tolerance-analysis.md`, `fusion/interference_report.json`, `fusion/motion_clearance.md`.
+- Alternative designs: `concepts/variants/a1`, `a2`, `a3` (design notes, inventories, metrics, Fusion models).
 - Audit: a six-reviewer project audit (79 findings) recorded in review §12.
 - Absent, and must not be fabricated:
   - flight-test data and measured thrust, drag or temperature (the M-items are still open); SITL runs use ArduPilot's generic QuadPlane, not this airframe

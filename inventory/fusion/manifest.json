@@ -1,0 +1,3362 @@
+{
+ "axis_note": "STL coordinates are Fusion world cm, Z-up (world-transformed, written from the B-rep mesh calculator; no further transform needed). Model X fwd = Fusion +Y, model Y up = Fusion +Z, model Z right = Fusion +X. i.e. model (x,y,z) m -> Fusion (z,x,y)*100 cm.",
+ "units": "cm",
+ "generated": "2026-11-02",
+ "entries": [
+  {
+   "file": "stl/Wing_Panel_R.stl",
+   "name": "Wing_Panel_R",
+   "group": "airframe",
+   "color": [
+    0.925,
+    0.933,
+    0.957
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     8.0,
+     -23.868,
+     -1.361
+    ],
+    [
+     120.0,
+     0.002,
+     2.245
+    ]
+   ],
+   "size": 245584,
+   "triangles": 4910,
+   "moving": "slide_panel_R"
+  },
+  {
+   "file": "stl/Wing_Panel_L.stl",
+   "name": "Wing_Panel_L",
+   "group": "airframe",
+   "color": [
+    0.925,
+    0.933,
+    0.957
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -120.0,
+     -23.868,
+     -1.361
+    ],
+    [
+     -8.0,
+     0.002,
+     2.242
+    ]
+   ],
+   "size": 262484,
+   "triangles": 5248,
+   "moving": "slide_panel_L"
+  },
+  {
+   "file": "kinematics/Aileron_R.stl",
+   "name": "Aileron_R",
+   "group": "airframe",
+   "color": [
+    0.8,
+    0.82,
+    0.859
+   ],
+   "count": 7,
+   "bbox_cm": [
+    [
+     58.6,
+     -23.868,
+     -2.675
+    ],
+    [
+     119.8,
+     -17.662,
+     1.325
+    ]
+   ],
+   "size": 95784,
+   "triangles": 1914,
+   "moving": "ail_R",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "kinematics/Aileron_L.stl",
+   "name": "Aileron_L",
+   "group": "airframe",
+   "color": [
+    0.8,
+    0.82,
+    0.859
+   ],
+   "count": 7,
+   "bbox_cm": [
+    [
+     -119.8,
+     -23.868,
+     -2.675
+    ],
+    [
+     -58.6,
+     -17.662,
+     1.325
+    ]
+   ],
+   "size": 95784,
+   "triangles": 1914,
+   "moving": "ail_L",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Wing_Joiner.stl",
+   "name": "Wing_Joiner",
+   "group": "airframe",
+   "color": [
+    0.718,
+    0.733,
+    0.773
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -38.0,
+     -8.271,
+     -0.663
+    ],
+    [
+     38.0,
+     -6.049,
+     1.559
+    ]
+   ],
+   "size": 15684,
+   "triangles": 312
+  },
+  {
+   "file": "stl/Wing_Saddle.stl",
+   "name": "Wing_Saddle",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -8.0,
+     -23.868,
+     -1.361
+    ],
+    [
+     8.0,
+     -0.0,
+     2.246
+    ]
+   ],
+   "size": 54384,
+   "triangles": 1086
+  },
+  {
+   "file": "stl/Boom_Front_1.stl",
+   "name": "Boom_Front_1",
+   "group": "airframe",
+   "color": [
+    0.718,
+    0.733,
+    0.773
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -44.64,
+     -53.458,
+     -4.27
+    ],
+    [
+     -42.1,
+     42.042,
+     -1.73
+    ]
+   ],
+   "size": 8484,
+   "triangles": 168,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Boom_Rear_Stub_1.stl",
+   "name": "Boom_Rear_Stub_1",
+   "group": "airframe",
+   "color": [
+    0.718,
+    0.733,
+    0.773
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -44.64,
+     -99.048,
+     -4.27
+    ],
+    [
+     -42.122,
+     -53.458,
+     -1.73
+    ]
+   ],
+   "size": 10484,
+   "triangles": 208,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Boom_Clamp_Front_1.stl",
+   "name": "Boom_Clamp_Front_1",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -45.37,
+     -8.86,
+     -4.67
+    ],
+    [
+     -41.37,
+     -5.46,
+     -1.343
+    ]
+   ],
+   "size": 95684,
+   "triangles": 1912,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Boom_Clamp_Rear_1.stl",
+   "name": "Boom_Clamp_Rear_1",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -45.37,
+     -20.794,
+     -4.67
+    ],
+    [
+     -41.37,
+     -17.394,
+     -0.517
+    ]
+   ],
+   "size": 94684,
+   "triangles": 1892,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Motor_Mount_1.stl",
+   "name": "Motor_Mount_1",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -45.67,
+     33.592,
+     -4.5
+    ],
+    [
+     -41.07,
+     40.592,
+     -0.9
+    ]
+   ],
+   "size": 100684,
+   "triangles": 2012,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/H_Tail.stl",
+   "name": "H_Tail",
+   "group": "airframe",
+   "color": [
+    0.925,
+    0.933,
+    0.957
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -44.64,
+     -82.189,
+     -1.73
+    ],
+    [
+     44.64,
+     -77.048,
+     -1.05
+    ]
+   ],
+   "size": 34984,
+   "triangles": 698,
+   "moving": "slide_htail",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "kinematics/Elevator.stl",
+   "name": "Elevator",
+   "group": "airframe",
+   "color": [
+    0.8,
+    0.82,
+    0.859
+   ],
+   "count": 7,
+   "bbox_cm": [
+    [
+     -42.614,
+     -84.608,
+     -3.697
+    ],
+    [
+     42.614,
+     -82.539,
+     -0.897
+    ]
+   ],
+   "size": 146684,
+   "triangles": 2932,
+   "moving": "elev",
+   "rides": "slide_htail"
+  },
+  {
+   "file": "stl/Fin_1.stl",
+   "name": "Fin_1",
+   "group": "airframe",
+   "color": [
+    0.925,
+    0.933,
+    0.957
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -44.045,
+     -87.573,
+     -1.604
+    ],
+    [
+     -42.697,
+     -77.128,
+     17.065
+    ]
+   ],
+   "size": 53584,
+   "triangles": 1070,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Fuselage_Pod.stl",
+   "name": "Fuselage_Pod",
+   "group": "airframe",
+   "color": [
+    0.945,
+    0.957,
+    0.969
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -7.984,
+     -40.0,
+     -10.997
+    ],
+    [
+     7.992,
+     45.0,
+     5.001
+    ]
+   ],
+   "size": 523384,
+   "triangles": 10466
+  },
+  {
+   "file": "stl/Canopy.stl",
+   "name": "Canopy",
+   "group": "airframe",
+   "color": [
+    0.094,
+    0.157,
+    0.259
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -5.29,
+     9.986,
+     3.001
+    ],
+    [
+     5.29,
+     30.999,
+     6.999
+    ]
+   ],
+   "size": 91584,
+   "triangles": 1830,
+   "moving": "slide_canopy"
+  },
+  {
+   "file": "stl/Battery_6S_LiPo.stl",
+   "name": "Battery_6S_LiPo",
+   "group": "electronics",
+   "color": [
+    0.2,
+    0.443,
+    0.843
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -2.4,
+     -1.65,
+     -7.5
+    ],
+    [
+     2.4,
+     13.85,
+     -2.5
+    ]
+   ],
+   "size": 15884,
+   "triangles": 316,
+   "moving": "slide_battery"
+  },
+  {
+   "file": "stl/Pitot_Tube.stl",
+   "name": "Pitot_Tube",
+   "group": "airframe",
+   "color": [
+    0.718,
+    0.733,
+    0.773
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -100.3,
+     -5.0,
+     -2.3
+    ],
+    [
+     -99.7,
+     20.0,
+     -1.7
+    ]
+   ],
+   "size": 6684,
+   "triangles": 132,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Gear_Clamp_1.stl",
+   "name": "Gear_Clamp_1",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -45.37,
+     26.392,
+     -5.87
+    ],
+    [
+     -41.37,
+     29.792,
+     -1.33
+    ]
+   ],
+   "size": 88584,
+   "triangles": 1770,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Landing_Leg_1.stl",
+   "name": "Landing_Leg_1",
+   "group": "gear",
+   "color": [
+    0.075,
+    0.075,
+    0.075
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -44.64,
+     26.822,
+     -24.37
+    ],
+    [
+     -42.1,
+     29.362,
+     -3.87
+    ]
+   ],
+   "size": 24784,
+   "triangles": 494,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Boom_Front_2.stl",
+   "name": "Boom_Front_2",
+   "group": "airframe",
+   "color": [
+    0.718,
+    0.733,
+    0.773
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     42.1,
+     -53.458,
+     -4.27
+    ],
+    [
+     44.64,
+     42.042,
+     -1.73
+    ]
+   ],
+   "size": 8484,
+   "triangles": 168,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Boom_Rear_Stub_2.stl",
+   "name": "Boom_Rear_Stub_2",
+   "group": "airframe",
+   "color": [
+    0.718,
+    0.733,
+    0.773
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     42.1,
+     -99.048,
+     -4.27
+    ],
+    [
+     44.618,
+     -53.458,
+     -1.73
+    ]
+   ],
+   "size": 10484,
+   "triangles": 208,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Boom_Clamp_Front_2.stl",
+   "name": "Boom_Clamp_Front_2",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     41.37,
+     -8.86,
+     -4.67
+    ],
+    [
+     45.37,
+     -5.46,
+     -1.343
+    ]
+   ],
+   "size": 95684,
+   "triangles": 1912,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Boom_Clamp_Rear_2.stl",
+   "name": "Boom_Clamp_Rear_2",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     41.37,
+     -20.794,
+     -4.67
+    ],
+    [
+     45.37,
+     -17.394,
+     -0.517
+    ]
+   ],
+   "size": 94684,
+   "triangles": 1892,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Motor_Mount_2.stl",
+   "name": "Motor_Mount_2",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -45.67,
+     -53.958,
+     -4.5
+    ],
+    [
+     -41.07,
+     -46.958,
+     -0.9
+    ]
+   ],
+   "size": 100684,
+   "triangles": 2012,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Motor_Mount_3.stl",
+   "name": "Motor_Mount_3",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     41.07,
+     33.592,
+     -4.5
+    ],
+    [
+     45.67,
+     40.592,
+     -0.9
+    ]
+   ],
+   "size": 100684,
+   "triangles": 2012,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Motor_Mount_4.stl",
+   "name": "Motor_Mount_4",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     41.07,
+     -53.958,
+     -4.5
+    ],
+    [
+     45.67,
+     -46.958,
+     -0.9
+    ]
+   ],
+   "size": 100684,
+   "triangles": 2012,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Fin_2.stl",
+   "name": "Fin_2",
+   "group": "airframe",
+   "color": [
+    0.925,
+    0.933,
+    0.957
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     42.695,
+     -87.573,
+     -1.604
+    ],
+    [
+     44.043,
+     -77.128,
+     17.065
+    ]
+   ],
+   "size": 53584,
+   "triangles": 1070,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Gear_Clamp_2.stl",
+   "name": "Gear_Clamp_2",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -45.37,
+     -43.158,
+     -5.87
+    ],
+    [
+     -41.37,
+     -39.758,
+     -1.33
+    ]
+   ],
+   "size": 88584,
+   "triangles": 1770,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Gear_Clamp_3.stl",
+   "name": "Gear_Clamp_3",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     41.37,
+     26.392,
+     -5.87
+    ],
+    [
+     45.37,
+     29.792,
+     -1.33
+    ]
+   ],
+   "size": 88584,
+   "triangles": 1770,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Gear_Clamp_4.stl",
+   "name": "Gear_Clamp_4",
+   "group": "printed",
+   "color": [
+    0.118,
+    0.125,
+    0.157
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     41.37,
+     -43.158,
+     -5.87
+    ],
+    [
+     45.37,
+     -39.758,
+     -1.33
+    ]
+   ],
+   "size": 88584,
+   "triangles": 1770,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Landing_Leg_2.stl",
+   "name": "Landing_Leg_2",
+   "group": "gear",
+   "color": [
+    0.075,
+    0.075,
+    0.075
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -44.64,
+     -42.728,
+     -24.37
+    ],
+    [
+     -42.1,
+     -40.188,
+     -3.87
+    ]
+   ],
+   "size": 24784,
+   "triangles": 494,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Landing_Leg_3.stl",
+   "name": "Landing_Leg_3",
+   "group": "gear",
+   "color": [
+    0.075,
+    0.075,
+    0.075
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     42.1,
+     26.822,
+     -24.37
+    ],
+    [
+     44.64,
+     29.362,
+     -3.87
+    ]
+   ],
+   "size": 24784,
+   "triangles": 494,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Landing_Leg_4.stl",
+   "name": "Landing_Leg_4",
+   "group": "gear",
+   "color": [
+    0.075,
+    0.075,
+    0.075
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     42.1,
+     -42.728,
+     -24.37
+    ],
+    [
+     44.64,
+     -40.188,
+     -3.87
+    ]
+   ],
+   "size": 24784,
+   "triangles": 494,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Spar_Tube_1.stl",
+   "name": "Spar_Tube_1",
+   "group": "airframe",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     8.0,
+     -8.421,
+     -0.822
+    ],
+    [
+     88.0,
+     -5.899,
+     1.718
+    ]
+   ],
+   "size": 12284,
+   "triangles": 244,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Spar_Tube_2.stl",
+   "name": "Spar_Tube_2",
+   "group": "airframe",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -88.0,
+     -8.421,
+     -0.822
+    ],
+    [
+     -8.0,
+     -5.899,
+     1.718
+    ]
+   ],
+   "size": 12284,
+   "triangles": 244,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-01_Wing_panel_root_R.stl",
+   "name": "J-01 Wing panel root - saddle root plates LE locati [R]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 8,
+   "bbox_cm": [
+    [
+     6.8,
+     -23.868,
+     -1.357
+    ],
+    [
+     10.5,
+     0.002,
+     2.247
+    ]
+   ],
+   "size": 80884,
+   "triangles": 1616,
+   "joint": "J-01",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-01_Wing_panel_root_L.stl",
+   "name": "J-01 Wing panel root - saddle root plates LE locati [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 8,
+   "bbox_cm": [
+    [
+     -10.5,
+     -23.868,
+     -1.359
+    ],
+    [
+     -6.8,
+     0.002,
+     2.247
+    ]
+   ],
+   "size": 81084,
+   "triangles": 1620,
+   "joint": "J-01",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-02_Wing_saddle_pod_R.stl",
+   "name": "J-02 Wing saddle - pod M5 Wing_Bolt + washer + capt [R]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 4,
+   "bbox_cm": [
+    [
+     5.4,
+     -18.107,
+     -1.549
+    ],
+    [
+     7.6,
+     -15.307,
+     1.726
+    ]
+   ],
+   "size": 23684,
+   "triangles": 472,
+   "joint": "J-02"
+  },
+  {
+   "file": "stl/J-02_Wing_saddle_pod_L.stl",
+   "name": "J-02 Wing saddle - pod M5 Wing_Bolt + washer + capt [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 4,
+   "bbox_cm": [
+    [
+     -7.6,
+     -18.107,
+     -1.549
+    ],
+    [
+     -5.4,
+     -15.307,
+     1.726
+    ]
+   ],
+   "size": 23684,
+   "triangles": 472,
+   "joint": "J-02"
+  },
+  {
+   "file": "stl/J-04_Front_boom_clamp_R.stl",
+   "name": "J-04 Front boom clamp - wing 2 vertical M3x40 throu [R]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 6,
+   "bbox_cm": [
+    [
+     41.285,
+     -7.605,
+     -1.913
+    ],
+    [
+     45.455,
+     -6.715,
+     2.481
+    ]
+   ],
+   "size": 60884,
+   "triangles": 1216,
+   "joint": "J-04",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-04_Front_boom_clamp_L.stl",
+   "name": "J-04 Front boom clamp - wing 2 vertical M3x40 throu [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 6,
+   "bbox_cm": [
+    [
+     -45.455,
+     -7.605,
+     -1.913
+    ],
+    [
+     -41.285,
+     -6.715,
+     2.481
+    ]
+   ],
+   "size": 60884,
+   "triangles": 1216,
+   "joint": "J-04",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-05_Rear_boom_clamp_R.stl",
+   "name": "J-05 Rear boom clamp - wing 2 vertical M3x30 throug [R]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 6,
+   "bbox_cm": [
+    [
+     41.285,
+     -19.539,
+     -1.867
+    ],
+    [
+     45.455,
+     -18.649,
+     1.433
+    ]
+   ],
+   "size": 60284,
+   "triangles": 1204,
+   "joint": "J-05",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-05_Rear_boom_clamp_L.stl",
+   "name": "J-05 Rear boom clamp - wing 2 vertical M3x30 throug [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 6,
+   "bbox_cm": [
+    [
+     -45.455,
+     -19.539,
+     -1.867
+    ],
+    [
+     -41.285,
+     -18.649,
+     1.433
+    ]
+   ],
+   "size": 60284,
+   "triangles": 1204,
+   "joint": "J-05",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-06_Boom_clamp_lower_R.stl",
+   "name": "J-06 Boom clamp lower halves - upper halves boom dr [R]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 24,
+   "bbox_cm": [
+    [
+     41.385,
+     -20.34,
+     -4.52
+    ],
+    [
+     45.355,
+     -5.914,
+     -2.22
+    ]
+   ],
+   "size": 244884,
+   "triangles": 4896,
+   "joint": "J-06",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-06_Boom_clamp_lower_L.stl",
+   "name": "J-06 Boom clamp lower halves - upper halves boom dr [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 24,
+   "bbox_cm": [
+    [
+     -45.355,
+     -20.34,
+     -4.52
+    ],
+    [
+     -41.385,
+     -5.914,
+     -2.22
+    ]
+   ],
+   "size": 244884,
+   "triangles": 4896,
+   "joint": "J-06",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-07_Boom_front_rear_R.stl",
+   "name": "J-07 Boom front - rear stub splice internal plug + [R]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 9,
+   "bbox_cm": [
+    [
+     42.21,
+     -57.958,
+     -4.68
+    ],
+    [
+     44.53,
+     -42.958,
+     -1.38
+    ]
+   ],
+   "size": 65084,
+   "triangles": 1300,
+   "joint": "J-07",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-07_Boom_front_rear_L.stl",
+   "name": "J-07 Boom front - rear stub splice internal plug + [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 9,
+   "bbox_cm": [
+    [
+     -44.53,
+     -57.958,
+     -4.68
+    ],
+    [
+     -42.21,
+     -42.958,
+     -1.38
+    ]
+   ],
+   "size": 65084,
+   "triangles": 1300,
+   "joint": "J-07",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-08_Motor_mount_clamshell_R.stl",
+   "name": "J-08 Motor mount clamshell - boom 4 pinch bolts per [R]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 24,
+   "bbox_cm": [
+    [
+     41.235,
+     -52.404,
+     -4.35
+    ],
+    [
+     45.505,
+     39.038,
+     -2.05
+    ]
+   ],
+   "size": 244884,
+   "triangles": 4896,
+   "joint": "J-08",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-08_Motor_mount_clamshell_L.stl",
+   "name": "J-08 Motor mount clamshell - boom 4 pinch bolts per [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 24,
+   "bbox_cm": [
+    [
+     -45.505,
+     -52.404,
+     -4.35
+    ],
+    [
+     -41.235,
+     39.038,
+     -2.05
+    ]
+   ],
+   "size": 244884,
+   "triangles": 4896,
+   "joint": "J-08",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-09_Lift_motor_motor_R.stl",
+   "name": "J-09 Lift motor - motor mount 4 x M3x12 from the bo [R]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 16,
+   "bbox_cm": [
+    [
+     42.07,
+     -51.754,
+     -2.057
+    ],
+    [
+     44.67,
+     38.388,
+     -0.557
+    ]
+   ],
+   "size": 116884,
+   "triangles": 2336,
+   "joint": "J-09",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-09_Lift_motor_motor_L.stl",
+   "name": "J-09 Lift motor - motor mount 4 x M3x12 from the bo [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 16,
+   "bbox_cm": [
+    [
+     -44.67,
+     -51.754,
+     -2.057
+    ],
+    [
+     -42.07,
+     38.388,
+     -0.557
+    ]
+   ],
+   "size": 116884,
+   "triangles": 2336,
+   "joint": "J-09",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "kinematics/Lift_Prop_L1.stl",
+   "name": "Lift_Prop_L1",
+   "group": "propulsion",
+   "color": [
+    0.059,
+    0.059,
+    0.067
+   ],
+   "count": 9,
+   "bbox_cm": [
+    [
+     40.974,
+     15.502,
+     -0.9
+    ],
+    [
+     45.766,
+     58.682,
+     4.28
+    ]
+   ],
+   "size": 266384,
+   "triangles": 5326,
+   "moving": "prop_L1",
+   "rides": "slide_panel_R",
+   "color_note": "prop + motor can merged on export; colour set to the prop colour (cad/mesh/meta.json Lift_Prop)"
+  },
+  {
+   "file": "kinematics/Lift_Prop_L3.stl",
+   "name": "Lift_Prop_L3",
+   "group": "propulsion",
+   "color": [
+    0.059,
+    0.059,
+    0.067
+   ],
+   "count": 9,
+   "bbox_cm": [
+    [
+     -45.766,
+     15.502,
+     -0.9
+    ],
+    [
+     -40.974,
+     58.682,
+     4.28
+    ]
+   ],
+   "size": 266384,
+   "triangles": 5326,
+   "moving": "prop_L3",
+   "rides": "slide_panel_L",
+   "color_note": "prop + motor can merged on export; colour set to the prop colour (cad/mesh/meta.json Lift_Prop)"
+  },
+  {
+   "file": "kinematics/Lift_Prop_L4.stl",
+   "name": "Lift_Prop_L4",
+   "group": "propulsion",
+   "color": [
+    0.059,
+    0.059,
+    0.067
+   ],
+   "count": 9,
+   "bbox_cm": [
+    [
+     40.974,
+     -72.048,
+     -0.9
+    ],
+    [
+     45.766,
+     -28.868,
+     4.28
+    ]
+   ],
+   "size": 266384,
+   "triangles": 5326,
+   "moving": "prop_L4",
+   "rides": "slide_panel_R",
+   "color_note": "prop + motor can merged on export; colour set to the prop colour (cad/mesh/meta.json Lift_Prop)"
+  },
+  {
+   "file": "kinematics/Lift_Prop_L2.stl",
+   "name": "Lift_Prop_L2",
+   "group": "propulsion",
+   "color": [
+    0.059,
+    0.059,
+    0.067
+   ],
+   "count": 9,
+   "bbox_cm": [
+    [
+     -45.766,
+     -72.048,
+     -0.9
+    ],
+    [
+     -40.974,
+     -28.868,
+     4.28
+    ]
+   ],
+   "size": 266384,
+   "triangles": 5326,
+   "moving": "prop_L2",
+   "rides": "slide_panel_L",
+   "color_note": "prop + motor can merged on export; colour set to the prop colour (cad/mesh/meta.json Lift_Prop)"
+  },
+  {
+   "file": "stl/J-11_Pusher_motor_firewall.stl",
+   "name": "J-11 Pusher motor - firewall - pod aft bulkhead",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 22,
+   "bbox_cm": [
+    [
+     -2.9,
+     -40.34,
+     -5.87
+    ],
+    [
+     2.9,
+     -38.74,
+     -0.13
+    ]
+   ],
+   "size": 235884,
+   "triangles": 4716,
+   "joint": "J-11"
+  },
+  {
+   "file": "kinematics/Pusher_Prop_Set.stl",
+   "name": "Pusher_Prop_Set",
+   "group": "propulsion",
+   "color": [
+    0.059,
+    0.059,
+    0.067
+   ],
+   "count": 16,
+   "bbox_cm": [
+    [
+     -2.399,
+     -48.0,
+     -20.78
+    ],
+    [
+     2.399,
+     -40.0,
+     14.78
+    ]
+   ],
+   "size": 506784,
+   "triangles": 10134,
+   "moving": "prop_P",
+   "color_note": "prop + motor can merged on export; colour set to the prop colour (cad/mesh/meta.json Lift_Prop)"
+  },
+  {
+   "file": "stl/J-13_Gear_clamp_cap_R.stl",
+   "name": "J-13 Gear clamp cap - gear clamp body on the boom 2 [R]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 12,
+   "bbox_cm": [
+    [
+     41.385,
+     -41.804,
+     -3.68
+    ],
+    [
+     45.355,
+     28.438,
+     -1.38
+    ]
+   ],
+   "size": 122484,
+   "triangles": 2448,
+   "joint": "J-13",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-13_Gear_clamp_cap_L.stl",
+   "name": "J-13 Gear clamp cap - gear clamp body on the boom 2 [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 12,
+   "bbox_cm": [
+    [
+     -45.355,
+     -41.804,
+     -3.68
+    ],
+    [
+     -41.385,
+     28.438,
+     -1.38
+    ]
+   ],
+   "size": 122484,
+   "triangles": 2448,
+   "joint": "J-13",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-16_Tail_fin_and_R.stl",
+   "name": "J-16 Tail fin and H_Tail seat on boom stubs servo s [R]",
+   "group": "hardware",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 14,
+   "bbox_cm": [
+    [
+     41.0,
+     -95.5,
+     -4.662
+    ],
+    [
+     45.05,
+     -74.5,
+     -0.805
+    ]
+   ],
+   "size": 433284,
+   "triangles": 8664,
+   "joint": "J-16",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-16_Tail_fin_and_L.stl",
+   "name": "J-16 Tail fin and H_Tail seat on boom stubs servo s [L]",
+   "group": "hardware",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 14,
+   "bbox_cm": [
+    [
+     -45.05,
+     -95.5,
+     -4.662
+    ],
+    [
+     -41.0,
+     -74.5,
+     -0.805
+    ]
+   ],
+   "size": 411284,
+   "triangles": 8224,
+   "joint": "J-16",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-17_Aileron_servo_servo_R.stl",
+   "name": "J-17 Aileron servo - servo tray R and L arm [R]",
+   "group": "mechanisms",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 19,
+   "bbox_cm": [
+    [
+     78.255,
+     -15.1,
+     -0.8
+    ],
+    [
+     82.445,
+     -8.2,
+     1.8
+    ]
+   ],
+   "size": 161884,
+   "triangles": 3236,
+   "joint": "J-17",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-17_Aileron_servo_servo_L.stl",
+   "name": "J-17 Aileron servo - servo tray R and L arm [L]",
+   "group": "mechanisms",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 19,
+   "bbox_cm": [
+    [
+     -82.445,
+     -15.1,
+     -0.8
+    ],
+    [
+     -78.255,
+     -8.2,
+     1.8
+    ]
+   ],
+   "size": 161884,
+   "triangles": 3236,
+   "joint": "J-17",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "kinematics/Arm_Aileron_R.stl",
+   "name": "Arm_Aileron_R",
+   "group": "mechanisms",
+   "color": [
+    0.86,
+    0.85,
+    0.8
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     81.645,
+     -13.877,
+     -1.901
+    ],
+    [
+     82.445,
+     -12.518,
+     0.949
+    ]
+   ],
+   "size": 22284,
+   "triangles": 444,
+   "moving": "arm_ail_R",
+   "rides": "slide_panel_R",
+   "color_note": "nylon servo arm; light grey for contrast against the white skins"
+  },
+  {
+   "file": "kinematics/Arm_Aileron_L.stl",
+   "name": "Arm_Aileron_L",
+   "group": "mechanisms",
+   "color": [
+    0.86,
+    0.85,
+    0.8
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -82.445,
+     -13.877,
+     -1.901
+    ],
+    [
+     -81.645,
+     -12.518,
+     0.949
+    ]
+   ],
+   "size": 22284,
+   "triangles": 444,
+   "moving": "arm_ail_L",
+   "rides": "slide_panel_L",
+   "color_note": "nylon servo arm; light grey for contrast against the white skins"
+  },
+  {
+   "file": "stl/J-18_Elevator_servo_right_R.stl",
+   "name": "J-18 Elevator servo right stub - saddle tray arm [R]",
+   "group": "mechanisms",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 19,
+   "bbox_cm": [
+    [
+     36.855,
+     -82.1,
+     -4.9
+    ],
+    [
+     41.095,
+     -75.2,
+     -2.3
+    ]
+   ],
+   "size": 163684,
+   "triangles": 3272,
+   "joint": "J-18",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "kinematics/Arm_Elevator.stl",
+   "name": "Arm_Elevator",
+   "group": "mechanisms",
+   "color": [
+    0.86,
+    0.85,
+    0.8
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     36.855,
+     -80.958,
+     -5.222
+    ],
+    [
+     37.655,
+     -79.513,
+     -3.152
+    ]
+   ],
+   "size": 22084,
+   "triangles": 440,
+   "moving": "arm_elev",
+   "rides": "slide_panel_R",
+   "color_note": "nylon servo arm; light grey for contrast against the white skins"
+  },
+  {
+   "file": "stl/J-19_Rudder_servos_saddle_R.stl",
+   "name": "J-19 Rudder servos - saddle tray arms [R]",
+   "group": "mechanisms",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 19,
+   "bbox_cm": [
+    [
+     39.46,
+     -88.1,
+     -5.195
+    ],
+    [
+     42.06,
+     -81.2,
+     -0.955
+    ]
+   ],
+   "size": 163684,
+   "triangles": 3272,
+   "joint": "J-19",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-19_Rudder_servos_saddle_L.stl",
+   "name": "J-19 Rudder servos - saddle tray arms [L]",
+   "group": "mechanisms",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 19,
+   "bbox_cm": [
+    [
+     -42.06,
+     -88.1,
+     -5.195
+    ],
+    [
+     -39.46,
+     -81.2,
+     -0.955
+    ]
+   ],
+   "size": 163684,
+   "triangles": 3272,
+   "joint": "J-19",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "kinematics/Arm_Rudder_R.stl",
+   "name": "Arm_Rudder_R",
+   "group": "mechanisms",
+   "color": [
+    0.86,
+    0.85,
+    0.8
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     39.258,
+     -87.152,
+     -1.755
+    ],
+    [
+     41.204,
+     -85.514,
+     -0.955
+    ]
+   ],
+   "size": 22084,
+   "triangles": 440,
+   "moving": "arm_rud_R",
+   "rides": "slide_panel_R",
+   "color_note": "nylon servo arm; light grey for contrast against the white skins"
+  },
+  {
+   "file": "kinematics/Arm_Rudder_L.stl",
+   "name": "Arm_Rudder_L",
+   "group": "mechanisms",
+   "color": [
+    0.86,
+    0.85,
+    0.8
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -41.204,
+     -87.152,
+     -1.755
+    ],
+    [
+     -39.258,
+     -85.514,
+     -0.955
+    ]
+   ],
+   "size": 22084,
+   "triangles": 440,
+   "moving": "arm_rud_L",
+   "rides": "slide_panel_L",
+   "color_note": "nylon servo arm; light grey for contrast against the white skins"
+  },
+  {
+   "file": "kinematics/Pushrod_Aileron_R.stl",
+   "name": "Pushrod_Aileron_R",
+   "group": "mechanisms",
+   "color": [
+    0.098,
+    0.098,
+    0.098
+   ],
+   "count": 3,
+   "bbox_cm": [
+    [
+     81.795,
+     -19.763,
+     -2.069
+    ],
+    [
+     82.637,
+     -13.353,
+     -1.243
+    ]
+   ],
+   "size": 17184,
+   "triangles": 342,
+   "moving": "rod_ail_R",
+   "rides": "arm_ail_R"
+  },
+  {
+   "file": "kinematics/Pushrod_Aileron_L.stl",
+   "name": "Pushrod_Aileron_L",
+   "group": "mechanisms",
+   "color": [
+    0.098,
+    0.098,
+    0.098
+   ],
+   "count": 3,
+   "bbox_cm": [
+    [
+     -82.637,
+     -19.763,
+     -2.069
+    ],
+    [
+     -81.795,
+     -13.353,
+     -1.245
+    ]
+   ],
+   "size": 16984,
+   "triangles": 338,
+   "moving": "rod_ail_L",
+   "rides": "arm_ail_L"
+  },
+  {
+   "file": "kinematics/Pushrod_Elevator.stl",
+   "name": "Pushrod_Elevator",
+   "group": "mechanisms",
+   "color": [
+    0.098,
+    0.098,
+    0.098
+   ],
+   "count": 3,
+   "bbox_cm": [
+    [
+     36.664,
+     -83.843,
+     -5.014
+    ],
+    [
+     37.505,
+     -80.437,
+     -3.026
+    ]
+   ],
+   "size": 17284,
+   "triangles": 344,
+   "moving": "rod_elev",
+   "rides": "arm_elev"
+  },
+  {
+   "file": "kinematics/Rudder_R.stl",
+   "name": "Rudder_R",
+   "group": "airframe",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 7,
+   "bbox_cm": [
+    [
+     40.895,
+     -92.084,
+     -1.498
+    ],
+    [
+     44.095,
+     -87.973,
+     17.065
+    ]
+   ],
+   "size": 175984,
+   "triangles": 3518,
+   "moving": "rud_R",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "kinematics/Rudder_L.stl",
+   "name": "Rudder_L",
+   "group": "airframe",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 7,
+   "bbox_cm": [
+    [
+     -44.095,
+     -92.084,
+     -1.498
+    ],
+    [
+     -40.895,
+     -87.973,
+     17.065
+    ]
+   ],
+   "size": 176184,
+   "triangles": 3522,
+   "moving": "rud_L",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "kinematics/Pushrod_Rudder_R.stl",
+   "name": "Pushrod_Rudder_R",
+   "group": "mechanisms",
+   "color": [
+    0.098,
+    0.098,
+    0.098
+   ],
+   "count": 3,
+   "bbox_cm": [
+    [
+     39.465,
+     -89.554,
+     -1.605
+    ],
+    [
+     41.99,
+     -86.623,
+     -0.764
+    ]
+   ],
+   "size": 17784,
+   "triangles": 354,
+   "moving": "rod_rud_R",
+   "rides": "arm_rud_R"
+  },
+  {
+   "file": "kinematics/Pushrod_Rudder_L.stl",
+   "name": "Pushrod_Rudder_L",
+   "group": "mechanisms",
+   "color": [
+    0.098,
+    0.098,
+    0.098
+   ],
+   "count": 3,
+   "bbox_cm": [
+    [
+     -41.99,
+     -89.554,
+     -1.605
+    ],
+    [
+     -39.463,
+     -86.623,
+     -0.764
+    ]
+   ],
+   "size": 17584,
+   "triangles": 350,
+   "moving": "rod_rud_L",
+   "rides": "arm_rud_L"
+  },
+  {
+   "file": "stl/Hinge_Aileron_R.stl",
+   "name": "Hinge_Aileron_R",
+   "group": "mechanisms",
+   "color": [
+    0.898,
+    0.898,
+    0.898
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     58.6,
+     -18.696,
+     1.134
+    ],
+    [
+     119.8,
+     -16.152,
+     1.567
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Hinge_Aileron_L.stl",
+   "name": "Hinge_Aileron_L",
+   "group": "mechanisms",
+   "color": [
+    0.898,
+    0.898,
+    0.898
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -119.8,
+     -18.696,
+     1.134
+    ],
+    [
+     -58.6,
+     -16.152,
+     1.567
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Hinge_Elevator.stl",
+   "name": "Hinge_Elevator",
+   "group": "mechanisms",
+   "color": [
+    0.898,
+    0.898,
+    0.898
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -42.77,
+     -83.634,
+     -1.186
+    ],
+    [
+     42.77,
+     -81.094,
+     -1.166
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_htail"
+  },
+  {
+   "file": "stl/Hinge_Rudder_R.stl",
+   "name": "Hinge_Rudder_R",
+   "group": "mechanisms",
+   "color": [
+    0.898,
+    0.898,
+    0.898
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     43.765,
+     -89.043,
+     -1.73
+    ],
+    [
+     43.785,
+     -86.503,
+     17.07
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Hinge_Rudder_L.stl",
+   "name": "Hinge_Rudder_L",
+   "group": "mechanisms",
+   "color": [
+    0.898,
+    0.898,
+    0.898
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -43.785,
+     -89.043,
+     -1.73
+    ],
+    [
+     -43.765,
+     -86.503,
+     17.07
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-24_27_Canopy_screws_GPS_mast.stl",
+   "name": "J-24+27 Canopy screws and GPS mast",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 20,
+   "bbox_cm": [
+    [
+     -4.35,
+     9.654,
+     2.744
+    ],
+    [
+     4.35,
+     30.346,
+     8.7
+    ]
+   ],
+   "size": 207284,
+   "triangles": 4144,
+   "joint": "J-24",
+   "rides": "slide_canopy"
+  },
+  {
+   "file": "stl/J-25_Pod_formers_battery.stl",
+   "name": "J-25 Pod formers battery tray straps",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 16,
+   "bbox_cm": [
+    [
+     -7.0,
+     -2.865,
+     -9.929
+    ],
+    [
+     7.0,
+     34.7,
+     3.929
+    ]
+   ],
+   "size": 189284,
+   "triangles": 3784,
+   "joint": "J-25"
+  },
+  {
+   "file": "stl/J-26_FC_stack_on.stl",
+   "name": "J-26 FC stack on avionics deck deck on formers",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 33,
+   "bbox_cm": [
+    [
+     -4.5,
+     14.635,
+     -2.25
+    ],
+    [
+     4.5,
+     34.865,
+     1.35
+    ]
+   ],
+   "size": 265484,
+   "triangles": 5308,
+   "joint": "J-26"
+  },
+  {
+   "file": "stl/J-28_RX_Remote_ID_C.stl",
+   "name": "J-28 RX Remote ID UBEC BUS1 XT90S airspeed module c [C]",
+   "group": "hardware",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 6,
+   "bbox_cm": [
+    [
+     -3.23,
+     10.729,
+     -6.921
+    ],
+    [
+     4.23,
+     31.271,
+     5.231
+    ]
+   ],
+   "size": 58484,
+   "triangles": 1168,
+   "joint": "J-28"
+  },
+  {
+   "file": "stl/J-28_RX_Remote_ID_L.stl",
+   "name": "J-28 RX Remote ID UBEC BUS1 XT90S airspeed module c [L]",
+   "group": "hardware",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -11.23,
+     -14.171,
+     -0.241
+    ],
+    [
+     -10.77,
+     -11.829,
+     1.401
+    ]
+   ],
+   "size": 11284,
+   "triangles": 224,
+   "joint": "J-28",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-29_ESC_mounting_lift_R.stl",
+   "name": "J-29 ESC mounting lift ESCs on boom outboard faces [R]",
+   "group": "hardware",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 6,
+   "bbox_cm": [
+    [
+     41.78,
+     -38.5,
+     -4.59
+    ],
+    [
+     46.692,
+     22.5,
+     -1.25
+    ]
+   ],
+   "size": 65284,
+   "triangles": 1304,
+   "joint": "J-29",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-29_ESC_mounting_lift_L.stl",
+   "name": "J-29 ESC mounting lift ESCs on boom outboard faces [L]",
+   "group": "hardware",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 6,
+   "bbox_cm": [
+    [
+     -46.692,
+     -38.5,
+     -4.59
+    ],
+    [
+     -41.78,
+     22.5,
+     -1.25
+    ]
+   ],
+   "size": 65284,
+   "triangles": 1304,
+   "joint": "J-29",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-29_ESC_mounting_lift_C.stl",
+   "name": "J-29 ESC mounting lift ESCs on boom outboard faces [C]",
+   "group": "hardware",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -1.43,
+     -36.421,
+     -3.571
+    ],
+    [
+     1.43,
+     -31.579,
+     -2.269
+    ]
+   ],
+   "size": 16084,
+   "triangles": 320,
+   "joint": "J-29"
+  },
+  {
+   "file": "stl/J-30_Harness_joint_boxes_R.stl",
+   "name": "J-30 Harness joint boxes J1J2J3 anchors XT60H + JR [R]",
+   "group": "hardware",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 6,
+   "bbox_cm": [
+    [
+     8.77,
+     -51.171,
+     -3.671
+    ],
+    [
+     43.6,
+     -11.329,
+     0.831
+    ]
+   ],
+   "size": 35484,
+   "triangles": 708,
+   "joint": "J-30",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/J-30_Harness_joint_boxes_L.stl",
+   "name": "J-30 Harness joint boxes J1J2J3 anchors XT60H + JR [L]",
+   "group": "hardware",
+   "color": [
+    0.929,
+    0.929,
+    0.898
+   ],
+   "count": 6,
+   "bbox_cm": [
+    [
+     -43.6,
+     -51.171,
+     -3.671
+    ],
+    [
+     -8.77,
+     -11.329,
+     0.831
+    ]
+   ],
+   "size": 35484,
+   "triangles": 708,
+   "joint": "J-30",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/J-31_Pitot_clamp_on_L.stl",
+   "name": "J-31 Pitot clamp on left wing lower skin [L]",
+   "group": "hardware",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 7,
+   "bbox_cm": [
+    [
+     -100.8,
+     -4.6,
+     -2.75
+    ],
+    [
+     -99.2,
+     -2.4,
+     -1.35
+    ]
+   ],
+   "size": 86484,
+   "triangles": 1728,
+   "joint": "J-31",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/XT90S_1.stl",
+   "name": "XT90S_1",
+   "group": "electronics",
+   "color": [
+    0.447,
+    0.498,
+    0.549
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -1.0,
+     15.5,
+     -6.0
+    ],
+    [
+     1.0,
+     17.5,
+     -4.0
+    ]
+   ],
+   "size": 36284,
+   "triangles": 724
+  },
+  {
+   "file": "stl/FC1.stl",
+   "name": "FC1",
+   "group": "electronics",
+   "color": [
+    0.149,
+    0.647,
+    0.349
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -1.6,
+     18.4,
+     -0.85
+    ],
+    [
+     1.6,
+     23.6,
+     0.85
+    ]
+   ],
+   "size": 4684,
+   "triangles": 92
+  },
+  {
+   "file": "stl/BUS1.stl",
+   "name": "BUS1",
+   "group": "electronics",
+   "color": [
+    0.447,
+    0.498,
+    0.549
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -1.25,
+     18.0,
+     -6.75
+    ],
+    [
+     1.25,
+     22.0,
+     -5.25
+    ]
+   ],
+   "size": 8684,
+   "triangles": 172
+  },
+  {
+   "file": "stl/UBEC1.stl",
+   "name": "UBEC1",
+   "group": "electronics",
+   "color": [
+    0.447,
+    0.498,
+    0.549
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -1.0,
+     24.0,
+     -6.0
+    ],
+    [
+     1.0,
+     28.0,
+     -5.0
+    ]
+   ],
+   "size": 8684,
+   "triangles": 172
+  },
+  {
+   "file": "stl/GPS1.stl",
+   "name": "GPS1",
+   "group": "electronics",
+   "color": [
+    0.447,
+    0.498,
+    0.549
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -1.05,
+     18.95,
+     8.399
+    ],
+    [
+     1.05,
+     21.05,
+     9.201
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_canopy"
+  },
+  {
+   "file": "stl/RX1.stl",
+   "name": "RX1",
+   "group": "electronics",
+   "color": [
+    0.447,
+    0.498,
+    0.549
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -3.65,
+     28.9,
+     2.8
+    ],
+    [
+     -2.35,
+     31.1,
+     3.2
+    ]
+   ],
+   "size": 684,
+   "triangles": 12
+  },
+  {
+   "file": "stl/ASPD1.stl",
+   "name": "ASPD1",
+   "group": "electronics",
+   "color": [
+    0.447,
+    0.498,
+    0.549
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -12.1,
+     -14.0,
+     -0.07
+    ],
+    [
+     -9.9,
+     -12.0,
+     1.07
+    ]
+   ],
+   "size": 8684,
+   "triangles": 172,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/ESC_L1.stl",
+   "name": "ESC_L1",
+   "group": "electronics",
+   "color": [
+    0.859,
+    0.376,
+    0.098
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     44.87,
+     17.75,
+     -3.4
+    ],
+    [
+     46.52,
+     22.25,
+     -2.6
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/ESC_L2.stl",
+   "name": "ESC_L2",
+   "group": "electronics",
+   "color": [
+    0.859,
+    0.376,
+    0.098
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -46.52,
+     -38.25,
+     -3.4
+    ],
+    [
+     -44.87,
+     -33.75,
+     -2.6
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/ESC_L3.stl",
+   "name": "ESC_L3",
+   "group": "electronics",
+   "color": [
+    0.859,
+    0.376,
+    0.098
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -46.52,
+     17.75,
+     -3.4
+    ],
+    [
+     -44.87,
+     22.25,
+     -2.6
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/ESC_L4.stl",
+   "name": "ESC_L4",
+   "group": "electronics",
+   "color": [
+    0.859,
+    0.376,
+    0.098
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     44.87,
+     -38.25,
+     -3.4
+    ],
+    [
+     46.52,
+     -33.75,
+     -2.6
+    ]
+   ],
+   "size": 684,
+   "triangles": 12,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/ESC_P.stl",
+   "name": "ESC_P",
+   "group": "electronics",
+   "color": [
+    0.859,
+    0.376,
+    0.098
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -1.25,
+     -36.25,
+     -3.4
+    ],
+    [
+     1.25,
+     -31.75,
+     -2.6
+    ]
+   ],
+   "size": 684,
+   "triangles": 12
+  },
+  {
+   "file": "stl/CAP_L1.stl",
+   "name": "CAP_L1",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     45.97,
+     19.5,
+     -3.5
+    ],
+    [
+     46.97,
+     20.5,
+     -2.5
+    ]
+   ],
+   "size": 1484,
+   "triangles": 28,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/CAP_L2.stl",
+   "name": "CAP_L2",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -46.97,
+     -36.5,
+     -3.5
+    ],
+    [
+     -45.97,
+     -35.5,
+     -2.5
+    ]
+   ],
+   "size": 1484,
+   "triangles": 28,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/CAP_L3.stl",
+   "name": "CAP_L3",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -46.97,
+     19.5,
+     -3.5
+    ],
+    [
+     -45.97,
+     20.5,
+     -2.5
+    ]
+   ],
+   "size": 1484,
+   "triangles": 28,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/CAP_L4.stl",
+   "name": "CAP_L4",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     45.97,
+     -36.5,
+     -3.5
+    ],
+    [
+     46.97,
+     -35.5,
+     -2.5
+    ]
+   ],
+   "size": 1484,
+   "triangles": 28,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/CAP_P.stl",
+   "name": "CAP_P",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -0.5,
+     -34.5,
+     -5.5
+    ],
+    [
+     0.5,
+     -33.5,
+     -4.5
+    ]
+   ],
+   "size": 684,
+   "triangles": 12
+  },
+  {
+   "file": "stl/JB_J1_R.stl",
+   "name": "JB_J1_R",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     8.5,
+     -12.5,
+     -0.5
+    ],
+    [
+     9.5,
+     -11.5,
+     0.5
+    ]
+   ],
+   "size": 11084,
+   "triangles": 220,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/JB_J2_R.stl",
+   "name": "JB_J2_R",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     42.87,
+     -19.594,
+     -3.5
+    ],
+    [
+     43.87,
+     -18.594,
+     -2.5
+    ]
+   ],
+   "size": 11084,
+   "triangles": 220,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/JB_J3_R.stl",
+   "name": "JB_J3_R",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     42.87,
+     -51.0,
+     -3.5
+    ],
+    [
+     43.87,
+     -50.0,
+     -2.5
+    ]
+   ],
+   "size": 11084,
+   "triangles": 220,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/JB_J1_L.stl",
+   "name": "JB_J1_L",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -9.5,
+     -12.5,
+     -0.5
+    ],
+    [
+     -8.5,
+     -11.5,
+     0.5
+    ]
+   ],
+   "size": 11084,
+   "triangles": 220,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/JB_J2_L.stl",
+   "name": "JB_J2_L",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -43.87,
+     -19.594,
+     -3.5
+    ],
+    [
+     -42.87,
+     -18.594,
+     -2.5
+    ]
+   ],
+   "size": 11084,
+   "triangles": 220,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/JB_J3_L.stl",
+   "name": "JB_J3_L",
+   "group": "electronics",
+   "color": [
+    0.949,
+    0.8,
+    0.149
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     -43.87,
+     -51.0,
+     -3.5
+    ],
+    [
+     -42.87,
+     -50.0,
+     -2.5
+    ]
+   ],
+   "size": 11084,
+   "triangles": 220,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/RID1.stl",
+   "name": "RID1",
+   "group": "electronics",
+   "color": [
+    0.447,
+    0.498,
+    0.549
+   ],
+   "count": 1,
+   "bbox_cm": [
+    [
+     3.22,
+     10.9,
+     4.1
+    ],
+    [
+     4.78,
+     13.1,
+     4.9
+    ]
+   ],
+   "size": 5484,
+   "triangles": 108
+  },
+  {
+   "file": "kinematics/Wheel_FR.stl",
+   "name": "Wheel_FR",
+   "group": "gear",
+   "color": [
+    0.098,
+    0.098,
+    0.098
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     45.14,
+     24.282,
+     -29.18
+    ],
+    [
+     47.44,
+     31.902,
+     -21.56
+    ]
+   ],
+   "size": 80284,
+   "triangles": 1604,
+   "moving": "wheel_FR",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Wheel_Leg_FR.stl",
+   "name": "Leg_FR",
+   "group": "gear",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 20,
+   "bbox_cm": [
+    [
+     41.77,
+     25.742,
+     -25.97
+    ],
+    [
+     48.18,
+     30.007,
+     -4.52
+    ]
+   ],
+   "size": 369684,
+   "triangles": 7392,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "kinematics/Wheel_FL.stl",
+   "name": "Wheel_FL",
+   "group": "gear",
+   "color": [
+    0.098,
+    0.098,
+    0.098
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -47.44,
+     24.282,
+     -29.18
+    ],
+    [
+     -45.14,
+     31.902,
+     -21.56
+    ]
+   ],
+   "size": 80284,
+   "triangles": 1604,
+   "moving": "wheel_FL",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Wheel_Leg_FL.stl",
+   "name": "Leg_FL",
+   "group": "gear",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 20,
+   "bbox_cm": [
+    [
+     -48.18,
+     25.742,
+     -25.97
+    ],
+    [
+     -41.77,
+     30.007,
+     -4.52
+    ]
+   ],
+   "size": 369684,
+   "triangles": 7392,
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "kinematics/Wheel_RR.stl",
+   "name": "Wheel_RR",
+   "group": "gear",
+   "color": [
+    0.098,
+    0.098,
+    0.098
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     45.14,
+     -45.268,
+     -29.18
+    ],
+    [
+     47.44,
+     -37.648,
+     -21.56
+    ]
+   ],
+   "size": 80284,
+   "triangles": 1604,
+   "moving": "wheel_RR",
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "stl/Wheel_Leg_RR.stl",
+   "name": "Leg_RR",
+   "group": "gear",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 20,
+   "bbox_cm": [
+    [
+     41.77,
+     -43.808,
+     -25.97
+    ],
+    [
+     48.18,
+     -39.543,
+     -4.52
+    ]
+   ],
+   "size": 369684,
+   "triangles": 7392,
+   "rides": "slide_panel_R"
+  },
+  {
+   "file": "kinematics/Wheel_RL.stl",
+   "name": "Wheel_RL",
+   "group": "gear",
+   "color": [
+    0.098,
+    0.098,
+    0.098
+   ],
+   "count": 2,
+   "bbox_cm": [
+    [
+     -47.44,
+     -45.268,
+     -29.18
+    ],
+    [
+     -45.14,
+     -37.648,
+     -21.56
+    ]
+   ],
+   "size": 80284,
+   "triangles": 1604,
+   "moving": "wheel_RL",
+   "rides": "slide_panel_L"
+  },
+  {
+   "file": "stl/Wheel_Leg_RL.stl",
+   "name": "Leg_RL",
+   "group": "gear",
+   "color": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "count": 20,
+   "bbox_cm": [
+    [
+     -48.18,
+     -43.808,
+     -25.97
+    ],
+    [
+     -41.77,
+     -39.543,
+     -4.52
+    ]
+   ],
+   "size": 369684,
+   "triangles": 7392,
+   "rides": "slide_panel_L"
+  }
+ ]
+}
