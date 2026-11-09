@@ -1,12 +1,15 @@
 """build_all.py - build the whole aircraft from every subsystem module, in a fixed order.
 
-Discovers <root>/<subsystem>/fusion/*.py (root = redesign/subsystems, or redesign/fusion/examples with --examples),
+Discovers <root>/<subsystem>/fusion/*.py (root = redesign/subsystems; redesign/fusion/skeleton with --skeleton = the
+K09-L reference layout; redesign/fusion/examples with --examples = the generic test aircraft),
 orders them by <list file> (redesign/fusion/modules.txt or examples/modules.txt; unlisted modules go last,
 alphabetically, with a warning), calls each module's build(ctx), then creates all joints and wires, then prints
-mass and CG (declared masses; CG declared or, if absent, geometric centroid).
+mass and CG (declared masses; CG declared or, if absent, geometric centroid). For the K09-L roots (subsystems,
+skeleton) the datum sheet (k09kit.build_datums, DATUMS.md) is registered before the first module, so modules can
+read ctx.D('DP-SPAR') and Fusion shows a '00 Datums' component.
 
 Outside Fusion (stub backend, for checks):
-    python -I redesign/fusion/build_all.py [--examples] [--root DIR]
+    python -I redesign/fusion/build_all.py [--skeleton | --examples | --root DIR]
 Inside Fusion: run the launcher redesign/fusion/BuildAll/ from Utilities > Add-Ins > Scripts and Add-Ins
 (see README.md). It calls fusion_main() below. TARGET picks what is built.
 """
@@ -27,19 +30,25 @@ for p in (HERE, os.path.join(REDESIGN, 'interfaces')):
 import fusionkit                 # noqa: E402
 import merge_check               # noqa: E402
 
-# Inside Fusion: 'auto' builds redesign/subsystems if any module exists there, else the example aircraft.
-TARGET = 'auto'                  # 'auto' | 'subsystems' | 'examples'
+# Inside Fusion: 'auto' builds redesign/subsystems if any module exists there, else the K09-L skeleton.
+TARGET = 'auto'                  # 'auto' | 'subsystems' | 'skeleton' | 'examples'
 
 
-def roots(examples=False, root=None):
+def roots(examples=False, root=None, skeleton=False):
     """(module root, list file) for a build."""
     if root:
         root = os.path.abspath(root)
         return root, os.path.join(root, 'modules.txt')
-    if examples:
-        r = os.path.join(HERE, 'examples')
+    if examples or skeleton:
+        r = os.path.join(HERE, 'examples' if examples else 'skeleton')
         return r, os.path.join(r, 'modules.txt')
     return os.path.join(REDESIGN, 'subsystems'), os.path.join(HERE, 'modules.txt')
+
+
+def wants_datums(root):
+    """K09-L datums for redesign/subsystems and the skeleton; not for the generic examples or test roots."""
+    n = os.path.normcase(os.path.abspath(root))
+    return n in (os.path.normcase(os.path.join(REDESIGN, 'subsystems')), os.path.normcase(os.path.join(HERE, 'skeleton')))
 
 
 def discover(root, list_file):
@@ -79,8 +88,9 @@ def load_params():
     return {}
 
 
-def build(backend, root, list_file, log=print):
-    """Run every module against `backend`. Returns (ctx, graph, results); results = [(sub, file, ok, ms, err)]."""
+def build(backend, root, list_file, log=print, datums=None):
+    """Run every module against `backend`. Returns (ctx, graph, results); results = [(sub, file, ok, ms, err)].
+    datums: True/False registers the K09-L datum sheet first; None = wants_datums(root)."""
     graph = merge_check.load(root)
     ctx = fusionkit.Context(backend, parts=graph.parts, params=load_params())
     mods, warns, notes = discover(root, list_file)
@@ -89,6 +99,12 @@ def build(backend, root, list_file, log=print):
     if notes:
         log('not built yet (listed in %s, no module): %s' % (os.path.basename(list_file), ', '.join(notes)))
     backend.begin('DBF redesign - %s' % os.path.basename(root))
+    if wants_datums(root) if datums is None else datums:
+        try:
+            import k09kit
+            k09kit.build_datums(ctx)
+        except Exception as e:
+            ctx.issue('ERROR', 'datums', '-', 'k09kit.build_datums: %s: %s' % (type(e).__name__, e))
     results = []
     for sub, path in mods:
         t0 = time.time()
@@ -140,10 +156,11 @@ def mass_table(ctx):
 def main(argv=None):
     ap = argparse.ArgumentParser(description='Build all subsystem modules on the stub backend (outside Fusion).')
     ap.add_argument('--examples', action='store_true')
+    ap.add_argument('--skeleton', action='store_true')
     ap.add_argument('--root')
     a = ap.parse_args(argv)
     from backends.stub_backend import StubBackend
-    root, lst = roots(a.examples, a.root)
+    root, lst = roots(a.examples, a.root, a.skeleton)
     ctx, _, results = build(StubBackend(), root, lst)
     for sub, f, ok, ms, err in results:
         print('%-14s %-18s %s %6.1f ms %s' % (sub, f, 'ok  ' if ok else 'FAIL', ms, err))
@@ -156,12 +173,12 @@ def fusion_main():
     from backends.fusion_backend import FusionBackend
     target = TARGET
     if target == 'auto':
-        target = 'subsystems' if discover(*roots(False))[0] else 'examples'
-    root, lst = roots(target == 'examples')
+        target = 'subsystems' if discover(*roots(False))[0] else 'skeleton'
+    root, lst = roots(target == 'examples', skeleton=target == 'skeleton')
     out = []
     ctx, _, results = build(FusionBackend(), root, lst, log=out.append)
-    lines = ['Built %s: %d modules, %d components, %d joints, %d wires' % (
-        target, len(results), len(ctx.components), len(ctx.joints), len(ctx.wires))]
+    lines = ['Built %s: %d modules, %d components, %d joints, %d wires, %d datums' % (
+        target, len(results), len(ctx.components), len(ctx.joints), len(ctx.wires), len(ctx.datums))]
     lines += ['%s/%s: %s' % (s, f, 'ok' if ok else err) for s, f, ok, _, err in results]
     lines += [i[0] + ' ' + i[2] + ': ' + i[3] for i in ctx.issues]
     lines += mass_table(ctx) + out

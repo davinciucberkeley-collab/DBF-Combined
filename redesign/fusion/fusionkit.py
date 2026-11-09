@@ -12,6 +12,8 @@ A subsystem module (redesign/subsystems/<name>/fusion/<name>.py) exposes build(c
         ctx.wire('E-FUS-03', [(...), (...)])            # electrical edge = a routed wire, not a drawn line
         ctx.contact('E-XXX-01')                         # edge held by tape/bond already shown by geometry
         ctx.mirror('WNG-001', 'WNG-002', plane='XZ')   # right panel = mirrored left panel
+        ctx.value('wing.span_m', 'm'); ctx.D('DP-SPAR')  # params.json value (unit-checked); named datum (DATUMS.md)
+        ctx.keepout_cylinder('KO-PROP-UR', 'X', hub, r, half, exempt=(...))   # volume no other part may enter
 
 Everything is recorded here as plain data (shapes in metres, joints, wires) and passed to a BACKEND as it is made:
     backends/stub_backend.py    pure python, used by check.py (seconds)
@@ -312,6 +314,47 @@ class Wire:
         self.native = None
 
 
+class Datum:
+    """Named reference geometry every designer builds from (redesign/fusion/DATUMS.md).
+    kind 'plane': axis ('X'|'Y'|'Z' = plane normal) + offset (m). kind 'point': p = (x, y, z) m.
+    kind 'axis': p = a point on the line, axis = direction. `key` = the params.json key it comes from."""
+
+    def __init__(self, name, kind, axis=None, offset=None, p=None, key='', note=''):
+        self.name, self.kind, self.axis, self.key, self.note = name, kind, axis, key, note
+        self.offset = None if offset is None else float(offset)
+        self.p = None if p is None else tuple(map(float, p))
+        self.native = None
+
+
+class Keepout:
+    """Volume no other part may enter (bounding-box test in check.py).
+    kind 'cylinder': axis, center (world m), r, half (half-length along the axis) - e.g. a prop disc + clearance.
+    kind 'halfspace': axis, at, side (+1: nothing beyond `at` in +axis, -1: nothing below) - e.g. the hover ground
+    plane at the feet. `exempt` = part ids allowed inside (the prop itself, its motor, the feet)."""
+
+    def __init__(self, name, kind, axis, exempt=(), sub=None, center=None, r=None, half=None, at=None, side=1):
+        self.name, self.kind, self.axis, self.exempt, self.sub = name, kind, axis, set(exempt), sub
+        self.center = None if center is None else tuple(map(float, center))
+        self.r, self.half, self.at, self.side = r, half, at, side
+
+    def hits(self, box):
+        """True if the axis-aligned box ((lo), (hi)) enters this keep-out volume (coarse: whole bbox)."""
+        k = AX[self.axis]
+        lo, hi = box
+        if self.kind == 'halfspace':
+            return hi[k] > self.at + 1e-9 if self.side > 0 else lo[k] < self.at - 1e-9
+        c = self.center
+        if hi[k] <= c[k] - self.half or lo[k] >= c[k] + self.half:
+            return False
+        d2 = 0.0
+        for i in range(3):
+            if i == k:
+                continue
+            q = min(max(c[i], lo[i]), hi[i])          # closest point of the box to the axis, per coordinate
+            d2 += (q - c[i]) ** 2
+        return d2 < self.r ** 2 - 1e-12
+
+
 # ----------------------------------------------------------------------------- backend interface
 class Backend:
     """Implement these to drive a CAD/render tool. All lengths are metres in the aircraft frame
@@ -331,6 +374,9 @@ class Backend:
         pass
 
     def wire(self, wire):                   # after all modules: wire.points = world polyline, wire.dia metres
+        pass
+
+    def datum(self, datum):                 # optional: named construction plane / point / axis (world metres)
         pass
 
     def end(self, ctx):                     # finish; return a short text summary or None
@@ -353,6 +399,9 @@ class Context:
         self.wires = []
         self.contacts = {}                   # edge id -> note
         self.issues = []                     # (severity, code, item, message) found while building
+        self.datums = {}                     # name -> Datum (k09kit.build_datums; DATUMS.md)
+        self.keepouts = []                   # Keepout volumes registered by modules (prop discs, hover ground)
+        self.envelope = None                 # ((lo), (hi)) aircraft envelope in m; check.py warns outside it
 
     # --- module bookkeeping
     def begin_module(self, sub, sub_dir):
@@ -371,6 +420,40 @@ class Context:
                 raise KeyError('params.json has no "%s" (needed by %s)' % (dotted, self.sub))
             d = d[k]
         return d
+
+    def value(self, dotted, unit=None):
+        """The number (or list/text) of a params.json leaf: ctx.value('wing.span_m', 'm') -> 1.15.
+        params.json leaves are {value, unit, source, ...}; `unit` given -> KeyError if the leaf's unit differs
+        (catches mm-vs-m before it becomes geometry)."""
+        d = self.param(dotted)
+        if isinstance(d, dict) and 'value' in d:
+            if unit is not None and d.get('unit') != unit:
+                raise KeyError('params.json "%s" is in %s, %s asked for %s' % (dotted, d.get('unit'), self.sub, unit))
+            return d['value']
+        return d
+
+    # --- datums and keep-outs
+    def datum(self, name, kind, **kw):
+        """Register a named datum (plane / point / axis); the backend draws it (Fusion: construction geometry)."""
+        if name in self.datums:
+            raise ValueError('datum %s defined twice' % name)
+        d = Datum(name, kind, **kw)
+        self.datums[name] = d
+        self.backend.datum(d)
+        return d
+
+    def D(self, name):
+        """A datum's value: plane -> offset (m), point -> (x, y, z), axis -> point on the line."""
+        d = self.datums.get(name)
+        if d is None:
+            raise KeyError('no datum %s (see redesign/fusion/DATUMS.md)' % name)
+        return d.offset if d.kind == 'plane' else d.p
+
+    def keepout_cylinder(self, name, axis, center, r, half, exempt=()):
+        self.keepouts.append(Keepout(name, 'cylinder', axis, exempt, self.sub, center=center, r=r, half=half))
+
+    def keepout_halfspace(self, name, axis, at, side=1, exempt=()):
+        self.keepouts.append(Keepout(name, 'halfspace', axis, exempt, self.sub, at=at, side=side))
 
     def log(self, *a):
         print(*a)

@@ -2,7 +2,9 @@
 
 1. the generic example aircraft passes check.py and merge_check.py with --strict;
 2. the deliberately broken aircraft (tests/broken/) fails, and each planted defect is reported;
-3. geometry helpers (NACA thickness, volumes, mirror) are right.
+3. geometry helpers (NACA thickness, volumes, mirror) are right;
+4. K09-L: the skeleton passes --strict with its datums and keep-outs, k09kit helpers (sections, .dat reader,
+   keep-outs, hover pose, DATUMS.md freshness) are right, and the Fusion backend runs the skeleton with a fake adsk.
 """
 import contextlib
 import io
@@ -15,6 +17,7 @@ FUSION = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, FUSION)
 
 import check            # noqa: E402  (adds redesign/interfaces to sys.path)
+import k09kit as k9     # noqa: E402
 import build_all        # noqa: E402
 import fusionkit as fk  # noqa: E402
 import merge_check      # noqa: E402
@@ -159,8 +162,91 @@ class _Any:
         return 1
 
 
+class K09(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.P = k9.load_params()
+
+    def test_skeleton_passes_strict(self):
+        code, out = quiet(check.main, ['--skeleton', '--strict'])
+        self.assertEqual(code, 0, out)
+        self.assertIn('42 datums, 5 keep-outs', out)
+
+    def test_skeleton_rollup_is_the_allocations(self):
+        ctx = quiet(check.run_checks, *build_all.roots(skeleton=True))[0][0]
+        M, cg = ctx.rollup()
+        alloc = sum(k9.val(self.P, 'mass.allocation_g.' + k) for k in
+                    ('wing', 'fins', 'pod', 'landing', 'propulsion', 'power', 'avionics', 'harness', 'mechanisms'))
+        self.assertAlmostEqual(M, alloc)
+        self.assertAlmostEqual(cg[1], 0.0, places=6)               # exact mirrors
+
+    def test_datums_and_stations(self):
+        names = [s[0] for s in k9.datum_specs(self.P)]
+        self.assertEqual(len(names), len(set(names)))
+        d = {s[0]: s[2] for s in k9.datum_specs(self.P)}
+        self.assertEqual(d['DX-HUB-LL']['p'], (-0.15, -0.32, -0.19))
+        self.assertAlmostEqual(d['DP-HINGE']['offset'], 0.234)
+        self.assertFalse(k9.datums_md_stale(self.P), 'run python -I redesign/fusion/k09kit.py --datums-md')
+
+    def test_section_and_dat_reader(self):
+        s = k9.reflex_placeholder(0.0985)
+        t = max(k9.thickness_at(s, 1.0, i / 100.0) for i in range(1, 100))
+        self.assertAlmostEqual(t, 0.0985, delta=0.001)
+        self.assertGreater(k9.surface_y(s, 0.3, 'upper') + k9.surface_y(s, 0.3, 'lower'), 0)    # cambered forward
+        self.assertLess(k9.surface_y(s, 0.95, 'upper') + k9.surface_y(s, 0.95, 'lower'), 0)    # reflexed aft
+        loop = k9.section_loop(s, 0.3, x0=0.0, x1=1.0)
+        self.assertGreaterEqual(loop[0][1] - loop[-1][1], k9.TE_MIN_M - 1e-9)                  # TE opened
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            sel, led = os.path.join(d, 's.dat'), os.path.join(d, 'l.dat')
+            NL = chr(10)
+            with open(sel, 'w') as f:
+                f.write('TEST' + NL + NL.join('%f %f' % p for p in s))
+            up, lo = s[:len(s) // 2 + 1][::-1], s[len(s) // 2:]
+            with open(led, 'w') as f:
+                f.write('TEST' + NL + '%d. %d.' % (len(up), len(lo)) + NL * 2 + NL.join('%f %f' % p for p in up)
+                        + NL * 2 + NL.join('%f %f' % p for p in lo))
+            for path in (sel, led):
+                r = k9.read_dat(path)
+                self.assertAlmostEqual(k9.thickness_at(r, 1.0, 0.3), k9.thickness_at(s, 1.0, 0.3), places=4)
+
+    def test_keepouts(self):
+        ko = fk.Keepout('KO', 'cylinder', 'X', center=(-0.15, 0.32, 0.19), r=0.165, half=0.033)
+        self.assertTrue(ko.hits(((-0.16, 0.30, 0.0), (-0.14, 0.31, 0.03))))     # inside the disc radius
+        self.assertFalse(ko.hits(((-0.111, 0.30, 0.0), (0.0, 0.34, 0.21))))    # tube face 6 mm aft of the zone
+        self.assertFalse(ko.hits(((-0.16, 0.0, 0.0), (-0.14, 0.10, 0.02))))     # radially outside (corner test)
+        g = fk.Keepout('G', 'halfspace', 'X', at=0.31)
+        self.assertTrue(g.hits(((0.2, 0, 0), (0.311, 0.1, 0.1))))
+        self.assertFalse(g.hits(((0.2, 0, 0), (0.30, 0.1, 0.1))))
+
+    def test_keepout_violation_reported(self):
+        ctx, _, issues = quiet(check.run_checks, *build_all.roots(skeleton=True))[0]
+        self.assertFalse([i for i in issues if i[1] == 'keepout'])
+        ko = next(k for k in ctx.keepouts if k.name == 'KO-PROP-UR')
+        ko.exempt.clear()                                               # the prop now violates its own zone
+        hit = [c.id for c in ctx.components.values() if ko.hits(c.bbox())]
+        self.assertEqual(sorted(hit), ['PRP-901', 'PRP-905'])           # its motor and itself, nothing else
+
+    def test_hover_pose(self):
+        self.assertAlmostEqual(k9.to_hover((0.31, 0.32, 0.19), self.P)[2], 0.0)    # foot on the ground
+        self.assertGreater(k9.to_hover((-0.15, 0.32, 0.19), self.P)[2], 0.4)       # props on top
+        self.assertAlmostEqual(k9.to_hover((0.0, 0.0, 0.05), self.P)[0], 0.05)     # pod side faces +x
+
+    def test_value_unit_check(self):
+        ctx = fk.Context(None, params=self.P)
+        self.assertEqual(ctx.value('wing.span_m', 'm'), 1.15)
+        with self.assertRaises(KeyError):
+            ctx.value('wing.span_m', 'mm')
+
+
 class FusionBackendSmoke(unittest.TestCase):
+    def test_runs_skeleton_with_fake_adsk(self):
+        self._run(build_all.roots(skeleton=True), datums=42)
+
     def test_runs_examples_with_fake_adsk(self):
+        self._run(build_all.roots(True), datums=0)
+
+    def _run(self, roots, datums):
         import types
         saved = {k: sys.modules.get(k) for k in ('adsk', 'adsk.core', 'adsk.fusion', 'backends.fusion_backend')}
         adsk = types.ModuleType('adsk')
@@ -169,8 +255,10 @@ class FusionBackendSmoke(unittest.TestCase):
         sys.modules.pop('backends.fusion_backend', None)
         try:
             from backends.fusion_backend import FusionBackend
-            ctx, _, results = quiet(build_all.build, FusionBackend(), *build_all.roots(True))[0]
+            ctx, _, results = quiet(build_all.build, FusionBackend(), *roots)[0]
             self.assertTrue(all(r[2] for r in results), results)
+            self.assertEqual(len(ctx.datums), datums)
+            self.assertTrue(all(d.native is not None for d in ctx.datums.values()))
             self.assertEqual([i for i in ctx.issues if i[0] == 'ERROR'], [])
             self.assertTrue(all(j.native is not None for j in ctx.joints))
             self.assertTrue(all(w.native is not None for w in ctx.wires))

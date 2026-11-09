@@ -1,0 +1,15 @@
+# Change requests from A2 (systems engineer)
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-A2-01 | A1 | Adopt A2's 39 `PROPOSED` limits as `params.json#requirements.*` keys (table "Numbers added by A2" in `team/A2/REQUIREMENTS.md`: key, value, unit, basis per row). Until then claims reference the `ASM-A2-…` nodes in `team/A2/claims.json`; after adoption A2 removes the duplicates. | One source for every limit; `build_graph.py` catches a drifted limit only when it is a parameter |
+| CR-A2-02 | A1 | Confirm fin height: P6 says 0.40 m, `params.json#fins.half_height_m` 0.19 gives 0.38 m (0.40 m is the fin *chord*). The requirement set uses 0.38 m. | `R-ENVELOPE` and `CL-A1-TIPOVER` depend on it |
+| CR-A2-03 | A1 | Close CR-A1-09: P1–P25 are mapped onto your 18 ids plus 39 new ones (`team/A2/claims.json`, no duplicates); the P→R table is in `REQUIREMENTS.md`. Also close CR-A4-13 and CR-J1-09 on their side (rows below). | Traceability |
+| CR-A2-04 | A3 | Point `CL-A3-CG-X-RANGE` and `CL-A3-CG-Z-RANGE` at `R-CG-RANGE` (new) instead of `R-STATIC-MARGIN`, and `CL-A3-ALLOC-WORST` at `R-MASS-ALLOC` (new). Today the CG-range failure (−126 %) shows under static margin, which is B3's. | Each requirement fails for its own reason |
+| CR-A2-05 | A4 | Point `CL-A4-PLAN-CONNECTED` and `CL-A4-PLAN-POWERED` at `R-NO-FLOATING` (P24, new); joint stacks go to `R-JOINT-STACK` (C6). Closes CR-A4-13. | Traceability |
+| CR-A2-06 | J1 | Point `CL-J1-TUBE-MODE-SEP` at `R-VIBRATION` (separation ≥ 0.20, `VIBE` < 30 m/s², `Clip = 0`) and `CL-J1-FIN-YAW-ARM` at `R-DIRECTIONAL` (Cn_β ≥ 0.03 /rad, `ASM-A2-CNBETA-MIN`). Closes CR-J1-09. `CL-J1-TUBE-MODE-SEP` fails today (0.064 vs 0.20): C4 owns the fix. | Traceability; the fail reaches C4's row |
+| CR-A2-07 | B1, B2 | `R-TRANSITION` still fails (15.05 m/s vs 15 m/s cruise, CR-A1-05). Resolve before CDR; `R-GUST-LEAN` (new) also needs your 8 m/s lean at the gate mass. | Two requirements on B1 with no claim |
+| CR-A2-08 | F1 | `R-DISCONNECT` fails on J1's `CL-J1-XT60-BURST` (XT60 60 A vs 120 A momentary). Decide XT60 vs AS150U with the burst case stated as momentary (≤ 1 s, four motors full) and emit the claim that supersedes J1's reference values. | Open since P18 |
+| CR-A2-09 | C1 | `R-LOADS` lists the load cases the structures roles need (n +3.0/−1.5, FoS 1.5, sink 1.5 m/s, attitude 10°, 12 g pack retention, 0.3 m box drop) as `PROPOSED` numbers. Re-derive and write `team/C1/LOADS.md` before C2–C6 size anything. | Nothing structural was in P1–P25 |
+| CR-A2-10 | H1, H2, H3 | Evidence files named in the matrix do not exist yet: `team/H2/FLIGHT-TEST-PLAN.md`, `TWIN-REPORT.md`, `PILOT-LOG.md`, `logs/`; `team/H1/claims.json`; `team/H3/COMPLIANCE.md`, `FLIGHT-CARD.md`, `BATTERY-PROCEDURE.md`, `WIND-RFS.md`. Use these names or tell A2 the ones you use. | The matrix checks file presence automatically |
+| CR-A2-11 | J2 | `R-PROOF-BUILD` asks for `build_graph.py --strict` before first flight. Consider a `--requirements <file>` filter so a role can run the strict check on its own ids. | Optional; convenience |

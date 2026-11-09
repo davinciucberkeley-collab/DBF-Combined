@@ -1,0 +1,33 @@
+ ---------------------------------------------------------------
+ Vortex Lattice Output -- Total Forces
+
+ Configuration: K09-L wing + fins (mh60, eta 0.617, twist +0.0 deg, fins Tru
+     # Surfaces =   4
+     # Strips   =  76
+     # Vortices = 816
+
+  Sref = 0.34500       Cref = 0.30000       Bref =  1.1500    
+  Xref = 0.60000E-01   Yref =  0.0000       Zref =  0.0000    
+
+ Standard axis orientation,  X fwd, Z down         
+
+ Run case:  -unnamed-                              
+
+  Alpha =  21.02441     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Beta  =   0.00000     qc/2V =   0.00000
+  Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
+
+  CXtot =   0.24629     Cltot =   0.00000     Cl'tot =   0.00000
+  CYtot =   0.00000     Cmtot =   0.01648
+  CZtot =  -1.08379     Cntot =   0.00000     Cn'tot =   0.00000
+
+  CLtot =   1.10000
+  CDtot =   0.15894
+  CDvis =   0.06119     CDind = 0.0977508
+  CLff  =   1.13757     CDff  = 0.1021225    | Trefftz
+  CYff  =   0.00000         e =    1.0522    | Plane  
+
+   elevator        = -11.01608
+   aileron         =   0.00000
+
+ ---------------------------------------------------------------

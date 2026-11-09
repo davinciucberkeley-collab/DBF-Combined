@@ -1,0 +1,89 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/A4/interface_plan.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "CALC-A4-PLAN-GRAPH",
+   "type": "calculation",
+   "title": "Interface plan graph checks",
+   "script": "redesign/team/A4/interface_plan.py",
+   "function": "plan_graph_checks",
+   "equation": "connected = |main structural cluster| / |flight parts| ; powered = electrical parts reached from a source / all ; field = count(edges with field_disconnect)",
+   "inputs": {
+    "n_motors": "P:propulsion.n_motors"
+   },
+   "outputs": {
+    "connected_frac": 1.0,
+    "powered_frac": 1.0,
+    "field_disconnects": 1,
+    "edges": 125,
+    "parts": 82
+   },
+   "input_values": {
+    "n_motors": 4
+   }
+  },
+  {
+   "id": "CL-A4-PLAN-CONNECTED",
+   "type": "claim",
+   "title": "Planned parts all connected",
+   "calc": "CALC-A4-PLAN-GRAPH",
+   "output": "connected_frac",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "how": "python -I redesign/team/A4/interface_plan.py; then merge_check.py on the real subsystems reports no 'floating'",
+   "value": 1.0
+  },
+  {
+   "id": "CL-A4-PLAN-POWERED",
+   "type": "claim",
+   "title": "Planned electrical parts all powered",
+   "calc": "CALC-A4-PLAN-GRAPH",
+   "output": "powered_frac",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "how": "interface_plan.py; merge_check.py reports no 'unpowered'/'unconnected'; bench power-up per H1",
+   "value": 1.0
+  },
+  {
+   "id": "CL-A4-FIELD-DISCONNECTS",
+   "type": "claim",
+   "title": "One field disconnect (pack plug)",
+   "calc": "CALC-A4-PLAN-GRAPH",
+   "output": "field_disconnects",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.field_disconnects"
+   },
+   "verifies": [
+    "R-TRANSPORT"
+   ],
+   "parts": [
+    "PWR-001",
+    "PWR-002"
+   ],
+   "how": "count field-disconnect joints in the merged graph; field set-up timed by H2 (one plug, four prop nuts)",
+   "value": 1
+  },
+  {
+   "id": "CL-A4-PLAN-EDGES",
+   "type": "claim",
+   "title": "Planned interfaces",
+   "calc": "CALC-A4-PLAN-GRAPH",
+   "output": "edges",
+   "unit": "-",
+   "how": "interface_plan.py --compare: every planned edge declared and acknowledged",
+   "value": 125
+  }
+ ]
+}

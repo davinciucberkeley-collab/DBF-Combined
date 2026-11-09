@@ -9,7 +9,7 @@ import sys
 import traceback
 
 FUSION_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))     # redesign/fusion
-OURS = ('build_all', 'fusionkit', 'merge_check', 'backends')
+OURS = ('build_all', 'fusionkit', 'k09kit', 'merge_check', 'backends')
 
 
 def run(context):

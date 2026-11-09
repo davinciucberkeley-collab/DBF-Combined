@@ -25,6 +25,9 @@ UNVERIFIED-IN-FUSION (this file has not run in Fusion yet; first run by a teamma
     a component placed with ctx.part(rotate=...) the two frames differ and Fusion will turn part a to match part b.
     joint() reports such joints as WARN in the build summary; check the placement in Fusion. (Fix if it bites:
     set JointInput.angle for Z rotations, or build the joint-point sketch on a plane that is world-aligned.)
+  - datum(): planes are offset construction planes in a '00 Datums' component placed at the origin; points and
+    axes are sketch points / construction lines in one sketch per datum (sketch points off the sketch plane, as for
+    wires). Construction points/axes by Point3D/InfiniteLine3D are avoided (parametric designs reject them).
 """
 import math
 import re
@@ -52,6 +55,7 @@ MATERIALS = [
     (r'petg', ['PET Plastic', 'Polyethylene Terephthalate', 'ABS Plastic']),
     (r'pla', ['PLA', 'ABS Plastic']),
     (r'pa6|pa12|nylon', ['Nylon 6', 'Nylon']),
+    (r'tpu', ['Thermoplastic Polyurethane', 'Rubber, Silicone', 'Rubber']),
     (r'xps|eps|epp|foam', ['Polystyrene', 'Foam']),
     (r'ply\w*|birch|balsa', ['Plywood', 'Birch', 'Balsa', 'Wood']),
     (r'steel|stainless', ['Steel, Stainless 304', 'Steel']),
@@ -76,6 +80,7 @@ class FusionBackend(Backend):
         self._materials = {}
         self._sub_colour = {}
         self.wiring = None
+        self.datums_occ = None
 
     # ------------------------------------------------------------------ document
     def begin(self, title):
@@ -318,6 +323,33 @@ class FusionBackend(Backend):
             L.isRestValueEnabled = True
             L.restValue = 0.0
         j.native = jt
+
+    def datum(self, d):
+        if self.datums_occ is None:
+            self.datums_occ = self.root.occurrences.addNewComponent(adsk.core.Matrix3D.create())
+            self.datums_occ.component.name = '00 Datums (DATUMS.md)'
+        fc = self.datums_occ.component
+        if d.kind == 'plane':
+            pl = self._plane(fc, d.axis, d.offset)
+            if pl in (fc.xYConstructionPlane, fc.xZConstructionPlane, fc.yZConstructionPlane):
+                d.native = pl                       # base plane: keep its own name, Fusion does not allow renaming
+                return
+            pl.isLightBulbOn = True
+            pl.name = d.name
+            d.native = pl
+            return
+        sk = fc.sketches.add(fc.xYConstructionPlane)
+        sk.name = d.name
+        if d.kind == 'point':
+            d.native = sk.sketchPoints.add(sk.modelToSketchSpace(P3(d.p)))
+        else:
+            k = AX[d.axis]
+            a, b = list(d.p), list(d.p)
+            a[k] -= 0.30
+            b[k] += 0.30
+            ln = sk.sketchCurves.sketchLines.addByTwoPoints(sk.modelToSketchSpace(P3(a)), sk.modelToSketchSpace(P3(b)))
+            ln.isConstruction = True
+            d.native = ln
 
     def wire(self, w):
         if self.wiring is None:

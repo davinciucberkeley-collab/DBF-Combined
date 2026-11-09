@@ -1,0 +1,38 @@
+# UIUC Propeller Database Vol. 1 (Brandt, Deters, Ananda, Selig), wind-tunnel and static measurements,
+# https://m-selig.ae.illinois.edu/props/volume-1/propDB-volume-1.html, read 2026-11-09 by B4.
+# Files: data/apcsf_11x4.7_static_pg0526.txt, data/apcsf_11x4.7_pg0533_6004.txt, data/apce_11x5.5_static_kt0467.txt, data/apce_11x5.5_kt0472_6000.txt
+# kind=static: x = rpm, J = 0. kind=tunnel: x = nominal rpm; eta as printed. No UIUC data exist for APC MR props.
+prop,kind,x,J,Ct,Cp,eta
+11x4.7SF,static,4290,0,0.1151,0.0442,
+11x4.7SF,static,4853,0,0.1191,0.0460,
+11x4.7SF,static,5450,0,0.1230,0.0477,
+11x4.7SF,static,6021,0,0.1259,0.0493,
+11x4.7SF,tunnel,6004,0.368,0.0644,0.0379,0.625
+11x4.7SF,tunnel,6004,0.394,0.0587,0.0363,0.638
+11x4.7SF,tunnel,6004,0.413,0.0547,0.0351,0.644
+11x4.7SF,tunnel,6004,0.436,0.0494,0.0336,0.642
+11x4.7SF,tunnel,6004,0.457,0.0442,0.0322,0.628
+11x4.7SF,tunnel,6004,0.479,0.0386,0.0307,0.603
+11x4.7SF,tunnel,6004,0.500,0.0333,0.0293,0.568
+11x4.7SF,tunnel,6004,0.528,0.0254,0.0273,0.491
+11x4.7SF,tunnel,6004,0.546,0.0203,0.0260,0.426
+11x4.7SF,tunnel,6004,0.571,0.0131,0.0241,0.310
+11x4.7SF,tunnel,6004,0.590,0.0077,0.0227,0.200
+11x4.7SF,tunnel,6004,0.615,-0.0001,0.0205,-0.002
+11x5.5E,static,4350,0,0.0862,0.0312,
+11x5.5E,static,4968,0,0.0873,0.0313,
+11x5.5E,static,5577,0,0.0885,0.0317,
+11x5.5E,static,6213,0,0.0897,0.0322,
+11x5.5E,static,6473,0,0.0903,0.0323,
+11x5.5E,tunnel,6000,0.369,0.0434,0.0264,0.607
+11x5.5E,tunnel,6000,0.392,0.0395,0.0250,0.618
+11x5.5E,tunnel,6000,0.415,0.0355,0.0235,0.628
+11x5.5E,tunnel,6000,0.435,0.0323,0.0223,0.632
+11x5.5E,tunnel,6000,0.462,0.0279,0.0204,0.631
+11x5.5E,tunnel,6000,0.480,0.0250,0.0193,0.621
+11x5.5E,tunnel,6000,0.506,0.0209,0.0176,0.601
+11x5.5E,tunnel,6000,0.528,0.0172,0.0160,0.567
+11x5.5E,tunnel,6000,0.549,0.0136,0.0143,0.523
+11x5.5E,tunnel,6000,0.570,0.0100,0.0125,0.453
+11x5.5E,tunnel,6000,0.592,0.0060,0.0106,0.337
+11x5.5E,tunnel,6000,0.614,0.0021,0.0086,0.153

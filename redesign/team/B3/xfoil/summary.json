@@ -1,0 +1,19 @@
+{
+ "Re": 300000.0,
+ "hinge_xc": 0.78,
+ "cm_thin_c4": 0.006252924183929778,
+ "cm_visc_mean_cl_0.3_0.7": -0.0092,
+ "dcm_visc": -0.015452924183929777,
+ "dcl_ddelta_thin_per_deg": 0.0630030047316152,
+ "flap_eff_by_deflection": {
+  "5": 0.841970424944631,
+  "10": 0.800755459440555,
+  "-5": 0.686316473066593,
+  "-10": 0.6044949786480385,
+  "-15": 0.5884375434356032,
+  "-20": 0.6277875185237376
+ },
+ "flap_eff_up_mean": 0.626759128418493,
+ "clmax_2d_clean": 1.2126,
+ "note": "Laminar-bubble noise at Re 3e5 makes single points unreliable; B2 re-runs with finer alpha steps"
+}

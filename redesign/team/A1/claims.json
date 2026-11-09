@@ -1,0 +1,635 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/A1/frame_claims.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-A1-CLMAX",
+   "type": "assumption",
+   "title": "CLmax 0.9 of the reflexed wing (SUPERSEDED)",
+   "text": "The MH 45-type reflexed section with elevons neutral reaches CLmax = 0.9 at Re ~3e5",
+   "basis": "config-study card ESTIMATE. SUPERSEDED 2026-11-09 by B2's trimmed CLmax 0.80 (CL-B2-CLMAX-DESIGN, S5010, SM 5 %), which CALC-A1-STALL now reads; the node stays only until B1, B3 and C1 re-point their inputs (CHANGE-LOG D-02)",
+   "value": 0.9,
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-A1-WALL",
+   "type": "assumption",
+   "title": "Box wall and lining 25 mm per side",
+   "text": "The transport box loses 25 mm per side to plywood/corrugated wall plus foam lining",
+   "basis": "1/4 in ply + ~18 mm foam; D7 re-derives with the real box",
+   "value": 0.025,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-REVIEW"
+   ]
+  },
+  {
+   "id": "CALC-A1-WING",
+   "type": "calculation",
+   "title": "Wing area and aspect ratio",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "wing_geometry",
+   "equation": "S = b c ; AR = b^2 / S",
+   "inputs": {
+    "b": "P:wing.span_m",
+    "c": "P:wing.chord_m"
+   },
+   "units": {
+    "b": "m",
+    "c": "m"
+   },
+   "outputs": {
+    "S_m2": 0.368,
+    "AR": 3.5937499999999996
+   },
+   "input_values": {
+    "b": 1.15,
+    "c": 0.32
+   }
+  },
+  {
+   "id": "CALC-A1-ELEVON",
+   "type": "calculation",
+   "title": "Elevon area fraction",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "elevon_area",
+   "equation": "A = 2 (span_in + span_out) f c ; frac = A / S",
+   "inputs": {
+    "f": "P:wing.elevon.chord_frac",
+    "yin": "P:wing.elevon.inboard_y_m",
+    "yout": "P:wing.elevon.outboard_y_m",
+    "c": "P:wing.chord_m",
+    "S": "CL-A1-WING-AREA"
+   },
+   "units": {
+    "yin": "m",
+    "yout": "m",
+    "c": "m",
+    "S": "m2"
+   },
+   "outputs": {
+    "A_m2": 0.06336,
+    "frac": 0.17217391304347826
+   },
+   "input_values": {
+    "f": 0.22,
+    "yin": [
+     0.07,
+     0.3
+    ],
+    "yout": [
+     0.34,
+     0.56
+    ],
+    "c": 0.32,
+    "S": 0.368
+   }
+  },
+  {
+   "id": "CALC-A1-PROP-CLEAR",
+   "type": "calculation",
+   "title": "Prop clearances",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "prop_clearances",
+   "equation": "gap_vert = 2 z_m - D ; gap_lat = 2 y_m - D ; gap_tip = b/2 - y_m - D/2 ; gap_tube = (x_mount - r_tube) - x_prop ; gap_wing = z_m - D/2 - t_c c / 2 ; min of the five",
+   "inputs": {
+    "D": "P:propulsion.prop_diameter_m",
+    "y": "P:propulsion.stations.y_m",
+    "z": "P:propulsion.stations.z_m",
+    "b": "P:wing.span_m",
+    "x_mount": "P:propulsion.stations.x_mount_m",
+    "x_prop": "P:propulsion.stations.x_prop_plane_m",
+    "tube_od": "P:fins.tube.od_m",
+    "t_c": "P:wing.t_c",
+    "c": "P:wing.chord_m"
+   },
+   "units": {
+    "D": "m",
+    "y": "m",
+    "z": "m",
+    "b": "m",
+    "x_mount": "m",
+    "x_prop": "m",
+    "tube_od": "m",
+    "c": "m"
+   },
+   "outputs": {
+    "gap_vertical_pair_m": 0.10060000000000002,
+    "gap_lateral_pair_m": 0.36060000000000003,
+    "gap_to_wingtip_m": 0.11529999999999996,
+    "gap_to_tube_face_m": 0.039,
+    "gap_disc_to_wing_plane_m": 0.03458800000000001,
+    "gap_min_m": 0.03458800000000001
+   },
+   "input_values": {
+    "D": 0.2794,
+    "y": 0.32,
+    "z": 0.19,
+    "b": 1.15,
+    "x_mount": 0.045,
+    "x_prop": -0.005,
+    "tube_od": 0.022,
+    "t_c": 0.0982,
+    "c": 0.32
+   }
+  },
+  {
+   "id": "CALC-A1-TIPOVER",
+   "type": "calculation",
+   "title": "Stance tip-over angles",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "tipover",
+   "equation": "h = c - x_cg + foot ; narrow = atan(z_fin / h) ; wide = atan(y_fin / h)",
+   "inputs": {
+    "c": "P:wing.chord_m",
+    "x_cg": "P:cg.x_target_m",
+    "foot": "P:cg.foot_height_m",
+    "z_fin": "P:fins.half_height_m",
+    "y_fin": "P:fins.y_m"
+   },
+   "units": {
+    "c": "m",
+    "x_cg": "m",
+    "foot": "m",
+    "z_fin": "m",
+    "y_fin": "m"
+   },
+   "outputs": {
+    "cg_height_m": 0.321,
+    "narrow_deg": 30.62130307732461,
+    "wide_deg": 44.91061508107474,
+    "footprint_m": [
+     0.64,
+     0.38
+    ]
+   },
+   "input_values": {
+    "c": 0.32,
+    "x_cg": 0.044,
+    "foot": 0.045,
+    "z_fin": 0.19,
+    "y_fin": 0.32
+   }
+  },
+  {
+   "id": "CALC-A1-BOX",
+   "type": "calculation",
+   "title": "Box fit",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "box_fit",
+   "equation": "internal = external - 2 wall ; slack = internal - envelope (sorted largest first)",
+   "inputs": {
+    "ext": "P:requirements.box_external_m",
+    "wall": "ASM-A1-WALL",
+    "env": "P:transport.envelope_props_off_m"
+   },
+   "units": {
+    "ext": "m",
+    "wall": "m",
+    "env": "m"
+   },
+   "assumes": [
+    "ASM-A1-WALL"
+   ],
+   "outputs": {
+    "internal_m": [
+     1.2,
+     0.5,
+     0.4
+    ],
+    "slack_m": [
+     0.050000000000000044,
+     0.030000000000000027,
+     -0.024999999999999967
+    ],
+    "slack_min_m": -0.024999999999999967
+   },
+   "input_values": {
+    "ext": [
+     1.25,
+     0.55,
+     0.45
+    ],
+    "wall": 0.025,
+    "env": [
+     1.15,
+     0.47,
+     0.425
+    ]
+   }
+  },
+  {
+   "id": "CALC-A1-MASS-SIZED",
+   "type": "calculation",
+   "title": "Sized mass and A1 reserve from the allocations",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "sized_mass",
+   "equation": "alloc = sum(allocations) ; sized = alloc + growth_allowance + build_overrun ; reserve_cover = growth_reserve - (growth_allowance + build_overrun) ; gate_check = gate - alloc - growth_reserve",
+   "inputs": {
+    "wing": "P:mass.allocation_g.wing",
+    "fins": "P:mass.allocation_g.fins",
+    "pod": "P:mass.allocation_g.pod",
+    "landing": "P:mass.allocation_g.landing",
+    "propulsion": "P:mass.allocation_g.propulsion",
+    "power": "P:mass.allocation_g.power",
+    "avionics": "P:mass.allocation_g.avionics",
+    "harness": "P:mass.allocation_g.harness",
+    "mechanisms": "P:mass.allocation_g.mechanisms",
+    "reserve": "P:mass.growth_reserve_g",
+    "growth_kg": "P:requirements.growth_allowance_kg",
+    "overrun_kg": "P:requirements.build_overrun_kg",
+    "gate_kg": "P:requirements.mtow_gate_kg"
+   },
+   "units": {
+    "wing": "g",
+    "fins": "g",
+    "pod": "g",
+    "landing": "g",
+    "propulsion": "g",
+    "power": "g",
+    "avionics": "g",
+    "harness": "g",
+    "mechanisms": "g",
+    "reserve": "g",
+    "growth_kg": "kg",
+    "overrun_kg": "kg",
+    "gate_kg": "kg"
+   },
+   "outputs": {
+    "allocated_g": 2200,
+    "sized_kg": 2.55,
+    "reserve_cover_g": 50.0,
+    "gate_check_g": 0.0
+   },
+   "input_values": {
+    "wing": 405,
+    "fins": 370,
+    "pod": 105,
+    "landing": 40,
+    "propulsion": 440,
+    "power": 595,
+    "avionics": 75,
+    "harness": 105,
+    "mechanisms": 65,
+    "reserve": 400,
+    "growth_kg": 0.25,
+    "overrun_kg": 0.1,
+    "gate_kg": 2.6
+   }
+  },
+  {
+   "id": "CALC-A1-HOVER-TW",
+   "type": "calculation",
+   "title": "Hover T/W at the gate and sized mass",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "hover_tw",
+   "equation": "T/W = n T_max / m ; sag case x voltage_sag ; DL = m g / (n pi D^2/4)",
+   "inputs": {
+    "n": "P:propulsion.n_motors",
+    "t_max": "P:propulsion.thrust_max_per_motor_kg",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "m_sized": "CL-A1-MASS-SIZED",
+    "sag": "P:propulsion.voltage_sag",
+    "D": "P:propulsion.prop_diameter_m",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "t_max": "kg",
+    "m_gate": "kg",
+    "m_sized": "kg",
+    "D": "m",
+    "g": "m/s2"
+   },
+   "outputs": {
+    "tw_gate": 2.4923076923076923,
+    "tw_gate_sag": 1.7944615384615386,
+    "tw_sized": 2.5411764705882356,
+    "disk_loading_gate_Nm2": 103.9660028967778
+   },
+   "input_values": {
+    "n": 4,
+    "t_max": 1.62,
+    "m_gate": 2.6,
+    "m_sized": 2.55,
+    "sag": 0.72,
+    "D": 0.2794,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CALC-A1-STALL",
+   "type": "calculation",
+   "title": "Stall and transition speed at the gate",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "stall",
+   "equation": "Vs = sqrt(2 m g / (rho S CLmax_trimmed)) ; Vt = k Vs",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "S": "CL-A1-WING-AREA",
+    "clmax": "CL-B2-CLMAX-DESIGN",
+    "k": "P:requirements.transition_factor"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "S": "m2"
+   },
+   "outputs": {
+    "vs_ms": 11.864195023298253,
+    "vt_ms": 15.423453530287729,
+    "wing_loading_Nm2": 69.28611413043478
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "S": 0.368,
+    "clmax": 0.8036437246963563,
+    "k": 1.3
+   }
+  },
+  {
+   "id": "CALC-A1-RESERVE",
+   "type": "calculation",
+   "title": "Budget reserve, pessimistic",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "reserve",
+   "equation": "reserve = budget - spend_pess",
+   "inputs": {
+    "budget": "P:requirements.budget_usd",
+    "spend": "P:cost.spend_pessimistic_usd"
+   },
+   "units": {
+    "budget": "USD",
+    "spend": "USD"
+   },
+   "outputs": {
+    "reserve_usd": 321.4200000000001
+   },
+   "input_values": {
+    "budget": 2000.0,
+    "spend": 1678.58
+   }
+  },
+  {
+   "id": "CL-A1-WING-AREA",
+   "type": "claim",
+   "title": "Wing reference area",
+   "calc": "CALC-A1-WING",
+   "output": "S_m2",
+   "unit": "m2",
+   "verifies": [
+    "R-CONFIG"
+   ],
+   "how": "Measure the hot-wired core: span x chord.",
+   "value": 0.368
+  },
+  {
+   "id": "CL-A1-WING-AR",
+   "type": "claim",
+   "title": "Aspect ratio",
+   "calc": "CALC-A1-WING",
+   "output": "AR",
+   "unit": "-",
+   "how": "Follows from the measured span and chord.",
+   "value": 3.5937499999999996
+  },
+  {
+   "id": "CL-A1-ELEVON-FRAC",
+   "type": "claim",
+   "title": "Elevon area fraction",
+   "calc": "CALC-A1-ELEVON",
+   "output": "frac",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.15
+   },
+   "verifies": [
+    "R-ELEVON-AREA"
+   ],
+   "how": "Measure the cut elevon panels; B3 confirms authority with AVL and the foam-board twin (upper bound 0.25 is checked by B3).",
+   "value": 0.17217391304347826
+  },
+  {
+   "id": "CL-A1-PROP-CLEAR",
+   "type": "claim",
+   "title": "Minimum prop clearance",
+   "calc": "CALC-A1-PROP-CLEAR",
+   "output": "gap_min_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "verifies": [
+    "R-PROP-CLEAR"
+   ],
+   "how": "Fusion interference check (A5) then a ruler on the built aircraft: prop tip to tube face, to the other prop, to the wing tip.",
+   "value": 0.03458800000000001
+  },
+  {
+   "id": "CL-A1-TIPOVER",
+   "type": "claim",
+   "title": "Tip-over angle, narrow axis",
+   "calc": "CALC-A1-TIPOVER",
+   "output": "narrow_deg",
+   "unit": "deg",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.tipover_min_deg"
+   },
+   "verifies": [
+    "R-TIPOVER"
+   ],
+   "how": "Stand the aircraft on a tilting board (C5 test): record the angle at which it tips about the fin axis.",
+   "value": 30.62130307732461
+  },
+  {
+   "id": "CL-A1-BOX-FIT",
+   "type": "claim",
+   "title": "Aircraft fits the box",
+   "calc": "CALC-A1-BOX",
+   "output": "slack_min_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-TRANSPORT"
+   ],
+   "how": "Place the props-off aircraft in the built box on its cradles; lid closes without touching fins or tubes (D7).",
+   "value": -0.024999999999999967
+  },
+  {
+   "id": "CL-A1-MASS-SIZED",
+   "type": "claim",
+   "title": "Sized take-off mass (allocations + planned growth + overrun)",
+   "calc": "CALC-A1-MASS-SIZED",
+   "output": "sized_kg",
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.mtow_gate_kg"
+   },
+   "verifies": [
+    "R-MASS-GATE"
+   ],
+   "how": "A3 roll-up of every parts.csv against MASS-CG.md (CL-A3-MASS-PREDICTED is the maturity-based prediction); weigh the built aircraft with pack (H1).",
+   "value": 2.55
+  },
+  {
+   "id": "CL-A1-RESERVE-COVERS",
+   "type": "claim",
+   "title": "A1 mass reserve covers the planned growth and overrun",
+   "calc": "CALC-A1-MASS-SIZED",
+   "output": "reserve_cover_g",
+   "unit": "g",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-MASS-GATE"
+   ],
+   "how": "growth_reserve_g in params.json minus (250 g growth allowance + 100 g build overrun); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.",
+   "value": 50.0
+  },
+  {
+   "id": "CL-A1-ALLOC-GATE",
+   "type": "claim",
+   "title": "Allocations plus reserve equal the gate",
+   "calc": "CALC-A1-MASS-SIZED",
+   "output": "gate_check_g",
+   "unit": "g",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-MASS-GATE"
+   ],
+   "how": "2 600 - sum(allocation_g) - growth_reserve_g must be >= 0; A1 re-runs this script after any allocation change.",
+   "value": 0.0
+  },
+  {
+   "id": "CL-A1-HOVER-TW-GATE",
+   "type": "claim",
+   "title": "Hover T/W at the 2.6 kg gate",
+   "calc": "CALC-A1-HOVER-TW",
+   "output": "tw_gate",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "how": "Thrust stand, one station, 11x5.5MR on a fresh pack with the 100 A limiter (24.8 A per motor): thrust >= 1.3 kgf gives T/W 2.0 at 2.6 kg (H1, T-E1-STAND).",
+   "value": 2.4923076923076923
+  },
+  {
+   "id": "CL-A1-HOVER-TW-SAG",
+   "type": "claim",
+   "title": "Hover T/W at the gate, worst pack state",
+   "calc": "CALC-A1-HOVER-TW",
+   "output": "tw_gate_sag",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min_sag"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "how": "Thrust-stand run on a pack at 20 % charge after a cold soak at 10 degC (E2 T-E2-IR), or the fresh value x CL-E2-SAG-F-WORST.",
+   "value": 1.7944615384615386
+  },
+  {
+   "id": "CL-A1-STALL-GATE",
+   "type": "claim",
+   "title": "Stall speed at the gate",
+   "calc": "CALC-A1-STALL",
+   "output": "vs_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.stall_max_ms"
+   },
+   "verifies": [
+    "R-STALL"
+   ],
+   "how": "Trimmed CLmax from B2 (CL-B2-CLMAX-DESIGN); flight test: slow-flight stall in FBWA at altitude with airspeed logged (H2, T-B2-STALL).",
+   "value": 11.864195023298253
+  },
+  {
+   "id": "CL-A1-TRANSITION-GATE",
+   "type": "claim",
+   "title": "Transition speed at the gate",
+   "calc": "CALC-A1-STALL",
+   "output": "vt_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:performance.cruise_ms"
+   },
+   "verifies": [
+    "R-TRANSITION"
+   ],
+   "how": "Cruise 16 m/s (B1) against 1.3 x the trimmed stall; log airspeed at 'Transition FW done' (F4/H2). Closed by D-01: chord 0.32 and cruise 16 m/s.",
+   "value": 15.423453530287729
+  },
+  {
+   "id": "CL-A1-RESERVE",
+   "type": "claim",
+   "title": "Pessimistic reserve at order",
+   "calc": "CALC-A1-RESERVE",
+   "output": "reserve_usd",
+   "unit": "USD",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.crash_cost_usd"
+   },
+   "verifies": [
+    "R-RESERVE",
+    "R-BUDGET"
+   ],
+   "how": "I1 re-prices the BOM at order time; reserve = 2 000 - spend, pessimistic column.",
+   "value": 321.4200000000001
+  },
+  {
+   "id": "T-A1-WEIGH",
+   "type": "test",
+   "title": "Weigh the assembled aircraft",
+   "verifies": [
+    "CL-A1-MASS-SIZED"
+   ],
+   "state": "planned",
+   "procedure": "Pack in, props on, 5 kg scale with 1 g resolution; record with the pack's own mass (H1)."
+  },
+  {
+   "id": "T-A1-THRUST-STATION",
+   "type": "test",
+   "title": "Thrust stand, one station",
+   "verifies": [
+    "CL-A1-HOVER-TW-GATE",
+    "CL-A1-HOVER-TW-SAG"
+   ],
+   "state": "planned",
+   "procedure": "X3108S + 11x5.5MR on the 20 kg load cell (A/B with the 11x4.5MR), fresh pack then a 20 % pack at 10 degC, 0-100 % in 10 % steps, log gf, A, V and rpm (T-E1-STAND, T-B4-STAND)."
+  }
+ ]
+}

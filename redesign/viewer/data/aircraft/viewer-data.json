@@ -1,7 +1,7 @@
 {
  "schema": "dbf-viewer/1",
  "dataset": "aircraft",
- "generated": "2026-11-09 09:45 UTC",
+ "generated": "2026-11-09 12:38 UTC",
  "sources": {
   "glb": "redesign/blender/out/aircraft/glb",
   "interfaces": "redesign/interfaces/interfaces.json",
@@ -125,9 +125,32 @@
  },
  "claims": [],
  "proofs_viewer": "../proofs/viewer/index.html?data=redesign#node={id}",
- "budget": null,
+ "budget": {
+  "_note": "Written by redesign/team/A1/frame_claims.py from params/params.json#mass.allocation_g; do not edit by hand. limit_g is the hard as-built gate (P4). Allocations are flying mass per subsystem folder; the growth reserve is held by A1. A3 refines allocations in MASS-CG.md through a change request to A1.",
+  "limit_g": 2600,
+  "sized_g": 2482,
+  "growth_reserve_g": 350,
+  "allocations_g": {
+   "wing": 378,
+   "fins": 410,
+   "pod": 90,
+   "landing": 24,
+   "propulsion": 430,
+   "power": 600,
+   "avionics": 90,
+   "harness": 60,
+   "mechanisms": 50
+  },
+  "cg_x_m": [
+   0.045,
+   0.075
+  ],
+  "cg_z_m": [
+   -0.02,
+   0.03
+  ]
+ },
  "warnings": [
-  "no 3-D model: redesign/blender/out/aircraft/glb/assembly.glb (run blender/export_glb.py)",
-  "no mass budget at redesign/params/mass_budget.json"
+  "no 3-D model: redesign/blender/out/aircraft/glb/assembly.glb (run blender/export_glb.py)"
  ]
 }

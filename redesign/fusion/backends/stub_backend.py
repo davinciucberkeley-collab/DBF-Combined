@@ -12,7 +12,7 @@ class StubBackend(Backend):
     name = 'stub'
 
     def __init__(self):
-        self.counts = {'components': 0, 'bodies': 0, 'joints': 0, 'wires': 0}
+        self.counts = {'components': 0, 'bodies': 0, 'joints': 0, 'wires': 0, 'datums': 0}
 
     def component(self, comp):
         self.counts['components'] += 1
@@ -44,5 +44,12 @@ class StubBackend(Backend):
             raise ValueError('wire needs >= 2 points')
         self.counts['wires'] += 1
 
+    def datum(self, d):
+        if d.kind == 'plane' and (d.axis not in ('X', 'Y', 'Z') or d.offset is None):
+            raise ValueError('datum %s: plane needs axis X|Y|Z and offset' % d.name)
+        if d.kind in ('point', 'axis') and (d.p is None or len(d.p) != 3):
+            raise ValueError('datum %s: %s needs p = (x, y, z)' % (d.name, d.kind))
+        self.counts['datums'] += 1
+
     def end(self, ctx):
-        return 'stub: %(components)d components, %(bodies)d bodies, %(joints)d joints, %(wires)d wires' % self.counts
+        return 'stub: %(components)d components, %(bodies)d bodies, %(joints)d joints, %(wires)d wires, '                '%(datums)d datums' % self.counts

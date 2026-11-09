@@ -1,0 +1,1411 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/E1/propulsion.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-E1-X3108S-DATA",
+   "type": "source",
+   "title": "SunnySky X3108S KV900 data image (11x4.7 and 10x3.8 at 14.8 V)",
+   "kind": "datasheet",
+   "url": "https://cdn.shopify.com/s/files/1/2024/0305/files/SunnySky_X3108S_KV900_Data_3.jpg",
+   "checked": "2026-11-09",
+   "where": "table APC1147 14.8 V, 18 rows, temperature 94 degC at 30 A",
+   "note": "full table transcribed into MAKER_1147 in propulsion.py; product page https://sunnyskyusa.com/products/sunnysky-x3108s-motors returned HTTP 429 on 2026-11-09, price $24.99 from docs/research/budget-lift.md (seen 2026-11-01)"
+  },
+  {
+   "id": "SRC-E1-X3108S-SPEC",
+   "type": "source",
+   "title": "SunnySky X3108S KV900 retailer spec (Robu)",
+   "kind": "listing",
+   "url": "https://robu.in/?p=1569817",
+   "where": "Kv 900, R 86 mOhm, I0 0.9 A at 10 V, 25 A / 30 s, 370 W, 81 g, 3-4S",
+   "note": "single retailer source (search snippet 2026-11-09; page 403 to direct fetch): Rm and I0 are UNVERIFIED until measured on arrival (T-E1-MOTOR-RM)",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-E1-APC-PER3",
+   "type": "source",
+   "title": "APC PER3 performance files 11x4.5MR, 11x5.5MR, 12x4.5MR, 11x4.7SF",
+   "kind": "datasheet",
+   "url": "https://www.apcprop.com/files/PER3_11x45MR.dat",
+   "checked": "2026-11-09",
+   "where": "static rows per rpm and the 6000 rpm J-sweep; also PER3_11x55MR.dat, PER3_12x45MR.dat, PER3_11x47SF.dat",
+   "note": "blade-element prediction by the maker, not a measurement: calibrated against SRC-E1-X3108S-DATA"
+  },
+  {
+   "id": "SRC-E1-APC-PAGES",
+   "type": "source",
+   "title": "APC 11x4.5MR/MRP and 11x5.5MR/MRP product pages",
+   "kind": "listing",
+   "url": "https://www.apcprop.com/product/11x5-5mr/",
+   "checked": "2026-11-09",
+   "where": "LP11045MR / LP11045MRP / LP11055MR / LP11055MRP: $3.83 each, 0.60 oz (17 g), 1/4 in bore, LPAR06E rings not included"
+  },
+  {
+   "id": "SRC-E1-TEKKO32",
+   "type": "source",
+   "title": "Holybro Tekko32 F4 45A single ESC (AM32), ReadyMadeRC",
+   "kind": "listing",
+   "url": "https://www.readymaderc.com/products/details/87186-holybro-tekko32-f4-45a-esc-am32",
+   "checked": "2026-11-09",
+   "where": "$22.50, 45 A cont, 2-6S, AM32, current sensor, 5.8 g, 16 AWG; backorder to Dec 2026"
+  },
+  {
+   "id": "ASM-E1-KV",
+   "type": "assumption",
+   "title": "Motor Kv 900 rpm/V",
+   "text": "X3108S KV900 speed constant",
+   "basis": "maker name and listing; the maker table's rpm at low throttle is consistent with it (CALC-E1-CAL residuals)",
+   "value": 900.0,
+   "unit": "rpm/V",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-E1-X3108S-SPEC",
+    "SRC-E1-X3108S-DATA"
+   ]
+  },
+  {
+   "id": "ASM-E1-RM",
+   "type": "assumption",
+   "title": "Winding resistance 86 mOhm at 25 degC",
+   "text": "phase-to-phase resistance of the X3108S KV900",
+   "basis": "one retailer listing; measure with a 4-wire milliohm method on arrival",
+   "value": 0.086,
+   "unit": "ohm",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-E1-X3108S-SPEC"
+   ]
+  },
+  {
+   "id": "ASM-E1-I0",
+   "type": "assumption",
+   "title": "No-load current 0.9 A",
+   "text": "no-load current, used as speed-independent iron + friction loss",
+   "basis": "listing value at 10 V (~9 000 rpm): conservative below that speed",
+   "value": 0.9,
+   "unit": "A",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-E1-X3108S-SPEC"
+   ]
+  },
+  {
+   "id": "ASM-E1-ESC",
+   "type": "assumption",
+   "title": "ESC loss 10 mOhm + 0.5 W",
+   "text": "ESC conduction path 10 mOhm (two FETs + leads) and 0.5 W fixed",
+   "basis": "typical BLHeli_S 45 A FETs 3-4 mOhm each; the fit factor kP absorbs any error at the calibration points",
+   "value": [
+    0.01,
+    0.5
+   ],
+   "unit": "ohm,W",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E1-PACK",
+   "type": "assumption",
+   "title": "Pack + harness 24 mOhm, avionics 1 A",
+   "text": "4S 6500 130C pack 20 mOhm (5 mOhm/cell, part-aged) plus 4 mOhm main lead and connector; avionics + servos 1 A from the bus",
+   "basis": "E2 measures pack IR with the charger; F1 owns the harness resistance",
+   "value": [
+    0.024,
+    1.0
+   ],
+   "unit": "ohm,A",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-E1-OCV",
+   "type": "assumption",
+   "title": "Pack OCV states",
+   "text": "open-circuit pack voltage: full 4.20, mid 3.80, low 3.60 V/cell (4S)",
+   "basis": "3.60 V/cell OCV is the 20 % reserve point of a LiPo; the sag case uses it",
+   "value": [
+    16.8,
+    15.2,
+    14.4
+   ],
+   "unit": "V",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E1-TCOPPER",
+   "type": "assumption",
+   "title": "Copper 0.393 %/K, hot winding 80 degC",
+   "text": "R_m(T) = R_25 (1 + 0.00393 (T - 25)); thrust-limit cases use an 80 degC winding, current-limit cases 25 degC",
+   "basis": "annealed copper coefficient; 80 degC = hot after a hover",
+   "value": [
+    0.00393,
+    80.0
+   ],
+   "unit": "1/K,degC",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E1-CAL-TRANSFER",
+   "type": "assumption",
+   "title": "PER3-to-measured factors transfer between APC 11 in props",
+   "text": "kT, kP fitted on the 11x4.7SF apply to the 11x4.5MR / 11x5.5MR PER3 data",
+   "basis": "same maker, same code, same diameter; H1's thrust stand (T-E1-STAND) measures the fitted prop directly and supersedes this",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-E1-RTH",
+   "type": "assumption",
+   "title": "Motor thermal resistance 1.0 K/W in own wash",
+   "text": "steady winding-to-ambient resistance of the X3108S in its own static prop wash",
+   "basis": "maker's 94 degC at the 30 A row, 25 degC room, losses from this model (CALC-E1-CAL); the test was not steady, so the true value may be higher: E3 owns the thermal model",
+   "value": 1.0,
+   "unit": "K/W",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-E1-X3108S-DATA"
+   ]
+  },
+  {
+   "id": "ASM-E1-ILIM",
+   "type": "assumption",
+   "title": "Pack-current limit 100 A",
+   "text": "ArduPilot Q_M_BAT_CURR_MAX = 100 A (with the power module's current sensor calibrated) caps the summed motor current",
+   "basis": "4 x 25 A = the X3108S's 25 A / 30 s rating; F4 sets it, F1 sizes wiring to it",
+   "value": 100.0,
+   "unit": "A",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E1-TRANS-MARGIN",
+   "type": "assumption",
+   "title": "Transition thrust margin 1.3",
+   "text": "full thrust at every point of the level pitch-over corridor >= 1.3 x the thrust that holds level unaccelerated flight there",
+   "basis": "0.3 g of surplus for acceleration and gusts; same headroom as ASM-A2-GUST-THRUST-HEADROOM",
+   "value": 1.3,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E1-POSTSTALL",
+   "type": "assumption",
+   "title": "Wing CL: linear to CLmax, flat plate after stall",
+   "text": "CL = a alpha up to CLmax (a = 2 pi AR/(AR+2)); above stall CN = 1.98 sin(alpha) (flat plate); prop wash on the wing ignored",
+   "basis": "Hoerner flat-plate normal force; ignoring wash lift is conservative for thrust required; B1/B2 refine",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-E1-CAL",
+   "type": "calculation",
+   "title": "Fit PER3 to the maker's X3108S + 11x4.7 table",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "cal",
+   "equation": "kT = mean(T_meas / T_PER3(rpm)) ; kP: sum(P_bat,model(rpm) - P_meas) = 0 over rows 5-12 A ; R_th = (94 - 25) / P_loss(30 A row)",
+   "inputs": {
+    "rho": "P:env.rho_kgm3",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC"
+   },
+   "units": {
+    "rho": "kg/m3",
+    "kv": "rpm/V",
+    "rm": "ohm",
+    "i0": "A"
+   },
+   "assumes": [
+    "ASM-E1-KV",
+    "ASM-E1-RM",
+    "ASM-E1-I0",
+    "ASM-E1-ESC"
+   ],
+   "cites": [
+    "SRC-E1-X3108S-DATA",
+    "SRC-E1-APC-PER3"
+   ],
+   "outputs": {
+    "kT": 1.0390466549306472,
+    "kP": 1.2395830229048008,
+    "T_err_rms": 0.006046535791996946,
+    "P_err_rms": 0.03958004154958643,
+    "P_err_max": 0.0628468847702861,
+    "v_supply_30A": 11.180072527680627,
+    "loss_30A_W": 83.12255506667148,
+    "rth_KW": 0.8300996034669054
+   },
+   "input_values": {
+    "rho": 1.225,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ]
+   }
+  },
+  {
+   "id": "CALC-E1-HOVER",
+   "type": "calculation",
+   "title": "Hover operating point per motor, 11x4.5MR and 11x5.5MR",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "hover",
+   "equation": "T_m = m_gate g k_dl / 4 ; solve rpm: T(rpm) = T_m ; I_bat, P_bat at V_bus = 14.8 V ; g/W = T_m / g / P_bat ; dT_wind = R_th P_loss",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "kdl": "P:propulsion.download_factor",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "tc": "ASM-E1-TCOPPER",
+    "rth": "ASM-E1-RTH"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3"
+   },
+   "assumes": [
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E1-RTH"
+   ],
+   "cites": [
+    "SRC-E1-APC-PER3"
+   ],
+   "outputs": {
+    "T_per_motor_N": 6.75678185,
+    "rpm_45": 5685.703072347853,
+    "I_bat_45_A": 6.5388847973938615,
+    "I_m_45_A": 12.610418151604073,
+    "P_total_45_W": 387.1019800057166,
+    "I_pack_45_A": 26.155539189575446,
+    "gW_45": 7.1195709201986,
+    "loss_motor_45_W": 20.705312471786826,
+    "loss_esc_45_W": 2.0902264595830546,
+    "dT_wind_45_K": 20.705312471786826,
+    "duty_45": 0.515851333033125,
+    "rpm_55": 5293.25173507878,
+    "I_bat_55_A": 6.757552593143062,
+    "I_m_55_A": 13.623597310769371,
+    "P_total_55_W": 400.0471135140693,
+    "I_pack_55_A": 27.03021037257225,
+    "gW_55": 6.889188565294008,
+    "loss_motor_55_W": 22.823305962019873,
+    "loss_esc_55_W": 2.3560240368600245,
+    "dT_wind_55_K": 22.823305962019873,
+    "duty_55": 0.493538428653068
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "kdl": 1.06,
+    "n": 4,
+    "rho": 1.225,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "tc": [
+     0.00393,
+     80.0
+    ],
+    "rth": 1.0
+   }
+  },
+  {
+   "id": "CALC-E1-FULL",
+   "type": "calculation",
+   "title": "Full-throttle static thrust and current, all four motors",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "full",
+   "equation": "duty = 1 ; V_bus = V_ocv - R_pack (4 I_bat + I_avn) ; T/W = 4 T_max / (m_gate g) ; cases: table basis (bus held 14.8 V, 25 degC), sag (OCV 14.4 V, R_pack, 80 degC), current limits (bus held 14.8 / 16.8 V, 25 degC)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK",
+    "ocv": "ASM-E1-OCV",
+    "tc": "ASM-E1-TCOPPER"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3"
+   },
+   "assumes": [
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E1-PACK"
+   ],
+   "cites": [
+    "SRC-E1-APC-PER3"
+   ],
+   "outputs": {
+    "tw_table_45": 3.4084103827459513,
+    "tw_sag_45": 2.2298665168729963,
+    "Tmax_table_45_gf": 2215.4667487848683,
+    "Tmax_sag_45_gf": 1449.4132359674477,
+    "I_148_45_A": 37.24562227610827,
+    "I_168_45_A": 45.56843813136883,
+    "P_148_45_W": 551.2352096864024,
+    "Ipack_sag_45_A": 100.89462894414373,
+    "Vbus_sag_45_V": 11.978529845838839,
+    "rpm_148_45": 10104.897154263163,
+    "loss_148_45_W": 129.19089661644358,
+    "tw_table_55": 3.5825625030154566,
+    "tw_sag_55": 2.2747626575232154,
+    "Tmax_table_55_gf": 2328.665626960047,
+    "Tmax_sag_55_gf": 1478.5957273900901,
+    "I_148_55_A": 42.42756085506846,
+    "I_168_55_A": 51.56136196434739,
+    "P_148_55_W": 627.9279006550132,
+    "Ipack_sag_55_A": 111.13399857298252,
+    "Vbus_sag_55_V": 11.73278461969502,
+    "rpm_148_55": 9657.177661041005,
+    "loss_148_55_W": 164.21915841684222,
+    "tw_table_12": 3.9281353574741082,
+    "tw_sag_12": 2.4504683692896316,
+    "Tmax_table_12_gf": 2553.2879823581707,
+    "Tmax_sag_12_gf": 1592.8044400382605,
+    "I_148_12_A": 44.96644489432176,
+    "I_168_12_A": 54.52117456590724,
+    "P_148_12_W": 665.5033844359621,
+    "Ipack_sag_12_A": 116.04275879349409,
+    "Vbus_sag_12_V": 11.614974224863499,
+    "rpm_148_12": 9437.818080049521,
+    "loss_148_12_W": 183.0670050448523
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "n": 4,
+    "rho": 1.225,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.024,
+     1.0
+    ],
+    "ocv": [
+     16.8,
+     15.2,
+     14.4
+    ],
+    "tc": [
+     0.00393,
+     80.0
+    ]
+   }
+  },
+  {
+   "id": "CALC-E1-LIMIT",
+   "type": "calculation",
+   "title": "Full throttle with the pack-current limiter Q_M_BAT_CURR_MAX",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "limit_calc",
+   "equation": "largest duty with 4 I_bat + I_avn <= I_lim ; T/W = 4 T / (m_gate g) ; cases fresh (OCV 16.8 V, 25 degC) and low (OCV 14.4 V, 80 degC), with R_pack",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK",
+    "ocv": "ASM-E1-OCV",
+    "tc": "ASM-E1-TCOPPER",
+    "ilim": "ASM-E1-ILIM"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "ilim": "A"
+   },
+   "assumes": [
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E1-PACK",
+    "ASM-E1-ILIM"
+   ],
+   "outputs": {
+    "I_motor_fresh_45_A": 24.750000000012722,
+    "tw_fresh_45": 2.5639567652582445,
+    "tw_low_45": 2.219497054828108,
+    "I_motor_low_45_A": 24.7500000000049,
+    "I_motor_fresh_55_A": 24.750000000000682,
+    "tw_fresh_55": 2.496519491456836,
+    "tw_low_55": 2.153854659908112,
+    "I_motor_low_55_A": 24.74999999999492
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "n": 4,
+    "rho": 1.225,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.024,
+     1.0
+    ],
+    "ocv": [
+     16.8,
+     15.2,
+     14.4
+    ],
+    "tc": [
+     0.00393,
+     80.0
+    ],
+    "ilim": 100.0
+   }
+  },
+  {
+   "id": "CALC-E1-CRUISE",
+   "type": "calculation",
+   "title": "Cruise point: four props share the drag at 15 m/s",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "cruise",
+   "equation": "D = q S (CD0 + K CL^2), CD0 from L/D 5.9 at 15 m/s ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "b": "P:wing.span_m",
+    "c": "P:wing.chord_m",
+    "e": "P:wing.oswald_e",
+    "ld": "P:performance.ld_cruise",
+    "V": "P:performance.cruise_ms",
+    "n": "P:propulsion.n_motors",
+    "kP": "CL-E1-KP",
+    "kT": "CL-E1-KT",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "V": "m/s",
+    "b": "m",
+    "c": "m"
+   },
+   "assumes": [
+    "ASM-E1-CAL-TRANSFER"
+   ],
+   "cites": [
+    "SRC-E1-APC-PER3"
+   ],
+   "outputs": {
+    "drag_N": 4.321574576271186,
+    "T_per_motor_N": 1.0803936440677966,
+    "cd0": 0.061042994731664635,
+    "J_45": 0.4914860886459439,
+    "rpm_45": 6553.97647048931,
+    "eta_prop_45": 0.3038501450490942,
+    "eta_motor_45": 0.8075134590121654,
+    "eta_tot_45": 0.24106954665882602,
+    "P_total_45_W": 268.9000727902372,
+    "I_pack_45_A": 18.168923837178188,
+    "I_m_45_A": 8.224052743733216,
+    "loss_motor_45_W": 12.71347959440871,
+    "Q_45_Nm": 0.07771061317539334,
+    "J_55": 0.568424480197681,
+    "rpm_55": 5666.871102099802,
+    "eta_prop_55": 0.38550906729629736,
+    "eta_motor_55": 0.7941823447288746,
+    "eta_tot_55": 0.3000758579938703,
+    "P_total_55_W": 216.02410496279228,
+    "I_pack_55_A": 14.596223308296775,
+    "I_m_55_A": 7.576330960387147,
+    "loss_motor_55_W": 10.894343901960255,
+    "Q_55_Nm": 0.07083807160420502,
+    "J_12": 0.4689334113590762,
+    "rpm_12": 6296.748821872277,
+    "eta_prop_12": 0.25728728489681213,
+    "eta_motor_12": 0.8053107372418727,
+    "eta_tot_12": 0.20334671918963743,
+    "P_total_12_W": 318.7836956622569,
+    "I_pack_12_A": 21.53943889609844,
+    "I_m_12_A": 9.902872414534825,
+    "loss_motor_12_W": 15.227670350880253,
+    "Q_12_Nm": 0.09552344311992562
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "b": 1.15,
+    "c": 0.3,
+    "e": 0.8,
+    "ld": 5.9,
+    "V": 15.0,
+    "n": 4,
+    "kP": 1.2395830229048008,
+    "kT": 1.0390466549306472,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ]
+   }
+  },
+  {
+   "id": "CALC-E1-CORRIDOR",
+   "type": "calculation",
+   "title": "Thrust margin along the level pitch-over corridor (sag case, 11x4.5MR and 11x5.5MR)",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "corridor_calc",
+   "equation": "min over V in [0, 1.3 Vs] of 4 T_full(V cos a, OCV 14.4 V, 80 degC) / T_req,min(V) ; T_req from T sin a + L = W, T cos a >= D",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "b": "P:wing.span_m",
+    "c": "P:wing.chord_m",
+    "e": "P:wing.oswald_e",
+    "ld": "P:performance.ld_cruise",
+    "vref": "P:performance.cruise_ms",
+    "clmax": "P:performance.clmax",
+    "vtr": "P:performance.transition_min_ms",
+    "n": "P:propulsion.n_motors",
+    "kP": "CL-E1-KP",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK",
+    "ocv": "ASM-E1-OCV"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "vref": "m/s",
+    "vtr": "m/s",
+    "b": "m",
+    "c": "m"
+   },
+   "assumes": [
+    "ASM-E1-POSTSTALL",
+    "ASM-E1-CAL-TRANSFER",
+    "ASM-E1-PACK"
+   ],
+   "outputs": {
+    "margin_45": 2.139289909405953,
+    "V_worst_45_ms": 2.92,
+    "Treq_over_W_45": 0.9904254797767665,
+    "margin_55": 2.1863678710381196,
+    "V_worst_55_ms": 2.433333333333333,
+    "Treq_over_W_55": 0.9953520120570497
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "b": 1.15,
+    "c": 0.3,
+    "e": 0.8,
+    "ld": 5.9,
+    "vref": 15.0,
+    "clmax": 0.9,
+    "vtr": 14.6,
+    "n": 4,
+    "kP": 1.2395830229048008,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.024,
+     1.0
+    ],
+    "ocv": [
+     16.8,
+     15.2,
+     14.4
+    ]
+   }
+  },
+  {
+   "id": "CALC-E1-MOTOR-OUT",
+   "type": "calculation",
+   "title": "One motor out: what is left",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "motor_out",
+   "equation": "hover: thrust/moment balance forces the diagonal partner to 0 -> 2 same-direction motors, T/W_2 = 2 T_max / W, unbalanced yaw torque = 2 Q_hover ; cruise: 2 motors carry D, roll torque = 2 Q(T = D/2) for elevons to hold",
+   "inputs": {
+    "full": "CL-E1-TMAX-SAG",
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "drag": "CL-E1-CRUISE-DRAG",
+    "V": "P:performance.cruise_ms",
+    "T_h": "CL-E1-HOVER-T",
+    "kP": "CL-E1-KP",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC"
+   },
+   "units": {
+    "full": "gf",
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "drag": "N",
+    "V": "m/s",
+    "T_h": "N"
+   },
+   "assumes": [
+    "ASM-E1-CAL-TRANSFER"
+   ],
+   "outputs": {
+    "tw_two_motors": 1.1149332584364982,
+    "yaw_torque_hover_Nm": 0.25778443658483335,
+    "q_hover_per_motor_Nm": 0.12889221829241668,
+    "yaw_diff30_Nm": 0.14914944112340467,
+    "roll_torque_cruise_Nm": 0.21667228469874963,
+    "I_bat_cruise_2mot_A": 6.758053083339462,
+    "P_cruise_2mot_W": 200.0383712668481
+   },
+   "input_values": {
+    "full": 1449.4132359674477,
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "drag": 4.321574576271186,
+    "V": 15.0,
+    "T_h": 6.75678185,
+    "kP": 1.2395830229048008,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ]
+   }
+  },
+  {
+   "id": "CALC-E1-SENS",
+   "type": "calculation",
+   "title": "Lower bound: pure PER3 power (kP = 1)",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "sens",
+   "equation": "as CALC-E1-HOVER and CALC-E1-CRUISE with kP = 1, kT = 1",
+   "inputs": {
+    "Th": "CL-E1-HOVER-T",
+    "Tc": "CL-E1-CRUISE-DRAG",
+    "V": "P:performance.cruise_ms",
+    "n": "P:propulsion.n_motors",
+    "rho": "P:env.rho_kgm3",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC"
+   },
+   "units": {
+    "Th": "N",
+    "Tc": "N",
+    "V": "m/s",
+    "rho": "kg/m3"
+   },
+   "outputs": {
+    "P_hover_45_W": 325.39930573588117,
+    "P_cruise_45_W": 219.06328564352452,
+    "P_hover_55_W": 334.67540327008265,
+    "P_cruise_55_W": 176.29283230769607
+   },
+   "input_values": {
+    "Th": 6.75678185,
+    "Tc": 4.321574576271186,
+    "V": 15.0,
+    "n": 4,
+    "rho": 1.225,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ]
+   }
+  },
+  {
+   "id": "CL-E1-KT",
+   "type": "claim",
+   "title": "PER3 thrust factor kT (fit)",
+   "calc": "CALC-E1-CAL",
+   "output": "kT",
+   "unit": "-",
+   "how": "Re-run; compare with T-E1-STAND rows (thrust vs rpm) for the fitted prop.",
+   "value": 1.0390466549306472
+  },
+  {
+   "id": "CL-E1-KP",
+   "type": "claim",
+   "title": "PER3 power factor kP (fit)",
+   "calc": "CALC-E1-CAL",
+   "output": "kP",
+   "unit": "-",
+   "how": "Re-run; the rms power error on the fitted rows is printed (CALC-E1-CAL P_err_rms).",
+   "value": 1.2395830229048008
+  },
+  {
+   "id": "CL-E1-CAL-PERR",
+   "type": "claim",
+   "title": "Model power error on the maker rows",
+   "calc": "CALC-E1-CAL",
+   "output": "P_err_max",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.1
+   },
+   "how": "Max |P_model / P_maker - 1| over the 7 rows 5-12 A; re-run the script.",
+   "value": 0.0628468847702861
+  },
+  {
+   "id": "CL-E1-MAKER-SUPPLY",
+   "type": "claim",
+   "title": "Maker's supply at the 30 A row (inferred)",
+   "calc": "CALC-E1-CAL",
+   "output": "v_supply_30A",
+   "unit": "V",
+   "how": "Thrust stand at a held 14.8 V bench supply: full-throttle rpm should exceed 7 500 (T-E1-STAND).",
+   "note": "the maker's 1 580 gf top row is reachable only with ~11 V at the motor: the table's 447 W is 14.8 V x 30 A bookkeeping, not a measurement at 14.8 V",
+   "value": 11.180072527680627
+  },
+  {
+   "id": "CL-E1-HOVER-T",
+   "type": "claim",
+   "title": "Hover thrust per motor at the gate",
+   "calc": "CALC-E1-HOVER",
+   "output": "T_per_motor_N",
+   "unit": "N",
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "m_gate g k_download / 4; compare with the tethered-hover throttle and log.",
+   "value": 6.75678185
+  },
+  {
+   "id": "CL-E1-HOVER-I",
+   "type": "claim",
+   "title": "Hover pack current, 11x4.5MR, 14.8 V",
+   "calc": "CALC-E1-HOVER",
+   "output": "I_pack_45_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "value": 27.6
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "Log battery current in a 30 s tethered hover at 2.6 kg; within 24 A +/- 15 % (limit 27.6 A).",
+   "value": 26.155539189575446
+  },
+  {
+   "id": "CL-E1-HOVER-I-55",
+   "type": "claim",
+   "title": "Hover pack current, 11x5.5MR, 14.8 V",
+   "calc": "CALC-E1-HOVER",
+   "output": "I_pack_55_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "value": 27.6
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "As CL-E1-HOVER-I with the 11x5.5MR fitted.",
+   "value": 27.03021037257225
+  },
+  {
+   "id": "CL-E1-HOVER-GW",
+   "type": "claim",
+   "title": "Hover efficiency, 11x4.5MR",
+   "calc": "CALC-E1-HOVER",
+   "output": "gW_45",
+   "unit": "gf/W",
+   "how": "Thrust stand: gf / W at 689 gf (T-E1-STAND).",
+   "value": 7.1195709201986
+  },
+  {
+   "id": "CL-E1-HOVER-DT",
+   "type": "claim",
+   "title": "Hover winding temperature rise",
+   "calc": "CALC-E1-HOVER",
+   "output": "dT_wind_45_K",
+   "unit": "K",
+   "limit": {
+    "op": "<=",
+    "value": 50.0
+   },
+   "verifies": [
+    "R-THERMAL"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "IR thermometer on the can after a 2 min tethered hover; E3 owns the limit (80 degC can at 30 degC ambient).",
+   "value": 20.705312471786826
+  },
+  {
+   "id": "CL-E1-TW-TABLE",
+   "type": "claim",
+   "title": "Hover T/W at the gate, 11x4.5MR, bus 14.8 V",
+   "calc": "CALC-E1-FULL",
+   "output": "tw_table_45",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "Thrust stand at a held 14.8 V: full-throttle thrust >= 1 300 gf per motor (T-E1-STAND).",
+   "value": 3.4084103827459513
+  },
+  {
+   "id": "CL-E1-TW-SAG",
+   "type": "claim",
+   "title": "Hover T/W at the gate, 11x4.5MR, sagged low pack",
+   "calc": "CALC-E1-FULL",
+   "output": "tw_sag_45",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min_sag"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "Thrust stand on a flight pack at 3.6 V/cell rest voltage after a warm-up run (T-E1-STAND).",
+   "value": 2.2298665168729963
+  },
+  {
+   "id": "CL-E1-TW-SAG-55",
+   "type": "claim",
+   "title": "Hover T/W at the gate, 11x5.5MR, sagged low pack",
+   "calc": "CALC-E1-FULL",
+   "output": "tw_sag_55",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min_sag"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "As CL-E1-TW-SAG with the 11x5.5MR.",
+   "value": 2.2747626575232154
+  },
+  {
+   "id": "CL-E1-TMAX-SAG",
+   "type": "claim",
+   "title": "Full thrust per motor, sag case, 11x4.5MR",
+   "calc": "CALC-E1-FULL",
+   "output": "Tmax_sag_45_gf",
+   "unit": "gf",
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "Thrust stand, flight pack at 3.6 V/cell rest, motor warm.",
+   "value": 1449.4132359674477
+  },
+  {
+   "id": "CL-E1-IMAX-148",
+   "type": "claim",
+   "title": "Full-throttle current per motor at 14.8 V, 11x4.5MR",
+   "calc": "CALC-E1-FULL",
+   "output": "I_148_45_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "value": 36.0
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "Thrust stand at a held 14.8 V, 3 s full throttle, clamp meter on the ESC lead.",
+   "value": 37.24562227610827
+  },
+  {
+   "id": "CL-E1-IMAX-168",
+   "type": "claim",
+   "title": "Full-throttle current per motor at 16.8 V, 11x4.5MR",
+   "calc": "CALC-E1-FULL",
+   "output": "I_168_45_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "value": 45.0
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "Thrust stand on a fresh pack (16.8 V), 2 s full throttle.",
+   "value": 45.56843813136883
+  },
+  {
+   "id": "CL-E1-IMAX-168-55",
+   "type": "claim",
+   "title": "Full-throttle current per motor at 16.8 V, 11x5.5MR",
+   "calc": "CALC-E1-FULL",
+   "output": "I_168_55_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "value": 45.0
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "As CL-E1-IMAX-168 with the 11x5.5MR.",
+   "value": 51.56136196434739
+  },
+  {
+   "id": "CL-E1-IMAX-148-55",
+   "type": "claim",
+   "title": "Full-throttle current per motor at 14.8 V, 11x5.5MR",
+   "calc": "CALC-E1-FULL",
+   "output": "I_148_55_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "value": 36.0
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "As CL-E1-IMAX-148 with the 11x5.5MR.",
+   "value": 42.42756085506846
+  },
+  {
+   "id": "CL-E1-IPACK-PEAK",
+   "type": "claim",
+   "title": "Peak pack current, all four full throttle (sag case)",
+   "calc": "CALC-E1-FULL",
+   "output": "Ipack_sag_45_A",
+   "unit": "A",
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "F1 sizes the disconnect and main leads on this (replaces params 120 A); log on the stand with 4 motors.",
+   "value": 100.89462894414373
+  },
+  {
+   "id": "CL-E1-ILIM-I",
+   "type": "claim",
+   "title": "Per-motor current with the 100 A limiter, fresh pack, 11x5.5MR",
+   "calc": "CALC-E1-LIMIT",
+   "output": "I_motor_fresh_55_A",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "value": 25.0
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "Bench: all four motors, props on, fresh pack, full throttle 2 s in QSTABILIZE on a restrained frame; dataflash BAT.Curr <= 100 A.",
+   "value": 24.750000000000682
+  },
+  {
+   "id": "CL-E1-ILIM-TW-LOW",
+   "type": "claim",
+   "title": "T/W with the limiter, low pack, 11x5.5MR",
+   "calc": "CALC-E1-LIMIT",
+   "output": "tw_low_55",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min_sag"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "As CL-E1-TW-SAG with the limiter set.",
+   "value": 2.153854659908112
+  },
+  {
+   "id": "CL-E1-ILIM-TW-FRESH",
+   "type": "claim",
+   "title": "T/W with the limiter, fresh pack, 11x5.5MR",
+   "calc": "CALC-E1-LIMIT",
+   "output": "tw_fresh_55",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "Thrust stand on a fresh pack with the duty limit found on the bench.",
+   "value": 2.496519491456836
+  },
+  {
+   "id": "CL-E1-CRUISE-DRAG",
+   "type": "claim",
+   "title": "Cruise drag at 15 m/s, gate mass",
+   "calc": "CALC-E1-CRUISE",
+   "output": "drag_N",
+   "unit": "N",
+   "how": "B1 owns the polar; this is W / (L/D) from params.json.",
+   "value": 4.321574576271186
+  },
+  {
+   "id": "CL-E1-CRUISE-P-45",
+   "type": "claim",
+   "title": "Cruise electrical power, 11x4.5MR",
+   "calc": "CALC-E1-CRUISE",
+   "output": "P_total_45_W",
+   "unit": "W",
+   "limit": {
+    "op": "<=",
+    "ref": "P:performance.cruise_power_w"
+   },
+   "verifies": [
+    "R-MISSION"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "Log pack power in steady 15 m/s FBWA legs, both directions, calm morning.",
+   "value": 268.9000727902372
+  },
+  {
+   "id": "CL-E1-CRUISE-P-55",
+   "type": "claim",
+   "title": "Cruise electrical power, 11x5.5MR",
+   "calc": "CALC-E1-CRUISE",
+   "output": "P_total_55_W",
+   "unit": "W",
+   "limit": {
+    "op": "<=",
+    "ref": "P:performance.cruise_power_w"
+   },
+   "verifies": [
+    "R-MISSION"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "As CL-E1-CRUISE-P-45 with the 11x5.5MR.",
+   "value": 216.02410496279228
+  },
+  {
+   "id": "CL-E1-CRUISE-P-55-LO",
+   "type": "claim",
+   "title": "Cruise power lower bound (kP = 1), 11x5.5MR",
+   "calc": "CALC-E1-SENS",
+   "output": "P_cruise_55_W",
+   "unit": "W",
+   "how": "Bounds the band with CL-E1-CRUISE-P-55; flight log decides.",
+   "value": 176.29283230769607
+  },
+  {
+   "id": "CL-E1-CRUISE-P-45-LO",
+   "type": "claim",
+   "title": "Cruise power lower bound (kP = 1), 11x4.5MR",
+   "calc": "CALC-E1-SENS",
+   "output": "P_cruise_45_W",
+   "unit": "W",
+   "how": "Bounds the band with CL-E1-CRUISE-P-45; flight log decides.",
+   "value": 219.06328564352452
+  },
+  {
+   "id": "CL-E1-CRUISE-ETA-45",
+   "type": "claim",
+   "title": "Cruise prop efficiency, 11x4.5MR",
+   "calc": "CALC-E1-CRUISE",
+   "output": "eta_prop_45",
+   "unit": "-",
+   "how": "PER3 at J of the cruise point; check with logged rpm (bidirectional DShot) and power.",
+   "value": 0.3038501450490942
+  },
+  {
+   "id": "CL-E1-CRUISE-ETA-55",
+   "type": "claim",
+   "title": "Cruise prop efficiency, 11x5.5MR",
+   "calc": "CALC-E1-CRUISE",
+   "output": "eta_prop_55",
+   "unit": "-",
+   "how": "As CL-E1-CRUISE-ETA-45.",
+   "value": 0.38550906729629736
+  },
+  {
+   "id": "CL-E1-CORRIDOR-45",
+   "type": "claim",
+   "title": "Transition thrust margin, 11x4.5MR",
+   "calc": "CALC-E1-CORRIDOR",
+   "output": "margin_45",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-E1-TRANS-MARGIN"
+   },
+   "verifies": [
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "B1 replaces the wing model with AVL/XFOIL post-stall data; flight log of throttle during the first transition.",
+   "value": 2.139289909405953
+  },
+  {
+   "id": "CL-E1-CORRIDOR-55",
+   "type": "claim",
+   "title": "Transition thrust margin, 11x5.5MR",
+   "calc": "CALC-E1-CORRIDOR",
+   "output": "margin_55",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-E1-TRANS-MARGIN"
+   },
+   "verifies": [
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "As CL-E1-CORRIDOR-45.",
+   "value": 2.1863678710381196
+  },
+  {
+   "id": "CL-E1-MOTOROUT-TW",
+   "type": "claim",
+   "title": "Hover T/W left on one diagonal pair",
+   "calc": "CALC-E1-MOTOR-OUT",
+   "output": "tw_two_motors",
+   "unit": "-",
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "SITL motor-failure injection (F4); no flight test.",
+   "note": "lift is there, yaw is not: both remaining props turn the same way",
+   "value": 1.1149332584364982
+  },
+  {
+   "id": "CL-E1-HOVER-YAW",
+   "type": "claim",
+   "title": "Hover yaw moment from +/-30 % thrust differential",
+   "calc": "CALC-E1-MOTOR-OUT",
+   "output": "yaw_diff30_Nm",
+   "unit": "N*m",
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "B3 uses it for R-HOVER-AUTHORITY (yaw); thrust stand torque arm or a yaw-step in tethered hover.",
+   "value": 0.14914944112340467
+  },
+  {
+   "id": "CL-E1-MOTOROUT-ROLL",
+   "type": "claim",
+   "title": "Cruise roll torque, one motor out",
+   "calc": "CALC-E1-MOTOR-OUT",
+   "output": "roll_torque_cruise_Nm",
+   "unit": "N*m",
+   "parts": [
+    "PRP-901",
+    "PRP-902",
+    "PRP-903",
+    "PRP-904"
+   ],
+   "how": "B3 compares with elevon roll authority at 15 m/s (CR-E1-04).",
+   "value": 0.21667228469874963
+  },
+  {
+   "id": "T-E1-STAND",
+   "type": "test",
+   "title": "Thrust stand, one station, both candidate props",
+   "verifies": [
+    "CL-E1-TW-TABLE",
+    "CL-E1-TW-SAG",
+    "CL-E1-IMAX-148",
+    "CL-E1-IMAX-168",
+    "CL-E1-HOVER-GW",
+    "CL-E1-KT",
+    "CL-E1-KP",
+    "CL-E1-MAKER-SUPPLY"
+   ],
+   "state": "planned",
+   "procedure": "H1 stand (20 kg cell + HX711), X3108S + LANRC 45 A, 11x4.5MR then 11x5.5MR; held 14.8 V bench supply (>= 40 A) and then a flight pack; 10 % throttle steps to 100 %, 3 s each; log gf, A, V, rpm (optical tach or ESC telemetry), can temperature; one 60 s run at 689 gf for g/W; ten 10 -> 100 % throttle punches in < 50 ms with no desync"
+  },
+  {
+   "id": "T-E1-MOTOR-RM",
+   "type": "test",
+   "title": "Winding resistance and no-load current",
+   "verifies": [
+    "CL-E1-KP"
+   ],
+   "state": "planned",
+   "procedure": "4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load current and rpm at 10.0 V without prop (Kv = rpm / (V - I0 R))"
+  },
+  {
+   "id": "T-E1-HOVER-LOG",
+   "type": "test",
+   "title": "Tethered hover current",
+   "verifies": [
+    "CL-E1-HOVER-I",
+    "CL-E1-HOVER-DT"
+   ],
+   "state": "planned",
+   "procedure": "XPS aircraft at 2.6 kg, 30 s tethered hover; pack current from the power module; can temperature by IR at landing"
+  }
+ ]
+}

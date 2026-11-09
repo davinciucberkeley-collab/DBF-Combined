@@ -1,6 +1,7 @@
 """check.py - build every module on the stub backend and check CAD against interfaces.json. Runs in about a second.
 
     python -I redesign/fusion/check.py              # redesign/subsystems
+    python -I redesign/fusion/check.py --skeleton   # K09-L reference layout (redesign/fusion/skeleton)
     python -I redesign/fusion/check.py --examples   # generic test aircraft (redesign/fusion/examples)
     python -I redesign/fusion/check.py --root DIR [--strict] [--tol-mm 2]
 
@@ -13,6 +14,10 @@ Proves (exit 1 on any ERROR; --strict: on any WARN too):
   touch     the two parts of every structural edge touch (bounding boxes within --tol-mm), joint origins lie on
             both parts, wire ends lie on their parts
   floating  no modelled group of parts is cut off from the rest (unless it attaches to a part not modelled yet)
+  keepout   no part's bounding box enters a registered keep-out (prop disc + clearance, hover ground plane)
+            unless the keep-out exempts it (ERROR; coarse: a diagonal part's bbox can over-report)
+  envelope  (K09-L roots) every flight part lies inside the aircraft envelope from params.json (WARN: unit slips)
+  datums    (K09-L roots) the datum sheet built and DATUMS.md is not stale against params.json (WARN)
   graph     everything merge_check.py checks (schema, dangling edges, joint stacks, wires, mass budget...)
 Does NOT prove (UNVERIFIED-IN-FUSION): that Fusion's kernel builds the sketches/lofts, that joints solve, that
 bodies do not interpenetrate, real masses. Bounding boxes are coarse: touching boxes do not prove a glue line.
@@ -34,8 +39,8 @@ ALLOWED = {'electrical': ('wire',), 'hinged': ('revolute', 'slider'),
            'mechanical': ('rigid', 'contact'), 'thermal': ('rigid', 'contact'), 'kinematic': ('revolute', 'slider')}
 
 
-def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None):
-    ctx, _, results = build_all.build(StubBackend(), root, list_file, log=log)
+def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, datums=None):
+    ctx, _, results = build_all.build(StubBackend(), root, list_file, log=log, datums=datums)
     g = merge_check.check(merge_check.load(root))
     subs, tot = merge_check.rollup(g)
     merge_check.check_budget(g, merge_check.load_budget(budget), subs, tot)   # None -> params/mass_budget.json or MASS-CG.md
@@ -116,17 +121,40 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None):
     for grp in groups[1:]:
         if not grp & anchored:
             add('ERROR', 'floating', ', '.join(sorted(grp)), 'modelled parts not connected to the main structure')
+
+    # keepout: prop discs, hover ground (registered by the owning modules)
+    flying = {pid: c for pid, c in comps.items() if (g.parts.get(pid) or {}).get('flight', True) and c.shapes}
+    for ko in ctx.keepouts:
+        for pid, c in sorted(flying.items()):
+            if pid not in ko.exempt and ko.hits(c.bbox()):
+                add('ERROR', 'keepout', pid, 'bounding box enters %s (registered by %s)' % (ko.name, ko.sub))
+
+    # envelope + datums (K09-L roots only: build_datums set ctx.envelope)
+    if ctx.envelope:
+        lo, hi = ctx.envelope
+        for pid, c in sorted(flying.items()):
+            b = c.bbox()
+            out = max(max(lo[i] - b[0][i], b[1][i] - hi[i]) for i in range(3))
+            if out > 0:
+                add('WARN', 'envelope', pid, '%.0f mm outside the aircraft envelope (unit slip? see DATUMS.md)' % (out * 1000))
+        try:
+            import k09kit
+            if k09kit.datums_md_stale(ctx.params):
+                add('WARN', 'datums', 'DATUMS.md', 'stale against params.json: python -I redesign/fusion/k09kit.py --datums-md')
+        except Exception as e:
+            add('WARN', 'datums', 'DATUMS.md', 'could not compare: %s' % e)
     return ctx, results, issues
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description='Stub-build all modules and check them against interfaces.json.')
     ap.add_argument('--examples', action='store_true')
+    ap.add_argument('--skeleton', action='store_true')
     ap.add_argument('--root')
     ap.add_argument('--strict', action='store_true')
     ap.add_argument('--tol-mm', type=float, default=2.0)
     a = ap.parse_args(argv)
-    root, lst = build_all.roots(a.examples, a.root)
+    root, lst = build_all.roots(a.examples, a.root, a.skeleton)
     budget = os.path.join(root, 'mass_budget.json')
     ctx, results, issues = run_checks(root, lst, a.tol_mm / 1000.0, budget if os.path.exists(budget) else None,
                                      log=lambda m: print(m) if m.startswith('not built') else None)
@@ -146,8 +174,8 @@ def main(argv=None):
             sum(1 for j in ctx.joints if j.sub == sub), sum(1 for x in ctx.wires if x.sub == sub),
             sum(c.mass_g or 0 for c in cs), e, w))
     M, cg = ctx.rollup()
-    print('TOTAL %.0f g, CG %s m (declared mass; CG declared or CAD centroid)' % (
-        M, ', '.join('%.3f' % v for v in cg) if cg else '-'))
+    print('TOTAL %.0f g, CG %s m (declared mass; CG declared or CAD centroid); %d datums, %d keep-outs' % (
+        M, ', '.join('%.3f' % v for v in cg) if cg else '-', len(ctx.datums), len(ctx.keepouts)))
     for sev, code, item, msg in sorted(issues, key=lambda i: (i[0] != 'ERROR', i[1])):
         print('  %-5s %-16s %-16s %s' % (sev, code, item, msg))
     nerr = sum(1 for i in issues if i[0] == 'ERROR')

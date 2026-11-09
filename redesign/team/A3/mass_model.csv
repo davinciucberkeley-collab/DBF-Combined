@@ -1,0 +1,43 @@
+item_id,subsystem,discipline,name,qty,sym,mass_g,x_m,y_m,z_m,lx_m,ly_m,lz_m,maturity,growth_pct,basis
+WNG-E01,wing,structure,XPS core one piece incl. elevon panels (less spar slot),1,-,=P:wing.core.density_kgm3*0.68*P:wing.t_c*P:wing.chord_m**2*P:wing.span_m*1000-P:wing.spar.od_m**2*P:wing.spar.length_m*P:wing.core.density_kgm3*1000,=0.42*P:wing.chord_m,0,0,=P:wing.chord_m,=P:wing.span_m,=P:wing.t_c*P:wing.chord_m,CALC,,section area 0.68 t c^2 (thin-airfoil rule); centroid 42 % chord; density UNVERIFIED
+WNG-E02,wing,structure,Packing-tape skin both sides,1,-,=P:wing.skin.areal_mass_kgm2*2*P:wing.chord_m*P:wing.span_m*1.02*1000,=0.5*P:wing.chord_m,0,0,=P:wing.chord_m,=P:wing.span_m,0.03,EST,,areal mass incl. overlap EST; x1.02 for surface length over chord
+WNG-E03,wing,structure,CF spar 22x20 x 1000 mm,1,-,=P:wing.spar.mass_per_m_kgm*P:wing.spar.length_m*1000,=P:wing.spar.x_m,0,=P:wing.spar.z_m,0.022,=P:wing.spar.length_m,0.022,CALC,,tube area x 1.55 g/cm3; weigh on arrival
+WNG-E04,wing,structure,Spar slot epoxy fill,1,-,15,=P:wing.spar.x_m,0,0,0.03,=P:wing.spar.length_m,0.03,EST,,~15 g/m thickened epoxy
+WNG-E05,wing,structure,Edge tape and FAA label,1,-,5,=0.5*P:wing.chord_m,0,0,=P:wing.chord_m,=P:wing.span_m,0.01,EST,,
+FIN-E01,fins,structure,Fin foam board (layers per params),2,y,=P:fins.areal_mass_kgm2*P:fins.layers*P:fins.chord_m*2*P:fins.half_height_m*1000,=(P:fins.le_x_m+P:fins.te_x_m)/2,=P:fins.y_m,0,=P:fins.chord_m,0.01,=2*P:fins.half_height_m,EST,,full rectangle chord x height; board areal mass EST
+FIN-E02,fins,structure,CF motor tube 22x20,2,y,=P:wing.spar.mass_per_m_kgm*P:fins.tube.length_m*1000,=P:fins.tube.x_m,=P:fins.y_m,0,0.022,0.022,=P:fins.tube.length_m,CALC,,same tube as the spar
+FIN-E03,fins,structure,Printed PETG motor mount,4,yz,18,=P:propulsion.stations.x_mount_m-0.005,=P:fins.y_m,=P:propulsion.stations.z_m,0.04,0.04,0.04,EST,,card 126 g printed set split mounts 18 / saddles 15 / feet 6
+FIN-E04,fins,structure,Printed tube-to-spar saddle,2,y,15,=(P:fins.tube.x_m+P:wing.spar.x_m)/2,=P:fins.y_m,0,=P:wing.spar.x_m-P:fins.tube.x_m,0.03,0.03,EST,,bridges the 0.18 m tube-spar offset; mass grows if it must carry the load (C4)
+FIN-E05,fins,structure,Fin-tube clips and epoxy,2,y,40,=P:fins.tube.x_m+0.02,=P:fins.y_m,0,0.04,0.02,=2*P:fins.half_height_m,EST,,REVIEW sec. 2 +80 g for the pair
+FIN-E06,fins,structure,Fin glue and tape,2,y,10,=(P:fins.le_x_m+P:fins.te_x_m)/2,=P:fins.y_m,0,=P:fins.chord_m,0.01,=2*P:fins.half_height_m,EST,,
+POD-E01,pod,structure,Pod shell tray and hatch,1,-,70,=P:pod.x_le_m+P:pod.size_m[0]/2,0,=P:pod.z_base_m+P:pod.size_m[2]/2,=P:pod.size_m[0],=P:pod.size_m[1],=P:pod.size_m[2],EST,,card 70 g
+POD-E02,pod,structure,Pack strap and Velcro,1,-,20,=P:pod.x_le_m+P:pod.size_m[0]/2,0,=P:pod.z_base_m+P:pod.size_m[2],0.10,0.05,0.01,EST,,
+POD-E03,pod,structure,GPS mast,1,-,8,=P:pod.x_le_m+0.85*P:pod.size_m[0],0,=P:pod.z_base_m+P:pod.size_m[2]+0.03,0.01,0.01,0.06,EST,,not in the A1 allocation note
+POD-E04,pod,structure,Pitot boom mount,1,-,4,=P:pod.x_le_m,0,=P:pod.z_base_m+P:pod.size_m[2]/2,0.02,0.02,0.02,EST,,not in the A1 allocation note
+GER-E01,landing,structure,Crushable printed foot,4,yz,6,=P:wing.te_x_m+P:cg.foot_height_m/2,=P:fins.y_m,=P:fins.half_height_m,0.02,0.02,0.02,EST,,card 6 g each
+PRP-E01,propulsion,propulsion,Motor X3108S KV900,4,yz,=P:propulsion.motor_mass_kg*1000,=P:propulsion.stations.x_mount_m-P:fins.tube.od_m/2-P:propulsion.motor_length_m/2,=P:propulsion.stations.y_m,=P:propulsion.stations.z_m,=P:propulsion.motor_length_m,=P:propulsion.motor_diameter_m,=P:propulsion.motor_diameter_m,DATASHEET,,maker mass UNVERIFIED; leads included?
+PRP-E02,propulsion,propulsion,Prop APC 11x4.5MR,4,yz,=P:propulsion.prop_mass_kg*1000,=P:propulsion.stations.x_prop_plane_m,=P:propulsion.stations.y_m,=P:propulsion.stations.z_m,0.01,=P:propulsion.prop_diameter_m,0.02,DATASHEET,,blade along y for inertia
+PRP-E03,propulsion,propulsion,Prop adapter and nut,4,yz,5,=P:propulsion.stations.x_prop_plane_m+0.005,=P:propulsion.stations.y_m,=P:propulsion.stations.z_m,0.02,0.01,0.01,EST,,not in the A1 allocation (430 g = 4 x 107.6 g)
+PRP-E04,propulsion,propulsion,ESC LANRC 45 A on fin pad,4,yz,=P:propulsion.esc_mass_kg*1000,=P:fins.tube.x_m+0.04,=P:fins.y_m,=0.6*P:propulsion.stations.z_m,0.04,0.005,0.02,DATASHEET,,6.6 g bare board; in the prop wash (E3)
+PWR-E01,power,energy,Flight pack 4S 6500,1,-,=P:battery.mass_kg*1000,=P:pod.x_le_m+P:pod.size_m[0]/2,0,=P:pod.z_base_m+0.003+P:battery.size_m[2]/2,=P:battery.size_m[0],=P:battery.size_m[1],=P:battery.size_m[2],DATASHEET,24,listings 503-680 g: growth set to reach 680 g
+PWR-E02,power,electrical,Main disconnect and pack lead,1,-,10,=P:pod.x_le_m+0.03,0,0.04,0.03,0.02,0.02,EST,,XT60 or AS150U pair + 12 AWG tail
+PWR-E03,power,electrical,Distribution and 12 AWG main leads,1,-,25,=P:pod.x_le_m+0.08,0,0.03,0.05,0.04,0.01,EST,,
+PWR-E04,power,electrical,UBEC,1,-,10,=P:pod.x_le_m+0.12,0,0.03,0.03,0.02,0.01,EST,,drop if the FC regulator carries the servos (F1)
+AVN-E01,avionics,avionics,Flight controller F405 wing class,1,-,25,=P:pod.x_le_m+0.14,0,0.035,0.05,0.04,0.015,EST,,board + PDB; F3 confirms
+AVN-E02,avionics,avionics,GPS and compass,1,-,12,=P:pod.x_le_m+0.85*P:pod.size_m[0],0,=P:pod.z_base_m+P:pod.size_m[2]+0.06,0.025,0.025,0.01,EST,,on the pod mast
+AVN-E03,avionics,avionics,Receiver ELRS and antennas,1,-,3,=P:pod.x_le_m+0.12,0,0.04,0.02,0.01,0.005,EST,,
+AVN-E04,avionics,avionics,Airspeed sensor MS5525,1,-,6,=P:pod.x_le_m+0.03,0,0.03,0.03,0.02,0.01,EST,,
+AVN-E05,avionics,avionics,Pitot tube and silicone tubing,1,-,12,=P:pod.x_le_m-0.04,0,=P:pod.z_base_m+P:pod.size_m[2]/2,0.10,0.005,0.005,EST,,pod-nose option; B4/F3 place it
+AVN-E06,avionics,avionics,Vibration mounts labels foam tape,1,-,8,=P:pod.x_le_m+0.14,0,0.03,0.05,0.04,0.01,EST,,
+HRN-E01,harness,electrical,ESC power lead pair 16 AWG 0.5 m,4,yz,14,=(P:pod.x_le_m+0.08+P:fins.tube.x_m+0.04)/2,=P:fins.y_m/2,=0.3*P:propulsion.stations.z_m,0.15,=P:fins.y_m,0.05,EST,,2 x 0.5 m x 14 g/m silicone 16 AWG; 18 AWG saves ~18 g total
+HRN-E02,harness,electrical,ESC signal lead 0.5 m,4,yz,1.5,=(P:pod.x_le_m+0.14+P:fins.tube.x_m+0.04)/2,=P:fins.y_m/2,=0.3*P:propulsion.stations.z_m,0.15,=P:fins.y_m,0.05,EST,,
+HRN-E03,harness,electrical,Motor phase bullets and short leads,4,yz,4,=P:fins.tube.x_m+0.01,=P:fins.y_m,=0.8*P:propulsion.stations.z_m,0.03,0.01,0.05,EST,,3 x 3.5 mm bullet pairs per station
+HRN-E04,harness,electrical,Servo lead extension,2,y,5,=0.6*P:wing.chord_m,=P:fins.y_m/2,0,0.05,=P:fins.y_m,0.005,EST,,
+HRN-E05,harness,electrical,Sensor cables GPS airspeed RX,1,-,6,=P:pod.x_le_m+0.10,0,0.04,0.10,0.02,0.02,EST,,
+HRN-E06,harness,electrical,Ties sleeve heat shrink chafe guard,2,y,5,0.0,=P:fins.y_m/2,0,0.1,=P:fins.y_m,0.02,EST,,
+MEC-E01,mechanisms,controls,Elevon servo micro metal gear,2,y,12,=0.63*P:wing.chord_m,=P:wing.elevon.inboard_y_m[1],0,0.023,0.012,0.025,EST,,9-13 g class; D6 chooses
+MEC-E02,mechanisms,controls,Control horn,4,y,1.5,=(1-P:wing.elevon.chord_frac/2)*P:wing.chord_m,=P:wing.elevon.inboard_y_m[1],0,0.02,0.01,0.02,EST,,one per panel
+MEC-E03,mechanisms,controls,Pushrod and clevises,2,y,3,=(0.63+1-P:wing.elevon.chord_frac)/2*P:wing.chord_m,=P:wing.elevon.inboard_y_m[1],0,0.06,0.005,0.005,EST,,
+MEC-E04,mechanisms,controls,Inter-panel link across fin root,2,y,3,=(1-P:wing.elevon.chord_frac/2)*P:wing.chord_m,=P:fins.y_m,0,0.02,0.06,0.01,EST,,
+MEC-E05,mechanisms,controls,Hinge tape,2,y,4,=(1-P:wing.elevon.chord_frac)*P:wing.chord_m,=(P:wing.elevon.inboard_y_m[0]+P:wing.elevon.outboard_y_m[1])/2,0,0.02,=P:wing.elevon.outboard_y_m[1]-P:wing.elevon.inboard_y_m[0],0.001,EST,,
+MEC-E06,mechanisms,controls,Servo cover and frame,2,y,2,=0.63*P:wing.chord_m,=P:wing.elevon.inboard_y_m[1],0,0.03,0.02,0.005,EST,,
