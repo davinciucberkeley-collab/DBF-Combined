@@ -1,0 +1,22 @@
+# Git LFS: CAD exchange files, native CAD, video, office files and PDFs.
+# Clone with Git LFS installed (`git lfs install` once per machine), or these files arrive as small pointer files.
+# Bracket patterns make the match case-insensitive on every OS (the repo has both .stl and .STL, .step and .STEP).
+*.[sS][tT][eE][pP]         filter=lfs diff=lfs merge=lfs -text
+*.[sS][tT][pP]             filter=lfs diff=lfs merge=lfs -text
+*.[fF]3[dD]                filter=lfs diff=lfs merge=lfs -text
+*.[sS][lL][dD][pP][rR][tT] filter=lfs diff=lfs merge=lfs -text
+*.[sS][lL][dD][aA][sS][mM] filter=lfs diff=lfs merge=lfs -text
+*.[sS][lL][dD][dD][rR][wW] filter=lfs diff=lfs merge=lfs -text
+*.[sS][tT][lL]             filter=lfs diff=lfs merge=lfs -text
+*.3[mM][fF]                filter=lfs diff=lfs merge=lfs -text
+*.[mM][pP]4                filter=lfs diff=lfs merge=lfs -text
+*.[mM][oO][vV]             filter=lfs diff=lfs merge=lfs -text
+*.[pP][dD][fF]             filter=lfs diff=lfs merge=lfs -text
+*.[xX][lL][sS][xX]         filter=lfs diff=lfs merge=lfs -text
+
+# Exception: the CI workflow (.github/workflows/regenerate-check.yml) builds the review page from cad/mesh/*.stl
+# on a hosted runner that checks out without LFS. Keep those meshes as ordinary Git blobs so CI sees real files.
+cad/mesh/*.[sS][tT][lL]    !filter !diff !merge -text
+# Exception: the review page's Downloads section links the drawing set PDF directly (0.3 MB). GitHub Pages serves
+# LFS files as pointer text, so keep it as an ordinary blob.
+cad/drawings/DBF-DRW-001.PDF !filter !diff !merge -text
