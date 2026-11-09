@@ -252,7 +252,7 @@ export function buildVariants(ctx){
       kpiTile('Committed / reserve', `${usd(sm.committed)}`, `reserve ${usd(sm.reserve)} · ${reserveOk(sm.reserve) ? 'meets' : 'below'} the $${reserveTarget} target`, reserveOk(sm.reserve) ? 'ok' : 'bad'),
       kpiTile('Hardware pieces', `${sgn(v.hw.net, 0)}`, `+${v.hw.nAdd} / \u2212${v.hw.nRem} vs ${v.hw.base}`)].join('')}</div>`;
     const riskP = `<p><span class="chip ${riskCls(m.risk)}">risk: ${esc(m.risk)}</span> ${esc(firstSentences(m.risk_basis || '', 1))}</p>`;
-    const mdHtml = v.md ? `<p><a href="https://github.com/davinciucberkeley-collab/DBF-VTOL/blob/main/concepts/variants/${id}/design.md" target="_blank" rel="noopener">Full design note</a> (concepts/variants/${id}/design.md)</p>` : '';
+    const mdHtml = v.md ? `<p><a href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/main/concepts/variants/${id}/design.md" target="_blank" rel="noopener">Full design note</a> (concepts/variants/${id}/design.md)</p>` : '';
     const srcs = `<p class="src">concepts/variants/${id}/metrics.json (every figure; each carries its own source and EST flag, shown on hover in the table), inventory.json (rows, summary: goods ${f(sm.goods, 2)}, tax ${f(sm.tax, 2)}, shipping ${f(sm.shipping, 2)}, committed ${f(sm.committed, 2)}), design.md; concepts/concepts.json ${id} (what, claim, source)</p>`;
     tabs.push(`<button type="button" role="tab" id="tab-${id}" aria-selected="${vi === 0}" aria-controls="alt-${id}" tabindex="${vi === 0 ? 0 : -1}" data-alt="${id}"><span class="mono">${v.ID}</span> ${esc(v.name)}</button>`);
     panels.push(`<div role="tabpanel" id="alt-${id}" class="altpanel" aria-labelledby="tab-${id}" tabindex="0"${vi === 0 ? '' : ' hidden'}>

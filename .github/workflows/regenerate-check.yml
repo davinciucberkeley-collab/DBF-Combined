@@ -40,10 +40,10 @@ jobs:
 
       - name: Committed outputs match the regenerated ones
         # line endings normalised: export_bom.mjs writes CRLF, the repository stores LF
+        # review/*.html fragment copies are also written by the build but are git-ignored (DBF-Combined keeps the root copies only)
         run: |
           git -c core.autocrlf=input diff --stat --exit-code -- \
             analysis/results.json analysis/aero.json analysis/tradestudy.json docs/purchasing \
-            review/vtol-review.html review/build-manual.html review/test-plan.html review/flight-software.html review/templates.html \
             VTOL-Review.html build-manual.html test-plan.html flight-software.html templates.html \
             || { echo "::error::A committed output is stale: run the pipeline locally (sizing -> export_bom -> vlm -> verify -> tradestudy -> review build) and commit the results."; exit 1; }
 

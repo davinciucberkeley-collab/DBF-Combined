@@ -3,6 +3,8 @@
 > **Archived exploration, not the design baseline.** This tilt-wing study (S1223 wing, 2.0 m span, 9.5 kg paper
 > defaults) was an alternative to C0 and is kept for reference only. The team baseline is the lift + cruise C0 at the
 > repository root; see the [root README](../../README.md) and [DECISIONS.md](../../DECISIONS.md).
+> Script headers say `tiltwing/...` (the folder's old location); here it is `explorations/tiltwing/`. The scripts
+> resolve their own paths, except `tools/polars.py` (hard-coded output path, see the root README "Known issues").
 
 Parametric tilt-wing VTOL after Çakır & Kurtuluş, "Design and aerodynamic analysis of a VTOL tilt-wing UAV",
 Turk J Elec Eng & Comp Sci 30 (2022) 767–784, doi:10.3906/elk-2105-59. The paper's values are only the slider

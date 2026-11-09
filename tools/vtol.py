@@ -93,7 +93,7 @@ def status():
     files = ["cad/params.txt", "cad/model/VTOL_Concept.STEP", "analysis/results.json", "analysis/aero/aero_results.json", "cad/sim/results.txt",
              "analysis/cfd3d/out/oml_half.brep", "analysis/cfd3d/out/L1/mesh.su2", "analysis/cfd3d/out/L2/mesh.su2", "analysis/cfd3d/out/L3/mesh.su2",
              "analysis/cfd3d/out/cfd3d_results.json", "analysis/cfd3d/out/viz/cfd3d_viz.json", "analysis/validation/validation_matrix.json",
-             "analysis/validation/proofs.json", "analysis/cfd3d/out/mesh_audit.json", "analysis/validation/xtool_boom_fea.json", "review/vtol-review.html"]
+             "analysis/validation/proofs.json", "analysis/cfd3d/out/mesh_audit.json", "analysis/validation/xtool_boom_fea.json", "VTOL-Review.html"]
     cases = {}
     for d in sorted((CFD / "out" / "cases").glob("*")) if (CFD / "out" / "cases").exists() else []:
         r = json.loads((d / "run.json").read_text(encoding="utf-8")) if (d / "run.json").exists() else None
