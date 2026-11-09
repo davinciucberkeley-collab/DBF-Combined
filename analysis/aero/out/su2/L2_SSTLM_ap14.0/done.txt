@@ -1,0 +1,1 @@
+rc=0 wall_s=3091.7 attempt=1 cfg_sha=fea8dac6c1996c2d mesh=naca2415_L2.su2:6756176:1793078120

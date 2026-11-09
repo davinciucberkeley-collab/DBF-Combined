@@ -1,0 +1,3361 @@
+{
+ "generated": "2026-10-13",
+ "base": {
+  "rho": 1.225,
+  "Vs": 12,
+  "Vc": 20,
+  "CLmax": 1.2,
+  "span": 2.4,
+  "e": 0.8,
+  "CD0_clean": 0.03,
+  "CdA_boom": 0.0015,
+  "etaProp": 0.6,
+  "etaMEc": 0.85,
+  "kCtrl": 1.1,
+  "kCoax": 1.282,
+  "tHover": 120,
+  "tCruise": 600,
+  "tTrans": 40,
+  "reserve": 0.2,
+  "etaBatt": 0.95,
+  "Vpack": 21.6,
+  "rhoFoam": 32,
+  "tc": 0.13,
+  "wGlass": 0.1017,
+  "rResin": 1,
+  "sigmaTail": 1.22,
+  "tailAreaRatio": 0.25,
+  "VhTarget": 0.35,
+  "VvTarget": 0.03,
+  "boomLin": 0.164,
+  "boomClamp": 0.026,
+  "m_spar": 0.4072,
+  "mFus": 0.8,
+  "mGear": 0.25,
+  "mAvionics": 0.35,
+  "mPusherSet": 0.323,
+  "mServos": 0.228,
+  "mWiring": 0.25,
+  "mWirePerLift": 0.03,
+  "mPayload": 0.5,
+  "eSpec": 209,
+  "m_guess": 10
+ },
+ "packs": [
+  {
+   "id": "WREKD 6S2P P50B 10 Ah",
+   "chem": "Li-ion",
+   "Wh": 216,
+   "kg": 1.034,
+   "usd": 252,
+   "contA": 120
+  },
+  {
+   "id": "Tattu 6S 12 Ah 30C",
+   "chem": "LiPo",
+   "Wh": 266.4,
+   "kg": 1.532,
+   "usd": 268.99,
+   "contA": 360
+  },
+  {
+   "id": "WREKD 6S3P P42A 12.6 Ah",
+   "chem": "Li-ion",
+   "Wh": 272.16,
+   "kg": 1.483,
+   "usd": 306,
+   "contA": 135
+  },
+  {
+   "id": "WREKD 6S3P P50B 15 Ah",
+   "chem": "Li-ion",
+   "Wh": 324,
+   "kg": 1.551,
+   "usd": 378,
+   "contA": 180
+  },
+  {
+   "id": "Tattu 6S 16 Ah 30C",
+   "chem": "LiPo",
+   "Wh": 355.2,
+   "kg": 1.988,
+   "usd": 335.99,
+   "contA": 480
+  },
+  {
+   "id": "WREKD 6S4P P42A 16.8 Ah",
+   "chem": "Li-ion",
+   "Wh": 362.88,
+   "kg": 1.982,
+   "usd": 408,
+   "contA": 180
+  },
+  {
+   "id": "WREKD 6S4P P50B 20 Ah",
+   "chem": "Li-ion",
+   "Wh": 432,
+   "kg": 2.068,
+   "usd": 504,
+   "contA": 240
+  },
+  {
+   "id": "Tattu Plus 6S 22 Ah 25C",
+   "chem": "LiPo",
+   "Wh": 488.4,
+   "kg": 2.65,
+   "usd": 486.99,
+   "contA": 550
+  }
+ ],
+ "concepts": {
+  "C0": {
+   "key": "C0",
+   "label": "4-lift twin boom (Alia-style)",
+   "motor": "Hobbywing X6 SE 280KV + MFP2270",
+   "params": {
+    "rho": 1.225,
+    "Vs": 12,
+    "Vc": 20,
+    "CLmax": 1.2,
+    "span": 2.4,
+    "e": 0.8,
+    "CD0_clean": 0.03,
+    "CdA_boom": 0.0015,
+    "etaProp": 0.6,
+    "etaMEc": 0.85,
+    "kCtrl": 1.1,
+    "kCoax": 1.282,
+    "tHover": 120,
+    "tCruise": 600,
+    "tTrans": 40,
+    "reserve": 0.2,
+    "etaBatt": 0.95,
+    "Vpack": 21.6,
+    "rhoFoam": 32,
+    "tc": 0.13,
+    "wGlass": 0.1017,
+    "rResin": 1,
+    "sigmaTail": 1.22,
+    "tailAreaRatio": 0.19290201,
+    "VhTarget": 0.35,
+    "VvTarget": 0.03,
+    "boomLin": 0.164,
+    "boomClamp": 0.026,
+    "m_spar": 0.4072,
+    "mFus": 0.8,
+    "mGear": 0.25,
+    "mAvionics": 0.35,
+    "mPusherSet": 0.323,
+    "mServos": 0.228,
+    "mWiring": 0.25,
+    "mWirePerLift": 0.03,
+    "mPayload": 0.5,
+    "eSpec": 209,
+    "m_guess": 10,
+    "name": "Hobbywing X6 SE 280KV + MFP2270",
+    "liftD": 0.5588,
+    "Tmax_g": 6058,
+    "mMotor": 0.373,
+    "mEsc": 0,
+    "mProp": 0,
+    "mMount": 0.026,
+    "thrustTable": [
+     [
+      2013,
+      193.5
+     ],
+     [
+      2449,
+      256.3
+     ],
+     [
+      3132,
+      366.6
+     ],
+     [
+      4306,
+      597.9
+     ],
+     [
+      6058,
+      1051.6
+     ]
+    ],
+    "ratedCont_W": 187,
+    "CdA_rotor": 0.004,
+    "nLift": 4,
+    "nBooms": 2,
+    "coax": false,
+    "boomTotalLen": 3.3542175,
+    "mBattFixed": 1.034,
+    "EBattFixed": 216
+   },
+   "design": {
+    "m": 7.036575,
+    "W": 69.005228,
+    "nUnits": 4,
+    "Tunit_N": 17.251448,
+    "Tunit_g": 1759.1581,
+    "Tmotor_g": 1759.1581,
+    "A": 0.24524642,
+    "FMeta": 0.58476494,
+    "Pi_unit": 92.438723,
+    "P_hover": 695.54509,
+    "S": 0.65198215,
+    "AR": 8.8345977,
+    "chord": 0.27165923,
+    "CL": 0.432,
+    "CD0": 0.059141902,
+    "CDi": 0.0084050607,
+    "LD": 6.3955503,
+    "D_cruise": 10.789656,
+    "P_cruise": 423.12378,
+    "E_Wh": 101.43375,
+    "Epack_req_Wh": 133.46545,
+    "Epack_Wh": 133.46545,
+    "m_batt": 0.63859069,
+    "sigmaWing": 1.1752696,
+    "m_wing": 1.1734548,
+    "S_tail": 0.12576866,
+    "m_tail": 0.15343777,
+    "m_booms": 0.65409168,
+    "m_lift": 1.596,
+    "m_fixed": 2.821,
+    "CdA_extra": 0.019,
+    "TW": 3.4437209,
+    "TW_motorOut": 0,
+    "I_hover": 32.201161,
+    "I_cruise": 19.589064,
+    "P_hover_per_motor": 173.88627,
+    "endurance_ok": true,
+    "t_cruise_avail_min": 10,
+    "diskLoading": 70.343321,
+    "wingLoading": 105.84,
+    "iter": 20,
+    "converged": true
+   },
+   "pick": {
+    "id": "WREKD 6S2P P50B 10 Ah",
+    "chem": "Li-ion",
+    "Wh": 216,
+    "kg": 1.034,
+    "usd": 252,
+    "contA": 120
+   },
+   "sized": {
+    "m": 7.5351717,
+    "W": 73.894791,
+    "nUnits": 4,
+    "Tunit_N": 18.473878,
+    "Tunit_g": 1883.8113,
+    "Tmotor_g": 1883.8113,
+    "A": 0.24524642,
+    "FMeta": 0.58476494,
+    "Pi_unit": 102.43603,
+    "P_hover": 770.76871,
+    "S": 0.69818133,
+    "AR": 8.2500058,
+    "chord": 0.29090889,
+    "CL": 0.432,
+    "CD0": 0.057213561,
+    "CDi": 0.0090006398,
+    "LD": 6.5242802,
+    "D_cruise": 11.326232,
+    "P_cruise": 444.16596,
+    "E_Wh": 108.28405,
+    "Epack_req_Wh": 142.47901,
+    "Epack_Wh": 216,
+    "m_batt": 1.034,
+    "sigmaWing": 1.2297231,
+    "m_wing": 1.2657697,
+    "S_tail": 0.13468058,
+    "m_tail": 0.16431031,
+    "m_booms": 0.65409168,
+    "m_lift": 1.596,
+    "m_fixed": 2.821,
+    "CdA_extra": 0.019,
+    "TW": 3.2158524,
+    "TW_motorOut": 0,
+    "I_hover": 35.683737,
+    "I_cruise": 20.563239,
+    "P_hover_per_motor": 192.69218,
+    "endurance_ok": true,
+    "t_cruise_avail_min": 17.547983,
+    "diskLoading": 75.327819,
+    "wingLoading": 105.84,
+    "iter": 17,
+    "converged": true
+   },
+   "geo": {
+    "D": 0.5588,
+    "xFront": 0.45739991,
+    "xRear": -0.62030889,
+    "xLEtoCG": -0.081454488,
+    "booms": [
+     {
+      "y": -0.4094,
+      "x0": -1.1697089,
+      "x1": 0.50739991,
+      "tail": true,
+      "rotors": [
+       {
+        "x": 0.45739991,
+        "coax": false
+       },
+       {
+        "x": -0.62030889,
+        "coax": false
+       }
+      ]
+     },
+     {
+      "y": 0.4094,
+      "x0": -1.1697089,
+      "x1": 0.50739991,
+      "tail": true,
+      "rotors": [
+       {
+        "x": 0.45739991,
+        "coax": false
+       },
+       {
+        "x": -0.62030889,
+        "coax": false
+       }
+      ]
+     }
+    ],
+    "segs": [
+     1.158,
+     0.579,
+     1.158,
+     0.579
+    ],
+    "boomTotal": 3.3542176,
+    "hSpan": 0.8188,
+    "hC": 0.096351206,
+    "vH": 0.18672877,
+    "vC": 0.14938302,
+    "Sh": 0.078892368,
+    "Sv": 0.055788213,
+    "lh": 0.90106947,
+    "Vh": 0.35,
+    "Vv": 0.03,
+    "aw": 4.9419838,
+    "at": 4.976117,
+    "deda": 0.38135302,
+    "hn": 0.44621975,
+    "SM": 0.16621975,
+    "yIn": 0.4094,
+    "longestPiece": 1.2
+   },
+   "bom": {
+    "lines": [
+     {
+      "cat": "Lift propulsion",
+      "item": "Hobbywing XRotor X6 SE 280KV (motor+ESC)",
+      "qty": 4,
+      "unit": 114.99,
+      "ext": 459.96,
+      "src": "LP A1 hobbywingdirect.com/products/eps-ips-x6se",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "Hobbywing MFP2270 folding prop",
+      "qty": 4,
+      "unit": 19.99,
+      "ext": 79.96,
+      "src": "LP A1",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "T-Motor AT3520 LS KV550",
+      "qty": 1,
+      "unit": 79.99,
+      "ext": 79.99,
+      "src": "PB 1a",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "Hobbywing Skywalker V2 60A ESC",
+      "qty": 1,
+      "unit": 41.99,
+      "ext": 41.99,
+      "src": "PB 1d",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "APC 14x8.5EP pusher prop",
+      "qty": 3,
+      "unit": 6.79,
+      "ext": 20.37,
+      "src": "PB 1c",
+      "note": ""
+     },
+     {
+      "cat": "Controls",
+      "item": "Hitec D645MW servo",
+      "qty": 4,
+      "unit": 45.99,
+      "ext": 183.96,
+      "src": "PB 4",
+      "note": ""
+     },
+     {
+      "cat": "Energy",
+      "item": "WREKD 6S2P P50B 10 Ah flight pack",
+      "qty": 2,
+      "unit": 252,
+      "ext": 504,
+      "src": "PB 2",
+      "note": "second pack per R7"
+     },
+     {
+      "cat": "Energy",
+      "item": "HOTA D6 Pro charger",
+      "qty": 1,
+      "unit": 149.99,
+      "ext": 149.99,
+      "src": "PB 3",
+      "note": "AC-only 7.9 A on 6S"
+     },
+     {
+      "cat": "Energy",
+      "item": "Pyrodrone 400 W 24 V PSU",
+      "qty": 1,
+      "unit": 63.99,
+      "ext": 63.99,
+      "src": "PB 3",
+      "note": "lifts charge rate to ~15 A"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro Pixhawk 6C Mini (bare)",
+      "qty": 1,
+      "unit": 179,
+      "ext": 179,
+      "src": "AV §2",
+      "note": "14 outputs"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro DroneCAN PM08 200 A",
+      "qty": 1,
+      "unit": 83,
+      "ext": 83,
+      "src": "AV §3.3",
+      "note": "full-throttle lift current exceeds PM06 120 A burst"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro M10 GPS (12040)",
+      "qty": 1,
+      "unit": 43.99,
+      "ext": 43.99,
+      "src": "AV §3.1",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro MS5525DSO + PT40 airspeed",
+      "qty": 1,
+      "unit": 59.99,
+      "ext": 59.99,
+      "src": "AV §3.2",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster Boxer (M2)",
+      "qty": 1,
+      "unit": 109.99,
+      "ext": 109.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster RP3 V2 ELRS receiver",
+      "qty": 1,
+      "unit": 19.99,
+      "ext": 19.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro SiK V3 915 MHz pair",
+      "qty": 1,
+      "unit": 58.99,
+      "ext": 58.99,
+      "src": "AV §3.5",
+      "note": "lean: ELRS MAVLink"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Dronetag Beacon Remote ID",
+      "qty": 1,
+      "unit": 149,
+      "ext": 149,
+      "src": "AV §3.6",
+      "note": "FAA DoC check pending"
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME1172F 28.4 mm spar tube, 72 in",
+      "qty": 1,
+      "unit": 151.54,
+      "ext": 151.54,
+      "src": "AM §1a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME9972F 25.3 mm tube, 72 in (booms + joiner)",
+      "qty": 3,
+      "unit": 123.45,
+      "ext": 370.35,
+      "src": "AM §1a",
+      "note": "cut list 1.158 + 0.579 + 1.158 + 0.579 + 0.6 joiner m"
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 2x24x96 in (wing cores)",
+      "qty": 1,
+      "unit": 84.85,
+      "ext": 84.85,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 1x24x48 in (tail)",
+      "qty": 1,
+      "unit": 17.95,
+      "ext": 17.95,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "E-glass style 120, 3 oz (yd)",
+      "qty": 8,
+      "unit": 8.7,
+      "ext": 69.6,
+      "src": "AM §2b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "US Composites 635 epoxy 2:1 kit",
+      "qty": 1,
+      "unit": 53.45,
+      "ext": 53.45,
+      "src": "AM §2c",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Birch ply 1/8 in 2x4 ft",
+      "qty": 1,
+      "unit": 36.5,
+      "ext": 36.5,
+      "src": "AM §2e",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker LW-PLA 800 g",
+      "qty": 2,
+      "unit": 29.69,
+      "ext": 59.38,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker PA6-CF20 500 g (clamps, mounts)",
+      "qty": 1,
+      "unit": 39.99,
+      "ext": 39.99,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Secraft M6 wing bolt set",
+      "qty": 1,
+      "unit": 8.91,
+      "ext": 8.91,
+      "src": "AM §3b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Wire, connectors, servo leads, hinges, fasteners",
+      "qty": 1,
+      "unit": 120,
+      "ext": 120,
+      "src": "EST allowance",
+      "note": "not priced item by item"
+     },
+     {
+      "cat": "Test & safety",
+      "item": "DIY thrust stand: 2x TAL220 10 kg + 2x HX711",
+      "qty": 1,
+      "unit": 35.8,
+      "ext": 35.8,
+      "src": "AV §4.1",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "ToolkitRC WM150 watt meter",
+      "qty": 1,
+      "unit": 51.99,
+      "ext": 51.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "Bat-Safe LiPo box",
+      "qty": 1,
+      "unit": 89.99,
+      "ext": 89.99,
+      "src": "AV §4.2",
+      "note": "rated 222 Wh — too small for these packs; resize"
+     },
+     {
+      "cat": "Test & safety",
+      "item": "Etekcity IR thermometer",
+      "qty": 1,
+      "unit": 24.99,
+      "ext": 24.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "FAA registration",
+      "qty": 1,
+      "unit": 5,
+      "ext": 5,
+      "src": "AV §5",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "AMA Full membership, 1 pilot",
+      "qty": 1,
+      "unit": 89,
+      "ext": 89,
+      "src": "AV §5",
+      "note": "$2.5M liability; covers UC $1M rule"
+     },
+     {
+      "cat": "Spares",
+      "item": "X6 SE 280KV spare unit",
+      "qty": 1,
+      "unit": 114.99,
+      "ext": 114.99,
+      "src": "LP A1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "MFP2270 spare props",
+      "qty": 2,
+      "unit": 19.99,
+      "ext": 39.98,
+      "src": "LP A1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "Hitec D645MW spare servo",
+      "qty": 1,
+      "unit": 45.99,
+      "ext": 45.99,
+      "src": "PB 4",
+      "note": ""
+     }
+    ],
+    "goods": 3798.41,
+    "shipping": 100,
+    "tax": 389.34,
+    "crash": 555.66,
+    "total": 4843.41,
+    "tubes25": 3
+   },
+   "bomLean": {
+    "lines": [
+     {
+      "cat": "Lift propulsion",
+      "item": "Hobbywing XRotor X6 SE 280KV (motor+ESC)",
+      "qty": 4,
+      "unit": 114.99,
+      "ext": 459.96,
+      "src": "LP A1 hobbywingdirect.com/products/eps-ips-x6se",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "Hobbywing MFP2270 folding prop",
+      "qty": 4,
+      "unit": 19.99,
+      "ext": 79.96,
+      "src": "LP A1",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "T-Motor AT3520 LS KV550",
+      "qty": 1,
+      "unit": 79.99,
+      "ext": 79.99,
+      "src": "PB 1a",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "Hobbywing Skywalker V2 60A ESC",
+      "qty": 1,
+      "unit": 41.99,
+      "ext": 41.99,
+      "src": "PB 1d",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "APC 14x8.5EP pusher prop",
+      "qty": 3,
+      "unit": 6.79,
+      "ext": 20.37,
+      "src": "PB 1c",
+      "note": ""
+     },
+     {
+      "cat": "Controls",
+      "item": "Hitec D645MW servo",
+      "qty": 4,
+      "unit": 45.99,
+      "ext": 183.96,
+      "src": "PB 4",
+      "note": ""
+     },
+     {
+      "cat": "Energy",
+      "item": "WREKD 6S2P P50B 10 Ah flight pack",
+      "qty": 2,
+      "unit": 252,
+      "ext": 504,
+      "src": "PB 2",
+      "note": "second pack per R7"
+     },
+     {
+      "cat": "Energy",
+      "item": "HOTA D6 Pro charger",
+      "qty": 1,
+      "unit": 149.99,
+      "ext": 149.99,
+      "src": "PB 3",
+      "note": "AC-only 7.9 A on 6S"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro Pixhawk 6C Mini + PM06 bundle",
+      "qty": 1,
+      "unit": 199.99,
+      "ext": 199.99,
+      "src": "AV §2",
+      "note": "14 outputs; PM06 70 A cont / 120 A burst"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro M10 GPS (12040)",
+      "qty": 1,
+      "unit": 43.99,
+      "ext": 43.99,
+      "src": "AV §3.1",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro MS5525DSO + PT40 airspeed",
+      "qty": 1,
+      "unit": 59.99,
+      "ext": 59.99,
+      "src": "AV §3.2",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster Pocket (M2)",
+      "qty": 1,
+      "unit": 59.99,
+      "ext": 59.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster RP3 V2 ELRS receiver",
+      "qty": 1,
+      "unit": 19.99,
+      "ext": 19.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Dronetag Beacon Remote ID",
+      "qty": 1,
+      "unit": 149,
+      "ext": 149,
+      "src": "AV §3.6",
+      "note": "FAA DoC check pending"
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME1172F 28.4 mm spar tube, 72 in",
+      "qty": 1,
+      "unit": 151.54,
+      "ext": 151.54,
+      "src": "AM §1a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME9972F 25.3 mm tube, 72 in (booms + joiner)",
+      "qty": 3,
+      "unit": 123.45,
+      "ext": 370.35,
+      "src": "AM §1a",
+      "note": "cut list 1.158 + 0.579 + 1.158 + 0.579 + 0.6 joiner m"
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 2x24x96 in (wing cores)",
+      "qty": 1,
+      "unit": 84.85,
+      "ext": 84.85,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 1x24x48 in (tail)",
+      "qty": 1,
+      "unit": 17.95,
+      "ext": 17.95,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "E-glass style 120, 3 oz (yd)",
+      "qty": 8,
+      "unit": 8.7,
+      "ext": 69.6,
+      "src": "AM §2b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "US Composites 635 epoxy 2:1 kit",
+      "qty": 1,
+      "unit": 53.45,
+      "ext": 53.45,
+      "src": "AM §2c",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Birch ply 1/8 in 2x4 ft",
+      "qty": 1,
+      "unit": 36.5,
+      "ext": 36.5,
+      "src": "AM §2e",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker LW-PLA 800 g",
+      "qty": 2,
+      "unit": 29.69,
+      "ext": 59.38,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker PA6-CF20 500 g (clamps, mounts)",
+      "qty": 1,
+      "unit": 39.99,
+      "ext": 39.99,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Secraft M6 wing bolt set",
+      "qty": 1,
+      "unit": 8.91,
+      "ext": 8.91,
+      "src": "AM §3b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Wire, connectors, servo leads, hinges, fasteners",
+      "qty": 1,
+      "unit": 120,
+      "ext": 120,
+      "src": "EST allowance",
+      "note": "not priced item by item"
+     },
+     {
+      "cat": "Test & safety",
+      "item": "DIY thrust stand: 2x TAL220 10 kg + 2x HX711",
+      "qty": 1,
+      "unit": 35.8,
+      "ext": 35.8,
+      "src": "AV §4.1",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "ToolkitRC WM150 watt meter",
+      "qty": 1,
+      "unit": 51.99,
+      "ext": 51.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "Etekcity IR thermometer",
+      "qty": 1,
+      "unit": 24.99,
+      "ext": 24.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "FAA registration",
+      "qty": 1,
+      "unit": 5,
+      "ext": 5,
+      "src": "AV §5",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "AMA Full membership, 1 pilot",
+      "qty": 1,
+      "unit": 89,
+      "ext": 89,
+      "src": "AV §5",
+      "note": "$2.5M liability; covers UC $1M rule"
+     },
+     {
+      "cat": "Spares",
+      "item": "X6 SE 280KV spare unit",
+      "qty": 1,
+      "unit": 114.99,
+      "ext": 114.99,
+      "src": "LP A1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "MFP2270 spare props",
+      "qty": 2,
+      "unit": 19.99,
+      "ext": 39.98,
+      "src": "LP A1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "Hitec D645MW spare servo",
+      "qty": 1,
+      "unit": 45.99,
+      "ext": 45.99,
+      "src": "PB 4",
+      "note": ""
+     }
+    ],
+    "goods": 3473.43,
+    "shipping": 100,
+    "tax": 356.03,
+    "crash": 506.91,
+    "total": 4436.37,
+    "tubes25": 3
+   },
+   "struct": {
+    "nLimit": 3,
+    "FS": 1.5,
+    "nUlt": 4.5,
+    "Mroot": 84.677193,
+    "sigJ": 132931440,
+    "MS_J": 3.2573183,
+    "sigS": 102786330,
+    "Mhover": 30.252528,
+    "Lb": 0.53012713,
+    "Tmax": 59.408686,
+    "Mb": 31.494156,
+    "sigB": 49441452,
+    "MS_B": 8.7578333,
+    "defl_max": 0.0063743423,
+    "defl_hover": 0.0019821819,
+    "fn": 24.324334,
+    "mTip": 0.399,
+    "Ij_mm4": 8049.438,
+    "Is_mm4": 11717.983,
+    "h": 0.3,
+    "strokes": [
+     {
+      "stroke": 0.01,
+      "n": 31
+     },
+     {
+      "stroke": 0.02,
+      "n": 16
+     },
+     {
+      "stroke": 0.05,
+      "n": 7
+     },
+     {
+      "stroke": 0.08,
+      "n": 4.75
+     }
+    ],
+    "E_DESIGN": 57500000000,
+    "SIG_DESIGN": 433000000
+   },
+   "cg": {
+    "items": [
+     {
+      "name": "Lift units, front",
+      "m": 0.798,
+      "x": 0.457,
+      "src": "LP"
+     },
+     {
+      "name": "Lift units, rear",
+      "m": 0.798,
+      "x": -0.62,
+      "src": "LP"
+     },
+     {
+      "name": "Booms + clamps",
+      "m": 0.654,
+      "x": -0.331,
+      "src": "AM"
+     },
+     {
+      "name": "Wing (foam/glass + spar)",
+      "m": 1.266,
+      "x": -0.116,
+      "src": "F11; centroid 40 % c EST"
+     },
+     {
+      "name": "Tail",
+      "m": 0.164,
+      "x": -0.988,
+      "src": "geometry"
+     },
+     {
+      "name": "Fuselage pod",
+      "m": 0.8,
+      "x": 0.1,
+      "src": "EST"
+     },
+     {
+      "name": "Landing gear",
+      "m": 0.25,
+      "x": -0.073,
+      "src": "EST"
+     },
+     {
+      "name": "Avionics",
+      "m": 0.35,
+      "x": 0.25,
+      "src": "EST"
+     },
+     {
+      "name": "Pusher set",
+      "m": 0.323,
+      "x": -0.391,
+      "src": "PB"
+     },
+     {
+      "name": "Servos (4)",
+      "m": 0.228,
+      "x": -0.131,
+      "src": "PB; 2 wing + 2 tail, mean EST"
+     },
+     {
+      "name": "Wiring",
+      "m": 0.37,
+      "x": -0.1,
+      "src": "EST"
+     },
+     {
+      "name": "Battery (placed for CG)",
+      "m": 1.034,
+      "x": 0.01,
+      "src": "PB"
+     },
+     {
+      "name": "Payload allowance (bay)",
+      "m": 0.5,
+      "x": 0.15,
+      "src": "R12; bay x EST"
+     }
+    ],
+    "target": -0.081454488,
+    "xb": 0.010239294,
+    "cgBattFwd": -0.0773377,
+    "cgBattAft": -0.085571277,
+    "pctFwd": 26.584853,
+    "pctAft": 29.415147,
+    "cgNoPayload": -0.097904701,
+    "thrustCentroid": -0.081454488,
+    "pct": {
+     "target": 28,
+     "noPayload": 33.654764,
+     "np": 44.621975,
+     "thrust": 28
+    },
+    "SM_noPayload": 0.10967211
+   }
+  },
+  "C1": {
+   "key": "C1",
+   "label": "8-lift, four booms",
+   "motor": "T-Motor MN5008 KV340 + P17x5.8 + XRotor 40A",
+   "params": {
+    "rho": 1.225,
+    "Vs": 12,
+    "Vc": 20,
+    "CLmax": 1.2,
+    "span": 2.4,
+    "e": 0.8,
+    "CD0_clean": 0.03,
+    "CdA_boom": 0.0015,
+    "etaProp": 0.6,
+    "etaMEc": 0.85,
+    "kCtrl": 1.1,
+    "kCoax": 1.282,
+    "tHover": 120,
+    "tCruise": 600,
+    "tTrans": 40,
+    "reserve": 0.2,
+    "etaBatt": 0.95,
+    "Vpack": 21.6,
+    "rhoFoam": 32,
+    "tc": 0.13,
+    "wGlass": 0.1017,
+    "rResin": 1,
+    "sigmaTail": 1.22,
+    "tailAreaRatio": 0.22843157,
+    "VhTarget": 0.35,
+    "VvTarget": 0.03,
+    "boomLin": 0.164,
+    "boomClamp": 0.026,
+    "m_spar": 0.4072,
+    "mFus": 0.8,
+    "mGear": 0.25,
+    "mAvionics": 0.35,
+    "mPusherSet": 0.323,
+    "mServos": 0.228,
+    "mWiring": 0.25,
+    "mWirePerLift": 0.03,
+    "mPayload": 0.5,
+    "eSpec": 209,
+    "m_guess": 10,
+    "name": "T-Motor MN5008 KV340 + P17x5.8 + XRotor 40A",
+    "liftD": 0.4318,
+    "Tmax_g": 3556,
+    "mMotor": 0.135,
+    "mEsc": 0.03,
+    "mProp": 0.03,
+    "mMount": 0.026,
+    "thrustTable": [
+     [
+      1224,
+      125
+     ],
+     [
+      1697,
+      199
+     ],
+     [
+      1936,
+      241
+     ],
+     [
+      3556,
+      600
+     ]
+    ],
+    "ratedCont_W": null,
+    "CdA_rotor": 0.003,
+    "nLift": 8,
+    "nBooms": 4,
+    "coax": false,
+    "boomTotalLen": 5.2881461,
+    "mBattFixed": 1.034,
+    "EBattFixed": 216
+   },
+   "design": {
+    "m": 8.2526061,
+    "W": 80.93042,
+    "nUnits": 8,
+    "Tunit_N": 10.116375,
+    "Tunit_g": 1031.5832,
+    "Tmotor_g": 1031.5832,
+    "A": 0.14643846,
+    "FMeta": 0.55543406,
+    "Pi_unit": 53.71886,
+    "P_hover": 851.09287,
+    "S": 0.76465423,
+    "AR": 7.5328165,
+    "chord": 0.31860593,
+    "CL": 0.432,
+    "CD0": 0.069233419,
+    "CDi": 0.0098575785,
+    "LD": 5.4620628,
+    "D_cruise": 14.81693,
+    "P_cruise": 581.05609,
+    "E_Wh": 134.66903,
+    "Epack_req_Wh": 177.19609,
+    "Epack_Wh": 177.19609,
+    "m_batt": 0.8478282,
+    "sigmaWing": 1.3080725,
+    "m_wing": 1.4074231,
+    "S_tail": 0.17467117,
+    "m_tail": 0.21309883,
+    "m_booms": 1.075256,
+    "m_lift": 1.768,
+    "m_fixed": 2.941,
+    "CdA_extra": 0.03,
+    "TW": 3.4471535,
+    "TW_motorOut": 2.5853651,
+    "I_hover": 39.402448,
+    "I_cruise": 26.900745,
+    "P_hover_per_motor": 106.38661,
+    "endurance_ok": true,
+    "t_cruise_avail_min": 10,
+    "diskLoading": 69.082776,
+    "wingLoading": 105.84,
+    "iter": 20,
+    "converged": true
+   },
+   "pick": {
+    "id": "WREKD 6S2P P50B 10 Ah",
+    "chem": "Li-ion",
+    "Wh": 216,
+    "kg": 1.034,
+    "usd": 252,
+    "contA": 120
+   },
+   "sized": {
+    "m": 8.4953305,
+    "W": 83.310733,
+    "nUnits": 8,
+    "Tunit_N": 10.413921,
+    "Tunit_g": 1061.9244,
+    "Tmotor_g": 1061.9244,
+    "A": 0.14643846,
+    "FMeta": 0.55543406,
+    "Pi_unit": 56.106192,
+    "P_hover": 888.91649,
+    "S": 0.78714444,
+    "AR": 7.3175896,
+    "chord": 0.32797685,
+    "CL": 0.432,
+    "CD0": 0.068112446,
+    "CDi": 0.010147512,
+    "LD": 5.5200643,
+    "D_cruise": 15.092463,
+    "P_cruise": 591.86131,
+    "E_Wh": 138.15095,
+    "Epack_req_Wh": 181.77757,
+    "Epack_Wh": 216,
+    "m_batt": 1.034,
+    "sigmaWing": 1.3345809,
+    "m_wing": 1.457708,
+    "S_tail": 0.17980864,
+    "m_tail": 0.21936654,
+    "m_booms": 1.075256,
+    "m_lift": 1.768,
+    "m_fixed": 2.941,
+    "CdA_extra": 0.03,
+    "TW": 3.3486631,
+    "TW_motorOut": 2.5114974,
+    "I_hover": 41.153541,
+    "I_cruise": 27.400986,
+    "P_hover_per_motor": 111.11456,
+    "endurance_ok": true,
+    "t_cruise_avail_min": 12.63667,
+    "diskLoading": 71.114657,
+    "wingLoading": 105.84,
+    "iter": 17,
+    "converged": true
+   },
+   "geo": {
+    "D": 0.4318,
+    "xFront": 0.41020981,
+    "xRear": -0.59387685,
+    "xLEtoCG": -0.091833518,
+    "booms": [
+     {
+      "y": -0.3459,
+      "x0": -1.0797769,
+      "x1": 0.46020981,
+      "tail": true,
+      "rotors": [
+       {
+        "x": 0.41020981
+       },
+       {
+        "x": -0.59387685
+       }
+      ]
+     },
+     {
+      "y": 0.3459,
+      "x0": -1.0797769,
+      "x1": 0.46020981,
+      "tail": true,
+      "rotors": [
+       {
+        "x": 0.41020981
+       },
+       {
+        "x": -0.59387685
+       }
+      ]
+     },
+     {
+      "y": -0.8277,
+      "x0": -0.64387685,
+      "x1": 0.46020981,
+      "tail": false,
+      "rotors": [
+       {
+        "x": 0.41020981
+       },
+       {
+        "x": -0.59387685
+       }
+      ]
+     },
+     {
+      "y": 0.8277,
+      "x0": -0.64387685,
+      "x1": 0.46020981,
+      "tail": false,
+      "rotors": [
+       {
+        "x": 0.41020981
+       },
+       {
+        "x": -0.59387685
+       }
+      ]
+     }
+    ],
+    "segs": [
+     1.084,
+     0.516,
+     1.084,
+     0.516,
+     1.104,
+     1.104
+    ],
+    "boomTotal": 5.2881467,
+    "hSpan": 0.6918,
+    "hC": 0.1597288,
+    "vH": 0.20812897,
+    "vC": 0.16650318,
+    "Sh": 0.11050039,
+    "Sv": 0.069308269,
+    "lh": 0.81771484,
+    "Vh": 0.35,
+    "Vv": 0.03,
+    "aw": 4.796355,
+    "at": 4.0193134,
+    "deda": 0.41727599,
+    "hn": 0.40382043,
+    "SM": 0.12382043,
+    "yIn": 0.3459,
+    "longestPiece": 1.2
+   },
+   "bom": {
+    "lines": [
+     {
+      "cat": "Lift propulsion",
+      "item": "T-Motor MN5008 KV340",
+      "qty": 8,
+      "unit": 89.99,
+      "ext": 719.92,
+      "src": "LP B1 ligpower.com (ships CN)",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "T-Motor P17x5.8 CF prop (pair)",
+      "qty": 4,
+      "unit": 71.9,
+      "ext": 287.6,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "Hobbywing XRotor 40A ESC",
+      "qty": 8,
+      "unit": 17.99,
+      "ext": 143.92,
+      "src": "LP B1 hobbywingdirect.com",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "T-Motor AT3520 LS KV550",
+      "qty": 1,
+      "unit": 79.99,
+      "ext": 79.99,
+      "src": "PB 1a",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "Hobbywing Skywalker V2 60A ESC",
+      "qty": 1,
+      "unit": 41.99,
+      "ext": 41.99,
+      "src": "PB 1d",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "APC 14x8.5EP pusher prop",
+      "qty": 3,
+      "unit": 6.79,
+      "ext": 20.37,
+      "src": "PB 1c",
+      "note": ""
+     },
+     {
+      "cat": "Controls",
+      "item": "Hitec D645MW servo",
+      "qty": 4,
+      "unit": 45.99,
+      "ext": 183.96,
+      "src": "PB 4",
+      "note": ""
+     },
+     {
+      "cat": "Energy",
+      "item": "WREKD 6S2P P50B 10 Ah flight pack",
+      "qty": 2,
+      "unit": 252,
+      "ext": 504,
+      "src": "PB 2",
+      "note": "second pack per R7"
+     },
+     {
+      "cat": "Energy",
+      "item": "HOTA D6 Pro charger",
+      "qty": 1,
+      "unit": 149.99,
+      "ext": 149.99,
+      "src": "PB 3",
+      "note": "AC-only 7.9 A on 6S"
+     },
+     {
+      "cat": "Energy",
+      "item": "Pyrodrone 400 W 24 V PSU",
+      "qty": 1,
+      "unit": 63.99,
+      "ext": 63.99,
+      "src": "PB 3",
+      "note": "lifts charge rate to ~15 A"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro Pixhawk 6C Mini (bare)",
+      "qty": 1,
+      "unit": 179,
+      "ext": 179,
+      "src": "AV §2",
+      "note": "14 outputs"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro DroneCAN PM08 200 A",
+      "qty": 1,
+      "unit": 83,
+      "ext": 83,
+      "src": "AV §3.3",
+      "note": "full-throttle lift current exceeds PM06 120 A burst"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro M10 GPS (12040)",
+      "qty": 1,
+      "unit": 43.99,
+      "ext": 43.99,
+      "src": "AV §3.1",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro MS5525DSO + PT40 airspeed",
+      "qty": 1,
+      "unit": 59.99,
+      "ext": 59.99,
+      "src": "AV §3.2",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster Boxer (M2)",
+      "qty": 1,
+      "unit": 109.99,
+      "ext": 109.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster RP3 V2 ELRS receiver",
+      "qty": 1,
+      "unit": 19.99,
+      "ext": 19.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro SiK V3 915 MHz pair",
+      "qty": 1,
+      "unit": 58.99,
+      "ext": 58.99,
+      "src": "AV §3.5",
+      "note": "lean: ELRS MAVLink"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Dronetag Beacon Remote ID",
+      "qty": 1,
+      "unit": 149,
+      "ext": 149,
+      "src": "AV §3.6",
+      "note": "FAA DoC check pending"
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME1172F 28.4 mm spar tube, 72 in",
+      "qty": 1,
+      "unit": 151.54,
+      "ext": 151.54,
+      "src": "AM §1a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME9972F 25.3 mm tube, 72 in (booms + joiner)",
+      "qty": 4,
+      "unit": 123.45,
+      "ext": 493.8,
+      "src": "AM §1a",
+      "note": "cut list 1.084 + 0.516 + 1.084 + 0.516 + 1.104 + 1.104 + 0.6 joiner m"
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 2x24x96 in (wing cores)",
+      "qty": 1,
+      "unit": 84.85,
+      "ext": 84.85,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 1x24x48 in (tail)",
+      "qty": 1,
+      "unit": 17.95,
+      "ext": 17.95,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "E-glass style 120, 3 oz (yd)",
+      "qty": 8,
+      "unit": 8.7,
+      "ext": 69.6,
+      "src": "AM §2b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "US Composites 635 epoxy 2:1 kit",
+      "qty": 1,
+      "unit": 53.45,
+      "ext": 53.45,
+      "src": "AM §2c",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Birch ply 1/8 in 2x4 ft",
+      "qty": 1,
+      "unit": 36.5,
+      "ext": 36.5,
+      "src": "AM §2e",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker LW-PLA 800 g",
+      "qty": 2,
+      "unit": 29.69,
+      "ext": 59.38,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker PA6-CF20 500 g (clamps, mounts)",
+      "qty": 1,
+      "unit": 39.99,
+      "ext": 39.99,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Secraft M6 wing bolt set",
+      "qty": 1,
+      "unit": 8.91,
+      "ext": 8.91,
+      "src": "AM §3b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Wire, connectors, servo leads, hinges, fasteners",
+      "qty": 1,
+      "unit": 120,
+      "ext": 120,
+      "src": "EST allowance",
+      "note": "not priced item by item"
+     },
+     {
+      "cat": "Test & safety",
+      "item": "DIY thrust stand: 2x TAL220 10 kg + 2x HX711",
+      "qty": 1,
+      "unit": 35.8,
+      "ext": 35.8,
+      "src": "AV §4.1",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "ToolkitRC WM150 watt meter",
+      "qty": 1,
+      "unit": 51.99,
+      "ext": 51.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "Bat-Safe LiPo box",
+      "qty": 1,
+      "unit": 89.99,
+      "ext": 89.99,
+      "src": "AV §4.2",
+      "note": "rated 222 Wh — too small for these packs; resize"
+     },
+     {
+      "cat": "Test & safety",
+      "item": "Etekcity IR thermometer",
+      "qty": 1,
+      "unit": 24.99,
+      "ext": 24.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "FAA registration",
+      "qty": 1,
+      "unit": 5,
+      "ext": 5,
+      "src": "AV §5",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "AMA Full membership, 1 pilot",
+      "qty": 1,
+      "unit": 89,
+      "ext": 89,
+      "src": "AV §5",
+      "note": "$2.5M liability; covers UC $1M rule"
+     },
+     {
+      "cat": "Spares",
+      "item": "MN5008 spare motor",
+      "qty": 1,
+      "unit": 89.99,
+      "ext": 89.99,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "P17x5.8 spare pair",
+      "qty": 1,
+      "unit": 71.9,
+      "ext": 71.9,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "XRotor 40A spare",
+      "qty": 1,
+      "unit": 17.99,
+      "ext": 17.99,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "Hitec D645MW spare servo",
+      "qty": 1,
+      "unit": 45.99,
+      "ext": 45.99,
+      "src": "PB 4",
+      "note": ""
+     }
+    ],
+    "goods": 4558.29,
+    "shipping": 100,
+    "tax": 467.22,
+    "crash": 669.64,
+    "total": 5795.16,
+    "tubes25": 4
+   },
+   "bomLean": {
+    "lines": [
+     {
+      "cat": "Lift propulsion",
+      "item": "T-Motor MN5008 KV340",
+      "qty": 8,
+      "unit": 89.99,
+      "ext": 719.92,
+      "src": "LP B1 ligpower.com (ships CN)",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "T-Motor P17x5.8 CF prop (pair)",
+      "qty": 4,
+      "unit": 71.9,
+      "ext": 287.6,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "Hobbywing XRotor 40A ESC",
+      "qty": 8,
+      "unit": 17.99,
+      "ext": 143.92,
+      "src": "LP B1 hobbywingdirect.com",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "T-Motor AT3520 LS KV550",
+      "qty": 1,
+      "unit": 79.99,
+      "ext": 79.99,
+      "src": "PB 1a",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "Hobbywing Skywalker V2 60A ESC",
+      "qty": 1,
+      "unit": 41.99,
+      "ext": 41.99,
+      "src": "PB 1d",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "APC 14x8.5EP pusher prop",
+      "qty": 3,
+      "unit": 6.79,
+      "ext": 20.37,
+      "src": "PB 1c",
+      "note": ""
+     },
+     {
+      "cat": "Controls",
+      "item": "Hitec D645MW servo",
+      "qty": 4,
+      "unit": 45.99,
+      "ext": 183.96,
+      "src": "PB 4",
+      "note": ""
+     },
+     {
+      "cat": "Energy",
+      "item": "WREKD 6S2P P50B 10 Ah flight pack",
+      "qty": 2,
+      "unit": 252,
+      "ext": 504,
+      "src": "PB 2",
+      "note": "second pack per R7"
+     },
+     {
+      "cat": "Energy",
+      "item": "HOTA D6 Pro charger",
+      "qty": 1,
+      "unit": 149.99,
+      "ext": 149.99,
+      "src": "PB 3",
+      "note": "AC-only 7.9 A on 6S"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro Pixhawk 6C Mini + PM06 bundle",
+      "qty": 1,
+      "unit": 199.99,
+      "ext": 199.99,
+      "src": "AV §2",
+      "note": "14 outputs; PM06 70 A cont / 120 A burst"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro M10 GPS (12040)",
+      "qty": 1,
+      "unit": 43.99,
+      "ext": 43.99,
+      "src": "AV §3.1",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro MS5525DSO + PT40 airspeed",
+      "qty": 1,
+      "unit": 59.99,
+      "ext": 59.99,
+      "src": "AV §3.2",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster Pocket (M2)",
+      "qty": 1,
+      "unit": 59.99,
+      "ext": 59.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster RP3 V2 ELRS receiver",
+      "qty": 1,
+      "unit": 19.99,
+      "ext": 19.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Dronetag Beacon Remote ID",
+      "qty": 1,
+      "unit": 149,
+      "ext": 149,
+      "src": "AV §3.6",
+      "note": "FAA DoC check pending"
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME1172F 28.4 mm spar tube, 72 in",
+      "qty": 1,
+      "unit": 151.54,
+      "ext": 151.54,
+      "src": "AM §1a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME9972F 25.3 mm tube, 72 in (booms + joiner)",
+      "qty": 4,
+      "unit": 123.45,
+      "ext": 493.8,
+      "src": "AM §1a",
+      "note": "cut list 1.084 + 0.516 + 1.084 + 0.516 + 1.104 + 1.104 + 0.6 joiner m"
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 2x24x96 in (wing cores)",
+      "qty": 1,
+      "unit": 84.85,
+      "ext": 84.85,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 1x24x48 in (tail)",
+      "qty": 1,
+      "unit": 17.95,
+      "ext": 17.95,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "E-glass style 120, 3 oz (yd)",
+      "qty": 8,
+      "unit": 8.7,
+      "ext": 69.6,
+      "src": "AM §2b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "US Composites 635 epoxy 2:1 kit",
+      "qty": 1,
+      "unit": 53.45,
+      "ext": 53.45,
+      "src": "AM §2c",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Birch ply 1/8 in 2x4 ft",
+      "qty": 1,
+      "unit": 36.5,
+      "ext": 36.5,
+      "src": "AM §2e",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker LW-PLA 800 g",
+      "qty": 2,
+      "unit": 29.69,
+      "ext": 59.38,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker PA6-CF20 500 g (clamps, mounts)",
+      "qty": 1,
+      "unit": 39.99,
+      "ext": 39.99,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Secraft M6 wing bolt set",
+      "qty": 1,
+      "unit": 8.91,
+      "ext": 8.91,
+      "src": "AM §3b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Wire, connectors, servo leads, hinges, fasteners",
+      "qty": 1,
+      "unit": 120,
+      "ext": 120,
+      "src": "EST allowance",
+      "note": "not priced item by item"
+     },
+     {
+      "cat": "Test & safety",
+      "item": "DIY thrust stand: 2x TAL220 10 kg + 2x HX711",
+      "qty": 1,
+      "unit": 35.8,
+      "ext": 35.8,
+      "src": "AV §4.1",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "ToolkitRC WM150 watt meter",
+      "qty": 1,
+      "unit": 51.99,
+      "ext": 51.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "Etekcity IR thermometer",
+      "qty": 1,
+      "unit": 24.99,
+      "ext": 24.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "FAA registration",
+      "qty": 1,
+      "unit": 5,
+      "ext": 5,
+      "src": "AV §5",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "AMA Full membership, 1 pilot",
+      "qty": 1,
+      "unit": 89,
+      "ext": 89,
+      "src": "AV §5",
+      "note": "$2.5M liability; covers UC $1M rule"
+     },
+     {
+      "cat": "Spares",
+      "item": "MN5008 spare motor",
+      "qty": 1,
+      "unit": 89.99,
+      "ext": 89.99,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "P17x5.8 spare pair",
+      "qty": 1,
+      "unit": 71.9,
+      "ext": 71.9,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "XRotor 40A spare",
+      "qty": 1,
+      "unit": 17.99,
+      "ext": 17.99,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "Hitec D645MW spare servo",
+      "qty": 1,
+      "unit": 45.99,
+      "ext": 45.99,
+      "src": "PB 4",
+      "note": ""
+     }
+    ],
+    "goods": 4233.31,
+    "shipping": 100,
+    "tax": 433.91,
+    "crash": 620.9,
+    "total": 5388.12,
+    "tubes25": 4
+   },
+   "struct": {
+    "nLimit": 3,
+    "FS": 1.5,
+    "nUlt": 4.5,
+    "Mroot": 95.467067,
+    "sigJ": 149870040,
+    "MS_J": 2.8891698,
+    "sigS": 115883730,
+    "Mhover": 28.817182,
+    "Lb": 0.49220403,
+    "Tmax": 34.872447,
+    "Mb": 17.164359,
+    "sigB": 26945661,
+    "MS_B": 16.069378,
+    "defl_max": 0.0029947685,
+    "defl_hover": 0.00089432446,
+    "fn": 36.532852,
+    "mTip": 0.221,
+    "Ij_mm4": 8049.438,
+    "Is_mm4": 11717.983,
+    "h": 0.3,
+    "strokes": [
+     {
+      "stroke": 0.01,
+      "n": 31
+     },
+     {
+      "stroke": 0.02,
+      "n": 16
+     },
+     {
+      "stroke": 0.05,
+      "n": 7
+     },
+     {
+      "stroke": 0.08,
+      "n": 4.75
+     }
+    ],
+    "E_DESIGN": 57500000000,
+    "SIG_DESIGN": 433000000
+   },
+   "cg": {
+    "items": [
+     {
+      "name": "Lift units, front",
+      "m": 0.884,
+      "x": 0.41,
+      "src": "LP"
+     },
+     {
+      "name": "Lift units, rear",
+      "m": 0.884,
+      "x": -0.594,
+      "src": "LP"
+     },
+     {
+      "name": "Booms + clamps",
+      "m": 1.075,
+      "x": -0.219,
+      "src": "AM"
+     },
+     {
+      "name": "Wing (foam/glass + spar)",
+      "m": 1.458,
+      "x": -0.131,
+      "src": "F11; centroid 40 % c EST"
+     },
+     {
+      "name": "Tail",
+      "m": 0.219,
+      "x": -0.924,
+      "src": "geometry"
+     },
+     {
+      "name": "Fuselage pod",
+      "m": 0.8,
+      "x": 0.1,
+      "src": "EST"
+     },
+     {
+      "name": "Landing gear",
+      "m": 0.25,
+      "x": -0.082,
+      "src": "EST"
+     },
+     {
+      "name": "Avionics",
+      "m": 0.35,
+      "x": 0.25,
+      "src": "EST"
+     },
+     {
+      "name": "Pusher set",
+      "m": 0.323,
+      "x": -0.428,
+      "src": "PB"
+     },
+     {
+      "name": "Servos (4)",
+      "m": 0.228,
+      "x": -0.148,
+      "src": "PB; 2 wing + 2 tail, mean EST"
+     },
+     {
+      "name": "Wiring",
+      "m": 0.49,
+      "x": -0.1,
+      "src": "EST"
+     },
+     {
+      "name": "Battery (placed for CG)",
+      "m": 1.034,
+      "x": 0.01,
+      "src": "PB"
+     },
+     {
+      "name": "Payload allowance (bay)",
+      "m": 0.5,
+      "x": 0.15,
+      "src": "R12; bay x EST"
+     }
+    ],
+    "target": -0.091833518,
+    "xb": 0.0099586667,
+    "cgBattFwd": -0.088181959,
+    "cgBattAft": -0.095485078,
+    "pctFwd": 26.886641,
+    "pctAft": 29.113359,
+    "cgNoPayload": -0.10695757,
+    "thrustCentroid": -0.091833518,
+    "pct": {
+     "target": 28,
+     "noPayload": 32.611316,
+     "np": 40.382043,
+     "thrust": 28
+    },
+    "SM_noPayload": 0.077707274
+   }
+  },
+  "C2": {
+   "key": "C2",
+   "label": "Coaxial X8, twin boom",
+   "motor": "T-Motor MN5008 KV340 + P17x5.8 + XRotor 40A",
+   "params": {
+    "rho": 1.225,
+    "Vs": 12,
+    "Vc": 20,
+    "CLmax": 1.2,
+    "span": 2.4,
+    "e": 0.8,
+    "CD0_clean": 0.03,
+    "CdA_boom": 0.0015,
+    "etaProp": 0.6,
+    "etaMEc": 0.85,
+    "kCtrl": 1.1,
+    "kCoax": 1.282,
+    "tHover": 120,
+    "tCruise": 600,
+    "tTrans": 40,
+    "reserve": 0.2,
+    "etaBatt": 0.95,
+    "Vpack": 21.6,
+    "rhoFoam": 32,
+    "tc": 0.13,
+    "wGlass": 0.1017,
+    "rResin": 1,
+    "sigmaTail": 1.22,
+    "tailAreaRatio": 0.22435809,
+    "VhTarget": 0.35,
+    "VvTarget": 0.03,
+    "boomLin": 0.164,
+    "boomClamp": 0.026,
+    "m_spar": 0.4072,
+    "mFus": 0.8,
+    "mGear": 0.25,
+    "mAvionics": 0.35,
+    "mPusherSet": 0.323,
+    "mServos": 0.228,
+    "mWiring": 0.25,
+    "mWirePerLift": 0.03,
+    "mPayload": 0.5,
+    "eSpec": 209,
+    "m_guess": 10,
+    "name": "T-Motor MN5008 KV340 + P17x5.8 + XRotor 40A",
+    "liftD": 0.4318,
+    "Tmax_g": 3556,
+    "mMotor": 0.135,
+    "mEsc": 0.03,
+    "mProp": 0.03,
+    "mMount": 0.026,
+    "thrustTable": [
+     [
+      1224,
+      125
+     ],
+     [
+      1697,
+      199
+     ],
+     [
+      1936,
+      241
+     ],
+     [
+      3556,
+      600
+     ]
+    ],
+    "ratedCont_W": null,
+    "CdA_rotor": 0.003,
+    "nLift": 8,
+    "nBooms": 2,
+    "coax": true,
+    "boomTotalLen": 3.010577,
+    "mBattFixed": 1.034,
+    "EBattFixed": 216
+   },
+   "design": {
+    "m": 7.5816464,
+    "W": 74.350553,
+    "nUnits": 4,
+    "Tunit_N": 18.587805,
+    "Tunit_g": 1895.4286,
+    "Tmotor_g": 1214.9698,
+    "A": 0.14643846,
+    "FMeta": 0.55543406,
+    "Pi_unit": 133.79243,
+    "P_hover": 1358.7506,
+    "S": 0.70248697,
+    "AR": 8.1994403,
+    "chord": 0.29270291,
+    "CL": 0.432,
+    "CD0": 0.051352709,
+    "CDi": 0.0090561462,
+    "LD": 7.1512694,
+    "D_cruise": 10.396926,
+    "P_cruise": 407.7226,
+    "E_Wh": 128.34268,
+    "Epack_req_Wh": 168.87195,
+    "Epack_Wh": 168.87195,
+    "m_batt": 0.80799976,
+    "sigmaWing": 1.234798,
+    "m_wing": 1.2746295,
+    "S_tail": 0.15760864,
+    "m_tail": 0.19228254,
+    "m_booms": 0.59773463,
+    "m_lift": 1.768,
+    "m_fixed": 2.941,
+    "CdA_extra": 0.015,
+    "TW": 2.9268481,
+    "TW_motorOut": 2.1951361,
+    "I_hover": 62.90512,
+    "I_cruise": 18.876046,
+    "P_hover_per_motor": 169.84382,
+    "endurance_ok": true,
+    "t_cruise_avail_min": 10,
+    "diskLoading": 126.93254,
+    "wingLoading": 105.84,
+    "iter": 21,
+    "converged": true
+   },
+   "pick": {
+    "id": "WREKD 6S2P P50B 10 Ah",
+    "chem": "Li-ion",
+    "Wh": 216,
+    "kg": 1.034,
+    "usd": 252,
+    "contA": 120
+   },
+   "sized": {
+    "m": 7.8711771,
+    "W": 77.189879,
+    "nUnits": 4,
+    "Tunit_N": 19.297653,
+    "Tunit_g": 1967.813,
+    "Tmotor_g": 1261.3681,
+    "A": 0.14643846,
+    "FMeta": 0.55543406,
+    "Pi_unit": 141.52923,
+    "P_hover": 1437.3228,
+    "S": 0.72931419,
+    "AR": 7.8978307,
+    "chord": 0.30388091,
+    "CL": 0.432,
+    "CD0": 0.050567268,
+    "CDi": 0.0094019906,
+    "LD": 7.2036909,
+    "D_cruise": 10.715426,
+    "P_cruise": 420.21277,
+    "E_Wh": 133.91648,
+    "Epack_req_Wh": 176.20589,
+    "Epack_Wh": 216,
+    "m_batt": 1.034,
+    "sigmaWing": 1.2664183,
+    "m_wing": 1.3308168,
+    "S_tail": 0.16362754,
+    "m_tail": 0.1996256,
+    "m_booms": 0.59773463,
+    "m_lift": 1.768,
+    "m_fixed": 2.941,
+    "CdA_extra": 0.015,
+    "TW": 2.819188,
+    "TW_motorOut": 2.114391,
+    "I_hover": 66.542724,
+    "I_cruise": 19.454295,
+    "P_hover_per_motor": 179.66535,
+    "endurance_ok": true,
+    "t_cruise_avail_min": 14.318316,
+    "diskLoading": 131.77995,
+    "wingLoading": 105.84,
+    "iter": 17,
+    "converged": true
+   },
+   "geo": {
+    "D": 0.4318,
+    "xFront": 0.3996076,
+    "xRear": -0.56978091,
+    "xLEtoCG": -0.085086655,
+    "booms": [
+     {
+      "y": -0.3459,
+      "x0": -1.0556809,
+      "x1": 0.4496076,
+      "tail": true,
+      "rotors": [
+       {
+        "x": 0.3996076,
+        "coax": true
+       },
+       {
+        "x": -0.56978091,
+        "coax": true
+       }
+      ]
+     },
+     {
+      "y": 0.3459,
+      "x0": -1.0556809,
+      "x1": 0.4496076,
+      "tail": true,
+      "rotors": [
+       {
+        "x": 0.3996076,
+        "coax": true
+       },
+       {
+        "x": -0.56978091,
+        "coax": true
+       }
+      ]
+     }
+    ],
+    "segs": [
+     1.049,
+     0.516,
+     1.049,
+     0.516
+    ],
+    "boomTotal": 3.010577,
+    "hSpan": 0.6918,
+    "hC": 0.14104378,
+    "vH": 0.20318319,
+    "vC": 0.16254655,
+    "Sh": 0.097574087,
+    "Sv": 0.066053454,
+    "lh": 0.79497163,
+    "Vh": 0.35,
+    "Vv": 0.03,
+    "aw": 4.8904008,
+    "at": 4.2234297,
+    "deda": 0.39420013,
+    "hn": 0.41480127,
+    "SM": 0.13480127,
+    "yIn": 0.3459,
+    "longestPiece": 1.2
+   },
+   "bom": {
+    "lines": [
+     {
+      "cat": "Lift propulsion",
+      "item": "T-Motor MN5008 KV340",
+      "qty": 8,
+      "unit": 89.99,
+      "ext": 719.92,
+      "src": "LP B1 ligpower.com (ships CN)",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "T-Motor P17x5.8 CF prop (pair)",
+      "qty": 4,
+      "unit": 71.9,
+      "ext": 287.6,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "Hobbywing XRotor 40A ESC",
+      "qty": 8,
+      "unit": 17.99,
+      "ext": 143.92,
+      "src": "LP B1 hobbywingdirect.com",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "T-Motor AT3520 LS KV550",
+      "qty": 1,
+      "unit": 79.99,
+      "ext": 79.99,
+      "src": "PB 1a",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "Hobbywing Skywalker V2 60A ESC",
+      "qty": 1,
+      "unit": 41.99,
+      "ext": 41.99,
+      "src": "PB 1d",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "APC 14x8.5EP pusher prop",
+      "qty": 3,
+      "unit": 6.79,
+      "ext": 20.37,
+      "src": "PB 1c",
+      "note": ""
+     },
+     {
+      "cat": "Controls",
+      "item": "Hitec D645MW servo",
+      "qty": 4,
+      "unit": 45.99,
+      "ext": 183.96,
+      "src": "PB 4",
+      "note": ""
+     },
+     {
+      "cat": "Energy",
+      "item": "WREKD 6S2P P50B 10 Ah flight pack",
+      "qty": 2,
+      "unit": 252,
+      "ext": 504,
+      "src": "PB 2",
+      "note": "second pack per R7"
+     },
+     {
+      "cat": "Energy",
+      "item": "HOTA D6 Pro charger",
+      "qty": 1,
+      "unit": 149.99,
+      "ext": 149.99,
+      "src": "PB 3",
+      "note": "AC-only 7.9 A on 6S"
+     },
+     {
+      "cat": "Energy",
+      "item": "Pyrodrone 400 W 24 V PSU",
+      "qty": 1,
+      "unit": 63.99,
+      "ext": 63.99,
+      "src": "PB 3",
+      "note": "lifts charge rate to ~15 A"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro Pixhawk 6C Mini (bare)",
+      "qty": 1,
+      "unit": 179,
+      "ext": 179,
+      "src": "AV §2",
+      "note": "14 outputs"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro DroneCAN PM08 200 A",
+      "qty": 1,
+      "unit": 83,
+      "ext": 83,
+      "src": "AV §3.3",
+      "note": "full-throttle lift current exceeds PM06 120 A burst"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro M10 GPS (12040)",
+      "qty": 1,
+      "unit": 43.99,
+      "ext": 43.99,
+      "src": "AV §3.1",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro MS5525DSO + PT40 airspeed",
+      "qty": 1,
+      "unit": 59.99,
+      "ext": 59.99,
+      "src": "AV §3.2",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster Boxer (M2)",
+      "qty": 1,
+      "unit": 109.99,
+      "ext": 109.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster RP3 V2 ELRS receiver",
+      "qty": 1,
+      "unit": 19.99,
+      "ext": 19.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro SiK V3 915 MHz pair",
+      "qty": 1,
+      "unit": 58.99,
+      "ext": 58.99,
+      "src": "AV §3.5",
+      "note": "lean: ELRS MAVLink"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Dronetag Beacon Remote ID",
+      "qty": 1,
+      "unit": 149,
+      "ext": 149,
+      "src": "AV §3.6",
+      "note": "FAA DoC check pending"
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME1172F 28.4 mm spar tube, 72 in",
+      "qty": 1,
+      "unit": 151.54,
+      "ext": 151.54,
+      "src": "AM §1a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME9972F 25.3 mm tube, 72 in (booms + joiner)",
+      "qty": 3,
+      "unit": 123.45,
+      "ext": 370.35,
+      "src": "AM §1a",
+      "note": "cut list 1.049 + 0.516 + 1.049 + 0.516 + 0.6 joiner m"
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 2x24x96 in (wing cores)",
+      "qty": 1,
+      "unit": 84.85,
+      "ext": 84.85,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 1x24x48 in (tail)",
+      "qty": 1,
+      "unit": 17.95,
+      "ext": 17.95,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "E-glass style 120, 3 oz (yd)",
+      "qty": 8,
+      "unit": 8.7,
+      "ext": 69.6,
+      "src": "AM §2b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "US Composites 635 epoxy 2:1 kit",
+      "qty": 1,
+      "unit": 53.45,
+      "ext": 53.45,
+      "src": "AM §2c",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Birch ply 1/8 in 2x4 ft",
+      "qty": 1,
+      "unit": 36.5,
+      "ext": 36.5,
+      "src": "AM §2e",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker LW-PLA 800 g",
+      "qty": 2,
+      "unit": 29.69,
+      "ext": 59.38,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker PA6-CF20 500 g (clamps, mounts)",
+      "qty": 1,
+      "unit": 39.99,
+      "ext": 39.99,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Secraft M6 wing bolt set",
+      "qty": 1,
+      "unit": 8.91,
+      "ext": 8.91,
+      "src": "AM §3b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Wire, connectors, servo leads, hinges, fasteners",
+      "qty": 1,
+      "unit": 120,
+      "ext": 120,
+      "src": "EST allowance",
+      "note": "not priced item by item"
+     },
+     {
+      "cat": "Test & safety",
+      "item": "DIY thrust stand: 2x TAL220 10 kg + 2x HX711",
+      "qty": 1,
+      "unit": 35.8,
+      "ext": 35.8,
+      "src": "AV §4.1",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "ToolkitRC WM150 watt meter",
+      "qty": 1,
+      "unit": 51.99,
+      "ext": 51.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "Bat-Safe LiPo box",
+      "qty": 1,
+      "unit": 89.99,
+      "ext": 89.99,
+      "src": "AV §4.2",
+      "note": "rated 222 Wh — too small for these packs; resize"
+     },
+     {
+      "cat": "Test & safety",
+      "item": "Etekcity IR thermometer",
+      "qty": 1,
+      "unit": 24.99,
+      "ext": 24.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "FAA registration",
+      "qty": 1,
+      "unit": 5,
+      "ext": 5,
+      "src": "AV §5",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "AMA Full membership, 1 pilot",
+      "qty": 1,
+      "unit": 89,
+      "ext": 89,
+      "src": "AV §5",
+      "note": "$2.5M liability; covers UC $1M rule"
+     },
+     {
+      "cat": "Spares",
+      "item": "MN5008 spare motor",
+      "qty": 1,
+      "unit": 89.99,
+      "ext": 89.99,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "P17x5.8 spare pair",
+      "qty": 1,
+      "unit": 71.9,
+      "ext": 71.9,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "XRotor 40A spare",
+      "qty": 1,
+      "unit": 17.99,
+      "ext": 17.99,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "Hitec D645MW spare servo",
+      "qty": 1,
+      "unit": 45.99,
+      "ext": 45.99,
+      "src": "PB 4",
+      "note": ""
+     }
+    ],
+    "goods": 4434.84,
+    "shipping": 100,
+    "tax": 454.57,
+    "crash": 651.13,
+    "total": 5640.54,
+    "tubes25": 3
+   },
+   "bomLean": {
+    "lines": [
+     {
+      "cat": "Lift propulsion",
+      "item": "T-Motor MN5008 KV340",
+      "qty": 8,
+      "unit": 89.99,
+      "ext": 719.92,
+      "src": "LP B1 ligpower.com (ships CN)",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "T-Motor P17x5.8 CF prop (pair)",
+      "qty": 4,
+      "unit": 71.9,
+      "ext": 287.6,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Lift propulsion",
+      "item": "Hobbywing XRotor 40A ESC",
+      "qty": 8,
+      "unit": 17.99,
+      "ext": 143.92,
+      "src": "LP B1 hobbywingdirect.com",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "T-Motor AT3520 LS KV550",
+      "qty": 1,
+      "unit": 79.99,
+      "ext": 79.99,
+      "src": "PB 1a",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "Hobbywing Skywalker V2 60A ESC",
+      "qty": 1,
+      "unit": 41.99,
+      "ext": 41.99,
+      "src": "PB 1d",
+      "note": ""
+     },
+     {
+      "cat": "Cruise propulsion",
+      "item": "APC 14x8.5EP pusher prop",
+      "qty": 3,
+      "unit": 6.79,
+      "ext": 20.37,
+      "src": "PB 1c",
+      "note": ""
+     },
+     {
+      "cat": "Controls",
+      "item": "Hitec D645MW servo",
+      "qty": 4,
+      "unit": 45.99,
+      "ext": 183.96,
+      "src": "PB 4",
+      "note": ""
+     },
+     {
+      "cat": "Energy",
+      "item": "WREKD 6S2P P50B 10 Ah flight pack",
+      "qty": 2,
+      "unit": 252,
+      "ext": 504,
+      "src": "PB 2",
+      "note": "second pack per R7"
+     },
+     {
+      "cat": "Energy",
+      "item": "HOTA D6 Pro charger",
+      "qty": 1,
+      "unit": 149.99,
+      "ext": 149.99,
+      "src": "PB 3",
+      "note": "AC-only 7.9 A on 6S"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro Pixhawk 6C Mini + PM06 bundle",
+      "qty": 1,
+      "unit": 199.99,
+      "ext": 199.99,
+      "src": "AV §2",
+      "note": "14 outputs; PM06 70 A cont / 120 A burst"
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro M10 GPS (12040)",
+      "qty": 1,
+      "unit": 43.99,
+      "ext": 43.99,
+      "src": "AV §3.1",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Holybro MS5525DSO + PT40 airspeed",
+      "qty": 1,
+      "unit": 59.99,
+      "ext": 59.99,
+      "src": "AV §3.2",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster Pocket (M2)",
+      "qty": 1,
+      "unit": 59.99,
+      "ext": 59.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "RadioMaster RP3 V2 ELRS receiver",
+      "qty": 1,
+      "unit": 19.99,
+      "ext": 19.99,
+      "src": "AV §3.4",
+      "note": ""
+     },
+     {
+      "cat": "Avionics",
+      "item": "Dronetag Beacon Remote ID",
+      "qty": 1,
+      "unit": 149,
+      "ext": 149,
+      "src": "AV §3.6",
+      "note": "FAA DoC check pending"
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME1172F 28.4 mm spar tube, 72 in",
+      "qty": 1,
+      "unit": 151.54,
+      "ext": 151.54,
+      "src": "AM §1a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "CFTS ME9972F 25.3 mm tube, 72 in (booms + joiner)",
+      "qty": 3,
+      "unit": 123.45,
+      "ext": 370.35,
+      "src": "AM §1a",
+      "note": "cut list 1.049 + 0.516 + 1.049 + 0.516 + 0.6 joiner m"
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 2x24x96 in (wing cores)",
+      "qty": 1,
+      "unit": 84.85,
+      "ext": 84.85,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Styrofoam 1x24x48 in (tail)",
+      "qty": 1,
+      "unit": 17.95,
+      "ext": 17.95,
+      "src": "AM §2a",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "E-glass style 120, 3 oz (yd)",
+      "qty": 8,
+      "unit": 8.7,
+      "ext": 69.6,
+      "src": "AM §2b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "US Composites 635 epoxy 2:1 kit",
+      "qty": 1,
+      "unit": 53.45,
+      "ext": 53.45,
+      "src": "AM §2c",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Birch ply 1/8 in 2x4 ft",
+      "qty": 1,
+      "unit": 36.5,
+      "ext": 36.5,
+      "src": "AM §2e",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker LW-PLA 800 g",
+      "qty": 2,
+      "unit": 29.69,
+      "ext": 59.38,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Polymaker PA6-CF20 500 g (clamps, mounts)",
+      "qty": 1,
+      "unit": 39.99,
+      "ext": 39.99,
+      "src": "AM §2d",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Secraft M6 wing bolt set",
+      "qty": 1,
+      "unit": 8.91,
+      "ext": 8.91,
+      "src": "AM §3b",
+      "note": ""
+     },
+     {
+      "cat": "Airframe",
+      "item": "Wire, connectors, servo leads, hinges, fasteners",
+      "qty": 1,
+      "unit": 120,
+      "ext": 120,
+      "src": "EST allowance",
+      "note": "not priced item by item"
+     },
+     {
+      "cat": "Test & safety",
+      "item": "DIY thrust stand: 2x TAL220 10 kg + 2x HX711",
+      "qty": 1,
+      "unit": 35.8,
+      "ext": 35.8,
+      "src": "AV §4.1",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "ToolkitRC WM150 watt meter",
+      "qty": 1,
+      "unit": 51.99,
+      "ext": 51.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Test & safety",
+      "item": "Etekcity IR thermometer",
+      "qty": 1,
+      "unit": 24.99,
+      "ext": 24.99,
+      "src": "AV §4.2",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "FAA registration",
+      "qty": 1,
+      "unit": 5,
+      "ext": 5,
+      "src": "AV §5",
+      "note": ""
+     },
+     {
+      "cat": "Compliance",
+      "item": "AMA Full membership, 1 pilot",
+      "qty": 1,
+      "unit": 89,
+      "ext": 89,
+      "src": "AV §5",
+      "note": "$2.5M liability; covers UC $1M rule"
+     },
+     {
+      "cat": "Spares",
+      "item": "MN5008 spare motor",
+      "qty": 1,
+      "unit": 89.99,
+      "ext": 89.99,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "P17x5.8 spare pair",
+      "qty": 1,
+      "unit": 71.9,
+      "ext": 71.9,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "XRotor 40A spare",
+      "qty": 1,
+      "unit": 17.99,
+      "ext": 17.99,
+      "src": "LP B1",
+      "note": ""
+     },
+     {
+      "cat": "Spares",
+      "item": "Hitec D645MW spare servo",
+      "qty": 1,
+      "unit": 45.99,
+      "ext": 45.99,
+      "src": "PB 4",
+      "note": ""
+     }
+    ],
+    "goods": 4109.86,
+    "shipping": 100,
+    "tax": 421.26,
+    "crash": 602.38,
+    "total": 5233.5,
+    "tubes25": 3
+   },
+   "struct": {
+    "nLimit": 3,
+    "FS": 1.5,
+    "nUlt": 4.5,
+    "Mroot": 88.453085,
+    "sigJ": 138859060,
+    "MS_J": 3.1182696,
+    "sigS": 107369740,
+    "Mhover": 26.699979,
+    "Lb": 0.47557783,
+    "Tmax": 54.403194,
+    "Mb": 25.872953,
+    "sigB": 40616944,
+    "MS_B": 10.660576,
+    "defl_max": 0.0042143882,
+    "defl_hover": 0.0014949086,
+    "fn": 38.465282,
+    "mTip": 0.221,
+    "Ij_mm4": 8049.438,
+    "Is_mm4": 11717.983,
+    "h": 0.3,
+    "strokes": [
+     {
+      "stroke": 0.01,
+      "n": 31
+     },
+     {
+      "stroke": 0.02,
+      "n": 16
+     },
+     {
+      "stroke": 0.05,
+      "n": 7
+     },
+     {
+      "stroke": 0.08,
+      "n": 4.75
+     }
+    ],
+    "E_DESIGN": 57500000000,
+    "SIG_DESIGN": 433000000
+   },
+   "cg": {
+    "items": [
+     {
+      "name": "Lift units, front",
+      "m": 0.884,
+      "x": 0.4,
+      "src": "LP"
+     },
+     {
+      "name": "Lift units, rear",
+      "m": 0.884,
+      "x": -0.57,
+      "src": "LP"
+     },
+     {
+      "name": "Booms + clamps",
+      "m": 0.598,
+      "x": -0.303,
+      "src": "AM"
+     },
+     {
+      "name": "Wing (foam/glass + spar)",
+      "m": 1.331,
+      "x": -0.122,
+      "src": "F11; centroid 40 % c EST"
+     },
+     {
+      "name": "Tail",
+      "m": 0.2,
+      "x": -0.892,
+      "src": "geometry"
+     },
+     {
+      "name": "Fuselage pod",
+      "m": 0.8,
+      "x": 0.1,
+      "src": "EST"
+     },
+     {
+      "name": "Landing gear",
+      "m": 0.25,
+      "x": -0.076,
+      "src": "EST"
+     },
+     {
+      "name": "Avionics",
+      "m": 0.35,
+      "x": 0.25,
+      "src": "EST"
+     },
+     {
+      "name": "Pusher set",
+      "m": 0.323,
+      "x": -0.404,
+      "src": "PB"
+     },
+     {
+      "name": "Servos (4)",
+      "m": 0.228,
+      "x": -0.137,
+      "src": "PB; 2 wing + 2 tail, mean EST"
+     },
+     {
+      "name": "Wiring",
+      "m": 0.49,
+      "x": -0.1,
+      "src": "EST"
+     },
+     {
+      "name": "Battery (placed for CG)",
+      "m": 1.034,
+      "x": -0.01,
+      "src": "PB"
+     },
+     {
+      "name": "Payload allowance (bay)",
+      "m": 0.5,
+      "x": 0.15,
+      "src": "R12; bay x EST"
+     }
+    ],
+    "target": -0.085086655,
+    "xb": -0.0099788674,
+    "cgBattFwd": -0.081146106,
+    "cgBattAft": -0.089027204,
+    "pctFwd": 26.703259,
+    "pctAft": 29.296741,
+    "cgNoPayload": -0.10103122,
+    "thrustCentroid": -0.085086655,
+    "pct": {
+     "target": 28,
+     "noPayload": 33.246978,
+     "np": 41.480127,
+     "thrust": 28
+    },
+    "SM_noPayload": 0.082331488
+   }
+  }
+ },
+ "sweepC0": [
+  {
+   "pack": "WREKD 6S2P P50B 10 Ah",
+   "Wh": 216,
+   "usd": 252,
+   "m": 7.535,
+   "cruise_min": 17.55,
+   "ok": true
+  },
+  {
+   "pack": "Tattu 6S 12 Ah 30C",
+   "Wh": 266.4,
+   "usd": 268.99,
+   "m": 8.172,
+   "cruise_min": 20.83,
+   "ok": true
+  },
+  {
+   "pack": "WREKD 6S3P P42A 12.6 Ah",
+   "Wh": 272.16,
+   "usd": 306,
+   "m": 8.109,
+   "cruise_min": 21.57,
+   "ok": true
+  },
+  {
+   "pack": "WREKD 6S3P P50B 15 Ah",
+   "Wh": 324,
+   "usd": 378,
+   "m": 8.197,
+   "cruise_min": 26.32,
+   "ok": true
+  },
+  {
+   "pack": "Tattu 6S 16 Ah 30C",
+   "Wh": 355.2,
+   "usd": 335.99,
+   "m": 8.765,
+   "cruise_min": 27.36,
+   "ok": true
+  },
+  {
+   "pack": "WREKD 6S4P P42A 16.8 Ah",
+   "Wh": 362.88,
+   "usd": 408,
+   "m": 8.757,
+   "cruise_min": 28.08,
+   "ok": true
+  },
+  {
+   "pack": "WREKD 6S4P P50B 20 Ah",
+   "Wh": 432,
+   "usd": 504,
+   "m": 8.87,
+   "cruise_min": 33.97,
+   "ok": true
+  },
+  {
+   "pack": "Tattu Plus 6S 22 Ah 25C",
+   "Wh": 488.4,
+   "usd": 486.99,
+   "m": 9.643,
+   "cruise_min": 35.87,
+   "ok": true
+  }
+ ]
+}

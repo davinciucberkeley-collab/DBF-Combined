@@ -1,0 +1,359 @@
+{
+ "generated": "2026-11-02",
+ "author": "audit agent (structures/thermal/mfg)",
+ "levels": [
+  "Ready",
+  "Needs minor specification",
+  "Not ready"
+ ],
+ "subsystems": [
+  {
+   "name": "Wing (panels, spar sockets, joiner, saddle, wing bolt)",
+   "level": "Not ready",
+   "ready_items": [
+    "Templates, panel/spar/boom stations from params.txt",
+    "FT01/FT06 fit band with measure-lap-shim rule (M1)",
+    "Joiner stop position and check (300 +-1 mm)",
+    "J10 rev E: M5 x 25, 11.0 mm nut pocket, screw end >= 1.61 mm past the nylock worst case (MFG-09)",
+    "Root moment on the AVL span loading 89.6 N m, joiner RF 1.25 on minimum yield (STR-06, STR-07)"
+   ],
+   "blocking_items": [
+    "No joiner-through-saddle jig when bonding the spar sockets: up to 0.48 mm root-face gap and 0.09 deg panel error WC (MFG-06)",
+    "Drawings built one iteration back (chord 320.8 vs 321.9 mm, tail chord -0.60 %); 22 layout overlaps; no foam tolerance class; unchecked (MFG-01, MFG-03)",
+    "Adhesive product/cure unspecified (MFG-11)",
+    "S01 proof schedule is elliptic; AVL loading is 7 % higher; hard landing loads the joiner to ~105 N m EST (STR-06, STR-07, STR-11)"
+   ],
+   "evidence": [
+    "docs/build/BUILD-MANUAL.md WP4.7",
+    "cad/hardware.json FT01/FT05/FT06",
+    "cad/drawings/DBF-DRW-001_sheet4.png",
+    "analysis/validation/checks_struct.json MFG-STACKS"
+   ]
+  },
+  {
+   "name": "Booms (tubes, splice, boom clamps, wing hardpoints)",
+   "level": "Needs minor specification",
+   "ready_items": [
+    "Cut lengths 1045.4 / 485.9 mm (params segF / segR) with ISO 2768-m and cross-hole positions (sheet 7 after the CAD rebuild)",
+    "Boom stress RF > 6 for thrust (STR-01)",
+    "Split-clamp grip geometry (MFG-07)"
+   ],
+   "blocking_items": [
+    "Front clamp upper half overlaps the bonded spar collar (2 x 3.9 mm3, unexplained) (MFG-02)",
+    "Splice free play up to 1.2 deg, no straightness check (MFG-08, STR-12)",
+    "Insert pull-out (C03) and hardpoint-to-foam bond strength unknown for 96-127 N clamp loads (STR-10)"
+   ],
+   "evidence": [
+    "cad/verification.txt",
+    "docs/research/hardware-spec.md J04/J05",
+    "cad/params.txt comp="
+   ]
+  },
+  {
+   "name": "Lift propulsion (motor mounts, motors, props, ESCs)",
+   "level": "Needs minor specification",
+   "ready_items": [
+    "Motor bolt pattern, counterbores, floor 4.50 +-0.15, pattern position 0.2 (sheet 5)",
+    "Screw-depth check M4",
+    "PA6-CF dry/anneal cycle in WP2",
+    "Lift-unit mass 0.3255 kg used by sizing, FEA and modal matches the CAD within 1.5 % (STR-05)"
+   ],
+   "blocking_items": [
+    "Prop screw length waits on JeeFly hub thickness (M5)",
+    "Motor can mission peak 75.2 C vs 80 C EST (4.8 K) at 25 C; lumped motor-alone bound 80.6 C; C08 required before flight (THM-03/04)",
+    "PA6-CF floor crush/creep under 41 MPa screw bearing unknown (C04, THM-08)"
+   ],
+   "evidence": [
+    "cad/verification.txt",
+    "analysis/thermal/thermal_results.json",
+    "docs/research/hardware-spec.md M3-M5"
+   ]
+  },
+  {
+   "name": "Landing gear (legs, gear clamps, feet, fairings)",
+   "level": "Needs minor specification",
+   "ready_items": [
+    "Leg length, socket FT03, F05 cross-bolt, fairing geometry",
+    "Landing loads at 2 x Q_LAND_FINAL_SPD (0.6 m/s): boom RF >= 1.65 on minimum yield (analysis/structures/landing.py, STR-11)"
+   ],
+   "blocking_items": [
+    "Landing model (rigid clamp and foot) not yet checked by the S06 drop test (STR-11)",
+    "Hard-landing joiner moment ~105 N m EST exceeds the flight ultimate case; inspect after S06 (S07, STR-07)"
+   ],
+   "evidence": [
+    "analysis/structures/landing.json",
+    "firmware/vtol_c0.param Q_LAND_FINAL_SPD",
+    "docs/test/TEST-PLAN.md S06, S07"
+   ]
+  },
+  {
+   "name": "Tail (stabiliser, fins, rudders, tail clamps, servos)",
+   "level": "Needs minor specification",
+   "ready_items": [
+    "Four-screw tail removal J09 with crush sleeves",
+    "Pushrod cut lengths from params.txt"
+   ],
+   "blocking_items": [
+    "Rudder pushrod passes through Control_Horn-1 in the CAD (101 mm3, unexplained) (MFG-02)",
+    "Servo tab hole pattern EST until M6",
+    "Tail aero loads not computed for the splice/clamps (STR-12)"
+   ],
+   "evidence": [
+    "cad/verification.txt",
+    "docs/build/BUILD-MANUAL.md 2.5 M6"
+   ]
+  },
+  {
+   "name": "Fuselage pod (foam body, saddle-to-pod, canopy, trays)",
+   "level": "Not ready",
+   "ready_items": [
+    "Pod profile and bays from params.txt",
+    "Saddle tab screws J11 into inserts"
+   ],
+   "blocking_items": [
+    "Pod internal structure (frames, rails, bay walls) undefined in CAD (BUILD-MANUAL 8.2 #8); inserts for J11/J13 have nothing designed to sit in",
+    "FC hole pattern unknown (M6)",
+    "Canopy overlaps the pod in the as-built CAD (22 entries, 154 mm3); re-check after the rebuild (MFG-02)",
+    "Battery-bay vents not in the CAD; pack passes at 25 C only for C11-accepted packs, and c_p is an estimate (THM-06)"
+   ],
+   "evidence": [
+    "docs/build/BUILD-MANUAL.md §8.2",
+    "docs/research/thermal.md §6"
+   ]
+  },
+  {
+   "name": "Cruise propulsion (pusher motor, cup, adapter, prop)",
+   "level": "Needs minor specification",
+   "ready_items": [
+    "Cup geometry FT11, radial screws, Loctite rule"
+   ],
+   "blocking_items": [
+    "Pusher can 76.0 C after 600 s cruise, steady 77.3 C vs 80 C EST at 25 C; losses and limit are estimates (C09, F08, THM-08)",
+    "APC hub 11.2 mm vs 8 mm modelled; adapter screw length EST",
+    "Tail-ring cut that removed nothing (verification.txt warning)"
+   ],
+   "evidence": [
+    "cad/sim/thermal/results.txt",
+    "docs/build/BUILD-MANUAL.md §8.2 item 5",
+    "cad/verification.txt"
+   ]
+  },
+  {
+   "name": "Battery and avionics installation",
+   "level": "Needs minor specification",
+   "ready_items": [
+    "Battery tray and strap scheme",
+    "Wiring list (docs/build/wiring.csv)"
+   ],
+   "blocking_items": [
+    "FC 60.3 C at mission end vs 85 C STM32F405 rating; steady bound 89.7 C passes 85 C after ~45 min powered: limit ground power-on time (THM-07)",
+    "Pack 53.2 C at mission end for <= 6.0 mOhm/cell (C11) at <= 25 C; reaches 60 C at 7.3 mOhm/cell or c_p 908 J/kgK (THM-06)",
+    "CoreWing hole pattern sources conflict (hardware.json unknowns)"
+   ],
+   "evidence": [
+    "analysis/thermal/thermal_results.json",
+    "cad/hardware.json unknowns"
+   ]
+  },
+  {
+   "name": "Fasteners, inserts and adhesives (aircraft-wide)",
+   "level": "Needs minor specification",
+   "ready_items": [
+    "Fastener schedule with IDs, standards, quantities, vendor part numbers (sheet 8, hardware.json); order table matches hardware.json and params.txt (automated check, MFG-04)",
+    "Threadlocker rules per material pair"
+   ],
+   "blocking_items": [
+    "11 of 13 torques EST pending C02/C04; no torque tool (MFG-10)",
+    "Adhesive products/cure/prep unspecified (MFG-11)",
+    "Drawing sheets carry the rev E fastener sizes only after the CAD rebuild (MFG-01c)"
+   ],
+   "evidence": [
+    "cad/hardware.json",
+    "docs/research/hardware-spec.md"
+   ]
+  }
+ ],
+ "tolerance_stacks": [
+  {
+   "name": "FT01 joiner in spar socket (diametral clearance, mm)",
+   "contributors": [
+    {
+     "item": "socket tube OD 1.000 in",
+     "nominal": 25.4,
+     "tol": 0.102
+    },
+    {
+     "item": "socket wall x2 (0.058 in)",
+     "nominal": 2.946,
+     "tol": 0.102
+    },
+    {
+     "item": "joiner OD 0.875 in",
+     "nominal": 22.225,
+     "tol": 0.102
+    }
+   ],
+   "nominal": 0.229,
+   "worst_case": [
+    -0.076,
+    0.534
+   ],
+   "rss": [
+    0.053,
+    0.405
+   ],
+   "requirement": "> 0 (hand slip fit) and <= 0.30 (shim threshold, hardware.json FT01 action)",
+   "verdict": "WC fails both limits; RSS passes the lower and fails the upper tail. Acceptable only with M1 measure-select-lap-shim."
+  },
+  {
+   "name": "FT06 joiner in printed saddle bore (diametral clearance, mm)",
+   "contributors": [
+    {
+     "item": "saddle bore (FDM)",
+     "nominal": 22.455,
+     "tol": 0.2
+    },
+    {
+     "item": "joiner OD",
+     "nominal": 22.225,
+     "tol": 0.102
+    }
+   ],
+   "nominal": 0.23,
+   "worst_case": [
+    -0.072,
+    0.532
+   ],
+   "rss": [
+    0.006,
+    0.454
+   ],
+   "requirement": "> 0 (slides out for transport)",
+   "verdict": "WC can interfere; ream/sand on fit (repo action). Needs M2 coupon."
+  },
+  {
+   "name": "Spar socket coaxiality vs joiner (lateral offset at 300 mm engagement, mm)",
+   "contributors": [
+    {
+     "item": "channel 26.0 vs tube 25.4 (diametral float)",
+     "nominal": 0.6,
+     "tol": 0.602
+    },
+    {
+     "item": "socket length over which tilt develops",
+     "nominal": 800,
+     "tol": 0
+    },
+    {
+     "item": "root-face squareness (hot wire)",
+     "nominal": 0,
+     "tol": null
+    }
+   ],
+   "nominal": null,
+   "worst_case": [
+    0.0,
+    0.451
+   ],
+   "rss": [
+    0.0,
+    0.416
+   ],
+   "requirement": "<= joiner diametral clearance (0.229 nominal, 0.05 RSS-min)",
+   "verdict": "Socket tilt (1.50 mrad WC) exceeds the joiner tilt allowance (0.76 mrad), so the panel follows the joiner: <= 0.48 mm root-face gap, 0.09 deg, 1.7 mm at the tip (WC). Not binding; bond with the joiner through the saddle to remove it (MFG-06)."
+  },
+  {
+   "name": "FT02 boom in printed split clamp (diametral clearance vs 1.2 mm split gap, mm)",
+   "contributors": [
+    {
+     "item": "clamp bore (FDM)",
+     "nominal": 25.6,
+     "tol": 0.2
+    },
+    {
+     "item": "boom OD",
+     "nominal": 25.4,
+     "tol": 0.102
+    }
+   ],
+   "nominal": 0.2,
+   "worst_case": [
+    -0.102,
+    0.502
+   ],
+   "rss": [
+    -0.024,
+    0.424
+   ],
+   "requirement": "clearance < 1.2 mm so the clamp grips before the halves close",
+   "verdict": "Pass (0.70 mm margin WC)."
+  },
+  {
+   "name": "FT04 splice plug in boom (diametral clearance, mm) and free tilt",
+   "contributors": [
+    {
+     "item": "boom ID 0.930 in",
+     "nominal": 23.622,
+     "tol": 0.203
+    },
+    {
+     "item": "printed plug OD",
+     "nominal": 23.2,
+     "tol": 0.2
+    }
+   ],
+   "nominal": 0.422,
+   "worst_case": [
+    0.019,
+    0.825
+   ],
+   "rss": [
+    0.137,
+    0.707
+   ],
+   "requirement": "— (no alignment requirement stated); audit proposes <= 0.25 deg stub misalignment",
+   "verdict": "Free tilt 0.6 deg nominal, 1.2 deg WC: needs a tighter plug or bonding."
+  },
+  {
+   "name": "J10 M5 x 25 protrusion past the nylock (mm), rev E",
+   "contributors": [
+    {
+     "item": "spot-face depth",
+     "nominal": 2.0,
+     "tol": 0.5
+    },
+    {
+     "item": "screw length (EST tol)",
+     "nominal": 25.0,
+     "tol": 0.4
+    },
+    {
+     "item": "pillar height",
+     "nominal": 29.489,
+     "tol": 0.5
+    },
+    {
+     "item": "nut pocket depth",
+     "nominal": 11.0,
+     "tol": 0.5
+    },
+    {
+     "item": "nylock height",
+     "nominal": 5.0,
+     "tol": 0.0
+    }
+   ],
+   "nominal": 3.511,
+   "worst_case": [
+    1.611,
+    5.411
+   ],
+   "rss": [
+    2.557,
+    4.465
+   ],
+   "requirement": ">= 1.6 mm (two 0.8 mm pitches past the nut, cad/params.mjs rev E rule) and screw end inside the lower skin",
+   "verdict": "Pass: 1.61 mm WC (0.01 mm margin), 1.09 mm inside the skin WC. Requires M5 x 25 screws (an M5 x 20 gives -1.49 mm nominal)."
+  }
+ ]
+}

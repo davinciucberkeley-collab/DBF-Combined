@@ -1,0 +1,291 @@
+{
+  "generated": {
+    "results_json": "2026-11-01",
+    "aero_results_json": "2026-11-02"
+  },
+  "mass_kg": 7.4379985,
+  "inertia_kg_m2": {
+    "xx": 1.4173327905573332,
+    "yy": 1.0904342245762113,
+    "zz": 2.470726043225102
+  },
+  "rotors": [
+    {
+      "n": 1,
+      "pos": [
+        0.497979905,
+        0.4337,
+        -0.02006
+      ],
+      "dir": 1
+    },
+    {
+      "n": 2,
+      "pos": [
+        -0.497979905,
+        -0.4337,
+        -0.02006
+      ],
+      "dir": 1
+    },
+    {
+      "n": 3,
+      "pos": [
+        0.497979905,
+        -0.4337,
+        -0.02006
+      ],
+      "dir": -1
+    },
+    {
+      "n": 4,
+      "pos": [
+        -0.497979905,
+        0.4337,
+        -0.02006
+      ],
+      "dir": -1
+    }
+  ],
+  "contacts": [
+    [
+      0.407983295,
+      0.4337,
+      0.25
+    ],
+    [
+      0.407983295,
+      -0.4337,
+      0.25
+    ],
+    [
+      -0.407976705,
+      0.4337,
+      0.25
+    ],
+    [
+      -0.407976705,
+      -0.4337,
+      0.25
+    ]
+  ],
+  "controls_per_deg": {
+    "CLde": 0.007652,
+    "Cmde": -0.017564,
+    "Clda": 0.006323,
+    "Cnda": -0.000386,
+    "CYda": -0.000287,
+    "CYdr": -0.002026,
+    "Cndr": 0.000732,
+    "Cldr": -4.3e-05,
+    "rudder_source": "AVL st_pod_trim.txt Cnd03/CYd03/Cld03"
+  },
+  "pusher_pos": [
+    -0.346746705,
+    0.0,
+    0.03
+  ],
+  "checks": [
+    {
+      "check": "hover thrust fraction (AP throttle) @22.2V",
+      "model": 0.5940893370607029,
+      "predicted": 0.5940841533546326,
+      "unit": "-",
+      "dev_pct": 0.0008725541728400817,
+      "note": "TEST-PLAN C07 0.52 = Tunit_g/Tmax_g at 22.2 V"
+    },
+    {
+      "check": "hover PWM fraction (expo 0.72) @22.2V",
+      "model": 0.7344972766695794,
+      "predicted": null,
+      "unit": "-",
+      "dev_pct": null,
+      "note": "EST expo"
+    },
+    {
+      "check": "hover thrust fraction (AP throttle) @25.2V",
+      "model": 0.5117553518773345,
+      "predicted": null,
+      "unit": "-",
+      "dev_pct": null,
+      "note": "what Q_M_THST_HOVER learns at full pack"
+    },
+    {
+      "check": "hover PWM fraction (expo 0.72) @25.2V",
+      "model": 0.6707607127449716,
+      "predicted": null,
+      "unit": "-",
+      "dev_pct": null,
+      "note": "EST expo"
+    },
+    {
+      "check": "hover electrical power, 4 motors",
+      "model": 1039.235667,
+      "predicted": 1131.9372,
+      "unit": "W",
+      "dev_pct": -8.189635697104057,
+      "note": "maker table interp vs sizing FM*eta model"
+    },
+    {
+      "check": "hover current at 22.2 V",
+      "model": 46.81241743243243,
+      "predicted": 50.988162,
+      "unit": "A",
+      "dev_pct": -8.189635405111424,
+      "note": ""
+    },
+    {
+      "check": "alpha",
+      "model": 4.120060923597859,
+      "predicted": 4.13612,
+      "unit": "deg",
+      "dev_pct": -0.3882642767168477,
+      "note": "AVL trim"
+    },
+    {
+      "check": "elevator (AVL sign, + TE down)",
+      "model": -4.006836455041115,
+      "predicted": -3.99756,
+      "unit": "deg",
+      "dev_pct": -0.23205292831414287,
+      "note": "AVL trim"
+    },
+    {
+      "check": "CL",
+      "model": 0.4717054117497298,
+      "predicted": 0.4751,
+      "unit": "-",
+      "dev_pct": -0.7144997369543727,
+      "note": ""
+    },
+    {
+      "check": "drag / pusher thrust",
+      "model": 7.310000406428052,
+      "predicted": 7.31556,
+      "unit": "N",
+      "dev_pct": -0.07599682829404594,
+      "note": "aero build-up D_N"
+    },
+    {
+      "check": "pusher throttle (PWM fraction)",
+      "model": 0.6981986860714642,
+      "predicted": null,
+      "unit": "-",
+      "dev_pct": null,
+      "note": "EST motor model"
+    },
+    {
+      "check": "pusher rpm",
+      "model": 5785.651950746179,
+      "predicted": null,
+      "unit": "rpm",
+      "dev_pct": null,
+      "note": "EST motor model (R, I0)"
+    },
+    {
+      "check": "pusher electrical power",
+      "model": 200.70207506477323,
+      "predicted": 258.196,
+      "unit": "W",
+      "dev_pct": -22.26755059537204,
+      "note": "build-up assumes etaProp 0.60; APC data gives ~0.74 at this J"
+    },
+    {
+      "check": "pusher battery current at 22.2 V",
+      "model": 9.040634011926723,
+      "predicted": 11.630450450450452,
+      "unit": "A",
+      "dev_pct": -22.26755059537203,
+      "note": "= power / 22.2 V; sizing is conservative (etaProp 0.60)"
+    },
+    {
+      "check": "pusher motor (phase) current",
+      "model": 12.948511924013228,
+      "predicted": null,
+      "unit": "A",
+      "dev_pct": null,
+      "note": "EST motor model; the ESC rating applies to this"
+    },
+    {
+      "check": "pusher advance ratio J",
+      "model": 0.5249400388772619,
+      "predicted": null,
+      "unit": "-",
+      "dev_pct": null,
+      "note": ""
+    },
+    {
+      "check": "pusher static thrust, full throttle 22.2 V",
+      "model": 3354.096059897074,
+      "predicted": null,
+      "unit": "gf",
+      "dev_pct": null,
+      "note": "7977 rpm, 28.2 A, 626 W (EST); maker motor max 615 W"
+    },
+    {
+      "check": "pusher static elec. power, full throttle 25.2 V",
+      "model": 889.8223311692882,
+      "predicted": null,
+      "unit": "W",
+      "dev_pct": null,
+      "note": "EST: exceeds the motor's 615 W rating - do not hold full pusher static on a full pack"
+    },
+    {
+      "check": "stall speed",
+      "model": 11.750048798610603,
+      "predicted": 11.7501,
+      "unit": "m/s",
+      "dev_pct": -0.00043575279696970916,
+      "note": "R11 12.0"
+    },
+    {
+      "check": "alpha at stall",
+      "model": 11.788823630760897,
+      "predicted": 11.3512,
+      "unit": "deg",
+      "dev_pct": 3.8553071988943572,
+      "note": ""
+    },
+    {
+      "check": "elevator at stall (AVL sign)",
+      "model": -7.9987584095230595,
+      "predicted": -7.80731,
+      "unit": "deg",
+      "dev_pct": -2.4521686665837437,
+      "note": ""
+    },
+    {
+      "check": "static margin Cma/CLa",
+      "model": 10.405146112408827,
+      "predicted": 10.404,
+      "unit": "%MAC",
+      "dev_pct": 0.011016074671544106,
+      "note": "aero_results static_margin CG_28pct"
+    }
+  ],
+  "EST": {
+    "expo_phys": 0.72,
+    "lift_motor_tau_s": 0.06,
+    "lift_rpm_max": 7100.0,
+    "pusher_R_ohm": 0.08,
+    "pusher_I0_A": 0.8,
+    "pusher_tau_s": 0.2,
+    "eta_motor": 0.85,
+    "de_max_deg": 20.0,
+    "da_max_deg": 20.0,
+    "dr_max_deg": 20.0,
+    "cg_z_m": 0.0,
+    "CL_min": -0.8,
+    "post_stall_slope": 2.5,
+    "flat_plate_CN": 1.1,
+    "rudder_tau": 0.661,
+    "fin_z_arm_m": 0.1,
+    "ground_k": 8000.0,
+    "ground_c": 250.0,
+    "ground_mu": 0.6,
+    "leg_contact_below_ref_m": 0.25,
+    "pack_R_ohm": 0.03,
+    "pack_cells": 6,
+    "wiring_mass_spread_m": 0.6
+  }
+}

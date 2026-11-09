@@ -1,0 +1,809 @@
+{
+ "generated": "2026-11-03 18:28",
+ "author": "analysis/cfd3d/verify_cfd.py",
+ "claims": [
+  {
+   "id": "CFD-01",
+   "claim": "8 of 8 full-aircraft cruise cases ran to completion in SU2.",
+   "value": 8,
+   "units": "cases",
+   "equations": [
+    "Cauchy criterion on CL, CD, CMy over 200 iterations, eps 1e-6"
+   ],
+   "assumptions": [
+    "steady, incompressible, inviscid",
+    "power off, control surfaces 0 deg"
+   ],
+   "inputs": {
+    "L1_a4.0": "522 it, log10 rms(p) drop 2.95, Cauchy[CL] 2.3e-06, 637.2 s",
+    "L2_a4.0": "1064 it, log10 rms(p) drop 5.21, Cauchy[CL] 1.5e-06, 2658.8 s",
+    "L3_a4.0": "971 it, log10 rms(p) drop 3.65, Cauchy[CL] 3.5e-06, 5668.1 s",
+    "L4_a4.0": "2517 it, log10 rms(p) drop 4.10, Cauchy[CL] 1.3e-06, 8277.9 s",
+    "L2_a0.0": "659 it, log10 rms(p) drop 8.28, Cauchy[CL] 4.0e-06, 1695.8 s",
+    "L2_a2.0": "3000 it, log10 rms(p) drop 7.11, Cauchy[CL] 2.5e-06, 6742.4 s",
+    "L2_a6.0": "839 it, log10 rms(p) drop 7.18, Cauchy[CL] 9.3e-07, 2125.9 s",
+    "L2_a8.0": "558 it, log10 rms(p) drop 7.50, Cauchy[CL] 1.2e-06, 1431.0 s"
+   },
+   "evidence": [
+    {
+     "file": "analysis/cfd3d/out/cases/L1_a4.0/history.csv",
+     "what": "per-iteration residuals and coefficients"
+    },
+    {
+     "file": "analysis/cfd3d/out/cases/L2_a4.0/history.csv",
+     "what": "per-iteration residuals and coefficients"
+    },
+    {
+     "file": "analysis/cfd3d/out/cases/L3_a4.0/history.csv",
+     "what": "per-iteration residuals and coefficients"
+    },
+    {
+     "file": "analysis/cfd3d/out/cases/L4_a4.0/history.csv",
+     "what": "per-iteration residuals and coefficients"
+    },
+    {
+     "file": "analysis/cfd3d/out/cases/L2_a0.0/history.csv",
+     "what": "per-iteration residuals and coefficients"
+    },
+    {
+     "file": "analysis/cfd3d/out/cases/L2_a2.0/history.csv",
+     "what": "per-iteration residuals and coefficients"
+    },
+    {
+     "file": "analysis/cfd3d/out/cases/L2_a6.0/history.csv",
+     "what": "per-iteration residuals and coefficients"
+    },
+    {
+     "file": "analysis/cfd3d/out/cases/L2_a8.0/history.csv",
+     "what": "per-iteration residuals and coefficients"
+    },
+    {
+     "file": "analysis/cfd3d/out/cases/L1_a4.0/su2.log",
+     "what": "solver log incl. mesh read and orientation check"
+    }
+   ],
+   "ran_evidence": "history.csv, su2.log, restart_flow.csv and forces_breakdown.dat written by SU2 in each case folder; run.json records return code and wall time",
+   "reproduced": {
+    "done": true,
+    "how": "py analysis/cfd3d/run_cases.py run <case> regenerates every file",
+    "matches": null
+   },
+   "independent_check": {
+    "method": "residual drop and coefficient Cauchy series read from history.csv",
+    "value": 2.9518815379999994,
+    "repo_value": null,
+    "delta_pct": null,
+    "script": "analysis/cfd3d/verify_cfd.py#CFD-01"
+   },
+   "status": "Verified",
+   "status_reason": "8 of 8 cases finished with exit code 0; log10 rms(p) fell 3.0-8.3 orders; Cauchy[CL] 4e-06 at the last iteration",
+   "limitations": [
+    "residual drop is modest; convergence is judged on the integral quantities"
+   ],
+   "next_step": "\u2014",
+   "component": "aircraft",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-02",
+   "claim": "Grid convergence at alpha 4 deg (L2-L3-L4): CL 0.4941 / 0.5104 / 0.5229 on 3,957,746 / 9,271,143 / 23,261,119 tetrahedra.",
+   "value": 6.83033577979076,
+   "units": "% GCI_fine on CL",
+   "equations": [
+    "r = (N_fine/N_coarse)^(1/3)",
+    "p from |e32/e21| (Celik 2008, fixed-point)",
+    "f_ext = (r21^p f1 - f2)/(r21^p - 1)",
+    "GCI_fine = 1.25 |(f1-f2)/f1| / (r21^p - 1)"
+   ],
+   "assumptions": [
+    "the three meshes share every sizing rule (one scale factor; mesh rev 2)",
+    "monotone convergence in the asymptotic range (|e32/e21| > 1)"
+   ],
+   "inputs": {
+    "levels": "L2-L3-L4",
+    "r21": 1.359,
+    "r32": 1.328,
+    "CL": [
+     0.4940511136,
+     0.5103905514,
+     0.5228598096
+    ],
+    "CMy": [
+     -0.07230904575,
+     -0.07276938288,
+     -0.06684860269
+    ],
+    "CL_all_levels": {
+     "L1": 0.4845627974,
+     "L2": 0.4940511136,
+     "L3": 0.5103905514,
+     "L4": 0.5228598096
+    },
+    "coarser_triplet": {
+     "levels": "L1-L2-L3",
+     "p": null,
+     "f_ext": null,
+     "gci_fine_pct": null,
+     "e32_over_e21": 0.5807002857833912,
+     "note": "monotone but pre-asymptotic: the finer pair changed more than the coarser pair (|e32/e21| = 0.58 < 1), so the observed order is negative and Celik's |ln| form would give a GCI that is not valid"
+    }
+   },
+   "evidence": [
+    {
+     "file": "analysis/cfd3d/out/cfd3d_results.json",
+     "what": "cases L1_a4.0, L2_a4.0, L3_a4.0, L4_a4.0"
+    },
+    {
+     "file": "analysis/cfd3d/out/L1..L4/mesh_stats.json",
+     "what": "cell counts"
+    }
+   ],
+   "ran_evidence": "three separate SU2 runs (CFD-01)",
+   "reproduced": {
+    "done": true,
+    "how": "computed here from the stored coefficients",
+    "matches": null
+   },
+   "independent_check": {
+    "method": "Richardson extrapolation",
+    "value": 0.5514302741226038,
+    "repo_value": 0.5228598096,
+    "delta_pct": -5.181156324444297,
+    "script": "analysis/cfd3d/verify_cfd.py#CFD-02",
+    "CMy": {
+     "p": null,
+     "f_ext": null,
+     "gci_fine_pct": null,
+     "note": "oscillatory or zero change: no asymptotic estimate"
+    }
+   },
+   "status": "Partially Verified",
+   "status_reason": "GCI_fine on CL 6.83 % (p 1.18); CMy oscillatory or zero change: no asymptotic estimate",
+   "limitations": [
+    "discretisation error only; model error (inviscid) is separate",
+    "observed order p 1.18 is below the scheme's formal order 2, so the grids are only just inside the asymptotic range",
+    "pitching moment is not grid-converged (CMy -0.0723 / -0.0728 / -0.0668, oscillatory); stability numbers come from AVL and the neutral-point check CFD-07"
+   ],
+   "next_step": "Use CL with a +-6.8 % grid band. A GCI under 3 % needs a level finer than L4 (estimate: 23.3 M x the 2.5 level-to-level ratio = about 58 M tetrahedra, about 100 GB), which does not fit this PC's 64 GB RAM; a cluster run or a prism-layer mesh would be the route",
+   "component": "aircraft",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-03",
+   "claim": "SU2's reported forces equal an independent pressure integration over the same wall triangles.",
+   "value": 5.177592089211282e-05,
+   "units": "% max |dCL|",
+   "equations": [
+    "F = -sum_i p_i n_i A_i (n into the fluid, from the owning tetrahedron)",
+    "CL = F.l / (q S_ref/2)"
+   ],
+   "assumptions": [
+    "node pressures averaged to triangle centroids (SU2 uses the same nodal dual-area idea, so small differences are expected)"
+   ],
+   "inputs": {
+    "L1_a4.0": {
+     "su2_CL": 0.48456,
+     "int_CL": 0.48456,
+     "su2_CMy": -0.07805,
+     "int_CMy": -0.07804
+    },
+    "L2_a4.0": {
+     "su2_CL": 0.49405,
+     "int_CL": 0.49405,
+     "su2_CMy": -0.07231,
+     "int_CMy": -0.0723
+    },
+    "L3_a4.0": {
+     "su2_CL": 0.51039,
+     "int_CL": 0.51039,
+     "su2_CMy": -0.07277,
+     "int_CMy": -0.07277
+    },
+    "L4_a4.0": {
+     "su2_CL": 0.52286,
+     "int_CL": 0.52286,
+     "su2_CMy": -0.06685,
+     "int_CMy": -0.06685
+    },
+    "L2_a0.0": {
+     "su2_CL": 0.16734,
+     "int_CL": 0.16734,
+     "su2_CMy": -0.03537,
+     "int_CMy": -0.03536
+    },
+    "L2_a2.0": {
+     "su2_CL": 0.33211,
+     "int_CL": 0.33211,
+     "su2_CMy": -0.05417,
+     "int_CMy": -0.05417
+    },
+    "L2_a6.0": {
+     "su2_CL": 0.65716,
+     "int_CL": 0.65716,
+     "su2_CMy": -0.09305,
+     "int_CMy": -0.09305
+    },
+    "L2_a8.0": {
+     "su2_CL": 0.81864,
+     "int_CL": 0.81864,
+     "su2_CMy": -0.11654,
+     "int_CMy": -0.11653
+    }
+   },
+   "evidence": [
+    {
+     "file": "analysis/cfd3d/out/post/<case>.json",
+     "what": "integrated"
+    }
+   ],
+   "ran_evidence": "post-processing reads restart_flow.csv written by SU2",
+   "reproduced": {
+    "done": true,
+    "how": "py analysis/cfd3d/postprocess.py <case>",
+    "matches": true
+   },
+   "independent_check": {
+    "method": "own surface integration in numpy",
+    "value": 5.177592089211282e-05,
+    "repo_value": 0,
+    "delta_pct": 5.177592089211282e-05,
+    "script": "analysis/cfd3d/postprocess.py"
+   },
+   "status": "Verified",
+   "status_reason": "largest CL difference 0.00 %",
+   "limitations": [
+    "checks bookkeeping (reference area, axes, moment centre), not the flow solution"
+   ],
+   "next_step": "\u2014",
+   "component": "aircraft",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-04",
+   "claim": "Boundary conditions behave: no flow through the symmetry plane; free stream recovered at the far field.",
+   "value": 6.248537250718789e-16,
+   "units": "max |v_y|/V on the symmetry plane",
+   "equations": [
+    "symmetry: v . n = 0",
+    "far field: |V|/V_inf -> 1"
+   ],
+   "assumptions": [
+    "domain 8 m ahead, 16 m behind, 8 m above/below, 10 m to the side of the half model"
+   ],
+   "inputs": {
+    "far_field_speed_ratio_min": 0.9994890936928993,
+    "far_field_speed_ratio_max": 1.0000749634297097
+   },
+   "evidence": [
+    {
+     "file": "analysis/cfd3d/out/post/<case>.json",
+     "what": "symmetry_max_abs_vy_over_V, farfield_speed_ratio"
+    }
+   ],
+   "ran_evidence": "read from the SU2 restart files",
+   "reproduced": {
+    "done": true,
+    "how": "postprocess.py",
+    "matches": null
+   },
+   "independent_check": {
+    "method": "nodal velocities on the marker nodes",
+    "value": 6.248537250718789e-16,
+    "repo_value": 0,
+    "delta_pct": null,
+    "script": "analysis/cfd3d/postprocess.py"
+   },
+   "status": "Verified",
+   "status_reason": "|v_y|/V <= 6.2e-16 on the symmetry plane; far-field |V|/V in 0.999-1.000",
+   "limitations": [],
+   "next_step": "\u2014",
+   "component": "aircraft",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-05",
+   "claim": "Whole-aircraft lift-curve slope 4.67 /rad (alpha 0-6 deg, elevator 0).",
+   "value": 4.673605006722537,
+   "units": "1/rad",
+   "equations": [
+    "CL = CL0 + CL_alpha alpha (least squares, |alpha| <= 6 deg)",
+    "Helmbold: a = a0 / (sqrt(1 + (a0/(pi AR))^2) + a0/(pi AR))"
+   ],
+   "assumptions": [
+    "Helmbold is wing-only (no tail, pod or booms)",
+    "AVL: vortex lattice + slender pod, same CG"
+   ],
+   "inputs": {
+    "AR": 7.455,
+    "a0_per_rad": 6.832,
+    "CFD_points": [
+     [
+      0.0,
+      0.1673
+     ],
+     [
+      2.0,
+      0.3321
+     ],
+     [
+      4.0,
+      0.4941
+     ],
+     [
+      6.0,
+      0.6572
+     ],
+     [
+      8.0,
+      0.8186
+     ]
+    ]
+   },
+   "evidence": [
+    {
+     "file": "analysis/cfd3d/out/cfd3d_results.json",
+     "what": "L2 alpha sweep"
+    },
+    {
+     "file": "analysis/aero/out/avl_results.json",
+     "what": "pod sweep, elevator 0"
+    }
+   ],
+   "ran_evidence": "SU2 runs (CFD-01)",
+   "reproduced": {
+    "done": true,
+    "how": "fit here",
+    "matches": null
+   },
+   "independent_check": {
+    "method": "AVL (pod) lift slope; Helmbold wing-only as a sanity bound",
+    "value": 5.060576059490763,
+    "repo_value": 4.673605006722537,
+    "delta_pct": -7.646778710943147,
+    "script": "analysis/cfd3d/verify_cfd.py#CFD-05",
+    "helmbold_wing_only": 5.123748142909461
+   },
+   "status": "Verified",
+   "status_reason": "CFD 4.67 vs AVL 5.06 /rad (-7.6 %); Helmbold wing alone 5.12",
+   "limitations": [
+    "AVL and CFD share the planform and CG but not the solver or the body model; AVL geometry is one sizing pass older (chord 281.8 vs 284.2 mm)"
+   ],
+   "next_step": "\u2014",
+   "component": "aircraft",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-06",
+   "claim": "CL 0.523 at alpha 4 deg, elevator 0, V 18 m/s (finest mesh).",
+   "value": 0.5228598096,
+   "units": "-",
+   "equations": [
+    "CL = L / (q S_ref)"
+   ],
+   "assumptions": [
+    "S_ref 0.7727 m^2 (CAD wing chord x span)",
+    "inviscid: no boundary-layer decambering, so CFD should sit a few % above a viscous answer"
+   ],
+   "inputs": {
+    "AVL_pod_CL_a4": 0.49374,
+    "zero_lift_alpha_CFD_deg": -2.0590252884906386
+   },
+   "evidence": [
+    {
+     "file": "analysis/aero/out/avl/ft_pod_a4.txt",
+     "what": "AVL total forces"
+    }
+   ],
+   "ran_evidence": "SU2 runs (CFD-01)",
+   "reproduced": {
+    "done": true,
+    "how": "\u2014",
+    "matches": null
+   },
+   "independent_check": {
+    "method": "AVL 3.52 with pod at the same alpha and elevator",
+    "value": 0.49374,
+    "repo_value": 0.5228598096,
+    "delta_pct": 5.897802406124679,
+    "script": "analysis/cfd3d/verify_cfd.py#CFD-06"
+   },
+   "status": "Verified",
+   "status_reason": "+5.9 % against AVL on the finest mesh (L4); CL on L1/L2/L3/L4 0.4846, 0.4941, 0.5104, 0.5229 with a valid GCI (CFD-02)",
+   "limitations": [
+    "both inviscid",
+    "3-D lift magnitude not mesh-converged"
+   ],
+   "next_step": "Finer wing/tail wall spacing (CFD-12).",
+   "component": "aircraft",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-07",
+   "component": "tail",
+   "discipline": "stability",
+   "claim": "Neutral point 39.7 % MAC from the CFD moment slope (static margin 11.7 % at the 28 % CG).",
+   "value": 39.719151577194225,
+   "units": "% MAC",
+   "equations": [
+    "x_np = x_cg - c (dCm/dalpha)/(dCL/dalpha)"
+   ],
+   "assumptions": [
+    "moment centre at the design CG on the chord line"
+   ],
+   "inputs": {
+    "Cm_alpha_per_rad": -0.5477068548571523,
+    "CL_alpha_per_rad": 4.673605006722537
+   },
+   "evidence": [
+    {
+     "file": "analysis/aero/aero_results.json",
+     "what": "neutral_point (AVL with pod)"
+    }
+   ],
+   "ran_evidence": "SU2 runs (CFD-01)",
+   "reproduced": {
+    "done": true,
+    "how": "fit here",
+    "matches": null
+   },
+   "independent_check": {
+    "method": "AVL neutral point with pod",
+    "value": 38.404,
+    "repo_value": 39.719151577194225,
+    "delta_pct": 3.424517178403868,
+    "script": "analysis/cfd3d/verify_cfd.py#CFD-07"
+   },
+   "status": "Verified",
+   "status_reason": "CFD 39.7 % vs AVL 38.4 % MAC (+1.3 pt; band 3 pt)",
+   "limitations": [
+    "power-off; propeller normal force and slipstream not modelled"
+   ],
+   "next_step": "Flight: trim-elevator-vs-speed test for the stick-fixed neutral point (test plan).",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-08",
+   "claim": "Induced drag from the Trefftz plane CDi 0.0115 at alpha 4 deg.",
+   "value": 0.011498924306396064,
+   "units": "-",
+   "equations": [
+    "CDi = (2/(q S)) * integral of 1/2 rho (v^2 + w^2) dA over the half plane",
+    "CDi = CL^2 / (pi e AR)"
+   ],
+   "assumptions": [
+    "far-field kinetic-energy form; streamwise perturbation neglected"
+   ],
+   "inputs": {
+    "plane_x_m": 0.6,
+    "e_AVL": 0.965,
+    "AR": 7.454782087401109
+   },
+   "evidence": [
+    {
+     "file": "analysis/cfd3d/out/post/<case>.json",
+     "what": "trefftz"
+    }
+   ],
+   "ran_evidence": "sampled from the SU2 solution",
+   "reproduced": {
+    "done": true,
+    "how": "postprocess.py",
+    "matches": null
+   },
+   "independent_check": {
+    "method": "CL^2/(pi e AR) with AVL's span efficiency",
+    "value": 0.012096462454529123,
+    "repo_value": 0.011498924306396064,
+    "delta_pct": -4.939775991362921,
+    "script": "analysis/cfd3d/verify_cfd.py#CFD-08"
+   },
+   "status": "Partially Verified",
+   "status_reason": "Trefftz 0.0115 on the plane 0.3 m behind the wing TE vs CL^2/(pi e AR) 0.0121 (-5 %); planes further aft read 0.0108, 0.0099 as the trailing vortices dissipate on the tetrahedra, so the value depends on where it is measured",
+   "limitations": [
+    "numerical dissipation of the trailing vortices before the plane",
+    "plane truncated at 4 m x 4 m"
+   ],
+   "next_step": "\u2014",
+   "component": "aircraft",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-10",
+   "claim": "The inviscid solver's surface CD (0.0345) is not a drag prediction: the part above the induced drag is numerical, and it falls with every mesh refinement.",
+   "value": 0.03454399821,
+   "units": "-",
+   "equations": [
+    "CD_surface = CD_induced + CD_spurious(numerical)",
+    "CD_spurious = CD_surface - CD_i,Trefftz"
+   ],
+   "assumptions": [
+    "no skin friction, no physical separation in an Euler run"
+   ],
+   "inputs": {
+    "components": {
+     "wing": 0.0124,
+     "htail": 0.0014,
+     "fins": 0.0045,
+     "pod": 0.0016,
+     "booms": 0.0069,
+     "motors": 0.0001,
+     "gear": 0.0076
+    },
+    "CD_by_level": {
+     "L1": 0.0524,
+     "L2": 0.0401,
+     "L3": 0.0371,
+     "L4": 0.0345
+    },
+    "CDi_trefftz": 0.0115
+   },
+   "evidence": [
+    {
+     "file": "analysis/cfd3d/out/cfd3d_results.json",
+     "what": "CD on L1/L2/L3/L4 at alpha 4"
+    },
+    {
+     "file": "analysis/aero/drag_buildup.json",
+     "what": "the viscous drag the sizing uses"
+    }
+   ],
+   "ran_evidence": "SU2 runs (CFD-01)",
+   "reproduced": {
+    "done": true,
+    "how": "read from cfd3d_results.json",
+    "matches": true
+   },
+   "independent_check": {
+    "method": "Trefftz induced drag (CFD-08) and CD on every level",
+    "value": 0.011498924306396064,
+    "repo_value": 0.03454399821,
+    "delta_pct": null,
+    "script": "analysis/cfd3d/verify_cfd.py#CFD-10"
+   },
+   "status": "Verified",
+   "status_reason": "surface CD at alpha 4: L1 0.0524 -> L2 0.0401 -> L3 0.0371 -> L4 0.0345 (falls with refinement); 0.0230 of the L4 value is above the Trefftz induced drag 0.0115 and is numerical (blunt clamp and motor bases, tetrahedra); profile drag stays with analysis/aero/drag_buildup.py",
+   "limitations": [
+    "a viscous (RANS) full-aircraft run with prism layers would be needed for a CFD drag number"
+   ],
+   "next_step": "Car-roof / flight power test (aero M1, mass M3) remains the drag evidence.",
+   "component": "aircraft",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-11",
+   "component": "aircraft",
+   "claim": "Wall Cp above the incompressible stagnation bound (Cp = 1) is a local numerical overshoot: it covers under 1 % of wall nodes in every case and its share falls 6-fold from L1 to L4 but not on every step, so it is a discretisation artefact, not a physical pressure.",
+   "value": 0.12775359892869098,
+   "units": "% of wall nodes with Cp > 1 (L4, alpha 4)",
+   "equations": [
+    "Bernoulli, incompressible: Cp = 1 - (V/V_inf)^2 <= 1",
+    "share = nodes with Cp > 1 / wall nodes of the listed parts"
+   ],
+   "assumptions": [
+    "nodal values from the restart file",
+    "a physical feature would not shrink with refinement; a discretisation overshoot does"
+   ],
+   "inputs": {
+    "L1_a4.0": {
+     "share_pct": 0.737,
+     "cp_max": 2.18,
+     "wing": "572/94175 nodes, max 1.80 at [0.1295, 0.6632, -0.0186]",
+     "htail": "225/16042 nodes, max 1.98 at [0.8541, 0.1363, -0.0124]",
+     "fins": "92/10994 nodes, max 1.61 at [0.9038, 0.433, 0.175]",
+     "pod": "1/2565 nodes, max 1.04 at [-0.5983, 0.0, -0.04]",
+     "booms": "21/9695 nodes, max 1.89 at [-0.4426, 0.445, -0.0167]",
+     "gear": "99/3551 nodes, max 2.18 at [0.4735, 0.4351, -0.232]"
+    },
+    "L2_a0.0": {
+     "share_pct": 0.202,
+     "cp_max": 1.78,
+     "wing": "120/211889 nodes, max 1.27 at [0.3204, 1.0246, -0.0002]",
+     "htail": "77/34275 nodes, max 1.45 at [0.8537, 0.1379, -0.0116]",
+     "fins": "229/24265 nodes, max 1.78 at [0.9078, 0.4337, 0.1899]",
+     "booms": "45/20643 nodes, max 1.35 at [-0.4426, 0.453, -0.0343]",
+     "gear": "131/7371 nodes, max 1.42 at [-0.3417, 0.4364, -0.2323]"
+    },
+    "L2_a2.0": {
+     "share_pct": 0.213,
+     "cp_max": 1.76,
+     "wing": "188/211889 nodes, max 1.30 at [0.3204, 1.0246, -0.0002]",
+     "htail": "101/34275 nodes, max 1.47 at [0.8539, 0.1681, -0.0121]",
+     "fins": "161/24265 nodes, max 1.76 at [0.9078, 0.4337, 0.1899]",
+     "booms": "47/20643 nodes, max 1.35 at [-0.4426, 0.453, -0.0343]",
+     "gear": "138/7371 nodes, max 1.41 at [-0.3417, 0.4364, -0.2323]"
+    },
+    "L2_a4.0": {
+     "share_pct": 0.207,
+     "cp_max": 1.71,
+     "wing": "195/211889 nodes, max 1.32 at [0.3206, 0.752, -0.0001]",
+     "htail": "118/34275 nodes, max 1.51 at [0.8539, 0.1681, -0.0121]",
+     "fins": "103/24265 nodes, max 1.71 at [0.9078, 0.4337, 0.1899]",
+     "booms": "55/20643 nodes, max 1.35 at [0.0796, 0.4318, -0.0474]",
+     "gear": "147/7371 nodes, max 1.39 at [-0.3417, 0.4364, -0.2323]"
+    },
+    "L2_a6.0": {
+     "share_pct": 0.298,
+     "cp_max": 1.63,
+     "wing": "434/211889 nodes, max 1.36 at [0.3204, 0.5361, -0.0002]",
+     "htail": "179/34275 nodes, max 1.60 at [0.8539, 0.1752, -0.0122]",
+     "fins": "63/24265 nodes, max 1.63 at [0.9078, 0.4337, 0.1899]",
+     "pod": "1/5468 nodes, max 1.02 at [0.3939, 0.0278, -0.0185]",
+     "booms": "69/20643 nodes, max 1.48 at [0.0796, 0.4318, -0.0474]",
+     "gear": "159/7371 nodes, max 1.39 at [-0.3417, 0.4364, -0.2323]"
+    },
+    "L2_a8.0": {
+     "share_pct": 0.474,
+     "cp_max": 1.74,
+     "wing": "805/211889 nodes, max 1.44 at [0.3204, 0.5361, -0.0002]",
+     "htail": "321/34275 nodes, max 1.74 at [0.8539, 0.1688, -0.0122]",
+     "fins": "51/24265 nodes, max 1.72 at [0.8152, 0.0186, 0.0003]",
+     "pod": "1/5468 nodes, max 1.08 at [0.3939, 0.0278, -0.0185]",
+     "booms": "85/20643 nodes, max 1.64 at [-0.3736, 0.4147, -0.0479]",
+     "gear": "177/7371 nodes, max 1.40 at [-0.3417, 0.4364, -0.2323]"
+    },
+    "L3_a4.0": {
+     "share_pct": 0.115,
+     "cp_max": 1.56,
+     "wing": "168/408421 nodes, max 1.45 at [0.3208, 0.181, -0.0001]",
+     "htail": "219/68969 nodes, max 1.54 at [0.8538, 0.1248, -0.0121]",
+     "fins": "77/46578 nodes, max 1.56 at [0.8152, 0.3724, 0.0279]",
+     "pod": "2/10150 nodes, max 1.21 at [0.3971, 0.03, -0.03]",
+     "booms": "54/39629 nodes, max 1.47 at [0.0796, 0.4364, -0.0475]",
+     "gear": "156/14231 nodes, max 1.45 at [0.4735, 0.4321, -0.2323]"
+    },
+    "L4_a4.0": {
+     "share_pct": 0.128,
+     "cp_max": 1.8,
+     "wing": "277/780405 nodes, max 1.80 at [0.1295, 0.6712, -0.0195]",
+     "htail": "761/132755 nodes, max 1.47 at [0.8538, 0.1733, -0.0121]",
+     "fins": "193/89253 nodes, max 1.55 at [0.8989, 0.4339, 0.1581]",
+     "pod": "7/19029 nodes, max 1.43 at [0.3975, 0.0297, -0.0259]",
+     "booms": "47/72945 nodes, max 1.39 at [-0.4426, 0.4235, -0.015]",
+     "gear": "146/25738 nodes, max 1.50 at [-0.3415, 0.4306, -0.0616]"
+    }
+   },
+   "evidence": [
+    {
+     "file": "analysis/cfd3d/out/post/<case>.json",
+     "what": "cp_above_stagnation"
+    }
+   ],
+   "ran_evidence": "read from the SU2 restart files",
+   "reproduced": {
+    "done": true,
+    "how": "py analysis/cfd3d/postprocess.py <case>",
+    "matches": true
+   },
+   "independent_check": {
+    "method": "share of Cp > 1 nodes on L1 -> L2 -> L3 -> L4 at alpha 4 (must fall) and Bernoulli bound",
+    "value": [
+     0.737,
+     0.207,
+     0.115,
+     0.128
+    ],
+    "repo_value": 0.12775359892869098,
+    "delta_pct": null,
+    "script": "analysis/cfd3d/verify_cfd.py#CFD-11"
+   },
+   "status": "Partially Verified",
+   "status_reason": "share of wall nodes with Cp > 1 at alpha 4: L1 0.74 % -> L2 0.21 % -> L3 0.11 % -> L4 0.13 % (does not fall monotonically); the L3 -> L4 rise is the htail (219 -> 761 nodes, peak Cp 1.54 -> 1.47); largest share in any case 0.74 %; peak Cp 2.18 on the gear (L1_a4.0) at a sharp corner or small leading-edge radius",
+   "limitations": [
+    "local surface pressures at leading edges and box corners from these runs are not usable; no design number in the repo takes CFD surface pressure (structural loads come from cad/Sim.cs load cases, sizing from analysis/sizing.mjs)"
+   ],
+   "next_step": "Refine the htail leading edge (mesh audit STD-04: H-tail LE spacing is above 0.1 % local chord on every level) and re-check the share; no design number depends on it",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-12",
+   "component": "wing",
+   "claim": "At the 3-D meshes' lifting-surface spacing (mesh rev 2: L2, L3, L4), the SU2 scheme matches XFOIL's inviscid section lift at 4 deg within 5 % and its lift slope within 8 %, approaching XFOIL as the spacing is refined.",
+   "value": -4.2763898238233,
+   "units": "% section cl at 4 deg vs XFOIL inviscid, L2 spacing",
+   "equations": [
+    "same SU2 INC_EULER numerics as run_cases.CFG on a 2-D gmsh mesh of the same NACA 2415 section",
+    "reference: XFOIL 6.99 inviscid panel method",
+    "cl_alpha = (cl(4) - cl(0)) / 4 deg"
+   ],
+   "assumptions": [
+    "2-D section behaviour carries over to the 3-D wing's chordwise resolution",
+    "wall size, TE size and curvature rule copied from build_mesh.py at each level"
+   ],
+   "inputs": {
+    "xfoil_inviscid_cl_alpha_per_rad": 7.062,
+    "3D-L1": "202 wall edges: cl_alpha 6.33 /rad, cl(4 deg) -14.6 %",
+    "3D-L2": "302 wall edges: cl_alpha 6.52 /rad, cl(4 deg) -4.3 %",
+    "3D-L3": "419 wall edges: cl_alpha 6.63 /rad, cl(4 deg) -4.9 %",
+    "3D-L4": "580 wall edges: cl_alpha 6.72 /rad, cl(4 deg) -2.9 %",
+    "fine": "342 wall edges: cl_alpha 6.51 /rad, cl(4 deg) -7.6 %",
+    "finest": "680 wall edges: cl_alpha 6.75 /rad, cl(4 deg) -4.1 %"
+   },
+   "evidence": [
+    {
+     "file": "analysis/cfd3d/out/scheme_check_2d.json",
+     "what": "five spacings, alpha 0 and 4"
+    },
+    {
+     "file": "analysis/cfd3d/out/scheme2d/",
+     "what": "meshes, SU2 logs, XFOIL polar"
+    }
+   ],
+   "ran_evidence": "SU2 and XFOIL run by analysis/cfd3d/scheme_check_2d.py (2000+ iterations per case)",
+   "reproduced": {
+    "done": true,
+    "how": "py analysis/cfd3d/scheme_check_2d.py",
+    "matches": true
+   },
+   "independent_check": {
+    "method": "XFOIL inviscid",
+    "value": 7.061704824987397,
+    "repo_value": 6.519297288461976,
+    "delta_pct": -7.680971521298177,
+    "script": "analysis/cfd3d/scheme_check_2d.py"
+   },
+   "status": "Verified",
+   "status_reason": "section cl at 4 deg vs XFOIL: L1 -14.6 %, L2 -4.3 %, L3 -4.9 %, L4 -2.9 %; lift slope: L1 -10.4 %, L2 -7.7 %, L3 -6.1 %, L4 -4.9 %; the slope rises toward XFOIL with each refinement",
+   "limitations": [
+    "2-D proxy for the 3-D chordwise resolution",
+    "the remaining few % under-prediction carries into the 3-D lift slope (CFD-05)"
+   ],
+   "next_step": "\u2014",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  },
+  {
+   "id": "CFD-09",
+   "component": "wing",
+   "claim": "Cruise chord Reynolds number 3.92e+05: attached, lift-dominated flow, so inviscid CFD is admissible for lift and moment at alpha <= 8 deg.",
+   "value": 392198.84254143643,
+   "units": "-",
+   "equations": [
+    "Re = V c / nu",
+    "nu = mu/rho, mu 1.81e-5 Pa s (ISA 15 C)"
+   ],
+   "assumptions": [
+    "ISA sea level"
+   ],
+   "inputs": {
+    "V": 18.0,
+    "c": 0.321941
+   },
+   "evidence": [
+    {
+     "file": "analysis/aero/aero_results.json",
+     "what": "conditions"
+    }
+   ],
+   "ran_evidence": "hand calculation",
+   "reproduced": {
+    "done": true,
+    "how": "here",
+    "matches": true
+   },
+   "independent_check": {
+    "method": "XFOIL section at Re 3.5e5 stays attached to ~10 deg (aero_results.json section_polars)",
+    "value": null,
+    "repo_value": 392198.84254143643,
+    "delta_pct": null,
+    "script": "analysis/cfd3d/verify_cfd.py#CFD-09"
+   },
+   "status": "Verified",
+   "status_reason": "Re matches the aero package (AERO-01); attached-flow range from the viscous section polar",
+   "limitations": [
+    "laminar separation bubbles at Re 3.5e5 are not represented"
+   ],
+   "next_step": "\u2014",
+   "discipline": "aerodynamics",
+   "tool": "SU2 8.5.0 INC_EULER on gmsh 4.15.2 tetrahedra (analysis/cfd3d/)"
+  }
+ ]
+}
