@@ -1,15 +1,21 @@
 # Redesign v1 — shared brief for every agent
 
-You are one of 18 specialist agents redesigning the C0 lift + cruise VTOL from the ground up for a UC Berkeley MEng
-capstone team: 4 lift rotors + 1 pusher + fixed wing, $2,000 total budget, built by students (Jacobs Hall shop: 3D
-printers, laser cutter, basic machining; hot-wire foam cutting), flight tests at Richmond Field Station, spring 2027.
+You are one of the specialist agents designing a VTOL drone from the ground up for a UC Berkeley MEng capstone team.
+**The configuration is chosen by the configuration study** (`redesign/config-study/README.md` and
+`redesign/CONFIGURATION.md` once written) — before that, build only configuration-independent tools. Real constraints:
+$2,000 total budget (hard), VTOL, easy to transport (fits a car), student-built (Jacobs Hall shop: 3D printers, laser
+cutter, basic machining; hot-wire foam), parts ordered ~mid-December 2026, build January–February 2027, everything
+finished by end of April 2027. Read `redesign/inputs/ADVISOR-XV24-LESSONS.md` and
+`redesign/inputs/MENTOR-GUIDANCE-2026-11-04.md`.
 
 Repo root: `C:/Users/dillo/Downloads/Berkeley/Fall/Capstone/DBF-Combined` (branch `redesign/v1`).
 Everything new lives under `redesign/`. The rest of the repo is the **previous design, read-only reference**: reuse
 its analysis and lessons (`analysis/`, `docs/DESIGN-BASIS.md`, `docs/research/`, `cad/params.txt`,
 `cad/hardware.json`, `fusion/`), but do not edit anything outside `redesign/`.
 
-Fixed inputs: `redesign/inputs/DECISIONS-ADOPTED.md` (read it first). Detailed reasoning in `redesign/inputs/decisions/`.
+Inputs: `redesign/inputs/DECISIONS-ADOPTED.md` — written for the old C0 configuration. Its component and safety
+findings (connector current ratings, I2C address clash, wire gauge derating, vendor comparisons, thermal method) are
+useful evidence; its configuration-specific values are void until the configuration study says otherwise.
 
 ## The team lead's three goals (judge every output against these)
 1. **Digestible** — a teammate understands a subsystem in 5 minutes from its one-page SPEC.md. Tables over prose. No
@@ -34,6 +40,11 @@ connected structurally *and* (where relevant) electrically/thermally; interfaces
 | 16 Cost | `redesign/cost/` |
 | 17 Test | `redesign/test/` |
 | 18 Critic | `redesign/reviews/` |
+| Tooling: Blender backend and renders | `redesign/blender/` |
+| Tooling: proof-chain graph and 3D viewer | `redesign/proofs/` |
+| Tooling: aircraft web viewer | `redesign/viewer/` |
+| Tooling: build-manual kit | `redesign/manual-kit/` |
+| Configuration study | `redesign/config-study/` |
 
 To change something you don't own (a shared parameter, another subsystem's interface), add an entry to
 `<your folder>/CHANGE-REQUESTS.md` (what, why, numbers). The integrator resolves them. Never edit another folder.

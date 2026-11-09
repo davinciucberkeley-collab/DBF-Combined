@@ -1,5 +1,10 @@
 # Decisions adopted as inputs to redesign v1
 
+> **Superseded in part (2026-11-09):** the team lead made the aircraft configuration open again; the only real
+> constraints are the $2,000 budget, VTOL, transportability, student build and the schedule. Entries tied to the C0
+> configuration (D1–D4, D12, D14, and the sizing-dependent parts of D5–D11) are void until the configuration study
+> (`redesign/config-study/`) chooses a configuration. D13 (all CAD in Autodesk Fusion) and D15 still stand.
+
 Source: one analysis agent per open decision (full write-ups in `decisions/D1.md` … `D15.md`), reconciled
 2026-11-09. These are **fixed inputs** for the redesign. Status: adopted for the redesign, pending team sign-off.
 A subsystem agent that believes one is wrong files a change request; it does not silently deviate.
