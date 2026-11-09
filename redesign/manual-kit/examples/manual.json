@@ -1,0 +1,31 @@
+{
+ "schema": "dbf-manual/1",
+ "_note": "Manual-level settings for the generic example aircraft (redesign/fusion/examples). Not a design.",
+ "id": "EX-MAN",
+ "title": "Example aircraft build manual",
+ "subtitle": "Generic test geometry: fuselage box, wing with spar and aileron, two booms with lift motors",
+ "revision": "A",
+ "date": "2026-11-09",
+ "status": "PROPOSED",
+ "subsystems": ["ex_fuselage", "ex_wing", "ex_booms"],
+ "work_packages": [
+  {"id": "WP1", "title": "Fuselage", "summary": "Inserts and ESC in the fuselage box."},
+  {"id": "WP2", "title": "Wing", "summary": "Spar bond, aileron hinge and servo. One overnight cure."},
+  {"id": "WP3", "title": "Booms and motors", "summary": "Motors onto the booms, booms clamped under the wing."},
+  {"id": "WP4", "title": "Final assembly", "summary": "Wing onto the fuselage, leads connected, battery in last."}
+ ],
+ "safety": [
+  {"level": "stop", "title": "LiPo", "text": "Battery goes in last (step 6). Charge only in a LiPo bag, never unattended. A swollen or dented pack is not used."},
+  {"level": "stop", "title": "Props", "text": "No propeller on any motor during bench work. Props go on only for a test on the stand or a tied-down airframe."},
+  {"level": "caution", "title": "Heat and fumes", "text": "Insert iron and soldering iron run at 220-350 °C: heat-proof mat, fan or extraction on."},
+  {"level": "caution", "title": "Epoxy", "text": "Nitrile gloves, ventilated room. Mix on a card, not in a cup (heat builds up in a mass of epoxy)."}
+ ],
+ "figures": [
+  {"id": "cover", "camera": "iso", "context": ["*"],
+   "callouts": ["FUS-001", "WNG-001", "WNG-004", "BMS-001", "BMS-003"],
+   "caption": {"title": "Example aircraft, complete", "sub": "Generic test geometry from redesign/fusion/examples"}},
+  {"id": "exploded", "camera": {"preset": "iso", "el": 24}, "context": ["*"], "explode": {"factor": 1.0},
+   "callouts": "parts",
+   "caption": {"title": "Every part and its part id", "sub": "Exploded along the interface graph; bonded parts stay together"}}
+ ]
+}

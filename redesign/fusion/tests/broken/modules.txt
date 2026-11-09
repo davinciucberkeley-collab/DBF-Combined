@@ -1,0 +1,3 @@
+# deliberately broken aircraft for tests/test_framework.py
+bk_frame
+bk_crash

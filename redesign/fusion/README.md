@@ -1,0 +1,99 @@
+# redesign/fusion - CAD framework
+
+One CAD vocabulary (`fusionkit.py`) for every subsystem; the same `build(ctx)` code drives a pure-python stub
+(checks, seconds), Autodesk Fusion, and later Blender (`redesign/blender/`). Connections come from
+`interfaces.json` (schema: `redesign/interfaces/SCHEMA.md`). Keeper: agent 2.
+
+| File | What it is |
+|---|---|
+| `fusionkit.py` | `Context`, `Component`, shapes (prism / revolve / loft), joints, wires, NACA 4-digit helper, `Backend` interface |
+| `backends/stub_backend.py` | pure python backend used by `check.py` |
+| `backends/fusion_backend.py` | Fusion API backend (cm, sketches, extrude/revolve/loft, joints, materials) - UNVERIFIED-IN-FUSION |
+| `build_all.py` | discovers `redesign/subsystems/*/fusion/*.py`, builds in `modules.txt` order, prints mass and CG |
+| `BuildAll/` | the folder you add in Fusion (launcher + manifest) |
+| `check.py` | stub build + CAD-vs-interfaces checks; exit 1 on failure |
+| `examples/` | generic test aircraft (fuselage box, wing panels + spar + hinged aileron + servo, booms + motors, battery, ESC, wires). Not a design |
+| `tests/` | `test_framework.py` + `broken/` (a deliberately broken aircraft that must fail) |
+
+## Run the checks (any machine, Python 3, no installs)
+
+```
+python -I redesign/fusion/check.py                 # real subsystems
+python -I redesign/fusion/check.py --examples      # example aircraft (passes with --strict)
+python -I redesign/interfaces/merge_check.py       # graph only; writes redesign/interfaces/{interfaces.json,REPORT.md}
+python -I redesign/fusion/tests/test_framework.py  # 13 tests, < 1 s
+```
+
+## Build in Fusion (teammate, about 2 minutes)
+
+1. Get the repo on your machine (`git pull`, branch `redesign/v1`).
+2. Fusion: **UTILITIES** tab > **ADD-INS** panel > **Scripts and Add-Ins** (Shift+S).
+3. Add the launcher once: click **+** (newer Fusion: **+ > Script or add-in from device**; older Fusion: the green
+   **+** next to *My Scripts*) and pick the folder `<repo>/redesign/fusion/BuildAll`. No path to edit: the launcher
+   finds the repo from its own location.
+4. Select **BuildAll** > **Run**. It opens a new design, builds every subsystem module (or the example aircraft
+   while `redesign/subsystems/` has no modules; set `TARGET` at the top of `build_all.py` to force one), creates
+   joints and wire routes, and shows a summary. The full text is in the **TEXT COMMANDS** window.
+5. Optional: Preferences > General > Design > Default modeling orientation = **Z up** (our frame is z up).
+6. Report back: did it run, anything in the summary marked FAIL/ERROR, screenshot. The first run is the test of
+   `fusion_backend.py`.
+
+Frame: metres in code, x aft from the nose datum, y right, z up; Fusion receives cm. Each part is its own component
+named `<part id> <name>` with attributes `dbf/id, status, mass_g, material`. Declared mass (interfaces.json) is
+authoritative; the summary also lists Fusion's geometry x library-density mass for comparison.
+
+## Write a subsystem module (agents)
+
+`redesign/subsystems/<name>/fusion/<name>.py`:
+
+```python
+import fusionkit as fk
+
+def build(ctx):
+    P = ctx.local                          # <name>/params.json; shared numbers: ctx.param('wing.span_m')
+    panel = ctx.part('WNG-001')            # must exist in <name>/interfaces.json (name/material/mass/status from there)
+    sec = fk.airfoil('2412', P['chord_m'], le=(P['le_x_m'], P['z_m']))
+    panel.loft('Y', [(-0.06, sec), (-0.60, sec)], smooth=True)
+    ctx.mirror('WNG-001', 'WNG-002', plane='XZ')
+    spar = ctx.part('WNG-003'); spar.tube('Y', (0.21, -0.55, 0.066), 1.10, 0.006, 0.005)
+    ctx.rigid('E-WNG-01', 'WNG-003', 'FUS-001', at=(0.21, 0, 0.060))     # fastened/clamped edge
+    ctx.contact('E-WNG-02')                                                # bonded/taped/strapped edge
+    ctx.revolute('E-WNG-04', 'WNG-004', 'WNG-001', at=(...), axis='Y', limits=(-25, 25))   # hinged edge
+    ctx.wire('E-FUS-04', [(...), (...)])                                   # electrical edge = routed wire
+```
+
+| Builder | Use for |
+|---|---|
+| `box(lo, hi)` | blocks, battery, electronics envelopes |
+| `cylinder(axis, start, length, r)`, `tube(axis, start, length, r_out, r_in)` | spars, booms, pins |
+| `prism(axis, offset, loops, depth)` | laser-cut plates, frames, hollow sections (loops: outer first, then holes) |
+| `revolve(axis, center, [(a, r), ...])` | motors, spinners, wheels, pods |
+| `loft(axis, [(offset, loop), ...], smooth)` | wings, tails, fairings (`fk.airfoil()` gives the loop) |
+| `ctx.part(id, at=, rotate=('Z', deg))` | place / rotate a whole component |
+| `ctx.mirror(src, new, plane='XZ')` | right side from left side (exact) |
+
+Rules: one component per part id; every edge you own gets exactly one registration of the right kind;
+dimensions come from params files, not literals; run `check.py` before you finish and report its last line.
+Keep geometry simple (envelopes for bought parts). Mark anything that depends on real Fusion behaviour
+`UNVERIFIED-IN-FUSION`.
+
+## What check.py proves, and what it does not
+
+| Proves (stub, seconds) | Does not prove (UNVERIFIED-IN-FUSION) |
+|---|---|
+| every module imports and `build(ctx)` runs | that Fusion's kernel builds the sketches/lofts/revolves |
+| every component has a part id, material, mass > 0, a body | that joints solve or move as intended |
+| every MODELLED+ part has a component; PROPOSED ones listed as missing | that bodies do not interpenetrate (only bounding boxes are used) |
+| every edge has a registration of the right kind (wire / revolute / rigid-or-contact) | real masses (declared mass is used) |
+| parts of each structural edge touch (bounding boxes within 2 mm); joint origins and wire ends sit on their parts | wire bend radii, clearances, access for tools |
+| no modelled group floats; all `merge_check.py` graph checks | anything about the real aircraft configuration |
+
+`tests/test_framework.py` also runs `fusion_backend.py` end to end against a fake `adsk` module: that catches
+Python mistakes in the backend, not Fusion API behaviour.
+
+## Writing another backend (Blender)
+
+Subclass `fusionkit.Backend` and implement `begin, component, body, joint, wire, end` (docstrings in
+`fusionkit.py`). `body()` receives one of three shape kinds in component-local metres; `fusionkit.to3d(axis,
+offset, (u, v))` turns plane points into 3-D points; `comp.matrix()` is the 4x4 placement. Pass the backend to
+`build_all.build(backend, *build_all.roots(examples=True))`.

@@ -1,0 +1,37 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "hand-written (shows that claims.json can be written without proofkit)",
+ "nodes": [
+  {"id": "R-EX-HOVER", "type": "requirement", "title": "Hover thrust-to-weight",
+   "text": "Hover T/W >= 1.6 at take-off mass, from the maker's thrust table at nominal pack voltage",
+   "ref": "redesign/config-study/requirements/REQUIREMENTS.md#D11"},
+  {"id": "R-EX-DISCONNECT", "type": "requirement", "title": "Connectors carry the current",
+   "text": "Every power connector is rated >= 1.25 x the highest continuous current through it",
+   "ref": "redesign/config-study/requirements/REQUIREMENTS.md#D9"},
+  {"id": "R-EX-STALL", "type": "requirement", "title": "Stall speed",
+   "text": "Stall speed at MTOW <= 13 m/s (example value, so transition at 1.3 Vs stays below 17 m/s)"},
+  {"id": "R-EX-MASS", "type": "requirement", "title": "Mass budget",
+   "text": "Take-off mass <= 5.5 kg (example budget)"},
+  {"id": "R-EX-SPAR", "type": "requirement", "title": "Spar does not yield",
+   "text": "Wing spar root stress x 1.5 safety factor <= minimum yield at load factor 3"},
+
+  {"id": "SRC-EX-ISA", "type": "source", "kind": "standard", "title": "ICAO Standard Atmosphere, sea level (Doc 7488)",
+   "where": "rho = 1.225 kg/m3, g = 9.80665 m/s2", "checked": "2026-11-09"},
+  {"id": "SRC-EX-X4110S", "type": "source", "kind": "datasheet", "title": "SunnySky X4110S KV400 maker thrust table",
+   "url": "https://sunnyskyusa.com/products/sunnysky-x4110s-motors",
+   "where": "KV400 tab, prop 17x5.8, 22.2 V (copy: analysis/propulsion_data_2026-11-01.json S1); weight 165 g",
+   "checked": "2026-11-01", "note": "rows re-checked against the page in analysis/validation/source_audit.json SRC-01"},
+  {"id": "SRC-EX-OVONIC", "type": "source", "kind": "web", "title": "Ovonic 6S 6500 mAh 100C LiPo listing",
+   "url": "https://www.amazon.com/dp/B09CTRKLM4", "where": "listing title: 6500 mAh, 22.2 V",
+   "checked": "2026-11-01", "note": "capacity and voltage confirmed; mass not on the page (source_audit.json SRC-04)"},
+  {"id": "SRC-EX-6061", "type": "source", "kind": "web", "title": "Wikipedia, 6061 aluminium alloy",
+   "url": "https://en.wikipedia.org/wiki/6061_aluminium_alloy", "where": "Mechanical properties, T6: yield min 240 MPa",
+   "checked": "2026-11-01"},
+  {"id": "SRC-EX-PM02", "type": "source", "kind": "web", "title": "Holybro PM02 V3 power module page",
+   "url": "https://holybro.com/products/pm02-v3-12s-power-module", "where": "XT60 lead rated 30 A continuous",
+   "checked": "2026-10-13", "note": "via docs/research/avionics-autopilot.md"},
+  {"id": "SRC-EX-AS150U", "type": "source", "kind": "web", "title": "Amass AS150U rating (secondary citation)",
+   "where": "redesign/config-study/requirements/REQUIREMENTS.md D9: 70 A continuous / 140 A 1 min",
+   "note": "maker datasheet not yet opened; check before ordering"}
+ ]
+}

@@ -1,0 +1,13 @@
+part_id,name,qty,make_or_buy,process,material,mass_g,unit_cost_usd,vendor_or_file,notes
+FUS-001,Fuselage box,1,make,laser-cut + CA,3 mm birch ply,180,6.00,redesign/fusion/examples/ex_fuselage/fusion/ex_fuselage.py,demo data for the generic test aircraft
+FUS-002,Battery block,1,buy,,LiPo pack (bought),400,45.00,demo vendor (example only),demo data
+FUS-003,ESC 2-in-1 with BEC,1,buy,,PCB assembly (bought),40,30.00,demo vendor (example only),demo data
+WNG-001,Wing panel L,1,make,hot-wire foam + tape,XPS foam + tape skin,220,4.00,redesign/fusion/examples/ex_wing/fusion/ex_wing.py,demo data
+WNG-002,Wing panel R,1,make,hot-wire foam + tape,XPS foam + tape skin,220,4.00,redesign/fusion/examples/ex_wing/fusion/ex_wing.py,demo data
+WNG-003,Spar tube 12x10,1,buy,cut to length,CF tube (bought),60,12.00,demo vendor (example only),demo data
+WNG-004,Aileron L,1,make,hot-wire foam + tape,XPS foam + tape skin,30,1.00,redesign/fusion/examples/ex_wing/fusion/ex_wing.py,demo data
+WNG-005,Aileron servo L,1,buy,,servo (bought),20,9.00,demo vendor (example only),demo data
+BMS-001,Boom L,1,buy,cut to length,CF tube 16x14 (bought),40,10.00,demo vendor (example only),demo data
+BMS-002,Boom R,1,buy,cut to length,CF tube 16x14 (bought),40,10.00,demo vendor (example only),demo data
+BMS-003,Lift motor L,1,buy,,motor (bought),110,25.00,demo vendor (example only),demo data
+BMS-004,Lift motor R,1,buy,,motor (bought),110,25.00,demo vendor (example only),demo data

@@ -1,0 +1,12 @@
+# Build order for redesign/subsystems/<name>/fusion/*.py (one subsystem folder name per line).
+# Structure first, then things mounted on it, then wiring. Unlisted modules still build (last, with a WARN).
+# Names not present yet are reported as "not built yet". Keeper: agent 2 - edit via redesign/interfaces/CHANGE-REQUESTS.md
+fuselage
+wing
+booms
+tail
+landing_gear
+pusher
+power
+harness
+avionics

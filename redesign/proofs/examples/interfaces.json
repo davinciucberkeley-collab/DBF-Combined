@@ -1,0 +1,25 @@
+{
+ "_note": "Demo parts for the proof-chain example only. The real format is redesign/interfaces/SCHEMA.md (interface keeper); build_graph.py only reads part ids from 'parts' lists or 'part_id' keys.",
+ "parts": [
+  {"id": "EX-FUS-001", "name": "Fuselage box", "subsystem": "fuselage"},
+  {"id": "EX-WNG-001", "name": "Wing panel L", "subsystem": "wing"},
+  {"id": "EX-WNG-002", "name": "Wing panel R", "subsystem": "wing"},
+  {"id": "EX-WNG-003", "name": "Wing spar tube 20x1.5 6061", "subsystem": "wing"},
+  {"id": "EX-WNG-004", "name": "Aileron L (hinged)", "subsystem": "wing"},
+  {"id": "EX-BMS-001", "name": "Boom L", "subsystem": "booms"},
+  {"id": "EX-BMS-002", "name": "Boom R", "subsystem": "booms"},
+  {"id": "EX-PWR-001", "name": "Lift motor FL", "subsystem": "power"},
+  {"id": "EX-PWR-002", "name": "Lift motor FR", "subsystem": "power"},
+  {"id": "EX-PWR-003", "name": "Lift motor RL", "subsystem": "power"},
+  {"id": "EX-PWR-004", "name": "Lift motor RR", "subsystem": "power"},
+  {"id": "EX-PWR-010", "name": "Battery block 6S 6500 mAh", "subsystem": "power"},
+  {"id": "EX-HRN-001", "name": "Main disconnect AS150U", "subsystem": "harness"},
+  {"id": "EX-HRN-002", "name": "ESC lead connector XT60", "subsystem": "harness"},
+  {"id": "EX-HRN-003", "name": "Pack lead wire", "subsystem": "harness"}
+ ],
+ "interfaces": [
+  {"id": "EX-IF-001", "a": "EX-WNG-003", "b": "EX-FUS-001", "type": "bolt M4x30 through spar"},
+  {"id": "EX-IF-002", "a": "EX-WNG-004", "b": "EX-WNG-001", "type": "revolute hinge (tape)"},
+  {"id": "EX-IF-003", "a": "EX-PWR-010", "b": "EX-HRN-001", "type": "AS150U"}
+ ]
+}

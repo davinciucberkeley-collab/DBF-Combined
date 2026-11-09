@@ -1,0 +1,164 @@
+"""check.py - build every module on the stub backend and check CAD against interfaces.json. Runs in about a second.
+
+    python -I redesign/fusion/check.py              # redesign/subsystems
+    python -I redesign/fusion/check.py --examples   # generic test aircraft (redesign/fusion/examples)
+    python -I redesign/fusion/check.py --root DIR [--strict] [--tol-mm 2]
+
+Proves (exit 1 on any ERROR; --strict: on any WARN too):
+  module    every module imports and build(ctx) runs
+  part      every component has a declared part id, material, mass > 0 and at least one body
+  missing   every MODELLED/CHECKED/VERIFIED part has a component (PROPOSED ones are listed as missing, WARN)
+  register  every edge whose parts are both modelled is registered: electrical -> ctx.wire, hinged -> revolute/
+            slider, mechanical/thermal -> rigid joint or ctx.contact
+  touch     the two parts of every structural edge touch (bounding boxes within --tol-mm), joint origins lie on
+            both parts, wire ends lie on their parts
+  floating  no modelled group of parts is cut off from the rest (unless it attaches to a part not modelled yet)
+  graph     everything merge_check.py checks (schema, dangling edges, joint stacks, wires, mass budget...)
+Does NOT prove (UNVERIFIED-IN-FUSION): that Fusion's kernel builds the sketches/lofts, that joints solve, that
+bodies do not interpenetrate, real masses. Bounding boxes are coarse: touching boxes do not prove a glue line.
+"""
+import argparse
+import os
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+if HERE not in sys.path:
+    sys.path.insert(0, HERE)
+
+import build_all                                   # noqa: E402  (also puts redesign/interfaces on sys.path)
+import merge_check                                 # noqa: E402
+from fusionkit import bbox_gap, point_gap          # noqa: E402
+from backends.stub_backend import StubBackend     # noqa: E402
+
+ALLOWED = {'electrical': ('wire',), 'hinged': ('revolute', 'slider'),
+           'mechanical': ('rigid', 'contact'), 'thermal': ('rigid', 'contact'), 'kinematic': ('revolute', 'slider')}
+
+
+def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None):
+    ctx, _, results = build_all.build(StubBackend(), root, list_file, log=log)
+    g = merge_check.check(merge_check.load(root))
+    subs, tot = merge_check.rollup(g)
+    merge_check.check_budget(g, merge_check.load_budget(budget), subs, tot)   # None -> params/mass_budget.json or MASS-CG.md
+    issues = list(ctx.issues) + [(s, 'graph:' + c, i, m) for s, c, i, m in g.issues]
+    add = lambda *i: issues.append(i)
+    comps = ctx.components
+
+    # part: component data
+    for pid, c in sorted(comps.items()):
+        if not c.material:
+            add('ERROR', 'part', pid, 'no material')
+        if not c.mass_g or c.mass_g <= 0:
+            add('ERROR', 'part', pid, 'no mass (mass_g in interfaces.json)')
+        if not c.shapes:
+            add('ERROR', 'part', pid, 'component has no bodies')
+        if c.status == 'PROPOSED':
+            add('WARN', 'status', pid, 'modelled but status is PROPOSED (set MODELLED)')
+        geo = c.volume_centroid()[1] if c.shapes else None
+        if c.cg_declared and geo:
+            d = point_gap(geo, (tuple(c.cg_declared),) * 2)
+            if d > 0.030:
+                add('WARN', 'cg', pid, 'declared CG is %.0f mm from the CAD centroid' % (d * 1000))
+
+    # missing: declared parts without a component
+    for pid, p in sorted(g.parts.items()):
+        if pid not in comps:
+            sev = 'WARN' if p['status'] == 'PROPOSED' else 'ERROR'
+            add(sev, 'missing', pid, '%s part has no component (%s)' % (p['status'], p['subsystem']))
+
+    # register + touch
+    reg = ctx.registrations()
+    for eid, e in sorted(g.edges.items()):
+        a, b = comps.get(e.get('part_a')), comps.get(e.get('part_b'))
+        kind, method = g.kind(e), g.method(e)
+        regs = reg.pop(eid, [])
+        if a is None or b is None:
+            if regs:
+                add('WARN', 'register', eid, 'registered but a part is not modelled yet')
+            continue
+        if not regs:
+            add('ERROR', 'register', eid, '%s edge %s-%s has no joint/contact/wire in CAD' % (kind, a.id, b.id))
+            continue
+        allowed = ALLOWED.get('hinged' if method == 'hinged' else kind, ())
+        for rk, obj in regs:
+            if rk not in allowed:
+                add('ERROR', 'register', eid, '%s edge registered as %s (allowed: %s)' % (kind, rk, '/'.join(allowed)))
+            if rk in ('rigid', 'revolute', 'slider') and {obj.a, obj.b} != {a.id, b.id}:
+                add('ERROR', 'register', eid, 'joint joins %s-%s but the edge is %s-%s' % (obj.a, obj.b, a.id, b.id))
+        ba, bb = a.bbox(), b.bbox()
+        if not (ba and bb):
+            continue
+        if kind in merge_check.STRUCTURAL or kind == 'thermal':
+            gap = bbox_gap(ba, bb)
+            if gap > tol:
+                add('ERROR', 'touch', eid, '%s and %s are %.1f mm apart' % (a.id, b.id, gap * 1000))
+        for rk, obj in regs:
+            if rk in ('rigid', 'revolute', 'slider'):
+                off = max(point_gap(obj.origin, ba), point_gap(obj.origin, bb))
+                if off > tol:
+                    add('ERROR', 'touch', eid, 'joint origin is %.1f mm off a part' % (off * 1000))
+            if rk == 'wire':
+                p0, p1 = obj.points[0], obj.points[-1]
+                off = min(max(point_gap(p0, ba), point_gap(p1, bb)), max(point_gap(p0, bb), point_gap(p1, ba)))
+                if off > tol:
+                    add('ERROR', 'touch', eid, 'wire end is %.1f mm off its part' % (off * 1000))
+    for eid, regs in sorted(reg.items()):
+        add('ERROR', 'register', eid, 'CAD registers an edge that no interfaces.json declares')
+
+    # floating: modelled structure split into groups that do not reach a not-yet-modelled part
+    modelled = {k: g.parts[k] for k in comps if k in g.parts and g.parts[k].get('flight', True)}
+    groups = merge_check.clusters(g, parts=modelled)
+    anchored = set()
+    for e in g.edges.values():
+        if g.kind(e) in merge_check.STRUCTURAL:
+            ends = (e.get('part_a'), e.get('part_b'))
+            if any(x in g.parts and x not in comps for x in ends):
+                anchored.update(x for x in ends if x in comps)
+    for grp in groups[1:]:
+        if not grp & anchored:
+            add('ERROR', 'floating', ', '.join(sorted(grp)), 'modelled parts not connected to the main structure')
+    return ctx, results, issues
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description='Stub-build all modules and check them against interfaces.json.')
+    ap.add_argument('--examples', action='store_true')
+    ap.add_argument('--root')
+    ap.add_argument('--strict', action='store_true')
+    ap.add_argument('--tol-mm', type=float, default=2.0)
+    a = ap.parse_args(argv)
+    root, lst = build_all.roots(a.examples, a.root)
+    budget = os.path.join(root, 'mass_budget.json')
+    ctx, results, issues = run_checks(root, lst, a.tol_mm / 1000.0, budget if os.path.exists(budget) else None,
+                                     log=lambda m: print(m) if m.startswith('not built') else None)
+
+    per = {}
+    for sev, code, item, msg in issues:
+        sub = next((c.subsystem for c in ctx.components.values() if c.id in str(item)), None) or \
+            (item if any(r[0] == item for r in results) else '-')
+        per.setdefault(sub, [0, 0])[0 if sev == 'ERROR' else 1] += 1
+    print('%-14s %-4s %6s %5s %6s %6s %5s %8s %4s %4s' % ('module', 'ok', 'ms', 'parts', 'bodies', 'joints',
+                                                          'wires', 'mass g', 'err', 'warn'))
+    for sub, f, ok, ms, _ in results:
+        cs = [c for c in ctx.components.values() if c.subsystem == sub]
+        e, w = per.get(sub, [0, 0])
+        print('%-14s %-4s %6.1f %5d %6d %6d %5d %8.0f %4d %4d' % (
+            sub, 'ok' if ok else 'FAIL', ms, len(cs), sum(len(c.shapes) for c in cs),
+            sum(1 for j in ctx.joints if j.sub == sub), sum(1 for x in ctx.wires if x.sub == sub),
+            sum(c.mass_g or 0 for c in cs), e, w))
+    M, cg = ctx.rollup()
+    print('TOTAL %.0f g, CG %s m (declared mass; CG declared or CAD centroid)' % (
+        M, ', '.join('%.3f' % v for v in cg) if cg else '-'))
+    for sev, code, item, msg in sorted(issues, key=lambda i: (i[0] != 'ERROR', i[1])):
+        print('  %-5s %-16s %-16s %s' % (sev, code, item, msg))
+    nerr = sum(1 for i in issues if i[0] == 'ERROR')
+    nwarn = len(issues) - nerr
+    fail = nerr or (a.strict and nwarn) or not results
+    print('check: %s (%d modules, %d errors, %d warnings%s)' % ('FAIL' if fail else 'PASS', len(results), nerr, nwarn,
+                                                              ', strict' if a.strict else ''))
+    if not results:
+        print('  no modules found under %s' % root)
+    return 1 if fail else 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

@@ -1,0 +1,249 @@
+{
+ "id": "wng-s03",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "workbench",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 13.29,
+ "explode": 0.0,
+ "camera": {
+  "preset": "closeup",
+  "az_deg": 35,
+  "el_deg": 40,
+  "ortho": false,
+  "lens_mm": 40,
+  "location_m": [
+   -0.4932,
+   -0.6054,
+   0.791
+  ],
+  "fit": [
+   "WNG-003",
+   "FUS-001"
+  ],
+  "frame": [
+   0.07,
+   0.93,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Step 5: Bolt the wing to the fuselage",
+  "sub": ""
+ },
+ "subject_px": [
+  -103,
+  66,
+  1655,
+  1112
+ ],
+ "callouts": [
+  {
+   "item": "WNG-003",
+   "x": 629.6,
+   "y": 426.1,
+   "title": "WNG-003",
+   "text": "Spar tube 12x10",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2082,
+    0.0237,
+    0.0701
+   ]
+  },
+  {
+   "item": "E-WNG-01",
+   "x": 662.5,
+   "y": 447.6,
+   "title": "E-WNG-01",
+   "text": "2x M4x30 SHCS + nyloc",
+   "detail": "3 mm hex key + 7 mm spanner / 1.0 N m (check tube crush)",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2065,
+    -0.0051,
+    0.0662
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "FUS-001",
+   "role": "context",
+   "name": "Fuselage box",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    365,
+    180,
+    1030,
+    810
+   ]
+  },
+  {
+   "id": "FUS-003",
+   "role": "context",
+   "name": "ESC 2-in-1 with BEC",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    738,
+    443,
+    821,
+    508
+   ]
+  },
+  {
+   "id": "WNG-001",
+   "role": "context",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    675,
+    364,
+    1655,
+    937
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    13,
+    103,
+    705,
+    457
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "focus",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    114,
+    189,
+    1489,
+    822
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "role": "context",
+   "name": "Aileron L",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    1020,
+    402,
+    1591,
+    675
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "role": "context",
+   "name": "Aileron servo L",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    1115,
+    528,
+    1179,
+    602
+   ]
+  },
+  {
+   "id": "BMS-001",
+   "role": "context",
+   "name": "Boom L",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    796,
+    315,
+    1419,
+    1112
+   ]
+  },
+  {
+   "id": "BMS-003",
+   "role": "context",
+   "name": "Lift motor L",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    812,
+    950,
+    908,
+    1068
+   ]
+  },
+  {
+   "id": "BMS-002",
+   "role": "context",
+   "name": "Boom R",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    -103,
+    66,
+    667,
+    540
+   ]
+  },
+  {
+   "id": "BMS-004",
+   "role": "context",
+   "name": "Lift motor R",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    -95,
+    430,
+    -7,
+    509
+   ]
+  }
+ ],
+ "hidden": [
+  "E-FUS-03",
+  "E-FUS-04",
+  "E-FUS-05",
+  "E-FUS-06",
+  "FUS-002"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "focus"
+ ],
+ "files": {
+  "png": "wng-s03.png",
+  "jpg": "wng-s03.jpg"
+ }
+}

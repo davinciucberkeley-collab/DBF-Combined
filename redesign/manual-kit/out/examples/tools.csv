@@ -1,0 +1,18 @@
+tool,work_packages,steps
+2.5 mm hex key,WP1 WP3,FUS-S01 BMS-S01
+3 mm hex key,WP4,WNG-S03
+5.5 mm spanner,WP3,BMS-S01
+7 mm spanner,WP4,WNG-S03
+Calipers 150 mm,WP3,BMS-S01
+Flat table >= 1.3 m,WP2,WNG-S01
+Heat-proof mat,WP1,FUS-S01
+Kitchen scale 5 kg x 1 g,WP4,FUS-S02
+Mixing card and stick,WP2,WNG-S01
+Multimeter,WP4,FUS-S02
+PH0 screwdriver,WP2,WNG-S02
+Protractor or throw gauge,WP2,WNG-S02
+Servo tester,WP2,WNG-S02
+Soldering iron with an M3 insert tip,WP1,FUS-S01
+Steel rule 1 m,WP2,WNG-S01
+Torque screwdriver,WP3 WP4,BMS-S01 WNG-S03
+Transmitter (bound),WP4,FUS-S02

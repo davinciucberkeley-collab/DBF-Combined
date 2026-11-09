@@ -1,0 +1,162 @@
+{
+ "source": "examples",
+ "mode": "material",
+ "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
+ "files": {
+  "assembly.glb": 158216,
+  "ex_booms.glb": 45664,
+  "ex_fuselage.glb": 57212,
+  "ex_wing.glb": 54880
+ },
+ "parts": [
+  {
+   "id": "FUS-001",
+   "subsystem": "ex_fuselage",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.06
+   ]
+  },
+  {
+   "id": "FUS-002",
+   "subsystem": "ex_fuselage",
+   "status": "MODELLED",
+   "mass_g": 400,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.173
+   ]
+  },
+  {
+   "id": "FUS-003",
+   "subsystem": "ex_fuselage",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.133
+   ]
+  },
+  {
+   "id": "WNG-001",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "explode_m": [
+    0.06,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0836
+   ]
+  },
+  {
+   "id": "BMS-001",
+   "subsystem": "ex_booms",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.1026
+   ]
+  },
+  {
+   "id": "BMS-003",
+   "subsystem": "ex_booms",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0426
+   ]
+  },
+  {
+   "id": "BMS-002",
+   "subsystem": "ex_booms",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.1026
+   ]
+  },
+  {
+   "id": "BMS-004",
+   "subsystem": "ex_booms",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0426
+   ]
+  }
+ ],
+ "wires": [
+  "E-FUS-03",
+  "E-FUS-04",
+  "E-FUS-05",
+  "E-FUS-06"
+ ],
+ "joints": [
+  "E-BMS-01",
+  "E-BMS-02",
+  "E-BMS-03",
+  "E-BMS-04",
+  "E-FUS-02",
+  "E-WNG-01",
+  "E-WNG-04",
+  "E-WNG-05"
+ ],
+ "issues": []
+}

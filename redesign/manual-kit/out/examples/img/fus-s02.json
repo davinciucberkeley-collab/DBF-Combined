@@ -1,0 +1,341 @@
+{
+ "id": "fus-s02",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "workbench",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 13.71,
+ "explode": 0.0,
+ "camera": {
+  "preset": "iso",
+  "az_deg": 30,
+  "el_deg": 34,
+  "ortho": false,
+  "lens_mm": 50,
+  "location_m": [
+   -1.0978,
+   -0.8328,
+   1.0497
+  ],
+  "fit": "visible",
+  "frame": [
+   0.07,
+   0.93,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Step 6: Connect the leads, then strap in the battery",
+  "sub": ""
+ },
+ "subject_px": [
+  113,
+  157,
+  1487,
+  845
+ ],
+ "callouts": [
+  {
+   "item": "E-FUS-04",
+   "x": 937.7,
+   "y": 545.9,
+   "title": "E-FUS-04",
+   "text": "MR30 at wing root, 18 AWG",
+   "detail": "bend >= 10 mm",
+   "role": "focus",
+   "occluded": true,
+   "world_m": [
+    0.218,
+    -0.2005,
+    0.0235
+   ]
+  },
+  {
+   "item": "E-FUS-06",
+   "x": 873.0,
+   "y": 379.7,
+   "title": "E-FUS-06",
+   "text": "JR 3-pin at wing root, 26 AWG",
+   "detail": "bend >= 5 mm",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.3575,
+    -0.0652,
+    0.0657
+   ]
+  },
+  {
+   "item": "FUS-002",
+   "x": 719.1,
+   "y": 538.0,
+   "title": "FUS-002",
+   "text": "Battery block",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.1766,
+    -0.0196,
+    -0.007
+   ]
+  },
+  {
+   "item": "E-FUS-03",
+   "x": 780.4,
+   "y": 486.9,
+   "title": "E-FUS-03",
+   "text": "XT60, 14 AWG",
+   "detail": "bend >= 15 mm",
+   "role": "focus",
+   "occluded": true,
+   "world_m": [
+    0.31,
+    0.0,
+    -0.0395
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "FUS-001",
+   "role": "ghost",
+   "name": "Fuselage box",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    509,
+    239,
+    991,
+    721
+   ]
+  },
+  {
+   "id": "FUS-002",
+   "role": "focus",
+   "name": "Battery block",
+   "status": "MODELLED",
+   "mass_g": 400,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    646,
+    451,
+    809,
+    609
+   ]
+  },
+  {
+   "id": "FUS-003",
+   "role": "context",
+   "name": "ESC 2-in-1 with BEC",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    767,
+    456,
+    833,
+    504
+   ]
+  },
+  {
+   "id": "WNG-001",
+   "role": "context",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    743,
+    375,
+    1487,
+    711
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    127,
+    201,
+    737,
+    454
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "context",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    211,
+    272,
+    1370,
+    649
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "role": "context",
+   "name": "Aileron L",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    1004,
+    396,
+    1443,
+    557
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "role": "context",
+   "name": "Aileron servo L",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    1088,
+    475,
+    1134,
+    528
+   ]
+  },
+  {
+   "id": "BMS-001",
+   "role": "context",
+   "name": "Boom L",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    897,
+    324,
+    1312,
+    845
+   ]
+  },
+  {
+   "id": "BMS-003",
+   "role": "context",
+   "name": "Lift motor L",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    903,
+    735,
+    971,
+    813
+   ]
+  },
+  {
+   "id": "BMS-002",
+   "role": "context",
+   "name": "Boom R",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    113,
+    157,
+    661,
+    540
+   ]
+  },
+  {
+   "id": "BMS-004",
+   "role": "context",
+   "name": "Lift motor R",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    120,
+    451,
+    183,
+    514
+   ]
+  },
+  {
+   "id": "E-FUS-03",
+   "role": "focus",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    773,
+    479,
+    788,
+    495
+   ]
+  },
+  {
+   "id": "E-FUS-04",
+   "role": "focus",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    819,
+    400,
+    1153,
+    791
+   ]
+  },
+  {
+   "id": "E-FUS-05",
+   "role": "focus",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    162,
+    306,
+    782,
+    501
+   ]
+  },
+  {
+   "id": "E-FUS-06",
+   "role": "focus",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    827,
+    377,
+    1111,
+    508
+   ]
+  }
+ ],
+ "hidden": [],
+ "clipped": [],
+ "legend": [
+  "context",
+  "focus",
+  "ghost"
+ ],
+ "files": {
+  "png": "fus-s02.png",
+  "jpg": "fus-s02.jpg"
+ }
+}

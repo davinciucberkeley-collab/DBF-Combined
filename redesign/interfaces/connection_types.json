@@ -1,0 +1,24 @@
+{
+ "schema": "dbf-interfaces/1",
+ "note": "Shared connection-type library (keeper: agent 2). Few fastener sizes on purpose: M2, M3, M4. Subsystems may add types in their own interfaces.json; propose common ones via redesign/interfaces/CHANGE-REQUESTS.md. Connector ratings: see redesign/inputs/DECISIONS-ADOPTED.md.",
+ "connection_types": [
+  {"id": "CT-M2-SCREW-PLASTIC", "kind": "mechanical", "method": "fastened", "spec": "M2 self-tapping or machine screw into printed/plastic boss (servo ears)"},
+  {"id": "CT-M3-SHCS-INSERT", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS into M3 brass heat-set insert"},
+  {"id": "CT-M3-SHCS-NYLOC", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS through clearance hole, nyloc nut"},
+  {"id": "CT-M3-SHCS-MOTOR", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS into motor base tapped hole (manufacturer pattern)"},
+  {"id": "CT-M4-SHCS-NYLOC", "kind": "mechanical", "method": "fastened", "spec": "M4 SHCS through clearance hole, nyloc nut"},
+  {"id": "CT-EPOXY", "kind": "mechanical", "method": "bonded", "spec": "epoxy bond (30 min laminating epoxy), surfaces scuffed"},
+  {"id": "CT-CA", "kind": "mechanical", "method": "bonded", "spec": "cyanoacrylate bond (foam-safe CA where foam)"},
+  {"id": "CT-TUBE-CLAMP", "kind": "mechanical", "method": "clamped", "spec": "printed split clamp around round tube, closed by fasteners listed in the joint stack"},
+  {"id": "CT-STRAP-VELCRO", "kind": "mechanical", "method": "strapped", "spec": "hook-and-loop strap + anti-slip pad"},
+  {"id": "CT-TAPE-HINGE", "kind": "kinematic", "method": "hinged", "spec": "tape hinge (top surface), control surface"},
+  {"id": "CT-PIN-HINGE", "kind": "kinematic", "method": "hinged", "spec": "pin hinge, printed knuckles + steel pin"},
+  {"id": "CT-XT60", "kind": "electrical", "method": "connector", "spec": "XT60 (battery main)"},
+  {"id": "CT-XT90", "kind": "electrical", "method": "connector", "spec": "XT90 (battery main, high current)"},
+  {"id": "CT-MR30", "kind": "electrical", "method": "connector", "spec": "MR30 3-pin (motor phases at a removable joint)"},
+  {"id": "CT-SOLDER-PHASE", "kind": "electrical", "method": "soldered", "spec": "soldered motor phase wires, heat-shrink"},
+  {"id": "CT-SERVO-JR", "kind": "electrical", "method": "connector", "spec": "JR/Futaba 3-pin servo connector"},
+  {"id": "CT-JST-GH-6", "kind": "electrical", "method": "connector", "spec": "JST-GH 6-pin (telemetry / GPS)"},
+  {"id": "CT-THERMAL-PAD", "kind": "thermal", "method": "conductive", "spec": "thermal pad between heat source and sink"}
+ ]
+}

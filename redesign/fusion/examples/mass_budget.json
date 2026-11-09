@@ -1,0 +1,4 @@
+{"_note": "Example mass budget for the generic test aircraft (format proposed for redesign/params/mass_budget.json).",
+ "limit_g": 2000,
+ "allocations_g": {"ex_fuselage": 650, "ex_wing": 600, "ex_booms": 320},
+ "cg_x_m": [0.18, 0.24]}

@@ -1,0 +1,30 @@
+{
+ "schema": "dbf-steps/1",
+ "subsystem": "ex_booms",
+ "steps": [
+  {"id": "BMS-S01", "wp": "WP3", "after": ["WNG-S02"], "title": "Fit the motors and clamp the booms under the wing",
+   "goal": "Both booms parallel under the spar line, a motor on the front of each.",
+   "parts": ["BMS-001", "BMS-002", "BMS-003", "BMS-004"],
+   "edges": ["E-BMS-03", "E-BMS-04", "E-BMS-01", "E-BMS-02"],
+   "tools": ["Calipers 150 mm"],
+   "time_min": 30,
+   "safety": [{"level": "caution", "text": "A motor screw longer than the joint stack allows reaches the windings. Measure every screw before it goes in."}],
+   "actions": [
+    {"do": "Measure each M3x8 against the saddle: thread in the motor base `4 mm` (minimum `3 mm`).", "at": "E-BMS-03"},
+    {"do": "Fix BMS-003 to the front of BMS-001: 4x M3x8, threadlocker, snug. Same for BMS-004 on BMS-002.", "at": "BMS-003"},
+    {"do": "Close a printed clamp round each boom under the spar line: 2x M3x20 from below, washer and nyloc.", "at": "E-BMS-01"},
+    {"do": "Set both booms parallel to the fuselage axis, then tighten the clamps to `0.5 N m`.", "at": "E-BMS-02"}
+   ],
+   "check": {"type": "dimension", "text": "Measure centre to centre between the motor shafts; spin each motor by hand.",
+    "target": "{ex_booms.boom_y_m*2|mm} ± 2 mm; both motors spin freely, no rub", "record": "spacing mm"},
+   "can_go_wrong": [
+    {"problem": "Boom rotates in the clamp", "fix": "Clamp halves touching before they grip: sand 0.3 mm off a mating face, re-torque."},
+    {"problem": "Motor bell rubs after tightening", "fix": "Screw too long: swap to the length in the joint stack."}
+   ],
+   "figure": {"camera": {"preset": "iso", "az": 40, "el": 32}},
+   "details": [
+    {"title": "Motor on the boom end", "camera": {"preset": "closeup", "fit": ["BMS-003"], "az": 30, "el": 25, "lens": 60, "frame": [0.25, 0.75, 0.2, 0.8]}}
+   ]
+  }
+ ]
+}

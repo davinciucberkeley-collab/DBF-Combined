@@ -1,0 +1,60 @@
+{
+ "schema": "dbf-interfaces/1",
+ "generated_by": "redesign/interfaces/merge_check.py",
+ "sources": [
+  "fusion/examples/ex_booms/interfaces.json",
+  "fusion/examples/ex_fuselage/interfaces.json",
+  "fusion/examples/ex_wing/interfaces.json"
+ ],
+ "parts": [
+  {"id": "BMS-001", "name": "Boom L", "subsystem": "ex_booms", "status": "MODELLED", "mass_g": 40, "material": "CF tube 16x14 (bought)", "cg_xyz_m": [0.265, -0.35, 0.05], "make_or_buy": "buy"},
+  {"id": "BMS-002", "name": "Boom R", "subsystem": "ex_booms", "status": "MODELLED", "mass_g": 40, "material": "CF tube 16x14 (bought)", "cg_xyz_m": [0.265, 0.35, 0.05], "make_or_buy": "buy"},
+  {"id": "BMS-003", "name": "Lift motor L", "subsystem": "ex_booms", "status": "MODELLED", "mass_g": 110, "material": "motor (bought)", "cg_xyz_m": [-0.08, -0.35, 0.074], "make_or_buy": "buy", "electrical": "sink"},
+  {"id": "BMS-004", "name": "Lift motor R", "subsystem": "ex_booms", "status": "MODELLED", "mass_g": 110, "material": "motor (bought)", "cg_xyz_m": [-0.08, 0.35, 0.074], "make_or_buy": "buy", "electrical": "sink"},
+  {"id": "FUS-001", "name": "Fuselage box", "subsystem": "ex_fuselage", "status": "MODELLED", "mass_g": 180, "material": "3 mm birch ply", "cg_xyz_m": [0.3, 0.0, 0.0], "make_or_buy": "make"},
+  {"id": "FUS-002", "name": "Battery block", "subsystem": "ex_fuselage", "status": "MODELLED", "mass_g": 400, "material": "LiPo pack (bought)", "cg_xyz_m": [0.225, 0.0, -0.032], "make_or_buy": "buy", "electrical": "source"},
+  {"id": "FUS-003", "name": "ESC 2-in-1 with BEC", "subsystem": "ex_fuselage", "status": "MODELLED", "mass_g": 40, "material": "PCB assembly (bought)", "cg_xyz_m": [0.345, 0.0, -0.052], "make_or_buy": "buy", "electrical": "bus"},
+  {"id": "WNG-001", "name": "Wing panel L", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 220, "material": "XPS foam + tape skin", "cg_xyz_m": [0.243, -0.33, 0.072], "make_or_buy": "make"},
+  {"id": "WNG-002", "name": "Wing panel R", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 220, "material": "XPS foam + tape skin", "cg_xyz_m": [0.243, 0.33, 0.072], "make_or_buy": "make"},
+  {"id": "WNG-003", "name": "Spar tube 12x10", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 60, "material": "CF tube (bought)", "cg_xyz_m": [0.212, 0.0, 0.066], "make_or_buy": "buy"},
+  {"id": "WNG-004", "name": "Aileron L", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 30, "material": "XPS foam + tape skin", "cg_xyz_m": [0.36, -0.375, 0.07], "make_or_buy": "make"},
+  {"id": "WNG-005", "name": "Aileron servo L", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 20, "material": "servo (bought)", "cg_xyz_m": [0.28, -0.32, 0.071], "make_or_buy": "buy", "electrical": "sink"}
+ ],
+ "connection_types": [
+  {"id": "CT-CA", "kind": "mechanical", "method": "bonded", "spec": "cyanoacrylate bond (foam-safe CA where foam)"},
+  {"id": "CT-EPOXY", "kind": "mechanical", "method": "bonded", "spec": "epoxy bond (30 min laminating epoxy), surfaces scuffed"},
+  {"id": "CT-JST-GH-6", "kind": "electrical", "method": "connector", "spec": "JST-GH 6-pin (telemetry / GPS)"},
+  {"id": "CT-M2-SCREW-PLASTIC", "kind": "mechanical", "method": "fastened", "spec": "M2 self-tapping or machine screw into printed/plastic boss (servo ears)"},
+  {"id": "CT-M3-SHCS-INSERT", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS into M3 brass heat-set insert"},
+  {"id": "CT-M3-SHCS-MOTOR", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS into motor base tapped hole (manufacturer pattern)"},
+  {"id": "CT-M3-SHCS-NYLOC", "kind": "mechanical", "method": "fastened", "spec": "M3 SHCS through clearance hole, nyloc nut"},
+  {"id": "CT-M4-SHCS-NYLOC", "kind": "mechanical", "method": "fastened", "spec": "M4 SHCS through clearance hole, nyloc nut"},
+  {"id": "CT-MR30", "kind": "electrical", "method": "connector", "spec": "MR30 3-pin (motor phases at a removable joint)"},
+  {"id": "CT-PIN-HINGE", "kind": "kinematic", "method": "hinged", "spec": "pin hinge, printed knuckles + steel pin"},
+  {"id": "CT-SERVO-JR", "kind": "electrical", "method": "connector", "spec": "JR/Futaba 3-pin servo connector"},
+  {"id": "CT-SOLDER-PHASE", "kind": "electrical", "method": "soldered", "spec": "soldered motor phase wires, heat-shrink"},
+  {"id": "CT-STRAP-VELCRO", "kind": "mechanical", "method": "strapped", "spec": "hook-and-loop strap + anti-slip pad"},
+  {"id": "CT-TAPE-HINGE", "kind": "kinematic", "method": "hinged", "spec": "tape hinge (top surface), control surface"},
+  {"id": "CT-THERMAL-PAD", "kind": "thermal", "method": "conductive", "spec": "thermal pad between heat source and sink"},
+  {"id": "CT-TUBE-CLAMP", "kind": "mechanical", "method": "clamped", "spec": "printed split clamp around round tube, closed by fasteners listed in the joint stack"},
+  {"id": "CT-XT60", "kind": "electrical", "method": "connector", "spec": "XT60 (battery main)"},
+  {"id": "CT-XT90", "kind": "electrical", "method": "connector", "spec": "XT90 (battery main, high current)"}
+ ],
+ "edges": [
+  {"id": "E-BMS-01", "part_a": "BMS-001", "part_b": "WNG-001", "via": "CT-M3-SHCS-NYLOC", "owner": "ex_booms", "notes": "printed clamp under the spar line", "joint_stack": {"fastener": "M3x20 SHCS", "count": 2, "grade": "A2-70", "hole": "3.4 mm clearance through clamp halves", "insert": "none", "engagement_mm": 4.0, "min_engagement_mm": 3.0, "washer_nut": "M3 washer + M3 nyloc", "torque": "0.5 N m", "tool": "2.5 mm hex key + 5.5 mm spanner", "access": "from below (-z)", "install_order": 1, "removal_order": 2}, "declared_in": "ex_booms"},
+  {"id": "E-BMS-02", "part_a": "BMS-002", "part_b": "WNG-002", "via": "CT-M3-SHCS-NYLOC", "owner": "ex_booms", "notes": "mirror of E-BMS-01", "joint_stack": {"fastener": "M3x20 SHCS", "count": 2, "grade": "A2-70", "hole": "3.4 mm clearance through clamp halves", "insert": "none", "engagement_mm": 4.0, "min_engagement_mm": 3.0, "washer_nut": "M3 washer + M3 nyloc", "torque": "0.5 N m", "tool": "2.5 mm hex key + 5.5 mm spanner", "access": "from below (-z)", "install_order": 1, "removal_order": 2}, "declared_in": "ex_booms"},
+  {"id": "E-BMS-03", "part_a": "BMS-003", "part_b": "BMS-001", "via": "CT-M3-SHCS-MOTOR", "owner": "ex_booms", "notes": "motor on a printed boom saddle (saddle omitted in the example)", "joint_stack": {"fastener": "M3x8 SHCS", "count": 4, "grade": "A2-70", "hole": "3.4 mm clearance in saddle", "insert": "none (motor base tapped)", "engagement_mm": 4.0, "min_engagement_mm": 3.0, "washer_nut": "none", "torque": "snug + threadlocker", "tool": "2.5 mm hex key", "access": "from below (-z)", "install_order": 2, "removal_order": 1}, "declared_in": "ex_booms"},
+  {"id": "E-BMS-04", "part_a": "BMS-004", "part_b": "BMS-002", "via": "CT-M3-SHCS-MOTOR", "owner": "ex_booms", "notes": "mirror of E-BMS-03", "joint_stack": {"fastener": "M3x8 SHCS", "count": 4, "grade": "A2-70", "hole": "3.4 mm clearance in saddle", "insert": "none (motor base tapped)", "engagement_mm": 4.0, "min_engagement_mm": 3.0, "washer_nut": "none", "torque": "snug + threadlocker", "tool": "2.5 mm hex key", "access": "from below (-z)", "install_order": 2, "removal_order": 1}, "declared_in": "ex_booms"},
+  {"id": "E-FUS-01", "part_a": "FUS-002", "part_b": "FUS-001", "via": "CT-STRAP-VELCRO", "owner": "ex_fuselage", "notes": "strap through two floor slots", "declared_in": "ex_fuselage"},
+  {"id": "E-FUS-02", "part_a": "FUS-003", "part_b": "FUS-001", "via": "CT-M3-SHCS-INSERT", "owner": "ex_fuselage", "notes": "", "joint_stack": {"fastener": "M3x10 SHCS", "count": 4, "grade": "A2-70", "hole": "3.4 mm clearance in ESC tab; insert in floor boss", "insert": "M3x5.7 brass heat-set", "engagement_mm": 5.0, "min_engagement_mm": 4.5, "washer_nut": "M3 nylon washer", "torque": "snug + threadlocker", "tool": "2.5 mm hex key", "access": "from above (+z) through the open top", "install_order": 2, "removal_order": 1}, "declared_in": "ex_fuselage"},
+  {"id": "E-FUS-03", "part_a": "FUS-002", "part_b": "FUS-003", "via": "CT-XT60", "owner": "ex_fuselage", "notes": "", "wire": {"gauge_awg": 14, "connector": "XT60", "route_id": "E-FUS-03", "support_points": ["tie to floor at x 0.31"], "bend_radius_mm": 15, "strain_relief": "heat-shrink over solder cups", "disconnect": true}, "declared_in": "ex_fuselage"},
+  {"id": "E-FUS-04", "part_a": "FUS-003", "part_b": "BMS-003", "via": "CT-MR30", "owner": "ex_fuselage", "notes": "MR30 at the wing root so the wing can come off", "wire": {"gauge_awg": 18, "connector": "MR30 at wing root", "route_id": "E-FUS-04", "support_points": ["clip at fuselage side wall", "ties on boom every 100 mm"], "bend_radius_mm": 10, "strain_relief": "tie at each connector", "disconnect": true}, "declared_in": "ex_fuselage"},
+  {"id": "E-FUS-05", "part_a": "FUS-003", "part_b": "BMS-004", "via": "CT-MR30", "owner": "ex_fuselage", "notes": "mirror of E-FUS-04", "wire": {"gauge_awg": 18, "connector": "MR30 at wing root", "route_id": "E-FUS-05", "support_points": ["clip at fuselage side wall", "ties on boom every 100 mm"], "bend_radius_mm": 10, "strain_relief": "tie at each connector", "disconnect": true}, "declared_in": "ex_fuselage"},
+  {"id": "E-FUS-06", "part_a": "FUS-003", "part_b": "WNG-005", "via": "CT-SERVO-JR", "owner": "ex_fuselage", "notes": "BEC 5 V to aileron servo", "wire": {"gauge_awg": 26, "connector": "JR 3-pin at wing root", "route_id": "E-FUS-06", "support_points": ["tape inside wing at mid-span"], "bend_radius_mm": 5, "strain_relief": "tape at servo exit", "disconnect": true}, "declared_in": "ex_fuselage"},
+  {"id": "E-WNG-01", "part_a": "WNG-003", "part_b": "FUS-001", "via": "CT-M4-SHCS-NYLOC", "owner": "ex_wing", "notes": "spar saddle on fuselage top; the one transport joint", "joint_stack": {"fastener": "M4x30 SHCS", "count": 2, "grade": "A2-70", "hole": "4.5 mm clearance through saddle and spar", "insert": "none", "engagement_mm": 6.0, "min_engagement_mm": 4.0, "washer_nut": "M4 washer + M4 nyloc (2 full threads proud)", "torque": "1.0 N m (check tube crush)", "tool": "3 mm hex key + 7 mm spanner", "access": "from above (+z), nut inside fuselage", "install_order": 1, "removal_order": 1}, "declared_in": "ex_wing"},
+  {"id": "E-WNG-02", "part_a": "WNG-001", "part_b": "WNG-003", "via": "CT-EPOXY", "owner": "ex_wing", "notes": "spar bonded in panel bore", "declared_in": "ex_wing"},
+  {"id": "E-WNG-03", "part_a": "WNG-002", "part_b": "WNG-003", "via": "CT-EPOXY", "owner": "ex_wing", "notes": "spar bonded in panel bore", "declared_in": "ex_wing"},
+  {"id": "E-WNG-04", "part_a": "WNG-004", "part_b": "WNG-001", "via": "CT-TAPE-HINGE", "owner": "ex_wing", "notes": "", "motion": {"axis": "Y", "range_deg": [-25, 25]}, "declared_in": "ex_wing"},
+  {"id": "E-WNG-05", "part_a": "WNG-005", "part_b": "WNG-001", "via": "CT-M2-SCREW-PLASTIC", "owner": "ex_wing", "notes": "servo in foam pocket on a printed frame", "joint_stack": {"fastener": "M2x8 pan self-tapping", "count": 2, "grade": "steel, zinc", "hole": "1.6 mm pilot in printed frame", "insert": "none", "engagement_mm": 5.0, "min_engagement_mm": 3.0, "washer_nut": "servo grommets", "torque": "snug", "tool": "PH0 screwdriver", "access": "from below (-z) through the servo hatch", "install_order": 3, "removal_order": 2}, "declared_in": "ex_wing"}
+ ]
+}

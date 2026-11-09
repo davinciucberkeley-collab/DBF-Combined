@@ -1,0 +1,278 @@
+{
+ "id": "step_2",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "workbench",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 13.36,
+ "explode": 0.0,
+ "camera": {
+  "preset": "iso",
+  "az_deg": 38,
+  "el_deg": 28,
+  "ortho": false,
+  "lens_mm": 50,
+  "location_m": [
+   -1.65,
+   -1.5224,
+   1.3034
+  ],
+  "fit": "all",
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Step 2: Mount the wing on the fuselage",
+  "sub": "Check: spar sits flat in the saddle; nyloc nuts 2 threads proud"
+ },
+ "subject_px": [
+  380,
+  309,
+  1249,
+  653
+ ],
+ "callouts": [
+  {
+   "item": "WNG-001",
+   "x": 1014.5,
+   "y": 541.6,
+   "title": "WNG-001",
+   "text": "Wing panel L",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2219,
+    -0.3663,
+    0.0876
+   ]
+  },
+  {
+   "item": "WNG-003",
+   "x": 731.5,
+   "y": 460.9,
+   "title": "WNG-003",
+   "text": "Spar tube 12x10",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2076,
+    0.0352,
+    0.0694
+   ]
+  },
+  {
+   "item": "E-WNG-01",
+   "x": 756.5,
+   "y": 474.4,
+   "title": "E-WNG-01",
+   "text": "2x M4x30 SHCS + nyloc",
+   "detail": "3 mm hex key + 7 mm spanner / 1.0 N m (check tube crush)",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.207,
+    -0.0045,
+    0.0637
+   ]
+  },
+  {
+   "item": "WNG-005",
+   "x": 1007.8,
+   "y": 523.0,
+   "title": "WNG-005",
+   "text": "Aileron servo L",
+   "detail": null,
+   "role": "focus",
+   "occluded": true,
+   "world_m": [
+    0.28,
+    -0.32,
+    0.071
+   ]
+  },
+  {
+   "item": "WNG-004",
+   "x": 1097.6,
+   "y": 508.6,
+   "title": "WNG-004",
+   "text": "Aileron L",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.3691,
+    -0.3866,
+    0.0742
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "FUS-001",
+   "role": "context",
+   "name": "Fuselage box",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    602,
+    358,
+    976,
+    647
+   ]
+  },
+  {
+   "id": "FUS-002",
+   "role": "context",
+   "name": "Battery block",
+   "status": "MODELLED",
+   "mass_g": 400,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    703,
+    489,
+    823,
+    587
+   ]
+  },
+  {
+   "id": "FUS-003",
+   "role": "context",
+   "name": "ESC 2-in-1 with BEC",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    798,
+    499,
+    846,
+    530
+   ]
+  },
+  {
+   "id": "WNG-001",
+   "role": "focus",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    763,
+    438,
+    1249,
+    653
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "focus",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    380,
+    309,
+    782,
+    476
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "focus",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    437,
+    351,
+    1154,
+    618
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "role": "focus",
+   "name": "Aileron L",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    950,
+    459,
+    1235,
+    570
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "role": "focus",
+   "name": "Aileron servo L",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    991,
+    506,
+    1025,
+    540
+   ]
+  },
+  {
+   "id": "E-FUS-03",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    799,
+    510,
+    812,
+    522
+   ]
+  },
+  {
+   "id": "E-FUS-06",
+   "role": "focus",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    841,
+    441,
+    1008,
+    528
+   ]
+  }
+ ],
+ "hidden": [
+  "BMS-001",
+  "BMS-002",
+  "BMS-003",
+  "BMS-004",
+  "E-FUS-04",
+  "E-FUS-05"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "focus"
+ ],
+ "files": {
+  "png": "step_2.png",
+  "jpg": "step_2.jpg"
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "schema": "dbf-steps/1",
+ "subsystem": "ex_fuselage",
+ "steps": [
+  {"id": "FUS-S01", "wp": "WP1", "title": "Set the inserts and mount the ESC",
+   "goal": "ESC held by 4 screws in brass inserts on the fuselage floor.",
+   "parts": ["FUS-001", "FUS-003"],
+   "edges": ["E-FUS-02"],
+   "tools": ["Soldering iron with an M3 insert tip", "Heat-proof mat"],
+   "consumables": [],
+   "time_min": 20,
+   "safety": [{"level": "caution", "text": "Insert tip at 220 °C. Park the iron in its stand between inserts."}],
+   "actions": [
+    {"do": "Press 4 M3 heat-set inserts into the floor bosses with the iron at `220 °C`. Stop when the insert top is flush.", "at": "E-FUS-02"},
+    {"do": "Let the bosses cool for `2 min`. An M3 screw turned into each insert must stand upright."},
+    {"do": "Place FUS-003 on the bosses, wires toward the rear.", "at": "FUS-003"},
+    {"do": "Fit 4x M3x10 SHCS with nylon washers, one drop of threadlocker on each thread. Tighten snug in a cross pattern."}
+   ],
+   "check": {"type": "fit", "text": "Push the ESC firmly with a finger.", "target": "no movement; 4 of 4 screw heads seated on their washers", "record": "pass / fail"},
+   "can_go_wrong": [
+    {"problem": "Insert goes in crooked or too deep", "fix": "Reheat it, pull it out on the iron tip, replace the boss. Do not shim."},
+    {"problem": "Threadlocker on the boss cracks the plastic", "fix": "One drop on the screw thread only, never on the boss."}
+   ],
+   "figure": {"camera": {"preset": "closeup", "fit": ["FUS-003"], "az": 150, "el": 50, "lens": 50, "frame": [0.4, 0.6, 0.38, 0.62]}, "xray": ["FUS-001"]}
+  },
+
+  {"id": "FUS-S02", "wp": "WP4", "after": ["WNG-S03"], "title": "Connect the leads, then strap in the battery",
+   "goal": "Every lead plugged and supported; battery strapped and connected last.",
+   "parts": ["FUS-002"],
+   "edges": ["E-FUS-04", "E-FUS-05", "E-FUS-06", "E-FUS-01", "E-FUS-03"],
+   "tools": ["Multimeter", "Kitchen scale 5 kg x 1 g", "Transmitter (bound)"],
+   "consumables": [{"item": "Zip ties 100 mm", "qty": 6, "unit": "pcs"}],
+   "time_min": 20,
+   "safety": [
+    {"level": "stop", "text": "Props off. The XT60 is the last connection you make and the first you break."},
+    {"level": "stop", "text": "Inspect the pack before it goes in: no swelling, dents or cut insulation."}
+   ],
+   "actions": [
+    {"do": "Plug the left and right motor leads (MR30) at the wing root. Clip each lead to the fuselage side wall.", "at": "E-FUS-04"},
+    {"do": "Plug the aileron servo lead (JR 3-pin). Tape it where it leaves the servo.", "at": "E-FUS-06"},
+    {"do": "Multimeter on continuity across the ESC's XT60 pins: it must NOT beep (no short)."},
+    {"do": "Lay FUS-002 on the anti-slip pad and close the strap through both floor slots.", "at": "FUS-002"},
+    {"do": "Plug the XT60 last. The ESC beeps its start-up tune.", "at": "E-FUS-03"}
+   ],
+   "check": [
+    {"type": "mass", "of": ["*"], "tol_pct": 5, "text": "Weigh the complete aircraft, ready to fly, on the kitchen scale.", "record": "mass g"},
+    {"type": "function", "text": "Transmitter on, props off: run the motor test and move the aileron stick.", "target": "both motors spin, correct direction; aileron moves both ways", "record": "pass / fail"}
+   ],
+   "can_go_wrong": [
+    {"problem": "A lead is trapped under the battery strap", "fix": "Unplug the XT60 first, reroute the lead along the side wall, re-strap."},
+    {"problem": "A motor spins the wrong way", "fix": "Reverse it in the ESC configurator. Do not cut or re-solder the phase wires."},
+    {"problem": "Mass more than 5 % over", "fix": "Weigh each subassembly against parts.csv; report the part in CHANGE-REQUESTS.md, do not file foam off."}
+   ],
+   "figure": {"camera": {"preset": "iso", "az": 30, "el": 34}, "xray": ["FUS-001"]}
+  }
+ ]
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/proofs/examples/wing/analysis.py",
+ "params": [
+  "../params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-EX-CLMAX",
+   "type": "assumption",
+   "title": "Aircraft CLmax 1.1",
+   "text": "Whole-aircraft maximum lift coefficient, no flaps",
+   "basis": "typical of a rectangular wing with a 12 % low-Re section; replace with the aero analysis",
+   "value": 1.1,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-EX-UNIFORM-LIFT",
+   "type": "assumption",
+   "title": "Uniform spanwise lift",
+   "text": "Lift is spread evenly along the span",
+   "basis": "puts each half's resultant at b/4 = 0.25 b, outboard of the elliptic 0.21 b, so the root moment is over-estimated (conservative)",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-EX-STALL",
+   "type": "calculation",
+   "title": "Stall speed",
+   "script": "redesign/proofs/examples/wing/analysis.py",
+   "function": "stall_speed",
+   "equation": "Vs = sqrt(2 m g / (rho b c CLmax))",
+   "inputs": {
+    "m": "CL-EX-MTOW",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "b": "P:wing.span_m",
+    "c": "P:wing.chord_m",
+    "cl_max": "ASM-EX-CLMAX"
+   },
+   "units": {
+    "m": "kg",
+    "rho": "kg/m3",
+    "b": "m",
+    "c": "m"
+   },
+   "outputs": {
+    "S_m2": 0.48,
+    "Vs_ms": 12.557176592796806
+   },
+   "input_values": {
+    "m": 5.2,
+    "g": 9.80665,
+    "rho": 1.225,
+    "b": 1.6,
+    "c": 0.3,
+    "cl_max": 1.1
+   }
+  },
+  {
+   "id": "CALC-EX-SPAR",
+   "type": "calculation",
+   "title": "Spar root stress",
+   "script": "redesign/proofs/examples/wing/analysis.py",
+   "function": "spar_stress",
+   "equation": "M = n m g / 2 * b / 4;  I = pi/64 (D^4 - d^4);  sigma = SF * M (D/2) / I",
+   "inputs": {
+    "m": "CL-EX-MTOW",
+    "g": "P:env.g_ms2",
+    "n": "P:requirements.load_factor",
+    "b": "P:wing.span_m",
+    "od": "P:wing.spar_od_mm",
+    "wall": "P:wing.spar_wall_mm",
+    "sf": "P:requirements.safety_factor"
+   },
+   "units": {
+    "m": "kg",
+    "b": "m",
+    "od": "mm",
+    "wall": "mm"
+   },
+   "assumes": [
+    "ASM-EX-UNIFORM-LIFT"
+   ],
+   "outputs": {
+    "M_root_Nm": 30.596748000000005,
+    "I_mm4": 3754.1541336545906,
+    "sigma_MPa": 81.50104367242565,
+    "sigma_design_MPa": 122.25156550863848
+   },
+   "input_values": {
+    "m": 5.2,
+    "g": 9.80665,
+    "n": 3.0,
+    "b": 1.6,
+    "od": 20.0,
+    "wall": 1.5,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CL-EX-STALL",
+   "type": "claim",
+   "title": "Stall speed at MTOW",
+   "calc": "CALC-EX-STALL",
+   "output": "Vs_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.stall_max_ms"
+   },
+   "verifies": [
+    "R-EX-STALL"
+   ],
+   "parts": [
+    "EX-WNG-001",
+    "EX-WNG-002",
+    "EX-WNG-004"
+   ],
+   "how": "Replace ASM-EX-CLMAX with the aero analysis CLmax; flight: slow-flight stall at MTOW with airspeed logging.",
+   "value": 12.557176592796806
+  },
+  {
+   "id": "CL-EX-SPAR",
+   "type": "claim",
+   "title": "Spar design stress",
+   "calc": "CALC-EX-SPAR",
+   "output": "sigma_design_MPa",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:wing.spar_yield_mpa"
+   },
+   "verifies": [
+    "R-EX-SPAR"
+   ],
+   "parts": [
+    "EX-WNG-003"
+   ],
+   "how": "Wingtip load test: support at the root, hang n*m*g/2 spread over each half, check no permanent set.",
+   "value": 122.25156550863848
+  }
+ ]
+}

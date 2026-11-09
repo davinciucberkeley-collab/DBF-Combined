@@ -1,0 +1,46 @@
+group,item,qty,unit_usd_pretax,ext_usd,vendor_source,date_seen,note
+propulsion,SunnySky X3108S KV900 motor (4 lift + 1 pusher + 1 spare: one SKU),6,24.99,149.94,SunnySky USA https://sunnyskyusa.com/collections/multirotor-motors/products/sunnysky-x3108s-motors (via docs/research/budget-lift.md),2026-11-01,
+propulsion,LANRC BLHeli_S 45A ESC 4-pack (5 used + 3 spare),2,30.00,60.00,Amazon https://www.amazon.com/dp/B0D2HS4Y4J (docs/research/bom-savings.md),2026-11-01,
+propulsion,"APC 11x4.5MR / MRP lift props (4 fitted + 8 spare, CW/CCW)",12,3.83,45.96,APC https://www.apcprop.com/product/11x4-5mr/,2026-11-01,
+propulsion,APC LPAR06E-type adapter rings,12,0.50,6.00,"APC (price ESTIMATE, as K09)",2026-11-09,ESTIMATE
+propulsion,APC 10x6E pusher prop LP10060EP (1 + 2 spare),3,3.47,10.41,BuddyRC https://buddyrc.com/products/copy-of-apc-10x4-7-slow-flyer-pusher-propeller,2026-11-09,search snippet; 10x6E tractor $3.64 at reach.dog as fallback
+servos,EMAX ES08MA II 12 g metal-gear servo (2 ailerons + 1 spare),3,13.49,40.47,WREKD https://wrekd.com/products/emax-es08ma-ii-12g-analog-metal-gear-servo,2026-11-09,search snippet; Amain $8.99 backorder
+servos,"EMAX ES3005HV 8 kg.cm servo (elevator: pusher wash, needs torque)",1,19.99,19.99,EMAX USA https://shop.emax-usa.com/products/es3005hv-high-voltage-servo,2026-11-01,as K01
+battery,"Admiral 4S 4000 40C XT60 LiPo, 2-pack (2 packs total)",1,107.00,107.00,Motion RC https://www.motionrc.com/products/admiral-4000mah-4s-14-8v-40c-lipo-battery-with-xt60-connector-multi-pack-2-batteries-adm6024-002,2026-11-09,cached pages show $102.49-$107.00; higher used
+avionics,SpeedyBee F405 Wing APP flight controller (stable ArduPilot target SpeedyBeeF405WING: CHECK),1,47.99,47.99,RaceDayQuads https://www.racedayquads.com/products/speedybee-f405-wing-app-fixed-wing-flight-controller,2026-11-09,search snippet; stock UNVERIFIED (NewBeeDrone $51.99 sold out)
+avionics,HGLRC M100-5883 GPS + compass,1,20.49,20.49,RaceDayQuads https://www.racedayquads.com/products/hglrc-m100-5883-gps-module-10th-gen,2026-11-01,
+avionics,Holybro MS5525 airspeed sensor + pitot (speed-scheduled transition),1,59.99,59.99,Holybro (cost_model.py AIRSPEED),2026-11-09,kept: the documented QuadPlane path uses it
+avionics,RadioMaster Pocket Crush ELRS transmitter,1,64.99,64.99,RadioMaster https://www.radiomasterrc.com/products/pocket-crush-radio-controller,2026-11-01,
+avionics,18650 cells 2-pack for the Pocket (not included),1,24.49,24.49,GetFPV Lumenier 18650 2-pack (K09 REVIEW section 6),2026-11-09,
+avionics,RadioMaster RP3 V2 ELRS receiver,1,19.99,19.99,RadioMaster https://www.radiomasterrc.com/products/rp3-expresslrs-2-4ghz-nano-receiver,2026-11-01,
+airframe,FOAMULAR XPS 2 in x 4 x 8 ft (wing cores: ~5 one-piece cores per sheet),1,59.97,59.97,Home Depot / Lowe's (docs/research/budget-airframe.md),2026-11-01,local pickup
+airframe,"Foam board 20x30 in 10-pack (pod, H-tail, fins, test panels)",1,35.92,35.92,Amazon B074QZMLQF (budget-airframe.md),2026-10,
+airframe,CF tube 22x20x1000 matte (spar + 2 booms + 1 spare: one SKU),4,28.32,113.28,Amazon https://www.amazon.com/s?k=carbon+fiber+tube+22mm+1000mm (budget-airframe.md),2026-11-01,overseas lead time ~2 weeks: order first
+airframe,PETG filament 1 kg (Ambrosia),2,20.99,41.98,West3D (docs/research/airframe-materials.md),2026-10,
+airframe,Scotch Heavy Duty packing tape 6 rolls,1,19.98,19.98,Amazon B000087KUA (budget-airframe.md),2026-10,
+airframe,Foam-safe glue (UHU Por / Gorilla clear),1,12.99,12.99,cost_model.py AIRFRAME,2026-11,ESTIMATE vendor
+hardware,"Wiring + hardware kit (AS150U, 12/16 AWG, XT60 pairs x2, bullets, screws, inserts, horns, pushrods, hinge tape, UBEC, epoxy)",1,124.01,124.01,cost_model.py HARDWARE_MIN (bom-savings.md),2026-11-01,"shared floor, unchanged"
+hardware,Re-terminate 2 packs + charge lead XT60 -> AS150U,1,15.00,15.00,K09 REVIEW section 6,2026-11-09,ESTIMATE
+ground,HTRC C150 charger 150 W AC,1,56.99,56.99,Amazon (budget-energy-test.md),2026-11-01,
+ground,LiPo bag (Pyrodrone),2,9.99,19.98,Pyrodrone (cost_model.py),2026-11-01,
+ground,Ammo can (Harbor Freight 63750),1,19.99,19.99,Harbor Freight https://www.harborfreight.com/50-caliber-metal-ammo-can-63750.html,2026-11-01,
+ground,Watt meter 150 A,1,12.99,12.99,Amazon B0F13JWDFV (budget-energy-test.md),2026-11-01,
+ground,IR thermometer,1,8.98,8.98,Amazon B0BN317X6Z (budget-energy-test.md),2026-11-01,
+ground,Thrust stand: 20 kg load cell + HX711 + Nano,1,17.97,17.97,Amazon (budget-energy-test.md),2026-11-01,
+ground,Pinecil V2 soldering iron,1,25.99,25.99,Pine64 (cost_model.py),2026-11-01,
+ground,USB-C PD supply for iron,1,20.00,20.00,ESTIMATE,2026-11-09,ESTIMATE
+ground,Multimeter,1,25.00,25.00,ESTIMATE,2026-11-09,ESTIMATE
+ground,"Solder, flux, wick",1,15.00,15.00,ESTIMATE,2026-11-09,ESTIMATE
+ground,Hot-wire: NICE-POWER 30 V 10 A supply + Ni80 24 AWG,1,41.73,41.73,Amazon B0CRSS744F + B0CP9V3DBX (bom-savings.md),2026-11-01,
+ground,Hot-wire bow/jig + airfoil template stock,1,15.00,15.00,K01 REVIEW section 2,2026-11-09,ESTIMATE
+ground,Smoke stopper / fused first-power lead,1,10.00,10.00,K01 REVIEW section 2,2026-11-09,ESTIMATE
+ground,Transport box 1.25 x 0.52 x 0.37 m external (1/4 in ply + foam cradles),1,55.00,55.00,K09 REVIEW section 6 ($60 for a taller box),2026-11-09,ESTIMATE
+subtotal,Goods pre-tax,,,1445.46,,,
+tax,"Sales tax 10.25 % (Berkeley, CDTFA 2026-10-01)",,,148.16,cost_model.py TAX,,a 0.5 % Berkeley increase was on the 2026-11-03 ballot: +~$7 if it applies (K01 REVIEW)
+shipping,"Shipping, all vendors (class S)",,,120.00,cost_model.py SHIPPING['S'],,ESTIMATE
+fee,FAA registration (not taxed),,,5.00,faa.gov DroneZone,,
+TOTAL,Spend at order time (tax + shipping + FAA included),,,1718.62,,,
+reserve,"Reserve left of $2,000",,,281.38,,,vs one bad crash: study formula $308.93 incl. tax; K01 card $266; this aircraft's own bill $224.06
+dropped,NewBeeDrone BeeID Remote ID module (RFS is a FRIA),,,0.00,README section 1,,saves $44.09 incl. tax
+dropped,Third flight pack,,,0.00,README section 4.2,,2 packs only
+option,Admiral 4S 5000 2-pack instead of 4000 (variant in sizing.json),,,~+30 ESTIMATE,motionrc.eu listing,,price not checked

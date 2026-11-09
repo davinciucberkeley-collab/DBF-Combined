@@ -1,0 +1,29 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "ex_fuselage",
+ "parts": [
+  {"id": "FUS-001", "name": "Fuselage box", "subsystem": "ex_fuselage", "status": "MODELLED", "mass_g": 180, "material": "3 mm birch ply", "cg_xyz_m": [0.3, 0.0, 0.0], "make_or_buy": "make"},
+  {"id": "FUS-002", "name": "Battery block", "subsystem": "ex_fuselage", "status": "MODELLED", "mass_g": 400, "material": "LiPo pack (bought)", "cg_xyz_m": [0.225, 0.0, -0.032], "make_or_buy": "buy", "electrical": "source"},
+  {"id": "FUS-003", "name": "ESC 2-in-1 with BEC", "subsystem": "ex_fuselage", "status": "MODELLED", "mass_g": 40, "material": "PCB assembly (bought)", "cg_xyz_m": [0.345, 0.0, -0.052], "make_or_buy": "buy", "electrical": "bus"}
+ ],
+ "edges": [
+  {"id": "E-FUS-01", "part_a": "FUS-002", "part_b": "FUS-001", "via": "CT-STRAP-VELCRO", "owner": "ex_fuselage", "notes": "strap through two floor slots"},
+  {"id": "E-FUS-02", "part_a": "FUS-003", "part_b": "FUS-001", "via": "CT-M3-SHCS-INSERT", "owner": "ex_fuselage", "notes": "",
+   "joint_stack": {"fastener": "M3x10 SHCS", "count": 4, "grade": "A2-70", "hole": "3.4 mm clearance in ESC tab; insert in floor boss",
+    "insert": "M3x5.7 brass heat-set", "engagement_mm": 5.0, "min_engagement_mm": 4.5, "washer_nut": "M3 nylon washer",
+    "torque": "snug + threadlocker", "tool": "2.5 mm hex key", "access": "from above (+z) through the open top", "install_order": 2, "removal_order": 1}},
+  {"id": "E-FUS-03", "part_a": "FUS-002", "part_b": "FUS-003", "via": "CT-XT60", "owner": "ex_fuselage", "notes": "",
+   "wire": {"gauge_awg": 14, "connector": "XT60", "route_id": "E-FUS-03", "support_points": ["tie to floor at x 0.31"],
+    "bend_radius_mm": 15, "strain_relief": "heat-shrink over solder cups", "disconnect": true}},
+  {"id": "E-FUS-04", "part_a": "FUS-003", "part_b": "BMS-003", "via": "CT-MR30", "owner": "ex_fuselage", "notes": "MR30 at the wing root so the wing can come off",
+   "wire": {"gauge_awg": 18, "connector": "MR30 at wing root", "route_id": "E-FUS-04", "support_points": ["clip at fuselage side wall", "ties on boom every 100 mm"],
+    "bend_radius_mm": 10, "strain_relief": "tie at each connector", "disconnect": true}},
+  {"id": "E-FUS-05", "part_a": "FUS-003", "part_b": "BMS-004", "via": "CT-MR30", "owner": "ex_fuselage", "notes": "mirror of E-FUS-04",
+   "wire": {"gauge_awg": 18, "connector": "MR30 at wing root", "route_id": "E-FUS-05", "support_points": ["clip at fuselage side wall", "ties on boom every 100 mm"],
+    "bend_radius_mm": 10, "strain_relief": "tie at each connector", "disconnect": true}},
+  {"id": "E-FUS-06", "part_a": "FUS-003", "part_b": "WNG-005", "via": "CT-SERVO-JR", "owner": "ex_fuselage", "notes": "BEC 5 V to aileron servo",
+   "wire": {"gauge_awg": 26, "connector": "JR 3-pin at wing root", "route_id": "E-FUS-06", "support_points": ["tape inside wing at mid-span"],
+    "bend_radius_mm": 5, "strain_relief": "tape at servo exit", "disconnect": true}}
+ ],
+ "acknowledges": ["E-WNG-01"]
+}

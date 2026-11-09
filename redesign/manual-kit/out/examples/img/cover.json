@@ -1,0 +1,354 @@
+{
+ "id": "cover",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 15.51,
+ "explode": 0.0,
+ "camera": {
+  "preset": "iso",
+  "az_deg": 38,
+  "el_deg": 28,
+  "ortho": false,
+  "lens_mm": 50,
+  "location_m": [
+   -1.65,
+   -1.5224,
+   1.3034
+  ],
+  "fit": "visible",
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Example aircraft, complete",
+  "sub": "Generic test geometry from redesign/fusion/examples"
+ },
+ "subject_px": [
+  352,
+  297,
+  1249,
+  703
+ ],
+ "callouts": [
+  {
+   "item": "FUS-001",
+   "x": 742.1,
+   "y": 518.1,
+   "title": "FUS-001",
+   "text": "Fuselage box",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1153,
+    -0.0569,
+    0.06
+   ]
+  },
+  {
+   "item": "WNG-001",
+   "x": 1014.5,
+   "y": 541.6,
+   "title": "WNG-001",
+   "text": "Wing panel L",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2219,
+    -0.3663,
+    0.0876
+   ]
+  },
+  {
+   "item": "WNG-004",
+   "x": 1097.6,
+   "y": 508.6,
+   "title": "WNG-004",
+   "text": "Aileron L",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.3691,
+    -0.3866,
+    0.0742
+   ]
+  },
+  {
+   "item": "BMS-001",
+   "x": 968.0,
+   "y": 590.3,
+   "title": "BMS-001",
+   "text": "Boom L",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1462,
+    -0.3559,
+    0.0553
+   ]
+  },
+  {
+   "item": "BMS-003",
+   "x": 840.5,
+   "y": 661.2,
+   "title": "BMS-003",
+   "text": "Lift motor L",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.098,
+    -0.3626,
+    0.0861
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "FUS-001",
+   "role": "context",
+   "name": "Fuselage box",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    602,
+    358,
+    976,
+    647
+   ]
+  },
+  {
+   "id": "FUS-002",
+   "role": "context",
+   "name": "Battery block",
+   "status": "MODELLED",
+   "mass_g": 400,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    703,
+    489,
+    823,
+    587
+   ]
+  },
+  {
+   "id": "FUS-003",
+   "role": "context",
+   "name": "ESC 2-in-1 with BEC",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    798,
+    499,
+    846,
+    530
+   ]
+  },
+  {
+   "id": "WNG-001",
+   "role": "context",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    763,
+    438,
+    1249,
+    653
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    380,
+    309,
+    782,
+    476
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "context",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    437,
+    351,
+    1154,
+    618
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "role": "context",
+   "name": "Aileron L",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    950,
+    459,
+    1235,
+    570
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "role": "context",
+   "name": "Aileron servo L",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    991,
+    506,
+    1025,
+    540
+   ]
+  },
+  {
+   "id": "BMS-001",
+   "role": "context",
+   "name": "Boom L",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    811,
+    429,
+    1193,
+    703
+   ]
+  },
+  {
+   "id": "BMS-003",
+   "role": "context",
+   "name": "Lift motor L",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    820,
+    636,
+    863,
+    684
+   ]
+  },
+  {
+   "id": "BMS-002",
+   "role": "context",
+   "name": "Boom R",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    352,
+    297,
+    763,
+    506
+   ]
+  },
+  {
+   "id": "BMS-004",
+   "role": "context",
+   "name": "Lift motor R",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    360,
+    449,
+    399,
+    490
+   ]
+  },
+  {
+   "id": "E-FUS-03",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    799,
+    510,
+    812,
+    522
+   ]
+  },
+  {
+   "id": "E-FUS-04",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    834,
+    457,
+    1037,
+    676
+   ]
+  },
+  {
+   "id": "E-FUS-05",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    385,
+    383,
+    811,
+    508
+   ]
+  },
+  {
+   "id": "E-FUS-06",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    841,
+    441,
+    1008,
+    528
+   ]
+  }
+ ],
+ "hidden": [],
+ "clipped": [],
+ "legend": [
+  "context"
+ ],
+ "files": {
+  "png": "cover.png",
+  "jpg": "cover.jpg"
+ }
+}
