@@ -1,0 +1,141 @@
+{
+  "schema": "dbf-blender-style/1",
+  "notes": "Read by redesign/blender/. Colours are linear-sRGB floats for Blender node inputs (hex is the display value). Units: metres, millimetres where named, pixels at the figure's output width.",
+
+  "render": {
+    "engine": "CYCLES",
+    "device_fallback": "EEVEE_NEXT for drafts; final figures in Cycles",
+    "samples": { "draft": 32, "figure": 128, "hero": 512 },
+    "denoise": true,
+    "view_transform": "AgX",
+    "look": "AgX - Base Contrast",
+    "exposure": -0.25,
+    "film_transparent_for_hero": true,
+    "resolution": {
+      "step_figure": [1600, 1000],
+      "detail_inset": [1000, 1000],
+      "hero": [2400, 1500],
+      "three_view_reference": [1600, 1000],
+      "viewer_thumbnail": [480, 300]
+    },
+    "output": { "format": "PNG", "color_depth": 8, "compression": 60, "hero_also_jpeg_quality": 90 }
+  },
+
+  "world": {
+    "studio": {
+      "background_rgb": [0.52, 0.56, 0.62], "background_hex": "#DCE1E8",
+      "strength": 1.0,
+      "floor": { "enabled": true, "material": "studio_floor", "sweep": true, "radius_m": 20, "shadow_catcher_for_hero": true }
+    },
+    "bench": {
+      "comment": "close-ups of hand work; warm, plain, no horizon",
+      "background_rgb": [0.42, 0.36, 0.30], "background_hex": "#A99A8C",
+      "strength": 1.0,
+      "floor": { "enabled": true, "material": "workbench", "sweep": false, "size_m": 60 }
+    },
+    "stage_gradient_for_web": { "top_hex": "#F3F5F8", "bottom_hex": "#DCE1E8", "dark_top_hex": "#1B212A", "dark_bottom_hex": "#0F1318",
+      "comment": "the page draws this gradient behind transparent hero PNGs; matches tokens.css --stage-top/--stage-bottom" }
+  },
+
+  "lights": {
+    "comment": "three-point area lights relative to the camera azimuth; az = degrees left of camera (+) / right (-), el = elevation above the subject",
+    "key":  { "type": "AREA", "shape": "RECTANGLE", "size_m": [2.0, 1.4], "power_w": 1200, "az_deg": 40,  "el_deg": 38, "distance_m": 4.0, "color_rgb": [1.0, 0.98, 0.95] },
+    "fill": { "type": "AREA", "shape": "RECTANGLE", "size_m": [3.0, 2.0], "power_w": 350,  "az_deg": -55, "el_deg": 20, "distance_m": 4.5, "color_rgb": [0.95, 0.97, 1.0] },
+    "rim":  { "type": "AREA", "shape": "RECTANGLE", "size_m": [1.0, 2.5], "power_w": 600,  "az_deg": 160, "el_deg": 30, "distance_m": 4.0, "color_rgb": [1.0, 1.0, 1.0] },
+    "scale_rule": "power scales with (subject_extent_m / 2.0)^2 so a 0.3 m detail and a 2.2 m aircraft read the same",
+    "shadow_softness": "area lights only; no sun lamp; no HDRI in figures (HDRI allowed for hero only, strength <= 0.6, neutral studio HDRI)"
+  },
+
+  "camera": {
+    "sensor_mm": 36,
+    "focal_mm": { "overview": 35, "step": 50, "detail": 85, "hero": 50, "three_view": "ORTHO" },
+    "default_view": { "az_deg": 35, "el_deg": 25, "comment": "front-left-above isometric-ish; left = port side of aircraft facing the viewer" },
+    "step_views": { "iso": [35, 25], "iso_rear": [145, 25], "top": [0, 89], "front": [0, 0], "side": [90, 0], "under": [35, -25] },
+    "fit": { "margin": 0.08, "comment": "frame the focus parts plus one context part; never the whole aircraft for a step" },
+    "depth_of_field": { "step": false, "hero": { "enabled": true, "fstop": 5.6 } },
+    "clip_end_m": 100
+  },
+
+  "materials": {
+    "comment": "principled BSDF. Roughness 0 = mirror, 1 = matte. Colour by material class; never by subsystem (subsystem colour is for the web viewer and diagrams).",
+    "xps_foam":       { "base_rgb": [0.90, 0.90, 0.86], "hex": "#F1F1EC", "roughness": 0.75, "metallic": 0.0, "specular": 0.3, "note": "pink/blue XPS is rendered neutral cream so it reads as 'foam' in print" },
+    "eps_foam":       { "base_rgb": [0.93, 0.93, 0.92], "hex": "#F5F5F3", "roughness": 0.85, "metallic": 0.0, "specular": 0.2 },
+    "balsa":          { "base_rgb": [0.80, 0.66, 0.45], "hex": "#E6CEA8", "roughness": 0.65, "metallic": 0.0, "specular": 0.3 },
+    "plywood":        { "base_rgb": [0.66, 0.50, 0.30], "hex": "#D2A878", "roughness": 0.55, "metallic": 0.0, "specular": 0.35 },
+    "print_pla":      { "base_rgb": [0.55, 0.58, 0.62], "hex": "#BFC4CA", "roughness": 0.55, "metallic": 0.0, "specular": 0.4, "note": "all printed parts one light grey, layer lines off" },
+    "print_petg":     { "base_rgb": [0.45, 0.48, 0.52], "hex": "#AEB4BB", "roughness": 0.35, "metallic": 0.0, "specular": 0.5 },
+    "print_tpu":      { "base_rgb": [0.30, 0.30, 0.32], "hex": "#8E8E92", "roughness": 0.8,  "metallic": 0.0, "specular": 0.2 },
+    "carbon_tube":    { "base_rgb": [0.05, 0.05, 0.06], "hex": "#3A3A3E", "roughness": 0.30, "metallic": 0.0, "specular": 0.6, "coat": 0.3, "note": "no weave texture; plain dark with coat" },
+    "fibreglass_g10": { "base_rgb": [0.55, 0.55, 0.30], "hex": "#C0C08E", "roughness": 0.4,  "metallic": 0.0, "specular": 0.5 },
+    "aluminium_6061": { "base_rgb": [0.80, 0.81, 0.83], "hex": "#E5E6E8", "roughness": 0.35, "metallic": 1.0, "specular": 0.5 },
+    "steel_fastener": { "base_rgb": [0.45, 0.46, 0.48], "hex": "#AEB0B3", "roughness": 0.40, "metallic": 1.0, "specular": 0.5 },
+    "steel_black":    { "base_rgb": [0.08, 0.08, 0.09], "hex": "#4A4A4E", "roughness": 0.45, "metallic": 1.0, "specular": 0.4 },
+    "brass_insert":   { "base_rgb": [0.85, 0.62, 0.25], "hex": "#ECCB8A", "roughness": 0.35, "metallic": 1.0, "specular": 0.5 },
+    "motor_housing":  { "base_rgb": [0.10, 0.10, 0.11], "hex": "#575759", "roughness": 0.45, "metallic": 0.8, "specular": 0.5 },
+    "propeller":      { "base_rgb": [0.12, 0.12, 0.12], "hex": "#5E5E5E", "roughness": 0.4,  "metallic": 0.0, "specular": 0.5, "note": "props shown static; no motion blur" },
+    "lipo_pack":      { "base_rgb": [0.10, 0.12, 0.18], "hex": "#58617A", "roughness": 0.35, "metallic": 0.0, "specular": 0.5, "coat": 0.4, "note": "shrink-wrap look" },
+    "pcb":            { "base_rgb": [0.03, 0.18, 0.08], "hex": "#2F7A4A", "roughness": 0.4,  "metallic": 0.0, "specular": 0.5 },
+    "wire_red":       { "base_rgb": [0.70, 0.05, 0.03], "hex": "#D83A30", "roughness": 0.5,  "metallic": 0.0 },
+    "wire_black":     { "base_rgb": [0.03, 0.03, 0.03], "hex": "#303030", "roughness": 0.5,  "metallic": 0.0 },
+    "wire_signal":    { "base_rgb": [0.80, 0.70, 0.10], "hex": "#E8D55A", "roughness": 0.5,  "metallic": 0.0, "note": "signal/servo leads yellow; other colours only when the harness spec names them" },
+    "connector":      { "base_rgb": [0.85, 0.85, 0.85], "hex": "#ECECEC", "roughness": 0.6,  "metallic": 0.0 },
+    "acrylic_clear":  { "base_rgb": [0.9, 0.95, 1.0],   "hex": "#F3F9FF", "roughness": 0.05, "metallic": 0.0, "transmission": 0.9, "ior": 1.49 },
+    "tape_hinge":     { "base_rgb": [0.95, 0.95, 0.95], "hex": "#F7F7F7", "roughness": 0.3,  "metallic": 0.0, "alpha": 0.7 },
+    "epoxy_fillet":   { "base_rgb": [0.75, 0.70, 0.55], "hex": "#DFD6BC", "roughness": 0.2,  "metallic": 0.0, "coat": 0.5 },
+    "studio_floor":   { "base_rgb": [0.42, 0.45, 0.50], "hex": "#B0B6BE", "roughness": 0.5,  "metallic": 0.0 },
+    "workbench":      { "base_rgb": [0.36, 0.25, 0.15], "hex": "#A67E5B", "roughness": 0.6,  "metallic": 0.0 }
+  },
+
+  "emphasis": {
+    "comment": "every step figure has exactly three classes of part: act (what you touch now), built (what is already there), ghost (context that would hide the action).",
+    "act":   { "override_base_rgb": [0.78, 0.26, 0.03], "hex": "#E0661A", "roughness": 0.45, "metallic": 0.0, "coat": 0.15, "keep_material_class": false, "note": "tokens.css --highlight-strong" },
+    "act_secondary": { "override_base_rgb": [0.95, 0.55, 0.20], "hex": "#FBA052", "note": "fasteners and small hardware of the same action; lighter so the main part dominates" },
+    "built": { "override": "none", "desaturate": 0.0, "note": "its own material class" },
+    "ghost": { "override_base_rgb": [0.62, 0.70, 0.80], "hex": "#CBD6E2", "roughness": 0.3, "alpha": 0.18, "blend": "BLEND", "shadow": "NONE", "outline": true, "note": "ghost parts still get a thin outline so the silhouette reads" },
+    "hidden": { "note": "everything not in act/built/ghost is not rendered" },
+    "removed_part": { "override_base_rgb": [0.62, 0.70, 0.80], "alpha": 0.35, "offset_along_removal_axis_m": 0.08, "arrow": true, "note": "a part being taken off is shown ghosted at its lifted position with a removal arrow (2-D pass)" }
+  },
+
+  "outline": {
+    "comment": "Freestyle on silhouettes, borders, creases and external contour; thickness scales with output width",
+    "enabled": true,
+    "thickness_mode": "ABSOLUTE",
+    "thickness_px_per_1000px_width": { "figure": 0.8, "hero": 0.0, "three_view": 1.0 },
+    "color_rgb": [0.07, 0.08, 0.10], "hex": "#1F2328",
+    "alpha": 0.9,
+    "crease_angle_deg": 138,
+    "ghost_thickness_factor": 0.6,
+    "ghost_alpha": 0.5
+  },
+
+  "callouts": {
+    "comment": "2-D annotation pass over the render (SVG or PIL). Positions in output pixels at the figure width; the render is scaled to width_px first.",
+    "width_px": 1400,
+    "number_dot": { "radius_px": 12, "fill_hex": "#C2540A", "ring_hex": "#FFFFFF", "ring_px": 2, "font": "IBM Plex Mono", "weight": 600, "size_px": 14, "color_hex": "#FFFFFF" },
+    "anchor_dot": { "radius_px": 4, "fill_hex": "#C2540A", "ring_hex": "#FFFFFF", "ring_px": 2 },
+    "leader": { "stroke_hex": "#1F2328", "width_px": 1.5, "halo_hex": "#FFFFFF", "halo_width_px": 5, "style": "straight; one bend at most; never crosses another leader; never crosses the act part", "min_length_px": 40, "max_length_px": 260, "angle_snap_deg": 15 },
+    "label": { "font": "IBM Plex Sans", "size_px": 15, "weight": 500, "color_hex": "#121619", "box_fill_hex": "#FFFFFF", "box_fill_alpha": 0.94, "box_stroke_hex": "#CBD2DB", "box_stroke_px": 1, "box_radius_px": 5, "pad_px": [6, 10], "max_chars": 28, "use": "only when the number alone is ambiguous; the numbered action list in the step card is the primary label" },
+    "dimension": { "stroke_hex": "#1F5FC7", "width_px": 1.25, "tick_px": 6, "font": "IBM Plex Mono", "size_px": 13, "color_hex": "#1F5FC7", "format": "value then unit with a thin space: 310 mm" },
+    "arrow": { "stroke_hex": "#C2540A", "width_px": 3, "head_px": 12, "use": "direction of motion (insert, slide, rotate); curved arrow for rotation" },
+    "figure_id": { "font": "IBM Plex Mono", "size_px": 12, "color_hex": "#6B7280", "position": "bottom-left, 12 px inset", "format": "FIG <SUB>-<nn> · <view> <focal> mm" },
+    "max_callouts_per_figure": 6,
+    "numbering": "left to right, then top to bottom, matching the step's action list",
+    "dark_theme_variant": { "label_box_fill_hex": "#161B22", "label_color_hex": "#E6EAF0", "leader_hex": "#E6EAF0", "halo_hex": "#0F1217", "number_dot_fill_hex": "#FF8A3D", "dimension_hex": "#6EA8FE", "note": "only for figures rendered with film_transparent and placed on the dark stage; print and manual use the light variant" }
+  },
+
+  "three_view": {
+    "camera": "ORTHO",
+    "views": ["top", "front", "side"],
+    "layout": "top above side, front to the right of side (third-angle); or three in a row for the web",
+    "fill_hex": "#FFFFFF",
+    "line_hex": "#1F2328",
+    "hidden_line": { "hex": "#6B7280", "dash_px": [6, 4], "width_px": 0.75 },
+    "dimensions": "span, length, height, rotor diameter, CG position only"
+  },
+
+  "exploded": {
+    "axis": "per interface normal from interfaces.json; default +z for fasteners, along tube axis for slid parts",
+    "distance_factor": 1.6,
+    "comment": "distance = factor x part extent along the axis; parts with a joint_stack get a thin dashed assembly line (outline colour, 0.6 px) between mating faces"
+  }
+}
