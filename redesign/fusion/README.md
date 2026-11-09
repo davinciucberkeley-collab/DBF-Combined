@@ -36,7 +36,9 @@ python -I redesign/fusion/tests/test_framework.py  # 13 tests, < 1 s
    joints and wire routes, and shows a summary. The full text is in the **TEXT COMMANDS** window.
 5. Optional: Preferences > General > Design > Default modeling orientation = **Z up** (our frame is z up).
 6. Report back: did it run, anything in the summary marked FAIL/ERROR, screenshot. The first run is the test of
-   `fusion_backend.py`.
+   `fusion_backend.py`. A WARN `joins rotated component` means a joint touches a part placed with
+   `ctx.part(rotate=)`: Fusion aligns both joint frames, so check that part did not turn (docstring of
+   `fusion_backend.py`).
 
 Frame: metres in code, x aft from the nose datum, y right, z up; Fusion receives cm. Each part is its own component
 named `<part id> <name>` with attributes `dbf/id, status, mass_g, material`. Declared mass (interfaces.json) is

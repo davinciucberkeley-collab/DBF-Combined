@@ -2,7 +2,7 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "examples",
- "generated": "2026-11-09 09:45 UTC",
+ "generated": "2026-11-09 12:20 UTC",
  "sources": {
   "glb": "redesign/blender/out/examples/glb",
   "interfaces": "redesign/interfaces/example-output/interfaces.json",
@@ -697,7 +697,8 @@ window.VIEWER_DATA = {
    "how": "Weigh the assembled aircraft with battery on a 10 kg scale (T-EX-WEIGH).",
    "margin": 0.054545454545454515,
    "parts": [
-    "FUS-001"
+    "FUS-001",
+    "FUS-002"
    ]
   },
   {
@@ -713,7 +714,10 @@ window.VIEWER_DATA = {
    "status": "CHECKED",
    "how": "Thrust stand: one motor + 17x5.8 prop at 22.2 V, full throttle, >= 3.13 kgf (T-EX-THRUST).",
    "margin": 0.5048076923076922,
-   "parts": []
+   "parts": [
+    "BMS-003",
+    "BMS-004"
+   ]
   },
   {
    "id": "CL-EX-HOVER-I",
@@ -724,7 +728,10 @@ window.VIEWER_DATA = {
    "status": "CHECKED",
    "how": "Log battery current (power module) in a 30 s hover; compare with this value.",
    "margin": null,
-   "parts": []
+   "parts": [
+    "FUS-002",
+    "FUS-003"
+   ]
   },
   {
    "id": "CL-EX-DISCONNECT",
@@ -739,7 +746,9 @@ window.VIEWER_DATA = {
    "status": "UNVERIFIED",
    "how": "Open the Amass AS150U datasheet and confirm the continuous rating.",
    "margin": 0.5357142857142857,
-   "parts": []
+   "parts": [
+    "FUS-002"
+   ]
   },
   {
    "id": "CL-EX-ESC-CONN",
@@ -754,7 +763,9 @@ window.VIEWER_DATA = {
    "status": "UNVERIFIED",
    "how": "Compare the connector datasheet rating with 1.25 x the maker's maximum motor current.",
    "margin": -0.15416666666666667,
-   "parts": []
+   "parts": [
+    "FUS-003"
+   ]
   },
   {
    "id": "CL-EX-STALL",
@@ -807,15 +818,5 @@ window.VIEWER_DATA = {
    0.24
   ]
  },
- "warnings": [
-  "claim CL-EX-MTOW names EX-PWR-010, not a part of this aircraft",
-  "claim CL-EX-HOVER-TW names EX-PWR-001, not a part of this aircraft",
-  "claim CL-EX-HOVER-TW names EX-PWR-002, not a part of this aircraft",
-  "claim CL-EX-HOVER-TW names EX-PWR-003, not a part of this aircraft",
-  "claim CL-EX-HOVER-TW names EX-PWR-004, not a part of this aircraft",
-  "claim CL-EX-HOVER-I names EX-PWR-010, not a part of this aircraft",
-  "claim CL-EX-HOVER-I names EX-HRN-003, not a part of this aircraft",
-  "claim CL-EX-DISCONNECT names EX-HRN-001, not a part of this aircraft",
-  "claim CL-EX-ESC-CONN names EX-HRN-002, not a part of this aircraft"
- ]
+ "warnings": []
 };

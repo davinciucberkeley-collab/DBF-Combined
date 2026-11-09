@@ -93,7 +93,11 @@ def load(root, library=os.path.join(HERE, 'connection_types.json')):
         lib = _read(library, g) or {}
         for ct in lib.get('connection_types', []):
             _add_ctype(g, ct, 'library')
-    for path in find_sources(root):
+    sources = find_sources(root)
+    if not sources:                                # an empty graph must not read as a clean PASS
+        g.add('WARN', 'no-sources', os.path.relpath(root, REDESIGN).replace('\\', '/'),
+              'no <subsystem>/interfaces.json found under this folder; nothing was checked')
+    for path in sources:
         doc = _read(path, g)
         if doc is None:
             continue

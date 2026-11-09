@@ -20,12 +20,12 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D9
 - claim **CL-EX-DISCONNECT** Main disconnect rating = **32.5 A** (limit <= 70 A, margin +54%) — **UNVERIFIED**
   - ⚠ uses P:harness.main_disconnect_a, which is UNVERIFIED (cites SRC-EX-AS150U, which is UNVERIFIED)
   - how to verify: Open the Amass AS150U datasheet and confirm the continuous rating.
-  - parts: EX-HRN-001
+  - parts: FUS-002
   - calc `CALC-EX-DISCONNECT` `redesign/proofs/examples/power/analysis.py::disconnect_required()`: `I_req = k * I_pack,hover` — **CHECKED**
     - `k` ← param `P:requirements.disconnect_factor` = 1.25 (REQUIREMENTS.md D9 (config study)) — **PROPOSED**
     - `i_pack` ← claim **CL-EX-HOVER-I** Hover pack current = **26 A** — **CHECKED**
       - how to verify: Log battery current (power module) in a 30 s hover; compare with this value.
-      - parts: EX-PWR-010, EX-HRN-003
+      - parts: FUS-002, FUS-003
       - calc `CALC-EX-HOVER-I` `redesign/proofs/examples/power/analysis.py::hover_current()`: `I_pack = n * I_motor(m * 1000 / n gf)` — **CHECKED**
         - `n` ← param `P:propulsion.n_lift` = 4 (example choice (2 booms x 2 motors)) — **PROPOSED**
         - `table` ← param `P:propulsion.thrust_table` = table (10 rows) A,gf — **CHECKED**
@@ -39,7 +39,7 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D9
 - claim **CL-EX-ESC-CONN** ESC connector rating = **34.62 A** (limit <= 30 A, margin -15%) — **UNVERIFIED** **FAILS**
   - ⚠ FAILS: margin -15.4% (34.62 A vs <= 30 A)
   - how to verify: Compare the connector datasheet rating with 1.25 x the maker's maximum motor current.
-  - parts: EX-HRN-002
+  - parts: FUS-003
   - calc `CALC-EX-ESC-CONN` `redesign/proofs/examples/power/analysis.py::esc_connector_required()`: `I_req = k * I_motor,max (last table row)` — **CHECKED**
     - `k` ← `P:requirements.disconnect_factor` (see above)
     - `table` ← `P:propulsion.thrust_table` (see above)
@@ -53,7 +53,7 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D11
 
 - claim **CL-EX-HOVER-TW** Hover thrust-to-weight = **2.408** (limit >= 1.6, margin +50%) — **CHECKED**
   - how to verify: Thrust stand: one motor + 17x5.8 prop at 22.2 V, full throttle, >= 3.13 kgf (T-EX-THRUST).
-  - parts: EX-PWR-001, EX-PWR-002, EX-PWR-003, EX-PWR-004
+  - parts: BMS-003, BMS-004
   - calc `CALC-EX-HOVER-TW` `redesign/proofs/examples/power/analysis.py::hover_tw()`: `T/W = n * T_max / m  (T_max = last table row)` — **CHECKED**
     - `n` ← param `P:propulsion.n_lift` = 4 (example choice (2 booms x 2 motors)) — **PROPOSED**
     - `table` ← param `P:propulsion.thrust_table` = table (10 rows) A,gf — **CHECKED**
@@ -68,7 +68,7 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D11
 
 - claim **CL-EX-MTOW** Take-off mass = **5.2 kg** (limit <= 5.5 kg, margin +5%) — **VERIFIED**
   - how to verify: Weigh the assembled aircraft with battery on a 10 kg scale (T-EX-WEIGH).
-  - parts: EX-FUS-001, EX-PWR-010
+  - parts: FUS-001, FUS-002
   - calc `CALC-EX-MTOW` `redesign/proofs/examples/power/analysis.py::mtow()`: `m = sum of item masses (motors, props, ESCs x n)` — **CHECKED**
     - `fus` ← param `P:mass.fuselage_box_kg` = 0.9 kg (example estimate) — **PROPOSED**
     - `wing` ← param `P:mass.wing_panels_kg` = 0.9 kg (example estimate) — **PROPOSED**
@@ -94,7 +94,7 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D11
 
 - claim **CL-EX-SPAR** Spar design stress = **122.3 MPa** (limit <= 240 MPa, margin +49%) — **CHECKED**
   - how to verify: Wingtip load test: support at the root, hang n*m*g/2 spread over each half, check no permanent set.
-  - parts: EX-WNG-003
+  - parts: WNG-003
   - calc `CALC-EX-SPAR` `redesign/proofs/examples/wing/analysis.py::spar_stress()`: `M = n m g / 2 * b / 4;  I = pi/64 (D^4 - d^4);  sigma = SF * M (D/2) / I` — **CHECKED**
     - `m` ← claim **CL-EX-MTOW** Take-off mass = **5.2 kg** (limit <= 5.5 kg, margin +5%) — **VERIFIED** — chain under [R-EX-MASS](#r-ex-mass)
     - `g` ← param `P:env.g_ms2` = 9.807 m/s2 — **CHECKED**
@@ -115,7 +115,7 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D11
 - claim **CL-EX-STALL** Stall speed at MTOW = **12.56 m/s** (limit <= 13 m/s, margin +3%) — **UNVERIFIED**
   - ⚠ uses ASM-EX-CLMAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: Replace ASM-EX-CLMAX with the aero analysis CLmax; flight: slow-flight stall at MTOW with airspeed logging.
-  - parts: EX-WNG-001, EX-WNG-002, EX-WNG-004
+  - parts: WNG-001, WNG-002, WNG-004
   - calc `CALC-EX-STALL` `redesign/proofs/examples/wing/analysis.py::stall_speed()`: `Vs = sqrt(2 m g / (rho b c CLmax))` — **CHECKED**
     - `m` ← claim **CL-EX-MTOW** Take-off mass = **5.2 kg** (limit <= 5.5 kg, margin +5%) — **VERIFIED** — chain under [R-EX-MASS](#r-ex-mass)
     - `g` ← param `P:env.g_ms2` = 9.807 m/s2 — **CHECKED**

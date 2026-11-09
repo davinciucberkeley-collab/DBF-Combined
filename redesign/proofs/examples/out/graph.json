@@ -1,7 +1,7 @@
 {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-09 09:45 UTC",
+  "generated": "2026-11-09 12:20 UTC",
   "dataset": "examples",
   "ok": true,
   "errors": [],
@@ -17,11 +17,11 @@
     "requirement": 5,
     "source": 6,
     "parameter": 30,
-    "part": 13
+    "part": 9
    },
    "by_status": {
     "PROPOSED": 23,
-    "CHECKED": 32,
+    "CHECKED": 28,
     "VERIFIED": 4,
     "UNVERIFIED": 14
    },
@@ -340,8 +340,8 @@
     "R-EX-MASS"
    ],
    "parts": [
-    "EX-FUS-001",
-    "EX-PWR-010"
+    "FUS-001",
+    "FUS-002"
    ],
    "how": "Weigh the assembled aircraft with battery on a 10 kg scale (T-EX-WEIGH).",
    "value": 5.2,
@@ -366,10 +366,8 @@
     "R-EX-HOVER"
    ],
    "parts": [
-    "EX-PWR-001",
-    "EX-PWR-002",
-    "EX-PWR-003",
-    "EX-PWR-004"
+    "BMS-003",
+    "BMS-004"
    ],
    "how": "Thrust stand: one motor + 17x5.8 prop at 22.2 V, full throttle, >= 3.13 kgf (T-EX-THRUST).",
    "value": 2.4076923076923076,
@@ -386,8 +384,8 @@
    "output": "i_pack_a",
    "unit": "A",
    "parts": [
-    "EX-PWR-010",
-    "EX-HRN-003"
+    "FUS-002",
+    "FUS-003"
    ],
    "how": "Log battery current (power module) in a 30 s hover; compare with this value.",
    "value": 26.0,
@@ -411,7 +409,7 @@
     "R-EX-DISCONNECT"
    ],
    "parts": [
-    "EX-HRN-001"
+    "FUS-002"
    ],
    "how": "Open the Amass AS150U datasheet and confirm the continuous rating.",
    "value": 32.5,
@@ -439,7 +437,7 @@
     "R-EX-DISCONNECT"
    ],
    "parts": [
-    "EX-HRN-002"
+    "FUS-003"
    ],
    "how": "Compare the connector datasheet rating with 1.25 x the maker's maximum motor current.",
    "value": 34.625,
@@ -745,9 +743,9 @@
     "R-EX-STALL"
    ],
    "parts": [
-    "EX-WNG-001",
-    "EX-WNG-002",
-    "EX-WNG-004"
+    "WNG-001",
+    "WNG-002",
+    "WNG-004"
    ],
    "how": "Replace ASM-EX-CLMAX with the aero analysis CLmax; flight: slow-flight stall at MTOW with airspeed logging.",
    "value": 12.557176592796806,
@@ -775,7 +773,7 @@
     "R-EX-SPAR"
    ],
    "parts": [
-    "EX-WNG-003"
+    "WNG-003"
    ],
    "how": "Wingtip load test: support at the root, hang n*m*g/2 spread over each half, check no permanent set.",
    "value": 122.25156550863848,
@@ -1165,93 +1163,65 @@
    "importance": 1
   },
   {
-   "id": "EX-FUS-001",
+   "id": "FUS-001",
    "type": "part",
    "title": "Fuselage box",
    "status": "VERIFIED",
    "importance": 1
   },
   {
-   "id": "EX-PWR-010",
+   "id": "FUS-002",
    "type": "part",
-   "title": "Battery block 6S 6500 mAh",
+   "title": "Battery block",
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "BMS-003",
+   "type": "part",
+   "title": "Lift motor L",
    "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "BMS-004",
+   "type": "part",
+   "title": "Lift motor R",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "FUS-003",
+   "type": "part",
+   "title": "ESC 2-in-1 with BEC",
+   "status": "UNVERIFIED",
    "importance": 2
   },
   {
-   "id": "EX-PWR-001",
-   "type": "part",
-   "title": "Lift motor FL",
-   "status": "CHECKED",
-   "importance": 1
-  },
-  {
-   "id": "EX-PWR-002",
-   "type": "part",
-   "title": "Lift motor FR",
-   "status": "CHECKED",
-   "importance": 1
-  },
-  {
-   "id": "EX-PWR-003",
-   "type": "part",
-   "title": "Lift motor RL",
-   "status": "CHECKED",
-   "importance": 1
-  },
-  {
-   "id": "EX-PWR-004",
-   "type": "part",
-   "title": "Lift motor RR",
-   "status": "CHECKED",
-   "importance": 1
-  },
-  {
-   "id": "EX-HRN-003",
-   "type": "part",
-   "title": "Pack lead wire",
-   "status": "CHECKED",
-   "importance": 1
-  },
-  {
-   "id": "EX-HRN-001",
-   "type": "part",
-   "title": "Main disconnect AS150U",
-   "status": "UNVERIFIED",
-   "importance": 1
-  },
-  {
-   "id": "EX-HRN-002",
-   "type": "part",
-   "title": "ESC lead connector XT60",
-   "status": "UNVERIFIED",
-   "importance": 1
-  },
-  {
-   "id": "EX-WNG-001",
+   "id": "WNG-001",
    "type": "part",
    "title": "Wing panel L",
    "status": "UNVERIFIED",
    "importance": 1
   },
   {
-   "id": "EX-WNG-002",
+   "id": "WNG-002",
    "type": "part",
    "title": "Wing panel R",
    "status": "UNVERIFIED",
    "importance": 1
   },
   {
-   "id": "EX-WNG-004",
+   "id": "WNG-004",
    "type": "part",
-   "title": "Aileron L (hinged)",
+   "title": "Aileron L",
    "status": "UNVERIFIED",
    "importance": 1
   },
   {
-   "id": "EX-WNG-003",
+   "id": "WNG-003",
    "type": "part",
-   "title": "Wing spar tube 20x1.5 6061",
+   "title": "Spar tube 12x10",
    "status": "CHECKED",
    "importance": 1
   }
@@ -1389,12 +1359,12 @@
   },
   {
    "source": "CL-EX-MTOW",
-   "target": "EX-FUS-001",
+   "target": "FUS-001",
    "type": "about"
   },
   {
    "source": "CL-EX-MTOW",
-   "target": "EX-PWR-010",
+   "target": "FUS-002",
    "type": "about"
   },
   {
@@ -1414,22 +1384,12 @@
   },
   {
    "source": "CL-EX-HOVER-TW",
-   "target": "EX-PWR-001",
+   "target": "BMS-003",
    "type": "about"
   },
   {
    "source": "CL-EX-HOVER-TW",
-   "target": "EX-PWR-002",
-   "type": "about"
-  },
-  {
-   "source": "CL-EX-HOVER-TW",
-   "target": "EX-PWR-003",
-   "type": "about"
-  },
-  {
-   "source": "CL-EX-HOVER-TW",
-   "target": "EX-PWR-004",
+   "target": "BMS-004",
    "type": "about"
   },
   {
@@ -1439,12 +1399,12 @@
   },
   {
    "source": "CL-EX-HOVER-I",
-   "target": "EX-PWR-010",
+   "target": "FUS-002",
    "type": "about"
   },
   {
    "source": "CL-EX-HOVER-I",
-   "target": "EX-HRN-003",
+   "target": "FUS-003",
    "type": "about"
   },
   {
@@ -1464,7 +1424,7 @@
   },
   {
    "source": "CL-EX-DISCONNECT",
-   "target": "EX-HRN-001",
+   "target": "FUS-002",
    "type": "about"
   },
   {
@@ -1484,7 +1444,7 @@
   },
   {
    "source": "CL-EX-ESC-CONN",
-   "target": "EX-HRN-002",
+   "target": "FUS-003",
    "type": "about"
   },
   {
@@ -1584,17 +1544,17 @@
   },
   {
    "source": "CL-EX-STALL",
-   "target": "EX-WNG-001",
+   "target": "WNG-001",
    "type": "about"
   },
   {
    "source": "CL-EX-STALL",
-   "target": "EX-WNG-002",
+   "target": "WNG-002",
    "type": "about"
   },
   {
    "source": "CL-EX-STALL",
-   "target": "EX-WNG-004",
+   "target": "WNG-004",
    "type": "about"
   },
   {
@@ -1614,7 +1574,7 @@
   },
   {
    "source": "CL-EX-SPAR",
-   "target": "EX-WNG-003",
+   "target": "WNG-003",
    "type": "about"
   },
   {

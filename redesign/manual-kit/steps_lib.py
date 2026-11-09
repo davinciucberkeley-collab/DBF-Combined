@@ -361,7 +361,8 @@ class Manual:
             self.err(sid, 'check type must be one of ' + ', '.join(CHECK_TYPES))
         if t == 'mass':
             pats = c.get('of', ['*'])
-            ids = [p for p in built_parts if any(fnmatch.fnmatchcase(p, x) for x in pats)]
+            ids = [p for p in built_parts if any(fnmatch.fnmatchcase(p, x) for x in pats)
+                   and self.parts.get(p, {}).get('flight', True) is not False]      # fixtures never weigh in
             m = sum(float(self.parts.get(p, {}).get('mass_g') or 0) for p in ids)
             tol = float(c.get('tol_pct', 5))
             c['target'] = '%s g ± %s %% (%s to %s g)' % (num(m), num(tol), num(m * (1 - tol / 100)), num(m * (1 + tol / 100)))

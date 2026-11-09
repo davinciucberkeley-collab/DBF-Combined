@@ -33,6 +33,9 @@ def check(ok, what):
 
 be, ctx, graph, results = bb.build(examples, root)
 check(all(r[2] for r in results), 'every module built (%d)' % len(results))
+if not ctx.components:
+    print('FAIL  no parts were built (no <subsystem>/fusion/*.py under the module root); nothing to check')
+    sys.exit(1)
 for pid, comp in ctx.components.items():
     ob = bpy.data.objects.get(pid)
     if ob is None:

@@ -511,7 +511,7 @@ def page(m, figinfo, terms, overview):
     meta = m.meta
     title = meta.get('title', 'Build manual')
     allk = m.kit(m.steps)
-    mass = sum(float(p.get('mass_g') or 0) for p in m.parts.values())
+    mass = sum(float(p.get('mass_g') or 0) for p in m.parts.values() if p.get('flight', True) is not False)  # no ground tools
     n_fas = sum(f['qty'] for f in allk['fasteners'])
     # ----- data for the hover panels
     data = {'id': meta.get('id', 'manual'), 'rev': meta.get('revision', ''), 'parts': {}, 'edges': {},

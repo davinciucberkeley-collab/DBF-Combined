@@ -84,8 +84,7 @@ def main():
                  budget=os.path.join(RED, 'fusion/examples/mass_budget.json'),
                  csv=[os.path.join(HERE, 'examples/parts.csv')],
                  proofs_viewer='../proofs/viewer/index.html?data=examples#node={id}',
-                 # the proof-chain demo names the example parts EX-FUS-001 etc. (CHANGE-REQUESTS.md #1)
-                 proof_alias='EX-')
+                 proof_alias=None)   # proof_alias: a prefix to strip from claim part ids (none needed now)
     else:
         d = dict(glb=os.path.join(RED, 'blender/out/aircraft/glb'),
                  interfaces=os.path.join(RED, 'interfaces/interfaces.json'),
@@ -183,6 +182,11 @@ def main():
         'proofs_viewer': d['proofs_viewer'], 'budget': budget, 'warnings': warn,
     }
     os.makedirs(out, exist_ok=True)
+    # 'generated' = when the DATA last changed: keep the old stamp when nothing else differs, so re-running the
+    # checks does not dirty the committed data files
+    old = load_json(os.path.join(out, 'viewer-data.json')) or {}
+    if old.get('generated') and dict(old, generated=None) == dict(data, generated=None):
+        data['generated'] = old['generated']
     js = json.dumps(data, indent=1, ensure_ascii=False)
     with open(os.path.join(out, 'viewer-data.json'), 'w', encoding='utf-8', newline='\n') as f:
         f.write(js + '\n')

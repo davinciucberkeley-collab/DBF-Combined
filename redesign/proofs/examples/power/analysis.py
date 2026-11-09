@@ -13,7 +13,8 @@ import proofkit as pk  # noqa: E402
 
 kit = pk.Kit(__file__, params=["../params.json"])
 
-MOTORS = ["EX-PWR-001", "EX-PWR-002", "EX-PWR-003", "EX-PWR-004"]
+# part ids are those of the generic test aircraft (redesign/fusion/examples), so the web viewer links claims to parts
+MOTORS = ["BMS-003", "BMS-004"]            # the modelled lift motors (the demo numbers assume n_lift = 4)
 
 kit.assumption("ASM-EX-INTERP", "Linear interpolation", "Current between two rows of the maker's thrust table "
                "varies linearly with thrust", basis="rows are 250 gf apart; the curve is smooth and convex, so linear "
@@ -71,19 +72,19 @@ def esc_connector_required(k, table):
 
 # ---- claims: what the numbers above mean, against which limit, for which requirement ----
 kit.claim("CL-EX-MTOW", "Take-off mass", calc="CALC-EX-MTOW", output="m_kg", unit="kg",
-          limit=("<=", "P:requirements.mtow_max_kg"), verifies=["R-EX-MASS"], parts=["EX-FUS-001", "EX-PWR-010"],
+          limit=("<=", "P:requirements.mtow_max_kg"), verifies=["R-EX-MASS"], parts=["FUS-001", "FUS-002"],
           how="Weigh the assembled aircraft with battery on a 10 kg scale (T-EX-WEIGH).")
 kit.claim("CL-EX-HOVER-TW", "Hover thrust-to-weight", calc="CALC-EX-HOVER-TW", output="tw", unit="-",
           limit=(">=", "P:requirements.hover_tw_min"), verifies=["R-EX-HOVER"], parts=MOTORS,
           how="Thrust stand: one motor + 17x5.8 prop at 22.2 V, full throttle, >= 3.13 kgf (T-EX-THRUST).")
 kit.claim("CL-EX-HOVER-I", "Hover pack current", calc="CALC-EX-HOVER-I", output="i_pack_a", unit="A",
-          parts=["EX-PWR-010", "EX-HRN-003"],
+          parts=["FUS-002", "FUS-003"],
           how="Log battery current (power module) in a 30 s hover; compare with this value.")
 kit.claim("CL-EX-DISCONNECT", "Main disconnect rating", calc="CALC-EX-DISCONNECT", output="i_req_a", unit="A",
-          limit=("<=", "P:harness.main_disconnect_a"), verifies=["R-EX-DISCONNECT"], parts=["EX-HRN-001"],
+          limit=("<=", "P:harness.main_disconnect_a"), verifies=["R-EX-DISCONNECT"], parts=["FUS-002"],
           how="Open the Amass AS150U datasheet and confirm the continuous rating.")
 kit.claim("CL-EX-ESC-CONN", "ESC connector rating", calc="CALC-EX-ESC-CONN", output="i_req_a", unit="A",
-          limit=("<=", "P:harness.esc_connector_a"), verifies=["R-EX-DISCONNECT"], parts=["EX-HRN-002"],
+          limit=("<=", "P:harness.esc_connector_a"), verifies=["R-EX-DISCONNECT"], parts=["FUS-003"],
           how="Compare the connector datasheet rating with 1.25 x the maker's maximum motor current.")
 
 kit.test("T-EX-WEIGH", "Weigh the assembled aircraft", verifies=["CL-EX-MTOW"], state="run", result="pass",

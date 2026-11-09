@@ -54,7 +54,7 @@ if (demo) {
   const f = { statuses: new Set(['UNVERIFIED']), types: new Set(M.TYPES), failsOnly: false };
   const unv = m.nodes.filter(n => M.visible(n, f)).map(n => n.id);
   ok(unv.includes('CL-EX-STALL') && unv.includes('ASM-EX-CLMAX') && !unv.includes('CL-EX-HOVER-TW'), 'UNVERIFIED filter');
-  ok(M.chain(m, 'EX-WNG-003').has('CL-EX-SPAR'), 'a part selects the claims about it');
+  ok(M.chain(m, 'WNG-003').has('CL-EX-SPAR'), 'a part selects the claims about it');
   ok(M.fmt(2.40769, '-') === '2.408' && M.fmt(26, 'A') === '26 A', 'number formatting matches proofkit.fmt');
   console.log(`  ${m.nodes.length} nodes, UNVERIFIED filter shows ${unv.length}`);
 }

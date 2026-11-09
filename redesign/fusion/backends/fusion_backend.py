@@ -20,6 +20,11 @@ UNVERIFIED-IN-FUSION (this file has not run in Fusion yet; first run by a teamma
   - Fusion grounds the first occurrence added to a design ("ground to parent"); the old build_joints_fusion.py found
     that this blocked a joint whose moving side was that occurrence. joint() un-grounds the moving side of a
     revolute/slider joint before adding it.
+  - A joint aligns BOTH joint frames (origin and axes), not only the origins. The joint-point sketches are Z-normal
+    planes of each component, so for an unrotated component the frame is the aircraft frame and nothing moves. For
+    a component placed with ctx.part(rotate=...) the two frames differ and Fusion will turn part a to match part b.
+    joint() reports such joints as WARN in the build summary; check the placement in Fusion. (Fix if it bites:
+    set JointInput.angle for Z rotations, or build the joint-point sketch on a plane that is world-aligned.)
 """
 import math
 import re
@@ -66,7 +71,7 @@ class FusionBackend(Backend):
     def __init__(self, new_document=True):
         self.new_document = new_document
         self.app = adsk.core.Application.get()
-        self.log_lines = []
+        self.warnings = []            # (code, item, message) reported as WARN issues by end()
         self._appearances = {}
         self._materials = {}
         self._sub_colour = {}
@@ -90,6 +95,8 @@ class FusionBackend(Backend):
             self.app.activeViewport.fit()
         except Exception:
             pass
+        for code, item, msg in self.warnings:
+            ctx.issue('WARN', code, item, msg)
         lines = ['%-10s %8s %10s  %s' % ('part', 'decl g', 'Fusion g', 'Fusion material')]
         for pid, c in sorted(ctx.components.items()):
             try:
@@ -266,17 +273,21 @@ class FusionBackend(Backend):
             if ap:
                 b.appearance = ap
         for sk in fc.sketches:
-            sk.isVisible = False
+            sk.isLightBulbOn = False      # the settable one (isVisible is the computed state); as in the old scripts
 
     def _point_geometry(self, comp, world):
         fc = comp.native.component
         loc = comp.to_local(world)
         sk = self._sketch(fc, 'Z', loc[2], 'jp_%d' % fc.sketches.count)
         sp = sk.sketchPoints.add(sk.modelToSketchSpace(P3(loc)))
-        sk.isVisible = False
+        sk.isLightBulbOn = False
         return adsk.fusion.JointGeometry.createByPoint(sp.createForAssemblyContext(comp.native))
 
     def joint(self, j, comp_a, comp_b):
+        rotated = [c.id for c in (comp_a, comp_b) if c.rotate]
+        if rotated:                                # see the module docstring: Fusion aligns both joint frames
+            self.warnings.append(('joint', j.edge, 'joins rotated component %s: Fusion may turn %s to align the '
+                                  'joint frames; check its placement (UNVERIFIED-IN-FUSION)' % (', '.join(rotated), j.a)))
         if j.kind != 'rigid':
             try:                                   # a grounded first occurrence cannot move (see module docstring)
                 if comp_a.native.isGroundToParent:

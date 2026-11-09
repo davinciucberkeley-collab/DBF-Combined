@@ -44,7 +44,7 @@ def kit_md(m, steps):
 def write(m, out_dir, figinfo, terms, overview):
     meta = m.meta
     allk = m.kit(m.steps)
-    mass = sum(float(p.get('mass_g') or 0) for p in m.parts.values())
+    mass = sum(float(p.get('mass_g') or 0) for p in m.parts.values() if p.get('flight', True) is not False)
     L_ = []
     a = L_.append
     a('# %s\n' % meta.get('title', 'Build manual'))

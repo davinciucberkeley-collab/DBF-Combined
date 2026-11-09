@@ -113,9 +113,9 @@
     "R-EX-STALL"
    ],
    "parts": [
-    "EX-WNG-001",
-    "EX-WNG-002",
-    "EX-WNG-004"
+    "WNG-001",
+    "WNG-002",
+    "WNG-004"
    ],
    "how": "Replace ASM-EX-CLMAX with the aero analysis CLmax; flight: slow-flight stall at MTOW with airspeed logging.",
    "value": 12.557176592796806
@@ -135,7 +135,7 @@
     "R-EX-SPAR"
    ],
    "parts": [
-    "EX-WNG-003"
+    "WNG-003"
    ],
    "how": "Wingtip load test: support at the root, hang n*m*g/2 spread over each half, check no permanent set.",
    "value": 122.25156550863848

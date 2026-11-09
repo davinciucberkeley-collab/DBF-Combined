@@ -9,7 +9,7 @@ The last section is this card's own skeptic pass with pessimistic numbers. Every
 **What changed from the K01 card, in one line each:**
 
 - **Wing.** One-piece 1.20 × 0.27 m hot-wired XPS wing (K09 construction) instead of two 0.80 m halves on a joiner.
-- **Spar.** One 22×20 CF spar runs 1.00 m and passes through both boom stations. The booms clamp to the spar, not to the foam (fixes REVIEW C3).
+- **Spar.** One 22×20 CF spar runs 1.00 m and passes through both boom stations. The booms clamp to the spar, not to the foam (fixes REVIEW C3). It is "full-span" in the sense the skeptic asked for: only the last 0.10 m of each tip is foam alone, at ≈ 11 kPa under 3 g against ≈ 300 kPa for XPS. A 1.2 m tube would need a second SKU for no structural gain.
 - **CF tubes.** One tube SKU, 22×20×1000, used for the spar, both booms and a spare (fixes C11).
 - **Tail.** Foam-board H-tail: one elevator and two fixed fins. It ties the boom ends together and replaces the inverted-V.
 - **Stability.** Static margin is set by construction: CG at 28.7 % MAC for a 15 % margin, 8.5 % pessimistic. The lift centroid sits on that CG (fixes C4).
@@ -115,7 +115,7 @@ The last section is this card's own skeptic pass with pessimistic numbers. Every
 | Spar check (3 g cruise / 2.5 × hover) | 28 / 29 MPa vs ≈ 300 MPa allowable `ESTIMATE`; bare foam tip beyond the spar end 11 kPa | | `sizing.json` `structure` |
 | **Spend / reserve** | **$1,718.62 / $281.38** | ≈ $1,775 / ≈ $225 | `cost.csv`; pess below |
 | **Reserve vs one crash** | $281 vs **$266** (K01 card) ✓, vs **$309** (study formula) ✗ by $28, vs **$224** (this aircraft's own bill) ✓ | $225: covers own bill only | `cost.csv` crash lines |
-| **Team-hours to first hover** | **90–110 h** (100) | **130 h** | build list below |
+| **Team-hours to first hover** | **90–110 h** (100) | **130 h** (outer bound 150) | build list below; S12 |
 | Packed | 1 box **1.25 × 0.52 × 0.37 m** external, ≈ 5 kg; 4 pieces; 3 joints + 5 plugs; ≈ 7 min, 1 person | | `packing()` |
 
 ## Mass build-up (kg, baseline)
@@ -287,7 +287,7 @@ one crash.
 | S9 | SpeedyBee $47.99 in stock | Search snippet only. NewBeeDrone is sold out | **CoreWing $67.26 (+$19.27)** |
 | S10 | Tax 10.25 % | A Berkeley +0.5 % measure was on the 2026-11-03 ballot | **+$7** |
 | S11 | Hot-wire bow $15, box $55 | Plywood boxes and jigs grow | **+$20** |
-| S12 | 100 team-hours | K01 card 100–120 became 150–180 under review. This build is simpler (one wing piece, 3 joints, one tube SKU) but still has 5 stations, 3 servos and an airspeed sensor | **130 h** (≈ 4 weeks to first hover) |
+| S12 | 100 team-hours | K01 card 100–120 became 150–180 under review (×1.5); K09's 70 became 70–85 (×1.2). This build is simpler than K01 (one wing piece, 3 joints, one tube SKU) but still has 5 stations, 3 servos and an airspeed sensor | **130 h** (≈ 4 weeks to first hover); outer bound **150 h** if this card is as optimistic as K01's was (×1.5) |
 | S13 | Crash = $224 own bill | It assumes the spares are not already used and that only 2 stations die | study formula **$309** |
 
 **Pessimistic summary.** AUW 2.64 kg. Hover T/W 2.40 at full voltage, **2.02 at low voltage** (1.84 net of download).

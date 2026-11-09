@@ -85,5 +85,4 @@ and is parsed in under 10 ms. From `file://` the base64 copy is read instead (no
 
 - Exploded and deflected parts are moved, wires are not; wires and joint markers hide while exploded.
 - The selected part's outline is a 1 px edge line (WebGL has no thick lines).
-- Claims for the demo use the proof demo's `EX-` ids, matched by stripping the prefix (CHANGE-REQUESTS #1).
 - The page loads IBM Plex from Google Fonts; offline it falls back to system fonts.

@@ -43,10 +43,10 @@ def spar_stress(m, g, n, b, od, wall, sf):
 
 kit.claim("CL-EX-STALL", "Stall speed at MTOW", calc="CALC-EX-STALL", output="Vs_ms", unit="m/s",
           limit=("<=", "P:requirements.stall_max_ms"), verifies=["R-EX-STALL"],
-          parts=["EX-WNG-001", "EX-WNG-002", "EX-WNG-004"],
+          parts=["WNG-001", "WNG-002", "WNG-004"],          # ids of the generic test aircraft (fusion/examples)
           how="Replace ASM-EX-CLMAX with the aero analysis CLmax; flight: slow-flight stall at MTOW with airspeed logging.")
 kit.claim("CL-EX-SPAR", "Spar design stress", calc="CALC-EX-SPAR", output="sigma_design_MPa", unit="MPa",
-          limit=("<=", "P:wing.spar_yield_mpa"), verifies=["R-EX-SPAR"], parts=["EX-WNG-003"],
+          limit=("<=", "P:wing.spar_yield_mpa"), verifies=["R-EX-SPAR"], parts=["WNG-003"],
           how="Wingtip load test: support at the root, hang n*m*g/2 spread over each half, check no permanent set.")
 
 if __name__ == "__main__":

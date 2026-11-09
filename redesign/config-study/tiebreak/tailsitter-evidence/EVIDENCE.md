@@ -1,6 +1,8 @@
 # Tailsitter evidence: quad tailsitter (K09) vs small quadplane 4+1 (K01)
 
 Tiebreak input for `README.md` §4. Written 2026-11-09. All web pages were seen on 2026-11-09.
+Re-checked 2026-11-09 (second pass): the Box Kite student thread, Covey Bix3 dates and copter-tailsitters page 50
+(Farkhod, airton_dep, Jaliy4) were re-read against the source and match. The student-thread row was corrected.
 Tags: **DOC** = official ArduPilot or PX4 documentation, or a peer-reviewed paper or thesis. **FORUM** = a builder's own
 post on discuss.ardupilot.org (some attach a `.bin` log, noted where they do). **VIDEO** = video only, no log.
 `ESTIMATE` = my judgement. `UNVERIFIED` = not checked against the primary source.
@@ -13,8 +15,8 @@ supported (**DOC**). The ArduPilot wiki lists one build guide in this family, He
 quad tailsitter with elevons, but it is small (1804 motors, 3S 1000–1300 mAh). There are about a dozen FORUM reports of
 quad tailsitters. Of those, **one** posts a log of an auto mission with a transition, cruise and vertical landing
 (size and surfaces unknown), and **three** post or describe a **dive right after "transition done"**. The best-matched
-teaching case (an instructor with students, four identical Box Kite style aircraft, 2025) shows failed transitions
-and uncommanded yaw in a log, and no success in the thread. Small quadplanes are the opposite: the most mature
+teaching case (an instructor with students, four identical Box Kite style aircraft, 2025) shows a failed first transition,
+then 1–2 min of FBWA ending in uncommanded yaw on all four, with logs, and no clean round trip in the thread. Small quadplanes are the opposite: the most mature
 ArduPilot VTOL path, with an expert reaching transitions 8 days after first hover. First-timers still crash them,
 nearly always through setup errors (reversed surfaces, zero throttle, overweight) rather than through the control law.
 **`ESTIMATE` P(first full transition and back by week 8): K09 ≈ 0.40 (0.25–0.55), K01 ≈ 0.45 (0.30–0.60).** K09 reaches
@@ -46,7 +48,7 @@ stands after this search. It is now "searched for and not found in the target cl
 |---|---|---|---|---|---|---|---|
 | H. Wurzburg (ArduPilot dev), 2020 | **Box Kite** foam-board quad tailsitter, the wiki build | 3 × 20×30 in foam board; 1804 motors, 5 in props, 3S 1000–1300 mAh (≈ 0.3–0.5 kg `ESTIMATE`) | **2 elevons**, top and bottom linked | Flies (dev's own aircraft). Guide **does not show** a transition log. Author: fly on a **zero-wind day**. | No | Taped ground-contact points and leading edges for durability | DOC-listed / FORUM [link](https://discuss.ardupilot.org/t/box-kite-copter-tailsitter-build-instructions) |
 | DaveSprague (reply), 2021 | Box Kite copy | same | elevons | Short hover hops "went well"; yaw sluggish. Hover only after the wind dropped. | No | — | FORUM (same thread) |
-| **dpapworth (instructor, with students), Oct 2025** | **4 identical Box Kite style** quads, 1806, 5 in tri-blade, SpeedyBee F405 | small | 2 elevons | **Failed transition to FW** (log); recovered in QSTABILIZE. **All 4 yaw uncommanded in FBWA.** Two FCs had bad loop rates. No success in thread. | **Yes** | No crash; setup and tuning faults | FORUM [link](https://discuss.ardupilot.org/t/boxkite-vtol-learning/139972) |
+| **dpapworth (instructor, with students), Oct 2025** | **4 identical Box Kite style** quads, 1806, 5 in tri-blade, SpeedyBee F405 | small | 2 elevons | Oct 9: **failed transition to FW** (log), recovered in QSTABILIZE. Oct 29: some aircraft flew FBWA for 1–2 min, then **all 4 yawed uncommanded** (2 left, 2 right). Two MicoAir F405 boards had erratic loop rates (dev). No clean round trip posted as of Oct 31, 2025. | **Yes** (4 logs) | No crash. Dev: Plane does not stabilize yaw in FW by default, so trim or a yaw damper is needed | FORUM [link](https://discuss.ardupilot.org/t/boxkite-vtol-learning/139972) |
 | same instructor, Nov 2024 – Apr 2025 | twin-motor tailsitter, foam board | ≈ 315 g | 2 elevons | First hover Nov; first transition flight **Dec 3** with FW oscillation; **still unsteady 5 months later** (descent after back-transition tumbles: low throttle, no airflow over elevons) | Yes | none reported | FORUM [link](https://discuss.ardupilot.org/t/learning-vtol-tailsitter/126754) |
 | Farkhod Khikmatov, Jan 2024 | quad tailsitter, 4S | not given | not stated (likely none) | **AUTO mission: transition, waypoint cruise, vertical landing** (manual QRTL for the last part). "Two of three builds flying". | **Yes** (`2024-01-03 15-29-53.bin`) | No crash; slow final descent from 70 m (Q_LAND_SPEED) | FORUM [link](https://discuss.ardupilot.org/t/copter-tailsitters/45514?page=50) |
 | airton_dep, Dec 2023 | Swan-style H-wing quad, **≈ 1.7 × Swan K1 span** | not given | **none** | Transition OK, **then dive ≈ 10 m, twice**; recovered to QLOITER on the first attempt | **Yes** | Dev (P. Hall): FW pitch trim wrong and pitch-up demand rising to motor saturation; check CG/static margin | FORUM (same page) |

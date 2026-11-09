@@ -531,6 +531,8 @@ def main():
                      "thrust-stand tests (lift + pusher) and bench tests": 10,
                      "integration, CG, tethered first hover": 8, "slack (first-time team)": 11},
             base_total_h=100, range_h="90-110", pessimistic_h=130,
+            outer_bound_h=150, outer_bound_basis="K01 skeptic scaled K01's card hours by 1.5x (100-120 -> 150-180); "
+            "K09 skeptic by 1.2x (70 -> 70-85); 1.5 x 100 = 150 h if this card is as optimistic as K01's was",
             after_first_hover="+25-35 h of flight-test sessions to a clean transition (documented QuadPlane path)"),
         gates=dict(
             G1_cost_le_1850=c["passes_G1_1850"],
