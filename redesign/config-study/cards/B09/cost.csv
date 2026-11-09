@@ -1,0 +1,43 @@
+group,item,qty,unit_usd_pretax,line_usd,vendor,source,date_seen,flag
+Design files,"Flightory Stallion base files (STL/STEP, personal-use licence)",1,34.99,34.99,Flightory,https://flightory.com/?p=3082,2026-11-09,digital; licence check
+Design files,Flightory Stallion VTOL pack files,1,14.99,14.99,Flightory,https://flightory.com/?p=3755,2026-11-09,digital
+Airframe,Polymaker PolyLite LW-PLA 800 g (2 build + 1 crash reprint),3,29.99,89.97,Polymaker US store,https://ca.spoolfinder.com/filament/polymaker-pla-lw-lightweight-aero-white-1spool-800.0g-rPRjoLCU8XAyzgqn7DM9O (aggregator; Amazon US $40.99),2026-11-09,UNVERIFIED price
+Airframe,"SUNLU PETG 4 kg (hard points, mounts, skids, test prints)",1,39.99,39.99,Amazon,https://www.amazon.com/dp/B0D1KC72YP (as K01),2026-11-01,
+Airframe,CF tube 10x8x1000 roll-wrapped (main spar 800 + spare length),2,13.00,26.00,Amazon,search listing (ESTIMATE),2026-11-09,ESTIMATE
+Airframe,CF tube 8x6x1000 (secondary spar 600),1,10.00,10.00,Amazon,search listing (ESTIMATE),2026-11-09,ESTIMATE
+Airframe,CF tube 6x4x1000 (2x wing spar 435),2,8.00,16.00,Amazon,search listing (ESTIMATE),2026-11-09,ESTIMATE
+Airframe,CF tube 16x14x500 (tail boom 430),2,15.00,30.00,Amazon,search listing (ESTIMATE),2026-11-09,ESTIMATE
+Airframe,CF rod/tube 4x2x1000 (4x V-tail spar ~255),2,5.00,10.00,Amazon,search listing (ESTIMATE),2026-11-09,ESTIMATE
+Airframe,MF83ZZ 3x8x4 flange bearings 10-pack (tilt pivots),1,8.99,8.99,Amazon,https://flightory.com/?p=3755 spec; price ESTIMATE,2026-11-09,ESTIMATE
+Propulsion,Emax ECO II 2807 1700KV (3 + 1 spare),4,23.99,95.96,RaceDayQuads,https://www.racedayquads.com/products/emax-eco-ii-2807-1700kv-motor (price = RDQ 1300KV regular),2026-11-09,UNVERIFIED price
+Propulsion,LANRC BLHeli_S 45A ESC 4-pack (3 + 1 spare),1,30.00,30.00,Amazon,https://www.amazon.com/dp/B0D2HS4Y4J via bom-savings.md (as K01),2026-11-01,
+Propulsion,7x5 two-blade props CW/CCW pairs (3 flying + 9 spare),6,3.99,23.94,RaceDayQuads/GetFPV,7 in long-range 2-blade pair (ESTIMATE),2026-11-09,ESTIMATE
+Servos,Tilt servo PowerHD 1810MG / GDW DS041MG class (2 + 1 spare),3,14.99,44.97,Amazon/HobbyKing,https://flightory.com/?p=3755 spec; price ESTIMATE,2026-11-09,ESTIMATE
+Servos,EMAX ES08MA II metal-gear (4 + 1 spare),5,7.99,39.95,EMAX USA,https://flightory.com/?p=3082 spec; price ESTIMATE,2026-11-09,ESTIMATE
+Energy,Ovonic 4S 5000 mAh 50C XT60 LiPo (3 packs),3,48.57,145.71,Ovonic US,us.ovonicshop.com (as K06),2026-11-09,
+Avionics,SpeedyBee F405 Wing App flight controller (Flightory output map),1,67.26,67.26,ReadyMadeRC,https://readymaderc.com/products/details/85786-speedybee-f405-wing-app-fixed-wing-flight-controller (as K01),2026-11-01,backorder Nov 2026
+Avionics,HGLRC M100-5883 GPS + compass,1,20.49,20.49,RaceDayQuads,https://www.racedayquads.com/products/hglrc-m100-5883-gps-module-10th-gen,2026-11-01,
+Avionics,Holybro MS5525 airspeed sensor + pitot (Q_ASSIST / transition),1,59.99,59.99,Holybro,cost_model.py AIRSPEED,2026-11-09,
+Avionics,NewBeeDrone BeeID Remote ID (conditional: only if flown outside RFS FRIA),1,39.99,39.99,NewBeeDrone,https://newbeedrone.com via bom-savings.md,2026-11-01,conditional
+Avionics,Amass AS150U anti-spark connector set (D9),1,17.26,17.26,Neu Racing,https://neuracing.us/product/as150u/,2026-11-01,
+Radio,RadioMaster Pocket Crush ELRS transmitter,1,64.99,64.99,RadioMaster,https://www.radiomasterrc.com/products/pocket-crush-radio-controller,2026-11-01,
+Radio,RadioMaster RP3 V2 ELRS receiver,1,19.99,19.99,RadioMaster,https://www.radiomasterrc.com/products/rp3-expresslrs-2-4ghz-nano-receiver,2026-11-01,
+Hardware,"Wiring, connectors, M3 screws, heat-set inserts, horns, pushrods, UBEC, CA/epoxy",1,124.01,124.01,various,cost_model.py HARDWARE_MIN,2026-11-09,ESTIMATE
+Ground,HTRC C150 150 W AC charger,1,56.99,56.99,Pyrodrone/Amazon,bom-savings.md,2026-11-01,
+Ground,LiPo bags x2,2,9.99,19.98,Pyrodrone,cost_model.py GROUND,2026-11-09,
+Ground,Ammo can (Harbor Freight 63750),1,19.99,19.99,Harbor Freight,https://www.harborfreight.com/50-caliber-metal-ammo-can-63750.html,2026-11-01,
+Ground,Watt meter 150 A,1,12.99,12.99,Amazon,B0F13JWDFV via budget-energy-test.md,2026-11-01,
+Ground,IR thermometer,1,8.98,8.98,Amazon,B0BN317X6Z via budget-energy-test.md,2026-11-01,
+Ground,Thrust stand: 20 kg load cell + HX711 + Nano clone,1,17.97,17.97,Amazon,budget-energy-test.md,2026-11-01,
+Ground,Pinecil V2 soldering iron + USB-C PD supply,1,45.99,45.99,Pine64/Amazon,cost_model.py GROUND (supply ESTIMATE),2026-11-09,ESTIMATE
+Ground,Multimeter + solder/flux/wick,1,40.00,40.00,Amazon,cost_model.py GROUND,2026-11-09,ESTIMATE
+
+TOTAL,Goods subtotal,,,1298.33,,,,
+TOTAL,"Sales tax 10.25 % on physical goods (Berkeley, CDTFA 2026-10-01); digital files untaxed (ESTIMATE)",,,127.96,,cost_model.py TAX,2026-11-09,
+TOTAL,"Shipping, all carriers",,,120.00,,cost_model.py SHIPPING['S'],2026-11-09,ESTIMATE
+TOTAL,Spend at order time,,,1546.29,,,,
+TOTAL,"Crash reserve left of $2,000 (target >= $150; one bad crash ~ $266 incl. tax per cost_model.py)",,,453.71,,,,
+NOTE,"Typical crash here: 2 motors + 2 prop pairs + reprint (LW-PLA spool already bought) + FC + GPS + tilt servo, incl. tax",,,208.03,,calc from lines above,2026-11-09,ESTIMATE
+OPTION,Drop airspeed sensor (synthetic airspeed) incl. tax,,,-66.14,,,,not recommended
+OPTION,"Drop Remote ID if every flight is at RFS FRIA, incl. tax",,,-44.09,,REQUIREMENTS.md D4,,
+OPTION,Licence: Flightory commercial/edu licence if personal-use terms exclude a university project,,,UNKNOWN,Flightory,email Flightory,,UNVERIFIED
