@@ -121,7 +121,8 @@ RPM = {"rpm_h": "CL-B4-HOVER-RPM", "rpm_c": "CL-B4-CRUISE-RPM", "rpm_x": "CL-B4-
 RU = {k: "rpm" for k in RPM}
 TUBE = {"E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE"}
 TU = {"E": "Pa", "G": "Pa"}
-MESH = (12, 10)
+MESH = (24, 20)
+REC, REC_U = {"lay_rec": P + "fins.layers"}, {"lay_rec": "-"}
 SIDES = ("upper", "lower")
 ST_PART = 0.10
 
@@ -203,8 +204,9 @@ def station_modes(mdl, n=16):
     cl = fe.classify(mdl, Phi)
     st = [(float(x), c["kind"]) for x, c in zip(f, cl) if c["ke_station"] >= ST_PART]
     pn = [float(x) for x, c in zip(f, cl) if c["ke_station"] < ST_PART]
+    dom = [float(x) for x, c in zip(f, cl) if c["ke_station"] >= 0.5]
     return {"f_st": [x for x, _ in st], "kinds": [k for _, k in st], "f_st1": st[0][0], "f_st2": st[1][0] if len(st) > 1
-            else st[0][0], "f_panel": pn[0] if pn else float(f[-1]),
+            else st[0][0], "f_panel": pn[0] if pn else float(f[-1]), "f_dom": dom,
             "all": [(float(x), c["kind"], round(c["ke_station"], 3)) for x, c in zip(f, cl)]}
 
 
@@ -270,7 +272,7 @@ def _ins(extra=None, extra_u=None):
 INS, UNS = _ins({"lo": "ASM-C4-BAND-LO", "hi": "ASM-C4-BAND-HI"}, {"lo": "Hz", "hi": "Hz"})
 
 
-@kit.calc("CALC-C4-D3-MODES", title="Station modes, D3 as-designed quarter (upper UR and lower LR), nominal E/G",
+@kit.calc("CALC-C4-D3-MODES", title="Station modes, D3 as designed (fin_detail.layers board), upper UR and lower LR, nominal E/G",
           inputs=INS, units=UNS, tol=1e-4,
           equation="FE (fin_fe.build_q): tube frame + 1-layer board (mapped Q4 shell) + edge strips + brace (EA/L in "
                    "series with the anchor) + mount springs + motor/prop/mount rigid body; station mode = >= 10 % of "
@@ -292,10 +294,34 @@ def modes_d3(**k):
     return out
 
 
-@kit.calc("CALC-C4-D3-WORST", title="Separation over the tube E/G corners and the mount/root stiffness range",
-          inputs={**GEOM, **RPM, "E0": "ASM-J1-E-TUBE", "E_lo": "ASM-C4-E-TUBE-LO", "E_hi": "ASM-C4-E-TUBE-HI",
+INS2, UNS2 = {**INS, **REC}, {**UNS, **REC_U}
+
+
+@kit.calc("CALC-C4-D3-MODES-REC", title="Station modes, recommended: D3 geometry with fins.layers boards (params), "
+          "brace and edge strips, nominal E/G", inputs=INS2, units=UNS2, tol=1e-4,
+          equation="as CALC-C4-D3-MODES with the board layers from params.json (fins.layers)",
+          assumes=["ASM-C4-MOUNT-K-ROCK", "ASM-C4-ROOT-K", "ASM-C4-ANCHOR-K", "ASM-C4-PROP-IP", "ASM-C4-FACE-E"],
+          cites=["SRC-C4-ALLEN"])
+def modes_rec(**k):
+    g = {n: k[n] for n in GEOM}
+    rpm = (k["rpm_h"], k["rpm_c"], k["rpm_x"])
+    out = {}
+    for side in SIDES:
+        r = summary(g, k["E"], k["G"], side, rpm, k["lo"], k["hi"], layers=k["lay_rec"])
+        s = side[:2]
+        out.update({f"f1_{s}": r["f_st1"], f"f2_{s}": r["f_st2"], f"panel_{s}": r["f_panel"], f"sep_{s}": r["sep_op"],
+                    f"band_{s}": r["sep_band"]})
+    out["f1_min"] = min(out["f1_up"], out["f1_lo"])
+    out["sep_op"] = min(out["sep_up"], out["sep_lo"])
+    out["sep_band"] = min(out["band_up"], out["band_lo"])
+    return out
+
+
+@kit.calc("CALC-C4-D3-WORST", title="Separation over the tube E/G corners, recommended design",
+          inputs={**GEOM, **RPM, **REC, "E0": "ASM-J1-E-TUBE", "E_lo": "ASM-C4-E-TUBE-LO", "E_hi": "ASM-C4-E-TUBE-HI",
                   "G0": "ASM-C4-G-TUBE", "G_lo": "ASM-C4-G-TUBE-LO", "G_hi": "ASM-C4-G-TUBE-HI"},
-          units={**GU, **RU, "E0": "Pa", "E_lo": "Pa", "E_hi": "Pa", "G0": "Pa", "G_lo": "Pa", "G_hi": "Pa"}, tol=1e-4,
+          units={**GU, **RU, **REC_U, "E0": "Pa", "E_lo": "Pa", "E_hi": "Pa", "G0": "Pa", "G_lo": "Pa", "G_hi": "Pa"},
+          tol=1e-4,
           equation="min over side x E {lo, nom, hi} x G {lo, nom, hi} of sep_op (18 FE runs), mount and root at "
                    "their nominal springs",
           assumes=["ASM-C4-E-TUBE-LO", "ASM-C4-E-TUBE-HI", "ASM-C4-G-TUBE-LO", "ASM-C4-G-TUBE-HI"])
@@ -304,7 +330,7 @@ def worst_d3(**k):
     rpm = (k["rpm_h"], k["rpm_c"], k["rpm_x"])
     worst, f_min, at = 9.0, 1e9, ""
     for side, E, G in itertools.product(SIDES, (k["E_lo"], k["E0"], k["E_hi"]), (k["G_lo"], k["G0"], k["G_hi"])):
-        r = summary(g, E, G, side, rpm)
+        r = summary(g, E, G, side, rpm, layers=k["lay_rec"])
         f_min = min(f_min, r["f_st1"])
         worst = min(worst, r["sep_op"])
     return {"sep_op_worst": worst, "f_station_min": f_min}
@@ -313,9 +339,10 @@ def worst_d3(**k):
 K_SWEEP = (500.0, 1000.0, 1500.0, 2000.0, 3000.0, 5000.0, 10000.0, 30000.0)
 
 
-@kit.calc("CALC-C4-D3-MOUNT-K", title="Mount rocking stiffness needed for the separation rule (governing side)",
-          inputs={**GEOM, **RPM, **TUBE, "sep_min": LIMIT_SEP, "E_lo": "ASM-C4-E-TUBE-LO", "G_lo": "ASM-C4-G-TUBE-LO"},
-          units={**GU, **RU, **TU, "sep_min": "-", "E_lo": "Pa", "G_lo": "Pa"}, tol=1e-3,
+@kit.calc("CALC-C4-D3-MOUNT-K", title="Mount rocking stiffness needed for the separation rule, recommended design",
+          inputs={**GEOM, **RPM, **TUBE, **REC, "sep_min": LIMIT_SEP, "E_lo": "ASM-C4-E-TUBE-LO",
+                  "G_lo": "ASM-C4-G-TUBE-LO"},
+          units={**GU, **RU, **TU, **REC_U, "sep_min": "-", "E_lo": "Pa", "G_lo": "Pa"}, tol=1e-3,
           equation="sweep k_rock over 500-30 000 N m/rad (k_twist fixed) on both quarters at nominal and low E/G; "
                    "k_req = smallest k with sep_op >= sep_min at every larger k (log interpolation)")
 def mount_k(**k):
@@ -323,7 +350,7 @@ def mount_k(**k):
     rpm = (k["rpm_h"], k["rpm_c"], k["rpm_x"])
 
     def sep_at(kr, E, G):
-        return min(summary(g, E, G, s, rpm, k_rock=kr)["sep_op"] for s in SIDES)
+        return min(summary(g, E, G, s, rpm, k_rock=kr, layers=k["lay_rec"])["sep_op"] for s in SIDES)
 
     out = {}
     for tag, E, G in (("nom", k["E"], k["G"]), ("lo", k["E_lo"], k["G_lo"])):
@@ -345,19 +372,23 @@ def mount_k(**k):
     return out
 
 
-@kit.calc("CALC-C4-D3-CONVERGENCE", title="Mesh convergence, D3 quarter (both sides)",
-          inputs={**GEOM, **TUBE}, units={**GU, **TU}, tol=1e-4,
-          equation="first two station modes at fin meshes 6x5, 12x10 (used), 24x20; change = max |f(12x10)/f(24x20) - 1|")
+@kit.calc("CALC-C4-D3-CONVERGENCE", title="Mesh convergence, recommended design (both sides)",
+          inputs={**GEOM, **TUBE, **RPM, **REC}, units={**GU, **TU, **RU, **REC_U}, tol=1e-4,
+          equation="first dominant station mode f1 (>= 50 % kinetic energy in the motor body) and sep_op at fin meshes "
+                   "12x10, 24x20 (used), 36x30; change = max over sides of |f1(24x20)/f1(36x30) - 1| and "
+                   "|sep(24x20)/sep(36x30) - 1| (f2 reported only: near 360-600 Hz it swaps between coupled modes)")
 def convergence_d3(**k):
     g = {n: k[n] for n in GEOM}
+    rpm = (k["rpm_h"], k["rpm_c"], k["rpm_x"])
     out, ch = {}, 0.0
     for side in SIDES:
         fs = {}
-        for tag, mesh in (("coarse", (6, 5)), ("used", MESH), ("fine", (24, 20))):
-            r = station_modes(fe.build_q(model_cfg(g, k["E"], k["G"], side, mesh=mesh)))
-            fs[tag] = (r["f_st1"], r["f_st2"])
-            out[f"f1_{side[:2]}_{tag}"], out[f"f2_{side[:2]}_{tag}"] = r["f_st1"], r["f_st2"]
-        ch = max(ch, abs(fs["used"][0] / fs["fine"][0] - 1), abs(fs["used"][1] / fs["fine"][1] - 1))
+        for tag, mesh in (("coarse", (12, 10)), ("used", MESH), ("fine", (36, 30))):
+            r = summary(g, k["E"], k["G"], side, rpm, mesh=mesh, layers=k["lay_rec"])
+            fs[tag] = (r["f_dom"][0], r["sep_op"])
+            s = side[:2]
+            out[f"f1_{s}_{tag}"], out[f"f2_{s}_{tag}"], out[f"sep_{s}_{tag}"] = r["f_dom"][0], r["f_dom"][1], r["sep_op"]
+        ch = max([ch] + [abs(a / b - 1) for a, b in zip(fs["used"], fs["fine"])])
     out["change"] = ch
     return out
 
@@ -382,8 +413,8 @@ def station_whirl(mdl, ip_spin, rpm, n_modes=16):
     return sorted(out)
 
 
-@kit.calc("CALC-C4-D3-CAMPBELL", title="Gyroscopic whirl separation, D3 quarter (both sides)",
-          inputs={**GEOM, **RPM, **TUBE}, units={**GU, **RU, **TU}, tol=1e-4,
+@kit.calc("CALC-C4-D3-CAMPBELL", title="Gyroscopic whirl separation, recommended design (both sides)",
+          inputs={**GEOM, **RPM, **TUBE, **REC}, units={**GU, **RU, **TU, **REC_U}, tol=1e-4,
           equation="M q'' + Omega G q' + K q = 0 on 16 modes, G = -[Ip_spin e_shaft]x at the station; sep over 1P/2P "
                    "at hover and cruise and 1P at the cap, station whirl modes only",
           assumes=["ASM-C4-PROP-IP", "ASM-C1-BELL-INERTIA"])
@@ -391,7 +422,7 @@ def campbell_d3(**k):
     g = {n: k[n] for n in GEOM}
     worst = 9.0
     for side in SIDES:
-        mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side))
+        mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, layers=k["lay_rec"]))
         for name, rpm in (("hover", k["rpm_h"]), ("cruise", k["rpm_c"]), ("max", k["rpm_x"])):
             for f in station_whirl(mdl, g["ip"] + g["i_bell"], rpm):
                 for p in ((1,) if name == "max" else (1, 2)):
@@ -405,14 +436,15 @@ STAT_IN = {"f_level": "CL-C1-FOOT-LEVEL", "f_corner": "CL-C1-FOOT-CORNER", "mu_g
            "s_face": "ASM-C4-FACE-SIGMA", "s_cf": "ASM-C4-CF-SIGMA", "patch": "ASM-C4-FOOT-PATCH",
            "s_bond": "ASM-C4-BOND-SHEAR", "peel": "ASM-C4-PEEL-KD", "engage": P + "fin_detail.brace.engage_m",
            "a_lx": P + "fin_detail.anchor.len_x_m", "a_ly": P + "fin_detail.anchor.len_y_m",
-           "d_spar": P + "wing.spar.od_m"}
+           "d_spar": P + "wing.spar.od_m", "ear_w": P + "fin_detail.station_collar.ear_w_m",
+           "s_ten": "ASM-C4-PETG-TENSILE"}
 STAT_U = {"f_level": "N", "f_corner": "N", "mu_g": "-", "n_h": "-", "m_gate": "kg", "grav": "m/s2", "t_lim": "N",
           "q_mot": "N m", "sf": "-", "fit": "-", "prt": "-", "s_face": "Pa", "s_cf": "Pa", "patch": "m", "s_bond": "Pa",
-          "peel": "-", "engage": "m", "a_lx": "m", "a_ly": "m", "d_spar": "m"}
+          "peel": "-", "engage": "m", "a_lx": "m", "a_ly": "m", "d_spar": "m", "ear_w": "m", "s_ten": "Pa"}
 
 
 def fin_static(g, k, side):
-    mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side))
+    mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, layers=k["lay_rec"]))
     pr = mdl.cfg["fin"]["props"]
     nodes = mdl.nodes
     corner = np.array([g["x_te"], 0.0, g["hh"]])
@@ -428,9 +460,7 @@ def fin_static(g, k, side):
              "H2": [(mdl.i_station, (-k["t_lim"], 0, 0, k["q_mot"], 0, 0))]}
     nu = pr["nu"]
     Qf = g["e_face"] / (1 - nu * nu) * np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1 - nu) / 2]])
-    Cm = pr["A"] * np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1 - nu) / 2]])
-    Cb = pr["D"] * np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1 - nu) / 2]])
-    zf = pr["z_face_out"]
+    C3 = np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1 - nu) / 2]])
     s = mdl.strut_info[0]
     le_top = mdl.fin_id[(0, mdl.cfg["nz"])]
     ear = np.array(nodes[s["node"]]) - np.array([g["tube_x"], 0.0, nodes[s["node"]][2]])
@@ -438,11 +468,11 @@ def fin_static(g, k, side):
     for cname, loads in cases.items():
         u = fe.static(mdl, loads)
         smax = 0.0
-        for ns, xz in mdl.shells:
+        for ns, xz, pe in mdl.shells:
             ue = np.concatenate([u[6 * n:6 * n + 6] for n in ns])
-            Nv, Mv = fe.shell_q4_resultants(xz, pr, ue)
-            e0, kap = np.linalg.solve(Cm, Nv), np.linalg.solve(Cb, Mv)
-            for z in (zf, -zf):
+            Nv, Mv = fe.shell_q4_resultants(xz, pe, ue)
+            e0, kap = np.linalg.solve(pe["A"] * C3, Nv), np.linalg.solve(pe["D"] * C3, Mv)
+            for z in (pe["z_face_out"], -pe["z_face_out"]):
                 sx, sz, txz = Qf @ (e0 + z * kap)
                 smax = max(smax, abs((sx + sz) / 2) + math.hypot((sx - sz) / 2, txz))
         ke, _ = fe.frame_element(nodes[0], nodes[1], k["E"], k["G"], mdl.A_t, mdl.I_t, mdl.I_t, mdl.J_t, 1.0)
@@ -465,11 +495,11 @@ def fin_static(g, k, side):
     return res, s["L"]
 
 
-@kit.calc("CALC-C4-D3-STATIC", title="Fin, tube, brace, collar and anchor strength, D3 quarter (both sides)",
-          inputs={**GEOM, **TUBE, **STAT_IN}, units={**GU, **TU, **STAT_U}, tol=1e-4,
+@kit.calc("CALC-C4-D3-STATIC", title="Fin, tube, brace, collar and anchor strength, recommended design (both sides)",
+          inputs={**GEOM, **TUBE, **STAT_IN, **REC}, units={**GU, **TU, **STAT_U, **REC_U}, tol=1e-4,
           equation="FE static, cases L1, L4 (both friction senses), L5, G2 (both senses, n_h m g at the tube end), H2; "
                    "ultimate = sf x limit (joints x fit x prt); face = Q_f (eps0 + z kappa); brace Pcr = pi^2 E w t^3 "
-                   "/ (12 L^2); brace-end bond tau = F / (2 (w + t) engage); collar bond tau = T / (2 pi r^2 h) + F / "
+                   "/ (12 L^2); brace-end bond tau = F / (2 (w + t) engage); ear root s = 6 F (ear/2) / (w_ear h^2) + F / (w_ear h) (interlayer); collar bond tau = T / (2 pi r^2 h) + F / "
                    "(pi d h); anchor tau = F / (len_y pi d_spar / 4) vs peel x bond allowable",
           assumes=["ASM-C4-FACE-SIGMA", "ASM-C4-BOND-SHEAR", "ASM-C4-PEEL-KD", "ASM-C4-FOOT-PATCH"],
           cites=["SRC-C4-ALLEN", "SRC-C4-ROARK"])
@@ -504,14 +534,17 @@ def static_d3(**k):
     r_t, h_c = g["od"] / 2, g["sc_h"]
     tau_collar = agg["t_collar"] * jf / (2 * math.pi * r_t ** 2 * h_c) + agg["f_collar"] * jf / (math.pi * g["od"] * h_c)
     tau_anchor = agg["tens"] * jf / (k["a_ly"] * math.pi * k["d_spar"] / 4)
+    f_ear = max(agg["comp"], agg["tens"]) * jf                       # brace force on the collar ear, design
+    s_ear = 6 * f_ear * g["ear_len"] / 2 / (k["ear_w"] * g["sc_h"] ** 2) + f_ear / (k["ear_w"] * g["sc_h"])
     ms = {"ms_face": k["s_face"] / face_u - 1, "ms_edge": k["s_cf"] / edge_u - 1, "ms_tube": k["s_cf"] / tube_u - 1,
           "ms_brace_buckling": pcr / max(comp_d, 1e-9) - 1, "ms_brace_end_bond": k["s_bond"] / tau_end - 1,
           "ms_collar_bond": k["s_bond"] / tau_collar - 1,
-          "ms_anchor_bond": k["s_bond"] * k["peel"] / max(tau_anchor, 1.0) - 1}
+          "ms_anchor_bond": k["s_bond"] * k["peel"] / max(tau_anchor, 1.0) - 1,
+          "ms_ear_root": k["s_ten"] / s_ear - 1}
     out.update({"face_ult_pa": face_u, "edge_ult_pa": edge_u, "tube_ult_pa": tube_u, "root_m_lim_nm": agg["mroot"],
                 "brace_comp_design_n": comp_d, "brace_tens_design_n": tens_d, "brace_pcr_n": pcr,
                 "brace_len_m": L, "collar_t_lim_nm": agg["t_collar"], "tau_collar_pa": tau_collar,
-                "tau_anchor_pa": tau_anchor, "tau_brace_end_pa": tau_end, "dfoot_L4_m": agg["dfoot_L4"], **ms,
+                "tau_anchor_pa": tau_anchor, "s_ear_pa": s_ear, "tau_brace_end_pa": tau_end, "dfoot_L4_m": agg["dfoot_L4"], **ms,
                 "ms_min": min(ms.values())})
     return out
 
@@ -546,6 +579,30 @@ def block_d3(m_des_c1, m_task, f_ult, my_lim, sf, fit, prt, d, d_spar, skin, x_t
             "tube_couple_n": 1.5 * M / h}
 
 
+@kit.calc("CALC-C4-D3-MASS", title="Fins mass, recommended design (second board layer on D3's CAD)",
+          inputs={"m_d3": "CL-D3-MASS", "lay_d3": P + "fin_detail.layers", "lay_rec": P + "fins.layers",
+                  "areal": P + "fins.areal_mass_kgm2", "adh": P + "fin_detail.fin.adhesive_kgm2",
+                  "skin": "ASM-C4-SKIN-PTS", "tube_x": P + "fins.tube.x_m", "od": P + "fins.tube.od_m",
+                  "le_gap": P + "fin_detail.fin.le_gap_m", "x_te": P + "fins.te_x_m", "hh": P + "fins.half_height_m",
+                  "tube_len": P + "fin_detail.tube_length_m", "grip": P + "fin_detail.mount.grip_m",
+                  "sc_gap": P + "fin_detail.station_collar.gap_m"},
+          units={"m_d3": "g", "lay_d3": "-", "lay_rec": "-", "areal": "kg/m2", "adh": "kg/m2", "skin": "m", "tube_x": "m",
+                 "od": "m", "le_gap": "m", "x_te": "m", "hh": "m", "tube_len": "m", "grip": "m", "sc_gap": "m"},
+          equation="half-fin area = integral over x_le..x_te of (z_top(x) - z_skin(x)), z_top linear from the collar "
+                   "top to hh; added = (lay_rec - lay_d3) (areal + adh) x (2 upper + 2 lower areas); total = CL-D3-MASS "
+                   "+ added", tol=1e-6)
+def fins_mass_d3(m_d3, lay_d3, lay_rec, areal, adh, skin, tube_x, od, le_gap, x_te, hh, tube_len, grip, sc_gap):
+    sk = np.array(skin, float)
+    x_le = tube_x + od / 2 + le_gap
+    z_top_le = tube_len / 2 - grip - sc_gap
+    xs = np.linspace(x_le, x_te, 201)
+    top = z_top_le + (hh - z_top_le) * (xs - x_le) / (x_te - x_le)
+    a_up = float(np.trapezoid(top - np.interp(xs, sk[:, 0], sk[:, 1]), xs))
+    a_lo = float(np.trapezoid(top + np.interp(xs, sk[:, 0], sk[:, 2]), xs))
+    added = (lay_rec - lay_d3) * (areal + adh) * 2 * (a_up + a_lo) * 1000
+    return {"area_up_m2": a_up, "area_lo_m2": a_lo, "added_g": added, "total_g": m_d3 + added}
+
+
 # ====================================================================== claims
 R_VIB, R_SM, R_JNT = ["R-VIBRATION"], ["R-STRUCT-MARGIN"], ["R-FIN-TUBE-JOINT"]
 TUBES = ["FIN-002-R", "FIN-002-L"]
@@ -564,33 +621,41 @@ kit.claim("CL-C4-D3-Q4-SKEW", "Skewed-mesh cantilever plate vs Leissa", calc="CA
           unit="-", limit=("<=", 0.02), cites=["SRC-C4-LEISSA"], how="Re-run fin_structures_d3.py (16 x 16, 20 % skew).")
 kit.claim("CL-C4-D3-MESH-CONV", "Mesh convergence of the station modes, D3 quarter", calc="CALC-C4-D3-CONVERGENCE",
           output="change", unit="-", limit=("<=", 0.03), how="Meshes 6x5, 12x10, 24x20 on both quarters.")
-kit.claim("CL-C4-D3-F1-UP", "First station mode, upper quarter (as designed)", calc="CALC-C4-D3-MODES", output="f1_up",
-          unit="Hz", parts=TUBES + HALF[:2] + BRACE[:2] + MOUNT[:2], how=TAP)
-kit.claim("CL-C4-D3-F1-LO", "First station mode, lower quarter (as designed)", calc="CALC-C4-D3-MODES", output="f1_lo",
-          unit="Hz", parts=TUBES + HALF[2:] + BRACE[2:] + MOUNT[2:], how=TAP,
+kit.claim("CL-C4-D3-SEP-1L", "Mode separation, D3 as designed (one board layer), nominal", calc="CALC-C4-D3-MODES",
+          output="sep_op", unit="-", limit=(">=", LIMIT_SEP), parts=TUBES + HALF + BRACE + MOUNT, how=TAP,
+          note="FAILS: motor twist about the tube coupled with fore-aft nodding near 2P cruise (200 Hz); the one-layer "
+               "board stores 45-70 % of the strain energy. Not the design of record: see CL-C4-D3-SEP.")
+kit.claim("CL-C4-D3-F1-1L", "First station mode, D3 as designed (one board layer), lower quarter",
+          calc="CALC-C4-D3-MODES", output="f1_lo", unit="Hz", parts=TUBES + HALF, how=TAP)
+kit.claim("CL-C4-D3-F1-UP", "First station mode, recommended (two layers), upper quarter", calc="CALC-C4-D3-MODES-REC",
+          output="f1_up", unit="Hz", parts=TUBES + HALF[:2] + BRACE[:2] + MOUNT[:2], how=TAP)
+kit.claim("CL-C4-D3-F1-LO", "First station mode, recommended (two layers), lower quarter", calc="CALC-C4-D3-MODES-REC",
+          output="f1_lo", unit="Hz", parts=TUBES + HALF[2:] + BRACE[2:] + MOUNT[2:], how=TAP,
           note="The lower tube is 14 mm longer outside the bore (cambered wing); the lower quarter governs.")
-kit.claim("CL-C4-D3-PANEL", "First fin-panel mode (TE tip with the foot), upper quarter", calc="CALC-C4-D3-MODES",
-          output="panel_up", unit="Hz", parts=HALF, how="Tap the TE tip with the foot fitted.",
+kit.claim("CL-C4-D3-PANEL", "First fin-panel mode (TE tip with the foot), recommended, upper quarter",
+          calc="CALC-C4-D3-MODES-REC", output="panel_up", unit="Hz", parts=HALF, how="Tap the TE tip with the foot fitted.",
           note="Below the forcing band; < 10 % of its energy reaches the station.")
-kit.claim("CL-C4-D3-SEP", "Mode separation from 1P/2P operating points, as designed (nominal)", calc="CALC-C4-D3-MODES",
-          output="sep_op", unit="-", limit=(">=", LIMIT_SEP), verifies=R_VIB, parts=TUBES + HALF + BRACE + MOUNT, how=TAP)
-kit.claim("CL-C4-D3-SEP-WORST", "Mode separation, as designed, worst tube E/G corner", calc="CALC-C4-D3-WORST",
+kit.claim("CL-C4-D3-SEP", "Mode separation from the 1P/2P operating points, recommended design (nominal)",
+          calc="CALC-C4-D3-MODES-REC", output="sep_op", unit="-", limit=(">=", LIMIT_SEP), verifies=R_VIB,
+          parts=TUBES + HALF + BRACE + MOUNT, how=TAP)
+kit.claim("CL-C4-D3-SEP-WORST", "Mode separation, recommended design, worst tube E/G corner", calc="CALC-C4-D3-WORST",
           output="sep_op_worst", unit="-", limit=(">=", LIMIT_SEP), verifies=R_VIB, parts=TUBES,
-          how="T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the bought tube (I1, H1), then T-C4-TAP.")
-kit.claim("CL-C4-D3-SEP-WHIRL", "Whirl separation incl. prop gyroscopics, as designed", calc="CALC-C4-D3-CAMPBELL",
+          how="T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the bought tube (I1, H1), then T-C4-TAP-D3.")
+kit.claim("CL-C4-D3-SEP-WHIRL", "Whirl separation incl. prop gyroscopics, recommended design", calc="CALC-C4-D3-CAMPBELL",
           output="sep_whirl", unit="-", limit=(">=", LIMIT_SEP), verifies=R_VIB, parts=TUBES, how=TAP)
-kit.claim("CL-C4-D3-SEP-BAND", "Separation from the whole 80-330 Hz band (B4 rule), as designed",
-          calc="CALC-C4-D3-MODES", output="sep_band", unit="-", limit=(">=", LIMIT_SEP), parts=TUBES,
-          how="Needs every station mode >= 396 Hz; R-VIBRATION (operating points) is the criterion of record (CR-C4-06).")
+kit.claim("CL-C4-D3-SEP-BAND", "Separation from the whole 80-330 Hz band (B4 rule), recommended design",
+          calc="CALC-C4-D3-MODES-REC", output="sep_band", unit="-", limit=(">=", LIMIT_SEP), parts=TUBES,
+          how="Needs every station mode >= 396 Hz; R-VIBRATION (operating points) is the criterion of record (CR-C4-06).",
+          note="FAILS by design intent: no buildable 22 mm tube station reaches 396 Hz; rpm-tracking notch is the backup.")
 kit.claim("CL-C4-D3-MOUNT-K-REQ", "Mount rocking stiffness needed for 20 % separation (worst of nominal / low E,G)",
           calc="CALC-C4-D3-MOUNT-K", output="k_req", unit="N m/rad", limit=("<=", "ASM-C4-MOUNT-K-ROCK"),
           verifies=R_VIB, parts=MOUNT,
-          how="T-C4-MOUNT-STIFF: 5 N side load at the prop nut on a mount clamped on a tube stub; rotation from two dial "
+          how="T-C4-MOUNT-STIFF: side load at the prop nut on a mount clamped on a tube stub; rotation from two dial "
               "gauges; k = F a / theta.")
-kit.claim("CL-C4-D3-MS-FACE", "Fin face margin, as designed, worst case and side", calc="CALC-C4-D3-STATIC",
+kit.claim("CL-C4-D3-MS-FACE", "Fin face margin, recommended design, worst case and side", calc="CALC-C4-D3-STATIC",
           output="ms_face", unit="-", limit=(">=", 0.0), verifies=R_SM, parts=HALF,
           how="T-C4-BOARD-COUPON for the face allowable; T-C4-FIN-PROOF at 1.5 x L4.")
-kit.claim("CL-C4-D3-MS-EDGE", "Edge-strip margin, as designed", calc="CALC-C4-D3-STATIC", output="ms_edge", unit="-",
+kit.claim("CL-C4-D3-MS-EDGE", "Edge-strip margin, recommended design", calc="CALC-C4-D3-STATIC", output="ms_edge", unit="-",
           limit=(">=", 0.0), verifies=R_SM, parts=HALF, how="T-C4-FIN-PROOF.")
 kit.claim("CL-C4-D3-MS-TUBE", "Motor tube bending margin at the bore end", calc="CALC-C4-D3-STATIC", output="ms_tube",
           unit="-", limit=(">=", 0.0), verifies=R_SM, parts=TUBES, how="T-C4-FIN-PROOF (G2 at the tube end).")
@@ -608,7 +673,10 @@ kit.claim("CL-C4-D3-MS-COLLAR", "Station-collar bond margin on the tube (torsion
 kit.claim("CL-C4-D3-MS-ANCHOR", "Anchor bond margin on the spar (brace tension, peel knock-down)",
           calc="CALC-C4-D3-STATIC", output="ms_anchor_bond", unit="-", limit=(">=", 0.0), verifies=R_SM + R_JNT,
           parts=ANCHOR, how="T-C4-FIN-PROOF G2 in the tension sense; C6 peel coupon PETG on CF.")
-kit.claim("CL-C4-D3-FOOT-DEFL", "Foot deflection under L4 (limit), as designed", calc="CALC-C4-D3-STATIC",
+kit.claim("CL-C4-D3-MS-EAR", "Station-collar ear root margin (brace force, interlayer bending)", calc="CALC-C4-D3-STATIC",
+          output="ms_ear_root", unit="-", limit=(">=", 0.0), verifies=R_SM, parts=COLLAR,
+          how="T-C4-FIN-PROOF G2 both senses; print the collar with layers in x-y (ear bending loads the layer lines).")
+kit.claim("CL-C4-D3-FOOT-DEFL", "Foot deflection under L4 (limit), recommended design", calc="CALC-C4-D3-STATIC",
           output="dfoot_L4_m", unit="m", parts=HALF, how="T-C4-FIN-PROOF: dial gauge at the foot.")
 kit.claim("CL-C4-D3-BLOCK-MS", "Through-core block minimum margin, D3 geometry", calc="CALC-C4-D3-BLOCK",
           output="ms_min", unit="-", limit=(">=", 0.0), verifies=R_JNT + R_SM, parts=BLOCK,
@@ -616,13 +684,21 @@ kit.claim("CL-C4-D3-BLOCK-MS", "Through-core block minimum margin, D3 geometry",
 kit.claim("CL-C4-D3-SPAR-COUPLE", "Bearing couple on the spar at each block (design), D3 geometry",
           calc="CALC-C4-D3-BLOCK", output="spar_couple_n", unit="N", parts=BLOCK, how="C2 spar crushing check (CR-C4-02).")
 
+kit.claim("CL-C4-D3-FINS-MASS", "Fins subsystem mass, recommended design (D3 CAD + second board layer)",
+          calc="CALC-C4-D3-MASS", output="total_g", unit="g", limit=("<=", P + "mass.allocation_g.fins"),
+          parts=HALF, how="T-D3-WEIGH; A3 roll-up.",
+          note="Over the 370 g allocation: A1 decides between raising the allocation and the reserve (CR-C4-15).")
+kit.claim("CL-C4-D3-LAYER-ADD", "Mass of the second board layer, four half-fins", calc="CALC-C4-D3-MASS",
+          output="added_g", unit="g", parts=HALF, how="Weigh the boards before and after laminating.")
+
 kit.test("T-C4-MOUNT-STIFF", "Mount rocking stiffness on the bench", verifies=["CL-C4-D3-MOUNT-K-REQ"],
          procedure="Mount with motor clamped on a 60 mm tube stub held in a vice; 0.5 kg over a pulley at the prop nut, "
                    "sideways (y) and fore-aft (z); dial gauges at the motor can top and at the collar; theta = "
                    "(d_can - d_collar) / spacing; k = F a / theta. Pass: k >= the CL-C4-D3-MOUNT-K-REQ value in both "
                    "directions.")
 kit.test("T-C4-TAP-D3", "Tap test, as-built upper and lower quarter",
-         verifies=["CL-C4-D3-SEP", "CL-C4-D3-F1-UP", "CL-C4-D3-F1-LO", "CL-C4-D3-SEP-WHIRL", "CL-C4-D3-PANEL"],
+         verifies=["CL-C4-D3-SEP", "CL-C4-D3-F1-UP", "CL-C4-D3-F1-LO", "CL-C4-D3-SEP-WHIRL", "CL-C4-D3-PANEL",
+                   "CL-C4-D3-SEP-WORST"],
          procedure="Finished wing on foam blocks, props on; tap each motor bell in y and in z; FC raw IMU at 1 kHz (or a "
                    "phone accelerometer taped to the can); FFT peaks vs 1P/2P at hover, cruise and the cap.")
 
@@ -675,28 +751,38 @@ if __name__ == "__main__":
     rpm = tuple(kit.value(RPM[k]) for k in ("rpm_h", "rpm_c", "rpm_x"))
     res = {"inputs": {k: v for k, v in g.items() if k != "skin"}, "geometry": {s: geometry(g, s) for s in SIDES},
            "configs": {}, "sensitivity": {}}
-    variants = {"as designed": {}, "no brace, no strips": {"brace": False, "edge": False},
-                "brace, no strips": {"edge": False}, "rigid mount": {"k_rock": None},
-                "rigid root": {"k_root": None}, "root 3 000 N m/rad": {"k_root": 3000.0},
-                "2 board layers": {"layers": 2}, "half height 0.21 m (CR-B3-14)": {"hh": 0.21}}
+    variants = {"D3 as designed (1 layer)": {},
+                "recommended (2 layers)": {"layers": 2},
+                "2 layers, brace 10 x 2": {"layers": 2, "_g": {"b_t": 0.002}},
+                "2 layers, no brace": {"layers": 2, "brace": False},
+                "2 layers, no edge strips": {"layers": 2, "edge": False},
+                "2 layers, no brace, no strips": {"layers": 2, "brace": False, "edge": False},
+                "2 layers, rigid mount": {"layers": 2, "k_rock": None},
+                "2 layers, mount 1 000 N m/rad": {"layers": 2, "k_rock": 1000.0},
+                "2 layers, rigid root": {"layers": 2, "k_root": None},
+                "2 layers, root 3 000 N m/rad": {"layers": 2, "k_root": 3000.0},
+                "2 layers, half height 0.21 m (CR-B3-14)": {"layers": 2, "hh": 0.21},
+                "1 layer, rigid mount and root": {"k_rock": None, "k_root": None}}
     for name, kw in variants.items():
         for side in SIDES:
-            r = summary(g, E0, G0, side, rpm, **kw)
+            kw2 = {a: b for a, b in kw.items() if a != "_g"}
+            r = summary({**g, **kw.get("_g", {})}, E0, G0, side, rpm, **kw2)
             res["configs"][f"{name} / {side}"] = r
-            print(f"{name:32s} {side:5s} station {[round(x) for x in r['f_st'][:3]]} {r['kinds'][:1]} "
+            print(f"{name:40s} {side:5s} station {[round(x) for x in r['f_st'][:3]]} "
                   f"panel {r['f_panel']:5.1f}  sep {r['sep_op']:+.2f} ({r['nearest']})  band {r['sep_band']:+.2f}")
     for side in SIDES:
         rows = []
         for E, G in itertools.product((70e9, 100e9, 135e9), (3e9, 5e9, 10e9)):
-            r = summary(g, E, G, side, rpm)
+            r = summary(g, E, G, side, rpm, layers=2)
             rows.append({"E_GPa": E / 1e9, "G_GPa": G / 1e9, "f_st1": r["f_st1"], "f_st2": r["f_st2"],
                          "sep": r["sep_op"], "nearest": r["nearest"]})
         res["sensitivity"][side] = rows
     rpms = np.linspace(0, 10000, 41)
     curves = {}
-    for label, side, colour, dash in (("upper quarter", "upper", "#9AA4B1", None),
-                                      ("lower quarter (governs)", "lower", "#1F5FC7", None)):
-        mdl = fe.build_q(model_cfg(g, E0, G0, side))
+    for label, side, lay, colour, dash in (("D3 as designed, 1 layer, lower", "lower", 1, "#6B7280", "8 5"),
+                                           ("recommended, 2 layers, upper", "upper", 2, "#9AA4B1", None),
+                                           ("recommended, 2 layers, lower (governs)", "lower", 2, "#1F5FC7", None)):
+        mdl = fe.build_q(model_cfg(g, E0, G0, side, layers=lay))
         fr = [(station_whirl(mdl, g["ip"] + g["i_bell"], r) + [np.nan] * 4)[:4] for r in rpms]
         curves[label] = (rpms, np.array(fr, float), colour, dash)
         res.setdefault("campbell", {})[label] = {"rpm": rpms.tolist(), "f_hz": np.array(fr, float).tolist()}

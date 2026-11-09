@@ -605,11 +605,11 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 149.1541760489334,
-    "f_st2": 328.88507647758894,
-    "f_panel": 38.402836475826454,
-    "sep_op": 0.03972359168842421,
-    "sep_band": -0.5480176483365654
+    "f_st1": 149.15417604890658,
+    "f_st2": 328.8850764775358,
+    "f_panel": 38.40283647582673,
+    "sep_op": 0.03972359168859696,
+    "sep_band": -0.5480176483366468
    },
    "input_values": {
     "tube_x": 0.045,
@@ -774,11 +774,11 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 146.3525589281277,
-    "f_st2": 274.2663537353723,
-    "f_panel": 20.734163914969116,
-    "sep_op": 0.057760812619797264,
-    "sep_band": -0.5565073971874919
+    "f_st1": 146.3525589374585,
+    "f_st2": 274.26635373651044,
+    "f_panel": 20.734163914943704,
+    "sep_op": 0.057760812559724206,
+    "sep_band": -0.5565073971592167
    },
    "input_values": {
     "tube_x": 0.045,
@@ -943,11 +943,11 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 391.53772394268947,
-    "f_st2": 514.044909364823,
-    "f_panel": 68.07901710134243,
-    "sep_op": 0.9577081661035469,
-    "sep_band": 0.18647795134148315
+    "f_st1": 391.53772394275245,
+    "f_st2": 514.044909364383,
+    "f_panel": 68.07901710136323,
+    "sep_op": 0.957708166103862,
+    "sep_band": 0.1864779513416741
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1112,11 +1112,11 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 295.59397780328305,
-    "f_st2": 306.74867798546046,
-    "f_panel": 55.51346539144687,
-    "sep_op": 0.4779846456920762,
-    "sep_band": -0.10426067332338473
+    "f_st1": 295.59397780322485,
+    "f_st2": 306.7486779853986,
+    "f_panel": 55.513465391441805,
+    "sep_op": 0.4779846456917851,
+    "sep_band": -0.10426067332356104
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1282,8 +1282,8 @@
     "ASM-C4-G-TUBE-HI"
    ],
    "outputs": {
-    "sep_op_worst": 0.8961997356194824,
-    "f_station_min": 379.2361606698804
+    "sep_op_worst": 0.8961997356238391,
+    "f_station_min": 379.23616067075176
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1451,8 +1451,8 @@
     "ASM-C4-G-TUBE-HI"
    ],
    "outputs": {
-    "sep_op_worst": 0.4274181409121369,
-    "f_station_min": 285.48077782175557
+    "sep_op_worst": 0.4274181409118458,
+    "f_station_min": 285.48077782169736
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1602,11 +1602,11 @@
    "outputs": {
     "f1_coarse": 391.8628561452462,
     "f2_coarse": 517.4017317727571,
-    "f1_used": 391.53772394239724,
-    "f2_used": 514.0449093648905,
-    "f1_fine": 391.63387154362584,
-    "f2_fine": 501.7411120756059,
-    "change": 0.024522202771836143
+    "f1_used": 391.5377239425505,
+    "f2_used": 514.0449093651262,
+    "f1_fine": 391.63387154021814,
+    "f2_fine": 501.7411120667743,
+    "change": 0.024522202790339342
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1757,7 +1757,7 @@
     "ASM-C1-BELL-INERTIA"
    ],
    "outputs": {
-    "sep_whirl": 0.9553137544981765
+    "sep_whirl": 0.9553137545005177
    },
    "input_values": {
     "tube_x": 0.045,
@@ -2404,6 +2404,7 @@
    "cites": [
     "SRC-C4-BLEVINS"
    ],
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.00032362317772527405
   },
   {
@@ -2421,6 +2422,7 @@
    "cites": [
     "SRC-C4-LEISSA"
    ],
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.007179339368354687
   },
   {
@@ -2435,7 +2437,8 @@
     "value": 0.03
    },
    "how": "Three meshes 6x5, 12x10, 24x20; 12x10 is used for every claim.",
-   "value": 0.024522202771836143
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.024522202790339342
   },
   {
    "id": "CL-C4-F1-1LB",
@@ -2447,13 +2450,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 295.59397780328305
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 295.59397780322485
   },
   {
    "id": "CL-C4-F-LT-2L",
@@ -2465,14 +2469,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "note": "Tube bends out of the fin plane and twists; the foam-board fin adds < 3 % here.",
-   "value": 149.1541760489334
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). Tube bends out of the fin plane and twists; the foam-board fin adds < 3 % here.",
+   "value": 149.15417604890658
   },
   {
    "id": "CL-C4-F-FA-2L",
@@ -2484,14 +2488,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "note": "Bare tube 180 Hz; the bonded fin lifts it to ~330 Hz.",
-   "value": 328.88507647758894
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). Bare tube 180 Hz; the bonded fin lifts it to ~330 Hz.",
+   "value": 328.8850764775358
   },
   {
    "id": "CL-C4-SEP-2L",
@@ -2504,20 +2508,17 @@
     "op": ">=",
     "ref": "P:requirements.vibration_sep_frac"
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "note": "FAILS: the lateral-torsion mode sits at ~149 Hz, 4 % from 1P at the F4 cap and 17 % below 2P hover.",
-   "value": 0.03972359168842421
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). FAILS: the lateral-torsion mode sits at ~149 Hz, 4 % from 1P at the F4 cap and 17 % below 2P hover.",
+   "value": 0.03972359168859696
   },
   {
    "id": "CL-C4-SEP-1L",
@@ -2530,19 +2531,17 @@
     "op": ">=",
     "ref": "P:requirements.vibration_sep_frac"
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.057760812619797264
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.057760812559724206
   },
   {
    "id": "CL-C4-F-LT-REC",
@@ -2554,13 +2553,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 391.53772394268947
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 391.53772394275245
   },
   {
    "id": "CL-C4-F-FA-REC",
@@ -2572,13 +2572,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 514.044909364823
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 514.044909364383
   },
   {
    "id": "CL-C4-F-PANEL-REC",
@@ -2588,14 +2589,14 @@
    "output": "f_panel",
    "unit": "Hz",
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap the fin TE tip with the foot fitted; expect 50-70 Hz, below the 1P band.",
-   "note": "Local flapping of the free TE corner; < 2 % of its energy reaches the station. Below the forcing band.",
-   "value": 68.07901710134243
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). Local flapping of the free TE corner; < 2 % of its energy reaches the station. Below the forcing band.",
+   "value": 68.07901710136323
   },
   {
    "id": "CL-C4-SEP-REC",
@@ -2608,19 +2609,17 @@
     "op": ">=",
     "ref": "P:requirements.vibration_sep_frac"
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.9577081661035469
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.957708166103862
   },
   {
    "id": "CL-C4-SEP-REC-WORST",
@@ -2633,15 +2632,13 @@
     "op": ">=",
     "ref": "P:requirements.vibration_sep_frac"
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the US-stock tube (I1), then T-C4-TAP.",
-   "value": 0.8961997356194824
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.8961997356238391
   },
   {
    "id": "CL-C4-SEP-REC-WHIRL",
@@ -2654,15 +2651,13 @@
     "op": ">=",
     "ref": "P:requirements.vibration_sep_frac"
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.9553137544981765
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.9553137545005177
   },
   {
    "id": "CL-C4-SEP-BAND-REC",
@@ -2680,8 +2675,8 @@
     "FIN-002-R"
    ],
    "how": "Needs every station mode >= 396 Hz. R-VIBRATION (A2) is met on the operating points instead, with an rpm-tracking harmonic notch as the backup (F4).",
-   "note": "With 2 layers the first station mode is 392 Hz: 1 % short of the band rule. A2's R-VIBRATION is the basis.",
-   "value": 0.18647795134148315
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). With 2 layers the first station mode is 392 Hz: 1 % short of the band rule. A2's R-VIBRATION is the basis.",
+   "value": 0.1864779513416741
   },
   {
    "id": "CL-C4-SEP-BAND-1LB",
@@ -2699,8 +2694,8 @@
     "FIN-002-R"
    ],
    "how": "As CL-C4-SEP-BAND-REC.",
-   "note": "FAILS (first station mode ~296 Hz inside the band); passes R-VIBRATION.",
-   "value": -0.10426067332338473
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). FAILS (first station mode ~296 Hz inside the band); passes R-VIBRATION.",
+   "value": -0.10426067332356104
   },
   {
    "id": "CL-C4-SEP-1LB",
@@ -2713,19 +2708,17 @@
     "op": ">=",
     "ref": "P:requirements.vibration_sep_frac"
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.4779846456920762
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.4779846456917851
   },
   {
    "id": "CL-C4-SEP-1LB-WORST",
@@ -2738,15 +2731,13 @@
     "op": ">=",
     "ref": "P:requirements.vibration_sep_frac"
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "Passes only if the measured tube E and G are near nominal (T-C4-TUBE-BEND/TORSION).",
-   "value": 0.4274181409121369
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.4274181409118458
   },
   {
    "id": "CL-C4-MS-FACE-2L",
@@ -2759,16 +2750,14 @@
     "op": ">=",
     "value": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Foam-board coupon bend test (T-C4-BOARD-COUPON) for the face allowable; proof-load one fin quarter to 1.5 x L4 at the foot (T-C4-FIN-PROOF).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 1.6777667513120584
   },
   {
@@ -2782,16 +2771,14 @@
     "op": ">=",
     "value": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Foam-board coupon bend test (T-C4-BOARD-COUPON) for the face allowable; proof-load one fin quarter to 1.5 x L4 at the foot (T-C4-FIN-PROOF).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.27794924167206725
   },
   {
@@ -2805,16 +2792,14 @@
     "op": ">=",
     "value": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "T-C4-FIN-PROOF.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 3.2658357757124525
   },
   {
@@ -2828,14 +2813,12 @@
     "op": ">=",
     "value": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "T-C4-FIN-PROOF (G2 load at the tube end).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 8.536758990379223
   },
   {
@@ -2849,14 +2832,12 @@
     "op": ">=",
     "value": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "Proof-load G2 at the tube end with the brace fitted; no visible bow.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.3649018868421894
   },
   {
@@ -2867,6 +2848,7 @@
    "output": "strut_len_m",
    "unit": "m",
    "how": "D3 CAD.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.19064954759977798
   },
   {
@@ -2877,12 +2859,13 @@
    "output": "dfoot_L4_m",
    "unit": "m",
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "T-C4-FIN-PROOF: dial gauge at the foot.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.008906955489189138
   },
   {
@@ -2897,6 +2880,7 @@
     "FIN-004-R"
    ],
    "how": "C1 G2 / the A1 action value, x 1.5 x 1.15 x 1.25.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 23.071874999999995
   },
   {
@@ -2910,15 +2894,12 @@
     "op": ">=",
     "value": 0.0
    },
-   "verifies": [
-    "R-FIN-TUBE-JOINT",
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
     "FIN-004-L",
     "FIN-004-R"
    ],
    "how": "Proof test: hang 2 x 1.5 x 51 N (G2 ultimate, printed factor) from one upper tube end of a block bonded in a core offcut (T-C4-BLOCK-PROOF); C6 bond coupons for ASM-C4-BOND-SHEAR.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.47452255180820835
   },
   {
@@ -2933,6 +2914,7 @@
     "FIN-004-R"
    ],
    "how": "Weigh the first print (T-A3-WEIGH-PARTS).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.030119067982376978
   },
   {
@@ -2947,6 +2929,7 @@
     "FIN-004-R"
    ],
    "how": "C2 checks spar wall crushing with the internal plug (CR-C4-02).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 961.3281249999999
   },
   {
@@ -2957,6 +2940,7 @@
    "output": "rec_delta_g",
    "unit": "g",
    "how": "A3 roll-up; weigh the braces and blocks.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 108.61467986712641
   },
   {
@@ -2967,6 +2951,7 @@
    "output": "rec_1l_delta_g",
    "unit": "g",
    "how": "A3 roll-up.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 66.81467986712642
   },
   {
@@ -2975,7 +2960,8 @@
    "title": "Three-point bend of the US-stock 22 x 20 tube (I1 buys, H1 runs)",
    "verifies": [
     "CL-C4-SEP-REC-WORST",
-    "CL-C4-SEP-1LB-WORST"
+    "CL-C4-SEP-1LB-WORST",
+    "CL-C4-D3-SEP-WORST"
    ],
    "state": "planned",
    "procedure": "Span 0.80 m on two 22 mm dowels, load at centre in 0.5 kg steps to 4 kg, dial gauge to 0.01 mm; E = F L^3 / (48 I delta) with I = 3.645e-9 m4. Pass band for the recommended design: E >= 70 GPa."
@@ -2986,7 +2972,8 @@
    "title": "Torsion of the same tube",
    "verifies": [
     "CL-C4-SEP-REC-WORST",
-    "CL-C4-SEP-1LB-WORST"
+    "CL-C4-SEP-1LB-WORST",
+    "CL-C4-D3-SEP-WORST"
    ],
    "state": "planned",
    "procedure": "Clamp 0.40 m of tube in two printed V-blocks at one end, 0.30 m lever arm at the other, 0.5-2 kg, measure twist with a laser pointer on a wall 3 m away; G = T L / (J theta), J = 7.29e-9 m4."
@@ -3012,7 +2999,8 @@
    "title": "Foam-board face coupon",
    "verifies": [
     "CL-C4-MS-FACE-2L",
-    "CL-C4-MS-FACE-1L"
+    "CL-C4-MS-FACE-1L",
+    "CL-C4-D3-MS-FACE"
    ],
    "state": "planned",
    "procedure": "Three 50 x 300 mm strips per layer count, four-point bend, span 250 mm, load to failure: face allowable and D. Weigh 0.1 m2 for the areal mass."
@@ -3027,7 +3015,16 @@
     "CL-C4-MS-TUBE",
     "CL-C4-MS-EDGE",
     "CL-C4-FOOT-DEFL-L4",
-    "CL-C4-MS-STRUT"
+    "CL-C4-MS-STRUT",
+    "CL-C4-D3-MS-FACE",
+    "CL-C4-D3-MS-EDGE",
+    "CL-C4-D3-MS-TUBE",
+    "CL-C4-D3-MS-BRACE",
+    "CL-C4-D3-MS-BRACE-END",
+    "CL-C4-D3-MS-COLLAR",
+    "CL-C4-D3-MS-EAR",
+    "CL-C4-D3-MS-ANCHOR",
+    "CL-C4-D3-FOOT-DEFL"
    ],
    "state": "planned",
    "procedure": "1.5 x L4 at the foot (49 N along the fin + 25 N across), then 1.5 x G2 (77 N lateral at the tube end); no cracking or face wrinkle; record the foot deflection."
@@ -3037,7 +3034,8 @@
    "type": "test",
    "title": "Block proof in a core offcut",
    "verifies": [
-    "CL-C4-BLOCK-MS"
+    "CL-C4-BLOCK-MS",
+    "CL-C4-D3-BLOCK-MS"
    ],
    "state": "planned",
    "procedure": "Block bonded on a spar stub in a 0.15 m core offcut; 0.30 m tube in the bore; hang 18 kg at 0.17 m lever (30 N m > design 20.3 N m) for 1 min; no creak, no bond line crack."
@@ -3047,7 +3045,8 @@
    "type": "test",
    "title": "Bifilar swing of one prop",
    "verifies": [
-    "CL-C4-SEP-REC-WHIRL"
+    "CL-C4-SEP-REC-WHIRL",
+    "CL-C4-D3-SEP-WHIRL"
    ],
    "state": "planned",
    "procedure": "Two 0.5 m threads at the blade tips; period of 20 swings; I = m g d^2 T^2 / (16 pi^2 L)."

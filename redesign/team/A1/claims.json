@@ -304,21 +304,21 @@
     "ASM-A1-WALL"
    ],
    "outputs": {
-    "cg_pack_centred_m": 0.051896864071250874,
+    "cg_pack_centred_m": 0.06006656005814803,
     "pack_fwd_need_m": 0.02917859345454551,
     "held_fwd_room_m": 0.026999999999999996,
     "held_room_left_m": -0.0021785934545455153,
-    "trigger_margin_m": -0.0028076541063900215,
-    "cg_alt_m": 0.044782190546648136,
-    "alt_aft_margin_m": 0.004307019418212717,
-    "alt_fwd_margin_m": 0.005042009391931342,
+    "trigger_margin_m": -0.004815501844795386,
+    "cg_alt_m": 0.052951886533545295,
+    "alt_aft_margin_m": 0.002299171679807352,
+    "alt_fwd_margin_m": 0.003034161653525977,
     "pack_fwd_room_alt_m": 0.026999999999999996,
     "pack_aft_room_alt_m": 0.027,
     "box_x_slack_now_m": 0.030000000000000027,
     "box_x_slack_alt_m": 0.010000000000000009
    },
    "input_values": {
-    "x_t": 0.044414695559788823,
+    "x_t": 0.05258439154668598,
     "x_req": -0.03417859345454549,
     "M": 2.1448630000000004,
     "m_p": 0.55,
@@ -336,8 +336,8 @@
     "m_grp": 763.0,
     "x_alt": -0.125,
     "wall": 0.003,
-    "x_aft": 0.04908920996486085,
-    "x_fwd": 0.039740181154716794,
+    "x_aft": 0.05525105821335265,
+    "x_fwd": 0.04991772488001932,
     "ext": [
      1.25,
      0.55,
@@ -744,7 +744,7 @@
    "unit": "m",
    "how": "Recomputes when B3 re-runs sc_analysis.py at R1 (CR-A1-10); then balance the built aircraft with the pack centred (T-A3-CG-BALANCE).",
    "note": "Rule part 1 (D-17 as refined in team/A1/HANDOFF.md): if B3's R1 aft limit (CL-B3-CG-AFT) is below this value, A1 moves pod.x_le_m to -0.125; part 2 is CL-A1-POD-HELD-ROOM < 0. Supersedes the 0.051 m written in D-17 (same rule, current A3/B3 numbers). Trigger margin = CL-B3-CG-AFT - this value; the stored CL-B3-CG-AFT is still the R0 value.",
-   "value": 0.051896864071250874
+   "value": 0.06006656005814803
   },
   {
    "id": "CL-A1-POD-HELD-ROOM",
@@ -779,7 +779,7 @@
     "R-CG-RANGE"
    ],
    "how": "A3 re-runs the roll-up with pod.x_le_m -0.125; balance test T-A3-CG-BALANCE on the built aircraft.",
-   "value": 0.044782190546648136
+   "value": 0.052951886533545295
   },
   {
    "id": "CL-A1-POD-ALT-FWD",
@@ -796,7 +796,7 @@
     "R-CG-RANGE"
    ],
    "how": "As CL-A1-POD-ALT-AFT; the heavy 680 g pack slides aft to re-trim.",
-   "value": 0.005042009391931342
+   "value": 0.003034161653525977
   },
   {
    "id": "CL-A1-POD-ALT-PACK-ROOM",

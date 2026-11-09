@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-09 18:21 UTC",
+  "generated": "2026-11-09 18:37 UTC",
   "dataset": "redesign",
   "ok": false,
   "errors": [
@@ -59,24 +59,24 @@ window.PROOF_GRAPH = {
    "CL-B4-PITOT: part AVN-005 is not in any interfaces.json",
    "SRC-C1-PRATT: source has no url",
    "SRC-C4-S5010: source has no url",
-   "CL-C4-F1-1LB: part FIN-001-UR is not in any interfaces.json",
-   "CL-C4-F1-1LB: part FIN-001-UL is not in any interfaces.json",
-   "CL-C4-F1-1LB: part FIN-001-LR is not in any interfaces.json",
-   "CL-C4-F1-1LB: part FIN-001-LL is not in any interfaces.json",
+   "CL-C6-MOTOR-SEP-RF: part PRP-001-UR is not in any interfaces.json",
+   "CL-C6-MOTOR-SEP-RF: part PRP-001-UL is not in any interfaces.json",
+   "CL-C6-MOTOR-SEP-RF: part PRP-001-LR is not in any interfaces.json",
+   "CL-C6-MOTOR-SEP-RF: part PRP-001-LL is not in any interfaces.json",
+   "CL-C6-FC-ENGAGE-RF: part AVN-001 is not in any interfaces.json",
+   "CL-C6-LINK-BOND-AREA-MIN: part MEC-008-L is not in any interfaces.json",
+   "CL-C6-LINK-BOND-AREA-MIN: part MEC-008-R is not in any interfaces.json",
+   "CL-C6-LINK-BOND-AREA-MIN: part MEC-004-L is not in any interfaces.json",
+   "CL-C6-LINK-BOND-AREA-MIN: part MEC-004-R is not in any interfaces.json",
    "SRC-D7-PE-FOAM: source has no url",
    "CL-E1-HOVER-T: part PRP-901 is not in any interfaces.json",
    "CL-E1-HOVER-T: part PRP-902 is not in any interfaces.json",
    "CL-E1-HOVER-T: part PRP-903 is not in any interfaces.json",
    "CL-E1-HOVER-T: part PRP-904 is not in any interfaces.json",
-   "CL-E3-MOTOR-PEAK: part PRP-001-UR is not in any interfaces.json",
-   "CL-E3-MOTOR-PEAK: part PRP-001-UL is not in any interfaces.json",
-   "CL-E3-MOTOR-PEAK: part PRP-001-LR is not in any interfaces.json",
-   "CL-E3-MOTOR-PEAK: part PRP-001-LL is not in any interfaces.json",
    "CL-E3-ESC-PEAK: part PRP-002-UR is not in any interfaces.json",
    "CL-E3-ESC-PEAK: part PRP-002-UL is not in any interfaces.json",
    "CL-E3-ESC-PEAK: part PRP-002-LR is not in any interfaces.json",
    "CL-E3-ESC-PEAK: part PRP-002-LL is not in any interfaces.json",
-   "CL-E3-FC-PEAK: part AVN-001 is not in any interfaces.json",
    "CL-F1-I-CONT: part PWR-003 is not in any interfaces.json",
    "CL-F1-I-CONT: part PWR-004 is not in any interfaces.json",
    "CL-F1-FEED-RISE: part PWR-005 is not in any interfaces.json",
@@ -90,20 +90,20 @@ window.PROOF_GRAPH = {
   "counts": {
    "by_type": {
     "requirement": 58,
-    "source": 138,
-    "assumption": 293,
-    "calculation": 206,
-    "claim": 725,
-    "test": 97,
-    "parameter": 429,
-    "part": 97
+    "source": 142,
+    "assumption": 326,
+    "calculation": 247,
+    "claim": 800,
+    "test": 108,
+    "parameter": 522,
+    "part": 105
    },
    "by_status": {
-    "CHECKED": 374,
-    "UNVERIFIED": 1151,
-    "PROPOSED": 518
+    "CHECKED": 426,
+    "UNVERIFIED": 1269,
+    "PROPOSED": 613
    },
-   "fails": 66
+   "fails": 68
   },
   "files": [
    "redesign/params/claims.json",
@@ -117,10 +117,12 @@ window.PROOF_GRAPH = {
    "redesign/team/B3/claims.json",
    "redesign/team/B4/claims.json",
    "redesign/team/C1/claims.json",
+   "redesign/team/C2/claims.json",
    "redesign/team/C3/claims.json",
    "redesign/team/C4/claims.d3.json",
    "redesign/team/C4/claims.json",
    "redesign/team/C5/claims.json",
+   "redesign/team/C6/claims.json",
    "redesign/team/D2/claims.json",
    "redesign/team/D3/claims.json",
    "redesign/team/D5/claims.json",
@@ -402,7 +404,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 141
+   "importance": 173
   },
   {
    "id": "R-DISCONNECT",
@@ -516,7 +518,7 @@ window.PROOF_GRAPH = {
    "checked": "2026-11-09",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 581
+   "importance": 620
   },
   {
    "id": "SRC-K09-CARD",
@@ -528,7 +530,7 @@ window.PROOF_GRAPH = {
    "note": "card values are the concept engineer's ESTIMATEs unless a datasheet is named",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 617
+   "importance": 658
   },
   {
    "id": "SRC-K09-REVIEW",
@@ -539,7 +541,7 @@ window.PROOF_GRAPH = {
    "checked": "2026-11-09",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 506
+   "importance": 545
   },
   {
    "id": "SRC-TIEBREAK",
@@ -550,7 +552,7 @@ window.PROOF_GRAPH = {
    "checked": "2026-11-09",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 283
+   "importance": 316
   },
   {
    "id": "SRC-ISA",
@@ -561,7 +563,7 @@ window.PROOF_GRAPH = {
    "checked": "2026-11-09",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 582
+   "importance": 621
   },
   {
    "id": "SRC-X3108S",
@@ -574,7 +576,7 @@ window.PROOF_GRAPH = {
    "note": "E1 compared the four rows with the maker image 2026-11-09 (CR-E1-03): W = 14.8 x A bookkeeping and the top row is at a sagged supply (~11.2 V, CL-E1-MAKER-SUPPLY). Not a 14.8 V thrust table; T-E1-STAND replaces it",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 383
+   "importance": 415
   },
   {
    "id": "SRC-APC-11X45MR",
@@ -600,7 +602,7 @@ window.PROOF_GRAPH = {
    "note": "fitted prop since D-05 (E1 CR-E1-01, B4 CR-B4-01); E1's SRC-E1-APC-PAGES and B4's SRC-B4-APC-PER3 hold the performance data",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 507
+   "importance": 545
   },
   {
    "id": "SRC-S5010",
@@ -613,7 +615,7 @@ window.PROOF_GRAPH = {
    "note": "wing section since D-02 (B2 CR-B2-02, SRC-B2-S5010-COORD); copy to subsystems/wing/s5010.dat with this header (D1)",
    "defined_in": "redesign/params/claims.json",
    "status": "CHECKED",
-   "importance": 316
+   "importance": 340
   },
   {
    "id": "SRC-LANRC-45A",
@@ -643,7 +645,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 485
+   "importance": 524
   },
   {
    "id": "SRC-CF-TUBE",
@@ -658,7 +660,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 404
+   "importance": 454
   },
   {
    "id": "SRC-XPS-F250",
@@ -673,7 +675,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 32
+   "importance": 45
   },
   {
    "id": "SRC-MH45",
@@ -770,7 +772,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/A1/claims.json",
    "status": "PROPOSED",
-   "importance": 13
+   "importance": 17
   },
   {
    "id": "CALC-A1-WING",
@@ -797,7 +799,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A1/claims.json",
    "status": "CHECKED",
-   "importance": 469
+   "importance": 508
   },
   {
    "id": "CALC-A1-ELEVON",
@@ -1224,7 +1226,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A1/claims.json",
    "status": "CHECKED",
-   "importance": 73
+   "importance": 83
   },
   {
    "id": "CALC-A1-RESERVE",
@@ -1266,7 +1268,7 @@ window.PROOF_GRAPH = {
    "value": 0.368,
    "defined_in": "redesign/team/A1/claims.json",
    "status": "CHECKED",
-   "importance": 468
+   "importance": 507
   },
   {
    "id": "CL-A1-WING-AR",
@@ -1538,7 +1540,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.032486320161185245,
-   "importance": 67
+   "importance": 77
   },
   {
    "id": "CL-A1-RESERVE",
@@ -1804,7 +1806,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 29
+   "importance": 31
   },
   {
    "id": "R-CG-RANGE",
@@ -2024,6 +2026,20 @@ window.PROOF_GRAPH = {
    "note": "P24; owner C2; method A+T; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
    "reasons": [
+    "CL-C2-SPAR-SIGMA-ULT is UNVERIFIED",
+    "CL-C2-SPAR-SIGMA-ENV is UNVERIFIED",
+    "CL-C2-SPAR-TAU-ULT is UNVERIFIED",
+    "CL-C2-SPAR-BUCKLE is UNVERIFIED",
+    "CL-C2-SPAR-SIGMA-BRACE is UNVERIFIED",
+    "CL-C2-V-REVERSAL is UNVERIFIED",
+    "CL-C2-V-DIVERGENCE is UNVERIFIED",
+    "CL-C2-V-FLUTTER is UNVERIFIED",
+    "CL-C2-PLUG-BEARING is UNVERIFIED",
+    "CL-C2-SPAR-BOND-TAU is UNVERIFIED",
+    "CL-C2-CHORD-TAPE is UNVERIFIED",
+    "CL-C2-TIP-FOAM is UNVERIFIED",
+    "CL-C2-ROOT-TAPE is UNVERIFIED",
+    "CL-C2-POD-FOAM is UNVERIFIED",
     "CL-C3-BOND-R-DESIGN is UNVERIFIED",
     "CL-C3-BOND-SIGMA-DESIGN is UNVERIFIED",
     "CL-C3-OVERHANG-DESIGN is UNVERIFIED",
@@ -2036,20 +2052,36 @@ window.PROOF_GRAPH = {
     "CL-C4-D3-MS-BRACE-END is UNVERIFIED",
     "CL-C4-D3-MS-COLLAR is UNVERIFIED",
     "CL-C4-D3-MS-ANCHOR is UNVERIFIED",
+    "CL-C4-D3-MS-EAR is UNVERIFIED",
     "CL-C4-D3-BLOCK-MS is UNVERIFIED",
-    "CL-C4-MS-FACE-2L is UNVERIFIED",
-    "CL-C4-MS-FACE-1L is UNVERIFIED",
-    "CL-C4-MS-EDGE is UNVERIFIED",
-    "CL-C4-MS-TUBE is UNVERIFIED",
-    "CL-C4-MS-STRUT is UNVERIFIED",
-    "CL-C4-BLOCK-MS is UNVERIFIED",
+    "CL-C6-MOTOR-HEAD-RF is UNVERIFIED",
+    "CL-C6-MOTOR-SEP-RF is UNVERIFIED",
+    "CL-C6-MOTOR-STRIP-RF is UNVERIFIED",
+    "CL-C6-MOUNT-ROCK-RF is UNVERIFIED",
+    "CL-C6-MOUNT-HOOP-RF is UNVERIFIED",
+    "CL-C6-INSERT-PULL-RF is UNVERIFIED",
+    "CL-C6-TUBE-BLOCK-RF is UNVERIFIED",
+    "CL-C6-BLOCK-SPAR-RF is UNVERIFIED",
+    "CL-C6-COLLAR-RF is UNVERIFIED",
+    "CL-C6-COLLAR-L-REQ: FAILS: margin -9.9% (0.01319 m vs <= 0.012 m)",
+    "CL-C6-STRIP-ANCHOR-RF: FAILS: margin -70.3% (0.2968 vs >= 1)",
+    "CL-C6-STRIP-EMBED-REQ is UNVERIFIED",
+    "CL-C6-STRIP-ANCHOR-RF-PROP is UNVERIFIED",
+    "CL-C6-STRIP-FACE-RF: FAILS: margin -80.4% (0.1959 vs >= 1)",
+    "CL-C6-STRIP-PIN-RF is UNVERIFIED",
+    "CL-C6-BRACE-END-RF is UNVERIFIED",
+    "CL-C6-ANCHOR-PULL-RF is UNVERIFIED",
+    "CL-C6-FOOT-SHOE-RF is UNVERIFIED",
+    "CL-C6-FIN-ROOT-RF is UNVERIFIED",
+    "CL-C6-POD-WING-RF is UNVERIFIED",
+    "CL-C6-LINK-BOND-AREA-MIN is UNVERIFIED",
     "CL-D2-BOND-STRESS is UNVERIFIED",
     "CL-D3-SLIP-HOLD is UNVERIFIED",
     "CL-D3-BRACE-PCR is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
-   "importance": 171
+   "fails": true,
+   "importance": 263
   },
   {
    "id": "R-FIN-TUBE-JOINT",
@@ -2064,11 +2096,22 @@ window.PROOF_GRAPH = {
     "CL-C4-D3-MS-COLLAR is UNVERIFIED",
     "CL-C4-D3-MS-ANCHOR is UNVERIFIED",
     "CL-C4-D3-BLOCK-MS is UNVERIFIED",
-    "CL-C4-BLOCK-MS is UNVERIFIED"
+    "CL-C6-MOUNT-ROCK-RF is UNVERIFIED",
+    "CL-C6-MOUNT-HOOP-RF is UNVERIFIED",
+    "CL-C6-TUBE-BLOCK-RF is UNVERIFIED",
+    "CL-C6-BLOCK-SPAR-RF is UNVERIFIED",
+    "CL-C6-COLLAR-RF is UNVERIFIED",
+    "CL-C6-COLLAR-L-REQ: FAILS: margin -9.9% (0.01319 m vs <= 0.012 m)",
+    "CL-C6-STRIP-ANCHOR-RF: FAILS: margin -70.3% (0.2968 vs >= 1)",
+    "CL-C6-STRIP-EMBED-REQ is UNVERIFIED",
+    "CL-C6-STRIP-ANCHOR-RF-PROP is UNVERIFIED",
+    "CL-C6-BRACE-END-RF is UNVERIFIED",
+    "CL-C6-ANCHOR-PULL-RF is UNVERIFIED",
+    "CL-C6-FIN-ROOT-RF is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "fails": false,
-   "importance": 119
+   "fails": true,
+   "importance": 155
   },
   {
    "id": "R-VIBRATION",
@@ -2079,17 +2122,11 @@ window.PROOF_GRAPH = {
    "note": "P24; owner C4; method A+T; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
    "reasons": [
-    "CL-C4-D3-SEP: FAILS: margin -44.7% (0.1106 vs >= 0.2)",
-    "CL-C4-D3-SEP-WORST: FAILS: margin -75.5% (0.04896 vs >= 0.2)",
-    "CL-C4-D3-SEP-WHIRL: FAILS: margin -47.0% (0.1061 vs >= 0.2)",
-    "CL-C4-D3-MOUNT-K-REQ: FAILS: margin -9900.0% (3e+05 N m/rad vs <= 3000 N m/rad)",
-    "CL-C4-SEP-2L: FAILS: margin -80.1% (0.03972 vs >= 0.2)",
-    "CL-C4-SEP-1L: FAILS: margin -71.1% (0.05776 vs >= 0.2)",
-    "CL-C4-SEP-REC is UNVERIFIED",
-    "CL-C4-SEP-REC-WORST is UNVERIFIED",
-    "CL-C4-SEP-REC-WHIRL is UNVERIFIED",
-    "CL-C4-SEP-1LB is UNVERIFIED",
-    "CL-C4-SEP-1LB-WORST is UNVERIFIED",
+    "CL-C2-WING-MODE-SEP: FAILS: margin -61.7% (0.07665 vs >= 0.2)",
+    "CL-C4-D3-SEP is UNVERIFIED",
+    "CL-C4-D3-SEP-WORST is UNVERIFIED",
+    "CL-C4-D3-SEP-WHIRL is UNVERIFIED",
+    "CL-C4-D3-MOUNT-K-REQ is UNVERIFIED",
     "CL-D3-BRACE-KY is UNVERIFIED",
     "CL-F3-VIBE-T1P is UNVERIFIED",
     "CL-F4-NOTCH-LOW is UNVERIFIED",
@@ -2097,7 +2134,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 115
+   "importance": 103
   },
   {
    "id": "R-PACK-RETENTION",
@@ -2122,13 +2159,13 @@ window.PROOF_GRAPH = {
     "CL-C3-TRAY-FLAT is UNVERIFIED",
     "CL-C3-FLOOR-GLUE is UNVERIFIED",
     "CL-C3-OVERHANG-CRASH is UNVERIFIED",
-    "CL-C5-PACK-NOSE-ROOM: FAILS: margin -2527.9% (0.02628 m vs <= 0.001 m)",
+    "CL-C5-PACK-NOSE-ROOM: FAILS: margin -22.5% (0.02636 m vs <= 0.02152 m)",
     "CL-D2-STRAP-CAP is UNVERIFIED",
     "CL-D2-TIE-CAP is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 99
+   "importance": 133
   },
   {
    "id": "R-LANDING-IMPACT",
@@ -2141,16 +2178,17 @@ window.PROOF_GRAPH = {
    "reasons": [
     "CL-C1-N-LAND-STROKE-MIN: FAILS: margin -1.1% (6.069 vs <= 6)",
     "CL-C1-WINGTIP-STRIKE-ANGLE is UNVERIFIED",
-    "CL-C5-DROP-STROKE is UNVERIFIED",
-    "CL-C5-DROP-N is UNVERIFIED",
-    "CL-C5-FOOT-ENERGY is UNVERIFIED",
-    "CL-C5-DROP-PAIR-PITCH: FAILS: margin -7.1% (0.03427 m vs <= 0.032 m)",
-    "CL-C5-DROP-PAIR-ROLL: FAILS: margin -2.7% (0.03288 m vs <= 0.032 m)",
+    "CL-C5-DYN-LEVEL-CUR is UNVERIFIED",
+    "CL-C5-DYN-PAIR-CUR: FAILS: margin -13.2% (0.03284 m vs <= 0.029 m)",
+    "CL-C5-DROP-PAIR-PITCH is UNVERIFIED",
+    "CL-C5-DROP-PAIR-ROLL is UNVERIFIED",
+    "CL-C5-DYN-LEVEL-FREE-PROP is UNVERIFIED",
+    "CL-C5-DYN-N-LEVEL is UNVERIFIED",
     "CL-D3-ROOT-FILLET-RF is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "fails": true,
-   "importance": 163
+   "importance": 169
   },
   {
    "id": "R-AVIONICS-POWER",
@@ -2361,11 +2399,14 @@ window.PROOF_GRAPH = {
    "note": "P24; owner C6; method I; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
    "reasons": [
+    "CL-C6-PINCH-ENGAGE-RF is UNVERIFIED",
+    "CL-C6-PINCH-TORQUE is UNVERIFIED",
+    "CL-C6-FC-ENGAGE-RF is UNVERIFIED",
     "CL-D3-SCREW-ENGAGE is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "fails": false,
-   "importance": 9
+   "importance": 17
   },
   {
    "id": "R-PROOF-BUILD",
@@ -2496,7 +2537,7 @@ window.PROOF_GRAPH = {
    "note": "RETIRED; cite P:requirements.servo_torque_factor",
    "defined_in": "redesign/team/A2/claims.json",
    "status": "PROPOSED",
-   "importance": 2
+   "importance": 3
   },
   {
    "id": "ASM-A2-PACK-CAPACITY-FRAC",
@@ -2530,7 +2571,7 @@ window.PROOF_GRAPH = {
    "unit": "%",
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 197
+   "importance": 226
   },
   {
    "id": "ASM-A3-PACK-SLIDE",
@@ -2545,7 +2586,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 170
+   "importance": 199
   },
   {
    "id": "ASM-A3-PACK-RANGE",
@@ -2567,7 +2608,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 216
+   "importance": 247
   },
   {
    "id": "CALC-A3-MASS",
@@ -3990,7 +4031,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A3/claims.json",
    "status": "CHECKED",
-   "importance": 61
+   "importance": 70
   },
   {
    "id": "CALC-A3-CG",
@@ -5376,7 +5417,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A3/claims.json",
    "status": "CHECKED",
-   "importance": 170
+   "importance": 199
   },
   {
    "id": "CALC-A3-INERTIA",
@@ -6667,7 +6708,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/A3/claims.json",
    "status": "CHECKED",
-   "importance": 46
+   "importance": 55
   },
   {
    "id": "CL-A3-MASS-BASIC",
@@ -6692,7 +6733,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.1750526923076922,
-   "importance": 55
+   "importance": 64
   },
   {
    "id": "CL-A3-MASS-PREDICTED",
@@ -6789,7 +6830,7 @@ window.PROOF_GRAPH = {
     "uses P:pod.x_le_m, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 170
+   "importance": 199
   },
   {
    "id": "CL-A3-CG-X-RANGE",
@@ -6842,7 +6883,7 @@ window.PROOF_GRAPH = {
     "uses P:pod.x_le_m, which is UNVERIFIED (cites CL-A3-CG-X, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 121
+   "importance": 146
   },
   {
    "id": "CL-A3-PACK-AFT-ROOM",
@@ -6896,7 +6937,7 @@ window.PROOF_GRAPH = {
     "uses P:pod.x_le_m, which is UNVERIFIED (cites CL-A3-CG-X, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 5
+   "importance": 1
   },
   {
    "id": "CL-A3-CG-Z-RANGE",
@@ -6987,7 +7028,7 @@ window.PROOF_GRAPH = {
     "uses P:a3.rollup.items, which is UNVERIFIED (marked UNVERIFIED in redesign/team/A3/rollup/mass_items.json: params used: P:battery.mass_kg, P:battery.size_m, P:cg.foot_height_m, P:fins.areal_mass_kgm2, P:fins.chord_m, P:fins.half_height_m, P:fins.layers, P:fins.le_x_m, P:fins.te_x_m, P:fins.tube.length_m, P:fins.tube.od_m, P:fins.tube.x_m, P:fins.y_m, P:pod.size_m, P:pod.x_le_m, P:pod.z_base_m, P:propulsion.esc_mass_kg, P:propulsion.motor_diameter_m, P:propulsion.motor_length_m, P:propulsion.motor_mass_kg, P:propulsion.prop_diameter_m, P:propulsion.prop_mass_kg, P:propulsion.stations.x_mount_m, P:propulsion.stations.x_prop_plane_m, P:propulsion.stations.y_m, P:propulsion.stations.z_m, P:wing.chord_m, P:wing.core.density_kgm3, P:wing.elevon.chord_frac, P:wing.elevon.inboard_y_m, P:wing.elevon.outboard_y_m, P:wing.skin.areal_mass_kgm2, P:wing.span_m, P:wing.spar.length_m, P:wing.spar.mass_per_m_kgm, P:wing.spar.od_m, P:wing.spar.x_m, P:wing.spar.z_m, P:wing.t_c, P:wing.te_x_m)"
    ],
    "status": "UNVERIFIED",
-   "importance": 42
+   "importance": 51
   },
   {
    "id": "CL-A3-IZZ",
@@ -7003,7 +7044,7 @@ window.PROOF_GRAPH = {
     "uses P:a3.rollup.items, which is UNVERIFIED (marked UNVERIFIED in redesign/team/A3/rollup/mass_items.json: params used: P:battery.mass_kg, P:battery.size_m, P:cg.foot_height_m, P:fins.areal_mass_kgm2, P:fins.chord_m, P:fins.half_height_m, P:fins.layers, P:fins.le_x_m, P:fins.te_x_m, P:fins.tube.length_m, P:fins.tube.od_m, P:fins.tube.x_m, P:fins.y_m, P:pod.size_m, P:pod.x_le_m, P:pod.z_base_m, P:propulsion.esc_mass_kg, P:propulsion.motor_diameter_m, P:propulsion.motor_length_m, P:propulsion.motor_mass_kg, P:propulsion.prop_diameter_m, P:propulsion.prop_mass_kg, P:propulsion.stations.x_mount_m, P:propulsion.stations.x_prop_plane_m, P:propulsion.stations.y_m, P:propulsion.stations.z_m, P:wing.chord_m, P:wing.core.density_kgm3, P:wing.elevon.chord_frac, P:wing.elevon.inboard_y_m, P:wing.elevon.outboard_y_m, P:wing.skin.areal_mass_kgm2, P:wing.span_m, P:wing.spar.length_m, P:wing.spar.mass_per_m_kgm, P:wing.spar.od_m, P:wing.spar.x_m, P:wing.spar.z_m, P:wing.t_c, P:wing.te_x_m)"
    ],
    "status": "UNVERIFIED",
-   "importance": 42
+   "importance": 51
   },
   {
    "id": "T-A3-WEIGH-PARTS",
@@ -7032,7 +7073,7 @@ window.PROOF_GRAPH = {
    "procedure": "Two knife edges (or two scales) under the wing at known x; ready to fly, props on.",
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 123
+   "importance": 148
   },
   {
    "id": "T-A3-SWING",
@@ -7047,7 +7088,7 @@ window.PROOF_GRAPH = {
    "procedure": "Two 1.5 m strings, 0.30 m apart, about each axis; I = m g d^2 T^2 / (16 pi^2 L).",
    "defined_in": "redesign/team/A3/claims.json",
    "status": "PROPOSED",
-   "importance": 46
+   "importance": 55
   },
   {
    "id": "CALC-A4-PLAN-GRAPH",
@@ -8936,7 +8977,7 @@ window.PROOF_GRAPH = {
    "note": "APC's own blade-element prediction, not a wind-tunnel test; static values run ~10 % optimistic (K09 REVIEW section 3, J1 REFERENCES). B4 owns the prop data.",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 302
+   "importance": 326
   },
   {
    "id": "SRC-B1-HOERNER",
@@ -8950,7 +8991,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 313
+   "importance": 337
   },
   {
    "id": "SRC-B1-HELMBOLD",
@@ -8992,7 +9033,7 @@ window.PROOF_GRAPH = {
    "note": "B1 compared every 6 000 rpm row of B4's file with PROP_TABLE on 2026-11-09. APC's blade-element prediction, not a test; B4 owns the prop data",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 302
+   "importance": 326
   },
   {
    "id": "ASM-B1-PROP",
@@ -9109,7 +9150,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 326
   },
   {
    "id": "ASM-B1-PROP-REF",
@@ -9275,7 +9316,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 302
+   "importance": 326
   },
   {
    "id": "ASM-B1-DRAG",
@@ -9302,7 +9343,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 293
+   "importance": 317
   },
   {
    "id": "ASM-B1-WING-ROUGH",
@@ -9317,7 +9358,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 293
+   "importance": 317
   },
   {
    "id": "ASM-B1-CD90",
@@ -9350,7 +9391,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 299
+   "importance": 323
   },
   {
    "id": "ASM-B1-AVIONICS-W",
@@ -9365,7 +9406,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 299
+   "importance": 323
   },
   {
    "id": "ASM-B1-TRIM",
@@ -9380,7 +9421,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 279
+   "importance": 303
   },
   {
    "id": "ASM-B1-VCRUISE",
@@ -9392,7 +9433,7 @@ window.PROOF_GRAPH = {
    "unit": "m/s",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 315
+   "importance": 339
   },
   {
    "id": "ASM-B1-PESS",
@@ -9411,7 +9452,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 235
+   "importance": 248
   },
   {
    "id": "ASM-B1-CTRL-RESERVE",
@@ -9423,7 +9464,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 158
+   "importance": 179
   },
   {
    "id": "ASM-B1-LAND-ERR",
@@ -9555,7 +9596,7 @@ window.PROOF_GRAPH = {
     "does not re-run to its stored outputs (see build errors)"
    ],
    "status": "UNVERIFIED",
-   "importance": 293
+   "importance": 317
   },
   {
    "id": "CALC-B1-STALL",
@@ -9938,7 +9979,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 290
+   "importance": 314
   },
   {
    "id": "CALC-B1-HOVER",
@@ -10493,7 +10534,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 222
+   "importance": 235
   },
   {
    "id": "CALC-B1-SWEEP",
@@ -11690,7 +11731,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B1/claims.json",
    "status": "CHECKED",
-   "importance": 140
+   "importance": 161
   },
   {
    "id": "CL-B1-CD0",
@@ -11717,7 +11758,7 @@ window.PROOF_GRAPH = {
     "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 288
+   "importance": 312
   },
   {
    "id": "CL-B1-K",
@@ -11744,7 +11785,7 @@ window.PROOF_GRAPH = {
     "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 288
+   "importance": 312
   },
   {
    "id": "CL-B1-K-PESS",
@@ -11771,7 +11812,7 @@ window.PROOF_GRAPH = {
     "uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 280
+   "importance": 304
   },
   {
    "id": "CL-B1-CLA",
@@ -11969,7 +12010,7 @@ window.PROOF_GRAPH = {
     "uses P:propulsion.voltage_sag, which is UNVERIFIED (cites CL-E2-SAG-F-WORST, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 154
+   "importance": 175
   },
   {
    "id": "CL-B1-KCAL",
@@ -11991,7 +12032,7 @@ window.PROOF_GRAPH = {
     "uses P:propulsion.voltage_sag, which is UNVERIFIED (cites CL-E2-SAG-F-WORST, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 288
+   "importance": 312
   },
   {
    "id": "CL-B1-FM",
@@ -12302,7 +12343,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 153
+   "importance": 166
   },
   {
    "id": "CL-B1-CRUISE-DRAG",
@@ -13042,7 +13083,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.07222222222222482,
-   "importance": 108
+   "importance": 129
   },
   {
    "id": "T-B1-CRUISE-POWER",
@@ -13057,7 +13098,7 @@ window.PROOF_GRAPH = {
    "procedure": "Twin, then the aircraft: 60 s level legs at 14, 16, 18 m/s both directions, calm morning, log airspeed, pack V and A, ESC rpm (H2).",
    "defined_in": "redesign/team/B1/claims.json",
    "status": "PROPOSED",
-   "importance": 288
+   "importance": 312
   },
   {
    "id": "T-B1-TETHER-HOVER",
@@ -13101,7 +13142,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 482
+   "importance": 521
   },
   {
    "id": "SRC-B2-AVL",
@@ -13116,7 +13157,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 480
+   "importance": 519
   },
   {
    "id": "SRC-B2-S5010-COORD",
@@ -13128,7 +13169,7 @@ window.PROOF_GRAPH = {
    "where": "61 points; t/c 9.82 % from the file matches the published 9.8 %",
    "defined_in": "redesign/team/B2/claims.json",
    "status": "CHECKED",
-   "importance": 261
+   "importance": 292
   },
   {
    "id": "SRC-B2-MH45-COORD",
@@ -13155,7 +13196,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 312
+   "importance": 336
   },
   {
    "id": "ASM-B2-DIVE-FACTOR",
@@ -13167,7 +13208,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/B2/claims.json",
    "status": "PROPOSED",
-   "importance": 2
+   "importance": 3
   },
   {
    "id": "ASM-B2-HINGE-INVISCID",
@@ -13177,7 +13218,7 @@ window.PROOF_GRAPH = {
    "basis": "converged viscous XFOIL values are 70-80 % of inviscid at +10..+25 deg; viscous up-deflection cases do not converge (separated), so the inviscid value is used for both directions",
    "defined_in": "redesign/team/B2/claims.json",
    "status": "PROPOSED",
-   "importance": 2
+   "importance": 3
   },
   {
    "id": "ASM-B2-MIN-COVER",
@@ -13283,7 +13324,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B2/claims.json",
    "status": "CHECKED",
-   "importance": 308
+   "importance": 332
   },
   {
    "id": "CALC-B2-STALL",
@@ -13476,7 +13517,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B2/claims.json",
    "status": "CHECKED",
-   "importance": 2
+   "importance": 3
   },
   {
    "id": "CALC-B2-SPAR-COVER",
@@ -13597,7 +13638,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B2-CLMAX-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 307
+   "importance": 331
   },
   {
    "id": "CL-B2-STALL-GATE",
@@ -13831,7 +13872,7 @@ window.PROOF_GRAPH = {
     "uses P:b2.xfoil.hinge_coef_max, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 2
   },
   {
    "id": "CL-B2-SERVO-TORQUE-REQ",
@@ -13987,7 +14028,7 @@ window.PROOF_GRAPH = {
     "uses P:b2.xfoil.clmin_2d, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 256
+   "importance": 287
   },
   {
    "id": "CL-B2-DCM-VISC",
@@ -14006,7 +14047,7 @@ window.PROOF_GRAPH = {
     "uses P:b2.xfoil.clmin_2d, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 256
+   "importance": 287
   },
   {
    "id": "CL-B2-CLA-3D",
@@ -14025,7 +14066,7 @@ window.PROOF_GRAPH = {
     "uses P:b2.xfoil.clmin_2d, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 70
+   "importance": 81
   },
   {
    "id": "CL-B2-CLMIN-2D",
@@ -14076,7 +14117,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B2/claims.json",
    "status": "CHECKED",
-   "importance": 272
+   "importance": 304
   },
   {
    "id": "T-B2-STALL",
@@ -14090,7 +14131,7 @@ window.PROOF_GRAPH = {
    "procedure": "Twin first, then the XPS aircraft in FBWA at >= 50 m: ballast to 2.6 kg, CG at B3's value, decelerate 0.5 m/s per s to the stall break three times; Vs = mean airspeed at the break",
    "defined_in": "redesign/team/B2/claims.json",
    "status": "PROPOSED",
-   "importance": 307
+   "importance": 331
   },
   {
    "id": "T-B2-HINGE",
@@ -14116,7 +14157,7 @@ window.PROOF_GRAPH = {
    "note": "installed at C:/Users/dillo/tools/avl",
    "defined_in": "redesign/team/B3/claims.json",
    "status": "CHECKED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "SRC-B3-RIBNER",
@@ -14130,7 +14171,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "SRC-B3-PERKINS",
@@ -14143,7 +14184,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "SRC-B3-MIL8785C",
@@ -14184,7 +14225,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "ASM-B3-CLMAX-FLAP",
@@ -14227,7 +14268,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "ASM-B3-PROP-CNA",
@@ -14246,7 +14287,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "ASM-B3-UPWASH",
@@ -14258,7 +14299,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/B3/claims.json",
    "status": "PROPOSED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "ASM-B3-CD-CYL",
@@ -14288,7 +14329,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B3/claims.json",
    "status": "PROPOSED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "ASM-B3-POD-K-YAW",
@@ -14614,7 +14655,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.json",
    "status": "CHECKED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "CL-B3-AVL-CONV",
@@ -14652,7 +14693,7 @@ window.PROOF_GRAPH = {
     "uses P:cg.x_target_m, which is UNVERIFIED (cites CL-B3-CG-TARGET, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "CL-B3-CLA",
@@ -14668,7 +14709,7 @@ window.PROOF_GRAPH = {
     "uses P:cg.x_target_m, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "CL-B3-ALPHA0",
@@ -14830,7 +14871,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.json",
    "status": "CHECKED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "CL-B3-XNP",
@@ -14851,7 +14892,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-PROP-CNA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "CALC-B3-CG-LIMITS",
@@ -15107,7 +15148,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B3/claims.json",
    "status": "CHECKED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "CL-B3-CG-AFT",
@@ -15128,7 +15169,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-CLMAX-FLAP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 73
+   "importance": 92
   },
   {
    "id": "CL-B3-CG-FWD",
@@ -15149,7 +15190,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-CLMAX-FLAP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 227
+   "importance": 258
   },
   {
    "id": "CL-B3-CG-TARGET",
@@ -15170,7 +15211,7 @@ window.PROOF_GRAPH = {
     "uses ASM-B3-CLMAX-FLAP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "CL-B3-CG-WIDTH",
@@ -17930,7 +17971,7 @@ window.PROOF_GRAPH = {
    "procedure": "H1: balance the ready-to-fly aircraft on two fingertips (or a knife-edge jig) at the fin roots; the balance line must lie between the two marks drawn at the B3 limits.",
    "defined_in": "redesign/team/B3/claims.json",
    "status": "PROPOSED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "T-B3-TWIN-NP",
@@ -17944,7 +17985,7 @@ window.PROOF_GRAPH = {
    "procedure": "Twin, FBWA glides at 3 speeds for 2 pack positions; plot elevon trim vs CL; Xnp where the slope is 0.",
    "defined_in": "redesign/team/B3/claims.json",
    "status": "PROPOSED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "T-B3-YAW-DOUBLET",
@@ -17988,7 +18029,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/B4/claims.json",
    "status": "PROPOSED",
-   "importance": 229
+   "importance": 253
   },
   {
    "id": "ASM-B4-CD-TUBE",
@@ -18102,7 +18143,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/B4/claims.json",
    "status": "PROPOSED",
-   "importance": 42
+   "importance": 45
   },
   {
    "id": "ASM-B4-CANT",
@@ -18114,7 +18155,7 @@ window.PROOF_GRAPH = {
    "unit": "deg",
    "defined_in": "redesign/team/B4/claims.json",
    "status": "PROPOSED",
-   "importance": 42
+   "importance": 45
   },
   {
    "id": "SRC-B4-APC-PER3",
@@ -18127,7 +18168,7 @@ window.PROOF_GRAPH = {
    "note": "APC blade-element predictions (v2022-0915), not measurements; transcription checked by CALC-B4-DATA",
    "defined_in": "redesign/team/B4/claims.json",
    "status": "CHECKED",
-   "importance": 237
+   "importance": 261
   },
   {
    "id": "SRC-B4-UIUC",
@@ -18151,7 +18192,7 @@ window.PROOF_GRAPH = {
    "where": "MR 105,000/D(in); SF 65,000/D; Thin Electric 150,000/D",
    "defined_in": "redesign/team/B4/claims.json",
    "status": "CHECKED",
-   "importance": 234
+   "importance": 258
   },
   {
    "id": "SRC-B4-APC-PRODUCTS",
@@ -18356,7 +18397,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B4/claims.json",
    "status": "CHECKED",
-   "importance": 229
+   "importance": 253
   },
   {
    "id": "CALC-B4-CRUISE",
@@ -18458,7 +18499,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B4/claims.json",
    "status": "CHECKED",
-   "importance": 67
+   "importance": 70
   },
   {
    "id": "CALC-B4-DOWNLOAD",
@@ -18787,7 +18828,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/B4/claims.json",
    "status": "CHECKED",
-   "importance": 42
+   "importance": 45
   },
   {
    "id": "CALC-B4-GEOM",
@@ -19011,7 +19052,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 179
+   "importance": 200
   },
   {
    "id": "CL-B4-DL",
@@ -19055,7 +19096,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 177
+   "importance": 201
   },
   {
    "id": "CL-B4-HOVER-Q",
@@ -19080,7 +19121,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 179
+   "importance": 200
   },
   {
    "id": "CL-B4-FM",
@@ -19183,7 +19224,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.02367638416404223,
-   "importance": 30
+   "importance": 33
   },
   {
    "id": "CL-B4-RPM-MAX-FULL",
@@ -19390,7 +19431,7 @@ window.PROOF_GRAPH = {
     "uses P:performance.ld_cruise, which is UNVERIFIED (cites CL-B1-CRUISE-LD, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 61
+   "importance": 64
   },
   {
    "id": "CL-B4-CRUISE-SHAFT",
@@ -19902,7 +19943,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.6455892078535783,
-   "importance": 39
+   "importance": 42
   },
   {
    "id": "CL-B4-DESCENT",
@@ -20034,7 +20075,7 @@ window.PROOF_GRAPH = {
    "procedure": "H1 stand (shared with T-E1-STAND), 14.8 V, 10 % throttle steps; log thrust, torque, rpm, V, A.",
    "defined_in": "redesign/team/B4/claims.json",
    "status": "PROPOSED",
-   "importance": 212
+   "importance": 236
   },
   {
    "id": "T-B4-INSTALLED",
@@ -20090,7 +20131,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 201
+   "importance": 251
   },
   {
    "id": "SRC-C1-PRATT",
@@ -20103,7 +20144,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 69
+   "importance": 80
   },
   {
    "id": "SRC-C1-THIN-AIRFOIL",
@@ -20116,7 +20157,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 54
+   "importance": 64
   },
   {
    "id": "SRC-C1-HOERNER",
@@ -20129,7 +20170,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 109
+   "importance": 134
   },
   {
    "id": "ASM-C1-B2-SPANLOAD",
@@ -20279,7 +20320,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 54
+   "importance": 64
   },
   {
    "id": "ASM-C1-CLMIN",
@@ -20297,7 +20338,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 69
+   "importance": 80
   },
   {
    "id": "ASM-C1-UDE-D-FRAC",
@@ -20312,7 +20353,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 69
+   "importance": 80
   },
   {
    "id": "ASM-C1-PROP-PITCH",
@@ -20327,7 +20368,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 106
+   "importance": 127
   },
   {
    "id": "ASM-C1-VD-FACTOR",
@@ -20342,7 +20383,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 106
+   "importance": 127
   },
   {
    "id": "ASM-C1-BELL-INERTIA",
@@ -20357,7 +20398,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 131
+   "importance": 154
   },
   {
    "id": "ASM-C1-PITCH-RATE",
@@ -20372,7 +20413,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 107
+   "importance": 128
   },
   {
    "id": "ASM-C1-ELEVON-CN",
@@ -20402,7 +20443,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 134
+   "importance": 161
   },
   {
    "id": "ASM-C1-CRUSH-EFF",
@@ -20417,7 +20458,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 109
+   "importance": 134
   },
   {
    "id": "ASM-C1-LAND-LIFT",
@@ -20432,7 +20473,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 146
+   "importance": 181
   },
   {
    "id": "ASM-C1-FRICTION",
@@ -20447,7 +20488,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 124
+   "importance": 149
   },
   {
    "id": "ASM-C1-CONTACT-STROKE",
@@ -20462,7 +20503,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 109
+   "importance": 134
   },
   {
    "id": "ASM-C1-CD-PLATE",
@@ -20477,7 +20518,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 109
+   "importance": 134
   },
   {
    "id": "ASM-C1-HANDLING-N",
@@ -20489,7 +20530,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 78
+   "importance": 94
   },
   {
    "id": "ASM-C1-CRASH-V",
@@ -20501,7 +20542,7 @@ window.PROOF_GRAPH = {
    "unit": "m/s",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 32
+   "importance": 36
   },
   {
    "id": "ASM-C1-CRASH-STROKE",
@@ -20525,7 +20566,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 54
+   "importance": 64
   },
   {
    "id": "ASM-C1-CRADLE-STROKE",
@@ -20537,7 +20578,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 54
+   "importance": 64
   },
   {
    "id": "ASM-C1-FITTING-FACTOR",
@@ -20552,7 +20593,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 95
+   "importance": 122
   },
   {
    "id": "ASM-C1-PRINTED-FACTOR",
@@ -20567,7 +20608,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 83
+   "importance": 112
   },
   {
    "id": "ASM-C1-PROP-NUT-TORQUE",
@@ -20582,7 +20623,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 0
+   "importance": 4
   },
   {
    "id": "ASM-C1-STRAP-PRELOAD",
@@ -20687,7 +20728,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 106
+   "importance": 127
   },
   {
    "id": "CALC-C1-VN",
@@ -20772,7 +20813,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 69
+   "importance": 80
   },
   {
    "id": "CALC-C1-LANDING",
@@ -21009,7 +21050,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 109
+   "importance": 134
   },
   {
    "id": "CALC-C1-CRASH",
@@ -21081,7 +21122,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 54
+   "importance": 64
   },
   {
    "id": "CALC-C1-ENVELOPE",
@@ -21567,7 +21608,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C1/claims.json",
    "status": "CHECKED",
-   "importance": 54
+   "importance": 64
   },
   {
    "id": "CL-C1-T-CAP",
@@ -21661,7 +21702,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-VMAX, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 82
+   "importance": 98
   },
   {
    "id": "CL-C1-MOTOR-TORQUE",
@@ -21687,7 +21728,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-VMAX, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 80
+   "importance": 96
   },
   {
    "id": "CL-C1-ROTOR-H",
@@ -21713,7 +21754,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-VMAX, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-ROTOR-OMEGA",
@@ -21739,7 +21780,7 @@ window.PROOF_GRAPH = {
     "uses CL-B1-VMAX, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-GYRO-MOMENT",
@@ -21830,7 +21871,7 @@ window.PROOF_GRAPH = {
    "status": "UNVERIFIED",
    "margin": -0.21483909970238096,
    "fails": true,
-   "importance": 70
+   "importance": 85
   },
   {
    "id": "CL-C1-HOVER-N-MAX",
@@ -21878,7 +21919,7 @@ window.PROOF_GRAPH = {
     "uses CL-C1-VD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 66
   },
   {
    "id": "CL-C1-Q-VD",
@@ -21944,7 +21985,7 @@ window.PROOF_GRAPH = {
     "uses CL-C1-VD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 56
+   "importance": 66
   },
   {
    "id": "CL-C1-N-LIMIT-POS",
@@ -21978,7 +22019,7 @@ window.PROOF_GRAPH = {
    "status": "UNVERIFIED",
    "margin": -0.10544696527277682,
    "fails": true,
-   "importance": 58
+   "importance": 68
   },
   {
    "id": "CL-C1-N-LIMIT-NEG",
@@ -22009,7 +22050,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0,
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-GUST-N-POS",
@@ -22042,7 +22083,7 @@ window.PROOF_GRAPH = {
    "status": "UNVERIFIED",
    "margin": -0.10544696527277682,
    "fails": true,
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-GUST-V-POS",
@@ -22064,7 +22105,7 @@ window.PROOF_GRAPH = {
     "uses CL-C1-VD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-GUST-N-NEG",
@@ -22092,7 +22133,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.09598482221307385,
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-GUST-V-NEG",
@@ -22114,7 +22155,7 @@ window.PROOF_GRAPH = {
     "uses CL-C1-VD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-N-STALL-VD",
@@ -22298,7 +22339,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 75
+   "importance": 91
   },
   {
    "id": "CL-C1-FOOT-PAIR-NARROW",
@@ -22331,7 +22372,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-FOOT-PAIR-WIDE",
@@ -22364,7 +22405,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-FOOT-CORNER",
@@ -22397,7 +22438,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 82
+   "importance": 107
   },
   {
    "id": "CL-C1-FOOT-MAX",
@@ -22430,7 +22471,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 27
   },
   {
    "id": "CL-C1-WINGTIP-STRIKE-ANGLE",
@@ -22581,7 +22622,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-TIPOVER-ANGLE-CONTACT",
@@ -22614,7 +22655,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-TIPOVER-ENERGY",
@@ -22680,7 +22721,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 55
+   "importance": 65
   },
   {
    "id": "CL-C1-STANCE-TIP-WIND",
@@ -22831,7 +22872,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0742248517041975,
-   "importance": 54
+   "importance": 64
   },
   {
    "id": "CL-C1-SPAR-MB-ULT",
@@ -22894,7 +22935,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 3
   },
   {
    "id": "CL-C1-SPAR-MX-ULT",
@@ -22957,7 +22998,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 7
+   "importance": 8
   },
   {
    "id": "CL-C1-SPAR-MZ-ULT",
@@ -23083,7 +23124,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 2
   },
   {
    "id": "CL-C1-WING-SHEAR-ULT",
@@ -23146,7 +23187,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 7
+   "importance": 8
   },
   {
    "id": "CL-C1-FINJOINT-F-ULT",
@@ -23587,7 +23628,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "CL-C1-POD-F-ULT",
@@ -23650,7 +23691,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 2
+   "importance": 5
   },
   {
    "id": "CL-C1-FOOT-F-ULT",
@@ -23713,7 +23754,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 7
   },
   {
    "id": "CL-C1-TRANSPORT-N-ALLOW",
@@ -23776,7 +23817,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 54
+   "importance": 64
   },
   {
    "id": "CL-C1-FINJOINT-M-FLIGHT-LIM",
@@ -24045,7 +24086,7 @@ window.PROOF_GRAPH = {
    "procedure": "Support at the pod, sandbag the wing to the F1 spanwise shear (data/wing_spanwise.csv) at limit; no permanent set after unloading; tip deflection logged.",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 58
+   "importance": 68
   },
   {
    "id": "T-C1-FOOT-DROP",
@@ -24073,7 +24114,7 @@ window.PROOF_GRAPH = {
    "procedure": "H1 thrust stand, one station, 11x5.5MR, 16.8 V pack, F4 output cap and 100 A limiter as flown: step to full throttle, record peak thrust, torque and rpm.",
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
-   "importance": 83
+   "importance": 99
   },
   {
    "id": "T-C1-STATION-PROOF",
@@ -24088,6 +24129,1687 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C1/claims.json",
    "status": "PROPOSED",
    "importance": 8
+  },
+  {
+   "id": "SRC-C2-ROARK",
+   "type": "source",
+   "title": "Roark's Formulas for Stress and Strain, 7th ed., table 9.2 (rings) and 15.2 (tubes)",
+   "kind": "book",
+   "where": "ring under two opposed loads M = P R / pi; thin tube in bending sigma_cr = 0.6 gamma E t / R, gamma ~ 0.5 for R/t 10 (knock-down)",
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "value never compared with the source (no 'checked' date)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "SRC-C2-THEODORSEN",
+   "type": "source",
+   "title": "Theodorsen, NACA Report 496 (1935); Bisplinghoff, Ashley & Halfman, Aeroelasticity ch. 5-9",
+   "kind": "paper",
+   "url": "https://ntrs.nasa.gov/citations/19930090935",
+   "where": "unsteady strip aerodynamics for the p-k flutter screen; divergence and reversal by strip theory",
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "value never compared with the source (no 'checked' date)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "SRC-C2-FAR23-629",
+   "type": "source",
+   "title": "14 CFR 23.629 (pre-Amdt 23-64): flutter, divergence and reversal free to 1.2 VD",
+   "kind": "standard",
+   "url": "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-23",
+   "where": "23.629(b): free from flutter, control reversal and divergence up to 1.2 VD; adopted by analogy",
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "value never compared with the source (no 'checked' date)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "SRC-C2-XPS-TYP",
+   "type": "source",
+   "title": "Extruded polystyrene mechanical properties (Gibson & Ashby, Cellular Solids, ch. 5; EN 13164 XPS grades)",
+   "kind": "book",
+   "where": "E 8-15 MPa, G 3-6 MPa, shear strength 0.15-0.25 MPa at 28-35 kg/m3; replaced by T-C2-XPS-COUPON",
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "value never compared with the source (no 'checked' date)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "ASM-C2-SPAR-SIGMA",
+   "type": "assumption",
+   "title": "Spar bending allowable 350 MPa",
+   "text": "Compressive-side bending allowable of the unbranded 22 x 20 roll-wrapped CF tube",
+   "basis": "standard-modulus roll-wrapped tubes are catalogued at 500-600 MPa compressive; 0.6 x for an unbranded tube; every spar margin is > +4 so the exact value does not drive the design",
+   "value": 350000000.0,
+   "unit": "Pa",
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "ASM-C2-SPAR-HOOP",
+   "type": "assumption",
+   "title": "Spar hoop allowable 40 MPa",
+   "text": "Transverse (ring-bending) allowable of the 1 mm wall",
+   "basis": "UD-dominated wall: transverse strength 40-60 MPa; a woven outer ply raises it. Drives the plugs",
+   "value": 40000000.0,
+   "unit": "Pa",
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "ASM-C2-TAPE",
+   "type": "assumption",
+   "title": "Packing tape skin 2 GPa, 44 um, 60 MPa",
+   "text": "BOPP film, machine direction, structural thickness 40 um x 1.1 overlap",
+   "basis": "BOPP E 1.7-2.5 GPa, tensile 100-150 MPa; adhesive not counted",
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "ASM-C2-TAPE-EFF",
+   "type": "assumption",
+   "title": "Tape stiffness effectiveness 50 %",
+   "text": "Tape on foam develops half its film stiffness (creep, wrinkles, overlaps)",
+   "basis": "modal corners run at 0, 0.5 and 1.0; T-C2-TWIST measures GJ",
+   "value": 0.5,
+   "unit": "-",
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "ASM-C2-XPS",
+   "type": "assumption",
+   "title": "XPS F-250 properties",
+   "text": "E 10 MPa, G 4 MPa; allowables compression 120 kPa, tension 150 kPa, shear 100 kPa",
+   "basis": "typical XPS at 30 kg/m3 knocked down for hot-wire surface damage; only the 25 psi compressive rating is on the F-250 sheet",
+   "cites": [
+    "SRC-C2-XPS-TYP",
+    "SRC-XPS-F250"
+   ],
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "ASM-C2-CONTACT",
+   "type": "assumption",
+   "title": "Bore contact half-angle 30 deg",
+   "text": "A 0.15 mm radial bond gap gives a narrow contact arc at the bore end",
+   "basis": "60 deg halves the ring stress; the plug makes it irrelevant",
+   "value": 30.0,
+   "unit": "deg",
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "ASM-C2-AE-FACTOR",
+   "type": "assumption",
+   "title": "Aeroelastic clearance to 1.2 VD",
+   "text": "Flutter, divergence and reversal free to 1.2 VD",
+   "basis": "FAR 23.629 practice",
+   "value": 1.2,
+   "unit": "-",
+   "cites": [
+    "SRC-C2-FAR23-629"
+   ],
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "ASM-C2-FE-TOL",
+   "type": "assumption",
+   "title": "FE convergence tolerance 1 %",
+   "text": "Result change between the two finest meshes",
+   "basis": "SIM-TOOLS professional practice: 3+ levels, change < 1 %",
+   "value": 0.01,
+   "unit": "-",
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "PROPOSED",
+   "importance": 3
+  },
+  {
+   "id": "ASM-C2-FE-AGREE",
+   "type": "assumption",
+   "title": "FE vs beam-integration agreement 2 %",
+   "text": "Two independent methods on the same loads",
+   "basis": "both are beam theory; residual is load lumping",
+   "value": 0.02,
+   "unit": "-",
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-SPAR-ROOT",
+   "type": "calculation",
+   "title": "Spar root bending stress, spar alone",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "spar_root",
+   "equation": "sigma = Mb_ult (D/2) / I;  I = pi/64 (D^4 - d^4)",
+   "inputs": {
+    "Mb": "CL-C1-SPAR-MB-ULT",
+    "D": "P:wing.spar.od_m",
+    "d": "P:wing.spar.id_m"
+   },
+   "assumes": [
+    "ASM-C2-SPAR-SIGMA"
+   ],
+   "cites": [
+    "SRC-C2-ROARK"
+   ],
+   "outputs": {
+    "sigma_pa": 61516572.001447745,
+    "I_m4": 3.645032876327555e-09
+   },
+   "input_values": {
+    "Mb": 20.384538853113476,
+    "D": 0.022,
+    "d": 0.02
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 2
+  },
+  {
+   "id": "CALC-C2-SPAR-TAU",
+   "type": "calculation",
+   "title": "Spar shear stress, torsion + transverse shear, spar alone",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "spar_tau",
+   "equation": "tau = T r / J + 2 V / A",
+   "inputs": {
+    "T": "CL-C1-WING-TORSION-ULT",
+    "V": "CL-C1-WING-SHEAR-ULT",
+    "D": "P:wing.spar.od_m",
+    "d": "P:wing.spar.id_m"
+   },
+   "outputs": {
+    "value": 11774370.032241136
+   },
+   "input_values": {
+    "T": 6.945309112482081,
+    "V": 42.70376241550614,
+    "D": 0.022,
+    "d": 0.02
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-SPAR-BUCKLE",
+   "type": "calculation",
+   "title": "Spar local buckling stress in bending",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "spar_buckle",
+   "equation": "sigma_cr = 0.6 gamma E_lo t / R, gamma 0.5",
+   "inputs": {
+    "E": "P:c2.inputs.spar_E_lo_pa",
+    "D": "P:wing.spar.od_m",
+    "d": "P:wing.spar.id_m"
+   },
+   "cites": [
+    "SRC-C2-ROARK"
+   ],
+   "outputs": {
+    "value": 1999999999.9999983
+   },
+   "input_values": {
+    "E": 70000000000.0,
+    "D": 0.022,
+    "d": 0.02
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-SPAR-BRACE",
+   "type": "calculation",
+   "title": "Spar between brace anchor and block, brace couple added",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "spar_brace",
+   "equation": "sigma = (Mx_ult + F_brace/(1.15 x 1.25) x (y_fin - 0.242)) (D/2) / I",
+   "inputs": {
+    "Mx": "CL-C1-SPAR-MX-ULT",
+    "Fb": "P:c2.fe.F_brace_design_N",
+    "y_fin": "P:fins.y_m",
+    "D": "P:wing.spar.od_m",
+    "d": "P:wing.spar.id_m"
+   },
+   "outputs": {
+    "value": 66154851.21180489
+   },
+   "input_values": {
+    "Mx": 14.005343119851746,
+    "Fb": 145.890892,
+    "y_fin": 0.32,
+    "D": 0.022,
+    "d": 0.02
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-AE-REQ",
+   "type": "calculation",
+   "title": "Required aeroelastic clearance speed",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "ae_req",
+   "equation": "V_req = 1.2 VD",
+   "inputs": {
+    "VD": "CL-C1-VD",
+    "k": "ASM-C2-AE-FACTOR"
+   },
+   "outputs": {
+    "value": 32.654875
+   },
+   "input_values": {
+    "VD": 27.212395833333332,
+    "k": 1.2
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 4
+  },
+  {
+   "id": "CALC-C2-DEFL",
+   "type": "calculation",
+   "title": "Tip deflection ratio at limit load (beam integration of every C1 case)",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "defl",
+   "equation": "w_tip_max / (b/2)",
+   "inputs": {
+    "w": "P:c2.fe.w_tip_env_m",
+    "b": "P:wing.span_m"
+   },
+   "outputs": {
+    "value": 0.005038260869565218
+   },
+   "input_values": {
+    "w": 0.002897,
+    "b": 1.15
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-MASS",
+   "type": "calculation",
+   "title": "Wing structure mass",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "wing_mass",
+   "equation": "m = core + tape + spar + fill + plugs",
+   "inputs": {
+    "m": "P:c2.fe.wing_mass_kg"
+   },
+   "outputs": {
+    "value": 397.433
+   },
+   "input_values": {
+    "m": 0.397433
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-SPAR-ENV",
+   "type": "calculation",
+   "title": "Spar stress, envelope maximum along the span",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_spar_env",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.spar_sigma_ult_max_pa"
+   },
+   "outputs": {
+    "value": 61516454.750311
+   },
+   "input_values": {
+    "v": 61516454.750311
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-TWIST",
+   "type": "calculation",
+   "title": "Wing twist, flight cases, limit",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_twist",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.twist_flight_deg"
+   },
+   "outputs": {
+    "value": 2.766828
+   },
+   "input_values": {
+    "v": 2.766828
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-VREV",
+   "type": "calculation",
+   "title": "Roll reversal speed (strip theory, spar-only GJ bound)",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_vrev",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.V_rev_bound_ms"
+   },
+   "outputs": {
+    "value": 53.331614
+   },
+   "input_values": {
+    "v": 53.331614
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-VDIV",
+   "type": "calculation",
+   "title": "Divergence speed (spar-only GJ, shear centre 20 mm aft)",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_vdiv",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.V_div_bound_ms"
+   },
+   "outputs": {
+    "value": 91.092299
+   },
+   "input_values": {
+    "v": 91.092299
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-VFL",
+   "type": "calculation",
+   "title": "Flutter screen speed (modal p-k, 6 modes)",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_vfl",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.V_flutter_ms"
+   },
+   "outputs": {
+    "value": 81.637187
+   },
+   "input_values": {
+    "v": 81.637187
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-EFF",
+   "type": "calculation",
+   "title": "Elevon roll effectiveness at VD",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_eff",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.eff_vd"
+   },
+   "outputs": {
+    "value": 0.775008
+   },
+   "input_values": {
+    "v": 0.775008
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-MODESEP",
+   "type": "calculation",
+   "title": "Wing-mode separation from rotor orders, nominal stiffness",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_modesep",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.mode_sep_worst"
+   },
+   "outputs": {
+    "value": 0.076653
+   },
+   "input_values": {
+    "v": 0.076653
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-FTORS",
+   "type": "calculation",
+   "title": "First wing mode, antisymmetric torsion, low corner",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_ftors",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.f_torsion_anti_hz"
+   },
+   "outputs": {
+    "value": 11.705633
+   },
+   "input_values": {
+    "v": 11.705633
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-FTORS-S",
+   "type": "calculation",
+   "title": "Symmetric wing torsion mode, low corner",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_ftors_s",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.f_torsion_sym_hz"
+   },
+   "outputs": {
+    "value": 21.689836
+   },
+   "input_values": {
+    "v": 21.689836
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-RING",
+   "type": "calculation",
+   "title": "Spar wall ring stress at the block, no plug",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_ring",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.ring_no_plug_sigma_pa"
+   },
+   "outputs": {
+    "value": 910890812.725561
+   },
+   "input_values": {
+    "v": 910890812.725561
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-RING-ANCHOR",
+   "type": "calculation",
+   "title": "Spar wall ring stress under the brace anchor, no plug",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_ring_anchor",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.ring_anchor_sigma_pa"
+   },
+   "outputs": {
+    "value": 77758053.315274
+   },
+   "input_values": {
+    "v": 77758053.315274
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-PLUG",
+   "type": "calculation",
+   "title": "Plug bearing stress at the block",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_plug",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.plug_bearing_pa"
+   },
+   "outputs": {
+    "value": 5340711.805556
+   },
+   "input_values": {
+    "v": 5340711.805556
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-BOND",
+   "type": "calculation",
+   "title": "Spar slot bond shear",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_bond",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.spar_bond_tau_ult_pa"
+   },
+   "outputs": {
+    "value": 8094.765092
+   },
+   "input_values": {
+    "v": 8094.765092
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-CHORD-TAPE",
+   "type": "calculation",
+   "title": "Tape stress, chordwise bending aft of the spar",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_chord_tape",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.chord_tape_sigma_ult_pa"
+   },
+   "outputs": {
+    "value": 13020209.381177
+   },
+   "input_values": {
+    "v": 13020209.381177
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-CHORD-FOAM",
+   "type": "calculation",
+   "title": "Bare-foam stress, chordwise bending aft of the spar",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_chord_foam",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.chord_foam_only_sigma_ult_pa"
+   },
+   "outputs": {
+    "value": 109429.887373
+   },
+   "input_values": {
+    "v": 109429.887373
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-TIP",
+   "type": "calculation",
+   "title": "Foam stress outboard of the spar end",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_tip",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.tip_foam_sigma_ult_pa"
+   },
+   "outputs": {
+    "value": 4923.735828
+   },
+   "input_values": {
+    "v": 4923.735828
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-ROOT-TAPE",
+   "type": "calculation",
+   "title": "Tape stress at the root, composite section",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_root_tape",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.tape_sigma_root_ult_pa"
+   },
+   "outputs": {
+    "value": 7503720.880622
+   },
+   "input_values": {
+    "v": 7503720.880622
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-POD",
+   "type": "calculation",
+   "title": "Pod bond shear on the wing foam",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_pod",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.pod_tau_pa"
+   },
+   "outputs": {
+    "value": 8745.663953
+   },
+   "input_values": {
+    "v": 8745.663953
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-CRADLE",
+   "type": "calculation",
+   "title": "Cradle pad area required",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_cradle",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.cradle_area_req_m2"
+   },
+   "outputs": {
+    "value": 0.00108
+   },
+   "input_values": {
+    "v": 0.00108
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-CONV-F",
+   "type": "calculation",
+   "title": "Modal mesh convergence",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_conv_f",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.mesh_conv_freq"
+   },
+   "outputs": {
+    "value": 0.000213
+   },
+   "input_values": {
+    "v": 0.000213
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-CONV-S",
+   "type": "calculation",
+   "title": "Static mesh convergence",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_conv_s",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.mesh_conv_static"
+   },
+   "outputs": {
+    "value": 0.000526
+   },
+   "input_values": {
+    "v": 0.000526
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-FE-INT",
+   "type": "calculation",
+   "title": "FE vs beam integration",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_fe_int",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.fe_vs_integration"
+   },
+   "outputs": {
+    "value": 0.002241
+   },
+   "input_values": {
+    "v": 0.002241
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C2-RING-VAL",
+   "type": "calculation",
+   "title": "Ring model vs Roark",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_ring_val",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2.fe.ring_validation_err"
+   },
+   "outputs": {
+    "value": 0.003689
+   },
+   "input_values": {
+    "v": 0.003689
+   },
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-SPAR-SIGMA-ULT",
+   "type": "claim",
+   "title": "Spar root bending stress, ultimate, spar alone",
+   "calc": "CALC-C2-SPAR-ROOT",
+   "output": "sigma_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.spar_sigma_allow_pa",
+    "resolved": 350000000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "T-C2-WING-PROOF: wing on the two block stations, limit load hung at the tip and pod; no crack, no set",
+   "value": 61516572.001447745,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses SRC-C2-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C2-SPAR-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-SPAR-MB-ULT, which is UNVERIFIED",
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:wing.spar.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:c2.inputs.spar_sigma_allow_pa, which is UNVERIFIED (cites ASM-C2-SPAR-SIGMA, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.8242383657101493,
+   "importance": 2
+  },
+  {
+   "id": "CL-C2-SPAR-SIGMA-ENV",
+   "type": "claim",
+   "title": "Spar bending stress, max along the span, ultimate",
+   "calc": "CALC-C2-SPAR-ENV",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.spar_sigma_allow_pa",
+    "resolved": 350000000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Re-run wing_struct.py; equals CL-C2-SPAR-SIGMA-ULT when the root governs",
+   "value": 61516454.750311,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses P:c2.inputs.spar_sigma_allow_pa, which is UNVERIFIED (cites ASM-C2-SPAR-SIGMA, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.8242387007133971,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-SPAR-TAU-ULT",
+   "type": "claim",
+   "title": "Spar shear stress, all torsion and shear on the spar, ultimate",
+   "calc": "CALC-C2-SPAR-TAU",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.spar_tau_allow_pa",
+    "resolved": 30000000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "T-C2-TWIST loads the wing in torsion to 1.5 x 4.6 N m",
+   "value": 11774370.032241136,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses CL-C1-WING-TORSION-ULT, which is UNVERIFIED",
+    "uses CL-C1-WING-SHEAR-ULT, which is UNVERIFIED",
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:wing.spar.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:c2.inputs.spar_tau_allow_pa, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C2/params.json: in-plane shear allowable, matrix-dominated UD lower bound (G12 strength 50-70 MPa x 0.5))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.6075209989252954,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-SPAR-BUCKLE",
+   "type": "claim",
+   "title": "Spar local buckling stress vs the ultimate bending stress",
+   "calc": "CALC-C2-SPAR-BUCKLE",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C2-SPAR-SIGMA-ULT",
+    "resolved": 61516572.001447745
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Hand check against Roark; the proof test exceeds ultimate stress nowhere",
+   "value": 1999999999.9999983,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses SRC-C2-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses P:c2.inputs.spar_E_lo_pa, which is UNVERIFIED (cites ASM-C4-E-TUBE-LO, which is UNVERIFIED)",
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:wing.spar.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses CL-C2-SPAR-SIGMA-ULT, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 31.51156452529458,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-SPAR-SIGMA-BRACE",
+   "type": "claim",
+   "title": "Spar between anchor and block with the brace couple, ultimate",
+   "calc": "CALC-C2-SPAR-BRACE",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.spar_sigma_allow_pa",
+    "resolved": 350000000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-002",
+    "FIN-004-L",
+    "FIN-004-R"
+   ],
+   "how": "T-C4-BLOCK-PROOF on a spar stub with the brace fitted",
+   "value": 66154851.21180489,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses CL-C1-SPAR-MX-ULT, which is UNVERIFIED",
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:wing.spar.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:c2.inputs.spar_sigma_allow_pa, which is UNVERIFIED (cites ASM-C2-SPAR-SIGMA, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.8109861393948432,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-TIP-DEFL-FRAC",
+   "type": "claim",
+   "title": "Wing tip deflection / semi-span at limit, worst case (G2), E 70 GPa",
+   "calc": "CALC-C2-DEFL",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.spar_deflection_max",
+    "resolved": 0.05
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-WING-PROOF: dial gauge or ruler at the tip at limit load",
+   "value": 0.005038260869565218,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "margin": 0.8992347826086957,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-TWIST-FLIGHT",
+   "type": "claim",
+   "title": "Wing twist at limit, flight cases (F7 rolling pull-up at VD)",
+   "calc": "CALC-C2-TWIST",
+   "output": "value",
+   "unit": "deg",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TWIST: measure GJ, re-run wing_struct.py with it",
+   "value": 2.766828,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-V-AE-REQ",
+   "type": "claim",
+   "title": "Aeroelastic clearance speed required (1.2 VD)",
+   "calc": "CALC-C2-AE-REQ",
+   "output": "value",
+   "unit": "m/s",
+   "how": "Follows CL-C1-VD",
+   "value": 32.654875,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses CL-C1-VD, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "CL-C2-V-REVERSAL",
+   "type": "claim",
+   "title": "Roll reversal speed, spar-only torsion bound",
+   "calc": "CALC-C2-VREV",
+   "output": "value",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C2-V-AE-REQ",
+    "resolved": 32.654875
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TWIST gives GJ; flight: roll response at 20 m/s matches 16 m/s per unit q",
+   "cites": [
+    "SRC-C2-THEODORSEN"
+   ],
+   "value": 53.331614,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses SRC-C2-THEODORSEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses CL-C2-V-AE-REQ, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.6331899601514325,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-V-DIVERGENCE",
+   "type": "claim",
+   "title": "Divergence speed, spar-only torsion, shear centre 20 mm aft",
+   "calc": "CALC-C2-VDIV",
+   "output": "value",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C2-V-AE-REQ",
+    "resolved": 32.654875
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TWIST (GJ) and a tip-load test locating the shear centre (load at x 0.08 gives no twist)",
+   "cites": [
+    "SRC-C2-THEODORSEN"
+   ],
+   "value": 91.092299,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses SRC-C2-THEODORSEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses CL-C2-V-AE-REQ, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 1.7895467062728,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-V-FLUTTER",
+   "type": "claim",
+   "title": "Flutter screen: no unstable root up to this speed",
+   "calc": "CALC-C2-VFL",
+   "output": "value",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C2-V-AE-REQ",
+    "resolved": 32.654875
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TAP-TEST frequencies within 15 % of the model; elevons servo-held with < 1 deg free play",
+   "cites": [
+    "SRC-C2-THEODORSEN"
+   ],
+   "value": 81.637187,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses SRC-C2-THEODORSEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses CL-C2-V-AE-REQ, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 1.4999999846883507,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-ROLL-EFF-VD",
+   "type": "claim",
+   "title": "Elevon roll effectiveness at VD, flexible / rigid",
+   "calc": "CALC-C2-EFF",
+   "output": "value",
+   "unit": "-",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "B3/F4 use it for the gain schedule; T-C2-TWIST replaces GJ",
+   "value": 0.775008,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-WING-MODE-SEP",
+   "type": "claim",
+   "title": "Wing modes with >= 10 % motor/mount energy: separation from hover/cruise 1P, 2P",
+   "calc": "CALC-C2-MODESEP",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.vibration_sep_frac",
+    "resolved": 0.2
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003",
+    "FIN-002-L",
+    "FIN-002-R"
+   ],
+   "how": "T-C2-TAP-TEST on the built airframe with motors fitted; hover VIBE < 30 m/s2 with the F4 harmonic notch",
+   "value": 0.076653,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "FAILS: margin -61.7% (0.07665 vs >= 0.2)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.616735,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-F-TORSION-ANTI",
+   "type": "claim",
+   "title": "First wing mode: antisymmetric torsion with the fin stations, low corner",
+   "calc": "CALC-C2-FTORS",
+   "output": "value",
+   "unit": "Hz",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TAP-TEST (tap a fin tip, phone accelerometer at the pod)",
+   "value": 11.705633,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-F-TORSION-SYM",
+   "type": "claim",
+   "title": "Symmetric wing torsion mode (hover pitch control path), low corner",
+   "calc": "CALC-C2-FTORS-S",
+   "output": "value",
+   "unit": "Hz",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TAP-TEST",
+   "value": 21.689836,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-RING-NO-PLUG",
+   "type": "claim",
+   "title": "Spar wall ring stress at the block bore end without a plug, design",
+   "calc": "CALC-C2-RING",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.spar_hoop_allow_pa",
+    "resolved": 40000000.0
+   },
+   "parts": [
+    "WNG-002",
+    "FIN-004-L",
+    "FIN-004-R"
+   ],
+   "how": "Shows the plug is required (expected FAIL); the plug claim CL-C2-PLUG-BEARING carries the load",
+   "assumes": [
+    "ASM-C2-CONTACT"
+   ],
+   "cites": [
+    "SRC-C2-ROARK"
+   ],
+   "value": 910890812.725561,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "FAILS: margin -2177.2% (9.109e+08 Pa vs <= 4e+07 Pa)",
+    "uses SRC-C2-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C2-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:c2.inputs.spar_hoop_allow_pa, which is UNVERIFIED (cites ASM-C2-SPAR-HOOP, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -21.772270318139025,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-RING-ANCHOR",
+   "type": "claim",
+   "title": "Spar wall ring stress under the brace anchor without a plug, design",
+   "calc": "CALC-C2-RING-ANCHOR",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.spar_hoop_allow_pa",
+    "resolved": 40000000.0
+   },
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Shows the anchor plug is required (expected FAIL)",
+   "assumes": [
+    "ASM-C2-CONTACT"
+   ],
+   "value": 77758053.315274,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "FAILS: margin -94.4% (7.776e+07 Pa vs <= 4e+07 Pa)",
+    "uses ASM-C2-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:c2.inputs.spar_hoop_allow_pa, which is UNVERIFIED (cites ASM-C2-SPAR-HOOP, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.94395133288185,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-PLUG-BEARING",
+   "type": "claim",
+   "title": "Plug bearing stress at the block, plug fitted, design",
+   "calc": "CALC-C2-PLUG",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.petg_bearing_allow_pa",
+    "resolved": 20000000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-002",
+    "FIN-004-L",
+    "FIN-004-R"
+   ],
+   "how": "T-C4-BLOCK-PROOF with the plug fitted: no wall crack (inspect with a light inside the tube)",
+   "value": 5340711.805556,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses P:c2.inputs.petg_bearing_allow_pa, which is UNVERIFIED (cites ASM-C4-PETG-BEARING, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.7329644097222,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-SPAR-BOND-TAU",
+   "type": "claim",
+   "title": "Spar slot bond shear from the distributed air load, ultimate",
+   "calc": "CALC-C2-BOND",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_shear_allow_pa",
+    "resolved": 100000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002"
+   ],
+   "how": "T-C2-XPS-COUPON (foam shear) and T-C2-WING-PROOF",
+   "value": 8094.765092,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses P:c2.inputs.xps_shear_allow_pa, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C2/params.json: XPS shear strength 150-250 kPa (EN 12090 grades near 200 kPa compression), knocked down)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.91905234908,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-CHORD-TAPE",
+   "type": "claim",
+   "title": "Tape stress, chordwise bending of the core aft of the spar, CN 1 at VD, ultimate",
+   "calc": "CALC-C2-CHORD-TAPE",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.tape_sigma_allow_pa",
+    "resolved": 60000000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-003"
+   ],
+   "how": "T-C2-XPS-COUPON: taped foam strip in 3-point bending",
+   "value": 13020209.381177,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses P:c2.inputs.tape_sigma_allow_pa, which is UNVERIFIED (cites ASM-C2-TAPE, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.7829965103137166,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-CHORD-FOAM",
+   "type": "claim",
+   "title": "Same, bare foam (tape lost)",
+   "calc": "CALC-C2-CHORD-FOAM",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_tens_allow_pa",
+    "resolved": 150000.0
+   },
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "T-C2-XPS-COUPON: bare foam strip",
+   "value": 109429.887373,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses P:c2.inputs.xps_tens_allow_pa, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C2/params.json: XPS tensile/flexural 250-500 kPa at this density, halved for hot-wire surface damage)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.2704674175133333,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-TIP-FOAM",
+   "type": "claim",
+   "title": "Foam stress outboard of the spar end, flight and landing, ultimate",
+   "calc": "CALC-C2-TIP",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_tens_allow_pa",
+    "resolved": 150000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "T-C2-WING-PROOF",
+   "value": 4923.735828,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses P:c2.inputs.xps_tens_allow_pa, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C2/params.json: XPS tensile/flexural 250-500 kPa at this density, halved for hot-wire surface damage)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.9671750944799999,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-ROOT-TAPE",
+   "type": "claim",
+   "title": "Tape stress at the root (in-plane + flap), ultimate",
+   "calc": "CALC-C2-ROOT-TAPE",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.tape_sigma_allow_pa",
+    "resolved": 60000000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-003"
+   ],
+   "how": "T-C2-WING-PROOF",
+   "value": 7503720.880622,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses P:c2.inputs.tape_sigma_allow_pa, which is UNVERIFIED (cites ASM-C2-TAPE, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.8749379853229666,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-POD-FOAM",
+   "type": "claim",
+   "title": "Pod bond shear in the wing foam, design (x 1.15 x 1.25)",
+   "calc": "CALC-C2-POD",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:c2.inputs.xps_shear_allow_pa",
+    "resolved": 100000.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "Bond on bare sanded foam; C3 proof-pulls the pod",
+   "value": 8745.663953,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses P:c2.inputs.xps_shear_allow_pa, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C2/params.json: XPS shear strength 150-250 kPa (EN 12090 grades near 200 kPa compression), knocked down)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.9125433604700001,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-CRADLE-AREA",
+   "type": "claim",
+   "title": "Foam pad area each transport cradle needs (X3 drop x 1.5)",
+   "calc": "CALC-C2-CRADLE",
+   "output": "value",
+   "unit": "m2",
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "D7 pad >= 40 x 40 mm under the spar line",
+   "value": 0.00108,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-WING-MASS",
+   "type": "claim",
+   "title": "Wing structure mass (core, tape, spar, fill, 6 plugs)",
+   "calc": "CALC-C2-MASS",
+   "output": "value",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mass.allocation_g.wing",
+    "resolved": 405
+   },
+   "verifies": [
+    "R-MASS-ALLOC"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "Weigh the core, the tube and the finished wing (A3 M-items)",
+   "value": 397.433,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "margin": 0.018683950617283968,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-FE-CONV-FREQ",
+   "type": "claim",
+   "title": "FE modal convergence, 48 -> 96 elements per half",
+   "calc": "CALC-C2-CONV-F",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C2-FE-TOL",
+    "resolved": 0.01
+   },
+   "how": "Re-run wing_struct.py; out/results.json#modal_conv",
+   "value": 0.000213,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "margin": 0.9787,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-FE-CONV-STATIC",
+   "type": "claim",
+   "title": "FE static convergence, 48 -> 96 elements per half",
+   "calc": "CALC-C2-CONV-S",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C2-FE-TOL",
+    "resolved": 0.01
+   },
+   "how": "out/results.json#fe_static_conv",
+   "value": 0.000526,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "margin": 0.9473999999999999,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-FE-VS-BEAM",
+   "type": "claim",
+   "title": "FE vs beam integration of C1 cut loads (F1 w, L1 u, F7 twist)",
+   "calc": "CALC-C2-FE-INT",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C2-FE-AGREE",
+    "resolved": 0.02
+   },
+   "how": "out/results.json#fe_vs_integration",
+   "value": 0.002241,
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "CHECKED",
+   "margin": 0.88795,
+   "importance": 1
+  },
+  {
+   "id": "CL-C2-RING-VALIDATION",
+   "type": "claim",
+   "title": "Ring model vs Roark two-point ring",
+   "calc": "CALC-C2-RING-VAL",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C2-FE-TOL",
+    "resolved": 0.01
+   },
+   "how": "out/results.json#ring_validation",
+   "cites": [
+    "SRC-C2-ROARK"
+   ],
+   "value": 0.003689,
+   "defined_in": "redesign/team/C2/claims.json",
+   "reasons": [
+    "uses SRC-C2-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.6311000000000001,
+   "importance": 1
+  },
+  {
+   "id": "T-C2-WING-PROOF",
+   "type": "test",
+   "title": "Wing proof load to limit",
+   "verifies": [
+    "CL-C2-SPAR-SIGMA-ULT",
+    "CL-C2-TIP-DEFL-FRAC",
+    "CL-C2-TIP-FOAM",
+    "CL-C2-SPAR-BOND-TAU",
+    "CL-C2-ROOT-TAPE"
+   ],
+   "state": "planned",
+   "procedure": "Wing upside down on two padded V-blocks under the spar at |y| 0.32; sand bags: 2 x 25 N spread over |y| 0.33-0.50 per side (= F1 limit outer moment); measure tip deflection; then the G2 case: hang 51 N from one upper tube end (fins fitted). Pass: no crack, no set > 0.5 mm after unloading",
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "PROPOSED",
+   "importance": 6
+  },
+  {
+   "id": "T-C2-TAP-TEST",
+   "type": "test",
+   "title": "Wing modal tap test with motors fitted",
+   "verifies": [
+    "CL-C2-WING-MODE-SEP",
+    "CL-C2-F-TORSION-ANTI",
+    "CL-C2-F-TORSION-SYM",
+    "CL-C2-V-FLUTTER"
+   ],
+   "state": "planned",
+   "procedure": "Aircraft hung on bungees (free-free), phone accelerometer app (>= 400 Hz) taped at the pod and at a fin tip; tap a motor can fore-aft and a fin tip sideways; FFT peaks to 400 Hz. Pass: model within 15 %, no peak within 20 % of the hover/cruise 1P/2P, or F4 notch set on it",
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "T-C2-TWIST",
+   "type": "test",
+   "title": "Wing torsion stiffness",
+   "verifies": [
+    "CL-C2-TWIST-FLIGHT",
+    "CL-C2-V-REVERSAL",
+    "CL-C2-V-DIVERGENCE",
+    "CL-C2-SPAR-TAU-ULT"
+   ],
+   "state": "planned",
+   "procedure": "Pod clamped, 0.3 m lever on the right block, 1 kg on the lever (2.9 N m); inclinometer app at the block and at the tip; GJ = T L / twist. Pass: GJ >= 25 N m2",
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "T-C2-XPS-COUPON",
+   "type": "test",
+   "title": "XPS and taped-foam coupons",
+   "verifies": [
+    "CL-C2-CHORD-TAPE",
+    "CL-C2-CHORD-FOAM",
+    "CL-C2-SPAR-BOND-TAU",
+    "CL-C2-POD-FOAM"
+   ],
+   "state": "planned",
+   "procedure": "Weigh a 100 x 100 x 50 mm block (density); 3-point bend a 300 x 40 x 30 mm strip bare and taped to failure; record E and strength",
+   "defined_in": "redesign/team/C2/claims.json",
+   "status": "PROPOSED",
+   "importance": 4
   },
   {
    "id": "ASM-C3-POD-LOADS",
@@ -28013,7 +29735,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 20
+   "importance": 25
   },
   {
    "id": "ASM-C4-SKIN-PTS",
@@ -28099,7 +29821,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "PROPOSED",
-   "importance": 20
+   "importance": 25
   },
   {
    "id": "ASM-C4-BORE-Z",
@@ -28117,7 +29839,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "ASM-C4-MOUNT-CAD",
@@ -28134,7 +29856,7 @@ window.PROOF_GRAPH = {
    "unit": "kg, m",
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "ASM-C4-COLLAR-BRACE-MASS",
@@ -28149,7 +29871,7 @@ window.PROOF_GRAPH = {
    "unit": "kg",
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "ASM-C4-MOUNT-K-ROCK",
@@ -28164,7 +29886,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "ASM-C4-MOUNT-K-TWIST",
@@ -28179,7 +29901,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "ASM-C4-ROOT-K",
@@ -28194,7 +29916,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "ASM-C4-ANCHOR-K",
@@ -28209,7 +29931,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "ASM-C4-PEEL-KD",
@@ -28224,7 +29946,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "CALC-C4-D3-Q4-CHECK",
@@ -28271,7 +29993,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CALC-C4-D3-MODES",
    "type": "calculation",
-   "title": "Station modes, D3 as-designed quarter (upper UR and lower LR), nominal E/G",
+   "title": "Station modes, D3 as designed (fin_detail.layers board), upper UR and lower LR, nominal E/G",
    "script": "redesign/team/C4/fin_structures_d3.py",
    "function": "modes_d3",
    "equation": "FE (fin_fe.build_q): tube frame + 1-layer board (mapped Q4 shell) + edge strips + brace (EA/L in series with the anchor) + mount springs + motor/prop/mount rigid body; station mode = >= 10 % of kinetic energy in the rigid body; sep = min |f/f_k - 1| over 1P/2P hover, 1P/2P cruise, 1P cap",
@@ -28419,19 +30141,19 @@ window.PROOF_GRAPH = {
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f1_up": 227.9574852845727,
-    "f2_up": 239.18195914139164,
-    "panel_up": 57.087694079502434,
-    "sep_up": 0.13979880654197085,
-    "band_up": -0.3092197415619009,
-    "f1_lo": 222.11839139135418,
-    "f2_lo": 230.7838675134496,
-    "panel_lo": 55.68770641419168,
-    "sep_lo": 0.110603045575979,
-    "band_lo": -0.3269139654807449,
-    "f1_min": 222.11839139135418,
-    "sep_op": 0.110603045575979,
-    "sep_band": -0.3269139654807449
+    "f1_up": 236.6674935209041,
+    "f2_up": 303.9904319320613,
+    "panel_up": 57.09082366324399,
+    "sep_up": 0.18334928254563443,
+    "band_up": -0.2828257772093815,
+    "f1_lo": 228.199710543076,
+    "f2_lo": 295.9584331299153,
+    "panel_lo": 55.68265952498146,
+    "sep_lo": 0.141009944926884,
+    "band_lo": -0.30848572562704235,
+    "f1_min": 228.199710543076,
+    "sep_op": 0.141009944926884,
+    "sep_band": -0.30848572562704235
    },
    "input_values": {
     "tube_x": 0.045,
@@ -28583,323 +30305,15 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "CHECKED",
-   "importance": 5
+   "importance": 2
   },
   {
-   "id": "CALC-C4-D3-WORST",
+   "id": "CALC-C4-D3-MODES-REC",
    "type": "calculation",
-   "title": "Separation over the tube E/G corners and the mount/root stiffness range",
+   "title": "Station modes, recommended: D3 geometry with fins.layers boards (params), brace and edge strips, nominal E/G",
    "script": "redesign/team/C4/fin_structures_d3.py",
-   "function": "worst_d3",
-   "equation": "min over side x E {lo, nom, hi} x G {lo, nom, hi} of sep_op (18 FE runs), mount and root at their nominal springs",
-   "inputs": {
-    "tube_x": "P:fins.tube.x_m",
-    "y_fin": "P:fins.y_m",
-    "od": "P:fins.tube.od_m",
-    "idd": "P:fins.tube.id_m",
-    "mu": "P:wing.spar.mass_per_m_kgm",
-    "tube_len": "P:fin_detail.tube_length_m",
-    "z_st": "P:propulsion.stations.z_m",
-    "x_face": "CL-D3-X-FACE",
-    "x_prop": "CL-D3-X-PROP",
-    "x_te": "P:fins.te_x_m",
-    "hh": "P:fins.half_height_m",
-    "le_gap": "P:fin_detail.fin.le_gap_m",
-    "grip": "P:fin_detail.mount.grip_m",
-    "sc_gap": "P:fin_detail.station_collar.gap_m",
-    "sc_h": "P:fin_detail.station_collar.height_m",
-    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
-    "ear_len": "P:fin_detail.station_collar.ear_len_m",
-    "bond_gap": "P:fin_detail.bond_gap_m",
-    "skin": "ASM-C4-SKIN-PTS",
-    "bore_z": "ASM-C4-BORE-Z",
-    "m_motor": "P:propulsion.motor_mass_kg",
-    "d_motor": "P:propulsion.motor_diameter_m",
-    "l_motor": "P:propulsion.motor_length_m",
-    "m_prop": "P:propulsion.prop_mass_kg",
-    "m_adapt": "ASM-C1-ADAPTER-MASS",
-    "ip": "ASM-C4-PROP-IP",
-    "i_bell": "ASM-C1-BELL-INERTIA",
-    "mount": "ASM-C4-MOUNT-CAD",
-    "cb_mass": "ASM-C4-COLLAR-BRACE-MASS",
-    "m_esc": "P:propulsion.esc_mass_kg",
-    "esc_x0": "P:fin_detail.esc_pad.x0_m",
-    "esc_len": "P:fin_detail.esc_pad.len_m",
-    "esc_z": "P:fin_detail.esc_pad.z_m",
-    "landing_g": "P:mass.allocation_g.landing",
-    "t_board": "P:fins.board_t_m",
-    "areal": "P:fins.areal_mass_kgm2",
-    "layers": "P:fin_detail.layers",
-    "t_face": "ASM-C4-FACE-T",
-    "e_face": "ASM-C4-FACE-E",
-    "e_core": "ASM-C4-CORE-E",
-    "g_core": "ASM-C4-CORE-G",
-    "x_spar": "P:wing.spar.x_m",
-    "y_anchor": "P:fin_detail.brace.anchor_y_m",
-    "proud": "P:fin_detail.anchor.proud_m",
-    "b_w": "P:fin_detail.brace.w_m",
-    "b_t": "P:fin_detail.brace.t_m",
-    "e_strip": "ASM-C4-CF-E-STRIP",
-    "e_w": "P:fin_detail.edge_strip.w_m",
-    "e_t": "P:fin_detail.edge_strip.t_m",
-    "rho_cf": "ASM-C4-CF-RHO",
-    "chord": "P:wing.chord_m",
-    "el_frac": "P:wing.elevon.chord_frac",
-    "slot_hw": "P:fin_detail.link_slot.half_width_m",
-    "k_rock": "ASM-C4-MOUNT-K-ROCK",
-    "k_twist": "ASM-C4-MOUNT-K-TWIST",
-    "k_root": "ASM-C4-ROOT-K",
-    "k_anchor": "ASM-C4-ANCHOR-K",
-    "rpm_h": "CL-B4-HOVER-RPM",
-    "rpm_c": "CL-B4-CRUISE-RPM",
-    "rpm_x": "CL-B4-RPM-MAX",
-    "E0": "ASM-J1-E-TUBE",
-    "E_lo": "ASM-C4-E-TUBE-LO",
-    "E_hi": "ASM-C4-E-TUBE-HI",
-    "G0": "ASM-C4-G-TUBE",
-    "G_lo": "ASM-C4-G-TUBE-LO",
-    "G_hi": "ASM-C4-G-TUBE-HI"
-   },
-   "units": {
-    "tube_x": "m",
-    "y_fin": "m",
-    "od": "m",
-    "idd": "m",
-    "mu": "kg/m",
-    "tube_len": "m",
-    "z_st": "m",
-    "x_face": "m",
-    "x_prop": "m",
-    "x_te": "m",
-    "hh": "m",
-    "le_gap": "m",
-    "grip": "m",
-    "sc_gap": "m",
-    "sc_h": "m",
-    "sc_wall": "m",
-    "ear_len": "m",
-    "bond_gap": "m",
-    "skin": "m",
-    "bore_z": "m",
-    "m_motor": "kg",
-    "d_motor": "m",
-    "l_motor": "m",
-    "m_prop": "kg",
-    "m_adapt": "kg",
-    "ip": "kg m2",
-    "i_bell": "kg m2",
-    "mount": "kg, m",
-    "cb_mass": "kg",
-    "m_esc": "kg",
-    "esc_x0": "m",
-    "esc_len": "m",
-    "esc_z": "m",
-    "landing_g": "g",
-    "t_board": "m",
-    "areal": "kg/m2",
-    "layers": "-",
-    "t_face": "m",
-    "e_face": "Pa",
-    "e_core": "Pa",
-    "g_core": "Pa",
-    "x_spar": "m",
-    "y_anchor": "m",
-    "proud": "m",
-    "b_w": "m",
-    "b_t": "m",
-    "e_strip": "Pa",
-    "e_w": "m",
-    "e_t": "m",
-    "rho_cf": "kg/m3",
-    "chord": "m",
-    "el_frac": "-",
-    "slot_hw": "m",
-    "k_rock": "N m/rad",
-    "k_twist": "N m/rad",
-    "k_root": "N m/rad",
-    "k_anchor": "N/m",
-    "rpm_h": "rpm",
-    "rpm_c": "rpm",
-    "rpm_x": "rpm",
-    "E0": "Pa",
-    "E_lo": "Pa",
-    "E_hi": "Pa",
-    "G0": "Pa",
-    "G_lo": "Pa",
-    "G_hi": "Pa"
-   },
-   "tol": 0.0001,
-   "assumes": [
-    "ASM-C4-E-TUBE-LO",
-    "ASM-C4-E-TUBE-HI",
-    "ASM-C4-G-TUBE-LO",
-    "ASM-C4-G-TUBE-HI"
-   ],
-   "outputs": {
-    "sep_op_worst": 0.04896261875559427,
-    "f_station_min": 209.79042911485985
-   },
-   "input_values": {
-    "tube_x": 0.045,
-    "y_fin": 0.32,
-    "od": 0.022,
-    "idd": 0.02,
-    "mu": 0.102,
-    "tube_len": 0.344,
-    "z_st": 0.19,
-    "x_face": 0.030849999999999995,
-    "x_prop": -0.008150000000000004,
-    "x_te": 0.32,
-    "hh": 0.19,
-    "le_gap": 0.0005,
-    "grip": 0.012,
-    "sc_gap": 0.0005,
-    "sc_h": 0.012,
-    "sc_wall": 0.0016,
-    "ear_len": 0.01,
-    "bond_gap": 0.00015,
-    "skin": [
-     [
-      0.0335,
-      0.01775,
-      -0.00731
-     ],
-     [
-      0.045,
-      0.0198,
-      -0.00791
-     ],
-     [
-      0.0565,
-      0.02119,
-      -0.00829
-     ],
-     [
-      0.07,
-      0.0222,
-      -0.00857
-     ],
-     [
-      0.08,
-      0.02259,
-      -0.00865
-     ],
-     [
-      0.1,
-      0.02263,
-      -0.00862
-     ],
-     [
-      0.13,
-      0.02111,
-      -0.00815
-     ],
-     [
-      0.16,
-      0.01814,
-      -0.00736
-     ],
-     [
-      0.19,
-      0.01422,
-      -0.00636
-     ],
-     [
-      0.22,
-      0.00982,
-      -0.0052
-     ],
-     [
-      0.25,
-      0.00555,
-      -0.00393
-     ],
-     [
-      0.28,
-      0.00214,
-      -0.00265
-     ],
-     [
-      0.3,
-      0.00074,
-      -0.00166
-     ],
-     [
-      0.32,
-      0.0003,
-      -0.0003
-     ]
-    ],
-    "bore_z": [
-     0.03043,
-     -0.01662
-    ],
-    "m_motor": 0.081,
-    "d_motor": 0.038,
-    "l_motor": 0.025,
-    "m_prop": 0.017,
-    "m_adapt": 0.005,
-    "ip": 7.5e-05,
-    "i_bell": 1.5e-05,
-    "mount": [
-     0.01128,
-     -0.0046,
-     0.0018,
-     -0.0097
-    ],
-    "cb_mass": [
-     0.0057,
-     0.0074
-    ],
-    "m_esc": 0.0066,
-    "esc_x0": 0.078,
-    "esc_len": 0.046,
-    "esc_z": 0.118,
-    "landing_g": 40,
-    "t_board": 0.0048,
-    "areal": 0.2,
-    "layers": 1,
-    "t_face": 0.0001,
-    "e_face": 4000000000.0,
-    "e_core": 10000000.0,
-    "g_core": 4000000.0,
-    "x_spar": 0.08,
-    "y_anchor": 0.242,
-    "proud": 0.008,
-    "b_w": 0.01,
-    "b_t": 0.003,
-    "e_strip": 110000000000.0,
-    "e_w": 0.01,
-    "e_t": 0.001,
-    "rho_cf": 1550.0,
-    "chord": 0.32,
-    "el_frac": 0.22,
-    "slot_hw": 0.012,
-    "k_rock": 3000.0,
-    "k_twist": 30000.0,
-    "k_root": 10000.0,
-    "k_anchor": 30000000.0,
-    "rpm_h": 5395.714905199311,
-    "rpm_c": 5999.940094063748,
-    "rpm_x": 9319.452696615961,
-    "E0": 100000000000.0,
-    "E_lo": 70000000000.0,
-    "E_hi": 135000000000.0,
-    "G0": 5000000000.0,
-    "G_lo": 3000000000.0,
-    "G_hi": 10000000000.0
-   },
-   "defined_in": "redesign/team/C4/claims.d3.json",
-   "status": "CHECKED",
-   "importance": 1
-  },
-  {
-   "id": "CALC-C4-D3-MOUNT-K",
-   "type": "calculation",
-   "title": "Mount rocking stiffness needed for the separation rule (governing side)",
-   "script": "redesign/team/C4/fin_structures_d3.py",
-   "function": "mount_k",
-   "equation": "sweep k_rock over 500-30 000 N m/rad (k_twist fixed) on both quarters at nominal and low E/G; k_req = smallest k with sep_op >= sep_min at every larger k (log interpolation)",
+   "function": "modes_rec",
+   "equation": "as CALC-C4-D3-MODES with the board layers from params.json (fins.layers)",
    "inputs": {
     "tube_x": "P:fins.tube.x_m",
     "y_fin": "P:fins.y_m",
@@ -28963,9 +30377,9 @@ window.PROOF_GRAPH = {
     "rpm_x": "CL-B4-RPM-MAX",
     "E": "ASM-J1-E-TUBE",
     "G": "ASM-C4-G-TUBE",
-    "sep_min": "P:requirements.vibration_sep_frac",
-    "E_lo": "ASM-C4-E-TUBE-LO",
-    "G_lo": "ASM-C4-G-TUBE-LO"
+    "lo": "ASM-C4-BAND-LO",
+    "hi": "ASM-C4-BAND-HI",
+    "lay_rec": "P:fins.layers"
    },
    "units": {
     "tube_x": "m",
@@ -29030,35 +30444,35 @@ window.PROOF_GRAPH = {
     "rpm_x": "rpm",
     "E": "Pa",
     "G": "Pa",
-    "sep_min": "-",
-    "E_lo": "Pa",
-    "G_lo": "Pa"
+    "lo": "Hz",
+    "hi": "Hz",
+    "lay_rec": "-"
    },
-   "tol": 0.001,
+   "tol": 0.0001,
+   "assumes": [
+    "ASM-C4-MOUNT-K-ROCK",
+    "ASM-C4-ROOT-K",
+    "ASM-C4-ANCHOR-K",
+    "ASM-C4-PROP-IP",
+    "ASM-C4-FACE-E"
+   ],
+   "cites": [
+    "SRC-C4-ALLEN"
+   ],
    "outputs": {
-    "k_req_nom": 300000.0,
-    "seps_nom": [
-     0.009039827099664666,
-     0.07484830562841771,
-     0.09866481309994501,
-     0.10599828057696281,
-     0.11060304557619394,
-     0.11298454053164009,
-     0.11428931840087797,
-     0.11499799514733455
-    ],
-    "k_req_lo": 300000.0,
-    "seps_lo": [
-     0.04269014261366544,
-     0.015912297716719204,
-     0.034607743050460105,
-     0.04230134166577848,
-     0.04896261875629704,
-     0.05361040686229024,
-     0.05673514103694455,
-     0.058659999570633614
-    ],
-    "k_req": 300000.0
+    "f1_up": 288.90264616194895,
+    "f2_up": 359.5031498635583,
+    "panel_up": 70.65014444117446,
+    "sep_up": 0.4445276534399982,
+    "band_up": -0.12453743587288202,
+    "f1_lo": 281.1352828694466,
+    "f2_lo": 355.522933262664,
+    "panel_lo": 68.27071438133488,
+    "sep_lo": 0.4056904492143063,
+    "band_lo": -0.14807490039561633,
+    "f1_min": 281.1352828694466,
+    "sep_op": 0.4056904492143063,
+    "sep_band": -0.14807490039561633
    },
    "input_values": {
     "tube_x": 0.045,
@@ -29205,21 +30619,21 @@ window.PROOF_GRAPH = {
     "rpm_x": 9319.452696615961,
     "E": 100000000000.0,
     "G": 5000000000.0,
-    "sep_min": 0.2,
-    "E_lo": 70000000000.0,
-    "G_lo": 3000000000.0
+    "lo": 80.0,
+    "hi": 330.0,
+    "lay_rec": 2
    },
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 5
   },
   {
-   "id": "CALC-C4-D3-CONVERGENCE",
+   "id": "CALC-C4-D3-WORST",
    "type": "calculation",
-   "title": "Mesh convergence, D3 quarter (both sides)",
+   "title": "Separation over the tube E/G corners, recommended design",
    "script": "redesign/team/C4/fin_structures_d3.py",
-   "function": "convergence_d3",
-   "equation": "first two station modes at fin meshes 6x5, 12x10 (used), 24x20; change = max |f(12x10)/f(24x20) - 1|",
+   "function": "worst_d3",
+   "equation": "min over side x E {lo, nom, hi} x G {lo, nom, hi} of sep_op (18 FE runs), mount and root at their nominal springs",
    "inputs": {
     "tube_x": "P:fins.tube.x_m",
     "y_fin": "P:fins.y_m",
@@ -29278,8 +30692,16 @@ window.PROOF_GRAPH = {
     "k_twist": "ASM-C4-MOUNT-K-TWIST",
     "k_root": "ASM-C4-ROOT-K",
     "k_anchor": "ASM-C4-ANCHOR-K",
-    "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE"
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_c": "CL-B4-CRUISE-RPM",
+    "rpm_x": "CL-B4-RPM-MAX",
+    "lay_rec": "P:fins.layers",
+    "E0": "ASM-J1-E-TUBE",
+    "E_lo": "ASM-C4-E-TUBE-LO",
+    "E_hi": "ASM-C4-E-TUBE-HI",
+    "G0": "ASM-C4-G-TUBE",
+    "G_lo": "ASM-C4-G-TUBE-LO",
+    "G_hi": "ASM-C4-G-TUBE-HI"
    },
    "units": {
     "tube_x": "m",
@@ -29339,24 +30761,27 @@ window.PROOF_GRAPH = {
     "k_twist": "N m/rad",
     "k_root": "N m/rad",
     "k_anchor": "N/m",
-    "E": "Pa",
-    "G": "Pa"
+    "rpm_h": "rpm",
+    "rpm_c": "rpm",
+    "rpm_x": "rpm",
+    "lay_rec": "-",
+    "E0": "Pa",
+    "E_lo": "Pa",
+    "E_hi": "Pa",
+    "G0": "Pa",
+    "G_lo": "Pa",
+    "G_hi": "Pa"
    },
    "tol": 0.0001,
+   "assumes": [
+    "ASM-C4-E-TUBE-LO",
+    "ASM-C4-E-TUBE-HI",
+    "ASM-C4-G-TUBE-LO",
+    "ASM-C4-G-TUBE-HI"
+   ],
    "outputs": {
-    "f1_up_coarse": 234.65071696705803,
-    "f2_up_coarse": 244.5110905568378,
-    "f1_up_used": 227.95748528459714,
-    "f2_up_used": 239.18195914119903,
-    "f1_up_fine": 236.57040221348748,
-    "f2_up_fine": 303.7344669447772,
-    "f1_lo_coarse": 226.8188068700514,
-    "f2_lo_coarse": 269.22176130585615,
-    "f1_lo_used": 222.11839139121187,
-    "f2_lo_used": 230.78386751334705,
-    "f1_lo_fine": 228.0797816688917,
-    "f2_lo_fine": 295.5661874843884,
-    "change": 0.21918041614439787
+    "sep_op_worst": 0.3345832528583548,
+    "f_station_min": 266.91398558969536
    },
    "input_values": {
     "tube_x": 0.045,
@@ -29498,20 +30923,28 @@ window.PROOF_GRAPH = {
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "E": 100000000000.0,
-    "G": 5000000000.0
+    "rpm_h": 5395.714905199311,
+    "rpm_c": 5999.940094063748,
+    "rpm_x": 9319.452696615961,
+    "lay_rec": 2,
+    "E0": 100000000000.0,
+    "E_lo": 70000000000.0,
+    "E_hi": 135000000000.0,
+    "G0": 5000000000.0,
+    "G_lo": 3000000000.0,
+    "G_hi": 10000000000.0
    },
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "CHECKED",
    "importance": 1
   },
   {
-   "id": "CALC-C4-D3-CAMPBELL",
+   "id": "CALC-C4-D3-MOUNT-K",
    "type": "calculation",
-   "title": "Gyroscopic whirl separation, D3 quarter (both sides)",
+   "title": "Mount rocking stiffness needed for the separation rule, recommended design",
    "script": "redesign/team/C4/fin_structures_d3.py",
-   "function": "campbell_d3",
-   "equation": "M q'' + Omega G q' + K q = 0 on 16 modes, G = -[Ip_spin e_shaft]x at the station; sep over 1P/2P at hover and cruise and 1P at the cap, station whirl modes only",
+   "function": "mount_k",
+   "equation": "sweep k_rock over 500-30 000 N m/rad (k_twist fixed) on both quarters at nominal and low E/G; k_req = smallest k with sep_op >= sep_min at every larger k (log interpolation)",
    "inputs": {
     "tube_x": "P:fins.tube.x_m",
     "y_fin": "P:fins.y_m",
@@ -29574,7 +31007,11 @@ window.PROOF_GRAPH = {
     "rpm_c": "CL-B4-CRUISE-RPM",
     "rpm_x": "CL-B4-RPM-MAX",
     "E": "ASM-J1-E-TUBE",
-    "G": "ASM-C4-G-TUBE"
+    "G": "ASM-C4-G-TUBE",
+    "lay_rec": "P:fins.layers",
+    "sep_min": "P:requirements.vibration_sep_frac",
+    "E_lo": "ASM-C4-E-TUBE-LO",
+    "G_lo": "ASM-C4-G-TUBE-LO"
    },
    "units": {
     "tube_x": "m",
@@ -29638,15 +31075,37 @@ window.PROOF_GRAPH = {
     "rpm_c": "rpm",
     "rpm_x": "rpm",
     "E": "Pa",
-    "G": "Pa"
+    "G": "Pa",
+    "lay_rec": "-",
+    "sep_min": "-",
+    "E_lo": "Pa",
+    "G_lo": "Pa"
    },
-   "tol": 0.0001,
-   "assumes": [
-    "ASM-C4-PROP-IP",
-    "ASM-C1-BELL-INERTIA"
-   ],
+   "tol": 0.001,
    "outputs": {
-    "sep_whirl": 0.10606883098131958
+    "k_req_nom": 778.3633509052677,
+    "seps_nom": [
+     0.07073530690388452,
+     0.27318090936242245,
+     0.34334898414303616,
+     0.37577699893086947,
+     0.40569044927634623,
+     0.4276417950436291,
+     0.4429332338894718,
+     0.4525783763481883
+    ],
+    "k_req_lo": 894.3822305439886,
+    "seps_lo": [
+     0.04945515630366759,
+     0.22889664118258835,
+     0.28598041338187885,
+     0.31145531795757186,
+     0.33458325289244506,
+     0.3514086167535666,
+     0.3630932428808473,
+     0.3704601238680858
+    ],
+    "k_req": 894.3822305439886
    },
    "input_values": {
     "tube_x": 0.045,
@@ -29792,7 +31251,617 @@ window.PROOF_GRAPH = {
     "rpm_c": 5999.940094063748,
     "rpm_x": 9319.452696615961,
     "E": 100000000000.0,
-    "G": 5000000000.0
+    "G": 5000000000.0,
+    "lay_rec": 2,
+    "sep_min": 0.2,
+    "E_lo": 70000000000.0,
+    "G_lo": 3000000000.0
+   },
+   "defined_in": "redesign/team/C4/claims.d3.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C4-D3-CONVERGENCE",
+   "type": "calculation",
+   "title": "Mesh convergence, recommended design (both sides)",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "convergence_d3",
+   "equation": "first dominant station mode f1 (>= 50 % kinetic energy in the motor body) and sep_op at fin meshes 12x10, 24x20 (used), 36x30; change = max over sides of |f1(24x20)/f1(36x30) - 1| and |sep(24x20)/sep(36x30) - 1| (f2 reported only: near 360-600 Hz it swaps between coupled modes)",
+   "inputs": {
+    "tube_x": "P:fins.tube.x_m",
+    "y_fin": "P:fins.y_m",
+    "od": "P:fins.tube.od_m",
+    "idd": "P:fins.tube.id_m",
+    "mu": "P:wing.spar.mass_per_m_kgm",
+    "tube_len": "P:fin_detail.tube_length_m",
+    "z_st": "P:propulsion.stations.z_m",
+    "x_face": "CL-D3-X-FACE",
+    "x_prop": "CL-D3-X-PROP",
+    "x_te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "le_gap": "P:fin_detail.fin.le_gap_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "ear_len": "P:fin_detail.station_collar.ear_len_m",
+    "bond_gap": "P:fin_detail.bond_gap_m",
+    "skin": "ASM-C4-SKIN-PTS",
+    "bore_z": "ASM-C4-BORE-Z",
+    "m_motor": "P:propulsion.motor_mass_kg",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "l_motor": "P:propulsion.motor_length_m",
+    "m_prop": "P:propulsion.prop_mass_kg",
+    "m_adapt": "ASM-C1-ADAPTER-MASS",
+    "ip": "ASM-C4-PROP-IP",
+    "i_bell": "ASM-C1-BELL-INERTIA",
+    "mount": "ASM-C4-MOUNT-CAD",
+    "cb_mass": "ASM-C4-COLLAR-BRACE-MASS",
+    "m_esc": "P:propulsion.esc_mass_kg",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "landing_g": "P:mass.allocation_g.landing",
+    "t_board": "P:fins.board_t_m",
+    "areal": "P:fins.areal_mass_kgm2",
+    "layers": "P:fin_detail.layers",
+    "t_face": "ASM-C4-FACE-T",
+    "e_face": "ASM-C4-FACE-E",
+    "e_core": "ASM-C4-CORE-E",
+    "g_core": "ASM-C4-CORE-G",
+    "x_spar": "P:wing.spar.x_m",
+    "y_anchor": "P:fin_detail.brace.anchor_y_m",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "b_w": "P:fin_detail.brace.w_m",
+    "b_t": "P:fin_detail.brace.t_m",
+    "e_strip": "ASM-C4-CF-E-STRIP",
+    "e_w": "P:fin_detail.edge_strip.w_m",
+    "e_t": "P:fin_detail.edge_strip.t_m",
+    "rho_cf": "ASM-C4-CF-RHO",
+    "chord": "P:wing.chord_m",
+    "el_frac": "P:wing.elevon.chord_frac",
+    "slot_hw": "P:fin_detail.link_slot.half_width_m",
+    "k_rock": "ASM-C4-MOUNT-K-ROCK",
+    "k_twist": "ASM-C4-MOUNT-K-TWIST",
+    "k_root": "ASM-C4-ROOT-K",
+    "k_anchor": "ASM-C4-ANCHOR-K",
+    "E": "ASM-J1-E-TUBE",
+    "G": "ASM-C4-G-TUBE",
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_c": "CL-B4-CRUISE-RPM",
+    "rpm_x": "CL-B4-RPM-MAX",
+    "lay_rec": "P:fins.layers"
+   },
+   "units": {
+    "tube_x": "m",
+    "y_fin": "m",
+    "od": "m",
+    "idd": "m",
+    "mu": "kg/m",
+    "tube_len": "m",
+    "z_st": "m",
+    "x_face": "m",
+    "x_prop": "m",
+    "x_te": "m",
+    "hh": "m",
+    "le_gap": "m",
+    "grip": "m",
+    "sc_gap": "m",
+    "sc_h": "m",
+    "sc_wall": "m",
+    "ear_len": "m",
+    "bond_gap": "m",
+    "skin": "m",
+    "bore_z": "m",
+    "m_motor": "kg",
+    "d_motor": "m",
+    "l_motor": "m",
+    "m_prop": "kg",
+    "m_adapt": "kg",
+    "ip": "kg m2",
+    "i_bell": "kg m2",
+    "mount": "kg, m",
+    "cb_mass": "kg",
+    "m_esc": "kg",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_z": "m",
+    "landing_g": "g",
+    "t_board": "m",
+    "areal": "kg/m2",
+    "layers": "-",
+    "t_face": "m",
+    "e_face": "Pa",
+    "e_core": "Pa",
+    "g_core": "Pa",
+    "x_spar": "m",
+    "y_anchor": "m",
+    "proud": "m",
+    "b_w": "m",
+    "b_t": "m",
+    "e_strip": "Pa",
+    "e_w": "m",
+    "e_t": "m",
+    "rho_cf": "kg/m3",
+    "chord": "m",
+    "el_frac": "-",
+    "slot_hw": "m",
+    "k_rock": "N m/rad",
+    "k_twist": "N m/rad",
+    "k_root": "N m/rad",
+    "k_anchor": "N/m",
+    "E": "Pa",
+    "G": "Pa",
+    "rpm_h": "rpm",
+    "rpm_c": "rpm",
+    "rpm_x": "rpm",
+    "lay_rec": "-"
+   },
+   "tol": 0.0001,
+   "outputs": {
+    "f1_up_coarse": 288.94917565854405,
+    "f2_up_coarse": 607.4060641838164,
+    "sep_up_coarse": 0.4447603032458245,
+    "f1_up_used": 288.90264616014423,
+    "f2_up_used": 377.7513938144199,
+    "sep_up_used": 0.44452765343097456,
+    "f1_up_fine": 288.84263947086646,
+    "f2_up_fine": 375.4195290436127,
+    "sep_up_fine": 0.444227616988925,
+    "f1_lo_coarse": 281.09686798147123,
+    "f2_lo_coarse": 355.2424370837283,
+    "sep_lo_coarse": 0.4054983728566772,
+    "f1_lo_used": 281.13528286640104,
+    "f2_lo_used": 588.1389928715466,
+    "sep_lo_used": 0.4056904491990785,
+    "f1_lo_fine": 280.9439212955386,
+    "f2_lo_fine": 369.16427874500965,
+    "sep_lo_fine": 0.4047336317915924,
+    "change": 0.0023640669623887778
+   },
+   "input_values": {
+    "tube_x": 0.045,
+    "y_fin": 0.32,
+    "od": 0.022,
+    "idd": 0.02,
+    "mu": 0.102,
+    "tube_len": 0.344,
+    "z_st": 0.19,
+    "x_face": 0.030849999999999995,
+    "x_prop": -0.008150000000000004,
+    "x_te": 0.32,
+    "hh": 0.19,
+    "le_gap": 0.0005,
+    "grip": 0.012,
+    "sc_gap": 0.0005,
+    "sc_h": 0.012,
+    "sc_wall": 0.0016,
+    "ear_len": 0.01,
+    "bond_gap": 0.00015,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "bore_z": [
+     0.03043,
+     -0.01662
+    ],
+    "m_motor": 0.081,
+    "d_motor": 0.038,
+    "l_motor": 0.025,
+    "m_prop": 0.017,
+    "m_adapt": 0.005,
+    "ip": 7.5e-05,
+    "i_bell": 1.5e-05,
+    "mount": [
+     0.01128,
+     -0.0046,
+     0.0018,
+     -0.0097
+    ],
+    "cb_mass": [
+     0.0057,
+     0.0074
+    ],
+    "m_esc": 0.0066,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_z": 0.118,
+    "landing_g": 40,
+    "t_board": 0.0048,
+    "areal": 0.2,
+    "layers": 1,
+    "t_face": 0.0001,
+    "e_face": 4000000000.0,
+    "e_core": 10000000.0,
+    "g_core": 4000000.0,
+    "x_spar": 0.08,
+    "y_anchor": 0.242,
+    "proud": 0.008,
+    "b_w": 0.01,
+    "b_t": 0.003,
+    "e_strip": 110000000000.0,
+    "e_w": 0.01,
+    "e_t": 0.001,
+    "rho_cf": 1550.0,
+    "chord": 0.32,
+    "el_frac": 0.22,
+    "slot_hw": 0.012,
+    "k_rock": 3000.0,
+    "k_twist": 30000.0,
+    "k_root": 10000.0,
+    "k_anchor": 30000000.0,
+    "E": 100000000000.0,
+    "G": 5000000000.0,
+    "rpm_h": 5395.714905199311,
+    "rpm_c": 5999.940094063748,
+    "rpm_x": 9319.452696615961,
+    "lay_rec": 2
+   },
+   "defined_in": "redesign/team/C4/claims.d3.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C4-D3-CAMPBELL",
+   "type": "calculation",
+   "title": "Gyroscopic whirl separation, recommended design (both sides)",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "campbell_d3",
+   "equation": "M q'' + Omega G q' + K q = 0 on 16 modes, G = -[Ip_spin e_shaft]x at the station; sep over 1P/2P at hover and cruise and 1P at the cap, station whirl modes only",
+   "inputs": {
+    "tube_x": "P:fins.tube.x_m",
+    "y_fin": "P:fins.y_m",
+    "od": "P:fins.tube.od_m",
+    "idd": "P:fins.tube.id_m",
+    "mu": "P:wing.spar.mass_per_m_kgm",
+    "tube_len": "P:fin_detail.tube_length_m",
+    "z_st": "P:propulsion.stations.z_m",
+    "x_face": "CL-D3-X-FACE",
+    "x_prop": "CL-D3-X-PROP",
+    "x_te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "le_gap": "P:fin_detail.fin.le_gap_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "ear_len": "P:fin_detail.station_collar.ear_len_m",
+    "bond_gap": "P:fin_detail.bond_gap_m",
+    "skin": "ASM-C4-SKIN-PTS",
+    "bore_z": "ASM-C4-BORE-Z",
+    "m_motor": "P:propulsion.motor_mass_kg",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "l_motor": "P:propulsion.motor_length_m",
+    "m_prop": "P:propulsion.prop_mass_kg",
+    "m_adapt": "ASM-C1-ADAPTER-MASS",
+    "ip": "ASM-C4-PROP-IP",
+    "i_bell": "ASM-C1-BELL-INERTIA",
+    "mount": "ASM-C4-MOUNT-CAD",
+    "cb_mass": "ASM-C4-COLLAR-BRACE-MASS",
+    "m_esc": "P:propulsion.esc_mass_kg",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "landing_g": "P:mass.allocation_g.landing",
+    "t_board": "P:fins.board_t_m",
+    "areal": "P:fins.areal_mass_kgm2",
+    "layers": "P:fin_detail.layers",
+    "t_face": "ASM-C4-FACE-T",
+    "e_face": "ASM-C4-FACE-E",
+    "e_core": "ASM-C4-CORE-E",
+    "g_core": "ASM-C4-CORE-G",
+    "x_spar": "P:wing.spar.x_m",
+    "y_anchor": "P:fin_detail.brace.anchor_y_m",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "b_w": "P:fin_detail.brace.w_m",
+    "b_t": "P:fin_detail.brace.t_m",
+    "e_strip": "ASM-C4-CF-E-STRIP",
+    "e_w": "P:fin_detail.edge_strip.w_m",
+    "e_t": "P:fin_detail.edge_strip.t_m",
+    "rho_cf": "ASM-C4-CF-RHO",
+    "chord": "P:wing.chord_m",
+    "el_frac": "P:wing.elevon.chord_frac",
+    "slot_hw": "P:fin_detail.link_slot.half_width_m",
+    "k_rock": "ASM-C4-MOUNT-K-ROCK",
+    "k_twist": "ASM-C4-MOUNT-K-TWIST",
+    "k_root": "ASM-C4-ROOT-K",
+    "k_anchor": "ASM-C4-ANCHOR-K",
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_c": "CL-B4-CRUISE-RPM",
+    "rpm_x": "CL-B4-RPM-MAX",
+    "E": "ASM-J1-E-TUBE",
+    "G": "ASM-C4-G-TUBE",
+    "lay_rec": "P:fins.layers"
+   },
+   "units": {
+    "tube_x": "m",
+    "y_fin": "m",
+    "od": "m",
+    "idd": "m",
+    "mu": "kg/m",
+    "tube_len": "m",
+    "z_st": "m",
+    "x_face": "m",
+    "x_prop": "m",
+    "x_te": "m",
+    "hh": "m",
+    "le_gap": "m",
+    "grip": "m",
+    "sc_gap": "m",
+    "sc_h": "m",
+    "sc_wall": "m",
+    "ear_len": "m",
+    "bond_gap": "m",
+    "skin": "m",
+    "bore_z": "m",
+    "m_motor": "kg",
+    "d_motor": "m",
+    "l_motor": "m",
+    "m_prop": "kg",
+    "m_adapt": "kg",
+    "ip": "kg m2",
+    "i_bell": "kg m2",
+    "mount": "kg, m",
+    "cb_mass": "kg",
+    "m_esc": "kg",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_z": "m",
+    "landing_g": "g",
+    "t_board": "m",
+    "areal": "kg/m2",
+    "layers": "-",
+    "t_face": "m",
+    "e_face": "Pa",
+    "e_core": "Pa",
+    "g_core": "Pa",
+    "x_spar": "m",
+    "y_anchor": "m",
+    "proud": "m",
+    "b_w": "m",
+    "b_t": "m",
+    "e_strip": "Pa",
+    "e_w": "m",
+    "e_t": "m",
+    "rho_cf": "kg/m3",
+    "chord": "m",
+    "el_frac": "-",
+    "slot_hw": "m",
+    "k_rock": "N m/rad",
+    "k_twist": "N m/rad",
+    "k_root": "N m/rad",
+    "k_anchor": "N/m",
+    "rpm_h": "rpm",
+    "rpm_c": "rpm",
+    "rpm_x": "rpm",
+    "E": "Pa",
+    "G": "Pa",
+    "lay_rec": "-"
+   },
+   "tol": 0.0001,
+   "assumes": [
+    "ASM-C4-PROP-IP",
+    "ASM-C1-BELL-INERTIA"
+   ],
+   "outputs": {
+    "sep_whirl": 0.4012155111602733
+   },
+   "input_values": {
+    "tube_x": 0.045,
+    "y_fin": 0.32,
+    "od": 0.022,
+    "idd": 0.02,
+    "mu": 0.102,
+    "tube_len": 0.344,
+    "z_st": 0.19,
+    "x_face": 0.030849999999999995,
+    "x_prop": -0.008150000000000004,
+    "x_te": 0.32,
+    "hh": 0.19,
+    "le_gap": 0.0005,
+    "grip": 0.012,
+    "sc_gap": 0.0005,
+    "sc_h": 0.012,
+    "sc_wall": 0.0016,
+    "ear_len": 0.01,
+    "bond_gap": 0.00015,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "bore_z": [
+     0.03043,
+     -0.01662
+    ],
+    "m_motor": 0.081,
+    "d_motor": 0.038,
+    "l_motor": 0.025,
+    "m_prop": 0.017,
+    "m_adapt": 0.005,
+    "ip": 7.5e-05,
+    "i_bell": 1.5e-05,
+    "mount": [
+     0.01128,
+     -0.0046,
+     0.0018,
+     -0.0097
+    ],
+    "cb_mass": [
+     0.0057,
+     0.0074
+    ],
+    "m_esc": 0.0066,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_z": 0.118,
+    "landing_g": 40,
+    "t_board": 0.0048,
+    "areal": 0.2,
+    "layers": 1,
+    "t_face": 0.0001,
+    "e_face": 4000000000.0,
+    "e_core": 10000000.0,
+    "g_core": 4000000.0,
+    "x_spar": 0.08,
+    "y_anchor": 0.242,
+    "proud": 0.008,
+    "b_w": 0.01,
+    "b_t": 0.003,
+    "e_strip": 110000000000.0,
+    "e_w": 0.01,
+    "e_t": 0.001,
+    "rho_cf": 1550.0,
+    "chord": 0.32,
+    "el_frac": 0.22,
+    "slot_hw": 0.012,
+    "k_rock": 3000.0,
+    "k_twist": 30000.0,
+    "k_root": 10000.0,
+    "k_anchor": 30000000.0,
+    "rpm_h": 5395.714905199311,
+    "rpm_c": 5999.940094063748,
+    "rpm_x": 9319.452696615961,
+    "E": 100000000000.0,
+    "G": 5000000000.0,
+    "lay_rec": 2
    },
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "CHECKED",
@@ -29801,10 +31870,10 @@ window.PROOF_GRAPH = {
   {
    "id": "CALC-C4-D3-STATIC",
    "type": "calculation",
-   "title": "Fin, tube, brace, collar and anchor strength, D3 quarter (both sides)",
+   "title": "Fin, tube, brace, collar and anchor strength, recommended design (both sides)",
    "script": "redesign/team/C4/fin_structures_d3.py",
    "function": "static_d3",
-   "equation": "FE static, cases L1, L4 (both friction senses), L5, G2 (both senses, n_h m g at the tube end), H2; ultimate = sf x limit (joints x fit x prt); face = Q_f (eps0 + z kappa); brace Pcr = pi^2 E w t^3 / (12 L^2); brace-end bond tau = F / (2 (w + t) engage); collar bond tau = T / (2 pi r^2 h) + F / (pi d h); anchor tau = F / (len_y pi d_spar / 4) vs peel x bond allowable",
+   "equation": "FE static, cases L1, L4 (both friction senses), L5, G2 (both senses, n_h m g at the tube end), H2; ultimate = sf x limit (joints x fit x prt); face = Q_f (eps0 + z kappa); brace Pcr = pi^2 E w t^3 / (12 L^2); brace-end bond tau = F / (2 (w + t) engage); ear root s = 6 F (ear/2) / (w_ear h^2) + F / (w_ear h) (interlayer); collar bond tau = T / (2 pi r^2 h) + F / (pi d h); anchor tau = F / (len_y pi d_spar / 4) vs peel x bond allowable",
    "inputs": {
     "tube_x": "P:fins.tube.x_m",
     "y_fin": "P:fins.y_m",
@@ -29884,7 +31953,10 @@ window.PROOF_GRAPH = {
     "engage": "P:fin_detail.brace.engage_m",
     "a_lx": "P:fin_detail.anchor.len_x_m",
     "a_ly": "P:fin_detail.anchor.len_y_m",
-    "d_spar": "P:wing.spar.od_m"
+    "d_spar": "P:wing.spar.od_m",
+    "ear_w": "P:fin_detail.station_collar.ear_w_m",
+    "s_ten": "ASM-C4-PETG-TENSILE",
+    "lay_rec": "P:fins.layers"
    },
    "units": {
     "tube_x": "m",
@@ -29965,7 +32037,10 @@ window.PROOF_GRAPH = {
     "engage": "m",
     "a_lx": "m",
     "a_ly": "m",
-    "d_spar": "m"
+    "d_spar": "m",
+    "ear_w": "m",
+    "s_ten": "Pa",
+    "lay_rec": "-"
    },
    "tol": 0.0001,
    "assumes": [
@@ -29980,56 +32055,58 @@ window.PROOF_GRAPH = {
    ],
    "outputs": {
     "brace_len_up_m": 0.14477986945704846,
-    "face_up_L1_mpa": 2.990138047877179,
-    "brace_up_L1_n": 8.35956262214616,
-    "face_up_L4+_mpa": 5.649866339180194,
-    "brace_up_L4+_n": -7.826880859327584,
-    "face_up_L4-_mpa": 5.620395426775839,
-    "brace_up_L4-_n": 22.210944115095696,
-    "face_up_L5_mpa": 4.9554411128331015,
-    "brace_up_L5_n": 5.622944596244632,
-    "face_up_G2+_mpa": 0.9233679859146097,
-    "brace_up_G2+_n": 86.66358855882234,
-    "face_up_G2-_mpa": 0.9233679859146097,
-    "brace_up_G2-_n": -86.66358855882234,
-    "face_up_H2_mpa": 1.0369210607996198,
-    "brace_up_H2_n": -1.3707815461631194,
+    "face_up_L1_mpa": 1.9096938204432183,
+    "brace_up_L1_n": 5.023733840737121,
+    "face_up_L4+_mpa": 5.029062681328049,
+    "brace_up_L4+_n": -4.997224220145042,
+    "face_up_L4-_mpa": 5.035430807773452,
+    "brace_up_L4-_n": 13.641421127512382,
+    "face_up_L5_mpa": 2.9167136579974247,
+    "brace_up_L5_n": 3.375997812587022,
+    "face_up_G2+_mpa": 0.8747103816731973,
+    "brace_up_G2+_n": 89.06479715962158,
+    "face_up_G2-_mpa": 0.8747103816731973,
+    "brace_up_G2-_n": -89.06479715962158,
+    "face_up_H2_mpa": 0.7836882434425715,
+    "brace_up_H2_n": -3.4500739699526206,
     "brace_len_lo_m": 0.15714256266206172,
-    "face_lo_L1_mpa": 2.986109679645294,
-    "brace_lo_L1_n": 8.033851876325977,
-    "face_lo_L4+_mpa": 5.6704850003420235,
-    "brace_lo_L4+_n": -2.3544562178942603,
-    "face_lo_L4-_mpa": 5.651440859661283,
-    "brace_lo_L4-_n": 16.178078193954303,
-    "face_lo_L5_mpa": 4.958076764198751,
-    "brace_lo_L5_n": 5.4259042336128,
-    "face_lo_G2+_mpa": 1.027434583922937,
-    "brace_lo_G2+_n": 94.00123279746333,
-    "face_lo_G2-_mpa": 1.027434583922937,
-    "brace_lo_G2-_n": -94.00123279746333,
-    "face_lo_H2_mpa": 1.2200253314399978,
-    "brace_lo_H2_n": -1.6506241305371174,
-    "face_ult_pa": 5670485.000342024,
-    "edge_ult_pa": 99470020.49570388,
-    "tube_ult_pa": 19145615.03483937,
-    "root_m_lim_nm": 4.229478559969736,
-    "brace_comp_design_n": 162.15212657562424,
-    "brace_tens_design_n": 162.15212657562424,
+    "face_lo_L1_mpa": 1.908744967929037,
+    "brace_lo_L1_n": 4.676052403738844,
+    "face_lo_L4+_mpa": 4.985414980460199,
+    "brace_lo_L4+_n": 0.20123379403824554,
+    "face_lo_L4-_mpa": 4.988055840623258,
+    "brace_lo_L4-_n": 7.8447174807348015,
+    "face_lo_L5_mpa": 2.916190564051042,
+    "brace_lo_L5_n": 3.1643841747589363,
+    "face_lo_G2+_mpa": 0.9071169727623257,
+    "brace_lo_G2+_n": 96.41366807890714,
+    "face_lo_G2-_mpa": 0.9071169727623257,
+    "brace_lo_G2-_n": -96.41366807890714,
+    "face_lo_H2_mpa": 0.8845411045772155,
+    "brace_lo_H2_n": -3.7232917698368406,
+    "face_ult_pa": 5035430.807773452,
+    "edge_ult_pa": 48961420.0406311,
+    "tube_ult_pa": 15872228.116732847,
+    "root_m_lim_nm": 3.506351109458292,
+    "brace_comp_design_n": 166.31357743611483,
+    "brace_tens_design_n": 166.31357743611483,
     "brace_pcr_n": 989.207239501606,
     "brace_len_m": 0.15714256266206172,
-    "collar_t_lim_nm": 3.892285840980007,
-    "tau_collar_pa": 1164322.8771699618,
-    "tau_anchor_pa": 733162.2862890139,
-    "tau_brace_end_pa": 779577.531613578,
-    "dfoot_L4_m": 0.009125591132771345,
-    "ms_face": 0.76351758260481,
-    "ms_edge": 3.0213121300932686,
-    "ms_tube": 19.892512425018367,
-    "ms_brace_buckling": 5.100488845826275,
-    "ms_brace_end_bond": 1.565492101677659,
-    "ms_collar_bond": 0.7177365825373629,
-    "ms_anchor_bond": 0.3639545005262288,
-    "ms_min": 0.3639545005262288
+    "collar_t_lim_nm": 3.4610521105294287,
+    "tau_collar_pa": 1068673.4109323397,
+    "tau_anchor_pa": 751978.0668254086,
+    "s_ear_pa": 3789697.402515637,
+    "tau_brace_end_pa": 799584.5069043981,
+    "dfoot_L4_m": 0.005175701822402744,
+    "ms_face": 0.9859273976245464,
+    "ms_edge": 7.16969768581173,
+    "ms_tube": 24.201250703945675,
+    "ms_brace_buckling": 4.947844155307074,
+    "ms_brace_end_bond": 1.501299090627739,
+    "ms_collar_bond": 0.8714791437125264,
+    "ms_anchor_bond": 0.3298260203540966,
+    "ms_ear_root": 2.958099659894444,
+    "ms_min": 0.3298260203540966
    },
    "input_values": {
     "tube_x": 0.045,
@@ -30192,11 +32269,14 @@ window.PROOF_GRAPH = {
     "engage": 0.01,
     "a_lx": 0.02,
     "a_ly": 0.016,
-    "d_spar": 0.022
+    "d_spar": 0.022,
+    "ear_w": 0.016,
+    "s_ten": 15000000.0,
+    "lay_rec": 2
    },
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "CHECKED",
-   "importance": 9
+   "importance": 10
   },
   {
    "id": "CALC-C4-D3-BLOCK",
@@ -30356,6 +32436,143 @@ window.PROOF_GRAPH = {
    "importance": 2
   },
   {
+   "id": "CALC-C4-D3-MASS",
+   "type": "calculation",
+   "title": "Fins mass, recommended design (second board layer on D3's CAD)",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "fins_mass_d3",
+   "equation": "half-fin area = integral over x_le..x_te of (z_top(x) - z_skin(x)), z_top linear from the collar top to hh; added = (lay_rec - lay_d3) (areal + adh) x (2 upper + 2 lower areas); total = CL-D3-MASS + added",
+   "inputs": {
+    "m_d3": "CL-D3-MASS",
+    "lay_d3": "P:fin_detail.layers",
+    "lay_rec": "P:fins.layers",
+    "areal": "P:fins.areal_mass_kgm2",
+    "adh": "P:fin_detail.fin.adhesive_kgm2",
+    "skin": "ASM-C4-SKIN-PTS",
+    "tube_x": "P:fins.tube.x_m",
+    "od": "P:fins.tube.od_m",
+    "le_gap": "P:fin_detail.fin.le_gap_m",
+    "x_te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "tube_len": "P:fin_detail.tube_length_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m"
+   },
+   "units": {
+    "m_d3": "g",
+    "lay_d3": "-",
+    "lay_rec": "-",
+    "areal": "kg/m2",
+    "adh": "kg/m2",
+    "skin": "m",
+    "tube_x": "m",
+    "od": "m",
+    "le_gap": "m",
+    "x_te": "m",
+    "hh": "m",
+    "tube_len": "m",
+    "grip": "m",
+    "sc_gap": "m"
+   },
+   "tol": 1e-06,
+   "outputs": {
+    "area_up_m2": 0.04260165223118102,
+    "area_lo_m2": 0.0445122815115478,
+    "added_g": 37.458991509373405,
+    "total_g": 401.9589915093734
+   },
+   "input_values": {
+    "m_d3": 364.5,
+    "lay_d3": 1,
+    "lay_rec": 2,
+    "areal": 0.2,
+    "adh": 0.015,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "tube_x": 0.045,
+    "od": 0.022,
+    "le_gap": 0.0005,
+    "x_te": 0.32,
+    "hh": 0.19,
+    "tube_len": 0.344,
+    "grip": 0.012,
+    "sc_gap": 0.0005
+   },
+   "defined_in": "redesign/team/C4/claims.d3.json",
+   "status": "CHECKED",
+   "importance": 2
+  },
+  {
    "id": "CL-C4-D3-Q4-RECT",
    "type": "claim",
    "title": "Quad shell = R1 rectangle element on a rectangle",
@@ -30426,10 +32643,9 @@ window.PROOF_GRAPH = {
     "resolved": 0.03
    },
    "how": "Meshes 6x5, 12x10, 24x20 on both quarters.",
-   "value": 0.21918041614439787,
+   "value": 0.0023640669623887778,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
-    "FAILS: margin -630.6% (0.2192 vs <= 0.03)",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
@@ -30454,18 +32670,151 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-ROOT-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-ANCHOR-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-J1-E-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B4-HOVER-RPM, which is UNVERIFIED",
+    "uses CL-B4-CRUISE-RPM, which is UNVERIFIED",
+    "uses CL-B4-RPM-MAX, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.9211977679203741,
+   "importance": 1
+  },
+  {
+   "id": "CL-C4-D3-SEP-1L",
+   "type": "claim",
+   "title": "Mode separation, D3 as designed (one board layer), nominal",
+   "calc": "CALC-C4-D3-MODES",
+   "output": "sep_op",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.vibration_sep_frac",
+    "resolved": 0.2
+   },
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L",
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD",
+    "FIN-009-UR",
+    "FIN-009-UL",
+    "FIN-009-LR",
+    "FIN-009-LL",
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
+   "note": "FAILS: motor twist about the tube coupled with fore-aft nodding near 2P cruise (200 Hz); the one-layer board stores 45-70 % of the strain energy. Not the design of record: see CL-C4-D3-SEP.",
+   "value": 0.141009944926884,
+   "defined_in": "redesign/team/C4/claims.d3.json",
+   "reasons": [
+    "FAILS: margin -29.5% (0.141 vs >= 0.2)",
+    "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ROOT-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ANCHOR-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PROP-IP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-FACE-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
+    "uses CL-D3-X-FACE, which is UNVERIFIED",
+    "uses CL-D3-X-PROP, which is UNVERIFIED",
+    "uses P:propulsion.motor_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_diameter_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_length_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: can only; E1/D3 confirm with the bell and shaft)",
+    "uses ASM-C1-ADAPTER-MASS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PROP-IP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-BELL-INERTIA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:propulsion.esc_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-FACE-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CORE-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CORE-G, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CF-E-STRIP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-MOUNT-K-TWIST, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ROOT-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ANCHOR-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B4-HOVER-RPM, which is UNVERIFIED",
+    "uses CL-B4-CRUISE-RPM, which is UNVERIFIED",
+    "uses CL-B4-RPM-MAX, which is UNVERIFIED",
+    "uses ASM-J1-E-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -6.306013871479929,
+   "margin": -0.29495027536558,
    "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-C4-D3-F1-1L",
+   "type": "claim",
+   "title": "First station mode, D3 as designed (one board layer), lower quarter",
+   "calc": "CALC-C4-D3-MODES",
+   "output": "f1_lo",
+   "unit": "Hz",
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L",
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
+   ],
+   "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
+   "value": 228.199710543076,
+   "defined_in": "redesign/team/C4/claims.d3.json",
+   "reasons": [
+    "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ROOT-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ANCHOR-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PROP-IP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-FACE-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
+    "uses CL-D3-X-FACE, which is UNVERIFIED",
+    "uses CL-D3-X-PROP, which is UNVERIFIED",
+    "uses P:propulsion.motor_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_diameter_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_length_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: can only; E1/D3 confirm with the bell and shaft)",
+    "uses ASM-C1-ADAPTER-MASS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PROP-IP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-BELL-INERTIA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:propulsion.esc_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-FACE-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CORE-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CORE-G, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CF-E-STRIP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-MOUNT-K-TWIST, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ROOT-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ANCHOR-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B4-HOVER-RPM, which is UNVERIFIED",
+    "uses CL-B4-CRUISE-RPM, which is UNVERIFIED",
+    "uses CL-B4-RPM-MAX, which is UNVERIFIED",
+    "uses ASM-J1-E-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
    "id": "CL-C4-D3-F1-UP",
    "type": "claim",
-   "title": "First station mode, upper quarter (as designed)",
-   "calc": "CALC-C4-D3-MODES",
+   "title": "First station mode, recommended (two layers), upper quarter",
+   "calc": "CALC-C4-D3-MODES-REC",
    "output": "f1_up",
    "unit": "Hz",
    "parts": [
@@ -30479,7 +32828,7 @@ window.PROOF_GRAPH = {
     "FIN-003-UL"
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "value": 227.9574852845727,
+   "value": 288.90264616194895,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -30523,8 +32872,8 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-C4-D3-F1-LO",
    "type": "claim",
-   "title": "First station mode, lower quarter (as designed)",
-   "calc": "CALC-C4-D3-MODES",
+   "title": "First station mode, recommended (two layers), lower quarter",
+   "calc": "CALC-C4-D3-MODES-REC",
    "output": "f1_lo",
    "unit": "Hz",
    "parts": [
@@ -30539,7 +32888,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
    "note": "The lower tube is 14 mm longer outside the bore (cambered wing); the lower quarter governs.",
-   "value": 222.11839139135418,
+   "value": 281.1352828694466,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -30583,8 +32932,8 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-C4-D3-PANEL",
    "type": "claim",
-   "title": "First fin-panel mode (TE tip with the foot), upper quarter",
-   "calc": "CALC-C4-D3-MODES",
+   "title": "First fin-panel mode (TE tip with the foot), recommended, upper quarter",
+   "calc": "CALC-C4-D3-MODES-REC",
    "output": "panel_up",
    "unit": "Hz",
    "parts": [
@@ -30595,7 +32944,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "Tap the TE tip with the foot fitted.",
    "note": "Below the forcing band; < 10 % of its energy reaches the station.",
-   "value": 57.087694079502434,
+   "value": 70.65014444117446,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -30639,8 +32988,8 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-C4-D3-SEP",
    "type": "claim",
-   "title": "Mode separation from 1P/2P operating points, as designed (nominal)",
-   "calc": "CALC-C4-D3-MODES",
+   "title": "Mode separation from the 1P/2P operating points, recommended design (nominal)",
+   "calc": "CALC-C4-D3-MODES-REC",
    "output": "sep_op",
    "unit": "-",
    "limit": {
@@ -30668,10 +33017,9 @@ window.PROOF_GRAPH = {
     "FIN-003-LL"
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.110603045575979,
+   "value": 0.4056904492143063,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
-    "FAILS: margin -44.7% (0.1106 vs >= 0.2)",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-ROOT-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -30708,14 +33056,13 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.44698477212010507,
-   "fails": true,
+   "margin": 1.0284522460715313,
    "importance": 1
   },
   {
    "id": "CL-C4-D3-SEP-WORST",
    "type": "claim",
-   "title": "Mode separation, as designed, worst tube E/G corner",
+   "title": "Mode separation, recommended design, worst tube E/G corner",
    "calc": "CALC-C4-D3-WORST",
    "output": "sep_op_worst",
    "unit": "-",
@@ -30731,11 +33078,10 @@ window.PROOF_GRAPH = {
     "FIN-002-R",
     "FIN-002-L"
    ],
-   "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the bought tube (I1, H1), then T-C4-TAP.",
-   "value": 0.04896261875559427,
+   "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the bought tube (I1, H1), then T-C4-TAP-D3.",
+   "value": 0.3345832528583548,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
-    "FAILS: margin -75.5% (0.04896 vs >= 0.2)",
     "uses ASM-C4-E-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-E-TUBE-HI, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-G-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -30774,14 +33120,13 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE-HI, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.7551869062220287,
-   "fails": true,
+   "margin": 0.6729162642917738,
    "importance": 1
   },
   {
    "id": "CL-C4-D3-SEP-WHIRL",
    "type": "claim",
-   "title": "Whirl separation incl. prop gyroscopics, as designed",
+   "title": "Whirl separation incl. prop gyroscopics, recommended design",
    "calc": "CALC-C4-D3-CAMPBELL",
    "output": "sep_whirl",
    "unit": "-",
@@ -30798,10 +33143,9 @@ window.PROOF_GRAPH = {
     "FIN-002-L"
    ],
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.10606883098131958,
+   "value": 0.4012155111602733,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
-    "FAILS: margin -47.0% (0.1061 vs >= 0.2)",
     "uses ASM-C4-PROP-IP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C1-BELL-INERTIA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
@@ -30834,15 +33178,14 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.46965584509340214,
-   "fails": true,
+   "margin": 1.0060775558013664,
    "importance": 1
   },
   {
    "id": "CL-C4-D3-SEP-BAND",
    "type": "claim",
-   "title": "Separation from the whole 80-330 Hz band (B4 rule), as designed",
-   "calc": "CALC-C4-D3-MODES",
+   "title": "Separation from the whole 80-330 Hz band (B4 rule), recommended design",
+   "calc": "CALC-C4-D3-MODES-REC",
    "output": "sep_band",
    "unit": "-",
    "limit": {
@@ -30855,10 +33198,11 @@ window.PROOF_GRAPH = {
     "FIN-002-L"
    ],
    "how": "Needs every station mode >= 396 Hz; R-VIBRATION (operating points) is the criterion of record (CR-C4-06).",
-   "value": -0.3269139654807449,
+   "note": "FAILS by design intent: no buildable 22 mm tube station reaches 396 Hz; rpm-tracking notch is the backup.",
+   "value": -0.14807490039561633,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
-    "FAILS: margin -263.5% (-0.3269 vs >= 0.2)",
+    "FAILS: margin -174.0% (-0.1481 vs >= 0.2)",
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
     "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-ROOT-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -30895,7 +33239,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -2.634569827403724,
+   "margin": -1.7403745019780816,
    "fails": true,
    "importance": 1
   },
@@ -30920,11 +33264,10 @@ window.PROOF_GRAPH = {
     "FIN-003-LR",
     "FIN-003-LL"
    ],
-   "how": "T-C4-MOUNT-STIFF: 5 N side load at the prop nut on a mount clamped on a tube stub; rotation from two dial gauges; k = F a / theta.",
-   "value": 300000.0,
+   "how": "T-C4-MOUNT-STIFF: side load at the prop nut on a mount clamped on a tube stub; rotation from two dial gauges; k = F a / theta.",
+   "value": 894.3822305439886,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
-    "FAILS: margin -9900.0% (3e+05 N m/rad vs <= 3000 N m/rad)",
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
     "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
@@ -30958,14 +33301,13 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -99.0,
-   "fails": true,
+   "margin": 0.7018725898186705,
    "importance": 1
   },
   {
    "id": "CL-C4-D3-MS-FACE",
    "type": "claim",
-   "title": "Fin face margin, as designed, worst case and side",
+   "title": "Fin face margin, recommended design, worst case and side",
    "calc": "CALC-C4-D3-STATIC",
    "output": "ms_face",
    "unit": "-",
@@ -30984,7 +33326,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LD"
    ],
    "how": "T-C4-BOARD-COUPON for the face allowable; T-C4-FIN-PROOF at 1.5 x L4.",
-   "value": 0.76351758260481,
+   "value": 0.9859273976245464,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -31029,7 +33371,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -31037,7 +33380,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-C4-D3-MS-EDGE",
    "type": "claim",
-   "title": "Edge-strip margin, as designed",
+   "title": "Edge-strip margin, recommended design",
    "calc": "CALC-C4-D3-STATIC",
    "output": "ms_edge",
    "unit": "-",
@@ -31056,7 +33399,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LD"
    ],
    "how": "T-C4-FIN-PROOF.",
-   "value": 3.0213121300932686,
+   "value": 7.16969768581173,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -31101,7 +33444,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -31126,7 +33470,7 @@ window.PROOF_GRAPH = {
     "FIN-002-L"
    ],
    "how": "T-C4-FIN-PROOF (G2 at the tube end).",
-   "value": 19.892512425018367,
+   "value": 24.201250703945675,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -31171,7 +33515,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -31198,7 +33543,7 @@ window.PROOF_GRAPH = {
     "FIN-009-LL"
    ],
    "how": "T-C4-FIN-PROOF G2 both senses; no visible bow.",
-   "value": 5.100488845826275,
+   "value": 4.947844155307074,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -31243,7 +33588,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -31266,7 +33612,7 @@ window.PROOF_GRAPH = {
     "FIN-010-LL"
    ],
    "how": "C2 checks the spar under the anchor.",
-   "value": 162.15212657562424,
+   "value": 166.31357743611483,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -31311,7 +33657,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -31347,7 +33694,7 @@ window.PROOF_GRAPH = {
     "FIN-010-LL"
    ],
    "how": "C6 lap-shear coupons; T-C4-FIN-PROOF.",
-   "value": 1.565492101677659,
+   "value": 1.501299090627739,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -31392,7 +33739,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -31420,7 +33768,7 @@ window.PROOF_GRAPH = {
     "FIN-008-LL"
    ],
    "how": "T-C4-FIN-PROOF at 1.5 x L4; witness line across collar and tube does not move.",
-   "value": 0.7177365825373629,
+   "value": 0.8714791437125264,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -31465,7 +33813,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -31493,7 +33842,7 @@ window.PROOF_GRAPH = {
     "FIN-010-LL"
    ],
    "how": "T-C4-FIN-PROOF G2 in the tension sense; C6 peel coupon PETG on CF.",
-   "value": 0.3639545005262288,
+   "value": 0.3298260203540966,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -31538,7 +33887,81 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C4-D3-MS-EAR",
+   "type": "claim",
+   "title": "Station-collar ear root margin (brace force, interlayer bending)",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "ms_ear_root",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0,
+    "resolved": 0.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "T-C4-FIN-PROOF G2 both senses; print the collar with layers in x-y (ear bending loads the layer lines).",
+   "value": 2.958099659894444,
+   "defined_in": "redesign/team/C4/claims.d3.json",
+   "reasons": [
+    "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
+    "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:wing.spar.mass_per_m_kgm, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival)",
+    "uses CL-D3-X-FACE, which is UNVERIFIED",
+    "uses CL-D3-X-PROP, which is UNVERIFIED",
+    "uses P:propulsion.motor_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_diameter_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:propulsion.motor_length_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: can only; E1/D3 confirm with the bell and shaft)",
+    "uses ASM-C1-ADAPTER-MASS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PROP-IP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-BELL-INERTIA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:propulsion.esc_mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json)",
+    "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses ASM-C4-FACE-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-FACE-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CORE-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CORE-G, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CF-E-STRIP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-MOUNT-K-TWIST, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ROOT-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-ANCHOR-K, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-J1-E-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-LEVEL, which is UNVERIFIED",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-T-LIMIT, which is UNVERIFIED",
+    "uses CL-C1-MOTOR-TORQUE, which is UNVERIFIED",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-FACE-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -31546,7 +33969,7 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-C4-D3-FOOT-DEFL",
    "type": "claim",
-   "title": "Foot deflection under L4 (limit), as designed",
+   "title": "Foot deflection under L4 (limit), recommended design",
    "calc": "CALC-C4-D3-STATIC",
    "output": "dfoot_L4_m",
    "unit": "m",
@@ -31557,7 +33980,7 @@ window.PROOF_GRAPH = {
     "FIN-001-LD"
    ],
    "how": "T-C4-FIN-PROOF: dial gauge at the foot.",
-   "value": 0.009125591132771345,
+   "value": 0.005175701822402744,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -31602,7 +34025,8 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C4-PEEL-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+    "uses P:wing.spar.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-PETG-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -31677,6 +34101,65 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
+   "id": "CL-C4-D3-FINS-MASS",
+   "type": "claim",
+   "title": "Fins subsystem mass, recommended design (D3 CAD + second board layer)",
+   "calc": "CALC-C4-D3-MASS",
+   "output": "total_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mass.allocation_g.fins",
+    "resolved": 370
+   },
+   "parts": [
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
+   ],
+   "how": "T-D3-WEIGH; A3 roll-up.",
+   "note": "Over the 370 g allocation: A1 decides between raising the allocation and the reserve (CR-C4-15).",
+   "value": 401.9589915093734,
+   "defined_in": "redesign/team/C4/claims.d3.json",
+   "reasons": [
+    "FAILS: margin -8.6% (402 g vs <= 370 g)",
+    "uses CL-D3-MASS, which is PROPOSED",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses P:fin_detail.fin.adhesive_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: spray adhesive between the two board layers (3M 77 class, ~15 g/m2 wet))",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.0863756527280362,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-C4-D3-LAYER-ADD",
+   "type": "claim",
+   "title": "Mass of the second board layer, four half-fins",
+   "calc": "CALC-C4-D3-MASS",
+   "output": "added_g",
+   "unit": "g",
+   "parts": [
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
+   ],
+   "how": "Weigh the boards before and after laminating.",
+   "value": 37.458991509373405,
+   "defined_in": "redesign/team/C4/claims.d3.json",
+   "reasons": [
+    "uses CL-D3-MASS, which is PROPOSED",
+    "uses P:fins.areal_mass_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item))",
+    "uses P:fin_detail.fin.adhesive_kgm2, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: spray adhesive between the two board layers (3M 77 class, ~15 g/m2 wet))",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
    "id": "T-C4-MOUNT-STIFF",
    "type": "test",
    "title": "Mount rocking stiffness on the bench",
@@ -31698,13 +34181,14 @@ window.PROOF_GRAPH = {
     "CL-C4-D3-F1-UP",
     "CL-C4-D3-F1-LO",
     "CL-C4-D3-SEP-WHIRL",
-    "CL-C4-D3-PANEL"
+    "CL-C4-D3-PANEL",
+    "CL-C4-D3-SEP-WORST"
    ],
    "state": "planned",
    "procedure": "Finished wing on foam blocks, props on; tap each motor bell in y and in z; FC raw IMU at 1 kHz (or a phone accelerometer taped to the can); FFT peaks vs 1P/2P at hover, cruise and the cap.",
    "defined_in": "redesign/team/C4/claims.d3.json",
    "status": "PROPOSED",
-   "importance": 5
+   "importance": 6
   },
   {
    "id": "SRC-C4-LEISSA",
@@ -31743,7 +34227,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 17
+   "importance": 18
   },
   {
    "id": "SRC-C4-ALLEN",
@@ -31756,7 +34240,7 @@ window.PROOF_GRAPH = {
     "value never compared with the source (no 'checked' date)"
    ],
    "status": "UNVERIFIED",
-   "importance": 39
+   "importance": 47
   },
   {
    "id": "SRC-C4-PETG",
@@ -31768,7 +34252,7 @@ window.PROOF_GRAPH = {
    "note": "not re-opened in this session; allowables below are taken at about 40-70 % of these",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "UNVERIFIED",
-   "importance": 16
+   "importance": 31
   },
   {
    "id": "ASM-C4-G-TUBE",
@@ -31783,7 +34267,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 47
+   "importance": 55
   },
   {
    "id": "ASM-C4-E-TUBE-LO",
@@ -31798,7 +34282,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 5
   },
   {
    "id": "ASM-C4-E-TUBE-HI",
@@ -31858,7 +34342,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 33
+   "importance": 42
   },
   {
    "id": "ASM-C4-FACE-T",
@@ -31873,7 +34357,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 58
+   "importance": 66
   },
   {
    "id": "ASM-C4-FACE-E",
@@ -31888,7 +34372,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 51
+   "importance": 59
   },
   {
    "id": "ASM-C4-FACE-SIGMA",
@@ -31903,7 +34387,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 29
+   "importance": 35
   },
   {
    "id": "ASM-C4-CORE-E",
@@ -31918,7 +34402,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 51
+   "importance": 59
   },
   {
    "id": "ASM-C4-CORE-G",
@@ -31933,7 +34417,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 47
+   "importance": 55
   },
   {
    "id": "ASM-C4-PROP-IP",
@@ -31948,7 +34432,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 47
+   "importance": 55
   },
   {
    "id": "ASM-C4-MOUNT-DX",
@@ -31963,7 +34447,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 29
+   "importance": 34
   },
   {
    "id": "ASM-C4-STRUT-DY",
@@ -31978,7 +34462,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 29
+   "importance": 34
   },
   {
    "id": "ASM-C4-STRUT-DZ",
@@ -31993,7 +34477,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 29
+   "importance": 34
   },
   {
    "id": "ASM-C4-STRUT-W",
@@ -32008,7 +34492,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 29
+   "importance": 34
   },
   {
    "id": "ASM-C4-STRUT-T",
@@ -32023,7 +34507,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 29
+   "importance": 34
   },
   {
    "id": "ASM-C4-EDGE-W",
@@ -32035,7 +34519,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 29
+   "importance": 34
   },
   {
    "id": "ASM-C4-EDGE-T",
@@ -32047,7 +34531,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 29
+   "importance": 34
   },
   {
    "id": "ASM-C4-EDGE-DZ",
@@ -32059,7 +34543,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 29
+   "importance": 34
   },
   {
    "id": "ASM-C4-CF-E-STRIP",
@@ -32074,7 +34558,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 47
+   "importance": 55
   },
   {
    "id": "ASM-C4-CF-SIGMA",
@@ -32089,7 +34573,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 22
+   "importance": 32
   },
   {
    "id": "ASM-C4-CF-RHO",
@@ -32101,7 +34585,7 @@ window.PROOF_GRAPH = {
    "unit": "kg/m3",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 47
+   "importance": 55
   },
   {
    "id": "ASM-C4-STRUT-FIT-MASS",
@@ -32173,7 +34657,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 8
+   "importance": 13
   },
   {
    "id": "ASM-C4-PETG-TENSILE",
@@ -32191,7 +34675,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 15
+   "importance": 25
   },
   {
    "id": "ASM-C4-PETG-SHEAR",
@@ -32224,7 +34708,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 17
+   "importance": 29
   },
   {
    "id": "ASM-C4-FINJOINT-M-TASK",
@@ -32266,7 +34750,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 22
+   "importance": 28
   },
   {
    "id": "CALC-C4-FE-CHECK",
@@ -32347,7 +34831,7 @@ window.PROOF_GRAPH = {
    "unit": "Hz",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 17
+   "importance": 19
   },
   {
    "id": "ASM-C4-BAND-HI",
@@ -32359,7 +34843,7 @@ window.PROOF_GRAPH = {
    "unit": "Hz",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 17
+   "importance": 19
   },
   {
    "id": "ASM-C4-ONE-LAYER",
@@ -32371,7 +34855,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 9
+   "importance": 14
   },
   {
    "id": "CALC-C4-MODES-2L",
@@ -32487,11 +34971,11 @@ window.PROOF_GRAPH = {
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 149.1541760489334,
-    "f_st2": 328.88507647758894,
-    "f_panel": 38.402836475826454,
-    "sep_op": 0.03972359168842421,
-    "sep_band": -0.5480176483365654
+    "f_st1": 149.15417604890658,
+    "f_st2": 328.8850764775358,
+    "f_panel": 38.40283647582673,
+    "sep_op": 0.03972359168859696,
+    "sep_band": -0.5480176483366468
    },
    "input_values": {
     "tube_x": 0.045,
@@ -32659,11 +35143,11 @@ window.PROOF_GRAPH = {
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 146.3525589281277,
-    "f_st2": 274.2663537353723,
-    "f_panel": 20.734163914969116,
-    "sep_op": 0.057760812619797264,
-    "sep_band": -0.5565073971874919
+    "f_st1": 146.3525589374585,
+    "f_st2": 274.26635373651044,
+    "f_panel": 20.734163914943704,
+    "sep_op": 0.057760812559724206,
+    "sep_band": -0.5565073971592167
    },
    "input_values": {
     "tube_x": 0.045,
@@ -32831,11 +35315,11 @@ window.PROOF_GRAPH = {
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 391.53772394268947,
-    "f_st2": 514.044909364823,
-    "f_panel": 68.07901710134243,
-    "sep_op": 0.9577081661035469,
-    "sep_band": 0.18647795134148315
+    "f_st1": 391.53772394275245,
+    "f_st2": 514.044909364383,
+    "f_panel": 68.07901710136323,
+    "sep_op": 0.957708166103862,
+    "sep_band": 0.1864779513416741
    },
    "input_values": {
     "tube_x": 0.045,
@@ -33003,11 +35487,11 @@ window.PROOF_GRAPH = {
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 295.59397780328305,
-    "f_st2": 306.74867798546046,
-    "f_panel": 55.51346539144687,
-    "sep_op": 0.4779846456920762,
-    "sep_band": -0.10426067332338473
+    "f_st1": 295.59397780322485,
+    "f_st2": 306.7486779853986,
+    "f_panel": 55.513465391441805,
+    "sep_op": 0.4779846456917851,
+    "sep_band": -0.10426067332356104
    },
    "input_values": {
     "tube_x": 0.045,
@@ -33176,8 +35660,8 @@ window.PROOF_GRAPH = {
     "ASM-C4-G-TUBE-HI"
    ],
    "outputs": {
-    "sep_op_worst": 0.8961997356194824,
-    "f_station_min": 379.2361606698804
+    "sep_op_worst": 0.8961997356238391,
+    "f_station_min": 379.23616067075176
    },
    "input_values": {
     "tube_x": 0.045,
@@ -33348,8 +35832,8 @@ window.PROOF_GRAPH = {
     "ASM-C4-G-TUBE-HI"
    ],
    "outputs": {
-    "sep_op_worst": 0.4274181409121369,
-    "f_station_min": 285.48077782175557
+    "sep_op_worst": 0.4274181409118458,
+    "f_station_min": 285.48077782169736
    },
    "input_values": {
     "tube_x": 0.045,
@@ -33502,11 +35986,11 @@ window.PROOF_GRAPH = {
    "outputs": {
     "f1_coarse": 391.8628561452462,
     "f2_coarse": 517.4017317727571,
-    "f1_used": 391.53772394239724,
-    "f2_used": 514.0449093648905,
-    "f1_fine": 391.63387154362584,
-    "f2_fine": 501.7411120756059,
-    "change": 0.024522202771836143
+    "f1_used": 391.5377239425505,
+    "f2_used": 514.0449093651262,
+    "f1_fine": 391.63387154021814,
+    "f2_fine": 501.7411120667743,
+    "change": 0.024522202790339342
    },
    "input_values": {
     "tube_x": 0.045,
@@ -33660,7 +36144,7 @@ window.PROOF_GRAPH = {
     "ASM-C1-BELL-INERTIA"
    ],
    "outputs": {
-    "sep_whirl": 0.9553137544981765
+    "sep_whirl": 0.9553137545005177
    },
    "input_values": {
     "tube_x": 0.045,
@@ -34130,7 +36614,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C4/claims.json",
    "status": "CHECKED",
-   "importance": 4
+   "importance": 9
   },
   {
    "id": "CALC-C4-BLOCK",
@@ -34323,6 +36807,7 @@ window.PROOF_GRAPH = {
    "cites": [
     "SRC-C4-BLEVINS"
    ],
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.00032362317772527405,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -34360,6 +36845,7 @@ window.PROOF_GRAPH = {
    "cites": [
     "SRC-C4-LEISSA"
    ],
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.007179339368354687,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -34394,7 +36880,8 @@ window.PROOF_GRAPH = {
     "resolved": 0.03
    },
    "how": "Three meshes 6x5, 12x10, 24x20; 12x10 is used for every claim.",
-   "value": 0.024522202771836143,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.024522202790339342,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
@@ -34424,7 +36911,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.1825932409387952,
+   "margin": 0.1825932403220219,
    "importance": 1
   },
   {
@@ -34437,13 +36924,14 @@ window.PROOF_GRAPH = {
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 295.59397780328305,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 295.59397780322485,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -34493,14 +36981,14 @@ window.PROOF_GRAPH = {
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "note": "Tube bends out of the fin plane and twists; the foam-board fin adds < 3 % here.",
-   "value": 149.1541760489334,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). Tube bends out of the fin plane and twists; the foam-board fin adds < 3 % here.",
+   "value": 149.15417604890658,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -34550,14 +37038,14 @@ window.PROOF_GRAPH = {
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "note": "Bare tube 180 Hz; the bonded fin lifts it to ~330 Hz.",
-   "value": 328.88507647758894,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). Bare tube 180 Hz; the bonded fin lifts it to ~330 Hz.",
+   "value": 328.8850764775358,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -34609,20 +37097,17 @@ window.PROOF_GRAPH = {
     "ref": "P:requirements.vibration_sep_frac",
     "resolved": 0.2
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "note": "FAILS: the lateral-torsion mode sits at ~149 Hz, 4 % from 1P at the F4 cap and 17 % below 2P hover.",
-   "value": 0.03972359168842421,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). FAILS: the lateral-torsion mode sits at ~149 Hz, 4 % from 1P at the F4 cap and 17 % below 2P hover.",
+   "value": 0.03972359168859696,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "FAILS: margin -80.1% (0.03972 vs >= 0.2)",
@@ -34661,7 +37146,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.801382041557879,
+   "margin": -0.8013820415570152,
    "fails": true,
    "importance": 1
   },
@@ -34677,19 +37162,17 @@ window.PROOF_GRAPH = {
     "ref": "P:requirements.vibration_sep_frac",
     "resolved": 0.2
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.057760812619797264,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.057760812559724206,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "FAILS: margin -71.1% (0.05776 vs >= 0.2)",
@@ -34728,7 +37211,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.7111959369010137,
+   "margin": -0.711195937201379,
    "fails": true,
    "importance": 1
   },
@@ -34742,13 +37225,14 @@ window.PROOF_GRAPH = {
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 391.53772394268947,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 391.53772394275245,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -34798,13 +37282,14 @@ window.PROOF_GRAPH = {
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 514.044909364823,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 514.044909364383,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -34852,14 +37337,14 @@ window.PROOF_GRAPH = {
    "output": "f_panel",
    "unit": "Hz",
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap the fin TE tip with the foot fitted; expect 50-70 Hz, below the 1P band.",
-   "note": "Local flapping of the free TE corner; < 2 % of its energy reaches the station. Below the forcing band.",
-   "value": 68.07901710134243,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). Local flapping of the free TE corner; < 2 % of its energy reaches the station. Below the forcing band.",
+   "value": 68.07901710136323,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -34911,19 +37396,17 @@ window.PROOF_GRAPH = {
     "ref": "P:requirements.vibration_sep_frac",
     "resolved": 0.2
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.9577081661035469,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.957708166103862,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -34961,7 +37444,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 3.788540830517735,
+   "margin": 3.78854083051931,
    "importance": 1
   },
   {
@@ -34976,15 +37459,13 @@ window.PROOF_GRAPH = {
     "ref": "P:requirements.vibration_sep_frac",
     "resolved": 0.2
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the US-stock tube (I1), then T-C4-TAP.",
-   "value": 0.8961997356194824,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.8961997356238391,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses ASM-C4-E-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -35025,7 +37506,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE-HI, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 3.480998678097412,
+   "margin": 3.480998678119196,
    "importance": 1
   },
   {
@@ -35040,15 +37521,13 @@ window.PROOF_GRAPH = {
     "ref": "P:requirements.vibration_sep_frac",
     "resolved": 0.2
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.9553137544981765,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.9553137545005177,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses ASM-C4-PROP-IP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -35083,7 +37562,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 3.7765687724908825,
+   "margin": 3.7765687725025887,
    "importance": 1
   },
   {
@@ -35103,8 +37582,8 @@ window.PROOF_GRAPH = {
     "FIN-002-R"
    ],
    "how": "Needs every station mode >= 396 Hz. R-VIBRATION (A2) is met on the operating points instead, with an rpm-tracking harmonic notch as the backup (F4).",
-   "note": "With 2 layers the first station mode is 392 Hz: 1 % short of the band rule. A2's R-VIBRATION is the basis.",
-   "value": 0.18647795134148315,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). With 2 layers the first station mode is 392 Hz: 1 % short of the band rule. A2's R-VIBRATION is the basis.",
+   "value": 0.1864779513416741,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "FAILS: margin -6.8% (0.1865 vs >= 0.2)",
@@ -35143,7 +37622,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.0676102432925843,
+   "margin": -0.06761024329162951,
    "fails": true,
    "importance": 1
   },
@@ -35164,8 +37643,8 @@ window.PROOF_GRAPH = {
     "FIN-002-R"
    ],
    "how": "As CL-C4-SEP-BAND-REC.",
-   "note": "FAILS (first station mode ~296 Hz inside the band); passes R-VIBRATION.",
-   "value": -0.10426067332338473,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). FAILS (first station mode ~296 Hz inside the band); passes R-VIBRATION.",
+   "value": -0.10426067332356104,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "FAILS: margin -152.1% (-0.1043 vs >= 0.2)",
@@ -35204,7 +37683,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": -1.5213033666169236,
+   "margin": -1.521303366617805,
    "fails": true,
    "importance": 1
   },
@@ -35220,19 +37699,17 @@ window.PROOF_GRAPH = {
     "ref": "P:requirements.vibration_sep_frac",
     "resolved": 0.2
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "value": 0.4779846456920762,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.4779846456917851,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses SRC-C4-ALLEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -35270,7 +37747,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 1.3899232284603809,
+   "margin": 1.3899232284589254,
    "importance": 1
   },
   {
@@ -35285,15 +37762,13 @@ window.PROOF_GRAPH = {
     "ref": "P:requirements.vibration_sep_frac",
     "resolved": 0.2
    },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "Passes only if the measured tube E and G are near nominal (T-C4-TUBE-BEND/TORSION).",
-   "value": 0.4274181409121369,
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
+   "value": 0.4274181409118458,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
     "uses ASM-C4-E-TUBE-LO, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
@@ -35334,7 +37809,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-G-TUBE-HI, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 1.1370907045606844,
+   "margin": 1.137090704559229,
    "importance": 1
   },
   {
@@ -35349,16 +37824,14 @@ window.PROOF_GRAPH = {
     "value": 0.0,
     "resolved": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Foam-board coupon bend test (T-C4-BOARD-COUPON) for the face allowable; proof-load one fin quarter to 1.5 x L4 at the foot (T-C4-FIN-PROOF).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 1.6777667513120584,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35416,16 +37889,14 @@ window.PROOF_GRAPH = {
     "value": 0.0,
     "resolved": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "Foam-board coupon bend test (T-C4-BOARD-COUPON) for the face allowable; proof-load one fin quarter to 1.5 x L4 at the foot (T-C4-FIN-PROOF).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.27794924167206725,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35483,16 +37954,14 @@ window.PROOF_GRAPH = {
     "value": 0.0,
     "resolved": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "T-C4-FIN-PROOF.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 3.2658357757124525,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35536,7 +38005,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-FOOT-PATCH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 6
   },
   {
    "id": "CL-C4-MS-TUBE",
@@ -35550,14 +38019,12 @@ window.PROOF_GRAPH = {
     "value": 0.0,
     "resolved": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "T-C4-FIN-PROOF (G2 load at the tube end).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 8.536758990379223,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35615,14 +38082,12 @@ window.PROOF_GRAPH = {
     "value": 0.0,
     "resolved": 0.0
    },
-   "verifies": [
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
    ],
    "how": "Proof-load G2 at the tube end with the brace fitted; no visible bow.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.3649018868421894,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35676,6 +38141,7 @@ window.PROOF_GRAPH = {
    "output": "strut_len_m",
    "unit": "m",
    "how": "D3 CAD.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.19064954759977798,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35729,12 +38195,13 @@ window.PROOF_GRAPH = {
    "output": "dfoot_L4_m",
    "unit": "m",
    "parts": [
-    "FIN-001-UR",
-    "FIN-001-UL",
-    "FIN-001-LR",
-    "FIN-001-LL"
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
    ],
    "how": "T-C4-FIN-PROOF: dial gauge at the foot.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.008906955489189138,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35792,6 +38259,7 @@ window.PROOF_GRAPH = {
     "FIN-004-R"
    ],
    "how": "C1 G2 / the A1 action value, x 1.5 x 1.15 x 1.25.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 23.071874999999995,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35826,15 +38294,12 @@ window.PROOF_GRAPH = {
     "value": 0.0,
     "resolved": 0.0
    },
-   "verifies": [
-    "R-FIN-TUBE-JOINT",
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
     "FIN-004-L",
     "FIN-004-R"
    ],
    "how": "Proof test: hang 2 x 1.5 x 51 N (G2 ultimate, printed factor) from one upper tube end of a block bonded in a core offcut (T-C4-BLOCK-PROOF); C6 bond coupons for ASM-C4-BOND-SHEAR.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.47452255180820835,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35869,6 +38334,7 @@ window.PROOF_GRAPH = {
     "FIN-004-R"
    ],
    "how": "Weigh the first print (T-A3-WEIGH-PARTS).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 0.030119067982376978,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35903,6 +38369,7 @@ window.PROOF_GRAPH = {
     "FIN-004-R"
    ],
    "how": "C2 checks spar wall crushing with the internal plug (CR-C4-02).",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 961.3281249999999,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35933,6 +38400,7 @@ window.PROOF_GRAPH = {
    "output": "rec_delta_g",
    "unit": "g",
    "how": "A3 roll-up; weigh the braces and blocks.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 108.61467986712641,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35955,6 +38423,7 @@ window.PROOF_GRAPH = {
    "output": "rec_1l_delta_g",
    "unit": "g",
    "how": "A3 roll-up.",
+   "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
    "value": 66.81467986712642,
    "defined_in": "redesign/team/C4/claims.json",
    "reasons": [
@@ -35975,13 +38444,14 @@ window.PROOF_GRAPH = {
    "title": "Three-point bend of the US-stock 22 x 20 tube (I1 buys, H1 runs)",
    "verifies": [
     "CL-C4-SEP-REC-WORST",
-    "CL-C4-SEP-1LB-WORST"
+    "CL-C4-SEP-1LB-WORST",
+    "CL-C4-D3-SEP-WORST"
    ],
    "state": "planned",
    "procedure": "Span 0.80 m on two 22 mm dowels, load at centre in 0.5 kg steps to 4 kg, dial gauge to 0.01 mm; E = F L^3 / (48 I delta) with I = 3.645e-9 m4. Pass band for the recommended design: E >= 70 GPa.",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 2
+   "importance": 3
   },
   {
    "id": "T-C4-TUBE-TORSION",
@@ -35989,13 +38459,14 @@ window.PROOF_GRAPH = {
    "title": "Torsion of the same tube",
    "verifies": [
     "CL-C4-SEP-REC-WORST",
-    "CL-C4-SEP-1LB-WORST"
+    "CL-C4-SEP-1LB-WORST",
+    "CL-C4-D3-SEP-WORST"
    ],
    "state": "planned",
    "procedure": "Clamp 0.40 m of tube in two printed V-blocks at one end, 0.30 m lever arm at the other, 0.5-2 kg, measure twist with a laser pointer on a wall 3 m away; G = T L / (J theta), J = 7.29e-9 m4.",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 2
+   "importance": 3
   },
   {
    "id": "T-C4-TAP",
@@ -36021,13 +38492,14 @@ window.PROOF_GRAPH = {
    "title": "Foam-board face coupon",
    "verifies": [
     "CL-C4-MS-FACE-2L",
-    "CL-C4-MS-FACE-1L"
+    "CL-C4-MS-FACE-1L",
+    "CL-C4-D3-MS-FACE"
    ],
    "state": "planned",
    "procedure": "Three 50 x 300 mm strips per layer count, four-point bend, span 250 mm, load to failure: face allowable and D. Weigh 0.1 m2 for the areal mass.",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 2
+   "importance": 3
   },
   {
    "id": "T-C4-FIN-PROOF",
@@ -36039,39 +38511,50 @@ window.PROOF_GRAPH = {
     "CL-C4-MS-TUBE",
     "CL-C4-MS-EDGE",
     "CL-C4-FOOT-DEFL-L4",
-    "CL-C4-MS-STRUT"
+    "CL-C4-MS-STRUT",
+    "CL-C4-D3-MS-FACE",
+    "CL-C4-D3-MS-EDGE",
+    "CL-C4-D3-MS-TUBE",
+    "CL-C4-D3-MS-BRACE",
+    "CL-C4-D3-MS-BRACE-END",
+    "CL-C4-D3-MS-COLLAR",
+    "CL-C4-D3-MS-EAR",
+    "CL-C4-D3-MS-ANCHOR",
+    "CL-C4-D3-FOOT-DEFL"
    ],
    "state": "planned",
    "procedure": "1.5 x L4 at the foot (49 N along the fin + 25 N across), then 1.5 x G2 (77 N lateral at the tube end); no cracking or face wrinkle; record the foot deflection.",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 6
+   "importance": 20
   },
   {
    "id": "T-C4-BLOCK-PROOF",
    "type": "test",
    "title": "Block proof in a core offcut",
    "verifies": [
-    "CL-C4-BLOCK-MS"
+    "CL-C4-BLOCK-MS",
+    "CL-C4-D3-BLOCK-MS"
    ],
    "state": "planned",
    "procedure": "Block bonded on a spar stub in a 0.15 m core offcut; 0.30 m tube in the bore; hang 18 kg at 0.17 m lever (30 N m > design 20.3 N m) for 1 min; no creak, no bond line crack.",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 1
+   "importance": 2
   },
   {
    "id": "T-C4-PROP-SWING",
    "type": "test",
    "title": "Bifilar swing of one prop",
    "verifies": [
-    "CL-C4-SEP-REC-WHIRL"
+    "CL-C4-SEP-REC-WHIRL",
+    "CL-C4-D3-SEP-WHIRL"
    ],
    "state": "planned",
    "procedure": "Two 0.5 m threads at the blade tips; period of 20 swings; I = m g d^2 T^2 / (16 pi^2 L).",
    "defined_in": "redesign/team/C4/claims.json",
    "status": "PROPOSED",
-   "importance": 1
+   "importance": 2
   },
   {
    "id": "SRC-C5-UN383",
@@ -36083,7 +38566,7 @@ window.PROOF_GRAPH = {
    "note": "every pack shipped as UN3480 must pass T.4; value not yet re-read against the current revision",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 8
   },
   {
    "id": "ASM-C5-TD-DRIFT",
@@ -36185,7 +38668,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 4
+   "importance": 8
   },
   {
    "id": "ASM-C5-NOSE-WALL",
@@ -36197,7 +38680,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 4
+   "importance": 0
   },
   {
    "id": "ASM-C5-DROP-GUARD",
@@ -36209,7 +38692,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 9
+   "importance": 25
   },
   {
    "id": "CALC-C5-STANCE",
@@ -36354,6 +38837,8 @@ window.PROOF_GRAPH = {
     "a1_feet_r1_nozcg_deg": 30.624886480457597,
     "d5_a3_layout_deg": 32.26349665319715,
     "x_pack_target_m": -0.008680020693466933,
+    "x_pack_light_m": -0.014404528397815222,
+    "x_pack_heavy_m": 0.0030322934112681915,
     "d5_r1_narrow_deg": 32.7940870322433,
     "d5_r1_nozcg_deg": 34.906889486454226,
     "d5_worst_narrow_deg": 32.37959241580515,
@@ -37656,7 +40141,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C5/claims.json",
    "status": "CHECKED",
-   "importance": 46
+   "importance": 65
   },
   {
    "id": "CL-C5-TIPOVER-A1-R1-ZCG",
@@ -38112,7 +40597,7 @@ window.PROOF_GRAPH = {
     "uses CL-B3-CG-AFT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 32
+   "importance": 41
   },
   {
    "id": "CL-C5-CG-H-R1",
@@ -38134,7 +40619,7 @@ window.PROOF_GRAPH = {
     "uses CL-B3-CG-AFT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 23
+   "importance": 32
   },
   {
    "id": "CL-C5-PACK-X-B3",
@@ -38157,7 +40642,51 @@ window.PROOF_GRAPH = {
     "uses CL-B3-CG-AFT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 9
+  },
+  {
+   "id": "CL-C5-PACK-X-B3-LIGHT",
+   "type": "claim",
+   "title": "Pack station on the B3 target, 503 g pack",
+   "calc": "CALC-C5-STANCE",
+   "output": "x_pack_light_m",
+   "unit": "m",
+   "how": "As CL-C5-PACK-X-B3 with the weighed pack.",
+   "value": -0.014404528397815222,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses P:a3.rollup.items, which is UNVERIFIED (marked UNVERIFIED in redesign/team/A3/rollup/mass_items.json: params used: P:battery.mass_kg, P:battery.size_m, P:cg.foot_height_m, P:fins.areal_mass_kgm2, P:fins.chord_m, P:fins.half_height_m, P:fins.layers, P:fins.le_x_m, P:fins.te_x_m, P:fins.tube.length_m, P:fins.tube.od_m, P:fins.tube.x_m, P:fins.y_m, P:pod.size_m, P:pod.x_le_m, P:pod.z_base_m, P:propulsion.esc_mass_kg, P:propulsion.motor_diameter_m, P:propulsion.motor_length_m, P:propulsion.motor_mass_kg, P:propulsion.prop_diameter_m, P:propulsion.prop_mass_kg, P:propulsion.stations.x_mount_m, P:propulsion.stations.x_prop_plane_m, P:propulsion.stations.y_m, P:propulsion.stations.z_m, P:wing.chord_m, P:wing.core.density_kgm3, P:wing.elevon.chord_frac, P:wing.elevon.inboard_y_m, P:wing.elevon.outboard_y_m, P:wing.skin.areal_mass_kgm2, P:wing.span_m, P:wing.spar.length_m, P:wing.spar.mass_per_m_kgm, P:wing.spar.od_m, P:wing.spar.x_m, P:wing.spar.z_m, P:wing.t_c, P:wing.te_x_m)",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-D5-MASS-TOTAL, which is UNVERIFIED",
+    "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B3-CG-TARGET, which is UNVERIFIED",
+    "uses CL-B3-CG-FWD, which is UNVERIFIED",
+    "uses CL-B3-CG-AFT, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 9
+  },
+  {
+   "id": "CL-C5-PACK-X-B3-HEAVY",
+   "type": "claim",
+   "title": "Pack station on the B3 target, 680 g pack",
+   "calc": "CALC-C5-STANCE",
+   "output": "x_pack_heavy_m",
+   "unit": "m",
+   "how": "As CL-C5-PACK-X-B3 with the weighed pack.",
+   "value": 0.0030322934112681915,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses P:a3.rollup.items, which is UNVERIFIED (marked UNVERIFIED in redesign/team/A3/rollup/mass_items.json: params used: P:battery.mass_kg, P:battery.size_m, P:cg.foot_height_m, P:fins.areal_mass_kgm2, P:fins.chord_m, P:fins.half_height_m, P:fins.layers, P:fins.le_x_m, P:fins.te_x_m, P:fins.tube.length_m, P:fins.tube.od_m, P:fins.tube.x_m, P:fins.y_m, P:pod.size_m, P:pod.x_le_m, P:pod.z_base_m, P:propulsion.esc_mass_kg, P:propulsion.motor_diameter_m, P:propulsion.motor_length_m, P:propulsion.motor_mass_kg, P:propulsion.prop_diameter_m, P:propulsion.prop_mass_kg, P:propulsion.stations.x_mount_m, P:propulsion.stations.x_prop_plane_m, P:propulsion.stations.y_m, P:propulsion.stations.z_m, P:wing.chord_m, P:wing.core.density_kgm3, P:wing.elevon.chord_frac, P:wing.elevon.inboard_y_m, P:wing.elevon.outboard_y_m, P:wing.skin.areal_mass_kgm2, P:wing.span_m, P:wing.spar.length_m, P:wing.spar.mass_per_m_kgm, P:wing.spar.od_m, P:wing.spar.x_m, P:wing.spar.z_m, P:wing.t_c, P:wing.te_x_m)",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-D5-MASS-TOTAL, which is UNVERIFIED",
+    "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-B3-CG-TARGET, which is UNVERIFIED",
+    "uses CL-B3-CG-FWD, which is UNVERIFIED",
+    "uses CL-B3-CG-AFT, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 9
   },
   {
    "id": "CL-C5-MASS-EMPTY",
@@ -38720,7 +41249,7 @@ window.PROOF_GRAPH = {
    "procedure": "Built aircraft, props off, pack in (then pack slid to the forward stop, then pack out), on a 0.6 x 0.8 m plywood board faced with the landing-mat rubber, a 6 mm stop strip behind the pads on the hinge side. Raise the far edge slowly with a phone inclinometer on the board; record the angle when the far pads lift. Four directions (+z pod side, -z, +y, -y), 3 times each. Pass: pod side >= 30 deg and within 1.5 deg of CL-C5-TIPOVER-R1 (else re-measure the CG z).",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 36
+   "importance": 45
   },
   {
    "id": "T-C5-DRIFT-LOG",
@@ -38924,7 +41453,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C5/claims.json",
    "status": "CHECKED",
-   "importance": 9
+   "importance": 25
   },
   {
    "id": "CL-C5-DROP-HEIGHT",
@@ -38965,9 +41494,6 @@ window.PROOF_GRAPH = {
     "ref": "CL-D5-STROKE-AVAIL",
     "resolved": 0.032
    },
-   "verifies": [
-    "R-LANDING-IMPACT"
-   ],
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -38987,7 +41513,7 @@ window.PROOF_GRAPH = {
     "GER-004-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP: flange-to-sleeve gap before and after; pass with >= 3 mm left.",
-   "note": "no rotor lift in the test, so it is harder than the design landing (lift 2/3 W)",
+   "note": "symmetric hand energy balance (CG on the pad midline); CALC-C5-DROP-DYN supersedes it for the real CG (17 mm toward the pod-side pair) and for tilted landings",
    "value": 0.028784664513196504,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
@@ -39007,7 +41533,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.10047923396260927,
-   "importance": 1
+   "importance": 17
   },
   {
    "id": "CL-C5-DROP-STROKE-MARGIN",
@@ -39071,9 +41597,6 @@ window.PROOF_GRAPH = {
     "ref": "P:requirements.landing_n_design",
     "resolved": 6.0
    },
-   "verifies": [
-    "R-LANDING-IMPACT"
-   ],
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -39125,9 +41648,6 @@ window.PROOF_GRAPH = {
     "ref": "CL-C5-FOOT-ENERGY-40",
     "resolved": 3.0596748000000002
    },
-   "verifies": [
-    "R-LANDING-IMPACT"
-   ],
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -39227,6 +41747,7 @@ window.PROOF_GRAPH = {
     "GER-004-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP corner drop: stroke of the first foot.",
+   "note": "first foot only; the feet that land after the rotation stroke more (CALC-C5-DROP-DYN)",
    "value": 0.0211619089910216,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
@@ -39310,12 +41831,36 @@ window.PROOF_GRAPH = {
    "importance": 1
   },
   {
+   "id": "ASM-C5-STROKE-PROP",
+   "type": "assumption",
+   "title": "Proposed foot stroke 38 mm",
+   "text": "Flange-to-sleeve gap C5 asks D5 for (CR-C5-10)",
+   "basis": "worst pad-pair-first landing in CALC-C5-DROP-DYN plus the 3 mm guard; the 77 mm cartridge has 42 mm of usable crush (0.55 x 77)",
+   "value": 0.038,
+   "unit": "m",
+   "defined_in": "redesign/team/C5/claims.json",
+   "status": "PROPOSED",
+   "importance": 16
+  },
+  {
+   "id": "ASM-C5-FOOT-PROP",
+   "type": "assumption",
+   "title": "Proposed foot height 48 mm beyond the TE",
+   "text": "cg.foot_height_m C5 asks A1 for (CR-C5-11)",
+   "basis": "keeps the wing TE >= 10 mm off the ground at the full 38 mm stroke (C1 D-11 rule)",
+   "value": 0.048,
+   "unit": "m",
+   "defined_in": "redesign/team/C5/claims.json",
+   "status": "PROPOSED",
+   "importance": 16
+  },
+  {
    "id": "CALC-C5-DROP-DYN",
    "type": "calculation",
-   "title": "Planar landing dynamics (level, pad pair first in pitch and roll) and foot side load",
+   "title": "Planar landing dynamics: level and pad pair first (pitch, roll), current and proposed foot; foot side load",
    "script": "redesign/team/C5/landing_calc.py",
    "function": "drop_dyn",
-   "equation": "m Y'' = sum f_i - (1 - lam) m g ; I th'' = sum f_i x_i ; f_i = crusher(s_i), s_i = pad penetration (ramp to F_pk at eps_y L/2, plateau F_p, no rebound), two feet per contact ; tilt = err toward the +z pad pair (pitch: Iyy, arms z_pad - z_cg and -z_pad - z_cg) or toward one fin (roll: Izz, arms +/- y_fin) ; explicit Euler dt 20 us, re-run at 10 and 40 us ; side load = mu_pad F_corner vs C1 L4 = mu_c1 F_corner",
+   "equation": "m Y'' = sum f_i - (1 - lam) m g ; I th'' = sum f_i x_i ; f_i = 2 x crusher(s_i), s_i = pad penetration (ramp to F_pk at eps_y L/2, plateau F_p, no rebound, stiff stop at s_av) ; pitch: Iyy, arms z_pad - z_cg and -(z_pad + z_cg) ; roll: Izz, arms +/- y_fin ; tilt scanned -err..+err in 1 deg steps, worst kept ; design = sink v with lift lam W, test = free drop ; bias: upper (pod-side) plateau x 2 a_- / (a_+ + a_-), lower x 2 a_+ / (a_+ + a_-) (no level moment, same sum) ; explicit Euler 40 us, governing case re-run at 10 us ; side load = mu_pad F_corner",
    "inputs": {
     "m": "P:requirements.mtow_gate_kg",
     "g": "P:env.g_ms2",
@@ -39326,6 +41871,7 @@ window.PROOF_GRAPH = {
     "s_av": "CL-D5-STROKE-AVAIL",
     "L": "CL-D5-CART-LEN",
     "eps_y": "ASM-D5-YIELD-STRAIN",
+    "guard": "ASM-C5-DROP-GUARD",
     "z_cg": "CL-C5-CG-Z-R1",
     "h": "CL-C5-CG-H-R1",
     "z_pad": "CL-D5-CONTACT-Z",
@@ -39336,6 +41882,9 @@ window.PROOF_GRAPH = {
     "err": "P:requirements.landing_attitude_err_deg",
     "b": "P:wing.span_m",
     "foot": "P:cg.foot_height_m",
+    "s_prop": "ASM-C5-STROKE-PROP",
+    "foot_prop": "ASM-C5-FOOT-PROP",
+    "s_hand": "CL-C5-DROP-STROKE",
     "mu_pad": "ASM-D5-PAD-MU",
     "mu_c1": "ASM-C1-FRICTION",
     "F_corner": "CL-C1-FOOT-CORNER"
@@ -39348,6 +41897,7 @@ window.PROOF_GRAPH = {
     "F_pk": "N",
     "s_av": "m",
     "L": "m",
+    "guard": "m",
     "z_cg": "m",
     "h": "m",
     "z_pad": "m",
@@ -39358,49 +41908,71 @@ window.PROOF_GRAPH = {
     "err": "deg",
     "b": "m",
     "foot": "m",
+    "s_prop": "m",
+    "foot_prop": "m",
+    "s_hand": "m",
     "F_corner": "N"
    },
    "outputs": {
     "cases": {
-     "free": {
-      "level_stroke_m": 0.03232510711259301,
-      "level_n": 46.09496862791115,
-      "pitch_strokes_m": [
-       0.032693933998071745,
-       0.03427167558971339
+     "current": {
+      "s_av_m": 0.032,
+      "usable_m": 0.029,
+      "scales": [
+       1.0,
+       1.0
       ],
-      "pitch_n": 306.0925450637272,
-      "roll_strokes_m": [
-       0.03273839024921371,
-       0.03287750162554004
-      ],
-      "roll_n": 119.87672164136492,
-      "roll_wingtip_min_m": 0.007725919101614187
+      "level_design_m": 0.02864549037961589,
+      "level_free_m": 0.03232675243519317,
+      "level_free_n": 46.31472965534256,
+      "pitch_worst_tilt_deg": 4,
+      "pitch_design_m": 0.03284004021283998,
+      "pitch_n": 114.87310803806375,
+      "roll_worst_tilt_deg": -8,
+      "roll_design_m": 0.03048702670830883,
+      "roll_n": 2.9106755076073467,
+      "roll_wingtip_min_m": -0.006528054252290971,
+      "te_clear_full_stroke_m": 0.012999999999999998
      },
-     "design": {
-      "level_stroke_m": 0.028645776634849518,
-      "level_n": 5.8214903074845274,
-      "pitch_strokes_m": [
-       0.03222986527861793,
-       0.032634141679096396
+     "proposed": {
+      "s_av_m": 0.038,
+      "usable_m": 0.034999999999999996,
+      "scales": [
+       1.0766399478825723,
+       0.9233600521174277
       ],
-      "pitch_n": 87.37183058790495,
-      "roll_strokes_m": [
-       0.030420498556594233,
-       0.023990114857826816
-      ],
-      "roll_n": 2.91299194959246,
-      "roll_wingtip_min_m": 0.006658329010338138
+      "level_design_m": 0.023824092197136937,
+      "level_free_m": 0.0274871232803493,
+      "level_free_n": 5.839117441437233,
+      "pitch_worst_tilt_deg": -4,
+      "pitch_design_m": 0.034539873480196825,
+      "pitch_n": 5.536704869902701,
+      "roll_worst_tilt_deg": -8,
+      "roll_design_m": 0.03048702670830883,
+      "roll_n": 2.9106755076073467,
+      "roll_wingtip_min_m": -0.003549849233136282,
+      "te_clear_full_stroke_m": 0.010000000000000002
      }
     },
-    "level_stroke_free_m": 0.03232510711259301,
-    "pair_pitch_stroke_free_m": 0.03427167558971339,
-    "pair_roll_stroke_free_m": 0.03287750162554004,
-    "pair_max_stroke_design_m": 0.032634141679096396,
-    "n_max_free": 306.0925450637272,
-    "roll_wingtip_min_free_m": 0.007725919101614187,
-    "roll_wingtip_min_design_m": 0.006658329010338138,
-    "dt_check_spread_m": 1.2439725222135323e-07,
+    "bias_upper": 1.0766399478825723,
+    "bias_lower": 0.9233600521174277,
+    "cur_level_design_m": 0.02864549037961589,
+    "cur_pair_design_m": 0.03284004021283998,
+    "cur_usable_m": 0.029,
+    "prop_level_design_m": 0.023824092197136937,
+    "prop_pitch_design_m": 0.034539873480196825,
+    "prop_roll_design_m": 0.03048702670830883,
+    "prop_level_free_m": 0.0274871232803493,
+    "prop_level_free_n": 5.839117441437233,
+    "prop_n_tilted": 5.536704869902701,
+    "prop_usable_m": 0.034999999999999996,
+    "prop_worst_tilt_deg": -4,
+    "prop_te_clear_full_m": 0.010000000000000002,
+    "prop_wingtip_min_m": -0.003549849233136282,
+    "test_tilt_drop_h_m": 0.08213153122259513,
+    "valid_sym_free_m": 0.0274871232803493,
+    "valid_hand_free_m": 0.028784664513196504,
+    "dt_check_spread_m": 1.009053820055783e-06,
     "side_load_N": 23.033044982280824,
     "side_load_c1_N": 16.452174987343447
    },
@@ -39414,6 +41986,7 @@ window.PROOF_GRAPH = {
     "s_av": 0.032,
     "L": 0.07700000000000007,
     "eps_y": 0.05,
+    "guard": 0.003,
     "z_cg": 0.01670750863840076,
     "h": 0.312415608453314,
     "z_pad": 0.218,
@@ -39424,50 +41997,28 @@ window.PROOF_GRAPH = {
     "err": 10.0,
     "b": 1.15,
     "foot": 0.045,
+    "s_prop": 0.038,
+    "foot_prop": 0.048,
+    "s_hand": 0.028784664513196504,
     "mu_pad": 0.7,
     "mu_c1": 0.5,
     "F_corner": 32.904349974686895
    },
    "defined_in": "redesign/team/C5/claims.json",
    "status": "CHECKED",
-   "importance": 7
+   "importance": 16
   },
   {
-   "id": "CL-C5-DYN-LEVEL-STROKE",
+   "id": "CL-C5-DYN-USABLE-CUR",
    "type": "claim",
-   "title": "Level free-drop stroke, planar dynamics",
+   "title": "Usable stroke, D5 foot today (32 - 3 mm guard)",
    "calc": "CALC-C5-DROP-DYN",
-   "output": "level_stroke_free_m",
+   "output": "cur_usable_m",
    "unit": "m",
-   "limit": {
-    "op": "<=",
-    "ref": "CL-D5-STROKE-AVAIL",
-    "resolved": 0.032
-   },
-   "parts": [
-    "GER-001-UR",
-    "GER-001-UL",
-    "GER-001-LR",
-    "GER-001-LL",
-    "GER-002-UR",
-    "GER-002-UL",
-    "GER-002-LR",
-    "GER-002-LL",
-    "GER-003-UR",
-    "GER-003-UL",
-    "GER-003-LR",
-    "GER-003-LL",
-    "GER-004-UR",
-    "GER-004-UL",
-    "GER-004-LR",
-    "GER-004-LL"
-   ],
-   "how": "T-C5-AIRCRAFT-DROP level drops.",
-   "note": "cross-check of the hand calculation CL-C5-DROP-STROKE (same inputs, energy balance)",
-   "value": 0.03232510711259301,
+   "how": "D5 CAD flange gap minus the guard.",
+   "value": 0.029,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
-    "FAILS: margin -1.0% (0.03233 m vs <= 0.032 m)",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -39479,27 +42030,25 @@ window.PROOF_GRAPH = {
     "uses CL-A3-IYY, which is UNVERIFIED",
     "uses CL-A3-IZZ, which is UNVERIFIED",
     "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
     "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
-    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
-    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED"
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.010159597268531544,
-   "fails": true,
-   "importance": 1
+   "importance": 3
   },
   {
-   "id": "CL-C5-DROP-PAIR-PITCH",
+   "id": "CL-C5-DYN-LEVEL-CUR",
    "type": "claim",
-   "title": "Stroke, one pad pair first (10 deg pitch), free drop",
+   "title": "Level 1.5 m/s landing stroke, D5 foot today (CG 17 mm above the chord)",
    "calc": "CALC-C5-DROP-DYN",
-   "output": "pair_pitch_stroke_free_m",
+   "output": "cur_level_design_m",
    "unit": "m",
    "limit": {
     "op": "<=",
-    "ref": "CL-D5-STROKE-AVAIL",
-    "resolved": 0.032
+    "ref": "CL-C5-DYN-USABLE-CUR",
+    "resolved": 0.029
    },
    "verifies": [
     "R-LANDING-IMPACT"
@@ -39522,12 +42071,11 @@ window.PROOF_GRAPH = {
     "GER-004-LR",
     "GER-004-LL"
    ],
-   "how": "T-C5-AIRCRAFT-DROP 10 deg pitch drop: flange gap of the first pair.",
-   "note": "answers CR-D5-05: the 54 mm 'two feet take everything' figure ignores rotation; the first pair stops only its share and the aircraft rotates onto the second pair",
-   "value": 0.03427167558971339,
+   "how": "T-C5-AIRCRAFT-DROP level drop with lift offload: compare the upper and lower pair flange gaps.",
+   "note": "equal constant-force feet and a CG offset toward the pod-side pair: the aircraft rotates and the pod-side pair strokes more than the hand calculation (CL-C5-DROP-STROKE, symmetric)",
+   "value": 0.02864549037961589,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
-    "FAILS: margin -7.1% (0.03427 m vs <= 0.032 m)",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -39539,27 +42087,176 @@ window.PROOF_GRAPH = {
     "uses CL-A3-IYY, which is UNVERIFIED",
     "uses CL-A3-IZZ, which is UNVERIFIED",
     "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
     "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
-    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED"
+    "uses CL-C5-DYN-USABLE-CUR, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.07098986217854343,
+   "margin": 0.012224469668417637,
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-DYN-PAIR-CUR",
+   "type": "claim",
+   "title": "Pad pair first, worst tilt, D5 foot today",
+   "calc": "CALC-C5-DROP-DYN",
+   "output": "cur_pair_design_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C5-DYN-USABLE-CUR",
+    "resolved": 0.029
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP tilted drops; the model is validated, not the full design case (no rotor lift).",
+   "note": "answers CR-D5-05: the first pair stops only its share; the aircraft rotates onto the second pair, which lands harder. Worst tilt is about 4 deg, not 10",
+   "value": 0.03284004021283998,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "FAILS: margin -13.2% (0.03284 m vs <= 0.029 m)",
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-D5-F-PEAK, which is UNVERIFIED",
+    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
+    "uses CL-D5-CART-LEN, which is UNVERIFIED",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C5-CG-Z-R1, which is UNVERIFIED",
+    "uses CL-C5-CG-H-R1, which is UNVERIFIED",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-IZZ, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
+    "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C5-DYN-USABLE-CUR, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.1324151797531028,
    "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-DYN-USABLE-PROP",
+   "type": "claim",
+   "title": "Usable stroke, proposed foot (38 - 3 mm guard)",
+   "calc": "CALC-C5-DROP-DYN",
+   "output": "prop_usable_m",
+   "unit": "m",
+   "how": "D5 CAD flange gap minus the guard (CR-C5-10).",
+   "value": 0.034999999999999996,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-D5-F-PEAK, which is UNVERIFIED",
+    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
+    "uses CL-D5-CART-LEN, which is UNVERIFIED",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C5-CG-Z-R1, which is UNVERIFIED",
+    "uses CL-C5-CG-H-R1, which is UNVERIFIED",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-IZZ, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
+    "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 5
+  },
+  {
+   "id": "CL-C5-DROP-PAIR-PITCH",
+   "type": "claim",
+   "title": "Pad pair first in pitch, worst tilt, proposed foot",
+   "calc": "CALC-C5-DROP-DYN",
+   "output": "prop_pitch_design_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C5-DYN-USABLE-PROP",
+    "resolved": 0.034999999999999996
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP tilted drops validate the model (stroke within 3 mm).",
+   "value": 0.034539873480196825,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-D5-F-PEAK, which is UNVERIFIED",
+    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
+    "uses CL-D5-CART-LEN, which is UNVERIFIED",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C5-CG-Z-R1, which is UNVERIFIED",
+    "uses CL-C5-CG-H-R1, which is UNVERIFIED",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-IZZ, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
+    "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C5-DYN-USABLE-PROP, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.013146471994376314,
    "importance": 1
   },
   {
    "id": "CL-C5-DROP-PAIR-ROLL",
    "type": "claim",
-   "title": "Stroke, one fin's pair first (10 deg roll), free drop",
+   "title": "One fin's pair first in roll, worst tilt, proposed foot",
    "calc": "CALC-C5-DROP-DYN",
-   "output": "pair_roll_stroke_free_m",
+   "output": "prop_roll_design_m",
    "unit": "m",
    "limit": {
     "op": "<=",
-    "ref": "CL-D5-STROKE-AVAIL",
-    "resolved": 0.032
+    "ref": "CL-C5-DYN-USABLE-PROP",
+    "resolved": 0.034999999999999996
    },
    "verifies": [
     "R-LANDING-IMPACT"
@@ -39582,11 +42279,10 @@ window.PROOF_GRAPH = {
     "GER-004-LR",
     "GER-004-LL"
    ],
-   "how": "T-C5-AIRCRAFT-DROP 10 deg roll drop: flange gap of the first fin's feet.",
-   "value": 0.03287750162554004,
+   "how": "As CL-C5-DROP-PAIR-PITCH, roll drops.",
+   "value": 0.03048702670830883,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
-    "FAILS: margin -2.7% (0.03288 m vs <= 0.032 m)",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -39598,22 +42294,192 @@ window.PROOF_GRAPH = {
     "uses CL-A3-IYY, which is UNVERIFIED",
     "uses CL-A3-IZZ, which is UNVERIFIED",
     "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
     "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
-    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED"
+    "uses CL-C5-DYN-USABLE-PROP, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -0.027421925798126225,
-   "fails": true,
+   "margin": 0.12894209404831908,
    "importance": 1
   },
   {
-   "id": "CL-C5-DYN-N-MAX",
+   "id": "CL-C5-DYN-LEVEL-PROP",
    "type": "claim",
-   "title": "Peak load factor, all planar drop cases, free drop",
+   "title": "Level 1.5 m/s landing stroke, proposed biased cartridges",
    "calc": "CALC-C5-DROP-DYN",
-   "output": "n_max_free",
+   "output": "prop_level_design_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C5-DYN-USABLE-PROP",
+    "resolved": 0.034999999999999996
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP level drop: both pair gaps equal within 2 mm.",
+   "value": 0.023824092197136937,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-D5-F-PEAK, which is UNVERIFIED",
+    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
+    "uses CL-D5-CART-LEN, which is UNVERIFIED",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C5-CG-Z-R1, which is UNVERIFIED",
+    "uses CL-C5-CG-H-R1, which is UNVERIFIED",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-IZZ, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
+    "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C5-DYN-USABLE-PROP, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.31931165151037316,
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "type": "claim",
+   "title": "Level free drop 0.115 m, proposed foot",
+   "calc": "CALC-C5-DROP-DYN",
+   "output": "prop_level_free_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C5-DYN-USABLE-PROP",
+    "resolved": 0.034999999999999996
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP level drops (no lift: harder than design).",
+   "value": 0.0274871232803493,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-D5-F-PEAK, which is UNVERIFIED",
+    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
+    "uses CL-D5-CART-LEN, which is UNVERIFIED",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C5-CG-Z-R1, which is UNVERIFIED",
+    "uses CL-C5-CG-H-R1, which is UNVERIFIED",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-IZZ, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
+    "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C5-DYN-USABLE-PROP, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.21465362056144846,
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-DYN-N-LEVEL",
+   "type": "claim",
+   "title": "Peak load factor, level free drop, proposed foot",
+   "calc": "CALC-C5-DROP-DYN",
+   "output": "prop_level_free_n",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.landing_n_design",
+    "resolved": 6.0
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP: CG accelerometer, 100 Hz low-pass.",
+   "value": 5.839117441437233,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-D5-F-PEAK, which is UNVERIFIED",
+    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
+    "uses CL-D5-CART-LEN, which is UNVERIFIED",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C5-CG-Z-R1, which is UNVERIFIED",
+    "uses CL-C5-CG-H-R1, which is UNVERIFIED",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-IZZ, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
+    "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.026813759760461114,
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-DYN-N-TILTED",
+   "type": "claim",
+   "title": "Peak load factor, tilted landings, proposed foot",
+   "calc": "CALC-C5-DROP-DYN",
+   "output": "prop_n_tilted",
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -39638,11 +42504,10 @@ window.PROOF_GRAPH = {
     "GER-004-LR",
     "GER-004-LL"
    ],
-   "how": "T-C5-AIRCRAFT-DROP: CG accelerometer, 100 Hz low-pass.",
-   "value": 306.0925450637272,
+   "how": "As CL-C5-DYN-N-LEVEL, tilted drops.",
+   "value": 5.536704869902701,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
-    "FAILS: margin -5001.5% (306.1 vs <= 6)",
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
     "uses CL-D5-F-PEAK, which is UNVERIFIED",
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
@@ -39654,25 +42519,79 @@ window.PROOF_GRAPH = {
     "uses CL-A3-IYY, which is UNVERIFIED",
     "uses CL-A3-IZZ, which is UNVERIFIED",
     "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
     "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C1-FOOT-CORNER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -50.01542417728786,
-   "fails": true,
+   "margin": 0.07721585501621646,
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-TE-CLEAR-PROP",
+   "type": "claim",
+   "title": "Wing TE above ground at full stroke, proposed foot",
+   "calc": "CALC-C5-DROP-DYN",
+   "output": "prop_te_clear_full_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.01,
+    "resolved": 0.01
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "Crush one foot to its stop on the bench; feeler under the TE.",
+   "value": 0.010000000000000002,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-D5-F-PEAK, which is UNVERIFIED",
+    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
+    "uses CL-D5-CART-LEN, which is UNVERIFIED",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C5-CG-Z-R1, which is UNVERIFIED",
+    "uses CL-C5-CG-H-R1, which is UNVERIFIED",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-IZZ, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
+    "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 1.734723475976807e-16,
    "importance": 1
   },
   {
    "id": "CL-C5-WINGTIP-CLEAR-ROLL",
    "type": "claim",
-   "title": "Lowest wingtip TE height in the 10 deg roll drop",
+   "title": "Lowest wingtip TE height, worst roll landing, proposed foot",
    "calc": "CALC-C5-DROP-DYN",
-   "output": "roll_wingtip_min_free_m",
+   "output": "prop_wingtip_min_m",
    "unit": "m",
-   "how": "T-C5-AIRCRAFT-DROP roll drop: witness tape on the wingtip TE corner.",
-   "note": "negative = the wingtip TE corner reaches the ground; the corner cap of CR-C5-04 takes it",
-   "value": 0.007725919101614187,
+   "how": "T-C5-AIRCRAFT-DROP roll drops: witness tape on the wingtip TE corner.",
+   "note": "negative: in a roll-first landing at 6-10 deg the wingtip TE corner reaches the ground before the second fin lands; the 1 g corner cap of CR-C5-04 is the contact point",
+   "value": -0.003549849233136282,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
     "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
@@ -39686,11 +42605,81 @@ window.PROOF_GRAPH = {
     "uses CL-A3-IYY, which is UNVERIFIED",
     "uses CL-A3-IZZ, which is UNVERIFIED",
     "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
     "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C1-FOOT-CORNER, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-TEST-TILT-H",
+   "type": "claim",
+   "title": "Free-drop height for the tilted test drops",
+   "calc": "CALC-C5-DROP-DYN",
+   "output": "test_tilt_drop_h_m",
+   "unit": "m",
+   "how": "Release height pad-to-floor.",
+   "note": "without rotor lift a tilted 0.115 m drop needs about 47 mm; tilted drops are run at this height and pass when each pair's stroke is within 3 mm of the model",
+   "value": 0.08213153122259513,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-D5-F-PEAK, which is UNVERIFIED",
+    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
+    "uses CL-D5-CART-LEN, which is UNVERIFIED",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C5-CG-Z-R1, which is UNVERIFIED",
+    "uses CL-C5-CG-H-R1, which is UNVERIFIED",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-IZZ, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
+    "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-DYN-VALID",
+   "type": "claim",
+   "title": "Model check: symmetric free level drop vs the hand energy balance",
+   "calc": "CALC-C5-DROP-DYN",
+   "output": "valid_sym_free_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C5-DROP-STROKE",
+    "resolved": 0.028784664513196504
+   },
+   "how": "Re-run; compare with CL-C5-DROP-STROKE.",
+   "note": "the sim spends 0.45 F_p eps L/2 less in the ramp than the hand calculation; it must not exceed it",
+   "value": 0.0274871232803493,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses CL-D5-F-PLATEAU, which is UNVERIFIED",
+    "uses CL-D5-F-PEAK, which is UNVERIFIED",
+    "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED",
+    "uses CL-D5-CART-LEN, which is UNVERIFIED",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C5-CG-Z-R1, which is UNVERIFIED",
+    "uses CL-C5-CG-H-R1, which is UNVERIFIED",
+    "uses CL-D5-CONTACT-Z, which is UNVERIFIED",
+    "uses CL-A3-IYY, which is UNVERIFIED",
+    "uses CL-A3-IZZ, which is UNVERIFIED",
+    "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
+    "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.0450775180045033,
    "importance": 1
   },
   {
@@ -39724,7 +42713,7 @@ window.PROOF_GRAPH = {
     "GER-004-LL"
    ],
    "how": "T-D5-PAD-MU gives mu; C4's T-C4-FIN-PROOF at 1.5 x this load.",
-   "note": "the landing mat and neoprene pad (mu 0.7) raise C1's L4/L5 side load (mu 0.5); C4's fin face stress scales with it (CR-C5-09)",
+   "note": "the landing mat and neoprene pad (mu 0.7) raise C1's L4/L5 side load (mu 0.5) by 40 %; C4's fin face stress scales with it (CR-C5-09)",
    "value": 23.033044982280824,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
@@ -39740,6 +42729,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-IYY, which is UNVERIFIED",
     "uses CL-A3-IZZ, which is UNVERIFIED",
     "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
     "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C1-FOOT-CORNER, which is UNVERIFIED",
@@ -39772,6 +42762,7 @@ window.PROOF_GRAPH = {
     "uses CL-A3-IYY, which is UNVERIFIED",
     "uses CL-A3-IZZ, which is UNVERIFIED",
     "uses CL-A3-MASS-BASIC, which is UNVERIFIED",
+    "uses CL-C5-DROP-STROKE, which is UNVERIFIED",
     "uses ASM-D5-PAD-MU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-C1-FRICTION, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses CL-C1-FOOT-CORNER, which is UNVERIFIED"
@@ -39788,37 +42779,52 @@ window.PROOF_GRAPH = {
     "CL-C5-DROP-N"
    ],
    "state": "planned",
-   "procedure": "A foot (shoe bonded on a 2-layer foam-board offcut clamped vertical) under a 0.65 kg sled on two guide rods; free drop 0.115 m onto plywood; phone or logger accelerometer on the sled. 3 drops, new cartridge each. Pass: stroke <= 29 mm, sled peak <= 6.0 g (100 Hz filter), no shoe-bond crack. Run before the aircraft drop; cheap and repeatable.",
+   "procedure": "A foot (shoe bonded on a 2-layer foam-board offcut clamped vertical) under a 0.65 kg sled on two guide rods; free drop 0.115 m onto plywood; phone or logger accelerometer on the sled. 3 drops, new cartridge each. Pass: stroke <= 29 mm, sled peak <= 6.0 g (100 Hz filter), no shoe-bond crack. With the biased cartridges (CR-C5-10) use a 0.70 kg sled for an upper-foot cartridge and 0.60 kg for a lower one. Run before the aircraft drop; cheap and repeatable.",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 2
+   "importance": 18
   },
   {
    "id": "T-C5-AIRCRAFT-DROP",
    "type": "test",
-   "title": "Aircraft drop at 1.5 m/s (= T-C1-FOOT-DROP)",
+   "title": "Aircraft drop (= T-C1-FOOT-DROP), proposed foot",
    "verifies": [
-    "CL-C5-DROP-STROKE",
-    "CL-C5-DROP-STROKE-MARGIN",
-    "CL-C5-DROP-N",
-    "CL-C5-DROP-ONE-FOOT",
-    "CL-C5-FOOT-ENERGY"
+    "CL-C5-DYN-LEVEL-FREE-PROP",
+    "CL-C5-DYN-N-LEVEL",
+    "CL-C5-DYN-N-TILTED",
+    "CL-C5-DROP-PAIR-PITCH",
+    "CL-C5-DROP-PAIR-ROLL",
+    "CL-C5-DYN-LEVEL-PROP",
+    "CL-C5-WINGTIP-CLEAR-ROLL"
    ],
    "state": "planned",
-   "procedure": "Complete aircraft, props off, LiPo replaced by a 550 g sandbag (add ballast to 2.6 kg), FC powered from a small 2S pack logging IMU at >= 1 kHz (or a strapped logger at the CG). Hang from a quick-release at 0.115 m pad-to-floor over plywood. Drops: level x2; 10 deg pitch (one pad pair first); 10 deg roll (one fin first); 10 deg pitch + roll (one foot first). New cartridges before each level drop. Pass: CG peak <= 6.0 g (100 Hz low-pass), every stroke <= 29 mm, the wing TE does not touch in the level and pitch drops (the protected wingtip corner may touch in the roll and corner drops), no damage beyond the cartridges (shoe bonds, fin tips, tube block, pod bond checked).",
+   "procedure": "Complete aircraft, props off, LiPo replaced by a sandbag of the weighed pack mass (ballast to 2.6 kg), FC on a small 2S pack logging IMU at >= 1 kHz. Quick-release hook over plywood. (1) Level, 0.115 m pad-to-floor, x2, new cartridges each: pass CG peak <= 6.0 g (100 Hz low-pass), every stroke <= 35 mm, upper and lower pair strokes within 3 mm of each other (bias check). (2) Pitch 4 deg both ways and roll 8 deg, at 0.082 m (CL-C5-TEST-TILT-H): pass when each pair's stroke is within 3 mm of the model re-run at the measured height and tilt, and the wing TE stays clear except the wingtip corner cap. The model then carries the design case (1.5 m/s with 2/3 W lift). After every drop: shoe bonds, fin tips, tube block and pod bond checked.",
    "defined_in": "redesign/team/C5/claims.json",
    "status": "PROPOSED",
-   "importance": 5
+   "importance": 7
+  },
+  {
+   "id": "ASM-C5-SPREADER-T",
+   "type": "assumption",
+   "title": "Spreader plate 1.5 mm",
+   "text": "Printed PETG plate between the pack fore face and the crush block, so the block's whole section works",
+   "basis": "D2 tray practice (1.5 mm stop wall)",
+   "value": 0.0015,
+   "unit": "m",
+   "defined_in": "redesign/team/C5/claims.json",
+   "status": "PROPOSED",
+   "importance": 8
   },
   {
    "id": "CALC-C5-CRASH",
    "type": "calculation",
-   "title": "Crush block ahead of the pack (nose-in crash)",
+   "title": "Crush block ahead of the pack (5 m/s nose-in)",
    "script": "redesign/team/C5/landing_calc.py",
    "function": "crash",
-   "equation": "m_p = max pack ; F = n_pack m_p g ; A = F / sigma (<= pod inside section) ; s = m_p v^2 / (2 F) ; L_block = s / (eps_d - eps_y / 2) ; room needed = L_block + wall ; extension = needed - room ; box x slack = (box_x - 2 wall_box) - (envelope_x + extension)",
+   "equation": "per weighed pack mass m (503 / 550 / 680 g): F = min(n_pack m g, sigma A_bay) ; s = m v^2 / (2 F) ; L = s / (eps_d - eps_y / 2) ; room = L + t_spreader (if F / sigma > pack face) ; pack trimmed to the B3 target at x_p(m) ; nose wall inside face needed = x_p - pack_L / 2 - room ; today = x_stop - pack_L / 2 ; extension = most forward need - today ; box x slack = box_x - 2 wall - (envelope_x + extension)",
    "inputs": {
     "pack_rng": "ASM-A3-PACK-RANGE",
+    "m_nom": "P:battery.mass_kg",
     "v": "ASM-C1-CRASH-V",
     "g": "P:env.g_ms2",
     "n_pack": "ASM-C5-PACK-G-MAX",
@@ -39826,46 +42832,97 @@ window.PROOF_GRAPH = {
     "eps_d": "ASM-D5-DENSIFY",
     "eps_y": "ASM-D5-YIELD-STRAIN",
     "pack": "P:battery.size_m",
-    "pod": "P:pod.size_m",
-    "wall": "ASM-C5-NOSE-WALL",
-    "room": "CL-A3-PACK-FWD-ROOM",
+    "bay_w": "CL-D2-BAY-W",
+    "bay_h": "CL-D2-BAY-H",
+    "x_stop": "CL-D2-PACK-X-FWD",
+    "travel": "CL-D2-PACK-TRAVEL",
+    "x_pack": "CL-C5-PACK-X-B3",
+    "x_light": "CL-C5-PACK-X-B3-LIGHT",
+    "x_heavy": "CL-C5-PACK-X-B3-HEAVY",
+    "t_sp": "ASM-C5-SPREADER-T",
     "box": "P:requirements.box_external_m",
     "bwall": "ASM-A1-WALL",
     "env": "P:transport.envelope_props_off_m"
    },
    "units": {
     "pack_rng": "g",
+    "m_nom": "kg",
     "v": "m/s",
     "g": "m/s2",
     "sigma": "Pa",
     "pack": "m",
-    "pod": "m",
-    "wall": "m",
-    "room": "m",
+    "bay_w": "m",
+    "bay_h": "m",
+    "x_stop": "m",
+    "travel": "m",
+    "x_pack": "m",
+    "x_light": "m",
+    "x_heavy": "m",
+    "t_sp": "m",
     "box": "m",
     "bwall": "m",
     "env": "m"
    },
    "outputs": {
-    "m_pack_kg": 0.68,
-    "F_N": 666.8521999999999,
-    "n_pack": 99.99999999999999,
-    "A_block_m2": 0.003877047674418604,
+    "A_bay_m2": 0.0030628,
     "A_pack_face_m2": 0.0024000000000000002,
-    "spreader_needed": true,
-    "stroke_m": 0.012746452662224104,
-    "L_block_m": 0.024278957451855435,
-    "room_needed_m": 0.026278957451855434,
-    "room_now_m": 0.000999999999999987,
-    "nose_ext_m": 0.025278957451855447,
-    "n_without_spreader": 61.90277245842482,
-    "box_x_slack_m": 0.004721042548144594
+    "packs": {
+     "503 g": {
+      "x_pack_m": -0.014404528397815222,
+      "F_N": 493.27449499999994,
+      "A_m2": 0.0028678749709302323,
+      "n": 99.99999999999999,
+      "stroke_m": 0.012746452662224106,
+      "L_m": 0.02427895745185544,
+      "spreader": true,
+      "room_needed_m": 0.02577895745185544,
+      "room_avail_m": 0.01579547160218477,
+      "x_nose_inner_req_m": -0.11018348584967066
+     },
+     "550 g": {
+      "x_pack_m": -0.008680020693466933,
+      "F_N": 526.8016,
+      "A_m2": 0.0030628,
+      "n": 97.67056955322062,
+      "stroke_m": 0.013050453909023815,
+      "L_m": 0.024858007445759646,
+      "spreader": true,
+      "room_needed_m": 0.026358007445759647,
+      "room_avail_m": 0.021519979306533057,
+      "x_nose_inner_req_m": -0.10503802813922658
+     },
+     "680 g": {
+      "x_pack_m": 0.0030322934112681915,
+      "F_N": 526.8016,
+      "A_m2": 0.0030628,
+      "n": 78.99825478569313,
+      "stroke_m": 0.016135106651156715,
+      "L_m": 0.03073353647839374,
+      "spreader": true,
+      "room_needed_m": 0.03223353647839374,
+      "room_avail_m": 0.03323229341126818,
+      "x_nose_inner_req_m": -0.09920124306712555
+     }
+    },
+    "room_needed_nom_m": 0.026358007445759647,
+    "room_avail_m": 0.021519979306533057,
+    "block_L_nom_m": 0.024858007445759646,
+    "n_pack_nom": 97.67056955322062,
+    "n_pack_max": 99.99999999999999,
+    "room_ideal_m": 0.024278957451855435,
+    "room_in_travel_m": 0.0237,
+    "x_nose_inner_now_m": -0.1002,
+    "x_nose_inner_req_m": -0.11018348584967066,
+    "nose_ext_nom_m": 0.004838028139226583,
+    "nose_ext_m": 0.009983485849670667,
+    "box_x_slack_m": 0.020016514150329345
    },
    "input_values": {
     "pack_rng": [
      503.0,
      680.0
     ],
+    "m_nom": 0.55,
     "v": 5.0,
     "g": 9.80665,
     "n_pack": 100.0,
@@ -39877,13 +42934,14 @@ window.PROOF_GRAPH = {
      0.048,
      0.05
     ],
-    "pod": [
-     0.2,
-     0.1,
-     0.07
-    ],
-    "wall": 0.002,
-    "room": 0.000999999999999987,
+    "bay_w": 0.052,
+    "bay_h": 0.05890000000000001,
+    "x_stop": -0.03019999999999999,
+    "travel": 0.0237,
+    "x_pack": -0.008680020693466933,
+    "x_light": -0.014404528397815222,
+    "x_heavy": 0.0030322934112681915,
+    "t_sp": 0.0015,
     "box": [
      1.25,
      0.55,
@@ -39898,61 +42956,164 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/C5/claims.json",
    "status": "CHECKED",
-   "importance": 4
+   "importance": 8
   },
   {
-   "id": "CL-C5-PACK-NOSE-ROOM",
+   "id": "CL-C5-PACK-ROOM-AVAIL",
    "type": "claim",
-   "title": "Room ahead of the pack for its crush block",
+   "title": "Room ahead of the pack at the B3 target station",
    "calc": "CALC-C5-CRASH",
-   "output": "room_needed_m",
+   "output": "room_avail_m",
    "unit": "m",
-   "limit": {
-    "op": "<=",
-    "ref": "CL-A3-PACK-FWD-ROOM",
-    "resolved": 0.000999999999999987
-   },
-   "verifies": [
-    "R-PACK-RETENTION"
-   ],
-   "how": "Measure pack fore face to pod nose outside on the built pod; crush a block coupon (T-D5-COUPON method).",
-   "note": "FAILS today: the pack fore face is 1 mm behind the pod nose skin (CR-A3-11). Needs the pod nose extended (CR-C5-02)",
-   "value": 0.026278957451855434,
+   "how": "Built pod, pack at the balanced station: rule from the nose wall inside face to the pack fore face.",
+   "note": "CR-B3-11 moves the pack aft from D2's forward stop; the gap between the pack fore face and the nose wall is the crush zone. At A3's old station it was 1 mm (CL-A3-PACK-FWD-ROOM)",
+   "value": 0.021519979306533057,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
-    "FAILS: margin -2527.9% (0.02628 m vs <= 0.001 m)",
     "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)",
     "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-XPS-PLATEAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-DENSIFY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.size_m, which is UNVERIFIED (cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED)",
-    "uses CL-A3-PACK-FWD-ROOM, which is UNVERIFIED",
-    "uses CL-A3-PACK-FWD-ROOM, which is UNVERIFIED"
+    "uses CL-D2-BAY-W, which is UNVERIFIED",
+    "uses CL-D2-BAY-H, which is UNVERIFIED",
+    "uses CL-D2-PACK-X-FWD, which is UNVERIFIED",
+    "uses CL-D2-PACK-TRAVEL, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-LIGHT, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-HEAVY, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": -25.278957451855774,
+   "importance": 2
+  },
+  {
+   "id": "CL-C5-PACK-NOSE-ROOM",
+   "type": "claim",
+   "title": "Room the crush block needs, weighed 550 g pack",
+   "calc": "CALC-C5-CRASH",
+   "output": "room_needed_nom_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C5-PACK-ROOM-AVAIL",
+    "resolved": 0.021519979306533057
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "how": "Crush a block coupon (T-D5-COUPON method) to get the force; weigh the pack (E2).",
+   "note": "XPS F-250 over the full bay section behind a 1.5 mm spreader; the n_pack limit, not the foam, sets the floor (ideal 24.3 mm). Short by the nose extension CL-C5-NOSE-EXT (CR-C5-02)",
+   "value": 0.026358007445759647,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "FAILS: margin -22.5% (0.02636 m vs <= 0.02152 m)",
+    "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)",
+    "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-XPS-PLATEAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-DENSIFY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.size_m, which is UNVERIFIED (cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED)",
+    "uses CL-D2-BAY-W, which is UNVERIFIED",
+    "uses CL-D2-BAY-H, which is UNVERIFIED",
+    "uses CL-D2-PACK-X-FWD, which is UNVERIFIED",
+    "uses CL-D2-PACK-TRAVEL, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-LIGHT, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-HEAVY, which is UNVERIFIED",
+    "uses CL-C5-PACK-ROOM-AVAIL, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.22481565015993563,
    "fails": true,
    "importance": 1
   },
   {
    "id": "CL-C5-NOSE-EXT",
    "type": "claim",
-   "title": "Pod nose extension needed for the block",
+   "title": "Pod nose extension for the block, any pack 503-680 g",
    "calc": "CALC-C5-CRASH",
    "output": "nose_ext_m",
    "unit": "m",
-   "how": "D2 geometry.",
-   "value": 0.025278957451855447,
+   "how": "D2 geometry: nose wall inside face at CL-C5-NOSE-INNER-REQ or ahead.",
+   "note": "the 503 g pack trims furthest forward and sets it; a weighed 550 g pack alone needs CL-C5-NOSE-EXT-550",
+   "value": 0.009983485849670667,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
     "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)",
     "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-XPS-PLATEAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-DENSIFY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.size_m, which is UNVERIFIED (cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED)",
-    "uses CL-A3-PACK-FWD-ROOM, which is UNVERIFIED"
+    "uses CL-D2-BAY-W, which is UNVERIFIED",
+    "uses CL-D2-BAY-H, which is UNVERIFIED",
+    "uses CL-D2-PACK-X-FWD, which is UNVERIFIED",
+    "uses CL-D2-PACK-TRAVEL, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-LIGHT, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-HEAVY, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-NOSE-EXT-550",
+   "type": "claim",
+   "title": "Pod nose extension for the block, 550 g pack",
+   "calc": "CALC-C5-CRASH",
+   "output": "nose_ext_nom_m",
+   "unit": "m",
+   "how": "As CL-C5-NOSE-EXT.",
+   "value": 0.004838028139226583,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)",
+    "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-XPS-PLATEAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-DENSIFY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.size_m, which is UNVERIFIED (cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED)",
+    "uses CL-D2-BAY-W, which is UNVERIFIED",
+    "uses CL-D2-BAY-H, which is UNVERIFIED",
+    "uses CL-D2-PACK-X-FWD, which is UNVERIFIED",
+    "uses CL-D2-PACK-TRAVEL, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-LIGHT, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-HEAVY, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-NOSE-INNER-REQ",
+   "type": "claim",
+   "title": "Nose wall inside face station needed (any pack)",
+   "calc": "CALC-C5-CRASH",
+   "output": "x_nose_inner_req_m",
+   "unit": "m",
+   "how": "D2 CAD: nose wall inside face x.",
+   "value": -0.11018348584967066,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)",
+    "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-XPS-PLATEAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-DENSIFY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.size_m, which is UNVERIFIED (cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED)",
+    "uses CL-D2-BAY-W, which is UNVERIFIED",
+    "uses CL-D2-BAY-H, which is UNVERIFIED",
+    "uses CL-D2-PACK-X-FWD, which is UNVERIFIED",
+    "uses CL-D2-PACK-TRAVEL, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-LIGHT, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-HEAVY, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "importance": 1
@@ -39960,9 +43121,9 @@ window.PROOF_GRAPH = {
   {
    "id": "CL-C5-PACK-CRASH-G",
    "type": "claim",
-   "title": "Pack deceleration in the block, 5 m/s nose-in",
+   "title": "Largest pack deceleration in its block, 5 m/s nose-in",
    "calc": "CALC-C5-CRASH",
-   "output": "n_pack",
+   "output": "n_pack_max",
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -39974,16 +43135,55 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
     "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)",
     "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-XPS-PLATEAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-DENSIFY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.size_m, which is UNVERIFIED (cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED)",
-    "uses CL-A3-PACK-FWD-ROOM, which is UNVERIFIED",
+    "uses CL-D2-BAY-W, which is UNVERIFIED",
+    "uses CL-D2-BAY-H, which is UNVERIFIED",
+    "uses CL-D2-PACK-X-FWD, which is UNVERIFIED",
+    "uses CL-D2-PACK-TRAVEL, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-LIGHT, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-HEAVY, which is UNVERIFIED",
     "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
    "margin": 1.4210854715202004e-16,
+   "importance": 1
+  },
+  {
+   "id": "CL-C5-BLOCK-L",
+   "type": "claim",
+   "title": "Crush block length (F-250, weighed 550 g pack)",
+   "calc": "CALC-C5-CRASH",
+   "output": "block_L_nom_m",
+   "unit": "m",
+   "parts": [
+    "POD-008"
+   ],
+   "how": "Cut length; rule.",
+   "value": 0.024858007445759646,
+   "defined_in": "redesign/team/C5/claims.json",
+   "reasons": [
+    "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)",
+    "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-XPS-PLATEAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-DENSIFY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.size_m, which is UNVERIFIED (cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED)",
+    "uses CL-D2-BAY-W, which is UNVERIFIED",
+    "uses CL-D2-BAY-H, which is UNVERIFIED",
+    "uses CL-D2-PACK-X-FWD, which is UNVERIFIED",
+    "uses CL-D2-PACK-TRAVEL, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-LIGHT, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-HEAVY, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
    "importance": 1
   },
   {
@@ -40002,19 +43202,1801 @@ window.PROOF_GRAPH = {
     "R-TRANSPORT"
    ],
    "how": "D7: close the box on the built aircraft with the extended nose.",
-   "value": 0.004721042548144594,
+   "value": 0.020016514150329345,
    "defined_in": "redesign/team/C5/claims.json",
    "reasons": [
     "uses ASM-A3-PACK-RANGE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)",
     "uses ASM-C5-PACK-G-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-XPS-PLATEAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-DENSIFY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses ASM-D5-YIELD-STRAIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
     "uses P:battery.size_m, which is UNVERIFIED (cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED)",
-    "uses CL-A3-PACK-FWD-ROOM, which is UNVERIFIED"
+    "uses CL-D2-BAY-W, which is UNVERIFIED",
+    "uses CL-D2-BAY-H, which is UNVERIFIED",
+    "uses CL-D2-PACK-X-FWD, which is UNVERIFIED",
+    "uses CL-D2-PACK-TRAVEL, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-LIGHT, which is UNVERIFIED",
+    "uses CL-C5-PACK-X-B3-HEAVY, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
    "importance": 1
+  },
+  {
+   "id": "ASM-C6-FOAM-KD",
+   "type": "assumption",
+   "title": "Foam bond knock-down 0.5",
+   "text": "Design allowable of an epoxy bond into XPS or onto paper-faced foam board = 0.5 x the typical cohesive strength of the foam or of the paper-to-core interface",
+   "basis": "cut-surface damage, dust, sun-heated foam and coupon scatter; replaced by 0.5 x the mean of T-C6-XPS-PULL / T-C6-BOARD-LAP",
+   "value": 0.5,
+   "unit": "-",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 9
+  },
+  {
+   "id": "ASM-C6-PEEL",
+   "type": "assumption",
+   "title": "Epoxy tension/peel on PETG or CF 1.0 MPa",
+   "text": "Flatwise tension allowable of a 30 min epoxy bond on abraded PETG or CF",
+   "basis": "0.5 x the 2 MPa lap-shear allowable (ASM-C4-BOND-SHEAR): peel concentrates at the bond edge",
+   "value": 1000000.0,
+   "unit": "Pa",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "ASM-C6-HEAD-BEARING",
+   "type": "assumption",
+   "title": "Printed plate under a screw head 30 MPa",
+   "text": "Sustained bearing stress allowed under an M3 head on printed PETG or ASA at up to 70 degC (creep-limited)",
+   "basis": "about 0.5 x room-temperature compressive yield (~60 MPa); the motor base runs at 66 degC (E3 CR-E3-01); T-C6-HEAD-CREEP",
+   "value": 30000000.0,
+   "unit": "Pa",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "ASM-C6-NUT-FACTOR",
+   "type": "assumption",
+   "title": "Nut factor K 0.2",
+   "text": "T = K F d for M3 A2 screws, dry or with Loctite 243",
+   "basis": "VDI 2230 / Shigley typical 0.15-0.30",
+   "value": 0.2,
+   "unit": "-",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 7
+  },
+  {
+   "id": "ASM-C6-AL-SHEAR",
+   "type": "assumption",
+   "title": "Motor base thread shear 160 MPa",
+   "text": "Shear yield of the motor base aluminium (6061-T6 assumed: 0.58 x 276 MPa)",
+   "basis": "maker does not publish the alloy",
+   "value": 160000000.0,
+   "unit": "Pa",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "ASM-C6-INSERT-PULL",
+   "type": "assumption",
+   "title": "Heat-set insert pull-out 300 N",
+   "text": "Design pull-out of one M3 x 5.7 mm brass heat-set insert in PETG",
+   "basis": "~0.4 x the 700-1 000 N measured in published PLA/PETG tests (CNC Kitchen insert tests); T-C6-INSERT",
+   "value": 300.0,
+   "unit": "N",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "ASM-C6-PIN-TAU",
+   "type": "assumption",
+   "title": "CF rod transverse shear 50 MPa",
+   "text": "Transverse shear allowable of a 2 mm pultruded CF rod",
+   "basis": "typical pultruded rod 60-90 MPa interlaminar/transverse, knocked down",
+   "value": 50000000.0,
+   "unit": "Pa",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 5
+  },
+  {
+   "id": "ASM-C6-SNAP-STRAIN",
+   "type": "assumption",
+   "title": "Snap-hook strain 2 %",
+   "text": "Maximum bending strain of a printed PETG snap hook that is flexed at every foot-insert swap",
+   "basis": "PETG yield strain ~4-5 %; half for repeated use and layer lines",
+   "value": 0.02,
+   "unit": "-",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "ASM-C6-E1-TORQUE",
+   "type": "assumption",
+   "title": "Motor screw torque in PRP-005: 0.5 N m",
+   "text": "Torque currently written in propulsion PRP-005 and fins E-FIN-61..64",
+   "basis": "subsystems/propulsion/parts.csv, subsystems/fins/interfaces.json",
+   "value": 0.5,
+   "unit": "N m",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 3
+  },
+  {
+   "id": "ASM-C6-MOTOR-M-ULT",
+   "type": "assumption",
+   "title": "Motor-to-mount moment 0.848 N m (ult)",
+   "text": "Ultimate moment at the motor base",
+   "basis": "team/C1/data/envelope.json#joints.J-MOTOR.M_res_Nm.ultimate (T3 flare, lower pair)",
+   "value": 0.848,
+   "unit": "N m",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "ASM-C6-FIN-MZ-ULT",
+   "type": "assumption",
+   "title": "Fin group torsion about the tube 7.26 N m (ult)",
+   "text": "Ultimate Mz of the fin group at the wing",
+   "basis": "team/C1/data/envelope.json#joints.J-FIN.Mz_Nm.ultimate (L4 corner)",
+   "value": 7.262,
+   "unit": "N m",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "ASM-C6-FIN-MY-ULT",
+   "type": "assumption",
+   "title": "Fin group torsion about the spar 6.72 N m (ult)",
+   "text": "Ultimate My of the fin group at the wing",
+   "basis": "team/C1/data/envelope.json#joints.J-FIN.My_Nm.ultimate (L4 corner)",
+   "value": 6.7165,
+   "unit": "N m",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "ASM-C6-FINHALF-MZ-ULT",
+   "type": "assumption",
+   "title": "Half-fin torsion about the tube 7.94 N m (ult)",
+   "text": "Ultimate Mz of one half-fin + tube at the wing plane",
+   "basis": "team/C1/data/envelope.json#joints.J-FINHALF.Mz_Nm.ultimate (L4 corner)",
+   "value": 7.941,
+   "unit": "N m",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "ASM-C6-C4-COLLAR-T",
+   "type": "assumption",
+   "title": "C4 collar torsion 9.3 N m (limit)",
+   "text": "Tube torsion at the block face in L4 that C4 says the station collar passes into the tube",
+   "basis": "team/C4/BOOM-STRUCTURES.md, strength section; differs from C1's half-fin Mz 5.29 N m limit (CR-C6-03)",
+   "value": 9.3,
+   "unit": "N m",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "ASM-C6-STRIP-L",
+   "type": "assumption",
+   "title": "Edge strip length 264 mm",
+   "text": "Length of one edge strip from the collar to the foot",
+   "basis": "team/C4/BOOM-STRUCTURES.md mass table (8 strips 10 x 1 x 264 mm)",
+   "value": 0.264,
+   "unit": "m",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 5
+  },
+  {
+   "id": "ASM-C6-BRACE-F",
+   "type": "assumption",
+   "title": "Brace design force 142 N",
+   "text": "Brace axial force at design (ultimate x 1.15), G2",
+   "basis": "team/C4 CALC-C4-STATIC-1L strut_comp_design_n (C4 model, 10 x 2 brace); C4 re-runs with D3's 10 x 3 brace (CR-D3-10)",
+   "value": 142.0,
+   "unit": "N",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "ASM-C6-POD-M-ULT",
+   "type": "assumption",
+   "title": "Pod-to-wing moment 3.51 N m (ult)",
+   "text": "Ultimate moment at the pod bond",
+   "basis": "team/C1/data/envelope.json#joints.J-POD.M_res_Nm.ultimate (L1)",
+   "value": 3.506,
+   "unit": "N m",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "ASM-C6-POD-AREA",
+   "type": "assumption",
+   "title": "Pod bond area 10 014 mm2",
+   "text": "Bonded footprint of the pod shell on the core",
+   "basis": "subsystems/pod/interfaces.json E-POD-01 bond.area_mm2",
+   "value": 0.010014,
+   "unit": "m2",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 3
+  },
+  {
+   "id": "ASM-C6-AVN-CRASH",
+   "type": "assumption",
+   "title": "Avionics crash load 9.4 N",
+   "text": "Ultimate crash load of the avionics group, any axis",
+   "basis": "team/C1/data/envelope.json#crash_ultimate.avionics_N_any_axis (75 g x 12.75 g)",
+   "value": 9.375,
+   "unit": "N",
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "assumption marked UNVERIFIED by its author"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "ASM-C6-B2-HINGE-V",
+   "type": "assumption",
+   "title": "B2 hinge moment speed 19.5 m/s",
+   "text": "Speed at which CL-B2-HINGE-MOMENT was computed",
+   "basis": "team/C1/CHANGE-REQUESTS.md CR-C1-15",
+   "value": 19.5,
+   "unit": "m/s",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "ASM-C6-HORN-ARM",
+   "type": "assumption",
+   "title": "Horn arm 12 mm",
+   "text": "Control-horn hole radius used for the pushrod force",
+   "basis": "team/B2/WING-AERO.md (pushrod force, 12 mm horn arm)",
+   "value": 0.012,
+   "unit": "m",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C6-MOTOR-SCREW",
+   "type": "calculation",
+   "title": "Motor to mount: 4 x M3x8 into the motor base",
+   "script": "redesign/team/C6/joints.py",
+   "function": "motor_screw",
+   "equation": "P = T/(K d); head bearing = P / (pi/4 (dh^2 - dhole^2)); screw tension F_t = ff (F/4 + M/s_min); separation RF = P / F_t; thread strip = 0.5 pi d Le tau_Al",
+   "inputs": {
+    "T": "P:joints.torque.motor_screw_nm",
+    "T_e1": "ASM-C6-E1-TORQUE",
+    "K": "ASM-C6-NUT-FACTOR",
+    "d": "P:joints.m3_d_m",
+    "dh": "P:fin_detail.mount.head_d_m",
+    "dhole": "P:fin_detail.mount.screw_hole_d_m",
+    "s_allow": "ASM-C6-HEAD-BEARING",
+    "F_ult": "CL-C1-MOTOR-F-ULT",
+    "M_ult": "ASM-C6-MOTOR-M-ULT",
+    "ff": "ASM-C1-FITTING-FACTOR",
+    "pat": "P:fin_detail.mount.bolt_pattern_m",
+    "Le": "CL-D3-SCREW-ENGAGE",
+    "tau_al": "ASM-C6-AL-SHEAR"
+   },
+   "outputs": {
+    "preload_n": 333.3333333333333,
+    "head_mpa": 22.70803539745252,
+    "rf_head": 1.3211182506508479,
+    "head_mpa_e1": 56.7700884936313,
+    "rf_head_e1": 0.5284473002603391,
+    "tension_n": 69.50420018008194,
+    "rf_sep": 4.795873234562562,
+    "strip_n": 2316.1586083328825,
+    "rf_strip": 33.324009230116026
+   },
+   "input_values": {
+    "T": 0.2,
+    "T_e1": 0.5,
+    "K": 0.2,
+    "d": 0.003,
+    "dh": 0.0055,
+    "dhole": 0.0034,
+    "s_allow": 30000000.0,
+    "F_ult": 29.753739756806752,
+    "M_ult": 0.848,
+    "ff": 1.15,
+    "pat": [
+     0.016,
+     0.019
+    ],
+    "Le": 0.0030719007625085283,
+    "tau_al": 160000000.0
+   },
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 3
+  },
+  {
+   "id": "CALC-C6-PINCH",
+   "type": "calculation",
+   "title": "Motor-mount slit collar: M3x16 + nyloc, rocking under the prop-nut torque",
+   "script": "redesign/team/C6/joints.py",
+   "function": "pinch",
+   "equation": "protrusion = L - (2 ear + slit + nw wt); needed nyloc h + n p; clamp N = Ts/(mu pi r), bolt torque = K N d; rocking bearing p = 6 M/(od grip^2), M = Tprop sf ff pf; tube hoop = p r / t",
+   "inputs": {
+    "L": "P:joints.pinch_screw_len_m",
+    "ear": "P:fin_detail.mount.ear_t_m",
+    "slit": "P:fin_detail.mount.slit_m",
+    "wt": "P:joints.washer_t_m",
+    "nw": "P:joints.pinch_washers",
+    "nh": "P:joints.nyloc_h_m",
+    "p": "P:joints.m3_pitch_m",
+    "nthr": "P:joints.nyloc_protrusion_min_threads",
+    "Ts": "P:fin_detail.mount.slip_torque_nm",
+    "mu": "P:fin_detail.mount.mu_petg_cf",
+    "od": "P:fins.tube.od_m",
+    "id": "P:fins.tube.id_m",
+    "K": "ASM-C6-NUT-FACTOR",
+    "d": "P:joints.m3_d_m",
+    "Tprop": "ASM-C1-PROP-NUT-TORQUE",
+    "sf": "P:requirements.safety_factor_ult",
+    "ff": "ASM-C1-FITTING-FACTOR",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "grip": "P:fin_detail.mount.grip_m",
+    "s_b": "ASM-C4-PETG-BEARING",
+    "s_cf": "ASM-C4-CF-SIGMA"
+   },
+   "outputs": {
+    "grip_stack_m": 0.010499999999999999,
+    "protrusion_m": 0.005500000000000001,
+    "protrusion_need_m": 0.005,
+    "rf_engage": 1.1000000000000003,
+    "clamp_n": 241.1438531695384,
+    "bolt_torque_nm": 0.14468631190172307,
+    "M_design_nm": 3.234375,
+    "bearing_mpa": 6.1257102272727275,
+    "rf_rock": 3.264927536231884,
+    "hoop_mpa": 67.38281250000006,
+    "rf_hoop": 5.936231884057966
+   },
+   "input_values": {
+    "L": 0.016,
+    "ear": 0.004,
+    "slit": 0.0015,
+    "wt": 0.0005,
+    "nw": 2,
+    "nh": 0.004,
+    "p": 0.0005,
+    "nthr": 2,
+    "Ts": 2.5,
+    "mu": 0.3,
+    "od": 0.022,
+    "id": 0.02,
+    "K": 0.2,
+    "d": 0.003,
+    "Tprop": 1.5,
+    "sf": 1.5,
+    "ff": 1.15,
+    "pf": 1.25,
+    "grip": 0.012,
+    "s_b": 20000000.0,
+    "s_cf": 400000000.0
+   },
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 4
+  },
+  {
+   "id": "CALC-C6-INSERT",
+   "type": "calculation",
+   "title": "FC on M3 heat-set inserts: engagement and pull-out",
+   "script": "redesign/team/C6/joints.py",
+   "function": "insert",
+   "equation": "engagement = L - stack >= kmin d; blind hole >= engagement + 0.5 mm; RF = pull-out / (F ff pf), whole avionics crash load on one insert",
+   "inputs": {
+    "L": "P:joints.fc_screw_len_m",
+    "stack": "P:joints.fc_stack_m",
+    "d": "P:joints.m3_d_m",
+    "kmin": "P:joints.insert_engage_min_d",
+    "Li": "P:joints.insert_len_m",
+    "F": "ASM-C6-AVN-CRASH",
+    "ff": "ASM-C1-FITTING-FACTOR",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "cap": "ASM-C6-INSERT-PULL"
+   },
+   "outputs": {
+    "engage_m": 0.0056,
+    "rf_engage": 1.2444444444444442,
+    "hole_depth_m": 0.006200000000000001,
+    "rf_pull": 22.26086956521739
+   },
+   "input_values": {
+    "L": 0.01,
+    "stack": 0.0044,
+    "d": 0.003,
+    "kmin": 1.5,
+    "Li": 0.0057,
+    "F": 9.375,
+    "ff": 1.15,
+    "pf": 1.25,
+    "cap": 300.0
+   },
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 2
+  },
+  {
+   "id": "CALC-C6-TUBE-BONDS",
+   "type": "calculation",
+   "title": "Tube-in-block, block-on-spar and station-collar bonds in torsion",
+   "script": "redesign/team/C6/joints.py",
+   "function": "tube_bonds",
+   "equation": "tau = T / (2 pi r^2 L), T = T_ult ff pf; spar OD = tube OD (22 mm); tube bore L = core + 2 bosses; L_req = T / (2 pi r^2 tau)",
+   "inputs": {
+    "od": "P:fins.tube.od_m",
+    "core": "ASM-C4-CORE-T-TUBE",
+    "boss": "P:fin_detail.boss.height_m",
+    "Ls": "P:fin_detail.block.width_m",
+    "Lc": "P:fin_detail.station_collar.height_m",
+    "Tz": "ASM-C6-FIN-MZ-ULT",
+    "Ty": "ASM-C6-FIN-MY-ULT",
+    "Th": "ASM-C6-FINHALF-MZ-ULT",
+    "Tc4": "ASM-C6-C4-COLLAR-T",
+    "sf": "P:requirements.safety_factor_ult",
+    "ff": "ASM-C1-FITTING-FACTOR",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "tau": "ASM-C4-BOND-SHEAR"
+   },
+   "outputs": {
+    "L_bore_m": 0.043,
+    "area_bore_mm2": 2971.9466502959435,
+    "rf_tube_block": 6.263247763247474,
+    "area_spar_mm2": 2488.141381643116,
+    "rf_block_spar": 5.669527454052977,
+    "area_collar_mm2": 829.3804605477052,
+    "rf_collar": 1.5984292971140002,
+    "rf_collar_c4": 0.9099015805291951,
+    "L_collar_req_c4_m": 0.01318823953797382
+   },
+   "input_values": {
+    "od": 0.022,
+    "core": 0.027,
+    "boss": 0.008,
+    "Ls": 0.036,
+    "Lc": 0.012,
+    "Tz": 7.262,
+    "Ty": 6.7165,
+    "Th": 7.941,
+    "Tc4": 9.3,
+    "sf": 1.5,
+    "ff": 1.15,
+    "pf": 1.25,
+    "tau": 2000000.0
+   },
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 4
+  },
+  {
+   "id": "CALC-C6-STRIP",
+   "type": "calculation",
+   "title": "Edge-strip anchorage in the station collar and strip-to-board shear flow",
+   "script": "redesign/team/C6/joints.py",
+   "function": "strip",
+   "equation": "F = sigma_ult w t ff pf, sigma_ult = sigma_allow/(1+MS_edge); anchor tau = F/(n w L); L_req = F/(2 w tau); shear flow q = F/L_strip onto the paper face, tau = q/w vs kd tau_board; pins: P = q pitch, shear P/(pi d^2/4), bending 32 P (tb+t)/2 / (pi d^3)",
+   "inputs": {
+    "s_cf": "ASM-C4-CF-SIGMA",
+    "ms": "CL-C4-MS-EDGE",
+    "w": "P:fin_detail.edge_strip.w_m",
+    "t": "P:fin_detail.edge_strip.t_m",
+    "ff": "ASM-C1-FITTING-FACTOR",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "tail": "P:fin_detail.station_collar.tail_m",
+    "n_now": "P:joints.strip_bonded_faces_now",
+    "n_p": "P:joints.strip_bonded_faces_prop",
+    "L_p": "P:joints.strip_embed_prop_m",
+    "tau": "ASM-C4-BOND-SHEAR",
+    "Ls": "ASM-C6-STRIP-L",
+    "kd": "ASM-C6-FOAM-KD",
+    "tau_b": "ASM-D5-BOND-TAU",
+    "tb": "P:fins.board_t_m",
+    "dp": "P:joints.pin_d_m",
+    "pp": "P:joints.pin_pitch_m",
+    "tau_pin": "ASM-C6-PIN-TAU"
+   },
+   "outputs": {
+    "F_design_n": 1347.9187437870064,
+    "rf_anchor_now": 0.29675379309304023,
+    "L_req_m": 0.03369796859467516,
+    "rf_anchor_prop": 1.187015172372161,
+    "q_npm": 5105.752817375024,
+    "tau_face_mpa": 0.5105752817375024,
+    "rf_face": 0.19585750344140654,
+    "pin_load_n": 76.58629226062536,
+    "rf_pin_shear": 2.0510149798732016,
+    "rf_pin_bend": 1.4144930895677257,
+    "rf_pin": 1.4144930895677257,
+    "pins_per_strip_pair": 18
+   },
+   "input_values": {
+    "s_cf": 400000000.0,
+    "ms": 3.2658357757124525,
+    "w": 0.01,
+    "t": 0.001,
+    "ff": 1.15,
+    "pf": 1.25,
+    "tail": 0.02,
+    "n_now": 1,
+    "n_p": 2,
+    "L_p": 0.04,
+    "tau": 2000000.0,
+    "Ls": 0.264,
+    "kd": 0.5,
+    "tau_b": 200000.0,
+    "tb": 0.0048,
+    "dp": 0.002,
+    "pp": 0.015,
+    "tau_pin": 50000000.0
+   },
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 5
+  },
+  {
+   "id": "CALC-C6-BRACE",
+   "type": "calculation",
+   "title": "Brace ends in their slots and the anchor on the spar",
+   "script": "redesign/team/C6/joints.py",
+   "function": "brace",
+   "equation": "end bond tau = F pf / (2 (w+t) e); anchor pull-off sigma = F pf / (ax ay), whole brace force normal",
+   "inputs": {
+    "F": "ASM-C6-BRACE-F",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "w": "P:fin_detail.brace.w_m",
+    "t": "P:fin_detail.brace.t_m",
+    "e": "P:fin_detail.brace.engage_m",
+    "ax": "P:fin_detail.anchor.len_x_m",
+    "ay": "P:fin_detail.anchor.len_y_m",
+    "tau": "ASM-C4-BOND-SHEAR",
+    "peel": "ASM-C6-PEEL"
+   },
+   "outputs": {
+    "F_design_n": 177.5,
+    "rf_end": 2.929577464788733,
+    "rf_anchor": 1.8028169014084507
+   },
+   "input_values": {
+    "F": 142.0,
+    "pf": 1.25,
+    "w": 0.01,
+    "t": 0.003,
+    "e": 0.01,
+    "ax": 0.02,
+    "ay": 0.016,
+    "tau": 2000000.0,
+    "peel": 1000000.0
+   },
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 2
+  },
+  {
+   "id": "CALC-C6-FOAM-BONDS",
+   "type": "calculation",
+   "title": "Bonds into XPS and onto paper-faced board at the C6 allowables",
+   "script": "redesign/team/C6/joints.py",
+   "function": "foam_bonds",
+   "equation": "foot shoe RF = SF_D5 kd (D5 used the undiscounted 0.20 MPa); fin root RF = RF_D3 kd; pod: sigma = F ff pf / A + 6 M ff pf / (b Leff^2), Leff = A/b, vs kd sigma_XPS",
+   "inputs": {
+    "kd": "ASM-C6-FOAM-KD",
+    "sf_d5": "CL-D5-BOND-SF",
+    "rf_d3": "CL-D3-ROOT-FILLET-RF",
+    "F": "CL-C1-POD-F-ULT",
+    "M": "ASM-C6-POD-M-ULT",
+    "A": "ASM-C6-POD-AREA",
+    "b": "ASM-D2-POD-WIDTH",
+    "ff": "ASM-C1-FITTING-FACTOR",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "s_xps": "ASM-D3-XPS-TENSILE"
+   },
+   "outputs": {
+    "rf_foot": 1.3487327223920291,
+    "rf_root": 1.1239741010298832,
+    "allow_xps_mpa": 0.125,
+    "pod_sigma_kpa": 59.6835348871718,
+    "rf_pod": 2.0943799698912793
+   },
+   "input_values": {
+    "kd": 0.5,
+    "sf_d5": 2.6974654447840583,
+    "rf_d3": 2.2479482020597663,
+    "F": 121.67880282098471,
+    "M": 3.506,
+    "A": 0.010014,
+    "b": 0.14,
+    "ff": 1.15,
+    "pf": 1.25,
+    "s_xps": 250000.0
+   },
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 3
+  },
+  {
+   "id": "CALC-C6-LINKAGE",
+   "type": "calculation",
+   "title": "Servo frame and control horn: minimum bond area into XPS",
+   "script": "redesign/team/C6/joints.py",
+   "function": "linkage",
+   "equation": "F = Mh/arm (V_D/V_B2)^2 sf ff pf; A_min = F / (kd sigma_XPS)",
+   "inputs": {
+    "Mh": "CL-B2-HINGE-MOMENT",
+    "arm": "ASM-C6-HORN-ARM",
+    "V": "CL-C1-VD-ENV",
+    "Vb": "ASM-C6-B2-HINGE-V",
+    "sf": "P:requirements.safety_factor_ult",
+    "ff": "ASM-C1-FITTING-FACTOR",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "kd": "ASM-C6-FOAM-KD",
+    "s_xps": "ASM-D3-XPS-TENSILE"
+   },
+   "outputs": {
+    "F_design_n": 89.98824936039941,
+    "A_min_mm2": 719.9059948831953
+   },
+   "input_values": {
+    "Mh": 0.2571601084416001,
+    "arm": 0.012,
+    "V": 27.212395833333332,
+    "Vb": 19.5,
+    "sf": 1.5,
+    "ff": 1.15,
+    "pf": 1.25,
+    "kd": 0.5,
+    "s_xps": 250000.0
+   },
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CALC-C6-SNAP",
+   "type": "calculation",
+   "title": "Foot piston snap hook: minimum finger length",
+   "script": "redesign/team/C6/joints.py",
+   "function": "snap",
+   "equation": "cantilever snap fit eps = 1.5 t y / L^2  ->  L_min = sqrt(1.5 t y / eps)",
+   "inputs": {
+    "t": "P:landing.wall_t_m",
+    "y": "P:landing.piston.hook_protrusion_m",
+    "eps": "ASM-C6-SNAP-STRAIN"
+   },
+   "outputs": {
+    "value": 0.006
+   },
+   "input_values": {
+    "t": 0.0008,
+    "y": 0.0006,
+    "eps": 0.02
+   },
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-MOTOR-HEAD-RF",
+   "type": "claim",
+   "title": "Motor screw head bearing on the printed plate at 0.20 N m",
+   "calc": "CALC-C6-MOTOR-SCREW",
+   "output": "rf_head",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "T-C6-HEAD-CREEP: 4 screws at 0.20 N m on a printed plate, 2 h at 70 degC, witness lines unmoved and breakaway torque >= 0.15 N m",
+   "value": 1.3211182506508479,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C6-HEAD-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-MOTOR-F-ULT, which is UNVERIFIED",
+    "uses ASM-C6-MOTOR-M-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fin_detail.mount.bolt_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: cross pattern, 16 mm across y, 19 mm across z; not published, E1 measures on arrival (T-E1-MOTOR-RM): drill the plate from the measured pattern)",
+    "uses CL-D3-SCREW-ENGAGE, which is UNVERIFIED",
+    "uses ASM-C6-AL-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.32111825065084787,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-MOTOR-SEP-RF",
+   "type": "claim",
+   "title": "Motor screw preload / design tension (no gapping)",
+   "calc": "CALC-C6-MOTOR-SCREW",
+   "output": "rf_sep",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL",
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "Witness line across each screw head and plate; tap test after T-H1 thrust-stand runs",
+   "value": 4.795873234562562,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C6-HEAD-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-MOTOR-F-ULT, which is UNVERIFIED",
+    "uses ASM-C6-MOTOR-M-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fin_detail.mount.bolt_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: cross pattern, 16 mm across y, 19 mm across z; not published, E1 measures on arrival (T-E1-MOTOR-RM): drill the plate from the measured pattern)",
+    "uses CL-D3-SCREW-ENGAGE, which is UNVERIFIED",
+    "uses ASM-C6-AL-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 3.7958732345625616,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-MOTOR-STRIP-RF",
+   "type": "claim",
+   "title": "Motor-base thread strip / design tension",
+   "calc": "CALC-C6-MOTOR-SCREW",
+   "output": "rf_strip",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Probe the motor hole depth on arrival (E1 T-E1-MOTOR-RM); engagement >= 3.0 mm (CL-D3-SCREW-ENGAGE)",
+   "value": 33.324009230116026,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C6-HEAD-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C1-MOTOR-F-ULT, which is UNVERIFIED",
+    "uses ASM-C6-MOTOR-M-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fin_detail.mount.bolt_pattern_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: cross pattern, 16 mm across y, 19 mm across z; not published, E1 measures on arrival (T-E1-MOTOR-RM): drill the plate from the measured pattern)",
+    "uses CL-D3-SCREW-ENGAGE, which is UNVERIFIED",
+    "uses ASM-C6-AL-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 32.324009230116026,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-PINCH-ENGAGE-RF",
+   "type": "claim",
+   "title": "Mount pinch bolt: protrusion past the grip / nyloc need",
+   "calc": "CALC-C6-PINCH",
+   "output": "rf_engage",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "Build check: >= 2 threads visible past each nyloc (BUILD step for the mounts)",
+   "value": 1.1000000000000003,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses P:fin_detail.mount.mu_petg_cf, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: PETG on matte CF, dry; only used to estimate the bolt preload, the setting is measured)",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C1-PROP-NUT-TORQUE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PETG-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.10000000000000031,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-PINCH-TORQUE",
+   "type": "claim",
+   "title": "Mount pinch bolt torque that gives the 2.5 N m slip (estimate)",
+   "calc": "CALC-C6-PINCH",
+   "output": "bolt_torque_nm",
+   "unit": "N m",
+   "limit": {
+    "op": "<=",
+    "ref": "P:joints.torque.printed_max_nm",
+    "resolved": 0.4
+   },
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "T-D3-SLIP sets the bolt by the slip force (85-100 N at the can); a torque above 0.4 N m to reach it means the collar bore is oversize: reprint",
+   "value": 0.14468631190172307,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses P:fin_detail.mount.mu_petg_cf, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: PETG on matte CF, dry; only used to estimate the bolt preload, the setting is measured)",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C1-PROP-NUT-TORQUE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PETG-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.6382842202456923,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-MOUNT-ROCK-RF",
+   "type": "claim",
+   "title": "Mount collar bearing under 3.2 N m prop-nut torque (CR-C1-11)",
+   "calc": "CALC-C6-PINCH",
+   "output": "rf_rock",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL",
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "T-C6-PROPNUT: 1.5 N m on the prop nut with the bell held, 10 cycles; collar witness line and lip cap unmoved",
+   "value": 3.264927536231884,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses P:fin_detail.mount.mu_petg_cf, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: PETG on matte CF, dry; only used to estimate the bolt preload, the setting is measured)",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C1-PROP-NUT-TORQUE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PETG-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 2.264927536231884,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-MOUNT-HOOP-RF",
+   "type": "claim",
+   "title": "Tube wall hoop stress under the rocking collar",
+   "calc": "CALC-C6-PINCH",
+   "output": "rf_hoop",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "Same as T-C6-PROPNUT; inspect the tube end for crazing",
+   "value": 5.936231884057966,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses P:fin_detail.mount.mu_petg_cf, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/fins/params.json: PETG on matte CF, dry; only used to estimate the bolt preload, the setting is measured)",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses P:fins.tube.id_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C1-PROP-NUT-TORQUE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-PETG-BEARING, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 4.936231884057966,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-FC-ENGAGE-RF",
+   "type": "claim",
+   "title": "FC screw engagement in the heat-set insert / 1.5 d",
+   "calc": "CALC-C6-INSERT",
+   "output": "rf_engage",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "AVN-001",
+    "POD-002"
+   ],
+   "how": "F3 measures the board + grommet stack; screw runs in by hand >= 4.5 mm",
+   "value": 1.2444444444444442,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses P:joints.fc_stack_m, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C6/params.json: nylon washer 0.8 + grommet flange 1.0 + PCB 1.6 + grommet flange 1.0; F3 measures the chosen board)",
+    "uses ASM-C6-AVN-CRASH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.24444444444444424,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-INSERT-PULL-RF",
+   "type": "claim",
+   "title": "Heat-set insert pull-out / avionics crash load",
+   "calc": "CALC-C6-INSERT",
+   "output": "rf_pull",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "POD-002",
+    "AVN-001"
+   ],
+   "how": "T-C6-INSERT: pull 3 inserts from a printed coupon boss",
+   "value": 22.26086956521739,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses P:joints.fc_stack_m, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C6/params.json: nylon washer 0.8 + grommet flange 1.0 + PCB 1.6 + grommet flange 1.0; F3 measures the chosen board)",
+    "uses ASM-C6-AVN-CRASH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-INSERT-PULL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 21.26086956521739,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-TUBE-BLOCK-RF",
+   "type": "claim",
+   "title": "Tube-in-block bond, fin torsion",
+   "calc": "CALC-C6-TUBE-BONDS",
+   "output": "rf_tube_block",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L",
+    "FIN-004-R",
+    "FIN-004-L"
+   ],
+   "how": "T-C6-LAP-PETG (allowable) and C4 T-C4-BLOCK-PROOF",
+   "value": 6.263247763247474,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FIN-MY-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FINHALF-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-C4-COLLAR-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 5.263247763247474,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-BLOCK-SPAR-RF",
+   "type": "claim",
+   "title": "Block-on-spar bond, torsion about the spar",
+   "calc": "CALC-C6-TUBE-BONDS",
+   "output": "rf_block_spar",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-004-R",
+    "FIN-004-L",
+    "WNG-002"
+   ],
+   "how": "T-C6-LAP-PETG and T-C4-BLOCK-PROOF",
+   "value": 5.669527454052977,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FIN-MY-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FINHALF-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-C4-COLLAR-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 4.669527454052977,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-COLLAR-RF",
+   "type": "claim",
+   "title": "Station collar bond on the tube, half-fin torsion (C1)",
+   "calc": "CALC-C6-TUBE-BONDS",
+   "output": "rf_collar",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL",
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF (1.5 x L4) with the collar witness-marked",
+   "value": 1.5984292971140002,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FIN-MY-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FINHALF-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-C4-COLLAR-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.5984292971140002,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-COLLAR-L-REQ",
+   "type": "claim",
+   "title": "Station collar bond length needed for C4's 9.3 N m tube torsion",
+   "calc": "CALC-C6-TUBE-BONDS",
+   "output": "L_collar_req_c4_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "P:fin_detail.station_collar.height_m",
+    "resolved": 0.012
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "C4 and C1 agree the collar torsion (CR-C6-03); D3 sets the collar height to at least this",
+   "value": 0.01318823953797382,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "FAILS: margin -9.9% (0.01319 m vs <= 0.012 m)",
+    "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)",
+    "uses ASM-C4-CORE-T-TUBE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FIN-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FIN-MY-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FINHALF-MZ-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-C4-COLLAR-T, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.09901996149781825,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-STRIP-ANCHOR-RF",
+   "type": "claim",
+   "title": "Edge-strip end in the collar tail, as drawn (20 mm, one PETG face)",
+   "calc": "CALC-C6-STRIP",
+   "output": "rf_anchor_now",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-011-RUO",
+    "FIN-011-RUI",
+    "FIN-011-RDO",
+    "FIN-011-RDI",
+    "FIN-011-LUO",
+    "FIN-011-LUI",
+    "FIN-011-LDO",
+    "FIN-011-LDI",
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "T-C6-STRIP-ANCHOR: pull a strip out of a printed tail coupon",
+   "value": 0.29675379309304023,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "FAILS: margin -70.3% (0.2968 vs >= 1)",
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C4-MS-EDGE, which is UNVERIFIED",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FOAM-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
+    "uses ASM-C6-PIN-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.7032462069069598,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-STRIP-EMBED-REQ",
+   "type": "claim",
+   "title": "Edge-strip embedment needed, both faces on PETG",
+   "calc": "CALC-C6-STRIP",
+   "output": "L_req_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "P:joints.strip_embed_prop_m",
+    "resolved": 0.04
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "T-C6-STRIP-ANCHOR on the 40 mm two-face tail (CR-C6-01)",
+   "value": 0.03369796859467516,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C4-MS-EDGE, which is UNVERIFIED",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FOAM-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
+    "uses ASM-C6-PIN-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.15755078513312107,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "type": "claim",
+   "title": "Edge-strip anchorage with the CR-C6-01 tail (40 mm, two faces)",
+   "calc": "CALC-C6-STRIP",
+   "output": "rf_anchor_prop",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-011-RUO",
+    "FIN-011-RUI",
+    "FIN-011-RDO",
+    "FIN-011-RDI",
+    "FIN-011-LUO",
+    "FIN-011-LUI",
+    "FIN-011-LDO",
+    "FIN-011-LDI",
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "T-C6-STRIP-ANCHOR",
+   "value": 1.187015172372161,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C4-MS-EDGE, which is UNVERIFIED",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FOAM-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
+    "uses ASM-C6-PIN-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.18701517237216092,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-STRIP-FACE-RF",
+   "type": "claim",
+   "title": "Edge-strip shear flow onto the board paper face, no pins",
+   "calc": "CALC-C6-STRIP",
+   "output": "rf_face",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-011-RUO",
+    "FIN-011-RUI",
+    "FIN-011-RDO",
+    "FIN-011-RDI",
+    "FIN-011-LUO",
+    "FIN-011-LUI",
+    "FIN-011-LDO",
+    "FIN-011-LDI",
+    "FIN-001-RU",
+    "FIN-001-RD",
+    "FIN-001-LU",
+    "FIN-001-LD"
+   ],
+   "how": "T-C6-BOARD-LAP (allowable); C4 confirms the shear flow in its FE (CR-C6-02)",
+   "value": 0.19585750344140654,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "FAILS: margin -80.4% (0.1959 vs >= 1)",
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C4-MS-EDGE, which is UNVERIFIED",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FOAM-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
+    "uses ASM-C6-PIN-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": -0.8041424965585935,
+   "fails": true,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-STRIP-PIN-RF",
+   "type": "claim",
+   "title": "Through-pins tying the strip pair (CR-C6-02), weaker of shear and bending",
+   "calc": "CALC-C6-STRIP",
+   "output": "rf_pin",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-011-RUO",
+    "FIN-011-RUI",
+    "FIN-011-RDO",
+    "FIN-011-RDI",
+    "FIN-011-LUO",
+    "FIN-011-LUI",
+    "FIN-011-LDO",
+    "FIN-011-LDI",
+    "FIN-001-RU",
+    "FIN-001-RD",
+    "FIN-001-LU",
+    "FIN-001-LD"
+   ],
+   "how": "T-C4-FIN-PROOF with pins fitted; no strip lift at the tip",
+   "value": 1.4144930895677257,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C4-CF-SIGMA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-C4-MS-EDGE, which is UNVERIFIED",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FOAM-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D5-BOND-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses P:fins.board_t_m, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width)",
+    "uses ASM-C6-PIN-TAU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.4144930895677257,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-BRACE-END-RF",
+   "type": "claim",
+   "title": "Brace ends bonded in the ear and anchor slots",
+   "calc": "CALC-C6-BRACE",
+   "output": "rf_end",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-009-UR",
+    "FIN-009-UL",
+    "FIN-009-LR",
+    "FIN-009-LL",
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL",
+    "FIN-010-UR",
+    "FIN-010-UL",
+    "FIN-010-LR",
+    "FIN-010-LL"
+   ],
+   "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF (G2)",
+   "value": 2.929577464788733,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C6-BRACE-F, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-PEEL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 1.929577464788733,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-ANCHOR-PULL-RF",
+   "type": "claim",
+   "title": "Brace anchor pull-off from the spar",
+   "calc": "CALC-C6-BRACE",
+   "output": "rf_anchor",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-010-UR",
+    "FIN-010-UL",
+    "FIN-010-LR",
+    "FIN-010-LL",
+    "WNG-002"
+   ],
+   "how": "T-C4-FIN-PROOF (G2 in tension on the brace)",
+   "value": 1.8028169014084507,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C6-BRACE-F, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C4-BOND-SHEAR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-PEEL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.8028169014084507,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-FOOT-SHOE-RF",
+   "type": "claim",
+   "title": "Foot shoe bond on the fin tip at the C6 board allowable",
+   "calc": "CALC-C6-FOAM-BONDS",
+   "output": "rf_foot",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "FIN-001-RU",
+    "FIN-001-RD",
+    "FIN-001-LU",
+    "FIN-001-LD"
+   ],
+   "how": "T-C6-BOARD-LAP; T-C1-FOOT-DROP",
+   "value": 1.3487327223920291,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C6-FOAM-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-D5-BOND-SF, which is UNVERIFIED",
+    "uses CL-D3-ROOT-FILLET-RF, which is UNVERIFIED",
+    "uses CL-C1-POD-F-ULT, which is UNVERIFIED",
+    "uses ASM-C6-POD-M-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D3-XPS-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.3487327223920291,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-FIN-ROOT-RF",
+   "type": "claim",
+   "title": "Half-fin root fillet on XPS at the C6 foam allowable",
+   "calc": "CALC-C6-FOAM-BONDS",
+   "output": "rf_root",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-001-RU",
+    "FIN-001-RD",
+    "FIN-001-LU",
+    "FIN-001-LD",
+    "WNG-001"
+   ],
+   "how": "T-C6-XPS-PULL; D3 T-D3-ROOT side pull",
+   "value": 1.1239741010298832,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C6-FOAM-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-D5-BOND-SF, which is UNVERIFIED",
+    "uses CL-D3-ROOT-FILLET-RF, which is UNVERIFIED",
+    "uses CL-C1-POD-F-ULT, which is UNVERIFIED",
+    "uses ASM-C6-POD-M-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D3-XPS-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 0.12397410102988315,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-POD-WING-RF",
+   "type": "claim",
+   "title": "Pod shell bond on the core at the C6 foam allowable",
+   "calc": "CALC-C6-FOAM-BONDS",
+   "output": "rf_pod",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "POD-001",
+    "WNG-001"
+   ],
+   "how": "T-C6-XPS-PULL; C3 pod proof",
+   "value": 2.0943799698912793,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses ASM-C6-FOAM-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses CL-D5-BOND-SF, which is UNVERIFIED",
+    "uses CL-D3-ROOT-FILLET-RF, which is UNVERIFIED",
+    "uses CL-C1-POD-F-ULT, which is UNVERIFIED",
+    "uses ASM-C6-POD-M-ULT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D3-XPS-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "margin": 1.0943799698912793,
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-LINK-BOND-AREA-MIN",
+   "type": "claim",
+   "title": "Minimum bond area into XPS for a servo frame or a control horn",
+   "calc": "CALC-C6-LINKAGE",
+   "output": "A_min_mm2",
+   "unit": "mm2",
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "MEC-008-L",
+    "MEC-008-R",
+    "MEC-004-L",
+    "MEC-004-R"
+   ],
+   "how": "D6 shows the bonded area of each part >= this; T-C6-XPS-PULL",
+   "value": 719.9059948831953,
+   "defined_in": "redesign/team/C6/claims.json",
+   "reasons": [
+    "uses CL-B2-HINGE-MOMENT, which is UNVERIFIED",
+    "uses CL-C1-VD-ENV, which is UNVERIFIED",
+    "uses ASM-C1-PRINTED-FACTOR, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-C6-FOAM-KD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)",
+    "uses ASM-D3-XPS-TENSILE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "CL-C6-SNAP-L-MIN",
+   "type": "claim",
+   "title": "Foot snap-hook finger length for 2 % strain",
+   "calc": "CALC-C6-SNAP",
+   "output": "value",
+   "unit": "m",
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL"
+   ],
+   "how": "D5 shows the free finger length >= this in the CAD; 20 insert swaps on one printed piston, no crack",
+   "value": 0.006,
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "CHECKED",
+   "importance": 1
+  },
+  {
+   "id": "T-C6-LAP-PETG",
+   "type": "test",
+   "title": "Epoxy lap shear on abraded PETG and CF",
+   "verifies": [
+    "CL-C6-TUBE-BLOCK-RF",
+    "CL-C6-BLOCK-SPAR-RF",
+    "CL-C6-COLLAR-RF",
+    "CL-C6-BRACE-END-RF",
+    "CL-C6-STRIP-ANCHOR-RF-PROP"
+   ],
+   "state": "planned",
+   "procedure": "5 single-lap coupons each: PETG-PETG and PETG-CF tube offcut, 25 x 12.5 mm overlap, 120 grit + IPA, 30 min epoxy, 24 h cure; hang water jugs on a luggage scale to failure. Allowable = mean x 0.5; pass >= 2.0 MPa (ASM-C4-BOND-SHEAR)",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 5
+  },
+  {
+   "id": "T-C6-BOARD-LAP",
+   "type": "test",
+   "title": "Epoxy on paper-faced foam board",
+   "verifies": [
+    "CL-C6-FOOT-SHOE-RF",
+    "CL-C6-STRIP-FACE-RF"
+   ],
+   "state": "planned",
+   "procedure": "5 PETG tabs 20 x 20 mm bonded on a scuffed board face, pull in shear to failure; record the failure mode (paper peels vs epoxy). Allowable = 0.5 x mean (replaces ASM-D5-BOND-TAU x KD)",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 2
+  },
+  {
+   "id": "T-C6-XPS-PULL",
+   "type": "test",
+   "title": "Flatwise pull of an epoxy puck on XPS",
+   "verifies": [
+    "CL-C6-FIN-ROOT-RF",
+    "CL-C6-POD-WING-RF",
+    "CL-C6-LINK-BOND-AREA-MIN"
+   ],
+   "state": "planned",
+   "procedure": "5 printed pucks 30 mm dia bonded with microballoon epoxy on hot-wire-cut F-250 offcut, pull normal to the face; allowable = 0.5 x mean (replaces ASM-D3-XPS-TENSILE x KD)",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 3
+  },
+  {
+   "id": "T-C6-INSERT",
+   "type": "test",
+   "title": "Heat-set insert pull-out",
+   "verifies": [
+    "CL-C6-INSERT-PULL-RF"
+   ],
+   "state": "planned",
+   "procedure": "3 inserts in a printed boss (same settings as POD-002), M3 screw + washer, pull to failure; pass >= 300 N each",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "T-C6-HEAD-CREEP",
+   "type": "test",
+   "title": "Motor screw creep on a hot printed plate",
+   "verifies": [
+    "CL-C6-MOTOR-HEAD-RF"
+   ],
+   "state": "planned",
+   "procedure": "Printed mount plate (final material) on an aluminium block with 4 x M3x8 at 0.20 N m, 2 h at 70 degC (oven), cool, breakaway torque >= 0.15 N m on all four",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "T-C6-STRIP-ANCHOR",
+   "type": "test",
+   "title": "Edge-strip pull-out from the collar tail",
+   "verifies": [
+    "CL-C6-STRIP-ANCHOR-RF",
+    "CL-C6-STRIP-ANCHOR-RF-PROP"
+   ],
+   "state": "planned",
+   "procedure": "Print the station collar tail alone; bond a 10 x 1 strip in it as built; pull along the strip with water jugs; pass >= 1 350 N (design force)",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 2
+  },
+  {
+   "id": "T-C6-PROPNUT",
+   "type": "test",
+   "title": "Prop-nut torque on a finished mount",
+   "verifies": [
+    "CL-C6-MOUNT-ROCK-RF",
+    "CL-C6-MOUNT-HOOP-RF"
+   ],
+   "state": "planned",
+   "procedure": "Bell held by hand, prop nut to 1.5 N m and off 10 times; collar witness line and lip cap unmoved",
+   "defined_in": "redesign/team/C6/claims.json",
+   "status": "PROPOSED",
+   "importance": 2
   },
   {
    "id": "ASM-D2-POD-WIDTH",
@@ -40029,7 +45011,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/D2/claims.json",
    "status": "PROPOSED",
-   "importance": 12
+   "importance": 15
   },
   {
    "id": "ASM-D2-BAY-W",
@@ -40044,7 +45026,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/D2/claims.json",
    "status": "PROPOSED",
-   "importance": 25
+   "importance": 33
   },
   {
    "id": "ASM-D2-FLOOR-STACK",
@@ -40059,7 +45041,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/D2/claims.json",
    "status": "PROPOSED",
-   "importance": 14
+   "importance": 22
   },
   {
    "id": "ASM-D2-SLOT-WALL",
@@ -40074,7 +45056,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/D2/claims.json",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 26
   },
   {
    "id": "ASM-D2-STOP-T",
@@ -40089,7 +45071,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/D2/claims.json",
    "status": "PROPOSED",
-   "importance": 19
+   "importance": 27
   },
   {
    "id": "ASM-D2-TRIM-NEED",
@@ -40107,7 +45089,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 9
   },
   {
    "id": "ASM-D2-STRAP-CAP",
@@ -40336,7 +45318,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D2/claims.json",
    "status": "CHECKED",
-   "importance": 14
+   "importance": 22
   },
   {
    "id": "CALC-D2-RECESS",
@@ -40888,7 +45870,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.0,
-   "importance": 1
+   "importance": 9
   },
   {
    "id": "CL-D2-BAY-H",
@@ -40921,7 +45903,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.11132075471698132,
-   "importance": 1
+   "importance": 9
   },
   {
    "id": "CL-D2-PACK-X-FWD",
@@ -40945,7 +45927,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.size_m, which is UNVERIFIED (cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 7
+   "importance": 15
   },
   {
    "id": "CL-D2-PACK-AHEAD",
@@ -41002,7 +45984,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.3166666666666667,
-   "importance": 1
+   "importance": 9
   },
   {
    "id": "CL-D2-PACK-Z",
@@ -41326,7 +46308,7 @@ window.PROOF_GRAPH = {
    "procedure": "Both packs: in through the hatch, strapped at both trim ends, XT60 and balance lead reachable, hatch closes",
    "defined_in": "redesign/team/D2/claims.json",
    "status": "PROPOSED",
-   "importance": 5
+   "importance": 13
   },
   {
    "id": "T-D2-STRAP-PULL",
@@ -41392,7 +46374,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 5
   },
   {
    "id": "ASM-D3-ROOT-LEFF",
@@ -41407,7 +46389,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "ASM-D3-ROOT-SHARE",
@@ -41422,7 +46404,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "ASM-D3-FILLET-LEG",
@@ -41434,7 +46416,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "defined_in": "redesign/team/D3/claims.json",
    "status": "PROPOSED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "ASM-D3-WASH",
@@ -41546,7 +46528,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D3/claims.json",
    "status": "CHECKED",
-   "importance": 21
+   "importance": 24
   },
   {
    "id": "CALC-D3-SCREW-ENGAGE",
@@ -41582,7 +46564,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D3/claims.json",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "CALC-D3-ESC-WASH",
@@ -41652,7 +46634,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D3/claims.json",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "CALC-D3-BRACE",
@@ -41870,7 +46852,7 @@ window.PROOF_GRAPH = {
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 19
+   "importance": 22
   },
   {
    "id": "CL-D3-X-FACE",
@@ -41892,7 +46874,7 @@ window.PROOF_GRAPH = {
     "uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 19
+   "importance": 22
   },
   {
    "id": "CL-D3-SCREW-ENGAGE",
@@ -41925,7 +46907,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.023966920836176093,
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "CL-D3-ESC-WASH",
@@ -42006,7 +46988,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 1.2479482020597663,
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "CL-D3-BRACE-PCR",
@@ -42149,7 +47131,7 @@ window.PROOF_GRAPH = {
    "procedure": "half-fin bonded to a core offcut per BUILD step 10; pull at the TE tip along y to 35 N, then to failure",
    "defined_in": "redesign/team/D3/claims.json",
    "status": "PROPOSED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "T-D3-WEIGH",
@@ -42162,7 +47144,7 @@ window.PROOF_GRAPH = {
    "procedure": "1 g scale; update mass_g and status VERIFIED",
    "defined_in": "redesign/team/D3/claims.json",
    "status": "PROPOSED",
-   "importance": 1
+   "importance": 3
   },
   {
    "id": "CL-D3-MASS",
@@ -42186,7 +47168,7 @@ window.PROOF_GRAPH = {
    "defined_in": "redesign/team/D3/claims.json",
    "status": "PROPOSED",
    "margin": 0.014864864864864866,
-   "importance": 1
+   "importance": 3
   },
   {
    "id": "SRC-D5-OC-F250",
@@ -42197,7 +47179,7 @@ window.PROOF_GRAPH = {
    "note": "25 psi = 172 kPa at yield or 10 % deformation, through the board thickness; not yet compared with the sheet for the board the team buys",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 28
+   "importance": 41
   },
   {
    "id": "SRC-D5-TOOLBOX-MU",
@@ -42207,7 +47189,7 @@ window.PROOF_GRAPH = {
    "url": "https://www.engineeringtoolbox.com/friction-coefficients-d_778.html",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 23
+   "importance": 32
   },
   {
    "id": "SRC-D5-NEOPRENE",
@@ -42218,7 +47200,7 @@ window.PROOF_GRAPH = {
    "note": "density ~1.3 g/cm3; choose a 12 x 12 in adhesive-back sheet; part number at order time (I1)",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "SRC-D5-PETG",
@@ -42228,7 +47210,7 @@ window.PROOF_GRAPH = {
    "url": "https://www.prusa3d.com/page/petg_234/",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 68
   },
   {
    "id": "ASM-D5-XPS-PLATEAU",
@@ -42247,7 +47229,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 28
+   "importance": 41
   },
   {
    "id": "ASM-D5-PEAK-FACTOR",
@@ -42262,7 +47244,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 24
+   "importance": 33
   },
   {
    "id": "ASM-D5-YIELD-STRAIN",
@@ -42277,7 +47259,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 28
+   "importance": 41
   },
   {
    "id": "ASM-D5-DENSIFY",
@@ -42292,7 +47274,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 28
+   "importance": 41
   },
   {
    "id": "ASM-D5-NORMAL-SINK",
@@ -42304,7 +47286,7 @@ window.PROOF_GRAPH = {
    "unit": "m/s",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "PROPOSED",
-   "importance": 24
+   "importance": 33
   },
   {
    "id": "ASM-D5-PAD-MU",
@@ -42322,7 +47304,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 23
+   "importance": 32
   },
   {
    "id": "ASM-D5-PETG-SIGMA",
@@ -42355,7 +47337,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 6
+   "importance": 14
   },
   {
    "id": "ASM-D5-FIT-FACTOR",
@@ -42367,7 +47349,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "PROPOSED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "ASM-D5-REPLACE-MIN",
@@ -42497,7 +47479,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D5/claims.json",
    "status": "CHECKED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "CALC-D5-CRUSH",
@@ -42565,7 +47547,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D5/claims.json",
    "status": "CHECKED",
-   "importance": 24
+   "importance": 33
   },
   {
    "id": "CALC-D5-TIPOVER",
@@ -42716,7 +47698,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D5/claims.json",
    "status": "CHECKED",
-   "importance": 48
+   "importance": 67
   },
   {
    "id": "CALC-D5-FLANGE",
@@ -42794,7 +47776,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/D5/claims.json",
    "status": "CHECKED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "CALC-D5-BOX",
@@ -42858,7 +47840,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 57
+   "importance": 76
   },
   {
    "id": "CL-D5-SLEEVE-OUT",
@@ -42878,7 +47860,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 50
+   "importance": 69
   },
   {
    "id": "CL-D5-PISTON-OUT",
@@ -42898,7 +47880,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 68
   },
   {
    "id": "CL-D5-SLEEVE-LEN",
@@ -42915,7 +47897,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 68
   },
   {
    "id": "CL-D5-SKIRT-LEN",
@@ -42932,7 +47914,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 68
   },
   {
    "id": "CL-D5-LEG-LEN",
@@ -42949,7 +47931,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 50
+   "importance": 72
   },
   {
    "id": "CL-D5-WINDOW-LEN",
@@ -42966,7 +47948,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 68
   },
   {
    "id": "CL-D5-FLANGE-Z",
@@ -42983,7 +47965,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 49
+   "importance": 68
   },
   {
    "id": "CL-D5-FLANGE-OVERHANG",
@@ -43017,7 +47999,7 @@ window.PROOF_GRAPH = {
     "uses P:landing.pad.t_m, which is UNVERIFIED (cites SRC-D5-NEOPRENE, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 2
+   "importance": 5
   },
   {
    "id": "CL-D5-STROKE-AVAIL",
@@ -43051,7 +48033,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.27999999999999997,
-   "importance": 25
+   "importance": 34
   },
   {
    "id": "CL-D5-CONTACT-Z",
@@ -43081,7 +48063,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.03809523809523813,
-   "importance": 50
+   "importance": 69
   },
   {
    "id": "CL-D5-TE-CLEAR-CRUSHED",
@@ -43132,7 +48114,7 @@ window.PROOF_GRAPH = {
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 17
+   "importance": 26
   },
   {
    "id": "CL-D5-F-PEAK",
@@ -43178,7 +48160,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.020507669638616464,
-   "importance": 17
+   "importance": 26
   },
   {
    "id": "CL-D5-N-LAND",
@@ -43344,7 +48326,7 @@ window.PROOF_GRAPH = {
     "uses CL-D5-STROKE-AVAIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 10
+   "importance": 26
   },
   {
    "id": "CL-D5-MARK-MARGIN",
@@ -43556,7 +48538,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.02160291999999906,
-   "importance": 47
+   "importance": 66
   },
   {
    "id": "CL-D5-FLANGE-SF",
@@ -43618,7 +48600,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 1.6974654447840583,
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "CL-D5-BOX-SLACK",
@@ -43731,7 +48713,7 @@ window.PROOF_GRAPH = {
    "procedure": "Crush 3 cartridge pairs in a printed piston + shoe on a drill-press over a kitchen scale (or the H1 thrust-stand load cell), 30 mm at < 10 mm/s; record force every 2 mm. Pass: plateau 30-37 N, peak <= 38 N. Off target: change cartridge.section_z_m by the force ratio and re-run feet_calc.py.",
    "defined_in": "redesign/team/D5/claims.json",
    "status": "PROPOSED",
-   "importance": 20
+   "importance": 29
   },
   {
    "id": "T-D5-PAD-MU",
@@ -44698,7 +49680,7 @@ window.PROOF_GRAPH = {
    "note": "full table transcribed into MAKER_1147 in propulsion.py; product page https://sunnyskyusa.com/products/sunnysky-x3108s-motors returned HTTP 429 on 2026-11-09, price $24.99 from docs/research/budget-lift.md (seen 2026-11-01)",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 376
+   "importance": 400
   },
   {
    "id": "SRC-E1-X3108S-SPEC",
@@ -44710,7 +49692,7 @@ window.PROOF_GRAPH = {
    "note": "single retailer source (search snippet 2026-11-09; page 403 to direct fetch): Rm and I0 are UNVERIFIED until measured on arrival (T-E1-MOTOR-RM)",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "UNVERIFIED",
-   "importance": 376
+   "importance": 400
   },
   {
    "id": "SRC-E1-X3108S-HIMODEL",
@@ -44723,7 +49705,7 @@ window.PROOF_GRAPH = {
    "note": "second independent listing for R and I0 (agrees with Robu); geekbuying swaps body and shaft length",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 381
+   "importance": 405
   },
   {
    "id": "SRC-E1-SPCNC-ADAPTER",
@@ -44749,7 +49731,7 @@ window.PROOF_GRAPH = {
    "note": "blade-element prediction by the maker, not a measurement: calibrated against SRC-E1-X3108S-DATA",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 343
+   "importance": 367
   },
   {
    "id": "SRC-E1-APC-PAGES",
@@ -44789,7 +49771,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 376
+   "importance": 400
   },
   {
    "id": "ASM-E1-RM",
@@ -44808,7 +49790,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 376
+   "importance": 400
   },
   {
    "id": "ASM-E1-I0",
@@ -44827,7 +49809,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 376
+   "importance": 400
   },
   {
    "id": "ASM-E1-ESC",
@@ -44842,7 +49824,7 @@ window.PROOF_GRAPH = {
    "unit": "ohm,W",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 376
+   "importance": 400
   },
   {
    "id": "ASM-E1-PACK",
@@ -44860,7 +49842,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 372
+   "importance": 396
   },
   {
    "id": "ASM-E1-OCV",
@@ -44876,7 +49858,7 @@ window.PROOF_GRAPH = {
    "unit": "V",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 335
+   "importance": 359
   },
   {
    "id": "ASM-E1-TCOPPER",
@@ -44891,7 +49873,7 @@ window.PROOF_GRAPH = {
    "unit": "1/K,degC",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 372
+   "importance": 396
   },
   {
    "id": "ASM-E1-CAL-TRANSFER",
@@ -44904,7 +49886,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 339
+   "importance": 363
   },
   {
    "id": "ASM-E1-RTH",
@@ -44934,7 +49916,7 @@ window.PROOF_GRAPH = {
    "unit": "A",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 326
+   "importance": 350
   },
   {
    "id": "ASM-E1-TRANS-MARGIN",
@@ -45098,7 +50080,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 343
+   "importance": 367
   },
   {
    "id": "CALC-E1-HOVER",
@@ -45361,7 +50343,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E1/claims.json",
    "status": "CHECKED",
-   "importance": 322
+   "importance": 346
   },
   {
    "id": "CALC-E1-WORST",
@@ -45868,7 +50850,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 340
+   "importance": 364
   },
   {
    "id": "CL-E1-KP",
@@ -45887,7 +50869,7 @@ window.PROOF_GRAPH = {
     "uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "importance": 340
+   "importance": 364
   },
   {
    "id": "CL-E1-CAL-PERR",
@@ -46356,7 +51338,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.009999999999972715,
-   "importance": 321
+   "importance": 345
   },
   {
    "id": "CL-E1-ILIM-TW-FRESH",
@@ -46393,7 +51375,7 @@ window.PROOF_GRAPH = {
    ],
    "status": "UNVERIFIED",
    "margin": 0.2482597457284179,
-   "importance": 321
+   "importance": 345
   },
   {
    "id": "CL-E1-CRUISE-DRAG",
@@ -47049,7 +52031,7 @@ window.PROOF_GRAPH = {
    "procedure": "H1 stand (20 kg cell + HX711), X3108S + LANRC 45 A, 11x4.5MR then 11x5.5MR; held 14.8 V bench supply (>= 40 A) and then a flight pack; 10 % throttle steps to 100 %, 3 s each; log gf, A, V, rpm (optical tach or ESC telemetry), can temperature; one 60 s run at 689 gf for g/W; ten 10 -> 100 % throttle punches in < 50 ms with no desync",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 342
+   "importance": 366
   },
   {
    "id": "T-E1-MOTOR-RM",
@@ -47065,7 +52047,7 @@ window.PROOF_GRAPH = {
    "procedure": "Weigh motor, ESC, prop, adapter set (0.1 g); calipers: base bolt pattern, hole depth, lead length, body length, adapter base and post; 4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load current and rpm at 10.0 V without prop (Kv = rpm / (V - I0 R))",
    "defined_in": "redesign/team/E1/claims.json",
    "status": "PROPOSED",
-   "importance": 343
+   "importance": 367
   },
   {
    "id": "T-E1-HOVER-LOG",
@@ -47091,7 +52073,7 @@ window.PROOF_GRAPH = {
    "note": "none of these is the exact 130C XT60 SKU the BOM buys; weigh and measure the first pack (T-E2-WEIGH)",
    "defined_in": "redesign/team/E2/claims.json",
    "status": "UNVERIFIED",
-   "importance": 209
+   "importance": 238
   },
   {
    "id": "SRC-E2-HTRC-C150",
@@ -47192,7 +52174,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 324
+   "importance": 348
   },
   {
    "id": "ASM-E2-R-CELL",
@@ -47207,7 +52189,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 326
+   "importance": 350
   },
   {
    "id": "ASM-E2-R-EXT",
@@ -47222,7 +52204,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 324
+   "importance": 348
   },
   {
    "id": "ASM-E2-COLD-R",
@@ -47237,7 +52219,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 326
+   "importance": 350
   },
   {
    "id": "ASM-E2-HOVER-MARGIN",
@@ -47861,7 +52843,7 @@ window.PROOF_GRAPH = {
    },
    "defined_in": "redesign/team/E2/claims.json",
    "status": "CHECKED",
-   "importance": 320
+   "importance": 344
   },
   {
    "id": "CALC-E2-HEAT",
@@ -48991,7 +53973,7 @@ window.PROOF_GRAPH = {
     "uses P:battery.capacity_ah, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)"
    ],
    "status": "UNVERIFIED",
-   "importance": 317
+   "importance": 341
   },
   {
    "id": "CL-E2-TW-SAG-WORST",
@@ -49481,7 +54463,7 @@ window.PROOF_GRAPH = {
    "procedure": "Thrust stand, one motor: rest voltage, then 20 A step; R = dV / dI after 2 s; repeat at 10 degC (pack 1 h in a fridge, bagged). Pass <= 5 mOhm/cell at 25 degC.",
    "defined_in": "redesign/team/E2/claims.json",
    "status": "PROPOSED",
-   "importance": 319
+   "importance": 343
   },
   {
    "id": "T-E2-MISSION-LOG",
@@ -61459,7 +66441,7 @@ window.PROOF_GRAPH = {
    "where": "roll-wrapped ~200 kg vs pultruded ~140 kg in their bend test; roll-wrapped trades a little stiffness for hoop strength",
    "defined_in": "redesign/team/J1/claims.json",
    "status": "CHECKED",
-   "importance": 51
+   "importance": 59
   },
   {
    "id": "SRC-J1-EPSILON",
@@ -61471,7 +66453,7 @@ window.PROOF_GRAPH = {
    "where": "HS-fibre pultrusion tensile modulus 100-140 GPa, strength 2000-3000 MPa (unidirectional)",
    "defined_in": "redesign/team/J1/claims.json",
    "status": "CHECKED",
-   "importance": 51
+   "importance": 59
   },
   {
    "id": "SRC-J1-ALOFT-TUBE",
@@ -61652,7 +66634,7 @@ window.PROOF_GRAPH = {
     "assumption marked UNVERIFIED by its author"
    ],
    "status": "UNVERIFIED",
-   "importance": 51
+   "importance": 59
   },
   {
    "id": "ASM-J1-MOUNT-MASS",
@@ -61667,7 +66649,7 @@ window.PROOF_GRAPH = {
    ],
    "defined_in": "redesign/team/J1/claims.json",
    "status": "PROPOSED",
-   "importance": 129
+   "importance": 154
   },
   {
    "id": "ASM-J1-APC-KT",
@@ -62621,7 +67603,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-ISA",
    "note": "sea level; Richmond Field Station is ~5 m ASL",
    "status": "CHECKED",
-   "importance": 553
+   "importance": 592
   },
   {
    "id": "P:env.g_ms2",
@@ -62632,7 +67614,7 @@ window.PROOF_GRAPH = {
    "unit": "m/s2",
    "source": "SRC-ISA",
    "status": "CHECKED",
-   "importance": 575
+   "importance": 614
   },
   {
    "id": "P:env.ambient_design_c",
@@ -62673,7 +67655,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P4: hard as-built gate = sized 2.48 kg + 5 %",
    "status": "CHECKED",
-   "importance": 570
+   "importance": 609
   },
   {
    "id": "P:requirements.mtow_sized_kg",
@@ -62700,7 +67682,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P5: at the 2.6 kg gate on the maker's 14.8 V table",
    "status": "CHECKED",
-   "importance": 323
+   "importance": 347
   },
   {
    "id": "P:requirements.hover_tw_min_sag",
@@ -62724,7 +67706,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P7",
    "status": "CHECKED",
-   "importance": 273
+   "importance": 304
   },
   {
    "id": "P:requirements.transition_factor",
@@ -62736,7 +67718,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P7: transition at >= 1.3 Vs",
    "status": "CHECKED",
-   "importance": 109
+   "importance": 119
   },
   {
    "id": "P:requirements.hover_time_min",
@@ -62823,7 +67805,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-REQ-PROPOSED",
    "note": "P8: survive-and-land case, not an operating case",
    "status": "CHECKED",
-   "importance": 144
+   "importance": 170
   },
   {
    "id": "P:requirements.tipover_min_deg",
@@ -62859,7 +67841,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "fraction of chord, cruise, elevons neutral; B3 keeps 0.05 (CR-B3-01, sets the aft CG limit); B2's trimmed CLmax 0.80 is at this margin",
    "status": "PROPOSED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "P:requirements.elevon_area_frac",
@@ -62977,7 +67959,7 @@ window.PROOF_GRAPH = {
    "source": "redesign/params/CHANGE-LOG.md#D-16",
    "note": "P9 said 0.45 m high; CHANGE-LOG D-16: 0.50 m because the tube ends (+/-0.21 m) make the props-off envelope 0.425 m high and 25 mm walls left it 25 mm short (CL-A1-BOX-FIT). D7 measures two cars before freezing; fallback 0.48 m with a 12 mm lining",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 26
   },
   {
    "id": "P:requirements.box_mass_max_kg",
@@ -63025,7 +68007,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/LOADS.md",
    "note": "limit load factor, pull-up (CL-C1-N-LIMIT-POS; gust peak 2.92)",
    "status": "PROPOSED",
-   "importance": 69
+   "importance": 80
   },
   {
    "id": "P:requirements.load_factor_limit_neg",
@@ -63037,7 +68019,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/LOADS.md",
    "note": "limit load factor, push-over (CL-C1-N-LIMIT-NEG)",
    "status": "PROPOSED",
-   "importance": 69
+   "importance": 80
   },
   {
    "id": "P:requirements.safety_factor_ult",
@@ -63049,7 +68031,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "ultimate = 1.5 x limit (FAR 23.303 practice)",
    "status": "PROPOSED",
-   "importance": 95
+   "importance": 120
   },
   {
    "id": "P:requirements.vd_ms",
@@ -63061,7 +68043,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/LOADS.md",
    "note": "design dive speed (CL-C1-VD, derived at cruise 15 m/s; C1 re-derives at 16 m/s)",
    "status": "PROPOSED",
-   "importance": 70
+   "importance": 85
   },
   {
    "id": "P:requirements.thrust_limit_per_motor_n",
@@ -63073,7 +68055,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/LOADS.md",
    "note": "1.15 x 1.58 kgf (CL-C1-T-LIMIT); E1/H1 replace with the fresh-pack stand value (CR-C1-07)",
    "status": "PROPOSED",
-   "importance": 106
+   "importance": 127
   },
   {
    "id": "P:requirements.landing_sink_ms",
@@ -63085,7 +68067,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "3 x Q_LAND_SPEED 0.5 m/s; C5 re-derives",
    "status": "PROPOSED",
-   "importance": 116
+   "importance": 141
   },
   {
    "id": "P:requirements.landing_n_design",
@@ -63097,7 +68079,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/LOADS.md",
    "note": "landing load factor the feet must hold the airframe to at the design sink (ASM-C1-N-LAND)",
    "status": "PROPOSED",
-   "importance": 110
+   "importance": 135
   },
   {
    "id": "P:requirements.landing_attitude_err_deg",
@@ -63109,7 +68091,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "attitude error at touchdown in 5 m/s; sets the foot height with the wingtip-strike check (CR-C1-01)",
    "status": "PROPOSED",
-   "importance": 139
+   "importance": 174
   },
   {
    "id": "P:requirements.foot_crush_stroke_min_m",
@@ -63121,7 +68103,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/LOADS.md",
    "note": "CR-C1-01: >= 40 mm at crush efficiency 0.5, or >= 25 mm with a constant-force core (eta >= 0.8), for n_L <= 6 at 1.5 m/s",
    "status": "PROPOSED",
-   "importance": 109
+   "importance": 134
   },
   {
    "id": "P:requirements.box_drop_m",
@@ -63133,7 +68115,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "box slipping from a car sill. CHANGE-LOG D-22: kept; D7 puts >= 70 mm crush foam under the spar cradles (CR-C1-05: 69 mm at the assumed cradle y +/-0.20 m), which sits inside the 0.21 m the lower tubes need anyway",
    "status": "PROPOSED",
-   "importance": 54
+   "importance": 64
   },
   {
    "id": "P:requirements.crash_decel_g",
@@ -63157,7 +68139,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "tip deflection / half-span at limit load; C2 re-derives",
    "status": "PROPOSED",
-   "importance": 6
+   "importance": 7
   },
   {
    "id": "P:requirements.vibration_sep_frac",
@@ -63169,7 +68151,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "structural modes >= 20 % from 1P and 2P (J1 CR-J1-03, B4 CR-B4-07: keep tube and fin modes outside 80-330 Hz)",
    "status": "PROPOSED",
-   "importance": 15
+   "importance": 17
   },
   {
    "id": "P:requirements.fc_vibe_max_ms2",
@@ -63253,7 +68235,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "trim deflection <= half the travel",
    "status": "PROPOSED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "P:requirements.roll_rate_min_degs",
@@ -63277,7 +68259,7 @@ window.PROOF_GRAPH = {
    "source": "team/A2/REQUIREMENTS.md",
    "note": "rated stall torque >= 1.5 x hinge moment (B2 CL-B2-SERVO-TORQUE-REQ 3.04 kgf cm)",
    "status": "PROPOSED",
-   "importance": 2
+   "importance": 3
   },
   {
    "id": "P:requirements.pitot_wash_clearance_radii",
@@ -63597,7 +68579,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "P6: one piece; may grow only if the measured car box allows",
    "status": "CHECKED",
-   "importance": 483
+   "importance": 523
   },
   {
    "id": "P:wing.chord_m",
@@ -63609,7 +68591,7 @@ window.PROOF_GRAPH = {
    "source": "team/B2/CHANGE-REQUESTS.md#CR-B2-01",
    "note": "CHANGE-LOG D-01: 0.30 -> 0.32 so the trimmed CLmax 0.80 gives Vs 11.9 m/s and 1.3 Vs 15.5 m/s at the gate; constant chord, rectangular, no sweep, no twist (B2 confirmed 0 deg)",
    "status": "PROPOSED",
-   "importance": 540
+   "importance": 578
   },
   {
    "id": "P:wing.sweep_deg",
@@ -63665,7 +68647,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-S5010",
    "note": "from the coordinate file; 31.4 mm at c 0.32",
    "status": "CHECKED",
-   "importance": 297
+   "importance": 321
   },
   {
    "id": "P:wing.le_x_m",
@@ -63689,7 +68671,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "= chord",
    "status": "PROPOSED",
-   "importance": 170
+   "importance": 199
   },
   {
    "id": "P:wing.oswald_e",
@@ -63704,7 +68686,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: kept conservative: B2's AVL gives 0.93 with the 0.40 m fins (P:b2.avl.e_oswald); B2/B3 re-run with the 0.275 m fins (D-04)"
    ],
    "status": "UNVERIFIED",
-   "importance": 297
+   "importance": 321
   },
   {
    "id": "P:wing.core.material",
@@ -63733,7 +68715,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: conservative for F-250 (REVIEW section 2); weigh the first core"
    ],
    "status": "UNVERIFIED",
-   "importance": 51
+   "importance": 70
   },
   {
    "id": "P:wing.core.pieces",
@@ -63799,7 +68781,7 @@ window.PROOF_GRAPH = {
     "cites SRC-CF-TUBE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 48
+   "importance": 61
   },
   {
    "id": "P:wing.spar.id_m",
@@ -63813,7 +68795,7 @@ window.PROOF_GRAPH = {
     "cites SRC-CF-TUBE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 0
+   "importance": 4
   },
   {
    "id": "P:wing.spar.length_m",
@@ -63825,7 +68807,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "stock length, centred: spans y = -0.50 to +0.50; outer 0.075 m per side is unspanned foam",
    "status": "CHECKED",
-   "importance": 116
+   "importance": 141
   },
   {
    "id": "P:wing.spar.x_m",
@@ -63837,7 +68819,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "25 % chord at c 0.32, near the section's maximum thickness (~31 mm) so the 22 mm tube stays inside the foam; 35 mm behind the motor tubes (x 0.045); C2/D1 confirm",
    "status": "PROPOSED",
-   "importance": 161
+   "importance": 196
   },
   {
    "id": "P:wing.spar.z_m",
@@ -63867,7 +68849,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: calc at rho 1.55 g/cm3; weigh the tube on arrival"
    ],
    "status": "UNVERIFIED",
-   "importance": 145
+   "importance": 172
   },
   {
    "id": "P:wing.elevon.chord_frac",
@@ -63879,7 +68861,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-TIEBREAK",
    "note": "B3 CR-B3-01: keep 22 % chord, both panels, 17.2 % of S; outboard panels alone would be 8.4 % (< 15 % floor)",
    "status": "CHECKED",
-   "importance": 272
+   "importance": 305
   },
   {
    "id": "P:wing.elevon.panels_per_side",
@@ -63906,7 +68888,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "20 mm clear of the pod (y = 0.05) and the fin root (y = 0.32)",
    "status": "PROPOSED",
-   "importance": 261
+   "importance": 293
   },
   {
    "id": "P:wing.elevon.outboard_y_m",
@@ -63921,7 +68903,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "20 mm clear of the fin root; 15 mm from the tip",
    "status": "PROPOSED",
-   "importance": 261
+   "importance": 293
   },
   {
    "id": "P:wing.elevon.deflection_deg",
@@ -63936,7 +68918,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "mechanical travel; F4 sets the servo limits",
    "status": "PROPOSED",
-   "importance": 258
+   "importance": 289
   },
   {
    "id": "P:wing.elevon.hinge",
@@ -63960,7 +68942,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "+/-; motor station from centreline; 11 in props clear each other by 0.36 m",
    "status": "CHECKED",
-   "importance": 265
+   "importance": 298
   },
   {
    "id": "P:fins.half_height_m",
@@ -63972,7 +68954,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "fin extends 0.19 m above and below the wing chord plane: fin height 0.38 m (CR-A2-02 confirmed; P6's 0.40 m was the old chord)",
    "status": "CHECKED",
-   "importance": 486
+   "importance": 526
   },
   {
    "id": "P:fins.chord_m",
@@ -63984,7 +68966,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-02",
    "note": "from the motor tube (x = 0.045) to the wing trailing edge (x = 0.32); was 0.40 with the tube at -0.10",
    "status": "PROPOSED",
-   "importance": 315
+   "importance": 339
   },
   {
    "id": "P:fins.le_x_m",
@@ -63996,7 +68978,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-02",
    "note": "motor-tube centreline; fin leading edge on the tube",
    "status": "PROPOSED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "P:fins.te_x_m",
@@ -64008,7 +68990,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "= wing trailing edge; feet at the tips",
    "status": "CHECKED",
-   "importance": 344
+   "importance": 379
   },
   {
    "id": "P:fins.material",
@@ -64034,7 +69016,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: CR-A5-05: 3/16 in nominal; measure one board. Sets the elevon end gaps and the foot width"
    ],
    "status": "UNVERIFIED",
-   "importance": 152
+   "importance": 182
   },
   {
    "id": "P:fins.areal_mass_kgm2",
@@ -64049,7 +69031,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: ESTIMATE; weigh one board (M-item)"
    ],
    "status": "UNVERIFIED",
-   "importance": 138
+   "importance": 167
   },
   {
    "id": "P:fins.layers",
@@ -64064,7 +69046,7 @@ window.PROOF_GRAPH = {
     "marked PROPOSED in redesign/params/params.json: allocation carries two layers; one layer with the tube as the LE stiffener saves ~20 g per fin at the new chord if C4's mode check (vibration_sep_frac) passes. D3 designs the fin-tube joint, P25"
    ],
    "status": "PROPOSED",
-   "importance": 176
+   "importance": 222
   },
   {
    "id": "P:fins.pieces_per_fin",
@@ -64104,7 +69086,7 @@ window.PROOF_GRAPH = {
     "cites SRC-CF-TUBE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 383
+   "importance": 425
   },
   {
    "id": "P:fins.tube.id_m",
@@ -64118,7 +69100,7 @@ window.PROOF_GRAPH = {
     "cites SRC-CF-TUBE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 51
+   "importance": 63
   },
   {
    "id": "P:fins.tube.length_m",
@@ -64130,7 +69112,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "2 x 0.19 + 2 x 0.02 for the motor mounts; z = -0.21 to +0.21; passes through the core (31 mm thick at y 0.32)",
    "status": "CHECKED",
-   "importance": 336
+   "importance": 369
   },
   {
    "id": "P:fins.tube.x_m",
@@ -64142,7 +69124,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-02",
    "note": "centreline, = fins.le_x_m; through a vertical 22 mm hole in the core at y = +/-0.32 (core ~27 mm thick there); cruise Cn_beta +0.044 /rad modelled (CL-B3-CNB option O4b)",
    "status": "PROPOSED",
-   "importance": 149
+   "importance": 178
   },
   {
    "id": "P:fins.tube.axis",
@@ -64176,7 +69158,7 @@ window.PROOF_GRAPH = {
    "unit": "-",
    "source": "SRC-K09-CARD",
    "status": "CHECKED",
-   "importance": 506
+   "importance": 545
   },
   {
    "id": "P:propulsion.motor",
@@ -64202,7 +69184,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json"
    ],
    "status": "UNVERIFIED",
-   "importance": 168
+   "importance": 195
   },
   {
    "id": "P:propulsion.motor_diameter_m",
@@ -64216,7 +69198,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json"
    ],
    "status": "UNVERIFIED",
-   "importance": 107
+   "importance": 118
   },
   {
    "id": "P:propulsion.motor_length_m",
@@ -64231,7 +69213,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: can only; E1/D3 confirm with the bell and shaft"
    ],
    "status": "UNVERIFIED",
-   "importance": 146
+   "importance": 173
   },
   {
    "id": "P:propulsion.esc",
@@ -64260,7 +69242,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json"
    ],
    "status": "UNVERIFIED",
-   "importance": 134
+   "importance": 161
   },
   {
    "id": "P:propulsion.esc_cont_a",
@@ -64301,7 +69283,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-APC-11X55MR",
    "note": "11 in",
    "status": "CHECKED",
-   "importance": 503
+   "importance": 541
   },
   {
    "id": "P:propulsion.prop_mass_kg",
@@ -64313,7 +69295,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-APC-11X55MR",
    "note": "0.60 oz on the product page (B4, E1 2026-11-09); adapter rings not included",
    "status": "CHECKED",
-   "importance": 177
+   "importance": 209
   },
   {
    "id": "P:propulsion.rpm_max",
@@ -64325,7 +69307,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-B4-APC-RPM",
    "note": "0.98 x APC's 105 000 / D(in) = 9 545 rpm for MR props; unlimited full throttle reaches 10 637 rpm on a fresh pack (CL-B4-RPM-MAX-FULL): F4 caps the output at ~0.85 from rpm telemetry (CL-B4-SPIN-MAX)",
    "status": "CHECKED",
-   "importance": 115
+   "importance": 136
   },
   {
    "id": "P:propulsion.thrust_table_g_w",
@@ -64357,7 +69339,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows"
    ],
    "status": "UNVERIFIED",
-   "importance": 302
+   "importance": 326
   },
   {
    "id": "P:propulsion.thrust_max_per_motor_kg",
@@ -64372,7 +69354,7 @@ window.PROOF_GRAPH = {
     "cites CL-E1-ILIM-TW-FRESH, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 320
+   "importance": 344
   },
   {
    "id": "P:propulsion.current_max_per_motor_a",
@@ -64387,7 +69369,7 @@ window.PROOF_GRAPH = {
     "cites CL-E1-ILIM-I, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 320
+   "importance": 344
   },
   {
    "id": "P:propulsion.download_factor",
@@ -64402,7 +69384,7 @@ window.PROOF_GRAPH = {
     "marked PROPOSED in redesign/params/params.json: B4 models 1.036-1.046 with the tube at x -0.10 (CL-B4-DOWNLOAD); kept at 1.06 until T-B4-INSTALLED, and B4 re-runs with the tube at x 0.045 (the disc edge is now 35 mm above the wing LE)"
    ],
    "status": "PROPOSED",
-   "importance": 312
+   "importance": 336
   },
   {
    "id": "P:propulsion.voltage_sag",
@@ -64417,7 +69399,7 @@ window.PROOF_GRAPH = {
     "cites CL-E2-SAG-F-WORST, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 316
+   "importance": 340
   },
   {
    "id": "P:propulsion.stations.x_mount_m",
@@ -64429,7 +69411,7 @@ window.PROOF_GRAPH = {
    "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-02",
    "note": "CHANGE-LOG D-04: on the tube centreline (was -0.10); mount plate face at x = 0.034 (tube radius)",
    "status": "PROPOSED",
-   "importance": 190
+   "importance": 215
   },
   {
    "id": "P:propulsion.stations.x_prop_plane_m",
@@ -64441,7 +69423,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "mount face 0.034, can 0.025, adapter + hub ~0.014: 0.050 m ahead of the tube axis, tube face 39 mm behind the prop plane (B4 minimum 0.14 D, CR-B4-04); the disc edge sits 50 mm above the wing LE. D3/E1 settle",
    "status": "PROPOSED",
-   "importance": 346
+   "importance": 377
   },
   {
    "id": "P:propulsion.stations.cant_deg",
@@ -64456,7 +69438,7 @@ window.PROOF_GRAPH = {
     "cites CL-B4-YAW-CANT, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 38
+   "importance": 41
   },
   {
    "id": "P:propulsion.stations.y_m",
@@ -64468,7 +69450,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "+/-",
    "status": "CHECKED",
-   "importance": 170
+   "importance": 195
   },
   {
    "id": "P:propulsion.stations.z_m",
@@ -64480,7 +69462,7 @@ window.PROOF_GRAPH = {
    "source": "SRC-K09-CARD",
    "note": "+/-; motors at the fin tips, 0.19 m above and below the chord plane",
    "status": "CHECKED",
-   "importance": 249
+   "importance": 280
   },
   {
    "id": "P:propulsion.stations.ids",
@@ -64526,7 +69508,7 @@ window.PROOF_GRAPH = {
     "cites SRC-OVONIC-4S6500, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 326
+   "importance": 350
   },
   {
    "id": "P:battery.v_nom",
@@ -64540,7 +69522,7 @@ window.PROOF_GRAPH = {
     "cites SRC-OVONIC-4S6500, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 357
+   "importance": 381
   },
   {
    "id": "P:battery.capacity_ah",
@@ -64554,7 +69536,7 @@ window.PROOF_GRAPH = {
     "cites SRC-OVONIC-4S6500, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 322
+   "importance": 346
   },
   {
    "id": "P:battery.energy_wh",
@@ -64581,7 +69563,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55"
    ],
    "status": "UNVERIFIED",
-   "importance": 170
+   "importance": 203
   },
   {
    "id": "P:battery.n_packs",
@@ -64611,7 +69593,7 @@ window.PROOF_GRAPH = {
     "cites SRC-E2-OVONIC-LISTINGS, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 207
+   "importance": 236
   },
   {
    "id": "P:pod.size_m",
@@ -64630,7 +69612,7 @@ window.PROOF_GRAPH = {
     "marked PROPOSED in redesign/params/params.json: L x W x H outside; height 0.06 -> 0.07 for the 50 mm pack (E2 CR-E2-02); D2 may recess the tray ~10 mm into the core instead. D2 fits the pack, FC and hatch inside and re-sizes"
    ],
    "status": "PROPOSED",
-   "importance": 461
+   "importance": 500
   },
   {
    "id": "P:pod.x_le_m",
@@ -64645,7 +69627,7 @@ window.PROOF_GRAPH = {
     "cites CL-A3-CG-X, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 170
+   "importance": 199
   },
   {
    "id": "P:pod.z_base_m",
@@ -64657,7 +69639,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "sits on the upper skin near maximum thickness; D1 may recess the tray into the core",
    "status": "PROPOSED",
-   "importance": 133
+   "importance": 166
   },
   {
    "id": "P:pod.material",
@@ -64686,7 +69668,7 @@ window.PROOF_GRAPH = {
     "cites CL-B3-CG-TARGET, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "P:cg.x_range_m",
@@ -64704,7 +69686,7 @@ window.PROOF_GRAPH = {
     "cites CL-B3-CG-FWD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 181
+   "importance": 210
   },
   {
    "id": "P:cg.y_target_m",
@@ -64728,7 +69710,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "on the chord plane, midway between the upper and lower motor pairs, so hover pitch trim needs no differential thrust; the pod pushes it up: allowed range below",
    "status": "PROPOSED",
-   "importance": 255
+   "importance": 286
   },
   {
    "id": "P:cg.z_range_m",
@@ -64742,7 +69724,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "A1 choice",
    "status": "PROPOSED",
-   "importance": 203
+   "importance": 234
   },
   {
    "id": "P:cg.foot_height_m",
@@ -64754,7 +69736,7 @@ window.PROOF_GRAPH = {
    "source": "team/C1/LOADS.md",
    "note": "CHANGE-LOG D-11 (C1 CR-C1-01, A4 CR-A4-02): foot bottom 45 mm beyond the wing TE so a 10 deg attitude error does not land on the wingtip TE (2.2 deg with 10 mm) and a crushed foot or grass does not ground the TE; crush stroke requirements.foot_crush_stroke_min_m; D5 may splay the feet outward for the stance",
    "status": "PROPOSED",
-   "importance": 241
+   "importance": 272
   },
   {
    "id": "P:mass.allocation_g.wing",
@@ -64766,7 +69748,7 @@ window.PROOF_GRAPH = {
    "source": "team/A3/mass_model.csv",
    "note": "core 221 (calc, c 0.32, less the spar slot), tape 48, spar 102, slot fill 15, edge tape + label 5, consumables 14",
    "status": "PROPOSED",
-   "importance": 231
+   "importance": 257
   },
   {
    "id": "P:mass.allocation_g.fins",
@@ -64778,7 +69760,7 @@ window.PROOF_GRAPH = {
    "source": "team/A3/mass_model.csv",
    "note": "2 fins (2 layers, 0.275 chord) 84, 2 tubes 86, 4 motor mounts 72, 2 through-core blocks 40, fin-tube bond + clips 60, consumables 28; one-layer fins save ~40",
    "status": "PROPOSED",
-   "importance": 232
+   "importance": 259
   },
   {
    "id": "P:mass.allocation_g.pod",
@@ -64790,7 +69772,7 @@ window.PROOF_GRAPH = {
    "source": "team/A3/mass_model.csv",
    "note": "shell + tray + hatch 70, straps/Velcro 20, GPS mast 8, pitot mount 4, 3 spare",
    "status": "PROPOSED",
-   "importance": 239
+   "importance": 264
   },
   {
    "id": "P:mass.allocation_g.landing",
@@ -64802,7 +69784,7 @@ window.PROOF_GRAPH = {
    "source": "team/A3/mass_model.csv",
    "note": "4 crushable feet x 10 g at 45 mm height and >= 40 mm stroke (was 4 x 6 g at 10 mm)",
    "status": "PROPOSED",
-   "importance": 273
+   "importance": 310
   },
   {
    "id": "P:mass.allocation_g.propulsion",
@@ -64814,7 +69796,7 @@ window.PROOF_GRAPH = {
    "source": "team/E1/PROPULSION.md",
    "note": "4 x (motor 81 + ESC 6.6 + prop 17 + adapter and nut 5) = 438; E1 confirms motor and ESC masses with leads (CR-A3-05)",
    "status": "PROPOSED",
-   "importance": 139
+   "importance": 148
   },
   {
    "id": "P:mass.allocation_g.power",
@@ -64826,7 +69808,7 @@ window.PROOF_GRAPH = {
    "source": "team/A3/mass_model.csv",
    "note": "pack 550 (UNVERIFIED, listings 522-680) + disconnect, main leads, UBEC 45; pack growth to 680 g is carried in the A1 reserve",
    "status": "PROPOSED",
-   "importance": 239
+   "importance": 264
   },
   {
    "id": "P:mass.allocation_g.avionics",
@@ -64838,7 +69820,7 @@ window.PROOF_GRAPH = {
    "source": "team/A3/mass_model.csv",
    "note": "FC 25, GPS 12, RX 3, airspeed 6, pitot 12, mounts 8 = 66; 9 left for telemetry",
    "status": "PROPOSED",
-   "importance": 254
+   "importance": 279
   },
   {
    "id": "P:mass.allocation_g.harness",
@@ -64850,7 +69832,7 @@ window.PROOF_GRAPH = {
    "source": "team/A3/mass_model.csv",
    "note": "4 x 0.5 m 16 AWG pairs 56, signal leads 6, bullets 16, servo leads 10, sensor cables 6, ties 10; 18 AWG saves ~18 (F1/F2, CR-A3-06)",
    "status": "PROPOSED",
-   "importance": 231
+   "importance": 256
   },
   {
    "id": "P:mass.allocation_g.mechanisms",
@@ -64862,7 +69844,7 @@ window.PROOF_GRAPH = {
    "source": "team/A3/mass_model.csv",
    "note": "2 x 15 g servos (>= 3.04 kgf cm stall, B2 CR-B2-05), horns, pushrods, inter-panel links, hinge tape, covers",
    "status": "PROPOSED",
-   "importance": 231
+   "importance": 256
   },
   {
    "id": "P:mass.growth_reserve_g",
@@ -64874,7 +69856,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "= gate 2 600 - allocations 2 200, held by A1 and released only through a change request; must cover growth by maturity (A3) and the 100 g build overrun",
    "status": "PROPOSED",
-   "importance": 131
+   "importance": 140
   },
   {
    "id": "P:mass.transport_box_kg",
@@ -64946,7 +69928,7 @@ window.PROOF_GRAPH = {
    "source": "ASM-B1-VCRUISE",
    "note": "D-01: 15 -> 16 (B1 CR-B1-01); 3.4 % above 1.3 Vs; F4 AIRSPEED_CRUISE 16, ARSPD_FBW_MIN >= 15.5",
    "status": "PROPOSED",
-   "importance": 277
+   "importance": 301
   },
   {
    "id": "P:performance.hover_power_w",
@@ -65036,7 +70018,7 @@ window.PROOF_GRAPH = {
     "cites CL-B1-CRUISE-LD, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 150
+   "importance": 163
   },
   {
    "id": "P:performance.cruise_after_hover_min",
@@ -65287,7 +70269,7 @@ window.PROOF_GRAPH = {
    "source": "A1 choice",
    "note": "span x (pod nose -0.105 to foot tips 0.365, pitot boom removed) x (tube ends +/-0.21 plus ~5 mm mount caps). The old 0.39 height ignored the tube ends; CHANGE-LOG D-16 raised the box to 0.50 m (25 mm slack with 25 mm walls, CL-A1-BOX-FIT). D7 confirms against two measured cars",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 26
   },
   {
    "id": "P:transport.field_steps",
@@ -66683,7 +71665,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/team/A3/rollup/mass_items.json: params used: P:battery.mass_kg, P:battery.size_m, P:cg.foot_height_m, P:fins.areal_mass_kgm2, P:fins.chord_m, P:fins.half_height_m, P:fins.layers, P:fins.le_x_m, P:fins.te_x_m, P:fins.tube.length_m, P:fins.tube.od_m, P:fins.tube.x_m, P:fins.y_m, P:pod.size_m, P:pod.x_le_m, P:pod.z_base_m, P:propulsion.esc_mass_kg, P:propulsion.motor_diameter_m, P:propulsion.motor_length_m, P:propulsion.motor_mass_kg, P:propulsion.prop_diameter_m, P:propulsion.prop_mass_kg, P:propulsion.stations.x_mount_m, P:propulsion.stations.x_prop_plane_m, P:propulsion.stations.y_m, P:propulsion.stations.z_m, P:wing.chord_m, P:wing.core.density_kgm3, P:wing.elevon.chord_frac, P:wing.elevon.inboard_y_m, P:wing.elevon.outboard_y_m, P:wing.skin.areal_mass_kgm2, P:wing.span_m, P:wing.spar.length_m, P:wing.spar.mass_per_m_kgm, P:wing.spar.od_m, P:wing.spar.x_m, P:wing.spar.z_m, P:wing.t_c, P:wing.te_x_m"
    ],
    "status": "UNVERIFIED",
-   "importance": 215
+   "importance": 246
   },
   {
    "id": "P:b2.section.foil",
@@ -66866,7 +71848,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 293
+   "importance": 317
   },
   {
    "id": "P:b2.xfoil.cm_cl07_2d",
@@ -66896,7 +71878,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 272
+   "importance": 304
   },
   {
    "id": "P:b2.xfoil.elevon_eta",
@@ -66911,7 +71893,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 272
+   "importance": 304
   },
   {
    "id": "P:b2.xfoil.hinge_coef_max",
@@ -66926,7 +71908,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 2
+   "importance": 3
   },
   {
    "id": "P:b2.avl.dcm_visc",
@@ -66941,7 +71923,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 272
+   "importance": 304
   },
   {
    "id": "P:b2.avl.xnp_m",
@@ -66970,7 +71952,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 463
+   "importance": 502
   },
   {
    "id": "P:b2.avl.e_oswald",
@@ -66985,7 +71967,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 293
+   "importance": 317
   },
   {
    "id": "P:b2.avl.cd0_wing",
@@ -67000,7 +71982,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 293
+   "importance": 317
   },
   {
    "id": "P:b2.avl.cnb_per_rad",
@@ -67143,7 +72125,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-AVL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 308
+   "importance": 332
   },
   {
    "id": "P:b2.avl.cs.clmax_local",
@@ -67185,7 +72167,7 @@ window.PROOF_GRAPH = {
     "cites SRC-B2-XFOIL, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 308
+   "importance": 332
   },
   {
    "id": "P:b2.avl.cs.y_m",
@@ -67229,6 +72211,957 @@ window.PROOF_GRAPH = {
    "importance": 0
   },
   {
+   "id": "P:c2.inputs.spar_E_nom_pa",
+   "type": "parameter",
+   "title": "c2.inputs.spar_E_nom_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 100000000000.0,
+   "unit": "Pa",
+   "source": "ASM-J1-E-TUBE",
+   "note": "hobby 22 x 20 tube axial modulus, J1/C4 nominal; T-C4-TUBE-BEND measures it",
+   "reasons": [
+    "cites ASM-J1-E-TUBE, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.spar_E_lo_pa",
+   "type": "parameter",
+   "title": "c2.inputs.spar_E_lo_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 70000000000.0,
+   "unit": "Pa",
+   "source": "ASM-C4-E-TUBE-LO",
+   "note": "low corner (woven-heavy roll-wrapped); used for every deflection, twist and frequency claim",
+   "reasons": [
+    "cites ASM-C4-E-TUBE-LO, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.inputs.spar_G_nom_pa",
+   "type": "parameter",
+   "title": "c2.inputs.spar_G_nom_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 5000000000.0,
+   "unit": "Pa",
+   "source": "ASM-C4-G-TUBE",
+   "note": "C4 nominal",
+   "reasons": [
+    "cites ASM-C4-G-TUBE, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.spar_G_lo_pa",
+   "type": "parameter",
+   "title": "c2.inputs.spar_G_lo_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 3000000000.0,
+   "unit": "Pa",
+   "source": "ASM-C4-G-TUBE-LO",
+   "note": "pure UD corner",
+   "reasons": [
+    "cites ASM-C4-G-TUBE-LO, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.spar_sigma_allow_pa",
+   "type": "parameter",
+   "title": "c2.inputs.spar_sigma_allow_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 350000000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-SPAR-SIGMA",
+   "note": "bending (compression side) allowable for an unbranded roll-wrapped tube: ~0.6 x the 500-600 MPa catalogue compressive strength of standard-modulus roll-wrapped tubes",
+   "reasons": [
+    "cites ASM-C2-SPAR-SIGMA, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "P:c2.inputs.spar_tau_allow_pa",
+   "type": "parameter",
+   "title": "c2.inputs.spar_tau_allow_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 30000000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-SPAR-TAU",
+   "note": "in-plane shear allowable, matrix-dominated UD lower bound (G12 strength 50-70 MPa x 0.5)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/team/C2/params.json: in-plane shear allowable, matrix-dominated UD lower bound (G12 strength 50-70 MPa x 0.5)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.inputs.spar_hoop_allow_pa",
+   "type": "parameter",
+   "title": "c2.inputs.spar_hoop_allow_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 40000000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-SPAR-HOOP",
+   "note": "transverse (hoop) ring-bending allowable, UD matrix-dominated lower bound; a woven outer ply raises it, a split tube lowers it",
+   "reasons": [
+    "cites ASM-C2-SPAR-HOOP, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "P:c2.inputs.xps_E_pa",
+   "type": "parameter",
+   "title": "c2.inputs.xps_E_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 10000000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-XPS-E",
+   "note": "XPS 25-35 kg/m3 modulus 8-15 MPa; T-C2-XPS-COUPON",
+   "reasons": [
+    "marked UNVERIFIED in redesign/team/C2/params.json: XPS 25-35 kg/m3 modulus 8-15 MPa; T-C2-XPS-COUPON"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.xps_G_pa",
+   "type": "parameter",
+   "title": "c2.inputs.xps_G_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 4000000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-XPS-G",
+   "note": "XPS shear modulus 3-6 MPa",
+   "reasons": [
+    "marked UNVERIFIED in redesign/team/C2/params.json: XPS shear modulus 3-6 MPa"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.xps_comp_allow_pa",
+   "type": "parameter",
+   "title": "c2.inputs.xps_comp_allow_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 120000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-XPS-COMP",
+   "note": "0.7 x the 172 kPa (25 psi) F-250 rating at 10 % strain or yield (SRC-XPS-F250)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/team/C2/params.json: 0.7 x the 172 kPa (25 psi) F-250 rating at 10 % strain or yield (SRC-XPS-F250)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.xps_tens_allow_pa",
+   "type": "parameter",
+   "title": "c2.inputs.xps_tens_allow_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 150000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-XPS-TENS",
+   "note": "XPS tensile/flexural 250-500 kPa at this density, halved for hot-wire surface damage",
+   "reasons": [
+    "marked UNVERIFIED in redesign/team/C2/params.json: XPS tensile/flexural 250-500 kPa at this density, halved for hot-wire surface damage"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "P:c2.inputs.xps_shear_allow_pa",
+   "type": "parameter",
+   "title": "c2.inputs.xps_shear_allow_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 100000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-XPS-SHEAR",
+   "note": "XPS shear strength 150-250 kPa (EN 12090 grades near 200 kPa compression), knocked down",
+   "reasons": [
+    "marked UNVERIFIED in redesign/team/C2/params.json: XPS shear strength 150-250 kPa (EN 12090 grades near 200 kPa compression), knocked down"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "P:c2.inputs.tape_E_pa",
+   "type": "parameter",
+   "title": "c2.inputs.tape_E_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 2000000000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-TAPE",
+   "note": "BOPP packing-tape film, machine direction",
+   "reasons": [
+    "cites ASM-C2-TAPE, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.tape_G_pa",
+   "type": "parameter",
+   "title": "c2.inputs.tape_G_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 700000000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-TAPE",
+   "note": "BOPP, E / 2.8",
+   "reasons": [
+    "cites ASM-C2-TAPE, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.tape_t_m",
+   "type": "parameter",
+   "title": "c2.inputs.tape_t_m",
+   "file": "redesign/team/C2/params.json",
+   "value": 4.4e-05,
+   "unit": "m",
+   "source": "ASM-C2-TAPE",
+   "note": "40 um film x 1.1 for the 10 % overlap; adhesive not counted",
+   "reasons": [
+    "cites ASM-C2-TAPE, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.tape_sigma_allow_pa",
+   "type": "parameter",
+   "title": "c2.inputs.tape_sigma_allow_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 60000000.0,
+   "unit": "Pa",
+   "source": "ASM-C2-TAPE",
+   "note": "BOPP MD tensile 100-150 MPa, knocked down",
+   "reasons": [
+    "cites ASM-C2-TAPE, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "P:c2.inputs.tape_eff",
+   "type": "parameter",
+   "title": "c2.inputs.tape_eff",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.5,
+   "unit": "-",
+   "source": "ASM-C2-TAPE-EFF",
+   "note": "stiffness effectiveness of a tape skin on foam (adhesive creep, wrinkles, overlaps): 50 %",
+   "reasons": [
+    "cites ASM-C2-TAPE-EFF, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.rear_web_t_m",
+   "type": "parameter",
+   "title": "c2.inputs.rear_web_t_m",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.01,
+   "unit": "m",
+   "source": "ASM-C2-REAR-WEB",
+   "note": "the torsion cell is closed at the hinge line by foam only; an effective 10 mm foam web",
+   "reasons": [
+    "marked UNVERIFIED in redesign/team/C2/params.json: the torsion cell is closed at the hinge line by foam only; an effective 10 mm foam web"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.petg_bearing_allow_pa",
+   "type": "parameter",
+   "title": "c2.inputs.petg_bearing_allow_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 20000000.0,
+   "unit": "Pa",
+   "source": "ASM-C4-PETG-BEARING",
+   "note": "C4's printed PETG bearing allowable",
+   "reasons": [
+    "cites ASM-C4-PETG-BEARING, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.inputs.slot_fill_kgm",
+   "type": "parameter",
+   "title": "c2.inputs.slot_fill_kgm",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.015,
+   "unit": "kg/m",
+   "source": "team/A3/mass_model.csv",
+   "note": "epoxy + microballoon slot fill, A3 15 g",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.plug_mass_kg",
+   "type": "parameter",
+   "title": "c2.inputs.plug_mass_kg",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.007,
+   "unit": "kg",
+   "source": "C2 estimate",
+   "note": "20 mm x 36 mm printed PETG plug, 50 % fill",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.anchor_plug_mass_kg",
+   "type": "parameter",
+   "title": "c2.inputs.anchor_plug_mass_kg",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.004,
+   "unit": "kg",
+   "source": "C2 estimate",
+   "note": "20 mm x 20 mm printed PETG plug, 30 % fill",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.contact_half_angle_deg",
+   "type": "parameter",
+   "title": "c2.inputs.contact_half_angle_deg",
+   "file": "redesign/team/C2/params.json",
+   "value": 30.0,
+   "unit": "deg",
+   "source": "ASM-C2-CONTACT",
+   "note": "half-angle of the bore-to-tube contact arc with a 0.15 mm radial bond gap",
+   "reasons": [
+    "cites ASM-C2-CONTACT, which is UNVERIFIED"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.cla_2d_per_rad",
+   "type": "parameter",
+   "title": "c2.inputs.cla_2d_per_rad",
+   "file": "redesign/team/C2/params.json",
+   "value": 5.97,
+   "unit": "1/rad",
+   "source": "C2 strip basis",
+   "note": "0.95 x 2 pi; strip theory, no downwash (conservative)",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.x_sc_aft_m",
+   "type": "parameter",
+   "title": "c2.inputs.x_sc_aft_m",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.1,
+   "unit": "m",
+   "source": "ASM-C2-XSC",
+   "note": "pessimistic shear-centre position for divergence (computed 0.08x m; 20 mm aft margin)",
+   "reasons": [
+    "marked UNVERIFIED in redesign/team/C2/params.json: pessimistic shear-centre position for divergence (computed 0.08x m; 20 mm aft margin)"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.inputs.flutter_vmax_factor",
+   "type": "parameter",
+   "title": "c2.inputs.flutter_vmax_factor",
+   "file": "redesign/team/C2/params.json",
+   "value": 3.0,
+   "unit": "-",
+   "source": "C2 choice",
+   "note": "flutter sweep to 3 x VD",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.EI_flap_lo",
+   "type": "parameter",
+   "title": "c2.section.EI_flap_lo",
+   "file": "redesign/team/C2/params.json",
+   "value": 262.174209,
+   "unit": "N m2",
+   "source": "team/C2/wing_struct.py",
+   "note": "flap EI, spar E 70 GPa, tape 50 %",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.EI_inplane_lo",
+   "type": "parameter",
+   "title": "c2.section.EI_inplane_lo",
+   "file": "redesign/team/C2/params.json",
+   "value": 723.335644,
+   "unit": "N m2",
+   "source": "team/C2/wing_struct.py",
+   "note": "in-plane EI about the modulus-weighted x",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.GJ_lo",
+   "type": "parameter",
+   "title": "c2.section.GJ_lo",
+   "file": "redesign/team/C2/params.json",
+   "value": 30.667162,
+   "unit": "N m2",
+   "source": "team/C2/wing_struct.py",
+   "note": "foam + tape cell + spar, spar G 3 GPa",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.GJ_spar_lo",
+   "type": "parameter",
+   "title": "c2.section.GJ_spar_lo",
+   "file": "redesign/team/C2/params.json",
+   "value": 21.870197,
+   "unit": "N m2",
+   "source": "team/C2/wing_struct.py",
+   "note": "spar alone, G 3 GPa",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.I_spar",
+   "type": "parameter",
+   "title": "c2.section.I_spar",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.0,
+   "unit": "m4",
+   "source": "team/C2/wing_struct.py",
+   "note": "pi/64 (D^4 - d^4)",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.J_spar",
+   "type": "parameter",
+   "title": "c2.section.J_spar",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.0,
+   "unit": "m4",
+   "source": "team/C2/wing_struct.py",
+   "note": "pi/32 (D^4 - d^4)",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.spar_share_flap",
+   "type": "parameter",
+   "title": "c2.section.spar_share_flap",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.981098,
+   "unit": "-",
+   "source": "team/C2/wing_struct.py",
+   "note": "spar EI / section EI, flap",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.spar_share_inplane",
+   "type": "parameter",
+   "title": "c2.section.spar_share_inplane",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.437424,
+   "unit": "-",
+   "source": "team/C2/wing_struct.py",
+   "note": "spar EI / section EI, in-plane",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.x_sc",
+   "type": "parameter",
+   "title": "c2.section.x_sc",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.080018,
+   "unit": "m",
+   "source": "team/C2/wing_struct.py",
+   "note": "flap shear-centre estimate",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.t_at_spar",
+   "type": "parameter",
+   "title": "c2.section.t_at_spar",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.031235,
+   "unit": "m",
+   "source": "team/C2/wing_struct.py",
+   "note": "section thickness at the spar station",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.section.tip_EI_flap",
+   "type": "parameter",
+   "title": "c2.section.tip_EI_flap",
+   "file": "redesign/team/C2/params.json",
+   "value": 6.994142,
+   "unit": "N m2",
+   "source": "team/C2/wing_struct.py",
+   "note": "foam + tape outboard of the spar",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.w_tip_env_m",
+   "type": "parameter",
+   "title": "c2.fe.w_tip_env_m",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.002897,
+   "unit": "m",
+   "source": "team/C2/wing_struct.py",
+   "note": "max flap tip deflection, envelope cases, limit, low corner: G2-HANG-MOTOR/MC-P/R",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.w_tip_flight_m",
+   "type": "parameter",
+   "title": "c2.fe.w_tip_flight_m",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.001075,
+   "unit": "m",
+   "source": "team/C2/wing_struct.py",
+   "note": "flight cases only: F1-PULLUP-VD/MC-C/R",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.w_max_env_m",
+   "type": "parameter",
+   "title": "c2.fe.w_max_env_m",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.002897,
+   "unit": "m",
+   "source": "team/C2/wing_struct.py",
+   "note": "max |w| anywhere: G2-HANG-MOTOR/MC-P/R",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.u_max_env_m",
+   "type": "parameter",
+   "title": "c2.fe.u_max_env_m",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.001483,
+   "unit": "m",
+   "source": "team/C2/wing_struct.py",
+   "note": "max in-plane |u|: L1-LEVEL/MC-C/R",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.twist_env_rad",
+   "type": "parameter",
+   "title": "c2.fe.twist_env_rad",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.04829,
+   "unit": "rad",
+   "source": "team/C2/wing_struct.py",
+   "note": "max twist: F7-ROLLPULL-VD/MC-C/L",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.twist_flight_rad",
+   "type": "parameter",
+   "title": "c2.fe.twist_flight_rad",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.04829,
+   "unit": "rad",
+   "source": "team/C2/wing_struct.py",
+   "note": "max twist, flight: F7-ROLLPULL-VD/MC-C/L",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.spar_sigma_ult_max_pa",
+   "type": "parameter",
+   "title": "c2.fe.spar_sigma_ult_max_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 61516454.750311,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "spar alone, envelope Mbend ultimate, y 0.000 m",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.tape_sigma_root_ult_pa",
+   "type": "parameter",
+   "title": "c2.fe.tape_sigma_root_ult_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 7503720.880622,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "tape at full stiffness, root, Mx and Mz ult combined",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.foam_sigma_root_ult_pa",
+   "type": "parameter",
+   "title": "c2.fe.foam_sigma_root_ult_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 37518.604403,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "foam fibre stress, root, ult",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.tip_foam_sigma_ult_pa",
+   "type": "parameter",
+   "title": "c2.fe.tip_foam_sigma_ult_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 4923.735828,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "foam outboard of the spar end, ult",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.tip_tape_sigma_ult_pa",
+   "type": "parameter",
+   "title": "c2.fe.tip_tape_sigma_ult_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 984747.165586,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "tape outboard of the spar end, ult",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.chord_tape_sigma_ult_pa",
+   "type": "parameter",
+   "title": "c2.fe.chord_tape_sigma_ult_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 13020209.381177,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "chordwise bending of the core aft of the spar, CN 1 at q_VD, ult, tape faces",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.chord_foam_only_sigma_ult_pa",
+   "type": "parameter",
+   "title": "c2.fe.chord_foam_only_sigma_ult_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 109429.887373,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "same, bare foam (no tape)",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.spar_bond_tau_ult_pa",
+   "type": "parameter",
+   "title": "c2.fe.spar_bond_tau_ult_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 8094.765092,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "air load into the spar through the slot bond",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.ring_no_plug_sigma_pa",
+   "type": "parameter",
+   "title": "c2.fe.ring_no_plug_sigma_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 910890812.725561,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "spar wall ring bending at the block bore end, no plug, design load",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.plug_bearing_pa",
+   "type": "parameter",
+   "title": "c2.fe.plug_bearing_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 5340711.805556,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "plug bearing with the plug fitted, design",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.ring_anchor_sigma_pa",
+   "type": "parameter",
+   "title": "c2.fe.ring_anchor_sigma_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 77758053.315274,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "spar wall ring bending under the brace anchor saddle, design, no plug",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.cradle_area_req_m2",
+   "type": "parameter",
+   "title": "c2.fe.cradle_area_req_m2",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.00108,
+   "unit": "m2",
+   "source": "team/C2/wing_struct.py",
+   "note": "foam pad area per cradle, X3 drop x 1.5",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.pod_tau_pa",
+   "type": "parameter",
+   "title": "c2.fe.pod_tau_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 8745.663953,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "pod bond shear on the wing foam, design",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.mode_sep_worst",
+   "type": "parameter",
+   "title": "c2.fe.mode_sep_worst",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.076653,
+   "unit": "-",
+   "source": "team/C2/wing_struct.py",
+   "note": "worst separation of a station-participating wing mode (215.3 Hz in-plane sym, corner E100-G5-tape0.5)",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.mode_worst_f_hz",
+   "type": "parameter",
+   "title": "c2.fe.mode_worst_f_hz",
+   "file": "redesign/team/C2/params.json",
+   "value": 215.328433,
+   "unit": "Hz",
+   "source": "team/C2/wing_struct.py",
+   "note": "frequency of that mode",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.mode_sep_worst_all",
+   "type": "parameter",
+   "title": "c2.fe.mode_sep_worst_all",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.001815,
+   "unit": "-",
+   "source": "team/C2/wing_struct.py",
+   "note": "same over all 12 stiffness corners (199.6 Hz, E100-G3-tape0.0)",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.f_torsion_anti_hz",
+   "type": "parameter",
+   "title": "c2.fe.f_torsion_anti_hz",
+   "file": "redesign/team/C2/params.json",
+   "value": 11.705633,
+   "unit": "Hz",
+   "source": "team/C2/wing_struct.py",
+   "note": "first wing mode, low corner: antisymmetric torsion (fin stations rocking)",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.f_torsion_sym_hz",
+   "type": "parameter",
+   "title": "c2.fe.f_torsion_sym_hz",
+   "file": "redesign/team/C2/params.json",
+   "value": 21.689836,
+   "unit": "Hz",
+   "source": "team/C2/wing_struct.py",
+   "note": "second wing mode, low corner: symmetric torsion",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.V_rev_ms",
+   "type": "parameter",
+   "title": "c2.fe.V_rev_ms",
+   "file": "redesign/team/C2/params.json",
+   "value": 57.314038,
+   "unit": "m/s",
+   "source": "team/C2/wing_struct.py",
+   "note": "roll reversal, strip theory, low corner",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.V_rev_bound_ms",
+   "type": "parameter",
+   "title": "c2.fe.V_rev_bound_ms",
+   "file": "redesign/team/C2/params.json",
+   "value": 53.331614,
+   "unit": "m/s",
+   "source": "team/C2/wing_struct.py",
+   "note": "roll reversal, spar-only GJ bound",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.eff_vd",
+   "type": "parameter",
+   "title": "c2.fe.eff_vd",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.775008,
+   "unit": "-",
+   "source": "team/C2/wing_struct.py",
+   "note": "elevon roll effectiveness at VD (rigid = 1)",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.V_div_bound_ms",
+   "type": "parameter",
+   "title": "c2.fe.V_div_bound_ms",
+   "file": "redesign/team/C2/params.json",
+   "value": 91.092299,
+   "unit": "m/s",
+   "source": "team/C2/wing_struct.py",
+   "note": "divergence, spar-only GJ, shear centre 20 mm aft",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.V_flutter_ms",
+   "type": "parameter",
+   "title": "c2.fe.V_flutter_ms",
+   "file": "redesign/team/C2/params.json",
+   "value": 81.637187,
+   "unit": "m/s",
+   "source": "team/C2/wing_struct.py",
+   "note": "flutter screen (modal p-k, 6 modes): no crossing up to this speed",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.mesh_conv_freq",
+   "type": "parameter",
+   "title": "c2.fe.mesh_conv_freq",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.000213,
+   "unit": "-",
+   "source": "team/C2/wing_struct.py",
+   "note": "max change of the first 4 frequencies, 48 -> 96 elements per half",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.mesh_conv_static",
+   "type": "parameter",
+   "title": "c2.fe.mesh_conv_static",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.000526,
+   "unit": "-",
+   "source": "team/C2/wing_struct.py",
+   "note": "F1 tip deflection change, 48 -> 96 elements per half",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.fe_vs_integration",
+   "type": "parameter",
+   "title": "c2.fe.fe_vs_integration",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.002241,
+   "unit": "-",
+   "source": "team/C2/wing_struct.py",
+   "note": "FE (96/half) vs beam integration, F1 w, L1 u, F7 twist",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.ring_validation_err",
+   "type": "parameter",
+   "title": "c2.fe.ring_validation_err",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.003689,
+   "unit": "-",
+   "source": "team/C2/wing_struct.py",
+   "note": "ring model vs Roark two-point-load ring, P R / pi",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.F_brace_design_N",
+   "type": "parameter",
+   "title": "c2.fe.F_brace_design_N",
+   "file": "redesign/team/C2/params.json",
+   "value": 145.890892,
+   "unit": "N",
+   "source": "team/C4/claims.json",
+   "note": "C4 design brace load (CALC-C4-STATIC-1L)",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.anchor_plug_bearing_pa",
+   "type": "parameter",
+   "title": "c2.fe.anchor_plug_bearing_pa",
+   "file": "redesign/team/C2/params.json",
+   "value": 455909.037083,
+   "unit": "Pa",
+   "source": "team/C2/wing_struct.py",
+   "note": "anchor plug bearing, design",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:c2.fe.twist_flight_deg",
+   "type": "parameter",
+   "title": "c2.fe.twist_flight_deg",
+   "file": "redesign/team/C2/params.json",
+   "value": 2.766828,
+   "unit": "deg",
+   "source": "team/C2/wing_struct.py",
+   "note": "max twist, flight, limit, low corner",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:c2.fe.wing_mass_kg",
+   "type": "parameter",
+   "title": "c2.fe.wing_mass_kg",
+   "file": "redesign/team/C2/params.json",
+   "value": 0.397433,
+   "unit": "kg",
+   "source": "team/C2/wing_struct.py",
+   "note": "core + tape + spar + slot fill + 2 plugs",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
    "id": "P:fin_detail.tube_length_m",
    "type": "parameter",
    "title": "fin_detail.tube_length_m",
@@ -67238,7 +73171,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/CHANGE-REQUESTS.md#CR-D3-01",
    "note": "CR to A1 (params fins.tube.length_m 0.42): the tube ends 18 mm below the motor axis, under the mount lip cap, so the four motor screws are reachable from behind the plate; the printed mount carries the motor beyond the tube end. Saves 2 x 7.8 g",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 27
   },
   {
    "id": "P:fin_detail.bond_gap_m",
@@ -67250,7 +73183,7 @@ window.PROOF_GRAPH = {
    "source": "G3/C6 practice",
    "note": "radial gap of every printed bore on a 22 mm CF tube (bore 22.3 mm); filled with 30 min epoxy",
    "status": "PROPOSED",
-   "importance": 28
+   "importance": 31
   },
   {
    "id": "P:fin_detail.block.width_m",
@@ -67262,7 +73195,7 @@ window.PROOF_GRAPH = {
    "source": "team/C4/fin_structures.py#ASM-C4-BLOCK-W",
    "note": "spanwise, centred on the fin plane; C4 sizes the tube-bore shear-out at 36 mm (CL-C4-BLOCK-MS 0.47); core cut-out (CR-D3-03 to D1)",
    "status": "PROPOSED",
-   "importance": 2
+   "importance": 6
   },
   {
    "id": "P:fin_detail.block.wall_m",
@@ -67313,7 +73246,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "board LE to tube surface, filled by the epoxy fillet",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 23
   },
   {
    "id": "P:fin_detail.fin.adhesive_kgm2",
@@ -67328,7 +73261,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/fins/params.json: spray adhesive between the two board layers (3M 77 class, ~15 g/m2 wet)"
    ],
    "status": "UNVERIFIED",
-   "importance": 0
+   "importance": 2
   },
   {
    "id": "P:fin_detail.fin.root_joint_g",
@@ -67367,7 +73300,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/CHANGE-REQUESTS.md#CR-D3-05",
    "note": "notch in the LOWER half-fin root centred on the elevon hinge line (x = c (1 - elevon chord_frac)), for D6's inter-panel link (CR-A4-04); D6 confirms the sweep",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "P:fin_detail.link_slot.depth_m",
@@ -67391,7 +73324,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "5 perimeters at 0.4 mm",
    "status": "PROPOSED",
-   "importance": 24
+   "importance": 27
   },
   {
    "id": "P:fin_detail.mount.grip_m",
@@ -67403,7 +73336,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/fins_calcs.py#CALC-D3-MOUNT-SLIP",
    "note": "collar length on the tube; the lip cap sits on the tube end and the station collar directly below (brace ear as high as possible, CR-C4-04)",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 31
   },
   {
    "id": "P:fin_detail.mount.cap_t_m",
@@ -67451,7 +73384,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "collar split on the outboard side",
    "status": "PROPOSED",
-   "importance": 0
+   "importance": 4
   },
   {
    "id": "P:fin_detail.mount.ear_t_m",
@@ -67462,7 +73395,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "G3 practice",
    "status": "PROPOSED",
-   "importance": 0
+   "importance": 4
   },
   {
    "id": "P:fin_detail.mount.ear_len_m",
@@ -67497,7 +73430,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/fins_calcs.py#CALC-D3-PROP-GAP",
    "note": "motor face this far ahead of the collar front so the collar sits >= 39 mm behind the prop plane (CR-B4-04)",
    "status": "PROPOSED",
-   "importance": 24
+   "importance": 27
   },
   {
    "id": "P:fin_detail.mount.pad_h_m",
@@ -67509,7 +73442,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "canted bearing pads, height at the motor axis; the pad tops lie on the 3 deg canted plane",
    "status": "PROPOSED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "P:fin_detail.mount.plate_t_m",
@@ -67521,7 +73454,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/fins_calcs.py#CALC-D3-SCREW-ENGAGE",
    "note": "plate + pads = 4.5 mm under the screw head at the axis (CR-D3-06 to E1: M3x8 gives 3.1-3.9 mm engagement)",
    "status": "PROPOSED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "P:fin_detail.mount.plate_half_y_m",
@@ -67584,7 +73517,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/fins/params.json: cross pattern, 16 mm across y, 19 mm across z; not published, E1 measures on arrival (T-E1-MOTOR-RM): drill the plate from the measured pattern"
    ],
    "status": "UNVERIFIED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "P:fin_detail.mount.screw_hole_d_m",
@@ -67595,7 +73528,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "ISO 273 medium",
    "status": "PROPOSED",
-   "importance": 0
+   "importance": 3
   },
   {
    "id": "P:fin_detail.mount.shaft_hole_d_m",
@@ -67652,7 +73585,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "ISO 4762 M3",
    "status": "PROPOSED",
-   "importance": 0
+   "importance": 3
   },
   {
    "id": "P:fin_detail.mount.prop_stack_m",
@@ -67664,7 +73597,7 @@ window.PROOF_GRAPH = {
    "source": "params.json#propulsion.stations.x_prop_plane_m note",
    "note": "motor face to prop plane: can 0.025 + adapter and hub 0.014 (E1 settles)",
    "status": "PROPOSED",
-   "importance": 24
+   "importance": 27
   },
   {
    "id": "P:fin_detail.mount.cant_sense_UR",
@@ -67691,7 +73624,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/fins_calcs.py#CALC-D3-MOUNT-SLIP",
    "note": "pinch-bolt setting: the collar turns on the tube at this torque (the D-23 fuse, side loads at the motor); set with a luggage scale, BUILD.md step 14",
    "status": "PROPOSED",
-   "importance": 3
+   "importance": 7
   },
   {
    "id": "P:fin_detail.mount.mu_petg_cf",
@@ -67706,7 +73639,7 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/fins/params.json: PETG on matte CF, dry; only used to estimate the bolt preload, the setting is measured"
    ],
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 7
   },
   {
    "id": "P:fin_detail.mount.fill_factor",
@@ -67745,7 +73678,7 @@ window.PROOF_GRAPH = {
    "source": "subsystems/propulsion/parts.csv#PRP-005",
    "note": "M3x8 SHCS supplied by propulsion",
    "status": "PROPOSED",
-   "importance": 1
+   "importance": 4
   },
   {
    "id": "P:fin_detail.esc_pad.x0_m",
@@ -67757,7 +73690,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "aft of the clip tails; ESC long axis along x (hover slipstream direction)",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "P:fin_detail.esc_pad.len_m",
@@ -67768,7 +73701,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "D3 choice",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 21
   },
   {
    "id": "P:fin_detail.esc_pad.h_m",
@@ -67791,7 +73724,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/fins_calcs.py#CALC-D3-ESC-WASH",
    "note": "|z| of the pad centre: 72 mm from the motor axis, inside the contracted slipstream and below the edge strip",
    "status": "PROPOSED",
-   "importance": 20
+   "importance": 23
   },
   {
    "id": "P:fin_detail.esc_pad.t_m",
@@ -67908,7 +73841,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/CHANGE-REQUESTS.md#CR-D3-02",
    "note": "CR to A1 (params fins.layers 2): C4 recommends one layer + brace + edge strips (CL-C4-SEP-1LB 0.48, CL-C4-MS-FACE-1L 0.28); saves 38 g and pays for the braces. The module uses this value until A1 decides",
    "status": "PROPOSED",
-   "importance": 19
+   "importance": 27
   },
   {
    "id": "P:fin_detail.plug.od_m",
@@ -67969,7 +73902,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "directly below the mount collar (0.5 mm gap); carries the LE top of the board, both edge-strip ends and the brace ear",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 29
   },
   {
    "id": "P:fin_detail.station_collar.gap_m",
@@ -67980,7 +73913,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "D3 choice",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 27
   },
   {
    "id": "P:fin_detail.station_collar.ring_wall_m",
@@ -67991,7 +73924,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "G3 practice",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 25
   },
   {
    "id": "P:fin_detail.station_collar.slot_wall_m",
@@ -68014,7 +73947,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "slot length aft of the tube surface: the edge strips are bonded 20 mm into it",
    "status": "PROPOSED",
-   "importance": 0
+   "importance": 5
   },
   {
    "id": "P:fin_detail.station_collar.ear_len_m",
@@ -68026,7 +73959,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "inboard of the collar; holds the brace end in a 3.3 x 10.4 mm slot, 10 mm deep",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 25
   },
   {
    "id": "P:fin_detail.station_collar.ear_w_m",
@@ -68038,7 +73971,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "along x; 2.8 mm walls either side of the 10.4 mm brace slot",
    "status": "PROPOSED",
-   "importance": 0
+   "importance": 10
   },
   {
    "id": "P:fin_detail.station_collar.fill_factor",
@@ -68061,7 +73994,7 @@ window.PROOF_GRAPH = {
    "source": "team/C4/fin_structures.py#ASM-C4-STRUT-W",
    "note": "pultruded CF strip 10 x 3 mm, 10 mm side along x (cruise flow)",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 23
   },
   {
    "id": "P:fin_detail.brace.t_m",
@@ -68073,7 +74006,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/fins_calcs.py#CALC-D3-BRACE",
    "note": "10 x 3 mm (C4 modelled 10 x 2): with the anchor moved outboard to clear the transport cradles the brace is steeper, the thicker strip restores the lateral axial stiffness (CL-D3-BRACE-KY >= 1)",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 27
   },
   {
    "id": "P:fin_detail.brace.anchor_y_m",
@@ -68085,7 +74018,7 @@ window.PROOF_GRAPH = {
    "source": "team/D3/fins_calcs.py#CALC-D3-BRACE",
    "note": "|y| of the anchor on the spar line, just outboard of D7's spar cradle and lid pillar (y 0.17-0.23, CR-D3-11): gives the same lateral axial stiffness EA (dy/L)^2/L as C4's brace anchored 0.12 m inboard (CL-D3-BRACE-KY); clear of the elevons (x < 0.2496) and the pod",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 25
   },
   {
    "id": "P:fin_detail.brace.engage_m",
@@ -68097,7 +74030,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "strip end bonded into the ear and the anchor slots",
    "status": "PROPOSED",
-   "importance": 9
+   "importance": 12
   },
   {
    "id": "P:fin_detail.brace.epoxy_g",
@@ -68123,7 +74056,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "printed saddle on the spar top, through a 20 x 16 mm pocket in the core and skin (CR-D3-03 to D1)",
    "status": "PROPOSED",
-   "importance": 9
+   "importance": 12
   },
   {
    "id": "P:fin_detail.anchor.len_y_m",
@@ -68134,7 +74067,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "D3 choice",
    "status": "PROPOSED",
-   "importance": 9
+   "importance": 12
   },
   {
    "id": "P:fin_detail.anchor.proud_m",
@@ -68146,7 +74079,7 @@ window.PROOF_GRAPH = {
    "source": "D3 choice",
    "note": "above the skin, holds the brace slot",
    "status": "PROPOSED",
-   "importance": 22
+   "importance": 25
   },
   {
    "id": "P:fin_detail.anchor.fill_factor",
@@ -68172,7 +74105,7 @@ window.PROOF_GRAPH = {
    "source": "team/C4/fin_structures.py#ASM-C4-EDGE-W",
    "note": "pultruded CF strip 10 x 1 mm on both faces of each half-fin along the top edge, from inside the station collar to the foot",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 26
   },
   {
    "id": "P:fin_detail.edge_strip.t_m",
@@ -68183,7 +74116,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "team/C4/fin_structures.py#ASM-C4-EDGE-T",
    "status": "PROPOSED",
-   "importance": 18
+   "importance": 26
   },
   {
    "id": "P:fin_detail.edge_strip.epoxy_g",
@@ -68209,7 +74142,7 @@ window.PROOF_GRAPH = {
    "source": "team/C4/CHANGE-REQUESTS.md#CR-C4-04",
    "note": "keyhole boss on the block, above the upper skin and below the lower skin: lengthens the tube bore 27 -> 47 mm (root fixity) and holds the board root LE in its slot (replaces separate root clips)",
    "status": "PROPOSED",
-   "importance": 0
+   "importance": 4
   },
   {
    "id": "P:fin_detail.boss.ring_wall_m",
@@ -68267,7 +74200,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
    "note": "crush area 11 x 18 = 198 mm2 sets the plateau force; the tuning knob after the coupon test T-D5-COUPON",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.cartridge.section_z_m",
@@ -68278,7 +74211,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.cartridge.segments",
@@ -68316,7 +74249,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice",
    "note": "per side, cartridge in the piston bore",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.cartridge.preload_m",
@@ -68340,7 +74273,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "two 0.4 mm perimeters, 100 % solid; shoe sleeve and piston skirt",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 97
   },
   {
    "id": "P:landing.slide_clear_m",
@@ -68352,7 +74285,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "per side, piston in sleeve (PETG on PETG); check with the first print",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.shoe.back_wall_t_m",
@@ -68363,7 +74296,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "D5 choice",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.shoe.leg_depth_m",
@@ -68375,7 +74308,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-BOND",
    "note": "U-channel legs bonded to both fin faces",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.shoe.glue_gap_m",
@@ -68387,7 +74320,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "per side between leg and fin face (epoxy line)",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.shoe.window_z_m",
@@ -68399,7 +74332,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice",
    "note": "snap-hook window height in the two y walls",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.piston.flange_t_m",
@@ -68411,7 +74344,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-FLANGE",
    "note": "floor and stop flange; bending of the outboard overhang under the ultimate foot load",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.piston.engage_m",
@@ -68423,7 +74356,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice",
    "note": "skirt engagement in the sleeve before any crush; grows to engage + stroke",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.piston.hook_protrusion_m",
@@ -68435,7 +74368,7 @@ window.PROOF_GRAPH = {
    "source": "G3 practice",
    "note": "snap hook into the 0.8 mm window",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 97
   },
   {
    "id": "P:landing.piston.hook_len_m",
@@ -68446,7 +74379,7 @@ window.PROOF_GRAPH = {
    "unit": "m",
    "source": "D5 choice",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.piston.replace_mark_m",
@@ -68458,7 +74391,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
    "note": "groove on the skirt 6 mm aft of the sleeve end: once it is inside the sleeve, less than the design stroke is left; replace the cartridge",
    "status": "PROPOSED",
-   "importance": 24
+   "importance": 33
   },
   {
    "id": "P:landing.pad.t_m",
@@ -68473,7 +74406,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D5-NEOPRENE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.pad.z_outer_m",
@@ -68485,7 +74418,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-TIPOVER",
    "note": "CR-A1-20 splay: outboard edge of the pad and flange; tip-over pivot = z_outer - edge_r",
    "status": "PROPOSED",
-   "importance": 78
+   "importance": 100
   },
   {
    "id": "P:landing.pad.edge_r_m",
@@ -68497,7 +74430,7 @@ window.PROOF_GRAPH = {
    "source": "D5 choice",
    "note": "edge round on the flange and pad",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.stroke_max_m",
@@ -68509,7 +74442,7 @@ window.PROOF_GRAPH = {
    "source": "team/D5/feet_calc.py#CALC-D5-GEOM",
    "note": "flange-to-sleeve-end gap; the wing TE stays >= 13 mm off the ground at full stroke",
    "status": "PROPOSED",
-   "importance": 74
+   "importance": 96
   },
   {
    "id": "P:landing.materials.petg_density_kgm3",
@@ -68523,7 +74456,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D5-PETG, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 48
+   "importance": 67
   },
   {
    "id": "P:landing.materials.neoprene_density_kgm3",
@@ -68537,7 +74470,7 @@ window.PROOF_GRAPH = {
     "cites SRC-D5-NEOPRENE, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "importance": 48
+   "importance": 67
   },
   {
    "id": "P:landing.materials.glue_g_per_foot",
@@ -68552,7 +74485,228 @@ window.PROOF_GRAPH = {
     "marked UNVERIFIED in redesign/subsystems/landing/params.json: epoxy bead on the shoe (0.30) + foam-safe CA on the cartridge (0.05)"
    ],
    "status": "UNVERIFIED",
-   "importance": 48
+   "importance": 67
+  },
+  {
+   "id": "P:joints.m3_d_m",
+   "type": "parameter",
+   "title": "joints.m3_d_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.003,
+   "unit": "m",
+   "source": "ISO 261",
+   "note": "every bought structural fastener is M3 (one thread, one 2.5 mm hex key)",
+   "status": "PROPOSED",
+   "importance": 9
+  },
+  {
+   "id": "P:joints.m3_pitch_m",
+   "type": "parameter",
+   "title": "joints.m3_pitch_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.0005,
+   "unit": "m",
+   "source": "ISO 261 coarse",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "P:joints.washer_t_m",
+   "type": "parameter",
+   "title": "joints.washer_t_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.0005,
+   "unit": "m",
+   "source": "ISO 7089 M3 (7 mm OD, 0.5 mm)",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "P:joints.nyloc_h_m",
+   "type": "parameter",
+   "title": "joints.nyloc_h_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.004,
+   "unit": "m",
+   "source": "ISO 10511 M3 (m = 4.0 mm)",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "P:joints.nyloc_protrusion_min_threads",
+   "type": "parameter",
+   "title": "joints.nyloc_protrusion_min_threads",
+   "file": "redesign/team/C6/params.json",
+   "value": 2,
+   "unit": "-",
+   "source": "C6 rule (nylon ring fully engaged)",
+   "note": "bolt end at least 2 pitches past the nyloc nut",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "P:joints.insert_len_m",
+   "type": "parameter",
+   "title": "joints.insert_len_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.0057,
+   "unit": "m",
+   "source": "Ruthex RX-M3x5.7 / CNC Kitchen M3 standard insert",
+   "note": "hole 4.0 mm, blind depth >= engagement + 0.5 mm, boss wall >= 1.6 mm",
+   "status": "PROPOSED",
+   "importance": 2
+  },
+  {
+   "id": "P:joints.insert_engage_min_d",
+   "type": "parameter",
+   "title": "joints.insert_engage_min_d",
+   "file": "redesign/team/C6/params.json",
+   "value": 1.5,
+   "unit": "-",
+   "source": "interfaces/SCHEMA.md joint-stack rule",
+   "note": "x d into a heat-set insert; 1.0 d into metal; 2.0 d self-tapping into plastic",
+   "status": "PROPOSED",
+   "importance": 2
+  },
+  {
+   "id": "P:joints.pinch_screw_len_m",
+   "type": "parameter",
+   "title": "joints.pinch_screw_len_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.016,
+   "unit": "m",
+   "source": "FIN-101 M3x16 SHCS",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "P:joints.pinch_washers",
+   "type": "parameter",
+   "title": "joints.pinch_washers",
+   "file": "redesign/team/C6/params.json",
+   "value": 2,
+   "unit": "-",
+   "source": "E-FIN-05..08 joint stack",
+   "status": "PROPOSED",
+   "importance": 4
+  },
+  {
+   "id": "P:joints.fc_screw_len_m",
+   "type": "parameter",
+   "title": "joints.fc_screw_len_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.01,
+   "unit": "m",
+   "source": "C6 choice",
+   "note": "FC (and PDB if a PCB) on 4 M3 heat-set inserts; M3x8 is too short through a grommet stack",
+   "status": "PROPOSED",
+   "importance": 2
+  },
+  {
+   "id": "P:joints.fc_stack_m",
+   "type": "parameter",
+   "title": "joints.fc_stack_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.0044,
+   "unit": "m",
+   "source": "C6 estimate",
+   "note": "nylon washer 0.8 + grommet flange 1.0 + PCB 1.6 + grommet flange 1.0; F3 measures the chosen board",
+   "reasons": [
+    "marked UNVERIFIED in redesign/team/C6/params.json: nylon washer 0.8 + grommet flange 1.0 + PCB 1.6 + grommet flange 1.0; F3 measures the chosen board"
+   ],
+   "status": "UNVERIFIED",
+   "importance": 2
+  },
+  {
+   "id": "P:joints.torque.motor_screw_nm",
+   "type": "parameter",
+   "title": "joints.torque.motor_screw_nm",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.2,
+   "unit": "N m",
+   "source": "team/C6/joints.py#CALC-C6-MOTOR-SCREW",
+   "note": "M3 into the aluminium motor base, head on a printed plate, no washer; 4 N (0.41 kg) on a luggage scale hooked 50 mm out on the hex key",
+   "status": "PROPOSED",
+   "importance": 3
+  },
+  {
+   "id": "P:joints.torque.insert_nm",
+   "type": "parameter",
+   "title": "joints.torque.insert_nm",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.4,
+   "unit": "N m",
+   "source": "C6 choice",
+   "note": "M3 into a brass heat-set insert in PETG; insert torque-out is several times higher",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:joints.torque.printed_max_nm",
+   "type": "parameter",
+   "title": "joints.torque.printed_max_nm",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.4,
+   "unit": "N m",
+   "source": "C6 choice",
+   "note": "ceiling for any M3 whose head or nut bears on a printed part",
+   "status": "PROPOSED",
+   "importance": 1
+  },
+  {
+   "id": "P:joints.strip_bonded_faces_now",
+   "type": "parameter",
+   "title": "joints.strip_bonded_faces_now",
+   "file": "redesign/team/C6/params.json",
+   "value": 1,
+   "unit": "-",
+   "source": "subsystems/fins (E-FIN-29..36): strip outer face on the PETG slot wall, inner face on the board paper",
+   "status": "PROPOSED",
+   "importance": 5
+  },
+  {
+   "id": "P:joints.strip_bonded_faces_prop",
+   "type": "parameter",
+   "title": "joints.strip_bonded_faces_prop",
+   "file": "redesign/team/C6/params.json",
+   "value": 2,
+   "unit": "-",
+   "source": "C6 proposal CR-C6-01: solid PETG tongue between the strips in the collar tail",
+   "status": "PROPOSED",
+   "importance": 5
+  },
+  {
+   "id": "P:joints.strip_embed_prop_m",
+   "type": "parameter",
+   "title": "joints.strip_embed_prop_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.04,
+   "unit": "m",
+   "source": "C6 proposal CR-C6-01",
+   "status": "PROPOSED",
+   "importance": 5
+  },
+  {
+   "id": "P:joints.pin_d_m",
+   "type": "parameter",
+   "title": "joints.pin_d_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.002,
+   "unit": "m",
+   "source": "C6 proposal CR-C6-02: pultruded CF rod 2 mm",
+   "status": "PROPOSED",
+   "importance": 5
+  },
+  {
+   "id": "P:joints.pin_pitch_m",
+   "type": "parameter",
+   "title": "joints.pin_pitch_m",
+   "file": "redesign/team/C6/params.json",
+   "value": 0.015,
+   "unit": "m",
+   "source": "C6 proposal CR-C6-02",
+   "status": "PROPOSED",
+   "importance": 5
   },
   {
    "id": "P:trn.box.external_m",
@@ -69504,28 +75658,28 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Wing panel L",
    "status": "UNVERIFIED",
-   "importance": 19
+   "importance": 36
   },
   {
    "id": "WNG-002",
    "type": "part",
    "title": "Wing panel R",
    "status": "UNVERIFIED",
-   "importance": 16
+   "importance": 37
   },
   {
    "id": "POD-002",
    "type": "part",
    "title": "Tray: bay floor + guides + aft stop, FC plate, avionics plate (printed PETG)",
    "status": "UNVERIFIED",
-   "importance": 21
+   "importance": 23
   },
   {
    "id": "WNG-003",
    "type": "part",
    "title": "Spar tube 12x10",
    "status": "UNVERIFIED",
-   "importance": 9
+   "importance": 21
   },
   {
    "id": "PRP-003-UR",
@@ -69574,14 +75728,14 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Motor tube L, CF 22x20, 324 mm",
    "status": "UNVERIFIED",
-   "importance": 29
+   "importance": 36
   },
   {
    "id": "FIN-002-R",
    "type": "part",
    "title": "Motor tube R, CF 22x20, 324 mm",
    "status": "UNVERIFIED",
-   "importance": 29
+   "importance": 36
   },
   {
    "id": "AVN-005",
@@ -69598,11 +75752,25 @@ window.PROOF_GRAPH = {
    "importance": 5
   },
   {
+   "id": "FIN-004-L",
+   "type": "part",
+   "title": "Through-core block L (tube socket + spar saddle)",
+   "status": "UNVERIFIED",
+   "importance": 11
+  },
+  {
+   "id": "FIN-004-R",
+   "type": "part",
+   "title": "Through-core block R (tube socket + spar saddle)",
+   "status": "UNVERIFIED",
+   "importance": 12
+  },
+  {
    "id": "POD-001",
    "type": "part",
    "title": "Pod shell (foam-board box, XPS LE filler, printed nose lip)",
    "status": "UNVERIFIED",
-   "importance": 23
+   "importance": 24
   },
   {
    "id": "POD-004",
@@ -69630,301 +75798,378 @@ window.PROOF_GRAPH = {
    "type": "part",
    "title": "Half-fin upper R, foam board",
    "status": "UNVERIFIED",
-   "importance": 8
+   "importance": 30
   },
   {
    "id": "FIN-001-LU",
    "type": "part",
    "title": "Half-fin upper L, foam board",
    "status": "UNVERIFIED",
-   "importance": 6
-  },
-  {
-   "id": "FIN-009-UR",
-   "type": "part",
-   "title": "Brace UR, CF strip 10 x 3",
-   "status": "UNVERIFIED",
-   "importance": 8
-  },
-  {
-   "id": "FIN-009-UL",
-   "type": "part",
-   "title": "Brace UL, CF strip 10 x 3",
-   "status": "UNVERIFIED",
-   "importance": 5
-  },
-  {
-   "id": "FIN-003-UR",
-   "type": "part",
-   "title": "Motor mount UR, 3 deg canted, slip clamp (print A)",
-   "status": "UNVERIFIED",
-   "importance": 15
-  },
-  {
-   "id": "FIN-003-UL",
-   "type": "part",
-   "title": "Motor mount UL, 3 deg canted, slip clamp (print B)",
-   "status": "UNVERIFIED",
-   "importance": 12
+   "importance": 28
   },
   {
    "id": "FIN-001-RD",
    "type": "part",
    "title": "Half-fin lower R, foam board, link slot",
    "status": "UNVERIFIED",
-   "importance": 6
+   "importance": 28
   },
   {
    "id": "FIN-001-LD",
    "type": "part",
    "title": "Half-fin lower L, foam board, link slot",
    "status": "UNVERIFIED",
-   "importance": 6
+   "importance": 28
+  },
+  {
+   "id": "FIN-009-UR",
+   "type": "part",
+   "title": "Brace UR, CF strip 10 x 3",
+   "status": "UNVERIFIED",
+   "importance": 10
+  },
+  {
+   "id": "FIN-009-UL",
+   "type": "part",
+   "title": "Brace UL, CF strip 10 x 3",
+   "status": "UNVERIFIED",
+   "importance": 7
   },
   {
    "id": "FIN-009-LR",
    "type": "part",
    "title": "Brace LR, CF strip 10 x 3",
    "status": "UNVERIFIED",
-   "importance": 5
+   "importance": 7
   },
   {
    "id": "FIN-009-LL",
    "type": "part",
    "title": "Brace LL, CF strip 10 x 3",
    "status": "UNVERIFIED",
-   "importance": 5
+   "importance": 7
+  },
+  {
+   "id": "FIN-003-UR",
+   "type": "part",
+   "title": "Motor mount UR, 3 deg canted, slip clamp (print A)",
+   "status": "UNVERIFIED",
+   "importance": 21
+  },
+  {
+   "id": "FIN-003-UL",
+   "type": "part",
+   "title": "Motor mount UL, 3 deg canted, slip clamp (print B)",
+   "status": "UNVERIFIED",
+   "importance": 18
   },
   {
    "id": "FIN-003-LR",
    "type": "part",
    "title": "Motor mount LR, 3 deg canted, slip clamp (print B)",
    "status": "UNVERIFIED",
-   "importance": 12
+   "importance": 18
   },
   {
    "id": "FIN-003-LL",
    "type": "part",
    "title": "Motor mount LL, 3 deg canted, slip clamp (print A)",
    "status": "UNVERIFIED",
-   "importance": 12
+   "importance": 18
   },
   {
    "id": "FIN-010-UR",
    "type": "part",
    "title": "Brace anchor UR on the spar at |y| 0.20",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 5
   },
   {
    "id": "FIN-010-UL",
    "type": "part",
    "title": "Brace anchor UL on the spar at |y| 0.20",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 5
   },
   {
    "id": "FIN-010-LR",
    "type": "part",
    "title": "Brace anchor LR on the spar at |y| 0.20",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 5
   },
   {
    "id": "FIN-010-LL",
    "type": "part",
    "title": "Brace anchor LL on the spar at |y| 0.20",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 5
   },
   {
    "id": "FIN-008-UR",
    "type": "part",
    "title": "Station collar UR (board top + edge strips + brace ear)",
    "status": "UNVERIFIED",
-   "importance": 3
+   "importance": 10
   },
   {
    "id": "FIN-008-UL",
    "type": "part",
    "title": "Station collar UL (board top + edge strips + brace ear)",
    "status": "UNVERIFIED",
-   "importance": 2
+   "importance": 9
   },
   {
    "id": "FIN-008-LR",
    "type": "part",
    "title": "Station collar LR (board top + edge strips + brace ear)",
    "status": "UNVERIFIED",
-   "importance": 2
+   "importance": 9
   },
   {
    "id": "FIN-008-LL",
    "type": "part",
    "title": "Station collar LL (board top + edge strips + brace ear)",
    "status": "UNVERIFIED",
-   "importance": 2
-  },
-  {
-   "id": "FIN-004-R",
-   "type": "part",
-   "title": "Through-core block R (tube socket + spar saddle)",
-   "status": "UNVERIFIED",
-   "importance": 7
-  },
-  {
-   "id": "FIN-004-L",
-   "type": "part",
-   "title": "Through-core block L (tube socket + spar saddle)",
-   "status": "UNVERIFIED",
-   "importance": 6
-  },
-  {
-   "id": "FIN-001-UR",
-   "type": "part",
-   "title": "FIN-001-UR",
-   "status": "UNVERIFIED",
-   "importance": 14
-  },
-  {
-   "id": "FIN-001-UL",
-   "type": "part",
-   "title": "FIN-001-UL",
-   "status": "UNVERIFIED",
-   "importance": 14
-  },
-  {
-   "id": "FIN-001-LR",
-   "type": "part",
-   "title": "FIN-001-LR",
-   "status": "UNVERIFIED",
-   "importance": 14
-  },
-  {
-   "id": "FIN-001-LL",
-   "type": "part",
-   "title": "FIN-001-LL",
-   "status": "UNVERIFIED",
-   "importance": 14
+   "importance": 9
   },
   {
    "id": "GER-004-UR",
    "type": "part",
    "title": "Foot pad UR",
    "status": "UNVERIFIED",
-   "importance": 24
+   "importance": 29
   },
   {
    "id": "GER-004-UL",
    "type": "part",
    "title": "Foot pad UL",
    "status": "UNVERIFIED",
-   "importance": 24
+   "importance": 29
   },
   {
    "id": "GER-004-LR",
    "type": "part",
    "title": "Foot pad LR",
    "status": "UNVERIFIED",
-   "importance": 24
+   "importance": 29
   },
   {
    "id": "GER-004-LL",
    "type": "part",
    "title": "Foot pad LL",
    "status": "UNVERIFIED",
-   "importance": 24
+   "importance": 29
   },
   {
    "id": "GER-001-UR",
    "type": "part",
    "title": "Foot shoe UR",
    "status": "UNVERIFIED",
-   "importance": 17
+   "importance": 23
   },
   {
    "id": "GER-001-UL",
    "type": "part",
    "title": "Foot shoe UL",
    "status": "UNVERIFIED",
-   "importance": 17
+   "importance": 23
   },
   {
    "id": "GER-001-LR",
    "type": "part",
    "title": "Foot shoe LR",
    "status": "UNVERIFIED",
-   "importance": 17
+   "importance": 23
   },
   {
    "id": "GER-001-LL",
    "type": "part",
    "title": "Foot shoe LL",
    "status": "UNVERIFIED",
-   "importance": 17
+   "importance": 23
   },
   {
    "id": "GER-002-UR",
    "type": "part",
    "title": "Foot piston UR",
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 24
   },
   {
    "id": "GER-002-UL",
    "type": "part",
    "title": "Foot piston UL",
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 24
   },
   {
    "id": "GER-002-LR",
    "type": "part",
    "title": "Foot piston LR",
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 24
   },
   {
    "id": "GER-002-LL",
    "type": "part",
    "title": "Foot piston LL",
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 24
   },
   {
    "id": "GER-003-UR",
    "type": "part",
    "title": "Crush cartridge UR",
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 23
   },
   {
    "id": "GER-003-UL",
    "type": "part",
    "title": "Crush cartridge UL",
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 23
   },
   {
    "id": "GER-003-LR",
    "type": "part",
    "title": "Crush cartridge LR",
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 23
   },
   {
    "id": "GER-003-LL",
    "type": "part",
    "title": "Crush cartridge LL",
    "status": "UNVERIFIED",
-   "importance": 18
+   "importance": 23
   },
   {
    "id": "POD-008",
    "type": "part",
    "title": "Trim spacer set (3 printed U-spacers 5 / 8 / 10 mm)",
    "status": "UNVERIFIED",
-   "importance": 2
+   "importance": 3
+  },
+  {
+   "id": "PRP-001-UR",
+   "type": "part",
+   "title": "PRP-001-UR",
+   "status": "UNVERIFIED",
+   "importance": 13
+  },
+  {
+   "id": "PRP-001-UL",
+   "type": "part",
+   "title": "PRP-001-UL",
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "PRP-001-LR",
+   "type": "part",
+   "title": "PRP-001-LR",
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "PRP-001-LL",
+   "type": "part",
+   "title": "PRP-001-LL",
+   "status": "UNVERIFIED",
+   "importance": 3
+  },
+  {
+   "id": "AVN-001",
+   "type": "part",
+   "title": "AVN-001",
+   "status": "UNVERIFIED",
+   "importance": 31
+  },
+  {
+   "id": "FIN-011-RUO",
+   "type": "part",
+   "title": "Edge strip upper R outboard face, CF 10 x 1",
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "FIN-011-RUI",
+   "type": "part",
+   "title": "Edge strip upper R inboard face, CF 10 x 1",
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "FIN-011-RDO",
+   "type": "part",
+   "title": "Edge strip lower R outboard face, CF 10 x 1",
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "FIN-011-RDI",
+   "type": "part",
+   "title": "Edge strip lower R inboard face, CF 10 x 1",
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "FIN-011-LUO",
+   "type": "part",
+   "title": "Edge strip upper L outboard face, CF 10 x 1",
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "FIN-011-LUI",
+   "type": "part",
+   "title": "Edge strip upper L inboard face, CF 10 x 1",
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "FIN-011-LDO",
+   "type": "part",
+   "title": "Edge strip lower L outboard face, CF 10 x 1",
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "FIN-011-LDI",
+   "type": "part",
+   "title": "Edge strip lower L inboard face, CF 10 x 1",
+   "status": "UNVERIFIED",
+   "importance": 4
+  },
+  {
+   "id": "MEC-008-L",
+   "type": "part",
+   "title": "MEC-008-L",
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "MEC-008-R",
+   "type": "part",
+   "title": "MEC-008-R",
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "MEC-004-L",
+   "type": "part",
+   "title": "MEC-004-L",
+   "status": "UNVERIFIED",
+   "importance": 1
+  },
+  {
+   "id": "MEC-004-R",
+   "type": "part",
+   "title": "MEC-004-R",
+   "status": "UNVERIFIED",
+   "importance": 1
   },
   {
    "id": "POD-005",
@@ -70018,34 +76263,6 @@ window.PROOF_GRAPH = {
    "importance": 27
   },
   {
-   "id": "PRP-001-UR",
-   "type": "part",
-   "title": "PRP-001-UR",
-   "status": "UNVERIFIED",
-   "importance": 11
-  },
-  {
-   "id": "PRP-001-UL",
-   "type": "part",
-   "title": "PRP-001-UL",
-   "status": "UNVERIFIED",
-   "importance": 1
-  },
-  {
-   "id": "PRP-001-LR",
-   "type": "part",
-   "title": "PRP-001-LR",
-   "status": "UNVERIFIED",
-   "importance": 1
-  },
-  {
-   "id": "PRP-001-LL",
-   "type": "part",
-   "title": "PRP-001-LL",
-   "status": "UNVERIFIED",
-   "importance": 1
-  },
-  {
    "id": "PRP-002-UR",
    "type": "part",
    "title": "PRP-002-UR",
@@ -70072,13 +76289,6 @@ window.PROOF_GRAPH = {
    "title": "PRP-002-LL",
    "status": "UNVERIFIED",
    "importance": 16
-  },
-  {
-   "id": "AVN-001",
-   "type": "part",
-   "title": "AVN-001",
-   "status": "UNVERIFIED",
-   "importance": 29
   },
   {
    "id": "FIN-007-UL",
@@ -79227,6 +85437,996 @@ window.PROOF_GRAPH = {
    "type": "verifies"
   },
   {
+   "source": "SRC-C2-XPS-TYP",
+   "target": "ASM-C2-XPS",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-XPS-F250",
+   "target": "ASM-C2-XPS",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-C2-FAR23-629",
+   "target": "ASM-C2-AE-FACTOR",
+   "type": "cites"
+  },
+  {
+   "source": "SRC-C2-ROARK",
+   "target": "CALC-C2-SPAR-ROOT",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-SPAR-SIGMA",
+   "target": "CALC-C2-SPAR-ROOT",
+   "type": "assumes"
+  },
+  {
+   "source": "CL-C1-SPAR-MB-ULT",
+   "target": "CALC-C2-SPAR-ROOT",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.od_m",
+   "target": "CALC-C2-SPAR-ROOT",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.id_m",
+   "target": "CALC-C2-SPAR-ROOT",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C1-WING-TORSION-ULT",
+   "target": "CALC-C2-SPAR-TAU",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C1-WING-SHEAR-ULT",
+   "target": "CALC-C2-SPAR-TAU",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.od_m",
+   "target": "CALC-C2-SPAR-TAU",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.id_m",
+   "target": "CALC-C2-SPAR-TAU",
+   "type": "uses"
+  },
+  {
+   "source": "SRC-C2-ROARK",
+   "target": "CALC-C2-SPAR-BUCKLE",
+   "type": "cites"
+  },
+  {
+   "source": "P:c2.inputs.spar_E_lo_pa",
+   "target": "CALC-C2-SPAR-BUCKLE",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.od_m",
+   "target": "CALC-C2-SPAR-BUCKLE",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.id_m",
+   "target": "CALC-C2-SPAR-BUCKLE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C1-SPAR-MX-ULT",
+   "target": "CALC-C2-SPAR-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.F_brace_design_N",
+   "target": "CALC-C2-SPAR-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.y_m",
+   "target": "CALC-C2-SPAR-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.od_m",
+   "target": "CALC-C2-SPAR-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.id_m",
+   "target": "CALC-C2-SPAR-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C1-VD",
+   "target": "CALC-C2-AE-REQ",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C2-AE-FACTOR",
+   "target": "CALC-C2-AE-REQ",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.w_tip_env_m",
+   "target": "CALC-C2-DEFL",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.span_m",
+   "target": "CALC-C2-DEFL",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.wing_mass_kg",
+   "target": "CALC-C2-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.spar_sigma_ult_max_pa",
+   "target": "CALC-C2-SPAR-ENV",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.twist_flight_deg",
+   "target": "CALC-C2-TWIST",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.V_rev_bound_ms",
+   "target": "CALC-C2-VREV",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.V_div_bound_ms",
+   "target": "CALC-C2-VDIV",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.V_flutter_ms",
+   "target": "CALC-C2-VFL",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.eff_vd",
+   "target": "CALC-C2-EFF",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.mode_sep_worst",
+   "target": "CALC-C2-MODESEP",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.f_torsion_anti_hz",
+   "target": "CALC-C2-FTORS",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.f_torsion_sym_hz",
+   "target": "CALC-C2-FTORS-S",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.ring_no_plug_sigma_pa",
+   "target": "CALC-C2-RING",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.ring_anchor_sigma_pa",
+   "target": "CALC-C2-RING-ANCHOR",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.plug_bearing_pa",
+   "target": "CALC-C2-PLUG",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.spar_bond_tau_ult_pa",
+   "target": "CALC-C2-BOND",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.chord_tape_sigma_ult_pa",
+   "target": "CALC-C2-CHORD-TAPE",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.chord_foam_only_sigma_ult_pa",
+   "target": "CALC-C2-CHORD-FOAM",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.tip_foam_sigma_ult_pa",
+   "target": "CALC-C2-TIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.tape_sigma_root_ult_pa",
+   "target": "CALC-C2-ROOT-TAPE",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.pod_tau_pa",
+   "target": "CALC-C2-POD",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.cradle_area_req_m2",
+   "target": "CALC-C2-CRADLE",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.mesh_conv_freq",
+   "target": "CALC-C2-CONV-F",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.mesh_conv_static",
+   "target": "CALC-C2-CONV-S",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.fe_vs_integration",
+   "target": "CALC-C2-FE-INT",
+   "type": "uses"
+  },
+  {
+   "source": "P:c2.fe.ring_validation_err",
+   "target": "CALC-C2-RING-VAL",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-C2-SPAR-ROOT",
+   "target": "CL-C2-SPAR-SIGMA-ULT",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.spar_sigma_allow_pa",
+   "target": "CL-C2-SPAR-SIGMA-ULT",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-SPAR-SIGMA-ULT",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-SPAR-SIGMA-ULT",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-SPAR-ENV",
+   "target": "CL-C2-SPAR-SIGMA-ENV",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.spar_sigma_allow_pa",
+   "target": "CL-C2-SPAR-SIGMA-ENV",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-SPAR-SIGMA-ENV",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-SPAR-SIGMA-ENV",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-SPAR-TAU",
+   "target": "CL-C2-SPAR-TAU-ULT",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.spar_tau_allow_pa",
+   "target": "CL-C2-SPAR-TAU-ULT",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-SPAR-TAU-ULT",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-SPAR-TAU-ULT",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-SPAR-BUCKLE",
+   "target": "CL-C2-SPAR-BUCKLE",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C2-SPAR-SIGMA-ULT",
+   "target": "CL-C2-SPAR-BUCKLE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-SPAR-BUCKLE",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-SPAR-BUCKLE",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-SPAR-BRACE",
+   "target": "CL-C2-SPAR-SIGMA-BRACE",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.spar_sigma_allow_pa",
+   "target": "CL-C2-SPAR-SIGMA-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-SPAR-SIGMA-BRACE",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-SPAR-SIGMA-BRACE",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-SPAR-SIGMA-BRACE",
+   "target": "FIN-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-SPAR-SIGMA-BRACE",
+   "target": "FIN-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-DEFL",
+   "target": "CL-C2-TIP-DEFL-FRAC",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.spar_deflection_max",
+   "target": "CL-C2-TIP-DEFL-FRAC",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-TIP-DEFL-FRAC",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-TIP-DEFL-FRAC",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-TIP-DEFL-FRAC",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-TIP-DEFL-FRAC",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-TWIST",
+   "target": "CL-C2-TWIST-FLIGHT",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C2-TWIST-FLIGHT",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-TWIST-FLIGHT",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-TWIST-FLIGHT",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-AE-REQ",
+   "target": "CL-C2-V-AE-REQ",
+   "type": "derives-from"
+  },
+  {
+   "source": "SRC-C2-THEODORSEN",
+   "target": "CL-C2-V-REVERSAL",
+   "type": "cites"
+  },
+  {
+   "source": "CALC-C2-VREV",
+   "target": "CL-C2-V-REVERSAL",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C2-V-AE-REQ",
+   "target": "CL-C2-V-REVERSAL",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-V-REVERSAL",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-V-REVERSAL",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-V-REVERSAL",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-V-REVERSAL",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "SRC-C2-THEODORSEN",
+   "target": "CL-C2-V-DIVERGENCE",
+   "type": "cites"
+  },
+  {
+   "source": "CALC-C2-VDIV",
+   "target": "CL-C2-V-DIVERGENCE",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C2-V-AE-REQ",
+   "target": "CL-C2-V-DIVERGENCE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-V-DIVERGENCE",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-V-DIVERGENCE",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-V-DIVERGENCE",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-V-DIVERGENCE",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "SRC-C2-THEODORSEN",
+   "target": "CL-C2-V-FLUTTER",
+   "type": "cites"
+  },
+  {
+   "source": "CALC-C2-VFL",
+   "target": "CL-C2-V-FLUTTER",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C2-V-AE-REQ",
+   "target": "CL-C2-V-FLUTTER",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-V-FLUTTER",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-V-FLUTTER",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-V-FLUTTER",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-V-FLUTTER",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-EFF",
+   "target": "CL-C2-ROLL-EFF-VD",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C2-ROLL-EFF-VD",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-ROLL-EFF-VD",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-ROLL-EFF-VD",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-MODESEP",
+   "target": "CL-C2-WING-MODE-SEP",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.vibration_sep_frac",
+   "target": "CL-C2-WING-MODE-SEP",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-WING-MODE-SEP",
+   "target": "R-VIBRATION",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-WING-MODE-SEP",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-WING-MODE-SEP",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-WING-MODE-SEP",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-WING-MODE-SEP",
+   "target": "FIN-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-WING-MODE-SEP",
+   "target": "FIN-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-FTORS",
+   "target": "CL-C2-F-TORSION-ANTI",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C2-F-TORSION-ANTI",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-F-TORSION-ANTI",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-F-TORSION-ANTI",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-FTORS-S",
+   "target": "CL-C2-F-TORSION-SYM",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C2-F-TORSION-SYM",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-F-TORSION-SYM",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-F-TORSION-SYM",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "SRC-C2-ROARK",
+   "target": "CL-C2-RING-NO-PLUG",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-CONTACT",
+   "target": "CL-C2-RING-NO-PLUG",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-C2-RING",
+   "target": "CL-C2-RING-NO-PLUG",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.spar_hoop_allow_pa",
+   "target": "CL-C2-RING-NO-PLUG",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-RING-NO-PLUG",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-RING-NO-PLUG",
+   "target": "FIN-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-RING-NO-PLUG",
+   "target": "FIN-004-R",
+   "type": "about"
+  },
+  {
+   "source": "ASM-C2-CONTACT",
+   "target": "CL-C2-RING-ANCHOR",
+   "type": "assumes"
+  },
+  {
+   "source": "CALC-C2-RING-ANCHOR",
+   "target": "CL-C2-RING-ANCHOR",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.spar_hoop_allow_pa",
+   "target": "CL-C2-RING-ANCHOR",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-RING-ANCHOR",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-PLUG",
+   "target": "CL-C2-PLUG-BEARING",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.petg_bearing_allow_pa",
+   "target": "CL-C2-PLUG-BEARING",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-PLUG-BEARING",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-PLUG-BEARING",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-PLUG-BEARING",
+   "target": "FIN-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-PLUG-BEARING",
+   "target": "FIN-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-BOND",
+   "target": "CL-C2-SPAR-BOND-TAU",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.xps_shear_allow_pa",
+   "target": "CL-C2-SPAR-BOND-TAU",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-SPAR-BOND-TAU",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-SPAR-BOND-TAU",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-SPAR-BOND-TAU",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-CHORD-TAPE",
+   "target": "CL-C2-CHORD-TAPE",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.tape_sigma_allow_pa",
+   "target": "CL-C2-CHORD-TAPE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-CHORD-TAPE",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-CHORD-TAPE",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-CHORD-FOAM",
+   "target": "CL-C2-CHORD-FOAM",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.xps_tens_allow_pa",
+   "target": "CL-C2-CHORD-FOAM",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-CHORD-FOAM",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-TIP",
+   "target": "CL-C2-TIP-FOAM",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.xps_tens_allow_pa",
+   "target": "CL-C2-TIP-FOAM",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-TIP-FOAM",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-TIP-FOAM",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-ROOT-TAPE",
+   "target": "CL-C2-ROOT-TAPE",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.tape_sigma_allow_pa",
+   "target": "CL-C2-ROOT-TAPE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-ROOT-TAPE",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-ROOT-TAPE",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-POD",
+   "target": "CL-C2-POD-FOAM",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:c2.inputs.xps_shear_allow_pa",
+   "target": "CL-C2-POD-FOAM",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-POD-FOAM",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-POD-FOAM",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-CRADLE",
+   "target": "CL-C2-CRADLE-AREA",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C2-CRADLE-AREA",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-MASS",
+   "target": "CL-C2-WING-MASS",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:mass.allocation_g.wing",
+   "target": "CL-C2-WING-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C2-WING-MASS",
+   "target": "R-MASS-ALLOC",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C2-WING-MASS",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-WING-MASS",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C2-WING-MASS",
+   "target": "WNG-003",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C2-CONV-F",
+   "target": "CL-C2-FE-CONV-FREQ",
+   "type": "derives-from"
+  },
+  {
+   "source": "ASM-C2-FE-TOL",
+   "target": "CL-C2-FE-CONV-FREQ",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-C2-CONV-S",
+   "target": "CL-C2-FE-CONV-STATIC",
+   "type": "derives-from"
+  },
+  {
+   "source": "ASM-C2-FE-TOL",
+   "target": "CL-C2-FE-CONV-STATIC",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-C2-FE-INT",
+   "target": "CL-C2-FE-VS-BEAM",
+   "type": "derives-from"
+  },
+  {
+   "source": "ASM-C2-FE-AGREE",
+   "target": "CL-C2-FE-VS-BEAM",
+   "type": "uses"
+  },
+  {
+   "source": "SRC-C2-ROARK",
+   "target": "CL-C2-RING-VALIDATION",
+   "type": "cites"
+  },
+  {
+   "source": "CALC-C2-RING-VAL",
+   "target": "CL-C2-RING-VALIDATION",
+   "type": "derives-from"
+  },
+  {
+   "source": "ASM-C2-FE-TOL",
+   "target": "CL-C2-RING-VALIDATION",
+   "type": "uses"
+  },
+  {
+   "source": "T-C2-WING-PROOF",
+   "target": "CL-C2-SPAR-SIGMA-ULT",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-WING-PROOF",
+   "target": "CL-C2-TIP-DEFL-FRAC",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-WING-PROOF",
+   "target": "CL-C2-TIP-FOAM",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-WING-PROOF",
+   "target": "CL-C2-SPAR-BOND-TAU",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-WING-PROOF",
+   "target": "CL-C2-ROOT-TAPE",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-TAP-TEST",
+   "target": "CL-C2-WING-MODE-SEP",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-TAP-TEST",
+   "target": "CL-C2-F-TORSION-ANTI",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-TAP-TEST",
+   "target": "CL-C2-F-TORSION-SYM",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-TAP-TEST",
+   "target": "CL-C2-V-FLUTTER",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-TWIST",
+   "target": "CL-C2-TWIST-FLIGHT",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-TWIST",
+   "target": "CL-C2-V-REVERSAL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-TWIST",
+   "target": "CL-C2-V-DIVERGENCE",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-TWIST",
+   "target": "CL-C2-SPAR-TAU-ULT",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-XPS-COUPON",
+   "target": "CL-C2-CHORD-TAPE",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-XPS-COUPON",
+   "target": "CL-C2-CHORD-FOAM",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-XPS-COUPON",
+   "target": "CL-C2-SPAR-BOND-TAU",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C2-XPS-COUPON",
+   "target": "CL-C2-POD-FOAM",
+   "type": "verifies"
+  },
+  {
    "source": "SRC-K09-CARD",
    "target": "ASM-C3-POD-LOADS",
    "type": "cites"
@@ -80652,6 +87852,361 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "SRC-C4-ALLEN",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C4-MOUNT-K-ROCK",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-C4-ROOT-K",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-C4-ANCHOR-K",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-C4-PROP-IP",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "assumes"
+  },
+  {
+   "source": "ASM-C4-FACE-E",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "assumes"
+  },
+  {
+   "source": "P:fins.tube.x_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.y_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.tube.od_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.tube.id_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.mass_per_m_kgm",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.tube_length_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.stations.z_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "CL-D3-X-FACE",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "CL-D3-X-PROP",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.te_x_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.half_height_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.fin.le_gap_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.grip_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.station_collar.gap_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.station_collar.height_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.station_collar.ring_wall_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.station_collar.ear_len_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.bond_gap_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-SKIN-PTS",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-BORE-Z",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.motor_mass_kg",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.motor_diameter_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.motor_length_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.prop_mass_kg",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-ADAPTER-MASS",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-PROP-IP",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-BELL-INERTIA",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-MOUNT-CAD",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-COLLAR-BRACE-MASS",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:propulsion.esc_mass_kg",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.esc_pad.x0_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.esc_pad.len_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.esc_pad.z_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:mass.allocation_g.landing",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.board_t_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.areal_mass_kgm2",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.layers",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-FACE-T",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-FACE-E",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-CORE-E",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-CORE-G",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.spar.x_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.brace.anchor_y_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.anchor.proud_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.brace.w_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.brace.t_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-CF-E-STRIP",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.edge_strip.w_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.edge_strip.t_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-CF-RHO",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.chord_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:wing.elevon.chord_frac",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.link_slot.half_width_m",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-MOUNT-K-ROCK",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-MOUNT-K-TWIST",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-ROOT-K",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-ANCHOR-K",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B4-HOVER-RPM",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B4-CRUISE-RPM",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B4-RPM-MAX",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-J1-E-TUBE",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-G-TUBE",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-BAND-LO",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-BAND-HI",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.layers",
+   "target": "CALC-C4-D3-MODES-REC",
+   "type": "uses"
+  },
+  {
    "source": "ASM-C4-E-TUBE-LO",
    "target": "CALC-C4-D3-WORST",
    "type": "assumes"
@@ -80968,6 +88523,11 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-B4-RPM-MAX",
+   "target": "CALC-C4-D3-WORST",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.layers",
    "target": "CALC-C4-D3-WORST",
    "type": "uses"
   },
@@ -81308,6 +88868,11 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "ASM-C4-G-TUBE",
+   "target": "CALC-C4-D3-MOUNT-K",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.layers",
    "target": "CALC-C4-D3-MOUNT-K",
    "type": "uses"
   },
@@ -81622,6 +89187,26 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "CL-B4-HOVER-RPM",
+   "target": "CALC-C4-D3-CONVERGENCE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B4-CRUISE-RPM",
+   "target": "CALC-C4-D3-CONVERGENCE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B4-RPM-MAX",
+   "target": "CALC-C4-D3-CONVERGENCE",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.layers",
+   "target": "CALC-C4-D3-CONVERGENCE",
+   "type": "uses"
+  },
+  {
    "source": "ASM-C4-PROP-IP",
    "target": "CALC-C4-D3-CAMPBELL",
    "type": "assumes"
@@ -81938,6 +89523,11 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "ASM-C4-G-TUBE",
+   "target": "CALC-C4-D3-CAMPBELL",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.layers",
    "target": "CALC-C4-D3-CAMPBELL",
    "type": "uses"
   },
@@ -82367,6 +89957,21 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "P:fin_detail.station_collar.ear_w_m",
+   "target": "CALC-C4-D3-STATIC",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-PETG-TENSILE",
+   "target": "CALC-C4-D3-STATIC",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.layers",
+   "target": "CALC-C4-D3-STATIC",
+   "type": "uses"
+  },
+  {
    "source": "SRC-C4-ROARK",
    "target": "CALC-C4-D3-BLOCK",
    "type": "cites"
@@ -82452,6 +90057,76 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "CL-D3-MASS",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.layers",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.layers",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.areal_mass_kgm2",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.fin.adhesive_kgm2",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-SKIN-PTS",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.tube.x_m",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.tube.od_m",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.fin.le_gap_m",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.te_x_m",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.half_height_m",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.tube_length_m",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.grip_m",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.station_collar.gap_m",
+   "target": "CALC-C4-D3-MASS",
+   "type": "uses"
+  },
+  {
    "source": "CALC-C4-D3-Q4-CHECK",
    "target": "CL-C4-D3-Q4-RECT",
    "type": "derives-from"
@@ -82473,6 +90148,121 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CALC-C4-D3-MODES",
+   "target": "CL-C4-D3-SEP-1L",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.vibration_sep_frac",
+   "target": "CL-C4-D3-SEP-1L",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-001-RU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-001-LU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-001-RD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-001-LD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-009-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-009-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-009-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-009-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-SEP-1L",
+   "target": "FIN-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C4-D3-MODES",
+   "target": "CL-C4-D3-F1-1L",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C4-D3-F1-1L",
+   "target": "FIN-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-F1-1L",
+   "target": "FIN-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-F1-1L",
+   "target": "FIN-001-RU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-F1-1L",
+   "target": "FIN-001-LU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-F1-1L",
+   "target": "FIN-001-RD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-F1-1L",
+   "target": "FIN-001-LD",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C4-D3-MODES-REC",
    "target": "CL-C4-D3-F1-UP",
    "type": "derives-from"
   },
@@ -82517,7 +90307,7 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
-   "source": "CALC-C4-D3-MODES",
+   "source": "CALC-C4-D3-MODES-REC",
    "target": "CL-C4-D3-F1-LO",
    "type": "derives-from"
   },
@@ -82562,7 +90352,7 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
-   "source": "CALC-C4-D3-MODES",
+   "source": "CALC-C4-D3-MODES-REC",
    "target": "CL-C4-D3-PANEL",
    "type": "derives-from"
   },
@@ -82587,7 +90377,7 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
-   "source": "CALC-C4-D3-MODES",
+   "source": "CALC-C4-D3-MODES-REC",
    "target": "CL-C4-D3-SEP",
    "type": "derives-from"
   },
@@ -82722,7 +90512,7 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
-   "source": "CALC-C4-D3-MODES",
+   "source": "CALC-C4-D3-MODES-REC",
    "target": "CL-C4-D3-SEP-BAND",
    "type": "derives-from"
   },
@@ -83078,6 +90868,36 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CALC-C4-D3-STATIC",
+   "target": "CL-C4-D3-MS-EAR",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C4-D3-MS-EAR",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C4-D3-MS-EAR",
+   "target": "FIN-008-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-MS-EAR",
+   "target": "FIN-008-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-MS-EAR",
+   "target": "FIN-008-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-MS-EAR",
+   "target": "FIN-008-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C4-D3-STATIC",
    "target": "CL-C4-D3-FOOT-DEFL",
    "type": "derives-from"
   },
@@ -83142,6 +90962,61 @@ window.PROOF_GRAPH = {
    "type": "about"
   },
   {
+   "source": "CALC-C4-D3-MASS",
+   "target": "CL-C4-D3-FINS-MASS",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:mass.allocation_g.fins",
+   "target": "CL-C4-D3-FINS-MASS",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C4-D3-FINS-MASS",
+   "target": "FIN-001-RU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-FINS-MASS",
+   "target": "FIN-001-LU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-FINS-MASS",
+   "target": "FIN-001-RD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-FINS-MASS",
+   "target": "FIN-001-LD",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C4-D3-MASS",
+   "target": "CL-C4-D3-LAYER-ADD",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C4-D3-LAYER-ADD",
+   "target": "FIN-001-RU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-LAYER-ADD",
+   "target": "FIN-001-LU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-LAYER-ADD",
+   "target": "FIN-001-RD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C4-D3-LAYER-ADD",
+   "target": "FIN-001-LD",
+   "type": "about"
+  },
+  {
    "source": "T-C4-MOUNT-STIFF",
    "target": "CL-C4-D3-MOUNT-K-REQ",
    "type": "verifies"
@@ -83169,6 +91044,11 @@ window.PROOF_GRAPH = {
   {
    "source": "T-C4-TAP-D3",
    "target": "CL-C4-D3-PANEL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-TAP-D3",
+   "target": "CL-C4-D3-SEP-WORST",
    "type": "verifies"
   },
   {
@@ -86063,22 +93943,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-F1-1LB",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-F1-1LB",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-F1-1LB",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-F1-1LB",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86098,22 +93978,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-F-LT-2L",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-LT-2L",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-LT-2L",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-F-LT-2L",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86133,22 +94013,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-F-FA-2L",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-FA-2L",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-FA-2L",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-F-FA-2L",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86163,11 +94043,6 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-SEP-2L",
-   "target": "R-VIBRATION",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C4-SEP-2L",
    "target": "FIN-002-L",
    "type": "about"
   },
@@ -86178,22 +94053,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-SEP-2L",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-2L",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-2L",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-2L",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86208,11 +94083,6 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-SEP-1L",
-   "target": "R-VIBRATION",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C4-SEP-1L",
    "target": "FIN-002-L",
    "type": "about"
   },
@@ -86223,22 +94093,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-SEP-1L",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-1L",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-1L",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-1L",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86258,22 +94128,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-F-LT-REC",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-LT-REC",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-LT-REC",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-F-LT-REC",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86293,22 +94163,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-F-FA-REC",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-FA-REC",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-FA-REC",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-F-FA-REC",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86318,22 +94188,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-F-PANEL-REC",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-PANEL-REC",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-F-PANEL-REC",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-F-PANEL-REC",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86345,11 +94215,6 @@ window.PROOF_GRAPH = {
    "source": "P:requirements.vibration_sep_frac",
    "target": "CL-C4-SEP-REC",
    "type": "uses"
-  },
-  {
-   "source": "CL-C4-SEP-REC",
-   "target": "R-VIBRATION",
-   "type": "verifies"
   },
   {
    "source": "CL-C4-SEP-REC",
@@ -86363,22 +94228,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-SEP-REC",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-REC",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-REC",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-REC",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86390,11 +94255,6 @@ window.PROOF_GRAPH = {
    "source": "P:requirements.vibration_sep_frac",
    "target": "CL-C4-SEP-REC-WORST",
    "type": "uses"
-  },
-  {
-   "source": "CL-C4-SEP-REC-WORST",
-   "target": "R-VIBRATION",
-   "type": "verifies"
   },
   {
    "source": "CL-C4-SEP-REC-WORST",
@@ -86418,11 +94278,6 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-SEP-REC-WHIRL",
-   "target": "R-VIBRATION",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C4-SEP-REC-WHIRL",
    "target": "FIN-002-L",
    "type": "about"
   },
@@ -86483,11 +94338,6 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-SEP-1LB",
-   "target": "R-VIBRATION",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C4-SEP-1LB",
    "target": "FIN-002-L",
    "type": "about"
   },
@@ -86498,22 +94348,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-SEP-1LB",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-1LB",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-1LB",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-SEP-1LB",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86525,11 +94375,6 @@ window.PROOF_GRAPH = {
    "source": "P:requirements.vibration_sep_frac",
    "target": "CL-C4-SEP-1LB-WORST",
    "type": "uses"
-  },
-  {
-   "source": "CL-C4-SEP-1LB-WORST",
-   "target": "R-VIBRATION",
-   "type": "verifies"
   },
   {
    "source": "CL-C4-SEP-1LB-WORST",
@@ -86548,27 +94393,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-MS-FACE-2L",
-   "target": "R-STRUCT-MARGIN",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C4-MS-FACE-2L",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-MS-FACE-2L",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-MS-FACE-2L",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-MS-FACE-2L",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86578,27 +94418,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-MS-FACE-1L",
-   "target": "R-STRUCT-MARGIN",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C4-MS-FACE-1L",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-MS-FACE-1L",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-MS-FACE-1L",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-MS-FACE-1L",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86608,38 +94443,28 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-MS-EDGE",
-   "target": "R-STRUCT-MARGIN",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C4-MS-EDGE",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-MS-EDGE",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-MS-EDGE",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-MS-EDGE",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
    "source": "CALC-C4-STATIC-1L",
    "target": "CL-C4-MS-TUBE",
    "type": "derives-from"
-  },
-  {
-   "source": "CL-C4-MS-TUBE",
-   "target": "R-STRUCT-MARGIN",
-   "type": "verifies"
   },
   {
    "source": "CL-C4-MS-TUBE",
@@ -86655,11 +94480,6 @@ window.PROOF_GRAPH = {
    "source": "CALC-C4-STATIC-2L",
    "target": "CL-C4-MS-STRUT",
    "type": "derives-from"
-  },
-  {
-   "source": "CL-C4-MS-STRUT",
-   "target": "R-STRUCT-MARGIN",
-   "type": "verifies"
   },
   {
    "source": "CL-C4-MS-STRUT",
@@ -86683,22 +94503,22 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C4-FOOT-DEFL-L4",
-   "target": "FIN-001-UR",
+   "target": "FIN-001-RU",
    "type": "about"
   },
   {
    "source": "CL-C4-FOOT-DEFL-L4",
-   "target": "FIN-001-UL",
+   "target": "FIN-001-LU",
    "type": "about"
   },
   {
    "source": "CL-C4-FOOT-DEFL-L4",
-   "target": "FIN-001-LR",
+   "target": "FIN-001-RD",
    "type": "about"
   },
   {
    "source": "CL-C4-FOOT-DEFL-L4",
-   "target": "FIN-001-LL",
+   "target": "FIN-001-LD",
    "type": "about"
   },
   {
@@ -86720,16 +94540,6 @@ window.PROOF_GRAPH = {
    "source": "CALC-C4-BLOCK",
    "target": "CL-C4-BLOCK-MS",
    "type": "derives-from"
-  },
-  {
-   "source": "CL-C4-BLOCK-MS",
-   "target": "R-FIN-TUBE-JOINT",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C4-BLOCK-MS",
-   "target": "R-STRUCT-MARGIN",
-   "type": "verifies"
   },
   {
    "source": "CL-C4-BLOCK-MS",
@@ -86792,6 +94602,11 @@ window.PROOF_GRAPH = {
    "type": "verifies"
   },
   {
+   "source": "T-C4-TUBE-BEND",
+   "target": "CL-C4-D3-SEP-WORST",
+   "type": "verifies"
+  },
+  {
    "source": "T-C4-TUBE-TORSION",
    "target": "CL-C4-SEP-REC-WORST",
    "type": "verifies"
@@ -86799,6 +94614,11 @@ window.PROOF_GRAPH = {
   {
    "source": "T-C4-TUBE-TORSION",
    "target": "CL-C4-SEP-1LB-WORST",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-TUBE-TORSION",
+   "target": "CL-C4-D3-SEP-WORST",
    "type": "verifies"
   },
   {
@@ -86842,6 +94662,11 @@ window.PROOF_GRAPH = {
    "type": "verifies"
   },
   {
+   "source": "T-C4-BOARD-COUPON",
+   "target": "CL-C4-D3-MS-FACE",
+   "type": "verifies"
+  },
+  {
    "source": "T-C4-FIN-PROOF",
    "target": "CL-C4-MS-FACE-2L",
    "type": "verifies"
@@ -86872,13 +94697,68 @@ window.PROOF_GRAPH = {
    "type": "verifies"
   },
   {
+   "source": "T-C4-FIN-PROOF",
+   "target": "CL-C4-D3-MS-FACE",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-FIN-PROOF",
+   "target": "CL-C4-D3-MS-EDGE",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-FIN-PROOF",
+   "target": "CL-C4-D3-MS-TUBE",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-FIN-PROOF",
+   "target": "CL-C4-D3-MS-BRACE",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-FIN-PROOF",
+   "target": "CL-C4-D3-MS-BRACE-END",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-FIN-PROOF",
+   "target": "CL-C4-D3-MS-COLLAR",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-FIN-PROOF",
+   "target": "CL-C4-D3-MS-EAR",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-FIN-PROOF",
+   "target": "CL-C4-D3-MS-ANCHOR",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-FIN-PROOF",
+   "target": "CL-C4-D3-FOOT-DEFL",
+   "type": "verifies"
+  },
+  {
    "source": "T-C4-BLOCK-PROOF",
    "target": "CL-C4-BLOCK-MS",
    "type": "verifies"
   },
   {
+   "source": "T-C4-BLOCK-PROOF",
+   "target": "CL-C4-D3-BLOCK-MS",
+   "type": "verifies"
+  },
+  {
    "source": "T-C4-PROP-SWING",
    "target": "CL-C4-SEP-REC-WHIRL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C4-PROP-SWING",
+   "target": "CL-C4-D3-SEP-WHIRL",
    "type": "verifies"
   },
   {
@@ -87308,6 +95188,16 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CALC-C5-STANCE",
+   "target": "CL-C5-PACK-X-B3-LIGHT",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-C5-STANCE",
+   "target": "CL-C5-PACK-X-B3-HEAVY",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-C5-STANCE",
    "target": "CL-C5-MASS-EMPTY",
    "type": "derives-from"
   },
@@ -87663,11 +95553,6 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C5-DROP-STROKE",
-   "target": "R-LANDING-IMPACT",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C5-DROP-STROKE",
    "target": "GER-001-UR",
    "type": "about"
   },
@@ -87843,11 +95728,6 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CL-C5-DROP-N",
-   "target": "R-LANDING-IMPACT",
-   "type": "verifies"
-  },
-  {
-   "source": "CL-C5-DROP-N",
    "target": "GER-001-UR",
    "type": "about"
   },
@@ -87935,11 +95815,6 @@ window.PROOF_GRAPH = {
    "source": "CL-C5-FOOT-ENERGY-40",
    "target": "CL-C5-FOOT-ENERGY",
    "type": "uses"
-  },
-  {
-   "source": "CL-C5-FOOT-ENERGY",
-   "target": "R-LANDING-IMPACT",
-   "type": "verifies"
   },
   {
    "source": "CL-C5-FOOT-ENERGY",
@@ -88172,6 +96047,11 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "ASM-C5-DROP-GUARD",
+   "target": "CALC-C5-DROP-DYN",
+   "type": "uses"
+  },
+  {
    "source": "CL-C5-CG-Z-R1",
    "target": "CALC-C5-DROP-DYN",
    "type": "uses"
@@ -88222,6 +96102,21 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
+   "source": "ASM-C5-STROKE-PROP",
+   "target": "CALC-C5-DROP-DYN",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C5-FOOT-PROP",
+   "target": "CALC-C5-DROP-DYN",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C5-DROP-STROKE",
+   "target": "CALC-C5-DROP-DYN",
+   "type": "uses"
+  },
+  {
    "source": "ASM-D5-PAD-MU",
    "target": "CALC-C5-DROP-DYN",
    "type": "uses"
@@ -88238,93 +96133,203 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CALC-C5-DROP-DYN",
-   "target": "CL-C5-DYN-LEVEL-STROKE",
+   "target": "CL-C5-DYN-USABLE-CUR",
    "type": "derives-from"
   },
   {
-   "source": "CL-D5-STROKE-AVAIL",
-   "target": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CALC-C5-DROP-DYN",
+   "target": "CL-C5-DYN-LEVEL-CUR",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C5-DYN-USABLE-CUR",
+   "target": "CL-C5-DYN-LEVEL-CUR",
    "type": "uses"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
+   "target": "R-LANDING-IMPACT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-001-UR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-001-UL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-001-LR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-001-LL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-002-UR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-002-UL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-002-LR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-002-LL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-003-UR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-003-UL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-003-LR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-003-LL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-004-UR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-004-UL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-004-LR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-LEVEL-STROKE",
+   "source": "CL-C5-DYN-LEVEL-CUR",
    "target": "GER-004-LL",
    "type": "about"
+  },
+  {
+   "source": "CALC-C5-DROP-DYN",
+   "target": "CL-C5-DYN-PAIR-CUR",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C5-DYN-USABLE-CUR",
+   "target": "CL-C5-DYN-PAIR-CUR",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "R-LANDING-IMPACT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-004-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-004-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-004-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-PAIR-CUR",
+   "target": "GER-004-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C5-DROP-DYN",
+   "target": "CL-C5-DYN-USABLE-PROP",
+   "type": "derives-from"
   },
   {
    "source": "CALC-C5-DROP-DYN",
@@ -88332,7 +96337,7 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
-   "source": "CL-D5-STROKE-AVAIL",
+   "source": "CL-C5-DYN-USABLE-PROP",
    "target": "CL-C5-DROP-PAIR-PITCH",
    "type": "uses"
   },
@@ -88427,7 +96432,7 @@ window.PROOF_GRAPH = {
    "type": "derives-from"
   },
   {
-   "source": "CL-D5-STROKE-AVAIL",
+   "source": "CL-C5-DYN-USABLE-PROP",
    "target": "CL-C5-DROP-PAIR-ROLL",
    "type": "uses"
   },
@@ -88518,91 +96523,456 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CALC-C5-DROP-DYN",
-   "target": "CL-C5-DYN-N-MAX",
+   "target": "CL-C5-DYN-LEVEL-PROP",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C5-DYN-USABLE-PROP",
+   "target": "CL-C5-DYN-LEVEL-PROP",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-004-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-004-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-004-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-PROP",
+   "target": "GER-004-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C5-DROP-DYN",
+   "target": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C5-DYN-USABLE-PROP",
+   "target": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "R-LANDING-IMPACT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-004-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-004-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-004-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-LEVEL-FREE-PROP",
+   "target": "GER-004-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C5-DROP-DYN",
+   "target": "CL-C5-DYN-N-LEVEL",
    "type": "derives-from"
   },
   {
    "source": "P:requirements.landing_n_design",
-   "target": "CL-C5-DYN-N-MAX",
+   "target": "CL-C5-DYN-N-LEVEL",
    "type": "uses"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
+   "target": "R-LANDING-IMPACT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-001-UR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-001-UL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-001-LR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-001-LL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-002-UR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-002-UL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-002-LR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-002-LL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-003-UR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-003-UL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-003-LR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-003-LL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-004-UR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-004-UL",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
    "target": "GER-004-LR",
    "type": "about"
   },
   {
-   "source": "CL-C5-DYN-N-MAX",
+   "source": "CL-C5-DYN-N-LEVEL",
+   "target": "GER-004-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C5-DROP-DYN",
+   "target": "CL-C5-DYN-N-TILTED",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:requirements.landing_n_design",
+   "target": "CL-C5-DYN-N-TILTED",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-004-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-004-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-004-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-DYN-N-TILTED",
+   "target": "GER-004-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C5-DROP-DYN",
+   "target": "CL-C5-TE-CLEAR-PROP",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-004-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-004-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
+   "target": "GER-004-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C5-TE-CLEAR-PROP",
    "target": "GER-004-LL",
    "type": "about"
   },
@@ -88610,6 +96980,21 @@ window.PROOF_GRAPH = {
    "source": "CALC-C5-DROP-DYN",
    "target": "CL-C5-WINGTIP-CLEAR-ROLL",
    "type": "derives-from"
+  },
+  {
+   "source": "CALC-C5-DROP-DYN",
+   "target": "CL-C5-TEST-TILT-H",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-C5-DROP-DYN",
+   "target": "CL-C5-DYN-VALID",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C5-DROP-STROKE",
+   "target": "CL-C5-DYN-VALID",
+   "type": "uses"
   },
   {
    "source": "CALC-C5-DROP-DYN",
@@ -88718,31 +97103,46 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "T-C5-AIRCRAFT-DROP",
-   "target": "CL-C5-DROP-STROKE",
+   "target": "CL-C5-DYN-LEVEL-FREE-PROP",
    "type": "verifies"
   },
   {
    "source": "T-C5-AIRCRAFT-DROP",
-   "target": "CL-C5-DROP-STROKE-MARGIN",
+   "target": "CL-C5-DYN-N-LEVEL",
    "type": "verifies"
   },
   {
    "source": "T-C5-AIRCRAFT-DROP",
-   "target": "CL-C5-DROP-N",
+   "target": "CL-C5-DYN-N-TILTED",
    "type": "verifies"
   },
   {
    "source": "T-C5-AIRCRAFT-DROP",
-   "target": "CL-C5-DROP-ONE-FOOT",
+   "target": "CL-C5-DROP-PAIR-PITCH",
    "type": "verifies"
   },
   {
    "source": "T-C5-AIRCRAFT-DROP",
-   "target": "CL-C5-FOOT-ENERGY",
+   "target": "CL-C5-DROP-PAIR-ROLL",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C5-AIRCRAFT-DROP",
+   "target": "CL-C5-DYN-LEVEL-PROP",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C5-AIRCRAFT-DROP",
+   "target": "CL-C5-WINGTIP-CLEAR-ROLL",
    "type": "verifies"
   },
   {
    "source": "ASM-A3-PACK-RANGE",
+   "target": "CALC-C5-CRASH",
+   "type": "uses"
+  },
+  {
+   "source": "P:battery.mass_kg",
    "target": "CALC-C5-CRASH",
    "type": "uses"
   },
@@ -88782,17 +97182,42 @@ window.PROOF_GRAPH = {
    "type": "uses"
   },
   {
-   "source": "P:pod.size_m",
+   "source": "CL-D2-BAY-W",
    "target": "CALC-C5-CRASH",
    "type": "uses"
   },
   {
-   "source": "ASM-C5-NOSE-WALL",
+   "source": "CL-D2-BAY-H",
    "target": "CALC-C5-CRASH",
    "type": "uses"
   },
   {
-   "source": "CL-A3-PACK-FWD-ROOM",
+   "source": "CL-D2-PACK-X-FWD",
+   "target": "CALC-C5-CRASH",
+   "type": "uses"
+  },
+  {
+   "source": "CL-D2-PACK-TRAVEL",
+   "target": "CALC-C5-CRASH",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C5-PACK-X-B3",
+   "target": "CALC-C5-CRASH",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C5-PACK-X-B3-LIGHT",
+   "target": "CALC-C5-CRASH",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C5-PACK-X-B3-HEAVY",
+   "target": "CALC-C5-CRASH",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C5-SPREADER-T",
    "target": "CALC-C5-CRASH",
    "type": "uses"
   },
@@ -88813,11 +97238,16 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CALC-C5-CRASH",
+   "target": "CL-C5-PACK-ROOM-AVAIL",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-C5-CRASH",
    "target": "CL-C5-PACK-NOSE-ROOM",
    "type": "derives-from"
   },
   {
-   "source": "CL-A3-PACK-FWD-ROOM",
+   "source": "CL-C5-PACK-ROOM-AVAIL",
    "target": "CL-C5-PACK-NOSE-ROOM",
    "type": "uses"
   },
@@ -88833,6 +97263,16 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CALC-C5-CRASH",
+   "target": "CL-C5-NOSE-EXT-550",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-C5-CRASH",
+   "target": "CL-C5-NOSE-INNER-REQ",
+   "type": "derives-from"
+  },
+  {
+   "source": "CALC-C5-CRASH",
    "target": "CL-C5-PACK-CRASH-G",
    "type": "derives-from"
   },
@@ -88843,12 +97283,1677 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "CALC-C5-CRASH",
+   "target": "CL-C5-BLOCK-L",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C5-BLOCK-L",
+   "target": "POD-008",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C5-CRASH",
    "target": "CL-C5-BOX-X-SLACK-NOSE",
    "type": "derives-from"
   },
   {
    "source": "CL-C5-BOX-X-SLACK-NOSE",
    "target": "R-TRANSPORT",
+   "type": "verifies"
+  },
+  {
+   "source": "P:joints.torque.motor_screw_nm",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-E1-TORQUE",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-NUT-FACTOR",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.m3_d_m",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.head_d_m",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.screw_hole_d_m",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-HEAD-BEARING",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C1-MOTOR-F-ULT",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-MOTOR-M-ULT",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-FITTING-FACTOR",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.bolt_pattern_m",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "CL-D3-SCREW-ENGAGE",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-AL-SHEAR",
+   "target": "CALC-C6-MOTOR-SCREW",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.pinch_screw_len_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.ear_t_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.slit_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.washer_t_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.pinch_washers",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.nyloc_h_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.m3_pitch_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.nyloc_protrusion_min_threads",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.slip_torque_nm",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.mu_petg_cf",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.tube.od_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.tube.id_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-NUT-FACTOR",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.m3_d_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-PROP-NUT-TORQUE",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.safety_factor_ult",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-FITTING-FACTOR",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-PRINTED-FACTOR",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.grip_m",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-PETG-BEARING",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-CF-SIGMA",
+   "target": "CALC-C6-PINCH",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.fc_screw_len_m",
+   "target": "CALC-C6-INSERT",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.fc_stack_m",
+   "target": "CALC-C6-INSERT",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.m3_d_m",
+   "target": "CALC-C6-INSERT",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.insert_engage_min_d",
+   "target": "CALC-C6-INSERT",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.insert_len_m",
+   "target": "CALC-C6-INSERT",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-AVN-CRASH",
+   "target": "CALC-C6-INSERT",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-FITTING-FACTOR",
+   "target": "CALC-C6-INSERT",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-PRINTED-FACTOR",
+   "target": "CALC-C6-INSERT",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-INSERT-PULL",
+   "target": "CALC-C6-INSERT",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.tube.od_m",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-CORE-T-TUBE",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.boss.height_m",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.block.width_m",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.station_collar.height_m",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-FIN-MZ-ULT",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-FIN-MY-ULT",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-FINHALF-MZ-ULT",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-C4-COLLAR-T",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.safety_factor_ult",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-FITTING-FACTOR",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-PRINTED-FACTOR",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-BOND-SHEAR",
+   "target": "CALC-C6-TUBE-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-CF-SIGMA",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C4-MS-EDGE",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.edge_strip.w_m",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.edge_strip.t_m",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-FITTING-FACTOR",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-PRINTED-FACTOR",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.station_collar.tail_m",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.strip_bonded_faces_now",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.strip_bonded_faces_prop",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.strip_embed_prop_m",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-BOND-SHEAR",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-STRIP-L",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-FOAM-KD",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-D5-BOND-TAU",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:fins.board_t_m",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.pin_d_m",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "P:joints.pin_pitch_m",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-PIN-TAU",
+   "target": "CALC-C6-STRIP",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-BRACE-F",
+   "target": "CALC-C6-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-PRINTED-FACTOR",
+   "target": "CALC-C6-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.brace.w_m",
+   "target": "CALC-C6-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.brace.t_m",
+   "target": "CALC-C6-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.brace.engage_m",
+   "target": "CALC-C6-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.anchor.len_x_m",
+   "target": "CALC-C6-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.anchor.len_y_m",
+   "target": "CALC-C6-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C4-BOND-SHEAR",
+   "target": "CALC-C6-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-PEEL",
+   "target": "CALC-C6-BRACE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-FOAM-KD",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "CL-D5-BOND-SF",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "CL-D3-ROOT-FILLET-RF",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C1-POD-F-ULT",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-POD-M-ULT",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-POD-AREA",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-D2-POD-WIDTH",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-FITTING-FACTOR",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-PRINTED-FACTOR",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-D3-XPS-TENSILE",
+   "target": "CALC-C6-FOAM-BONDS",
+   "type": "uses"
+  },
+  {
+   "source": "CL-B2-HINGE-MOMENT",
+   "target": "CALC-C6-LINKAGE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-HORN-ARM",
+   "target": "CALC-C6-LINKAGE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C1-VD-ENV",
+   "target": "CALC-C6-LINKAGE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-B2-HINGE-V",
+   "target": "CALC-C6-LINKAGE",
+   "type": "uses"
+  },
+  {
+   "source": "P:requirements.safety_factor_ult",
+   "target": "CALC-C6-LINKAGE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-FITTING-FACTOR",
+   "target": "CALC-C6-LINKAGE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C1-PRINTED-FACTOR",
+   "target": "CALC-C6-LINKAGE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-FOAM-KD",
+   "target": "CALC-C6-LINKAGE",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-D3-XPS-TENSILE",
+   "target": "CALC-C6-LINKAGE",
+   "type": "uses"
+  },
+  {
+   "source": "P:landing.wall_t_m",
+   "target": "CALC-C6-SNAP",
+   "type": "uses"
+  },
+  {
+   "source": "P:landing.piston.hook_protrusion_m",
+   "target": "CALC-C6-SNAP",
+   "type": "uses"
+  },
+  {
+   "source": "ASM-C6-SNAP-STRAIN",
+   "target": "CALC-C6-SNAP",
+   "type": "uses"
+  },
+  {
+   "source": "CALC-C6-MOTOR-SCREW",
+   "target": "CL-C6-MOTOR-HEAD-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-MOTOR-HEAD-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-MOTOR-HEAD-RF",
+   "target": "FIN-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-HEAD-RF",
+   "target": "FIN-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-HEAD-RF",
+   "target": "FIN-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-HEAD-RF",
+   "target": "FIN-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-MOTOR-SCREW",
+   "target": "CL-C6-MOTOR-SEP-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-MOTOR-SEP-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-MOTOR-SEP-RF",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-SEP-RF",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-SEP-RF",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-SEP-RF",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-SEP-RF",
+   "target": "FIN-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-SEP-RF",
+   "target": "FIN-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-SEP-RF",
+   "target": "FIN-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-SEP-RF",
+   "target": "FIN-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-MOTOR-SCREW",
+   "target": "CL-C6-MOTOR-STRIP-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-MOTOR-STRIP-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-MOTOR-STRIP-RF",
+   "target": "PRP-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-STRIP-RF",
+   "target": "PRP-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-STRIP-RF",
+   "target": "PRP-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOTOR-STRIP-RF",
+   "target": "PRP-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-PINCH",
+   "target": "CL-C6-PINCH-ENGAGE-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-PINCH-ENGAGE-RF",
+   "target": "R-JOINT-STACK",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-PINCH-ENGAGE-RF",
+   "target": "FIN-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-PINCH-ENGAGE-RF",
+   "target": "FIN-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-PINCH-ENGAGE-RF",
+   "target": "FIN-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-PINCH-ENGAGE-RF",
+   "target": "FIN-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-PINCH",
+   "target": "CL-C6-PINCH-TORQUE",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:joints.torque.printed_max_nm",
+   "target": "CL-C6-PINCH-TORQUE",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C6-PINCH-TORQUE",
+   "target": "R-JOINT-STACK",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-PINCH-TORQUE",
+   "target": "FIN-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-PINCH-TORQUE",
+   "target": "FIN-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-PINCH-TORQUE",
+   "target": "FIN-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-PINCH-TORQUE",
+   "target": "FIN-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-PINCH",
+   "target": "CL-C6-MOUNT-ROCK-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-MOUNT-ROCK-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-MOUNT-ROCK-RF",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-MOUNT-ROCK-RF",
+   "target": "FIN-003-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOUNT-ROCK-RF",
+   "target": "FIN-003-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOUNT-ROCK-RF",
+   "target": "FIN-003-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOUNT-ROCK-RF",
+   "target": "FIN-003-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOUNT-ROCK-RF",
+   "target": "FIN-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOUNT-ROCK-RF",
+   "target": "FIN-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-PINCH",
+   "target": "CL-C6-MOUNT-HOOP-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-MOUNT-HOOP-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-MOUNT-HOOP-RF",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-MOUNT-HOOP-RF",
+   "target": "FIN-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-MOUNT-HOOP-RF",
+   "target": "FIN-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-INSERT",
+   "target": "CL-C6-FC-ENGAGE-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-FC-ENGAGE-RF",
+   "target": "R-JOINT-STACK",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-FC-ENGAGE-RF",
+   "target": "AVN-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FC-ENGAGE-RF",
+   "target": "POD-002",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-INSERT",
+   "target": "CL-C6-INSERT-PULL-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-INSERT-PULL-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-INSERT-PULL-RF",
+   "target": "POD-002",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-INSERT-PULL-RF",
+   "target": "AVN-001",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-TUBE-BONDS",
+   "target": "CL-C6-TUBE-BLOCK-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-TUBE-BLOCK-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-TUBE-BLOCK-RF",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-TUBE-BLOCK-RF",
+   "target": "FIN-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-TUBE-BLOCK-RF",
+   "target": "FIN-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-TUBE-BLOCK-RF",
+   "target": "FIN-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-TUBE-BLOCK-RF",
+   "target": "FIN-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-TUBE-BONDS",
+   "target": "CL-C6-BLOCK-SPAR-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-BLOCK-SPAR-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-BLOCK-SPAR-RF",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-BLOCK-SPAR-RF",
+   "target": "FIN-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BLOCK-SPAR-RF",
+   "target": "FIN-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BLOCK-SPAR-RF",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-TUBE-BONDS",
+   "target": "CL-C6-COLLAR-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-COLLAR-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-COLLAR-RF",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-COLLAR-RF",
+   "target": "FIN-008-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-COLLAR-RF",
+   "target": "FIN-008-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-COLLAR-RF",
+   "target": "FIN-008-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-COLLAR-RF",
+   "target": "FIN-008-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-COLLAR-RF",
+   "target": "FIN-002-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-COLLAR-RF",
+   "target": "FIN-002-L",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-TUBE-BONDS",
+   "target": "CL-C6-COLLAR-L-REQ",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:fin_detail.station_collar.height_m",
+   "target": "CL-C6-COLLAR-L-REQ",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C6-COLLAR-L-REQ",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-COLLAR-L-REQ",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-COLLAR-L-REQ",
+   "target": "FIN-008-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-COLLAR-L-REQ",
+   "target": "FIN-008-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-COLLAR-L-REQ",
+   "target": "FIN-008-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-COLLAR-L-REQ",
+   "target": "FIN-008-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-STRIP",
+   "target": "CL-C6-STRIP-ANCHOR-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-011-RUO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-011-RUI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-011-RDO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-011-RDI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-011-LUO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-011-LUI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-011-LDO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-011-LDI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-008-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-008-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-008-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF",
+   "target": "FIN-008-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-STRIP",
+   "target": "CL-C6-STRIP-EMBED-REQ",
+   "type": "derives-from"
+  },
+  {
+   "source": "P:joints.strip_embed_prop_m",
+   "target": "CL-C6-STRIP-EMBED-REQ",
+   "type": "uses"
+  },
+  {
+   "source": "CL-C6-STRIP-EMBED-REQ",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-STRIP-EMBED-REQ",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-STRIP-EMBED-REQ",
+   "target": "FIN-008-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-EMBED-REQ",
+   "target": "FIN-008-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-EMBED-REQ",
+   "target": "FIN-008-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-EMBED-REQ",
+   "target": "FIN-008-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-STRIP",
+   "target": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-011-RUO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-011-RUI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-011-RDO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-011-RDI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-011-LUO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-011-LUI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-011-LDO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-011-LDI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-008-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-008-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-008-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "target": "FIN-008-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-STRIP",
+   "target": "CL-C6-STRIP-FACE-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-011-RUO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-011-RUI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-011-RDO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-011-RDI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-011-LUO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-011-LUI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-011-LDO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-011-LDI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-001-RU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-001-RD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-001-LU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-FACE-RF",
+   "target": "FIN-001-LD",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-STRIP",
+   "target": "CL-C6-STRIP-PIN-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-011-RUO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-011-RUI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-011-RDO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-011-RDI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-011-LUO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-011-LUI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-011-LDO",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-011-LDI",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-001-RU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-001-RD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-001-LU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-STRIP-PIN-RF",
+   "target": "FIN-001-LD",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-BRACE",
+   "target": "CL-C6-BRACE-END-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-009-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-009-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-009-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-009-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-008-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-008-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-008-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-008-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-010-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-010-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-010-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-BRACE-END-RF",
+   "target": "FIN-010-LL",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-BRACE",
+   "target": "CL-C6-ANCHOR-PULL-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-ANCHOR-PULL-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-ANCHOR-PULL-RF",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-ANCHOR-PULL-RF",
+   "target": "FIN-010-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-ANCHOR-PULL-RF",
+   "target": "FIN-010-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-ANCHOR-PULL-RF",
+   "target": "FIN-010-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-ANCHOR-PULL-RF",
+   "target": "FIN-010-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-ANCHOR-PULL-RF",
+   "target": "WNG-002",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-FOAM-BONDS",
+   "target": "CL-C6-FOOT-SHOE-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-FOOT-SHOE-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-FOOT-SHOE-RF",
+   "target": "GER-001-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FOOT-SHOE-RF",
+   "target": "GER-001-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FOOT-SHOE-RF",
+   "target": "GER-001-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FOOT-SHOE-RF",
+   "target": "GER-001-LL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FOOT-SHOE-RF",
+   "target": "FIN-001-RU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FOOT-SHOE-RF",
+   "target": "FIN-001-RD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FOOT-SHOE-RF",
+   "target": "FIN-001-LU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FOOT-SHOE-RF",
+   "target": "FIN-001-LD",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-FOAM-BONDS",
+   "target": "CL-C6-FIN-ROOT-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-FIN-ROOT-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-FIN-ROOT-RF",
+   "target": "R-FIN-TUBE-JOINT",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-FIN-ROOT-RF",
+   "target": "FIN-001-RU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FIN-ROOT-RF",
+   "target": "FIN-001-RD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FIN-ROOT-RF",
+   "target": "FIN-001-LU",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FIN-ROOT-RF",
+   "target": "FIN-001-LD",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-FIN-ROOT-RF",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-FOAM-BONDS",
+   "target": "CL-C6-POD-WING-RF",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-POD-WING-RF",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-POD-WING-RF",
+   "target": "POD-001",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-POD-WING-RF",
+   "target": "WNG-001",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-LINKAGE",
+   "target": "CL-C6-LINK-BOND-AREA-MIN",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-LINK-BOND-AREA-MIN",
+   "target": "R-STRUCT-MARGIN",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-LINK-BOND-AREA-MIN",
+   "target": "MEC-008-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-LINK-BOND-AREA-MIN",
+   "target": "MEC-008-R",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-LINK-BOND-AREA-MIN",
+   "target": "MEC-004-L",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-LINK-BOND-AREA-MIN",
+   "target": "MEC-004-R",
+   "type": "about"
+  },
+  {
+   "source": "CALC-C6-SNAP",
+   "target": "CL-C6-SNAP-L-MIN",
+   "type": "derives-from"
+  },
+  {
+   "source": "CL-C6-SNAP-L-MIN",
+   "target": "R-JOINT-STACK",
+   "type": "verifies"
+  },
+  {
+   "source": "CL-C6-SNAP-L-MIN",
+   "target": "GER-002-UR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-SNAP-L-MIN",
+   "target": "GER-002-UL",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-SNAP-L-MIN",
+   "target": "GER-002-LR",
+   "type": "about"
+  },
+  {
+   "source": "CL-C6-SNAP-L-MIN",
+   "target": "GER-002-LL",
+   "type": "about"
+  },
+  {
+   "source": "T-C6-LAP-PETG",
+   "target": "CL-C6-TUBE-BLOCK-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-LAP-PETG",
+   "target": "CL-C6-BLOCK-SPAR-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-LAP-PETG",
+   "target": "CL-C6-COLLAR-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-LAP-PETG",
+   "target": "CL-C6-BRACE-END-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-LAP-PETG",
+   "target": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-BOARD-LAP",
+   "target": "CL-C6-FOOT-SHOE-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-BOARD-LAP",
+   "target": "CL-C6-STRIP-FACE-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-XPS-PULL",
+   "target": "CL-C6-FIN-ROOT-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-XPS-PULL",
+   "target": "CL-C6-POD-WING-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-XPS-PULL",
+   "target": "CL-C6-LINK-BOND-AREA-MIN",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-INSERT",
+   "target": "CL-C6-INSERT-PULL-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-HEAD-CREEP",
+   "target": "CL-C6-MOTOR-HEAD-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-STRIP-ANCHOR",
+   "target": "CL-C6-STRIP-ANCHOR-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-STRIP-ANCHOR",
+   "target": "CL-C6-STRIP-ANCHOR-RF-PROP",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-PROPNUT",
+   "target": "CL-C6-MOUNT-ROCK-RF",
+   "type": "verifies"
+  },
+  {
+   "source": "T-C6-PROPNUT",
+   "target": "CL-C6-MOUNT-HOOP-RF",
    "type": "verifies"
   },
   {
@@ -102509,6 +112614,71 @@ window.PROOF_GRAPH = {
   {
    "source": "SRC-B2-AVL",
    "target": "P:b2.avl.cs.y_m",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-J1-E-TUBE",
+   "target": "P:c2.inputs.spar_E_nom_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C4-E-TUBE-LO",
+   "target": "P:c2.inputs.spar_E_lo_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C4-G-TUBE",
+   "target": "P:c2.inputs.spar_G_nom_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C4-G-TUBE-LO",
+   "target": "P:c2.inputs.spar_G_lo_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-SPAR-SIGMA",
+   "target": "P:c2.inputs.spar_sigma_allow_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-SPAR-HOOP",
+   "target": "P:c2.inputs.spar_hoop_allow_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-TAPE",
+   "target": "P:c2.inputs.tape_E_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-TAPE",
+   "target": "P:c2.inputs.tape_G_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-TAPE",
+   "target": "P:c2.inputs.tape_t_m",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-TAPE",
+   "target": "P:c2.inputs.tape_sigma_allow_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-TAPE-EFF",
+   "target": "P:c2.inputs.tape_eff",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C4-PETG-BEARING",
+   "target": "P:c2.inputs.petg_bearing_allow_pa",
+   "type": "cites"
+  },
+  {
+   "source": "ASM-C2-CONTACT",
+   "target": "P:c2.inputs.contact_half_angle_deg",
    "type": "cites"
   },
   {

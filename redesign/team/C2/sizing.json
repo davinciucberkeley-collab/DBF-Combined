@@ -1,0 +1,76 @@
+{
+ "_note": "C2 sizing outputs for D1 (wing CAD) and D3/D7 where marked. Written by team/C2/wing_struct.py. Frame: params.json#frame, metres. Status PROPOSED until D1 models it and H1 proof-tests it.",
+ "spar": {
+  "part": "WNG-002",
+  "tube": "CF 22 x 20 x 1000 mm, roll-wrapped, unspliced",
+  "x_m": 0.08,
+  "z_m": 0.0066,
+  "y_m": [
+   -0.5,
+   0.5
+  ],
+  "foam_cover_upper_mm": 4.99,
+  "foam_cover_lower_mm": 4.25,
+  "slot": "22.4 mm wide (0.2 mm per side bond line), cut from the lower surface to z_s + 11.2 mm, bottom rounded r 11.2 mm; slot foam strip re-bonded as the cap",
+  "bond": "30-min epoxy + glass microballoons (1:1 by volume), full wet-out of the slot; cure 24 h before tape",
+  "abrade": "sand the tube 120 grit, wipe with IPA"
+ },
+ "plugs": {
+  "what": "internal plug, printed PETG 19.8 mm dia x 36 mm, 4 perimeters 50 % gyroid, bonded with thickened epoxy",
+  "y_m": [
+   -0.32,
+   0.32
+  ],
+  "why": "spar wall ring bending under the through-core block bore (CR-C4-02)",
+  "install": "push in from the spar end with a marked dowel to |y| = 0.32 m before the spar goes into the slot",
+  "mass_g_each": 7.0,
+  "anchor_plugs": {
+   "what": "printed PETG plug 19.8 mm dia x 20 mm, 30 % fill, bonded",
+   "y_m": [
+    -0.242,
+    0.242
+   ],
+   "per_anchor": "one under each brace saddle, upper and lower braces share it (|y| 0.242)",
+   "why": "ring bending under the 146 N design saddle load exceeds the hoop allowable without it",
+   "order": "push the anchor plug (0.242) in first, then the block plug (0.32)",
+   "mass_g_each": 4.0
+  }
+ },
+ "skin": {
+  "part": "WNG-003",
+  "layup": "1 layer packing tape each side, spanwise strips, 10 % overlap, wrapped 15 mm round the LE; tape continuous over the spar slot and the block pockets",
+  "required_for": "chordwise bending aft of the spar (bare foam MS < tape MS), torsion cell, handling",
+  "doublers": "one extra chordwise tape band 60 mm wide over each block pocket and each servo pocket edge"
+ },
+ "core": {
+  "part": "WNG-001",
+  "material": "XPS F-250, one piece",
+  "ribs": "none: the core is the rib; the blocks FIN-004-L/R are the hard points at |y| 0.32",
+  "pockets": "block pocket full depth at |y| 0.32 (C4/D3 size), brace anchor pockets 20 x 16 mm to the spar at |y| 0.242, servo pockets aft of x 0.12 m only",
+  "keep_out": "no cut deeper than 50 % of the local thickness between x 0.06 and 0.10 m except the spar slot and block pockets"
+ },
+ "tip": {
+  "unspanned_m": 0.075,
+  "edge": "wingtip edge tape 2 layers (damage fuse; L6 tip strike breaks the tip outboard of the spar, repair = re-cut and glue)"
+ },
+ "transport_cradle": {
+  "y_m": [
+   -0.2,
+   0.2
+  ],
+  "pad_area_min_m2": 0.00108,
+  "pad_min_mm": "40 x 40 under the spar line (D7)"
+ },
+ "pod": {
+  "bond": "epoxy to bare foam (remove tape in the footprint, sand); not onto tape"
+ },
+ "mass_g": {
+  "core_kg": 201.9,
+  "tape_kg": 48.6,
+  "spar_kg": 102.0,
+  "slot_fill_kg": 15.0,
+  "plugs_kg": 30.0,
+  "total_kg": 397.4,
+  "allocation_kg": 405.0
+ }
+}

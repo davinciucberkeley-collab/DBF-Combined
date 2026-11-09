@@ -184,6 +184,7 @@ def stance(items, c, foot, z_fin, y_fin, z_pad, m_feet, pack_rng, x_t, x_fwd, x_
     return {"cases": table, "a1_feet_r1_narrow_deg": a1_r1["a1_narrow_deg"],
             "a1_feet_r1_nozcg_deg": math.degrees(math.atan(z_fin / a1_r1["h_m"])),
             "d5_a3_layout_deg": a3l["d5_narrow_pos_deg"], "x_pack_target_m": r1["x_pack_m"],
+            "x_pack_light_m": table["B3 target, 503 g"]["x_pack_m"], "x_pack_heavy_m": table["B3 target, 680 g"]["x_pack_m"],
             "d5_r1_narrow_deg": r1["d5_narrow_pos_deg"], "d5_r1_nozcg_deg": math.degrees(math.atan(z_pad / r1["h_m"])),
             "d5_worst_narrow_deg": table[worst]["d5_narrow_pos_deg"], "worst_case": worst,
             "d5_corner_deg": corner, "wide_r1_deg": r1["wide_deg"],
@@ -323,6 +324,10 @@ kit.claim("CL-C5-PACK-X-B3", "Pack centroid station that puts the CG on the B3 t
           note="C5's own trim of A3's item list (550 g pack); B3 quotes -0.001 m in CR-B3-11. Sets the room ahead "
                "of the pack for the crush block (CALC-C5-CRASH)",
           how="T-A3-CG-BALANCE: mark the pack station that balances on the target line.")
+kit.claim("CL-C5-PACK-X-B3-LIGHT", "Pack station on the B3 target, 503 g pack", calc="CALC-C5-STANCE",
+          output="x_pack_light_m", unit="m", how="As CL-C5-PACK-X-B3 with the weighed pack.")
+kit.claim("CL-C5-PACK-X-B3-HEAVY", "Pack station on the B3 target, 680 g pack", calc="CALC-C5-STANCE",
+          output="x_pack_heavy_m", unit="m", how="As CL-C5-PACK-X-B3 with the weighed pack.")
 kit.claim("CL-C5-MASS-EMPTY", "Mass with the pack out", calc="CALC-C5-STANCE", output="m_empty_kg", unit="kg",
           how="Weigh without the pack.")
 kit.claim("CL-C5-CG-Z-EMPTY", "CG z with the pack out", calc="CALC-C5-STANCE", output="z_empty_m", unit="m",
@@ -592,7 +597,7 @@ def drop_dyn(m, g, v, lam, F_p, F_pk, s_av, L, eps_y, guard, z_cg, h, z_pad, y_f
         lvf = _sim2d(m, Iyy * k, pitch, sc, h, v, 0.0, 0.0, g, F_p, F_pk, s_y, sav)
         pw = worst(pitch, Iyy * k, sc, sav, lam, v)
         rw = worst(roll, Izz * k, (1.0, 1.0), sav, lam, v, tip=(b / 2, -h + ft))
-        res[tag] = {"s_av_m": sav, "usable_m": sav - guard, "scales": sc,
+        res[tag] = {"s_av_m": sav, "usable_m": sav - guard, "scales": list(sc),
                     "level_design_m": max(lv[0]), "level_free_m": max(lvf[0]), "level_free_n": lvf[1],
                     "pitch_worst_tilt_deg": pw[0], "pitch_design_m": pw[1], "pitch_n": pw[2],
                     "roll_worst_tilt_deg": rw[0], "roll_design_m": rw[1], "roll_n": rw[2],
@@ -687,7 +692,8 @@ kit.test("T-C5-FOOT-RIG", "Single-foot drop rig", verifies=["CL-C5-DROP-STROKE",
          procedure="A foot (shoe bonded on a 2-layer foam-board offcut clamped vertical) under a 0.65 kg sled on two "
                    "guide rods; free drop 0.115 m onto plywood; phone or logger accelerometer on the sled. 3 drops, "
                    "new cartridge each. Pass: stroke <= 29 mm, sled peak <= 6.0 g (100 Hz filter), no shoe-bond crack. "
-                   "Run before the aircraft drop; cheap and repeatable.")
+                   "With the biased cartridges (CR-C5-10) use a 0.70 kg sled for an upper-foot cartridge and 0.60 kg "
+                   "for a lower one. Run before the aircraft drop; cheap and repeatable.")
 kit.test("T-C5-AIRCRAFT-DROP", "Aircraft drop (= T-C1-FOOT-DROP), proposed foot",
          verifies=["CL-C5-DYN-LEVEL-FREE-PROP", "CL-C5-DYN-N-LEVEL", "CL-C5-DYN-N-TILTED", "CL-C5-DROP-PAIR-PITCH",
                    "CL-C5-DROP-PAIR-ROLL", "CL-C5-DYN-LEVEL-PROP", "CL-C5-WINGTIP-CLEAR-ROLL"],
@@ -710,44 +716,47 @@ CRASH_IN = {"pack_rng": "ASM-A3-PACK-RANGE", "m_nom": P + "battery.mass_kg", "v"
             "g": P + "env.g_ms2", "n_pack": "ASM-C5-PACK-G-MAX", "sigma": "ASM-D5-XPS-PLATEAU",
             "eps_d": "ASM-D5-DENSIFY", "eps_y": "ASM-D5-YIELD-STRAIN", "pack": P + "battery.size_m",
             "bay_w": "CL-D2-BAY-W", "bay_h": "CL-D2-BAY-H", "x_stop": "CL-D2-PACK-X-FWD", "travel": "CL-D2-PACK-TRAVEL",
-            "x_pack": "CL-C5-PACK-X-B3", "t_sp": "ASM-C5-SPREADER-T", "box": P + "requirements.box_external_m",
+            "x_pack": "CL-C5-PACK-X-B3", "x_light": "CL-C5-PACK-X-B3-LIGHT", "x_heavy": "CL-C5-PACK-X-B3-HEAVY",
+            "t_sp": "ASM-C5-SPREADER-T", "box": P + "requirements.box_external_m",
             "bwall": "ASM-A1-WALL", "env": P + "transport.envelope_props_off_m"}
 
 
 @kit.calc("CALC-C5-CRASH", title="Crush block ahead of the pack (5 m/s nose-in)", inputs=CRASH_IN,
           units={"pack_rng": "g", "m_nom": "kg", "v": "m/s", "g": "m/s2", "sigma": "Pa", "pack": "m", "bay_w": "m",
-                 "bay_h": "m", "x_stop": "m", "travel": "m", "x_pack": "m", "t_sp": "m", "box": "m", "bwall": "m",
-                 "env": "m"},
-          equation="F = min(n_pack m_set g, sigma A_bay) ; s = m_hit v^2 / (2 F) ; L = s / (eps_d - eps_y / 2) ; "
-                   "room = L + t_spreader (if F / sigma > pack face) ; weighed pack: m_set = m_hit = m ; unweighed: "
-                   "m_set = lightest, m_hit = heaviest ; room available = x_pack(B3 target) - x_pack(forward stop) ; "
-                   "nose extension = room - available ; box x slack = box_x - 2 wall - (envelope_x + extension)")
-def crash(pack_rng, m_nom, v, g, n_pack, sigma, eps_d, eps_y, pack, bay_w, bay_h, x_stop, travel, x_pack, t_sp,
-          box, bwall, env):
+                 "bay_h": "m", "x_stop": "m", "travel": "m", "x_pack": "m", "x_light": "m", "x_heavy": "m",
+                 "t_sp": "m", "box": "m", "bwall": "m", "env": "m"},
+          equation="per weighed pack mass m (503 / 550 / 680 g): F = min(n_pack m g, sigma A_bay) ; s = m v^2 / (2 F) ; "
+                   "L = s / (eps_d - eps_y / 2) ; room = L + t_spreader (if F / sigma > pack face) ; pack trimmed to "
+                   "the B3 target at x_p(m) ; nose wall inside face needed = x_p - pack_L / 2 - room ; today = "
+                   "x_stop - pack_L / 2 ; extension = most forward need - today ; box x slack = box_x - 2 wall - "
+                   "(envelope_x + extension)")
+def crash(pack_rng, m_nom, v, g, n_pack, sigma, eps_d, eps_y, pack, bay_w, bay_h, x_stop, travel, x_pack, x_light,
+          x_heavy, t_sp, box, bwall, env):
     A_bay = bay_w * bay_h
     face = pack[1] * pack[2]
     eff = eps_d - eps_y / 2
-
-    def block(m_set, m_hit):
-        F = min(n_pack * m_set * g, sigma * A_bay)
-        s = 0.5 * m_hit * v * v / F
+    nose_now = x_stop - pack[0] / 2
+    rows = {}
+    for tag, mp, xp in (("503 g", min(pack_rng) / 1000.0, x_light), ("550 g", m_nom, x_pack),
+                        ("680 g", max(pack_rng) / 1000.0, x_heavy)):
+        F = min(n_pack * mp * g, sigma * A_bay)
+        s = 0.5 * mp * v * v / F
         A = F / sigma
         L = s / eff
-        return {"F_N": F, "A_m2": A, "stroke_m": s, "L_m": L, "spreader": A > face,
-                "room_m": L + (t_sp if A > face else 0.0), "n_light": F / (m_set * g), "n_heavy": F / (m_hit * g)}
-    nom = block(m_nom, m_nom)
-    rob = block(min(pack_rng) / 1000.0, max(pack_rng) / 1000.0)
-    avail = x_pack - x_stop
-    ext_nom = max(0.0, nom["room_m"] - avail)
-    ext_rob = max(0.0, rob["room_m"] - avail)
-    ideal = 0.5 * v * v / (n_pack * g) / eff
-    return {"A_bay_m2": A_bay, "A_pack_face_m2": face, "weighed_550": nom, "unweighed_503_680": rob,
-            "room_needed_nom_m": nom["room_m"], "room_needed_rob_m": rob["room_m"], "block_L_nom_m": nom["L_m"],
-            "block_A_nom_m2": nom["A_m2"], "n_pack_nom": nom["n_light"], "room_ideal_m": ideal,
-            "room_avail_m": avail, "room_in_travel_m": travel, "nose_ext_nom_m": ext_nom, "nose_ext_rob_m": ext_rob,
-            "x_nose_inner_req_m": x_pack - pack[0] / 2 - nom["room_m"],
-            "x_nose_inner_now_m": x_stop - pack[0] / 2,
-            "box_x_slack_m": (box[1] - 2 * bwall) - (env[1] + ext_nom)}
+        room = L + (t_sp if A > face else 0.0)
+        rows[tag] = {"x_pack_m": xp, "F_N": F, "A_m2": A, "n": F / (mp * g), "stroke_m": s, "L_m": L,
+                     "spreader": A > face, "room_needed_m": room, "room_avail_m": xp - x_stop,
+                     "x_nose_inner_req_m": xp - pack[0] / 2 - room}
+    nom = rows["550 g"]
+    req = min(r["x_nose_inner_req_m"] for r in rows.values())
+    ext = max(0.0, nose_now - req)
+    ext_nom = max(0.0, nose_now - nom["x_nose_inner_req_m"])
+    return {"A_bay_m2": A_bay, "A_pack_face_m2": face, "packs": rows,
+            "room_needed_nom_m": nom["room_needed_m"], "room_avail_m": nom["room_avail_m"],
+            "block_L_nom_m": nom["L_m"], "n_pack_nom": nom["n"], "n_pack_max": max(r["n"] for r in rows.values()),
+            "room_ideal_m": 0.5 * v * v / (n_pack * g) / eff, "room_in_travel_m": travel,
+            "x_nose_inner_now_m": nose_now, "x_nose_inner_req_m": req, "nose_ext_nom_m": ext_nom, "nose_ext_m": ext,
+            "box_x_slack_m": (box[1] - 2 * bwall) - (env[1] + ext)}
 
 
 kit.claim("CL-C5-PACK-ROOM-AVAIL", "Room ahead of the pack at the B3 target station", calc="CALC-C5-CRASH",
@@ -760,16 +769,16 @@ kit.claim("CL-C5-PACK-NOSE-ROOM", "Room the crush block needs, weighed 550 g pac
           note="XPS F-250 over the full bay section behind a 1.5 mm spreader; the n_pack limit, not the foam, sets "
                "the floor (ideal 24.3 mm). Short by the nose extension CL-C5-NOSE-EXT (CR-C5-02)",
           how="Crush a block coupon (T-D5-COUPON method) to get the force; weigh the pack (E2).")
-kit.claim("CL-C5-PACK-NOSE-ROOM-ANY", "Room the crush block needs before the pack is weighed (503-680 g)",
-          calc="CALC-C5-CRASH", output="room_needed_rob_m", unit="m",
-          note="the lightest pack sets the force, the heaviest the stroke: weigh the pack and cut the block to it",
-          how="As CL-C5-PACK-NOSE-ROOM.")
-kit.claim("CL-C5-NOSE-EXT", "Pod nose extension for the block (weighed pack)", calc="CALC-C5-CRASH",
-          output="nose_ext_nom_m", unit="m", how="D2 geometry: nose wall inside face at CL-C5-NOSE-INNER-REQ or ahead.")
-kit.claim("CL-C5-NOSE-INNER-REQ", "Nose wall inside face station needed", calc="CALC-C5-CRASH",
+kit.claim("CL-C5-NOSE-EXT", "Pod nose extension for the block, any pack 503-680 g", calc="CALC-C5-CRASH",
+          output="nose_ext_m", unit="m",
+          note="the 503 g pack trims furthest forward and sets it; a weighed 550 g pack alone needs CL-C5-NOSE-EXT-550",
+          how="D2 geometry: nose wall inside face at CL-C5-NOSE-INNER-REQ or ahead.")
+kit.claim("CL-C5-NOSE-EXT-550", "Pod nose extension for the block, 550 g pack", calc="CALC-C5-CRASH",
+          output="nose_ext_nom_m", unit="m", how="As CL-C5-NOSE-EXT.")
+kit.claim("CL-C5-NOSE-INNER-REQ", "Nose wall inside face station needed (any pack)", calc="CALC-C5-CRASH",
           output="x_nose_inner_req_m", unit="m", how="D2 CAD: nose wall inside face x.")
-kit.claim("CL-C5-PACK-CRASH-G", "Pack deceleration in the block, 5 m/s nose-in, weighed pack", calc="CALC-C5-CRASH",
-          output="n_pack_nom", unit="-", limit=("<=", "ASM-C5-PACK-G-MAX"),
+kit.claim("CL-C5-PACK-CRASH-G", "Largest pack deceleration in its block, 5 m/s nose-in", calc="CALC-C5-CRASH",
+          output="n_pack_max", unit="-", limit=("<=", "ASM-C5-PACK-G-MAX"),
           how="Block coupon crush force x section; pack mass weighed (E2).")
 kit.claim("CL-C5-BLOCK-L", "Crush block length (F-250, weighed 550 g pack)", calc="CALC-C5-CRASH",
           output="block_L_nom_m", unit="m", parts=["POD-008"], how="Cut length; rule.")
@@ -786,4 +795,10 @@ if __name__ == "__main__":
     for k, r in st["cases"].items():
         print(f"  {k:<30} {r['m_kg']:6.3f} {r['x_m']:7.4f} {r['z_m']:7.4f} {r['h_m']:6.3f} {r['a1_narrow_deg']:8.1f}"
               f" {r['d5_narrow_pos_deg']:6.1f} {r['d5_narrow_neg_deg']:6.1f} {r['wide_deg']:6.1f}")
-    for name in ("CALC-C5-STANCE", "CALC-C5-WIND", "CALC-C5-LAYFLAT", "CALC-C5-DROP", "CALC-C5-
+    for name in ("CALC-C5-STANCE", "CALC-C5-WIND", "CALC-C5-LAYFLAT", "CALC-C5-DROP", "CALC-C5-DROP-DYN", "CALC-C5-CRASH"):
+        out = kit.nodes[name]["outputs"]
+        print(f"\n{name}:")
+        for k, v in out.items():
+            if k == "cases":
+                continue
+            print(f"  {k:<30} {v:.4g}" if isinstance(v, float) else f"  {k:<30} {v}")

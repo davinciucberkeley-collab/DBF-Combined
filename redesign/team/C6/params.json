@@ -13,13 +13,13 @@
   "fc_screw_len_m": {"value": 0.010, "unit": "m", "source": "C6 choice", "status": "PROPOSED", "note": "FC (and PDB if a PCB) on 4 M3 heat-set inserts; M3x8 is too short through a grommet stack"},
   "fc_stack_m": {"value": 0.0044, "unit": "m", "source": "C6 estimate", "status": "UNVERIFIED", "note": "nylon washer 0.8 + grommet flange 1.0 + PCB 1.6 + grommet flange 1.0; F3 measures the chosen board"},
   "torque": {
-   "motor_screw_nm": {"value": 0.25, "unit": "N m", "source": "team/C6/joints.py#CALC-C6-MOTOR-SCREW", "status": "PROPOSED", "note": "M3 into the aluminium motor base, head on a printed plate, no washer; 5 N on a luggage scale at 50 mm from the screw axis"},
+   "motor_screw_nm": {"value": 0.2, "unit": "N m", "source": "team/C6/joints.py#CALC-C6-MOTOR-SCREW", "status": "PROPOSED", "note": "M3 into the aluminium motor base, head on a printed plate, no washer; 4 N (0.41 kg) on a luggage scale hooked 50 mm out on the hex key"},
    "insert_nm": {"value": 0.4, "unit": "N m", "source": "C6 choice", "status": "PROPOSED", "note": "M3 into a brass heat-set insert in PETG; insert torque-out is several times higher"},
    "printed_max_nm": {"value": 0.4, "unit": "N m", "source": "C6 choice", "status": "PROPOSED", "note": "ceiling for any M3 whose head or nut bears on a printed part"}
   },
   "strip_bonded_faces_now": {"value": 1, "unit": "-", "source": "subsystems/fins (E-FIN-29..36): strip outer face on the PETG slot wall, inner face on the board paper", "status": "PROPOSED"},
   "strip_bonded_faces_prop": {"value": 2, "unit": "-", "source": "C6 proposal CR-C6-01: solid PETG tongue between the strips in the collar tail", "status": "PROPOSED"},
-  "strip_embed_prop_m": {"value": 0.035, "unit": "m", "source": "C6 proposal CR-C6-01", "status": "PROPOSED"},
+  "strip_embed_prop_m": {"value": 0.040, "unit": "m", "source": "C6 proposal CR-C6-01", "status": "PROPOSED"},
   "pin_d_m": {"value": 0.002, "unit": "m", "source": "C6 proposal CR-C6-02: pultruded CF rod 2 mm", "status": "PROPOSED"},
   "pin_pitch_m": {"value": 0.015, "unit": "m", "source": "C6 proposal CR-C6-02", "status": "PROPOSED"}
  }

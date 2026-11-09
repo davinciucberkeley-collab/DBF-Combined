@@ -549,7 +549,7 @@ def fins_mass(areal, chord, hh, s_w, s_t, rho_cf, m_fit, L_s, m_block, e_w, e_t,
 
 # ====================================================================== claims
 R_VIB, R_SM, R_JNT = ["R-VIBRATION"], ["R-STRUCT-MARGIN"], ["R-FIN-TUBE-JOINT"]
-TUBES, HALF = ["FIN-002-L", "FIN-002-R"], ["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"]
+TUBES, HALF = ["FIN-002-L", "FIN-002-R"], ["FIN-001-RU", "FIN-001-LU", "FIN-001-RD", "FIN-001-LD"]
 TAP = "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0."
 
 kit.claim("CL-C4-FE-CHECK-TUBE", "FE vs closed form, bare tube + tip mass", calc="CALC-C4-FE-CHECK",
@@ -634,29 +634,44 @@ kit.claim("CL-C4-FINS-DELTA", "Fins mass change, braced design, 2 layers kept", 
 kit.claim("CL-C4-FINS-DELTA-1L", "Fins mass change, recommended 1-layer fin + braces + edge strips + blocks", calc="CALC-C4-MASS",
           output="rec_1l_delta_g", unit="g", how="A3 roll-up.")
 
+# R2 (2026-11-09): these are the R1 concept-model claims (symmetric core, tube to the motor axis, brace 10 x 2 to
+# y 0.20). fin_structures_d3.py re-runs on D3's as-designed geometry and its CL-C4-D3-* claims are the claims of
+# record. The R1 values stay (D3's CALC-D3-BRACE reads CL-C4-STRUT-LEN), but they no longer verify requirements.
+for _n in kit.nodes.values():
+    if _n["type"] == "claim":
+        _n.pop("verifies", None)
+        _n["note"] = ("R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). " + _n.get("note", "")).strip()
+
 # ====================================================================== tests (planned)
 kit.test("T-C4-TUBE-BEND", "Three-point bend of the US-stock 22 x 20 tube (I1 buys, H1 runs)",
-         verifies=["CL-C4-SEP-REC-WORST", "CL-C4-SEP-1LB-WORST"],
+         verifies=["CL-C4-SEP-REC-WORST", "CL-C4-SEP-1LB-WORST", "CL-C4-D3-SEP-WORST"],
          procedure="Span 0.80 m on two 22 mm dowels, load at centre in 0.5 kg steps to 4 kg, dial gauge to 0.01 mm; "
                    "E = F L^3 / (48 I delta) with I = 3.645e-9 m4. Pass band for the recommended design: E >= 70 GPa.")
-kit.test("T-C4-TUBE-TORSION", "Torsion of the same tube", verifies=["CL-C4-SEP-REC-WORST", "CL-C4-SEP-1LB-WORST"],
+kit.test("T-C4-TUBE-TORSION", "Torsion of the same tube",
+         verifies=["CL-C4-SEP-REC-WORST", "CL-C4-SEP-1LB-WORST", "CL-C4-D3-SEP-WORST"],
          procedure="Clamp 0.40 m of tube in two printed V-blocks at one end, 0.30 m lever arm at the other, 0.5-2 kg, "
                    "measure twist with a laser pointer on a wall 3 m away; G = T L / (J theta), J = 7.29e-9 m4.")
 kit.test("T-C4-TAP", "Tap test of one fin quarter (tube + block + half-fin + motor + prop + brace)",
          verifies=["CL-C4-SEP-REC", "CL-C4-SEP-1LB", "CL-C4-F1-1LB", "CL-C4-F-LT-REC", "CL-C4-F-FA-REC", "CL-C4-F-PANEL-REC"],
          procedure="Block clamped in a vice via a core offcut; tap the motor bell in y and x; phone accelerometer or FC "
                    "raw IMU at 1 kHz; FFT peaks vs 1P/2P at hover, cruise, max.")
-kit.test("T-C4-BOARD-COUPON", "Foam-board face coupon", verifies=["CL-C4-MS-FACE-2L", "CL-C4-MS-FACE-1L"],
+kit.test("T-C4-BOARD-COUPON", "Foam-board face coupon",
+         verifies=["CL-C4-MS-FACE-2L", "CL-C4-MS-FACE-1L", "CL-C4-D3-MS-FACE"],
          procedure="Three 50 x 300 mm strips per layer count, four-point bend, span 250 mm, load to failure: face "
                    "allowable and D. Weigh 0.1 m2 for the areal mass.")
 kit.test("T-C4-FIN-PROOF", "Proof load of one fin quarter", verifies=["CL-C4-MS-FACE-2L", "CL-C4-MS-FACE-1L", "CL-C4-MS-TUBE", "CL-C4-MS-EDGE",
-                                                                       "CL-C4-FOOT-DEFL-L4", "CL-C4-MS-STRUT"],
+                                                                       "CL-C4-FOOT-DEFL-L4", "CL-C4-MS-STRUT",
+                                                                       "CL-C4-D3-MS-FACE", "CL-C4-D3-MS-EDGE",
+                                                                       "CL-C4-D3-MS-TUBE", "CL-C4-D3-MS-BRACE",
+                                                                       "CL-C4-D3-MS-BRACE-END", "CL-C4-D3-MS-COLLAR",
+                                                                       "CL-C4-D3-MS-EAR", "CL-C4-D3-MS-ANCHOR",
+                                                                       "CL-C4-D3-FOOT-DEFL"],
          procedure="1.5 x L4 at the foot (49 N along the fin + 25 N across), then 1.5 x G2 (77 N lateral at the tube "
                    "end); no cracking or face wrinkle; record the foot deflection.")
-kit.test("T-C4-BLOCK-PROOF", "Block proof in a core offcut", verifies=["CL-C4-BLOCK-MS"],
+kit.test("T-C4-BLOCK-PROOF", "Block proof in a core offcut", verifies=["CL-C4-BLOCK-MS", "CL-C4-D3-BLOCK-MS"],
          procedure="Block bonded on a spar stub in a 0.15 m core offcut; 0.30 m tube in the bore; hang 18 kg at 0.17 m "
                    "lever (30 N m > design 20.3 N m) for 1 min; no creak, no bond line crack.")
-kit.test("T-C4-PROP-SWING", "Bifilar swing of one prop", verifies=["CL-C4-SEP-REC-WHIRL"],
+kit.test("T-C4-PROP-SWING", "Bifilar swing of one prop", verifies=["CL-C4-SEP-REC-WHIRL", "CL-C4-D3-SEP-WHIRL"],
          procedure="Two 0.5 m threads at the blade tips; period of 20 swings; I = m g d^2 T^2 / (16 pi^2 L).")
 
 

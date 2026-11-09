@@ -253,6 +253,8 @@
     "a1_feet_r1_nozcg_deg": 30.624886480457597,
     "d5_a3_layout_deg": 32.26349665319715,
     "x_pack_target_m": -0.008680020693466933,
+    "x_pack_light_m": -0.014404528397815222,
+    "x_pack_heavy_m": 0.0030322934112681915,
     "d5_r1_narrow_deg": 32.7940870322433,
     "d5_r1_nozcg_deg": 34.906889486454226,
     "d5_worst_narrow_deg": 32.37959241580515,
@@ -1879,6 +1881,26 @@
    "value": -0.008680020693466933
   },
   {
+   "id": "CL-C5-PACK-X-B3-LIGHT",
+   "type": "claim",
+   "title": "Pack station on the B3 target, 503 g pack",
+   "calc": "CALC-C5-STANCE",
+   "output": "x_pack_light_m",
+   "unit": "m",
+   "how": "As CL-C5-PACK-X-B3 with the weighed pack.",
+   "value": -0.014404528397815222
+  },
+  {
+   "id": "CL-C5-PACK-X-B3-HEAVY",
+   "type": "claim",
+   "title": "Pack station on the B3 target, 680 g pack",
+   "calc": "CALC-C5-STANCE",
+   "output": "x_pack_heavy_m",
+   "unit": "m",
+   "how": "As CL-C5-PACK-X-B3 with the weighed pack.",
+   "value": 0.0030322934112681915
+  },
+  {
    "id": "CL-C5-MASS-EMPTY",
    "type": "claim",
    "title": "Mass with the pack out",
@@ -2308,9 +2330,6 @@
     "op": "<=",
     "ref": "CL-D5-STROKE-AVAIL"
    },
-   "verifies": [
-    "R-LANDING-IMPACT"
-   ],
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -2330,7 +2349,7 @@
     "GER-004-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP: flange-to-sleeve gap before and after; pass with >= 3 mm left.",
-   "note": "no rotor lift in the test, so it is harder than the design landing (lift 2/3 W)",
+   "note": "symmetric hand energy balance (CG on the pad midline); CALC-C5-DROP-DYN supersedes it for the real CG (17 mm toward the pod-side pair) and for tilted landings",
    "value": 0.028784664513196504
   },
   {
@@ -2376,9 +2395,6 @@
     "op": "<=",
     "ref": "P:requirements.landing_n_design"
    },
-   "verifies": [
-    "R-LANDING-IMPACT"
-   ],
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -2411,9 +2427,6 @@
     "op": ">=",
     "ref": "CL-C5-FOOT-ENERGY-40"
    },
-   "verifies": [
-    "R-LANDING-IMPACT"
-   ],
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -2476,6 +2489,7 @@
     "GER-004-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP corner drop: stroke of the first foot.",
+   "note": "first foot only; the feet that land after the rotation stroke more (CALC-C5-DROP-DYN)",
    "value": 0.0211619089910216
   },
   {
@@ -3091,21 +3105,23 @@
     "CL-C5-DROP-N"
    ],
    "state": "planned",
-   "procedure": "A foot (shoe bonded on a 2-layer foam-board offcut clamped vertical) under a 0.65 kg sled on two guide rods; free drop 0.115 m onto plywood; phone or logger accelerometer on the sled. 3 drops, new cartridge each. Pass: stroke <= 29 mm, sled peak <= 6.0 g (100 Hz filter), no shoe-bond crack. Run before the aircraft drop; cheap and repeatable."
+   "procedure": "A foot (shoe bonded on a 2-layer foam-board offcut clamped vertical) under a 0.65 kg sled on two guide rods; free drop 0.115 m onto plywood; phone or logger accelerometer on the sled. 3 drops, new cartridge each. Pass: stroke <= 29 mm, sled peak <= 6.0 g (100 Hz filter), no shoe-bond crack. With the biased cartridges (CR-C5-10) use a 0.70 kg sled for an upper-foot cartridge and 0.60 kg for a lower one. Run before the aircraft drop; cheap and repeatable."
   },
   {
    "id": "T-C5-AIRCRAFT-DROP",
    "type": "test",
-   "title": "Aircraft drop at 1.5 m/s (= T-C1-FOOT-DROP)",
+   "title": "Aircraft drop (= T-C1-FOOT-DROP), proposed foot",
    "verifies": [
-    "CL-C5-DROP-STROKE",
-    "CL-C5-DROP-STROKE-MARGIN",
-    "CL-C5-DROP-N",
-    "CL-C5-DROP-ONE-FOOT",
-    "CL-C5-FOOT-ENERGY"
+    "CL-C5-DYN-LEVEL-FREE-PROP",
+    "CL-C5-DYN-N-LEVEL",
+    "CL-C5-DYN-N-TILTED",
+    "CL-C5-DROP-PAIR-PITCH",
+    "CL-C5-DROP-PAIR-ROLL",
+    "CL-C5-DYN-LEVEL-PROP",
+    "CL-C5-WINGTIP-CLEAR-ROLL"
    ],
    "state": "planned",
-   "procedure": "Complete aircraft, props off, LiPo replaced by a 550 g sandbag (add ballast to 2.6 kg), FC powered from a small 2S pack logging IMU at >= 1 kHz (or a strapped logger at the CG). Hang from a quick-release at 0.115 m pad-to-floor over plywood. Drops: level x2; 10 deg pitch (one pad pair first); 10 deg roll (one fin first); 10 deg pitch + roll (one foot first). New cartridges before each level drop. Pass: CG peak <= 6.0 g (100 Hz low-pass), every stroke <= 29 mm, the wing TE does not touch in the level and pitch drops (the protected wingtip corner may touch in the roll and corner drops), no damage beyond the cartridges (shoe bonds, fin tips, tube block, pod bond checked)."
+   "procedure": "Complete aircraft, props off, LiPo replaced by a sandbag of the weighed pack mass (ballast to 2.6 kg), FC on a small 2S pack logging IMU at >= 1 kHz. Quick-release hook over plywood. (1) Level, 0.115 m pad-to-floor, x2, new cartridges each: pass CG peak <= 6.0 g (100 Hz low-pass), every stroke <= 35 mm, upper and lower pair strokes within 3 mm of each other (bias check). (2) Pitch 4 deg both ways and roll 8 deg, at 0.082 m (CL-C5-TEST-TILT-H): pass when each pair's stroke is within 3 mm of the model re-run at the measured height and tilt, and the wing TE stays clear except the wingtip corner cap. The model then carries the design case (1.5 m/s with 2/3 W lift). After every drop: shoe bonds, fin tips, tube block and pod bond checked."
   },
   {
    "id": "ASM-C5-SPREADER-T",
@@ -3123,7 +3139,7 @@
    "title": "Crush block ahead of the pack (5 m/s nose-in)",
    "script": "redesign/team/C5/landing_calc.py",
    "function": "crash",
-   "equation": "F = min(n_pack m_set g, sigma A_bay) ; s = m_hit v^2 / (2 F) ; L = s / (eps_d - eps_y / 2) ; room = L + t_spreader (if F / sigma > pack face) ; weighed pack: m_set = m_hit = m ; unweighed: m_set = lightest, m_hit = heaviest ; room available = x_pack(B3 target) - x_pack(forward stop) ; nose extension = room - available ; box x slack = box_x - 2 wall - (envelope_x + extension)",
+   "equation": "per weighed pack mass m (503 / 550 / 680 g): F = min(n_pack m g, sigma A_bay) ; s = m v^2 / (2 F) ; L = s / (eps_d - eps_y / 2) ; room = L + t_spreader (if F / sigma > pack face) ; pack trimmed to the B3 target at x_p(m) ; nose wall inside face needed = x_p - pack_L / 2 - room ; today = x_stop - pack_L / 2 ; extension = most forward need - today ; box x slack = box_x - 2 wall - (envelope_x + extension)",
    "inputs": {
     "pack_rng": "ASM-A3-PACK-RANGE",
     "m_nom": "P:battery.mass_kg",
@@ -3139,6 +3155,8 @@
     "x_stop": "CL-D2-PACK-X-FWD",
     "travel": "CL-D2-PACK-TRAVEL",
     "x_pack": "CL-C5-PACK-X-B3",
+    "x_light": "CL-C5-PACK-X-B3-LIGHT",
+    "x_heavy": "CL-C5-PACK-X-B3-HEAVY",
     "t_sp": "ASM-C5-SPREADER-T",
     "box": "P:requirements.box_external_m",
     "bwall": "ASM-A1-WALL",
@@ -3156,6 +3174,8 @@
     "x_stop": "m",
     "travel": "m",
     "x_pack": "m",
+    "x_light": "m",
+    "x_heavy": "m",
     "t_sp": "m",
     "box": "m",
     "bwall": "m",
@@ -3164,39 +3184,56 @@
    "outputs": {
     "A_bay_m2": 0.0030628,
     "A_pack_face_m2": 0.0024000000000000002,
-    "weighed_550": {
-     "F_N": 526.8016,
-     "A_m2": 0.0030628,
-     "stroke_m": 0.013050453909023815,
-     "L_m": 0.024858007445759646,
-     "spreader": true,
-     "room_m": 0.026358007445759647,
-     "n_light": 97.67056955322062,
-     "n_heavy": 97.67056955322062
-    },
-    "unweighed_503_680": {
-     "F_N": 493.27449499999994,
-     "A_m2": 0.0028678749709302323,
-     "stroke_m": 0.017231784911157837,
-     "L_m": 0.032822447449824446,
-     "spreader": true,
-     "room_m": 0.03432244744982445,
-     "n_light": 99.99999999999999,
-     "n_heavy": 73.9705882352941
+    "packs": {
+     "503 g": {
+      "x_pack_m": -0.014404528397815222,
+      "F_N": 493.27449499999994,
+      "A_m2": 0.0028678749709302323,
+      "n": 99.99999999999999,
+      "stroke_m": 0.012746452662224106,
+      "L_m": 0.02427895745185544,
+      "spreader": true,
+      "room_needed_m": 0.02577895745185544,
+      "room_avail_m": 0.01579547160218477,
+      "x_nose_inner_req_m": -0.11018348584967066
+     },
+     "550 g": {
+      "x_pack_m": -0.008680020693466933,
+      "F_N": 526.8016,
+      "A_m2": 0.0030628,
+      "n": 97.67056955322062,
+      "stroke_m": 0.013050453909023815,
+      "L_m": 0.024858007445759646,
+      "spreader": true,
+      "room_needed_m": 0.026358007445759647,
+      "room_avail_m": 0.021519979306533057,
+      "x_nose_inner_req_m": -0.10503802813922658
+     },
+     "680 g": {
+      "x_pack_m": 0.0030322934112681915,
+      "F_N": 526.8016,
+      "A_m2": 0.0030628,
+      "n": 78.99825478569313,
+      "stroke_m": 0.016135106651156715,
+      "L_m": 0.03073353647839374,
+      "spreader": true,
+      "room_needed_m": 0.03223353647839374,
+      "room_avail_m": 0.03323229341126818,
+      "x_nose_inner_req_m": -0.09920124306712555
+     }
     },
     "room_needed_nom_m": 0.026358007445759647,
-    "room_needed_rob_m": 0.03432244744982445,
-    "block_L_nom_m": 0.024858007445759646,
-    "block_A_nom_m2": 0.0030628,
-    "n_pack_nom": 97.67056955322062,
-    "room_ideal_m": 0.024278957451855435,
     "room_avail_m": 0.021519979306533057,
+    "block_L_nom_m": 0.024858007445759646,
+    "n_pack_nom": 97.67056955322062,
+    "n_pack_max": 99.99999999999999,
+    "room_ideal_m": 0.024278957451855435,
     "room_in_travel_m": 0.0237,
-    "nose_ext_nom_m": 0.00483802813922659,
-    "nose_ext_rob_m": 0.01280246814329139,
-    "x_nose_inner_req_m": -0.10503802813922658,
     "x_nose_inner_now_m": -0.1002,
-    "box_x_slack_m": 0.025161971860773458
+    "x_nose_inner_req_m": -0.11018348584967066,
+    "nose_ext_nom_m": 0.004838028139226583,
+    "nose_ext_m": 0.009983485849670667,
+    "box_x_slack_m": 0.020016514150329345
    },
    "input_values": {
     "pack_rng": [
@@ -3220,6 +3257,8 @@
     "x_stop": -0.03019999999999999,
     "travel": 0.0237,
     "x_pack": -0.008680020693466933,
+    "x_light": -0.014404528397815222,
+    "x_heavy": 0.0030322934112681915,
     "t_sp": 0.0015,
     "box": [
      1.25,
@@ -3264,49 +3303,49 @@
    "value": 0.026358007445759647
   },
   {
-   "id": "CL-C5-PACK-NOSE-ROOM-ANY",
-   "type": "claim",
-   "title": "Room the crush block needs before the pack is weighed (503-680 g)",
-   "calc": "CALC-C5-CRASH",
-   "output": "room_needed_rob_m",
-   "unit": "m",
-   "how": "As CL-C5-PACK-NOSE-ROOM.",
-   "note": "the lightest pack sets the force, the heaviest the stroke: weigh the pack and cut the block to it",
-   "value": 0.03432244744982445
-  },
-  {
    "id": "CL-C5-NOSE-EXT",
    "type": "claim",
-   "title": "Pod nose extension for the block (weighed pack)",
+   "title": "Pod nose extension for the block, any pack 503-680 g",
+   "calc": "CALC-C5-CRASH",
+   "output": "nose_ext_m",
+   "unit": "m",
+   "how": "D2 geometry: nose wall inside face at CL-C5-NOSE-INNER-REQ or ahead.",
+   "note": "the 503 g pack trims furthest forward and sets it; a weighed 550 g pack alone needs CL-C5-NOSE-EXT-550",
+   "value": 0.009983485849670667
+  },
+  {
+   "id": "CL-C5-NOSE-EXT-550",
+   "type": "claim",
+   "title": "Pod nose extension for the block, 550 g pack",
    "calc": "CALC-C5-CRASH",
    "output": "nose_ext_nom_m",
    "unit": "m",
-   "how": "D2 geometry: nose wall inside face at CL-C5-NOSE-INNER-REQ or ahead.",
-   "value": 0.00483802813922659
+   "how": "As CL-C5-NOSE-EXT.",
+   "value": 0.004838028139226583
   },
   {
    "id": "CL-C5-NOSE-INNER-REQ",
    "type": "claim",
-   "title": "Nose wall inside face station needed",
+   "title": "Nose wall inside face station needed (any pack)",
    "calc": "CALC-C5-CRASH",
    "output": "x_nose_inner_req_m",
    "unit": "m",
    "how": "D2 CAD: nose wall inside face x.",
-   "value": -0.10503802813922658
+   "value": -0.11018348584967066
   },
   {
    "id": "CL-C5-PACK-CRASH-G",
    "type": "claim",
-   "title": "Pack deceleration in the block, 5 m/s nose-in, weighed pack",
+   "title": "Largest pack deceleration in its block, 5 m/s nose-in",
    "calc": "CALC-C5-CRASH",
-   "output": "n_pack_nom",
+   "output": "n_pack_max",
    "unit": "-",
    "limit": {
     "op": "<=",
     "ref": "ASM-C5-PACK-G-MAX"
    },
    "how": "Block coupon crush force x section; pack mass weighed (E2).",
-   "value": 97.67056955322062
+   "value": 99.99999999999999
   },
   {
    "id": "CL-C5-BLOCK-L",
@@ -3336,7 +3375,7 @@
     "R-TRANSPORT"
    ],
    "how": "D7: close the box on the built aircraft with the extended nose.",
-   "value": 0.025161971860773458
+   "value": 0.020016514150329345
   }
  ]
 }

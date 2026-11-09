@@ -1,24 +1,26 @@
 # Fin and motor-tube structures — K09-L
 
-Owner C4 (fin / motor-tube structures). Status `PROPOSED` design change, analysis `MODELLED`, every input
-`UNVERIFIED` until the tests at the end have run. Revision C4-R1, 2026-11-09, against params A1-R2 and C1 loads of
-2026-11-09 09:39. Re-run in about 5 s: `python -I redesign/team/C4/fin_structures.py`, then
-`python -I redesign/proofs/build_graph.py`. That build reports no C4 errors; other roles' drift still fails it.
-Every number below is in `claims.json` (`CL-C4-…`) or `out/results.json`.
+Owner C4 (fin / motor-tube structures). Revision **C4-R2**, 2026-11-09: re-run on D3's as-designed fin (CR-D3-10),
+params A1-R2, `subsystems/fins/params.json` (D3 R2), C1 loads and B4 rpm of 2026-11-09. Analysis `MODELLED`; every
+input that is not a catalogue value is `UNVERIFIED` until the tests at the end have run.
+
+Re-run (about 40 s): `python -I redesign/team/C4/fin_structures_d3.py`, then `python -I redesign/proofs/build_graph.py`
+(no C4 errors; other roles' drift still fails the build). Every number below is in `claims.d3.json` (`CL-C4-D3-…`)
+or `out/results_d3.json`. R1 (`fin_structures.py`, `claims.json`) is kept only because D3's `CALC-D3-BRACE` reads it;
+its claims no longer verify requirements.
 
 ## Verdict
 
-| Question (A1 action item) | Answer | Claim | Status |
+| Question | Answer | Claim | Status |
 |---|---|---|---|
-| Does the bonded fin, acting as a shear web, move the tube modes out of the forcing? | **No.** It lifts the fore-aft mode (x, in the fin plane) from 180 to 329 Hz. The first mode is the **lateral-torsion** mode (tube bends out of the fin plane and twists, because the motor and prop sit 24–50 mm ahead of the tube axis). It stays at **149 Hz**, 4 % from 1P at the F4 rpm cap | `CL-C4-F-LT-2L`, `CL-C4-SEP-2L` | `FAIL` |
-| What fixes it? | One **10 × 2 mm CF strip brace** per motor station, from a collar under the mount to the spar line 0.12 m inboard, plus **10 × 1 mm CF edge strips** on both faces of the fin top edge, from the same collar to the foot. First station mode **296 Hz** with 1 layer, **392 Hz** with 2 layers | `CL-C4-F1-1LB`, `CL-C4-F-LT-REC` | `PROPOSED` |
-| ≥ 20 % from 1P/2P at hover, cruise and 1P at the F4 cap (`R-VIBRATION`)? | **Yes** with the brace and edge strips: 0.48 (1 layer) / 0.96 (2 layers). Over the whole tube E 70–135 GPa × G 3–10 GPa range: 0.43 / 0.90. With prop gyroscopics: 0.96 | `CL-C4-SEP-1LB`, `-1LB-WORST`, `-REC-WHIRL` | `UNVERIFIED` |
-| ≥ 20 % outside the whole 80–330 Hz band (B4's rule)? | **No.** 1 layer: first mode inside the band (−0.10). 2 layers: 392 Hz, 1 % short of the 396 Hz the rule needs (+0.19). No 22 mm tube design reaches it without the brace | `CL-C4-SEP-BAND-1LB`, `-REC` | `FAIL` |
-| Tube modulus used | E = **100 GPa** (`ASM-J1-E-TUBE`), corners 70 / 135 GPa; G = **5 GPa** (`ASM-C4-G-TUBE`), corners 3 / 10 GPa. I1 buys the US-stock tube and runs the bend and torsion tests (CR-C4-03) | — | `UNVERIFIED` |
-| Through-core block sized to the fin-joint moment? | **Yes.** Design moment 23.1 N·m = 10.7 N·m (A1 value; C1 now reports 9.4 N·m) × 1.5 × 1.15 × 1.25. Block 69 × 36 × 27 mm, minimum margin **+0.47** (tube-bore wall shear-out), 30 g each | `CL-C4-BLOCK-MS`, `CL-C4-BLOCK-MASS` | `UNVERIFIED` |
-| Spar bearing (with C2) | Bearing on the spar 5.0 MPa, margin +2.0. The spar takes a **961 N** design couple across the 36 mm bore. The 1 mm wall needs an internal plug at each block (CR-C4-02) | `CL-C4-SPAR-COUPLE` | `UNVERIFIED` |
-| One foam-board layer per half-fin (−42 g)? | **Passes only with the brace and edge strips:** separation 0.48 / 0.43 worst case, face margin +0.28 against a 10 MPa face allowable that is still a guess. Without them neither 1 nor 2 layers pass: foot side load L4 gives an ultimate face stress of 26 MPa (2 layers) / 58 MPa (1 layer) on the bare board | `CL-C4-MS-FACE-1L`, `CL-C4-SEP-1LB` | `UNVERIFIED` |
-| Mass | Recommended (1 layer + braces + edge strips + heavier blocks): **+67 g** on the fins allocation (370 → 437 g). The 2-layer version adds 109 g | `CL-C4-FINS-DELTA-1L`, `-DELTA` | `UNVERIFIED` |
+| Does D3's fin as drawn (one board layer) meet `R-VIBRATION`? | **No.** First station mode 228 Hz (lower quarter), 14 % from 2P cruise (200 Hz) | `CL-C4-D3-SEP-1L` 0.14 | `FAIL` |
+| Why did R1's 296 Hz drop? | The tube now stops 18 mm below the motor axis and the fin top 30 mm below it (CR-D3-01), and the cambered wing leaves 14 mm more free tube below than above. The governing mode is motor twist about the tube plus fore-aft nodding; the one-layer board stores 45–70 % of its strain energy, the brace 2–3 % | `out/results_d3.json#configs` | `MODELLED` |
+| What fixes it? | **Keep two board layers** (as `params.json` `fins.layers` = 2 already says), with the brace and the edge strips. All three are needed: drop the brace → 0.01, drop the strips → 0.02 | `CL-C4-D3-SEP` | `UNVERIFIED` |
+| Separation, recommended design | **0.41** nominal (281 Hz lower, 289 Hz upper); **0.33** at the worst tube E/G corner; **0.40** with prop gyroscopics | `CL-C4-D3-SEP`, `-WORST`, `-WHIRL` | `UNVERIFIED` |
+| B4's whole-band rule (80–330 Hz) | Not met (−0.15); needs every station mode ≥ 396 Hz. `R-VIBRATION` on the operating points is the criterion; rpm notch is the backup (CR-C4-06/07) | `CL-C4-D3-SEP-BAND` | `FAIL` |
+| Strength, every part | Positive; tightest is the brace anchor on the spar, **+0.33** with a 0.5 peel knock-down | `CL-C4-D3-MS-*` | `UNVERIFIED` |
+| Through-core block | **+0.55** (tube-bore shear-out), bosses not credited for strength | `CL-C4-D3-BLOCK-MS` | `UNVERIFIED` |
+| Mass | Second layer +37.5 g: fins **402 g** vs 370 g allocated (−9 %). A 10 × 2 brace instead of 10 × 3 saves about 10 g `EST` | `CL-C4-D3-FINS-MASS` | `FAIL` |
 
 ## Forcing and criterion
 
@@ -26,133 +28,118 @@ Every number below is in `claims.json` (`CL-C4-…`) or `out/results.json`.
 |---|---|---|---|---|
 | Hover, 2.6 kg | 5 396 | 89.9 | 179.9 | `CL-B4-HOVER-RPM` |
 | Cruise, 16 m/s | 6 000 | 100.0 | 200.0 | `CL-B4-CRUISE-RPM` |
-| F4 output cap | 9 319 | 155.3 | 310.6 (transient, not a dwell point) | `CL-B4-RPM-MAX` |
+| F4 cap | 9 319 | 155.3 | 310.6 (transient, not counted) | `CL-B4-RPM-MAX` |
 
-Criterion: `R-VIBRATION` (A2), separation ≥ `P:requirements.vibration_sep_frac` 0.20 from each steady point. A
-station mode is any mode with ≥ 10 % of its kinetic energy in the motor, prop and mount body. Fin-panel modes
-(< 10 %) are reported but do not count. The 80–330 Hz band rule (CR-B4-07) is reported as a second, stricter claim.
+`R-VIBRATION`: every station mode ≥ `P:requirements.vibration_sep_frac` 0.20 from each point above. A station mode
+has ≥ 10 % of its kinetic energy in the motor + prop + mount body.
 
-## Model
+## Model (`fin_fe.build_q`, one quarter, upper UR and lower LR)
 
 | Item | Value | Source | Status |
 |---|---|---|---|
-| Method | FE quarter model, UR station; tube 3-D frame elements; half-fin flat shell (Q4 membrane + Mindlin plate, selective reduced integration); LE bond = rigid link to the tube; fin root pinned on the skin; motor + prop + mount as one rigid body at its true offsets; brace = axial element; edge strips = beam on the top fin row | `fin_fe.py` | `MODELLED` |
-| Tube clamp | at the block face, z = ±13.5 mm (core 27 mm at x 0.045 m) | `ASM-C4-CORE-T-TUBE` | `UNVERIFIED` |
-| Tube 22 × 20 mm, 0.102 kg/m | E 100 GPa, G 5 GPa | `ASM-J1-E-TUBE`, `ASM-C4-G-TUBE` | `UNVERIFIED` |
-| Station masses | motor 81 g at −23.5 mm, prop + adapter 22 g at −50 mm (Ip 7.5e-5 kg·m², diametral Ip/2), mount 18 g at −5 mm (x from the tube axis) | params, `ASM-C4-PROP-IP` | `UNVERIFIED` |
-| Fin masses | ESC 6.6 g on the fin, foot 10 g at the TE tip | params (A3 placement) | `PROPOSED` |
-| Foam board, per layer | faces 0.10 mm paper, E 4 GPa; core E 10 MPa, G 4 MPa; 0.2 kg/m² | `ASM-C4-FACE-*`, `-CORE-*` | `UNVERIFIED` |
-| Brace | 10 × 2 mm pultruded CF strip, E 110 GPa, from (−11, −11, −25) mm off the station to the spar line at y = 0.20 m; length 0.191 m | `ASM-C4-STRUT-*` | `PROPOSED` |
-| Edge strips | 10 × 1 mm CF on both outer faces along the fin top edge, collar to foot | `ASM-C4-EDGE-*` | `PROPOSED` |
-| Gyroscopics | spin inertia = prop + bell 9.0e-5 kg·m²; modal reduction on 16 modes | `CALC-C4-CAMPBELL` | `MODELLED` |
+| Tube | CF 22 × 20, frame elements, clamp at the bore ends z +30.4 / −16.6 mm, root spring 10 000 N·m/rad (swept 3 000–rigid) | `ASM-C4-BORE-Z`, `ASM-C4-ROOT-K` | `UNVERIFIED` |
+| Tube E, G | 100 GPa (70–135), 5 GPa (3–10) | `ASM-J1-E-TUBE`, `ASM-C4-G-TUBE` | `UNVERIFIED` |
+| Tube end / motor axis | z 0.172 / 0.190 m | `fin_detail.tube_length_m`, params | `PROPOSED` |
+| Mount | spring tube end → motor body: rocking 3 000, twist 30 000 N·m/rad | `ASM-C4-MOUNT-K-ROCK`, `-TWIST` | `UNVERIFIED` |
+| Motor body | motor 81 g (face x 0.0309), prop + adapter 22 g (x −0.0082), mount 11.3 g at its CAD CG | `CL-D3-X-FACE`, `CL-D3-X-PROP`, `ASM-C4-MOUNT-CAD` | `PROPOSED` |
+| Half-fin | mapped Q4 Mindlin shell between the S5010 skin and a straight top edge (collar top 0.1595 m → TE tip 0.19 m); lower root free over the link slot | `ASM-C4-SKIN-PTS`, `fin_detail` | `PROPOSED` |
+| Board | 1 or 2 layers × 4.8 mm, faces 0.10 mm paper E 4 GPa, core E 10 / G 4 MPa | `ASM-C4-FACE-*`, `-CORE-*` | `UNVERIFIED` |
+| Edge strips | CF 10 × 1, both faces, top edge, collar to foot | `fin_detail.edge_strip` | `PROPOSED` |
+| Brace | CF 10 × 3, ear (0, −17.8, 0) mm at the collar z 0.1535, anchor (0.080, ±0.242, skin + 4 mm); L 0.145 / 0.157 m; anchor + spar 3e7 N/m in series | `fin_detail.brace`, `ASM-C4-ANCHOR-K` | `PROPOSED` |
 
 | Check | Result | Limit | Claim | Status |
 |---|---|---|---|---|
-| Bare tube + tip mass vs Blevins (and J1's formula) | 183.0 vs 183.0 Hz, error 0.03 % | ≤ 1 % | `CL-C4-FE-CHECK-TUBE` | `CHECKED` |
-| Cantilever foam-board plate vs Leissa (stiff core) | 68.6 vs 69.1 Hz, 0.7 % | ≤ 2 % | `CL-C4-FE-CHECK-PLATE` | `CHECKED` |
-| Mesh 6×5 / 12×10 (used) / 24×20, braced design | 392 / 392 / 392 Hz and 517 / 514 / 502 Hz; change 2.5 % | ≤ 3 % | `CL-C4-MESH-CONV` | `CHECKED` |
+| Quad shell = R1 rectangle element on a rectangle | 1e-15 | ≤ 1e-9 | `CL-C4-D3-Q4-RECT` | `CHECKED` |
+| Skewed 16 × 16 mesh cantilever plate vs Leissa | 69.7 vs 69.1 Hz, 0.9 % | ≤ 2 % | `CL-C4-D3-Q4-SKEW` | `CHECKED` |
+| Mesh 12 × 10 / 24 × 20 (used) / 36 × 30 | f1 lower 281.1 / 281.1 / 280.9 Hz; change 0.24 % | ≤ 3 % | `CL-C4-D3-MESH-CONV` | `CHECKED` |
+| R1 checks (tube vs Blevins 0.03 %, plate vs Leissa 0.7 %) | unchanged | — | `CL-C4-FE-CHECK-*` | `CHECKED` |
 
-## Modes by configuration (E 100 GPa, G 5 GPa)
+## Modes (nominal E, G; first three station modes, Hz; separation = nearest operating point)
 
-| Configuration | Station modes, Hz | First fin-panel mode, Hz | Separation (nearest) | Worst over E/G | Band rule | Claim |
-|---|---|---|---|---|---|---|
-| Bare tube | 144 (lateral-torsion), 180 (fore-aft) | — | 0.00 (2P hover) | — | −0.56 | `out/results.json` |
-| 1 layer, no brace | 146, 274 | 21 | 0.06 (1P cap) | — | −0.56 | `CL-C4-SEP-1L` `FAIL` |
-| 2 layers, no brace (current) | 149, 329 | 38 | 0.04 (1P cap) | 0.02 | −0.55 | `CL-C4-SEP-2L` `FAIL` |
-| **1 layer + brace + edge strips (recommended)** | **296, 307** | 56 | **0.48** (2P cruise) | **0.43** | −0.10 | `CL-C4-SEP-1LB`, `-1LB-WORST` |
-| 2 layers + brace + edge strips | 392, 514 | 68 | 0.96 (2P cruise) | 0.90 | +0.19 | `CL-C4-SEP-REC`, `-REC-WORST` |
+| Configuration | Upper | Lower | Separation | Source |
+|---|---|---|---|---|
+| D3 as designed, 1 layer | 237, 304, 504 | 228, 296, 485 | **0.14** `FAIL` | `CL-C4-D3-SEP-1L` |
+| **Recommended: 2 layers + brace + strips** | **289**, 360, 378 | **281**, 356, 373 | **0.41** | `CL-C4-D3-SEP` |
+| same, brace 10 × 2 | 287, 358, 373 | 279, 352, 369 | 0.39 | `results_d3.json` |
+| 2 layers, no brace | 158, 317, 522 | 143, 310, 517 | 0.01 `FAIL` | same |
+| 2 layers, no edge strips | 196, 228, 283 | 190, 224, 274 | 0.02 `FAIL` | same |
+| 2 layers, mount 1 000 N·m/rad | 259 | 255 | 0.27 | same |
+| 2 layers, root 3 000 N·m/rad | 278 | 272 | 0.36 | same |
+| 2 layers, half height 0.21 m (CR-B3-14) | 283 | 276 | 0.38 | same |
+| 1 layer, rigid mount **and** rigid root | 257 | 248 | 0.24 (not credible: both springs rigid) | same |
 
-![Campbell diagram](fig-c4-campbell.svg)
+Panel mode (TE tip with the foot) 70.7 Hz, below the band, < 10 % energy at the motor (`CL-C4-D3-PANEL`).
+Mount rocking stiffness needed for 0.20: **894 N·m/rad** (low E/G corner; 778 nominal), estimate 3 000
+(`CL-C4-D3-MOUNT-K-REQ`, margin +70 %). At 500 N·m/rad the separation collapses to 0.07.
 
-`FIG C4-01 — Station whirl frequencies vs rpm against 1P and 2P ± 20 %; dashed: current design.` The braced
-modes sit above 2P at every steady point and hardly move with rpm: gyroscopic split is under 3 %.
+![Campbell diagram](fig-c4-02-campbell-d3.svg)
 
-What each part of the fix does (development runs, `out/results.json`):
+`FIG FIN-C4-02 — Station whirl frequency vs rpm, against 1P and 2P ± 20 %; dashed: D3 as designed (1 layer).`
+The recommended curves stay above 2P cruise at every steady point; gyroscopic split is under 3 %.
 
-| Change | Effect |
-|---|---|
-| Fin bonded to the tube | fore-aft mode 180 → 274 (1 layer) / 329 Hz (2 layers); lateral-torsion unchanged (+2 %) |
-| Thicker tube 22 × 18, or a 25 × 23 sleeve | lateral-torsion 193 / 229 Hz: still within 20 % of 2P cruise; +50–80 g |
-| Brace alone | lateral-torsion 248–288 Hz; fails at low E/G (0.06) |
-| Edge strips placed 25–35 mm below the fin top edge | a 170–260 Hz panel mode that moves the motor (≥ 10 % energy) appears: **the strips must be the top edge** |
-| Brace + edge strips on the top edge | above; both modes move out of 1P/2P for all E/G corners |
+## Strength (recommended design; ultimate = 1.5 × C1 limit; joints × 1.15 × 1.25)
 
-Root fixity (block + wing compliance, rotational springs at the clamp): first station mode with 1 layer 261 / 273 /
-283 / 296 Hz at 2 000 / 5 000 / 10 000 N·m/rad / rigid. Separation stays ≥ 0.30 at 2 000 N·m/rad. A PETG bore only
-27 mm long gives about 3 000 N·m/rad (foundation estimate), so D3 extends the tube bore with 8 mm bosses above and
-below the skin (43 mm, about 4× stiffer) where the fin root fillet allows (CR-C4-04).
+Cases per quarter: L1 level foot 38.2 N; L4 foot 32.9 N + μ 0.5 across the fin (both senses); L5 the same along;
+G2 51 N lateral at the tube end (both senses); H2 thrust 21.1 N + 0.42 N·m. Foot load over 30 mm.
 
-## Strength (ultimate = 1.5 × C1 limit; joints × 1.15 × 1.25)
+| Item | Ultimate | Allowable | MS | Governing | Claim |
+|---|---|---|---|---|---|
+| Fin face (paper), 2 layers | 5.0 MPa | 10 MPa | +0.99 | L4 | `CL-C4-D3-MS-FACE` |
+| Edge strips 10 × 1 | 49 MPa | 400 MPa | +7.2 | L4 | `CL-C4-D3-MS-EDGE` |
+| Tube at the bore end | 15.9 MPa | 400 MPa | +24 | G2 | `CL-C4-D3-MS-TUBE` |
+| Brace buckling, 10 × 3 (10 × 2) | 166 N design (G2; limit 89 / 96 N upper / lower) | P_cr 989 N (293 N) | +4.9 (+0.76) | G2 | `CL-C4-D3-MS-BRACE` |
+| Brace-end bond, 10 mm engagement | 0.80 MPa | 2 MPa | +1.50 | G2 | `CL-C4-D3-MS-BRACE-END` |
+| Station-collar bond on the tube (3.5 N·m limit torque + brace shear) | 1.07 MPa | 2 MPa | +0.87 | L4 / G2 | `CL-C4-D3-MS-COLLAR` |
+| Collar ear root, interlayer bending | — | 15 MPa | +2.96 | G2 | `CL-C4-D3-MS-EAR` |
+| **Anchor bond on the spar (pull-off)** | 0.75 MPa | 1 MPa (2 × 0.5 peel) | **+0.33** | G2 | `CL-C4-D3-MS-ANCHOR` |
+| Foot deflection, L4 limit | 5.2 mm | — | — | L4 | `CL-C4-D3-FOOT-DEFL` |
 
-Cases at the UR quarter: L1 level foot 38.2 N; L4 foot 32.9 N + 0.5 friction across the fin; L5 the same along the
-fin; G2 2 × 2.6 kg × g = 51 N lateral at the tube end; H2 T_lim 21.1 N + 0.42 N·m. Foot load spread over 30 mm.
+## Through-core block (`FIN-004-R/L`, D3 geometry)
 
-| Item, recommended 1-layer design | Ultimate | Allowable | MS | Governing | Claim | Status |
-|---|---|---|---|---|---|---|
-| Fin face (paper), max principal | 7.8 MPa | 10 MPa (`ASM-C4-FACE-SIGMA`) | +0.28 | L4 at the LE top | `CL-C4-MS-FACE-1L` | `UNVERIFIED` |
-| Same, 2 layers | 3.7 MPa | 10 MPa | +1.68 | L4 | `CL-C4-MS-FACE-2L` | `UNVERIFIED` |
-| Same, no edge strips (development run) | 26 MPa (2 layers) / 58 MPa (1 layer) | 10 MPa | −0.62 / −0.83 | L4 | — | `FAIL` |
-| Edge strips 10 × 1 CF | 94 MPa | 400 MPa | +3.3 | L4 | `CL-C4-MS-EDGE` | `UNVERIFIED` |
-| Motor tube at the block face | 42 MPa | 400 MPa | +8.5 | L4 | `CL-C4-MS-TUBE` | `UNVERIFIED` |
-| Brace buckling (pinned, weak axis), design load incl. 1.15 | 142 N compression (G2) | P_cr 199 N | +0.40 (2 layers +0.36) | G2 | `CL-C4-MS-STRUT` | `UNVERIFIED` |
-| Foot deflection, L4 limit | 8.9 mm (2 layers 5.2 mm) | — | — | L4 | `CL-C4-FOOT-DEFL-L4` | `UNVERIFIED` |
-
-The worst face stress sits where the fin leaves the tube near the top edge: the foot side load makes the half-fin a
-0.26 m cantilever off the tube. Without strips even 2 layers reach 2.6 × the face allowable. The edge strips carry it as flanges,
-and the collar passes it into the tube as torsion (9.3 N·m limit at the block face in L4, covered above).
-
-## Through-core block (`FIN-004-L/R`)
-
-Geometry: printed PETG, 69 mm (x) × 36 mm (y, spar bore length) × 27 mm (z, core thickness). Vertical tube bore at
-x 0.045 m and spanwise spar bore at x 0.080 m, 13 mm of web between them, 6–7 mm walls. Layers in the x-y plane,
-4 perimeters, 40 % gyroid (fill 0.55). Load path: all fin-group loads go through the block into the spar. The root
-bond to the skin and the brace are not counted.
+Bore credited for strength = core depth at the tube, 27.7 mm (S5010). The 8 mm bosses add root fixity, not strength
+(2.4 mm C-rings, open at the board slot).
 
 | Check | Stress | Allowable | MS | Claim |
 |---|---|---|---|---|
-| Design moment, force | 23.1 N·m = max(C1 20.3, 10.7 × 1.5 × 1.15 × 1.25); 121 N | — | — | `CL-C4-BLOCK-M-DESIGN` |
-| Tube bore bearing, 6M/(d h²) + F/(d h) | 8.8 MPa | 20 MPa | +1.26 | `CALC-C4-BLOCK` |
-| Tube-bore wall shear-out, 7 mm walls | 6.8 MPa | 10 MPa | **+0.47** | `CL-C4-BLOCK-MS` |
-| Spar bore bearing, 6M/(d W²) + F/(d W) | 5.0 MPa | 20 MPa | +3.0 | `CALC-C4-BLOCK` |
-| Web bending / torsion (36 × 27 mm) | 5.3 / 4.2 MPa | 15 / 10 MPa | +1.84 / +1.39 | `CALC-C4-BLOCK` |
-| Bond on the spar, torsion My 5.2 N·m limit | 0.41 MPa | 2 MPa | +3.9 | `CALC-C4-BLOCK` |
-| Bond on the tube, axial | 0.07 MPa | 2 MPa | +30 | `CALC-C4-BLOCK` |
-| Couple on the spar / on the motor tube (design) | 961 N / 1 282 N | — | — | `CL-C4-SPAR-COUPLE` |
-| Mass each (EST, 0.55 fill) | 30 g vs 20 g allocated | — | — | `CL-C4-BLOCK-MASS` |
+| Design moment 23.1 N·m (= 10.7 × 1.5 × 1.15 × 1.25 > C1 20.3); force 121 N | — | — | — | `CALC-C4-D3-BLOCK` |
+| Tube-bore wall shear-out (7 mm walls) | 6.4 MPa | 10 MPa | **+0.55** | `CL-C4-D3-BLOCK-MS` |
+| Tube-bore bearing | 8.4 MPa | 20 MPa | +1.38 | same |
+| Spar-bore bearing | 5.0 MPa | 20 MPa | +2.99 | same |
+| Bond on the spar, torsion | — | 2 MPa | +3.9 | same |
+| Couple on the spar / on the tube (design) | 961 N / 1 249 N | — | — | `CL-C4-D3-SPAR-COUPLE` |
 
-Both CF walls are 1 mm. Line loads near 1 kN at the bore ends risk crushing the ring, so **a 20 mm printed plug
-goes inside each tube over the bore length**: motor tube 27 mm (43 mm with bosses), spar 36 mm, bonded
-(CR-C4-02, CR-C4-04).
+## Sizing sheet for D3
 
-## Mass
-
-| Item | Δ g | Basis | Claim |
+| Feature | Size | Basis | Status |
 |---|---|---|---|
-| One board layer instead of two (4 half-fins) | −41.8 | 0.2 kg/m² × 0.275 × 0.38 m × 2 fins | `CALC-C4-MASS` |
-| 4 braces (strip 5.9 g + two 4 g fittings) | +55.6 | `ASM-C4-STRUT-FIT-MASS` | `CALC-C4-MASS` |
-| 8 edge strips 10 × 1 × 264 mm | +32.7 | CF 1 550 kg/m³ | `CALC-C4-MASS` |
-| 2 blocks 30 g vs 20 g | +20.2 | `CL-C4-BLOCK-MASS` | `CALC-C4-MASS` |
-| **Recommended total** | **+66.8** | fins 370 → 437 g | `CL-C4-FINS-DELTA-1L` |
+| Board | **2 layers** (9.6 mm), laminated with spray adhesive, all four half-fins | `CL-C4-D3-SEP` 0.41 vs 0.14 with 1 | `PROPOSED` |
+| Edge strips | CF 10 × 1, both faces, on the top edge from inside the collar to the foot (no free band above) | no strips → 0.02 | `PROPOSED` |
+| Brace | CF 10 × 3 as drawn, or 10 × 2 (−10 g `EST`, P_cr 293 N, separation 0.39); ear and anchor as drawn | `CL-C4-D3-MS-BRACE` | `PROPOSED` |
+| Brace ends | ≥ 10 mm bonded in each slot | +1.50 | `PROPOSED` |
+| Station collar | 12 mm tall, ≥ 1.6 mm ring, bonded on the scuffed tube; layers in x-y | +0.87 | `PROPOSED` |
+| Anchor | 20 × 16 mm saddle bonded on the spar top; do not shrink | +0.33 (tightest) | `PROPOSED` |
+| Mount | rocking stiffness ≥ **900 N·m/rad** about x and y: keep the 12 mm grip, 2 mm wall, lip cap | `CL-C4-D3-MOUNT-K-REQ` | `UNVERIFIED` |
+| Tube | 22 × 20 × 0.344 m accepted (CR-D3-01), CF 20 × 18 plug over the 47 mm bore | modes above | `PROPOSED` |
+| Block | 69 × 36 mm, full core depth, 7 mm walls each side of the tube bore | +0.55 | `PROPOSED` |
 
 ## Open issues
 
 | # | Issue | Owner | Status |
 |---|---|---|---|
-| 1 | Tube E and G, board face allowable and prop inertia are assumptions; the 1-layer face margin (+0.28) needs a face allowable ≥ 7.8 MPa | I1, H1 | `UNVERIFIED` |
-| 2 | The band rule (80–330 Hz) is not met; R-VIBRATION is. Backup: rpm-tracking harmonic notch (F4) | A2, B4, F4 | open |
-| 3 | Wing modes (spar flap and torsion with four 120 g stations) are not in this quarter model; C2 owns them | C2 | open |
-| 4 | Brace adds about 0.07 N cruise drag with rounded edges, 0.24 N with square edges, about 1.5–5 % of the 4.6 N cruise drag | B1, B4 | open |
-| 5 | +67 g on the fins against a 105 g gate margin | A1, A3 | open |
-| 6 | Bond-line moment at the fin LE (modelled rigid) and the collar bonds need C6 joint stacks | C6 | open |
+| 1 | Fins 402 g vs 370 g allocated: allocation or reserve decision | A1, A3 | open (CR-C4-15) |
+| 2 | Tube E, G, board faces, mount and root stiffness, prop inertia are assumptions | I1, H1 | `UNVERIFIED` |
+| 3 | Band rule (80–330 Hz) not met; `R-VIBRATION` is met | A2, B4, F4 | open (CR-C4-06/07) |
+| 4 | Wing modes with four 125 g stations, and the spar under the anchor, are C2's | C2 | open (CR-C4-18) |
+| 5 | Anchor margin rests on a 0.5 peel factor; joint stacks for collar, ear, anchor | C6 | open (CR-C4-10) |
 
-## How to verify (planned tests, `claims.json`)
+## How to verify (planned tests in `claims.d3.json` / `claims.json`)
 
 | Test | What | Verifies |
 |---|---|---|
-| `T-C4-TUBE-BEND` | 3-point bend of the US-stock 22 × 20 tube, span 0.80 m, to 4 kg: E | separation worst-case claims |
-| `T-C4-TUBE-TORSION` | 0.40 m tube, 0.30 m lever, laser on a wall: G | same |
-| `T-C4-BOARD-COUPON` | 4-point bend of 50 × 300 mm foam-board strips, 1 and 2 layers: face allowable, D, areal mass | `CL-C4-MS-FACE-*` |
-| `T-C4-TAP` | one finished quarter on a core offcut; tap the bell in x and y; FFT | every frequency claim |
-| `T-C4-FIN-PROOF` | 1.5 × L4 at the foot, 1.5 × G2 at the tube end | face, edge, tube, brace, deflection |
-| `T-C4-BLOCK-PROOF` | block on a spar stub in a core offcut, 30 N·m for 1 min | `CL-C4-BLOCK-MS` |
-| `T-C4-PROP-SWING` | bifilar swing of one prop | `ASM-C4-PROP-IP` |
+| `T-C4-TUBE-BEND`, `-TORSION` | E, G of the bought tube (I1 by 10 Dec, CR-I1-08) | `CL-C4-D3-SEP-WORST` |
+| `T-C4-MOUNT-STIFF` | mount rocking stiffness ≥ 900 N·m/rad | `CL-C4-D3-MOUNT-K-REQ` |
+| `T-C4-TAP-D3` | tap each motor bell of the finished wing, FFT vs 1P/2P | every frequency claim |
+| `T-C4-BOARD-COUPON` | face allowable, D, areal mass (1 and 2 layers) | `CL-C4-D3-MS-FACE` |
+| `T-C4-FIN-PROOF` | 1.5 × L4 at the foot, 1.5 × G2 at the tube end, both senses | face, strips, brace, collar, anchor |
+| `T-C4-BLOCK-PROOF` | 30 N·m on a block in a core offcut, 1 min | `CL-C4-D3-BLOCK-MS` |
+| `T-C4-PROP-SWING` | prop polar inertia | `CL-C4-D3-SEP-WHIRL` |
