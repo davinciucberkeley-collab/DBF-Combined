@@ -11,15 +11,25 @@ prop and fixed wing for cruise, lift rotors stopped in cruise.
   hard cap under 25 kg (55 lb). Breaks down to fit in a standard car; two
   people can carry it assembled.
 
+## Where things are
+- README.md is the front door: directory map, status, how to view the pages.
+- DECISIONS.md lists the open design-parameter conflicts. Do not pick a side
+  silently; the root `analysis/` + `cad/` are the 11-02 resize, while
+  `inventory/`, `fusion/`, `concepts/variants/` are still on v0.3.1.
+- PROVENANCE.md says which source repo and commit each area came from.
+
 ## Working rules
 - Scope is the real, physical aircraft. Ignore any browser flight-sim code.
 - Every number cites its source: a repo file, a shown formula, or a URL with
   the date checked. Look up prices and specs; don't recall them.
 - Label estimates as estimates. Unknowns are "—", never invented.
 - Reports follow docs/reference/REVIEW-STYLE.md.
+- Never commit secrets (API keys, tokens, passwords), including the team's
+  Claude API key: keep it in an environment variable or a git-ignored `.env`.
 
 ## Team (commit attribution)
-The repo lives at davinciucberkeley-collab/DBF-VTOL. Claude sessions push from a
+The repo lives at davinciucberkeley-collab/DBF-Combined (consolidated 2026-11-08 from
+DBF-VTOL, DillonVTOL, TiltWing and OpenCAEModel; see PROVENANCE.md). Claude sessions push from a
 shared account, so ask who is working (or use the name they give) and credit them
 with `git commit --author "<Name> <email>"`. Use `Co-Authored-By: <Name> <email>`
 trailers for work done together. Use these GitHub no-reply emails, never personal
