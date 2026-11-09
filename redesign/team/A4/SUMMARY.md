@@ -1,58 +1,60 @@
 # A4 configuration / interface manager — interface plan for K09-L
 
-Status: `PROPOSED` plan, `CHECKED` against its own graph rules (2026-11-09). No subsystem has declared an
-`interfaces.json` yet, so the real graph is empty and every planned edge is open.
+Status: plan revision **A4-R2** on design frame A1-R2, `PROPOSED`; `CHECKED` against its own graph rules
+(2026-11-09). No subsystem has declared an `interfaces.json` yet, so `--compare` shows every planned edge open.
+This revision closes CR-A1-18 and, with it, CR-A1-02.
 
-## What was produced
+## What changed in A4-R2 (CR-A1-18)
 
-| File | What | Status |
+| Item | Done | Where |
 |---|---|---|
-| `team/A4/INTERFACE-PLAN.md` | rules, per-method data blocks, N² matrix, reserved part ids, register of 125 interfaces (owner, acknowledgers, designer · sizer, data to carry), acknowledgements owed, data interfaces, keep-outs, 11 open issues, queued tooling changes | `PROPOSED` |
-| `team/A4/interface_plan.py` | the plan as code; checks it with `merge_check.py` plus load-path and power-path rules; renders the register; `--compare` checks the real graph against the plan | `CHECKED` |
-| `team/A4/interface_plan.json` · `PLAN-STATUS.md` | generated machine copy · generated comparison (125 edges open) | — |
-| `team/A4/test_interface_plan.py` | 6 cases (clean baseline + 5 seeded faults), all caught | `CHECKED` |
-| `team/A4/claims.json` | 4 claims in the proof chain | `CHECKED` |
-| `team/A4/CHANGE-REQUESTS.md` | 14 requests to A1, A2, A5, B3, B4, C4, C5, C6, D1, D2, D3, D5, D6, E1, E3, F1–F5 | open |
+| D-20 ownership | the elevon hinge is a `wing` edge (D6 designs it); `harness` owns all 23 wires, incl. ESC power leads `E-HRN-13…16`; `power` owns only the boxes; electrical `part_a` = supply side | plan Rules, `interfaces/SCHEMA.md` Edge table |
+| Per-unit mass / instance ids (CR-A3-09) | `parts.csv mass_g` per unit; one node per instance `<id>-<UR\|UL\|LR\|LL\|L\|R>`; one suffix family per part number; new `id_rule()` check and claim | plan Rules, SCHEMA Part table, `CL-A4-PLAN-ID-RULE` |
+| Frame and 9xx (CR-A5-04) | SCHEMA frame text points to `params.json#frame` and `fusion/DATUMS.md`; `9xx` reserved for `fusion/skeleton/` and enforced | SCHEMA, `id_rule()` |
+| Half-fins | `FIN-001-L/R` retired → `FIN-001-UR/UL/LR/LL`; clip sets per half-fin; new edges `E-FIN-33…38` | register |
+| Through-core block | `FIN-004-L/R` re-scoped from the R0 saddle; tube, spar and core joints `E-FIN-07…12` bonded | register, OI-02 |
+| Other R2 changes | pitot plug-in boom (`CT-PLUG-IN`, `E-TRN-12`), carry point `POD-007` (D-23), hinge x 0.2496 m, feet to x 0.365 m, 11×5.5MR, currents read from `params.json` | register |
+| SCHEMA extras | the A4 data blocks, `signal_only`, `field_joint`, a K09-L minimal example (JSON parses) | `interfaces/SCHEMA.md` |
 
 ## Key numbers
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Parts reserved (flight) | 82 (77) | — | `CALC-A4-PLAN-GRAPH` | `CHECKED` |
-| Interfaces planned (cross-subsystem) | 125 (78) | — | `CL-A4-PLAN-EDGES` | `CHECKED` |
-| By kind: mechanical · electrical · kinematic · thermal | 90 · 23 · 8 · 4 | — | register | `PROPOSED` |
-| Fastened · clamped · bonded joints | 19 · 8 · 33 | — | register | `PROPOSED` |
+| Parts reserved (flight) | 87 (82) | — | `CALC-A4-PLAN-GRAPH` | `CHECKED` |
+| Interfaces planned (cross-subsystem) | 133 (81) | — | `CL-A4-PLAN-EDGES` | `CHECKED` |
+| By kind: mechanical · electrical · kinematic · thermal | 98 · 23 · 8 · 4 | — | register | `PROPOSED` |
+| Fastened · clamped · bonded joints | 19 · 4 · 43 | — | register | `PROPOSED` |
 | Flight parts on a load path | 100 | % | `CL-A4-PLAN-CONNECTED` (≥ 100 %) | `CHECKED` |
 | Electrical parts powered through power wires | 100 | % | `CL-A4-PLAN-POWERED` (≥ 100 %) | `CHECKED` |
-| Field disconnects | 1 (pack plug `E-HRN-10`) | — | `CL-A4-FIELD-DISCONNECTS` ≤ `P:electrical.field_disconnects` → `R-TRANSPORT` | `CHECKED` |
+| Part-id rule breaches | 0 | — | `CL-A4-PLAN-ID-RULE` (≤ 0) | `CHECKED` |
+| Field disconnects (field joints) | 1 (7: pack plug, pack strap, 4 prop nuts, pitot boom) | — | `CL-A4-FIELD-DISCONNECTS` ≤ `P:electrical.field_disconnects` → `R-TRANSPORT` | `CHECKED` |
 | Schema data blocks owed (joint stacks 19, wire 23) | 42 | — | `interface_plan.py` | open |
-| Masses owed | 77 | parts | `interface_plan.py` | open |
+| Masses owed | 82 | parts | `interface_plan.py` | open |
 
-## Decisions in the plan
+## Open issues (top five; all ten in the plan)
 
-| Decision | Why |
-|---|---|
-| Harness declares all 23 wires end to end; harness mass sits in 3 lumped bundles tied to structure | the wire is the installation (advisor lesson 3); the README gives harness every wire |
-| Elevon hinge declared by wing, designed by D6 | merge_check requires the owner to hold a side (CR-A4-01) |
-| Ties, tape channels, labels and pitot tubing are not load paths | `merge_check` counts them as structure: a fin held only by its harness ties passes there |
-| Power reach follows power wires supply → load, signal leads excluded | `merge_check` accepts an ESC reached through its signal lead or a PDB fed backwards through the FC |
-| ESCs on fin pads next to each motor; thermal edge motor → printed mount | prop-wash cooling (E3); PETG mount softening is the real thermal interface |
+1. `merge_check.py` still warns `owner` on the 23 harness wires (D-20), so `--strict` cannot pass; the fix is shared tooling, waiting on A1 (CR-A4-15).
+2. Half-fin-to-tube clip and the tube's 80–330 Hz mode (OI-01, P25); through-core block design (OI-02).
+3. Inter-panel link slot in the lower half-fin (OI-03).
+4. Feet leave 5 mm of TE clearance after a full 40 mm crush; grass grounds the TE (OI-05, `UNVERIFIED`).
+5. Plug-in pitot boom needs a pneumatic break at the socket (OI-12, new).
 
-## Open issues (top five; all eleven in the plan)
+## Files
 
-1. Wing TE sits 10 mm above the ground plane in stance (foot height); a crushed foot grounds the TE (OI-05, CR-A4-02).
-2. Fin-through-wing and fin-tube junction undecided; part ids may split (OI-01, P25).
-3. 0.18 m tube-to-spar offset and spar access cut-out (OI-02).
-4. Elevon link crosses the fin at the hinge line (OI-03).
-5. Airspeed sensor and board barometer may share I2C 0x76 (OI-08, `UNVERIFIED`).
-
-`redesign/interfaces/` was not edited (not assigned in this step); the six queued changes are listed in the plan.
+| File | What | Status |
+|---|---|---|
+| `INTERFACE-PLAN.md` | rules, data blocks, N² matrix, reserved and retired ids, register of 133 interfaces, acknowledgements, keep-outs, open issues, tooling status | `PROPOSED` |
+| `interface_plan.py` · `interface_plan.json` · `PLAN-STATUS.md` | plan as code and its checks · generated copy · generated comparison | `CHECKED` |
+| `test_interface_plan.py` | 10 cases: clean baseline + 9 seeded faults (load path, floating half-fin, power path ×2, pack float, field disconnect, 3 id-rule faults) | `CHECKED` |
+| `claims.json` | 5 claims | `CHECKED` |
+| `CHANGE-REQUESTS.md` | round 1 dispositions; round 2 CR-A4-15 … 21 to A1, B4, A3, D3, D2/F3, C6/C4, D7 | open |
+| `redesign/interfaces/SCHEMA.md` | edited (assigned by CR-A1-18) | `PROPOSED` |
 
 ## How to verify
 
 | Check | Command (repo root) | Result 2026-11-09 |
 |---|---|---|
-| Plan | `python -I redesign/team/A4/interface_plan.py` | `PASS`: 0 plan errors |
-| Self-test | `python -I redesign/team/A4/test_interface_plan.py` | `PASS` 6/6 |
-| Real graph vs plan | `python -I redesign/team/A4/interface_plan.py --compare` | 0 sources, 125 edges open |
-| Proof chain | `python -I redesign/proofs/build_graph.py` | OK, no drift; A4 claims `CHECKED` |
+| Plan | `python -I redesign/team/A4/interface_plan.py` | `PASS`: 0 plan errors, 0 id-rule breaches |
+| Self-test | `python -I redesign/team/A4/test_interface_plan.py` | `PASS` 10/10 |
+| Real graph vs plan | `python -I redesign/team/A4/interface_plan.py --compare` | 0 sources, 133 edges open |
+| Proof chain | `python -I redesign/proofs/build_graph.py` | A4 claims `CHECKED`, no A4 drift; the build still fails on other roles' R2 drift (A5, B1, C1 and others) |

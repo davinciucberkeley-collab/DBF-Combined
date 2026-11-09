@@ -24,7 +24,11 @@ RHO, G = 1.225, 9.80665
 KV, RM, I0, ESC = 900.0, 0.086, 0.9, (0.010, 0.5)
 kT, kP, _ = pm.calibrate(RHO, KV, RM, I0, ESC)
 RM_WARM = pm.r_hot(RM, 0.00393, 40.0)
-M, S, B, E, LD, VREF = 2.6, 0.345, 1.15, 0.8, 5.9, 15.0
+_PJ = __import__("json").loads((HERE.parents[1] / "params" / "params.json").read_text(encoding="utf-8"))
+M = _PJ["requirements"]["mtow_gate_kg"]["value"]
+B, E = _PJ["wing"]["span_m"]["value"], _PJ["wing"]["oswald_e"]["value"]
+S = B * _PJ["wing"]["chord_m"]["value"]
+LD, VREF = _PJ["performance"]["ld_cruise"]["value"], _PJ["performance"]["cruise_ms"]["value"]
 
 
 def eff_map():
@@ -47,10 +51,10 @@ def eff_map():
         vd = [12 + 0.25 * i for i in range(33)]
         td = [pm.cruise_drag(v, M, G, RHO, S, B, E, LD, VREF)[0] / 4 for v in vd]
         ax.plot(vd, td, color=col, lw=2)
-        tc = pm.cruise_drag(15, M, G, RHO, S, B, E, LD, VREF)[0] / 4
-        s = pm.at_thrust(prop, tc, 15, RHO, 1.0, kP, KV, RM_WARM, I0, ESC[0], ESC[1], 14.8)
-        ax.plot([15], [tc], "o", color=col, ms=6)
-        ax.annotate(f"cruise 15 m/s\n{4 * s['P_bat_W']:.0f} W, eta {tc * 15 / s['P_bat_W']:.2f}", (15, tc),
+        tc = pm.cruise_drag(VREF, M, G, RHO, S, B, E, LD, VREF)[0] / 4
+        s = pm.at_thrust(prop, tc, VREF, RHO, 1.0, kP, KV, RM_WARM, I0, ESC[0], ESC[1], 14.8)
+        ax.plot([VREF], [tc], "o", color=col, ms=6)
+        ax.annotate(f"cruise {VREF:.0f} m/s\n{4 * s['P_bat_W']:.0f} W, eta {tc * VREF / s['P_bat_W']:.2f}", (VREF, tc),
                     xytext=(16.2, 3.4), fontsize=8, color=INK, arrowprops=dict(arrowstyle="-", color=FG3, lw=0.8))
         ax.set_title(f"X3108S KV900 + APC {prop}", fontsize=10, color=INK, loc="left")
         ax.set_xlabel("airspeed along the prop axis (m/s)")

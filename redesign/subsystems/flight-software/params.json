@@ -1,0 +1,245 @@
+{
+ "_note": "flight-software (FSW) local numbers, owner F4. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
+ "fsw": {
+  "firmware": {
+   "value": "ArduPlane stable with tailsitter support",
+   "unit": "-",
+   "source": "R-FC-STABLE",
+   "status": "PROPOSED"
+  },
+  "airspeed_cruise_ms": {
+   "value": 16.0,
+   "unit": "m/s",
+   "source": "P:performance.cruise_ms",
+   "ap": "AIRSPEED_CRUISE"
+  },
+  "airspeed_min_ms": {
+   "value": 15,
+   "unit": "m/s",
+   "source": "team/B1/CHANGE-REQUESTS.md#CR-B1-12",
+   "ap": "AIRSPEED_MIN",
+   "note": "integer parameter (AP_Int16)"
+  },
+  "airspeed_max_ms": {
+   "value": 18,
+   "unit": "m/s",
+   "source": "team/B1/CHANGE-REQUESTS.md#CR-B1-12",
+   "ap": "AIRSPEED_MAX"
+  },
+  "spin_max": {
+   "value": 0.84,
+   "unit": "-",
+   "source": "CL-B4-SPIN-MAX",
+   "ap": "Q_M_SPIN_MAX"
+  },
+  "thr_max_pct": {
+   "value": 75,
+   "unit": "%",
+   "source": "F4 choice",
+   "ap": "THR_MAX"
+  },
+  "thr_min_pct": {
+   "value": 10,
+   "unit": "%",
+   "source": "F4 choice",
+   "ap": "THR_MIN"
+  },
+  "rudd_dt_gain_pct": {
+   "value": 35,
+   "unit": "%",
+   "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-04",
+   "ap": "RUDD_DT_GAIN"
+  },
+  "bat_curr_max_a": {
+   "value": 100,
+   "unit": "A",
+   "source": "team/E1/CHANGE-REQUESTS.md#CR-E1-08",
+   "ap": "Q_M_BAT_CURR_MAX"
+  },
+  "wp_spd_dn_ms": {
+   "value": 1.2,
+   "unit": "m/s",
+   "source": "team/B4/CHANGE-REQUESTS.md#CR-B4-06",
+   "ap": "Q_WP_SPD_DN"
+  },
+  "pilot_spd_dn_ms": {
+   "value": 1.2,
+   "unit": "m/s",
+   "source": "team/B4/CHANGE-REQUESTS.md#CR-B4-06",
+   "ap": "Q_PILOT_SPD_DN"
+  },
+  "land_final_spd_ms": {
+   "value": 0.5,
+   "unit": "m/s",
+   "source": "team/B4/CHANGE-REQUESTS.md#CR-B4-06",
+   "ap": "Q_LAND_FINAL_SPD"
+  },
+  "rat_fw_degs": {
+   "value": 12,
+   "unit": "deg/s",
+   "source": "team/B1/CHANGE-REQUESTS.md#CR-B1-12",
+   "ap": "Q_TAILSIT_RAT_FW"
+  },
+  "rate_max_q_degs": {
+   "value": [
+    120,
+    120,
+    90
+   ],
+   "unit": "deg/s",
+   "source": "F4 choice",
+   "ap": "Q_A_RATE_R_MAX,Q_A_RATE_P_MAX,Q_A_RATE_Y_MAX"
+  },
+  "rate_max_fw_degs": {
+   "value": [
+    150,
+    100,
+    100
+   ],
+   "unit": "deg/s",
+   "source": "F4 choice",
+   "ap": "RLL2SRV_RMAX,PTCH2SRV_RMAX_UP,PTCH2SRV_RMAX_DN"
+  },
+  "notch_freq_hz": {
+   "value": 70,
+   "unit": "Hz",
+   "source": "CL-B4-HOVER-RPM",
+   "ap": "INS_HNTCH_FREQ"
+  },
+  "notch_harmonics": {
+   "value": 3,
+   "unit": "-",
+   "source": "team/J1/CHANGE-REQUESTS.md#CR-J1-12",
+   "note": "count of harmonics in INS_HNTCH_HMNCS 7 (bits 1, 2, 3)"
+  },
+  "gyro_rate_hz": {
+   "value": 1000,
+   "unit": "Hz",
+   "source": "ArduPilot INS_GYRO_RATE default 0 = 1 kHz",
+   "status": "UNVERIFIED"
+  },
+  "batt_low_mah": {
+   "value": 2700,
+   "unit": "mAh",
+   "source": "CL-E2-BATT-LOW-MAH",
+   "ap": "BATT_LOW_MAH"
+  },
+  "batt_crt_mah": {
+   "value": 1300,
+   "unit": "mAh",
+   "source": "CL-E2-BATT-CRT-MAH",
+   "ap": "BATT_CRT_MAH"
+  },
+  "batt_capacity_mah": {
+   "value": 6500,
+   "unit": "mAh",
+   "source": "P:battery.capacity_ah",
+   "ap": "BATT_CAPACITY"
+  },
+  "batt_arm_volt_v": {
+   "value": 16.4,
+   "unit": "V",
+   "source": "team/E2/ENERGY.md",
+   "ap": "BATT_ARM_VOLT"
+  },
+  "fence_alt_max_m": {
+   "value": 110,
+   "unit": "m",
+   "source": "F4 choice",
+   "ap": "FENCE_ALT_MAX"
+  },
+  "fence_radius_m": {
+   "value": 250,
+   "unit": "m",
+   "source": "F4 choice",
+   "ap": "FENCE_RADIUS"
+  },
+  "rtl_altitude_m": {
+   "value": 50,
+   "unit": "m",
+   "source": "P:requirements.transition_alt_min_m",
+   "ap": "RTL_ALTITUDE"
+  },
+  "motor_map": {
+   "value": [
+    {
+     "station": "LR",
+     "ap_motor": 1,
+     "fc_output": 1,
+     "servo_function": 33,
+     "copter_position": "front-right",
+     "rotation_from_nose": "CCW",
+     "rotation_from_behind": "CW",
+     "prop": "APC 11x5.5MR",
+     "harness_edge": "E-HRN-26",
+     "esc": "PRP-002-LR"
+    },
+    {
+     "station": "UL",
+     "ap_motor": 2,
+     "fc_output": 2,
+     "servo_function": 34,
+     "copter_position": "back-left",
+     "rotation_from_nose": "CCW",
+     "rotation_from_behind": "CW",
+     "prop": "APC 11x5.5MR",
+     "harness_edge": "E-HRN-25",
+     "esc": "PRP-002-UL"
+    },
+    {
+     "station": "LL",
+     "ap_motor": 3,
+     "fc_output": 3,
+     "servo_function": 35,
+     "copter_position": "front-left",
+     "rotation_from_nose": "CW",
+     "rotation_from_behind": "CCW",
+     "prop": "APC 11x5.5MRP",
+     "harness_edge": "E-HRN-27",
+     "esc": "PRP-002-LL"
+    },
+    {
+     "station": "UR",
+     "ap_motor": 4,
+     "fc_output": 4,
+     "servo_function": 36,
+     "copter_position": "back-right",
+     "rotation_from_nose": "CW",
+     "rotation_from_behind": "CCW",
+     "prop": "APC 11x5.5MRP",
+     "harness_edge": "E-HRN-24",
+     "esc": "PRP-002-UR"
+    }
+   ],
+   "unit": "-",
+   "source": "team/F4/fsw_check.py#CALC-F4-MOTOR-MAP",
+   "status": "PROPOSED",
+   "note": "hover copter frame: forward = belly (-z), right = +y; ArduPilot Quad X: M1 front-right CCW, M2 back-left CCW, M3 front-left CW, M4 back-right CW (viewed from above in hover = from the nose). UNVERIFIED until the props-off motor test (T-F4-BENCH-MAP)"
+  },
+  "elevon_outputs": {
+   "value": [
+    {
+     "side": "L",
+     "fc_output": 5,
+     "servo_function": 77,
+     "harness_edge": "E-HRN-28"
+    },
+    {
+     "side": "R",
+     "fc_output": 6,
+     "servo_function": 78,
+     "harness_edge": "E-HRN-29"
+    }
+   ],
+   "unit": "-",
+   "source": "F4 choice",
+   "status": "PROPOSED"
+  },
+  "thst_hover": {
+   "value": 0.49,
+   "unit": "-",
+   "source": "team/E1/CHANGE-REQUESTS.md#CR-E1-08",
+   "ap": "Q_M_THST_HOVER"
+  }
+ }
+}

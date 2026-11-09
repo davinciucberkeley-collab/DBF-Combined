@@ -1,50 +1,50 @@
 # A5 CAD lead: Fusion framework for K09-L
 
-Status: `CHECKED` framework, `UNVERIFIED-IN-FUSION` backend (A5, 2026-11-09). Re-check:
-`python -I redesign/fusion/tests/test_framework.py` · `python -I redesign/fusion/check.py --skeleton --strict` ·
-`python -I redesign/team/A5/cad_claims.py` then `python -I redesign/proofs/build_graph.py`.
+Status: `CHECKED` framework and R1 skeleton, `UNVERIFIED-IN-FUSION` backend (A5, 2026-11-09, params revision A1-R2).
+Re-check: `python -I redesign/fusion/tests/test_framework.py` · `python -I redesign/fusion/check.py --skeleton --strict`
+· `python -I redesign/team/A5/cad_claims.py` then `python -I redesign/proofs/build_graph.py`.
 
-## What was produced
+## This round (CR-A1-12, CR-A4-11)
 
-| File (under `redesign/`) | What | Status |
+| Item | Done | Status |
 |---|---|---|
-| `fusion/modules.txt` | K09-L build order `wing fins pod landing propulsion mechanisms power avionics harness transport` (closes CR-A1-01; a hyphenated `flight-software` module would import and build last) | `CHECKED` |
-| `fusion/DATUMS.md` | frame, cruise/hover attitudes, 42 named datums (table generated from `params.json`), derived geometry, rules | `CHECKED` |
-| `fusion/STANDARDS.md` | build order, naming = part ids (9xx = skeleton), geometry, materials, mass/CG, joints, status, hand-over checklist | `PROPOSED` |
-| `fusion/k09kit.py` | helpers: datum sheet, `.dat` reader + placeholder reflex section, core/elevon lofts, hinge point, spar/tube, fin plate, motor/prop envelopes, prop and ground keep-outs, `pair`/`quad` mirrors, hover pose | `CHECKED` |
-| `fusion/fusionkit.py`, `build_all.py`, `check.py`, `backends/*`, `BuildAll/` | `ctx.value(key, unit)`, `ctx.D()`, datums (Fusion: **00 Datums** component), keep-out and envelope checks, `--skeleton`, TPU material | `CHECKED` (stub) |
-| `fusion/skeleton/` | reference layout: 9 modules, 36 parts, 2 132 g = allocations; `make_skeleton.py` writes masses and CAD-centroid CGs | `MODELLED` |
-| `fusion/tests/test_framework.py` | 13 → 22 tests (skeleton, datums, sections, `.dat` reader, keep-outs, hover pose, units, backend smoke on skeleton) | `CHECKED` |
-| `team/A5/cad_claims.py` → `claims.json` | 12 claims, 5 assumptions, 2 planned tests | see below |
+| Re-run `cad_claims.py` (18 drifting calcs) | Section now the real S5010 (`ASM-A5-SECTION`; placeholder `ASM-A5-CAMBER` and `ASM-A5-FOAMBOARD-T` retired); layout CG rebuilt for R1; the script cross-checks the closed form against the CAD roll-up and stops on > 1 mm | `CHECKED` (0 A5 drift) |
+| Skeleton to R1 | tubes through the core at x 0.045, 4 half-fins (`k9.half_fin`, root on the skin), 2 through-core blocks (`k9.core_block`), clip sets, 45 mm feet, pod at −0.105, 11×5.5MR, harness bundle bodies, new `transport` module (box 1.25 × 0.55 × 0.50 m); instance ids `<id>-<UR…/L/R>` | `MODELLED` |
+| `s5010.dat` → `subsystems/wing/` | byte-identical copy of B2's file; `k9.section()` and the claims read it | `CHECKED` |
+| CR-A4-11 | (a) `stowed` edges skip touch, new `transport` overlap check, ground parts out of `ctx.rollup`; (b) `k9.bundle`; (c) thermal = `ctx.contact`, touch-checked | `CHECKED` (tests) |
+| Also fixed | revolve centroid now r-weighted (`fk.revolve_volume_centroid`); envelope includes pod nose and pitot; floating check anchors on undeclared parts; datum `DX-SADDLE` → `DX-BLOCK`, new `DX-BOX` (43 datums) | `CHECKED` |
 
 ## Check results
 
 | Run | Result |
 |---|---|
-| `check.py --examples --strict` | PASS (3 modules, 0 errors, 0 warnings) |
-| `check.py --skeleton --strict` | PASS (9 modules, 36 parts, 42 datums, 5 keep-outs, 0 errors, 0 warnings); TOTAL 2 132 g, CG (0.039, 0, 0.015) m |
-| `check.py` (real subsystems) | FAIL: no modules yet under `subsystems/` (expected until the designers start) |
-| `tests/test_framework.py` | 22 tests OK |
-| `build_graph.py` | OK: every stored number re-computes |
+| `check.py --skeleton --strict` | PASS: 10 modules, 44 parts (40 flight), 43 datums, 5 keep-outs, 0 errors, 0 warnings; 2 200 g, CG (0.053, 0, 0.018) m |
+| `check.py --examples --strict` | PASS: 3 modules, 0 errors, 0 warnings |
+| `check.py` (real `subsystems/`: D5 landing, D7 transport so far) | FAIL, expected: 8 dangling edges to `WNG-001` / `FIN-001-*` and the partial-aircraft CG (merge_check) until D1/D3 ship; no framework errors |
+| `tests/test_framework.py` | 25 tests OK (3 new: transport stowed/pressed, thermal + bundle, revolve centroid) |
+| `build_graph.py` | no A5 errors; the build fails on B1, B3, E2, A1 drift (theirs) |
 
 ## Claims others build on
 
 | Claim | Value | Unit | Limit | Status |
 |---|---|---|---|---|
-| `CL-A5-HINGE-X` / `CL-A5-HINGE-Z` | 0.234 / 0.0072 | m | — | `CHECKED` / `UNVERIFIED` (placeholder section) |
+| `CL-A5-HINGE-X` / `CL-A5-HINGE-Z` | 0.2496 / 0.0056 | m | — | `CHECKED` |
+| `CL-A5-SPAR-COVER` (spar z 0.0066; upper 5.0 mm) | 0.0043 | m | ≥ 0.002 | `CHECKED` (was a stale `FAIL`) |
+| `CL-A5-SPAR-Z-CAMBER` · `CL-A5-SPAR-COVER-CAMBER` | 0.0070 · 0.0046 | m | ≥ 0.002 | `CHECKED` (0.0066 in params is fine) |
 | `CL-A5-ELEVON-GAP-MIN` | 0.015 | m | ≥ 0.010 | `CHECKED` |
-| `CL-A5-SPAR-COVER` (spar on the chord line) | −0.0011 | m | ≥ 0.002 | `FAIL` → CR-A5-01 |
-| `CL-A5-SPAR-Z-CAMBER` / `CL-A5-SPAR-COVER-CAMBER` | 0.0048 / 0.0037 | m | ≥ 0.002 | `UNVERIFIED` |
-| `CL-A5-LAYOUT-CG-X` | 0.037 (CAD roll-up 0.039) | m | ≥ 0.045 | `FAIL` → CR-A5-03 |
-| `CL-A5-PACK-X-FOR-CG` | 0.170 | m | pod ends at 0.180 | `UNVERIFIED` |
-| `CL-A5-LAYOUT-CG-Z` · `CL-A5-HOVER-SPLIT` | 0.015 · 0.54 (upper pair) | m · — | ≤ 0.030 | `UNVERIFIED` |
+| `CL-A5-LAYOUT-CG-X` (pack centred) | 0.053 (16.6 % c) | m | ≤ 0.049 | `FAIL` −8 % → CR-A5-11 |
+| `CL-A5-PACK-X-FOR-CG` · `CL-A5-PACK-SHIFT` | −0.041 · −0.036 | m | slide ±0.030 | `UNVERIFIED` (beyond the slide) |
+| `CL-A5-LAYOUT-CG-Z` | 0.018 | m | ≤ 0.030 | `UNVERIFIED` |
+| `CL-A5-HOVER-SPLIT` (upper / lower) | 1.20 | — | ≤ 1.25 | `UNVERIFIED` (+4 %) |
+
+A1 forecast 0.058 m for the old calc at the new params; the R1 split (clip sets at the tube, power lump at the pod
+nose, elevon mass by volume) gives 0.053. A3's bottom-up 0.051 differs mainly by the harness route (CR-A5-12).
 
 ## Open issues
 
-1. With the spar on the chord line, the tube breaks the lower skin of any section with about 1.6 % camber (CR-A5-01). The MH 45 file is missing (CR-A5-02).
-2. Layout CG is 6–8 mm ahead of the CG range; the pack would need to sit 0.09 m further aft (CR-A5-03).
-3. `fusion_backend.py` (datums, lofts, joints, materials) has never run in Fusion (CR-A5-08).
-4. Keep-out and touch checks use bounding boxes, which are coarse for diagonal parts. Real prop-tip clearance is A1's `CL-A1-PROP-CLEAR` plus a Fusion interference check.
-5. Prop axial thickness 8 mm and foam-board 4.8 mm are `EST` (CR-A5-05, CR-A5-06).
+1. Layout CG is 4 mm aft of the R0-derived range and the pack cannot reach the target inside ±30 mm with an aft wire channel: B3's R1 range decides (D-17).
+2. `fusion_backend.py` has never run in Fusion (CR-A5-08 / CR-A1-21; the R1 skeleton is ready for it).
+3. Checks use bounding boxes per body: coarse for diagonal parts; real clearances need a Fusion interference check.
+4. Not modelled in the skeleton: 3° motor cant, tube holes and block cut-outs in the core, feet splay (CR-A1-20).
 
-Change requests: 9 in `team/A5/CHANGE-REQUESTS.md` (A1, A3, A4, B2, B3, E1, J3, all designers).
+Change requests: `team/A5/CHANGE-REQUESTS.md` (round 1 status; CR-A5-10 … 15 to A4, A1, F2/D1, E1, D7; answer to CR-A4-11).

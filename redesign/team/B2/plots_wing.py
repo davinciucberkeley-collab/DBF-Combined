@@ -22,6 +22,7 @@ FG, FG2, FG3, LINE3, ACCENT, FAIL = "#121619", "#4B5563", "#6B7280", "#9AA4B1", 
 GREYS = {"mh45": FG2, "mh60": LINE3, "e186": "#C2C8D0"}
 NAME = {"mh45": "MH 45", "mh60": "MH 60", "s5010": "S5010", "e186": "E186"}
 CH = A["chosen"]
+TS, TC, TD = (f"{X[k]/1e5:.1f}e5" for k in ("re_stall", "re_cruise", "re_dive"))
 plt.rcParams.update({"font.family": ["IBM Plex Sans", "DejaVu Sans"], "font.size": 9, "axes.edgecolor": LINE3,
                      "axes.labelcolor": FG2, "xtick.color": FG3, "ytick.color": FG3, "axes.spines.top": False,
                      "axes.spines.right": False, "axes.grid": True, "grid.color": "#E3E7ED", "grid.linewidth": 0.6,
@@ -39,7 +40,7 @@ def pol(tag):
 def fig_polars():
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(8, 3.4))
     for f in ["e186", "mh60", "mh45", "s5010"]:
-        t = pol(f"{f}_re2.3e5_n9_f+0_p220")
+        t = pol(f"{f}_re{TS}_n9_f+0_p220")
         lw = 1.8 if f == CH else 1.1
         a1.plot(t[:, 2] * 1e4, t[:, 1], color=col(f), lw=lw)
         a2.plot(t[:, 0], t[:, 1], color=col(f), lw=lw)
@@ -57,9 +58,9 @@ def fig_polars():
 def fig_flap():
     fig, ax = plt.subplots(figsize=(4.6, 3.2))
     for f in ["mh45", "s5010"]:
-        env = np.array(A["foils"][f]["clmax_vs_flap_re2.3e5"])
+        env = np.array(A["foils"][f]["clmax_vs_flap"])
         ax.plot(env[:, 0], env[:, 1], color=col(f), lw=1.8 if f == CH else 1.1, marker="o", ms=3, label=NAME[f])
-        for re_, mk in (("2.3e5", "^"), ("3.0e5", "v")):
+        for re_, mk in ((TS, "^"), (TC, "v")):
             pts = []
             for d in (-15, -10, -5, 0, 5, 10):
                 s = X["polars"].get(f"{f}_re{re_}_n9_f{d:+g}_p220", {}).get("summary", {})
@@ -76,7 +77,7 @@ def fig_flap():
 
 def fig_span():
     yin, yout = P["wing"]["elevon"]["inboard_y_m"]["value"], P["wing"]["elevon"]["outboard_y_m"]["value"]
-    cfl = np.array(A["foils"][CH]["clmax_vs_flap_re2.3e5"])
+    cfl = np.array(A["foils"][CH]["clmax_vs_flap"])
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(8, 3.2))
     for k, shade in (("CL0.30", "#C2C8D0"), ("CL0.50", LINE3), ("CL0.80", ACCENT)):
         c = L["cases"][k]
@@ -105,7 +106,7 @@ def fig_hinge():
     for mode, ls, lab in (("i", "-", "inviscid (design)"), ("v", ":", "viscous, converged")):
         ds, lo, hi = [], [], []
         for d in (-25, -20, -15, -10, -5, 5, 10, 15, 20, 25):
-            r = X["hinge"].get(f"hm_{CH}_re4.0e5_f{d:+g}_{mode}")
+            r = X["hinge"].get(f"hm_{CH}_re{TD}_f{d:+g}_{mode}")
             if not r:
                 continue
             v = [h for h, c in zip(r["hmom_qc2"], r["converged"]) if c and h == h]

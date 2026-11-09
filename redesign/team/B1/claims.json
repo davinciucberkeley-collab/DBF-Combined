@@ -2,7 +2,8 @@
  "schema": "proofs/1",
  "generated_by": "redesign/team/B1/performance.py",
  "params": [
-  "../../params/params.json"
+  "../../params/params.json",
+  "../B2/params.json"
  ],
  "nodes": [
   {
@@ -41,11 +42,136 @@
    "note": "parameter names only; values below are B1 proposals for F4"
   },
   {
+   "id": "SRC-B1-B4-PER3-55",
+   "type": "source",
+   "title": "APC PER3 11x5.5MR rows as copied by B4",
+   "kind": "file",
+   "url": "https://www.apcprop.com/files/PER3_11x55MR.dat",
+   "checked": "2026-11-09",
+   "where": "team/B4/data/apc_per3_11x55MR.csv, rows rpm = 6000 (19 rows, J 0 to 0.624)",
+   "note": "B1 compared every 6 000 rpm row of B4's file with PROP_TABLE on 2026-11-09. APC's blade-element prediction, not a test; B4 owns the prop data"
+  },
+  {
    "id": "ASM-B1-PROP",
    "type": "assumption",
-   "title": "11x4.5MR Ct and Cp versus J",
-   "text": "The fitted prop follows APC's PER3 Ct(J), Cp(J) at 6 000 rpm at every operating point; rows are [J, Ct, Cp]",
-   "basis": "APC data file read 2026-11-09; Re effect 5 000-8 000 rpm < 1 % on Ct, Cp in the same file; the hover-table calibration (CALC-B1-PROPCAL) absorbs APC's static optimism",
+   "title": "11x5.5MR Ct and Cp versus J",
+   "text": "The fitted prop (APC 11x5.5MR, params propulsion.prop) follows APC's PER3 Ct(J), Cp(J) at 6 000 rpm at every operating point; rows are [J, Ct, Cp]; last row extrapolated to zero thrust",
+   "basis": "B4's copy of the APC file; cruise runs at 6 000 rpm (CL-B4-CRUISE-RPM); Re effect between the 5 000 and 7 000 rpm blocks < 1 % on Ct, Cp; the hover-table calibration (CALC-B1-PROPCAL) absorbs APC's static optimism",
+   "value": [
+    [
+     0.0,
+     0.1121,
+     0.0418
+    ],
+    [
+     0.0446,
+     0.1083,
+     0.0423
+    ],
+    [
+     0.0891,
+     0.1038,
+     0.0426
+    ],
+    [
+     0.1337,
+     0.0987,
+     0.0426
+    ],
+    [
+     0.1782,
+     0.093,
+     0.0422
+    ],
+    [
+     0.2228,
+     0.0865,
+     0.0414
+    ],
+    [
+     0.2674,
+     0.0794,
+     0.0402
+    ],
+    [
+     0.3119,
+     0.0716,
+     0.0385
+    ],
+    [
+     0.3565,
+     0.063,
+     0.0363
+    ],
+    [
+     0.401,
+     0.0539,
+     0.0335
+    ],
+    [
+     0.4456,
+     0.0443,
+     0.0303
+    ],
+    [
+     0.4679,
+     0.0393,
+     0.0285
+    ],
+    [
+     0.4902,
+     0.0343,
+     0.0267
+    ],
+    [
+     0.5124,
+     0.0292,
+     0.0247
+    ],
+    [
+     0.5347,
+     0.0241,
+     0.0226
+    ],
+    [
+     0.557,
+     0.0189,
+     0.0204
+    ],
+    [
+     0.5793,
+     0.0137,
+     0.0181
+    ],
+    [
+     0.6016,
+     0.0085,
+     0.0157
+    ],
+    [
+     0.6238,
+     0.0034,
+     0.0133
+    ],
+    [
+     0.6386,
+     0.0,
+     0.0117
+    ]
+   ],
+   "unit": "-",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-B1-B4-PER3-55",
+    "SRC-APC-11X55MR"
+   ]
+  },
+  {
+   "id": "ASM-B1-PROP-REF",
+   "type": "assumption",
+   "title": "11x4.5MR Ct and Cp versus J (calibration reference)",
+   "text": "APC PER3 11x4.5MR at 6 000 rpm, rows [J, Ct, Cp]; used only to calibrate the chain to the maker table (11x4.7) and for the 11x5.5MR / 11x4.5MR hover power ratio",
+   "basis": "APC data file read 2026-11-09 (rev 1 of this script); the 11x4.5MR is closer in pitch to the maker's 11x4.7 than the 11x5.5MR, so it carries the calibration with less prop error",
    "value": [
     [
      0.0,
@@ -205,31 +331,12 @@
    ]
   },
   {
-   "id": "ASM-B1-MOTOR",
-   "type": "assumption",
-   "title": "X3108S KV900 motor constants",
-   "text": "[Kv rpm/V, winding resistance ohm, no-load current A] = [900, 0.080, 0.6]",
-   "basis": "Kv from the part name; Rm and I0 are typical of a 31xx 900 kV motor and not read from the maker (page refused the fetch, J1). The calibration factor to the maker table absorbs most of the error at hover; E1 confirms",
-   "value": [
-    900.0,
-    0.08,
-    0.6
-   ],
-   "unit": "-",
-   "status": "UNVERIFIED",
-   "cites": [
-    "SRC-X3108S"
-   ]
-  },
-  {
    "id": "ASM-B1-DRAG",
    "type": "assumption",
-   "title": "Zero-lift drag build-up coefficients",
-   "text": "[Cf wing, FF wing, Cf fin/pod, FF fin, CD motor tube (frontal, faired by the fin), CdA per motor m2, FF pod, interference factor] = [0.0060, 1.25, 0.0070, 1.20, 0.30, 0.0004, 1.30, 1.15]",
-   "basis": "Same coefficients as the K09 card and the K01 card, accepted by the K09 REVIEW (section 4: 'already pessimistic'); turbulent flat plate at Re 3e5 with tape seams; Hoerner for the tube",
+   "title": "Zero-lift drag build-up coefficients, non-wing parts",
+   "text": "[Cf fin/pod, FF fin, CD motor tube (frontal, faired by the fin), CdA per motor m2, FF pod, interference factor] = [0.0070, 1.20, 0.30, 0.0004, 1.30, 1.15]",
+   "basis": "Same coefficients as the K09 card and the K01 card, accepted by the K09 REVIEW (section 4: 'already pessimistic'); turbulent flat plate at Re 3e5 for the paper-faced board and pod; Hoerner for the tube. The wing now uses B2's S5010 section drag (ASM-B1-WING-ROUGH)",
    "value": [
-    0.006,
-    1.25,
     0.007,
     1.2,
     0.3,
@@ -246,16 +353,16 @@
    ]
   },
   {
-   "id": "ASM-B1-ALPHA0",
+   "id": "ASM-B1-WING-ROUGH",
    "type": "assumption",
-   "title": "Zero-lift angle of the MH 45 wing",
-   "text": "Zero-lift angle of attack -1.0 deg with elevons neutral",
-   "basis": "MH 45 is a low-camber reflexed section; B2 replaces this with XFOIL",
-   "value": -1.0,
-   "unit": "deg",
-   "status": "UNVERIFIED",
+   "title": "Tape-seam factor on the S5010 wing profile drag",
+   "text": "The packing-tape wing has 1.10 x the XFOIL Ncrit 9 profile drag that B2's AVL polar carries",
+   "basis": "B2 CR-B2-08: S5010 cd at cl 0.47 is 0.0087 (Re 3e5, Ncrit 9) and 0.0096 (Re 2.3e5, Ncrit 5); the ratio 1.10 stands in for early transition at spanwise tape seams. A trip-strip XFOIL run (B2) or the cruise-power test replaces it",
+   "value": 1.1,
+   "unit": "-",
+   "status": "PROPOSED",
    "cites": [
-    "SRC-MH45"
+    "SRC-B2-XFOIL"
    ]
   },
   {
@@ -301,21 +408,21 @@
    "id": "ASM-B1-TRIM",
    "type": "assumption",
    "title": "Cruise trim drag factor",
-   "text": "Elevon up-trim and differential-thrust trimming add 5 % to cruise drag",
-   "basis": "K09 card TRIM_FACTOR 1.05; J1 shows the MH 45 needs elevon up-trim for SM > 2.7 %",
-   "value": 1.05,
+   "text": "Trim adds 2 % to cruise drag on top of B2's trimmed wing polar",
+   "basis": "B2's polar (P:b2.avl.e_oswald, cd0_wing) is already trimmed, elevon profile drag included; B3 finds +0.2 % induced trim drag at 16 m/s (CR-B3-07). The 2 % left covers the up-trimmed elevon gap and pod/fin junctions. Was 1.05 (K09 card) before B2/B3 answered",
+   "value": 1.02,
    "unit": "-",
    "status": "PROPOSED",
    "cites": [
-    "SRC-K09-CARD"
+    "SRC-B2-AVL"
    ]
   },
   {
    "id": "ASM-B1-VCRUISE",
    "type": "assumption",
    "title": "Proposed cruise airspeed 16 m/s",
-   "text": "B1 proposes AIRSPEED_CRUISE = 16 m/s (was 15 m/s in params.json#performance.cruise_ms)",
-   "basis": "lowest whole-number speed that clears 1.3 Vs at the 2.6 kg gate with CLmax 0.9 (15.05 m/s) with ~1 m/s for airspeed-hold and sensor error; costs ~2 min of base cruise against 15 m/s (CALC-B1-SWEEP)",
+   "text": "B1 proposes AIRSPEED_CRUISE = 16 m/s (params.json#performance.cruise_ms, CHANGE-LOG D-01)",
+   "basis": "lowest whole-number speed above 1.3 Vs at the 2.6 kg gate with B2's trimmed CLmax 0.80 on the c 0.32 wing (15.43 m/s, CL-B1-VT-GATE); +3.7 %, about 0.6 m/s for airspeed-hold and sensor error (R-AIRSPEED-ERR allows 1 m/s, so the margin is thin)",
    "value": 16.0,
    "unit": "m/s",
    "status": "PROPOSED"
@@ -324,8 +431,8 @@
    "id": "ASM-B1-PESS",
    "type": "assumption",
    "title": "Pessimistic-case factors",
-   "text": "[CD0 factor, prop efficiency factor, hover power factor] = [1.30, 0.85, 1.10]",
-   "basis": "CD0 x 1.3 as the K09 REVIEW pessimistic case; prop efficiency 15 % below APC (BEMT optimism, tractor prop ahead of a fin and tube); hover +10 % for APC static optimism and 11x4.5MR vs 11x4.7 table",
+   "text": "[CD0 factor, prop efficiency factor, hover power factor] = [1.30, 0.85, 1.10]; the pessimistic case also uses params wing.oswald_e (0.80) in place of B2's 0.93",
+   "basis": "CD0 x 1.3 as the K09 REVIEW pessimistic case; prop efficiency 15 % below APC (BEMT optimism, tractor prop ahead of a fin and tube); hover +10 % for APC static optimism and the 11x4.7 maker table (400 W x 1.10 = 440 W, E2's pessimistic 29.9 A x 14.8 V = 443 W)",
    "value": [
     1.3,
     0.85,
@@ -361,10 +468,10 @@
    "id": "ASM-B1-TRANS",
    "type": "assumption",
    "title": "Pitch-over schedule",
-   "text": "[pitch rate deg/s, assist speed as a fraction of Vs, back-transition energy as a fraction of the forward pitch-over] = [20, 1.10, 1.0]",
-   "basis": "20 deg/s is the fastest pitch-down rate that keeps peak thrust <= 80 % of available in CALC-B1-PITCHOVER (30 deg/s reaches 94 %, 50 deg/s saturates); proposed first-flight Q_TAILSIT_RAT_FW; thrust holds altitude below 1.1 Vs (Q_ASSIST_SPEED analogue); the back-transition is a pitch-up deceleration of similar length at similar thrust",
+   "text": "[pitch rate deg/s, assist speed as a fraction of Vs, back-transition energy as a fraction of the forward pitch-over] = [12, 1.10, 1.0]",
+   "basis": "12 deg/s is the fastest whole-number pitch-down rate that keeps peak thrust <= 80 % of available in CALC-B1-PITCHOVER on the worst-case pack (sag 0.72, D-06): 13 deg/s gives 0.79, 15 gives 0.84, 20 gives 0.96 (rev 1 used 20 at sag 0.93). On a fresh pack 20 deg/s gives 0.59 (performance_results.json#sensitivity). Proposed first-flight Q_TAILSIT_RAT_FW; thrust holds altitude below 1.1 Vs (Q_ASSIST_SPEED analogue); the back-transition is a pitch-up deceleration of similar length at similar thrust",
    "value": [
-    20.0,
+    12.0,
     1.1,
     1.0
    ],
@@ -380,12 +487,16 @@
    "title": "Aero model: CD0, k, lift slope, stall angle",
    "script": "redesign/team/B1/performance.py",
    "function": "aero_build",
-   "equation": "Swet = 2 S (1 + 0.2 t/c) ; CD0 = IF [Cf FF Swet_wing + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod] / S ; k = 1/(pi AR e) ; a = 2 pi AR/(2 + sqrt(AR^2+4)) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))",
+   "equation": "CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod] / S, Swet_fin = 2 A (1 + 0.2 t/c) ; k = 1/(pi AR e_B2) ; k_pess = 1/(pi AR e_params) ; a = CLa (B2 AVL) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))",
    "inputs": {
     "b": "P:wing.span_m",
     "c": "P:wing.chord_m",
     "tc": "P:wing.t_c",
-    "e": "P:wing.oswald_e",
+    "e_b2": "P:b2.avl.e_oswald",
+    "e_pess": "P:wing.oswald_e",
+    "cd0_w": "P:b2.avl.cd0_wing",
+    "rough": "ASM-B1-WING-ROUGH",
+    "cla": "P:b2.avl.cla_per_rad",
     "fin_h": "P:fins.half_height_m",
     "fin_c": "P:fins.chord_m",
     "tube_l": "P:fins.tube.length_m",
@@ -393,8 +504,8 @@
     "pod": "P:pod.size_m",
     "n": "P:propulsion.n_motors",
     "drag": "ASM-B1-DRAG",
-    "a0": "ASM-B1-ALPHA0",
-    "clmax": "ASM-A1-CLMAX"
+    "a0": "P:b2.xfoil.alpha0_2d_deg",
+    "clmax": "CL-B2-CLMAX-DESIGN"
    },
    "units": {
     "b": "m",
@@ -404,51 +515,55 @@
     "tube_l": "m",
     "tube_d": "m",
     "pod": "m",
-    "a0": "deg"
+    "a0": "deg",
+    "cla": "1/rad"
    },
    "assumes": [
     "ASM-B1-DRAG",
-    "ASM-B1-ALPHA0",
-    "ASM-A1-CLMAX"
+    "ASM-B1-WING-ROUGH"
    ],
    "cites": [
-    "SRC-B1-HELMBOLD"
+    "SRC-B2-AVL",
+    "SRC-B2-XFOIL"
    ],
    "outputs": {
-    "S_m2": 0.345,
-    "AR": 3.833333333333333,
-    "cd0": 0.06106786446666666,
-    "k": 0.1037967020164535,
-    "cla_per_rad": 3.8087695553534475,
-    "alpha_stall_deg": 12.538808481939997,
-    "ld_max": 6.280176659292719,
-    "cl_ldmax": 0.7670339541128223,
+    "S_m2": 0.368,
+    "AR": 3.5937499999999996,
+    "cd0": 0.044510124899999996,
+    "k": 0.09426690689730415,
+    "k_pess": 0.11071648215088373,
+    "cla_per_rad": 3.4773,
+    "alpha_stall_deg": 12.38474654631278,
+    "ld_max": 7.718998726394225,
+    "cl_ldmax": 0.6871471948294957,
     "cd0_parts": [
-     0.01759,
-     0.017359,
-     0.01848,
-     0.005333,
-     0.002305
+     0.008665,
+     0.011188,
+     0.017325,
+     0.005,
+     0.002332
     ]
    },
    "input_values": {
     "b": 1.15,
-    "c": 0.3,
-    "tc": 0.0985,
-    "e": 0.8,
+    "c": 0.32,
+    "tc": 0.0982,
+    "e_b2": 0.9396,
+    "e_pess": 0.8,
+    "cd0_w": 0.00685,
+    "rough": 1.1,
+    "cla": 3.4773,
     "fin_h": 0.19,
-    "fin_c": 0.4,
+    "fin_c": 0.275,
     "tube_l": 0.42,
     "tube_d": 0.022,
     "pod": [
      0.2,
      0.1,
-     0.06
+     0.07
     ],
     "n": 4,
     "drag": [
-     0.006,
-     1.25,
      0.007,
      1.2,
      0.3,
@@ -456,8 +571,8 @@
      1.3,
      1.15
     ],
-    "a0": -1.0,
-    "clmax": 0.9
+    "a0": -1.17,
+    "clmax": 0.822642096260011
    }
   },
   {
@@ -473,7 +588,7 @@
     "g": "P:env.g_ms2",
     "rho": "P:env.rho_kgm3",
     "S": "CL-A1-WING-AREA",
-    "clmax": "ASM-A1-CLMAX",
+    "clmax": "CL-B2-CLMAX-DESIGN",
     "kt": "P:requirements.transition_factor",
     "vc": "ASM-B1-VCRUISE"
    },
@@ -486,26 +601,25 @@
     "vc": "m/s"
    },
    "assumes": [
-    "ASM-A1-CLMAX",
     "ASM-B1-VCRUISE"
    ],
    "outputs": {
-    "vs_gate_ms": 11.578789616799682,
-    "vs_sized_ms": 11.312989332101811,
-    "vt_gate_ms": 15.052426501839587,
-    "vs_bank30_gate_ms": 12.442219169123568,
-    "vs_gate_clmax080_ms": 12.281160983957161,
-    "vs_gate_clmax100_ms": 10.984604321098567,
-    "clmax_needed_for_15ms": 0.906302174373131,
-    "cruise_over_vt": 1.0629515445928008
+    "vs_gate_ms": 11.726396944442973,
+    "vs_sized_ms": 11.613095766145547,
+    "vt_gate_ms": 15.244316027775865,
+    "vs_bank30_gate_ms": 12.600833565125875,
+    "vs_gate_clmax086_ms": 11.468875288798127,
+    "vs_gate_clmax090_ms": 11.211114838776131,
+    "clmax_needed_for_15ms": 0.8496582884748102,
+    "cruise_over_vt": 1.0495715236319716
    },
    "input_values": {
     "m_gate": 2.6,
-    "m_sized": 2.482,
+    "m_sized": 2.55,
     "g": 9.80665,
     "rho": 1.225,
-    "S": 0.345,
-    "clmax": 0.9,
+    "S": 0.368,
+    "clmax": 0.822642096260011,
     "kt": 1.3,
     "vc": 16.0
    }
@@ -516,10 +630,13 @@
    "title": "Prop and motor chain, calibrated to the maker table",
    "script": "redesign/team/B1/performance.py",
    "function": "prop_calibration",
-   "equation": "n_max = sqrt(T0/(Ct0 rho D^4)) ; n_max,sag = n_max sqrt(sag) ; k_cal = P_table(690 gf) / P_motor(prop model at 690 gf, J = 0) ; FM = T^1.5/(sqrt(2 rho A) P_shaft)",
+   "equation": "n_max = sqrt(T0/(Ct0 rho D^4)) (11x5.5MR) ; n_max,sag = n_max sqrt(sag) ; k_cal = P_table(690 gf) / P_motor(11x4.5MR model at 690 gf, J = 0) ; FM = T^1.5/(sqrt(2 rho A) P_shaft) (11x5.5MR)",
    "inputs": {
     "tab": "ASM-B1-PROP",
-    "motor": "ASM-B1-MOTOR",
+    "tab_ref": "ASM-B1-PROP-REF",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
     "table": "P:propulsion.thrust_table_g_w",
     "t_max_kg": "P:propulsion.thrust_max_per_motor_kg",
     "sag": "P:propulsion.voltage_sag",
@@ -535,18 +652,123 @@
    },
    "assumes": [
     "ASM-B1-PROP",
-    "ASM-B1-MOTOR"
+    "ASM-B1-PROP-REF",
+    "ASM-E1-KV",
+    "ASM-E1-RM",
+    "ASM-E1-I0"
    ],
    "outputs": {
-    "n_max_rps": 146.20371847706338,
-    "n_max_sag_rps": 140.9937600951332,
-    "k_cal": 1.1786451001411038,
-    "hover_ref_rpm": 5797.0316391812785,
-    "fm_apc_static": 0.7206495160347752,
-    "motor_eff_hover_ref": 0.8345823847519879
+    "n_max_rps": 137.78254133683689,
+    "n_max_sag_rps": 116.91236317007179,
+    "k_cal": 1.131836279989992,
+    "hover_ref_rpm": 5395.261254325904,
+    "fm_apc_static": 0.7164274187618953,
+    "motor_eff_hover_ref": 0.8014377029945486
    },
    "input_values": {
     "tab": [
+     [
+      0.0,
+      0.1121,
+      0.0418
+     ],
+     [
+      0.0446,
+      0.1083,
+      0.0423
+     ],
+     [
+      0.0891,
+      0.1038,
+      0.0426
+     ],
+     [
+      0.1337,
+      0.0987,
+      0.0426
+     ],
+     [
+      0.1782,
+      0.093,
+      0.0422
+     ],
+     [
+      0.2228,
+      0.0865,
+      0.0414
+     ],
+     [
+      0.2674,
+      0.0794,
+      0.0402
+     ],
+     [
+      0.3119,
+      0.0716,
+      0.0385
+     ],
+     [
+      0.3565,
+      0.063,
+      0.0363
+     ],
+     [
+      0.401,
+      0.0539,
+      0.0335
+     ],
+     [
+      0.4456,
+      0.0443,
+      0.0303
+     ],
+     [
+      0.4679,
+      0.0393,
+      0.0285
+     ],
+     [
+      0.4902,
+      0.0343,
+      0.0267
+     ],
+     [
+      0.5124,
+      0.0292,
+      0.0247
+     ],
+     [
+      0.5347,
+      0.0241,
+      0.0226
+     ],
+     [
+      0.557,
+      0.0189,
+      0.0204
+     ],
+     [
+      0.5793,
+      0.0137,
+      0.0181
+     ],
+     [
+      0.6016,
+      0.0085,
+      0.0157
+     ],
+     [
+      0.6238,
+      0.0034,
+      0.0133
+     ],
+     [
+      0.6386,
+      0.0,
+      0.0117
+     ]
+    ],
+    "tab_ref": [
      [
       0.0,
       0.0971,
@@ -698,11 +920,9 @@
       0.0112
      ]
     ],
-    "motor": [
-     900.0,
-     0.08,
-     0.6
-    ],
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
     "table": [
      [
       690,
@@ -721,8 +941,8 @@
       447.0
      ]
     ],
-    "t_max_kg": 1.58,
-    "sag": 0.93,
+    "t_max_kg": 1.62,
+    "sag": 0.72,
     "D": 0.2794,
     "rho": 1.225,
     "g": 9.80665
@@ -734,7 +954,7 @@
    "title": "Hover power, current, endurance and thrust headroom",
    "script": "redesign/team/B1/performance.py",
    "function": "hover",
-   "equation": "T_motor = m DL / n ; P = n P_table(T_motor) / eta_esc + P_av ; I = P / V ; t_hover = E (1 - reserve) / P ; throttle = m g DL / (n T_max sag)",
+   "equation": "T_motor = m DL / n ; r = P_motor(11x5.5MR, T) / P_motor(11x4.5MR, T) ; P = n P_table(T_motor) r / eta_esc + P_av ; I = P / V ; t_hover = E (1 - reserve) / P ; throttle = m g DL / (n T_max sag)",
    "inputs": {
     "m_gate": "P:requirements.mtow_gate_kg",
     "m_sized": "CL-A1-MASS-SIZED",
@@ -748,7 +968,15 @@
     "res": "P:requirements.energy_reserve_frac",
     "t_max_kg": "P:propulsion.thrust_max_per_motor_kg",
     "sag": "P:propulsion.voltage_sag",
-    "pess": "ASM-B1-PESS"
+    "pess": "ASM-B1-PESS",
+    "tab": "ASM-B1-PROP",
+    "tab_ref": "ASM-B1-PROP-REF",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "D": "P:propulsion.prop_diameter_m",
+    "rho": "P:env.rho_kgm3",
+    "g": "P:env.g_ms2"
    },
    "units": {
     "m_gate": "kg",
@@ -756,7 +984,10 @@
     "av": "W",
     "E": "Wh",
     "v": "V",
-    "t_max_kg": "kg"
+    "t_max_kg": "kg",
+    "D": "m",
+    "rho": "kg/m3",
+    "g": "m/s2"
    },
    "assumes": [
     "ASM-B1-ESC",
@@ -764,19 +995,20 @@
     "ASM-B1-PESS"
    ],
    "outputs": {
-    "p_gate_w": 379.92249202901627,
-    "p_sized_w": 354.75804396618025,
-    "i_gate_a": 25.670438650609206,
-    "i_sized_a": 23.97013810582299,
-    "p_gate_pess_w": 417.9147412319179,
-    "hover_only_gate_min": 12.154057990458051,
-    "hover_only_sized_min": 13.01619534366416,
-    "throttle_frac_gate_sag": 0.46889887028719207,
-    "tw_gate_sag_download": 2.132656023222061
+    "p_gate_w": 386.9342052710069,
+    "p_sized_w": 375.9017091083481,
+    "i_gate_a": 26.144203058851815,
+    "i_sized_a": 25.398764128942435,
+    "p_gate_pess_w": 425.6276257981076,
+    "prop_ratio_55_45": 1.0187517824989423,
+    "hover_only_gate_min": 11.933811839575815,
+    "hover_only_sized_min": 12.284062264449684,
+    "throttle_frac_gate_sag": 0.5907064471879286,
+    "tw_gate_sag_download": 1.6928882438316402
    },
    "input_values": {
     "m_gate": 2.6,
-    "m_sized": 2.482,
+    "m_sized": 2.55,
     "table": [
      [
       690,
@@ -802,81 +1034,116 @@
     "E": 96.2,
     "v": 14.8,
     "res": 0.2,
-    "t_max_kg": 1.58,
-    "sag": 0.93,
+    "t_max_kg": 1.62,
+    "sag": 0.72,
     "pess": [
      1.3,
      0.85,
      1.1
-    ]
-   }
-  },
-  {
-   "id": "CALC-B1-CRUISE",
-   "type": "calculation",
-   "title": "Cruise at the proposed speed, gate mass",
-   "script": "redesign/team/B1/performance.py",
-   "function": "cruise",
-   "equation": "CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim ; prop: Ct(J) rho n^2 D^4 = D/n ; P_el = n k_cal P_motor(Cp rho n^3 D^5) / eta_esc + P_av ; pess: CD0 x 1.3, eta_prop x 0.85",
-   "inputs": {
-    "m": "P:requirements.mtow_gate_kg",
-    "g": "P:env.g_ms2",
-    "rho": "P:env.rho_kgm3",
-    "S": "CL-A1-WING-AREA",
-    "cd0": "CL-B1-CD0",
-    "k": "CL-B1-K",
-    "trim": "ASM-B1-TRIM",
-    "n": "P:propulsion.n_motors",
-    "tab": "ASM-B1-PROP",
-    "motor": "ASM-B1-MOTOR",
-    "kcal": "CL-B1-KCAL",
-    "D": "P:propulsion.prop_diameter_m",
-    "esc": "ASM-B1-ESC",
-    "av": "ASM-B1-AVIONICS-W",
-    "vc": "ASM-B1-VCRUISE",
-    "pess": "ASM-B1-PESS",
-    "v": "P:battery.v_nom"
-   },
-   "units": {
-    "m": "kg",
-    "g": "m/s2",
-    "rho": "kg/m3",
-    "S": "m2",
-    "D": "m",
-    "av": "W",
-    "vc": "m/s",
-    "v": "V"
-   },
-   "assumes": [
-    "ASM-B1-TRIM",
-    "ASM-B1-VCRUISE",
-    "ASM-B1-PESS",
-    "ASM-B1-PROP",
-    "ASM-B1-MOTOR"
-   ],
-   "outputs": {
-    "cl": 0.4713341097308489,
-    "ld": 5.602655787985118,
-    "drag_n": 4.77847569315481,
-    "t_prop_n": 1.1946189232887026,
-    "J": 0.4926458706743183,
-    "rpm": 6974.450308276335,
-    "eta_prop": 0.3697132203756927,
-    "p_el_w": 306.6351982453451,
-    "i_a": 20.71859447603683,
-    "p_el_pess_w": 396.8912273127308,
-    "eta_overall": 0.24933736090304695
-   },
-   "input_values": {
-    "m": 2.6,
-    "g": 9.80665,
-    "rho": 1.225,
-    "S": 0.345,
-    "cd0": 0.06106786446666666,
-    "k": 0.1037967020164535,
-    "trim": 1.05,
-    "n": 4,
+    ],
     "tab": [
+     [
+      0.0,
+      0.1121,
+      0.0418
+     ],
+     [
+      0.0446,
+      0.1083,
+      0.0423
+     ],
+     [
+      0.0891,
+      0.1038,
+      0.0426
+     ],
+     [
+      0.1337,
+      0.0987,
+      0.0426
+     ],
+     [
+      0.1782,
+      0.093,
+      0.0422
+     ],
+     [
+      0.2228,
+      0.0865,
+      0.0414
+     ],
+     [
+      0.2674,
+      0.0794,
+      0.0402
+     ],
+     [
+      0.3119,
+      0.0716,
+      0.0385
+     ],
+     [
+      0.3565,
+      0.063,
+      0.0363
+     ],
+     [
+      0.401,
+      0.0539,
+      0.0335
+     ],
+     [
+      0.4456,
+      0.0443,
+      0.0303
+     ],
+     [
+      0.4679,
+      0.0393,
+      0.0285
+     ],
+     [
+      0.4902,
+      0.0343,
+      0.0267
+     ],
+     [
+      0.5124,
+      0.0292,
+      0.0247
+     ],
+     [
+      0.5347,
+      0.0241,
+      0.0226
+     ],
+     [
+      0.557,
+      0.0189,
+      0.0204
+     ],
+     [
+      0.5793,
+      0.0137,
+      0.0181
+     ],
+     [
+      0.6016,
+      0.0085,
+      0.0157
+     ],
+     [
+      0.6238,
+      0.0034,
+      0.0133
+     ],
+     [
+      0.6386,
+      0.0,
+      0.0117
+     ]
+    ],
+    "tab_ref": [
      [
       0.0,
       0.0971,
@@ -1028,12 +1295,196 @@
       0.0112
      ]
     ],
-    "motor": [
-     900.0,
-     0.08,
-     0.6
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "D": 0.2794,
+    "rho": 1.225,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CALC-B1-CRUISE",
+   "type": "calculation",
+   "title": "Cruise at the proposed speed, gate mass",
+   "script": "redesign/team/B1/performance.py",
+   "function": "cruise",
+   "equation": "CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim ; prop: Ct(J) rho n^2 D^4 = D/n ; P_el = n k_cal P_motor(Cp rho n^3 D^5) / eta_esc + P_av ; eta_drive = P_shaft / (P_el - P_av) ; pess: CD0 x 1.3, k_pess (e 0.80), eta_prop x 0.85",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "S": "CL-A1-WING-AREA",
+    "cd0": "CL-B1-CD0",
+    "k": "CL-B1-K",
+    "k_pess": "CL-B1-K-PESS",
+    "trim": "ASM-B1-TRIM",
+    "n": "P:propulsion.n_motors",
+    "tab": "ASM-B1-PROP",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "kcal": "CL-B1-KCAL",
+    "D": "P:propulsion.prop_diameter_m",
+    "esc": "ASM-B1-ESC",
+    "av": "ASM-B1-AVIONICS-W",
+    "vc": "ASM-B1-VCRUISE",
+    "pess": "ASM-B1-PESS",
+    "v": "P:battery.v_nom"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "S": "m2",
+    "D": "m",
+    "av": "W",
+    "vc": "m/s",
+    "v": "V"
+   },
+   "assumes": [
+    "ASM-B1-TRIM",
+    "ASM-B1-VCRUISE",
+    "ASM-B1-PESS",
+    "ASM-B1-PROP",
+    "ASM-E1-KV",
+    "ASM-E1-RM",
+    "ASM-E1-I0"
+   ],
+   "outputs": {
+    "cl": 0.44187572787267076,
+    "ld": 7.023250226031203,
+    "drag_n": 3.703019964119452,
+    "t_prop_n": 0.925754991029863,
+    "J": 0.5829431085270208,
+    "rpm": 5894.115728166806,
+    "eta_prop": 0.42303690379934444,
+    "p_shaft_w": 140.0547301991743,
+    "eta_drive": 0.6639477863266682,
+    "p_el_w": 216.94238595784117,
+    "i_a": 14.658269321475753,
+    "p_el_pess_w": 283.38662015452303,
+    "i_pess_a": 19.14774460503534,
+    "drag_pess_n": 4.677970283240417,
+    "eta_prop_pess": 0.3996833906068537,
+    "eta_overall": 0.2731062404625027
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "S": 0.368,
+    "cd0": 0.044510124899999996,
+    "k": 0.09426690689730415,
+    "k_pess": 0.11071648215088373,
+    "trim": 1.02,
+    "n": 4,
+    "tab": [
+     [
+      0.0,
+      0.1121,
+      0.0418
+     ],
+     [
+      0.0446,
+      0.1083,
+      0.0423
+     ],
+     [
+      0.0891,
+      0.1038,
+      0.0426
+     ],
+     [
+      0.1337,
+      0.0987,
+      0.0426
+     ],
+     [
+      0.1782,
+      0.093,
+      0.0422
+     ],
+     [
+      0.2228,
+      0.0865,
+      0.0414
+     ],
+     [
+      0.2674,
+      0.0794,
+      0.0402
+     ],
+     [
+      0.3119,
+      0.0716,
+      0.0385
+     ],
+     [
+      0.3565,
+      0.063,
+      0.0363
+     ],
+     [
+      0.401,
+      0.0539,
+      0.0335
+     ],
+     [
+      0.4456,
+      0.0443,
+      0.0303
+     ],
+     [
+      0.4679,
+      0.0393,
+      0.0285
+     ],
+     [
+      0.4902,
+      0.0343,
+      0.0267
+     ],
+     [
+      0.5124,
+      0.0292,
+      0.0247
+     ],
+     [
+      0.5347,
+      0.0241,
+      0.0226
+     ],
+     [
+      0.557,
+      0.0189,
+      0.0204
+     ],
+     [
+      0.5793,
+      0.0137,
+      0.0181
+     ],
+     [
+      0.6016,
+      0.0085,
+      0.0157
+     ],
+     [
+      0.6238,
+      0.0034,
+      0.0133
+     ],
+     [
+      0.6386,
+      0.0,
+      0.0117
+     ]
     ],
-    "kcal": 1.1786451001411038,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "kcal": 1.131836279989992,
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
@@ -1052,7 +1503,7 @@
    "title": "Cruise power and cruise time versus airspeed",
    "script": "redesign/team/B1/performance.py",
    "function": "cruise_sweep",
-   "equation": "for V in 14..20 m/s: P_el(V) as CALC-B1-CRUISE ; t = (E(1-res) - P_h t_h - 2 E_tr)/P_el",
+   "equation": "for V in 14..20 m/s: P_el(V) as CALC-B1-CRUISE ; t = (E(1-res) - P_h t_h - 2 E_tr)/P_el ; pess: P_h and E_tr x 1.10 and the pessimistic P_el",
    "inputs": {
     "m": "P:requirements.mtow_gate_kg",
     "g": "P:env.g_ms2",
@@ -1060,10 +1511,13 @@
     "S": "CL-A1-WING-AREA",
     "cd0": "CL-B1-CD0",
     "k": "CL-B1-K",
+    "k_pess": "CL-B1-K-PESS",
     "trim": "ASM-B1-TRIM",
     "n": "P:propulsion.n_motors",
     "tab": "ASM-B1-PROP",
-    "motor": "ASM-B1-MOTOR",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
     "kcal": "CL-B1-KCAL",
     "D": "P:propulsion.prop_diameter_m",
     "esc": "ASM-B1-ESC",
@@ -1071,7 +1525,7 @@
     "pess": "ASM-B1-PESS",
     "E": "P:battery.energy_wh",
     "res": "P:requirements.energy_reserve_frac",
-    "p_hover": "CL-B1-HOVER-P-GATE",
+    "p_hover": "P:performance.hover_power_w",
     "t_hover": "P:requirements.hover_time_min",
     "e_tr": "CL-B1-TRANS-ENERGY",
     "trans": "ASM-B1-TRANS"
@@ -1096,279 +1550,228 @@
     "rows_V_P_Ppess_eta_t_tpess": [
      [
       14.0,
-      229.6,
-      293.3,
-      0.403,
-      16.42,
-      12.86
+      166.5,
+      216.5,
+      0.461,
+      22.3,
+      16.73
      ],
      [
       14.5,
-      246.7,
-      316.2,
-      0.393,
-      15.29,
-      11.92
+      177.7,
+      231.3,
+      0.45,
+      20.89,
+      15.66
      ],
      [
       15.0,
-      265.2,
-      341.1,
-      0.384,
-      14.22,
-      11.05
+      189.9,
+      247.3,
+      0.44,
+      19.56,
+      14.65
      ],
      [
       15.5,
-      285.1,
-      368.0,
-      0.377,
-      13.22,
-      10.25
+      202.9,
+      264.7,
+      0.431,
+      18.3,
+      13.69
      ],
      [
       16.0,
-      306.6,
-      396.9,
-      0.37,
-      12.3,
-      9.5
+      216.9,
+      283.4,
+      0.423,
+      17.11,
+      12.78
      ],
      [
       16.5,
-      329.7,
-      427.9,
-      0.364,
-      11.44,
-      8.81
+      232.0,
+      303.5,
+      0.416,
+      16.0,
+      11.94
      ],
      [
       17.0,
-      354.3,
-      461.1,
-      0.358,
-      10.64,
-      8.18
+      248.1,
+      325.0,
+      0.41,
+      14.97,
+      11.14
      ],
      [
       17.5,
-      380.6,
-      496.6,
-      0.353,
-      9.91,
-      7.59
+      265.2,
+      348.0,
+      0.404,
+      14.0,
+      10.41
      ],
      [
       18.0,
-      408.6,
-      534.3,
-      0.349,
-      9.23,
-      7.06
+      283.5,
+      372.5,
+      0.399,
+      13.1,
+      9.72
      ],
      [
       18.5,
-      438.4,
-      574.4,
-      0.345,
-      8.6,
-      6.56
+      302.8,
+      398.6,
+      0.395,
+      12.26,
+      9.09
      ],
      [
       19.0,
-      469.9,
-      616.9,
-      0.342,
-      8.02,
-      6.11
+      323.3,
+      426.2,
+      0.391,
+      11.48,
+      8.5
      ],
      [
       19.5,
-      503.2,
-      661.8,
-      0.339,
-      7.49,
-      5.7
+      345.0,
+      455.4,
+      0.387,
+      10.76,
+      7.95
      ],
      [
       20.0,
-      538.5,
-      709.3,
-      0.336,
-      7.0,
-      5.32
+      367.9,
+      486.3,
+      0.384,
+      10.09,
+      7.45
      ]
     ],
     "v_min_power_ms": 14.0,
-    "e_cruise_wh": 62.84123636742521
+    "e_cruise_wh": 61.88083436187936
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
-    "S": 0.345,
-    "cd0": 0.06106786446666666,
-    "k": 0.1037967020164535,
-    "trim": 1.05,
+    "S": 0.368,
+    "cd0": 0.044510124899999996,
+    "k": 0.09426690689730415,
+    "k_pess": 0.11071648215088373,
+    "trim": 1.02,
     "n": 4,
     "tab": [
      [
       0.0,
-      0.0971,
+      0.1121,
+      0.0418
+     ],
+     [
+      0.0446,
+      0.1083,
+      0.0423
+     ],
+     [
+      0.0891,
+      0.1038,
+      0.0426
+     ],
+     [
+      0.1337,
+      0.0987,
+      0.0426
+     ],
+     [
+      0.1782,
+      0.093,
+      0.0422
+     ],
+     [
+      0.2228,
+      0.0865,
+      0.0414
+     ],
+     [
+      0.2674,
+      0.0794,
+      0.0402
+     ],
+     [
+      0.3119,
+      0.0716,
+      0.0385
+     ],
+     [
+      0.3565,
+      0.063,
+      0.0363
+     ],
+     [
+      0.401,
+      0.0539,
       0.0335
      ],
      [
-      0.0188,
-      0.0952,
-      0.0336
+      0.4456,
+      0.0443,
+      0.0303
      ],
      [
-      0.0376,
-      0.0931,
-      0.0336
+      0.4679,
+      0.0393,
+      0.0285
      ],
      [
-      0.0564,
-      0.0909,
-      0.0336
+      0.4902,
+      0.0343,
+      0.0267
      ],
      [
-      0.0752,
-      0.0887,
-      0.0335
+      0.5124,
+      0.0292,
+      0.0247
      ],
      [
-      0.094,
-      0.0863,
-      0.0334
+      0.5347,
+      0.0241,
+      0.0226
      ],
      [
-      0.1128,
-      0.0838,
-      0.0332
-     ],
-     [
-      0.1316,
-      0.0813,
-      0.033
-     ],
-     [
-      0.1504,
-      0.0786,
-      0.0327
-     ],
-     [
-      0.1692,
-      0.0758,
-      0.0324
-     ],
-     [
-      0.188,
-      0.0728,
-      0.032
-     ],
-     [
-      0.2069,
-      0.0698,
-      0.0315
-     ],
-     [
-      0.2257,
-      0.0666,
-      0.031
-     ],
-     [
-      0.2445,
-      0.0634,
-      0.0304
-     ],
-     [
-      0.2633,
-      0.06,
-      0.0297
-     ],
-     [
-      0.2821,
-      0.0564,
-      0.029
-     ],
-     [
-      0.3009,
-      0.0528,
-      0.0281
-     ],
-     [
-      0.3197,
-      0.0491,
-      0.0273
-     ],
-     [
-      0.3385,
-      0.0453,
-      0.0263
-     ],
-     [
-      0.3573,
-      0.0415,
-      0.0253
-     ],
-     [
-      0.3761,
-      0.0375,
-      0.0242
-     ],
-     [
-      0.3949,
-      0.0335,
-      0.023
-     ],
-     [
-      0.4137,
-      0.0294,
-      0.0217
-     ],
-     [
-      0.4325,
-      0.0253,
+      0.557,
+      0.0189,
       0.0204
      ],
      [
-      0.4513,
-      0.0211,
-      0.0191
+      0.5793,
+      0.0137,
+      0.0181
      ],
      [
-      0.4701,
-      0.0169,
-      0.0176
+      0.6016,
+      0.0085,
+      0.0157
      ],
      [
-      0.4889,
-      0.0127,
-      0.0161
+      0.6238,
+      0.0034,
+      0.0133
      ],
      [
-      0.5077,
-      0.0084,
-      0.0145
-     ],
-     [
-      0.5265,
-      0.0042,
-      0.0129
-     ],
-     [
-      0.5453,
+      0.6386,
       0.0,
-      0.0112
+      0.0117
      ]
     ],
-    "motor": [
-     900.0,
-     0.08,
-     0.6
-    ],
-    "kcal": 1.1786451001411038,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "kcal": 1.131836279989992,
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
@@ -1379,11 +1782,11 @@
     ],
     "E": 96.2,
     "res": 0.2,
-    "p_hover": 379.92249202901627,
+    "p_hover": 400.0,
     "t_hover": 2.0,
-    "e_tr": 0.7273402824704649,
+    "e_tr": 0.8729161523936574,
     "trans": [
-     20.0,
+     12.0,
      1.1,
      1.0
     ]
@@ -1395,12 +1798,13 @@
    "title": "Mission energy: 2 min hover, two transitions, cruise",
    "script": "redesign/team/B1/performance.py",
    "function": "mission",
-   "equation": "E_use = E (1 - reserve) ; E_c = E_use - P_hover t_hover - E_tr (1 + back) ; t_cruise = E_c / P_cruise ; range = t_cruise V",
+   "equation": "E_use = E (1 - reserve) ; E_c = E_use - P_hover t_hover - E_tr (1 + back) ; t_cruise = E_c / P_cruise ; range = t_cruise V ; pess: P_hover and E_tr x 1.10, P_cruise,pess ; cross-check with B1 hover",
    "inputs": {
     "E": "P:battery.energy_wh",
     "res": "P:requirements.energy_reserve_frac",
-    "p_hover": "CL-B1-HOVER-P-GATE",
-    "p_hover_pess": "CL-B1-HOVER-P-PESS",
+    "p_hover": "P:performance.hover_power_w",
+    "pess": "ASM-B1-PESS",
+    "p_hover_b1": "CL-B1-HOVER-P-GATE",
     "t_hover": "P:requirements.hover_time_min",
     "e_tr": "CL-B1-TRANS-ENERGY",
     "trans": "ASM-B1-TRANS",
@@ -1411,7 +1815,7 @@
    "units": {
     "E": "Wh",
     "p_hover": "W",
-    "p_hover_pess": "W",
+    "p_hover_b1": "W",
     "t_hover": "min",
     "e_tr": "Wh",
     "p_c": "W",
@@ -1419,30 +1823,39 @@
     "vc": "m/s"
    },
    "assumes": [
-    "ASM-B1-TRANS"
+    "ASM-B1-TRANS",
+    "ASM-B1-PESS"
    ],
    "outputs": {
     "e_usable_wh": 76.96000000000001,
-    "e_hover_wh": 12.664083067633875,
-    "e_transitions_wh": 1.4546805649409298,
-    "t_cruise_min": 12.296286282922676,
-    "t_cruise_pess_min": 9.286578655833742,
-    "range_km": 11.80443483160577
+    "e_hover_wh": 13.333333333333334,
+    "e_transitions_wh": 1.7458323047873148,
+    "t_cruise_min": 17.114452048270028,
+    "p_hover_pess_w": 440.00000000000006,
+    "t_cruise_pess_min": 12.782449171061268,
+    "t_cruise_b1_hover_min": 17.234906100356763,
+    "range_km": 16.429873966339226,
+    "e_cruise_wh": 61.88083436187936
    },
    "input_values": {
     "E": 96.2,
     "res": 0.2,
-    "p_hover": 379.92249202901627,
-    "p_hover_pess": 417.9147412319179,
+    "p_hover": 400.0,
+    "pess": [
+     1.3,
+     0.85,
+     1.1
+    ],
+    "p_hover_b1": 386.9342052710069,
     "t_hover": 2.0,
-    "e_tr": 0.7273402824704649,
+    "e_tr": 0.8729161523936574,
     "trans": [
-     20.0,
+     12.0,
      1.1,
      1.0
     ],
-    "p_c": 306.6351982453451,
-    "p_c_pess": 396.8912273127308,
+    "p_c": 216.94238595784117,
+    "p_c_pess": 283.38662015452303,
     "vc": 16.0
    }
   },
@@ -1459,14 +1872,16 @@
     "rho": "P:env.rho_kgm3",
     "S": "CL-A1-WING-AREA",
     "cla": "CL-B1-CLA",
-    "a0": "ASM-B1-ALPHA0",
-    "clmax": "ASM-A1-CLMAX",
+    "a0": "P:b2.xfoil.alpha0_2d_deg",
+    "clmax": "CL-B2-CLMAX-DESIGN",
     "cd0": "CL-B1-CD0",
     "k": "CL-B1-K",
     "cd90": "ASM-B1-CD90",
     "n": "P:propulsion.n_motors",
     "tab": "ASM-B1-PROP",
-    "motor": "ASM-B1-MOTOR",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
     "kcal": "CL-B1-KCAL",
     "nmax": "CL-B1-NMAX-SAG",
     "D": "P:propulsion.prop_diameter_m",
@@ -1496,363 +1911,311 @@
      [
       0,
       90.0,
-      33.75,
+      44.25,
       1.06,
-      0.469,
-      379.9,
+      0.591,
+      387.0,
       1
      ],
      [
       1,
-      89.36,
-      33.61,
+      89.33,
+      44.08,
       1.0,
-      0.442,
-      349.0,
+      0.557,
+      355.7,
       1
      ],
      [
       2,
-      87.45,
-      32.95,
+      87.32,
+      43.07,
       0.999,
-      0.443,
-      350.4,
+      0.558,
+      356.9,
       1
      ],
      [
       3,
-      84.29,
-      32.29,
+      83.98,
+      41.98,
       0.995,
-      0.444,
-      353.3,
+      0.558,
+      359.2,
       1
      ],
      [
       4,
-      79.92,
-      31.42,
-      0.986,
-      0.444,
-      357.5,
+      79.39,
+      40.39,
+      0.984,
+      0.558,
+      362.2,
       1
      ],
      [
       5,
-      74.47,
-      30.72,
-      0.967,
-      0.444,
-      362.8,
+      73.68,
+      38.43,
+      0.962,
+      0.554,
+      365.0,
       1
      ],
      [
       6,
-      68.19,
-      29.69,
-      0.935,
-      0.442,
-      367.0,
+      67.14,
+      36.64,
+      0.927,
+      0.548,
+      366.7,
       1
      ],
      [
       7,
-      61.43,
-      28.68,
-      0.89,
-      0.437,
-      370.3,
+      60.16,
+      34.66,
+      0.877,
+      0.538,
+      365.7,
       1
      ],
      [
       8,
-      54.58,
-      27.58,
-      0.834,
-      0.431,
-      372.7,
+      53.15,
+      32.65,
+      0.815,
+      0.525,
+      361.7,
       1
      ],
      [
       9,
-      48.01,
-      26.51,
-      0.771,
-      0.423,
-      374.5,
+      46.52,
+      30.77,
+      0.747,
+      0.511,
+      356.5,
       1
      ],
      [
       10,
-      41.98,
-      25.23,
-      0.706,
-      0.417,
-      376.7,
+      40.5,
+      28.75,
+      0.679,
+      0.5,
+      351.0,
       1
      ],
      [
       11,
-      36.63,
-      23.88,
-      0.645,
-      0.414,
-      381.8,
+      35.22,
+      26.47,
+      0.614,
+      0.492,
+      347.3,
       1
      ],
      [
       12,
-      11.22,
-      9.72,
-      0.158,
-      0.127,
-      164.1,
+      11.44,
+      10.19,
+      0.13,
+      0.13,
+      125.2,
       0
      ],
      [
       13,
-      9.46,
-      8.46,
-      0.158,
-      0.142,
-      189.1,
+      9.62,
+      8.87,
+      0.129,
+      0.144,
+      141.8,
       0
      ],
      [
       14,
-      8.05,
-      7.55,
-      0.162,
-      0.163,
-      219.3,
+      8.16,
+      7.66,
+      0.131,
+      0.167,
+      161.8,
       0
      ],
      [
       15,
-      6.9,
-      6.65,
-      0.169,
-      0.195,
-      254.9,
+      6.98,
+      6.73,
+      0.135,
+      0.201,
+      185.4,
       0
      ],
      [
       16,
-      5.96,
-      5.71,
-      0.178,
-      0.242,
-      296.1,
+      6.0,
+      6.0,
+      0.142,
+      0.253,
+      212.6,
       0
      ],
      [
       17,
-      5.17,
-      5.17,
-      0.189,
-      0.313,
-      343.3,
+      5.19,
+      5.19,
+      0.15,
+      0.337,
+      243.8,
       0
      ],
      [
       18,
       4.51,
       4.51,
-      0.202,
-      0.43,
-      397.0,
+      0.16,
+      0.483,
+      279.1,
       0
      ],
      [
       19,
-      3.95,
-      3.95,
-      0.217,
-      0.646,
-      457.4,
+      3.93,
+      3.93,
+      0.171,
+      0.794,
+      318.9,
       0
      ]
     ],
-    "thrust_frac_max": 0.46889887028719196,
-    "p_peak_w": 381.820581357356,
-    "v_peak_ms": 11,
+    "thrust_frac_max": 0.5907064471879288,
+    "p_peak_w": 386.9521125059667,
+    "v_peak_ms": 0,
     "v_wing_unstalled_ms": 12,
-    "alpha_stall_deg": 12.538808481939997,
-    "lean_5ms_lift_deg": 15.52834285676957,
-    "lean_8ms_lift_deg": 35.42450260443366
+    "alpha_stall_deg": 12.38474654631278,
+    "lean_5ms_lift_deg": 16.31590541234783,
+    "lean_8ms_lift_deg": 36.84624929836656
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
-    "S": 0.345,
-    "cla": 3.8087695553534475,
-    "a0": -1.0,
-    "clmax": 0.9,
-    "cd0": 0.06106786446666666,
-    "k": 0.1037967020164535,
+    "S": 0.368,
+    "cla": 3.4773,
+    "a0": -1.17,
+    "clmax": 0.822642096260011,
+    "cd0": 0.044510124899999996,
+    "k": 0.09426690689730415,
     "cd90": 1.28,
     "n": 4,
     "tab": [
      [
       0.0,
-      0.0971,
+      0.1121,
+      0.0418
+     ],
+     [
+      0.0446,
+      0.1083,
+      0.0423
+     ],
+     [
+      0.0891,
+      0.1038,
+      0.0426
+     ],
+     [
+      0.1337,
+      0.0987,
+      0.0426
+     ],
+     [
+      0.1782,
+      0.093,
+      0.0422
+     ],
+     [
+      0.2228,
+      0.0865,
+      0.0414
+     ],
+     [
+      0.2674,
+      0.0794,
+      0.0402
+     ],
+     [
+      0.3119,
+      0.0716,
+      0.0385
+     ],
+     [
+      0.3565,
+      0.063,
+      0.0363
+     ],
+     [
+      0.401,
+      0.0539,
       0.0335
      ],
      [
-      0.0188,
-      0.0952,
-      0.0336
+      0.4456,
+      0.0443,
+      0.0303
      ],
      [
-      0.0376,
-      0.0931,
-      0.0336
+      0.4679,
+      0.0393,
+      0.0285
      ],
      [
-      0.0564,
-      0.0909,
-      0.0336
+      0.4902,
+      0.0343,
+      0.0267
      ],
      [
-      0.0752,
-      0.0887,
-      0.0335
+      0.5124,
+      0.0292,
+      0.0247
      ],
      [
-      0.094,
-      0.0863,
-      0.0334
+      0.5347,
+      0.0241,
+      0.0226
      ],
      [
-      0.1128,
-      0.0838,
-      0.0332
-     ],
-     [
-      0.1316,
-      0.0813,
-      0.033
-     ],
-     [
-      0.1504,
-      0.0786,
-      0.0327
-     ],
-     [
-      0.1692,
-      0.0758,
-      0.0324
-     ],
-     [
-      0.188,
-      0.0728,
-      0.032
-     ],
-     [
-      0.2069,
-      0.0698,
-      0.0315
-     ],
-     [
-      0.2257,
-      0.0666,
-      0.031
-     ],
-     [
-      0.2445,
-      0.0634,
-      0.0304
-     ],
-     [
-      0.2633,
-      0.06,
-      0.0297
-     ],
-     [
-      0.2821,
-      0.0564,
-      0.029
-     ],
-     [
-      0.3009,
-      0.0528,
-      0.0281
-     ],
-     [
-      0.3197,
-      0.0491,
-      0.0273
-     ],
-     [
-      0.3385,
-      0.0453,
-      0.0263
-     ],
-     [
-      0.3573,
-      0.0415,
-      0.0253
-     ],
-     [
-      0.3761,
-      0.0375,
-      0.0242
-     ],
-     [
-      0.3949,
-      0.0335,
-      0.023
-     ],
-     [
-      0.4137,
-      0.0294,
-      0.0217
-     ],
-     [
-      0.4325,
-      0.0253,
+      0.557,
+      0.0189,
       0.0204
      ],
      [
-      0.4513,
-      0.0211,
-      0.0191
+      0.5793,
+      0.0137,
+      0.0181
      ],
      [
-      0.4701,
-      0.0169,
-      0.0176
+      0.6016,
+      0.0085,
+      0.0157
      ],
      [
-      0.4889,
-      0.0127,
-      0.0161
+      0.6238,
+      0.0034,
+      0.0133
      ],
      [
-      0.5077,
-      0.0084,
-      0.0145
-     ],
-     [
-      0.5265,
-      0.0042,
-      0.0129
-     ],
-     [
-      0.5453,
+      0.6386,
       0.0,
-      0.0112
+      0.0117
      ]
     ],
-    "motor": [
-     900.0,
-     0.08,
-     0.6
-    ],
-    "kcal": 1.1786451001411038,
-    "nmax": 140.9937600951332,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "kcal": 1.131836279989992,
+    "nmax": 116.91236317007179,
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
@@ -1874,14 +2237,16 @@
     "rho": "P:env.rho_kgm3",
     "S": "CL-A1-WING-AREA",
     "cla": "CL-B1-CLA",
-    "a0": "ASM-B1-ALPHA0",
-    "clmax": "ASM-A1-CLMAX",
+    "a0": "P:b2.xfoil.alpha0_2d_deg",
+    "clmax": "CL-B2-CLMAX-DESIGN",
     "cd0": "CL-B1-CD0",
     "k": "CL-B1-K",
     "cd90": "ASM-B1-CD90",
     "n": "P:propulsion.n_motors",
     "tab": "ASM-B1-PROP",
-    "motor": "ASM-B1-MOTOR",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
     "kcal": "CL-B1-KCAL",
     "nmax": "CL-B1-NMAX-SAG",
     "D": "P:propulsion.prop_diameter_m",
@@ -1911,194 +2276,142 @@
     "ASM-B1-CTRL-RESERVE"
    ],
    "outputs": {
-    "t_to_vt_s": 4.959999999999939,
-    "t_to_cruise_s": 6.389999999999908,
-    "alt_loss_m": 0.1640934629122984,
-    "alt_gain_m": 0.0,
-    "thrust_frac_max": 0.7657798666027088,
-    "energy_wh": 0.7273402824704649
+    "t_to_vt_s": 7.349999999999888,
+    "t_to_cruise_s": 8.499999999999863,
+    "alt_loss_m": 0.12410276204589299,
+    "alt_gain_m": 0.35411692230933806,
+    "thrust_frac_max": 0.7412910298770923,
+    "energy_wh": 0.8729161523936574
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
-    "S": 0.345,
-    "cla": 3.8087695553534475,
-    "a0": -1.0,
-    "clmax": 0.9,
-    "cd0": 0.06106786446666666,
-    "k": 0.1037967020164535,
+    "S": 0.368,
+    "cla": 3.4773,
+    "a0": -1.17,
+    "clmax": 0.822642096260011,
+    "cd0": 0.044510124899999996,
+    "k": 0.09426690689730415,
     "cd90": 1.28,
     "n": 4,
     "tab": [
      [
       0.0,
-      0.0971,
+      0.1121,
+      0.0418
+     ],
+     [
+      0.0446,
+      0.1083,
+      0.0423
+     ],
+     [
+      0.0891,
+      0.1038,
+      0.0426
+     ],
+     [
+      0.1337,
+      0.0987,
+      0.0426
+     ],
+     [
+      0.1782,
+      0.093,
+      0.0422
+     ],
+     [
+      0.2228,
+      0.0865,
+      0.0414
+     ],
+     [
+      0.2674,
+      0.0794,
+      0.0402
+     ],
+     [
+      0.3119,
+      0.0716,
+      0.0385
+     ],
+     [
+      0.3565,
+      0.063,
+      0.0363
+     ],
+     [
+      0.401,
+      0.0539,
       0.0335
      ],
      [
-      0.0188,
-      0.0952,
-      0.0336
+      0.4456,
+      0.0443,
+      0.0303
      ],
      [
-      0.0376,
-      0.0931,
-      0.0336
+      0.4679,
+      0.0393,
+      0.0285
      ],
      [
-      0.0564,
-      0.0909,
-      0.0336
+      0.4902,
+      0.0343,
+      0.0267
      ],
      [
-      0.0752,
-      0.0887,
-      0.0335
+      0.5124,
+      0.0292,
+      0.0247
      ],
      [
-      0.094,
-      0.0863,
-      0.0334
+      0.5347,
+      0.0241,
+      0.0226
      ],
      [
-      0.1128,
-      0.0838,
-      0.0332
-     ],
-     [
-      0.1316,
-      0.0813,
-      0.033
-     ],
-     [
-      0.1504,
-      0.0786,
-      0.0327
-     ],
-     [
-      0.1692,
-      0.0758,
-      0.0324
-     ],
-     [
-      0.188,
-      0.0728,
-      0.032
-     ],
-     [
-      0.2069,
-      0.0698,
-      0.0315
-     ],
-     [
-      0.2257,
-      0.0666,
-      0.031
-     ],
-     [
-      0.2445,
-      0.0634,
-      0.0304
-     ],
-     [
-      0.2633,
-      0.06,
-      0.0297
-     ],
-     [
-      0.2821,
-      0.0564,
-      0.029
-     ],
-     [
-      0.3009,
-      0.0528,
-      0.0281
-     ],
-     [
-      0.3197,
-      0.0491,
-      0.0273
-     ],
-     [
-      0.3385,
-      0.0453,
-      0.0263
-     ],
-     [
-      0.3573,
-      0.0415,
-      0.0253
-     ],
-     [
-      0.3761,
-      0.0375,
-      0.0242
-     ],
-     [
-      0.3949,
-      0.0335,
-      0.023
-     ],
-     [
-      0.4137,
-      0.0294,
-      0.0217
-     ],
-     [
-      0.4325,
-      0.0253,
+      0.557,
+      0.0189,
       0.0204
      ],
      [
-      0.4513,
-      0.0211,
-      0.0191
+      0.5793,
+      0.0137,
+      0.0181
      ],
      [
-      0.4701,
-      0.0169,
-      0.0176
+      0.6016,
+      0.0085,
+      0.0157
      ],
      [
-      0.4889,
-      0.0127,
-      0.0161
+      0.6238,
+      0.0034,
+      0.0133
      ],
      [
-      0.5077,
-      0.0084,
-      0.0145
-     ],
-     [
-      0.5265,
-      0.0042,
-      0.0129
-     ],
-     [
-      0.5453,
+      0.6386,
       0.0,
-      0.0112
+      0.0117
      ]
     ],
-    "motor": [
-     900.0,
-     0.08,
-     0.6
-    ],
-    "kcal": 1.1786451001411038,
-    "nmax": 140.9937600951332,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "kcal": 1.131836279989992,
+    "nmax": 116.91236317007179,
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
     "frac": 0.8,
     "trans": [
-     20.0,
+     12.0,
      1.1,
      1.0
     ],
-    "vs": 11.578789616799682,
+    "vs": 11.726396944442973,
     "vc": 16.0,
     "kt": 1.3
    }
@@ -2151,30 +2464,30 @@
     "ASM-B1-CTRL-RESERVE"
    ],
    "outputs": {
-    "lean_5ms_deg": 14.853182958014594,
-    "lean_8ms_deg": 34.17352087695308,
-    "lean_allowed_deg": 27.234833981574667,
-    "v_hover_max_ms": 6.9655607786283795,
-    "tw_needed_8ms": 1.208692551930143,
-    "thrust_frac_8ms": 0.5667545721245872,
-    "v_ground_tip_ms": 9.5808307505186,
+    "lean_5ms_deg": 15.795410611927222,
+    "lean_8ms_deg": 35.911511415879644,
+    "lean_allowed_deg": 20.62130307732461,
+    "v_hover_max_ms": 5.766761623413693,
+    "tw_needed_8ms": 1.2346840304455746,
+    "thrust_frac_8ms": 0.7293358170241777,
+    "v_ground_tip_ms": 8.229955690656153,
     "groundspeed_upwind_ms": 11.0,
-    "m_min_kg": 2.132
+    "m_min_kg": 2.15
    },
    "input_values": {
     "m": 2.6,
-    "m_sized": 2.482,
-    "growth": 350,
+    "m_sized": 2.55,
+    "growth": 400,
     "g": 9.80665,
     "rho": 1.225,
-    "S": 0.345,
+    "S": 0.368,
     "cd90": 1.28,
-    "tip": 37.23483398157467,
+    "tip": 30.62130307732461,
     "err": 10.0,
     "z_fin": 0.19,
-    "c": 0.3,
-    "foot": 0.01,
-    "tw_sag": 2.132656023222061,
+    "c": 0.32,
+    "foot": 0.045,
+    "tw_sag": 1.6928882438316402,
     "frac": 0.8,
     "vw": 5.0,
     "vg": 8.0,
@@ -2195,10 +2508,13 @@
     "S": "CL-A1-WING-AREA",
     "cd0": "CL-B1-CD0",
     "k": "CL-B1-K",
+    "k_pess": "CL-B1-K-PESS",
     "trim": "ASM-B1-TRIM",
     "n": "P:propulsion.n_motors",
     "tab": "ASM-B1-PROP",
-    "motor": "ASM-B1-MOTOR",
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
     "kcal": "CL-B1-KCAL",
     "D": "P:propulsion.prop_diameter_m",
     "esc": "ASM-B1-ESC",
@@ -2222,183 +2538,132 @@
     "ASM-B1-CTRL-RESERVE"
    ],
    "outputs": {
-    "p_vclimb_2p5_w": 446.95468383235493,
-    "roc_fw_max_ms": 6.252876879464661,
-    "climb_angle_fw_deg": 23.004585986589152,
-    "v_max_level_ms": 19.700000000000053
+    "p_vclimb_2p5_w": 447.8067131548745,
+    "roc_fw_max_ms": 4.721936197095069,
+    "climb_angle_fw_deg": 17.16479393959994,
+    "v_max_level_ms": 19.300000000000047
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
-    "S": 0.345,
-    "cd0": 0.06106786446666666,
-    "k": 0.1037967020164535,
-    "trim": 1.05,
+    "S": 0.368,
+    "cd0": 0.044510124899999996,
+    "k": 0.09426690689730415,
+    "k_pess": 0.11071648215088373,
+    "trim": 1.02,
     "n": 4,
     "tab": [
      [
       0.0,
-      0.0971,
+      0.1121,
+      0.0418
+     ],
+     [
+      0.0446,
+      0.1083,
+      0.0423
+     ],
+     [
+      0.0891,
+      0.1038,
+      0.0426
+     ],
+     [
+      0.1337,
+      0.0987,
+      0.0426
+     ],
+     [
+      0.1782,
+      0.093,
+      0.0422
+     ],
+     [
+      0.2228,
+      0.0865,
+      0.0414
+     ],
+     [
+      0.2674,
+      0.0794,
+      0.0402
+     ],
+     [
+      0.3119,
+      0.0716,
+      0.0385
+     ],
+     [
+      0.3565,
+      0.063,
+      0.0363
+     ],
+     [
+      0.401,
+      0.0539,
       0.0335
      ],
      [
-      0.0188,
-      0.0952,
-      0.0336
+      0.4456,
+      0.0443,
+      0.0303
      ],
      [
-      0.0376,
-      0.0931,
-      0.0336
+      0.4679,
+      0.0393,
+      0.0285
      ],
      [
-      0.0564,
-      0.0909,
-      0.0336
+      0.4902,
+      0.0343,
+      0.0267
      ],
      [
-      0.0752,
-      0.0887,
-      0.0335
+      0.5124,
+      0.0292,
+      0.0247
      ],
      [
-      0.094,
-      0.0863,
-      0.0334
+      0.5347,
+      0.0241,
+      0.0226
      ],
      [
-      0.1128,
-      0.0838,
-      0.0332
-     ],
-     [
-      0.1316,
-      0.0813,
-      0.033
-     ],
-     [
-      0.1504,
-      0.0786,
-      0.0327
-     ],
-     [
-      0.1692,
-      0.0758,
-      0.0324
-     ],
-     [
-      0.188,
-      0.0728,
-      0.032
-     ],
-     [
-      0.2069,
-      0.0698,
-      0.0315
-     ],
-     [
-      0.2257,
-      0.0666,
-      0.031
-     ],
-     [
-      0.2445,
-      0.0634,
-      0.0304
-     ],
-     [
-      0.2633,
-      0.06,
-      0.0297
-     ],
-     [
-      0.2821,
-      0.0564,
-      0.029
-     ],
-     [
-      0.3009,
-      0.0528,
-      0.0281
-     ],
-     [
-      0.3197,
-      0.0491,
-      0.0273
-     ],
-     [
-      0.3385,
-      0.0453,
-      0.0263
-     ],
-     [
-      0.3573,
-      0.0415,
-      0.0253
-     ],
-     [
-      0.3761,
-      0.0375,
-      0.0242
-     ],
-     [
-      0.3949,
-      0.0335,
-      0.023
-     ],
-     [
-      0.4137,
-      0.0294,
-      0.0217
-     ],
-     [
-      0.4325,
-      0.0253,
+      0.557,
+      0.0189,
       0.0204
      ],
      [
-      0.4513,
-      0.0211,
-      0.0191
+      0.5793,
+      0.0137,
+      0.0181
      ],
      [
-      0.4701,
-      0.0169,
-      0.0176
+      0.6016,
+      0.0085,
+      0.0157
      ],
      [
-      0.4889,
-      0.0127,
-      0.0161
+      0.6238,
+      0.0034,
+      0.0133
      ],
      [
-      0.5077,
-      0.0084,
-      0.0145
-     ],
-     [
-      0.5265,
-      0.0042,
-      0.0129
-     ],
-     [
-      0.5453,
+      0.6386,
       0.0,
-      0.0112
+      0.0117
      ]
     ],
-    "motor": [
-     900.0,
-     0.08,
-     0.6
-    ],
-    "kcal": 1.1786451001411038,
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "kcal": 1.131836279989992,
     "D": 0.2794,
     "esc": 0.95,
     "av": 6.0,
     "vc": 16.0,
-    "nmax": 140.9937600951332,
+    "nmax": 116.91236317007179,
     "frac": 0.8,
     "dl": 1.06
    }
@@ -2411,27 +2676,37 @@
    "output": "cd0",
    "unit": "-",
    "how": "B2/B3 AVL + XFOIL profile drag; flight: glide or power-off sink at 16 m/s, or cruise power at known prop data (H2).",
-   "value": 0.06106786446666666
+   "value": 0.044510124899999996
   },
   {
    "id": "CL-B1-K",
    "type": "claim",
-   "title": "Induced drag factor",
+   "title": "Lift-dependent drag factor (B2 trimmed polar, e 0.93)",
    "calc": "CALC-B1-AERO",
    "output": "k",
    "unit": "-",
-   "how": "B3 AVL Trefftz-plane CDi at cruise CL gives e; replaces wing.oswald_e 0.8.",
-   "value": 0.1037967020164535
+   "how": "B2/B3 re-run AVL at c 0.32 with fins and pod; flight: cruise power at 14/16/18 m/s (H2).",
+   "value": 0.09426690689730415
+  },
+  {
+   "id": "CL-B1-K-PESS",
+   "type": "claim",
+   "title": "Lift-dependent drag factor, pessimistic (e 0.80)",
+   "calc": "CALC-B1-AERO",
+   "output": "k_pess",
+   "unit": "-",
+   "how": "As CL-B1-K.",
+   "value": 0.11071648215088373
   },
   {
    "id": "CL-B1-CLA",
    "type": "claim",
-   "title": "Wing lift slope",
+   "title": "Wing lift slope (B2 AVL, c 0.30 run)",
    "calc": "CALC-B1-AERO",
    "output": "cla_per_rad",
    "unit": "1/rad",
-   "how": "B3 AVL CLa with fins and pod.",
-   "value": 3.8087695553534475
+   "how": "B3 AVL CLa with fins and pod at c 0.32.",
+   "value": 3.4773
   },
   {
    "id": "CL-B1-LDMAX",
@@ -2441,7 +2716,7 @@
    "output": "ld_max",
    "unit": "-",
    "how": "Glide test at best-glide speed with airspeed and baro logged (H2).",
-   "value": 6.280176659292719
+   "value": 7.718998726394225
   },
   {
    "id": "CL-B1-ALPHA-STALL",
@@ -2451,7 +2726,7 @@
    "output": "alpha_stall_deg",
    "unit": "deg",
    "how": "B2 XFOIL CLmax and AVL; tuft the twin at slow flight.",
-   "value": 12.538808481939997
+   "value": 12.38474654631278
   },
   {
    "id": "CL-B1-VS-GATE",
@@ -2467,8 +2742,8 @@
    "verifies": [
     "R-STALL"
    ],
-   "how": "B2 replaces CLmax 0.9; flight: slow-flight stall in FBWA at >= 50 m with airspeed logged (H2).",
-   "value": 11.578789616799682
+   "how": "B2 trimmed CLmax 0.80 (XFOIL + AVL); flight: slow-flight stall in FBWA at >= 50 m with airspeed logged (H2, T-B2-STALL).",
+   "value": 11.726396944442973
   },
   {
    "id": "CL-B1-VS-SIZED",
@@ -2485,7 +2760,7 @@
     "R-STALL"
    ],
    "how": "As CL-B1-VS-GATE at the weighed mass.",
-   "value": 11.312989332101811
+   "value": 11.613095766145547
   },
   {
    "id": "CL-B1-VT-GATE",
@@ -2501,8 +2776,8 @@
    "verifies": [
     "R-TRANSITION"
    ],
-   "how": "Resolves CR-A1-05 by raising cruise to 16 m/s (CR-B1-01). Log airspeed at 'Transition done' (F4/H2).",
-   "value": 15.052426501839587
+   "how": "16 m/s cruise (D-01) over 1.3 Vs with B2's trimmed CLmax 0.80 at c 0.32. Log airspeed at 'Transition done' (F4/H2).",
+   "value": 15.244316027775865
   },
   {
    "id": "CL-B1-CLMAX-FOR-15",
@@ -2512,7 +2787,7 @@
    "output": "clmax_needed_for_15ms",
    "unit": "-",
    "how": "B2 compares with the XFOIL/AVL CLmax with elevon up-trim; if B2 shows >= this value, 15 m/s also passes.",
-   "value": 0.906302174373131
+   "value": 0.8496582884748102
   },
   {
    "id": "CL-B1-NMAX-SAG",
@@ -2522,7 +2797,7 @@
    "output": "n_max_sag_rps",
    "unit": "rev/s",
    "how": "Thrust stand at 14.0 V, full throttle, optical tachometer (H1, T-A1-THRUST-STATION).",
-   "value": 140.9937600951332
+   "value": 116.91236317007179
   },
   {
    "id": "CL-B1-KCAL",
@@ -2532,7 +2807,7 @@
    "output": "k_cal",
    "unit": "-",
    "how": "Thrust stand: measured W at 690 gf replaces the maker point; k_cal re-derives (H1).",
-   "value": 1.1786451001411038
+   "value": 1.131836279989992
   },
   {
    "id": "CL-B1-FM",
@@ -2542,20 +2817,21 @@
    "output": "fm_apc_static",
    "unit": "-",
    "how": "Thrust stand gf and shaft W (from current, Kv, Rm) at hover thrust (H1).",
-   "value": 0.7206495160347752
+   "value": 0.7164274187618953
   },
   {
    "id": "CL-B1-HOVER-P-GATE",
    "type": "claim",
-   "title": "Hover power at 2.6 kg",
+   "title": "Hover power at 2.6 kg, 11x5.5MR (B1 cross-check of E1)",
    "calc": "CALC-B1-HOVER",
    "output": "p_gate_w",
    "unit": "W",
-   "verifies": [
-    "R-MISSION"
-   ],
+   "limit": {
+    "op": "<=",
+    "ref": "P:performance.hover_power_w"
+   },
    "how": "Tethered hover at the gate mass (ballast), log pack W for 60 s (H2); thrust stand first (H1).",
-   "value": 379.92249202901627
+   "value": 386.9342052710069
   },
   {
    "id": "CL-B1-HOVER-P-PESS",
@@ -2565,7 +2841,7 @@
    "output": "p_gate_pess_w",
    "unit": "W",
    "how": "As CL-B1-HOVER-P-GATE.",
-   "value": 417.9147412319179
+   "value": 425.6276257981076
   },
   {
    "id": "CL-B1-HOVER-I-GATE",
@@ -2575,7 +2851,17 @@
    "output": "i_gate_a",
    "unit": "A",
    "how": "Current sensor log in tethered hover; F1 sizes the disconnect on it (x 1.25).",
-   "value": 25.670438650609206
+   "value": 26.144203058851815
+  },
+  {
+   "id": "CL-B1-HOVER-PROP-RATIO",
+   "type": "claim",
+   "title": "Hover power ratio 11x5.5MR / 11x4.5MR",
+   "calc": "CALC-B1-HOVER",
+   "output": "prop_ratio_55_45",
+   "unit": "-",
+   "how": "Thrust stand A/B of both props at 690 gf (H1, CR-B1-06).",
+   "value": 1.0187517824989423
   },
   {
    "id": "CL-B1-HOVER-ONLY",
@@ -2585,7 +2871,7 @@
    "output": "hover_only_gate_min",
    "unit": "min",
    "how": "Not flown; follows from the measured hover power.",
-   "value": 12.154057990458051
+   "value": 11.933811839575815
   },
   {
    "id": "CL-B1-HOVER-THROTTLE",
@@ -2602,7 +2888,7 @@
     "R-HOVER-TW"
    ],
    "how": "Hover throttle in the log (MOT_THST_HOVER learned) at the gate mass and low pack (F4/H2).",
-   "value": 0.46889887028719207
+   "value": 0.5907064471879286
   },
   {
    "id": "CL-B1-HOVER-TW-SAG",
@@ -2619,7 +2905,7 @@
     "R-HOVER-TW"
    ],
    "how": "Thrust stand at 14.0 V; download from B4 or a tethered hover.",
-   "value": 2.132656023222061
+   "value": 1.6928882438316402
   },
   {
    "id": "CL-B1-CRUISE-P",
@@ -2632,7 +2918,7 @@
     "R-MISSION"
    ],
    "how": "Level cruise at 16 m/s for 60 s, pack W logged, both directions on a calm morning (H2).",
-   "value": 306.6351982453451
+   "value": 216.94238595784117
   },
   {
    "id": "CL-B1-CRUISE-P-PESS",
@@ -2642,7 +2928,7 @@
    "output": "p_el_pess_w",
    "unit": "W",
    "how": "As CL-B1-CRUISE-P.",
-   "value": 396.8912273127308
+   "value": 283.38662015452303
   },
   {
    "id": "CL-B1-CRUISE-I",
@@ -2652,7 +2938,7 @@
    "output": "i_a",
    "unit": "A",
    "how": "Current sensor in cruise (H2).",
-   "value": 20.71859447603683
+   "value": 14.658269321475753
   },
   {
    "id": "CL-B1-CRUISE-LD",
@@ -2662,7 +2948,57 @@
    "output": "ld",
    "unit": "-",
    "how": "Follows from CD0 and k; glide test.",
-   "value": 5.602655787985118
+   "value": 7.023250226031203
+  },
+  {
+   "id": "CL-B1-CRUISE-DRAG",
+   "type": "claim",
+   "title": "Cruise drag at 16 m/s, 2.6 kg",
+   "calc": "CALC-B1-CRUISE",
+   "output": "drag_n",
+   "unit": "N",
+   "how": "Follows from CD0, k and trim; cruise power test with known prop data (H2).",
+   "value": 3.703019964119452
+  },
+  {
+   "id": "CL-B1-CRUISE-DRAG-PESS",
+   "type": "claim",
+   "title": "Cruise drag, pessimistic",
+   "calc": "CALC-B1-CRUISE",
+   "output": "drag_pess_n",
+   "unit": "N",
+   "how": "As CL-B1-CRUISE-DRAG.",
+   "value": 4.677970283240417
+  },
+  {
+   "id": "CL-B1-CRUISE-P-SHAFT",
+   "type": "claim",
+   "title": "Cruise shaft power, 4 props",
+   "calc": "CALC-B1-CRUISE",
+   "output": "p_shaft_w",
+   "unit": "W",
+   "how": "ESC telemetry current and rpm with E1's motor constants (H2).",
+   "value": 140.0547301991743
+  },
+  {
+   "id": "CL-B1-CRUISE-ETA-DRIVE",
+   "type": "claim",
+   "title": "Motor + ESC + calibration efficiency in cruise",
+   "calc": "CALC-B1-CRUISE",
+   "output": "eta_drive",
+   "unit": "-",
+   "how": "Thrust stand at cruise rpm and torque (H1); replaces E2's eta_motor 0.72.",
+   "value": 0.6639477863266682
+  },
+  {
+   "id": "CL-B1-CRUISE-I-PESS",
+   "type": "claim",
+   "title": "Cruise current, pessimistic",
+   "calc": "CALC-B1-CRUISE",
+   "output": "i_pess_a",
+   "unit": "A",
+   "how": "Current sensor in cruise (H2).",
+   "value": 19.14774460503534
   },
   {
    "id": "CL-B1-CRUISE-ETA-PROP",
@@ -2672,7 +3008,7 @@
    "output": "eta_prop",
    "unit": "-",
    "how": "B4 confirms from APC data and a car-top or wind-tunnel prop test; flight: rpm (ESC telemetry) vs airspeed.",
-   "value": 0.3697132203756927
+   "value": 0.42303690379934444
   },
   {
    "id": "CL-B1-CRUISE-J",
@@ -2682,7 +3018,7 @@
    "output": "J",
    "unit": "-",
    "how": "ESC telemetry rpm and airspeed in cruise.",
-   "value": 0.4926458706743183
+   "value": 0.5829431085270208
   },
   {
    "id": "CL-B1-V-MINPOWER",
@@ -2709,7 +3045,7 @@
     "R-MISSION"
    ],
    "how": "Fly the mission profile at the gate mass; land with >= 20 % by the pack's mAh count (H2).",
-   "value": 12.296286282922676
+   "value": 17.114452048270028
   },
   {
    "id": "CL-B1-CRUISE-TIME-PESS",
@@ -2726,7 +3062,31 @@
     "R-MISSION"
    ],
    "how": "As CL-B1-CRUISE-TIME.",
-   "value": 9.286578655833742
+   "value": 12.782449171061268
+  },
+  {
+   "id": "CL-B1-CRUISE-TIME-B1H",
+   "type": "claim",
+   "title": "Cruise after hover with B1's own hover power",
+   "calc": "CALC-B1-MISSION",
+   "output": "t_cruise_b1_hover_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "As CL-B1-CRUISE-TIME; cross-check of the E1 hover figure.",
+   "value": 17.234906100356763
+  },
+  {
+   "id": "CL-B1-CRUISE-ENERGY",
+   "type": "claim",
+   "title": "Energy left for cruise after hover and transitions",
+   "calc": "CALC-B1-MISSION",
+   "output": "e_cruise_wh",
+   "unit": "Wh",
+   "how": "Pack Wh counter at the end of the hover and transition legs (H2).",
+   "value": 61.88083436187936
   },
   {
    "id": "CL-B1-CORR-THRUST",
@@ -2743,7 +3103,7 @@
     "R-TRANSITION"
    ],
    "how": "Throttle output in the transition log stays below 80 % with no motor saturation flag (F4 SITL, H2).",
-   "value": 0.46889887028719196
+   "value": 0.5907064471879288
   },
   {
    "id": "CL-B1-CORR-P-PEAK",
@@ -2753,7 +3113,7 @@
    "output": "p_peak_w",
    "unit": "W",
    "how": "Pack W in the transition log (H2).",
-   "value": 381.820581357356
+   "value": 386.9521125059667
   },
   {
    "id": "CL-B1-V-WINGBORNE",
@@ -2773,7 +3133,7 @@
    "output": "lean_5ms_lift_deg",
    "unit": "deg",
    "how": "QLOITER in measured 5 m/s wind: log pitch (H2, twin first).",
-   "value": 15.52834285676957
+   "value": 16.31590541234783
   },
   {
    "id": "CL-B1-TRANS-TIME",
@@ -2783,7 +3143,7 @@
    "output": "t_to_vt_s",
    "unit": "s",
    "how": "F4 SITL with the tailsitter model at these masses; then the twin's log.",
-   "value": 4.959999999999939
+   "value": 7.349999999999888
   },
   {
    "id": "CL-B1-TRANS-ALT-LOSS",
@@ -2800,7 +3160,7 @@
     "R-TRANSITION"
    ],
    "how": "Baro altitude in the transition log; first transitions at >= 50 m (H2). Limit 10 m = 20 % of 50 m.",
-   "value": 0.1640934629122984
+   "value": 0.12410276204589299
   },
   {
    "id": "CL-B1-TRANS-THRUST",
@@ -2817,7 +3177,7 @@
     "R-TRANSITION"
    ],
    "how": "Throttle output in the transition log (H2).",
-   "value": 0.7657798666027088
+   "value": 0.7412910298770923
   },
   {
    "id": "CL-B1-TRANS-ENERGY",
@@ -2827,7 +3187,7 @@
    "output": "energy_wh",
    "unit": "Wh",
    "how": "Integrate pack W over the transition in the log.",
-   "value": 0.7273402824704649
+   "value": 0.8729161523936574
   },
   {
    "id": "CL-B1-LEAN-ALLOWED",
@@ -2837,7 +3197,7 @@
    "output": "lean_allowed_deg",
    "unit": "deg",
    "how": "Tilt-board tip-over test (C5) minus the landing attitude error from the twin's logs.",
-   "value": 27.234833981574667
+   "value": 20.62130307732461
   },
   {
    "id": "CL-B1-LEAN-5MS",
@@ -2854,7 +3214,7 @@
     "R-WIND"
    ],
    "how": "QLOITER in 5 m/s wind measured with the handheld anemometer; log pitch and roll (H2).",
-   "value": 14.853182958014594
+   "value": 15.795410611927222
   },
   {
    "id": "CL-B1-WIND-HOVER-MAX",
@@ -2871,7 +3231,7 @@
     "R-WIND"
    ],
    "how": "As CL-B1-LEAN-5MS; flight card stays at 5 m/s.",
-   "value": 6.9655607786283795
+   "value": 5.766761623413693
   },
   {
    "id": "CL-B1-GUST-8-THRUST",
@@ -2888,7 +3248,7 @@
     "R-WIND"
    ],
    "how": "Thrust stand T/W (H1) and the 8 m/s lean from the logs.",
-   "value": 0.5667545721245872
+   "value": 0.7293358170241777
   },
   {
    "id": "CL-B1-GROUND-TIP-WIND",
@@ -2906,7 +3266,7 @@
     "R-TIPOVER"
    ],
    "how": "Tilt-board tip angle (C5) and a fan test at the lightest flying mass; never leave it standing disarmed in gusts.",
-   "value": 9.5808307505186
+   "value": 8.229955690656153
   },
   {
    "id": "CL-B1-VCLIMB-P",
@@ -2916,7 +3276,7 @@
    "output": "p_vclimb_2p5_w",
    "unit": "W",
    "how": "Pack W during QHOVER climbs (H2).",
-   "value": 446.95468383235493
+   "value": 447.8067131548745
   },
   {
    "id": "CL-B1-ROC-FW",
@@ -2926,7 +3286,7 @@
    "output": "roc_fw_max_ms",
    "unit": "m/s",
    "how": "Full-throttle climb at 16 m/s in FBWA (H2); TECS limits set below it (F4).",
-   "value": 6.252876879464661
+   "value": 4.721936197095069
   },
   {
    "id": "CL-B1-VMAX",
@@ -2940,7 +3300,7 @@
     "value": 18.0
    },
    "how": "Full-throttle level run in FBWA at altitude (H2); AIRSPEED_MAX set 2 m/s below it (F4). Limit 18 m/s = cruise 16 + 2 m/s speed-hold headroom.",
-   "value": 19.700000000000053
+   "value": 19.300000000000047
   },
   {
    "id": "T-B1-CRUISE-POWER",

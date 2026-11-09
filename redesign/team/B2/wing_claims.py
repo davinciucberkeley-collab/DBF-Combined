@@ -16,11 +16,11 @@ kit = pk.Kit(__file__, params=["../../params/params.json", "params.json"])
 # ---------------------------------------------------------------- sources and assumptions
 kit.source("SRC-B2-XFOIL", "XFOIL 6.99 runs, team/B2/xfoil_wing.py", "web",
            url="https://web.mit.edu/drela/Public/web/xfoil/",
-           where="team/B2/out/xfoil_results.json; panels 220 (160/300 convergence), Ncrit 9, Re 2.0-4.0e5",
+           where="team/B2/out/xfoil_results.json; panels 220 (160/300 convergence), Ncrit 9, Re 2.0-4.5e5; design Re follow wing.chord_m (c 0.32 m: stall 2.6e5, cruise 3.5e5, dive 4.5e5)",
            note="not yet compared with wind-tunnel data at this Re; flight stall test T-B2-STALL closes it")
 kit.source("SRC-B2-AVL", "AVL 3.52 runs, team/B2/avl_wing.py", "web",
            url="https://web.mit.edu/drela/Public/web/avl/",
-           where="team/B2/out/avl_results.json; 3 lattice levels, Xnp within 0.1 mm",
+           where="team/B2/out/avl_results.json; 3 lattice levels; geometry from params.json (A1-R2: wing 1.15 x 0.32 m, half-fins x 0.045..0.32 m, 0.275 m chord, +/-0.19 m)",
            note="props-off wing + flat-plate fins, no pod; not yet compared with flight data")
 kit.source("SRC-B2-S5010-COORD", "S5010 coordinates, UIUC airfoil database", "web",
            url="https://m-selig.ae.illinois.edu/ads/coord/s5010.dat", checked="2026-11-09",
@@ -37,7 +37,7 @@ kit.assumption("ASM-B2-CLMAX-KD", "No net knock-down on CLmax",
                value=1.0, unit="-", status="UNVERIFIED")
 kit.assumption("ASM-B2-DIVE-FACTOR", "Dive speed 1.3 x cruise",
                "Elevon hinge moments are sized at 1.3 x cruise speed with full 25 deg travel",
-               basis="R-SERVO-TORQUE text (19.5 m/s at 15 m/s cruise)", value=1.3, unit="-")
+               basis="R-SERVO-TORQUE text (1.3 x cruise; 20.8 m/s at the 16 m/s cruise)", value=1.3, unit="-")
 kit.assumption("ASM-B2-HINGE-INVISCID", "Inviscid hinge moment is the bound",
                "Design hinge moment = XFOIL inviscid HMOM, the larger of viscous and inviscid",
                basis="converged viscous XFOIL values are 70-80 % of inviscid at +10..+25 deg; viscous up-deflection "
@@ -46,6 +46,11 @@ kit.assumption("ASM-B2-MIN-COVER", "Foam over the spar >= 2 mm",
                "At least 2 mm of XPS above and below the spar tube at the spar station",
                basis="hot-wire kerf ~1 mm plus slot tolerance; thinner foam tears when the slot is cut (G2 confirms)",
                value=0.002, unit="m")
+
+kit.assumption("ASM-B2-RE-TOL", "Stall polars valid within 10 % of their Re",
+               "XFOIL clmax and cm used at the stall are taken from polars within 10 % of the actual stall Re",
+               basis="S5010 clmax changes ~0.02 per 0.3e5 of Re in this band (Re 2.0-3.0e5 polars, xfoil_results.json)",
+               value=0.10, unit="-")
 
 G_KGF = 9.80665
 
@@ -65,11 +70,30 @@ def clmax_trim(cl_ratio, clmax_local, kd):
           equation="Vs = sqrt(2 m g / (rho b c CLmax)); Vtr = 1.3 Vs; Re_s = Vs c / nu",
           inputs={"m": "P:requirements.mtow_gate_kg", "g": "P:env.g_ms2", "rho": "P:env.rho_kgm3",
                   "b": "P:wing.span_m", "c": "P:wing.chord_m", "clmax": "CL-B2-CLMAX-DESIGN",
-                  "k": "P:requirements.transition_factor"},
+                  "k": "P:requirements.transition_factor", "re_x": "P:b2.xfoil.re_stall"},
           units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "b": "m", "c": "m"})
-def stall(m, g, rho, b, c, clmax, k):
+def stall(m, g, rho, b, c, clmax, k, re_x):
     vs = math.sqrt(2 * m * g / (rho * b * c * clmax))
-    return {"Vs_ms": vs, "Vtr_ms": k * vs, "Re_stall": vs * c / 1.48e-5}
+    re_s = vs * c / 1.48e-5
+    return {"Vs_ms": vs, "Vtr_ms": k * vs, "Re_stall": re_s, "Re_dev": abs(re_s / re_x - 1.0)}
+
+
+@kit.calc("CALC-B2-STALL-FWD", title="Stall speed at the forward CG limit",
+          equation="SM_fwd = SM_min + (x_aft - x_fwd)/c; CLmax_fwd = kd * interp(SM_fwd, CLmax(SM)); "
+                   "Vs = sqrt(2 m g / (rho b c CLmax_fwd))",
+          inputs={"tab": "P:b2.avl.clmax_vs_sm", "sm_min": "P:requirements.static_margin_min",
+                  "xr": "P:cg.x_range_m", "kd": "ASM-B2-CLMAX-KD", "m": "P:requirements.mtow_gate_kg",
+                  "g": "P:env.g_ms2", "rho": "P:env.rho_kgm3", "b": "P:wing.span_m", "c": "P:wing.chord_m",
+                  "k": "P:requirements.transition_factor"},
+          units={"xr": "m", "m": "kg", "g": "m/s2", "rho": "kg/m3", "b": "m", "c": "m"},
+          assumes=["ASM-B2-CLMAX-KD"])
+def stall_fwd(tab, sm_min, xr, kd, m, g, rho, b, c, k):
+    sm = sm_min + (xr[1] - xr[0]) / c
+    xs, ys = [r[0] for r in tab], [r[1] for r in tab]
+    i = max(j for j in range(len(xs) - 1) if xs[j] <= sm or j == 0)
+    cl = kd * (ys[i] + (ys[i + 1] - ys[i]) * (sm - xs[i]) / (xs[i + 1] - xs[i]))
+    vs = math.sqrt(2 * m * g / (rho * b * c * cl))
+    return {"SM_fwd": sm, "CLmax_fwd": cl, "Vs_fwd_ms": vs, "Vtr_fwd_ms": k * vs}
 
 
 @kit.calc("CALC-B2-HINGE", title="Elevon hinge moment per servo",
@@ -116,14 +140,28 @@ kit.claim("CL-B2-CLMAX-CS", "Trimmed CLmax, critical section", calc="CALC-B2-CLM
 kit.claim("CL-B2-CLMAX-DESIGN", "Design trimmed CLmax", calc="CALC-B2-CLMAX", output="CLmax_design", unit="-",
           parts=WING, how="Slow-flight stall at the gate mass with airspeed logging (T-B2-STALL); "
                           "CLmax = 2 m g / (rho S Vs^2)")
-kit.claim("CL-B2-STALL-GATE", "Stall speed at the gate (B2)", calc="CALC-B2-STALL", output="Vs_ms", unit="m/s",
+kit.claim("CL-B2-STALL-GATE", "Stall speed at the gate, SM floor (B2)", calc="CALC-B2-STALL", output="Vs_ms", unit="m/s",
           limit=("<=", "P:requirements.stall_max_ms"), verifies=["R-STALL"], parts=WING,
           how="T-B2-STALL: FBWA slow flight, 1 kt/s deceleration, three runs, airspeed sensor calibrated")
-kit.claim("CL-B2-TRANSITION-GATE", "1.3 Vs against cruise (B2)", calc="CALC-B2-STALL", output="Vtr_ms", unit="m/s",
+kit.claim("CL-B2-TRANSITION-GATE", "1.3 Vs against cruise, SM floor (B2)", calc="CALC-B2-STALL", output="Vtr_ms", unit="m/s",
           limit=("<=", "P:performance.cruise_ms"), verifies=["R-TRANSITION"], parts=WING,
           how="Re-run with the cruise speed B1 sets (CR-B2-01); flight: transition logs show airspeed >= 1.3 Vs")
 kit.claim("CL-B2-RE-STALL", "Reynolds number at stall", calc="CALC-B2-STALL", output="Re_stall", unit="-",
-          how="Must stay within 10 % of the XFOIL stall polar Re 2.3e5 (P:b2.xfoil.re_stall); re-run XFOIL if not")
+          how="Must stay within 10 % of the XFOIL stall polar Re (P:b2.xfoil.re_stall, which follows the chord); re-run xfoil_wing.py if not")
+kit.claim("CL-B2-SM-FWD", "Static margin at the forward CG limit", calc="CALC-B2-STALL-FWD", output="SM_fwd",
+          unit="-", how="B3's CG range width over the chord, added to the SM floor; B3 re-derives the range (D-17)")
+kit.claim("CL-B2-CLMAX-FWD", "Trimmed CLmax at the forward CG limit", calc="CALC-B2-STALL-FWD",
+          output="CLmax_fwd", unit="-", parts=WING,
+          how="T-B2-STALL flown at the forward CG ballast as well as the aft")
+kit.claim("CL-B2-STALL-GATE-FWD", "Stall speed at the gate, forward CG (B2)", calc="CALC-B2-STALL-FWD",
+          output="Vs_fwd_ms", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), verifies=["R-STALL"],
+          parts=WING, how="T-B2-STALL at the forward CG limit, 2.6 kg")
+kit.claim("CL-B2-TRANSITION-GATE-FWD", "1.3 Vs against cruise, forward CG (B2)", calc="CALC-B2-STALL-FWD",
+          output="Vtr_fwd_ms", unit="m/s", limit=("<=", "P:performance.cruise_ms"), verifies=["R-TRANSITION"],
+          parts=WING, how="Transition logs at the forward CG: airspeed >= 1.3 Vs before the wing carries the weight")
+kit.claim("CL-B2-RE-STALL-DEV", "Stall Re vs the XFOIL stall polars", calc="CALC-B2-STALL", output="Re_dev",
+          unit="-", limit=("<=", "ASM-B2-RE-TOL"),
+          how="|Re at Vs / Re of the stall polars - 1|; re-run xfoil_wing.py (Re follow the chord) if it fails")
 kit.claim("CL-B2-HINGE-MOMENT", "Hinge moment per servo, dive", calc="CALC-B2-HINGE", output="M_hinge_Nm",
           unit="N*m", parts=WING,
           how="Bench: hang M / (0.5 x elevon chord) on the trailing edge of a linked panel pair at 25 deg")
@@ -133,7 +171,7 @@ kit.claim("CL-B2-SERVO-TORQUE-REQ", "Required servo stall torque", calc="CALC-B2
 kit.claim("CL-B2-SPAR-COVER", "Foam cover over spar, params z", calc="CALC-B2-SPAR-COVER", output="cover_min_m",
           unit="m", limit=(">=", "ASM-B2-MIN-COVER"), parts=["WNG-001", "WNG-002"],
           how="Measure foam above and below the slot on the first cut core (calipers)",
-          note="FAILS at z = 0: the 22 mm tube breaks the lower skin; CR-B2-03 moves it to z_mid")
+          note="At z = 0 the 22 mm tube breaks the lower skin; with params z = +6.6 mm (CR-B2-03) it passes; z_mid at c 0.32 is +7.0 mm (CR-B2-09)")
 kit.claim("CL-B2-SPAR-Z-MID", "Spar centre on the camber line", calc="CALC-B2-SPAR-COVER", output="z_mid_m",
           unit="m", parts=["WNG-002"], how="Template check: slot centre midway between the skins at x = 0.08 m")
 kit.claim("CL-B2-SPAR-COVER-CENTRED", "Foam cover, spar centred", calc="CALC-B2-SPAR-COVER",
@@ -148,9 +186,9 @@ kit.claim("CL-B2-ELEVON-ETA", "Elevon effectiveness factor", calc="CALC-B2-SECTI
 kit.claim("CL-B2-DCM-VISC", "Viscous cm correction to AVL", calc="CALC-B2-SECTION", output="dcm", unit="-",
           how="Replaces ASM-B3-DCM-VISC; flight: trimmed elevon at known CG and speed (twin, XPS)")
 kit.claim("CL-B2-CLA-3D", "Wing lift slope, AVL", calc="CALC-B2-SECTION", output="cla3d", unit="1/rad",
-          how="For C1 gust loads; Helmbold check 3.81 /rad (elliptic) vs AVL 3.58 /rad (rectangular, elevon gaps)")
+          how="For C1 gust loads; Helmbold check at AR 3.59: 3.70 /rad with 2 pi, 3.79 /rad with the XFOIL 6.61 /rad, vs AVL 3.48 /rad (rectangular, elevon gaps)")
 kit.claim("CL-B2-CLMIN-2D", "Section negative clmax", calc="CALC-B2-SECTION", output="clmin", unit="-",
-          how="For C1 (ASM-C1-CLMIN); XFOIL last converged point, treat as magnitude 0.4 until flight")
+          how="For C1 (ASM-C1-CLMIN); XFOIL last converged point at the cruise Re, treat as magnitude 0.44 until flight")
 
 
 @kit.calc("CALC-B2-SECTION", title="Section and elevon data (pass-through)",

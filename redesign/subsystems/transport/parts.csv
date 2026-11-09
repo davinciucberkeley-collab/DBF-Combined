@@ -1,0 +1,18 @@
+part_id,name,qty,make_or_buy,process,material,mass_g,unit_cost_usd,vendor_or_file,notes
+TRN-001,"Box base (floor, walls, end pads)",1,make,"scored, folded, LSE tape + hot-melt",Coroplast 4 mm (PP twin-wall),2317.0,30.0,Home Depot Coroplast 48x96 4 mm (2 sheets incl. lid),"flight: false; incl. end pads, 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external"
+TRN-005,Lid with PE lining and plug lip,1,make,"scored, folded; 6 mm PE lining taped",Coroplast 4 mm (PP twin-wall),743.9,8.0,from TRN-001 sheets + 6 mm PE roll,flight: false; lip 30 mm inside the walls
+TRN-002-L,Spar cradle L (saddle + crush column),1,make,hot-wire saddle to the S5010 template; laminate 2+2+1 in PE column,XPS foam F-250 + PE foam 1.7 pcf (closed cell),68.3,6.0,XPS offcut; PE plank 2 in + 1 in,flight: false; column 60 x 50 x 127 mm under the spar; 6 mm PE cap
+TRN-002-R,Spar cradle R (saddle + crush column),1,make,as TRN-002-L (mirror),XPS foam F-250 + PE foam 1.7 pcf (closed cell),68.3,6.0,as TRN-002-L,flight: false
+TRN-003,Prop tray with pitot-boom and pouch pockets,1,make,hot-wire / knife cut slots in a 60 mm block,XPS foam F-250,149.0,3.0,XPS offcut,"flight: false; 8 prop slots on edge, pitot pocket 220 x 25 x 25 mm"
+TRN-004-L,Lid hold-down pillar L,1,make,"cut from PE plank, 10 mm soft face",PE foam 1.7 pcf (closed cell),36.9,3.0,PE plank,flight: false; 5 mm preload over the spar at y -0.20
+TRN-004-R,Lid hold-down pillar R,1,make,as TRN-004-L,PE foam 1.7 pcf (closed cell),36.9,3.0,PE plank,flight: false
+TRN-006-A,Cam-buckle strap A,1,buy,-,25 mm PP webbing + cam buckle,45.0,6.0,hardware store tie-down strap,"flight: false; EST mass; closes the lid, y -0.40"
+TRN-006-B,Cam-buckle strap B,1,buy,-,25 mm PP webbing + cam buckle,45.0,6.0,hardware store tie-down strap,flight: false; y +0.40
+TRN-007-C,Side carry handle,1,buy,bolt 2 x M5,strap handle (bought),40.0,4.0,luggage / tool-box strap handle,flight: false; at the CG (y 0) on the front wall: one-person carry
+TRN-007-L,End handle L,1,buy,bolt 2 x M5,strap handle (bought),40.0,4.0,as TRN-007-C,flight: false; two-person carry
+TRN-007-R,End handle R,1,buy,bolt 2 x M5,strap handle (bought),40.0,4.0,as TRN-007-C,flight: false
+TRN-008,"Field pouch (wrench if needed, spare nuts, tape, checklist card)",1,buy,-,nylon pouch + contents,150.0,8.0,any zip pouch,"flight: false; carried mass, part of the loaded box"
+TRN-101,"LSE double-sided tape (3M 300LSE class), 1 roll",1,buy,-,acrylic adhesive tape,0,12.0,hardware store,flight: false; mass in TRN-001
+TRN-102,M5 x 16 pan-head bolt + nyloc + 2 fender washers,6,buy,-,A2-70,0,0.5,hardware store,flight: false; handles; mass in TRN-001
+TRN-103,Laminated CHECKLIST.md card,1,make,print + laminate,paper,0,1.0,redesign/subsystems/transport/CHECKLIST.md,flight: false; in TRN-008
+TRN-104,Ground mat 0.6 x 0.6 m (aircraft stands on it at the field),1,buy,-,EVA foam tile,0,10.0,hardware store,"flight: false; rides on the lid outside, under strap A/B"

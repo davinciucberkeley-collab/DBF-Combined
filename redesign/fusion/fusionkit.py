@@ -66,6 +66,22 @@ def poly_area_centroid(loop):
     return abs(a) / 2.0, (cx / (3.0 * a), cy / (3.0 * a))
 
 
+def revolve_volume_centroid(profile):
+    """Solid of revolution of the closed (a, r) profile about the a axis: (volume, axial centroid).
+    Pappus for the volume; the axial centroid is r-weighted (int a r dA / int r dA), not the profile's area centroid."""
+    n = len(profile)
+    s1 = s2 = 0.0                                   # signed int r dA, int a r dA (Green's theorem)
+    for i in range(n):
+        a0, r0 = profile[i]
+        a1, r1 = profile[(i + 1) % n]
+        c = a0 * r1 - a1 * r0
+        s1 += c * (r0 + r1) / 6.0
+        s2 += c * (a0 * r1 + 2 * a0 * r0 + 2 * a1 * r1 + a1 * r0) / 24.0
+    if abs(s1) < 1e-18:
+        return 0.0, sum(p[0] for p in profile) / n
+    return 2 * math.pi * abs(s1), s2 / s1
+
+
 def loops_area_centroid(loops):
     """Outer loop minus hole loops."""
     A, (cu, cv) = poly_area_centroid(loops[0])
@@ -173,10 +189,10 @@ class Shape:
             A, (cu, cv) = loops_area_centroid(self.loops)
             return A * abs(self.depth), to3d(self.axis, self.offset + self.depth / 2.0, (cu, cv))
         if self.kind == 'revolve':
-            A, (ca, cr) = poly_area_centroid(self.profile)
+            V, ca = revolve_volume_centroid(self.profile)
             c = list(self.center)
             c[AX[self.axis]] += ca
-            return 2 * math.pi * cr * A, tuple(c)
+            return V, tuple(c)
         V, m = 0.0, [0.0, 0.0, 0.0]          # loft: trapezoidal rule between consecutive sections
         secs = [(o, loops_area_centroid([loop])) for o, loop in self.sections]
         for (o1, (a1, c1)), (o2, (a2, c2)) in zip(secs, secs[1:]):
@@ -217,6 +233,7 @@ class Component:
         self.material = info.get('material')
         self.mass_g = info.get('mass_g')
         self.status = info.get('status')
+        self.flight = info.get('flight', True)               # False: ground item (box, cradles), not in the roll-up
         self.make_or_buy = info.get('make_or_buy')
         self.cg_declared = cg or info.get('cg_xyz_m')
         self.rgb = rgb
@@ -539,9 +556,12 @@ class Context:
         return reg
 
     def rollup(self):
-        """Declared mass and CG (declared, else geometric) over all components -> (mass_g, cg or None)."""
+        """Declared mass and CG (declared, else geometric) over all flight components -> (mass_g, cg or None).
+        Parts with "flight": false (transport box, cradles, fixtures) are left out, as in merge_check."""
         M, m = 0.0, [0.0, 0.0, 0.0]
         for c in self.components.values():
+            if not c.flight:
+                continue
             cg, _ = c.cg()
             if c.mass_g and cg:
                 M += c.mass_g

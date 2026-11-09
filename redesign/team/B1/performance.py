@@ -7,14 +7,18 @@ Writes, beside this file:
   fig-b1-corridor.svg      FIG B1-01 transition corridor, pitch vs airspeed
   fig-b1-endurance.svg     FIG B1-02 cruise time after the 2 min hover vs cruise speed
 
-Method (first order; B2 XFOIL / B3 AVL / B4 prop data replace the marked assumptions when they exist):
-  aero      component drag build-up (CD0), induced drag k = 1/(pi AR e), Helmbold lift slope, linear lift to
-            CLmax then a decay (e-folding 4 deg) onto a flat-plate model (CN = CD90 sin a): valid 0-90 deg
-            angle of attack, which a tailsitter sweeps through in transition and in hover in wind.
-  prop      APC PER3 11x4.5MR Ct(J), Cp(J) at 6 000 rpm (cruise and hover both run at 5 800-6 500 rpm).
-  motor     DC model (Kv, Rm, I0), calibrated so the full chain reproduces the maker's hover table point
-            (690 gf, 89 W): the factor carries the 11x4.7 vs 11x4.5MR difference and APC's static optimism.
-  hover     maker thrust table x download factor (as A1 and the K09 review), power-law below the first row.
+Method (first order where B2/B3/B4/E1 data do not exist yet). Rev 2 (CR-A1-13): c 0.32, S5010, 11x5.5MR.
+  aero      wing: B2 S5010 trimmed polar (XFOIL section drag in AVL: CD0_wing, e, CLa; B2 alpha0, trimmed CLmax)
+            x a tape-seam roughness factor; fins, tubes, motors, pod: component build-up. Linear lift to CLmax
+            then a decay (e-folding 4 deg) onto a flat plate (CN = CD90 sin a): valid 0-90 deg, which a
+            tailsitter sweeps through in transition and in hover in wind. Pessimistic: CD0 x 1.3 and e from
+            params (0.80) instead of B2's 0.93.
+  prop      APC PER3 11x5.5MR Ct(J), Cp(J) at 6 000 rpm (B4 data file; cruise runs at ~6 000 rpm).
+  motor     E1's DC model constants (Kv, Rm, I0), calibrated so the full chain reproduces the maker's hover table
+            point (690 gf, 89 W, 11x4.7) with the 11x4.5MR static coefficients; the factor transfers to the
+            11x5.5MR (as E1's ASM-E1-CAL-TRANSFER).
+  hover     maker thrust table x download factor x (11x5.5MR / 11x4.5MR model power at hover thrust); the mission
+            uses the params hover power (E1, 400 W) and B1's figure is the cross-check.
   corridor  quasi-steady level flight at each airspeed: T cos(theta) = D, T sin(theta) + L = W.
   pitch-over  point-mass time simulation, pitch rate limited, altitude hold on thrust below the assist speed,
             speed hold on thrust above it, pitch never below what the wing plus thrust need to hold altitude.
@@ -29,7 +33,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "proofs"))          # redesign/proofs (python -I adds no paths)
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "../B2/params.json"])
 P = "P:"
 DEG = math.pi / 180.0
 
@@ -52,8 +56,19 @@ kit.source("SRC-B1-ARDUPILOT-TS", "ArduPilot Plane tailsitter and airspeed param
            note="parameter names only; values below are B1 proposals for F4")
 
 # ================================================================== assumptions
-# APC 11x4.5MR, PER3 block RPM = 6000: J, Ct, Cp (copied row by row, every row from J = 0 to zero thrust)
+# APC 11x5.5MR, PER3 block RPM = 6000: [J, Ct, Cp], every row of team/B4/data/apc_per3_11x55MR.csv (B4 copied the
+# file as printed, every second row near J = 0). The last row is B1's linear extrapolation of the last two rows to
+# zero thrust (J 0.639); APC prints no row there.
 PROP_TABLE = [
+    [0.0000, 0.1121, 0.0418], [0.0446, 0.1083, 0.0423], [0.0891, 0.1038, 0.0426], [0.1337, 0.0987, 0.0426],
+    [0.1782, 0.0930, 0.0422], [0.2228, 0.0865, 0.0414], [0.2674, 0.0794, 0.0402], [0.3119, 0.0716, 0.0385],
+    [0.3565, 0.0630, 0.0363], [0.4010, 0.0539, 0.0335], [0.4456, 0.0443, 0.0303], [0.4679, 0.0393, 0.0285],
+    [0.4902, 0.0343, 0.0267], [0.5124, 0.0292, 0.0247], [0.5347, 0.0241, 0.0226], [0.5570, 0.0189, 0.0204],
+    [0.5793, 0.0137, 0.0181], [0.6016, 0.0085, 0.0157], [0.6238, 0.0034, 0.0133], [0.6386, 0.0000, 0.0117],
+]
+# APC 11x4.5MR, PER3 block RPM = 6000 (rev 1 prop): kept only as the calibration reference against the maker's
+# 11x4.7 hover table and for the 11x5.5MR / 11x4.5MR hover power ratio.
+PROP_TABLE_REF = [
     [0.0000, 0.0971, 0.0335], [0.0188, 0.0952, 0.0336], [0.0376, 0.0931, 0.0336], [0.0564, 0.0909, 0.0336],
     [0.0752, 0.0887, 0.0335], [0.0940, 0.0863, 0.0334], [0.1128, 0.0838, 0.0332], [0.1316, 0.0813, 0.0330],
     [0.1504, 0.0786, 0.0327], [0.1692, 0.0758, 0.0324], [0.1880, 0.0728, 0.0320], [0.2069, 0.0698, 0.0315],
@@ -63,28 +78,38 @@ PROP_TABLE = [
     [0.4513, 0.0211, 0.0191], [0.4701, 0.0169, 0.0176], [0.4889, 0.0127, 0.0161], [0.5077, 0.0084, 0.0145],
     [0.5265, 0.0042, 0.0129], [0.5453, 0.0000, 0.0112],
 ]
-kit.assumption("ASM-B1-PROP", "11x4.5MR Ct and Cp versus J",
-               "The fitted prop follows APC's PER3 Ct(J), Cp(J) at 6 000 rpm at every operating point; "
-               "rows are [J, Ct, Cp]", basis="APC data file read 2026-11-09; Re effect 5 000-8 000 rpm < 1 % on "
-               "Ct, Cp in the same file; the hover-table calibration (CALC-B1-PROPCAL) absorbs APC's static optimism",
-               value=PROP_TABLE, unit="-", status="PROPOSED", cites=["SRC-B1-APC-PER3"])
-kit.assumption("ASM-B1-MOTOR", "X3108S KV900 motor constants",
-               "[Kv rpm/V, winding resistance ohm, no-load current A] = [900, 0.080, 0.6]",
-               basis="Kv from the part name; Rm and I0 are typical of a 31xx 900 kV motor and not read from the "
-                     "maker (page refused the fetch, J1). The calibration factor to the maker table absorbs most of "
-                     "the error at hover; E1 confirms", value=[900.0, 0.080, 0.6], unit="-", status="UNVERIFIED",
-               cites=["SRC-X3108S"])
-kit.assumption("ASM-B1-DRAG", "Zero-lift drag build-up coefficients",
-               "[Cf wing, FF wing, Cf fin/pod, FF fin, CD motor tube (frontal, faired by the fin), CdA per motor m2, "
-               "FF pod, interference factor] = [0.0060, 1.25, 0.0070, 1.20, 0.30, 0.0004, 1.30, 1.15]",
+kit.source("SRC-B1-B4-PER3-55", "APC PER3 11x5.5MR rows as copied by B4", "file",
+           url="https://www.apcprop.com/files/PER3_11x55MR.dat", checked="2026-11-09",
+           where="team/B4/data/apc_per3_11x55MR.csv, rows rpm = 6000 (19 rows, J 0 to 0.624)",
+           note="B1 compared every 6 000 rpm row of B4's file with PROP_TABLE on 2026-11-09. APC's blade-element "
+                "prediction, not a test; B4 owns the prop data")
+kit.assumption("ASM-B1-PROP", "11x5.5MR Ct and Cp versus J",
+               "The fitted prop (APC 11x5.5MR, params propulsion.prop) follows APC's PER3 Ct(J), Cp(J) at 6 000 rpm "
+               "at every operating point; rows are [J, Ct, Cp]; last row extrapolated to zero thrust",
+               basis="B4's copy of the APC file; cruise runs at 6 000 rpm (CL-B4-CRUISE-RPM); Re effect between the "
+                     "5 000 and 7 000 rpm blocks < 1 % on Ct, Cp; the hover-table calibration (CALC-B1-PROPCAL) "
+                     "absorbs APC's static optimism", value=PROP_TABLE, unit="-", status="PROPOSED",
+               cites=["SRC-B1-B4-PER3-55", "SRC-APC-11X55MR"])
+kit.assumption("ASM-B1-PROP-REF", "11x4.5MR Ct and Cp versus J (calibration reference)",
+               "APC PER3 11x4.5MR at 6 000 rpm, rows [J, Ct, Cp]; used only to calibrate the chain to the maker "
+               "table (11x4.7) and for the 11x5.5MR / 11x4.5MR hover power ratio",
+               basis="APC data file read 2026-11-09 (rev 1 of this script); the 11x4.5MR is closer in pitch to the "
+                     "maker's 11x4.7 than the 11x5.5MR, so it carries the calibration with less prop error",
+               value=PROP_TABLE_REF, unit="-", status="PROPOSED", cites=["SRC-B1-APC-PER3"])
+kit.assumption("ASM-B1-DRAG", "Zero-lift drag build-up coefficients, non-wing parts",
+               "[Cf fin/pod, FF fin, CD motor tube (frontal, faired by the fin), CdA per motor m2, FF pod, "
+               "interference factor] = [0.0070, 1.20, 0.30, 0.0004, 1.30, 1.15]",
                basis="Same coefficients as the K09 card and the K01 card, accepted by the K09 REVIEW (section 4: "
-                     "'already pessimistic'); turbulent flat plate at Re 3e5 with tape seams; Hoerner for the tube",
-               value=[0.0060, 1.25, 0.0070, 1.20, 0.30, 0.0004, 1.30, 1.15], unit="-", status="UNVERIFIED",
+                     "'already pessimistic'); turbulent flat plate at Re 3e5 for the paper-faced board and pod; "
+                     "Hoerner for the tube. The wing now uses B2's S5010 section drag (ASM-B1-WING-ROUGH)",
+               value=[0.0070, 1.20, 0.30, 0.0004, 1.30, 1.15], unit="-", status="UNVERIFIED",
                cites=["SRC-K09-CARD", "SRC-K09-REVIEW", "SRC-B1-HOERNER"])
-kit.assumption("ASM-B1-ALPHA0", "Zero-lift angle of the MH 45 wing",
-               "Zero-lift angle of attack -1.0 deg with elevons neutral",
-               basis="MH 45 is a low-camber reflexed section; B2 replaces this with XFOIL", value=-1.0, unit="deg",
-               status="UNVERIFIED", cites=["SRC-MH45"])
+kit.assumption("ASM-B1-WING-ROUGH", "Tape-seam factor on the S5010 wing profile drag",
+               "The packing-tape wing has 1.10 x the XFOIL Ncrit 9 profile drag that B2's AVL polar carries",
+               basis="B2 CR-B2-08: S5010 cd at cl 0.47 is 0.0087 (Re 3e5, Ncrit 9) and 0.0096 (Re 2.3e5, Ncrit 5); "
+                     "the ratio 1.10 stands in for early transition at spanwise tape seams. A trip-strip XFOIL run "
+                     "(B2) or the cruise-power test replaces it", value=1.10, unit="-", status="PROPOSED",
+               cites=["SRC-B2-XFOIL"])
 kit.assumption("ASM-B1-CD90", "Flat-plate normal-force coefficient",
                "Wing normal-force coefficient beyond stall CN = CD90 sin(alpha), CD90 = 1.28",
                basis="Hoerner flat plate; the value the K09 card used for hover lean, kept so the numbers compare. "
@@ -98,19 +123,24 @@ kit.assumption("ASM-B1-AVIONICS-W", "Avionics and servo power",
                basis="card 5 W + 1 W for the two servos", value=6.0, unit="W", status="PROPOSED",
                cites=["SRC-K09-CARD"])
 kit.assumption("ASM-B1-TRIM", "Cruise trim drag factor",
-               "Elevon up-trim and differential-thrust trimming add 5 % to cruise drag",
-               basis="K09 card TRIM_FACTOR 1.05; J1 shows the MH 45 needs elevon up-trim for SM > 2.7 %",
-               value=1.05, unit="-", status="PROPOSED", cites=["SRC-K09-CARD"])
+               "Trim adds 2 % to cruise drag on top of B2's trimmed wing polar",
+               basis="B2's polar (P:b2.avl.e_oswald, cd0_wing) is already trimmed, elevon profile drag included; "
+                     "B3 finds +0.2 % induced trim drag at 16 m/s (CR-B3-07). The 2 % left covers the up-trimmed "
+                     "elevon gap and pod/fin junctions. Was 1.05 (K09 card) before B2/B3 answered",
+               value=1.02, unit="-", status="PROPOSED", cites=["SRC-B2-AVL"])
 kit.assumption("ASM-B1-VCRUISE", "Proposed cruise airspeed 16 m/s",
-               "B1 proposes AIRSPEED_CRUISE = 16 m/s (was 15 m/s in params.json#performance.cruise_ms)",
-               basis="lowest whole-number speed that clears 1.3 Vs at the 2.6 kg gate with CLmax 0.9 "
-                     "(15.05 m/s) with ~1 m/s for airspeed-hold and sensor error; costs ~2 min of base cruise "
-                     "against 15 m/s (CALC-B1-SWEEP)", value=16.0, unit="m/s", status="PROPOSED")
+               "B1 proposes AIRSPEED_CRUISE = 16 m/s (params.json#performance.cruise_ms, CHANGE-LOG D-01)",
+               basis="lowest whole-number speed above 1.3 Vs at the 2.6 kg gate with B2's trimmed CLmax 0.80 on "
+                     "the c 0.32 wing (15.43 m/s, CL-B1-VT-GATE); +3.7 %, about 0.6 m/s for airspeed-hold and "
+                     "sensor error (R-AIRSPEED-ERR allows 1 m/s, so the margin is thin)", value=16.0, unit="m/s",
+               status="PROPOSED")
 kit.assumption("ASM-B1-PESS", "Pessimistic-case factors",
-               "[CD0 factor, prop efficiency factor, hover power factor] = [1.30, 0.85, 1.10]",
+               "[CD0 factor, prop efficiency factor, hover power factor] = [1.30, 0.85, 1.10]; the pessimistic "
+               "case also uses params wing.oswald_e (0.80) in place of B2's 0.93",
                basis="CD0 x 1.3 as the K09 REVIEW pessimistic case; prop efficiency 15 % below APC (BEMT "
                      "optimism, tractor prop ahead of a fin and tube); hover +10 % for APC static optimism and "
-                     "11x4.5MR vs 11x4.7 table", value=[1.30, 0.85, 1.10], unit="-", status="PROPOSED",
+                     "the 11x4.7 maker table (400 W x 1.10 = 440 W, E2's pessimistic 29.9 A x 14.8 V = 443 W)",
+               value=[1.30, 0.85, 1.10], unit="-", status="PROPOSED",
                cites=["SRC-K09-REVIEW"])
 kit.assumption("ASM-B1-CTRL-RESERVE", "Thrust kept for attitude control",
                "Steady flight may use at most 80 % of available thrust (sagged pack); 20 % stays for control",
@@ -123,12 +153,13 @@ kit.assumption("ASM-B1-LAND-ERR", "Landing attitude error",
                      "twin's logs", value=10.0, unit="deg", status="PROPOSED")
 kit.assumption("ASM-B1-TRANS", "Pitch-over schedule",
                "[pitch rate deg/s, assist speed as a fraction of Vs, back-transition energy as a fraction of "
-               "the forward pitch-over] = [20, 1.10, 1.0]",
-               basis="20 deg/s is the fastest pitch-down rate that keeps peak thrust <= 80 % of available in "
-                     "CALC-B1-PITCHOVER (30 deg/s reaches 94 %, 50 deg/s saturates); proposed first-flight "
-                     "Q_TAILSIT_RAT_FW; thrust holds altitude below "
-                     "1.1 Vs (Q_ASSIST_SPEED analogue); the back-transition is a pitch-up deceleration "
-                     "of similar length at similar thrust", value=[20.0, 1.10, 1.0], unit="-", status="PROPOSED",
+               "the forward pitch-over] = [12, 1.10, 1.0]",
+               basis="12 deg/s is the fastest whole-number pitch-down rate that keeps peak thrust <= 80 % of "
+                     "available in CALC-B1-PITCHOVER on the worst-case pack (sag 0.72, D-06): 13 deg/s gives 0.79, "
+                     "15 gives 0.84, 20 gives 0.96 (rev 1 used 20 at sag 0.93). On a fresh pack 20 deg/s gives 0.59 "
+                     "(performance_results.json#sensitivity). Proposed first-flight Q_TAILSIT_RAT_FW; thrust holds "
+                     "altitude below 1.1 Vs (Q_ASSIST_SPEED analogue); the back-transition is a pitch-up deceleration "
+                     "of similar length at similar thrust", value=[12.0, 1.10, 1.0], unit="-", status="PROPOSED",
                cites=["SRC-B1-ARDUPILOT-TS"])
 
 
@@ -250,32 +281,33 @@ def aero_from(cla, a0, clmax, cd0, k, cd90):
 
 # ================================================================== calculations
 @kit.calc("CALC-B1-AERO", title="Aero model: CD0, k, lift slope, stall angle",
-          equation="Swet = 2 S (1 + 0.2 t/c) ; CD0 = IF [Cf FF Swet_wing + Cf FF Swet_fins + Cd_tube d L + n CdA_motor "
-                   "+ Cf FF Swet_pod] / S ; k = 1/(pi AR e) ; a = 2 pi AR/(2 + sqrt(AR^2+4)) ; "
-                   "alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))",
-          inputs={"b": P + "wing.span_m", "c": P + "wing.chord_m", "tc": P + "wing.t_c", "e": P + "wing.oswald_e",
+          equation="CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod] / S, "
+                   "Swet_fin = 2 A (1 + 0.2 t/c) ; k = 1/(pi AR e_B2) ; k_pess = 1/(pi AR e_params) ; "
+                   "a = CLa (B2 AVL) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))",
+          inputs={"b": P + "wing.span_m", "c": P + "wing.chord_m", "tc": P + "wing.t_c",
+                  "e_b2": P + "b2.avl.e_oswald", "e_pess": P + "wing.oswald_e", "cd0_w": P + "b2.avl.cd0_wing",
+                  "rough": "ASM-B1-WING-ROUGH", "cla": P + "b2.avl.cla_per_rad",
                   "fin_h": P + "fins.half_height_m", "fin_c": P + "fins.chord_m", "tube_l": P + "fins.tube.length_m",
                   "tube_d": P + "fins.tube.od_m", "pod": P + "pod.size_m", "n": P + "propulsion.n_motors",
-                  "drag": "ASM-B1-DRAG", "a0": "ASM-B1-ALPHA0", "clmax": "ASM-A1-CLMAX"},
+                  "drag": "ASM-B1-DRAG", "a0": P + "b2.xfoil.alpha0_2d_deg", "clmax": "CL-B2-CLMAX-DESIGN"},
           units={"b": "m", "c": "m", "fin_h": "m", "fin_c": "m", "tube_l": "m", "tube_d": "m", "pod": "m",
-                 "a0": "deg"},
-          assumes=["ASM-B1-DRAG", "ASM-B1-ALPHA0", "ASM-A1-CLMAX"], cites=["SRC-B1-HELMBOLD"])
-def aero_build(b, c, tc, e, fin_h, fin_c, tube_l, tube_d, pod, n, drag, a0, clmax):
-    cf_w, ff_w, cf_b, ff_f, cd_tube, cda_m, ff_pod, interf = drag
+                 "a0": "deg", "cla": "1/rad"},
+          assumes=["ASM-B1-DRAG", "ASM-B1-WING-ROUGH"], cites=["SRC-B2-AVL", "SRC-B2-XFOIL"])
+def aero_build(b, c, tc, e_b2, e_pess, cd0_w, rough, cla, fin_h, fin_c, tube_l, tube_d, pod, n, drag, a0, clmax):
+    cf_b, ff_f, cd_tube, cda_m, ff_pod, interf = drag
     S = b * c
     AR = b * b / S
     wet = 2.0 * (1.0 + 0.2 * tc)
     parts = {
-        "wing": cf_w * ff_w * wet * S / S,
+        "wing": cd0_w * rough,
         "fins": cf_b * ff_f * wet * (2 * 2 * fin_h * fin_c) / S,
         "motor_tubes": 2 * cd_tube * tube_d * tube_l / S,
         "motors": n * cda_m / S,
         "pod": cf_b * ff_pod * 2 * (pod[0] * pod[1] + pod[0] * pod[2] + pod[1] * pod[2]) / S,
     }
     cd0 = interf * sum(parts.values())
-    k = 1.0 / (math.pi * AR * e)
-    cla = 2 * math.pi * AR / (2 + math.sqrt(AR * AR + 4))
-    return {"S_m2": S, "AR": AR, "cd0": cd0, "k": k, "cla_per_rad": cla,
+    k = 1.0 / (math.pi * AR * e_b2)
+    return {"S_m2": S, "AR": AR, "cd0": cd0, "k": k, "k_pess": 1.0 / (math.pi * AR * e_pess), "cla_per_rad": cla,
             "alpha_stall_deg": a0 + clmax / cla / DEG, "ld_max": 1 / (2 * math.sqrt(cd0 * k)),
             "cl_ldmax": math.sqrt(cd0 / k),
             "cd0_parts": [round(interf * parts[p], 6) for p in ("wing", "fins", "motor_tubes", "motors", "pod")]}
@@ -285,57 +317,74 @@ def aero_build(b, c, tc, e, fin_h, fin_c, tube_l, tube_d, pod, n, drag, a0, clma
           equation="Vs = sqrt(2 m g/(rho S CLmax)) ; Vt = 1.3 Vs ; Vs30 = Vs/sqrt(cos 30) ; "
                    "margin = Vcruise/Vt - 1",
           inputs={"m_gate": P + "requirements.mtow_gate_kg", "m_sized": "CL-A1-MASS-SIZED", "g": P + "env.g_ms2",
-                  "rho": P + "env.rho_kgm3", "S": "CL-A1-WING-AREA", "clmax": "ASM-A1-CLMAX",
+                  "rho": P + "env.rho_kgm3", "S": "CL-A1-WING-AREA", "clmax": "CL-B2-CLMAX-DESIGN",
                   "kt": P + "requirements.transition_factor", "vc": "ASM-B1-VCRUISE"},
           units={"m_gate": "kg", "m_sized": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2", "vc": "m/s"},
-          assumes=["ASM-A1-CLMAX", "ASM-B1-VCRUISE"])
+          assumes=["ASM-B1-VCRUISE"])
 def stall_speeds(m_gate, m_sized, g, rho, S, clmax, kt, vc):
     vs = lambda m, cl: math.sqrt(2 * m * g / (rho * S * cl))
     v_gate = vs(m_gate, clmax)
     return {"vs_gate_ms": v_gate, "vs_sized_ms": vs(m_sized, clmax), "vt_gate_ms": kt * v_gate,
             "vs_bank30_gate_ms": v_gate / math.sqrt(math.cos(30 * DEG)),
-            "vs_gate_clmax080_ms": vs(m_gate, 0.80), "vs_gate_clmax100_ms": vs(m_gate, 1.00),
+            "vs_gate_clmax086_ms": vs(m_gate, 0.86), "vs_gate_clmax090_ms": vs(m_gate, 0.90),
             "clmax_needed_for_15ms": 2 * m_gate * g / (rho * S * (15.0 / kt) ** 2),
             "cruise_over_vt": vc / (kt * v_gate)}
 
 
 @kit.calc("CALC-B1-PROPCAL", title="Prop and motor chain, calibrated to the maker table",
-          equation="n_max = sqrt(T0/(Ct0 rho D^4)) ; n_max,sag = n_max sqrt(sag) ; "
-                   "k_cal = P_table(690 gf) / P_motor(prop model at 690 gf, J = 0) ; FM = T^1.5/(sqrt(2 rho A) P_shaft)",
-          inputs={"tab": "ASM-B1-PROP", "motor": "ASM-B1-MOTOR", "table": P + "propulsion.thrust_table_g_w",
+          equation="n_max = sqrt(T0/(Ct0 rho D^4)) (11x5.5MR) ; n_max,sag = n_max sqrt(sag) ; "
+                   "k_cal = P_table(690 gf) / P_motor(11x4.5MR model at 690 gf, J = 0) ; "
+                   "FM = T^1.5/(sqrt(2 rho A) P_shaft) (11x5.5MR)",
+          inputs={"tab": "ASM-B1-PROP", "tab_ref": "ASM-B1-PROP-REF", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM",
+                  "i0": "ASM-E1-I0", "table": P + "propulsion.thrust_table_g_w",
                   "t_max_kg": P + "propulsion.thrust_max_per_motor_kg", "sag": P + "propulsion.voltage_sag",
                   "D": P + "propulsion.prop_diameter_m", "rho": P + "env.rho_kgm3", "g": P + "env.g_ms2"},
           units={"t_max_kg": "kg", "D": "m", "rho": "kg/m3", "g": "m/s2"},
-          assumes=["ASM-B1-PROP", "ASM-B1-MOTOR"])
-def prop_calibration(tab, motor, table, t_max_kg, sag, D, rho, g):
+          assumes=["ASM-B1-PROP", "ASM-B1-PROP-REF", "ASM-E1-KV", "ASM-E1-RM", "ASM-E1-I0"])
+def prop_calibration(tab, tab_ref, kv, rm, i0, table, t_max_kg, sag, D, rho, g):
+    motor = (kv, rm, i0)
     ct0 = tab[0][1]
     n_max = math.sqrt(t_max_kg * g / (ct0 * rho * D ** 4))
     t_ref = sorted(table)[0]
     T = t_ref[0] / 1000.0 * g
-    n, p_shaft, _ = prop_operating_point(tab, T, 0.0, D, rho)
+    n, p_shaft, _ = prop_operating_point(tab_ref, T, 0.0, D, rho)
     p_model = motor_input_w(p_shaft, n, motor)
-    fm = T ** 1.5 / math.sqrt(2 * rho * math.pi * D * D / 4) / p_shaft
+    n55, p55, _ = prop_operating_point(tab, T, 0.0, D, rho)
+    fm = T ** 1.5 / math.sqrt(2 * rho * math.pi * D * D / 4) / p55
     return {"n_max_rps": n_max, "n_max_sag_rps": n_max * math.sqrt(sag), "k_cal": t_ref[1] / p_model,
-            "hover_ref_rpm": n * 60, "fm_apc_static": fm, "motor_eff_hover_ref": p_shaft / p_model}
+            "hover_ref_rpm": n55 * 60, "fm_apc_static": fm, "motor_eff_hover_ref": p_shaft / p_model}
 
 
 @kit.calc("CALC-B1-HOVER", title="Hover power, current, endurance and thrust headroom",
-          equation="T_motor = m DL / n ; P = n P_table(T_motor) / eta_esc + P_av ; I = P / V ; "
+          equation="T_motor = m DL / n ; r = P_motor(11x5.5MR, T) / P_motor(11x4.5MR, T) ; "
+                   "P = n P_table(T_motor) r / eta_esc + P_av ; I = P / V ; "
                    "t_hover = E (1 - reserve) / P ; throttle = m g DL / (n T_max sag)",
           inputs={"m_gate": P + "requirements.mtow_gate_kg", "m_sized": "CL-A1-MASS-SIZED",
                   "table": P + "propulsion.thrust_table_g_w", "dl": P + "propulsion.download_factor",
                   "n": P + "propulsion.n_motors", "esc": "ASM-B1-ESC", "av": "ASM-B1-AVIONICS-W",
                   "E": P + "battery.energy_wh", "v": P + "battery.v_nom", "res": P + "requirements.energy_reserve_frac",
                   "t_max_kg": P + "propulsion.thrust_max_per_motor_kg", "sag": P + "propulsion.voltage_sag",
-                  "pess": "ASM-B1-PESS"},
-          units={"m_gate": "kg", "m_sized": "kg", "av": "W", "E": "Wh", "v": "V", "t_max_kg": "kg"},
+                  "pess": "ASM-B1-PESS", "tab": "ASM-B1-PROP", "tab_ref": "ASM-B1-PROP-REF", "kv": "ASM-E1-KV",
+                  "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "D": P + "propulsion.prop_diameter_m",
+                  "rho": P + "env.rho_kgm3", "g": P + "env.g_ms2"},
+          units={"m_gate": "kg", "m_sized": "kg", "av": "W", "E": "Wh", "v": "V", "t_max_kg": "kg", "D": "m",
+                 "rho": "kg/m3", "g": "m/s2"},
           assumes=["ASM-B1-ESC", "ASM-B1-AVIONICS-W", "ASM-B1-PESS"])
-def hover(m_gate, m_sized, table, dl, n, esc, av, E, v, res, t_max_kg, sag, pess):
+def hover(m_gate, m_sized, table, dl, n, esc, av, E, v, res, t_max_kg, sag, pess, tab, tab_ref, kv, rm, i0, D, rho,
+          g):
+    motor = (kv, rm, i0)
+
+    def ratio(m):
+        T = m * g * dl / n
+        n1, p1, _ = prop_operating_point(tab, T, 0.0, D, rho)
+        n0, p0, _ = prop_operating_point(tab_ref, T, 0.0, D, rho)
+        return motor_input_w(p1, n1, motor) / motor_input_w(p0, n0, motor)
+
     def p(m):
-        return n * table_power_w(table, m * 1000 * dl / n) / esc + av
+        return n * table_power_w(table, m * 1000 * dl / n) * ratio(m) / esc + av
     pg, ps = p(m_gate), p(m_sized)
     return {"p_gate_w": pg, "p_sized_w": ps, "i_gate_a": pg / v, "i_sized_a": ps / v,
-            "p_gate_pess_w": pg * pess[2],
+            "p_gate_pess_w": pg * pess[2], "prop_ratio_55_45": ratio(m_gate),
             "hover_only_gate_min": E * (1 - res) / pg * 60, "hover_only_sized_min": E * (1 - res) / ps * 60,
             "throttle_frac_gate_sag": m_gate * dl / (n * t_max_kg * sag),
             "tw_gate_sag_download": n * t_max_kg * sag / (m_gate * dl)}
@@ -351,87 +400,100 @@ def cruise_point(V, m, g, rho, S, cd0, k, trim, n, tab, motor, kcal, D, esc, av,
     p_shaft /= eta_fac
     p_el = n * kcal * motor_input_w(p_shaft, rps, motor) / esc + av
     return {"cl": cl, "ld": cl / cd, "drag_n": drag, "t_prop_n": drag / n, "J": V / (rps * D),
-            "rpm": rps * 60, "eta_prop": eta * eta_fac, "p_shaft_w": n * p_shaft, "p_el_w": p_el}
+            "rpm": rps * 60, "eta_prop": eta * eta_fac, "p_shaft_w": n * p_shaft, "p_el_w": p_el,
+            "eta_drive": n * p_shaft / (p_el - av)}
 
 
 CRUISE_INPUTS = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
-                 "S": "CL-A1-WING-AREA", "cd0": "CL-B1-CD0", "k": "CL-B1-K", "trim": "ASM-B1-TRIM",
-                 "n": P + "propulsion.n_motors", "tab": "ASM-B1-PROP", "motor": "ASM-B1-MOTOR", "kcal": "CL-B1-KCAL",
+                 "S": "CL-A1-WING-AREA", "cd0": "CL-B1-CD0", "k": "CL-B1-K", "k_pess": "CL-B1-K-PESS",
+                 "trim": "ASM-B1-TRIM",
+                 "n": P + "propulsion.n_motors", "tab": "ASM-B1-PROP", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "kcal": "CL-B1-KCAL",
                  "D": P + "propulsion.prop_diameter_m", "esc": "ASM-B1-ESC", "av": "ASM-B1-AVIONICS-W"}
 CRUISE_UNITS = {"m": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2", "D": "m", "av": "W"}
 
 
 @kit.calc("CALC-B1-CRUISE", title="Cruise at the proposed speed, gate mass",
           equation="CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim ; prop: Ct(J) rho n^2 D^4 = D/n ; "
-                   "P_el = n k_cal P_motor(Cp rho n^3 D^5) / eta_esc + P_av ; pess: CD0 x 1.3, eta_prop x 0.85",
+                   "P_el = n k_cal P_motor(Cp rho n^3 D^5) / eta_esc + P_av ; eta_drive = P_shaft / (P_el - P_av) ; "
+                   "pess: CD0 x 1.3, k_pess (e 0.80), eta_prop x 0.85",
           inputs={**CRUISE_INPUTS, "vc": "ASM-B1-VCRUISE", "pess": "ASM-B1-PESS", "v": P + "battery.v_nom"},
           units={**CRUISE_UNITS, "vc": "m/s", "v": "V"},
-          assumes=["ASM-B1-TRIM", "ASM-B1-VCRUISE", "ASM-B1-PESS", "ASM-B1-PROP", "ASM-B1-MOTOR"])
-def cruise(m, g, rho, S, cd0, k, trim, n, tab, motor, kcal, D, esc, av, vc, pess, v):
+          assumes=["ASM-B1-TRIM", "ASM-B1-VCRUISE", "ASM-B1-PESS", "ASM-B1-PROP", "ASM-E1-KV", "ASM-E1-RM", "ASM-E1-I0"])
+def cruise(m, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, pess, v):
+    motor = (kv, rm, i0)
     base = cruise_point(vc, m, g, rho, S, cd0, k, trim, n, tab, motor, kcal, D, esc, av)
-    worst = cruise_point(vc, m, g, rho, S, cd0 * pess[0], k, trim, n, tab, motor, kcal, D, esc, av, pess[1])
+    worst = cruise_point(vc, m, g, rho, S, cd0 * pess[0], k_pess, trim, n, tab, motor, kcal, D, esc, av, pess[1])
     return {"cl": base["cl"], "ld": base["ld"], "drag_n": base["drag_n"], "t_prop_n": base["t_prop_n"],
-            "J": base["J"], "rpm": base["rpm"], "eta_prop": base["eta_prop"], "p_el_w": base["p_el_w"],
-            "i_a": base["p_el_w"] / v, "p_el_pess_w": worst["p_el_w"],
+            "J": base["J"], "rpm": base["rpm"], "eta_prop": base["eta_prop"], "p_shaft_w": base["p_shaft_w"],
+            "eta_drive": base["eta_drive"], "p_el_w": base["p_el_w"],
+            "i_a": base["p_el_w"] / v, "p_el_pess_w": worst["p_el_w"], "i_pess_a": worst["p_el_w"] / v,
+            "drag_pess_n": worst["drag_n"], "eta_prop_pess": worst["eta_prop"],
             "eta_overall": base["drag_n"] * vc / base["p_el_w"]}
 
 
 @kit.calc("CALC-B1-SWEEP", title="Cruise power and cruise time versus airspeed",
-          equation="for V in 14..20 m/s: P_el(V) as CALC-B1-CRUISE ; t = (E(1-res) - P_h t_h - 2 E_tr)/P_el",
+          equation="for V in 14..20 m/s: P_el(V) as CALC-B1-CRUISE ; t = (E(1-res) - P_h t_h - 2 E_tr)/P_el ; "
+                   "pess: P_h and E_tr x 1.10 and the pessimistic P_el",
           inputs={**CRUISE_INPUTS, "pess": "ASM-B1-PESS", "E": P + "battery.energy_wh",
-                  "res": P + "requirements.energy_reserve_frac", "p_hover": "CL-B1-HOVER-P-GATE",
+                  "res": P + "requirements.energy_reserve_frac", "p_hover": P + "performance.hover_power_w",
                   "t_hover": P + "requirements.hover_time_min", "e_tr": "CL-B1-TRANS-ENERGY",
                   "trans": "ASM-B1-TRANS"},
           units={**CRUISE_UNITS, "E": "Wh", "p_hover": "W", "t_hover": "min", "e_tr": "Wh"},
           assumes=["ASM-B1-PESS", "ASM-B1-TRANS"])
-def cruise_sweep(m, g, rho, S, cd0, k, trim, n, tab, motor, kcal, D, esc, av, pess, E, res, p_hover, t_hover,
-                 e_tr, trans):
+def cruise_sweep(m, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, pess, E, res, p_hover,
+                 t_hover, e_tr, trans):
+    motor = (kv, rm, i0)
     e_left = E * (1 - res) - p_hover * t_hover / 60 - e_tr * (1 + trans[2])
+    e_left_p = E * (1 - res) - (p_hover * t_hover / 60 + e_tr * (1 + trans[2])) * pess[2]
     rows = []
     for v10 in range(140, 201, 5):
         V = v10 / 10
         b = cruise_point(V, m, g, rho, S, cd0, k, trim, n, tab, motor, kcal, D, esc, av)
-        w = cruise_point(V, m, g, rho, S, cd0 * pess[0], k, trim, n, tab, motor, kcal, D, esc, av, pess[1])
+        w = cruise_point(V, m, g, rho, S, cd0 * pess[0], k_pess, trim, n, tab, motor, kcal, D, esc, av, pess[1])
         rows.append([V, round(b["p_el_w"], 1), round(w["p_el_w"], 1), round(b["eta_prop"], 3),
-                     round(e_left / b["p_el_w"] * 60, 2), round(e_left / w["p_el_w"] * 60, 2)])
+                     round(e_left / b["p_el_w"] * 60, 2), round(e_left_p / w["p_el_w"] * 60, 2)])
     best = min(rows, key=lambda r: r[1])
     return {"rows_V_P_Ppess_eta_t_tpess": rows, "v_min_power_ms": best[0], "e_cruise_wh": e_left}
 
 
 @kit.calc("CALC-B1-MISSION", title="Mission energy: 2 min hover, two transitions, cruise",
           equation="E_use = E (1 - reserve) ; E_c = E_use - P_hover t_hover - E_tr (1 + back) ; t_cruise = E_c / P_cruise ; "
-                   "range = t_cruise V",
+                   "range = t_cruise V ; pess: P_hover and E_tr x 1.10, P_cruise,pess ; cross-check with B1 hover",
           inputs={"E": P + "battery.energy_wh", "res": P + "requirements.energy_reserve_frac",
-                  "p_hover": "CL-B1-HOVER-P-GATE", "p_hover_pess": "CL-B1-HOVER-P-PESS",
+                  "p_hover": P + "performance.hover_power_w", "pess": "ASM-B1-PESS",
+                  "p_hover_b1": "CL-B1-HOVER-P-GATE",
                   "t_hover": P + "requirements.hover_time_min", "e_tr": "CL-B1-TRANS-ENERGY",
                   "trans": "ASM-B1-TRANS", "p_c": "CL-B1-CRUISE-P", "p_c_pess": "CL-B1-CRUISE-P-PESS",
                   "vc": "ASM-B1-VCRUISE"},
-          units={"E": "Wh", "p_hover": "W", "p_hover_pess": "W", "t_hover": "min", "e_tr": "Wh", "p_c": "W",
+          units={"E": "Wh", "p_hover": "W", "p_hover_b1": "W", "t_hover": "min", "e_tr": "Wh", "p_c": "W",
                  "p_c_pess": "W", "vc": "m/s"},
-          assumes=["ASM-B1-TRANS"])
-def mission(E, res, p_hover, p_hover_pess, t_hover, e_tr, trans, p_c, p_c_pess, vc):
+          assumes=["ASM-B1-TRANS", "ASM-B1-PESS"])
+def mission(E, res, p_hover, pess, p_hover_b1, t_hover, e_tr, trans, p_c, p_c_pess, vc):
     use = E * (1 - res)
-    e_h, e_hp = p_hover * t_hover / 60, p_hover_pess * t_hover / 60
+    e_h = p_hover * t_hover / 60
     e_t = e_tr * (1 + trans[2])
     t_c = (use - e_h - e_t) / p_c * 60
     return {"e_usable_wh": use, "e_hover_wh": e_h, "e_transitions_wh": e_t, "t_cruise_min": t_c,
-            "t_cruise_pess_min": (use - e_hp - e_t * p_hover_pess / p_hover) / p_c_pess * 60,
-            "range_km": t_c * 60 * vc / 1000.0}
+            "p_hover_pess_w": p_hover * pess[2],
+            "t_cruise_pess_min": (use - (e_h + e_t) * pess[2]) / p_c_pess * 60,
+            "t_cruise_b1_hover_min": (use - p_hover_b1 * t_hover / 60 - e_t) / p_c * 60,
+            "range_km": t_c * 60 * vc / 1000.0, "e_cruise_wh": use - e_h - e_t}
 
 
 @kit.calc("CALC-B1-CORRIDOR", title="Transition corridor, steady level flight",
           equation="for V in 0..22 m/s: T cos(th) = D(a=th), T sin(th) + L = W ; corridor th_lo..th_eq with "
                    "T = (W - L)/sin(th) <= f T_max(V cos a) ; P_el at T/n ; peaks taken over 0 <= V <= Vcruise",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
-                  "S": "CL-A1-WING-AREA", "cla": "CL-B1-CLA", "a0": "ASM-B1-ALPHA0", "clmax": "ASM-A1-CLMAX",
+                  "S": "CL-A1-WING-AREA", "cla": "CL-B1-CLA", "a0": P + "b2.xfoil.alpha0_2d_deg", "clmax": "CL-B2-CLMAX-DESIGN",
                   "cd0": "CL-B1-CD0", "k": "CL-B1-K", "cd90": "ASM-B1-CD90", "n": P + "propulsion.n_motors",
-                  "tab": "ASM-B1-PROP", "motor": "ASM-B1-MOTOR", "kcal": "CL-B1-KCAL", "nmax": "CL-B1-NMAX-SAG",
+                  "tab": "ASM-B1-PROP", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "kcal": "CL-B1-KCAL", "nmax": "CL-B1-NMAX-SAG",
                   "D": P + "propulsion.prop_diameter_m", "esc": "ASM-B1-ESC", "av": "ASM-B1-AVIONICS-W",
                   "frac": "ASM-B1-CTRL-RESERVE", "dl": P + "propulsion.download_factor", "vc": "ASM-B1-VCRUISE"},
           units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2", "a0": "deg", "D": "m", "av": "W",
                  "nmax": "rev/s", "vc": "m/s"},
           assumes=["ASM-B1-CD90", "ASM-B1-CTRL-RESERVE"])
-def corridor(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, motor, kcal, nmax, D, esc, av, frac, dl, vc):
+def corridor(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, kv, rm, i0, kcal, nmax, D, esc, av, frac, dl, vc):
+    motor = (kv, rm, i0)
     W = m * g
     aero = aero_from(cla, a0, clmax, cd0, k, cd90)
     a_s = a0 + clmax / cla / DEG
@@ -481,23 +543,25 @@ def corridor(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, motor, kcal, nm
           equation="m dv/dt = T(th) + L + D - W (2-D point mass, dt 0.01 s, semi-implicit Euler) ; "
                    "th_cmd = max(90 - r t, th_req(V)) ; T holds altitude below V_assist, speed above",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
-                  "S": "CL-A1-WING-AREA", "cla": "CL-B1-CLA", "a0": "ASM-B1-ALPHA0", "clmax": "ASM-A1-CLMAX",
+                  "S": "CL-A1-WING-AREA", "cla": "CL-B1-CLA", "a0": P + "b2.xfoil.alpha0_2d_deg", "clmax": "CL-B2-CLMAX-DESIGN",
                   "cd0": "CL-B1-CD0", "k": "CL-B1-K", "cd90": "ASM-B1-CD90", "n": P + "propulsion.n_motors",
-                  "tab": "ASM-B1-PROP", "motor": "ASM-B1-MOTOR", "kcal": "CL-B1-KCAL", "nmax": "CL-B1-NMAX-SAG",
+                  "tab": "ASM-B1-PROP", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "kcal": "CL-B1-KCAL", "nmax": "CL-B1-NMAX-SAG",
                   "D": P + "propulsion.prop_diameter_m", "esc": "ASM-B1-ESC", "av": "ASM-B1-AVIONICS-W",
                   "frac": "ASM-B1-CTRL-RESERVE", "trans": "ASM-B1-TRANS", "vs": "CL-B1-VS-GATE",
                   "vc": "ASM-B1-VCRUISE", "kt": P + "requirements.transition_factor"},
           units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2", "a0": "deg", "D": "m", "av": "W",
                  "nmax": "rev/s", "vs": "m/s", "vc": "m/s"},
           assumes=["ASM-B1-TRANS", "ASM-B1-CD90", "ASM-B1-CTRL-RESERVE"])
-def pitchover(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, motor, kcal, nmax, D, esc, av, frac, trans, vs,
+def pitchover(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, kv, rm, i0, kcal, nmax, D, esc, av, frac, trans, vs,
               vc, kt):
-    return simulate_pitchover(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, motor, kcal, nmax, D, esc, av,
+    motor = (kv, rm, i0)
+    return simulate_pitchover(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, kv, rm, i0, kcal, nmax, D, esc, av,
                               frac, trans, vs, vc, kt)["summary"]
 
 
-def simulate_pitchover(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, motor, kcal, nmax, D, esc, av, frac,
+def simulate_pitchover(m, g, rho, S, cla, a0, clmax, cd0, k, cd90, n, tab, kv, rm, i0, kcal, nmax, D, esc, av, frac,
                        trans, vs, vc, kt, dt=0.01, t_end=20.0):
+    motor = (kv, rm, i0)
     aero = aero_from(cla, a0, clmax, cd0, k, cd90)
     W = m * g
     rate, v_assist = trans[0], trans[1] * vs
@@ -602,7 +666,8 @@ def wind(m, m_sized, growth, g, rho, S, cd90, tip, err, z_fin, c, foot, tw_sag, 
                   "dl": P + "propulsion.download_factor"},
           units={**CRUISE_UNITS, "vc": "m/s", "nmax": "rev/s"},
           assumes=["ASM-B1-CTRL-RESERVE"])
-def climb(m, g, rho, S, cd0, k, trim, n, tab, motor, kcal, D, esc, av, vc, nmax, frac, dl):
+def climb(m, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, nmax, frac, dl):
+    motor = (kv, rm, i0)
     W = m * g
     v_up = 2.5                                            # Q_PILOT_SPD_UP-class vertical climb, m/s
     T_up = W * dl + 0.5 * rho * v_up ** 2 * S * cd0       # nose-first climb: wing edge-on, cruise-like drag
@@ -628,10 +693,12 @@ def climb(m, g, rho, S, cd0, k, trim, n, tab, motor, kcal, D, esc, av, vc, nmax,
 kit.claim("CL-B1-CD0", "Zero-lift drag coefficient", calc="CALC-B1-AERO", output="cd0", unit="-",
           how="B2/B3 AVL + XFOIL profile drag; flight: glide or power-off sink at 16 m/s, or cruise power at "
               "known prop data (H2).")
-kit.claim("CL-B1-K", "Induced drag factor", calc="CALC-B1-AERO", output="k", unit="-",
-          how="B3 AVL Trefftz-plane CDi at cruise CL gives e; replaces wing.oswald_e 0.8.")
-kit.claim("CL-B1-CLA", "Wing lift slope", calc="CALC-B1-AERO", output="cla_per_rad", unit="1/rad",
-          how="B3 AVL CLa with fins and pod.")
+kit.claim("CL-B1-K", "Lift-dependent drag factor (B2 trimmed polar, e 0.93)", calc="CALC-B1-AERO", output="k",
+          unit="-", how="B2/B3 re-run AVL at c 0.32 with fins and pod; flight: cruise power at 14/16/18 m/s (H2).")
+kit.claim("CL-B1-K-PESS", "Lift-dependent drag factor, pessimistic (e 0.80)", calc="CALC-B1-AERO",
+          output="k_pess", unit="-", how="As CL-B1-K.")
+kit.claim("CL-B1-CLA", "Wing lift slope (B2 AVL, c 0.30 run)", calc="CALC-B1-AERO", output="cla_per_rad",
+          unit="1/rad", how="B3 AVL CLa with fins and pod at c 0.32.")
 kit.claim("CL-B1-LDMAX", "Maximum lift-to-drag ratio", calc="CALC-B1-AERO", output="ld_max", unit="-",
           how="Glide test at best-glide speed with airspeed and baro logged (H2).")
 kit.claim("CL-B1-ALPHA-STALL", "Wing stall angle of attack", calc="CALC-B1-AERO", output="alpha_stall_deg",
@@ -639,13 +706,15 @@ kit.claim("CL-B1-ALPHA-STALL", "Wing stall angle of attack", calc="CALC-B1-AERO"
 
 kit.claim("CL-B1-VS-GATE", "Stall speed at 2.6 kg", calc="CALC-B1-STALL", output="vs_gate_ms", unit="m/s",
           limit=("<=", P + "requirements.stall_max_ms"), verifies=["R-STALL"],
-          how="B2 replaces CLmax 0.9; flight: slow-flight stall in FBWA at >= 50 m with airspeed logged (H2).")
+          how="B2 trimmed CLmax 0.80 (XFOIL + AVL); flight: slow-flight stall in FBWA at >= 50 m with airspeed "
+              "logged (H2, T-B2-STALL).")
 kit.claim("CL-B1-VS-SIZED", "Stall speed at sized mass", calc="CALC-B1-STALL", output="vs_sized_ms", unit="m/s",
           limit=("<=", P + "requirements.stall_max_ms"), verifies=["R-STALL"],
           how="As CL-B1-VS-GATE at the weighed mass.")
 kit.claim("CL-B1-VT-GATE", "Transition-complete airspeed 1.3 Vs", calc="CALC-B1-STALL", output="vt_gate_ms",
           unit="m/s", limit=("<=", "ASM-B1-VCRUISE"), verifies=["R-TRANSITION"],
-          how="Resolves CR-A1-05 by raising cruise to 16 m/s (CR-B1-01). Log airspeed at 'Transition done' (F4/H2).")
+          how="16 m/s cruise (D-01) over 1.3 Vs with B2's trimmed CLmax 0.80 at c 0.32. Log airspeed at "
+              "'Transition done' (F4/H2).")
 kit.claim("CL-B1-CLMAX-FOR-15", "CLmax that would keep 15 m/s cruise", calc="CALC-B1-STALL",
           output="clmax_needed_for_15ms", unit="-",
           how="B2 compares with the XFOIL/AVL CLmax with elevon up-trim; if B2 shows >= this value, 15 m/s also passes.")
@@ -657,13 +726,15 @@ kit.claim("CL-B1-KCAL", "Chain calibration to the maker table", calc="CALC-B1-PR
 kit.claim("CL-B1-FM", "Prop figure of merit, static (APC)", calc="CALC-B1-PROPCAL", output="fm_apc_static",
           unit="-", how="Thrust stand gf and shaft W (from current, Kv, Rm) at hover thrust (H1).")
 
-kit.claim("CL-B1-HOVER-P-GATE", "Hover power at 2.6 kg", calc="CALC-B1-HOVER", output="p_gate_w", unit="W",
-          verifies=["R-MISSION"],
+kit.claim("CL-B1-HOVER-P-GATE", "Hover power at 2.6 kg, 11x5.5MR (B1 cross-check of E1)", calc="CALC-B1-HOVER",
+          output="p_gate_w", unit="W", limit=("<=", P + "performance.hover_power_w"),
           how="Tethered hover at the gate mass (ballast), log pack W for 60 s (H2); thrust stand first (H1).")
 kit.claim("CL-B1-HOVER-P-PESS", "Hover power at 2.6 kg, pessimistic", calc="CALC-B1-HOVER", output="p_gate_pess_w",
           unit="W", how="As CL-B1-HOVER-P-GATE.")
 kit.claim("CL-B1-HOVER-I-GATE", "Hover current at 2.6 kg", calc="CALC-B1-HOVER", output="i_gate_a", unit="A",
           how="Current sensor log in tethered hover; F1 sizes the disconnect on it (x 1.25).")
+kit.claim("CL-B1-HOVER-PROP-RATIO", "Hover power ratio 11x5.5MR / 11x4.5MR", calc="CALC-B1-HOVER",
+          output="prop_ratio_55_45", unit="-", how="Thrust stand A/B of both props at 690 gf (H1, CR-B1-06).")
 kit.claim("CL-B1-HOVER-ONLY", "Hover-only endurance, 20 % reserve", calc="CALC-B1-HOVER",
           output="hover_only_gate_min", unit="min", how="Not flown; follows from the measured hover power.")
 kit.claim("CL-B1-HOVER-THROTTLE", "Hover thrust fraction, sagged pack", calc="CALC-B1-HOVER",
@@ -682,6 +753,16 @@ kit.claim("CL-B1-CRUISE-I", "Cruise current", calc="CALC-B1-CRUISE", output="i_a
           how="Current sensor in cruise (H2).")
 kit.claim("CL-B1-CRUISE-LD", "Cruise L/D at 16 m/s", calc="CALC-B1-CRUISE", output="ld", unit="-",
           how="Follows from CD0 and k; glide test.")
+kit.claim("CL-B1-CRUISE-DRAG", "Cruise drag at 16 m/s, 2.6 kg", calc="CALC-B1-CRUISE", output="drag_n", unit="N",
+          how="Follows from CD0, k and trim; cruise power test with known prop data (H2).")
+kit.claim("CL-B1-CRUISE-DRAG-PESS", "Cruise drag, pessimistic", calc="CALC-B1-CRUISE", output="drag_pess_n",
+          unit="N", how="As CL-B1-CRUISE-DRAG.")
+kit.claim("CL-B1-CRUISE-P-SHAFT", "Cruise shaft power, 4 props", calc="CALC-B1-CRUISE", output="p_shaft_w",
+          unit="W", how="ESC telemetry current and rpm with E1's motor constants (H2).")
+kit.claim("CL-B1-CRUISE-ETA-DRIVE", "Motor + ESC + calibration efficiency in cruise", calc="CALC-B1-CRUISE",
+          output="eta_drive", unit="-", how="Thrust stand at cruise rpm and torque (H1); replaces E2's eta_motor 0.72.")
+kit.claim("CL-B1-CRUISE-I-PESS", "Cruise current, pessimistic", calc="CALC-B1-CRUISE", output="i_pess_a", unit="A",
+          how="Current sensor in cruise (H2).")
 kit.claim("CL-B1-CRUISE-ETA-PROP", "Prop efficiency in cruise", calc="CALC-B1-CRUISE", output="eta_prop", unit="-",
           how="B4 confirms from APC data and a car-top or wind-tunnel prop test; flight: rpm (ESC telemetry) vs airspeed.")
 kit.claim("CL-B1-CRUISE-J", "Cruise advance ratio", calc="CALC-B1-CRUISE", output="J", unit="-",
@@ -696,6 +777,11 @@ kit.claim("CL-B1-CRUISE-TIME", "Cruise after 2 min hover, 20 % reserve", calc="C
 kit.claim("CL-B1-CRUISE-TIME-PESS", "Cruise after hover, pessimistic", calc="CALC-B1-MISSION",
           output="t_cruise_pess_min", unit="min", limit=(">=", P + "requirements.cruise_time_min"),
           verifies=["R-MISSION"], how="As CL-B1-CRUISE-TIME.")
+kit.claim("CL-B1-CRUISE-TIME-B1H", "Cruise after hover with B1's own hover power", calc="CALC-B1-MISSION",
+          output="t_cruise_b1_hover_min", unit="min", limit=(">=", P + "requirements.cruise_time_min"),
+          how="As CL-B1-CRUISE-TIME; cross-check of the E1 hover figure.")
+kit.claim("CL-B1-CRUISE-ENERGY", "Energy left for cruise after hover and transitions", calc="CALC-B1-MISSION",
+          output="e_cruise_wh", unit="Wh", how="Pack Wh counter at the end of the hover and transition legs (H2).")
 
 kit.claim("CL-B1-CORR-THRUST", "Peak steady thrust fraction in transition", calc="CALC-B1-CORRIDOR",
           output="thrust_frac_max", unit="-", limit=("<=", "ASM-B1-CTRL-RESERVE"), verifies=["R-TRANSITION"],
@@ -850,11 +936,14 @@ if __name__ == "__main__":
            "pitchover": hist,
            "outputs": {k: v["outputs"] for k, v in calcs.items()}}
     sens = {"pitch_rate_deg_s": {}, "clmax": {}}
-    for r in (15.0, 20.0, 30.0, 50.0):
+    sens["pitch_rate_fresh_pack_deg_s"] = {}
+    n_fresh = calcs["CALC-B1-PROPCAL"]["outputs"]["n_max_rps"]
+    for r in (10.0, 12.0, 13.0, 15.0, 20.0, 30.0, 50.0):
         pv2 = dict(pv, trans=[r] + list(pv["trans"][1:]))
         sens["pitch_rate_deg_s"][str(r)] = simulate_pitchover(**pv2)["summary"]
+        sens["pitch_rate_fresh_pack_deg_s"][str(r)] = simulate_pitchover(**dict(pv2, nmax=n_fresh))["summary"]
     si = calcs["CALC-B1-STALL"]["input_values"]
-    for cm in (0.8, 0.9, 1.0):
+    for cm in (0.80, 0.86, 0.90):
         sens["clmax"][str(cm)] = {k: v for k, v in stall_speeds(**dict(si, clmax=cm)).items()
                                   if k in ("vs_gate_ms", "vt_gate_ms", "cruise_over_vt")}
     ci = calcs["CALC-B1-CRUISE"]["input_values"]

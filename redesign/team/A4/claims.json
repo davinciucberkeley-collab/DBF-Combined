@@ -11,7 +11,7 @@
    "title": "Interface plan graph checks",
    "script": "redesign/team/A4/interface_plan.py",
    "function": "plan_graph_checks",
-   "equation": "connected = |main structural cluster| / |flight parts| ; powered = electrical parts reached from a source / all ; field = count(edges with field_disconnect)",
+   "equation": "connected = |main structural cluster| / |flight parts| ; powered = electrical parts reached from a source / all ; field = count(edges with field_disconnect) ; id_violations = count(id-rule breaches)",
    "inputs": {
     "n_motors": "P:propulsion.n_motors"
    },
@@ -19,8 +19,9 @@
     "connected_frac": 1.0,
     "powered_frac": 1.0,
     "field_disconnects": 1,
-    "edges": 125,
-    "parts": 82
+    "edges": 133,
+    "parts": 87,
+    "id_violations": 0
    },
    "input_values": {
     "n_motors": 4
@@ -76,6 +77,20 @@
    "value": 1
   },
   {
+   "id": "CL-A4-PLAN-ID-RULE",
+   "type": "claim",
+   "title": "Planned part ids follow the instance-id rule",
+   "calc": "CALC-A4-PLAN-GRAPH",
+   "output": "id_violations",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "how": "interface_plan.py id_rule(): <PREFIX>-NNN[-UR|UL|LR|LL|L|R], NNN 001-899, no retired id; --compare lists any declared id outside the plan; A3 mass_rollup.py maps instances to parts.csv lines by it",
+   "value": 0
+  },
+  {
    "id": "CL-A4-PLAN-EDGES",
    "type": "claim",
    "title": "Planned interfaces",
@@ -83,7 +98,7 @@
    "output": "edges",
    "unit": "-",
    "how": "interface_plan.py --compare: every planned edge declared and acknowledged",
-   "value": 125
+   "value": 133
   }
  ]
 }

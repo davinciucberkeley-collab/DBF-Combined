@@ -36,16 +36,6 @@
    ]
   },
   {
-   "id": "ASM-A3-SPLIT-MAX",
-   "type": "assumption",
-   "title": "Hover pitch-trim thrust split limit",
-   "text": "Upper/lower motor-pair thrust ratio needed to trim the CG z offset in hover stays <= 1.10, so at most ~5 % of each pair's hover thrust is spent on trim and the rest stays available for control",
-   "basis": "A3 choice pending B3/F4 hover-authority analysis; at T/W 2.4 the pairs run at ~41 % of max",
-   "value": 1.1,
-   "unit": "-",
-   "status": "UNVERIFIED"
-  },
-  {
    "id": "ASM-A3-PACK-RANGE",
    "type": "assumption",
    "title": "Pack mass range from listings",
@@ -101,10 +91,10 @@
     "ASM-A3-MGA"
    ],
    "outputs": {
-    "basic_kg": 2.146863,
-    "predicted_kg": 2.494569,
-    "mga_kg": 0.3477059999999997,
-    "gate_margin_kg": 0.10543100000000027,
+    "basic_kg": 2.1448630000000004,
+    "predicted_kg": 2.4921690000000005,
+    "mga_kg": 0.34730600000000006,
+    "gate_margin_kg": 0.10783099999999957,
     "allocated_g": 2200.0,
     "a1_sized_kg": 2.6,
     "by_subsystem_g": [
@@ -117,8 +107,8 @@
      [
       "fins",
       370.0,
-      371.3,
-      437.0
+      369.3,
+      434.6
      ],
      [
       "pod",
@@ -166,8 +156,8 @@
     "by_discipline_g": [
      [
       "structure",
-      889.5,
-      1026.4
+      887.5,
+      1024.0
      ],
      [
       "propulsion",
@@ -195,9 +185,9 @@
       64.8
      ]
     ],
-    "worst_alloc_ratio": 1.0035135135135136,
-    "worst_alloc_subsystem": "fins",
-    "overrun_total_g": 1.3000000000000114
+    "worst_alloc_ratio": 1.0,
+    "worst_alloc_subsystem": "power",
+    "overrun_total_g": 0.0
    },
    "input_values": {
     "items": [
@@ -400,12 +390,12 @@
       "FIN-E04",
       "fins",
       "structure",
-      15.0,
+      20.0,
       0.0625,
       0.32,
       0.0,
-      0.035,
-      0.03,
+      0.057,
+      0.04,
       0.03,
       "EST",
       null,
@@ -415,12 +405,12 @@
       "FIN-E04",
       "fins",
       "structure",
-      15.0,
+      20.0,
       0.0625,
       -0.32,
       0.0,
-      0.035,
-      0.03,
+      0.057,
+      0.04,
       0.03,
       "EST",
       null,
@@ -430,7 +420,7 @@
       "FIN-E05",
       "fins",
       "structure",
-      40.0,
+      30.0,
       0.065,
       0.32,
       0.0,
@@ -445,7 +435,7 @@
       "FIN-E05",
       "fins",
       "structure",
-      40.0,
+      30.0,
       0.065,
       -0.32,
       0.0,
@@ -460,7 +450,7 @@
       "FIN-E06",
       "fins",
       "structure",
-      10.0,
+      14.0,
       0.1825,
       0.32,
       0.0,
@@ -475,7 +465,7 @@
       "FIN-E06",
       "fins",
       "structure",
-      10.0,
+      14.0,
       0.1825,
       -0.32,
       0.0,
@@ -506,7 +496,7 @@
       "pod",
       "structure",
       20.0,
-      -0.005,
+      -0.034,
       0.0,
       0.085,
       0.1,
@@ -851,7 +841,7 @@
       "power",
       "energy",
       550.0,
-      -0.005,
+      -0.034,
       0.0,
       0.043,
       0.14,
@@ -1488,7 +1478,7 @@
    "title": "CG cases, pack station for the target, hover trim split",
    "script": "redesign/team/A3/mass_rollup.py",
    "function": "cg_cases",
-   "equation": "cg = sum m_i r_i / sum m_i ; x_pack_req = (x_t M - (M x_cg - m_p x_p)) / m_p ; split = (z_m + z_cg) / (z_m - z_cg) ; h_stance = c - x_cg + foot ; range_use = |x - mid| / half-range ; shift_req(group) = (x_t - x_cg) M / m_group",
+   "equation": "cg = sum m_i r_i / sum m_i ; x_pack_req = (x_t M - (M x_cg - m_p x_p)) / m_p ; split = (z_m + z_cg) / (z_m - z_cg) ; h_stance = c - x_cg + foot ; fwd_room = (x_pack - L_pack/2) - x_pod_le ; range_use = |x - mid| / half-range ; shift_req(group) = (x_t - x_cg) M / m_group",
    "inputs": {
     "items": "P:a3.rollup.items",
     "mga": "ASM-A3-MGA",
@@ -1501,7 +1491,8 @@
     "pack": "P:battery.size_m",
     "slide": "ASM-A3-PACK-SLIDE",
     "foot": "P:cg.foot_height_m",
-    "pack_rng": "ASM-A3-PACK-RANGE"
+    "pack_rng": "ASM-A3-PACK-RANGE",
+    "pod_le": "P:pod.x_le_m"
    },
    "units": {
     "x_rng": "m",
@@ -1513,7 +1504,8 @@
     "pack": "m",
     "slide": "m",
     "foot": "m",
-    "pack_rng": "g"
+    "pack_rng": "g",
+    "pod_le": "m"
    },
    "assumes": [
     "ASM-A3-MGA",
@@ -1521,50 +1513,51 @@
     "ASM-A3-PACK-RANGE"
    ],
    "outputs": {
-    "mass_g": 2146.863,
+    "mass_g": 2144.863,
     "cg_m": [
-     0.051338719983529464,
+     0.04404579611844673,
      0.0,
-     0.016809735879746403
+     0.016825410294270544
     ],
     "cg_pred_m": [
-     0.05076754751622425,
+     0.042979087790595255,
      0.0,
-     0.017712286170476745
+     0.017729343395251285
     ],
-    "cg_x_frac_chord": 0.16043349994852957,
-    "cg_x_range_use": 1.5197155518954368,
-    "cg_z_range_use": 0.47238943518985615,
-    "pod_group_shift_req_m": -0.020649051638270015,
+    "cg_x_frac_chord": 0.13764311287014602,
+    "cg_x_range_use": 0.10093419590072623,
+    "cg_z_range_use": 0.47301641177082177,
+    "pod_group_shift_req_m": -0.00012873709043252112,
     "pod_group_mass_g": 763.0,
-    "stations_shift_req_m": -0.21290846486486514,
+    "stations_shift_req_m": -0.0013273837837839675,
     "stations_mass_g": 74.0,
     "dxcg_dx": {
-     "pack": 0.2561877492881474,
-     "pod_group": 0.35540227764883,
-     "stations": 0.034468897176950744
+     "pack": 0.2564266342419073,
+     "pod_group": 0.35573367623013685,
+     "stations": 0.034501038061638435
     },
     "cg_empty_m": [
-     0.07074319988627703,
+     0.07096045139927379,
      0.0,
-     0.007789146595543888
+     0.007798914389511826
     ],
-    "empty_mass_g": 1596.863,
-    "pack_x_m": -0.005,
+    "empty_mass_g": 1594.863,
+    "pack_x_m": -0.034,
     "pack_mass_g": 550.0,
-    "pack_x_req_m": -0.0336458661818182,
-    "pack_shift_req_m": -0.028645866181818202,
-    "pack_aft_room_m": 0.2836458661818182,
+    "pack_x_req_m": -0.03417859345454549,
+    "pack_shift_req_m": -0.00017859345454548925,
+    "pack_aft_room_m": 0.2841785934545455,
+    "pack_fwd_room_m": 0.000999999999999987,
     "cg_x_trim_range_m": [
-     0.04365308750488504,
-     0.059024352462173885
+     0.036352997091189505,
+     0.05173859514570395
     ],
     "cg_x_pack_light_heavy_m": [
-     0.05259971645769272,
-     0.04812199873246656
+     0.045794314690711456,
+     0.03958576775832215
     ],
-    "hover_split": 1.194118716373972,
-    "stance_cg_height_m": 0.31366128001647053
+    "hover_split": 1.1943173109041167,
+    "stance_cg_height_m": 0.32095420388155327
    },
    "input_values": {
     "items": [
@@ -1767,12 +1760,12 @@
       "FIN-E04",
       "fins",
       "structure",
-      15.0,
+      20.0,
       0.0625,
       0.32,
       0.0,
-      0.035,
-      0.03,
+      0.057,
+      0.04,
       0.03,
       "EST",
       null,
@@ -1782,12 +1775,12 @@
       "FIN-E04",
       "fins",
       "structure",
-      15.0,
+      20.0,
       0.0625,
       -0.32,
       0.0,
-      0.035,
-      0.03,
+      0.057,
+      0.04,
       0.03,
       "EST",
       null,
@@ -1797,7 +1790,7 @@
       "FIN-E05",
       "fins",
       "structure",
-      40.0,
+      30.0,
       0.065,
       0.32,
       0.0,
@@ -1812,7 +1805,7 @@
       "FIN-E05",
       "fins",
       "structure",
-      40.0,
+      30.0,
       0.065,
       -0.32,
       0.0,
@@ -1827,7 +1820,7 @@
       "FIN-E06",
       "fins",
       "structure",
-      10.0,
+      14.0,
       0.1825,
       0.32,
       0.0,
@@ -1842,7 +1835,7 @@
       "FIN-E06",
       "fins",
       "structure",
-      10.0,
+      14.0,
       0.1825,
       -0.32,
       0.0,
@@ -1873,7 +1866,7 @@
       "pod",
       "structure",
       20.0,
-      -0.005,
+      -0.034,
       0.0,
       0.085,
       0.1,
@@ -2218,7 +2211,7 @@
       "power",
       "energy",
       550.0,
-      -0.005,
+      -0.034,
       0.0,
       0.043,
       0.14,
@@ -2858,7 +2851,8 @@
     "pack_rng": [
      503.0,
      680.0
-    ]
+    ],
+    "pod_le": -0.105
    }
   },
   {
@@ -2872,16 +2866,16 @@
     "items": "P:a3.rollup.items"
    },
    "outputs": {
-    "Ixx": 0.1599402302671188,
-    "Iyy": 0.04034120246638536,
-    "Izz": 0.15186756038259971,
+    "Ixx": 0.159593697939046,
+    "Iyy": 0.04261549350141796,
+    "Izz": 0.15408375041237227,
     "Ixy": -0.0,
-    "Ixz": -0.0018963409945096069,
+    "Ixz": -0.0023683024994817312,
     "Iyz": -0.0,
     "k_m": [
-     0.2729459740506808,
-     0.13707941867558998,
-     0.2659685848991809
+     0.27277721448673814,
+     0.14095613479587754,
+     0.2680270593856819
     ]
    },
    "input_values": {
@@ -3085,12 +3079,12 @@
       "FIN-E04",
       "fins",
       "structure",
-      15.0,
+      20.0,
       0.0625,
       0.32,
       0.0,
-      0.035,
-      0.03,
+      0.057,
+      0.04,
       0.03,
       "EST",
       null,
@@ -3100,12 +3094,12 @@
       "FIN-E04",
       "fins",
       "structure",
-      15.0,
+      20.0,
       0.0625,
       -0.32,
       0.0,
-      0.035,
-      0.03,
+      0.057,
+      0.04,
       0.03,
       "EST",
       null,
@@ -3115,7 +3109,7 @@
       "FIN-E05",
       "fins",
       "structure",
-      40.0,
+      30.0,
       0.065,
       0.32,
       0.0,
@@ -3130,7 +3124,7 @@
       "FIN-E05",
       "fins",
       "structure",
-      40.0,
+      30.0,
       0.065,
       -0.32,
       0.0,
@@ -3145,7 +3139,7 @@
       "FIN-E06",
       "fins",
       "structure",
-      10.0,
+      14.0,
       0.1825,
       0.32,
       0.0,
@@ -3160,7 +3154,7 @@
       "FIN-E06",
       "fins",
       "structure",
-      10.0,
+      14.0,
       0.1825,
       -0.32,
       0.0,
@@ -3191,7 +3185,7 @@
       "pod",
       "structure",
       20.0,
-      -0.005,
+      -0.034,
       0.0,
       0.085,
       0.1,
@@ -3536,7 +3530,7 @@
       "power",
       "energy",
       550.0,
-      -0.005,
+      -0.034,
       0.0,
       0.043,
       0.14,
@@ -4164,7 +4158,7 @@
     "R-MASS-GATE"
    ],
    "how": "Re-run mass_rollup.py on the parts.csv files; weigh the assembled aircraft with pack (T-A1-WEIGH).",
-   "value": 2.146863
+   "value": 2.1448630000000004
   },
   {
    "id": "CL-A3-MASS-PREDICTED",
@@ -4181,7 +4175,7 @@
     "R-MASS-GATE"
    ],
    "how": "Same roll-up; growth shrinks as items move EST -> CAD -> WEIGHED. Weigh every bought part on arrival.",
-   "value": 2.494569
+   "value": 2.4921690000000005
   },
   {
    "id": "CL-A3-GATE-MARGIN",
@@ -4198,7 +4192,7 @@
     "R-MASS-GATE"
    ],
    "how": "2.6 kg minus the predicted mass must stay >= the 0.10 kg first-build overrun; weigh the first core and fin.",
-   "value": 0.10543100000000027
+   "value": 0.10783099999999957
   },
   {
    "id": "CL-A3-ALLOC-WORST",
@@ -4211,8 +4205,11 @@
     "op": "<=",
     "value": 1.0
    },
+   "verifies": [
+    "R-MASS-ALLOC"
+   ],
    "how": "ROLLUP.md subsystem table; A1 re-allocates through CR-A3-01.",
-   "value": 1.0035135135135136
+   "value": 1.0
   },
   {
    "id": "CL-A3-CG-X",
@@ -4222,7 +4219,7 @@
    "output": "cg_x_frac_chord",
    "unit": "-",
    "how": "Balance on two knife edges under the spar line (T-A3-CG-BALANCE).",
-   "value": 0.16043349994852957
+   "value": 0.13764311287014602
   },
   {
    "id": "CL-A3-CG-X-RANGE",
@@ -4236,10 +4233,10 @@
     "value": 1.0
    },
    "verifies": [
-    "R-STATIC-MARGIN"
+    "R-CG-RANGE"
    ],
    "how": "CG balance with pack at its station; B3 confirms the range from AVL.",
-   "value": 1.5197155518954368
+   "value": 0.10093419590072623
   },
   {
    "id": "CL-A3-PACK-X-REQ",
@@ -4249,7 +4246,7 @@
    "output": "pack_x_req_m",
    "unit": "m",
    "how": "Strap the pack at this x and balance (T-A3-CG-BALANCE); D2 places the pod around it.",
-   "value": -0.0336458661818182
+   "value": -0.03417859345454549
   },
   {
    "id": "CL-A3-PACK-AFT-ROOM",
@@ -4263,7 +4260,21 @@
     "value": 0.0
    },
    "how": "D2 pod drawing: pack aft face x <= wing TE.",
-   "value": 0.2836458661818182
+   "value": 0.2841785934545455
+  },
+  {
+   "id": "CL-A3-PACK-FWD-ROOM",
+   "type": "claim",
+   "title": "Pack fore face to pod nose at the nominal pack station (outside skin)",
+   "calc": "CALC-A3-CG",
+   "output": "pack_fwd_room_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "D2 pod drawing: pack fore face behind the inside of the pod nose wall; lead exit at the aft end.",
+   "value": 0.000999999999999987
   },
   {
    "id": "CL-A3-CG-Z-RANGE",
@@ -4277,10 +4288,10 @@
     "value": 1.0
    },
    "verifies": [
-    "R-STATIC-MARGIN"
+    "R-CG-RANGE"
    ],
    "how": "Balance the aircraft on its side (z axis vertical) on a knife edge.",
-   "value": 0.47238943518985615
+   "value": 0.47301641177082177
   },
   {
    "id": "CL-A3-HOVER-SPLIT",
@@ -4291,13 +4302,10 @@
    "unit": "-",
    "limit": {
     "op": "<=",
-    "ref": "ASM-A3-SPLIT-MAX"
+    "ref": "P:requirements.hover_split_max"
    },
    "how": "Tethered hover log: mean upper vs lower motor outputs (F4/H2).",
-   "assumes": [
-    "ASM-A3-SPLIT-MAX"
-   ],
-   "value": 1.194118716373972
+   "value": 1.1943173109041167
   },
   {
    "id": "CL-A3-IXX",
@@ -4307,7 +4315,7 @@
    "output": "Ixx",
    "unit": "kg m2",
    "how": "Bifilar pendulum (T-A3-SWING).",
-   "value": 0.1599402302671188
+   "value": 0.159593697939046
   },
   {
    "id": "CL-A3-IYY",
@@ -4317,7 +4325,7 @@
    "output": "Iyy",
    "unit": "kg m2",
    "how": "Bifilar pendulum (T-A3-SWING).",
-   "value": 0.04034120246638536
+   "value": 0.04261549350141796
   },
   {
    "id": "CL-A3-IZZ",
@@ -4327,7 +4335,7 @@
    "output": "Izz",
    "unit": "kg m2",
    "how": "Bifilar pendulum (T-A3-SWING).",
-   "value": 0.15186756038259971
+   "value": 0.15408375041237227
   },
   {
    "id": "T-A3-WEIGH-PARTS",

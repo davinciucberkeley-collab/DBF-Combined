@@ -14,6 +14,7 @@ interface_plan.json, PLAN-STATUS.md or the register section of INTERFACE-PLAN.md
 """
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -24,6 +25,7 @@ sys.path.insert(0, str(REDESIGN / "proofs"))
 import merge_check as mc  # noqa: E402
 
 PLAN_JSON = HERE / "interface_plan.json"
+PARAMS = json.loads((REDESIGN / "params" / "params.json").read_text(encoding="utf-8"))
 PLAN_MD = HERE / "INTERFACE-PLAN.md"
 STATUS_MD = HERE / "PLAN-STATUS.md"
 BEGIN, END = "<!-- BEGIN GENERATED REGISTER (interface_plan.py) -->", "<!-- END GENERATED REGISTER -->"
@@ -67,6 +69,8 @@ NEW_CTS = [
      "spec": "servo arm on the output spline, M2 retaining screw"},
     {"id": "CT-CLEVIS", "kind": "kinematic", "method": "hinged",
      "spec": "steel pushrod end (Z-bend or clevis) in a horn or arm hole"},
+    {"id": "CT-PLUG-IN", "kind": "mechanical", "method": "slid",
+     "spec": "boom pushed into a printed socket, keyed, retained by a detent or O-ring; tool-free field joint"},
     {"id": "CT-PITOT-TUBING", "kind": "mechanical", "method": "press_fit",
      "spec": "silicone tubing pushed on the pitot and sensor barbs, total and static lines (pneumatic)"},
     {"id": "CT-SOLDER-DC", "kind": "electrical", "method": "soldered", "spec": "soldered DC power joint, heat-shrink"},
@@ -97,6 +101,9 @@ A4_BLOCKS = {"clamp": ("clamped",), "bond": ("bonded",), "retention": ("taped", 
 
 
 # ----------------------------------------------------------------------------- parts (ids reserved by this plan)
+# Id rule (README, CR-A3-09, SCHEMA.md): <PREFIX>-NNN for a single part; a multi-instance part has one node per
+# instance, <PREFIX>-NNN-<UR|UL|LR|LL|L|R>, all instances one parts.csv line (mass_g per unit, line = qty x mass_g).
+# NNN 001-899; 9xx is reserved for fusion/skeleton/ (CR-A5-04). Two different parts on one side get two numbers.
 def build_parts():
     P = []
 
@@ -111,21 +118,25 @@ def build_parts():
         P.append(d)
 
     w = "wing"
-    part("WNG-001", "Wing core, one piece (XPS)", w, "make", note="spar slot, servo pockets, pod recess, saddle cut-outs, wire channels are features")
+    part("WNG-001", "Wing core, one piece (XPS)", w, "make",
+         note="features: spar slot, 2 tube holes and through-core block cut-outs at y = +/-0.32, servo pockets, pod recess, wire channels")
     part("WNG-002", "Spar CF 22x20x1000", w, "buy")
     part("WNG-003", "Tape skin", w, "make")
     for s in SIDES:
-        part(f"WNG-011-{s}", f"Elevon inboard {s}", w, "make")
-        part(f"WNG-012-{s}", f"Elevon outboard {s}", w, "make")
+        part(f"WNG-011-{s}", f"Elevon inboard {s}", w, "make", note="y 0.07-0.30, hinge x 0.2496")
+        part(f"WNG-012-{s}", f"Elevon outboard {s}", w, "make", note="y 0.34-0.56, hinge x 0.2496")
     part("WNG-020", "FAA registration label", w, "make")
     f = "fins"
-    for s in SIDES:
-        part(f"FIN-001-{s}", f"Fin {s} (foam board)", f, "make", note="one piece through a core slot or two halves: OI-01")
-        part(f"FIN-002-{s}", f"Motor tube {s} CF 22x20x420", f, "buy")
-        part(f"FIN-004-{s}", f"Tube-to-spar saddle {s}", f, "make", note="carries the 0.18 m tube-to-spar offset: OI-02")
-        part(f"FIN-005-{s}", f"Fin-to-tube clip set {s}", f, "make", note="clip count per D3; one node per set")
     for st in STATIONS:
-        part(f"FIN-003-{st}", f"Motor mount {st}", f, "make")
+        part(f"FIN-001-{st}", f"Half-fin {st} (foam board)", f, "make",
+             note="tube (x 0.045) to wing TE (x 0.320), 0 to %s0.19 m; D-04" % ("+" if st[0] == "U" else "-"))
+    for s in SIDES:
+        part(f"FIN-002-{s}", f"Motor tube {s} CF 22x20x420", f, "buy", note="continuous through the core, z -0.21 to +0.21")
+        part(f"FIN-004-{s}", f"Through-core block {s} (PETG)", f, "make",
+             note="vertical tube bore x 0.045 + spanwise spar bore x 0.080, bonded in a core cut-out; replaces the R0 saddle (D-04)")
+    for st in STATIONS:
+        part(f"FIN-003-{st}", f"Motor mount {st} (3 deg cant)", f, "make", note="the fuse in a tip-over (D-23)")
+        part(f"FIN-005-{st}", f"Fin-to-tube clip set {st}", f, "make", note="clip count per D3; one node per set")
         part(f"FIN-007-{st}", f"ESC pad {st}", f, "make")
     p = "pod"
     part("POD-001", "Pod shell", p, "make")
@@ -133,14 +144,15 @@ def build_parts():
     part("POD-003", "Hatch", p, "make")
     part("POD-004", "Pack strap", p, "buy")
     part("POD-005", "GPS mast", p, "make")
-    part("POD-006", "Pitot mount (pod nose)", p, "make", note="only if B4/F3 put the pitot at the pod nose: OI-07")
+    part("POD-006", "Pitot boom socket (pod nose)", p, "make", note="pitot on the pod nose (D-15)")
+    part("POD-007", "Carry point + 'do not lift by the motors' label", p, "make", note="D-23")
     for st in STATIONS:
-        part(f"GER-001-{st}", f"Crushable foot {st}", "landing", "make")
+        part(f"GER-001-{st}", f"Crushable foot {st}", "landing", "make", note="45 mm beyond the TE, stroke >= 40 mm (D-11)")
     q = "propulsion"
     for st in STATIONS:
         part(f"PRP-001-{st}", f"Motor {st} X3108S", q, "buy", elec="sink")
         part(f"PRP-002-{st}", f"ESC {st} 45 A", q, "buy", elec="bus")
-        part(f"PRP-003-{st}", f"Prop {st} 11x4.5MR", q, "buy", note="CW/CCW per E1/F4 map")
+        part(f"PRP-003-{st}", f"Prop {st} APC 11x5.5MR", q, "buy", note="CW/CCW per E1/F4 map; D-05")
         part(f"PRP-004-{st}", f"Prop adapter and nut {st}", q, "buy")
     v = "power"
     part("PWR-001", "Flight pack 4S 6500", v, "buy", elec="source", note="second pack is a ground spare (not in the graph)")
@@ -153,7 +165,7 @@ def build_parts():
     part("AVN-002", "GPS + compass", a, "buy", elec="sink")
     part("AVN-003", "RC receiver ELRS", a, "buy", elec="sink")
     part("AVN-004", "Airspeed sensor MS5525", a, "buy", elec="sink")
-    part("AVN-005", "Pitot tube", a, "buy")
+    part("AVN-005", "Pitot boom (plug-in)", a, "buy", note="removed for transport; tip x -0.185")
     h = "harness"
     part("HRN-001", "Pod harness bundle (lumped mass)", h, "make", note="mass/CG holder; wires themselves are the electrical edges")
     for s in SIDES:
@@ -164,24 +176,40 @@ def build_parts():
         part(f"MEC-002-{s}", f"Servo arm {s}", m, "buy")
         part(f"MEC-003-{s}", f"Pushrod {s}", m, "buy")
         part(f"MEC-004-{s}", f"Control horn {s} (inboard panel)", m, "buy")
-        part(f"MEC-005-{s}", f"Inter-panel link {s}", m, "make", note="crosses the fin at y = 0.32 m: OI-03")
+        part(f"MEC-005-{s}", f"Inter-panel link {s}", m, "make", note="passes a slot in the lower half-fin root at y = 0.32 m: OI-03")
         part(f"MEC-007-{s}", f"Servo cover {s}", m, "make")
         part(f"MEC-008-{s}", f"Servo frame {s}", m, "make")
     t = "transport"
     part("TRN-001", "Transport box", t, "make", flight=False)
     for s in SIDES:
         part(f"TRN-002-{s}", f"Spar cradle {s}", t, "make", flight=False)
-    part("TRN-003", "Prop tray", t, "make", flight=False)
+    part("TRN-003", "Prop and pitot tray", t, "make", flight=False)
     part("TRN-004", "Hold-down strap", t, "buy", flight=False)
     return P
 
 
 # ----------------------------------------------------------------------------- edges
 # carries: the data (beyond the per-method block) this joint must state; by: roles that design / size it.
+# Ids are fixed once published: a joint that survives a layout change keeps its id, new joints get the next free
+# number, retired ids are listed in RETIRED and never reused.
+RETIRED = {
+    "FIN-001-L": "split into half-fins FIN-001-UL / -LL (D-04)", "FIN-001-R": "split into FIN-001-UR / -LR (D-04)",
+    "FIN-005-L": "clip set per half-fin: FIN-005-UL / -LL", "FIN-005-R": "clip set per half-fin: FIN-005-UR / -LR",
+}
+
+
+def _p(key):
+    """A params.json value for the 'carries' text (text only; the claims read params through proofkit)."""
+    d = PARAMS
+    for k in key.split("."):
+        d = d[k]
+    return d["value"] if isinstance(d, dict) and "value" in d else d
+
+
 def build_edges():
     E = []
 
-    def edge(eid, a, b, via, owner, by, carries, oi=None, field=False, motion=None, signal_only=False):
+    def edge(eid, a, b, via, owner, by, carries, oi=None, field=False, motion=None, signal_only=False, field_joint=False):
         d = {"id": eid, "part_a": a, "part_b": b, "via": via, "owner": owner, "by": by, "carries": carries}
         if signal_only:
             d["signal_only"] = True
@@ -189,6 +217,8 @@ def build_edges():
             d["open"] = oi
         if field:
             d["field_disconnect"] = True
+        if field_joint:
+            d["field_joint"] = True
         if motion:
             d["motion"] = motion
         E.append(d)
@@ -196,39 +226,55 @@ def build_edges():
     def n(prefix, i):
         return f"E-{prefix}-{i:02d}"
 
+    hinge_x = _p("wing.chord_m") * (1 - _p("wing.elevon.chord_frac"))
     elevon = {"axis": "Y", "range_deg": [-25, 25], "source": "P:wing.elevon.deflection_deg"}
-    # --- wing
-    edge(n("WNG", 1), "WNG-002", "WNG-001", "CT-EPOXY", "wing", "D1 · C2", "slot fit (22.2 mm `EST`), bond length 1 000 mm, spar bending load into core")
+    # --- wing (D-20: the elevon hinge is a wing edge; D6 designs it)
+    edge(n("WNG", 1), "WNG-002", "WNG-001", "CT-EPOXY", "wing", "D1 · C2",
+         "slot fit (22.2 mm `EST`), bond length 1 000 mm, spar centre z +0.0066 m (D-03), spar bending load into core")
     edge(n("WNG", 2), "WNG-003", "WNG-001", "CT-TAPE-SKIN", "wing", "D1 · G2", "strip layout, overlap 10 %, wrap at LE/TE")
     edge(n("WNG", 3), "WNG-020", "WNG-003", "CT-LABEL", "wing", "D1 · H3", "position visible without tools (FAA)")
     i = 4
     for s in SIDES:
-        for pid in (f"WNG-011-{s}", f"WNG-012-{s}"):
+        for pid, ys in ((f"WNG-011-{s}", "0.07–0.30"), (f"WNG-012-{s}", "0.34–0.56")):
             edge(n("WNG", i), pid, "WNG-001", "CT-TAPE-HINGE", "wing", "D6 designs · B2 hinge moment",
-                 "hinge line x 0.234 m, gap to fin board, throw ±25° to stops", oi="OI-03", motion=elevon)
+                 "hinge line x %.4f m, panel y %s m, 20 mm end gap to the half-fin, throw ±25° to stops" % (hinge_x, ys),
+                 oi="OI-03", motion=elevon)
             i += 1
-    # --- fins
-    i = 1
+    # --- fins: half-fins, tube, through-core block (D-04)
+    up = ("UL", "UR")                    # ids 01-06 kept from R0 for the upper halves, lower halves numbered 33-38
+    lo = ("LL", "LR")
+    root = "half-fin root bonded + taped to core skin and the block face; fin-tip landing load into core"
+    for k, st in enumerate(up, 1):
+        edge(n("FIN", k), f"FIN-001-{st}", "WNG-001", "CT-EPOXY", "fins", "D3 · C4 · D1", root)
+    for k, st in enumerate(lo, 33):
+        edge(n("FIN", k), f"FIN-001-{st}", "WNG-001", "CT-EPOXY", "fins", "D3 · C4 · D1", root)
+    clip_t = "clip bore on 22 mm OD, spacing along the tube; with the bonded fin lifts the tube mode out of 80–330 Hz (P25)"
+    clip_f = "clip to foam-board faces, LE wedge on the tube"
+    for k, st in zip((3, 5), up):
+        edge(n("FIN", k), f"FIN-005-{st}", f"FIN-002-{side(st)}", "CT-EPOXY", "fins", "D3 · C4", clip_t, oi="OI-01")
+        edge(n("FIN", k + 1), f"FIN-005-{st}", f"FIN-001-{st}", "CT-EPOXY", "fins", "D3 · C4", clip_f)
+    for k, st in zip((35, 37), lo):
+        edge(n("FIN", k), f"FIN-005-{st}", f"FIN-002-{side(st)}", "CT-EPOXY", "fins", "D3 · C4", clip_t, oi="OI-01")
+        edge(n("FIN", k + 1), f"FIN-005-{st}", f"FIN-001-{st}", "CT-EPOXY", "fins", "D3 · C4", clip_f)
+    i = 7
     for s in SIDES:
-        edge(n("FIN", i), f"FIN-001-{s}", "WNG-001", "CT-EPOXY", "fins", "D3 · C4 · D1",
-             "core slot or half-fin roots, bond area, fin-tip landing load into core", oi="OI-01"); i += 1
-    for s in SIDES:
-        edge(n("FIN", i), f"FIN-005-{s}", f"FIN-002-{s}", "CT-EPOXY", "fins", "D3 · C4", "clip bore on 22 mm OD, spacing along the tube", oi="OI-01"); i += 1
-        edge(n("FIN", i), f"FIN-005-{s}", f"FIN-001-{s}", "CT-EPOXY", "fins", "D3 · C4", "clip to foam-board faces, 22 mm spacer or wedge", oi="OI-01"); i += 1
-    for s in SIDES:
-        edge(n("FIN", i), f"FIN-004-{s}", f"FIN-002-{s}", "CT-TUBE-CLAMP", "fins", "D3 · C4 · C6",
-             "clamp on tube at z = 0, hover thrust 4 × table max into the saddle", oi="OI-02"); i += 1
-        edge(n("FIN", i), f"FIN-004-{s}", "WNG-002", "CT-TUBE-CLAMP", "fins", "D3 · C4 · C2 · C6",
-             "spar access cut-out in core at y = ±0.32 m, 0.18 m offset moment", oi="OI-02"); i += 1
-        edge(n("FIN", i), f"FIN-004-{s}", "WNG-001", "CT-EPOXY", "fins", "D3 · C2", "bearing pad area on core (foam bearing stress)", oi="OI-02"); i += 1
+        edge(n("FIN", i), f"FIN-004-{s}", f"FIN-002-{s}", "CT-EPOXY", "fins", "D3 · C4 · C6",
+             "vertical bore on the 22 mm tube at x 0.045, bonded plug (a clamp is an allowed deviation); fin-joint moment C1 G2 10.7 N·m",
+             oi="OI-01"); i += 1
+        edge(n("FIN", i), f"FIN-004-{s}", "WNG-002", "CT-EPOXY", "fins", "D3 · C4 · C2",
+             "spanwise bore on the spar at x 0.080, z +0.0066; spar bearing (C2); tube-to-spar 35 mm", oi="OI-02"); i += 1
+        edge(n("FIN", i), f"FIN-004-{s}", "WNG-001", "CT-EPOXY", "fins", "D3 · C2 · D1",
+             "core cut-out at y = ±0.32 m, bond area, foam bearing stress", oi="OI-02"); i += 1
     for st in STATIONS:
         edge(n("FIN", i), f"FIN-003-{st}", f"FIN-002-{side(st)}", "CT-TUBE-CLAMP", "fins", "D3 · C4 · C6",
-             "mount at z = ±0.19 m, face at x = -0.10 m, anti-rotation on the tube"); i += 1
+             "mount at z = ±0.19 m, plate face x 0.034, 3° tangential cant (D-09), anti-rotation key; slip above the "
+             "3.2 N·m prop-nut case (CR-C1-11) and below the tube's strength (D-23)"); i += 1
     for st in STATIONS:
         edge(n("FIN", i), f"PRP-001-{st}", f"FIN-003-{st}", "CT-M3-SHCS-MOTOR", "fins", "D3 · E1 · C6",
              "motor bolt pattern (E1), max screw length clear of windings, threadlocker"); i += 1
     for st in STATIONS:
-        edge(n("FIN", i), f"FIN-007-{st}", f"FIN-001-{side(st)}", "CT-EPOXY", "fins", "D3", "pad position in the prop wash, near the motor"); i += 1
+        edge(n("FIN", i), f"FIN-007-{st}", f"FIN-001-{st}", "CT-EPOXY", "fins", "D3",
+             "pad on the half-fin in the prop wash, near the motor"); i += 1
     for st in STATIONS:
         edge(n("FIN", i), f"PRP-002-{st}", f"FIN-007-{st}", "CT-TAPE-TIE", "fins", "D3 · E3",
              "heat-sink face to the air stream, not taped over; vibration retention", oi="OI-06"); i += 1
@@ -236,25 +282,28 @@ def build_edges():
         edge(n("FIN", i), f"PRP-001-{st}", f"FIN-003-{st}", "CT-THERMAL-CONTACT", "fins", "E3 · G3",
              "motor base temperature at hover vs printed-mount softening (PETG HDT ~70 °C `EST`)", oi="OI-06"); i += 1
     # --- pod
-    edge(n("POD", 1), "POD-001", "WNG-001", "CT-EPOXY", "pod", "D2 · C3", "pod recess, bond area, crash load of pack mass")
+    edge(n("POD", 1), "POD-001", "WNG-001", "CT-EPOXY", "pod", "D2 · C3", "pod recess, bond area, crash load of pack mass; nose at x −0.105 (D-08)")
     edge(n("POD", 2), "POD-002", "POD-001", "CT-EPOXY", "pod", "D2 · C3", "tray datum for all avionics mounts")
     edge(n("POD", 3), "POD-003", "POD-001", "CT-HATCH-HL", "pod", "D2", "opened every flight: tool-free, no magnets")
     edge(n("POD", 4), "POD-004", "POD-002", "CT-STRAP-SLOT", "pod", "D2", "strap slot width, two slots")
     edge(n("POD", 5), "PWR-001", "POD-002", "CT-STRAP-VELCRO", "pod", "D2 · C3 · C1",
-         "pack 0.55 kg `UNVERIFIED` at crash g (C1); ±0.03 m slide for CG trim; hover attitude pulls pack toward -x")
+         "pack %.2f kg `UNVERIFIED` at crash g (C1); ±0.03 m slide, nominal 29 mm ahead of the pod centre (D-17); "
+         "hover attitude pulls pack toward +x" % _p("battery.mass_kg"), field_joint=True)
     edge(n("POD", 6), "POD-005", "POD-001", "CT-EPOXY", "pod", "D2 · F3", "mast height for compass distance from power leads")
-    edge(n("POD", 7), "POD-006", "POD-001", "CT-EPOXY", "pod", "D2 · B4", "pitot position out of the prop wash", oi="OI-07")
+    edge(n("POD", 7), "POD-006", "POD-001", "CT-EPOXY", "pod", "D2 · B4", "socket on the pod nose aligned to x; carries the boom's bending load")
+    edge(n("POD", 8), "POD-007", "POD-001", "CT-EPOXY", "pod", "D2 · C4", "carry point on the pod/spar line, sized to aircraft weight × handling factor (D-23)")
     # --- landing
     for k, st in enumerate(STATIONS, 1):
-        edge(n("GER", k), f"GER-001-{st}", f"FIN-001-{side(st)}", "CT-EPOXY", "landing", "D5 · C5",
-             "cap on fin TE tip at x = 0.30 m, crush stroke, replaceable after a hard landing", oi="OI-05")
+        edge(n("GER", k), f"GER-001-{st}", f"FIN-001-{st}", "CT-EPOXY", "landing", "D5 · C5",
+             "cap on the half-fin TE tip, x 0.320 → 0.365 m (`P:cg.foot_height_m`), crush stroke ≥ 40 mm, "
+             "replaceable in ≤ 10 min, splay to |z| ≥ 0.21 m (CR-A1-20)", oi="OI-05")
     # --- propulsion
     for k, st in enumerate(STATIONS, 1):
         edge(n("PRP", k), f"PRP-004-{st}", f"PRP-001-{st}", "CT-PROP-ADAPTER", "propulsion", "E1", "adapter type and screws per the motor maker")
     for k, st in enumerate(STATIONS, 5):
         edge(n("PRP", k), f"PRP-003-{st}", f"PRP-004-{st}", "CT-PROP-NUT", "propulsion", "E1 · F4",
-             "prop nut thread and torque; fitted at every field set-up; CW/CCW per station")
-    # --- power mounts
+             "prop nut thread and torque; fitted at every field set-up; CW/CCW per station", field_joint=True)
+    # --- power mounts (D-20: power owns the boxes, harness the wires)
     edge(n("PWR", 1), "PWR-002", "POD-002", "CT-TIE", "power", "F1 · F2", "pigtail exit inside the hatch, plug reachable with pack in")
     edge(n("PWR", 2), "PWR-003", "POD-002", "CT-TAPE-FOAM", "power", "F1", "")
     edge(n("PWR", 3), "PWR-004", "POD-002", "CT-M3-SHCS-INSERT", "power", "F1 · C6", "nylon standoffs if a PCB")
@@ -265,8 +314,10 @@ def build_edges():
     edge(n("AVN", 2), "AVN-002", "POD-005", "CT-TAPE-FOAM", "avionics", "F3", "compass arrow direction for F4; distance to power leads")
     edge(n("AVN", 3), "AVN-003", "POD-002", "CT-TAPE-FOAM", "avionics", "F3 · F5", "antennas clear of CF spar and tubes", oi="OI-10")
     edge(n("AVN", 4), "AVN-004", "POD-002", "CT-M2-SCREW-PLASTIC", "avionics", "F3", "")
-    edge(n("AVN", 5), "AVN-005", "POD-006", "CT-EPOXY", "avionics", "F3 · B4", "probe tip ahead of the pod nose, aligned to x", oi="OI-07")
-    edge(n("AVN", 6), "AVN-005", "AVN-004", "CT-PITOT-TUBING", "avionics", "F3", "total/static lines labelled, no kinks, length")
+    edge(n("AVN", 5), "AVN-005", "POD-006", "CT-PLUG-IN", "avionics", "F3 · B4 · D2",
+         "plug-in at every field set-up, tip at x −0.185 m aligned to x, keyed so total/static cannot swap", oi="OI-12", field_joint=True)
+    edge(n("AVN", 6), "AVN-005", "AVN-004", "CT-PITOT-TUBING", "avionics", "F3",
+         "total/static lines labelled, no kinks, length; separates at the socket when the boom is pulled", oi="OI-12")
     # --- mechanisms
     i = 1
     for s in SIDES:
@@ -291,11 +342,13 @@ def build_edges():
     edge(n("HRN", 1), "HRN-001", "POD-002", "CT-TIE", "harness", "F2", "tie points on the tray")
     i = 2
     for s in SIDES:
-        edge(n("HRN", i), f"HRN-002-{s}", "WNG-001", "CT-WIRE-CHANNEL", "harness", "F2 · D1", "channel route pod → fin root, size", oi="OI-04"); i += 1
+        edge(n("HRN", i), f"HRN-002-{s}", "WNG-001", "CT-WIRE-CHANNEL", "harness", "F2 · D1",
+             "channel pod → fin root aft of the spar (x > 0.095) or through the block (CR-A4-05), size", oi="OI-04"); i += 1
         edge(n("HRN", i), f"HRN-002-{s}", f"FIN-002-{s}", "CT-TIE", "harness", "F2 · D3", "ties along the tube, clear of the prop discs"); i += 1
-    # --- harness: wires (electrical edges; the edge is the installation)
-    pw = ("current_a {cont: `P:performance.hover_current_a` 24 A total, peak: `P:electrical.peak_current_a` 120 A}; "
-          "connector ≥ 1.25 × cont (`P:requirements.disconnect_factor`)")
+    # --- harness: wires (D-20: harness owns every wire; part_a = supply side; the edge is the installation)
+    pw = ("current_a {cont: `P:performance.hover_current_a` %.0f A total, peak: `P:electrical.peak_current_a` %.0f A < 5 s}; "
+          "connector ≥ %.2f × cont (`P:requirements.disconnect_factor`)" % (
+              _p("performance.hover_current_a"), _p("electrical.peak_current_a"), _p("requirements.disconnect_factor")))
     i = 10
     edge(n("HRN", i), "PWR-001", "PWR-002", "CT-XT60", "harness", "F1 · F2",
          "THE field disconnect; " + pw + "; anti-spark choice", oi="OI-09", field=True); i += 1
@@ -303,7 +356,8 @@ def build_edges():
     edge(n("HRN", i), "PWR-003", "PWR-004", "CT-SOLDER-DC", "harness", "F1 · F2", pw); i += 1
     for st in STATIONS:
         edge(n("HRN", i), "PWR-004", f"PRP-002-{st}", "CT-SOLDER-DC", "harness", "F1 · F2",
-             "current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` 30 A}; route pod → wing channel → fin", oi="OI-04"); i += 1
+             "ESC power lead (D-20: harness only); current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` %.1f A}; "
+             "route pod → wing channel → fin" % _p("propulsion.current_max_per_motor_a"), oi="OI-04"); i += 1
     for st in STATIONS:
         edge(n("HRN", i), f"PRP-002-{st}", f"PRP-001-{st}", "CT-BULLET-3", "harness", "F2 · E1",
              "motor lead length vs pad position (extension or not); phase order sets rotation (F4)", oi="OI-06"); i += 1
@@ -323,15 +377,16 @@ def build_edges():
     # --- transport (flight: false; not in mass or floating checks)
     i = 1
     for s in SIDES:
-        edge(n("TRN", i), f"TRN-002-{s}", "TRN-001", "CT-EPOXY", "transport", "D7", ""); i += 1
+        edge(n("TRN", i), f"TRN-002-{s}", "TRN-001", "CT-EPOXY", "transport", "D7", "≥ 70 mm crush foam under the cradle (D-22)"); i += 1
     edge(n("TRN", i), "TRN-003", "TRN-001", "CT-EPOXY", "transport", "D7", ""); i += 1
     edge(n("TRN", i), "TRN-004", "TRN-001", "CT-STRAP-SLOT", "transport", "D7", ""); i += 1
     for s in SIDES:
         edge(n("TRN", i), f"TRN-002-{s}", "WNG-001", "CT-CRADLE-CONTACT", "transport", "D7 · C1",
-             "cradle under the spar line; fins and tubes never pressed (`P:transport.cradle`)"); i += 1
+             "cradle under the spar line at y = ±0.20 m (CR-A1-19); fins and tubes never pressed (`P:transport.cradle`)"); i += 1
     edge(n("TRN", i), "TRN-004", "WNG-001", "CT-STRAP-VELCRO", "transport", "D7 · C1", "strap over the centre section only"); i += 1
     for st in STATIONS:
         edge(n("TRN", i), f"PRP-003-{st}", "TRN-003", "CT-CRADLE-CONTACT", "transport", "D7", "props off for transport, one slot each"); i += 1
+    edge(n("TRN", i), "AVN-005", "TRN-003", "CT-CRADLE-CONTACT", "transport", "D7 · F3", "pitot boom off for transport, own slot, tip protected"); i += 1
     return E
 
 
@@ -394,6 +449,7 @@ def check_plan(plan):
         seen.add(e["id"])
         if not e["id"].startswith("E-%s-" % SUBS[e["owner"]][0]):
             errors.append(("ERROR", "prefix", e["id"], "edge id prefix != owner %s" % e["owner"]))
+    errors += id_rule(plan)
     touched = {x for e in plan["edges"] for x in (e["part_a"], e["part_b"])}
     for p in plan["parts"]:
         if p["id"] not in touched:
@@ -402,6 +458,32 @@ def check_plan(plan):
     if sum(1 for e in plan["edges"] if e.get("field_disconnect")) != 1:
         errors.append(("ERROR", "field-disconnect", "plan", "exactly one field disconnect expected (P18)"))
     return g, errors, owed
+
+
+ID_RE = re.compile(r"^(?P<pre>[A-Z]{3})-(?P<num>\d{3})(?:-(?P<inst>UR|UL|LR|LL|L|R))?$")
+
+
+def id_rule(plan):
+    """Part-id rule (README, CR-A3-09, CR-A5-04): <PREFIX>-NNN[-UR|UL|LR|LL|L|R], NNN 001-899 (9xx = skeleton);
+    a multi-instance part uses one instance-suffix family only, so parts.csv qty = number of nodes; retired ids
+    are never reused."""
+    out, fam = [], {}
+    for p in plan["parts"]:
+        m = ID_RE.match(p["id"])
+        if not m:
+            out.append(("ERROR", "id-rule", p["id"], "not <PREFIX>-NNN[-UR|UL|LR|LL|L|R]"))
+            continue
+        if not 1 <= int(m["num"]) <= 899:
+            out.append(("ERROR", "id-rule", p["id"], "NNN outside 001-899 (9xx reserved for fusion/skeleton)"))
+        if p["id"] in RETIRED:
+            out.append(("ERROR", "id-retired", p["id"], "retired: " + RETIRED[p["id"]]))
+        fam.setdefault("%s-%s" % (m["pre"], m["num"]), set()).add(m["inst"])
+    for base, insts in sorted(fam.items()):
+        if None in insts and len(insts) > 1:
+            out.append(("ERROR", "id-rule", base, "both a bare id and instance ids"))
+        elif insts & set(STATIONS) and insts & set(SIDES):
+            out.append(("ERROR", "id-rule", base, "mixes station (UR..LL) and side (L/R) suffixes"))
+    return out
 
 
 # Edges that locate a part but carry no flight load: a harness tie must not be what holds a fin on.
@@ -454,6 +536,9 @@ def metrics(plan):
             "cross_edges": len(cross), "connected_frac": (len(flight) - len(outside)) / len(flight) if flight else 0.0,
             "powered_frac": (len(elec) - len(unpowered)) / len(elec) if elec else 0.0,
             "field_disconnects": sum(1 for e in plan["edges"] if e.get("field_disconnect")),
+            "field_joints": sum(1 for e in plan["edges"] if e.get("field_joint") or e.get("field_disconnect")),
+            "id_violations": len(id_rule(plan)),
+            "wires": sum(1 for e in plan["edges"] if g.kind(g.edges[e["id"]]) == "electrical"),
             "errors": len(errors), "owed": sum(1 for i in owed if i[1] != "no-mass"),
             "owed_mass": sum(1 for i in owed if i[1] == "no-mass")}
 
@@ -466,14 +551,15 @@ kit = pk.Kit(__file__, params=["../../params/params.json"])
 
 @kit.calc("CALC-A4-PLAN-GRAPH", title="Interface plan graph checks",
           equation="connected = |main structural cluster| / |flight parts| ; powered = electrical parts reached from "
-                   "a source / all ; field = count(edges with field_disconnect)", inputs={"n_motors": "P:propulsion.n_motors"})
+                   "a source / all ; field = count(edges with field_disconnect) ; id_violations = count(id-rule breaches)", inputs={"n_motors": "P:propulsion.n_motors"})
 def plan_graph_checks(n_motors):
     """Reads the plan defined in this file; build_graph.py re-runs it, so an edited plan without a re-run is DRIFT."""
     if len(STATIONS) != n_motors:
         raise ValueError("plan has %d motor stations, params.json says %s" % (len(STATIONS), n_motors))
     m = metrics(build_plan())
     return {"connected_frac": m["connected_frac"], "powered_frac": m["powered_frac"],
-            "field_disconnects": m["field_disconnects"], "edges": m["edges"], "parts": m["parts"]}
+            "field_disconnects": m["field_disconnects"], "edges": m["edges"], "parts": m["parts"],
+            "id_violations": m["id_violations"]}
 
 
 kit.claim("CL-A4-PLAN-CONNECTED", "Planned parts all connected", calc="CALC-A4-PLAN-GRAPH", output="connected_frac",
@@ -486,6 +572,10 @@ kit.claim("CL-A4-FIELD-DISCONNECTS", "One field disconnect (pack plug)", calc="C
           output="field_disconnects", unit="-", limit=("<=", "P:electrical.field_disconnects"),
           verifies=["R-TRANSPORT"], parts=["PWR-001", "PWR-002"],
           how="count field-disconnect joints in the merged graph; field set-up timed by H2 (one plug, four prop nuts)")
+kit.claim("CL-A4-PLAN-ID-RULE", "Planned part ids follow the instance-id rule", calc="CALC-A4-PLAN-GRAPH",
+          output="id_violations", unit="-", limit=("<=", 0),
+          how="interface_plan.py id_rule(): <PREFIX>-NNN[-UR|UL|LR|LL|L|R], NNN 001-899, no retired id; "
+              "--compare lists any declared id outside the plan; A3 mass_rollup.py maps instances to parts.csv lines by it")
 kit.claim("CL-A4-PLAN-EDGES", "Planned interfaces", calc="CALC-A4-PLAN-GRAPH", output="edges", unit="-",
           how="interface_plan.py --compare: every planned edge declared and acknowledged")
 
@@ -500,11 +590,12 @@ def render(plan):
     cts = library()
     m = metrics(plan)
     L = [BEGIN, "", "Generated by `python -I redesign/team/A4/interface_plan.py` from the plan in that script. Do not edit by hand.", ""]
-    L += ["| Parts (flight) | Interfaces | Cross-subsystem | Connected (load path) | Powered (power wires) | Field disconnects | Plan errors | Schema blocks owed | Masses owed |",
-          "|---|---|---|---|---|---|---|---|---|",
-          "| %d (%d) | %d | %d | %.0f %% | %.0f %% | %d | %d | %d | %d |" % (
+    L += ["| Parts (flight) | Interfaces | Cross-subsystem | Connected (load path) | Powered (power wires) | Field disconnects (field joints) | Id-rule breaches | Plan errors | Schema blocks owed | Masses owed |",
+          "|---|---|---|---|---|---|---|---|---|---|",
+          "| %d (%d) | %d | %d | %.0f %% | %.0f %% | %d (%d) | %d | %d | %d | %d |" % (
               m["parts"], m["flight_parts"], m["edges"], m["cross_edges"], 100 * m["connected_frac"],
-              100 * m["powered_frac"], m["field_disconnects"], m["errors"], m["owed"], m["owed_mass"]), ""]
+              100 * m["powered_frac"], m["field_disconnects"], m["field_joints"], m["id_violations"], m["errors"],
+              m["owed"], m["owed_mass"]), ""]
     # N2 matrix
     keys = [k for k in SUBS if k != "flight-software"]
     cnt = {}
@@ -513,24 +604,25 @@ def render(plan):
         cnt[(a, b)] = cnt.get((a, b), 0) + 1
         if a != b:
             cnt[(b, a)] = cnt.get((b, a), 0) + 1
-    L += ["## N² matrix", "", "Interfaces between each pair of subsystems (diagonal: internal joints). Read a row: who this subsystem must agree with. Wires count under the two subsystems they join; harness (`HRN`) declares all 23 of them.", "",
+    L += ["## N² matrix", "", "Interfaces between each pair of subsystems (diagonal: internal joints). Read a row: who this subsystem must agree with. Wires count under the two subsystems they join; harness (`HRN`) declares all %d of them (D-20)." % m["wires"], "",
           "| | " + " | ".join(SUBS[k][0] for k in keys) + " |", "|---|" + "---|" * len(keys)]
     for a in keys:
         L.append("| **%s** | " % SUBS[a][0] + " | ".join(str(cnt.get((a, b), "")) if cnt.get((a, b)) else "·" for b in keys) + " |")
     L += [""]
     # part ids
-    L += ["## Part ids reserved", "", "One node per physical instance. Stations `UR UL LR LL` = upper/lower, right/left (`params.json#propulsion.stations.ids`).", "",
+    L += ["## Part ids reserved", "", "One node per physical instance, id `<PREFIX>-NNN-<UR|UL|LR|LL|L|R>`; all instances of a part are one `parts.csv` line with `mass_g` per unit (CR-A3-09). Stations `UR UL LR LL` = upper/lower, right/left (`params.json#propulsion.stations.ids`); a half-fin takes the station it carries. `NNN` 001–899; `9xx` is reserved for `fusion/skeleton/` (CR-A5-04).", "",
           "| Subsystem | Designer | Prefix | Parts | Ids |", "|---|---|---|---|---|"]
     for k in keys:
         ids = [p["id"] for p in plan["parts"] if p["subsystem"] == k]
         L.append("| `%s` | %s | `%s` | %d | %s |" % (k, SUBS[k][1], SUBS[k][0], len(ids), " ".join(_pp(x) for x in ids)))
-    L += ["| `flight-software` | F4 | `FSW` | 0 | no parts: data interfaces below |", ""]
+    L += ["| `flight-software` | F4 | `FSW` | 0 | no parts: data interfaces below |", "",
+          "Retired ids (never reuse): " + "; ".join("`%s` %s" % kv for kv in RETIRED.items()) + ".", ""]
     # register
     L += ["## Interface register", "",
           "Declared by the owner in `subsystems/<owner>/interfaces.json`; each subsystem in *Ack* lists the id under `acknowledges`. "
           "*By* = designs · sizes. *Must carry* is in addition to the per-method block above. `OI-nn` = open issue below.", ""]
     for k in keys:
-        rows = [e for e in plan["edges"] if e["owner"] == k]
+        rows = sorted((e for e in plan["edges"] if e["owner"] == k), key=lambda e: e["id"])
         if not rows:
             continue
         L += ["### %s (%s, %d)" % (k, SUBS[k][1], len(rows)), "",
@@ -540,6 +632,8 @@ def render(plan):
             extra = e["carries"]
             if e.get("motion"):
                 extra = ("motion %s %s°; " % (e["motion"]["axis"], e["motion"]["range_deg"])) + extra
+            if e.get("field_joint"):
+                extra = "field joint; " + extra
             if e.get("open"):
                 extra += " (%s)" % e["open"]
             L.append("| `%s` | `%s` %s | `%s` %s | %s · %s · `%s` | %s | %s | %s |" % (

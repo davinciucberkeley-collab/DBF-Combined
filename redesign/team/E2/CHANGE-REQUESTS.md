@@ -1,17 +1,30 @@
 # Change requests from E2 (battery / energy engineer)
 
-Numbers are from `team/E2/energy_claims.py` → `team/E2/claims.json` (2026-11-09). All are `UNVERIFIED` until
-`T-E2-WEIGH`, `T-E2-CAPACITY` and `T-E2-IR` have run.
+Revision E2-R2, 2026-11-09. Numbers are from `team/E2/energy_claims.py` → `team/E2/claims.json`. All are
+`UNVERIFIED` until `T-E2-WEIGH`, `T-E2-CAPACITY` and `T-E2-IR` have run.
+
+## Open (new in R2)
 
 | # | To | What | Why / numbers |
 |---|---|---|---|
-| CR-E2-01 | A1 | Answer to CR-A1-08. (a) `battery.size_m` → **[0.140, 0.048, 0.050] m** plus 0.03 m lead exit on one end; note the 0.157 × 0.048 × 0.043 m alternative SKU. (b) Keep `battery.mass_kg` 0.55 `UNVERIFIED`; do **not** set `checked` on `SRC-OVONIC-4S6500` until a pack is weighed (`T-E2-WEIGH`). (c) `propulsion.voltage_sag` 0.93 → **0.72** (worst state, `CL-E2-SAG-F-WORST`); T/W with sag at the gate becomes 1.76 (still ≥ 1.6). (d) `performance.cruise_after_hover_min` / `_pess_min` 19 / 12 → **15.1 / 6.4** min; `hover_current_a` 24 → 25.4 (base) with 29.9 A pessimistic; `cruise_current_a` 13 → 14.2 (24.0 pessimistic). (e) Remove the Admiral 4S 4000 fallback from `battery.pack` note. | Every 6500 hard-case listing is 47–49 mm tall, not 35 mm. The sag model (R 19 mΩ, 27 mΩ cold) gives 0.72 at 20 % charge and 10 °C. The phase budget adds climb, descent, transitions, gate mass, 92 % capacity. The 4000 gives 2.3 min pessimistic cruise (< 5 min, fails R-MISSION) |
-| CR-E2-02 | D2 | Pack bay internal **≥ 0.160 × 0.052 × 0.053 m** (fits 139 × 47 × 49 and 157 × 48 × 43 mm SKUs + 2–3 mm foam), XT60 and balance lead reachable through the hatch without removing the pack, strap + Velcro, ±0.03 m slide kept. Pod outside height 0.060 m from z 0.015 leaves ~0.050 m inside: recess the tray into the core (~10 mm) or raise the pod. | Real pack height 49 mm (`SRC-E2-OVONIC-LISTINGS`) |
-| CR-E2-03 | F4 | Battery parameters: `BATT_CAPACITY` 6500 (lower to measured), `BATT_LOW_MAH` **2600** → QRTL-type action, `BATT_CRT_MAH` **1300** → QLAND, `BATT_LOW_VOLT` 14.0, `BATT_CRT_VOLT` 13.6, `BATT_FS_VOLTSRC` 1, `BATT_LOW_TIMER` 10 s, `BATT_ARM_VOLT` **16.4** (forces a full pack: the mAh counter assumes full at boot), `Q_M_BAT_VOLT_MAX` 16.8, `Q_M_BAT_VOLT_MIN` 13.2. Check enum values against the installed Plane version. | `CL-E2-BATT-LOW-MAH`, `CL-E2-BATT-CRT-MAH`; landing needs 1 284 mAh pessimistic; mission cruise before LOW 6.0 min ≥ 5 |
-| CR-E2-04 | F1 | Size wiring, disconnect and current sensor on: hover **29.9 A** (≤ 10 min), transition **42.9 A** (20 s), momentary **117 A** (< 5 s, full pack). 1.25 × 42.9 = 54 A → XT60 (60 A) passes the continuous rule and avoids re-terminating packs; current sensor ≥ 120 A. Keep cells-to-ESC series resistance ≤ 3 mΩ (`ASM-E2-R-EXT`) or tell me the real value. | `CL-E2-HOVER-I-GATE`, `CALC-E2-BUDGET-PESS`, `CALC-E2-SAG` |
-| CR-E2-05 | A1, I1 | Packs 3 and 4 (one more Ovonic 4S 6500 2-pack, **$87.37** incl. tax) bought at the start of the transition campaign (gate 6). It takes the pessimistic reserve from $321 to **$234**, below one $309 crash: A1 decides. Until then: 2 sorties per test day. Keep the 2 packs in the early (~20 Nov) order: the twin flies on them. | The 3 h window allows 4 full sorties (`CL-E2-SORTIES-WINDOW`), 2 packs give 2 (`CL-E2-SORTIES-PACKS`); ~5 flyable mornings a week |
-| CR-E2-06 | H3 | Name the charging room (attended, non-flammable surface, sand/extinguisher), the damaged-pack disposal site, and add to the flight card: packs ≥ 20 °C at take-off (cabin, not trunk), pack temperature at landing, one full pack per sortie. Ammo can gasket removed. | `ENERGY.md` §5–6; cold pack costs ~7 % thrust at the 20 % line |
-| CR-E2-07 | E3 | Pack heat input: hover 21 W (10 °C pack) / 14 W (25 °C); adiabatic rise over the pessimistic mission +21 K cold, +14 K hot → 44 °C at landing from 30 °C ambient. Please add the pod's heat path and confirm the 50 °C limit I used. | `CALC-E2-HEAT`, `CL-E2-PACK-T-END` |
-| CR-E2-08 | B1 | Replace my cruise assumptions (`ASM-E2-CRUISE-AERO`: CD0 0.0593, ×1.3 pess, η_prop 0.47/0.35, η_motor 0.72, trim 1.05, circuit 1.05) with your AVL/APC numbers; I re-run. Pessimistic cruise power is 340 W at the gate. | the pessimistic 6.4 min margin (+27 %) rests on them |
-| CR-E2-09 | H1, H2 | Add `T-E2-WEIGH`, `T-E2-CAPACITY` (1C on the thrust stand to 3.5 V/cell, watt meter), `T-E2-IR` (20 A load step, 25 °C and 10 °C) to the ground tests, and log `BAT` currents on every twin flight for `T-E2-MISSION-LOG`. | They turn every E2 claim from `UNVERIFIED` into `VERIFIED` |
-| CR-E2-10 | I2 | Plan test days at 2 full sorties until packs 3–4 arrive, 4 after; a charge afternoon (≈ 2 h / 4 h attended) before every flying morning. | `CL-E2-CHARGE-H-4` 3.9 h |
+| CR-E2-11 | B1 | Re-run `CALC-B1-CRUISE` with the **11×5.5MR at 16 m/s, c 0.32, S 0.368 m²** (the D-13 note already plans it) and keep the claim ids `CL-B1-CRUISE-P` / `CL-B1-CRUISE-P-PESS` (W, gate mass, level flight, avionics included). E2 reads them directly and re-runs. | With your delivered 11×4.5MR values (306.6 / 396.9 W), the pessimistic mission gives 5.1 min of cruise (+3 %) and `BATT_LOW` triggers at 4.6 min (`CL-E2-CRUISE-TO-LOW-PESS` **FAILS**, −7 %). Scaling by E1's 11×5.5MR ratio (216 / 269 W = 0.80) gives 6.5 / 6.1 min (`CL-E2-CRUISE-MIN-PESS-55`), so your re-run likely closes it. Your stored claims also drift (S 0.345 → 0.368: 311 / 405 W). |
+| CR-E2-12 | A1 | `params.json#performance`: `cruise_after_hover_pess_min` 6.4 → **5.1** (`CL-E2-CRUISE-MIN-PESS`); add the E2 mission base **9.6 min** in the note next to B1's 12.3 (the E2 figure counts climb, descent, transitions, ground and circuits). `propulsion.voltage_sag` 0.72: my claim is now **0.758** with the 24.8 A limiter (100 A total); keep 0.72 as the conservative carry and say so in the note, or update it (T/W worst 1.89). Interim until CR-E2-11. | `CL-E2-CRUISE-MIN-PESS`, `CL-E2-SAG-F-WORST`, `CL-E2-TW-SAG-WORST`; the params value cites my claim but no longer equals it |
+| CR-E2-13 | F4 | `BATT_LOW_MAH` 2600 → **2700** (provisional; back to 2600 if B1's 11×5.5MR re-run confirms). Other battery parameters unchanged from CR-E2-03. | Landing allowance is now 1 380 mAh pessimistic (`CL-E2-BATT-LOW-MAH`) |
+| CR-E2-14 | F1 | Design currents update: momentary peak **100 A** (24.8 A per motor limiter, D-05) instead of 117 A; hover 29.9 A, transition 42.9 A (20 s), cruise **29.8 A** pessimistic (was 24.0). XT60 and a ≥ 120 A sensor still fit. | `CALC-E2-SAG`, `CL-E2-CRUISE-I-PESS` |
+| CR-E2-15 | A3 | When the first pack is weighed (~20 Nov order), replace the 550 g pack line with the heaviest weighed pack from `team/E2/pack_log.csv` (`CL-E2-PACK-MASS`). Accept ≤ 680 g; above that E2 returns the pack. | CR-A3-08; your predicted roll-up already carries 680 g |
+| CR-E2-16 | I2 | Plan every test day at **2 sorties** (52 of 180 min of the window) with a 2.0 h attended charge the afternoon before. | D-12; `CL-E2-SORTIES-PACKS`, `CL-E2-WINDOW-USED` |
+
+## Earlier requests (R1) and their disposition
+
+| # | To | Disposition (CHANGE-LOG) | E2 follow-up |
+|---|---|---|---|
+| CR-E2-01 | A1 | accepted (D-06, D-12, D-13, D-15); (b) `SRC-OVONIC-4S6500` stays unchecked until weighed | (d) superseded by CR-E2-12 |
+| CR-E2-02 | D2 | accepted (D-15): bay ≥ 0.160 × 0.052 × 0.053 m | none |
+| CR-E2-03 | F4 | forwarded | `BATT_LOW_MAH` changed by CR-E2-13 |
+| CR-E2-04 | F1 | forwarded | currents changed by CR-E2-14 |
+| CR-E2-05 | A1, I1 | deferred (D-12): packs 3–4 only if the post-order reserve ≥ $396 | 2 sorties per day planned |
+| CR-E2-06 | H3 | forwarded | none |
+| CR-E2-07 | E3 | forwarded | heat input now 21.4 W cold / 14.3 W hot, 45 °C at landing |
+| CR-E2-08 | B1 | forwarded | E2 now reads B1's claims; CR-E2-11 asks for the 11×5.5MR re-run |
+| CR-E2-09 | H1, H2 | forwarded | add filling `team/E2/pack_log.csv` to `T-E2-WEIGH` |
+| CR-E2-10 | I2 | forwarded (D-12) | restated as CR-E2-16 |

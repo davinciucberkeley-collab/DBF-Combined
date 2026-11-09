@@ -19,7 +19,10 @@ propulsion, landing, pod and mechanisms designers build from the same numbers an
 | `surface_z(coords, chord, frac, side)` | upper/lower surface height (hinge line, spar cover) |
 | `wing_core`, `elevon`, `hinge_point` | one-piece core with elevon cut-outs, elevon panels, tape-hinge axis |
 | `spar_y`, `tube_z` | spanwise spar, vertical motor tube |
-| `fin_plate` | foam-board fin, centred on its plane |
+| `fin_plate`, `half_fin` | foam-board fin centred on its plane; upper/lower half-fin whose root follows the skin (R1) |
+| `core_block` | printed through-core block: section-shaped plug between two chord stations (tube + spar bores) |
+| `bundle` | harness bundle body: axis-aligned cylinder legs along a route (gives a lumped bundle part its body) |
+| `box_frame`, `box_shell` | transport box placed around the aircraft (DX-BOX), six wall bodies (flight: false) |
 | `motor_envelope`, `prop_disc`, `prop_keepout` | motor can + shaft along -x, prop disc, prop strike keep-out |
 | `quad(ctx, ids)`, `pair(ctx, r, l)` | UR -> UL, LR, LL by exact mirrors; R -> L |
 | `hover_pose(params)`, `to_hover(p, params)`, `hover_ground(ctx, exempt)` | stand-on-fin-tips attitude; ground keep-out |
@@ -44,7 +47,7 @@ SIGNS = {'UR': (1, 1), 'UL': (-1, 1), 'LR': (1, -1), 'LL': (-1, -1)}     # (y si
 
 # Standards (STANDARDS.md section 5); designers may not loosen these without a change request to A5.
 TE_MIN_M = 0.0006            # hot-wired XPS trailing edge cannot be a knife edge
-FOAMBOARD_T_M = 0.0048       # 3/16 in foam board, one layer (params.json#fins.material, text only)
+FOAMBOARD_T_M = 0.0048       # fallback only: params.json#fins.board_t_m (CHANGE-LOG D-15) is read first
 PROP_BLADE_HALF_M = 0.008    # half the axial thickness of an 11 in prop at the hub (APC MR class) - EST
 CAN_D_FALLBACK_M = 0.038
 
@@ -73,9 +76,17 @@ def _P(ctx_or_params):
     return ctx_or_params.params if hasattr(ctx_or_params, 'params') else ctx_or_params
 
 
+def board_t(params):
+    """One foam-board layer (m): params.json#fins.board_t_m, else the 3/16 in fallback."""
+    try:
+        return val(params, 'fins.board_t_m', 'm')
+    except KeyError:
+        return FOAMBOARD_T_M
+
+
 def fin_thickness(params):
     """Fin thickness (m) = layers x foam-board thickness (D3 may change the layup through fins/params.json)."""
-    return val(params, 'fins.layers') * FOAMBOARD_T_M
+    return val(params, 'fins.layers') * board_t(params)
 
 
 def hinge_frac(params):
@@ -126,9 +137,10 @@ def read_dat(path):
 
 
 def reflex_placeholder(t_c, camber=0.016, x_reflex=0.80, n=60):
-    """PLACEHOLDER reflexed section until B2 supplies the MH 45 .dat: NACA 00xx thickness at t_c with a cubic
+    """PLACEHOLDER reflexed section, used only when subsystems/wing/<airfoil>.dat is missing (S5010 is there since
+    2026-11-09, CR-B2-04): NACA 00xx thickness at t_c with a cubic
     camber line yc = k x (1 - x)(x_reflex - x) (positive forward, reflexed aft), scaled to max camber `camber`.
-    Status UNVERIFIED (ASM-A5-SECTION). Selig order, chord 1."""
+    Status UNVERIFIED. Selig order, chord 1."""
     f = lambda x: x * (1 - x) * (x_reflex - x)
     k = camber / max(f(i / 400.0) for i in range(401))
     pts_u, pts_l = [], []
@@ -233,7 +245,7 @@ def datum_specs(params):
     add('DP-PROP', 'plane', 'propulsion.stations.x_prop_plane_m', 'propeller disc plane (all four props)', axis='X', offset=xp)
     add('DP-GROUND', 'plane', 'cg.foot_height_m', 'ground in hover = TE + foot; nothing but feet beyond it', axis='X', offset=c + foot)
     for s, tag in ((1, 'R'), (-1, 'L')):
-        add('DP-FIN-' + tag, 'plane', 'fins.y_m', 'fin mid-plane, motor stations, saddle', axis='Y', offset=s * yf)
+        add('DP-FIN-' + tag, 'plane', 'fins.y_m', 'fin mid-plane, motor stations, through-core block', axis='Y', offset=s * yf)
         add('DP-TIP-' + tag, 'plane', 'wing.span_m', 'wing tip', axis='Y', offset=s * b / 2)
         add('DP-SPAR-END-' + tag, 'plane', 'wing.spar.length_m', 'spar end; foam outboard is unspanned', axis='Y', offset=s * spar_half)
     for s, tag in ((1, 'U'), (-1, 'L')):
@@ -250,10 +262,29 @@ def datum_specs(params):
         add('DX-HUB-' + st, 'point', 'propulsion.stations.x_prop_plane_m', 'prop hub centre on the prop plane', p=(xp, sy * ym, sz * zm))
         add('DX-FOOT-' + st, 'point', 'cg.foot_height_m', 'foot contact point (fin TE tip + foot)', p=(c + foot, sy * yf, sz * hf))
     for s, tag in ((1, 'R'), (-1, 'L')):
-        add('DX-SADDLE-' + tag, 'point', 'fins.saddle', 'tube-to-spar saddle on the spar axis', p=(xs, s * yf, zs))
+        add('DX-BLOCK-' + tag, 'point', 'fins.saddle', 'through-core block centre: tube bore on DA-TUBE, spar bore on DA-SPAR',
+            p=((xt + xs) / 2, s * yf, zs))
     add('DX-CG', 'point', 'cg.x_target_m', 'CG target', p=(val(P, 'cg.x_target_m', 'm'), val(P, 'cg.y_target_m', 'm'), val(P, 'cg.z_target_m', 'm')))
     add('DX-POD', 'point', 'pod.size_m', 'pod box centre', p=(pod_x + pod_l / 2, 0.0, pod_z + pod_h / 2))
+    add('DX-BOX', 'point', 'requirements.box_external_m', 'transport box centre: aircraft upright, span along the box '
+        'length, centred on the props-off envelope (box_frame)', p=box_frame(P)[0])
     return S
+
+
+def box_frame(params):
+    """Transport box in the aircraft frame (props off, pitot boom out, aircraft upright in cruise attitude):
+    centre, external (lo, hi), interior (lo, hi). Box length along y, width along x, height along z; centred on the
+    props-off envelope x = pod nose .. foot tips and z = 0 (params.json#transport.envelope_props_off_m)."""
+    P = params
+    L, W, H = val(P, 'requirements.box_external_m', 'm')
+    w = val(P, 'requirements.box_wall_m', 'm')
+    x0 = min(val(P, 'pod.x_le_m', 'm'), val(P, 'propulsion.stations.x_mount_m', 'm') - val(P, 'fins.tube.od_m', 'm') / 2)
+    x1 = val(P, 'wing.chord_m', 'm') + val(P, 'cg.foot_height_m', 'm')
+    c = ((x0 + x1) / 2, 0.0, 0.0)
+    half = (W / 2, L / 2, H / 2)
+    ext = (tuple(c[i] - half[i] for i in range(3)), tuple(c[i] + half[i] for i in range(3)))
+    inner = (tuple(v + w for v in ext[0]), tuple(v - w for v in ext[1]))
+    return c, ext, inner
 
 
 def envelope(params, margin=0.005):
@@ -265,7 +296,12 @@ def envelope(params, margin=0.005):
     b, c, foot = val(P, 'wing.span_m', 'm'), val(P, 'wing.chord_m', 'm'), val(P, 'cg.foot_height_m', 'm')
     ytip = max(b / 2, ym + D / 2)
     ztop = max(zm + D / 2, val(P, 'fins.tube.length_m', 'm') / 2)
-    return ((xp - PROP_BLADE_HALF_M - margin, -ytip - margin, -ztop - margin),
+    xfront = min(xp - PROP_BLADE_HALF_M, val(P, 'pod.x_le_m', 'm'))
+    try:
+        xfront = min(xfront, val(P, 'avionics.pitot_tip_xyz_m', 'm')[0])        # pitot boom on the pod nose
+    except KeyError:
+        pass
+    return ((xfront - margin, -ytip - margin, -ztop - margin),
             (c + foot + margin, ytip + margin, ztop + margin))
 
 
@@ -314,6 +350,61 @@ def fin_plate(part, y_mid, t, x_le, x_te, z_lo, z_hi, holes=()):
     holes = extra closed (x, z) loops (lightening, tube notch)."""
     outer = [(x_le, z_lo), (x_te, z_lo), (x_te, z_hi), (x_le, z_hi)]
     return part.prism('Y', y_mid - t / 2, [outer] + [list(h) for h in holes], t, name='fin plate')
+
+
+def half_fin(part, coords, chord, y_mid, t, x_le, x_te, z_tip, n=12):
+    """Upper (z_tip > 0) or lower (z_tip < 0) half-fin (R1, CHANGE-LOG D-04): foam board on y = y_mid, thickness t,
+    LE at x_le (aft face of the motor tube), TE at x_te; the root follows the wing skin so it bonds flat; tip at z_tip.
+    The section is not symmetric, so build the lower half-fin with its own call (do not z-mirror the upper)."""
+    outline = half_fin_outline(coords, chord, x_le, x_te, z_tip, n)
+    return part.prism('Y', y_mid - t / 2, [outline], t, name='half-fin ' + ('upper' if z_tip > 0 else 'lower'))
+
+
+def half_fin_outline(coords, chord, x_le, x_te, z_tip, n=12):
+    """(x, z) outline of a half-fin: tip edge at z_tip, root on the upper (z_tip > 0) or lower skin."""
+    side = 'upper' if z_tip > 0 else 'lower'
+    xs = [x_le + (x_te - x_le) * i / n for i in range(n + 1)]
+    root = [(x, surface_z(coords, chord, min(max(x / chord, 0.0), 1.0), side)) for x in xs]
+    return [(x_le, z_tip)] + root + [(x_te, z_tip)]
+
+
+def core_block(part, coords, chord, y_mid, width, x0, x1, n=8):
+    """Printed through-core block (params fins.saddle): the core section between stations x0..x1 (m), width along y
+    centred on y_mid. Flush with both skins; the tube bore (DA-TUBE) and spar bore (DA-SPAR) pass through it."""
+    loop = section_loop(coords, chord, (0.0, 0.0), x0 / chord, x1 / chord, n)
+    return part.prism('Y', y_mid - width / 2, [loop], width, name='through-core block')
+
+
+def bundle(part, legs, dia):
+    """Harness bundle body (lumped harness mass part, A4 HRN-001/-002): each leg = (start, end) points that differ in
+    one coordinate only (route along the channel, the tube, the pod floor). One cylinder per leg."""
+    out = []
+    for a, b in legs:
+        d = [b[i] - a[i] for i in range(3)]
+        ax = [i for i in range(3) if abs(d[i]) > 1e-9]
+        if len(ax) != 1:
+            raise ValueError('bundle leg %s -> %s is not axis-aligned: split it into X/Y/Z legs' % (a, b))
+        out.append(part.cylinder('XYZ'[ax[0]], a, d[ax[0]], dia / 2, name='bundle leg'))
+    return out
+
+
+def box_shell(part, ext, wall):
+    """Transport box as six wall bodies (so check.py can test each wall against the aircraft)."""
+    lo, hi = ext
+    out = []
+    for k in range(3):
+        for side in (0, 1):
+            a, b = list(lo), list(hi)
+            if side == 0:
+                b[k] = lo[k] + wall
+            else:
+                a[k] = hi[k] - wall
+            if k > 0:                                    # walls 2..3 and 4..5 sit between the x walls: no overlap
+                a[0], b[0] = lo[0] + wall, hi[0] - wall
+            if k > 1:
+                a[1], b[1] = lo[1] + wall, hi[1] - wall
+            out.append(part.box(tuple(a), tuple(b), name='box wall'))
+    return out
 
 
 def motor_envelope(part, face, can_d, can_l, shaft_d=0.005, shaft_l=0.014):

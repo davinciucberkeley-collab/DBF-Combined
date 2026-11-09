@@ -1,40 +1,46 @@
 # E1 Propulsion — summary
 
-Status: `UNVERIFIED` (modelled from catalogue data; the thrust stand has not run). 2026-11-09.
-Detail: [`PROPULSION.md`](PROPULSION.md). Model and claims: `propulsion.py` → `claims.json` (33 claims).
-Requests: [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md).
+Status: `UNVERIFIED` (modelled from catalogue data; the thrust stand has not run). Revision 2, 2026-11-09.
+Detail: [`PROPULSION.md`](PROPULSION.md). Model and claims: `propulsion.py` → `claims.json` (38 claims) and
+`subsystems/propulsion/parts.csv`. Requests: [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md) (CR-E1-14 to -21 are new).
 
 ## Decision
 
 | Item | Choice | Price | Status |
 |---|---|---|---|
-| Motor | SunnySky X3108S KV900 (5, 1 spare) | $24.99 | `UNVERIFIED` (R and I0 from one listing) |
-| ESC | LANRC BLHeli_S 45 A, Bluejay reflash (8, 4 spare); fallback Holybro Tekko32 F4 45A AM32 | $7.50 / $22.50 | `UNVERIFIED` / `CHECKED` |
-| Prop | **APC 11×5.5MR/MRP** (proposed; was 11×4.5MR), plus 4 × 11×4.5MR for the stand A/B | $3.83 | `PROPOSED` (CR-E1-01, B4 to concur) |
-| Current limit | `Q_M_BAT_CURR_MAX` 100 A (4 × 25 A motor rating) | — | `PROPOSED` (CR-E1-08) |
+| Motor | SunnySky X3108S KV900 (5, 1 spare) | $24.99 | `UNVERIFIED` (R, I0 agree across 2 listings) |
+| ESC | LANRC BLHeli_S 45 A, Bluejay (8, 4 spare); fallback Tekko32 F4 45A AM32 | $7.50 / $22.50 | `UNVERIFIED` / `CHECKED` |
+| Prop | APC 11×5.5MR/MRP (8) + 11×4.5MR/MRP (4, stand A/B) | $3.83 | `CHECKED` (D-05) |
+| Prop adapter | Bolt-on M6×1, 2 RH + 2 LH (Small Parts CNC set) | $23.95 / set | `CHECKED`, out of stock |
+| Current limit | `Q_M_BAT_CURR_MAX` 100 A | — | `PROPOSED` |
 
-## Key numbers (2.6 kg gate, 11×5.5MR)
+## Key numbers (2.6 kg gate, 11×5.5MR, cruise 16 m/s)
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Hover thrust per motor (download 1.06) | 6.76 (689 gf) | N | `CL-E1-HOVER-T` | `UNVERIFIED` (download factor) |
-| Hover pack current / power | 27.0 / 335–400 | A / W | `CL-E1-HOVER-I-55`, `CALC-E1-SENS` | `UNVERIFIED` |
-| T/W: limiter, fresh pack / low pack sagged | 2.50 / 2.15 | — | `CL-E1-ILIM-TW-FRESH`, `CL-E1-ILIM-TW-LOW` | `UNVERIFIED` |
+| Hover thrust per motor (download 1.06, cant 3°) | 6.77 | N | `CL-E1-HOVER-T` | `UNVERIFIED` |
+| Hover pack current / power | 27.1 / 335–401 | A / W | `CL-E1-HOVER-I-55` | `UNVERIFIED` |
+| T/W fresh pack with the limiter | 2.50 | — | `CL-E1-ILIM-TW-FRESH` | `UNVERIFIED` |
+| **T/W worst pack state (one E1 + E2 claim)** | **2.18** (limit 1.6) | — | `CL-E1-TW-WORST` | `UNVERIFIED` |
+| Sag factor, worst ÷ fresh (replaces params 0.72) | 0.854 | — | `CL-E1-SAG-FACTOR` | `UNVERIFIED` |
 | Per-motor current with the limiter | 24.8 | A | `CL-E1-ILIM-I` | `UNVERIFIED` |
-| Unlimited full throttle per motor, 14.8 / 16.8 V | 42.4 / 51.6 | A | `CL-E1-IMAX-148-55`, `CL-E1-IMAX-168-55` | `FAIL` vs `R-ESC-CURRENT` (CR-E1-07) |
-| Cruise 15 m/s: thrust per prop, J, η_prop | 1.08, 0.57, 0.39 | N, —, — | `CALC-E1-CRUISE` | `UNVERIFIED` |
-| Cruise power (11×4.5MR) | 176–216 (219–269) | W | `CL-E1-CRUISE-P-55`, `CL-E1-CRUISE-P-45` | `FAIL` vs params 194 W; mission passes at about 17.7 min |
+| Cruise pack power | 201–247 | W | `CL-E1-CRUISE-P-55` | `UNVERIFIED` |
 | Transition thrust margin (worst point) | 2.19 | — | `CL-E1-CORRIDOR-55` | `UNVERIFIED` |
-| Hover winding rise | 23 | K | `CALC-E1-HOVER` | `UNVERIFIED` (E3) |
-| Motor out in hover / in cruise | fatal (yaw 0.26 > 0.15 N·m) / glide possible (0.22 N·m roll to elevons) | N·m | `CALC-E1-MOTOR-OUT` | `UNVERIFIED` |
-| Propulsion mass | 422 (allocation 430) | g | `PROPULSION.md` | `UNVERIFIED` |
+| Motor out: hover T/W / cruise roll torque | 1.09 (fatal: yaw) / 0.23 | — / N·m | `CL-E1-MOTOROUT-*` | `UNVERIFIED` |
+| Mount face to prop mid-plane | 37.3 | mm | `CL-E1-STACK-PROP-PLANE` | `UNVERIFIED` |
+| Propulsion mass incl. leads, adapters, screws | 475.6 (allocation 440) | g | `CL-E1-MASS-PRP` | `FAIL` |
 
-## Findings
+## Action items closed this revision
 
-- The maker's "14.8 V" table was taken on a sagging supply. Its top row (1 580 gf, 447 W) corresponds to about 11.2 V at the motor, and the W column is just 14.8 × A. The PER3 fit (kT 1.04, kP 1.24) reproduces the rows within 6 %.
-- The 11×4.5MR runs close to windmilling in cruise (J 0.49 against J₀ 0.55). The 11×5.5MR cuts cruise power by about 20 % at the same price.
-- Full throttle without a limiter exceeds the motor's 25 A / 30 s rating and `R-ESC-CURRENT`. With the 100 A limiter, T/W stays at 2.15 or more.
+| Item | Result | Status |
+|---|---|---|
+| Re-run `propulsion.py` (drift) | Re-run on the current params (16 m/s, c 0.32, L/D 5.6, cant 3°); `build_graph.py` shows no `CALC-E1` drift. The remaining errors are A5, B2, B3 and E2 drift (E2 is downstream of my new cruise power) | `CHECKED` |
+| Sag 0.72 vs 0.86 | One claim, `CL-E1-TW-WORST` 2.18, from my station model with E2's pack assumptions. E2's (V/V)² on an already current-limited thrust counted the sag twice (CR-E1-15) | `MODELLED` |
+| CR-A3-05 | `subsystems/propulsion/parts.csv`: 5 lines, 118.9 g per station; motor 81 g with factory leads, ESC 11 g `EST` with leads | `MODELLED` |
+| CR-A4-06, CR-A5-06 | Bolt pattern not published: slotted mount until measured. M3×8, 5 mm plate, 3.0 mm engagement. Bolt-on M6 adapter (LH on CW motors). Hub 8.9 mm; stack 37.3 mm to the mid-plane, 48.1 mm to the post tip (CR-E1-16, -17) | `UNVERIFIED` |
 
 ## Verify
 
-`python -I redesign/team/E1/propulsion.py` → `python -I redesign/proofs/build_graph.py` ("every stored number re-computes"); then `T-E1-MOTOR-RM` and `T-E1-STAND`.
+`python -I redesign/team/E1/propulsion.py` → `python -I redesign/proofs/build_graph.py` (no `CALC-E1` drift); then
+`T-E1-MOTOR-RM` (incoming: masses, bolt pattern, hole depth, lead length, R, I0) and `T-E1-STAND` (fresh pack and a cold
+pack at 3.73 V/cell).

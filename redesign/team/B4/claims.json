@@ -89,6 +89,19 @@
    "status": "PROPOSED"
   },
   {
+   "id": "ASM-B4-BOOM",
+   "type": "assumption",
+   "title": "Pitot boom 80 mm ahead of the pod front at z 0.045 m",
+   "text": "plug-in pitot boom on the pod nose, probe along body x, tip 80 mm ahead of the pod front face, 30 mm above the pod base",
+   "basis": "B4 placement (CR-B4-05); D2 draws POD-006; the tip x follows pod.x_le_m if the pod moves",
+   "value": [
+    0.08,
+    0.045
+   ],
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
    "id": "ASM-B4-SPAN-AR",
    "type": "assumption",
    "title": "Fin effective aspect ratio doubles on the wing",
@@ -359,52 +372,52 @@
     "SRC-B4-APC-PER3"
    ],
    "outputs": {
-    "thrust_per_prop_n": 1.0803936440677966,
-    "rpm__11x4.5MR": 6552.990765897706,
-    "J__11x4.5MR": 0.4915600182624495,
-    "eta_prop__11x4.5MR": 0.3831088787331056,
-    "shaft_w__11x4.5MR": 42.30104171589001,
-    "in_w__11x4.5MR": 54.756448030079206,
-    "eta_motor__11x4.5MR": 0.7725307838202524,
-    "eta_total__11x4.5MR": 0.2959634023761842,
-    "pack_w__11x4.5MR": 219.02579212031682,
-    "pack_w_2motor__11x4.5MR": 160.8304659840172,
-    "rpm__11x4.7SF": 6002.331026458924,
-    "J__11x4.7SF": 0.5366562167862775,
-    "eta_prop__11x4.7SF": 0.36291470533001363,
-    "shaft_w__11x4.7SF": 44.65485807823697,
-    "in_w__11x4.7SF": 58.08041583307574,
-    "eta_motor__11x4.7SF": 0.7688453575569416,
-    "eta_total__11x4.7SF": 0.2790252863821264,
-    "pack_w__11x4.7SF": 232.32166333230296,
-    "pack_w_2motor__11x4.7SF": 170.9643471998902,
-    "rpm__11x5.5MR": 5667.988067105409,
-    "J__11x5.5MR": 0.5683124633329322,
-    "eta_prop__11x5.5MR": 0.4738509225630828,
-    "shaft_w__11x5.5MR": 34.20042863556837,
-    "in_w__11x5.5MR": 45.17754527480542,
-    "eta_motor__11x5.5MR": 0.7570227294894936,
-    "eta_total__11x5.5MR": 0.3587159187698196,
-    "pack_w__11x5.5MR": 180.71018109922167,
-    "pack_w_2motor__11x5.5MR": 140.5780262439619,
-    "rpm__11x5.5E": 5750.760496384952,
-    "J__11x5.5E": 0.5601325707414255,
-    "eta_prop__11x5.5E": 0.5215190510058213,
-    "shaft_w__11x5.5E": 31.074425046911763,
-    "in_w__11x5.5E": 41.31089457506285,
-    "eta_motor__11x5.5E": 0.7522089600468181,
-    "eta_total__11x5.5E": 0.39229130300169235,
-    "pack_w__11x5.5E": 165.2435783002514,
-    "pack_w_2motor__11x5.5E": 134.3205307408621,
-    "rpm__12x4.5MR": 6295.519523138901,
-    "J__12x4.5MR": 0.46902497794806114,
-    "eta_prop__12x4.5MR": 0.32262582653357036,
-    "shaft_w__12x4.5MR": 50.23126894439949,
-    "in_w__12x4.5MR": 64.86310082575436,
-    "eta_motor__12x4.5MR": 0.7744197903726305,
-    "eta_total__12x4.5MR": 0.2498478249529242,
-    "pack_w__12x4.5MR": 259.45240330301743,
-    "pack_w_2motor__12x4.5MR": 183.45507956986557
+    "thrust_per_prop_n": 1.138271875,
+    "rpm__11x4.5MR": 6941.3965700654935,
+    "J__11x4.5MR": 0.49499176569350556,
+    "eta_prop__11x4.5MR": 0.37429155567672934,
+    "shaft_w__11x4.5MR": 48.65819098448955,
+    "in_w__11x4.5MR": 62.33572518005886,
+    "eta_motor__11x4.5MR": 0.7805827371693954,
+    "eta_total__11x4.5MR": 0.2921655270295326,
+    "pack_w__11x4.5MR": 249.34290072023543,
+    "pack_w_2motor__11x4.5MR": 181.8608634820358,
+    "rpm__11x4.7SF": 6359.17952186022,
+    "J__11x4.7SF": 0.5403109210526682,
+    "eta_prop__11x4.7SF": 0.35053717559582853,
+    "shaft_w__11x4.7SF": 51.955544997598054,
+    "in_w__11x4.7SF": 66.98845946973194,
+    "eta_motor__11x4.7SF": 0.7755894882322775,
+    "eta_total__11x4.7SF": 0.27187294862675665,
+    "pack_w__11x4.7SF": 267.95383787892774,
+    "pack_w_2motor__11x4.7SF": 194.87442299031792,
+    "rpm__11x5.5MR": 5999.940094063748,
+    "J__11x5.5MR": 0.5726614084022312,
+    "eta_prop__11x5.5MR": 0.46484244550087694,
+    "shaft_w__11x5.5MR": 39.17961919414616,
+    "in_w__11x5.5MR": 51.19088930064286,
+    "eta_motor__11x5.5MR": 0.7653631286623134,
+    "eta_total__11x5.5MR": 0.3557732684235921,
+    "pack_w__11x5.5MR": 204.76355720257143,
+    "pack_w_2motor__11x5.5MR": 158.23368372921638,
+    "rpm__11x5.5E": 6082.145265855581,
+    "J__11x5.5E": 0.5649214207172059,
+    "eta_prop__11x5.5E": 0.5096710609275863,
+    "shaft_w__11x5.5E": 35.733537562156386,
+    "in_w__11x5.5E": 46.91010684643184,
+    "eta_motor__11x5.5E": 0.7617449621066983,
+    "eta_total__11x5.5E": 0.3882393629931649,
+    "pack_w__11x5.5E": 187.64042738572735,
+    "pack_w_2motor__11x5.5E": 150.48010477914795,
+    "rpm__12x4.5MR": 6675.026166844402,
+    "J__12x4.5MR": 0.4718492812593071,
+    "eta_prop__12x4.5MR": 0.3141757386594056,
+    "shaft_w__12x4.5MR": 57.968670902828066,
+    "in_w__12x4.5MR": 74.2598728914509,
+    "eta_motor__12x4.5MR": 0.7806190429057637,
+    "eta_total__12x4.5MR": 0.24525156441651655,
+    "pack_w__12x4.5MR": 297.0394915658036,
+    "pack_w_2motor__12x4.5MR": 209.35222259603702
    },
    "input_values": {
     "kv": 900.0,
@@ -423,8 +436,8 @@
      80.0
     ],
     "m": 2.6,
-    "ld": 5.9,
-    "V": 15.0,
+    "ld": 5.6,
+    "V": 16.0,
     "g": 9.80665,
     "rho": 1.225
    }
@@ -432,10 +445,10 @@
   {
    "id": "CALC-B4-DOWNLOAD",
    "type": "calculation",
-   "title": "Hover download on tube, fin and feet",
+   "title": "Hover download on tube, half-fins, feet and the wing beside the disc",
    "script": "redesign/team/B4/props.py",
    "function": "download",
-   "equation": "v_i = sqrt(T / 2 rho A) ; v(x) = v_i (1 + x / sqrt(x^2 + R^2)) ; r_s = R / sqrt(v/v_i) ; D = Cd q d L (tube) + 2 Cf q S (fin) + 0.5 q t h (fin base) + q A (foot) ; k = 1 + D/T",
+   "equation": "v_i = sqrt(T / 2 rho A) ; v(x) = v_i (1 + x / sqrt(x^2 + R^2)) ; r_s = R / sqrt(v/v_i) ; D = Cd q d L (tube) + 2 Cf q S (fin) + 0.5 q t h (fin base) + q A (foot) + D_wing ; wing: reach(x) = r_s + mix (x - x_p) ; gap(x) = z_m - reach - z_surf(x) (S5010 upper, and lower for the lower discs) ; where gap < 0 the wetted strip w = 2 sqrt(reach^2 - (z_m - z_surf)^2) carries Cf q/3 (mixing-layer mean of u^2) ; k = 1 + D/T",
    "inputs": {
     "m": "P:requirements.mtow_gate_kg",
     "g": "P:env.g_ms2",
@@ -450,7 +463,10 @@
     "cd": "ASM-B4-CD-TUBE",
     "prof": "ASM-B4-PROFILE",
     "t_fin": "ASM-B4-FIN-T",
-    "a_foot": "ASM-B4-FOOT"
+    "a_foot": "ASM-B4-FOOT",
+    "z_m": "P:propulsion.stations.z_m",
+    "c": "P:wing.chord_m",
+    "mix": "ASM-B4-MIX"
    },
    "units": {
     "m": "kg",
@@ -459,39 +475,55 @@
     "x_mount": "m",
     "d_tube": "m",
     "d_motor": "m",
-    "fin_te": "m"
+    "fin_te": "m",
+    "z_m": "m",
+    "c": "m"
    },
    "assumes": [
     "ASM-B4-CD-TUBE",
     "ASM-B4-PROFILE",
     "ASM-B4-FIN-T",
-    "ASM-B4-FOOT"
+    "ASM-B4-FOOT",
+    "ASM-B4-MIX"
+   ],
+   "cites": [
+    "SRC-S5010"
    ],
    "outputs": {
-    "k": 1.0359486718689739,
+    "k": 1.0335902168940811,
     "vi_ms": 6.514223148094837,
     "tube_n": 0.11447808325489532,
-    "fin_n": 0.042689553229524974,
-    "fin_base_n": 0.049628403552777596,
-    "foot_n": 0.022352387902318815,
+    "fin_n": 0.029855124766006193,
+    "fin_base_n": 0.048252001277451745,
+    "foot_n": 0.02152966602946789,
+    "wing_n": 0.0,
+    "wing_gap_min_m": 0.04491719769153568,
+    "wing_gap_min_x_m": 0.03,
+    "disc_edge_over_wing_top_m": 0.02753840000000001,
+    "disc_edge_over_chord_plane_m": 0.05030000000000001,
+    "tube_x_behind_disc_m": 0.049999999999999996,
+    "fin_mid_x_behind_disc_m": 0.193,
     "tube_frac_of_disk": 0.03653490041766018,
-    "k_high": 1.0456812845523076
+    "k_high": 1.0426540135233708
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
     "D": 0.2794,
-    "x_prop": -0.15,
-    "x_mount": -0.1,
+    "x_prop": -0.005,
+    "x_mount": 0.045,
     "d_tube": 0.022,
     "d_motor": 0.038,
-    "fin_te": 0.3,
-    "foot_h": 0.01,
+    "fin_te": 0.32,
+    "foot_h": 0.045,
     "cd": 1.1,
     "prof": 1.3,
     "t_fin": 0.01,
-    "a_foot": 0.0009
+    "a_foot": 0.0009,
+    "z_m": 0.19,
+    "c": 0.32,
+    "mix": 0.08
    }
   },
   {
@@ -525,24 +557,24 @@
     "ASM-B4-MIX"
    ],
    "outputs": {
-    "hover_edge_z_hinge_m": 0.05897461133691588,
-    "cruise_edge_z_hinge_m": 0.01958000000000001,
-    "hover_edge_z_te_m": 0.05408771458179134,
-    "cruise_edge_z_te_m": 0.014300000000000014,
-    "elevon_tip_z_max_m": 0.027892805274886166,
-    "hover_gap_elevon_m": 0.026194909306905174,
-    "cruise_gap_elevon_m": -0.013592805274886152,
-    "cruise_gap_wing_surface_m": 0.016325000000000013
+    "hover_edge_z_hinge_m": 0.0676556361857333,
+    "cruise_edge_z_hinge_m": 0.02993200000000001,
+    "hover_edge_z_te_m": 0.06314659825594177,
+    "cruise_edge_z_te_m": 0.02430000000000001,
+    "elevon_tip_z_max_m": 0.029752325626545242,
+    "hover_gap_elevon_m": 0.033394272629396524,
+    "cruise_gap_elevon_m": -0.005452325626545233,
+    "cruise_gap_wing_surface_m": 0.026508000000000007
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
     "D": 0.2794,
-    "x_prop": -0.15,
+    "x_prop": -0.005,
     "z_m": 0.19,
-    "c": 0.3,
-    "tc": 0.0985,
+    "c": 0.32,
+    "tc": 0.0982,
     "fe": 0.22,
     "defl": [
      -25,
@@ -569,7 +601,9 @@
     "ld": "P:performance.ld_cruise",
     "V": "P:performance.cruise_ms",
     "Vt": "P:performance.transition_min_ms",
-    "lim": "ASM-B4-PITOT-ERR"
+    "lim": "ASM-B4-PITOT-ERR",
+    "pod_x": "P:pod.x_le_m",
+    "boom": "ASM-B4-BOOM"
    },
    "units": {
     "m": "kg",
@@ -578,74 +612,83 @@
     "y_m": "m",
     "z_m": "m",
     "V": "m/s",
-    "Vt": "m/s"
+    "Vt": "m/s",
+    "pod_x": "m"
    },
    "assumes": [
     "ASM-B4-PITOT-ERR"
    ],
    "outputs": {
+    "tip_x_m": -0.185,
+    "tip_z_m": 0.045,
+    "tip_ahead_of_disc_m": 0.18,
     "selftest_centre_over_half_gamma": 0.9999213734120524,
-    "cruise__pod_boom_x-0.25__u_ms": 0.036464831923527743,
-    "cruise__pod_boom_x-0.25__conv": 2.7645338179074774e-05,
-    "cruise__pod_boom_x-0.25__err": 0.0024309887949018495,
-    "cruise__pod_nose_x-0.10__u_ms": -0.02047710186098911,
-    "cruise__pod_nose_x-0.10__conv": 2.9412518757118468e-05,
-    "cruise__pod_nose_x-0.10__err": -0.0013651401240659408,
-    "cruise__wing_LE_y0.15_x-0.08__u_ms": -0.05187306688590003,
-    "cruise__wing_LE_y0.15_x-0.08__conv": 2.9623367640435606e-05,
-    "cruise__wing_LE_y0.15_x-0.08__err": -0.003458204459060002,
-    "cruise__wing_LE_y0.15_x-0.25__u_ms": 0.06288509566243622,
-    "cruise__wing_LE_y0.15_x-0.25__conv": 2.761315971791569e-05,
-    "cruise__wing_LE_y0.15_x-0.25__err": 0.004192339710829081,
-    "cruise__wing_LE_y0.53_x-0.08__u_ms": -0.03410097672876097,
-    "cruise__wing_LE_y0.53_x-0.08__conv": 2.916860762001705e-05,
-    "cruise__wing_LE_y0.53_x-0.08__err": -0.0022733984485840647,
-    "transition__pod_boom_x-0.25__u_ms": 0.19475591694176464,
-    "transition__pod_boom_x-0.25__conv": 0.00015169691718842972,
-    "transition__pod_boom_x-0.25__err": 0.01333944636587429,
-    "transition__pod_nose_x-0.10__u_ms": -0.10936665655309656,
-    "transition__pod_nose_x-0.10__conv": 0.00016139388106957116,
-    "transition__pod_nose_x-0.10__err": -0.007490866887198395,
-    "transition__wing_LE_y0.15_x-0.08__u_ms": -0.27705013770889164,
-    "transition__wing_LE_y0.15_x-0.08__conv": 0.00016255086187352185,
-    "transition__wing_LE_y0.15_x-0.08__err": -0.01897603682937614,
-    "transition__wing_LE_y0.15_x-0.25__u_ms": 0.33586455282154254,
-    "transition__wing_LE_y0.15_x-0.25__conv": 0.00015152034588638663,
-    "transition__wing_LE_y0.15_x-0.25__err": 0.02300442142613305,
-    "transition__wing_LE_y0.53_x-0.08__u_ms": -0.18213074464041323,
-    "transition__wing_LE_y0.53_x-0.08__conv": 0.00016005547937137315,
-    "transition__wing_LE_y0.53_x-0.08__err": -0.012474708537014606,
-    "hover__pod_boom_x-0.25__u_ms": 0.5107584672631141,
-    "hover__pod_boom_x-0.25__conv": 0.011372054958480798,
-    "hover__pod_nose_x-0.10__u_ms": -0.2868202761072162,
-    "hover__pod_nose_x-0.10__conv": 0.021545421044043497,
-    "hover__wing_LE_y0.15_x-0.08__u_ms": -0.7265797410075135,
-    "hover__wing_LE_y0.15_x-0.08__conv": 0.008566112267546019,
-    "hover__wing_LE_y0.15_x-0.25__u_ms": 0.8808238892091651,
-    "hover__wing_LE_y0.15_x-0.25__conv": 0.006586574949207698,
-    "hover__wing_LE_y0.53_x-0.08__u_ms": -0.4776482349537196,
-    "hover__wing_LE_y0.53_x-0.08__conv": 0.012830398313231987,
-    "worst_err__pod_boom_x-0.25": 0.01333944636587429,
-    "worst_err__pod_nose_x-0.10": 0.007490866887198395,
-    "worst_err__wing_LE_y0.15_x-0.08": 0.01897603682937614,
-    "worst_err__wing_LE_y0.15_x-0.25": 0.02300442142613305,
-    "worst_err__wing_LE_y0.53_x-0.08": 0.012474708537014606,
-    "best_candidate": 1,
-    "best_worst_err": 0.007490866887198395,
-    "max_conv": 0.00016255086187352185
+    "cruise__pod_boom__u_ms": 0.04988039493787701,
+    "cruise__pod_boom__conv": 2.4835245438946905e-05,
+    "cruise__pod_boom__err": 0.003117524683617313,
+    "cruise__pod_face__u_ms": 0.036095315424701346,
+    "cruise__pod_face__conv": 2.5654869422087664e-05,
+    "cruise__pod_face__err": 0.002255957214043834,
+    "cruise__pod_boom_long__u_ms": 0.05144185433123738,
+    "cruise__pod_boom_long__conv": 2.3860443095510483e-05,
+    "cruise__pod_boom_long__err": 0.0032151158957023362,
+    "cruise__wing_LE_y0.15__u_ms": 0.053387523158852195,
+    "cruise__wing_LE_y0.15__conv": 2.5888211393097424e-05,
+    "cruise__wing_LE_y0.15__err": 0.003336720197428262,
+    "cruise__wing_LE_y0.53__u_ms": 0.03517313152582465,
+    "cruise__wing_LE_y0.53__conv": 2.5508303515983655e-05,
+    "cruise__wing_LE_y0.53__err": 0.0021983207203640407,
+    "transition__pod_boom__u_ms": 0.25723663652186657,
+    "transition__pod_boom__conv": 0.00013220859190153598,
+    "transition__pod_boom__err": 0.01659591203366881,
+    "transition__pod_face__u_ms": 0.18614603083255407,
+    "transition__pod_face__conv": 0.0001365717995439268,
+    "transition__pod_face__err": 0.012009421344035747,
+    "transition__pod_boom_long__u_ms": 0.26528919029401987,
+    "transition__pod_boom_long__conv": 0.00012701930373747126,
+    "transition__pod_boom_long__err": 0.01711543163187225,
+    "transition__wing_LE_y0.15__u_ms": 0.27532313861428515,
+    "transition__wing_LE_y0.15__conv": 0.00013781397826507385,
+    "transition__wing_LE_y0.15__err": 0.017762783136405492,
+    "transition__wing_LE_y0.53__u_ms": 0.181390264870855,
+    "transition__wing_LE_y0.53__conv": 0.00013579156678502732,
+    "transition__wing_LE_y0.53__err": 0.011702597733603548,
+    "hover__pod_boom__u_ms": 0.7058210675037937,
+    "hover__pod_boom__conv": 0.00796633481988322,
+    "hover__pod_face__u_ms": 0.5107584672631142,
+    "hover__pod_face__conv": 0.011372054958480796,
+    "hover__pod_boom_long__u_ms": 0.7279161398715659,
+    "hover__pod_boom_long__conv": 0.007421332191292076,
+    "hover__wing_LE_y0.15__u_ms": 0.7554478795585973,
+    "hover__wing_LE_y0.15__conv": 0.007758580240875783,
+    "hover__wing_LE_y0.53__u_ms": 0.4977093158931099,
+    "hover__wing_LE_y0.53__conv": 0.01160354050238846,
+    "worst_err__pod_boom": 0.01659591203366881,
+    "worst_err__pod_face": 0.012009421344035747,
+    "worst_err__pod_boom_long": 0.01711543163187225,
+    "worst_err__wing_LE_y0.15": 0.017762783136405492,
+    "worst_err__wing_LE_y0.53": 0.011702597733603548,
+    "best_candidate": 4,
+    "best_worst_err": 0.011702597733603548,
+    "max_conv": 0.00013781397826507385
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
     "D": 0.2794,
-    "x_prop": -0.15,
+    "x_prop": -0.005,
     "y_m": 0.32,
     "z_m": 0.19,
-    "ld": 5.9,
-    "V": 15.0,
-    "Vt": 14.6,
-    "lim": 0.02
+    "ld": 5.6,
+    "V": 16.0,
+    "Vt": 15.5,
+    "lim": 0.02,
+    "pod_x": -0.105,
+    "boom": [
+     0.08,
+     0.045
+    ]
    }
   },
   {
@@ -654,7 +697,7 @@
    "title": "Fin swirl recovery and hover yaw authority",
    "script": "redesign/team/B4/props.py",
    "function": "swirl",
-   "equation": "Gamma_s = Q / (rho v_i pi (R^2 - r_h^2)) ; v_t = Gamma_s / r ; alpha = atan(v_t / v_a) ; CL = 2 pi AR alpha / (2 + sqrt(AR^2 + 4)) (Helmbold) ; M = CL q c h r_cp ; f = M / Q ; yaw per N of differential thrust = (Q/T)(1 - f) + r_arm sin(cant)",
+   "equation": "Gamma_s = Q / (rho v_i pi (R^2 - r_h^2)) ; v_t = Gamma_s / r ; alpha = atan(v_t / v_a) ; CL = 2 pi AR alpha / (2 + sqrt(AR^2 + 4)) (Helmbold) ; M = CL q c h r_cp ; f = M / Q ; yaw per N of differential thrust = (Q/T)(1 - f) + r_arm sin(cant) ; half-fin root moment = F (z_m - r_cp - z_root), z_root = mean S5010 surface over the fin chord",
    "inputs": {
     "Th": "CL-B4-HOVER-T",
     "Q": "CL-B4-HOVER-Q",
@@ -668,26 +711,34 @@
     "ar_k": "ASM-B4-SPAN-AR",
     "y_m": "P:propulsion.stations.y_m",
     "z_m": "P:propulsion.stations.z_m",
-    "cant": "ASM-B4-CANT"
+    "cant": "ASM-B4-CANT",
+    "c": "P:wing.chord_m"
    },
    "units": {
     "D": "m",
-    "rho": "kg/m3"
+    "rho": "kg/m3",
+    "c": "m"
    },
    "assumes": [
     "ASM-B4-SPAN-AR"
    ],
    "outputs": {
+    "half_fin_root_moment_nm": 0.1081916202127467,
+    "half_fin_cp_above_root_m": 0.11475706037585885,
+    "half_fin_chord_m": 0.264,
+    "half_fin_wetted_span_m": 0.10383650030394316,
+    "half_fin_aspect_ratio": 0.7866401538177511,
+    "swirl_q_pa": 98.48925255070061,
     "torque_nm": 0.11286625933312935,
-    "swirl_deg": 16.50829511200969,
-    "fin_side_force_n": 0.9774810480232464,
-    "f_mid": 0.5298004962362424,
-    "f_low": 0.2649002481181212,
-    "yaw_authority_factor_mid": 0.47019950376375763,
-    "yaw_authority_factor_high": 0.7350997518818788,
+    "swirl_deg": 16.795623894045608,
+    "fin_side_force_n": 0.9427883553168002,
+    "f_mid": 0.5204168752742842,
+    "f_low": 0.2602084376371421,
+    "yaw_authority_factor_mid": 0.47958312472571585,
+    "yaw_authority_factor_high": 0.7397915623628579,
     "yaw_arm_m": 0.3721558813185679,
-    "cant_min_deg": 1.3626216361731085,
-    "yaw_with_cant_over_isolated": 1.63620558689162,
+    "cant_min_deg": 1.3384829792464716,
+    "yaw_with_cant_over_isolated": 1.6455892078535783,
     "yaw_with_cant_no_reaction_over_isolated": 1.1660060831278622,
     "cant_thrust_loss": 0.0013704652454261668
    },
@@ -697,14 +748,15 @@
     "rho": 1.225,
     "D": 0.2794,
     "d_motor": 0.038,
-    "x_prop": -0.15,
-    "x_mount": -0.1,
+    "x_prop": -0.005,
+    "x_mount": 0.045,
     "d_tube": 0.022,
-    "fin_te": 0.3,
+    "fin_te": 0.32,
     "ar_k": 2.0,
     "y_m": 0.32,
     "z_m": 0.19,
-    "cant": 3.0
+    "cant": 3.0,
+    "c": 0.32
    }
   },
   {
@@ -744,12 +796,12 @@
     "gap_vertical_m": 0.10060000000000002,
     "gap_vertical_over_D": 0.3600572655690767,
     "gap_lateral_m": 0.36060000000000003,
-    "gap_tube_face_m": 0.03899999999999999,
-    "gap_tube_over_D": 0.1395848246241947,
+    "gap_tube_face_m": 0.039,
+    "gap_tube_over_D": 0.13958482462419472,
     "vh_ms": 6.706803218864043,
     "descent_max_ms": 1.8779049012819322,
-    "prop_height_m": 0.45999999999999996,
-    "ige_gain": 0.005797862002792531,
+    "prop_height_m": 0.37,
+    "ige_gain": 0.008989927978230616,
     "tip_mach_hover": 0.23013352978555515,
     "tip_mach_max": 0.397485519977175,
     "bpf_hover_hz": 179.8571635066437,
@@ -760,11 +812,11 @@
     "D": 0.2794,
     "y_m": 0.32,
     "z_m": 0.19,
-    "x_prop": -0.15,
-    "x_mount": -0.1,
+    "x_prop": -0.005,
+    "x_mount": 0.045,
     "d_tube": 0.022,
-    "fin_te": 0.3,
-    "foot_h": 0.01,
+    "fin_te": 0.32,
+    "foot_h": 0.045,
     "m": 2.6,
     "k": 1.06,
     "g": 9.80665,
@@ -800,22 +852,22 @@
     "ct_ratio_static__11x4.7SF": 0.9967666441820182,
     "cp_ratio_static__11x4.7SF": 1.0422370254174762,
     "fm_ratio_static__11x4.7SF": 0.954824924264115,
-    "J_uiuc__11x4.7SF": 0.5615143297859942,
-    "eta_prop_uiuc__11x4.7SF": 0.3581586345411343,
-    "eta_prop_apc__11x4.7SF": 0.36291470533001363,
-    "eta_ratio_uiuc_over_apc__11x4.7SF": 0.9868947972649539,
+    "J_uiuc__11x4.7SF": 0.5649567193171504,
+    "eta_prop_uiuc__11x4.7SF": 0.34138692752694044,
+    "eta_prop_apc__11x4.7SF": 0.35053717559582853,
+    "eta_ratio_uiuc_over_apc__11x4.7SF": 0.9738964974161873,
     "ct_ratio_static__11x5.5E": 0.9334114794106794,
     "cp_ratio_static__11x5.5E": 0.9441462929835024,
     "fm_ratio_static__11x5.5E": 0.9551474360534336,
-    "J_uiuc__11x5.5E": 0.5422187857368362,
-    "eta_prop_uiuc__11x5.5E": 0.5390615881899162,
-    "eta_prop_apc__11x5.5E": 0.5215190510058213,
-    "eta_ratio_uiuc_over_apc__11x5.5E": 1.0336373851545053
+    "J_uiuc__11x5.5E": 0.5471384858931546,
+    "eta_prop_uiuc__11x5.5E": 0.5270116742402996,
+    "eta_prop_apc__11x5.5E": 0.5096710609275863,
+    "eta_ratio_uiuc_over_apc__11x5.5E": 1.0340231467746155
    },
    "input_values": {
     "m": 2.6,
-    "ld": 5.9,
-    "V": 15.0,
+    "ld": 5.6,
+    "V": 16.0,
     "g": 9.80665,
     "rho": 1.225
    }
@@ -1097,7 +1149,7 @@
   {
    "id": "CL-B4-CRUISE-ETA",
    "type": "claim",
-   "title": "Cruise prop efficiency, 11x5.5MR, 15 m/s, 1.08 N",
+   "title": "Cruise prop efficiency, 11x5.5MR, cruise speed and thrust (params)",
    "calc": "CALC-B4-CRUISE",
    "output": "eta_prop__11x5.5MR",
    "unit": "-",
@@ -1107,18 +1159,18 @@
     "PRP-003-LR",
     "PRP-003-LL"
    ],
-   "how": "Logged cruise: shaft power from ESC rpm and motor model vs drag x V; or a car-top test at 15 m/s.",
-   "value": 0.4738509225630828
+   "how": "Logged cruise: shaft power from ESC rpm and motor model vs drag x V; or a car-top test at cruise speed.",
+   "value": 0.46484244550087694
   },
   {
    "id": "CL-B4-CRUISE-ETA-OLD",
    "type": "claim",
-   "title": "Cruise prop efficiency, 11x4.5MR, 15 m/s, 1.08 N",
+   "title": "Cruise prop efficiency, 11x4.5MR, cruise speed and thrust (params)",
    "calc": "CALC-B4-CRUISE",
    "output": "eta_prop__11x4.5MR",
    "unit": "-",
    "how": "As CL-B4-CRUISE-ETA.",
-   "value": 0.3831088787331056
+   "value": 0.37429155567672934
   },
   {
    "id": "CL-B4-CRUISE-J",
@@ -1128,7 +1180,7 @@
    "output": "J__11x5.5MR",
    "unit": "-",
    "how": "J = V / (n D) from logged rpm and airspeed.",
-   "value": 0.5683124633329322
+   "value": 0.5726614084022312
   },
   {
    "id": "CL-B4-CRUISE-RPM",
@@ -1144,7 +1196,7 @@
     "PRP-003-LL"
    ],
    "how": "ESC rpm telemetry in steady cruise.",
-   "value": 5667.988067105409
+   "value": 5999.940094063748
   },
   {
    "id": "CL-B4-CRUISE-SHAFT",
@@ -1160,7 +1212,7 @@
     "PRP-003-LL"
    ],
    "how": "Logged cruise: rpm and current with E1's motor constants.",
-   "value": 34.20042863556837
+   "value": 39.17961919414616
   },
   {
    "id": "CL-B4-CRUISE-W",
@@ -1175,8 +1227,8 @@
     "PRP-003-LR",
     "PRP-003-LL"
    ],
-   "how": "Log pack power in steady level cruise at 15 m/s airspeed, 2.6 kg.",
-   "value": 180.71018109922167
+   "how": "Log pack power in steady level cruise at performance.cruise_ms, 2.6 kg.",
+   "value": 204.76355720257143
   },
   {
    "id": "CL-B4-CRUISE-W-OLD",
@@ -1186,7 +1238,7 @@
    "output": "pack_w__11x4.5MR",
    "unit": "W",
    "how": "As CL-B4-CRUISE-W.",
-   "value": 219.02579212031682
+   "value": 249.34290072023543
   },
   {
    "id": "CL-B4-HOVER-W",
@@ -1222,7 +1274,7 @@
    "output": "eta_ratio_uiuc_over_apc__11x4.7SF",
    "unit": "-",
    "how": "The 11x5.5MR value comes from T-B4-STAND plus a car-top or flight check; this ratio is the expected spread.",
-   "value": 0.9868947972649539
+   "value": 0.9738964974161873
   },
   {
    "id": "CL-B4-UIUC-ETA-E",
@@ -1232,7 +1284,7 @@
    "output": "eta_ratio_uiuc_over_apc__11x5.5E",
    "unit": "-",
    "how": "As CL-B4-UIUC-ETA.",
-   "value": 1.0336373851545053
+   "value": 1.0340231467746155
   },
   {
    "id": "CL-B4-DOWNLOAD",
@@ -1252,7 +1304,7 @@
     "FIN-002-R"
    ],
    "how": "T-B4-INSTALLED: thrust stand with a tube + fin mock-up behind the prop; installed/isolated thrust ratio.",
-   "value": 1.0359486718689739
+   "value": 1.0335902168940811
   },
   {
    "id": "CL-B4-DOWNLOAD-HIGH",
@@ -1272,7 +1324,7 @@
     "FIN-002-R"
    ],
    "how": "T-B4-INSTALLED.",
-   "value": 1.0456812845523076
+   "value": 1.0426540135233708
   },
   {
    "id": "CL-B4-ELEVON-HOVER",
@@ -1286,7 +1338,7 @@
     "value": 0.0
    },
    "how": "Tufts on the elevons during a tethered hover: they stay still. Consequence: zero elevon authority in hover.",
-   "value": 0.026194909306905174
+   "value": 0.033394272629396524
   },
   {
    "id": "CL-B4-ELEVON-CRUISE",
@@ -1296,14 +1348,14 @@
    "output": "cruise_gap_elevon_m",
    "unit": "m",
    "how": "Tufts on the elevons in cruise, camera on the fin.",
-   "value": -0.013592805274886152
+   "value": -0.005452325626545233
   },
   {
    "id": "CL-B4-PITOT",
    "type": "claim",
-   "title": "Worst prop-induced airspeed error at the chosen pitot (pod nose, tip x = -0.10 m)",
+   "title": "Worst prop-induced airspeed error at the chosen pitot (pod-nose boom, tip 80 mm ahead of the pod)",
    "calc": "CALC-B4-PITOT",
-   "output": "worst_err__pod_nose_x-0.10",
+   "output": "worst_err__pod_boom",
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -1314,21 +1366,49 @@
     "POD-006"
    ],
    "how": "Fly constant GPS-groundspeed legs in calm air at two throttle settings; airspeed must not step with throttle.",
-   "value": 0.007490866887198395
+   "value": 0.01659591203366881
+  },
+  {
+   "id": "CL-B4-PITOT-TIP-X",
+   "type": "claim",
+   "title": "Pitot tip x station (pod front - boom; = params avionics.pitot_tip_xyz_m[0])",
+   "calc": "CALC-B4-PITOT",
+   "output": "tip_x_m",
+   "unit": "m",
+   "parts": [
+    "AVN-005",
+    "POD-006"
+   ],
+   "how": "Measure the tip from the wing LE on the built airframe with the boom plugged in.",
+   "value": -0.185
+  },
+  {
+   "id": "CL-B4-PITOT-FACE",
+   "type": "claim",
+   "title": "Prop-induced airspeed error with no boom (probe at the pod front)",
+   "calc": "CALC-B4-PITOT",
+   "output": "worst_err__pod_face",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-B4-PITOT-ERR"
+   },
+   "how": "Same flight test as CL-B4-PITOT; shows what the boom buys.",
+   "value": 0.012009421344035747
   },
   {
    "id": "CL-B4-PITOT-WING",
    "type": "claim",
-   "title": "Prop-induced airspeed error, wing LE at y = 0.15 m (rejected)",
+   "title": "Prop-induced airspeed error, inboard wing LE at y = 0.15 m (rejected)",
    "calc": "CALC-B4-PITOT",
-   "output": "worst_err__wing_LE_y0.15_x-0.08",
+   "output": "worst_err__wing_LE_y0.15",
    "unit": "-",
    "limit": {
     "op": "<=",
     "ref": "ASM-B4-PITOT-ERR"
    },
    "how": "Same flight test; shows why the inboard wing LE is not used.",
-   "value": 0.01897603682937614
+   "value": 0.017762783136405492
   },
   {
    "id": "CL-B4-PITOT-CONV",
@@ -1342,7 +1422,75 @@
     "value": 0.002
    },
    "how": "Re-run: three wake lengths and Simpson grids; change as a fraction of airspeed.",
-   "value": 0.00016255086187352185
+   "value": 0.00013781397826507385
+  },
+  {
+   "id": "CL-B4-SWIRL-FIN",
+   "type": "claim",
+   "title": "Swirl side force on each half-fin in hover (static, mean; same sense on both halves of a fin)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "fin_side_force_n",
+   "unit": "N",
+   "parts": [
+    "FIN-001-L",
+    "FIN-001-R",
+    "FIN-002-L",
+    "FIN-002-R"
+   ],
+   "how": "T-B4-YAW: side force on a half-fin mock-up (0.275 m chord) behind the prop at hover thrust, or the reaction-torque difference divided by the centre-of-pressure radius.",
+   "value": 0.9427883553168002
+  },
+  {
+   "id": "CL-B4-SWIRL-FIN-M",
+   "type": "claim",
+   "title": "Swirl bending moment at each half-fin root (wing skin), hover",
+   "calc": "CALC-B4-SWIRL",
+   "output": "half_fin_root_moment_nm",
+   "unit": "N*m",
+   "parts": [
+    "FIN-001-L",
+    "FIN-001-R",
+    "FIN-002-L",
+    "FIN-002-R"
+   ],
+   "how": "As CL-B4-SWIRL-FIN, times the measured cp height.",
+   "value": 0.1081916202127467
+  },
+  {
+   "id": "CL-B4-TUBE-LOAD",
+   "type": "claim",
+   "title": "Slipstream drag on each motor tube in hover (mean loading)",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "tube_n",
+   "unit": "N",
+   "parts": [
+    "FIN-001-L",
+    "FIN-001-R",
+    "FIN-002-L",
+    "FIN-002-R"
+   ],
+   "how": "T-B4-INSTALLED: thrust with and without the tube.",
+   "value": 0.11447808325489532
+  },
+  {
+   "id": "CL-B4-WING-GAP",
+   "type": "claim",
+   "title": "Hover slipstream (incl. mixing layer) clearance to the wing surface at the fin station",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "wing_gap_min_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "parts": [
+    "FIN-001-L",
+    "FIN-001-R",
+    "FIN-002-L",
+    "FIN-002-R"
+   ],
+   "how": "T-B4-INSTALLED with a wing-section strip at the right height; tufts on the wing beside the fin in a tethered hover stay still.",
+   "value": 0.04491719769153568
   },
   {
    "id": "CL-B4-YAW",
@@ -1352,7 +1500,7 @@
    "output": "yaw_authority_factor_mid",
    "unit": "-",
    "how": "T-B4-YAW: reaction torque on the stand with and without a fin mock-up; tethered hover yaw step.",
-   "value": 0.47019950376375763
+   "value": 0.47958312472571585
   },
   {
    "id": "CL-B4-YAW-CANT",
@@ -1369,7 +1517,7 @@
    "assumes": [
     "ASM-B4-CANT"
    ],
-   "value": 1.63620558689162
+   "value": 1.6455892078535783
   },
   {
    "id": "CL-B4-DESCENT",
@@ -1458,12 +1606,14 @@
   {
    "id": "T-B4-INSTALLED",
    "type": "test",
-   "title": "Installed thrust with tube and fin mock-up",
+   "title": "Installed thrust with tube, half-fin and wing-strip mock-up",
    "verifies": [
-    "CL-B4-DOWNLOAD"
+    "CL-B4-DOWNLOAD",
+    "CL-B4-TUBE-LOAD",
+    "CL-B4-WING-GAP"
    ],
    "state": "planned",
-   "procedure": "Same stand; 22 mm tube with its face 39 mm behind the prop plane and a 0.40 m foam-board fin; compare thrust at equal rpm with and without; repeat with the fin removed."
+   "procedure": "Same stand; 22 mm tube with its face 39 mm behind the prop plane, a 0.275 m-chord foam-board half-fin behind it and a 0.32 m S5010 wing strip whose upper surface sits 28 mm below the disc edge (LE 5 mm behind the prop plane); compare thrust at equal rpm with and without; repeat with the fin, then the strip, removed."
   },
   {
    "id": "T-B4-YAW",
@@ -1484,7 +1634,7 @@
     "CL-B4-CRUISE-W"
    ],
    "state": "planned",
-   "procedure": "Car-top rig at 15 m/s (GPS) or logged level cruise on the twin: rpm, current, voltage; compare with CALC-B4-CRUISE."
+   "procedure": "Car-top rig at performance.cruise_ms (GPS) or logged level cruise on the twin: rpm, current, voltage; compare with CALC-B4-CRUISE."
   }
  ]
 }

@@ -48,16 +48,18 @@ def stall_speed(m, g, rho, S, CL):
 
 
 # ------------------------------------------------------------------------------------ hover
-def hover_authority(m, g, download, n_up_split, tmax_motor_N, y_m, z_m, z_cg, kq, cant_deg, I, dist):
+def hover_authority(m, g, download, n_up_split, tmax_motor_N, y_m, z_m, z_cg, kq, cant_deg, I, dist, dfrac=1.0):
     """Hover control power per axis with total thrust held at hover.
     n_up_split = upper/lower thrust ratio needed for pitch trim. tmax_motor_N already includes sag.
     I = (Ixx, Iyy, Izz) about the CG in cruise axes. dist = (M_pitch, M_roll, M_yaw) disturbance N m.
-    Differential dT per motor is limited by the least-loaded motor (>= 0 thrust) and the most-loaded (<= Tmax)."""
+    Differential dT per motor is limited by dfrac x hover thrust, the least-loaded motor (>= 0 thrust) and the
+    most-loaded (<= Tmax)."""
     W = m * g * download
     Tm = W / 4
     Tl = 2 * Tm / (1 + n_up_split)                  # lower pair, per motor
     Tu = n_up_split * Tl                            # upper pair
-    dT = min(Tl, tmax_motor_N - Tu)                 # usable symmetric differential per motor
+    dT = min(dfrac * Tm, Tl, tmax_motor_N - Tu)     # usable symmetric differential per motor (dfrac: cap as a
+                                                    # fraction of hover thrust, R-HOVER-AUTHORITY uses 0.30)
     au, al = z_m - z_cg, z_m + z_cg                 # arms of upper / lower pair to the CG
     r = math.hypot(y_m, z_m)
     M = {"pitch": 2 * dT * (au + al),

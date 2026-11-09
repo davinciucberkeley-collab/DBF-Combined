@@ -25,6 +25,19 @@ kit.assumption("ASM-A1-CLMAX", "CLmax 0.9 of the reflexed wing (SUPERSEDED)",
                      "S5010, SM 5 %), which CALC-A1-STALL now reads; the node stays only until B1, B3 and C1 re-point "
                      "their inputs (CHANGE-LOG D-02)", value=0.9, unit="-", status="UNVERIFIED",
                cites=["SRC-K09-CARD"])
+kit.assumption("ASM-A1-POD-GROUP", "Mass that moves with the pod",
+               "Pod shell, tray and hatch, the flight pack and power items, and the avionics move together when "
+               "pod.x_le_m changes",
+               basis="A3 CALC-A3-CG output pod_group_mass_g (subsystems pod + power + avionics), revision A3-R3 "
+                     "2026-11-09. Typed here because A3 publishes it only as a calc output; CR-A1-22 asks A3 for a "
+                     "claim so this node can be retired", value=763.0, unit="g", status="PROPOSED")
+kit.assumption("ASM-A1-POD-ALT", "Pod nose station if the D-17 trigger fires",
+               "The pod moves 20 mm forward to x_le = -0.125 m with the pack centred in it",
+               basis="CHANGE-LOG D-17 (A1 choice)", value=-0.125, unit="m", status="PROPOSED")
+kit.assumption("ASM-A1-POD-WALL", "Pod nose wall thickness ahead of the pack",
+               "Printed PETG / foam-board nose wall between the pack fore face and the pod outside skin",
+               basis="A3 CR-A3-11 option (a) used 3 mm; D2 confirms on the pod drawing", value=0.003, unit="m",
+               status="PROPOSED")
 kit.assumption("ASM-A1-WALL", "Box wall and lining 25 mm per side",
                "The transport box loses 25 mm per side to plywood/corrugated wall plus foam lining",
                basis="1/4 in ply + ~18 mm foam; D7 re-derives with the real box", value=0.025, unit="m",
@@ -86,6 +99,45 @@ def box_fit(ext, wall, env):
     envs = sorted(env, reverse=True)
     slack = [i - e for i, e in zip(inner, envs)]
     return {"internal_m": inner, "slack_m": slack, "slack_min_m": min(slack)}
+
+
+# ---------------------------------------------------------------- D-17 pod-station rule
+@kit.calc("CALC-A1-POD-RULE", title="D-17 pod-station trigger and the -0.125 m fallback",
+          assumes=["ASM-A1-POD-GROUP", "ASM-A1-POD-ALT", "ASM-A1-POD-WALL", "ASM-A1-WALL"],
+          equation="x_pc = pod_le + L_pod/2 ; cg_centred = x_t + (m_p/M)(x_pc - x_req) ; "
+                   "trigger: move the pod if x_aft < cg_centred ; "
+                   "cg_alt = cg_centred + (m_grp/M)(x_alt - pod_le) ; "
+                   "room_fwd_alt = (x_alt + L_pod/2 - L_p/2) - (x_alt + wall) ; "
+                   "box_x_slack_alt = (ext_2nd - 2 wall_box) - (env_2nd + pod_le - x_alt)",
+          inputs={"x_t": "CL-B3-CG-TARGET", "x_req": "CL-A3-PACK-X-REQ", "M": "CL-A3-MASS-BASIC",
+                  "m_p": P + "battery.mass_kg", "pack": P + "battery.size_m", "pod_le": P + "pod.x_le_m",
+                  "pod": P + "pod.size_m", "m_grp": "ASM-A1-POD-GROUP", "x_alt": "ASM-A1-POD-ALT",
+                  "wall": "ASM-A1-POD-WALL", "x_aft": "CL-B3-CG-AFT", "x_fwd": "CL-B3-CG-FWD",
+                  "ext": P + "requirements.box_external_m", "wall_box": "ASM-A1-WALL",
+                  "env": P + "transport.envelope_props_off_m"},
+          units={"x_t": "m", "x_req": "m", "M": "kg", "m_p": "kg", "pack": "m", "pod_le": "m", "pod": "m",
+                 "m_grp": "g", "x_alt": "m", "wall": "m", "x_aft": "m", "x_fwd": "m", "ext": "m",
+                 "wall_box": "m", "env": "m"})
+def pod_rule(x_t, x_req, M, m_p, pack, pod_le, pod, m_grp, x_alt, wall, x_aft, x_fwd, ext, wall_box, env):
+    L_pod, L_p = pod[0], pack[0]
+    x_pc = pod_le + L_pod / 2
+    cg_centred = x_t + (m_p / M) * (x_pc - x_req)                 # pack centred in the pod at the held station
+    cg_alt = cg_centred + (m_grp / 1000.0 / M) * (x_alt - pod_le)  # whole pod group moved, pack still centred
+    x_pc_alt = x_alt + L_pod / 2
+    inner = sorted((e - 2 * wall_box for e in ext), reverse=True)
+    envs = sorted(env, reverse=True)                               # env[1] = pod nose to foot tips (x)
+    pack_fwd_need = (cg_centred - x_t) * M / m_p                   # pack ahead of the pod centre to reach x_t
+    held_room = (x_pc - L_p / 2) - (pod_le + wall)                 # forward slide available at the held station
+    return {"cg_pack_centred_m": cg_centred,
+            "pack_fwd_need_m": pack_fwd_need, "held_fwd_room_m": held_room,
+            "held_room_left_m": held_room - pack_fwd_need,         # < 0: the pack cannot reach the target (CR-A3-11)
+            "trigger_margin_m": x_aft - cg_centred,                # < 0: the move is indicated by the stored range
+            "cg_alt_m": cg_alt,
+            "alt_aft_margin_m": x_aft - cg_alt, "alt_fwd_margin_m": cg_alt - x_fwd,
+            "pack_fwd_room_alt_m": (x_pc_alt - L_p / 2) - (x_alt + wall),
+            "pack_aft_room_alt_m": (x_alt + L_pod) - (x_pc_alt + L_p / 2) - wall,
+            "box_x_slack_now_m": inner[1] - envs[1],
+            "box_x_slack_alt_m": inner[1] - (envs[1] + pod_le - x_alt)}
 
 
 # ---------------------------------------------------------------- mass and the gate cases
@@ -179,7 +231,33 @@ kit.claim("CL-A1-RESERVE", "Pessimistic reserve at order", calc="CALC-A1-RESERVE
           limit=(">=", P + "requirements.crash_cost_usd"), verifies=["R-RESERVE", "R-BUDGET"],
           how="I1 re-prices the BOM at order time; reserve = 2 000 - spend, pessimistic column.")
 
-kit.test("T-A1-WEIGH", "Weigh the assembled aircraft", verifies=["CL-A1-MASS-SIZED"], state="planned",
+kit.claim("CL-A1-POD-TRIGGER", "D-17 trigger: CG with the pack centred in the pod at the held station (x_le -0.105 m)",
+          calc="CALC-A1-POD-RULE", output="cg_pack_centred_m", unit="m",
+          note="Rule part 1 (D-17 as refined in team/A1/HANDOFF.md): if B3's R1 aft limit (CL-B3-CG-AFT) is below this "
+               "value, A1 moves pod.x_le_m to -0.125; part 2 is CL-A1-POD-HELD-ROOM < 0. Supersedes the 0.051 m written in "
+               "D-17 (same rule, current A3/B3 numbers). "
+               "Trigger margin = CL-B3-CG-AFT - this value; the stored CL-B3-CG-AFT is still the R0 value.",
+          how="Recomputes when B3 re-runs sc_analysis.py at R1 (CR-A1-10); then balance the built aircraft with the pack "
+              "centred (T-A3-CG-BALANCE).")
+kit.claim("CL-A1-POD-HELD-ROOM", "Held pod (x_le -0.105): forward pack room left after trimming to the CG target",
+          calc="CALC-A1-POD-RULE", output="held_room_left_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
+          note="D-17 rule part 2: negative means the pack cannot reach CL-B3-CG-TARGET inside the pod nose wall at the "
+               "held station, so the pod moves to -0.125 when B3 publishes the R1 range (CR-A3-11).",
+          how="D2 pod drawing: pack fore face to the inside of the nose wall with the pack at A3's CL-A3-PACK-X-REQ.")
+kit.claim("CL-A1-POD-ALT-AFT", "Fallback pod at -0.125 m, pack centred: CG within the aft limit",
+          calc="CALC-A1-POD-RULE", output="cg_alt_m", unit="m", limit=("<=", "CL-B3-CG-AFT"), verifies=["R-CG-RANGE"],
+          how="A3 re-runs the roll-up with pod.x_le_m -0.125; balance test T-A3-CG-BALANCE on the built aircraft.")
+kit.claim("CL-A1-POD-ALT-FWD", "Fallback pod at -0.125 m, pack centred: CG behind the forward limit",
+          calc="CALC-A1-POD-RULE", output="alt_fwd_margin_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
+          how="As CL-A1-POD-ALT-AFT; the heavy 680 g pack slides aft to re-trim.")
+kit.claim("CL-A1-POD-ALT-PACK-ROOM", "Fallback pod: forward pack slide left inside the nose wall",
+          calc="CALC-A1-POD-RULE", output="pack_fwd_room_alt_m", unit="m", limit=(">=", 0.0),
+          how="D2 pod drawing at x_le -0.125: pack fore face to the inside of the nose wall.")
+kit.claim("CL-A1-POD-ALT-BOX", "Fallback pod: box slack along the chord (pod nose to foot tips, pitot off)",
+          calc="CALC-A1-POD-RULE", output="box_x_slack_alt_m", unit="m", limit=(">=", 0.0), verifies=["R-TRANSPORT"],
+          how="D7 box at 0.50 m inner chordwise length; pitot tube removed for transport.")
+
+kit.test("T-A1-WEIGH","Weigh the assembled aircraft", verifies=["CL-A1-MASS-SIZED"], state="planned",
          procedure="Pack in, props on, 5 kg scale with 1 g resolution; record with the pack's own mass (H1).")
 kit.test("T-A1-THRUST-STATION", "Thrust stand, one station", verifies=["CL-A1-HOVER-TW-GATE", "CL-A1-HOVER-TW-SAG"],
          state="planned", procedure="X3108S + 11x5.5MR on the 20 kg load cell (A/B with the 11x4.5MR), fresh pack then a 20 % pack at 10 degC, 0-100 % in 10 % steps, log gf, A, V and rpm (T-E1-STAND, T-B4-STAND).")

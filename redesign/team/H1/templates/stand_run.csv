@@ -1,0 +1,1 @@
+test_id,date,run,prop,motor_sn,esc_sn,supply,throttle_pct,thrust_gf,torque_arm_gf,torque_nm,rpm_telem,rpm_tach,v_esc,i_a,p_w,can_c,esc_c,ambient_c,pressure_hpa,rh_pct,rho_kgm3,thrust_corr_gf,notes

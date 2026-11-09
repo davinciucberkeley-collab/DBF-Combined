@@ -15,151 +15,222 @@
     "note": "from the coordinate file"
    },
    "upper_zc_at_spar": {
-    "value": 0.07094,
+    "value": 0.07058,
     "unit": "-",
     "source": "SRC-B2-S5010-COORD",
-    "note": "upper surface z/c at x/c = 0.2667"
+    "note": "upper surface z/c at x/c = 0.2500"
    },
    "lower_zc_at_spar": {
-    "value": -0.02713,
+    "value": -0.02703,
     "unit": "-",
     "source": "SRC-B2-S5010-COORD",
-    "note": "lower surface z/c at x/c = 0.2667"
+    "note": "lower surface z/c at x/c = 0.2500"
    }
   },
   "xfoil": {
    "re_stall": {
-    "value": 230000.0,
+    "value": 260000.0,
     "unit": "-",
     "source": "SRC-B2-XFOIL",
-    "note": "Re of the stall polars (V 11.3-11.9 m/s, c 0.30 m)"
+    "note": "Re of the stall polars (12 m/s, c 0.32 m)"
+   },
+   "re_cruise": {
+    "value": 350000.0,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "note": "Re of the cruise polars (cruise speed, c 0.32 m)"
+   },
+   "re_dive": {
+    "value": 450000.0,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "note": "Re of the hinge-moment cases (1.3 x cruise, c 0.32 m)"
    },
    "clmax_2d_re2.3e5": {
     "value": 1.2423,
     "unit": "-",
     "source": "SRC-B2-XFOIL",
-    "note": "elevon neutral, Ncrit 9"
+    "note": "Re 2.3e5 (the c 0.30 m stall Re), elevon neutral, Ncrit 9; kept for J1"
    },
    "cm0_2d_re2.3e5": {
     "value": -0.004,
     "unit": "-",
     "source": "SRC-B2-XFOIL",
-    "note": "about c/4, elevon neutral"
+    "note": "about c/4, Re 2.3e5, elevon neutral; kept for J1 (the c 0.32 value is cm0_2d_stall)"
+   },
+   "clmax_2d_stall": {
+    "value": 1.2563,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "note": "Re 2.6e5, elevon neutral, Ncrit 9"
+   },
+   "cm0_2d_stall": {
+    "value": -0.0007,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "note": "about c/4, Re 2.6e5, elevon neutral"
    },
    "cla_2d_per_rad": {
-    "value": 6.521,
+    "value": 6.612,
     "unit": "1/rad",
     "source": "SRC-B2-XFOIL",
-    "note": "alpha -2..4 deg, Re 2.3e5"
+    "note": "alpha -2..4 deg, Re 2.6e5"
    },
    "alpha0_2d_deg": {
-    "value": -1.23,
+    "value": -1.17,
     "unit": "deg",
     "source": "SRC-B2-XFOIL",
-    "note": "Re 2.3e5, elevon neutral"
+    "note": "Re 2.6e5, elevon neutral"
    },
    "cm_cl07_2d": {
-    "value": -0.0027,
+    "value": -0.0026,
     "unit": "-",
     "source": "SRC-B2-XFOIL",
-    "note": "section cm c/4 at cl 0.7, Re 2.3e5"
+    "note": "section cm c/4 at cl 0.7, Re 2.6e5"
    },
    "clmin_2d": {
-    "value": -0.38,
+    "value": -0.435,
     "unit": "-",
     "source": "SRC-B2-XFOIL",
-    "note": "last converged point of the negative sweep, Re 3e5 (lower-surface separation beyond)"
+    "note": "last converged point of the negative sweep, Re 3.5e5 (lower-surface separation beyond)"
    },
    "elevon_eta": {
     "value": 0.606,
     "unit": "-",
     "source": "SRC-B2-XFOIL",
-    "note": "XFOIL dcm/d(delta) at cl 0.5, -10..0 deg, mean of Re 2.3e5/3.0e5, over thin-airfoil theory"
+    "note": "XFOIL dcm/d(delta) at cl 0.5, -10..0 deg, mean of Re 2.6e5/3.5e5, over thin-airfoil theory"
    },
    "hinge_coef_max": {
     "value": 0.02106,
     "unit": "-",
     "source": "SRC-B2-XFOIL",
-    "note": "max |HMOM/(q c^2)| at +/-25 deg, alpha -4..8 deg, Re 4e5, INVISCID (upper bound); at delta -25, alpha -4; converged viscous max 0.0126"
+    "note": "max |HMOM/(q c^2)| at +/-25 deg, alpha -4..8 deg, Re 4.5e5, INVISCID (upper bound); at delta -25, alpha -4; converged viscous max 0.0125"
    }
   },
   "avl": {
    "dcm_visc": {
-    "value": -0.01033,
+    "value": -0.01025,
     "unit": "-",
     "source": "SRC-B2-AVL",
-    "note": "XFOIL section cm (cl 0.7, Re 2.3e5) minus AVL thin-airfoil Cm_ac; added to AVL Cm"
+    "note": "XFOIL section cm (cl 0.7, Re 2.6e5) minus AVL thin-airfoil Cm_ac; added to AVL Cm"
    },
    "xnp_m": {
-    "value": 0.0695,
+    "value": 0.07376,
     "unit": "m",
     "source": "SRC-B2-AVL",
-    "note": "props-off wing + flat-plate fins, no pod"
+    "note": "props-off wing + flat-plate fins (x 0.045..0.32 m), no pod"
    },
    "cla_per_rad": {
-    "value": 3.5817,
+    "value": 3.4773,
     "unit": "1/rad",
     "source": "SRC-B2-AVL"
    },
    "e_oswald": {
-    "value": 0.9321,
+    "value": 0.9396,
     "unit": "-",
     "source": "SRC-B2-AVL",
     "note": "trimmed parabolic fit CL 0.3-0.9, wing + fins only"
    },
    "cd0_wing": {
-    "value": 0.00738,
+    "value": 0.00685,
     "unit": "-",
     "source": "SRC-B2-AVL",
     "note": "wing section drag only"
    },
    "cnb_per_rad": {
-    "value": -0.1054,
+    "value": 0.0522,
     "unit": "1/rad",
     "source": "SRC-B2-AVL",
-    "note": "AVL stability axes, + = weathercock stable; alpha 4 deg, CG 0.060 m"
+    "note": "AVL stability axes, + = weathercock stable; alpha 4 deg, CG 0.044 m"
    },
    "ybar_frac": {
-    "value": 0.4227,
+    "value": 0.4221,
     "unit": "-",
     "source": "SRC-B2-AVL",
     "note": "half-wing lift centroid / semi-span, trimmed CL 0.9"
    },
    "torsion_root_m_per_N": {
-    "value": 0.02857,
+    "value": 0.02544,
     "unit": "m",
     "source": "SRC-B2-AVL",
     "note": "root torsion about the spar line per N of half-wing lift, nose-up +"
    },
+   "clmax_vs_sm": {
+    "value": [
+     [
+      0.03,
+      0.8634
+     ],
+     [
+      0.04,
+      0.8289
+     ],
+     [
+      0.05,
+      0.7977
+     ],
+     [
+      0.06,
+      0.788
+     ],
+     [
+      0.07,
+      0.7823
+     ],
+     [
+      0.08,
+      0.7768
+     ],
+     [
+      0.09,
+      0.7714
+     ],
+     [
+      0.1,
+      0.766
+     ],
+     [
+      0.11,
+      0.7608
+     ],
+     [
+      0.12,
+      0.7556
+     ]
+    ],
+    "unit": "-",
+    "source": "SRC-B2-AVL",
+    "note": "[static margin, trimmed CLmax (critical section, kd 1)]; static margin about this model's props-off NP; forward CG = larger SM = more up-elevon = lower CLmax"
+   },
    "cs": {
     "cl_over_CL": {
      "value": [
-      1.318,
-      1.306,
-      1.2971,
-      1.2844,
-      1.2596,
-      1.2369,
-      1.2162,
-      1.1964,
-      1.176,
-      1.1542,
-      1.1314,
-      1.1127,
-      1.1061,
-      1.1069,
-      1.0779,
-      1.0569,
-      1.0114,
-      0.9564,
-      0.893,
-      0.8188,
-      0.7282,
-      0.6199,
-      0.4988,
-      0.3786,
-      0.2815,
-      0.245
+      1.3185,
+      1.3068,
+      1.2981,
+      1.2861,
+      1.2626,
+      1.2405,
+      1.22,
+      1.1997,
+      1.1786,
+      1.1559,
+      1.1319,
+      1.1122,
+      1.1044,
+      1.1045,
+      1.0754,
+      1.055,
+      1.0104,
+      0.9555,
+      0.8916,
+      0.8165,
+      0.7253,
+      0.6165,
+      0.4955,
+      0.3756,
+      0.2788,
+      0.2421
      ],
      "unit": "-",
      "source": "SRC-B2-AVL",
@@ -167,36 +238,36 @@
     },
     "clmax_local": {
      "value": [
-      1.2423,
-      1.2423,
-      1.2423,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.2423,
-      1.2423,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.0322,
-      1.2423
+      1.2563,
+      1.2563,
+      1.2563,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.2563,
+      1.2563,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.026,
+      1.2563
      ],
      "unit": "-",
      "source": "SRC-B2-XFOIL",
-     "note": "XFOIL clmax at Re 2.3e5 at each strip's elevon deflection (-9.75 deg on elevon strips)"
+     "note": "XFOIL clmax (lower of Re 2.6e5/3.5e5) at each strip's elevon deflection (-9.76 deg on elevon strips)"
     },
     "y_m": {
      "value": [

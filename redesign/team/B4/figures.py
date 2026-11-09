@@ -71,7 +71,7 @@ def fig_cruise():
         b.append(text(pts[-1][0] + 8, pts[-1][1] + 4, prop, fill=col if col != LINE3 else FG3, mono=True))
     xc = X(v("performance.cruise_ms"))
     b.append(f'<line x1="{xc:.1f}" x2="{xc:.1f}" y1="{y0}" y2="{y0 + ph}" stroke="{LINE3}" stroke-dasharray="6 4"/>')
-    b.append(text(xc + 6, y0 + 16, "cruise 15 m/s", fill=FG3))
+    b.append(text(xc + 6, y0 + 16, f"cruise {v('performance.cruise_ms'):.0f} m/s", fill=FG3))
     return svg(W, H, b)
 
 
@@ -89,15 +89,17 @@ def fig_slipstream():
     mix = 0.08
     b = []
     # fin (ghost) and tube
-    x1, z1 = P(-0.10, 0.19)
-    x2, z2 = P(0.30, -0.19)
+    xt, dt = v("propulsion.stations.x_mount_m"), v("fins.tube.od_m")
+    x1, z1 = P(xt, zm)
+    x2, z2 = P(v("fins.te_x_m"), -zm)
     b.append(f'<rect x="{x1:.1f}" y="{z1:.1f}" width="{x2 - x1:.1f}" height="{z2 - z1:.1f}" fill="{LINE}" '
              f'stroke="{LINE3}" stroke-width="0.75"/>')
-    tx, tz = P(-0.111, 0.21)
-    b.append(f'<rect x="{tx:.1f}" y="{tz:.1f}" width="{0.022 * s:.1f}" height="{0.42 * s:.1f}" fill="{LINE3}"/>')
-    # wing section (MH45-ish thickness envelope) and elevon
-    up = [P(c * t, 0.0985 * c * 2.9 * math.sqrt(t) * (1 - t) * 0.55) for t in [i / 40 for i in range(41)]]
-    lo = [P(c * t, -0.0985 * c * 2.9 * math.sqrt(t) * (1 - t) * 0.45) for t in [i / 40 for i in range(40, -1, -1)]]
+    tx, tz = P(xt - dt / 2, zm)
+    b.append(f'<rect x="{tx:.1f}" y="{tz:.1f}" width="{dt * s:.1f}" height="{2 * zm * s:.1f}" fill="{LINE3}"/>')
+    # wing section (S5010 coordinates from B2) and elevon
+    afu, afl = pp._airfoil_surfaces()
+    up = [P(c * xx, c * zz) for xx, zz in afu]
+    lo = [P(c * xx, c * zz) for xx, zz in reversed(afl)]
     b.append('<polygon fill="#D6DCE4" stroke="' + FG + '" stroke-width="1.5" points="' +
              " ".join(f"{x:.1f},{y:.1f}" for x, y in up + lo) + '"/>')
     hx, hz = P(c * (1 - fe), 0)
@@ -126,8 +128,9 @@ def fig_slipstream():
     b.append(f'<line x1="{gx:.1f}" y1="{gz:.1f}" x2="{gx2:.1f}" y2="{gz2:.1f}" stroke="{ACC}" stroke-width="1.25"/>')
     b.append(text(gx + 8, (gz + gz2) / 2 + 4, f"{gap * 1000:.0f} mm clear", fill=ACC, mono=True))
     # pitot (pod nose, y = 0, drawn projected)
-    px, pz = P(-0.10, 0.045)
-    px2, pz2 = P(-0.02, 0.045)
+    tip_x, tip_z = RES["CALC-B4-PITOT"]["tip_x_m"], RES["CALC-B4-PITOT"]["tip_z_m"]
+    px, pz = P(tip_x, tip_z)
+    px2, pz2 = P(v("pod.x_le_m"), tip_z)
     b.append(f'<line x1="{px:.1f}" y1="{pz:.1f}" x2="{px2:.1f}" y2="{pz2:.1f}" stroke="{HL}" stroke-width="2"/>')
     b.append(text(px - 6, pz - 8, "pitot (y = 0)", fill=HL, anchor="end"))
     b.append(text(P(xp, zm + Rr)[0], P(xp, zm + Rr)[1] - 10, "prop plane", fill=FG3, anchor="middle"))

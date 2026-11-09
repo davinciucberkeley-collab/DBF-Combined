@@ -1,24 +1,37 @@
 # Interface plan — K09-L quad tailsitter
 
-Status: `PROPOSED` (A4, 2026-11-09). Every part id and every joint the aircraft needs, who declares it, who
-acknowledges it, who designs and sizes it, and the data it must carry. Owners copy their rows into
-`subsystems/<key>/interfaces.json` (schema `redesign/interfaces/SCHEMA.md`); A4 merges with
-`redesign/interfaces/merge_check.py` and compares against this plan with `interface_plan.py --compare`.
+Status: `PROPOSED`, plan revision **A4-R2** on design frame A1-R2 (A4, 2026-11-09). Every part id and every joint
+the aircraft needs, who declares it, who acknowledges it, who designs and sizes it, and the data it must carry.
+Owners copy their rows into `subsystems/<key>/interfaces.json` (schema `redesign/interfaces/SCHEMA.md`); A4 merges
+with `redesign/interfaces/merge_check.py` and compares against this plan with `interface_plan.py --compare`.
 Source of the tables below: `redesign/team/A4/interface_plan.py` (machine copy `interface_plan.json`).
+
+## What changed in A4-R2
+
+| Change | Why | Ids |
+|---|---|---|
+| Fins split into four half-fins, one per station | D-04: tube through the core at x 0.045, upper and lower half-fins behind it | `FIN-001-UR/UL/LR/LL` replace `FIN-001-L/R`; clip sets `FIN-005-<station>` replace `FIN-005-L/R`; new edges `E-FIN-33…38` |
+| Tube-to-spar saddle becomes the through-core block, all its joints bonded | D-04, README joint table: tube bore and spar bore 35 mm apart, bonded in a core cut-out | `FIN-004-L/R` re-scoped; `E-FIN-07…12` kept; `E-FIN-07/08/10/11` clamp → bond |
+| Ownership rules D-20 applied | an owner holds a side; harness owns every wire, `power` the boxes; the hinge is a wing edge; electrical `part_a` = supply | `E-WNG-04…07` (wing), `E-HRN-10…32` (harness); closes OI-11 |
+| Per-unit mass and instance-id rule (CR-A3-09) checked by `id_rule()`; `9xx` reserved for the skeleton (CR-A5-04) | `mass_rollup.py` and `steps_lib.py` map instances to `parts.csv` lines by id | `CL-A4-PLAN-ID-RULE` |
+| Pitot on the pod nose, plug-in boom removed for transport | D-15, README field steps | `POD-006` socket; `E-AVN-05` bond → plug-in (`CT-PLUG-IN`); new `E-TRN-12`; closes OI-07, opens OI-12 |
+| Carry point and label on the pod | D-23 | new `POD-007`, `E-POD-08` |
+| Station numbers updated | A1-R2 frame: hinge x 0.2496, mount face 0.034, feet to x 0.365, prop 11×5.5MR; currents read from `params.json` | text only |
 
 ## Rules
 
 | Rule | Value | Source |
 |---|---|---|
-| Frame | metres; origin wing root LE on the chord line; x aft, y right, z up in cruise; hover: +x points at the ground | `params.json#frame` |
-| Part ids | `<PREFIX>-NNN[-suffix]`; suffix `-L`/`-R` per side, `-UR -UL -LR -LL` per motor station | `README.md`, `params.json#propulsion.stations.ids` |
-| Edge ids | `E-<owner prefix>-NN`, numbered as in the register; do not renumber, retire unused ids | this plan |
-| Who declares | the owner in the register; the owner is one side, except harness, which declares every wire | `README.md` joint table |
+| Frame | metres; origin wing root LE on the chord line; x aft, y right, z up in cruise; hover: +x points at the ground | `params.json#frame`, `fusion/DATUMS.md` |
+| Part ids | `<PREFIX>-NNN`; a multi-instance part has one node per instance `<PREFIX>-NNN-<UR\|UL\|LR\|LL\|L\|R>`, one suffix family per part number; two different parts on one side get two numbers; `NNN` 001–899, `9xx` reserved for `fusion/skeleton/` | README, CR-A3-09, CR-A5-04, `id_rule()` |
+| Mass | `parts.csv mass_g` is per unit (line = qty × `mass_g`); each instance node carries that unit mass and its own `cg_xyz_m`; qty = number of nodes | README, CR-A3-09 |
+| Edge ids | `E-<owner prefix>-NN`, as in the register; a joint that survives a layout change keeps its id, new joints take the next free number, retired ids are never reused | this plan |
+| Who declares | the owner in the register; the owner holds one side of its edge, except `harness`, which declares every wire; `power` owns the boxes; the elevon hinge is a `wing` edge (D6 designs) | CHANGE-LOG D-20, README joint table |
 | Who acknowledges | every other subsystem that holds a side lists the edge id under `acknowledges` | `SCHEMA.md` |
-| Electrical direction | `part_a` is the supply side, `part_b` the load; signal-only leads carry `"signal_only": true` | this plan (power-path check) |
+| Electrical direction | `part_a` is the supply side, `part_b` the load; signal-only leads carry `"signal_only": true` | D-20, `SCHEMA.md` |
 | Load path | ties, tape channels, labels and pitot tubing locate a part but never count as its structural support | this plan (load-path check) |
 | Wires | an electrical edge runs end part to end part and *is* the installation (`wire` block + `ctx.wire` route); harness mass sits in three lumped bundle parts (`HRN-001`, `HRN-002-L/R`) tied to structure | `ADVISOR-XV24-LESSONS.md` lesson 3 |
-| Field disconnects | exactly one: the pack plug `E-HRN-10`; every other electrical joint is soldered or a service connector | `params.json#electrical.field_disconnects`, P18 |
+| Field disconnects | exactly one electrical: the pack plug `E-HRN-10`. Field joints (made at every set-up, `field_joint`): 4 prop nuts `E-PRP-05…08`, pitot boom `E-AVN-05`, pack strap `E-POD-05` | `params.json#electrical.field_disconnects`, `#transport.field_steps` |
 | Moving joints | no wire crosses a moving joint: both servos sit in the fixed core, so no `slack_mm` is needed | this plan |
 | Deviations | an owner may change a joint type or split a part; state why in the edge `notes`; `--compare` lists it and A4 updates the plan | — |
 | Status | parts and edges start `PROPOSED`; `MODELLED` in Fusion, `CHECKED` by `check.py`/calc, `VERIFIED` on the bench | `BRIEF.md` |
@@ -37,41 +50,42 @@ object, checked by `interface_plan.py --compare` (reported as owed until filled)
 | hinged | `motion` + `clearance_mm` | axis, range_deg; clearance at both stops; hinge_moment_nmm | merge_check (motion) · `--compare` · B2/D6 |
 | connector · soldered | `wire` + `current_a` or `signal` | gauge_awg, connector, route_id, support_points, bend_radius_mm, strain_relief, disconnect; power: current_a {cont, peak}; signal: {fc_port, protocol, i2c_addr} | merge_check (wire) · `--compare` · F1/F2/F3 |
 | conductive (thermal) | `thermal` | heat_w, t_max_c, t_ambient_c, path, sized_by | `--compare` · E3 |
+| any field joint | `field_joint: true` | marks a joint made at every field set-up (H2 times them) | `interface_plan.py` |
 
 <!-- BEGIN GENERATED REGISTER (interface_plan.py) -->
 
 Generated by `python -I redesign/team/A4/interface_plan.py` from the plan in that script. Do not edit by hand.
 
-| Parts (flight) | Interfaces | Cross-subsystem | Connected (load path) | Powered (power wires) | Field disconnects | Plan errors | Schema blocks owed | Masses owed |
-|---|---|---|---|---|---|---|---|---|
-| 82 (77) | 125 | 78 | 100 % | 100 % | 1 | 0 | 42 | 77 |
+| Parts (flight) | Interfaces | Cross-subsystem | Connected (load path) | Powered (power wires) | Field disconnects (field joints) | Id-rule breaches | Plan errors | Schema blocks owed | Masses owed |
+|---|---|---|---|---|---|---|---|---|---|
+| 87 (82) | 133 | 81 | 100 % | 100 % | 1 (7) | 0 | 0 | 42 | 82 |
 
 ## N² matrix
 
-Interfaces between each pair of subsystems (diagonal: internal joints). Read a row: who this subsystem must agree with. Wires count under the two subsystems they join; harness (`HRN`) declares all 23 of them.
+Interfaces between each pair of subsystems (diagonal: internal joints). Read a row: who this subsystem must agree with. Wires count under the two subsystems they join; harness (`HRN`) declares all 23 of them (D-20).
 
 | | WNG | FIN | POD | GER | PRP | PWR | AVN | HRN | MEC | TRN |
 |---|---|---|---|---|---|---|---|---|---|---|
-| **WNG** | 7 | 6 | 1 | · | · | · | · | 2 | 10 | 3 |
-| **FIN** | 6 | 14 | · | 4 | 12 | · | · | 2 | · | · |
-| **POD** | 1 | · | 5 | · | · | 5 | 5 | 1 | · | · |
+| **WNG** | 7 | 8 | 1 | · | · | · | · | 2 | 10 | 3 |
+| **FIN** | 8 | 18 | · | 4 | 12 | · | · | 2 | · | · |
+| **POD** | 1 | · | 6 | · | · | 5 | 5 | 1 | · | · |
 | **GER** | · | 4 | · | · | · | · | · | · | · | · |
 | **PRP** | · | 12 | · | · | 12 | 4 | 4 | · | · | 4 |
 | **PWR** | · | · | 5 | · | 4 | 4 | 2 | · | · | · |
-| **AVN** | · | · | 5 | · | 4 | 2 | 4 | · | 2 | · |
+| **AVN** | · | · | 5 | · | 4 | 2 | 4 | · | 2 | 1 |
 | **HRN** | 2 | 2 | 1 | · | · | · | · | · | · | · |
 | **MEC** | 10 | · | · | · | · | · | 2 | · | 8 | · |
-| **TRN** | 3 | · | · | · | 4 | · | · | · | · | 4 |
+| **TRN** | 3 | · | · | · | 4 | · | 1 | · | · | 4 |
 
 ## Part ids reserved
 
-One node per physical instance. Stations `UR UL LR LL` = upper/lower, right/left (`params.json#propulsion.stations.ids`).
+One node per physical instance, id `<PREFIX>-NNN-<UR|UL|LR|LL|L|R>`; all instances of a part are one `parts.csv` line with `mass_g` per unit (CR-A3-09). Stations `UR UL LR LL` = upper/lower, right/left (`params.json#propulsion.stations.ids`); a half-fin takes the station it carries. `NNN` 001–899; `9xx` is reserved for `fusion/skeleton/` (CR-A5-04).
 
 | Subsystem | Designer | Prefix | Parts | Ids |
 |---|---|---|---|---|
 | `wing` | D1 | `WNG` | 8 | `WNG-001` `WNG-002` `WNG-003` `WNG-011-L` `WNG-012-L` `WNG-011-R` `WNG-012-R` `WNG-020` |
-| `fins` | D3 | `FIN` | 16 | `FIN-001-L` `FIN-002-L` `FIN-004-L` `FIN-005-L` `FIN-001-R` `FIN-002-R` `FIN-004-R` `FIN-005-R` `FIN-003-UR` `FIN-007-UR` `FIN-003-UL` `FIN-007-UL` `FIN-003-LR` `FIN-007-LR` `FIN-003-LL` `FIN-007-LL` |
-| `pod` | D2 | `POD` | 6 | `POD-001` `POD-002` `POD-003` `POD-004` `POD-005` `POD-006` |
+| `fins` | D3 | `FIN` | 20 | `FIN-001-UR` `FIN-001-UL` `FIN-001-LR` `FIN-001-LL` `FIN-002-L` `FIN-004-L` `FIN-002-R` `FIN-004-R` `FIN-003-UR` `FIN-005-UR` `FIN-007-UR` `FIN-003-UL` `FIN-005-UL` `FIN-007-UL` `FIN-003-LR` `FIN-005-LR` `FIN-007-LR` `FIN-003-LL` `FIN-005-LL` `FIN-007-LL` |
+| `pod` | D2 | `POD` | 7 | `POD-001` `POD-002` `POD-003` `POD-004` `POD-005` `POD-006` `POD-007` |
 | `landing` | D5 | `GER` | 4 | `GER-001-UR` `GER-001-UL` `GER-001-LR` `GER-001-LL` |
 | `propulsion` | E1 | `PRP` | 16 | `PRP-001-UR` `PRP-002-UR` `PRP-003-UR` `PRP-004-UR` `PRP-001-UL` `PRP-002-UL` `PRP-003-UL` `PRP-004-UL` `PRP-001-LR` `PRP-002-LR` `PRP-003-LR` `PRP-004-LR` `PRP-001-LL` `PRP-002-LL` `PRP-003-LL` `PRP-004-LL` |
 | `power` | F1 | `PWR` | 5 | `PWR-001` `PWR-002` `PWR-003` `PWR-004` `PWR-005` |
@@ -81,6 +95,8 @@ One node per physical instance. Stations `UR UL LR LL` = upper/lower, right/left
 | `transport` | D7 | `TRN` | 5 | `TRN-001` `TRN-002-L` `TRN-002-R` `TRN-003` `TRN-004` |
 | `flight-software` | F4 | `FSW` | 0 | no parts: data interfaces below |
 
+Retired ids (never reuse): `FIN-001-L` split into half-fins FIN-001-UL / -LL (D-04); `FIN-001-R` split into FIN-001-UR / -LR (D-04); `FIN-005-L` clip set per half-fin: FIN-005-UL / -LL; `FIN-005-R` clip set per half-fin: FIN-005-UR / -LR.
+
 ## Interface register
 
 Declared by the owner in `subsystems/<owner>/interfaces.json`; each subsystem in *Ack* lists the id under `acknowledges`. *By* = designs · sizes. *Must carry* is in addition to the per-method block above. `OI-nn` = open issue below.
@@ -89,71 +105,78 @@ Declared by the owner in `subsystems/<owner>/interfaces.json`; each subsystem in
 
 | Edge | Side A | Side B | Kind · method · type | Ack | By | Must carry |
 |---|---|---|---|---|---|---|
-| `E-WNG-01` | `WNG-002` Spar CF 22x20x1000 | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | — | D1 · C2 | slot fit (22.2 mm `EST`), bond length 1 000 mm, spar bending load into core |
+| `E-WNG-01` | `WNG-002` Spar CF 22x20x1000 | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | — | D1 · C2 | slot fit (22.2 mm `EST`), bond length 1 000 mm, spar centre z +0.0066 m (D-03), spar bending load into core |
 | `E-WNG-02` | `WNG-003` Tape skin | `WNG-001` Wing core, one piece (XPS) | mechanical · taped · `CT-TAPE-SKIN` | — | D1 · G2 | strip layout, overlap 10 %, wrap at LE/TE |
 | `E-WNG-03` | `WNG-020` FAA registration label | `WNG-003` Tape skin | mechanical · taped · `CT-LABEL` | — | D1 · H3 | position visible without tools (FAA) |
-| `E-WNG-04` | `WNG-011-L` Elevon inboard L | `WNG-001` Wing core, one piece (XPS) | kinematic · hinged · `CT-TAPE-HINGE` | — | D6 designs · B2 hinge moment | motion Y [-25, 25]°; hinge line x 0.234 m, gap to fin board, throw ±25° to stops (OI-03) |
-| `E-WNG-05` | `WNG-012-L` Elevon outboard L | `WNG-001` Wing core, one piece (XPS) | kinematic · hinged · `CT-TAPE-HINGE` | — | D6 designs · B2 hinge moment | motion Y [-25, 25]°; hinge line x 0.234 m, gap to fin board, throw ±25° to stops (OI-03) |
-| `E-WNG-06` | `WNG-011-R` Elevon inboard R | `WNG-001` Wing core, one piece (XPS) | kinematic · hinged · `CT-TAPE-HINGE` | — | D6 designs · B2 hinge moment | motion Y [-25, 25]°; hinge line x 0.234 m, gap to fin board, throw ±25° to stops (OI-03) |
-| `E-WNG-07` | `WNG-012-R` Elevon outboard R | `WNG-001` Wing core, one piece (XPS) | kinematic · hinged · `CT-TAPE-HINGE` | — | D6 designs · B2 hinge moment | motion Y [-25, 25]°; hinge line x 0.234 m, gap to fin board, throw ±25° to stops (OI-03) |
+| `E-WNG-04` | `WNG-011-L` Elevon inboard L | `WNG-001` Wing core, one piece (XPS) | kinematic · hinged · `CT-TAPE-HINGE` | — | D6 designs · B2 hinge moment | motion Y [-25, 25]°; hinge line x 0.2496 m, panel y 0.07–0.30 m, 20 mm end gap to the half-fin, throw ±25° to stops (OI-03) |
+| `E-WNG-05` | `WNG-012-L` Elevon outboard L | `WNG-001` Wing core, one piece (XPS) | kinematic · hinged · `CT-TAPE-HINGE` | — | D6 designs · B2 hinge moment | motion Y [-25, 25]°; hinge line x 0.2496 m, panel y 0.34–0.56 m, 20 mm end gap to the half-fin, throw ±25° to stops (OI-03) |
+| `E-WNG-06` | `WNG-011-R` Elevon inboard R | `WNG-001` Wing core, one piece (XPS) | kinematic · hinged · `CT-TAPE-HINGE` | — | D6 designs · B2 hinge moment | motion Y [-25, 25]°; hinge line x 0.2496 m, panel y 0.07–0.30 m, 20 mm end gap to the half-fin, throw ±25° to stops (OI-03) |
+| `E-WNG-07` | `WNG-012-R` Elevon outboard R | `WNG-001` Wing core, one piece (XPS) | kinematic · hinged · `CT-TAPE-HINGE` | — | D6 designs · B2 hinge moment | motion Y [-25, 25]°; hinge line x 0.2496 m, panel y 0.34–0.56 m, 20 mm end gap to the half-fin, throw ±25° to stops (OI-03) |
 
-### fins (D3, 32)
+### fins (D3, 38)
 
 | Edge | Side A | Side B | Kind · method · type | Ack | By | Must carry |
 |---|---|---|---|---|---|---|
-| `E-FIN-01` | `FIN-001-L` Fin L (foam board) | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C4 · D1 | core slot or half-fin roots, bond area, fin-tip landing load into core (OI-01) |
-| `E-FIN-02` | `FIN-001-R` Fin R (foam board) | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C4 · D1 | core slot or half-fin roots, bond area, fin-tip landing load into core (OI-01) |
-| `E-FIN-03` | `FIN-005-L` Fin-to-tube clip set L | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip bore on 22 mm OD, spacing along the tube (OI-01) |
-| `E-FIN-04` | `FIN-005-L` Fin-to-tube clip set L | `FIN-001-L` Fin L (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip to foam-board faces, 22 mm spacer or wedge (OI-01) |
-| `E-FIN-05` | `FIN-005-R` Fin-to-tube clip set R | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip bore on 22 mm OD, spacing along the tube (OI-01) |
-| `E-FIN-06` | `FIN-005-R` Fin-to-tube clip set R | `FIN-001-R` Fin R (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip to foam-board faces, 22 mm spacer or wedge (OI-01) |
-| `E-FIN-07` | `FIN-004-L` Tube-to-spar saddle L | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | clamp on tube at z = 0, hover thrust 4 × table max into the saddle (OI-02) |
-| `E-FIN-08` | `FIN-004-L` Tube-to-spar saddle L | `WNG-002` Spar CF 22x20x1000 | mechanical · clamped · `CT-TUBE-CLAMP` | wing | D3 · C4 · C2 · C6 | spar access cut-out in core at y = ±0.32 m, 0.18 m offset moment (OI-02) |
-| `E-FIN-09` | `FIN-004-L` Tube-to-spar saddle L | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C2 | bearing pad area on core (foam bearing stress) (OI-02) |
-| `E-FIN-10` | `FIN-004-R` Tube-to-spar saddle R | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | clamp on tube at z = 0, hover thrust 4 × table max into the saddle (OI-02) |
-| `E-FIN-11` | `FIN-004-R` Tube-to-spar saddle R | `WNG-002` Spar CF 22x20x1000 | mechanical · clamped · `CT-TUBE-CLAMP` | wing | D3 · C4 · C2 · C6 | spar access cut-out in core at y = ±0.32 m, 0.18 m offset moment (OI-02) |
-| `E-FIN-12` | `FIN-004-R` Tube-to-spar saddle R | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C2 | bearing pad area on core (foam bearing stress) (OI-02) |
-| `E-FIN-13` | `FIN-003-UR` Motor mount UR | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | mount at z = ±0.19 m, face at x = -0.10 m, anti-rotation on the tube |
-| `E-FIN-14` | `FIN-003-UL` Motor mount UL | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | mount at z = ±0.19 m, face at x = -0.10 m, anti-rotation on the tube |
-| `E-FIN-15` | `FIN-003-LR` Motor mount LR | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | mount at z = ±0.19 m, face at x = -0.10 m, anti-rotation on the tube |
-| `E-FIN-16` | `FIN-003-LL` Motor mount LL | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | mount at z = ±0.19 m, face at x = -0.10 m, anti-rotation on the tube |
-| `E-FIN-17` | `PRP-001-UR` Motor UR X3108S | `FIN-003-UR` Motor mount UR | mechanical · fastened · `CT-M3-SHCS-MOTOR` | propulsion | D3 · E1 · C6 | motor bolt pattern (E1), max screw length clear of windings, threadlocker |
-| `E-FIN-18` | `PRP-001-UL` Motor UL X3108S | `FIN-003-UL` Motor mount UL | mechanical · fastened · `CT-M3-SHCS-MOTOR` | propulsion | D3 · E1 · C6 | motor bolt pattern (E1), max screw length clear of windings, threadlocker |
-| `E-FIN-19` | `PRP-001-LR` Motor LR X3108S | `FIN-003-LR` Motor mount LR | mechanical · fastened · `CT-M3-SHCS-MOTOR` | propulsion | D3 · E1 · C6 | motor bolt pattern (E1), max screw length clear of windings, threadlocker |
-| `E-FIN-20` | `PRP-001-LL` Motor LL X3108S | `FIN-003-LL` Motor mount LL | mechanical · fastened · `CT-M3-SHCS-MOTOR` | propulsion | D3 · E1 · C6 | motor bolt pattern (E1), max screw length clear of windings, threadlocker |
-| `E-FIN-21` | `FIN-007-UR` ESC pad UR | `FIN-001-R` Fin R (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 | pad position in the prop wash, near the motor |
-| `E-FIN-22` | `FIN-007-UL` ESC pad UL | `FIN-001-L` Fin L (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 | pad position in the prop wash, near the motor |
-| `E-FIN-23` | `FIN-007-LR` ESC pad LR | `FIN-001-R` Fin R (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 | pad position in the prop wash, near the motor |
-| `E-FIN-24` | `FIN-007-LL` ESC pad LL | `FIN-001-L` Fin L (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 | pad position in the prop wash, near the motor |
+| `E-FIN-01` | `FIN-001-UL` Half-fin UL (foam board) | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C4 · D1 | half-fin root bonded + taped to core skin and the block face; fin-tip landing load into core |
+| `E-FIN-02` | `FIN-001-UR` Half-fin UR (foam board) | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C4 · D1 | half-fin root bonded + taped to core skin and the block face; fin-tip landing load into core |
+| `E-FIN-03` | `FIN-005-UL` Fin-to-tube clip set UL | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip bore on 22 mm OD, spacing along the tube; with the bonded fin lifts the tube mode out of 80–330 Hz (P25) (OI-01) |
+| `E-FIN-04` | `FIN-005-UL` Fin-to-tube clip set UL | `FIN-001-UL` Half-fin UL (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip to foam-board faces, LE wedge on the tube |
+| `E-FIN-05` | `FIN-005-UR` Fin-to-tube clip set UR | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip bore on 22 mm OD, spacing along the tube; with the bonded fin lifts the tube mode out of 80–330 Hz (P25) (OI-01) |
+| `E-FIN-06` | `FIN-005-UR` Fin-to-tube clip set UR | `FIN-001-UR` Half-fin UR (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip to foam-board faces, LE wedge on the tube |
+| `E-FIN-07` | `FIN-004-L` Through-core block L (PETG) | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 · C6 | vertical bore on the 22 mm tube at x 0.045, bonded plug (a clamp is an allowed deviation); fin-joint moment C1 G2 10.7 N·m (OI-01) |
+| `E-FIN-08` | `FIN-004-L` Through-core block L (PETG) | `WNG-002` Spar CF 22x20x1000 | mechanical · bonded · `CT-EPOXY` | wing | D3 · C4 · C2 | spanwise bore on the spar at x 0.080, z +0.0066; spar bearing (C2); tube-to-spar 35 mm (OI-02) |
+| `E-FIN-09` | `FIN-004-L` Through-core block L (PETG) | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C2 · D1 | core cut-out at y = ±0.32 m, bond area, foam bearing stress (OI-02) |
+| `E-FIN-10` | `FIN-004-R` Through-core block R (PETG) | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 · C6 | vertical bore on the 22 mm tube at x 0.045, bonded plug (a clamp is an allowed deviation); fin-joint moment C1 G2 10.7 N·m (OI-01) |
+| `E-FIN-11` | `FIN-004-R` Through-core block R (PETG) | `WNG-002` Spar CF 22x20x1000 | mechanical · bonded · `CT-EPOXY` | wing | D3 · C4 · C2 | spanwise bore on the spar at x 0.080, z +0.0066; spar bearing (C2); tube-to-spar 35 mm (OI-02) |
+| `E-FIN-12` | `FIN-004-R` Through-core block R (PETG) | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C2 · D1 | core cut-out at y = ±0.32 m, bond area, foam bearing stress (OI-02) |
+| `E-FIN-13` | `FIN-003-UR` Motor mount UR (3 deg cant) | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | mount at z = ±0.19 m, plate face x 0.034, 3° tangential cant (D-09), anti-rotation key; slip above the 3.2 N·m prop-nut case (CR-C1-11) and below the tube's strength (D-23) |
+| `E-FIN-14` | `FIN-003-UL` Motor mount UL (3 deg cant) | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | mount at z = ±0.19 m, plate face x 0.034, 3° tangential cant (D-09), anti-rotation key; slip above the 3.2 N·m prop-nut case (CR-C1-11) and below the tube's strength (D-23) |
+| `E-FIN-15` | `FIN-003-LR` Motor mount LR (3 deg cant) | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | mount at z = ±0.19 m, plate face x 0.034, 3° tangential cant (D-09), anti-rotation key; slip above the 3.2 N·m prop-nut case (CR-C1-11) and below the tube's strength (D-23) |
+| `E-FIN-16` | `FIN-003-LL` Motor mount LL (3 deg cant) | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · clamped · `CT-TUBE-CLAMP` | — | D3 · C4 · C6 | mount at z = ±0.19 m, plate face x 0.034, 3° tangential cant (D-09), anti-rotation key; slip above the 3.2 N·m prop-nut case (CR-C1-11) and below the tube's strength (D-23) |
+| `E-FIN-17` | `PRP-001-UR` Motor UR X3108S | `FIN-003-UR` Motor mount UR (3 deg cant) | mechanical · fastened · `CT-M3-SHCS-MOTOR` | propulsion | D3 · E1 · C6 | motor bolt pattern (E1), max screw length clear of windings, threadlocker |
+| `E-FIN-18` | `PRP-001-UL` Motor UL X3108S | `FIN-003-UL` Motor mount UL (3 deg cant) | mechanical · fastened · `CT-M3-SHCS-MOTOR` | propulsion | D3 · E1 · C6 | motor bolt pattern (E1), max screw length clear of windings, threadlocker |
+| `E-FIN-19` | `PRP-001-LR` Motor LR X3108S | `FIN-003-LR` Motor mount LR (3 deg cant) | mechanical · fastened · `CT-M3-SHCS-MOTOR` | propulsion | D3 · E1 · C6 | motor bolt pattern (E1), max screw length clear of windings, threadlocker |
+| `E-FIN-20` | `PRP-001-LL` Motor LL X3108S | `FIN-003-LL` Motor mount LL (3 deg cant) | mechanical · fastened · `CT-M3-SHCS-MOTOR` | propulsion | D3 · E1 · C6 | motor bolt pattern (E1), max screw length clear of windings, threadlocker |
+| `E-FIN-21` | `FIN-007-UR` ESC pad UR | `FIN-001-UR` Half-fin UR (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 | pad on the half-fin in the prop wash, near the motor |
+| `E-FIN-22` | `FIN-007-UL` ESC pad UL | `FIN-001-UL` Half-fin UL (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 | pad on the half-fin in the prop wash, near the motor |
+| `E-FIN-23` | `FIN-007-LR` ESC pad LR | `FIN-001-LR` Half-fin LR (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 | pad on the half-fin in the prop wash, near the motor |
+| `E-FIN-24` | `FIN-007-LL` ESC pad LL | `FIN-001-LL` Half-fin LL (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 | pad on the half-fin in the prop wash, near the motor |
 | `E-FIN-25` | `PRP-002-UR` ESC UR 45 A | `FIN-007-UR` ESC pad UR | mechanical · taped · `CT-TAPE-TIE` | propulsion | D3 · E3 | heat-sink face to the air stream, not taped over; vibration retention (OI-06) |
 | `E-FIN-26` | `PRP-002-UL` ESC UL 45 A | `FIN-007-UL` ESC pad UL | mechanical · taped · `CT-TAPE-TIE` | propulsion | D3 · E3 | heat-sink face to the air stream, not taped over; vibration retention (OI-06) |
 | `E-FIN-27` | `PRP-002-LR` ESC LR 45 A | `FIN-007-LR` ESC pad LR | mechanical · taped · `CT-TAPE-TIE` | propulsion | D3 · E3 | heat-sink face to the air stream, not taped over; vibration retention (OI-06) |
 | `E-FIN-28` | `PRP-002-LL` ESC LL 45 A | `FIN-007-LL` ESC pad LL | mechanical · taped · `CT-TAPE-TIE` | propulsion | D3 · E3 | heat-sink face to the air stream, not taped over; vibration retention (OI-06) |
-| `E-FIN-29` | `PRP-001-UR` Motor UR X3108S | `FIN-003-UR` Motor mount UR | thermal · conductive · `CT-THERMAL-CONTACT` | propulsion | E3 · G3 | motor base temperature at hover vs printed-mount softening (PETG HDT ~70 °C `EST`) (OI-06) |
-| `E-FIN-30` | `PRP-001-UL` Motor UL X3108S | `FIN-003-UL` Motor mount UL | thermal · conductive · `CT-THERMAL-CONTACT` | propulsion | E3 · G3 | motor base temperature at hover vs printed-mount softening (PETG HDT ~70 °C `EST`) (OI-06) |
-| `E-FIN-31` | `PRP-001-LR` Motor LR X3108S | `FIN-003-LR` Motor mount LR | thermal · conductive · `CT-THERMAL-CONTACT` | propulsion | E3 · G3 | motor base temperature at hover vs printed-mount softening (PETG HDT ~70 °C `EST`) (OI-06) |
-| `E-FIN-32` | `PRP-001-LL` Motor LL X3108S | `FIN-003-LL` Motor mount LL | thermal · conductive · `CT-THERMAL-CONTACT` | propulsion | E3 · G3 | motor base temperature at hover vs printed-mount softening (PETG HDT ~70 °C `EST`) (OI-06) |
+| `E-FIN-29` | `PRP-001-UR` Motor UR X3108S | `FIN-003-UR` Motor mount UR (3 deg cant) | thermal · conductive · `CT-THERMAL-CONTACT` | propulsion | E3 · G3 | motor base temperature at hover vs printed-mount softening (PETG HDT ~70 °C `EST`) (OI-06) |
+| `E-FIN-30` | `PRP-001-UL` Motor UL X3108S | `FIN-003-UL` Motor mount UL (3 deg cant) | thermal · conductive · `CT-THERMAL-CONTACT` | propulsion | E3 · G3 | motor base temperature at hover vs printed-mount softening (PETG HDT ~70 °C `EST`) (OI-06) |
+| `E-FIN-31` | `PRP-001-LR` Motor LR X3108S | `FIN-003-LR` Motor mount LR (3 deg cant) | thermal · conductive · `CT-THERMAL-CONTACT` | propulsion | E3 · G3 | motor base temperature at hover vs printed-mount softening (PETG HDT ~70 °C `EST`) (OI-06) |
+| `E-FIN-32` | `PRP-001-LL` Motor LL X3108S | `FIN-003-LL` Motor mount LL (3 deg cant) | thermal · conductive · `CT-THERMAL-CONTACT` | propulsion | E3 · G3 | motor base temperature at hover vs printed-mount softening (PETG HDT ~70 °C `EST`) (OI-06) |
+| `E-FIN-33` | `FIN-001-LL` Half-fin LL (foam board) | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C4 · D1 | half-fin root bonded + taped to core skin and the block face; fin-tip landing load into core |
+| `E-FIN-34` | `FIN-001-LR` Half-fin LR (foam board) | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D3 · C4 · D1 | half-fin root bonded + taped to core skin and the block face; fin-tip landing load into core |
+| `E-FIN-35` | `FIN-005-LL` Fin-to-tube clip set LL | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip bore on 22 mm OD, spacing along the tube; with the bonded fin lifts the tube mode out of 80–330 Hz (P25) (OI-01) |
+| `E-FIN-36` | `FIN-005-LL` Fin-to-tube clip set LL | `FIN-001-LL` Half-fin LL (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip to foam-board faces, LE wedge on the tube |
+| `E-FIN-37` | `FIN-005-LR` Fin-to-tube clip set LR | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip bore on 22 mm OD, spacing along the tube; with the bonded fin lifts the tube mode out of 80–330 Hz (P25) (OI-01) |
+| `E-FIN-38` | `FIN-005-LR` Fin-to-tube clip set LR | `FIN-001-LR` Half-fin LR (foam board) | mechanical · bonded · `CT-EPOXY` | — | D3 · C4 | clip to foam-board faces, LE wedge on the tube |
 
-### pod (D2, 7)
+### pod (D2, 8)
 
 | Edge | Side A | Side B | Kind · method · type | Ack | By | Must carry |
 |---|---|---|---|---|---|---|
-| `E-POD-01` | `POD-001` Pod shell | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D2 · C3 | pod recess, bond area, crash load of pack mass |
+| `E-POD-01` | `POD-001` Pod shell | `WNG-001` Wing core, one piece (XPS) | mechanical · bonded · `CT-EPOXY` | wing | D2 · C3 | pod recess, bond area, crash load of pack mass; nose at x −0.105 (D-08) |
 | `E-POD-02` | `POD-002` Pod tray | `POD-001` Pod shell | mechanical · bonded · `CT-EPOXY` | — | D2 · C3 | tray datum for all avionics mounts |
 | `E-POD-03` | `POD-003` Hatch | `POD-001` Pod shell | mechanical · strapped · `CT-HATCH-HL` | — | D2 | opened every flight: tool-free, no magnets |
 | `E-POD-04` | `POD-004` Pack strap | `POD-002` Pod tray | mechanical · slid · `CT-STRAP-SLOT` | — | D2 | strap slot width, two slots |
-| `E-POD-05` | `PWR-001` Flight pack 4S 6500 | `POD-002` Pod tray | mechanical · strapped · `CT-STRAP-VELCRO` | power | D2 · C3 · C1 | pack 0.55 kg `UNVERIFIED` at crash g (C1); ±0.03 m slide for CG trim; hover attitude pulls pack toward -x |
+| `E-POD-05` | `PWR-001` Flight pack 4S 6500 | `POD-002` Pod tray | mechanical · strapped · `CT-STRAP-VELCRO` | power | D2 · C3 · C1 | field joint; pack 0.55 kg `UNVERIFIED` at crash g (C1); ±0.03 m slide, nominal 29 mm ahead of the pod centre (D-17); hover attitude pulls pack toward +x |
 | `E-POD-06` | `POD-005` GPS mast | `POD-001` Pod shell | mechanical · bonded · `CT-EPOXY` | — | D2 · F3 | mast height for compass distance from power leads |
-| `E-POD-07` | `POD-006` Pitot mount (pod nose) | `POD-001` Pod shell | mechanical · bonded · `CT-EPOXY` | — | D2 · B4 | pitot position out of the prop wash (OI-07) |
+| `E-POD-07` | `POD-006` Pitot boom socket (pod nose) | `POD-001` Pod shell | mechanical · bonded · `CT-EPOXY` | — | D2 · B4 | socket on the pod nose aligned to x; carries the boom's bending load |
+| `E-POD-08` | `POD-007` Carry point + 'do not lift by the motors' label | `POD-001` Pod shell | mechanical · bonded · `CT-EPOXY` | — | D2 · C4 | carry point on the pod/spar line, sized to aircraft weight × handling factor (D-23) |
 
 ### landing (D5, 4)
 
 | Edge | Side A | Side B | Kind · method · type | Ack | By | Must carry |
 |---|---|---|---|---|---|---|
-| `E-GER-01` | `GER-001-UR` Crushable foot UR | `FIN-001-R` Fin R (foam board) | mechanical · bonded · `CT-EPOXY` | fins | D5 · C5 | cap on fin TE tip at x = 0.30 m, crush stroke, replaceable after a hard landing (OI-05) |
-| `E-GER-02` | `GER-001-UL` Crushable foot UL | `FIN-001-L` Fin L (foam board) | mechanical · bonded · `CT-EPOXY` | fins | D5 · C5 | cap on fin TE tip at x = 0.30 m, crush stroke, replaceable after a hard landing (OI-05) |
-| `E-GER-03` | `GER-001-LR` Crushable foot LR | `FIN-001-R` Fin R (foam board) | mechanical · bonded · `CT-EPOXY` | fins | D5 · C5 | cap on fin TE tip at x = 0.30 m, crush stroke, replaceable after a hard landing (OI-05) |
-| `E-GER-04` | `GER-001-LL` Crushable foot LL | `FIN-001-L` Fin L (foam board) | mechanical · bonded · `CT-EPOXY` | fins | D5 · C5 | cap on fin TE tip at x = 0.30 m, crush stroke, replaceable after a hard landing (OI-05) |
+| `E-GER-01` | `GER-001-UR` Crushable foot UR | `FIN-001-UR` Half-fin UR (foam board) | mechanical · bonded · `CT-EPOXY` | fins | D5 · C5 | cap on the half-fin TE tip, x 0.320 → 0.365 m (`P:cg.foot_height_m`), crush stroke ≥ 40 mm, replaceable in ≤ 10 min, splay to |z| ≥ 0.21 m (CR-A1-20) (OI-05) |
+| `E-GER-02` | `GER-001-UL` Crushable foot UL | `FIN-001-UL` Half-fin UL (foam board) | mechanical · bonded · `CT-EPOXY` | fins | D5 · C5 | cap on the half-fin TE tip, x 0.320 → 0.365 m (`P:cg.foot_height_m`), crush stroke ≥ 40 mm, replaceable in ≤ 10 min, splay to |z| ≥ 0.21 m (CR-A1-20) (OI-05) |
+| `E-GER-03` | `GER-001-LR` Crushable foot LR | `FIN-001-LR` Half-fin LR (foam board) | mechanical · bonded · `CT-EPOXY` | fins | D5 · C5 | cap on the half-fin TE tip, x 0.320 → 0.365 m (`P:cg.foot_height_m`), crush stroke ≥ 40 mm, replaceable in ≤ 10 min, splay to |z| ≥ 0.21 m (CR-A1-20) (OI-05) |
+| `E-GER-04` | `GER-001-LL` Crushable foot LL | `FIN-001-LL` Half-fin LL (foam board) | mechanical · bonded · `CT-EPOXY` | fins | D5 · C5 | cap on the half-fin TE tip, x 0.320 → 0.365 m (`P:cg.foot_height_m`), crush stroke ≥ 40 mm, replaceable in ≤ 10 min, splay to |z| ≥ 0.21 m (CR-A1-20) (OI-05) |
 
 ### propulsion (E1, 8)
 
@@ -163,10 +186,10 @@ Declared by the owner in `subsystems/<owner>/interfaces.json`; each subsystem in
 | `E-PRP-02` | `PRP-004-UL` Prop adapter and nut UL | `PRP-001-UL` Motor UL X3108S | mechanical · fastened · `CT-PROP-ADAPTER` | — | E1 | adapter type and screws per the motor maker |
 | `E-PRP-03` | `PRP-004-LR` Prop adapter and nut LR | `PRP-001-LR` Motor LR X3108S | mechanical · fastened · `CT-PROP-ADAPTER` | — | E1 | adapter type and screws per the motor maker |
 | `E-PRP-04` | `PRP-004-LL` Prop adapter and nut LL | `PRP-001-LL` Motor LL X3108S | mechanical · fastened · `CT-PROP-ADAPTER` | — | E1 | adapter type and screws per the motor maker |
-| `E-PRP-05` | `PRP-003-UR` Prop UR 11x4.5MR | `PRP-004-UR` Prop adapter and nut UR | mechanical · fastened · `CT-PROP-NUT` | — | E1 · F4 | prop nut thread and torque; fitted at every field set-up; CW/CCW per station |
-| `E-PRP-06` | `PRP-003-UL` Prop UL 11x4.5MR | `PRP-004-UL` Prop adapter and nut UL | mechanical · fastened · `CT-PROP-NUT` | — | E1 · F4 | prop nut thread and torque; fitted at every field set-up; CW/CCW per station |
-| `E-PRP-07` | `PRP-003-LR` Prop LR 11x4.5MR | `PRP-004-LR` Prop adapter and nut LR | mechanical · fastened · `CT-PROP-NUT` | — | E1 · F4 | prop nut thread and torque; fitted at every field set-up; CW/CCW per station |
-| `E-PRP-08` | `PRP-003-LL` Prop LL 11x4.5MR | `PRP-004-LL` Prop adapter and nut LL | mechanical · fastened · `CT-PROP-NUT` | — | E1 · F4 | prop nut thread and torque; fitted at every field set-up; CW/CCW per station |
+| `E-PRP-05` | `PRP-003-UR` Prop UR APC 11x5.5MR | `PRP-004-UR` Prop adapter and nut UR | mechanical · fastened · `CT-PROP-NUT` | — | E1 · F4 | field joint; prop nut thread and torque; fitted at every field set-up; CW/CCW per station |
+| `E-PRP-06` | `PRP-003-UL` Prop UL APC 11x5.5MR | `PRP-004-UL` Prop adapter and nut UL | mechanical · fastened · `CT-PROP-NUT` | — | E1 · F4 | field joint; prop nut thread and torque; fitted at every field set-up; CW/CCW per station |
+| `E-PRP-07` | `PRP-003-LR` Prop LR APC 11x5.5MR | `PRP-004-LR` Prop adapter and nut LR | mechanical · fastened · `CT-PROP-NUT` | — | E1 · F4 | field joint; prop nut thread and torque; fitted at every field set-up; CW/CCW per station |
+| `E-PRP-08` | `PRP-003-LL` Prop LL APC 11x5.5MR | `PRP-004-LL` Prop adapter and nut LL | mechanical · fastened · `CT-PROP-NUT` | — | E1 · F4 | field joint; prop nut thread and torque; fitted at every field set-up; CW/CCW per station |
 
 ### power (F1, 4)
 
@@ -185,25 +208,25 @@ Declared by the owner in `subsystems/<owner>/interfaces.json`; each subsystem in
 | `E-AVN-02` | `AVN-002` GPS + compass | `POD-005` GPS mast | mechanical · taped · `CT-TAPE-FOAM` | pod | F3 | compass arrow direction for F4; distance to power leads |
 | `E-AVN-03` | `AVN-003` RC receiver ELRS | `POD-002` Pod tray | mechanical · taped · `CT-TAPE-FOAM` | pod | F3 · F5 | antennas clear of CF spar and tubes (OI-10) |
 | `E-AVN-04` | `AVN-004` Airspeed sensor MS5525 | `POD-002` Pod tray | mechanical · fastened · `CT-M2-SCREW-PLASTIC` | pod | F3 | — |
-| `E-AVN-05` | `AVN-005` Pitot tube | `POD-006` Pitot mount (pod nose) | mechanical · bonded · `CT-EPOXY` | pod | F3 · B4 | probe tip ahead of the pod nose, aligned to x (OI-07) |
-| `E-AVN-06` | `AVN-005` Pitot tube | `AVN-004` Airspeed sensor MS5525 | mechanical · press_fit · `CT-PITOT-TUBING` | — | F3 | total/static lines labelled, no kinks, length |
+| `E-AVN-05` | `AVN-005` Pitot boom (plug-in) | `POD-006` Pitot boom socket (pod nose) | mechanical · slid · `CT-PLUG-IN` | pod | F3 · B4 · D2 | field joint; plug-in at every field set-up, tip at x −0.185 m aligned to x, keyed so total/static cannot swap (OI-12) |
+| `E-AVN-06` | `AVN-005` Pitot boom (plug-in) | `AVN-004` Airspeed sensor MS5525 | mechanical · press_fit · `CT-PITOT-TUBING` | — | F3 | total/static lines labelled, no kinks, length; separates at the socket when the boom is pulled (OI-12) |
 
 ### harness (F2, 28)
 
 | Edge | Side A | Side B | Kind · method · type | Ack | By | Must carry |
 |---|---|---|---|---|---|---|
 | `E-HRN-01` | `HRN-001` Pod harness bundle (lumped mass) | `POD-002` Pod tray | mechanical · strapped · `CT-TIE` | pod | F2 | tie points on the tray |
-| `E-HRN-02` | `HRN-002-L` Wing-fin harness bundle L (lumped mass) | `WNG-001` Wing core, one piece (XPS) | mechanical · taped · `CT-WIRE-CHANNEL` | wing | F2 · D1 | channel route pod → fin root, size (OI-04) |
+| `E-HRN-02` | `HRN-002-L` Wing-fin harness bundle L (lumped mass) | `WNG-001` Wing core, one piece (XPS) | mechanical · taped · `CT-WIRE-CHANNEL` | wing | F2 · D1 | channel pod → fin root aft of the spar (x > 0.095) or through the block (CR-A4-05), size (OI-04) |
 | `E-HRN-03` | `HRN-002-L` Wing-fin harness bundle L (lumped mass) | `FIN-002-L` Motor tube L CF 22x20x420 | mechanical · strapped · `CT-TIE` | fins | F2 · D3 | ties along the tube, clear of the prop discs |
-| `E-HRN-04` | `HRN-002-R` Wing-fin harness bundle R (lumped mass) | `WNG-001` Wing core, one piece (XPS) | mechanical · taped · `CT-WIRE-CHANNEL` | wing | F2 · D1 | channel route pod → fin root, size (OI-04) |
+| `E-HRN-04` | `HRN-002-R` Wing-fin harness bundle R (lumped mass) | `WNG-001` Wing core, one piece (XPS) | mechanical · taped · `CT-WIRE-CHANNEL` | wing | F2 · D1 | channel pod → fin root aft of the spar (x > 0.095) or through the block (CR-A4-05), size (OI-04) |
 | `E-HRN-05` | `HRN-002-R` Wing-fin harness bundle R (lumped mass) | `FIN-002-R` Motor tube R CF 22x20x420 | mechanical · strapped · `CT-TIE` | fins | F2 · D3 | ties along the tube, clear of the prop discs |
-| `E-HRN-10` | `PWR-001` Flight pack 4S 6500 | `PWR-002` Main disconnect, aircraft side + pigtail | electrical · connector · `CT-XT60` | power | F1 · F2 | THE field disconnect; current_a {cont: `P:performance.hover_current_a` 24 A total, peak: `P:electrical.peak_current_a` 120 A}; connector ≥ 1.25 × cont (`P:requirements.disconnect_factor`); anti-spark choice (OI-09) |
-| `E-HRN-11` | `PWR-002` Main disconnect, aircraft side + pigtail | `PWR-003` Power module (V/I sensor) | electrical · soldered · `CT-SOLDER-DC` | power | F1 · F2 | current_a {cont: `P:performance.hover_current_a` 24 A total, peak: `P:electrical.peak_current_a` 120 A}; connector ≥ 1.25 × cont (`P:requirements.disconnect_factor`) |
-| `E-HRN-12` | `PWR-003` Power module (V/I sensor) | `PWR-004` Power distribution (PDB or splice) | electrical · soldered · `CT-SOLDER-DC` | power | F1 · F2 | current_a {cont: `P:performance.hover_current_a` 24 A total, peak: `P:electrical.peak_current_a` 120 A}; connector ≥ 1.25 × cont (`P:requirements.disconnect_factor`) |
-| `E-HRN-13` | `PWR-004` Power distribution (PDB or splice) | `PRP-002-UR` ESC UR 45 A | electrical · soldered · `CT-SOLDER-DC` | power, propulsion | F1 · F2 | current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` 30 A}; route pod → wing channel → fin (OI-04) |
-| `E-HRN-14` | `PWR-004` Power distribution (PDB or splice) | `PRP-002-UL` ESC UL 45 A | electrical · soldered · `CT-SOLDER-DC` | power, propulsion | F1 · F2 | current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` 30 A}; route pod → wing channel → fin (OI-04) |
-| `E-HRN-15` | `PWR-004` Power distribution (PDB or splice) | `PRP-002-LR` ESC LR 45 A | electrical · soldered · `CT-SOLDER-DC` | power, propulsion | F1 · F2 | current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` 30 A}; route pod → wing channel → fin (OI-04) |
-| `E-HRN-16` | `PWR-004` Power distribution (PDB or splice) | `PRP-002-LL` ESC LL 45 A | electrical · soldered · `CT-SOLDER-DC` | power, propulsion | F1 · F2 | current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` 30 A}; route pod → wing channel → fin (OI-04) |
+| `E-HRN-10` | `PWR-001` Flight pack 4S 6500 | `PWR-002` Main disconnect, aircraft side + pigtail | electrical · connector · `CT-XT60` | power | F1 · F2 | THE field disconnect; current_a {cont: `P:performance.hover_current_a` 27 A total, peak: `P:electrical.peak_current_a` 120 A < 5 s}; connector ≥ 1.25 × cont (`P:requirements.disconnect_factor`); anti-spark choice (OI-09) |
+| `E-HRN-11` | `PWR-002` Main disconnect, aircraft side + pigtail | `PWR-003` Power module (V/I sensor) | electrical · soldered · `CT-SOLDER-DC` | power | F1 · F2 | current_a {cont: `P:performance.hover_current_a` 27 A total, peak: `P:electrical.peak_current_a` 120 A < 5 s}; connector ≥ 1.25 × cont (`P:requirements.disconnect_factor`) |
+| `E-HRN-12` | `PWR-003` Power module (V/I sensor) | `PWR-004` Power distribution (PDB or splice) | electrical · soldered · `CT-SOLDER-DC` | power | F1 · F2 | current_a {cont: `P:performance.hover_current_a` 27 A total, peak: `P:electrical.peak_current_a` 120 A < 5 s}; connector ≥ 1.25 × cont (`P:requirements.disconnect_factor`) |
+| `E-HRN-13` | `PWR-004` Power distribution (PDB or splice) | `PRP-002-UR` ESC UR 45 A | electrical · soldered · `CT-SOLDER-DC` | power, propulsion | F1 · F2 | ESC power lead (D-20: harness only); current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` 24.8 A}; route pod → wing channel → fin (OI-04) |
+| `E-HRN-14` | `PWR-004` Power distribution (PDB or splice) | `PRP-002-UL` ESC UL 45 A | electrical · soldered · `CT-SOLDER-DC` | power, propulsion | F1 · F2 | ESC power lead (D-20: harness only); current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` 24.8 A}; route pod → wing channel → fin (OI-04) |
+| `E-HRN-15` | `PWR-004` Power distribution (PDB or splice) | `PRP-002-LR` ESC LR 45 A | electrical · soldered · `CT-SOLDER-DC` | power, propulsion | F1 · F2 | ESC power lead (D-20: harness only); current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` 24.8 A}; route pod → wing channel → fin (OI-04) |
+| `E-HRN-16` | `PWR-004` Power distribution (PDB or splice) | `PRP-002-LL` ESC LL 45 A | electrical · soldered · `CT-SOLDER-DC` | power, propulsion | F1 · F2 | ESC power lead (D-20: harness only); current_a {cont: hover share, peak: `P:propulsion.current_max_per_motor_a` 24.8 A}; route pod → wing channel → fin (OI-04) |
 | `E-HRN-17` | `PRP-002-UR` ESC UR 45 A | `PRP-001-UR` Motor UR X3108S | electrical · connector · `CT-BULLET-3` | propulsion | F2 · E1 | motor lead length vs pad position (extension or not); phase order sets rotation (F4) (OI-06) |
 | `E-HRN-18` | `PRP-002-UL` ESC UL 45 A | `PRP-001-UL` Motor UL X3108S | electrical · connector · `CT-BULLET-3` | propulsion | F2 · E1 | motor lead length vs pad position (extension or not); phase order sets rotation (F4) (OI-06) |
 | `E-HRN-19` | `PRP-002-LR` ESC LR 45 A | `PRP-001-LR` Motor LR X3108S | electrical · connector · `CT-BULLET-3` | propulsion | F2 · E1 | motor lead length vs pad position (extension or not); phase order sets rotation (F4) (OI-06) |
@@ -244,33 +267,34 @@ Declared by the owner in `subsystems/<owner>/interfaces.json`; each subsystem in
 | `E-MEC-17` | `MEC-007-L` Servo cover L | `WNG-003` Tape skin | mechanical · taped · `CT-TAPE-SKIN` | wing | D6 | removable for servo service |
 | `E-MEC-18` | `MEC-007-R` Servo cover R | `WNG-003` Tape skin | mechanical · taped · `CT-TAPE-SKIN` | wing | D6 | removable for servo service |
 
-### transport (D7, 11)
+### transport (D7, 12)
 
 | Edge | Side A | Side B | Kind · method · type | Ack | By | Must carry |
 |---|---|---|---|---|---|---|
-| `E-TRN-01` | `TRN-002-L` Spar cradle L | `TRN-001` Transport box | mechanical · bonded · `CT-EPOXY` | — | D7 | — |
-| `E-TRN-02` | `TRN-002-R` Spar cradle R | `TRN-001` Transport box | mechanical · bonded · `CT-EPOXY` | — | D7 | — |
-| `E-TRN-03` | `TRN-003` Prop tray | `TRN-001` Transport box | mechanical · bonded · `CT-EPOXY` | — | D7 | — |
+| `E-TRN-01` | `TRN-002-L` Spar cradle L | `TRN-001` Transport box | mechanical · bonded · `CT-EPOXY` | — | D7 | ≥ 70 mm crush foam under the cradle (D-22) |
+| `E-TRN-02` | `TRN-002-R` Spar cradle R | `TRN-001` Transport box | mechanical · bonded · `CT-EPOXY` | — | D7 | ≥ 70 mm crush foam under the cradle (D-22) |
+| `E-TRN-03` | `TRN-003` Prop and pitot tray | `TRN-001` Transport box | mechanical · bonded · `CT-EPOXY` | — | D7 | — |
 | `E-TRN-04` | `TRN-004` Hold-down strap | `TRN-001` Transport box | mechanical · slid · `CT-STRAP-SLOT` | — | D7 | — |
-| `E-TRN-05` | `TRN-002-L` Spar cradle L | `WNG-001` Wing core, one piece (XPS) | mechanical · slid · `CT-CRADLE-CONTACT` | wing | D7 · C1 | cradle under the spar line; fins and tubes never pressed (`P:transport.cradle`) |
-| `E-TRN-06` | `TRN-002-R` Spar cradle R | `WNG-001` Wing core, one piece (XPS) | mechanical · slid · `CT-CRADLE-CONTACT` | wing | D7 · C1 | cradle under the spar line; fins and tubes never pressed (`P:transport.cradle`) |
+| `E-TRN-05` | `TRN-002-L` Spar cradle L | `WNG-001` Wing core, one piece (XPS) | mechanical · slid · `CT-CRADLE-CONTACT` | wing | D7 · C1 | cradle under the spar line at y = ±0.20 m (CR-A1-19); fins and tubes never pressed (`P:transport.cradle`) |
+| `E-TRN-06` | `TRN-002-R` Spar cradle R | `WNG-001` Wing core, one piece (XPS) | mechanical · slid · `CT-CRADLE-CONTACT` | wing | D7 · C1 | cradle under the spar line at y = ±0.20 m (CR-A1-19); fins and tubes never pressed (`P:transport.cradle`) |
 | `E-TRN-07` | `TRN-004` Hold-down strap | `WNG-001` Wing core, one piece (XPS) | mechanical · strapped · `CT-STRAP-VELCRO` | wing | D7 · C1 | strap over the centre section only |
-| `E-TRN-08` | `PRP-003-UR` Prop UR 11x4.5MR | `TRN-003` Prop tray | mechanical · slid · `CT-CRADLE-CONTACT` | propulsion | D7 | props off for transport, one slot each |
-| `E-TRN-09` | `PRP-003-UL` Prop UL 11x4.5MR | `TRN-003` Prop tray | mechanical · slid · `CT-CRADLE-CONTACT` | propulsion | D7 | props off for transport, one slot each |
-| `E-TRN-10` | `PRP-003-LR` Prop LR 11x4.5MR | `TRN-003` Prop tray | mechanical · slid · `CT-CRADLE-CONTACT` | propulsion | D7 | props off for transport, one slot each |
-| `E-TRN-11` | `PRP-003-LL` Prop LL 11x4.5MR | `TRN-003` Prop tray | mechanical · slid · `CT-CRADLE-CONTACT` | propulsion | D7 | props off for transport, one slot each |
+| `E-TRN-08` | `PRP-003-UR` Prop UR APC 11x5.5MR | `TRN-003` Prop and pitot tray | mechanical · slid · `CT-CRADLE-CONTACT` | propulsion | D7 | props off for transport, one slot each |
+| `E-TRN-09` | `PRP-003-UL` Prop UL APC 11x5.5MR | `TRN-003` Prop and pitot tray | mechanical · slid · `CT-CRADLE-CONTACT` | propulsion | D7 | props off for transport, one slot each |
+| `E-TRN-10` | `PRP-003-LR` Prop LR APC 11x5.5MR | `TRN-003` Prop and pitot tray | mechanical · slid · `CT-CRADLE-CONTACT` | propulsion | D7 | props off for transport, one slot each |
+| `E-TRN-11` | `PRP-003-LL` Prop LL APC 11x5.5MR | `TRN-003` Prop and pitot tray | mechanical · slid · `CT-CRADLE-CONTACT` | propulsion | D7 | props off for transport, one slot each |
+| `E-TRN-12` | `AVN-005` Pitot boom (plug-in) | `TRN-003` Prop and pitot tray | mechanical · slid · `CT-CRADLE-CONTACT` | avionics | D7 · F3 | pitot boom off for transport, own slot, tip protected |
 
 ## Acknowledgements owed
 
 | Subsystem | Must list under `acknowledges` |
 |---|---|
-| `wing` | `E-FIN-01` `E-FIN-02` `E-FIN-08` `E-FIN-09` `E-FIN-11` `E-FIN-12` `E-POD-01` `E-MEC-01` `E-MEC-02` `E-MEC-11` `E-MEC-12` `E-MEC-13` `E-MEC-14` `E-MEC-15` `E-MEC-16` `E-MEC-17` `E-MEC-18` `E-HRN-02` `E-HRN-04` `E-TRN-05` `E-TRN-06` `E-TRN-07` |
+| `wing` | `E-FIN-01` `E-FIN-02` `E-FIN-33` `E-FIN-34` `E-FIN-08` `E-FIN-09` `E-FIN-11` `E-FIN-12` `E-POD-01` `E-MEC-01` `E-MEC-02` `E-MEC-11` `E-MEC-12` `E-MEC-13` `E-MEC-14` `E-MEC-15` `E-MEC-16` `E-MEC-17` `E-MEC-18` `E-HRN-02` `E-HRN-04` `E-TRN-05` `E-TRN-06` `E-TRN-07` |
 | `fins` | `E-GER-01` `E-GER-02` `E-GER-03` `E-GER-04` `E-HRN-03` `E-HRN-05` |
 | `pod` | `E-PWR-01` `E-PWR-02` `E-PWR-03` `E-PWR-04` `E-AVN-01` `E-AVN-02` `E-AVN-03` `E-AVN-04` `E-AVN-05` `E-HRN-01` |
 | `landing` | — |
 | `propulsion` | `E-FIN-17` `E-FIN-18` `E-FIN-19` `E-FIN-20` `E-FIN-25` `E-FIN-26` `E-FIN-27` `E-FIN-28` `E-FIN-29` `E-FIN-30` `E-FIN-31` `E-FIN-32` `E-HRN-13` `E-HRN-14` `E-HRN-15` `E-HRN-16` `E-HRN-17` `E-HRN-18` `E-HRN-19` `E-HRN-20` `E-HRN-24` `E-HRN-25` `E-HRN-26` `E-HRN-27` `E-TRN-08` `E-TRN-09` `E-TRN-10` `E-TRN-11` |
 | `power` | `E-POD-05` `E-HRN-10` `E-HRN-11` `E-HRN-12` `E-HRN-13` `E-HRN-14` `E-HRN-15` `E-HRN-16` `E-HRN-21` `E-HRN-22` `E-HRN-23` |
-| `avionics` | `E-HRN-22` `E-HRN-23` `E-HRN-24` `E-HRN-25` `E-HRN-26` `E-HRN-27` `E-HRN-28` `E-HRN-29` `E-HRN-30` `E-HRN-31` `E-HRN-32` |
+| `avionics` | `E-HRN-22` `E-HRN-23` `E-HRN-24` `E-HRN-25` `E-HRN-26` `E-HRN-27` `E-HRN-28` `E-HRN-29` `E-HRN-30` `E-HRN-31` `E-HRN-32` `E-TRN-12` |
 | `harness` | — |
 | `mechanisms` | `E-HRN-28` `E-HRN-29` |
 | `transport` | — |
@@ -292,6 +316,7 @@ Declared by the owner in `subsystems/<owner>/interfaces.json`; each subsystem in
 | `CT-PROP-NUT` | mechanical | fastened | prop clamped on the adapter by its nut |
 | `CT-SERVO-SPLINE` | mechanical | fastened | servo arm on the output spline, M2 retaining screw |
 | `CT-CLEVIS` | kinematic | hinged | steel pushrod end (Z-bend or clevis) in a horn or arm hole |
+| `CT-PLUG-IN` | mechanical | slid | boom pushed into a printed socket, keyed, retained by a detent or O-ring; tool-free field joint |
 | `CT-PITOT-TUBING` | mechanical | press_fit | silicone tubing pushed on the pitot and sensor barbs, total and static lines (pneumatic) |
 | `CT-SOLDER-DC` | electrical | soldered | soldered DC power joint, heat-shrink |
 | `CT-BULLET-3` | electrical | connector | 3 x gold bullet connectors, motor phases (size per E1) |
@@ -321,49 +346,54 @@ Not joints, so not edges: each is a number a designer must hold and a check that
 
 | Keep-out | Between | Minimum | Now | Source | Status | Owner |
 |---|---|---|---|---|---|---|
-| Prop disc | any prop tip ↔ structure or prop | 25 mm | 39 mm (to tube face) | `P:requirements.prop_clearance_min_m`, `CL-A1-PROP-CLEAR` | `UNVERIFIED` | B4 · D3 |
-| Prop wash | pitot tip, GPS mast ↔ prop discs (disc inner edge at y = 0.18 m) | outside the disc + wash | — | `params.json#propulsion` | `PROPOSED` | B4 · F3 |
-| Link sweep | inter-panel link ↔ fin board at y = 0.32 m, ±25° | — | — | OI-03 | `PROPOSED` | D6 · D3 |
-| Wing TE to ground | whole wing TE (x = 0.300 m) ↔ ground plane at the foot tips (x = 0.310 m) | > crush stroke + grass | 10 mm before crush | `P:cg.foot_height_m`, OI-05 | `UNVERIFIED` | D5 · C5 · A1 |
+| Prop disc | any prop tip ↔ structure or prop | 25 mm | 35 mm (disc edge to wing plane) / 39 mm (tube face) | `P:requirements.prop_clearance_min_m`, `CL-A1-PROP-CLEAR` | `UNVERIFIED` | B4 · D3 |
+| Prop wash | pitot tip (x −0.185, y 0), GPS mast ↔ prop discs (plane x −0.005, inner disc edge y 0.18 m) | outside the disc + wash | tip 180 mm ahead of the prop planes | `CL-B4-PITOT`, `params.json#avionics.pitot_tip_xyz_m` | `PROPOSED` | B4 · F3 |
+| Link slot | inter-panel link ↔ lower half-fin root at y = 0.32 m, hinge x 0.2496, ±25° | slot clears the full sweep | — | OI-03, CR-A4-04 | `PROPOSED` | D6 · D3 |
+| Elevon end gaps | panel ends (y 0.30 / 0.34) ↔ half-fin faces (y 0.32 ± 0.0024 per board layer) | > 0 at ±25° | 20 mm nominal less the fin half-thickness | `params.json#wing.elevon` | `PROPOSED` | D6 · D3 |
+| Wing TE to ground | whole wing TE (x = 0.320 m) ↔ ground plane at the foot tips (x = 0.365 m) | > 0 after a full crush on grass | 45 mm uncrushed, 5 mm after the 40 mm stroke | `P:cg.foot_height_m`, `P:requirements.foot_crush_stroke_min_m`, OI-05 | `UNVERIFIED` | D5 · C5 · A1 |
 | Compass | GPS compass ↔ power leads, PDB, UBEC | — | — | OI-10 | `PROPOSED` | F3 |
 | Antennas | RX and GPS antennas ↔ CF spar and tubes | — | — | OI-10 | `PROPOSED` | F5 · F3 |
 | Pushrod | pushrod ↔ skin and servo cover through full throw | — | — | `E-MEC-07…10` | `PROPOSED` | D6 |
-| Box | box lining ↔ fins, tubes, props | no contact | box height slack 10 mm | `P:transport.cradle`, `CL-A1-BOX-FIT` | `CHECKED` (slack) | D7 |
+| Box | box lining ↔ half-fins, tubes, props, pitot boom | no contact | height slack 25 mm (box 0.50 m, D-16) | `P:transport.cradle`, `CL-A1-BOX-FIT` | `PROPOSED` (D7 measures two cars) | D7 |
 
 ## Open interface issues
 
 | Id | Issue | Edges | Owner(s) | Close by |
 |---|---|---|---|---|
-| OI-01 | Fin through the wing: one-piece fin in a core slot or upper/lower halves; two 4.8 mm boards over a 22 mm tube are not flat (P25) | `E-FIN-01…06` (may split per half: ids `-U`/`-D`) | D3 · C4 · D1 | before Fusion modules |
-| OI-02 | Tube at x = −0.10 m, spar at x = 0.08 m: 0.18 m offset; saddle bridge or fin carries it; spar exposed by a core cut-out at y = ±0.32 m | `E-FIN-07…12` | D3 · C4 · C2 · D1 | before Fusion modules |
-| OI-03 | Elevon panels split at the fin (y 0.30–0.34 m): the link crosses the fin at the hinge line; slot and sweep clearance needed, or drop the inboard panels (CR-A1-06) | `E-WNG-04…07`, `E-MEC-13…16` | D6 · D3 · B3 | B3 elevon sizing |
-| OI-04 | Wire route pod → fins: per side 2 ESC power, 2 ESC signal, 1 servo lead in a core channel; channel must not cut the spar slot (x = 0.08 m) | `E-HRN-02…05`, `E-HRN-13…16`, `E-HRN-28/29` | F2 · D1 | before D1 freezes the core |
-| OI-05 | Wing TE is 10 mm above the ground plane in stance; a crushed foot or grass puts the TE on the ground; feet bonded vs replaceable | `E-GER-01…04` | D5 · C5 · A1 | landing load cases (C1) |
-| OI-06 | ESC on a fin pad in the prop wash; motor lead length decides an extension; motor base heat into a printed mount | `E-FIN-25…32`, `E-HRN-17…20` | E1 · E3 · D3 · G3 | thrust-stand run (H1) |
-| OI-07 | Pitot at the pod nose (`POD-006`) or the wing LE at y ≈ 0.15 m (30 mm from the disc edge); edges re-point to `WNG-001` if LE | `E-POD-07`, `E-AVN-05` | B4 · F3 · D2 | B4 wash study |
+| OI-01 | Half-fin to tube: two 4.8 mm boards over a 22 mm tube are not flat; clip and LE wedge design; the bonded fin must lift the tube's first mode out of 80–330 Hz (`CL-J1-TUBE-MODE-SEP` fails on the bare tube, P25). Tube in block: bonded plug or clamp | `E-FIN-03…07`, `E-FIN-10`, `E-FIN-35…38` | D3 · C4 | before Fusion modules |
+| OI-02 | Through-core block: one print carries the tube, the spar bearing and the fin root; core cut-out at y = ±0.32 m around tube hole and spar; sized to C1 case G2 10.7 N·m | `E-FIN-07…12` | D3 · C4 · C2 · D1 | before Fusion modules |
+| OI-03 | Inter-panel link crosses the lower half-fin root at the hinge line (panel ends y 0.30 / 0.34 m); both panels stay (B3); D6/D3 slot the lower half-fin | `E-WNG-04…07`, `E-MEC-13…16`, `FIN-001-LR/LL` | D6 · D3 | before Fusion modules |
+| OI-04 | Wire route pod → fins: per side 2 ESC power, 2 ESC signal, 1 servo lead; channel aft of the spar (x > 0.095) or through the block (CR-A4-05), never cutting the spar slot | `E-HRN-02…05`, `E-HRN-13…16`, `E-HRN-28/29` | F2 · D1 · D3 | before D1 freezes the core |
+| OI-05 | Feet 45 mm with ≥ 40 mm stroke leave 5 mm of TE clearance after a full crush; 10–20 mm grass `EST` grounds the TE then; bonded feet must still be replaceable in ≤ 10 min | `E-GER-01…04` | D5 · C5 | C5 landing case |
+| OI-06 | ESC on a half-fin pad in the prop wash; motor lead length decides an extension; motor base heat into a printed mount | `E-FIN-25…32`, `E-HRN-17…20` | E1 · E3 · D3 · G3 | thrust-stand run (H1) |
 | OI-08 | MS5525 I2C address 0x76 (`UNVERIFIED`) may clash with the board barometer at 0x76 | `E-HRN-32` | F3 | FC choice |
-| OI-09 | Main disconnect XT60 or AS150U; needs ≥ 1.25 × 24 A = 30 A continuous | `E-HRN-10` | F1 | F1 decision |
+| OI-09 | Main disconnect XT60 or AS150U: ≥ 1.25 × 29.9 A hover design current = 37 A continuous, and 120 A for < 5 s unless F4 caps it (CHANGE-LOG, CR-A2-08 row) | `E-HRN-10` | F1 | F1 decision |
 | OI-10 | RF and magnetics: antennas near carbon, compass near power leads; telemetry through ELRS or a separate radio (adds an `AVN` part and a harness edge) | `E-AVN-02/03`, `E-HRN-31` | F3 · F5 | avionics layout |
-| OI-11 | README joint table: elevon hinge owner `mechanisms` is not a side (plan: wing declares, D6 designs); ESC power leads listed under both power and harness (plan: harness) | `E-WNG-04…07`, `E-HRN-13…16` | A1 | CR-A4-01 |
+| OI-12 | Plug-in pitot boom: the total/static lines must part at the socket (keyed ports or a quick-disconnect) so the boom comes off without opening the pod; the socket carries the boom's bending load in a nose-first tip-over | `E-AVN-05`, `E-AVN-06`, `E-POD-07`, `E-TRN-12` | F3 · D2 | pod design |
 
-## Tooling changes A4 makes in `redesign/interfaces/` when that step is assigned
+Closed in A4-R2: OI-07 (pitot on the pod nose, D-15), OI-11 (ownership rules, D-20).
 
-| # | Change | Closes |
+## Tooling changes in `redesign/interfaces/`
+
+| # | Change | Status |
 |---|---|---|
-| 1 | `SCHEMA.md`: frame from `params.json#frame`; K09-L prefixes `WNG FIN POD GER PRP PWR AVN HRN MEC TRN` (`FSW` has no parts); `mass_budget.json` exists | CR-IF-01, CR-IF-02, CR-A1-02 (CR-IF-03 is A5's, CR-A1-01) |
-| 2 | `connection_types.json`: add the 18 types listed in the register (+ `CT-AS150U` if F1 picks it) | — |
-| 3 | `merge_check.py`: no `owner` warning for an electrical edge owned by `harness` | 23 expected warnings |
-| 5 | `merge_check.py` load-path check: ties, tape channels, labels and tubing (`"structural": false` on the type) do not count as holding a part | a fin held on only by its harness ties passes today |
-| 6 | `merge_check.py` power-path check: follow power wires `part_a` → `part_b`, skip `wire.signal_only` | an ESC fed only through its signal lead, or a PDB fed backwards through the UBEC and FC, passes today |
-| 4 | `SCHEMA.md`: document the optional A4 blocks (`clamp`, `bond`, `retention`, `thermal`, `current_a`, `signal`, `clearance_mm`) | — |
+| 1 | `SCHEMA.md`: frame from `params.json#frame`; K09-L folders and prefixes; `9xx` reserved for the skeleton; `mass_budget.json` exists | done A4-R2 (CR-A5-04, CR-IF-01, CR-IF-02) |
+| 4 | `SCHEMA.md`: D-20 ownership and supply-side rule; per-unit mass and instance-id rule; optional A4 blocks (`clamp`, `bond`, `retention`, `thermal`, `current_a`, `signal`, `clearance_mm`, `field_joint`, `signal_only`); K09-L minimal example | done A4-R2 (CR-A1-18, CR-A3-09) |
+| 2 | `connection_types.json`: add the 19 types listed in the register (+ `CT-AS150U` if F1 picks it) | queued: needed before the first `interfaces.json` lands, or each owner declares them locally |
+| 3 | `merge_check.py`: no `owner` warning for an electrical edge owned by `harness` (D-20) | queued: 23 expected warnings today; `--compare` filters them |
+| 5 | `merge_check.py` load-path check: ties, tape channels, labels and tubing (`"structural": false` on the type) do not count as holding a part | queued: `interface_plan.py` checks it on the plan only |
+| 6 | `merge_check.py` power-path check: follow power wires `part_a` → `part_b`, skip `signal_only` | queued: `interface_plan.py` checks it on the plan only |
+
+Items 2, 3, 5 and 6 change shared tooling that `fusion/check.py`, `build_all.py` and the Blender backend import.
+A4 makes them when A1 assigns that step (CR-A4-15).
 
 ## How to verify
 
 | Check | Command (repo root) | Pass |
 |---|---|---|
-| Plan is consistent | `python -I redesign/team/A4/interface_plan.py` | `PASS`, connected 100 %, powered 100 %, 1 field disconnect |
-| Checks catch faults | `python -I redesign/team/A4/test_interface_plan.py` | 5 seeded faults caught, baseline clean |
+| Plan is consistent | `python -I redesign/team/A4/interface_plan.py` | `PASS`, connected 100 %, powered 100 %, 1 field disconnect, 0 id-rule breaches |
+| Checks catch faults | `python -I redesign/team/A4/test_interface_plan.py` | 9 seeded faults caught, baseline clean |
 | Real graph vs plan | `python -I redesign/team/A4/interface_plan.py --compare` → `team/A4/PLAN-STATUS.md` | 0 missing, 0 owed, deviations explained |
-| Real graph | `python -I redesign/interfaces/merge_check.py --strict` | 0 errors, 0 warnings |
+| Real graph | `python -I redesign/interfaces/merge_check.py --strict` | 0 errors, 0 warnings (after items 3, 5, 6) |
 | CAD | `python -I redesign/fusion/check.py` | every edge registered, nothing floats |
 | Proof chain | `python -I redesign/proofs/build_graph.py` | no drift on `CALC-A4-PLAN-GRAPH` |

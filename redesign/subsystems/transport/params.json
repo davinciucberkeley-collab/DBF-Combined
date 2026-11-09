@@ -1,0 +1,328 @@
+{
+ "_note": "Local parameters of the transport subsystem (D7, 2026-11-09). Namespace 'trn' so the keys never collide with redesign/params/params.json. Read by fusion/transport.py (ctx.local) and team/D7/transport_calc.py (proofkit P:trn.*). Frame: aircraft frame (x aft, y right, z up), aircraft upright in cruise attitude in the box, props off, pitot boom out, pack out.",
+ "trn": {
+  "box": {
+   "external_m": {
+    "value": [
+     1.25,
+     0.55,
+     0.54
+    ],
+    "unit": "m",
+    "source": "team/D7/CHANGE-REQUESTS.md#CR-D7-01",
+    "status": "PROPOSED",
+    "note": "L (y) x W (x) x H (z). Length and width are A1's D-16 values; height 0.54 (was 0.50) because the lower tube ends need free travel equal to the cradle crush stroke (CL-D7-BOX-H-REQ). Freeze only after CAR-FIT.md has two measured cars"
+   },
+   "shell_t_m": {
+    "value": 0.004,
+    "unit": "m",
+    "source": "SRC-D7-COROPLAST",
+    "status": "PROPOSED",
+    "note": "4 mm corrugated polypropylene (Coroplast) twin-wall, one sheet per face, scored and folded"
+   },
+   "floor_doubler_t_m": {
+    "value": 0.0,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "no doubler: peak column pressure in the drop is 9.6 x 10 N / 3 000 mm2 = 32 kPa on a floor backed by the ground; dropped to save 0.12 kg for the 6 kg limit. Floor stack = 4 mm shell"
+   },
+   "lid_lining_t_m": {
+    "value": 0.006,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "closed-cell PE foam 6 mm on the lid underside only; lid stack 10 mm"
+   },
+   "lid_lip_m": {
+    "value": 0.03,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "plug lid: 30 mm lip folded down inside the base walls"
+   },
+   "flap_frac": {
+    "value": 0.05,
+    "unit": "-",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "glue flaps and folded corners, fraction of the shell area"
+   },
+   "top_gap_min_m": {
+    "value": 0.01,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "upper tube ends to the lid lining, static"
+   },
+   "end_pad_t_m": {
+    "value": 0.03,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "PE pad on each end wall facing a wingtip (tip foam may touch a pad, fins and tubes never)"
+   },
+   "end_pad_size_m": {
+    "value": [
+     0.2,
+     0.15
+    ],
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "x by z, centred on the wing chord at the tip"
+   },
+   "strap_y_m": {
+    "value": 0.4,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "+/-; two cam-buckle straps around the outside of the box, outboard of the cradles"
+   }
+  },
+  "cradle": {
+   "y_m": {
+    "value": 0.2,
+    "unit": "m",
+    "source": "ASM-C1-CRADLE-Y",
+    "status": "PROPOSED",
+    "note": "+/-; C1's assumed station kept: inboard of the fins (0.32), outboard of the pod (0.05), on the spar (spans -0.50..0.50)"
+   },
+   "width_m": {
+    "value": 0.06,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "saddle width along y (0.17-0.23)"
+   },
+   "saddle_x_m": {
+    "value": [
+     -0.015,
+     0.235
+    ],
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "from a 15 mm LE lip to 15 mm ahead of the elevon hinge (0.2496): elevons never pressed"
+   },
+   "cap_t_m": {
+    "value": 0.006,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "6 mm PE cap on the saddle contour (no point load on the tape skin)"
+   },
+   "crush_t_m": {
+    "value": 0.127,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "2 + 2 + 1 in PE plank laminated (5 in); usable stroke = eps_use x t"
+   },
+   "crush_footprint_m": {
+    "value": [
+     0.06,
+     0.05
+    ],
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "x by y per cradle, centred under the spar (x 0.08); static stress ~3.3 kPa (0.5 psi), confirm the density with T-D7-CUSHION"
+   },
+   "crush_x_m": {
+    "value": 0.08,
+    "unit": "m",
+    "source": "P:wing.spar.x_m",
+    "status": "PROPOSED",
+    "note": "column centred under the spar line"
+   }
+  },
+  "foam": {
+   "pe_density_kgm3": {
+    "value": 27.0,
+    "unit": "kg/m3",
+    "source": "SRC-D7-PE-FOAM",
+    "status": "UNVERIFIED",
+    "note": "1.7 lb/ft3 closed-cell polyethylene plank; weigh a plank"
+   },
+   "eps_use": {
+    "value": 0.55,
+    "unit": "-",
+    "source": "SRC-D7-PE-FOAM",
+    "status": "UNVERIFIED",
+    "note": "usable crush strain before the steep rise; T-D7-CUSHION"
+   },
+   "eps_bottom": {
+    "value": 0.6,
+    "unit": "-",
+    "source": "SRC-D7-PE-FOAM",
+    "status": "UNVERIFIED",
+    "note": "densification (bottoming) strain; sets the free travel under the lower tube ends"
+   },
+   "static_stress_band_kpa": {
+    "value": [
+     2.0,
+     7.0
+    ],
+    "unit": "kPa",
+    "source": "SRC-D7-PE-FOAM",
+    "status": "UNVERIFIED",
+    "note": "static-loading band where 1.7-2.2 pcf PE cushion curves are near their minimum (0.3-1.0 psi); supplier curve or T-D7-CUSHION"
+   },
+   "travel_margin_m": {
+    "value": 0.01,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "free travel left under the lower tube ends when the column bottoms"
+   }
+  },
+  "tray": {
+   "size_m": {
+    "value": [
+     0.46,
+     0.3,
+     0.06
+    ],
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "x by y by z, on the floor between the cradles; 8 prop slots (4 flight + 4 spare) 285 x 30 x 40 mm on edge, a pitot-boom pocket 220 x 25 x 25 mm and a field-pouch pocket 140 x 100 x 45 mm"
+   },
+   "x_lo_m": {
+    "value": -0.11,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "tray front face"
+   },
+   "prop_slots": {
+    "value": 8,
+    "unit": "-",
+    "source": "P:propulsion.prop",
+    "status": "PROPOSED",
+    "note": "4 flight + 4 spare props (I1 buys 8)"
+   },
+   "solid_frac": {
+    "value": 0.6,
+    "unit": "-",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "XPS left after cutting slots and pockets"
+   }
+  },
+  "mass": {
+   "coroplast_areal_kgm2": {
+    "value": 0.76,
+    "unit": "kg/m2",
+    "source": "SRC-D7-COROPLAST",
+    "status": "UNVERIFIED",
+    "note": "4.99 lb packaged weight of one 48 x 96 in 4 mm sheet (upper bound); weigh one sheet"
+   },
+   "handle_kg": {
+    "value": 0.04,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, bought strap handle with two M5 bolts and fender washers; 3 fitted"
+   },
+   "cam_strap_kg": {
+    "value": 0.045,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, 25 mm PP webbing 1.8 m + cam buckle; 2 fitted"
+   },
+   "corners_kg": {
+    "value": 0.08,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, 8 plastic corner protectors"
+   },
+   "consumables_kg": {
+    "value": 0.1,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, LSE tape, hot-melt, zip ties, M5 hardware"
+   },
+   "pouch_kg": {
+    "value": 0.15,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, field pouch: prop wrench (if E1 keeps a nut), 4 spare nuts, tape, laminated checklist"
+   },
+   "spare_props": {
+    "value": 4,
+    "unit": "-",
+    "source": "P:propulsion.prop",
+    "status": "PROPOSED",
+    "note": "spares carried in the tray"
+   }
+  },
+  "setup_steps_s": {
+   "value": [
+    [
+     "open box: 2 cam straps, lift lid (hold-down pillars come with it)",
+     20
+    ],
+    [
+     "lift aircraft by the centre section, stand it on its feet on the mat",
+     15
+    ],
+    [
+     "take props, pitot boom and pouch from the tray",
+     15
+    ],
+    [
+     "fit 4 props, CW/CCW colour-matched to the motor",
+     140
+    ],
+    [
+     "plug in the pitot boom, check the tubes",
+     20
+    ],
+    [
+     "take a pack from the LiPo bag, seat it, strap it",
+     40
+    ],
+    [
+     "close the pack plug, FC boots",
+     15
+    ]
+   ],
+   "unit": "s",
+   "source": "D7 estimate",
+   "status": "UNVERIFIED",
+   "note": "time from the closed box to the start of the arm check (R-FIELD-SETUP); timed trial T-D7-SETUP replaces these"
+  },
+  "holddown": {
+   "size_m": {
+    "value": [
+     0.1,
+     0.06
+    ],
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "x by y footprint of each lid hold-down pillar, centred over the spar (x 0.08) at y +/-0.20, directly above the cradle: the clamp load goes straight through the wing into the cradle"
+   },
+   "preload_m": {
+    "value": 0.005,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "pillar is cut 5 mm longer than the gap; 10 mm soft PE face on the wing side"
+   },
+   "x_m": {
+    "value": 0.08,
+    "unit": "m",
+    "source": "P:wing.spar.x_m",
+    "status": "PROPOSED",
+    "note": "over the spar line"
+   }
+  }
+ }
+}

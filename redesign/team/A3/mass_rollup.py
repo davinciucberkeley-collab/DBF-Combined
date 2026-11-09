@@ -61,11 +61,6 @@ kit.assumption("ASM-A3-PACK-SLIDE", "Pack fore-aft trim travel", "The pack can b
                "distance of its nominal station without re-building the pod",
                basis="params.json pod.x_le_m note: D2 provides +/-0.03 m", value=0.03, unit="m",
                cites=["SRC-K09-CARD"])
-kit.assumption("ASM-A3-SPLIT-MAX", "Hover pitch-trim thrust split limit",
-               "Upper/lower motor-pair thrust ratio needed to trim the CG z offset in hover stays <= 1.10, so at "
-               "most ~5 % of each pair's hover thrust is spent on trim and the rest stays available for control",
-               basis="A3 choice pending B3/F4 hover-authority analysis; at T/W 2.4 the pairs run at ~41 % of max",
-               value=1.10, unit="-", status="UNVERIFIED")
 kit.assumption("ASM-A3-PACK-RANGE", "Pack mass range from listings", "Ovonic 4S 6500 listings give 503 to 680 g",
                basis="config-study/cards/K09/REVIEW.md section 2; weigh on arrival", value=[503.0, 680.0], unit="g",
                status="UNVERIFIED", cites=["SRC-K09-REVIEW", "SRC-OVONIC-4S6500"])
@@ -120,14 +115,15 @@ def _cg(rows, w=None):
           assumes=["ASM-A3-MGA", "ASM-A3-PACK-SLIDE", "ASM-A3-PACK-RANGE"],
           equation="cg = sum m_i r_i / sum m_i ; x_pack_req = (x_t M - (M x_cg - m_p x_p)) / m_p ; "
                    "split = (z_m + z_cg) / (z_m - z_cg) ; h_stance = c - x_cg + foot ; "
+                   "fwd_room = (x_pack - L_pack/2) - x_pod_le ; "
                    "range_use = |x - mid| / half-range ; shift_req(group) = (x_t - x_cg) M / m_group",
           inputs={"items": P + ITEMS_KEY, "mga": "ASM-A3-MGA", "x_rng": P + "cg.x_range_m", "z_rng": P + "cg.z_range_m",
                   "x_t": P + "cg.x_target_m", "z_m": P + "propulsion.stations.z_m", "c": P + "wing.chord_m",
                   "te": P + "wing.te_x_m", "pack": P + "battery.size_m", "slide": "ASM-A3-PACK-SLIDE",
-                  "foot": P + "cg.foot_height_m", "pack_rng": "ASM-A3-PACK-RANGE"},
+                  "foot": P + "cg.foot_height_m", "pack_rng": "ASM-A3-PACK-RANGE", "pod_le": P + "pod.x_le_m"},
           units={"x_rng": "m", "z_rng": "m", "x_t": "m", "z_m": "m", "c": "m", "te": "m", "pack": "m", "slide": "m",
-                 "foot": "m", "pack_rng": "g"})
-def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_rng):
+                 "foot": "m", "pack_rng": "g", "pod_le": "m"})
+def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_rng, pod_le):
     rows = _rows(items)
     packs = [r for r in rows if r["discipline"] == "energy"]
     m, cg = _cg(rows)
@@ -155,6 +151,7 @@ def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_
             "cg_empty_m": cg_e, "empty_mass_g": m_e, "pack_x_m": xp, "pack_mass_g": mp,
             "pack_x_req_m": x_req, "pack_shift_req_m": x_req - xp,
             "pack_aft_room_m": te - (x_req + pack[0] / 2),           # >= 0: the pack still ends ahead of the TE
+            "pack_fwd_room_m": (xp - pack[0] / 2) - pod_le,          # pack fore face to pod nose (outside skin)
             "cg_x_trim_range_m": trim, "cg_x_pack_light_heavy_m": [x_for_pack(pack_rng[0]), x_for_pack(pack_rng[1])],
             "hover_split": (z_m + zc) / (z_m - zc), "stance_cg_height_m": c - cg[0] + foot}
 
@@ -192,12 +189,12 @@ kit.claim("CL-A3-GATE-MARGIN", "Gate margin after growth covers the first-build 
           verifies=["R-MASS-GATE"],
           how="2.6 kg minus the predicted mass must stay >= the 0.10 kg first-build overrun; weigh the first core and fin.")
 kit.claim("CL-A3-ALLOC-WORST", "Worst subsystem basic mass / its A1 allocation", calc="CALC-A3-MASS",
-          output="worst_alloc_ratio", unit="-", limit=("<=", 1.0),
+          output="worst_alloc_ratio", unit="-", limit=("<=", 1.0), verifies=["R-MASS-ALLOC"],
           how="ROLLUP.md subsystem table; A1 re-allocates through CR-A3-01.")
 kit.claim("CL-A3-CG-X", "CG x at take-off, current layout", calc="CALC-A3-CG", output="cg_x_frac_chord", unit="-",
           how="Balance on two knife edges under the spar line (T-A3-CG-BALANCE).")
 kit.claim("CL-A3-CG-X-RANGE", "CG x position in the allowable range, |x - mid| / half-range",
-          calc="CALC-A3-CG", output="cg_x_range_use", unit="-", limit=("<=", 1.0), verifies=["R-STATIC-MARGIN"],
+          calc="CALC-A3-CG", output="cg_x_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"],
           how="CG balance with pack at its station; B3 confirms the range from AVL.")
 kit.claim("CL-A3-PACK-X-REQ", "Pack centroid station that puts the CG on target", calc="CALC-A3-CG",
           output="pack_x_req_m", unit="m",
@@ -205,11 +202,14 @@ kit.claim("CL-A3-PACK-X-REQ", "Pack centroid station that puts the CG on target"
 kit.claim("CL-A3-PACK-AFT-ROOM", "Pack at the required station still ends ahead of the TE", calc="CALC-A3-CG",
           output="pack_aft_room_m", unit="m", limit=(">=", 0.0),
           how="D2 pod drawing: pack aft face x <= wing TE.")
+kit.claim("CL-A3-PACK-FWD-ROOM", "Pack fore face to pod nose at the nominal pack station (outside skin)",
+          calc="CALC-A3-CG", output="pack_fwd_room_m", unit="m", limit=(">=", 0.0),
+          how="D2 pod drawing: pack fore face behind the inside of the pod nose wall; lead exit at the aft end.")
 kit.claim("CL-A3-CG-Z-RANGE", "CG z position in the allowable range, |z - mid| / half-range",
-          calc="CALC-A3-CG", output="cg_z_range_use", unit="-", limit=("<=", 1.0), verifies=["R-STATIC-MARGIN"],
+          calc="CALC-A3-CG", output="cg_z_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"],
           how="Balance the aircraft on its side (z axis vertical) on a knife edge.")
 kit.claim("CL-A3-HOVER-SPLIT", "Hover pitch-trim thrust split upper/lower", calc="CALC-A3-CG", output="hover_split",
-          unit="-", limit=("<=", "ASM-A3-SPLIT-MAX"), assumes=["ASM-A3-SPLIT-MAX"],
+          unit="-", limit=("<=", P + "requirements.hover_split_max"),
           how="Tethered hover log: mean upper vs lower motor outputs (F4/H2).")
 kit.claim("CL-A3-IXX", "Roll inertia about the CG (cruise x)", calc="CALC-A3-INERTIA", output="Ixx", unit="kg m2",
           how="Bifilar pendulum (T-A3-SWING).")
@@ -456,15 +456,18 @@ def report(kit, items, log):
           "| CG result | Value | Unit | Source |", "|---|---|---|---|",
           f"| Pack centroid now / needed for x = {xt:.3f} m | {C['pack_x_m']:.3f} / {C['pack_x_req_m']:.3f} | m | "
           f"`CL-A3-PACK-X-REQ` |",
-          f"| Pack must move aft by | {C['pack_shift_req_m'] * 1000:.0f} | mm | `CALC-A3-CG` |",
+          f"| Pack shift still needed for the target (+ aft) | {round(C['pack_shift_req_m'] * 1000) + 0:+d} | mm | `CALC-A3-CG` |",
           f"| or the whole pod group ({C['pod_group_mass_g']:.0f} g: pod, power, avionics) by | "
-          f"{C['pod_group_shift_req_m'] * 1000:.0f} | mm | `CALC-A3-CG` |",
+          f"{round(C['pod_group_shift_req_m'] * 1000) + 0:+d} | mm | `CALC-A3-CG` |",
           f"| or the motor stations (everything ahead of the LE, {C['stations_mass_g']:.0f} g) by | "
-          f"{C['stations_shift_req_m'] * 1000:.0f} | mm | `CALC-A3-CG` |",
+          f"{round(C['stations_shift_req_m'] * 1000) + 0:+d} | mm | `CALC-A3-CG` |",
           f"| Pack aft face to wing TE at that station | {C['pack_aft_room_m'] * 1000:.0f} | mm | `CL-A3-PACK-AFT-ROOM` |",
           f"| CG shift per mm moved: pack / pod group / stations | {C['dxcg_dx']['pack']:.2f} / "
           f"{C['dxcg_dx']['pod_group']:.2f} / {C['dxcg_dx']['stations']:.2f} | mm/mm | `CALC-A3-CG` |",
-          f"| Hover trim split upper/lower pair | {C['hover_split']:.3f} | — | `CL-A3-HOVER-SPLIT` |",
+          f"| Pack fore face to pod nose (outside skin) at the nominal station | {C['pack_fwd_room_m'] * 1000:.0f} | mm | "
+          f"`CL-A3-PACK-FWD-ROOM` |",
+          f"| Hover trim split upper/lower pair (limit {kit.value('P:requirements.hover_split_max'):.2f}, D-18) | "
+          f"{C['hover_split']:.3f} | — | `CL-A3-HOVER-SPLIT` |",
           f"| CG height above the feet in the stance | {C['stance_cg_height_m']:.3f} | m | `CALC-A3-CG` |", "",
           "| Inertia about the CG | Ixx (roll, cruise) | Iyy (pitch) | Izz (yaw, cruise) | Ixz | Unit |",
           "|---|---|---|---|---|---|",

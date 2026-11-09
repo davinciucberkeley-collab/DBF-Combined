@@ -1,0 +1,5 @@
+case,i_a,awg8_rise_c,awg10_rise_c,awg12_rise_c,awg14_rise_c,awg16_rise_c,awg18_rise_c,awg20_rise_c
+"pack path, continuous",30.26,9.2,16.4,28.4,51.4,93.9,182.9,326.2
+"pack path, transition 42.9 A if held",42.92,17.5,31.3,55.3,102.5,191.3,360.3,574.9
+"ESC lead, hover share",8.4,1.0,1.7,3.0,5.3,9.2,16.4,27.8
+"ESC lead, limiter 24.8 A if held",24.8,7.2,12.7,22.0,39.5,71.4,137.7,250.4

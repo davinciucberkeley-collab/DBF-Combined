@@ -1,0 +1,8 @@
+run,awg,len_m,i_cont_a,rise_cont_c,peak_normal_c,peak_fault_c,r_loop_mohm,mass_g
+main,8,0.15,30.26,9.2,10.9,12.0,0.68,29.0
+esc,16,0.5,8.4,9.2,14.2,18.0,14.45,64.6
+esc18,18,0.5,8.4,16.4,30.6,41.4,23.58,39.7
+feed,20,0.15,1.24,0.7,nan,nan,nan,2.0
+bus,20,0.35,2.6,3.1,nan,nan,nan,4.6
+packlead,10,0.1,30.26,16.4,nan,24.7,0.74,nan
+packlead12,12,0.1,30.26,28.4,nan,49.2,1.22,nan

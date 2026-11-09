@@ -1,0 +1,863 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/H1/ground_tests.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-H1-HX711",
+   "type": "source",
+   "title": "Avia Semiconductor HX711 24-bit load-cell ADC datasheet",
+   "kind": "datasheet",
+   "url": "https://cdn.sparkfun.com/datasheets/Sensors/ForceFlex/hx711_english.pdf",
+   "where": "p.1-2: 10/80 SPS, gain 128 = +/-20 mV full scale; noise is set by the cell and wiring, so the 1 g (20 kg cell) and 0.5 g (1 kg cell) noise used here are assumptions confirmed by T-H1-STAND-CAL",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-H1-ELRS-RANGE",
+   "type": "source",
+   "title": "ExpressLRS: range and power settings (pre-flight range check at reduced power)",
+   "kind": "web",
+   "url": "https://www.expresslrs.org/quick-start/transmitters/tx-prep/",
+   "where": "power levels 10-250 mW selectable in the Lua script; LQ shown in telemetry",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-H1-COMPASSMOT",
+   "type": "source",
+   "title": "ArduPilot: compass-motor calibration (compassmot)",
+   "kind": "web",
+   "url": "https://ardupilot.org/copter/docs/common-compass-setup-advanced.html#compassmot-compensation-for-interference-from-the-power-wires-escs-and-motors",
+   "where": "interference < 30 % acceptable, 31-60 % grey zone, > 60 % unacceptable",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-H1-THRUST-CELL",
+   "type": "assumption",
+   "title": "Thrust cell 20 kgf bar cell + HX711",
+   "text": "Bar load cell rated 20 kgf on the thrust axis, read by an HX711 at 80 SPS; noise +/-1 gf after averaging 8 samples.",
+   "basis": "E1 CR-E1-11 asks for a 20 kg cell + HX711; 1 gf noise is typical of a shielded 20 kg bar cell",
+   "value": {
+    "cap_kgf": 20.0,
+    "noise_gf": 1.0
+   },
+   "unit": "kgf,gf",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-H1-HX711"
+   ]
+  },
+  {
+   "id": "ASM-H1-TORQUE-CELL",
+   "type": "assumption",
+   "title": "Torque cell 1 kgf bar cell at 100 mm arm",
+   "text": "Motor mount on a bearing axle coaxial with the shaft; reaction torque restrained by an arm of 0.100 m pressing a 1 kgf bar cell (second HX711); noise +/-0.5 gf.",
+   "basis": "B4 CR-B4-09 asks for a torque cell; a lever on a bar cell is the cheapest stand design that separates torque from thrust",
+   "value": {
+    "cap_kgf": 1.0,
+    "arm_m": 0.1,
+    "noise_gf": 0.5
+   },
+   "unit": "kgf,m,gf",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-H1-HX711"
+   ]
+  },
+  {
+   "id": "ASM-H1-RANGE-FACTOR",
+   "type": "assumption",
+   "title": "Cell range >= 1.25 x the largest expected load",
+   "text": "Each cell's rated capacity covers 1.25 x the peak load it should see, so an over-prediction of 25 % does not overload it.",
+   "basis": "common instrumentation practice (load at <= 80 % of rated capacity)",
+   "value": 1.25,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-SCALE",
+   "type": "assumption",
+   "title": "Two 5 kg x 1 g scales, 0.1 % after calibration",
+   "text": "Two identical kitchen/shipping scales, 5 kg capacity, 1 g display step, calibrated against a 2.000 kg check mass (water in a sealed bottle weighed on the Jacobs lab balance) to +/-0.1 % of reading.",
+   "basis": "1 g step is what A1 (T-A1-WEIGH) and A3 (T-A3-WEIGH-PARTS) specify; 0.1 % after a check-mass calibration is conservative for strain-gauge scales",
+   "value": {
+    "res_g": 1.0,
+    "cal_frac": 0.001
+   },
+   "unit": "g,-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-H1-CG-JIG",
+   "type": "assumption",
+   "title": "CG jig: two pin pairs 0.220 m apart in x",
+   "text": "Two bridges, one per scale, each with two padded pins under the wing outboard of the fins (|y| = 0.45 m): front pins at x = 0.010 m, rear pins at x = 0.230 m (ahead of the elevon hinge). Pin x set with a steel rule and square to +/-0.5 mm.",
+   "basis": "the lower half-fins and lower motors block any support inboard of |y| 0.34 m; the rear pins must stay off the elevons (hinge x 0.2496 m)",
+   "value": {
+    "x1_m": 0.01,
+    "x2_m": 0.23,
+    "pos_tol_m": 0.0005
+   },
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-RESTRAINT-SF",
+   "type": "assumption",
+   "title": "Tie-down factor 2.0",
+   "text": "The restrained-frame run (four motors, props on) is tied down for 2.0 x the net upward force if the limiter fails and all four motors reach C1's limit thrust.",
+   "basis": "props-on bench runs are the highest-energy ground test; 2.0 covers a snatch load on a slack strap",
+   "value": 2.0,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-ESC-BURST",
+   "type": "assumption",
+   "title": "ESC 55 A for 10 s",
+   "text": "LANRC BLHeli_S 45 A ESC burst rating 55 A for 10 s; a full-throttle step on the stand is held <= 2 s.",
+   "basis": "params.json#propulsion.esc listing text",
+   "value": 55.0,
+   "unit": "A",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-LANRC-45A"
+   ]
+  },
+  {
+   "id": "ASM-H1-RES-MAX",
+   "type": "assumption",
+   "title": "Thrust and torque resolution <= 0.5 % / 2 % of hover",
+   "text": "The A/B prop comparison must resolve B1's 1.9 % hover-power difference (CL-B1-HOVER-PROP-RATIO 1.019): thrust noise <= 0.5 % of hover thrust, torque noise <= 2 % of hover torque.",
+   "basis": "resolution 4 x finer than the difference to detect",
+   "value": {
+    "thrust": 0.005,
+    "torque": 0.02
+   },
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-H1-STAND",
+   "type": "calculation",
+   "title": "stand range",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "stand_range",
+   "equation": "F_req = k T_lim / g ; Ftq_req = k Q_lim / (arm g) ; res_T = noise_T / (T_h/g) ; res_Q = noise_Q g arm / Q_h",
+   "inputs": {
+    "t_lim": "CL-C1-T-LIMIT",
+    "q_lim": "CL-C1-MOTOR-TORQUE",
+    "t_hover": "CL-B4-HOVER-T",
+    "q_hover": "CL-B4-HOVER-Q",
+    "k": "ASM-H1-RANGE-FACTOR",
+    "cell": "ASM-H1-THRUST-CELL",
+    "tq": "ASM-H1-TORQUE-CELL",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "g": "m/s2"
+   },
+   "outputs": {
+    "thrust_cap_req_kgf": 2.6871351867740567,
+    "torque_cell_req_kgf": 0.5354936449064184,
+    "thrust_res_frac": 0.001451378809869376,
+    "torque_res_frac": 0.00434436742120392,
+    "torque_force_hover_gf": 115.0915545401634
+   },
+   "input_values": {
+    "t_lim": 21.081435423502242,
+    "q_lim": 0.4201119002257222,
+    "t_hover": 6.75678185,
+    "q_hover": 0.11286625933312935,
+    "k": 1.25,
+    "cell": {
+     "cap_kgf": 20.0,
+     "noise_gf": 1.0
+    },
+    "tq": {
+     "cap_kgf": 1.0,
+     "arm_m": 0.1,
+     "noise_gf": 0.5
+    },
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CALC-H1-LIMITS",
+   "type": "calculation",
+   "title": "rig limits",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "rig_limits",
+   "equation": "limits read from the rig assumptions",
+   "inputs": {
+    "cell": "ASM-H1-THRUST-CELL",
+    "tq": "ASM-H1-TORQUE-CELL",
+    "res": "ASM-H1-RES-MAX"
+   },
+   "outputs": {
+    "thrust_cap_kgf": 20.0,
+    "torque_cap_kgf": 1.0,
+    "thrust_res_max": 0.005,
+    "torque_res_max": 0.02
+   },
+   "input_values": {
+    "cell": {
+     "cap_kgf": 20.0,
+     "noise_gf": 1.0
+    },
+    "tq": {
+     "cap_kgf": 1.0,
+     "arm_m": 0.1,
+     "noise_gf": 0.5
+    },
+    "res": {
+     "thrust": 0.005,
+     "torque": 0.02
+    }
+   }
+  },
+  {
+   "id": "CL-H1-THRUST-CAP",
+   "type": "claim",
+   "title": "Thrust cell rating",
+   "calc": "CALC-H1-LIMITS",
+   "output": "thrust_cap_kgf",
+   "unit": "kgf",
+   "how": "Cell label and calibration T-H1-STAND-CAL.",
+   "value": 20.0
+  },
+  {
+   "id": "CL-H1-TORQUE-CAP",
+   "type": "claim",
+   "title": "Torque cell rating",
+   "calc": "CALC-H1-LIMITS",
+   "output": "torque_cap_kgf",
+   "unit": "kgf",
+   "how": "Cell label and calibration T-H1-STAND-CAL.",
+   "value": 1.0
+  },
+  {
+   "id": "CL-H1-THRUST-RES-MAX",
+   "type": "claim",
+   "title": "Thrust resolution needed",
+   "calc": "CALC-H1-LIMITS",
+   "output": "thrust_res_max",
+   "unit": "-",
+   "how": "From ASM-H1-RES-MAX (A/B prop comparison).",
+   "value": 0.005
+  },
+  {
+   "id": "CL-H1-TORQUE-RES-MAX",
+   "type": "claim",
+   "title": "Torque resolution needed",
+   "calc": "CALC-H1-LIMITS",
+   "output": "torque_res_max",
+   "unit": "-",
+   "how": "From ASM-H1-RES-MAX (A/B prop comparison).",
+   "value": 0.02
+  },
+  {
+   "id": "CL-H1-THRUST-CELL-REQ",
+   "type": "claim",
+   "title": "Thrust cell range needed",
+   "calc": "CALC-H1-STAND",
+   "output": "thrust_cap_req_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-THRUST-CAP"
+   },
+   "how": "T-H1-STAND-CAL: hang 0.5, 1.0, 2.0, 2.5 kg on the thrust axis; linear within 0.5 % FS.",
+   "value": 2.6871351867740567
+  },
+  {
+   "id": "CL-H1-TORQUE-CELL-REQ",
+   "type": "claim",
+   "title": "Torque cell range needed",
+   "calc": "CALC-H1-STAND",
+   "output": "torque_cell_req_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-TORQUE-CAP"
+   },
+   "how": "T-H1-STAND-CAL: 50, 100, 200, 500 g at the 0.100 m arm; linear within 1 % FS.",
+   "value": 0.5354936449064184
+  },
+  {
+   "id": "CL-H1-THRUST-RES",
+   "type": "claim",
+   "title": "Thrust noise / hover thrust",
+   "calc": "CALC-H1-STAND",
+   "output": "thrust_res_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-THRUST-RES-MAX"
+   },
+   "how": "T-H1-STAND-CAL: 60 s of zero-load samples, 2 sigma noise; repeat at 690 gf hanging mass.",
+   "value": 0.001451378809869376
+  },
+  {
+   "id": "CL-H1-TORQUE-RES",
+   "type": "claim",
+   "title": "Torque noise / hover torque",
+   "calc": "CALC-H1-STAND",
+   "output": "torque_res_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-TORQUE-RES-MAX"
+   },
+   "how": "T-H1-STAND-CAL: 60 s of zero-load samples on the torque cell, 2 sigma noise.",
+   "value": 0.00434436742120392
+  },
+  {
+   "id": "CL-H1-TORQUE-F-HOVER",
+   "type": "claim",
+   "title": "Torque-cell force at hover",
+   "calc": "CALC-H1-STAND",
+   "output": "torque_force_hover_gf",
+   "unit": "gf",
+   "how": "Read on the stand at 690 gf thrust (T-B4-STAND).",
+   "value": 115.0915545401634
+  },
+  {
+   "id": "CALC-H1-CURRENT",
+   "type": "calculation",
+   "title": "stand current",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "stand_current",
+   "equation": "I_supply = 1.05 I_max(14.8 V) ; I_step = I_max(16.8 V, unlimited)",
+   "inputs": {
+    "i148": "CL-E1-IMAX-148-55",
+    "i168": "CL-E1-IMAX-168-55"
+   },
+   "outputs": {
+    "supply_req_a": 44.548938897821884,
+    "step_a": 51.56136196434739
+   },
+   "input_values": {
+    "i148": 42.42756085506846,
+    "i168": 51.56136196434739
+   }
+  },
+  {
+   "id": "CL-H1-SUPPLY-REQ",
+   "type": "claim",
+   "title": "Bench supply current for 14.8 V sweeps",
+   "calc": "CALC-H1-CURRENT",
+   "output": "supply_req_a",
+   "unit": "A",
+   "how": "Supply label; if it cannot hold 14.8 V at this current, run 70-100 % steps on a flight pack and log V.",
+   "value": 44.548938897821884
+  },
+  {
+   "id": "CL-H1-STEP-I",
+   "type": "claim",
+   "title": "Unlimited 16.8 V full-throttle step current",
+   "calc": "CALC-H1-CURRENT",
+   "output": "step_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-H1-ESC-BURST"
+   },
+   "how": "T-C1-THRUST-FRESH logs it; hold the step <= 2 s; abort above 55 A.",
+   "value": 51.56136196434739
+  },
+  {
+   "id": "CALC-H1-TW-PASS",
+   "type": "calculation",
+   "title": "tw pass",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "tw_pass",
+   "equation": "T_pass = TW m g k_dl / (n g) [kgf] ; T_pred_sag = T_max x sag",
+   "inputs": {
+    "tw": "P:requirements.hover_tw_min",
+    "tw_sag": "P:requirements.hover_tw_min_sag",
+    "m": "P:requirements.mtow_gate_kg",
+    "k_dl": "P:propulsion.download_factor",
+    "n": "P:propulsion.n_motors",
+    "t_max": "P:propulsion.thrust_max_per_motor_kg",
+    "sag": "P:propulsion.voltage_sag"
+   },
+   "units": {
+    "m": "kg",
+    "t_max": "kg"
+   },
+   "outputs": {
+    "pass_fresh_kgf": 1.3780000000000001,
+    "pass_sag_kgf": 1.1024,
+    "pred_sag_kgf": 1.1664,
+    "pred_fresh_kgf": 1.62
+   },
+   "input_values": {
+    "tw": 2.0,
+    "tw_sag": 1.6,
+    "m": 2.6,
+    "k_dl": 1.06,
+    "n": 4,
+    "t_max": 1.62,
+    "sag": 0.72
+   }
+  },
+  {
+   "id": "CL-H1-T-PRED-FRESH",
+   "type": "claim",
+   "title": "Predicted thrust, limiter, fresh",
+   "calc": "CALC-H1-TW-PASS",
+   "output": "pred_fresh_kgf",
+   "unit": "kgf",
+   "how": "E1 CL-E1-ILIM-TW-FRESH via params; measured by T-A1-THRUST-STATION.",
+   "value": 1.62
+  },
+  {
+   "id": "CL-H1-T-PRED-SAG",
+   "type": "claim",
+   "title": "Predicted thrust, worst pack state",
+   "calc": "CALC-H1-TW-PASS",
+   "output": "pred_sag_kgf",
+   "unit": "kgf",
+   "how": "params.json thrust_max x voltage_sag; measured on a 3.6 V/cell 10 degC pack.",
+   "value": 1.1664
+  },
+  {
+   "id": "CL-H1-T-PASS-FRESH",
+   "type": "claim",
+   "title": "Stand pass line, fresh pack (T/W 2.0)",
+   "calc": "CALC-H1-TW-PASS",
+   "output": "pass_fresh_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-T-PRED-FRESH"
+   },
+   "how": "Card GT-02 step 6: isolated full-throttle thrust at the per-motor limiter share (25 A) on a 16.8 V pack must be >= this value.",
+   "value": 1.3780000000000001
+  },
+  {
+   "id": "CL-H1-T-PASS-SAG",
+   "type": "claim",
+   "title": "Stand pass line, worst pack (T/W 1.6)",
+   "calc": "CALC-H1-TW-PASS",
+   "output": "pass_sag_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-T-PRED-SAG"
+   },
+   "how": "Card GT-02 step 8: full-throttle thrust on a 3.6 V/cell (20 %) pack at 10 degC must be >= this value.",
+   "value": 1.1024
+  },
+  {
+   "id": "CALC-H1-WEIGH",
+   "type": "calculation",
+   "title": "weigh unc",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "weigh_unc",
+   "equation": "U95 = 2 sqrt((res/sqrt12)^2 + (cal m)^2) ; frac = U95 / gate margin",
+   "inputs": {
+    "scale": "ASM-H1-SCALE",
+    "m": "P:requirements.mtow_gate_kg",
+    "margin": "CL-A3-GATE-MARGIN"
+   },
+   "units": {
+    "m": "kg"
+   },
+   "outputs": {
+    "u95_g": 5.231953108862248,
+    "u_frac": 0.04851993498031428,
+    "accept_max_kg": 2.594768046891138
+   },
+   "input_values": {
+    "scale": {
+     "res_g": 1.0,
+     "cal_frac": 0.001
+    },
+    "m": 2.6,
+    "margin": 0.10783099999999957
+   }
+  },
+  {
+   "id": "CL-H1-WEIGH-U95",
+   "type": "claim",
+   "title": "Weigh uncertainty (95 %)",
+   "calc": "CALC-H1-WEIGH",
+   "output": "u95_g",
+   "unit": "g",
+   "how": "T-H1-SCALE-CAL: weigh the 2.000 kg check mass 10 times on each scale.",
+   "value": 5.231953108862248
+  },
+  {
+   "id": "CL-H1-WEIGH-U-FRAC",
+   "type": "claim",
+   "title": "Weigh uncertainty / A3 gate margin",
+   "calc": "CALC-H1-WEIGH",
+   "output": "u_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.1
+   },
+   "how": "Re-run after A3 updates CL-A3-GATE-MARGIN.",
+   "value": 0.04851993498031428
+  },
+  {
+   "id": "CL-H1-WEIGH-ACCEPT",
+   "type": "claim",
+   "title": "Weigh-in acceptance line (guard-banded)",
+   "calc": "CALC-H1-WEIGH",
+   "output": "accept_max_kg",
+   "unit": "kg",
+   "how": "Card GT-06: ready-to-fly mass must read <= this value (gate minus U95).",
+   "value": 2.594768046891138
+  },
+  {
+   "id": "CALC-H1-CG",
+   "type": "calculation",
+   "title": "cg unc",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "cg_unc",
+   "equation": "x = x1 + d W2/W ; U95 = 2 sqrt(e^2 + (W2/W sqrt2 e)^2 + (d sqrt2 u_W / W)^2)",
+   "inputs": {
+    "jig": "ASM-H1-CG-JIG",
+    "scale": "ASM-H1-SCALE",
+    "m": "P:requirements.mtow_gate_kg",
+    "xr": "P:cg.x_range_m",
+    "xt": "P:cg.x_target_m"
+   },
+   "units": {
+    "m": "kg",
+    "xr": "m",
+    "xt": "m"
+   },
+   "outputs": {
+    "u95_m": 0.0006027249570820125,
+    "u_frac_half_range": 0.13393887935155832,
+    "accept_fwd_m": 0.04060272495708201,
+    "accept_aft_m": 0.04839727504291799,
+    "w2_frac": 0.1545454545454545
+   },
+   "input_values": {
+    "jig": {
+     "x1_m": 0.01,
+     "x2_m": 0.23,
+     "pos_tol_m": 0.0005
+    },
+    "scale": {
+     "res_g": 1.0,
+     "cal_frac": 0.001
+    },
+    "m": 2.6,
+    "xr": [
+     0.04,
+     0.049
+    ],
+    "xt": 0.044
+   }
+  },
+  {
+   "id": "CL-H1-CG-U95",
+   "type": "claim",
+   "title": "CG-x uncertainty on the two-scale jig (95 %)",
+   "calc": "CALC-H1-CG",
+   "output": "u95_m",
+   "unit": "m",
+   "how": "T-H1-SCALE-CAL: place a 1.000 kg mass at a ruled x on the empty jig, recover x within U95.",
+   "value": 0.0006027249570820125
+  },
+  {
+   "id": "CL-H1-CG-U-FRAC",
+   "type": "claim",
+   "title": "CG uncertainty / half the CG range",
+   "calc": "CALC-H1-CG",
+   "output": "u_frac_half_range",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.5
+   },
+   "how": "Re-run after B3 changes cg.x_range_m.",
+   "value": 0.13393887935155832
+  },
+  {
+   "id": "CL-H1-CG-ACCEPT-FWD",
+   "type": "claim",
+   "title": "CG acceptance, forward line (guard-banded)",
+   "calc": "CALC-H1-CG",
+   "output": "accept_fwd_m",
+   "unit": "m",
+   "how": "Card GT-07: measured x must be >= this value.",
+   "value": 0.04060272495708201
+  },
+  {
+   "id": "CL-H1-CG-ACCEPT-AFT",
+   "type": "claim",
+   "title": "CG acceptance, aft line (guard-banded)",
+   "calc": "CALC-H1-CG",
+   "output": "accept_aft_m",
+   "unit": "m",
+   "how": "Card GT-07: measured x must be <= this value.",
+   "value": 0.04839727504291799
+  },
+  {
+   "id": "CALC-H1-PROOF",
+   "type": "calculation",
+   "title": "proof loads",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "proof_loads",
+   "equation": "P = V_ult/SF at y = Mx_ult/V_ult ; d_max = k b/2 ; F_mount = F_ult/SF ; F_fin = M_fin_ult / (SF z_station)",
+   "inputs": {
+    "v_ult": "CL-C1-WING-SHEAR-ULT",
+    "mx_ult": "CL-C1-SPAR-MX-ULT",
+    "sf": "P:requirements.safety_factor_ult",
+    "k_def": "P:requirements.spar_deflection_max",
+    "b": "P:wing.span_m",
+    "f_mount_ult": "CL-C1-MOUNT-F-ULT",
+    "m_fin_ult": "CL-C1-FINHALF-MB-ULT",
+    "z_st": "P:propulsion.stations.z_m",
+    "f_pack": "CL-C1-PACK-CRASH-LOAD",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "b": "m",
+    "z_st": "m",
+    "g": "m/s2"
+   },
+   "outputs": {
+    "wing_p_n": 28.46917494367076,
+    "wing_p_kg": 2.9030479260166073,
+    "wing_y_m": 0.32796508615752024,
+    "wing_defl_max_m": 0.028749999999999998,
+    "mount_f_n": 19.61836287881295,
+    "mount_f_kg": 2.0005162699609906,
+    "fin_f_n": 45.97039960266425,
+    "fin_f_kg": 4.687676179191085,
+    "pack_pull_n": 85.0,
+    "pack_pull_kg": 8.66758781031239
+   },
+   "input_values": {
+    "v_ult": 42.70376241550614,
+    "mx_ult": 14.005343119851746,
+    "sf": 1.5,
+    "k_def": 0.05,
+    "b": 1.15,
+    "f_mount_ult": 29.427544318219425,
+    "m_fin_ult": 13.101563886759312,
+    "z_st": 0.19,
+    "f_pack": 85.0,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CL-H1-WING-PROOF-P",
+   "type": "claim",
+   "title": "Wing proof load per side (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "wing_p_n",
+   "unit": "N",
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "Card GT-08: sandbag at y = CL-H1-WING-PROOF-Y each side; C1 confirms the load points (CR-H1-03).",
+   "value": 28.46917494367076
+  },
+  {
+   "id": "CL-H1-WING-PROOF-Y",
+   "type": "claim",
+   "title": "Wing proof load station",
+   "calc": "CALC-H1-PROOF",
+   "output": "wing_y_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "value": 0.575
+   },
+   "how": "Equivalent point that reproduces root flap moment and shear.",
+   "value": 0.32796508615752024
+  },
+  {
+   "id": "CL-H1-WING-DEFL-MAX",
+   "type": "claim",
+   "title": "Tip deflection allowed at limit",
+   "calc": "CALC-H1-PROOF",
+   "output": "wing_defl_max_m",
+   "unit": "m",
+   "how": "Card GT-08: dial gauge or ruler at the tip; and no permanent set after unloading.",
+   "value": 0.028749999999999998
+  },
+  {
+   "id": "CL-H1-MOUNT-PROOF-F",
+   "type": "claim",
+   "title": "Motor-mount proof load (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "mount_f_n",
+   "unit": "N",
+   "how": "Card GT-09: hang from each mount in -x and in y.",
+   "value": 19.61836287881295
+  },
+  {
+   "id": "CL-H1-FIN-PROOF-F",
+   "type": "claim",
+   "title": "Fin + tube proof load at the station (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "fin_f_n",
+   "unit": "N",
+   "how": "Card GT-09: hang at the motor station, side-load in y, wing held at the spar.",
+   "value": 45.97039960266425
+  },
+  {
+   "id": "CL-H1-PACK-PULL-F",
+   "type": "claim",
+   "title": "Pack retention pull (ultimate, dummy pack)",
+   "calc": "CALC-H1-PROOF",
+   "output": "pack_pull_n",
+   "unit": "N",
+   "how": "Card GT-10: spring scale on a 680 g pack dummy in x, y, z.",
+   "value": 85.0
+  },
+  {
+   "id": "CALC-H1-RESTRAINT",
+   "type": "calculation",
+   "title": "restraint",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "restraint",
+   "equation": "F_tie = SF (n T_lim - m g)",
+   "inputs": {
+    "n": "P:propulsion.n_motors",
+    "t_lim": "CL-C1-T-LIMIT",
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "sf": "ASM-H1-RESTRAINT-SF"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2"
+   },
+   "outputs": {
+    "tie_n": 117.65690338801794,
+    "tie_kg": 11.997665195353964,
+    "per_tie_n": 29.414225847004484
+   },
+   "input_values": {
+    "n": 4,
+    "t_lim": 21.081435423502242,
+    "m": 2.6,
+    "g": 9.80665,
+    "sf": 2.0
+   }
+  },
+  {
+   "id": "CL-H1-RESTRAINT-F",
+   "type": "claim",
+   "title": "Tie-down force, restrained four-motor run",
+   "calc": "CALC-H1-RESTRAINT",
+   "output": "tie_n",
+   "unit": "N",
+   "how": "T-H1-RESTRAINT-PULL: pull each of the 4 straps to the per-strap value.",
+   "value": 117.65690338801794
+  },
+  {
+   "id": "CL-H1-RESTRAINT-PER-TIE",
+   "type": "claim",
+   "title": "Tie-down force per strap (4 straps)",
+   "calc": "CALC-H1-RESTRAINT",
+   "output": "per_tie_n",
+   "unit": "N",
+   "how": "Spring scale on each strap before the run.",
+   "value": 29.414225847004484
+  },
+  {
+   "id": "CALC-H1-PACK",
+   "type": "calculation",
+   "title": "pack lines",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "pack_lines",
+   "equation": "C_min = frac C_nom ; R_10C = R_25C k_cold",
+   "inputs": {
+    "c": "P:battery.capacity_ah",
+    "frac": "P:requirements.pack_capacity_min_frac",
+    "r": "ASM-E2-R-CELL",
+    "k_cold": "ASM-E2-COLD-R"
+   },
+   "units": {
+    "c": "Ah"
+   },
+   "outputs": {
+    "cap_min_ah": 5.98,
+    "ir25_max_mohm": 5.0,
+    "ir10_max_mohm": 7.5,
+    "ir25_expect_mohm": 4.0,
+    "ir10_expect_mohm": 6.0
+   },
+   "input_values": {
+    "c": 6.5,
+    "frac": 0.92,
+    "r": 0.004,
+    "k_cold": 1.5
+   }
+  },
+  {
+   "id": "CL-H1-PACK-CAP-MIN",
+   "type": "claim",
+   "title": "Pack capacity acceptance (1C to 3.5 V/cell)",
+   "calc": "CALC-H1-PACK",
+   "output": "cap_min_ah",
+   "unit": "Ah",
+   "how": "Card GT-05 (T-E2-CAPACITY); pack_log.csv capacity_mah.",
+   "value": 5.98
+  },
+  {
+   "id": "CL-H1-PACK-IR10-MAX",
+   "type": "claim",
+   "title": "Pack IR acceptance at 10 degC",
+   "calc": "CALC-H1-PACK",
+   "output": "ir10_max_mohm",
+   "unit": "mOhm/cell",
+   "how": "Card GT-05 (T-E2-IR): E2's 5 mOhm/cell at 25 degC x the cold factor; pack_log.csv ir_mohm_cell_10c.",
+   "value": 7.5
+  },
+  {
+   "id": "T-H1-STAND-CAL",
+   "type": "test",
+   "title": "Thrust stand calibration and noise",
+   "verifies": [
+    "CL-H1-THRUST-CELL-REQ",
+    "CL-H1-TORQUE-CELL-REQ",
+    "CL-H1-THRUST-RES",
+    "CL-H1-TORQUE-RES"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-01: dead weights 0.5/1.0/2.0/2.5 kg on the thrust axis via a pulley-free hook, 50/100/200/500 g at the 0.100 m torque arm; 60 s zero-load noise; before and after every session.",
+   "evidence": "redesign/team/H1/logs/T-H1-STAND-CAL.csv"
+  },
+  {
+   "id": "T-H1-SCALE-CAL",
+   "type": "test",
+   "title": "Scale and CG-jig calibration",
+   "verifies": [
+    "CL-H1-WEIGH-U95",
+    "CL-H1-WEIGH-U-FRAC",
+    "CL-H1-CG-U95",
+    "CL-H1-CG-U-FRAC"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-06/07: 2.000 kg check mass 10 times per scale; 1.000 kg at a ruled x on the jig, recover x; record in logs/T-H1-SCALE-CAL.csv.",
+   "evidence": "redesign/team/H1/logs/T-H1-SCALE-CAL.csv"
+  },
+  {
+   "id": "T-H1-RESTRAINT-PULL",
+   "type": "test",
+   "title": "Restraint pull before props-on runs",
+   "verifies": [
+    "CL-H1-RESTRAINT-F",
+    "CL-H1-RESTRAINT-PER-TIE"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-03: spring scale on each strap to the per-strap force, no slip at the table anchor.",
+   "evidence": "redesign/team/H1/logs/T-H1-RESTRAINT-PULL.csv"
+  }
+ ]
+}

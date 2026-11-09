@@ -1,0 +1,58 @@
+{
+ "money": {
+  "goods_base": 1309.78,
+  "goods_pess": 1359.05,
+  "tax_base": 134.25,
+  "tax_pess": 139.3,
+  "spend_base": 1569.03,
+  "spend_pess": 1680.35,
+  "early_goods_tax": 921.88
+ },
+ "reserve_pess": 319.65,
+ "reserve_base": 430.97,
+ "bridge": {
+  "value": 1680.36,
+  "deltas": {
+   "elevon servos 2 x 19.99 replace the DECISION's $30 (horns and hinge are in the hardware kit)": 9.979999999999997,
+   "carbon tubes: 1 + 2 Aloft-or-overseas replace 3 overseas": -4.320000000000007,
+   "Small Parts adapter set (CR-E1-20)": 23.95,
+   "16 + 4 M3x8 screws (CR-E1-20)": 2.0,
+   "second ESC pack deferred (X01)": -30.0,
+   "prop and ring lines unchanged (12 x 3.83, 12 x 0.50)": 0.0
+  }
+ },
+ "vendors": {
+  "SunnySky USA": 124.95,
+  "Amazon": 297.55,
+  "APC": 51.96,
+  "Small Parts CNC": 23.95,
+  "Bolt Depot": 2.0,
+  "OVONIC US": 79.25,
+  "ReadyMadeRC": 67.26,
+  "RaceDayQuads": 20.49,
+  "RadioMaster": 84.98,
+  "Holybro": 59.99,
+  "EMAX USA": 39.98,
+  "Home Depot El Cerrito": 134.97,
+  "Aloft Hobbies": 72.0,
+  "West3D": 20.99,
+  "mixed (F1/F2 itemise)": 124.01,
+  "mixed": 15.0,
+  "GetFPV": 24.49,
+  "Pyrodrone": 19.98,
+  "Harbor Freight": 19.99,
+  "Pine64": 25.99
+ },
+ "by_order": {
+  "EARLY": 836.17,
+  "DEC": 318.65,
+  "LOCAL": 154.96
+ },
+ "gated": {
+  "X01": 33.08,
+  "X02": 22.04,
+  "X03": 18.39,
+  "X04": 87.37,
+  "X05": 44.09
+ }
+}

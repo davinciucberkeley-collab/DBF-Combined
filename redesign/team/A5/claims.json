@@ -6,16 +6,261 @@
  ],
  "nodes": [
   {
-   "id": "ASM-A5-CAMBER",
+   "id": "ASM-A5-SECTION",
    "type": "assumption",
-   "title": "Placeholder section camber 1.6 %",
-   "text": "Until B2 supplies the MH 45 coordinates, CAD and these claims use a NACA 00xx thickness at params wing.t_c with a reflexed cubic camber line, maximum camber 1.6 % chord, zero crossing at 80 % chord",
-   "basis": "EST for an MH 45-class reflexed section; replaced by subsystems/wing/mh45.dat (CR-A5-02)",
-   "value": 0.016,
+   "title": "Wing section coordinates (S5010)",
+   "text": "Normalised Selig-order coordinates of the S5010 read from subsystems/wing/s5010.dat, the file CAD lofts",
+   "basis": "B2's copy of the UIUC coordinate file (URL and checked date in its header line); D1 owns the subsystems/wing copy; params wing.airfoil = S5010 (CHANGE-LOG D-02)",
+   "value": [
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.99676,
+     1e-05
+    ],
+    [
+     0.987068,
+     7e-05
+    ],
+    [
+     0.971006,
+     0.00036
+    ],
+    [
+     0.948692,
+     0.00108
+    ],
+    [
+     0.920398,
+     0.00256
+    ],
+    [
+     0.886653,
+     0.005161
+    ],
+    [
+     0.848257,
+     0.009031
+    ],
+    [
+     0.806051,
+     0.014062
+    ],
+    [
+     0.760724,
+     0.020083
+    ],
+    [
+     0.713027,
+     0.026884
+    ],
+    [
+     0.66372,
+     0.034205
+    ],
+    [
+     0.613492,
+     0.041636
+    ],
+    [
+     0.562894,
+     0.048777
+    ],
+    [
+     0.512397,
+     0.055298
+    ],
+    [
+     0.462429,
+     0.060939
+    ],
+    [
+     0.413372,
+     0.06547
+    ],
+    [
+     0.365665,
+     0.06874
+    ],
+    [
+     0.319588,
+     0.070641
+    ],
+    [
+     0.275491,
+     0.071141
+    ],
+    [
+     0.233715,
+     0.070241
+    ],
+    [
+     0.194609,
+     0.068
+    ],
+    [
+     0.158474,
+     0.06446
+    ],
+    [
+     0.125599,
+     0.059689
+    ],
+    [
+     0.096234,
+     0.053778
+    ],
+    [
+     0.070571,
+     0.046887
+    ],
+    [
+     0.048747,
+     0.039156
+    ],
+    [
+     0.030875,
+     0.030815
+    ],
+    [
+     0.017033,
+     0.022143
+    ],
+    [
+     0.007241,
+     0.013482
+    ],
+    [
+     0.00152,
+     0.005331
+    ],
+    [
+     0.0,
+     -0.0014
+    ],
+    [
+     0.004091,
+     -0.006501
+    ],
+    [
+     0.014412,
+     -0.010842
+    ],
+    [
+     0.030135,
+     -0.014712
+    ],
+    [
+     0.051088,
+     -0.018043
+    ],
+    [
+     0.077042,
+     -0.020823
+    ],
+    [
+     0.107716,
+     -0.023063
+    ],
+    [
+     0.142781,
+     -0.024814
+    ],
+    [
+     0.181817,
+     -0.026094
+    ],
+    [
+     0.224364,
+     -0.026884
+    ],
+    [
+     0.26997,
+     -0.027154
+    ],
+    [
+     0.318188,
+     -0.026914
+    ],
+    [
+     0.368545,
+     -0.026234
+    ],
+    [
+     0.420463,
+     -0.025174
+    ],
+    [
+     0.473371,
+     -0.023814
+    ],
+    [
+     0.526679,
+     -0.022193
+    ],
+    [
+     0.579767,
+     -0.020393
+    ],
+    [
+     0.632035,
+     -0.018463
+    ],
+    [
+     0.682872,
+     -0.016452
+    ],
+    [
+     0.73169,
+     -0.014432
+    ],
+    [
+     0.777887,
+     -0.012432
+    ],
+    [
+     0.820923,
+     -0.010492
+    ],
+    [
+     0.860279,
+     -0.008651
+    ],
+    [
+     0.895454,
+     -0.006911
+    ],
+    [
+     0.926019,
+     -0.005271
+    ],
+    [
+     0.951623,
+     -0.003671
+    ],
+    [
+     0.972106,
+     -0.00212
+    ],
+    [
+     0.987298,
+     -0.00088
+    ],
+    [
+     0.99678,
+     -0.00019
+    ],
+    [
+     1.0,
+     0.0
+    ]
+   ],
    "unit": "-",
-   "status": "UNVERIFIED",
+   "status": "PROPOSED",
    "cites": [
-    "SRC-MH45"
+    "SRC-S5010"
    ]
   },
   {
@@ -45,25 +290,12 @@
    ]
   },
   {
-   "id": "ASM-A5-FOAMBOARD-T",
-   "type": "assumption",
-   "title": "Foam-board layer thickness",
-   "text": "One layer of the fin foam board is 4.8 mm (3/16 in)",
-   "basis": "params fins.material text; measure a sheet",
-   "value": 0.0048,
-   "unit": "m",
-   "status": "UNVERIFIED",
-   "cites": [
-    "SRC-K09-CARD"
-   ]
-  },
-  {
    "id": "ASM-A5-MASS-SPLIT",
    "type": "assumption",
-   "title": "Allocation split used for the layout CG",
-   "text": "Within each allocation: wing = spar 102 g + core/tape/elevons rest; fins = 2 x 111 fin (incl. clips, epoxy) + 2 x 43 tube + 4 x 18 mount + 2 x 15 saddle; propulsion = 4 x 87.5 motor+ESC at the motor + 4 x 20 prop; power = 550 pack + rest behind it; pod, avionics in the pod; mechanisms at the servo pockets; harness on the skin at x 0.01 m; growth reserve not placed",
-   "basis": "params.json#mass.allocation_g notes; the skeleton (redesign/fusion/skeleton) uses the same split",
-   "status": "PROPOSED",
+   "title": "Allocation split and lump stations used for the layout CG (R1 skeleton)",
+   "text": "Within each allocation: wing = spar (mass/m x length); the rest split between core and elevon panels with the tape skin by planform area and foam/fill/consumables by section volume; fins = 4 half-fins (rest) + 2 x 43 tube + 4 x 18 mount + 2 x 20 through-core block + 2 x 30 clip set; propulsion = 4 x prop (params) at the prop plane + rest (motor, ESC, adapter, nut) as the motor envelope; power = pack centred in the pod + rest at the pod nose; pod and avionics in the pod; mechanisms 23.5 mm ahead of the hinge; harness as two bundle legs (channel 14 mm aft of the spar surface, tube inboard face); printed walls 3 mm; growth reserve not placed",
+   "basis": "params.json#mass.allocation_g notes (CHANGE-LOG D-07); the skeleton modules (redesign/fusion/skeleton/*/fusion) use the same numbers",
+   "status": "UNVERIFIED",
    "cites": [
     "SRC-K09-CARD",
     "SRC-K09-REVIEW"
@@ -79,26 +311,269 @@
    "inputs": {
     "c": "P:wing.chord_m",
     "f": "P:wing.elevon.chord_frac",
-    "t_c": "P:wing.t_c",
-    "camber": "ASM-A5-CAMBER"
+    "sec": "ASM-A5-SECTION"
    },
    "units": {
     "c": "m"
    },
    "assumes": [
-    "ASM-A5-CAMBER"
+    "ASM-A5-SECTION"
    ],
    "outputs": {
-    "x_m": 0.23399999999999999,
-    "z_m": 0.0071561528312373375,
-    "thickness_m": 0.013993277343550868,
-    "elevon_chord_m": 0.066
+    "x_m": 0.24960000000000002,
+    "z_m": 0.005607192851942548,
+    "thickness_m": 0.009554952547081502,
+    "elevon_chord_m": 0.0704
    },
    "input_values": {
-    "c": 0.3,
+    "c": 0.32,
     "f": 0.22,
-    "t_c": 0.0985,
-    "camber": 0.016
+    "sec": [
+     [
+      1.0,
+      0.0
+     ],
+     [
+      0.99676,
+      1e-05
+     ],
+     [
+      0.987068,
+      7e-05
+     ],
+     [
+      0.971006,
+      0.00036
+     ],
+     [
+      0.948692,
+      0.00108
+     ],
+     [
+      0.920398,
+      0.00256
+     ],
+     [
+      0.886653,
+      0.005161
+     ],
+     [
+      0.848257,
+      0.009031
+     ],
+     [
+      0.806051,
+      0.014062
+     ],
+     [
+      0.760724,
+      0.020083
+     ],
+     [
+      0.713027,
+      0.026884
+     ],
+     [
+      0.66372,
+      0.034205
+     ],
+     [
+      0.613492,
+      0.041636
+     ],
+     [
+      0.562894,
+      0.048777
+     ],
+     [
+      0.512397,
+      0.055298
+     ],
+     [
+      0.462429,
+      0.060939
+     ],
+     [
+      0.413372,
+      0.06547
+     ],
+     [
+      0.365665,
+      0.06874
+     ],
+     [
+      0.319588,
+      0.070641
+     ],
+     [
+      0.275491,
+      0.071141
+     ],
+     [
+      0.233715,
+      0.070241
+     ],
+     [
+      0.194609,
+      0.068
+     ],
+     [
+      0.158474,
+      0.06446
+     ],
+     [
+      0.125599,
+      0.059689
+     ],
+     [
+      0.096234,
+      0.053778
+     ],
+     [
+      0.070571,
+      0.046887
+     ],
+     [
+      0.048747,
+      0.039156
+     ],
+     [
+      0.030875,
+      0.030815
+     ],
+     [
+      0.017033,
+      0.022143
+     ],
+     [
+      0.007241,
+      0.013482
+     ],
+     [
+      0.00152,
+      0.005331
+     ],
+     [
+      0.0,
+      -0.0014
+     ],
+     [
+      0.004091,
+      -0.006501
+     ],
+     [
+      0.014412,
+      -0.010842
+     ],
+     [
+      0.030135,
+      -0.014712
+     ],
+     [
+      0.051088,
+      -0.018043
+     ],
+     [
+      0.077042,
+      -0.020823
+     ],
+     [
+      0.107716,
+      -0.023063
+     ],
+     [
+      0.142781,
+      -0.024814
+     ],
+     [
+      0.181817,
+      -0.026094
+     ],
+     [
+      0.224364,
+      -0.026884
+     ],
+     [
+      0.26997,
+      -0.027154
+     ],
+     [
+      0.318188,
+      -0.026914
+     ],
+     [
+      0.368545,
+      -0.026234
+     ],
+     [
+      0.420463,
+      -0.025174
+     ],
+     [
+      0.473371,
+      -0.023814
+     ],
+     [
+      0.526679,
+      -0.022193
+     ],
+     [
+      0.579767,
+      -0.020393
+     ],
+     [
+      0.632035,
+      -0.018463
+     ],
+     [
+      0.682872,
+      -0.016452
+     ],
+     [
+      0.73169,
+      -0.014432
+     ],
+     [
+      0.777887,
+      -0.012432
+     ],
+     [
+      0.820923,
+      -0.010492
+     ],
+     [
+      0.860279,
+      -0.008651
+     ],
+     [
+      0.895454,
+      -0.006911
+     ],
+     [
+      0.926019,
+      -0.005271
+     ],
+     [
+      0.951623,
+      -0.003671
+     ],
+     [
+      0.972106,
+      -0.00212
+     ],
+     [
+      0.987298,
+      -0.00088
+     ],
+     [
+      0.99678,
+      -0.00019
+     ],
+     [
+      1.0,
+      0.0
+     ]
+    ]
    }
   },
   {
@@ -110,8 +585,7 @@
    "equation": "cover_up = z_upper(x_s) - (z_s + r) ; cover_lo = (z_s - r) - z_lower(x_s) ; z_camber = (z_upper + z_lower)/2 ; cover_on_camber = (t(x_s) - 2r)/2",
    "inputs": {
     "c": "P:wing.chord_m",
-    "t_c": "P:wing.t_c",
-    "camber": "ASM-A5-CAMBER",
+    "sec": "ASM-A5-SECTION",
     "x_s": "P:wing.spar.x_m",
     "z_s": "P:wing.spar.z_m",
     "od": "P:wing.spar.od_m"
@@ -123,21 +597,265 @@
     "od": "m"
    },
    "assumes": [
-    "ASM-A5-CAMBER"
+    "ASM-A5-SECTION"
    ],
    "outputs": {
-    "cover_upper_m": 0.008469751152461999,
-    "cover_lower_m": -0.0010536695456435218,
-    "cover_min_m": -0.0010536695456435218,
-    "z_camber_m": 0.00476171034905276,
-    "cover_on_camber_m": 0.0037080408034092377
+    "cover_upper_m": 0.004989387330524706,
+    "cover_lower_m": 0.004251447083278516,
+    "cover_min_m": 0.004251447083278516,
+    "z_camber_m": 0.006968970123623094,
+    "cover_on_camber_m": 0.00462041720690161
    },
    "input_values": {
-    "c": 0.3,
-    "t_c": 0.0985,
-    "camber": 0.016,
+    "c": 0.32,
+    "sec": [
+     [
+      1.0,
+      0.0
+     ],
+     [
+      0.99676,
+      1e-05
+     ],
+     [
+      0.987068,
+      7e-05
+     ],
+     [
+      0.971006,
+      0.00036
+     ],
+     [
+      0.948692,
+      0.00108
+     ],
+     [
+      0.920398,
+      0.00256
+     ],
+     [
+      0.886653,
+      0.005161
+     ],
+     [
+      0.848257,
+      0.009031
+     ],
+     [
+      0.806051,
+      0.014062
+     ],
+     [
+      0.760724,
+      0.020083
+     ],
+     [
+      0.713027,
+      0.026884
+     ],
+     [
+      0.66372,
+      0.034205
+     ],
+     [
+      0.613492,
+      0.041636
+     ],
+     [
+      0.562894,
+      0.048777
+     ],
+     [
+      0.512397,
+      0.055298
+     ],
+     [
+      0.462429,
+      0.060939
+     ],
+     [
+      0.413372,
+      0.06547
+     ],
+     [
+      0.365665,
+      0.06874
+     ],
+     [
+      0.319588,
+      0.070641
+     ],
+     [
+      0.275491,
+      0.071141
+     ],
+     [
+      0.233715,
+      0.070241
+     ],
+     [
+      0.194609,
+      0.068
+     ],
+     [
+      0.158474,
+      0.06446
+     ],
+     [
+      0.125599,
+      0.059689
+     ],
+     [
+      0.096234,
+      0.053778
+     ],
+     [
+      0.070571,
+      0.046887
+     ],
+     [
+      0.048747,
+      0.039156
+     ],
+     [
+      0.030875,
+      0.030815
+     ],
+     [
+      0.017033,
+      0.022143
+     ],
+     [
+      0.007241,
+      0.013482
+     ],
+     [
+      0.00152,
+      0.005331
+     ],
+     [
+      0.0,
+      -0.0014
+     ],
+     [
+      0.004091,
+      -0.006501
+     ],
+     [
+      0.014412,
+      -0.010842
+     ],
+     [
+      0.030135,
+      -0.014712
+     ],
+     [
+      0.051088,
+      -0.018043
+     ],
+     [
+      0.077042,
+      -0.020823
+     ],
+     [
+      0.107716,
+      -0.023063
+     ],
+     [
+      0.142781,
+      -0.024814
+     ],
+     [
+      0.181817,
+      -0.026094
+     ],
+     [
+      0.224364,
+      -0.026884
+     ],
+     [
+      0.26997,
+      -0.027154
+     ],
+     [
+      0.318188,
+      -0.026914
+     ],
+     [
+      0.368545,
+      -0.026234
+     ],
+     [
+      0.420463,
+      -0.025174
+     ],
+     [
+      0.473371,
+      -0.023814
+     ],
+     [
+      0.526679,
+      -0.022193
+     ],
+     [
+      0.579767,
+      -0.020393
+     ],
+     [
+      0.632035,
+      -0.018463
+     ],
+     [
+      0.682872,
+      -0.016452
+     ],
+     [
+      0.73169,
+      -0.014432
+     ],
+     [
+      0.777887,
+      -0.012432
+     ],
+     [
+      0.820923,
+      -0.010492
+     ],
+     [
+      0.860279,
+      -0.008651
+     ],
+     [
+      0.895454,
+      -0.006911
+     ],
+     [
+      0.926019,
+      -0.005271
+     ],
+     [
+      0.951623,
+      -0.003671
+     ],
+     [
+      0.972106,
+      -0.00212
+     ],
+     [
+      0.987298,
+      -0.00088
+     ],
+     [
+      0.99678,
+      -0.00019
+     ],
+     [
+      1.0,
+      0.0
+     ]
+    ],
     "x_s": 0.08,
-    "z_s": 0.0,
+    "z_s": 0.0066,
     "od": 0.022
    }
   },
@@ -154,7 +872,7 @@
     "pod": "P:pod.size_m",
     "y_fin": "P:fins.y_m",
     "layers": "P:fins.layers",
-    "t_board": "ASM-A5-FOAMBOARD-T",
+    "t_board": "P:fins.board_t_m",
     "b": "P:wing.span_m"
    },
    "units": {
@@ -185,7 +903,7 @@
     "pod": [
      0.2,
      0.1,
-     0.06
+     0.07
     ],
     "y_fin": 0.32,
     "layers": 2,
@@ -196,10 +914,10 @@
   {
    "id": "CALC-A5-LAYOUT-CG",
    "type": "calculation",
-   "title": "Layout CG: allocations at the datum stations",
+   "title": "Layout CG: allocations at the R1 datum stations",
    "script": "redesign/team/A5/cad_claims.py",
    "function": "layout_cg",
-   "equation": "x_cg = sum(m_i x_i) / sum(m_i), z likewise; pack x for x_target = x_pack + M (x_target - x_cg) / m_pack ; upper-pair hover share = (z_m + z_cg) / (2 z_m)",
+   "equation": "x_cg = sum(m_i x_i) / sum(m_i), z likewise (lump centroids from the k09kit geometry); pack x for x_target = x_pack + M (x_target - x_cg) / m_pack ; hover split upper/lower = (z_m + z_cg) / (z_m - z_cg)",
    "inputs": {
     "a_wing": "P:mass.allocation_g.wing",
     "a_fins": "P:mass.allocation_g.fins",
@@ -211,15 +929,27 @@
     "a_hrn": "P:mass.allocation_g.harness",
     "a_mec": "P:mass.allocation_g.mechanisms",
     "m_pack_kg": "P:battery.mass_kg",
+    "spar_kgm": "P:wing.spar.mass_per_m_kgm",
+    "spar_l": "P:wing.spar.length_m",
+    "prop_kg": "P:propulsion.prop_mass_kg",
     "c": "P:wing.chord_m",
-    "t_c": "P:wing.t_c",
-    "camber": "ASM-A5-CAMBER",
+    "sec": "ASM-A5-SECTION",
     "f": "P:wing.elevon.chord_frac",
+    "b": "P:wing.span_m",
+    "skin_kgm2": "P:wing.skin.areal_mass_kgm2",
+    "yin": "P:wing.elevon.inboard_y_m",
+    "yout": "P:wing.elevon.outboard_y_m",
     "x_s": "P:wing.spar.x_m",
+    "z_s": "P:wing.spar.z_m",
+    "od_s": "P:wing.spar.od_m",
     "xt": "P:fins.tube.x_m",
     "te": "P:fins.te_x_m",
     "od": "P:fins.tube.od_m",
+    "y_fin": "P:fins.y_m",
+    "hh": "P:fins.half_height_m",
     "can_l": "P:propulsion.motor_length_m",
+    "can_d": "P:propulsion.motor_diameter_m",
+    "x_mount": "P:propulsion.stations.x_mount_m",
     "x_prop": "P:propulsion.stations.x_prop_plane_m",
     "z_m": "P:propulsion.stations.z_m",
     "foot": "P:cg.foot_height_m",
@@ -242,12 +972,25 @@
     "a_hrn": "g",
     "a_mec": "g",
     "m_pack_kg": "kg",
+    "spar_kgm": "kg/m",
+    "spar_l": "m",
+    "prop_kg": "kg",
     "c": "m",
+    "b": "m",
+    "skin_kgm2": "kg/m2",
+    "yin": "m",
+    "yout": "m",
     "x_s": "m",
+    "z_s": "m",
+    "od_s": "m",
     "xt": "m",
     "te": "m",
     "od": "m",
+    "y_fin": "m",
+    "hh": "m",
     "can_l": "m",
+    "can_d": "m",
+    "x_mount": "m",
     "x_prop": "m",
     "z_m": "m",
     "foot": "m",
@@ -261,59 +1004,323 @@
    },
    "assumes": [
     "ASM-A5-MASS-SPLIT",
-    "ASM-A5-CAMBER"
+    "ASM-A5-SECTION"
    ],
    "outputs": {
-    "mass_g": 2132.0,
-    "cg_x_m": 0.03678793105039973,
-    "cg_z_m": 0.014983640554347977,
-    "cg_x_frac_chord": 0.12262643683466577,
-    "cg_x_fwd_limit_m": 0.045,
+    "mass_g": 2200.0,
+    "cg_x_m": 0.05306939223862401,
+    "cg_z_m": 0.017550173702324354,
+    "cg_x_frac_chord": 0.16584185074570001,
+    "cg_x_fwd_limit_m": 0.04,
+    "cg_x_aft_limit_m": 0.049,
     "cg_z_up_limit_m": 0.03,
-    "pack_x_for_target_m": 0.16997842000099594,
-    "pack_shift_m": 0.08997842000099594,
-    "pod_aft_end_for_target_m": 0.24297842000099595,
-    "hover_upper_pair_share": 0.5394306330377578
+    "pack_x_for_target_m": -0.04127756895449604,
+    "pack_shift_m": -0.03627756895449605,
+    "hover_upper_pair_share": 0.5461846676376957,
+    "hover_split_ratio": 1.2035394767174772
    },
    "input_values": {
-    "a_wing": 378,
-    "a_fins": 410,
-    "a_pod": 90,
-    "a_land": 24,
-    "a_prop": 430,
-    "a_pwr": 600,
-    "a_avn": 90,
-    "a_hrn": 60,
-    "a_mec": 50,
+    "a_wing": 405,
+    "a_fins": 370,
+    "a_pod": 105,
+    "a_land": 40,
+    "a_prop": 440,
+    "a_pwr": 595,
+    "a_avn": 75,
+    "a_hrn": 105,
+    "a_mec": 65,
     "m_pack_kg": 0.55,
-    "c": 0.3,
-    "t_c": 0.0985,
-    "camber": 0.016,
+    "spar_kgm": 0.102,
+    "spar_l": 1.0,
+    "prop_kg": 0.017,
+    "c": 0.32,
+    "sec": [
+     [
+      1.0,
+      0.0
+     ],
+     [
+      0.99676,
+      1e-05
+     ],
+     [
+      0.987068,
+      7e-05
+     ],
+     [
+      0.971006,
+      0.00036
+     ],
+     [
+      0.948692,
+      0.00108
+     ],
+     [
+      0.920398,
+      0.00256
+     ],
+     [
+      0.886653,
+      0.005161
+     ],
+     [
+      0.848257,
+      0.009031
+     ],
+     [
+      0.806051,
+      0.014062
+     ],
+     [
+      0.760724,
+      0.020083
+     ],
+     [
+      0.713027,
+      0.026884
+     ],
+     [
+      0.66372,
+      0.034205
+     ],
+     [
+      0.613492,
+      0.041636
+     ],
+     [
+      0.562894,
+      0.048777
+     ],
+     [
+      0.512397,
+      0.055298
+     ],
+     [
+      0.462429,
+      0.060939
+     ],
+     [
+      0.413372,
+      0.06547
+     ],
+     [
+      0.365665,
+      0.06874
+     ],
+     [
+      0.319588,
+      0.070641
+     ],
+     [
+      0.275491,
+      0.071141
+     ],
+     [
+      0.233715,
+      0.070241
+     ],
+     [
+      0.194609,
+      0.068
+     ],
+     [
+      0.158474,
+      0.06446
+     ],
+     [
+      0.125599,
+      0.059689
+     ],
+     [
+      0.096234,
+      0.053778
+     ],
+     [
+      0.070571,
+      0.046887
+     ],
+     [
+      0.048747,
+      0.039156
+     ],
+     [
+      0.030875,
+      0.030815
+     ],
+     [
+      0.017033,
+      0.022143
+     ],
+     [
+      0.007241,
+      0.013482
+     ],
+     [
+      0.00152,
+      0.005331
+     ],
+     [
+      0.0,
+      -0.0014
+     ],
+     [
+      0.004091,
+      -0.006501
+     ],
+     [
+      0.014412,
+      -0.010842
+     ],
+     [
+      0.030135,
+      -0.014712
+     ],
+     [
+      0.051088,
+      -0.018043
+     ],
+     [
+      0.077042,
+      -0.020823
+     ],
+     [
+      0.107716,
+      -0.023063
+     ],
+     [
+      0.142781,
+      -0.024814
+     ],
+     [
+      0.181817,
+      -0.026094
+     ],
+     [
+      0.224364,
+      -0.026884
+     ],
+     [
+      0.26997,
+      -0.027154
+     ],
+     [
+      0.318188,
+      -0.026914
+     ],
+     [
+      0.368545,
+      -0.026234
+     ],
+     [
+      0.420463,
+      -0.025174
+     ],
+     [
+      0.473371,
+      -0.023814
+     ],
+     [
+      0.526679,
+      -0.022193
+     ],
+     [
+      0.579767,
+      -0.020393
+     ],
+     [
+      0.632035,
+      -0.018463
+     ],
+     [
+      0.682872,
+      -0.016452
+     ],
+     [
+      0.73169,
+      -0.014432
+     ],
+     [
+      0.777887,
+      -0.012432
+     ],
+     [
+      0.820923,
+      -0.010492
+     ],
+     [
+      0.860279,
+      -0.008651
+     ],
+     [
+      0.895454,
+      -0.006911
+     ],
+     [
+      0.926019,
+      -0.005271
+     ],
+     [
+      0.951623,
+      -0.003671
+     ],
+     [
+      0.972106,
+      -0.00212
+     ],
+     [
+      0.987298,
+      -0.00088
+     ],
+     [
+      0.99678,
+      -0.00019
+     ],
+     [
+      1.0,
+      0.0
+     ]
+    ],
     "f": 0.22,
+    "b": 1.15,
+    "skin_kgm2": 0.065,
+    "yin": [
+     0.07,
+     0.3
+    ],
+    "yout": [
+     0.34,
+     0.56
+    ],
     "x_s": 0.08,
-    "xt": -0.1,
-    "te": 0.3,
+    "z_s": 0.0066,
+    "od_s": 0.022,
+    "xt": 0.045,
+    "te": 0.32,
     "od": 0.022,
+    "y_fin": 0.32,
+    "hh": 0.19,
     "can_l": 0.025,
-    "x_prop": -0.15,
+    "can_d": 0.038,
+    "x_mount": 0.045,
+    "x_prop": -0.005,
     "z_m": 0.19,
-    "foot": 0.01,
-    "pod_x": -0.02,
+    "foot": 0.045,
+    "pod_x": -0.105,
     "pod_size": [
      0.2,
      0.1,
-     0.06
+     0.07
     ],
     "pod_z": 0.015,
     "pack_size": [
      0.14,
-     0.045,
-     0.035
+     0.048,
+     0.05
     ],
-    "x_target": 0.06,
+    "x_target": 0.044,
     "x_range": [
-     0.045,
-     0.075
+     0.04,
+     0.049
     ],
     "z_range": [
      -0.02,
@@ -328,8 +1335,11 @@
    "calc": "CALC-A5-HINGE",
    "output": "x_m",
    "unit": "m",
+   "parts": [
+    "WNG-001"
+   ],
    "how": "Datum DP-HINGE in Fusion (00 Datums); on the core, measure from the LE to the hinge cut.",
-   "value": 0.23399999999999999
+   "value": 0.24960000000000002
   },
   {
    "id": "CL-A5-HINGE-Z",
@@ -338,11 +1348,14 @@
    "calc": "CALC-A5-HINGE",
    "output": "z_m",
    "unit": "m",
-   "how": "Re-run after B2 supplies the MH 45 .dat; on the core, height of the upper skin at the hinge cut above the chord line.",
-   "assumes": [
-    "ASM-A5-CAMBER"
+   "parts": [
+    "WNG-001"
    ],
-   "value": 0.0071561528312373375
+   "how": "On the first cut core, height of the upper skin at the hinge cut above the chord line (G2).",
+   "assumes": [
+    "ASM-A5-SECTION"
+   ],
+   "value": 0.005607192851942548
   },
   {
    "id": "CL-A5-SPAR-COVER",
@@ -355,24 +1368,28 @@
     "op": ">=",
     "ref": "ASM-A5-MIN-COVER"
    },
-   "how": "With the spar on the chord line (wing.spar.z_m = 0) the tube breaks the lower skin; move it to the camber line (CR-A5-01). Check on the first cut core with a depth gauge on both surfaces.",
-   "assumes": [
-    "ASM-A5-CAMBER"
+   "parts": [
+    "WNG-001",
+    "WNG-002"
    ],
-   "value": -0.0010536695456435218
+   "how": "Spar at params wing.spar.z_m (D-03). Check on the first cut core with a depth gauge on both surfaces (G2).",
+   "assumes": [
+    "ASM-A5-SECTION"
+   ],
+   "value": 0.004251447083278516
   },
   {
    "id": "CL-A5-SPAR-Z-CAMBER",
    "type": "claim",
-   "title": "Spar height on the local camber line",
+   "title": "Camber-line height at the spar station",
    "calc": "CALC-A5-SPAR-COVER",
    "output": "z_camber_m",
    "unit": "m",
-   "how": "Recommended wing.spar.z_m; recompute with the real MH 45 coordinates.",
+   "how": "Compare with params wing.spar.z_m (B2's CL-B2-SPAR-Z-MID); the slot jig is cut to this height.",
    "assumes": [
-    "ASM-A5-CAMBER"
+    "ASM-A5-SECTION"
    ],
-   "value": 0.00476171034905276
+   "value": 0.006968970123623094
   },
   {
    "id": "CL-A5-SPAR-COVER-CAMBER",
@@ -385,11 +1402,11 @@
     "op": ">=",
     "ref": "ASM-A5-MIN-COVER"
    },
-   "how": "Same core check after the spar is moved.",
+   "how": "Same core check (T-A5-CORE-COVER).",
    "assumes": [
-    "ASM-A5-CAMBER"
+    "ASM-A5-SECTION"
    ],
-   "value": 0.0037080408034092377
+   "value": 0.00462041720690161
   },
   {
    "id": "CL-A5-ELEVON-GAP-MIN",
@@ -409,35 +1426,35 @@
    "value": 0.014999999999999902
   },
   {
-   "id": "CL-A5-CG-X-FWD-LIMIT",
+   "id": "CL-A5-CG-X-AFT-LIMIT",
    "type": "claim",
-   "title": "Forward CG limit (params cg.x_range_m[0])",
+   "title": "Aft CG limit (params cg.x_range_m[1])",
    "calc": "CALC-A5-LAYOUT-CG",
-   "output": "cg_x_fwd_limit_m",
+   "output": "cg_x_aft_limit_m",
    "unit": "m",
-   "how": "B3 sets the range from AVL (CR-A1-06).",
-   "value": 0.045
+   "how": "B3 re-derives the range at R1 geometry (CHANGE-LOG D-17, CR-A1-10).",
+   "value": 0.049
   },
   {
    "id": "CL-A5-LAYOUT-CG-X",
    "type": "claim",
-   "title": "Layout CG x (allocations at the datum stations)",
+   "title": "Layout CG x (allocations at the R1 datum stations, pack centred)",
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "cg_x_m",
    "unit": "m",
    "limit": {
-    "op": ">=",
-    "ref": "CL-A5-CG-X-FWD-LIMIT"
+    "op": "<=",
+    "ref": "CL-A5-CG-X-AFT-LIMIT"
    },
    "verifies": [
     "R-STATIC-MARGIN"
    ],
-   "how": "Cross-check with the CAD roll-up (python -I redesign/fusion/check.py --skeleton, TOTAL line). A3 replaces the allocations with part masses (MASS-CG.md); H1 balances the built aircraft on two knife edges.",
+   "how": "Equals the CAD roll-up (python -I redesign/fusion/check.py --skeleton, TOTAL line; this script stops if they differ by > 1 mm). A3 replaces the allocations with part masses (MASS-CG.md); H1 balances the built aircraft on two knife edges (T-A5-CG-BALANCE).",
    "assumes": [
     "ASM-A5-MASS-SPLIT",
-    "ASM-A5-CAMBER"
+    "ASM-A5-SECTION"
    ],
-   "value": 0.03678793105039973
+   "value": 0.05306939223862401
   },
   {
    "id": "CL-A5-PACK-X-FOR-CG",
@@ -446,11 +1463,28 @@
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "pack_x_for_target_m",
    "unit": "m",
-   "how": "D2/A3: compare with the pod length; the pod as sized ends at x = 0.18 m.",
+   "parts": [
+    "PWR-001",
+    "POD-002"
+   ],
+   "how": "D2/A3: compare with the pod (nose at pod.x_le_m) and the +/-0.03 m tray slide; A3's CL-A3-PACK-X-REQ is the same quantity from the bottom-up model.",
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.16997842000099594
+   "value": -0.04127756895449604
+  },
+  {
+   "id": "CL-A5-PACK-SHIFT",
+   "type": "claim",
+   "title": "Pack shift from the pod centre for the CG target",
+   "calc": "CALC-A5-LAYOUT-CG",
+   "output": "pack_shift_m",
+   "unit": "m",
+   "how": "Negative = forward. D2 provides +/-0.03 m of slide (params pod.x_le_m note); beyond that the pod moves (D-17).",
+   "assumes": [
+    "ASM-A5-MASS-SPLIT"
+   ],
+   "value": -0.03627756895449605
   },
   {
    "id": "CL-A5-CG-Z-UP-LIMIT",
@@ -465,7 +1499,7 @@
   {
    "id": "CL-A5-LAYOUT-CG-Z",
    "type": "claim",
-   "title": "Layout CG z (allocations at the datum stations)",
+   "title": "Layout CG z (allocations at the R1 datum stations)",
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "cg_z_m",
    "unit": "m",
@@ -477,20 +1511,24 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.014983640554347977
+   "value": 0.017550173702324354
   },
   {
    "id": "CL-A5-HOVER-SPLIT",
    "type": "claim",
-   "title": "Hover thrust share of the upper motor pair",
+   "title": "Hover pitch-trim thrust split, upper / lower pair",
    "calc": "CALC-A5-LAYOUT-CG",
-   "output": "hover_upper_pair_share",
+   "output": "hover_split_ratio",
    "unit": "-",
-   "how": "B3/E1: differential thrust needed to trim hover pitch; read from the hover log (motor outputs).",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.hover_split_max"
+   },
+   "how": "B3/E1: differential thrust to trim hover pitch; read from the hover log (motor outputs). A3's CL-A3-HOVER-SPLIT is the bottom-up value.",
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.5394306330377578
+   "value": 1.2035394767174772
   },
   {
    "id": "T-A5-CORE-COVER",

@@ -1,0 +1,286 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/I1/build_bom.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-I1-SUNNYSKY",
+   "type": "source",
+   "title": "SunnySky USA X3108S page",
+   "kind": "web",
+   "url": "https://sunnyskyusa.com/products/sunnysky-x3108s-motors",
+   "where": "search snippet 2026-11-09: KV900 variant $24.99, 60 units; page fetch returned HTTP 429",
+   "note": "not compared with the rendered page: stock and price to be re-read on 20 Nov",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-I1-APC-PRICE",
+   "type": "source",
+   "title": "APC 11x5.5MR page",
+   "kind": "web",
+   "url": "https://www.apcprop.com/product/11x5-5mr/",
+   "checked": "2026-11-09",
+   "where": "fetched 2026-11-09: $3.83, 0.60 oz; stock not stated; 11x4.5MR $3.83 per SRC-APC-11X45MR"
+  },
+  {
+   "id": "SRC-I1-ALOFT",
+   "type": "source",
+   "title": "Aloft Hobbies 22 x 20 x 1000 mm tube",
+   "kind": "web",
+   "url": "https://alofthobbies.com/products/22-x-20-x-1000mm-mw-carbon-tubing-matte-finish",
+   "where": "search 2026-11-09: $24.00, in stock, mandrel wound, shipping at checkout; page fetch 429",
+   "note": "layup and wall stiffness not stated: C4 bend test decides whether December buys the same SKU",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-I1-OVONIC",
+   "type": "source",
+   "title": "OVONIC US 2 x 4S 6500 mAh 130C listing",
+   "kind": "web",
+   "url": "https://us.ovonicshop.com/products/2-x-ovonic-4s-6500mah-14-8v-130c-lipo-battery-with-xt60-to-tra-plug-for-1-8-1-10-scale-rc-car-truck-boat",
+   "where": "search 2026-11-09: $79.25, list $119.88, In Stock, automatic $5 discount at checkout; reseller rcdrone.top shows $142.24 sold out",
+   "note": "title says 'XT60 to TRA plug': confirm the XT60 connector; mass not on the page",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-I1-LANRC",
+   "type": "source",
+   "title": "LANRC 45 A ESC 4-pack (Amazon B0D2HS4Y4J)",
+   "kind": "web",
+   "url": "https://www.amazon.com/dp/B0D2HS4Y4J",
+   "where": "HTTP 503 on 2026-11-09 (also E1); search finds only LANRC 45 A single units (45 A cont, 50 A / 10 s, 2-6S) at non-US shops",
+   "note": "price, pack size and rating of this ASIN unconfirmed: check in a browser before 20 Nov",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-I1-CARRIED",
+   "type": "source",
+   "title": "Carried prices (cost.csv)",
+   "kind": "web",
+   "url": "redesign/config-study/cards/K09/cost.csv",
+   "where": "all lines marked CARRY or EST in BOM.csv; dates in the `seen` column",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-I1-SHIPPING",
+   "type": "assumption",
+   "title": "Shipping 120 + 30 USD",
+   "text": "Class-S shipping for all vendors is $120 at baseline, +$30 in the pessimistic case",
+   "basis": "cards/K09/cost.csv shipping line and DECISION section 9; no vendor quote taken",
+   "value": 150.0,
+   "unit": "USD",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-TIEBREAK"
+   ]
+  },
+  {
+   "id": "ASM-I1-ADDERS",
+   "type": "assumption",
+   "title": "Pessimistic adders 27 USD",
+   "text": "Tax measure +7 and jig/box growth +20 USD on top of list-price lines",
+   "basis": "DECISION section 9 (K01 REVIEW S8-S11 applied to every candidate)",
+   "value": 27.0,
+   "unit": "USD",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-TIEBREAK"
+   ]
+  },
+  {
+   "id": "CALC-I1-SPEND",
+   "type": "calculation",
+   "title": "BOM spend, baseline and pessimistic",
+   "script": "redesign/team/I1/build_bom.py",
+   "function": "spend",
+   "equation": "spend = sum(qty x unit) x (1 + tax) + shipping + FAA fee (+ adders, pessimistic prices); lines in team/I1/build_bom.py LINES",
+   "inputs": {
+    "tax": "P:requirements.tax_rate"
+   },
+   "units": {
+    "tax": "-"
+   },
+   "assumes": [
+    "ASM-I1-SHIPPING",
+    "ASM-I1-ADDERS"
+   ],
+   "cites": [
+    "SRC-I1-CARRIED",
+    "SRC-I1-APC-PRICE",
+    "SRC-I1-OVONIC"
+   ],
+   "outputs": {
+    "goods_base": 1309.78,
+    "goods_pess": 1359.05,
+    "tax_base": 134.25,
+    "tax_pess": 139.3,
+    "spend_base": 1569.03,
+    "spend_pess": 1680.35,
+    "early_goods_tax": 921.88
+   },
+   "input_values": {
+    "tax": 0.1025
+   }
+  },
+  {
+   "id": "CALC-I1-BRIDGE",
+   "type": "calculation",
+   "title": "Bottom-up minus tie-break bridge",
+   "script": "redesign/team/I1/build_bom.py",
+   "function": "spend_bridge",
+   "equation": "delta = spend_pess(bottom-up) - [1678.58 + sum(line deltas) x (1 + tax)]",
+   "inputs": {
+    "tax": "P:requirements.tax_rate",
+    "sp": "CL-I1-SPEND-PESS"
+   },
+   "units": {
+    "tax": "-",
+    "sp": "USD"
+   },
+   "cites": [
+    "SRC-TIEBREAK"
+   ],
+   "outputs": {
+    "delta_usd": -0.01
+   },
+   "input_values": {
+    "tax": 0.1025,
+    "sp": 1680.35
+   }
+  },
+  {
+   "id": "CALC-I1-RESERVE",
+   "type": "calculation",
+   "title": "Reserve at order, pessimistic and baseline",
+   "script": "redesign/team/I1/build_bom.py",
+   "function": "reserve",
+   "equation": "reserve = budget - spend",
+   "inputs": {
+    "budget": "P:requirements.budget_usd",
+    "sp": "CL-I1-SPEND-PESS",
+    "sb": "CL-I1-SPEND-BASE"
+   },
+   "units": {
+    "budget": "USD",
+    "sp": "USD",
+    "sb": "USD"
+   },
+   "outputs": {
+    "reserve_pess": 319.65,
+    "reserve_base": 430.97
+   },
+   "input_values": {
+    "budget": 2000.0,
+    "sp": 1680.35,
+    "sb": 1569.03
+   }
+  },
+  {
+   "id": "CL-I1-SPEND-BASE",
+   "type": "claim",
+   "title": "BOM spend at order, baseline",
+   "calc": "CALC-I1-SPEND",
+   "output": "spend_base",
+   "unit": "USD",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.budget_usd"
+   },
+   "verifies": [
+    "R-BUDGET"
+   ],
+   "how": "Re-run build_bom.py after re-pricing each line on the day of the order; compare with the order confirmations.",
+   "value": 1569.03
+  },
+  {
+   "id": "CL-I1-SPEND-PESS",
+   "type": "claim",
+   "title": "BOM spend at order, pessimistic",
+   "calc": "CALC-I1-SPEND",
+   "output": "spend_pess",
+   "unit": "USD",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.budget_usd"
+   },
+   "verifies": [
+    "R-BUDGET"
+   ],
+   "how": "Same lines at list price plus the DECISION section 9 adders; CL-I1-BRIDGE-DELTA must be 0.",
+   "value": 1680.35
+  },
+  {
+   "id": "CL-I1-BRIDGE-DELTA",
+   "type": "claim",
+   "title": "Bottom-up minus tie-break bridge (USD)",
+   "calc": "CALC-I1-BRIDGE",
+   "output": "delta_usd",
+   "unit": "USD",
+   "limit": {
+    "op": "<=",
+    "value": 0.02
+   },
+   "how": "Non-zero means a BOM line changed without the bridge table in build_bom.py bridge() being updated.",
+   "value": -0.01
+  },
+  {
+   "id": "CL-I1-RESERVE-PESS",
+   "type": "claim",
+   "title": "Pessimistic reserve at order",
+   "calc": "CALC-I1-RESERVE",
+   "output": "reserve_pess",
+   "unit": "USD",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.crash_cost_usd"
+   },
+   "verifies": [
+    "R-RESERVE",
+    "R-BUDGET"
+   ],
+   "how": "2 000 minus CL-I1-SPEND-PESS must be >= 309 (one class-S crash incl. tax). On the day: re-price every CARRY line.",
+   "value": 319.65
+  },
+  {
+   "id": "CL-I1-RESERVE-BASE",
+   "type": "claim",
+   "title": "Baseline reserve at order",
+   "calc": "CALC-I1-RESERVE",
+   "output": "reserve_base",
+   "unit": "USD",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.crash_reserve_planned_usd"
+   },
+   "verifies": [
+    "R-RESERVE"
+   ],
+   "how": "2 000 minus CL-I1-SPEND-BASE must be >= 150 (planned reserve, P2).",
+   "value": 430.97
+  },
+  {
+   "id": "T-I1-LISTINGS",
+   "type": "test",
+   "title": "Re-read the six listings before each order",
+   "verifies": [
+    "CL-I1-SPEND-PESS",
+    "CL-I1-RESERVE-PESS"
+   ],
+   "state": "planned",
+   "procedure": "On 20 Nov and 15 Dec open: LANRC ASIN B0D2HS4Y4J, SunnySky X3108S, Ovonic 2-pack (connector, price), Aloft tube, Small Parts 4114, APC 11x5.5MR/11x4.5MR; log price and stock in team/I1/listing_log.csv; re-run build_bom.py."
+  },
+  {
+   "id": "T-I1-ARRIVAL",
+   "type": "test",
+   "title": "Weigh and inspect on arrival",
+   "verifies": [
+    "CL-I1-RESERVE-PESS"
+   ],
+   "state": "planned",
+   "procedure": "Weigh each pack, motor, ESC and the Aloft tube; check the pack connector is XT60; give masses to A3 and E2 (pack_log.csv)."
+  }
+ ]
+}

@@ -7,11 +7,11 @@ WNG-E05,wing,structure,Edge tape and FAA label,1,-,5,=0.5*P:wing.chord_m,0,0,=P:
 FIN-E01,fins,structure,Fin foam board (layers per params),2,y,=P:fins.areal_mass_kgm2*P:fins.layers*P:fins.chord_m*2*P:fins.half_height_m*1000,=(P:fins.le_x_m+P:fins.te_x_m)/2,=P:fins.y_m,0,=P:fins.chord_m,0.01,=2*P:fins.half_height_m,EST,,full rectangle chord x height; board areal mass EST
 FIN-E02,fins,structure,CF motor tube 22x20,2,y,=P:wing.spar.mass_per_m_kgm*P:fins.tube.length_m*1000,=P:fins.tube.x_m,=P:fins.y_m,0,0.022,0.022,=P:fins.tube.length_m,CALC,,same tube as the spar
 FIN-E03,fins,structure,Printed PETG motor mount,4,yz,18,=P:propulsion.stations.x_mount_m-0.005,=P:fins.y_m,=P:propulsion.stations.z_m,0.04,0.04,0.04,EST,,card 126 g printed set split mounts 18 / saddles 15 / feet 6
-FIN-E04,fins,structure,Printed tube-to-spar saddle,2,y,15,=(P:fins.tube.x_m+P:wing.spar.x_m)/2,=P:fins.y_m,0,=P:wing.spar.x_m-P:fins.tube.x_m,0.03,0.03,EST,,bridges the 0.18 m tube-spar offset; mass grows if it must carry the load (C4)
-FIN-E05,fins,structure,Fin-tube clips and epoxy,2,y,40,=P:fins.tube.x_m+0.02,=P:fins.y_m,0,0.04,0.02,=2*P:fins.half_height_m,EST,,REVIEW sec. 2 +80 g for the pair
-FIN-E06,fins,structure,Fin glue and tape,2,y,10,=(P:fins.le_x_m+P:fins.te_x_m)/2,=P:fins.y_m,0,=P:fins.chord_m,0.01,=2*P:fins.half_height_m,EST,,
+FIN-E04,fins,structure,Printed PETG through-core block (tube + spar bores),2,y,20,=(P:fins.tube.x_m+P:wing.spar.x_m)/2,=P:fins.y_m,0,=P:wing.spar.x_m-P:fins.tube.x_m+0.022,0.04,0.03,EST,,D-04 block: vertical tube bore and spanwise spar bore 35 mm apart; ~16 cm3 net solid PETG at 1.27 g/cm3 and partial infill; C4 sizes to 10.7 N m (was the 15 g bridge for the 0.18 m offset)
+FIN-E05,fins,structure,Fin-tube bond and clips,2,y,30,=P:fins.tube.x_m+0.02,=P:fins.y_m,0,0.04,0.02,=2*P:fins.half_height_m,EST,,D-04: half-fins bond along the 0.38 m tube (2 fillets ~8 g) + clips; was REVIEW sec. 2 40 g each for the 0.18 m bridged joint
+FIN-E06,fins,structure,Fin glue tape and consumables,2,y,14,=(P:fins.le_x_m+P:fins.te_x_m)/2,=P:fins.y_m,0,=P:fins.chord_m,0.01,=2*P:fins.half_height_m,EST,,
 POD-E01,pod,structure,Pod shell tray and hatch,1,-,70,=P:pod.x_le_m+P:pod.size_m[0]/2,0,=P:pod.z_base_m+P:pod.size_m[2]/2,=P:pod.size_m[0],=P:pod.size_m[1],=P:pod.size_m[2],EST,,card 70 g
-POD-E02,pod,structure,Pack strap and Velcro,1,-,20,=P:pod.x_le_m+P:pod.size_m[0]/2,0,=P:pod.z_base_m+P:pod.size_m[2],0.10,0.05,0.01,EST,,
+POD-E02,pod,structure,Pack strap and Velcro,1,-,20,=P:pod.x_le_m+P:pod.size_m[0]/2-0.029,0,=P:pod.z_base_m+P:pod.size_m[2],0.10,0.05,0.01,EST,,moves with the pack (D-17)
 POD-E03,pod,structure,GPS mast,1,-,8,=P:pod.x_le_m+0.85*P:pod.size_m[0],0,=P:pod.z_base_m+P:pod.size_m[2]+0.03,0.01,0.01,0.06,EST,,not in the A1 allocation note
 POD-E04,pod,structure,Pitot boom mount,1,-,4,=P:pod.x_le_m,0,=P:pod.z_base_m+P:pod.size_m[2]/2,0.02,0.02,0.02,EST,,not in the A1 allocation note
 GER-E01,landing,structure,Crushable printed foot,4,yz,6,=P:wing.te_x_m+P:cg.foot_height_m/2,=P:fins.y_m,=P:fins.half_height_m,0.02,0.02,0.02,EST,,card 6 g each
@@ -19,7 +19,7 @@ PRP-E01,propulsion,propulsion,Motor X3108S KV900,4,yz,=P:propulsion.motor_mass_k
 PRP-E02,propulsion,propulsion,Prop APC 11x4.5MR,4,yz,=P:propulsion.prop_mass_kg*1000,=P:propulsion.stations.x_prop_plane_m,=P:propulsion.stations.y_m,=P:propulsion.stations.z_m,0.01,=P:propulsion.prop_diameter_m,0.02,DATASHEET,,blade along y for inertia
 PRP-E03,propulsion,propulsion,Prop adapter and nut,4,yz,5,=P:propulsion.stations.x_prop_plane_m+0.005,=P:propulsion.stations.y_m,=P:propulsion.stations.z_m,0.02,0.01,0.01,EST,,not in the A1 allocation (430 g = 4 x 107.6 g)
 PRP-E04,propulsion,propulsion,ESC LANRC 45 A on fin pad,4,yz,=P:propulsion.esc_mass_kg*1000,=P:fins.tube.x_m+0.04,=P:fins.y_m,=0.6*P:propulsion.stations.z_m,0.04,0.005,0.02,DATASHEET,,6.6 g bare board; in the prop wash (E3)
-PWR-E01,power,energy,Flight pack 4S 6500,1,-,=P:battery.mass_kg*1000,=P:pod.x_le_m+P:pod.size_m[0]/2,0,=P:pod.z_base_m+0.003+P:battery.size_m[2]/2,=P:battery.size_m[0],=P:battery.size_m[1],=P:battery.size_m[2],DATASHEET,24,listings 503-680 g: growth set to reach 680 g
+PWR-E01,power,energy,Flight pack 4S 6500,1,-,=P:battery.mass_kg*1000,=P:pod.x_le_m+P:pod.size_m[0]/2-0.029,0,=P:pod.z_base_m+0.003+P:battery.size_m[2]/2,=P:battery.size_m[0],=P:battery.size_m[1],=P:battery.size_m[2],DATASHEET,24,listings 503-680 g: growth set to reach 680 g; nominal station 29 mm ahead of the pod centre (CHANGE-LOG D-17) until B3 re-derives the CG range
 PWR-E02,power,electrical,Main disconnect and pack lead,1,-,10,=P:pod.x_le_m+0.03,0,0.04,0.03,0.02,0.02,EST,,XT60 or AS150U pair + 12 AWG tail
 PWR-E03,power,electrical,Distribution and 12 AWG main leads,1,-,25,=P:pod.x_le_m+0.08,0,0.03,0.05,0.04,0.01,EST,,
 PWR-E04,power,electrical,UBEC,1,-,10,=P:pod.x_le_m+0.12,0,0.03,0.03,0.02,0.01,EST,,drop if the FC regulator carries the servos (F1)

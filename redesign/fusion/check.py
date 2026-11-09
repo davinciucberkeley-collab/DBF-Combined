@@ -11,8 +11,12 @@ Proves (exit 1 on any ERROR; --strict: on any WARN too):
   missing   every MODELLED/CHECKED/VERIFIED part has a component (PROPOSED ones are listed as missing, WARN)
   register  every edge whose parts are both modelled is registered: electrical -> ctx.wire, hinged -> revolute/
             slider, mechanical/thermal -> rigid joint or ctx.contact
-  touch     the two parts of every structural edge touch (bounding boxes within --tol-mm), joint origins lie on
-            both parts, wire ends lie on their parts
+  touch     the two parts of every structural or thermal edge touch (bounding boxes within --tol-mm), joint
+            origins lie on both parts, wire ends lie on their parts. Ground items ("flight": false) are modelled in
+            the aircraft frame at their transport position, so cradle-to-wing edges are touch-checked too; an edge
+            marked "stowed": true (a flight part removed for transport, e.g. a prop in its tray slot) is not
+  transport ground-item bodies (each wall, cradle, tray) must not overlap a flight part they have no edge with:
+            a cradle pressing a fin, or a part that does not fit inside the box (WARN; stowed parts exempt)
   floating  no modelled group of parts is cut off from the rest (unless it attaches to a part not modelled yet)
   keepout   no part's bounding box enters a registered keep-out (prop disc + clearance, hover ground plane)
             unless the keep-out exempts it (ERROR; coarse: a diagonal part's bbox can over-report)
@@ -92,6 +96,8 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
         ba, bb = a.bbox(), b.bbox()
         if not (ba and bb):
             continue
+        if e.get('stowed'):
+            continue                       # flight part sits at its flight station in CAD, not in the box
         if kind in merge_check.STRUCTURAL or kind == 'thermal':
             gap = bbox_gap(ba, bb)
             if gap > tol:
@@ -116,7 +122,7 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
     for e in g.edges.values():
         if g.kind(e) in merge_check.STRUCTURAL:
             ends = (e.get('part_a'), e.get('part_b'))
-            if any(x in g.parts and x not in comps for x in ends):
+            if any(x not in comps for x in ends):          # declared-not-modelled or not declared yet (dangling)
                 anchored.update(x for x in ends if x in comps)
     for grp in groups[1:]:
         if not grp & anchored:
@@ -128,6 +134,38 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
         for pid, c in sorted(flying.items()):
             if pid not in ko.exempt and ko.hits(c.bbox()):
                 add('ERROR', 'keepout', pid, 'bounding box enters %s (registered by %s)' % (ko.name, ko.sub))
+
+    # transport: ground-item bodies vs flight parts (cradles never press fins or tubes; everything fits the box)
+    ground = {pid: c for pid, c in comps.items() if not (g.parts.get(pid) or {}).get('flight', True) and c.shapes}
+    if ground:
+        partners, stowed = {}, set()
+        for e in g.edges.values():
+            a, b = e.get('part_a'), e.get('part_b')
+            partners.setdefault(a, set()).add(b)
+            partners.setdefault(b, set()).add(a)
+            if e.get('stowed'):
+                stowed.update(x for x in (a, b) if (g.parts.get(x) or {}).get('flight', True))
+        def boxes(c):                      # per-body world boxes: a multi-leg bundle is not one big box
+            out = []
+            for sh in c.shapes:
+                pts = [c.to_world(p) for p in sh.points()]
+                out.append((sh, (tuple(min(p[i] for p in pts) for i in range(3)),
+                                 tuple(max(p[i] for p in pts) for i in range(3)))))
+            return out
+        fboxes = {pid: boxes(c) for pid, c in flying.items() if pid not in stowed}
+        for gid, gc in sorted(ground.items()):
+            hits = {}
+            for sh, sb in boxes(gc):
+                for pid, fbs in fboxes.items():
+                    if pid in partners.get(gid, ()):
+                        continue
+                    for _, fb in fbs:
+                        depth = min(min(sb[1][i], fb[1][i]) - max(sb[0][i], fb[0][i]) for i in range(3))
+                        if depth > tol and depth > hits.get(pid, (0,))[0]:
+                            hits[pid] = (depth, sh.name or 'body')
+            for pid, (depth, name) in sorted(hits.items()):
+                add('WARN', 'transport', pid, 'overlaps %s (%s) by %.0f mm: pressed, or does not fit the box' % (
+                    gid, name, depth * 1000))
 
     # envelope + datums (K09-L roots only: build_datums set ctx.envelope)
     if ctx.envelope:

@@ -1,0 +1,3527 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/C3/pod_structures.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-C3-POD-LOADS",
+   "type": "assumption",
+   "title": "C1 pod-group joint loads, envelope cases, limit",
+   "text": "Six components [case, Fx, Fy, Fz (N), Mx, My, Mz (N m)] the pod group (pod, pack, avionics, power, harness, MC-C growth) passes to the wing, about C1's point (pod centre x, y 0, pod base z)",
+   "basis": "team/C1/data/joints.csv rows J-POD, families flight/hover/transition/landing/ground, MC-C and MC-P",
+   "value": [
+    [
+     "F1-PULLUP-VD/MC-C",
+     0.0,
+     -0.0,
+     -41.6804,
+     0.0,
+     -0.4536,
+     0.0
+    ],
+    [
+     "F2-PULLUP-VA/MC-C",
+     0.0,
+     -0.0,
+     -41.6804,
+     0.0,
+     -0.4536,
+     0.0
+    ],
+    [
+     "F3-PUSH-VD/MC-C",
+     -1.6124,
+     0.0,
+     15.2051,
+     -0.0,
+     0.0897,
+     -0.0
+    ],
+    [
+     "F4-GUST-POS/MC-C",
+     -0.0,
+     -0.0,
+     -41.6804,
+     0.0,
+     -0.4536,
+     0.0
+    ],
+    [
+     "F5-GUST-NEG/MC-C",
+     -0.4251,
+     0.0,
+     16.0813,
+     -0.0,
+     0.155,
+     -0.0
+    ],
+    [
+     "F6-ROLL-VD/MC-C",
+     -0.0,
+     7.019,
+     -12.5682,
+     -0.2223,
+     -0.1368,
+     -0.0688
+    ],
+    [
+     "F7-ROLLPULL-VD/MC-C",
+     -0.0,
+     7.019,
+     -27.787,
+     -0.2223,
+     -0.3024,
+     -0.0688
+    ],
+    [
+     "F8-CRUISE/MC-C",
+     -0.0,
+     0.0,
+     -12.5682,
+     -0.0,
+     -0.1368,
+     0.0
+    ],
+    [
+     "H1-HOVER/MC-C",
+     12.5682,
+     0.0,
+     -0.0,
+     -0.0,
+     0.3823,
+     -0.0
+    ],
+    [
+     "H2-MAX-THRUST/MC-C",
+     40.104,
+     0.0,
+     -3.3072,
+     -0.0,
+     1.1596,
+     -0.0
+    ],
+    [
+     "H3-PITCH-UPPER/MC-C",
+     26.2566,
+     -0.0,
+     12.3808,
+     0.0,
+     1.0241,
+     0.0
+    ],
+    [
+     "H4-PITCH-LOWER/MC-C",
+     13.8474,
+     0.0,
+     -15.688,
+     -0.0,
+     0.1354,
+     -0.0
+    ],
+    [
+     "H5-SIDE-RIGHT/MC-C",
+     20.052,
+     5.9619,
+     -1.6536,
+     -0.1793,
+     0.5798,
+     -0.1059
+    ],
+    [
+     "H6-DIAG-A/MC-C",
+     20.052,
+     -0.1504,
+     -1.6536,
+     0.0048,
+     0.5798,
+     0.0015
+    ],
+    [
+     "H7-DIAG-B/MC-C",
+     20.052,
+     0.1504,
+     -1.6536,
+     -0.0048,
+     0.5798,
+     -0.0015
+    ],
+    [
+     "H8-GUST-WING/MC-C",
+     9.2277,
+     0.0,
+     8.5329,
+     -0.0,
+     0.3735,
+     -0.0
+    ],
+    [
+     "H9-GUST-FINS/MC-C",
+     11.5963,
+     4.1712,
+     0.0,
+     -0.127,
+     0.3527,
+     -0.0411
+    ],
+    [
+     "T1-TRANSITION/MC-C",
+     38.1897,
+     -0.0,
+     -21.0848,
+     0.0,
+     0.9321,
+     0.0
+    ],
+    [
+     "T2-FLARE-UPPER/MC-C",
+     23.384,
+     -0.0,
+     -8.5886,
+     0.0,
+     0.7211,
+     0.0
+    ],
+    [
+     "T3-FLARE-LOWER/MC-C",
+     10.9747,
+     0.0,
+     -36.6573,
+     -0.0,
+     -0.1675,
+     -0.0
+    ],
+    [
+     "L1-LEVEL/MC-C",
+     80.8448,
+     0.0,
+     -6.6669,
+     -0.0,
+     2.3375,
+     -0.0
+    ],
+    [
+     "L2-PAIR-NARROW/MC-C",
+     41.5809,
+     -0.0,
+     15.1259,
+     0.0,
+     1.5402,
+     0.0
+    ],
+    [
+     "L3-PAIR-WIDE/MC-C",
+     34.5494,
+     7.8676,
+     -2.8491,
+     -0.2367,
+     0.999,
+     -0.1397
+    ],
+    [
+     "L4-CORNER-SIDE-Y/MC-C",
+     28.5791,
+     10.8656,
+     8.9951,
+     -0.3304,
+     1.0331,
+     -0.1333
+    ],
+    [
+     "L5-CORNER-SIDE-Z/MC-C",
+     24.3894,
+     3.7105,
+     7.6281,
+     -0.1101,
+     0.8213,
+     -0.0734
+    ],
+    [
+     "G1-POD-LIFT/MC-C",
+     -1.6275,
+     0.0,
+     22.1768,
+     -0.0,
+     -0.3901,
+     -0.0
+    ],
+    [
+     "G2-HANG-MOTOR/MC-C",
+     -0.5957,
+     -21.6782,
+     -12.7098,
+     0.6594,
+     -0.1564,
+     0.2359
+    ],
+    [
+     "G3-BENCH/MC-C",
+     -0.0,
+     0.0,
+     -25.1364,
+     -0.0,
+     -0.2736,
+     -0.0
+    ],
+    [
+     "F1-PULLUP-VD/MC-P",
+     0.0,
+     -0.0,
+     -33.8477,
+     0.0,
+     -0.5365,
+     0.0
+    ],
+    [
+     "F2-PULLUP-VA/MC-P",
+     0.0,
+     -0.0,
+     -33.8477,
+     0.0,
+     -0.5365,
+     0.0
+    ],
+    [
+     "F3-PUSH-VD/MC-P",
+     -1.1104,
+     0.0,
+     12.5492,
+     -0.0,
+     0.1477,
+     -0.0
+    ],
+    [
+     "F4-GUST-POS/MC-P",
+     -0.0,
+     -0.0,
+     -33.8477,
+     0.0,
+     -0.5365,
+     0.0
+    ],
+    [
+     "F5-GUST-NEG/MC-P",
+     -0.1786,
+     0.0,
+     13.396,
+     -0.0,
+     0.2041,
+     -0.0
+    ],
+    [
+     "F6-ROLL-VD/MC-P",
+     -0.0,
+     5.4735,
+     -10.2063,
+     -0.1606,
+     -0.1618,
+     -0.0871
+    ],
+    [
+     "F7-ROLLPULL-VD/MC-P",
+     0.0,
+     5.4735,
+     -22.5651,
+     -0.1606,
+     -0.3577,
+     -0.0871
+    ],
+    [
+     "F8-CRUISE/MC-P",
+     -0.0,
+     0.0,
+     -10.2063,
+     -0.0,
+     -0.1618,
+     0.0
+    ],
+    [
+     "H1-HOVER/MC-P",
+     10.2063,
+     0.0,
+     0.0,
+     0.0,
+     0.2891,
+     0.0
+    ],
+    [
+     "H2-MAX-THRUST/MC-P",
+     32.8497,
+     -0.0,
+     -2.2501,
+     0.0,
+     0.8786,
+     0.0
+    ],
+    [
+     "H3-PITCH-UPPER/MC-P",
+     21.3834,
+     0.0,
+     11.201,
+     -0.0,
+     0.8636,
+     -0.0
+    ],
+    [
+     "H4-PITCH-LOWER/MC-P",
+     11.4662,
+     -0.0,
+     -13.4511,
+     0.0,
+     0.0151,
+     0.0
+    ],
+    [
+     "H5-SIDE-RIGHT/MC-P",
+     16.4248,
+     5.1134,
+     -1.1251,
+     -0.1455,
+     0.4393,
+     -0.1159
+    ],
+    [
+     "H6-DIAG-A/MC-P",
+     16.4248,
+     -0.1173,
+     -1.1251,
+     0.0034,
+     0.4393,
+     0.0019
+    ],
+    [
+     "H7-DIAG-B/MC-P",
+     16.4248,
+     0.1173,
+     -1.1251,
+     -0.0034,
+     0.4393,
+     -0.0019
+    ],
+    [
+     "H8-GUST-WING/MC-P",
+     7.4936,
+     0.0,
+     6.9293,
+     -0.0,
+     0.3221,
+     -0.0
+    ],
+    [
+     "H9-GUST-FINS/MC-P",
+     9.4171,
+     3.3946,
+     -0.0,
+     -0.0961,
+     0.2667,
+     -0.0503
+    ],
+    [
+     "T1-TRANSITION/MC-P",
+     31.0129,
+     -0.0,
+     -17.1224,
+     0.0,
+     0.607,
+     0.0
+    ],
+    [
+     "T2-FLARE-UPPER/MC-P",
+     18.8033,
+     0.0,
+     -6.3042,
+     -0.0,
+     0.5196,
+     -0.0
+    ],
+    [
+     "T3-FLARE-LOWER/MC-P",
+     8.8861,
+     -0.0,
+     -30.9563,
+     0.0,
+     -0.3289,
+     0.0
+    ],
+    [
+     "L1-LEVEL/MC-P",
+     66.2209,
+     -0.0,
+     -4.5359,
+     0.0,
+     1.7712,
+     0.0
+    ],
+    [
+     "L2-PAIR-NARROW/MC-P",
+     33.9016,
+     0.0,
+     13.8341,
+     -0.0,
+     1.2788,
+     -0.0
+    ],
+    [
+     "L3-PAIR-WIDE/MC-P",
+     28.2998,
+     6.7478,
+     -1.9385,
+     -0.192,
+     0.7569,
+     -0.153
+    ],
+    [
+     "L4-CORNER-SIDE-Y/MC-P",
+     23.3129,
+     8.9695,
+     8.2876,
+     -0.2547,
+     0.8511,
+     -0.1557
+    ],
+    [
+     "L5-CORNER-SIDE-Z/MC-P",
+     20.0413,
+     3.2558,
+     6.7407,
+     -0.092,
+     0.6756,
+     -0.0788
+    ],
+    [
+     "G1-POD-LIFT/MC-P",
+     -1.5383,
+     0.0,
+     26.758,
+     -0.0,
+     -0.4552,
+     -0.0
+    ],
+    [
+     "G2-HANG-MOTOR/MC-P",
+     -0.0691,
+     -17.4877,
+     -10.5286,
+     0.4953,
+     -0.1688,
+     0.2772
+    ],
+    [
+     "G3-BENCH/MC-P",
+     -0.0,
+     -0.0,
+     -20.4127,
+     0.0,
+     -0.3235,
+     0.0
+    ]
+   ],
+   "unit": "N, N m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-PACK-LOADS",
+   "type": "assumption",
+   "title": "C1 pack-to-tray loads, envelope cases, limit",
+   "text": "Forces [case, Fx, Fy, Fz] the pack passes to the tray (x aft, z up, cruise frame)",
+   "basis": "team/C1/data/joints.csv rows J-PACK, same families",
+   "value": [
+    [
+     "F1-PULLUP-VD/MC-C",
+     0.0,
+     -0.0,
+     -17.8872
+    ],
+    [
+     "F2-PULLUP-VA/MC-C",
+     0.0,
+     -0.0,
+     -17.8872
+    ],
+    [
+     "F3-PUSH-VD/MC-C",
+     -0.6194,
+     0.0,
+     5.9755
+    ],
+    [
+     "F4-GUST-POS/MC-C",
+     -0.0,
+     -0.0,
+     -17.8872
+    ],
+    [
+     "F5-GUST-NEG/MC-C",
+     -0.1633,
+     0.0,
+     6.7564
+    ],
+    [
+     "F6-ROLL-VD/MC-C",
+     -0.0,
+     2.6308,
+     -5.3937
+    ],
+    [
+     "F7-ROLLPULL-VD/MC-C",
+     -0.0,
+     2.6308,
+     -11.9248
+    ],
+    [
+     "F8-CRUISE/MC-C",
+     -0.0,
+     -0.0,
+     -5.3937
+    ],
+    [
+     "H1-HOVER/MC-C",
+     5.3937,
+     0.0,
+     -0.0
+    ],
+    [
+     "H2-MAX-THRUST/MC-C",
+     17.2765,
+     0.0,
+     -1.9178
+    ],
+    [
+     "H3-PITCH-UPPER/MC-C",
+     11.0216,
+     -0.0,
+     7.1793
+    ],
+    [
+     "H4-PITCH-LOWER/MC-C",
+     6.2549,
+     0.0,
+     -9.0971
+    ],
+    [
+     "H5-SIDE-RIGHT/MC-C",
+     8.6382,
+     3.4671,
+     -0.9589
+    ],
+    [
+     "H6-DIAG-A/MC-C",
+     8.6382,
+     -0.0564,
+     -0.9589
+    ],
+    [
+     "H7-DIAG-B/MC-C",
+     8.6382,
+     0.0564,
+     -0.9589
+    ],
+    [
+     "H8-GUST-WING/MC-C",
+     3.9601,
+     0.0,
+     3.6619
+    ],
+    [
+     "H9-GUST-FINS/MC-C",
+     4.9766,
+     1.6954,
+     0.0
+    ],
+    [
+     "T1-TRANSITION/MC-C",
+     16.3891,
+     -0.0,
+     -9.0486
+    ],
+    [
+     "T2-FLARE-UPPER/MC-C",
+     9.7546,
+     -0.0,
+     -1.5603
+    ],
+    [
+     "T3-FLARE-LOWER/MC-C",
+     4.9878,
+     0.0,
+     -17.8367
+    ],
+    [
+     "L1-LEVEL/MC-C",
+     34.8273,
+     0.0,
+     -3.866
+    ],
+    [
+     "L2-PAIR-NARROW/MC-C",
+     17.5434,
+     -0.0,
+     8.7711
+    ],
+    [
+     "L3-PAIR-WIDE/MC-C",
+     14.8836,
+     4.5753,
+     -1.6521
+    ],
+    [
+     "L4-CORNER-SIDE-Y/MC-C",
+     12.0857,
+     4.981,
+     5.2161
+    ],
+    [
+     "L5-CORNER-SIDE-Z/MC-C",
+     10.4763,
+     2.3526,
+     3.201
+    ],
+    [
+     "G1-POD-LIFT/MC-C",
+     -0.6252,
+     0.0,
+     -12.922
+    ],
+    [
+     "G2-HANG-MOTOR/MC-C",
+     -0.2556,
+     -9.3032,
+     -5.4544
+    ],
+    [
+     "G3-BENCH/MC-C",
+     -0.0,
+     0.0,
+     -10.7873
+    ],
+    [
+     "F1-PULLUP-VD/MC-P",
+     0.0,
+     -0.0,
+     -21.1548
+    ],
+    [
+     "F2-PULLUP-VA/MC-P",
+     0.0,
+     -0.0,
+     -21.1548
+    ],
+    [
+     "F3-PUSH-VD/MC-P",
+     -0.6854,
+     0.0,
+     7.4872
+    ],
+    [
+     "F4-GUST-POS/MC-P",
+     -0.0,
+     -0.0,
+     -21.1548
+    ],
+    [
+     "F5-GUST-NEG/MC-P",
+     -0.1102,
+     0.0,
+     8.3152
+    ],
+    [
+     "F6-ROLL-VD/MC-P",
+     -0.0,
+     3.3461,
+     -6.379
+    ],
+    [
+     "F7-ROLLPULL-VD/MC-P",
+     0.0,
+     3.3461,
+     -14.1032
+    ],
+    [
+     "F8-CRUISE/MC-P",
+     -0.0,
+     -0.0,
+     -6.379
+    ],
+    [
+     "H1-HOVER/MC-P",
+     6.379,
+     0.0,
+     0.0
+    ],
+    [
+     "H2-MAX-THRUST/MC-P",
+     20.5381,
+     -0.0,
+     -1.6965
+    ],
+    [
+     "H3-PITCH-UPPER/MC-P",
+     13.3295,
+     0.0,
+     8.4453
+    ],
+    [
+     "H4-PITCH-LOWER/MC-P",
+     7.2085,
+     -0.0,
+     -10.1419
+    ],
+    [
+     "H5-SIDE-RIGHT/MC-P",
+     10.269,
+     3.8599,
+     -0.8483
+    ],
+    [
+     "H6-DIAG-A/MC-P",
+     10.269,
+     -0.0717,
+     -0.8483
+    ],
+    [
+     "H7-DIAG-B/MC-P",
+     10.269,
+     0.0717,
+     -0.8483
+    ],
+    [
+     "H8-GUST-WING/MC-P",
+     4.6835,
+     0.0,
+     4.3308
+    ],
+    [
+     "H9-GUST-FINS/MC-P",
+     5.8857,
+     2.0548,
+     -0.0
+    ],
+    [
+     "T1-TRANSITION/MC-P",
+     19.3831,
+     -0.0,
+     -10.7015
+    ],
+    [
+     "T2-FLARE-UPPER/MC-P",
+     11.7141,
+     0.0,
+     -2.3766
+    ],
+    [
+     "T3-FLARE-LOWER/MC-P",
+     5.5931,
+     -0.0,
+     -20.9638
+    ],
+    [
+     "L1-LEVEL/MC-P",
+     41.4023,
+     -0.0,
+     -3.42
+    ],
+    [
+     "L2-PAIR-NARROW/MC-P",
+     21.1451,
+     0.0,
+     10.4306
+    ],
+    [
+     "L3-PAIR-WIDE/MC-P",
+     17.6935,
+     5.0936,
+     -1.4616
+    ],
+    [
+     "L4-CORNER-SIDE-Y/MC-P",
+     14.5446,
+     5.8586,
+     6.2487
+    ],
+    [
+     "L5-CORNER-SIDE-Z/MC-P",
+     12.5253,
+     2.5631,
+     4.2329
+    ],
+    [
+     "G1-POD-LIFT/MC-P",
+     -0.9494,
+     0.0,
+     -15.641
+    ],
+    [
+     "G2-HANG-MOTOR/MC-P",
+     -0.0432,
+     -10.9298,
+     -6.5804
+    ],
+    [
+     "G3-BENCH/MC-P",
+     -0.0,
+     -0.0,
+     -12.7579
+    ]
+   ],
+   "unit": "N",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-XPS-SHEAR",
+   "type": "assumption",
+   "title": "Epoxy-to-XPS bond shear allowable 100 kPa",
+   "text": "Allowable shear at an epoxy bond line on F-250 XPS, foam failure",
+   "basis": "ESTIMATE: XPS shear strength is not on the F-250 TDS; typical 25 psi XPS 0.2-0.25 MPa, halved; coupon T-C3-BOND-COUPON",
+   "value": 100000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-XPS-F250"
+   ]
+  },
+  {
+   "id": "ASM-C3-STOP-H",
+   "type": "assumption",
+   "title": "Pack stop wall height 25 mm",
+   "text": "Printed stop wall height above the tray",
+   "basis": "subsystems/pod/params.json stop_wall_h_m",
+   "value": 0.025,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-GUIDE",
+   "type": "assumption",
+   "title": "Bay guides 1.0 x 8 mm (D2)",
+   "text": "Guide thickness and height above the tray [t, h]",
+   "basis": "subsystems/pod/params.json guide_t_m, guide_h_m",
+   "value": [
+    0.001,
+    0.008
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-REC",
+   "type": "assumption",
+   "title": "C3 recommended sizes",
+   "text": "[aft stop t, forward stop t, guide t, guide h] for printed PETG (tray printed flat: wall bending loads the layer bonds)",
+   "basis": "sized in this script to margin >= 0 at 15 MPa",
+   "value": [
+    0.003,
+    0.003,
+    0.0015,
+    0.008
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-HL",
+   "type": "assumption",
+   "title": "Hook-and-loop allowables",
+   "text": "[shear N/cm2 of overlap, flat-wise tension N/cm2] for sew-on nylon hook-and-loop, knocked down 2x",
+   "basis": "ESTIMATE from catalogue class values (shear 10-15, tension 5-10 N/cm2); T-D2-STRAP-PULL",
+   "value": [
+    5.0,
+    2.5
+   ],
+   "unit": "N/cm2",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-STRAP-OVERLAP",
+   "type": "assumption",
+   "title": "Strap hook-and-loop overlap 50 mm",
+   "text": "Specified overlap of each 20 mm strap",
+   "basis": "C3 specification for D2 (BUILD step: mark 50 mm on the strap)",
+   "value": 0.05,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-FB-FLAT",
+   "type": "assumption",
+   "title": "Foam-board flat-wise tension 100 kPa",
+   "text": "Paper-face-to-core flat-wise tension allowable of 4.8 mm paper-faced board",
+   "basis": "ESTIMATE; coupon T-C3-BOND-COUPON",
+   "value": 100000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-SPREAD",
+   "type": "assumption",
+   "title": "Plate load spread 10 mm each side of a strap",
+   "text": "Length of 1 mm PETG tray that shares a strap's pull either side of the 20 mm strap",
+   "basis": "~10 x tray thickness",
+   "value": 0.01,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-OVERHANG-ITEMS",
+   "type": "assumption",
+   "title": "Non-pack masses ahead of the wing LE",
+   "text": "[mass g, x m] of pod items ahead of x = 0: shell, tray, hatch and socket (half of CL-D2-MASS less handle); airspeed sensor, pitot boom, half the FC; RX, power module, UBEC",
+   "basis": "subsystems/pod/SPEC.md layout and params.json#mass.allocation_g.avionics note; weigh (T-D2-WEIGH)",
+   "value": [
+    [
+     35.0,
+     -0.05
+    ],
+    [
+     30.0,
+     -0.075
+    ],
+    [
+     15.0,
+     -0.03
+    ]
+   ],
+   "unit": "g, m",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-GROUP-XZ",
+   "type": "assumption",
+   "title": "Pod-group item centroids for the crash case",
+   "text": "[x, z] of: pod structure (D2 CAD CG), avionics (FC, GPS mast, airspeed, pitot, RX), power items less the pack",
+   "basis": "subsystems/pod/SPEC.md (pod CG 0.012, 0.052); avionics 66 g mass-weighted from the D2 layout; power items in the left channel",
+   "value": [
+    [
+     0.012,
+     0.052
+    ],
+    [
+     -0.023,
+     0.058
+    ],
+    [
+     0.0,
+     0.03
+    ]
+   ],
+   "unit": "m",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-CP-HATCH",
+   "type": "assumption",
+   "title": "Hatch suction Cp -1.0",
+   "text": "Peak suction on the pod top at VD (bluff box top, separated LE corner)",
+   "basis": "ESTIMATE, conservative for a 70 mm box on a wing",
+   "value": -1.0,
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-HATCH",
+   "type": "assumption",
+   "title": "Hatch plan and latch",
+   "text": "[hatch length x, width y, latch tab x, tab y] (m)",
+   "basis": "subsystems/pod/params.json: lip end to hatch_aft_x_m, width_m, latch_tab_m",
+   "value": [
+    0.1602,
+    0.14,
+    0.012,
+    0.03
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-GRIP",
+   "type": "assumption",
+   "title": "Carry-handle grip 10 x 8 mm PETG, legs at +-34 mm",
+   "text": "[grip x, grip z, leg y]",
+   "basis": "subsystems/pod/params.json grip_m, leg_y_m",
+   "value": [
+    0.01,
+    0.008,
+    0.034
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-C3-PETG-INPLANE",
+   "type": "assumption",
+   "title": "Printed PETG in-plane (along-raster) allowable 25 MPa",
+   "text": "Bending allowable along the filament (part printed so the stress runs along the layers)",
+   "basis": "filament data 40-50 MPa (ASM-D5-PETG-SIGMA basis) x ~0.6",
+   "value": 25000000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "CALC-C3-BOND",
+   "type": "calculation",
+   "title": "Pod-to-wing bond: flight/ground envelope and crash",
+   "script": "redesign/team/C3/pod_structures.py",
+   "function": "bond",
+   "equation": "loads moved from C1's point (pod centre, base) to the bond centroid: M' = M + (r_ref - r_c) x F; footprint b x L, x 0 ... recess end; sigma = Fz/A + 6|My|/(b L^2) + 6|Mx|/(L b^2) (tension only); tau = |Fxy|/A + |Mz| r_max / J; R = sigma/sigma_a + tau/tau_a; design = limit x SF x k_fit x k_print; crash: m_group n_c g any axis at the group CG, no further factor",
+   "inputs": {
+    "sf": "P:requirements.safety_factor_ult",
+    "kf": "ASM-C1-FITTING-FACTOR",
+    "kp": "ASM-C1-PRINTED-FACTOR",
+    "rows": "ASM-C3-POD-LOADS",
+    "xle": "P:pod.x_le_m",
+    "size": "P:pod.size_m",
+    "zb": "P:pod.z_base_m",
+    "b": "ASM-D2-POD-WIDTH",
+    "xs": "P:wing.spar.x_m",
+    "od": "P:wing.spar.od_m",
+    "wall": "ASM-D2-SLOT-WALL",
+    "sa": "ASM-D2-XPS-ALLOW",
+    "ta": "ASM-C3-XPS-SHEAR",
+    "tfb": "ASM-D5-BOND-TAU",
+    "m_pod": "CL-D2-MASS",
+    "a_avn": "P:mass.allocation_g.avionics",
+    "a_pwr": "P:mass.allocation_g.power",
+    "m_bat": "P:battery.mass_kg",
+    "pack_rng": "ASM-A3-PACK-RANGE",
+    "px": "CL-D2-PACK-X-FWD",
+    "pz": "CL-D2-PACK-Z",
+    "xz": "ASM-C3-GROUP-XZ",
+    "nc": "CL-C1-CRASH-N",
+    "g": "P:env.g_ms2"
+   },
+   "outputs": {
+    "area_m2": 0.0091,
+    "length_m": 0.065,
+    "sigma_design_pa": 45658.35679945054,
+    "tau_design_pa": 19156.21978021978,
+    "R_design": 0.6481457657967032,
+    "case": "L1-LEVEL/MC-C",
+    "group_mass_kg": 0.9004,
+    "group_cg_x": -0.023385384273656145,
+    "crash_F_n": 112.55,
+    "sigma_crash_pa": 76171.00591715975,
+    "tau_crash_pa": 0.0,
+    "R_crash": 0.7617100591715975,
+    "crash_dir": "+z"
+   },
+   "input_values": {
+    "sf": 1.5,
+    "kf": 1.15,
+    "kp": 1.25,
+    "rows": [
+     [
+      "F1-PULLUP-VD/MC-C",
+      0.0,
+      -0.0,
+      -41.6804,
+      0.0,
+      -0.4536,
+      0.0
+     ],
+     [
+      "F2-PULLUP-VA/MC-C",
+      0.0,
+      -0.0,
+      -41.6804,
+      0.0,
+      -0.4536,
+      0.0
+     ],
+     [
+      "F3-PUSH-VD/MC-C",
+      -1.6124,
+      0.0,
+      15.2051,
+      -0.0,
+      0.0897,
+      -0.0
+     ],
+     [
+      "F4-GUST-POS/MC-C",
+      -0.0,
+      -0.0,
+      -41.6804,
+      0.0,
+      -0.4536,
+      0.0
+     ],
+     [
+      "F5-GUST-NEG/MC-C",
+      -0.4251,
+      0.0,
+      16.0813,
+      -0.0,
+      0.155,
+      -0.0
+     ],
+     [
+      "F6-ROLL-VD/MC-C",
+      -0.0,
+      7.019,
+      -12.5682,
+      -0.2223,
+      -0.1368,
+      -0.0688
+     ],
+     [
+      "F7-ROLLPULL-VD/MC-C",
+      -0.0,
+      7.019,
+      -27.787,
+      -0.2223,
+      -0.3024,
+      -0.0688
+     ],
+     [
+      "F8-CRUISE/MC-C",
+      -0.0,
+      0.0,
+      -12.5682,
+      -0.0,
+      -0.1368,
+      0.0
+     ],
+     [
+      "H1-HOVER/MC-C",
+      12.5682,
+      0.0,
+      -0.0,
+      -0.0,
+      0.3823,
+      -0.0
+     ],
+     [
+      "H2-MAX-THRUST/MC-C",
+      40.104,
+      0.0,
+      -3.3072,
+      -0.0,
+      1.1596,
+      -0.0
+     ],
+     [
+      "H3-PITCH-UPPER/MC-C",
+      26.2566,
+      -0.0,
+      12.3808,
+      0.0,
+      1.0241,
+      0.0
+     ],
+     [
+      "H4-PITCH-LOWER/MC-C",
+      13.8474,
+      0.0,
+      -15.688,
+      -0.0,
+      0.1354,
+      -0.0
+     ],
+     [
+      "H5-SIDE-RIGHT/MC-C",
+      20.052,
+      5.9619,
+      -1.6536,
+      -0.1793,
+      0.5798,
+      -0.1059
+     ],
+     [
+      "H6-DIAG-A/MC-C",
+      20.052,
+      -0.1504,
+      -1.6536,
+      0.0048,
+      0.5798,
+      0.0015
+     ],
+     [
+      "H7-DIAG-B/MC-C",
+      20.052,
+      0.1504,
+      -1.6536,
+      -0.0048,
+      0.5798,
+      -0.0015
+     ],
+     [
+      "H8-GUST-WING/MC-C",
+      9.2277,
+      0.0,
+      8.5329,
+      -0.0,
+      0.3735,
+      -0.0
+     ],
+     [
+      "H9-GUST-FINS/MC-C",
+      11.5963,
+      4.1712,
+      0.0,
+      -0.127,
+      0.3527,
+      -0.0411
+     ],
+     [
+      "T1-TRANSITION/MC-C",
+      38.1897,
+      -0.0,
+      -21.0848,
+      0.0,
+      0.9321,
+      0.0
+     ],
+     [
+      "T2-FLARE-UPPER/MC-C",
+      23.384,
+      -0.0,
+      -8.5886,
+      0.0,
+      0.7211,
+      0.0
+     ],
+     [
+      "T3-FLARE-LOWER/MC-C",
+      10.9747,
+      0.0,
+      -36.6573,
+      -0.0,
+      -0.1675,
+      -0.0
+     ],
+     [
+      "L1-LEVEL/MC-C",
+      80.8448,
+      0.0,
+      -6.6669,
+      -0.0,
+      2.3375,
+      -0.0
+     ],
+     [
+      "L2-PAIR-NARROW/MC-C",
+      41.5809,
+      -0.0,
+      15.1259,
+      0.0,
+      1.5402,
+      0.0
+     ],
+     [
+      "L3-PAIR-WIDE/MC-C",
+      34.5494,
+      7.8676,
+      -2.8491,
+      -0.2367,
+      0.999,
+      -0.1397
+     ],
+     [
+      "L4-CORNER-SIDE-Y/MC-C",
+      28.5791,
+      10.8656,
+      8.9951,
+      -0.3304,
+      1.0331,
+      -0.1333
+     ],
+     [
+      "L5-CORNER-SIDE-Z/MC-C",
+      24.3894,
+      3.7105,
+      7.6281,
+      -0.1101,
+      0.8213,
+      -0.0734
+     ],
+     [
+      "G1-POD-LIFT/MC-C",
+      -1.6275,
+      0.0,
+      22.1768,
+      -0.0,
+      -0.3901,
+      -0.0
+     ],
+     [
+      "G2-HANG-MOTOR/MC-C",
+      -0.5957,
+      -21.6782,
+      -12.7098,
+      0.6594,
+      -0.1564,
+      0.2359
+     ],
+     [
+      "G3-BENCH/MC-C",
+      -0.0,
+      0.0,
+      -25.1364,
+      -0.0,
+      -0.2736,
+      -0.0
+     ],
+     [
+      "F1-PULLUP-VD/MC-P",
+      0.0,
+      -0.0,
+      -33.8477,
+      0.0,
+      -0.5365,
+      0.0
+     ],
+     [
+      "F2-PULLUP-VA/MC-P",
+      0.0,
+      -0.0,
+      -33.8477,
+      0.0,
+      -0.5365,
+      0.0
+     ],
+     [
+      "F3-PUSH-VD/MC-P",
+      -1.1104,
+      0.0,
+      12.5492,
+      -0.0,
+      0.1477,
+      -0.0
+     ],
+     [
+      "F4-GUST-POS/MC-P",
+      -0.0,
+      -0.0,
+      -33.8477,
+      0.0,
+      -0.5365,
+      0.0
+     ],
+     [
+      "F5-GUST-NEG/MC-P",
+      -0.1786,
+      0.0,
+      13.396,
+      -0.0,
+      0.2041,
+      -0.0
+     ],
+     [
+      "F6-ROLL-VD/MC-P",
+      -0.0,
+      5.4735,
+      -10.2063,
+      -0.1606,
+      -0.1618,
+      -0.0871
+     ],
+     [
+      "F7-ROLLPULL-VD/MC-P",
+      0.0,
+      5.4735,
+      -22.5651,
+      -0.1606,
+      -0.3577,
+      -0.0871
+     ],
+     [
+      "F8-CRUISE/MC-P",
+      -0.0,
+      0.0,
+      -10.2063,
+      -0.0,
+      -0.1618,
+      0.0
+     ],
+     [
+      "H1-HOVER/MC-P",
+      10.2063,
+      0.0,
+      0.0,
+      0.0,
+      0.2891,
+      0.0
+     ],
+     [
+      "H2-MAX-THRUST/MC-P",
+      32.8497,
+      -0.0,
+      -2.2501,
+      0.0,
+      0.8786,
+      0.0
+     ],
+     [
+      "H3-PITCH-UPPER/MC-P",
+      21.3834,
+      0.0,
+      11.201,
+      -0.0,
+      0.8636,
+      -0.0
+     ],
+     [
+      "H4-PITCH-LOWER/MC-P",
+      11.4662,
+      -0.0,
+      -13.4511,
+      0.0,
+      0.0151,
+      0.0
+     ],
+     [
+      "H5-SIDE-RIGHT/MC-P",
+      16.4248,
+      5.1134,
+      -1.1251,
+      -0.1455,
+      0.4393,
+      -0.1159
+     ],
+     [
+      "H6-DIAG-A/MC-P",
+      16.4248,
+      -0.1173,
+      -1.1251,
+      0.0034,
+      0.4393,
+      0.0019
+     ],
+     [
+      "H7-DIAG-B/MC-P",
+      16.4248,
+      0.1173,
+      -1.1251,
+      -0.0034,
+      0.4393,
+      -0.0019
+     ],
+     [
+      "H8-GUST-WING/MC-P",
+      7.4936,
+      0.0,
+      6.9293,
+      -0.0,
+      0.3221,
+      -0.0
+     ],
+     [
+      "H9-GUST-FINS/MC-P",
+      9.4171,
+      3.3946,
+      -0.0,
+      -0.0961,
+      0.2667,
+      -0.0503
+     ],
+     [
+      "T1-TRANSITION/MC-P",
+      31.0129,
+      -0.0,
+      -17.1224,
+      0.0,
+      0.607,
+      0.0
+     ],
+     [
+      "T2-FLARE-UPPER/MC-P",
+      18.8033,
+      0.0,
+      -6.3042,
+      -0.0,
+      0.5196,
+      -0.0
+     ],
+     [
+      "T3-FLARE-LOWER/MC-P",
+      8.8861,
+      -0.0,
+      -30.9563,
+      0.0,
+      -0.3289,
+      0.0
+     ],
+     [
+      "L1-LEVEL/MC-P",
+      66.2209,
+      -0.0,
+      -4.5359,
+      0.0,
+      1.7712,
+      0.0
+     ],
+     [
+      "L2-PAIR-NARROW/MC-P",
+      33.9016,
+      0.0,
+      13.8341,
+      -0.0,
+      1.2788,
+      -0.0
+     ],
+     [
+      "L3-PAIR-WIDE/MC-P",
+      28.2998,
+      6.7478,
+      -1.9385,
+      -0.192,
+      0.7569,
+      -0.153
+     ],
+     [
+      "L4-CORNER-SIDE-Y/MC-P",
+      23.3129,
+      8.9695,
+      8.2876,
+      -0.2547,
+      0.8511,
+      -0.1557
+     ],
+     [
+      "L5-CORNER-SIDE-Z/MC-P",
+      20.0413,
+      3.2558,
+      6.7407,
+      -0.092,
+      0.6756,
+      -0.0788
+     ],
+     [
+      "G1-POD-LIFT/MC-P",
+      -1.5383,
+      0.0,
+      26.758,
+      -0.0,
+      -0.4552,
+      -0.0
+     ],
+     [
+      "G2-HANG-MOTOR/MC-P",
+      -0.0691,
+      -17.4877,
+      -10.5286,
+      0.4953,
+      -0.1688,
+      0.2772
+     ],
+     [
+      "G3-BENCH/MC-P",
+      -0.0,
+      -0.0,
+      -20.4127,
+      0.0,
+      -0.3235,
+      0.0
+     ]
+    ],
+    "xle": -0.105,
+    "size": [
+     0.2,
+     0.1,
+     0.07
+    ],
+    "zb": 0.015,
+    "b": 0.14,
+    "xs": 0.08,
+    "od": 0.022,
+    "wall": 0.004,
+    "sa": 100000.0,
+    "ta": 100000.0,
+    "tfb": 200000.0,
+    "m_pod": 100.4,
+    "a_avn": 75,
+    "a_pwr": 595,
+    "m_bat": 0.55,
+    "pack_rng": [
+     503.0,
+     680.0
+    ],
+    "px": -0.03019999999999999,
+    "pz": 0.0463,
+    "xz": [
+     [
+      0.012,
+      0.052
+     ],
+     [
+      -0.023,
+      0.058
+     ],
+     [
+      0.0,
+      0.03
+     ]
+    ],
+    "nc": 12.746452662224103,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CALC-C3-STOPS",
+   "type": "calculation",
+   "title": "Pack stops: aft stop wall (+x), forward stop (-x)",
+   "script": "redesign/team/C3/pod_structures.py",
+   "function": "stops",
+   "equation": "F_design = max over cases of the pack force x SF x k_fit x k_print; crash F = C1 85 N; sigma = 6 F (h/2) / (b t^2), b = bay + 2 guides; t_req = sqrt(6 F h/2 / (b sigma_a)); nose wall (foam board) as a strip between the side walls: M = F/4 (S - c/2), m_cap = sigma_f t_f (t - t_f) per unit width over the pack height",
+   "inputs": {
+    "sf": "P:requirements.safety_factor_ult",
+    "kf": "ASM-C1-FITTING-FACTOR",
+    "kp": "ASM-C1-PRINTED-FACTOR",
+    "rows": "ASM-C3-PACK-LOADS",
+    "fc": "CL-C1-PACK-CRASH-LOAD",
+    "h": "ASM-C3-STOP-H",
+    "bw": "ASM-D2-BAY-W",
+    "gd": "ASM-C3-GUIDE",
+    "t0": "ASM-D2-STOP-T",
+    "rec": "ASM-C3-REC",
+    "sa": "ASM-C4-PETG-TENSILE",
+    "W": "ASM-D2-POD-WIDTH",
+    "tb": "P:fins.board_t_m",
+    "tf": "ASM-C4-FACE-T",
+    "sf_face": "ASM-C4-FACE-SIGMA",
+    "pack": "P:battery.size_m"
+   },
+   "outputs": {
+    "F_aft_n": 89.273709375,
+    "F_fwd_n": 85.0,
+    "F_fwd_flight_n": 2.04714375,
+    "sigma_aft_d2_pa": 55107228.00925926,
+    "t_req_m": 0.00287507986000196,
+    "sigma_aft_rec_pa": 13776807.002314815,
+    "sigma_fwd_rec_pa": 13117283.950617284,
+    "nose_m_req_nmm_per_mm": 45.220000000000006,
+    "nose_m_cap_nmm_per_mm": 4.699999999999999
+   },
+   "input_values": {
+    "sf": 1.5,
+    "kf": 1.15,
+    "kp": 1.25,
+    "rows": [
+     [
+      "F1-PULLUP-VD/MC-C",
+      0.0,
+      -0.0,
+      -17.8872
+     ],
+     [
+      "F2-PULLUP-VA/MC-C",
+      0.0,
+      -0.0,
+      -17.8872
+     ],
+     [
+      "F3-PUSH-VD/MC-C",
+      -0.6194,
+      0.0,
+      5.9755
+     ],
+     [
+      "F4-GUST-POS/MC-C",
+      -0.0,
+      -0.0,
+      -17.8872
+     ],
+     [
+      "F5-GUST-NEG/MC-C",
+      -0.1633,
+      0.0,
+      6.7564
+     ],
+     [
+      "F6-ROLL-VD/MC-C",
+      -0.0,
+      2.6308,
+      -5.3937
+     ],
+     [
+      "F7-ROLLPULL-VD/MC-C",
+      -0.0,
+      2.6308,
+      -11.9248
+     ],
+     [
+      "F8-CRUISE/MC-C",
+      -0.0,
+      -0.0,
+      -5.3937
+     ],
+     [
+      "H1-HOVER/MC-C",
+      5.3937,
+      0.0,
+      -0.0
+     ],
+     [
+      "H2-MAX-THRUST/MC-C",
+      17.2765,
+      0.0,
+      -1.9178
+     ],
+     [
+      "H3-PITCH-UPPER/MC-C",
+      11.0216,
+      -0.0,
+      7.1793
+     ],
+     [
+      "H4-PITCH-LOWER/MC-C",
+      6.2549,
+      0.0,
+      -9.0971
+     ],
+     [
+      "H5-SIDE-RIGHT/MC-C",
+      8.6382,
+      3.4671,
+      -0.9589
+     ],
+     [
+      "H6-DIAG-A/MC-C",
+      8.6382,
+      -0.0564,
+      -0.9589
+     ],
+     [
+      "H7-DIAG-B/MC-C",
+      8.6382,
+      0.0564,
+      -0.9589
+     ],
+     [
+      "H8-GUST-WING/MC-C",
+      3.9601,
+      0.0,
+      3.6619
+     ],
+     [
+      "H9-GUST-FINS/MC-C",
+      4.9766,
+      1.6954,
+      0.0
+     ],
+     [
+      "T1-TRANSITION/MC-C",
+      16.3891,
+      -0.0,
+      -9.0486
+     ],
+     [
+      "T2-FLARE-UPPER/MC-C",
+      9.7546,
+      -0.0,
+      -1.5603
+     ],
+     [
+      "T3-FLARE-LOWER/MC-C",
+      4.9878,
+      0.0,
+      -17.8367
+     ],
+     [
+      "L1-LEVEL/MC-C",
+      34.8273,
+      0.0,
+      -3.866
+     ],
+     [
+      "L2-PAIR-NARROW/MC-C",
+      17.5434,
+      -0.0,
+      8.7711
+     ],
+     [
+      "L3-PAIR-WIDE/MC-C",
+      14.8836,
+      4.5753,
+      -1.6521
+     ],
+     [
+      "L4-CORNER-SIDE-Y/MC-C",
+      12.0857,
+      4.981,
+      5.2161
+     ],
+     [
+      "L5-CORNER-SIDE-Z/MC-C",
+      10.4763,
+      2.3526,
+      3.201
+     ],
+     [
+      "G1-POD-LIFT/MC-C",
+      -0.6252,
+      0.0,
+      -12.922
+     ],
+     [
+      "G2-HANG-MOTOR/MC-C",
+      -0.2556,
+      -9.3032,
+      -5.4544
+     ],
+     [
+      "G3-BENCH/MC-C",
+      -0.0,
+      0.0,
+      -10.7873
+     ],
+     [
+      "F1-PULLUP-VD/MC-P",
+      0.0,
+      -0.0,
+      -21.1548
+     ],
+     [
+      "F2-PULLUP-VA/MC-P",
+      0.0,
+      -0.0,
+      -21.1548
+     ],
+     [
+      "F3-PUSH-VD/MC-P",
+      -0.6854,
+      0.0,
+      7.4872
+     ],
+     [
+      "F4-GUST-POS/MC-P",
+      -0.0,
+      -0.0,
+      -21.1548
+     ],
+     [
+      "F5-GUST-NEG/MC-P",
+      -0.1102,
+      0.0,
+      8.3152
+     ],
+     [
+      "F6-ROLL-VD/MC-P",
+      -0.0,
+      3.3461,
+      -6.379
+     ],
+     [
+      "F7-ROLLPULL-VD/MC-P",
+      0.0,
+      3.3461,
+      -14.1032
+     ],
+     [
+      "F8-CRUISE/MC-P",
+      -0.0,
+      -0.0,
+      -6.379
+     ],
+     [
+      "H1-HOVER/MC-P",
+      6.379,
+      0.0,
+      0.0
+     ],
+     [
+      "H2-MAX-THRUST/MC-P",
+      20.5381,
+      -0.0,
+      -1.6965
+     ],
+     [
+      "H3-PITCH-UPPER/MC-P",
+      13.3295,
+      0.0,
+      8.4453
+     ],
+     [
+      "H4-PITCH-LOWER/MC-P",
+      7.2085,
+      -0.0,
+      -10.1419
+     ],
+     [
+      "H5-SIDE-RIGHT/MC-P",
+      10.269,
+      3.8599,
+      -0.8483
+     ],
+     [
+      "H6-DIAG-A/MC-P",
+      10.269,
+      -0.0717,
+      -0.8483
+     ],
+     [
+      "H7-DIAG-B/MC-P",
+      10.269,
+      0.0717,
+      -0.8483
+     ],
+     [
+      "H8-GUST-WING/MC-P",
+      4.6835,
+      0.0,
+      4.3308
+     ],
+     [
+      "H9-GUST-FINS/MC-P",
+      5.8857,
+      2.0548,
+      -0.0
+     ],
+     [
+      "T1-TRANSITION/MC-P",
+      19.3831,
+      -0.0,
+      -10.7015
+     ],
+     [
+      "T2-FLARE-UPPER/MC-P",
+      11.7141,
+      0.0,
+      -2.3766
+     ],
+     [
+      "T3-FLARE-LOWER/MC-P",
+      5.5931,
+      -0.0,
+      -20.9638
+     ],
+     [
+      "L1-LEVEL/MC-P",
+      41.4023,
+      -0.0,
+      -3.42
+     ],
+     [
+      "L2-PAIR-NARROW/MC-P",
+      21.1451,
+      0.0,
+      10.4306
+     ],
+     [
+      "L3-PAIR-WIDE/MC-P",
+      17.6935,
+      5.0936,
+      -1.4616
+     ],
+     [
+      "L4-CORNER-SIDE-Y/MC-P",
+      14.5446,
+      5.8586,
+      6.2487
+     ],
+     [
+      "L5-CORNER-SIDE-Z/MC-P",
+      12.5253,
+      2.5631,
+      4.2329
+     ],
+     [
+      "G1-POD-LIFT/MC-P",
+      -0.9494,
+      0.0,
+      -15.641
+     ],
+     [
+      "G2-HANG-MOTOR/MC-P",
+      -0.0432,
+      -10.9298,
+      -6.5804
+     ],
+     [
+      "G3-BENCH/MC-P",
+      -0.0,
+      -0.0,
+      -12.7579
+     ]
+    ],
+    "fc": 85.0,
+    "h": 0.025,
+    "bw": 0.052,
+    "gd": [
+     0.001,
+     0.008
+    ],
+    "t0": 0.0015,
+    "rec": [
+     0.003,
+     0.003,
+     0.0015,
+     0.008
+    ],
+    "sa": 15000000.0,
+    "W": 0.14,
+    "tb": 0.0048,
+    "tf": 0.0001,
+    "sf_face": 10000000.0,
+    "pack": [
+     0.14,
+     0.048,
+     0.05
+    ]
+   }
+  },
+  {
+   "id": "CALC-C3-GUIDES",
+   "type": "calculation",
+   "title": "Bay guides (+-y) and strap legs in a lateral crash",
+   "script": "redesign/team/C3/pod_structures.py",
+   "function": "guides",
+   "equation": "q = F / L_pack on the guide, resultant at h/2: sigma = 6 q (h/2) / t^2; overturn about the far guide top: T_legs = F (z_pack/2 + pad - h) / w_bay, per strap = T_legs / n",
+   "inputs": {
+    "sf": "P:requirements.safety_factor_ult",
+    "kf": "ASM-C1-FITTING-FACTOR",
+    "kp": "ASM-C1-PRINTED-FACTOR",
+    "rows": "ASM-C3-PACK-LOADS",
+    "fc": "CL-C1-PACK-CRASH-LOAD",
+    "gd": "ASM-C3-GUIDE",
+    "rec": "ASM-C3-REC",
+    "pack": "P:battery.size_m",
+    "bw": "ASM-D2-BAY-W",
+    "n": "ASM-D2-N-STRAPS"
+   },
+   "outputs": {
+    "F_n": 85.0,
+    "sigma_d2_pa": 14571428.571428573,
+    "sigma_rec_pa": 6476190.476190476,
+    "strap_leg_n": 13.89423076923077
+   },
+   "input_values": {
+    "sf": 1.5,
+    "kf": 1.15,
+    "kp": 1.25,
+    "rows": [
+     [
+      "F1-PULLUP-VD/MC-C",
+      0.0,
+      -0.0,
+      -17.8872
+     ],
+     [
+      "F2-PULLUP-VA/MC-C",
+      0.0,
+      -0.0,
+      -17.8872
+     ],
+     [
+      "F3-PUSH-VD/MC-C",
+      -0.6194,
+      0.0,
+      5.9755
+     ],
+     [
+      "F4-GUST-POS/MC-C",
+      -0.0,
+      -0.0,
+      -17.8872
+     ],
+     [
+      "F5-GUST-NEG/MC-C",
+      -0.1633,
+      0.0,
+      6.7564
+     ],
+     [
+      "F6-ROLL-VD/MC-C",
+      -0.0,
+      2.6308,
+      -5.3937
+     ],
+     [
+      "F7-ROLLPULL-VD/MC-C",
+      -0.0,
+      2.6308,
+      -11.9248
+     ],
+     [
+      "F8-CRUISE/MC-C",
+      -0.0,
+      -0.0,
+      -5.3937
+     ],
+     [
+      "H1-HOVER/MC-C",
+      5.3937,
+      0.0,
+      -0.0
+     ],
+     [
+      "H2-MAX-THRUST/MC-C",
+      17.2765,
+      0.0,
+      -1.9178
+     ],
+     [
+      "H3-PITCH-UPPER/MC-C",
+      11.0216,
+      -0.0,
+      7.1793
+     ],
+     [
+      "H4-PITCH-LOWER/MC-C",
+      6.2549,
+      0.0,
+      -9.0971
+     ],
+     [
+      "H5-SIDE-RIGHT/MC-C",
+      8.6382,
+      3.4671,
+      -0.9589
+     ],
+     [
+      "H6-DIAG-A/MC-C",
+      8.6382,
+      -0.0564,
+      -0.9589
+     ],
+     [
+      "H7-DIAG-B/MC-C",
+      8.6382,
+      0.0564,
+      -0.9589
+     ],
+     [
+      "H8-GUST-WING/MC-C",
+      3.9601,
+      0.0,
+      3.6619
+     ],
+     [
+      "H9-GUST-FINS/MC-C",
+      4.9766,
+      1.6954,
+      0.0
+     ],
+     [
+      "T1-TRANSITION/MC-C",
+      16.3891,
+      -0.0,
+      -9.0486
+     ],
+     [
+      "T2-FLARE-UPPER/MC-C",
+      9.7546,
+      -0.0,
+      -1.5603
+     ],
+     [
+      "T3-FLARE-LOWER/MC-C",
+      4.9878,
+      0.0,
+      -17.8367
+     ],
+     [
+      "L1-LEVEL/MC-C",
+      34.8273,
+      0.0,
+      -3.866
+     ],
+     [
+      "L2-PAIR-NARROW/MC-C",
+      17.5434,
+      -0.0,
+      8.7711
+     ],
+     [
+      "L3-PAIR-WIDE/MC-C",
+      14.8836,
+      4.5753,
+      -1.6521
+     ],
+     [
+      "L4-CORNER-SIDE-Y/MC-C",
+      12.0857,
+      4.981,
+      5.2161
+     ],
+     [
+      "L5-CORNER-SIDE-Z/MC-C",
+      10.4763,
+      2.3526,
+      3.201
+     ],
+     [
+      "G1-POD-LIFT/MC-C",
+      -0.6252,
+      0.0,
+      -12.922
+     ],
+     [
+      "G2-HANG-MOTOR/MC-C",
+      -0.2556,
+      -9.3032,
+      -5.4544
+     ],
+     [
+      "G3-BENCH/MC-C",
+      -0.0,
+      0.0,
+      -10.7873
+     ],
+     [
+      "F1-PULLUP-VD/MC-P",
+      0.0,
+      -0.0,
+      -21.1548
+     ],
+     [
+      "F2-PULLUP-VA/MC-P",
+      0.0,
+      -0.0,
+      -21.1548
+     ],
+     [
+      "F3-PUSH-VD/MC-P",
+      -0.6854,
+      0.0,
+      7.4872
+     ],
+     [
+      "F4-GUST-POS/MC-P",
+      -0.0,
+      -0.0,
+      -21.1548
+     ],
+     [
+      "F5-GUST-NEG/MC-P",
+      -0.1102,
+      0.0,
+      8.3152
+     ],
+     [
+      "F6-ROLL-VD/MC-P",
+      -0.0,
+      3.3461,
+      -6.379
+     ],
+     [
+      "F7-ROLLPULL-VD/MC-P",
+      0.0,
+      3.3461,
+      -14.1032
+     ],
+     [
+      "F8-CRUISE/MC-P",
+      -0.0,
+      -0.0,
+      -6.379
+     ],
+     [
+      "H1-HOVER/MC-P",
+      6.379,
+      0.0,
+      0.0
+     ],
+     [
+      "H2-MAX-THRUST/MC-P",
+      20.5381,
+      -0.0,
+      -1.6965
+     ],
+     [
+      "H3-PITCH-UPPER/MC-P",
+      13.3295,
+      0.0,
+      8.4453
+     ],
+     [
+      "H4-PITCH-LOWER/MC-P",
+      7.2085,
+      -0.0,
+      -10.1419
+     ],
+     [
+      "H5-SIDE-RIGHT/MC-P",
+      10.269,
+      3.8599,
+      -0.8483
+     ],
+     [
+      "H6-DIAG-A/MC-P",
+      10.269,
+      -0.0717,
+      -0.8483
+     ],
+     [
+      "H7-DIAG-B/MC-P",
+      10.269,
+      0.0717,
+      -0.8483
+     ],
+     [
+      "H8-GUST-WING/MC-P",
+      4.6835,
+      0.0,
+      4.3308
+     ],
+     [
+      "H9-GUST-FINS/MC-P",
+      5.8857,
+      2.0548,
+      -0.0
+     ],
+     [
+      "T1-TRANSITION/MC-P",
+      19.3831,
+      -0.0,
+      -10.7015
+     ],
+     [
+      "T2-FLARE-UPPER/MC-P",
+      11.7141,
+      0.0,
+      -2.3766
+     ],
+     [
+      "T3-FLARE-LOWER/MC-P",
+      5.5931,
+      -0.0,
+      -20.9638
+     ],
+     [
+      "L1-LEVEL/MC-P",
+      41.4023,
+      -0.0,
+      -3.42
+     ],
+     [
+      "L2-PAIR-NARROW/MC-P",
+      21.1451,
+      0.0,
+      10.4306
+     ],
+     [
+      "L3-PAIR-WIDE/MC-P",
+      17.6935,
+      5.0936,
+      -1.4616
+     ],
+     [
+      "L4-CORNER-SIDE-Y/MC-P",
+      14.5446,
+      5.8586,
+      6.2487
+     ],
+     [
+      "L5-CORNER-SIDE-Z/MC-P",
+      12.5253,
+      2.5631,
+      4.2329
+     ],
+     [
+      "G1-POD-LIFT/MC-P",
+      -0.9494,
+      0.0,
+      -15.641
+     ],
+     [
+      "G2-HANG-MOTOR/MC-P",
+      -0.0432,
+      -10.9298,
+      -6.5804
+     ],
+     [
+      "G3-BENCH/MC-P",
+      -0.0,
+      -0.0,
+      -12.7579
+     ]
+    ],
+    "fc": 85.0,
+    "gd": [
+     0.001,
+     0.008
+    ],
+    "rec": [
+     0.003,
+     0.003,
+     0.0015,
+     0.008
+    ],
+    "pack": [
+     0.14,
+     0.048,
+     0.05
+    ],
+    "bw": 0.052,
+    "n": 2
+   }
+  },
+  {
+   "id": "CALC-C3-STRAPS",
+   "type": "calculation",
+   "title": "Straps (+z): loop tension, hook-and-loop overlap, tray and floor under the strap",
+   "script": "redesign/team/C3/pod_structures.py",
+   "function": "straps",
+   "equation": "per strap P = max(F_flight x SF x k_fit x k_print, F_crash) / n; leg T = P/2 + preload/(2n); overlap_req = T / (tau_hl w); tray flat-wise = P / (w_tray (w + 2 s)); front strap on the overhang: floor-to-wall glue line q = P / (2 (w + 2 s)), stress = q / t_board",
+   "inputs": {
+    "sf": "P:requirements.safety_factor_ult",
+    "kf": "ASM-C1-FITTING-FACTOR",
+    "kp": "ASM-C1-PRINTED-FACTOR",
+    "rows": "ASM-C3-PACK-LOADS",
+    "fc": "CL-C1-PACK-CRASH-LOAD",
+    "n": "ASM-D2-N-STRAPS",
+    "pre": "ASM-C1-STRAP-PRELOAD",
+    "hl": "ASM-C3-HL",
+    "bw": "ASM-D2-BAY-W",
+    "gd": "ASM-C3-GUIDE",
+    "s": "ASM-C3-SPREAD",
+    "tb": "P:fins.board_t_m"
+   },
+   "outputs": {
+    "F_n": 85.0,
+    "per_strap_n": 42.5,
+    "leg_t_n": 31.25,
+    "overlap_req_m": 0.03125,
+    "tray_flat_pa": 19675.925925925927,
+    "glue_line_pa": 110677.08333333334
+   },
+   "input_values": {
+    "sf": 1.5,
+    "kf": 1.15,
+    "kp": 1.25,
+    "rows": [
+     [
+      "F1-PULLUP-VD/MC-C",
+      0.0,
+      -0.0,
+      -17.8872
+     ],
+     [
+      "F2-PULLUP-VA/MC-C",
+      0.0,
+      -0.0,
+      -17.8872
+     ],
+     [
+      "F3-PUSH-VD/MC-C",
+      -0.6194,
+      0.0,
+      5.9755
+     ],
+     [
+      "F4-GUST-POS/MC-C",
+      -0.0,
+      -0.0,
+      -17.8872
+     ],
+     [
+      "F5-GUST-NEG/MC-C",
+      -0.1633,
+      0.0,
+      6.7564
+     ],
+     [
+      "F6-ROLL-VD/MC-C",
+      -0.0,
+      2.6308,
+      -5.3937
+     ],
+     [
+      "F7-ROLLPULL-VD/MC-C",
+      -0.0,
+      2.6308,
+      -11.9248
+     ],
+     [
+      "F8-CRUISE/MC-C",
+      -0.0,
+      -0.0,
+      -5.3937
+     ],
+     [
+      "H1-HOVER/MC-C",
+      5.3937,
+      0.0,
+      -0.0
+     ],
+     [
+      "H2-MAX-THRUST/MC-C",
+      17.2765,
+      0.0,
+      -1.9178
+     ],
+     [
+      "H3-PITCH-UPPER/MC-C",
+      11.0216,
+      -0.0,
+      7.1793
+     ],
+     [
+      "H4-PITCH-LOWER/MC-C",
+      6.2549,
+      0.0,
+      -9.0971
+     ],
+     [
+      "H5-SIDE-RIGHT/MC-C",
+      8.6382,
+      3.4671,
+      -0.9589
+     ],
+     [
+      "H6-DIAG-A/MC-C",
+      8.6382,
+      -0.0564,
+      -0.9589
+     ],
+     [
+      "H7-DIAG-B/MC-C",
+      8.6382,
+      0.0564,
+      -0.9589
+     ],
+     [
+      "H8-GUST-WING/MC-C",
+      3.9601,
+      0.0,
+      3.6619
+     ],
+     [
+      "H9-GUST-FINS/MC-C",
+      4.9766,
+      1.6954,
+      0.0
+     ],
+     [
+      "T1-TRANSITION/MC-C",
+      16.3891,
+      -0.0,
+      -9.0486
+     ],
+     [
+      "T2-FLARE-UPPER/MC-C",
+      9.7546,
+      -0.0,
+      -1.5603
+     ],
+     [
+      "T3-FLARE-LOWER/MC-C",
+      4.9878,
+      0.0,
+      -17.8367
+     ],
+     [
+      "L1-LEVEL/MC-C",
+      34.8273,
+      0.0,
+      -3.866
+     ],
+     [
+      "L2-PAIR-NARROW/MC-C",
+      17.5434,
+      -0.0,
+      8.7711
+     ],
+     [
+      "L3-PAIR-WIDE/MC-C",
+      14.8836,
+      4.5753,
+      -1.6521
+     ],
+     [
+      "L4-CORNER-SIDE-Y/MC-C",
+      12.0857,
+      4.981,
+      5.2161
+     ],
+     [
+      "L5-CORNER-SIDE-Z/MC-C",
+      10.4763,
+      2.3526,
+      3.201
+     ],
+     [
+      "G1-POD-LIFT/MC-C",
+      -0.6252,
+      0.0,
+      -12.922
+     ],
+     [
+      "G2-HANG-MOTOR/MC-C",
+      -0.2556,
+      -9.3032,
+      -5.4544
+     ],
+     [
+      "G3-BENCH/MC-C",
+      -0.0,
+      0.0,
+      -10.7873
+     ],
+     [
+      "F1-PULLUP-VD/MC-P",
+      0.0,
+      -0.0,
+      -21.1548
+     ],
+     [
+      "F2-PULLUP-VA/MC-P",
+      0.0,
+      -0.0,
+      -21.1548
+     ],
+     [
+      "F3-PUSH-VD/MC-P",
+      -0.6854,
+      0.0,
+      7.4872
+     ],
+     [
+      "F4-GUST-POS/MC-P",
+      -0.0,
+      -0.0,
+      -21.1548
+     ],
+     [
+      "F5-GUST-NEG/MC-P",
+      -0.1102,
+      0.0,
+      8.3152
+     ],
+     [
+      "F6-ROLL-VD/MC-P",
+      -0.0,
+      3.3461,
+      -6.379
+     ],
+     [
+      "F7-ROLLPULL-VD/MC-P",
+      0.0,
+      3.3461,
+      -14.1032
+     ],
+     [
+      "F8-CRUISE/MC-P",
+      -0.0,
+      -0.0,
+      -6.379
+     ],
+     [
+      "H1-HOVER/MC-P",
+      6.379,
+      0.0,
+      0.0
+     ],
+     [
+      "H2-MAX-THRUST/MC-P",
+      20.5381,
+      -0.0,
+      -1.6965
+     ],
+     [
+      "H3-PITCH-UPPER/MC-P",
+      13.3295,
+      0.0,
+      8.4453
+     ],
+     [
+      "H4-PITCH-LOWER/MC-P",
+      7.2085,
+      -0.0,
+      -10.1419
+     ],
+     [
+      "H5-SIDE-RIGHT/MC-P",
+      10.269,
+      3.8599,
+      -0.8483
+     ],
+     [
+      "H6-DIAG-A/MC-P",
+      10.269,
+      -0.0717,
+      -0.8483
+     ],
+     [
+      "H7-DIAG-B/MC-P",
+      10.269,
+      0.0717,
+      -0.8483
+     ],
+     [
+      "H8-GUST-WING/MC-P",
+      4.6835,
+      0.0,
+      4.3308
+     ],
+     [
+      "H9-GUST-FINS/MC-P",
+      5.8857,
+      2.0548,
+      -0.0
+     ],
+     [
+      "T1-TRANSITION/MC-P",
+      19.3831,
+      -0.0,
+      -10.7015
+     ],
+     [
+      "T2-FLARE-UPPER/MC-P",
+      11.7141,
+      0.0,
+      -2.3766
+     ],
+     [
+      "T3-FLARE-LOWER/MC-P",
+      5.5931,
+      -0.0,
+      -20.9638
+     ],
+     [
+      "L1-LEVEL/MC-P",
+      41.4023,
+      -0.0,
+      -3.42
+     ],
+     [
+      "L2-PAIR-NARROW/MC-P",
+      21.1451,
+      0.0,
+      10.4306
+     ],
+     [
+      "L3-PAIR-WIDE/MC-P",
+      17.6935,
+      5.0936,
+      -1.4616
+     ],
+     [
+      "L4-CORNER-SIDE-Y/MC-P",
+      14.5446,
+      5.8586,
+      6.2487
+     ],
+     [
+      "L5-CORNER-SIDE-Z/MC-P",
+      12.5253,
+      2.5631,
+      4.2329
+     ],
+     [
+      "G1-POD-LIFT/MC-P",
+      -0.9494,
+      0.0,
+      -15.641
+     ],
+     [
+      "G2-HANG-MOTOR/MC-P",
+      -0.0432,
+      -10.9298,
+      -6.5804
+     ],
+     [
+      "G3-BENCH/MC-P",
+      -0.0,
+      -0.0,
+      -12.7579
+     ]
+    ],
+    "fc": 85.0,
+    "n": 2,
+    "pre": 40.0,
+    "hl": [
+     5.0,
+     2.5
+    ],
+    "bw": 0.052,
+    "gd": [
+     0.001,
+     0.008
+    ],
+    "s": 0.01,
+    "tb": 0.0048
+   }
+  },
+  {
+   "id": "CALC-C3-OVERHANG",
+   "type": "calculation",
+   "title": "Pod overhang ahead of the wing LE: section at x = 0",
+   "script": "redesign/team/C3/pod_structures.py",
+   "function": "overhang",
+   "equation": "M = n g [m_pack,ahead x_bar + sum m_i |x_i|] (pack uniform over its length at the forward stop); section = foam-board faces only: 2 side walls (2 faces t_f x h_w) + floor bottom face (strap groove cuts the top face); tray left out (strap slot at x 0); sigma_top = M c / I",
+   "inputs": {
+    "sf": "P:requirements.safety_factor_ult",
+    "kf": "ASM-C1-FITTING-FACTOR",
+    "kp": "ASM-C1-PRINTED-FACTOR",
+    "n_lim": "CL-C1-N-LIMIT-POS",
+    "nc": "CL-C1-CRASH-N",
+    "pack_rng": "ASM-A3-PACK-RANGE",
+    "pack": "P:battery.size_m",
+    "px": "CL-D2-PACK-X-FWD",
+    "items": "ASM-C3-OVERHANG-ITEMS",
+    "W": "ASM-D2-POD-WIDTH",
+    "H": "P:pod.size_m",
+    "tb": "P:fins.board_t_m",
+    "tf": "ASM-C4-FACE-T",
+    "g": "P:env.g_ms2"
+   },
+   "outputs": {
+    "M_unit_nm_per_g": 0.28275469114599994,
+    "I_m4": 1.8449535333333343e-08,
+    "c_m": 0.04345,
+    "n_design": 7.150860056608275,
+    "sigma_design_pa": 4761814.203682876,
+    "sigma_crash_pa": 8487963.525095047
+   },
+   "input_values": {
+    "sf": 1.5,
+    "kf": 1.15,
+    "kp": 1.25,
+    "n_lim": 3.3163408958183305,
+    "nc": 12.746452662224103,
+    "pack_rng": [
+     503.0,
+     680.0
+    ],
+    "pack": [
+     0.14,
+     0.048,
+     0.05
+    ],
+    "px": -0.03019999999999999,
+    "items": [
+     [
+      35.0,
+      -0.05
+     ],
+     [
+      30.0,
+      -0.075
+     ],
+     [
+      15.0,
+      -0.03
+     ]
+    ],
+    "W": 0.14,
+    "H": [
+     0.2,
+     0.1,
+     0.07
+    ],
+    "tb": 0.0048,
+    "tf": 0.0001,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CALC-C3-HANDLE",
+   "type": "calculation",
+   "title": "Carry handle on the spar (G1, whole aircraft at 2 g)",
+   "script": "redesign/team/C3/pod_structures.py",
+   "function": "handle",
+   "equation": "F = m_gate g n_h x SF x k_fit x k_print; ties: F vs n x rating; grip: uniform hand load over the leg span s = 2 y_leg, M = F s / 8, sigma = 6 M / (b h^2)",
+   "inputs": {
+    "sf": "P:requirements.safety_factor_ult",
+    "kf": "ASM-C1-FITTING-FACTOR",
+    "kp": "ASM-C1-PRINTED-FACTOR",
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "nh": "ASM-C1-HANDLING-N",
+    "tie": "ASM-D2-TIE-CAP",
+    "nt": "ASM-D2-N-TIES",
+    "grip": "ASM-C3-GRIP"
+   },
+   "outputs": {
+    "F_design_n": 109.95706312499999,
+    "tie_cap_n": 444.0,
+    "sigma_grip_pa": 7009762.77421875
+   },
+   "input_values": {
+    "sf": 1.5,
+    "kf": 1.15,
+    "kp": 1.25,
+    "m": 2.6,
+    "g": 9.80665,
+    "nh": 2.0,
+    "tie": 222.0,
+    "nt": 2,
+    "grip": [
+     0.01,
+     0.008,
+     0.034
+    ]
+   }
+  },
+  {
+   "id": "CALC-C3-HATCH",
+   "type": "calculation",
+   "title": "Hatch suction at VD",
+   "script": "redesign/team/C3/pod_structures.py",
+   "function": "hatch",
+   "equation": "F = |Cp| q_VD A_hatch x SF x k_fit; aft half on the hook-and-loop tab: sigma = F/2 / A_tab",
+   "inputs": {
+    "q": "CL-C1-Q-VD",
+    "cp": "ASM-C3-CP-HATCH",
+    "ht": "ASM-C3-HATCH",
+    "sf": "P:requirements.safety_factor_ult",
+    "kf": "ASM-C1-FITTING-FACTOR"
+   },
+   "outputs": {
+    "F_design_n": 17.547663559047233,
+    "tab_n_per_cm2": 2.437175494312116
+   },
+   "input_values": {
+    "q": 453.56512328138564,
+    "cp": -1.0,
+    "ht": [
+     0.1602,
+     0.14,
+     0.012,
+     0.03
+    ],
+    "sf": 1.5,
+    "kf": 1.15
+   }
+  },
+  {
+   "id": "CALC-C3-MASS",
+   "type": "calculation",
+   "title": "Pod mass with the C3 changes",
+   "script": "redesign/team/C3/pod_structures.py",
+   "function": "mass",
+   "equation": "dm = rho (dt_aft h b + t_fwd h b + 2 dt_guide h_g L_bay) ; m = CL-D2-MASS + dm",
+   "inputs": {
+    "m0": "CL-D2-MASS",
+    "rho": "ASM-C4-PETG-RHO",
+    "rec": "ASM-C3-REC",
+    "t0": "ASM-D2-STOP-T",
+    "gd": "ASM-C3-GUIDE",
+    "h": "ASM-C3-STOP-H",
+    "bw": "ASM-D2-BAY-W",
+    "bay": "CL-D2-BAY-L"
+   },
+   "outputs": {
+    "dm_g": 9.521317000000002,
+    "mass_g": 109.921317
+   },
+   "input_values": {
+    "m0": 100.4,
+    "rho": 1270.0,
+    "rec": [
+     0.003,
+     0.003,
+     0.0015,
+     0.008
+    ],
+    "t0": 0.0015,
+    "gd": [
+     0.001,
+     0.008
+    ],
+    "h": 0.025,
+    "bw": 0.052,
+    "bay": 0.1637
+   }
+  },
+  {
+   "id": "CL-C3-BOND-R-DESIGN",
+   "type": "claim",
+   "title": "Pod-to-wing bond interaction, flight/ground envelope (design)",
+   "calc": "CALC-C3-BOND",
+   "output": "R_design",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "POD-001",
+    "WNG-001"
+   ],
+   "how": "T-C3-BOND-COUPON (allowables) then T-C3-POD-PROOF (built pod, 1.5 x limit).",
+   "note": "footprint is the LE filler + recess floor only (x 0 ... recess end, full width); walls left out",
+   "value": 0.6481457657967032
+  },
+  {
+   "id": "CL-C3-BOND-SIGMA-DESIGN",
+   "type": "claim",
+   "title": "Pod-to-wing bond peak tension (design)",
+   "calc": "CALC-C3-BOND",
+   "output": "sigma_design_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-D2-XPS-ALLOW"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "POD-001",
+    "WNG-001"
+   ],
+   "how": "As CL-C3-BOND-R-DESIGN.",
+   "value": 45658.35679945054
+  },
+  {
+   "id": "CL-C3-BOND-R-CRASH",
+   "type": "claim",
+   "title": "Pod-to-wing bond interaction, 12.75 g crash any axis",
+   "calc": "CALC-C3-BOND",
+   "output": "R_crash",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-001",
+    "WNG-001"
+   ],
+   "how": "T-C3-POD-PROOF: crash-direction pulls on the built pod with a 680 g dummy pack.",
+   "value": 0.7617100591715975
+  },
+  {
+   "id": "CL-C3-POD-GROUP-MASS",
+   "type": "claim",
+   "title": "Pod group mass, heaviest pack (crash case)",
+   "calc": "CALC-C3-BOND",
+   "output": "group_mass_kg",
+   "unit": "kg",
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Weigh the pod group with the 680 g listing pack.",
+   "value": 0.9004
+  },
+  {
+   "id": "CL-C3-AFT-STOP-D2",
+   "type": "claim",
+   "title": "Aft stop 1.5 mm (D2): root bending stress, design",
+   "calc": "CALC-C3-STOPS",
+   "output": "sigma_aft_d2_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-PETG-TENSILE"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-002"
+   ],
+   "how": "T-C3-STOP-PUSH on a printed tray: 89 N on a 680 g-pack-size block at 12 mm height.",
+   "value": 55107228.00925926
+  },
+  {
+   "id": "CL-C3-AFT-STOP-T-REQ",
+   "type": "claim",
+   "title": "Aft stop thickness required",
+   "calc": "CALC-C3-STOPS",
+   "output": "t_req_m",
+   "unit": "m",
+   "parts": [
+    "POD-002"
+   ],
+   "how": "Recompute after T-C3-STOP-PUSH sets the printed-PETG allowable.",
+   "value": 0.00287507986000196
+  },
+  {
+   "id": "CL-C3-AFT-STOP-REC",
+   "type": "claim",
+   "title": "Aft stop 3.0 mm (C3): root bending stress, design",
+   "calc": "CALC-C3-STOPS",
+   "output": "sigma_aft_rec_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-PETG-TENSILE"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-002"
+   ],
+   "how": "T-C3-STOP-PUSH.",
+   "value": 13776807.002314815
+  },
+  {
+   "id": "CL-C3-NOSE-WALL-M",
+   "type": "claim",
+   "title": "Foam-board nose wall as the forward stop: moment needed per mm (85 N crash)",
+   "calc": "CALC-C3-STOPS",
+   "output": "nose_m_req_nmm_per_mm",
+   "unit": "N mm/mm",
+   "limit": {
+    "op": "<=",
+    "value": 4.7
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Push a pack-size block into a built nose wall to 85 N; expect failure (C3 replaces it).",
+   "note": "limit = capacity sigma_f t_f (t - t_f) = 10 MPa x 0.1 x 4.7 mm from ASM-C4-FACE-*",
+   "value": 45.220000000000006
+  },
+  {
+   "id": "CL-C3-FWD-STOP-REC",
+   "type": "claim",
+   "title": "Forward stop 3.0 mm printed with the tray (C3): root bending stress",
+   "calc": "CALC-C3-STOPS",
+   "output": "sigma_fwd_rec_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-PETG-TENSILE"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-002"
+   ],
+   "how": "T-C3-STOP-PUSH in -x.",
+   "value": 13117283.950617284
+  },
+  {
+   "id": "CL-C3-GUIDE-D2",
+   "type": "claim",
+   "title": "Bay guide 1.0 mm (D2): bending stress, lateral crash",
+   "calc": "CALC-C3-GUIDES",
+   "output": "sigma_d2_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-PETG-TENSILE"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-002"
+   ],
+   "how": "T-C3-STOP-PUSH sideways, 85 N along the guide.",
+   "value": 14571428.571428573
+  },
+  {
+   "id": "CL-C3-GUIDE-REC",
+   "type": "claim",
+   "title": "Bay guide 1.5 mm (C3): bending stress, lateral crash",
+   "calc": "CALC-C3-GUIDES",
+   "output": "sigma_rec_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-PETG-TENSILE"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-002"
+   ],
+   "how": "T-C3-STOP-PUSH sideways.",
+   "value": 6476190.476190476
+  },
+  {
+   "id": "CL-C3-STRAP-LEG",
+   "type": "claim",
+   "title": "Strap leg tension, +z crash incl. preload",
+   "calc": "CALC-C3-STRAPS",
+   "output": "leg_t_n",
+   "unit": "N",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-D2-STRAP-CAP"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-004"
+   ],
+   "how": "T-D2-STRAP-PULL (one loop to 2 x 85 N covers it).",
+   "value": 31.25
+  },
+  {
+   "id": "CL-C3-STRAP-OVERLAP-REQ",
+   "type": "claim",
+   "title": "Hook-and-loop overlap needed per strap",
+   "calc": "CALC-C3-STRAPS",
+   "output": "overlap_req_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C3-STRAP-OVERLAP"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-004"
+   ],
+   "how": "T-D2-STRAP-PULL with the 50 mm overlap marked.",
+   "value": 0.03125
+  },
+  {
+   "id": "CL-C3-TRAY-FLAT",
+   "type": "claim",
+   "title": "Tray-to-floor bond flat-wise tension under one strap",
+   "calc": "CALC-C3-STRAPS",
+   "output": "tray_flat_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C3-FB-FLAT"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-002",
+    "POD-001"
+   ],
+   "how": "T-C3-BOND-COUPON flat-wise on board.",
+   "value": 19675.925925925927
+  },
+  {
+   "id": "CL-C3-FLOOR-GLUE",
+   "type": "claim",
+   "title": "Floor-to-side-wall glue line under the front strap (overhang)",
+   "calc": "CALC-C3-STRAPS",
+   "output": "glue_line_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-D5-BOND-TAU"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-001"
+   ],
+   "how": "T-C3-POD-PROOF +z pull.",
+   "value": 110677.08333333334
+  },
+  {
+   "id": "CL-C3-OVERHANG-DESIGN",
+   "type": "claim",
+   "title": "Overhang root (x = 0) wall-top face stress, flight design",
+   "calc": "CALC-C3-OVERHANG",
+   "output": "sigma_design_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-FACE-SIGMA"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "POD-001"
+   ],
+   "how": "T-C3-POD-PROOF: wing held at the spar, 7.3 x pack weight down on the pack.",
+   "value": 4761814.203682876
+  },
+  {
+   "id": "CL-C3-OVERHANG-CRASH",
+   "type": "claim",
+   "title": "Overhang root (x = 0) wall-top face stress, 12.75 g crash",
+   "calc": "CALC-C3-OVERHANG",
+   "output": "sigma_crash_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-FACE-SIGMA"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-001"
+   ],
+   "how": "T-C3-POD-PROOF to 12.75 x pack weight.",
+   "value": 8487963.525095047
+  },
+  {
+   "id": "CL-C3-HANDLE-TIES",
+   "type": "claim",
+   "title": "Carry-handle design load (G1) vs 2 spar ties",
+   "calc": "CALC-C3-HANDLE",
+   "output": "F_design_n",
+   "unit": "N",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C3-HANDLE-TIE-CAP"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "POD-007",
+    "WNG-002"
+   ],
+   "how": "T-D2-HANDLE-PULL (120 N, 10 s) proves 1.1 x this.",
+   "value": 109.95706312499999
+  },
+  {
+   "id": "CL-C3-HANDLE-TIE-CAP",
+   "type": "claim",
+   "title": "Spar ties capacity (2 x 222 N)",
+   "calc": "CALC-C3-HANDLE",
+   "output": "tie_cap_n",
+   "unit": "N",
+   "parts": [
+    "POD-007"
+   ],
+   "how": "Tie catalogue rating; T-D2-HANDLE-PULL.",
+   "value": 444.0
+  },
+  {
+   "id": "CL-C3-GRIP",
+   "type": "claim",
+   "title": "Carry-handle grip bending stress (along raster)",
+   "calc": "CALC-C3-HANDLE",
+   "output": "sigma_grip_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C3-PETG-INPLANE"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "POD-007"
+   ],
+   "how": "T-D2-HANDLE-PULL; print the handle lying flat so the grip runs along the layers.",
+   "value": 7009762.77421875
+  },
+  {
+   "id": "CL-C3-HATCH-TAB",
+   "type": "claim",
+   "title": "Hatch latch tab tension at VD suction (design)",
+   "calc": "CALC-C3-HATCH",
+   "output": "tab_n_per_cm2",
+   "unit": "N/cm2",
+   "limit": {
+    "op": "<=",
+    "value": 2.5
+   },
+   "parts": [
+    "POD-003"
+   ],
+   "how": "Spring scale on the closed hatch centre: >= 2 x F_design/2 before it opens.",
+   "note": "limit = ASM-C3-HL flat-wise 2.5 N/cm2",
+   "value": 2.437175494312116
+  },
+  {
+   "id": "CL-C3-POD-MASS-REC",
+   "type": "claim",
+   "title": "Pod mass with the C3 changes (stops, guides)",
+   "calc": "CALC-C3-MASS",
+   "output": "mass_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mass.allocation_g.pod"
+   },
+   "verifies": [
+    "R-MASS-ALLOC"
+   ],
+   "parts": [
+    "POD-002"
+   ],
+   "how": "T-D2-WEIGH.",
+   "value": 109.921317
+  },
+  {
+   "id": "T-C3-BOND-COUPON",
+   "type": "test",
+   "title": "Bond coupons: epoxy on F-250 and on paper-faced board",
+   "verifies": [
+    "CL-C3-BOND-SIGMA-DESIGN",
+    "CL-C3-BOND-R-DESIGN",
+    "CL-C3-TRAY-FLAT",
+    "CL-C3-FLOOR-GLUE"
+   ],
+   "state": "planned",
+   "procedure": "Build epoxy, 24 h cure. Three 50 x 50 mm PETG pads on F-250 offcut and three on board: flat-wise pull to failure (spring scale or luggage scale). Three 25 x 50 mm lap shears on F-250. Record failure load and mode (foam / paper / adhesive). Allowable = mean - 2 s, foam or paper failure required."
+  },
+  {
+   "id": "T-C3-STOP-PUSH",
+   "type": "test",
+   "title": "Printed stop wall and guide push test",
+   "verifies": [
+    "CL-C3-AFT-STOP-REC",
+    "CL-C3-FWD-STOP-REC",
+    "CL-C3-GUIDE-REC"
+   ],
+   "state": "planned",
+   "procedure": "Print a 60 mm tray offcut with a 3.0 mm stop wall and 1.5 mm guides, same settings as flight. Push a 50 x 50 mm block at 12 mm height to 90 N (stop) and 85 N spread over 60 mm (guide); no crack, set < 0.5 mm. Then to failure once to learn the allowable."
+  },
+  {
+   "id": "T-C3-POD-PROOF",
+   "type": "test",
+   "title": "Built pod on the wing: proof loads with a 680 g dummy pack",
+   "verifies": [
+    "CL-C3-BOND-R-CRASH",
+    "CL-C3-OVERHANG-DESIGN",
+    "CL-C3-OVERHANG-CRASH",
+    "CL-C3-FLOOR-GLUE"
+   ],
+   "state": "planned",
+   "procedure": "Wing on its spar ends. Dummy pack (680 g, pack size) strapped in. Pull the dummy pack with a luggage scale at 1.5 x the design value to the slowest-failing direction: down (overhang) 64 N, up 85 N, aft 85 N, sideways 85 N, 10 s each; inspect the bond edges, nose and wall tops for creases."
+  }
+ ]
+}

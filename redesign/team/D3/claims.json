@@ -1,0 +1,638 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/D3/fins_calcs.py",
+ "params": [
+  "../../params/params.json",
+  "../../subsystems/fins/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-D3-SKIN-Z-SPAR",
+   "type": "assumption",
+   "title": "Skin height over the spar 22.6 mm",
+   "text": "Upper surface at x 0.080 (anchor seat)",
+   "basis": "S5010 at x/c 0.25 (k09kit.surface_z, subsystems/wing/s5010.dat)",
+   "value": 0.0226,
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-D3-XPS-TENSILE",
+   "type": "assumption",
+   "title": "XPS tensile 0.25 MPa",
+   "text": "Through-thickness tensile strength of F-250 under a fillet",
+   "basis": "not on the TDS; typical XPS 0.2-0.4 MPa; coupon T-D3-ROOT",
+   "value": 250000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-D3-ROOT-LEFF",
+   "type": "assumption",
+   "title": "Root joint effective length 0.15 m",
+   "text": "Root length that reacts a foot side load at the TE tip",
+   "basis": "~55 % of the 0.26 m root; load enters at the aft end",
+   "value": 0.15,
+   "unit": "m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-D3-ROOT-SHARE",
+   "type": "assumption",
+   "title": "Root carries 50 % of the foot side load",
+   "text": "Share of the L4 side load at the foot reacted by the root fillets; the rest goes up the CF edge strips to the station collar and brace",
+   "basis": "C4 static FE: edge strips carry the L4 side load to the tube (ASM-C4-EDGE-W note); 0.5 is conservative",
+   "value": 0.5,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-D3-FILLET-LEG",
+   "type": "assumption",
+   "title": "Root fillet leg 12 mm",
+   "text": "Microballoon-epoxy fillet leg on the skin, each side",
+   "basis": "BUILD.md step 10",
+   "value": 0.012,
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-D3-WASH",
+   "type": "assumption",
+   "title": "Slipstream radius 0.71 R",
+   "text": "Fully contracted hover slipstream radius = R / sqrt 2",
+   "basis": "momentum theory",
+   "value": 0.7071,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-D3-HUB",
+   "type": "assumption",
+   "title": "Hub dead zone 0.2 R",
+   "text": "Inner radius below which the wash is weak",
+   "basis": "11 in MR prop hub 16.5 mm + root cut-out",
+   "value": 0.2,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-D3-MOUNT-SLIP",
+   "type": "calculation",
+   "title": "Motor-mount slip clamp: the D-23 fuse",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "mount_slip",
+   "equation": "side force at the can that turns the collar F = T / (x_tube - x_can_mid); root moment = F z_m (brace ignored: conservative); hold ratio = T / (M_mount,ult ff pf); bolt clamp N = T / (mu pi r)",
+   "inputs": {
+    "T": "P:fin_detail.mount.slip_torque_nm",
+    "xt": "P:fins.tube.x_m",
+    "od": "P:fins.tube.od_m",
+    "gap": "P:fin_detail.bond_gap_m",
+    "wall": "P:fin_detail.mount.collar_wall_m",
+    "ahead": "P:fin_detail.mount.face_ahead_m",
+    "can": "P:propulsion.motor_length_m",
+    "stack": "P:fin_detail.mount.prop_stack_m",
+    "zm": "P:propulsion.stations.z_m",
+    "M_mount": "CL-C1-MOUNT-M-ULT",
+    "ff": "ASM-C1-FITTING-FACTOR",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "M_joint": "CL-C1-FINJOINT-M-DESIGN",
+    "mu": "P:fin_detail.mount.mu_petg_cf"
+   },
+   "outputs": {
+    "F_side": 93.80863039399624,
+    "F_hub": 47.03668861712135,
+    "M_root": 17.823639774859284,
+    "fuse_ratio": 1.1377531195309802,
+    "hold_ratio": 2.049634580210593,
+    "F_axial": 227.27272727272728,
+    "clamp_n": 241.1438531695384
+   },
+   "input_values": {
+    "T": 2.5,
+    "xt": 0.045,
+    "od": 0.022,
+    "gap": 0.00015,
+    "wall": 0.002,
+    "ahead": 0.001,
+    "can": 0.025,
+    "stack": 0.039,
+    "zm": 0.19,
+    "M_mount": 0.8485075591395999,
+    "ff": 1.15,
+    "pf": 1.25,
+    "M_joint": 20.27890175524261,
+    "mu": 0.3
+   }
+  },
+  {
+   "id": "CALC-D3-PROP-GAP",
+   "type": "calculation",
+   "title": "Prop plane to the nearest structure behind it",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "prop_gap",
+   "equation": "gap = collar front - prop plane = face_ahead + stack; required 0.14 D (B4 CR-B4-04)",
+   "inputs": {
+    "ahead": "P:fin_detail.mount.face_ahead_m",
+    "stack": "P:fin_detail.mount.prop_stack_m",
+    "D": "P:propulsion.prop_diameter_m",
+    "xt": "P:fins.tube.x_m",
+    "od": "P:fins.tube.od_m",
+    "gap": "P:fin_detail.bond_gap_m",
+    "wall": "P:fin_detail.mount.collar_wall_m"
+   },
+   "outputs": {
+    "gap": 0.04,
+    "ratio": 1.0225994477962983,
+    "x_prop": -0.008150000000000004,
+    "x_face": 0.030849999999999995,
+    "tube_gap": 0.04215000000000001
+   },
+   "input_values": {
+    "ahead": 0.001,
+    "stack": 0.039,
+    "D": 0.2794,
+    "xt": 0.045,
+    "od": 0.022,
+    "gap": 0.00015,
+    "wall": 0.002
+   }
+  },
+  {
+   "id": "CALC-D3-SCREW-ENGAGE",
+   "type": "calculation",
+   "title": "Motor screw thread engagement on the canted face",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "screw_engage",
+   "equation": "engagement = L_screw - (plate + pad + tan(cant) max|t . hole|), t = tangential unit vector",
+   "inputs": {
+    "Ls": "P:fin_detail.mount.motor_screw_len_m",
+    "tp": "P:fin_detail.mount.plate_t_m",
+    "hp": "P:fin_detail.mount.pad_h_m",
+    "pat": "P:fin_detail.mount.bolt_pattern_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "ym": "P:propulsion.stations.y_m",
+    "zm": "P:propulsion.stations.z_m"
+   },
+   "outputs": {
+    "engage": 0.0030719007625085283,
+    "stack_max": 0.004928099237491472
+   },
+   "input_values": {
+    "Ls": 0.008,
+    "tp": 0.0025,
+    "hp": 0.002,
+    "pat": [
+     0.016,
+     0.019
+    ],
+    "cant": 3.0,
+    "ym": 0.32,
+    "zm": 0.19
+   }
+  },
+  {
+   "id": "CALC-D3-ESC-WASH",
+   "type": "calculation",
+   "title": "ESC pad inside the hover slipstream",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "esc_wash",
+   "equation": "pad radial extent from the motor axis r = |z_m - z_pad| -/+ h/2 inside [hub R, wash R]",
+   "inputs": {
+    "zm": "P:propulsion.stations.z_m",
+    "zp": "P:fin_detail.esc_pad.z_m",
+    "h": "P:fin_detail.esc_pad.h_m",
+    "D": "P:propulsion.prop_diameter_m",
+    "wash": "ASM-D3-WASH",
+    "hub": "ASM-D3-HUB"
+   },
+   "outputs": {
+    "r_out_frac": 0.8706051019281172,
+    "r_in_over_hub": 2.075876879026486
+   },
+   "input_values": {
+    "zm": 0.19,
+    "zp": 0.118,
+    "h": 0.028,
+    "D": 0.2794,
+    "wash": 0.7071,
+    "hub": 0.2
+   }
+  },
+  {
+   "id": "CALC-D3-ROOT",
+   "type": "calculation",
+   "title": "Half-fin root fillet joint, foot side load",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "root",
+   "equation": "M = share mu F_foot pf h; fillet couple capacity M_cap = sigma_xps leg L_eff (t_fin + leg)",
+   "inputs": {
+    "F": "CL-C1-FOOT-F-ULT",
+    "mu": "ASM-C1-FRICTION",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "hh": "P:fins.half_height_m",
+    "tb": "P:fins.board_t_m",
+    "n": "P:fin_detail.layers",
+    "share": "ASM-D3-ROOT-SHARE",
+    "leg": "ASM-D3-FILLET-LEG",
+    "Leff": "ASM-D3-ROOT-LEFF",
+    "sx": "ASM-D3-XPS-TENSILE"
+   },
+   "outputs": {
+    "M": 3.363066814917207,
+    "rf_fillet": 2.2479482020597663
+   },
+   "input_values": {
+    "F": 56.64112530386875,
+    "mu": 0.5,
+    "pf": 1.25,
+    "hh": 0.19,
+    "tb": 0.0048,
+    "n": 1,
+    "share": 0.5,
+    "leg": 0.012,
+    "Leff": 0.15,
+    "sx": 250000.0
+   }
+  },
+  {
+   "id": "CALC-D3-BRACE",
+   "type": "calculation",
+   "title": "Brace geometry against C4's braced model",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "brace",
+   "equation": "ear point (x_t, y_f - r_collar - ear/2, z_sc_mid), anchor (x_s, y_a, z_skin + proud/2); Pcr ratio = (t/t_C4)^3 (L_C4 / L)^2 (pinned strip, buckles about its thin axis); lateral axial stiffness ratio = [t (dy/L)^2/L] / same for C4's strut (station - (od/2, od/2, dz) to (x_s, y_f - dy_C4, core/2 + 2 mm))",
+   "inputs": {
+    "L_tube": "P:fin_detail.tube_length_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "g_sc": "P:fin_detail.station_collar.gap_m",
+    "h_sc": "P:fin_detail.station_collar.height_m",
+    "zm": "P:propulsion.stations.z_m",
+    "xt": "P:fins.tube.x_m",
+    "yf": "P:fins.y_m",
+    "od": "P:fins.tube.od_m",
+    "gap": "P:fin_detail.bond_gap_m",
+    "wall": "P:fin_detail.station_collar.ring_wall_m",
+    "ear": "P:fin_detail.station_collar.ear_len_m",
+    "xs": "P:wing.spar.x_m",
+    "ya": "P:fin_detail.brace.anchor_y_m",
+    "zsk": "ASM-D3-SKIN-Z-SPAR",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "L_c4": "CL-C4-STRUT-LEN",
+    "dz_c4": "ASM-C4-STRUT-DZ",
+    "dy_c4": "ASM-C4-STRUT-DY",
+    "core_c4": "ASM-C4-CORE-T-TUBE",
+    "t": "P:fin_detail.brace.t_m",
+    "t_c4": "ASM-C4-STRUT-T"
+   },
+   "outputs": {
+    "L": 0.14477110381564406,
+    "pcr_ratio": 5.85304096669291,
+    "ky_ratio": 1.0466802890965279,
+    "attach_dz": 0.03650000000000003,
+    "attach_dz_ratio": 1.4600000000000013,
+    "L_c4_check": 0.19064954759977795
+   },
+   "input_values": {
+    "L_tube": 0.344,
+    "grip": 0.012,
+    "g_sc": 0.0005,
+    "h_sc": 0.012,
+    "zm": 0.19,
+    "xt": 0.045,
+    "yf": 0.32,
+    "od": 0.022,
+    "gap": 0.00015,
+    "wall": 0.0016,
+    "ear": 0.01,
+    "xs": 0.08,
+    "ya": 0.242,
+    "zsk": 0.0226,
+    "proud": 0.008,
+    "L_c4": 0.19064954759977798,
+    "dz_c4": 0.025,
+    "dy_c4": 0.12,
+    "core_c4": 0.027,
+    "t": 0.003,
+    "t_c4": 0.002
+   }
+  },
+  {
+   "id": "CL-D3-SLIP-FUSE",
+   "type": "claim",
+   "title": "Fin-joint design moment / root moment when the mount slips",
+   "calc": "CALC-D3-MOUNT-SLIP",
+   "output": "fuse_ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-CRASH-REPAIR"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL",
+    "FIN-004-R"
+   ],
+   "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 85 and 100 N",
+   "value": 1.1377531195309802
+  },
+  {
+   "id": "CL-D3-SLIP-HOLD",
+   "type": "claim",
+   "title": "Slip torque / mount design moment (holds in flight)",
+   "calc": "CALC-D3-MOUNT-SLIP",
+   "output": "hold_ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "T-D3-SLIP; witness line checked before every flight",
+   "value": 2.049634580210593
+  },
+  {
+   "id": "CL-D3-SLIP-F",
+   "type": "claim",
+   "title": "Side force at the motor can that turns the collar",
+   "calc": "CALC-D3-MOUNT-SLIP",
+   "output": "F_side",
+   "unit": "N",
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "T-D3-SLIP",
+   "value": 93.80863039399624
+  },
+  {
+   "id": "CL-D3-PROP-GAP",
+   "type": "claim",
+   "title": "Prop plane to collar front / B4 minimum 0.14 D",
+   "calc": "CALC-D3-PROP-GAP",
+   "output": "ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-PROP-CLEAR"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "Measure motor face to prop hub face on the built station; Fusion interference check",
+   "value": 1.0225994477962983
+  },
+  {
+   "id": "CL-D3-X-PROP",
+   "type": "claim",
+   "title": "Prop plane x with the D3 mount",
+   "calc": "CALC-D3-PROP-GAP",
+   "output": "x_prop",
+   "unit": "m",
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "CR-D3-04: A1 updates propulsion.stations.x_prop_plane_m (-0.005 -> this value)",
+   "value": -0.008150000000000004
+  },
+  {
+   "id": "CL-D3-X-FACE",
+   "type": "claim",
+   "title": "Motor face x at the axis (D3 mount)",
+   "calc": "CALC-D3-PROP-GAP",
+   "output": "x_face",
+   "unit": "m",
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "CR-D3-04: A1 notes the mount face in propulsion.stations.x_mount_m",
+   "value": 0.030849999999999995
+  },
+  {
+   "id": "CL-D3-SCREW-ENGAGE",
+   "type": "claim",
+   "title": "Motor-screw engagement, worst hole on the canted face",
+   "calc": "CALC-D3-SCREW-ENGAGE",
+   "output": "engage",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.003
+   },
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "Probe the motor screw-hole depth on arrival (CL-E1-SCREW-ENGAGE); count turns on assembly",
+   "note": "limit = requirements.thread_engagement_min 1.0 x d, d = 3 mm",
+   "value": 0.0030719007625085283
+  },
+  {
+   "id": "CL-D3-ESC-WASH",
+   "type": "claim",
+   "title": "ESC pad outer edge / slipstream radius",
+   "calc": "CALC-D3-ESC-WASH",
+   "output": "r_out_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-THERMAL"
+   ],
+   "parts": [
+    "FIN-007-UR"
+   ],
+   "how": "Tuft on the pad in a tethered hover; ESC temperature log in the E3 hover test",
+   "value": 0.8706051019281172
+  },
+  {
+   "id": "CL-D3-ESC-HUB",
+   "type": "claim",
+   "title": "ESC pad inner edge / hub dead zone",
+   "calc": "CALC-D3-ESC-WASH",
+   "output": "r_in_over_hub",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "FIN-007-UR"
+   ],
+   "how": "as CL-D3-ESC-WASH",
+   "value": 2.075876879026486
+  },
+  {
+   "id": "CL-D3-ROOT-FILLET-RF",
+   "type": "claim",
+   "title": "Half-fin root fillet joint reserve factor, foot side load",
+   "calc": "CALC-D3-ROOT",
+   "output": "rf_fillet",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "FIN-001-RU"
+   ],
+   "how": "T-D3-ROOT: side pull at the fin TE tip on a core offcut to 1.25 x 28 N, then to failure",
+   "value": 2.2479482020597663
+  },
+  {
+   "id": "CL-D3-BRACE-PCR",
+   "type": "claim",
+   "title": "Brace buckling load / C4's modelled brace",
+   "calc": "CALC-D3-BRACE",
+   "output": "pcr_ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-009-UR"
+   ],
+   "how": "C4 re-runs CALC-C4-STATIC-1L with CL-D3-BRACE-L (CR-D3-10)",
+   "value": 5.85304096669291
+  },
+  {
+   "id": "CL-D3-BRACE-KY",
+   "type": "claim",
+   "title": "Brace lateral axial stiffness / C4's modelled brace",
+   "calc": "CALC-D3-BRACE",
+   "output": "ky_ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "FIN-009-UR"
+   ],
+   "how": "C4 re-runs the modes with the D3 brace (CR-D3-10)",
+   "note": "anchor moved outboard to y 0.242 to clear D7's cradles; steeper brace, 10 x 3 strip restores the stiffness",
+   "value": 1.0466802890965279
+  },
+  {
+   "id": "CL-D3-BRACE-L",
+   "type": "claim",
+   "title": "Brace length, D3 geometry",
+   "calc": "CALC-D3-BRACE",
+   "output": "L",
+   "unit": "m",
+   "parts": [
+    "FIN-009-UR"
+   ],
+   "how": "Measure on the jig",
+   "value": 0.14477110381564406
+  },
+  {
+   "id": "CL-D3-BRACE-DZ",
+   "type": "claim",
+   "title": "Brace attach depth below the motor axis, D3 geometry",
+   "calc": "CALC-D3-BRACE",
+   "output": "attach_dz",
+   "unit": "m",
+   "parts": [
+    "FIN-008-UR"
+   ],
+   "how": "C4 re-runs the modes with this value (C4 assumed 25 mm; CR-D3-10)",
+   "note": "deeper than C4's 25 mm because the mount collar and its slip stroke sit directly under the motor",
+   "value": 0.03650000000000003
+  },
+  {
+   "id": "T-D3-SLIP",
+   "type": "test",
+   "title": "Mount slip setting",
+   "verifies": [
+    "CL-D3-SLIP-FUSE",
+    "CL-D3-SLIP-HOLD"
+   ],
+   "state": "planned",
+   "procedure": "luggage scale hooked on the motor can, pull along y; adjust the pinch bolt until the collar turns at 85-100 N"
+  },
+  {
+   "id": "T-D3-ROOT",
+   "type": "test",
+   "title": "Half-fin root side pull",
+   "verifies": [
+    "CL-D3-ROOT-FILLET-RF"
+   ],
+   "state": "planned",
+   "procedure": "half-fin bonded to a core offcut per BUILD step 10; pull at the TE tip along y to 35 N, then to failure"
+  },
+  {
+   "id": "T-D3-WEIGH",
+   "type": "test",
+   "title": "Weigh every fins part",
+   "verifies": [
+    "CL-D3-MASS"
+   ],
+   "state": "planned",
+   "procedure": "1 g scale; update mass_g and status VERIFIED"
+  },
+  {
+   "id": "CL-D3-MASS",
+   "type": "claim",
+   "title": "Fins subsystem flying mass (one-layer boards, CR-D3-02)",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mass.allocation_g.fins"
+   },
+   "verifies": [
+    "R-MASS-ALLOC"
+   ],
+   "parts": [
+    "FIN-001-RU"
+   ],
+   "how": "T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
+   "value": 364.5,
+   "note": "from make_fins.py (CAD volumes x densities); with two board layers it is about 396 g (CR-D3-02)"
+  }
+ ]
+}

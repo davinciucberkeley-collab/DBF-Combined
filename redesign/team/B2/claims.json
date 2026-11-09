@@ -12,7 +12,7 @@
    "title": "XFOIL 6.99 runs, team/B2/xfoil_wing.py",
    "kind": "web",
    "url": "https://web.mit.edu/drela/Public/web/xfoil/",
-   "where": "team/B2/out/xfoil_results.json; panels 220 (160/300 convergence), Ncrit 9, Re 2.0-4.0e5",
+   "where": "team/B2/out/xfoil_results.json; panels 220 (160/300 convergence), Ncrit 9, Re 2.0-4.5e5; design Re follow wing.chord_m (c 0.32 m: stall 2.6e5, cruise 3.5e5, dive 4.5e5)",
    "note": "not yet compared with wind-tunnel data at this Re; flight stall test T-B2-STALL closes it"
   },
   {
@@ -21,7 +21,7 @@
    "title": "AVL 3.52 runs, team/B2/avl_wing.py",
    "kind": "web",
    "url": "https://web.mit.edu/drela/Public/web/avl/",
-   "where": "team/B2/out/avl_results.json; 3 lattice levels, Xnp within 0.1 mm",
+   "where": "team/B2/out/avl_results.json; 3 lattice levels; geometry from params.json (A1-R2: wing 1.15 x 0.32 m, half-fins x 0.045..0.32 m, 0.275 m chord, +/-0.19 m)",
    "note": "props-off wing + flat-plate fins, no pod; not yet compared with flight data"
   },
   {
@@ -57,7 +57,7 @@
    "type": "assumption",
    "title": "Dive speed 1.3 x cruise",
    "text": "Elevon hinge moments are sized at 1.3 x cruise speed with full 25 deg travel",
-   "basis": "R-SERVO-TORQUE text (19.5 m/s at 15 m/s cruise)",
+   "basis": "R-SERVO-TORQUE text (1.3 x cruise; 20.8 m/s at the 16 m/s cruise)",
    "value": 1.3,
    "unit": "-",
    "status": "PROPOSED"
@@ -81,6 +81,16 @@
    "status": "PROPOSED"
   },
   {
+   "id": "ASM-B2-RE-TOL",
+   "type": "assumption",
+   "title": "Stall polars valid within 10 % of their Re",
+   "text": "XFOIL clmax and cm used at the stall are taken from polars within 10 % of the actual stall Re",
+   "basis": "S5010 clmax changes ~0.02 per 0.3e5 of Re in this band (Re 2.0-3.0e5 polars, xfoil_results.json)",
+   "value": 0.1,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
    "id": "CALC-B2-CLMAX",
    "type": "calculation",
    "title": "Trimmed CLmax, critical section",
@@ -96,65 +106,65 @@
     "ASM-B2-CLMAX-KD"
    ],
    "outputs": {
-    "CLmax_cs": 0.8036437246963563,
-    "CLmax_design": 0.8036437246963563
+    "CLmax_cs": 0.7977606717984604,
+    "CLmax_design": 0.7977606717984604
    },
    "input_values": {
     "cl_ratio": [
-     1.318,
-     1.306,
-     1.2971,
-     1.2844,
-     1.2596,
-     1.2369,
-     1.2162,
-     1.1964,
-     1.176,
-     1.1542,
-     1.1314,
-     1.1127,
-     1.1061,
-     1.1069,
-     1.0779,
-     1.0569,
-     1.0114,
-     0.9564,
-     0.893,
-     0.8188,
-     0.7282,
-     0.6199,
-     0.4988,
-     0.3786,
-     0.2815,
-     0.245
+     1.3185,
+     1.3068,
+     1.2981,
+     1.2861,
+     1.2626,
+     1.2405,
+     1.22,
+     1.1997,
+     1.1786,
+     1.1559,
+     1.1319,
+     1.1122,
+     1.1044,
+     1.1045,
+     1.0754,
+     1.055,
+     1.0104,
+     0.9555,
+     0.8916,
+     0.8165,
+     0.7253,
+     0.6165,
+     0.4955,
+     0.3756,
+     0.2788,
+     0.2421
     ],
     "clmax_local": [
-     1.2423,
-     1.2423,
-     1.2423,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.2423,
-     1.2423,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.0322,
-     1.2423
+     1.2563,
+     1.2563,
+     1.2563,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.2563,
+     1.2563,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.026,
+     1.2563
     ],
     "kd": 1.0
    }
@@ -173,7 +183,8 @@
     "b": "P:wing.span_m",
     "c": "P:wing.chord_m",
     "clmax": "CL-B2-CLMAX-DESIGN",
-    "k": "P:requirements.transition_factor"
+    "k": "P:requirements.transition_factor",
+    "re_x": "P:b2.xfoil.re_stall"
    },
    "units": {
     "m": "kg",
@@ -183,17 +194,112 @@
     "c": "m"
    },
    "outputs": {
-    "Vs_ms": 12.253287931037613,
-    "Vtr_ms": 15.929274310348898,
-    "Re_stall": 248377.4580615732
+    "Vs_ms": 11.907860674939258,
+    "Vtr_ms": 15.480218877421036,
+    "Re_stall": 257467.25783652448,
+    "Re_dev": 0.009741316013367363
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
     "b": 1.15,
-    "c": 0.3,
-    "clmax": 0.8036437246963563,
+    "c": 0.32,
+    "clmax": 0.7977606717984604,
+    "k": 1.3,
+    "re_x": 260000.0
+   }
+  },
+  {
+   "id": "CALC-B2-STALL-FWD",
+   "type": "calculation",
+   "title": "Stall speed at the forward CG limit",
+   "script": "redesign/team/B2/wing_claims.py",
+   "function": "stall_fwd",
+   "equation": "SM_fwd = SM_min + (x_aft - x_fwd)/c; CLmax_fwd = kd * interp(SM_fwd, CLmax(SM)); Vs = sqrt(2 m g / (rho b c CLmax_fwd))",
+   "inputs": {
+    "tab": "P:b2.avl.clmax_vs_sm",
+    "sm_min": "P:requirements.static_margin_min",
+    "xr": "P:cg.x_range_m",
+    "kd": "ASM-B2-CLMAX-KD",
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "b": "P:wing.span_m",
+    "c": "P:wing.chord_m",
+    "k": "P:requirements.transition_factor"
+   },
+   "units": {
+    "xr": "m",
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "b": "m",
+    "c": "m"
+   },
+   "assumes": [
+    "ASM-B2-CLMAX-KD"
+   ],
+   "outputs": {
+    "SM_fwd": 0.078125,
+    "CLmax_fwd": 0.7778312500000001,
+    "Vs_fwd_ms": 12.059446141718322,
+    "Vtr_fwd_ms": 15.677279984233818
+   },
+   "input_values": {
+    "tab": [
+     [
+      0.03,
+      0.8634
+     ],
+     [
+      0.04,
+      0.8289
+     ],
+     [
+      0.05,
+      0.7977
+     ],
+     [
+      0.06,
+      0.788
+     ],
+     [
+      0.07,
+      0.7823
+     ],
+     [
+      0.08,
+      0.7768
+     ],
+     [
+      0.09,
+      0.7714
+     ],
+     [
+      0.1,
+      0.766
+     ],
+     [
+      0.11,
+      0.7608
+     ],
+     [
+      0.12,
+      0.7556
+     ]
+    ],
+    "sm_min": 0.05,
+    "xr": [
+     0.04,
+     0.049
+    ],
+    "kd": 1.0,
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "b": 1.15,
+    "c": 0.32,
     "k": 1.3
    }
   },
@@ -225,17 +331,17 @@
     "ASM-B2-HINGE-INVISCID"
    ],
    "outputs": {
-    "q_dive_Pa": 232.90312500000002,
-    "M_hinge_Nm": 0.19865006240625,
-    "T_req_Nm": 0.297975093609375,
-    "T_req_kgfcm": 3.038500340170956
+    "q_dive_Pa": 264.992,
+    "M_hinge_Nm": 0.2571601084416001,
+    "T_req_Nm": 0.38574016266240013,
+    "T_req_kgfcm": 3.933454978635927
    },
    "input_values": {
     "ch": 0.02106,
     "rho": 1.225,
-    "v": 15.0,
+    "v": 16.0,
     "f": 1.3,
-    "c": 0.3,
+    "c": 0.32,
     "yin": [
      0.07,
      0.3
@@ -267,18 +373,18 @@
     "z": "m"
    },
    "outputs": {
-    "cover_up_m": 0.010282,
-    "cover_lo_m": -0.002860999999999999,
-    "cover_min_m": -0.002860999999999999,
-    "z_mid_m": 0.0065715,
-    "cover_centred_m": 0.0037105000000000003
+    "cover_up_m": 0.004985600000000003,
+    "cover_lo_m": 0.004249600000000001,
+    "cover_min_m": 0.004249600000000001,
+    "z_mid_m": 0.006968000000000001,
+    "cover_centred_m": 0.004617600000000001
    },
    "input_values": {
-    "zu": 0.07094,
-    "zl": -0.02713,
-    "c": 0.3,
+    "zu": 0.07058,
+    "zl": -0.02703,
+    "c": 0.32,
     "d": 0.022,
-    "z": 0.0
+    "z": 0.0066
    }
   },
   {
@@ -302,16 +408,16 @@
     "t": "m"
    },
    "outputs": {
-    "M_root_1g_Nm": 3.0985900388625,
-    "T_root_1g_Nm": 0.36422878765,
-    "ybar_m": 0.2430525
+    "M_root_1g_Nm": 3.094191756337499,
+    "T_root_1g_Nm": 0.3243255288,
+    "ybar_m": 0.24270749999999996
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "b": 1.15,
-    "yb": 0.4227,
-    "t": 0.02857
+    "yb": 0.4221,
+    "t": 0.02544
    }
   },
   {
@@ -327,7 +433,7 @@
     "WNG-003"
    ],
    "how": "Re-run avl_wing.py; compare with the twin / XPS slow-flight stall at known mass",
-   "value": 0.8036437246963563
+   "value": 0.7977606717984604
   },
   {
    "id": "CL-B2-CLMAX-DESIGN",
@@ -342,12 +448,12 @@
     "WNG-003"
    ],
    "how": "Slow-flight stall at the gate mass with airspeed logging (T-B2-STALL); CLmax = 2 m g / (rho S Vs^2)",
-   "value": 0.8036437246963563
+   "value": 0.7977606717984604
   },
   {
    "id": "CL-B2-STALL-GATE",
    "type": "claim",
-   "title": "Stall speed at the gate (B2)",
+   "title": "Stall speed at the gate, SM floor (B2)",
    "calc": "CALC-B2-STALL",
    "output": "Vs_ms",
    "unit": "m/s",
@@ -364,12 +470,12 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL: FBWA slow flight, 1 kt/s deceleration, three runs, airspeed sensor calibrated",
-   "value": 12.253287931037613
+   "value": 11.907860674939258
   },
   {
    "id": "CL-B2-TRANSITION-GATE",
    "type": "claim",
-   "title": "1.3 Vs against cruise (B2)",
+   "title": "1.3 Vs against cruise, SM floor (B2)",
    "calc": "CALC-B2-STALL",
    "output": "Vtr_ms",
    "unit": "m/s",
@@ -386,7 +492,7 @@
     "WNG-003"
    ],
    "how": "Re-run with the cruise speed B1 sets (CR-B2-01); flight: transition logs show airspeed >= 1.3 Vs",
-   "value": 15.929274310348898
+   "value": 15.480218877421036
   },
   {
    "id": "CL-B2-RE-STALL",
@@ -395,8 +501,91 @@
    "calc": "CALC-B2-STALL",
    "output": "Re_stall",
    "unit": "-",
-   "how": "Must stay within 10 % of the XFOIL stall polar Re 2.3e5 (P:b2.xfoil.re_stall); re-run XFOIL if not",
-   "value": 248377.4580615732
+   "how": "Must stay within 10 % of the XFOIL stall polar Re (P:b2.xfoil.re_stall, which follows the chord); re-run xfoil_wing.py if not",
+   "value": 257467.25783652448
+  },
+  {
+   "id": "CL-B2-SM-FWD",
+   "type": "claim",
+   "title": "Static margin at the forward CG limit",
+   "calc": "CALC-B2-STALL-FWD",
+   "output": "SM_fwd",
+   "unit": "-",
+   "how": "B3's CG range width over the chord, added to the SM floor; B3 re-derives the range (D-17)",
+   "value": 0.078125
+  },
+  {
+   "id": "CL-B2-CLMAX-FWD",
+   "type": "claim",
+   "title": "Trimmed CLmax at the forward CG limit",
+   "calc": "CALC-B2-STALL-FWD",
+   "output": "CLmax_fwd",
+   "unit": "-",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-B2-STALL flown at the forward CG ballast as well as the aft",
+   "value": 0.7778312500000001
+  },
+  {
+   "id": "CL-B2-STALL-GATE-FWD",
+   "type": "claim",
+   "title": "Stall speed at the gate, forward CG (B2)",
+   "calc": "CALC-B2-STALL-FWD",
+   "output": "Vs_fwd_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.stall_max_ms"
+   },
+   "verifies": [
+    "R-STALL"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-B2-STALL at the forward CG limit, 2.6 kg",
+   "value": 12.059446141718322
+  },
+  {
+   "id": "CL-B2-TRANSITION-GATE-FWD",
+   "type": "claim",
+   "title": "1.3 Vs against cruise, forward CG (B2)",
+   "calc": "CALC-B2-STALL-FWD",
+   "output": "Vtr_fwd_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:performance.cruise_ms"
+   },
+   "verifies": [
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "Transition logs at the forward CG: airspeed >= 1.3 Vs before the wing carries the weight",
+   "value": 15.677279984233818
+  },
+  {
+   "id": "CL-B2-RE-STALL-DEV",
+   "type": "claim",
+   "title": "Stall Re vs the XFOIL stall polars",
+   "calc": "CALC-B2-STALL",
+   "output": "Re_dev",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-B2-RE-TOL"
+   },
+   "how": "|Re at Vs / Re of the stall polars - 1|; re-run xfoil_wing.py (Re follow the chord) if it fails",
+   "value": 0.009741316013367363
   },
   {
    "id": "CL-B2-HINGE-MOMENT",
@@ -411,7 +600,7 @@
     "WNG-003"
    ],
    "how": "Bench: hang M / (0.5 x elevon chord) on the trailing edge of a linked panel pair at 25 deg",
-   "value": 0.19865006240625
+   "value": 0.2571601084416001
   },
   {
    "id": "CL-B2-SERVO-TORQUE-REQ",
@@ -426,7 +615,7 @@
     "WNG-003"
    ],
    "how": "D6 selects a servo with rated stall torque >= this at 5 V; T-B2-HINGE bench test",
-   "value": 3.038500340170956
+   "value": 3.933454978635927
   },
   {
    "id": "CL-B2-SPAR-COVER",
@@ -444,8 +633,8 @@
     "WNG-002"
    ],
    "how": "Measure foam above and below the slot on the first cut core (calipers)",
-   "note": "FAILS at z = 0: the 22 mm tube breaks the lower skin; CR-B2-03 moves it to z_mid",
-   "value": -0.002860999999999999
+   "note": "At z = 0 the 22 mm tube breaks the lower skin; with params z = +6.6 mm (CR-B2-03) it passes; z_mid at c 0.32 is +7.0 mm (CR-B2-09)",
+   "value": 0.004249600000000001
   },
   {
    "id": "CL-B2-SPAR-Z-MID",
@@ -458,7 +647,7 @@
     "WNG-002"
    ],
    "how": "Template check: slot centre midway between the skins at x = 0.08 m",
-   "value": 0.0065715
+   "value": 0.006968000000000001
   },
   {
    "id": "CL-B2-SPAR-COVER-CENTRED",
@@ -476,7 +665,7 @@
     "WNG-002"
    ],
    "how": "Measure on the first cut core",
-   "value": 0.0037105000000000003
+   "value": 0.004617600000000001
   },
   {
    "id": "CL-B2-ROOT-BM-1G",
@@ -489,7 +678,7 @@
     "WNG-002"
    ],
    "how": "C1 multiplies by n; spar proof load test (H1)",
-   "value": 3.0985900388625
+   "value": 3.094191756337499
   },
   {
    "id": "CL-B2-ROOT-TORSION-1G",
@@ -503,7 +692,7 @@
     "WNG-002"
    ],
    "how": "C1 multiplies by n; included in the spar proof test",
-   "value": 0.36422878765
+   "value": 0.3243255288
   },
   {
    "id": "CL-B2-ELEVON-ETA",
@@ -523,7 +712,7 @@
    "output": "dcm",
    "unit": "-",
    "how": "Replaces ASM-B3-DCM-VISC; flight: trimmed elevon at known CG and speed (twin, XPS)",
-   "value": -0.01033
+   "value": -0.01025
   },
   {
    "id": "CL-B2-CLA-3D",
@@ -532,8 +721,8 @@
    "calc": "CALC-B2-SECTION",
    "output": "cla3d",
    "unit": "1/rad",
-   "how": "For C1 gust loads; Helmbold check 3.81 /rad (elliptic) vs AVL 3.58 /rad (rectangular, elevon gaps)",
-   "value": 3.5817
+   "how": "For C1 gust loads; Helmbold check at AR 3.59: 3.70 /rad with 2 pi, 3.79 /rad with the XFOIL 6.61 /rad, vs AVL 3.48 /rad (rectangular, elevon gaps)",
+   "value": 3.4773
   },
   {
    "id": "CL-B2-CLMIN-2D",
@@ -542,8 +731,8 @@
    "calc": "CALC-B2-SECTION",
    "output": "clmin",
    "unit": "-",
-   "how": "For C1 (ASM-C1-CLMIN); XFOIL last converged point, treat as magnitude 0.4 until flight",
-   "value": -0.38
+   "how": "For C1 (ASM-C1-CLMIN); XFOIL last converged point at the cruise Re, treat as magnitude 0.44 until flight",
+   "value": -0.435
   },
   {
    "id": "CALC-B2-SECTION",
@@ -563,15 +752,15 @@
    },
    "outputs": {
     "eta": 0.606,
-    "dcm": -0.01033,
-    "cla3d": 3.5817,
-    "clmin": -0.38
+    "dcm": -0.01025,
+    "cla3d": 3.4773,
+    "clmin": -0.435
    },
    "input_values": {
     "eta": 0.606,
-    "dcm": -0.01033,
-    "cla3d": 3.5817,
-    "clmin": -0.38
+    "dcm": -0.01025,
+    "cla3d": 3.4773,
+    "clmin": -0.435
    }
   },
   {

@@ -41,6 +41,20 @@ def _load(name):
 
 DATA = {k: _load(v[0]) for k, v in PROPS.items()}
 UIUC = _load("uiuc_measured.csv")
+AIRFOIL = HERE.parents[1] / "team" / "B2" / "airfoils" / "s5010.dat"   # B2's checked S5010 coordinates (SRC-S5010)
+
+
+def _airfoil_surfaces():
+    """S5010 upper and lower surfaces as (x/c ascending, z/c) lists, read from B2's Selig-format file."""
+    pts = []
+    for line in AIRFOIL.read_text(encoding="utf-8").splitlines()[1:]:
+        f = line.split()
+        if len(f) == 2:
+            pts.append((float(f[0]), float(f[1])))
+    i_le = min(range(len(pts)), key=lambda k: pts[k][0])
+    up = sorted(pts[:i_le + 1])
+    lo = sorted(pts[i_le:])
+    return up, lo
 
 
 def _interp(xs, ys, x):
@@ -171,6 +185,10 @@ A("ASM-B4-VRS", "Vortex-ring onset at 0.28 v_h", "vortex-ring state begins at a 
   "the hover induced velocity", value=0.28, unit="-",
   basis="Leishman, Principles of Helicopter Aerodynamics 2nd ed., sec. 2.14: VRS boundary from about -0.28 v_h "
         "(onset) to -1.0 v_h; conservative lower edge")
+A("ASM-B4-BOOM", "Pitot boom 80 mm ahead of the pod front at z 0.045 m", "plug-in pitot boom on the pod nose, "
+  "probe along body x, tip 80 mm ahead of the pod front face, 30 mm above the pod base", value=[0.08, 0.045],
+  unit="m", basis="B4 placement (CR-B4-05); D2 draws POD-006; the tip x follows pod.x_le_m if the pod moves",
+  status="PROPOSED")
 A("ASM-B4-SPAN-AR", "Fin effective aspect ratio doubles on the wing", "the wing acts as an end plate at the fin "
   "root inside the slipstream", value=2.0, unit="-", basis="image method for a plate ending on a wall")
 
@@ -310,18 +328,24 @@ def _r_slip(x, R):
     return R / math.sqrt(1 + x / math.sqrt(x * x + R * R))
 
 
-@kit.calc("CALC-B4-DOWNLOAD", title="Hover download on tube, fin and feet",
-          assumes=["ASM-B4-CD-TUBE", "ASM-B4-PROFILE", "ASM-B4-FIN-T", "ASM-B4-FOOT"],
+@kit.calc("CALC-B4-DOWNLOAD", title="Hover download on tube, half-fins, feet and the wing beside the disc",
+          assumes=["ASM-B4-CD-TUBE", "ASM-B4-PROFILE", "ASM-B4-FIN-T", "ASM-B4-FOOT", "ASM-B4-MIX"],
+          cites=["SRC-S5010"],
           equation="v_i = sqrt(T / 2 rho A) ; v(x) = v_i (1 + x / sqrt(x^2 + R^2)) ; r_s = R / sqrt(v/v_i) ; "
-                   "D = Cd q d L (tube) + 2 Cf q S (fin) + 0.5 q t h (fin base) + q A (foot) ; k = 1 + D/T",
+                   "D = Cd q d L (tube) + 2 Cf q S (fin) + 0.5 q t h (fin base) + q A (foot) + D_wing ; "
+                   "wing: reach(x) = r_s + mix (x - x_p) ; gap(x) = z_m - reach - z_surf(x) (S5010 upper, and lower "
+                   "for the lower discs) ; where gap < 0 the wetted strip w = 2 sqrt(reach^2 - (z_m - z_surf)^2) "
+                   "carries Cf q/3 (mixing-layer mean of u^2) ; k = 1 + D/T",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
                   "D": P + "propulsion.prop_diameter_m", "x_prop": P + "propulsion.stations.x_prop_plane_m",
                   "x_mount": P + "propulsion.stations.x_mount_m", "d_tube": P + "fins.tube.od_m",
                   "d_motor": P + "propulsion.motor_diameter_m", "fin_te": P + "fins.te_x_m",
                   "foot_h": P + "cg.foot_height_m", "cd": "ASM-B4-CD-TUBE", "prof": "ASM-B4-PROFILE",
-                  "t_fin": "ASM-B4-FIN-T", "a_foot": "ASM-B4-FOOT"},
-          units={"m": "kg", "D": "m", "x_prop": "m", "x_mount": "m", "d_tube": "m", "d_motor": "m", "fin_te": "m"})
-def download(m, g, rho, D, x_prop, x_mount, d_tube, d_motor, fin_te, foot_h, cd, prof, t_fin, a_foot):
+                  "t_fin": "ASM-B4-FIN-T", "a_foot": "ASM-B4-FOOT", "z_m": P + "propulsion.stations.z_m",
+                  "c": P + "wing.chord_m", "mix": "ASM-B4-MIX"},
+          units={"m": "kg", "D": "m", "x_prop": "m", "x_mount": "m", "d_tube": "m", "d_motor": "m", "fin_te": "m",
+                 "z_m": "m", "c": "m"})
+def download(m, g, rho, D, x_prop, x_mount, d_tube, d_motor, fin_te, foot_h, cd, prof, t_fin, a_foot, z_m, c, mix):
     R = D / 2
     T = m * g / 4.0
     vi = math.sqrt(T / (2 * rho * math.pi * R * R))
@@ -344,12 +368,47 @@ def download(m, g, rho, D, x_prop, x_mount, d_tube, d_motor, fin_te, foot_h, cd,
         v_b = _v_axial(vi, x_b, R)
         D_base = 0.5 * 0.5 * rho * v_b ** 2 * pf * t_fin * h_b
         D_foot = 1.0 * 0.5 * rho * (0.5 * v_b) ** 2 * a_foot   # foot sits on the hub axis: hub-wake deficit ~50 %
-        Dt = D_tube + D_fin + D_base + D_foot
+        D_wing, gap_min, x_gap = _wing_strip(rho, vi, R, x_prop, z_m, c, mix, pf, nu)
+        Dt = D_tube + D_fin + D_base + D_foot + D_wing
         res["k" + tag] = 1 + Dt / T
         if not tag:
+            up, lo = _airfoil_surfaces()
+            z_top = max(z for _, z in up) * c
             res.update({"vi_ms": vi, "tube_n": D_tube, "fin_n": D_fin, "fin_base_n": D_base, "foot_n": D_foot,
+                        "wing_n": D_wing, "wing_gap_min_m": gap_min, "wing_gap_min_x_m": x_gap,
+                        "disc_edge_over_wing_top_m": z_m - R - z_top,
+                        "disc_edge_over_chord_plane_m": z_m - R,
+                        "tube_x_behind_disc_m": x_t, "fin_mid_x_behind_disc_m": x_f,
                         "tube_frac_of_disk": d_tube * L_t / (math.pi * R * R)})
     return res
+
+
+def _wing_strip(rho, vi, R, x_prop, z_m, c, mix, pf, nu, n=64):
+    """Wing beside the disc: the slipstream (plus its mixing layer) reaching the S5010 surface at the fin station.
+    Returns (download N for one disc, minimum gap m, x of the minimum gap m). Upper discs see the upper surface,
+    lower discs the lower surface; the worse of the two is used for every disc."""
+    up, lo = _airfoil_surfaces()
+    zu = lambda xc: _interp([p[0] for p in up], [p[1] for p in up], xc) * c
+    zl = lambda xc: -_interp([p[0] for p in lo], [p[1] for p in lo], xc) * c    # distance below the chord plane
+    D_w, gap_min, x_gap = 0.0, float("inf"), 0.0
+    h = c / n
+    for k in range(n + 1):
+        x = k * h
+        xd = x - x_prop
+        if xd <= 0:
+            continue
+        reach = _r_slip(xd, R) + mix * xd
+        z_s = max(zu(x / c), zl(x / c))
+        gap = (z_m - z_s) - reach
+        if gap < gap_min:
+            gap_min, x_gap = gap, x
+        if gap < 0:
+            w = 2 * math.sqrt(max(reach * reach - (z_m - z_s) ** 2, 0.0))
+            v = _v_axial(vi, xd, R)
+            cf = 0.074 / max(v * max(x, h) / nu, 1e3) ** 0.2
+            wk = 0.5 if k in (0, n) else 1.0
+            D_w += wk * cf * 0.5 * rho * v * v * pf / 3.0 * w * h
+    return D_w, gap_min, x_gap
 
 
 # ---------------------------------------------------------------- 6. slipstream vs elevons and wing
@@ -381,13 +440,15 @@ def wake_vs_surfaces(m, g, rho, D, x_prop, z_m, c, tc, fe, defl, mix):
 
 
 # ---------------------------------------------------------------- 7. pitot placement (actuator-disk vortex cylinders)
-PITOT_CANDIDATES = {  # name -> (x, y, z) of the probe tip, m
-    "pod_boom_x-0.25": (-0.25, 0.0, 0.045),
-    "pod_nose_x-0.10": (-0.10, 0.0, 0.045),
-    "wing_LE_y0.15_x-0.08": (-0.08, 0.15, 0.0),
-    "wing_LE_y0.15_x-0.25": (-0.25, 0.15, 0.0),
-    "wing_LE_y0.53_x-0.08": (-0.08, 0.53, 0.0),
-}
+def pitot_candidates(pod_x, boom, z_boom, x_prop):
+    """name -> (x, y, z) of the probe tip, m. The chosen one is the pod-nose boom (POD-006); the rest bracket it."""
+    return {
+        "pod_boom": (pod_x - boom, 0.0, z_boom),                  # chosen: = params avionics.pitot_tip_xyz_m
+        "pod_face": (pod_x, 0.0, z_boom),                          # no boom: probe flush with the pod front
+        "pod_boom_long": (pod_x - boom - 0.10, 0.0, z_boom),       # 100 mm longer boom
+        "wing_LE_y0.15": (x_prop - 0.075, 0.15, 0.0),              # 75 mm boom on the inboard wing LE
+        "wing_LE_y0.53": (x_prop - 0.075, 0.53, 0.0),              # 75 mm boom on the outboard wing LE
+    }
 
 
 def _induced(pt, disks, R, gamma, L, N):
@@ -409,14 +470,18 @@ def _induced(pt, disks, R, gamma, L, N):
                   "D": P + "propulsion.prop_diameter_m", "x_prop": P + "propulsion.stations.x_prop_plane_m",
                   "y_m": P + "propulsion.stations.y_m", "z_m": P + "propulsion.stations.z_m",
                   "ld": P + "performance.ld_cruise", "V": P + "performance.cruise_ms",
-                  "Vt": P + "performance.transition_min_ms", "lim": "ASM-B4-PITOT-ERR"},
-          units={"m": "kg", "D": "m", "x_prop": "m", "y_m": "m", "z_m": "m", "V": "m/s", "Vt": "m/s"})
-def pitot(m, g, rho, D, x_prop, y_m, z_m, ld, V, Vt, lim):
+                  "Vt": P + "performance.transition_min_ms", "lim": "ASM-B4-PITOT-ERR",
+                  "pod_x": P + "pod.x_le_m", "boom": "ASM-B4-BOOM"},
+          units={"m": "kg", "D": "m", "x_prop": "m", "y_m": "m", "z_m": "m", "V": "m/s", "Vt": "m/s",
+                 "pod_x": "m"})
+def pitot(m, g, rho, D, x_prop, y_m, z_m, ld, V, Vt, lim, pod_x, boom):
     R = D / 2
+    PITOT_CANDIDATES = pitot_candidates(pod_x, boom[0], boom[1], x_prop)
     A_d = math.pi * R * R
     disks = [(x_prop, sy * y_m, sz * z_m) for sy in (1, -1) for sz in (1, -1)]
     cases = {"cruise": (V, m * g / ld / 4), "transition": (Vt, m * g / 4), "hover": (0.0, m * g / 4)}
-    out = {}
+    tip = PITOT_CANDIDATES["pod_boom"]
+    out = {"tip_x_m": tip[0], "tip_z_m": tip[2], "tip_ahead_of_disc_m": x_prop - tip[0]}
     # self-test: the disk centre of an isolated cylinder sees gamma/2; far downstream inside sees gamma
     out["selftest_centre_over_half_gamma"] = cylinder_ux(R, 1.0, 0.0, 1e-6, 80 * R, 400) / 0.5
     worst = {}
@@ -434,7 +499,7 @@ def pitot(m, g, rho, D, x_prop, y_m, z_m, ld, V, Vt, lim):
     for name, w in worst.items():
         out[f"worst_err__{name}"] = w
     best = min(worst, key=worst.get)
-    out["best_candidate"] = list(PITOT_CANDIDATES).index(best)
+    out["best_candidate"] = list(PITOT_CANDIDATES).index(best)          # 0 pod_boom ... 4 wing_LE_y0.53
     out["best_worst_err"] = worst[best]
     out["max_conv"] = max(v for k, v in out.items() if k.endswith("__conv") and not k.startswith("hover"))
     return out
@@ -444,15 +509,17 @@ def pitot(m, g, rho, D, x_prop, y_m, z_m, ld, V, Vt, lim):
 @kit.calc("CALC-B4-SWIRL", title="Fin swirl recovery and hover yaw authority", assumes=["ASM-B4-SPAN-AR"],
           equation="Gamma_s = Q / (rho v_i pi (R^2 - r_h^2)) ; v_t = Gamma_s / r ; alpha = atan(v_t / v_a) ; "
                    "CL = 2 pi AR alpha / (2 + sqrt(AR^2 + 4)) (Helmbold) ; M = CL q c h r_cp ; f = M / Q ; "
-                   "yaw per N of differential thrust = (Q/T)(1 - f) + r_arm sin(cant)",
+                   "yaw per N of differential thrust = (Q/T)(1 - f) + r_arm sin(cant) ; "
+                   "half-fin root moment = F (z_m - r_cp - z_root), z_root = mean S5010 surface over the fin chord",
           inputs={"Th": "CL-B4-HOVER-T", "Q": "CL-B4-HOVER-Q", "rho": P + "env.rho_kgm3",
                   "D": P + "propulsion.prop_diameter_m",
                   "d_motor": P + "propulsion.motor_diameter_m", "x_prop": P + "propulsion.stations.x_prop_plane_m",
                   "x_mount": P + "propulsion.stations.x_mount_m", "d_tube": P + "fins.tube.od_m",
                   "fin_te": P + "fins.te_x_m", "ar_k": "ASM-B4-SPAN-AR",
-                  "y_m": P + "propulsion.stations.y_m", "z_m": P + "propulsion.stations.z_m", "cant": "ASM-B4-CANT"},
-          units={"D": "m", "rho": "kg/m3"})
-def swirl(Th, Q, rho, D, d_motor, x_prop, x_mount, d_tube, fin_te, ar_k, y_m, z_m, cant):
+                  "y_m": P + "propulsion.stations.y_m", "z_m": P + "propulsion.stations.z_m", "cant": "ASM-B4-CANT",
+                  "c": P + "wing.chord_m"},
+          units={"D": "m", "rho": "kg/m3", "c": "m"})
+def swirl(Th, Q, rho, D, d_motor, x_prop, x_mount, d_tube, fin_te, ar_k, y_m, z_m, cant, c):
     R = D / 2
     vi = math.sqrt(Th / (2 * rho * math.pi * R * R))
     rh = d_motor / 2
@@ -474,7 +541,14 @@ def swirl(Th, Q, rho, D, d_motor, x_prop, x_mount, d_tube, fin_te, ar_k, y_m, z_
     need = max(k_iso - k_iso * (1 - f), 0.0)             # what the fin takes away
     cant_min = math.degrees(math.asin(min(need / arm, 1.0)))
     k_cant = k_iso * (1 - f) + arm * math.sin(math.radians(cant))
-    return {"torque_nm": Q, "swirl_deg": math.degrees(alpha), "fin_side_force_n": CL * q * c_f * h,
+    up, lo = _airfoil_surfaces()
+    x0, x1 = x_mount + d_tube / 2, fin_te
+    zs = [_interp([p[0] for p in up], [p[1] for p in up], (x0 + (x1 - x0) * k / 20) / c) * c for k in range(21)]
+    z_root = sum(zs) / len(zs)
+    F = CL * q * c_f * h
+    return {"half_fin_root_moment_nm": F * (z_m - r_cp - z_root), "half_fin_cp_above_root_m": z_m - r_cp - z_root,
+            "half_fin_chord_m": c_f, "half_fin_wetted_span_m": h, "half_fin_aspect_ratio": AR, "swirl_q_pa": q,
+            "torque_nm": Q, "swirl_deg": math.degrees(alpha), "fin_side_force_n": CL * q * c_f * h,
             "f_mid": f, "f_low": 0.5 * f, "yaw_authority_factor_mid": 1 - f, "yaw_authority_factor_high": 1 - 0.5 * f,
             "yaw_arm_m": arm, "cant_min_deg": cant_min, "yaw_with_cant_over_isolated": k_cant / k_iso,
             "yaw_with_cant_no_reaction_over_isolated": arm * math.sin(math.radians(cant)) / k_iso,
@@ -604,10 +678,10 @@ c("CL-B4-TW-CAP", "T/W at the rpm cap (11x5.5MR, installed, bus able to reach th
 c("CL-B4-SF-RPM", "11x4.7SF rpm-limit margin at full throttle (negative = over limit)", calc="CALC-B4-STATIC",
   output="rpm_limit_margin__11x4.7SF", unit="-", limit=(">=", 0.0), cites=["SRC-B4-APC-RPM"],
   how="APC SF limit 65 000/11 = 5 909 rpm against full-throttle rpm. FAILS by design: the reason the SF is rejected.")
-c("CL-B4-CRUISE-ETA", "Cruise prop efficiency, 11x5.5MR, 15 m/s, 1.08 N", calc="CALC-B4-CRUISE",
+c("CL-B4-CRUISE-ETA", "Cruise prop efficiency, 11x5.5MR, cruise speed and thrust (params)", calc="CALC-B4-CRUISE",
   output=f"eta_prop__{SEL}", unit="-", parts=PRP,
-  how="Logged cruise: shaft power from ESC rpm and motor model vs drag x V; or a car-top test at 15 m/s.")
-c("CL-B4-CRUISE-ETA-OLD", "Cruise prop efficiency, 11x4.5MR, 15 m/s, 1.08 N", calc="CALC-B4-CRUISE",
+  how="Logged cruise: shaft power from ESC rpm and motor model vs drag x V; or a car-top test at cruise speed.")
+c("CL-B4-CRUISE-ETA-OLD", "Cruise prop efficiency, 11x4.5MR, cruise speed and thrust (params)", calc="CALC-B4-CRUISE",
   output=f"eta_prop__{OLD}", unit="-", how="As CL-B4-CRUISE-ETA.")
 c("CL-B4-CRUISE-J", "Cruise advance ratio, 11x5.5MR", calc="CALC-B4-CRUISE", output=f"J__{SEL}", unit="-",
   how="J = V / (n D) from logged rpm and airspeed.")
@@ -616,7 +690,7 @@ c("CL-B4-CRUISE-RPM", "Cruise rpm, 11x5.5MR", calc="CALC-B4-CRUISE", output=f"rp
 c("CL-B4-CRUISE-SHAFT", "Cruise shaft power per motor, 11x5.5MR", calc="CALC-B4-CRUISE", output=f"shaft_w__{SEL}",
   unit="W", parts=PRP, how="Logged cruise: rpm and current with E1's motor constants.")
 c("CL-B4-CRUISE-W", "Cruise pack power, 11x5.5MR, 4 motors (E1 motor constants)", calc="CALC-B4-CRUISE",
-  output=f"pack_w__{SEL}", unit="W", parts=PRP, how="Log pack power in steady level cruise at 15 m/s airspeed, 2.6 kg.")
+  output=f"pack_w__{SEL}", unit="W", parts=PRP, how="Log pack power in steady level cruise at performance.cruise_ms, 2.6 kg.")
 c("CL-B4-CRUISE-W-OLD", "Cruise pack power, 11x4.5MR, 4 motors (E1 motor constants)", calc="CALC-B4-CRUISE",
   output=f"pack_w__{OLD}", unit="W", how="As CL-B4-CRUISE-W.")
 c("CL-B4-HOVER-W", "Hover pack power at the gate, 11x5.5MR (E1 motor constants)", calc="CALC-B4-STATIC",
@@ -638,16 +712,34 @@ c("CL-B4-ELEVON-HOVER", "Elevons outside the hover slipstream (gap)", calc="CALC
   how="Tufts on the elevons during a tethered hover: they stay still. Consequence: zero elevon authority in hover.")
 c("CL-B4-ELEVON-CRUISE", "Elevon tip vs cruise slipstream edge (negative = inside the mixing layer)",
   calc="CALC-B4-WAKE", output="cruise_gap_elevon_m", unit="m", how="Tufts on the elevons in cruise, camera on the fin.")
-c("CL-B4-PITOT", "Worst prop-induced airspeed error at the chosen pitot (pod nose, tip x = -0.10 m)",
-  calc="CALC-B4-PITOT", output="worst_err__pod_nose_x-0.10", unit="-", limit=("<=", "ASM-B4-PITOT-ERR"),
+c("CL-B4-PITOT", "Worst prop-induced airspeed error at the chosen pitot (pod-nose boom, tip 80 mm ahead of the pod)",
+  calc="CALC-B4-PITOT", output="worst_err__pod_boom", unit="-", limit=("<=", "ASM-B4-PITOT-ERR"),
   parts=["AVN-005", "POD-006"],
   how="Fly constant GPS-groundspeed legs in calm air at two throttle settings; airspeed must not step with throttle.")
-c("CL-B4-PITOT-WING", "Prop-induced airspeed error, wing LE at y = 0.15 m (rejected)", calc="CALC-B4-PITOT",
-  output="worst_err__wing_LE_y0.15_x-0.08", unit="-", limit=("<=", "ASM-B4-PITOT-ERR"),
+c("CL-B4-PITOT-TIP-X", "Pitot tip x station (pod front - boom; = params avionics.pitot_tip_xyz_m[0])",
+  calc="CALC-B4-PITOT", output="tip_x_m", unit="m", parts=["AVN-005", "POD-006"],
+  how="Measure the tip from the wing LE on the built airframe with the boom plugged in.")
+c("CL-B4-PITOT-FACE", "Prop-induced airspeed error with no boom (probe at the pod front)", calc="CALC-B4-PITOT",
+  output="worst_err__pod_face", unit="-", limit=("<=", "ASM-B4-PITOT-ERR"),
+  how="Same flight test as CL-B4-PITOT; shows what the boom buys.")
+c("CL-B4-PITOT-WING", "Prop-induced airspeed error, inboard wing LE at y = 0.15 m (rejected)", calc="CALC-B4-PITOT",
+  output="worst_err__wing_LE_y0.15", unit="-", limit=("<=", "ASM-B4-PITOT-ERR"),
   how="Same flight test; shows why the inboard wing LE is not used.")
 c("CL-B4-PITOT-CONV", "Pitot model wake/grid convergence (max change, last two levels)", calc="CALC-B4-PITOT",
   output="max_conv", unit="-", limit=("<=", 0.002),
   how="Re-run: three wake lengths and Simpson grids; change as a fraction of airspeed.")
+c("CL-B4-SWIRL-FIN", "Swirl side force on each half-fin in hover (static, mean; same sense on both halves of a fin)",
+  calc="CALC-B4-SWIRL", output="fin_side_force_n", unit="N", parts=FINS,
+  how="T-B4-YAW: side force on a half-fin mock-up (0.275 m chord) behind the prop at hover thrust, or the "
+      "reaction-torque difference divided by the centre-of-pressure radius.")
+c("CL-B4-SWIRL-FIN-M", "Swirl bending moment at each half-fin root (wing skin), hover", calc="CALC-B4-SWIRL",
+  output="half_fin_root_moment_nm", unit="N*m", parts=FINS, how="As CL-B4-SWIRL-FIN, times the measured cp height.")
+c("CL-B4-TUBE-LOAD", "Slipstream drag on each motor tube in hover (mean loading)", calc="CALC-B4-DOWNLOAD",
+  output="tube_n", unit="N", parts=FINS, how="T-B4-INSTALLED: thrust with and without the tube.")
+c("CL-B4-WING-GAP", "Hover slipstream (incl. mixing layer) clearance to the wing surface at the fin station",
+  calc="CALC-B4-DOWNLOAD", output="wing_gap_min_m", unit="m", limit=(">=", 0.0), parts=FINS,
+  how="T-B4-INSTALLED with a wing-section strip at the right height; tufts on the wing beside the fin in a "
+      "tethered hover stay still.")
 c("CL-B4-YAW", "Hover yaw authority left by fin swirl recovery (fraction of isolated)", calc="CALC-B4-SWIRL",
   output="yaw_authority_factor_mid", unit="-",
   how="T-B4-YAW: reaction torque on the stand with and without a fin mock-up; tethered hover yaw step.")
@@ -670,13 +762,16 @@ c("CL-B4-TIPMACH", "Tip Mach number at full throttle", calc="CALC-B4-GEOM", outp
 kit.test("T-B4-STAND", "Isolated static thrust A/B: 11x5.5MR and 11x4.5MR on one X3108S",
          verifies=["CL-B4-FM", "CL-B4-HOVER-SHAFT", "CL-B4-RPM-MAX", "CL-B4-HOVER-Q", "CL-B4-FM-OLD"], state="planned",
          procedure="H1 stand (shared with T-E1-STAND), 14.8 V, 10 % throttle steps; log thrust, torque, rpm, V, A.")
-kit.test("T-B4-INSTALLED", "Installed thrust with tube and fin mock-up", verifies=["CL-B4-DOWNLOAD"], state="planned",
-         procedure="Same stand; 22 mm tube with its face 39 mm behind the prop plane and a 0.40 m foam-board fin; "
-                   "compare thrust at equal rpm with and without; repeat with the fin removed.")
+kit.test("T-B4-INSTALLED", "Installed thrust with tube, half-fin and wing-strip mock-up",
+         verifies=["CL-B4-DOWNLOAD", "CL-B4-TUBE-LOAD", "CL-B4-WING-GAP"], state="planned",
+         procedure="Same stand; 22 mm tube with its face 39 mm behind the prop plane, a 0.275 m-chord foam-board "
+                   "half-fin behind it and a 0.32 m S5010 wing strip whose upper surface sits 28 mm below the disc "
+                   "edge (LE 5 mm behind the prop plane); compare thrust at equal rpm with and without; repeat with "
+                   "the fin, then the strip, removed.")
 kit.test("T-B4-YAW", "Fin swirl effect on reaction torque", verifies=["CL-B4-YAW"], state="planned",
          procedure="Stand with torque cell: reaction torque at hover thrust with and without the fin mock-up.")
 kit.test("T-B4-CRUISE", "Cruise prop check, car-top or flight", verifies=["CL-B4-CRUISE-ETA", "CL-B4-CRUISE-W"],
-         state="planned", procedure="Car-top rig at 15 m/s (GPS) or logged level cruise on the twin: rpm, current, "
+         state="planned", procedure="Car-top rig at performance.cruise_ms (GPS) or logged level cruise on the twin: rpm, current, "
                                     "voltage; compare with CALC-B4-CRUISE.")
 
 

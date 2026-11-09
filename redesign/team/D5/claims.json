@@ -1,0 +1,1193 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/D5/feet_calc.py",
+ "params": [
+  "../../params/params.json",
+  "../../subsystems/landing/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-D5-OC-F250",
+   "type": "source",
+   "title": "Owens Corning FOAMULAR 250 XPS product data sheet (compressive strength 25 psi, ASTM D1621)",
+   "kind": "datasheet",
+   "url": "https://www.owenscorning.com/en-us/insulation/products/foamular-250",
+   "note": "25 psi = 172 kPa at yield or 10 % deformation, through the board thickness; not yet compared with the sheet for the board the team buys",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-D5-TOOLBOX-MU",
+   "type": "source",
+   "title": "Engineering ToolBox, friction coefficients (rubber on dry concrete 0.6-0.85)",
+   "kind": "web",
+   "url": "https://www.engineeringtoolbox.com/friction-coefficients-d_778.html",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-D5-NEOPRENE",
+   "type": "source",
+   "title": "Neoprene rubber sheet 1/16 in, 40A, adhesive back (McMaster-Carr neoprene sheets)",
+   "kind": "web",
+   "url": "https://www.mcmaster.com/neoprene-rubber-sheets/",
+   "note": "density ~1.3 g/cm3; choose a 12 x 12 in adhesive-back sheet; part number at order time (I1)",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-D5-PETG",
+   "type": "source",
+   "title": "Generic PETG filament data (density 1.27 g/cm3, printed XY tensile ~40-50 MPa)",
+   "kind": "web",
+   "url": "https://www.prusa3d.com/page/petg_234/",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-D5-XPS-PLATEAU",
+   "type": "assumption",
+   "title": "XPS crush plateau 172 kPa",
+   "text": "Crush plateau stress of F-250 XPS loaded through the board thickness equals its 10 % compressive strength and stays flat to the densification strain",
+   "basis": "FOAMULAR 250 datasheet 25 psi; closed-cell XPS plateau is flat within ~10 % from 5 to 50 % strain. The coupon test T-D5-COUPON replaces it; the cartridge section is the tuning knob",
+   "value": 172000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-D5-OC-F250",
+    "SRC-XPS-F250"
+   ]
+  },
+  {
+   "id": "ASM-D5-PEAK-FACTOR",
+   "type": "assumption",
+   "title": "Initial crush peak 1.10 x plateau",
+   "text": "The first-yield peak of the XPS column is 10 % above the plateau",
+   "basis": "typical XPS curve; coupon test",
+   "value": 1.1,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-D5-YIELD-STRAIN",
+   "type": "assumption",
+   "title": "Strain to reach the plateau 5 %",
+   "text": "Elastic ramp of the XPS column ends at 5 % strain; half of that ramp is lost against a flat-force model",
+   "basis": "XPS modulus ~8-10 MPa vs 172 kPa plateau gives ~2 %; 5 % covers the knee",
+   "value": 0.05,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-D5-DENSIFY",
+   "type": "assumption",
+   "title": "Usable strain before densification 0.55",
+   "text": "The XPS force stays on its plateau to 55 % strain",
+   "basis": "closed-cell XPS densifies at 0.6-0.7",
+   "value": 0.55,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-D5-NORMAL-SINK",
+   "type": "assumption",
+   "title": "Normal touchdown 0.5 m/s with rotor lift = weight",
+   "text": "Routine landings touch down at Q_LAND_SPEED 0.5 m/s with the rotors still carrying the weight",
+   "basis": "params requirements.landing_sink_ms note (3 x Q_LAND_SPEED 0.5 m/s); F4 sets it",
+   "value": 0.5,
+   "unit": "m/s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-D5-PAD-MU",
+   "type": "assumption",
+   "title": "Neoprene pad friction 0.7 on dry concrete/asphalt",
+   "text": "Static friction of a 40A neoprene pad on dry concrete or asphalt",
+   "basis": "Engineering ToolBox rubber/concrete 0.6-0.85; grass is lower and unmeasured. Tilt-board slide test T-D5-PAD-MU",
+   "value": 0.7,
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-D5-TOOLBOX-MU"
+   ]
+  },
+  {
+   "id": "ASM-D5-PETG-SIGMA",
+   "type": "assumption",
+   "title": "Printed PETG allowable 40 MPa",
+   "text": "Printed PETG bending allowable (XY, 100 % walls)",
+   "basis": "filament data 40-50 MPa; low end for layer adhesion",
+   "value": 40000000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-D5-PETG"
+   ]
+  },
+  {
+   "id": "ASM-D5-BOND-TAU",
+   "type": "assumption",
+   "title": "Epoxy to paper-faced foam board 0.20 MPa shear",
+   "text": "Failure of an epoxy bond on foam-board paper facing occurs in the paper/foam at ~0.2 MPa shear",
+   "basis": "estimate; C6 owns bonded-joint allowables (CR-D5-04)",
+   "value": 200000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-D5-FIT-FACTOR",
+   "type": "assumption",
+   "title": "Printed/bonded fitting factor 1.4375 on ultimate",
+   "text": "C1 printed/bonded design value = ultimate x 1.15 x 1.25",
+   "basis": "team/C1/data/envelope.json#joints.J-FOOT (86.8 N / 60.4 N)",
+   "value": 1.4375,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-D5-REPLACE-MIN",
+   "type": "assumption",
+   "title": "Cartridge + piston swap 3 min",
+   "text": "Press two snap hooks, pull the piston out, push a pre-glued spare in until both hooks click",
+   "basis": "no tools, no cure; estimate until timed (T-D5-REPLACE)",
+   "value": 3.0,
+   "unit": "min",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-D5-GEOM",
+   "type": "calculation",
+   "title": "Foot stack and sizes",
+   "script": "redesign/team/D5/feet_calc.py",
+   "function": "geom",
+   "equation": "x_g = c + foot ; flange = x_g - pad - t_fl ; sleeve end = flange - stroke ; piston open = sleeve end - engage ; back wall = open - stroke - 1 mm ; L_cart = flange - back wall ; sections: cartridge + 2 cf -> piston + 2 w -> sleeve + 2 cs + 2 w ; z_eff = z_outer - r ; TE clearance at full stroke = foot - stroke",
+   "inputs": {
+    "te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "c": "P:wing.chord_m",
+    "foot": "P:cg.foot_height_m",
+    "board_t": "P:fins.board_t_m",
+    "layers": "P:fins.layers",
+    "w": "P:landing.wall_t_m",
+    "cs": "P:landing.slide_clear_m",
+    "cf": "P:landing.cartridge.clear_m",
+    "fy": "P:landing.cartridge.section_y_m",
+    "fz": "P:landing.cartridge.section_z_m",
+    "pad_t": "P:landing.pad.t_m",
+    "flange_t": "P:landing.piston.flange_t_m",
+    "stroke": "P:landing.stroke_max_m",
+    "engage": "P:landing.piston.engage_m",
+    "bw_t": "P:landing.shoe.back_wall_t_m",
+    "z_outer": "P:landing.pad.z_outer_m",
+    "edge_r": "P:landing.pad.edge_r_m",
+    "leg_depth": "P:landing.shoe.leg_depth_m",
+    "glue_gap": "P:landing.shoe.glue_gap_m",
+    "win_z": "P:landing.shoe.window_z_m",
+    "hook_len": "P:landing.piston.hook_len_m",
+    "hook_p": "P:landing.piston.hook_protrusion_m"
+   },
+   "units": {
+    "te": "m",
+    "hh": "m",
+    "c": "m",
+    "foot": "m",
+    "board_t": "m",
+    "w": "m",
+    "cs": "m",
+    "cf": "m",
+    "fy": "m",
+    "fz": "m",
+    "pad_t": "m",
+    "flange_t": "m",
+    "stroke": "m",
+    "engage": "m",
+    "bw_t": "m",
+    "z_outer": "m",
+    "edge_r": "m",
+    "leg_depth": "m",
+    "glue_gap": "m",
+    "win_z": "m",
+    "hook_len": "m",
+    "hook_p": "m"
+   },
+   "outputs": {
+    "x_ground_m": 0.365,
+    "x_flange0_m": 0.3609,
+    "x_sleeve_end_m": 0.32889999999999997,
+    "x_piston_open_m": 0.31689999999999996,
+    "x_back_wall_in_m": 0.28389999999999993,
+    "x_shoe_front_m": 0.28289999999999993,
+    "cart_len_m": 0.07700000000000007,
+    "piston_out_m": [
+     0.0128,
+     0.019799999999999998
+    ],
+    "sleeve_out_m": [
+     0.0148,
+     0.0218
+    ],
+    "z_sleeve_top_m": 0.2118,
+    "z_piston_top_m": 0.2108,
+    "flange_overhang_m": 0.008200000000000013,
+    "z_contact_eff_m": 0.218,
+    "leg_len_m": 0.03710000000000008,
+    "t_fin_m": 0.0096,
+    "sleeve_len_m": 0.04500000000000004,
+    "skirt_len_m": 0.04400000000000004,
+    "window_len_m": 0.035,
+    "te_clear_crushed_m": 0.012999999999999998,
+    "stroke_m": 0.032,
+    "flange_z_m": 0.028999999999999998,
+    "box_half_needed_m": 0.219
+   },
+   "input_values": {
+    "te": 0.32,
+    "hh": 0.19,
+    "c": 0.32,
+    "foot": 0.045,
+    "board_t": 0.0048,
+    "layers": 2,
+    "w": 0.0008,
+    "cs": 0.0002,
+    "cf": 0.0001,
+    "fy": 0.011,
+    "fz": 0.018,
+    "pad_t": 0.0016,
+    "flange_t": 0.0025,
+    "stroke": 0.032,
+    "engage": 0.012,
+    "bw_t": 0.001,
+    "z_outer": 0.219,
+    "edge_r": 0.001,
+    "leg_depth": 0.01,
+    "glue_gap": 0.0002,
+    "win_z": 0.006,
+    "hook_len": 0.002,
+    "hook_p": 0.0006
+   }
+  },
+  {
+   "id": "CALC-D5-CRUSH",
+   "type": "calculation",
+   "title": "Constant-force crush of one landing",
+   "script": "redesign/team/D5/feet_calc.py",
+   "function": "crush",
+   "equation": "F_p = sigma fy fz ; F_pk = k F_p ; KE = m v^2 / 2 ; 4 F_p (s - eps_y L / 2) = KE + (1 - lam) m g s ; eta = 4 F_p (s - eps_y L/2) / (4 F_pk s) ; n_L = 4 F_pk / (m g) ; strain = s / L ; normal set = max(0, (m v_n^2/2 - 4 F_p eps_y L / 2) / (4 F_p))",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "v": "P:requirements.landing_sink_ms",
+    "lam": "ASM-C1-LAND-LIFT",
+    "sigma": "ASM-D5-XPS-PLATEAU",
+    "k_pk": "ASM-D5-PEAK-FACTOR",
+    "eps_y": "ASM-D5-YIELD-STRAIN",
+    "eps_d": "ASM-D5-DENSIFY",
+    "fy": "P:landing.cartridge.section_y_m",
+    "fz": "P:landing.cartridge.section_z_m",
+    "L": "CL-D5-CART-LEN",
+    "s_max": "CL-D5-STROKE-AVAIL",
+    "v_norm": "ASM-D5-NORMAL-SINK",
+    "mark": "P:landing.piston.replace_mark_m"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "v": "m/s",
+    "fy": "m",
+    "fz": "m",
+    "L": "m",
+    "s_max": "m",
+    "sigma": "Pa",
+    "v_norm": "m/s",
+    "mark": "m"
+   },
+   "outputs": {
+    "F_plateau_N": 34.056,
+    "F_peak_N": 37.4616,
+    "KE_J": 2.9250000000000003,
+    "stroke_used_m": 0.02495221405964392,
+    "eta": 0.8389568522165598,
+    "n_land": 5.876953982168301,
+    "strain": 0.3240547280473233,
+    "strain_margin": 0.22594527195267672,
+    "stop_margin_m": 0.007047785940356082,
+    "set_normal_m": 0.0004607763683345064,
+    "mark_margin_m": 0.001047785940356082
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "v": 1.5,
+    "lam": 0.667,
+    "sigma": 172000.0,
+    "k_pk": 1.1,
+    "eps_y": 0.05,
+    "eps_d": 0.55,
+    "fy": 0.011,
+    "fz": 0.018,
+    "L": 0.07700000000000007,
+    "s_max": 0.032,
+    "v_norm": 0.5,
+    "mark": 0.006
+   }
+  },
+  {
+   "id": "CALC-D5-TIPOVER",
+   "type": "calculation",
+   "title": "Narrow-axis tip-over on the splayed pads",
+   "script": "redesign/team/D5/feet_calc.py",
+   "function": "tipover",
+   "equation": "h = c + foot - x_cg ; narrow = atan(z_eff / h) ; corner = atan((z_eff - z_cg,max) / (c + foot - x_cg,min)) ; wide = atan(y_fin / h)",
+   "inputs": {
+    "c": "P:wing.chord_m",
+    "foot": "P:cg.foot_height_m",
+    "x_cg": "P:cg.x_target_m",
+    "x_rng": "P:cg.x_range_m",
+    "z_rng": "P:cg.z_range_m",
+    "z_eff": "CL-D5-CONTACT-Z",
+    "y_fin": "P:fins.y_m"
+   },
+   "units": {
+    "c": "m",
+    "foot": "m",
+    "x_cg": "m",
+    "x_rng": "m",
+    "z_rng": "m",
+    "z_eff": "m",
+    "y_fin": "m"
+   },
+   "outputs": {
+    "cg_height_m": 0.321,
+    "narrow_deg": 34.181513196371455,
+    "corner_deg": 30.04773030082034,
+    "wide_deg": 44.91061508107474
+   },
+   "input_values": {
+    "c": 0.32,
+    "foot": 0.045,
+    "x_cg": 0.044,
+    "x_rng": [
+     0.04,
+     0.049
+    ],
+    "z_rng": [
+     -0.02,
+     0.03
+    ],
+    "z_eff": 0.218,
+    "y_fin": 0.32
+   }
+  },
+  {
+   "id": "CALC-D5-MASS",
+   "type": "calculation",
+   "title": "Foot mass from the printed and cut geometry",
+   "script": "redesign/team/D5/feet_calc.py",
+   "function": "mass",
+   "equation": "V_shoe = back wall + floor/roof + windowed y walls + 2 legs ; V_piston = skirt + flange + hooks ; m = rho V ; glue (epoxy 0.30 g on the shoe, CA 0.05 g on the cartridge) in the part it joins",
+   "inputs": {
+    "w": "P:landing.wall_t_m",
+    "bw_t": "P:landing.shoe.back_wall_t_m",
+    "leg_depth": "P:landing.shoe.leg_depth_m",
+    "win_z": "P:landing.shoe.window_z_m",
+    "flange_t": "P:landing.piston.flange_t_m",
+    "pad_t": "P:landing.pad.t_m",
+    "hook_len": "P:landing.piston.hook_len_m",
+    "hook_p": "P:landing.piston.hook_protrusion_m",
+    "fy": "P:landing.cartridge.section_y_m",
+    "fz": "P:landing.cartridge.section_z_m",
+    "slv": "CL-D5-SLEEVE-OUT",
+    "pist": "CL-D5-PISTON-OUT",
+    "L_slv": "CL-D5-SLEEVE-LEN",
+    "L_sk": "CL-D5-SKIRT-LEN",
+    "L_leg": "CL-D5-LEG-LEN",
+    "L_cart": "CL-D5-CART-LEN",
+    "L_win": "CL-D5-WINDOW-LEN",
+    "fl_z": "CL-D5-FLANGE-Z",
+    "rho_petg": "P:landing.materials.petg_density_kgm3",
+    "rho_neo": "P:landing.materials.neoprene_density_kgm3",
+    "rho_xps": "P:wing.core.density_kgm3",
+    "glue": "P:landing.materials.glue_g_per_foot",
+    "alloc": "P:mass.allocation_g.landing"
+   },
+   "units": {
+    "w": "m",
+    "bw_t": "m",
+    "leg_depth": "m",
+    "win_z": "m",
+    "flange_t": "m",
+    "pad_t": "m",
+    "hook_len": "m",
+    "hook_p": "m",
+    "fy": "m",
+    "fz": "m",
+    "slv": "m",
+    "pist": "m",
+    "L_slv": "m",
+    "L_sk": "m",
+    "L_leg": "m",
+    "L_cart": "m",
+    "L_win": "m",
+    "fl_z": "m",
+    "rho_petg": "kg/m3",
+    "rho_neo": "kg/m3",
+    "rho_xps": "kg/m3",
+    "glue": "g",
+    "alloc": "g"
+   },
+   "outputs": {
+    "shoe_g": 4.237304800000006,
+    "piston_g": 4.146550000000002,
+    "cartridge_g": 0.5073800000000004,
+    "pad_g": 0.8927359999999999,
+    "foot_g": 9.78397080000001,
+    "total_g": 39.13588320000004,
+    "alloc_margin_g": 0.8641167999999624
+   },
+   "input_values": {
+    "w": 0.0008,
+    "bw_t": 0.001,
+    "leg_depth": 0.01,
+    "win_z": 0.006,
+    "flange_t": 0.0025,
+    "pad_t": 0.0016,
+    "hook_len": 0.002,
+    "hook_p": 0.0006,
+    "fy": 0.011,
+    "fz": 0.018,
+    "slv": [
+     0.0148,
+     0.0218
+    ],
+    "pist": [
+     0.0128,
+     0.019799999999999998
+    ],
+    "L_slv": 0.04500000000000004,
+    "L_sk": 0.04400000000000004,
+    "L_leg": 0.03710000000000008,
+    "L_cart": 0.07700000000000007,
+    "L_win": 0.035,
+    "fl_z": 0.028999999999999998,
+    "rho_petg": 1270.0,
+    "rho_neo": 1300.0,
+    "rho_xps": 30.0,
+    "glue": 0.35,
+    "alloc": 40
+   }
+  },
+  {
+   "id": "CALC-D5-FLANGE",
+   "type": "calculation",
+   "title": "Flange overhang bending under the ultimate foot load at its edge",
+   "script": "redesign/team/D5/feet_calc.py",
+   "function": "flange",
+   "equation": "M = F a ; sigma = 6 M / (b t^2) ; SF = allow / sigma (b = sleeve width y)",
+   "inputs": {
+    "F": "CL-C1-FOOT-F-ULT",
+    "a": "CL-D5-FLANGE-OVERHANG",
+    "b": "CL-D5-SLEEVE-OUT",
+    "t": "P:landing.piston.flange_t_m",
+    "allow": "ASM-D5-PETG-SIGMA"
+   },
+   "units": {
+    "F": "N",
+    "a": "m",
+    "b": "m",
+    "t": "m",
+    "allow": "Pa"
+   },
+   "outputs": {
+    "sigma_Pa": 30126955.296760496,
+    "sf": 1.3277146530735264
+   },
+   "input_values": {
+    "F": 56.64112530386875,
+    "a": 0.008200000000000013,
+    "b": [
+     0.0148,
+     0.0218
+    ],
+    "t": 0.0025,
+    "allow": 40000000.0
+   }
+  },
+  {
+   "id": "CALC-D5-BOND",
+   "type": "calculation",
+   "title": "Shoe-to-fin bond shear at the printed/bonded design load",
+   "script": "redesign/team/D5/feet_calc.py",
+   "function": "bond",
+   "equation": "A = L (2 d + t_fin) ; tau_d = F ff / A ; SF = tau_allow / tau_d",
+   "inputs": {
+    "F": "CL-C1-FOOT-F-ULT",
+    "ff": "ASM-D5-FIT-FACTOR",
+    "L": "CL-D5-LEG-LEN",
+    "d": "P:landing.shoe.leg_depth_m",
+    "t_fin": "CL-D5-T-FIN",
+    "tau": "ASM-D5-BOND-TAU"
+   },
+   "units": {
+    "F": "N",
+    "L": "m",
+    "d": "m",
+    "t_fin": "m",
+    "tau": "Pa"
+   },
+   "outputs": {
+    "area_m2": 0.0010981600000000023,
+    "tau_Pa": 74143.67453222768,
+    "sf": 2.6974654447840583
+   },
+   "input_values": {
+    "F": 56.64112530386875,
+    "ff": 1.4375,
+    "L": 0.03710000000000008,
+    "d": 0.01,
+    "t_fin": 0.0096,
+    "tau": 200000.0
+   }
+  },
+  {
+   "id": "CALC-D5-BOX",
+   "type": "calculation",
+   "title": "Splayed feet in the transport box height",
+   "script": "redesign/team/D5/feet_calc.py",
+   "function": "box",
+   "equation": "slack = (H_ext - 2 wall) - 2 z_outer ; growth = 2 z_outer - envelope height",
+   "inputs": {
+    "ext": "P:requirements.box_external_m",
+    "wall": "ASM-A1-WALL",
+    "z_out": "P:landing.pad.z_outer_m",
+    "env": "P:transport.envelope_props_off_m"
+   },
+   "units": {
+    "ext": "m",
+    "wall": "m",
+    "z_out": "m",
+    "env": "m"
+   },
+   "outputs": {
+    "slack_m": 0.01200000000000001,
+    "growth_m": 0.013000000000000012
+   },
+   "input_values": {
+    "ext": [
+     1.25,
+     0.55,
+     0.5
+    ],
+    "wall": 0.025,
+    "z_out": 0.219,
+    "env": [
+     1.15,
+     0.47,
+     0.425
+    ]
+   }
+  },
+  {
+   "id": "CL-D5-CART-LEN",
+   "type": "claim",
+   "title": "Crush cartridge length",
+   "calc": "CALC-D5-GEOM",
+   "output": "cart_len_m",
+   "unit": "m",
+   "parts": [
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL"
+   ],
+   "how": "Measure the cut cartridge pair: 77 mm + 0.5 mm preload.",
+   "value": 0.07700000000000007
+  },
+  {
+   "id": "CL-D5-SLEEVE-OUT",
+   "type": "claim",
+   "title": "Sleeve outside y x z",
+   "calc": "CALC-D5-GEOM",
+   "output": "sleeve_out_m",
+   "unit": "m",
+   "how": "Calipers on the printed shoe.",
+   "value": [
+    0.0148,
+    0.0218
+   ]
+  },
+  {
+   "id": "CL-D5-PISTON-OUT",
+   "type": "claim",
+   "title": "Piston outside y x z",
+   "calc": "CALC-D5-GEOM",
+   "output": "piston_out_m",
+   "unit": "m",
+   "how": "Calipers on the printed piston; it slides in the sleeve by hand without play.",
+   "value": [
+    0.0128,
+    0.019799999999999998
+   ]
+  },
+  {
+   "id": "CL-D5-SLEEVE-LEN",
+   "type": "claim",
+   "title": "Sleeve length (back wall to end)",
+   "calc": "CALC-D5-GEOM",
+   "output": "sleeve_len_m",
+   "unit": "m",
+   "how": "Calipers on the printed shoe.",
+   "value": 0.04500000000000004
+  },
+  {
+   "id": "CL-D5-SKIRT-LEN",
+   "type": "claim",
+   "title": "Piston skirt length",
+   "calc": "CALC-D5-GEOM",
+   "output": "skirt_len_m",
+   "unit": "m",
+   "how": "Calipers on the printed piston.",
+   "value": 0.04400000000000004
+  },
+  {
+   "id": "CL-D5-LEG-LEN",
+   "type": "claim",
+   "title": "Shoe bond length on the fin tip",
+   "calc": "CALC-D5-GEOM",
+   "output": "leg_len_m",
+   "unit": "m",
+   "how": "Calipers on the printed shoe.",
+   "value": 0.03710000000000008
+  },
+  {
+   "id": "CL-D5-WINDOW-LEN",
+   "type": "claim",
+   "title": "Snap-hook window length",
+   "calc": "CALC-D5-GEOM",
+   "output": "window_len_m",
+   "unit": "m",
+   "how": "Calipers; the hook must run the full stroke without touching the window front edge.",
+   "value": 0.035
+  },
+  {
+   "id": "CL-D5-FLANGE-Z",
+   "type": "claim",
+   "title": "Flange and pad height (z)",
+   "calc": "CALC-D5-GEOM",
+   "output": "flange_z_m",
+   "unit": "m",
+   "how": "Calipers on the printed piston.",
+   "value": 0.028999999999999998
+  },
+  {
+   "id": "CL-D5-FLANGE-OVERHANG",
+   "type": "claim",
+   "title": "Flange overhang outboard of the piston",
+   "calc": "CALC-D5-GEOM",
+   "output": "flange_overhang_m",
+   "unit": "m",
+   "how": "Calipers on the printed piston.",
+   "value": 0.008200000000000013
+  },
+  {
+   "id": "CL-D5-T-FIN",
+   "type": "claim",
+   "title": "Fin thickness the shoe straddles",
+   "calc": "CALC-D5-GEOM",
+   "output": "t_fin_m",
+   "unit": "m",
+   "how": "Measure the bonded two-layer fin at the TE tip; the shoe slot is this + 2 x 0.2 mm.",
+   "value": 0.0096
+  },
+  {
+   "id": "CL-D5-STROKE-AVAIL",
+   "type": "claim",
+   "title": "Crush stroke available (flange to sleeve end)",
+   "calc": "CALC-D5-GEOM",
+   "output": "stroke_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.025
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL"
+   ],
+   "how": "Assembled foot: gap between the flange and the sleeve end, feeler/calipers.",
+   "note": "CR-C1-01 constant-force option: >= 25 mm at eta >= 0.8",
+   "value": 0.032
+  },
+  {
+   "id": "CL-D5-CONTACT-Z",
+   "type": "claim",
+   "title": "Tip-over pivot (pad outboard edge less the edge round)",
+   "calc": "CALC-D5-GEOM",
+   "output": "z_contact_eff_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.21
+   },
+   "parts": [
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "Measure pad edge to the wing chord plane on the built aircraft.",
+   "note": "CR-A1-20 asks z >= +/-0.21 m",
+   "value": 0.218
+  },
+  {
+   "id": "CL-D5-TE-CLEAR-CRUSHED",
+   "type": "claim",
+   "title": "Wing TE above the ground with a fully crushed foot",
+   "calc": "CALC-D5-GEOM",
+   "output": "te_clear_crushed_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.01
+   },
+   "how": "Stand the aircraft on fully crushed spare cartridges (or the stop) and measure the TE height.",
+   "note": "A4 OI-05: grass and a crushed foot must not put the TE down",
+   "value": 0.012999999999999998
+  },
+  {
+   "id": "CL-D5-F-PLATEAU",
+   "type": "claim",
+   "title": "Crush plateau force per foot",
+   "calc": "CALC-D5-CRUSH",
+   "output": "F_plateau_N",
+   "unit": "N",
+   "parts": [
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL"
+   ],
+   "how": "T-D5-COUPON: crush one cartridge pair 30 mm in the piston on a bench press over a scale.",
+   "value": 34.056
+  },
+  {
+   "id": "CL-D5-F-PEAK",
+   "type": "claim",
+   "title": "Peak foot force (limit) in the 1.5 m/s landing",
+   "calc": "CALC-D5-CRUSH",
+   "output": "F_peak_N",
+   "unit": "N",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C1-FOOT-MAX"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "T-D5-COUPON peak; drop test T-C1-FOOT-DROP.",
+   "value": 37.4616
+  },
+  {
+   "id": "CL-D5-N-LAND",
+   "type": "claim",
+   "title": "Landing load factor with the crush feet",
+   "calc": "CALC-D5-CRUSH",
+   "output": "n_land",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.landing_n_design"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "T-C1-FOOT-DROP (C5 plans it): 0.115 m drop, accelerometer at the CG, n <= 6.",
+   "value": 5.876953982168301
+  },
+  {
+   "id": "CL-D5-STROKE-USED",
+   "type": "claim",
+   "title": "Stroke used in the 1.5 m/s landing",
+   "calc": "CALC-D5-CRUSH",
+   "output": "stroke_used_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-D5-STROKE-AVAIL"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "Measure the flange-to-sleeve gap before and after the drop test.",
+   "value": 0.02495221405964392
+  },
+  {
+   "id": "CL-D5-ETA",
+   "type": "claim",
+   "title": "Crush efficiency (energy / peak force x stroke)",
+   "calc": "CALC-D5-CRUSH",
+   "output": "eta",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.8
+   },
+   "how": "Integrate the T-D5-COUPON force-stroke record.",
+   "note": "CR-C1-01 constant-force option",
+   "value": 0.8389568522165598
+  },
+  {
+   "id": "CL-D5-STRAIN-MARGIN",
+   "type": "claim",
+   "title": "Cartridge strain margin to densification",
+   "calc": "CALC-D5-CRUSH",
+   "output": "strain_margin",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "T-D5-COUPON: force still flat at 33 % strain.",
+   "value": 0.22594527195267672
+  },
+  {
+   "id": "CL-D5-SET-NORMAL",
+   "type": "claim",
+   "title": "Permanent crush per normal 0.5 m/s landing",
+   "calc": "CALC-D5-CRUSH",
+   "output": "set_normal_m",
+   "unit": "m",
+   "how": "Measure the flange gap after each of the first 10 hover landings (H2).",
+   "value": 0.0004607763683345064
+  },
+  {
+   "id": "CL-D5-MARK-MARGIN",
+   "type": "claim",
+   "title": "Replace mark leaves the full design stroke",
+   "calc": "CALC-D5-CRUSH",
+   "output": "mark_margin_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "With the groove at the sleeve end, the remaining gap must be >= the stroke used (CL-D5-STROKE-USED).",
+   "value": 0.001047785940356082
+  },
+  {
+   "id": "CL-D5-TIPOVER-NARROW",
+   "type": "claim",
+   "title": "Tip-over angle, narrow axis, splayed pads, CG at target",
+   "calc": "CALC-D5-TIPOVER",
+   "output": "narrow_deg",
+   "unit": "deg",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.tipover_min_deg"
+   },
+   "verifies": [
+    "R-TIPOVER"
+   ],
+   "parts": [
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "C5 tilting-board test: angle at which the built aircraft tips about the pad edges.",
+   "value": 34.181513196371455
+  },
+  {
+   "id": "CL-D5-TIPOVER-CR-TARGET",
+   "type": "claim",
+   "title": "Tip-over vs the CR-A1-20 target 33 deg",
+   "calc": "CALC-D5-TIPOVER",
+   "output": "narrow_deg",
+   "unit": "deg",
+   "limit": {
+    "op": ">=",
+    "value": 33.0
+   },
+   "how": "As CL-D5-TIPOVER-NARROW.",
+   "value": 34.181513196371455
+  },
+  {
+   "id": "CL-D5-TIPOVER-CORNER",
+   "type": "claim",
+   "title": "Tip-over at the worst CG corner (x fwd limit, |z| max)",
+   "calc": "CALC-D5-TIPOVER",
+   "output": "corner_deg",
+   "unit": "deg",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.tipover_min_deg"
+   },
+   "how": "Tilting board with the pack slid to its forward stop and ballast at the z limit.",
+   "value": 30.04773030082034
+  },
+  {
+   "id": "CL-D5-MASS-FOOT",
+   "type": "claim",
+   "title": "Mass of one complete foot",
+   "calc": "CALC-D5-MASS",
+   "output": "foot_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "value": 10.0
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "Weigh one assembled foot (T-A3-WEIGH-PARTS).",
+   "note": "CR-A1-20: <= 10 g each",
+   "value": 9.78397080000001
+  },
+  {
+   "id": "CL-D5-MASS-TOTAL",
+   "type": "claim",
+   "title": "Landing subsystem flying mass",
+   "calc": "CALC-D5-MASS",
+   "output": "total_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mass.allocation_g.landing"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "Weigh the four feet with glue.",
+   "value": 39.13588320000004
+  },
+  {
+   "id": "CL-D5-FLANGE-SF",
+   "type": "claim",
+   "title": "Flange overhang bending, safety factor at ultimate",
+   "calc": "CALC-D5-FLANGE",
+   "output": "sf",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL"
+   ],
+   "how": "Load a printed piston flange edge to 60 N on a vice-held skirt; no crack.",
+   "value": 1.3277146530735264
+  },
+  {
+   "id": "CL-D5-BOND-SF",
+   "type": "claim",
+   "title": "Shoe-to-fin bond, safety factor at the printed/bonded design load",
+   "calc": "CALC-D5-BOND",
+   "output": "sf",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "how": "Pull test of a shoe bonded on a foam-board offcut to 87 N along x (C6 to confirm the allowable).",
+   "value": 2.6974654447840583
+  },
+  {
+   "id": "CL-D5-BOX-SLACK",
+   "type": "claim",
+   "title": "Box height slack with the splayed feet",
+   "calc": "CALC-D5-BOX",
+   "output": "slack_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-TRANSPORT"
+   ],
+   "how": "D7: close the lid on the built aircraft.",
+   "value": 0.01200000000000001
+  },
+  {
+   "id": "CL-D5-ENVELOPE-GROWTH",
+   "type": "claim",
+   "title": "Props-off envelope height growth from the splay",
+   "calc": "CALC-D5-BOX",
+   "output": "growth_m",
+   "unit": "m",
+   "how": "A1 updates transport.envelope_props_off_m (CR-D5-01).",
+   "value": 0.013000000000000012
+  },
+  {
+   "id": "CL-D5-PAD-MU",
+   "type": "claim",
+   "title": "Pad friction vs the friction to stand in 8 m/s",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C1-STANCE-MU-REQ"
+   },
+   "verifies": [
+    "R-WIND"
+   ],
+   "parts": [
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "T-D5-PAD-MU tilt-board slide test.",
+   "assumes": [
+    "ASM-D5-PAD-MU"
+   ],
+   "value": 0.7
+  },
+  {
+   "id": "CL-D5-REPLACE-TIME",
+   "type": "claim",
+   "title": "Field replacement of a crushed foot insert",
+   "unit": "min",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.foot_replace_max_min"
+   },
+   "parts": [
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-003-LR",
+    "GER-003-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL"
+   ],
+   "how": "T-D5-REPLACE, stopwatch.",
+   "assumes": [
+    "ASM-D5-REPLACE-MIN"
+   ],
+   "value": 3.0
+  },
+  {
+   "id": "T-D5-COUPON",
+   "type": "test",
+   "title": "Cartridge crush coupon",
+   "verifies": [
+    "CL-D5-F-PLATEAU",
+    "CL-D5-F-PEAK",
+    "CL-D5-ETA",
+    "CL-D5-STRAIN-MARGIN"
+   ],
+   "state": "planned",
+   "procedure": "Crush 3 cartridge pairs in a printed piston + shoe on a drill-press over a kitchen scale (or the H1 thrust-stand load cell), 30 mm at < 10 mm/s; record force every 2 mm. Pass: plateau 30-37 N, peak <= 38 N. Off target: change cartridge.section_z_m by the force ratio and re-run feet_calc.py."
+  },
+  {
+   "id": "T-D5-PAD-MU",
+   "type": "test",
+   "title": "Pad slide on a tilt board",
+   "verifies": [
+    "CL-D5-PAD-MU"
+   ],
+   "state": "planned",
+   "procedure": "Foot with pad, 0.65 kg on it, on a board faced with concrete paver / asphalt shingle / turf; tilt until it slides; mu = tan(angle). Pass >= 0.7 dry."
+  },
+  {
+   "id": "T-D5-REPLACE",
+   "type": "test",
+   "title": "Timed foot-insert swap",
+   "verifies": [
+    "CL-D5-REPLACE-TIME"
+   ],
+   "state": "planned",
+   "procedure": "One student, field kit only, swap a crushed insert for a spare on the built aircraft; pass <= 10 min."
+  }
+ ]
+}

@@ -37,8 +37,6 @@ kit.source("SRC-C1-FAR23", "14 CFR Part 23 (pre-Amdt 23-64) loads", "standard",
            note="Small-aeroplane practice adopted by analogy; there is no certification basis for this UAV.")
 kit.source("SRC-C1-PRATT", "Pratt & Walker, NACA Rep. 1206 (1954) gust formula", "paper",
            where="kg = 0.88 mu / (5.3 + mu), mu = 2 (W/S) / (rho c a g)")
-kit.source("SRC-C1-SCHRENK", "Schrenk, NACA TM 948 (1940) lift distribution", "paper",
-           where="spanwise lift = mean of planform and elliptic distributions")
 kit.source("SRC-C1-THIN-AIRFOIL", "Abbott & von Doenhoff, Theory of Wing Sections, sec. 8.6", "book",
            where="plain-flap thin-airfoil increments dCl/d(delta), dCm/d(delta)")
 kit.source("SRC-C1-HOERNER", "Hoerner, Fluid-Dynamic Drag (1965), ch. 3", "book",
@@ -52,27 +50,33 @@ def asm(id, title, text, basis, value, unit, status="UNVERIFIED", cites=()):
     kit.assumption(id, title, text, basis, value=value, unit=unit, status=status, cites=cites)
 
 
-asm("ASM-C1-A0", "Section lift slope 5.65 /rad", "2-D lift slope of the reflexed section at Re 2-4e5",
-    "0.9 x 2 pi, typical of a 10 % section at low Re; B2 replaces with XFOIL", 5.65, "1/rad")
+def _b2_spanload(case="CL0.80"):
+    """B2's AVL + XFOIL strip loading (team/B2/out/loads_spanwise.json, CR-B2-07): [y_m, cl/CL, cm_c4] rows."""
+    p = HERE.parents[0] / "B2" / "out" / "loads_spanwise.json"
+    d = json.loads(p.read_text(encoding="utf-8"))["cases"][case]
+    return [[round(y, 5), round(r, 5), round(cm, 5)] for y, r, cm in zip(d["y_m"], d["cl_over_CL"], d["cm_c4"])]
+
+
+asm("ASM-C1-B2-SPANLOAD", "Spanwise lift shape and cm from B2's AVL (trimmed CL 0.80)",
+    "Strip lift per unit CL (cl/CL) and section cm about c/4 versus y of the trimmed S5010 wing with fins, props off, "
+    "copied from team/B2/out/loads_spanwise.json case CL0.80 (CR-B2-07); replaces Schrenk",
+    "B2 AVL 3.52 + XFOIL viscous cm at c 0.30 (AR 3.83); the shape changes < 1 % between CL 0.3 and 1.0 (centroid "
+    "0.421-0.423 b/2) and the 0.32 chord (AR 3.59) moves it inboard slightly (conservative). Pod and slipstream "
+    "not included (B2 note)", _b2_spanload(), "m,-,-", status="UNVERIFIED", cites=["SRC-B2-AVL", "SRC-B2-XFOIL"])
 asm("ASM-C1-CLMIN", "Negative CL limit 0.4", "Most negative CL of the reflexed wing, elevons neutral (magnitude)",
-    "reflexed sections stall early in negative lift; B2 replaces with XFOIL", 0.4, "-")
+    "B2 CR-B2-07: keep 0.4 (XFOIL section -0.38 at Re 3e5, CL-B2-CLMIN-2D); a larger magnitude raises the negative "
+    "stall line, so 0.4 is the conservative pick", 0.4, "-", cites=["SRC-B2-XFOIL"])
 asm("ASM-C1-UDE-D-FRAC", "Gust at VD is half the gust at VC", "Derived gust velocity at VD = 0.5 x the VC value",
     "FAR 23.333(c) ratio (25/50 ft/s)", 0.5, "-", status="PROPOSED", cites=["SRC-C1-FAR23"])
-asm("ASM-C1-PROP-PITCH", "Prop pitch 4.5 in", "Geometric pitch of the APC 11x4.5MR", "from the prop name",
-    0.1143, "m", status="PROPOSED", cites=["SRC-APC-11X45MR"])
-asm("ASM-C1-VD-FACTOR", "VD = 1.25 x fastest level speed", "Design dive speed = 1.25 x max(cruise, prop pitch speed)",
-    "FAR 23.335(b) VD >= 1.25 VC; the 11x4.5MR unloads near its pitch speed, which caps level speed", 1.25, "-",
-    status="PROPOSED", cites=["SRC-C1-FAR23"])
-asm("ASM-C1-THRUST-FACTOR", "Fresh-pack thrust 1.15 x table", "Maximum static thrust on a fresh 16.8 V pack",
-    "table is at load voltage; +10 % rpm on a fresh pack gives ~ +15-20 % thrust; H1 measures at 16.8 V", 1.15, "-")
-asm("ASM-C1-MOTOR-EFF", "Motor efficiency 0.80", "Shaft power / electrical power at full throttle",
-    "X3108S class outrunner near maximum load", 0.80, "-")
+asm("ASM-C1-PROP-PITCH", "Prop pitch 5.5 in", "Geometric pitch of the APC 11x5.5MR", "from the prop name (D-05)",
+    0.1397, "m", status="PROPOSED", cites=["SRC-APC-11X55MR"])
+asm("ASM-C1-VD-FACTOR", "VD = 1.25 x fastest level speed", "Design dive speed = 1.25 x max(VC, VH)",
+    "FAR 23.335(b) VD >= 1.25 VC with VC = the highest level speed the aircraft can hold; VH = max(prop pitch speed "
+    "at the F4 rpm cap, B1's top level speed)", 1.25, "-", status="PROPOSED", cites=["SRC-C1-FAR23"])
 asm("ASM-C1-BELL-INERTIA", "Motor bell inertia 1.5e-5 kg m2", "Rotating bell + magnets of the X3108S about its axis",
     "~40 g ring at r ~ 19 mm", 1.5e-5, "kg m2")
 asm("ASM-C1-PITCH-RATE", "Peak body rate 3 rad/s", "Highest body rate during transition or recovery (any axis)",
     "about 2 x the ArduPilot tailsitter rate limits; covers a saturated recovery", 3.0, "rad/s")
-asm("ASM-C1-ELEVON-EFF", "Elevon effectiveness 0.7 x thin-airfoil", "Viscous/large-deflection correction on the plain-flap increments at 25 deg",
-    "DATCOM-style correction for 20-25 deg plain flaps", 0.7, "-", cites=["SRC-C1-THIN-AIRFOIL"])
 asm("ASM-C1-ELEVON-CN", "Elevon panel CN 1.0", "Normal-force coefficient on a fully deflected elevon panel, for hinge/horn sizing",
     "upper bound for a 22 % plain flap at 25 deg; B2 hinge moments from XFOIL supersede", 1.0, "-")
 asm("ASM-C1-ADAPTER-MASS", "Prop adapter and nut 5 g", "Mass of one prop adapter and nut", "A3 mass model EST",
@@ -82,9 +86,6 @@ asm("ASM-C1-CRUSH-EFF", "Crush efficiency 0.5", "Energy absorbed / (peak force x
 asm("ASM-C1-LAND-LIFT", "Rotor lift 2/3 W at touchdown", "Thrust still acting at touchdown, fraction of weight",
     "FAR 23.473(b); ArduPilot keeps throttle until the land detector trips", 0.667, "-", status="PROPOSED",
     cites=["SRC-C1-FAR23"])
-asm("ASM-C1-N-LAND", "Landing design factor 6", "Limit ground-reaction factor the airframe is sized for",
-    "keeps a foot load near 1.5 x one motor's max thrust; feet must provide the stroke (C5/D5)", 6.0, "-",
-    status="PROPOSED")
 asm("ASM-C1-FRICTION", "Ground friction 0.5", "Side load / vertical load at a foot", "dry grass / packed dirt",
     0.5, "-")
 asm("ASM-C1-CONTACT-STROKE", "Contact stroke 10 mm", "Crush stroke at an unprotected contact (wingtip TE, motor end)",
@@ -99,8 +100,10 @@ asm("ASM-C1-CRASH-STROKE", "Crash stroke 0.10 m", "Arrest distance in the crash"
     0.10, "m", status="PROPOSED")
 asm("ASM-C1-CRADLE-Y", "Cradles at y = +/-0.20 m", "Spar cradle stations in the box", "inboard of the fins, clear of "
     "the pod and servos; D7 sets", 0.20, "m", status="PROPOSED")
-asm("ASM-C1-CRADLE-STROKE", "Cradle foam stroke 20 mm", "Usable crush stroke of the cradle/box foam in a drop",
-    "~40 mm PE foam at 50 % strain; D7 sets", 0.020, "m")
+asm("ASM-C1-CRADLE-STROKE", "Cradle foam stroke 70 mm", "Usable crush stroke of the cradle/box foam in a drop",
+    "CHANGE-LOG D-22: D7 puts >= 70 mm crush foam under the spar cradles (CR-C1-05). Read as usable STROKE; a foam "
+    "block bottoms at ~60-70 % strain, so D7 needs ~0.10-0.12 m of block thickness for it", 0.070, "m",
+    status="PROPOSED")
 asm("ASM-C1-FITTING-FACTOR", "Fitting factor 1.15", "Extra factor on every joint and fitting", "FAR 23.625",
     1.15, "-", status="PROPOSED", cites=["SRC-C1-FAR23"])
 asm("ASM-C1-PRINTED-FACTOR", "Printed/bonded factor 1.25", "Extra factor on printed PETG parts and bonds into foam",
@@ -131,7 +134,7 @@ MODEL = {
     "a_landing": P + "mass.allocation_g.landing", "a_power": P + "mass.allocation_g.power",
     "a_avionics": P + "mass.allocation_g.avionics", "a_harness": P + "mass.allocation_g.harness",
     "a_mech": P + "mass.allocation_g.mechanisms",
-    "mount_m": "ASM-J1-MOUNT-MASS", "adapter_m": "ASM-C1-ADAPTER-MASS",
+    "mount_m": "ASM-J1-MOUNT-MASS", "adapter_m": "ASM-C1-ADAPTER-MASS", "pack_x": "CL-A3-PACK-X-REQ",
 }
 MODEL_UNITS = {
     "g": "m/s2", "rho": "kg/m3", "m_gate": "kg", "b": "m", "c": "m", "x_spar": "m", "spar_len": "m",
@@ -140,7 +143,7 @@ MODEL_UNITS = {
     "motor_len": "m", "prop_m": "kg", "prop_D": "m", "esc_m": "kg", "x_mount": "m", "x_prop": "m", "st_y": "m",
     "st_z": "m", "pod_size": "m", "pod_xle": "m", "pod_zb": "m", "batt_m": "kg", "batt_size": "m", "foot_h": "m",
     "a_wing": "g", "a_fins": "g", "a_pod": "g", "a_landing": "g", "a_power": "g", "a_avionics": "g",
-    "a_harness": "g", "a_mech": "g", "mount_m": "kg", "adapter_m": "kg",
+    "a_harness": "g", "a_mech": "g", "mount_m": "kg", "adapter_m": "kg", "pack_x": "m",
 }
 MODEL_KEYS = list(MODEL)
 
@@ -249,7 +252,7 @@ def build_items(k, growth="centre", dy_target=0.005):
     L, Wd, H = k["pod_size"]
     pod_c = (k["pod_xle"] + L / 2, 0.0, k["pod_zb"] + H / 2)
     put(k["a_pod"] / 1000.0, pod_c, "centre")
-    put(k["batt_m"], (pod_c[0], 0.0, k["pod_zb"] + 0.003 + k["batt_size"][2] / 2), "pack", transport=False)
+    put(k["batt_m"], (k["pack_x"], 0.0, k["pod_zb"] + 0.003 + k["batt_size"][2] / 2), "pack", transport=False)
     put(k["a_power"] / 1000.0 - k["batt_m"], (k["pod_xle"] + 0.08, 0.0, 0.03), "centre")
     put(k["a_avionics"] / 1000.0, (k["pod_xle"] + 0.14, 0.0, 0.035), "centre")
     put(k["a_harness"] / 1000.0, pod_c, "centre")
@@ -351,10 +354,28 @@ def strips(k, dy_target=0.005):
     n = max(2, int(round(k["b"] / dy_target)))
     dy = k["b"] / n
     ys = [-k["b"] / 2 + (i + 0.5) * dy for i in range(n)]
-    b = k["b"]
-    w = [0.5 * (1.0 / b + 4.0 / (math.pi * b) * math.sqrt(max(0.0, 1 - (2 * y / b) ** 2))) for y in ys]
-    s = sum(w)
-    return ys, dy, [x / s for x in w]
+    return ys, dy, [1.0 / n] * n
+
+
+def _interp(x, xs, fs):
+    if x <= xs[0]:
+        return fs[0]
+    if x >= xs[-1]:
+        return fs[-1]
+    for i in range(1, len(xs)):
+        if x <= xs[i]:
+            t = (x - xs[i - 1]) / (xs[i] - xs[i - 1])
+            return fs[i - 1] + t * (fs[i] - fs[i - 1])
+    return fs[-1]
+
+
+def span_shape(ys, table):
+    """Lift weight per strip (sums to 1) and section cm c/4 per strip from B2's strip table [y, cl/CL, cm]."""
+    yt = [r[0] for r in table]
+    r = [_interp(abs(y), yt, [t[1] for t in table]) for y in ys]
+    cm = [_interp(abs(y), yt, [t[2] for t in table]) for y in ys]
+    s = sum(r)
+    return [x / s for x in r], cm
 
 
 def flap_increments(el_f):
@@ -365,13 +386,15 @@ def flap_increments(el_f):
     return dcl, dcm, 0.25 - dcm / dcl
 
 
-def wing_aero(k, cg, L, D, q, cm0, elevon=None, el_eff=0.7, dy_target=0.005):
-    """Spanwise strips: Schrenk lift L (N, +z), drag D (+x), Cm0 moment; optional elevon deltas {side: rad}."""
-    ys, dy, w = strips(k, dy_target)
+def wing_aero(k, cg, L, D, q, span, elevon=None, el_eff=0.606, dy_target=0.005):
+    """Spanwise strips: lift L (N, +z) on B2's AVL shape at c/4 with B2's section cm, drag D (+x) on the same shape;
+    optional elevon deltas {side: rad}. trim_lift() then moves the lift chordwise so the aircraft is in pitch trim."""
+    ys, dy, _ = strips(k, dy_target)
+    w, cms = span_shape(ys, span)
     c = k["c"]
     out = []
-    for y, wi in zip(ys, w):
-        out.append(load((cg[0], y, 0.0), (D * wi, 0.0, L * wi), (0.0, q * c * c * cm0 * dy, 0.0), grp="wing",
+    for y, wi, cm in zip(ys, w, cms):
+        out.append(load((0.25 * c, y, 0.0), (D * wi, 0.0, L * wi), (0.0, q * c * c * cm * dy, 0.0), grp="wing",
                         kind="lift"))
     if elevon:
         dcl, dcm, xf = flap_increments(k["el_f"])
@@ -428,12 +451,9 @@ def trim_split(k, cg, T_tot, other, T_lim):
 # ====================================================================== the small calculations
 
 
-def _vn(g, rho, m, b, c, clmax, clmin, a0, nlim, nneg, Vc, ude_c, ude_d_frac, Vd):
+def _vn(g, rho, m, b, c, clmax, clmin, a, nlim, nneg, Vc, ude_c, ude_d_frac, Vd):
     S = b * c
     W = m * g
-    AR = b * b / S
-    k = a0 / (math.pi * AR)
-    a = a0 / (math.sqrt(1 + k * k) + k)                       # Helmbold
     ws = W / S
     mu = 2 * ws / (rho * c * a * g)
     kg = 0.88 * mu / (5.3 + mu)
@@ -464,69 +484,83 @@ def _vn(g, rho, m, b, c, clmax, clmin, a0, nlim, nneg, Vc, ude_c, ude_d_frac, Vd
             "n_design_pos": max(nlim, npk), "n_design_neg": min(nneg, nng)}
 
 
-@kit.calc("CALC-C1-ROTOR", title="Rotor limit loads per motor",
-          equation="T_lim = k_T T_max g ; rpm = sqrt(T_lim / kT) ; V_pitch = p rpm/60 ; VD = f_D max(Vc, V_pitch) ; "
-                   "P = P_max (k_T)^1.5 ; Q = eta P / omega ; H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max",
-          inputs={"t_max": P + "propulsion.thrust_max_per_motor_kg", "g": P + "env.g_ms2",
-                  "kT": "ASM-J1-APC-KT", "kf": "ASM-C1-THRUST-FACTOR", "table": P + "propulsion.thrust_table_g_w",
-                  "eta": "ASM-C1-MOTOR-EFF", "m_p": P + "propulsion.prop_mass_kg", "D": P + "propulsion.prop_diameter_m",
+@kit.calc("CALC-C1-ROTOR", title="Rotor limit loads per motor and design dive speed",
+          equation="T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; "
+                   "rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; "
+                   "H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_cap/60 ; "
+                   "VH = max(V_pitch, VH_B1) ; VD = f_D max(Vc, VH) ; n_hover = n T_lim / (m g)",
+          inputs={"T_h": "CL-B4-HOVER-T", "rpm_h": "CL-B4-HOVER-RPM", "Q_h": "CL-B4-HOVER-Q", "kT": "CL-E1-KT",
+                  "kP": "CL-E1-KP", "rpm_cap": P + "propulsion.rpm_max", "T_req": P + "requirements.thrust_limit_per_motor_n",
+                  "t_ilim": P + "propulsion.thrust_max_per_motor_kg", "g": P + "env.g_ms2",
+                  "m_p": P + "propulsion.prop_mass_kg", "D": P + "propulsion.prop_diameter_m",
                   "I_bell": "ASM-C1-BELL-INERTIA", "q_max": "ASM-C1-PITCH-RATE", "pitch": "ASM-C1-PROP-PITCH",
-                  "Vc": P + "performance.cruise_ms", "fD": "ASM-C1-VD-FACTOR", "m": P + "requirements.mtow_gate_kg",
-                  "n_mot": P + "propulsion.n_motors"},
-          units={"t_max": "kg", "g": "m/s2", "m_p": "kg", "D": "m", "Vc": "m/s", "m": "kg"},
-          assumes=["ASM-C1-THRUST-FACTOR", "ASM-C1-MOTOR-EFF"])
-def rotor_calc(t_max, g, kT, kf, table, eta, m_p, D, I_bell, q_max, pitch, Vc, fD, m, n_mot):
-    T_lim = kf * t_max * g
-    rpm = math.sqrt(T_lim / kT)
+                  "Vc": P + "performance.cruise_ms", "VH_b1": "CL-B1-VMAX", "fD": "ASM-C1-VD-FACTOR",
+                  "m": P + "requirements.mtow_gate_kg", "n_mot": P + "propulsion.n_motors"},
+          units={"T_h": "N", "rpm_h": "rpm", "Q_h": "N*m", "rpm_cap": "rpm", "T_req": "N", "t_ilim": "kg", "g": "m/s2",
+                 "m_p": "kg", "D": "m", "Vc": "m/s", "VH_b1": "m/s", "m": "kg"},
+          assumes=["ASM-C1-PROP-PITCH", "ASM-C1-VD-FACTOR", "ASM-C1-PITCH-RATE"], cites=["SRC-C1-FAR23"])
+def rotor_calc(T_h, rpm_h, Q_h, kT, kP, rpm_cap, T_req, t_ilim, g, m_p, D, I_bell, q_max, pitch, Vc, VH_b1, fD, m,
+               n_mot):
+    T_cap = kT * T_h * (rpm_cap / rpm_h) ** 2
+    T_lim = max(T_req, T_cap)
+    rpm = rpm_h * math.sqrt(T_lim / (kT * T_h))
     omega = rpm * 2 * math.pi / 60
-    p_max = max(row[1] for row in table)
-    P_lim = p_max * kf ** 1.5
-    Q = eta * P_lim / omega
+    Q = kP * Q_h * (rpm / rpm_h) ** 2
     I_rot = m_p * D * D / 12 + I_bell
-    v_pitch = pitch * rpm / 60
-    Vd = fD * max(Vc, v_pitch)
-    return {"T_lim_N": T_lim, "rpm": rpm, "omega": omega, "P_elec_W": P_lim, "Q_Nm": Q, "I_rot": I_rot,
-            "H_Nms": I_rot * omega, "M_gyro_Nm": I_rot * omega * q_max, "V_pitch_ms": v_pitch, "VD_ms": Vd,
-            "n_hover_max": n_mot * T_lim / (m * g)}
+    v_pitch = pitch * rpm_cap / 60
+    VH = max(v_pitch, VH_b1)
+    Vd = fD * max(Vc, VH)
+    return {"T_cap_N": T_cap, "T_ilim_N": t_ilim * g, "T_lim_N": T_lim, "rpm": rpm, "omega": omega, "Q_Nm": Q,
+            "I_rot": I_rot, "H_Nms": I_rot * omega, "M_gyro_Nm": I_rot * omega * q_max, "V_pitch_ms": v_pitch,
+            "VH_ms": VH, "VD_ms": Vd, "n_hover_max": n_mot * T_lim / (m * g)}
 
 
 @kit.calc("CALC-C1-VN", title="V-n diagram: manoeuvre and gust envelope",
-          equation="Vs = sqrt(2W/(rho S CLmax)); VA = Vs sqrt(n+); a = Helmbold(a0, AR); mu = 2(W/S)/(rho c a g); "
+          equation="Vs = sqrt(2W/(rho S CLmax)); VA = Vs sqrt(n+); a = CL_alpha (B2 AVL); mu = 2(W/S)/(rho c a g); "
                    "kg = 0.88mu/(5.3+mu); dn = kg rho U V a / (2 W/S); n_gust = min(stall line, 1 +/- dn), U = Ude_C to VC "
-                   "then linear to f Ude_C at VD; design n = max(manoeuvre, gust)",
+                   "then linear to f Ude_C at VD; VD = max(VD_req, VD_C1); design n = max(requirement, gust)",
           inputs={"g": P + "env.g_ms2", "rho": P + "env.rho_kgm3", "m": P + "requirements.mtow_gate_kg",
-                  "b": P + "wing.span_m", "c": P + "wing.chord_m", "clmax": "ASM-A1-CLMAX", "clmin": "ASM-C1-CLMIN",
-                  "a0": "ASM-C1-A0", "nlim": "ASM-A2-LOAD-FACTOR", "Vc": P + "performance.cruise_ms",
-                  "ude_c": P + "requirements.gust_survive_ms", "ude_d_frac": "ASM-C1-UDE-D-FRAC", "Vd": "CL-C1-VD"},
-          units={"g": "m/s2", "rho": "kg/m3", "m": "kg", "b": "m", "c": "m", "Vc": "m/s", "ude_c": "m/s", "Vd": "m/s"},
-          assumes=["ASM-A1-CLMAX", "ASM-C1-CLMIN", "ASM-C1-A0"], cites=["SRC-C1-FAR23", "SRC-C1-PRATT"])
-def vn_calc(g, rho, m, b, c, clmax, clmin, a0, nlim, Vc, ude_c, ude_d_frac, Vd):
-    return _vn(g, rho, m, b, c, clmax, clmin, a0, nlim, -0.5 * nlim, Vc, ude_c, ude_d_frac, Vd)
+                  "b": P + "wing.span_m", "c": P + "wing.chord_m", "clmax": "CL-B2-CLMAX-DESIGN", "clmin": "ASM-C1-CLMIN",
+                  "a": "CL-B2-CLA-3D", "nlim": P + "requirements.load_factor_limit_pos",
+                  "nneg": P + "requirements.load_factor_limit_neg", "Vc": P + "performance.cruise_ms",
+                  "ude_c": P + "requirements.gust_survive_ms", "ude_d_frac": "ASM-C1-UDE-D-FRAC",
+                  "Vd_req": P + "requirements.vd_ms", "Vd_c1": "CL-C1-VD"},
+          units={"g": "m/s2", "rho": "kg/m3", "m": "kg", "b": "m", "c": "m", "a": "1/rad", "Vc": "m/s", "ude_c": "m/s",
+                 "Vd_req": "m/s", "Vd_c1": "m/s"},
+          assumes=["ASM-C1-CLMIN", "ASM-C1-UDE-D-FRAC"], cites=["SRC-C1-FAR23", "SRC-C1-PRATT"])
+def vn_calc(g, rho, m, b, c, clmax, clmin, a, nlim, nneg, Vc, ude_c, ude_d_frac, Vd_req, Vd_c1):
+    Vd = max(Vd_req, Vd_c1)
+    out = _vn(g, rho, m, b, c, clmax, clmin, a, nlim, nneg, Vc, ude_c, ude_d_frac, Vd)
+    out["VD_env"] = Vd
+    out["q_VD_Pa"] = 0.5 * rho * Vd * Vd
+    return out
 
 
 @kit.calc("CALC-C1-LANDING", title="Landing, wingtip strike, tip-over and stance-in-wind loads",
-          equation="n_L = v^2/(2 g eta s) + 1 - L/W ; s_req = v^2 / (2 g eta (n_target - 1 + L/W)) ; "
+          equation="n_L = v^2/(2 g eta s) + 1 - L/W at s = s_min (requirement) and s = foot height (bound) ; "
+                   "s_req = v^2 / (2 g eta (n_target - 1 + L/W)) ; "
                    "F_foot = m_eff v^2/(2 eta s) + (1 - L/W) W/4 with m_eff = 1/(1/m + (r x n).I^-1.(r x n)) ; "
                    "wingtip strike roll = atan(foot / (b/2 - y_fin)) ; foot_req = (b/2 - y_fin) tan(attitude) ; "
                    "tip-over: KE = m g r (1 - cos(phi0 + theta_c)) ; F = KE / (eta s) ; stance wind: q S CD h = W d",
-          inputs={**MODEL, "v": "ASM-A2-LANDING-SINK", "eta": "ASM-C1-CRUSH-EFF", "lw": "ASM-C1-LAND-LIFT",
-                  "n_t": "ASM-C1-N-LAND", "att": "ASM-A2-LANDING-ATTITUDE", "s_c": "ASM-C1-CONTACT-STROKE",
+          inputs={**MODEL, "v": P + "requirements.landing_sink_ms", "eta": "ASM-C1-CRUSH-EFF", "lw": "ASM-C1-LAND-LIFT",
+                  "n_t": P + "requirements.landing_n_design", "att": P + "requirements.landing_attitude_err_deg",
+                  "s_min": P + "requirements.foot_crush_stroke_min_m", "s_c": "ASM-C1-CONTACT-STROKE",
                   "cdp": "ASM-C1-CD-PLATE", "v_gust": P + "requirements.gust_survive_ms",
                   "x_cg_t": P + "cg.x_target_m", "mu": "ASM-C1-FRICTION"},
-          units={**MODEL_UNITS, "v": "m/s", "att": "deg", "s_c": "m", "v_gust": "m/s", "x_cg_t": "m"},
-          assumes=["ASM-C1-CRUSH-EFF", "ASM-C1-LAND-LIFT", "ASM-C1-N-LAND", "ASM-C1-CONTACT-STROKE"],
+          units={**MODEL_UNITS, "v": "m/s", "att": "deg", "s_min": "m", "s_c": "m", "v_gust": "m/s", "x_cg_t": "m"},
+          assumes=["ASM-C1-CRUSH-EFF", "ASM-C1-LAND-LIFT", "ASM-C1-CONTACT-STROKE"],
           cites=["SRC-C1-FAR23"])
-def landing_calc(v, eta, lw, n_t, att, s_c, cdp, v_gust, x_cg_t, mu, **k):
-    return _landing(k, v, eta, lw, n_t, att, s_c, cdp, v_gust, x_cg_t, mu)
+def landing_calc(v, eta, lw, n_t, att, s_min, s_c, cdp, v_gust, x_cg_t, mu, **k):
+    return _landing(k, v, eta, lw, n_t, att, s_min, s_c, cdp, v_gust, x_cg_t, mu)
 
 
-def _landing(k, v, eta, lw, n_t, att, s_c, cdp, v_gust, x_cg_t, mu, growth="centre"):
+def _landing(k, v, eta, lw, n_t, att, s_min, s_c, cdp, v_gust, x_cg_t, mu, growth="centre"):
     g = k["g"]
     items = build_items(k, growth)
     m, cg, I = mass_props(items)
     W = m * g
-    s_now = k["foot_h"]
-    n_now = v * v / (2 * g * eta * s_now) + 1 - lw
+    n_smin = v * v / (2 * g * eta * s_min) + 1 - lw
+    n_foot = v * v / (2 * g * eta * k["foot_h"]) + 1 - lw
     s_req = v * v / (2 * g * eta * (n_t - 1 + lw))
     xg = k["fin_te"] + k["foot_h"]                          # ground plane in the stance (x)
     nrm = (-1.0, 0.0, 0.0)
@@ -539,7 +573,7 @@ def _landing(k, v, eta, lw, n_t, att, s_c, cdp, v_gust, x_cg_t, mu, growth="cent
     grav = (1 - lw) * W / 4
     f = {"level": me_level * kin + grav, "pair_narrow": me_pair_n * kin + grav,
          "pair_wide": me_pair_w * kin + grav, "corner": me_corner * kin + grav}
-    f_now = me_level * v * v / (2 * eta * s_now) + grav
+    f_smin = me_level * v * v / (2 * eta * s_min) + grav
     out_tip = k["b"] / 2 - k["fin_y"]
     tip_angle = math.degrees(math.atan(k["foot_h"] / out_tip))
     foot_req = out_tip * math.tan(math.radians(att))
@@ -564,7 +598,8 @@ def _landing(k, v, eta, lw, n_t, att, s_c, cdp, v_gust, x_cg_t, mu, growth="cent
     h_d = xg - k["c"] / 2
     d_rest = k["fin_hh"] - abs(cg[2])
     v_tip = math.sqrt(2 * W * d_rest / (h_d * k["rho"] * Sw * cdp))
-    return {"m_kg": m, "W_N": W, "n_L_now": n_now, "F_foot_now_N": f_now, "stroke_req_m": s_req,
+    return {"m_kg": m, "W_N": W, "n_L_stroke_min": n_smin, "n_L_full_foot": n_foot, "F_foot_stroke_min_N": f_smin,
+            "stroke_req_m": s_req,
             "F_foot_level_N": f["level"], "F_foot_pair_narrow_N": f["pair_narrow"],
             "F_foot_pair_wide_N": f["pair_wide"], "F_foot_corner_N": f["corner"],
             "F_foot_max_N": max(f.values()), "F_side_max_N": mu * max(f.values()),
@@ -587,7 +622,7 @@ def crash_calc(v, s, g, pack, fc):
 
 @kit.calc("CALC-C1-TRANSPORT-N", title="Box drop load factor",
           equation="n_T = 1 + h / (eta s)",
-          inputs={"h": "ASM-A2-BOX-DROP", "eta": "ASM-C1-CRUSH-EFF", "s": "ASM-C1-CRADLE-STROKE"},
+          inputs={"h": P + "requirements.box_drop_m", "eta": "ASM-C1-CRUSH-EFF", "s": "ASM-C1-CRADLE-STROKE"},
           units={"h": "m", "s": "m"})
 def transport_n_calc(h, eta, s):
     return {"n_T": 1 + h / (eta * s), "v_impact_ms": math.sqrt(2 * 9.80665 * h)}
@@ -621,7 +656,7 @@ def build_cases(k, X, items, growth, dy=0.005):
         qq = 0.5 * k["rho"] * V * V
         L = n * W
         D = drag(V, L)
-        lds = wing_aero(k, cg, L, D, qq, X["cm0"], elevon, X["el_eff"], dy)
+        lds = wing_aero(k, cg, L, D, qq, X["span"], elevon, X["el_eff"], dy)
         lds += rotor_loads(k, Rr, {st: D / 4 for st in STATIONS})
         trim_lift(lds, cg, xlim)
         cases.append({"id": cid, "family": "flight", "title": title, "gb": (0.0, 0.0, -g), "loads": lds,
@@ -680,7 +715,7 @@ def build_cases(k, X, items, growth, dy=0.005):
         qq = 0.5 * k["rho"] * V * V
         L = qq * S * X["clmax"]
         D = drag(V, L)
-        lds = wing_aero(k, cg, L, D, qq, X["cm0"], dy_target=dy)
+        lds = wing_aero(k, cg, L, D, qq, X["span"], dy_target=dy)
         lds += rotor_loads(k, Rr, thrust, q_body)
         if trim:
             trim_lift(lds, cg, xlim)
@@ -745,17 +780,24 @@ def build_cases(k, X, items, growth, dy=0.005):
     cases.append({"id": "G2-HANG-MOTOR", "family": "ground", "title": "Carried by one upper motor tube end (UR)",
                   "gb": mul(gdir, g), "loads": [load(hand, mul(gdir, -nh * W), grp="tube", side=1, fin=True, st="UR",
                                                      kind="hand")], "info": {"n": nh}})
+    # set down flat (lower surface down): the lowest points are the lower motor cans (z -0.19), the lower tube
+    # ends (z -0.21) and the lower feet (z -0.19). The pair of contacts that brackets the CG in x carries it.
+    xm = k["x_mount"] - k["tube_od"] / 2 - k["motor_len"]
     xt, xf = k["tube_x"], k["fin_te"] + k["foot_h"]
-    Rt = nh * W * (xf - cg[0]) / (xf - xt) / 2
-    Rf = nh * W / 2 - Rt
+    if cg[0] < xt:
+        (xa, za, ga), (xb, zb, gb_) = (xm, -k["st_z"], "rotor"), (xt, -k["tube_len"] / 2, "tube")
+    else:
+        (xa, za, ga), (xb, zb, gb_) = (xt, -k["tube_len"] / 2, "tube"), (xf, -k["fin_hh"], "foot")
+    Ra = nh * W * (xb - cg[0]) / (xb - xa) / 2
+    Rb = nh * W / 2 - Ra
     sup = []
     for s in (1, -1):
-        sup.append(load((xt, s * k["fin_y"], -k["tube_len"] / 2), (0.0, 0.0, Rt), grp="tube", side=s, fin=True,
-                        st=("LR" if s > 0 else "LL"), kind="ground"))
-        sup.append(load((xf, s * k["fin_y"], -k["fin_hh"]), (0.0, 0.0, Rf), grp="foot", side=s, fin=True,
-                        st=("LR" if s > 0 else "LL"), kind="ground"))
-    cases.append({"id": "G3-BENCH", "family": "ground", "title": "Set down flat on lower tube ends and feet",
-                  "gb": (0.0, 0.0, -g), "loads": sup, "info": {"n": nh, "R_tube_N": Rt, "R_foot_N": Rf}})
+        st = "LR" if s > 0 else "LL"
+        sup.append(load((xa, s * k["fin_y"], za), (0.0, 0.0, Ra), grp=ga, side=s, fin=True, st=st, kind="ground"))
+        sup.append(load((xb, s * k["fin_y"], zb), (0.0, 0.0, Rb), grp=gb_, side=s, fin=True, st=st, kind="ground"))
+    cases.append({"id": "G3-BENCH", "family": "ground", "title": "Set down flat on the lower motors / tube ends / feet",
+                  "gb": (0.0, 0.0, -g), "loads": sup,
+                  "info": {"n": nh, "support_a": ga, "R_a_N": Ra, "support_b": gb_, "R_b_N": Rb}})
 
     nT = X["n_T"]
     W_T = sum(i["m"] for i in items if i["transport"]) * g
@@ -897,7 +939,7 @@ def envelope_scalars(res, fam=ENVELOPE_FAMILIES, skip_cases=()):
 def derived(k, kx):
     """Scalars the cases need, gathered from the other claims (passed in kx)."""
     return {"rotor": kx["rotor"], "q_max": kx["q_max"], "Vc": kx["Vc"], "ld": kx["ld"], "e": kx["e"],
-            "cm0": kx["cm0"], "el_eff": kx["el_eff"], "el_def": k["el_def"][1], "n_pos": kx["n_pos"],
+            "span": kx["span"], "el_eff": kx["el_eff"], "el_def": k["el_def"][1], "n_pos": kx["n_pos"],
             "n_neg": kx["n_neg"], "VD": kx["VD"], "VA": kx["VA"], "n_gust_pos": kx["n_gust_pos"],
             "V_gust_pos": kx["V_gust_pos"], "n_gust_neg": kx["n_gust_neg"], "V_gust_neg": kx["V_gust_neg"],
             "v_gust": kx["v_gust"], "cdp": kx["cdp"], "clmax": kx["clmax"], "V_tr": kx["V_tr"],
@@ -909,15 +951,16 @@ ENV_INPUTS = {
     **MODEL,
     "T_lim": "CL-C1-T-LIMIT", "Q": "CL-C1-MOTOR-TORQUE", "H": "CL-C1-ROTOR-H", "omega_lim": "CL-C1-ROTOR-OMEGA",
     "q_max": "ASM-C1-PITCH-RATE", "Vc": P + "performance.cruise_ms", "ld": P + "performance.ld_cruise",
-    "e": P + "wing.oswald_e", "cm0": "ASM-J1-MH45-CM0", "el_eff": "ASM-C1-ELEVON-EFF",
-    "n_pos": "CL-C1-N-LIMIT-POS", "n_neg": "CL-C1-N-LIMIT-NEG", "VD": "CL-C1-VD", "VA": "CL-C1-VA",
+    "e": P + "wing.oswald_e", "span": "ASM-C1-B2-SPANLOAD", "el_eff": "CL-B2-ELEVON-ETA",
+    "n_pos": "CL-C1-N-LIMIT-POS", "n_neg": "CL-C1-N-LIMIT-NEG", "VD": "CL-C1-VD-ENV", "VA": "CL-C1-VA",
     "n_gp": "CL-C1-GUST-N-POS", "V_gp": "CL-C1-GUST-V-POS", "n_gn": "CL-C1-GUST-N-NEG", "V_gn": "CL-C1-GUST-V-NEG",
-    "v_gust": P + "requirements.gust_survive_ms", "cdp": "ASM-C1-CD-PLATE", "clmax": "ASM-A1-CLMAX",
+    "v_gust": P + "requirements.gust_survive_ms", "cdp": "ASM-C1-CD-PLATE", "clmax": "CL-B2-CLMAX-DESIGN",
     "V_tr": "CL-A1-TRANSITION-GATE", "F_lvl": "CL-C1-FOOT-LEVEL", "F_pn": "CL-C1-FOOT-PAIR-NARROW",
     "F_pw": "CL-C1-FOOT-PAIR-WIDE", "F_cor": "CL-C1-FOOT-CORNER", "F_tip": "CL-C1-WINGTIP-FORCE",
     "th_to": "CL-C1-TIPOVER-ANGLE-CONTACT", "F_to": "CL-C1-TIPOVER-FORCE", "lw": "ASM-C1-LAND-LIFT",
-    "att": "ASM-A2-LANDING-ATTITUDE", "mu": "ASM-C1-FRICTION", "n_h": "ASM-C1-HANDLING-N", "n_T": "CL-C1-TRANSPORT-N",
-    "y_cr": "ASM-C1-CRADLE-Y", "h_drop": "ASM-A2-BOX-DROP", "s_cr": "ASM-C1-CRADLE-STROKE", "eta": "ASM-C1-CRUSH-EFF", "sf": "ASM-A2-SAFETY-FACTOR",
+    "att": P + "requirements.landing_attitude_err_deg", "mu": "ASM-C1-FRICTION", "n_h": "ASM-C1-HANDLING-N", "n_T": "CL-C1-TRANSPORT-N",
+    "y_cr": "ASM-C1-CRADLE-Y", "h_drop": P + "requirements.box_drop_m", "s_cr": "ASM-C1-CRADLE-STROKE",
+    "eta": "ASM-C1-CRUSH-EFF", "sf": P + "requirements.safety_factor_ult",
     "kfit": "ASM-C1-FITTING-FACTOR", "kprint": "ASM-C1-PRINTED-FACTOR",
 }
 ENV_UNITS = {**MODEL_UNITS, "Vc": "m/s", "VD": "m/s", "VA": "m/s", "V_gp": "m/s", "V_gn": "m/s", "v_gust": "m/s",
@@ -934,7 +977,7 @@ def pack_inputs(kw):
     k = {kk: kw[kk] for kk in MODEL_KEYS}
     kx = {
         "rotor": {"T_lim_N": kw["T_lim"], "Q_Nm": kw["Q"], "I_rot": kw["H"] / kw["omega_lim"], "omega": kw["omega_lim"]},
-        "q_max": kw["q_max"], "Vc": kw["Vc"], "ld": kw["ld"], "e": kw["e"], "cm0": kw["cm0"], "el_eff": kw["el_eff"],
+        "q_max": kw["q_max"], "Vc": kw["Vc"], "ld": kw["ld"], "e": kw["e"], "span": kw["span"], "el_eff": kw["el_eff"],
         "n_pos": kw["n_pos"], "n_neg": kw["n_neg"], "VD": kw["VD"], "VA": kw["VA"], "n_gust_pos": kw["n_gp"],
         "V_gust_pos": kw["V_gp"], "n_gust_neg": kw["n_gn"], "V_gust_neg": kw["V_gn"], "v_gust": kw["v_gust"],
         "cdp": kw["cdp"], "clmax": kw["clmax"], "V_tr": kw["V_tr"],
@@ -952,8 +995,8 @@ def pack_inputs(kw):
                    "SF x limit ; joints x fitting factor ; transport n_allow = n_T x min(envelope / transport) ; "
                    "s_req = h / (eta (n_allow - 1))",
           inputs=ENV_INPUTS, units=ENV_UNITS,
-          assumes=["ASM-C1-ELEVON-EFF", "ASM-C1-CD-PLATE", "ASM-C1-HANDLING-N", "ASM-C1-CRADLE-Y"],
-          cites=["SRC-C1-SCHRENK", "SRC-C1-THIN-AIRFOIL", "SRC-C1-FAR23"])
+          assumes=["ASM-C1-B2-SPANLOAD", "ASM-C1-CD-PLATE", "ASM-C1-HANDLING-N", "ASM-C1-CRADLE-Y"],
+          cites=["SRC-B2-AVL", "SRC-C1-THIN-AIRFOIL", "SRC-C1-FAR23"])
 def envelope_calc(**kw):
     k, X = pack_inputs(kw)
     res = run_all(k, X)
@@ -995,38 +1038,59 @@ def envelope_calc(**kw):
 
 # ====================================================================== claims
 # rotor
-kit.claim("CL-C1-T-LIMIT", "Limit thrust per motor", calc="CALC-C1-ROTOR", output="T_lim_N", unit="N",
-          verifies=["R-LOADS"], parts=[], how="H1 thrust stand at 16.8 V (fresh pack), 11x4.5MR: measured max thrust <= this value.",
-          note="Fresh-pack factor on the UNVERIFIED thrust table; every rotor load scales with it.")
+kit.claim("CL-C1-T-CAP", "Peak static thrust per motor at the F4 rpm cap", calc="CALC-C1-ROTOR", output="T_cap_N",
+          unit="N", limit=("<=", P + "requirements.thrust_limit_per_motor_n"), verifies=["R-LOADS"], parts=[],
+          how="T-C1-THRUST-FRESH: thrust stand on a 16.8 V pack with the F4 output cap; peak thrust <= the requirement.",
+          note="The 100 A pack-current limiter is filtered (seconds), so a step to full throttle reaches the rpm cap "
+               "before it acts: the limiter does not bound an instantaneous structural load (CR-C1-12).")
+kit.claim("CL-C1-T-ILIM", "Thrust per motor held by the 100 A limiter (steady)", calc="CALC-C1-ROTOR",
+          output="T_ilim_N", unit="N", how="E1 CL-E1-ILIM-TW-FRESH; stand with the limiter active.")
+kit.claim("CL-C1-T-LIMIT", "Limit thrust per motor used for every load case", calc="CALC-C1-ROTOR", output="T_lim_N",
+          unit="N", verifies=["R-LOADS"], parts=[],
+          how="= max(requirements.thrust_limit_per_motor_n, CL-C1-T-CAP); T-C1-THRUST-FRESH confirms.",
+          note="Every rotor, mount, fin and in-plane spar load scales with it.")
 kit.claim("CL-C1-MOTOR-TORQUE", "Motor reaction torque at T_lim", calc="CALC-C1-ROTOR", output="Q_Nm", unit="N m",
-          how="H1 thrust stand with a torque arm, or P_shaft / omega from the stand data.")
+          how="Thrust stand with a torque cell (T-B4-STAND) at T_lim.")
 kit.claim("CL-C1-ROTOR-H", "Rotor angular momentum at T_lim", calc="CALC-C1-ROTOR", output="H_Nms", unit="N m s",
           how="Prop and bell inertia by bifilar swing; rpm from the stand.")
 kit.claim("CL-C1-ROTOR-OMEGA", "Rotor speed at T_lim", calc="CALC-C1-ROTOR", output="omega", unit="rad/s",
-          how="Optical tachometer on the thrust stand.")
+          how="Optical tachometer or rpm telemetry on the thrust stand.")
 kit.claim("CL-C1-GYRO-MOMENT", "Gyroscopic moment per rotor at q_max", calc="CALC-C1-ROTOR", output="M_gyro_Nm",
           unit="N m", how="Calculated; check q_max against flight logs (RATE.*) after the first transitions.")
-kit.claim("CL-C1-VD", "Design dive speed VD", calc="CALC-C1-ROTOR", output="VD_ms", unit="m/s",
-          limit=(">=", 19.5), verifies=["R-LOADS"],
-          how="Flight logs: airspeed never exceeds VD; F4 sets the airspeed limit below it.",
-          note="Limit 19.5 m/s = the 1.3 x cruise dive speed A2 uses for servo torque (R-SERVO-TORQUE).")
+kit.claim("CL-C1-VH", "Highest level speed used for VD", calc="CALC-C1-ROTOR", output="VH_ms", unit="m/s",
+          how="Level full-throttle pass with airspeed logging on the twin; B1 re-runs CL-B1-VMAX with the 11x5.5MR.",
+          note="max(prop pitch speed at the 9 350 rpm cap, B1's top speed with the 11x4.5MR); B1's 11x5.5MR value "
+               "replaces it (CR-C1-14).")
+kit.claim("CL-C1-VD", "Design dive speed VD, re-derived at VC 16 m/s", calc="CALC-C1-ROTOR", output="VD_ms",
+          unit="m/s", limit=("<=", P + "requirements.vd_ms"), verifies=["R-LOADS"],
+          how="Flight logs: airspeed never exceeds VD; F4 sets ARSPD_FBW_MAX and the fixed-wing THR_MAX below it.",
+          note="1.25 x VH: VC 16 m/s does not govern; the 11x5.5MR at the rpm cap does. A FAIL here means "
+               "requirements.vd_ms is below the derived value (CR-C1-13); the envelope runs at the larger one.")
 kit.claim("CL-C1-HOVER-N-MAX", "Hover load factor at full thrust", calc="CALC-C1-ROTOR", output="n_hover_max",
           unit="-", how="Thrust stand x 4 / weighed mass.")
 # V-n
+kit.claim("CL-C1-VD-ENV", "Dive speed the envelope runs at", calc="CALC-C1-VN", output="VD_env", unit="m/s",
+          how="= max(requirements.vd_ms, CL-C1-VD).")
+kit.claim("CL-C1-Q-VD", "Dynamic pressure at the envelope VD", calc="CALC-C1-VN", output="q_VD_Pa", unit="Pa",
+          how="0.5 rho VD^2; B2/D6 size the elevon hinge and servo at it (CR-C1-15).")
+kit.claim("CL-C1-VS", "Stall speed at the gate, trimmed CLmax (B2)", calc="CALC-C1-VN", output="Vs", unit="m/s",
+          how="Same as CL-A1-STALL-GATE; slow-flight stall T-B2-STALL.")
 kit.claim("CL-C1-VA", "Manoeuvre speed VA", calc="CALC-C1-VN", output="VA", unit="m/s",
-          how="Follows from CLmax (B2) and n+; re-run after B2's XFOIL/AVL CLmax.")
+          how="Vs sqrt(n+) with B2's trimmed CLmax; moves with T-B2-STALL.")
 kit.claim("CL-C1-N-LIMIT-POS", "Design limit load factor, positive", calc="CALC-C1-VN", output="n_design_pos",
-          unit="-", limit=(">=", "ASM-A2-LOAD-FACTOR"), verifies=["R-LOADS"],
-          how="Wing proof load test (T-C1-WING-PROOF) at this n x the gate weight; flight logs: IMU n stays below it.")
+          unit="-", limit=("<=", P + "requirements.load_factor_limit_pos"), verifies=["R-LOADS"],
+          how="Wing proof load test (T-C1-WING-PROOF) at this n x the gate weight; flight logs: IMU n stays below it.",
+          note="= max(requirement, gust peak); a FAIL means the gust exceeds requirements.load_factor_limit_pos.")
 kit.claim("CL-C1-N-LIMIT-NEG", "Design limit load factor, negative", calc="CALC-C1-VN", output="n_design_neg",
-          unit="-", how="As the positive case, inverted.")
+          unit="-", limit=(">=", P + "requirements.load_factor_limit_neg"), verifies=["R-LOADS"],
+          how="As the positive case, inverted.")
 kit.claim("CL-C1-GUST-N-POS", "Peak positive gust load factor", calc="CALC-C1-VN", output="n_gust_pos", unit="-",
-          limit=("<=", "ASM-A2-LOAD-FACTOR"), verifies=["R-LOADS"],
-          how="Recompute with B2's CL-alpha and CLmax; the gust line is stall-limited below about 19 m/s.")
+          limit=("<=", P + "requirements.load_factor_limit_pos"), verifies=["R-LOADS"],
+          how="B2's CL_alpha and trimmed CLmax; the gust line is stall-limited below the peak speed.")
 kit.claim("CL-C1-GUST-V-POS", "Speed of the positive gust peak", calc="CALC-C1-VN", output="V_gust_pos", unit="m/s",
           how="Calculated.")
 kit.claim("CL-C1-GUST-N-NEG", "Peak negative gust load factor", calc="CALC-C1-VN", output="n_gust_neg", unit="-",
-          how="Calculated.")
+          limit=(">=", P + "requirements.load_factor_limit_neg"), how="Calculated.")
 kit.claim("CL-C1-GUST-V-NEG", "Speed of the negative gust peak", calc="CALC-C1-VN", output="V_gust_neg", unit="m/s",
           how="Calculated.")
 kit.claim("CL-C1-N-STALL-VD", "Stall-line load factor at VD", calc="CALC-C1-VN", output="n_stall_VD", unit="-",
@@ -1034,12 +1098,16 @@ kit.claim("CL-C1-N-STALL-VD", "Stall-line load factor at VD", calc="CALC-C1-VN",
           how="F4: limit pitch rate / elevon in manual modes so a full pull at VD cannot reach the stall line.",
           note="Above VA a full elevon pull can exceed the design n; the flight software must prevent it (CR-C1-08).")
 # landing and ground
-kit.claim("CL-C1-N-LAND-NOW", "Landing factor with the 10 mm foot", calc="CALC-C1-LANDING", output="n_L_now", unit="-",
-          limit=("<=", "ASM-C1-N-LAND"), verifies=["R-LANDING-IMPACT"], parts=[],
-          how="Drop test T-C1-FOOT-DROP: 0.115 m free drop (1.5 m/s) of the aircraft on its feet with an accelerometer.",
-          note="Rigid-airframe upper bound; elastic fin/tube compliance lowers it, but not to 6 without a stroke.")
-kit.claim("CL-C1-FOOT-STROKE-REQ", "Foot crush stroke required", calc="CALC-C1-LANDING", output="stroke_req_m",
-          unit="m", how="C5/D5 design the foot to this stroke; drop test T-C1-FOOT-DROP confirms n <= 6.")
+kit.claim("CL-C1-N-LAND-STROKE-MIN", "Landing factor at the minimum foot stroke (40 mm requirement)",
+          calc="CALC-C1-LANDING", output="n_L_stroke_min", unit="-", limit=("<=", P + "requirements.landing_n_design"),
+          verifies=["R-LANDING-IMPACT"], parts=[],
+          how="Drop test T-C1-FOOT-DROP: 0.115 m free drop (1.5 m/s) on the feet with an accelerometer at the CG.",
+          note="Replaces CL-C1-N-LAND-NOW (10 mm foot, retired). Rigid airframe, crush efficiency 0.5.")
+kit.claim("CL-C1-N-LAND-FULL-FOOT", "Landing factor if the whole 45 mm foot crushes (bound)", calc="CALC-C1-LANDING",
+          output="n_L_full_foot", unit="-",
+          how="Lower bound: a printed foot cannot crush to zero height; the drop test decides.")
+kit.claim("CL-C1-FOOT-STROKE-REQ", "Foot crush stroke required for n_L 6", calc="CALC-C1-LANDING",
+          output="stroke_req_m", unit="m", limit=("<=", P + "requirements.foot_crush_stroke_min_m"), how="C5/D5 design the foot to this stroke; drop test T-C1-FOOT-DROP confirms n <= 6.")
 kit.claim("CL-C1-FOOT-LEVEL", "Foot load, level landing (limit)", calc="CALC-C1-LANDING", output="F_foot_level_N",
           unit="N", how="Drop test with load cell / accelerometer.")
 kit.claim("CL-C1-FOOT-PAIR-NARROW", "Foot load, pair first, narrow axis", calc="CALC-C1-LANDING",
@@ -1051,7 +1119,7 @@ kit.claim("CL-C1-FOOT-CORNER", "Foot load, one foot first", calc="CALC-C1-LANDIN
 kit.claim("CL-C1-FOOT-MAX", "Peak foot load (limit)", calc="CALC-C1-LANDING", output="F_foot_max_N", unit="N",
           how="Envelope of the four foot cases.")
 kit.claim("CL-C1-WINGTIP-STRIKE-ANGLE", "Roll error that puts the wingtip down", calc="CALC-C1-LANDING",
-          output="wingtip_strike_deg", unit="deg", limit=(">=", "ASM-A2-LANDING-ATTITUDE"),
+          output="wingtip_strike_deg", unit="deg", limit=(">=", P + "requirements.landing_attitude_err_deg"),
           verifies=["R-LANDING-IMPACT"],
           how="Stand the aircraft on its feet and tilt it about the right foot pair until the wingtip TE touches.",
           note="With 10 mm feet the wing TE tip is the first contact for any roll error above this angle (CR-C1-01).")
@@ -1078,7 +1146,7 @@ kit.claim("CL-C1-STANCE-MU-REQ", "Friction needed to stand in 8 m/s", calc="CALC
           note="Above the friction available the parked aircraft slides before it tips: feet need spikes or a "
                "rubber pad, or it is laid flat between flights (CR-C1-02).")
 kit.claim("CL-C1-CRASH-N", "Crash deceleration (ultimate)", calc="CALC-C1-CRASH", output="n_crash", unit="-",
-          limit=(">=", "ASM-A2-CRASH-DECEL"), verifies=["R-PACK-RETENTION"],
+          limit=(">=", P + "requirements.crash_decel_g"), verifies=["R-PACK-RETENTION"],
           how="Pack strap pull test (C3) at F_pack in each axis.")
 kit.claim("CL-C1-PACK-CRASH-LOAD", "Pack retention load (ultimate)", calc="CALC-C1-CRASH", output="F_pack_N",
           unit="N", verifies=["R-PACK-RETENTION"], how="Pull test of the strapped 680 g pack dummy in x, y and z.")
@@ -1127,11 +1195,11 @@ for out, cid, title, unit_, how in (
 kit.test("T-C1-WING-PROOF", "Wing proof load at limit", verifies=["CL-C1-SPAR-MB-ULT", "CL-C1-N-LIMIT-POS"],
          procedure="Support at the pod, sandbag the wing to the F1 spanwise shear (data/wing_spanwise.csv) at limit; "
                    "no permanent set after unloading; tip deflection logged.")
-kit.test("T-C1-FOOT-DROP", "Foot drop test at 1.5 m/s", verifies=["CL-C1-N-LAND-NOW", "CL-C1-FOOT-STROKE-REQ"],
+kit.test("T-C1-FOOT-DROP", "Foot drop test at 1.5 m/s", verifies=["CL-C1-N-LAND-STROKE-MIN", "CL-C1-FOOT-STROKE-REQ"],
          procedure="0.115 m free drop of the aircraft (or a 2.6 kg dummy on one fin) onto its feet, accelerometer at the "
                    "CG; level and 10 deg tilted; n <= 6.")
-kit.test("T-C1-THRUST-FRESH", "Max thrust on a fresh pack", verifies=["CL-C1-T-LIMIT"],
-         procedure="H1 thrust stand, one station, 11x4.5MR, pack at 16.8 V: record peak thrust and torque.")
+kit.test("T-C1-THRUST-FRESH", "Max thrust on a fresh pack", verifies=["CL-C1-T-CAP", "CL-C1-T-LIMIT"],
+         procedure="H1 thrust stand, one station, 11x5.5MR, 16.8 V pack, F4 output cap and 100 A limiter as flown: step to full throttle, record peak thrust, torque and rpm.")
 kit.test("T-C1-STATION-PROOF", "Motor-station proof load", verifies=["CL-C1-MOUNT-F-ULT", "CL-C1-FINHALF-MB-ULT"],
          procedure="Hang the limit mount load from each motor mount in -x and y with the wing supported at the spar.")
 
@@ -1249,7 +1317,7 @@ def write_data(outdir):
     other = {
         "factors": {"safety_factor_ultimate": sf, "fitting_factor": kf, "printed_bonded_factor": kp,
                     "crash": "ultimate as given (emergency case, no further factor)"},
-        "landing": {kid: kit.value(kid) for kid in ("CL-C1-N-LAND-NOW", "CL-C1-FOOT-STROKE-REQ", "CL-C1-FOOT-LEVEL",
+        "landing": {kid: kit.value(kid) for kid in ("CL-C1-N-LAND-STROKE-MIN", "CL-C1-N-LAND-FULL-FOOT", "CL-C1-FOOT-STROKE-REQ", "CL-C1-FOOT-LEVEL",
                                                      "CL-C1-FOOT-PAIR-NARROW", "CL-C1-FOOT-PAIR-WIDE",
                                                      "CL-C1-FOOT-CORNER", "CL-C1-FOOT-MAX")},
         "foot_side_load_limit_N": kit.value("ASM-C1-FRICTION") * ld,
@@ -1302,12 +1370,13 @@ def convergence(k, X):
 
 
 def hand_check(k, X):
-    """Independent root flap moment for F8 (1 g cruise), MC-C: lift moment minus right-half weight moment."""
+    """Independent root flap moment for F8 (1 g cruise), MC-C: lift moment with B2's own half-span centroid (from
+    loads_spanwise.json, not from the strip model) minus the right-half weight moment."""
     items = build_items(k, "centre")
     m, cg, I = mass_props(items)
     W = m * k["g"]
-    b = k["b"]
-    ybar = 0.5 * (b / 4 + 4 * (b / 2) / (3 * math.pi))
+    p = HERE.parents[0] / "B2" / "out" / "loads_spanwise.json"
+    ybar = json.loads(p.read_text(encoding="utf-8"))["cases"]["CL0.30"]["ybar_m"]
     M_lift = W / 2 * ybar
     M_wt = sum(i["m"] * k["g"] * i["r"][1] for i in items if i["r"][1] > 0)
     return M_lift - M_wt
@@ -1319,8 +1388,9 @@ def svg_figures(outdir, k, X, kw, wenv):
     font = "font-family=\"IBM Plex Mono, monospace\" font-size=\"12\""
     # --- V-n diagram
     vn = vn_calc(kw["g"], kw["rho"], kw["m_gate"], kw["b"], kw["c"], kw["clmax"], kit.value("ASM-C1-CLMIN"),
-                 kit.value("ASM-C1-A0"), kit.value("ASM-A2-LOAD-FACTOR"), kw["Vc"], kw["v_gust"],
-                 kit.value("ASM-C1-UDE-D-FRAC"), kw["VD"])
+                 kit.value("CL-B2-CLA-3D"), kit.value(P + "requirements.load_factor_limit_pos"),
+                 kit.value(P + "requirements.load_factor_limit_neg"), kw["Vc"], kw["v_gust"],
+                 kit.value("ASM-C1-UDE-D-FRAC"), kw["VD"], kw["VD"])
     Wd, Hd, L, T, Rm, B = 1200, 560, 80, 30, 40, 60
     vmax, nmin, nmax = math.ceil(kw["VD"] + 2), -2.0, 4.0
 

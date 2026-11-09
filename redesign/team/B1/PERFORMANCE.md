@@ -1,81 +1,89 @@
 # K09-L whole-aircraft performance
 
-Status: `PROPOSED` (B1, 2026-11-09). First-order analysis. B2 (XFOIL), B3 (AVL) and B4 (prop) inputs were not
-available yet, so the marked assumptions stand in for them. Re-check: `python -I redesign/team/B1/performance.py`
-then `python -I redesign/proofs/build_graph.py` (result 2026-11-09: OK, 617 nodes, no drift).
+Status: `MODELLED` (B1, rev 2, 2026-11-09, answers CR-A1-13). The model now uses the R1 configuration: chord 0.32 m,
+S5010 with B2's trimmed polar and CLmax, the 11×5.5MR prop (APC PER3 via B4), E1's motor constants, sag 0.72 and
+the 400 W params hover power. Re-check: `python -I redesign/team/B1/performance.py`, then
+`python -I redesign/proofs/build_graph.py`. Result 2026-11-09: no B1 drift and no B1 claim fails. The build still
+fails on other roles' drift (A5, B2, E1, E2); E2's drift comes from B1's new cruise power, which CR-E2-08 asked for.
 
-**Verdict.** The transition gate closes if cruise goes to **16 m/s**. 1.3 Vs at the 2.6 kg gate is 15.05 m/s, so
-16 m/s leaves 6 % margin. **Cruise power is about 58 % above the 194 W in `params.json`.** The 11×4.5MR runs at
-J ≈ 0.49 in cruise, where APC's own data gives η 0.37. At 16 m/s the aircraft draws **307 W**, which leaves
-**12.3 min** of cruise after the 2 min hover (**9.3 min** in the pessimistic case). That still clears the 5 min
-requirement but misses the 10 min stretch target in the pessimistic case. Hover, the transition corridor and the
-5 m/s wind card all pass with margin. The wing is stalled from 0 to 11 m/s in level transition. That is acceptable
-because the motors carry the aircraft at ≤ 47 % of available thrust there.
+**Verdict.** At 16 m/s and 2.6 kg the aircraft needs **218 W in cruise** (285 W pessimistic), not the 307 W of
+rev 1. That gives **17.0 min of cruise after the 2 min hover** (12.7 min pessimistic) against the 5 min
+requirement. The 10 min stretch target is met in both cases. The transition gate passes, but only just:
+1.3 Vs = 15.42 m/s, which is 0.58 m/s below cruise. The pack sag of 0.72 (D-06) is the new constraint. On a worst-case
+pack, the rev 1 pitch-over rate of 20 °/s uses 96 % of available thrust, so B1 now proposes **12 °/s**
+(peak 0.76, 7.7 s to 1.3 Vs). Landing wind is limited by the 30.6° tip-over angle, to **5.8 m/s steady**.
 
 ## Inputs and assumptions
 
 | Item | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Mass: gate / sized / lightest flying | 2.600 / 2.482 / 2.132 | kg | `params.json#requirements`, `CL-A1-MASS-SIZED`, sized − growth | `PROPOSED` |
-| Wing S, AR, e | 0.345, 3.83, 0.80 | m², —, — | `CL-A1-WING-AREA`, `params.json#wing.oswald_e` | `UNVERIFIED` (e) |
-| CLmax, α₀ | 0.90, −1.0 | —, ° | `ASM-A1-CLMAX`, `ASM-B1-ALPHA0` | `UNVERIFIED` |
-| Drag build-up coefficients | Cf 0.006/0.007, FF 1.25/1.20/1.30, tube Cd 0.30, IF 1.15 | — | `ASM-B1-DRAG` (K09 card, accepted by REVIEW) | `UNVERIFIED` |
-| Post-stall wing | CN = 1.28 sin α, 4° e-fold from CLmax | — | `ASM-B1-CD90` (Hoerner) | `PROPOSED` |
-| Prop Ct(J), Cp(J) | APC PER3 11×4.5MR, 6 000 rpm block, 30 rows | — | `ASM-B1-PROP`, `SRC-B1-APC-PER3` (read 2026-11-09) | `PROPOSED` |
-| Motor Kv, Rm, I₀ | 900, 0.080, 0.6 | rpm/V, Ω, A | `ASM-B1-MOTOR` | `UNVERIFIED` |
-| Chain calibration to maker table (690 gf → 89 W) | 1.18 | — | `CL-B1-KCAL` | `PROPOSED` |
+| Mass: gate / sized / lightest flying | 2.600 / 2.550 / 2.150 | kg | `params.json#requirements`, `CL-A1-MASS-SIZED`, sized − growth reserve | `PROPOSED` |
+| Wing S, AR | 0.368, 3.59 | m², — | `CL-A1-WING-AREA`, `params.json#wing` (c 0.32) | `PROPOSED` |
+| Wing profile drag (S5010, trimmed, Re 3 × 10⁵, Ncrit 9) × tape-seam factor | 0.00738 × 1.10 | — | `P:b2.avl.cd0_wing`, `ASM-B1-WING-ROUGH` (Ncrit 5/9 ratio, CR-B2-08) | `UNVERIFIED` |
+| Oswald e: base / pessimistic | 0.93 / 0.80 | — | `P:b2.avl.e_oswald`, `params.json#wing.oswald_e` | `UNVERIFIED` |
+| Lift slope, α₀ (elevons neutral), trimmed CLmax | 3.58 /rad, −1.23°, 0.804 | — | `P:b2.avl.cla_per_rad`, `P:b2.xfoil.alpha0_2d_deg`, `CL-B2-CLMAX-DESIGN` | `UNVERIFIED` |
+| Non-wing drag build-up | Cf 0.007, FF fin 1.20 / pod 1.30, tube Cd 0.30, CdA 0.0004 m² per motor, IF 1.15 | — | `ASM-B1-DRAG` (K09 card, accepted by REVIEW) | `UNVERIFIED` |
+| Trim drag factor | 1.02 | — | `ASM-B1-TRIM` (B2 polar trimmed; B3 +0.2 %) | `PROPOSED` |
+| Post-stall wing | CN = 1.28 sin α, 4° e-fold from CLmax | — | `ASM-B1-CD90` (B2 accepts 1.2; 1.28 kept, conservative for wind) | `PROPOSED` |
+| Prop Ct(J), Cp(J) | APC PER3 11×5.5MR, 6 000 rpm, 19 rows + zero-thrust row at J 0.639 | — | `ASM-B1-PROP`, `SRC-B1-B4-PER3-55` (rows compared 2026-11-09) | `PROPOSED` |
+| Motor Kv, Rm, I₀ | 900, 0.086, 0.9 | rpm/V, Ω, A | `ASM-E1-KV`, `ASM-E1-RM`, `ASM-E1-I0` | `UNVERIFIED` |
+| Chain calibration to maker table (690 gf, 89 W, via 11×4.5MR) | 1.13 | — | `CL-B1-KCAL` | `UNVERIFIED` |
+| Full-throttle thrust per motor (fresh, limited) × sag | 1.62 kg × 0.72 | — | `params.json#propulsion` (E1, E2) | `UNVERIFIED` |
 | Hover download, ESC η, avionics | 1.06, 0.95, 6 | —, —, W | `params.json#propulsion.download_factor`, `ASM-B1-ESC`, `ASM-B1-AVIONICS-W` | `PROPOSED` |
-| Trim drag factor | 1.05 | — | `ASM-B1-TRIM` | `PROPOSED` |
-| Pessimistic case | CD0 × 1.3, η_prop × 0.85, hover × 1.10 | — | `ASM-B1-PESS` | `PROPOSED` |
-| Steady thrust allowed (control reserve 20 %) | 0.80 of available, sagged | — | `ASM-B1-CTRL-RESERVE` | `PROPOSED` |
-| Pack energy, reserve | 96.2, 20 % | Wh | `params.json#battery`, `#requirements` | `UNVERIFIED` (pack) |
+| Mission hover power (pessimistic × 1.10) | 400 (440) | W | `params.json#performance.hover_power_w` (E1), `ASM-B1-PESS` | `UNVERIFIED` |
+| Pessimistic case | CD0 × 1.3, e 0.80, η_prop × 0.85, hover and transition energy × 1.10 | — | `ASM-B1-PESS` | `PROPOSED` |
+| Steady thrust allowed (20 % control reserve) | 0.80 of available, sagged | — | `ASM-B1-CTRL-RESERVE` | `PROPOSED` |
+| Pack energy, reserve | 96.2, 20 % | Wh | `params.json#battery`, `#requirements` | `UNVERIFIED` |
 
 ## Aerodynamics
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| CD0 (wing 0.0176 · fins 0.0174 · motor tubes 0.0185 · motors 0.0053 · pod 0.0023) | 0.061 | — | `CL-B1-CD0` | `PROPOSED` |
-| Induced factor k | 0.104 | — | `CL-B1-K` | `PROPOSED` |
-| Lift slope (Helmbold) | 3.81 | 1/rad | `CL-B1-CLA` | `PROPOSED` |
-| Stall angle of attack | 12.5 | ° | `CL-B1-ALPHA-STALL` | `UNVERIFIED` |
-| L/D max (at CL 0.77, ≈ 12 m/s) | 6.3 | — | `CL-B1-LDMAX` | `PROPOSED` |
+| CD0 (wing 0.0093 · fins 0.0112 · motor tubes 0.0173 · motors 0.0050 · pod 0.0023) | 0.0452 | — | `CL-B1-CD0` | `UNVERIFIED` |
+| k, base / pessimistic | 0.0950 / 0.1107 | — | `CL-B1-K`, `CL-B1-K-PESS` | `UNVERIFIED` |
+| Stall angle of attack (elevons neutral α₀) | 11.6 | ° | `CL-B1-ALPHA-STALL` | `UNVERIFIED` |
+| L/D max (at CL 0.69, ≈ 12.8 m/s) / at 16 m/s | 7.6 / 6.9 | — | `CL-B1-LDMAX`, `CL-B1-CRUISE-LD` | `UNVERIFIED` |
 
-The fins and the two motor tubes cause 59 % of CD0. The wing alone causes 29 %.
+CD0 fell from 0.061 to 0.045. Rev 1 had a wing friction term of 0.018, and B2's S5010 section drag with the
+tape-seam factor replaces it with 0.009. The fins are shorter (chord 0.275 m, not 0.40 m). The motor tubes are now the
+largest item at 38 % of CD0. The trimmed lift curve B2 found has a slope of about 3.1 /rad from CL 0.5 to 0.7, and
+it puts α about 1.5° above this model at the same CL. That moves the corridor pitch angles, not the powers.
 
-## Stall and the transition gate (closes CR-A1-05)
+## Stall and the transition gate
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Vs at 2.6 kg / 2.48 kg | 11.58 / 11.31 | m/s | `CL-B1-VS-GATE`, `CL-B1-VS-SIZED` | `UNVERIFIED` (CLmax) |
-| Vs in a 30° bank at 2.6 kg | 12.44 | m/s | `CALC-B1-STALL` | `UNVERIFIED` |
-| 1.3 Vs at 2.6 kg | 15.05 | m/s | `CL-B1-VT-GATE` | `UNVERIFIED` |
-| Proposed cruise / margin over 1.3 Vs | 16.0 / +6 % | m/s | `ASM-B1-VCRUISE` | `PROPOSED` |
-| CLmax that keeps 15 m/s cruise | ≥ 0.906 | — | `CL-B1-CLMAX-FOR-15` | `PROPOSED` |
+| Vs at 2.6 kg / 2.55 kg | 11.86 / 11.75 | m/s | `CL-B1-VS-GATE` (≤ 12, +1 %), `CL-B1-VS-SIZED` | `UNVERIFIED` |
+| Vs in a 30° bank at 2.6 kg | 12.75 | m/s | `CALC-B1-STALL` | `UNVERIFIED` |
+| 1.3 Vs at 2.6 kg | 15.42 | m/s | `CL-B1-VT-GATE` (≤ 16, +3.6 %) | `UNVERIFIED` |
+| CLmax that would allow 15 m/s cruise | ≥ 0.85 | — | `CL-B1-CLMAX-FOR-15` | `UNVERIFIED` |
 
-| CLmax | Vs at 2.6 kg | 1.3 Vs | 16 m/s over 1.3 Vs |
+| Trimmed CLmax | Vs at 2.6 kg | 1.3 Vs | 16 m/s over 1.3 Vs |
 |---|---|---|---|
-| 0.80 | 12.28 m/s | 15.97 m/s | +0.2 % |
-| 0.90 | 11.58 m/s | 15.05 m/s | +6.3 % |
-| 1.00 | 10.98 m/s | 14.28 m/s | +12.0 % |
+| 0.80 (SM 5 %, design) | 11.89 m/s | 15.46 m/s | +3.5 % |
+| 0.86 (SM 3 %) | 11.47 m/s | 14.91 m/s | +7.3 % |
+| 0.90 | 11.21 m/s | 14.57 m/s | +9.8 % |
 
-Raising CLmax to 0.906 would satisfy the gate arithmetically, but it leaves no room for airspeed-hold or sensor
-error, and the elevon up-trim that J1 found necessary for static margin lowers CLmax. Raising cruise speed is the
-robust fix. Cost: about 2 min of base cruise against 15 m/s (FIG B1-02). B2's XFOIL CLmax can bring cruise back to
-15 m/s if CLmax with up-trim is ≥ 1.04, which gives 1.3 Vs ≤ 14 m/s.
+The margin is 0.58 m/s. B4's pitot error bound of 2 % (0.32 m/s) fits inside it. A2's `airspeed_err_max_ms` of 1.0
+m/s does not. A 1 m/s high-reading sensor would end the transition at 15.0 m/s true, 0.97 × 1.3 Vs.
 
 ## Hover
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Power at 2.6 kg / 2.48 kg (pessimistic 2.6 kg) | 380 / 355 (418) | W | `CL-B1-HOVER-P-GATE`, `CALC-B1-HOVER`, `CL-B1-HOVER-P-PESS` | `UNVERIFIED` (table is 11×4.7) |
-| Current at 2.6 kg / 2.48 kg | 25.7 / 24.0 | A | `CL-B1-HOVER-I-GATE` | `UNVERIFIED` |
-| Hover-only endurance at 2.6 kg, 20 % reserve | 12.2 | min | `CL-B1-HOVER-ONLY` | `UNVERIFIED` |
-| Hover thrust fraction, sagged pack, with download | 0.47 | — | `CL-B1-HOVER-THROTTLE` (≤ 0.60) | `UNVERIFIED` |
-| T/W with sag and download | 2.13 | — | `CL-B1-HOVER-TW-SAG` (≥ 1.6) | `UNVERIFIED` |
-| APC static figure of merit (cross-check) | 0.72 | — | `CL-B1-FM` | `PROPOSED` |
-| Vertical climb 2.5 m/s, power | 447 | W | `CL-B1-VCLIMB-P` | `PROPOSED` |
+| Hover power at 2.6 kg, used for the mission (pessimistic) | 400 (440) | W | `params.json#performance.hover_power_w` (E1) | `UNVERIFIED` |
+| B1 cross-check: table × download × 11×5.5MR/11×4.5MR (1.019) | 387 | W | `CL-B1-HOVER-P-GATE` (≤ 400), `CL-B1-HOVER-PROP-RATIO` | `UNVERIFIED` |
+| Current at 2.6 kg (B1 cross-check) | 26.1 | A | `CL-B1-HOVER-I-GATE` | `UNVERIFIED` |
+| Hover-only endurance at 2.6 kg, 20 % reserve | 11.9 | min | `CL-B1-HOVER-ONLY` | `UNVERIFIED` |
+| Hover thrust fraction, sagged pack, with download | 0.59 | — | `CL-B1-HOVER-THROTTLE` (≤ 0.60, +2 %) | `UNVERIFIED` |
+| T/W with sag and download | 1.69 | — | `CL-B1-HOVER-TW-SAG` (≥ 1.6, +6 %) | `UNVERIFIED` |
+| APC static figure of merit, 11×5.5MR | 0.72 | — | `CL-B1-FM` | `UNVERIFIED` |
+| Vertical climb 2.5 m/s, power | 448 (30.3 A) | W | `CL-B1-VCLIMB-P` | `UNVERIFIED` |
 
-## Transition corridor (level flight, 2.6 kg)
+The hover thrust fraction of 0.59 has almost no margin against 0.60. It rests on the worst-case sag of 0.72, which
+assumes 20 % charge at 10 °C. With a fresh pack the fraction is 0.43.
+
+## Transition corridor (level flight, 2.6 kg, worst-case pack)
 
 ![Transition corridor: pitch above horizon versus airspeed](fig-b1-corridor.svg)
 
@@ -84,58 +92,59 @@ pitch range that holds altitude within 80 % of available thrust (below the line 
 
 | V (m/s) | Pitch, steady (°) | Pitch, lowest (°) | T/W | T / T_avail | P (W) | Wing |
 |---|---|---|---|---|---|---|
-| 0 | 90.0 | 33.8 | 1.06 | 0.47 | 380 | stalled |
-| 3 | 84.3 | 32.3 | 1.00 | 0.44 | 353 | stalled |
-| 6 | 68.2 | 29.7 | 0.94 | 0.44 | 367 | stalled |
-| 9 | 48.0 | 26.5 | 0.77 | 0.42 | 375 | stalled |
-| 11 | 36.6 | 23.9 | 0.65 | 0.41 | 382 | stalled |
-| 12 | 11.2 | 9.7 | 0.16 | 0.13 | 164 | flying |
-| 14 | 8.1 | 7.6 | 0.16 | 0.16 | 219 | flying |
-| 16 | 6.0 | 5.7 | 0.18 | 0.24 | 296 | flying |
-| 19 | 4.0 | 4.0 | 0.22 | 0.65 | 457 | flying |
+| 0 | 90.0 | 44.3 | 1.06 | 0.59 | 387 | stalled |
+| 3 | 84.0 | 42.0 | 1.00 | 0.56 | 359 | stalled |
+| 6 | 67.1 | 36.6 | 0.93 | 0.55 | 367 | stalled |
+| 9 | 46.5 | 30.8 | 0.75 | 0.51 | 357 | stalled |
+| 11 | 35.2 | 26.7 | 0.62 | 0.49 | 348 | stalled |
+| 12 | 11.0 | 9.8 | 0.13 | 0.13 | 126 | flying |
+| 14 | 7.8 | 7.3 | 0.13 | 0.17 | 163 | flying |
+| 16 | 5.7 | 5.7 | 0.14 | 0.26 | 214 | flying |
+| 19 | 3.7 | 3.7 | 0.17 | 0.81 | 321 | flying |
 
 | Corridor result | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Peak steady thrust fraction, 0–16 m/s | 0.47 | — | `CL-B1-CORR-THRUST` (≤ 0.80) | `PROPOSED` |
-| Peak steady power, 0–16 m/s (≈ hover) | 382 | W | `CL-B1-CORR-P-PEAK` | `PROPOSED` |
-| Lowest speed where the unstalled wing holds level flight | 12 | m/s | `CL-B1-V-WINGBORNE` | `UNVERIFIED` (CLmax) |
-| Steady pitch jump between the stalled and flying branches (11 → 12 m/s) | 37° → 11° | ° | `CALC-B1-CORRIDOR` | `PROPOSED` |
-
-Between 11 and 12 m/s the controller must pitch down about 25° once the wing can carry the aircraft. The pitch-over
-simulation does exactly that. The flat-plate post-stall model under-predicts lift, so the real jump will be
-smaller and will happen at a lower speed.
+| Peak steady thrust fraction, 0–16 m/s (hover) | 0.59 | — | `CL-B1-CORR-THRUST` (≤ 0.80) | `UNVERIFIED` |
+| Peak steady power, 0–16 m/s (hover) | 387 | W | `CL-B1-CORR-P-PEAK` | `UNVERIFIED` |
+| Lowest speed where the unstalled wing holds level flight | 12 | m/s | `CL-B1-V-WINGBORNE` | `UNVERIFIED` |
 
 ### Pitch-over (forward transition), time simulation
 
 2-D point mass. Pitch is rate-limited and never drops below the angle at which wing lift plus 80 % of thrust can
 hold altitude. Thrust holds altitude below 1.1 Vs and holds speed above it.
 
-| Pitch rate | To 1.3 Vs | To 16 m/s | Altitude lost | Peak thrust fraction | Energy |
+| Pitch rate | To 1.3 Vs | To 16 m/s | Altitude lost | Peak thrust fraction, worst pack (fresh) | Energy |
 |---|---|---|---|---|---|
-| 15 °/s | 6.0 s | 7.4 s | 0.2 m | 0.67 | 0.83 Wh |
-| **20 °/s (proposed)** | **5.0 s** | **6.4 s** | **0.2 m** | **0.77** | **0.73 Wh** |
-| 30 °/s | 4.0 s | 5.4 s | 0.1 m | 0.94 | 0.64 Wh |
-| 50 °/s | 3.5 s | 4.9 s | 0.2 m | 1.00 (saturated) | 0.59 Wh |
+| 10 °/s | 8.7 s | 9.5 s | 0.2 m | 0.72 (0.44) | 0.99 Wh |
+| **12 °/s (proposed)** | **7.7 s** | **8.5 s** | **0.2 m** | **0.76 (0.47)** | **0.87 Wh** |
+| 15 °/s | 6.6 s | 7.4 s | 0.2 m | 0.84 (0.51) | 0.77 Wh |
+| 20 °/s (rev 1) | 5.5 s | 6.4 s | 0.1 m | 0.96 (0.59) | 0.66 Wh |
+| 30 °/s | 4.8 s | 5.6 s | 0.0 m | 1.00 (0.75) | 0.59 Wh |
 
-Claims: `CL-B1-TRANS-TIME` 4.96 s, `CL-B1-TRANS-ALT-LOSS` 0.16 m (≤ 10 m), `CL-B1-TRANS-THRUST` 0.77 (≤ 0.80),
-`CL-B1-TRANS-ENERGY` 0.73 Wh. The altitude loss assumes an ideal controller. The number to take from this table is
-the thrust fraction: **at pitch rates above about 20 °/s the pitch-over uses nearly all available thrust**, because
-thrust falls with inflow (at J 0.23 the prop gives 69 % of its static thrust).
+Claims: `CL-B1-TRANS-TIME` 7.66 s, `CL-B1-TRANS-ALT-LOSS` 0.21 m (≤ 10 m), `CL-B1-TRANS-THRUST` 0.765 (≤ 0.80),
+`CL-B1-TRANS-ENERGY` 0.87 Wh. The forward transition normally happens early in a flight, when the pack is still
+fresh. The 12 °/s figure covers the case where the aircraft has to transition again late in the flight on a cold,
+low pack. Once logs show the real thrust headroom, F4 can raise the rate to 20 °/s for fresh-pack flights.
 
 ## Cruise and endurance
 
 | Parameter (16 m/s, 2.6 kg) | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| CL, L/D | 0.47, 5.60 | — | `CL-B1-CRUISE-LD` | `PROPOSED` |
-| Drag (with trim) / per prop | 4.78 / 1.19 | N | `CALC-B1-CRUISE` | `PROPOSED` |
-| J, rpm, η_prop | 0.49, 6 970, 0.37 | —, rpm, — | `CL-B1-CRUISE-J`, `CL-B1-CRUISE-ETA-PROP` | `PROPOSED` |
-| Pack power (pessimistic) | 307 (397) | W | `CL-B1-CRUISE-P`, `CL-B1-CRUISE-P-PESS` | `UNVERIFIED` |
-| Pack power with no table calibration (optimistic) | 261 | W | `performance_results.json#sensitivity` | `PROPOSED` |
-| Current | 20.7 | A | `CL-B1-CRUISE-I` | `UNVERIFIED` |
-| Overall efficiency, drag power / pack power | 0.25 | — | `CALC-B1-CRUISE` | `PROPOSED` |
-| Energy: usable / hover 2 min / two transitions | 77.0 / 12.7 / 1.5 | Wh | `CALC-B1-MISSION` | `PROPOSED` |
-| **Cruise after 2 min hover (pessimistic)** | **12.3 (9.3)** | min | `CL-B1-CRUISE-TIME`, `CL-B1-CRUISE-TIME-PESS` (≥ 5) | `UNVERIFIED` |
-| Range in that cruise | 11.8 | km | `CALC-B1-MISSION` | `PROPOSED` |
+| CL, L/D | 0.44, 6.93 | — | `CL-B1-CRUISE-LD` | `UNVERIFIED` |
+| Drag with trim, base / pessimistic | 3.75 / 4.73 | N | `CL-B1-CRUISE-DRAG`, `-DRAG-PESS` | `UNVERIFIED` |
+| J, rpm, η_prop (pessimistic η) | 0.58, 5 900, 0.43 (0.40) | —, rpm, — | `CL-B1-CRUISE-J`, `CL-B1-CRUISE-ETA-PROP` | `UNVERIFIED` |
+| Shaft power, 4 props / drive efficiency (motor + ESC + calibration) | 141 / 0.66 | W, — | `CL-B1-CRUISE-P-SHAFT`, `CL-B1-CRUISE-ETA-DRIVE` | `UNVERIFIED` |
+| **Pack power (pessimistic)** | **218 (285)** | W | `CL-B1-CRUISE-P`, `CL-B1-CRUISE-P-PESS` | `UNVERIFIED` |
+| Pack power without the table calibration | 194 | W | `performance_results.json#sensitivity` | `MODELLED` |
+| Current (pessimistic) | 14.7 (19.3) | A | `CL-B1-CRUISE-I`, `CL-B1-CRUISE-I-PESS` | `UNVERIFIED` |
+| Energy: usable / hover 2 min / two transitions / left for cruise | 77.0 / 13.3 / 1.7 / 61.9 | Wh | `CALC-B1-MISSION`, `CL-B1-CRUISE-ENERGY` | `UNVERIFIED` |
+| **Cruise after 2 min hover (pessimistic)** | **17.0 (12.7)** | min | `CL-B1-CRUISE-TIME`, `-TIME-PESS` (≥ 5) | `UNVERIFIED` |
+| Same with B1's 387 W hover | 17.1 | min | `CL-B1-CRUISE-TIME-B1H` | `UNVERIFIED` |
+| Range in that cruise | 16.3 | km | `CALC-B1-MISSION` | `MODELLED` |
+
+Cross-checks at 15 m/s with the 11×5.5MR: B1 gives 191 W, B4 181–205 W (`CL-B4-CRUISE-W`) and E1 216 W
+(lower bound 176 W). They agree within the spread of the calibration. E1's own claim now re-runs to 247 W at
+16 m/s because it uses L/D 5.6 from rev 1. Scaled to B1's L/D of 6.9, it drops to roughly 200 W (CR-B1-11).
 
 ![Cruise time after the 2 min hover versus cruise speed](fig-b1-endurance.svg)
 
@@ -144,29 +153,43 @@ transition requirement does not allow.`
 
 | V (m/s) | 14 | 15 | 16 | 17 | 18 | 20 |
 |---|---|---|---|---|---|---|
-| Power, base / pessimistic (W) | 230 / 293 | 265 / 341 | 307 / 397 | 354 / 461 | 409 / 534 | 539 / 709 |
-| η_prop | 0.40 | 0.38 | 0.37 | 0.36 | 0.35 | 0.34 |
-| Cruise time, base / pessimistic (min) | 16.5 / 12.9 | 14.3 / 11.1 | 12.3 / 9.5 | 10.7 / 8.2 | 9.3 / 7.1 | 7.0 / 5.3 |
+| Power, base / pessimistic (W) | 168 / 218 | 191 / 249 | 218 / 285 | 250 / 327 | 285 / 375 | 370 / 490 |
+| η_prop | 0.46 | 0.44 | 0.43 | 0.41 | 0.40 | 0.39 |
+| Cruise time, base / pessimistic (min) | 22.2 / 16.6 | 19.4 / 14.6 | 17.0 / 12.7 | 14.9 / 11.1 | 13.0 / 9.7 | 10.0 / 7.4 |
 
-Power rises steeply with speed for two reasons: the airframe's minimum-power speed (≈ 10 m/s) is below stall, and
-η_prop falls as J approaches the prop's zero-thrust value of 0.545. **Fly the slowest speed the transition rule
-allows.**
+Each extra 1 m/s costs about 14 % in power and 2 min of cruise. The lowest-power speed in this band is at its
+lower edge (`CL-B1-V-MINPOWER` 14 m/s), so the transition rule, not the airframe, sets the cruise speed.
 
 ## Climb, top speed, wind
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Fixed-wing climb at 16 m/s, 80 % thrust | 6.3 (23°) | m/s | `CL-B1-ROC-FW` | `PROPOSED` |
-| Top level speed (prop thrust runs out at J 0.545) | 19.7 | m/s | `CL-B1-VMAX` (≥ 18) | `UNVERIFIED` |
-| Hover lean, flat plate, 5 / 8 m/s | 14.9 / 34.2 | ° | `CL-B1-LEAN-5MS`, `CALC-B1-WIND` | `PROPOSED` |
-| Hover lean with wing lift counted, 5 / 8 m/s | 15.5 / 35.4 | ° | `CL-B1-LEAN-5MS-LIFT`, `CALC-B1-CORRIDOR` | `PROPOSED` |
-| Lean allowed at touchdown (tip-over 37.2° − 10° error) | 27.2 | ° | `CL-B1-LEAN-ALLOWED` | `PROPOSED` |
-| Steady wind for a fin-tip landing | 7.0 | m/s | `CL-B1-WIND-HOVER-MAX` (≥ 5) | `PROPOSED` |
-| Thrust fraction holding the 8 m/s gust lean | 0.57 | — | `CL-B1-GUST-8-THRUST` (≤ 0.80) | `PROPOSED` |
-| Wind that tips the parked aircraft (motors off, 2.13 kg) | 9.6 | m/s | `CL-B1-GROUND-TIP-WIND` (≥ 8) | `PROPOSED` |
-| Upwind ground speed at 16 m/s in 5 m/s wind | 11 | m/s | `CALC-B1-WIND` | `PROPOSED` |
+| Fixed-wing climb at 16 m/s, 80 % thrust, worst pack | 4.7 (17°) | m/s | `CL-B1-ROC-FW` | `UNVERIFIED` |
+| Top level speed, worst pack (prop thrust runs out near J 0.64) | 19.3 | m/s | `CL-B1-VMAX` (≥ 18, +7 %) | `UNVERIFIED` |
+| Hover lean, flat plate, 5 / 8 m/s | 15.8 / 35.9 | ° | `CL-B1-LEAN-5MS`, `CALC-B1-WIND` | `UNVERIFIED` |
+| Hover lean with wing lift counted, 5 / 8 m/s | 16.3 / 36.9 | ° | `CL-B1-LEAN-5MS-LIFT`, `CALC-B1-CORRIDOR` | `UNVERIFIED` |
+| Lean allowed at touchdown (tip-over 30.6° − 10° error) | 20.6 | ° | `CL-B1-LEAN-ALLOWED` | `UNVERIFIED` |
+| Steady wind for a fin-tip landing | 5.8 | m/s | `CL-B1-WIND-HOVER-MAX` (≥ 5, +15 %) | `UNVERIFIED` |
+| Thrust fraction holding the 8 m/s gust lean | 0.73 | — | `CL-B1-GUST-8-THRUST` (≤ 0.80, +9 %) | `UNVERIFIED` |
+| Wind that tips the parked aircraft (motors off, 2.15 kg) | 8.2 | m/s | `CL-B1-GROUND-TIP-WIND` (≥ 8, +3 %) | `UNVERIFIED` |
+| Upwind ground speed at 16 m/s in 5 m/s wind | 11 | m/s | `CALC-B1-WIND` | `MODELLED` |
 
-The 5 m/s flight-card limit stands. The binding limit is landing (7.0 m/s steady), not thrust.
+The wind limits got tighter in rev 2 for three reasons: the R1 tip-over angle is 30.6° (rev 1 used 37.2°), the
+wing is larger, and the feet are taller. The 5 m/s flight-card limit still holds, with 0.8 m/s to spare at
+landing. A parked aircraft tips over in 8.2 m/s, so the card should require laying it flat between flights in
+gusty wind (CR-C1-02). Splaying the feet (C5) is the lever on both numbers.
+
+## First-flight values for F4
+
+| Parameter | Value | Basis |
+|---|---|---|
+| `AIRSPEED_CRUISE` | 16 m/s | `ASM-B1-VCRUISE`, 1.3 Vs 15.42 m/s |
+| `AIRSPEED_MIN` | 15 m/s | 1.26 Vs at the gate (wings level); TECS floor, not the transition end |
+| `AIRSPEED_MAX` | 18 m/s | Vmax 19.3 m/s on the worst pack, 1.3 m/s headroom |
+| Transition-complete airspeed | ≥ 15.5 m/s | `CL-B1-VT-GATE`; F4 maps it to the firmware's end-of-transition criterion |
+| `Q_ASSIST_SPEED` | 13 m/s | 1.10 Vs (`ASM-B1-TRANS`) |
+| `Q_TAILSIT_RAT_FW` | 12 °/s | `CL-B1-TRANS-THRUST` 0.76 on the worst pack |
+| `TECS_CLMB_MAX` | 3 m/s | `CL-B1-ROC-FW` 4.7 m/s at 80 % thrust |
 
 ## How to verify (planned tests)
 
@@ -178,10 +201,12 @@ The 5 m/s flight-card limit stands. The binding limit is landing (7.0 m/s steady
 
 ## Limits of this analysis
 
-- Steady 2-D model. It ignores prop normal force, edgewise inflow, slipstream over the wing and pitch-moment
-  balance. The pitch moment is B3's to check: the elevons sit 0.05 m outside the prop discs and get no prop wash,
-  so at low airspeed pitch control is differential thrust only.
-- Hover power comes from the 11×4.7 maker table. Cruise power uses APC's predicted 11×4.5MR data, scaled by the
-  same table point. The thrust stand (P13) replaces both.
-- All numbers are at 2.6 kg except where marked. At the 2.48 kg sized mass, hover is 355 W and stall is 11.31 m/s.
-- Outputs, tables and time histories are in `performance_results.json`.
+- Steady 2-D model. It ignores prop normal force, edgewise inflow, slipstream over the wing and the pitch-moment
+  balance. B3 owns the pitch moment. The elevons get no prop wash, so at low airspeed pitch control comes from
+  differential thrust alone.
+- B2's e, wing CD0 and lift slope come from a c 0.30 (AR 3.83) run. k already uses the R1 AR of 3.59. The AVL
+  lift slope is about 3 % high for AR 3.59 (Helmbold ratio 3.69/3.81). B2/B3 re-run at R1.
+- Hover comes from the 11×4.7 maker table, scaled to the 11×5.5MR by the APC model ratio. Cruise uses APC's
+  predicted 11×5.5MR data with the same table calibration. The H1 thrust stand replaces both.
+- All numbers are at 2.6 kg unless marked. Outputs, tables, sensitivities and time histories are in
+  `performance_results.json`.

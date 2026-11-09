@@ -1,0 +1,1115 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/D2/pod_claims.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-D2-POD-WIDTH",
+   "type": "assumption",
+   "title": "Pod outside width",
+   "text": "Pod outside width that holds the 52 mm bay and two 37 mm side channels",
+   "basis": "subsystems/pod/params.json#width_m; params.json pod.size_m[1] = 0.10 until A1 decides CR-D2-01",
+   "value": 0.14,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-BAY-W",
+   "type": "assumption",
+   "title": "Pack bay width between the guides",
+   "text": "Inside width of the bay",
+   "basis": "E2 CR-E2-02 minimum, D2 uses it exactly",
+   "value": 0.052,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-FLOOR-STACK",
+   "type": "assumption",
+   "title": "Tray floor + anti-slip pad under the pack",
+   "text": "Height from the foam-board floor top to the pack underside",
+   "basis": "subsystems/pod/params.json tray_floor_t_m + pad_t_m",
+   "value": 0.0015,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-SLOT-WALL",
+   "type": "assumption",
+   "title": "Foam between the pod recess and the spar slot",
+   "text": "Recess ends this far ahead of the spar-slot front face",
+   "basis": "subsystems/pod/params.json slot_wall_m; D1 confirms on the first core (CR-D2-04)",
+   "value": 0.004,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-STOP-T",
+   "type": "assumption",
+   "title": "Aft stop wall thickness",
+   "text": "Printed wall at the recess end, the pack's aft stop",
+   "basis": "subsystems/pod/params.json stop_wall_t_m",
+   "value": 0.0015,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-TRIM-NEED",
+   "type": "assumption",
+   "title": "Aft trim travel needed",
+   "text": "Pack travel aft of the forward stop that re-trims a 680 g pack to the 0.044 m target",
+   "basis": "A3 MASS-CG.md: 680 g pack at the nominal station gives CG 0.040 m; 0.26 mm CG per mm of pack: (0.0447 - 0.040) / 0.26 = 18 mm",
+   "value": 0.018,
+   "unit": "m",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-STRAP-CAP",
+   "type": "assumption",
+   "title": "Installed strap loop capacity",
+   "text": "Breaking load of one 20 mm hook-and-loop battery strap loop as installed (two legs)",
+   "basis": "ESTIMATE for rubber-backed RC battery straps; T-D2-STRAP-PULL pulls one loop to 2 x 85 N",
+   "value": 100.0,
+   "unit": "N",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-N-STRAPS",
+   "type": "assumption",
+   "title": "Pack straps",
+   "text": "Straps holding the pack in z and y",
+   "basis": "D2 design",
+   "value": 2,
+   "unit": "-",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-TIE-CAP",
+   "type": "assumption",
+   "title": "Spar tie capacity",
+   "text": "Rated tensile strength of one 7.6 mm heavy-duty nylon cable tie (50 lb class)",
+   "basis": "catalogue class value 50 lbf = 222 N; T-D2-HANDLE-PULL proof-loads the handle",
+   "value": 222.0,
+   "unit": "N",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-N-TIES",
+   "type": "assumption",
+   "title": "Spar ties",
+   "text": "One tie per handle foot",
+   "basis": "D2 design",
+   "value": 2,
+   "unit": "-",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-ULT",
+   "type": "assumption",
+   "title": "Ultimate factor",
+   "text": "Ultimate = 1.5 x limit for handling loads",
+   "basis": "C1 LOADS.md convention (limit x 1.5)",
+   "value": 1.5,
+   "unit": "-",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-POD-M-ULT",
+   "type": "assumption",
+   "title": "Pod-to-wing moment, ultimate",
+   "text": "Pitching moment at the pod bond in the L1 landing, ultimate",
+   "basis": "team/C1/LOADS.md joint table row 'Pod -> wing (C3)': 2.0 N m limit, 3.0 N m ultimate",
+   "value": 3.0,
+   "unit": "N m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-XPS-ALLOW",
+   "type": "assumption",
+   "title": "XPS bond allowable (tension)",
+   "text": "Allowable tensile stress at an epoxy-to-XPS F-250 bond line, foam failure",
+   "basis": "ESTIMATE, conservative for 25 psi XPS (compressive 172 kPa); C3 confirms with T-D2-BOND-PULL",
+   "value": 100000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-PART-MASSES",
+   "type": "assumption",
+   "title": "Pod part masses from the CAD",
+   "text": "Declared masses of POD-001 ... POD-008 (g), body volumes x densities",
+   "basis": "team/D2/pod_data.py from subsystems/pod/fusion/pod.py; foam board areal mass and PETG fill are estimates; weigh (T-D2-WEIGH)",
+   "value": [
+    19.8,
+    23.9,
+    7.2,
+    10.1,
+    5.6,
+    3.1,
+    26.5,
+    4.2
+   ],
+   "unit": "g",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-PITOT-Y",
+   "type": "assumption",
+   "title": "Pitot boom lateral station",
+   "text": "Boom on the left side-channel centre, beside the pack",
+   "basis": "subsystems/pod/params.json pitot_y_m; CR-D2-03 asks F3/B4/A1 to move the tip from y 0",
+   "value": -0.046,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-SOCKET",
+   "type": "assumption",
+   "title": "Pitot socket length inside / collar outside",
+   "text": "Socket depth behind the nose wall and collar ahead of it",
+   "basis": "subsystems/pod/params.json socket_m",
+   "value": [
+    0.022,
+    0.008
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "CALC-D2-BAY",
+   "type": "calculation",
+   "title": "bay",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "bay",
+   "equation": "bay L = (spar x - r - slot wall - stop t) - (pod LE + board t); H = (base + H - t) - (base + t + floor stack); pack centroid fwd = pod LE + t + L_pack/2; travel = bay L - L_pack",
+   "inputs": {
+    "x_le": "P:pod.x_le_m",
+    "size": "P:pod.size_m",
+    "z_base": "P:pod.z_base_m",
+    "t": "P:fins.board_t_m",
+    "xs": "P:wing.spar.x_m",
+    "od": "P:wing.spar.od_m",
+    "wall": "ASM-D2-SLOT-WALL",
+    "stop": "ASM-D2-STOP-T",
+    "stack": "ASM-D2-FLOOR-STACK",
+    "bw": "ASM-D2-BAY-W",
+    "pack": "P:battery.size_m"
+   },
+   "outputs": {
+    "bay_l": 0.1637,
+    "bay_w": 0.052,
+    "bay_h": 0.05890000000000001,
+    "pack_x_fwd": -0.03019999999999999,
+    "pack_ahead_of_centre": 0.0252,
+    "travel": 0.0237,
+    "pack_z": 0.0463,
+    "x_stop": 0.0635
+   },
+   "input_values": {
+    "x_le": -0.105,
+    "size": [
+     0.2,
+     0.1,
+     0.07
+    ],
+    "z_base": 0.015,
+    "t": 0.0048,
+    "xs": 0.08,
+    "od": 0.022,
+    "wall": 0.004,
+    "stop": 0.0015,
+    "stack": 0.0015,
+    "bw": 0.052,
+    "pack": [
+     0.14,
+     0.048,
+     0.05
+    ]
+   }
+  },
+  {
+   "id": "CALC-D2-RECESS",
+   "type": "calculation",
+   "title": "recess",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "recess",
+   "equation": "x0: upper surface z(x) = pod base; depth = z(x_end) - base, x_end = spar x - r - wall; foam under = base - lower surface z(x_end)",
+   "inputs": {
+    "sec": "ASM-A5-SECTION",
+    "c": "P:wing.chord_m",
+    "z_base": "P:pod.z_base_m",
+    "xs": "P:wing.spar.x_m",
+    "od": "P:wing.spar.od_m",
+    "wall": "ASM-D2-SLOT-WALL"
+   },
+   "outputs": {
+    "x0": 0.02257187998447807,
+    "x1": 0.065,
+    "depth": 0.006916165138853372,
+    "foam_under": 0.02347668498742567
+   },
+   "input_values": {
+    "sec": [
+     [
+      1.0,
+      0.0
+     ],
+     [
+      0.99676,
+      1e-05
+     ],
+     [
+      0.987068,
+      7e-05
+     ],
+     [
+      0.971006,
+      0.00036
+     ],
+     [
+      0.948692,
+      0.00108
+     ],
+     [
+      0.920398,
+      0.00256
+     ],
+     [
+      0.886653,
+      0.005161
+     ],
+     [
+      0.848257,
+      0.009031
+     ],
+     [
+      0.806051,
+      0.014062
+     ],
+     [
+      0.760724,
+      0.020083
+     ],
+     [
+      0.713027,
+      0.026884
+     ],
+     [
+      0.66372,
+      0.034205
+     ],
+     [
+      0.613492,
+      0.041636
+     ],
+     [
+      0.562894,
+      0.048777
+     ],
+     [
+      0.512397,
+      0.055298
+     ],
+     [
+      0.462429,
+      0.060939
+     ],
+     [
+      0.413372,
+      0.06547
+     ],
+     [
+      0.365665,
+      0.06874
+     ],
+     [
+      0.319588,
+      0.070641
+     ],
+     [
+      0.275491,
+      0.071141
+     ],
+     [
+      0.233715,
+      0.070241
+     ],
+     [
+      0.194609,
+      0.068
+     ],
+     [
+      0.158474,
+      0.06446
+     ],
+     [
+      0.125599,
+      0.059689
+     ],
+     [
+      0.096234,
+      0.053778
+     ],
+     [
+      0.070571,
+      0.046887
+     ],
+     [
+      0.048747,
+      0.039156
+     ],
+     [
+      0.030875,
+      0.030815
+     ],
+     [
+      0.017033,
+      0.022143
+     ],
+     [
+      0.007241,
+      0.013482
+     ],
+     [
+      0.00152,
+      0.005331
+     ],
+     [
+      0.0,
+      -0.0014
+     ],
+     [
+      0.004091,
+      -0.006501
+     ],
+     [
+      0.014412,
+      -0.010842
+     ],
+     [
+      0.030135,
+      -0.014712
+     ],
+     [
+      0.051088,
+      -0.018043
+     ],
+     [
+      0.077042,
+      -0.020823
+     ],
+     [
+      0.107716,
+      -0.023063
+     ],
+     [
+      0.142781,
+      -0.024814
+     ],
+     [
+      0.181817,
+      -0.026094
+     ],
+     [
+      0.224364,
+      -0.026884
+     ],
+     [
+      0.26997,
+      -0.027154
+     ],
+     [
+      0.318188,
+      -0.026914
+     ],
+     [
+      0.368545,
+      -0.026234
+     ],
+     [
+      0.420463,
+      -0.025174
+     ],
+     [
+      0.473371,
+      -0.023814
+     ],
+     [
+      0.526679,
+      -0.022193
+     ],
+     [
+      0.579767,
+      -0.020393
+     ],
+     [
+      0.632035,
+      -0.018463
+     ],
+     [
+      0.682872,
+      -0.016452
+     ],
+     [
+      0.73169,
+      -0.014432
+     ],
+     [
+      0.777887,
+      -0.012432
+     ],
+     [
+      0.820923,
+      -0.010492
+     ],
+     [
+      0.860279,
+      -0.008651
+     ],
+     [
+      0.895454,
+      -0.006911
+     ],
+     [
+      0.926019,
+      -0.005271
+     ],
+     [
+      0.951623,
+      -0.003671
+     ],
+     [
+      0.972106,
+      -0.00212
+     ],
+     [
+      0.987298,
+      -0.00088
+     ],
+     [
+      0.99678,
+      -0.00019
+     ],
+     [
+      1.0,
+      0.0
+     ]
+    ],
+    "c": 0.32,
+    "z_base": 0.015,
+    "xs": 0.08,
+    "od": 0.022,
+    "wall": 0.004
+   }
+  },
+  {
+   "id": "CALC-D2-STRAPS",
+   "type": "calculation",
+   "title": "straps",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "straps",
+   "equation": "capacity = n straps x installed loop capacity",
+   "inputs": {
+    "n": "ASM-D2-N-STRAPS",
+    "cap": "ASM-D2-STRAP-CAP"
+   },
+   "outputs": {
+    "capacity_n": 200.0
+   },
+   "input_values": {
+    "n": 2,
+    "cap": 100.0
+   }
+  },
+  {
+   "id": "CALC-D2-POD-CRASH",
+   "type": "calculation",
+   "title": "pod crash",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "pod_crash",
+   "equation": "F = (pod + avionics + power - nominal pack + heaviest pack listing) x n_crash x g",
+   "inputs": {
+    "pod": "P:mass.allocation_g.pod",
+    "avn": "P:mass.allocation_g.avionics",
+    "pwr": "P:mass.allocation_g.power",
+    "pack_nom": "P:battery.mass_kg",
+    "pack_rng": "ASM-A3-PACK-RANGE",
+    "n": "CL-C1-CRASH-N",
+    "g": "P:env.g_ms2"
+   },
+   "outputs": {
+    "mass_g": 905.0,
+    "force_n": 113.125
+   },
+   "input_values": {
+    "pod": 105,
+    "avn": 75,
+    "pwr": 595,
+    "pack_nom": 0.55,
+    "pack_rng": [
+     503.0,
+     680.0
+    ],
+    "n": 12.746452662224103,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CALC-D2-TIES",
+   "type": "calculation",
+   "title": "ties",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "ties",
+   "equation": "capacity = n ties x tie rating",
+   "inputs": {
+    "n": "ASM-D2-N-TIES",
+    "cap": "ASM-D2-TIE-CAP"
+   },
+   "outputs": {
+    "capacity_n": 444.0
+   },
+   "input_values": {
+    "n": 2,
+    "cap": 222.0
+   }
+  },
+  {
+   "id": "CALC-D2-HANDLE",
+   "type": "calculation",
+   "title": "handle",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "handle",
+   "equation": "F_ult = gate mass x g x handling factor x ultimate factor",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "nh": "ASM-C1-HANDLING-N",
+    "u": "ASM-D2-ULT"
+   },
+   "outputs": {
+    "force_ult_n": 76.49187
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "nh": 2.0,
+    "u": 1.5
+   }
+  },
+  {
+   "id": "CALC-D2-BOND",
+   "type": "calculation",
+   "title": "bond",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "bond",
+   "equation": "sigma = F/A + M / (b L^2 / 6); A = b L, b = pod width, L = pod TE - recess start",
+   "inputs": {
+    "F": "CL-C1-POD-F-ULT",
+    "M": "ASM-D2-POD-M-ULT",
+    "b": "ASM-D2-POD-WIDTH",
+    "x_le": "P:pod.x_le_m",
+    "size": "P:pod.size_m",
+    "x0": "CL-D2-RECESS-X0"
+   },
+   "outputs": {
+    "stress_pa": 36509.207998474456,
+    "length_m": 0.07242812001552194,
+    "area_m2": 0.010139936802173073
+   },
+   "input_values": {
+    "F": 121.67880282098471,
+    "M": 3.0,
+    "b": 0.14,
+    "x_le": -0.105,
+    "size": [
+     0.2,
+     0.1,
+     0.07
+    ],
+    "x0": 0.02257187998447807
+   }
+  },
+  {
+   "id": "CALC-D2-PITOT",
+   "type": "calculation",
+   "title": "pitot",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "pitot",
+   "equation": "boom length = socket inner end - tip x; exposed = pod LE - collar - tip x",
+   "inputs": {
+    "tip": "P:avionics.pitot_tip_xyz_m",
+    "x_le": "P:pod.x_le_m",
+    "t": "P:fins.board_t_m",
+    "sock": "ASM-D2-SOCKET"
+   },
+   "outputs": {
+    "boom_len": 0.1068,
+    "exposed": 0.07200000000000001,
+    "socket_depth": 0.0348
+   },
+   "input_values": {
+    "tip": [
+     -0.185,
+     0.0,
+     0.045
+    ],
+    "x_le": -0.105,
+    "t": 0.0048,
+    "sock": [
+     0.022,
+     0.008
+    ]
+   }
+  },
+  {
+   "id": "CALC-D2-MASS",
+   "type": "calculation",
+   "title": "mass",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "mass",
+   "equation": "pod mass = sum of the CAD part masses",
+   "inputs": {
+    "parts": "ASM-D2-PART-MASSES"
+   },
+   "outputs": {
+    "mass_g": 100.4
+   },
+   "input_values": {
+    "parts": [
+     19.8,
+     23.9,
+     7.2,
+     10.1,
+     5.6,
+     3.1,
+     26.5,
+     4.2
+    ]
+   }
+  },
+  {
+   "id": "CL-D2-BAY-L",
+   "type": "claim",
+   "title": "Pack bay inside length (nose wall to aft stop)",
+   "calc": "CALC-D2-BAY",
+   "output": "bay_l",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.16
+   },
+   "verifies": [
+    "R-BATT-HANDLING"
+   ],
+   "parts": [
+    "POD-001",
+    "POD-002"
+   ],
+   "how": "Measure nose wall to aft stop inside the built pod; drop the real pack in with the spacers out.",
+   "cites": [
+    "SRC-K09-CARD"
+   ],
+   "note": "E2 CR-E2-02 minimum 0.160 m",
+   "value": 0.1637
+  },
+  {
+   "id": "CL-D2-BAY-W",
+   "type": "claim",
+   "title": "Pack bay inside width (between the guides)",
+   "calc": "CALC-D2-BAY",
+   "output": "bay_w",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.052
+   },
+   "verifies": [
+    "R-BATT-HANDLING"
+   ],
+   "parts": [
+    "POD-001",
+    "POD-002"
+   ],
+   "how": "Calipers between the guides.",
+   "value": 0.052
+  },
+  {
+   "id": "CL-D2-BAY-H",
+   "type": "claim",
+   "title": "Pack bay inside height (pad top to hatch underside)",
+   "calc": "CALC-D2-BAY",
+   "output": "bay_h",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.053
+   },
+   "verifies": [
+    "R-BATT-HANDLING"
+   ],
+   "parts": [
+    "POD-001",
+    "POD-002",
+    "POD-003"
+   ],
+   "how": "Close the hatch over the strapped pack with the balance lead parked: no bulge.",
+   "value": 0.05890000000000001
+  },
+  {
+   "id": "CL-D2-PACK-X-FWD",
+   "type": "claim",
+   "title": "Pack centroid at the forward stop (nominal station)",
+   "calc": "CALC-D2-BAY",
+   "output": "pack_x_fwd",
+   "unit": "m",
+   "parts": [
+    "POD-001",
+    "POD-002"
+   ],
+   "how": "Mark the pack centre; measure from the wing LE with the pack against the nose wall.",
+   "note": "D-17 asks for 29 mm ahead of the pod centre (-0.034 m); the nose wall allows 25 mm (CR-D2-02, CR-A3-11 option a)",
+   "value": -0.03019999999999999
+  },
+  {
+   "id": "CL-D2-PACK-AHEAD",
+   "type": "claim",
+   "title": "Pack centroid ahead of the pod centre at the forward stop",
+   "calc": "CALC-D2-BAY",
+   "output": "pack_ahead_of_centre",
+   "unit": "m",
+   "parts": [
+    "POD-001",
+    "POD-002"
+   ],
+   "how": "As CL-D2-PACK-X-FWD.",
+   "value": 0.0252
+  },
+  {
+   "id": "CL-D2-PACK-TRAVEL",
+   "type": "claim",
+   "title": "Pack aft trim travel (forward stop to aft stop)",
+   "calc": "CALC-D2-BAY",
+   "output": "travel",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-D2-TRIM-NEED"
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "parts": [
+    "POD-001",
+    "POD-002",
+    "POD-008"
+   ],
+   "how": "Slide the real pack from the nose wall to the aft stop; record the travel; balance at both ends (T-A3-CG-BALANCE).",
+   "value": 0.0237
+  },
+  {
+   "id": "CL-D2-PACK-Z",
+   "type": "claim",
+   "title": "Pack centroid height",
+   "calc": "CALC-D2-BAY",
+   "output": "pack_z",
+   "unit": "m",
+   "parts": [
+    "POD-001",
+    "POD-002"
+   ],
+   "how": "Measure pad top above the chord line + half the pack height.",
+   "value": 0.0463
+  },
+  {
+   "id": "CL-D2-RECESS-X0",
+   "type": "claim",
+   "title": "Pod recess start (upper surface at the pod base)",
+   "calc": "CALC-D2-RECESS",
+   "output": "x0",
+   "unit": "m",
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Template on the hot-wired core; the recess floor meets the skin here.",
+   "value": 0.02257187998447807
+  },
+  {
+   "id": "CL-D2-RECESS-DEPTH",
+   "type": "claim",
+   "title": "Pod recess depth at its aft end (D1 cuts)",
+   "calc": "CALC-D2-RECESS",
+   "output": "depth",
+   "unit": "m",
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Depth gauge at the recess aft end before bonding.",
+   "value": 0.006916165138853372
+  },
+  {
+   "id": "CL-D2-RECESS-FOAM",
+   "type": "claim",
+   "title": "Foam left under the recess at its aft end",
+   "calc": "CALC-D2-RECESS",
+   "output": "foam_under",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.015
+   },
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Calipers through the core at the recess end.",
+   "note": "15 mm keeps the root section stiffer than the outboard core at the tubes (~27 mm thick)",
+   "value": 0.02347668498742567
+  },
+  {
+   "id": "CL-D2-STRAP-CAP",
+   "type": "claim",
+   "title": "Pack strap capacity (2 straps)",
+   "calc": "CALC-D2-STRAPS",
+   "output": "capacity_n",
+   "unit": "N",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C1-PACK-CRASH-LOAD"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-004",
+    "POD-002"
+   ],
+   "how": "T-D2-STRAP-PULL: one installed loop pulled to 2 x 85 N without slip or tear.",
+   "value": 200.0
+  },
+  {
+   "id": "CL-D2-POD-CRASH-F",
+   "type": "claim",
+   "title": "Pod group crash load (pod, heaviest pack, avionics, power), ultimate",
+   "calc": "CALC-D2-POD-CRASH",
+   "output": "force_n",
+   "unit": "N",
+   "parts": [
+    "POD-001",
+    "POD-007"
+   ],
+   "how": "Recompute from weighed masses.",
+   "value": 113.125
+  },
+  {
+   "id": "CL-D2-TIE-CAP",
+   "type": "claim",
+   "title": "Spar ties: pod retention capacity",
+   "calc": "CALC-D2-TIES",
+   "output": "capacity_n",
+   "unit": "N",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-D2-POD-CRASH-F"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-007"
+   ],
+   "how": "T-D2-HANDLE-PULL: 120 N on the handle grip for 10 s, no tie slip, no foot lift.",
+   "value": 444.0
+  },
+  {
+   "id": "CL-D2-HANDLE-F-ULT",
+   "type": "claim",
+   "title": "Carry handle load, lifting at 2 g, ultimate",
+   "calc": "CALC-D2-HANDLE",
+   "output": "force_ult_n",
+   "unit": "N",
+   "parts": [
+    "POD-007"
+   ],
+   "how": "Covered by T-D2-HANDLE-PULL (120 N > this).",
+   "value": 76.49187
+  },
+  {
+   "id": "CL-D2-BOND-STRESS",
+   "type": "claim",
+   "title": "Pod-to-wing bond stress, L1 ultimate, first cut (C3 sizes)",
+   "calc": "CALC-D2-BOND",
+   "output": "stress_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-D2-XPS-ALLOW"
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "POD-001"
+   ],
+   "how": "T-D2-BOND-PULL: 50 x 50 mm coupon of the same epoxy on F-250 pulled to foam failure; C3 replaces this first cut.",
+   "value": 36509.207998474456
+  },
+  {
+   "id": "CL-D2-PITOT-BOOM-L",
+   "type": "claim",
+   "title": "Pitot boom length (socket inner end to tip)",
+   "calc": "CALC-D2-PITOT",
+   "output": "boom_len",
+   "unit": "m",
+   "verifies": [
+    "R-AIRSPEED"
+   ],
+   "parts": [
+    "POD-006"
+   ],
+   "how": "F3 cuts the boom to this length; check the tip at x -0.185 m with the boom seated.",
+   "value": 0.1068
+  },
+  {
+   "id": "CL-D2-PITOT-SOCKET",
+   "type": "claim",
+   "title": "Pitot socket depth",
+   "calc": "CALC-D2-PITOT",
+   "output": "socket_depth",
+   "unit": "m",
+   "parts": [
+    "POD-006"
+   ],
+   "how": "Depth gauge in the bore.",
+   "value": 0.0348
+  },
+  {
+   "id": "CL-D2-MASS",
+   "type": "claim",
+   "title": "Pod subsystem mass (CAD estimate)",
+   "calc": "CALC-D2-MASS",
+   "output": "mass_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mass.allocation_g.pod"
+   },
+   "verifies": [
+    "R-MASS-ALLOC"
+   ],
+   "parts": [
+    "POD-001",
+    "POD-002",
+    "POD-003",
+    "POD-004",
+    "POD-005",
+    "POD-006",
+    "POD-007",
+    "POD-008"
+   ],
+   "how": "T-D2-WEIGH: weigh every pod part before bonding; update interfaces.json.",
+   "value": 100.4
+  },
+  {
+   "id": "T-D2-WEIGH",
+   "type": "test",
+   "title": "Weigh every pod part before assembly",
+   "verifies": [
+    "CL-D2-MASS"
+   ],
+   "state": "planned",
+   "procedure": "0.1 g scale; each printed part and board piece; record in subsystems/pod/parts.csv"
+  },
+  {
+   "id": "T-D2-FIT",
+   "type": "test",
+   "title": "Real pack fit",
+   "verifies": [
+    "CL-D2-BAY-L",
+    "CL-D2-BAY-W",
+    "CL-D2-BAY-H",
+    "CL-D2-PACK-TRAVEL"
+   ],
+   "state": "planned",
+   "procedure": "Both packs: in through the hatch, strapped at both trim ends, XT60 and balance lead reachable, hatch closes"
+  },
+  {
+   "id": "T-D2-STRAP-PULL",
+   "type": "test",
+   "title": "Strap loop pull test",
+   "verifies": [
+    "CL-D2-STRAP-CAP"
+   ],
+   "state": "planned",
+   "procedure": "Spring scale, one installed loop on a tray offcut, 170 N for 10 s; no slip, no tear at the slot"
+  },
+  {
+   "id": "T-D2-HANDLE-PULL",
+   "type": "test",
+   "title": "Handle proof load on the built wing",
+   "verifies": [
+    "CL-D2-TIE-CAP"
+   ],
+   "state": "planned",
+   "procedure": "Wing supported at the spar ends; 12 kg on the grip for 10 s; feet stay on the spar, ties do not slip"
+  },
+  {
+   "id": "T-D2-BOND-PULL",
+   "type": "test",
+   "title": "Epoxy-on-XPS pull-off coupon",
+   "verifies": [
+    "CL-D2-BOND-STRESS"
+   ],
+   "state": "planned",
+   "procedure": "Two 50 x 50 mm PETG pads bonded to F-250 offcut with the build epoxy, 24 h cure, pull to failure; foam must fail"
+  }
+ ]
+}

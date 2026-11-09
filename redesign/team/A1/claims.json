@@ -19,6 +19,36 @@
    ]
   },
   {
+   "id": "ASM-A1-POD-GROUP",
+   "type": "assumption",
+   "title": "Mass that moves with the pod",
+   "text": "Pod shell, tray and hatch, the flight pack and power items, and the avionics move together when pod.x_le_m changes",
+   "basis": "A3 CALC-A3-CG output pod_group_mass_g (subsystems pod + power + avionics), revision A3-R3 2026-11-09. Typed here because A3 publishes it only as a calc output; CR-A1-22 asks A3 for a claim so this node can be retired",
+   "value": 763.0,
+   "unit": "g",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-A1-POD-ALT",
+   "type": "assumption",
+   "title": "Pod nose station if the D-17 trigger fires",
+   "text": "The pod moves 20 mm forward to x_le = -0.125 m with the pack centred in it",
+   "basis": "CHANGE-LOG D-17 (A1 choice)",
+   "value": -0.125,
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-A1-POD-WALL",
+   "type": "assumption",
+   "title": "Pod nose wall thickness ahead of the pack",
+   "text": "Printed PETG / foam-board nose wall between the pack fore face and the pod outside skin",
+   "basis": "A3 CR-A3-11 option (a) used 3 mm; D2 confirms on the pod drawing",
+   "value": 0.003,
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
    "id": "ASM-A1-WALL",
    "type": "assumption",
    "title": "Box wall and lining 25 mm per side",
@@ -203,22 +233,117 @@
     "internal_m": [
      1.2,
      0.5,
-     0.4
+     0.45
     ],
     "slack_m": [
      0.050000000000000044,
      0.030000000000000027,
-     -0.024999999999999967
+     0.025000000000000022
     ],
-    "slack_min_m": -0.024999999999999967
+    "slack_min_m": 0.025000000000000022
    },
    "input_values": {
     "ext": [
      1.25,
      0.55,
-     0.45
+     0.5
     ],
     "wall": 0.025,
+    "env": [
+     1.15,
+     0.47,
+     0.425
+    ]
+   }
+  },
+  {
+   "id": "CALC-A1-POD-RULE",
+   "type": "calculation",
+   "title": "D-17 pod-station trigger and the -0.125 m fallback",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "pod_rule",
+   "equation": "x_pc = pod_le + L_pod/2 ; cg_centred = x_t + (m_p/M)(x_pc - x_req) ; trigger: move the pod if x_aft < cg_centred ; cg_alt = cg_centred + (m_grp/M)(x_alt - pod_le) ; room_fwd_alt = (x_alt + L_pod/2 - L_p/2) - (x_alt + wall) ; box_x_slack_alt = (ext_2nd - 2 wall_box) - (env_2nd + pod_le - x_alt)",
+   "inputs": {
+    "x_t": "CL-B3-CG-TARGET",
+    "x_req": "CL-A3-PACK-X-REQ",
+    "M": "CL-A3-MASS-BASIC",
+    "m_p": "P:battery.mass_kg",
+    "pack": "P:battery.size_m",
+    "pod_le": "P:pod.x_le_m",
+    "pod": "P:pod.size_m",
+    "m_grp": "ASM-A1-POD-GROUP",
+    "x_alt": "ASM-A1-POD-ALT",
+    "wall": "ASM-A1-POD-WALL",
+    "x_aft": "CL-B3-CG-AFT",
+    "x_fwd": "CL-B3-CG-FWD",
+    "ext": "P:requirements.box_external_m",
+    "wall_box": "ASM-A1-WALL",
+    "env": "P:transport.envelope_props_off_m"
+   },
+   "units": {
+    "x_t": "m",
+    "x_req": "m",
+    "M": "kg",
+    "m_p": "kg",
+    "pack": "m",
+    "pod_le": "m",
+    "pod": "m",
+    "m_grp": "g",
+    "x_alt": "m",
+    "wall": "m",
+    "x_aft": "m",
+    "x_fwd": "m",
+    "ext": "m",
+    "wall_box": "m",
+    "env": "m"
+   },
+   "assumes": [
+    "ASM-A1-POD-GROUP",
+    "ASM-A1-POD-ALT",
+    "ASM-A1-POD-WALL",
+    "ASM-A1-WALL"
+   ],
+   "outputs": {
+    "cg_pack_centred_m": 0.051896864071250874,
+    "pack_fwd_need_m": 0.02917859345454551,
+    "held_fwd_room_m": 0.026999999999999996,
+    "held_room_left_m": -0.0021785934545455153,
+    "trigger_margin_m": -0.0028076541063900215,
+    "cg_alt_m": 0.044782190546648136,
+    "alt_aft_margin_m": 0.004307019418212717,
+    "alt_fwd_margin_m": 0.005042009391931342,
+    "pack_fwd_room_alt_m": 0.026999999999999996,
+    "pack_aft_room_alt_m": 0.027,
+    "box_x_slack_now_m": 0.030000000000000027,
+    "box_x_slack_alt_m": 0.010000000000000009
+   },
+   "input_values": {
+    "x_t": 0.044414695559788823,
+    "x_req": -0.03417859345454549,
+    "M": 2.1448630000000004,
+    "m_p": 0.55,
+    "pack": [
+     0.14,
+     0.048,
+     0.05
+    ],
+    "pod_le": -0.105,
+    "pod": [
+     0.2,
+     0.1,
+     0.07
+    ],
+    "m_grp": 763.0,
+    "x_alt": -0.125,
+    "wall": 0.003,
+    "x_aft": 0.04908920996486085,
+    "x_fwd": 0.039740181154716794,
+    "ext": [
+     1.25,
+     0.55,
+     0.5
+    ],
+    "wall_box": 0.025,
     "env": [
      1.15,
      0.47,
@@ -346,8 +471,8 @@
     "S": "m2"
    },
    "outputs": {
-    "vs_ms": 11.864195023298253,
-    "vt_ms": 15.423453530287729,
+    "vs_ms": 11.907860674939258,
+    "vt_ms": 15.480218877421036,
     "wing_loading_Nm2": 69.28611413043478
    },
    "input_values": {
@@ -355,7 +480,7 @@
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
-    "clmax": 0.8036437246963563,
+    "clmax": 0.7977606717984604,
     "k": 1.3
    }
   },
@@ -471,7 +596,7 @@
     "R-TRANSPORT"
    ],
    "how": "Place the props-off aircraft in the built box on its cradles; lid closes without touching fins or tubes (D7).",
-   "value": -0.024999999999999967
+   "value": 0.025000000000000022
   },
   {
    "id": "CL-A1-MASS-SIZED",
@@ -573,7 +698,7 @@
     "R-STALL"
    ],
    "how": "Trimmed CLmax from B2 (CL-B2-CLMAX-DESIGN); flight test: slow-flight stall in FBWA at altitude with airspeed logged (H2, T-B2-STALL).",
-   "value": 11.864195023298253
+   "value": 11.907860674939258
   },
   {
    "id": "CL-A1-TRANSITION-GATE",
@@ -590,7 +715,7 @@
     "R-TRANSITION"
    ],
    "how": "Cruise 16 m/s (B1) against 1.3 x the trimmed stall; log airspeed at 'Transition FW done' (F4/H2). Closed by D-01: chord 0.32 and cruise 16 m/s.",
-   "value": 15.423453530287729
+   "value": 15.480218877421036
   },
   {
    "id": "CL-A1-RESERVE",
@@ -609,6 +734,100 @@
    ],
    "how": "I1 re-prices the BOM at order time; reserve = 2 000 - spend, pessimistic column.",
    "value": 321.4200000000001
+  },
+  {
+   "id": "CL-A1-POD-TRIGGER",
+   "type": "claim",
+   "title": "D-17 trigger: CG with the pack centred in the pod at the held station (x_le -0.105 m)",
+   "calc": "CALC-A1-POD-RULE",
+   "output": "cg_pack_centred_m",
+   "unit": "m",
+   "how": "Recomputes when B3 re-runs sc_analysis.py at R1 (CR-A1-10); then balance the built aircraft with the pack centred (T-A3-CG-BALANCE).",
+   "note": "Rule part 1 (D-17 as refined in team/A1/HANDOFF.md): if B3's R1 aft limit (CL-B3-CG-AFT) is below this value, A1 moves pod.x_le_m to -0.125; part 2 is CL-A1-POD-HELD-ROOM < 0. Supersedes the 0.051 m written in D-17 (same rule, current A3/B3 numbers). Trigger margin = CL-B3-CG-AFT - this value; the stored CL-B3-CG-AFT is still the R0 value.",
+   "value": 0.051896864071250874
+  },
+  {
+   "id": "CL-A1-POD-HELD-ROOM",
+   "type": "claim",
+   "title": "Held pod (x_le -0.105): forward pack room left after trimming to the CG target",
+   "calc": "CALC-A1-POD-RULE",
+   "output": "held_room_left_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "D2 pod drawing: pack fore face to the inside of the nose wall with the pack at A3's CL-A3-PACK-X-REQ.",
+   "note": "D-17 rule part 2: negative means the pack cannot reach CL-B3-CG-TARGET inside the pod nose wall at the held station, so the pod moves to -0.125 when B3 publishes the R1 range (CR-A3-11).",
+   "value": -0.0021785934545455153
+  },
+  {
+   "id": "CL-A1-POD-ALT-AFT",
+   "type": "claim",
+   "title": "Fallback pod at -0.125 m, pack centred: CG within the aft limit",
+   "calc": "CALC-A1-POD-RULE",
+   "output": "cg_alt_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-B3-CG-AFT"
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "A3 re-runs the roll-up with pod.x_le_m -0.125; balance test T-A3-CG-BALANCE on the built aircraft.",
+   "value": 0.044782190546648136
+  },
+  {
+   "id": "CL-A1-POD-ALT-FWD",
+   "type": "claim",
+   "title": "Fallback pod at -0.125 m, pack centred: CG behind the forward limit",
+   "calc": "CALC-A1-POD-RULE",
+   "output": "alt_fwd_margin_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "As CL-A1-POD-ALT-AFT; the heavy 680 g pack slides aft to re-trim.",
+   "value": 0.005042009391931342
+  },
+  {
+   "id": "CL-A1-POD-ALT-PACK-ROOM",
+   "type": "claim",
+   "title": "Fallback pod: forward pack slide left inside the nose wall",
+   "calc": "CALC-A1-POD-RULE",
+   "output": "pack_fwd_room_alt_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "D2 pod drawing at x_le -0.125: pack fore face to the inside of the nose wall.",
+   "value": 0.026999999999999996
+  },
+  {
+   "id": "CL-A1-POD-ALT-BOX",
+   "type": "claim",
+   "title": "Fallback pod: box slack along the chord (pod nose to foot tips, pitot off)",
+   "calc": "CALC-A1-POD-RULE",
+   "output": "box_x_slack_alt_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-TRANSPORT"
+   ],
+   "how": "D7 box at 0.50 m inner chordwise length; pitot tube removed for transport.",
+   "value": 0.010000000000000009
   },
   {
    "id": "T-A1-WEIGH",

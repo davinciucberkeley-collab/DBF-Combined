@@ -5,12 +5,14 @@ Run from the repo root (about 3-6 min, runs XFOIL in parallel):
     python -I redesign/team/B2/xfoil_wing.py --force    # re-run every case
 
 Inputs: redesign/params/params.json (chord, elevon chord fraction, rho), airfoils/*.dat (UIUC coordinates).
-Cases (Re = V c / nu, c = 0.30 m, nu = 1.48e-5 m2/s at 15 degC sea level):
-  A  candidates MH 45, MH 60, S5010, E186 at Re 2.0/2.3/3.0/4.0e5, Ncrit 9; Ncrit 5 at 2.3e5 (outdoor, tape skin)
-  B  every candidate with a 22 % elevon (hinge on the upper surface) at -15..+10 deg, Re 2.3e5 and 3.0e5
-  C  MH 45 and S5010 hinge moments, elevon -25..+25 deg, alpha -4..8 deg, Re 4.0e5 (dive 19.5 m/s), viscous and inviscid
-  N  negative stall (CLmin) S5010 and MH 45, Re 3.0e5, alpha -16..4 deg
-  G  panel-count convergence MH 45, Re 3.0e5: 160 / 220 / 300 panels
+Cases (Re = V c / nu, c = params wing.chord_m, nu = 1.48e-5 m2/s at 15 degC sea level). The three design Re
+follow the chord (rounded to 0.1e5): stall RE_STALL at requirements.stall_max_ms, cruise RE_CRUISE at
+performance.cruise_ms, dive RE_DIVE at 1.3 x cruise. c 0.32 m: 2.6e5 / 3.5e5 / 4.5e5 (c 0.30 m was 2.3/3.0/4.0e5).
+  A  candidates MH 45, MH 60, S5010, E186 at Re 2.0/2.3/3.0/4.0e5 + the three design Re, Ncrit 9; Ncrit 5 at RE_STALL
+  B  every candidate with a 22 % elevon (hinge on the upper surface) at -15..+10 deg, RE_STALL and RE_CRUISE
+  C  MH 45 and S5010 hinge moments, elevon -25..+25 deg, alpha -4..8 deg, RE_DIVE, viscous and inviscid
+  N  negative stall (CLmin) S5010 and MH 45, RE_CRUISE, alpha -16..4 deg
+  G  panel-count convergence MH 45, RE_CRUISE: 160 / 220 / 300 panels
 Outputs: out/xfoil/*.txt (raw polars and logs), out/xfoil_results.json. Plots: plots_wing.py.
 """
 from __future__ import annotations
@@ -37,7 +39,12 @@ X_HINGE = 1.0 - EF                     # hinge line x/c
 HINGE_YT = 0.9                         # hinge at 90 % of local thickness (tape hinge on the upper skin)
 NU = 1.48e-5                           # m2/s, 15 degC sea level (ISA mu 1.79e-5 / rho 1.225); ASM-B2-NU
 FOILS = ["mh45", "mh60", "s5010", "e186"]
-RES = [2.0e5, 2.3e5, 3.0e5, 4.0e5]
+V_STALL = P["requirements"]["stall_max_ms"]["value"]
+V_CRUISE = P["performance"]["cruise_ms"]["value"]
+DIVE_FACTOR = 1.3                      # ASM-B2-DIVE-FACTOR
+RE_STALL, RE_CRUISE, RE_DIVE = (round(V * CHORD / NU / 1e4) * 1e4
+                                for V in (V_STALL, V_CRUISE, DIVE_FACTOR * V_CRUISE))
+RES = sorted({2.0e5, 2.3e5, 3.0e5, 4.0e5, RE_STALL, RE_CRUISE, RE_DIVE})
 FLAPS = [-15.0, -10.0, -5.0, 0.0, 5.0, 10.0]
 HM_FLAPS = [-25.0, -20.0, -15.0, -10.0, -5.0, 5.0, 10.0, 15.0, 20.0, 25.0]
 HM_ALPHAS = [-4.0, -2.0, 0.0, 2.0, 4.0, 6.0, 8.0]
@@ -174,16 +181,16 @@ def main():
     for f in FOILS:
         for r in RES:
             jobs.append(("A", (f, r, 9.0, 0.0)))
-        jobs.append(("A", (f, 2.3e5, 5.0, 0.0)))
-        for r in (2.3e5, 3.0e5):
+        jobs.append(("A", (f, RE_STALL, 5.0, 0.0)))
+        for r in (RE_STALL, RE_CRUISE):
             for d in FLAPS:
                 if d:
                     jobs.append(("B", (f, r, 9.0, d)))
-    jobs.append(("N", ("s5010", 3.0e5, 9.0, 0.0, NPAN, -16.0, 4.0)))   # negative stall (CLmin) for C1
-    jobs.append(("N", ("mh45", 3.0e5, 9.0, 0.0, NPAN, -16.0, 4.0)))
+    jobs.append(("N", ("s5010", RE_CRUISE, 9.0, 0.0, NPAN, -16.0, 4.0)))   # negative stall (CLmin) for C1
+    jobs.append(("N", ("mh45", RE_CRUISE, 9.0, 0.0, NPAN, -16.0, 4.0)))
     for n in (160, 300):
-        jobs.append(("G", ("mh45", 3.0e5, 9.0, 0.0, n)))
-    hjobs = [(f, 4.0e5, d, v) for f in HM_FOILS for d in HM_FLAPS for v in (True, False)]
+        jobs.append(("G", ("mh45", RE_CRUISE, 9.0, 0.0, n)))
+    hjobs = [(f, RE_DIVE, d, v) for f in HM_FOILS for d in HM_FLAPS for v in (True, False)]
     pol = {}
     hm = {}
     with cf.ThreadPoolExecutor(max_workers=8) as ex:
@@ -196,6 +203,7 @@ def main():
             tag, d = fu.result()
             hm[tag] = d
     res = {"tool": "XFOIL 6.99 (https://web.mit.edu/drela/Public/web/xfoil/)", "nu_m2s": NU, "chord_m": CHORD,
+           "re_stall": RE_STALL, "re_cruise": RE_CRUISE, "re_dive": RE_DIVE,
            "x_hinge_c": X_HINGE, "hinge_y_t": HINGE_YT, "npan": NPAN, "polars": {}, "hinge": hm,
            "wall_s": None}
     for tag, a in sorted(pol.items()):

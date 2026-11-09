@@ -4,7 +4,7 @@
   "configuration": {"value": "K09-L", "unit": "-", "source": "SRC-CONFIG", "note": "quad tailsitter, flat flying wing, 4 fixed motors in X on two fins, 2 elevons, airspeed sensor, 4S, stands on fin tips, one-piece transport"},
   "schema": {"value": "params/1", "unit": "-", "source": "redesign/params/params.json"},
   "date": {"value": "2026-11-09", "unit": "-", "source": "SRC-CONFIG"},
-  "revision": {"value": "A1-R1", "unit": "-", "source": "redesign/params/CHANGE-LOG.md", "note": "R1 = after the first analysis round (decisions D-01..D-15 in CHANGE-LOG.md): chord 0.32, S5010, motor tubes through the wing at x 0.045, pod forward, 11x5.5MR, CG 0.044, 45 mm feet, allocations 2 200 g"},
+  "revision": {"value": "A1-R2", "unit": "-", "source": "redesign/params/CHANGE-LOG.md", "note": "R1 = after the first analysis round (D-01..D-15): chord 0.32, S5010, motor tubes through the wing at x 0.045, pod forward, 11x5.5MR, CG 0.044, 45 mm feet, allocations 2 200 g. R2 = change-request round (D-16..D-23): box 0.50 m high, pod held at -0.105 until B3 re-derives the CG range, hover split limit 1.25, SM 0.05 kept, joint ownership rules"},
   "status": {"value": "PROPOSED", "unit": "-", "source": "SRC-CONFIG", "note": "baseline for detailed design; reversible until the mid-December order on the conditions in CONFIGURATION.md"}
  },
  "frame": {
@@ -38,7 +38,7 @@
   "build_overrun_kg": {"value": 0.10, "unit": "kg", "source": "SRC-K09-REVIEW", "status": "PROPOSED", "note": "REVIEW section 2: first student foam build overrun, ESTIMATE"},
   "wind_limit_ms": {"value": 5.0, "unit": "m/s", "source": "SRC-REQ-PROPOSED", "note": "P8: flight-card steady wind limit; hover and fin landing controllable"},
   "gust_survive_ms": {"value": 8.0, "unit": "m/s", "source": "SRC-REQ-PROPOSED", "note": "P8: survive-and-land case, not an operating case"},
-  "tipover_min_deg": {"value": 30.0, "unit": "deg", "source": "A1 choice", "status": "PROPOSED", "note": "static tip-over angle on the narrow axis must exceed the 5 m/s hover lean (16 deg) plus landing attitude error; C5 re-derives"},
+  "tipover_min_deg": {"value": 30.0, "unit": "deg", "source": "A1 choice", "status": "PROPOSED", "note": "static tip-over angle on the narrow axis must exceed the 5 m/s hover lean (15 deg) plus the 10 deg landing attitude error; C5 re-derives. At R1 geometry (CG 0.044, feet 45 mm) CL-A1-TIPOVER is 30.6 deg (+2 %): D5 splays the feet to z >= +/-0.21 m for >= 33 deg"},
   "prop_clearance_min_m": {"value": 0.025, "unit": "m", "source": "A1 choice", "status": "PROPOSED", "note": "minimum geometric gap prop tip to any structure or other prop; B4/D3 re-derive"},
   "static_margin_min": {"value": 0.05, "unit": "-", "source": "A1 choice", "status": "PROPOSED", "note": "fraction of chord, cruise, elevons neutral; B3 keeps 0.05 (CR-B3-01, sets the aft CG limit); B2's trimmed CLmax 0.80 is at this margin"},
   "elevon_area_frac": {"value": [0.15, 0.25], "unit": "-", "source": "SRC-TIEBREAK", "status": "PROPOSED", "note": "DECISION section 5.1: 15-25 % of wing area; freeze on the foam-board twin"},
@@ -49,7 +49,7 @@
   "tax_rate": {"value": 0.1025, "unit": "-", "source": "SRC-K09-CARD", "note": "Berkeley sales tax, CDTFA 2026-10-01"},
   "build_hours_max": {"value": 90.0, "unit": "h", "source": "SRC-REQ-PROPOSED", "note": "P11: team-hours to first hover"},
   "field_setup_max_min": {"value": 5.0, "unit": "min", "source": "SRC-REQ-PROPOSED", "note": "P9: one person, no tools"},
-  "box_external_m": {"value": [1.25, 0.55, 0.45], "unit": "m", "source": "SRC-REQ-PROPOSED", "note": "P9: L x W x H external, one foam-lined box; measure two cars before freezing (M-item)"},
+  "box_external_m": {"value": [1.25, 0.55, 0.50], "unit": "m", "source": "redesign/params/CHANGE-LOG.md#D-16", "status": "PROPOSED", "note": "P9 said 0.45 m high; CHANGE-LOG D-16: 0.50 m because the tube ends (+/-0.21 m) make the props-off envelope 0.425 m high and 25 mm walls left it 25 mm short (CL-A1-BOX-FIT). D7 measures two cars before freezing; fallback 0.48 m with a 12 mm lining"},
   "box_mass_max_kg": {"value": 6.0, "unit": "kg", "source": "SRC-REQ-PROPOSED", "note": "P9: loaded"},
   "box_wall_m": {"value": 0.025, "unit": "m", "source": "A1 choice", "status": "PROPOSED", "note": "wall + foam lining per side; D7 re-derives"},
   "mass_max_legal_kg": {"value": 25.0, "unit": "kg", "source": "SRC-REQ-PROPOSED", "note": "P20"},
@@ -63,7 +63,7 @@
   "landing_n_design": {"value": 6.0, "unit": "-", "source": "team/C1/LOADS.md", "status": "PROPOSED", "note": "landing load factor the feet must hold the airframe to at the design sink (ASM-C1-N-LAND)"},
   "landing_attitude_err_deg": {"value": 10.0, "unit": "deg", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "attitude error at touchdown in 5 m/s; sets the foot height with the wingtip-strike check (CR-C1-01)"},
   "foot_crush_stroke_min_m": {"value": 0.040, "unit": "m", "source": "team/C1/LOADS.md", "status": "PROPOSED", "note": "CR-C1-01: >= 40 mm at crush efficiency 0.5, or >= 25 mm with a constant-force core (eta >= 0.8), for n_L <= 6 at 1.5 m/s"},
-  "box_drop_m": {"value": 0.3, "unit": "m", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "box slipping from a car sill; C1/D7 re-derive (CR-C1-05: needs >= 69 mm cradle foam or a 0.087 m label limit)"},
+  "box_drop_m": {"value": 0.3, "unit": "m", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "box slipping from a car sill. CHANGE-LOG D-22: kept; D7 puts >= 70 mm crush foam under the spar cradles (CR-C1-05: 69 mm at the assumed cradle y +/-0.20 m), which sits inside the 0.21 m the lower tubes need anyway"},
   "crash_decel_g": {"value": 12.0, "unit": "g", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "pack retention case; C1 re-derived 12.75 g"},
   "spar_deflection_max": {"value": 0.05, "unit": "-", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "tip deflection / half-span at limit load; C2 re-derives"},
   "vibration_sep_frac": {"value": 0.2, "unit": "-", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "structural modes >= 20 % from 1P and 2P (J1 CR-J1-03, B4 CR-B4-07: keep tube and fin modes outside 80-330 Hz)"},
@@ -72,6 +72,7 @@
   "cnbeta_min": {"value": 0.03, "unit": "/rad", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "cruise, props included, elevons neutral (R-DIRECTIONAL); A2 0.03 over B3's 0.02: O4b gives +0.044 (CR-B3-02)"},
   "hover_ctrl_accel_min": {"value": 2.0, "unit": "rad/s2", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "weakest hover axis; B3 re-derives"},
   "hover_ctrl_factor": {"value": 1.5, "unit": "-", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "control authority / disturbance at 5 m/s, every hover axis; B3 re-derives"},
+  "hover_split_max": {"value": 1.25, "unit": "-", "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-10", "status": "PROPOSED", "note": "CHANGE-LOG D-18: largest allowed upper/lower pair thrust ratio for hover pitch trim (uses (s-1)/2 of the pitch differential, 12.5 % at 1.25); replaces A3's 1.10 placeholder ASM-A3-SPLIT-MAX. A3 roll-up 1.19 today (CL-A3-HOVER-SPLIT)"},
   "elevon_trim_travel_max": {"value": 0.5, "unit": "-", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "trim deflection <= half the travel"},
   "roll_rate_min_degs": {"value": 90.0, "unit": "deg/s", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "cruise; B3 re-derives"},
   "servo_torque_factor": {"value": 1.5, "unit": "-", "source": "team/A2/REQUIREMENTS.md", "status": "PROPOSED", "note": "rated stall torque >= 1.5 x hinge moment (B2 CL-B2-SERVO-TORQUE-REQ 3.04 kgf cm)"},
@@ -205,12 +206,12 @@
  "pod": {
   "_note": "Centre pod on the wing upper surface: battery bay, flight controller and receiver tray, hatch, GPS mast, pitot. The only non-wing structure inboard of the fins.",
   "size_m": {"value": [0.20, 0.10, 0.07], "unit": "m", "source": "SRC-K09-CARD", "status": "PROPOSED", "note": "L x W x H outside; height 0.06 -> 0.07 for the 50 mm pack (E2 CR-E2-02); D2 may recess the tray ~10 mm into the core instead. D2 fits the pack, FC and hatch inside and re-sizes"},
-  "x_le_m": {"value": -0.105, "unit": "m", "source": "CL-A3-CG-X", "status": "PROPOSED", "note": "CHANGE-LOG D-08: pod spans x = -0.105 to 0.095 (nose 105 mm ahead of the wing LE) so the A3 roll-up puts the CG on the 0.044 m target with the motors at x 0.045; was -0.02. The pack slides fore-aft for trim (D2 provides +/-0.03 m)"},
+  "x_le_m": {"value": -0.105, "unit": "m", "source": "CL-A3-CG-X", "status": "PROPOSED", "note": "CHANGE-LOG D-08: pod spans x = -0.105 to 0.095 (nose 105 mm ahead of the wing LE) so the A3 roll-up puts the CG near the 0.044 m target with the motors at x 0.045; was -0.02. D-17: held here until B3 re-derives the CG range at R1 geometry (A3 basic roll-up 0.051 m with the pack centred, 0.044 with the pack 29 mm forward); if the re-derived aft limit is < 0.051 m the pod moves to -0.125. The pack slides fore-aft for trim (D2 provides +/-0.03 m)"},
   "z_base_m": {"value": 0.015, "unit": "m", "source": "A1 choice", "status": "PROPOSED", "note": "sits on the upper skin near maximum thickness; D1 may recess the tray into the core"},
   "material": {"value": "foam-board or XPS shell with a printed PETG tray and hatch", "unit": "-", "source": "SRC-K09-CARD", "status": "PROPOSED"}
  },
  "cg": {
-  "_note": "CHANGE-LOG D-10: B3's range from the AVL neutral point with props, fins and pod (CL-B3-XNP 0.064 m at c 0.30, tube at -0.10). B3 re-derives at c 0.32, S5010 and the tube at 0.045 before D1/D3 freeze; A3 tracks the roll-up against it in MASS-CG.md.",
+  "_note": "CHANGE-LOG D-10: B3's range from the AVL neutral point with props, fins and pod (CL-B3-XNP 0.064 m at c 0.30, tube at -0.10). D-17: B3 re-derives at c 0.32, S5010, the tube at 0.045 and the 3 deg cant before D1/D2/D3 freeze any station; until then the range below is UNVERIFIED and A3 carries the pack 29 mm ahead of the pod centre. A3 tracks the roll-up against it in MASS-CG.md.",
   "x_target_m": {"value": 0.044, "unit": "m", "source": "CL-B3-CG-TARGET", "status": "PROPOSED", "note": "13.8 % chord at c 0.32 (14.8 % at the c 0.30 it was derived at); static margin 6.6 % there; the forward limit keeps elevon up-trim <= 10 deg at the trimmed CLmax"},
   "x_range_m": {"value": [0.040, 0.049], "unit": "m", "source": "CL-B3-CG-FWD", "status": "PROPOSED", "note": "forward CL-B3-CG-FWD, aft CL-B3-CG-AFT (SM 5 %); written to mass_budget.json cg_x_m; A1's old 0.075 m aft end would be SM -3.6 %"},
   "y_target_m": {"value": 0.0, "unit": "m", "source": "A1 choice", "note": "lateral offset <= 0.005 m (P4 trim ballast only inside the gate)"},
@@ -238,7 +239,7 @@
   "_note": "CHANGE-LOG D-13: every value is at the 2.6 kg gate. Sources are the specialist claims of 2026-11-09 (B1 at 16 m/s with the 11x4.5MR, E1/B4 at 15 m/s with the 11x5.5MR, E2 pessimistic budget). Where they disagree the conservative one is carried and the note names the other. B1 re-runs at 16 m/s with the 11x5.5MR, c 0.32 and trimmed CLmax 0.80; the gate cases are recomputed in team/A1/frame_claims.py.",
   "clmax": {"value": 0.80, "unit": "-", "source": "CL-B2-CLMAX-DESIGN", "status": "UNVERIFIED", "note": "trimmed CLmax of the S5010 wing at SM 5 % (2-D 1.24 at Re 2.3e5, XFOIL); replaces the 0.9 ESTIMATE"},
   "stall_ms": {"value": 11.9, "unit": "m/s", "source": "CL-A1-STALL-GATE", "status": "PROPOSED", "note": "at 2.6 kg, c 0.32, CLmax 0.80 (was 11.2 at 2.43 kg)"},
-  "transition_min_ms": {"value": 15.5, "unit": "m/s", "source": "CL-A1-TRANSITION-GATE", "status": "PROPOSED", "note": "1.3 Vs at the gate"},
+  "transition_min_ms": {"value": 15.5, "unit": "m/s", "source": "CL-A1-TRANSITION-GATE", "status": "PROPOSED", "note": "1.3 Vs at the gate (15.42 computed, rounded up). CHANGE-LOG D-21: B3's 16.55 m/s (CR-B3-07) was the c 0.30 / MH 45 wing; B3 re-derives the trimmed stall at R1 geometry and F4 sets ARSPD_FBW_MIN from that claim"},
   "cruise_ms": {"value": 16.0, "unit": "m/s", "source": "ASM-B1-VCRUISE", "status": "PROPOSED", "note": "D-01: 15 -> 16 (B1 CR-B1-01); 3.4 % above 1.3 Vs; F4 AIRSPEED_CRUISE 16, ARSPD_FBW_MIN >= 15.5"},
   "hover_power_w": {"value": 400.0, "unit": "W", "source": "CL-E1-HOVER-I-55", "status": "UNVERIFIED", "note": "E1 pack power band 335-400 W at the gate (11x5.5MR, download 1.06); B1 380 W (11x4.5MR); was 355 at 2.43 kg"},
   "hover_current_a": {"value": 27.0, "unit": "A", "source": "CL-E1-HOVER-I-55", "status": "UNVERIFIED", "note": "E1 27.0 A; B1 25.7; E2 25.4 base / 29.9 pessimistic (F1 sizes on 29.9, CR-E2-04)"},
@@ -269,7 +270,7 @@
  },
  "transport": {
   "pieces": {"value": 1, "unit": "-", "source": "SRC-K09-CARD", "note": "no structural field joint"},
-  "envelope_props_off_m": {"value": [1.15, 0.47, 0.425], "unit": "m", "source": "A1 choice", "status": "PROPOSED", "note": "span x (pod nose -0.105 to foot tips 0.365, pitot boom removed) x (tube ends +/-0.21 plus ~5 mm mount caps). The old 0.39 height ignored the tube ends: with 25 mm walls the 0.45 m box is 25 mm short (CL-A1-BOX-FIT): D7 chooses a 0.48 m box or 12 mm lining"},
+  "envelope_props_off_m": {"value": [1.15, 0.47, 0.425], "unit": "m", "source": "A1 choice", "status": "PROPOSED", "note": "span x (pod nose -0.105 to foot tips 0.365, pitot boom removed) x (tube ends +/-0.21 plus ~5 mm mount caps). The old 0.39 height ignored the tube ends; CHANGE-LOG D-16 raised the box to 0.50 m (25 mm slack with 25 mm walls, CL-A1-BOX-FIT). D7 confirms against two measured cars"},
   "field_steps": {"value": "fit 4 props (one nut each), plug in the pitot boom, pack in and strap, close the pack plug, arm check", "unit": "-", "source": "SRC-K09-CARD"},
   "cradle": {"value": "cradles under the spar; fins and motor tubes exposed, never pressed by foam", "unit": "-", "source": "SRC-K09-REVIEW", "note": "REVIEW section 7; D7"}
  },

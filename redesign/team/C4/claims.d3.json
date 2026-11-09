@@ -1,0 +1,2786 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/C4/fin_structures_d3.py",
+ "params": [
+  "../../params/params.json",
+  "../../subsystems/fins/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-C4-S5010",
+   "type": "source",
+   "title": "Selig S5010 coordinates as used by the wing CAD",
+   "kind": "file",
+   "where": "redesign/subsystems/wing/s5010.dat read with redesign/fusion/k09kit.surface_z at chord 0.32 m",
+   "note": "the same file and helper D3's fins.py uses for the boss and root geometry"
+  },
+  {
+   "id": "ASM-C4-SKIN-PTS",
+   "type": "assumption",
+   "title": "Wing skin heights along the fin root (S5010, c 0.32 m)",
+   "text": "[x, z_upper, z_lower] in metres at the fin plane; the fin roots follow these, the bosses start from them",
+   "basis": "k09kit.surface_z on subsystems/wing/s5010.dat (SRC-C4-S5010); 14 stations from x 0.0335 to the TE",
+   "value": [
+    [
+     0.0335,
+     0.01775,
+     -0.00731
+    ],
+    [
+     0.045,
+     0.0198,
+     -0.00791
+    ],
+    [
+     0.0565,
+     0.02119,
+     -0.00829
+    ],
+    [
+     0.07,
+     0.0222,
+     -0.00857
+    ],
+    [
+     0.08,
+     0.02259,
+     -0.00865
+    ],
+    [
+     0.1,
+     0.02263,
+     -0.00862
+    ],
+    [
+     0.13,
+     0.02111,
+     -0.00815
+    ],
+    [
+     0.16,
+     0.01814,
+     -0.00736
+    ],
+    [
+     0.19,
+     0.01422,
+     -0.00636
+    ],
+    [
+     0.22,
+     0.00982,
+     -0.0052
+    ],
+    [
+     0.25,
+     0.00555,
+     -0.00393
+    ],
+    [
+     0.28,
+     0.00214,
+     -0.00265
+    ],
+    [
+     0.3,
+     0.00074,
+     -0.00166
+    ],
+    [
+     0.32,
+     0.0003,
+     -0.0003
+    ]
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-C4-S5010"
+   ]
+  },
+  {
+   "id": "ASM-C4-BORE-Z",
+   "type": "assumption",
+   "title": "Block bore ends (boss tops) +30.4 / -16.6 mm",
+   "text": "z of the upper and lower ends of D3's 47.0 mm tube bore: highest upper skin (lowest lower skin) under the keyhole boss footprint plus the 8 mm boss height",
+   "basis": "subsystems/fins/fusion/fins.py G['boss_u'], G['boss_l'] evaluated with params A1-R2 and fin_detail (C4 re-ran the same expressions)",
+   "value": [
+    0.03043,
+    -0.01662
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-C4-S5010"
+   ]
+  },
+  {
+   "id": "ASM-C4-MOUNT-CAD",
+   "type": "assumption",
+   "title": "Motor mount 11.3 g, CG 4.6 mm ahead, 9.7 mm below the motor axis",
+   "text": "[mass kg, dx, dy (+ outboard), dz (+ away from the wing)] of FIN-003-UR from the motor station (0.045, 0.32, 0.19)",
+   "basis": "subsystems/fins/interfaces.json FIN-003-UR mass_g 11.28, cg_xyz_m (0.0404, 0.3218, 0.1803) (D3 CAD centroid)",
+   "value": [
+    0.01128,
+    -0.0046,
+    0.0018,
+    -0.0097
+   ],
+   "unit": "kg, m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C4-COLLAR-BRACE-MASS",
+   "type": "assumption",
+   "title": "Station collar 5.7 g, brace 7.4 g",
+   "text": "[collar kg, brace kg]; collar lumped on the tube at the collar, half the brace at the ear",
+   "basis": "subsystems/fins/SPEC.md parts table (FIN-008, FIN-009)",
+   "value": [
+    0.0057,
+    0.0074
+   ],
+   "unit": "kg",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C4-MOUNT-K-ROCK",
+   "type": "assumption",
+   "title": "Mount rocking stiffness 3 000 N m/rad",
+   "text": "Rotational stiffness of the printed mount about x and y between the tube end and the motor base",
+   "basis": "12 mm slit collar on the tube as an elastic foundation: k = (E_PETG / t_wall) d l^3 / 12 = (2 GPa / 2 mm) x 0.022 x 0.012^3 / 12 = 3 200 N m/rad; the lip cap on the tube end adds to it; range 1 000-10 000. Static test T-C4-MOUNT-STIFF replaces it",
+   "value": 3000.0,
+   "unit": "N m/rad",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-C4-MOUNT-K-TWIST",
+   "type": "assumption",
+   "title": "Mount twist stiffness 30 000 N m/rad",
+   "text": "Rotational stiffness of the clamped collar about the tube axis below the slip torque",
+   "basis": "collar wall in shear: (G_PETG / t_wall) 2 pi r^3 l = (0.75 GPa / 2 mm) 2 pi 0.011^3 0.012 = 3.8e4 N m/rad",
+   "value": 30000.0,
+   "unit": "N m/rad",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-C4-ROOT-K",
+   "type": "assumption",
+   "title": "Root rotational stiffness 10 000 N m/rad",
+   "text": "Tube fixity at the bore end (block + bosses + core), about x and y",
+   "basis": "R1 foundation estimate 3 000 N m/rad for a 27 mm PETG bore x (47/27)^3 = 5.3 for the 47 mm bore with bosses, halved because the bosses are 2.4 mm C-rings: ~10 000; swept 3 000-rigid",
+   "value": 10000.0,
+   "unit": "N m/rad",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-C4-ANCHOR-K",
+   "type": "assumption",
+   "title": "Anchor + spar local stiffness 3e7 N/m along the brace",
+   "text": "Series spring of the printed anchor (bond line, 8 mm saddle) and the local spar/core under it",
+   "basis": "PETG saddle 20 x 16 mm, 8 mm: E A / t = 2 GPa x 3.2e-4 / 0.008 = 8e7 N/m; spar ring and core about the same; series ~3e7 (the 10 x 3 brace alone is EA/L 2.2e7 N/m)",
+   "value": 30000000.0,
+   "unit": "N/m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-C4-PEEL-KD",
+   "type": "assumption",
+   "title": "Peel knock-down 0.5 on bond allowables for joints loaded in pull-off",
+   "text": "Factor on ASM-C4-BOND-SHEAR for the anchor on the spar and the collar ear",
+   "basis": "PETG bonds peel at a fraction of lap shear; C6 coupons replace it",
+   "value": 0.5,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-C4-D3-Q4-CHECK",
+   "type": "calculation",
+   "title": "General quad shell element checks",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "q4_check",
+   "equation": "(a) shell_q4 = shell_element on a 20 x 30 mm rectangle (max relative entry difference); (b) cantilever 0.2 x 0.2 m plate on a 16 x 16 mesh with interior nodes skewed by up to 20 % of an element, f1 vs Leissa lambda^2 = 3.492 (stiff core)",
+   "inputs": {
+    "t_board": "P:fins.board_t_m",
+    "areal": "P:fins.areal_mass_kgm2",
+    "t_face": "ASM-C4-FACE-T",
+    "e_face": "ASM-C4-FACE-E",
+    "e_core": "ASM-C4-CORE-E"
+   },
+   "units": {
+    "t_board": "m",
+    "areal": "kg/m2",
+    "t_face": "m",
+    "e_face": "Pa",
+    "e_core": "Pa"
+   },
+   "tol": 0.0001,
+   "cites": [
+    "SRC-C4-LEISSA"
+   ],
+   "outputs": {
+    "err_rect": 1.0836532616868934e-15,
+    "f_skew_fe": 69.68687527352854,
+    "f_leissa": 69.08667983783796,
+    "err_skew": 0.008687570991968041
+   },
+   "input_values": {
+    "t_board": 0.0048,
+    "areal": 0.2,
+    "t_face": 0.0001,
+    "e_face": 4000000000.0,
+    "e_core": 10000000.0
+   }
+  },
+  {
+   "id": "CALC-C4-D3-MODES",
+   "type": "calculation",
+   "title": "Station modes, D3 as-designed quarter (upper UR and lower LR), nominal E/G",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "modes_d3",
+   "equation": "FE (fin_fe.build_q): tube frame + 1-layer board (mapped Q4 shell) + edge strips + brace (EA/L in series with the anchor) + mount springs + motor/prop/mount rigid body; station mode = >= 10 % of kinetic energy in the rigid body; sep = min |f/f_k - 1| over 1P/2P hover, 1P/2P cruise, 1P cap",
+   "inputs": {
+    "tube_x": "P:fins.tube.x_m",
+    "y_fin": "P:fins.y_m",
+    "od": "P:fins.tube.od_m",
+    "idd": "P:fins.tube.id_m",
+    "mu": "P:wing.spar.mass_per_m_kgm",
+    "tube_len": "P:fin_detail.tube_length_m",
+    "z_st": "P:propulsion.stations.z_m",
+    "x_face": "CL-D3-X-FACE",
+    "x_prop": "CL-D3-X-PROP",
+    "x_te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "le_gap": "P:fin_detail.fin.le_gap_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "ear_len": "P:fin_detail.station_collar.ear_len_m",
+    "bond_gap": "P:fin_detail.bond_gap_m",
+    "skin": "ASM-C4-SKIN-PTS",
+    "bore_z": "ASM-C4-BORE-Z",
+    "m_motor": "P:propulsion.motor_mass_kg",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "l_motor": "P:propulsion.motor_length_m",
+    "m_prop": "P:propulsion.prop_mass_kg",
+    "m_adapt": "ASM-C1-ADAPTER-MASS",
+    "ip": "ASM-C4-PROP-IP",
+    "i_bell": "ASM-C1-BELL-INERTIA",
+    "mount": "ASM-C4-MOUNT-CAD",
+    "cb_mass": "ASM-C4-COLLAR-BRACE-MASS",
+    "m_esc": "P:propulsion.esc_mass_kg",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "landing_g": "P:mass.allocation_g.landing",
+    "t_board": "P:fins.board_t_m",
+    "areal": "P:fins.areal_mass_kgm2",
+    "layers": "P:fin_detail.layers",
+    "t_face": "ASM-C4-FACE-T",
+    "e_face": "ASM-C4-FACE-E",
+    "e_core": "ASM-C4-CORE-E",
+    "g_core": "ASM-C4-CORE-G",
+    "x_spar": "P:wing.spar.x_m",
+    "y_anchor": "P:fin_detail.brace.anchor_y_m",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "b_w": "P:fin_detail.brace.w_m",
+    "b_t": "P:fin_detail.brace.t_m",
+    "e_strip": "ASM-C4-CF-E-STRIP",
+    "e_w": "P:fin_detail.edge_strip.w_m",
+    "e_t": "P:fin_detail.edge_strip.t_m",
+    "rho_cf": "ASM-C4-CF-RHO",
+    "chord": "P:wing.chord_m",
+    "el_frac": "P:wing.elevon.chord_frac",
+    "slot_hw": "P:fin_detail.link_slot.half_width_m",
+    "k_rock": "ASM-C4-MOUNT-K-ROCK",
+    "k_twist": "ASM-C4-MOUNT-K-TWIST",
+    "k_root": "ASM-C4-ROOT-K",
+    "k_anchor": "ASM-C4-ANCHOR-K",
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_c": "CL-B4-CRUISE-RPM",
+    "rpm_x": "CL-B4-RPM-MAX",
+    "E": "ASM-J1-E-TUBE",
+    "G": "ASM-C4-G-TUBE",
+    "lo": "ASM-C4-BAND-LO",
+    "hi": "ASM-C4-BAND-HI"
+   },
+   "units": {
+    "tube_x": "m",
+    "y_fin": "m",
+    "od": "m",
+    "idd": "m",
+    "mu": "kg/m",
+    "tube_len": "m",
+    "z_st": "m",
+    "x_face": "m",
+    "x_prop": "m",
+    "x_te": "m",
+    "hh": "m",
+    "le_gap": "m",
+    "grip": "m",
+    "sc_gap": "m",
+    "sc_h": "m",
+    "sc_wall": "m",
+    "ear_len": "m",
+    "bond_gap": "m",
+    "skin": "m",
+    "bore_z": "m",
+    "m_motor": "kg",
+    "d_motor": "m",
+    "l_motor": "m",
+    "m_prop": "kg",
+    "m_adapt": "kg",
+    "ip": "kg m2",
+    "i_bell": "kg m2",
+    "mount": "kg, m",
+    "cb_mass": "kg",
+    "m_esc": "kg",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_z": "m",
+    "landing_g": "g",
+    "t_board": "m",
+    "areal": "kg/m2",
+    "layers": "-",
+    "t_face": "m",
+    "e_face": "Pa",
+    "e_core": "Pa",
+    "g_core": "Pa",
+    "x_spar": "m",
+    "y_anchor": "m",
+    "proud": "m",
+    "b_w": "m",
+    "b_t": "m",
+    "e_strip": "Pa",
+    "e_w": "m",
+    "e_t": "m",
+    "rho_cf": "kg/m3",
+    "chord": "m",
+    "el_frac": "-",
+    "slot_hw": "m",
+    "k_rock": "N m/rad",
+    "k_twist": "N m/rad",
+    "k_root": "N m/rad",
+    "k_anchor": "N/m",
+    "rpm_h": "rpm",
+    "rpm_c": "rpm",
+    "rpm_x": "rpm",
+    "E": "Pa",
+    "G": "Pa",
+    "lo": "Hz",
+    "hi": "Hz"
+   },
+   "tol": 0.0001,
+   "assumes": [
+    "ASM-C4-MOUNT-K-ROCK",
+    "ASM-C4-ROOT-K",
+    "ASM-C4-ANCHOR-K",
+    "ASM-C4-PROP-IP",
+    "ASM-C4-FACE-E"
+   ],
+   "cites": [
+    "SRC-C4-ALLEN"
+   ],
+   "outputs": {
+    "f1_up": 227.9574852845727,
+    "f2_up": 239.18195914139164,
+    "panel_up": 57.087694079502434,
+    "sep_up": 0.13979880654197085,
+    "band_up": -0.3092197415619009,
+    "f1_lo": 222.11839139135418,
+    "f2_lo": 230.7838675134496,
+    "panel_lo": 55.68770641419168,
+    "sep_lo": 0.110603045575979,
+    "band_lo": -0.3269139654807449,
+    "f1_min": 222.11839139135418,
+    "sep_op": 0.110603045575979,
+    "sep_band": -0.3269139654807449
+   },
+   "input_values": {
+    "tube_x": 0.045,
+    "y_fin": 0.32,
+    "od": 0.022,
+    "idd": 0.02,
+    "mu": 0.102,
+    "tube_len": 0.344,
+    "z_st": 0.19,
+    "x_face": 0.030849999999999995,
+    "x_prop": -0.008150000000000004,
+    "x_te": 0.32,
+    "hh": 0.19,
+    "le_gap": 0.0005,
+    "grip": 0.012,
+    "sc_gap": 0.0005,
+    "sc_h": 0.012,
+    "sc_wall": 0.0016,
+    "ear_len": 0.01,
+    "bond_gap": 0.00015,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "bore_z": [
+     0.03043,
+     -0.01662
+    ],
+    "m_motor": 0.081,
+    "d_motor": 0.038,
+    "l_motor": 0.025,
+    "m_prop": 0.017,
+    "m_adapt": 0.005,
+    "ip": 7.5e-05,
+    "i_bell": 1.5e-05,
+    "mount": [
+     0.01128,
+     -0.0046,
+     0.0018,
+     -0.0097
+    ],
+    "cb_mass": [
+     0.0057,
+     0.0074
+    ],
+    "m_esc": 0.0066,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_z": 0.118,
+    "landing_g": 40,
+    "t_board": 0.0048,
+    "areal": 0.2,
+    "layers": 1,
+    "t_face": 0.0001,
+    "e_face": 4000000000.0,
+    "e_core": 10000000.0,
+    "g_core": 4000000.0,
+    "x_spar": 0.08,
+    "y_anchor": 0.242,
+    "proud": 0.008,
+    "b_w": 0.01,
+    "b_t": 0.003,
+    "e_strip": 110000000000.0,
+    "e_w": 0.01,
+    "e_t": 0.001,
+    "rho_cf": 1550.0,
+    "chord": 0.32,
+    "el_frac": 0.22,
+    "slot_hw": 0.012,
+    "k_rock": 3000.0,
+    "k_twist": 30000.0,
+    "k_root": 10000.0,
+    "k_anchor": 30000000.0,
+    "rpm_h": 5395.714905199311,
+    "rpm_c": 5999.940094063748,
+    "rpm_x": 9319.452696615961,
+    "E": 100000000000.0,
+    "G": 5000000000.0,
+    "lo": 80.0,
+    "hi": 330.0
+   }
+  },
+  {
+   "id": "CALC-C4-D3-WORST",
+   "type": "calculation",
+   "title": "Separation over the tube E/G corners and the mount/root stiffness range",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "worst_d3",
+   "equation": "min over side x E {lo, nom, hi} x G {lo, nom, hi} of sep_op (18 FE runs), mount and root at their nominal springs",
+   "inputs": {
+    "tube_x": "P:fins.tube.x_m",
+    "y_fin": "P:fins.y_m",
+    "od": "P:fins.tube.od_m",
+    "idd": "P:fins.tube.id_m",
+    "mu": "P:wing.spar.mass_per_m_kgm",
+    "tube_len": "P:fin_detail.tube_length_m",
+    "z_st": "P:propulsion.stations.z_m",
+    "x_face": "CL-D3-X-FACE",
+    "x_prop": "CL-D3-X-PROP",
+    "x_te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "le_gap": "P:fin_detail.fin.le_gap_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "ear_len": "P:fin_detail.station_collar.ear_len_m",
+    "bond_gap": "P:fin_detail.bond_gap_m",
+    "skin": "ASM-C4-SKIN-PTS",
+    "bore_z": "ASM-C4-BORE-Z",
+    "m_motor": "P:propulsion.motor_mass_kg",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "l_motor": "P:propulsion.motor_length_m",
+    "m_prop": "P:propulsion.prop_mass_kg",
+    "m_adapt": "ASM-C1-ADAPTER-MASS",
+    "ip": "ASM-C4-PROP-IP",
+    "i_bell": "ASM-C1-BELL-INERTIA",
+    "mount": "ASM-C4-MOUNT-CAD",
+    "cb_mass": "ASM-C4-COLLAR-BRACE-MASS",
+    "m_esc": "P:propulsion.esc_mass_kg",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "landing_g": "P:mass.allocation_g.landing",
+    "t_board": "P:fins.board_t_m",
+    "areal": "P:fins.areal_mass_kgm2",
+    "layers": "P:fin_detail.layers",
+    "t_face": "ASM-C4-FACE-T",
+    "e_face": "ASM-C4-FACE-E",
+    "e_core": "ASM-C4-CORE-E",
+    "g_core": "ASM-C4-CORE-G",
+    "x_spar": "P:wing.spar.x_m",
+    "y_anchor": "P:fin_detail.brace.anchor_y_m",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "b_w": "P:fin_detail.brace.w_m",
+    "b_t": "P:fin_detail.brace.t_m",
+    "e_strip": "ASM-C4-CF-E-STRIP",
+    "e_w": "P:fin_detail.edge_strip.w_m",
+    "e_t": "P:fin_detail.edge_strip.t_m",
+    "rho_cf": "ASM-C4-CF-RHO",
+    "chord": "P:wing.chord_m",
+    "el_frac": "P:wing.elevon.chord_frac",
+    "slot_hw": "P:fin_detail.link_slot.half_width_m",
+    "k_rock": "ASM-C4-MOUNT-K-ROCK",
+    "k_twist": "ASM-C4-MOUNT-K-TWIST",
+    "k_root": "ASM-C4-ROOT-K",
+    "k_anchor": "ASM-C4-ANCHOR-K",
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_c": "CL-B4-CRUISE-RPM",
+    "rpm_x": "CL-B4-RPM-MAX",
+    "E0": "ASM-J1-E-TUBE",
+    "E_lo": "ASM-C4-E-TUBE-LO",
+    "E_hi": "ASM-C4-E-TUBE-HI",
+    "G0": "ASM-C4-G-TUBE",
+    "G_lo": "ASM-C4-G-TUBE-LO",
+    "G_hi": "ASM-C4-G-TUBE-HI"
+   },
+   "units": {
+    "tube_x": "m",
+    "y_fin": "m",
+    "od": "m",
+    "idd": "m",
+    "mu": "kg/m",
+    "tube_len": "m",
+    "z_st": "m",
+    "x_face": "m",
+    "x_prop": "m",
+    "x_te": "m",
+    "hh": "m",
+    "le_gap": "m",
+    "grip": "m",
+    "sc_gap": "m",
+    "sc_h": "m",
+    "sc_wall": "m",
+    "ear_len": "m",
+    "bond_gap": "m",
+    "skin": "m",
+    "bore_z": "m",
+    "m_motor": "kg",
+    "d_motor": "m",
+    "l_motor": "m",
+    "m_prop": "kg",
+    "m_adapt": "kg",
+    "ip": "kg m2",
+    "i_bell": "kg m2",
+    "mount": "kg, m",
+    "cb_mass": "kg",
+    "m_esc": "kg",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_z": "m",
+    "landing_g": "g",
+    "t_board": "m",
+    "areal": "kg/m2",
+    "layers": "-",
+    "t_face": "m",
+    "e_face": "Pa",
+    "e_core": "Pa",
+    "g_core": "Pa",
+    "x_spar": "m",
+    "y_anchor": "m",
+    "proud": "m",
+    "b_w": "m",
+    "b_t": "m",
+    "e_strip": "Pa",
+    "e_w": "m",
+    "e_t": "m",
+    "rho_cf": "kg/m3",
+    "chord": "m",
+    "el_frac": "-",
+    "slot_hw": "m",
+    "k_rock": "N m/rad",
+    "k_twist": "N m/rad",
+    "k_root": "N m/rad",
+    "k_anchor": "N/m",
+    "rpm_h": "rpm",
+    "rpm_c": "rpm",
+    "rpm_x": "rpm",
+    "E0": "Pa",
+    "E_lo": "Pa",
+    "E_hi": "Pa",
+    "G0": "Pa",
+    "G_lo": "Pa",
+    "G_hi": "Pa"
+   },
+   "tol": 0.0001,
+   "assumes": [
+    "ASM-C4-E-TUBE-LO",
+    "ASM-C4-E-TUBE-HI",
+    "ASM-C4-G-TUBE-LO",
+    "ASM-C4-G-TUBE-HI"
+   ],
+   "outputs": {
+    "sep_op_worst": 0.04896261875559427,
+    "f_station_min": 209.79042911485985
+   },
+   "input_values": {
+    "tube_x": 0.045,
+    "y_fin": 0.32,
+    "od": 0.022,
+    "idd": 0.02,
+    "mu": 0.102,
+    "tube_len": 0.344,
+    "z_st": 0.19,
+    "x_face": 0.030849999999999995,
+    "x_prop": -0.008150000000000004,
+    "x_te": 0.32,
+    "hh": 0.19,
+    "le_gap": 0.0005,
+    "grip": 0.012,
+    "sc_gap": 0.0005,
+    "sc_h": 0.012,
+    "sc_wall": 0.0016,
+    "ear_len": 0.01,
+    "bond_gap": 0.00015,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "bore_z": [
+     0.03043,
+     -0.01662
+    ],
+    "m_motor": 0.081,
+    "d_motor": 0.038,
+    "l_motor": 0.025,
+    "m_prop": 0.017,
+    "m_adapt": 0.005,
+    "ip": 7.5e-05,
+    "i_bell": 1.5e-05,
+    "mount": [
+     0.01128,
+     -0.0046,
+     0.0018,
+     -0.0097
+    ],
+    "cb_mass": [
+     0.0057,
+     0.0074
+    ],
+    "m_esc": 0.0066,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_z": 0.118,
+    "landing_g": 40,
+    "t_board": 0.0048,
+    "areal": 0.2,
+    "layers": 1,
+    "t_face": 0.0001,
+    "e_face": 4000000000.0,
+    "e_core": 10000000.0,
+    "g_core": 4000000.0,
+    "x_spar": 0.08,
+    "y_anchor": 0.242,
+    "proud": 0.008,
+    "b_w": 0.01,
+    "b_t": 0.003,
+    "e_strip": 110000000000.0,
+    "e_w": 0.01,
+    "e_t": 0.001,
+    "rho_cf": 1550.0,
+    "chord": 0.32,
+    "el_frac": 0.22,
+    "slot_hw": 0.012,
+    "k_rock": 3000.0,
+    "k_twist": 30000.0,
+    "k_root": 10000.0,
+    "k_anchor": 30000000.0,
+    "rpm_h": 5395.714905199311,
+    "rpm_c": 5999.940094063748,
+    "rpm_x": 9319.452696615961,
+    "E0": 100000000000.0,
+    "E_lo": 70000000000.0,
+    "E_hi": 135000000000.0,
+    "G0": 5000000000.0,
+    "G_lo": 3000000000.0,
+    "G_hi": 10000000000.0
+   }
+  },
+  {
+   "id": "CALC-C4-D3-MOUNT-K",
+   "type": "calculation",
+   "title": "Mount rocking stiffness needed for the separation rule (governing side)",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "mount_k",
+   "equation": "sweep k_rock over 500-30 000 N m/rad (k_twist fixed) on both quarters at nominal and low E/G; k_req = smallest k with sep_op >= sep_min at every larger k (log interpolation)",
+   "inputs": {
+    "tube_x": "P:fins.tube.x_m",
+    "y_fin": "P:fins.y_m",
+    "od": "P:fins.tube.od_m",
+    "idd": "P:fins.tube.id_m",
+    "mu": "P:wing.spar.mass_per_m_kgm",
+    "tube_len": "P:fin_detail.tube_length_m",
+    "z_st": "P:propulsion.stations.z_m",
+    "x_face": "CL-D3-X-FACE",
+    "x_prop": "CL-D3-X-PROP",
+    "x_te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "le_gap": "P:fin_detail.fin.le_gap_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "ear_len": "P:fin_detail.station_collar.ear_len_m",
+    "bond_gap": "P:fin_detail.bond_gap_m",
+    "skin": "ASM-C4-SKIN-PTS",
+    "bore_z": "ASM-C4-BORE-Z",
+    "m_motor": "P:propulsion.motor_mass_kg",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "l_motor": "P:propulsion.motor_length_m",
+    "m_prop": "P:propulsion.prop_mass_kg",
+    "m_adapt": "ASM-C1-ADAPTER-MASS",
+    "ip": "ASM-C4-PROP-IP",
+    "i_bell": "ASM-C1-BELL-INERTIA",
+    "mount": "ASM-C4-MOUNT-CAD",
+    "cb_mass": "ASM-C4-COLLAR-BRACE-MASS",
+    "m_esc": "P:propulsion.esc_mass_kg",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "landing_g": "P:mass.allocation_g.landing",
+    "t_board": "P:fins.board_t_m",
+    "areal": "P:fins.areal_mass_kgm2",
+    "layers": "P:fin_detail.layers",
+    "t_face": "ASM-C4-FACE-T",
+    "e_face": "ASM-C4-FACE-E",
+    "e_core": "ASM-C4-CORE-E",
+    "g_core": "ASM-C4-CORE-G",
+    "x_spar": "P:wing.spar.x_m",
+    "y_anchor": "P:fin_detail.brace.anchor_y_m",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "b_w": "P:fin_detail.brace.w_m",
+    "b_t": "P:fin_detail.brace.t_m",
+    "e_strip": "ASM-C4-CF-E-STRIP",
+    "e_w": "P:fin_detail.edge_strip.w_m",
+    "e_t": "P:fin_detail.edge_strip.t_m",
+    "rho_cf": "ASM-C4-CF-RHO",
+    "chord": "P:wing.chord_m",
+    "el_frac": "P:wing.elevon.chord_frac",
+    "slot_hw": "P:fin_detail.link_slot.half_width_m",
+    "k_rock": "ASM-C4-MOUNT-K-ROCK",
+    "k_twist": "ASM-C4-MOUNT-K-TWIST",
+    "k_root": "ASM-C4-ROOT-K",
+    "k_anchor": "ASM-C4-ANCHOR-K",
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_c": "CL-B4-CRUISE-RPM",
+    "rpm_x": "CL-B4-RPM-MAX",
+    "E": "ASM-J1-E-TUBE",
+    "G": "ASM-C4-G-TUBE",
+    "sep_min": "P:requirements.vibration_sep_frac",
+    "E_lo": "ASM-C4-E-TUBE-LO",
+    "G_lo": "ASM-C4-G-TUBE-LO"
+   },
+   "units": {
+    "tube_x": "m",
+    "y_fin": "m",
+    "od": "m",
+    "idd": "m",
+    "mu": "kg/m",
+    "tube_len": "m",
+    "z_st": "m",
+    "x_face": "m",
+    "x_prop": "m",
+    "x_te": "m",
+    "hh": "m",
+    "le_gap": "m",
+    "grip": "m",
+    "sc_gap": "m",
+    "sc_h": "m",
+    "sc_wall": "m",
+    "ear_len": "m",
+    "bond_gap": "m",
+    "skin": "m",
+    "bore_z": "m",
+    "m_motor": "kg",
+    "d_motor": "m",
+    "l_motor": "m",
+    "m_prop": "kg",
+    "m_adapt": "kg",
+    "ip": "kg m2",
+    "i_bell": "kg m2",
+    "mount": "kg, m",
+    "cb_mass": "kg",
+    "m_esc": "kg",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_z": "m",
+    "landing_g": "g",
+    "t_board": "m",
+    "areal": "kg/m2",
+    "layers": "-",
+    "t_face": "m",
+    "e_face": "Pa",
+    "e_core": "Pa",
+    "g_core": "Pa",
+    "x_spar": "m",
+    "y_anchor": "m",
+    "proud": "m",
+    "b_w": "m",
+    "b_t": "m",
+    "e_strip": "Pa",
+    "e_w": "m",
+    "e_t": "m",
+    "rho_cf": "kg/m3",
+    "chord": "m",
+    "el_frac": "-",
+    "slot_hw": "m",
+    "k_rock": "N m/rad",
+    "k_twist": "N m/rad",
+    "k_root": "N m/rad",
+    "k_anchor": "N/m",
+    "rpm_h": "rpm",
+    "rpm_c": "rpm",
+    "rpm_x": "rpm",
+    "E": "Pa",
+    "G": "Pa",
+    "sep_min": "-",
+    "E_lo": "Pa",
+    "G_lo": "Pa"
+   },
+   "tol": 0.001,
+   "outputs": {
+    "k_req_nom": 300000.0,
+    "seps_nom": [
+     0.009039827099664666,
+     0.07484830562841771,
+     0.09866481309994501,
+     0.10599828057696281,
+     0.11060304557619394,
+     0.11298454053164009,
+     0.11428931840087797,
+     0.11499799514733455
+    ],
+    "k_req_lo": 300000.0,
+    "seps_lo": [
+     0.04269014261366544,
+     0.015912297716719204,
+     0.034607743050460105,
+     0.04230134166577848,
+     0.04896261875629704,
+     0.05361040686229024,
+     0.05673514103694455,
+     0.058659999570633614
+    ],
+    "k_req": 300000.0
+   },
+   "input_values": {
+    "tube_x": 0.045,
+    "y_fin": 0.32,
+    "od": 0.022,
+    "idd": 0.02,
+    "mu": 0.102,
+    "tube_len": 0.344,
+    "z_st": 0.19,
+    "x_face": 0.030849999999999995,
+    "x_prop": -0.008150000000000004,
+    "x_te": 0.32,
+    "hh": 0.19,
+    "le_gap": 0.0005,
+    "grip": 0.012,
+    "sc_gap": 0.0005,
+    "sc_h": 0.012,
+    "sc_wall": 0.0016,
+    "ear_len": 0.01,
+    "bond_gap": 0.00015,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "bore_z": [
+     0.03043,
+     -0.01662
+    ],
+    "m_motor": 0.081,
+    "d_motor": 0.038,
+    "l_motor": 0.025,
+    "m_prop": 0.017,
+    "m_adapt": 0.005,
+    "ip": 7.5e-05,
+    "i_bell": 1.5e-05,
+    "mount": [
+     0.01128,
+     -0.0046,
+     0.0018,
+     -0.0097
+    ],
+    "cb_mass": [
+     0.0057,
+     0.0074
+    ],
+    "m_esc": 0.0066,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_z": 0.118,
+    "landing_g": 40,
+    "t_board": 0.0048,
+    "areal": 0.2,
+    "layers": 1,
+    "t_face": 0.0001,
+    "e_face": 4000000000.0,
+    "e_core": 10000000.0,
+    "g_core": 4000000.0,
+    "x_spar": 0.08,
+    "y_anchor": 0.242,
+    "proud": 0.008,
+    "b_w": 0.01,
+    "b_t": 0.003,
+    "e_strip": 110000000000.0,
+    "e_w": 0.01,
+    "e_t": 0.001,
+    "rho_cf": 1550.0,
+    "chord": 0.32,
+    "el_frac": 0.22,
+    "slot_hw": 0.012,
+    "k_rock": 3000.0,
+    "k_twist": 30000.0,
+    "k_root": 10000.0,
+    "k_anchor": 30000000.0,
+    "rpm_h": 5395.714905199311,
+    "rpm_c": 5999.940094063748,
+    "rpm_x": 9319.452696615961,
+    "E": 100000000000.0,
+    "G": 5000000000.0,
+    "sep_min": 0.2,
+    "E_lo": 70000000000.0,
+    "G_lo": 3000000000.0
+   }
+  },
+  {
+   "id": "CALC-C4-D3-CONVERGENCE",
+   "type": "calculation",
+   "title": "Mesh convergence, D3 quarter (both sides)",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "convergence_d3",
+   "equation": "first two station modes at fin meshes 6x5, 12x10 (used), 24x20; change = max |f(12x10)/f(24x20) - 1|",
+   "inputs": {
+    "tube_x": "P:fins.tube.x_m",
+    "y_fin": "P:fins.y_m",
+    "od": "P:fins.tube.od_m",
+    "idd": "P:fins.tube.id_m",
+    "mu": "P:wing.spar.mass_per_m_kgm",
+    "tube_len": "P:fin_detail.tube_length_m",
+    "z_st": "P:propulsion.stations.z_m",
+    "x_face": "CL-D3-X-FACE",
+    "x_prop": "CL-D3-X-PROP",
+    "x_te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "le_gap": "P:fin_detail.fin.le_gap_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "ear_len": "P:fin_detail.station_collar.ear_len_m",
+    "bond_gap": "P:fin_detail.bond_gap_m",
+    "skin": "ASM-C4-SKIN-PTS",
+    "bore_z": "ASM-C4-BORE-Z",
+    "m_motor": "P:propulsion.motor_mass_kg",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "l_motor": "P:propulsion.motor_length_m",
+    "m_prop": "P:propulsion.prop_mass_kg",
+    "m_adapt": "ASM-C1-ADAPTER-MASS",
+    "ip": "ASM-C4-PROP-IP",
+    "i_bell": "ASM-C1-BELL-INERTIA",
+    "mount": "ASM-C4-MOUNT-CAD",
+    "cb_mass": "ASM-C4-COLLAR-BRACE-MASS",
+    "m_esc": "P:propulsion.esc_mass_kg",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "landing_g": "P:mass.allocation_g.landing",
+    "t_board": "P:fins.board_t_m",
+    "areal": "P:fins.areal_mass_kgm2",
+    "layers": "P:fin_detail.layers",
+    "t_face": "ASM-C4-FACE-T",
+    "e_face": "ASM-C4-FACE-E",
+    "e_core": "ASM-C4-CORE-E",
+    "g_core": "ASM-C4-CORE-G",
+    "x_spar": "P:wing.spar.x_m",
+    "y_anchor": "P:fin_detail.brace.anchor_y_m",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "b_w": "P:fin_detail.brace.w_m",
+    "b_t": "P:fin_detail.brace.t_m",
+    "e_strip": "ASM-C4-CF-E-STRIP",
+    "e_w": "P:fin_detail.edge_strip.w_m",
+    "e_t": "P:fin_detail.edge_strip.t_m",
+    "rho_cf": "ASM-C4-CF-RHO",
+    "chord": "P:wing.chord_m",
+    "el_frac": "P:wing.elevon.chord_frac",
+    "slot_hw": "P:fin_detail.link_slot.half_width_m",
+    "k_rock": "ASM-C4-MOUNT-K-ROCK",
+    "k_twist": "ASM-C4-MOUNT-K-TWIST",
+    "k_root": "ASM-C4-ROOT-K",
+    "k_anchor": "ASM-C4-ANCHOR-K",
+    "E": "ASM-J1-E-TUBE",
+    "G": "ASM-C4-G-TUBE"
+   },
+   "units": {
+    "tube_x": "m",
+    "y_fin": "m",
+    "od": "m",
+    "idd": "m",
+    "mu": "kg/m",
+    "tube_len": "m",
+    "z_st": "m",
+    "x_face": "m",
+    "x_prop": "m",
+    "x_te": "m",
+    "hh": "m",
+    "le_gap": "m",
+    "grip": "m",
+    "sc_gap": "m",
+    "sc_h": "m",
+    "sc_wall": "m",
+    "ear_len": "m",
+    "bond_gap": "m",
+    "skin": "m",
+    "bore_z": "m",
+    "m_motor": "kg",
+    "d_motor": "m",
+    "l_motor": "m",
+    "m_prop": "kg",
+    "m_adapt": "kg",
+    "ip": "kg m2",
+    "i_bell": "kg m2",
+    "mount": "kg, m",
+    "cb_mass": "kg",
+    "m_esc": "kg",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_z": "m",
+    "landing_g": "g",
+    "t_board": "m",
+    "areal": "kg/m2",
+    "layers": "-",
+    "t_face": "m",
+    "e_face": "Pa",
+    "e_core": "Pa",
+    "g_core": "Pa",
+    "x_spar": "m",
+    "y_anchor": "m",
+    "proud": "m",
+    "b_w": "m",
+    "b_t": "m",
+    "e_strip": "Pa",
+    "e_w": "m",
+    "e_t": "m",
+    "rho_cf": "kg/m3",
+    "chord": "m",
+    "el_frac": "-",
+    "slot_hw": "m",
+    "k_rock": "N m/rad",
+    "k_twist": "N m/rad",
+    "k_root": "N m/rad",
+    "k_anchor": "N/m",
+    "E": "Pa",
+    "G": "Pa"
+   },
+   "tol": 0.0001,
+   "outputs": {
+    "f1_up_coarse": 234.65071696705803,
+    "f2_up_coarse": 244.5110905568378,
+    "f1_up_used": 227.95748528459714,
+    "f2_up_used": 239.18195914119903,
+    "f1_up_fine": 236.57040221348748,
+    "f2_up_fine": 303.7344669447772,
+    "f1_lo_coarse": 226.8188068700514,
+    "f2_lo_coarse": 269.22176130585615,
+    "f1_lo_used": 222.11839139121187,
+    "f2_lo_used": 230.78386751334705,
+    "f1_lo_fine": 228.0797816688917,
+    "f2_lo_fine": 295.5661874843884,
+    "change": 0.21918041614439787
+   },
+   "input_values": {
+    "tube_x": 0.045,
+    "y_fin": 0.32,
+    "od": 0.022,
+    "idd": 0.02,
+    "mu": 0.102,
+    "tube_len": 0.344,
+    "z_st": 0.19,
+    "x_face": 0.030849999999999995,
+    "x_prop": -0.008150000000000004,
+    "x_te": 0.32,
+    "hh": 0.19,
+    "le_gap": 0.0005,
+    "grip": 0.012,
+    "sc_gap": 0.0005,
+    "sc_h": 0.012,
+    "sc_wall": 0.0016,
+    "ear_len": 0.01,
+    "bond_gap": 0.00015,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "bore_z": [
+     0.03043,
+     -0.01662
+    ],
+    "m_motor": 0.081,
+    "d_motor": 0.038,
+    "l_motor": 0.025,
+    "m_prop": 0.017,
+    "m_adapt": 0.005,
+    "ip": 7.5e-05,
+    "i_bell": 1.5e-05,
+    "mount": [
+     0.01128,
+     -0.0046,
+     0.0018,
+     -0.0097
+    ],
+    "cb_mass": [
+     0.0057,
+     0.0074
+    ],
+    "m_esc": 0.0066,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_z": 0.118,
+    "landing_g": 40,
+    "t_board": 0.0048,
+    "areal": 0.2,
+    "layers": 1,
+    "t_face": 0.0001,
+    "e_face": 4000000000.0,
+    "e_core": 10000000.0,
+    "g_core": 4000000.0,
+    "x_spar": 0.08,
+    "y_anchor": 0.242,
+    "proud": 0.008,
+    "b_w": 0.01,
+    "b_t": 0.003,
+    "e_strip": 110000000000.0,
+    "e_w": 0.01,
+    "e_t": 0.001,
+    "rho_cf": 1550.0,
+    "chord": 0.32,
+    "el_frac": 0.22,
+    "slot_hw": 0.012,
+    "k_rock": 3000.0,
+    "k_twist": 30000.0,
+    "k_root": 10000.0,
+    "k_anchor": 30000000.0,
+    "E": 100000000000.0,
+    "G": 5000000000.0
+   }
+  },
+  {
+   "id": "CALC-C4-D3-CAMPBELL",
+   "type": "calculation",
+   "title": "Gyroscopic whirl separation, D3 quarter (both sides)",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "campbell_d3",
+   "equation": "M q'' + Omega G q' + K q = 0 on 16 modes, G = -[Ip_spin e_shaft]x at the station; sep over 1P/2P at hover and cruise and 1P at the cap, station whirl modes only",
+   "inputs": {
+    "tube_x": "P:fins.tube.x_m",
+    "y_fin": "P:fins.y_m",
+    "od": "P:fins.tube.od_m",
+    "idd": "P:fins.tube.id_m",
+    "mu": "P:wing.spar.mass_per_m_kgm",
+    "tube_len": "P:fin_detail.tube_length_m",
+    "z_st": "P:propulsion.stations.z_m",
+    "x_face": "CL-D3-X-FACE",
+    "x_prop": "CL-D3-X-PROP",
+    "x_te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "le_gap": "P:fin_detail.fin.le_gap_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "ear_len": "P:fin_detail.station_collar.ear_len_m",
+    "bond_gap": "P:fin_detail.bond_gap_m",
+    "skin": "ASM-C4-SKIN-PTS",
+    "bore_z": "ASM-C4-BORE-Z",
+    "m_motor": "P:propulsion.motor_mass_kg",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "l_motor": "P:propulsion.motor_length_m",
+    "m_prop": "P:propulsion.prop_mass_kg",
+    "m_adapt": "ASM-C1-ADAPTER-MASS",
+    "ip": "ASM-C4-PROP-IP",
+    "i_bell": "ASM-C1-BELL-INERTIA",
+    "mount": "ASM-C4-MOUNT-CAD",
+    "cb_mass": "ASM-C4-COLLAR-BRACE-MASS",
+    "m_esc": "P:propulsion.esc_mass_kg",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "landing_g": "P:mass.allocation_g.landing",
+    "t_board": "P:fins.board_t_m",
+    "areal": "P:fins.areal_mass_kgm2",
+    "layers": "P:fin_detail.layers",
+    "t_face": "ASM-C4-FACE-T",
+    "e_face": "ASM-C4-FACE-E",
+    "e_core": "ASM-C4-CORE-E",
+    "g_core": "ASM-C4-CORE-G",
+    "x_spar": "P:wing.spar.x_m",
+    "y_anchor": "P:fin_detail.brace.anchor_y_m",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "b_w": "P:fin_detail.brace.w_m",
+    "b_t": "P:fin_detail.brace.t_m",
+    "e_strip": "ASM-C4-CF-E-STRIP",
+    "e_w": "P:fin_detail.edge_strip.w_m",
+    "e_t": "P:fin_detail.edge_strip.t_m",
+    "rho_cf": "ASM-C4-CF-RHO",
+    "chord": "P:wing.chord_m",
+    "el_frac": "P:wing.elevon.chord_frac",
+    "slot_hw": "P:fin_detail.link_slot.half_width_m",
+    "k_rock": "ASM-C4-MOUNT-K-ROCK",
+    "k_twist": "ASM-C4-MOUNT-K-TWIST",
+    "k_root": "ASM-C4-ROOT-K",
+    "k_anchor": "ASM-C4-ANCHOR-K",
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_c": "CL-B4-CRUISE-RPM",
+    "rpm_x": "CL-B4-RPM-MAX",
+    "E": "ASM-J1-E-TUBE",
+    "G": "ASM-C4-G-TUBE"
+   },
+   "units": {
+    "tube_x": "m",
+    "y_fin": "m",
+    "od": "m",
+    "idd": "m",
+    "mu": "kg/m",
+    "tube_len": "m",
+    "z_st": "m",
+    "x_face": "m",
+    "x_prop": "m",
+    "x_te": "m",
+    "hh": "m",
+    "le_gap": "m",
+    "grip": "m",
+    "sc_gap": "m",
+    "sc_h": "m",
+    "sc_wall": "m",
+    "ear_len": "m",
+    "bond_gap": "m",
+    "skin": "m",
+    "bore_z": "m",
+    "m_motor": "kg",
+    "d_motor": "m",
+    "l_motor": "m",
+    "m_prop": "kg",
+    "m_adapt": "kg",
+    "ip": "kg m2",
+    "i_bell": "kg m2",
+    "mount": "kg, m",
+    "cb_mass": "kg",
+    "m_esc": "kg",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_z": "m",
+    "landing_g": "g",
+    "t_board": "m",
+    "areal": "kg/m2",
+    "layers": "-",
+    "t_face": "m",
+    "e_face": "Pa",
+    "e_core": "Pa",
+    "g_core": "Pa",
+    "x_spar": "m",
+    "y_anchor": "m",
+    "proud": "m",
+    "b_w": "m",
+    "b_t": "m",
+    "e_strip": "Pa",
+    "e_w": "m",
+    "e_t": "m",
+    "rho_cf": "kg/m3",
+    "chord": "m",
+    "el_frac": "-",
+    "slot_hw": "m",
+    "k_rock": "N m/rad",
+    "k_twist": "N m/rad",
+    "k_root": "N m/rad",
+    "k_anchor": "N/m",
+    "rpm_h": "rpm",
+    "rpm_c": "rpm",
+    "rpm_x": "rpm",
+    "E": "Pa",
+    "G": "Pa"
+   },
+   "tol": 0.0001,
+   "assumes": [
+    "ASM-C4-PROP-IP",
+    "ASM-C1-BELL-INERTIA"
+   ],
+   "outputs": {
+    "sep_whirl": 0.10606883098131958
+   },
+   "input_values": {
+    "tube_x": 0.045,
+    "y_fin": 0.32,
+    "od": 0.022,
+    "idd": 0.02,
+    "mu": 0.102,
+    "tube_len": 0.344,
+    "z_st": 0.19,
+    "x_face": 0.030849999999999995,
+    "x_prop": -0.008150000000000004,
+    "x_te": 0.32,
+    "hh": 0.19,
+    "le_gap": 0.0005,
+    "grip": 0.012,
+    "sc_gap": 0.0005,
+    "sc_h": 0.012,
+    "sc_wall": 0.0016,
+    "ear_len": 0.01,
+    "bond_gap": 0.00015,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "bore_z": [
+     0.03043,
+     -0.01662
+    ],
+    "m_motor": 0.081,
+    "d_motor": 0.038,
+    "l_motor": 0.025,
+    "m_prop": 0.017,
+    "m_adapt": 0.005,
+    "ip": 7.5e-05,
+    "i_bell": 1.5e-05,
+    "mount": [
+     0.01128,
+     -0.0046,
+     0.0018,
+     -0.0097
+    ],
+    "cb_mass": [
+     0.0057,
+     0.0074
+    ],
+    "m_esc": 0.0066,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_z": 0.118,
+    "landing_g": 40,
+    "t_board": 0.0048,
+    "areal": 0.2,
+    "layers": 1,
+    "t_face": 0.0001,
+    "e_face": 4000000000.0,
+    "e_core": 10000000.0,
+    "g_core": 4000000.0,
+    "x_spar": 0.08,
+    "y_anchor": 0.242,
+    "proud": 0.008,
+    "b_w": 0.01,
+    "b_t": 0.003,
+    "e_strip": 110000000000.0,
+    "e_w": 0.01,
+    "e_t": 0.001,
+    "rho_cf": 1550.0,
+    "chord": 0.32,
+    "el_frac": 0.22,
+    "slot_hw": 0.012,
+    "k_rock": 3000.0,
+    "k_twist": 30000.0,
+    "k_root": 10000.0,
+    "k_anchor": 30000000.0,
+    "rpm_h": 5395.714905199311,
+    "rpm_c": 5999.940094063748,
+    "rpm_x": 9319.452696615961,
+    "E": 100000000000.0,
+    "G": 5000000000.0
+   }
+  },
+  {
+   "id": "CALC-C4-D3-STATIC",
+   "type": "calculation",
+   "title": "Fin, tube, brace, collar and anchor strength, D3 quarter (both sides)",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "static_d3",
+   "equation": "FE static, cases L1, L4 (both friction senses), L5, G2 (both senses, n_h m g at the tube end), H2; ultimate = sf x limit (joints x fit x prt); face = Q_f (eps0 + z kappa); brace Pcr = pi^2 E w t^3 / (12 L^2); brace-end bond tau = F / (2 (w + t) engage); collar bond tau = T / (2 pi r^2 h) + F / (pi d h); anchor tau = F / (len_y pi d_spar / 4) vs peel x bond allowable",
+   "inputs": {
+    "tube_x": "P:fins.tube.x_m",
+    "y_fin": "P:fins.y_m",
+    "od": "P:fins.tube.od_m",
+    "idd": "P:fins.tube.id_m",
+    "mu": "P:wing.spar.mass_per_m_kgm",
+    "tube_len": "P:fin_detail.tube_length_m",
+    "z_st": "P:propulsion.stations.z_m",
+    "x_face": "CL-D3-X-FACE",
+    "x_prop": "CL-D3-X-PROP",
+    "x_te": "P:fins.te_x_m",
+    "hh": "P:fins.half_height_m",
+    "le_gap": "P:fin_detail.fin.le_gap_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "ear_len": "P:fin_detail.station_collar.ear_len_m",
+    "bond_gap": "P:fin_detail.bond_gap_m",
+    "skin": "ASM-C4-SKIN-PTS",
+    "bore_z": "ASM-C4-BORE-Z",
+    "m_motor": "P:propulsion.motor_mass_kg",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "l_motor": "P:propulsion.motor_length_m",
+    "m_prop": "P:propulsion.prop_mass_kg",
+    "m_adapt": "ASM-C1-ADAPTER-MASS",
+    "ip": "ASM-C4-PROP-IP",
+    "i_bell": "ASM-C1-BELL-INERTIA",
+    "mount": "ASM-C4-MOUNT-CAD",
+    "cb_mass": "ASM-C4-COLLAR-BRACE-MASS",
+    "m_esc": "P:propulsion.esc_mass_kg",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "landing_g": "P:mass.allocation_g.landing",
+    "t_board": "P:fins.board_t_m",
+    "areal": "P:fins.areal_mass_kgm2",
+    "layers": "P:fin_detail.layers",
+    "t_face": "ASM-C4-FACE-T",
+    "e_face": "ASM-C4-FACE-E",
+    "e_core": "ASM-C4-CORE-E",
+    "g_core": "ASM-C4-CORE-G",
+    "x_spar": "P:wing.spar.x_m",
+    "y_anchor": "P:fin_detail.brace.anchor_y_m",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "b_w": "P:fin_detail.brace.w_m",
+    "b_t": "P:fin_detail.brace.t_m",
+    "e_strip": "ASM-C4-CF-E-STRIP",
+    "e_w": "P:fin_detail.edge_strip.w_m",
+    "e_t": "P:fin_detail.edge_strip.t_m",
+    "rho_cf": "ASM-C4-CF-RHO",
+    "chord": "P:wing.chord_m",
+    "el_frac": "P:wing.elevon.chord_frac",
+    "slot_hw": "P:fin_detail.link_slot.half_width_m",
+    "k_rock": "ASM-C4-MOUNT-K-ROCK",
+    "k_twist": "ASM-C4-MOUNT-K-TWIST",
+    "k_root": "ASM-C4-ROOT-K",
+    "k_anchor": "ASM-C4-ANCHOR-K",
+    "E": "ASM-J1-E-TUBE",
+    "G": "ASM-C4-G-TUBE",
+    "f_level": "CL-C1-FOOT-LEVEL",
+    "f_corner": "CL-C1-FOOT-CORNER",
+    "mu_g": "ASM-C1-FRICTION",
+    "n_h": "ASM-C1-HANDLING-N",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "grav": "P:env.g_ms2",
+    "t_lim": "CL-C1-T-LIMIT",
+    "q_mot": "CL-C1-MOTOR-TORQUE",
+    "sf": "P:requirements.safety_factor_ult",
+    "fit": "ASM-C1-FITTING-FACTOR",
+    "prt": "ASM-C1-PRINTED-FACTOR",
+    "s_face": "ASM-C4-FACE-SIGMA",
+    "s_cf": "ASM-C4-CF-SIGMA",
+    "patch": "ASM-C4-FOOT-PATCH",
+    "s_bond": "ASM-C4-BOND-SHEAR",
+    "peel": "ASM-C4-PEEL-KD",
+    "engage": "P:fin_detail.brace.engage_m",
+    "a_lx": "P:fin_detail.anchor.len_x_m",
+    "a_ly": "P:fin_detail.anchor.len_y_m",
+    "d_spar": "P:wing.spar.od_m"
+   },
+   "units": {
+    "tube_x": "m",
+    "y_fin": "m",
+    "od": "m",
+    "idd": "m",
+    "mu": "kg/m",
+    "tube_len": "m",
+    "z_st": "m",
+    "x_face": "m",
+    "x_prop": "m",
+    "x_te": "m",
+    "hh": "m",
+    "le_gap": "m",
+    "grip": "m",
+    "sc_gap": "m",
+    "sc_h": "m",
+    "sc_wall": "m",
+    "ear_len": "m",
+    "bond_gap": "m",
+    "skin": "m",
+    "bore_z": "m",
+    "m_motor": "kg",
+    "d_motor": "m",
+    "l_motor": "m",
+    "m_prop": "kg",
+    "m_adapt": "kg",
+    "ip": "kg m2",
+    "i_bell": "kg m2",
+    "mount": "kg, m",
+    "cb_mass": "kg",
+    "m_esc": "kg",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_z": "m",
+    "landing_g": "g",
+    "t_board": "m",
+    "areal": "kg/m2",
+    "layers": "-",
+    "t_face": "m",
+    "e_face": "Pa",
+    "e_core": "Pa",
+    "g_core": "Pa",
+    "x_spar": "m",
+    "y_anchor": "m",
+    "proud": "m",
+    "b_w": "m",
+    "b_t": "m",
+    "e_strip": "Pa",
+    "e_w": "m",
+    "e_t": "m",
+    "rho_cf": "kg/m3",
+    "chord": "m",
+    "el_frac": "-",
+    "slot_hw": "m",
+    "k_rock": "N m/rad",
+    "k_twist": "N m/rad",
+    "k_root": "N m/rad",
+    "k_anchor": "N/m",
+    "E": "Pa",
+    "G": "Pa",
+    "f_level": "N",
+    "f_corner": "N",
+    "mu_g": "-",
+    "n_h": "-",
+    "m_gate": "kg",
+    "grav": "m/s2",
+    "t_lim": "N",
+    "q_mot": "N m",
+    "sf": "-",
+    "fit": "-",
+    "prt": "-",
+    "s_face": "Pa",
+    "s_cf": "Pa",
+    "patch": "m",
+    "s_bond": "Pa",
+    "peel": "-",
+    "engage": "m",
+    "a_lx": "m",
+    "a_ly": "m",
+    "d_spar": "m"
+   },
+   "tol": 0.0001,
+   "assumes": [
+    "ASM-C4-FACE-SIGMA",
+    "ASM-C4-BOND-SHEAR",
+    "ASM-C4-PEEL-KD",
+    "ASM-C4-FOOT-PATCH"
+   ],
+   "cites": [
+    "SRC-C4-ALLEN",
+    "SRC-C4-ROARK"
+   ],
+   "outputs": {
+    "brace_len_up_m": 0.14477986945704846,
+    "face_up_L1_mpa": 2.990138047877179,
+    "brace_up_L1_n": 8.35956262214616,
+    "face_up_L4+_mpa": 5.649866339180194,
+    "brace_up_L4+_n": -7.826880859327584,
+    "face_up_L4-_mpa": 5.620395426775839,
+    "brace_up_L4-_n": 22.210944115095696,
+    "face_up_L5_mpa": 4.9554411128331015,
+    "brace_up_L5_n": 5.622944596244632,
+    "face_up_G2+_mpa": 0.9233679859146097,
+    "brace_up_G2+_n": 86.66358855882234,
+    "face_up_G2-_mpa": 0.9233679859146097,
+    "brace_up_G2-_n": -86.66358855882234,
+    "face_up_H2_mpa": 1.0369210607996198,
+    "brace_up_H2_n": -1.3707815461631194,
+    "brace_len_lo_m": 0.15714256266206172,
+    "face_lo_L1_mpa": 2.986109679645294,
+    "brace_lo_L1_n": 8.033851876325977,
+    "face_lo_L4+_mpa": 5.6704850003420235,
+    "brace_lo_L4+_n": -2.3544562178942603,
+    "face_lo_L4-_mpa": 5.651440859661283,
+    "brace_lo_L4-_n": 16.178078193954303,
+    "face_lo_L5_mpa": 4.958076764198751,
+    "brace_lo_L5_n": 5.4259042336128,
+    "face_lo_G2+_mpa": 1.027434583922937,
+    "brace_lo_G2+_n": 94.00123279746333,
+    "face_lo_G2-_mpa": 1.027434583922937,
+    "brace_lo_G2-_n": -94.00123279746333,
+    "face_lo_H2_mpa": 1.2200253314399978,
+    "brace_lo_H2_n": -1.6506241305371174,
+    "face_ult_pa": 5670485.000342024,
+    "edge_ult_pa": 99470020.49570388,
+    "tube_ult_pa": 19145615.03483937,
+    "root_m_lim_nm": 4.229478559969736,
+    "brace_comp_design_n": 162.15212657562424,
+    "brace_tens_design_n": 162.15212657562424,
+    "brace_pcr_n": 989.207239501606,
+    "brace_len_m": 0.15714256266206172,
+    "collar_t_lim_nm": 3.892285840980007,
+    "tau_collar_pa": 1164322.8771699618,
+    "tau_anchor_pa": 733162.2862890139,
+    "tau_brace_end_pa": 779577.531613578,
+    "dfoot_L4_m": 0.009125591132771345,
+    "ms_face": 0.76351758260481,
+    "ms_edge": 3.0213121300932686,
+    "ms_tube": 19.892512425018367,
+    "ms_brace_buckling": 5.100488845826275,
+    "ms_brace_end_bond": 1.565492101677659,
+    "ms_collar_bond": 0.7177365825373629,
+    "ms_anchor_bond": 0.3639545005262288,
+    "ms_min": 0.3639545005262288
+   },
+   "input_values": {
+    "tube_x": 0.045,
+    "y_fin": 0.32,
+    "od": 0.022,
+    "idd": 0.02,
+    "mu": 0.102,
+    "tube_len": 0.344,
+    "z_st": 0.19,
+    "x_face": 0.030849999999999995,
+    "x_prop": -0.008150000000000004,
+    "x_te": 0.32,
+    "hh": 0.19,
+    "le_gap": 0.0005,
+    "grip": 0.012,
+    "sc_gap": 0.0005,
+    "sc_h": 0.012,
+    "sc_wall": 0.0016,
+    "ear_len": 0.01,
+    "bond_gap": 0.00015,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "bore_z": [
+     0.03043,
+     -0.01662
+    ],
+    "m_motor": 0.081,
+    "d_motor": 0.038,
+    "l_motor": 0.025,
+    "m_prop": 0.017,
+    "m_adapt": 0.005,
+    "ip": 7.5e-05,
+    "i_bell": 1.5e-05,
+    "mount": [
+     0.01128,
+     -0.0046,
+     0.0018,
+     -0.0097
+    ],
+    "cb_mass": [
+     0.0057,
+     0.0074
+    ],
+    "m_esc": 0.0066,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_z": 0.118,
+    "landing_g": 40,
+    "t_board": 0.0048,
+    "areal": 0.2,
+    "layers": 1,
+    "t_face": 0.0001,
+    "e_face": 4000000000.0,
+    "e_core": 10000000.0,
+    "g_core": 4000000.0,
+    "x_spar": 0.08,
+    "y_anchor": 0.242,
+    "proud": 0.008,
+    "b_w": 0.01,
+    "b_t": 0.003,
+    "e_strip": 110000000000.0,
+    "e_w": 0.01,
+    "e_t": 0.001,
+    "rho_cf": 1550.0,
+    "chord": 0.32,
+    "el_frac": 0.22,
+    "slot_hw": 0.012,
+    "k_rock": 3000.0,
+    "k_twist": 30000.0,
+    "k_root": 10000.0,
+    "k_anchor": 30000000.0,
+    "E": 100000000000.0,
+    "G": 5000000000.0,
+    "f_level": 38.245934999999996,
+    "f_corner": 32.904349974686895,
+    "mu_g": 0.5,
+    "n_h": 2.0,
+    "m_gate": 2.6,
+    "grav": 9.80665,
+    "t_lim": 21.081435423502242,
+    "q_mot": 0.4201119002257222,
+    "sf": 1.5,
+    "fit": 1.15,
+    "prt": 1.25,
+    "s_face": 10000000.0,
+    "s_cf": 400000000.0,
+    "patch": 0.03,
+    "s_bond": 2000000.0,
+    "peel": 0.5,
+    "engage": 0.01,
+    "a_lx": 0.02,
+    "a_ly": 0.016,
+    "d_spar": 0.022
+   }
+  },
+  {
+   "id": "CALC-C4-D3-BLOCK",
+   "type": "calculation",
+   "title": "Through-core block on D3's geometry (bosses not credited for strength)",
+   "script": "redesign/team/C4/fin_structures_d3.py",
+   "function": "block_d3",
+   "equation": "as CALC-C4-BLOCK with h = core depth at the tube (z_upper - z_lower at x_t): tube bore s = 6M/(d h^2) + F/(d h); shear-out tau = (1.5 M / h)/(e h), e = (W - d)/2; spar bore s = 6M/(d W^2) + F/(d W); web s = 6M/(W h^2), tau = M/(0.21 W h^2); bond torsion tau = 2 My sf fit prt/(pi d^2 W)",
+   "inputs": {
+    "m_des_c1": "CL-C1-FINJOINT-M-DESIGN",
+    "m_task": "ASM-C4-FINJOINT-M-TASK",
+    "f_ult": "CL-C1-FINJOINT-F-ULT",
+    "my_lim": "ASM-C4-FINJOINT-MY",
+    "sf": "P:requirements.safety_factor_ult",
+    "fit": "ASM-C1-FITTING-FACTOR",
+    "prt": "ASM-C1-PRINTED-FACTOR",
+    "d": "P:fins.tube.od_m",
+    "d_spar": "P:wing.spar.od_m",
+    "skin": "ASM-C4-SKIN-PTS",
+    "x_t": "P:fins.tube.x_m",
+    "W": "P:fin_detail.block.width_m",
+    "s_brg": "ASM-C4-PETG-BEARING",
+    "s_ten": "ASM-C4-PETG-TENSILE",
+    "s_sh": "ASM-C4-PETG-SHEAR",
+    "s_bond": "ASM-C4-BOND-SHEAR"
+   },
+   "units": {
+    "m_des_c1": "N m",
+    "m_task": "N m",
+    "f_ult": "N",
+    "my_lim": "N m",
+    "sf": "-",
+    "fit": "-",
+    "prt": "-",
+    "d": "m",
+    "d_spar": "m",
+    "skin": "m",
+    "x_t": "m",
+    "W": "m",
+    "s_brg": "Pa",
+    "s_ten": "Pa",
+    "s_sh": "Pa",
+    "s_bond": "Pa"
+   },
+   "tol": 1e-06,
+   "cites": [
+    "SRC-C4-ROARK"
+   ],
+   "outputs": {
+    "h_core_m": 0.027710000000000002,
+    "M_design_nm": 23.071874999999995,
+    "F_design_n": 121.4460080306005,
+    "s_tube_bore_pa": 8394016.849048104,
+    "tau_shear_out_pa": 6438772.159981061,
+    "s_spar_bore_pa": 5008533.4697356075,
+    "ms_tube_bore": 1.3826494942368424,
+    "ms_shear_out": 0.5530911409092962,
+    "ms_spar_bore": 2.993184855577249,
+    "ms_web_bend": 1.995247200325072,
+    "ms_web_torsion": 1.5160076482730607,
+    "ms_bond_torsion": 3.910300598987339,
+    "ms_min": 0.5530911409092962,
+    "spar_couple_n": 961.3281249999999,
+    "tube_couple_n": 1248.9286358715262
+   },
+   "input_values": {
+    "m_des_c1": 20.27890175524261,
+    "m_task": 10.7,
+    "f_ult": 84.48417949954818,
+    "my_lim": 5.17,
+    "sf": 1.5,
+    "fit": 1.15,
+    "prt": 1.25,
+    "d": 0.022,
+    "d_spar": 0.022,
+    "skin": [
+     [
+      0.0335,
+      0.01775,
+      -0.00731
+     ],
+     [
+      0.045,
+      0.0198,
+      -0.00791
+     ],
+     [
+      0.0565,
+      0.02119,
+      -0.00829
+     ],
+     [
+      0.07,
+      0.0222,
+      -0.00857
+     ],
+     [
+      0.08,
+      0.02259,
+      -0.00865
+     ],
+     [
+      0.1,
+      0.02263,
+      -0.00862
+     ],
+     [
+      0.13,
+      0.02111,
+      -0.00815
+     ],
+     [
+      0.16,
+      0.01814,
+      -0.00736
+     ],
+     [
+      0.19,
+      0.01422,
+      -0.00636
+     ],
+     [
+      0.22,
+      0.00982,
+      -0.0052
+     ],
+     [
+      0.25,
+      0.00555,
+      -0.00393
+     ],
+     [
+      0.28,
+      0.00214,
+      -0.00265
+     ],
+     [
+      0.3,
+      0.00074,
+      -0.00166
+     ],
+     [
+      0.32,
+      0.0003,
+      -0.0003
+     ]
+    ],
+    "x_t": 0.045,
+    "W": 0.036,
+    "s_brg": 20000000.0,
+    "s_ten": 15000000.0,
+    "s_sh": 10000000.0,
+    "s_bond": 2000000.0
+   }
+  },
+  {
+   "id": "CL-C4-D3-Q4-RECT",
+   "type": "claim",
+   "title": "Quad shell = R1 rectangle element on a rectangle",
+   "calc": "CALC-C4-D3-Q4-CHECK",
+   "output": "err_rect",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1e-09
+   },
+   "how": "Re-run fin_structures_d3.py.",
+   "value": 1.0836532616868934e-15
+  },
+  {
+   "id": "CL-C4-D3-Q4-SKEW",
+   "type": "claim",
+   "title": "Skewed-mesh cantilever plate vs Leissa",
+   "calc": "CALC-C4-D3-Q4-CHECK",
+   "output": "err_skew",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.02
+   },
+   "how": "Re-run fin_structures_d3.py (16 x 16, 20 % skew).",
+   "cites": [
+    "SRC-C4-LEISSA"
+   ],
+   "value": 0.008687570991968041
+  },
+  {
+   "id": "CL-C4-D3-MESH-CONV",
+   "type": "claim",
+   "title": "Mesh convergence of the station modes, D3 quarter",
+   "calc": "CALC-C4-D3-CONVERGENCE",
+   "output": "change",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.03
+   },
+   "how": "Meshes 6x5, 12x10, 24x20 on both quarters.",
+   "value": 0.21918041614439787
+  },
+  {
+   "id": "CL-C4-D3-F1-UP",
+   "type": "claim",
+   "title": "First station mode, upper quarter (as designed)",
+   "calc": "CALC-C4-D3-MODES",
+   "output": "f1_up",
+   "unit": "Hz",
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L",
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-009-UR",
+    "FIN-009-UL",
+    "FIN-003-UR",
+    "FIN-003-UL"
+   ],
+   "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
+   "value": 227.9574852845727
+  },
+  {
+   "id": "CL-C4-D3-F1-LO",
+   "type": "claim",
+   "title": "First station mode, lower quarter (as designed)",
+   "calc": "CALC-C4-D3-MODES",
+   "output": "f1_lo",
+   "unit": "Hz",
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L",
+    "FIN-001-RD",
+    "FIN-001-LD",
+    "FIN-009-LR",
+    "FIN-009-LL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
+   "note": "The lower tube is 14 mm longer outside the bore (cambered wing); the lower quarter governs.",
+   "value": 222.11839139135418
+  },
+  {
+   "id": "CL-C4-D3-PANEL",
+   "type": "claim",
+   "title": "First fin-panel mode (TE tip with the foot), upper quarter",
+   "calc": "CALC-C4-D3-MODES",
+   "output": "panel_up",
+   "unit": "Hz",
+   "parts": [
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
+   ],
+   "how": "Tap the TE tip with the foot fitted.",
+   "note": "Below the forcing band; < 10 % of its energy reaches the station.",
+   "value": 57.087694079502434
+  },
+  {
+   "id": "CL-C4-D3-SEP",
+   "type": "claim",
+   "title": "Mode separation from 1P/2P operating points, as designed (nominal)",
+   "calc": "CALC-C4-D3-MODES",
+   "output": "sep_op",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.vibration_sep_frac"
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L",
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD",
+    "FIN-009-UR",
+    "FIN-009-UL",
+    "FIN-009-LR",
+    "FIN-009-LL",
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
+   "value": 0.110603045575979
+  },
+  {
+   "id": "CL-C4-D3-SEP-WORST",
+   "type": "claim",
+   "title": "Mode separation, as designed, worst tube E/G corner",
+   "calc": "CALC-C4-D3-WORST",
+   "output": "sep_op_worst",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.vibration_sep_frac"
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the bought tube (I1, H1), then T-C4-TAP.",
+   "value": 0.04896261875559427
+  },
+  {
+   "id": "CL-C4-D3-SEP-WHIRL",
+   "type": "claim",
+   "title": "Whirl separation incl. prop gyroscopics, as designed",
+   "calc": "CALC-C4-D3-CAMPBELL",
+   "output": "sep_whirl",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.vibration_sep_frac"
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
+   "value": 0.10606883098131958
+  },
+  {
+   "id": "CL-C4-D3-SEP-BAND",
+   "type": "claim",
+   "title": "Separation from the whole 80-330 Hz band (B4 rule), as designed",
+   "calc": "CALC-C4-D3-MODES",
+   "output": "sep_band",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.vibration_sep_frac"
+   },
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "Needs every station mode >= 396 Hz; R-VIBRATION (operating points) is the criterion of record (CR-C4-06).",
+   "value": -0.3269139654807449
+  },
+  {
+   "id": "CL-C4-D3-MOUNT-K-REQ",
+   "type": "claim",
+   "title": "Mount rocking stiffness needed for 20 % separation (worst of nominal / low E,G)",
+   "calc": "CALC-C4-D3-MOUNT-K",
+   "output": "k_req",
+   "unit": "N m/rad",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-MOUNT-K-ROCK"
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL"
+   ],
+   "how": "T-C4-MOUNT-STIFF: 5 N side load at the prop nut on a mount clamped on a tube stub; rotation from two dial gauges; k = F a / theta.",
+   "value": 300000.0
+  },
+  {
+   "id": "CL-C4-D3-MS-FACE",
+   "type": "claim",
+   "title": "Fin face margin, as designed, worst case and side",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "ms_face",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
+   ],
+   "how": "T-C4-BOARD-COUPON for the face allowable; T-C4-FIN-PROOF at 1.5 x L4.",
+   "value": 0.76351758260481
+  },
+  {
+   "id": "CL-C4-D3-MS-EDGE",
+   "type": "claim",
+   "title": "Edge-strip margin, as designed",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "ms_edge",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
+   ],
+   "how": "T-C4-FIN-PROOF.",
+   "value": 3.0213121300932686
+  },
+  {
+   "id": "CL-C4-D3-MS-TUBE",
+   "type": "claim",
+   "title": "Motor tube bending margin at the bore end",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "ms_tube",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "T-C4-FIN-PROOF (G2 at the tube end).",
+   "value": 19.892512425018367
+  },
+  {
+   "id": "CL-C4-D3-MS-BRACE",
+   "type": "claim",
+   "title": "Brace buckling margin (10 x 3 strip, design load incl. fitting factor)",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "ms_brace_buckling",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-009-UR",
+    "FIN-009-UL",
+    "FIN-009-LR",
+    "FIN-009-LL"
+   ],
+   "how": "T-C4-FIN-PROOF G2 both senses; no visible bow.",
+   "value": 5.100488845826275
+  },
+  {
+   "id": "CL-C4-D3-BRACE-F",
+   "type": "claim",
+   "title": "Brace design force (compression, incl. 1.5 x 1.15)",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "brace_comp_design_n",
+   "unit": "N",
+   "parts": [
+    "FIN-009-UR",
+    "FIN-009-UL",
+    "FIN-009-LR",
+    "FIN-009-LL",
+    "FIN-010-UR",
+    "FIN-010-UL",
+    "FIN-010-LR",
+    "FIN-010-LL"
+   ],
+   "how": "C2 checks the spar under the anchor.",
+   "value": 162.15212657562424
+  },
+  {
+   "id": "CL-C4-D3-MS-BRACE-END",
+   "type": "claim",
+   "title": "Brace-end bond margin (10 mm engagement in the ear and anchor slots)",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "ms_brace_end_bond",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-009-UR",
+    "FIN-009-UL",
+    "FIN-009-LR",
+    "FIN-009-LL",
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL",
+    "FIN-010-UR",
+    "FIN-010-UL",
+    "FIN-010-LR",
+    "FIN-010-LL"
+   ],
+   "how": "C6 lap-shear coupons; T-C4-FIN-PROOF.",
+   "value": 1.565492101677659
+  },
+  {
+   "id": "CL-C4-D3-MS-COLLAR",
+   "type": "claim",
+   "title": "Station-collar bond margin on the tube (torsion + brace shear)",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "ms_collar_bond",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "T-C4-FIN-PROOF at 1.5 x L4; witness line across collar and tube does not move.",
+   "value": 0.7177365825373629
+  },
+  {
+   "id": "CL-C4-D3-MS-ANCHOR",
+   "type": "claim",
+   "title": "Anchor bond margin on the spar (brace tension, peel knock-down)",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "ms_anchor_bond",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-010-UR",
+    "FIN-010-UL",
+    "FIN-010-LR",
+    "FIN-010-LL"
+   ],
+   "how": "T-C4-FIN-PROOF G2 in the tension sense; C6 peel coupon PETG on CF.",
+   "value": 0.3639545005262288
+  },
+  {
+   "id": "CL-C4-D3-FOOT-DEFL",
+   "type": "claim",
+   "title": "Foot deflection under L4 (limit), as designed",
+   "calc": "CALC-C4-D3-STATIC",
+   "output": "dfoot_L4_m",
+   "unit": "m",
+   "parts": [
+    "FIN-001-RU",
+    "FIN-001-LU",
+    "FIN-001-RD",
+    "FIN-001-LD"
+   ],
+   "how": "T-C4-FIN-PROOF: dial gauge at the foot.",
+   "value": 0.009125591132771345
+  },
+  {
+   "id": "CL-C4-D3-BLOCK-MS",
+   "type": "claim",
+   "title": "Through-core block minimum margin, D3 geometry",
+   "calc": "CALC-C4-D3-BLOCK",
+   "output": "ms_min",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-FIN-TUBE-JOINT",
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-004-R",
+    "FIN-004-L"
+   ],
+   "how": "T-C4-BLOCK-PROOF (30 N m for 1 min on a block in a core offcut).",
+   "value": 0.5530911409092962
+  },
+  {
+   "id": "CL-C4-D3-SPAR-COUPLE",
+   "type": "claim",
+   "title": "Bearing couple on the spar at each block (design), D3 geometry",
+   "calc": "CALC-C4-D3-BLOCK",
+   "output": "spar_couple_n",
+   "unit": "N",
+   "parts": [
+    "FIN-004-R",
+    "FIN-004-L"
+   ],
+   "how": "C2 spar crushing check (CR-C4-02).",
+   "value": 961.3281249999999
+  },
+  {
+   "id": "T-C4-MOUNT-STIFF",
+   "type": "test",
+   "title": "Mount rocking stiffness on the bench",
+   "verifies": [
+    "CL-C4-D3-MOUNT-K-REQ"
+   ],
+   "state": "planned",
+   "procedure": "Mount with motor clamped on a 60 mm tube stub held in a vice; 0.5 kg over a pulley at the prop nut, sideways (y) and fore-aft (z); dial gauges at the motor can top and at the collar; theta = (d_can - d_collar) / spacing; k = F a / theta. Pass: k >= the CL-C4-D3-MOUNT-K-REQ value in both directions."
+  },
+  {
+   "id": "T-C4-TAP-D3",
+   "type": "test",
+   "title": "Tap test, as-built upper and lower quarter",
+   "verifies": [
+    "CL-C4-D3-SEP",
+    "CL-C4-D3-F1-UP",
+    "CL-C4-D3-F1-LO",
+    "CL-C4-D3-SEP-WHIRL",
+    "CL-C4-D3-PANEL"
+   ],
+   "state": "planned",
+   "procedure": "Finished wing on foam blocks, props on; tap each motor bell in y and in z; FC raw IMU at 1 kHz (or a phone accelerometer taped to the can); FFT peaks vs 1P/2P at hover, cruise and the cap."
+  }
+ ]
+}

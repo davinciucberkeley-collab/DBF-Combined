@@ -83,11 +83,14 @@ A("ASM-E2-PROFILE", "Mission profile timings",
         "pitch-over is a few seconds at high throttle (J1 evidence); doubled for the pessimistic case",
   value={"ground_s": 180, "alt_m": 50, "climb_ms": 2.0, "descent_ms": 1.0, "hover_s": 120,
          "trans_s": [10, 20], "trans_fwd_factor": 1.4, "trans_back_factor": 1.3}, unit="-", status="PROPOSED")
-A("ASM-E2-CRUISE-AERO", "Cruise drag and efficiency model",
-  "CD0 0.0593 (x1.3 pessimistic), e from params, eta_prop 0.47 (0.35 pessimistic), eta_motor 0.72, "
-  "pitch-trim factor 1.05, turning (circuit) factor 1.05",
+A("ASM-E2-CRUISE-AERO", "Cruise mass scaling, circuit factor and independent cross-check model",
+  "The cruise power LEVEL is B1's (CL-B1-CRUISE-P / -P-PESS, level flight at the gate, avionics included). This "
+  "E2 drag model (CD0 0.0593, x1.3 pessimistic, e from params, eta_prop 0.47 / 0.35, eta_motor 0.72, trim 1.05) "
+  "only scales B1's power from the gate to another mass, and is reported as a cross-check. The turning (circuit) "
+  "factor 1.05 multiplies B1's level-flight power",
   basis="K09 sizing.json CD0 build-up; REVIEW section 4 corrected efficiencies; circuits inside one RFS sub-field "
-        "spend about half the time in 30 deg banks (induced drag x1.33). B1 replaces CD0 and eta with AVL/APC data",
+        "spend about half the time in 30 deg banks (induced drag x1.33). CR-E2-08: B1 owns cruise power; E2 "
+        "follows B1's claims through the proof chain (re-run this script after every B1 re-run)",
   value={"cd0": 0.0593, "cd0_pess": 1.3, "eta_prop": [0.47, 0.35], "eta_motor": 0.72, "trim": 1.05,
          "circuit": 1.05}, unit="-", status="UNVERIFIED", cites=["SRC-K09-CARD", "SRC-K09-REVIEW"])
 A("ASM-E2-PACK-CANDIDATES", "4S pack candidates [name, Ah, kg, continuous A]",
@@ -149,7 +152,7 @@ def cruise_bus_w(m_kg, g, rho, S, b, e, V, cd0, eta_p, eta_m, trim, circuit, avn
 
 
 def budget(m_kg, pess, *, n, table, download, esc, avn, g, rho, D, S, b, e, V, cells, ah, ocv, r_cell, r_ext,
-           cold, hmargin, prof, aero, cap_frac, reserve):
+           cold, hmargin, prof, aero, cap_frac, reserve, pc_b, pc_p, m_ref, p_scale=1.0):
     """Phase table [name, s, W, A, Ah] and the cruise time to the reserve line."""
     k = 1 if pess else 0
     r = cells * r_cell * (cold if pess else 1.0) + r_ext
@@ -170,15 +173,20 @@ def budget(m_kg, pess, *, n, table, download, esc, avn, g, rho, D, S, b, e, V, c
         rows.append([name, t, p, i, i * t / 3600])
         ah_fixed += i * t / 3600
     cd0 = aero["cd0"] * (aero["cd0_pess"] if pess else 1.0)
-    pc = cruise_bus_w(m_kg, g, rho, S, b, e, V, cd0, aero["eta_prop"][k], aero["eta_motor"], aero["trim"],
-                      aero["circuit"], avn)
+
+    def e2_model(mm):                               # level flight, no circuit factor (B1's basis)
+        return cruise_bus_w(mm, g, rho, S, b, e, V, cd0, aero["eta_prop"][k], aero["eta_motor"], aero["trim"],
+                            1.0, avn)
+    # B1's level-flight power at the gate, scaled to this mass by the E2 drag model, x circuit factor
+    pc = (pc_p if pess else pc_b) * p_scale * aero["circuit"] * e2_model(m_kg) / e2_model(m_ref)
+    pc_e2 = e2_model(m_kg) * aero["circuit"]
     ic = pack_current(pc, voc, r)
     ah_avail = ah * (cap_frac if pess else 1.0) - ah * reserve      # reserve = 20 % of nameplate, never planned in
     ah_cruise = ah_avail - ah_fixed
     rows.append(["cruise", ah_cruise / ic * 3600, pc, ic, ah_cruise])
     ih = pack_current(ph, voc, r)
     return {"phases": rows, "cruise_min": ah_cruise / ic * 60, "ah_fixed": ah_fixed, "ah_avail": ah_avail,
-            "hover_w": ph, "hover_a": ih, "cruise_w": pc, "cruise_a": ic,
+            "hover_w": ph, "hover_a": ih, "cruise_w": pc, "cruise_a": ic, "cruise_w_e2_model": pc_e2,
             "hover_only_min": (ah_avail - rows[0][4]) / ih * 60,
             "flight_min": (sum(x[1] for x in rows) - prof["ground_s"]) / 60, "r_pack": r}
 
@@ -190,9 +198,10 @@ COMMON = {"n": P + "propulsion.n_motors", "table": P + "propulsion.thrust_table_
           "cells": P + "battery.cells_s", "ah": P + "battery.capacity_ah", "ocv": "ASM-E2-OCV-AVG",
           "r_cell": "ASM-E2-R-CELL", "r_ext": "ASM-E2-R-EXT", "cold": "ASM-E2-COLD-R",
           "hmargin": "ASM-E2-HOVER-MARGIN", "prof": "ASM-E2-PROFILE", "aero": "ASM-E2-CRUISE-AERO",
-          "cap_frac": "ASM-A2-PACK-CAPACITY-FRAC", "reserve": P + "requirements.energy_reserve_frac"}
+          "cap_frac": "ASM-A2-PACK-CAPACITY-FRAC", "reserve": P + "requirements.energy_reserve_frac",
+          "pc_b": "CL-B1-CRUISE-P", "pc_p": "CL-B1-CRUISE-P-PESS", "m_ref": P + "requirements.mtow_gate_kg"}
 CU = {"g": "m/s2", "rho": "kg/m3", "D": "m", "S": "m2", "b": "m", "V": "m/s", "ah": "Ah", "ocv": "V",
-      "r_cell": "ohm", "r_ext": "ohm"}
+      "r_cell": "ohm", "r_ext": "ohm", "pc_b": "W", "pc_p": "W", "m_ref": "kg"}
 ASSUMES = ["ASM-E2-ESC-EFF", "ASM-E2-AVIONICS-W", "ASM-E2-OCV-AVG", "ASM-E2-R-CELL", "ASM-E2-R-EXT",
            "ASM-E2-PROFILE", "ASM-E2-CRUISE-AERO"]
 
@@ -200,6 +209,7 @@ ASSUMES = ["ASM-E2-ESC-EFF", "ASM-E2-AVIONICS-W", "ASM-E2-OCV-AVG", "ASM-E2-R-CE
 # ---------------------------------------------------------------- calculations
 @kit.calc("CALC-E2-BUDGET-BASE", title="Energy budget per phase, base case (sized mass)", assumes=ASSUMES,
           equation="I = (Voc - sqrt(Voc^2 - 4 R P)) / (2 R) per phase ; Ah = I t ; "
+                   "P_cruise = P_B1(gate) x circuit x P_E2(m) / P_E2(gate) ; "
                    "t_cruise = (C - 0.2 C - sum Ah_fixed) / I_cruise",
           inputs={"m": "CL-A1-MASS-SIZED", **COMMON}, units={"m": "kg", **CU})
 def budget_base(m, **kw):
@@ -209,8 +219,8 @@ def budget_base(m, **kw):
 
 @kit.calc("CALC-E2-BUDGET-PESS", title="Energy budget per phase, pessimistic (2.6 kg gate)",
           assumes=ASSUMES + ["ASM-E2-COLD-R", "ASM-E2-HOVER-MARGIN", "ASM-A2-PACK-CAPACITY-FRAC"],
-          equation="as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, CD0 x 1.3, eta_prop 0.35, "
-                   "20 s transitions",
+          equation="as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic "
+                   "(CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions",
           inputs={"m": P + "requirements.mtow_gate_kg", **COMMON}, units={"m": "kg", **CU})
 def budget_pess(m, **kw):
     return budget(m, True, **kw)
@@ -296,6 +306,10 @@ def pack_trade(cands, m_sized, m_pack, gate, t_req, i_full, **kw):
           inputs={"b": "CL-E2-BUDGET-PESS-TABLE", "ah": P + "battery.capacity_ah",
                   "reserve": P + "requirements.energy_reserve_frac"}, units={"ah": "Ah"})
 def failsafe(b, ah, reserve):
+    return failsafe_rows(b, ah, reserve)
+
+
+def failsafe_rows(b, ah, reserve):
     rows = {r[0]: r for r in b}
     need = rows["back-transition"][4] + rows["descent 50-0 m"][4] + rows["cruise"][3] * 60 / 3600 \
         + rows["hover (mission)"][3] * 30 / 3600
@@ -306,8 +320,27 @@ def failsafe(b, ah, reserve):
     return {"crt_mah": crt, "low_mah": low, "land_need_mah": need * 1000, "cruise_to_low_min": to_low}
 
 
+@kit.calc("CALC-E2-PROP55-SENS", title="Indicative: B1's cruise power scaled to the 11x5.5MR by E1's prop ratio",
+          equation="P_cruise = P_B1(11x4.5MR, 16 m/s) x P_E1(11x5.5MR) / P_E1(11x4.5MR) (both E1 points at 15 m/s) ; "
+                   "then the base and pessimistic budgets and the BATT_LOW check as above",
+          inputs={"m_b": "CL-A1-MASS-SIZED", "m_p": P + "requirements.mtow_gate_kg", "p55": "CL-E1-CRUISE-P-55",
+                  "p45": "CL-E1-CRUISE-P-45", **COMMON},
+          units={"m_b": "kg", "m_p": "kg", "p55": "W", "p45": "W", **CU},
+          assumes=ASSUMES + ["ASM-E2-COLD-R", "ASM-E2-HOVER-MARGIN", "ASM-A2-PACK-CAPACITY-FRAC"])
+def prop55_sens(m_b, m_p, p55, p45, **kw):
+    """Not a design value: mixes B1's 16 m/s model with E1's 15 m/s prop ratio until B1 re-runs (CR-E2-11)."""
+    f = p55 / p45
+    base = budget(m_b, False, p_scale=f, **kw)
+    pess = budget(m_p, True, p_scale=f, **kw)
+    fs = failsafe_rows(pess["phases"], kw["ah"], kw["reserve"])
+    return {"ratio": f, "cruise_w_pess": pess["cruise_w"], "cruise_min_base": base["cruise_min"],
+            "cruise_min_pess": pess["cruise_min"], "low_mah": fs["low_mah"],
+            "cruise_to_low_min": fs["cruise_to_low_min"]}
+
+
 @kit.calc("CALC-E2-TESTDAY", title="Sorties per test day and charge time",
-          equation="sorties_window = floor(window / (t_flight + t_turn)) ; sorties = min(packs, window) ; "
+          equation="sorties_window = floor(window / (t_flight + t_turn)) ; sorties = min(packs, window) (D-12: 2) ; "
+                   "window used = sorties t_flight + (sorties - 1) t_turn ; "
                    "t_charge = (0.85 - 0.20) C / I_cc + t_cv ; I_cc = min(1C, P_chg / 16.8 V)",
           inputs={"b": "CL-E2-BUDGET-BASE-TABLE", "td": "ASM-E2-TESTDAY", "n_packs": P + "battery.n_packs",
                   "ah": P + "battery.capacity_ah", "cells": P + "battery.cells_s", "chg": "ASM-E2-CHARGE",
@@ -318,7 +351,9 @@ def testday(b, td, n_packs, ah, cells, chg, p_chg, reserve):
     window = math.floor(td["window_min"] / (t_flight + td["turnaround_min"]))
     i_cc = min(chg["c_max"] * ah, p_chg / (cells * 4.2))
     t_chg = (chg["cc_end_soc"] - reserve) * ah / i_cc * 60 + chg["cv_min"]
-    return {"t_sortie_min": t_flight, "sorties_window": window, "sorties_current_packs": min(n_packs, window),
+    planned = min(n_packs, window)
+    return {"t_sortie_min": t_flight, "sorties_window": window, "sorties_current_packs": planned,
+            "window_used_min": planned * t_flight + (planned - 1) * td["turnaround_min"],
             "packs_to_fill_window": window, "charge_min_per_pack": t_chg,
             "charge_h_current_packs": n_packs * t_chg / 60, "charge_h_4_packs": 4 * t_chg / 60,
             "i_cc_a": i_cc}
@@ -356,7 +391,7 @@ kit.claim("CL-E2-HOVER-I-GATE", "Hover pack current at the gate, 5 m/s wind", ca
           output="hover_a", unit="A",
           how="Tethered hover at gate mass (ballast) with the 150 A watt meter; F1 sizes wires and the disconnect on it.")
 kit.claim("CL-E2-CRUISE-I-PESS", "Cruise pack current, pessimistic", calc="CALC-E2-BUDGET-PESS",
-          output="cruise_a", unit="A", how="Fixed-wing tune flights: mean BAT.Curr in level cruise at 15 m/s.")
+          output="cruise_a", unit="A", how="Fixed-wing tune flights: mean BAT.Curr in level cruise at 16 m/s.")
 kit.claim("CL-E2-C-PEAK", "Peak discharge rate, all motors full", calc="CALC-E2-SAG", output="c_peak", unit="1/h",
           limit=("<=", 25.0),
           how="Momentary (<5 s) 120 A = 18.5C; any hobby 6500 pack with IR <= 5 mOhm/cell carries it (T-E2-IR). "
@@ -398,12 +433,53 @@ kit.claim("CL-E2-CHARGE-MIN", "Charge time per pack from the 20 % line", calc="C
 kit.claim("CL-E2-CHARGE-H-4", "Attended charge time for 4 packs, one port", calc="CALC-E2-TESTDAY",
           output="charge_h_4_packs", unit="h", limit=("<=", 5.0),
           how="Sum of logged charge times after a test day; must fit one attended afternoon (<= 5 h).")
-kit.claim("CL-E2-PACK-MASS", "Flight pack mass carried in the budget", value=0.55, unit="kg",
-          limit=("<=", 0.55), verifies=["R-PACK-MASS"], status="PROPOSED", cites=["SRC-E2-OVONIC-LISTINGS"],
-          how="Weigh each pack on arrival on a 1 g scale (T-E2-WEIGH); hard-case 6500 listings say 522-551 g, one says 680 g.")
+kit.claim("CL-E2-CRUISE-MIN-PESS-55", "Indicative pessimistic cruise with the 11x5.5MR (E1 ratio on B1)",
+          calc="CALC-E2-PROP55-SENS", output="cruise_min_pess", unit="min",
+          limit=(">=", P + "requirements.cruise_time_min"),
+          how="Not a design value. Replaced by CL-E2-CRUISE-MIN-PESS once B1 re-runs CALC-B1-CRUISE with the "
+              "11x5.5MR at 16 m/s and c 0.32 (CR-E2-11).")
+kit.claim("CL-E2-CRUISE-TO-LOW-PESS-55", "Indicative cruise before BATT_LOW, pessimistic, 11x5.5MR",
+          calc="CALC-E2-PROP55-SENS", output="cruise_to_low_min", unit="min",
+          limit=(">=", P + "requirements.cruise_time_min"),
+          how="As CL-E2-CRUISE-MIN-PESS-55; SITL with logged currents once the twin flies the 11x5.5MR.")
+kit.claim("CL-E2-WINDOW-USED", "Window minutes used by the planned sorties (2 packs, D-12)", calc="CALC-E2-TESTDAY",
+          output="window_used_min", unit="min", limit=("<=", 180.0),
+          how="Log take-off and landing times on the first test day; I2 plans the day on it.")
 
-kit.test("T-E2-WEIGH", "Weigh and measure every pack on arrival", verifies=["CL-E2-PACK-MASS"], state="planned",
-         procedure="1 g kitchen scale; calipers L x W x H incl. leads exit; record per pack id E2-P1..P4.")
+
+# ---------------------------------------------------------------- measured packs (T-E2-WEIGH)
+def read_pack_log(path):
+    """Rows of pack_log.csv with a mass entered; empty until the ~20 Nov order arrives."""
+    import csv
+    if not path.exists():
+        return []
+    with path.open(newline="", encoding="utf-8") as f:
+        return [r for r in csv.DictReader(f) if (r.get("mass_g") or "").strip()]
+
+
+PACK_LOG = HERE / "pack_log.csv"
+WEIGHED = read_pack_log(PACK_LOG)
+PACK_ACCEPT_KG = 0.68       # A3 carries pack growth to 680 g (ASM-A3-PACK-RANGE); above that, reject the SKU
+if WEIGHED:
+    m_meas = max(float(r["mass_g"]) for r in WEIGHED) / 1000.0
+    kit.claim("CL-E2-PACK-MASS", "Flight pack mass, heaviest weighed pack", value=m_meas, unit="kg",
+              limit=("<=", PACK_ACCEPT_KG), verifies=["R-PACK-MASS"], cites=["SRC-E2-OVONIC-LISTINGS"],
+              how="Weighed on arrival (T-E2-WEIGH, pack_log.csv). A3 replaces the 550 g line with this value; "
+                  "A1 may then set checked on SRC-OVONIC-4S6500.")
+    kit.test("T-E2-WEIGH", "Weigh and measure every pack on arrival", verifies=["CL-E2-PACK-MASS"], state="run",
+             result="pass" if m_meas <= PACK_ACCEPT_KG else "fail", measured=m_meas,
+             date=max(r.get("received", "") for r in WEIGHED), evidence="redesign/team/E2/pack_log.csv",
+             procedure="1 g scale, calipers L x W x H incl. lead exit; one row per pack in pack_log.csv.")
+else:
+    kit.claim("CL-E2-PACK-MASS", "Flight pack mass carried in the budget (not yet weighed)", value=0.55, unit="kg",
+              limit=("<=", PACK_ACCEPT_KG), verifies=["R-PACK-MASS"], status="UNVERIFIED",
+              cites=["SRC-E2-OVONIC-LISTINGS"],
+              how="Weigh each pack on arrival on a 1 g scale (T-E2-WEIGH) and enter it in pack_log.csv, then re-run; "
+                  "listings say 522-551 g, one 680 g. Accept <= 0.68 kg (A3's growth bound); 0.55-0.68 kg: A3 "
+                  "updates the roll-up; > 0.68 kg: return the pack and buy another SKU.")
+    kit.test("T-E2-WEIGH", "Weigh and measure every pack on arrival", verifies=["CL-E2-PACK-MASS"], state="planned",
+             procedure="1 g scale; calipers L x W x H incl. lead exit; one row per pack (E2-P1, E2-P2) in "
+                       "redesign/team/E2/pack_log.csv, then re-run this script and build_graph.py.")
 kit.test("T-E2-CAPACITY", "Discharge capacity test at 1C", verifies=["CL-E2-CRUISE-MIN-PESS", "CL-E2-CHARGE-MIN"],
          state="planned", procedure="Charger discharge mode is limited in power: discharge through the thrust stand "
          "at ~6.5 A to 3.5 V/cell under load, log mAh with the watt meter; pass >= 6.0 Ah (R-PACK-MASS).")
@@ -430,3 +506,7 @@ if __name__ == "__main__":
         print("TRADE", r)
     print("FAILSAFE", kit.nodes["CALC-E2-FAILSAFE"]["outputs"])
     print("TESTDAY", {k: round(v, 2) for k, v in kit.nodes["CALC-E2-TESTDAY"]["outputs"].items()})
+    print("PROP55", {k: round(v, 3) for k, v in kit.nodes["CALC-E2-PROP55-SENS"]["outputs"].items()})
+    for cid in ("CALC-E2-BUDGET-BASE", "CALC-E2-BUDGET-PESS"):
+        print(cid, "E2 cross-check cruise W", round(kit.nodes[cid]["outputs"]["cruise_w_e2_model"], 1))
+    print("PACK LOG", f"{len(WEIGHED)} weighed pack(s)" if WEIGHED else "no pack weighed yet (order ~20 Nov)")

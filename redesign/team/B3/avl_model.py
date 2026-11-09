@@ -27,7 +27,8 @@ HERE = Path(__file__).resolve().parent
 AVL_EXE = Path(os.environ.get("AVL_EXE", "C:/Users/dillo/tools/avl/avl352.exe"))
 AVL_DIR = HERE / "avl"
 CACHE = AVL_DIR / "cache"
-AIRFOIL = AVL_DIR / "mh45.dat"            # UIUC coordinate file, see SRC-B3-MH45-COORD
+NL = chr(10)
+AIRFOIL = AVL_DIR / "s5010.dat"           # UIUC coordinate file (copy of team/B2/airfoils/s5010.dat, SRC-B2-S5010-COORD)
 
 # lattice levels for the convergence check: (chordwise vortices, target spanwise spacing m)
 LATTICE = {"coarse": (8, 0.025), "medium": (12, 0.0125), "fine": (16, 0.008)}
@@ -43,7 +44,8 @@ def avl_geometry(g: dict, lattice: str = DEFAULT_LATTICE) -> str:
     """AVL input file text from a geometry dict.
 
     g keys: b, c, ef (elevon chord fraction), yin [y0,y1], yout [y0,y1], fy (fin station), fh (fin half-height),
-            fle, fte (fin LE/TE x), xref, zref, airfoil (True: MH 45 camber line), optional:
+            fle, fte (fin LE/TE x), xref, zref, airfoil (True: S5010 camber line), optional: egain (elevon
+            gain; 1 = thin-airfoil degrees, eta = physical degrees),
             tipfin {"xle","c","h"} (vertical fins at the wing tips), fin_le_tip (fin LE x at the fin tips; swept LE)
     """
     nc, ds = LATTICE[lattice]
@@ -110,8 +112,9 @@ def _wing_text(g, nc, ds, af, hinge, S, lattice):
         if af:
             lines += af.strip().split("\n")
         if ctrl:
-            lines += ["CONTROL", f"elevator 1.0 {hinge:.4f} 0 0 0 1.0",
-                      "CONTROL", f"aileron 1.0 {hinge:.4f} 0 0 0 -1.0"]
+            k = g.get("egain", 1.0)
+            lines += ["CONTROL", f"elevator {k:.4f} {hinge:.4f} 0 0 0 1.0",
+                      "CONTROL", f"aileron {k:.4f} {hinge:.4f} 0 0 0 -1.0"]
     return "\n".join(lines) + "\n"
 
 
@@ -245,6 +248,46 @@ def geometry_from(b, c, ef, yin, yout, fy, fh, fle, fte, xref, zref, **extra) ->
 def derivatives(g, alpha_deg=4.0, lattice=DEFAULT_LATTICE, d1=0.0, d2=0.0, beta=0.0):
     case = [f"a a {alpha_deg}", f"b b {beta}", f"d1 d1 {d1}", f"d2 d2 {d2}"]
     return run_case(avl_geometry(g, lattice), case)["st"]
+
+
+def derivatives_cl(g, CL, lattice=DEFAULT_LATTICE):
+    """Stability derivatives at a given CL, elevons neutral."""
+    return run_case(avl_geometry(g, lattice), [f"a c {CL}", "b b 0", "d1 d1 0", "d2 d2 0"])["st"]
+
+
+def trim_sweep(g, cls, cm_t=0.0, lattice=DEFAULT_LATTICE):
+    """One AVL session: for each CL, alpha for CL and elevator for Cm = cm_t about Xref (cm_t = -viscous correction
+    so that AVL + correction trims to zero). Returns [{CL, alpha, d1, strips [(y, chord, cl)]}] (right wing). Cached."""
+    geom = avl_geometry(g, lattice)
+    case = {"cls": [round(c, 4) for c in cls], "cm_t": round(cm_t, 6)}
+    key = _key(geom, case, "trim_sweep", AIRFOIL.read_text() if AIRFOIL.exists() else "")
+    cf = CACHE / f"{key}.json"
+    if cf.exists():
+        return json.loads(cf.read_text())
+    if not AVL_EXE.exists():
+        raise RuntimeError(f"AVL not found at {AVL_EXE} and no cached result {cf.name}: run on the design machine")
+    tmp = Path(tempfile.mkdtemp(prefix="b3avl_"))
+    out = []
+    try:
+        (tmp / "k.avl").write_text(geom)
+        shutil.copy(AIRFOIL, tmp / AIRFOIL.name)
+        cmds = ["LOAD k.avl", "OPER"]
+        for i, c in enumerate(case["cls"]):
+            cmds += [f"a c {c}", f"d1 pm {case['cm_t']}", "d2 d2 0", "b b 0", "x",
+                     "ft", f"ft{i}.txt", "fs", f"fs{i}.txt"]
+        cmds += ["", "QUIT"]
+        subprocess.run([str(AVL_EXE)], input=NL.join(cmds) + NL, text=True, capture_output=True, cwd=str(tmp),
+                       timeout=300)
+        for i, c in enumerate(case["cls"]):
+            ft = (tmp / f"ft{i}.txt").read_text()
+            st = parse_st(ft)
+            out.append({"CL": st["CLtot"], "alpha": st["Alpha"], "d1": st["d1"], "CDind": st["CDind"],
+                        "strips": parse_strips((tmp / f"fs{i}.txt").read_text())})
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    CACHE.mkdir(parents=True, exist_ok=True)
+    cf.write_text(json.dumps(out, indent=0))
+    return out
 
 
 def trim(g, CL, lattice=DEFAULT_LATTICE, strips=False):

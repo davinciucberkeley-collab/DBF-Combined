@@ -1,0 +1,614 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/F5/rc_link.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-F5-ELRS-SIGNAL",
+   "type": "source",
+   "title": "ExpressLRS: Signal Health (sensitivity limit per packet rate)",
+   "kind": "web",
+   "url": "https://www.expresslrs.org/info/signal-health/",
+   "checked": "2026-11-09",
+   "where": "2.4 GHz table: 50 Hz -115, 100 Hz Full -112, 150 Hz -112, 250 Hz -108, 333 Hz Full -105, 500 Hz -105 dBm; RSSI alarm 5-10 dB above the limit"
+  },
+  {
+   "id": "SRC-F5-AP-ELRS",
+   "type": "source",
+   "title": "ArduPilot: Crossfire and ELRS RC systems",
+   "kind": "web",
+   "url": "https://ardupilot.org/copter/docs/common-tbs-rc.html",
+   "checked": "2026-11-09",
+   "where": "CRSF mode: SERIALx_PROTOCOL 23, RSSI_TYPE 3, RC_OPTIONS bit 13 (420 kbaud for ELRS), UART must have DMA on F4/F7, TX must transmit before the RX powers up; MAVLink mode: SERIALx_PROTOCOL 2, RSSI_TYPE 5, WiFi forwarding from the TX module"
+  },
+  {
+   "id": "SRC-F5-ELRS-MAVLINK",
+   "type": "source",
+   "title": "ExpressLRS: MAVLink mode (3.5+, TX Backpack 1.5+)",
+   "kind": "web",
+   "url": "https://www.expresslrs.org/software/mavlink/",
+   "where": "ESP-based RX only; telemetry ratio fixed 1:2; internal TX modules reach the GCS through the TX backpack WiFi. Read through a search summary only",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F5-POCKET",
+   "type": "source",
+   "title": "RadioMaster Pocket user manual (ELRS version)",
+   "kind": "datasheet",
+   "url": "https://xcopter.com/download/Pocket_User_Manual.pdf",
+   "where": "internal ELRS 25-250 mW (FCC), 100 mW at 500 Hz recommended; 2 x 18650 not included. Read through a search summary; BOM line R01 names the 'Pocket Crush' variant: I1 confirms it is the same module",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F5-RP3V2",
+   "type": "source",
+   "title": "RadioMaster RP3 V2 ELRS 2.4 GHz nano receiver (retailer listings)",
+   "kind": "web",
+   "url": "https://www.radiomasterrc.com/products/rp3-expresslrs-2-4ghz-nano-receiver",
+   "where": "antenna diversity, two 65 mm T-antennas (UFL), telemetry up to 100 mW, TCXO, 5 V, CRSF, 4.6 g, 22 x 13 x 4 mm. Maker page returned 429; values from 3 retailer listings that agree",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F5-FCC-15247",
+   "type": "source",
+   "title": "47 CFR 15.247, operation in 902-928, 2400-2483.5, 5725-5850 MHz",
+   "kind": "standard",
+   "url": "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-C/section-15.247",
+   "where": "(b)(1): 1 W conducted for FHSS in 2400-2483.5 MHz with >= 75 hopping channels; (b)(4): 6 dBi antenna allowance, i.e. 36 dBm EIRP",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F5-FRIIS",
+   "type": "source",
+   "title": "Free-space path loss, ITU-R P.525",
+   "kind": "standard",
+   "url": "https://www.itu.int/rec/R-REC-P.525/en",
+   "checked": "2026-11-09",
+   "where": "FSPL[dB] = 32.44 + 20 log10(f[MHz]) + 20 log10(d[km])"
+  },
+  {
+   "id": "ASM-F5-FREQ",
+   "type": "assumption",
+   "title": "Centre of the 2.4 GHz ISM band",
+   "text": "Link frequency for path loss 2 440 MHz",
+   "basis": "ELRS hops 2 400-2 480 MHz; path loss differs by < 0.3 dB across the band",
+   "value": 2440.0,
+   "unit": "MHz",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-F5-FRIIS"
+   ]
+  },
+  {
+   "id": "ASM-F5-RATE",
+   "type": "assumption",
+   "title": "ELRS 150 Hz LoRa, telemetry 1:4, Wide switches",
+   "text": "Packet rate 150 Hz, sensitivity -112 dBm; telemetry ratio 1:4 (37.5 Hz downlink for CRSF passthrough); switch mode Wide",
+   "basis": "150 Hz gives 4 dB more margin than 250 Hz at a 6.7 ms frame, ample for a 2.6 kg wing; ArduPilot passthrough wants >= 25 Hz telemetry (discuss.ardupilot.org CRSF thread)",
+   "value": {
+    "rate_hz": 150.0,
+    "sens_dbm": -112.0,
+    "aux_slots": 7
+   },
+   "unit": "Hz,dBm,-",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-F5-ELRS-SIGNAL"
+   ]
+  },
+  {
+   "id": "ASM-F5-POWER",
+   "type": "assumption",
+   "title": "Flight TX power 100 mW fixed; check power 25 mW",
+   "text": "TX power fixed at 100 mW (20 dBm), dynamic power off; ground range check at the Pocket's lowest setting 25 mW (14 dBm)",
+   "basis": "Pocket manual: 25-250 mW, 100 mW recommended; fixed power makes logs comparable flight to flight",
+   "value": {
+    "p_op_dbm": 20.0,
+    "p_test_dbm": 13.98,
+    "p_max_dbm": 23.98
+   },
+   "unit": "dBm",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-F5-POCKET"
+   ]
+  },
+  {
+   "id": "ASM-F5-ANT-GAIN",
+   "type": "assumption",
+   "title": "Antenna gains 0 dBi each end",
+   "text": "TX and RX antenna gain taken as 0 dBi (dipoles are ~2 dBi; nulls and cable loss eat it)",
+   "basis": "conservative; the range check measures it",
+   "value": {
+    "g_tx_dbi": 0.0,
+    "g_rx_dbi": 0.0,
+    "g_tx_max_dbi": 2.15
+   },
+   "unit": "dBi",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F5-LOSS",
+   "type": "assumption",
+   "title": "Implementation loss 16 dB",
+   "text": "Airframe shadowing by the pack, spar and tubes 8 dB, polarisation mismatch (the aircraft turns 90 deg at transition) 3 dB, pilot body and ground multipath 5 dB",
+   "basis": "engineering estimate for a small UAV at < 120 m AGL; the ground range check in two attitudes replaces it with a measured value",
+   "value": 16.0,
+   "unit": "dB",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F5-MARGIN-MIN",
+   "type": "assumption",
+   "title": "Fade margin >= 10 dB",
+   "text": "Required uplink margin above sensitivity at the design distance",
+   "basis": "ELRS guidance warns 5-10 dB above the limit; 10 dB covers a deep fade and keeps the warning alarm above the failsafe point",
+   "value": 10.0,
+   "unit": "dB",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-F5-ELRS-SIGNAL"
+   ]
+  },
+  {
+   "id": "ASM-F5-ELRS-LOSS-T",
+   "type": "assumption",
+   "title": "ELRS link-loss detection 1.0 s",
+   "text": "Time from the last good uplink packet to the RX stopping CRSF channel frames",
+   "basis": "ELRS disconnects after roughly 1 s without packets at 150 Hz; measured on the bench (T-F5-FS-BENCH)",
+   "value": 1.0,
+   "unit": "s",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F5-FS-SHORT",
+   "type": "assumption",
+   "title": "ArduPilot FS_SHORT_TIMEOUT 1.5 s",
+   "text": "Plane short RC failsafe after 1.5 s of no RC input (default, kept by K09L.param)",
+   "basis": "redesign/subsystems/flight-software/K09L.param section 10",
+   "value": 1.5,
+   "unit": "s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F5-ANT-CLEAR",
+   "type": "assumption",
+   "title": "Antenna clearance >= lambda/4",
+   "text": "Active element of each RX antenna at least a quarter wavelength from carbon, the pack, ESC leads and the other antenna element",
+   "basis": "common practice for dipoles near conductors (detuning, pattern null)",
+   "value": 0.25,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-F5-LINK",
+   "type": "calculation",
+   "title": "Uplink budget at the VLOS limit at 400 ft",
+   "script": "redesign/team/F5/rc_link.py",
+   "function": "link_budget",
+   "equation": "d = sqrt(vlos^2 + h^2); Prx = Ptx + Gtx + Grx - FSPL(f, d) - L; margin = Prx - S",
+   "inputs": {
+    "vlos": "P:requirements.vlos_max_m",
+    "ceil_ft": "P:mission.ceiling_ft_agl",
+    "f": "ASM-F5-FREQ",
+    "rate": "ASM-F5-RATE",
+    "pw": "ASM-F5-POWER",
+    "g": "ASM-F5-ANT-GAIN",
+    "loss": "ASM-F5-LOSS"
+   },
+   "units": {
+    "vlos": "m",
+    "ceil_ft": "ft"
+   },
+   "assumes": [
+    "ASM-F5-LOSS"
+   ],
+   "cites": [
+    "SRC-F5-FRIIS"
+   ],
+   "outputs": {
+    "d_slant_m": 514.6498677741985,
+    "fspl_db": 94.41803383740016,
+    "prx_dbm": -90.41803383740016,
+    "margin_db": 21.58196616259984,
+    "range_0db_m": 6174.619123716159
+   },
+   "input_values": {
+    "vlos": 500.0,
+    "ceil_ft": 400,
+    "f": 2440.0,
+    "rate": {
+     "rate_hz": 150.0,
+     "sens_dbm": -112.0,
+     "aux_slots": 7
+    },
+    "pw": {
+     "p_op_dbm": 20.0,
+     "p_test_dbm": 13.98,
+     "p_max_dbm": 23.98
+    },
+    "g": {
+     "g_tx_dbi": 0.0,
+     "g_rx_dbi": 0.0,
+     "g_tx_max_dbi": 2.15
+    },
+    "loss": 16.0
+   }
+  },
+  {
+   "id": "CALC-F5-RANGECHECK",
+   "type": "calculation",
+   "title": "Ground range-check RSSI pass line",
+   "script": "redesign/team/F5/rc_link.py",
+   "function": "range_check",
+   "equation": "RSSI_req = S + M + 20 log10(d_req / d_test) - (P_op - P_test); predicted = P_test - FSPL(d_test) - L",
+   "inputs": {
+    "d_req": "CL-F5-LINK-DIST",
+    "d_test": "P:requirements.range_check_min_m",
+    "f": "ASM-F5-FREQ",
+    "rate": "ASM-F5-RATE",
+    "pw": "ASM-F5-POWER",
+    "g": "ASM-F5-ANT-GAIN",
+    "loss": "ASM-F5-LOSS",
+    "m": "ASM-F5-MARGIN-MIN"
+   },
+   "units": {
+    "d_req": "m",
+    "d_test": "m"
+   },
+   "outputs": {
+    "rssi_req_dbm": -93.78976268937443,
+    "rssi_pred_dbm": -82.20779652677457,
+    "pred_over_req_db": 11.581966162599855,
+    "alarm_warn_dbm": -102.0,
+    "alarm_crit_dbm": -107.0
+   },
+   "input_values": {
+    "d_req": 514.6498677741985,
+    "d_test": 100.0,
+    "f": 2440.0,
+    "rate": {
+     "rate_hz": 150.0,
+     "sens_dbm": -112.0,
+     "aux_slots": 7
+    },
+    "pw": {
+     "p_op_dbm": 20.0,
+     "p_test_dbm": 13.98,
+     "p_max_dbm": 23.98
+    },
+    "g": {
+     "g_tx_dbi": 0.0,
+     "g_rx_dbi": 0.0,
+     "g_tx_max_dbi": 2.15
+    },
+    "loss": 16.0,
+    "m": 10.0
+   }
+  },
+  {
+   "id": "CALC-F5-ANT",
+   "type": "calculation",
+   "title": "Antenna clearance to conductors",
+   "script": "redesign/team/F5/rc_link.py",
+   "function": "antenna_clearance",
+   "equation": "c_min = k * c0 / f",
+   "inputs": {
+    "f": "ASM-F5-FREQ",
+    "k": "ASM-F5-ANT-CLEAR"
+   },
+   "outputs": {
+    "clear_m": 0.03071644036885246
+   },
+   "input_values": {
+    "f": 2440.0,
+    "k": 0.25
+   }
+  },
+  {
+   "id": "CALC-F5-LATENCY",
+   "type": "calculation",
+   "title": "Switch latency and RC-loss-to-failsafe time",
+   "script": "redesign/team/F5/rc_link.py",
+   "function": "latency",
+   "equation": "t_switch = (aux_slots + 1) / rate / LQ; t_fs = t_elrs + FS_SHORT_TIMEOUT",
+   "inputs": {
+    "rate": "ASM-F5-RATE",
+    "lq": "P:requirements.rc_lq_min",
+    "t_elrs": "ASM-F5-ELRS-LOSS-T",
+    "t_short": "ASM-F5-FS-SHORT"
+   },
+   "outputs": {
+    "t_switch_s": 0.05925925925925926,
+    "t_failsafe_s": 2.5
+   },
+   "input_values": {
+    "rate": {
+     "rate_hz": 150.0,
+     "sens_dbm": -112.0,
+     "aux_slots": 7
+    },
+    "lq": 0.9,
+    "t_elrs": 1.0,
+    "t_short": 1.5
+   }
+  },
+  {
+   "id": "CALC-F5-EIRP",
+   "type": "calculation",
+   "title": "Maximum EIRP the Pocket can radiate",
+   "script": "redesign/team/F5/rc_link.py",
+   "function": "eirp",
+   "equation": "EIRP = P_max + G_tx,max",
+   "inputs": {
+    "pw": "ASM-F5-POWER",
+    "g": "ASM-F5-ANT-GAIN"
+   },
+   "cites": [
+    "SRC-F5-FCC-15247"
+   ],
+   "outputs": {
+    "eirp_dbm": 26.13
+   },
+   "input_values": {
+    "pw": {
+     "p_op_dbm": 20.0,
+     "p_test_dbm": 13.98,
+     "p_max_dbm": 23.98
+    },
+    "g": {
+     "g_tx_dbi": 0.0,
+     "g_rx_dbi": 0.0,
+     "g_tx_max_dbi": 2.15
+    }
+   }
+  },
+  {
+   "id": "CL-F5-LINK-DIST",
+   "type": "claim",
+   "title": "Design link distance (VLOS limit at the 400 ft ceiling)",
+   "calc": "CALC-F5-LINK",
+   "output": "d_slant_m",
+   "unit": "m",
+   "verifies": [
+    "R-RC-LINK"
+   ],
+   "parts": [
+    "AVN-003"
+   ],
+   "how": "Geometry: sqrt(500^2 + 121.9^2). The 250 m fence (F4) keeps flights inside 273 m slant.",
+   "value": 514.6498677741985
+  },
+  {
+   "id": "CL-F5-LINK-MARGIN",
+   "type": "claim",
+   "title": "Uplink fade margin at 100 mW, 150 Hz, at the VLOS limit",
+   "calc": "CALC-F5-LINK",
+   "output": "margin_db",
+   "unit": "dB",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-F5-MARGIN-MIN"
+   },
+   "verifies": [
+    "R-RC-LINK"
+   ],
+   "parts": [
+    "AVN-003",
+    "GND-001"
+   ],
+   "how": "Flight logs (RSSI, RXLQ) at the farthest point of each fixed-wing flight: 1RSS/2RSS >= -102 dBm and LQ >= 0.9 (T-F5-FLIGHT-LINK); ground check T-F5-RANGE first.",
+   "assumes": [
+    "ASM-F5-LOSS"
+   ],
+   "value": 21.58196616259984
+  },
+  {
+   "id": "CL-F5-LINK-RANGE-0DB",
+   "type": "claim",
+   "title": "Range at which the modelled margin reaches 0 dB",
+   "calc": "CALC-F5-LINK",
+   "output": "range_0db_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.vlos_max_m"
+   },
+   "parts": [
+    "AVN-003",
+    "GND-001"
+   ],
+   "how": "Information only: shows the VLOS limit, not the radio, bounds the operating radius.",
+   "value": 6174.619123716159
+  },
+  {
+   "id": "CL-F5-RC-RSSI-REQ",
+   "type": "claim",
+   "title": "Range check pass line: RX RSSI at 100 m, 25 mW",
+   "calc": "CALC-F5-RANGECHECK",
+   "output": "rssi_req_dbm",
+   "unit": "dBm",
+   "verifies": [
+    "R-RC-LINK"
+   ],
+   "parts": [
+    "AVN-003",
+    "GND-001"
+   ],
+   "how": "T-F5-RANGE: better of 1RSS/2RSS at 100 m, 25 mW, in both hover and cruise attitude, >= this value and LQ >= 0.9; this proves >= 10 dB margin at 515 m and 100 mW.",
+   "value": -93.78976268937443
+  },
+  {
+   "id": "CL-F5-RC-RSSI-PRED",
+   "type": "claim",
+   "title": "Predicted RX RSSI at the range check",
+   "calc": "CALC-F5-RANGECHECK",
+   "output": "rssi_pred_dbm",
+   "unit": "dBm",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F5-RC-RSSI-REQ"
+   },
+   "parts": [
+    "AVN-003",
+    "GND-001"
+   ],
+   "how": "Compare with the measured RSSI in T-F5-RANGE; a shortfall means the 16 dB implementation loss is optimistic (move the antennas, CR to D2/F3).",
+   "assumes": [
+    "ASM-F5-LOSS"
+   ],
+   "value": -82.20779652677457
+  },
+  {
+   "id": "CL-F5-RSSI-WARN",
+   "type": "claim",
+   "title": "Transmitter RSSI warning alarm",
+   "calc": "CALC-F5-RANGECHECK",
+   "output": "alarm_warn_dbm",
+   "unit": "dBm",
+   "parts": [
+    "GND-001"
+   ],
+   "how": "EdgeTX telemetry alarm on 1RSS; check it sounds when the TX is shielded.",
+   "value": -102.0
+  },
+  {
+   "id": "CL-F5-RSSI-CRIT",
+   "type": "claim",
+   "title": "Transmitter RSSI critical alarm",
+   "calc": "CALC-F5-RANGECHECK",
+   "output": "alarm_crit_dbm",
+   "unit": "dBm",
+   "parts": [
+    "GND-001"
+   ],
+   "how": "EdgeTX telemetry alarm on 1RSS; 5 dB above the -112 dBm limit.",
+   "value": -107.0
+  },
+  {
+   "id": "CL-F5-ANT-CLEAR",
+   "type": "claim",
+   "title": "Minimum RX antenna clearance to carbon, pack and ESC leads",
+   "calc": "CALC-F5-ANT",
+   "output": "clear_m",
+   "unit": "m",
+   "parts": [
+    "AVN-003"
+   ],
+   "how": "Ruler on the installed pod: each 30 mm active element >= 31 mm from the CF spar, pack and power leads; one element vertical (z), one along x.",
+   "value": 0.03071644036885246
+  },
+  {
+   "id": "CL-F5-SWITCH-LATENCY",
+   "type": "claim",
+   "title": "Worst-case switch-channel (e-stop ch 9) link latency",
+   "calc": "CALC-F5-LATENCY",
+   "output": "t_switch_s",
+   "unit": "s",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-ARM-KILL"
+   ],
+   "parts": [
+    "AVN-003",
+    "GND-001"
+   ],
+   "how": "SITL S13 / bench: flip ch 9, read RCIN in the DataFlash log against the motor outputs (props off).",
+   "value": 0.05925925925925926
+  },
+  {
+   "id": "CL-F5-FS-TIME",
+   "type": "claim",
+   "title": "Transmitter off to ArduPilot RC failsafe",
+   "calc": "CALC-F5-LATENCY",
+   "output": "t_failsafe_s",
+   "unit": "s",
+   "verifies": [
+    "R-FAILSAFES"
+   ],
+   "parts": [
+    "AVN-003"
+   ],
+   "how": "T-F5-FS-BENCH: props off, armed in QSTABILIZE, switch the TX off; log time to the FS message.",
+   "assumes": [
+    "ASM-F5-ELRS-LOSS-T"
+   ],
+   "value": 2.5
+  },
+  {
+   "id": "CL-F5-EIRP-MAX",
+   "type": "claim",
+   "title": "Pocket EIRP at its maximum setting",
+   "calc": "CALC-F5-EIRP",
+   "output": "eirp_dbm",
+   "unit": "dBm",
+   "limit": {
+    "op": "<=",
+    "value": 36.0
+   },
+   "parts": [
+    "GND-001"
+   ],
+   "how": "47 CFR 15.247(b): 30 dBm conducted + 6 dBi = 36 dBm. Read the FCC ID on the Pocket and RP3 labels on arrival; keep the FCC (not LBT, not unlocked) ELRS regulatory domain.",
+   "value": 26.13
+  },
+  {
+   "id": "CL-F5-ADDED-COST",
+   "type": "claim",
+   "title": "RC, telemetry and GCS spend beyond BOM lines A03, R01, R02",
+   "unit": "USD",
+   "parts": [
+    "GND-001"
+   ],
+   "how": "BOM.csv: A03 $22.04 + R01 $71.65 + R02 $27.00 incl. tax = $120.69; telemetry rides on the ELRS link and the GCS is Mission Planner on a team laptop (no purchase).",
+   "value": 0.0,
+   "note": "A separate 915 MHz SiK pair (~$35-60) would cut the $12 reserve margin over one crash to below zero"
+  },
+  {
+   "id": "T-F5-BENCH",
+   "type": "test",
+   "title": "Arrival bench: versions, bind, model match, channel map",
+   "verifies": [
+    "CL-F5-SWITCH-LATENCY"
+   ],
+   "state": "planned",
+   "procedure": "ELRS TX and RX on the same major version (3.x), FCC domain; binding phrase set (kept off the repo); model match on, K09-L and twin have different model ids; RC calibration in Mission Planner; every channel moves the right way; ch 9 latency from the log."
+  },
+  {
+   "id": "T-F5-FS-BENCH",
+   "type": "test",
+   "title": "Bench RC failsafe, props off",
+   "verifies": [
+    "CL-F5-FS-TIME"
+   ],
+   "state": "planned",
+   "procedure": "Armed in QSTABILIZE, FBWA and CRUISE in turn (props off, tied down), TX off: QLAND in Q modes, circle then RTL at 5 s in FW; time from TX off to the FS message <= 2.5 s."
+  },
+  {
+   "id": "T-F5-RANGE",
+   "type": "test",
+   "title": "Ground range check, two attitudes",
+   "verifies": [
+    "CL-F5-RC-RSSI-REQ",
+    "CL-F5-RC-RSSI-PRED"
+   ],
+   "state": "planned",
+   "procedure": "25 mW, 150 Hz; aircraft 1 m above ground on a stand, motors spinning props-off at 20 %; at 100 m read 1RSS/2RSS/RQly for 4 headings in hover attitude and 4 in cruise attitude."
+  },
+  {
+   "id": "T-F5-FLIGHT-LINK",
+   "type": "test",
+   "title": "In-flight link log review",
+   "verifies": [
+    "CL-F5-LINK-MARGIN"
+   ],
+   "state": "planned",
+   "procedure": "After each flight: plot RSSI and RXLQ vs distance from home (DataFlash RSSI msg, EdgeTX SD log); min LQ >= 0.9, min RSSI >= -102 dBm at the farthest point."
+  }
+ ]
+}

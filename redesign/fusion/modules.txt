@@ -3,7 +3,7 @@
 # The datum sheet (k09kit.build_datums, DATUMS.md) is registered before line 1. Unlisted modules build last with a
 # WARN; listed names without a module are reported as "not built yet". Change the order via team/A5/CHANGE-REQUESTS.md.
 wing          # 1 D1  core, spar, elevon panels: primary structure, everything references DP-SPAR / DP-HINGE
-fins          # 2 D3  fins, motor tubes, mounts, saddles: bond to the spar and core
+fins          # 2 D3  half-fins, motor tubes through the core, through-core blocks, mounts
 pod           # 3 D2  shell, tray, hatch, GPS mast: on the upper skin
 landing       # 4 D5  feet on the fin TE tips; registers the hover ground keep-out (KO-GROUND)
 propulsion    # 5 E1  motors on the fin mounts, ESCs on the fin pads, props; registers the prop keep-outs

@@ -2,7 +2,8 @@
  "schema": "proofs/1",
  "generated_by": "redesign/team/J1/research_claims.py",
  "params": [
-  "../../params/params.json"
+  "../../params/params.json",
+  "../B2/params.json"
  ],
  "nodes": [
   {
@@ -100,8 +101,9 @@
    "type": "source",
    "title": "Tie-break tailsitter evidence file (forum survey, 16 builds)",
    "kind": "web",
+   "url": "redesign/config-study/tiebreak/tailsitter-evidence/EVIDENCE.md",
    "checked": "2026-11-09",
-   "where": "redesign/config-study/tiebreak/tailsitter-evidence/EVIDENCE.md sections 1.2-1.3"
+   "where": "sections 1.2-1.3 (repo file, no external URL)"
   },
   {
    "id": "SRC-J1-MH45-HEPPERLE",
@@ -110,7 +112,8 @@
    "kind": "web",
    "url": "https://www.mh-aerotools.de/airfoils/mh45koo.htm",
    "checked": "2026-11-09",
-   "where": "thickness 9.85 %, cm c/4 = +0.0145, Re >= 100 000, F3B tailless use"
+   "where": "thickness 9.85 %, cm c/4 = +0.0145, Re >= 100 000, F3B tailless use",
+   "note": "the MH 45 was the R0 section; superseded by the S5010 (CHANGE-LOG D-02). Kept as the comparison point"
   },
   {
    "id": "SRC-J1-HEPPERLE-PLANK",
@@ -128,7 +131,8 @@
    "kind": "datasheet",
    "url": "https://www.apcprop.com/files/PER3_11x45MR.dat",
    "checked": "2026-11-09",
-   "where": "static: 5.02 N / 41 W at 5000 rpm, 7.25 N / 70 W at 6000, 9.91 N / 110 W at 7000; zero thrust at J ~0.545; at 6000 rpm and 14.7 m/s: 0.32 N, eta 0.17; at 7000 rpm and 14.4 m/s: 2.38 N, eta 0.54, 64 W"
+   "where": "static: 5.02 N / 41 W at 5000 rpm, 7.25 N / 70 W at 6000, 9.91 N / 110 W at 7000; zero thrust at J ~0.545; at 6000 rpm and 14.7 m/s: 0.32 N, eta 0.17; at 7000 rpm and 14.4 m/s: 2.38 N, eta 0.54, 64 W",
+   "note": "the 11x4.5MR is now the stand A/B prop only (D-05); flight prop is the 11x5.5MR, whose rpm come from B4's claims"
   },
   {
    "id": "SRC-J1-HOLYBRO-CONN",
@@ -322,35 +326,25 @@
   {
    "id": "ASM-J1-APC-KT",
    "type": "assumption",
-   "title": "APC 11x4.5MR static thrust per rpm^2",
+   "title": "APC 11x4.5MR static thrust per rpm^2 (superseded)",
    "text": "Static thrust of the 11x4.5MR scales as T = kT n^2 with kT = 7.254 N / 6000^2 rpm^2 (APC PER3 file)",
-   "basis": "APC PER3 static rows: 5.02 N at 5000, 7.25 N at 6000, 9.91 N at 7000 rpm (within 2 % of n^2 scaling). APC predictions run ~10 % high on static thrust, so real rpm at a given thrust is slightly higher",
+   "basis": "APC PER3 static rows: 5.02 N at 5000, 7.25 N at 6000, 9.91 N at 7000 rpm (within 2 % of n^2 scaling). Superseded by D-05 (flight prop 11x5.5MR): J1's forcing frequencies now read B4's CL-B4-HOVER-RPM / CL-B4-CRUISE-RPM; kept only because team/C1/claims.json still names it (C1 re-runs loads.py, CR-J1-10)",
    "value": 2.015e-07,
    "unit": "N/rpm2",
-   "status": "PROPOSED",
+   "status": "UNVERIFIED",
    "cites": [
     "SRC-J1-APC-PER3"
    ]
   },
   {
-   "id": "ASM-J1-SEP-RULE",
-   "type": "assumption",
-   "title": "Mode separation from forcing",
-   "text": "A structural natural frequency must sit at least 20 % away from any steady motor forcing frequency (1P, 2P)",
-   "basis": "common rotorcraft/drone practice for untested structures; the first mode of the fin-tube assembly is then confirmed by tap test (T-J1-TAP-TEST) and by the hover VIBE log",
-   "value": 0.2,
-   "unit": "-",
-   "status": "PROPOSED"
-  },
-  {
    "id": "ASM-J1-MH45-CM0",
    "type": "assumption",
-   "title": "MH 45 quarter-chord moment coefficient",
+   "title": "MH 45 quarter-chord moment coefficient (superseded)",
    "text": "The MH 45 section with elevons neutral has cm c/4 = +0.0145 (2-D, Hepperle)",
-   "basis": "Hepperle's MH 45 page; B2 replaces it with the XFOIL value at Re 2-4e5 and the elevon-deflected polars",
+   "basis": "Hepperle's MH 45 page. Superseded by D-02 (S5010, cm0 -0.004 at Re 2.3e5, P:b2.xfoil.cm0_2d_re2.3e5); kept only because team/C1/claims.json still names it (C1 re-runs loads.py, CR-J1-10)",
    "value": 0.0145,
    "unit": "-",
-   "status": "PROPOSED",
+   "status": "UNVERIFIED",
    "cites": [
     "SRC-J1-MH45-HEPPERLE"
    ]
@@ -358,9 +352,9 @@
   {
    "id": "ASM-J1-ETA-CRUISE",
    "type": "assumption",
-   "title": "Prop efficiency at ~1 N per prop, 15 m/s",
+   "title": "Prop efficiency at ~1 N per prop, 15 m/s (11x4.5MR, superseded)",
    "text": "The 11x4.5MR at 15 m/s and ~1 N thrust runs at J ~0.50-0.53, close to its zero-thrust J ~0.545, with eta 0.30-0.45",
-   "basis": "APC PER3 rows: eta 0.17 at 6000 rpm / 14.7 m/s (0.32 N) and 0.54 at 7000 rpm / 14.4 m/s (2.38 N); 1 N lies between. The K09 REVIEW used 0.47; B4 interpolates the file properly",
+   "basis": "APC PER3 rows: eta 0.17 at 6000 rpm / 14.7 m/s (0.32 N) and 0.54 at 7000 rpm / 14.4 m/s (2.38 N); 1 N lies between. Superseded by D-05: the flight prop is the 11x5.5MR, B4 CL-B4-CRUISE-ETA 0.46 and E1 CL-E1-CRUISE-ETA-55 0.39 (B4 CL-B4-CRUISE-ETA-OLD 0.37 for the 11x4.5MR confirms this band)",
    "status": "UNVERIFIED",
    "cites": [
     "SRC-J1-APC-PER3"
@@ -372,7 +366,7 @@
    "title": "Fin side-area centroid vs CG",
    "script": "redesign/team/J1/research_claims.py",
    "function": "fin_yaw_arm",
-   "equation": "arm = (x_le + x_te)/2 - x_cg ; ahead = (x_cg - x_le)/(x_te - x_le) ; arm_c = arm / c",
+   "equation": "arm = (x_le + x_te)/2 - x_cg ; ahead = max(0, (x_cg - x_le)/(x_te - x_le)) ; arm_c = arm / c",
    "inputs": {
     "x_le": "P:fins.le_x_m",
     "x_te": "P:fins.te_x_m",
@@ -389,15 +383,15 @@
     "SRC-J1-HEPPERLE-PLANK"
    ],
    "outputs": {
-    "arm_m": 0.039999999999999994,
-    "arm_chord": 0.13333333333333333,
-    "fin_area_ahead_frac": 0.39999999999999997
+    "arm_m": 0.1385,
+    "arm_chord": 0.43281250000000004,
+    "fin_area_ahead_frac": 0.0
    },
    "input_values": {
-    "x_le": -0.1,
-    "x_te": 0.3,
-    "x_cg": 0.06,
-    "c": 0.3
+    "x_le": 0.045,
+    "x_te": 0.32,
+    "x_cg": 0.044,
+    "c": 0.32
    }
   },
   {
@@ -421,13 +415,13 @@
     "SRC-J1-RIBNER"
    ],
    "outputs": {
-    "arm_m": 0.21,
-    "arm_chord": 0.7
+    "arm_m": 0.048999999999999995,
+    "arm_chord": 0.15312499999999998
    },
    "input_values": {
-    "x_prop": -0.15,
-    "x_cg": 0.06,
-    "c": 0.3
+    "x_prop": -0.005,
+    "x_cg": 0.044,
+    "c": 0.32
    }
   },
   {
@@ -465,8 +459,8 @@
     "I_m4": 3.645032876327555e-09,
     "EI_Nm2": 364.5032876327555,
     "k_Npm": 159427.01019073717,
-    "m_eff_kg": 0.1236512,
-    "f1_hz": 180.7182093647522
+    "m_eff_kg": 0.1206512,
+    "f1_hz": 182.95119880173007
    },
    "input_values": {
     "od": 0.022,
@@ -474,7 +468,7 @@
     "E": 100000000000.0,
     "L": 0.19,
     "m_motor": 0.081,
-    "m_prop": 0.02,
+    "m_prop": 0.017,
     "m_mount": 0.018,
     "mu": 0.102
    }
@@ -482,44 +476,34 @@
   {
    "id": "CALC-J1-MOTOR-FREQ",
    "type": "calculation",
-   "title": "Motor forcing frequencies",
+   "title": "Motor forcing frequencies at the three steady rpm",
    "script": "redesign/team/J1/research_claims.py",
    "function": "motor_freq",
-   "equation": "T_h = m g dl / n ; rpm = sqrt(T / kT) ; f1P = rpm/60 ; f2P = 2 f1P (2-blade) ; rpm_max from T_max",
+   "equation": "f1P = rpm/60 ; f2P = 2 f1P (2-blade) at hover (B4), cruise (B4) and the capped full-throttle rpm",
    "inputs": {
-    "m": "P:requirements.mtow_gate_kg",
-    "g": "P:env.g_ms2",
-    "dl": "P:propulsion.download_factor",
-    "n": "P:propulsion.n_motors",
-    "kT": "ASM-J1-APC-KT",
-    "T_max_kg": "P:propulsion.thrust_max_per_motor_kg"
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_c": "CL-B4-CRUISE-RPM",
+    "rpm_max": "P:propulsion.rpm_max"
    },
    "units": {
-    "m": "kg",
-    "g": "m/s2",
-    "dl": "-",
-    "n": "-",
-    "kT": "N/rpm2",
-    "T_max_kg": "kg"
+    "rpm_h": "rpm",
+    "rpm_c": "rpm",
+    "rpm_max": "rpm"
    },
-   "assumes": [
-    "ASM-J1-APC-KT"
-   ],
    "outputs": {
-    "T_hover_N": 6.75678185,
-    "rpm_hover": 5790.718101326662,
-    "f1P_hover_hz": 96.51196835544437,
-    "f2P_hover_hz": 193.02393671088873,
-    "rpm_max": 8769.025965132685,
-    "f1P_max_hz": 146.15043275221143
+    "f1P_hover_hz": 89.92858175332185,
+    "f2P_hover_hz": 179.8571635066437,
+    "f1P_cruise_hz": 99.99900156772914,
+    "f2P_cruise_hz": 199.99800313545828,
+    "f1P_max_hz": 155.83333333333334,
+    "f2P_max_hz": 311.6666666666667,
+    "band_lo_hz": 71.94286540265747,
+    "band_hi_hz": 374.0
    },
    "input_values": {
-    "m": 2.6,
-    "g": 9.80665,
-    "dl": 1.06,
-    "n": 4,
-    "kT": 2.015e-07,
-    "T_max_kg": 1.58
+    "rpm_h": 5395.714905199311,
+    "rpm_c": 5999.940094063748,
+    "rpm_max": 9350
    }
   },
   {
@@ -528,47 +512,53 @@
    "title": "Tube mode separation from motor forcing",
    "script": "redesign/team/J1/research_claims.py",
    "function": "mode_separation",
-   "equation": "sep = min |f1/f - 1| over f in {1P hover, 2P hover, 1P max}",
+   "equation": "sep = min |f1/f - 1| over f in {1P, 2P} x {hover, cruise, max rpm}",
    "inputs": {
     "f1": "CL-J1-TUBE-F1",
-    "fa": "CL-J1-MOTOR-1P-HOVER",
-    "fb": "CL-J1-MOTOR-2P-HOVER",
-    "fc": "CL-J1-MOTOR-1P-MAX"
+    "a": "CL-J1-MOTOR-1P-HOVER",
+    "b": "CL-J1-MOTOR-2P-HOVER",
+    "c": "CL-J1-MOTOR-1P-CRUISE",
+    "d": "CL-J1-MOTOR-2P-CRUISE",
+    "e": "CL-J1-MOTOR-1P-MAX",
+    "f": "CL-J1-MOTOR-2P-MAX"
    },
    "units": {
     "f1": "Hz",
-    "fa": "Hz",
-    "fb": "Hz",
-    "fc": "Hz"
+    "a": "Hz",
+    "b": "Hz",
+    "c": "Hz",
+    "d": "Hz",
+    "e": "Hz",
+    "f": "Hz"
    },
-   "assumes": [
-    "ASM-J1-SEP-RULE"
-   ],
    "outputs": {
-    "sep_min": 0.0637523384706844,
+    "sep_min": 0.01720273596426458,
     "nearest": "2P_hover"
    },
    "input_values": {
-    "f1": 180.7182093647522,
-    "fa": 96.51196835544437,
-    "fb": 193.02393671088873,
-    "fc": 146.15043275221143
+    "f1": 182.95119880173007,
+    "a": 89.92858175332185,
+    "b": 179.8571635066437,
+    "c": 99.99900156772914,
+    "d": 199.99800313545828,
+    "e": 155.83333333333334,
+    "f": 311.6666666666667
    }
   },
   {
    "id": "CALC-J1-TRIM-SM",
    "type": "calculation",
-   "title": "Static margin trimmable with elevons neutral",
+   "title": "Static margin trimmable with elevons neutral (S5010)",
    "script": "redesign/team/J1/research_claims.py",
    "function": "trim_static_margin",
-   "equation": "CL = m g / (0.5 rho V^2 S) ; sigma_trim = Cm0 / CL  (Hepperle: Cm = CL sigma for a plank)",
+   "equation": "CL = m g / (0.5 rho V^2 S) ; sigma_trim = cm0 / CL  (Hepperle: Cm = CL sigma for a plank)",
    "inputs": {
     "m": "P:requirements.mtow_gate_kg",
     "g": "P:env.g_ms2",
     "rho": "P:env.rho_kgm3",
     "V": "P:performance.cruise_ms",
     "S": "CL-A1-WING-AREA",
-    "Cm0": "ASM-J1-MH45-CM0"
+    "cm0": "P:b2.xfoil.cm0_2d_re2.3e5"
    },
    "units": {
     "m": "kg",
@@ -576,25 +566,22 @@
     "rho": "kg/m3",
     "V": "m/s",
     "S": "m2",
-    "Cm0": "-"
+    "cm0": "-"
    },
-   "assumes": [
-    "ASM-J1-MH45-CM0"
-   ],
    "cites": [
     "SRC-J1-HEPPERLE-PLANK"
    ],
    "outputs": {
-    "CL_cruise": 0.5362734759604325,
-    "sigma_trim": 0.027038443350254085
+    "CL_cruise": 0.44187572787267076,
+    "sigma_trim": -0.009052318893498095
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
-    "V": 15.0,
-    "S": 0.345,
-    "Cm0": 0.0145
+    "V": 16.0,
+    "S": 0.368,
+    "cm0": -0.004
    }
   },
   {
@@ -603,21 +590,25 @@
    "title": "Required disconnect rating",
    "script": "redesign/team/J1/research_claims.py",
    "function": "disconnect_required",
-   "equation": "I_req = k x I_hover",
+   "equation": "I_req = k x I_hover ; I_req_pess = k x I_hover_gate_wind (E2)",
    "inputs": {
     "k": "P:requirements.disconnect_factor",
-    "i_hover": "P:performance.hover_current_a"
+    "i_hover": "P:performance.hover_current_a",
+    "i_hover_pess": "CL-E2-HOVER-I-GATE"
    },
    "units": {
     "k": "-",
-    "i_hover": "A"
+    "i_hover": "A",
+    "i_hover_pess": "A"
    },
    "outputs": {
-    "i_req_a": 30.0
+    "i_req_a": 33.75,
+    "i_req_pess_a": 37.35901585947585
    },
    "input_values": {
     "k": 1.25,
-    "i_hover": 24.0
+    "i_hover": 27.0,
+    "i_hover_pess": 29.887212687580682
    }
   },
   {
@@ -631,13 +622,16 @@
     "op": ">=",
     "value": 0.0
    },
-   "how": "B3: AVL Cn_beta with fins, tubes and motors; must be positive with margin. Flight: FBWA yaw doublet on the twin.",
+   "verifies": [
+    "R-DIRECTIONAL"
+   ],
+   "how": "B3: AVL Cn_beta >= P:requirements.cnbeta_min with fins, tubes and props at R1 geometry (CL-B3-CNB re-run). Flight: FBWA yaw doublet on the twin; no growing yaw oscillation hands-off.",
    "cites": [
     "SRC-J1-HEPPERLE-PLANK",
     "SRC-J1-BOXKITE-LEARN"
    ],
-   "note": "Only 0.04 m (13 % chord): 40 % of the fin area is ahead of the CG. Weak weathercock stability in cruise is the likely mechanism behind the uncommanded FW yaw seen on all four student Box Kites.",
-   "value": 0.039999999999999994
+   "note": "Geometry screen only, not Cn_beta. With the tubes through the wing at x 0.045 (D-04) the fin centroid is 0.14 m (43 % chord) aft of the CG and no fin area is ahead of it; at R0 it was 0.04 m with 40 % ahead. This is the geometric reason B3's option O4b turned Cn_beta from -0.105 to +0.044 /rad. The FW yaw actuator question (CR-J1-05, F4) stands: Plane has no FW yaw stabilisation by default.",
+   "value": 0.1385
   },
   {
    "id": "CL-J1-FIN-AREA-AHEAD",
@@ -646,8 +640,9 @@
    "calc": "CALC-J1-FIN-YAW-ARM",
    "output": "fin_area_ahead_frac",
    "unit": "-",
-   "how": "Geometry from params.json; re-run after B3 moves the fins or the CG.",
-   "value": 0.39999999999999997
+   "how": "Geometry from params.json; re-run after B3 moves the CG range (D-17).",
+   "note": "Zero at R1: the fin LE (tube axis 0.045) is 1 mm aft of the CG target 0.044; at the aft CG limit 0.049 about 1.5 % of the fin area is ahead of the CG, still negligible.",
+   "value": 0.0
   },
   {
    "id": "CL-J1-PROP-ARM",
@@ -656,11 +651,12 @@
    "calc": "CALC-J1-PROP-ARM",
    "output": "arm_m",
    "unit": "m",
-   "how": "B3: include propeller normal force (Ribner) in the AVL/hand pitch and yaw stability sums; 0.7 chord ahead of the CG is destabilising in both axes.",
+   "how": "B3: include propeller normal force (Ribner) in the AVL/hand pitch and yaw stability sums.",
    "cites": [
     "SRC-J1-RIBNER"
    ],
-   "value": 0.21
+   "note": "0.05 m (15 % chord) ahead of the CG at R1 (was 0.21 m, 70 % chord, at R0): the destabilising prop normal-force moment is 4x smaller than it was. B3's R1 neutral point should move aft (D-17).",
+   "value": 0.048999999999999995
   },
   {
    "id": "CL-J1-TUBE-F1",
@@ -673,8 +669,8 @@
    "assumes": [
     "ASM-J1-E-TUBE"
    ],
-   "note": "Tube alone, clamped at the chord plane, motor at the tip. The bonded fin should raise this a lot; it must be measured.",
-   "value": 180.7182093647522
+   "note": "Tube alone, cantilevered 0.19 m from the chord plane, motor + 11x5.5MR + mount at the tip. The bonded half-fin should raise this a lot; it must be measured. E 50-140 GPa puts f1 at 130-215 Hz.",
+   "value": 182.95119880173007
   },
   {
    "id": "CL-J1-MOTOR-1P-HOVER",
@@ -684,7 +680,8 @@
    "output": "f1P_hover_hz",
    "unit": "Hz",
    "how": "ESC telemetry or bidirectional DShot RPM in the hover log; harmonic notch centre (INS_HNTCH_FREQ).",
-   "value": 96.51196835544437
+   "note": "From B4's CL-B4-HOVER-RPM (11x5.5MR at the gate).",
+   "value": 89.92858175332185
   },
   {
    "id": "CL-J1-MOTOR-2P-HOVER",
@@ -694,17 +691,48 @@
    "output": "f2P_hover_hz",
    "unit": "Hz",
    "how": "FFT of the hover IMU log (ArduPilot notch review tool) shows the 2P peak.",
-   "value": 193.02393671088873
+   "value": 179.8571635066437
+  },
+  {
+   "id": "CL-J1-MOTOR-1P-CRUISE",
+   "type": "claim",
+   "title": "Motor 1P at cruise",
+   "calc": "CALC-J1-MOTOR-FREQ",
+   "output": "f1P_cruise_hz",
+   "unit": "Hz",
+   "how": "RPM telemetry in the cruise log (B4 CL-B4-CRUISE-RPM, 15 m/s).",
+   "value": 99.99900156772914
+  },
+  {
+   "id": "CL-J1-MOTOR-2P-CRUISE",
+   "type": "claim",
+   "title": "Blade-pass 2P at cruise",
+   "calc": "CALC-J1-MOTOR-FREQ",
+   "output": "f2P_cruise_hz",
+   "unit": "Hz",
+   "how": "FFT of the cruise IMU log.",
+   "value": 199.99800313545828
   },
   {
    "id": "CL-J1-MOTOR-1P-MAX",
    "type": "claim",
-   "title": "Motor 1P at maximum thrust",
+   "title": "Motor 1P at the capped full-throttle rpm",
    "calc": "CALC-J1-MOTOR-FREQ",
    "output": "f1P_max_hz",
    "unit": "Hz",
-   "how": "Thrust-stand RPM at full throttle (H1).",
-   "value": 146.15043275221143
+   "how": "Thrust-stand RPM at the F4 output cap (H1); P:propulsion.rpm_max 9 350.",
+   "note": "Unlimited on a fresh pack B4 gives 10 637 rpm (CL-B4-RPM-MAX-FULL): 1P 177 Hz, 2P 355 Hz for < 5 s.",
+   "value": 155.83333333333334
+  },
+  {
+   "id": "CL-J1-MOTOR-2P-MAX",
+   "type": "claim",
+   "title": "Blade-pass 2P at the capped full-throttle rpm",
+   "calc": "CALC-J1-MOTOR-FREQ",
+   "output": "f2P_max_hz",
+   "unit": "Hz",
+   "how": "Same stand run; the top of the forcing band C4 must clear (B4 CR-B4-07: 80-330 Hz).",
+   "value": 311.6666666666667
   },
   {
    "id": "CL-J1-TUBE-MODE-SEP",
@@ -715,18 +743,18 @@
    "unit": "-",
    "limit": {
     "op": ">=",
-    "ref": "ASM-J1-SEP-RULE"
+    "ref": "P:requirements.vibration_sep_frac"
    },
-   "how": "C4 re-derives with the fin as a shear web; H1 tap test; hover VIBE < 30 m/s2 and Clip = 0 (SRC-J1-AP-VIBE).",
-   "assumes": [
-    "ASM-J1-SEP-RULE"
+   "verifies": [
+    "R-VIBRATION"
    ],
+   "how": "C4 re-derives with the half-fin as a bonded shear web (CR-J1-03 / CR-B4-07); H1 tap test; hover VIBE < P:requirements.fc_vibe_max_ms2 and Clip = 0 (SRC-J1-AP-VIBE).",
    "cites": [
     "SRC-J1-AP-VIBE",
     "SRC-J1-AP-NOTCH"
    ],
-   "note": "FAILS on the bare tube: f1 sits 6 % from the hover 2P. Design the fin bond as the stiffener and move the mode.",
-   "value": 0.0637523384706844
+   "note": "FAILS on the bare tube: f1 ~183 Hz sits 2 % from the hover 2P (180 Hz) and 9 % from the cruise 2P (200 Hz). The forcing sweeps 90-156 Hz (1P) and 180-312 Hz (2P) between hover and the capped maximum, so no bare-tube mode in 72-374 Hz clears 20 % at every steady point: the fin bond must put the first mode above ~375 Hz, or the tap test must show it damped (R-VIBRATION allows either). C4 owns the fix.",
+   "value": 0.01720273596426458
   },
   {
    "id": "CL-J1-CL-CRUISE",
@@ -736,32 +764,23 @@
    "output": "CL_cruise",
    "unit": "-",
    "how": "B1/B2 from the drag polar; airspeed log in cruise.",
-   "value": 0.5362734759604325
+   "note": "At 2.6 kg, 16 m/s, S 0.368 (was 0.54 at 15 m/s, S 0.345).",
+   "value": 0.44187572787267076
   },
   {
    "id": "CL-J1-SM-TRIMMABLE",
    "type": "claim",
-   "title": "Static margin trimmable, elevons neutral",
+   "title": "Static margin trimmable, elevons neutral (S5010)",
    "calc": "CALC-J1-TRIM-SM",
    "output": "sigma_trim",
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "ref": "P:requirements.static_margin_min"
-   },
-   "verifies": [
-    "R-STATIC-MARGIN"
-   ],
-   "how": "B2: XFOIL Cm at Re 3e5 with elevon deflection; B3: AVL trim at cruise CL. Flight: elevon trim position in FBWA.",
-   "assumes": [
-    "ASM-J1-MH45-CM0"
-   ],
+   "how": "B2: XFOIL cm at the cruise Re (~3.5e5) with elevon deflection; B3: AVL trim at the cruise CL and SM 5 %. Flight: elevon trim position in FBWA (A2 limit elevon_trim_travel_max).",
    "cites": [
     "SRC-J1-HEPPERLE-PLANK",
     "SRC-J1-MH45-HEPPERLE"
    ],
-   "note": "FAILS against 5 %: the MH 45's +0.0145 trims ~2.7 % with neutral elevons at CL 0.54. Either B3 accepts ~3 % (Hepperle: 2-5 % typical for planks) or the elevons carry up-trim in cruise, which costs CLmax and worsens CR-A1-05 (transition gate).",
-   "value": 0.027038443350254085
+   "note": "Informational since D-19 (SM stays 0.05; CR-J1-02 rejected). The S5010's cm0 is about zero (-0.004 at Re 2.3e5, +0.003 at 3e5, B2), so elevons-neutral it trims no positive static margin (-0.9 %): all 5 % of SM is carried by elevon up-trim (B2: about -4 deg at CL 0.5), and that penalty is already inside the trimmed CLmax 0.80 (CL-B2-CLMAX-DESIGN). The MH 45's +0.0145 would have trimmed 3.3 % at this CL. R-STATIC-MARGIN is verified by B3's CL-B3-CG-AFT, not by this screen.",
+   "value": -0.009052318893498095
   },
   {
    "id": "CL-J1-DISCONNECT-REQ",
@@ -774,7 +793,21 @@
     "R-DISCONNECT"
    ],
    "how": "1.25 x the logged hover current (tethered hover, H1).",
-   "value": 30.0
+   "note": "1.25 x 27.0 A (params, E1). F1 sizes on E2's 29.9 A gate-wind hover (CR-E2-04): see CL-J1-DISCONNECT-REQ-PESS.",
+   "value": 33.75
+  },
+  {
+   "id": "CL-J1-DISCONNECT-REQ-PESS",
+   "type": "claim",
+   "title": "Required disconnect rating, E2 gate-wind hover",
+   "calc": "CALC-J1-DISCONNECT-REQ",
+   "output": "i_req_pess_a",
+   "unit": "A",
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "how": "1.25 x the hover current logged in 5 m/s wind at the gate mass (H2).",
+   "value": 37.35901585947585
   },
   {
    "id": "CL-J1-XT60-CONT",
@@ -788,13 +821,32 @@
    "verifies": [
     "R-DISCONNECT"
    ],
-   "how": "Maker sheet (35 A at 12 AWG, 85 K rise); Holybro says 30 A for < 60 degC rise. Bench: 30 A for 10 min, connector < 60 degC.",
+   "how": "Maker sheet (35 A at 12 AWG, 85 K rise); Holybro says 30 A for < 60 degC rise. Bench: 34 A for 10 min, connector < 60 degC.",
    "cites": [
     "SRC-J1-AMASS-XT60",
     "SRC-J1-HOLYBRO-CONN"
    ],
    "value": 35.0,
-   "note": "PROPOSED from the datasheet; margin +17 % on the Amass figure, 0 % on Holybro's. 12 AWG leads required."
+   "note": "PROPOSED from the datasheet; +4 % on the Amass figure against 33.75 A, and Holybro's 30 A (< 60 degC) already fails it. Against E2's 37.4 A (CL-J1-DISCONNECT-REQ-PESS) the XT60 fails on both figures. 12 AWG leads required."
+  },
+  {
+   "id": "CL-J1-XT60-CONT-PESS",
+   "type": "claim",
+   "title": "XT60 continuous rating vs E2 gate-wind hover",
+   "unit": "A",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-J1-DISCONNECT-REQ-PESS"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "how": "Same heat run at 37 A for 10 min; rise <= 60 degC.",
+   "cites": [
+    "SRC-J1-AMASS-XT60"
+   ],
+   "value": 35.0,
+   "note": "FAILS by 6 %: the XT60 only passes R-DISCONNECT if F1 sizes on 27 A rather than E2's 29.9 A."
   },
   {
    "id": "CL-J1-XT60-BURST",
@@ -813,7 +865,7 @@
     "SRC-J1-HOLYBRO-CONN"
    ],
    "value": 60.0,
-   "note": "FAILS the 120 A momentary case (4 x 30 A). F1: AS150U, or cap the momentary current in F4's output limits."
+   "note": "FAILS the 120 A momentary case (4 x 30 A). F1: AS150U, or a claim that the <= 5 s case at the 100 A limiter is inside a cited XT60 short-time rating (A1's condition, CHANGE-LOG CR-A2-08 row)."
   },
   {
    "id": "CL-J1-AS150U-CONT",
@@ -822,12 +874,12 @@
    "unit": "A",
    "limit": {
     "op": ">=",
-    "ref": "CL-J1-DISCONNECT-REQ"
+    "ref": "CL-J1-DISCONNECT-REQ-PESS"
    },
    "verifies": [
     "R-DISCONNECT"
    ],
-   "how": "Open the Amass AS150U sheet before ordering (UNVERIFIED reseller value); bench 30 A for 10 min.",
+   "how": "Open the Amass AS150U sheet before ordering (UNVERIFIED reseller value); bench 37 A for 10 min.",
    "cites": [
     "SRC-J1-AS150U"
    ],
@@ -860,7 +912,7 @@
     "CL-J1-TUBE-MODE-SEP"
    ],
    "state": "planned",
-   "procedure": "Clamp the finished fin at the spar saddle; tap the motor; FFT of a phone accelerometer or the FC IMU raw log; first mode must be >= 20 % from 1P/2P at hover and 1P at max."
+   "procedure": "Clamp the finished half-fin at the through-core block; tap the motor; FFT of a phone accelerometer or the FC IMU raw log; first mode must be >= 20 % from 1P and 2P at hover, cruise and the capped maximum (outside 72-374 Hz), or its damping ratio recorded for C4."
   },
   {
    "id": "T-J1-TUBE-BEND",
@@ -877,10 +929,11 @@
    "type": "test",
    "title": "Connector heat run",
    "verifies": [
-    "CL-J1-XT60-CONT"
+    "CL-J1-XT60-CONT",
+    "CL-J1-XT60-CONT-PESS"
    ],
    "state": "planned",
-   "procedure": "30 A through the mated pair for 10 min on the bench supply or thrust stand; IR thermometer; rise <= 60 degC."
+   "procedure": "37 A through the mated pair for 10 min on the bench supply or thrust stand; IR thermometer; rise <= 60 degC."
   }
  ]
 }

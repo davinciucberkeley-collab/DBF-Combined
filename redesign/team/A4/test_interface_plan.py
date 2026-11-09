@@ -16,6 +16,15 @@ def without(plan, *ids):
     return p
 
 
+def with_part(plan, pid, sub):
+    """Add a part tied by one bond to the core, so only the id rule can object to it."""
+    p = copy.deepcopy(plan)
+    p["parts"].append({"id": pid, "name": "seeded", "subsystem": sub, "make_or_buy": "make"})
+    p["edges"].append({"id": "E-FIN-99", "part_a": pid, "part_b": "WNG-001", "via": "CT-EPOXY", "owner": sub,
+                       "by": "", "carries": "", "acknowledged_by": ["wing"]})
+    return p
+
+
 def codes(plan):
     return {(i[1], i[2]) for i in ip.check_plan(plan)[1]}
 
@@ -25,9 +34,18 @@ def main():
     cases = [
         ("baseline is clean", base, lambda c: not c),
         ("pack strap removed -> pack floats", without(base, "E-POD-05"), lambda c: ("floating", "PWR-001") in c),
-        ("fin L held only by harness ties -> load path",
-         without(base, "E-FIN-01", "E-FIN-07", "E-FIN-08", "E-FIN-09"),
-         lambda c: any(k == "load-path" and "FIN-001-L" in item for k, item in c)),
+        ("tube L held only by harness ties (block bond and both clip bonds cut) -> load path",
+         without(base, "E-FIN-07", "E-FIN-03", "E-FIN-35"),
+         lambda c: any(k == "load-path" and "FIN-002-L" in item for k, item in c)),
+        ("half-fin LR root and clip bonds cut -> foot, ESC pad, half-fin float",
+         without(base, "E-FIN-34", "E-FIN-38"),
+         lambda c: any(k == "floating" and "FIN-001-LR" in item for k, item in c)),
+        ("skeleton id FIN-901 in the plan -> id rule", with_part(base, "FIN-901", "fins"),
+         lambda c: ("id-rule", "FIN-901") in c),
+        ("retired id FIN-001-L reused -> id rule", with_part(base, "FIN-001-L", "fins"),
+         lambda c: ("id-retired", "FIN-001-L") in c),
+        ("FIN-003 with both station and side suffixes -> id rule", with_part(base, "FIN-003-L", "fins"),
+         lambda c: ("id-rule", "FIN-003") in c),
         ("power module -> PDB cut -> ESCs unpowered (not fed back through UBEC/FC)", without(base, "E-HRN-12"),
          lambda c: ("power-path", "PRP-002-UR") in c and ("power-path", "PWR-004") in c),
         ("ESC UR power lead cut -> ESC UR unpowered although its signal lead exists", without(base, "E-HRN-13"),

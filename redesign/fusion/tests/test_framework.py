@@ -8,6 +8,7 @@
 """
 import contextlib
 import io
+import json
 import math
 import os
 import sys
@@ -170,7 +171,7 @@ class K09(unittest.TestCase):
     def test_skeleton_passes_strict(self):
         code, out = quiet(check.main, ['--skeleton', '--strict'])
         self.assertEqual(code, 0, out)
-        self.assertIn('42 datums, 5 keep-outs', out)
+        self.assertIn('43 datums, 5 keep-outs', out)
 
     def test_skeleton_rollup_is_the_allocations(self):
         ctx = quiet(check.run_checks, *build_all.roots(skeleton=True))[0][0]
@@ -184,8 +185,14 @@ class K09(unittest.TestCase):
         names = [s[0] for s in k9.datum_specs(self.P)]
         self.assertEqual(len(names), len(set(names)))
         d = {s[0]: s[2] for s in k9.datum_specs(self.P)}
-        self.assertEqual(d['DX-HUB-LL']['p'], (-0.15, -0.32, -0.19))
-        self.assertAlmostEqual(d['DP-HINGE']['offset'], 0.234)
+        v = lambda k: k9.val(self.P, k)
+        self.assertEqual(d['DX-HUB-LL']['p'], (v('propulsion.stations.x_prop_plane_m'), -v('propulsion.stations.y_m'),
+                                               -v('propulsion.stations.z_m')))
+        self.assertAlmostEqual(d['DP-HINGE']['offset'], v('wing.chord_m') * (1 - v('wing.elevon.chord_frac')))
+        self.assertAlmostEqual(d['DX-BLOCK-R']['p'][0], (v('fins.tube.x_m') + v('wing.spar.x_m')) / 2)
+        _c, ext, inner = k9.box_frame(self.P)
+        self.assertAlmostEqual(ext[1][2] - ext[0][2], v('requirements.box_external_m')[2])
+        self.assertEqual(d['DX-BOX']['p'], _c)
         self.assertFalse(k9.datums_md_stale(self.P), 'run python -I redesign/fusion/k09kit.py --datums-md')
 
     def test_section_and_dat_reader(self):
@@ -224,13 +231,58 @@ class K09(unittest.TestCase):
         self.assertFalse([i for i in issues if i[1] == 'keepout'])
         ko = next(k for k in ctx.keepouts if k.name == 'KO-PROP-UR')
         ko.exempt.clear()                                               # the prop now violates its own zone
-        hit = [c.id for c in ctx.components.values() if ko.hits(c.bbox())]
-        self.assertEqual(sorted(hit), ['PRP-901', 'PRP-905'])           # its motor and itself, nothing else
+        hit = [c.id for c in ctx.components.values() if c.flight and ko.hits(c.bbox())]
+        self.assertEqual(sorted(hit), ['PRP-901-UR', 'PRP-902-UR'])     # its motor and itself, nothing else
 
     def test_hover_pose(self):
-        self.assertAlmostEqual(k9.to_hover((0.31, 0.32, 0.19), self.P)[2], 0.0)    # foot on the ground
-        self.assertGreater(k9.to_hover((-0.15, 0.32, 0.19), self.P)[2], 0.4)       # props on top
+        foot = k9.datum_specs(self.P)
+        d = {s[0]: s[2] for s in foot}
+        self.assertAlmostEqual(k9.to_hover(d['DX-FOOT-UR']['p'], self.P)[2], 0.0)   # foot on the ground
+        self.assertGreater(k9.to_hover(d['DX-HUB-UR']['p'], self.P)[2], 0.3)       # props on top
         self.assertAlmostEqual(k9.to_hover((0.0, 0.0, 0.05), self.P)[0], 0.05)     # pod side faces +x
+
+    def test_transport_stowed_and_pressed(self):
+        # CR-A4-11a: cradle-to-wing edges are touch-checked; stowed prop edges are not; a cradle moved under the fin
+        # (presses the lower half-fin and tube) is reported; a prop edge without "stowed" fails the touch check
+        import shutil
+        import tempfile
+        src = build_all.roots(skeleton=True)[0]
+        with tempfile.TemporaryDirectory() as d:
+            root = os.path.join(d, 'sk')
+            shutil.copytree(src, root, ignore=shutil.ignore_patterns('__pycache__'))
+            tp = os.path.join(root, 'transport', 'fusion', 'transport.py')
+            with open(tp, encoding='utf-8') as f:
+                text = f.read()
+            with open(tp, 'w', encoding='utf-8') as f:
+                f.write(text.replace('CRADLE_Y = 0.20', 'CRADLE_Y = 0.32'))
+            ip = os.path.join(root, 'transport', 'interfaces.json')
+            with open(ip, encoding='utf-8') as f:
+                doc = json.load(f)
+            doc['edges'][-1].pop('stowed')                                  # E-TRN-909, prop LL
+            with open(ip, 'w', encoding='utf-8') as f:
+                json.dump(doc, f)
+            issues = quiet(check.run_checks, root, os.path.join(root, 'modules.txt'), datums=True)[0][2]
+        pressed = {i[2] for i in issues if i[1] == 'transport'}
+        self.assertTrue({'FIN-901-LR', 'FIN-902-R'} <= pressed, issues)
+        self.assertFalse({'PRP-902-UR', 'PRP-902-LR'} & pressed)              # stowed props are exempt
+        touch = [i for i in issues if i[1] == 'touch']
+        self.assertEqual([i[2] for i in touch], ['E-TRN-909'], touch)
+
+    def test_thermal_contact_and_bundle(self):
+        # CR-A4-11b/c: thermal edges register as ctx.contact and are touch-checked; bundle parts get bodies
+        ctx, _, issues = quiet(check.run_checks, *build_all.roots(skeleton=True))[0]
+        reg = ctx.registrations()
+        self.assertEqual([k for k, _ in reg['E-FIN-923']], ['contact'])
+        self.assertFalse([i for i in issues if i[2] == 'E-FIN-923'])
+        self.assertEqual(len(ctx.components['HRN-901-R'].shapes), 2)
+        with self.assertRaises(ValueError):                                   # diagonal leg: split it
+            k9.bundle(type('Part', (), {'cylinder': lambda *a, **k: None})(), [((0, 0, 0), (0.1, 0.1, 0))], 0.01)
+
+    def test_revolve_centroid(self):
+        self.assertAlmostEqual(fk.revolve_volume_centroid([(0, 0), (1, 0), (0, 1)])[1], 0.25)     # cone
+        V, c = fk.revolve_volume_centroid([(0, 0), (2, 0), (2, 1), (0, 1)])
+        self.assertAlmostEqual(V, 2 * math.pi)
+        self.assertAlmostEqual(c, 1.0)
 
     def test_value_unit_check(self):
         ctx = fk.Context(None, params=self.P)
@@ -241,7 +293,7 @@ class K09(unittest.TestCase):
 
 class FusionBackendSmoke(unittest.TestCase):
     def test_runs_skeleton_with_fake_adsk(self):
-        self._run(build_all.roots(skeleton=True), datums=42)
+        self._run(build_all.roots(skeleton=True), datums=43)
 
     def test_runs_examples_with_fake_adsk(self):
         self._run(build_all.roots(True), datums=0)

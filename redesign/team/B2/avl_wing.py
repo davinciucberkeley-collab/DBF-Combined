@@ -4,16 +4,18 @@ Run from the repo root after xfoil_wing.py (about 30 s):
     python -I redesign/team/B2/avl_wing.py
 
 Model (repo frame = AVL frame: x aft from the root LE, y right, z up; params.json#frame):
-  wing  rectangular 1.15 x 0.30 m, section from airfoils/<foil>.dat (AFILE), profile drag by CDCL from XFOIL at
-        Re 3.0e5; strip boundaries at the pod (0.05), elevon ends (0.07, 0.30, 0.34, 0.56) and the fin (0.32)
-  fins  flat plates at y = +/-0.32, x -0.10..0.30, z -0.19..+0.19 (params.json#fins)
+  wing  rectangular wing.span_m x wing.chord_m (1.15 x 0.32 m at A1-R2), section from airfoils/<foil>.dat (AFILE),
+        profile drag by CDCL from XFOIL at the cruise Re; strip boundaries at the pod (0.05), elevon ends
+        (0.07, 0.30, 0.34, 0.56) and the fin (0.32)
+  fins  flat plates at y = fins.y_m, x fins.le_x_m..fins.te_x_m, z +/- fins.half_height_m
+        (A1-R2: y +/-0.32, x 0.045..0.32 (chord 0.275), z -0.19..+0.19; params.json#fins)
   controls  'elevator' (symmetric) and 'aileron' (antisymmetric) on both elevon panels per side, hinge at
         1 - wing.elevon.chord_frac; gain = XFOIL/thin-airfoil effectiveness eta so AVL degrees = physical degrees
   not modelled: pod (0.20 x 0.10 x 0.06 m body), props and slipstream (B4), motor tubes. Props-off, Mach 0.
 Cases: clean alpha sweep (with / without fins); trim Cm = 0 at CL 0.2..1.2 for CG x = 0.045 / 0.060 / 0.075 m;
         twist 0 and -2 deg (linear washout); lattice convergence 3 levels.
-Trimmed CLmax by the critical-section method: CL at which the first strip reaches its local clmax (XFOIL,
-Re 2.3e5, at that strip's elevon deflection).
+Trimmed CLmax by the critical-section method: CL at which the first strip reaches its local clmax (XFOIL at the
+stall Re and the cruise Re, the lower of the two, at that strip's elevon deflection).
 Outputs: out/avl/* (inputs and raw outputs), out/avl_results.json, out/loads_inputs.json (for C1/C2).
 """
 from __future__ import annotations
@@ -54,7 +56,7 @@ POD_HALF = v("pod.size_m")[1] / 2
 XCG, XCG_RANGE = v("cg.x_target_m"), v("cg.x_range_m")
 RHO, G = v("env.rho_kgm3"), v("env.g_ms2")
 M_GATE = v("requirements.mtow_gate_kg")
-RE_STALL, RE_CRUISE = 2.3e5, 3.0e5
+RE_STALL, RE_CRUISE = X["re_stall"], X["re_cruise"]       # follow the chord (xfoil_wing.py)
 FOILS = ["mh45", "mh60", "s5010", "e186"]
 CLS = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2]
 
@@ -67,24 +69,52 @@ def polar(foil, re_, flap=0.0, ncrit=9, npan=220):
 
 def eta_from_xfoil(foil):
     """Elevon effectiveness on the trim side: XFOIL d(cm)/d(delta) at cl 0.5 between -10 and 0 deg, mean of
-    Re 2.3e5 and 3.0e5 (cm at fixed cl is less Re-noisy than cm0), over thin-airfoil theory for the same hinge."""
+    the stall and cruise Re (cm at fixed cl is less Re-noisy than cm0), over thin-airfoil theory for the same hinge."""
     th = math.acos(1 - 2 * XH)
     dcm_thin = -0.5 * math.sin(th) * (1 - math.cos(th)) * math.pi / 180     # per deg, about c/4
-    vals = []
+    vals, rejected = [], []
     for re_ in (RE_STALL, RE_CRUISE):
+        if not all(smooth_at(polar(foil, re_, d)[0]) for d in (-10.0, 0.0)):
+            rejected.append(re_)
+            continue
         cm = {d: polar(foil, re_, d)[1]["cm_at_cl"]["0.50"] for d in (-10.0, 0.0)}
         vals.append((cm[0.0] - cm[-10.0]) / 10.0)
+    if not vals:                       # no smooth polar: use them all and say so (candidate comparison only)
+        for re_ in (RE_STALL, RE_CRUISE):
+            cm = {d: polar(foil, re_, d)[1]["cm_at_cl"]["0.50"] for d in (-10.0, 0.0)}
+            vals.append((cm[0.0] - cm[-10.0]) / 10.0)
+        rejected = ["none smooth, all used"]
     dcm_x = sum(vals) / len(vals)
+    ETA_REJECTED[foil] = rejected
     return dcm_x / dcm_thin, dcm_x, dcm_thin
 
 
+ETA_REJECTED = {}
+
+
+def smooth_at(a, cl=0.5, half_window=2.0, tol=0.01):
+    """True when the attached polar is on one smooth branch around cl: a straight-line fit of cl(alpha) within
+    +/- half_window deg of the cl point leaves no residual above tol. XFOIL's up-elevon polars sometimes jump
+    between a lower-surface-separated and an attached branch (s5010 Re 3.5e5, -10 deg: cl steps 0.025-0.056 per
+    0.5 deg near cl 0.5, cm +0.02 off its neighbours); such a polar is left out of eta."""
+    if a is None or len(a) < 8:
+        return False
+    att = a[: int(np.argmax(a[:, 1])) + 1]
+    al0 = float(np.interp(cl, np.sort(att[:, 1]), att[np.argsort(att[:, 1]), 0]))
+    w = att[np.abs(att[:, 0] - al0) <= half_window]
+    if len(w) < 5:
+        return False
+    k, c0 = np.polyfit(w[:, 0], w[:, 1], 1)
+    return float(np.abs(w[:, 1] - (k * w[:, 0] + c0)).max()) <= tol
+
+
 def cm_section(foil, cl="0.70"):
-    """XFOIL section cm about c/4 at cl 0.7 (stall-relevant), Re 2.3e5, elevon neutral."""
+    """XFOIL section cm about c/4 at cl 0.7 (stall-relevant), stall Re, elevon neutral."""
     return polar(foil, RE_STALL)[1]["cm_at_cl"][cl]
 
 
 def clmax_vs_flap(foil):
-    """[(delta, clmax)] conservative envelope: at each deflection the lower of Re 2.3e5 and 3.0e5 (converged sets
+    """[(delta, clmax)] conservative envelope: at each deflection the lower of the stall and cruise Re (converged sets
     only), then made non-increasing from 0 deg towards -15 deg (XFOIL's up-elevon clmax is noisy, +/- 0.07)."""
     rows = []
     for d in (-15.0, -10.0, -5.0, 0.0, 5.0, 10.0):
@@ -241,7 +271,7 @@ def oswald_fit(res):
     cd = np.array([p[1] for p in pts])
     k, cd0 = np.polyfit(cl ** 2, cd, 1)
     return {"CD0_wing": float(cd0), "k": float(k), "e_oswald": float(1 / (math.pi * SPAN ** 2 / S * k)),
-            "note": "wing + fins (flat plates, no fin profile drag), trimmed, section drag from XFOIL CDCL at Re 3e5"}
+            "note": f"wing + fins (flat plates, no fin profile drag), trimmed, section drag from XFOIL CDCL at Re {RE_CRUISE:.3g}"}
 
 
 def span_loads(strips, cl_total):
@@ -267,7 +297,9 @@ def span_loads(strips, cl_total):
 
 def main():
     out = {"tool": "AVL 3.52 (https://web.mit.edu/drela/Public/web/avl/)", "S_m2": S, "cref": CHORD, "bref": SPAN,
-           "xref_cg": XCG, "chosen": CHOSEN, "foils": {}}
+           "xref_cg": XCG, "chosen": CHOSEN,
+           "fins": {"y_m": YFIN, "half_height_m": HFIN, "le_x_m": FIN_X0, "te_x_m": FIN_X1, "chord_m": FIN_X1 - FIN_X0},
+           "re_stall": RE_STALL, "re_cruise": RE_CRUISE, "foils": {}}
     for foil in FOILS:
         eta, dcmx, dcmt = eta_from_xfoil(foil)
         cfl = clmax_vs_flap(foil)
@@ -278,8 +310,8 @@ def main():
         r = case(foil, eta, f"{foil}_base", cm_t=-dcm)
         cs = critical_section(r, foil, cfl)
         cl05 = r["trim"]["0.50"]
-        out["foils"][foil] = {"eta": eta, "dcm_ddelta_xfoil_per_deg": dcmx, "dcm_ddelta_thin_per_deg": dcmt,
-                              "clmax_vs_flap_re2.3e5": cfl, "critical_section": cs,
+        out["foils"][foil] = {"eta": eta, "eta_re_rejected": ETA_REJECTED.get(foil, []), "dcm_ddelta_xfoil_per_deg": dcmx, "dcm_ddelta_thin_per_deg": dcmt,
+                              "clmax_vs_flap": cfl, "re_stall": RE_STALL, "re_cruise": RE_CRUISE, "critical_section": cs,
                               "CLa_per_rad": r["clean"]["a0"]["CLa"], "Xnp_m": r["clean"]["a0"]["Xnp"],
                               "Cm0": r["clean"]["a0"]["Cmtot"], "CL0": r["clean"]["a0"]["CLtot"],
                               "e_trefftz_cl0.5": cl05["e"], "CD_trim_cl0.5": cl05["CDtot"],
@@ -292,7 +324,7 @@ def main():
               f"de {cl05['elevator']:+.2f} dCm {dcm:+.4f}")
     foil = CHOSEN
     F = out["foils"][foil]
-    eta, cfl = F["eta"], F["clmax_vs_flap_re2.3e5"]
+    eta, cfl = F["eta"], F["clmax_vs_flap"]
     x_sm = round(F["Xnp_m"] - SM_TARGET * CHORD, 4)
     out["x_cg_sm5_m"] = x_sm
     out["cg_sweep"] = {}
@@ -309,6 +341,16 @@ def main():
         if abs(xc - x_sm) < 1e-9:
             design = (r, cs)
         print(f"  cg {xc:.4f} (SM {(F['Xnp_m'] - xc) / CHORD:+.3f}): CLmax_trim {cs['CLmax_trim']}  first {cs.get('y_first_stall')}")
+    # trimmed CLmax against static margin (props-off NP of this model): the stall-speed claims read it at the aft
+    # (SM floor) and forward ends of the CG range, since a forward CG needs more up-elevon and stalls the inboard
+    # elevon strip earlier
+    out["sm_sweep"] = []
+    for sm in (0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10, 0.11, 0.12):
+        xc = round(F["Xnp_m"] - sm * CHORD, 5)
+        r = case(foil, eta, f"{foil}_sm{sm*100:.0f}", xcg=xc, cm_t=F["cm_t"])
+        cs = critical_section(r, foil, cfl)
+        out["sm_sweep"].append([sm, cs["CLmax_trim"], cs.get("elevator_deg"), cs.get("y_first_stall")])
+        print(f"  SM {sm:.2f} (x {xc:.4f}): CLmax_trim {cs['CLmax_trim']:.4f}  elev {cs.get('elevator_deg'):+.2f}")
     out["twist"] = {}
     for tw in (0.0, -2.0, -4.0):
         r = case(foil, eta, f"{foil}_tw{abs(tw):g}", twist=tw, xcg=x_sm, cm_t=F["cm_t"])
