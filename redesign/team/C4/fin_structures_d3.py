@@ -1,4 +1,14 @@
-"""C4 R3: fin / motor-tube structures on D3's as-designed geometry (CR-D3-10), K09-L, params A1-R3.
+"""C4 R4: fin / motor-tube structures on D3's as-designed geometry (CR-D3-10), K09-L, params A1-R3/R4.
+
+R4 (2026-11-09, evening): D5 tip step (straight top edge to the half height at x_te - tip_square, flat step at
+tip_step_z to the TE, edge strips end at the step front; foot load through the shoe at the C1 ground point), brace
+ear at params fins.stations.collar_end_xyz_m (z 0.1535, was the collar mid height), station collar from
+fin_detail.station_collar.height_m (12 mm at R4, 16 mm kept as a sensitivity), friction ASM-C1-FRICTION 0.7 on
+CL-C1-FOOT-CORNER (CR-C1-21), level foot at CL-C1-FOOT-MAX, L5 both senses, B4 swirl on the half-fin in flight
+(CR-B4-19: misbuilt 1.43 N scaled to T_lim, with H2c), G3 set-down 23.2 N on the lower can (CR-C1-24), section-
+torque equilibrium check against C1 (CR-C1-21), both cant senses in the whirl model (D-52), brace edge-rounding
+trade (CR-B1-18), fixed ARPACK start vector and a singular-matrix guard (CR-C6-20), part ids FIN-001-UR/UL/LR/LL
+(CR-A4-47), T-C4-FIN-PROOF on a test article (CR-H1-17).
 
 R3 (2026-11-09): 0.21 m half-fins, two layers, tube 0.344, 7 deg tangential cant (thrust side component on the
 mount, collar and tube, prop spin axis tilted in the whirl model), foot side load at the pad friction 0.7
@@ -97,6 +107,32 @@ asm("ASM-C4-BRACE-T-3", "Brace strip option 10 x 3 mm", "Thicker pultruded CF st
     "stock pultruded strip sizes 10 x 1/2/3 mm", 0.003, "m", status="PROPOSED")
 asm("ASM-C4-BRACE-T-2", "Brace strip option 10 x 2 mm", "Thinner pultruded CF strip of the CR-C4-16 trade",
     "stock pultruded strip sizes 10 x 1/2/3 mm", 0.002, "m", status="PROPOSED")
+asm("ASM-C4-G3-CAN-F", "Set-down force on each lower motor can, G3, limit 23.2 N",
+    "Ground reaction on a lower motor can when the aircraft is set down flat on the lower cans and lower feet at the "
+    "2 g handling factor; acts along the tube axis toward the wing, at the motor body x",
+    "team/C1/LOADS.md G3 row and CR-C1-24 (C1 loads.py case G3-BENCH, R_a); C1 has not published it as a claim "
+    "(CR-C4-29 asks for CL-C1-G3-CAN-F)", 23.2, "N", status="UNVERIFIED")
+asm("ASM-C4-SWIRL-MISBUILT-N", "Swirl side force on a half-fin, misbuilt (wrong cant sense), hover, 1.43 N",
+    "B4's wrong-sense case of CL-B4-SWIRL-FIN (0.57 N as built); same centre of pressure",
+    "team/B4/CHANGE-REQUESTS.md CR-B4-19 (number given in the request, not a B4 claim)", 1.43, "N",
+    status="UNVERIFIED")
+asm("ASM-C4-SWIRL-SCALE", "Swirl side force scales with thrust (exponent 1)",
+    "F_swirl(T) = F_swirl(T_hover) (T / T_hover)^1, T_hover = m_gate g / 4",
+    "fixed prop: thrust and torque both go as n^2, and the swirl momentum flux goes as the torque; C4 choice, "
+    "conservative against B4's hover-only number", 1.0, "-", status="PROPOSED")
+asm("ASM-C4-SHOE-Z0", "D5 shoe cheeks reach down to |z| 0.196 m",
+    "Lowest |z| of the D5 shoe cheeks bonded to both board faces; with fin_detail.fin.tip_clear_x_m (x >= 0.2666) it "
+    "bounds the region modelled as one rigid body with the strip ends bonded into the shoe back wall",
+    "team/D5/CHANGE-REQUESTS.md CR-D5-11 ('nothing else on x >= 0.2666 m, |z| >= 0.196 m', cheeks 17 x 51 mm, strip "
+    "termination bonded into the shoe); subsystems/fins/params.json fin_detail.fin.tip_clear_x_m note", 0.196, "m",
+    status="PROPOSED")
+asm("ASM-C4-ASA-BEARING", "ASA printed bearing allowable 30 MPa",
+    "Compressive bearing allowable of the printed ASA lip cap on the tube end",
+    "ASA filament TDS compressive strength 50-60 MPa x 0.5 for layer lines and voids; G3 coupon not planned "
+    "(margin is large)", 30e6, "Pa")
+asm("ASM-C4-TAPE-AREAL", "Fairing tape areal mass 0.06 kg/m2",
+    "Clear polyester packing tape (50 um film + adhesive) wrapped over the brace strip as an aero fairing",
+    "typical 2 mil packing tape 55-65 g/m2; weigh 1 m before use", 0.06, "kg/m2")
 
 LIMIT_SEP = P + "requirements.vibration_sep_frac"
 SF, FIT, PRT = P + "requirements.safety_factor_ult", "ASM-C1-FITTING-FACTOR", "ASM-C1-PRINTED-FACTOR"
@@ -124,7 +160,10 @@ GEOM = {"tube_x": P + "fins.tube.x_m", "y_fin": P + "fins.y_m", "od": P + "fins.
         "e_strip": "ASM-C4-CF-E-STRIP", "e_w": P + "fin_detail.edge_strip.w_m", "e_t": P + "fin_detail.edge_strip.t_m",
         "rho_cf": "ASM-C4-CF-RHO", "chord": P + "wing.chord_m", "el_frac": P + "wing.elevon.chord_frac",
         "slot_hw": P + "fin_detail.link_slot.half_width_m", "k_rock": "ASM-C4-MOUNT-K-ROCK",
-        "k_twist": "ASM-C4-MOUNT-K-TWIST", "k_root": "ASM-C4-ROOT-K", "k_anchor": "ASM-C4-ANCHOR-K"}
+        "k_twist": "ASM-C4-MOUNT-K-TWIST", "k_root": "ASM-C4-ROOT-K", "k_anchor": "ASM-C4-ANCHOR-K",
+        "tip_sq": P + "fin_detail.fin.tip_square_m", "z_step": P + "fin_detail.fin.tip_step_z_m",
+        "ear_xyz": P + "fins.stations.collar_end_xyz_m", "shoe_x0": P + "fin_detail.fin.tip_clear_x_m",
+        "shoe_z0": "ASM-C4-SHOE-Z0"}
 GU = {"tube_x": "m", "y_fin": "m", "od": "m", "idd": "m", "mu": "kg/m", "tube_len": "m", "z_st": "m", "x_face": "m",
       "x_prop": "m", "x_te": "m", "hh": "m", "le_gap": "m", "grip": "m", "sc_gap": "m", "sc_h": "m", "sc_wall": "m",
       "ear_len": "m", "bond_gap": "m", "skin": "m", "bore_z": "m", "m_motor": "kg", "d_motor": "m", "l_motor": "m",
@@ -133,7 +172,7 @@ GU = {"tube_x": "m", "y_fin": "m", "od": "m", "idd": "m", "mu": "kg/m", "tube_le
       "layers": "-", "t_face": "m", "e_face": "Pa", "e_core": "Pa", "g_core": "Pa", "x_spar": "m", "y_anchor": "m",
       "proud": "m", "b_w": "m", "b_t": "m", "e_strip": "Pa", "e_w": "m", "e_t": "m", "rho_cf": "kg/m3", "chord": "m",
       "el_frac": "-", "slot_hw": "m", "k_rock": "N m/rad", "k_twist": "N m/rad", "k_root": "N m/rad",
-      "k_anchor": "N/m"}
+      "k_anchor": "N/m", "tip_sq": "m", "z_step": "m", "ear_xyz": "m", "shoe_x0": "m", "shoe_z0": "m"}
 RPM = {"rpm_h": "CL-B4-HOVER-RPM", "rpm_c": "CL-B4-CRUISE-RPM", "rpm_x": "CL-B4-RPM-MAX"}
 RU = {k: "rpm" for k in RPM}
 TUBE = {"E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE"}
@@ -152,18 +191,33 @@ def geometry(g, side):
     z_end = g["tube_len"] / 2
     z_sc = z_end - g["grip"] - g["sc_gap"] - g["sc_h"] / 2                       # station-collar mid height
     z_top_le = z_end - g["grip"] - g["sc_gap"]                                   # collar top = fin LE top
-    ear_dy = -(g["od"] / 2 + g["bond_gap"] + g["sc_wall"] + g["ear_len"] / 2)
+    ex, ey, ez = g["ear_xyz"]                                                    # brace end on the ear (params, A5)
+    ear_dy = -(g["y_fin"] - ey)                                                  # inboard of the tube axis
     z_anchor = float(np.interp(g["x_spar"], sk[:, 0], zs)) + g["proud"] / 2
     anchor = (g["x_spar"], -(g["y_fin"] - g["y_anchor"]), z_anchor)
     x_le = g["tube_x"] + g["od"] / 2 + g["le_gap"]
     x_hinge = g["chord"] * (1 - g["el_frac"])
     return {"root": [(float(x), float(z)) for x, z in zip(sk[:, 0], zs)], "z_clamp": z_clamp, "z_end": z_end,
-            "z_sc": z_sc, "z_top_le": z_top_le, "ear": (0.0, ear_dy, 0.0), "anchor": anchor, "x_le": x_le,
+            "z_sc": z_sc, "z_ear": abs(ez), "z_top_le": z_top_le, "ear": (ex - g["tube_x"], ear_dy, 0.0),
+            "anchor": anchor, "x_le": x_le, "x_step": g["x_te"] - g["tip_sq"],
             "root_free": [(x_hinge - g["slot_hw"], x_hinge + g["slot_hw"])] if side == "lower" else []}
 
 
+def fin_top(g, geo, nx, hh=None):
+    """D5 tip (R4): straight from the collar top at the LE to the half height at the step front, then the flat step
+    (tip_step_z) to the TE. Returns the top-edge points, the step height and nx + 1 mesh columns with one column on
+    the step front (the element after it carries the 9.5 mm step as a chamfer one element wide)."""
+    h = g["hh"] if hh is None else hh
+    zs = h - (g["hh"] - g["z_step"])                                             # same step depth if hh is varied
+    xs, xl, xt = geo["x_step"], geo["x_le"], g["x_te"]
+    pts = [(xl, geo["z_top_le"]), (xs, h), (xs + 1e-6, zs), (xt, zs)]
+    n2 = max(1, round(nx * (xt - xs) / (xt - xl)))
+    cols = list(np.linspace(xl, xs, nx - n2 + 1)) + list(np.linspace(xs, xt, n2 + 1)[1:])
+    return pts, zs, cols
+
+
 def model_cfg(g, E, G, side, mesh=MESH, brace=True, edge=True, k_rock="nom", k_root="nom", hh=None, layers=None,
-              le_cracked=False):
+              le_cracked=False, shoe="nom"):
     geo = geometry(g, side)
     A = math.pi / 4 * (g["od"] ** 2 - g["idd"] ** 2)
     dz_st = g["z_st"] - geo["z_end"]                                             # motor axis above the tube end
@@ -181,27 +235,29 @@ def model_cfg(g, E, G, side, mesh=MESH, brace=True, edge=True, k_rock="nom", k_r
         if lay > 0 else None
     m_col, m_br = g["cb_mass"]
     kr = g["k_rock"] if k_rock == "nom" else k_rock
+    top, z_stp, cols = fin_top(g, geo, mesh[0], hh)
     cfg = {"tube": {"x": g["tube_x"], "E": E, "G": G, "od": g["od"], "id": g["idd"], "rho": g["mu"] / A,
                     "z_clamp": geo["z_clamp"], "z_end": geo["z_end"]},
            "n_free": 2, "n_ext": 2, "k_root": g["k_root"] if k_root == "nom" else k_root,
            "fin": {"props": pr, "x_le": geo["x_le"], "x_te": g["x_te"], "root": geo["root"],
-                   "z_top_le": geo["z_top_le"], "z_top_te": g["hh"] if hh is None else hh,
+                   "z_top_le": geo["z_top_le"], "z_top_te": z_stp, "top_pts": top, "x_cols": cols,
                    "root_free": geo["root_free"],
                    "le_bonds": [(geo["z_top_le"] - g["sc_h"], geo["z_top_le"])] if le_cracked else None},
            "nx": mesh[0], "nz": mesh[1],
            "station": {"parts": parts, "k_rock": kr, "k_twist": None if kr is None else g["k_twist"]},
            "tube_masses": [(m_col + (m_br / 2 if brace else 0.0), geo["z_sc"])],
            "fin_masses": [(g["m_esc"], (g["esc_x0"] + g["esc_len"] / 2, g["esc_z"])),
-                          (g["landing_g"] / 4 / 1000.0, (g["x_te"], g["hh"] if hh is None else hh))],
-           "struts": [], "stiffeners": []}
+                          (g["landing_g"] / 4 / 1000.0, (g["x_te"] - g["tip_sq"] / 2, z_stp))],   # foot on the shoe
+           "struts": [], "stiffeners": [], "x_step": geo["x_step"],
+           "rigid_fin": [] if shoe is None else [(g["shoe_x0"], g["shoe_z0"]) if shoe == "nom" else shoe]}
     if brace:
-        cfg["struts"] = [{"z_attach": geo["z_sc"], "ear": geo["ear"], "anchor": geo["anchor"],
+        cfg["struts"] = [{"z_attach": geo["z_ear"], "ear": geo["ear"], "anchor": geo["anchor"],
                           "EA": g["e_strip"] * g["b_w"] * g["b_t"], "k_anchor": g["k_anchor"]}]
     if edge and pr is not None:
         d = lay * g["t_board"] + g["e_t"]
         cfg["stiffeners"] = [{"E": g["e_strip"], "G": 5e9, "A": 2 * g["e_w"] * g["e_t"],
                               "I_out": g["e_w"] * g["e_t"] * d * d / 2, "J": 2 * g["e_w"] * g["e_t"] ** 3 / 3,
-                              "rho": g["rho_cf"], "d": d}]
+                              "rho": g["rho_cf"], "d": d, "x_end": geo["x_step"]}]
     return cfg
 
 
@@ -413,11 +469,12 @@ def convergence_d3(**k):
     return out
 
 
-def spin_axis(g):
-    """Prop spin axis in the quarter frame with the tangential cant (thrust along -x, tilted toward the tangent)."""
+def spin_axis(g, sense=1):
+    """Prop spin axis in the quarter frame with the tangential cant (thrust along -x, tilted toward +/- the tangent;
+    D-52 set cant_sense_UR = -1, the whirl check runs both senses)."""
     ty, tz = tangent(g)
     c = math.radians(g["cant"])
-    return (-math.cos(c), math.sin(c) * ty, math.sin(c) * tz)
+    return (-math.cos(c), sense * math.sin(c) * ty, sense * math.sin(c) * tz)
 
 
 def tangent(g):
@@ -449,22 +506,31 @@ def station_whirl(mdl, ip_spin, rpm, n_modes=16, axis=(-1.0, 0.0, 0.0)):
 @kit.calc("CALC-C4-D3-CAMPBELL", title="Gyroscopic whirl separation, recommended design (both sides)",
           inputs={**GEOM, **RPM, **TUBE, **REC}, units={**GU, **RU, **TU, **REC_U}, tol=1e-4,
           equation="M q'' + Omega G q' + K q = 0 on 16 modes, G = -[Ip_spin e_shaft]x at the station, e_shaft = (-cos c, "
-                   "sin c t_y, sin c t_z) with the tangential cant c; sep over 1P/2P "
-                   "at hover and cruise and 1P at the cap, station whirl modes only",
+                   "s sin c t_y, s sin c t_z) with the tangential cant c and both senses s = +/-1; sep over 1P/2P "
+                   "at hover and cruise and 1P at the cap, station whirl modes only; f_whirl_* = whirl frequencies "
+                   "of the first station mode at hover and cruise rpm (lowest over sides and senses)",
           assumes=["ASM-C4-PROP-IP", "ASM-C1-BELL-INERTIA"])
 def campbell_d3(**k):
     g = {n: k[n] for n in GEOM}
-    worst = 9.0
+    worst, fw = 9.0, {"hover": 1e9, "cruise": 1e9}
     for side in SIDES:
         mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, layers=k["lay_rec"]))
-        for name, rpm in (("hover", k["rpm_h"]), ("cruise", k["rpm_c"]), ("max", k["rpm_x"])):
-            for f in station_whirl(mdl, g["ip"] + g["i_bell"], rpm, axis=spin_axis(g)):
-                for p in ((1,) if name == "max" else (1, 2)):
-                    worst = min(worst, abs(f / (p * rpm / 60) - 1))
-    return {"sep_whirl": worst}
+        for sense in (1, -1):
+            for name, rpm in (("hover", k["rpm_h"]), ("cruise", k["rpm_c"]), ("max", k["rpm_x"])):
+                fs = station_whirl(mdl, g["ip"] + g["i_bell"], rpm, axis=spin_axis(g, sense))
+                if name in fw and fs:
+                    fw[name] = min(fw[name], fs[0])
+                for f in fs:
+                    for p in ((1,) if name == "max" else (1, 2)):
+                        worst = min(worst, abs(f / (p * rpm / 60) - 1))
+    return {"sep_whirl": worst, "f_whirl_hover_hz": fw["hover"], "f_whirl_cruise_hz": fw["cruise"],
+            "f_2p_hover_hz": k["rpm_h"] / 30, "f_2p_cruise_hz": k["rpm_c"] / 30}
 
 
-STAT_IN = {"f_level": "CL-C1-FOOT-LEVEL", "f_corner": "CL-C1-FOOT-CORNER", "mu_hi": "ASM-D5-PAD-MU",
+STAT_IN = {"f_level": "CL-C1-FOOT-MAX", "f_corner": "CL-C1-FOOT-CORNER", "mu_hi": "ASM-C1-FRICTION",
+           "foot_h": P + "cg.foot_height_m", "z_pad": P + "landing.pad_contact_z_m",
+           "sw_f": "CL-B4-SWIRL-FIN", "sw_m": "CL-B4-SWIRL-FIN-M", "sw_bad": "ASM-C4-SWIRL-MISBUILT-N",
+           "sw_exp": "ASM-C4-SWIRL-SCALE", "g3": "ASM-C4-G3-CAN-F", "t_c1": "CL-C1-FINHALF-T-WINGPLANE-LIM",
            "side_c5": "CL-C5-FOOT-SIDE-LOAD",
            "n_h": "ASM-C1-HANDLING-N", "m_gate": P + "requirements.mtow_gate_kg", "grav": P + "env.g_ms2",
            "t_lim": "CL-C1-T-LIMIT", "q_mot": "CL-C1-MOTOR-TORQUE", "sf": SF, "fit": FIT, "prt": PRT,
@@ -474,7 +540,8 @@ STAT_IN = {"f_level": "CL-C1-FOOT-LEVEL", "f_corner": "CL-C1-FOOT-CORNER", "mu_h
            "d_spar": P + "wing.spar.od_m", "ear_w": P + "fin_detail.station_collar.ear_w_m",
            "s_ten": "ASM-C4-PETG-TENSILE", "kd_foam": "ASM-C6-FOAM-KD", "tau_board": "ASM-D5-BOND-TAU",
            "pin_pitch": P + "fin_detail.edge_strip.pin_pitch_m"}
-STAT_U = {"f_level": "N", "f_corner": "N", "mu_hi": "-", "side_c5": "N", "n_h": "-", "m_gate": "kg", "grav": "m/s2",
+STAT_U = {"f_level": "N", "f_corner": "N", "mu_hi": "-", "side_c5": "N", "foot_h": "m", "z_pad": "m", "sw_f": "N",
+          "sw_m": "N*m", "sw_bad": "N", "sw_exp": "-", "g3": "N", "t_c1": "N m", "n_h": "-", "m_gate": "kg", "grav": "m/s2",
           "t_lim": "N", "q_mot": "N m", "sf": "-", "fit": "-", "prt": "-", "s_face": "Pa", "s_cf": "Pa", "patch": "m",
           "s_bond": "Pa", "peel": "-", "engage": "m", "a_lx": "m", "a_ly": "m", "d_spar": "m", "ear_w": "m",
           "s_ten": "Pa", "kd_foam": "-", "tau_board": "Pa", "pin_pitch": "m"}
@@ -489,30 +556,114 @@ def tube_torques(mdl, u, E, G):
     return out
 
 
+def shoe_loads(nodes, shoe, F, P_app):
+    """Rigid-shoe distribution of a force F applied at P_app onto the shoe nodes: equal shares of F plus nodal forces
+    that carry the moment about the shoe centroid (out-of-plane Mx, Mz as y forces linear in (dx, dz); in-plane My
+    as an in-plane couple). Exact resultant and moment."""
+    xyz = np.array([nodes[n] for n in shoe])
+    C = xyz.mean(axis=0)
+    M = np.cross(np.asarray(P_app) - C, F)
+    dx, dz = xyz[:, 0] - C[0], xyz[:, 2] - C[2]
+    A = np.array([[np.sum(dx * dx), np.sum(dx * dz)], [np.sum(dx * dz), np.sum(dz * dz)]])
+    c1, c2 = np.linalg.solve(A, [M[2], -M[0]])                                   # sum dx fy = Mz, -sum dz fy = Mx
+    s2 = np.sum(dx * dx + dz * dz)
+    out = []
+    for i, n in enumerate(shoe):
+        fy = c1 * dx[i] + c2 * dz[i]
+        fx_m, fz_m = M[1] * dz[i] / s2, -M[1] * dx[i] / s2                       # in-plane couple for My
+        out.append((n, (F[0] / len(shoe) + fx_m, F[1] / len(shoe) + fy, F[2] / len(shoe) + fz_m, 0, 0, 0)))
+    return out
+
+
+def section_torque(mdl, u, loads, g):
+    """Torque about the tube axis carried across the wing plane, from the FE reactions (CR-C1-21 check): constrained
+    fin-root and boss nodes, the tube root spring and the brace anchor. Returns (total, tube, fin root, brace) with the
+    sign of the applied torque."""
+    R = fe.reactions(mdl, u, loads)
+    fixed = np.asarray(mdl.T.getnnz(axis=1) == 0)
+    nodes, xt = mdl.nodes, g["tube_x"]
+    t_fin = 0.0
+    for n in mdl.fin_id.values():
+        o = fe.NDOF * n
+        if fixed[o + 1]:
+            t_fin += (nodes[n][0] - xt) * R[o + 1]
+        if fixed[o + 0]:
+            t_fin -= nodes[n][1] * R[o]
+        if fixed[o + 5]:
+            t_fin += R[o + 5]
+    t_tube = 0.0
+    if fixed[5]:
+        t_tube += R[5]
+    elif mdl.cfg.get("k_root") is not None:
+        t_tube += -1e9 * u[5]                                                    # rz spring at the clamp (build_q)
+    t_br = 0.0
+    for s in mdl.strut_info:
+        us = u[fe.NDOF * s["node"]:fe.NDOF * s["node"] + 3]
+        Fr = -s["k"] * float(np.dot(s["n"], us)) * s["n"]                        # anchor spring on the structure
+        p = nodes[s["node"]]
+        t_br += (p[0] - xt) * Fr[1] - p[1] * Fr[0]
+    tot = t_fin + t_tube + t_br
+    return -tot, -t_tube, -t_fin, -t_br
+
+
+def applied_torque(mdl, loads, g):
+    """Torque of the applied loads about the tube axis (for the equilibrium residual)."""
+    t = 0.0
+    for n, f in loads:
+        p = mdl.nodes[n]
+        t += (p[0] - g["tube_x"]) * f[1] - p[1] * f[0] + f[5]
+    return t
+
+
 def fin_static(g, k, side, le_cracked=False):
     """One quarter, every limit case. Returns per-case results and the brace length."""
     mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, layers=k["lay_rec"], le_cracked=le_cracked))
     pr = mdl.cfg["fin"]["props"]
     nodes = mdl.nodes
     geo = geometry(g, side)
-    corner = np.array([g["x_te"], 0.0, g["hh"]])
-    foot = [n for n in mdl.fin_id.values() if np.linalg.norm(nodes[n] - corner) <= k["patch"] + 1e-9]
-    nf, fc = len(foot), k["f_corner"]
+    nz = mdl.cfg["nz"]
+    # D5 shoe: every fin node on the square tip (x >= step front) within the foot patch below the top edge
+    shoe = [n for (i, j), n in mdl.fin_id.items() if nodes[n][0] >= geo["x_step"] - 1e-9
+            and nodes[n][2] >= nodes[mdl.fin_id[(i, nz)]][2] - k["patch"] - 1e-9]
+    foot = shoe
+    P_pad = np.array([g["x_te"] + k["foot_h"], 0.0, k["z_pad"]])                 # C1 ground point (CALC-C1-LANDING)
+    fc = k["f_corner"]
     fs = max(k["mu_hi"] * fc, k["side_c5"])                                     # foot side load at the pad friction
     G2 = k["n_h"] * k["m_gate"] * k["grav"]
     T, Q, c = k["t_lim"], k["q_mot"], math.radians(g["cant"])
     ty, tz = tangent(g)
     r = np.array([g["x_prop"] - g["tube_x"], 0.0, g["z_st"] - geo["z_end"]])    # prop centre from the station node
-    cases = {"L1": [(n, (-k["f_level"] / nf, 0, 0, 0, 0, 0)) for n in foot],
-             "L4+": [(n, (-fc / nf, fs / nf, 0, 0, 0, 0)) for n in foot],
-             "L4-": [(n, (-fc / nf, -fs / nf, 0, 0, 0, 0)) for n in foot],
-             "L5": [(n, (-fc / nf, 0, -fs / nf, 0, 0, 0)) for n in foot],
+    cases = {"L1": shoe_loads(nodes, shoe, np.array([-k["f_level"], 0, 0]), P_pad),
+             "L4+": shoe_loads(nodes, shoe, np.array([-fc, fs, 0]), P_pad),
+             "L4-": shoe_loads(nodes, shoe, np.array([-fc, -fs, 0]), P_pad),
+             "L5+": shoe_loads(nodes, shoe, np.array([-fc, 0, fs]), P_pad),
+             "L5-": shoe_loads(nodes, shoe, np.array([-fc, 0, -fs]), P_pad),
              "G2+": [(mdl.i_end, (0, G2, 0, 0, 0, 0))],
              "G2-": [(mdl.i_end, (0, -G2, 0, 0, 0, 0))]}
+    # B4 swirl (CR-B4-19): misbuilt side force scaled from hover to T_lim, line load on the row nearest the B4 centre
+    # of pressure (CL-B4-SWIRL-FIN-M / CL-B4-SWIRL-FIN above the skin) over every column, same sense on the half-fin
+    h_cp = k["sw_m"] / k["sw_f"]
+    t_hov = k["m_gate"] * k["grav"] / 4
+    f_sw = k["sw_bad"] * (T / t_hov) ** k["sw_exp"]
+    nx = mdl.cfg["nx"]
+    row = []
+    for i in range(nx + 1):
+        zr = nodes[mdl.fin_id[(i, 0)]][2]
+        row.append(min((mdl.fin_id[(i, j)] for j in range(nz + 1)),
+                       key=lambda n: abs(nodes[n][2] - (zr + h_cp))))
     for s_c, s_q in itertools.product((1, -1), (1, -1)):                        # H2 with the 7 deg cant, both prints
         F = np.array([-T * math.cos(c), s_c * T * math.sin(c) * ty, s_c * T * math.sin(c) * tz])
         M = np.cross(r, F) + s_q * Q * F / np.linalg.norm(F)
-        cases[f"H2c{'+' if s_c > 0 else '-'}{'+' if s_q > 0 else '-'}"] = [(mdl.i_station, (*F, *M))]
+        tag = f"{'+' if s_c > 0 else '-'}{'+' if s_q > 0 else '-'}"
+        cases[f"H2c{tag}"] = [(mdl.i_station, (*F, *M))]
+        for s_w in (1, -1):
+            cases[f"H2s{tag}{'+' if s_w > 0 else '-'}"] = [(mdl.i_station, (*F, *M))] + \
+                [(n, (0, s_w * f_sw / len(row), 0, 0, 0, 0)) for n in row]
+    if side == "lower":                                                         # G3 set-down on the lower can (CR-C1-24)
+        x_m = g["x_face"] - g["l_motor"] / 2
+        rg = np.array([x_m - g["tube_x"], 0.0, g["z_st"] - geo["z_end"]])
+        Fg = np.array([0.0, 0.0, -k["g3"]])                                      # toward the wing
+        cases["G3"] = [(mdl.i_station, (*Fg, *np.cross(rg, Fg)))]
     nu = pr["nu"]
     Qf = g["e_face"] / (1 - nu * nu) * np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1 - nu) / 2]])
     C3 = np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1 - nu) / 2]])
@@ -558,27 +709,37 @@ def fin_static(g, k, side, le_cracked=False):
                 continue                                                            # foot shoe wraps the strip ends
             q = abs(Ns[i] - Ns[i - 1]) / 2 / ((Ls[i] + Ls[i - 1]) / 2) + max(Vs[i], Vs[i - 1]) / d
             q_face = max(q_face, q)
+        t_sec, t_tu, t_fi, t_bra = section_torque(mdl, u, loads, g)
         res[cname] = {"face": smax, "edge": s_edge, "tube": m_root * g["od"] / 2 / mdl.I_t, "mroot": m_root,
                       "brace": f_br, "t_collar": t_collar, "t_root": abs(tt[0]), "q_face": q_face,
                       "strip_end": abs(Ns[0]) / 2 + M0 / d,
-                      "dfoot": max(float(np.linalg.norm(u[6 * n:6 * n + 3])) for n in foot)}
+                      "dfoot": max(float(np.linalg.norm(u[6 * n:6 * n + 3])) for n in foot),
+                      "t_sec": t_sec, "t_sec_tube": t_tu, "t_sec_fin": t_fi, "t_sec_brace": t_bra,
+                      "t_app": applied_torque(mdl, loads, g), "f_swirl": f_sw, "h_cp": h_cp}
     return res, s["L"]
 
 
 @kit.calc("CALC-C4-D3-STATIC", title="Fin, tube, brace, collar, edge-strip bond and anchor strength, recommended "
           "design (both sides, LE fillet intact and cracked)",
           inputs={**GEOM, **TUBE, **STAT_IN, **REC}, units={**GU, **TU, **STAT_U, **REC_U}, tol=1e-4,
-          equation="FE static, limit cases L1, L4 (side = max(mu_pad F_corner, C5 side load), both senses), L5, G2 (both "
+          equation="FE static, limit cases L1 (C1 peak foot), L4 (side = max(mu F_corner, C5 side load), both senses), "
+                   "L5 (both senses), foot loads at the C1 ground point (x_te + foot_h, z_pad) through a rigid D5 shoe "
+                   "on the square tip; G2 (both "
                    "senses, n_h m g at the tube end), H2c (T_lim along the 7 deg canted shaft at the prop centre + Q "
-                   "about the shaft, 4 sign combinations); envelope over upper/lower quarter and LE fillet intact / "
-                   "cracked between the boss and the collar; ultimate = sf x limit (joints x fit x prt); face = Q_f "
+                   "about the shaft, 4 sign combinations), H2s = H2c + B4 misbuilt swirl x (T_lim/T_hover)^exp as a "
+                   "line load at the B4 centre of pressure, both senses; G3 (lower quarter) set-down force at the "
+                   "motor body toward the wing; envelope over upper/lower quarter and LE fillet intact / "
+                   "cracked between the boss and the collar; section torque at the wing plane from the FE reactions "
+                   "(fin root + boss nodes, tube root spring, brace anchor) vs C1's wing-plane torque, equilibrium "
+                   "residual vs the applied torque; ultimate = sf x limit (joints x fit x prt); face = Q_f "
                    "(eps0 + z kappa); collar torque = jump of the tube torque across the collar band; strip-to-paper "
                    "shear flow per face q = |dN|/2/ds + |V|/d (foot-shoe nodes excluded), tau = q/w vs kd tau_board; "
                    "strip end force per face = |N0|/2 + |M0|/d; pin force = q jf pitch; brace Pcr = pi^2 E w t^3 / (12 L^2); brace-end bond "
                    "tau = F / (2 (w + t) engage); ear root s = 6 F (ear/2) / (w_ear h^2) + F / (w_ear h); collar bond "
                    "tau = T / (2 pi r^2 h) + F / (pi d h), h_req at MS 0; anchor tau = F / (len_y pi d_spar / 4) vs "
                    "peel x bond allowable",
-          assumes=["ASM-C4-FACE-SIGMA", "ASM-C4-BOND-SHEAR", "ASM-C4-PEEL-KD", "ASM-C4-FOOT-PATCH"],
+          assumes=["ASM-C4-FACE-SIGMA", "ASM-C4-BOND-SHEAR", "ASM-C4-PEEL-KD", "ASM-C4-FOOT-PATCH",
+                   "ASM-C4-SWIRL-MISBUILT-N", "ASM-C4-SWIRL-SCALE", "ASM-C4-G3-CAN-F"],
           cites=["SRC-C4-ALLEN", "SRC-C4-ROARK"])
 def static_d3(**k):
     g = {n: k[n] for n in GEOM}
@@ -586,14 +747,31 @@ def static_d3(**k):
     out = {}
     agg = {"face": 0.0, "edge": 0.0, "tube": 0.0, "comp": 0.0, "tens": 0.0, "t_collar": 0.0, "f_collar": 0.0,
            "dfoot_L4": 0.0, "mroot": 0.0, "t_root": 0.0, "q_face": 0.0, "strip_end": 0.0, "t_collar_intact": 0.0,
-           "q_face_intact": 0.0, "face_intact": 0.0}
+           "q_face_intact": 0.0, "face_intact": 0.0, "eq_resid": 0.0, "t_sec_L4": 0.0, "brace_g3": 0.0,
+           "tube_g3": 0.0, "face_sw": 0.0, "brace_sw": 0.0, "t_collar_sw": 0.0}
+    gov = {}
     for side, cr in itertools.product(SIDES, (False, True)):
         res, L = fin_static(g, k, side, le_cracked=cr)
         tag = side[:2] + ("_cr" if cr else "")
         out[f"brace_len_{side[:2]}_m"] = L
         for c, r in res.items():
             for key in ("face", "edge", "tube", "mroot", "t_collar", "t_root", "q_face", "strip_end"):
+                if r[key] > agg[key]:
+                    gov[key] = f"{c} {tag}"
                 agg[key] = max(agg[key], r[key])
+            agg["eq_resid"] = max(agg["eq_resid"], abs(r["t_sec"] - r["t_app"]) / max(abs(r["t_app"]), 1e-3))
+            if c.startswith("L4") and abs(r["t_sec"]) > agg["t_sec_L4"]:
+                agg["t_sec_L4"] = abs(r["t_sec"])
+                out.update({"t_sec_L4_tube_nm": abs(r["t_sec_tube"]), "t_sec_L4_fin_nm": abs(r["t_sec_fin"]),
+                            "t_sec_L4_brace_nm": abs(r["t_sec_brace"]), "t_sec_L4_case": f"{c} {tag}"})
+            if c == "G3":
+                agg["brace_g3"] = max(agg["brace_g3"], abs(r["brace"]))
+                agg["tube_g3"] = max(agg["tube_g3"], r["tube"])
+            if c.startswith("H2s"):
+                agg["face_sw"] = max(agg["face_sw"], r["face"])
+                agg["brace_sw"] = max(agg["brace_sw"], abs(r["brace"]))
+                agg["t_collar_sw"] = max(agg["t_collar_sw"], r["t_collar"])
+                out["swirl_force_lim_n"], out["swirl_cp_m"] = r["f_swirl"], r["h_cp"]
             if not cr:
                 agg["t_collar_intact"] = max(agg["t_collar_intact"], r["t_collar"])
                 agg["q_face_intact"] = max(agg["q_face_intact"], r["q_face"])
@@ -638,18 +816,29 @@ def static_d3(**k):
                 "strip_end_face_design_n": agg["strip_end"] * jf,
                 "strip_pin_design_n": agg["q_face"] * jf * k["pin_pitch"],
                 "tau_anchor_pa": tau_anchor, "s_ear_pa": s_ear, "tau_brace_end_pa": tau_end,
-                "dfoot_L4_m": agg["dfoot_L4"], **ms, "ms_min": min(ms.values())})
+                "dfoot_L4_m": agg["dfoot_L4"], **ms, "ms_min": min(ms.values()),
+                "eq_resid": agg["eq_resid"], "t_sec_L4_lim_nm": agg["t_sec_L4"],
+                "t_sec_vs_c1": abs(agg["t_sec_L4"] / k["t_c1"] - 1),
+                "brace_g3_lim_n": agg["brace_g3"], "tube_g3_ult_pa": agg["tube_g3"] * k["sf"],
+                "face_swirl_ult_pa": agg["face_sw"] * k["sf"], "brace_swirl_lim_n": agg["brace_sw"],
+                "collar_t_swirl_lim_nm": agg["t_collar_sw"],
+                "collar_bond_per_h_npm": per_h,
+                "ms_collar_bond_16mm": k["s_bond"] / (per_h / 0.016) - 1,
+                "governing": "; ".join(f"{a}: {b}" for a, b in sorted(gov.items()))})
     return out
 
 
 @kit.calc("CALC-C4-D3-BRACE-TRADE", title="Brace strip 10 x 2 against 10 x 3 (CR-C4-16), recommended design",
           inputs={**GEOM, **TUBE, **RPM, **REC, "t3": "ASM-C4-BRACE-T-3", "t2": "ASM-C4-BRACE-T-2",
-                  "n_h": "ASM-C1-HANDLING-N",
+                  "n_h": "ASM-C1-HANDLING-N", "tape": "ASM-C4-TAPE-AREAL",
                   "m_gate": P + "requirements.mtow_gate_kg", "grav": P + "env.g_ms2", "sf": SF, "fit": FIT},
           units={**GU, **TU, **RU, **REC_U, "t3": "m", "t2": "m", "n_h": "-", "m_gate": "kg", "grav": "m/s2", "sf": "-",
-                 "fit": "-"}, tol=1e-4,
+                 "fit": "-", "tape": "kg/m2"}, tol=1e-4,
           equation="for t in (10 x 3, 10 x 2): sep_op (both quarters, nominal E/G); G2 brace force from the FE (limit, both "
-                   "quarters) x sf x fit vs Pcr = pi^2 E w t^3 / (12 L^2); mass of four braces = 4 rho w t L_mean")
+                   "quarters) x sf x fit vs Pcr = pi^2 E w t^3 / (12 L^2); mass of four braces = 4 rho w t L_mean; "
+                   "CR-B1-18 edge rounding of the 10 x 2 (both 2 mm edges full round, r = t/2): A and I_weak lose "
+                   "2 (2 r^2 - pi r^2 / 2) and 2 (r (2r)^3 / 12 - pi r^4 / 8), Pcr scales with I; tape fairing = "
+                   "4 x areal x perimeter (2 w + pi t) x 1.5 overlap x L_mean")
 def brace_trade(**k):
     g0 = {n: k[n] for n in GEOM}
     rpm = (k["rpm_h"], k["rpm_c"], k["rpm_x"])
@@ -672,6 +861,14 @@ def brace_trade(**k):
                     f"mass4_{tag}_g": 4 * g["rho_cf"] * g["b_w"] * t * sum(Ls) / len(Ls) * 1000})
     out["mass_saving_g"] = out["mass4_t3_g"] - out["mass4_t2_g"]
     out["sep_loss"] = out["sep_t3"] - out["sep_t2"]
+    # CR-B1-18: 10 x 2 strip with both 2 mm edges sanded to a full round (r = t/2) vs a tape fairing
+    w, t, rr = g0["b_w"], k["t2"], k["t2"] / 2
+    a_loss = 2 * (2 * rr * rr - math.pi * rr * rr / 2)                     # two ends: rectangle r x 2r minus half disc
+    i_loss = 2 * (rr * (2 * rr) ** 3 / 12 - math.pi * rr ** 4 / 8)          # about the weak axis (mid-thickness)
+    a_frac, i_frac = 1 - a_loss / (w * t), 1 - i_loss / (w * t ** 3 / 12)
+    out.update({"round_area_frac": a_frac, "round_i_frac": i_frac,
+                "ms_buckle_t2_round": out["pcr_t2_n"] * i_frac / out["f_design_t2_n"] - 1,
+                "tape_mass4_g": 4 * k["tape"] * (2 * w + math.pi * t) * 1.5 * sum(Ls) / len(Ls) * 1000})
     return out
 
 
@@ -680,16 +877,22 @@ def brace_trade(**k):
                   "y_fin": P + "fins.y_m", "z_st": P + "propulsion.stations.z_m", "x_prop": "CL-D3-X-PROP",
                   "tube_x": P + "fins.tube.x_m", "tube_len": P + "fin_detail.tube_length_m", "od": P + "fins.tube.od_m",
                   "slip": P + "fin_detail.mount.slip_torque_nm", "m_c1": "CL-C1-MOUNT-M-ULT",
-                  "f_c1": "CL-C1-MOUNT-F-ULT", "sf": SF, "fit": FIT, "prt": PRT},
+                  "f_c1": "CL-C1-MOUNT-F-ULT", "sf": SF, "fit": FIT, "prt": PRT, "g3": "ASM-C4-G3-CAN-F",
+                  "x_face": "CL-D3-X-FACE", "l_motor": P + "propulsion.motor_length_m", "idd": P + "fins.tube.id_m",
+                  "s_brg": "ASM-C4-ASA-BEARING"},
           units={"T": "N", "Q": "N m", "cant": "deg", "y_fin": "m", "z_st": "m", "x_prop": "m", "tube_x": "m",
                  "tube_len": "m", "od": "m", "slip": "N m", "m_c1": "N m", "f_c1": "N", "sf": "-", "fit": "-",
-                 "prt": "-"}, tol=1e-6,
+                 "prt": "-", "g3": "N", "x_face": "m", "l_motor": "m", "idd": "m", "s_brg": "Pa"}, tol=1e-6,
           equation="t = (-z_st, y_fin)/|.| (motor-circle tangent); F = T (-cos c, sin c t_y, sin c t_z) at r = (x_prop - "
                    "x_tube, 0, z_st - L_tube/2) from the tube end; side = T sin c; axial = T sin c |t_z|; twist "
                    "about the tube = |r_x| T sin c |t_y| + Q sin c |t_z|; rocking = |r x F| in x-y (worst sign) + Q cos c; design "
                    "= limit x sf x fit x prt; slip-clamp use = sqrt((F_ax,d / (T_slip / r))^2 + ((M_tw,d + M_C1,ult "
-                   "fit prt) / T_slip)^2) (C1's mount moment taken wholly about the tube: conservative)")
-def mount_cant(T, Q, cant, y_fin, z_st, x_prop, tube_x, tube_len, od, slip, m_c1, f_c1, sf, fit, prt):
+                   "fit prt) / T_slip)^2) (C1's mount moment taken wholly about the tube: conservative); G3 set-down "
+                   "(CR-C1-24): axial push F_g3 on the lip cap, bearing on the tube-wall annulus s = F_g3 jf / (pi/4 "
+                   "(od^2 - id^2)); rocking F_g3 |x_motor - x_tube|, x_motor = x_face - l_motor/2; rocking envelope = "
+                   "max(H2c, G3)")
+def mount_cant(T, Q, cant, y_fin, z_st, x_prop, tube_x, tube_len, od, slip, m_c1, f_c1, sf, fit, prt, g3, x_face,
+               l_motor, idd, s_brg):
     c = math.radians(cant)
     rr = math.hypot(y_fin, z_st)
     ty, tz = -z_st / rr, y_fin / rr
@@ -700,10 +903,15 @@ def mount_cant(T, Q, cant, y_fin, z_st, x_prop, tube_x, tube_len, od, slip, m_c1
     jf = sf * fit * prt
     r = od / 2
     use = math.hypot(ax * jf / (slip / r), (tw * jf + m_c1 * fit * prt) / slip)
+    rock_g3 = g3 * abs(x_face - l_motor / 2 - tube_x)
+    s_cap = g3 * jf / (math.pi / 4 * (od ** 2 - idd ** 2))
     return {"side_frac": math.sin(c), "side_lim_n": side, "axial_lim_n": ax, "lateral_lim_n": lat,
             "twist_lim_nm": tw, "rock_lim_nm": rock, "axial_design_n": ax * jf, "twist_design_nm": tw * jf,
             "rock_design_nm": rock * jf, "shear_design_n": math.hypot(T * math.cos(c), lat) * jf,
-            "c1_force_ratio": T * jf / max(f_c1 * fit * prt, 1e-9), "slip_use": use, "ms_slip_hold": 1 / use - 1}
+            "c1_force_ratio": T * jf / max(f_c1 * fit * prt, 1e-9), "slip_use": use, "ms_slip_hold": 1 / use - 1,
+            "rock_g3_lim_nm": rock_g3, "rock_g3_design_nm": rock_g3 * jf, "g3_design_n": g3 * jf,
+            "rock_env_design_nm": max(rock, rock_g3) * jf, "cap_bearing_g3_pa": s_cap,
+            "ms_cap_bearing_g3": s_brg / s_cap - 1}
 
 
 @kit.calc("CALC-C4-D3-BLOCK", title="Through-core block on D3's geometry (bosses not credited for strength)",
@@ -773,7 +981,7 @@ def fins_mass_d3(**k):
 # ====================================================================== claims
 R_VIB, R_SM, R_JNT = ["R-VIBRATION"], ["R-STRUCT-MARGIN"], ["R-FIN-TUBE-JOINT"]
 TUBES = ["FIN-002-R", "FIN-002-L"]
-HALF = ["FIN-001-RU", "FIN-001-LU", "FIN-001-RD", "FIN-001-LD"]
+HALF = ["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"]                   # CR-A4-47 (was RU/LU/RD/LD)
 BRACE = ["FIN-009-UR", "FIN-009-UL", "FIN-009-LR", "FIN-009-LL"]
 COLLAR = ["FIN-008-UR", "FIN-008-UL", "FIN-008-LR", "FIN-008-LL"]
 ANCHOR = ["FIN-010-UR", "FIN-010-UL", "FIN-010-LR", "FIN-010-LL"]
@@ -849,8 +1057,9 @@ COLLAR_H = P + "fin_detail.station_collar.height_m"
 kit.claim("CL-C4-D3-COLLAR-T", "Station-collar torsion into the tube, limit (envelope: LE fillet intact or cracked, "
           "both quarters, every case)", calc="CALC-C4-D3-STATIC", output="collar_t_lim_nm", unit="N m", parts=COLLAR,
           how="T-C4-FIN-PROOF with the LE fillet left unbonded on one quarter; witness line across collar and tube.",
-          note="The number C6 sizes the collar bond to (CR-C6-03). Supersedes the 9.3 N m C6 carried in "
-               "ASM-C6-C4-COLLAR-T, which is not a C4 output.")
+          note="Published for C6 (CR-C6-03, CR-C1-21): C6 reads this claim instead of ASM-C6-C4-COLLAR-T (9.3 N m, not "
+               "a C4 output) and sizes the collar to the larger of it and C1's section torque, plus CL-C4-D3-BRACE-F "
+               "as shear.")
 kit.claim("CL-C4-D3-COLLAR-T-INTACT", "Station-collar torsion, limit, LE fillet intact", calc="CALC-C4-D3-STATIC",
           output="collar_t_lim_intact_nm", unit="N m", parts=COLLAR, how="As CL-C4-D3-COLLAR-T.")
 kit.claim("CL-C4-D3-COLLAR-H-REQ", "Station-collar height needed for MS 0 on the envelope torsion + brace shear",
@@ -858,8 +1067,9 @@ kit.claim("CL-C4-D3-COLLAR-H-REQ", "Station-collar height needed for MS 0 on the
           parts=COLLAR, how="C6 lap-shear coupon on scuffed CF; T-C4-FIN-PROOF.")
 kit.claim("CL-C4-D3-TUBE-T-ROOT", "Tube torsion at the bore end, limit (for C1's J-FINHALF comparison)",
           calc="CALC-C4-D3-STATIC", output="tube_t_root_lim_nm", unit="N m", parts=TUBES, how="T-C4-FIN-PROOF.")
-kit.claim("CL-C4-D3-SIDE-LOAD", "Foot side load used (pad friction 0.7, CR-C5-09)", calc="CALC-C4-D3-STATIC",
-          output="side_load_n", unit="N", parts=HALF, how="D5 pad friction coupon (ASM-D5-PAD-MU).")
+kit.claim("CL-C4-D3-SIDE-LOAD", "Foot side load used (friction 0.7 x CL-C1-FOOT-CORNER, CR-C1-21)",
+          calc="CALC-C4-D3-STATIC",
+          output="side_load_n", unit="N", parts=HALF, how="D5 pad friction coupon (ASM-C1-FRICTION, ASM-D5-PAD-MU).")
 kit.claim("CL-C4-D3-STRIP-Q", "Edge-strip-to-paper shear flow per face, limit, FE (CR-C6-02a)", calc="CALC-C4-D3-STATIC",
           output="strip_q_lim_npm", unit="N/m", parts=HALF, how="T-C4-FIN-PROOF: no strip lift; T-C6-BOARD-LAP.")
 kit.claim("CL-C4-D3-MS-STRIP-PAPER", "Edge strip bonded to the paper face only (no pins): margin on the paper-to-foam "
@@ -887,8 +1097,15 @@ kit.claim("CL-C4-D3-MOUNT-AXIAL", "Mount pull-off load along the tube from the c
           output="axial_design_n", unit="N", parts=MOUNT, how="T-D3-SLIP.")
 kit.claim("CL-C4-D3-MOUNT-TWIST", "Mount twist about the tube from the cant, design", calc="CALC-C4-D3-MOUNT-CANT",
           output="twist_design_nm", unit="N m", parts=MOUNT, how="T-D3-SLIP.")
-kit.claim("CL-C4-D3-MOUNT-ROCK", "Mount rocking moment at T_lim with the cant, design", calc="CALC-C4-D3-MOUNT-CANT",
-          output="rock_design_nm", unit="N m", parts=MOUNT, how="T-C4-MOUNT-STIFF (load to 1.5 x limit).")
+kit.claim("CL-C4-D3-MOUNT-ROCK", "Mount rocking moment, design, envelope of H2c with the cant and G3 set-down",
+          calc="CALC-C4-D3-MOUNT-CANT",
+          output="rock_env_design_nm", unit="N m", parts=MOUNT, how="T-C4-MOUNT-STIFF (load to 1.5 x limit).")
+kit.claim("CL-C4-D3-MOUNT-G3-ROCK", "Mount rocking moment from the G3 set-down on a lower can, design (CR-C1-24)",
+          calc="CALC-C4-D3-MOUNT-CANT", output="rock_g3_design_nm", unit="N m", parts=MOUNT[2:],
+          how="T-C4-FIN-PROOF G3 step on the test article.")
+kit.claim("CL-C4-D3-MS-CAP-G3", "Mount lip cap bearing on the tube end under G3 set-down (CR-C1-24)",
+          calc="CALC-C4-D3-MOUNT-CANT", output="ms_cap_bearing_g3", unit="-", limit=(">=", 0.0), verifies=R_SM,
+          parts=MOUNT[2:] + TUBES, how="T-C4-FIN-PROOF G3 step: no cap crush, mount does not slide down the tube.")
 kit.claim("CL-C4-D3-MS-MOUNT-SLIP", "Slip clamp holds in flight with the cant (C1 moment + cant twist + pull-off)",
           calc="CALC-C4-D3-MOUNT-CANT", output="ms_slip_hold", unit="-", limit=(">=", 0.0), verifies=R_SM,
           parts=MOUNT, how="T-D3-SLIP: set 2.5 N m; witness line checked before every flight.")
@@ -909,6 +1126,57 @@ kit.claim("CL-C4-D3-LAYER-ADD", "Board mass added to CL-D3-MASS: second layer an
           calc="CALC-C4-D3-MASS",
           output="added_g", unit="g", parts=HALF, how="Weigh the boards before and after laminating.")
 
+kit.claim("CL-C4-D3-SEC-T-L4", "Half-fin torsion about the tube axis at the wing plane, L4, limit (FE reactions)",
+          calc="CALC-C4-D3-STATIC", output="t_sec_L4_lim_nm", unit="N m", parts=HALF + TUBES + BRACE,
+          how="T-C4-FIN-PROOF L4 step: load cell on the foot.",
+          note="Section total (tube root + fin root + brace anchor). The collar torque CL-C4-D3-COLLAR-T is an internal "
+               "path quantity and is smaller; C6 sizes the collar to the larger of the two (CR-C1-21).")
+kit.claim("CL-C4-D3-SEC-T-VS-C1", "FE wing-plane torsion vs C1's CL-C1-FINHALF-T-WINGPLANE-LIM, |ratio - 1|",
+          calc="CALC-C4-D3-STATIC", output="t_sec_vs_c1", unit="-", limit=("<=", 0.05), parts=HALF,
+          how="Re-run fin_structures_d3.py after any C1 or D5 foot-geometry change.",
+          note="CR-C1-21 equilibrium check: same foot load and ground point as C1 within 5 %.")
+kit.claim("CL-C4-D3-EQ-RESID", "FE equilibrium: wing-plane reaction torque vs applied torque, worst case",
+          calc="CALC-C4-D3-STATIC", output="eq_resid", unit="-", limit=("<=", 1e-3), parts=HALF,
+          how="Re-run fin_structures_d3.py.")
+kit.claim("CL-C4-D3-SWIRL-F", "Swirl side force per half-fin used with H2c (B4 misbuilt, scaled to T_lim), limit",
+          calc="CALC-C4-D3-STATIC", output="swirl_force_lim_n", unit="N", parts=HALF,
+          how="B4 tuft/flow check in hover; T-C4-FIN-PROOF covers it (L4 side load is 4 x larger).")
+kit.claim("CL-C4-D3-BRACE-G3", "Brace force under the G3 set-down, lower quarter, limit", calc="CALC-C4-D3-STATIC",
+          output="brace_g3_lim_n", unit="N", parts=BRACE[2:], how="T-C4-FIN-PROOF G3 step.")
+kit.claim("CL-C4-D3-MS-COLLAR-16", "Station-collar bond margin if the collar stays 16 mm (R3) instead of 12 mm",
+          calc="CALC-C4-D3-STATIC", output="ms_collar_bond_16mm", unit="-", limit=(">=", 0.0), parts=COLLAR,
+          how="As CL-C4-D3-MS-COLLAR.", note="Torsion from the 12 mm model; the 16 mm band changes it by < 3 % "
+                                            "(results_d3.json collar_16mm).")
+kit.claim("CL-C4-D3-F-WHIRL-CRUISE", "Lowest station whirl frequency at cruise rpm (both cant senses)",
+          calc="CALC-C4-D3-CAMPBELL", output="f_whirl_cruise_hz", unit="Hz", parts=TUBES + MOUNT, how=TAP)
+kit.claim("CL-C4-D3-BRACE-ROUND-I", "Weak-axis I of the 10 x 2 brace with both edges sanded full round, fraction",
+          calc="CALC-C4-D3-BRACE-TRADE", output="round_i_frac", unit="-", parts=BRACE,
+          how="Calipers on a sanded offcut.", note="CR-B1-18: rounding changes the 10 x 2 stiffness, so C4 asks for "
+                                                    "a tape fairing instead (CR-C4-31).")
+kit.claim("CL-C4-D3-BRACE-ROUND-MS", "Brace buckling margin if the 10 x 2 edges are sanded round (G2 design)",
+          calc="CALC-C4-D3-BRACE-TRADE", output="ms_buckle_t2_round", unit="-", limit=(">=", 0.0), parts=BRACE,
+          how="T-C4-FIN-PROOF G2 both senses.")
+kit.claim("CL-C4-D3-BRACE-TAPE-MASS", "Tape fairing on four braces (CR-B1-18), mass", calc="CALC-C4-D3-BRACE-TRADE",
+          output="tape_mass4_g", unit="g", parts=BRACE, how="Weigh the tape for one brace.")
+
+kit.test("T-C4-FIN-PROOF", "Ultimate proof of one TEST-ARTICLE fin quarter (not a flight fin; CR-H1-17)",
+         verifies=["CL-C4-D3-MS-FACE", "CL-C4-D3-MS-EDGE", "CL-C4-D3-MS-TUBE", "CL-C4-D3-MS-BRACE",
+                   "CL-C4-D3-MS-BRACE-END", "CL-C4-D3-MS-COLLAR", "CL-C4-D3-MS-EAR", "CL-C4-D3-MS-ANCHOR",
+                   "CL-C4-D3-FOOT-DEFL", "CL-C4-D3-MS-STRIP-PAPER", "CL-C4-D3-STRIP-PIN-F", "CL-C4-D3-MS-CAP-G3",
+                   "CL-C4-D3-SEC-T-L4", "CL-C4-D3-COLLAR-H-REQ"],
+         procedure="Test article built with flight processes but never flown: one LOWER quarter (it carries G3 and "
+                   "the longer free tube) = one 0.21 m half-fin cut from the flight board batch (two 4.8 mm layers "
+                   "laminated), CF 22 x 20 tube offcut 0.20 m, PETG through-core block bonded on a 0.15 m spar "
+                   "offcut in a 0.15 m core offcut, plug, station collar (as drawn, 12 mm), CF 10 x 2 brace 0.16 m "
+                   "with anchor saddle on the same spar offcut, CF 10 x 1 edge strips x 2 with 2 mm CF pins at 15 mm, "
+                   "ASA mount with a dummy motor (steel slug at the motor CG, M3 x 8 into the plate), D5 shoe and "
+                   "foot, LE fillet LEFT UNBONDED (fail-safe case), 30 min epoxy as in BUILD. Steps, each held 30 s, "
+                   "loads at 1.5 x limit through a hand-held spring scale or hung weights: (1) L4 at the C1 ground "
+                   "point 44 N along + 31 N across, both senses; (2) G2 77 N lateral at the tube end, both senses; "
+                   "(3) G3 35 N on the dummy can toward the wing. Pass: no crack, face wrinkle, strip lift, pin "
+                   "push-out or bond-line movement (witness lines on collar, strip ends, brace ends, anchor); foot "
+                   "deflection at 1.0 x L4 <= 1.2 x CL-C4-D3-FOOT-DEFL. Then load step (1) to failure and record the "
+                   "load and the failed part. Flight fins get a 1.0 x limit L4 hand check only.")
 kit.test("T-C4-MOUNT-STIFF", "Mount rocking stiffness on the bench", verifies=["CL-C4-D3-MOUNT-K-REQ"],
          procedure="Mount with motor clamped on a 60 mm tube stub held in a vice; 0.5 kg over a pulley at the prop nut, "
                    "sideways (y) and fore-aft (z); dial gauges at the motor can top and at the collar; theta = "
@@ -996,6 +1264,17 @@ if __name__ == "__main__":
             rows.append({"E_GPa": E / 1e9, "G_GPa": G / 1e9, "f_st1": r["f_st1"], "f_st2": r["f_st2"],
                          "sep": r["sep_op"], "nearest": r["nearest"]})
         res["sensitivity"][side] = rows
+    # station collar 16 mm (R3) against the params value (R4: 12 mm), full static envelope
+    st_in = {**GEOM, **TUBE, **STAT_IN, **REC}
+    kw = {n: kit.value(r) for n, r in st_in.items()}
+    for h in (0.012, 0.016):
+        r_h = static_d3(**{**kw, "sc_h": h})
+        res.setdefault("collar_sweep", {})[f"{h * 1000:.0f} mm"] = {
+            key: r_h[key] for key in ("collar_t_lim_nm", "collar_t_lim_intact_nm", "ms_collar_bond", "collar_h_req_m",
+                                      "ms_face", "ms_strip_paper", "strip_end_face_design_n", "t_sec_L4_lim_nm")}
+        print(f"collar {h * 1000:.0f} mm: T {r_h['collar_t_lim_nm']:.2f} N m (intact {r_h['collar_t_lim_intact_nm']:.2f}),"
+              f" MS bond {r_h['ms_collar_bond']:+.2f}, h_req {r_h['collar_h_req_m'] * 1000:.1f} mm, MS face "
+              f"{r_h['ms_face']:+.2f}")
     rpms = np.linspace(0, 10000, 41)
     curves = {}
     for label, side, lay, colour, dash in (("1 layer (rejected), lower", "lower", 1, "#6B7280", "8 5"),

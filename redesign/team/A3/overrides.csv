@@ -1,4 +1,4 @@
 part_id,x_m,y_m,z_m,maturity,reason
-PRP-002,,,,EST,ESC 11.0 g with leads and heat-shrink is EST per E1 parts.csv notes (6.6 g bare board is the only datasheet number)
+PRP-002,,,,EST,"ESC 7.6 g stripped (D-48): 6.6 g bare board + 1.0 g signal lead and shrink EST per E1 parts.csv notes; only the bare board is a datasheet number"
 HRN-001,,,,CALC,"F2 harness.py breakdown (team/F2/mass_estimate.csv): wires CALC from routed lengths; fittings and phase extensions EST; lump carried at CALC 10 %"
 HRN-002,,,,CALC,as HRN-001 (per-side lump)

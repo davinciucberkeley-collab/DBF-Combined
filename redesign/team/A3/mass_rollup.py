@@ -79,20 +79,30 @@ kit.assumption("ASM-A3-MGA", "Mass growth allowance by maturity",
                basis="Maturity-based allowance after AIAA S-120A (mass properties control); percentages are A3's "
                      "choice for a student foam build, ESTIMATE", value={"EST": 20, "CALC": 10, "DATASHEET": 5,
                                                                          "CAD": 5, "WEIGHED": 1}, unit="%")
-kit.assumption("ASM-A3-PACK-SLIDE", "Pack fore-aft trim travel from its nominal station",
-               "Printed U-spacers behind the pack (0-22 mm in 2 mm steps, POD-008); the nominal 550 g pack flies "
-               "the 8 mm spacer, so the pack can go 8 mm aft (no spacer) or up to 14 mm forward (22 mm of "
-               "spacers), the forward travel further limited by the crush stack (ASM-A3-NOSE-STACK)",
-               basis="subsystems/pod/params.json spacer_set_m, spacer_flown_m, aft_stop_x_m 0.077 (D2-R3)",
-               value=[-0.014, 0.008], unit="m", status="PROPOSED")
+kit.assumption("ASM-A3-PACK-SLIDE", "Total U-spacer stack behind the pack",
+               "Printed U-spacers POD-008 2/4/6/8/8 mm (0-28 mm) between the pack aft face and the aft stop. The "
+               "aft travel from the nominal station is P:pod.pack_aft_travel_m (no spacer, D-59: 12 mm, aft stop "
+               "0.060); the forward travel is that minus this stack, further limited by the crush stack "
+               "(ASM-A3-NOSE-STACK, 3.4 mm ahead of the -0.022 nominal)",
+               basis="params/CHANGE-LOG.md D-47 (spacer set 2/4/6/8/8) and D-59; replace by "
+                     "subsystems/pod/params.json spacer_set_m once D2-R5 is published",
+               value=0.028, unit="m", status="PROPOSED")
 kit.assumption("ASM-A3-PACK-RANGE", "Pack mass range from listings", "Ovonic 4S 6500 listings give 503 to 680 g",
                basis="config-study/cards/K09/REVIEW.md section 2; weigh on arrival", value=[503.0, 680.0], unit="g",
                status="UNVERIFIED", cites=["SRC-K09-REVIEW", "SRC-OVONIC-4S6500"])
 kit.assumption("ASM-A3-NOSE-STACK", "Length from the pod nose to the most forward pack fore face",
-               "Pod nose -0.115 to the forward-stop aft face -0.1002 (14.8 mm: nose block, 3 mm stop) + XPS F-250 "
-               "crush block >= 24.3 mm + 1.5 mm PETG spreader = 40.6 mm",
-               basis="subsystems/pod/params.json fwd_stop_x_m -0.1002 (D2-R3, D-25); crush block C5 CR-C5-02, "
-                     "spreader_t_m 0.0015", value=0.0406, unit="m")
+               "R5 bay (D-47): pod nose -0.130 to the forward-stop aft face -0.1212 (8.8 mm: nose wall, nose block, "
+               "3 mm stop) + XPS F-250 crush block >= 24.3 mm + 1.5 mm PETG spreader = 34.6 mm; most forward pack "
+               "fore face -0.0954",
+               basis="params/CHANGE-LOG.md D-47, CR-A1-43 (forward stop -0.1212, crush block >= 24.3 mm C5 "
+                     "CR-C5-02, spreader 1.5 mm); was 40.6 mm at D2-R3/R4", value=0.0346, unit="m")
+kit.assumption("ASM-A3-PACK-STATIONS", "Per-pack flight station rule (D-59)",
+               "Each weighed pack flies at the whole spacer step (P:pod.pack_spacer_step_m), counted forward from "
+               "the no-spacer station (nominal + P:pod.pack_aft_travel_m), that puts the basic CG nearest "
+               "cg.x_target_m, never ahead of the crush stack (ASM-A3-NOSE-STACK). Basic and predicted CG are both "
+               "checked against the range",
+               basis="params/CHANGE-LOG.md D-59 (A1-R4a), CR-A1-53; same rule as A1's CALC-A1-PACK-CASES",
+               status="PROPOSED")
 
 
 # ------------------------------------------------------------------ pure calculations (re-run by build_graph)
@@ -152,7 +162,8 @@ def _cg(rows, w=None):
 
 
 @kit.calc("CALC-A3-CG", title="CG cases, pack station for the target, hover trim split",
-          assumes=["ASM-A3-MGA", "ASM-A3-PACK-SLIDE", "ASM-A3-PACK-RANGE", "ASM-A3-NOSE-STACK"],
+          assumes=["ASM-A3-MGA", "ASM-A3-PACK-SLIDE", "ASM-A3-PACK-RANGE", "ASM-A3-NOSE-STACK",
+                   "ASM-A3-PACK-STATIONS"],
           equation="cg = sum m_i r_i / sum m_i ; x_pack_req = (x_t M - (M x_cg - m_p x_p)) / m_p ; "
                    "split = (z_m + z_cg) / (z_m - z_cg) ; h_stance = c - x_cg + foot ; "
                    "fwd_room = (x_pack - L_pack/2) - x_pod_le - nose_stack ; "
@@ -162,10 +173,12 @@ def _cg(rows, w=None):
                   "x_t": P + "cg.x_target_m", "z_m": P + "propulsion.stations.z_m", "c": P + "wing.chord_m",
                   "te": P + "wing.te_x_m", "pack": P + "battery.size_m", "slide": "ASM-A3-PACK-SLIDE",
                   "foot": P + "cg.foot_height_m", "pack_rng": "ASM-A3-PACK-RANGE", "pod_le": P + "pod.x_le_m",
-                  "nose": "ASM-A3-NOSE-STACK", "y_max": P + "requirements.cg_lateral_max_m"},
+                  "nose": "ASM-A3-NOSE-STACK", "y_max": P + "requirements.cg_lateral_max_m",
+                  "aft": P + "pod.pack_aft_travel_m", "stations": P + "pod.pack_spacer_step_m"},
           units={"x_rng": "m", "z_rng": "m", "x_t": "m", "z_m": "m", "c": "m", "te": "m", "pack": "m", "slide": "m",
-                 "foot": "m", "pack_rng": "g", "pod_le": "m", "nose": "m", "y_max": "m"})
-def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_rng, pod_le, nose, y_max):
+                 "foot": "m", "pack_rng": "g", "pod_le": "m", "nose": "m", "y_max": "m", "aft": "m", "stations": "m"})
+def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_rng, pod_le, nose, y_max,
+             aft=0.012, stations=0.002):
     rows = _rows(items)
     packs = [r for r in rows if r["discipline"] == "energy"]
     m, cg = _cg(rows)
@@ -175,7 +188,7 @@ def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_
     m_e, cg_e = _cg([r for r in rows if r["discipline"] != "energy"])
     x_req = (x_t * m - (m * cg[0] - mp * xp)) / mp
     x_fwd_lim = pod_le + nose + pack[0] / 2                  # most forward pack centroid the crush stack allows
-    sl = [max(slide[0], x_fwd_lim - xp), slide[1]]            # travel from nominal, clamped by the crush stack
+    sl = [max(aft - slide, x_fwd_lim - xp), aft]              # travel from nominal, clamped by the crush stack
     trim = [(m * cg[0] + mp * d) / m for d in sl]
 
     def x_for_pack(mass, d=0.0):                              # pack of this mass at nominal + d
@@ -202,6 +215,25 @@ def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_
             v["x_cg_trimmed_m"] = x_for_pack(mass, v["trim_aft_m"])
             v["trim_ok"] = sl[0] <= v["trim_aft_m"]
 
+    # D-59: each weighed pack flies at the spacer step nearest the target, clamped to the bay travel; basic and
+    # predicted CG (non-pack items with growth, pack 0 %) both checked against the range
+    st_cases, st_use = {}, 0.0
+    mid, half = (x_rng[0] + x_rng[1]) / 2, (x_rng[1] - x_rng[0]) / 2
+    pred_e = [(r["mass_g"] * (1 + _growth(r, mga)), r["x"]) for r in rows if r["discipline"] != "energy"]
+    m_pe, s_pe = sum(a for a, _ in pred_e), sum(a * b for a, b in pred_e)
+    x_aft = xp + sl[1]
+    for mass in (pack_rng[0], mp, pack_rng[1]):
+        ideal = (x_t * (m - mp + mass) - (m * cg[0] - mp * xp)) / mass - xp      # offset for the target
+        k = round((sl[1] - ideal) / stations)                                     # spacer steps from no spacer
+        d = min(max(sl[1] - k * stations, sl[0]), sl[1])
+        x, xpr = x_for_pack(mass, d), (s_pe + mass * (xp + d)) / (m_pe + mass)
+        u = max(abs(x - mid), abs(xpr - mid)) / half
+        st_use = max(st_use, u)
+        st_cases[f"{mass:.0f}"] = {"pack_x_m": xp + d, "offset_m": d, "spacer_m": x_aft - (xp + d),
+                                   "x_cg_m": x, "x_cg_pred_m": xpr, "range_use": u,
+                                   "fwd_margin_m": min(x, xpr) - x_rng[0], "aft_margin_m": x_rng[1] - max(x, xpr),
+                                   "ideal_offset_m": ideal, "clamped": abs(d - ideal) > stations / 2 + 1e-9}
+
     # slide needed beyond the travel the bay gives (0 = every listed pack can be trimmed into the range)
     trim_short = max(max(0.0, v["trim_aft_m"] - sl[1], sl[0] - v["trim_aft_m"]) for v in packs_cases.values())
     return {"mass_g": m, "cg_m": cg, "cg_pred_m": cg_pred, "cg_x_frac_chord": cg[0] / c,
@@ -216,7 +248,8 @@ def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_
             "pack_aft_room_m": te - (x_req + pack[0] / 2),           # >= 0: the pack still ends ahead of the TE
             "pack_fwd_room_m": (xp - pack[0] / 2) - pod_le - nose,   # room left after the crush stack and nose wall
             "cg_x_trim_range_m": trim, "cg_x_pack_light_heavy_m": [x_for_pack(pack_rng[0]), x_for_pack(pack_rng[1])],
-            "pack_cases": packs_cases, "pack_slide_eff_m": sl, "pack_trim_shortfall_m": trim_short, "pack_x_fwd_limit_m": x_fwd_lim,
+            "pack_cases": packs_cases, "station_cases": st_cases, "cg_x_station_range_use": st_use,
+            "cg_x_pred_range_use": abs(cg_pred[0] - mid) / half, "cg_x_pred_m": cg_pred[0], "pack_slide_eff_m": sl, "pack_trim_shortfall_m": trim_short, "pack_x_fwd_limit_m": x_fwd_lim,
             "cg_y_use": abs(cg[1]) / y_max,
             "hover_split": (z_m + zc) / (z_m - zc), "stance_cg_height_m": c - cg[0] + foot}
 
@@ -270,6 +303,16 @@ kit.claim("CL-A3-CG-X", "CG x at take-off, current layout", calc="CALC-A3-CG", o
 kit.claim("CL-A3-CG-X-RANGE", "CG x position in the allowable range, |x - mid| / half-range",
           calc="CALC-A3-CG", output="cg_x_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"],
           how="CG balance with pack at its station; B3 confirms the range from AVL.")
+kit.claim("CL-A3-CG-X-STATIONS", "Worst CG x range use (basic and predicted) with each listed pack (503 / 550 / 680 g) "
+          "at its D-59 spacer station",
+          calc="CALC-A3-CG", output="cg_x_station_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"],
+          how="Balance with the weighed pack at the station on the flight card (T-A3-CG-BALANCE).")
+kit.claim("CL-A3-CG-X-PRED-RANGE", "Predicted CG x (growth pro rata) range use, 550 g pack at nominal",
+          calc="CALC-A3-CG", output="cg_x_pred_range_use", unit="-", limit=("<=", 1.0),
+          how="Re-run as items mature; balance the built aircraft (T-A3-CG-BALANCE).")
+kit.claim("CL-A3-CG-X-PRED", "Predicted CG x (growth pro rata), 550 g pack at the nominal station", calc="CALC-A3-CG",
+          output="cg_x_pred_m", unit="m",
+          how="Re-run as items mature; balance the built aircraft (T-A3-CG-BALANCE).")
 kit.claim("CL-A3-PACK-X-REQ", "Pack centroid station that puts the CG on target", calc="CALC-A3-CG",
           output="pack_x_req_m", unit="m",
           how="Strap the pack at this x and balance (T-A3-CG-BALANCE); D2 places the pod around it.")
@@ -302,7 +345,7 @@ kit.test("T-A3-WEIGH-PARTS", "Weigh every bought part and the first core and fin
          verifies=["CL-A3-MASS-PREDICTED", "CL-A3-GATE-MARGIN", "CL-A3-GATE-MARGIN-680",
                    "CL-A3-GATE-MARGIN-503"], state="planned",
          procedure="1 g kitchen scale; record in the owner's interfaces.json status VERIFIED and mass_g; pack first.")
-kit.test("T-A3-CG-BALANCE", "CG balance", verifies=["CL-A3-CG-X-RANGE", "CL-A3-PACK-X-REQ", "CL-A3-CG-Z-RANGE",
+kit.test("T-A3-CG-BALANCE", "CG balance", verifies=["CL-A3-CG-X-RANGE", "CL-A3-CG-X-STATIONS", "CL-A3-PACK-X-REQ", "CL-A3-CG-Z-RANGE",
                                                     "CL-A3-PACK-TRIM", "CL-A3-CG-Y"],
          state="planned", procedure="Two knife edges (or two scales) under the wing at known x; ready to fly, props on.")
 kit.test("T-A3-SWING", "Bifilar pendulum inertia", verifies=["CL-A3-IXX", "CL-A3-IYY", "CL-A3-IZZ"], state="planned",
@@ -400,14 +443,18 @@ def model_rows(path, params, used, source):
 GROUND_WORDS = ("not flying", "ground spare", "not on the aircraft")
 
 
-def read_overrides():
-    """team/A3/overrides.csv: part_id -> {x_m, y_m, z_m (blank = keep), maturity (blank = keep), reason}."""
+def read_overrides(params=None, used=None):
+    """team/A3/overrides.csv: part_id -> {x_m, y_m, z_m (blank = keep; a number or an '=P:key' expression),
+    maturity (blank = keep), reason}. Expressions are evaluated here, so an override follows params.json."""
     f = HERE / "overrides.csv"
     out = {}
     if f.exists():
         for r in read_csv(f):
-            out[r["part_id"].strip()] = {k: (r.get(k) or "").strip() for k in ("x_m", "y_m", "z_m", "maturity",
-                                                                               "reason")}
+            o = {k: (r.get(k) or "").strip() for k in ("x_m", "y_m", "z_m", "maturity", "reason")}
+            for k in ("x_m", "y_m", "z_m"):
+                if o[k].startswith("="):
+                    o[k] = repr(evaluate(o[k], params, used if used is not None else set()))
+            out[r["part_id"].strip()] = o
     return out
 
 
@@ -535,7 +582,7 @@ def gather(params):
         mm = sum(r[3] for r in rs)
         model_cg[s] = [sum(r[3] * r[4 + i] for r in rs) / mm for i in range(3)]
     model_pos = {pid: (iid, [r[4:7] for r in it["rows"]]) for iid, it in model.items() for pid in it["part_ids"]}
-    overrides = read_overrides()
+    overrides = read_overrides(params, used)
     items = []
     subs_dirs = sorted(d for d in (RED / "subsystems").glob("*") if d.is_dir()) if (RED / "subsystems").exists() else []
     from_parts, part_ids = set(), set()
@@ -635,6 +682,10 @@ def report(kit, items, log):
           *[f"| Pack {k} g: nominal station → slid {v['trim_aft_m'] * 1000:+.1f} mm (+ aft) | "
             f"{v['x_cg_nominal_m']:.4f} → {v['x_cg_trimmed_m']:.4f} | | | {ok(v['trim_ok'])} |"
             for k, v in C["pack_cases"].items()],
+          *[f"| Pack {k} g at its D-59 station x {v['pack_x_m']:.4f} (spacers {v['spacer_m'] * 1000:.0f} mm"
+            f"{', clamped' if v['clamped'] else ''}): basic → predicted | {v['x_cg_m']:.4f} → {v['x_cg_pred_m']:.4f} "
+            f"(fwd {v['fwd_margin_m'] * 1000:+.1f} / aft {v['aft_margin_m'] * 1000:+.1f} mm) | | | "
+            f"{ok(v['range_use'] <= 1)} |" for k, v in C["station_cases"].items()],
           f"| No pack (handling) | {cge[0]:.3f} ({cge[0] / c:.1%}) | {cge[1]:+.4f} | {cge[2]:+.3f} | — |", "",
           "| CG result | Value | Unit | Source |", "|---|---|---|---|",
           f"| Pack centroid now / needed for x = {xt:.3f} m | {C['pack_x_m']:.3f} / {C['pack_x_req_m']:.3f} | m | "
@@ -654,6 +705,9 @@ def report(kit, items, log):
           f"| Pack slide needed for 503–680 g beyond the trim travel | {C['pack_trim_shortfall_m'] * 1000:.1f} | mm | "
           f"`CL-A3-PACK-TRIM` |",
           f"| Most forward pack centroid the nose stack allows | {C['pack_x_fwd_limit_m']:.4f} | m | `CALC-A3-CG` |",
+          f"| CG x range use: basic / packs at their stations (worst) / predicted | {C['cg_x_range_use']:.2f} / "
+          f"{C['cg_x_station_range_use']:.2f} / {C['cg_x_pred_range_use']:.2f} | — | `CL-A3-CG-X-RANGE` / "
+          f"`CL-A3-CG-X-STATIONS` / `CL-A3-CG-X-PRED-RANGE` |",
           f"| Lateral CG offset / allowed {kit.value(P + 'requirements.cg_lateral_max_m') * 1000:.0f} mm | "
           f"{C['cg_y_use']:.2f} ({cg[1] * 1000:+.1f} mm) | — | `CL-A3-CG-Y` |",
           f"| CG height above the feet in the stance | {C['stance_cg_height_m']:.3f} | m | `CALC-A3-CG` |", "",

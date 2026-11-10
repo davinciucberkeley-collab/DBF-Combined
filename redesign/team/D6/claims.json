@@ -53,6 +53,16 @@
    "status": "UNVERIFIED"
   },
   {
+   "id": "SRC-D6-CFROD",
+   "type": "source",
+   "title": "Pultruded unidirectional carbon rod 1/8 in: E 110-140 GPa, 1.55-1.6 g/cm3, flexural strength >= 1 000 MPa",
+   "kind": "web",
+   "url": "https://www.cstsales.com/carbon_rods.html",
+   "where": "rod table; low-end modulus used (110 GPa)",
+   "note": "weigh and bend-test one rod (T-D6-TWIST)",
+   "status": "UNVERIFIED"
+  },
+  {
    "id": "SRC-D6-CLEVIS",
    "type": "source",
    "title": "Du-Bro 2-56 threaded rod (0.072 in) and 2-56 steel clevis",
@@ -527,7 +537,7 @@
     "xs": "P:mec.station.shaft_x_m",
     "above": "P:mec.station.shaft_above_skin_m",
     "d": "P:mec.pushrod.d_m",
-    "E": "P:mec.link.e_pa",
+    "E": "P:mec.pushrod.e_pa",
     "sf": "P:requirements.safety_factor_ult",
     "ff": "ASM-C1-FITTING-FACTOR",
     "pf": "ASM-C1-PRINTED-FACTOR",
@@ -554,7 +564,7 @@
     "Pcr_N": 362.4571104555307,
     "buckling_sf": 17.910929168519583,
     "A_min_mm2": 349.08212167725816,
-    "A_horn_mm2": 1385.3433828571428,
+    "A_horn_mm2": 1109.3433828571428,
     "rod_len_m": 0.05475498790917957
    },
    "input_values": {
@@ -763,13 +773,13 @@
     "flange": [
      8.0,
      38.0,
-     20.0,
+     14.0,
      1.2
     ],
     "back": [
      14.0,
      38.0,
-     16.0,
+     12.0,
      1.0
     ],
     "blade": [
@@ -1074,7 +1084,7 @@
     "flange": [
      8.0,
      38.0,
-     20.0,
+     14.0,
      1.2
     ],
     "rh": 0.0255,
@@ -1131,7 +1141,7 @@
    "title": "Inter-panel rod lag, panel twist and elevon effectiveness loss",
    "script": "redesign/team/D6/mech_calcs.py",
    "function": "bridge",
-   "equation": "rod: fixed-guided beam, d = F L^3 / (12 E I), F = H_out / r_b, lag = d / r_b; panel: uniform torque from the drive point, tip theta = m L^2 / (2 GJ), mean = 2/3 tip; GJ = G_tube J_tube + 4 A^2 G_skin t / s (closed tape box) + G_xps c_e t^3 / 12; loss = mean lag / 25 deg",
+   "equation": "rod: fixed-guided beam, d = F L^3 / (12 E I), F = H_out / r_b, lag = d / r_b; panel: uniform torque m from the drive point, tube over the first a L (GJ_h), skin + foam beyond (GJ_l): tip = m L^2 [(a - a^2/2)/GJ_h + (1-a)^2/(2 GJ_l)], mean = m L^2 [(a^2/2 - a^3/6 + (a - a^2/2)(1-a))/GJ_h + (1-a)^3/(3 GJ_l)] (a = 1: tip m L^2/2GJ, mean 2/3 tip); GJ = G_tube J_tube + 4 A^2 G_skin t / s (closed tape box) + G_xps c_e t^3 / 12; loss = mean lag / 25 deg",
    "inputs": {
     "hva": "CL-D6-H-VA-FULL",
     "hvd": "CL-D6-H-VD-FULL",
@@ -1156,7 +1166,8 @@
     "szl": "P:mec.section.zl_m",
     "yin": "P:wing.elevon.inboard_y_m",
     "yout": "P:wing.elevon.outboard_y_m",
-    "defl": "P:wing.elevon.deflection_deg"
+    "defl": "P:wing.elevon.deflection_deg",
+    "afrac": "P:mec.tube.cover_frac"
    },
    "units": {
     "hva": "N*m",
@@ -1179,19 +1190,21 @@
     "ASM-D6-TAPE-G"
    ],
    "outputs": {
-    "lag_va_deg": 0.23153378031312707,
-    "lag_vd_deg": 0.4076096419437571,
+    "lag_va_deg": 0.42097050966023103,
+    "lag_vd_deg": 0.7411084398977402,
     "rod_sigma_vd_Pa": 98693110.09098677,
     "rod_free_len_m": 0.0476,
     "twist_out_va_deg": 2.3294401765659467,
-    "twist_in_va_deg": 2.5622456195540932,
+    "twist_in_va_deg": 2.9571874817439077,
     "twist_out_va_foam_only_deg": 16.324399086358714,
-    "out_total_va_deg": 2.560973956879074,
+    "out_total_va_deg": 2.7504106862261777,
     "GJ_Nm2": 0.28689365003229533,
     "GJ_tube_Nm2": 0.18113245143353648,
     "GJ_skin_Nm2": 0.06482238111142254,
-    "loss_out_va": 0.07137975592095032,
-    "loss_in_va": 0.06832654985477582
+    "loss_out_va": 0.0789572250948345,
+    "loss_in_va": 0.07148608475229434,
+    "loss_in_va_full_tube": 0.06832654985477583,
+    "loss_in_va_no_tube": 0.1853463608739801
    },
    "input_values": {
     "hva": 0.24979552416000003,
@@ -1199,7 +1212,7 @@
     "share": 0.48888888888888893,
     "rb": 0.0165,
     "d": 0.003175,
-    "E": 200000000000.0,
+    "E": 110000000000.0,
     "ya": 0.285,
     "yo": 0.355,
     "boss": 0.01,
@@ -1415,7 +1428,138 @@
     "defl": [
      -25,
      25
+    ],
+    "afrac": [
+     0.7,
+     1.0
     ]
+   }
+  },
+  {
+   "id": "CALC-D6-ROD-TRADE",
+   "type": "calculation",
+   "title": "Bridge-rod choice: outboard effectiveness loss and mass per rod",
+   "script": "redesign/team/D6/mech_calcs.py",
+   "function": "rod_trade",
+   "equation": "lag_alt = lag x (E d^4) / (E_alt d_alt^4) (same fixed-guided beam); loss_alt = loss + (lag_alt - lag) / 25 deg; m = pi d^2 / 4 x L_cut x rho",
+   "inputs": {
+    "lag": "CL-D6-BRIDGE-LAG-VA",
+    "loss": "CL-D6-EFF-LOSS-OUT",
+    "d": "P:mec.link.d_m",
+    "E": "P:mec.link.e_pa",
+    "alt": "P:mec.link.trade_d_e",
+    "rho_cf": "P:mec.link.rod_gcc",
+    "rho_st": "P:mec.link.steel_gcc",
+    "defl": "P:wing.elevon.deflection_deg",
+    "ya": "P:mec.station.arm_plane_y_m",
+    "yo": "P:mec.station.outboard_horn_y_m"
+   },
+   "units": {
+    "lag": "deg",
+    "d": "m",
+    "E": "Pa",
+    "rho_cf": "g/cm3",
+    "rho_st": "g/cm3",
+    "ya": "m",
+    "yo": "m"
+   },
+   "outputs": {
+    "mass_chosen_g": 0.8487350274883086,
+    "loss_out_steel_3_32": 0.09140114332340935,
+    "mass_steel_3_32_g": 2.3418179558428656,
+    "loss_out_cf_2mm": 0.16906491067243679,
+    "mass_cf_2mm_g": 0.3367787324648259,
+    "loss_out_steel_1_8": 0.07137975592095033,
+    "mass_steel_1_8_g": 4.164106228614514
+   },
+   "input_values": {
+    "lag": 0.42097050966023103,
+    "loss": 0.0789572250948345,
+    "d": 0.003175,
+    "E": 110000000000.0,
+    "alt": [
+     [
+      0.002381,
+      200000000000.0
+     ],
+     [
+      0.002,
+      110000000000.0
+     ],
+     [
+      0.003175,
+      200000000000.0
+     ]
+    ],
+    "rho_cf": 1.6,
+    "rho_st": 7.85,
+    "defl": [
+     -25,
+     25
+    ],
+    "ya": 0.285,
+    "yo": 0.355
+   }
+  },
+  {
+   "id": "CALC-D6-FRAME-BOND",
+   "type": "calculation",
+   "title": "Servo frame bonded area and the area its load needs",
+   "script": "redesign/team/D6/mech_calcs.py",
+   "function": "frame_bond",
+   "equation": "A = rim (Lx Ly - (Lx - 2r)(Ly - 2r)) + inboard wall Lx Hz + 2 end walls Ly Hz; Lx = ear span + 2 w, Ly = H + boss + t_arm + c + w (1.5 mm arm gap left out: conservative), Hz = W + c + w; F = T_stall / r_arm + T_stall / Lx; A_min = F sf ff pf / (kd sigma_XPS) (C6 method)",
+   "inputs": {
+    "case": "P:mec.servo.case_m",
+    "boss": "P:mec.servo.spline_boss_m",
+    "ear": "P:mec.servo.ear_span_m",
+    "at": "P:mec.arm.t_m",
+    "w": "P:mec.frame.wall_m",
+    "cl": "P:mec.frame.clear_m",
+    "rim": "P:mec.frame.window_rim_m",
+    "T": "P:mec.servo.stall_torque_6v_kgfcm",
+    "rs": "P:mec.arm.r_m",
+    "sf": "P:requirements.safety_factor_ult",
+    "ff": "ASM-C1-FITTING-FACTOR",
+    "pf": "ASM-C1-PRINTED-FACTOR",
+    "kd": "ASM-C6-FOAM-KD",
+    "s_xps": "ASM-D3-XPS-TENSILE"
+   },
+   "units": {
+    "case": "m",
+    "boss": "m",
+    "ear": "m",
+    "at": "m",
+    "w": "m",
+    "cl": "m",
+    "rim": "m",
+    "T": "kgf*cm",
+    "rs": "m"
+   },
+   "outputs": {
+    "A_frame_mm2": 1855.35,
+    "A_min_mm2": 611.9497121239256,
+    "F_design_N": 35.475345630372495,
+    "A_rim_mm2": 482.40000000000003
+   },
+   "input_values": {
+    "case": [
+     0.0228,
+     0.012,
+     0.0254
+    ],
+    "boss": 0.004,
+    "ear": 0.0325,
+    "at": 0.0025,
+    "w": 0.0012,
+    "cl": 0.0003,
+    "rim": 0.004,
+    "T": 3.9,
+    "rs": 0.0156,
+    "sf": 1.5,
+    "ff": 1.15,
+    "pf": 1.25,
+    "kd": 0.5,
+    "s_xps": 250000.0
    }
   },
   {
@@ -1457,12 +1601,12 @@
     "alloc": "g"
    },
    "outputs": {
-    "mass_g": 82.34,
-    "over_g": 17.340000000000003
+    "mass_g": 70.68,
+    "over_g": -9.319999999999993
    },
    "input_values": {
-    "m": 82.34,
-    "alloc": 65
+    "m": 70.68,
+    "alloc": 80
    }
   },
   {
@@ -1690,7 +1834,7 @@
     "MEC-006-R"
    ],
    "how": "T-C6-XPS-PULL; horn pull-off coupon",
-   "value": 1385.3433828571428
+   "value": 1109.3433828571428
   },
   {
    "id": "CL-D6-BOND-HORN-NEED",
@@ -1932,7 +2076,7 @@
     "MEC-006-R"
    ],
    "how": "T-D6-TWIST",
-   "value": 0.23153378031312707
+   "value": 0.42097050966023103
   },
   {
    "id": "CL-D6-TWIST-OUT-VA",
@@ -1954,7 +2098,7 @@
     "MEC-009-RO"
    ],
    "how": "T-D6-TWIST: weight on the panel tip TE, protractor at both ends",
-   "value": 2.560973956879074
+   "value": 2.7504106862261777
   },
   {
    "id": "CL-D6-TWIST-IN-VA",
@@ -1970,7 +2114,7 @@
     "MEC-009-RO"
    ],
    "how": "T-D6-TWIST",
-   "value": 2.5622456195540932
+   "value": 2.9571874817439077
   },
   {
    "id": "CL-D6-EFF-LOSS-OUT",
@@ -1996,7 +2140,7 @@
     "MEC-009-RO"
    ],
    "how": "T-D6-TWIST",
-   "value": 0.07137975592095032
+   "value": 0.0789572250948345
   },
   {
    "id": "CL-D6-EFF-LOSS-IN",
@@ -2016,7 +2160,131 @@
     "MEC-009-RO"
    ],
    "how": "T-D6-TWIST",
-   "value": 0.06832654985477582
+   "value": 0.07148608475229434
+  },
+  {
+   "id": "CL-D6-EFF-LOSS-IN-FULL-TUBE",
+   "type": "claim",
+   "title": "Inboard panel loss if its tube ran the full panel (R1)",
+   "calc": "CALC-D6-BRIDGE",
+   "output": "loss_in_va_full_tube",
+   "unit": "-",
+   "parts": [
+    "MEC-009-LI",
+    "MEC-009-LO",
+    "MEC-009-RI",
+    "MEC-009-RO"
+   ],
+   "how": "Information: cost of the 30 % shorter inboard tube (D6-R2, -1.7 g)",
+   "value": 0.06832654985477583
+  },
+  {
+   "id": "CL-D6-EFF-LOSS-IN-NO-TUBE",
+   "type": "claim",
+   "title": "Inboard panel loss with no tube (closed tape skin only)",
+   "calc": "CALC-D6-BRIDGE",
+   "output": "loss_in_va_no_tube",
+   "unit": "-",
+   "parts": [
+    "MEC-009-LI",
+    "MEC-009-LO",
+    "MEC-009-RI",
+    "MEC-009-RO"
+   ],
+   "how": "Information: why both panels keep a tube (above the 10 % limit)",
+   "value": 0.1853463608739801
+  },
+  {
+   "id": "CL-D6-ROD-MASS",
+   "type": "claim",
+   "title": "Bridge rod mass, 1/8 in pultruded CF, 67 mm",
+   "calc": "CALC-D6-ROD-TRADE",
+   "output": "mass_chosen_g",
+   "unit": "g",
+   "parts": [
+    "MEC-005-L",
+    "MEC-005-R"
+   ],
+   "how": "T-D6-WEIGH",
+   "value": 0.8487350274883086
+  },
+  {
+   "id": "CL-D6-EFF-LOSS-OUT-332-STEEL",
+   "type": "claim",
+   "title": "Outboard loss with a 3/32 in music-wire rod (A1 D-48 fallback)",
+   "calc": "CALC-D6-ROD-TRADE",
+   "output": "loss_out_steel_3_32",
+   "unit": "-",
+   "parts": [
+    "MEC-005-L",
+    "MEC-005-R"
+   ],
+   "how": "Information: rejected option (heavier and more lag than CF 1/8 in)",
+   "value": 0.09140114332340935
+  },
+  {
+   "id": "CL-D6-EFF-LOSS-OUT-2MM-CF",
+   "type": "claim",
+   "title": "Outboard loss with a 2 mm CF rod (A3 suggestion)",
+   "calc": "CALC-D6-ROD-TRADE",
+   "output": "loss_out_cf_2mm",
+   "unit": "-",
+   "parts": [
+    "MEC-005-L",
+    "MEC-005-R"
+   ],
+   "how": "Information: rejected option (above the 10 % limit)",
+   "value": 0.16906491067243679
+  },
+  {
+   "id": "CL-D6-ROD-MASS-R1",
+   "type": "claim",
+   "title": "Bridge rod mass, 1/8 in music wire (R1)",
+   "calc": "CALC-D6-ROD-TRADE",
+   "output": "mass_steel_1_8_g",
+   "unit": "g",
+   "parts": [
+    "MEC-005-L",
+    "MEC-005-R"
+   ],
+   "how": "Information: R1 baseline",
+   "value": 4.164106228614514
+  },
+  {
+   "id": "CL-D6-BOND-FRAME",
+   "type": "claim",
+   "title": "Servo frame bonded area into XPS (top-plate rim + three walls)",
+   "calc": "CALC-D6-FRAME-BOND",
+   "output": "A_frame_mm2",
+   "unit": "mm2",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C6-LINK-BOND-AREA-MIN"
+   },
+   "parts": [
+    "MEC-008-L",
+    "MEC-008-R"
+   ],
+   "how": "T-C6-XPS-PULL; frame pull-off coupon",
+   "value": 1855.35
+  },
+  {
+   "id": "CL-D6-BOND-FRAME-NEED",
+   "type": "claim",
+   "title": "Frame bond area needed at servo stall (C6 method)",
+   "calc": "CALC-D6-FRAME-BOND",
+   "output": "A_min_mm2",
+   "unit": "mm2",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-D6-BOND-FRAME"
+   },
+   "parts": [
+    "MEC-008-L",
+    "MEC-008-R"
+   ],
+   "how": "T-C6-XPS-PULL",
+   "value": 611.9497121239256
   },
   {
    "id": "CL-D6-TWIST-FOAM-ONLY",
@@ -2086,7 +2354,7 @@
     "MEC-001-R"
    ],
    "how": "T-D6-WEIGH: weigh every part on arrival",
-   "value": 82.34
+   "value": 70.68
   },
   {
    "id": "T-D6-THROW",

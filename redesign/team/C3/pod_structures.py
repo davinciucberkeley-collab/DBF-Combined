@@ -31,6 +31,8 @@ P = "P:"
 G0 = 9.80665
 _POD = json.loads((REDESIGN / "subsystems" / "pod" / "params.json").read_text(encoding="utf-8"))
 _pv = lambda k: _POD[k]["value"]
+_PAR = json.loads((REDESIGN / "params" / "params.json").read_text(encoding="utf-8"))
+_gv = lambda sec, k: _PAR[sec][k]["value"]
 ENVELOPE_FAMILIES = ("flight", "hover", "transition", "landing", "ground")
 
 
@@ -57,11 +59,26 @@ kit.assumption("ASM-C3-PACK-LOADS", "C1 pack-to-tray loads, envelope cases, limi
                unit="N", cites=SRC)
 kit.assumption("ASM-C3-XPS-SHEAR", "Epoxy-to-XPS bond shear allowable 100 kPa",
                "Allowable shear at an epoxy bond line on F-250 XPS, foam failure",
-               basis="ESTIMATE: XPS shear strength is not on the F-250 TDS; typical 25 psi XPS 0.2-0.25 MPa, halved; "
-                     "coupon T-C3-BOND-COUPON", value=100000.0, unit="Pa", status="UNVERIFIED", cites=["SRC-XPS-F250"])
-kit.assumption("ASM-C3-STOP-H", "Pack stop wall height 25 mm", "Printed stop wall height above the tray",
-               basis="subsystems/pod/params.json stop_wall_h_m", value=_pv("stop_wall_h_m"), unit="m", cites=SRC)
-kit.assumption("ASM-C3-GUIDE", "Bay guides 1.0 x 8 mm (D2)", "Guide thickness and height above the tray [t, h]",
+               basis="C6 value (CR-C6-16): ASM-C6-FOAM-KD 0.5 x ASM-C6-XPS-SHEAR-TYP 0.20 MPa; kept for C6's "
+                     "CALC-C6-POD-ALLOW comparison, the C3 calcs read C6's nodes through CALC-C3-ALLOW",
+               value=100000.0, unit="Pa", status="UNVERIFIED", cites=["SRC-XPS-F250"])
+kit.assumption("ASM-C3-STOP-H", "Forward stop height 25 mm", "Printed forward stop height above the tray top "
+               "(C5's CALC-C5-CRASH reads it as the stop section height)",
+               basis="subsystems/pod/params.json fwd_stop_m[1] (D2-R4; stop_wall_h_m retired)",
+               value=_pv("fwd_stop_m")[1], unit="m", cites=SRC)
+kit.assumption("ASM-C3-AFT-STOP-H", "Aft stop height 27 mm", "Printed aft stop top above the pack underside: "
+               "lever of the pack load at the stop root (uniform pressure over this height)",
+               basis="subsystems/pod/params.json aft_stop_m[1] (D2-R4)", value=_pv("aft_stop_m")[1], unit="m", cites=SRC)
+kit.assumption("ASM-C3-D47-NOSE", "D-47 nose stack: forward stop aft face -0.1212 m, stack 8.8 mm",
+               "[forward stop aft face x, nose wall + block A + forward stop length] that A1 decided at D-47",
+               basis="params/CHANGE-LOG.md D-47 (CR-A3-22, CR-D2-16): nose block 14.8 -> 8.8 mm, forward stop "
+                     "-0.1002 -> -0.1212; D2 has not yet re-laid subsystems/pod/params.json (nose_block_l_m 0.007)",
+               value=[-0.1212, 0.0088], unit="m", cites=["SRC-K09-CARD"])
+kit.assumption("ASM-C3-FILLET-LEG", "Floor-to-side-wall corner fillet leg 6 mm",
+               "Microballoon-epoxy fillet along both floor-to-wall corners +-30 mm of each strap; widens the glue line",
+               basis="C6 CR-C6-17, adopted by D2 at R4 (subsystems/pod/params.json bought_g.fillet_corners)",
+               value=0.006, unit="m", cites=SRC)
+kit.assumption("ASM-C3-GUIDE", "Bay guides as modelled by D2", "Guide thickness and height above the tray [t, h]",
                basis="subsystems/pod/params.json guide_t_m, guide_h_m", value=[_pv("guide_t_m"), _pv("guide_h_m")],
                unit="m", cites=SRC)
 kit.assumption("ASM-C3-REC", "C3 recommended sizes",
@@ -75,16 +92,21 @@ kit.assumption("ASM-C3-HL", "Hook-and-loop allowables",
 kit.assumption("ASM-C3-STRAP-OVERLAP", "Strap hook-and-loop overlap 50 mm", "Specified overlap of each 20 mm strap",
                basis="C3 specification for D2 (BUILD step: mark 50 mm on the strap)", value=0.05, unit="m", cites=SRC)
 kit.assumption("ASM-C3-FB-FLAT", "Foam-board flat-wise tension 100 kPa",
-               "Paper-face-to-core flat-wise tension allowable of 4.8 mm paper-faced board", basis="ESTIMATE; coupon T-C3-BOND-COUPON",
-               value=100000.0, unit="Pa", status="UNVERIFIED", cites=SRC)
+               "Paper-face-to-core flat-wise tension allowable of 4.8 mm paper-faced board",
+               basis="C6 value (CR-C6-16): ASM-C6-FOAM-KD 0.5 x ASM-C6-BOARD-FLAT-TYP 0.10 MPa = 50 kPa (was 100); kept "
+                     "for C6's comparison, the C3 calcs read C6's nodes through CALC-C3-ALLOW",
+               value=50000.0, unit="Pa", status="UNVERIFIED", cites=SRC)
 kit.assumption("ASM-C3-SPREAD", "Plate load spread 10 mm each side of a strap",
                "Length of 1 mm PETG tray that shares a strap's pull either side of the 20 mm strap", basis="~10 x tray thickness",
                value=0.010, unit="m", cites=SRC)
 kit.assumption("ASM-C3-OVERHANG-ITEMS", "Non-pack masses ahead of the wing LE",
                "[mass g, x m] of pod items ahead of x = 0: shell, tray, hatch and socket (half of CL-D2-MASS less handle); "
-               "airspeed sensor, pitot boom, half the FC; RX, power module, UBEC",
-               basis="subsystems/pod/SPEC.md layout and params.json#mass.allocation_g.avionics note; weigh (T-D2-WEIGH)",
-               value=[[35.0, -0.050], [30.0, -0.075], [15.0, -0.030]], unit="g, m", status="UNVERIFIED", cites=SRC)
+               "airspeed sensor, pitot boom, half the FC; RX, power module, UBEC"
+               "; D-47 nose extension (15 mm of shell, +3 g)",
+               basis="subsystems/pod/SPEC.md layout and params.json#mass.allocation_g.avionics note; D-47 +3 g shell at "
+                     "the new nose; weigh (T-D2-WEIGH)",
+               value=[[35.0, -0.050], [30.0, -0.075], [15.0, -0.030], [3.0, -0.122]], unit="g, m", status="UNVERIFIED",
+               cites=SRC)
 kit.assumption("ASM-C3-GROUP-XZ", "Pod-group item centroids for the crash case",
                "[x, z] of: pod structure (D2 CAD CG), avionics (FC, GPS mast, airspeed, pitot, RX), power items less the pack",
                basis="subsystems/pod/SPEC.md (pod CG 0.012, 0.052); avionics 66 g mass-weighted from the D2 layout; power "
@@ -93,8 +115,10 @@ kit.assumption("ASM-C3-GROUP-XZ", "Pod-group item centroids for the crash case",
 kit.assumption("ASM-C3-CP-HATCH", "Hatch suction Cp -1.0", "Peak suction on the pod top at VD (bluff box top, separated LE corner)",
                basis="ESTIMATE, conservative for a 70 mm box on a wing", value=-1.0, unit="-", status="UNVERIFIED", cites=SRC)
 kit.assumption("ASM-C3-HATCH", "Hatch plan and latch", "[hatch length x, width y, latch tab x, tab y] (m)",
-               basis="subsystems/pod/params.json: lip end to hatch_aft_x_m, width_m, latch_tab_m",
-               value=[_pv("hatch_aft_x_m") - (-0.105 + 0.0048 + _pv("lip_m")[0]), _pv("width_m")] + _pv("latch_tab_m"),
+               basis="params.json pod.x_le_m + fins.board_t_m + pod lip_m[0] to hatch_aft_x_m; pod.size_m[1]; "
+                     "subsystems/pod/params.json latch_tab_m",
+               value=[_pv("hatch_aft_x_m") - (_gv("pod", "x_le_m") + _gv("fins", "board_t_m") + _pv("lip_m")[0]),
+                      _gv("pod", "size_m")[1]] + _pv("latch_tab_m"),
                unit="m", cites=SRC)
 kit.assumption("ASM-C3-GRIP", "Carry-handle grip 10 x 8 mm PETG, legs at +-34 mm", "[grip x, grip z, leg y]",
                basis="subsystems/pod/params.json grip_m, leg_y_m", value=_pv("grip_m") + [_pv("leg_y_m")], unit="m", cites=SRC)
@@ -107,6 +131,15 @@ kit.assumption("ASM-C3-PETG-INPLANE", "Printed PETG in-plane (along-raster) allo
 F_IN = {"sf": P + "requirements.safety_factor_ult", "kf": "ASM-C1-FITTING-FACTOR", "kp": "ASM-C1-PRINTED-FACTOR"}
 
 
+@kit.calc("CALC-C3-ALLOW", title="Pod joint allowables from C6 (CR-C6-16)",
+          equation="design allowable = C6 knock-down x typical: XPS shear kd tau_xps, epoxy on the paper face kd tau_b, "
+                   "board flat-wise kd f_b",
+          inputs={"kd": "ASM-C6-FOAM-KD", "t_xps": "ASM-C6-XPS-SHEAR-TYP", "tau_b": "ASM-D5-BOND-TAU",
+                  "f_b": "ASM-C6-BOARD-FLAT-TYP"})
+def allow(kd, t_xps, tau_b, f_b):
+    return {"xps_shear_pa": kd * t_xps, "paper_shear_pa": kd * tau_b, "board_flat_pa": kd * f_b}
+
+
 @kit.calc("CALC-C3-BOND", title="Pod-to-wing bond: flight/ground envelope and crash",
           equation="loads moved from C1's point (pod centre, base) to the bond centroid: M' = M + (r_ref - r_c) x F; "
                    "footprint b x L, x 0 ... recess end; sigma = Fz/A + 6|My|/(b L^2) + 6|Mx|/(L b^2) (tension only); "
@@ -114,9 +147,9 @@ F_IN = {"sf": P + "requirements.safety_factor_ult", "kf": "ASM-C1-FITTING-FACTOR
                    "crash: m_group n_c g any axis at the group CG, no further factor",
           inputs=dict(F_IN, rows="ASM-C3-POD-LOADS", xle=P + "pod.x_le_m", size=P + "pod.size_m", zb=P + "pod.z_base_m",
                       b="ASM-D2-POD-WIDTH", xs=P + "wing.spar.x_m", od=P + "wing.spar.od_m", wall="ASM-D2-SLOT-WALL",
-                      sa="ASM-D2-XPS-ALLOW", ta="ASM-C3-XPS-SHEAR", tfb="ASM-D5-BOND-TAU",
+                      sa="ASM-D2-XPS-ALLOW", ta="CL-C3-ALLOW-XPS-SHEAR", tfb="CL-C3-ALLOW-PAPER-SHEAR",
                       m_pod="CL-D2-MASS", a_avn=P + "mass.allocation_g.avionics", a_pwr=P + "mass.allocation_g.power",
-                      m_bat=P + "battery.mass_kg", pack_rng="ASM-A3-PACK-RANGE", px="CL-D2-PACK-X-FWD", pz="CL-D2-PACK-Z",
+                      m_bat=P + "battery.mass_kg", pack_rng="ASM-A3-PACK-RANGE", px="CL-D2-PACK-X-FWD-MIN", pz="CL-D2-PACK-Z",
                       xz="ASM-C3-GROUP-XZ", nc="CL-C1-CRASH-N", g=P + "env.g_ms2"))
 def bond(rows, xle, size, zb, b, xs, od, wall, sa, ta, tfb, m_pod, a_avn, a_pwr, m_bat, pack_rng, px, pz, xz, nc, g, sf, kf, kp):
     x0, x1 = 0.0, xs - od / 2 - wall
@@ -170,14 +203,16 @@ def _wall_sigma(F, h, b, t):
 
 @kit.calc("CALC-C3-STOPS", title="Pack stops: aft stop wall (+x), forward stop (-x)",
           equation="F_design = max over cases of the pack force x SF x k_fit x k_print; crash F = C1 85 N; "
-                   "sigma = 6 F (h/2) / (b t^2), b = bay + 2 guides; t_req = sqrt(6 F h/2 / (b sigma_a)); "
+                   "sigma = 6 F (h/2) / (b t^2), b = bay + 2 guides, h = aft stop top (aft) or forward stop height (fwd); "
+                   "fuse load of the forward stop F_f = sigma_a b t^2 / (6 h_f / 2); t_req = sqrt(6 F h/2 / (b sigma_a)); "
                    "nose wall (foam board) as a strip between the side walls: M = F/4 (S - c/2), "
                    "m_cap = sigma_f t_f (t - t_f) per unit width over the pack height",
-          inputs=dict(F_IN, rows="ASM-C3-PACK-LOADS", fc="CL-C1-PACK-CRASH-LOAD", h="ASM-C3-STOP-H", bw="ASM-D2-BAY-W",
+          inputs=dict(F_IN, rows="ASM-C3-PACK-LOADS", fc="CL-C1-PACK-CRASH-LOAD", h="ASM-C3-AFT-STOP-H",
+                      hf="ASM-C3-STOP-H", bw="ASM-D2-BAY-W",
                       gd="ASM-C3-GUIDE", t0="ASM-D2-STOP-T", rec="ASM-C3-REC", sa="ASM-C4-PETG-TENSILE",
                       W="ASM-D2-POD-WIDTH", tb=P + "fins.board_t_m", tf="ASM-C4-FACE-T", sf_face="ASM-C4-FACE-SIGMA",
                       pack=P + "battery.size_m"))
-def stops(rows, fc, h, bw, gd, t0, rec, sa, W, tb, tf, sf_face, pack, sf, kf, kp):
+def stops(rows, fc, h, hf, bw, gd, t0, rec, sa, W, tb, tf, sf_face, pack, sf, kf, kp):
     k = sf * kf * kp
     f_aft = max(max(r[1] for r in rows) * k, fc)
     f_fwd_flight = max(-min(r[1] for r in rows), 0.0) * k
@@ -188,7 +223,8 @@ def stops(rows, fc, h, bw, gd, t0, rec, sa, W, tb, tf, sf_face, pack, sf, kf, kp
     m_cap = sf_face * tf * (tb - tf)
     return {"F_aft_n": f_aft, "F_fwd_n": f_fwd, "F_fwd_flight_n": f_fwd_flight,
             "sigma_aft_d2_pa": _wall_sigma(f_aft, h, b, t0), "t_req_m": math.sqrt(6 * f_aft * h / 2 / (b * sa)),
-            "sigma_aft_rec_pa": _wall_sigma(f_aft, h, b, rec[0]), "sigma_fwd_rec_pa": _wall_sigma(f_fwd, h, b, rec[1]),
+            "sigma_aft_rec_pa": _wall_sigma(f_aft, h, b, rec[0]), "sigma_fwd_rec_pa": _wall_sigma(f_fwd, hf, b, rec[1]),
+            "fwd_fuse_n": sa * b * rec[1] ** 2 / (6 * hf / 2),
             "nose_m_req_nmm_per_mm": m_req, "nose_m_cap_nmm_per_mm": m_cap}
 
 
@@ -208,11 +244,12 @@ def guides(rows, fc, gd, rec, pack, bw, n, sf, kf, kp):
 @kit.calc("CALC-C3-STRAPS", title="Straps (+z): loop tension, hook-and-loop overlap, tray and floor under the strap",
           equation="per strap P = max(F_flight x SF x k_fit x k_print, F_crash) / n; leg T = P/2 + preload/(2n); "
                    "overlap_req = T / (tau_hl w); tray flat-wise = P / (w_tray (w + 2 s)); front strap on the overhang: "
-                   "floor-to-wall glue line q = P / (2 (w + 2 s)), stress = q / t_board",
+                   "floor-to-wall glue line q = P / (2 (w + 2 s)), stress = q / t_board (as drawn) or q / (t_board + fillet leg) "
+                   "with C6's corner fillet (CR-C6-17)",
           inputs=dict(F_IN, rows="ASM-C3-PACK-LOADS", fc="CL-C1-PACK-CRASH-LOAD", n="ASM-D2-N-STRAPS",
                       pre="ASM-C1-STRAP-PRELOAD", hl="ASM-C3-HL", bw="ASM-D2-BAY-W", gd="ASM-C3-GUIDE",
-                      s="ASM-C3-SPREAD", tb=P + "fins.board_t_m"))
-def straps(rows, fc, n, pre, hl, bw, gd, s, tb, sf, kf, kp):
+                      s="ASM-C3-SPREAD", tb=P + "fins.board_t_m", leg="ASM-C3-FILLET-LEG"))
+def straps(rows, fc, n, pre, hl, bw, gd, s, tb, leg, sf, kf, kp):
     w = 0.020
     f = max(max(r[3] for r in rows) * sf * kf * kp, fc)
     p = f / n
@@ -221,7 +258,8 @@ def straps(rows, fc, n, pre, hl, bw, gd, s, tb, sf, kf, kp):
     tray_w = bw + 2 * gd[0]
     lw = w + 2 * s
     return {"F_n": f, "per_strap_n": p, "leg_t_n": t_leg, "overlap_req_m": ov,
-            "tray_flat_pa": p / (tray_w * lw), "glue_line_pa": p / (2 * lw) / tb}
+            "tray_flat_pa": p / (tray_w * lw), "glue_line_pa": p / (2 * lw) / tb,
+            "glue_fillet_pa": p / (2 * lw) / (tb + leg)}
 
 
 @kit.calc("CALC-C3-OVERHANG", title="Pod overhang ahead of the wing LE: section at x = 0",
@@ -229,7 +267,7 @@ def straps(rows, fc, n, pre, hl, bw, gd, s, tb, sf, kf, kp):
                    "section = foam-board faces only: 2 side walls (2 faces t_f x h_w) + floor bottom face (strap groove "
                    "cuts the top face); tray left out (strap slot at x 0); sigma_top = M c / I",
           inputs=dict(F_IN, n_lim="CL-C1-N-LIMIT-POS", nc="CL-C1-CRASH-N", pack_rng="ASM-A3-PACK-RANGE",
-                      pack=P + "battery.size_m", px="CL-D2-PACK-X-FWD", items="ASM-C3-OVERHANG-ITEMS",
+                      pack=P + "battery.size_m", px="CL-D2-PACK-X-FWD-MIN", items="ASM-C3-OVERHANG-ITEMS",
                       W="ASM-D2-POD-WIDTH", H=P + "pod.size_m", tb=P + "fins.board_t_m", tf="ASM-C4-FACE-T", g=P + "env.g_ms2"))
 def overhang(n_lim, nc, pack_rng, pack, px, items, W, H, tb, tf, g, sf, kf, kp):
     x_front = px - pack[0] / 2
@@ -267,14 +305,49 @@ def hatch(q, cp, ht, sf, kf):
     return {"F_design_n": f, "tab_n_per_cm2": f / 2 / (ht[2] * ht[3] * 1e4)}
 
 
-@kit.calc("CALC-C3-MASS", title="Pod mass with the C3 changes",
-          equation="dm = rho (dt_aft h b + t_fwd h b + 2 dt_guide h_g L_bay) ; m = CL-D2-MASS + dm",
+@kit.calc("CALC-C3-MASS", title="Pod mass: C3 sizing against D2's model, and the full-section forward stop option",
+          equation="dm = rho [(t_aft,rec - t_aft,D2) h_a b + (t_fwd,rec - t_fwd,D2) h_f b + 2 (t_g,rec - t_g,D2) h_g L_bay]; "
+                   "m = CL-D2-MASS + dm; full-section option (CR-C5-13): + rho t_fwd b (H_bay - h_f)",
           inputs={"m0": "CL-D2-MASS", "rho": "ASM-C4-PETG-RHO", "rec": "ASM-C3-REC", "t0": "ASM-D2-STOP-T",
-                  "gd": "ASM-C3-GUIDE", "h": "ASM-C3-STOP-H", "bw": "ASM-D2-BAY-W", "bay": "CL-D2-BAY-L"})
-def mass(m0, rho, rec, t0, gd, h, bw, bay):
+                  "fs": "ASM-D2-FWD-STOP", "gd": "ASM-C3-GUIDE", "h": "ASM-C3-AFT-STOP-H", "hf": "ASM-C3-STOP-H",
+                  "bw": "ASM-D2-BAY-W", "bay": "CL-D2-BAY-L", "hb": "CL-D2-BAY-H"})
+def mass(m0, rho, rec, t0, fs, gd, h, hf, bw, bay, hb):
     b = bw + 2 * rec[2]
-    dv = (rec[0] - t0) * h * b + rec[1] * h * b + 2 * (rec[2] - gd[0]) * rec[3] * bay
-    return {"dm_g": dv * rho * 1000, "mass_g": m0 + dv * rho * 1000}
+    dv = (rec[0] - t0) * h * b + (rec[1] - fs[1]) * hf * b + 2 * (rec[2] - gd[0]) * rec[3] * bay
+    full = rho * rec[1] * bw * (hb - hf) * 1000
+    return {"dm_g": dv * rho * 1000, "mass_g": m0 + dv * rho * 1000, "full_section_dm_g": full,
+            "mass_full_section_g": m0 + dv * rho * 1000 + full}
+
+
+@kit.calc("CALC-C3-NOSE-PATH", title="Nose-in crush path with the D-47 nose (8.8 mm nose stack, block A ~1 mm)",
+          equation="L_A = (x_fs - t_fs) - (x_le + t_b) ; per pack m (503/550/680 g): F = min(n_pack m g, sigma A_bay), "
+                   "KE = m v^2/2, eff = eps_d - eps_y/2 ; block A energy E_A = min(F, sigma A_stop) eff L_A, share = E_A/KE ; "
+                   "block B gap penalty of a stop of height h_f vs the full section = (min(F, sigma A_bay) - "
+                   "min(F, sigma h_f b_bay)) L_A / F ; same at the D2-R3/R4 block A (ASM-D2-FWD-STOP[0]) for comparison ; "
+                   "stack = t_b + L_A + t_fs",
+          inputs={"x_le": P + "pod.x_le_m", "tb": P + "fins.board_t_m", "d47": "ASM-C3-D47-NOSE", "fs": "ASM-D2-FWD-STOP",
+                  "rec": "ASM-C3-REC", "pack_rng": "ASM-A3-PACK-RANGE", "m_nom": P + "battery.mass_kg",
+                  "v": "ASM-C1-CRASH-V", "n_pack": "ASM-C5-PACK-G-MAX", "sigma": "ASM-D5-XPS-PLATEAU",
+                  "eps_d": "ASM-D5-DENSIFY", "eps_y": "ASM-D5-YIELD-STRAIN", "bw": "ASM-D2-BAY-W", "hb": "CL-D2-BAY-H",
+                  "hf": "ASM-C3-STOP-H", "g": P + "env.g_ms2"})
+def nose_path(x_le, tb, d47, fs, rec, pack_rng, m_nom, v, n_pack, sigma, eps_d, eps_y, bw, hb, hf, g):
+    L_A = (d47[0] - rec[1]) - (x_le + tb)
+    eff = eps_d - eps_y / 2
+    A_bay, A_c3 = bw * hb, bw * hf
+    out = {"L_A_m": L_A, "L_A_r4_m": fs[0], "stack_m": tb + L_A + rec[1]}
+    share_full, share_c3, pen, pen_r4, FB = 0.0, 0.0, 0.0, 0.0, 0.0
+    for m in (min(pack_rng) / 1000, m_nom, max(pack_rng) / 1000):
+        F = min(n_pack * m * g, sigma * A_bay)
+        KE = 0.5 * m * v * v
+        FA_full, FA_c3 = min(F, sigma * A_bay), min(F, sigma * A_c3)
+        share_full = max(share_full, FA_full * eff * L_A / KE)
+        share_c3 = max(share_c3, FA_c3 * eff * L_A / KE)
+        pen = max(pen, (FA_full - FA_c3) * L_A / F)
+        pen_r4 = max(pen_r4, (FA_full - FA_c3) * fs[0] / F)
+        FB = max(FB, F)
+    out.update({"blockA_share_full": share_full, "blockA_share_c3": share_c3, "gap_penalty_c3_m": pen,
+                "gap_penalty_c3_r4_m": pen_r4, "F_blockB_n": FB})
+    return out
 
 
 # ---------------------------------------------------------------- claims
@@ -291,9 +364,16 @@ kit.claim("CL-C3-BOND-R-CRASH", "Pod-to-wing bond interaction, 12.75 g crash any
           how="T-C3-POD-PROOF: crash-direction pulls on the built pod with a 680 g dummy pack.")
 kit.claim("CL-C3-POD-GROUP-MASS", "Pod group mass, heaviest pack (crash case)", calc="CALC-C3-BOND", output="group_mass_kg",
           unit="kg", parts=[SHELL], how="Weigh the pod group with the 680 g listing pack.")
-kit.claim("CL-C3-AFT-STOP-D2", "Aft stop 1.5 mm (D2): root bending stress, design", calc="CALC-C3-STOPS",
+kit.claim("CL-C3-AFT-STOP-D2", "Aft stop as modelled by D2 (ASM-D2-STOP-T): root bending stress, design", calc="CALC-C3-STOPS",
           output="sigma_aft_d2_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"), verifies=["R-PACK-RETENTION"],
-          parts=[TRAY], how="T-C3-STOP-PUSH on a printed tray: 89 N on a 680 g-pack-size block at 12 mm height.")
+          parts=[TRAY], how="T-C3-STOP-PUSH on a printed tray: 89 N on a 680 g-pack-size block at 13 mm height.",
+          note="D2-R5: printed with the tray rear piece at x 0.056; 2 gussets behind it ignored (conservative)")
+kit.claim("CL-C3-AFT-STOP-BOND", "Aft stop design load vs D2's tray rear piece bond (stop on the tray since D-47)",
+          calc="CALC-C3-STOPS", output="F_aft_n", unit="N", limit=("<=", "CL-D2-AFT-STOP-BOND"),
+          verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL],
+          how="T-C3-STOP-PUSH on the built tray rear piece: 90 N at 13 mm height, no peel at the piece ends.",
+          note="D2-R5 moved the stop off the spar bridge onto the tray rear piece (x 0.056) with 2 gussets; root moment "
+               "F h/2 = 1.2 N m peels the piece ends, covered by the push test")
 kit.claim("CL-C3-AFT-STOP-T-REQ", "Aft stop thickness required", calc="CALC-C3-STOPS", output="t_req_m", unit="m",
           parts=[TRAY], how="Recompute after T-C3-STOP-PUSH sets the printed-PETG allowable.")
 kit.claim("CL-C3-AFT-STOP-REC", "Aft stop 3.0 mm (C3): root bending stress, design", calc="CALC-C3-STOPS",
@@ -301,13 +381,15 @@ kit.claim("CL-C3-AFT-STOP-REC", "Aft stop 3.0 mm (C3): root bending stress, desi
           parts=[TRAY], how="T-C3-STOP-PUSH.")
 kit.claim("CL-C3-NOSE-WALL-M", "Foam-board nose wall as the forward stop: moment needed per mm (85 N crash)",
           calc="CALC-C3-STOPS", output="nose_m_req_nmm_per_mm", unit="N mm/mm",
-          limit=("<=", 4.7), verifies=["R-PACK-RETENTION"], parts=[SHELL],
-          how="Push a pack-size block into a built nose wall to 85 N; expect failure (C3 replaces it).",
-          note="limit = capacity sigma_f t_f (t - t_f) = 10 MPa x 0.1 x 4.7 mm from ASM-C4-FACE-*")
+          parts=[SHELL],
+          how="Push a pack-size block into a built nose wall to 85 N; expect failure (the printed forward stop replaces it).",
+          note="reference, no limit: capacity sigma_f t_f (t - t_f) = 4.7 N mm/mm (ASM-C4-FACE-*) is ~1/10 of the need, "
+               "which is why the printed forward stop exists (adopted by D2, fwd_stop_m); the wall carries pack load only "
+               "when the ground backs it in a nose-in impact")
 kit.claim("CL-C3-FWD-STOP-REC", "Forward stop 3.0 mm printed with the tray (C3): root bending stress",
           calc="CALC-C3-STOPS", output="sigma_fwd_rec_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"),
           verifies=["R-PACK-RETENTION"], parts=[TRAY], how="T-C3-STOP-PUSH in -x.")
-kit.claim("CL-C3-GUIDE-D2", "Bay guide 1.0 mm (D2): bending stress, lateral crash", calc="CALC-C3-GUIDES",
+kit.claim("CL-C3-GUIDE-D2", "Bay guide as modelled by D2 (guide_t_m): bending stress, lateral crash", calc="CALC-C3-GUIDES",
           output="sigma_d2_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"), verifies=["R-PACK-RETENTION"], parts=[TRAY],
           how="T-C3-STOP-PUSH sideways, 85 N along the guide.")
 kit.claim("CL-C3-GUIDE-REC", "Bay guide 1.5 mm (C3): bending stress, lateral crash", calc="CALC-C3-GUIDES",
@@ -320,11 +402,16 @@ kit.claim("CL-C3-STRAP-OVERLAP-REQ", "Hook-and-loop overlap needed per strap", c
           unit="m", limit=("<=", "ASM-C3-STRAP-OVERLAP"), verifies=["R-PACK-RETENTION"], parts=[STRAP],
           how="T-D2-STRAP-PULL with the 50 mm overlap marked.")
 kit.claim("CL-C3-TRAY-FLAT", "Tray-to-floor bond flat-wise tension under one strap", calc="CALC-C3-STRAPS",
-          output="tray_flat_pa", unit="Pa", limit=("<=", "ASM-C3-FB-FLAT"), verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL],
+          output="tray_flat_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"), verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL],
           how="T-C3-BOND-COUPON flat-wise on board.")
-kit.claim("CL-C3-FLOOR-GLUE", "Floor-to-side-wall glue line under the front strap (overhang)", calc="CALC-C3-STRAPS",
-          output="glue_line_pa", unit="Pa", limit=("<=", "ASM-D5-BOND-TAU"), verifies=["R-PACK-RETENTION"], parts=[SHELL],
-          how="T-C3-POD-PROOF +z pull.")
+kit.claim("CL-C3-FLOOR-GLUE", "Floor-to-side-wall glue line under the front strap, board edge only (reference)",
+          calc="CALC-C3-STRAPS", output="glue_line_pa", unit="Pa", parts=[SHELL],
+          how="T-C6-BOARD-CORNER without the fillet.",
+          note="no limit: as drawn before CR-C6-17 it exceeds C6's 100 kPa paper allowable (C6 CL-C6-POD-FLOOR-RF 0.90); "
+               "C6 reads this value, CL-C3-FLOOR-GLUE-FILLET is the flown check")
+kit.claim("CL-C3-FLOOR-GLUE-FILLET", "Floor-to-side-wall glue line under the front strap, with the 6 mm corner fillet",
+          calc="CALC-C3-STRAPS", output="glue_fillet_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-PAPER-SHEAR"),
+          verifies=["R-PACK-RETENTION"], parts=[SHELL], how="T-C6-BOARD-CORNER with the fillet; T-C3-POD-PROOF +z pull.")
 kit.claim("CL-C3-OVERHANG-DESIGN", "Overhang root (x = 0) wall-top face stress, flight design", calc="CALC-C3-OVERHANG",
           output="sigma_design_pa", unit="Pa", limit=("<=", "ASM-C4-FACE-SIGMA"), verifies=["R-STRUCT-MARGIN"], parts=[SHELL],
           how="T-C3-POD-PROOF: wing held at the spar, 7.3 x pack weight down on the pack.")
@@ -342,8 +429,47 @@ kit.claim("CL-C3-GRIP", "Carry-handle grip bending stress (along raster)", calc=
 kit.claim("CL-C3-HATCH-TAB", "Hatch latch tab tension at VD suction (design)", calc="CALC-C3-HATCH", output="tab_n_per_cm2",
           unit="N/cm2", limit=("<=", 2.5), parts=[HATCH], how="Spring scale on the closed hatch centre: >= 2 x F_design/2 before it opens.",
           note="limit = ASM-C3-HL flat-wise 2.5 N/cm2")
-kit.claim("CL-C3-POD-MASS-REC", "Pod mass with the C3 changes (stops, guides)", calc="CALC-C3-MASS", output="mass_g", unit="g",
+kit.claim("CL-C3-POD-MASS-REC", "Pod mass with the C3 sizing (D2 model + any C3 delta)", calc="CALC-C3-MASS", output="mass_g", unit="g",
           limit=("<=", P + "mass.allocation_g.pod"), verifies=["R-MASS-ALLOC"], parts=[TRAY], how="T-D2-WEIGH.")
+
+kit.claim("CL-C3-ALLOW-XPS-SHEAR", "Epoxy-to-XPS shear allowable (C6)", calc="CALC-C3-ALLOW", output="xps_shear_pa",
+          unit="Pa", how="T-C6-XPS-PULL shear coupons.")
+kit.claim("CL-C3-ALLOW-PAPER-SHEAR", "Epoxy on foam-board paper face, shear allowable (C6)", calc="CALC-C3-ALLOW",
+          output="paper_shear_pa", unit="Pa", how="T-C6-BOARD-LAP.")
+kit.claim("CL-C3-ALLOW-BOARD-FLAT", "Foam-board flat-wise tension allowable (C6)", calc="CALC-C3-ALLOW",
+          output="board_flat_pa", unit="Pa", how="T-C6-BOARD-LAP flat-wise pulls.")
+kit.claim("CL-C3-FWD-STOP-FUSE", "Forward stop root capacity (fuse) vs the 85 N crash pack load", calc="CALC-C3-STOPS",
+          output="fwd_fuse_n", unit="N", limit=(">=", "CL-C1-PACK-CRASH-LOAD"), verifies=["R-PACK-RETENTION"],
+          parts=[TRAY], how="T-C3-STOP-PUSH in -x to failure.",
+          note="holds every airframe-decelerated case (pack load <= 12.75 g); in a nose-in impact it is backed by the "
+               "nose wall and the ground, so the fuse no longer has to break (block A ~1 mm, CALC-C3-NOSE-PATH)")
+kit.claim("CL-C3-NOSE-BLOCK-A", "Block A length left by the D-47 nose stack", calc="CALC-C3-NOSE-PATH", output="L_A_m",
+          unit="m", parts=[SHELL, "POD-008"], how="Rule from the nose wall inside face to the forward stop fore face.",
+          note="7.0 mm at D2-R4 -> 1.0 mm at D-47: too thin to cut from XPS; C3 asks D2 to fill it with the "
+               "stop-to-nose-wall epoxy bed (CR-C3-08)")
+kit.claim("CL-C3-NOSE-STACK", "Nose stack (wall + block A + forward stop) at D-47", calc="CALC-C3-NOSE-PATH",
+          output="stack_m", unit="m", parts=[SHELL], how="D2 CAD read-out.", note="D-47 states 8.8 mm")
+kit.claim("CL-C3-BLOCK-A-SHARE", "Share of the nose-in pack energy block A can take (full-section stop, worst pack)",
+          calc="CALC-C3-NOSE-PATH", output="blockA_share_full", unit="-", limit=("<=", 0.10),
+          verifies=["R-PACK-RETENTION"], parts=["POD-008"],
+          how="C5 CALC-C5-CRASH re-run on the D-47 bay.",
+          note="<= 10 % means block B (removable, behind the spreader) carries the crush path alone; the shorter nose "
+               "block keeps the path, it only drops block A's contribution")
+kit.claim("CL-C3-STOP-SECTION-PENALTY", "Block B length a 25 mm stop costs vs a full-section stop (D-47, worst pack)",
+          calc="CALC-C3-NOSE-PATH", output="gap_penalty_c3_m", unit="m", limit=("<=", 0.001),
+          verifies=["R-PACK-RETENTION"], parts=[TRAY, "POD-008"],
+          how="C5 CL-C5-PACK-ROOM-C3-STOP re-run on the D-47 bay.",
+          note="limit 1 mm: below it the full-section stop (CR-C5-13, +6 g) buys nothing worth its mass; was ~3.8 mm "
+               "with block A 7 mm")
+kit.claim("CL-C3-BLOCK-B-FORCE", "Block B crush force the forward stop and nose wall react (worst pack)",
+          calc="CALC-C3-NOSE-PATH", output="F_blockB_n", unit="N", parts=["POD-008", SHELL],
+          how="Block coupon crush force x bay section (T-D5-COUPON method).",
+          note="far above the stop fuse: reacted only when the nose wall is backed by the ground (nose-in); in any "
+               "other crash the pack load is <= 85 N and the stop holds it")
+kit.claim("CL-C3-POD-MASS-FULL-STOP", "Pod mass with the full-section forward stop (CR-C5-13 option)", calc="CALC-C3-MASS",
+          output="mass_full_section_g", unit="g", parts=[TRAY],
+          how="T-D2-WEIGH.", note="option not recommended (CL-C3-STOP-SECTION-PENALTY); would exceed the 131 g pod "
+                                   "allocation unless 4-6 g came from the reserve")
 
 # ---------------------------------------------------------------- tests (planned)
 kit.test("T-C3-BOND-COUPON", "Bond coupons: epoxy on F-250 and on paper-faced board",

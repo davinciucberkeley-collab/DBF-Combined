@@ -22,7 +22,8 @@ the keep-outs are registered on the modelled hubs; CR-E1-22 / CR-E1-29 settle th
 Joints registered here (interfaces.json, owner propulsion): E-PRP-01..04 adapter -> motor (rigid at the bell top),
 E-PRP-05..08 prop -> adapter (rigid at the hub centre, field joint). Registered by fins (D3): E-FIN-61..64 motor ->
 mount, E-FIN-65..68 ESC -> pad. By harness (F2): E-HRN-17..20 phase leads ESC -> motor (wire ends on the ESC phase
-end and the motor lead exit). Keep-outs KO-PROP-<st>: disc radius D/2 + clearance, axial blade half + clearance.
+end and the motor lead exit). Keep-outs KO-PROP-<st>: disc radius D/2 + clearance, axial blade half (10 mm) +
+clearance, on the canted shaft axis (k9.prop_keepout rotate=, CR-A5-21), so check.py tests the tilted cylinder.
 
 UNVERIFIED-IN-FUSION: a rigid joint aligns both joint frames; E-FIN-61..64 join an unrotated mount to a rotated motor,
 so Fusion may turn the stack back to 0 deg cant (fusion_backend.py docstring; CR-E1-31 to A5). Twisted blade lofts
@@ -34,6 +35,7 @@ import k09kit as k9
 
 STATIONS = ('UR', 'UL', 'LR', 'LL')
 ROT = {'UR': 'CW', 'LL': 'CW', 'UL': 'CCW', 'LR': 'CCW'}      # seen from the nose (F4 motor map, CR-E1-21)
+BLADE_HALF_M = 0.010   # prop axial half-extent about the mid-plane, -6 / +10 mm with coning (ASM-E1-BLADE-HALF)
 
 
 def _lv(LP, key, unit=None):
@@ -186,6 +188,7 @@ def build(ctx):
         ctx.rigid('E-PRP-%02d' % (i + 1), 'PRP-004-' + s, 'PRP-001-' + s, at=S['bell_top'])
         ctx.rigid('E-PRP-%02d' % (i + 5), 'PRP-003-' + s, 'PRP-004-' + s, at=S['hub'])
         k9.prop_keepout(ctx, 'KO-PROP-' + s, S['hub'], G['D'], G['clr'],
-                        exempt=('PRP-001-' + s, 'PRP-003-' + s, 'PRP-004-' + s))
+                        exempt=('PRP-001-' + s, 'PRP-003-' + s, 'PRP-004-' + s),
+                        rotate=rot, blade_half=BLADE_HALF_M)        # canted with the stack (CR-A5-21)
     ctx.part('PRP-002-UR').box(G['esc_lo'], G['esc_hi'], name='ESC 45 x 20 x 6 in heat-shrink')
     k9.quad(ctx, {s: 'PRP-002-' + s for s in STATIONS})

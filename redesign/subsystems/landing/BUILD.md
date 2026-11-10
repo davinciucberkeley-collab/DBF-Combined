@@ -1,7 +1,8 @@
 # Landing feet — build notes for G4
 
-Status: `PROPOSED` (D5-R4: C5-R3 pre-crushed cartridges, 7/32 in bore, 7 mm legs, 3 mm replace mark). Four feet, one per half-fin TE tip (`UR UL LR LL`), two wingtip corner caps, plus the
-field kit (4 + 4 spare inserts, 16 + 16 loose cartridges, 2 spare shoes). Dimensions from
+Status: `PROPOSED` (D5-R5: caps built on `WNG-001`, field kit modelled; D5-R4: C5-R3 pre-crushed cartridges, 7/32 in bore, 7 mm legs, 3 mm replace mark). Four feet, one per half-fin TE tip (`UR UL LR LL`), two wingtip corner caps, plus the
+field kit (4 + 4 spare inserts, 16 + 16 loose cartridges, 2 spare shoes; the CAD shows one unit of each kit line in
+a row at y 0.85 m, a layout only: the kit travels in `TRN-108`). Dimensions from
 `subsystems/landing/params.json` via `fusion/landing.py`; numbers in `SPEC.md`.
 
 ## Before you start

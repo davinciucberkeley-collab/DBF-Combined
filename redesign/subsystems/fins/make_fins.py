@@ -1,4 +1,4 @@
-"""Write subsystems/fins/interfaces.json and parts.csv from the CAD module (one source). Owner: D3. Design R3.
+"""Write subsystems/fins/interfaces.json and parts.csv from the CAD module (one source). Owner: D3. Design R4 (CR-A1-47).
 
     python -I redesign/subsystems/fins/make_fins.py
 
@@ -9,11 +9,13 @@ interfaces.json; until then it waits, complete, under "edges_pending" (merge_che
 params change or when wing / propulsion declare their parts, then check.py and merge_check.py.
 
 Joint data blocks (A4: bond / clamp / retention): the C6 block for the same edge id in team/C6/joint_stacks.json is
-used where C6 sized the joint; where R3 changed the geometry (e.g. the 16 mm collar) the D3 area replaces C6's and
-load_n says so; edges C6 has not sized carry the D3 block.
+used where C6 sized the joint; where D3 changed the geometry since (e.g. the 12 mm collar, the R4 root fillets) the D3
+area replaces C6's and load_n says so; edges C6 has not sized carry the D3 block. A C6 joint_stack adds its 'load'
+line to the D3 stack. Thermal blocks (E-FIN-81...88) take t_design_c and heat_w from team/E3 (claims, results).
 
 Mass rules (status UNVERIFIED until weighed, T-D3-WEIGH):
-  board   area x (areal mass x layers + laminating adhesive) + root joint (fillets, tape laps)
+  board   laminate area x (areal mass x layers + laminating adhesive) + tape laps; root fillets = CAD volume x
+          fin.root_fillet.gcc (bodies named 'root fillet' in the half-fin part)
   tube    params wing.spar.mass_per_m_kgm (same 22 x 20 stock) x length
   CF      CAD volume x CF density + bond epoxy (plug, brace, strips, pins)
   printed CAD volume x density (PETG; ASA for mounts and ESC pads, D-42) x fill factor (+ hardware, + bond epoxy)
@@ -64,13 +66,24 @@ def masses(ctx, specs, P, LP, G, mod):
         V, cg = c.volume_centroid()
         cm3 = V * 1e6
         if rule == 'board':
-            area = V / G['t_fin']
+            fil = [s for s in c.shapes if s.name == mod.FILLET]
+            vf = sum(s.volume_centroid()[0] for s in fil)
+            cf_w = [0.0, 0.0, 0.0]
+            for s in fil:
+                v, cc = s.volume_centroid()
+                cc = c.to_world(cc)
+                cf_w = [cf_w[i] + v * cc[i] for i in range(3)]
+            area = (V - vf) / G['t_fin']
             lay = G['layers']
             adh = l('fin.adhesive_kgm2', 'kg/m2') * (lay - 1)
             am = k9.val(P, 'fins.areal_mass_kgm2', 'kg/m2')
-            m = area * (am * lay + adh) * 1000 + l('fin.root_joint_g', 'g')
-            basis = 'area %.4f m2 x (%.2f x %d + %.3f) kg/m2 + root joint %.1f g' % (area, am, lay, adh,
-                                                                                    l('fin.root_joint_g', 'g'))
+            m_lam = area * (am * lay + adh) * 1000 + l('fin.root_joint_g', 'g')
+            m_fil = vf * 1e6 * G['fil_gcc']
+            m = m_lam + m_fil
+            cg_lam = [(V * cg[i] - cf_w[i]) / (V - vf) for i in range(3)]
+            cg = [(m_lam * cg_lam[i] + m_fil * cf_w[i] / vf) / m for i in range(3)] if vf > 0 else cg
+            basis = ('area %.4f m2 x (%.2f x %d + %.3f) kg/m2 + tape laps %.1f g + root fillets %.1f cm3 x %.2f g/cm3 '
+                     '= %.1f g' % (area, am, lay, adh, l('fin.root_joint_g', 'g'), vf * 1e6, G['fil_gcc'], m_fil))
         elif rule == 'tube':
             m = k9.val(P, 'wing.spar.mass_per_m_kgm', 'kg/m') * G['L_tube'] * 1000
             basis = '%.3f kg/m x %.3f m' % (k9.val(P, 'wing.spar.mass_per_m_kgm', 'kg/m'), G['L_tube'])
@@ -140,15 +153,53 @@ def merge_blocks(e, c6):
         for g in e['geo']:
             if g in mine and abs(mine[g] - theirs.get(g, 0)) > 0.05 * max(1, mine[g]):
                 blk[g] = mine[g]
-                blk['load_n'] = '%s [R3 geometry: %s %s, C6 used %s; C6 re-checks]' % (
+                blk['load_n'] = '%s [D3 R4 geometry: %s %s, C6 used %s; C6 re-checks]' % (
                     theirs.get('load_n', ''), g, mine[g], theirs.get(g))
         out[key] = blk
     return out
 
 
+def merge_stack(mine, c6):
+    """D3 joint stack (geometry, engagement, torque) + C6's load line for the same edge where C6 sized it."""
+    st = dict(mine)
+    theirs = (c6 or {}).get('joint_stack') or {}
+    if theirs.get('load'):
+        st['load'] = theirs['load'] + ' (C6)'
+    return st
+
+
+def e3_thermal():
+    """{claim id: (value, limit)} from team/E3/claims.json and the mission results, for the thermal blocks."""
+    out, res = {}, {}
+    try:
+        with open(os.path.join(REDESIGN, 'team', 'E3', 'claims.json'), encoding='utf-8') as f:
+            for n in json.load(f).get('nodes', []):
+                if n.get('type') == 'claim':
+                    out[n['id']] = (n.get('value'), (n.get('limit') or {}).get('value'))
+        with open(os.path.join(REDESIGN, 'team', 'E3', 'thermal_results.json'), encoding='utf-8') as f:
+            res = json.load(f).get('mission', {})
+    except (OSError, ValueError):
+        pass
+    return out, res
+
+
+def fill_thermal(blk, claims, res):
+    t = dict(blk)
+    cid, hk = t.pop('claim', None), t.pop('heat_key', None)
+    val, lim = claims.get(cid, (None, None))
+    q = res.get(hk)
+    t['heat_w'] = ('%.1f W source loss, hover design (E3 %s); ~0 W credited through this contact' % (q, hk)
+                   if q is not None else '— (E3 to publish)')
+    if lim is not None:
+        t['t_max_c'] = lim
+    t['t_design_c'] = round(val, 1) if val is not None else '—'
+    t['claim'] = cid
+    return t
+
+
 NOTES = {
     'board': 'two 4.8 mm boards spray-laminated (D-26), knife-cut together from the DXF of this outline (notch for the '
-             'collar tongue, square 40 mm tip); LE butts the tube',
+             'collar tongue, D5 stepped 45.4 mm tip); LE butts the tube; root fillets are microballoon epoxy (BUILD step 11)',
     'tube': 'two per 1 000 mm stock length; scuff the bond zones (block, collars) with 120 grit',
     'mount': 'ASA (D-42), 0.2 mm layers, 5 perimeters, enclosed printer; collar axis vertical on the bed; slit + ears '
              'outboard; A = UR/LL, B = UL/LR (mirror); drill the motor holes 3.4 mm through the pilots to the measured '
@@ -156,11 +207,11 @@ NOTES = {
     'block': 'PETG, 3 perimeters, 15 % gyroid, spar bore horizontal on the bed; sand the socket top/bottom flush; '
              'strap eyes print with it',
     'plug': 'CF 20 x 18 offcut, 53 mm, sanded to slide in the 20 mm bore, laminating epoxy',
-    'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed); 16 mm ring, 40 mm '
+    'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed); 12 mm ring, 40 mm '
               'two-face tail, brace ear inboard',
     'brace': 'pultruded CF strip 10 x 2 mm, cut to length on the jig, ends scuffed',
     'anchor': 'PETG, 80 %, brace slot vertical on the bed; foot sits on the spar through a core pocket',
-    'strip': 'pultruded CF strip 10 x 1 mm, cut to the template, one per laminate face, ends at the square tip',
+    'strip': 'pultruded CF strip 10 x 1 mm, cut to the template, one per laminate face, ends at the step front x 0.2746',
     'pad': 'ASA 1.2 mm, 100 % (D-42); two strap slots, matching slots knifed through the laminate',
     'pins': 'pultruded CF rod 2 mm cut to 12 mm; drilled through strip-laminate-strip after cure, bonded, sanded flush',
 }
@@ -171,13 +222,14 @@ def write_parts_csv(specs, M, P):
     for pid, name, mat, mob, rule in specs:
         base = '-'.join(pid.split('-')[:2])
         groups.setdefault(base, []).append((pid, name, mat, mob, rule))
-    cost = {'FIN-001': 0.40, 'FIN-002': 14.16, 'FIN-003': 0.40, 'FIN-004': 0.70, 'FIN-006': 1.00,
+    cost = {'FIN-001': 0.40, 'FIN-002': 14.16, 'FIN-003': 0.40, 'FIN-004': 0.70, 'FIN-006': 1.06,
             'FIN-007': 0.05, 'FIN-008': 0.15, 'FIN-009': 2.00, 'FIN-010': 0.10, 'FIN-011': 2.00, 'FIN-012': 0.75}
     vendor = {'FIN-001': 'Dollar Tree / Adams foam board 20 x 30 in, $1.25 (SRC-K09-CARD)',
               'FIN-002': 'SRC-CF-TUBE 22 x 20 x 1000 mm $28.32, two tubes per stock length (I1 fixes the listing)',
               'FIN-003': 'fusion/fins.py (Fusion export STL), ASA ~$25/kg (D-42)',
               'FIN-004': 'fusion/fins.py, PETG',
-              'FIN-006': 'CF tube 20 x 18 offcut (any 20 x 18 stock), ~$1 share UNVERIFIED (I1)',
+              'FIN-006': 'CF tube 20 x 18 x 1000 mm, $20 per metre (I1 D03): one length gives both FIN-006 plugs (2 x 53 mm) and '
+                          'C2 six 36 mm spar plugs (216 mm) with ~0.65 m spare (CR-I1-17); cost = 53 mm share',
               'FIN-007': 'fusion/fins.py, ASA (D-42)', 'FIN-008': 'fusion/fins.py, PETG',
               'FIN-009': 'pultruded CF strip 10 x 2 x 1000 mm, ~$10 per length, 4 braces per length UNVERIFIED (I1, CR-D3-09)',
               'FIN-010': 'fusion/fins.py, PETG',
@@ -191,7 +243,7 @@ def write_parts_csv(specs, M, P):
              'mount': 'Motor mount ASA, 7 deg canted plate, slip clamp (prints A and B)',
              'block': 'Through-core block (tube socket + spar saddle + strap eyes)',
              'plug': 'Tube plug CF 20x18 x 53 mm', 'pad': 'ESC pad, ASA',
-             'collar': 'Station collar, 16 mm + 40 mm two-face tail', 'brace': 'Brace, CF strip 10 x 2 (C4 CR-C4-16)',
+             'collar': 'Station collar, 12 mm + 40 mm two-face tail', 'brace': 'Brace, CF strip 10 x 2 (C4 CR-C4-16)',
              'anchor': 'Brace anchor on the spar', 'strip': 'Edge strip, CF 10 x 1',
              'pins': 'Edge-strip pin set, CF rod 2 mm'}
     rows = []
@@ -239,23 +291,27 @@ def main():
                       'notes': 'mass EST (%s); CG = CAD centroid; section %s' % (basis, src)})
     have = declared_elsewhere()
     c6 = c6_blocks()
+    e3c, e3r = e3_thermal()
     edges, pending = [], []
     for e in mod.edge_specs(G):
         d = {k: e[k] for k in ('id', 'part_a', 'part_b', 'via', 'notes')}
         d['owner'] = 'fins'
         if e['joint_stack']:
-            d['joint_stack'] = e['joint_stack']
+            d['joint_stack'] = merge_stack(e['joint_stack'], c6.get(e['id']))
         d.update(merge_blocks(e, c6.get(e['id'], {})))
+        if 'thermal' in d:
+            d['thermal'] = fill_thermal(d['thermal'], e3c, e3r)
         missing = [x for x in e['needs'] if x not in have]
         if missing:
             d['waits_for'] = missing
             pending.append(d)
         else:
             edges.append(d)
-    acks = ['E-GER-%02d' % i for i in range(1, 5)]          # landing feet on the half-fin square tips (CR-D5-03)
+    acks = ['E-GER-%02d' % i for i in range(1, 5)]          # landing feet on the half-fin stepped tips (CR-D5-11)
     acks += ['E-HRN-03', 'E-HRN-05'] + ['E-HRN-%02d' % i for i in range(6, 10)]   # lead ties: boss / collar lugs (CR-F2-05)
+    acks += ['E-PWR-%02d' % i for i in range(11, 15)]       # ESC caps foam-taped on the half-fin faces (CR-F1-22)
     doc = {'schema': 'dbf-interfaces/1', 'subsystem': 'fins',
-           '_note': 'GENERATED by subsystems/fins/make_fins.py from fusion/fins.py and params.json (design R3); do not '
+           '_note': 'GENERATED by subsystems/fins/make_fins.py from fusion/fins.py and params.json (design R4); do not '
                     'edit by hand. edges_pending = complete edges to parts other subsystems have not declared yet.',
            'parts': parts, 'edges': edges, 'edges_pending': pending, 'acknowledges': acks}
     with open(os.path.join(HERE, 'interfaces.json'), 'w', encoding='utf-8', newline='\n') as f:
@@ -277,6 +333,13 @@ def main():
     print('  collar z %.4f..%.4f, ear mid %.4f, brace L %.1f / %.1f mm, strip %.0f mm (tail %.1f mm), %d pins/half'
           % (G['z_sc0'], G['z_sc1'], G['z_ear_mid'], G['brace_len'] * 1000, G['brace_len_l'] * 1000,
              G['strip_len'] * 1000, G['strip_tail_len'] * 1000, len(G['pins'])))
+    fil = {pid: M[pid][2].split('root fillets ')[1] for pid, _, _, _, r in specs if r == 'board'}
+    print('  tongue %.2f mm in the %.0f mm collar (fit %.2f mm), last pin x %.4f (+r %.4f <= %.4f), x_prop %.5f, '
+          'x_face %.5f' % (G['tongue_d'] * 1000, G['sc_h'] * 1000, G['tongue_fit'] * 1000, G['pins'][-1][0],
+                          G['pins'][-1][0] + G['pin_r'], G['x_tip_clear'], G['x_prop'], G['x_face']))
+    print('  root fillets: ' + '; '.join('%s %s' % (k[8:], v) for k, v in fil.items()))
+    print('  fillet couple capacity upper %.3e / lower %.3e m3, skin bond %.0f / %.0f mm2, elevon gap aft %.1f mm'
+          % (G['fil_cap_u'], G['fil_cap_l'], G['fil_bond_u'], G['fil_bond_l'], G['elevon_gap_aft'] * 1000))
     return 0
 
 

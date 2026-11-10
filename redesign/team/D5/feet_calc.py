@@ -1,4 +1,4 @@
-"""D5 landing designer: crushable fin-tip feet (GER) for the K09-L quad tailsitter, revision D5-R4 (CR-A1-34, D-30; C5-R3 cartridges).
+"""D5 landing designer: crushable fin-tip feet (GER) for the K09-L quad tailsitter, revision D5-R5 (CR-A4-39 ground kit; R4: CR-A1-34, D-30; C5-R3 cartridges).
 
 Run:  python -I redesign/team/D5/feet_calc.py
 Writes claims.json beside this file. Every number is a pure function of params.json (P:...), the landing subsystem
@@ -431,6 +431,24 @@ kit.claim("CL-D5-MASS-TOTAL", "Landing subsystem flying mass (4 feet + 2 caps)",
           limit=("<=", P + "mass.allocation_g.landing"), parts=FEET + CAPS,
           how="Weigh the four feet and two caps with glue and tape.")
 
+
+# ---------------------------------------------------------------- ground kit stock (flight: false, R5, CR-A4-39)
+@kit.calc("CALC-D5-KIT", title="Ground field-kit stock masses (neoprene sheet GER-006, brass tube GER-013)",
+          inputs={"a": LP + "kit.sheet_side_m", "t": LP + "pad.t_m", "rho_neo": LP + "materials.neoprene_density_kgm3",
+                  "od": LP + "kit.tube_od_m", "wall": LP + "kit.tube_wall_m", "L": LP + "kit.tube_len_m",
+                  "rho_br": LP + "materials.brass_density_kgm3"},
+          units={"a": "m", "t": "m", "rho_neo": "kg/m3", "od": "m", "wall": "m", "L": "m", "rho_br": "kg/m3"},
+          equation="sheet = rho_neo a^2 t ; tube = rho_br pi/4 (od^2 - (od - 2 wall)^2) L")
+def kit_stock(a, t, rho_neo, od, wall, L, rho_br):
+    return {"sheet_g": rho_neo * a * a * t * 1000.0,
+            "tube_g": rho_br * math.pi / 4 * (od ** 2 - (od - 2 * wall) ** 2) * L * 1000.0}
+
+
+kit.claim("CL-D5-KIT-SHEET-MASS", "Ground mass of the whole 12 x 12 in neoprene sheet (not flying)", calc="CALC-D5-KIT",
+          output="sheet_g", unit="g", parts=["GER-006"], how="Weigh the sheet as bought.")
+kit.claim("CL-D5-KIT-TUBE-MASS", "Ground mass of the 12 in 7/32 in brass bore-cutter tube (not flying)",
+          calc="CALC-D5-KIT", output="tube_g", unit="g", parts=["GER-013"], how="Weigh the tube as bought.")
+
 kit.claim("CL-D5-FLANGE-SF", "Flange overhang bending, SF at ultimate", calc="CALC-D5-FLANGE", output="sf",
           unit="-", limit=(">=", 1.0), parts=PISTONS, how="Load a printed flange edge to 61 N; no crack (T-D5-PROOF).")
 kit.claim("CL-D5-BOND-AREA", "Shoe bond area on the half-fin", calc="CALC-D5-BOND", output="area_m2", unit="m2",
@@ -440,7 +458,7 @@ kit.claim("CL-D5-BOND-SF", "Shoe-to-fin bond RF at the printed/bonded design loa
           how="Pull test of a shoe bonded on a stepped two-layer offcut to 88 N along x (T-D5-PROOF, C6 coupon).")
 kit.claim("CL-D5-SIDE-RIM-SF", "Rim bending under the tine lip reaction (side load at the pad)", calc="CALC-D5-SIDE",
           output="sf_rim", unit="-", limit=(">=", 1.0), parts=SHOES,
-          how="T-D5-SIDE: 32 N sideways at the pad of a foot crushed 4 mm, both axes; no crack at the rim.")
+          how="T-D5-SIDE: 35 N (>= 34.2 N ult, C5 side 22.8 N x 1.5) sideways at the pad of a foot crushed 4 mm, both axes; no crack at the rim.")
 kit.claim("CL-D5-SIDE-TINE-SF", "Tine bending at the rim under the side load", calc="CALC-D5-SIDE",
           output="sf_tine", unit="-", limit=(">=", 1.0), parts=PISTONS, how="T-D5-SIDE.")
 kit.claim("CL-D5-SNAP-STRAIN", "Snap finger strain at release", calc="CALC-D5-SNAP", output="strain", unit="-",
@@ -476,7 +494,7 @@ kit.test("T-D5-PROOF", "Shoe bond and flange proof load", verifies=["CL-D5-BOND-
          procedure="Shoe bonded (24 h) on a stepped two-layer foam-board offcut with strip ends; load the pad along x "
                    "to 88 N through a 10 mm steel block at the pad edge; hold 3 s. Pass: no bond crack, no flange crack.")
 kit.test("T-D5-SIDE", "Side load at the pad", verifies=["CL-D5-SIDE-RIM-SF", "CL-D5-SIDE-TINE-SF"],
-         procedure="Same specimen, insert pushed 4 mm in; 32 N at the pad sideways along y, then along z; pass: no crack "
+         procedure="Same specimen, insert pushed 4 mm in; 35 N at the pad sideways along y, then along z; pass: no crack "
                    "at the rim or tine, insert still slides.")
 
 
@@ -496,7 +514,16 @@ def _cad_crosscheck():
     landing.build(ctx)
     n = landing.inputs(ctx.value, ctx.local)
     B = landing.bodies(n, k9.section(ctx)[0])
+    K = {k: landing._lv(ctx.local, "landing." + key) for k, key in landing.KIT_LOCAL.items()}
+    KB = landing.kit_bodies(n, B, K)
+    # ground kit units are translated copies of the flight bodies: same volume as their source bodies
+    for pid, src in (("GER-010", "GER-003"), ("GER-012", "GER-001")):
+        assert abs(landing.volume(KB[pid]) - landing.volume(B[src])) <= 1e-12, pid
     for pid, c in ctx.components.items():
+        if pid in landing.KIT:
+            V_cad, V_calc = c.volume_centroid()[0], landing.volume(KB[pid])
+            assert abs(V_cad - V_calc) <= 1e-9 + 1e-6 * V_calc, (pid, V_cad, V_calc)
+            continue
         base = pid.rsplit("-", 1)[0]
         V_cad = c.volume_centroid()[0]
         V_calc = landing.volume(B[base])

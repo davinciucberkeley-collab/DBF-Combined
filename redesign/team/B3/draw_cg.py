@@ -47,9 +47,12 @@ xa = np_["xnp"] - np_["dx_props"] - np_["dx_pod"]
 lab = [(lim["x_fwd"], f'fwd {lim["x_fwd"]:.4f}', ACC, 72), (lim["x_aft"], f'aft {lim["x_aft"]:.4f}', ACC, 54),
        (lim["x_target"], f'target {lim["x_target"]:.4f}', ACC, 36),
        (np_["xnp"], f'NP {np_["xnp"]:.4f}', FG, 236), (xa, f'NP wing+fins {xa:.4f}', FG3, 256),
-       (chk["x_centred"], f'A3 R3 CG, pack at x -0.001 {chk["x_centred"]:.4f}',
-        FAIL if chk["centred_margin_aft"] < 0 else HI, 216),
-       (chk["cg_slide_fwd"], f'pack at its fwd stop {chk["cg_slide_fwd"]:.4f}', FG2, 276)]
+       (chk["x_centred"], f'A3 CG, 550 g at x -0.022 {chk["x_centred"]:.4f}',
+        FAIL if min(chk["centred_margin_aft"], chk["centred_margin_fwd"]) < 0 else HI, 216),
+       (chk["cg_slide_fwd"], f'550 g on the crush stack {chk["cg_slide_fwd"]:.4f}', FG2, 276)]
+for i, (mg, xs, xg, mf, ma) in enumerate(chk["pack_cases"]):
+    if mg != 550.0:
+        lab.append((xg, f'{mg:.0f} g at {xs:+.3f}: {xg:.4f}', FAIL if min(mf, ma) < 0 else FG2, 18 if mg > 550 else 0))
 for x, t, col, y in lab:
     y0 = 96 if y < 96 else 166
     s.append(f'<line x1="{X(x):.1f}" y1="{y0}" x2="{X(x):.1f}" y2="{y + 4 if y < 96 else y - 14}" stroke="{col}" stroke-width="1.25"/>')

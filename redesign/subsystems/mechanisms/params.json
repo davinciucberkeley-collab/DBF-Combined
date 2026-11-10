@@ -1,5 +1,5 @@
 {
- "_note": "Mechanisms subsystem (MEC) local numbers, owner D6, revision D6-R1 (2026-11-09). Read by fusion/mechanisms.py (ctx.local), make_mechanisms.py and team/D6/mech_calcs.py (P:mec.*). Shared numbers (hinge line, chord, elevon spans and travel, fin plane and thickness, VD, torque factor) come from params/params.json and are not repeated. Frame: params.json#frame (x aft, y right, z up, metres). Stations are given for the RIGHT side; the left side is the exact mirror through DP-SYM. Horn and arm outlines are in mm in the hinge frame: X aft from the hinge line, Z up from the hinge axis (upper skin at the hinge).",
+ "_note": "Mechanisms subsystem (MEC) local numbers, owner D6, revision D6-R2 (2026-11-09; R1 the same day). Read by fusion/mechanisms.py (ctx.local), make_mechanisms.py and team/D6/mech_calcs.py (P:mec.*). Shared numbers (hinge line, chord, elevon spans and travel, fin plane and thickness, VD, torque factor) come from params/params.json and are not repeated. Frame: params.json#frame (x aft, y right, z up, metres). Stations are given for the RIGHT side; the left side is the exact mirror through DP-SYM. Horn and arm outlines are in mm in the hinge frame: X aft from the hinge line, Z up from the hinge axis (upper skin at the hinge).",
  "mec": {
   "servo": {
    "model": {
@@ -244,25 +244,25 @@
     "value": [
      8.0,
      38.0,
-     20.0,
+     14.0,
      1.2
     ],
     "unit": "mm",
     "source": "D6 choice",
     "status": "PROPOSED",
-    "note": "lower flange: X from, X to, width along y, thickness; bonded to bare foam (tape cut back)"
+    "note": "lower flange: X from, X to, width along y, thickness; bonded to bare foam (tape cut back). D6-R2: width 20 -> 14 mm (bond area still >= C6 minimum)"
    },
    "backplate_mm": {
     "value": [
      14.0,
      38.0,
-     16.0,
+     12.0,
      1.0
     ],
     "unit": "mm",
     "source": "D6 choice",
     "status": "PROPOSED",
-    "note": "upper backplate, 1.5 mm aft of the 25 mm hinge tape; bonded to bare foam"
+    "note": "upper backplate, 1.5 mm aft of the 25 mm hinge tape; bonded to bare foam. D6-R2: width 16 -> 12 mm"
    },
    "boss_od_m": {
     "value": 0.007,
@@ -296,21 +296,50 @@
    "d_m": {
     "value": 0.003175,
     "unit": "m",
-    "source": "SRC-D6-WIRE",
+    "source": "SRC-D6-CFROD",
     "status": "PROPOSED",
-    "note": "1/8 in music wire (ASTM A228), E 200 GPa"
+    "note": "1/8 in (3.18 mm) pultruded unidirectional CF rod (D6-R2, was 1/8 in music wire: -6.6 g); a 3.0 mm metric rod also fits the 3.3 mm bore (loss 8.3 %)"
    },
    "e_pa": {
-    "value": 200000000000.0,
+    "value": 110000000000.0,
     "unit": "Pa",
-    "source": "SRC-D6-WIRE",
-    "status": "PROPOSED"
+    "source": "SRC-D6-CFROD",
+    "status": "UNVERIFIED",
+    "note": "longitudinal modulus of pultruded CF rod, low end (makers list 120-140 GPa); T-D6-TWIST measures the lag"
    },
    "steel_gcc": {
     "value": 7.85,
     "unit": "g/cm3",
     "source": "SRC-D6-WIRE",
-    "status": "PROPOSED"
+    "status": "PROPOSED",
+    "note": "music wire / 2-56 steel rod density: used for the pushrod MEC-003"
+   },
+   "rod_gcc": {
+    "value": 1.6,
+    "unit": "g/cm3",
+    "source": "SRC-D6-CFROD",
+    "status": "UNVERIFIED",
+    "note": "pultruded CF rod, 60 % fibre"
+   },
+   "trade_d_e": {
+    "value": [
+     [
+      0.002381,
+      200000000000.0
+     ],
+     [
+      0.002,
+      110000000000.0
+     ],
+     [
+      0.003175,
+      200000000000.0
+     ]
+    ],
+    "unit": "m, Pa",
+    "source": "SRC-D6-WIRE, SRC-D6-CFROD",
+    "status": "PROPOSED",
+    "note": "rods considered for MEC-005 (D6-R2 trade, CALC-D6-ROD-TRADE): 3/32 in music wire (A1 D-48 fallback), 2 mm CF rod (A3 suggestion), 1/8 in music wire (R1)"
    }
   },
   "pushrod": {
@@ -348,6 +377,13 @@
     "source": "ASM-D6-HOLE-PLAY",
     "status": "PROPOSED",
     "note": "diametral play: Z-bend in the arm hole drilled 1.6 mm with a pin vise, clevis pin in the drilled horn hole"
+   },
+   "e_pa": {
+    "value": 200000000000.0,
+    "unit": "Pa",
+    "source": "SRC-D6-WIRE",
+    "status": "PROPOSED",
+    "note": "2-56 steel rod (was read from mec.link.e_pa until D6-R2 made the link CF)"
    }
   },
   "tube": {
@@ -359,7 +395,7 @@
     "unit": "m",
     "source": "SRC-D6-CFTUBE",
     "status": "UNVERIFIED",
-    "note": "roll-wrapped CF tube 5 x 4 mm, one per panel, torque tube along the panel LE"
+    "note": "roll-wrapped CF tube 5 x 4 mm, one per panel along the panel LE; inboard tube shortened (cover_frac)"
    },
    "x_aft_of_hinge_m": {
     "value": 0.0075,
@@ -393,6 +429,16 @@
     "source": "D6 estimate",
     "status": "UNVERIFIED",
     "note": "epoxy + microballoon fill of the routed groove"
+   },
+   "cover_frac": {
+    "value": [
+     0.7,
+     1.0
+    ],
+    "unit": "-",
+    "source": "team/D6/mech_calcs.py#CALC-D6-BRIDGE",
+    "status": "PROPOSED",
+    "note": "fraction of the drive-to-far-end length the tube covers, [inboard, outboard] panel, measured from the horn. Inboard tube runs 0.150 m inboard of the horn (|y| 0.135-0.295, 160 mm with the 10 mm past the horn): the torque near the far end is small (loss 6.8 -> 7.1 %). Outboard tube kept full length: wing tip, ground handling, tip stiffness"
    }
   },
   "panel": {
@@ -438,6 +484,13 @@
     "unit": "m",
     "source": "G3 practice",
     "status": "PROPOSED"
+   },
+   "window_rim_m": {
+    "value": 0.004,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "D6-R2: the frame top plate is a 4 mm rim with a window over the servo case (-0.9 g per frame); the case bears on the rim, the bond area stays >= the C6 minimum (CL-D6-BOND-FRAME)"
    }
   },
   "cover": {
@@ -731,7 +784,7 @@
    }
   },
   "mass_total_g": {
-   "value": 82.34,
+   "value": 70.68,
    "unit": "g",
    "source": "subsystems/mechanisms/make_mechanisms.py",
    "status": "UNVERIFIED",

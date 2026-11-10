@@ -72,6 +72,7 @@ def cap(x, y):
     out.append(f'<line x1="{x - 7}" y1="{y + 13}" x2="{x + 7}" y2="{y + 13}" stroke="{FG}" stroke-width="1.5"/>')
 
 
+LEN = [CL["CALC-F1-WIRES"]["input_values"][k] for k in ("l_ur", "l_ul", "l_lr", "l_ll")]
 r = lambda k, d=1: f"{W[k]:.{d}f}"  # noqa: E731
 i_cont = CL["CL-F1-I-CONT"]["value"]
 
@@ -87,11 +88,12 @@ pair(262, 206, 280, 206)
 box(280, 150, 130, 112, "PWR", "PWR-002", "Disconnect",
     ["anti-spark 15 Ω", "70 A / 140 A", f"t95 {CL['CL-F1-PRECHARGE-T95']['value']:.0f} ms"])
 # --- main path to power board
-pair(410, 206, 540, 206, f"{W['main_awg']} AWG · +{r('main_rise_c')} °C", 475, 190)
+pair(410, 206, 540, 206, f"{W['main_awg']} AWG ≤ 50 mm", 475, 190)
+out.append(f'<text x="475" y="236" font-family="{MONO}" font-size="11" fill="{FG2}" text-anchor="middle">+{r('main_rise_c')} °C</text>')
 box(540, 150, 150, 112, "PWR", "PWR-003", "Power board",
-    ["V + I sense", "90 A / 215 A pk", "FC BEC 5 V"])
-pair(690, 206, 760, 206, "8 AWG", 725, 190)
-box(760, 150, 110, 112, "PWR", "PWR-004", "4-way bus", ["2 oz PDB", "twisted in pod"])
+    ["CoreWing PDB", "90 A / 215 A pk", "FC BEC 5 V"])
+pair(690, 206, 760, 206, f"{W['main_awg']} AWG", 725, 190)
+box(760, 150, 110, 112, "PWR", "PWR-004", "Bus board", ["2 × 8 AWG bars", "4 ESC + fuse"])
 
 # --- ESC leads (four)
 esc = [("PRP-002-UR", "ESC upper R"), ("PRP-002-UL", "ESC upper L"),
@@ -103,7 +105,7 @@ for k, (pid, name) in enumerate(esc):
     box(1010, y, 150, 92, "PRP", pid, name, ["45 A (55 A 10 s)", "+680 µF at pads"])
     sig(f"1190,{y + 70} 1160,{y + 70}")
 out.append(f'<text x="955" y="28" font-family="{MONO}" font-size="11" fill="{FG2}" text-anchor="middle">'
-           f'{W["esc_awg"]} AWG × 0.5 m · +{r("esc_rise_c")} °C</text>')
+           f'{W["esc_awg"]} AWG · {min(LEN):.2f}–{max(LEN):.2f} m · +{r("esc_rise_c")} °C</text>')
 out.append(f'<text x="1085" y="478" font-family="{MONO}" font-size="11" fill="{FG3}" text-anchor="middle">'
            f'to motor: 3 × 3.5 mm bullet</text>')
 

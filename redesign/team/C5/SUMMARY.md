@@ -1,52 +1,55 @@
 # C5 Landing / impact: summary
 
-Fin-tip feet of the K09-L tailsitter (hardware by D5). Revision **C5-R2**, 2026-11-09, at params A1-R2, the A3-R3
-roll-up, B3's R1 CG range (CR-B3-11) and D2's pod. Re-check: `python -I redesign/team/C5/landing_calc.py`, then
-`python -I redesign/proofs/build_graph.py`. The build reports no C5 errors; it still fails on other roles' drift
-(A1, B1, E2).
+Fin-tip feet of the K09-L tailsitter (hardware by D5). Revision **C5-R4**, 2026-11-09. Inputs: params A1-R4 (D-47),
+A3's R5 roll-up with the D-47 bay, B3's R3 CG range, D2's R5 pod params and D5-R4's foot. To re-check, run
+`python -I redesign/team/C5/landing_calc.py`, then `python -I redesign/proofs/build_graph.py`. The build shows no C5
+drift, crash or warning. It still fails on other roles' drift.
 
 ## Key numbers
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Tip-over, pod side: B3 target / worst flying CG / corner bound (limit 30) | 32.8 / 32.4 / 30.8 | ° | `CL-C5-TIPOVER-R1`, `-WORST`, `-B3-CORNER` | `UNVERIFIED` |
-| Tip-over, unsplayed foot | 28.3–29.2 | ° | `CL-C5-TIPOVER-A1-R1-ZCG` | `FAIL` (splay required) |
-| Landing wind limit, broadside / span into wind | 4.35 / 8.4 | m/s | `CL-C5-V-LAND-*` | `FAIL` / `UNVERIFIED` |
-| Hard landing, pair first, D5 foot today: stroke / usable | 32.8 / 29.0 | mm | `CL-C5-DYN-PAIR-CUR` | `FAIL` |
-| Hard landing, pair first, proposed foot: stroke / usable | 34.5 / 35.0 | mm | `CL-C5-DROP-PAIR-PITCH` | `UNVERIFIED` |
-| Peak n, level free drop / tilted design (proposed) | 5.84 / 5.54 | — | `CL-C5-DYN-N-LEVEL`, `-TILTED` | `UNVERIFIED` |
-| Proposed foot: stroke, beyond TE, cartridge bias upper / lower | 38, 48, ×1.077 / ×0.923 | mm, mm, — | `ASM-C5-STROKE-PROP`, `ASM-C5-FOOT-PROP` | `PROPOSED` |
-| Test drop heights: level / tilted | 0.115 / 0.082 | m | `CL-C5-DROP-HEIGHT`, `CL-C5-TEST-TILT-H` | `PROPOSED` |
-| Foot side load on the mat (μ 0.7) vs C1 L4 (μ 0.5) | 23.0 vs 16.5 | N | `CL-C5-FOOT-SIDE-LOAD` | `FAIL` vs C1 case |
-| Parked standing, pack out: largest gust on the mat / grass | 5.1 / 4.3 | m/s | `CL-C5-V-PARK-GUST*` | `UNVERIFIED` |
-| Pack crush room: needed / available (550 g, 5 m/s, ≤ 100 g) | 26.4 / 21.5 | mm | `CL-C5-PACK-NOSE-ROOM` | `FAIL` |
-| Pod nose extension, any pack 503–680 g / 550 g | 10.0 / 4.8 | mm | `CL-C5-NOSE-EXT`, `-550` | `PROPOSED` |
+| Tip-over, pod side: B3 target / worst flying / D-47 stations worst / corner bound (limit 30) | 32.3 / 31.8 / 31.9 / 30.6 | ° | `CL-C5-TIPOVER-R1`, `-WORST`, `-D47`, `-B3-CORNER` | `UNVERIFIED` (+8 / +6 / +6 / +2 %) |
+| D-47 effect, 550 g: CG rise in the stance / tip-over change | +5.1 / −0.42 | mm / ° | `CL-C5-D47-CG-RISE`, `-TIP-CHANGE` | `MODELLED` |
+| Landing wind limit, broadside / span into wind | 4.41 / 8.2 | m/s | `CL-C5-V-LAND-*` | `FAIL` (rule S2) / `UNVERIFIED` |
+| Hard landing, pair first, D5-R4 as delivered: stroke / usable | 31.4 / 35.0 | mm | `CL-C5-DYN-PAIR-CUR`, `CL-C5-DROP-PAIR-PITCH` | `UNVERIFIED` (+10 %) |
+| Peak n, level free drop / tilted | 5.88 / 5.88 | — | `CL-C5-DYN-N-LEVEL`, `-N-CUR` | `UNVERIFIED` (+2 %) |
+| Cartridge bias: C5 optimum / D5-R4 | 1.055 / 1.056 | — | `CL-C5-CART-BIAS-UPPER` | `CHECKED` |
+| Normal landings per cartridge | 2.3 (≥ 5) | — | `CL-C5-LANDINGS-PER-CARTRIDGE` | `FAIL` (D5, CR-D5-21) |
+| Test drop heights: level / tilted | 0.115 / 0.098 | m | `CL-C5-DROP-HEIGHT`, `CL-C5-TEST-TILT-H` | `PROPOSED` |
+| Foot side load on the mat (μ 0.7) | 22.8 = C1 | N | `CL-C5-FOOT-SIDE-LOAD` | `UNVERIFIED` |
+| Parked standing, pack out: largest gust on the mat / grass | 5.3 / 4.5 | m/s | `CL-C5-V-PARK-GUST*` | `UNVERIFIED` |
+| Crush block B margin at the D-47 marks, 503 / 550 / 680 g (5 m/s, ≤ 100 g) | +1.9 / +3.0 / +4.9 | mm | `CL-C5-PACK-ROOM-MARGIN-503/-550/-680` | `UNVERIFIED` |
+| Block B length needed, 503 / 550 / 680 g | 24.3 / 25.7 / 31.8 | mm | `CL-C5-BLOCK-L-503`, `CL-C5-BLOCK-L`, `-680` | `MODELLED` |
+| Further nose extension / box x slack | 0 / 2 | mm | `CL-C5-NOSE-EXT`, `CL-C5-BOX-X-SLACK-NOSE` | `UNVERIFIED` |
 
 ## Decisions and findings
 
-1. **The CG move helps.** B3's range (0.050–0.055 m) adds about 0.5° of tip-over everywhere. 33° is not needed.
-   Keep the pads at z ±0.219 m, also with 0.21 m fins.
-2. **The 32 mm foot is too short.** A planar landing model (validated against the hand balance within 1.3 mm)
-   shows two effects. The 17 mm z_cg offset rotates a level landing onto the pod-side pair, and in a pair-first
-   touchdown the second pair lands harder. The worst tilt is about 4°. Fix: 38 mm stroke, a 48 mm foot and biased
-   cartridges (CR-C5-10, -11). Stroke is the only lever that keeps n ≤ 6.
-3. **Pack protection is now within reach.** The aft pack station opens 21.5 mm. A 10 mm nose-shell extension plus
-   an XPS block as the forward trim spacer holds any listed pack to ≤ 100 g (CR-C5-02 revised, down from 25 mm).
-4. **Landing heading and stance rules stand** (wingtip into wind, mat, lay flat, spin down at contact: S1–S8).
-5. **The mat raises the fin side load 40 %.** C1/C4 re-check at μ 0.7 (CR-C5-09).
+1. **The `IndexError` is fixed.** A3 renamed the pack row `PWR-E01` → `PWR-001`. The script now finds the single
+   power/energy row and fails with a clear message if it is missing.
+2. **Tip-over holds after D-47.** The CG rises 5.1 mm in the stance and costs 0.4°. The worst flying case is 31.8°
+   (+6 %). The +2 % corner bound sits at B3's forward limit, which D-47 does not move.
+3. **D5-R4's cartridges pass.** Pitch pair-first strokes 31.4 of 35 mm at n 5.88. CR-C5-10 is closed. The
+   "foot today" claims are cross-checks only and no longer carry `verifies` (CR-A2-21a).
+4. **The crush block passes for every pack at its D-47 mark.** CR-C5-12 is closed. Do not trim a pack forward of its
+   mark: a 503 g pack slid onto the B3 target has 0 mm left (flight-card rule S9, CR-C5-14).
+5. **CR-C5-13 is withdrawn.** At R5 a full-section forward stop gains only 0.5 mm. C3 and D2 close it.
+6. Lower cartridges are named `GER-008-LR/LL` in the claims (CR-A4-47).
 
 ## Files
 
 | File | What | Status |
 |---|---|---|
-| `landing_calc.py` | six calculations (stance, wind, lay-flat, hand drop, planar dynamics, crash block), 67 claims, 4 tests | `CHECKED` (runs; no C5 drift) |
+| `landing_calc.py` | six calculations (stance, wind, lay-flat, hand drop, planar dynamics, crash block), 83 claims, 4 tests | `CHECKED` (runs; no C5 drift in the build) |
 | `claims.json` | proof-chain nodes (generated) | `CHECKED` |
-| `LANDING.md` | report: tip-over, wind, dynamics and D5 sizing, drop tests, stance rules, crash path | `PROPOSED` |
-| `CHANGE-REQUESTS.md` | CR-C5-01 … 11 (09, 10, 11 new; 02 revised) | open |
+| `LANDING.md` | report: tip-over, wind, dynamics and D5 sizing, drop tests, stance rules S1–S9, crash path | `PROPOSED` |
+| `CHANGE-REQUESTS.md` | CR-C5-14 new (D2 R5 claims, H3 station rule); 10, 12, 13 closed or withdrawn | open |
 
 ## Open issues
 
-- Proposed pitch-first case leaves 0.5 mm inside the 3 mm guard. It rests on the XPS plateau (coupon), rotor lift
-  2/3 W and frictionless pads. The tilted drops validate the model.
-- With a 680 g pack the balanced station is 9.5 mm aft of D2's travel (D2, A1).
-- Touchdown drift (0.3 m/s), gust factor (1.4) and pack shock limit (100 g) remain `UNVERIFIED` assumptions.
+- D5's permanent set (1.28 mm per landing) gives 2.3 landings per cartridge. D5 owns the fix (CR-D5-21).
+- D2's `CL-D2-*` claims still describe the R4 bay, and `CALC-D2-NOSE-EXT` reads C5's trim stations (CR-C5-14).
+  `CALC-C5-CRASH` reads D2's R5 pod params directly.
+- The wingtip TE corner clears by only 2.4 mm in the worst roll landing. Keep the corner caps.
+- Touchdown drift (0.3 m/s), gust factor (1.4), pack shock limit (100 g) and the coupon plateau stay
+  `UNVERIFIED`.

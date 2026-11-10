@@ -1,10 +1,11 @@
-"""K09-L fins subsystem (FIN), owner D3, design R3 (CR-A1-28; CHANGE-LOG D-26, D-27, D-28, D-42). Two fins at
-y = +/-0.32 m. Each fin = one continuous CF motor tube through the wing core at x 0.045 (0.344 m, ends at z +/-0.172),
-an upper and a lower two-layer foam-board half-fin behind it (0.21 m high, square 40 mm tip for the foot), a printed
-PETG through-core block that joins tube, spar and core (with a strap eye on each bore boss), and per motor station an
-ASA slip-clamp motor mount with a 7 deg canted plate, a 16 mm PETG station collar with a 40 mm two-face tail, a
-pultruded CF brace from the collar to the spar, two CF edge strips along the half-fin top edge pinned with 2 mm CF
-pins every 15 mm, and an ASA ESC pad.
+"""K09-L fins subsystem (FIN), owner D3, design R4 (CR-A1-47; CHANGE-LOG D-26, D-27, D-28, D-42, D-48, D-51, D-52,
+D-54). Two fins at y = +/-0.32 m. Each fin = one continuous CF motor tube through the wing core at x 0.045 (0.344 m,
+ends at z +/-0.172), an upper and a lower two-layer foam-board half-fin behind it (0.21 m high, D5's stepped 45.4 mm
+tip for the foot shoe), a printed PETG through-core block that joins tube, spar and core (with a strap eye on each bore
+boss), and per motor station an ASA slip-clamp motor mount with a 7 deg canted plate (sense per D-52), a 12 mm PETG
+station collar with a 40 mm two-face tail, a pultruded CF brace from the collar to the spar, two CF edge strips along
+the half-fin top edge pinned with 2 mm CF pins every 15 mm, an ASA ESC pad, and microballoon-epoxy root fillets
+(CR-C6-24) modelled as bodies of the half-fin.
 
     build(ctx)            Fusion / stub module (fusionkit), cruise attitude, aircraft frame (DATUMS.md)
     geometry(P, LP, co)   every derived dimension, shared with make_fins.py and team/D3/fins_calcs.py
@@ -22,13 +23,17 @@ board thickness that fills a notch in the board's LE-top corner, with the two ed
 and two outer walls (both strip faces bonded to PETG over 40 mm). Nothing wraps the board around the tube.
 Load path: motor -> canted plate -> mount collar (friction clamp, the D-23 fuse) -> tube -> station collar -> brace
 (axial) -> anchor -> spar, and tube -> block (socket bore, CF plug inside) -> spar bore -> spar; fin top edge -> CF
-edge strips (pinned to the board) -> collar tail -> tube; fin root -> fillets and tape laps -> core.
+edge strips (pinned to the board) -> collar tail -> tube; fin root -> cove fillets (15 mm on the effective root
+length, 13 mm aft of the hinge for the elevon end gaps, 6 mm sealing bead ahead of it, none over the D6 link slot on
+the lower roots) and tape laps -> core.
 
-Cant (D-27, 7 deg): the motor plate is a slab whose front and back faces are both planes through the motor point
-tilted 7 deg about the radial line from the x-axis to the motor, so every motor screw passes the same 4.5 mm stack and
-its head bears flat. fusionkit has no rotated bodies inside an axis-aligned part and no holes in lofts, so the slab is
-a set of ruled Z-lofts around the openings (square 2.5 mm drill pilots on the nominal pattern, a 10 mm square shaft
-opening): exact planes. The brace is a ruled Y-loft between two (x, z) rectangles, exact for a straight strip.
+Cant (D-27, 7 deg; sense D-52): the motor plate is a slab whose front and back faces are both planes through the motor
+point tilted 7 deg about the radial line from the x-axis to the motor, so every motor screw passes the same 4.5 mm stack
+and its head bears flat. fin_detail.mount.cant_sense_UR = -1: the UR prop end leans toward the wing plane and
+outboard. fusionkit has no rotated bodies inside an axis-aligned part and no holes in lofts, so the slab is a set of
+ruled Z-lofts around the openings (square 2.5 mm drill pilots on the nominal pattern, a 10 mm square shaft opening):
+exact planes. The brace is a ruled Y-loft between two (x, z) rectangles, exact for a straight strip. The root fillets
+are ruled X-lofts of a cove section (equal legs) on the S5010 surface, one station every 10 mm.
 
 UNVERIFIED-IN-FUSION: lofts of the canted plate and braces; the block socket is flat-topped at the local surface
 (sand flush); the brace slots in the ear and anchor are where the brace body overlaps them (cut with the brace body as
@@ -120,7 +125,7 @@ def geometry(P, LP, coords):
     G['z_col0'] = G['z_tube_end'] - G['grip']
     G['z_grip_mid'] = G['z_tube_end'] - G['grip'] / 2
     G['plate_hy'], G['plate_hz'] = l('mount.plate_half_y_m', 'm'), l('mount.plate_half_z_m', 'm')
-    G['x_prop'] = G['x_face'] - l('mount.prop_stack_m', 'm')
+    G['x_prop'] = G['x_face'] - l('mount.prop_stack_m', 'm') * math.cos(math.radians(G['cant']))   # hub on the axis
     G['prop_gap'] = G['x_col_front'] - G['x_prop']
     corners = [(sy * G['plate_hy'], sz * G['plate_hz']) for sy in (-1, 1) for sz in (-1, 1)]
     G['plate_x_min'] = min(G['face_x_at'](dy, dz) for dy, dz in corners)
@@ -151,27 +156,36 @@ def geometry(P, LP, coords):
     G['sc_x_end'] = G['xt'] + G['r_t'] + l('station_collar.tail_m', 'm')
     G['sc_ear_len'], G['sc_ear_w'] = l('station_collar.ear_len_m', 'm'), l('station_collar.ear_w_m', 'm')
 
-    # half-fin: LE on the tube, sloped top edge from the collar top to the square tip, flat tip
+    # half-fin: LE on the tube, sloped top edge from the collar top to the step front, D5's flat step to the TE
     G['x_le'] = G['xt'] + G['r_t'] + l('fin.le_gap_m', 'm')
     G['x_sq'] = G['te'] - l('fin.tip_square_m', 'm')
+    G['z_step'] = l('fin.tip_step_z_m', 'm')
+    G['x_tip_clear'] = l('fin.tip_clear_x_m', 'm')
+    if not G['z_sc1'] < G['z_step'] < G['h']:
+        raise ValueError('fin tip step |z| %.4f must lie between the collar top %.4f and the half height %.4f'
+                         % (G['z_step'], G['z_sc1'], G['h']))
     G['z_le_top'] = G['z_sc1']
     G['slope'] = (G['h'] - G['z_le_top']) / (G['x_sq'] - G['x_le'])
     G['ztop'] = lambda x: min(G['h'], G['z_le_top'] + G['slope'] * (x - G['x_le']))
     G['cos_e'] = 1 / math.hypot(1, G['slope'])
     G['es_wz'] = G['es_w'] / G['cos_e']                              # strip band height measured along z
     G['tongue_d'] = G['es_wz'] + l('station_collar.tongue_depth_m', 'm')   # tail tongue / wall / notch depth along z
+    G['tongue_fit'] = G['sc_h'] - G['tongue_d']                     # D-48: the 12 mm collar holds only if >= 0.5 mm
+    if G['tongue_fit'] < 0.0005:
+        raise ValueError('strip-tail tongue %.2f mm does not fit under the %.1f mm station collar (D-48): keep 16 mm'
+                         % (G['tongue_d'] * 1000, G['sc_h'] * 1000))
     G['x_hinge'] = c * k9.hinge_frac(P)
     G['slot_hw'], G['slot_d'] = l('link_slot.half_width_m', 'm'), l('link_slot.depth_m', 'm')
     G['strip_len'] = (G['x_sq'] - G['x_le']) / G['cos_e']
     G['strip_tail_len'] = G['sc_x_end'] - G['x_le']                 # strip length bonded inside the collar tail
 
-    # edge-strip pins (CR-C6-02): along the strip centreline aft of the collar tail, to the square tip
+    # edge-strip pins (CR-C6-02): along the strip centreline aft of the collar tail, ending before D5's shoe cheeks
     G['pin_r'], G['pin_pitch'] = l('edge_strip.pin_d_m', 'm') / 2, l('edge_strip.pin_pitch_m', 'm')
     G['pin_len'] = G['t_fin'] + 2 * G['es_t']
     dxp = G['pin_pitch'] * G['cos_e']
     xs_ = []
     x = G['sc_x_end'] + dxp / 2
-    while x < G['x_sq'] - dxp / 4:
+    while x < G['x_sq'] - dxp / 4 and x + G['pin_r'] <= G['x_tip_clear']:     # clear of D5's shoe cheeks
         xs_.append(x)
         x += dxp
     G['pins'] = [(x, G['ztop'](x) - G['es_wz'] / 2) for x in xs_]
@@ -186,6 +200,31 @@ def geometry(P, LP, coords):
     G['boss_u'] = (G['zu'](G['xt']), max(G['zu'](x) for x in xb) + G['boss_h'])      # z range of the upper boss
     G['boss_l'] = (min(G['zl'](x) for x in xb) - G['boss_h'], G['zl'](G['xt']))      # lower boss
     G['bore_len'] = G['boss_u'][1] - G['boss_l'][0]
+
+    # root fillets (CR-C6-24, CR-D6-04): zones (x0, x1, leg) per half; full leg over eff_len of bonded root from the TE
+    rf = lambda k, u='m': l('fin.root_fillet.' + k, u)
+    G['fil_leg'], G['fil_aft'], G['fil_fwd'] = rf('leg_m'), rf('leg_aft_m'), rf('leg_fwd_m')
+    G['fil_leff'], G['fil_gcc'] = rf('eff_len_m'), rf('gcc', 'g/cm3')
+    G['fil_x0'] = G['boss_x_end']                                     # starts behind the bore-boss slot walls
+    G['fil_x1'] = G['te'] - 0.002                                     # stops short of the opened TE
+    G['slot_x'] = (G['x_hinge'] - G['slot_hw'], G['x_hinge'] + G['slot_hw'])
+
+    def fillet_zones(upper):
+        gap = 0.0 if upper or not rf('stop_over_link_slot', '-') else G['slot_x'][1] - G['slot_x'][0]
+        x_full = G['te'] - G['fil_leff'] - gap
+        if upper:
+            return [(G['fil_x0'], x_full, G['fil_fwd']), (x_full, G['x_hinge'], G['fil_leg']),
+                    (G['x_hinge'], G['fil_x1'], G['fil_aft'])]
+        a, b = G['slot_x']
+        return [(G['fil_x0'], x_full, G['fil_fwd']), (x_full, a, G['fil_leg']), (b, G['fil_x1'], G['fil_aft'])]
+    G['fillet_zones'] = fillet_zones
+    t = G['t_fin']
+    for key, up in (('fil_cap_u', True), ('fil_cap_l', False)):     # couple capacity per unit stress (m3), full zones
+        G[key] = sum(lg * (t + lg) * (x1 - x0) for x0, x1, lg in fillet_zones(up) if lg > G['fil_fwd'])
+    G['fil_bond_u'] = sum(2 * lg * (x1 - x0) for x0, x1, lg in fillet_zones(True)) * 1e6    # skin bond, mm2
+    G['fil_bond_l'] = sum(2 * lg * (x1 - x0) for x0, x1, lg in fillet_zones(False)) * 1e6
+    G['elevon_gap_aft'] = min(v('wing.elevon.outboard_y_m', 'm')[0] - (G['yf'] + t / 2),
+                              (G['yf'] - t / 2) - v('wing.elevon.inboard_y_m', 'm')[1]) - G['fil_aft']
 
     # strap eye on each boss (CR-H1-08)
     G['eye_len'], G['eye_h'], G['eye_t'] = l('strap_eye.len_m', 'm'), l('strap_eye.h_m', 'm'), l('strap_eye.t_m', 'm')
@@ -285,8 +324,8 @@ def band(x0, x1, top, depth):
 # ----------------------------------------------------------------------------- shapes
 def half_fin_loop(G, upper):
     """(x, z) outline, right side. Root on the skin; LE on the tube up to the collar bottom; notch for the collar
-    tongue; sloped top edge to the square tip; flat tip at the half height; TE = wing TE. The lower half has the
-    elevon inter-panel link slot (CR-A4-04) on the hinge line."""
+    tongue; sloped top edge to the half height at the step front (x_sq); D5's step cut down to |z| z_step, flat to
+    the TE (D-54); TE = wing TE. The lower half has the elevon inter-panel link slot (CR-A4-04) on the hinge line."""
     s = 1 if upper else -1
     surf = G['zu'] if upper else G['zl']
     xs = [G['x_le'] + (G['te'] - G['x_le']) * i / 24 for i in range(25)]
@@ -303,7 +342,7 @@ def half_fin_loop(G, upper):
             root.append((x, surf(x)))
     xe = G['sc_x_end']
     xr = G['xt'] + G['sc_r_out'] + (G['x_le'] - G['xt'] - G['r_t'])    # clear of the collar ring by the LE gap
-    top = [(G['te'], s * G['h']), (G['x_sq'], s * G['h']), (xe, s * G['ztop'](xe)),
+    top = [(G['te'], s * G['z_step']), (G['x_sq'], s * G['z_step']), (G['x_sq'], s * G['h']), (xe, s * G['ztop'](xe)),
            (xe, s * (G['ztop'](xe) - G['tongue_d'])), (xr, s * (G['ztop'](xr) - G['tongue_d'])),
            (xr, s * G['z_sc0']), (G['x_le'], s * G['z_sc0'])]
     return root + top
@@ -312,8 +351,36 @@ def half_fin_loop(G, upper):
 def build_half_fin(part, G, upper):
     """Laminate with the Ø 8 mm ESC-lead hole (CR-F2-05; drilled after laminating, F2's grommet goes in it)."""
     hole = circle(G['wh_x'], G['wh_z'] if upper else G['wh_zl'], G['wh_r'], 24)
-    return part.prism('Y', G['yf'] - G['t_fin'] / 2, [half_fin_loop(G, upper), hole], G['t_fin'],
-                      name='half-fin laminate (2 boards)')
+    lam = part.prism('Y', G['yf'] - G['t_fin'] / 2, [half_fin_loop(G, upper), hole], G['t_fin'],
+                     name='half-fin laminate (2 boards)')
+    build_root_fillets(part, G, upper)
+    return lam
+
+
+FILLET = 'root fillet'
+
+
+def cove(y_face, d, zb, s, leg, n=6):
+    """(y, z) cove section on a face at y_face (fillet side d = +/-1) and a skin at zb (fillet side s = +/-1): corner,
+    skin leg, concave quarter arc of radius leg back to the face leg. Area (1 - pi/4) leg^2."""
+    cy, cz = y_face + d * leg, zb + s * leg
+    pts = [(cy - d * leg * math.sin(math.pi / 2 * i / n), cz - s * leg * math.cos(math.pi / 2 * i / n))
+           for i in range(n + 1)]
+    return [(y_face, zb)] + pts
+
+
+def build_root_fillets(part, G, upper):
+    """Microballoon-epoxy cove fillets along the root on both laminate faces, on the S5010 surface (bodies of the
+    half-fin part; make_fins.py weighs them at fin.root_fillet.gcc). Zones from geometry()['fillet_zones']."""
+    surf, s = (G['zu'], 1) if upper else (G['zl'], -1)
+    for x0, x1, leg in G['fillet_zones'](upper):
+        if x1 - x0 < 1e-4:
+            continue
+        n = max(1, int(math.ceil((x1 - x0) / 0.010)))
+        xs = [x0 + (x1 - x0) * i / n for i in range(n + 1)]
+        for d in (1, -1):
+            yF = G['yf'] + d * G['t_fin'] / 2
+            part.loft('X', [(x, cove(yF, d, surf(x), s, leg)) for x in xs], smooth=False, name=FILLET)
 
 
 def tie_lug(part, G, xc, y_face, out, z0, name):
@@ -329,7 +396,7 @@ def tie_lug(part, G, xc, y_face, out, z0, name):
 
 def build_edge_strip(part, G, outboard):
     """Straight CF strip on one face of the upper-right half-fin along the sloped top edge, from the board LE (inside
-    the collar tail) to the start of the square tip."""
+    the collar tail) to the step front (x_sq, D-54)."""
     y0 = G['yf'] + G['t_fin'] / 2 if outboard else G['yf'] - G['t_fin'] / 2 - G['es_t']
     return part.prism('Y', y0, [band(G['x_le'], G['x_sq'], G['ztop'], G['es_wz'])], G['es_t'], name='edge strip')
 
@@ -479,8 +546,8 @@ def part_specs(G=None):
     L = '%.0f mm' % (G['L_tube'] * 1000) if G else '344 mm'
     S = []
     for st in STATIONS:
-        S.append(('FIN-001-' + st, 'Half-fin %s, two-layer foam board, square 40 mm tip, 8 mm lead hole%s'
-                  % (SNAME[st], ', link slot' if st[0] == 'L' else ''), BOARD, 'make', 'board'))
+        S.append(('FIN-001-' + st, 'Half-fin %s, two-layer foam board, stepped %.1f mm tip, 8 mm lead hole, root fillets%s'
+                  % (SNAME[st], (G['te'] - G['x_sq']) * 1000 if G else 45.4, ', link slot' if st[0] == 'L' else ''), BOARD, 'make', 'board'))
     for s in ('R', 'L'):
         S.append(('FIN-002-' + s, 'Motor tube %s, CF 22x20 x %s' % (s, L), CF, 'buy', 'tube'))
     for st in STATIONS:
@@ -495,7 +562,7 @@ def part_specs(G=None):
     for st in STATIONS:
         S.append(('FIN-007-' + st, 'ESC pad %s, ASA, on the outboard face of half-fin %s' % (st, st), ASA, 'make', 'pad'))
     for st in STATIONS:
-        S.append(('FIN-008-' + st, 'Station collar %s, 16 mm, 40 mm two-face tail + brace ear + tie lug' % st, PETG, 'make',
+        S.append(('FIN-008-' + st, 'Station collar %s, %.0f mm, 40 mm two-face tail + brace ear + tie lug' % (st, G['sc_h'] * 1000 if G else 12), PETG, 'make',
                   'collar'))
     for st in STATIONS:
         S.append(('FIN-009-' + st, 'Brace %s, CF strip 10 x %.0f' % (st, G['br_t'] * 1000 if G else 2), CFS, 'buy', 'brace'))
@@ -616,11 +683,17 @@ def edge_specs(G):
             blocks={'bond': bond(6500, 'secondary: spar carries the block', '-', 'C4', adhesive=EPOXY_FOAM,
                                  prep='foam dusted off')})
     for st in STATIONS:                                                                      # 53-56
+        up = st[0] == 'U'
+        z = G['fillet_zones'](up)
+        stop = '' if up else '; NO fillet over the link slot x %.4f-%.4f (both faces, CR-D6-04)' % G['slot_x']
         add('FIN-001-' + st, 'WNG-001', 'CT-EPOXY',
-            'laminate root on bare foam, microballoon-epoxy fillets both sides (12 mm legs), then the skin tape laps '
-            '15 mm up both faces (L-angle); root contour from the S5010 section', needs=['WNG-001'],
-            blocks={'bond': bond(6300, 'see C6', 'L4 side load', 'D3, C6', adhesive=EPOXY_FOAM,
-                                 prep='foam dusted off; board edge scuffed')})
+            'laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): %.0f mm legs x %.4f-%.4f, '
+            '%.0f mm legs aft of the hinge to the TE (elevon end gap), %.0f mm sealing bead x %.4f-%.4f%s; then the '
+            'skin tape laps 15 mm up both faces; root contour from the S5010 section'
+            % (z[1][2] * 1000, z[1][0], z[1][1], z[2][2] * 1000, z[0][2] * 1000, z[0][0], z[0][1], stop),
+            needs=['WNG-001'],
+            blocks={'bond': bond(G['fil_bond_u'] if up else G['fil_bond_l'], 'see C6', 'L4 side load', 'D3, C6',
+                                 adhesive=EPOXY_FOAM, prep='foam dusted off; board edge scuffed')}, geo=['area_mm2'])
     for st in STATIONS:                                                                      # 57-60
         add('FIN-010-' + st, 'WNG-002', 'CT-EPOXY',
             'anchor foot bonded on the spar %s face through a %.0f x %.0f mm pocket in skin and core at y %+.3f (D1 '
@@ -635,7 +708,8 @@ def edge_specs(G):
                      % (G['plate_t'] * 1000, G['pilot'] * 1000, G['pattern'][0] * 1000, G['pattern'][1] * 1000),
              'insert': 'none (motor base tapped M3)',
              'engagement_mm': round(G['engage_min'] * 1000, 2), 'min_engagement_mm': 3.0,
-             'max_engagement_mm': 'probed hole depth - 0.5 (T-E1-MOTOR-RM)', 'washer_nut': 'none',
+             'max_engagement_mm': 'probed hole depth - 0.5 (T-E1-MOTOR-RM)',
+             'washer_nut': 'none (head bears flat on the canted back face)',
              'torque': '0.20 N m (4 N on a luggage scale 50 mm out on the key) + Loctite 243 on the screw tip only',
              'tool': '2.5 mm hex key + luggage scale',
              'access': 'from behind the plate (+x), above the tube end, between the cheeks',
@@ -652,7 +726,7 @@ def edge_specs(G):
             'heat-shrink not taped over, long axis along x in the slipstream (CR-E3-02)', needs=['PRP-002-' + st],
             blocks={'retention': {'item': 'FIN-104 10 mm hook-and-loop strap + 25 x 40 mm tape', 'count': 1,
                                   'load_n': 'ESC ~28 g x 10 g = 2.7 N', 'inspection': 'tug test before every flight'}})
-    # ---- R3 additions (appended; ids above are fixed)
+    # ---- R3 / R4 additions (appended; ids above are fixed)
     np_ = len(G['pins'])
     for st in STATIONS:                                                                      # 69-72
         add('FIN-012-' + st, 'FIN-001-' + st, 'CT-EPOXY',
@@ -666,6 +740,28 @@ def edge_specs(G):
                 % ('outboard' if f == 'O' else 'inboard'),
                 blocks={'bond': bond(np_ * math.pi * 2 * G['pin_r'] * G['es_t'] * 1e6,
                                      '77 N per pin design; RF 1.41 (CL-C6-STRIP-PIN-RF)', 'L4', 'C6')})
+    # R4 thermal edges (CR-A4-22a / CR-A4-40, E3 CR-E3-11): make_fins.py fills t_design_c and heat_w from E3's claims
+    for st in STATIONS:                                                                      # 81-84
+        add('PRP-001-' + st, 'FIN-003-' + st, 'CT-THERMAL-CONTACT',
+            'motor base on the canted ASA plate: dry contact on four ~4 x 4 mm pads around the screw holes; the mount is '
+            'not a cooling path (printed ASA k ~0.2 W/m K), E3 takes the base at the motor-node temperature',
+            needs=['PRP-001-' + st],
+            blocks={'thermal': {'heat_w': 'E3', 't_max_c': 83, 't_ambient_c': 30,
+                                'path': 'motor -> own prop wash over the bell + internal ventilation; base -> ASA plate '
+                                        '(four 4 x 4 mm pads) not credited; plate limit = ASA HDT 93 - 10 K (D-42)',
+                                'sized_by': 'E3, D3', 'claim': 'CL-E3-MOUNT-ASA',
+                                'heat_key': 'hover_loss_motor_des_w'}})
+    for st in STATIONS:                                                                      # 85-88
+        add('PRP-002-' + st, 'FIN-007-' + st, 'CT-THERMAL-CONTACT',
+            'ESC on its ASA pad through the hook-and-loop tape (treated as insulating); FET side out in the slipstream '
+            'at x %.3f-%.3f, |z| %.4f (%.0f-%.0f mm from the motor axis)'
+            % (G['pad_x0'], G['pad_x0'] + G['pad_len'], G['pad_z'], (G['zm'] - G['pad_z'] - G['pad_hh']) * 1000,
+               (G['zm'] - G['pad_z'] + G['pad_hh']) * 1000), needs=['PRP-002-' + st],
+            blocks={'thermal': {'heat_w': 'E3', 't_max_c': 85, 't_ambient_c': 30,
+                                'path': 'ESC FET face -> hover slipstream (exposed ~1 360 mm2, h ~50 W/m2 K, half '
+                                        'velocity behind the tube) + radiation; pad side adiabatic; the ASA pad sees at '
+                                        'most the ESC case temperature (ASA HDT 93 - 10 K)',
+                                'sized_by': 'E3, D3', 'claim': 'CL-E3-ESC-PEAK', 'heat_key': 'hover_loss_esc_des_w'}})
     return E
 
 

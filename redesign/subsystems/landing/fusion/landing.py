@@ -1,4 +1,4 @@
-"""K09-L landing (GER, D5, revision D5-R4): four crushable feet on the half-fin TE tips + two wingtip corner caps.
+"""K09-L landing (GER, D5, revision D5-R5): four crushable feet on the half-fin TE tips + two wingtip corner caps.
 
 Each foot is a telescoping crush unit in the fin plane, built for the UR station and mirrored to UL, LR, LL:
 
@@ -25,7 +25,9 @@ Registers: E-GER-05..08 piston-shoe slider along X (crush stroke 0 .. -38 mm), E
 E-GER-01..04 (shoe on FIN-001-<st>) are contacts too: registered here, touch-checked once the fins (R3 ids) are
 modelled. The corner caps GER-007-R/L and their edges E-GER-21/22 (cap on WNG-001) are built and registered only when
 some subsystem declares WNG-001 (CAP_HOST); until then the caps are PROPOSED and the edges sit in edges_pending
-(team/D5/make_interfaces.py makes the same test), so nothing floats and nothing dangles.
+(team/D5/make_interfaces.py makes the same test), so nothing floats and nothing dangles. Since D1 declares WNG-001
+(R5) the caps are MODELLED and E-GER-21/22 are edges. Ground kit GER-005..013 (flight: false): one unit per line in a
+row at y = landing.kit.y_m (kit_bodies), built for the lines interfaces.json declares.
 
 UNVERIFIED-IN-FUSION: slider direction on the mirrored LR/LL components; prisms with notch/window loops (tine y
 walls, sleeve y walls, bored cartridge); the cap loop follows the section only at its two end stations.
@@ -209,6 +211,72 @@ def _mirror_z(spec):
     return ('prism', ax, off, [[(u, -v) for u, v in l] for l in loops], depth, nm)
 
 
+_UV = {'X': (1, 2), 'Y': (0, 2), 'Z': (0, 1)}
+_AX = {'X': 0, 'Y': 1, 'Z': 2}
+
+# Ground field kit (flight: false, CR-A3-18): one representative unit per parts.csv line, laid out in a row beside
+# the aircraft (y = landing.kit.y_m, clear of the 0.576 m wingtip and the transport box), long axis along x, one
+# z pitch per line. It stands for the contents of the separate landing-spares box (TRN-108, not modelled); the
+# layout is a CAD convention, not a stowage claim. The node mass is per unit, so the CAD unit matches it.
+KIT = ('GER-005', 'GER-009', 'GER-010', 'GER-011', 'GER-012', 'GER-013', 'GER-006')
+KIT_LOCAL = {'kit_y': 'kit.y_m', 'kit_x': 'kit.x_m', 'kit_dz': 'kit.pitch_z_m', 'sheet_y': 'kit.sheet_y_m',
+             'sheet_a': 'kit.sheet_side_m', 'tube_od': 'kit.tube_od_m', 'tube_wall': 'kit.tube_wall_m',
+             'tube_len': 'kit.tube_len_m'}
+
+
+def _shift(spec, d):
+    if spec[0] == 'box':
+        _, lo, hi, nm = spec
+        return ('box', tuple(lo[i] + d[i] for i in range(3)), tuple(hi[i] + d[i] for i in range(3)), nm)
+    _, ax, off, loops, depth, nm = spec
+    iu, iv = _UV[ax]
+    return ('prism', ax, off + d[_AX[ax]], [[(u + d[iu], v + d[iv]) for u, v in l] for l in loops], depth, nm)
+
+
+def _bbox(specs):
+    lo, hi = [1e9] * 3, [-1e9] * 3
+    for sp in specs:
+        if sp[0] == 'box':
+            pts = [sp[1], sp[2]]
+        else:
+            _, ax, off, loops, depth, _ = sp
+            iu, iv, k = _UV[ax][0], _UV[ax][1], _AX[ax]
+            pts = []
+            for u, v in loops[0]:
+                for w_ in (off, off + depth):
+                    p = [0.0] * 3
+                    p[iu], p[iv], p[k] = u, v, w_
+                    pts.append(p)
+        for p in pts:
+            for i in range(3):
+                lo[i], hi[i] = min(lo[i], p[i]), max(hi[i], p[i])
+    return lo, hi
+
+
+def _place(specs, centre, tag):
+    lo, hi = _bbox(specs)
+    d = tuple(centre[i] - (lo[i] + hi[i]) / 2 for i in range(3))
+    return [_shift(sp, d)[:-1] + ('%s %s' % (tag, sp[-1]),) for sp in specs]
+
+
+def kit_bodies(n, B, K):
+    """Body specs of the ground field kit (one unit per line) from the foot bodies B and the kit inputs K."""
+    y, x, dz = K['kit_y'], K['kit_x'], K['kit_dz']
+    cart_l_ur = [_mirror_z(sp) for sp in B['GER-008']]          # type L back at the UR station (unmirror z)
+    insert_u = B['GER-002'] + B['GER-003'] + B['GER-004']
+    insert_l = B['GER-002'] + cart_l_ur + B['GER-004']
+    ro, ri = K['tube_od'] / 2, K['tube_od'] / 2 - K['tube_wall']
+    tube = [('prism', 'X', 0.0, [_circle(0.0, 0.0, ro), _circle(0.0, 0.0, ri)], K['tube_len'], 'brass tube 7/32 in')]
+    a = K['sheet_a']
+    sheet = [('box', (0.0, 0.0, 0.0), (a, n['pad_t'], a), 'neoprene sheet 1/16 in')]
+    rows = (('GER-005', insert_u, 'spare upper insert'), ('GER-009', insert_l, 'spare lower insert'),
+            ('GER-010', B['GER-003'], 'spare type-U cartridge'), ('GER-011', cart_l_ur, 'spare type-L cartridge'),
+            ('GER-012', B['GER-001'], 'spare shoe'), ('GER-013', tube, 'bore cutter'))
+    out = {pid: _place(sp, (x, y, (2 - i) * dz), tag) for i, (pid, sp, tag) in enumerate(rows)}
+    out['GER-006'] = _place(sheet, (x, K['sheet_y'], 0.0), 'stock')
+    return out
+
+
 def _area(loop):
     return abs(sum(loop[i][0] * loop[(i + 1) % len(loop)][1] - loop[(i + 1) % len(loop)][0] * loop[i][1]
                    for i in range(len(loop)))) / 2
@@ -275,3 +343,9 @@ def build(ctx):
         ctx.contact('E-GER-21', 'corner cap taped on the right wingtip TE')
         ctx.contact('E-GER-22', 'corner cap taped on the left wingtip TE')
     k9.hover_ground(ctx, exempt=['GER-004-' + st for st in ST])
+
+    # --- ground field kit (flight: false): built for the kit lines that interfaces.json declares
+    K = {k: _lv(ctx.local, 'landing.' + key) for k, key in KIT_LOCAL.items()}
+    for pid, specs in kit_bodies(n, B, K).items():
+        if pid in ctx.parts_info:
+            _realise(ctx.part(pid, rgb=RGB_SHOE), specs)

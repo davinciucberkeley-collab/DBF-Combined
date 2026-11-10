@@ -1,6 +1,6 @@
 # Mechanisms build (MEC)
 
-D6-R1 · for G4's work packages. Right side shown; the left side is the mirror (print mirrored parts, bend the left
+D6-R2 · for G4's work packages. Right side shown; the left side is the mirror (print mirrored parts, bend the left
 pushrod the other way). Do it after the wing core is cut and skinned (D1 BUILD) and the fins are bonded (D3), before
 the first power-up. Times are for one side.
 
@@ -9,9 +9,9 @@ the first power-up. Times are for one side.
 | Item | Per side | Note |
 |---|---|---|
 | `MEC-001` servo SH-0255MG+ | 1 | weigh, record (`T-D6-WEIGH`) |
-| `MEC-004` horn, `MEC-006` link horn, `MEC-008` frame, `MEC-007` cover | 1 each | PETG; horns 100 % infill, flat on the y face; frame and cover 3 / 2 perimeters |
-| `MEC-005` rod 1/8 in music wire | 67 mm | cut with a rotary tool, deburr both ends |
-| `MEC-009` CF tube 5 × 4 mm | 220 + 210 mm | inboard / outboard panel |
+| `MEC-004` horn, `MEC-006` link horn, `MEC-008` frame, `MEC-007` cover | 1 each | PETG; horns 100 % infill, flat on the y face; frame (windowed top plate) and cover 3 / 2 perimeters |
+| `MEC-005` rod 1/8 in pultruded carbon | 67 mm | cut with an abrasive disc (not side cutters: they split it), wrap tape at the cut, scuff the bonded ends 120 grit, wear a mask |
+| `MEC-009` CF tube 5 × 4 mm | 160 + 210 mm | inboard / outboard panel |
 | `MEC-003` 2-56 rod + steel clevis + silicone keeper | 1 | Z-bend pliers |
 | M2 × 6 self-tapping pan head | 2 | cover |
 | Tools | — | pin vise + 1.6 mm drill, Z-bend pliers, 2.5 mm slot saw or hobby knife, 5.4 mm ball router bit or round file, protractor, feeler gauges 1.0 mm, Phillips #0 and #1, servo tester or the FC |
@@ -23,7 +23,8 @@ the first power-up. Times are for one side.
    vise. Push the rod into both bosses: snug, no rock. **Check:** rod slides in by hand, clevis pin turns freely in
    the horn with no visible play.
 2. **Rout the torque-tube grooves** (panels off the wing or hinged up): 5.4 mm round groove along each panel,
-   centre 7.5 mm aft of the panel front edge (upper corner), mid-thickness, from 5 mm inside each panel end. Cut the
+   centre 7.5 mm aft of the panel front edge (upper corner), mid-thickness: inboard panel from |y| 0.135 to 0.295
+   (the 65 mm at the root end has no tube), outboard panel from 0.345 to 0.555. Cut the
    2.5 mm horn slots through the panel at y 0.285 (inboard) and 0.355 (outboard), x 6–40 mm aft of the hinge line.
    **Check:** tube sits flush, ≥ 1.2 mm foam above and below.
 3. **Bond the tubes** with epoxy + microballoons; wipe flush; tape over. Cure 24 h. **Check:** panel twisted by hand
@@ -34,7 +35,8 @@ the first power-up. Times are for one side.
 5. **Fit the horns.** Cut the tape back 1 mm outside the flange (lower) and backplate (upper) outlines. Sand the
    PETG 120 grit, IPA wipe. Dry-fit both horns and the rod through D3's fin notch (rod passes under the fin root
    fillet gap). Bond `MEC-004` and `MEC-006` with the rod already in both bosses, panels clamped at neutral on a flat
-   board, rod parallel to the hinge line. Cure 24 h. **Check:** both panels move together; at ±30° the rod clears the
+   board, rod parallel to the hinge line. If the delivered rod is 3.0 mm, fill the 3.3 mm bore with thickened
+   epoxy and centre it. Cure 24 h. **Check:** both panels move together; at ±30° the rod clears the
    notch sides, the notch bottom and the fixed-core skin by ≥ 1 mm (feeler gauge).
 6. **Prepare the servo.** Centre it (1500 µs from the servo tester or FC). Fit the single arm pointing straight
    down (toward the lower skin), drill its hole to 1.6 mm at 15.6 mm from the shaft, screw on with Loctite 222.
@@ -55,7 +57,8 @@ the first power-up. Times are for one side.
     the TE. **Check:** ≤ 1.0° (≤ 1.2 mm at the 70 mm elevon chord) on each panel.
 12. **Load test** (`T-B2-HINGE`, `T-D6-TWIST`): wing on its back, servo at ±25°, hang the VA hinge-moment share at
     each panel's far-end TE (inboard 0.128 N·m → 3.6 N at 35 mm; outboard 0.122 N·m → 3.5 N). **Check:** servo holds,
-    far-end lag ≤ 3.7° (predicted 2.6°; mean lag ≤ 2.5° = 10 % of travel), nothing slips; record in `T-D6-TWIST`.
+    far-end lag ≤ 3.7° (predicted 2.8° outboard, 3.0° inboard; mean lag ≤ 2.5° = 10 % of travel), nothing slips;
+    record in `T-D6-TWIST`.
 
 ## Pre-flight (every flight)
 

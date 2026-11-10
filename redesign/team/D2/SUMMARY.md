@@ -1,30 +1,31 @@
-# D2 — Pod designer, summary (revision D2-R4)
+# D2 — Pod designer, summary (revision D2-R5)
 
-Status: `MODELLED` (2026-11-09, params A1-R3). The pod passes `fusion/check.py` and `merge_check.py` with no errors
-of its own. One warning remains: mass over the allocation (CR-D2-09).
+Status: `MODELLED` (2026-11-09, params A1-R4). This revision is the D-47 re-lay (CR-A1-43, CR-A3-22) at the D-48
+allocation of 131 g, plus the CR-A5-27 CG fix. The pod has no errors or warnings in `fusion/check.py`,
+`merge_check.py` or the strict self-check, and all 47 D2 claims pass.
 
-## What changed at R4
+## What changed at R5
 
 | Request | Change | Claim |
 |---|---|---|
-| F2 CR-F2-03 | side-wall exits; 10 mm wire channel under the pack (tray split, guides notched); JR tie bar; GPS cable path in the right leg, the grip groove and the mast bore; UBEC zone 0.044 … 0.072 | `CL-D2-FLOOR-CH-H`, `-CROSS-GAP`, `-CROSS-H` |
-| F3 CR-F3-12 | tie posts 21 mm apart (params); avionics plate to −0.040; PDB plate from −0.038; FC end-stop strap slots; keyed pitot bore | — |
-| C6 CR-C6-17/-18/-19 | corner fillets; PA66 mast screw (grip 10.0 mm); FC secondary strap | `CL-D2-MAST-BOLT-PAST` |
-| A4 CR-A4-23 | `field_joint` on `E-POD-05`; `E-POD-12` thermal edge; one `E-POD-06` stack with C6; acknowledgements | — |
-| F1 CR-F1-16/-17 | park slot left to F1's frame `PWR-006`; UBEC plate added | — |
-| Pack station (B3, A3, C5) | forward stop now derived from the nose; what-if script; CR-D2-16 | `CL-D2-FWD-STOP-X`, `-NOSE-EXT-NOM/-LIGHT` |
+| D-47 nose | Shell −0.130 … 0.095 (0.225 long). XPS nose block A deleted: the forward stop and tray front sit on a 1 mm epoxy line against the nose wall, so nose skin to stop face is 8.8 mm | `CL-D2-NOSE-TO-STOP` |
+| D-47 bay | The bay moved 21 mm forward: forward stop −0.1002 → −0.1212, aft stop 0.077 → 0.056. The aft stop now stands on the tray rear piece with 2 gussets, because the handle bridge cannot reach it. Saddle `POD-007` stays at x 0.080 | `CL-D2-FWD-STOP-X`, `-AFT-STOP-BOND` |
+| D-47 stations | Nominal centroid read from `pod.pack_x_nominal_m` (−0.022). Spacers 2/4/6/8/8, colour-coded: 680 g none (−0.014), 550 g blue (−0.022), 503 g blue + white (−0.024) | `CL-D2-PACK-X-NOM/-HEAVY/-LIGHT` |
+| Knock-on | Straps moved to −0.054 / 0.016. The wire channel moved −0.0655 → −0.0245 (the forward strap now sits on the old position). Pitot socket moved with the nose; the boom is unchanged (tip −0.210) | `CL-D2-FLOOR-CH-H`, `-PITOT-BOOM-L` |
+| CR-A5-27 | Trim kit split into `POD-008` spacers, `POD-009` crush block and `POD-010` spreader, so each declared CG equals its body centroid. All CGs regenerated from the bodies | — |
 
 ## Key numbers others build on
 
 | Parameter | Value | Unit | Claim | Status |
 |---|---|---|---|---|
+| Forward stop · aft stop face | −0.1212 · 0.056 | m | `CL-D2-FWD-STOP-X`, `ASM-D2-AFT-STOP-X` | `CHECKED` |
 | Bay inside L × W × H | 0.177 × 0.052 × 0.057 | m | `CL-D2-BAY-L/-W/-H` | `CHECKED` |
-| Forward stop face · most forward pack centroid with block B | −0.1002 · −0.0038 | m | `CL-D2-FWD-STOP-X`, `-PACK-X-FWD-MIN` | `CHECKED` |
-| Nose extension for C5's 550 g / 503 g stations | 10.6 / 14.7 | mm | `CL-D2-NOSE-EXT-NOM/-LIGHT` | `PROPOSED` |
-| Block B nominal · forward-stop tray bond | 27.7 · 180 | mm · N | `CL-D2-BLOCK-B-NOM`, `-FWD-STOP-BOND` | `CHECKED` |
-| Wire channel · crossing gap | 3.5 · 6.7 | mm | `CL-D2-FLOOR-CH-H`, `-CROSS-GAP` | `CHECKED` |
-| GPS to the nearest power item | 0.152 | m | `CL-D2-GPS-CLR` | `CHECKED` |
-| Pod mass (allocation 122) | 128.1 | g | `CL-D2-MASS` `EST` | `FAIL` |
+| Pack centroid 503 · 550 · 680 g | −0.024 · −0.022 · −0.014 | m | `CL-D2-PACK-X-LIGHT/-NOM/-HEAVY` | `CHECKED` |
+| Block B 503 · 550 · 680 g (minimum) | 25.7 (23.5) · 27.7 (25.7) · 35.7 (31.8) | mm | `CL-D2-BLOCK-B-*` | `CHECKED`, scaling `UNVERIFIED` |
+| Forward trim room at 550 g | 2.0 (D-47 assumed 3.4 with a 24.3 mm block) | mm | `CL-D2-PACK-FWD-ROOM` | `CHECKED` |
+| Stop bonds, front · rear (≥ 85) | 182 · 417 | N | `CL-D2-FWD-STOP-BOND`, `-AFT-STOP-BOND` | `CHECKED` |
+| Wire channel · GPS to the nearest power item | 3.5 mm · 0.152 m | — | `CL-D2-FLOOR-CH-H`, `-GPS-CLR` | `CHECKED` |
+| Pod mass (allocation 131) · CG | 131.0 · (−0.007, −0.003, 0.050) | g · m | `CL-D2-MASS` `EST` | `CHECKED`, 0 g margin |
 
 ## Checks run
 

@@ -1,118 +1,119 @@
 {
- "note": "Envelope at the derived VD (B1's VH x 1.25, what the claims carry) vs at requirements.vd_ms",
- "VD_derived_ms": 32.1,
- "VD_requirement_ms": 27.2,
+ "note": "D-50: 'at_derived' = the envelope the claims carry (VD = max(requirements.vd_ms, 1.25 x F4's capped VH)); 'at_requirement' = the REJECTED uncapped alternative (1.25 x B1's 9 350 rpm top speed), kept to show what losing the THR_MAX cap would cost",
+ "VD_derived_ms": 27.2,
+ "VD_requirement_ms": 32.1,
+ "VD_uncapped_ms": 32.1,
  "n_pos": [
-  3.58292005104954,
-  3.4
+  3.4,
+  3.58292005104954
  ],
  "n_neg": [
-  -1.5829200510495398,
-  -1.5
+  -1.5,
+  -1.5829200510495398
  ],
  "q_VD_Pa": [
-  631.1261250000001,
-  453.152
+  453.152,
+  631.1261250000001
  ],
  "n_stall_VD": [
-  7.266789425103522,
-  5.217594441308401
+  5.217594441308401,
+  7.266789425103522
  ],
  "outputs": {
   "spar_Mb_ult": {
-   "at_derived": 20.064326246674945,
-   "at_requirement": 20.064326246674945,
+   "at_derived": 19.64479102828695,
+   "at_requirement": 19.64479102828695,
    "case": [
     "L1-LEVEL",
     "L1-LEVEL"
    ]
   },
   "spar_Mx_ult": {
-   "at_derived": 12.030645356262898,
-   "at_requirement": 12.030645356262898,
+   "at_derived": 12.023901506083249,
+   "at_requirement": 12.023901506083249,
    "case": [
     "G2-HANG-MOTOR",
     "G2-HANG-MOTOR"
    ]
   },
   "wing_T_ult": {
-   "at_derived": 6.869237985523171,
-   "at_requirement": 6.869237985523171,
+   "at_derived": 7.533791366331122,
+   "at_requirement": 7.533791366331122,
    "case": [
-    "H6-DIAG-A",
-    "H6-DIAG-A"
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
    ]
   },
   "wing_Vz_ult": {
-   "at_derived": 33.3698928733632,
-   "at_requirement": 32.257178313940216,
+   "at_derived": 32.31010412452968,
+   "at_requirement": 32.91880237837638,
    "case": [
     "F7-ROLLPULL-VA",
     "F7-ROLLPULL-VA"
    ]
   },
   "finjoint_M_ult": {
-   "at_derived": 12.514181101388056,
-   "at_requirement": 12.514181101388056,
+   "at_derived": 14.407244307540669,
+   "at_requirement": 14.407244307540669,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "finhalf_Mb_ult": {
-   "at_derived": 11.59534971219233,
-   "at_requirement": 11.59534971219233,
+   "at_derived": 11.40597350208047,
+   "at_requirement": 11.40597350208047,
    "case": [
     "L1-LEVEL",
     "L1-LEVEL"
    ]
   },
   "finhalf_T_ult": {
-   "at_derived": 9.899197994174333,
-   "at_requirement": 9.899197994174333,
+   "at_derived": 11.133371297632666,
+   "at_requirement": 11.133371297632666,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "mount_F_ult": {
-   "at_derived": 31.306247724418608,
-   "at_requirement": 31.306247724418608,
+   "at_derived": 31.225351989675172,
+   "at_requirement": 31.225351989675172,
    "case": [
     "G3-BENCH",
     "G3-BENCH"
    ]
   },
   "pod_F_ult": {
-   "at_derived": 120.18413585746009,
-   "at_requirement": 120.18413585746009,
+   "at_derived": 117.4585646068378,
+   "at_requirement": 117.4585646068378,
    "case": [
     "L1-LEVEL",
     "L1-LEVEL"
    ]
   },
   "foot_F_ult": {
-   "at_derived": 60.83198901721087,
-   "at_requirement": 60.83198901721087,
+   "at_derived": 59.63141581818816,
+   "at_requirement": 59.63141581818816,
    "case": [
     "L1-LEVEL",
     "L1-LEVEL"
    ]
   },
   "proof_P_side_lim_N": {
-   "at_derived": 28.98882359682475,
-   "at_requirement": 27.404000251147934,
+   "at_derived": 27.08038080114794,
+   "at_requirement": 28.651750399935057,
    "case": [
-    28.98882359682475,
-    27.404000251147934
+    27.08038080114794,
+    28.651750399935057
    ]
   },
   "proof_Mx_root_lim_Nm": {
-   "at_derived": 2.463899000860872,
-   "at_requirement": 2.338108716791786,
+   "at_derived": 2.238914452041786,
+   "at_requirement": 2.359368083177962,
    "case": [
-    2.463899000860872,
-    2.338108716791786
+    2.238914452041786,
+    2.359368083177962
    ]
   }
  }

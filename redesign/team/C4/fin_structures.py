@@ -549,7 +549,7 @@ def fins_mass(areal, chord, hh, s_w, s_t, rho_cf, m_fit, L_s, m_block, e_w, e_t,
 
 # ====================================================================== claims
 R_VIB, R_SM, R_JNT = ["R-VIBRATION"], ["R-STRUCT-MARGIN"], ["R-FIN-TUBE-JOINT"]
-TUBES, HALF = ["FIN-002-L", "FIN-002-R"], ["FIN-001-RU", "FIN-001-LU", "FIN-001-RD", "FIN-001-LD"]
+TUBES, HALF = ["FIN-002-L", "FIN-002-R"], ["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"]  # CR-A4-47
 TAP = "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0."
 
 kit.claim("CL-C4-FE-CHECK-TUBE", "FE vs closed form, bare tube + tip mass", calc="CALC-C4-FE-CHECK",
@@ -659,15 +659,7 @@ kit.test("T-C4-BOARD-COUPON", "Foam-board face coupon",
          verifies=["CL-C4-MS-FACE-2L", "CL-C4-MS-FACE-1L", "CL-C4-D3-MS-FACE"],
          procedure="Three 50 x 300 mm strips per layer count, four-point bend, span 250 mm, load to failure: face "
                    "allowable and D. Weigh 0.1 m2 for the areal mass.")
-kit.test("T-C4-FIN-PROOF", "Proof load of one fin quarter", verifies=["CL-C4-MS-FACE-2L", "CL-C4-MS-FACE-1L", "CL-C4-MS-TUBE", "CL-C4-MS-EDGE",
-                                                                       "CL-C4-FOOT-DEFL-L4", "CL-C4-MS-STRUT",
-                                                                       "CL-C4-D3-MS-FACE", "CL-C4-D3-MS-EDGE",
-                                                                       "CL-C4-D3-MS-TUBE", "CL-C4-D3-MS-BRACE",
-                                                                       "CL-C4-D3-MS-BRACE-END", "CL-C4-D3-MS-COLLAR",
-                                                                       "CL-C4-D3-MS-EAR", "CL-C4-D3-MS-ANCHOR",
-                                                                       "CL-C4-D3-FOOT-DEFL"],
-         procedure="1.5 x L4 at the foot (49 N along the fin + 25 N across), then 1.5 x G2 (77 N lateral at the tube "
-                   "end); no cracking or face wrinkle; record the foot deflection.")
+# T-C4-FIN-PROOF moved to fin_structures_d3.py (R4, test article per CR-H1-17); it verifies D3 claims only.
 kit.test("T-C4-BLOCK-PROOF", "Block proof in a core offcut", verifies=["CL-C4-BLOCK-MS", "CL-C4-D3-BLOCK-MS"],
          procedure="Block bonded on a spar stub in a 0.15 m core offcut; 0.30 m tube in the bore; hang 18 kg at 0.17 m "
                    "lever (30 N m > design 20.3 N m) for 1 min; no creak, no bond line crack.")

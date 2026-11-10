@@ -8,8 +8,12 @@ Wire model (CALC-F1-WIRES), per metre of conductor, Python standard library only
   steady:   I^2 R(T) = h(T) * pi * OD * (T - T_amb)                           solved by iteration
   h = f_enc * f_pair * (h_conv Churchill-Chu horizontal cylinder + h_rad, eps 0.9)
   transient: C' dT/dt = I(t)^2 R(T) - h pi OD (T - T_amb),  C' = m_Cu c_Cu + m_sil c_sil, dt 0.25 s
-The mission current profile is E2's pessimistic phase table (ASM-F1-PROFILE) with short punches inserted after each
-transition (limited 100 A in the normal case, 120 A unlimited / 51.6 A single-ESC in the fault case).
+  short runs (main jumpers, bundled sections): 1-D fin, ends held at the terminal / open-run temperature,
+            theta_mid = theta_inf - (theta_inf - theta_end) / cosh(m L / 2),  m = sqrt(h pi OD / (k_Cu A))
+The mission current profile (CL-F1-PROFILE) is built from E2's pessimistic phase claims (CR-E2-19) with short
+punches inserted after each transition (limited 100 A normal case, 120 A unlimited / 51.6 A single-ESC fault case).
+R3 (2026-11-09): routed ESC lengths from F2 (CR-F2-02), 10 AWG main jumpers from subsystems/power (PWR-R1), limits
+from P:electrical.* (D-56), servo stall 1.4 A (CR-D6-06), mass from CL-PWR-MASS-NONPACK (D-48).
 """
 import csv
 import math
@@ -19,7 +23,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "proofs"))
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/power/params.json"])
 
 PARTS_MAIN = ["PWR-001", "PWR-002", "PWR-003", "PWR-004"]
 ESC_IDS = ["PRP-002-UR", "PRP-002-UL", "PRP-002-LR", "PRP-002-LL"]
@@ -47,29 +51,33 @@ kit.source("SRC-F1-INCROPERA", "Incropera & DeWitt, Fundamentals of Heat and Mas
            "book", where="Churchill-Chu correlation, free convection from a long horizontal cylinder")
 
 # ---------------------------------------------------------------- assumptions
-kit.assumption("ASM-F1-PROFILE", "Pessimistic mission current profile",
-               "[phase, duration s, pack current A] at the 2.6 kg gate, 10 degC pack, from E2's CALC-E2-BUDGET-PESS "
-               "phase table (team/E2/ENERGY.md)",
-               basis="copied from E2's stored outputs 2026-11-09 (CR-E2-14): hover 29.9 A, transition 42.9 A for "
-                     "20 s, cruise 29.8 A. E2 to emit the phases as claims so this link is live (CR-F1-04)",
-               value=[["ground", 180, 0.41], ["climb 0-50 m", 25, 35.18], ["hover", 120, 29.89],
-                      ["transition forward", 20, 42.92], ["cruise", 308, 29.78], ["back-transition", 20, 39.60],
-                      ["descent", 50, 29.89]],
-               unit="s,A", status="UNVERIFIED", cites=["SRC-K09-CARD"])
+kit.assumption("ASM-F1-GROUND", "Ground phase before take-off",
+               "[duration s, pack current A] armed on the ground (FC, RX, GPS, servos idle)",
+               basis="E2's pessimistic budget ground row (team/E2/ENERGY.md); E2 emits no claim for it. It does not "
+                     "move any wire result (0.4 A)", value=[180, 0.41], unit="s,A", status="UNVERIFIED")
 kit.assumption("ASM-F1-PUNCH", "Short-time current cases",
                "durations: limited full-throttle punch 5 s, unlimited momentary 5 s, single-ESC asymmetric burst 2 s",
                basis="P:electrical.peak_current_a says < 5 s; a single motor at full throttle while the others are low "
                      "(yaw/roll saturation) lasts about one control correction; F4 to confirm from SITL",
                value=[5.0, 5.0, 2.0], unit="s", status="PROPOSED")
 kit.assumption("ASM-F1-GAUGES", "Chosen gauges",
-               "AWG for [main pack path, ESC power lead, ESC alternative checked, UBEC feed, UBEC servo bus]",
-               basis="F1 choice; the alternative (18 AWG) is computed to answer CR-A3-06", value=[8, 16, 18, 20, 20],
+               "AWG for [ESC power lead, ESC alternative checked, UBEC feed, UBEC servo bus]; the main jumper gauge "
+               "is P:power.jumper_awg (10 AWG, PWR-R1)",
+               basis="F1 choice; the alternative (18 AWG) is computed to answer CR-A3-06", value=[16, 18, 20, 20],
                unit="AWG", status="PROPOSED")
-kit.assumption("ASM-F1-LENGTHS", "Conductor lengths, one way",
-               "[main path pack plug to bus, ESC lead bus to ESC pads, UBEC feed, servo bus] per conductor",
-               basis="pod: AS150U at the hatch, bus 0.12-0.15 m away; ESC lead 0.5 m = pod to fin at y 0.32 m plus "
-                     "~0.13 m along the fin to the ESC pad (A3 mass model). F2 replaces with the routed lengths",
-               value=[0.15, 0.50, 0.15, 0.35], unit="m", status="PROPOSED")
+kit.assumption("ASM-F1-LENGTHS", "Conductor lengths, one way, not routed by F2",
+               "[UBEC feed incl. fuse pigtails, UBEC to servo bus] per conductor; main jumpers come from "
+               "P:power.jumper_len_m and ESC leads from F2's CL-F2-ESC-LEN-*",
+               basis="pod layout subsystems/power/SPEC.md: fuse under the cradle, UBEC in the right channel",
+               value=[0.15, 0.35], unit="m", status="PROPOSED")
+kit.assumption("ASM-F1-BUNDLE", "Short bundled ESC-lead sections (F2 routing, CR-F2-02)",
+               "[name, length m, cooling factor] for sections where more than one pair shares a passage",
+               basis="F2: LR/LL pairs together through the P1 straw (~0.05 m) and two twisted pairs stacked 8 mm in the "
+                     "pod crossing (~0.09 m). Factor = fraction of free-air convection + radiation kept: straw "
+                     "enclosed in foam 0.3 (four conductors, little radiation out), pod crossing 0.6 (twisted 0.85 x "
+                     "stacked ~0.7). Judgement, conservative; T-F1-WIRE-HEAT checks the straw",
+               value=[["P1 straw, LR + LL pairs", 0.05, 0.3], ["pod crossing, 2 twisted pairs stacked", 0.09, 0.6]],
+               unit="-,m,-", status="UNVERIFIED", cites=["SRC-F1-INCROPERA"])
 kit.assumption("ASM-F1-WIRE-OD", "Silicone wire outside diameter by gauge",
                "[AWG, OD mm] for high-strand silicone hobby wire",
                basis="typical maker tables (BNTECHGO, Turnigy) +/-0.2 mm; measure the reel",
@@ -83,12 +91,6 @@ kit.assumption("ASM-F1-COOLING", "Cooling derates",
                      "foam (~0.75 overall); a twisted pair shields ~15 % of each conductor's surface. Prop wash over "
                      "the wing in hover is not credited. T-F1-WIRE-HEAT measures it",
                value=[1.0, 0.75, 0.85, 0.9], unit="-", status="UNVERIFIED", cites=["SRC-F1-INCROPERA"])
-kit.assumption("ASM-F1-TRANSIENT-LIMIT", "Short-time wire temperature rise limit 30 degC",
-               "conductor rise <= 30 degC for any case shorter than 60 s",
-               basis="keeps the conductor <= 60 degC at the 30 degC ambient ceiling: 14 degC under the XPS service "
-                     "limit (~74 degC) and 20 degC under PETG Tg; silicone itself is rated 200 degC. P18's 10 degC "
-                     "applies to the continuous current (CR-F1-01 asks A2 to state this)",
-               value=30.0, unit="degC", status="PROPOSED")
 kit.assumption("ASM-F1-R-CONTACT", "Contact resistance per mated contact",
                "AS150U contact 0.8 mOhm (two in the path)",
                basis="reseller values 0.40 and <= 0.8 mOhm; the larger is used", value=0.0008, unit="ohm",
@@ -97,10 +99,11 @@ kit.assumption("ASM-F1-R-BOARD", "Current shunt, board copper and solder joints"
                "0.6 mOhm in the common path (sensor shunt ~0.25, copper and four solder joints ~0.35)",
                basis="typical 0.2-0.3 mOhm hobby PDB shunts; measured by T-F1-DROP", value=0.0006, unit="ohm",
                status="UNVERIFIED")
-kit.assumption("ASM-F1-SERVO-STALL", "Servo stall current 1.3 A at 6 V",
-               "per elevon servo, 17-20 g metal-gear class", basis="ES3054HV listing max current 1.3 A; micro "
-               "metal-gear servos 1.0-1.5 A; measured by T-F1-SERVO-STALL on the servo D6 picks",
-               value=1.3, unit="A", status="UNVERIFIED", cites=["SRC-F1-EMAX-ES3054"])
+kit.assumption("ASM-F1-SERVO-STALL", "Servo stall current 1.4 A at 6 V",
+               "per elevon servo, Savox SH-0255MG+ (D6), rated 4.8-6.0 V (not HV)",
+               basis="D6 CR-D6-06: retailer data 1.2 A at 4.8 V / 1.4 A at 6.0 V (was 1.3 A class value); measured "
+                     "by T-F1-SERVO-STALL on the delivered servos",
+               value=1.4, unit="A", status="UNVERIFIED", cites=["SRC-D6-SH0255-STALL"])
 kit.assumption("ASM-F1-SENSOR-TOL", "Current-sensor tolerance 5 %",
                "BATT_AMP_PERVLT calibrated within +/-5 % at 24-30 A (R-AVIONICS-POWER)",
                basis="requirement value; the 100 A limiter acts on the sensed current", value=0.05, unit="-",
@@ -150,6 +153,20 @@ def steady_rise(i, w, ta, cool):
     return ts - ta
 
 
+def fin_mid_rise(i, w, ta, cool, length, theta_end, k_cu):
+    """Mid-length rise above ambient of a short run whose ends sit at ambient + theta_end (1-D fin)."""
+    th = theta_end + 1.0
+    for _ in range(200):
+        ts = ta + th
+        g = h_total(ts, ta, w["od"], *cool) * math.pi * w["od"]           # W/m/K to ambient
+        q = i * i * w["r20"] * (1 + ALPHA * (ts - 20))                      # W/m
+        m = math.sqrt(g / (k_cu * w["a"]))
+        th_inf = q / g
+        new = th_inf - (th_inf - theta_end) / math.cosh(m * length / 2)
+        th = 0.5 * th + 0.5 * new
+    return th
+
+
 def profile_peak(segments, w, ta, cool, dt=0.25):
     t = ta
     peak = 0.0
@@ -164,11 +181,31 @@ def profile_peak(segments, w, ta, cool, dt=0.25):
 
 
 # ---------------------------------------------------------------- calculations
+@kit.calc("CALC-F1-PROFILE", title="Pessimistic mission current profile from E2's phase claims",
+          equation="table [phase, t_phase, I_phase] in flight order (ground, climb, hover, transition forward, cruise, "
+                   "back-transition, descent)",
+          inputs={"ground": "ASM-F1-GROUND",
+                  "i_climb": "CL-E2-I-CLIMB-PESS", "t_climb": "CL-E2-T-CLIMB-PESS",
+                  "i_hover": "CL-E2-HOVER-I-GATE", "t_hover": "CL-E2-T-HOVER-PESS",
+                  "i_fwd": "CL-E2-I-TRANS-FWD-PESS", "t_fwd": "CL-E2-T-TRANS-FWD-PESS",
+                  "i_cruise": "CL-E2-CRUISE-I-PESS", "t_cruise": "CL-E2-T-CRUISE-PESS",
+                  "i_back": "CL-E2-I-TRANS-BACK-PESS", "t_back": "CL-E2-T-TRANS-BACK-PESS",
+                  "i_desc": "CL-E2-I-DESCENT-PESS", "t_desc": "CL-E2-T-DESCENT-PESS"},
+          units={"i_climb": "A", "i_hover": "A", "i_fwd": "A", "i_cruise": "A", "i_back": "A", "i_desc": "A",
+                 "t_climb": "s", "t_hover": "s", "t_fwd": "s", "t_cruise": "s", "t_back": "s", "t_desc": "s"})
+def mission_profile(ground, i_climb, t_climb, i_hover, t_hover, i_fwd, t_fwd, i_cruise, t_cruise, i_back, t_back,
+                    i_desc, t_desc):
+    return {"profile": [["ground", ground[0], ground[1]], ["climb 0-50 m", t_climb, i_climb],
+                        ["hover", t_hover, i_hover], ["transition forward", t_fwd, i_fwd],
+                        ["cruise", t_cruise, i_cruise], ["back-transition", t_back, i_back],
+                        ["descent", t_desc, i_desc]]}
+
+
 @kit.calc("CALC-F1-I-DESIGN", title="Design currents for the pack path",
           equation="I_cont = max(I_hover, I_cruise, P_vclimb / V_nom) ; I_short = max profile phase <= 60 s ; "
                    "I_req = k I",
           inputs={"i_hover": "CL-E2-HOVER-I-GATE", "i_cruise": "CL-E2-CRUISE-I-PESS", "p_climb": "CL-B1-VCLIMB-P",
-                  "v": "P:battery.v_nom", "k": "P:requirements.disconnect_factor", "profile": "ASM-F1-PROFILE",
+                  "v": "P:battery.v_nom", "k": "P:requirements.disconnect_factor", "profile": "CL-F1-PROFILE",
                   "ilim": "P:performance.full_throttle_current_a", "tol": "ASM-F1-SENSOR-TOL"},
           units={"i_hover": "A", "i_cruise": "A", "p_climb": "W", "v": "V", "ilim": "A"})
 def design_currents(i_hover, i_cruise, p_climb, v, k, profile, ilim, tol):
@@ -189,57 +226,88 @@ def _segments(profile, kind, punch_t, i_punch, scale):
 
 @kit.calc("CALC-F1-WIRES", title="Wire derating: steady rise, mission-profile peak, drop, mass",
           equation="see module docstring; ESC lead current = I_pack / n x 2s/(1+s) (heavier pair at the hover "
-                   "split s); drop = I (R_contacts + R_board + 2 L R'(T)) / V_nom",
-          inputs={"i_cont": "CL-F1-I-CONT", "profile": "ASM-F1-PROFILE", "punch": "ASM-F1-PUNCH",
+                   "split s, applied to every branch); R_ext = R_common + 1/sum(1/R_branch_i); "
+                   "drop = I R_common + I_esc R_branch,max",
+          inputs={"i_cont": "CL-F1-I-CONT", "profile": "CL-F1-PROFILE", "punch": "ASM-F1-PUNCH",
                   "gauges": "ASM-F1-GAUGES", "lengths": "ASM-F1-LENGTHS", "od": "ASM-F1-WIRE-OD",
+                  "g_main": "P:power.jumper_awg", "l_main": "P:power.jumper_len_m", "k_cu": "P:power.k_cu_w_mk",
+                  "l_ur": "CL-F2-ESC-LEN-UR", "l_ul": "CL-F2-ESC-LEN-UL", "l_lr": "CL-F2-ESC-LEN-LR",
+                  "l_ll": "CL-F2-ESC-LEN-LL", "bundle": "ASM-F1-BUNDLE",
                   "cool": "ASM-F1-COOLING", "amb": "P:env.ambient_design_c", "n": "P:propulsion.n_motors",
                   "split": "P:requirements.hover_split_max", "ilim": "P:performance.full_throttle_current_a",
                   "ipeak": "P:electrical.peak_current_a", "i_esc_lim": "P:propulsion.current_max_per_motor_a",
                   "i_esc_asym": "CL-E1-IMAX-168-55", "r_contact": "ASM-F1-R-CONTACT", "r_board": "ASM-F1-R-BOARD",
                   "v": "P:battery.v_nom", "i_servo_bus": "CL-F1-SERVO-STALL-BUS", "ubec_eta_in": "ASM-F1-UBEC-IN"},
-          units={"ilim": "A", "ipeak": "A", "i_esc_lim": "A", "v": "V"})
-def wires(i_cont, profile, punch, gauges, lengths, od, cool, amb, n, split, ilim, ipeak, i_esc_lim, i_esc_asym,
-          r_contact, r_board, v, i_servo_bus, ubec_eta_in):
+          units={"ilim": "A", "ipeak": "A", "i_esc_lim": "A", "v": "V", "l_main": "m", "k_cu": "W/m/K",
+                 "l_ur": "m", "l_ul": "m", "l_lr": "m", "l_ll": "m"})
+def wires(i_cont, profile, punch, gauges, lengths, od, g_main, l_main, k_cu, l_ur, l_ul, l_lr, l_ll, bundle, cool,
+          amb, n, split, ilim, ipeak, i_esc_lim, i_esc_asym, r_contact, r_board, v, i_servo_bus, ubec_eta_in):
     ta = max(amb)
     share = 2 * split / (1 + split) / n
     t_lim, t_mom, t_asym = punch
-    g_main, g_esc, g_esc_alt, g_feed, g_bus = gauges
-    l_main, l_esc, l_feed, l_bus = lengths
+    g_esc, g_esc_alt, g_feed, g_bus = gauges
+    l_feed, l_bus = lengths
+    l_esc = [l_ur, l_ul, l_lr, l_ll]
     f_pod, f_chan, f_pair, eps = cool
     cools = {"main": (f_pod, f_pair, eps), "esc": (f_chan, 1.0, eps), "esc18": (f_chan, 1.0, eps),
              "feed": (f_pod, f_pair, eps), "bus": (f_chan, 1.0, eps)}
     out = {}
-    runs = {"main": (g_main, l_main, 1.0, ilim, ipeak, t_mom),
-            "esc": (g_esc, l_esc, share, i_esc_lim, i_esc_asym, t_asym),
-            "esc18": (g_esc_alt, l_esc, share, i_esc_lim, i_esc_asym, t_asym)}
+    runs = {"main": (int(g_main), sum(l_main), 1.0, ilim, ipeak, t_mom),
+            "esc": (g_esc, max(l_esc), share, i_esc_lim, i_esc_asym, t_asym),
+            "esc18": (g_esc_alt, max(l_esc), share, i_esc_lim, i_esc_asym, t_asym)}
     for key, (g, length, scale, i_norm, i_fault, t_fault) in runs.items():
         w = wire_props(g, od)
         cool = cools[key]
         i_c = i_cont * scale
         out[f"{key}_awg"] = g
+        out[f"{key}_len_m"] = length
         out[f"{key}_i_cont_a"] = i_c
-        out[f"{key}_rise_c"] = steady_rise(i_c, w, ta, cool)
+        out[f"{key}_rise_long_c"] = steady_rise(i_c, w, ta, cool)          # long wire, no end conduction
+        out[f"{key}_rise_c"] = out[f"{key}_rise_long_c"]
         out[f"{key}_peak_normal_c"] = profile_peak(_segments(profile, True, t_lim, i_norm, scale), w, ta, cool)
         out[f"{key}_peak_fault_c"] = profile_peak(_segments(profile, True, t_fault, i_fault, scale), w, ta, cool)
         t_hot = ta + out[f"{key}_rise_c"]
         out[f"{key}_r_loop_mohm"] = 2 * length * w["r20"] * (1 + ALPHA * (t_hot - 20)) * 1e3
-        out[f"{key}_mass_g"] = 2 * length * w["mass_gpm"] * (1 if key == "main" else n)
+        out[f"{key}_mass_g"] = 2 * (length if key == "main" else sum(l_esc)) * w["mass_gpm"]
         out[f"{key}_od_mm"] = w["od"] * 1e3
+        out[f"{key}_gpm"] = w["mass_gpm"]
+    # main jumpers: each <= 0.05 m between soldered terminals, so the rise above the terminals is a fin result.
+    # The long-wire value (main_rise_long_c) is kept as the bound if a jumper were ever made long.
+    wm = wire_props(int(g_main), od)
+    out["main_rise_c"] = fin_mid_rise(i_cont, wm, ta, cools["main"], max(l_main), 0.0, k_cu)
+    # ESC branches: loop resistance per routed length, parallel equivalent
+    we = wire_props(g_esc, od)
+    t_esc = ta + out["esc_rise_c"]
+    r_br = [2 * L * we["r20"] * (1 + ALPHA * (t_esc - 20)) for L in l_esc]
+    out["esc_r_loop_max_mohm"] = max(r_br) * 1e3
+    out["esc_r_loop_min_mohm"] = min(r_br) * 1e3
+    out["esc_len_total_m"] = sum(l_esc)
+    # bundled sections: fin with ends at the open-run (groove) rise; peak without axial credit
+    for k, (name, lb, fb) in enumerate(bundle):
+        cb = (fb, 1.0, eps)
+        out[f"bundle{k}_rise_c"] = fin_mid_rise(i_cont * share, we, ta, cb, lb, out["esc_rise_c"], k_cu)
+        out[f"bundle{k}_rise_long_c"] = steady_rise(i_cont * share, we, ta, cb)
+        out[f"bundle{k}_peak_fault_c"] = profile_peak(_segments(profile, True, t_asym, i_esc_asym, share), we, ta, cb)
+    out["bundle_rise_max_c"] = max(out[f"bundle{k}_rise_c"] for k in range(len(bundle)))
+    out["bundle_peak_max_c"] = max(out[f"bundle{k}_peak_fault_c"] for k in range(len(bundle)))
     # UBEC feed and servo bus: steady at their worst continuous current (servo stall)
     i_feed = i_servo_bus * 6.0 / (ubec_eta_in * v)
     for key, g, length, i in (("feed", g_feed, l_feed, i_feed), ("bus", g_bus, l_bus, i_servo_bus)):
         w = wire_props(g, od)
         cool = cools[key]
-        out[f"{key}_awg"], out[f"{key}_i_cont_a"] = g, i
+        out[f"{key}_awg"], out[f"{key}_i_cont_a"], out[f"{key}_len_m"] = g, i, length
         out[f"{key}_rise_c"] = steady_rise(i, w, ta, cool)
         out[f"{key}_mass_g"] = 2 * length * w["mass_gpm"]
+        out[f"{key}_r_loop_mohm"] = 2 * length * w["r20"] * (1 + ALPHA * (ta + out[f"{key}_rise_c"] - 20)) * 1e3
     # resistance pack terminals -> ESC pads, as one equivalent common resistance (four branches in parallel)
     r_common = 2 * r_contact + r_board + out["main_r_loop_mohm"] * 1e-3
-    r_branch = out["esc_r_loop_mohm"] * 1e-3
-    out["r_ext_mohm"] = (r_common + r_branch / n) * 1e3
-    out["drop_cont_pct"] = 100 * (i_cont * r_common + i_cont * share * r_branch) / v
-    out["drop_peak_pct"] = 100 * (ilim * r_common + i_esc_lim * r_branch) / v
+    out["r_common_mohm"] = r_common * 1e3
+    out["r_ext_mohm"] = (r_common + 1 / sum(1 / r for r in r_br)) * 1e3
+    out["drop_cont_pct"] = 100 * (i_cont * r_common + i_cont * share * max(r_br)) / v
+    out["drop_peak_pct"] = 100 * (ilim * r_common + i_esc_lim * max(r_br)) / v
     out["main_loss_w_cont"] = i_cont ** 2 * r_common
+    r_per_m = 2 * we["r20"] * (1 + ALPHA * (t_esc - 20))                   # loop Ohm per metre of route
+    out["esc_len_allow_m"] = (0.05 * v - ilim * r_common) / (i_esc_lim * r_per_m)
     return out
 
 
@@ -252,17 +320,9 @@ kit.assumption("ASM-F1-PACKLEAD", "Pack's own leads: gauge and length after re-t
                      "130C packs ship with 10 or 12 AWG. Length: D2 CR-D2-07 needs >= 90 mm from the pack aft face to "
                      "the parked connector; cut to 0.10 m when the AS150U is fitted",
                value=[10, 12, 0.10], unit="AWG,AWG,m", status="UNVERIFIED", cites=["SRC-OVONIC-4S6500"])
-kit.assumption("ASM-F1-PACKLEAD-LIMIT", "Pack lead steady rise limit 20 degC",
-               "steady conductor rise <= 20 degC at the continuous design current for the pack's own leads",
-               basis="the leads are bought with the pack and conduct heat into the cells: conductor <= 50 degC at the "
-                     "30 degC ambient ceiling keeps the cell tabs under the 60 degC LiPo discharge limit. P18's 10 degC "
-                     "applies to the aircraft-side wiring F1 sizes (CR-F1-15 asks A2 to state the scope)",
-               value=20.0, unit="degC", status="PROPOSED")
-
-
 @kit.calc("CALC-F1-PACKLEAD", title="Pack's own leads: steady and mission-peak rise",
           equation="same wire model as CALC-F1-WIRES, pod still air, side-by-side pair (f_pair)",
-          inputs={"i_cont": "CL-F1-I-CONT", "lead": "ASM-F1-PACKLEAD", "profile": "ASM-F1-PROFILE",
+          inputs={"i_cont": "CL-F1-I-CONT", "lead": "ASM-F1-PACKLEAD", "profile": "CL-F1-PROFILE",
                   "punch": "ASM-F1-PUNCH", "od": "ASM-F1-WIRE-OD", "cool": "ASM-F1-COOLING",
                   "amb": "P:env.ambient_design_c", "ipeak": "P:electrical.peak_current_a"},
           units={"amb": "degC", "ipeak": "A"})
@@ -298,24 +358,20 @@ def precharge(n, c, cells):
     return {"t95_ms": 3 * r_pre * n * c * 1e3, "i_inrush_a": cells * 4.2 / r_pre}
 
 
-MASS_ITEMS = [["AS150U aircraft half + heat-shrink", 10.0], ["bus PDB board (no sensor)", 6.0],
-              ["UBEC 6 V >= 6 A", 13.0], ["mini blade fuse + holder", 3.0], ["4 x 680 uF caps", 8.0]]
-kit.assumption("ASM-F1-MASS-ITEMS", "Power boxes masses (excluding the pack and the FC power board)",
-               "[item, g]", basis="listing weights; weigh on arrival (A3)", value=MASS_ITEMS, unit="g",
-               status="UNVERIFIED")
-
-
-@kit.calc("CALC-F1-MASS", title="Power subsystem mass excluding the pack",
-          equation="sum(items) + main path wire mass", inputs={"items": "ASM-F1-MASS-ITEMS",
-                                                               "main_wire": "CL-F1-MAIN-MASS",
-                                                               "alloc": "P:mass.allocation_g.power",
-                                                               "pack": "P:battery.mass_kg"},
-          units={"alloc": "g", "pack": "kg"})
-def power_mass(items, main_wire, alloc, pack):
-    return {"mass_g": sum(g for _, g in items) + main_wire, "budget_g": alloc - pack * 1000}
+@kit.calc("CALC-F1-MASS", title="Power mass excluding the pack, against the allocation left after the pack",
+          equation="m = CL-PWR-MASS-NONPACK (PWR-R1 parts: AS150U half + 10 AWG jumpers, power board, bus board, UBEC, "
+                   "frame, fuse, 4 caps); budget = allocation - pack",
+          inputs={"nonpack": "CL-PWR-MASS-NONPACK", "alloc": "P:mass.allocation_g.power", "pack": "P:battery.mass_kg"},
+          units={"nonpack": "g", "alloc": "g", "pack": "kg"})
+def power_mass(nonpack, alloc, pack):
+    return {"mass_g": nonpack, "budget_g": alloc - pack * 1000}
 
 
 # ---------------------------------------------------------------- claims: currents and disconnect
+kit.claim("CL-F1-PROFILE", "Mission current profile used for wire heating (E2 pessimistic phases)",
+          calc="CALC-F1-PROFILE", output="profile", unit="s,A", parts=PARTS_MAIN,
+          how="Phase means of BAT.Curr on the full-mission log (T-E2-MISSION-LOG) inside E2's +/-15 %.",
+          note="Replaces ASM-F1-PROFILE (copied table, retired in R3) per CR-E2-19.")
 kit.claim("CL-F1-I-CONT", "Continuous design current, pack path", calc="CALC-F1-I-DESIGN", output="i_cont_a",
           unit="A", parts=PARTS_MAIN, how="Mean BAT.Curr over a 60 s hover and a 60 s cruise segment at the gate "
           "mass (T-E2-MISSION-LOG); the larger must be <= this value.")
@@ -356,40 +412,67 @@ kit.claim("CL-F1-INRUSH", "Pre-charge inrush current", calc="CALC-F1-PRECHARGE",
 
 # ---------------------------------------------------------------- claims: wires
 W = "CALC-F1-WIRES"
-kit.claim("CL-F1-MAIN-RISE", "Main path 8 AWG, steady rise at the continuous current", calc=W, output="main_rise_c",
-          unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"), verifies=["R-DISCONNECT"],
-          parts=PARTS_MAIN, how="T-F1-WIRE-HEAT: 30 A through the pigtail in the closed pod for 10 min, "
-          "thermocouple mid-lead, rise <= 10 degC.")
-kit.claim("CL-F1-MAIN-PEAK", "Main path, peak rise over the mission with 120 A punches", calc=W,
-          output="main_peak_fault_c", unit="degC", limit=("<=", "ASM-F1-TRANSIENT-LIMIT"), verifies=["R-DISCONNECT"],
-          parts=PARTS_MAIN, how="Log the lead temperature over a full flight profile on the stand (T-F1-WIRE-HEAT).")
-kit.claim("CL-F1-MAIN-MASS", "Main path wire mass (two conductors)", calc=W, output="main_mass_g", unit="g",
-          parts=PARTS_MAIN, how="Weigh the finished pigtail.")
-kit.claim("CL-F1-ESC-RISE", "ESC lead 16 AWG, steady rise at the heavier pair's hover share", calc=W,
-          output="esc_rise_c", unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"),
+SHORT = "P:electrical.wire_temp_rise_short_max_c"
+kit.claim("CL-F1-MAIN-RISE", "Main jumpers 10 AWG (<= 0.05 m), steady rise above their terminals", calc=W,
+          output="main_rise_c", unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"),
+          verifies=["R-DISCONNECT"], parts=PARTS_MAIN,
+          how="T-F1-WIRE-HEAT: 30 A through the built stack in the closed pod mock-up, 10 min, thermocouples at the "
+              "W-MAIN-2 mid-point and at both solder joints; mid minus joint <= 10 degC.",
+          note="Fin result with convection; agrees with CL-PWR-JUMPER-RISE (conduction only). The terminals sit at "
+               "the AS150U / pack-lead / board temperature (CL-F1-PACKLEAD-RISE, T-F1-CONN-HEAT). A long 10 AWG run "
+               "would rise CL-F1-MAIN-RISE-LONG: never extend the jumpers.")
+kit.claim("CL-F1-MAIN-RISE-LONG", "Main path 10 AWG, long-wire steady rise (bound, not the design case)", calc=W,
+          output="main_rise_long_c", unit="degC", parts=PARTS_MAIN,
+          how="Not tested: shows why the jumpers stay <= 0.05 m (above the 10 degC limit if run long).")
+kit.claim("CL-F1-MAIN-PEAK", "Main path, peak rise over the mission with 120 A punches (long-wire, conservative)",
+          calc=W, output="main_peak_fault_c", unit="degC", limit=("<=", SHORT), verifies=["R-DISCONNECT"],
+          parts=PARTS_MAIN, how="Log the jumper temperature over a full flight profile on the stand (T-F1-WIRE-HEAT).")
+kit.claim("CL-F1-MAIN-MASS", "Main jumper wire mass (two conductors, both jumpers)", calc=W, output="main_mass_g",
+          unit="g", parts=PARTS_MAIN, how="Weigh the finished jumpers.",
+          note="Booked inside CL-PWR-MASS-NONPACK (PWR-002); listed here for the derating table only.")
+kit.claim("CL-F1-ESC-RISE", "ESC lead 16 AWG, steady rise at the heavier pair's hover share (open groove run)",
+          calc=W, output="esc_rise_c", unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"),
           verifies=["R-DISCONNECT"], parts=ESC_IDS,
-          how="T-F1-WIRE-HEAT: 8.4 A through a 0.5 m 16 AWG twisted pair in a taped XPS channel mock-up, 10 min.")
+          how="T-F1-WIRE-HEAT: 8.4 A through a 0.65 m 16 AWG pair in a taped XPS groove mock-up, 10 min.")
 kit.claim("CL-F1-ESC-PEAK", "ESC lead 16 AWG, peak rise with 51.6 A single-ESC bursts", calc=W,
-          output="esc_peak_fault_c", unit="degC", limit=("<=", "ASM-F1-TRANSIENT-LIMIT"), verifies=["R-DISCONNECT"],
+          output="esc_peak_fault_c", unit="degC", limit=("<=", SHORT), verifies=["R-DISCONNECT"],
           parts=ESC_IDS, how="Same rig: profile replay incl. 2 s at 50 A.")
+kit.claim("CL-F1-BUNDLE-RISE", "ESC leads in the bundled sections (P1 straw, pod crossing), steady rise", calc=W,
+          output="bundle_rise_max_c", unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"),
+          verifies=["R-DISCONNECT"], parts=ESC_IDS,
+          how="T-F1-WIRE-HEAT: two 16 AWG pairs at 8.4 A each through a 50 mm straw in XPS, thermocouple at the "
+              "straw mid-point, 10 min.",
+          note="Answer to CR-F2-02: both bundles accepted; axial conduction to the open run carries most of the "
+               "extra heat over sections this short.")
+kit.claim("CL-F1-BUNDLE-PEAK", "Bundled sections, peak rise with 51.6 A bursts (no axial credit, conservative)",
+          calc=W, output="bundle_peak_max_c", unit="degC", limit=("<=", SHORT), verifies=["R-DISCONNECT"],
+          parts=ESC_IDS, how="Same straw rig, profile replay incl. 2 s at 50 A.")
 kit.claim("CL-F1-ESC18-RISE", "ESC lead 18 AWG alternative, steady rise (rejected)", calc=W, output="esc18_rise_c",
           unit="degC", parts=ESC_IDS, how="Same rig with 18 AWG if A3 asks again.",
-          note="Answer to CR-A3-06: above the 10 degC limit, so 18 AWG is not used; 16 AWG stays (56 g).")
-kit.claim("CL-F1-ESC-MASS", "ESC power leads, 4 pairs", calc=W, output="esc_mass_g", unit="g", parts=ESC_IDS,
-          how="Weigh the four cut pairs before soldering.")
+          note="Answer to CR-A3-06: above the 10 degC limit, so 18 AWG is not used; 16 AWG stays.")
+kit.claim("CL-F1-ESC-MASS", "ESC power leads, 4 pairs at F2's routed lengths", calc=W, output="esc_mass_g", unit="g",
+          parts=ESC_IDS, how="Weigh the four cut pairs before soldering.",
+          note="Harness mass is F2's (HRN-101/102, CL-F2-MASS); F2 reads the per-metre value CL-F1-W16-GPM "
+               "instead of dividing this by 4.0 m (CR-F1-23).")
+kit.claim("CL-F1-ESC-LEN-ALLOW", "Longest 16 AWG ESC lead that keeps the 100 A drop <= 5 %", calc=W,
+          output="esc_len_allow_m", unit="m", limit=(">=", "CL-F2-ESC-LEN-MAX"), parts=ESC_IDS,
+          how="F2 cut list: every ESC lead <= this length (CR-F1-25); T-F1-DROP on the longest branch.",
+          note="R3: LR routed at 0.650 m is 7 mm over; trim its service loop or use 14 AWG on LR only.")
+kit.claim("CL-F1-W16-GPM", "16 AWG silicone wire mass per metre of one conductor", calc=W, output="esc_gpm",
+          unit="g/m", parts=ESC_IDS, how="Weigh 1 m of the delivered reel.")
 kit.claim("CL-F1-PACKLEAD-RISE", "Pack's own leads (10 AWG assumed), steady rise at the continuous current",
-          calc="CALC-F1-PACKLEAD", output="lead_rise_c", unit="degC", limit=("<=", "ASM-F1-PACKLEAD-LIMIT"),
+          calc="CALC-F1-PACKLEAD", output="lead_rise_c", unit="degC", limit=("<=", "P:electrical.pack_lead_rise_max_c"),
           verifies=["R-DISCONNECT"], parts=["PWR-001"],
           how="Read the lead gauge on the delivered pack (printed on the silicone); T-F1-WIRE-HEAT: 30 A for 10 min "
               "from the pack in the pod mock-up, thermocouple mid-lead.",
           note="12 AWG leads would rise ~28 degC (CL-F1-PACKLEAD12-RISE): buy packs with >= 10 AWG leads (CR-F1-14).")
 kit.claim("CL-F1-PACKLEAD-PEAK", "Pack's own leads (10 AWG), mission peak with 120 A punches",
-          calc="CALC-F1-PACKLEAD", output="lead_peak_fault_c", unit="degC", limit=("<=", "ASM-F1-TRANSIENT-LIMIT"),
+          calc="CALC-F1-PACKLEAD", output="lead_peak_fault_c", unit="degC", limit=("<=", SHORT),
           verifies=["R-DISCONNECT"], parts=["PWR-001"], how="Same rig, profile replay.")
 kit.claim("CL-F1-PACKLEAD12-RISE", "Pack's own leads if 12 AWG, steady rise (not accepted)",
           calc="CALC-F1-PACKLEAD", output="lead_alt_rise_c", unit="degC", parts=["PWR-001"],
           how="Only if the delivered pack has 12 AWG leads: same heat run; above 20 degC the pack is returned.",
-          note="above ASM-F1-PACKLEAD-LIMIT 20 degC: a 12 AWG pack is not accepted.")
+          note="above P:electrical.pack_lead_rise_max_c 20 degC: a 12 AWG pack is not accepted.")
 kit.claim("CL-F1-FEED-RISE", "UBEC feed 20 AWG, steady rise at servo stall", calc=W, output="feed_rise_c",
           unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"), parts=["PWR-005"],
           how="Bench: both servos stalled 60 s, touch-probe the feed.")
@@ -399,18 +482,19 @@ kit.claim("CL-F1-BUS-RISE", "Servo bus 20 AWG, steady rise at both servos stalle
 kit.claim("CL-F1-R-EXT", "Resistance pack terminals to ESC pads (equivalent, hot)", calc=W, output="r_ext_mohm",
           unit="mOhm", parts=PARTS_MAIN + ESC_IDS,
           how="T-F1-DROP: 20 A load step, read pack-terminal and ESC-pad voltages with one meter.",
-          note="Replaces E2's ASM-E2-R-EXT 3 mOhm and E1's 4 mOhm (CR-F1-03).")
-kit.claim("CL-F1-DROP-CONT", "Voltage drop pack to ESC at the continuous current", calc=W, output="drop_cont_pct",
-          unit="%", limit=("<=", 2.0), parts=PARTS_MAIN + ESC_IDS, how="T-F1-DROP at 30 A.")
-kit.claim("CL-F1-DROP-PEAK", "Voltage drop pack to ESC at the 100 A limiter", calc=W, output="drop_peak_pct",
-          unit="%", limit=("<=", 5.0), parts=PARTS_MAIN + ESC_IDS, how="T-F1-DROP scaled; stand log at full throttle.")
+          note="R3: routed ESC lengths and 10 AWG jumpers; P:electrical.r_ext_mohm follows (CR-F1-24).")
+kit.claim("CL-F1-DROP-CONT", "Voltage drop pack to the farthest ESC at the continuous current", calc=W,
+          output="drop_cont_pct", unit="%", limit=("<=", 2.0), parts=PARTS_MAIN + ESC_IDS, how="T-F1-DROP at 30 A.")
+kit.claim("CL-F1-DROP-PEAK", "Voltage drop pack to the farthest ESC at the 100 A limiter", calc=W,
+          output="drop_peak_pct", unit="%", limit=("<=", 5.0), parts=PARTS_MAIN + ESC_IDS,
+          how="T-F1-DROP scaled; stand log at full throttle.")
 
 # ---------------------------------------------------------------- claims: avionics supply, sensing, mass
 kit.claim("CL-F1-SERVO-BEC-REQ", "Servo supply rating required", calc="CALC-F1-SERVO-BEC", output="i_req_a",
           unit="A", verifies=["R-AVIONICS-POWER"], parts=["PWR-005"],
           how="T-F1-SERVO-STALL: measure each servo's stall current at 6 V; re-run with the measured value.",
-          note="> 4.5 A (SpeedyBee F405 Wing servo BEC, SRC-F1-SPEEDYBEE-WING): a UBEC is fitted. Drop it only if "
-               "the measured stall current is <= 1.1 A per servo AND F3's FC servo BEC is >= 4.5 A continuous.")
+          note="5.6 A with D6's 1.4 A stall (CR-D6-06) > the 4.5 A carried for the CoreWing servo BEC "
+               "(CL-F3-SERVO-BEC): the UBEC stays. The drop rule (<= 1.1 A per servo) is not met.")
 kit.claim("CL-F1-SERVO-STALL-BUS", "Servo bus current, both servos stalled", calc="CALC-F1-SERVO-BEC",
           output="i_bus_stall_a", unit="A", verifies=["R-AVIONICS-POWER"], parts=["PWR-005"],
           how="T-F1-SERVO-STALL, both servos blocked together, meter in the UBEC output.")
@@ -427,19 +511,21 @@ kit.claim("CL-F1-SENSOR-CONT", "Current sensor continuous rating", value=90.0, u
           cites=["SRC-F1-SPEEDYBEE-WING"], how="As CL-F1-SENSOR-PEAK; T-F1-SENSOR-CAL.")
 kit.claim("CL-F1-POWER-MASS", "Power subsystem mass excluding the pack", calc="CALC-F1-MASS", output="mass_g",
           unit="g", limit=("<=", "CL-F1-POWER-BUDGET"), parts=PARTS_MAIN + ["PWR-005"],
-          how="Weigh each item on arrival; A3 replaces the EST rows.",
-          note="over A3's 45 g by 24 g: 8 AWG main path (+12 g over 10 AWG, needed for the 10 degC rise) and the "
-               "four ESC capacitors (8 g, not in A3's model). CR-F1-02 asks A1 for +25 g from the reserve.")
+          how="Weigh each item on arrival (T-PWR-ARRIVAL); A3 replaces the EST rows.",
+          note="D-48: power 648 g incl. the CoreWing power board (28 g EST; one retailer lists the PDB board alone at "
+               "11.4 g, kept at 28 until weighed).")
 kit.claim("CL-F1-POWER-BUDGET", "Power allocation left after the pack", calc="CALC-F1-MASS", output="budget_g",
           unit="g", how="P:mass.allocation_g.power minus P:battery.mass_kg; follows A1's allocation.")
 
 # ---------------------------------------------------------------- tests
 kit.test("T-F1-WIRE-HEAT", "Wire heat runs", verifies=["CL-F1-MAIN-RISE", "CL-F1-MAIN-PEAK", "CL-F1-ESC-RISE",
-                                                         "CL-F1-ESC-PEAK", "CL-F1-PACKLEAD-RISE",
+                                                         "CL-F1-ESC-PEAK", "CL-F1-BUNDLE-RISE", "CL-F1-BUNDLE-PEAK",
+                                                         "CL-F1-PACKLEAD-RISE",
                                                          "CL-F1-PACKLEAD-PEAK"],
-         procedure="Bench supply (>= 40 A) + load; 8 AWG pigtail in a closed pod mock-up at 30 A, 16 AWG pair in a "
-                   "taped XPS channel at 8.4 A, each 10 min; K-type thermocouple taped mid-lead under 10 mm of foam "
-                   "tape; then 50 A for 2 s on the 16 AWG. Pass: rise <= 10 degC steady, <= 30 degC peak.")
+         procedure="Bench supply (>= 40 A) + load; built power stack (10 AWG jumpers) in a closed pod mock-up at 30 A, "
+                   "16 AWG pair in a taped XPS groove at 8.4 A, two pairs through a 50 mm straw at 8.4 A each, each "
+                   "10 min; K-type thermocouples mid-lead under foam tape; then 50 A for 2 s on the 16 AWG. Pass: "
+                   "rise <= 10 degC steady (jumpers: above their joints), <= 30 degC peak, pack leads <= 20 degC.")
 kit.test("T-F1-CONN-HEAT", "AS150U heat run", verifies=["CL-F1-AS150U-CONT"],
          procedure="38 A for 10 min through a mated pair; IR thermometer on the housing; rise <= 30 degC.")
 kit.test("T-F1-DROP", "Path resistance", verifies=["CL-F1-R-EXT", "CL-F1-DROP-CONT", "CL-F1-DROP-PEAK"],
@@ -461,33 +547,40 @@ kit.test("T-F1-RIPPLE", "ESC supply ripple", verifies=["CL-F1-DROP-PEAK"],
 
 
 def write_tables(out):
-    """data/derating.csv: the derating table POWER.md shows (written under __main__ only)."""
+    """data/derating.csv (current, length, gauge, drop, temperature) and data/gauge_sweep.csv, under __main__ only."""
     d = Path(__file__).resolve().parent / "data"
     d.mkdir(exist_ok=True)
+    v = kit.value("P:battery.v_nom")
     rows = [("run", "awg", "len_m", "i_cont_a", "rise_cont_c", "peak_normal_c", "peak_fault_c", "r_loop_mohm",
-             "mass_g")]
-    lens = {"main": 0.15, "esc": 0.5, "esc18": 0.5, "feed": 0.15, "bus": 0.35}
+             "drop_cont_pct", "mass_g")]
     for k in ("main", "esc", "esc18", "feed", "bus"):
-        rows.append((k, out[f"{k}_awg"], lens[k], round(out[f"{k}_i_cont_a"], 2), round(out[f"{k}_rise_c"], 1),
-                     round(out.get(f"{k}_peak_normal_c", float("nan")), 1),
-                     round(out.get(f"{k}_peak_fault_c", float("nan")), 1),
-                     round(out.get(f"{k}_r_loop_mohm", float("nan")), 2), round(out[f"{k}_mass_g"], 1)))
+        rl = out.get(f"{k}_r_loop_mohm", float("nan"))
+        rows.append((k, out[f"{k}_awg"], round(out[f"{k}_len_m"], 3), round(out[f"{k}_i_cont_a"], 2),
+                     round(out[f"{k}_rise_c"], 1), round(out.get(f"{k}_peak_normal_c", float("nan")), 1),
+                     round(out.get(f"{k}_peak_fault_c", float("nan")), 1), round(rl, 2),
+                     round(100 * out[f"{k}_i_cont_a"] * rl * 1e-3 / v, 3), round(out[f"{k}_mass_g"], 1)))
+    for k, (name, lb, fb) in enumerate(kit.value("ASM-F1-BUNDLE")):
+        rows.append((f"bundle: {name}", out["esc_awg"], lb, round(out["esc_i_cont_a"], 2),
+                     round(out[f"bundle{k}_rise_c"], 1), float("nan"), round(out[f"bundle{k}_peak_fault_c"], 1),
+                     float("nan"), float("nan"), float("nan")))
     pl = kit.nodes["CALC-F1-PACKLEAD"]["outputs"]
     i_c = round(out["main_i_cont_a"], 2)
     for k, name in (("lead", "packlead"), ("lead_alt", "packlead12")):
         rows.append((name, pl[f"{k}_awg"], kit.value("ASM-F1-PACKLEAD")[2], i_c, round(pl[f"{k}_rise_c"], 1),
-                     float("nan"), round(pl[f"{k}_peak_fault_c"], 1), round(pl[f"{k}_r_loop_mohm"], 2), float("nan")))
+                     float("nan"), round(pl[f"{k}_peak_fault_c"], 1), round(pl[f"{k}_r_loop_mohm"], 2),
+                     round(100 * i_c * pl[f"{k}_r_loop_mohm"] * 1e-3 / v, 3), float("nan")))
     with open(d / "derating.csv", "w", newline="", encoding="utf-8") as f:
         csv.writer(f).writerows(rows)
-    # gauge sweep: steady rise at each run's continuous current for every gauge (the derating table)
     od = kit.value("ASM-F1-WIRE-OD")
     f_pod, f_chan, f_pair, eps = kit.value("ASM-F1-COOLING")
     ta = max(kit.value("P:env.ambient_design_c"))
     pod, chan = (f_pod, f_pair, eps), (f_chan, 1.0, eps)
+    i_tr = max(a for _, s_, a in kit.value("CL-F1-PROFILE") if s_ <= 60)
+    i_esc_lim = kit.value("P:propulsion.current_max_per_motor_a")
     cases = [("pack path, continuous", out["main_i_cont_a"], pod),
-             ("pack path, transition 42.9 A if held", 42.92, pod),
+             (f"pack path, transition {i_tr:.1f} A if held", i_tr, pod),
              ("ESC lead, hover share", out["esc_i_cont_a"], chan),
-             ("ESC lead, limiter 24.8 A if held", 24.8, chan)]
+             (f"ESC lead, limiter {i_esc_lim:.1f} A if held", i_esc_lim, chan)]
     with open(d / "gauge_sweep.csv", "w", newline="", encoding="utf-8") as f:
         wr = csv.writer(f)
         wr.writerow(["case", "i_a"] + [f"awg{g}_rise_c" for g in (8, 10, 12, 14, 16, 18, 20)])

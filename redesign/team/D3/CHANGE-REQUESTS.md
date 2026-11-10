@@ -1,9 +1,29 @@
 # D3 change requests
 
 Raised by D3 (fins and motor-tube designer). Numbers come from `subsystems/fins/` (CAD, `make_fins.py`) and
-`team/D3/claims.json`. R3 requests (2026-11-09, answering CR-A1-28) first; R2 requests below with A1's disposition.
+`team/D3/claims.json`. R4 requests (2026-11-09, answering CR-A1-47 and CR-A4-40) first, then R3 and R2 with A1's
+disposition.
 
-## R3 (open)
+## R4 (open)
+
+| Id | To | What | Why | Numbers |
+|---|---|---|---|---|
+| CR-D3-26 | A1 (E1, A5, B4) | **Prop keep-out after D-52.** Decide one: (a) `face_ahead_m` 0.0025 → 0.020 (prop plane −0.0077 → −0.0247; mount cheeks +17 mm, C4 re-checks rocking stiffness); (b) E1/A5 give `KO-PROP` E1's real axial envelope (−6 mm aft / +10 mm fwd, `ASM-E1-BLADE-HALF`) and test the blade surface, not a symmetric 35 mm cylinder; (c) 5° cant (B4's option; still hits block, plug and wing skin). Also set `propulsion.stations.x_plate_face_m` 0.0309 → **0.02935** (DP-MOTOR-FACE at face_ahead 2.5 mm) | With the corrected sense the wing-side blade tip swings aft over the tube. `check.py` now reports 16 keep-out ERRORs: `FIN-002/004/006/009` and `WNG-001/003` | `CL-D3-PROP-TIP-GAP` 26.9 mm, mid-plane to tube face (B4 `CL-B4-GAP-TUBE` 27.3). Less the aft blade 6 mm it is 20.9 mm (< 25). Probe runs, all restored: face_ahead 0.0165 clears the fins parts, 0.020 clears everything; 3° leaves only the block. D3 keeps D-51's 0.0025 until A1 decides |
+| CR-D3-27 | A1 (A3, C4) | **Mass 436.4 g vs 418 g (−18.4 g).** Take +18 g from the reserve now; D3 returns what the levers give. Levers: block fill 0.55 → 0.45 (−14 g, C4 re-checks `CL-C4-D3-BLOCK-MS` +0.55); fillet mix 0.55 → 0.45 g/cm³ if the T-D3-WEIGH cup allows (−5.9 g); mount cheeks 12 → 8 mm (−4 g, C4: 926 N·m/rad needed) | D-48 booked +3 g for the 15 mm fillets. Modelled as bodies they are 32.2 g; the old 3 g/root estimate held about a quarter of the real volume. The collar 16 → 12 mm saved 2.0 g, not 3 (the 12 mm ear already set the ring top). The ESC pad 31 mm costs +0.8 g | `CL-D3-MASS` 436.4, `CL-D3-FILLET-MASS` 32.2 (UR/UL 8.1, LR/LL 8.0 g); collars 40.2 (was 42.2) |
+| CR-D3-25 | C6 (C4) | Re-run `joints.py` on R4. **Collar 12 mm**: your 12.0 mm gives RF 1.00, so T-C6-COLLAR decides; the 16 mm fallback costs +2 g. **Root fillets** as drawn in `E-FIN-53…56`: 15 mm over the last 0.15 m of *bonded* root (lower: x 0.146–0.2376), 13 mm aft of the hinge, a 6 mm bead ahead, none over the D6 slot. Accept this zoning in place of "15 mm full root chord" or say why the forward root needs 15 mm. A full-chord 15 mm fillet would add +17 g | A full-length 15 mm leg aft of the hinge leaves 0.2 mm to the elevon end, so it cannot be built. Forward of x 0.17 the D3 root model gives no credit | `CL-D3-ROOT-FILLET-RF` 2.28 typical (lower governs; upper 2.29), `-ALLOW` 1.14 at your 0.125 MPa; skin bond 5 318 / 5 078 mm² |
+| CR-D3-28 | E1 | Acknowledge `E-FIN-81…88` (`CT-THERMAL-CONTACT`, E3 blocks filled from `CL-E3-MOUNT-ASA` 66.3 / 83 °C and `CL-E3-ESC-PEAK` 61.6 / 85 °C). The mount plate geometry changed with the sense (D-52), so print R4 mounts only | 8 one-sided WARN in `check.py` / `merge_check.py` | `subsystems/fins/interfaces.json` |
+| CR-D3-29 | C4 | Re-run `fin_structures_d3.py` on R4: collar ring z 0.1475–0.1595 (ear unchanged, brace end \|z\| 0.1535); stepped tip (strip 224 mm, ends x 0.2746, 12 pins to x 0.2641); ESC pad 46 × 31 mm, 2.04 g; root fillets as part bodies (8.0–8.1 g per half-fin at CG from `FIN-001-*` `cg_xyz_m`); thrust side load in the D-52 sense; then the block-fill lever (CR-D3-27) | Mass and geometry moved under your FE | `subsystems/fins/interfaces.json` |
+| CR-D3-30 | D5 | Tip step adopted as CR-D5-11 asked (closes it; CR-D3-19 withdrawn): `tip_square_m` 0.0454, step \|z\| 0.2005 from x 0.2746, strips end at 0.2746, last pin x 0.2641 (edge 0.2651 < 0.2666). `check.py` shows no shoe–fin overlap | D-54 | `CL-D3-TIP-STEP-MISMATCH` 0 |
+| CR-D3-31 | D6, D1, F1 | Information. D6: no fillet over x 0.2376–0.2616 on either face of the lower roots (closes CR-D6-04). D1: fillets up to 15 mm on the skin each side of y ±0.320; aft of the hinge 13 mm, so 2.2 mm clear of each elevon end. F1: `E-PWR-11…14` acknowledged; the pad is now x 0.078–0.124, \|z\| 0.1025–0.1335, and your caps at x ≥ 0.127 stay clear | CR-D6-04, CR-F1-22 | — |
+
+**Answers to I1.** CR-I1-17: yes. One 20 × 18 × 1 000 mm length gives both `FIN-006` plugs (2 × 53 mm) and C2's six
+36 mm spar plugs (216 mm): 322 mm plus 8 saw kerfs, leaving about 0.65 m for crash spares. C2 must confirm its plugs
+are the same stock sanded to 19.9 mm. `parts.csv` now prices `FIN-006` at $1.06 (53 mm share of $20). CR-I1-20: the
+flying ASA is about 46 g (4 mounts 38.5 g of print, 4 pads 7.0 g). With a spare A/B mount set and pads (~46 g), the
+E3/H1 stand mount (~10 g) and supports/brims (~30 %), the need is about 130 g. A 1 kg spool is the practical buy: a
+0.5 kg spool costs nearly the same, and the rest of the spool covers reprints after crashes. One spool is enough.
+
+## R3 (A1-R4 disposition: CR-D3-16 accepted at 418 g (D-48); CR-D3-19 superseded by D-54; the rest forwarded)
 
 | Id | To | What | Why | Numbers |
 |---|---|---|---|---|

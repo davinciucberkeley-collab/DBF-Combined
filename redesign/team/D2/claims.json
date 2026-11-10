@@ -61,7 +61,7 @@
    "id": "ASM-D2-STOP-T",
    "type": "assumption",
    "title": "Aft stop wall thickness",
-   "text": "Printed aft stop on the handle bridge, the pack's aft stop",
+   "text": "Printed aft stop on the tray rear piece (R5, D-47), the pack's aft stop",
    "basis": "C3 CR-C3-01 (3.0 mm, 2 mm root fillet), adopted at R3",
    "value": 0.003,
    "unit": "m",
@@ -73,11 +73,11 @@
   {
    "id": "ASM-D2-FWD-STOP",
    "type": "assumption",
-   "title": "Nose block A length, forward stop thickness",
-   "text": "Fixed XPS block behind the nose wall, then the printed forward stop (backstop of the crush block); the stop face follows the nose (R4)",
-   "basis": "CHANGE-LOG D-25 (block A 7.0 mm, stop face -0.1002 at x_le -0.115), C3 CR-C3-01 (3.0 mm)",
+   "title": "Nose-wall bond line (was block A), forward stop thickness",
+   "text": "R5 (D-47): XPS nose block A deleted; the printed forward stop (backstop of the crush block) sits on a 1 mm epoxy line on the nose wall inside face; the stop face follows the nose",
+   "basis": "CHANGE-LOG D-47 (nose skin to stop face 14.8 -> 8.8 mm, stop face -0.1212 at x_le -0.130), C3 CR-C3-01 (3.0 mm)",
    "value": [
-    0.007,
+    0.001,
     0.003
    ],
    "unit": "m",
@@ -91,8 +91,8 @@
    "type": "assumption",
    "title": "Aft stop face x",
    "text": "Face of the aft stop the spacers bear on",
-   "basis": "subsystems/pod/params.json aft_stop_x_m: A1's 0.073 heavy-pack aft face + 4 mm",
-   "value": 0.077,
+   "basis": "CHANGE-LOG D-47 (aft stop 0.077 -> 0.056 = the 680 g pack's aft face at -0.014)",
+   "value": 0.056,
    "unit": "m",
    "status": "PROPOSED",
    "cites": [
@@ -103,11 +103,27 @@
    "id": "ASM-D2-PACK-AFT",
    "type": "assumption",
    "title": "Pack aft face, nominal and 680 g",
-   "text": "A1's stations: aft face for the nominal centroid x -0.001 and with a 680 g pack",
-   "basis": "team/A1/CHANGE-REQUESTS.md#CR-A1-27 (D-24, D-25)",
+   "text": "A1's stations: aft face for the nominal centroid pod.pack_x_nominal_m -0.022 (8 mm spacer) and for the 680 g pack at -0.014 (no spacer)",
+   "basis": "CHANGE-LOG D-47, team/A1/CHANGE-REQUESTS.md#CR-A1-43",
    "value": [
-    0.069,
-    0.073
+    0.048,
+    0.056
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-PACK-STATIONS",
+   "type": "assumption",
+   "title": "Pack centroid stations for the lightest and heaviest listed packs",
+   "text": "A1's per-pack stations for 503 g and 680 g (the nominal 550 g one is pod.pack_x_nominal_m)",
+   "basis": "CHANGE-LOG D-47, params.json pod.pack_x_nominal_m note; subsystems/pod/params.json pack_x_per_pack_m",
+   "value": [
+    -0.0245,
+    -0.014
    ],
    "unit": "m",
    "status": "PROPOSED",
@@ -154,6 +170,7 @@
    "value": [
     0.002,
     0.004,
+    0.006,
     0.008,
     0.008
    ],
@@ -258,17 +275,19 @@
    "id": "ASM-D2-PART-MASSES",
    "type": "assumption",
    "title": "Pod part masses from the CAD",
-   "text": "Declared masses of POD-001 ... POD-008 (g), body volumes x densities",
+   "text": "Declared masses of POD-001 ... POD-010 (g), body volumes x densities",
    "basis": "team/D2/pod_data.py from subsystems/pod/fusion/pod.py; foam board areal mass and PETG fill are estimates; weigh (T-D2-WEIGH)",
    "value": [
-    24.8,
-    31.2,
-    8.5,
+    24.3,
+    40.0,
+    8.9,
     9.1,
     5.5,
     5.8,
-    34.1,
-    9.1
+    28.3,
+    1.5,
+    2.3,
+    5.3
    ],
    "unit": "g",
    "status": "UNVERIFIED",
@@ -309,17 +328,18 @@
    "id": "ASM-D2-GEOM-CAD",
    "type": "assumption",
    "title": "Pod CAD geometry read-outs",
-   "text": "Values the CAD layout computes from the wing section and pod params: [pad-to-wing clearance over the overhang, antenna A element to pack, antenna B element to pack, GPS to the nearest power item (PDB / AS150U park / UBEC) (m); wire-channel height under the pack, crossing gap leg-to-aft-wall, crossing height (m); tray front-piece area (m2)]",
+   "text": "Values the CAD layout computes from the wing section and pod params: [pad-to-wing clearance over the overhang, antenna A element to pack, antenna B element to pack, GPS to the nearest power item (PDB / AS150U park / UBEC) (m); wire-channel height under the pack, crossing gap leg-to-aft-wall, crossing height (m); tray front-piece solid area under the forward stop, tray rear-piece net area under the aft stop (m2)]. R5: item 0 is now the most aft pack face (680 g, no spacer) ahead of the recess end (the pack no longer overhangs)",
    "basis": "subsystems/pod/fusion/pod.py#layout() via team/D2/pod_data.py (S5010 section, pod params)",
    "value": [
-    0.0007754,
+    0.009,
     0.0345961,
-    0.044,
+    0.038,
     0.1522725,
     0.0035,
     0.0067,
     0.0544491,
-    0.0017985
+    0.001815,
+    0.0041723
    ],
    "unit": "m",
    "status": "PROPOSED",
@@ -378,7 +398,7 @@
    "title": "bay",
    "script": "redesign/team/D2/pod_claims.py",
    "function": "bay",
-   "equation": "x_fs = pod LE + t + block A + t_fs (forward stop aft face); bay L = x_as - x_fs; H = (base + H - t) - (base + t + floor stack); x_nose_in = pod LE + t; nose block = (x_fs - t_fs) - x_nose_in; centroid against the forward stop = x_fs + L_pack/2 ; nominal / heavy centroid = aft face - L_pack/2 ; spacer = x_as - aft face ; block B (nominal) = (aft_nom - L_pack - t_sp) - x_fs ; block section = bw (zh - tray top) - groove ; aft reach = x_as - L_pack/2 ; travel = bay L - L_pack",
+   "equation": "x_fs = pod LE + t + bond line + t_fs (forward stop aft face); nose to stop = x_fs - pod LE; bay L = x_as - x_fs; H = (base + H - t) - (base + t + floor stack); x_nose_in = pod LE + t; nose block = (x_fs - t_fs) - x_nose_in; centroid against the forward stop = x_fs + L_pack/2 ; nominal / heavy centroid = aft face - L_pack/2 ; spacer = x_as - aft face ; block B (nominal) = (aft_nom - L_pack - t_sp) - x_fs ; block section = bw (zh - tray top) - groove ; aft reach = x_as - L_pack/2 ; travel = bay L - L_pack",
    "inputs": {
     "x_le": "P:pod.x_le_m",
     "size": "P:pod.size_m",
@@ -397,37 +417,38 @@
     "bay_l": 0.1772,
     "bay_w": 0.052,
     "bay_h": 0.056900000000000006,
-    "pack_x_fwd": -0.03019999999999999,
-    "pack_x_nom": -0.0010000000000000009,
-    "pack_x_hvy": 0.002999999999999989,
-    "aft_reach": 0.006999999999999992,
-    "spacer_nom": 0.007999999999999993,
-    "spacer_hvy": 0.0040000000000000036,
+    "pack_x_fwd": -0.051199999999999996,
+    "pack_x_nom": -0.022000000000000006,
+    "pack_x_hvy": -0.014000000000000005,
+    "aft_reach": -0.014000000000000005,
+    "spacer_nom": 0.008,
+    "spacer_hvy": 0.0,
     "block_nom": 0.02769999999999999,
-    "nose_in": -0.1102,
-    "nose_block": 0.007,
-    "x_fs": -0.1002,
+    "nose_in": -0.1252,
+    "nose_block": 0.001,
+    "x_fs": -0.1212,
+    "nose_to_stop": 0.008800000000000002,
     "block_area": 0.0028488000000000003,
     "travel": 0.03719999999999998,
     "pack_z": 0.048299999999999996
    },
    "input_values": {
-    "x_le": -0.115,
+    "x_le": -0.13,
     "size": [
-     0.21,
+     0.225,
      0.14,
      0.07
     ],
     "z_base": 0.015,
     "t": 0.0048,
     "fs": [
-     0.007,
+     0.001,
      0.003
     ],
-    "x_as": 0.077,
+    "x_as": 0.056,
     "aft": [
-     0.069,
-     0.073
+     0.048,
+     0.056
     ],
     "t_sp": 0.0015,
     "stack": 0.0035,
@@ -460,26 +481,46 @@
     "sp": "ASM-D2-SPACERS"
    },
    "outputs": {
-    "x_fwd_min": -0.0038419925542403366,
-    "range": 0.010841992554240329,
-    "spacer_sum": 0.022
+    "x_fwd_min": -0.023968248883036142,
+    "range": 0.009968248883036136,
+    "spacer_sum": 0.028
    },
    "input_values": {
-    "x_fs": -0.1002,
+    "x_fs": -0.1212,
     "t_sp": 0.0015,
-    "LB": 0.024858007445759646,
+    "LB": 0.025731751116963852,
     "pack": [
      0.14,
      0.048,
      0.05
     ],
-    "reach": 0.006999999999999992,
+    "reach": -0.014000000000000005,
     "sp": [
      0.002,
      0.004,
+     0.006,
      0.008,
      0.008
     ]
+   }
+  },
+  {
+   "id": "CALC-D2-FWD-ROOM",
+   "type": "calculation",
+   "title": "fwd room",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "fwd_room",
+   "equation": "forward trim room at the nominal station = nominal centroid - most forward centroid with block B",
+   "inputs": {
+    "x_nom": "CL-D2-PACK-X-NOM",
+    "x_min": "CL-D2-PACK-X-FWD-MIN"
+   },
+   "outputs": {
+    "room": 0.001968248883036136
+   },
+   "input_values": {
+    "x_nom": -0.022000000000000006,
+    "x_min": -0.023968248883036142
    }
   },
   {
@@ -768,9 +809,9 @@
     "g": "ASM-D2-GEOM-CAD"
    },
    "outputs": {
-    "overhang_clr": 0.0007754,
+    "overhang_clr": 0.009,
     "ant_a": 0.0345961,
-    "ant_b": 0.044,
+    "ant_b": 0.038,
     "gps": 0.1522725,
     "ch_h": 0.0035,
     "cross_gap": 0.0067,
@@ -778,14 +819,15 @@
    },
    "input_values": {
     "g": [
-     0.0007754,
+     0.009,
      0.0345961,
-     0.044,
+     0.038,
      0.1522725,
      0.0035,
      0.0067,
      0.0544491,
-     0.0017985
+     0.001815,
+     0.0041723
     ]
    }
   },
@@ -801,47 +843,59 @@
     "tau": "ASM-D2-PAPER-SHEAR"
    },
    "outputs": {
-    "front_n": 179.85
+    "front_n": 181.5,
+    "rear_n": 417.23
    },
    "input_values": {
     "g": [
-     0.0007754,
+     0.009,
      0.0345961,
-     0.044,
+     0.038,
      0.1522725,
      0.0035,
      0.0067,
      0.0544491,
-     0.0017985
+     0.001815,
+     0.0041723
     ],
     "tau": 100000.0
    }
   },
   {
-   "id": "CALC-D2-NOSE-EXT",
+   "id": "CALC-D2-PACK-STATIONS",
    "type": "calculation",
-   "title": "nose ext",
+   "title": "pack stations",
    "script": "redesign/team/D2/pod_claims.py",
-   "function": "nose_ext",
-   "equation": "block B for mass m: L_B(m) = CL-C5-BLOCK-L x m / m_nom (crush energy ~ m); forward stop face needed = x_station - L_pack/2 - t_sp - L_B(m); nose extension = x_fs - that (>0: the nose must move forward by this)",
+   "function": "pack_stations",
+   "equation": "per pack m (lightest, heaviest listing): spacer = round_2mm(x_as - (x_target + L_pack/2)); x = x_as - spacer - L_pack/2; block B = (x - L_pack/2 - t_sp) - x_fs; block B min = CL-C5-BLOCK-L x m / m_nom (crush energy ~ m)",
    "inputs": {
     "x_fs": "CL-D2-FWD-STOP-X",
+    "x_as": "ASM-D2-AFT-STOP-X",
     "t_sp": "ASM-D2-SPREADER-T",
     "LB": "CL-C5-BLOCK-L",
     "pack": "P:battery.size_m",
     "m_nom": "P:battery.mass_kg",
     "rng": "ASM-A3-PACK-RANGE",
-    "x550": "CL-C5-PACK-X-B3",
-    "x503": "CL-C5-PACK-X-B3-LIGHT"
+    "st": "ASM-D2-PACK-STATIONS",
+    "sp": "ASM-D2-SPACERS"
    },
    "outputs": {
-    "ext_nom": 0.01059063559261296,
-    "ext_light": 0.014728433550512052
+    "spacer_light": 0.01,
+    "x_light": -0.024000000000000007,
+    "block_light": 0.025699999999999987,
+    "block_min_light": 0.023532856021514215,
+    "dx_light": 0.0004999999999999935,
+    "spacer_heavy": 0.0,
+    "x_heavy": -0.014000000000000005,
+    "block_heavy": 0.03569999999999998,
+    "block_min_heavy": 0.03181380138097349,
+    "dx_heavy": -5.204170427930421e-18
    },
    "input_values": {
-    "x_fs": -0.1002,
+    "x_fs": -0.1212,
+    "x_as": 0.056,
     "t_sp": 0.0015,
-    "LB": 0.024858007445759646,
+    "LB": 0.025731751116963852,
     "pack": [
      0.14,
      0.048,
@@ -852,8 +906,17 @@
      503.0,
      680.0
     ],
-    "x550": -0.014432628146853317,
-    "x503": -0.02069465583193549
+    "st": [
+     -0.0245,
+     -0.014
+    ],
+    "sp": [
+     0.002,
+     0.004,
+     0.006,
+     0.008,
+     0.008
+    ]
    }
   },
   {
@@ -892,13 +955,13 @@
     "g": "P:env.g_ms2"
    },
    "outputs": {
-    "mass_g": 952.0,
-    "force_n": 118.99999999999999
+    "mass_g": 954.0,
+    "force_n": 119.24999999999999
    },
    "input_values": {
-    "pod": 122,
-    "avn": 80,
-    "pwr": 620,
+    "pod": 131,
+    "avn": 45,
+    "pwr": 648,
     "pack_nom": 0.55,
     "pack_rng": [
      503.0,
@@ -964,17 +1027,17 @@
     "sock": "ASM-D2-SOCKET"
    },
    "outputs": {
-    "boom_len": 0.1068,
-    "exposed": 0.07200000000000001,
+    "boom_len": 0.10679999999999998,
+    "exposed": 0.07199999999999998,
     "socket_depth": 0.0348
    },
    "input_values": {
     "tip": [
-     -0.195,
+     -0.21,
      -0.046,
      0.045
     ],
-    "x_le": -0.115,
+    "x_le": -0.13,
     "t": 0.0048,
     "sock": [
      0.022,
@@ -1014,18 +1077,20 @@
     "parts": "ASM-D2-PART-MASSES"
    },
    "outputs": {
-    "mass_g": 128.1
+    "mass_g": 131.0
    },
    "input_values": {
     "parts": [
-     24.8,
-     31.2,
-     8.5,
+     24.3,
+     40.0,
+     8.9,
      9.1,
      5.5,
      5.8,
-     34.1,
-     9.1
+     28.3,
+     1.5,
+     2.3,
+     5.3
     ]
    }
   },
@@ -1110,39 +1175,181 @@
     "POD-002"
    ],
    "how": "Mark the pack centre; measure from the wing LE with the pack against the forward stop.",
-   "note": "R3: the forward stop aft face (x -0.1002) is unchanged, so this reference is unchanged; the pack never flies here (the crush block is ahead of it)",
-   "value": -0.03019999999999999
+   "note": "R5 (D-47): the forward stop face moved -0.1002 -> -0.1212, so this reference moved 21 mm forward; the pack never flies here (the crush block is ahead of it)",
+   "value": -0.051199999999999996
   },
   {
    "id": "CL-D2-PACK-X-NOM",
    "type": "claim",
-   "title": "Pack centroid, nominal station (aft face 0.069, 8 mm spacer)",
+   "title": "Pack centroid, nominal 550 g station (aft face 0.048, 8 mm blue spacer)",
    "calc": "CALC-D2-BAY",
    "output": "pack_x_nom",
    "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "P:pod.pack_x_nominal_m"
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
    "parts": [
     "POD-001",
     "POD-002",
-    "POD-008"
+    "POD-008",
+    "POD-009",
+    "POD-010"
    ],
-   "how": "Pack strapped with its block and spacer; measure the centre mark from the wing LE.",
-   "note": "CR-A1-27: x -0.001 m",
-   "value": -0.0010000000000000009
+   "how": "Pack strapped with its block, spreader and spacer; measure the centre mark from the wing LE.",
+   "note": "D-47 / CR-A1-43: pod.pack_x_nominal_m -0.022 m (was -0.001, D-24)",
+   "value": -0.022000000000000006
   },
   {
    "id": "CL-D2-PACK-X-HEAVY",
    "type": "claim",
-   "title": "Pack centroid, 680 g station (aft face 0.073, 4 mm spacer)",
+   "title": "Pack centroid, 680 g station (aft face 0.056, no spacer, on the aft stop)",
    "calc": "CALC-D2-BAY",
    "output": "pack_x_hvy",
    "unit": "m",
    "parts": [
     "POD-001",
     "POD-002",
+    "POD-009",
+    "POD-010"
+   ],
+   "how": "As CL-D2-PACK-X-NOM with no spacer.",
+   "note": "D-47: -0.014 m",
+   "value": -0.014000000000000005
+  },
+  {
+   "id": "CL-D2-PACK-X-LIGHT",
+   "type": "claim",
+   "title": "Pack centroid, 503 g station (10 mm spacer, blue + white)",
+   "calc": "CALC-D2-PACK-STATIONS",
+   "output": "x_light",
+   "unit": "m",
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "parts": [
+    "POD-001",
+    "POD-002",
+    "POD-008",
+    "POD-009",
+    "POD-010"
+   ],
+   "how": "As CL-D2-PACK-X-NOM with the 8 + 2 mm spacers.",
+   "note": "D-47 asks -0.0245; the 2 mm spacer steps give -0.024 (0.5 mm aft, +0.12 mm CG at A3's 0.236 mm/mm); a 12 mm stack gives -0.026 with block B 23.7 mm",
+   "value": -0.024000000000000007
+  },
+  {
+   "id": "CL-D2-SPACER-LIGHT",
+   "type": "claim",
+   "title": "Aft spacer stack for the 503 g pack",
+   "calc": "CALC-D2-PACK-STATIONS",
+   "output": "spacer_light",
+   "unit": "m",
+   "parts": [
     "POD-008"
    ],
-   "how": "As CL-D2-PACK-X-NOM with the 4 mm spacer.",
-   "value": 0.002999999999999989
+   "how": "Stack on the pack label; calipers.",
+   "value": 0.01
+  },
+  {
+   "id": "CL-D2-SPACER-HEAVY",
+   "type": "claim",
+   "title": "Aft spacer stack for the 680 g pack",
+   "calc": "CALC-D2-PACK-STATIONS",
+   "output": "spacer_heavy",
+   "unit": "m",
+   "parts": [
+    "POD-008"
+   ],
+   "how": "No spacer: the pack bears on the aft stop.",
+   "value": 0.0
+  },
+  {
+   "id": "CL-D2-BLOCK-MIN-LIGHT",
+   "type": "claim",
+   "title": "Crush block B minimum for the 503 g pack (scaled from C5's 550 g length)",
+   "calc": "CALC-D2-PACK-STATIONS",
+   "output": "block_min_light",
+   "unit": "m",
+   "parts": [
+    "POD-009"
+   ],
+   "how": "C5 confirms per pack mass (CR-D2-10).",
+   "note": "scaling with pack mass is D2's estimate (UNVERIFIED until C5 publishes CL-C5-BLOCK-L per mass)",
+   "value": 0.023532856021514215
+  },
+  {
+   "id": "CL-D2-BLOCK-MIN-HEAVY",
+   "type": "claim",
+   "title": "Crush block B minimum for the 680 g pack (scaled from C5's 550 g length)",
+   "calc": "CALC-D2-PACK-STATIONS",
+   "output": "block_min_heavy",
+   "unit": "m",
+   "parts": [
+    "POD-009"
+   ],
+   "how": "C5 confirms per pack mass (CR-D2-10).",
+   "value": 0.03181380138097349
+  },
+  {
+   "id": "CL-D2-BLOCK-B-LIGHT",
+   "type": "claim",
+   "title": "Crush block length at the 503 g station",
+   "calc": "CALC-D2-PACK-STATIONS",
+   "output": "block_light",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-D2-BLOCK-MIN-LIGHT"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-009"
+   ],
+   "how": "Cut length for the 503 g pack; rule.",
+   "value": 0.025699999999999987
+  },
+  {
+   "id": "CL-D2-BLOCK-B-HEAVY",
+   "type": "claim",
+   "title": "Crush block length at the 680 g station",
+   "calc": "CALC-D2-PACK-STATIONS",
+   "output": "block_heavy",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-D2-BLOCK-MIN-HEAVY"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-009"
+   ],
+   "how": "Cut length for the 680 g pack; rule.",
+   "value": 0.03569999999999998
+  },
+  {
+   "id": "CL-D2-PACK-FWD-ROOM",
+   "type": "claim",
+   "title": "Forward trim room at the nominal station with C5's block B",
+   "calc": "CALC-D2-FWD-ROOM",
+   "output": "room",
+   "unit": "m",
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "parts": [
+    "POD-009"
+   ],
+   "how": "Block cut to CL-C5-BLOCK-L: pack slides this far forward of nominal.",
+   "note": "D-47 quotes 3.4 mm with block B 24.3 mm; with C5's published 24.86 mm it is 2.8 mm",
+   "value": 0.001968248883036136
   },
   {
    "id": "CL-D2-AFT-REACH",
@@ -1153,22 +1360,22 @@
    "unit": "m",
    "limit": {
     "op": ">=",
-    "ref": "CL-C5-PACK-X-B3-HEAVY"
+    "ref": "CL-D2-PACK-X-HEAVY"
    },
    "verifies": [
     "R-CG-RANGE"
    ],
    "parts": [
-    "POD-007"
+    "POD-002"
    ],
    "how": "Pack against the aft stop with no spacer: centre mark from the wing LE.",
-   "note": "also >= A1's 680 g station (CL-D2-PACK-X-HEAVY) by 4 mm",
-   "value": 0.006999999999999992
+   "note": "D-47: the aft stop is the 680 g pack's aft face, so the heaviest listing flies with no spacer (C5's pre-D-47 stations superseded)",
+   "value": -0.014000000000000005
   },
   {
    "id": "CL-D2-SPACER-NOM",
    "type": "claim",
-   "title": "Aft spacer at the nominal station",
+   "title": "Aft spacer at the nominal station (one blue 8 mm)",
    "calc": "CALC-D2-BAY",
    "output": "spacer_nom",
    "unit": "m",
@@ -1176,7 +1383,7 @@
     "POD-008"
    ],
    "how": "Spacer thickness fitted behind the nominal pack.",
-   "value": 0.007999999999999993
+   "value": 0.008
   },
   {
    "id": "CL-D2-BLOCK-B-NOM",
@@ -1193,7 +1400,7 @@
     "R-PACK-RETENTION"
    ],
    "parts": [
-    "POD-008"
+    "POD-009"
    ],
    "how": "Cut length of the block for a 550 g pack; rule.",
    "value": 0.02769999999999999
@@ -1206,7 +1413,7 @@
    "output": "block_area",
    "unit": "m2",
    "parts": [
-    "POD-008"
+    "POD-009"
    ],
    "how": "Calipers on the cut block.",
    "note": "C5 uses bay W x bay H (pad top to hatch) for A_bay; the block stands on the tray, 2.5 mm lower than the pack",
@@ -1215,7 +1422,7 @@
   {
    "id": "CL-D2-NOSE-INNER",
    "type": "claim",
-   "title": "Nose wall inside face x (front of the fixed nose block)",
+   "title": "Nose wall inside face x",
    "calc": "CALC-D2-BAY",
    "output": "nose_in",
    "unit": "m",
@@ -1224,7 +1431,7 @@
    ],
    "how": "Built pod: rule from the wing LE to the nose wall inside face.",
    "note": "foam-board nose wall 4.8 mm (C5 assumes 2 mm, ASM-C5-NOSE-WALL)",
-   "value": -0.1102
+   "value": -0.1252
   },
   {
    "id": "CL-D2-FWD-STOP-X",
@@ -1237,21 +1444,41 @@
     "POD-002"
    ],
    "how": "Built pod: rule from the wing LE to the forward stop aft face.",
-   "note": "R4: derived from the nose (x_le + wall + block A + stop), so the bay follows pod.x_le_m (CR-D2-16)",
-   "value": -0.1002
+   "note": "D-47: -0.1212 (was -0.1002); derived from the nose (x_le + wall + bond line + stop)",
+   "value": -0.1212
   },
   {
    "id": "CL-D2-NOSE-BLOCK-L",
    "type": "claim",
-   "title": "Fixed XPS nose block length (block A)",
+   "title": "Nose wall to forward stop bond line (XPS block A deleted, D-47)",
    "calc": "CALC-D2-BAY",
    "output": "nose_block",
    "unit": "m",
    "parts": [
-    "POD-001"
+    "POD-001",
+    "POD-002"
    ],
-   "how": "Cut length; rule.",
-   "value": 0.007
+   "how": "Feeler gauge before bonding: stop fore face 1 mm off the nose wall; fill with microballoon epoxy.",
+   "value": 0.001
+  },
+  {
+   "id": "CL-D2-NOSE-TO-STOP",
+   "type": "claim",
+   "title": "Nose skin to forward stop face (A1's 'nose block')",
+   "calc": "CALC-D2-BAY",
+   "output": "nose_to_stop",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "value": 0.00885
+   },
+   "parts": [
+    "POD-001",
+    "POD-002"
+   ],
+   "how": "Rule from the nose skin to the stop face through the hatch.",
+   "note": "D-47: 14.8 -> 8.8 mm (limit 8.8 mm + 0.05 mm rounding)",
+   "value": 0.008800000000000002
   },
   {
    "id": "CL-D2-PACK-TRAVEL",
@@ -1266,8 +1493,9 @@
    "parts": [
     "POD-001",
     "POD-002",
-    "POD-007",
-    "POD-008"
+    "POD-008",
+    "POD-009",
+    "POD-010"
    ],
    "how": "Slide the real pack from the forward stop to the aft stop (block and spacers out); record the travel.",
    "value": 0.03719999999999998
@@ -1301,11 +1529,10 @@
     "R-PACK-RETENTION"
    ],
    "parts": [
-    "POD-008"
+    "POD-009"
    ],
    "how": "Pack strapped with a block cut to CL-C5-BLOCK-L: centre mark from the wing LE.",
-   "note": "any trim forward of this needs the pod nose (or the whole pod group) forward by the same amount (CR-C5-12 is A1's call)",
-   "value": -0.0038419925542403366
+   "value": -0.023968248883036142
   },
   {
    "id": "CL-D2-SPACER-SUM",
@@ -1325,7 +1552,8 @@
     "POD-008"
    ],
    "how": "Stack the spacers; calipers.",
-   "value": 0.022
+   "note": "D-47 set 2 / 4 / 6 / 8 / 8 mm, colour-coded",
+   "value": 0.028
   },
   {
    "id": "CL-D2-STATION-RANGE",
@@ -1338,25 +1566,26 @@
     "POD-008"
    ],
    "how": "As CL-D2-AFT-REACH and CL-D2-PACK-X-FWD-MIN.",
-   "value": 0.010841992554240329
+   "value": 0.009968248883036136
   },
   {
    "id": "CL-D2-OVERHANG-CLR",
    "type": "claim",
-   "title": "Pack underside above the wing surface where it overhangs the recess end",
+   "title": "Most aft pack face (680 g, no spacer) ahead of the recess end",
    "calc": "CALC-D2-CAD",
    "output": "overhang_clr",
    "unit": "m",
    "limit": {
     "op": ">=",
-    "value": 0.0005
+    "value": 0.0
    },
    "parts": [
-    "POD-004",
-    "POD-007"
+    "POD-002",
+    "POD-004"
    ],
-   "how": "Pack strapped at the 0.077 aft face: feeler gauge between the pack and the wing over the spar slot.",
-   "value": 0.0007754
+   "how": "Pack against the aft stop: the pack sits wholly on the tray, nothing over the spar slot.",
+   "note": "R5 (D-47): the pack no longer overhangs (was a pad-to-wing clearance at the 0.077 aft face)",
+   "value": 0.009
   },
   {
    "id": "CL-D2-ANT-A-CLR",
@@ -1396,7 +1625,7 @@
     "POD-001"
    ],
    "how": "Rule from the nose skin to the pack fore face.",
-   "value": 0.044
+   "value": 0.038
   },
   {
    "id": "CL-D2-GPS-CLR",
@@ -1482,7 +1711,7 @@
   {
    "id": "CL-D2-CROSS-H",
    "type": "claim",
-   "title": "Crossing height: stop bridge top to deck underside",
+   "title": "Crossing height: foot bridge top to deck underside",
    "calc": "CALC-D2-CAD",
    "output": "cross_h",
    "unit": "m",
@@ -1516,45 +1745,31 @@
     "POD-002",
     "POD-001"
    ],
-   "how": "T-C3-STOP-PUSH on the built tray: 100 N on the stop; the stop breaks off (C3 fuse), the tray does not peel.",
-   "note": "R4 splits the tray at the wire channel; the front piece is solid so its bond (> ~100 N stop break load) outlasts the stop",
-   "value": 179.85
+   "how": "T-C3-STOP-PUSH on the built tray: 100 N on the stop; the tray does not peel.",
+   "note": "R5: the stop is also backed by the nose wall through the 1 mm epoxy line (block A deleted, D-47); this bond alone carries the 85 N",
+   "value": 181.5
   },
   {
-   "id": "CL-D2-NOSE-EXT-NOM",
+   "id": "CL-D2-AFT-STOP-BOND",
    "type": "claim",
-   "title": "Nose extension needed to fly a 550 g pack at C5's B3-target station with block B",
-   "calc": "CALC-D2-NOSE-EXT",
-   "output": "ext_nom",
-   "unit": "m",
+   "title": "Tray rear piece bond (carries the aft stop since D-47), shear capacity",
+   "calc": "CALC-D2-POD-BONDS",
+   "output": "rear_n",
+   "unit": "N",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C1-PACK-CRASH-LOAD"
+   },
    "verifies": [
-    "R-CG-RANGE"
+    "R-PACK-RETENTION"
    ],
    "parts": [
-    "POD-001",
-    "POD-002"
+    "POD-002",
+    "POD-001"
    ],
-   "how": "python -I redesign/team/D2/pod_station_options.py (CAD rebuilt at each extension).",
-   "note": "> 0: the pack cannot reach the station today (CR-D2-16 asks A1 for x_le -0.127)",
-   "value": 0.01059063559261296
-  },
-  {
-   "id": "CL-D2-NOSE-EXT-LIGHT",
-   "type": "claim",
-   "title": "Nose extension needed to fly a 503 g pack at C5's light station with block B",
-   "calc": "CALC-D2-NOSE-EXT",
-   "output": "ext_light",
-   "unit": "m",
-   "verifies": [
-    "R-CG-RANGE"
-   ],
-   "parts": [
-    "POD-001",
-    "POD-002"
-   ],
-   "how": "As CL-D2-NOSE-EXT-NOM.",
-   "note": "block B scaled with pack mass (UNVERIFIED, C5 to confirm)",
-   "value": 0.014728433550512052
+   "how": "T-C3-STOP-PUSH on the aft stop: 100 N at the pack centroid height; the tray does not peel, the gussets hold.",
+   "note": "peel at the stop root (85 N x 27.5 mm) is C3's check (CR-D2-11)",
+   "value": 417.23
   },
   {
    "id": "CL-D2-RECESS-X0",
@@ -1633,7 +1848,7 @@
     "POD-007"
    ],
    "how": "Recompute from weighed masses.",
-   "value": 118.99999999999999
+   "value": 119.24999999999999
   },
   {
    "id": "CL-D2-HANDLE-F-ULT",
@@ -1682,8 +1897,9 @@
    "parts": [
     "POD-006"
    ],
-   "how": "F3 cuts the boom to this length; check the tip at x -0.195 m with the boom seated.",
-   "value": 0.1068
+   "how": "F3 cuts the boom to this length; check the tip at x -0.210 m with the boom seated.",
+   "note": "D-47: the socket moved 15 mm forward with the nose; boom AVN-005 unchanged",
+   "value": 0.10679999999999998
   },
   {
    "id": "CL-D2-PITOT-SOCKET",
@@ -1720,11 +1936,13 @@
     "POD-005",
     "POD-006",
     "POD-007",
-    "POD-008"
+    "POD-008",
+    "POD-009",
+    "POD-010"
    ],
    "how": "T-D2-WEIGH: weigh every pod part before bonding; update interfaces.json.",
-   "note": "over the 122 g allocation: CR-D2-09 (rev. R4) asks A1 for 128 g (131 g with CR-D2-16)",
-   "value": 128.1
+   "note": "D-48 allocation 131 g (was 122)",
+   "value": 131.0
   },
   {
    "id": "T-D2-WEIGH",
@@ -1747,10 +1965,11 @@
     "CL-D2-PACK-TRAVEL",
     "CL-D2-AFT-REACH",
     "CL-D2-OVERHANG-CLR",
-    "CL-D2-PACK-X-NOM"
+    "CL-D2-PACK-X-NOM",
+    "CL-D2-PACK-X-LIGHT"
    ],
    "state": "planned",
-   "procedure": "Both packs: in through the hatch, tucked under the deck, strapped at the nominal and the aft-reach stations, block and spacer fitted, leads over the aft stop to the AS150U park, hatch closes; feeler gauge under the overhang"
+   "procedure": "Both packs weighed and labelled with their spacer stack: in through the hatch, strapped at their station (680 g none, 550 g blue, 503 g blue + white), block cut for the pack and spreader fitted, leads over the aft stop to the AS150U park, hatch closes; centre mark measured from the wing LE"
   },
   {
    "id": "T-D2-STRAP-PULL",

@@ -1,5 +1,5 @@
 {
- "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Revision C6-R2 (params A1-R3). Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
+ "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Revision C6-R3 (params A1-R4, D-50, D-58). Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
  "joints": {
   "m3_d_m": {
    "value": 0.003,
@@ -80,6 +80,13 @@
     "source": "C6 choice",
     "status": "PROPOSED",
     "note": "ceiling for any M3 whose head or nut bears on a printed part"
+   },
+   "nylon_m3_nm": {
+    "value": 0.08,
+    "unit": "N m",
+    "source": "team/C6/joints.py#CALC-C6-PWR-FRAME",
+    "status": "PROPOSED",
+    "note": "PA66 M3 into a brass insert: 1.6 N on a luggage scale 50 mm out on the hex key, or fingertip-snug on a PH1 until the washer stops turning; replaces F1's 0.20 N m (install RF 0.67 at 0.20). No threadlocker on nylon"
    }
   },
   "strip_bonded_faces_now": {
@@ -89,26 +96,66 @@
    "status": "PROPOSED",
    "note": "R3: both strip faces bond to PETG in the 40 mm two-face tail (tongue between the strips)"
   },
-  "pdb_screw_len_m": {
-   "value": 0.01,
-   "unit": "m",
-   "source": "C6 choice",
-   "status": "PROPOSED",
-   "note": "bus PDB (F1, bare 2 oz PCB) on 4 M3 heat-set inserts in POD-002; the FC is on gel pads (D-33, CR-F3-03), not on inserts"
-  },
-  "pdb_stack_m": {
-   "value": 0.0044,
-   "unit": "m",
-   "source": "C6 estimate",
-   "status": "UNVERIFIED",
-   "note": "nylon washer 0.8 + PCB 1.6 + nylon spacer 2.0 mm; F1 measures the board"
-  },
   "fillet_leg_m": {
    "value": 0.006,
    "unit": "m",
    "source": "C6 proposal CR-C6-17",
    "status": "PROPOSED",
    "note": "microballoon-epoxy fillet leg in the pod floor-to-side-wall corner under the strap"
+  },
+  "pwr_frame": {
+   "screw_len_m": {
+    "value": 0.018,
+    "unit": "m",
+    "source": "subsystems/power/params.json screw.len_mm (F1, CR-F1-20)",
+    "status": "PROPOSED",
+    "note": "M3x18 PA66"
+   },
+   "stack_m": {
+    "value": 0.0125,
+    "unit": "m",
+    "source": "subsystems/power/params.json screw (washer 0.5 + deck 2.0 + spacer 10.0 mm)",
+    "status": "PROPOSED",
+    "note": "clamped length above the insert face"
+   },
+   "bore_depth_m": {
+    "value": 0.0065,
+    "unit": "m",
+    "source": "subsystems/power/params.json screw.boss_bore_mm (D2 POD-002 boss)",
+    "status": "PROPOSED"
+   },
+   "spacer_m": {
+    "value": [
+     0.006,
+     0.0032,
+     0.01
+    ],
+    "unit": "m",
+    "source": "subsystems/power/interfaces.json E-PWR-03 (nylon spacer OD 6 / ID 3.2 / 10 mm)",
+    "status": "PROPOSED",
+    "note": "OD, ID, length"
+   }
+  },
+  "collar_alt_h_m": {
+   "value": 0.016,
+   "unit": "m",
+   "source": "subsystems/fins/params.json R3 (16 mm ring); CHANGE-LOG D-48",
+   "status": "PROPOSED",
+   "note": "fallback height if T-C6-LAP-PETG comes in below 2.0 MPa design: D3 drew 12 mm at R4 (D-48); the drawn height is fin_detail.station_collar.height_m"
+  },
+  "root_fillet_leg_m": {
+   "value": 0.015,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-24, adopted in D-48",
+   "status": "PROPOSED",
+   "note": "half-fin root microballoon fillet leg, both faces; D3 still draws 12 mm (ASM-D3-FILLET-LEG)"
+  },
+  "pin_pitch_prop_m": {
+   "value": 0.012,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-25",
+   "status": "PROPOSED",
+   "note": "strip through-pin pitch proposed to D3 (drawn 15 mm) at C4's 64 N pin force"
   }
  }
 }

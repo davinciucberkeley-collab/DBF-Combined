@@ -13,7 +13,9 @@ claims: airspeed limits against the stall, the D-36 floor and VA; the elevon def
 pitch floor <= VA, level speed <= VH, speed scaler); the rpm cap in Q and FW modes; hover rate-loop crossover and
 filter separation from the wing torsion mode; descent speeds against vortex-ring onset; the touchdown cut time;
 body-rate limits; differential-thrust yaw gain; upper-pair hover output at the pitch-trim split; harmonic-notch coverage; battery thresholds; geofence; the 100 A
-limiter setting. Lints K09L.param and the stand overlay K09L-STAND.param.
+limiter setting and its per-motor share; final landing speed against the foot cartridges (CR-D5-21); sensor
+offsets from F3's points and the CG; elevon servo limits from D6's linkage; elevon mixer gain against the trimmed
+stall need. Lints K09L.param and the stand overlay K09L-STAND.param.
 """
 import math
 import sys
@@ -100,6 +102,17 @@ kit.assumption("ASM-F4-TD-REQ", "Time from touchdown to spin-min", "<= 0.5 s (C5
 kit.assumption("ASM-F4-MIN-FACTOR", "TECS floor above stall", "AIRSPEED_MIN >= 1.2 x trimmed stall speed, wings "
                "level; stall prevention (AIRSPEED_STALL) raises it in turns", basis="usual ArduPilot practice; "
                "B1 CR-B1-12 sets 15 m/s = 1.26 Vs", value=1.2, unit="-")
+kit.assumption("ASM-F4-AVN-POINTS", "IMU and GPS centres in the aircraft frame",
+               "IMU (-0.010, 0.046, 0.039) m: F3's FC point with the board 4 mm higher (old IMU z 0.035 + 0.004); "
+               "GPS centre (0.075, 0, 0.178) m", basis="team/F3/CHANGE-REQUESTS.md CR-F3-20 (F3's CALC-F3-OFFSETS "
+               "still holds the R3 layout); re-measure as built", value={"imu": [-0.010, 0.046, 0.039],
+               "gps": [0.075, 0.0, 0.178]}, unit="m", status="UNVERIFIED")
+kit.assumption("ASM-F4-CG-Z", "CG height for the sensor offsets", "+0.018 m above the chord plane, take-off case",
+               basis="MASS-CG.md CG table (A3-R5, take-off basic and predicted both +0.018); A3 publishes no CG-z "
+               "claim, only CL-A3-CG-Z-RANGE", value=0.018, unit="m", status="UNVERIFIED")
+kit.assumption("ASM-F4-THETA-DN", "Servo angle for 25 deg TE down", "-42.9 deg (D6 linkage solution)",
+               basis="team/D6/claims.json CALC-D6-KIN output theta_dn_deg -42.87 (no claim id published; "
+               "CR-D6-09 quotes it)", value=-42.87, unit="deg", status="UNVERIFIED")
 
 # ---------------------------------------------------------------- ArduPilot Quad-X table (AP_MotorsMatrix, viewed from above)
 # motor number: (angle from copter forward, clockwise positive, deg; rotation viewed from above)
@@ -331,6 +344,61 @@ def fence(alt, ceil, rad, vlos):
     return {"alt_ratio": alt / (ceil * 0.3048), "rad_ratio": rad / vlos}
 
 
+@kit.calc("CALC-F4-SENSOR-POS", title="INS_POS and GPS1_POS from F3's points and the CG (FRD body axes)",
+          equation="X_fwd = -(x - x_cg) ; Y = y ; Z_down = -(z - z_cg) ; err = max |set - derived|",
+          inputs={"pts": "ASM-F4-AVN-POINTS", "xcg": "P:cg.x_target_m", "zcg": "ASM-F4-CG-Z",
+                  "ins": "P:fsw.ins_pos_m", "gps": "P:fsw.gps_pos_m"}, units={"xcg": "m", "zcg": "m"},
+          assumes=["ASM-F4-AVN-POINTS", "ASM-F4-CG-Z"])
+def sensor_pos(pts, xcg, zcg, ins, gps):
+    frd = lambda q: [-(q[0] - xcg), q[1], -(q[2] - zcg)]
+    i, g = frd(pts["imu"]), frd(pts["gps"])
+    err = max(abs(a - b) for a, b in zip(i + g, list(ins) + list(gps)))
+    return {"ins_derived_m": i, "gps_derived_m": g, "err_m": err}
+
+
+@kit.calc("CALC-F4-ELEVON-PWM", title="SERVO5/6 MIN/MAX for +/-25 deg TE from D6's linkage",
+          equation="k = 500 us / servo throw ; up = theta_up k ; dn = |theta_dn| k ; right (normal): MAX = TRIM + up, "
+                   "MIN = TRIM - dn ; left (reversed): MIN = TRIM - up, MAX = TRIM + dn ; err = max |set - derived| ; "
+                   "span = max |end - TRIM|",
+          inputs={"th_up": "CL-D6-THROW-NEED", "th_dn": "ASM-F4-THETA-DN", "throw": "ASM-D6-SERVO-THROW",
+                  "left": "P:fsw.elevon_pwm_left_us", "right": "P:fsw.elevon_pwm_right_us"},
+          units={"th_up": "deg", "th_dn": "deg", "throw": "deg"}, assumes=["ASM-F4-THETA-DN", "ASM-D6-SERVO-THROW"])
+def elevon_pwm(th_up, th_dn, throw, left, right):
+    k = 500.0 / throw
+    up, dn = th_up * k, abs(th_dn) * k
+    lmin, ltrim, lmax, lrev = left
+    rmin, rtrim, rmax, rrev = right
+    want = {"l_min": ltrim - up, "l_max": ltrim + dn, "r_min": rtrim - dn, "r_max": rtrim + up}
+    have = {"l_min": lmin, "l_max": lmax, "r_min": rmin, "r_max": rmax}
+    err = max(abs(want[n] - have[n]) for n in want)
+    span = max(abs(lmin - ltrim), abs(lmax - ltrim), abs(rmin - rtrim), abs(rmax - rtrim))
+    return {"err_us": err, "span_us": span, "us_per_deg": k, "derived_us": want,
+            "mirror_ok": 1 if (lrev, rrev) == (1, 0) else 0}
+
+
+@kit.calc("CALC-F4-MIX", title="Elevon travel for pure pitch with MIXING_GAIN against the trimmed-CLmax need",
+          equation="d_pitch = MIXING_GAIN x full travel ; r = |delta_stall| / d_pitch",
+          inputs={"g": "P:fsw.mixing_gain", "trav": "P:wing.elevon.deflection_deg", "ds": "CL-B3-DELTA-STALL",
+                  "half": "P:requirements.elevon_trim_travel_max"}, units={"trav": "deg", "ds": "deg"})
+def mix(g, trav, ds, half):
+    full = max(abs(t) for t in trav)
+    return {"d_pitch_deg": g * full, "ratio": abs(ds) / (g * full), "gain_over_trim_limit": g / half}
+
+
+@kit.calc("CALC-F4-LAND-SPD", title="Final landing descent as set", equation="Q_LAND_FINAL_SPD",
+          inputs={"v": "P:fsw.land_final_spd_ms"}, units={"v": "m/s"})
+def land_spd(v):
+    return float(v)
+
+
+@kit.calc("CALC-F4-BAT-CURR", title="Pack-current limiter as set and its per-motor share",
+          equation="I_set = Q_M_BAT_CURR_MAX ; I_motor = I_set / n",
+          inputs={"i": "P:fsw.bat_curr_max_a", "n": "P:propulsion.n_motors", "idx": "P:fsw.bat_idx"},
+          units={"i": "A"})
+def bat_curr(i, n, idx):
+    return {"i_set_a": float(i), "i_motor_a": i / n, "idx": idx}
+
+
 # ---------------------------------------------------------------- claims
 FC = ["AVN-001"]
 MOT = ["PRP-002-UR", "PRP-002-UL", "PRP-002-LR", "PRP-002-LL"]
@@ -390,7 +458,8 @@ kit.claim("CL-F4-SPLIT-OUT-LIMIT", "Upper-pair hover output at the 1.25 split li
           calc="CALC-F4-SPLIT", output="a_up_at_limit", limit=("<=", "P:fsw.spin_max"), parts=MOT,
           how="As CL-F4-SPLIT-OUT; holds for any CG z A3 can report within R-HOVER-SPLIT.")
 kit.claim("CL-F4-BAT-CURR-MAX", "Parameter file sets Q_M_BAT_CURR_MAX = 100 A on the flight pack (Q_M_BAT_IDX 0)",
-          value=100, unit="A", verifies=["R-ESC-CURRENT", "R-FSW-PARAMS"], parts=FC + ["PWR-001"],
+          calc="CALC-F4-BAT-CURR", output="i_set_a", unit="A", limit=("<=", "P:performance.full_throttle_current_a"),
+          verifies=["R-ESC-CURRENT", "R-FSW-PARAMS"], parts=FC + ["PWR-001"],
           how="Parameter diff of the board against K09L.param after loading: Q_M_BAT_CURR_MAX 100, Q_M_BAT_IDX 0, "
               "Q_M_BAT_CURR_TC 1; H1's restrained four-motor run shows BAT.Curr <= 100 A (CR-A2-14).")
 kit.claim("CL-F4-CRUISE-TRANS", "AIRSPEED_CRUISE over 1.3 Vs", calc="CALC-F4-ARSPD", output="cruise_over_trans",
@@ -435,6 +504,27 @@ kit.claim("CL-F4-FENCE-ALT", "FENCE_ALT_MAX over the 400 ft ceiling", calc="CALC
           limit=("<=", 0.95), verifies=["R-FAILSAFES"], parts=FC, how="SITL S9: climb through 110 m triggers RTL.")
 kit.claim("CL-F4-FENCE-RADIUS", "FENCE_RADIUS over VLOS", calc="CALC-F4-FENCE", output="rad_ratio",
           limit=("<=", 1.0), verifies=["R-FAILSAFES"], parts=FC, how="SITL S9; H3 checks the circle sits inside the sub-field.")
+kit.claim("CL-F4-BAT-CURR-MOTOR", "Per-motor share of the 100 A limiter against the 25 A motor rating",
+          calc="CALC-F4-BAT-CURR", output="i_motor_a", unit="A", limit=("<=", "P:propulsion.motor_max_a"),
+          verifies=["R-ESC-CURRENT"], parts=MOT,
+          how="T-H1-RESTRAINED-RUN: ESC telemetry current per motor <= 25 A during the 2 s full-throttle run.")
+kit.claim("CL-F4-LAND-SPD", "Final landing descent against the no-set touchdown speed of the foot cartridges",
+          calc="CALC-F4-LAND-SPD", output="value", unit="m/s", limit=("<=", "CL-D5-V-NO-SET"),
+          parts=FC, how="QLAND logs: CTUN/QTUN climb rate over the last 1 m >= -0.3 m/s; cartridge set read after 10 "
+          "landings (CR-D5-21).")
+kit.claim("CL-F4-SENSOR-POS-ERR", "INS_POS / GPS1_POS as set against F3's points and the CG", calc="CALC-F4-SENSOR-POS",
+          output="err_m", unit="m", limit=("<=", 0.002), parts=FC + ["AVN-002"],
+          how="Measure the as-built IMU and GPS centres from the CG mark (T-A3-CG-BALANCE) and reset the six lines.")
+kit.claim("CL-F4-ELEVON-PWM-ERR", "SERVO5/6 MIN/MAX as set against D6's +/-25 deg servo angles",
+          calc="CALC-F4-ELEVON-PWM", output="err_us", unit="us", limit=("<=", 1.5), parts=FC,
+          how="T-D6-THROW: protractor on each trailing edge at full pitch + roll demand reads +25 / -25 deg; the "
+          "bench values replace these starting values.")
+kit.claim("CL-F4-ELEVON-PWM-SPAN", "Largest servo pulse excursion from trim", calc="CALC-F4-ELEVON-PWM",
+          output="span_us", unit="us", limit=("<=", 500.0), parts=FC,
+          how="T-D6-THROW; the 500 us end is D6's assumed +/-45 deg servo range (ASM-D6-SERVO-THROW).")
+kit.claim("CL-F4-MIX-PITCH", "Trimmed-CLmax elevon need over pure-pitch travel at MIXING_GAIN 0.5",
+          calc="CALC-F4-MIX", output="ratio", limit=("<=", 1.0), parts=FC,
+          how="T-B2-STALL slow flight in FBWA: elevon output not at the pitch end at the stall break.")
 
 # ---------------------------------------------------------------- tests (all planned)
 kit.test("T-F4-SITL-NAMES", "Load K09L.param in SITL and on the board; no unknown name except the 3 LEGACY pairs",

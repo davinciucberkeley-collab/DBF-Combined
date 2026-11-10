@@ -1,6 +1,6 @@
 # Landing feet (GER)
 
-Status: `MODELLED` (D5, revision D5-R4, 2026-11-09, params A1-R3). R4 adopts C5-R3's cartridges (CR-C5-10 revised):
+Status: `MODELLED` (D5, revision D5-R5, 2026-11-09, params A1-R3). R5: corner caps built on `WNG-001` (edges `E-GER-21/22`), ground kit modelled (CR-A4-39, CR-A5-25, CR-A1-46). R4 adopts C5-R3's cartridges (CR-C5-10 revised):
 pre-crushed, 39.4 / 35.6 N, bias ×1.05. Calc and claims: `team/D5/feet_calc.py`; CAD: `fusion/landing.py`; parts
 and edges: `team/D5/make_interfaces.py`.
 
@@ -25,16 +25,16 @@ and is repaired at the field by swapping one colour-coded insert without tools.
 | Foot beyond TE / stroke (flange to rim) / usable (−3 mm guard) | 48 / 38 / 35 | mm | `CL-D5-STROKE-AVAIL`, `-STROKE-USABLE` | `UNVERIFIED` |
 | C5 pair-first stroke vs usable | 31.5 vs 35 | mm | `CL-C5-DROP-PAIR-PITCH` | `UNVERIFIED` |
 | Plateau upper / lower / mean (C5-R3: 39.4 / 35.6 / 37.5) | 39.6 / 35.4 / 37.5 | N | `CL-D5-F-PLATEAU-UPPER/-LOWER`, `-F-MEAN-ERR` 0.03 % | `UNVERIFIED` (coupon) |
-| Bias upper (C5 target 1.05) | 1.056 | — | `CL-D5-BIAS-UPPER`, `-BIAS-ERR` 0.006 ≤ 0.01 | `UNVERIFIED` |
-| Peak upper foot, limit / ultimate (C1 R3 bound 41.2 / 60.8) | 39.6 / 59.4 | N | `CL-D5-F-PEAK-UPPER`, `-F-ULT-UPPER` (pre-crushed: peak = plateau) | `UNVERIFIED` |
+| Bias upper (C5 target 1.055) | 1.056 | — | `CL-D5-BIAS-UPPER`, `-BIAS-ERR` 0.0007 ≤ 0.01 | `UNVERIFIED` |
+| Peak upper foot, limit / ultimate (C1 ult bound 59.6) | 39.6 / 59.4 | N | `CL-D5-F-PEAK-UPPER`, `-F-ULT-UPPER` (pre-crushed: peak = plateau) | `UNVERIFIED` |
 | Level landing 1.5 m/s: stroke / n / η | 23.0 mm / 5.88 / 0.90 | — | `CL-D5-STROKE-USED`, `-N-LAND`, `-ETA` | `UNVERIFIED` |
 | Permanent set per 0.5 m/s landing / sink with no set | 1.28 mm / 0.32 m/s | — | `CL-D5-SET-NORMAL`, `-V-NO-SET` | `UNVERIFIED` |
 | Landings to the 3 mm replace mark at 0.5 / ≤ 0.3 m/s | 2.3 / no limit | — | `CL-D5-LANDINGS-PER-CART` (CR-D5-21) | `UNVERIFIED` |
 | Wing TE above ground at full stroke | 10 | mm | `CL-D5-TE-CLEAR-CRUSHED` (≥ 10) | `UNVERIFIED` |
-| Tip-over pivot z / angle at target / worst flying CG | 0.218 / 34.7 / 30.6 | m / ° / ° | `CL-D5-CONTACT-Z`, `-TIPOVER-NARROW`, `-CORNER` | `UNVERIFIED` |
+| Tip-over pivot z / angle at target / worst flying CG | 0.218 / 34.6 / 30.6 | m / ° / ° | `CL-D5-CONTACT-Z`, `-TIPOVER-NARROW`, `-CORNER` | `UNVERIFIED` |
 | Fin step: \|z\| / from x / depth | 0.2005 / 0.2746 / 9.5 | m / m / mm | `CL-D5-FIN-STEP-Z/-X/-DEPTH` (CR-D5-11) | `PROPOSED` |
-| Shoe bond area / RF at C6's 0.10 MPa, 87.4 N design | 1 350 / 1.54 | mm² / — | `CL-D5-BOND-AREA`, `-BOND-SF` | `UNVERIFIED` |
-| Flange SF / rim SF (side 30.5 N ult) / tine SF | 2.69 / 1.18 / 3.52 | — | `CL-D5-FLANGE-SF`, `-SIDE-RIM-SF`, `-SIDE-TINE-SF` | `UNVERIFIED` |
+| Shoe bond area / RF at C6's 0.10 MPa, 85.7 N design | 1 350 / 1.57 | mm² / — | `CL-D5-BOND-AREA`, `-BOND-SF` | `UNVERIFIED` |
+| Flange SF / rim SF (side 34.2 N ult) / tine SF | 2.74 / 1.05 / 3.14 | — | `CL-D5-FLANGE-SF`, `-SIDE-RIM-SF`, `-SIDE-TINE-SF` | `UNVERIFIED` |
 | Snap finger strain / length (C6: ≥ 6.0 mm, ≤ 2 %) | 1.7 % / 6.5 mm | — / mm | `CL-D5-SNAP-STRAIN`, `-SNAP-LEN` | `CHECKED` |
 | Insert swap | 3 | min | `CL-D5-REPLACE-TIME` (≤ 10) | `PROPOSED` |
 
@@ -47,11 +47,13 @@ and is repaired at the field by swapping one colour-coded insert without tools.
 | `E-GER-09…12` | cartridge (`GER-003`/`GER-008`) ↔ piston | `CT-CA` foam-safe CA | contact |
 | `E-GER-13…16` | pad ↔ flange | `CT-GER-PSA` | contact |
 | `E-GER-17…20` | cartridge ↔ shoe back wall | `CT-GER-END-BEAR`, 0.5 mm preload | contact |
-| `E-GER-21/22` | cap ↔ `WNG-001` | `CT-GER-CAP-TAPE`, 2 wraps 12 mm filament tape | pending (waits for D1) |
+| `E-GER-21/22` | cap ↔ `WNG-001` | `CT-GER-CAP-TAPE`, 2 wraps 12 mm filament tape | contact; wing to acknowledge (CR-D5-28) |
 | `KO-GROUND` | only `GER-004-*` reach x 0.368 | keep-out | `k9.hover_ground` |
 
 No fasteners: the field joint is the snap fit. Load path: pad → flange → cartridge → back wall → step, legs → fin.
-Ground items (`GER-005`, `-006`, `-009…013`: spares, sheet, bore tube) are declared `"flight": false` (CR-A3-18).
+Ground items (`GER-005`, `-006`, `-009…013`: spares, sheet, bore tube) are declared `"flight": false` (CR-A3-18) and
+modelled as one unit per kit line in a row at y 0.85 m beside the aircraft (`landing.kit`; layout only, the kit travels
+in `TRN-108`). Sheet 193.2 g and tube 15.1 g are ground mass, never in the flight roll-up.
 
 ## Mass budget
 
@@ -64,8 +66,8 @@ Ground items (`GER-005`, `-006`, `-009…013`: spares, sheet, bore tube) are dec
 ## Open issues
 
 - Each normal 0.5 m/s landing crushes 1.3 mm. R3's 0.17 mm counted the plastic knee strain as elastic. Proposed fix: `Q_LAND_SPEED` 30 cm/s (F4, CR-D5-21). Without it, swap the inserts every 2 landings.
-- The step in the half-fin tip (9.5 × 45.4 mm) is D3's cut (CR-D5-11). D3's CR-D3-19 still shows the flat 0.21 m tip, so the CAD shoe overlaps the fin board until D3 cuts the step.
-- Rim SF 1.18 (wider R4 sleeve) rests on a beam model of a printed lip (`T-D5-SIDE`). The plateau rests on the datasheet (`T-D5-COUPON`).
+- The step in the half-fin tip (9.5 × 45.4 mm) is D3's cut (CR-D5-11), decided by A1 in D-54 (tip_square 0.0454, step at \|z\| 0.2005 from x 0.2746). Until D3 re-runs `make_fins.py` (fins params still 0.040), the CAD shoe overlaps the fin board.
+- Rim SF 1.05 (C5 side load up to 22.8 N limit, R5) rests on a beam model of a printed lip; `T-D5-SIDE` raised to 35 N. If it cracks, thicken the rim by 0.5 mm (about +0.15 g per foot, 0.6 g total: over the 0.50 g margin, so an A3 request). The plateau rests on the datasheet (`T-D5-COUPON`).
 - Mass margin 0.50 g: no added perimeters; a heavier print fails the allocation.
 
 ## How to verify

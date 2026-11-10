@@ -274,6 +274,65 @@
     "source": "D5 estimate",
     "status": "UNVERIFIED",
     "note": "epoxy on the shoe (0.35) + foam-safe CA on the cartridge (0.05)"
+   },
+   "brass_density_kgm3": {
+    "value": 8500.0,
+    "unit": "kg/m3",
+    "source": "handbook, C260 cartridge brass 8530 kg/m3",
+    "status": "UNVERIFIED"
+   }
+  },
+  "kit": {
+   "y_m": {
+    "value": 0.85,
+    "unit": "m",
+    "source": "D5 CAD convention",
+    "note": "y of the ground field-kit row (one unit per GER-005..013 line), clear of the 0.576 m wingtip and the transport box; layout only, not a stowage claim (kit travels in TRN-108)"
+   },
+   "x_m": {
+    "value": 0.15,
+    "unit": "m",
+    "source": "D5 CAD convention",
+    "note": "x centre of each kit item"
+   },
+   "pitch_z_m": {
+    "value": 0.05,
+    "unit": "m",
+    "source": "D5 CAD convention",
+    "note": "z pitch between kit lines"
+   },
+   "sheet_y_m": {
+    "value": 0.9,
+    "unit": "m",
+    "source": "D5 CAD convention",
+    "note": "y of the neoprene stock sheet, behind the kit row"
+   },
+   "sheet_side_m": {
+    "value": 0.3048,
+    "unit": "m",
+    "source": "SRC-D5-NEOPRENE",
+    "note": "12 x 12 in sheet (GER-006)"
+   },
+   "tube_od_m": {
+    "value": 0.005556,
+    "unit": "m",
+    "source": "K&S catalogue 7/32 in round brass tube",
+    "status": "UNVERIFIED",
+    "note": "bore cutter OD (GER-013) = type-L bore 5.56 mm"
+   },
+   "tube_wall_m": {
+    "value": 0.000356,
+    "unit": "m",
+    "source": "K&S catalogue 7/32 in round brass tube",
+    "status": "UNVERIFIED",
+    "note": "0.014 in wall"
+   },
+   "tube_len_m": {
+    "value": 0.3048,
+    "unit": "m",
+    "source": "K&S catalogue 7/32 in round brass tube",
+    "status": "UNVERIFIED",
+    "note": "12 in stick"
    }
   }
  }

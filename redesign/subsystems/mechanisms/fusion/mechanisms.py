@@ -1,9 +1,10 @@
-"""K09-L mechanisms (MEC, D6, revision D6-R1): elevon drive, one servo per side for two linked panels.
+"""K09-L mechanisms (MEC, D6, revision D6-R2): elevon drive, one servo per side for two linked panels.
 
 Per side (built for the right side, mirrored through DP-SYM with k9.pair):
 
   MEC-008 servo frame     printed PETG tray bonded in a core pocket opening on the LOWER skin, x 0.172-0.208; the
-                          servo ears sit in slots in its end walls (captured, no screws along y: there is no tool
+                          top plate is a 4 mm rim with a window over the case (D6-R2); the servo ears sit in slots
+                          in its end walls (captured, no screws along y: there is no tool
                           access along the span inside the pocket)
   MEC-001 servo           Savox SH-0255MG+ laid on its side, shaft along y, case base flush with the lower skin
   MEC-002 servo arm       supplied single arm, hole at 15.6 mm (0.61 x the horn radius)
@@ -11,14 +12,15 @@ Per side (built for the right side, mirrored through DP-SYM with k9.pair):
   MEC-004 control horn    printed PETG through-panel horn in the INBOARD panel at y 0.285: blade in a 2.5 mm slot,
                           lower flange, upper backplate, clevis hole 25.5 mm below the hinge axis, and a boss holding
                           the inter-panel rod 16.5 mm below the axis
-  MEC-005 inter-panel rod 1/8 in music wire on the hinge-parallel line 16.5 mm below the axis, bonded in the bosses of
+  MEC-005 inter-panel rod 1/8 in pultruded CF rod (D6-R2, was music wire) on the hinge-parallel line 16.5 mm below the axis, bonded in the bosses of
                           MEC-004 and MEC-006: a rigid bridge that turns with both panels, through D3's 24 x 12 mm
                           notch in the lower half-fin root (fins/params.json#link_slot)
   MEC-006 link horn       the same horn without the clevis hole, in the OUTBOARD panel at y 0.355
   MEC-007 servo cover     printed PETG plate on the lower skin, slot for the arm (its ends are the TE-up stops),
                           2 x M2 screws into the frame
   MEC-009 torque tube     CF 5 x 4 mm along each panel just aft of the bevel (-RI, -RO), through the horn blade:
-                          stiffens the tape-skinned foam panel in torsion (one-end drive)
+                          stiffens the tape-skinned foam panel in torsion (one-end drive). The inboard tube covers
+                          70 % of the horn-to-root length (mec.tube.cover_frac), the outboard tube the whole panel
   MEC-010 hinge tape      one 25 mm strip per panel on the upper skin (lumped part per side, carried)
 
 Kinematics (team/D6/mech_calcs.py): servo shaft S, arm hole P, horn hole Q, hinge axis A form a four-bar in the x-z
@@ -116,10 +118,12 @@ def geometry(P, LP, coords):
     G['xt'] = G['xh'] + l('tube.x_aft_of_hinge_m', 'm')
     G['zt'] = (zu(G['xt']) + zl(G['xt'])) / 2
     ins = l('tube.end_inset_m', 'm')
-    G['tube_in'] = (G['yin'][0] + ins, G['yin'][1] - ins)
-    G['tube_out'] = (G['yout'][0] + ins, G['yout'][1] - ins)
+    a_in, a_out = l('tube.cover_frac', '-')
+    G['tube_in'] = (max(G['yin'][0] + ins, G['ya'] - a_in * (G['ya'] - G['yin'][0])), G['yin'][1] - ins)
+    G['tube_out'] = (G['yout'][0] + ins, min(G['yout'][1] - ins, G['yo'] + a_out * (G['yout'][1] - G['yo'])))
     # frame and cover
     G['fw'], G['fc'] = l('frame.wall_m', 'm'), l('frame.clear_m', 'm')
+    G['f_rim'] = l('frame.window_rim_m', 'm')
     G['fx0'], G['fx1'] = G['ex0'] - G['fw'], G['ex1'] + G['fw']        # frame outer x (ears in end-wall slots)
     G['fy0'] = G['cy0'] - G['fc'] - G['fw']                            # inboard wall
     G['fy1'] = G['ya'] + G['at'] / 2 + 0.0015                          # open toward the arm; pocket ends here
@@ -266,7 +270,9 @@ def build_horn(part, G, y, clevis, boss_dir):
 def build_frame(part, G):
     fw = G['fw']
     x0, x1, y0, y1, z0, z1 = G['fx0'], G['fx1'], G['fy0'], G['fy1'], G['cz0'], G['fz1']
-    part.box((x0, y0, z1 - fw), (x1, y1, z1), name='top plate')
+    rim = G['f_rim']
+    part.prism('Z', z1 - fw, [rect(x0, y0, x1, y1), rect(x0 + rim, y0 + rim, x1 - rim, y1 - rim)], fw,
+               name='top plate (rim, window over the case)')
     part.box((x0, y0, z0), (x1, y0 + fw, z1), name='inboard wall')
     part.box((x0, y0, z0), (x0 + fw, y1, z1), name='front end wall (ear slot)')
     part.box((x1 - fw, y0, z0), (x1, y1, z1), name='aft end wall (ear slot)')
@@ -312,7 +318,7 @@ def build(ctx):
     build_pushrod(ctx.part('MEC-003-R', rgb=RGB_STEEL), G)
     build_horn(ctx.part('MEC-004-R', rgb=RGB_PRINT), G, G['ya'], True, +1)
     ctx.part('MEC-005-R', rgb=RGB_STEEL).cylinder('Y', (G['B'][0], G['rod_y'][0], G['B'][1]),
-                                                   G['rod_y'][1] - G['rod_y'][0], G['rod_r'], name='1/8 in music wire')
+                                                   G['rod_y'][1] - G['rod_y'][0], G['rod_r'], name='1/8 in CF rod')
     build_horn(ctx.part('MEC-006-R', rgb=RGB_PRINT), G, G['yo'], False, -1)
     build_cover(ctx.part('MEC-007-R', rgb=RGB_PRINT), G)
     build_frame(ctx.part('MEC-008-R', rgb=RGB_PRINT), G)

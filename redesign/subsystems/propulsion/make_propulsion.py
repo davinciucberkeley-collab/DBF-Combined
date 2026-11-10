@@ -67,6 +67,19 @@ def foreign_edges():
     return sorted(set(out))
 
 
+def planned_edges():
+    """Edges A4's interface plan assigns to another owner on a PRP part (team/A4/interface_plan.json). Those not yet
+    declared go under acknowledges_pending (D1's convention, CR-D1-09) and move to acknowledges on the next run after
+    the owner declares them (CR-A1-48: E-HRN-13..16, -24..27, -34..37, E-FIN-81..88)."""
+    path = os.path.join(REDESIGN, 'team', 'A4', 'interface_plan.json')
+    if not os.path.exists(path):
+        return []
+    with open(path, encoding='utf-8') as f:
+        plan = json.load(f)
+    return sorted({e['id'] for e in plan.get('edges', []) if e.get('owner') != 'propulsion'
+                   and any(str(e.get(k, '')).startswith('PRP-') for k in ('part_a', 'part_b'))})
+
+
 def main():
     P = k9.load_params()
     mod = load_module()
@@ -89,9 +102,10 @@ def main():
             {'id': 'PRP-002-' + s, 'name': 'ESC %s LANRC 45 A' % s, 'subsystem': 'propulsion', 'status': 'MODELLED',
              'mass_g': m['PRP-002'], 'material': 'electronics (bought)', 'cg_xyz_m': cg['PRP-002-' + s],
              'make_or_buy': 'buy', 'electrical': 'bus',
-             'notes': '11.0 g EST with leads and heat-shrink; 45 x 20 x 6 mm (ASM-E3-ESC) flat on the outboard face of '
-                      'FIN-007-%s, FET side out, phase end forward (x %.4f), power end aft; CG = CAD centroid'
-                      % (s, G['esc_lo'][0])},
+             'notes': '%.1f g EST, stripped: factory power leads removed, F2 solders 16 AWG to the pads (D-48); '
+                      '45 x 20 x 6 mm body (ASM-E3-ESC), 7.5 mm proud of the pad at the strap (CL-E1-ESC-PROUD), flat '
+                      'on the outboard face of FIN-007-%s, FET side out, phase end forward (x %.4f), power end aft; '
+                      'CG = CAD centroid' % (m['PRP-002'], s, G['esc_lo'][0])},
             {'id': 'PRP-003-' + s, 'name': 'Prop %s APC %s' % (s, SKU[rot]), 'subsystem': 'propulsion',
              'status': 'MODELLED', 'mass_g': m['PRP-003'], 'material': 'glass-filled nylon',
              'cg_xyz_m': cg['PRP-003-' + s], 'make_or_buy': 'buy',
@@ -111,9 +125,13 @@ def main():
              'joint_stack': {'fastener': 'M3x4 SHCS (4 supplied with the adapter)', 'count': 4, 'grade': '12.9 (vendor)',
                              'hole': 'counterbored clearance in the adapter base; M3 tapped in the bell top by the maker',
                              'insert': 'none (aluminium bell)', 'engagement_mm': 2.5, 'min_engagement_mm': 2.0,
-                             'min_engagement_basis': 'below the 1.0 d rule, cited: CL-E1-ADAPTER-STRIP (thread strip at '
-                                                     '2.0 mm vs the 0.5 N m preload); vendor screw length; tip must stop '
-                                                     '>= 0.5 mm short of the windings (probe the bell, T-E1-MOTOR-RM)',
+                             'min_engagement_basis': 'deviation D-58 (a) from the 1.0 d rule (D-41), granted on '
+                                                     'CL-E1-ADAPTER-STRIP (RF 1.70 at 2.0 mm vs the 0.5 N m preload) '
+                                                     'and conditional on T-E1-MOTOR-RM measuring >= 2.5 mm of bell-top '
+                                                     'thread (CL-E1-ADAPTER-THREAD-D58); if the bell has >= 3.0 mm of '
+                                                     'thread and >= 4.0 mm free depth, M3x5 (3.5 mm, no deviation, '
+                                                     'CL-E1-ADAPTER-M3X5-ENGAGE) replaces it (CR-A4-43); tip >= 0.5 mm '
+                                                     'short of the windings',
                              'washer_nut': 'none', 'torque': '0.5 N m + Loctite 243 on the tip threads (C6; vendor '
                                                              'value wins if printed)',
                              'tool': '2.0 mm hex key (vendor set)', 'access': 'from the front (-x), prop and nut off',
@@ -153,12 +171,13 @@ def main():
                 'spec': 'M6x1 nut and washer clamp the prop hub on the adapter post (field joint)'}],
            'edges': edges,
            'acknowledges': foreign_edges()}
+    doc['acknowledges_pending'] = [e for e in planned_edges() if e not in doc['acknowledges']]
     out = os.path.join(HERE, 'interfaces.json')
     with open(out, 'w', encoding='utf-8') as f:
         f.write(json.dumps(doc, indent=1) + '\n')
     tot = sum(p['mass_g'] for p in parts)
-    print('subsystems/propulsion/interfaces.json: %d parts, %d edges, %d acknowledged, %.1f g' % (
-        len(parts), len(edges), len(doc['acknowledges']), tot))
+    print('subsystems/propulsion/interfaces.json: %d parts, %d edges, %d acknowledged, %d pending, %.1f g' % (
+        len(parts), len(edges), len(doc['acknowledges']), len(doc['acknowledges_pending']), tot))
     print('hub x %.4f (datum %.4f), nut margin %.2f mm, motor face %.4f' % (
         G['hub_x'], k9.val(P, 'propulsion.stations.x_prop_plane_m', 'm'), 1000 * G['nut_margin'], G['x_face']))
     for s in STATIONS:

@@ -206,6 +206,47 @@
    "status": "PROPOSED"
   },
   {
+   "id": "ASM-F4-AVN-POINTS",
+   "type": "assumption",
+   "title": "IMU and GPS centres in the aircraft frame",
+   "text": "IMU (-0.010, 0.046, 0.039) m: F3's FC point with the board 4 mm higher (old IMU z 0.035 + 0.004); GPS centre (0.075, 0, 0.178) m",
+   "basis": "team/F3/CHANGE-REQUESTS.md CR-F3-20 (F3's CALC-F3-OFFSETS still holds the R3 layout); re-measure as built",
+   "value": {
+    "imu": [
+     -0.01,
+     0.046,
+     0.039
+    ],
+    "gps": [
+     0.075,
+     0.0,
+     0.178
+    ]
+   },
+   "unit": "m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-CG-Z",
+   "type": "assumption",
+   "title": "CG height for the sensor offsets",
+   "text": "+0.018 m above the chord plane, take-off case",
+   "basis": "MASS-CG.md CG table (A3-R5, take-off basic and predicted both +0.018); A3 publishes no CG-z claim, only CL-A3-CG-Z-RANGE",
+   "value": 0.018,
+   "unit": "m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-THETA-DN",
+   "type": "assumption",
+   "title": "Servo angle for 25 deg TE down",
+   "text": "-42.9 deg (D6 linkage solution)",
+   "basis": "team/D6/claims.json CALC-D6-KIN output theta_dn_deg -42.87 (no claim id published; CR-D6-09 quotes it)",
+   "value": -42.87,
+   "unit": "deg",
+   "status": "UNVERIFIED"
+  },
+  {
    "id": "CALC-F4-MOTOR-MAP",
    "type": "calculation",
    "title": "Station -> motor number -> rotation, and cant sense",
@@ -268,7 +309,7 @@
      ]
     },
     "d3_sense_needed": -1,
-    "d3_sense_agree": -1
+    "d3_sense_agree": 1
    },
    "input_values": {
     "ids": [
@@ -338,7 +379,7 @@
       "cant_print": "B"
      }
     ],
-    "d3": 1
+    "d3": -1
    }
   },
   {
@@ -416,7 +457,7 @@
     "v_dive": 17.75252236774182,
     "cd0": 0.048064648619879656,
     "scaler_va": 0.7804878048780488,
-    "scaler_vd": 0.4984423676012461
+    "scaler_vd": 0.599250936329588
    },
    "input_values": {
     "m": 2.6,
@@ -430,7 +471,7 @@
     "th": -10,
     "sc": 16,
     "vmax": 18,
-    "vd": 32.1,
+    "vd": 26.7,
     "va": 20.5
    }
   },
@@ -516,12 +557,12 @@
     "ASM-F4-QT-ARM"
    ],
    "outputs": {
-    "f_rll_hz": 1.062902298985141,
-    "p_ceiling_rll": 0.33869528774538166,
-    "f_pit_hz": 2.5968564010369106,
-    "p_ceiling_pit": 0.1386291517144552,
-    "f_yaw_hz": 1.0257120368548045,
-    "p_ceiling_yaw": 0.9359351996528179
+    "f_rll_hz": 1.0382281785568142,
+    "p_ceiling_rll": 0.3467445860508399,
+    "f_pit_hz": 2.437949061549758,
+    "p_ceiling_pit": 0.14766510329430543,
+    "f_yaw_hz": 1.0105707033988331,
+    "p_ceiling_yaw": 0.9499582728563675
    },
    "input_values": {
     "T": 21.1,
@@ -529,9 +570,9 @@
     "z": 0.19,
     "cant": 7.0,
     "qt": 0.02,
-    "izz": 0.1640021381188458,
-    "iyy": 0.04245713929586418,
-    "ixx": 0.171175618827575,
+    "izz": 0.16779524020721423,
+    "iyy": 0.04484018801013867,
+    "ixx": 0.17374033509679151,
     "p": [
      0.08,
      0.08,
@@ -593,11 +634,11 @@
     "ASM-F4-SAG"
    ],
    "outputs": {
-    "a_up": 0.6680896694358508,
+    "a_up": 0.6713136160793005,
     "a_up_at_limit": 0.6755223233592841
    },
    "input_values": {
-    "s": 1.190088519148525,
+    "s": 1.2155978991283574,
     "smax": 1.25,
     "a_h": 0.49,
     "d": 0.3,
@@ -728,7 +769,7 @@
    "input_values": {
     "wp": 1.2,
     "pil": 1.2,
-    "fin": 0.5
+    "fin": 0.3
    }
   },
   {
@@ -870,6 +911,199 @@
    }
   },
   {
+   "id": "CALC-F4-SENSOR-POS",
+   "type": "calculation",
+   "title": "INS_POS and GPS1_POS from F3's points and the CG (FRD body axes)",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "sensor_pos",
+   "equation": "X_fwd = -(x - x_cg) ; Y = y ; Z_down = -(z - z_cg) ; err = max |set - derived|",
+   "inputs": {
+    "pts": "ASM-F4-AVN-POINTS",
+    "xcg": "P:cg.x_target_m",
+    "zcg": "ASM-F4-CG-Z",
+    "ins": "P:fsw.ins_pos_m",
+    "gps": "P:fsw.gps_pos_m"
+   },
+   "units": {
+    "xcg": "m",
+    "zcg": "m"
+   },
+   "assumes": [
+    "ASM-F4-AVN-POINTS",
+    "ASM-F4-CG-Z"
+   ],
+   "outputs": {
+    "ins_derived_m": [
+     0.062200000000000005,
+     0.046,
+     -0.021
+    ],
+    "gps_derived_m": [
+     -0.022799999999999994,
+     0.0,
+     -0.16
+    ],
+    "err_m": 0.00020000000000000573
+   },
+   "input_values": {
+    "pts": {
+     "imu": [
+      -0.01,
+      0.046,
+      0.039
+     ],
+     "gps": [
+      0.075,
+      0.0,
+      0.178
+     ]
+    },
+    "xcg": 0.0522,
+    "zcg": 0.018,
+    "ins": [
+     0.062,
+     0.046,
+     -0.021
+    ],
+    "gps": [
+     -0.023,
+     0,
+     -0.16
+    ]
+   }
+  },
+  {
+   "id": "CALC-F4-ELEVON-PWM",
+   "type": "calculation",
+   "title": "SERVO5/6 MIN/MAX for +/-25 deg TE from D6's linkage",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "elevon_pwm",
+   "equation": "k = 500 us / servo throw ; up = theta_up k ; dn = |theta_dn| k ; right (normal): MAX = TRIM + up, MIN = TRIM - dn ; left (reversed): MIN = TRIM - up, MAX = TRIM + dn ; err = max |set - derived| ; span = max |end - TRIM|",
+   "inputs": {
+    "th_up": "CL-D6-THROW-NEED",
+    "th_dn": "ASM-F4-THETA-DN",
+    "throw": "ASM-D6-SERVO-THROW",
+    "left": "P:fsw.elevon_pwm_left_us",
+    "right": "P:fsw.elevon_pwm_right_us"
+   },
+   "units": {
+    "th_up": "deg",
+    "th_dn": "deg",
+    "throw": "deg"
+   },
+   "assumes": [
+    "ASM-F4-THETA-DN",
+    "ASM-D6-SERVO-THROW"
+   ],
+   "outputs": {
+    "err_us": 0.33333333333325754,
+    "span_us": 497,
+    "us_per_deg": 11.11111111111111,
+    "derived_us": {
+     "l_min": 1002.9796257135517,
+     "l_max": 1976.3333333333333,
+     "r_min": 1023.6666666666667,
+     "r_max": 1997.0203742864483
+    },
+    "mirror_ok": 1
+   },
+   "input_values": {
+    "th_up": 44.731833685780344,
+    "th_dn": -42.87,
+    "throw": 45.0,
+    "left": [
+     1003,
+     1500,
+     1976,
+     1
+    ],
+    "right": [
+     1024,
+     1500,
+     1997,
+     0
+    ]
+   }
+  },
+  {
+   "id": "CALC-F4-MIX",
+   "type": "calculation",
+   "title": "Elevon travel for pure pitch with MIXING_GAIN against the trimmed-CLmax need",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "mix",
+   "equation": "d_pitch = MIXING_GAIN x full travel ; r = |delta_stall| / d_pitch",
+   "inputs": {
+    "g": "P:fsw.mixing_gain",
+    "trav": "P:wing.elevon.deflection_deg",
+    "ds": "CL-B3-DELTA-STALL",
+    "half": "P:requirements.elevon_trim_travel_max"
+   },
+   "units": {
+    "trav": "deg",
+    "ds": "deg"
+   },
+   "outputs": {
+    "d_pitch_deg": 12.5,
+    "ratio": 0.8822284257228873,
+    "gain_over_trim_limit": 1.0
+   },
+   "input_values": {
+    "g": 0.5,
+    "trav": [
+     -25,
+     25
+    ],
+    "ds": -11.02785532153609,
+    "half": 0.5
+   }
+  },
+  {
+   "id": "CALC-F4-LAND-SPD",
+   "type": "calculation",
+   "title": "Final landing descent as set",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "land_spd",
+   "equation": "Q_LAND_FINAL_SPD",
+   "inputs": {
+    "v": "P:fsw.land_final_spd_ms"
+   },
+   "units": {
+    "v": "m/s"
+   },
+   "outputs": {
+    "value": 0.3
+   },
+   "input_values": {
+    "v": 0.3
+   }
+  },
+  {
+   "id": "CALC-F4-BAT-CURR",
+   "type": "calculation",
+   "title": "Pack-current limiter as set and its per-motor share",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "bat_curr",
+   "equation": "I_set = Q_M_BAT_CURR_MAX ; I_motor = I_set / n",
+   "inputs": {
+    "i": "P:fsw.bat_curr_max_a",
+    "n": "P:propulsion.n_motors",
+    "idx": "P:fsw.bat_idx"
+   },
+   "units": {
+    "i": "A"
+   },
+   "outputs": {
+    "i_set_a": 100.0,
+    "i_motor_a": 25.0,
+    "idx": 0
+   },
+   "input_values": {
+    "i": 100,
+    "n": 4,
+    "idx": 0
+   }
+  },
+  {
    "id": "CL-F4-MOTOR-MAP-ERR",
    "type": "claim",
    "title": "Motor map errors (derived vs published, pairs, cant sense)",
@@ -982,7 +1216,7 @@
     "AVN-001"
    ],
    "how": "Information: the speed scaler alone does not hold <= 1/3 at VD; the schedule rests on CL-F4-VDIVE-VA and CL-F4-VLEVEL-VH (CR-F4-12).",
-   "value": 0.4984423676012461
+   "value": 0.599250936329588
   },
   {
    "id": "CL-F4-VLEVEL-VH",
@@ -1056,7 +1290,7 @@
     "AVN-001"
    ],
    "how": "Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.",
-   "value": 1.062902298985141
+   "value": 1.0382281785568142
   },
   {
    "id": "CL-F4-XOVER-PIT",
@@ -1076,7 +1310,7 @@
     "AVN-001"
    ],
    "how": "As roll; after QAUTOTUNE reject any Q_A_RAT_PIT_P above p_ceiling_pit.",
-   "value": 2.5968564010369106
+   "value": 2.437949061549758
   },
   {
    "id": "CL-F4-XOVER-YAW",
@@ -1093,7 +1327,7 @@
     "AVN-001"
    ],
    "how": "As roll.",
-   "value": 1.0257120368548045
+   "value": 1.0105707033988331
   },
   {
    "id": "CL-F4-FILT-SEP",
@@ -1154,7 +1388,7 @@
     "PRP-002-LL"
    ],
    "how": "Look along the UR shaft from the nose: the prop end must lean outboard (+y) and toward the wing plane (-z); D3 sets cant_sense_UR = d3_sense_needed (CR-F4-11).",
-   "value": -1
+   "value": 1
   },
   {
    "id": "CL-F4-SPLIT-OUT",
@@ -1174,7 +1408,7 @@
     "PRP-002-LL"
    ],
    "how": "Tethered-hover log on a pack near BATT_LOW: mean RCOU of the upper pair (UR, UL) / lower pair gives the split; peak upper-pair RCOU during pitch inputs stays below 0.84 (CR-A3-04, R-HOVER-SPLIT).",
-   "value": 0.6680896694358508
+   "value": 0.6713136160793005
   },
   {
    "id": "CL-F4-SPLIT-OUT-LIMIT",
@@ -1200,7 +1434,13 @@
    "id": "CL-F4-BAT-CURR-MAX",
    "type": "claim",
    "title": "Parameter file sets Q_M_BAT_CURR_MAX = 100 A on the flight pack (Q_M_BAT_IDX 0)",
+   "calc": "CALC-F4-BAT-CURR",
+   "output": "i_set_a",
    "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:performance.full_throttle_current_a"
+   },
    "verifies": [
     "R-ESC-CURRENT",
     "R-FSW-PARAMS"
@@ -1210,7 +1450,7 @@
     "PWR-001"
    ],
    "how": "Parameter diff of the board against K09L.param after loading: Q_M_BAT_CURR_MAX 100, Q_M_BAT_IDX 0, Q_M_BAT_CURR_TC 1; H1's restrained four-motor run shows BAT.Curr <= 100 A (CR-A2-14).",
-   "value": 100
+   "value": 100.0
   },
   {
    "id": "CL-F4-CRUISE-TRANS",
@@ -1523,6 +1763,115 @@
    ],
    "how": "SITL S9; H3 checks the circle sits inside the sub-field.",
    "value": 0.5
+  },
+  {
+   "id": "CL-F4-BAT-CURR-MOTOR",
+   "type": "claim",
+   "title": "Per-motor share of the 100 A limiter against the 25 A motor rating",
+   "calc": "CALC-F4-BAT-CURR",
+   "output": "i_motor_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:propulsion.motor_max_a"
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "T-H1-RESTRAINED-RUN: ESC telemetry current per motor <= 25 A during the 2 s full-throttle run.",
+   "value": 25.0
+  },
+  {
+   "id": "CL-F4-LAND-SPD",
+   "type": "claim",
+   "title": "Final landing descent against the no-set touchdown speed of the foot cartridges",
+   "calc": "CALC-F4-LAND-SPD",
+   "output": "value",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-D5-V-NO-SET"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "QLAND logs: CTUN/QTUN climb rate over the last 1 m >= -0.3 m/s; cartridge set read after 10 landings (CR-D5-21).",
+   "value": 0.3
+  },
+  {
+   "id": "CL-F4-SENSOR-POS-ERR",
+   "type": "claim",
+   "title": "INS_POS / GPS1_POS as set against F3's points and the CG",
+   "calc": "CALC-F4-SENSOR-POS",
+   "output": "err_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "value": 0.002
+   },
+   "parts": [
+    "AVN-001",
+    "AVN-002"
+   ],
+   "how": "Measure the as-built IMU and GPS centres from the CG mark (T-A3-CG-BALANCE) and reset the six lines.",
+   "value": 0.00020000000000000573
+  },
+  {
+   "id": "CL-F4-ELEVON-PWM-ERR",
+   "type": "claim",
+   "title": "SERVO5/6 MIN/MAX as set against D6's +/-25 deg servo angles",
+   "calc": "CALC-F4-ELEVON-PWM",
+   "output": "err_us",
+   "unit": "us",
+   "limit": {
+    "op": "<=",
+    "value": 1.5
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-D6-THROW: protractor on each trailing edge at full pitch + roll demand reads +25 / -25 deg; the bench values replace these starting values.",
+   "value": 0.33333333333325754
+  },
+  {
+   "id": "CL-F4-ELEVON-PWM-SPAN",
+   "type": "claim",
+   "title": "Largest servo pulse excursion from trim",
+   "calc": "CALC-F4-ELEVON-PWM",
+   "output": "span_us",
+   "unit": "us",
+   "limit": {
+    "op": "<=",
+    "value": 500.0
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-D6-THROW; the 500 us end is D6's assumed +/-45 deg servo range (ASM-D6-SERVO-THROW).",
+   "value": 497
+  },
+  {
+   "id": "CL-F4-MIX-PITCH",
+   "type": "claim",
+   "title": "Trimmed-CLmax elevon need over pure-pitch travel at MIXING_GAIN 0.5",
+   "calc": "CALC-F4-MIX",
+   "output": "ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-B2-STALL slow flight in FBWA: elevon output not at the pitch end at the stall break.",
+   "value": 0.8822284257228873
   },
   {
    "id": "T-F4-SITL-NAMES",

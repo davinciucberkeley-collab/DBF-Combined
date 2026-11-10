@@ -193,12 +193,13 @@ kit.assumption("ASM-E1-MOUNT-SCREW", "Motor screw length and engagement window",
                      "base; probe the hole depth on arrival, the screw tip must stop >= 0.5 mm short of the bottom",
                value=[0.008, 0.0025, 0.0035], unit="m", status="UNVERIFIED")
 kit.assumption("ASM-E1-PART-MASS", "Per-unit flying masses incl. leads, g", "motor with factory leads 81.0 (no bullets: "
-               "harness HRN-E03); ESC with factory power and signal leads and heat-shrink 11.0 (6.6 g bare board + "
-               "2 x 80 mm 16 AWG + signal lead + shrink); prop 17.0; bolt-on adapter 3.0 + 4 x M3x4 1.2 + M6 nut 1.9 + "
+               "harness HRN-E03); ESC stripped of its factory power leads (F2 solders its own 16 AWG to the pads, D-48, "
+               "CR-F2-07) with signal lead and heat-shrink 7.6 (6.6 g bare board + 1.0 g; was 11.0 with 2 x 80 mm "
+               "16 AWG); prop 17.0; bolt-on adapter 3.0 + 4 x M3x4 1.2 + M6 nut 1.9 + "
                "washer 0.6 = 6.7; 4 x M3x8 SHCS motor screws 3.2",
-               basis="listings (81 g, 17 g, 3.0 g); ISO masses for screws, nuts, washers; the ESC with leads is EST "
-                     "from the 6.6 g bare board and 14 g/m 16 AWG silicone (A3 HRN-E01); weigh everything on arrival",
-               value={"motor": 81.0, "esc": 11.0, "prop": 17.0, "adapter_nut": 6.7, "motor_screws": 3.2}, unit="g",
+               basis="listings (81 g, 17 g, 3.0 g); ISO masses for screws, nuts, washers; the stripped ESC is EST "
+                     "from the 6.6 g bare board (D-48, CR-A3-21: -3.4 g per ESC); weigh everything on arrival",
+               value={"motor": 81.0, "esc": 7.6, "prop": 17.0, "adapter_nut": 6.7, "motor_screws": 3.2}, unit="g",
                status="UNVERIFIED", cites=["SRC-E1-X3108S-HIMODEL", "SRC-E1-APC-PAGES", "SRC-E1-SPCNC-ADAPTER"])
 
 
@@ -831,9 +832,12 @@ kit.claim("CL-E1-MASS-PRP", "Propulsion flying mass, four stations incl. leads, 
           parts=STATION, how="Weigh each part on the 0.1 g scale on arrival (one of each), update ASM-E1-PART-MASS, re-run.")
 
 # ================================================================== CAD stack (subsystems/propulsion, rev 4)
-kit.assumption("ASM-E1-BLADE-HALF", "Prop blade half thickness at the hub 8 mm", "axial half-extent of an APC 11 in MR "
-               "blade about its mid-plane, the keep-out's blade term", basis="k09kit.PROP_BLADE_HALF_M (A5); the CAD "
-               "envelope's root section (14 mm chord at 48 deg) reaches 5.5 mm", value=0.008, unit="m",
+kit.assumption("ASM-E1-BLADE-HALF", "Prop axial half-extent about the mid-plane 10 mm (with coning)", "axial "
+               "half-extent of the rotating APC 11 in MR disc about its mid-plane: -6 mm aft / +10 mm forward with "
+               "coning (CR-E1-16), carried symmetric at 10 mm as the keep-out's blade term (k9.prop_keepout "
+               "blade_half=0.010, CR-A5-21)", basis="CAD root section (14 mm chord at 48 deg) reaches 5.5 mm; "
+               "forward coning of a thin-hub nylon prop at hover thrust EST 4 mm; was k09kit's 8 mm default",
+               value=0.010, unit="m",
                status="UNVERIFIED")
 kit.assumption("ASM-E1-ADAPTER-SCREW", "Adapter screws M3x4 into the bell: strip model", "d 3 mm; shortest engagement "
                "2.0 mm; tightening torque 0.5 N m (C6); nut factor 0.2; shear allowable of the bell alloy 150 MPa; "
@@ -842,6 +846,51 @@ kit.assumption("ASM-E1-ADAPTER-SCREW", "Adapter screws M3x4 into the bell: strip
                      "alloy; measure the bell-top thread depth on arrival (T-E1-MOTOR-RM)",
                value=[0.003, 0.0020, 0.5, 0.2, 150e6], unit="m,m,N m,-,Pa", status="UNVERIFIED",
                cites=["SRC-E1-SPCNC-ADAPTER"])
+
+
+kit.assumption("ASM-E1-ADAPTER-FIT", "Adapter screw fit: head-seat flange 1.5 mm, M3x4 / M3x5, tip clear 0.5 mm, "
+               "rule 1.0 d", "the bolt-on adapter's counterbored flange leaves 1.5 mm of each screw above the bell top "
+               "(M3x4 engages 2.5 mm, the declared E-PRP-01..04 value); candidate lengths 4 mm (vendor) and 5 mm; the "
+               "screw tip must stop >= 0.5 mm short of the windings under the bell top; minimum engagement into metal "
+               "1.0 d (D-41, C6)", basis="Small Parts CNC adapter listing (M3x4 supplied) and the 2.5 mm declared "
+               "engagement; D-41 joint rule; flange to be measured with the adapter (T-E1-MOTOR-RM)",
+               value=[0.0015, 0.004, 0.005, 0.0005, 1.0], unit="m,m,m,m,-", status="UNVERIFIED",
+               cites=["SRC-E1-SPCNC-ADAPTER"])
+kit.assumption("ASM-E1-ESC-STRAP", "ESC strap 1.5 mm thick, 10 mm band", "one 10 mm hook-and-loop strap (fins "
+               "BUILD, E3 ASM-E3-ESC-STRAP) over the ESC's FET face: single layer 1.5 mm where it crosses the ESC; "
+               "the overlap sits on the inboard face of the pad, not on the ESC",
+               basis="typical 10 mm hook-and-loop cable tie 1.3-1.6 mm; the ESC body (45 x 20 x 6 mm in heat-shrink, "
+                     "ASM-E3-ESC) bounds the 6.6 g 45 A BLHeli_S board, which generic listings give as 28.5 x 13 mm; "
+                     "LANRC publishes no drawing. Stripped ESC: F2's 16 AWG solder joints sit on the pads under the "
+                     "shrink, the signal lead leaves the aft end. Measure on arrival", value=[0.0015, 0.010], unit="m",
+               status="UNVERIFIED")
+
+
+@kit.calc("CALC-E1-ADAPTER-CHOICE", title="Prop adapter screws: M3x4 under deviation D-58 or M3x5 at the 1.0 d rule",
+          equation="e_L = L - t_flange ; e_rule = k d ; thread needed (D-58) = e_M3x4 ; free depth for M3x5 = "
+                   "e_M3x5 + tip clearance ; RF(e) = 0.5 pi d e tau / (T / (K d))",
+          inputs={"a": "ASM-E1-ADAPTER-SCREW", "f": "ASM-E1-ADAPTER-FIT"},
+          assumes=["ASM-E1-ADAPTER-SCREW", "ASM-E1-ADAPTER-FIT"])
+def adapter_choice(a, f):
+    d, _, T, K, tau = a
+    fl, l4, l5, tip, k = f
+    e4, e5, rule = l4 - fl, l5 - fl, k * d
+    f_pre = T / (K * d)
+    return {"e_m3x4_m": round(e4, 9), "e_m3x5_m": round(e5, 9), "e_rule_m": rule,
+            "m3x5_margin_m": round(e5 - rule, 9), "m3x4_short_m": round(rule - e4, 9),
+            "thread_needed_d58_m": round(e4, 9), "free_depth_m3x5_m": round(e5 + tip, 9),
+            "rf_m3x4": 0.5 * math.pi * d * e4 * tau / f_pre, "rf_m3x5": 0.5 * math.pi * d * e5 * tau / f_pre}
+
+
+@kit.calc("CALC-E1-ESC-ENV", title="ESC installed envelope on the fin pad (for B4's drag and wash, E3)",
+          equation="h = h_body + t_strap ; w = w_body + 2 t_strap ; A_front = w h (strap band, seen along x)",
+          inputs={"esc": "ASM-E3-ESC", "st": "ASM-E1-ESC-STRAP"}, units={"st": "m"},
+          assumes=["ASM-E3-ESC", "ASM-E1-ESC-STRAP"])
+def esc_env(esc, st):
+    L, w, h = esc[0], esc[1], esc[2]
+    t, band = st
+    return {"len_m": L, "w_strap_m": w + 2 * t, "proud_max_m": h + t, "proud_body_m": h,
+            "frontal_m2": (w + 2 * t) * (h + t), "strap_band_m": band}
 
 
 @kit.calc("CALC-E1-CAD-STACK", title="Modelled station: canted prop plane, keep-out, ESC on the pad",
@@ -895,12 +944,17 @@ kit.claim("CL-E1-CAD-PROP-GAP", "Prop plane to collar front along x, canted stac
           output="gap_ratio", unit="-", limit=(">=", 1.0), parts=PROPS_ID + MOTORS,
           note="same finding as CL-E1-PROP-GAP with the 7 deg cant included: fixed by face_ahead_m 0.002 (CR-E1-22)",
           how="Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.")
-kit.claim("CL-E1-KO-TILT", "Blade tip axial excursion of the canted disc vs the prop keep-out half-length",
-          calc="CALC-E1-CAD-STACK", output="dx_tip_m", unit="m", limit=("<=", 0.033), parts=PROPS_ID,
-          note="0.033 = k09kit keep-out half (blade half 8 mm + 25 mm clearance): the 7 deg disc stays inside KO-PROP, "
-               "but its tip moves 17 mm toward the structure, so the 25 mm clearance is not all geometric margin "
-               "(A5: tilt the keep-out with the station, CR-E1-31)",
+kit.claim("CL-E1-KO-TILT", "Blade tip axial (x) excursion of the 7 deg canted disc, incl. the blade half",
+          calc="CALC-E1-CAD-STACK", output="dx_tip_m", unit="m", parts=PROPS_ID,
+          note="information only since rev 5: KO-PROP-<st> is now the cylinder on the canted shaft axis "
+               "(k9.prop_keepout rotate=rot, CR-A5-21), so this excursion is geometry inside the keep-out and the "
+               "full 25 mm clearance is margin; check.py tests the tilted cylinder exactly",
           how="Recompute from the CAD bounding box of PRP-003-<st> after any cant or prop change.")
+kit.claim("CL-E1-KO-HALF", "Prop keep-out axial half-length on the canted axis (blade half + clearance)",
+          calc="CALC-E1-CAD-STACK", output="ko_half_m", unit="m", parts=PROPS_ID,
+          note="the value KO-PROP-<st> carries (subsystems/propulsion/fusion/propulsion.py, blade_half 0.010); "
+               "radius D/2 + 25 mm",
+          how="python -I redesign/fusion/check.py: 0 parts inside KO-PROP-<st> (per-body test).")
 kit.claim("CL-E1-ESC-PAD-LEN", "D3's pad length / ESC length", calc="CALC-E1-CAD-STACK",
           output="esc_len_ratio", unit="-", limit=(">=", 1.0), parts=ESCS,
           how="Lay the ESC in heat-shrink on a printed pad before the strap is threaded.")
@@ -909,6 +963,31 @@ kit.claim("CL-E1-ESC-SLOT", "Strap-slot inner edge from the pad centre / ESC hal
           note="the 20 mm ESC covers 1 mm of each 3 mm strap slot on the 28 mm pad; the strap then bends over the ESC "
                "edge inside the slot and cuts into the heat-shrink. D3: pad h 0.028 -> 0.031 m (CR-E1-30)",
           how="Thread the strap on a printed pad with the ESC in place: the strap must enter the slot beside the ESC.")
+kit.claim("CL-E1-ESC-PROUD", "ESC envelope height proud of the pad at the strap band", calc="CALC-E1-ESC-ENV",
+          output="proud_max_m", unit="m", parts=ESCS,
+          note="for B4 (CR-B4-20): use 7.5 mm, not the 6.8 mm of ASM-B4-ESC; the body is 6.0 mm proud outside the "
+               "10 mm strap band; length 45 mm along x, width 23 mm at the strap",
+          how="T-E1-MOTOR-RM: calipers over the strapped ESC on a printed pad.")
+kit.claim("CL-E1-ESC-FRONTAL", "ESC frontal area along x at the strap band", calc="CALC-E1-ESC-ENV",
+          output="frontal_m2", unit="m2", parts=ESCS,
+          note="23 x 7.5 mm bounding rectangle seen along x; the ESC long side lies along x on the pad",
+          how="As CL-E1-ESC-PROUD.")
+kit.claim("CL-E1-ADAPTER-M3X5-ENGAGE", "M3x5 adapter-screw engagement minus the 1.0 d rule", calc="CALC-E1-ADAPTER-CHOICE",
+          output="m3x5_margin_m", unit="m", limit=(">=", 0.0), parts=ADAPTERS + MOTORS,
+          note="the compliant option of CR-A4-43: valid only if the bell top has >= 3.0 mm of thread and >= "
+               "CL-E1-ADAPTER-M3X5-DEPTH of free depth; otherwise M3x4 under D-58",
+          how="T-E1-MOTOR-RM: depth gauge in a bell-top hole (thread length and free depth to the windings).")
+kit.claim("CL-E1-ADAPTER-M3X5-DEPTH", "Free hole depth under the bell top needed for M3x5", calc="CALC-E1-ADAPTER-CHOICE",
+          output="free_depth_m3x5_m", unit="m", parts=MOTORS,
+          how="T-E1-MOTOR-RM: depth gauge from the bell-top face to the first obstruction in each of the 4 holes.")
+kit.claim("CL-E1-ADAPTER-THREAD-D58", "Bell-top thread length that D-58 requires (M3x4 fully engaged)",
+          calc="CALC-E1-ADAPTER-CHOICE", output="thread_needed_d58_m", unit="m", parts=MOTORS,
+          note="D-58 grants the 2.0 mm minimum only if T-E1-MOTOR-RM measures at least this; below it the deviation "
+               "lapses and the station is not flown (fallback: the motor-box adapter on its own screws, re-assessed)",
+          how="T-E1-MOTOR-RM: thread length by a gauge screw turned in until it bottoms, minus the head seat.")
+kit.claim("CL-E1-ADAPTER-RF-NOM", "Adapter screw thread strip RF at the declared 2.5 mm engagement",
+          calc="CALC-E1-ADAPTER-CHOICE", output="rf_m3x4", unit="-", limit=(">=", P + "requirements.safety_factor_ult"),
+          parts=ADAPTERS + MOTORS, how="As CL-E1-ADAPTER-STRIP.")
 kit.claim("CL-E1-ADAPTER-STRIP", "Adapter screw thread strip at 2.0 mm engagement vs preload (RF)",
           calc="CALC-E1-ADAPTER-STRIP", output="rf", unit="-", limit=(">=", P + "requirements.safety_factor_ult"),
           parts=ADAPTERS + MOTORS,
@@ -923,10 +1002,15 @@ kit.test("T-E1-STAND", "Thrust stand, one station, both candidate props", verifi
                    "(>= 40 A) and then a flight pack; 10 % throttle steps to 100 %, 3 s each; log gf, A, V, rpm (optical "
                    "tach or ESC telemetry), can temperature; one 60 s run at 689 gf for g/W; ten 10 -> 100 % throttle "
                    "punches in < 50 ms with no desync")
-kit.test("T-E1-MOTOR-RM", "Incoming check: resistance, no-load current, mass, bolt pattern, hole depth",
-         verifies=["CL-E1-KP", "CL-E1-MASS-PRP", "CL-E1-SCREW-ENGAGE", "CL-E1-STACK-PROP-PLANE", "CL-E1-PROP-GAP"],
-         procedure="Weigh motor, ESC, prop, adapter set (0.1 g); calipers: base bolt pattern, hole depth, lead length, "
-                   "body length, adapter base and post; 4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load "
+kit.test("T-E1-MOTOR-RM", "Incoming check: resistance, no-load current, mass, bolt pattern, hole and thread depth",
+         verifies=["CL-E1-KP", "CL-E1-MASS-PRP", "CL-E1-SCREW-ENGAGE", "CL-E1-STACK-PROP-PLANE", "CL-E1-PROP-GAP",
+                   "CL-E1-ADAPTER-THREAD-D58", "CL-E1-ADAPTER-M3X5-DEPTH", "CL-E1-HOLE-DEPTH-MIN", "CL-E1-ESC-PROUD"],
+         procedure="Weigh motor, stripped ESC, prop, adapter set (0.1 g); calipers: base diameter (D3 needs >= 28 mm), "
+                   "base bolt pattern (D3 prints 16 x 19 mm), base hole depth (>= 4.0 mm, CL-E1-HOLE-DEPTH-MIN), "
+                   "bell-top thread length (>= 2.5 mm for D-58; >= 3.0 mm with >= 4.0 mm free depth -> M3x5, "
+                   "CR-A4-43), adapter flange under the screw head, motor phase-lead length from the base (F2's "
+                   "routed reach 0.121 m, CL-F2-PHASE-REACH: if the leads reach, no splice and F2 returns 12 g), "
+                   "ESC strapped on a printed pad (height proud), body length, adapter base and post; 4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load "
                    "current and rpm at 10.0 V without prop (Kv = rpm / (V - I0 R))")
 kit.test("T-E1-HOVER-LOG", "Tethered hover current", verifies=["CL-E1-HOVER-I-55", "CL-E1-HOVER-DT"],
          procedure="XPS aircraft at 2.6 kg, 30 s tethered hover; pack current from the power module; can temperature "
@@ -959,7 +1043,8 @@ def write_parts():
          "pattern, hole depth and lead length not published: measure the first motor (T-E1-MOTOR-RM); UNVERIFIED"],
         ["PRP-002", "ESC LANRC BLHeli_S 45 A (55 A 10 s) 2-6S, Bluejay reflash", 4, "buy", "-", "-", pm["esc"], 7.50,
          "https://www.amazon.com/dp/B0D2HS4Y4J",
-         "6.6 g bare board; mass with factory power/signal leads and heat-shrink is EST; 4-pack $30.00, buy 2 packs "
+         "stripped: factory power leads removed, F2 solders 16 AWG to the pads (D-48); 6.6 g bare board + 1.0 g signal "
+         "lead and shrink EST; envelope 45 x 23 x 7.5 mm at the strap (CL-E1-ESC-PROUD); 4-pack $30.00, buy 2 packs "
          "(4 spare); fallback Holybro Tekko32 F4 45A AM32 $22.50 (readymaderc.com); price UNVERIFIED"],
         ["PRP-003", "Prop APC 11x5.5MR (LP11055MR) on UL/LR, 11x5.5MRP (LP11055MRP) on UR/LL", 4, "buy", "-",
          "glass-filled nylon", pm["prop"], 3.83, "https://www.apcprop.com/product/11x5-5mr/",

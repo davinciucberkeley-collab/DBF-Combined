@@ -1,5 +1,5 @@
 {
- "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R4. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
+ "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R4b. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
  "fsw": {
   "firmware": {
    "value": "ArduPlane 4.7.x stable, target CoreWingF405WingV2",
@@ -70,9 +70,9 @@
    "ap": "Q_PILOT_SPD_DN"
   },
   "land_final_spd_ms": {
-   "value": 0.5,
+   "value": 0.3,
    "unit": "m/s",
-   "source": "team/B4/CHANGE-REQUESTS.md#CR-B4-06",
+   "source": "team/D5/CHANGE-REQUESTS.md#CR-D5-21 (CL-D5-V-NO-SET 0.32 m/s)",
    "ap": "Q_LAND_FINAL_SPD"
   },
   "rat_fw_degs": {
@@ -339,6 +339,74 @@
    "unit": "-",
    "source": "ArduPilot default, stated (CALC-F4-VLEVEL input)",
    "ap": "Q_M_THST_EXPO"
+  },
+  "land_final_alt_m": {
+   "value": 6,
+   "unit": "m",
+   "source": "ArduPilot default, stated (CR-D5-21 keeps it)",
+   "ap": "Q_LAND_FINAL_ALT"
+  },
+  "elevon_pwm_left_us": {
+   "value": [
+    1003,
+    1500,
+    1976,
+    1
+   ],
+   "unit": "us",
+   "source": "CALC-F4-ELEVON-PWM from CL-D6-THROW-NEED / CALC-D6-KIN (CR-D6-09); replace from T-D6-THROW",
+   "ap": "SERVO5_MIN,SERVO5_TRIM,SERVO5_MAX,SERVO5_REVERSED",
+   "status": "PROPOSED",
+   "note": "MIN, TRIM, MAX, REVERSED (last entry 0/1, not us)"
+  },
+  "elevon_pwm_right_us": {
+   "value": [
+    1024,
+    1500,
+    1997,
+    0
+   ],
+   "unit": "us",
+   "source": "CALC-F4-ELEVON-PWM (CR-D6-09); replace from T-D6-THROW",
+   "ap": "SERVO6_MIN,SERVO6_TRIM,SERVO6_MAX,SERVO6_REVERSED",
+   "status": "PROPOSED",
+   "note": "MIN, TRIM, MAX, REVERSED"
+  },
+  "mixing_gain": {
+   "value": 0.5,
+   "unit": "-",
+   "source": "ArduPilot default, stated: pure pitch reaches half travel (P:requirements.elevon_trim_travel_max)",
+   "ap": "MIXING_GAIN"
+  },
+  "ins_pos_m": {
+   "value": [
+    0.062,
+    0.046,
+    -0.021
+   ],
+   "unit": "m",
+   "source": "CALC-F4-SENSOR-POS (CR-F3-20 IMU point, CG x 0.0522, z 0.018)",
+   "ap": "INS_POS1_X,INS_POS1_Y,INS_POS1_Z",
+   "status": "UNVERIFIED",
+   "note": "FRD from the CG; INS_POS2 the same"
+  },
+  "gps_pos_m": {
+   "value": [
+    -0.023,
+    0,
+    -0.16
+   ],
+   "unit": "m",
+   "source": "CALC-F4-SENSOR-POS (CR-F3-20 GPS centre (0.075, 0, 0.178), CG x 0.0522, z 0.018)",
+   "ap": "GPS1_POS_X,GPS1_POS_Y,GPS1_POS_Z",
+   "status": "UNVERIFIED",
+   "note": "FRD from the CG; re-measure as built"
+  },
+  "ins_log_bat_opt": {
+   "value": 5,
+   "unit": "-",
+   "source": "team/H1/CHANGE-REQUESTS.md#CR-H1-18 (>= 1 kHz raw IMU)",
+   "ap": "INS_LOG_BAT_OPT"
   }
  }
 }

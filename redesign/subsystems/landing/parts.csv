@@ -10,5 +10,5 @@ GER-009,"Spare insert, lower (blue piston + type-L cartridge + pad, pre-glued)",
 GER-010,"Spare cartridge pair type U, loose (orange stripe)",16,make,as GER-003,XPS F-250,0.66,0.0,field kit,"ground spare, not flying (C5 CR-C5-06: 16 per type)"
 GER-011,"Spare cartridge pair type L, loose (blue stripe)",16,make,as GER-008,XPS F-250,0.6,0.0,field kit,"ground spare, not flying (C5 CR-C5-06: 16 per type)"
 GER-012,Spare shoe,2,make,as GER-001,PETG (printed),5.33,0.1,field kit,"ground spare, not flying"
-GER-006,Neoprene sheet 1/16 in 40A adhesive back 12 x 12 in,1,buy,bought,neoprene 40A,0,12.0,SRC-D5-NEOPRENE (UNVERIFIED price),stock for GER-004 and spares; not flying (mass in GER-004)
-GER-013,"Brass tube 7/32 in OD (K&S), sharpened, cartridge bore cutter",1,buy,bought,brass,0,3.0,"hobby shop, K&S 7/32 in round tube (UNVERIFIED price)","shop tool, not flying"
+GER-006,Neoprene sheet 1/16 in 40A adhesive back 12 x 12 in,1,buy,bought,neoprene 40A,193.2,12.0,SRC-D5-NEOPRENE (UNVERIFIED price),stock for GER-004 and spares; not flying (whole-sheet mass; flying pads are counted in GER-004)
+GER-013,"Brass tube 7/32 in OD (K&S), sharpened, cartridge bore cutter",1,buy,bought,brass,15.1,3.0,"hobby shop, K&S 7/32 in round tube (UNVERIFIED price)","shop tool, not flying"

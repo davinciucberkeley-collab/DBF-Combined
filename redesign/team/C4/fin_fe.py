@@ -348,7 +348,10 @@ def modes(mdl, n=10):
         w2, V = sla.eigh(mdl.Kr.toarray(), mdl.Mr.toarray())
         w2, V = w2[:k], V[:, :k]
     else:
-        w2, V = spla.eigsh(mdl.Kr, k=k, M=mdl.Mr, sigma=0.0, which="LM")
+        # fixed start vector: ARPACK's random start made the last digits differ between runs (CALC-C4-D3-CONVERGENCE
+        # drifted in build_graph with "the function changed")
+        v0 = np.linspace(1.0, 2.0, mdl.Kr.shape[0])
+        w2, V = spla.eigsh(mdl.Kr, k=k, M=mdl.Mr, sigma=0.0, which="LM", v0=v0)
         o = np.argsort(w2)
         w2, V = w2[o], V[:, o]
     f = np.sqrt(np.maximum(w2, 0)) / (2 * math.pi)
@@ -396,8 +399,23 @@ def static(mdl, loads):
     F = np.zeros(mdl.K.shape[0])
     for n, f in loads:
         F[NDOF * n:NDOF * n + 6] += f
-    ur = spla.spsolve(mdl.Kr, mdl.T.T @ F)
+    Fr = mdl.T.T @ F
+    ur = spla.spsolve(mdl.Kr, Fr)
+    # CR-C6-20: a mechanism (unrestrained DOF) gives a singular Kr and NaN; fail loudly with the cause instead of
+    # passing NaN into the claims (build_graph then stopped in proofkit.fmt)
+    if not np.all(np.isfinite(ur)) or np.linalg.norm(mdl.Kr @ ur - Fr) > 1e-6 * max(np.linalg.norm(Fr), 1e-12):
+        diag = mdl.Kr.diagonal()
+        raise FloatingPointError(f"fin_fe.static: singular stiffness ({int(np.sum(np.abs(diag) < 1e-9))} reduced DOFs "
+                                 f"with zero diagonal); check the mesh columns, le_bonds bands and strut nodes")
     return mdl.T @ ur
+
+
+def reactions(mdl, u, loads):
+    """Reaction on the structure at every constrained DOF and grounded spring: R = K u - F (full vector)."""
+    F = np.zeros(mdl.K.shape[0])
+    for n, f in loads:
+        F[NDOF * n:NDOF * n + 6] += f
+    return mdl.K @ u - F
 
 
 def gyro_matrix(mdl, Ip, spin_axis=(-1.0, 0.0, 0.0)):
@@ -524,12 +542,15 @@ def build_q(cfg):
       the clamp and the first fin LE node), n_ext (tube elements above the fin top), k_root (rx = ry spring at the
       clamp, N m/rad, None = clamped);
       fin {props or None, x_le, x_te, root [(x, z)] skin profile, z_top_le, z_top_te, root_free [(x0, x1)],
-           le_bonds [(z0, z1)] optional: LE nodes above the bore end tied to the tube only inside these bands}, nx, nz;
+           le_bonds [(z0, z1)] optional: LE nodes above the bore end tied to the tube only inside these bands,
+           top_pts [(x, z)] optional piecewise top edge (replaces the straight z_top_le -> z_top_te line),
+           x_cols optional nx + 1 mesh column x positions (to put a column on the tip step)}, nx, nz;
       station {parts [(m, offset from the station node, J)], k_rock (rx, ry), k_twist (rz), N m/rad, None = rigid};
       the station node sits on the tube axis at the tube end;
       tube_masses [(m, z)], fin_masses [(m, (x, z))];
       struts [{z_attach, ear (dx, dy, dz) from the tube axis at z_attach, anchor (x, y, z), EA, k_anchor}];
-      stiffeners [{E, G, A, I_out, J, rho, d}] along the fin top row (edge strips)."""
+      stiffeners [{E, G, A, I_out, J, rho, d, x_end (optional)}] along the fin top row (edge strips);
+      rigid_fin [(x0, z0)] optional: fin nodes with x >= x0 and z >= z0 tied as one rigid body (D5 shoe)."""
     tb, fn = cfg["tube"], cfg["fin"]
     x_t = tb["x"]
     r_o, r_i = tb["od"] / 2, tb["id"] / 2
@@ -545,9 +566,15 @@ def build_q(cfg):
         root_x = np.array([p[0] for p in fn["root"]])
         root_z = np.array([p[1] for p in fn["root"]])
         zr = lambda x: float(np.interp(x, root_x, root_z))
-        xf = np.linspace(fn["x_le"], fn["x_te"], nx + 1)
+        xf = np.asarray(fn["x_cols"], float) if fn.get("x_cols") is not None else np.linspace(fn["x_le"], fn["x_te"], nx + 1)
+        if len(xf) != nx + 1 or np.any(np.diff(xf) <= 1e-6):
+            raise ValueError("fin_fe.build_q: x_cols must be nx + 1 strictly increasing columns")
+        top = fn.get("top_pts")                         # optional piecewise top edge [(x, z)], e.g. the D5 tip step
         for i, x in enumerate(xf):
-            ztop = fn["z_top_le"] + (fn["z_top_te"] - fn["z_top_le"]) * (x - fn["x_le"]) / (fn["x_te"] - fn["x_le"])
+            if top is not None:
+                ztop = float(np.interp(x, [p[0] for p in top], [p[1] for p in top]))
+            else:
+                ztop = fn["z_top_le"] + (fn["z_top_te"] - fn["z_top_le"]) * (x - fn["x_le"]) / (fn["x_te"] - fn["x_le"])
             for j in range(nz + 1):
                 grid[(i, j)] = (float(x), zr(x) + (ztop - zr(x)) * j / nz)
         le_z = [grid[(0, j)][1] for j in range(nz + 1)]
@@ -615,6 +642,8 @@ def build_q(cfg):
     for stf in (cfg.get("stiffeners") or []) if has_fin else []:
         for i in range(nx):
             n1, n2 = fin_id[(i, nz)], fin_id[(i + 1, nz)]
+            if stf.get("x_end") is not None and nodes[n2][0] > stf["x_end"] + 1e-9:
+                break                                       # strips end at the step front (D5 tip)
             ke, me = frame_element(nodes[n1], nodes[n2], stf["E"], stf["G"], stf["A"], 1e-15, stf["I_out"],
                                    stf["J"], stf["rho"])
             add(dofs_of(n1, n2), ke, me)
@@ -678,6 +707,16 @@ def build_q(cfg):
                 fixed.add(NDOF * n + 4)                     # no drilling DOF in the shell
     for si, sn in zip(strut_info, strut_nodes):
         slave[sn] = (si["master"], np.array(nodes[sn]) - np.array(nodes[si["master"]]))
+    rigid_groups = []
+    for x0, z0r in (cfg.get("rigid_fin") or []) if has_fin else []:
+        # printed part bonded over the board (D5 shoe): fin nodes with x >= x0 and z >= z0r move as one rigid body
+        # (out of plane; in plane the master's drilling DOF is not a DOF, so the group only translates in plane)
+        grp = sorted((n for (i, j), n in fin_id.items() if i > 0 and j > 0 and nodes[n][0] >= x0 - 1e-9
+                      and nodes[n][2] >= z0r - 1e-9 and n not in slave), key=lambda n: (nodes[n][0], -nodes[n][2]))
+        if len(grp) > 1:
+            for n in grp[1:]:
+                slave[n] = (grp[0], np.array(nodes[n]) - np.array(nodes[grp[0]]))
+        rigid_groups.append(grp)
     red = {}
     for n in range(nn):
         if n in slave:
@@ -707,5 +746,6 @@ def build_q(cfg):
     mdl.__dict__.update(dict(cfg=cfg, nodes=np.array(nodes), K=K, M=M, T=T, Kr=(T.T @ K @ T).tocsc(),
                              Mr=(T.T @ M @ T).tocsc(), i_station=i_station, i_end=i_end, fin_id=fin_id,
                              shells=shells, Ms=Ms, strut_info=strut_info, stf_elems=stf_elems, has_fin=has_fin,
-                             n_tube=n_tube, A_t=A_t, I_t=I_t, J_t=J_t, nearest_tube=nearest_tube))
+                             n_tube=n_tube, A_t=A_t, I_t=I_t, J_t=J_t, nearest_tube=nearest_tube,
+                             rigid_groups=rigid_groups))
     return mdl

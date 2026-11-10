@@ -286,34 +286,121 @@
    }
   },
   {
-   "id": "CALC-A1-PACK-STATION",
+   "id": "ASM-A1-CG-GROWTH-DX",
+   "type": "assumption",
+   "title": "Growth by maturity moves the CG 1.4 mm aft (A3 roll-up on the D-47 bay)",
+   "text": "Predicted (growth pro rata by maturity) minus basic CG x of A3's roll-up with the 550 g pack; scaled by mass for the other packs",
+   "basis": "team/A3/claims.json CALC-A3-CG outputs cg_pred_m[0] 0.05265 - cg_m[0] 0.05125 (A3 run of 2026-11-09 20:35); A3 publishes the predicted CG x as a claim (CR-A1-53), then this node is retired",
+   "value": 0.0014,
+   "unit": "m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-A1-PACK-CASES",
    "type": "calculation",
-   "title": "Pack nominal station vs the station A3's roll-up needs (D-47)",
+   "title": "CG per weighed pack at its D-59 flight station in the D-47 bay",
    "script": "redesign/team/A1/frame_claims.py",
-   "function": "pack_station",
-   "equation": "miss = x_nom - x_req ; room_left = fwd_room - |miss| ; aft_room_left = aft_room - |miss|",
+   "function": "pack_cases",
+   "equation": "x_cg = CL-A3-CG-X * c ; x_p,A3 = x_req - (x_t - x_cg) M / m_p ; M_e x_e = M x_cg - m_p x_p,A3 ; x_fwd = x_pod_le + nose + L/2 ; x_aft = x_nom + aft_travel ; x_p(m) = x_aft - k step, k >= 0 the whole step nearest (x_t (M_e + m) - M_e x_e) / m, x_p >= x_fwd ; x_cg(m) = (M_e x_e + m x_p) / (M_e + m) ; x_pred = x_cg + dx_growth M / (M_e + m) ; fwd margin = min x_cg - x_range[0] ; aft margin = x_range[1] - max x_pred ; ballast(nose) = (M_e + m) excess / (x_pred - x_pod_le)",
    "inputs": {
-    "x_nom": "P:pod.pack_x_nominal_m",
+    "M_kg": "CL-A3-MASS-BASIC",
+    "cg_frac": "CL-A3-CG-X",
+    "c": "P:wing.chord_m",
     "x_req": "CL-A3-PACK-X-REQ",
-    "fwd_room": "CL-A3-PACK-FWD-ROOM",
-    "aft_room": "CL-A3-PACK-AFT-ROOM"
+    "x_t": "P:cg.x_target_m",
+    "mp_kg": "P:battery.mass_kg",
+    "x_rng": "P:cg.x_range_m",
+    "pod_le": "P:pod.x_le_m",
+    "pack": "P:battery.size_m",
+    "nose": "ASM-A3-NOSE-STACK",
+    "x_nom": "P:pod.pack_x_nominal_m",
+    "aft_travel": "P:pod.pack_aft_travel_m",
+    "step": "P:pod.pack_spacer_step_m",
+    "pack_rng": "ASM-A3-PACK-RANGE",
+    "dx_growth": "ASM-A1-CG-GROWTH-DX"
    },
    "units": {
-    "x_nom": "m",
+    "M_kg": "kg",
+    "c": "m",
     "x_req": "m",
-    "fwd_room": "m",
-    "aft_room": "m"
+    "x_t": "m",
+    "mp_kg": "kg",
+    "x_rng": "m",
+    "pod_le": "m",
+    "pack": "m",
+    "nose": "m",
+    "x_nom": "m",
+    "aft_travel": "m",
+    "step": "m",
+    "pack_rng": "g",
+    "dx_growth": "m"
    },
+   "assumes": [
+    "ASM-A3-NOSE-STACK",
+    "ASM-A1-CG-GROWTH-DX"
+   ],
    "outputs": {
-    "miss_m": 0.00045496000000000425,
-    "fwd_room_left_m": 0.002945039999999996,
-    "aft_room_left_m": 0.272
+    "pack_x_a3_m": -0.022000000000000033,
+    "empty_x_m": 0.07420760421177383,
+    "pack_x_fwd_limit_m": -0.025400000000000006,
+    "pack_x_aft_limit_m": -0.009999999999999998,
+    "fwd_room_nominal_m": 0.003400000000000007,
+    "travel_left_fwd_m": 0.0014000000000000054,
+    "cases": {
+     "503": {
+      "spacer_m": 0.014,
+      "station_m": -0.024,
+      "cg_basic_m": 0.05233130889959612,
+      "cg_pred_m": 0.05376044869978035,
+      "nose_ballast_g": 0.0
+     },
+     "550": {
+      "spacer_m": 0.008,
+      "station_m": -0.018,
+      "cg_basic_m": 0.05220655335172749,
+      "cg_pred_m": 0.05360655335172749,
+      "nose_ballast_g": 0.0
+     },
+     "680": {
+      "spacer_m": 0.0,
+      "station_m": -0.009999999999999998,
+      "cg_basic_m": 0.05069249552376103,
+      "cg_pred_m": 0.05201775465282455,
+      "nose_ballast_g": 0.0
+     }
+    },
+    "fwd_margin_min_m": 0.0006924955237610289,
+    "aft_margin_pred_min_m": 0.0011395513002196503,
+    "aft_margin_basic_min_m": 0.0025686911004038776,
+    "nose_ballast_max_g": 0.0,
+    "ballast_g_per_mm": 12.651372118551041
    },
    "input_values": {
+    "M_kg": 2.30508,
+    "cg_frac": 0.160162936318913,
+    "c": 0.32,
+    "x_req": -0.01802746545454547,
+    "x_t": 0.0522,
+    "mp_kg": 0.55,
+    "x_rng": [
+     0.05,
+     0.0549
+    ],
+    "pod_le": -0.13,
+    "pack": [
+     0.14,
+     0.048,
+     0.05
+    ],
+    "nose": 0.0346,
     "x_nom": -0.022,
-    "x_req": -0.022454960000000003,
-    "fwd_room": 0.0034000000000000002,
-    "aft_room": 0.27245496
+    "aft_travel": 0.012,
+    "step": 0.002,
+    "pack_rng": [
+     503.0,
+     680.0
+    ],
+    "dx_growth": 0.0014
    }
   },
   {
@@ -775,9 +862,9 @@
   {
    "id": "CL-A1-PACK-STATION",
    "type": "claim",
-   "title": "Pack nominal station (D-47) is inside the forward trim room of the station A3 needs",
-   "calc": "CALC-A1-PACK-STATION",
-   "output": "fwd_room_left_m",
+   "title": "Lightest pack at its D-59 station: forward travel left to the crush stack",
+   "calc": "CALC-A1-PACK-CASES",
+   "output": "travel_left_fwd_m",
    "unit": "m",
    "limit": {
     "op": ">=",
@@ -790,9 +877,81 @@
     "PWR-001",
     "POD-008"
    ],
-   "how": "D2 re-lays the bay (forward stop -0.1212), A3 re-runs the roll-up with the pack at the new station, then T-A3-CG-BALANCE with each pack at its marked station.",
-   "note": "D-47: pod.pack_x_nominal_m -0.022 against CL-A3-PACK-X-REQ -0.0225 (A3-R5, CG 0.053 target); the 0.5 mm miss is 0.1 mm of CG and sits inside the 3.4 mm forward room. Per weighed pack: 680 g at -0.014, 550 g at -0.022, 503 g at -0.0245.",
-   "value": 0.002945039999999996
+   "how": "D2 re-lays the bay (CR-A1-43, CR-A1-54); T-A3-CG-BALANCE with each pack at its flight-card station.",
+   "assumes": [
+    "ASM-A3-NOSE-STACK"
+   ],
+   "note": "A1-R4a (D-59): was nominal-vs-required against CL-A3-PACK-FWD-ROOM (R4). Most forward centroid = pod.x_le_m + 34.6 mm + L/2 = -0.0254 m; the 503 g pack flies at -0.024.",
+   "value": 0.0014000000000000054
+  },
+  {
+   "id": "CL-A1-PACK-CG-FWD",
+   "type": "claim",
+   "title": "Every pack (503 / 550 / 680 g) at its D-59 station: basic CG margin to the forward limit",
+   "calc": "CALC-A1-PACK-CASES",
+   "output": "fwd_margin_min_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "parts": [
+    "PWR-001",
+    "POD-008"
+   ],
+   "how": "T-A3-CG-BALANCE / H1 GT-07 with each weighed pack at its flight-card station.",
+   "note": "Worst case is the 680 g pack with no spacer (nominal + pod.pack_aft_travel_m 12 mm, D-59); growth moves the CG aft, so basic is the forward-limit case. With the R4 8 mm travel it was -0.4 mm (A3: 9.5 mm needed).",
+   "value": 0.0006924955237610289
+  },
+  {
+   "id": "CL-A1-PACK-CG-AFT",
+   "type": "claim",
+   "title": "Every pack at its D-59 station: predicted CG (growth by maturity) margin to the aft limit",
+   "calc": "CALC-A1-PACK-CASES",
+   "output": "aft_margin_pred_min_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-CG-RANGE",
+    "R-STATIC-MARGIN"
+   ],
+   "parts": [
+    "PWR-001",
+    "POD-008"
+   ],
+   "how": "T-A3-CG-BALANCE on the built aircraft; never fly aft of the aft mark (B3).",
+   "assumes": [
+    "ASM-A1-CG-GROWTH-DX"
+   ],
+   "note": "Worst case is the 503 g listing one step behind the crush stack.",
+   "value": 0.0011395513002196503
+  },
+  {
+   "id": "CL-A1-NOSE-BALLAST",
+   "type": "claim",
+   "title": "Nose ballast the predicted CG needs with the worst pack (D-59 cap 10 g)",
+   "calc": "CALC-A1-PACK-CASES",
+   "output": "nose_ballast_max_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "value": 10.0
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "Balance the built aircraft; add lead tape behind the nose block until the CG is 0.5 mm ahead of the aft mark; weigh it.",
+   "assumes": [
+    "ASM-A1-CG-GROWTH-DX"
+   ],
+   "note": "About 13 g per mm of CG at the pod nose, from the A1 reserve; beyond 10 g A1 re-opens the station.",
+   "value": 0.0
   },
   {
    "id": "T-A1-WEIGH",

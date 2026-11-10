@@ -1,4 +1,4 @@
-# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R4, 2026-11-09)
+# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R4b, 2026-11-09)
 # Status: PROPOSED. Not loaded on hardware, not run in SITL (SITL not installed): UNVERIFIED.
 # Firmware: ArduPlane 4.7.x stable, target CoreWingF405WingV2 (D-33; bdshot on outputs 1-4, no Lua on this board).
 # Parameter names checked 2026-11-09 against ArduPilot master source and the Plane parameter index
@@ -38,7 +38,7 @@ SERVO2_FUNCTION,34
 SERVO3_FUNCTION,35
 # out 4 = Motor 4 = station UR (upper right), CW seen from the nose, 11x5.5MRP, LEFT-hand-thread adapter (CR-E1-21)
 SERVO4_FUNCTION,36
-# out 5 = left elevon servo (ElevonLeft); direction, trim and +/-25 deg throw set on the bench (SERVO5_MIN/MAX/TRIM/REVERSED)
+# out 5 = left elevon servo (ElevonLeft); throw limits in section 2b
 SERVO5_FUNCTION,77
 # out 6 = right elevon servo (ElevonRight)
 SERVO6_FUNCTION,78
@@ -50,6 +50,34 @@ SERVO_BLH_BDMASK,15
 SERVO_BLH_POLES,14
 # ESC type for DShot commands: 1 = BLHeli32/BLHeli_S/Kiss family (UNVERIFIED for Bluejay; bench check)
 SERVO_DSHOT_ESC,1
+
+# ---------------------------------------------------------------- 2b Elevon throw (D6 CR-D6-09; CALC-F4-ELEVON-PWM)
+# Starting values from D6's linkage: the servo turns +44.7 deg for TE up 25 deg and -42.9 deg for TE down 25 deg
+#   (CL-D6-THROW-NEED, CALC-D6-KIN), at 500 us per 45 deg (ASM-D6-SERVO-THROW, 11.1 us/deg). Each side gets its own
+#   MIN and MAX so a full demand gives exactly +/-25 deg at the trailing edge. FINAL VALUES COME FROM T-D6-THROW
+#   (protractor on the TE, both sides): replace these lines, never exceed 1000-2000 us without D6.
+#   Sense assumed: right servo, higher pulse = TE up; left servo mirrored, so REVERSED 1. If the bench shows the
+#   right TE going down on a higher pulse, set both REVERSED the other way and swap the up/down offsets below.
+# left: reversed (mirror of the right servo, CR-D6-09)
+SERVO5_REVERSED,1
+# left neutral 1500 us (trim set on the bench with the panel on the airfoil line)
+SERVO5_TRIM,1500
+# left TE-up end: reversed, so the low end; 1500 - 44.7 x 11.1 = 1003 us
+SERVO5_MIN,1003
+# left TE-down end: 1500 + 42.9 x 11.1 = 1976 us
+SERVO5_MAX,1976
+# right: normal sense
+SERVO6_REVERSED,0
+# right neutral 1500 us
+SERVO6_TRIM,1500
+# right TE-down end: 1500 - 42.9 x 11.1 = 1024 us
+SERVO6_MIN,1024
+# right TE-up end: 1500 + 44.7 x 11.1 = 1997 us
+SERVO6_MAX,1997
+# elevon mixer gain 0.5 (default, stated): pure pitch or pure roll reaches half travel (12.5 deg), both together the full
+#   25 deg without saturating. B3's trim limit is exactly half travel (P:requirements.elevon_trim_travel_max 0.5) and the
+#   trimmed CLmax needs 11.0 deg (CL-B3-DELTA-STALL), inside 12.5 (CL-F4-MIX-PITCH)
+MIXING_GAIN,0.5
 
 # ---------------------------------------------------------------- 3 Motor limits (E1, B4, C1, A2)
 # output at full demand: holds rpm <= 9 350 on a 16.8 V pack (CL-B4-SPIN-MAX 0.849). Documented range is 0.9-1.0: SITL S1 confirms the value is kept; the stand (T-F4-STAND-RPM-CAP) confirms rpm
@@ -84,7 +112,9 @@ Q_A_RATE_R_MAX,120
 Q_A_RATE_P_MAX,120
 # copter yaw = rotation about the aircraft x axis; slowest axis (prop torque + 7 deg cant)
 Q_A_RATE_Y_MAX,90
-# starting rate gains (PROPOSED). Crossover <= 4.5 Hz (CR-B3-19, tighter than CR-C2-03's 5): copter roll (L/R pairs, arm 0.32 m, Izz from A3) 1.1 Hz at these gains (CL-F4-XOVER-RLL); P ceiling 0.34
+# starting rate gains (PROPOSED). Crossover ceilings hold until T-C2-TAP-TEST gives the symmetric torsion mode and a static
+#   notch is set on it (CR-B3-19): pitch <= 4.5 Hz, yaw <= 2.4 Hz, roll held to 4.5 Hz too (tighter than CR-C2-03's 5).
+#   Copter roll (L/R pairs, arm 0.32 m, Izz from A3) 1.1 Hz at these gains (CL-F4-XOVER-RLL); P ceiling 0.34
 Q_A_RAT_RLL_P,0.08
 Q_A_RAT_RLL_I,0.08
 Q_A_RAT_RLL_D,0.002
@@ -96,7 +126,7 @@ Q_A_RAT_PIT_I,0.08
 Q_A_RAT_PIT_D,0.002
 # D-term filter 32 Hz, as roll
 Q_A_RAT_PIT_FLTD,32
-# copter yaw: prop torque + 7 deg cant (needs CR-F4-11 fixed), 1.0 Hz at these gains (CL-F4-XOVER-YAW, ceiling 2.4 Hz: P+I only, no D, CR-B3-19); P ceiling 0.94
+# copter yaw: prop torque + 7 deg cant (sense corrected, D-52: cant_sense_UR -1), 1.0 Hz at these gains (CL-F4-XOVER-YAW, ceiling 2.4 Hz: P+I only, no D, CR-B3-19); P ceiling 0.94
 Q_A_RAT_YAW_P,0.40
 Q_A_RAT_YAW_I,0.04
 # auto/QRTL descent 1.2 m/s: vortex-ring onset 1.88 m/s (CL-B4-DESCENT); B4 asks <= 1.5 (CR-B4-06b). Units m/s
@@ -107,10 +137,14 @@ Q_WP_SPEED_DN,120
 Q_PILOT_SPD_DN,1.2
 # LEGACY name of the line above (cm/s)
 Q_PILOT_SPEED_DN,120
-# final landing descent 0.5 m/s (default, stated: CR-D5-09, CR-B4-06b); the velocity controller holds thrust to contact
-Q_LAND_FINAL_SPD,0.5
+# final landing descent 0.3 m/s (was 0.5, the default; CR-D5-21): below 0.32 m/s the pre-crushed foot cartridges take a touchdown
+#   elastically (CL-D5-V-NO-SET), at 0.5 they set 1.28 mm per landing (2.3 landings to the 3 mm mark). Costs ~8 s from
+#   Q_LAND_FINAL_ALT. VRS onset 1.88 m/s is far away. The velocity controller holds thrust to contact (CL-F4-LAND-SPD)
+Q_LAND_FINAL_SPD,0.3
 # LEGACY name of the line above (cm/s)
-Q_LAND_SPEED,50
+Q_LAND_SPEED,30
+# QLAND/RTL switches to the final descent speed below 6 m (default, stated: CR-D5-21 keeps it)
+Q_LAND_FINAL_ALT,6
 # weathervane in hover: 1 = belly (copter nose) into wind (default on Plane, stated; J1 CR-J1-05: wind loads copter pitch, the strongest axis)
 Q_WVANE_ENABLE,1
 # weathervane gain start 1 (J1, ArduPilot weathervaning page)
@@ -202,9 +236,11 @@ INS_HNTCH_FREQ,70
 INS_HNTCH_BW,35
 # harmonics 1, 2, 3 (bitmask 7): 1P, blade pass 2P (180-312 Hz), 3P; one notch set on mean rpm (F405 CPU)
 INS_HNTCH_HMNCS,7
-# log raw + filtered gyro batches on tuning flights (FFT check of the notch and the 12-15 Hz mode, T-C2-TAP-TEST)
+# batch-log the first IMU (FFT check of the notch and the 12-15 Hz mode, T-C2-TAP-TEST)
 INS_LOG_BAT_MASK,1
-INS_LOG_BAT_OPT,4
+# 5 = bit 0 sensor-rate sampling (>= the 1 kHz backend rate, CR-H1-18: GT-18 needs >= 935 Hz) + bit 2 pre- and post-filter
+#   gyro (notch check). Read ISBH.SampleRate from the first log; if the F405 drops log blocks (DSF.Dp > 0) set 1
+INS_LOG_BAT_OPT,5
 
 # ---------------------------------------------------------------- 9 Battery (E2: CL-E2-BATT-LOW-MAH, CL-E2-BATT-CRT-MAH; F1/F3 sensor)
 # analog voltage + current (FC power board)
@@ -301,21 +337,22 @@ FENCE_MARGIN,10
 AHRS_ORIENTATION,0
 # GPS on SERIAL5: 5 = GPS
 SERIAL5_PROTOCOL,5
-# IMU position from the CG in the FRD body frame (m), from F3
-INS_POS1_X,0.054
+# IMU position from the CG in the FRD body frame (m): F3's IMU (-0.010, 0.046, 0.039) aircraft frame (CR-F3-20: board
+#   4 mm higher) from CG x 0.0522 (P:cg.x_target_m), z +0.018 (MASS-CG.md take-off case). CALC-F4-SENSOR-POS. Re-measure as built
+INS_POS1_X,0.062
 INS_POS1_Y,0.046
-INS_POS1_Z,-0.035
+INS_POS1_Z,-0.021
 # second IMU slot, same chip position (F3)
-INS_POS2_X,0.054
+INS_POS2_X,0.062
 INS_POS2_Y,0.046
-INS_POS2_Z,-0.035
-# GPS antenna position from the CG (m), from F3 (4.6+ name)
-GPS1_POS_X,-0.036
+INS_POS2_Z,-0.021
+# GPS antenna position from the CG (m): F3's GPS centre (0.075, 0, 0.178) (CR-F3-20) from the same CG (4.6+ name). CALC-F4-SENSOR-POS
+GPS1_POS_X,-0.023
 GPS1_POS_Y,0
-GPS1_POS_Z,-0.169
+GPS1_POS_Z,-0.160
 # LEGACY names of the three lines above (before 4.6)
-GPS_POS1_X,-0.036
+GPS_POS1_X,-0.023
 GPS_POS1_Y,0
-GPS_POS1_Z,-0.169
+GPS_POS1_Z,-0.160
 # compass orientation auto-detected and stored (F3 expects 36 on the 45-deg mast pad)
 COMPASS_AUTO_ROT,2

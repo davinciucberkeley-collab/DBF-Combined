@@ -1,10 +1,10 @@
-"""D2 pod self-check: run check.py's checks on the pod against stand-ins for the parts it joins that other roles
+﻿"""D2 pod self-check: run check.py's checks on the pod against stand-ins for the parts it joins that other roles
 have not declared yet (wing core WNG-001, spar WNG-002 from D1; flight pack PWR-001 from F1).
 
     python -I redesign/team/D2/pod_selfcheck.py
 
 Builds a throw-away root in a temp folder: the real subsystems/pod files + a stand-in wing (S5010 core loft and
-the 22 mm spar from params.json) + a stand-in pack (params battery.size_m at the nominal station, aft face 0.069), with both
+the 22 mm spar from params.json) + a stand-in pack (params battery.size_m at the nominal station pod.pack_x_nominal_m), with both
 stand-ins acknowledging the pod edges. Runs fusion/check.py's run_checks with the K09-L datums, --strict on the
 pod's own items. Proves the pod geometry touches what it bonds/ties/straps to, every pod edge is registered with
 the right kind, nothing of the pod floats, and the joint stacks / blocks are complete. It does NOT replace the

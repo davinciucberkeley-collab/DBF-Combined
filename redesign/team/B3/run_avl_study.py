@@ -24,6 +24,7 @@ PAR = json.loads((ROOT / "params" / "params.json").read_text())
 A3 = json.loads((ROOT / "team" / "A3" / "rollup" / "rollup.json").read_text())
 B2 = json.loads((ROOT / "team" / "B2" / "claims.json").read_text())
 B2V = {n["id"]: n.get("value") for n in B2["nodes"]}
+CLM_ALL = {n["id"]: n.get("value") for n in json.loads((ROOT / "team" / "B4" / "claims.json").read_text())["nodes"]}
 
 
 def pv(path):
@@ -110,7 +111,7 @@ def main():
     other = lat["Cnb"] - lat["Cnb_avl"]
     CLvt = 2 * m * g0 / (rho * vt * vt * S)
     dirs = []
-    for label, mod in (("R3 baseline (half-fins 0.21 m, D-26)", {}), ("R1 half-fins 0.19 m", {"fh": 0.19}),
+    for label, mod in (("R4 baseline (half-fins 0.21 m, D-26)", {}), ("R1 half-fins 0.19 m", {"fh": 0.19}),
                        ("half-fin TE +15 mm (fte 0.335, feet move aft)", {"fte": 0.335})):
         gg = dict(geo, **mod)
         d = AV.derivatives_cl(AV.geometry_from(**gg, xref=lim["x_aft"], zref=0.0), CLvt, "fine")
@@ -121,10 +122,13 @@ def main():
     hv = RES["CALC-B3-HOVER"]
     r_ = math.hypot(pv("propulsion.stations.y_m"), pv("propulsion.stations.z_m"))
     cants = []
-    for cd_ in (3.0, 5.0, 7.0, 8.0):
+    kq_lo = hv["kq_iso_m"] * CLM_ALL["CL-B4-YAW-LOW"]        # B4 half-fin factor (sizing, CR-B4-13)
+    for cd_ in (0.0, 3.0, 5.0, 7.0, 8.0):
         M = 4 * hv["dT_N"] * (hv["kq_eff_m"] + r_ * math.sin(math.radians(cd_)))
+        Ml = 4 * hv["dT_N"] * (kq_lo + r_ * math.sin(math.radians(cd_)))
         cants.append({"cant_deg": cd_, "M_yaw_Nm": M, "ratio": M / hv["dist_yaw_Nm"],
-                      "acc_rads2": M / (I["Ixx"] * k), "thrust_loss_frac": 1 - math.cos(math.radians(cd_))})
+                      "acc_rads2": M / (I["Ixx"] * k), "ratio_halffin": Ml / hv["dist_yaw_Nm"],
+                      "acc_halffin_rads2": Ml / (I["Ixx"] * k), "thrust_loss_frac": 1 - math.cos(math.radians(cd_))})
         print(cants[-1])
     out["hover_cant"] = cants
     # ---- AVL MODE cross-check (aero only: no props, tubes, pod) at the CG target, cruise speed

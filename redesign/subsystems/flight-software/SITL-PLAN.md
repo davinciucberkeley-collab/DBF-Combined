@@ -1,6 +1,6 @@
 # flight-software — SITL plan
 
-Revision F4-R4, 2026-11-09. Status `UNVERIFIED`: ArduPilot SITL is not installed on the design machine; nothing below has run. Owner F4; the
+Revision F4-R4b, 2026-11-09. Status `UNVERIFIED`: ArduPilot SITL is not installed on the design machine; nothing below has run. Owner F4; the
 pilot's ≥ 10 h (`R-PILOT`, `P:requirements.sitl_hours_min`) run on the same set-up after S1–S13 pass.
 
 ## Set-up
@@ -19,7 +19,7 @@ pilot's ≥ 10 h (`R-PILOT`, `P:requirements.sitl_hours_min`) run on the same se
 
 | # | Case | How | Pass |
 |---|---|---|---|
-| S1 | Name check | load `K09L.param`, then `K09L-STAND.param`; `param show` each name; Mission Planner compare | only LEGACY names unknown (6 at most); `Q_M_SPIN_MAX` 0.84, `AIRSPEED_MIN` 16, `THR_MAX` 70 read back; pre-arm clean; move the 78 unmatched names into `CHECKED_NAMES` |
+| S1 | Name check | load `K09L.param`, then `K09L-STAND.param`; `param show` each name; Mission Planner compare | only LEGACY names unknown (6 at most); `Q_M_SPIN_MAX` 0.84, `AIRSPEED_MIN` 16, `THR_MAX` 70, `Q_LAND_FINAL_SPD` 0.3, `SERVO5/6_MIN/MAX` read back; pre-arm clean; move the 88 unmatched names into `CHECKED_NAMES` |
 | S2 | Output map | QuadPlane motor test A–D, `SERVO1–6_FUNCTION`; tilt the model in QSTABILIZE | A=LR, B=UR, C=UL, D=LL; belly-forward tilt speeds up the upper pair |
 | S3 | Hover | QLOITER 2 min at 0 / 5 / 8 m/s wind | position ±1 m at 5 m/s; lean ≤ 20°; no motor at 0.84 for > 1 s |
 | S4 | Pitch-over, FW output path | FBWA at 50 m, `Q_TAILSIT_RAT_FW` 12 / 16, fresh and sagged pack (CR-B1-12 rev 3); then FBWA full throttle with full rudder | altitude loss ≤ 10 m; peak motor output < 0.84 at 12 °/s sagged (B1: 0.70 × cap); airspeed ≥ 15.5 m/s within 15 s; RCOU at `THR_MAX` 70 = 0.70 (pass-through) or 0.704 (thrust curve): record which, update `ASM-F4-FW-PASSTHRU`; ≤ 0.79 with full rudder |
@@ -35,7 +35,7 @@ pilot's ≥ 10 h (`R-PILOT`, `P:requirements.sitl_hours_min`) run on the same se
 | S14 | Airspeed failure in cruise | `SIM_ARSPD_FAIL` 1 | synthetic airspeed, no stall, RTL possible |
 | S15 | Pilot hours | QSTABILIZE recovery from a failed transition, landings in 5 m/s | 10 h logged with this file (`R-PILOT`) |
 | S16 | Dive and level speed | FBWA full-down stick, idle and full throttle, 30 s; FBWB full throttle (stage B, prop model from B4) | dive airspeed ≤ 20.5 m/s (`CL-F4-VDIVE-VA`); level ≤ 21.8 m/s at ≤ 7 950 rpm (`CL-F4-VLEVEL-VH`, `-FW-RPM-CAP`) |
-| S17 | Landing heading, single-motor burst | QLAND in 5 m/s crosswind; motor test one output at full for 2 s | lands wingtip into wind (`Q_WVANE_LAND` 3); one output at full ≤ 2 s, none in any mode (CR-F1-10) |
+| S17 | Landing heading, descent, single-motor burst | QLAND from 20 m in 5 m/s crosswind; motor test one output at full for 2 s | lands wingtip into wind (`Q_WVANE_LAND` 3); descent ≤ 0.3 m/s below 6 m (`CL-F4-LAND-SPD`); one output at full ≤ 2 s, none in any mode (CR-F1-10) |
 
 `SIM_ENGINE_FAIL` ("Engine Fail Mask") and `SIM_ENGINE_MUL` ("Engine failure thrust scaler") are in the current
 Plane parameter list (checked 2026-11-09); which motor index each bit maps to is confirmed in S11 before the runs.

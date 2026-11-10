@@ -121,71 +121,105 @@
   {
    "id": "ASM-C6-MOTOR-M-ULT",
    "type": "assumption",
-   "title": "Motor-to-mount moment 0.849 N m (ult)",
+   "title": "Motor-to-mount moment 0.974 N m (ult)",
    "text": "Ultimate moment at the motor base (no cant side force; C1 does not model the cant)",
-   "basis": "team/C1/data/envelope.json#joints.J-MOTOR.M_res_Nm.ultimate (T3 flare, lower pair)",
-   "value": 0.8488,
+   "basis": "team/C1/data/envelope.json#joints.J-MOTOR.M_res_Nm.ultimate (H5 side, upper right; R4 envelope)",
+   "value": 0.9742,
    "unit": "N m",
    "status": "UNVERIFIED"
   },
   {
    "id": "ASM-C6-FIN-MZ-ULT",
    "type": "assumption",
-   "title": "Fin group torsion about the tube 6.77 N m (ult)",
+   "title": "Fin group torsion about the tube 9.04 N m (ult)",
    "text": "Ultimate Mz of the fin group at the wing",
-   "basis": "team/C1/data/envelope.json#joints.J-FIN.Mz_Nm.ultimate (L4 corner)",
-   "value": 6.766,
+   "basis": "team/C1/data/envelope.json#joints.J-FIN.Mz_Nm.ultimate (L4 corner, R4 envelope)",
+   "value": 9.0423,
    "unit": "N m",
    "status": "UNVERIFIED"
   },
   {
    "id": "ASM-C6-FIN-MY-ULT",
    "type": "assumption",
-   "title": "Fin group torsion about the spar 6.74 N m (ult)",
+   "title": "Fin group torsion about the spar 6.73 N m (ult)",
    "text": "Ultimate My of the fin group at the wing",
-   "basis": "team/C1/data/envelope.json#joints.J-FIN.My_Nm.ultimate (L4 corner)",
-   "value": 6.7409,
-   "unit": "N m",
-   "status": "UNVERIFIED"
-  },
-  {
-   "id": "ASM-C6-FINHALF-MZ-ULT",
-   "type": "assumption",
-   "title": "Half-fin torsion about the tube 7.39 N m (ult)",
-   "text": "Ultimate Mz of one half-fin + tube at the wing plane",
-   "basis": "team/C1/data/envelope.json#joints.J-FINHALF.Mz_Nm.ultimate (L4 corner)",
-   "value": 7.3909,
-   "unit": "N m",
-   "status": "UNVERIFIED"
-  },
-  {
-   "id": "ASM-C6-C4-COLLAR-T",
-   "type": "assumption",
-   "title": "Collar sizing torsion 9.3 N m (limit, C4 R2)",
-   "text": "Tube torsion the station collar passes into the tube; the largest of C1 J-FINHALF Mz 4.93 N m limit, C4 R2 9.3 N m and C4 R3 3.46 N m (CALC-C4-D3-STATIC collar_t_lim_nm)",
-   "basis": "team/C4/BOOM-STRUCTURES.md R2 strength section; CHANGE-LOG forward row CR-C6-03: C6 sizes to C4's until C1 and C4 agree",
-   "value": 9.3,
+   "basis": "team/C1/data/envelope.json#joints.J-FIN.My_Nm.ultimate (H6 diagonal, R4 envelope)",
+   "value": 6.7296,
    "unit": "N m",
    "status": "UNVERIFIED"
   },
   {
    "id": "ASM-C6-STRIP-L",
    "type": "assumption",
-   "title": "Edge strip length 264 mm",
-   "text": "Length of one edge strip from the collar to the foot",
-   "basis": "team/C4/BOOM-STRUCTURES.md R2 mass table (8 strips 10 x 1 x 264 mm); the R3 top edge is ~277 mm, so 264 mm over-states the average shear flow by 5 %",
-   "value": 0.264,
+   "title": "Edge strip length 229 mm",
+   "text": "Length of one edge strip from the collar tail to the square tip (pin count only)",
+   "basis": "team/D3/CHANGE-REQUESTS.md CR-D3-18 (R3 square tip, strips end at x 0.280)",
+   "value": 0.229,
    "unit": "m",
    "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C6-TAIL-NET-A",
+   "type": "assumption",
+   "title": "Collar tail net section 95 mm2",
+   "text": "Effective PETG area carrying one strip's force along the two-face tail: walls 1.2 mm + cap 1.2 mm + tongue at 0.45 fill",
+   "basis": "team/D3/CHANGE-REQUESTS.md CR-D3-17 (D3 estimate); T-C6-STRIP-ANCHOR fails the tail or the bond",
+   "value": 9.5e-05,
+   "unit": "m2",
+   "status": "UNVERIFIED"
   },
   {
    "id": "ASM-C6-AVN-CRASH",
    "type": "assumption",
    "title": "Avionics crash load 10.0 N",
-   "text": "Ultimate crash load of an avionics item, any axis (used for the PDB on its inserts and the FC on its gel pads)",
+   "text": "Ultimate crash load of an avionics item, any axis (used for the power frame on its inserts and the FC on its gel pads)",
    "basis": "team/C1/data/envelope.json#other.crash_ultimate.avionics_N_any_axis",
    "value": 10.0,
    "unit": "N",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-C6-PWR-UNPLUG",
+   "type": "assumption",
+   "title": "AS150U unplug pull 50 N on the power frame, 18 mm above the inserts, 25 mm screw pattern",
+   "text": "Hand pull that separates the AS150U pair, carried by the frame cradle if the pilot does not hold the cradle; lever = connector axis above the insert faces; pattern = boss spacing",
+   "basis": "team/F1/CHANGE-REQUESTS.md CR-F1-20 (F1 estimate: 18 N tension per screw); subsystems/power/interfaces.json E-PWR-03 notes (25 mm pattern)",
+   "value": [
+    50.0,
+    0.018,
+    0.025
+   ],
+   "unit": "N, m, m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-C6-PA66-SIGMA",
+   "type": "assumption",
+   "title": "PA66 screw allowable 50 MPa",
+   "text": "Tensile / von Mises allowable of a moulded PA66 M3 screw at 50 % RH, room temperature, used for the one-time installation stress and service tension",
+   "basis": "PA66 dry ~80 MPa, conditioned ~50-60 MPa (typical datasheet range for unfilled PA66); the conditioned value is taken. Replaced by T-C6-NYLON-TORQUE",
+   "value": 50000000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-C6-THREAD-SHARE",
+   "type": "assumption",
+   "title": "Thread share of tightening torque 0.5",
+   "text": "Fraction of the applied torque that twists the screw shank (thread friction + pitch); the rest is head friction",
+   "basis": "VDI 2230 split, typical 0.4-0.6 for a pan head on a washer",
+   "value": 0.5,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C6-NYLON-MU",
+   "type": "assumption",
+   "title": "Friction nylon washer / PETG deck / nylon spacer 0.25",
+   "text": "Friction coefficient in the clamped power-frame stack",
+   "basis": "PA66 on PETG, dry, typical 0.25-0.4; lower end taken",
+   "value": 0.25,
+   "unit": "-",
    "status": "UNVERIFIED"
   },
   {
@@ -242,12 +276,12 @@
     "head_mpa_e1": 56.7700884936313,
     "rf_head_e1": 0.5284473002603391,
     "side_lim_n": 2.5714431458486118,
-    "M_side_ult_nm": 0.1504294240321438,
-    "tension_n": 80.97240931433068,
-    "rf_sep": 4.116628567137612,
+    "M_side_ult_nm": 0.14387224401022983,
+    "tension_n": 89.49097947651686,
+    "rf_sep": 3.7247701978812584,
     "engage_m": 0.0035000000000000005,
     "strip_n": 2638.9378290154264,
-    "rf_strip": 32.59058056147504
+    "rf_strip": 29.488310938734386
    },
    "input_values": {
     "T": 0.2,
@@ -257,8 +291,8 @@
     "dh": 0.0055,
     "dhole": 0.0034,
     "s_allow": 30000000.0,
-    "F_ult": 31.835806824418608,
-    "M_ult": 0.8488,
+    "F_ult": 31.754911089675172,
+    "M_ult": 0.9742,
     "ff": 1.15,
     "pat": [
      0.016,
@@ -269,7 +303,7 @@
     "tau_al": 160000000.0,
     "Tlim": 21.1,
     "cant": 7.0,
-    "arm": 0.039,
+    "arm": 0.0373,
     "sf": 1.5
    }
   },
@@ -332,9 +366,9 @@
    },
    "outputs": {
     "side_lim_n": 2.5714431458486118,
-    "mz_lim_nm": 0.06984209741935615,
+    "mz_lim_nm": 0.06918568672932461,
     "fax_lim_n": 2.2110675874746706,
-    "rf_slip_torsion": 16.60059380653349,
+    "rf_slip_torsion": 16.758094696538553,
     "rf_slip_axial": 47.67011426035242,
     "side_frac": 0.12186934340514748
    },
@@ -344,7 +378,7 @@
     "ym": 0.32,
     "zm": 0.19,
     "xt": 0.045,
-    "xp": -0.0082,
+    "xp": -0.0077,
     "Ts": 2.5,
     "od": 0.022,
     "sf": 1.5,
@@ -420,39 +454,81 @@
    }
   },
   {
-   "id": "CALC-C6-INSERT",
+   "id": "CALC-C6-PWR-FRAME",
    "type": "calculation",
-   "title": "Bus PDB on M3 heat-set inserts: engagement and pull-out",
+   "title": "Power frame PWR-006 on 4 x M3x18 PA66 into brass heat-set inserts (E-PWR-03)",
    "script": "redesign/team/C6/joints.py",
-   "function": "insert",
-   "equation": "engagement = L - stack >= kmin d (D-41); blind hole >= engagement + 0.5 mm; RF = pull-out / (F ff pf), whole crash load on one insert",
+   "function": "pwr_frame",
+   "equation": "e = L - stack >= kmin d (D-41), e <= insert length, bore >= e + 0.5 mm; preload P = T/(K d); install von Mises = sqrt((P/As)^2 + 3 (16 share T/(pi d3^3))^2), As = pi/4 ((d2+d3)/2)^2; unplug design k = sf ff pf: tension per screw F_t = k F a/(2 s), shear V = k F; tension RF = s_pa As/(P + F_t); slip RF = 4 mu P / V (and at 50 % preload after nylon creep); if it slips the spacer bends as a guided column: M = (V/4) L_sp/2, sigma = M (OD/2)/I_tube; insert RF = pull-out / max(P + F_t, Fc ff pf)",
    "inputs": {
-    "L": "P:joints.pdb_screw_len_m",
-    "stack": "P:joints.pdb_stack_m",
+    "L": "P:joints.pwr_frame.screw_len_m",
+    "stack": "P:joints.pwr_frame.stack_m",
+    "bore": "P:joints.pwr_frame.bore_depth_m",
+    "sp": "P:joints.pwr_frame.spacer_m",
     "d": "P:joints.m3_d_m",
+    "p": "P:joints.m3_pitch_m",
     "kmin": "P:requirements.thread_engagement_insert_min",
     "Li": "P:joints.insert_len_m",
-    "F": "ASM-C6-AVN-CRASH",
+    "T": "P:joints.torque.nylon_m3_nm",
+    "K": "ASM-C6-NUT-FACTOR",
+    "share": "ASM-C6-THREAD-SHARE",
+    "s_pa": "ASM-C6-PA66-SIGMA",
+    "mu": "ASM-C6-NYLON-MU",
+    "un": "ASM-C6-PWR-UNPLUG",
+    "Fc": "ASM-C6-AVN-CRASH",
+    "cap": "ASM-C6-INSERT-PULL",
+    "sf": "P:requirements.safety_factor_ult",
     "ff": "ASM-C1-FITTING-FACTOR",
-    "pf": "ASM-C1-PRINTED-FACTOR",
-    "cap": "ASM-C6-INSERT-PULL"
+    "pf": "ASM-C1-PRINTED-FACTOR"
    },
    "outputs": {
-    "engage_m": 0.0056,
-    "rf_engage": 1.2444444444444442,
-    "hole_depth_m": 0.006200000000000001,
-    "rf_pull": 20.869565217391305
+    "engage_m": 0.005499999999999998,
+    "rf_engage": 1.2222222222222217,
+    "rf_insert_len": 1.0363636363636368,
+    "tip_clear_m": 0.0010000000000000018,
+    "rf_bore": 1.0833333333333335,
+    "preload_n": 133.33333333333331,
+    "install_vm_mpa": 37.09802816603819,
+    "rf_install": 1.3477805282862194,
+    "rf_install_at_0p2": 0.5391122113144877,
+    "tension_design_n": 38.81249999999999,
+    "shear_design_n": 107.8125,
+    "rf_tension": 1.461212376182796,
+    "rf_slip": 1.2367149758454103,
+    "rf_slip_relaxed": 0.6183574879227052,
+    "spacer_mpa": 6.914595857729172,
+    "rf_spacer": 7.231080605254713,
+    "rf_pull": 1.7427084593973134,
+    "scale_n_at_50mm": 1.5999999999999999
    },
    "input_values": {
-    "L": 0.01,
-    "stack": 0.0044,
+    "L": 0.018,
+    "stack": 0.0125,
+    "bore": 0.0065,
+    "sp": [
+     0.006,
+     0.0032,
+     0.01
+    ],
     "d": 0.003,
+    "p": 0.0005,
     "kmin": 1.5,
     "Li": 0.0057,
-    "F": 10.0,
+    "T": 0.08,
+    "K": 0.2,
+    "share": 0.5,
+    "s_pa": 50000000.0,
+    "mu": 0.25,
+    "un": [
+     50.0,
+     0.018,
+     0.025
+    ],
+    "Fc": 10.0,
+    "cap": 300.0,
+    "sf": 1.5,
     "ff": 1.15,
-    "pf": 1.25,
-    "cap": 300.0
+    "pf": 1.25
    }
   },
   {
@@ -461,7 +537,7 @@
    "title": "Tube-in-block, block-on-spar and station-collar bonds",
    "script": "redesign/team/C6/joints.py",
    "function": "tube_bonds",
-   "equation": "tau = T / (2 pi r^2 L), T = T_ult ff pf; spar OD = tube OD (22 mm); tube bore L = core + 2 bosses; collar sizing (C4 method): tau = T_c4 sf ff pf / (2 pi r^2 h) + F_brace pf / (pi d h); h_req = (T/(2 pi r^2) + F/(pi d)) / tau",
+   "equation": "tau = T / (2 pi r^2 L), T = T_ult ff pf; spar OD = tube OD (22 mm); tube bore L = core + 2 bosses; collar (CR-C4-23): T_lim = max(C1 J-FINHALF section torsion, C4 FE collar torsion); tau = T_lim sf ff pf / (2 pi r^2 h) + F_brace pf / (pi d h) (F_brace already x 1.5 x 1.15); h_req = (T/(2 pi r^2) + F/(pi d)) / tau",
    "inputs": {
     "od": "P:fins.tube.od_m",
     "core": "ASM-C4-CORE-T-TUBE",
@@ -470,43 +546,45 @@
     "Lc": "P:fin_detail.station_collar.height_m",
     "Tz": "ASM-C6-FIN-MZ-ULT",
     "Ty": "ASM-C6-FIN-MY-ULT",
-    "Th": "ASM-C6-FINHALF-MZ-ULT",
-    "Tc4": "ASM-C6-C4-COLLAR-T",
+    "Tc1": "CL-C1-FINHALF-T-LIM",
+    "Tc4": "CL-C4-D3-COLLAR-T",
     "Fb": "CL-C4-D3-BRACE-F",
+    "h12": "P:joints.collar_alt_h_m",
     "sf": "P:requirements.safety_factor_ult",
     "ff": "ASM-C1-FITTING-FACTOR",
     "pf": "ASM-C1-PRINTED-FACTOR",
     "tau": "ASM-C4-BOND-SHEAR"
    },
    "outputs": {
-    "T_tb_design_nm": 9.726125,
-    "T_bs_design_nm": 9.69004375,
+    "T_tb_design_nm": 12.998306249999999,
+    "T_bs_design_nm": 9.6738,
     "L_bore_m": 0.043,
     "area_bore_mm2": 2971.9466502959435,
-    "rf_tube_block": 6.72239214553697,
+    "rf_tube_block": 5.030103541875755,
     "area_spar_mm2": 2488.141381643116,
-    "rf_block_spar": 5.649005495578753,
-    "area_collar_mm2": 1105.840614063607,
-    "T_c1_design_nm": 10.62441875,
-    "T_c4_design_nm": 20.053125,
-    "F_brace_design_n": 208.9148125266608,
-    "rf_collar": 2.2898658347214855,
-    "tau_collar_c4_mpa": 1.8374494030349926,
-    "rf_collar_c4": 1.0884653458737508,
-    "rf_collar_c4_12mm": 0.816349009405313,
-    "L_collar_req_m": 0.014699595224279941
+    "rf_block_spar": 5.6584910165755495,
+    "area_collar_mm2": 829.3804605477052,
+    "T_collar_lim_nm": 7.399744418198648,
+    "collar_c1_governs": 1.0,
+    "T_collar_design_nm": 15.955698901740835,
+    "F_brace_design_n": 205.42820236140872,
+    "tau_collar_mpa": 1.9966063382350439,
+    "rf_collar": 1.0016997150114009,
+    "rf_collar_alt": 1.335599620015201,
+    "L_collar_req_m": 0.011979638029410263
    },
    "input_values": {
     "od": 0.022,
     "core": 0.027,
     "boss": 0.008,
     "Ls": 0.036,
-    "Lc": 0.016,
-    "Tz": 6.766,
-    "Ty": 6.7409,
-    "Th": 7.3909,
-    "Tc4": 9.3,
-    "Fb": 167.13185002132863,
+    "Lc": 0.012,
+    "Tz": 9.0423,
+    "Ty": 6.7296,
+    "Tc1": 7.399744418198648,
+    "Tc4": 4.612338198770672,
+    "Fb": 164.34256188912698,
+    "h12": 0.016,
     "sf": 1.5,
     "ff": 1.15,
     "pf": 1.25,
@@ -519,58 +597,77 @@
    "title": "Edge-strip anchorage in the station collar and strip-to-board shear flow",
    "script": "redesign/team/C6/joints.py",
    "function": "strip",
-   "equation": "F = sigma_ult w t ff pf, sigma_ult = sigma_allow/(1+MS_edge) (C4 R3, two layers); anchor tau = F/(n w L); L_req = F/(2 w tau); shear flow q = F/L_strip onto the paper face, tau = q/w vs kd tau_board; pins through both layers: P = q pitch, shear P/(pi d^2/4), bending 32 P (n tb + t)/2 / (pi d^3)",
+   "equation": "C4 R3 FE (CR-C4-23): F = strip force per face at the collar end, design; anchor tau = F/(n w (tail - gap)); L_req = F/(2 w tau); tail net section sigma = F / A_net vs PETG; paper face if unpinned: tau = q_lim sf ff pf / w vs kd tau_board; pins carry the whole shear flow: P = C4 pin force at the drawn pitch, shear P/(pi d^2/4), bending (pin loaded at the strip, reacted at the board mid-plane, bound) 32 P (n tb + t)/2 / (pi d^3); at a proposed pitch P' = P pitch'/pitch",
    "inputs": {
     "s_cf": "ASM-C4-CF-SIGMA",
-    "ms": "CL-C4-D3-MS-EDGE",
+    "F": "CL-C4-D3-STRIP-END-F",
+    "q_lim": "CL-C4-D3-STRIP-Q",
+    "Pp": "CL-C4-D3-STRIP-PIN-F",
     "w": "P:fin_detail.edge_strip.w_m",
     "t": "P:fin_detail.edge_strip.t_m",
+    "sf": "P:requirements.safety_factor_ult",
     "ff": "ASM-C1-FITTING-FACTOR",
     "pf": "ASM-C1-PRINTED-FACTOR",
     "tail": "P:fin_detail.station_collar.tail_m",
+    "gap": "P:fin_detail.fin.le_gap_m",
     "n_now": "P:joints.strip_bonded_faces_now",
     "tau": "ASM-C4-BOND-SHEAR",
-    "Ls": "ASM-C6-STRIP-L",
+    "A_net": "ASM-C6-TAIL-NET-A",
+    "s_pet": "ASM-C4-PETG-TENSILE",
     "kd": "ASM-C6-FOAM-KD",
     "tau_b": "ASM-D5-BOND-TAU",
     "tb": "P:fins.board_t_m",
     "nl": "P:fins.layers",
     "dp": "P:fin_detail.edge_strip.pin_d_m",
     "pp": "P:fin_detail.edge_strip.pin_pitch_m",
+    "pp_new": "P:joints.pin_pitch_prop_m",
+    "Ls": "ASM-C6-STRIP-L",
     "tau_pin": "ASM-C6-PIN-TAU"
    },
    "outputs": {
-    "F_design_n": 907.7422431904278,
-    "rf_anchor": 1.7626148964672004,
-    "L_req_m": 0.022693556079760695,
-    "rf_anchor_r2": 0.4406537241168001,
-    "q_npm": 3438.4175878425294,
-    "tau_face_mpa": 0.34384175878425294,
-    "rf_face": 0.2908314579170881,
-    "pin_load_n": 51.57626381763794,
-    "rf_pin_shear": 3.0455799054171093,
-    "rf_pin_bend": 1.1492754360064568,
-    "rf_pin": 1.1492754360064568,
+    "F_design_n": 907.9413306284688,
+    "embed_m": 0.0395,
+    "rf_anchor": 1.7402005467757904,
+    "L_req_m": 0.02269853326571172,
+    "tail_net_mpa": 9.557277164510198,
+    "rf_tail_net": 1.569484670351583,
+    "q_design_npm": 4288.2185489960375,
+    "tau_face_mpa": 0.4288218548996038,
+    "rf_face": 0.23319706973286636,
+    "pin_load_n": 64.32327823494056,
+    "rf_pin_shear": 2.4420340037047987,
+    "rf_pin_bend": 0.9215222655489811,
+    "rf_pin": 0.9215222655489811,
+    "pin_load_prop_n": 51.45862258795245,
+    "rf_pin_prop": 1.1519028319362261,
     "pin_len_m": 0.0116,
-    "pins_per_strip_pair": 18
+    "pins_per_strip_pair": 16,
+    "pins_per_strip_pair_prop": 20
    },
    "input_values": {
     "s_cf": 400000000.0,
-    "ms": 5.334397284179002,
+    "F": 907.9413306284688,
+    "q_lim": 1988.7390372155537,
+    "Pp": 64.32327823494056,
     "w": 0.01,
     "t": 0.001,
+    "sf": 1.5,
     "ff": 1.15,
     "pf": 1.25,
     "tail": 0.04,
+    "gap": 0.0005,
     "n_now": 2,
     "tau": 2000000.0,
-    "Ls": 0.264,
+    "A_net": 9.5e-05,
+    "s_pet": 15000000.0,
     "kd": 0.5,
     "tau_b": 200000.0,
     "tb": 0.0048,
     "nl": 2,
     "dp": 0.002,
     "pp": 0.015,
+    "pp_new": 0.012,
+    "Ls": 0.229,
     "tau_pin": 50000000.0
    }
   },
@@ -593,13 +690,13 @@
     "peel": "ASM-C6-PEEL"
    },
    "outputs": {
-    "F_design_n": 208.9148125266608,
-    "rf_end": 2.29758720406072,
+    "F_design_n": 205.42820236140872,
+    "rf_end": 2.3365827792015557,
     "anchor_area_mm2": 276.46015351590177,
-    "rf_anchor": 1.3233152315641628
+    "rf_anchor": 1.3457750705014053
    },
    "input_values": {
-    "F": 167.13185002132863,
+    "F": 164.34256188912698,
     "pf": 1.25,
     "w": 0.01,
     "t": 0.002,
@@ -616,23 +713,39 @@
    "title": "Foot shoe and fin root bonds at the C6 allowables",
    "script": "redesign/team/C6/joints.py",
    "function": "foam_bonds",
-   "equation": "foot shoe RF = SF_D5 kd (D5 used the undiscounted 0.20 MPa); fin root RF = RF_D3 kd",
+   "equation": "foot shoe (CR-D5-24): D5 now sizes at the C6 allowable kd tau_board, so RF = SF_D5; design load = kd tau A / SF; fin root RF = RF_D3 x (C6 XPS allowable / D3's 0.25 MPa) = RF_D3 kd; with leg l': x l'(n tb + l') / (l (n tb + l)) (fillet couple capacity, CALC-D3-ROOT)",
    "inputs": {
     "kd": "ASM-C6-FOAM-KD",
     "sf_d5": "CL-D5-BOND-SF",
+    "A_d5": "CL-D5-BOND-AREA",
+    "tau_b": "ASM-D5-BOND-TAU",
     "rf_d3": "CL-D3-ROOT-FILLET-RF",
-    "s_xps": "ASM-D3-XPS-TENSILE"
+    "s_xps": "ASM-D3-XPS-TENSILE",
+    "leg0": "ASM-D3-FILLET-LEG",
+    "leg1": "P:joints.root_fillet_leg_m",
+    "tb": "P:fins.board_t_m",
+    "nl": "P:fins.layers"
    },
    "outputs": {
-    "rf_foot": 1.3487327223920291,
-    "rf_root": 0.8695746667456354,
+    "rf_foot": 1.5437186877828502,
+    "foot_area_mm2": 1349.9199999999992,
+    "foot_design_n": 87.44598421224063,
+    "rf_root": 0.869574709594114,
+    "rf_root_prop": 1.237936218519398,
+    "leg_req_m": 0.013119730639279525,
     "allow_xps_mpa": 0.125
    },
    "input_values": {
     "kd": 0.5,
-    "sf_d5": 2.6974654447840583,
-    "rf_d3": 1.7391493334912709,
-    "s_xps": 250000.0
+    "sf_d5": 1.5437186877828502,
+    "A_d5": 0.0013499199999999992,
+    "tau_b": 200000.0,
+    "rf_d3": 1.739149419188228,
+    "s_xps": 250000.0,
+    "leg0": 0.012,
+    "leg1": 0.015,
+    "tb": 0.0048,
+    "nl": 2
    }
   },
   {
@@ -667,14 +780,14 @@
     "board_flat_mpa": 0.05,
     "c3_over_c6_xps_t": 0.8,
     "c3_over_c6_xps_s": 1.0,
-    "c3_over_c6_board_flat": 2.0,
+    "c3_over_c6_board_flat": 1.0,
     "c3_over_c6_paper_s": 2.0,
-    "rf_pod_design": 1.5428628138468146,
-    "rf_pod_crash": 1.3128354916141665,
-    "rf_tray": 2.541176470588235,
+    "rf_pod_design": 1.152005193702942,
+    "rf_pod_crash": 1.2876582905383789,
+    "rf_tray": 2.588235294117647,
     "rf_floor": 0.9035294117647058,
     "rf_floor_prop": 2.0329411764705885,
-    "rf_hatch": 1.0257775879638147
+    "rf_hatch": 1.1841568270473484
    },
    "input_values": {
     "kd": 0.5,
@@ -684,12 +797,12 @@
     "f_b": 100000.0,
     "c3_sa": 100000.0,
     "c3_ta": 100000.0,
-    "c3_fb": 100000.0,
-    "Rd": 0.6481457657967032,
-    "Rc": 0.7617100591715975,
-    "tray": 19675.925925925927,
+    "c3_fb": 50000.0,
+    "Rd": 0.8680516420118342,
+    "Rc": 0.7766035502958577,
+    "tray": 19318.181818181816,
     "glue": 110677.08333333334,
-    "hatch": 2.437175494312116,
+    "hatch": 2.111206846,
     "hl": [
      5.0,
      2.5
@@ -704,11 +817,11 @@
    "title": "Servo frame and control horn: minimum bond area into XPS",
    "script": "redesign/team/C6/joints.py",
    "function": "linkage",
-   "equation": "F = Mh/arm (V_D/V_B2)^2 sf ff pf (full deflection at VD: conservative vs F4's schedule, D-29); A_min = F / (kd sigma_XPS)",
+   "equation": "F = Mh/arm (V_D/V_B2)^2 sf ff pf, V_D = requirements.vd_ms 27.2 m/s (D-50: VD held by the fixed-wing throttle cap; full deflection at VD is conservative vs F4's schedule, D-29); A_min = F / (kd sigma_XPS)",
    "inputs": {
     "Mh": "CL-B2-HINGE-MOMENT",
     "arm": "ASM-C6-HORN-ARM",
-    "V": "CL-C1-VD-ENV",
+    "V": "P:requirements.vd_ms",
     "Vb": "ASM-C6-B2-HINGE-V",
     "sf": "P:requirements.safety_factor_ult",
     "ff": "ASM-C1-FITTING-FACTOR",
@@ -717,13 +830,13 @@
     "s_xps": "ASM-D3-XPS-TENSILE"
    },
    "outputs": {
-    "F_design_n": 125.21671574630405,
-    "A_min_mm2": 1001.7337259704323
+    "F_design_n": 89.90628485529601,
+    "A_min_mm2": 719.2502788423681
    },
    "input_values": {
     "Mh": 0.2571601084416001,
     "arm": 0.012,
-    "V": 32.1,
+    "V": 27.2,
     "Vb": 19.5,
     "sf": 1.5,
     "ff": 1.15,
@@ -801,7 +914,7 @@
     "FIN-003-LL"
    ],
    "how": "Witness line across each screw head and plate; tap test after T-H1 thrust-stand runs",
-   "value": 4.116628567137612
+   "value": 3.7247701978812584
   },
   {
    "id": "CL-C6-MOTOR-STRIP-RF",
@@ -824,7 +937,7 @@
     "PRP-001-LL"
    ],
    "how": "Probe the motor hole depth on arrival (E1 T-E1-MOTOR-RM); engagement >= 3.0 mm",
-   "value": 32.59058056147504
+   "value": 29.488310938734386
   },
   {
    "id": "CL-C6-CANT-ENGAGE",
@@ -878,7 +991,7 @@
     "FIN-002-L"
    ],
    "how": "T-D3-SLIP setting; witness line after GT runs",
-   "value": 16.60059380653349
+   "value": 16.758094696538553
   },
   {
    "id": "CL-C6-MOUNT-SIDE-AXIAL-RF",
@@ -1001,10 +1114,10 @@
    "value": 5.936231884057966
   },
   {
-   "id": "CL-C6-PDB-ENGAGE-RF",
+   "id": "CL-C6-PWR-ENGAGE-RF",
    "type": "claim",
-   "title": "PDB screw engagement in the heat-set insert / 1.5 d",
-   "calc": "CALC-C6-INSERT",
+   "title": "Power-frame M3x18 PA66 engagement in the heat-set insert / 1.5 d (E-PWR-03)",
+   "calc": "CALC-C6-PWR-FRAME",
    "output": "rf_engage",
    "unit": "-",
    "limit": {
@@ -1015,16 +1128,143 @@
     "R-JOINT-STACK"
    ],
    "parts": [
+    "PWR-006",
     "POD-002"
    ],
-   "how": "F1 measures the PCB + spacer stack; screw runs in by hand >= 4.5 mm",
-   "value": 1.2444444444444442
+   "how": "Build check: stack 0.5 + 2.0 + 10.0 mm measured with calipers; the screw runs in by hand >= 9 turns (4.5 mm) before the head seats",
+   "value": 1.2222222222222217
+  },
+  {
+   "id": "CL-C6-PWR-BORE-RF",
+   "type": "claim",
+   "title": "Insert bore depth / (engagement + 0.5 mm): the M3x18 tip does not bottom",
+   "calc": "CALC-C6-PWR-FRAME",
+   "output": "rf_bore",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "PWR-006",
+    "POD-002"
+   ],
+   "how": "D2 bore 4.0 x 6.5 mm; head seats on the washer with no gap (0.05 mm feeler)",
+   "value": 1.0833333333333335
+  },
+  {
+   "id": "CL-C6-PWR-INSERT-LEN-RF",
+   "type": "claim",
+   "title": "Insert length / engagement: the screw stays inside the brass",
+   "calc": "CALC-C6-PWR-FRAME",
+   "output": "rf_insert_len",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "PWR-006",
+    "POD-002"
+   ],
+   "how": "Same build check",
+   "value": 1.0363636363636368
+  },
+  {
+   "id": "CL-C6-PWR-INSTALL-RF",
+   "type": "claim",
+   "title": "PA66 M3 installation stress (tension + shank torsion) at the C6 torque 0.08 N m",
+   "calc": "CALC-C6-PWR-FRAME",
+   "output": "rf_install",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "PWR-006",
+    "POD-002"
+   ],
+   "how": "T-C6-NYLON-TORQUE: 5 PA66 M3x18 into inserts, torque to failure on a luggage scale; C6 torque <= 0.5 x mean failure torque",
+   "value": 1.3477805282862194
+  },
+  {
+   "id": "CL-C6-PWR-TENSION-RF",
+   "type": "claim",
+   "title": "PA66 screw tension: capacity / (preload + 50 N unplug moment, design)",
+   "calc": "CALC-C6-PWR-FRAME",
+   "output": "rf_tension",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "PWR-006",
+    "POD-002"
+   ],
+   "how": "T-C6-NYLON-TORQUE; first assembly: pull the AS150U apart 10 times, witness marks unmoved",
+   "value": 1.461212376182796
+  },
+  {
+   "id": "CL-C6-PWR-SLIP-RF",
+   "type": "claim",
+   "title": "Power-frame clamp friction / unplug shear (design, full preload)",
+   "calc": "CALC-C6-PWR-FRAME",
+   "output": "rf_slip",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "PWR-006",
+    "POD-002"
+   ],
+   "how": "First assembly: 10 unplug pulls, frame witness line unmoved",
+   "value": 1.2367149758454103
+  },
+  {
+   "id": "CL-C6-PWR-SPACER-RF",
+   "type": "claim",
+   "title": "Nylon spacer bending if the clamp has crept and slips (guided column)",
+   "calc": "CALC-C6-PWR-FRAME",
+   "output": "rf_spacer",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "PWR-006",
+    "POD-002"
+   ],
+   "how": "Every 10 flights: frame does not rock by hand; re-snug to 0.08 N m",
+   "value": 7.231080605254713
   },
   {
    "id": "CL-C6-INSERT-PULL-RF",
    "type": "claim",
-   "title": "Heat-set insert pull-out / avionics crash load",
-   "calc": "CALC-C6-INSERT",
+   "title": "Heat-set insert pull-out / (preload + unplug tension) or crash",
+   "calc": "CALC-C6-PWR-FRAME",
    "output": "rf_pull",
    "unit": "-",
    "limit": {
@@ -1035,10 +1275,11 @@
     "R-STRUCT-MARGIN"
    ],
    "parts": [
+    "PWR-006",
     "POD-002"
    ],
-   "how": "T-C6-INSERT: pull 3 inserts from a printed coupon boss",
-   "value": 20.869565217391305
+   "how": "T-C6-INSERT: pull 3 inserts from a boss printed on the 0.8 mm plate bonded to board",
+   "value": 1.7427084593973134
   },
   {
    "id": "CL-C6-TUBE-BLOCK-RF",
@@ -1062,7 +1303,7 @@
     "FIN-004-L"
    ],
    "how": "T-C6-LAP-PETG (allowable) and C4 T-C4-BLOCK-PROOF",
-   "value": 6.72239214553697
+   "value": 5.030103541875755
   },
   {
    "id": "CL-C6-BLOCK-SPAR-RF",
@@ -1085,12 +1326,12 @@
     "WNG-002"
    ],
    "how": "T-C6-LAP-PETG and T-C4-BLOCK-PROOF",
-   "value": 5.649005495578753
+   "value": 5.6584910165755495
   },
   {
    "id": "CL-C6-COLLAR-RF",
    "type": "claim",
-   "title": "Station collar bond (12 mm as drawn), C1 half-fin torsion",
+   "title": "Station collar bond at the drawn height: max(C1, C4) torsion + brace shear (CR-C4-23)",
    "calc": "CALC-C6-TUBE-BONDS",
    "output": "rf_collar",
    "unit": "-",
@@ -1111,14 +1352,14 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF (1.5 x L4) with the collar witness-marked",
-   "value": 2.2898658347214855
+   "value": 1.0016997150114009
   },
   {
-   "id": "CL-C6-COLLAR-RF-C4",
+   "id": "CL-C6-COLLAR-RF-16MM",
    "type": "claim",
-   "title": "Station collar bond (16 mm, R3), C4 9.3 N m + brace shear (sizing case)",
+   "title": "Station collar bond at the 16 mm fallback (R3 ring), same case",
    "calc": "CALC-C6-TUBE-BONDS",
-   "output": "rf_collar_c4",
+   "output": "rf_collar_alt",
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -1137,12 +1378,12 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "value": 1.0884653458737508
+   "value": 1.335599620015201
   },
   {
    "id": "CL-C6-COLLAR-L-REQ",
    "type": "claim",
-   "title": "Station collar bond height needed for 9.3 N m + brace shear",
+   "title": "Station collar bond height needed for max(C1, C4) torsion + brace shear",
    "calc": "CALC-C6-TUBE-BONDS",
    "output": "L_collar_req_m",
    "unit": "m",
@@ -1160,8 +1401,36 @@
     "FIN-008-LR",
     "FIN-008-LL"
    ],
-   "how": "D3 keeps fin_detail.station_collar.height_m >= this; C1 and C4 agree the torsion (CR-C6-03)",
-   "value": 0.014699595224279941
+   "how": "D3 keeps fin_detail.station_collar.height_m >= this; T-C4-FIN-PROOF",
+   "value": 0.011979638029410263
+  },
+  {
+   "id": "CL-C6-STRIP-ANCHOR-F",
+   "type": "claim",
+   "title": "Edge-strip anchor design force per strip (pass line of T-C6-STRIP-ANCHOR, for H1)",
+   "calc": "CALC-C6-STRIP",
+   "output": "F_design_n",
+   "unit": "N",
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-011-URO",
+    "FIN-011-URI",
+    "FIN-011-ULO",
+    "FIN-011-ULI",
+    "FIN-011-LRO",
+    "FIN-011-LRI",
+    "FIN-011-LLO",
+    "FIN-011-LLI",
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "H1 sizes the lever frame to >= this (CR-H1-12); C4 FE CL-C4-D3-STRIP-END-F is the source",
+   "value": 907.9413306284688
   },
   {
    "id": "CL-C6-STRIP-ANCHOR-RF",
@@ -1192,8 +1461,8 @@
     "FIN-008-LR",
     "FIN-008-LL"
    ],
-   "how": "T-C6-STRIP-ANCHOR: pull a strip out of a printed tail coupon",
-   "value": 1.7626148964672004
+   "how": "T-C6-STRIP-ANCHOR: pull one strip out of a printed tail coupon",
+   "value": 1.7402005467757904
   },
   {
    "id": "CL-C6-STRIP-EMBED-REQ",
@@ -1217,7 +1486,31 @@
     "FIN-008-LL"
    ],
    "how": "T-C6-STRIP-ANCHOR on the 40 mm two-face tail",
-   "value": 0.022693556079760695
+   "value": 0.02269853326571172
+  },
+  {
+   "id": "CL-C6-STRIP-TAIL-NET-RF",
+   "type": "claim",
+   "title": "Collar tail net section in tension, one strip's force (D3 area estimate)",
+   "calc": "CALC-C6-STRIP",
+   "output": "rf_tail_net",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "T-C6-STRIP-ANCHOR: the tail must not break before 908 N",
+   "value": 1.569484670351583
   },
   {
    "id": "CL-C6-STRIP-FACE-RF",
@@ -1243,13 +1536,13 @@
     "FIN-001-LR",
     "FIN-001-LL"
    ],
-   "how": "T-C6-BOARD-LAP (allowable); C4 confirms the shear flow in its FE (CR-C6-02)",
-   "value": 0.2908314579170881
+   "how": "T-C6-BOARD-LAP (allowable); C4 FE CL-C4-D3-STRIP-Q (= C4 MS -0.77)",
+   "value": 0.23319706973286636
   },
   {
    "id": "CL-C6-STRIP-PIN-RF",
    "type": "claim",
-   "title": "Through-pins tying the strip pair through two layers (CR-C6-02), weaker of shear and bending",
+   "title": "Through-pins at the drawn 15 mm pitch, C4 pin force 64 N, weaker of shear and bending (bending bound: reaction at the board mid-plane)",
    "calc": "CALC-C6-STRIP",
    "output": "rf_pin",
    "unit": "-",
@@ -1275,7 +1568,38 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF with pins fitted; no strip lift at the tip",
-   "value": 1.1492754360064568
+   "value": 0.9215222655489811
+  },
+  {
+   "id": "CL-C6-STRIP-PIN-RF-PROP",
+   "type": "claim",
+   "title": "Through-pins at the proposed 12 mm pitch (CR-C6-25)",
+   "calc": "CALC-C6-STRIP",
+   "output": "rf_pin_prop",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-011-URO",
+    "FIN-011-URI",
+    "FIN-011-ULO",
+    "FIN-011-ULI",
+    "FIN-011-LRO",
+    "FIN-011-LRI",
+    "FIN-011-LLO",
+    "FIN-011-LLI",
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "T-C4-FIN-PROOF with pins fitted at 12 mm",
+   "value": 1.1519028319362261
   },
   {
    "id": "CL-C6-BRACE-END-RF",
@@ -1307,7 +1631,7 @@
     "FIN-010-LL"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF (G2)",
-   "value": 2.29758720406072
+   "value": 2.3365827792015557
   },
   {
    "id": "CL-C6-ANCHOR-PULL-RF",
@@ -1332,12 +1656,12 @@
     "WNG-002"
    ],
    "how": "T-C4-FIN-PROOF (G2 in tension on the brace)",
-   "value": 1.3233152315641628
+   "value": 1.3457750705014053
   },
   {
    "id": "CL-C6-FOOT-SHOE-RF",
    "type": "claim",
-   "title": "Foot shoe bond on the fin tip at the C6 board allowable",
+   "title": "Foot shoe bond on the fin tip, 1 350 mm2 at the C6 board allowable (CR-D5-24)",
    "calc": "CALC-C6-FOAM-BONDS",
    "output": "rf_foot",
    "unit": "-",
@@ -1359,12 +1683,12 @@
     "FIN-001-LL"
    ],
    "how": "T-C6-BOARD-LAP; T-C1-FOOT-DROP",
-   "value": 1.3487327223920291
+   "value": 1.5437186877828502
   },
   {
    "id": "CL-C6-FIN-ROOT-RF",
    "type": "claim",
-   "title": "Half-fin root fillet on XPS at the C6 foam allowable",
+   "title": "Half-fin root fillet on XPS at the C6 foam allowable, leg as drawn by D3 (12 mm)",
    "calc": "CALC-C6-FOAM-BONDS",
    "output": "rf_root",
    "unit": "-",
@@ -1384,7 +1708,32 @@
     "WNG-001"
    ],
    "how": "T-C6-XPS-PULL; D3 T-D3-ROOT side pull",
-   "value": 0.8695746667456354
+   "value": 0.869574709594114
+  },
+  {
+   "id": "CL-C6-FIN-ROOT-RF-PROP",
+   "type": "claim",
+   "title": "Same root fillet with the 15 mm leg adopted in D-48 (CR-C6-24)",
+   "calc": "CALC-C6-FOAM-BONDS",
+   "output": "rf_root_prop",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN",
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL",
+    "WNG-001"
+   ],
+   "how": "T-C6-XPS-PULL; D3 T-D3-ROOT side pull on a 15 mm-leg coupon",
+   "value": 1.237936218519398
   },
   {
    "id": "CL-C6-POD-WING-RF",
@@ -1405,7 +1754,7 @@
     "WNG-001"
    ],
    "how": "T-C6-XPS-PULL (tension and shear); C3 pod proof",
-   "value": 1.5428628138468146
+   "value": 1.152005193702942
   },
   {
    "id": "CL-C6-POD-CRASH-RF",
@@ -1426,7 +1775,7 @@
     "WNG-001"
    ],
    "how": "T-C6-XPS-PULL",
-   "value": 1.3128354916141665
+   "value": 1.2876582905383789
   },
   {
    "id": "CL-C6-POD-TRAY-RF",
@@ -1447,7 +1796,7 @@
     "POD-002"
    ],
    "how": "T-C6-BOARD-LAP flat-wise pulls",
-   "value": 2.541176470588235
+   "value": 2.588235294117647
   },
   {
    "id": "CL-C6-POD-FLOOR-RF",
@@ -1507,7 +1856,7 @@
     "POD-003"
    ],
    "how": "Spring scale on the closed hatch (C3 CL-C3-HATCH-TAB); T-D2-STRAP-PULL",
-   "value": 1.0257775879638147
+   "value": 1.1841568270473484
   },
   {
    "id": "CL-C6-POD-ALLOW-RATIO",
@@ -1546,7 +1895,7 @@
     "MEC-004-R"
    ],
    "how": "D6 shows the bonded area of each part >= this; T-C6-XPS-PULL",
-   "value": 1001.7337259704323
+   "value": 719.2502788423681
   },
   {
    "id": "CL-C6-SNAP-L-MIN",
@@ -1575,7 +1924,7 @@
     "CL-C6-TUBE-BLOCK-RF",
     "CL-C6-BLOCK-SPAR-RF",
     "CL-C6-COLLAR-RF",
-    "CL-C6-COLLAR-RF-C4",
+    "CL-C6-COLLAR-RF-16MM",
     "CL-C6-BRACE-END-RF",
     "CL-C6-STRIP-ANCHOR-RF"
    ],
@@ -1600,6 +1949,7 @@
    "title": "Flat-wise pull and shear of epoxy pucks on XPS",
    "verifies": [
     "CL-C6-FIN-ROOT-RF",
+    "CL-C6-FIN-ROOT-RF-PROP",
     "CL-C6-POD-WING-RF",
     "CL-C6-POD-CRASH-RF",
     "CL-C6-LINK-BOND-AREA-MIN"
@@ -1626,7 +1976,18 @@
     "CL-C6-INSERT-PULL-RF"
    ],
    "state": "planned",
-   "procedure": "3 inserts in a printed boss (same settings as POD-002), M3 screw + washer, pull to failure; pass >= 300 N each"
+   "procedure": "3 inserts in 7 mm bosses printed on a 0.8 mm plate as POD-002 (same settings), plate bonded to a foam-board offcut; steel M3 screw + washer, pull to failure; pass >= 300 N each or, if the plate peels off the board first, record that load for D2 (unplug moment path, CR-C6-27)"
+  },
+  {
+   "id": "T-C6-NYLON-TORQUE",
+   "type": "test",
+   "title": "PA66 M3x18 torque to failure in a brass insert",
+   "verifies": [
+    "CL-C6-PWR-INSTALL-RF",
+    "CL-C6-PWR-TENSION-RF"
+   ],
+   "state": "planned",
+   "procedure": "5 PA66 M3x18 from the bought batch through a 12.5 mm nylon/PETG stack into an insert; hex key + luggage scale 50 mm out, raise slowly to failure; pass: mean failure torque >= 2 x 0.08 N m (>= 3.2 N on the scale). Repeat one at 0.08 N m, 48 h, re-check breakaway >= 0.04 N m (creep)"
   },
   {
    "id": "T-C6-HEAD-CREEP",
@@ -1654,11 +2015,13 @@
    "type": "test",
    "title": "Edge-strip pull-out from the collar tail",
    "verifies": [
+    "CL-C6-STRIP-ANCHOR-F",
     "CL-C6-STRIP-ANCHOR-RF",
-    "CL-C6-STRIP-EMBED-REQ"
+    "CL-C6-STRIP-EMBED-REQ",
+    "CL-C6-STRIP-TAIL-NET-RF"
    ],
    "state": "planned",
-   "procedure": "Print the 40 mm two-face station collar tail alone; bond a 10 x 1 strip pair in it as built; pull along the strip with water jugs; pass >= F_design_n of CALC-C6-STRIP (700 N)"
+   "procedure": "Print the 40 mm two-face station collar (ring + tail) alone; bond a 10 x 1 strip pair in it as built (board offcut as the tongue spacer); pull ONE strip along its axis on H1's lever frame with the ring held on a 22 mm mandrel; pass >= CL-C6-STRIP-ANCHOR-F (908 N) with neither the bond nor the tail failing. Record the failure mode"
   },
   {
    "id": "T-C6-PROPNUT",

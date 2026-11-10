@@ -1,16 +1,38 @@
 # Propulsion — K09-L quad tailsitter
 
-Owner: E1 (propulsion engineer), revision 3, 2026-11-09. Model and claims: `team/E1/propulsion.py` →
-`team/E1/claims.json` (47 claims, `CL-E1-…`), `subsystems/propulsion/parts.csv` and
+Owner: E1 (propulsion engineer), revision 5, 2026-11-09. Model and claims: `team/E1/propulsion.py` →
+`team/E1/claims.json` (61 claims, `CL-E1-…`), `subsystems/propulsion/parts.csv` and
 `subsystems/propulsion/interfaces.json`. Figures: `team/E1/plots.py`. Every number is at the 2.6 kg gate and reads
 `params.json` as of this revision: cruise 16 m/s, chord 0.32 m, CLmax 0.80, **7° motor cant** (D-27), harness
 6.5 mΩ (D-32), and B1's rev 3 polar (CD0 0.0513, k 0.0943, trim 1.02).
 
 **Verdict.** Keep the SunnySky X3108S KV900, the LANRC 45 A ESC and the APC 11×5.5MR/MRP. Full throttle stays
 current-limited (`Q_M_BAT_CURR_MAX` 100 A). The worst-state hover T/W is **2.12** (limit 1.6). Propulsion is
-**475.6 g** against the 476 g allocation. Two claims fail, and both are fixed outside E1: cruise power against a
-stale params value (A1, CR-E1-24), and the prop-to-collar gap with my 37.3 mm stack (D3, CR-E1-22). Every number is
-`UNVERIFIED` until `T-E1-MOTOR-RM` and `T-E1-STAND` run.
+**462.0 g** against the 462 g allocation (D-48, ESCs carried stripped of their power leads), zero margin. Three
+claims fail, all fixed by D3 values A1 has already adopted (D-51) but `subsystems/fins/params.json` does not carry yet:
+the prop-to-collar gap (`face_ahead_m` 0.001 → 0.0025, CR-E1-22) twice, and the ESC strap slot (pad 28 → 31 mm,
+CR-E1-30). Every number is `UNVERIFIED` until `T-E1-MOTOR-RM` and `T-E1-STAND` run.
+
+## Revision 5 (2026-11-09): CR-A1-48, CR-A4-43, CR-A5-21, CR-D3-22, CR-B4-20
+
+| Item | Resolution | Numbers | Claim | Status |
+|---|---|---|---|---|
+| Re-run on current inputs (CR-E2-17) | `CALC-E1-WORST` reads `P:electrical.r_ext_mohm` ÷ 1000; stored map rewritten | T/W worst **2.12**, sag 0.851, pack R 22.5 / 30.5 mΩ warm / cold | `CL-E1-TW-WORST`, `CL-E1-SAG-FACTOR` | `UNVERIFIED` |
+| `PRP-002` stripped (D-48) | F2 removes the factory power leads and solders 16 AWG to the pads | ESC 11.0 → **7.6 g**; propulsion **462.0 / 462 g** | `CL-E1-MASS-PRP` | `UNVERIFIED` (weigh) |
+| Tilted keep-outs (CR-A5-21) | `k9.prop_keepout(..., rotate=rot, blade_half=0.010)` in `fusion/propulsion.py` | cylinder on the 7° axis, R 164.7 mm, half **35 mm** (10 + 25) | `CL-E1-KO-HALF` | `MODELLED` (`check.py` 0 hits) |
+| Adapter screws (CR-A4-43, D-58) | M3×4 at 2.5 mm stays under deviation D-58 (a), minimum 2.0 mm; the condition is now a claim and a test step; M3×5 is the compliant swap if the bell allows | thread needed **2.5 mm**; M3×5 engages 3.5 mm (rule 3.0, +0.5 mm) and needs **4.0 mm** free depth; RF 2.12 at 2.5 mm, 1.70 at 2.0 mm | `CL-E1-ADAPTER-THREAD-D58`, `-M3X5-ENGAGE`, `-M3X5-DEPTH`, `-RF-NOM`, `-STRIP` | `UNVERIFIED` (measure) |
+| Motor interface (CR-D3-22) | added to `T-E1-MOTOR-RM`: base Ø ≥ 28 mm, 16 × 19 mm pattern, base hole depth ≥ 4.0 mm | M3×8 through the 4.5 mm plate → 3.5 mm | `CL-E1-HOLE-DEPTH-MIN`, `CL-E1-SCREW-ENGAGE` | `UNVERIFIED` |
+| Lead reach (CR-F2-07) | motor phase-lead length measured against F2's routed **0.121 m**; if it reaches, no splice (F2 −12 g) | — | `CL-F2-PHASE-REACH` | `UNVERIFIED` |
+| ESC envelope for B4 (CR-B4-20) | body 45 × 20 × 6 mm in shrink + 1.5 mm strap over a 10 mm band | **7.5 mm** proud of the pad (B4 assumed 6.8), 23 mm wide, 172.5 mm² frontal | `CL-E1-ESC-PROUD`, `CL-E1-ESC-FRONTAL` | `UNVERIFIED` |
+| Acknowledgements | declared edges in `acknowledges` (16); A4's plan edges not yet declared in `acknowledges_pending` (20: `E-HRN-13…16`, `-24…27`, `-34…37`, `E-FIN-81…88`), moved on the next run after F2 / D3 declare | — | `make_propulsion.py` | `CHECKED` |
+
+**Adapter-screw decision at `T-E1-MOTOR-RM`** (first motor, before any adapter is torqued):
+
+| Measured in the bell top | Screw | Engagement | Basis |
+|---|---|---|---|
+| thread ≥ 3.0 mm and free depth ≥ 4.0 mm | M3×5 SHCS (buy 20, ≈ $3 `EST`) | 3.5 mm | 1.0 d rule met, no deviation |
+| 2.5 mm ≤ thread < 3.0 mm, or free depth < 4.0 mm | supplied M3×4 | 2.5 mm (min 2.0) | D-58 (a), RF 1.70 at 2.0 mm |
+| thread < 2.5 mm | none: the station is not flown | — | D-58 condition fails; E1 re-assesses (motor-box adapter, other motor) |
 
 ## Selection
 
@@ -97,20 +119,22 @@ stands, and with D3's 1 mm `face_ahead_m` the gap is 0.8 mm short. A 2 mm `face_
 | `E-PRP-05…08` | prop `PRP-003-<st>` → adapter | `CT-PROP-NUT` | propulsion | M6 nut 5.3 mm engaged, 1.5 N·m `EST`, field joint |
 | `E-FIN-61…64` | motor → mount `FIN-003-<st>` | `CT-M3-SHCS-MOTOR` | fins (acknowledged) | 4 × M3×8 `PRP-005` |
 | `E-FIN-65…68` | ESC `PRP-002-<st>` → pad `FIN-007-<st>` | `CT-STRAP-VELCRO` | fins (acknowledged) | heat-sink side out |
-| `E-HRN-13…20, 24…27` | power, phase, signal | — | harness (not yet published) | per ESC 24.75 A limited, 51.6 A burst |
+| `E-HRN-17…20` | ESC phase → motor | `CT-SOLDER-PHASE` | harness (acknowledged) | per ESC 24.75 A limited, 51.6 A burst |
+| `E-TRN-17…20` | prop → box slot | `CT-TRN-POCKET` | transport (acknowledged) | stowed props |
+| `E-HRN-13…16`, `-24…27`, `-34…37`; `E-FIN-81…88` | ESC power, DShot, cap leads; motor / ESC thermal contact | — | harness, fins (`acknowledges_pending`) | from A4's plan |
 
-`merge_check.py`: no propulsion errors; 16 nodes, 475.6 g against 476 g; the 8 electrical nodes warn `unconnected`
-until harness publishes.
+`merge_check.py`: no propulsion errors; 16 nodes, 462.0 g against 462 g (WARN `mass` at zero margin); the 8
+electrical nodes warn `unpowered` until harness declares `E-HRN-13…16`.
 
 ## Mass (`CL-E1-MASS-PRP`, `subsystems/propulsion/parts.csv`)
 
 | Part | Per unit | Qty | Total | Basis | Status |
 |---|---|---|---|---|---|
 | Motor with factory leads + 4 × M3×8 (`PRP-001`; screws `PRP-005` at 0 g) | 84.2 g | 4 | 336.8 g | listing 81.0 + ISO 3.2 | `UNVERIFIED` |
-| ESC with leads and heat-shrink | 11.0 g `EST` | 4 | 44.0 g | 6.6 g board + leads | `UNVERIFIED` |
+| ESC stripped (power leads off, F2's 16 AWG on the pads), signal lead, shrink | 7.6 g `EST` | 4 | 30.4 g | 6.6 g board + 1.0 g | `UNVERIFIED` |
 | Prop | 17.0 g | 4 | 68.0 g | APC page | `CHECKED` |
 | Adapter + 4 × M3×4 + M6 nut + washer | 6.7 g | 4 | 26.8 g | vendor 3.0 g + ISO | `UNVERIFIED` |
-| **Total** | 118.9 g | | **475.6 g** | allocation 476 g (D-34) | `UNVERIFIED` |
+| **Total** | 115.5 g | | **462.0 g** | allocation 462 g (D-48) | `UNVERIFIED` |
 
 ## Losses per station (input to E3)
 

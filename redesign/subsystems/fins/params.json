@@ -1,5 +1,5 @@
 {
- "_note": "Fins subsystem (FIN) local numbers, owner D3, design R3 (CR-A1-28, CHANGE-LOG D-26/27/28/42). Read by fusion/fins.py (ctx.local), make_fins.py and team/D3/fins_calcs.py (P:fin_detail.*); C4, C6 and E3 read some keys too: never rename a key. Shared numbers (fin station, tube x, tube OD/ID and length, half height, TE, motor height, cant, board thickness, layers, spar) come from params/params.json; tube_length_m and layers are copies for the C4/C6 readers and fins.py checks they agree. Frame: params.json#frame (metres, x aft, y right, z up).",
+ "_note": "Fins subsystem (FIN) local numbers, owner D3, design R4 (CR-A1-47; CHANGE-LOG D-26/27/28/42/48/51/52/54). Read by fusion/fins.py (ctx.local), make_fins.py and team/D3/fins_calcs.py (P:fin_detail.*); C4, C6 and E3 read some keys too: never rename a key. Shared numbers (fin station, tube x, tube OD/ID and length, half height, TE, motor height, cant, board thickness, layers, spar) come from params/params.json; tube_length_m and layers are copies for the C4/C6 readers and fins.py checks they agree. Frame: params.json#frame (metres, x aft, y right, z up).",
  "fin_detail": {
   "tube_length_m": {
    "value": 0.344,
@@ -61,25 +61,83 @@
     "note": "spray adhesive between the two board layers (3M 77 class, ~15 g/m2 wet)"
    },
    "root_joint_g": {
-    "value": 3.0,
+    "value": 0.4,
     "unit": "g",
-    "source": "ASM-D3-ROOT-JOINT",
+    "source": "ASM-D3-TAPE-LAP",
     "status": "UNVERIFIED",
-    "note": "per half-fin: microballoon-epoxy fillets 2 x 0.26 m + skin-tape laps 15 mm up both faces + LE fillet to the tube (same fillet legs with two layers)"
+    "note": "R4: skin-tape laps only (15 mm up both faces x 0.26 m, ~50 g/m2 packing tape). The fillets are now CAD bodies (root_fillet) with their own density; was 3.0 g for fillets + laps, which under-counted the fillet volume about four times"
    },
    "top_edge": {
-    "value": "straight line from the station-collar top at the LE to the start of the square tip at the half height, then flat to the TE",
+    "value": "straight line from the station-collar top at the LE to the half height at the step front (x 0.2746), then a vertical cut down to the flat step at |z| 0.2005 to the TE",
     "unit": "-",
     "source": "C4 ASM-C4-EDGE-DZ",
     "status": "PROPOSED",
     "note": "the edge strips run along the sloped part and end at the square tip; the LE-top corner is notched for the collar tongue (station_collar.tail_m)"
    },
    "tip_square_m": {
-    "value": 0.04,
+    "value": 0.0454,
     "unit": "m",
-    "source": "team/D5/CHANGE-REQUESTS.md#CR-D5-03 (CR-A1-28)",
+    "source": "team/D5/claims.json#CL-D5-FIN-STEP-X (CR-D5-11, D-54)",
     "status": "PROPOSED",
-    "note": "last 40 mm of each half-fin (x 0.280-0.320) has a flat top edge at |z| = fins.half_height_m and nothing on it but the foot shoe; the edge strips end at its forward edge"
+    "note": "R4: square tip x 0.2746-0.320 (D5): the sloped top edge reaches the half height at x 0.2746, the tip is cut down to the flat step (tip_step_z_m) from there to the TE; strips end at x 0.2746, their end faces meet the step front; pins stop before the shoe cheeks (tip_clear_x_m)"
+   },
+   "tip_step_z_m": {
+    "value": 0.2005,
+    "unit": "m",
+    "source": "team/D5/claims.json#CL-D5-FIN-STEP-Z (CR-D5-11, D-54)",
+    "status": "PROPOSED",
+    "note": "|z| of the flat step edge, 9.5 mm below the 0.21 m half height; the D5 shoe sits on it"
+   },
+   "tip_clear_x_m": {
+    "value": 0.2666,
+    "unit": "m",
+    "source": "team/D5/CHANGE-REQUESTS.md#CR-D5-11",
+    "status": "PROPOSED",
+    "note": "nothing of D3 but the laminate and the strip ends on x >= 0.2666, |z| >= 0.196 (shoe cheeks): the last pin ends before it"
+   },
+   "root_fillet": {
+    "leg_m": {
+     "value": 0.015,
+     "unit": "m",
+     "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-24 (D-48)",
+     "status": "PROPOSED",
+     "note": "cove fillet, both faces, equal legs on the skin and up the laminate, over the effective root length ahead of the hinge"
+    },
+    "leg_aft_m": {
+     "value": 0.013,
+     "unit": "m",
+     "source": "D3 choice (params.json#wing.elevon inboard_y_m / outboard_y_m)",
+     "status": "PROPOSED",
+     "note": "aft of the hinge line the elevon panel ends are 15.2 mm from each laminate face: a 15 mm leg leaves 0.2 mm, 13 mm leaves 2.2 mm for the bead edge"
+    },
+    "leg_fwd_m": {
+     "value": 0.006,
+     "unit": "m",
+     "source": "D3 choice",
+     "status": "PROPOSED",
+     "note": "sealing fillet from the boss tail to the start of the effective length (no strength credit)"
+    },
+    "eff_len_m": {
+     "value": 0.15,
+     "unit": "m",
+     "source": "ASM-D3-ROOT-LEFF",
+     "status": "UNVERIFIED",
+     "note": "bonded root length from the TE forward that carries the full fillet (the foot side load enters at the TE tip); the lower roots skip the D6 slot, so their full fillet starts further forward"
+    },
+    "gcc": {
+     "value": 0.55,
+     "unit": "g/cm3",
+     "source": "ASM-D3-FILLET-DENSITY",
+     "status": "UNVERIFIED",
+     "note": "non-sag fillet mix, ~2 : 1 glass microballoons : laminating epoxy by volume; weigh a cured 20 cm3 sample (T-D3-WEIGH)"
+    },
+    "stop_over_link_slot": {
+     "value": true,
+     "unit": "-",
+     "source": "team/D6/CHANGE-REQUESTS.md#CR-D6-04",
+     "status": "PROPOSED",
+     "note": "lower roots: no fillet over the link slot x 0.2376-0.2616 (both faces), else the 1/8 in rod hits it"
+    }
    }
   },
   "link_slot": {
@@ -161,11 +219,11 @@
     "status": "PROPOSED"
    },
    "face_ahead_m": {
-    "value": 0.001,
+    "value": 0.0025,
     "unit": "m",
-    "source": "team/D3/fins_calcs.py#CALC-D3-PROP-GAP",
+    "source": "params/CHANGE-LOG.md#D-51 (CR-E1-22 rev, CR-A1-47)",
     "status": "PROPOSED",
-    "note": "motor face at the axis this far ahead of the collar front so the collar sits >= 39 mm behind the prop plane (CR-B4-04); the canted plate corners reach about 2 mm further forward, inside the motor-base shadow"
+    "note": "R4: motor face at the axis 2.5 mm ahead of the mount collar front, so the prop plane (E1 stack 37.3 mm, 37.0 mm along x at 7 deg) sits 39.5 mm ahead of the collar >= 0.14 D = 39.1 mm (CL-D3-PROP-GAP)"
    },
    "plate_t_m": {
     "value": 0.0045,
@@ -237,18 +295,18 @@
     "status": "PROPOSED"
    },
    "prop_stack_m": {
-    "value": 0.039,
+    "value": 0.0373,
     "unit": "m",
-    "source": "params.json#propulsion.stations.x_prop_plane_m note",
-    "status": "PROPOSED",
-    "note": "motor face to prop plane: can 0.025 + adapter and hub 0.014 (E1 settles)"
+    "source": "team/E1/claims.json#CL-E1-STACK-PROP-PLANE (D-51)",
+    "status": "UNVERIFIED",
+    "note": "R4: mount face to prop mid-plane along the motor axis (E1 paper stack; frozen on the measured motor, T-E1-MOTOR-RM); its x projection is stack cos(cant)"
    },
    "cant_sense_UR": {
-    "value": 1,
+    "value": -1,
     "unit": "-",
-    "source": "team/D3/CHANGE-REQUESTS.md#CR-D3-07",
+    "source": "params/CHANGE-LOG.md#D-52 (CR-F4-11, CR-B4-15a, CR-E1-32; CR-A1-47)",
     "status": "UNVERIFIED",
-    "note": "+1: the UR thrust gets a component along +t = x_hat x r_hat (right-handed about +x). Sense unchanged at 7 deg (D-27). Prints A (UR, LL) and B (UL, LR) are mirror images; if F4 needs the other sense, swap A and B, no reprint"
+    "note": "R4: -1. The UR thrust side component points along -t = -(x_hat x r_hat): the UR prop end leans toward the wing plane (-z) and outboard (+y); every station follows by the quad mirrors (UL: outboard -y and -z; LR: +y and +z; LL: -y and +z). The R3 print (+1) reversed hover yaw. Prints A (UR, LL) and B (UL, LR) keep their station assignment; the plate geometry of each print changed. H1/H2 verify with an inclinometer and the hanging yaw test before the first hover (D-52)"
    },
    "slip_torque_nm": {
     "value": 2.5,
@@ -315,10 +373,11 @@
     "status": "PROPOSED"
    },
    "h_m": {
-    "value": 0.028,
+    "value": 0.031,
     "unit": "m",
-    "source": "D3 choice",
-    "status": "PROPOSED"
+    "source": "team/E1/CHANGE-REQUESTS.md#CR-E1-30 (CR-A1-47)",
+    "status": "PROPOSED",
+    "note": "R4: 28 -> 31 mm so each strap slot inner edge is 10.5 mm from the pad centre and the 20 mm ESC (ASM-E3-ESC) clears both 3 mm slots (CL-E1-ESC-SLOT was 0.90)"
    },
    "z_m": {
     "value": 0.118,
@@ -400,7 +459,7 @@
     "note": "mounts and ESC pads (D-42)"
    }
   },
-  "_note": "Design R3 (D3): two-layer braced fin (D-26): two 4.8 mm boards laminated, CF 10 x 3 brace from a 16 mm station collar to the spar, CF 10 x 1 edge strips pinned with 2 mm CF pins every 15 mm and anchored 40 mm in a two-face collar tail (C6), internal tube plug at the block, square 40 mm tips for the feet, a strap eye on each block boss, ASA mounts (7 deg canted plate) and ESC pads (D-42).",
+  "_note": "Design R4 (D3, CR-A1-47): R3 two-layer braced fin (D-26) with: cant sense reversed (D-52), motor face 2.5 mm ahead of the collar and E1 stack 37.3 mm (D-51), ESC pad 31 mm high (CR-E1-30), D5 tip step (D-54), 12 mm station collar (D-48, C4 CR-C4-25) and 15 mm root fillets modelled as CAD bodies (CR-C6-24), stopped over the D6 link slot (CR-D6-04). R3: two 4.8 mm boards laminated, CF 10 x 2 brace from the station collar to the spar, CF 10 x 1 edge strips pinned with 2 mm CF pins every 15 mm and anchored 40 mm in a two-face collar tail (C6), internal tube plug at the block, a strap eye on each block boss, ASA mounts (7 deg canted plate) and ESC pads (D-42).",
   "layers": {
    "value": 2,
    "unit": "-",
@@ -438,11 +497,11 @@
   },
   "station_collar": {
    "height_m": {
-    "value": 0.016,
+    "value": 0.012,
     "unit": "m",
-    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-03 (CR-A1-28)",
+    "source": "params/CHANGE-LOG.md#D-48 (C4 CR-C4-25, CR-A1-47)",
     "status": "PROPOSED",
-    "note": "R3: 16 mm (was 12) covers C4 torsion 9.3 N m (CL-C6-COLLAR-L-REQ 13.2 mm). Top 0.5 mm below the mount collar, grows downward; the brace ear keeps its R2 height (ear_h_m) so the brace end stays at |z| 0.1535 as C4 modelled"
+    "note": "R4: 16 -> 12 mm. C4 needs 8.0 mm of bond for the envelope torsion + brace shear (CL-C4-D3-COLLAR-H-REQ); the strip-tail tongue (strip band + 1 mm, ~11.3 mm along z) fits under the ring top (fins.py raises if not). Top 0.5 mm below the mount collar, unchanged; the 12 mm brace ear is now the full ring height, so the brace end stays at |z| 0.1535. C6's re-run (CL-C6-COLLAR-L-REQ 12.0 mm on max(C1, C4)) leaves ratio 1.00: no margin, C6 confirms with T-C6-COLLAR (CR-D3-25)"
    },
    "gap_m": {
     "value": 0.0005,

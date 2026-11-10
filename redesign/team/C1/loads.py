@@ -60,12 +60,13 @@ def _b2_spanload(case="CL0.80"):
 asm("ASM-C1-B2-SPANLOAD", "Spanwise lift shape and cm from B2's AVL (trimmed CL 0.80)",
     "Strip lift per unit CL (cl/CL) and section cm about c/4 versus y of the trimmed S5010 wing with fins, props off, "
     "copied from team/B2/out/loads_spanwise.json case CL0.80 (CR-B2-07); replaces Schrenk",
-    "B2 AVL 3.52 + XFOIL viscous cm at c 0.30 (AR 3.83); the shape changes < 1 % between CL 0.3 and 1.0 (centroid "
-    "0.421-0.423 b/2) and the 0.32 chord (AR 3.59) moves it inboard slightly (conservative). Pod and slipstream "
-    "not included (B2 note)", _b2_spanload(), "m,-,-", status="UNVERIFIED", cites=["SRC-B2-AVL", "SRC-B2-XFOIL"])
-asm("ASM-C1-CLMIN", "Negative CL limit 0.4", "Most negative CL of the reflexed wing, elevons neutral (magnitude)",
-    "B2 CR-B2-07: keep 0.4 (XFOIL section -0.38 at Re 3e5, CL-B2-CLMIN-2D); a larger magnitude raises the negative "
-    "stall line, so 0.4 is the conservative pick", 0.4, "-", cites=["SRC-B2-XFOIL"])
+    "B2 AVL 3.52 + XFOIL viscous cm, regenerated at c 0.32 (AR 3.59, CLa 3.48 /rad, CG 0.0578; CR-B2-13); the shape "
+    "changes < 1 % between CL 0.3 and 1.0 (centroid 0.420-0.422 b/2). Pod and slipstream not included (B2 note)",
+    _b2_spanload(), "m,-,-", status="UNVERIFIED", cites=["SRC-B2-AVL", "SRC-B2-XFOIL"])
+asm("ASM-C1-CLMIN", "Negative CL limit 0.44", "Most negative CL of the reflexed wing, elevons neutral (magnitude)",
+    "B2 CR-B2-13 at c 0.32: 0.44 (XFOIL section -0.435 at Re 3.5e5, CL-B2-CLMIN-2D; was 0.4 at c 0.30). A larger "
+    "magnitude lowers the negative stall line (more negative n reachable before stall), so the B2 value is used as "
+    "given", 0.44, "-", cites=["SRC-B2-XFOIL"])
 asm("ASM-C1-UDE-D-FRAC", "Gust at VD is half the gust at VC", "Derived gust velocity at VD = 0.5 x the VC value",
     "FAR 23.333(c) ratio (25/50 ft/s)", 0.5, "-", status="PROPOSED", cites=["SRC-C1-FAR23"])
 asm("ASM-C1-PROP-PITCH", "Prop pitch 5.5 in", "Geometric pitch of the APC 11x5.5MR", "from the prop name (D-05)",
@@ -80,8 +81,9 @@ asm("ASM-C1-PITCH-RATE", "Peak body rate 3 rad/s", "Highest body rate during tra
 asm("ASM-C1-ELEVON-CN", "Elevon panel CN 1.0", "Normal-force coefficient on a fully deflected elevon panel, for hinge/horn sizing",
     "upper bound for a 22 % plain flap at 25 deg; B2 hinge moments from XFOIL supersede", 1.0, "-")
 asm("ASM-C1-ELEVON-VD-FRAC", "Elevon travel at VD is 1/3 of full", "Roll elevon deflection at VD as a fraction of "
-    "the full travel; full travel up to VA", "requirements.vd_ms note (D-29, CR-C1-15) and FAR 23.455 (aileron 1/3 at "
-    "VD); F4 enforces the schedule in every mode (forwarded by A1)", 1.0 / 3.0, "-", status="PROPOSED",
+    "the full travel; full travel up to VA", "requirements.vd_ms note (D-29, D-50, CR-C1-15) and FAR 23.455 (aileron "
+    "1/3 at VD). D-50: F4 holds the 1/3-at-VD half by envelope (no raw-stick fixed-wing mode, PTCH_LIM_MIN_DEG -10, "
+    "AIRSPEED_MAX 18, THR_MAX 70 %), not by an airspeed-dependent surface limit", 1.0 / 3.0, "-", status="PROPOSED",
     cites=["SRC-C1-FAR23"])
 asm("ASM-C1-ADAPTER-MASS", "Prop adapter and nut 5 g", "Mass of one prop adapter and nut", "A3 mass model EST",
     0.005, "kg")
@@ -95,10 +97,8 @@ asm("ASM-C1-FRICTION", "Ground friction 0.7 (neoprene pad on the landing mat)", 
     "neoprene pad value (ASM-D5-PAD-MU 0.7, UNVERIFIED until H1's pad pull test). Was 0.5 (grass) at C1-R2; the higher "
     "value raises L4/L5 side loads by 40 %; it also sets the parked-stance slide check (higher = less margin needed)",
     0.7, "-")
-asm("ASM-C1-FOOT-BIAS", "Upper-foot cartridge bias 1.077", "Upper (pod-side) foot plateau / mean foot plateau; the lower "
-    "feet carry 2 - bias", "CHANGE-LOG D-30 (C5 CR-C5-10): biased cartridges, upper x1.077, lower x0.923, so the pod-side "
-    "pair that lands first and harder gets the stiffer core. C1 applies it to the level landing L1", 1.077, "-",
-    status="PROPOSED")
+# ASM-C1-FOOT-BIAS (1.077, D-30) is retired at C1-R4: the upper/lower split is read from D5's per-type cartridge
+# plateaus (CL-D5-F-PLATEAU-UPPER / CL-D5-F-PLATEAU, CR-D5-23), bias = upper / mean.
 asm("ASM-C1-MOUNT-MASS", "Printed motor mount 18 g", "One printed ASA motor mount with its collar and screws",
     "inside the C4 fins allocation (D3 CAD; replaces J1's mount-mass assumption, CR-J1-10: C1 reads no J1 ids)",
     0.018, "kg", status="PROPOSED")
@@ -152,7 +152,8 @@ MODEL = {
     "a_avionics": P + "mass.allocation_g.avionics", "a_harness": P + "mass.allocation_g.harness",
     "a_mech": P + "mass.allocation_g.mechanisms",
     "mount_m": "ASM-C1-MOUNT-MASS", "adapter_m": "ASM-C1-ADAPTER-MASS", "pack_x": "CL-A3-PACK-X-REQ",
-    "x_cg_rng": P + "cg.x_range_m", "cant": P + "propulsion.stations.cant_deg", "foot_bias": "ASM-C1-FOOT-BIAS",
+    "x_cg_rng": P + "cg.x_range_m", "cant": P + "propulsion.stations.cant_deg", "fp_u": "CL-D5-F-PLATEAU-UPPER", "fp_m": "CL-D5-F-PLATEAU",
+    "iyy_a3": "CL-A3-IYY", "m_a3": "CL-A3-MASS-BASIC",
 }
 MODEL_UNITS = {
     "g": "m/s2", "rho": "kg/m3", "m_gate": "kg", "b": "m", "c": "m", "x_spar": "m", "spar_len": "m",
@@ -162,7 +163,7 @@ MODEL_UNITS = {
     "st_z": "m", "pod_size": "m", "pod_xle": "m", "pod_zb": "m", "batt_m": "kg", "batt_size": "m", "foot_h": "m",
     "a_wing": "g", "a_fins": "g", "a_pod": "g", "a_landing": "g", "a_power": "g", "a_avionics": "g",
     "a_harness": "g", "a_mech": "g", "mount_m": "kg", "adapter_m": "kg", "pack_x": "m", "x_cg_rng": "m",
-    "cant": "deg", "foot_bias": "-",
+    "cant": "deg", "fp_u": "N", "fp_m": "N", "iyy_a3": "kg m2", "m_a3": "kg",
 }
 MODEL_KEYS = list(MODEL)
 
@@ -293,10 +294,34 @@ def build_items(k, growth="centre", dy_target=0.005):
     for i in grp:
         i["r"] = (i["r"][0] + dx, i["r"][1], i["r"][2])
     TRIM[growth] = dx
+    # Pitch-inertia match (C1-R4, A3-R5): the centre group is lumped at a few points, so the model's Iyy falls short
+    # of A3's item roll-up. Each centre item is split into two halves at x +/- d (CG unchanged) with d chosen so the
+    # model Iyy equals A3's (MC-C: A3 as rolled up, the growth sits at the CG; MC-P: A3 x m_gate / m_A3), bounded by
+    # the pod half-length (the contents cannot sit outside the pod). Izz rises by the same amount.
+    m_all = sum(i["m"] for i in it)
+    cgx = sum(i["m"] * i["r"][0] for i in it) / m_all
+    cgz = sum(i["m"] * i["r"][2] for i in it) / m_all
+    iyy = sum(i["m"] * ((i["r"][0] - cgx) ** 2 + (i["r"][2] - cgz) ** 2) for i in it)
+    target = k["iyy_a3"] * (1.0 if growth == "centre" else k["m_gate"] / k["m_a3"])
+    cen = [i for i in it if i["grp"] == "centre"]
+    m_c = sum(i["m"] for i in cen)
+    d = min(math.sqrt(max(target - iyy, 0.0) / m_c), k["pod_size"][0] / 2)
+    if d > 0:
+        for i in cen:
+            i["m"] /= 2
+            it.append(dict(i, r=(i["r"][0] - d, i["r"][1], i["r"][2])))
+            i["r"] = (i["r"][0] + d, i["r"][1], i["r"][2])
+    SPREAD[growth] = d
     return it
 
 
+def foot_bias(k):
+    """Upper (pod-side) foot share relative to the mean: D5's type-U plateau / mean plateau (lower = 2 - bias)."""
+    return k["fp_u"] / k["fp_m"]
+
+
 TRIM = {}           # centre-group x shift applied per mass configuration (reported in mass_model.csv)
+SPREAD = {}         # centre-group half-separation in x for the pitch-inertia match, per mass configuration
 
 
 def mass_props(items):
@@ -525,32 +550,38 @@ def _vn(g, rho, m, b, c, clmax, clmin, a, nlim, nneg, Vc, ude_c, ude_d_frac, Vd)
 @kit.calc("CALC-C1-ROTOR", title="Rotor limit loads per motor and design dive speed",
           equation="T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; "
                    "rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; "
-                   "H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_cap/60 ; "
-                   "VH = max(V_pitch, VH_B1) ; VD = f_D max(Vc, VH) rounded to 0.1 m/s ; n_hover = n T_lim / (m g)",
+                   "H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_fw/60 (fixed-wing rpm at "
+                   "F4's THR_MAX) ; VH = max(V_pitch, V_lvl_F4) ; VD = f_D max(Vc, VH) rounded UP to 0.1 m/s ; "
+                   "VD_uncapped = f_D max(Vc, VMAX_B1) (information) ; n_hover = n T_lim / (m g)",
           inputs={"T_h": "CL-B4-HOVER-T", "rpm_h": "CL-B4-HOVER-RPM", "Q_h": "CL-B4-HOVER-Q", "kT": "CL-E1-KT",
                   "kP": "CL-E1-KP", "rpm_cap": P + "propulsion.rpm_max", "T_req": P + "requirements.thrust_limit_per_motor_n",
                   "t_ilim": P + "propulsion.thrust_max_per_motor_kg", "g": P + "env.g_ms2",
                   "m_p": P + "propulsion.prop_mass_kg", "D": P + "propulsion.prop_diameter_m",
                   "I_bell": "ASM-C1-BELL-INERTIA", "q_max": "ASM-C1-PITCH-RATE", "pitch": "ASM-C1-PROP-PITCH",
-                  "Vc": P + "performance.cruise_ms", "VH_b1": "CL-B1-VMAX", "fD": "ASM-C1-VD-FACTOR",
+                  "Vc": P + "performance.cruise_ms", "VH_f4": "CL-F4-VLEVEL", "rpm_fw": "CL-F4-FW-RPM-CAP",
+                  "VH_b1": "CL-B1-VMAX", "fD": "ASM-C1-VD-FACTOR",
                   "m": P + "requirements.mtow_gate_kg", "n_mot": P + "propulsion.n_motors"},
           units={"T_h": "N", "rpm_h": "rpm", "Q_h": "N*m", "rpm_cap": "rpm", "T_req": "N", "t_ilim": "kg", "g": "m/s2",
-                 "m_p": "kg", "D": "m", "Vc": "m/s", "VH_b1": "m/s", "m": "kg"},
+                 "m_p": "kg", "D": "m", "Vc": "m/s", "VH_f4": "m/s", "rpm_fw": "rpm", "VH_b1": "m/s", "m": "kg"},
           assumes=["ASM-C1-PROP-PITCH", "ASM-C1-VD-FACTOR", "ASM-C1-PITCH-RATE"], cites=["SRC-C1-FAR23"])
-def rotor_calc(T_h, rpm_h, Q_h, kT, kP, rpm_cap, T_req, t_ilim, g, m_p, D, I_bell, q_max, pitch, Vc, VH_b1, fD, m,
-               n_mot):
+def rotor_calc(T_h, rpm_h, Q_h, kT, kP, rpm_cap, T_req, t_ilim, g, m_p, D, I_bell, q_max, pitch, Vc, VH_f4, rpm_fw,
+               VH_b1, fD, m, n_mot):
     T_cap = kT * T_h * (rpm_cap / rpm_h) ** 2
     T_lim = max(T_req, T_cap)
     rpm = rpm_h * math.sqrt(T_lim / (kT * T_h))
     omega = rpm * 2 * math.pi / 60
     Q = kP * Q_h * (rpm / rpm_h) ** 2
     I_rot = m_p * D * D / 12 + I_bell
-    v_pitch = pitch * rpm_cap / 60
-    VH = max(v_pitch, VH_b1)
-    Vd = round(fD * max(Vc, VH), 1)          # quoted to 0.1 m/s, as the requirement; VH is a proxy (CR-C1-14)
+    # D-50: in fixed-wing flight F4's THR_MAX 70 % holds the motors at rpm_fw, so the highest level speed is F4's
+    # CL-F4-VLEVEL (B1's polar at that throttle), not B1's 9 350 rpm top speed. The pitch speed at rpm_fw is kept as
+    # a lower-bound cross-check. VD is rounded UP to 0.1 m/s (never under-states 1.25 VH).
+    v_pitch = pitch * rpm_fw / 60
+    VH = max(v_pitch, VH_f4)
+    Vd = math.ceil(round(fD * max(Vc, VH) * 10, 6)) / 10
     return {"T_cap_N": T_cap, "T_ilim_N": t_ilim * g, "T_lim_N": T_lim, "rpm": rpm, "omega": omega, "Q_Nm": Q,
             "I_rot": I_rot, "H_Nms": I_rot * omega, "M_gyro_Nm": I_rot * omega * q_max, "V_pitch_ms": v_pitch,
-            "VH_ms": VH, "VD_ms": Vd, "n_hover_max": n_mot * T_lim / (m * g)}
+            "VH_ms": VH, "VD_ms": Vd, "VD_raw_ms": fD * max(Vc, VH), "VD_uncapped_ms": fD * max(Vc, VH_b1),
+            "n_hover_max": n_mot * T_lim / (m * g)}
 
 
 @kit.calc("CALC-C1-VN", title="V-n diagram: manoeuvre and gust envelope",
@@ -588,7 +619,7 @@ def vn_calc(g, rho, m, b, c, clmax, clmin, a, nlim, nneg, Vc, ude_c, ude_d_frac,
                   "cdp": "ASM-C1-CD-PLATE", "v_gust": P + "requirements.gust_survive_ms",
                   "x_cg_t": P + "cg.x_target_m", "mu": "ASM-C1-FRICTION"},
           units={**MODEL_UNITS, "v": "m/s", "att": "deg", "s_min": "m", "s_c": "m", "v_gust": "m/s", "x_cg_t": "m"},
-          assumes=["ASM-C1-CRUSH-EFF", "ASM-C1-LAND-LIFT", "ASM-C1-CONTACT-STROKE", "ASM-C1-FOOT-BIAS"],
+          assumes=["ASM-C1-CRUSH-EFF", "ASM-C1-LAND-LIFT", "ASM-C1-CONTACT-STROKE"],
           cites=["SRC-C1-FAR23"])
 def landing_calc(v, eta, eta_f, lw, n_t, att, s_min, s_c, cdp, v_gust, x_cg_t, mu, **k):
     return _landing(k, v, eta, eta_f, lw, n_t, att, s_min, s_c, cdp, v_gust, x_cg_t, mu)
@@ -613,7 +644,7 @@ def _landing(k, v, eta, eta_f, lw, n_t, att, s_min, s_c, cdp, v_gust, x_cg_t, mu
     grav = (1 - lw) * W / 4
     f = {"level": me_level * kin + grav, "pair_narrow": me_pair_n * kin + grav,
          "pair_wide": me_pair_w * kin + grav, "corner": me_corner * kin + grav}
-    f["level_upper"] = f["level"] * k["foot_bias"]
+    f["level_upper"] = f["level"] * foot_bias(k)
     f_smin = me_level * v * v / (2 * eta_f * s_min) + grav
     out_tip = k["b"] / 2 - k["fin_y"]
     tip_angle = math.degrees(math.atan(k["foot_h"] / out_tip))
@@ -668,6 +699,38 @@ def crash_calc(v, s, g, pack, fc):
           units={"h": "m", "s": "m"})
 def transport_n_calc(h, eta, s):
     return {"n_T": 1 + h / (eta * s), "v_impact_ms": math.sqrt(2 * 9.80665 * h)}
+
+
+@kit.calc("CALC-C1-MASS-XCHECK", title="Lumped-model mass properties against A3's roll-up",
+          equation="I_model from the lumped masses at the gate (MC-C, MC-P, after the Iyy match) ; ratio = I_model / "
+                   "(I_A3 x s) per axis, s = 1 for MC-C (growth at the CG) and m_gate / m_A3 for MC-P (pro rata) ; "
+                   "trim dx = centre-group x shift that puts the model CG on the limit ; d = centre-group spread",
+          inputs={**MODEL, "ixx": "CL-A3-IXX", "izz": "CL-A3-IZZ"},
+          units={**MODEL_UNITS, "ixx": "kg m2", "izz": "kg m2"})
+def mass_xcheck_calc(ixx, izz, **k):
+    out = {}
+    iyy, m_a3 = k["iyy_a3"], k["m_a3"]
+    for growth, mc in (("centre", "C"), ("prorata", "P")):
+        s = 1.0 if growth == "centre" else k["m_gate"] / m_a3
+        m, cg, I = mass_props(build_items(k, growth))
+        for ax, (i, ref) in zip("xyz", ((0, ixx), (1, iyy), (2, izz))):
+            out[f"I{ax}{ax}_{mc}"] = I[i][i]
+            out[f"r_I{ax}{ax}_{mc}"] = I[i][i] / (ref * s)
+        out[f"trim_dx_{mc}_m"] = TRIM[growth]
+        out[f"spread_d_{mc}_m"] = SPREAD[growth]
+    out["r_I_min"] = min(v for kk, v in out.items() if kk.startswith("r_I"))
+    out["r_I_max"] = max(v for kk, v in out.items() if kk.startswith("r_I"))
+    out["trim_dx_max_m"] = max(abs(out["trim_dx_C_m"]), abs(out["trim_dx_P_m"]))
+    return out
+
+
+@kit.calc("CALC-C1-FOOT-XCHECK", title="D5's per-type foot loads inside C1's level-landing bound",
+          equation="r_lim = F_peak_upper(D5) / F_level_upper(C1) ; r_ult = F_ult_upper(D5) / (SF F_level_upper(C1))",
+          inputs={"f_d5": "CL-D5-F-PEAK-UPPER", "f_d5u": "CL-D5-F-ULT-UPPER", "f_c1": "CL-C1-FOOT-LEVEL-UPPER",
+                  "sf": P + "requirements.safety_factor_ult"},
+          units={"f_d5": "N", "f_d5u": "N", "f_c1": "N"})
+def foot_xcheck_calc(f_d5, f_d5u, f_c1, sf):
+    return {"r_lim": f_d5 / f_c1, "r_ult": f_d5u / (sf * f_c1), "F_c1_ult_N": sf * f_c1}
 
 
 # ====================================================================== load cases
@@ -794,7 +857,7 @@ def build_cases(k, X, items, growth, dy=0.005):
     a = math.radians(X["att"])
     Fl, Fn, Fw, Fc, mu = LD["F_foot_level_N"], LD["F_foot_pair_narrow_N"], LD["F_foot_pair_wide_N"], \
         LD["F_foot_corner_N"], X["mu"]
-    bias = k["foot_bias"]
+    bias = foot_bias(k)
     land("L1-LEVEL", "Level landing on four feet, biased cartridges (upper x bias, lower x (2 - bias))",
          {st: (-Fl * (bias if STATIONS[st][1] > 0 else 2 - bias), 0.0, 0.0) for st in STATIONS},
          info={"F_foot_N": Fl, "F_upper_N": Fl * bias, "F_lower_N": Fl * (2 - bias)})
@@ -871,6 +934,16 @@ def build_cases(k, X, items, growth, dy=0.005):
     cases.append({"id": "X4-DROP-LID", "family": "transport",
                   "title": "Box lands on its lid (or rebounds): n_T along -z, reacted at the lid pillars",
                   "gb": (0.0, 0.0, g), "loads": lds, "info": {"n_T": nT, "m_transport_kg": W_T / g}})
+    # aft-wall drop (D-53, CR-D7-14b): box lands on its aft wall (aircraft +x down); the four feet crush on the wall at
+    # D5's per-type plateaus, so the deceleration is sum(plateau) / W_T (props and pack out, no rotor lift).
+    fu, fl = k["fp_u"], 2 * k["fp_m"] - k["fp_u"]
+    xg = k["fin_te"] + k["foot_h"]
+    lds = [load((xg, s * k["fin_y"], sz * k["fin_hh"]), (-(fu if sz > 0 else fl), 0.0, 0.0), grp="foot", side=s,
+                st=st, fin=True, kind="ground") for st, (s, sz) in STATIONS.items()]
+    cases.append({"id": "X5-DROP-AFT", "family": "transport",
+                  "title": "Box lands on its aft wall: four feet crush at D5's plateaus (props and pack out)",
+                  "gb": (g, 0.0, 0.0), "loads": lds,
+                  "info": {"n_T": 2 * (fu + fl) / W_T, "m_transport_kg": W_T / g, "F_upper_N": fu, "F_lower_N": fl}})
     return cases
 
 
@@ -1088,6 +1161,23 @@ def proof_tree(k, res, sf=1.5):
            "proof_hanger_lim_N": 2 * Pt,
            "proof_pivot_in_y_m": (Pa * ya + Pb * yb) / (Pa + Pb), "proof_pivot_out_y_m": (Pc * yc + Pd * yd) / (Pc + Pd),
            "proof_pivot_side_y_m": sum(P * y for y, P in pads) / Pt}
+    # Outboard step (CR-H1-13, agreed with C2): the rolling cases (F6/F7) load one outboard panel far above the
+    # symmetric tree. One side at a time, the wing (still inverted) rests on a padded V-block under the spar just
+    # outboard of the fin (s_out), and pads 3 and 4 (same stations) reproduce the flight-envelope flap shear and
+    # moment at s_out. Limit loads; own weight subtracted as above.
+    ko = max(curves, key=lambda kk: curves[kk][s_out][1])
+    co = curves[ko]
+    Vo2, Mo2 = co[s_out][0] - W[s_out][0], co[s_out][1] - W[s_out][1]
+    P4o = (Mo2 - Vo2 * (yc - s_out)) / (yd - yc)
+    P3o = Vo2 - P4o
+    out_chk = [s for s in stations if s_out <= s <= yc]          # support to pad 3 (beyond it a two-pad test must fall off)
+
+    def test_o(s):
+        return sum(P * (yy - s) for yy, P in ((yc, P3o), (yd, P4o)) if yy > s) + W[s][1]
+    out.update({"proof_out_support_y_m": s_out, "proof_out_case": f"{ko[0]}/{ko[1]}",
+                "proof_out_P3_lim_N": P3o, "proof_out_P4_lim_N": P4o, "proof_out_V_lim_N": co[s_out][0],
+                "proof_out_Mx_lim_Nm": co[s_out][1],
+                "proof_out_cover_min": min(test_o(s) / env_mx[s] for s in out_chk)})
     for j, (y, P) in enumerate(pads):
         out[f"proof_y{j + 1}_m"] = y
         out[f"proof_P{j + 1}_lim_N"] = P
@@ -1172,17 +1262,24 @@ def envelope_calc(**kw):
     # transport allowance per impact axis: every resultant the drop produces must stay inside the other limit cases.
     # z = floor drop onto the cradle foam (the only axis with stroke, D7); x = end impact; y = side impact;
     # lid = box lands on its lid, reacted by the pillars.
-    xcases = {"x": "X1-DROP-X", "y": "X2-DROP-Y", "z": "X3-DROP-Z", "lid": "X4-DROP-LID"}
+    # Axis names (CR-D7-14a): aircraft x = chord = the box's LONG walls (x: nose wall, X1; aft wall, X5 on the feet);
+    # aircraft y = span = the box's END walls (wingtips, X2); z = floor (X3) and lid (X4).
+    W_T = sum(i["m"] for i in build_items(k, "centre") if i["transport"]) * k["g"]
+    n_aft = 2 * (k["fp_u"] + (2 * k["fp_m"] - k["fp_u"])) / W_T
+    xcases = {"x": "X1-DROP-X", "y": "X2-DROP-Y", "z": "X3-DROP-Z", "lid": "X4-DROP-LID", "aft": "X5-DROP-AFT"}
     for ax, cid in xcases.items():
         trn = envelope_scalars(res, fam=("transport",), skip_cases=tuple(c for c in xcases.values() if c != cid))
         rmin, rkey = min((env[key][0] / trn[key][0], key) for key in TRANSPORT_KEYS if trn[key][0] > 1e-9)
-        n_al = kw["n_T"] * rmin
+        n_case = n_aft if ax == "aft" else kw["n_T"]
+        n_al = n_case * rmin
         o[f"n_T_allow_{ax}"] = n_al
         o[f"n_T_governing_{ax}"] = rkey
-        o[f"stroke_req_{ax}_m"] = kw["h_drop"] / (kw["eta"] * max(n_al - 1, 1e-6))
+        if ax != "aft":                                      # the aft wall's stroke is the feet (D5), not foam
+            o[f"stroke_req_{ax}_m"] = kw["h_drop"] / (kw["eta"] * max(n_al - 1, 1e-6))
+    o["n_T_aft"] = n_aft
+    o["aft_ratio"] = n_aft / o["n_T_allow_aft"]
     n_allow, rkey, s_req = o["n_T_allow_z"], o["n_T_governing_z"], o["stroke_req_z_m"]
     # lid pillar / cradle local loads (the pinch is self-equilibrated; it adds bearing, not wing bending)
-    W_T = sum(i["m"] for i in build_items(k, "centre") if i["transport"]) * k["g"]
     A_pad = kw["pad"] ** 2
     o["cradle_F_static_N"] = W_T / 2 + kw["p_lid"]
     o["cradle_F_floor_drop_N"] = kw["n_T"] * W_T / 2 + kw["p_lid"]
@@ -1193,7 +1290,24 @@ def envelope_calc(**kw):
     o.update({kk: vv for kk, vv in proof_tree(k, res)[0].items()})
     nog = envelope_scalars(res, fam=("flight", "hover", "transition", "landing"))
     o["finhalf_T_wingplane_lim"] = env["J-FINHALF:Mz"][0]
+    o["finhalf_T_wingplane_ult"] = env["J-FINHALF:Mz"][0] * sf
     o["finhalf_T_wingplane_case"] = env["J-FINHALF:Mz"][1]
+    # 7 deg tangential cant (CR-C6-21a): the thrust side component rides in every rotor-on case through the J-MOTOR
+    # and J-FINHALF cuts (rotor_loads applies T sin(cant) at the prop plane). Publish the side force in the motor
+    # plane (y-z) and the bending at the mount face it produces, separately from the resultants.
+    side = {}
+    for case, mc, family, jid, v, mb in res["joints"]:
+        if family in ("flight", "hover", "transition") and jid.startswith("J-MOTOR-"):     # rotor-on cases
+            fs = math.hypot(v[1], v[2])
+            if fs > side.get("F", (-1, ""))[0]:
+                side["F"] = (fs, case)
+            if mb > side.get("M", (-1, ""))[0]:
+                side["M"] = (mb, case)
+    o["motor_Fside_lim"], o["motor_Fside_case"] = side["F"]
+    o["motor_Fside_ult"] = side["F"][0] * sf
+    o["motor_Mb_lim"], o["motor_Mb_case"] = side["M"]
+    o["motor_Mb_ult"] = side["M"][0] * sf
+    o["cant_Fside_TLIM_N"] = kw["T_lim"] * math.sin(math.radians(k["cant"]))
     for key, name in (("WING:Mb", "spar_Mb"), ("WING:Mx", "spar_Mx"), ("WING:Mz", "spar_Mz"), ("WING:My", "wing_T"),
                       ("WING:Vz", "wing_Vz"), ("WING:Vx", "wing_Vx"), ("J-FIN:F", "finjoint_F"),
                       ("J-FIN:M", "finjoint_M"), ("FIN:Mb", "finhalf_Mb"), ("FIN:Mz", "finhalf_T"),
@@ -1241,15 +1355,21 @@ kit.claim("CL-C1-ROTOR-OMEGA", "Rotor speed at T_lim", calc="CALC-C1-ROTOR", out
           how="Optical tachometer or rpm telemetry on the thrust stand.")
 kit.claim("CL-C1-GYRO-MOMENT", "Gyroscopic moment per rotor at q_max", calc="CALC-C1-ROTOR", output="M_gyro_Nm",
           unit="N m", how="Calculated; check q_max against flight logs (RATE.*) after the first transitions.")
-kit.claim("CL-C1-VH", "Highest level speed used for VD", calc="CALC-C1-ROTOR", output="VH_ms", unit="m/s",
-          how="Level full-throttle pass with airspeed logging on the twin; B1 re-runs CL-B1-VMAX with the 11x5.5MR.",
-          note="max(prop pitch speed at the 9 350 rpm cap, B1's top speed with the 11x4.5MR); B1's 11x5.5MR value "
-               "replaces it (CR-C1-14).")
-kit.claim("CL-C1-VD", "Design dive speed VD, re-derived at VC 16 m/s", calc="CALC-C1-ROTOR", output="VD_ms",
-          unit="m/s", limit=("<=", P + "requirements.vd_ms"), verifies=["R-LOADS"],
-          how="Flight logs: airspeed never exceeds VD; F4 sets ARSPD_FBW_MAX and the fixed-wing THR_MAX below it.",
-          note="1.25 x VH: VC 16 m/s does not govern; the 11x5.5MR at the rpm cap does. A FAIL here means "
-               "requirements.vd_ms is below the derived value (CR-C1-13); the envelope runs at the larger one.")
+kit.claim("CL-C1-VH", "Highest level speed used for VD (F4 THR_MAX cap)", calc="CALC-C1-ROTOR", output="VH_ms",
+          unit="m/s",
+          how="H2 first full-throttle FBWB level leg, fresh pack: logged airspeed <= this value (same log as "
+              "CL-F4-VLEVEL-VH).",
+          note="D-50: max(prop pitch speed at the fixed-wing rpm cap CL-F4-FW-RPM-CAP, F4's level speed at THR_MAX "
+               "70 % CL-F4-VLEVEL). B1's uncapped 25.7 m/s (CL-B1-VMAX) is no longer the basis; it is kept as "
+               "information (CL-C1-VD-UNCAPPED).")
+kit.claim("CL-C1-VD", "Design dive speed VD = 1.25 VH, re-derived on the capped VH", calc="CALC-C1-ROTOR",
+          output="VD_ms", unit="m/s", limit=("<=", P + "requirements.vd_ms"), verifies=["R-LOADS"],
+          how="Flight logs: airspeed never exceeds VD; F4 holds THR_MAX 70 % in fixed-wing modes (CL-F4-VLEVEL-VH).",
+          note="1.25 x VH rounded up to 0.1 m/s; VC 16 m/s does not govern. Passes against requirements.vd_ms 27.2 "
+               "only while F4's THR_MAX cap holds (D-50); if the log shows a faster level speed, C1 re-runs.")
+kit.claim("CL-C1-VD-UNCAPPED", "VD the uncapped propulsion would need (information)", calc="CALC-C1-ROTOR",
+          output="VD_uncapped_ms", unit="m/s",
+          how="Information only: 1.25 x B1's 9 350 rpm top speed; the 32.1 m/s alternative was rejected (D-50).")
 kit.claim("CL-C1-HOVER-N-MAX", "Hover load factor at full thrust", calc="CALC-C1-ROTOR", output="n_hover_max",
           unit="-", how="Thrust stand x 4 / weighed mass.")
 # V-n
@@ -1376,16 +1496,39 @@ for out, cid, title, unit_, how in (
          "N m", "As above x 1.5."),
         ("n_T_allow", "CL-C1-TRANSPORT-N-ALLOW", "Box floor-drop (z) factor the airframe tolerates", "-",
          "Calculated: the drop must not exceed any flight/landing/handling limit load."),
-        ("n_T_allow_x", "CL-C1-TRANSPORT-N-ALLOW-X", "Box end-impact (x) factor the airframe tolerates", "-",
-         "D7: no stroke at the end pads today (16 mm gap): test-only (CR-D7-02b)."),
-        ("n_T_allow_y", "CL-C1-TRANSPORT-N-ALLOW-Y", "Box side-impact (y) factor the airframe tolerates", "-",
-         "D7: no stroke at the side walls today (36 mm gap): test-only (CR-D7-02b)."),
+        ("n_T_allow_x", "CL-C1-TRANSPORT-N-ALLOW-X",
+         "Box nose-wall impact factor the airframe tolerates (aircraft x = chord = box long wall, load at the cradles)",
+         "-", "D-53: label-and-test only ('keep upright'); D7 names this the nose face (CR-D7-14a confirmed)."),
+        ("n_T_allow_y", "CL-C1-TRANSPORT-N-ALLOW-Y",
+         "Box end-wall impact factor the airframe tolerates (aircraft y = span = box end wall, wingtips)", "-",
+         "D-53: label-and-test only ('keep upright'); D7 names this the end faces (CR-D7-14a confirmed)."),
         ("n_T_allow_lid", "CL-C1-TRANSPORT-N-ALLOW-LID", "Box lid-down (-z) factor the airframe tolerates", "-",
-         "Reacted by the lid pillars over the spar (CR-D7-02c)."),
-        ("stroke_req_x_m", "CL-C1-BOX-STROKE-REQ-X", "Crush stroke an end impact from 0.3 m would need", "m",
-         "D7: end-pad foam if an end drop must be survivable."),
-        ("stroke_req_y_m", "CL-C1-BOX-STROKE-REQ-Y", "Crush stroke a side impact from 0.3 m would need", "m",
-         "D7: side-wall foam if a side drop must be survivable."),
+         "D-53: label-and-test only; reacted by the lid pillars over the spar."),
+        ("n_T_allow_aft", "CL-C1-TRANSPORT-N-ALLOW-AFT",
+         "Box aft-wall impact factor the airframe tolerates (aircraft +x down, four feet crushing)", "-",
+         "Calculated (CR-D7-14b): the X5 cut loads must stay inside the flight/landing/handling envelope."),
+        ("stroke_req_x_m", "CL-C1-BOX-STROKE-REQ-X", "Crush stroke a nose-wall impact (x) from 0.3 m would need", "m",
+         "Information (D-53: label-and-test only)."),
+        ("stroke_req_y_m", "CL-C1-BOX-STROKE-REQ-Y", "Crush stroke an end-wall impact (y) from 0.3 m would need", "m",
+         "Information (D-53: label-and-test only)."),
+        ("finhalf_T_wingplane_lim", "CL-C1-FINHALF-T-WINGPLANE-LIM",
+         "Half-fin torsion about the tube axis at the wing plane (J-FINHALF joint cut), limit", "N m",
+         "C4's FE section torque at the wing plane in the governing case equals this within 5 % (CR-C1-21); C6 "
+         "sizes the collar to max(C4 FE collar torque, this)."),
+        ("finhalf_T_wingplane_ult", "CL-C1-FINHALF-T-WINGPLANE-ULT",
+         "Half-fin torsion about the tube axis at the wing plane (J-FINHALF joint cut), ultimate", "N m",
+         "As above x 1.5."),
+        ("motor_Fside_lim", "CL-C1-MOTOR-FSIDE-LIM",
+         "Motor-to-mount force in the motor plane (y-z), rotor-on cases incl. the 7 deg cant side force, limit", "N",
+         "Stand: side load cell under the canted mount at T_lim (T-C1-STATION-PROOF); C6 motor screws and mount side. "
+         "The set-down case G3 (motor can on the bench) is in CL-C1-MOTOR-F-ULT."),
+        ("motor_Mb_lim", "CL-C1-MOTOR-MB-LIM",
+         "Bending at the motor mount face (about y-z), rotor-on cases incl. cant, limit", "N m",
+         "As above; C6 CALC-C6-MOTOR-SCREW reads it."),
+        ("motor_Mb_ult", "CL-C1-MOTOR-MB-ULT",
+         "Bending at the motor mount face (about y-z), rotor-on cases incl. cant, ultimate", "N m", "As above x 1.5."),
+        ("cant_Fside_TLIM_N", "CL-C1-CANT-FSIDE", "Thrust side force per motor from the 7 deg tangential cant at T_lim",
+         "N", "Inclinometer on the built mounts (D-52) x stand thrust."),
         ("pillar_F_lid_drop_N", "CL-C1-PILLAR-F-LIM", "Lid pillar force per side, lid-down drop (limit)", "N",
          "D7 sizes the pillar and its pad; C2 checks skin bearing over the spar."),
         ("cradle_F_floor_drop_N", "CL-C1-CRADLE-F-LIM", "Cradle force per side, floor drop with lid preload (limit)",
@@ -1396,6 +1539,23 @@ for out, cid, title, unit_, how in (
          "H1 GT-08 whiffletree; pads 40 mm over the spar line."),
         ("proof_y2_m", "CL-C1-PROOF-Y2", "Wing proof pad 2 station per side", "m", "As above."),
         ("proof_y3_m", "CL-C1-PROOF-Y3", "Wing proof pad 3 station per side", "m", "As above."),
+        ("proof_y4_m", "CL-C1-PROOF-Y4", "Wing proof pad 4 station per side", "m", "As above (CR-H1-09)."),
+        ("proof_P4_lim_N", "CL-C1-PROOF-P4-LIM", "Wing proof pad 4 load per side, LIMIT", "N",
+         "As pads 1-3 (CR-H1-09)."),
+        ("proof_R_relief_lim_N", "CL-C1-PROOF-R-LIM", "Wing proof upward relief pull at each motor tube, LIMIT",
+         "N", "Sling + pulley + counterweight on the tube at the wing plane; spring scale reading."),
+        ("proof_pivot_side_y_m", "CL-C1-PROOF-PIVOT-Y", "Wing proof pad-load centroid per side", "m",
+         "Hanger position of the side bar; = sum(P y) / sum(P)."),
+        ("proof_out_support_y_m", "CL-C1-PROOF-OUT-SUPPORT-Y",
+         "Wing proof outboard step: V-block station under the spar, one side at a time", "m",
+         "H1 GT-08 step 2 (CR-H1-13: C2's V-block set-up with C1's loads)."),
+        ("proof_out_P3_lim_N", "CL-C1-PROOF-OUT-P3-LIM", "Wing proof outboard step, pad 3 load, LIMIT", "N",
+         "As above; pad at CL-C1-PROOF-Y3."),
+        ("proof_out_P4_lim_N", "CL-C1-PROOF-OUT-P4-LIM", "Wing proof outboard step, pad 4 load, LIMIT", "N",
+         "As above; pad at CL-C1-PROOF-Y4."),
+        ("proof_out_Mx_lim_Nm", "CL-C1-PROOF-OUT-MX-LIM",
+         "Flap moment just outboard of the fin the outboard step reproduces, LIMIT", "N m",
+         "Strain gauge or tip deflection vs the model."),
         ("proof_P1_lim_N", "CL-C1-PROOF-P1-LIM", "Wing proof pad 1 load per side, LIMIT", "N",
          "H1 GT-08 at limit (no permanent set); x 1.5 only on a sacrificial wing."),
         ("proof_P2_lim_N", "CL-C1-PROOF-P2-LIM", "Wing proof pad 2 load per side, LIMIT", "N", "As above."),
@@ -1418,22 +1578,57 @@ for out, cid, title, unit_, how in (
     kw_ = {}
     if cid == "CL-C1-EQUILIBRIUM-RESIDUAL":
         kw_["limit"] = ("<=", 1e-6)
-    info_only = cid == "CL-C1-EQUILIBRIUM-RESIDUAL" or cid.startswith("CL-C1-PROOF-") or "STROKE-REQ-" in cid
+    info_only = (cid in ("CL-C1-EQUILIBRIUM-RESIDUAL", "CL-C1-CANT-FSIDE") or cid.startswith("CL-C1-PROOF-")
+                 or "STROKE-REQ-" in cid)
     kit.claim(cid, title, calc="CALC-C1-ENVELOPE", output=out, unit=unit_, how=how,
               verifies=[] if info_only else ["R-LOADS"], **kw_)
 
-kit.test("T-C1-WING-PROOF", "Wing proof load at limit", verifies=["CL-C1-SPAR-MB-ULT", "CL-C1-N-LIMIT-POS"],
-         procedure="Aircraft inverted, supported under the pod with the half-fins hanging free; three-pad whiffletree per "
-                   "side over the spar at CL-C1-PROOF-Y1/-Y2/-Y3 loaded to CL-C1-PROOF-P1/P2/P3-LIM (LIMIT; data/whiffletree.json); "
-                   "hold 3 s, no permanent set after unloading; tip deflection logged. Ultimate (x 1.5) on a sacrificial "
-                   "wing only. Torsion is proven separately (twist test at CL-C1-WING-TORSION-ULT / 1.5).")
+kit.claim("CL-C1-FOOT-D5-RATIO", "D5's per-type upper foot peak over C1's level-landing upper foot (limit)",
+          calc="CALC-C1-FOOT-XCHECK", output="r_lim", unit="-", limit=("<=", 1.0), verifies=["R-LANDING-IMPACT"],
+          how="T-C1-FOOT-DROP with a load cell under one upper foot.",
+          note="CR-D5-23: D5's type-U peak (plateau) must sit inside C1's n_L 6 bound; D5 sizes the flange and bond "
+               "to C1's ultimate (CL-C1-FOOT-F-ULT).")
+kit.claim("CL-C1-FOOT-LEVEL-UPPER-ULT", "Upper foot load, level landing, ultimate (D5 sizes the flange to it)",
+          calc="CALC-C1-FOOT-XCHECK", output="F_c1_ult_N", unit="N", how="As CL-C1-FOOT-LEVEL-UPPER x 1.5.")
+kit.claim("CL-C1-INERTIA-RATIO-MIN", "Lumped-model inertia over A3's (scaled to the gate), smallest axis",
+          calc="CALC-C1-MASS-XCHECK", output="r_I_min", unit="-", limit=(">=", 0.85),
+          how="A3 bifilar swing (T-A3-SWING) replaces both.",
+          note="The rotor cases' angular accelerations scale with 1/I, so a low model inertia under-states the "
+               "inertia relief that is NOT there (unconservative for the differential-thrust cases). Iyy is matched by "
+               "spreading the centre group in x (bounded by the pod half-length); Ixx and Izz are checked. Band "
+               "0.85-1.15 accepted for a quasi-static load model.")
+kit.claim("CL-C1-INERTIA-RATIO-MAX", "Lumped-model inertia over A3's (scaled to the gate), largest axis",
+          calc="CALC-C1-MASS-XCHECK", output="r_I_max", unit="-", limit=("<=", 1.15),
+          how="As above.")
+kit.claim("CL-C1-CG-TRIM-DX", "Largest centre-group shift that puts the lumped model on a CG limit",
+          calc="CALC-C1-MASS-XCHECK", output="trim_dx_max_m", unit="m", how="Information (CR-C1-25).")
+kit.claim("CL-C1-TRANSPORT-N-AFT", "Box aft-wall impact factor, four feet crushing at D5's plateaus",
+          calc="CALC-C1-ENVELOPE", output="n_T_aft", unit="-", limit=("<=", "CL-C1-TRANSPORT-N-ALLOW-AFT"),
+          verifies=["R-LOADS"],
+          how="Loaded-box drop on the aft wall with an accelerometer on the spar (D7 T-D7-BOX-DROP); cartridges "
+              "replaced after.",
+          note="n = sum of the four plateaus / transport weight (props and pack out); independent of the drop height "
+               "while the 35 mm usable foot stroke lasts (D7 CL-D7-AFT-DROP-ALLOW).")
+
+kit.test("T-C1-WING-PROOF", "Wing proof load at limit (the one wing limit proof, run as H1 GT-08)",
+         verifies=["CL-C1-PROOF-MX-ROOT-LIM", "CL-C1-N-LIMIT-POS"],
+         procedure="Aircraft inverted, supported under the pod with the half-fins hanging free; four-pad whiffletree per "
+                   "side over the spar at CL-C1-PROOF-Y1/-Y2/-Y3/-Y4 loaded to CL-C1-PROOF-P1/P2/P3/P4-LIM, plus the "
+                   "upward relief pull CL-C1-PROOF-R-LIM at each motor tube (LIMIT; data/whiffletree.json); hold 3 s, "
+                   "no permanent set after unloading; tip deflection logged. Step 2, each side in turn (rolling "
+                   "cases): padded V-block under the spar at CL-C1-PROOF-OUT-SUPPORT-Y, pads 3 and 4 at "
+                   "CL-C1-PROOF-OUT-P3/P4-LIM. "
+                   "Ultimate (x 1.5) on a sacrificial wing only. Torsion: twist test at CL-C1-WING-TORSION-ULT / 1.5; "
+                   "the G2 tube-end handling moment: T-C1-STATION-PROOF (CR-H1-13, agreed with C2).")
 kit.test("T-C1-FOOT-DROP", "Foot drop test at 1.5 m/s", verifies=["CL-C1-N-LAND-STROKE-MIN", "CL-C1-FOOT-STROKE-REQ"],
          procedure="0.115 m free drop of the aircraft (or a 2.6 kg dummy on one fin) onto its feet, accelerometer at the "
                    "CG; level and 10 deg tilted; n <= 6.")
 kit.test("T-C1-THRUST-FRESH", "Max thrust on a fresh pack", verifies=["CL-C1-T-CAP", "CL-C1-T-LIMIT"],
          procedure="H1 thrust stand, one station, 11x5.5MR, 16.8 V pack, F4 output cap and 100 A limiter as flown: step to full throttle, record peak thrust, torque and rpm.")
 kit.test("T-C1-STATION-PROOF", "Motor-station proof load", verifies=["CL-C1-MOUNT-F-ULT", "CL-C1-FINHALF-MB-ULT"],
-         procedure="Hang the limit mount load from each motor mount in -x and y with the wing supported at the spar.")
+         procedure="Hang the limit mount load from each motor mount in -x and y with the wing supported at the spar. "
+                   "G2 step (CR-H1-13): wing held under the pod, a load equal to the G2 fin-group cut "
+                   "(data/envelope.json, J-FIN in G2-HANG-MOTOR) hung at the UR upper tube end at LIMIT; no permanent set.")
 
 
 # ====================================================================== export (data files and figures)
@@ -1597,10 +1792,17 @@ def write_data(outdir):
                            "direction when inverted. The tree reproduces the flap shear and bending of the governing "
                            "flight case at the support station; torsion is not proof-tested by it.",
                    **{kk: (round(vv, 4) if isinstance(vv, float) else vv) for kk, vv in pt.items()},
-                   "pad_mass_kg_limit": {f"P{j}": round(pt[f"proof_P{j}_lim_N"] / k["g"], 3) for j in (1, 2, 3)},
-                   "tree": "bar A joins pads 2 and 3 at proof_pivot_outer_y_m; bar B joins pad 1 and bar A's pivot "
-                           "at proof_pivot_side_y_m; the top bar joins both sides at the centreline "
-                           "(hanger load = proof_hanger_lim_N)"}, f, indent=1)
+                   "pad_mass_kg_limit": {f"P{j}": round(pt[f"proof_P{j}_lim_N"] / k["g"], 3) for j in (1, 2, 3, 4)},
+                   "relief_mass_kg_limit": round(pt["proof_R_relief_lim_N"] / k["g"], 3),
+                   "tree": "per side: bar A joins pads 1 and 2 (inboard panel) at proof_pivot_in_y_m; bar B joins pads 3 "
+                           "and 4 (outboard panel) at proof_pivot_out_y_m; bar C joins the pivots of A and B at "
+                           "proof_pivot_side_y_m; the top bar joins both sides at the centreline (hanger load = "
+                           "proof_hanger_lim_N). The relief pull R acts upward on each motor tube at the wing plane "
+                           "through a separate sling over a pulley (not part of the tree). Step 2 (outboard, each "
+                           "side in turn): padded V-block under the spar at proof_out_support_y_m, pads 3 and 4 only, "
+                           "at proof_out_P3_lim_N / proof_out_P4_lim_N.",
+                   "pad_mass_kg_limit_outboard_step": {"P3": round(pt["proof_out_P3_lim_N"] / k["g"], 3),
+                                                       "P4": round(pt["proof_out_P4_lim_N"] / k["g"], 3)}}, f, indent=1)
     with open(outdir / "whiffletree.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["y_m", "Vz_case_limit_N", "Mx_case_limit_Nm", "Mx_flight_envelope_limit_Nm", "Vz_test_limit_N",
@@ -1629,6 +1831,8 @@ def write_mass_csv(outdir, k):
             m, cg, I = mass_props(items)
             w.writerow([mc, "TOTAL", "", len(items), f"{m:.5f}"] + [f"{x:.4f}" for x in cg])
             w.writerow([mc, "TRIM_centre_group_dx", "", "", "", f"{TRIM[growth]:.4f}", "", ""])
+            w.writerow([mc, "SPREAD_centre_group_half_dx", "", "", "", f"{SPREAD[growth]:.4f}", "", ""])
+            w.writerow([mc, "INERTIA_Ixx_Iyy_Izz_kgm2", "", "", "", f"{I[0][0]:.5f}", f"{I[1][1]:.5f}", f"{I[2][2]:.5f}"])
 
 
 def convergence(k, X):
@@ -1653,6 +1857,25 @@ def hand_check(k, X):
     M_lift = W / 2 * ybar
     M_wt = sum(i["m"] * k["g"] * i["r"][1] for i in items if i["r"][1] > 0)
     return M_lift - M_wt
+
+
+def b2_root_check(k):
+    """Lift-only root bending at 1 g, gate mass: model strips (B2 shape) vs B2's CL-B2-ROOT-BM-1G."""
+    ys, dy, _ = strips(k)
+    w, _ = span_shape(ys, kit.value("ASM-C1-B2-SPANLOAD"))
+    W = k["m_gate"] * k["g"]
+    m_model = sum(W * wi * y for y, wi in zip(ys, w) if y > 0)
+    m_b2 = kit.value("CL-B2-ROOT-BM-1G")
+    return {"model_Nm": m_model, "B2_Nm": m_b2, "diff_frac": (m_model - m_b2) / m_b2}
+
+
+def cant_check(k, res):
+    """H2 (four motors at T_lim): J-MOTOR in-plane force vs T_lim sin(cant) (the rest is rotor-group inertia)."""
+    v = [vv for case, mc, fam, jid, vv, mb in res["joints"] if case == "H2-MAX-THRUST" and mc == "MC-C"
+         and jid == "J-MOTOR-UR"][0]
+    T = kit.value("CL-C1-T-LIMIT")
+    return {"J_MOTOR_UR_Fside_N": math.hypot(v[1], v[2]), "T_lim_sin_cant_N": T * math.sin(math.radians(k["cant"])),
+            "J_MOTOR_UR_Fx_N": v[0]}
 
 
 def svg_figures(outdir, k, X, kw, wenv):
@@ -1777,11 +2000,14 @@ if __name__ == "__main__":
     f8 = [v for case, mc, fam, y, side, v in res["wing"] if case == "F8-CRUISE" and mc == "MC-C" and side > 0 and abs(y) < 1e-12][0]
     rep = {"strip_convergence_F1_root": [{"dy_m": d, "Mx_Nm": mx, "Mbend_Nm": mb} for d, mx, mb in conv],
            "hand_check_F8_root_Mx": {"hand_Nm": hc, "model_Nm": f8[3], "diff_frac": (f8[3] - hc) / hc},
-           "equilibrium_residual_max": res["residual"]}
+           "equilibrium_residual_max": res["residual"],
+           "hand_check_B2_root_lift_moment_1g": b2_root_check(k),
+           "cant_side_force_in_J_MOTOR_H2": cant_check(k, res)}
     (out / "checks.json").write_text(json.dumps(rep, indent=1), encoding="utf-8")
     print(json.dumps(rep, indent=1))
-    # sensitivity: the envelope at requirements.vd_ms (what A1 keeps if F4 caps the level speed, CR-C1-20)
-    vd_req = kit.value(P + "requirements.vd_ms")
+    # sensitivity (information, D-50): the envelope the claims carry (VD = max(requirement, capped derived)) vs the
+    # rejected uncapped alternative (1.25 x B1's 9 350 rpm top speed): what an uncapped THR_MAX would cost
+    vd_req = math.ceil(round(kit.value("CL-C1-VD-UNCAPPED") * 10, 6)) / 10
     vn2 = vn_calc(kw["g"], kw["rho"], kw["m_gate"], kw["b"], kw["c"], kw["clmax"], kit.value("ASM-C1-CLMIN"),
                   kit.value("CL-B2-CLA-3D"), kit.value(P + "requirements.load_factor_limit_pos"),
                   kit.value(P + "requirements.load_factor_limit_neg"), kw["Vc"], kw["v_gust"],
@@ -1791,8 +2017,10 @@ if __name__ == "__main__":
     o1, o2 = kit._run("CALC-C1-ENVELOPE"), envelope_calc(**kw2)
     keys = ["spar_Mb_ult", "spar_Mx_ult", "wing_T_ult", "wing_Vz_ult", "finjoint_M_ult", "finhalf_Mb_ult",
             "finhalf_T_ult", "mount_F_ult", "pod_F_ult", "foot_F_ult", "proof_P_side_lim_N", "proof_Mx_root_lim_Nm"]
-    sens = {"note": "Envelope at the derived VD (B1's VH x 1.25, what the claims carry) vs at requirements.vd_ms",
-            "VD_derived_ms": kw["VD"], "VD_requirement_ms": vd_req,
+    sens = {"note": "D-50: 'at_derived' = the envelope the claims carry (VD = max(requirements.vd_ms, 1.25 x F4's "
+                    "capped VH)); 'at_requirement' = the REJECTED uncapped alternative (1.25 x B1's 9 350 rpm top "
+                    "speed), kept to show what losing the THR_MAX cap would cost",
+            "VD_derived_ms": kw["VD"], "VD_requirement_ms": vd_req, "VD_uncapped_ms": vd_req,
             "n_pos": [kw["n_pos"], vn2["n_design_pos"]], "n_neg": [kw["n_neg"], vn2["n_design_neg"]],
             "q_VD_Pa": [0.5 * kw["rho"] * kw["VD"] ** 2, 0.5 * kw["rho"] * vd_req ** 2],
             "n_stall_VD": [(kw["VD"] / vn2["Vs"]) ** 2, vn2["n_stall_VD"]],

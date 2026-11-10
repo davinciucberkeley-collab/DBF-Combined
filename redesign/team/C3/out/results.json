@@ -1,33 +1,39 @@
 {
+ "CALC-C3-ALLOW": {
+  "xps_shear_pa": 100000.0,
+  "paper_shear_pa": 100000.0,
+  "board_flat_pa": 50000.0
+ },
  "CALC-C3-BOND": {
   "area_m2": 0.0091,
   "length_m": 0.065,
-  "sigma_design_pa": 45658.35679945054,
-  "tau_design_pa": 19156.21978021978,
-  "R_design": 0.6481457657967032,
-  "case": "L1-LEVEL/MC-C",
-  "group_mass_kg": 0.9004,
-  "group_cg_x": -0.023385384273656145,
-  "crash_F_n": 112.55,
-  "sigma_crash_pa": 76171.00591715975,
+  "sigma_design_pa": 77866.67862426034,
+  "tau_design_pa": 8938.485576923076,
+  "R_design": 0.8680516420118342,
+  "case": "L2-PAIR-NARROW/MC-C",
+  "group_mass_kg": 0.954,
+  "group_cg_x": -0.01652139333382031,
+  "crash_F_n": 119.24999999999999,
+  "sigma_crash_pa": 72402.46311132448,
   "tau_crash_pa": 0.0,
-  "R_crash": 0.7617100591715975,
+  "R_crash": 0.7240246311132448,
   "crash_dir": "+z"
  },
  "CALC-C3-STOPS": {
-  "F_aft_n": 89.273709375,
+  "F_aft_n": 85.51730625,
   "F_fwd_n": 85.0,
-  "F_fwd_flight_n": 2.04714375,
-  "sigma_aft_d2_pa": 55107228.00925926,
-  "t_req_m": 0.00287507986000196,
-  "sigma_aft_rec_pa": 13776807.002314815,
-  "sigma_fwd_rec_pa": 13117283.950617284,
+  "F_fwd_flight_n": 1.7817093750000002,
+  "sigma_aft_d2_pa": 13993741.022727273,
+  "t_req_m": 0.002897627411113507,
+  "sigma_aft_rec_pa": 13993741.022727273,
+  "sigma_fwd_rec_pa": 12878787.878787879,
+  "fwd_fuse_n": 98.99999999999999,
   "nose_m_req_nmm_per_mm": 45.220000000000006,
   "nose_m_cap_nmm_per_mm": 4.699999999999999
  },
  "CALC-C3-GUIDES": {
   "F_n": 85.0,
-  "sigma_d2_pa": 14571428.571428573,
+  "sigma_d2_pa": 6476190.476190476,
   "sigma_rec_pa": 6476190.476190476,
   "strap_leg_n": 13.89423076923077
  },
@@ -36,28 +42,41 @@
   "per_strap_n": 42.5,
   "leg_t_n": 31.25,
   "overlap_req_m": 0.03125,
-  "tray_flat_pa": 19675.925925925927,
-  "glue_line_pa": 110677.08333333334
+  "tray_flat_pa": 19318.181818181816,
+  "glue_line_pa": 110677.08333333334,
+  "glue_fillet_pa": 49189.81481481481
  },
  "CALC-C3-OVERHANG": {
-  "M_unit_nm_per_g": 0.28275469114599994,
+  "M_unit_nm_per_g": 0.25752618820937256,
   "I_m4": 1.8449535333333343e-08,
   "c_m": 0.04345,
-  "n_design": 7.150860056608275,
-  "sigma_design_pa": 4761814.203682876,
-  "sigma_crash_pa": 8487963.525095047
+  "n_design": 7.331249999999999,
+  "sigma_design_pa": 4446351.347202013,
+  "sigma_crash_pa": 7730633.516348078
  },
  "CALC-C3-HANDLE": {
   "F_design_n": 109.95706312499999,
   "tie_cap_n": 444.0,
-  "sigma_grip_pa": 7009762.77421875
+  "sigma_grip_pa": 9896135.681249999
  },
  "CALC-C3-HATCH": {
-  "F_design_n": 17.547663559047233,
-  "tab_n_per_cm2": 2.437175494312116
+  "F_design_n": 20.2675857216,
+  "tab_n_per_cm2": 2.111206846
  },
  "CALC-C3-MASS": {
-  "dm_g": 9.521317000000002,
-  "mass_g": 109.921317
+  "dm_g": 0.0,
+  "mass_g": 131.0,
+  "full_section_dm_g": 6.320028000000001,
+  "mass_full_section_g": 137.320028
+ },
+ "CALC-C3-NOSE-PATH": {
+  "L_A_m": 0.0010000000000000009,
+  "L_A_r4_m": 0.001,
+  "stack_m": 0.0088,
+  "blockA_share_full": 0.04118793000000003,
+  "blockA_share_c3": 0.018670377733598423,
+  "gap_penalty_c3_m": 0.0005606326889279444,
+  "gap_penalty_c3_r4_m": 0.0005606326889279438,
+  "F_blockB_n": 508.91360000000003
  }
 }

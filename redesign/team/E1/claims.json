@@ -285,11 +285,11 @@
    "id": "ASM-E1-PART-MASS",
    "type": "assumption",
    "title": "Per-unit flying masses incl. leads, g",
-   "text": "motor with factory leads 81.0 (no bullets: harness HRN-E03); ESC with factory power and signal leads and heat-shrink 11.0 (6.6 g bare board + 2 x 80 mm 16 AWG + signal lead + shrink); prop 17.0; bolt-on adapter 3.0 + 4 x M3x4 1.2 + M6 nut 1.9 + washer 0.6 = 6.7; 4 x M3x8 SHCS motor screws 3.2",
-   "basis": "listings (81 g, 17 g, 3.0 g); ISO masses for screws, nuts, washers; the ESC with leads is EST from the 6.6 g bare board and 14 g/m 16 AWG silicone (A3 HRN-E01); weigh everything on arrival",
+   "text": "motor with factory leads 81.0 (no bullets: harness HRN-E03); ESC stripped of its factory power leads (F2 solders its own 16 AWG to the pads, D-48, CR-F2-07) with signal lead and heat-shrink 7.6 (6.6 g bare board + 1.0 g; was 11.0 with 2 x 80 mm 16 AWG); prop 17.0; bolt-on adapter 3.0 + 4 x M3x4 1.2 + M6 nut 1.9 + washer 0.6 = 6.7; 4 x M3x8 SHCS motor screws 3.2",
+   "basis": "listings (81 g, 17 g, 3.0 g); ISO masses for screws, nuts, washers; the stripped ESC is EST from the 6.6 g bare board (D-48, CR-A3-21: -3.4 g per ESC); weigh everything on arrival",
    "value": {
     "motor": 81.0,
-    "esc": 11.0,
+    "esc": 7.6,
     "prop": 17.0,
     "adapter_nut": 6.7,
     "motor_screws": 3.2
@@ -765,9 +765,9 @@
     "mount_to_hub_front_m": 0.04174,
     "mount_to_post_tip_m": 0.048049999999999995,
     "hub_half_m": 0.004445,
-    "stack_minus_d3_m": -0.0017050000000000051,
-    "gap_e1_m": 0.038294999999999996,
-    "gap_ratio_e1": 0.9790111463339809,
+    "stack_minus_d3_m": -5.0000000000050004e-06,
+    "gap_e1_m": 0.039795,
+    "gap_ratio_e1": 1.017358625626342,
     "ahead_needed_m": 0.0018210000000000032,
     "nut_engagement_m": 0.00531,
     "nut_margin_m": 0.00011,
@@ -790,8 +790,8 @@
      0.0025,
      0.0035
     ],
-    "d3_stack": 0.039,
-    "ahead": 0.001,
+    "d3_stack": 0.0373,
+    "ahead": 0.0025,
     "D": 0.2794,
     "tp": 0.0045,
     "ls": 0.008
@@ -815,14 +815,14 @@
     "ASM-E1-PART-MASS"
    ],
    "outputs": {
-    "station_g": 118.9,
-    "total_g": 475.6,
-    "total_ex_screws_g": 462.8
+    "station_g": 115.5,
+    "total_g": 462.0,
+    "total_ex_screws_g": 449.2
    },
    "input_values": {
     "pm": {
      "motor": 81.0,
-     "esc": 11.0,
+     "esc": 7.6,
      "prop": 17.0,
      "adapter_nut": 6.7,
      "motor_screws": 3.2
@@ -1832,7 +1832,7 @@
    ],
    "how": "Same caliper measurement; D3 sets prop_stack_m to the measured value.",
    "note": "negative = the prop sits closer to the collar than D3's CAD assumes (D-28)",
-   "value": -0.0017050000000000051
+   "value": -5.0000000000050004e-06
   },
   {
    "id": "CL-E1-PROP-GAP",
@@ -1857,7 +1857,7 @@
    ],
    "how": "Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.",
    "note": "D3's CL-D3-PROP-GAP uses the 39 mm stack; with E1's 37.3 mm and the same 1 mm face_ahead the gap is below B4's 0.14 D. Fix: face_ahead_m >= CALC-E1-STACK ahead_needed_m (CR-E1-23)",
-   "value": 0.9790111463339809
+   "value": 1.017358625626342
   },
   {
    "id": "CL-E1-AHEAD-NEEDED",
@@ -2000,15 +2000,15 @@
     "PRP-004-LL"
    ],
    "how": "Weigh each part on the 0.1 g scale on arrival (one of each), update ASM-E1-PART-MASS, re-run.",
-   "value": 475.6
+   "value": 462.0
   },
   {
    "id": "ASM-E1-BLADE-HALF",
    "type": "assumption",
-   "title": "Prop blade half thickness at the hub 8 mm",
-   "text": "axial half-extent of an APC 11 in MR blade about its mid-plane, the keep-out's blade term",
-   "basis": "k09kit.PROP_BLADE_HALF_M (A5); the CAD envelope's root section (14 mm chord at 48 deg) reaches 5.5 mm",
-   "value": 0.008,
+   "title": "Prop axial half-extent about the mid-plane 10 mm (with coning)",
+   "text": "axial half-extent of the rotating APC 11 in MR disc about its mid-plane: -6 mm aft / +10 mm forward with coning (CR-E1-16), carried symmetric at 10 mm as the keep-out's blade term (k9.prop_keepout blade_half=0.010, CR-A5-21)",
+   "basis": "CAD root section (14 mm chord at 48 deg) reaches 5.5 mm; forward coning of a thin-hub nylon prop at hover thrust EST 4 mm; was k09kit's 8 mm default",
+   "value": 0.01,
    "unit": "m",
    "status": "UNVERIFIED"
   },
@@ -2030,6 +2030,121 @@
    "cites": [
     "SRC-E1-SPCNC-ADAPTER"
    ]
+  },
+  {
+   "id": "ASM-E1-ADAPTER-FIT",
+   "type": "assumption",
+   "title": "Adapter screw fit: head-seat flange 1.5 mm, M3x4 / M3x5, tip clear 0.5 mm, rule 1.0 d",
+   "text": "the bolt-on adapter's counterbored flange leaves 1.5 mm of each screw above the bell top (M3x4 engages 2.5 mm, the declared E-PRP-01..04 value); candidate lengths 4 mm (vendor) and 5 mm; the screw tip must stop >= 0.5 mm short of the windings under the bell top; minimum engagement into metal 1.0 d (D-41, C6)",
+   "basis": "Small Parts CNC adapter listing (M3x4 supplied) and the 2.5 mm declared engagement; D-41 joint rule; flange to be measured with the adapter (T-E1-MOTOR-RM)",
+   "value": [
+    0.0015,
+    0.004,
+    0.005,
+    0.0005,
+    1.0
+   ],
+   "unit": "m,m,m,m,-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-E1-SPCNC-ADAPTER"
+   ]
+  },
+  {
+   "id": "ASM-E1-ESC-STRAP",
+   "type": "assumption",
+   "title": "ESC strap 1.5 mm thick, 10 mm band",
+   "text": "one 10 mm hook-and-loop strap (fins BUILD, E3 ASM-E3-ESC-STRAP) over the ESC's FET face: single layer 1.5 mm where it crosses the ESC; the overlap sits on the inboard face of the pad, not on the ESC",
+   "basis": "typical 10 mm hook-and-loop cable tie 1.3-1.6 mm; the ESC body (45 x 20 x 6 mm in heat-shrink, ASM-E3-ESC) bounds the 6.6 g 45 A BLHeli_S board, which generic listings give as 28.5 x 13 mm; LANRC publishes no drawing. Stripped ESC: F2's 16 AWG solder joints sit on the pads under the shrink, the signal lead leaves the aft end. Measure on arrival",
+   "value": [
+    0.0015,
+    0.01
+   ],
+   "unit": "m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-E1-ADAPTER-CHOICE",
+   "type": "calculation",
+   "title": "Prop adapter screws: M3x4 under deviation D-58 or M3x5 at the 1.0 d rule",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "adapter_choice",
+   "equation": "e_L = L - t_flange ; e_rule = k d ; thread needed (D-58) = e_M3x4 ; free depth for M3x5 = e_M3x5 + tip clearance ; RF(e) = 0.5 pi d e tau / (T / (K d))",
+   "inputs": {
+    "a": "ASM-E1-ADAPTER-SCREW",
+    "f": "ASM-E1-ADAPTER-FIT"
+   },
+   "assumes": [
+    "ASM-E1-ADAPTER-SCREW",
+    "ASM-E1-ADAPTER-FIT"
+   ],
+   "outputs": {
+    "e_m3x4_m": 0.0025,
+    "e_m3x5_m": 0.0035,
+    "e_rule_m": 0.003,
+    "m3x5_margin_m": 0.0005,
+    "m3x4_short_m": 0.0005,
+    "thread_needed_d58_m": 0.0025,
+    "free_depth_m3x5_m": 0.004,
+    "rf_m3x4": 2.120575041173111,
+    "rf_m3x5": 2.9688050576423555
+   },
+   "input_values": {
+    "a": [
+     0.003,
+     0.002,
+     0.5,
+     0.2,
+     150000000.0
+    ],
+    "f": [
+     0.0015,
+     0.004,
+     0.005,
+     0.0005,
+     1.0
+    ]
+   }
+  },
+  {
+   "id": "CALC-E1-ESC-ENV",
+   "type": "calculation",
+   "title": "ESC installed envelope on the fin pad (for B4's drag and wash, E3)",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "esc_env",
+   "equation": "h = h_body + t_strap ; w = w_body + 2 t_strap ; A_front = w h (strap band, seen along x)",
+   "inputs": {
+    "esc": "ASM-E3-ESC",
+    "st": "ASM-E1-ESC-STRAP"
+   },
+   "units": {
+    "st": "m"
+   },
+   "assumes": [
+    "ASM-E3-ESC",
+    "ASM-E1-ESC-STRAP"
+   ],
+   "outputs": {
+    "len_m": 0.045,
+    "w_strap_m": 0.023,
+    "proud_max_m": 0.0075,
+    "proud_body_m": 0.006,
+    "frontal_m2": 0.0001725,
+    "strap_band_m": 0.01
+   },
+   "input_values": {
+    "esc": [
+     0.045,
+     0.02,
+     0.006,
+     0.011,
+     700.0
+    ],
+    "st": [
+     0.0015,
+     0.01
+    ]
+   }
   },
   {
    "id": "CALC-E1-CAD-STACK",
@@ -2079,15 +2194,15 @@
     "ASM-E3-ESC"
    ],
    "outputs": {
-    "x_face_m": 0.030850000000000002,
-    "x_hub_m": -0.006167008725463094,
-    "hub_minus_datum_m": 0.0020329912745369067,
-    "gap_m": 0.0380170087254631,
-    "gap_ratio": 0.9719043032381404,
-    "dx_tip_m": 0.025025147273699103,
-    "ko_half_m": 0.033,
+    "x_face_m": 0.029350000000000005,
+    "x_hub_m": -0.007667008725463092,
+    "hub_minus_datum_m": 3.299127453690841e-05,
+    "gap_m": 0.0395170087254631,
+    "gap_ratio": 1.0102517825305015,
+    "dx_tip_m": 0.027025147273699104,
+    "ko_half_m": 0.035,
     "esc_len_ratio": 1.0222222222222221,
-    "esc_slot_ratio": 0.9000000000000001
+    "esc_slot_ratio": 1.0499999999999998
    },
    "input_values": {
     "st": [
@@ -2102,12 +2217,12 @@
     "od": 0.022,
     "bg": 0.00015,
     "cw": 0.002,
-    "ahead": 0.001,
+    "ahead": 0.0025,
     "cant": 7.0,
     "D": 0.2794,
-    "xp": -0.0082,
+    "xp": -0.0077,
     "clr": 0.025,
-    "hb": 0.008,
+    "hb": 0.01,
     "esc": [
      0.045,
      0.02,
@@ -2116,7 +2231,7 @@
      700.0
     ],
     "plen": 0.046,
-    "ph": 0.028,
+    "ph": 0.031,
     "slot": [
      0.012,
      0.003
@@ -2167,7 +2282,7 @@
    ],
    "how": "python -I redesign/subsystems/propulsion/make_propulsion.py prints the same x; calipers on the built station (T-E1-MOTOR-RM).",
    "note": "subsystems/propulsion/fusion/propulsion.py places the hub here; the datum DP-PROP is -0.0082 (D-28, D3's 39 mm stack). KO-PROP-<st> are registered on the modelled hub",
-   "value": -0.006167008725463094
+   "value": -0.007667008725463092
   },
   {
    "id": "CL-E1-CAD-HUB-VS-DATUM",
@@ -2184,7 +2299,7 @@
    ],
    "how": "As CL-E1-CAD-HUB-X.",
    "note": "positive = the real prop sits aft of the datum, closer to the mount collar (CR-E1-29)",
-   "value": 0.0020329912745369067
+   "value": 3.299127453690841e-05
   },
   {
    "id": "CL-E1-CAD-PROP-GAP",
@@ -2209,19 +2324,15 @@
    ],
    "how": "Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.",
    "note": "same finding as CL-E1-PROP-GAP with the 7 deg cant included: fixed by face_ahead_m 0.002 (CR-E1-22)",
-   "value": 0.9719043032381404
+   "value": 1.0102517825305015
   },
   {
    "id": "CL-E1-KO-TILT",
    "type": "claim",
-   "title": "Blade tip axial excursion of the canted disc vs the prop keep-out half-length",
+   "title": "Blade tip axial (x) excursion of the 7 deg canted disc, incl. the blade half",
    "calc": "CALC-E1-CAD-STACK",
    "output": "dx_tip_m",
    "unit": "m",
-   "limit": {
-    "op": "<=",
-    "value": 0.033
-   },
    "parts": [
     "PRP-003-UR",
     "PRP-003-UL",
@@ -2229,8 +2340,25 @@
     "PRP-003-LL"
    ],
    "how": "Recompute from the CAD bounding box of PRP-003-<st> after any cant or prop change.",
-   "note": "0.033 = k09kit keep-out half (blade half 8 mm + 25 mm clearance): the 7 deg disc stays inside KO-PROP, but its tip moves 17 mm toward the structure, so the 25 mm clearance is not all geometric margin (A5: tilt the keep-out with the station, CR-E1-31)",
-   "value": 0.025025147273699103
+   "note": "information only since rev 5: KO-PROP-<st> is now the cylinder on the canted shaft axis (k9.prop_keepout rotate=rot, CR-A5-21), so this excursion is geometry inside the keep-out and the full 25 mm clearance is margin; check.py tests the tilted cylinder exactly",
+   "value": 0.027025147273699104
+  },
+  {
+   "id": "CL-E1-KO-HALF",
+   "type": "claim",
+   "title": "Prop keep-out axial half-length on the canted axis (blade half + clearance)",
+   "calc": "CALC-E1-CAD-STACK",
+   "output": "ko_half_m",
+   "unit": "m",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "python -I redesign/fusion/check.py: 0 parts inside KO-PROP-<st> (per-body test).",
+   "note": "the value KO-PROP-<st> carries (subsystems/propulsion/fusion/propulsion.py, blade_half 0.010); radius D/2 + 25 mm",
+   "value": 0.035
   },
   {
    "id": "CL-E1-ESC-PAD-LEN",
@@ -2271,7 +2399,123 @@
    ],
    "how": "Thread the strap on a printed pad with the ESC in place: the strap must enter the slot beside the ESC.",
    "note": "the 20 mm ESC covers 1 mm of each 3 mm strap slot on the 28 mm pad; the strap then bends over the ESC edge inside the slot and cuts into the heat-shrink. D3: pad h 0.028 -> 0.031 m (CR-E1-30)",
-   "value": 0.9000000000000001
+   "value": 1.0499999999999998
+  },
+  {
+   "id": "CL-E1-ESC-PROUD",
+   "type": "claim",
+   "title": "ESC envelope height proud of the pad at the strap band",
+   "calc": "CALC-E1-ESC-ENV",
+   "output": "proud_max_m",
+   "unit": "m",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "T-E1-MOTOR-RM: calipers over the strapped ESC on a printed pad.",
+   "note": "for B4 (CR-B4-20): use 7.5 mm, not the 6.8 mm of ASM-B4-ESC; the body is 6.0 mm proud outside the 10 mm strap band; length 45 mm along x, width 23 mm at the strap",
+   "value": 0.0075
+  },
+  {
+   "id": "CL-E1-ESC-FRONTAL",
+   "type": "claim",
+   "title": "ESC frontal area along x at the strap band",
+   "calc": "CALC-E1-ESC-ENV",
+   "output": "frontal_m2",
+   "unit": "m2",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "As CL-E1-ESC-PROUD.",
+   "note": "23 x 7.5 mm bounding rectangle seen along x; the ESC long side lies along x on the pad",
+   "value": 0.0001725
+  },
+  {
+   "id": "CL-E1-ADAPTER-M3X5-ENGAGE",
+   "type": "claim",
+   "title": "M3x5 adapter-screw engagement minus the 1.0 d rule",
+   "calc": "CALC-E1-ADAPTER-CHOICE",
+   "output": "m3x5_margin_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "parts": [
+    "PRP-004-UR",
+    "PRP-004-UL",
+    "PRP-004-LR",
+    "PRP-004-LL",
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-MOTOR-RM: depth gauge in a bell-top hole (thread length and free depth to the windings).",
+   "note": "the compliant option of CR-A4-43: valid only if the bell top has >= 3.0 mm of thread and >= CL-E1-ADAPTER-M3X5-DEPTH of free depth; otherwise M3x4 under D-58",
+   "value": 0.0005
+  },
+  {
+   "id": "CL-E1-ADAPTER-M3X5-DEPTH",
+   "type": "claim",
+   "title": "Free hole depth under the bell top needed for M3x5",
+   "calc": "CALC-E1-ADAPTER-CHOICE",
+   "output": "free_depth_m3x5_m",
+   "unit": "m",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-MOTOR-RM: depth gauge from the bell-top face to the first obstruction in each of the 4 holes.",
+   "value": 0.004
+  },
+  {
+   "id": "CL-E1-ADAPTER-THREAD-D58",
+   "type": "claim",
+   "title": "Bell-top thread length that D-58 requires (M3x4 fully engaged)",
+   "calc": "CALC-E1-ADAPTER-CHOICE",
+   "output": "thread_needed_d58_m",
+   "unit": "m",
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "T-E1-MOTOR-RM: thread length by a gauge screw turned in until it bottoms, minus the head seat.",
+   "note": "D-58 grants the 2.0 mm minimum only if T-E1-MOTOR-RM measures at least this; below it the deviation lapses and the station is not flown (fallback: the motor-box adapter on its own screws, re-assessed)",
+   "value": 0.0025
+  },
+  {
+   "id": "CL-E1-ADAPTER-RF-NOM",
+   "type": "claim",
+   "title": "Adapter screw thread strip RF at the declared 2.5 mm engagement",
+   "calc": "CALC-E1-ADAPTER-CHOICE",
+   "output": "rf_m3x4",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.safety_factor_ult"
+   },
+   "parts": [
+    "PRP-004-UR",
+    "PRP-004-UL",
+    "PRP-004-LR",
+    "PRP-004-LL",
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "As CL-E1-ADAPTER-STRIP.",
+   "value": 2.120575041173111
   },
   {
    "id": "CL-E1-ADAPTER-STRIP",
@@ -2318,16 +2562,20 @@
   {
    "id": "T-E1-MOTOR-RM",
    "type": "test",
-   "title": "Incoming check: resistance, no-load current, mass, bolt pattern, hole depth",
+   "title": "Incoming check: resistance, no-load current, mass, bolt pattern, hole and thread depth",
    "verifies": [
     "CL-E1-KP",
     "CL-E1-MASS-PRP",
     "CL-E1-SCREW-ENGAGE",
     "CL-E1-STACK-PROP-PLANE",
-    "CL-E1-PROP-GAP"
+    "CL-E1-PROP-GAP",
+    "CL-E1-ADAPTER-THREAD-D58",
+    "CL-E1-ADAPTER-M3X5-DEPTH",
+    "CL-E1-HOLE-DEPTH-MIN",
+    "CL-E1-ESC-PROUD"
    ],
    "state": "planned",
-   "procedure": "Weigh motor, ESC, prop, adapter set (0.1 g); calipers: base bolt pattern, hole depth, lead length, body length, adapter base and post; 4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load current and rpm at 10.0 V without prop (Kv = rpm / (V - I0 R))"
+   "procedure": "Weigh motor, stripped ESC, prop, adapter set (0.1 g); calipers: base diameter (D3 needs >= 28 mm), base bolt pattern (D3 prints 16 x 19 mm), base hole depth (>= 4.0 mm, CL-E1-HOLE-DEPTH-MIN), bell-top thread length (>= 2.5 mm for D-58; >= 3.0 mm with >= 4.0 mm free depth -> M3x5, CR-A4-43), adapter flange under the screw head, motor phase-lead length from the base (F2's routed reach 0.121 m, CL-F2-PHASE-REACH: if the leads reach, no splice and F2 returns 12 g), ESC strapped on a printed pad (height proud), body length, adapter base and post; 4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load current and rpm at 10.0 V without prop (Kv = rpm / (V - I0 R))"
   },
   {
    "id": "T-E1-HOVER-LOG",

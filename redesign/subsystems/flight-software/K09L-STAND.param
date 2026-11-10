@@ -1,4 +1,4 @@
-# K09-L thrust-stand overlay (owner F4, revision F4-R4, 2026-11-09). CR-H1-04. Status PROPOSED, UNVERIFIED.
+# K09-L thrust-stand overlay (owner F4, revision F4-R4b, 2026-11-09). CR-H1-04. Status PROPOSED, UNVERIFIED.
 # Load K09L.param first, then this file. Same output cap (Q_M_SPIN_MAX 0.84), protocol (DShot300 bidirectional)
 #   and notch as the flight file; only the lines below differ. Reload K09L.param before any flight: a stand set
 #   left on the aircraft would cap the pack at 25 A (no hover). RC failsafe stays on: TX loss stops the run.

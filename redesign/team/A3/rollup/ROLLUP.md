@@ -1,6 +1,6 @@
 # A3 live mass roll-up (generated)
 
-Run `python -I redesign/team/A3/mass_rollup.py`. 139 instances, basic 2330 g, predicted 2449 g, gate 2600 g.
+Run `python -I redesign/team/A3/mass_rollup.py`. 141 instances, basic 2323 g, predicted 2437 g, gate 2600 g.
 
 ### Live roll-up
 
@@ -9,69 +9,73 @@ Sources: `wing` ← redesign/subsystems/wing/parts.csv; `fins` ← redesign/subs
 | Subsystem | Alloc g (A1) | Basic g | Predicted g | Basic − alloc g | Status |
 |---|---|---|---|---|---|
 | wing | 405 | 387 | 407 | -18 | `PROPOSED` |
-| fins | 408 | 417 | 438 | +9 | `FAIL` |
-| pod | 122 | 128 | 134 | +6 | `FAIL` |
+| fins | 418 | 436 | 458 | +18 | `FAIL` |
+| pod | 131 | 131 | 138 | +0 | `PROPOSED` |
 | landing | 43 | 42 | 47 | -0 | `PROPOSED` |
-| propulsion | 476 | 476 | 506 | -0 | `PROPOSED` |
-| power | 620 | 638 | 650 | +18 | `FAIL` |
-| avionics | 80 | 36 | 39 | -44 | `PROPOSED` |
-| harness | 105 | 123 | 135 | +18 | `FAIL` |
-| mechanisms | 65 | 82 | 94 | +17 | `FAIL` |
-| **total** | **2 600** | **2 330** | **2 449** | allocated 2 324 + growth 276 | gate margin +151 g |
+| propulsion | 462 | 462 | 490 | +0 | `PROPOSED` |
+| power | 648 | 638 | 650 | -10 | `PROPOSED` |
+| avionics | 45 | 36 | 39 | -8 | `PROPOSED` |
+| harness | 123 | 118 | 130 | -5 | `PROPOSED` |
+| mechanisms | 80 | 71 | 80 | -9 | `PROPOSED` |
+| **total** | **2 600** | **2 323** | **2 437** | allocated 2 355 + growth 245 | gate margin +163 g |
 
 | Gate case (predicted, all other items with growth) | Pack g | Predicted g | Gate margin g | Overrun to cover g | Claim | Status |
 |---|---|---|---|---|---|---|
-| lightest listing | 503 | 2 402 | +198 | 100 | `CL-A3-GATE-MARGIN-503` | `MODELLED` |
-| as carried (`battery.mass_kg`) | 550 | 2 449 | +151 | 100 | `CL-A3-GATE-MARGIN` | `MODELLED` |
-| heaviest listing | 680 | 2 579 | +21 | 100 | `CL-A3-GATE-MARGIN-680` | `FAIL` |
+| lightest listing | 503 | 2 390 | +210 | 100 | `CL-A3-GATE-MARGIN-503` | `MODELLED` |
+| as carried (`battery.mass_kg`) | 550 | 2 437 | +163 | 100 | `CL-A3-GATE-MARGIN` | `MODELLED` |
+| heaviest listing | 680 | 2 567 | +33 | 100 | `CL-A3-GATE-MARGIN-680` | `FAIL` |
 
 | Discipline | Basic g | Predicted g | Share |
 |---|---|---|---|
-| structure | 975 | 1 026 | 42 % |
-| propulsion | 476 | 506 | 20 % |
+| structure | 997 | 1 049 | 43 % |
+| propulsion | 462 | 490 | 20 % |
 | energy | 550 | 550 | 24 % |
-| electrical | 211 | 234 | 9 % |
+| electrical | 206 | 229 | 9 % |
 | avionics | 36 | 39 | 2 % |
-| controls | 82 | 94 | 4 % |
+| controls | 71 | 80 | 3 % |
 
 | CG case | x m (% chord) | y m | z m | Status |
 |---|---|---|---|---|
 | Allowable (A1/B3) | 0.050–0.055 (16%–17%) | ±0.005 | -0.020…+0.030 | `PROPOSED` |
-| Take-off, basic | 0.058 (18.0%) | -0.0011 | +0.018 | `FAIL` |
-| Take-off, predicted (growth pro rata) | 0.059 (18.4%) | -0.0013 | +0.018 | `FAIL` |
-| Pack slid -3.4 … +8.0 mm (spacers, crush stack) | 0.0569 … 0.0596 | | | — |
-| Pack 503 g: nominal station → slid -17.6 mm (+ aft) | 0.0589 → 0.0550 | | | `FAIL` |
-| Pack 550 g: nominal station → slid -11.3 mm (+ aft) | 0.0577 → 0.0550 | | | `FAIL` |
-| Pack 680 g: nominal station → slid +0.0 mm (+ aft) | 0.0546 → 0.0546 | | | `CHECKED` |
-| No pack (handling) | 0.076 (23.7%) | -0.0015 | +0.009 | — |
+| Take-off, basic | 0.052 (16.4%) | -0.0011 | +0.019 | `CHECKED` |
+| Take-off, predicted (growth pro rata) | 0.054 (16.8%) | -0.0013 | +0.018 | `CHECKED` |
+| Pack slid -3.4 … +12.0 mm (spacers, crush stack) | 0.0517 … 0.0553 | | | — |
+| Pack 503 g: nominal station → slid +0.0 mm (+ aft) | 0.0540 → 0.0540 | | | `CHECKED` |
+| Pack 550 g: nominal station → slid +0.0 mm (+ aft) | 0.0525 → 0.0525 | | | `CHECKED` |
+| Pack 680 g: nominal station → slid +5.3 mm (+ aft) | 0.0485 → 0.0500 | | | `CHECKED` |
+| Pack 503 g at its D-59 station x -0.0254 (spacers 15 mm, clamped): basic → predicted | 0.0533 → 0.0546 (fwd +3.3 / aft +0.3 mm) | | | `CHECKED` |
+| Pack 550 g at its D-59 station x -0.0240 (spacers 14 mm): basic → predicted | 0.0520 → 0.0534 (fwd +2.0 / aft +1.5 mm) | | | `CHECKED` |
+| Pack 680 g at its D-59 station x -0.0100 (spacers 0 mm, clamped): basic → predicted | 0.0519 → 0.0532 (fwd +1.9 / aft +1.7 mm) | | | `CHECKED` |
+| No pack (handling) | 0.076 (23.6%) | -0.0015 | +0.009 | — |
 
 | CG result | Value | Unit | Source |
 |---|---|---|---|
-| Pack centroid now / needed for x = 0.053 m | -0.001 / -0.022 | m | `CL-A3-PACK-X-REQ` |
-| Pack shift still needed for the target (+ aft) | -21 | mm | `CALC-A3-CG` |
-| or the whole pod group (803 g: pod, power, avionics) by | -15 | mm | `CALC-A3-CG` |
-| or the four motor stations (propulsion, 476 g) by | -25 | mm | `CALC-A3-CG` |
-| Pack aft face to wing TE at that station | 272 | mm | `CL-A3-PACK-AFT-ROOM` |
-| CG shift per mm moved: pack / pod group / stations | 0.24 / 0.34 / 0.20 | mm/mm | `CALC-A3-CG` |
+| Pack centroid now / needed for x = 0.052 m | -0.022 / -0.023 | m | `CL-A3-PACK-X-REQ` |
+| Pack shift still needed for the target (+ aft) | -1 | mm | `CALC-A3-CG` |
+| or the whole pod group (806 g: pod, power, avionics) by | -1 | mm | `CALC-A3-CG` |
+| or the four motor stations (propulsion, 462 g) by | -1 | mm | `CALC-A3-CG` |
+| Pack aft face to wing TE at that station | 273 | mm | `CL-A3-PACK-AFT-ROOM` |
+| CG shift per mm moved: pack / pod group / stations | 0.24 / 0.35 / 0.20 | mm/mm | `CALC-A3-CG` |
 | Forward room at the nominal station (nose block, stop, crush block, spreader taken) | 3 | mm | `CL-A3-PACK-FWD-ROOM` |
-| Hover trim split upper/lower pair (limit 1.25, D-18) | 1.214 | — | `CL-A3-HOVER-SPLIT` → `R-HOVER-SPLIT` |
-| Pack slide needed for 503–680 g beyond the trim travel | 14.2 | mm | `CL-A3-PACK-TRIM` |
-| Most forward pack centroid the nose stack allows | -0.0044 | m | `CALC-A3-CG` |
-| Lateral CG offset / allowed 5 mm | 0.22 (-1.1 mm) | — | `CL-A3-CG-Y` |
-| CG height above the feet in the stance | 0.310 | m | `CALC-A3-CG` |
+| Hover trim split upper/lower pair (limit 1.25, D-18) | 1.216 | — | `CL-A3-HOVER-SPLIT` → `R-HOVER-SPLIT` |
+| Pack slide needed for 503–680 g beyond the trim travel | 0.0 | mm | `CL-A3-PACK-TRIM` |
+| Most forward pack centroid the nose stack allows | -0.0254 | m | `CALC-A3-CG` |
+| CG x range use: basic / packs at their stations (worst) / predicted | 0.01 / 0.89 / 0.58 | — | `CL-A3-CG-X-RANGE` / `CL-A3-CG-X-STATIONS` / `CL-A3-CG-X-PRED-RANGE` |
+| Lateral CG offset / allowed 5 mm | 0.23 (-1.1 mm) | — | `CL-A3-CG-Y` |
+| CG height above the feet in the stance | 0.316 | m | `CALC-A3-CG` |
 
 | Inertia about the CG | Ixx (roll, cruise) | Iyy (pitch) | Izz (yaw, cruise) | Ixz | Unit |
 |---|---|---|---|---|---|
-| Basic, take-off | 0.1746 | 0.0423 | 0.1654 | -0.0020 | kg·m² |
-| Radius of gyration | 0.274 | 0.135 | 0.266 | | m |
+| Basic, take-off | 0.1733 | 0.0448 | 0.1673 | -0.0023 | kg·m² |
+| Radius of gyration | 0.273 | 0.139 | 0.268 | | m |
 
-Allocations read from `params.json#mass.allocation_g` and checked equal to `params/mass_budget.json` (2 324 g + reserve 276 g = 2 600 g).
+Allocations read from `params.json#mass.allocation_g` and checked equal to `params/mass_budget.json` (2 355 g + reserve 245 g = 2 600 g).
 
-A3 position / maturity overrides (`team/A3/overrides.csv`): HRN-001: F2 harness.py breakdown (team/F2/mass_estimate.csv): wires CALC from routed lengths; fittings and phase extensions EST; lump carried at CALC 10 %; HRN-002: as HRN-001 (per-side lump); PRP-002: ESC 11.0 g with leads and heat-shrink is EST per E1 parts.csv notes (6.6 g bare board is the only datasheet number).
+A3 position / maturity overrides (`team/A3/overrides.csv`): HRN-001: F2 harness.py breakdown (team/F2/mass_estimate.csv): wires CALC from routed lengths; fittings and phase extensions EST; lump carried at CALC 10 %; HRN-002: as HRN-001 (per-side lump); PRP-002: ESC 7.6 g stripped (D-48): 6.6 g bare board + 1.0 g signal lead and shrink EST per E1 parts.csv notes; only the bare board is a datasheet number.
 
 Excluded as ground items (`flight: false` in interfaces.json, or no interface node and notes say not flying): GER-005 (redesign/subsystems/landing/parts.csv, flight false): Spare insert, upper (orange piston + type-U cartridge + pad, pre-glued); GER-009 (redesign/subsystems/landing/parts.csv, flight false): Spare insert, lower (blue piston + type-L cartridge + pad, pre-glued); GER-010 (redesign/subsystems/landing/parts.csv, flight false): Spare cartridge pair type U, loose (orange stripe); GER-011 (redesign/subsystems/landing/parts.csv, flight false): Spare cartridge pair type L, loose (blue stripe); GER-012 (redesign/subsystems/landing/parts.csv, flight false): Spare shoe; GER-006 (redesign/subsystems/landing/parts.csv, flight false): Neoprene sheet 1/16 in 40A adhesive back 12 x 12 in; GER-013 (redesign/subsystems/landing/parts.csv, flight false): Brass tube 7/32 in OD (K&S), sharpened, cartridge bore cutter; PWR-201 (redesign/subsystems/power/parts.csv): Second flight pack (ground: charge / rotate; flight false).
 
-Zero-mass lines (mass carried inside another part): FIN-101, FIN-102, FIN-103, FIN-104, FIN-105, FIN-106, FIN-107, HRN-101, HRN-102, HRN-103, HRN-104, HRN-105, HRN-106, HRN-107, HRN-108, HRN-109, HRN-110, HRN-111, PWR-101, PWR-102, PWR-103, PWR-104, PWR-105, PWR-106, PWR-202, PRP-005.
+Zero-mass lines (mass carried inside another part): FIN-101, FIN-102, FIN-103, FIN-104, FIN-105, FIN-106, FIN-107, HRN-101, HRN-102, HRN-103, HRN-104, HRN-105, HRN-106, HRN-107, HRN-108, HRN-109, HRN-110, HRN-111, HRN-112, PWR-101, PWR-102, PWR-103, PWR-104, PWR-105, PWR-106, PWR-202, PRP-005.
 
 
 
@@ -91,28 +95,28 @@ Zero-mass lines (mass carried inside another part): FIN-101, FIN-102, FIN-103, F
 | `WNG-012` | wing | structure | 3.5 | +0.278 | +0.451 | +0.000 | CAD | 5 | `redesign/subsystems/wing/parts.csv` |
 | `WNG-012` | wing | structure | 3.5 | +0.278 | -0.451 | +0.000 | CAD | 5 | `redesign/subsystems/wing/parts.csv` |
 | `WNG-020` | wing | structure | 0.5 | +0.165 | +0.390 | +0.017 | CAD | 5 | `redesign/subsystems/wing/parts.csv` |
-| `FIN-001` | fins | structure | 22.3 | +0.200 | +0.320 | +0.101 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-001` | fins | structure | 22.3 | +0.200 | -0.320 | +0.101 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-001` | fins | structure | 22.3 | +0.197 | +0.320 | -0.098 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-001` | fins | structure | 22.3 | +0.197 | -0.320 | -0.098 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-001` | fins | structure | 27.7 | +0.207 | +0.320 | +0.074 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-001` | fins | structure | 27.7 | +0.207 | -0.320 | +0.074 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-001` | fins | structure | 27.7 | +0.201 | +0.320 | -0.072 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-001` | fins | structure | 27.7 | +0.201 | -0.320 | -0.072 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-002` | fins | structure | 35.1 | +0.045 | +0.320 | +0.000 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-002` | fins | structure | 35.1 | +0.045 | -0.320 | +0.000 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-003` | fins | structure | 11.0 | +0.040 | +0.322 | +0.181 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-003` | fins | structure | 11.0 | +0.040 | -0.322 | +0.181 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-003` | fins | structure | 11.0 | +0.040 | +0.322 | -0.181 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-003` | fins | structure | 11.0 | +0.040 | -0.322 | -0.181 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-003` | fins | structure | 11.0 | +0.039 | +0.322 | +0.181 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-003` | fins | structure | 11.0 | +0.039 | -0.322 | +0.181 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-003` | fins | structure | 11.0 | +0.039 | +0.322 | -0.181 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-003` | fins | structure | 11.0 | +0.039 | -0.322 | -0.181 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-004` | fins | structure | 41.0 | +0.061 | +0.320 | +0.007 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-004` | fins | structure | 41.0 | +0.061 | -0.320 | +0.007 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-006` | fins | structure | 5.5 | +0.045 | +0.320 | +0.007 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-006` | fins | structure | 5.5 | +0.045 | -0.320 | +0.007 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-007` | fins | structure | 1.9 | +0.101 | +0.325 | +0.118 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-007` | fins | structure | 1.9 | +0.101 | -0.325 | +0.118 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-007` | fins | structure | 1.9 | +0.101 | +0.325 | -0.118 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-007` | fins | structure | 1.9 | +0.101 | -0.325 | -0.118 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-008` | fins | structure | 10.7 | +0.064 | +0.317 | +0.157 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-008` | fins | structure | 10.7 | +0.064 | -0.317 | +0.157 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-008` | fins | structure | 10.7 | +0.064 | +0.317 | -0.157 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-008` | fins | structure | 10.7 | +0.064 | -0.317 | -0.157 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-007` | fins | structure | 2.0 | +0.101 | +0.325 | +0.118 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-007` | fins | structure | 2.0 | +0.101 | -0.325 | +0.118 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-007` | fins | structure | 2.0 | +0.101 | +0.325 | -0.118 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-007` | fins | structure | 2.0 | +0.101 | -0.325 | -0.118 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-008` | fins | structure | 10.1 | +0.065 | +0.316 | +0.157 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-008` | fins | structure | 10.1 | +0.065 | -0.316 | +0.157 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-008` | fins | structure | 10.1 | +0.065 | +0.316 | -0.157 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-008` | fins | structure | 10.1 | +0.065 | -0.316 | -0.157 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-009` | fins | structure | 5.2 | +0.062 | +0.272 | +0.090 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-009` | fins | structure | 5.2 | +0.062 | -0.272 | +0.090 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-009` | fins | structure | 5.2 | +0.062 | +0.272 | -0.083 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
@@ -121,26 +125,28 @@ Zero-mass lines (mass carried inside another part): FIN-101, FIN-102, FIN-103, F
 | `FIN-010` | fins | structure | 3.2 | +0.080 | -0.242 | +0.024 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-010` | fins | structure | 3.2 | +0.080 | +0.242 | -0.011 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
 | `FIN-010` | fins | structure | 3.2 | +0.080 | -0.242 | -0.011 | CAD | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-011` | fins | structure | 4.2 | +0.168 | +0.325 | +0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-011` | fins | structure | 4.2 | +0.168 | +0.315 | +0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-011` | fins | structure | 4.2 | +0.168 | -0.325 | +0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-011` | fins | structure | 4.2 | +0.168 | -0.315 | +0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-011` | fins | structure | 4.2 | +0.168 | +0.325 | -0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-011` | fins | structure | 4.2 | +0.168 | +0.315 | -0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-011` | fins | structure | 4.2 | +0.168 | -0.325 | -0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-011` | fins | structure | 4.2 | +0.168 | -0.315 | -0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-012` | fins | structure | 1.1 | +0.184 | +0.320 | +0.183 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-012` | fins | structure | 1.1 | +0.184 | -0.320 | +0.183 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-012` | fins | structure | 1.1 | +0.184 | +0.320 | -0.183 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `FIN-012` | fins | structure | 1.1 | +0.184 | -0.320 | -0.183 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
-| `POD-001` | pod | structure | 24.8 | -0.032 | -0.000 | +0.044 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
-| `POD-002` | pod | structure | 31.2 | -0.032 | +0.001 | +0.024 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
-| `POD-003` | pod | structure | 8.5 | -0.029 | -0.004 | +0.083 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
-| `POD-004` | pod | structure | 9.1 | -0.001 | +0.000 | +0.044 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
+| `FIN-011` | fins | structure | 4.1 | +0.166 | +0.325 | +0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-011` | fins | structure | 4.1 | +0.166 | +0.315 | +0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-011` | fins | structure | 4.1 | +0.166 | -0.325 | +0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-011` | fins | structure | 4.1 | +0.166 | -0.315 | +0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-011` | fins | structure | 4.1 | +0.166 | +0.325 | -0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-011` | fins | structure | 4.1 | +0.166 | +0.315 | -0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-011` | fins | structure | 4.1 | +0.166 | -0.325 | -0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-011` | fins | structure | 4.1 | +0.166 | -0.315 | -0.180 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-012` | fins | structure | 1.1 | +0.184 | +0.320 | +0.184 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-012` | fins | structure | 1.1 | +0.184 | -0.320 | +0.184 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-012` | fins | structure | 1.1 | +0.184 | +0.320 | -0.184 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `FIN-012` | fins | structure | 1.1 | +0.184 | -0.320 | -0.184 | DATASHEET | 5 | `redesign/subsystems/fins/parts.csv` |
+| `POD-001` | pod | structure | 24.3 | -0.034 | -0.001 | +0.043 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
+| `POD-002` | pod | structure | 40.0 | -0.024 | +0.001 | +0.026 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
+| `POD-003` | pod | structure | 8.9 | -0.036 | -0.003 | +0.083 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
+| `POD-004` | pod | structure | 9.1 | -0.019 | +0.000 | +0.044 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
 | `POD-005` | pod | structure | 5.5 | +0.081 | +0.000 | +0.156 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
-| `POD-006` | pod | structure | 5.8 | -0.107 | -0.046 | +0.045 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
-| `POD-007` | pod | structure | 34.1 | +0.080 | -0.001 | +0.060 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
-| `POD-008` | pod | structure | 9.1 | -0.052 | +0.000 | +0.045 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
+| `POD-006` | pod | structure | 5.8 | -0.122 | -0.046 | +0.045 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
+| `POD-007` | pod | structure | 28.3 | +0.080 | -0.001 | +0.066 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
+| `POD-008` | pod | structure | 1.5 | +0.052 | +0.000 | +0.027 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
+| `POD-009` | pod | structure | 2.3 | -0.107 | +0.000 | +0.048 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
+| `POD-010` | pod | structure | 5.3 | -0.093 | +0.000 | +0.048 | CAD | 5 | `redesign/subsystems/pod/parts.csv` |
 | `GER-001` | landing | structure | 5.7 | +0.301 | +0.320 | +0.208 | CALC | 10 | `redesign/subsystems/landing/parts.csv` |
 | `GER-001` | landing | structure | 5.7 | +0.301 | -0.320 | +0.208 | CALC | 10 | `redesign/subsystems/landing/parts.csv` |
 | `GER-001` | landing | structure | 5.7 | +0.301 | +0.320 | -0.208 | CALC | 10 | `redesign/subsystems/landing/parts.csv` |
@@ -163,10 +169,10 @@ Zero-mass lines (mass carried inside another part): FIN-101, FIN-102, FIN-103, F
 | `PRP-001` | propulsion | propulsion | 84.2 | +0.017 | -0.319 | +0.192 | DATASHEET | 5 | `redesign/subsystems/propulsion/parts.csv` |
 | `PRP-001` | propulsion | propulsion | 84.2 | +0.017 | +0.319 | -0.192 | DATASHEET | 5 | `redesign/subsystems/propulsion/parts.csv` |
 | `PRP-001` | propulsion | propulsion | 84.2 | +0.017 | -0.319 | -0.192 | DATASHEET | 5 | `redesign/subsystems/propulsion/parts.csv` |
-| `PRP-002` | propulsion | propulsion | 11.0 | +0.101 | +0.329 | +0.118 | EST | 20 | `redesign/subsystems/propulsion/parts.csv` |
-| `PRP-002` | propulsion | propulsion | 11.0 | +0.101 | -0.329 | +0.118 | EST | 20 | `redesign/subsystems/propulsion/parts.csv` |
-| `PRP-002` | propulsion | propulsion | 11.0 | +0.101 | +0.329 | -0.118 | EST | 20 | `redesign/subsystems/propulsion/parts.csv` |
-| `PRP-002` | propulsion | propulsion | 11.0 | +0.101 | -0.329 | -0.118 | EST | 20 | `redesign/subsystems/propulsion/parts.csv` |
+| `PRP-002` | propulsion | propulsion | 7.6 | +0.101 | +0.329 | +0.118 | EST | 20 | `redesign/subsystems/propulsion/parts.csv` |
+| `PRP-002` | propulsion | propulsion | 7.6 | +0.101 | -0.329 | +0.118 | EST | 20 | `redesign/subsystems/propulsion/parts.csv` |
+| `PRP-002` | propulsion | propulsion | 7.6 | +0.101 | +0.329 | -0.118 | EST | 20 | `redesign/subsystems/propulsion/parts.csv` |
+| `PRP-002` | propulsion | propulsion | 7.6 | +0.101 | -0.329 | -0.118 | EST | 20 | `redesign/subsystems/propulsion/parts.csv` |
 | `PRP-003` | propulsion | propulsion | 17.0 | -0.006 | +0.318 | +0.194 | DATASHEET | 5 | `redesign/subsystems/propulsion/parts.csv` |
 | `PRP-003` | propulsion | propulsion | 17.0 | -0.006 | -0.318 | +0.194 | DATASHEET | 5 | `redesign/subsystems/propulsion/parts.csv` |
 | `PRP-003` | propulsion | propulsion | 17.0 | -0.006 | +0.318 | -0.194 | DATASHEET | 5 | `redesign/subsystems/propulsion/parts.csv` |
@@ -175,10 +181,10 @@ Zero-mass lines (mass carried inside another part): FIN-101, FIN-102, FIN-103, F
 | `PRP-004` | propulsion | propulsion | 6.7 | -0.003 | -0.318 | +0.194 | DATASHEET | 5 | `redesign/subsystems/propulsion/parts.csv` |
 | `PRP-004` | propulsion | propulsion | 6.7 | -0.003 | +0.318 | -0.194 | DATASHEET | 5 | `redesign/subsystems/propulsion/parts.csv` |
 | `PRP-004` | propulsion | propulsion | 6.7 | -0.003 | -0.318 | -0.194 | DATASHEET | 5 | `redesign/subsystems/propulsion/parts.csv` |
-| `PWR-001` | power | energy | 550.0 | -0.001 | +0.000 | +0.048 | DATASHEET | 0 | `redesign/subsystems/power/parts.csv` |
+| `PWR-001` | power | energy | 550.0 | -0.022 | +0.000 | +0.048 | DATASHEET | 0 | `redesign/subsystems/power/parts.csv` |
 | `PWR-002` | power | electrical | 18.6 | +0.017 | -0.046 | +0.046 | EST | 20 | `redesign/subsystems/power/parts.csv` |
 | `PWR-003` | power | electrical | 28.0 | -0.031 | -0.046 | +0.044 | EST | 20 | `redesign/subsystems/power/parts.csv` |
-| `PWR-004` | power | electrical | 7.3 | -0.023 | -0.046 | +0.021 | CAD | 5 | `redesign/subsystems/power/parts.csv` |
+| `PWR-004` | power | electrical | 7.3 | -0.021 | -0.046 | +0.021 | CAD | 5 | `redesign/subsystems/power/parts.csv` |
 | `PWR-005` | power | electrical | 13.0 | +0.065 | +0.046 | +0.026 | DATASHEET | 5 | `redesign/subsystems/power/parts.csv` |
 | `PWR-006` | power | electrical | 9.0 | +0.010 | -0.046 | +0.039 | CAD | 5 | `redesign/subsystems/power/parts.csv` |
 | `PWR-007` | power | electrical | 3.5 | +0.017 | -0.059 | +0.032 | DATASHEET | 5 | `redesign/subsystems/power/parts.csv` |
@@ -193,28 +199,28 @@ Zero-mass lines (mass carried inside another part): FIN-101, FIN-102, FIN-103, F
 | `AVN-005` | avionics | avionics | 4.8 | -0.128 | -0.046 | +0.045 | EST | 20 | `redesign/subsystems/avionics/parts.csv` |
 | `AVN-006` | avionics | avionics | 2.4 | -0.010 | +0.046 | +0.023 | DATASHEET | 5 | `redesign/subsystems/avionics/parts.csv` |
 | `AVN-007` | avionics | avionics | 0.4 | -0.030 | +0.046 | +0.027 | DATASHEET | 5 | `redesign/subsystems/avionics/parts.csv` |
-| `HRN-001` | harness | electrical | 41.2 | +0.040 | -0.001 | +0.030 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
-| `HRN-002` | harness | electrical | 40.7 | +0.081 | +0.260 | +0.005 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
-| `HRN-002` | harness | electrical | 40.7 | +0.081 | -0.260 | +0.005 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
+| `HRN-001` | harness | electrical | 40.7 | +0.048 | -0.001 | +0.029 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
+| `HRN-002` | harness | electrical | 38.7 | +0.076 | +0.256 | +0.006 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
+| `HRN-002` | harness | electrical | 38.7 | +0.076 | -0.256 | +0.006 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
 | `MEC-001` | mechanisms | controls | 15.8 | +0.190 | +0.268 | -0.000 | DATASHEET | 5 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-001` | mechanisms | controls | 15.8 | +0.190 | -0.268 | -0.000 | DATASHEET | 5 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-002` | mechanisms | controls | 0.6 | +0.195 | +0.285 | -0.006 | DATASHEET | 5 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-002` | mechanisms | controls | 0.6 | +0.195 | -0.285 | -0.006 | DATASHEET | 5 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-003` | mechanisms | controls | 1.6 | +0.231 | +0.285 | -0.018 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-003` | mechanisms | controls | 1.6 | +0.231 | -0.285 | -0.018 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-004` | mechanisms | controls | 3.5 | +0.266 | +0.286 | -0.006 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-004` | mechanisms | controls | 3.5 | +0.266 | -0.286 | -0.006 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-005` | mechanisms | controls | 4.2 | +0.250 | +0.320 | -0.011 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-005` | mechanisms | controls | 4.2 | +0.250 | -0.320 | -0.011 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-006` | mechanisms | controls | 3.1 | +0.267 | +0.354 | -0.004 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-006` | mechanisms | controls | 3.1 | +0.267 | -0.354 | -0.004 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-004` | mechanisms | controls | 3.1 | +0.265 | +0.286 | -0.006 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-004` | mechanisms | controls | 3.1 | +0.265 | -0.286 | -0.006 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-005` | mechanisms | controls | 0.8 | +0.250 | +0.320 | -0.011 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-005` | mechanisms | controls | 0.8 | +0.250 | -0.320 | -0.011 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-006` | mechanisms | controls | 2.7 | +0.266 | +0.354 | -0.004 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-006` | mechanisms | controls | 2.7 | +0.266 | -0.354 | -0.004 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-007` | mechanisms | controls | 1.7 | +0.190 | +0.269 | -0.007 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-007` | mechanisms | controls | 1.7 | +0.190 | -0.269 | -0.007 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-008` | mechanisms | controls | 4.2 | +0.190 | +0.267 | +0.003 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-008` | mechanisms | controls | 4.2 | +0.190 | -0.267 | +0.003 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-009` | mechanisms | controls | 3.0 | +0.257 | +0.185 | +0.001 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-009` | mechanisms | controls | 3.0 | +0.257 | -0.185 | +0.001 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-009` | mechanisms | controls | 3.0 | +0.257 | +0.450 | +0.001 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
-| `MEC-009` | mechanisms | controls | 3.0 | +0.257 | -0.450 | +0.001 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-008` | mechanisms | controls | 3.2 | +0.190 | +0.265 | +0.002 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-008` | mechanisms | controls | 3.2 | +0.190 | -0.265 | +0.002 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-009` | mechanisms | controls | 2.6 | +0.257 | +0.215 | +0.001 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-009` | mechanisms | controls | 2.6 | +0.257 | -0.215 | +0.001 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-009` | mechanisms | controls | 2.6 | +0.257 | +0.450 | +0.001 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
+| `MEC-009` | mechanisms | controls | 2.6 | +0.257 | -0.450 | +0.001 | EST | 20 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-010` | mechanisms | controls | 0.6 | +0.250 | +0.315 | +0.006 | DATASHEET | 5 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-010` | mechanisms | controls | 0.6 | +0.250 | -0.315 | +0.006 | DATASHEET | 5 | `redesign/subsystems/mechanisms/parts.csv` |

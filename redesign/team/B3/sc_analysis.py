@@ -1,4 +1,9 @@
-"""B3 stability and control: proof-chain claims for the K09-L quad tailsitter (R3 geometry, A1-R3 params).
+"""B3 stability and control: proof-chain claims for the K09-L quad tailsitter (R4: A1-R4 params, A3-R5 roll-up).
+
+R4 re-run: pod nose -0.130 / 0.225 m (D-47), pack nominal x -0.022 with per-pack stations (D-47, supersedes CR-B3-18),
+prop plane -0.0077 (D-51), sag 0.851 (D-49), A3-R5 mass and inertia, B4 R3 hover-yaw factor 1.79 with the cant sized
+on CL-B4-YAW-LOW 1.40 (CR-B4-13), D6 elevon effectiveness and free play in the trim, roll and transition margins
+(CR-D6-08), F4's R4 crossovers in the torsion-mode loops and a sweep of the 11.7-14.9 Hz antisymmetric band (D-45).
 
 R3 re-run (CR-A1-26): 7 deg cant (D-27), half-fins 0.21 m (D-26), pod 0.21 x 0.14 x 0.07 at -0.115 (D-25), prop
 plane -0.0082 (D-28), pack nominal x -0.001 (D-24) on A3's R3 roll-up and inertia, B4's swirl factor. Added: the
@@ -114,13 +119,11 @@ kit.assumption("ASM-B3-ZETA-SP-MIN", "Short-period damping minimum", "Level 1 sh
                basis="MIL-F-8785C 3.2.2.1.2, cat. B Level 1", value=0.30, unit="-", cites=["SRC-B3-MIL8785C"])
 kit.assumption("ASM-B3-ZETA-DR-MIN", "Dutch-roll damping minimum", "Level 1 Dutch-roll damping ratio",
                basis="MIL-F-8785C 3.3.1.1, cat. B Level 1", value=0.08, unit="-", cites=["SRC-B3-MIL8785C"])
-kit.assumption("ASM-B3-SWIRL-LOW", "Hover yaw factor, low bracket", "Reaction-torque factor if the fins remove "
-               "swirl instead of adding side force about the body axis", basis="B4 R0-R2 CL-B4-YAW 0.48 (moment about "
-               "the motor axis); B4 R3 gives 1.79 (side force about the body x-axis). Kept as the bracket until "
-               "T-B4-YAW", value=0.48, unit="-", status="UNVERIFIED")
-kit.assumption("ASM-B3-PACK-X-NOM", "Pack nominal centroid station (D-24)", "x of the pack centroid at its nominal "
-               "station, the forward end of its trim travel", basis="params/CHANGE-LOG.md D-24 (B3 CR-B3-11): -0.001 m; "
-               "A3 R3 roll-up uses the same station (ASM-A3-PACK-SLIDE: 0 ... 23 mm aft only)", value=-0.001, unit="m")
+kit.assumption("ASM-B3-PACK-FWD-MOST", "Most forward pack centroid the nose stack allows (D-47 bay)",
+               "Pack centroid x with the pack fore face on the crush block / spreader stack",
+               basis="MASS-CG.md A3-R5 (D-47 bay: stop -0.1212, crush block 24.3 mm, spreader 1.5 mm): centroid "
+                     ">= -0.0254 m, i.e. 3.4 mm forward of the -0.022 nominal (CHANGE-LOG D-47)",
+               value=-0.0254, unit="m", status="PROPOSED")
 
 # hover loop with the wing torsion modes (CR-C2-03, D-45)
 kit.source("SRC-B3-MIL9490", "MIL-F-9490D Flight control systems, general specification (1975)", "standard",
@@ -151,8 +154,16 @@ kit.assumption("ASM-B3-FSW-PID-PIT", "Hover pitch rate PID shape [P, I, D]", "F4
 kit.assumption("ASM-B3-FSW-PID-YAW", "Hover yaw rate PID shape [P, I, D]", "F4's starting gains (no D)",
                basis="K09L.param Q_A_RAT_YAW_P/I", value=[0.40, 0.04, 0.0], unit="-", status="PROPOSED")
 kit.assumption("ASM-B3-XOVER", "Hover rate-loop crossovers [pitch, yaw]", "F4's predicted crossovers at the "
-               "starting gains", basis="K09L.param comments (CL-F4-XOVER-PIT 4.0 Hz, CL-F4-XOVER-YAW 1.8 Hz; not yet "
-               "published as claims)", value=[4.0, 1.8], unit="Hz", status="PROPOSED")
+               "starting gains", basis="team/F4/claims.json CL-F4-XOVER-PIT 2.61 Hz, CL-F4-XOVER-YAW 1.01 Hz (F4 R4, "
+               "rigid body at the 21.1 N thrust limit, so upper bounds). Copied, not linked: CALC-F4-XOVER reads "
+               "CL-B3-XOVER-MAX-*, so a link would close a loop in the graph. R3 used 4.0 / 1.8 Hz",
+               value=[2.6, 1.0], unit="Hz", status="PROPOSED")
+kit.assumption("ASM-B3-SLOP-TRIM-FRAC", "Share of the elevon free play charged to trim",
+               "Fraction of CL-D6-SLOP (worst-case band) the servo must add to hold a steady trim deflection",
+               basis="steady hinge moment holds the surface on one side of the play band and T-D6-THROW sets the "
+                     "servo neutral at the band centre, so trim costs half the band; roll authority is charged the "
+                     "full band (reversal across the play). B3 choice; full band in the sensitivity (S-AND-C.md)",
+               value=0.5, unit="-")
 kit.assumption("ASM-B3-GM-MIN", "Loop gain margin minimum", "Gain margin at every -180 deg crossing, structural "
                "modes included", basis="MIL-F-9490D 3.1.3.6.1", value=6.0, unit="dB", cites=["SRC-B3-MIL9490"])
 kit.assumption("ASM-B3-PM-MIN", "Loop phase margin minimum", "Phase margin at every 0 dB crossing",
@@ -178,10 +189,19 @@ def _interp(x, xs, ys):
     return ys[-1]
 
 
-def critical_section(geo, xref_eff, zref, eta, dcm, table, cls=CLS):
+def eff_mech(V, loss_o, loss_i, va):
+    """D6 elevon effectiveness (panel twist + rod lag, CR-D6-08). The lag is proportional to the hinge moment, so the
+    loss fraction scales with q: 1 - max(loss_out, loss_in) (V/VA)^2."""
+    return 1.0 - max(loss_o, loss_i) * (V / va) ** 2
+
+
+def critical_section(geo, xref_eff, zref, eta, dcm, table, cls=CLS, eff=1.0):
     """Trimmed CLmax by the critical-section method (B2's method, WING-AERO.md): AVL trims Cm + dcm = 0 about
     xref_eff at each CL with the elevon in physical degrees (gain eta); the first strip whose cl reaches its local
-    clmax (table at that strip's deflection: elevon strips at the trim deflection, others at 0) sets CLmax."""
+    clmax (table at that strip's deflection: elevon strips at the trim deflection, others at 0) sets CLmax.
+    eff (D6 mechanical effectiveness): AVL sees only the product gain x deflection, so the commanded deflection is
+    the AVL value / eff with alpha and the strip loads unchanged (exact in the linear lattice); the clmax table is
+    read at the surface's mean deflection, which is the AVL value (the panel lags the servo by the twist)."""
     g = _g(**geo, xref=xref_eff, zref=zref, egain=eta)
     rows = AV.trim_sweep(g, cls, -dcm, LAT_TRIM)
     ds, cs = [r[0] for r in table], [r[1] for r in table]
@@ -192,10 +212,11 @@ def critical_section(geo, xref_eff, zref, eta, dcm, table, cls=CLS):
 
     prev, hist = None, []
     for r in rows:
+        d1 = r["d1"] / eff
         lim0 = _interp(0.0, ds, cs)
         limd = _interp(r["d1"], ds, cs)
         ratio, yfirst = max((s[2] / (limd if in_el(s[0]) else lim0), s[0]) for s in r["strips"])
-        h = {"CL": r["CL"], "alpha": r["alpha"], "d1": r["d1"], "ratio": ratio, "y": yfirst}
+        h = {"CL": r["CL"], "alpha": r["alpha"], "d1": d1, "ratio": ratio, "y": yfirst}
         hist.append(h)
         if ratio >= 1.0 and prev is not None:
             f = (1.0 - prev["ratio"]) / (ratio - prev["ratio"])
@@ -281,14 +302,17 @@ kit.claim("CL-B3-XNP", "Neutral point, whole aircraft", calc="CALC-B3-NP", outpu
 # ---------------------------------------------------------------------------------------------- CG limits
 CS_IN = {**GEO, "zref": P + "cg.z_target_m", "xnp_a": "CL-B3-XNP-AERO", "xnp": "CL-B3-XNP",
          "dcm": "CL-B2-DCM-VISC", "eta": "CL-B2-ELEVON-ETA", "tab": "ASM-B3-CLMAX-FLAP",
-         "m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3", "S": "CL-A1-WING-AREA"}
-CS_U = {**GEOU, "zref": "m", "xnp_a": "m", "xnp": "m", "m": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2"}
+         "m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3", "S": "CL-A1-WING-AREA",
+         "lo": "CL-D6-EFF-LOSS-OUT", "li": "CL-D6-EFF-LOSS-IN", "va": "ASM-F4-VA-SCHED", "slop": "CL-D6-SLOP",
+         "vmax": P + "requirements.stall_max_ms"}
+CS_U = {**GEOU, "zref": "m", "xnp_a": "m", "xnp": "m", "m": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2",
+        "va": "m/s", "slop": "deg", "vmax": "m/s"}
 
 
-def _cs_at(x, geo, zref, xnp_a, xnp, eta, dcm, tab, m, g, rho, S):
+def _cs_at(x, geo, zref, xnp_a, xnp, eta, dcm, tab, m, g, rho, S, eff=1.0):
     """Critical section at CG x. AVL has no props or pod: the reference is shifted by (Xnp_aero - Xnp) so the AVL
-    model has the whole aircraft's static margin."""
-    r = critical_section(geo, x + (xnp_a - xnp), zref, eta, dcm, tab)
+    model has the whole aircraft's static margin. eff: D6 mechanical effectiveness at the stall speed."""
+    r = critical_section(geo, x + (xnp_a - xnp), zref, eta, dcm, tab, eff=eff)
     r["vs"] = FM.stall_speed(m, g, rho, S, r["CLmax"])
     return r
 
@@ -305,22 +329,28 @@ def _crossing(xs, ys, lim):
           assumes=["ASM-B3-CLMAX-FLAP"], cites=["SRC-B3-AVL"],
           inputs={**CS_IN, "sm_min": P + "requirements.static_margin_min",
                   "travel": P + "wing.elevon.deflection_deg", "tfrac": P + "requirements.elevon_trim_travel_max",
-                  "vmax": P + "requirements.stall_max_ms"},
-          units={**CS_U, "travel": "deg", "vmax": "m/s"},
+                  "kslop": "ASM-B3-SLOP-TRIM-FRAC"},
+          units={**CS_U, "travel": "deg"},
           equation="aft: x = Xnp - SMmin c ; for SM 3..14 %: AVL trim (Cm + dcm = 0, elevon gain eta) at CL 0.4..1.2, "
-                   "critical section -> CLmax_t(SM), delta(SM), Vs(SM) ; forward = smaller SM of "
-                   "{|delta| = tfrac travel, Vs = Vs_max} ; target = mid-range")
-def cg_limits(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta, tab, m, g, rho, S, sm_min, travel,
-              tfrac, vmax):
+                   "critical section -> CLmax_t(SM), delta(SM), Vs(SM) ; commanded delta = delta_AVL / e_D6(Vs_max), "
+                   "e_D6 = 1 - loss_VA (V/VA)^2 ; forward = smaller SM of {|delta| + k slop = tfrac travel, "
+                   "Vs = Vs_max} ; target = mid-range")
+def cg_limits(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta, tab, m, g, rho, S, lo, li, va, slop,
+              vmax, sm_min, travel, tfrac, kslop):
     geo = dict(zip(GKEYS, (b, c, ef, yin, yout, fy, fh, fle, fte)))
+    e_st = eff_mech(vmax, lo, li, va)
     rows = []
     for sm in SM_GRID:
-        r = _cs_at(xnp - sm * c, geo, zref, xnp_a, xnp, eta, dcm, tab, m, g, rho, S)
+        r = _cs_at(xnp - sm * c, geo, zref, xnp_a, xnp, eta, dcm, tab, m, g, rho, S, eff=e_st)
         rows.append([round(sm, 3), round(xnp - sm * c, 5), round(r["CLmax"], 4), round(r["delta"], 2),
                      round(r["alpha"], 2), round(r["vs"], 3), round(r["y_first"], 3)])
     sms = [r[0] for r in rows]
-    budget = tfrac * travel[1]
+    budget = tfrac * travel[1] - kslop * slop
     sm_trim = _crossing(sms, [-r[3] for r in rows], budget)
+    # sensitivities: no D6 loss and no free play (R3 basis); full play band charged to trim
+    r3 = [_crossing(sms, [-r[3] * e_st for r in rows], tfrac * travel[1]),
+          _crossing(sms, [-r[3] for r in rows], tfrac * travel[1] - slop)]
+    x_fwd_r3basis, x_fwd_fullslop = [None if s_ is None else xnp - s_ * c for s_ in r3]
     sm_stall = _crossing(sms, [r[5] for r in rows], vmax)
     x_aft = xnp - sm_min * c
     cand = [s for s in (sm_trim, sm_stall) if s is not None]
@@ -335,7 +365,8 @@ def cg_limits(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta,
             "sm_fwd_trim": sm_trim, "sm_fwd_stall": sm_stall,
             "x_fwd_trim": None if sm_trim is None else xnp - sm_trim * c,
             "x_fwd_stall": None if sm_stall is None else xnp - sm_stall * c,
-            "trim_budget_deg": budget, "binding": "stall" if sm_fwd == sm_stall else "trim",
+            "trim_budget_deg": budget, "binding": "stall" if sm_fwd == sm_stall else "trim", "eff_stall": e_st,
+            "x_fwd_no_d6": x_fwd_r3basis, "x_fwd_full_slop": x_fwd_fullslop,
             "columns": ["SM", "x_cg m", "CLmax_trim", "elevon deg", "alpha deg", "Vs m/s", "y first stall m"],
             "table": rows}
 
@@ -390,47 +421,75 @@ kit.claim("CL-B3-PROP-DXNP", "NP shift from the props (Ribner, all four)", calc=
           how="T-B3-TWIN-NP: NP from powered vs gliding trim-vs-CL slopes.")
 
 
-@kit.calc("CALC-B3-CG-CHECK", title="A3 CG (pack at the D-24 nominal station) against the B3 range",
+@kit.calc("CALC-B3-CG-CHECK", title="A3 CG and the D-59 pack stations against the B3 range",
           inputs={"cg_frac": "CL-A3-CG-X", "c": P + "wing.chord_m", "x_fwd": "CL-B3-CG-FWD", "x_aft": "CL-B3-CG-AFT",
-                  "x_t": "CL-B3-CG-TARGET", "x_t_a3": P + "cg.x_target_m", "x_nom": "ASM-B3-PACK-X-NOM",
+                  "x_t": "CL-B3-CG-TARGET", "x_t_a3": P + "cg.x_target_m", "x_nom": P + "pod.pack_x_nominal_m",
                   "x_req": "CL-A3-PACK-X-REQ", "m_pack": P + "battery.mass_kg", "m_basic": "CL-A3-MASS-BASIC",
-                  "slide": "ASM-A3-PACK-SLIDE"},
+                  "aft": P + "pod.pack_aft_travel_m", "step": P + "pod.pack_spacer_step_m",
+                  "x_most": "ASM-B3-PACK-FWD-MOST", "mrange": "ASM-A3-PACK-RANGE"},
           units={"c": "m", "x_fwd": "m", "x_aft": "m", "x_t": "m", "x_t_a3": "m", "x_nom": "m", "x_req": "m",
-                 "m_pack": "kg", "slide": "m"},
+                 "m_pack": "kg", "aft": "m", "step": "m", "x_most": "m", "mrange": "g"},
           equation="x_now = cg_frac c ; A3 pack station x_p = x_req - (x_t,A3 - x_now) m/m_pack ; "
-                   "x_nom CG = x_now + (x_nom - x_p) m_pack/m ; margins to the limits ; pack station for the B3 target "
-                   "= x_p + (x_t - x_now) m/m_pack ; slide left = distance to the nearer end of [x_nom + s0, x_nom + s1]")
-def cg_check(cg_frac, c, x_fwd, x_aft, x_t, x_t_a3, x_nom, x_req, m_pack, m_basic, slide):
-    s0, s1 = (slide if isinstance(slide, (list, tuple)) else (-slide, slide))
+                   "dry moment S0 = m x_now - m_pack x_p, M0 = m - m_pack ; CG(m_i, x_i) = (S0 + m_i x_i)/(M0 + m_i) ; "
+                   "D-59 rule: stations x_nom + aft - k step >= x_most, the one with CG nearest the B3 target ; "
+                   "pack window: heaviest pack inside at the aft-most station, lightest inside at the crush stack")
+def cg_check(cg_frac, c, x_fwd, x_aft, x_t, x_t_a3, x_nom, x_req, m_pack, m_basic, aft, step, x_most, mrange):
     x = cg_frac * c
     xp = x_req - (x_t_a3 - x) * m_basic / m_pack
-    xc = x + (x_nom - xp) * m_pack / m_basic
-    xp_t = xp + (x_t - x) * m_basic / m_pack
+    M0, S0 = m_basic - m_pack, m_basic * x - m_pack * xp
+    cg = lambda mp, xs: (S0 + mp * xs) / (M0 + mp)   # noqa: E731
+    xc = cg(m_pack, x_nom)
+    x_back = x_nom + aft
+    stations = [x_back - k * step for k in range(200) if x_back - k * step >= x_most - 1e-9]
+    cases = []
+    for mg in (mrange[0], m_pack * 1000, mrange[1]):
+        xs = min(stations, key=lambda v: abs(cg(mg / 1000, v) - x_t))
+        xg = cg(mg / 1000, xs)
+        cases.append([round(mg, 1), round(xs, 4), round(xg, 5), round(xg - x_fwd, 5), round(x_aft - xg, 5)])
+    xp_t = x_nom + (x_t - xc) * m_basic / m_pack
     off = xp_t - x_nom
     return {"x_now": x, "pack_x_a3": xp, "margin_fwd": x - x_fwd, "margin_aft": x_aft - x, "to_target": x_t - x,
             "x_centred": xc, "centred_margin_fwd": xc - x_fwd, "centred_margin_aft": x_aft - xc,
-            "pack_x_target": xp_t, "pack_offset_target": off, "pack_slide_left": min(off - s0, s1 - off),
-            "cg_slide_fwd": xc + s0 * m_pack / m_basic, "cg_slide_aft": xc + s1 * m_pack / m_basic,
-            "pack_shift_into_range_m": (x_aft - xc) * m_basic / m_pack if xc > x_aft else 0.0}
+            "pack_x_target": xp_t, "pack_offset_target": off, "pack_slide_left": min(off - (x_most - x_nom), aft - off),
+            "travel_m": [x_most - x_nom, aft], "cg_slide_fwd": cg(m_pack, x_most), "cg_slide_aft": cg(m_pack, x_back),
+            "pack_cases_columns": ["pack g", "station x m", "CG x m", "fwd margin m", "aft margin m"],
+            "pack_cases": cases, "packs_margin_fwd": min(r[3] for r in cases),
+            "packs_margin_aft": min(r[4] for r in cases),
+            "pack_max_g": 1000 * (x_fwd * M0 - S0) / (x_back - x_fwd),
+            "pack_min_g": 1000 * (x_aft * M0 - S0) / (x_most - x_aft)}
 
 
-kit.claim("CL-B3-CG-NOW-FWD", "A3 CG (A3 roll-up as published) behind the forward limit", calc="CALC-B3-CG-CHECK",
+kit.claim("CL-B3-CG-NOW-FWD", "A3 CG as published (A3's pack station) behind the forward limit", calc="CALC-B3-CG-CHECK",
           output="margin_fwd", unit="m", limit=(">=", 0.0),
           how="Re-run after A3 updates the roll-up; T-B3-CG-BALANCE on the built aircraft.")
-kit.claim("CL-B3-CG-NOW-AFT", "A3 CG (A3 roll-up as published) ahead of the aft limit", calc="CALC-B3-CG-CHECK",
-          output="margin_aft", unit="m", limit=(">=", 0.0), how="As CL-B3-CG-NOW-FWD.")
-kit.claim("CL-B3-CG-CENTRED-AFT", "CG with the pack at its D-24 nominal station (x -0.001), ahead of the aft limit",
+kit.claim("CL-B3-CG-NOW-AFT", "A3 CG as published (A3's pack station) ahead of the aft limit", calc="CALC-B3-CG-CHECK",
+          output="margin_aft", unit="m", limit=(">=", 0.0), how="As CL-B3-CG-NOW-FWD.",
+          note="A3-R5 rolls up with the pack at the old D-24 station (-0.001); D-47 moves it to -0.022, which "
+               "CL-B3-CG-CENTRED-* check. Clears when A3 re-runs at pod.pack_x_nominal_m")
+kit.claim("CL-B3-CG-CENTRED-AFT", "CG with the 550 g pack at its D-47 nominal station (x -0.022), ahead of the aft limit",
           calc="CALC-B3-CG-CHECK", output="centred_margin_aft", unit="m", limit=(">=", 0.0),
-          how="A3 roll-up with the pack at x -0.001; T-B3-CG-BALANCE.",
-          note="id kept for A1's CALC-A1-CG-RANGE; 'centred' now means the D-24 nominal station (pod centre at R3 is "
-               "-0.010)")
-kit.claim("CL-B3-CG-CENTRED-FWD", "CG with the pack at its D-24 nominal station, behind the forward limit",
+          how="A3 roll-up with the pack at pod.pack_x_nominal_m; T-B3-CG-BALANCE.",
+          note="id kept for A1's CALC-A1-CG-RANGE; 'centred' means the nominal station (D-24 -0.001, D-47 -0.022)")
+kit.claim("CL-B3-CG-CENTRED-FWD", "CG with the 550 g pack at its D-47 nominal station, behind the forward limit",
           calc="CALC-B3-CG-CHECK", output="centred_margin_fwd", unit="m", limit=(">=", 0.0),
           how="As CL-B3-CG-CENTRED-AFT.")
-kit.claim("CL-B3-PACK-SLIDE-LEFT", "Pack trim travel left with the pack at the B3 target station",
+kit.claim("CL-B3-CG-PACKS-FWD", "Smallest forward-limit margin over the 503 / 550 / 680 g packs at their D-59 stations",
+          calc="CALC-B3-CG-CHECK", output="packs_margin_fwd", unit="m", limit=(">=", 0.0),
+          how="Weigh the pack (E2), set the station from the flight card (H3), balance (T-B3-CG-BALANCE).")
+kit.claim("CL-B3-CG-PACKS-AFT", "Smallest aft-limit margin over the 503 / 550 / 680 g packs at their D-59 stations",
+          calc="CALC-B3-CG-CHECK", output="packs_margin_aft", unit="m", limit=(">=", 0.0),
+          how="As CL-B3-CG-PACKS-FWD.")
+kit.claim("CL-B3-PACK-SLIDE-LEFT", "Pack trim travel left with the 550 g pack at the B3 target station",
           calc="CALC-B3-CG-CHECK", output="pack_slide_left", unit="m", limit=(">=", 0.0),
           how="D2 marks the pack station on the tray; H1 balance confirms the CG on target.",
-          note="negative: the target station is outside the bay's 0 ... 23 mm aft-only travel (ASM-A3-PACK-SLIDE)")
+          note="travel from the -0.022 datum: aft to the stop (pod.pack_aft_travel_m, D-59), forward to the crush "
+               "stack (ASM-B3-PACK-FWD-MOST)")
+kit.claim("CL-B3-PACK-MASS-MAX", "Heaviest pack that stays behind the forward limit at the aft-most station",
+          calc="CALC-B3-CG-CHECK", output="pack_max_g", unit="g",
+          how="E2 weighs the pack; above this mass the pack cannot be trimmed with the bay (ballast or a new station).")
+kit.claim("CL-B3-PACK-MASS-MIN", "Lightest pack that stays ahead of the aft limit on the crush stack",
+          calc="CALC-B3-CG-CHECK", output="pack_min_g", unit="g",
+          how="E2 weighs the pack; below this mass nose ballast (A1 cap 10 g, D-59) is needed.")
 
 
 # ---------------------------------------------------------------------------------------------- trimmed stall
@@ -439,14 +498,15 @@ kit.claim("CL-B3-PACK-SLIDE-LEFT", "Pack trim travel left with the pack at the B
           inputs={**CS_IN, "x_t": "CL-B3-CG-TARGET", "x_aft": "CL-B3-CG-AFT", "x_fwd": "CL-B3-CG-FWD",
                   "k": P + "requirements.transition_factor"},
           units={**CS_U, "x_t": "m", "x_aft": "m", "x_fwd": "m"},
-          equation="critical section at each CG -> CLmax_t, delta ; Vs = sqrt(2 m g / (rho S CLmax_t)) ; "
-                   "Vt = k Vs at the forward limit (worst CG in the range)")
-def stall_trim(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta, tab, m, g, rho, S, x_t, x_aft,
-               x_fwd, k):
+          equation="critical section at each CG -> CLmax_t, delta (commanded, / e_D6(Vs_max)) ; "
+                   "Vs = sqrt(2 m g / (rho S CLmax_t)) ; Vt = k Vs at the forward limit (worst CG in the range)")
+def stall_trim(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta, tab, m, g, rho, S, lo, li, va,
+               slop, vmax, x_t, x_aft, x_fwd, k):
     geo = dict(zip(GKEYS, (b, c, ef, yin, yout, fy, fh, fle, fte)))
     out = {}
+    e_st = eff_mech(vmax, lo, li, va)
     for tag, x in (("target", x_t), ("aft", x_aft), ("fwd", x_fwd)):
-        r = _cs_at(x, geo, zref, xnp_a, xnp, eta, dcm, tab, m, g, rho, S)
+        r = _cs_at(x, geo, zref, xnp_a, xnp, eta, dcm, tab, m, g, rho, S, eff=e_st)
         out[f"clmax_{tag}"], out[f"delta_{tag}"], out[f"alpha_{tag}"] = r["CLmax"], r["delta"], r["alpha"]
         out[f"vs_{tag}"], out[f"y_first_{tag}"] = r["vs"], r["y_first"]
     out["vt_target"] = k * out["vs_target"]
@@ -475,16 +535,17 @@ kit.claim("CL-B3-VT-TRIM", "Transition speed 1.3 Vs, forward CG limit (ARSPD_FBW
                   "vs": "CL-B3-VS-TRIM", "vc": P + "performance.cruise_ms"},
           units={**CS_U, "x_t": "m", "x_aft": "m", "x_fwd": "m", "vs": "m/s", "vc": "m/s"},
           equation="CL = 2 m g/(rho V^2 S) ; AVL: alpha for CL, elevon (gain eta) for Cm + dcm = 0 about "
-                   "x_cg + (Xnp_a - Xnp)")
-def trim_sweep(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta, tab, m, g, rho, S, x_t, x_aft,
-               x_fwd, vs, vc):
+                   "x_cg + (Xnp_a - Xnp) ; commanded elevon = AVL / e_D6(V)")
+def trim_sweep(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta, tab, m, g, rho, S, lo, li, va,
+               slop, vmax, x_t, x_aft, x_fwd, vs, vc):
     speeds = [round(vs, 2)] + [v for v in (13.0, 14.0, 15.0, 16.0, 18.0, 20.0, 22.0, 25.0) if v > vs + 0.05]
     cls = [2 * m * g / (rho * V * V * S) for V in speeds]
     rows = {}
     for tag, x in (("fwd", x_fwd), ("target", x_t), ("aft", x_aft)):
         gg = _g(b, c, ef, yin, yout, fy, fh, fle, fte, x + (xnp_a - xnp), zref, egain=eta)
         res = AV.trim_sweep(gg, cls, -dcm, LAT_TRIM)
-        rows[tag] = [[V, round(r["CL"], 4), round(r["alpha"], 2), round(r["d1"], 2)] for V, r in zip(speeds, res)]
+        rows[tag] = [[V, round(r["CL"], 4), round(r["alpha"], 2), round(r["d1"] / eff_mech(V, lo, li, va), 2)]
+                     for V, r in zip(speeds, res)]
     cruise = [r for r in rows["target"] if abs(r[0] - vc) < 1e-6][0]
     worst = min(r[3] for t in rows.values() for r in t)
     return {"columns": ["V m/s", "CL", "alpha deg", "elevon deg (- TE up)"], "table": rows,
@@ -502,13 +563,15 @@ kit.claim("CL-B3-ALPHA-CRUISE", "Body angle at cruise speed, CG target", calc="C
           inputs={"Cld": "CL-B3-CLDA", "Clp": "CL-B3-CLP", "eta": "CL-B2-ELEVON-ETA",
                   "travel": P + "wing.elevon.deflection_deg", "d_stall": "CL-B3-DELTA-STALL", "vs": "CL-B3-VS-TRIM",
                   "b": P + "wing.span_m", "S": "CL-A1-WING-AREA", "rho": P + "env.rho_kgm3", "Ixx": "CL-A3-IXX",
-                  "m_basic": "CL-A3-MASS-BASIC", "m": P + "requirements.mtow_gate_kg"},
-          units={"travel": "deg", "d_stall": "deg", "vs": "m/s", "b": "m", "S": "m2", "rho": "kg/m3", "m": "kg"},
-          equation="da = travel - |delta_trim at CLmax| ; pb/2V = |Cld| eta da / |Clp| ; tau = Ixx / (|Clp| q S b^2 / 2V) ;"
-                   " t60 from first-order roll response")
-def roll_authority(Cld, Clp, eta, travel, d_stall, vs, b, S, rho, Ixx, m_basic, m):
-    da = travel[1] - abs(d_stall)
-    pb2v = abs(Cld) * eta * da / abs(Clp)
+                  "m_basic": "CL-A3-MASS-BASIC", "m": P + "requirements.mtow_gate_kg",
+                  "lo": "CL-D6-EFF-LOSS-OUT", "li": "CL-D6-EFF-LOSS-IN", "va": "ASM-F4-VA-SCHED", "slop": "CL-D6-SLOP"},
+          units={"travel": "deg", "d_stall": "deg", "vs": "m/s", "b": "m", "S": "m2", "rho": "kg/m3", "m": "kg",
+                 "va": "m/s", "slop": "deg"},
+          equation="da = travel - |delta_trim at CLmax| - slop ; pb/2V = |Cld| eta e_D6(Vs) da / |Clp| ; "
+                   "tau = Ixx / (|Clp| q S b^2 / 2V) ; t60 from first-order roll response")
+def roll_authority(Cld, Clp, eta, travel, d_stall, vs, b, S, rho, Ixx, m_basic, m, lo, li, va, slop):
+    da = travel[1] - abs(d_stall) - slop
+    pb2v = abs(Cld) * eta * eff_mech(vs, lo, li, va) * da / abs(Clp)
     V = vs
     p = pb2v * 2 * V / b
     q = 0.5 * rho * V * V
@@ -518,7 +581,8 @@ def roll_authority(Cld, Clp, eta, travel, d_stall, vs, b, S, rho, Ixx, m_basic, 
     while phi < math.radians(60) and t < 10:
         t += 0.001
         phi = p * (t - tau * (1 - math.exp(-t / tau)))
-    return {"da_deg": da, "pb2v": pb2v, "p_degs": math.degrees(p), "tau_s": tau, "t60_s": t}
+    return {"da_deg": da, "pb2v": pb2v, "p_degs": math.degrees(p), "tau_s": tau, "t60_s": t,
+            "eff": eff_mech(vs, lo, li, va)}
 
 
 kit.claim("CL-B3-DELTA-STALL", "Elevon trim at the trimmed CLmax, CG target", calc="CALC-B3-STALL-TRIM",
@@ -533,25 +597,28 @@ kit.claim("CL-B3-ROLL-T60", "Time to 60 deg bank at the stall", calc="CALC-B3-RO
           cites=["SRC-B3-AVL"],
           inputs={**CS_IN, "x_aft": "CL-B3-CG-AFT", "x_fwd": "CL-B3-CG-FWD", "vt": "CL-B3-VT-TRIM",
                   "travel": P + "wing.elevon.deflection_deg", "Cld": "CL-B3-CLDA", "Clp": "CL-B3-CLP",
-                  "M_out": "CL-E1-MOTOROUT-ROLL"},
+                  "M_out": "CL-E1-MOTOROUT-ROLL", "kslop": "ASM-B3-SLOP-TRIM-FRAC"},
           units={**CS_U, "x_aft": "m", "x_fwd": "m", "vt": "m/s", "travel": "deg"},
-          equation="AVL trim at CL(Vt) for the aft and forward CG ; use = max|delta| / travel ; da = travel - max|delta| ;"
-                   " p = |Cld| eta da / |Clp| 2V/b ; M_roll = |Cld| eta da q S b ; ratio = M_roll / M_motor-out")
-def cruise_auth(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta, tab, m, g, rho, S, x_aft, x_fwd,
-                vt, travel, Cld, Clp, M_out):
+          equation="AVL trim at CL(Vt) for the aft and forward CG ; e = e_D6(Vt) ; delta = delta_AVL / e ; "
+                   "use = (max|delta| + k slop) / travel ; da = travel - max|delta| - slop ; "
+                   "p = |Cld| eta e da / |Clp| 2V/b ; M_roll = |Cld| eta e da q S b ; ratio = M_roll / M_motor-out")
+def cruise_auth(b, c, ef, yin, yout, fy, fh, fle, fte, zref, xnp_a, xnp, dcm, eta, tab, m, g, rho, S, lo, li, va,
+                slop, vmax, x_aft, x_fwd, vt, travel, Cld, Clp, M_out, kslop):
     CL = 2 * m * g / (rho * vt * vt * S)
+    e = eff_mech(vt, lo, li, va)
     ds = {}
     for tag, x in (("aft", x_aft), ("fwd", x_fwd)):
         gg = _g(b, c, ef, yin, yout, fy, fh, fle, fte, x + (xnp_a - xnp), zref, egain=eta)
-        ds[tag] = AV.trim_sweep(gg, [CL], -dcm, LAT_TRIM)[0]["d1"]
+        ds[tag] = AV.trim_sweep(gg, [CL], -dcm, LAT_TRIM)[0]["d1"] / e
     dmax = max(abs(v) for v in ds.values())
-    da = travel[1] - dmax
+    da = travel[1] - dmax - slop
     q = 0.5 * rho * vt * vt
-    p = abs(Cld) * eta * da / abs(Clp) * 2 * vt / b
-    M = abs(Cld) * eta * da * q * S * b
-    d_hold = M_out / (abs(Cld) * eta * q * S * b)
-    return {"CL": CL, "delta_aft": ds["aft"], "delta_fwd": ds["fwd"], "trim_use": dmax / travel[1], "da_deg": da,
-            "p_degs": math.degrees(p), "M_roll_Nm": M, "motorout_ratio": M / M_out, "motorout_delta_deg": d_hold}
+    p = abs(Cld) * eta * e * da / abs(Clp) * 2 * vt / b
+    M = abs(Cld) * eta * e * da * q * S * b
+    d_hold = M_out / (abs(Cld) * eta * e * q * S * b)
+    return {"CL": CL, "eff": e, "delta_aft": ds["aft"], "delta_fwd": ds["fwd"],
+            "trim_use": (dmax + kslop * slop) / travel[1], "da_deg": da, "p_degs": math.degrees(p), "M_roll_Nm": M,
+            "motorout_ratio": M / M_out, "motorout_delta_deg": d_hold}
 
 
 kit.claim("CL-B3-TRIM-USE-VT", "Elevon trim share of travel at 1.3 Vs, worst CG", calc="CALC-B3-CRUISE-AUTH",
@@ -746,7 +813,7 @@ HOV_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "dl": P + 
           "S": "CL-A1-WING-AREA", "c": P + "wing.chord_m", "b": P + "wing.span_m", "x_t": "CL-B3-CG-TARGET",
           "cn90": "ASM-B3-CN90", "xcp": "ASM-B3-XCP-HOVER", "fc": P + "fins.chord_m", "fh": P + "fins.half_height_m",
           "fle": P + "fins.le_x_m", "asym": "ASM-B3-GUST-ASYM", "fac": P + "requirements.hover_ctrl_factor",
-          "amin": P + "requirements.hover_ctrl_accel_min", "swirl_lo": "ASM-B3-SWIRL-LOW"}
+          "amin": P + "requirements.hover_ctrl_accel_min", "swirl_lo": "CL-B4-YAW-LOW"}
 HOV_U = {"m": "kg", "g": "m/s2", "tmax": "kg", "y": "m", "z": "m", "cant": "deg", "rho": "kg/m3", "Vw": "m/s",
          "S": "m2", "c": "m", "b": "m", "x_t": "m", "fc": "m", "fh": "m", "fle": "m", "amin": "rad/s2"}
 
@@ -756,7 +823,7 @@ HOV_U = {"m": "kg", "g": "m/s2", "tmax": "kg", "y": "m", "z": "m", "cant": "deg"
           equation="dT = min(dfrac T_h, T_lower, Tmax sag - T_upper) per motor ; M_pitch = 2 dT (2 z) ; "
                    "M_roll = 4 dT y ; M_yaw = 4 dT (kq swirl + r sin cant), kq = Q_h/T_h (B4) ; disturbance: "
                    "q S CN90 arm (pitch), fins (roll), asym F b/4 (yaw) ; cant_req: smallest cant meeting both "
-                   "the accel floor and fac x disturbance on yaw")
+                   "the accel floor and fac x disturbance on yaw, sized on B4's half-fin factor (CL-B4-YAW-LOW)")
 def hover(m, g, dl, split, tmax, sag, y, z, Qh, swirl, cant, dfrac, Ixx, Iyy, Izz, m_basic, rho, Vw, S, c, b, x_t,
           cn90, xcp, fc, fh, fle, asym, fac, amin, swirl_lo):
     k = m / m_basic
@@ -781,8 +848,13 @@ def hover(m, g, dl, split, tmax, sag, y, z, Qh, swirl, cant, dfrac, Ixx, Iyy, Iz
     # smallest cant that meets both yaw criteria with the capped differential
     rr = math.hypot(y, z)
     M_need = max(amin * II[0], fac * dist["M_yaw"])
-    s = (M_need / (4 * r["dT_N"]) - kq) / rr
+    s = (M_need / (4 * r["dT_N"]) - kq_iso * swirl_lo) / rr        # sized on the low (half-fin) factor, CR-B4-13
     r["cant_req_deg"] = math.degrees(math.asin(min(1.0, max(0.0, s))))
+    s_n = (M_need / (4 * r["dT_N"]) - kq) / rr
+    r["cant_req_nominal_deg"] = math.degrees(math.asin(min(1.0, max(0.0, s_n))))
+    r["k_yaw_m"], r["k_yaw_low_m"] = kq + rr * math.sin(math.radians(cant)), kq_iso * swirl_lo + rr * math.sin(
+        math.radians(cant))
+    r["k_yaw_need_m"] = M_need / (4 * r["dT_N"])
     r["M_yaw_need_Nm"] = M_need
     r["yaw_iso_30pct_Nm"] = 4 * dfrac * (m * g * dl / 4) * kq_iso     # isolated props, no swirl, no cant (E1 basis)
     return r
@@ -797,18 +869,19 @@ for ax in ("pitch", "roll", "yaw"):
               calc="CALC-B3-HOVER", output=f"acc_{ax}_rads2", unit="rad/s2",
               limit=(">=", P + "requirements.hover_ctrl_accel_min"), verifies=["R-HOVER-AUTHORITY"],
               how="Hover step inputs (twin, then aircraft): peak angular acceleration from the FC gyro log.")
-kit.claim("CL-B3-HOVER-CANT-REQ", "Motor cant needed for hover yaw at 30 % differential", calc="CALC-B3-HOVER",
+kit.claim("CL-B3-HOVER-CANT-REQ", "Motor cant needed for hover yaw at 30 % differential, B4 half-fin factor",
+          calc="CALC-B3-HOVER",
           output="cant_req_deg", unit="deg", limit=("<=", P + "propulsion.stations.cant_deg"),
           verifies=["R-HOVER-AUTHORITY"], how="Bench yaw torque on a turntable with canted mounts; hover yaw steps (H2).")
 
 
-kit.claim("CL-B3-HOVER-YAW-RATIO-LOW", "Hover yaw control / 5 m/s disturbance, low swirl bracket (B4 R0-R2 factor)",
+kit.claim("CL-B3-HOVER-YAW-RATIO-LOW", "Hover yaw control / 5 m/s disturbance, B4 half-fin factor (sizing case)",
           calc="CALC-B3-HOVER", output="ratio_yaw_low", unit="-", limit=(">=", P + "requirements.hover_ctrl_factor"),
-          assumes=["ASM-B3-SWIRL-LOW"], how="T-B4-YAW stand test settles the factor between the two brackets.")
-kit.claim("CL-B3-HOVER-YAW-ACCEL-LOW", "Hover yaw acceleration, 30 % differential, low swirl bracket",
+          how="T-B4-YAW stand test measures the factor; T-B3-HOVER-WIND.",
+          note="CL-B4-YAW-LOW 1.40 (CR-B4-13); R3 carried B4's R0-R2 0.48 here (ASM-B3-SWIRL-LOW, retired)")
+kit.claim("CL-B3-HOVER-YAW-ACCEL-LOW", "Hover yaw acceleration, 30 % differential, B4 half-fin factor",
           calc="CALC-B3-HOVER", output="acc_yaw_low_rads2", unit="rad/s2",
-          limit=(">=", P + "requirements.hover_ctrl_accel_min"), assumes=["ASM-B3-SWIRL-LOW"],
-          how="As CL-B3-HOVER-YAW-RATIO-LOW.")
+          limit=(">=", P + "requirements.hover_ctrl_accel_min"), how="As CL-B3-HOVER-YAW-RATIO-LOW.")
 
 
 FLEX_IN = {"Iyy": "CL-A3-IYY", "Ixx": "CL-A3-IXX", "m_basic": "CL-A3-MASS-BASIC", "m": P + "requirements.mtow_gate_kg",
@@ -881,6 +954,15 @@ def hover_flex(Iyy, Ixx, m_basic, m, g, dl, Qh, swirl, y, z, cant, f_anti, f_sym
         r5 = worst(ax, 5.0, nominal_only=True, rigid=False)
         out[f"gm_{ax}_at_5hz_db"] = min(r["gm_db"] for r in r5)
         out[f"pm_{ax}_at_5hz_deg"] = min(r["pm_deg"] for r in r5)
+    # antisymmetric mode anywhere in C2's 11.7-14.9 Hz band (D-45: 12-15 Hz), yaw loop at its ceiling, both map signs
+    band = [f_anti + (f_hi[0] - f_anti) * i / 8 for i in range(9)]
+    gb = []
+    for fm in band:
+        for sg in (1.0, -1.0):
+            r = HL.loop("yaw", out["xover_max_yaw_hz"], fm, zeta, pid["yaw"], flt, ph["yaw"], sg, rigid_margins=False)
+            gb.append((r["flex"]["gm_db"], r["flex"]["pm_deg"], fm, sg))
+    out["yaw_band_gm_min_db"], out["yaw_band_pm_min_deg"] = min(x[0] for x in gb), min(x[1] for x in gb)
+    out["yaw_band_f_worst_hz"] = min(gb)[2]
     # static aeroelastic change of hover yaw control power (antisymmetric twist tilts the thrust), low corner
     w = 2 * math.pi * f_anti
     out["yaw_flex_static_frac"] = 16 * T * y * z / (2 * Is * w * w * ky)
@@ -903,12 +985,12 @@ kit.claim("CL-B3-FLEX-PM-PITCH", "Hover pitch loop phase margin, flexible, F4 cr
 kit.claim("CL-B3-FLEX-PM-YAW", "Hover yaw loop phase margin, flexible, F4 crossover", calc="CALC-B3-HOVER-FLEX",
           output="pm_yaw_deg", unit="deg", limit=(">=", "ASM-B3-PM-MIN"), how="As CL-B3-FLEX-PM-PITCH.")
 kit.claim("CL-B3-XOVER-MAX-PITCH", "Highest hover pitch crossover with 6 dB / 45 deg, torsion mode in",
-          calc="CALC-B3-HOVER-FLEX", output="xover_max_pitch_hz", unit="Hz", limit=(">=", 4.0),
+          calc="CALC-B3-HOVER-FLEX", output="xover_max_pitch_hz", unit="Hz", limit=(">=", 2.6),
           how="F4 tuning ceiling (TUNING-PLAN.md): do not raise pitch P above the value giving this crossover "
-              "until a notch is set from T-C2-TAP-TEST.", note="limit 4.0 Hz = F4's starting crossover (ASM-B3-XOVER)")
+              "until a notch is set from T-C2-TAP-TEST.", note="limit 2.6 Hz = F4's starting crossover (ASM-B3-XOVER, CL-F4-XOVER-PIT)")
 kit.claim("CL-B3-XOVER-MAX-YAW", "Highest hover yaw crossover with 6 dB / 45 deg, torsion mode in",
-          calc="CALC-B3-HOVER-FLEX", output="xover_max_yaw_hz", unit="Hz", limit=(">=", 1.8),
-          how="As CL-B3-XOVER-MAX-PITCH for yaw P.", note="limit 1.8 Hz = F4's starting crossover (ASM-B3-XOVER)")
+          calc="CALC-B3-HOVER-FLEX", output="xover_max_yaw_hz", unit="Hz", limit=(">=", 1.0),
+          how="As CL-B3-XOVER-MAX-PITCH for yaw P.", note="limit 1.0 Hz = F4's starting crossover (ASM-B3-XOVER, CL-F4-XOVER-YAW)")
 kit.claim("CL-B3-HOVER-YAW-FLEX-STATIC", "Static change of hover yaw control power from the antisymmetric twist",
           calc="CALC-B3-HOVER-FLEX", output="yaw_flex_static_frac", unit="-",
           how="Turntable yaw-torque bench test on the built wing vs the rigid prediction.",
@@ -963,23 +1045,25 @@ kit.claim("CL-B3-ELEVON-WASH-GAP", "Elevon to hover slipstream gap", calc="CALC-
                   "sag": P + "propulsion.voltage_sag", "z": P + "propulsion.stations.z_m",
                   "dl": P + "propulsion.download_factor", "vc": P + "performance.cruise_ms",
                   "CLd": "CL-B3-CLD", "Cmd_ref": "CL-B3-CMD", "xref": P + "cg.x_target_m", "eta": "CL-B2-ELEVON-ETA",
-                  "dp": "ASM-B3-ELEVON-TRANS", "fpost": "ASM-B3-ELEVON-POST"},
+                  "dp": "ASM-B3-ELEVON-TRANS", "fpost": "ASM-B3-ELEVON-POST", "lo": "CL-D6-EFF-LOSS-OUT",
+                  "li": "CL-D6-EFF-LOSS-IN", "va": "ASM-F4-VA-SCHED", "slop": "CL-D6-SLOP"},
           units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "S": "m2", "c": "m", "b": "m", "x_t": "m", "x_fwd": "m",
                  "xnp": "m", "a0": "deg", "D": "m", "x_prop": "m", "tmax": "kg", "z": "m", "vc": "m/s",
-                 "xref": "m", "dp": "deg"},
+                 "xref": "m", "dp": "deg", "va": "m/s", "slop": "deg"},
           equation="level flight at V: T cos a = D, T sin a + L = W ; wing CP from Xnp (attached) to 0.5 c at 90 deg ; "
-                   "props' normal force at x_prop ; use = |M_aero - M_elevon| / (2 dT 2z), dT = min(T/4, Tmax sag - T/4)")
+                   "props' normal force at x_prop ; elevon (dp - slop) deg at Cmd eta e_D6(V) ; "
+                   "use = |M_aero - M_elevon| / (2 dT 2z), dT = min(T/4, Tmax sag - T/4)")
 def transition(m, g, rho, S, c, b, x_t, x_fwd, xnp, cm_np_thin, dcm, CLa, a0, clmax, cd0, e, cn90, n, D, x_prop,
-               cna, tmax, sag, z, dl, vc, CLd, Cmd_ref, xref, eta, dp, fpost):
+               cna, tmax, sag, z, dl, vc, CLd, Cmd_ref, xref, eta, dp, fpost, lo, li, va, slop):
     AR = b * b / S
     k_ind = 1 / (math.pi * e * AR)
     out = {}
     for tag, x in (("target", x_t), ("fwd", x_fwd)):
         rows = []
         for V in sorted({0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, vc}):
-            cmd = (Cmd_ref + CLd * (x - xref) / c) * eta
+            cmd = (Cmd_ref + CLd * (x - xref) / c) * eta * eff_mech(V, lo, li, va)
             r = FM.transition_point(V, m, g, rho, S, c, x, xnp, cm_np_thin + dcm, CLa, math.radians(a0), clmax, cd0,
-                                    k_ind, cn90, n, D, x_prop, cna, tmax * g * sag, z, 0.0, dl, cmd, dp, fpost)
+                                    k_ind, cn90, n, D, x_prop, cna, tmax * g * sag, z, 0.0, dl, cmd, dp - slop, fpost)
             rows.append([V, round(r["alpha_deg"], 1), round(r["TW"], 3), round(r["M_aero_Nm"], 3),
                          round(r["M_elev_Nm"], 3), round(r["M_avail_Nm"], 3), round(r["use"], 3)])
         out[tag] = rows

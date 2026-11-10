@@ -1,4 +1,4 @@
-"""D6 mechanisms claims for the proof chain (K09-L, revision D6-R1).
+"""D6 mechanisms claims for the proof chain (K09-L, revision D6-R2: mass reduction, CF bridge rod).
 
 Run from the repo root after subsystems/mechanisms/make_mechanisms.py:
     python -I redesign/team/D6/mech_calcs.py
@@ -49,6 +49,10 @@ kit.source("SRC-D6-ES3054", "EMAX ES3054 listing (3.0/3.5 kgf cm, 17 g class, 20
            note="fallback servo, cheaper; fails the unprotected VD case", status="UNVERIFIED")
 kit.source("SRC-D6-WIRE", "Music wire ASTM A228: E 200 GPa, G 79 GPa, 7.85 g/cm3, UTS >= 1 700 MPa at 1/8 in",
            "web", url="https://www.astm.org/a0228_a0228m-16.html", status="UNVERIFIED")
+kit.source("SRC-D6-CFROD", "Pultruded unidirectional carbon rod 1/8 in: E 110-140 GPa, 1.55-1.6 g/cm3, flexural "
+           "strength >= 1 000 MPa", "web", url="https://www.cstsales.com/carbon_rods.html",
+           where="rod table; low-end modulus used (110 GPa)", note="weigh and bend-test one rod (T-D6-TWIST)",
+           status="UNVERIFIED")
 kit.source("SRC-D6-CLEVIS", "Du-Bro 2-56 threaded rod (0.072 in) and 2-56 steel clevis", "web",
            url="https://www.dubro.com/collections/pushrods-and-control-rods", status="UNVERIFIED")
 kit.source("SRC-D6-CFTUBE", "Roll-wrapped CF tube 5 x 4 mm x 1 000 mm, 1.55 g/cm3", "web",
@@ -172,7 +176,7 @@ def servo_torque(hvd, hva, tf, sf):
           inputs={"hvd": "CL-D6-H-VD-FULL", "xh": "CL-A5-HINGE-X", "sx": "P:mec.section.x_m",
                   "szu": "P:mec.section.zu_m", "szl": "P:mec.section.zl_m", "rh": "P:mec.horn.r_m",
                   "rs": "P:mec.arm.r_m", "xs": "P:mec.station.shaft_x_m", "above": "P:mec.station.shaft_above_skin_m",
-                  "d": "P:mec.pushrod.d_m", "E": "P:mec.link.e_pa", "sf": "P:requirements.safety_factor_ult",
+                  "d": "P:mec.pushrod.d_m", "E": "P:mec.pushrod.e_pa", "sf": "P:requirements.safety_factor_ult",
                   "ff": "ASM-C1-FITTING-FACTOR", "pf": "ASM-C1-PRINTED-FACTOR", "kd": "ASM-C6-FOAM-KD",
                   "s_xps": "ASM-D3-XPS-TENSILE", "flange": "P:mec.horn.flange_mm", "back": "P:mec.horn.backplate_mm",
                   "blade": "P:mec.horn.blade_x_mm", "defl": "P:wing.elevon.deflection_deg"},
@@ -277,7 +281,9 @@ def slop(bl, k, play, rh):
 
 @kit.calc("CALC-D6-BRIDGE", title="Inter-panel rod lag, panel twist and elevon effectiveness loss",
           equation="rod: fixed-guided beam, d = F L^3 / (12 E I), F = H_out / r_b, lag = d / r_b; panel: uniform "
-                   "torque from the drive point, tip theta = m L^2 / (2 GJ), mean = 2/3 tip; GJ = G_tube J_tube + "
+                   "torque m from the drive point, tube over the first a L (GJ_h), skin + foam beyond (GJ_l): tip = "
+                   "m L^2 [(a - a^2/2)/GJ_h + (1-a)^2/(2 GJ_l)], mean = m L^2 [(a^2/2 - a^3/6 + (a - a^2/2)(1-a))/GJ_h "
+                   "+ (1-a)^3/(3 GJ_l)] (a = 1: tip m L^2/2GJ, mean 2/3 tip); GJ = G_tube J_tube + "
                    "4 A^2 G_skin t / s (closed tape box) + G_xps c_e t^3 / 12; loss = mean lag / 25 deg",
           inputs={"hva": "CL-D6-H-VA-FULL", "hvd": "CL-D6-H-VD-FULL", "share": "CL-D6-SHARE-OUT",
                   "rb": "P:mec.horn.bridge_r_m", "d": "P:mec.link.d_m", "E": "P:mec.link.e_pa",
@@ -287,12 +293,13 @@ def slop(bl, k, play, rh):
                   "gs": "P:mec.panel.skin_g_eff_pa", "c": "P:wing.chord_m", "cf": "P:wing.elevon.chord_frac",
                   "xh": "CL-A5-HINGE-X", "sx": "P:mec.section.x_m", "szu": "P:mec.section.zu_m",
                   "szl": "P:mec.section.zl_m", "yin": "P:wing.elevon.inboard_y_m",
-                  "yout": "P:wing.elevon.outboard_y_m", "defl": "P:wing.elevon.deflection_deg"},
+                  "yout": "P:wing.elevon.outboard_y_m", "defl": "P:wing.elevon.deflection_deg",
+                  "afrac": "P:mec.tube.cover_frac"},
           units={"hva": "N*m", "hvd": "N*m", "rb": "m", "d": "m", "E": "Pa", "ya": "m", "yo": "m", "boss": "m",
                  "ht": "m", "c": "m", "xh": "m", "gt": "Pa", "gf": "Pa", "ts": "m", "gs": "Pa"},
           assumes=["ASM-D6-TAPE-G"])
 def bridge(hva, hvd, share, rb, d, E, ya, yo, boss, ht, tube, gt, gf, ts, gs, c, cf, xh, sx, szu, szl, yin, yout,
-           defl):
+           defl, afrac):
     L = (yo - ya) - ht - 2 * boss
     EI = E * math.pi * d ** 4 / 64
     lag = lambda h: math.degrees(h * share / rb * L ** 3 / (12 * EI) / rb)
@@ -311,14 +318,65 @@ def bridge(hva, hvd, share, rb, d, E, ya, yo, boss, ht, tube, gt, gf, ts, gs, c,
     b_in, b_out = yin[1] - yin[0], yout[1] - yout[0]
     l_in = ya - yin[0]                                              # inboard panel driven near its outer end
     l_out = yout[1] - yo                                            # outboard panel driven near its inner end
-    tw = lambda h, b, l, gj: math.degrees(h / b * l * l / (2 * gj))
+    GJ_l = GJ_skin + GJ_foam                                        # panel beyond the end of the tube
+
+    def tw(h, b, l, a, gjh, gjl):
+        k = h / b * l * l
+        tip = k * ((a - a * a / 2) / gjh + (1 - a) ** 2 / (2 * gjl))
+        mean = k * ((a * a / 2 - a ** 3 / 6 + (a - a * a / 2) * (1 - a)) / gjh + (1 - a) ** 3 / (3 * gjl))
+        return math.degrees(tip), math.degrees(mean)
     dmax = max(abs(defl[0]), abs(defl[1]))
-    tw_out, tw_in = tw(hva * share, b_out, l_out, GJ), tw(hva * (1 - share), b_in, l_in, GJ)
+    a_in, a_out = afrac
+    tw_out, m_out = tw(hva * share, b_out, l_out, a_out, GJ, GJ_l)
+    tw_in, m_in = tw(hva * (1 - share), b_in, l_in, a_in, GJ, GJ_l)
     return {"lag_va_deg": lag(hva), "lag_vd_deg": lag(hvd), "rod_sigma_vd_Pa": sigma, "rod_free_len_m": L,
             "twist_out_va_deg": tw_out, "twist_in_va_deg": tw_in,
-            "twist_out_va_foam_only_deg": tw(hva * share, b_out, l_out, GJ_foam),
+            "twist_out_va_foam_only_deg": tw(hva * share, b_out, l_out, 1.0, GJ_foam, GJ_foam)[0],
             "out_total_va_deg": lag(hva) + tw_out, "GJ_Nm2": GJ, "GJ_tube_Nm2": GJ_tube, "GJ_skin_Nm2": GJ_skin,
-            "loss_out_va": (lag(hva) + 2.0 / 3.0 * tw_out) / dmax, "loss_in_va": 2.0 / 3.0 * tw_in / dmax}
+            "loss_out_va": (lag(hva) + m_out) / dmax, "loss_in_va": m_in / dmax,
+            "loss_in_va_full_tube": tw(hva * (1 - share), b_in, l_in, 1.0, GJ, GJ_l)[1] / dmax,
+            "loss_in_va_no_tube": tw(hva * (1 - share), b_in, l_in, 0.0, GJ, GJ_l)[1] / dmax}
+
+
+@kit.calc("CALC-D6-ROD-TRADE", title="Bridge-rod choice: outboard effectiveness loss and mass per rod",
+          equation="lag_alt = lag x (E d^4) / (E_alt d_alt^4) (same fixed-guided beam); loss_alt = loss + (lag_alt - "
+                   "lag) / 25 deg; m = pi d^2 / 4 x L_cut x rho",
+          inputs={"lag": "CL-D6-BRIDGE-LAG-VA", "loss": "CL-D6-EFF-LOSS-OUT", "d": "P:mec.link.d_m",
+                  "E": "P:mec.link.e_pa", "alt": "P:mec.link.trade_d_e", "rho_cf": "P:mec.link.rod_gcc",
+                  "rho_st": "P:mec.link.steel_gcc", "defl": "P:wing.elevon.deflection_deg",
+                  "ya": "P:mec.station.arm_plane_y_m", "yo": "P:mec.station.outboard_horn_y_m"},
+          units={"lag": "deg", "d": "m", "E": "Pa", "rho_cf": "g/cm3", "rho_st": "g/cm3", "ya": "m", "yo": "m"})
+def rod_trade(lag, loss, d, E, alt, rho_cf, rho_st, defl, ya, yo):
+    dmax = max(abs(defl[0]), abs(defl[1]))
+    L_cut = yo - ya - 0.003                                         # 67 mm: the rod stops short of each horn face
+    out = {"mass_chosen_g": math.pi / 4 * d * d * L_cut * 1e6 * rho_cf}
+    for key, (da, Ea) in zip(("steel_3_32", "cf_2mm", "steel_1_8"), alt):
+        la = lag * (E * d ** 4) / (Ea * da ** 4)
+        out["loss_out_" + key] = loss + (la - lag) / dmax
+        out["mass_" + key + "_g"] = math.pi / 4 * da * da * L_cut * 1e6 * (rho_st if Ea > 150e9 else rho_cf)
+    return out
+
+
+@kit.calc("CALC-D6-FRAME-BOND", title="Servo frame bonded area and the area its load needs",
+          equation="A = rim (Lx Ly - (Lx - 2r)(Ly - 2r)) + inboard wall Lx Hz + 2 end walls Ly Hz; Lx = ear span + "
+                   "2 w, Ly = H + boss + t_arm + c + w (1.5 mm arm gap left out: conservative), Hz = W + c + w; "
+                   "F = T_stall / r_arm + T_stall / Lx; A_min = F sf ff pf / (kd sigma_XPS) (C6 method)",
+          inputs={"case": "P:mec.servo.case_m", "boss": "P:mec.servo.spline_boss_m", "ear": "P:mec.servo.ear_span_m",
+                  "at": "P:mec.arm.t_m", "w": "P:mec.frame.wall_m", "cl": "P:mec.frame.clear_m",
+                  "rim": "P:mec.frame.window_rim_m", "T": "P:mec.servo.stall_torque_6v_kgfcm", "rs": "P:mec.arm.r_m",
+                  "sf": "P:requirements.safety_factor_ult", "ff": "ASM-C1-FITTING-FACTOR",
+                  "pf": "ASM-C1-PRINTED-FACTOR", "kd": "ASM-C6-FOAM-KD", "s_xps": "ASM-D3-XPS-TENSILE"},
+          units={"case": "m", "boss": "m", "ear": "m", "at": "m", "w": "m", "cl": "m", "rim": "m", "T": "kgf*cm",
+                 "rs": "m"})
+def frame_bond(case, boss, ear, at, w, cl, rim, T, rs, sf, ff, pf, kd, s_xps):
+    L, W, H = case
+    Lx, Ly, Hz = ear + 2 * w, H + boss + at + cl + w, W + cl + w
+    a_rim = Lx * Ly - (Lx - 2 * rim) * (Ly - 2 * rim)
+    area = (a_rim + Lx * Hz + 2 * Ly * Hz) * 1e6
+    Tn = T * G0 / 100
+    F = Tn / rs + Tn / Lx
+    return {"A_frame_mm2": area, "A_min_mm2": F * sf * ff * pf / (kd * s_xps) * 1e6, "F_design_N": F,
+            "A_rim_mm2": a_rim * 1e6}
 
 
 @kit.calc("CALC-D6-SUPPLY", title="Servo supply demand for F1",
@@ -398,6 +456,28 @@ kit.claim("CL-D6-EFF-LOSS-OUT", "Outboard panel effectiveness loss at VA (mean l
           how="T-D6-TWIST")
 kit.claim("CL-D6-EFF-LOSS-IN", "Inboard panel effectiveness loss at VA (mean lag / travel)", calc="CALC-D6-BRIDGE",
           output="loss_in_va", unit="-", limit=("<=", "ASM-D6-EFF-LOSS-MAX"), parts=TUBES, how="T-D6-TWIST")
+kit.claim("CL-D6-EFF-LOSS-IN-FULL-TUBE", "Inboard panel loss if its tube ran the full panel (R1)",
+          calc="CALC-D6-BRIDGE", output="loss_in_va_full_tube", unit="-", parts=TUBES,
+          how="Information: cost of the 30 % shorter inboard tube (D6-R2, -1.7 g)")
+kit.claim("CL-D6-EFF-LOSS-IN-NO-TUBE", "Inboard panel loss with no tube (closed tape skin only)",
+          calc="CALC-D6-BRIDGE", output="loss_in_va_no_tube", unit="-", parts=TUBES,
+          how="Information: why both panels keep a tube (above the 10 % limit)")
+kit.claim("CL-D6-ROD-MASS", "Bridge rod mass, 1/8 in pultruded CF, 67 mm", calc="CALC-D6-ROD-TRADE",
+          output="mass_chosen_g", unit="g", parts=["MEC-005-L", "MEC-005-R"], how="T-D6-WEIGH")
+kit.claim("CL-D6-EFF-LOSS-OUT-332-STEEL", "Outboard loss with a 3/32 in music-wire rod (A1 D-48 fallback)",
+          calc="CALC-D6-ROD-TRADE", output="loss_out_steel_3_32", unit="-", parts=["MEC-005-L", "MEC-005-R"],
+          how="Information: rejected option (heavier and more lag than CF 1/8 in)")
+kit.claim("CL-D6-EFF-LOSS-OUT-2MM-CF", "Outboard loss with a 2 mm CF rod (A3 suggestion)", calc="CALC-D6-ROD-TRADE",
+          output="loss_out_cf_2mm", unit="-", parts=["MEC-005-L", "MEC-005-R"],
+          how="Information: rejected option (above the 10 % limit)")
+kit.claim("CL-D6-ROD-MASS-R1", "Bridge rod mass, 1/8 in music wire (R1)", calc="CALC-D6-ROD-TRADE",
+          output="mass_steel_1_8_g", unit="g", parts=["MEC-005-L", "MEC-005-R"], how="Information: R1 baseline")
+kit.claim("CL-D6-BOND-FRAME", "Servo frame bonded area into XPS (top-plate rim + three walls)",
+          calc="CALC-D6-FRAME-BOND", output="A_frame_mm2", unit="mm2", limit=(">=", "CL-C6-LINK-BOND-AREA-MIN"),
+          parts=["MEC-008-L", "MEC-008-R"], how="T-C6-XPS-PULL; frame pull-off coupon")
+kit.claim("CL-D6-BOND-FRAME-NEED", "Frame bond area needed at servo stall (C6 method)", calc="CALC-D6-FRAME-BOND",
+          output="A_min_mm2", unit="mm2", limit=("<=", "CL-D6-BOND-FRAME"), parts=["MEC-008-L", "MEC-008-R"],
+          how="T-C6-XPS-PULL")
 kit.claim("CL-D6-TWIST-FOAM-ONLY", "Outboard panel twist with bare foam (no tube, open skin), VA full",
           calc="CALC-D6-BRIDGE", output="twist_out_va_foam_only_deg", unit="deg", parts=TUBES,
           how="Information: why the tubes and the closed skin are needed")

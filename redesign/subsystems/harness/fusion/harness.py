@@ -7,7 +7,8 @@ pod and propulsion data: re-run that script after any change, then this module f
 Bodies: HRN-001 (pod runs: left channel, crossing behind the aft stop, right channel, under-pack channel, GPS cable
 in the right handle leg) and HRN-002-R (grooves ahead of the spar slot, servo groove aft of it, outboard fin-face
 legs to the ESCs and the phase legs past the collar), mirrored to HRN-002-L. Legs are axis-aligned cylinders
-(k09kit.bundle); the wires themselves are drawn as polylines (ctx.wire).
+(k09kit.bundle), each sized by the wire mass it carries so the body centroid is the declared CG (CR-A5-27); the
+wires themselves are drawn as polylines (ctx.wire), 22 AWG cap legs and 10 AWG jumpers included.
 Registers only edges declared in subsystems/harness/interfaces.json; edges in edges-pending.json wait for their
 other part's owner. UNVERIFIED-IN-FUSION: wire polylines (fusion_backend draws sketch lines / pipes).
 """
@@ -23,14 +24,15 @@ def _lv(d):
 
 def build(ctx):
     H = ctx.local['harness']
-    legs = _lv(H['cad']['bundle_legs'])
-    dia = _lv(H['cad']['bundle_dia_m'])
+    legs = _lv(H['cad']['bundle_legs'])                      # {key: [[start, end, diameter], ...]}
     with open(os.path.join(ctx.dir, 'interfaces.json'), encoding='utf-8') as f:
         iface = json.load(f)
     declared = {e['id']: e for e in iface['edges']}
 
-    k9.bundle(ctx.part('HRN-001'), [(tuple(a), tuple(b)) for a, b in legs['pod']], dia['pod'])
-    k9.bundle(ctx.part('HRN-002-R'), [(tuple(a), tuple(b)) for a, b in legs['side_R']], dia['side'])
+    for pid, key in (('HRN-001', 'pod'), ('HRN-002-R', 'side_R')):
+        part = ctx.part(pid)
+        for a, b, d in legs[key]:                             # one leg per call: each has its own diameter
+            k9.bundle(part, [(tuple(a), tuple(b))], d)
     k9.pair(ctx, 'HRN-002-R', 'HRN-002-L')
 
     by_edge = {}

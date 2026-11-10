@@ -1,11 +1,11 @@
 {
- "_note": "Pod-local dimensions (D2, revision D2-R4 on params A1-R3). Shared numbers (pod LE, L x W x H, base, board thickness, pack size, spar station, pitot tip) come from redesign/params/params.json; these are the pod-only ones. Read by subsystems/pod/fusion/pod.py, team/D2/pod_data.py and team/D2/pod_claims.py. Metres unless stated.",
+ "_note": "Pod-local dimensions (D2, revision D2-R5 on params A1-R4, D-47 re-lay). Shared numbers (pod LE, L x W x H, base, board thickness, pack size, pack nominal centroid, spar station, pitot tip) come from redesign/params/params.json; these are the pod-only ones. Read by subsystems/pod/fusion/pod.py, team/D2/pod_data.py and team/D2/pod_claims.py. Metres unless stated.",
  "nose_block_l_m": {
-  "value": 0.007,
+  "value": 0.001,
   "unit": "m",
-  "source": "params/CHANGE-LOG.md#D-25 (CR-A1-27, CR-C5-02)",
+  "source": "params/CHANGE-LOG.md#D-47 (CR-A1-43, CR-A3-22)",
   "status": "PROPOSED",
-  "note": "R4: fixed XPS nose block A behind the nose wall; the forward stop aft face is now derived: x_fs = pod.x_le_m + board t + this + forward-stop t (= -0.1002 at x_le -0.115), so the whole bay follows A1 if the nose moves (CR-D2-16)"
+  "note": "R5 (D-47): fixed XPS nose block A deleted. This is now the 1 mm thickened-epoxy (microballoon) bond line between the nose wall inside face and the fore faces of the forward stop and the tray front piece (key name kept for C3, F2, A5). x_fs = pod.x_le_m + board t + this + forward-stop t = -0.130 + 0.0048 + 0.001 + 0.003 = -0.1212; nose skin to stop face 8.8 mm (was 14.8). The stop is now backed by the nose wall instead of riding into block A after it breaks (C3, C5 re-check)"
  },
  "fwd_stop_m": {
   "value": [
@@ -20,20 +20,20 @@
  },
  "pack_aft_face_m": {
   "value": [
-   0.069,
-   0.073
+   0.048,
+   0.056
   ],
   "unit": "m",
-  "source": "team/A1/CHANGE-REQUESTS.md#CR-A1-27",
+  "source": "params/CHANGE-LOG.md#D-47",
   "status": "PROPOSED",
-  "note": "pack aft face at the nominal centroid x -0.001 (550 g) and with a 680 g pack"
+  "note": "pack aft face: nominal 550 g pack at pod.pack_x_nominal_m -0.022 (8 mm spacer) and the 680 g pack at -0.014 (no spacer, on the aft stop). Pack 0.140 long. Read by F2 harness.py and A5 cad_claims.py; pod.py checks it against pod.pack_x_nominal_m"
  },
  "aft_stop_x_m": {
-  "value": 0.077,
+  "value": 0.056,
   "unit": "m",
-  "source": "D2 choice",
+  "source": "params/CHANGE-LOG.md#D-47",
   "status": "PROPOSED",
-  "note": "aft stop face: A1's 0.073 heavy-pack face + 4 mm, so C5's pre-R3 heavy station (CL-C5-PACK-X-B3-HEAVY 0.0067, face 0.0767) also fits; spacers fill the rest"
+  "note": "aft stop face (D-47: 0.077 -> 0.056): the 680 g pack's aft face at -0.014, so the heaviest listed pack flies with no spacer"
  },
  "aft_stop_m": {
   "value": [
@@ -43,17 +43,17 @@
   "unit": "m",
   "source": "team/C3/CHANGE-REQUESTS.md#CR-C3-01 + D2",
   "status": "PROPOSED",
-  "note": "thickness (C3: 3.0 mm, 2 mm root fillet) x top above the pack underside (pack centroid + 2 mm); part of the carry handle POD-007, on a bridge between the two spar saddles, so the +x pack load goes into the spar"
+  "note": "thickness (C3: 3.0 mm, 2 mm root fillet) x top above the pack underside (pack centroid + 2 mm). R5: printed with the tray rear piece (POD-002) with 2 gussets; at x 0.056 it is 9 mm ahead of the recess end, over the tray, so it no longer stands on the handle bridge. +x load: stop -> tray rear bond (3 960 mm2) -> floor -> pod-wing bond"
  },
  "gusset_m": {
   "value": [
-   0.008,
+   0.006,
    0.003
   ],
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "two triangular gussets behind the aft stop at the bay edges: length aft x thickness (CR-C5-07: the stop is not a cantilever off the floor alone)"
+  "note": "two triangular gussets behind the aft stop at the bay edges, on the tray rear piece: length aft (to the tray end 0.065) x thickness (CR-C5-07: the stop is not a cantilever off the floor alone)"
  },
  "bay_min_m": {
   "value": [
@@ -78,7 +78,7 @@
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "closed-cell EVA pads with an anti-slip face; 2.5 mm lifts the pack underside to z 0.0233 so it clears the wing surface (<= 0.0224) where it overhangs the recess end"
+  "note": "closed-cell EVA pads with an anti-slip face. R5: the pack no longer overhangs the recess end (aft face <= 0.056 < 0.065); 2.5 mm kept for the 3.5 mm wire channel under the pack and the bay height"
  },
  "pad_len_m": {
   "value": 0.045,
@@ -95,7 +95,7 @@
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "tray-floor lightening windows: border to ends and slots (x), to the guides (y)"
+  "note": "tray-floor lightening windows: border to ends and slots (x), to the guides (y); R5: a window needs >= 6 mm clear length (was 10)"
  },
  "guide_t_m": {
   "value": 0.0015,
@@ -121,13 +121,14 @@
   "value": [
    0.002,
    0.004,
+   0.006,
    0.008,
    0.008
   ],
   "unit": "m",
-  "source": "D2 choice",
+  "source": "params/CHANGE-LOG.md#D-47",
   "status": "PROPOSED",
-  "note": "printed U-spacers behind the pack, 0-22 mm in 2 mm steps; nominal pack (aft face 0.069) flies the 8 mm spacer, 680 g pack (0.073) the 4 mm"
+  "note": "printed U-spacers behind the pack (POD-008): any even stack 0-28 mm. Crash-safe stack per pack = 35.7 mm - C5 block minimum for that mass: 680 g <= 2 mm, 550 g <= 10 mm, 503 g <= 12 mm (D-47 0-22 mm is the bay travel, not the crash-safe range). Colour by thickness: 2 white, 4 yellow, 6 green, 8 blue; each pack label carries its stack: 680 g none, 550 g blue, 503 g blue + white"
  },
  "spacer_flown_m": {
   "value": [
@@ -136,7 +137,7 @@
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "spacers in the CAD (nominal 550 g pack); the rest live in the field kit"
+  "note": "spacers in the CAD (nominal 550 g pack: one blue 8 mm); the rest live in the field kit"
  },
  "spacer_h_m": {
   "value": 0.012,
@@ -192,13 +193,13 @@
  },
  "strap_x_m": {
   "value": [
-   -0.036,
-   0.0335
+   -0.054,
+   0.016
   ],
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "strap slot centres: quarter points of the 140 mm pack at mid-range (aft face 0.066)"
+  "note": "strap slot centres: quarter points of the 140 mm pack at the middle of the D-47 stations (centroid -0.019); the 37 mm slots follow the pack from -0.026 to -0.012"
  },
  "strap_slot_m": {
   "value": [
@@ -329,7 +330,7 @@
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "hatch opening ends here; fixed aft deck behind it; the pack tucks 3-11 mm under the deck"
+  "note": "hatch opening ends here; fixed aft deck behind it. R5: every pack (aft face <= 0.056) and the aft stop are now inside the opening, nothing tucks under the deck"
  },
  "lip_m": {
   "value": [
@@ -576,14 +577,14 @@
  },
  "floor_channel_m": {
   "value": [
-   -0.0655,
+   -0.0245,
    0.01,
    0.003
   ],
   "unit": "m",
-  "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-03 (d)",
+  "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-03 (d) + D-47",
   "status": "PROPOSED",
-  "note": "wire channel across the bay under the pack: centre x, width x, guide-notch height. The tray floor is split here (10 mm gap down to the foam-board floor, 3.5 mm under the pack); both guides notched 3 mm at the base; x -0.0655 (not -0.065) keeps 6 mm of tray behind the front strap-slot border"
+  "note": "wire channel across the bay under the pack: centre x, width x, guide-notch height. R5: moved -0.0655 -> -0.0245 because the forward strap now sits over -0.0655; it now lands on the PDB plate (left) and the FC (right), 6 mm behind the forward strap-slot border, 17 mm ahead of the aft one. The tray splits here (10 mm gap down to the foam-board floor, 3.5 mm under the pack); both guides notched 3 mm at the base"
  },
  "side_exit_m": {
   "value": [
@@ -661,5 +662,49 @@
   "source": "team/F3/CHANGE-REQUESTS.md#CR-F3-12 (d)",
   "status": "PROPOSED",
   "note": "socket bore key: flat on +z, 5.8 mm from the bore bottom (sleeve flat 5.6, OD 6.0 in the 6.2 bore): total/static cannot swap"
+ },
+ "pack_x_per_pack_m": {
+  "value": {
+   "503": -0.0245,
+   "550": -0.022,
+   "680": -0.014
+  },
+  "unit": "m",
+  "source": "params/CHANGE-LOG.md#D-47 (pod.pack_x_nominal_m note)",
+  "status": "PROPOSED",
+  "note": "A1's centroid station per weighed pack (g -> m). D2 meets each with the 2 mm spacer steps: 680 g no spacer (-0.014), 550 g 8 mm (-0.022), 503 g 10 mm (-0.024, 0.5 mm aft of -0.0245: +0.12 mm CG). Other pack masses: interpolate, round the spacer to 2 mm"
+ },
+ "spacer_colour": {
+  "value": {
+   "0.002": "white",
+   "0.004": "yellow",
+   "0.006": "green",
+   "0.008": "blue"
+  },
+  "unit": "-",
+  "source": "D2 choice",
+  "status": "PROPOSED",
+  "note": "PETG filament colour per spacer thickness (H3 writes the stack colours on each pack's flight-card label)"
+ },
+ "tray_front_solid_m": {
+  "value": 0.033,
+  "unit": "m",
+  "source": "D2 choice",
+  "status": "PROPOSED",
+  "note": "length of solid tray behind the forward stop's fore face (no window): 33 x 55 mm = 1 815 mm2 of bond under the stop (CL-D2-FWD-STOP-BOND), as at R4"
+ },
+ "nose_ant_tube_in_m": {
+  "value": 0.01,
+  "unit": "m",
+  "source": "D2 choice",
+  "status": "PROPOSED",
+  "note": "antenna B tube length behind the nose wall inside face (block A that held it is gone): bonded in the 6.4 mm wall hole with an epoxy fillet; no load"
+ },
+ "bridge_x0_m": {
+  "value": 0.077,
+  "unit": "m",
+  "source": "D2 choice",
+  "status": "PROPOSED",
+  "note": "R5: front of the handle foot bridge (the tie between the two feet over the slot fill, |y| < 0.029); it no longer carries the aft stop, so it keeps its R4 extent 0.077 ... 0.0902 (3 mm behind the spar axis)"
  }
 }
