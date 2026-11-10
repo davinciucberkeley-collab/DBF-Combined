@@ -184,15 +184,18 @@
   {
    "id": "ASM-F3-ISOLATOR",
    "type": "assumption",
-   "title": "FC isolation mount",
-   "text": "natural frequency 35 Hz, damping ratio 0.10, board mass 0.042 kg",
-   "basis": "silicone gel pads (Kyosho Zeal class) under a ~40 g board; 35 Hz sits above the attitude control bandwidth (< 10 Hz, rule fn >= 20 Hz) and well below hover 1P (~90 Hz). zeta 0.10 is the low end for gel (less damping = better isolation, larger resonance)",
+   "title": "FC isolation mount (F3-R2: FC top board alone on 4 gel cubes)",
+   "text": "[cube count, cube side m, cube height m, gel modulus Pa, damping ratio, board mass kg]",
+   "basis": "subsystems/avionics/params.json pad_m, gel_e_pa, fc_mass_g: silicone gel cubes (Zeal / alpha-gel class) under the corners of the 12 g FC board; the power board is split off to the PDB plate. E = 30 kPa and zeta 0.10 are class values: the 50 g sag test (BUILD.md) measures k",
    "value": [
-    35.0,
+    4,
+    0.005,
+    0.005,
+    30000.0,
     0.1,
-    0.042
+    0.012
    ],
-   "unit": "Hz,-,kg",
+   "unit": "-,m,m,Pa,-,kg",
    "status": "UNVERIFIED"
   },
   {
@@ -249,37 +252,37 @@
   {
    "id": "ASM-F3-MASS",
    "type": "assumption",
-   "title": "Avionics part masses",
-   "text": "[part, g]: AVN-001 CoreWing F405 Wing APP V2 incl. power board 40 + pigtails 2; AVN-002 GPS 10; AVN-003 RX + antennas 3; AVN-004 MS4525DO board 5; AVN-005 pitot tube, sleeve boom, 0.4 m tubing, 2 couplers 13; AVN-006 gel pads, tape, ties 5; AVN-007 microSD 0.5",
-   "basis": "FC from the ArduPilot page (40 g); the rest EST from listings and A3's model; weigh on arrival",
+   "title": "Avionics part masses (from the CAD roll-up, team/F3/avn_data.py)",
+   "text": "[part, g] as declared in subsystems/avionics/interfaces.json: FC top board + wireless board (no power board, which is PWR-003), GPS, RX with antennas, MS4525DO board + 2 lines, pitot boom (probe, printed sleeve, couplers), gel cubes + tape + ties + FC strap, microSD",
+   "basis": "seller figures where listed (GPS 7.73 g, RX 4.6 g, airspeed board 3.5 g, pitot 3.12 g); printed and silicone parts from CAD volume x density; FC 12 g EST; weigh on arrival (T-F3-ARRIVAL)",
    "value": [
     [
      "AVN-001",
-     42.0
+     12.0
     ],
     [
      "AVN-002",
-     10.0
+     7.73
     ],
     [
      "AVN-003",
-     3.0
+     4.6
     ],
     [
      "AVN-004",
-     5.0
+     4.51
     ],
     [
      "AVN-005",
-     13.0
+     4.84
     ],
     [
      "AVN-006",
-     5.0
+     2.4
     ],
     [
      "AVN-007",
-     0.5
+     0.4
     ]
    ],
    "unit": "g",
@@ -324,16 +327,16 @@
    "id": "ASM-F3-FC-SIZE",
    "type": "assumption",
    "title": "FC envelope on its mount",
-   "text": "52 x 32 x 17 mm board stack, no header pins, 6 mm gel/boss",
-   "basis": "ArduPilot page dimensions; signal leads soldered as 100 mm pigtails with in-line JR connectors",
+   "text": "FC top board L x W x H on 5 mm gel cubes",
+   "basis": "subsystems/avionics/params.json fc_board_m, pad_m; 52 x 32 footprint from the ArduPilot page; signal leads soldered as 100 mm pigtails with in-line JR connectors (no header pins)",
    "value": [
     0.052,
     0.032,
-    0.017,
-    0.006
+    0.008,
+    0.005
    ],
    "unit": "m",
-   "status": "PROPOSED",
+   "status": "UNVERIFIED",
    "cites": [
     "SRC-F3-AP-COREWING"
    ]
@@ -457,7 +460,7 @@
    "title": "FC isolation: transmissibility at hover 1P and 2P",
    "script": "redesign/team/F3/avionics.py",
    "function": "vibe",
-   "equation": "T(r) = sqrt((1+(2 z r)^2)/((1-r^2)^2+(2 z r)^2)), r = f/fn, f1P = rpm/60, 2P = 2 f1P",
+   "equation": "k = n E a^2 / h; fn = sqrt(k/m)/2pi; T(r) = sqrt((1+(2 z r)^2)/((1-r^2)^2+(2 z r)^2)), r = f/fn, f1P = rpm/60",
    "inputs": {
     "rpm": "CL-B4-HOVER-RPM",
     "iso": "ASM-F3-ISOLATOR"
@@ -466,20 +469,24 @@
     "rpm": "rpm"
    },
    "outputs": {
-    "f1p_hz": 89.92858175332185,
-    "t_1p": 0.19986731109775488,
-    "t_2p": 0.056393941339086914,
-    "r_1p": 2.56938805009491,
-    "fn_hz": 35.0,
-    "k_total_n_per_m": 2031.1645857441897,
-    "static_sag_mm": 0.20277987460533303
+    "f1p_hz": 90.26319535055327,
+    "t_1p": 0.20549488412034056,
+    "t_2p": 0.05755042717074425,
+    "r_1p": 2.536328897477494,
+    "fn_hz": 35.588127170858854,
+    "fn_lateral_hz": 20.546814802049994,
+    "k_total_n_per_m": 600.0,
+    "sag_50g_mm": 0.8172208333333333
    },
    "input_values": {
-    "rpm": 5395.714905199311,
+    "rpm": 5415.791721033196,
     "iso": [
-     35.0,
+     4,
+     0.005,
+     0.005,
+     30000.0,
      0.1,
-     0.042
+     0.012
     ]
    }
   },
@@ -503,13 +510,13 @@
    "outputs": {
     "q_pa": 156.8,
     "dv_per_count_ms": 0.05357142857142857,
-    "err_rss_ms": 0.44390745968817147,
-    "err_linear_ms": 0.7653815313142112
+    "err_rss_ms": 0.4499189175883065,
+    "err_linear_ms": 0.7753134875100557
    },
    "input_values": {
     "v": 16.0,
     "rho": 1.225,
-    "wash": 0.01659591203366881,
+    "wash": 0.01721665929590909,
     "e": [
      1.05,
      3.0,
@@ -560,37 +567,37 @@
     "m": "ASM-F3-MASS"
    },
    "outputs": {
-    "value": 78.5
+    "value": 36.48
    },
    "input_values": {
     "m": [
      [
       "AVN-001",
-      42.0
+      12.0
      ],
      [
       "AVN-002",
-      10.0
+      7.73
      ],
      [
       "AVN-003",
-      3.0
+      4.6
      ],
      [
       "AVN-004",
-      5.0
+      4.51
      ],
      [
       "AVN-005",
-      13.0
+      4.84
      ],
      [
       "AVN-006",
-      5.0
+      2.4
      ],
      [
       "AVN-007",
-      0.5
+      0.4
      ]
     ]
    }
@@ -606,7 +613,7 @@
     "s": "ASM-F3-FC-SIZE"
    },
    "outputs": {
-    "h_mm": 23.0,
+    "h_mm": 13.000000000000002,
     "w_mm": 32.0,
     "l_mm": 52.0
    },
@@ -614,8 +621,8 @@
     "s": [
      0.052,
      0.032,
-     0.017,
-     0.006
+     0.008,
+     0.005
     ]
    }
   },
@@ -658,16 +665,16 @@
    },
    "outputs": {
     "ins_pos_m": [
-     0.054,
+     0.063,
      0.046,
      -0.035
     ],
     "gps_pos_m": [
-     -0.036,
+     -0.027,
      0.0,
      -0.169
     ],
-    "imu_r_m": 0.07910120100226038
+    "imu_r_m": 0.08549853799919623
    },
    "input_values": {
     "lay": {
@@ -696,7 +703,7 @@
       0.016
      ]
     },
-    "xcg": 0.044,
+    "xcg": 0.0526,
     "zcg": 0.0
    }
   },
@@ -885,7 +892,7 @@
     "AVN-006"
    ],
    "how": "T-F3-VIBE: tethered hover, VIBE X/Y/Z < 30 m/s2, clip 0; batch-sampler FFT shows the 1P peak.",
-   "value": 0.19986731109775488
+   "value": 0.20549488412034056
   },
   {
    "id": "CL-F3-VIBE-FN",
@@ -901,8 +908,44 @@
    "parts": [
     "AVN-006"
    ],
-   "how": "Tap test on the mounted board with the IMU batch log; peak 25-45 Hz accepted.",
-   "value": 35.0
+   "how": "Bench: 50 g on the mounted board, caliper sag 0.6-1.2 mm (fn 32-45 Hz); then the batch-log tap test.",
+   "value": 35.588127170858854
+  },
+  {
+   "id": "CL-F3-VIBE-FN-LAT",
+   "type": "claim",
+   "title": "FC mount lateral (shear) natural frequency",
+   "calc": "CALC-F3-VIBE",
+   "output": "fn_lateral_hz",
+   "unit": "Hz",
+   "limit": {
+    "op": ">=",
+    "value": 15.0
+   },
+   "parts": [
+    "AVN-006"
+   ],
+   "how": "Batch-log tap test across the board; lateral peak above 15 Hz.",
+   "note": "shear modulus ~ E/3; must stay above the < 10 Hz attitude control band",
+   "value": 20.546814802049994
+  },
+  {
+   "id": "CL-F3-PAD-SAG",
+   "type": "claim",
+   "title": "Gel-cube sag under 50 g (bench acceptance value)",
+   "calc": "CALC-F3-VIBE",
+   "output": "sag_50g_mm",
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "value": 0.6
+   },
+   "parts": [
+    "AVN-006"
+   ],
+   "how": "BUILD.md step 3: 50 g mass on the board, caliper on the board edge before and after.",
+   "note": "0.6-1.2 mm accepted; less sag = stiffer than designed: use softer gel or smaller cubes",
+   "value": 0.8172208333333333
   },
   {
    "id": "CL-F3-ASPD-ERR",
@@ -924,7 +967,7 @@
    ],
    "how": "T-F3-ARSPD-CAL: ARSPD_AUTOCAL then calm-air box pattern; airspeed vs GPS ground speed both ways.",
    "note": "also meets B1's proposed 0.5 m/s (CR-B1-13) by 11 %; the linear sum (CL-F3-ASPD-ERR-LIN) does not",
-   "value": 0.44390745968817147
+   "value": 0.4499189175883065
   },
   {
    "id": "CL-F3-ASPD-ERR-LIN",
@@ -937,7 +980,7 @@
     "AVN-004"
    ],
    "how": "As CL-F3-ASPD-ERR.",
-   "value": 0.7653815313142112
+   "value": 0.7753134875100557
   },
   {
    "id": "CL-F3-ASPD-RES",
@@ -1074,8 +1117,8 @@
     "AVN-007"
    ],
    "how": "Weigh each part on arrival; A3 replaces the EST rows.",
-   "note": "includes the CoreWing power board (PWR-003 position, 0 g in power); CR-F3-01 asks +5 g",
-   "value": 78.5
+   "note": "F3-R2: FC top board only; the CoreWing power board (~28 g) is PWR-003 at its own station (CR-F3-13)",
+   "value": 36.48
   },
   {
    "id": "CL-F3-FC-H",
@@ -1094,7 +1137,7 @@
    ],
    "how": "Caliper on the mounted board, hatch closes.",
    "note": "limit from D2 CR-D2-06 (connectors up <= 28 mm)",
-   "value": 23.0
+   "value": 13.000000000000002
   },
   {
    "id": "CL-F3-FC-W",
@@ -1144,7 +1187,7 @@
    ],
    "how": "Measure the as-built FC centre from the CG mark.",
    "value": [
-    0.054,
+    0.063,
     0.046,
     -0.035
    ]
@@ -1161,7 +1204,7 @@
    ],
    "how": "Measure the as-built mast top from the CG mark.",
    "value": [
-    -0.036,
+    -0.027,
     0.0,
     -0.169
    ]

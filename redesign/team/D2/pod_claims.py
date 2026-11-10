@@ -1,4 +1,4 @@
-"""D2 pod designer (revision D2-R3, params A1-R3): claims other roles build on (pack bay and stations, crush-block
+"""D2 pod designer (revision D2-R4, params A1-R3): claims other roles build on (pack bay and stations, crush-block
 geometry for C5, pack and pod retention, carry point, recess for D1, pitot boom, antenna and GPS clearances, pod mass).
 
 Run:  python -I redesign/team/D2/pod_data.py   (CAD masses -> interfaces.json)
@@ -34,7 +34,8 @@ SRC_POD = ["SRC-K09-CARD"]
 def _cad_readouts():
     import pod_data as pdm
     _ctx, _P, _Lc, G, _src = pdm.build_pod()
-    return [round(v, 5) for v in (G["overhang_clr"], G["ant_a_pack_clr"], G["ant_b_pack_clr"], min(G["gps_clr"].values()))]
+    return [round(v, 7) for v in (G["overhang_clr"], G["ant_a_pack_clr"], G["ant_b_pack_clr"], min(G["gps_clr"].values()),
+                                  G["ch_h"], G["cross_gap"], G["cross_h"], G["tray_front_area"])]
 
 
 _GEO = _cad_readouts()
@@ -51,9 +52,10 @@ kit.assumption("ASM-D2-SLOT-WALL", "Foam between the pod recess and the spar slo
                basis="subsystems/pod/params.json slot_wall_m; D1 confirms on the first core (CR-D2-04)", value=_lv("slot_wall_m"), unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-STOP-T", "Aft stop wall thickness", "Printed aft stop on the handle bridge, the pack's aft stop",
                basis="C3 CR-C3-01 (3.0 mm, 2 mm root fillet), adopted at R3", value=_lv("aft_stop_m")[0], unit="m", cites=SRC_POD)
-kit.assumption("ASM-D2-FWD-STOP", "Forward stop: aft face x, thickness", "Printed forward stop on the tray, backstop of the crush block",
-               basis="CHANGE-LOG D-25 (x -0.1002 unchanged), C3 CR-C3-01 (3.0 mm)", value=[_lv("fwd_stop_x_m"), _lv("fwd_stop_m")[0]],
-               unit="m", cites=SRC_POD)
+kit.assumption("ASM-D2-FWD-STOP", "Nose block A length, forward stop thickness", "Fixed XPS block behind the nose wall, then the "
+               "printed forward stop (backstop of the crush block); the stop face follows the nose (R4)",
+               basis="CHANGE-LOG D-25 (block A 7.0 mm, stop face -0.1002 at x_le -0.115), C3 CR-C3-01 (3.0 mm)",
+               value=[_lv("nose_block_l_m"), _lv("fwd_stop_m")[0]], unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-AFT-STOP-X", "Aft stop face x", "Face of the aft stop the spacers bear on",
                basis="subsystems/pod/params.json aft_stop_x_m: A1's 0.073 heavy-pack aft face + 4 mm", value=_lv("aft_stop_x_m"), unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-PACK-AFT", "Pack aft face, nominal and 680 g", "A1's stations: aft face for the nominal centroid x -0.001 and with a 680 g pack",
@@ -90,10 +92,17 @@ kit.assumption("ASM-D2-SOCKET", "Pitot socket length inside / collar outside", "
                basis="subsystems/pod/params.json socket_m", value=[_lv("socket_m")[2], _lv("socket_m")[3]], unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-GEOM-CAD", "Pod CAD geometry read-outs", "Values the CAD layout computes from the wing section and pod params: "
                "[pad-to-wing clearance over the overhang, antenna A element to pack, antenna B element to pack, GPS to the nearest "
-               "power item (PDB / AS150U park / UBEC)] (m)",
+               "power item (PDB / AS150U park / UBEC) (m); wire-channel height under the pack, crossing gap leg-to-aft-wall, crossing "
+               "height (m); tray front-piece area (m2)]",
                basis="subsystems/pod/fusion/pod.py#layout() via team/D2/pod_data.py (S5010 section, pod params)", value=_GEO, unit="m", cites=SRC_POD)
-kit.assumption("ASM-D2-MAST-BOLT", "GPS mast bolt: length, grip", "Brass M3 bolt length and clamped grip (counterbored boss + 1 washer)",
-               basis="subsystems/pod/params.json socket_boss_m and E-POD-06 joint stack", value=[0.016, 0.0105], unit="m", cites=SRC_POD)
+kit.assumption("ASM-D2-MAST-BOLT", "GPS mast screw: length, grip", "PA66 M3x16 screw length and clamped grip (counterbored boss, no washer)",
+               basis="C6 CR-C6-18 (PA66 screw + nut, grip <= 11.0 mm); subsystems/pod/params.json socket_boss_m", value=[0.016, 0.010],
+               unit="m", cites=SRC_POD)
+kit.assumption("ASM-D2-PAPER-SHEAR", "Epoxy on foam-board paper face, shear allowable", "PETG epoxied to the scuffed paper face",
+               basis="C6 CR-C6-16 (100 kPa, halved from 200); subsystems/pod/params.json paper_shear_pa", value=_lv("paper_shear_pa"),
+               unit="Pa", status="UNVERIFIED", cites=SRC_POD)
+kit.assumption("ASM-D2-F2-ROUTE", "F2 routing minima in the pod", "Wire channel under the pack (height), crossing gap behind the aft stop",
+               basis="team/F2/CHANGE-REQUESTS.md#CR-F2-03 (d) 10 x 3 mm, (c) >= 6.7 mm", value=[0.003, 0.0067], unit="m", cites=SRC_POD)
 
 
 def _section(coords):
@@ -101,7 +110,7 @@ def _section(coords):
 
 
 # ---------------------------------------------------------------- calculations
-@kit.calc("CALC-D2-BAY", equation="x_fs = forward stop aft face; bay L = x_as - x_fs; H = (base + H - t) - (base + t + floor stack); "
+@kit.calc("CALC-D2-BAY", equation="x_fs = pod LE + t + block A + t_fs (forward stop aft face); bay L = x_as - x_fs; H = (base + H - t) - (base + t + floor stack); "
           "x_nose_in = pod LE + t; nose block = (x_fs - t_fs) - x_nose_in; centroid against the forward stop = x_fs + L_pack/2 ; "
           "nominal / heavy centroid = aft face - L_pack/2 ; spacer = x_as - aft face ; block B (nominal) = (aft_nom - L_pack - t_sp) - x_fs ; block section = bw (zh - tray top) - groove ; "
           "aft reach = x_as - L_pack/2 ; travel = bay L - L_pack",
@@ -109,22 +118,23 @@ def _section(coords):
                   "fs": "ASM-D2-FWD-STOP", "x_as": "ASM-D2-AFT-STOP-X", "aft": "ASM-D2-PACK-AFT", "t_sp": "ASM-D2-SPREADER-T",
                   "stack": "ASM-D2-FLOOR-STACK", "bw": "ASM-D2-BAY-W", "pack": P + "battery.size_m", "sec": "ASM-D2-BLOCK-SEC"})
 def bay(x_le, size, z_base, t, fs, x_as, aft, t_sp, stack, bw, pack, sec):
-    x_fs, t_fs = fs
+    l_a, t_fs = fs
     xn = x_le + t
+    x_fs = xn + l_a + t_fs
     zh = z_base + size[2] - t
     zp = z_base + t + stack
     return {"bay_l": x_as - x_fs, "bay_w": bw, "bay_h": zh - zp, "pack_x_fwd": x_fs + pack[0] / 2,
             "pack_x_nom": aft[0] - pack[0] / 2, "pack_x_hvy": aft[1] - pack[0] / 2, "aft_reach": x_as - pack[0] / 2,
             "spacer_nom": x_as - aft[0], "spacer_hvy": x_as - aft[1], "block_nom": (aft[0] - pack[0] - t_sp) - x_fs,
-            "nose_in": xn, "nose_block": (x_fs - t_fs) - xn, "block_area": bw * (zh - (z_base + t + sec[0])) - sec[1] * sec[2], "travel": x_as - x_fs - pack[0], "pack_z": zp + pack[2] / 2}
+            "nose_in": xn, "nose_block": l_a, "x_fs": x_fs, "block_area": bw * (zh - (z_base + t + sec[0])) - sec[1] * sec[2], "travel": x_as - x_fs - pack[0], "pack_z": zp + pack[2] / 2}
 
 
 @kit.calc("CALC-D2-STATION", equation="most forward centroid that keeps C5's block B = x_fs + t_sp + L_B + L_pack/2 ; station range = "
           "aft reach - that ; spacer sum >= range",
-          inputs={"fs": "ASM-D2-FWD-STOP", "t_sp": "ASM-D2-SPREADER-T", "LB": "CL-C5-BLOCK-L", "pack": P + "battery.size_m",
+          inputs={"x_fs": "CL-D2-FWD-STOP-X", "t_sp": "ASM-D2-SPREADER-T", "LB": "CL-C5-BLOCK-L", "pack": P + "battery.size_m",
                   "reach": "CL-D2-AFT-REACH", "sp": "ASM-D2-SPACERS"})
-def station(fs, t_sp, LB, pack, reach, sp):
-    x_min = fs[0] + t_sp + LB + pack[0] / 2
+def station(x_fs, t_sp, LB, pack, reach, sp):
+    x_min = x_fs + t_sp + LB + pack[0] / 2
     return {"x_fwd_min": x_min, "range": reach - x_min, "spacer_sum": sum(sp)}
 
 
@@ -144,10 +154,25 @@ def recess(sec, c, z_base, xs, od, wall):
             "foam_under": z_base - k9.surface_z(co, c, x1 / c, "lower")}
 
 
-@kit.calc("CALC-D2-CAD", equation="read-outs of pod.py#layout(): pad clearance, antenna A / B to pack, GPS to nearest power item",
-          inputs={"g": "ASM-D2-GEOM-CAD"})
+@kit.calc("CALC-D2-CAD", equation="read-outs of pod.py#layout(): pad clearance, antenna A / B to pack, GPS to nearest power item, "
+          "wire channel and crossing (F2)", inputs={"g": "ASM-D2-GEOM-CAD"})
 def cad(g):
-    return {"overhang_clr": g[0], "ant_a": g[1], "ant_b": g[2], "gps": g[3]}
+    return {"overhang_clr": g[0], "ant_a": g[1], "ant_b": g[2], "gps": g[3], "ch_h": g[4], "cross_gap": g[5], "cross_h": g[6]}
+
+
+@kit.calc("CALC-D2-POD-BONDS", equation="capacity = bonded area x epoxy-on-paper shear allowable",
+          inputs={"g": "ASM-D2-GEOM-CAD", "tau": "ASM-D2-PAPER-SHEAR"})
+def pod_bonds(g, tau):
+    return {"front_n": g[7] * tau}
+
+
+@kit.calc("CALC-D2-NOSE-EXT", equation="block B for mass m: L_B(m) = CL-C5-BLOCK-L x m / m_nom (crush energy ~ m); forward stop face "
+          "needed = x_station - L_pack/2 - t_sp - L_B(m); nose extension = x_fs - that (>0: the nose must move forward by this)",
+          inputs={"x_fs": "CL-D2-FWD-STOP-X", "t_sp": "ASM-D2-SPREADER-T", "LB": "CL-C5-BLOCK-L", "pack": P + "battery.size_m",
+                  "m_nom": P + "battery.mass_kg", "rng": "ASM-A3-PACK-RANGE", "x550": "CL-C5-PACK-X-B3", "x503": "CL-C5-PACK-X-B3-LIGHT"})
+def nose_ext(x_fs, t_sp, LB, pack, m_nom, rng, x550, x503):
+    need = lambda x, m: x_fs - (x - pack[0] / 2 - t_sp - LB * m / (m_nom * 1000))
+    return {"ext_nom": need(x550, m_nom * 1000), "ext_light": need(x503, min(rng))}
 
 
 @kit.calc("CALC-D2-STRAPS", equation="capacity = n straps x installed loop capacity", inputs={"n": "ASM-D2-N-STRAPS", "cap": "ASM-D2-STRAP-CAP"})
@@ -181,7 +206,7 @@ def pitot(tip, x_le, t, sock):
     return {"boom_len": inner - tip[0], "exposed": (x_le - sock[1]) - tip[0], "socket_depth": inner - (x_le - sock[1])}
 
 
-@kit.calc("CALC-D2-MAST-BOLT", equation="past the grip = bolt length - grip ; nyloc-rule equivalent: >= 5.0 mm (C6 E-POD-06)",
+@kit.calc("CALC-D2-MAST-BOLT", equation="past the grip = screw length - grip ; C6 E-POD-06 min engagement 4.0 mm (PA66 nut fully on + 2 pitches)",
           inputs={"b": "ASM-D2-MAST-BOLT"})
 def mast_bolt(b):
     return {"past": b[0] - b[1], "grip": b[1]}
@@ -226,6 +251,9 @@ kit.claim("CL-D2-BLOCK-SECTION", "Crush block B section (52 mm x tray top to hat
 kit.claim("CL-D2-NOSE-INNER", "Nose wall inside face x (front of the fixed nose block)", calc="CALC-D2-BAY", output="nose_in", unit="m",
           parts=["POD-001"], how="Built pod: rule from the wing LE to the nose wall inside face.",
           note="foam-board nose wall 4.8 mm (C5 assumes 2 mm, ASM-C5-NOSE-WALL)")
+kit.claim("CL-D2-FWD-STOP-X", "Forward stop aft face x (crush block backstop)", calc="CALC-D2-BAY", output="x_fs", unit="m",
+          parts=["POD-002"], how="Built pod: rule from the wing LE to the forward stop aft face.",
+          note="R4: derived from the nose (x_le + wall + block A + stop), so the bay follows pod.x_le_m (CR-D2-16)")
 kit.claim("CL-D2-NOSE-BLOCK-L", "Fixed XPS nose block length (block A)", calc="CALC-D2-BAY", output="nose_block", unit="m", parts=["POD-001"],
           how="Cut length; rule.")
 kit.claim("CL-D2-PACK-TRAVEL", "Stop-to-stop room beyond the pack length (block B + spreader + spacers)", calc="CALC-D2-BAY", output="travel",
@@ -251,9 +279,29 @@ kit.claim("CL-D2-ANT-B-CLR", "Antenna B (nose tube) element base to the pack for
 kit.claim("CL-D2-GPS-CLR", "GPS to the nearest power item (PDB, AS150U park, UBEC zone)", calc="CALC-D2-CAD", output="gps", unit="m",
           limit=(">=", P + "requirements.gps_mast_clearance_m"), verifies=["R-COMPASS"], parts=["POD-005", "POD-002"],
           how="Rule from the GPS puck centre to the PDB, the parked AS150U and the UBEC as installed.")
-kit.claim("CL-D2-MAST-BOLT-PAST", "GPS mast bolt length past the grip", calc="CALC-D2-MAST-BOLT", output="past", unit="m",
-          limit=(">=", 0.005), verifies=["R-JOINT-STACK"], parts=["POD-005", "POD-007"],
-          how="Assembled: thread showing past the brass nut >= 2 pitches; grip measured with calipers.")
+kit.claim("CL-D2-MAST-BOLT-PAST", "GPS mast screw length past the grip", calc="CALC-D2-MAST-BOLT", output="past", unit="m",
+          limit=(">=", 0.004), verifies=["R-JOINT-STACK"], parts=["POD-005", "POD-007"],
+          how="Assembled: PA66 nut fully on with >= 2 pitches showing; grip measured with calipers (<= 11.0 mm).",
+          note="C6 CR-C6-18 min engagement 4.0 mm")
+kit.claim("CL-D2-FLOOR-CH-H", "Wire channel under the pack: foam-board floor to pack underside", calc="CALC-D2-CAD", output="ch_h",
+          unit="m", limit=(">=", 0.003), parts=["POD-002", "POD-004"],
+          how="Pack strapped: a 3 mm drill shank slides through the channel under the pack.", note="F2 CR-F2-03 (d): 10 x 3 mm")
+kit.claim("CL-D2-CROSS-GAP", "Crossing behind the aft stop: handle-leg aft face to aft-wall inside face", calc="CALC-D2-CAD",
+          output="cross_gap", unit="m", limit=(">=", 0.0067), parts=["POD-007", "POD-001"],
+          how="Calipers between each leg and the aft wall before the deck goes on.", note="F2 CR-F2-03 (c): >= 6.7 mm")
+kit.claim("CL-D2-CROSS-H", "Crossing height: stop bridge top to deck underside", calc="CALC-D2-CAD", output="cross_h", unit="m",
+          limit=(">=", 0.026), parts=["POD-007", "POD-001"], how="Rule before the deck goes on.", note="F2 CR-F2-03 (c): 26 mm")
+kit.claim("CL-D2-FWD-STOP-BOND", "Tray front piece bond (carries the forward stop), shear capacity", calc="CALC-D2-POD-BONDS",
+          output="front_n", unit="N", limit=(">=", "CL-C1-PACK-CRASH-LOAD"), verifies=["R-PACK-RETENTION"], parts=["POD-002", "POD-001"],
+          how="T-C3-STOP-PUSH on the built tray: 100 N on the stop; the stop breaks off (C3 fuse), the tray does not peel.",
+          note="R4 splits the tray at the wire channel; the front piece is solid so its bond (> ~100 N stop break load) outlasts the stop")
+kit.claim("CL-D2-NOSE-EXT-NOM", "Nose extension needed to fly a 550 g pack at C5's B3-target station with block B", calc="CALC-D2-NOSE-EXT",
+          output="ext_nom", unit="m", verifies=["R-CG-RANGE"], parts=["POD-001", "POD-002"],
+          how="python -I redesign/team/D2/pod_station_options.py (CAD rebuilt at each extension).",
+          note="> 0: the pack cannot reach the station today (CR-D2-16 asks A1 for x_le -0.127)")
+kit.claim("CL-D2-NOSE-EXT-LIGHT", "Nose extension needed to fly a 503 g pack at C5's light station with block B", calc="CALC-D2-NOSE-EXT",
+          output="ext_light", unit="m", verifies=["R-CG-RANGE"], parts=["POD-001", "POD-002"],
+          how="As CL-D2-NOSE-EXT-NOM.", note="block B scaled with pack mass (UNVERIFIED, C5 to confirm)")
 kit.claim("CL-D2-RECESS-X0", "Pod recess start (upper surface at the pod base)", calc="CALC-D2-RECESS", output="x0", unit="m",
           parts=["POD-001"], how="Template on the hot-wired core; the recess floor meets the skin here.")
 kit.claim("CL-D2-RECESS-DEPTH", "Pod recess depth at its aft end (D1 cuts)", calc="CALC-D2-RECESS", output="depth", unit="m",
@@ -279,7 +327,7 @@ kit.claim("CL-D2-PITOT-SOCKET", "Pitot socket depth", calc="CALC-D2-PITOT", outp
 kit.claim("CL-D2-MASS", "Pod subsystem mass (CAD estimate)", calc="CALC-D2-MASS", output="mass_g", unit="g",
           limit=("<=", P + "mass.allocation_g.pod"), verifies=["R-MASS-ALLOC"], parts=sorted(_MASSES),
           how="T-D2-WEIGH: weigh every pod part before bonding; update interfaces.json.",
-          note="over the 122 g allocation: CR-D2-09 asks A1 for 128 g")
+          note="over the 122 g allocation: CR-D2-09 (rev. R4) asks A1 for 128 g (131 g with CR-D2-16)")
 
 # ---------------------------------------------------------------- tests (planned)
 kit.test("T-D2-WEIGH", "Weigh every pod part before assembly", verifies=["CL-D2-MASS"],

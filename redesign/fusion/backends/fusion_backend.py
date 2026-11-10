@@ -23,8 +23,10 @@ UNVERIFIED-IN-FUSION (this file has not run in Fusion yet; first run by a teamma
   - A joint aligns BOTH joint frames (origin and axes), not only the origins. The joint-point sketches are Z-normal
     planes of each component, so for an unrotated component the frame is the aircraft frame and nothing moves. For
     a component placed with ctx.part(rotate=...) the two frames differ and Fusion will turn part a to match part b.
-    joint() reports such joints as WARN in the build summary; check the placement in Fusion. (Fix if it bites:
-    set JointInput.angle for Z rotations, or build the joint-point sketch on a plane that is world-aligned.)
+    joint() therefore makes an AS-BUILT joint (root.asBuiltJoints) whenever either part is rotated (CR-E1-31a,
+    e.g. the 7 deg canted motor stacks): both occurrences stay where their matrices put them. Rigid as-built joints
+    take no geometry; a revolute/slider one takes its axis point in the unrotated partner. Check in Fusion that
+    the motors keep their cant after the build.
   - datum(): planes are offset construction planes in a '00 Datums' component placed at the origin; points and
     axes are sketch points / construction lines in one sketch per datum (sketch points off the sketch plane, as for
     wires). Construction points/axes by Point3D/InfiniteLine3D are avoided (parametric designs reject them).
@@ -291,39 +293,65 @@ class FusionBackend(Backend):
 
     def joint(self, j, comp_a, comp_b):
         rotated = [c.id for c in (comp_a, comp_b) if c.rotate]
-        if rotated:                                # see the module docstring: Fusion aligns both joint frames
-            self.warnings.append(('joint', j.edge, 'joins rotated component %s: Fusion may turn %s to align the '
-                                  'joint frames; check its placement (UNVERIFIED-IN-FUSION)' % (', '.join(rotated), j.a)))
         if j.kind != 'rigid':
             try:                                   # a grounded first occurrence cannot move (see module docstring)
                 if comp_a.native.isGroundToParent:
                     comp_a.native.isGroundToParent = False
             except Exception:
                 pass
-        ji = self.root.joints.createInput(self._point_geometry(comp_a, j.origin), self._point_geometry(comp_b, j.origin))
+        if rotated:                                # CR-E1-31a: a joint would align both frames and undo the rotation
+            jt = self._as_built_joint(j, comp_a, comp_b, rotated)
+        else:
+            ji = self.root.joints.createInput(self._point_geometry(comp_a, j.origin),
+                                              self._point_geometry(comp_b, j.origin))
+            self._motion(ji, j)
+            jt = self.root.joints.add(ji)
+        jt.name = j.edge
+        self._limits(jt, j)
+        j.native = jt
+
+    def _as_built_joint(self, j, comp_a, comp_b, rotated):
+        """As-built joint: keeps both occurrences where their matrices put them (no frame alignment), so a component
+        placed with ctx.part(rotate=) keeps its rotation. Rigid: no geometry needed. Revolute/slider: the axis point
+        is sketched in an unrotated partner, so JDIR (X/Y/Z) is the aircraft axis; if both parts are rotated the axis
+        is taken in part a's own frame and a WARN is printed. UNVERIFIED-IN-FUSION (AsBuiltJoints API)."""
+        geo = None
+        if j.kind != 'rigid':
+            host = comp_b if comp_a.rotate and not comp_b.rotate else comp_a
+            if host.rotate:
+                self.warnings.append(('joint', j.edge, '%s joint between two rotated components: axis %s is taken in '
+                                      'the frame of %s (UNVERIFIED-IN-FUSION)' % (j.kind, j.axis, host.id)))
+            geo = self._point_geometry(host, j.origin)
+        ji = self.root.asBuiltJoints.createInput(comp_a.native, comp_b.native, geo)
+        self._motion(ji, j)
+        return self.root.asBuiltJoints.add(ji)
+
+    @staticmethod
+    def _motion(ji, j):
         if j.kind == 'rigid':
             ji.setAsRigidJointMotion()
         elif j.kind == 'revolute':
             ji.setAsRevoluteJointMotion(JDIR[j.axis])
         else:
             ji.setAsSliderJointMotion(JDIR[j.axis])
-        jt = self.root.joints.add(ji)
-        jt.name = j.edge
-        if j.limits:
-            lo, hi = j.limits
-            if j.kind == 'revolute':
-                L = jt.jointMotion.rotationLimits
-                lo, hi = math.radians(lo - 0.1), math.radians(hi + 0.1)
-            else:
-                L = jt.jointMotion.slideLimits
-                lo, hi = lo * CM, hi * CM
-            L.isMinimumValueEnabled = True
-            L.minimumValue = lo
-            L.isMaximumValueEnabled = True
-            L.maximumValue = hi
-            L.isRestValueEnabled = True
-            L.restValue = 0.0
-        j.native = jt
+
+    @staticmethod
+    def _limits(jt, j):
+        if not j.limits:
+            return
+        lo, hi = j.limits
+        if j.kind == 'revolute':
+            L = jt.jointMotion.rotationLimits
+            lo, hi = math.radians(lo - 0.1), math.radians(hi + 0.1)
+        else:
+            L = jt.jointMotion.slideLimits
+            lo, hi = lo * CM, hi * CM
+        L.isMinimumValueEnabled = True
+        L.minimumValue = lo
+        L.isMaximumValueEnabled = True
+        L.maximumValue = hi
+        L.isRestValueEnabled = True
+        L.restValue = 0.0
 
     def datum(self, d):
         if self.datums_occ is None:

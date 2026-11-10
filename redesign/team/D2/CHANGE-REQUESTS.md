@@ -1,41 +1,40 @@
 # D2 change requests
 
-Revision D2-R3 (2026-11-09), params A1-R3. Numbers from `team/D2/pod_claims.py`, `team/D2/pod_data.py` and
-`subsystems/pod/params.json`. Status of every request: `PROPOSED`.
+Revision D2-R4 (2026-11-09), params A1-R3. Numbers from `team/D2/pod_claims.py`, `team/D2/pod_data.py`,
+`team/D2/pod_station_options.py` and `subsystems/pod/params.json`. Status of every request: `PROPOSED`.
 
 ## Open
 
 | Id | To | What | Why | Numbers |
 |---|---|---|---|---|
-| **CR-D2-09** (new) | A1 (cc A3, C3) | `mass.allocation_g.pod` 122 → **128 g** from the reserve. Alternative (b): F1 mounts the PDB on ties instead of 4 inserts (−3.5 g, see CR-D2-13) and the allocation goes to 124 g | R3 adds scope the 122 g did not count: spreader 1.5 mm (C5) 5.3 g, PDB plate + inserts (C6/F1) 4.0 g, aft stop moved onto a spar bridge with gussets (+3 g over a tray stop), pitot flange (C6) 2.2 g, 45° GPS pad (F3) 1.0 g, EVA pads 1.1 g, light tape (E3) 1.5 g, antenna tubes (F5) 0.7 g. Already trimmed: side plates 1.5 → 1.0 mm (−3.4 g), saddle tongues 24 → 14 mm (−2.1 g), GPS base plate dropped (−1.0 g) | `CL-D2-MASS` 127.3 g vs 122 (−4 %); CG (0.001, −0.003, 0.052) m; all `EST` until `T-D2-WEIGH` |
-| **CR-D2-04** (rev. R3) | D1 | As R2 (recess x 0.0226 … 0.065, floor z 0.015, y ±0.070; no tape over x 0 … 0.095, y ±0.070), plus: **fill the spar slot flush over the spar at \|y\| < 0.029** (the handle's stop bridge bonds on it) and leave it open at y ±0.029 … 0.053 (saddles); the two ties under the spar move **y ±0.048 → ±0.036** | The pack's aft face reaches x 0.073 (680 g) and the aft stop sits at 0.077, over the spar slot; the handle legs moved to y ±0.048 so the pack leads can turn inboard of them | bridge 766 mm² on the fill; saddles 680 mm² on CF; ties 2 × 222 N |
-| **CR-D2-10** (new) | C5 (cc A1, C3) | Re-run `CALC-C5-CRASH` on D2-R3 geometry: nose wall inside face **−0.1102** (4.8 mm foam board, not the 2 mm of `ASM-C5-NOSE-WALL`) → block A 7.0 mm (`CL-D2-NOSE-INNER`, `-NOSE-BLOCK-L`); block B section **2 849 mm²** (52 × 59.4 on the tray, less a 30 × 8 vent groove), not bay W × H (`CL-D2-BLOCK-SECTION`); travel 37.2 mm. D2 holds A1's station (−0.001 nominal, block B 27.7 mm ≥ your 24.9); the most forward station that keeps block B is **−0.0038** (`CL-D2-PACK-X-FWD-MIN`). Your R3 stations (−0.0144 / −0.0207) need CR-C5-12 decided by A1 first. CR-C5-13 (full-section forward stop): ready in the CAD (`fwd_stop_m` height), +4.1 g, not adopted until C3 confirms the break-off load | D-25 sized the block at A1's station; the vent groove (E3) and the tray under the block change your A_bay | `CL-D2-BLOCK-B-NOM` 27.7 mm; `CL-D2-AFT-REACH` 0.007 m |
-| **CR-D2-11** (new) | C3 | Re-run `pod_structures.py` on D2-R3: aft stop 3.0 mm now on **POD-007**, standing on a 3 mm bridge between the spar saddles (x 0.077 … 0.090, y ±0.029) with two 8 × 3 mm gussets at its ends: the +x pack load goes stop → bridge → saddles → spar (`E-POD-09`, 1 445 mm²), not into the tray. Pack centroid 25.5 mm above the stop base (as R2). Pads 2.5 mm EVA: pack z 0.0483. Forward stop 3 × 25 × 54 as you sized; guides 1.5; tray and plates full-area epoxy; hatch tab 12 × 40. `CL-D2-TIE-CAP` now handling only; `CL-D2-BOND-STRESS` retired (CR-C3-04) | A1's 0.073 aft face lies 4 mm past the spar-slot front face (0.069): the stop cannot stand on the tray | pack +x 40 N limit (hover landing), 85 N ultimate; `ASM-D2-STOP-T` 0.003 |
-| **CR-D2-12** (new) | C6 (cc F3) | Accept `E-POD-06` as **M3x16 brass SHCS + brass nut + Loctite 222 + 1 nylon washer** (`CT-M3-BRASS-NUT`, declared in `subsystems/pod/interfaces.json`) instead of A2-70 + nyloc; grip 10.0 mm with a Ø6.5 × 4.5 counterbore, 5.5 mm past the grip | F3 CR-F3-03: no steel on the mast, the bolt is 56 mm from the compass; brass nylon-insert nuts are not a stock M3 part | `CL-D2-MAST-BOLT-PAST` 5.5 ≥ 5.0 mm |
-| **CR-D2-13** (new) | F1 (cc F2) | Confirm the power layout: PDB plate x −0.042 … −0.004 left channel, 4 M3 inserts on a **25 mm square (placeholder)** or say "ties" (CR-D2-09 b); fuse holder x −0.004 … 0; AS150U park 0 … 0.060 (CR-F1-13); **UBEC on the right channel floor x 0.042 … 0.088**; pack leads over the aft stop (top z 0.050), left at x 0.080 … 0.088 inboard of the leg (y −0.048), forward to the park, about 85 mm of the 100 mm lead; harness exits now **11 × 16 mm** at y ±0.053 … 0.064, z 0.027 … 0.043 (outboard of the legs) | The left channel is full; the UBEC goes beside the FC's aft end, 0.15 m from the GPS | `CL-D2-GPS-CLR` 0.153 m ≥ 0.10 |
-| **CR-D2-14** (new) | F3, F5 | Placements: RX on the left floor x −0.064 … −0.044 behind the airspeed sensor (x −0.086 … −0.066, tape + 1 tie on 2 posts); antenna A tube at (−0.054, −0.046), top z 0.100; antenna B tube out of the nose at y −0.046, z 0.0245, 20.5 mm below the boom axis: **the boom sleeve must be non-carbon** (F3 names its material); GPS pad 45° to the nose, centre (0.076, 0, 0.178) | F5's 31 mm rule against carbon; the boom is the only conductor near antenna B | `CL-D2-ANT-A-CLR` 34.6 mm, `-B-CLR` 44 mm vs `CL-F5-ANT-CLEAR` 30.7 |
-| **CR-D2-15** (rev. of CR-D2-08) | A4 | Plan deviations at R3: `POD-008` is the trim kit (crush block, spreader, spacers); the aft stop moved from `POD-002` to `POD-007`; `E-POD-10` is `POD-008` ↔ `POD-007`; new `E-POD-11` `POD-008` ↔ `POD-002` (block on the forward stop, `CT-SLIDE-STOP`); `E-POD-06` via new `CT-M3-BRASS-NUT` | interfaces follow the load paths | — |
+| **CR-D2-16** (new) | A1 (cc B3, A3, C5, C3, B4, F3) | Decide the pack station and, with it, **`pod.x_le_m` −0.115 → −0.127** and **`pod.size_m` L 0.210 → 0.222** (nose +12 mm; tray, hatch, handle, aft stop unchanged). The bay follows by itself: the forward stop is now derived from the nose (`CL-D2-FWD-STOP-X`). If A1 takes C5's 503 g station (−0.0207), make it −0.130 / 0.225 (+15 mm) and D2 adds a 6 mm spacer (set 2/4/6/8/8). Pitot tip stays at −0.195 (boom 12 mm shorter, 95 mm) | B3 (CR-B3-18 −0.012), A3 (CR-A3-15 −0.0104) and C5 (`CL-C5-PACK-X-B3` −0.0144) all put the 550 g pack forward of −0.001; today the most forward station that keeps C5's block B is **−0.0038** (`CL-D2-PACK-X-FWD-MIN`). CR-A3-15's alternative (forward stop 6 mm forward) deletes block A and still leaves block B 2 mm short | `CL-D2-NOSE-EXT-NOM` 10.6 mm, `-LIGHT` 14.7 mm. At +12 mm: B3's 503 / 550 / 680 g stations −0.015 / −0.012 / 0.000 fit with block B 25.7 / 28.7 / 40.7 mm (≥ 22.7 / 24.9 / 30.7, block scaled with pack mass `UNVERIFIED`) and spacers 22 / 19 / 7 mm. Pod 131.2 g (+3.2 g), frontal area unchanged |
+| **CR-D2-09** (rev. R4) | A1 (cc A3, C3) | `mass.allocation_g.pod` 122 → **128 g** (131 g with CR-D2-16) from the reserve | R4 adds what others asked: C6 corner fillets 1.5 g, UBEC plate (F1) 1.0 g, JR tie bar (F2) 0.5 g, solid tray front under the forward stop 0.8 g. Taken off at R4: plates 1.0 → 0.8 mm (−1.3 g), PA66 mast hardware (−1.1 g), grip groove (−0.5 g), park slot left to F1's frame (CR-F1-16) | `CL-D2-MASS` 128.1 g vs 122 (−5 %); CG (0.000, −0.002, 0.051) m; all `EST` until `T-D2-WEIGH` |
+| **CR-D2-04** (R3, unchanged) | D1 | Recess x 0.0226 … 0.065, floor z 0.015, y ±0.070; no tape over x 0 … 0.095, y ±0.070; spar slot filled flush over the spar at \|y\| < 0.029 (stop bridge), open at y ±0.029 … 0.053 (saddles); ties under the spar at y ±0.036 | handle feet and stop bridge on the spar | bridge 766 mm²; saddles 680 mm²; ties 2 × 222 N |
+| **CR-D2-10** (R3, re-stated) | C5 (cc A1, C3) | Re-run `CALC-C5-CRASH` on the R3/R4 bay: nose wall inside face −0.1102 (4.8 mm board), block A 7.0 mm, block B section 2 849 mm², travel 37.2 mm; give `CL-C5-BLOCK-L` per pack mass (503 / 550 / 680 g) so CR-D2-16 can use your numbers instead of D2's linear scaling. CR-C5-13 (full-section forward stop) still waits for C3's break-off load | the build graph shows `CALC-C5-CRASH` drifting on `CL-D2-BAY-H` and `CL-D2-PACK-TRAVEL` | `CL-D2-BLOCK-B-NOM` 27.7 mm; `CL-D2-FWD-STOP-BOND` 180 N |
+| **CR-D2-11** (R3, re-stated) | C3 | Re-run `pod_structures.py` on D2-R4. It fails today on keys D2 retired at R3: `stop_wall_h_m` → `aft_stop_m[1]` (aft) / `fwd_stop_m[1]` (forward); `width_m` → `params.json#pod.size_m[1]`. Aft stop 3.0 mm on `POD-007` (bridge between the saddles, 2 gussets); tray split at x −0.0705 … −0.0605 (front piece 1 798 mm² carries the forward stop, `CL-D2-FWD-STOP-BOND` 180 N at C6's 100 kPa); plates 0.8 mm; fillets per CR-C6-17 | `CALC-C3-*` all error in the build graph | pack +x 40 N limit, 85 N ultimate |
+| **CR-D2-13** (rev. R4) | F1 (cc F2) | Confirm against your PWR-R1 frame: PDB plate now x −0.038 … −0.004 (CR-F3-12 b), inserts still a 25 mm square (placeholder until the bus board is cut), insert face z 0.0266; UBEC plate x 0.044 … 0.072, 0.8 mm; park zone x 0 … 0.060 is yours (`PWR-006`), F2 asks it against the inboard guide (CR-F2-03 b) | your module reads `pdb_plate_x_m`, `plate_t_m`, `ubec_zone_x_m` live | `CL-D2-GPS-CLR` 0.152 m ≥ 0.10 |
+| **CR-D2-14** (R3, unchanged) | F3, F5 | Antenna B tube 20.5 mm below the boom axis: the boom sleeve must be non-carbon | F5's 31 mm rule | `CL-D2-ANT-B-CLR` 44 mm |
+| **CR-D2-17** (new) | A4 | Graph changes at R4: `E-POD-06` via new `CT-M3-PA66-NUT` (replaces `CT-M3-BRASS-NUT`, C6's stack); `E-POD-05` `field_joint: true`; `E-POD-12` declared with a thermal block (E3 values); pod acknowledges `E-PWR-03/-04/-05`, `E-AVN-01 … -05, -07, -10`, `E-HRN-01` and no longer `E-PWR-01/-02` (they land on F1's `PWR-006`, CR-F1-16) | CR-A4-23 (a)–(d) | — |
 
 ## Closed or superseded
 
 | Id | Outcome |
 |---|---|
-| CR-D2-01, CR-D2-03 | adopted (D-25): width 0.14, pitot y −0.046 |
-| CR-D2-02 | superseded by D-24 (nominal −0.001, block ahead, spacers behind) |
-| CR-D2-05 | answered by C3 (CR-C3-01 … 06); follow-up CR-D2-11 |
-| CR-D2-06 | answered by F3 CR-F3-03 (gel pads, no inserts, no M2) |
-| CR-D2-07 | answered by F1 CR-F1-13 (60 mm park); follow-up CR-D2-13 |
-| CR-D2-08 | replaced by CR-D2-15 |
+| CR-D2-01, CR-D2-03 | adopted (D-25) |
+| CR-D2-02 | superseded by D-24 |
+| CR-D2-05, -06, -07 | answered (C3, F3, F1) |
+| CR-D2-08, CR-D2-15 | replaced by CR-D2-17 |
+| CR-D2-12 | withdrawn: D2 adopts C6's PA66 stack (CR-C6-18) |
 
-## Requests to D2 answered at R3
+## Requests to D2 answered at R4
 
 | Id | From | Answer |
 |---|---|---|
-| CR-A1-27 | A1 | done: aft face 0.069 / 0.073 (spacer 8 / 4 mm), forward stop −0.1002, nose −0.115 with block A and the 3 mm stop, width 0.14, park 60 mm, pitot y −0.046 with flange, vents, gel pads, foam tape; mass 127.3 vs 122 (CR-D2-09) |
-| CR-C3-01 | C3 | adopted, except the aft stop face: 0.077 on the handle bridge, not the recess end (CR-D2-11) |
-| CR-C3-04, CR-C3-06, CR-C5-02, CR-C2-07 | C3, C5, C2 | adopted |
-| CR-C5-07 | C5 | stop braced by gussets and the bridge; no screw heads within 5 mm of the pack (nearest insert 7 mm into the channel) |
-| CR-C5-12, CR-C5-13 | C5 | A1's call / waits for C3 (CR-D2-10) |
-| CR-C6-07, CR-C6-09 | C6 | adopted (foam tape + tie; 32 × 32 flange; grip 10.0 mm, see CR-D2-12) |
-| CR-E3-03, CR-F1-08, CR-F1-13, CR-F3-03, CR-F5-03 | E3, F1, F3, F5 | adopted (vents, park, gel pads, 45° pad, two antenna exits) |
-| CR-I1-01 | I1 | `parts.csv` carries vendor class and `EST` cost; part numbers when F1/F2 itemise the kit |
+| CR-F2-03 | F2 | (a) side-wall exits 16 × 12 at x 0.056 … 0.072, z 0.027 … 0.039, both sides; aft exits for servo leads. (b) park is F1's cradle: passed to F1 (CR-D2-13). (c) 6.7 mm leg-to-aft-wall, 54 mm high (`CL-D2-CROSS-GAP`, `-CROSS-H`). (d) 10 mm channel at x −0.0655 (not −0.065: keeps the strap-slot border), 3.5 mm under the pack, guides notched 3 mm (`CL-D2-FLOOR-CH-H`). (e) GPS cable in the right leg, window z 0.055 … 0.065 on the outboard face, groove under the grip, hole up into the mast bore; left leg empty. (f) JR tie bar x 0.0285 … 0.0325, 3 slots. (g) UBEC zone x 0.044 … 0.072 |
+| CR-F3-12 | F3 | (a) tie posts at +7.5 / +32.5 mm (inner faces 21 mm), in params. (b) avionics plate to −0.040, PDB plate from −0.038. (c) 11 × 2 mm strap slot at each FC end-stop root. (d) socket bore keyed, flat 5.8 mm across on +z. (e) acknowledged. (f) FC 13 mm on 4 gel cubes noted |
+| CR-C6-17 | C6 | 6 mm microballoon fillets ±30 mm of each strap, 1.5 g |
+| CR-C6-18 | C6 | adopted: M3x16 PA66 + PA66 nut, grip 10.0 mm (≤ 11.0), 6.0 mm past the grip |
+| CR-C6-19 | C6 | met by F3's strap through the end-stop slots (CR-F3-12 c) |
+| CR-A4-23 | A4 | (a)–(d) done (CR-D2-17) |
+| CR-F1-17 | F1 | UBEC plate added |
+| CR-B3-18, CR-A3-15, CR-C5-12 | B3, A3, C5 | A1's decision; D2's ready option is CR-D2-16 |

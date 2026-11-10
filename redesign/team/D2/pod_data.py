@@ -46,13 +46,15 @@ def lv(L, k):
 PARTS = [
     # id, name, material, make_or_buy, process, vendor_or_file, bought extras (keys of bought_g), notes
     ('POD-001', 'Pod shell (foam-board box, XPS LE filler and nose block, printed nose lip and antenna tube)', 'foam board + PETG', 'make',
-     'knife/laser-cut foam board, hot-wire XPS, FDM lip and tube', 'subsystems/pod/fusion/pod.py', ['glue_shell', 'tape_light'],
-     'floor, 2 side walls, nose wall (pitot, vent and antenna holes), aft wall (vent + harness exits), aft deck; 7 mm XPS '
-     'nose block bonded to the nose and side walls; light tape on the top (CR-E3-03)'),
-    ('POD-002', 'Tray: bay floor + 3 mm forward stop + 1.5 mm guides, FC plate, avionics plate, PDB plate (printed PETG)', 'PETG (printed)', 'make',
-     'FDM PETG, 4 prints epoxied full-area to the floor', 'subsystems/pod/fusion/pod.py', ['glue_tray', 'inserts_m3'],
-     '4 strap slots 37 x 1.8 mm; FC on 2 gel pads between end stops (no screws, CR-F3-03); airspeed on foam tape + 1 tie '
-     '(no M2, CR-C6-07); PDB on 4 M3 heat-set inserts (25 mm pattern UNVERIFIED, F1)'),
+     'knife/laser-cut foam board, hot-wire XPS, FDM lip and tube', 'subsystems/pod/fusion/pod.py', ['glue_shell', 'tape_light', 'fillet_corners'],
+     'floor, 2 side walls (16 x 12 mm power/DShot exits, CR-F2-03), nose wall (pitot, vent and antenna holes), aft wall (vent + '
+     'servo-lead exits), aft deck; 7 mm XPS nose block bonded to the nose and side walls; 6 mm microballoon fillets floor-to-wall '
+     'at the straps (CR-C6-17); light tape on the top (CR-E3-03)'),
+    ('POD-002', 'Tray: bay floor (2 pieces) + 3 mm forward stop + 1.5 mm guides, FC, avionics, PDB and UBEC plates, JR tie bar (printed PETG)',
+     'PETG (printed)', 'make', 'FDM PETG, 7 prints epoxied full-area to the floor', 'subsystems/pod/fusion/pod.py', ['glue_tray', 'inserts_m3'],
+     '4 strap slots 37 x 1.8 mm; 10 mm wire channel across the bay at x -0.0655 (CR-F2-03); FC on 4 gel cubes between end stops '
+     'with strap slots (CR-F3-12, CR-C6-19); airspeed between tie posts 21 mm apart, foam tape + 1 tie; 4 M3 heat-set inserts for '
+     'F1 power frame (25 mm pattern); UBEC plate x 0.044-0.072 (CR-F1-17); JR tie bar x 0.021-0.040 right channel'),
     ('POD-003', 'Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)', 'foam board + PETG', 'make',
      'knife-cut foam board, FDM tongue and tube', 'subsystems/pod/fusion/pod.py', ['velcro_tab'],
      'tool-free, no magnets: tongue under the nose lip, hook-and-loop tab on the aft deck; receiver antenna A up the tube'),
@@ -60,13 +62,15 @@ PARTS = [
      'cut to length', 'battery strap 20 x 300 mm (any RC vendor); EVA sheet 2.5 mm with anti-slip face', [],
      'two straps at the pack quarter points, overlap >= 50 mm marked; slots let them follow the station range'),
     ('POD-005', 'GPS mast with 45 deg pad (printed PETG, plugs into the handle grip)', 'PETG (printed)', 'make', 'FDM PETG',
-     'subsystems/pod/fusion/pod.py', ['mast_hw'], 'GPS taped on the pad tilted 45 deg toward the nose, arrow forward; brass bolt (no steel within 50 mm)'),
+     'subsystems/pod/fusion/pod.py', ['mast_hw'], 'GPS taped on the pad tilted 45 deg toward the nose, arrow forward; GPS cable up the '
+     'mast bore; PA66 M3 screw + nut (no steel within 50 mm, CR-C6-18)'),
     ('POD-006', 'Pitot boom socket with 32 mm flange (printed PETG, pod nose, left channel)', 'PETG (printed)', 'make', 'FDM PETG',
      'subsystems/pod/fusion/pod.py', ['glue_socket'], 'bore 6.2 mm for the 6 mm keyed boom (F3 accepted); flange bonded to the nose wall inside face (CR-C6-09)'),
     ('POD-007', "Carry handle on the spar with the aft stop bridge (printed PETG) + 'LIFT HERE - do not lift by the motors' label", 'PETG (printed)',
      'make', 'FDM PETG, printed lying flat, 40 % infill feet and grip', 'subsystems/pod/fusion/pod.py', ['tie_each', 'tie_each', 'label', 'glue_handle'],
      'feet saddle the spar top in the open slot, one 7.6 mm nylon tie each round foot + spar; bridge between the feet carries the 3 mm '
-     'aft stop and 2 gussets; legs through the aft deck'),
+     'aft stop and 2 gussets; legs through the aft deck; GPS cable in the right leg (window at z 0.055-0.065) and a groove under '
+     'the grip (CR-F2-03)'),
     ('POD-008', 'Trim kit: XPS crush block (cut per pack), 1.5 mm PETG spreader, PETG U-spacers 2 / 4 / 8 / 8 mm', 'XPS + PETG (printed)', 'make',
      'hot-wire XPS F-250, FDM PETG', 'subsystems/pod/fusion/pod.py', [],
      'block ahead of the pack (CR-C5-02), spacers behind it; CAD and mass: nominal 550 g pack = block 27.7 mm + spreader + 8 mm '
@@ -79,8 +83,9 @@ EDGES = [
               'z = pod base, full pod width) and leaves the tape skin off under the pod (CR-C2-07); skin then taped over the shell foot (CR-D2-04)',
      'bond': 'AREA_POD_WING'},
     {'id': 'E-POD-02', 'part_a': 'POD-002', 'part_b': 'POD-001', 'via': 'CT-EPOXY', 'owner': 'pod',
-     'notes': 'tray (with the forward stop), FC, avionics and PDB plates epoxied full-area to the foam-board floor (paper face scuffed); '
-              'floor-to-side-wall fillets over x -0.100 ... 0 (CR-C3-01)', 'bond': 'AREA_TRAY'},
+     'notes': 'tray front piece (with the forward stop) and rear piece, FC, avionics, PDB and UBEC plates and the JR bar epoxied '
+              'full-area to the foam-board floor (paper face scuffed); 6 mm microballoon fillets floor-to-side-wall over +/-30 mm of '
+              'each strap (CR-C6-17) and over x -0.100 ... 0 (CR-C3-01)', 'bond': 'AREA_TRAY'},
     {'id': 'E-POD-03', 'part_a': 'POD-003', 'part_b': 'POD-001', 'via': 'CT-HATCH-HL', 'owner': 'pod',
      'notes': 'opened every flight, tool-free, no magnets; the hatch carries no pack load',
      'retention': {'item': 'tongue under the nose lip + 12 x 40 mm hook-and-loop tab (CR-C3-01)', 'count': 1, 'load_n': 'hatch weight only (< 10 g)',
@@ -92,16 +97,15 @@ EDGES = [
      'notes': 'field joint. z/y: 2 straps + guides + EVA pads; fore-aft: crush block + spreader ahead (on the forward stop, x -0.1002), '
               'U-spacers + aft stop (x 0.077, on the handle bridge) behind. Nominal centroid x -0.001 (aft face 0.069, 8 mm spacer); '
               '680 g pack aft face 0.073 (4 mm spacer); block cut per pack. Leads exit aft over the stop',
-     'retention': 'RET_PACK'},
-    {'id': 'E-POD-06', 'part_a': 'POD-005', 'part_b': 'POD-007', 'via': 'CT-M3-BRASS-NUT', 'owner': 'pod',
-     'notes': 'mast plugs 8 mm into the grip socket; cross-bolted with brass hardware (F3: no steel within 50 mm of the compass, '
-              'the bolt is about 0.06 m from the GPS); 6.5 mm counterbore 4.5 deep on +y keeps the grip at 10 mm (CR-C6-09); replace the '
-              'mast after a tip-over',
-     'joint_stack': {'fastener': 'M3x16 SHCS, brass (DIN 912 CuZn)', 'count': 1, 'grade': 'brass CuZn39Pb3',
-                     'hole': '3.4 mm clearance across the socket boss (POD-007, 14 mm, counterbored to a 9.5 mm grip) and the mast (POD-005)',
-                     'insert': 'none', 'engagement_mm': 5.5, 'min_engagement_mm': 5.0,
-                     'washer_nut': 'M3 brass nut + 1 nylon washer 0.5 mm; Loctite 222 on the nut (grip 10.0 mm, 5.5 mm past the grip)',
-                     'torque': 'snug, <= 0.3 N m (printed parts, brass)', 'tool': '2.5 mm hex key + 5.5 mm spanner',
+     'retention': 'RET_PACK', 'field_joint': True},
+    {'id': 'E-POD-06', 'part_a': 'POD-005', 'part_b': 'POD-007', 'via': 'CT-M3-PA66-NUT', 'owner': 'pod',
+     'notes': 'mast plugs 8 mm into the grip socket; cross-screwed with PA66 hardware (C6 CR-C6-18; F3: no steel within 50 mm of the '
+              'compass); 6.5 mm counterbore 4.5 deep on +y keeps the grip at 10.0 mm (C6 <= 11.0); the mast is the fuse: replace it after a tip-over',
+     'joint_stack': {'fastener': 'M3x16 PA66 (nylon) cheese-head screw, slotted (DIN 84 PA66)', 'count': 1, 'grade': 'PA66',
+                     'hole': '3.4 mm clearance across the socket boss (POD-007, 14 mm, counterbored to a 10.0 mm grip) and the mast base (POD-005)',
+                     'insert': 'none', 'engagement_mm': 6.0, 'min_engagement_mm': 4.0,
+                     'washer_nut': 'M3 PA66 hex nut fully on + 2 pitches; no washer (grip 10.0 mm, 6.0 mm past the grip)',
+                     'torque': 'finger tight + 1/4 turn (~0.1 N m); no threadlocker', 'tool': 'flat screwdriver + fingers',
                      'access': 'from +y beside the grip, above the pod', 'install_order': 7, 'removal_order': 1}},
     {'id': 'E-POD-07', 'part_a': 'POD-006', 'part_b': 'POD-001', 'via': 'CT-EPOXY', 'owner': 'pod',
      'notes': 'socket through a 12 mm square hole in the nose wall; 32 x 32 mm flange bonded to the wall inside face (CR-C6-09); the '
@@ -123,6 +127,13 @@ EDGES = [
      'retention': {'item': 'trapped between the forward stop and the pack', 'count': 1,
                    'load_n': 'pack -x: 85 N ultimate; crash: crush, <= 100 g on the pack (C5)',
                    'inspection': 'block intact, not crushed, labelled for this pack: pre-flight card'}},
+    {'id': 'E-POD-12', 'part_a': 'PWR-001', 'part_b': 'POD-002', 'via': 'CT-THERMAL-CONTACT', 'owner': 'pod',
+     'notes': 'insulating contact (E3 CR-E3-11): pack on 2.5 mm EVA pads on the 1 mm PETG tray over 4.8 mm foam board; the pack '
+              'heat leaves by the pod air through the two vents (CR-E3-03), not by this contact',
+     'thermal': {'heat_w': 'about 0 through this contact (insulating; pack loss goes to the pod air: E3 3-node model)',
+                 't_max_c': 50, 't_ambient_c': 30,
+                 'path': 'pack -> pod air -> nose inlet / aft exit vents and the foam-board shell; the pads, tray and floor insulate',
+                 'sized_by': 'E3', 't_design_c': 47.1, 'claim': 'CL-E3-PACK-END'}},
 ]
 
 CTYPES = [
@@ -132,11 +143,12 @@ CTYPES = [
     {'id': 'CT-SPAR-TIE', 'kind': 'mechanical', 'method': 'strapped',
      'spec': 'printed saddle bonded on a round spar + nylon cable tie round saddle and spar (7.6 mm, 50 lb class)'},
     {'id': 'CT-SLIDE-STOP', 'kind': 'mechanical', 'method': 'slid', 'spec': 'loose printed spacer trapped between two stops'},
-    {'id': 'CT-M3-BRASS-NUT', 'kind': 'mechanical', 'method': 'fastened',
-     'spec': 'M3 brass SHCS through clearance hole, brass nut + Loctite 222 (non-magnetic, near a compass)'},
+    {'id': 'CT-M3-PA66-NUT', 'kind': 'mechanical', 'method': 'fastened',
+     'spec': 'M3 PA66 (nylon) screw through a clearance hole, PA66 nut, finger tight + 1/4 turn (non-magnetic, near a compass; the screw is a fuse)'},
 ]
 
-ACKS = ['E-PWR-01', 'E-PWR-02', 'E-PWR-03', 'E-PWR-04', 'E-AVN-01', 'E-AVN-02', 'E-AVN-03', 'E-AVN-04', 'E-AVN-05', 'E-HRN-01']
+ACKS = ['E-PWR-03', 'E-PWR-04', 'E-PWR-05', 'E-AVN-01', 'E-AVN-02', 'E-AVN-03', 'E-AVN-04', 'E-AVN-05', 'E-AVN-07',
+        'E-AVN-10', 'E-HRN-01']   # R4: E-PWR-01/-02 now land on F1's power frame PWR-006 (CR-F1-16), not on POD-002
 
 
 def build_pod():
@@ -210,7 +222,10 @@ def areas(G, L):
     chw = G['ch_y'][1] - G['ch_y'][0]
     ax0, ax1 = lv(L, 'avn_plate_x_m')
     p0, p1 = lv(L, 'pdb_plate_x_m')
-    tray = (G['x_rec1'] - G['x_fs0']) * (G['bw'] + 2 * G['tg']) + (lv(L, 'fc_plate_len_m') + (ax1 - ax0) + (p1 - p0)) * chw
+    jb = lv(L, 'jr_bar_m')
+    u0, u1 = lv(L, 'ubec_zone_x_m')
+    tray = ((G['x_rec1'] - G['x_fs0']) - (G['ch_x'][1] - G['ch_x'][0])) * (G['bw'] + 2 * G['tg']) + \
+        (lv(L, 'fc_plate_len_m') + (ax1 - ax0) + (p1 - p0) + (u1 - u0)) * chw + jb[2] * (chw - 0.001)
     so = lv(L, 'socket_m')
     fl = lv(L, 'flange_m')[0]
     sock = 4 * so[0] * tb + fl * fl - so[0] * so[0]
@@ -219,6 +234,7 @@ def areas(G, L):
     mm2 = lambda a: round(a * 1e6)
     return {'AREA_POD_WING': mm2(floor + filler + walls + aftw), 'AREA_TRAY': mm2(tray), 'AREA_SOCKET': mm2(sock),
             'AREA_LEGS': mm2(legs), 'AREA_SADDLE': mm2(saddle), 'bridge': mm2(bridge),
+            'tray_front': mm2(G['tray_front_area']),
             'parts': {'floor': mm2(floor), 'filler': mm2(filler), 'walls': mm2(walls), 'aft wall': mm2(aftw)}}
 
 
@@ -227,8 +243,9 @@ BOND = {
                       'foam and board faces scuffed, dust off', '24 h at >= 18 degC before load',
                       'CL-C1-POD-F-ULT 121.7 N + 3.0 N m (L1 landing, ultimate); crash: pod group 12.75 g (CL-D2-POD-CRASH-F)',
                       'L1 landing; C1 crash any axis', 'C3 (CR-D2-05)'),
-    'AREA_TRAY': ('30 min epoxy', 'PETG underside sanded 120 grit; board face scuffed', '24 h',
-                  'pack straps 85 N ultimate (CL-C1-PACK-CRASH-LOAD) into the floor', 'C1 crash', 'C3'),
+    'AREA_TRAY': ('30 min epoxy; 6 mm microballoon fillets at the floor-to-wall corners by the straps', 'PETG underside sanded 120 grit; board face scuffed 220 grit', '24 h',
+                  'pack straps 85 N ultimate (CL-C1-PACK-CRASH-LOAD) into the floor; forward stop 85 N on the front piece '
+                  '(CL-D2-FWD-STOP-BOND)', 'C1 crash', 'C3, C6'),
     'AREA_SOCKET': ('30 min epoxy', 'PETG sanded; hole edges sealed; flange face to the paper face, clamped', '24 h', '1 kg on the boom tip in handling, about 0.8 N m', 'handling', 'C6 (CR-C6-09), C3'),
     'AREA_LEGS': ('30 min epoxy', 'PETG sanded', '24 h', 'shell crash load bearing on the legs', 'C1 crash', 'C3'),
     'AREA_SADDLE': ('30 min epoxy', 'spar top scuffed 120 grit and wiped with IPA; PETG sanded', '24 h',
@@ -302,7 +319,8 @@ def main(argv):
                                           ', '.join('%s %.1f' % (k, v) for k, v in sorted(M[pid][2].items()))))
     print('pod total %.1f g, cg %s m' % (tot, ', '.join('%.4f' % v for v in cg)))
     print('bond areas mm2: %s' % areas(G, L))
-    for k in ('x_rec0', 'x_rec1', 'xn', 'x_fs0', 'x_fs', 'nose_block', 'x_as', 'pack_fwd_c', 'pack_c_nom', 'pack_c_hvy', 'travel',
+    for k in ('ch_x', 'ch_h', 'cross_gap', 'cross_h', 'tray_front_area',
+              'x_rec0', 'x_rec1', 'xn', 'x_fs0', 'x_fs', 'nose_block', 'x_as', 'pack_fwd_c', 'pack_c_nom', 'pack_c_hvy', 'travel',
               'spacer_nom', 'spacer_hvy', 'block_nom', 'bay', 'zp', 'overhang_surf', 'overhang_clr', 'pack_z_c', 'z_aft', 'zfoot',
               'z_as_top', 'z_grip0', 'z_grip1', 'z_mast1', 'gps_c', 'pitot_tip', 'boom_len', 'socket_x', 'ch_y', 'strap_x', 'pod_c',
               'ant_a', 'ant_a_pack_clr', 'ant_b_pack_clr', 'ant_b_boom_clr', 'gps_clr'):

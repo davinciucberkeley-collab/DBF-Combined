@@ -5,43 +5,43 @@
  "parts": [
   {
    "id": "FIN-001-UR",
-   "name": "Half-fin upper right, two-layer foam board, square 40 mm tip",
+   "name": "Half-fin upper right, two-layer foam board, square 40 mm tip, 8 mm lead hole",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 22.0,
+   "mass_g": 21.98,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.1999,
+    0.2,
     0.32,
-    0.1008
+    0.1009
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0458 m2 x (0.20 x 2 + 0.015) kg/m2 + root joint 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (area 0.0457 m2 x (0.20 x 2 + 0.015) kg/m2 + root joint 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-001-UL",
-   "name": "Half-fin upper left, two-layer foam board, square 40 mm tip",
+   "name": "Half-fin upper left, two-layer foam board, square 40 mm tip, 8 mm lead hole",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 22.0,
+   "mass_g": 21.98,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.1999,
+    0.2,
     -0.32,
-    0.1008
+    0.1009
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0458 m2 x (0.20 x 2 + 0.015) kg/m2 + root joint 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (area 0.0457 m2 x (0.20 x 2 + 0.015) kg/m2 + root joint 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-001-LR",
-   "name": "Half-fin lower right, two-layer foam board, square 40 mm tip, link slot",
+   "name": "Half-fin lower right, two-layer foam board, square 40 mm tip, 8 mm lead hole, link slot",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 22.68,
+   "mass_g": 22.66,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.1968,
+    0.1969,
     0.32,
     -0.0979
    ],
@@ -50,13 +50,13 @@
   },
   {
    "id": "FIN-001-LL",
-   "name": "Half-fin lower left, two-layer foam board, square 40 mm tip, link slot",
+   "name": "Half-fin lower left, two-layer foam board, square 40 mm tip, 8 mm lead hole, link slot",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 22.68,
+   "mass_g": 22.66,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.1968,
+    0.1969,
     -0.32,
     -0.0979
    ],
@@ -155,33 +155,33 @@
   },
   {
    "id": "FIN-004-R",
-   "name": "Through-core block R (tube socket + spar saddle + 2 strap eyes)",
+   "name": "Through-core block R (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.93,
+   "mass_g": 41.04,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0614,
+    0.0615,
     0.3204,
     0.0067
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (54.31 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (54.46 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-004-L",
-   "name": "Through-core block L (tube socket + spar saddle + 2 strap eyes)",
+   "name": "Through-core block L (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.93,
+   "mass_g": 41.04,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0614,
+    0.0615,
     -0.3204,
     0.0067
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (54.31 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (54.46 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-006-R",
@@ -275,63 +275,63 @@
   },
   {
    "id": "FIN-008-UR",
-   "name": "Station collar UR, 16 mm, 40 mm two-face tail + brace ear",
+   "name": "Station collar UR, 16 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.56,
+   "mass_g": 10.65,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0639,
-    0.3165,
+    0.0641,
+    0.3166,
     0.1565
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.67 cm3 x 1.00 + tongue 4.30 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((5.74 cm3 x 1.00 + tongue 4.30 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-008-UL",
-   "name": "Station collar UL, 16 mm, 40 mm two-face tail + brace ear",
+   "name": "Station collar UL, 16 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.56,
+   "mass_g": 10.65,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0639,
-    -0.3165,
+    0.0641,
+    -0.3166,
     0.1565
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.67 cm3 x 1.00 + tongue 4.30 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((5.74 cm3 x 1.00 + tongue 4.30 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-008-LR",
-   "name": "Station collar LR, 16 mm, 40 mm two-face tail + brace ear",
+   "name": "Station collar LR, 16 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.56,
+   "mass_g": 10.65,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0639,
-    0.3165,
+    0.0641,
+    0.3166,
     -0.1565
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.67 cm3 x 1.00 + tongue 4.30 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((5.74 cm3 x 1.00 + tongue 4.30 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-008-LL",
-   "name": "Station collar LL, 16 mm, 40 mm two-face tail + brace ear",
+   "name": "Station collar LL, 16 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.56,
+   "mass_g": 10.65,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0639,
-    -0.3165,
+    0.0641,
+    -0.3166,
     -0.1565
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.67 cm3 x 1.00 + tongue 4.30 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((5.74 cm3 x 1.00 + tongue 4.30 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-009-UR",
@@ -1500,6 +1500,210 @@
    }
   },
   {
+   "id": "E-FIN-49",
+   "part_a": "FIN-004-R",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "notes": "spar through the block spar bore (22.3 mm, 36 mm long, C2 plug inside the spar); blocks threaded on the spar and set by jig at y = +/-0.320 before the spar is bonded into the core (CL-C4-D3-BLOCK-MS)",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 2488,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "9.7 N m torsion design; RF 5.65 (CL-C6-BLOCK-SPAR-RF)",
+    "load_case": "L4 corner",
+    "sized_by": "C4, C6"
+   }
+  },
+  {
+   "id": "E-FIN-50",
+   "part_a": "FIN-004-L",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "notes": "spar through the block spar bore (22.3 mm, 36 mm long, C2 plug inside the spar); blocks threaded on the spar and set by jig at y = +/-0.320 before the spar is bonded into the core (CL-C4-D3-BLOCK-MS)",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 2488,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "9.7 N m torsion design; RF 5.65 (CL-C6-BLOCK-SPAR-RF)",
+    "load_case": "L4 corner",
+    "sized_by": "C4, C6"
+   }
+  },
+  {
+   "id": "E-FIN-51",
+   "part_a": "FIN-004-R",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "notes": "block bonded into the core cut-out x 0.028-0.097, y 0.320 +/- 0.018, full depth (D1 cuts it); tape skin over",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
+    "area_mm2": 6500,
+    "prep": "foam dusted off",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "secondary: spar carries the block",
+    "load_case": "-",
+    "sized_by": "C4"
+   }
+  },
+  {
+   "id": "E-FIN-52",
+   "part_a": "FIN-004-L",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "notes": "block bonded into the core cut-out x 0.028-0.097, y 0.320 +/- 0.018, full depth (D1 cuts it); tape skin over",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
+    "area_mm2": 6500,
+    "prep": "foam dusted off",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "secondary: spar carries the block",
+    "load_case": "-",
+    "sized_by": "C4"
+   }
+  },
+  {
+   "id": "E-FIN-53",
+   "part_a": "FIN-001-UR",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "notes": "laminate root on bare foam, microballoon-epoxy fillets both sides (12 mm legs), then the skin tape laps 15 mm up both faces (L-angle); root contour from the S5010 section",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
+    "area_mm2": 6300,
+    "prep": "foam dusted off; board edges scuffed",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "RF 0.87 at 0.125 MPa (CL-C6-FIN-ROOT-RF)",
+    "load_case": "L4 side load",
+    "sized_by": "D3, C6"
+   }
+  },
+  {
+   "id": "E-FIN-54",
+   "part_a": "FIN-001-UL",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "notes": "laminate root on bare foam, microballoon-epoxy fillets both sides (12 mm legs), then the skin tape laps 15 mm up both faces (L-angle); root contour from the S5010 section",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
+    "area_mm2": 6300,
+    "prep": "foam dusted off; board edges scuffed",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "RF 0.87 at 0.125 MPa (CL-C6-FIN-ROOT-RF)",
+    "load_case": "L4 side load",
+    "sized_by": "D3, C6"
+   }
+  },
+  {
+   "id": "E-FIN-55",
+   "part_a": "FIN-001-LR",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "notes": "laminate root on bare foam, microballoon-epoxy fillets both sides (12 mm legs), then the skin tape laps 15 mm up both faces (L-angle); root contour from the S5010 section",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
+    "area_mm2": 6300,
+    "prep": "foam dusted off; board edges scuffed",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "RF 0.87 at 0.125 MPa (CL-C6-FIN-ROOT-RF)",
+    "load_case": "L4 side load",
+    "sized_by": "D3, C6"
+   }
+  },
+  {
+   "id": "E-FIN-56",
+   "part_a": "FIN-001-LL",
+   "part_b": "WNG-001",
+   "via": "CT-EPOXY",
+   "notes": "laminate root on bare foam, microballoon-epoxy fillets both sides (12 mm legs), then the skin tape laps 15 mm up both faces (L-angle); root contour from the S5010 section",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
+    "area_mm2": 6300,
+    "prep": "foam dusted off; board edges scuffed",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "RF 0.87 at 0.125 MPa (CL-C6-FIN-ROOT-RF)",
+    "load_case": "L4 side load",
+    "sized_by": "D3, C6"
+   }
+  },
+  {
+   "id": "E-FIN-57",
+   "part_a": "FIN-010-UR",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "notes": "anchor foot bonded on the spar top face through a 20 x 16 mm pocket in skin and core at y +0.242 (D1 cuts it, C2 plug inside the spar); thickened epoxy fills the saddle",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 276,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "209 N pull-off on the 90 deg saddle contact; RF 1.32 (CL-C6-ANCHOR-PULL-RF)",
+    "load_case": "G2",
+    "sized_by": "C6"
+   }
+  },
+  {
+   "id": "E-FIN-58",
+   "part_a": "FIN-010-UL",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "notes": "anchor foot bonded on the spar top face through a 20 x 16 mm pocket in skin and core at y -0.242 (D1 cuts it, C2 plug inside the spar); thickened epoxy fills the saddle",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 276,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "209 N pull-off on the 90 deg saddle contact; RF 1.32 (CL-C6-ANCHOR-PULL-RF)",
+    "load_case": "G2",
+    "sized_by": "C6"
+   }
+  },
+  {
+   "id": "E-FIN-59",
+   "part_a": "FIN-010-LR",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "notes": "anchor foot bonded on the spar bottom face through a 20 x 16 mm pocket in skin and core at y +0.242 (D1 cuts it, C2 plug inside the spar); thickened epoxy fills the saddle",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 276,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "209 N pull-off on the 90 deg saddle contact; RF 1.32 (CL-C6-ANCHOR-PULL-RF)",
+    "load_case": "G2",
+    "sized_by": "C6"
+   }
+  },
+  {
+   "id": "E-FIN-60",
+   "part_a": "FIN-010-LL",
+   "part_b": "WNG-002",
+   "via": "CT-EPOXY",
+   "notes": "anchor foot bonded on the spar bottom face through a 20 x 16 mm pocket in skin and core at y -0.242 (D1 cuts it, C2 plug inside the spar); thickened epoxy fills the saddle",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 276,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": "209 N pull-off on the 90 deg saddle contact; RF 1.32 (CL-C6-ANCHOR-PULL-RF)",
+    "load_case": "G2",
+    "sized_by": "C6"
+   }
+  },
+  {
    "id": "E-FIN-61",
    "part_a": "PRP-001-UR",
    "part_b": "FIN-003-UR",
@@ -1856,252 +2060,17 @@
    }
   }
  ],
- "edges_pending": [
-  {
-   "id": "E-FIN-49",
-   "part_a": "FIN-004-R",
-   "part_b": "WNG-002",
-   "via": "CT-EPOXY",
-   "notes": "spar through the block spar bore (22.3 mm, 36 mm long, C2 plug inside the spar); blocks threaded on the spar and set by jig at y = +/-0.320 before the spar is bonded into the core (CL-C4-D3-BLOCK-MS)",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2488,
-    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "9.7 N m torsion design; RF 5.65 (CL-C6-BLOCK-SPAR-RF)",
-    "load_case": "L4 corner",
-    "sized_by": "C4, C6"
-   },
-   "waits_for": [
-    "WNG-002"
-   ]
-  },
-  {
-   "id": "E-FIN-50",
-   "part_a": "FIN-004-L",
-   "part_b": "WNG-002",
-   "via": "CT-EPOXY",
-   "notes": "spar through the block spar bore (22.3 mm, 36 mm long, C2 plug inside the spar); blocks threaded on the spar and set by jig at y = +/-0.320 before the spar is bonded into the core (CL-C4-D3-BLOCK-MS)",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2488,
-    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "9.7 N m torsion design; RF 5.65 (CL-C6-BLOCK-SPAR-RF)",
-    "load_case": "L4 corner",
-    "sized_by": "C4, C6"
-   },
-   "waits_for": [
-    "WNG-002"
-   ]
-  },
-  {
-   "id": "E-FIN-51",
-   "part_a": "FIN-004-R",
-   "part_b": "WNG-001",
-   "via": "CT-EPOXY",
-   "notes": "block bonded into the core cut-out x 0.028-0.097, y 0.320 +/- 0.018, full depth (D1 cuts it); tape skin over",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 6500,
-    "prep": "foam dusted off",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "secondary: spar carries the block",
-    "load_case": "-",
-    "sized_by": "C4"
-   },
-   "waits_for": [
-    "WNG-001"
-   ]
-  },
-  {
-   "id": "E-FIN-52",
-   "part_a": "FIN-004-L",
-   "part_b": "WNG-001",
-   "via": "CT-EPOXY",
-   "notes": "block bonded into the core cut-out x 0.028-0.097, y 0.320 +/- 0.018, full depth (D1 cuts it); tape skin over",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 6500,
-    "prep": "foam dusted off",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "secondary: spar carries the block",
-    "load_case": "-",
-    "sized_by": "C4"
-   },
-   "waits_for": [
-    "WNG-001"
-   ]
-  },
-  {
-   "id": "E-FIN-53",
-   "part_a": "FIN-001-UR",
-   "part_b": "WNG-001",
-   "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam, microballoon-epoxy fillets both sides (12 mm legs), then the skin tape laps 15 mm up both faces (L-angle); root contour from the S5010 section",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 6300,
-    "prep": "foam dusted off; board edges scuffed",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "RF 0.87 at 0.125 MPa (CL-C6-FIN-ROOT-RF)",
-    "load_case": "L4 side load",
-    "sized_by": "D3, C6"
-   },
-   "waits_for": [
-    "WNG-001"
-   ]
-  },
-  {
-   "id": "E-FIN-54",
-   "part_a": "FIN-001-UL",
-   "part_b": "WNG-001",
-   "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam, microballoon-epoxy fillets both sides (12 mm legs), then the skin tape laps 15 mm up both faces (L-angle); root contour from the S5010 section",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 6300,
-    "prep": "foam dusted off; board edges scuffed",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "RF 0.87 at 0.125 MPa (CL-C6-FIN-ROOT-RF)",
-    "load_case": "L4 side load",
-    "sized_by": "D3, C6"
-   },
-   "waits_for": [
-    "WNG-001"
-   ]
-  },
-  {
-   "id": "E-FIN-55",
-   "part_a": "FIN-001-LR",
-   "part_b": "WNG-001",
-   "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam, microballoon-epoxy fillets both sides (12 mm legs), then the skin tape laps 15 mm up both faces (L-angle); root contour from the S5010 section",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 6300,
-    "prep": "foam dusted off; board edges scuffed",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "RF 0.87 at 0.125 MPa (CL-C6-FIN-ROOT-RF)",
-    "load_case": "L4 side load",
-    "sized_by": "D3, C6"
-   },
-   "waits_for": [
-    "WNG-001"
-   ]
-  },
-  {
-   "id": "E-FIN-56",
-   "part_a": "FIN-001-LL",
-   "part_b": "WNG-001",
-   "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam, microballoon-epoxy fillets both sides (12 mm legs), then the skin tape laps 15 mm up both faces (L-angle); root contour from the S5010 section",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 6300,
-    "prep": "foam dusted off; board edges scuffed",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "RF 0.87 at 0.125 MPa (CL-C6-FIN-ROOT-RF)",
-    "load_case": "L4 side load",
-    "sized_by": "D3, C6"
-   },
-   "waits_for": [
-    "WNG-001"
-   ]
-  },
-  {
-   "id": "E-FIN-57",
-   "part_a": "FIN-010-UR",
-   "part_b": "WNG-002",
-   "via": "CT-EPOXY",
-   "notes": "anchor foot bonded on the spar top face through a 20 x 16 mm pocket in skin and core at y +0.242 (D1 cuts it, C2 plug inside the spar); thickened epoxy fills the saddle",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 276,
-    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "209 N pull-off on the 90 deg saddle contact; RF 1.32 (CL-C6-ANCHOR-PULL-RF)",
-    "load_case": "G2",
-    "sized_by": "C6"
-   },
-   "waits_for": [
-    "WNG-002"
-   ]
-  },
-  {
-   "id": "E-FIN-58",
-   "part_a": "FIN-010-UL",
-   "part_b": "WNG-002",
-   "via": "CT-EPOXY",
-   "notes": "anchor foot bonded on the spar top face through a 20 x 16 mm pocket in skin and core at y -0.242 (D1 cuts it, C2 plug inside the spar); thickened epoxy fills the saddle",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 276,
-    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "209 N pull-off on the 90 deg saddle contact; RF 1.32 (CL-C6-ANCHOR-PULL-RF)",
-    "load_case": "G2",
-    "sized_by": "C6"
-   },
-   "waits_for": [
-    "WNG-002"
-   ]
-  },
-  {
-   "id": "E-FIN-59",
-   "part_a": "FIN-010-LR",
-   "part_b": "WNG-002",
-   "via": "CT-EPOXY",
-   "notes": "anchor foot bonded on the spar bottom face through a 20 x 16 mm pocket in skin and core at y +0.242 (D1 cuts it, C2 plug inside the spar); thickened epoxy fills the saddle",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 276,
-    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "209 N pull-off on the 90 deg saddle contact; RF 1.32 (CL-C6-ANCHOR-PULL-RF)",
-    "load_case": "G2",
-    "sized_by": "C6"
-   },
-   "waits_for": [
-    "WNG-002"
-   ]
-  },
-  {
-   "id": "E-FIN-60",
-   "part_a": "FIN-010-LL",
-   "part_b": "WNG-002",
-   "via": "CT-EPOXY",
-   "notes": "anchor foot bonded on the spar bottom face through a 20 x 16 mm pocket in skin and core at y -0.242 (D1 cuts it, C2 plug inside the spar); thickened epoxy fills the saddle",
-   "owner": "fins",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 276,
-    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
-    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "209 N pull-off on the 90 deg saddle contact; RF 1.32 (CL-C6-ANCHOR-PULL-RF)",
-    "load_case": "G2",
-    "sized_by": "C6"
-   },
-   "waits_for": [
-    "WNG-002"
-   ]
-  }
- ],
+ "edges_pending": [],
  "acknowledges": [
   "E-GER-01",
   "E-GER-02",
   "E-GER-03",
-  "E-GER-04"
+  "E-GER-04",
+  "E-HRN-03",
+  "E-HRN-05",
+  "E-HRN-06",
+  "E-HRN-07",
+  "E-HRN-08",
+  "E-HRN-09"
  ]
 }

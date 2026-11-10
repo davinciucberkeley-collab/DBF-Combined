@@ -20,7 +20,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "proofs"))          # redesign/proofs (python -I adds no paths)
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/fins/params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/fins/params.json",
+                              "../../subsystems/propulsion/params.json"])
 P = "P:"
 ST = ["UR", "UL", "LR", "LL"]                               # = params.json#propulsion.stations.ids
 MOTORS = [f"PRP-001-{s}" for s in ST]                      # instance ids (interfaces SCHEMA, CR-A1-32)
@@ -829,6 +830,93 @@ kit.claim("CL-E1-MASS-PRP", "Propulsion flying mass, four stations incl. leads, 
           calc="CALC-E1-MASS", output="total_g", unit="g", limit=("<=", P + "mass.allocation_g.propulsion"),
           parts=STATION, how="Weigh each part on the 0.1 g scale on arrival (one of each), update ASM-E1-PART-MASS, re-run.")
 
+# ================================================================== CAD stack (subsystems/propulsion, rev 4)
+kit.assumption("ASM-E1-BLADE-HALF", "Prop blade half thickness at the hub 8 mm", "axial half-extent of an APC 11 in MR "
+               "blade about its mid-plane, the keep-out's blade term", basis="k09kit.PROP_BLADE_HALF_M (A5); the CAD "
+               "envelope's root section (14 mm chord at 48 deg) reaches 5.5 mm", value=0.008, unit="m",
+               status="UNVERIFIED")
+kit.assumption("ASM-E1-ADAPTER-SCREW", "Adapter screws M3x4 into the bell: strip model", "d 3 mm; shortest engagement "
+               "2.0 mm; tightening torque 0.5 N m (C6); nut factor 0.2; shear allowable of the bell alloy 150 MPa; "
+               "stripping area 0.5 pi d L (internal thread, conservative)",
+               basis="VDI 2230 short form; 6061-T6 shear ultimate 207 MPa taken down to 150 MPa for an unknown bell "
+                     "alloy; measure the bell-top thread depth on arrival (T-E1-MOTOR-RM)",
+               value=[0.003, 0.0020, 0.5, 0.2, 150e6], unit="m,m,N m,-,Pa", status="UNVERIFIED",
+               cites=["SRC-E1-SPCNC-ADAPTER"])
+
+
+@kit.calc("CALC-E1-CAD-STACK", title="Modelled station: canted prop plane, keep-out, ESC on the pad",
+          equation="x_face = x_tube - od/2 - bond_gap - collar_wall - face_ahead ; x_hub = x_face - s cos(cant) ; "
+                   "gap = (x_face + face_ahead) - x_hub ; dx_tip = D/2 sin(cant) + h_blade vs h_blade + clr ; "
+                   "esc: pad_len / L_esc ; slot inner edge (pad_h/2 - edge - slot_z) / (w_esc/2)",
+          inputs={"st": "ASM-E1-STACK", "xt": P + "fins.tube.x_m", "od": P + "fins.tube.od_m",
+                  "bg": P + "fin_detail.bond_gap_m", "cw": P + "fin_detail.mount.collar_wall_m",
+                  "ahead": P + "fin_detail.mount.face_ahead_m", "cant": P + "propulsion.stations.cant_deg",
+                  "D": P + "propulsion.prop_diameter_m", "xp": P + "propulsion.stations.x_prop_plane_m",
+                  "clr": P + "requirements.prop_clearance_min_m", "hb": "ASM-E1-BLADE-HALF", "esc": "ASM-E3-ESC",
+                  "plen": P + "fin_detail.esc_pad.len_m", "ph": P + "fin_detail.esc_pad.h_m",
+                  "slot": P + "fin_detail.esc_pad.slot_m", "edge": P + "fin_detail.esc_pad.slot_edge_m"},
+          units={"st": "m", "xt": "m", "od": "m", "bg": "m", "cw": "m", "ahead": "m", "cant": "deg", "D": "m",
+                 "xp": "m", "clr": "m", "hb": "m", "plen": "m", "ph": "m", "slot": "m", "edge": "m"},
+          assumes=["ASM-E1-STACK", "ASM-E1-BLADE-HALF", "ASM-E3-ESC"])
+def cad_stack(st, xt, od, bg, cw, ahead, cant, D, xp, clr, hb, esc, plen, ph, slot, edge):
+    body, base, post, hub, wash, nut = st
+    s = body + base + hub / 2
+    c = math.radians(cant)
+    x_face = xt - od / 2 - bg - cw - ahead
+    x_hub = x_face - s * math.cos(c)
+    gap = (x_face + ahead) - x_hub
+    return {"x_face_m": x_face, "x_hub_m": x_hub, "hub_minus_datum_m": x_hub - xp, "gap_m": gap,
+            "gap_ratio": gap / (0.14 * D), "dx_tip_m": D / 2 * math.sin(c) + hb, "ko_half_m": hb + clr,
+            "esc_len_ratio": plen / esc[0],
+            "esc_slot_ratio": (ph / 2 - edge - slot[1]) / (esc[1] / 2)}
+
+
+@kit.calc("CALC-E1-ADAPTER-STRIP", title="Prop adapter M3x4 in the bell: thread strip vs tightening preload",
+          equation="F_pre = T / (K d) ; F_strip = 0.5 pi d L tau ; RF = F_strip / F_pre",
+          inputs={"a": "ASM-E1-ADAPTER-SCREW"}, assumes=["ASM-E1-ADAPTER-SCREW"])
+def adapter_strip(a):
+    d, L, T, K, tau = a
+    f_pre = T / (K * d)
+    f_strip = 0.5 * math.pi * d * L * tau
+    return {"f_pre_n": f_pre, "f_strip_n": f_strip, "rf": f_strip / f_pre}
+
+
+kit.claim("CL-E1-CAD-HUB-X", "Modelled prop hub centre x on the 7 deg canted axis", calc="CALC-E1-CAD-STACK",
+          output="x_hub_m", unit="m", parts=PROPS_ID,
+          note="subsystems/propulsion/fusion/propulsion.py places the hub here; the datum DP-PROP is -0.0082 (D-28, "
+               "D3's 39 mm stack). KO-PROP-<st> are registered on the modelled hub",
+          how="python -I redesign/subsystems/propulsion/make_propulsion.py prints the same x; calipers on the built "
+              "station (T-E1-MOTOR-RM).")
+kit.claim("CL-E1-CAD-HUB-VS-DATUM", "Modelled hub minus datum DP-PROP", calc="CALC-E1-CAD-STACK",
+          output="hub_minus_datum_m", unit="m", parts=PROPS_ID,
+          note="positive = the real prop sits aft of the datum, closer to the mount collar (CR-E1-29)",
+          how="As CL-E1-CAD-HUB-X.")
+kit.claim("CL-E1-CAD-PROP-GAP", "Prop plane to collar front along x, canted stack / 0.14 D", calc="CALC-E1-CAD-STACK",
+          output="gap_ratio", unit="-", limit=(">=", 1.0), parts=PROPS_ID + MOTORS,
+          note="same finding as CL-E1-PROP-GAP with the 7 deg cant included: fixed by face_ahead_m 0.002 (CR-E1-22)",
+          how="Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.")
+kit.claim("CL-E1-KO-TILT", "Blade tip axial excursion of the canted disc vs the prop keep-out half-length",
+          calc="CALC-E1-CAD-STACK", output="dx_tip_m", unit="m", limit=("<=", 0.033), parts=PROPS_ID,
+          note="0.033 = k09kit keep-out half (blade half 8 mm + 25 mm clearance): the 7 deg disc stays inside KO-PROP, "
+               "but its tip moves 17 mm toward the structure, so the 25 mm clearance is not all geometric margin "
+               "(A5: tilt the keep-out with the station, CR-E1-31)",
+          how="Recompute from the CAD bounding box of PRP-003-<st> after any cant or prop change.")
+kit.claim("CL-E1-ESC-PAD-LEN", "D3's pad length / ESC length", calc="CALC-E1-CAD-STACK",
+          output="esc_len_ratio", unit="-", limit=(">=", 1.0), parts=ESCS,
+          how="Lay the ESC in heat-shrink on a printed pad before the strap is threaded.")
+kit.claim("CL-E1-ESC-SLOT", "Strap-slot inner edge from the pad centre / ESC half-width", calc="CALC-E1-CAD-STACK",
+          output="esc_slot_ratio", unit="-", limit=(">=", 1.0), parts=ESCS,
+          note="the 20 mm ESC covers 1 mm of each 3 mm strap slot on the 28 mm pad; the strap then bends over the ESC "
+               "edge inside the slot and cuts into the heat-shrink. D3: pad h 0.028 -> 0.031 m (CR-E1-30)",
+          how="Thread the strap on a printed pad with the ESC in place: the strap must enter the slot beside the ESC.")
+kit.claim("CL-E1-ADAPTER-STRIP", "Adapter screw thread strip at 2.0 mm engagement vs preload (RF)",
+          calc="CALC-E1-ADAPTER-STRIP", output="rf", unit="-", limit=(">=", P + "requirements.safety_factor_ult"),
+          parts=ADAPTERS + MOTORS,
+          note="cites the 2.0 mm minimum in E-PRP-01..04 (below the 1.0 d rule of D-41); service loads are 14 N shear "
+               "and 4 N axial per screw, so the tightening preload governs",
+          how="T-E1-MOTOR-RM: measure the bell-top thread depth; torque one adapter to 0.5 N m and off 5 times, "
+              "threads undamaged.")
+
 kit.test("T-E1-STAND", "Thrust stand, one station, both candidate props", verifies=["CL-E1-TW-TABLE", "CL-E1-TW-WORST",
          "CL-E1-SAG-FACTOR", "CL-E1-IMAX-168-55", "CL-E1-HOVER-GW", "CL-E1-KT", "CL-E1-KP", "CL-E1-MAKER-SUPPLY"],
          procedure="H1 stand (20 kg cell + HX711), X3108S + LANRC 45 A, 11x4.5MR then 11x5.5MR; held 14.8 V bench supply "
@@ -885,7 +973,8 @@ def write_parts():
         ["PRP-005", "Motor screw M3x8 SHCS ISO 4762 A2", 16, "buy", "-", "A2 stainless", 0, 0.10,
          "Bolt Depot (same size as the old design's F01)",
          "mass inside PRP-001 (0.8 g each); buy 20 (4 spare); joint stack in fins E-FIN-61..64 (D3 owns the edge); "
-         "Loctite 243; engagement window 2.5-3.5 mm (CL-E1-SCREW-ENGAGE), hole depth probed on arrival"],
+         "0.20 N m (C6 CR-C6-10) + Loctite 243 on the tip threads only; engagement 3.5 mm in the 2.5-3.5 mm "
+         "window (CL-E1-SCREW-ENGAGE), hole depth probed on arrival"],
     ]
     out = HERE.parents[1] / "subsystems" / "propulsion" / "parts.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -899,96 +988,7 @@ def write_parts():
     return {r[0]: r for r in rows}
 
 
-def write_interfaces(rows):
-    """redesign/subsystems/propulsion/interfaces.json (CR-A1-32): one node per instance, PRP-00N-<UR|UL|LR|LL>.
-    CG in the aircraft frame from params.json: station y, z; prop plane x_prop_plane_m (D-28); the motor face is
-    x_prop + fin_detail.mount.prop_stack_m (D3's CAD stack, so every subsystem draws the same plane until the first
-    motor is measured). ESC CG = D3's pad CG moved 5 mm outboard (ESC on the outboard face)."""
-    import json
-    par = json.loads((HERE.parents[1] / "params" / "params.json").read_text(encoding="utf-8"))
-    fpar = json.loads((HERE.parents[1] / "subsystems" / "fins" / "params.json").read_text(encoding="utf-8"))
-    fins = json.loads((HERE.parents[1] / "subsystems" / "fins" / "interfaces.json").read_text(encoding="utf-8"))
-    pads = {p["id"]: p["cg_xyz_m"] for p in fins["parts"]}
-    stn = par["propulsion"]["stations"]
-    y0, z0, xp = stn["y_m"]["value"], stn["z_m"]["value"], stn["x_prop_plane_m"]["value"]
-    x_face = xp + fpar["fin_detail"]["mount"]["prop_stack_m"]["value"]
-    st = kit.nodes["CALC-E1-STACK"]["outputs"]
-    body = kit.nodes["ASM-E1-STACK"]["value"][0]
-    r3 = lambda v: [round(c, 4) for c in v]                                    # noqa: E731
-    parts, edges = [], []
-    for i, s in enumerate(ST):
-        sy = 1 if s[1] == "R" else -1
-        sz = 1 if s[0] == "U" else -1
-        y, z = sy * y0, sz * z0
-        rot = ROT[s]
-        pad = pads.get(f"FIN-007-{s}")
-        esc_cg = [pad[0], pad[1] + sy * 0.005, pad[2]] if pad else [0.10, y, sz * 0.118]
-        parts += [
-            {"id": f"PRP-001-{s}", "name": f"Motor {s} SunnySky X3108S KV900 ({rot} from the nose)",
-             "subsystem": "propulsion", "status": "PROPOSED", "mass_g": rows["PRP-001"][6], "material": "steel / NdFeB / Al",
-             "cg_xyz_m": r3([x_face - 0.45 * body, y, z]), "make_or_buy": "buy", "electrical": "sink",
-             "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); CG 45 % of the 26.5 mm body ahead "
-                      "of the mount face (EST); axis canted 7 deg tangentially (params cant_deg), not drawn in the CG"},
-            {"id": f"PRP-002-{s}", "name": f"ESC {s} LANRC 45 A", "subsystem": "propulsion", "status": "PROPOSED",
-             "mass_g": rows["PRP-002"][6], "material": "PCB / copper", "cg_xyz_m": r3(esc_cg), "make_or_buy": "buy",
-             "electrical": "bus", "notes": "11.0 g EST with leads and heat-shrink; on the outboard face of FIN-007, "
-                                           "heat-sink side out in the slipstream"},
-            {"id": f"PRP-003-{s}", "name": f"Prop {s} APC {PROP_SKU[rot]}", "subsystem": "propulsion",
-             "status": "PROPOSED", "mass_g": rows["PRP-003"][6], "material": "glass-filled nylon",
-             "cg_xyz_m": r3([xp, y, z]), "make_or_buy": "buy",
-             "notes": f"hub centre on the prop plane x {xp} m (params, D-28); E1's stack puts it "
-                      f"{-st['stack_minus_d3_m'] * 1000:.1f} mm further aft until measured"},
-            {"id": f"PRP-004-{s}", "name": f"Prop adapter {s} M6x1 {THREAD[rot]} + nut + washer", "subsystem": "propulsion",
-             "status": "PROPOSED", "mass_g": rows["PRP-004"][6], "material": "6061 aluminium / steel",
-             "cg_xyz_m": r3([x_face - body - 0.005, y, z]), "make_or_buy": "buy",
-             "notes": f"{THREAD[rot]} thread: prop drag tightens the nut on a {rot} motor (CR-E1-21)"},
-        ]
-        edges += [
-            {"id": f"E-PRP-{i + 1:02d}", "part_a": f"PRP-004-{s}", "part_b": f"PRP-001-{s}", "via": "CT-PROP-ADAPTER",
-             "owner": "propulsion", "notes": "adapter pilot on the 4 mm shaft, four screws into the bell top on a "
-                                             "12 mm circle (vendor fit list names the X3108S KV900)",
-             "joint_stack": {"fastener": "M3x4 SHCS (supplied with the adapter)", "count": 4, "grade": "12.9 (vendor)",
-                             "hole": "counterbored clearance in the adapter base; tapped M3 in the bell",
-                             "insert": "none (bell tapped by the maker)", "engagement_mm": 2.5,
-                             "min_engagement_mm": 2.0,
-                             "washer_nut": "none", "torque": "0.6 N m + Loctite 243",
-                             "tool": "2.0 mm hex key", "access": "from the front (-x) with the prop off",
-                             "install_order": 2, "removal_order": 3},
-             "retention": {"item": "Loctite 243", "count": 4, "load_n": "prop torque 0.33 N m at full throttle on a "
-                           "6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial",
-                           "inspection": "witness mark on each head, checked at every field set-up"}},
-            {"id": f"E-PRP-{i + 5:02d}", "part_a": f"PRP-003-{s}", "part_b": f"PRP-004-{s}", "via": "CT-PROP-NUT",
-             "owner": "propulsion", "field_joint": True,
-             "notes": f"{PROP_SKU[rot]} on a {THREAD[rot]} post; LPAR06E ring centres the 1/4 in bore on the M6 post; "
-                      "prop off for transport",
-             "joint_stack": {"fastener": f"M6x1 hex nut ISO 4032 ({THREAD[rot]}) + M6 washer ISO 7089",
-                             "count": 1, "grade": "8 (steel)", "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
-                             "insert": "none (threaded aluminium post)",
-                             "engagement_mm": round(st["nut_engagement_m"] * 1000, 2),
-                             "min_engagement_mm": 5.2, "washer_nut": "M6 washer under the nut",
-                             "torque": "1.5 N m EST (nylon hub; snug, no crushing)",
-                             "tool": "10 mm open or socket wrench", "access": "from the front (-x)",
-                             "install_order": 3, "removal_order": 1}},
-        ]
-    doc = {"schema": "dbf-interfaces/1", "subsystem": "propulsion",
-           "_note": "Written by team/E1/propulsion.py (do not hand-edit). Instance nodes per station (UR UL LR LL). "
-                    "Motor-to-mount (E-FIN-61..64) and ESC-to-pad (E-FIN-65..68) edges are D3's; every electrical edge "
-                    "(ESC power, phase, signal) is harness's (D-20) and is acknowledged when harness publishes it.",
-           "parts": parts,
-           "connection_types": [
-               {"id": "CT-PROP-ADAPTER", "kind": "mechanical", "method": "fastened",
-                "spec": "bolt-on prop adapter, 4 x M3x4 SHCS into the motor bell, pilot on the shaft"},
-               {"id": "CT-PROP-NUT", "kind": "mechanical", "method": "fastened",
-                "spec": "M6x1 nut and washer clamp the prop hub on the adapter post (field joint)"}],
-           "edges": edges,
-           "acknowledges": [f"E-FIN-{n}" for n in range(61, 69)]}
-    out = HERE.parents[1] / "subsystems" / "propulsion" / "interfaces.json"
-    out.write_text(json.dumps(doc, indent=1) + "\n", encoding="utf-8")
-    print(f"{out.relative_to(HERE.parents[2]).as_posix()}: {len(parts)} parts, {len(edges)} edges, "
-          f"{sum(p['mass_g'] for p in parts):.1f} g")
-
-
 if __name__ == "__main__":
     kit.write()
-    write_interfaces(write_parts())
+    write_parts()          # interfaces.json: python -I redesign/subsystems/propulsion/make_propulsion.py (rev 4)
     report()

@@ -87,6 +87,8 @@ an information-only mass (`backends/fusion_backend.py#MATERIALS`, `UNVERIFIED-IN
 | CG | `cg_xyz_m` from the CAD centroid (`Component.volume_centroid()`, as `skeleton/make_skeleton.py` does) unless weighed or the part is non-uniform (pack: geometric centre; motor: can centre) |
 | Budget | each subsystem stays inside `params/mass_budget.json`; `check.py` warns over allocation, errors over 2 600 g |
 | Ground items | `"flight": false` on every transport part: left out of the roll-up (`ctx.rollup`, `merge_check`), floating, keep-out and envelope checks |
+| Carried items | a label, harness bundle or consumable located only by a non-structural type (`CT-TIE`, `CT-LABEL`, `CT-WIRE-CHANNEL`: `"structural": false`) carries `"carried": true`; it is in the roll-up but exempt from the floating check in both `merge_check.py` and `check.py`. Without the flag it floats (a pack on a cable tie is an error) |
+| Declared CG vs geometry | `team/A5/integration_check.py` flags a declared `cg_xyz_m` more than 10 mm from the CAD centroid of the same component: either the bodies or the declared CG is wrong |
 | Review trigger | a `make` part whose Fusion mass differs from its declared mass by > 25 % (wrong geometry or wrong density) |
 
 ## 6. Joints
@@ -98,6 +100,7 @@ an information-only mass (`backends/fusion_backend.py#MATERIALS`, `UNVERIFIED-IN
 | thermal (`CT-THERMAL-PAD`, e.g. motor base on its mount `E-FIN-29…32`) | `ctx.contact(edge, note)` beside the mechanical joint of the same pair (CR-A4-11c) | touch-checked like a bond: heat needs contact |
 | transport: cradle or strap on the aircraft | `ctx.contact`; model the box around the aircraft in the aircraft frame (`DX-BOX`) so the touch check is real (CR-A4-11a) | cradle top on the lower skin |
 | transport: a flight part removed for transport (props, pitot boom) in its tray slot | `ctx.contact`, and set `"stowed": true` on the edge: the part stays at its flight station in CAD, so the edge is not touch-checked | — |
+| transport: a cradle that bears on a covering bonded to its partner (the tape skin `WNG-003` on the core `WNG-001`) | the cradle edge lists `"also_contacts": ["WNG-003"]` (CR-D7-19); each listed part must share a load-bearing edge with the flight partner, or `check.py` errors | — |
 | hinged (elevons) | `ctx.revolute(edge, panel, core, at=k9.hinge_point(...), axis='Y', limits=wing.elevon.deflection_deg)` | on the hinge line |
 | electrical | `ctx.wire(edge, route)` | ends on the two parts' connectors |
 
@@ -105,7 +108,13 @@ an information-only mass (`backends/fusion_backend.py#MATERIALS`, `UNVERIFIED-IN
 with: a cradle pressing a fin or tube (`transport.cradle`), or a part that does not fit inside the box.
 One registration per edge, by the owning subsystem; the other side lists it in `acknowledges`. Fusion: the
 **00 Datums** component is grounded; ground the wing core after BuildAll if Fusion did not (UNVERIFIED-IN-FUSION).
-A part placed with `ctx.part(rotate=)` must not carry a joint (the backend warns).
+A joint that touches a part placed with `ctx.part(rotate=)` (the 7° canted motor stacks) is built in Fusion as an
+**as-built joint**, so Fusion keeps the rotation instead of aligning the joint frames (CR-E1-31a,
+UNVERIFIED-IN-FUSION: check the cant after BuildAll). Register it like any other joint.
+
+Keep-outs: `k9.prop_keepout(ctx, name, hub, D, clearance, exempt, rotate=<the motor's rotate tuple>,
+blade_half=<owner's axial half-extent>)` registers the canted prop cylinder; `check.py` tests it exactly against
+each body's box (CR-E1-31b), so the cant is geometry, not margin.
 
 ## 7. Status words
 

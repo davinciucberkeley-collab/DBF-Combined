@@ -1,13 +1,13 @@
 part_id,name,qty,make_or_buy,process,material,mass_g,unit_cost_usd,vendor_or_file,notes
-TRN-001,"Box base (floor, walls, end pads)",1,make,"scored, folded, LSE tape + hot-melt",Coroplast 4 mm (PP twin-wall),2317.0,30.0,Home Depot Coroplast 48x96 4 mm (2 sheets incl. lid),"flight: false; incl. end pads, 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external"
+TRN-001,"Box base (floor, walls, end pads, nose pad)",1,make,"scored, folded, LSE tape + hot-melt",Coroplast 4 mm (PP twin-wall),2339.0,30.0,Home Depot Coroplast 48x96 4 mm (2 sheets incl. lid),"flight: false; incl. 2 end pads, 1 in PE nose pad, 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external; aircraft 12 mm off the aft wall"
 TRN-005,"Lid with plug lip (no lining, D-31)",1,make,"scored, folded",Coroplast 4 mm (PP twin-wall),634.8,6.0,from TRN-001 sheets,flight: false; lip 30 mm inside the walls; pillars taped to the shell
 TRN-002-L,Spar cradle L (saddle + crush column),1,make,"hot-wire saddle to the S5010 template; laminate 2+2+1 in PE, band-saw to 120 mm",XPS foam F-250 + PE foam 1.7 pcf (closed cell),69.8,6.0,XPS offcut; PE plank 2 in + 1 in,flight: false; column 60 x 50 x 120 mm under the spar; saddle 60 x 250 mm at y 0.17-0.23 (4 mm inboard of the brace anchor); 6 mm PE cap
 TRN-002-R,Spar cradle R (saddle + crush column),1,make,as TRN-002-L (mirror),XPS foam F-250 + PE foam 1.7 pcf (closed cell),69.8,6.0,as TRN-002-L,flight: false
 TRN-003,Prop tray with pitot-boom slot and pouch pocket,1,make,hot-wire / knife cut slots in a 60 mm block,XPS foam F-250,149.0,3.0,XPS offcut,"flight: false; 8 prop slots on edge; pitot slot 220 x 25 x 25 mm with a PE tip plug; props stowed here, packs never in the box"
 TRN-004-L,Lid hold-down pillar L,1,make,"cut from PE plank, 10 mm soft face",PE foam 1.7 pcf (closed cell),37.9,3.0,PE plank,flight: false; 5 mm preload over the spar at y -0.20
 TRN-004-R,Lid hold-down pillar R,1,make,as TRN-004-L,PE foam 1.7 pcf (closed cell),37.9,3.0,PE plank,flight: false
-TRN-006-A,Cam-buckle strap A,1,buy,-,25 mm PP webbing + cam buckle,45.0,6.0,hardware store tie-down strap,"flight: false; EST mass; closes the lid, y -0.40"
-TRN-006-B,Cam-buckle strap B,1,buy,-,25 mm PP webbing + cam buckle,45.0,6.0,hardware store tie-down strap,flight: false; y +0.40
+TRN-006-L,Cam-buckle strap L,1,buy,-,25 mm PP webbing + cam buckle,45.0,6.0,hardware store tie-down strap,"flight: false; EST mass; closes the lid, y -0.40 (was TRN-006-A, A4 CR-A4-24)"
+TRN-006-R,Cam-buckle strap R,1,buy,-,25 mm PP webbing + cam buckle,45.0,6.0,hardware store tie-down strap,flight: false; y +0.40 (was TRN-006-B)
 TRN-007-C,Side carry handle,1,buy,bolt 2 x M3 + backing strip,strap handle (bought),40.0,4.0,luggage / tool-box strap handle,flight: false; at the CG (y 0) on the front wall: one-person carry
 TRN-007-L,End handle L,1,buy,bolt 2 x M3 + backing strip,strap handle (bought),40.0,4.0,as TRN-007-C,flight: false; two-person carry
 TRN-007-R,End handle R,1,buy,bolt 2 x M3 + backing strip,strap handle (bought),40.0,4.0,as TRN-007-C,flight: false
@@ -17,4 +17,7 @@ TRN-102,M3 x 16 SHCS + M3 nyloc + M3 x 12 mm fender washer (outside),6,buy,-,A2-
 TRN-105,"Handle backing strip 140 x 30 x 3 mm, 2 holes 3.4 mm at 100 mm",3,make,laser cut,birch plywood 3 mm,7.6,0.3,laser-cut sheet offcut,flight: false; inside the wall behind each handle; mass in CL-D7-BOX-MASS
 TRN-106,10 mm prop spanner (D-40),1,buy,-,steel,0,4.0,hardware store,flight: false; in TRN-008; mass in TRN-008
 TRN-103,Laminated CHECKLIST.md card,1,make,print + laminate,paper,0,1.0,redesign/subsystems/transport/CHECKLIST.md,flight: false; in TRN-008
-TRN-104,Ground mat 0.6 x 0.6 m (aircraft stands on it at the field),1,buy,-,EVA foam tile,0,10.0,hardware store,"flight: false; rides on the lid outside, under strap A/B"
+TRN-104,"Landing mat 0.8 x 0.8 m, two 0.8 x 0.4 m panels hinged with cloth tape: 1.5 mm rubber on 3 mm birch ply (C5 S1, CR-C5-06)",1,make,"laser-cut ply, contact-glued rubber, cloth-tape hinge, webbing loop",birch ply 3 mm + SBR/neoprene 1.5 mm,2700,25.0,ply: Jacobs Hall stock; rubber sheet: hardware store (EST price),flight: false; carried folded by its loop (CL-D7-MAT-MASS); replaces the EVA tile of round 2 (I1 CR-I1-18)
+TRN-107,"Field tote (TX, landing-spares box, flight card, anemometer)",1,buy,-,canvas tote,150,8.0,any tote about 0.45 x 0.35 x 0.25 m,flight: false; carried on the shoulder by carrier A (CL-D7-CARRY-A)
+TRN-108,Landing-spares box 1 L (holds the GER-005/009/010/011/012 spares),1,buy,-,PP food box,0,3.0,any 1 L food box,flight: false; contents are D5 parts; mass in trn.field_bag.landing_spares_kg
+TRN-109,"Lid and end-wall labels (6 lines, trn.box.labels)",1,make,print on label sheet,paper label,0,2.0,subsystems/transport/params.json#trn.box.labels,flight: false; end-first and lid-down drops are label-and-test cases

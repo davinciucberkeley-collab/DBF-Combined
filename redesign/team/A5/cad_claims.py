@@ -284,10 +284,64 @@ kit.claim("CL-A5-HOVER-SPLIT", "Hover pitch-trim thrust split, upper / lower pai
           how="B3/E1: differential thrust to trim hover pitch; read from the hover log (motor outputs). A3's "
               "CL-A3-HOVER-SPLIT is the bottom-up value.")
 
+# ---------------------------------------------------------------- integration (assembled designer modules)
+def _snapshot():
+    """team/A5/integration.json, written by integration_check.py from the delivered subsystems (not from params)."""
+    import json
+    s = json.loads((HERE / "integration.json").read_text(encoding="utf-8"))
+    return {"date": s["date"], "mass_g": s["mass_g"], "cg_m": s["cg_m"], "errors": s["errors"],
+            "warnings": s["warnings"], "skeleton_cg_x_m": s["skeleton_cg_m"][0],
+            "by_subsystem": {r["sub"]: [r["declared_g"], r["cg_x_m"], r["dcg_x_mm"]] for r in s["subsystems"]}}
+
+
+kit.assumption("ASM-A5-ASSY-ROLLUP", "Assembled CAD roll-up of the delivered subsystem modules",
+               "Declared part masses and CGs (interfaces.json) of the ten modules check.py builds from redesign/subsystems, "
+               "summed by merge_check.rollup; per subsystem [mass g, CG x m, share of the CG shift from the R3 skeleton mm]",
+               basis="python -I redesign/team/A5/integration_check.py (snapshot team/A5/integration.json, tables in "
+                     "INTEGRATION.md); declared masses are the designers' CAD/datasheet numbers, not weighed",
+               value=_snapshot(), unit="mixed", status="UNVERIFIED", cites=["SRC-K09-CARD"])
+
+
+@kit.calc("CALC-A5-ASSY", title="Assembled CAD: mass, CG and check.py result",
+          assumes=["ASM-A5-ASSY-ROLLUP"],
+          equation="read the roll-up; range use = |x_cg - mid| / half-range; shift = x_cg - x_cg(skeleton)",
+          inputs={"snap": "ASM-A5-ASSY-ROLLUP", "x_range": P + "cg.x_range_m", "z_range": P + "cg.z_range_m",
+                  "gate_kg": P + "requirements.mtow_gate_kg"},
+          units={"snap": "mixed", "x_range": "m", "z_range": "m", "gate_kg": "kg"})
+def assy(snap, x_range, z_range, gate_kg):
+    x, y, z = snap["cg_m"]
+    mid, half = (x_range[0] + x_range[1]) / 2, (x_range[1] - x_range[0]) / 2
+    return {"mass_kg": snap["mass_g"] / 1000.0, "cg_x_m": x, "cg_y_m": y, "cg_z_m": z,
+            "cg_x_range_use": abs(x - mid) / half, "cg_x_shift_m": x - snap["skeleton_cg_x_m"],
+            "check_errors": snap["errors"]}
+
+
+kit.claim("CL-A5-ASSY-MASS", "Assembled CAD mass (declared part masses, pack 550 g)", calc="CALC-A5-ASSY",
+          output="mass_kg", unit="kg", limit=("<=", P + "requirements.mtow_gate_kg"), verifies=["R-MASS-GATE"],
+          assumes=["ASM-A5-ASSY-ROLLUP"],
+          how="python -I redesign/fusion/check.py (TOTAL line), same basis as A3's CL-A3-MASS-BASIC; weigh the aircraft "
+              "(T-A1-WEIGH).")
+kit.claim("CL-A5-ASSY-CG-X", "Assembled CAD CG x against the aft limit", calc="CALC-A5-ASSY", output="cg_x_m", unit="m",
+          limit=("<=", "CL-A5-CG-X-AFT-LIMIT"), verifies=["R-CG-RANGE"], assumes=["ASM-A5-ASSY-ROLLUP"],
+          how="check.py TOTAL line; independent code from A3's mass_rollup.py on the same declared data. T-A5-CG-BALANCE.")
+kit.claim("CL-A5-ASSY-CG-X-RANGE-USE", "Assembled CAD CG x, |x - mid| / half-range", calc="CALC-A5-ASSY",
+          output="cg_x_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"], assumes=["ASM-A5-ASSY-ROLLUP"],
+          how="Same basis as CL-A3-CG-X-RANGE; T-A5-CG-BALANCE.")
+kit.claim("CL-A5-ASSY-CG-SHIFT", "Assembled CG x minus the allocation-layout CG (R3 skeleton)", calc="CALC-A5-ASSY",
+          output="cg_x_shift_m", unit="m", assumes=["ASM-A5-ASSY-ROLLUP", "ASM-A5-MASS-SPLIT"],
+          how="Per-subsystem shares in team/A5/INTEGRATION.md (they sum to this value).")
+kit.claim("CL-A5-ASSY-CG-Z", "Assembled CAD CG z", calc="CALC-A5-ASSY", output="cg_z_m", unit="m",
+          limit=("<=", "CL-A5-CG-Z-UP-LIMIT"), assumes=["ASM-A5-ASSY-ROLLUP"],
+          how="check.py TOTAL line; H1 hangs the aircraft from two points.")
+kit.claim("CL-A5-ASSY-CHECK-ERRORS", "check.py errors on the delivered subsystems", calc="CALC-A5-ASSY",
+          output="check_errors", unit="-", limit=("<=", 0), assumes=["ASM-A5-ASSY-ROLLUP"],
+          how="python -I redesign/fusion/check.py; the list by role is in team/A5/INTEGRATION.md.")
+
 kit.test("T-A5-CORE-COVER", "Spar cover on the first cut core", verifies=["CL-A5-SPAR-COVER", "CL-A5-SPAR-COVER-CAMBER"],
          state="planned", procedure="Cut a 100 mm core section, cut the slot, depth-gauge foam above and below the slot (G2).")
 kit.test("T-A5-CG-BALANCE", "CG balance of the built aircraft",
-         verifies=["CL-A5-LAYOUT-CG-X", "CL-A5-LAYOUT-CG-X-FWD", "CL-A5-LAYOUT-CG-X-RANGE-USE", "CL-A5-LAYOUT-CG-Z"],
+         verifies=["CL-A5-LAYOUT-CG-X", "CL-A5-LAYOUT-CG-X-FWD", "CL-A5-LAYOUT-CG-X-RANGE-USE", "CL-A5-LAYOUT-CG-Z",
+                   "CL-A5-ASSY-CG-X", "CL-A5-ASSY-CG-X-RANGE-USE", "CL-A5-ASSY-CG-Z"],
          state="planned", procedure="Pack in, props on; two knife edges under the wing at the fin roots; mark x (H1).")
 
 

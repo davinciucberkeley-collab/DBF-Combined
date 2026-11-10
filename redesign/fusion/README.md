@@ -4,7 +4,7 @@ One CAD vocabulary (`fusionkit.py`) for every subsystem; the same `build(ctx)` c
 (checks, seconds), Autodesk Fusion, and later Blender (`redesign/blender/`). Connections come from
 `interfaces.json` (schema: `redesign/interfaces/SCHEMA.md`). Keeper: A5 (CAD lead).
 
-**Designers start here:** [`DATUMS.md`](DATUMS.md) (frame, attitudes, 43 named datums) ·
+**Designers start here:** [`DATUMS.md`](DATUMS.md) (frame, attitudes, 52 named datums) ·
 [`STANDARDS.md`](STANDARDS.md) (build order, naming, materials, mass, joints, hand-over checklist) ·
 [`skeleton/`](skeleton/) (the K09-L reference layout, one folder per subsystem, part ids 9xx) ·
 `k09kit.py` (shared helpers for this configuration).
@@ -22,7 +22,7 @@ One CAD vocabulary (`fusionkit.py`) for every subsystem; the same `build(ctx)` c
 | `BuildAll/` | the folder you add in Fusion (launcher + manifest) |
 | `check.py` | stub build + CAD-vs-interfaces checks; exit 1 on failure |
 | `examples/` | generic test aircraft (fuselage box, wing panels + spar + hinged aileron + servo, booms + motors, battery, ESC, wires). Not a design, not K09-L |
-| `tests/` | `test_framework.py` (25 tests) + `broken/` (a deliberately broken aircraft that must fail) |
+| `tests/` | `test_framework.py` (31 tests) + `broken/` (a deliberately broken aircraft that must fail) |
 
 ## Run the checks (any machine, Python 3, no installs)
 
@@ -32,7 +32,7 @@ python -I redesign/fusion/check.py --skeleton      # K09-L reference layout (pas
 python -I redesign/fusion/check.py --examples      # generic example aircraft (passes with --strict)
 python -I redesign/fusion/k09kit.py --check        # DATUMS.md up to date with params.json
 python -I redesign/interfaces/merge_check.py       # graph only; writes redesign/interfaces/{interfaces.json,REPORT.md}
-python -I redesign/fusion/tests/test_framework.py  # 25 tests, < 1 s
+python -I redesign/fusion/tests/test_framework.py  # 31 tests, about 1 s
 ```
 
 ## Build in Fusion (teammate, about 2 minutes)
@@ -47,9 +47,9 @@ python -I redesign/fusion/tests/test_framework.py  # 25 tests, < 1 s
    `build_all.py` to `subsystems`, `skeleton` or `examples`), creates joints and wire routes, and shows a summary. The full text is in the **TEXT COMMANDS** window.
 5. Optional: Preferences > General > Design > Default modeling orientation = **Z up** (our frame is z up).
 6. Report back: did it run, anything in the summary marked FAIL/ERROR, screenshot. The first run is the test of
-   `fusion_backend.py`. A WARN `joins rotated component` means a joint touches a part placed with
-   `ctx.part(rotate=)`: Fusion aligns both joint frames, so check that part did not turn (docstring of
-   `fusion_backend.py`).
+   `fusion_backend.py`. Joints that touch a part placed with `ctx.part(rotate=)` (the 7° canted motor, adapter
+   and prop stacks) are made as **as-built joints** so Fusion does not turn them back: check that the motors still
+   show their cant after the build (docstring of `fusion_backend.py`).
 
 Frame: metres in code, origin at the wing root LE on the chord line, x aft, y right, z up (`DATUMS.md`,
 `params.json#frame`); Fusion receives cm. Each part is its own component
@@ -106,8 +106,8 @@ Keep geometry simple (envelopes for bought parts). Mark anything that depends on
 | every MODELLED+ part has a component; PROPOSED ones listed as missing | that bodies do not interpenetrate (only bounding boxes are used) |
 | every edge has a registration of the right kind (wire / revolute / rigid-or-contact) | real masses (declared mass is used) |
 | parts of each structural edge touch (bounding boxes within 2 mm); joint origins and wire ends sit on their parts | wire bend radii, clearances, access for tools |
-| no modelled group floats; all `merge_check.py` graph checks | anything about the real aircraft configuration |
-| no part enters a prop keep-out or reaches the hover ground plane (bounding boxes); flight parts inside the aircraft envelope; DATUMS.md fresh | real prop-tip clearance under blade flex; interpenetration of real bodies |
+| no modelled group floats (same `carried` rule as `merge_check.py`); all `merge_check.py` graph checks | anything about the real aircraft configuration |
+| no body enters a prop keep-out (canted discs tested exactly against per-body boxes) or reaches the hover ground plane; flight parts inside the aircraft envelope; DATUMS.md fresh | real prop-tip clearance under blade flex; interpenetration of real bodies |
 
 `tests/test_framework.py` also runs `fusion_backend.py` end to end against a fake `adsk` module: that catches
 Python mistakes in the backend, not Fusion API behaviour.

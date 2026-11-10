@@ -314,6 +314,90 @@ class K09(unittest.TestCase):
         with self.assertRaises(ValueError):                                   # diagonal leg: split it
             k9.bundle(type('Part', (), {'cylinder': lambda *a, **k: None})(), [((0, 0, 0), (0.1, 0.1, 0))], 0.01)
 
+    def _skeleton_copy(self, d, edit):
+        """Copy the skeleton to d, apply edit(root) and run check.py on it; returns the issues."""
+        import shutil
+        root = os.path.join(d, 'sk')
+        shutil.copytree(build_all.roots(skeleton=True)[0], root, ignore=shutil.ignore_patterns('__pycache__'))
+        edit(root)
+        return quiet(check.run_checks, root, os.path.join(root, 'modules.txt'), datums=True)[0][2]
+
+    @staticmethod
+    def _edit_json(path, fn):
+        with open(path, encoding='utf-8') as f:
+            doc = json.load(f)
+        fn(doc)
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(doc, f)
+
+    def test_carried_items_do_not_float(self):
+        # CR-D1-01, CR-F2-09, CR-A4-32: check.py uses merge_check's rule. Bundles held only by ties float unless
+        # flagged "carried": true; then they are exempt in both checks.
+        import tempfile
+
+        def ties(carried):
+            def edit(root):
+                def fn(doc):
+                    for e in doc['edges']:
+                        e['via'] = 'CT-TIE'
+                    for p in doc['parts']:
+                        p['carried'] = carried
+                self._edit_json(os.path.join(root, 'harness', 'interfaces.json'), fn)
+            return edit
+        with tempfile.TemporaryDirectory() as d:
+            bad = self._skeleton_copy(d, ties(False))
+        with tempfile.TemporaryDirectory() as d:
+            good = self._skeleton_copy(d, ties(True))
+        fl = lambda iss: sorted(i[2] for i in iss if i[1] == 'floating')
+        self.assertEqual(fl(bad), ['HRN-901-L', 'HRN-901-R'], bad)
+        self.assertEqual(fl(good), [], good)
+        self.assertFalse([i for i in good if i[1] == 'graph:floating'])
+
+    def test_transport_also_contacts(self):
+        # CR-D7-19: a cradle edge may name parts bonded on its flight partner; an unrelated part is refused
+        import tempfile
+
+        def edit(extra):
+            def e(root):
+                def fn(doc):
+                    for x in doc['edges']:
+                        if x['id'] == 'E-TRN-904':
+                            x['also_contacts'] = extra
+                self._edit_json(os.path.join(root, 'transport', 'interfaces.json'), fn)
+            return e
+        with tempfile.TemporaryDirectory() as d:
+            ok = self._skeleton_copy(d, edit(['WNG-902']))                    # spar, epoxied in the core
+        with tempfile.TemporaryDirectory() as d:
+            bad = self._skeleton_copy(d, edit(['PRP-902-UR']))                # a prop: not bonded to the core
+        self.assertFalse([i for i in ok if i[1] == 'transport'], ok)
+        self.assertEqual([i[2] for i in bad if i[1] == 'transport'], ['E-TRN-904'], bad)
+
+    def test_tilted_keepout(self):
+        # CR-E1-31b: a vector axis is tested exactly; (1, 0, 0) agrees with 'X' on random boxes
+        import random
+        rnd = random.Random(7)
+        for _ in range(500):
+            c = tuple(rnd.uniform(-1, 1) for _ in range(3))
+            a = fk.Keepout('a', 'cylinder', 'X', center=c, r=0.5, half=0.3)
+            b = fk.Keepout('b', 'cylinder', (1.0, 0.0, 0.0), center=c, r=0.5, half=0.3)
+            lo = [rnd.uniform(-1.5, 1.5) for _ in range(3)]
+            box = (lo, [v + rnd.uniform(0.01, 0.8) for v in lo])
+            self.assertEqual(a.hits(box), b.hits(box), box)
+        # disc R 0.165, half 0.033 at the origin, canted +7 deg about z: the -y rim moves aft by R sin 7 = 20 mm
+        n = fk.mat_vec(fk.rot_matrix('Z', 7.0), (1.0, 0.0, 0.0))
+        t = fk.Keepout('t', 'cylinder', n, center=(0, 0, 0), r=0.165, half=0.033)
+        u = fk.Keepout('u', 'cylinder', 'X', center=(0, 0, 0), r=0.165, half=0.033)
+        rim = ((0.040, -0.160, -0.005), (0.045, -0.150, 0.005))               # aft of the flat disc, inside the canted one
+        self.assertTrue(t.hits(rim))
+        self.assertFalse(u.hits(rim))
+        self.assertFalse(t.hits(((0.040, 0.150, -0.005), (0.045, 0.160, 0.005))))     # the +y rim moved forward
+        # k9.prop_keepout with rotate= gives that axis; blade_half overrides the default
+        ctx = fk.Context(None, params=self.P)
+        k9.prop_keepout(ctx, 'KO', (0, 0, 0), 0.2794, 0.025, (), rotate=('Z', 7.0), blade_half=0.010)
+        ko = ctx.keepouts[-1]
+        self.assertAlmostEqual(ko.half, 0.035)
+        self.assertAlmostEqual(ko.axis[1], math.sin(math.radians(7.0)))
+
     def test_revolve_centroid(self):
         self.assertAlmostEqual(fk.revolve_volume_centroid([(0, 0), (1, 0), (0, 1)])[1], 0.25)     # cone
         V, c = fk.revolve_volume_centroid([(0, 0), (2, 0), (2, 1), (0, 1)])
@@ -333,6 +417,40 @@ class FusionBackendSmoke(unittest.TestCase):
 
     def test_runs_examples_with_fake_adsk(self):
         self._run(build_all.roots(True), datums=0)
+
+    def test_rotated_parts_get_as_built_joints(self):
+        # CR-E1-31a: a joint touching a ctx.part(rotate=) component is an as-built joint (placement kept)
+        import types
+        saved = {k: sys.modules.get(k) for k in ('adsk', 'adsk.core', 'adsk.fusion', 'backends.fusion_backend')}
+        adsk = types.ModuleType('adsk')
+        adsk.core, adsk.fusion = _Any(), _Any()
+        sys.modules.update({'adsk': adsk, 'adsk.core': adsk.core, 'adsk.fusion': adsk.fusion})
+        sys.modules.pop('backends.fusion_backend', None)
+        used = []
+
+        class Root(_Any):
+            def __getattr__(self, n):
+                if n in ('joints', 'asBuiltJoints'):
+                    used.append(n)
+                return _Any.__getattr__(self, n)
+        try:
+            from backends.fusion_backend import FusionBackend
+            be = FusionBackend()
+            be.root, be.warnings = Root(), []
+            comp = lambda i, rot: types.SimpleNamespace(id=i, rotate=rot, native=_Any(), to_local=lambda p: p)
+            for kind, rot in (('rigid', ('Y', 7.0)), ('rigid', None), ('revolute', ('Y', 7.0))):
+                used.clear()
+                j = types.SimpleNamespace(kind=kind, edge='E', origin=(0, 0, 0), axis='Y', limits=(-20, 20), a='A',
+                                          native=None)
+                be.joint(j, comp('A', rot), comp('B', None))
+                self.assertIsNotNone(j.native)
+                self.assertEqual(set(used), {'asBuiltJoints'} if rot else {'joints'}, (kind, rot, used))
+        finally:
+            for k, v in saved.items():
+                if v is None:
+                    sys.modules.pop(k, None)
+                else:
+                    sys.modules[k] = v
 
     def _run(self, roots, datums):
         import types

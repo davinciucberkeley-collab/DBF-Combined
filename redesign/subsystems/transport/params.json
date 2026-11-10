@@ -92,6 +92,44 @@
     "source": "D7 choice",
     "status": "PROPOSED",
     "note": "drop height printed on the fallback 0.50 m box; must stay <= CL-D7-FALLBACK-DROP-ALLOW"
+   },
+   "aft_gap_m": {
+    "value": 0.012,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "round 3 (C1 CR-C1-22): the aircraft sits 12 mm off the aft wall (foot pads, x 0.368) instead of centred; the four crushable feet take an aft-wall-first drop along their own stroke axis (CALC-D7-OFFAXIS). The slack moves to the nose side"
+   },
+   "nose_pad_t_m": {
+    "value": 0.0254,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "1 in PE plank on the front wall facing the pod nose (C1 CR-C1-22); front gap left >= 10 mm even if the pod nose moves 9.3 mm forward (C5 CR-C5-12)"
+   },
+   "nose_pad_size_m": {
+    "value": [
+     0.16,
+     0.2
+    ],
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "y by z, centred on the pod nose (y 0, z +0.05); 0.2 m tall so the nose still faces it after the 72 mm floor-drop sink; 12 mm relief hole for antenna B (pod y -0.046, z 0.0245)"
+   },
+   "labels": {
+    "value": [
+     "THIS SIDE UP",
+     "KEEP FLAT: NEVER STAND ON END",
+     "LIFT BY HANDLES",
+     "AIRCRAFT INSIDE: NO LOAD ON LID",
+     "PACKS TRAVEL IN THE BATTERY CAN, NEVER IN THE BOX",
+     "PROPS AND PITOT IN THE TRAY"
+    ],
+    "unit": "-",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "lid and both end walls; the end-first and lid-down drops are label-and-test only (CL-D7-END-DROP-ALLOW, CL-D7-LID-DROP-ALLOW)"
    }
   },
   "cradle": {
@@ -163,6 +201,23 @@
     "source": "team/C2/CHANGE-REQUESTS.md#CR-C2-05",
     "status": "PROPOSED",
     "note": "C2: foam pad >= 40 x 40 mm (CL-C2-CRADLE-AREA 1 080 mm2) under the spar line; smallest side of the saddle contact and of the pillar face"
+   },
+   "relief_x_m": {
+    "value": [
+     0.0573,
+     0.0663
+    ],
+    "unit": "m",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-12",
+    "status": "PROPOSED",
+    "note": "9 mm relief channel across the saddle top, centred on the ESC-lead groove in the lower surface (harness leg x 0.0593-0.0643, recessed 0.5 mm): the saddle never bears on the taped leads. Copy of an F2 station: re-check if the harness route moves"
+   },
+   "relief_depth_m": {
+    "value": 0.003,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "channel depth below the lower-surface contour (cut with the knife after hot-wiring)"
    }
   },
   "foam": {
@@ -208,14 +263,14 @@
   "tray": {
    "size_m": {
     "value": [
-     0.47,
+     0.46,
      0.3,
      0.06
     ],
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "x by y by z, on the floor between the cradles; 8 prop slots (4 flight + 4 spare) 285 x 30 x 40 mm on edge (8 x 30 + 9 x 8 = 312 mm along x); the last 150 mm along x holds a pitot-boom slot 220 x 25 x 25 mm (along y) with a 30 mm PE plug at the tip end, the field-pouch pocket 100 x 140 x 45 mm and the spare-cartridge pocket 100 x 120 x 45 mm (round 3, C5 CR-C5-06). Was 0.46 m"
+    "note": "x by y by z, on the floor between the cradles; 8 prop slots (4 flight + 4 spare) 285 x 30 x 40 mm on edge (8 x 30 + 9 x 8 = 312 mm along x); the last 150 mm along x holds the pitot-boom slot 220 x 25 x 25 mm (along y) with a 30 mm PE plug at the tip end and the field-pouch pocket 140 x 100 x 45 mm. Round 3: the landing spares (C5 CR-C5-06, 16 + 16 cartridges, 8 inserts, 2 shoes, about 0.75 L) do not fit a 0.54 L tray pocket and travel in the field tote (trn.field_bag)"
    },
    "x_lo_m": {
     "value": -0.11,
@@ -295,50 +350,47 @@
     "source": "D7 estimate",
     "status": "UNVERIFIED",
     "note": "EST, 3 mm laser-cut plywood strip 140 x 30 mm inside the wall behind each handle (600 kg/m3 -> 7.6 g): spreads the M3 nut load over 4 200 mm2 of Coroplast instead of a 12 mm washer"
-   },
-   "spare_cartridges_kg": {
-    "value": 0.015,
-    "unit": "kg",
-    "source": "D7 estimate",
-    "status": "UNVERIFIED",
-    "note": "EST, 32 pre-crushed XPS foot cartridges (16 per type, C5 CR-C5-06) of about 11 x 21 x 45 mm at 33 kg/m3, in a zip bag in the tray pocket"
    }
   },
   "setup_steps_s": {
    "value": [
     [
-     "open box: 2 cam straps, lift lid (hold-down pillars come with it)",
-     20
+     "open box: 2 cam straps, lift lid (pillars come with it); unfold the mat upwind, rubber up",
+     30
     ],
     [
-     "lift aircraft by the centre section, stand it on its feet on the mat",
-     15
+     "lift aircraft by the centre section, stand it on its four feet on the mat; glance at the four replace-mark grooves",
+     20
     ],
     [
      "take props, pitot boom and pouch from the tray",
      15
     ],
     [
-     "fit 4 props, CW/CCW colour-matched to the motor",
+     "fit 4 props, colour-matched to the motor (LH nut on the CW motors), 10 mm spanner",
      140
     ],
     [
-     "plug in the pitot boom, check the tubes",
+     "plug in the pitot boom, check the tubes, tip cover off",
      20
     ],
     [
-     "take a pack from the LiPo bag, seat it, strap it",
+     "TX on (before the pack, flight card)",
+     5
+    ],
+    [
+     "take a pack from the battery can, seat it at the trim mark, strap it",
      40
     ],
     [
-     "close the pack plug, FC boots",
+     "close the AS150U pack plug, FC boots",
      15
     ]
    ],
    "unit": "s",
    "source": "D7 estimate",
    "status": "UNVERIFIED",
-   "note": "time from the closed box to the start of the arm check (R-FIELD-SETUP); timed trial T-D7-SETUP replaces these"
+   "note": "time from the closed box to the start of the arm check (R-FIELD-SETUP). Round 3: mat unfold (C5 S1), foot groove glance (C5 S7) and TX-on-first (F5 CR-F5-09) added, +25 s. T-D7-SETUP replaces these"
   },
   "holddown": {
    "size_m": {
@@ -382,7 +434,7 @@
   },
   "_note_r2": "D7 round 2 (2026-11-09, CR-A1-35 / D-31): column 127 -> 120 mm so it cannot bottom within 10 mm of the floor in the 0.54 m box (envelope grew to 0.438 m); lid lining dropped (the pillars arrest the rebound, ASM-D7-REBOUND), +6 mm travel; M3 handles with plywood backing strips (C6 CR-C6-08); cradle pad and brace gap checked (C2 CR-C2-05, D3 CR-D3-11)",
   "field_bag": {
-   "_note": "Second carried item (round 3): LiPo bag with both packs plus the folding landing mat. Packs never in the box (ASM-D7-PACK-OUT); the mat is C5's (CR-C5-06, CR-I1-18) and is too heavy for the box under the 6 kg limit.",
+   "_note": "Second and third carried items (round 3). Item 2 is the battery can (GND-004 ammo can, E2) with both packs in their LiPo bags (GND-003). Item 3 is the folded landing mat (TRN-104, C5 spec) with the field tote (TRN-107: TX, landing spares, flight card). Packs never in the box (ASM-D7-PACK-OUT); the mat is too heavy for the box under the 6 kg limit.",
    "mat_size_m": {
     "value": [
      0.8,
@@ -413,7 +465,60 @@
     "source": "D7 estimate",
     "status": "UNVERIFIED",
     "note": "EST, fire-resistant LiPo bag sized for two 4S packs (E2)"
+   },
+   "landing_spares_kg": {
+    "value": 0.065,
+    "unit": "kg",
+    "source": "subsystems/landing/parts.csv",
+    "status": "UNVERIFIED",
+    "note": "GER-005 x4 4.42 g + GER-009 x4 4.34 g + GER-010 x16 0.62 g + GER-011 x16 0.53 g + GER-012 x2 5.42 g = 64 g (D5 EST), in a 1 L food box in the tote"
+   },
+   "tote_kg": {
+    "value": 0.15,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, soft tote about 0.45 x 0.35 x 0.25 m"
+   },
+   "tx_kg": {
+    "value": 0.35,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, RadioMaster Pocket with two 18650 cells (GND-001, F5); weigh it"
+   },
+   "can_kg": {
+    "value": 2.0,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, Harbor Freight 63750 .50 cal ammo can (GND-004, E2), seal vented; weigh it"
+   },
+   "mat_hinge_kg": {
+    "value": 0.05,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, cloth-tape hinge, edge tape and a webbing carry loop"
    }
-  }
+  },
+  "offaxis": {
+   "_note": "Off-axis impacts (C1 CR-C1-22). Floor drop is the design case (CALC-D7-STROKE). The others are checked for the drop height the current stack allows; nothing here grows the box.",
+   "foot_stroke_m": {
+    "value": 0.04,
+    "unit": "m",
+    "source": "team/C5/LANDING.md#3",
+    "status": "UNVERIFIED",
+    "note": "usable crush of one pre-crushed foot cartridge (42 mm, 2 mm pre-crush; C5 R3 table); T-C5-FOOT-RIG"
+   },
+   "blade_half_t_m": {
+    "value": 0.012,
+    "unit": "m",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "half the out-of-plane thickness of an APC 11 x 5.5MR at the hub (prop on, clocked spanwise; option CR-D7-15); measure a prop"
+   }
+  },
+  "_note_r3": "D7 round 3 (2026-11-09): off-axis drops (C1 CR-C1-22): aircraft 12 mm off the aft wall so the feet take an aft-wall drop, 1 in PE nose pad, labels for end-first and lid-down; strap ids L/R (A4 CR-A4-24); stowed prop edges; landing spares and mat in the field tote (C5 CR-C5-06, I1 CR-I1-18); set-up steps +25 s"
  }
 }

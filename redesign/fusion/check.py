@@ -16,10 +16,15 @@ Proves (exit 1 on any ERROR; --strict: on any WARN too):
             the aircraft frame at their transport position, so cradle-to-wing edges are touch-checked too; an edge
             marked "stowed": true (a flight part removed for transport, e.g. a prop in its tray slot) is not
   transport ground-item bodies (each wall, cradle, tray) must not overlap a flight part they have no edge with:
-            a cradle pressing a fin, or a part that does not fit inside the box (WARN; stowed parts exempt)
-  floating  no modelled group of parts is cut off from the rest (unless it attaches to a part not modelled yet)
-  keepout   no part's bounding box enters a registered keep-out (prop disc + clearance, hover ground plane)
-            unless the keep-out exempts it (ERROR; coarse: a diagonal part's bbox can over-report)
+            a cradle pressing a fin, or a part that does not fit inside the box (WARN; stowed parts exempt). A
+            transport edge may list "also_contacts": [ids] of parts bonded to its flight partner (the tape skin on
+            the core) that the ground item also bears on; each must share a load-bearing edge with that partner
+  floating  no modelled group of parts is cut off from the rest (unless it attaches to a part not modelled yet);
+            same rule as merge_check: "structural": false types (tie, label) do not hold a part, and a part
+            flagged "carried": true located only by them (label, harness bundle) is exempt
+  keepout   no body's bounding box enters a registered keep-out (prop disc + clearance, hover ground plane)
+            unless the keep-out exempts it (ERROR; coarse: a diagonal body's box can over-report). A prop keep-out
+            registered with the motor's rotate= tuple is the canted cylinder, tested exactly against each box
   envelope  (K09-L roots) every flight part lies inside the aircraft envelope from params.json (WARN: unit slips)
   datums    (K09-L roots) the datum sheet built and DATUMS.md is not stale against params.json (WARN)
   graph     everything merge_check.py checks (schema, dangling edges, joint stacks, wires, mass budget...)
@@ -116,11 +121,15 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
         add('ERROR', 'register', eid, 'CAD registers an edge that no interfaces.json declares')
 
     # floating: modelled structure split into groups that do not reach a not-yet-modelled part
+    # Same rule as merge_check (D-46): only load-bearing edges join groups, and "carried": true items (labels,
+    # harness bundles) located by a non-structural type only (tie, label) are exempt, not floating.
     modelled = {k: g.parts[k] for k in comps if k in g.parts and g.parts[k].get('flight', True)}
+    for p in merge_check.carried(g, dict(modelled)):
+        modelled.pop(p)
     groups = merge_check.clusters(g, parts=modelled)
     anchored = set()
     for e in g.edges.values():
-        if g.kind(e) in merge_check.STRUCTURAL:
+        if g.kind(e) in merge_check.STRUCTURAL and g.load_bearing(e):
             ends = (e.get('part_a'), e.get('part_b'))
             if any(x not in comps for x in ends):          # declared-not-modelled or not declared yet (dangling)
                 anchored.update(x for x in ends if x in comps)
@@ -129,11 +138,25 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
             add('ERROR', 'floating', ', '.join(sorted(grp)), 'modelled parts not connected to the main structure')
 
     # keepout: prop discs, hover ground (registered by the owning modules)
+    # Per-body world boxes, not one box per component: a canted plate's component box has corners where no body
+    # is (CR-E1-31b; tilted prop discs are exact cylinders, fusionkit.Keepout._hits_tilted).
+    def boxes(c):                          # per-body world boxes: a multi-leg bundle is not one big box
+        out = []
+        for sh in c.shapes:
+            pts = [c.to_world(p) for p in sh.points()]
+            out.append((sh, (tuple(min(p[i] for p in pts) for i in range(3)),
+                             tuple(max(p[i] for p in pts) for i in range(3)))))
+        return out
     flying = {pid: c for pid, c in comps.items() if (g.parts.get(pid) or {}).get('flight', True) and c.shapes}
+    fly_boxes = {pid: boxes(c) for pid, c in flying.items()}
     for ko in ctx.keepouts:
-        for pid, c in sorted(flying.items()):
-            if pid not in ko.exempt and ko.hits(c.bbox()):
-                add('ERROR', 'keepout', pid, 'bounding box enters %s (registered by %s)' % (ko.name, ko.sub))
+        for pid in sorted(flying):
+            if pid in ko.exempt:
+                continue
+            hit = [sh.name or sh.kind for sh, b in fly_boxes[pid] if ko.hits(b)]
+            if hit:
+                add('ERROR', 'keepout', pid, 'body box (%s) enters %s (registered by %s)' % (
+                    ', '.join(sorted(set(hit))[:3]), ko.name, ko.sub))
 
     # transport: ground-item bodies vs flight parts (cradles never press fins or tubes; everything fits the box)
     ground = {pid: c for pid, c in comps.items() if not (g.parts.get(pid) or {}).get('flight', True) and c.shapes}
@@ -145,13 +168,24 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
             partners.setdefault(b, set()).add(a)
             if e.get('stowed'):
                 stowed.update(x for x in (a, b) if (g.parts.get(x) or {}).get('flight', True))
-        def boxes(c):                      # per-body world boxes: a multi-leg bundle is not one big box
-            out = []
-            for sh in c.shapes:
-                pts = [c.to_world(p) for p in sh.points()]
-                out.append((sh, (tuple(min(p[i] for p in pts) for i in range(3)),
-                                 tuple(max(p[i] for p in pts) for i in range(3)))))
-            return out
+        # CR-D7-19: a transport edge may name "also_contacts": flight parts bonded on its flight partner that the
+        # ground item bears on too (a cradle on the tape skin over the core). Each must share a load-bearing edge
+        # with that partner, so the list cannot hide an unrelated part.
+        for e in g.edges.values():
+            extra = e.get('also_contacts') or []
+            if not extra:
+                continue
+            a, b = e.get('part_a'), e.get('part_b')
+            gnd = [x for x in (a, b) if not (g.parts.get(x) or {}).get('flight', True)]
+            fl = [x for x in (a, b) if x not in gnd]
+            for x in extra:
+                ok = gnd and fl and any(g.load_bearing(f) and {f.get('part_a'), f.get('part_b')} == {x, fl[0]}
+                                        for f in g.edges.values())
+                if not ok:
+                    add('ERROR', 'transport', e['id'], 'also_contacts %s: not bonded to %s by a load-bearing edge, '
+                        'or the edge has no ground item' % (x, fl[0] if fl else '?'))
+                    continue
+                partners.setdefault(gnd[0], set()).add(x)
         fboxes = {pid: boxes(c) for pid, c in flying.items() if pid not in stowed}
         for gid, gc in sorted(ground.items()):
             hits = {}

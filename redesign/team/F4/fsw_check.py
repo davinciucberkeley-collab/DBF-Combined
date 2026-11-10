@@ -44,10 +44,21 @@ kit.assumption("ASM-F4-DT-MIX", "Differential-thrust mixing in fixed-wing flight
                "AP_MotorsMulticopter::output_motor_mask and AP_MotorsMatrix::normalise_rpy_factors",
                value=0.25, unit="-", status="UNVERIFIED", cites=["SRC-F4-AP-SRC"])
 kit.assumption("ASM-F4-FW-PASSTHRU", "Fixed-wing motor output bypasses Q_M_SPIN_MAX",
-               "In fixed-wing flight the tailsitter writes throttle straight to the motor actuators, so the rpm cap "
-               "there is THR_MAX plus the yaw differential, not Q_M_SPIN_MAX", basis="tailsitter.cpp output() calls "
-               "output_motor_mask(throttle, mask, rudder_dt), no thrust linearisation seen; SITL S4 logs RCOU",
+               "In fixed-wing flight the tailsitter sends throttle to the motors through output_motor_mask(); whether that "
+               "path applies thrust_to_actuator() (Q_M_SPIN_MIN/MAX, Q_M_THST_EXPO) is not settled from source here. "
+               "F4 uses the higher of the two outputs (pass-through or linearised) for every speed and rpm cap; the "
+               "two agree within 0.01 at THR_MAX 70", basis="tailsitter.cpp output(), AP_MotorsMulticopter::"
+               "output_motor_mask(); SITL S4 logs RCOU at FW full throttle and settles which path the build uses",
                status="UNVERIFIED", cites=["SRC-F4-AP-SRC"])
+kit.assumption("ASM-F4-RPM-LIN", "Level-flight top speed scales with motor output",
+               "At the top of the level-speed range the 11x5.5 prop runs near its pitch speed, so rpm ~ output x pack "
+               "voltage and VMAX ~ rpm; B1's VMAX at 9 350 rpm (output 0.849 on 16.8 V) scales by output",
+               basis="team/B1/CHANGE-REQUESTS.md CR-B1-17 (7 950 rpm -> 21.8 m/s, 8 000 -> 21.9, 8 590 -> 23.6: "
+               "~linear); first full-throttle level log (H2) replaces it", status="UNVERIFIED")
+kit.assumption("ASM-F4-FW-RPM-REQ", "Fixed-wing rpm that holds level speed at 21.8 m/s",
+               "<= 7 950 rpm (B1 option b); 21.8 m/s = VD 27.2 / 1.25, the VH C1's VD assumes", basis=
+               "team/B1/CHANGE-REQUESTS.md CR-B1-17; team/C1/CHANGE-REQUESTS.md CR-C1-20 (recommended option)",
+               value=7950, unit="rpm", status="UNVERIFIED")
 kit.assumption("ASM-F4-THRUST-SQ", "Thrust varies with output squared",
                "Static thrust per motor T = k a^2, with k from the hover point (Q_M_THST_HOVER)",
                basis="rpm ~ duty x V and T ~ rpm^2; good to ~10 % between 0.2 and 0.85 output; the stand replaces it",
@@ -184,13 +195,23 @@ def dive(m, g, rho, b, c, e, ld, vc, th, sc, vmax, vd, va):
             "scaler_vd": max(smin, sc / vd)}
 
 
-@kit.calc("CALC-F4-VLEVEL", title="Highest level speed at THR_MAX against VH",
-          equation="V_lvl = VMAX(at the Q_M_SPIN_MAX rpm cap) x (THR_MAX/100) / Q_M_SPIN_MAX ; r = V_lvl / VH "
-                   "(VMAX is prop-pitch-limited, so it scales with rpm, and rpm with output)",
-          inputs={"vmax": "CL-B1-VMAX", "vh": "CL-C1-VH", "thr": "P:fsw.thr_max_pct", "spin": "P:fsw.spin_max"},
-          units={"thr": "%"}, assumes=["ASM-F4-FW-PASSTHRU"])
-def vlevel(vmax, vh, thr, spin):
-    return vmax * (thr / 100.0) / spin / vh
+@kit.calc("CALC-F4-VLEVEL", title="Highest level speed at THR_MAX against the VH that VD 27.2 m/s assumes",
+          equation="a_pass = THR_MAX/100 ; a_lin = s_min + (s_max - s_min) (sqrt((1-e)^2 + 4 e THR_MAX/100) - (1-e)) "
+                   "/ (2 e) ; a = max(a_pass, a_lin) ; V_lvl = VMAX(9 350 rpm) x a / a(9 350 rpm) ; "
+                   "VH_req = VD / 1.25 ; r = V_lvl / VH_req (fresh pack: worst case, voltage scaling 1)",
+          inputs={"vmax": "CL-B1-VMAX", "a_cap": "CL-B4-SPIN-MAX", "thr": "P:fsw.thr_max_pct",
+                  "smax": "P:fsw.spin_max", "smin": "P:fsw.spin_min", "e": "P:fsw.thst_expo",
+                  "vd": "P:requirements.vd_ms", "rpm_cap": "P:propulsion.rpm_max"},
+          units={"vmax": "m/s", "thr": "%", "vd": "m/s", "rpm_cap": "rpm"}, assumes=["ASM-F4-FW-PASSTHRU", "ASM-F4-RPM-LIN"],
+          cites=["SRC-F4-AP-SRC"])
+def vlevel(vmax, a_cap, thr, smax, smin, e, vd, rpm_cap):
+    t = thr / 100.0
+    a_lin = smin + (smax - smin) * (math.sqrt((1 - e) ** 2 + 4 * e * t) - (1 - e)) / (2 * e)
+    a = max(t, a_lin)
+    v = vmax * a / a_cap
+    vh_req = vd / 1.25
+    return {"v_lvl": v, "a_fw_thr": a, "a_pass": t, "a_lin": a_lin, "vh_req": vh_req, "ratio": v / vh_req,
+            "rpm_fw": rpm_cap * a / a_cap}
 
 
 @kit.calc("CALC-F4-XOVER", title="Hover rate-loop crossover per axis (rigid body, upper-bound thrust)",
@@ -333,9 +354,16 @@ kit.claim("CL-F4-SCALER-VD", "Surface demand scaling at VD (fraction of the crui
           calc="CALC-F4-DIVE", output="scaler_vd", limit=("<=", 1.0), parts=FC,
           how="Information: the speed scaler alone does not hold <= 1/3 at VD; the schedule rests on CL-F4-VDIVE-VA "
               "and CL-F4-VLEVEL-VH (CR-F4-12).")
-kit.claim("CL-F4-VLEVEL-VH", "Highest level speed at THR_MAX over VH", calc="CALC-F4-VLEVEL",
-          output="value", limit=("<=", 1.0), parts=FC,
-          how="FBWB full-throttle leg on the twin: logged airspeed stays below VH; TECS caps demand at AIRSPEED_MAX 18.")
+kit.claim("CL-F4-VLEVEL-VH", "Highest level speed at THR_MAX over the VH that VD 27.2 m/s assumes (21.8 m/s)",
+          calc="CALC-F4-VLEVEL", output="ratio", limit=("<=", 1.0), parts=FC,
+          how="FBWB full-throttle level leg, fresh pack, >= 60 m (H2): logged airspeed <= 21.8 m/s and ESC rpm "
+              "<= 7 950 (CR-B1-17 b, CR-C1-20); TECS caps demand at AIRSPEED_MAX 18 in normal flight.")
+kit.claim("CL-F4-VLEVEL", "Highest level speed at THR_MAX 70 %, fresh pack", calc="CALC-F4-VLEVEL", output="v_lvl",
+          unit="m/s", limit=(">=", "P:fsw.airspeed_max_ms"), parts=FC,
+          how="As CL-F4-VLEVEL-VH; the same log shows AIRSPEED_MAX 18 m/s is reachable.")
+kit.claim("CL-F4-FW-RPM-CAP", "Motor rpm at THR_MAX in fixed-wing flight, fresh pack", calc="CALC-F4-VLEVEL",
+          output="rpm_fw", unit="rpm", limit=("<=", "ASM-F4-FW-RPM-REQ"), parts=MOT,
+          how="ESC rpm telemetry in the FBWB full-throttle leg (H2) and on the stand at RCOU = a_fw_thr.")
 kit.claim("CL-F4-XOVER-RLL", "Hover copter-roll rate-loop crossover", calc="CALC-F4-XOVER", output="f_rll_hz", unit="Hz",
           limit=("<=", "ASM-F4-XOVER-MAX"), verifies=["R-VIBRATION"], parts=FC,
           how="Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.")
@@ -372,8 +400,8 @@ kit.claim("CL-F4-ARSPD-MAX-VA", "AIRSPEED_MAX against manoeuvre speed VA", calc=
           limit=("<=", "ASM-F4-VA-SCHED"), parts=FC, how="Read AIRSPEED_MAX after loading; C1 re-derives VA.")
 kit.claim("CL-F4-ARSPD-MAX-CAP", "AIRSPEED_MAX against the 22 m/s ARSPD_FBW_MAX ceiling (CR-C1-08)", calc="CALC-F4-ARSPD", output="vmax", unit="m/s",
           limit=("<=", "ASM-F4-ARSPD-CAP"), parts=FC, how="Read AIRSPEED_MAX after loading.")
-kit.claim("CL-F4-ARSPD-MAX-VMAX", "AIRSPEED_MAX reachable in level flight", calc="CALC-F4-ARSPD", output="vmax", unit="m/s",
-          limit=("<=", "CL-B1-VMAX"), parts=FC, how="FBWB full-stick leg on the cruise-power test.")
+kit.claim("CL-F4-ARSPD-MAX-VMAX", "AIRSPEED_MAX reachable in level flight at THR_MAX", calc="CALC-F4-ARSPD", output="vmax", unit="m/s",
+          limit=("<=", "CL-F4-VLEVEL"), parts=FC, how="FBWB full-stick leg on the cruise-power test.")
 kit.claim("CL-F4-SPIN-MAX", "Q-mode motor output cap", calc="CALC-F4-ACT-CAP", output="a_q",
           limit=("<=", "CL-B4-SPIN-MAX"), verifies=["R-ESC-CURRENT"], parts=MOT,
           how="Stand, fresh pack, QSTABILIZE full stick, props on: ESC telemetry rpm <= 9 350 (T-F4-STAND-RPM-CAP).")
@@ -418,7 +446,7 @@ kit.test("T-F4-STAND-RPM-CAP", "Fresh-pack full-stick rpm and pack current on th
 kit.test("T-F4-SITL-FAILSAFES", "RC, battery, geofence, GPS/EKF, transition-fail and e-stop in SITL",
          verifies=["CL-F4-BATT-CRT", "CL-F4-FENCE-ALT", "CL-F4-FENCE-RADIUS", "CL-F4-DESCENT"],
          procedure="SITL-PLAN.md S7-S13")
-kit.test("T-F4-SITL-TRANSITION", "Pitch-over 12/16/20 deg/s and back-transition 20/30/50 deg/s on a sagged pack",
+kit.test("T-F4-SITL-TRANSITION", "Pitch-over 12/16 deg/s (CR-B1-12) and back-transition 20/30/50 deg/s on a sagged pack",
          verifies=["CL-F4-CRUISE-TRANS", "CL-F4-FW-ACT-MAX"], procedure="SITL-PLAN.md S4-S5")
 kit.test("T-F4-DIVE", "FBWA full-down stick, idle, 20 s at >= 80 m on the twin then K09-L",
          verifies=["CL-F4-VDIVE-VA"], procedure="TUNING-PLAN.md step 6b")

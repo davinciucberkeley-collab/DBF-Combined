@@ -78,31 +78,49 @@ A4_BLOCKS = {"clamp": ("clamped",), "bond": ("bonded",), "retention": ("taped", 
 # (configuration control). Later changes by the owner show up in --compare as deviations until A4 re-baselines with
 # `python -I redesign/team/A4/interface_plan.py --rebaseline` after reviewing them. Edges parked in `edges_pending`
 # are part of the baseline. A4 overrides (target ids, flags) and additions are applied on top, below.
-BASELINE = HERE / "baseline-R3.json"
-BASELINED = ("fins", "landing", "pod", "propulsion", "transport")
+REVISION = "A4-R4"
+BASELINE = HERE / "baseline-R4.json"          # baseline-R3.json is kept as the record of the R3 freeze
+# A4-R4: every subsystem with parts has declared (2026-11-09 integration check); ground (F5) has not.
+BASELINED = ("wing", "fins", "pod", "landing", "propulsion", "power", "avionics", "harness", "mechanisms", "transport")
+PENDING_FILES = ("edges-pending.json",)       # F2 parks pending edges in a sibling file instead of "edges_pending"
 FIELD_JOINTS = {"E-PRP-05", "E-PRP-06", "E-PRP-07", "E-PRP-08", "E-POD-05", "E-AVN-05"}   # README field steps
 
 
+def pending_edges(folder, doc):
+    """(edge, waits_for) for the edges a subsystem parks: its "edges_pending" plus a sibling edges-pending.json."""
+    out = [(e, e.get("waits_for", [])) for e in doc.get("edges_pending", [])]
+    for name in PENDING_FILES:
+        f = Path(folder) / name
+        if f.exists():
+            side = json.loads(f.read_text(encoding="utf-8"))
+            wait = set(side.get("waiting_for", []))
+            out += [(e, sorted(wait & {e.get("part_a"), e.get("part_b")})) for e in side.get("edges", [])]
+    return out
+
+
 def rebaseline(root=REDESIGN / "subsystems"):
-    """Snapshot the declared parts, local connection types and edges (incl. edges_pending) of BASELINED."""
-    out = {"schema": "a4-baseline/1", "revision": "A4-R3", "taken_from": {}, "parts": [], "connection_types": [],
+    """Snapshot the declared parts, local connection types and edges (incl. pending edges) of BASELINED."""
+    out = {"schema": "a4-baseline/1", "revision": REVISION, "taken_from": {}, "parts": [], "connection_types": [],
            "edges": []}
     for sub in BASELINED:
         path = root / sub / "interfaces.json"
         doc = json.loads(path.read_text(encoding="utf-8"))
+        pend = pending_edges(path.parent, doc)
         out["taken_from"][sub] = {"file": "redesign/subsystems/%s/interfaces.json" % sub,
                                   "parts": len(doc.get("parts", [])), "edges": len(doc.get("edges", [])),
-                                  "edges_pending": len(doc.get("edges_pending", []))}
+                                  "edges_pending": len(pend)}
         for p in doc.get("parts", []):
             out["parts"].append({k: p[k] for k in ("id", "name", "subsystem", "make_or_buy", "electrical", "flight", "carried")
                                  if k in p})
         out["connection_types"] += doc.get("connection_types", [])
-        for e in doc.get("edges", []) + doc.get("edges_pending", []):
+        for e, waits in [(e, None) for e in doc.get("edges", [])] + pend:
             d = {k: e[k] for k in ("id", "part_a", "part_b", "via", "owner", "signal_only", "stowed", "field_joint")
                  if k in e}
+            if (e.get("wire") or {}).get("disconnect"):
+                d["field_disconnect"] = True
             d["carries"] = re.sub(r"\s+", " ", e.get("notes", ""))[:200]
-            if e in doc.get("edges_pending", []):
-                d["pending"] = e.get("waits_for", [])
+            if waits is not None:
+                d["pending"] = waits
             out["edges"].append(d)
     BASELINE.write_text(mc.dump_lines(out), encoding="utf-8")
     return out
@@ -133,6 +151,8 @@ def build_parts():
     P = []
 
     def part(pid, name, sub, mob, elec=None, flight=True, note="", carried=False):
+        if sub in BASELINED:              # A4-R4: the declaration replaces the R2/R3 plan row
+            return
         d = {"id": pid, "name": name, "subsystem": sub, "make_or_buy": mob}
         if elec:
             d["electrical"] = elec
@@ -213,6 +233,15 @@ RETIRED = {
     "TRN-004": "hold-down strap replaced by lid pillars TRN-004-L/R (CR-D7-03)",
     "TRN-006-A": "rename to TRN-006-L (side family, CR-A4-24)", "TRN-006-B": "rename to TRN-006-R (CR-A4-24)",
 }
+# Edge ids retired (never reuse). A4-R4: D6-R1 bonds the inter-panel rod in the horns, not in the panels.
+RETIRED_EDGES = {
+    "E-MEC-13": "link bonded in the horns E-MEC-19…22 (D6-R1)", "E-MEC-14": "as E-MEC-13",
+    "E-MEC-15": "as E-MEC-13", "E-MEC-16": "as E-MEC-13",
+}
+# A4 changes applied on top of a baselined declaration (the owner changes its file; --compare shows it until then).
+# A4-R4: CR-F1-18 puts the 5 A fuse PWR-007 in the UBEC feed as its own part, so E-HRN-21 ends at the fuse.
+OVERRIDE = {"E-HRN-21": {"part_b": "PWR-007",
+                         "carries": "UBEC feed, bus bars -> fuse holder pigtail 20 AWG (CR-F1-18); E-HRN-33 continues to the UBEC"}}
 DESIGNER = None   # filled from SUBS below
 
 
@@ -227,8 +256,14 @@ def _p(key):
 def build_edges():
     E = []
 
+    base_ids = {e["id"] for e in baseline()["edges"]}
+
     def edge(eid, a, b, via, owner, by, carries, oi=None, field=False, motion=None, signal_only=False,
              field_joint=False, stowed=False, declared=False, pending=None):
+        # A4-R4: a plan row of a baselined owner is dropped when the declaration holds that id or D6/D3 retired it;
+        # plan rows the owner has not declared (A4 additions, e.g. the E3 thermal paths) stay as requirements.
+        if not declared and owner in BASELINED and (eid in base_ids or eid in RETIRED_EDGES):
+            return
         d = {"id": eid, "part_a": a, "part_b": b, "via": via, "owner": owner, "by": by, "carries": carries}
         for k, v in (("signal_only", signal_only), ("stowed", stowed), ("field_disconnect", field),
                      ("field_joint", field_joint or eid in FIELD_JOINTS), ("declared", declared)):
@@ -252,10 +287,17 @@ def build_edges():
              "E-GER-01": "OI-05", "E-GER-02": "OI-05", "E-GER-03": "OI-05", "E-GER-04": "OI-05",
              "E-AVN-05": "OI-12", "E-POD-07": "OI-12"}
     for e in baseline()["edges"]:
+        e = dict(e, **OVERRIDE.get(e["id"], {}))
         edge(e["id"], RENAME.get(e["part_a"], e["part_a"]), RENAME.get(e["part_b"], e["part_b"]), e["via"], e["owner"],
              SUBS[e["owner"]][1], e.get("carries", ""), oi=oi_of.get(e["id"]), signal_only=e.get("signal_only", False),
-             field_joint=e.get("field_joint", False), stowed=e.get("stowed", False), declared=True,
-             pending=e.get("pending"))
+             field=e.get("field_disconnect", False), field_joint=e.get("field_joint", False),
+             stowed=e.get("stowed", False), declared=True, pending=e.get("pending"))
+    # A4-R4 additions from CR-F1-18 (F2 declares them): fuse -> UBEC, and the four ESC cap leads
+    edge("E-HRN-33", "PWR-007", "PWR-005", "CT-SOLDER-DC", "harness", "F1 · F2",
+         "fuse holder pigtail -> UBEC input, 20 AWG; fuse 5 A in the wire block (CR-F1-06, CR-F1-18)")
+    for k, st in enumerate(STATIONS, 34):
+        edge(n("HRN", k), f"PRP-002-{st}", f"PWR-008-{st}", "CT-SOLDER-DC", "harness", "F1 · F2",
+             "680 µF 25 V cap leads ≤ 20 mm at the ESC power pads, cap x 0.127…0.147 on the fin face (CR-F1-18, CR-F1-22)")
 
     hinge_x = _p("wing.chord_m") * (1 - _p("wing.elevon.chord_frac"))
     elevon = {"axis": "Y", "range_deg": [-25, 25], "source": "P:wing.elevon.deflection_deg"}
@@ -409,7 +451,7 @@ def library():
     """Shared library + the owners' local types in the baseline + local types of plan-only subsystems."""
     with open(REDESIGN / "interfaces" / "connection_types.json", encoding="utf-8") as fh:
         lib = json.load(fh)["connection_types"]
-    out = {c["id"]: c for c in baseline()["connection_types"] + PLAN_LOCAL_CTS}
+    out = {c["id"]: c for c in PLAN_LOCAL_CTS + baseline()["connection_types"]}   # a declared local type wins
     out.update({c["id"]: c for c in lib})
     return out
 
@@ -430,7 +472,7 @@ def build_plan():
         blocks = sorted(k for k in c6.get(e["id"], {}) if k != "field_joint")
         if blocks:
             e["c6"] = blocks
-    return {"schema": "a4-interface-plan/1", "revision": "A4-R3", "configuration": "K09-L",
+    return {"schema": "a4-interface-plan/1", "revision": REVISION, "configuration": "K09-L",
             "generated_by": "redesign/team/A4/interface_plan.py",
             "baseline": {k: v for k, v in baseline()["taken_from"].items()},
             "subsystems": {k: {"prefix": v[0], "designer": v[1]} for k, v in SUBS.items()},
@@ -478,7 +520,7 @@ def check_plan(plan):
     errors += id_rule(plan)
     touched = {x for e in plan["edges"] for x in (e["part_a"], e["part_b"])}
     for p in plan["parts"]:
-        if p["id"] not in touched:
+        if p["id"] not in touched and p.get("flight", True):    # loose kit items (spares, tools) need no joint
             errors.append(("ERROR", "no-edge", p["id"], "part has no interface"))
     errors += load_path(plan, g) + power_path(plan, g)
     if sum(1 for e in plan["edges"] if e.get("field_disconnect")) != 1:
@@ -633,7 +675,7 @@ def render(plan):
     cts = library()
     m = metrics(plan)
     L = [BEGIN, "", "Generated by `python -I redesign/team/A4/interface_plan.py` from the plan in that script and "
-         "`baseline-R3.json`. Do not edit by hand.", ""]
+         "`%s` (revision %s). Do not edit by hand." % (BASELINE.name, REVISION), ""]
     L += ["| Parts (flight) | Interfaces | Cross-subsystem | Declared (pending) | Mech · elec · kin · thermal | Connected (load path) | Powered (power wires) | Field disconnects (field joints) | Stowed | Id-rule breaches | Plan errors | Schema blocks owed | Masses owed |",
           "|---|---|---|---|---|---|---|---|---|---|---|---|---|",
           "| %d (%d) | %d | %d | %d (%d) | %d · %d · %d · %d | %.0f %% | %.0f %% | %d (%d) | %d | %d | %d | %d | %d |" % (
@@ -656,18 +698,18 @@ def render(plan):
         L.append("| **%s** | " % SUBS[a][0] + " | ".join(str(cnt.get((a, b), "")) if cnt.get((a, b)) else "·" for b in keys) + " |")
     L += [""]
     # part ids
-    L += ["## Part ids reserved", "", "One node per physical instance, id `<PREFIX>-NNN-<UR|UL|LR|LL|L|R|C>[I|O]`; all instances of a part are one `parts.csv` line with `mass_g` per unit (CR-A3-09). Stations `UR UL LR LL` = upper/lower, right/left (`params.json#propulsion.stations.ids`); a half-fin takes the station it carries; `C` = centre; `I`/`O` = inboard/outboard face of the same part at one station (A4-R3). `NNN` 001–899; `9xx` is reserved for `fusion/skeleton/` (CR-A5-04). *Declared* = taken from the owner's `interfaces.json` into `baseline-R3.json`.", "",
+    L += ["## Part ids reserved", "", "One node per physical instance, id `<PREFIX>-NNN-<UR|UL|LR|LL|L|R|C>[I|O]`; all instances of a part are one `parts.csv` line with `mass_g` per unit (CR-A3-09). Stations `UR UL LR LL` = upper/lower, right/left (`params.json#propulsion.stations.ids`); a half-fin takes the station it carries; `C` = centre; `I`/`O` = inboard/outboard face of the same part at one station (A4-R3). `NNN` 001–899; `9xx` is reserved for `fusion/skeleton/` (CR-A5-04). *Declared* = taken from the owner's `interfaces.json` into `%s`." % BASELINE.name, "",
           "| Subsystem | Designer | Prefix | Parts | Declared | Ids |", "|---|---|---|---|---|---|"]
     for k in keys:
         ids = [p["id"] for p in plan["parts"] if p["subsystem"] == k]
         nd = sum(1 for p in plan["parts"] if p["subsystem"] == k and p.get("declared"))
         L.append("| `%s` | %s | `%s` | %d | %d | %s |" % (k, SUBS[k][1], SUBS[k][0], len(ids), nd, " ".join(_pp(x) for x in ids)))
     L += ["| `flight-software` | F4 | `FSW` | 0 | — | no parts: data interfaces below |", "",
-          "Retired ids (never reuse): " + "; ".join("`%s` %s" % kv for kv in RETIRED.items()) + ".", ""]
+          "Retired ids (never reuse): " + "; ".join("`%s` %s" % kv for kv in list(RETIRED.items()) + list(RETIRED_EDGES.items())) + ".", ""]
     # register
     L += ["## Interface register", "",
           "Declared by the owner in `subsystems/<owner>/interfaces.json`; each subsystem in *Ack* lists the id under `acknowledges`. "
-          "*By* = designs · sizes. *Decl.* = in the R3 baseline (`yes`), parked in the owner's `edges_pending` (`pending`), or still to declare (`—`). "
+          "*By* = designs · sizes. *Decl.* = in the baseline (`yes`), parked in the owner's `edges_pending` or `edges-pending.json` (`pending`), or still to declare (`—`). "
           "*C6* = blocks C6 has written in `team/C6/joint_stacks.json` for the owner to copy. *Must carry* is in addition to the per-method block above (for declared edges: the owner's notes, shortened). `OI-nn` = open issue below.", ""]
     for k in keys:
         rows = sorted((e for e in plan["edges"] if e["owner"] == k), key=lambda e: e["id"])
@@ -763,8 +805,8 @@ def compare(plan, root=REDESIGN / "subsystems"):
             doc = json.loads(Path(path).read_text(encoding="utf-8"))
         except ValueError:
             continue
-        for e in doc.get("edges_pending", []):
-            pending[e.get("id")] = (doc.get("subsystem"), e.get("waits_for", []), e)
+        for e, waits in pending_edges(Path(path).parent, doc):
+            pending[e.get("id")] = (doc.get("subsystem"), waits, e)
     rows = []                              # (severity, code, item, detail)
     inv = {v: k for k, v in RENAME.items()}
     for pid, p in parts.items():

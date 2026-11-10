@@ -1,0 +1,53 @@
+{
+ "_note": "Propulsion subsystem-local dimensions (owner E1). Shared numbers (prop diameter, stations, cant, motor OD, ESC pad, motor face) are read from params/params.json and subsystems/fins/params.json, never copied here. Envelopes of bought parts: every value UNVERIFIED until T-E1-MOTOR-RM measures the first motor, adapter, ESC and prop. Read by fusion/propulsion.py and make_propulsion.py.",
+ "propulsion_detail": {
+  "motor": {
+   "body_len_m": {"value": 0.0265, "unit": "m", "source": "ASM-E1-STACK (SRC-E1-X3108S-HIMODEL)", "status": "UNVERIFIED", "note": "mount face to bell top; params.json#propulsion.motor_length_m 0.025 is the can only (CR-E1-29)"},
+   "base_d_m": {"value": 0.030, "unit": "m", "source": "E1 EST (31 mm stator class)", "status": "UNVERIFIED", "note": "stationary base boss that bears on the canted plate; must cover the 16 x 19 mm screw cross with 5.5 mm heads clear of the bell (measure)"},
+   "base_h_m": {"value": 0.0030, "unit": "m", "source": "E1 EST", "status": "UNVERIFIED", "note": "base boss height; the bell starts 0.5 mm above it (running gap)"},
+   "bell_gap_m": {"value": 0.0005, "unit": "m", "source": "E1 EST", "status": "UNVERIFIED", "note": "axial running gap base to bell"},
+   "shaft_d_m": {"value": 0.004, "unit": "m", "source": "SRC-E1-X3108S-HIMODEL", "status": "UNVERIFIED"},
+   "shaft_ahead_m": {"value": 0.0065, "unit": "m", "source": "SRC-E1-X3108S-HIMODEL", "status": "UNVERIFIED", "note": "overall shaft 33 mm - body 26.5 mm; sits in the adapter's 8.5 mm pilot bore"},
+   "circlip_d_m": {"value": 0.007, "unit": "m", "source": "E1 EST (DIN 6799 for a 4 mm shaft)", "status": "UNVERIFIED", "note": "rear shaft end and E-clip inside the plate's 10 mm square opening (fin_detail.mount.shaft_hole_d_m)"},
+   "circlip_h_m": {"value": 0.0012, "unit": "m", "source": "E1 EST", "status": "UNVERIFIED", "note": "behind the base face; the plate is 4.5 mm, so the clip never touches the tube"},
+   "lead_exit_r_m": {"value": 0.023, "unit": "m", "source": "team/F2 wire table W-PH-<st> motor end (y 0.341 at UR)", "status": "UNVERIFIED", "note": "three factory phase leads leave the base outboard (toward the ESC face of the fin); measure lead length (CR-E1-18)"},
+   "lead_exit_w_m": {"value": 0.008, "unit": "m", "source": "E1 EST (3 x 16 AWG side by side)", "status": "UNVERIFIED"},
+   "lead_exit_h_m": {"value": 0.003, "unit": "m", "source": "E1 EST", "status": "UNVERIFIED"}
+  },
+  "adapter": {
+   "base_d_m": {"value": 0.018, "unit": "m", "source": "E1 EST (4 x M3 on a 12 mm circle + 3 mm wall)", "status": "UNVERIFIED"},
+   "base_t_m": {"value": 0.00635, "unit": "m", "source": "ASM-E1-STACK (SRC-E1-SPCNC-ADAPTER)", "status": "UNVERIFIED"},
+   "post_d_m": {"value": 0.006, "unit": "m", "source": "SRC-E1-SPCNC-ADAPTER (M6x1)", "status": "CHECKED"},
+   "post_len_m": {"value": 0.0152, "unit": "m", "source": "ASM-E1-STACK (SRC-E1-SPCNC-ADAPTER)", "status": "UNVERIFIED", "note": "above the base; with the 8.89 mm hub and a 1.0 mm washer the ISO 4032 nut (5.2 mm) has 5.31 mm of thread (CL-E1-NUT-ENGAGE)"},
+   "pilot_d_m": {"value": 0.004, "unit": "m", "source": "SRC-E1-SPCNC-ADAPTER", "status": "UNVERIFIED"},
+   "pilot_depth_m": {"value": 0.0085, "unit": "m", "source": "SRC-E1-SPCNC-ADAPTER", "status": "UNVERIFIED"},
+   "screw_circle_d_m": {"value": 0.012, "unit": "m", "source": "SRC-E1-SPCNC-ADAPTER", "status": "UNVERIFIED", "note": "4 x M3x4 into the bell top"},
+   "washer_od_m": {"value": 0.012, "unit": "m", "source": "DIN 988 6 x 12 x 1.0 (supplied with the set)", "status": "UNVERIFIED"},
+   "washer_t_m": {"value": 0.0010, "unit": "m", "source": "ASM-E1-STACK", "status": "UNVERIFIED", "note": "a 1.6 mm ISO 7089 washer leaves the nut 0.5 mm short of the post tip: do not substitute"},
+   "nut_af_m": {"value": 0.010, "unit": "m", "source": "ISO 4032 M6", "status": "CHECKED"},
+   "nut_h_m": {"value": 0.0052, "unit": "m", "source": "ISO 4032 M6", "status": "CHECKED"}
+  },
+  "prop": {
+   "hub_d_m": {"value": 0.0165, "unit": "m", "source": "SRC-E1-APC-PAGES (0.65 in)", "status": "CHECKED"},
+   "hub_t_m": {"value": 0.00889, "unit": "m", "source": "ASM-E1-STACK (SRC-E1-APC-PAGES, 0.35 in)", "status": "CHECKED"},
+   "bore_d_m": {"value": 0.006, "unit": "m", "source": "APC LPAR06E ring in the 1/4 in bore", "status": "PROPOSED"},
+   "pitch_m": {"value": 0.1397, "unit": "m", "source": "APC 11x5.5MR (5.5 in)", "status": "CHECKED", "note": "sets the blade angle beta = atan(p / (2 pi r)) of the envelope only"},
+   "blade_r_frac": {"value": [0.07, 0.25, 0.45, 0.70, 0.90, 1.0], "unit": "-", "source": "E1 EST (APC MR planform from photographs)", "status": "UNVERIFIED"},
+   "blade_chord_m": {"value": [0.014, 0.024, 0.023, 0.018, 0.012, 0.007], "unit": "m", "source": "E1 EST", "status": "UNVERIFIED", "note": "envelope for the CAD and the transport tray, not for aero (B4 uses the PER3 files)"},
+   "blade_t_frac": {"value": [0.20, 0.12, 0.10, 0.08, 0.07, 0.07], "unit": "-", "source": "E1 EST", "status": "UNVERIFIED", "note": "flat-plate section thickness / chord (min 0.6 mm)"}
+  },
+  "esc": {
+   "_note": "ESC envelope = E3's ASM-E3-ESC (45 x 20 x 6 mm in heat-shrink); lies flat on the outboard face of the ASA pad FIN-007, long side along x, FET side out, centred on the pad",
+   "size_m": {"value": [0.045, 0.006, 0.020], "unit": "m", "source": "ASM-E3-ESC", "status": "UNVERIFIED", "note": "x along the fin (slipstream), y away from the pad, z across"}
+  },
+  "spares": {
+   "_note": "bought, not flown (not in the mass roll-up); I1 orders them with the flight set",
+   "motor": {"value": 1, "unit": "-", "source": "E1", "status": "PROPOSED"},
+   "esc": {"value": 4, "unit": "-", "source": "E1 (second 4-pack)", "status": "PROPOSED"},
+   "prop_11x55": {"value": 4, "unit": "-", "source": "E1 (2 MR + 2 MRP)", "status": "PROPOSED"},
+   "prop_11x45_stand": {"value": 4, "unit": "-", "source": "CR-E1-12 (stand A/B, 2 MR + 2 MRP)", "status": "PROPOSED"},
+   "motor_screw": {"value": 4, "unit": "-", "source": "E1", "status": "PROPOSED"},
+   "prop_nut_set": {"value": 1, "unit": "-", "source": "E1 (adapter box nuts + washers)", "status": "PROPOSED"}
+  }
+ }
+}

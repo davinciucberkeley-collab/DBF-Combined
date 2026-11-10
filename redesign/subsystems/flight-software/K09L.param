@@ -1,4 +1,4 @@
-# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R3, 2026-11-09)
+# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R4, 2026-11-09)
 # Status: PROPOSED. Not loaded on hardware, not run in SITL (SITL not installed): UNVERIFIED.
 # Firmware: ArduPlane 4.7.x stable, target CoreWingF405WingV2 (D-33; bdshot on outputs 1-4, no Lua on this board).
 # Parameter names checked 2026-11-09 against ArduPilot master source and the Plane parameter index
@@ -64,10 +64,14 @@ Q_M_BAT_CURR_TC,1
 Q_M_BAT_VOLT_MAX,16.8
 # 3.30 V/cell
 Q_M_BAT_VOLT_MIN,13.2
+# lowest running output 0.15 (default, stated: CALC-F4-VLEVEL input); the stand sets the value that spins reliably (TUNING-PLAN step 2)
+Q_M_SPIN_MIN,0.15
+# thrust-curve expo 0.65 (default, stated: CALC-F4-VLEVEL input); replace from the stand thrust-vs-output curve
+Q_M_THST_EXPO,0.65
 # hover throttle start value (E1: duty 0.49 on the 11x5.5MR); learnt in flight (Q_M_HOVER_LEARN 2, default)
 Q_M_THST_HOVER,0.49
-# fixed-wing throttle ceiling 75 %: FW motor output bypasses Q_M_SPIN_MAX; 0.75 + 0.0875 yaw = 0.84 (CL-F4-FW-ACT-MAX); level speed then <= 0.89 VH (CL-F4-VLEVEL-VH); never sustained full throttle (CR-E3-05)
-THR_MAX,75
+# fixed-wing throttle ceiling 70 % (was 75): motor output <= 0.704 whether FW throttle passes straight through or via the thrust curve below (ASM-F4-FW-PASSTHRU) = 7 750 rpm fresh pack <= 7 950 (CR-B1-17 b); level speed <= 21.3 m/s <= 21.8 = VD 27.2 / 1.25 (CL-F4-VLEVEL-VH, CR-C1-20); with full yaw differential 0.70 + 0.0875 = 0.79 <= 0.849 (CL-F4-FW-ACT-MAX); never sustained full throttle (CR-E3-05)
+THR_MAX,70
 # fixed-wing throttle floor 10 %: keeps differential-thrust yaw damping when TECS idles (CR-B3-15: optional damping)
 THR_MIN,10
 
@@ -80,19 +84,19 @@ Q_A_RATE_R_MAX,120
 Q_A_RATE_P_MAX,120
 # copter yaw = rotation about the aircraft x axis; slowest axis (prop torque + 7 deg cant)
 Q_A_RATE_Y_MAX,90
-# starting rate gains (PROPOSED). Crossover <= 5 Hz (CR-C2-03): copter roll (L/R pairs, arm 0.32 m, Izz from A3) 1.1 Hz at these gains (CL-F4-XOVER-RLL); P ceiling 0.38
+# starting rate gains (PROPOSED). Crossover <= 4.5 Hz (CR-B3-19, tighter than CR-C2-03's 5): copter roll (L/R pairs, arm 0.32 m, Izz from A3) 1.1 Hz at these gains (CL-F4-XOVER-RLL); P ceiling 0.34
 Q_A_RAT_RLL_P,0.08
 Q_A_RAT_RLL_I,0.08
 Q_A_RAT_RLL_D,0.002
 # D-term filter 32 Hz (default 20): >= 2 x the 14.9 Hz top of the wing torsion band (CL-F4-FILT-SEP)
 Q_A_RAT_RLL_FLTD,32
-# copter pitch = upper/lower pairs, arm 0.19 m, the stiffest axis, 2.6 Hz at these gains (CL-F4-XOVER-PIT); P ceiling 0.15 with D 0.002
+# copter pitch = upper/lower pairs, arm 0.19 m, the stiffest axis, 2.6 Hz at these gains (CL-F4-XOVER-PIT, ceiling 4.5 Hz); P ceiling 0.14 with D 0.002
 Q_A_RAT_PIT_P,0.08
 Q_A_RAT_PIT_I,0.08
 Q_A_RAT_PIT_D,0.002
 # D-term filter 32 Hz, as roll
 Q_A_RAT_PIT_FLTD,32
-# copter yaw: prop torque + 7 deg cant (needs CR-F4-11 fixed), 1.0 Hz at these gains (CL-F4-XOVER-YAW)
+# copter yaw: prop torque + 7 deg cant (needs CR-F4-11 fixed), 1.0 Hz at these gains (CL-F4-XOVER-YAW, ceiling 2.4 Hz: P+I only, no D, CR-B3-19); P ceiling 0.94
 Q_A_RAT_YAW_P,0.40
 Q_A_RAT_YAW_I,0.04
 # auto/QRTL descent 1.2 m/s: vortex-ring onset 1.88 m/s (CL-B4-DESCENT); B4 asks <= 1.5 (CR-B4-06b). Units m/s
@@ -117,7 +121,7 @@ Q_WVANE_LAND,3
 Q_WVANE_TAKEOFF,3
 
 # ---------------------------------------------------------------- 5 Transition (TRANSITION section of SPEC.md)
-# forward pitch-over rate 12 deg/s: peak thrust 0.76 on a sagged pack at sag 0.72 (CR-B1-12); kept until B1 re-checks at sag 0.76 (D-35); 20 only on fresh packs after logs
+# forward pitch-over rate 12 deg/s: peak thrust fraction 0.70 at sag 0.76 (CR-B1-12 rev 3; 0.77 at 15, 0.88 at 20); at most 15 after the cold-pack stand run confirms sag >= 0.76 and step-7 logs show peak output <= 0.7
 Q_TAILSIT_RAT_FW,12
 # back-transition pitch-up rate 30 deg/s (default 50); SITL S5 sweeps 20/30/50 (CR-B3-15: motors hold 1.03 N*m nose-up at 8-11 m/s)
 Q_TAILSIT_RAT_VT,30
@@ -211,14 +215,14 @@ BATT_VOLT_MULT,11.05
 BATT_AMP_PERVLT,64
 # nameplate 6 500 mAh; lower to the measured capacity (T-E2-CAPACITY)
 BATT_CAPACITY,6500
-# low at 2 700 mAh remaining -> RTL (CL-E2-BATT-LOW-MAH)
-BATT_LOW_MAH,2700
+# low at 2 600 mAh remaining -> RTL (CR-E2-20, CL-E2-BATT-LOW-MAH: landing allowance 1 265 mAh; was 2 700 provisional)
+BATT_LOW_MAH,2600
 # critical at 1 300 mAh = 20 % reserve -> QLAND
 BATT_CRT_MAH,1300
 # voltage backups 3.50 / 3.40 V per cell
 BATT_LOW_VOLT,14.0
 BATT_CRT_VOLT,13.6
-# sag-compensated voltage for the failsafe: a transition sag must not trigger it
+# sag-compensated voltage for the failsafe: a transition sag (worst bus 11.87 V at full throttle, CL-E2-V-BUS-WORST) must not trigger it (CR-E2-20)
 BATT_FS_VOLTSRC,1
 # low action 1 = RTL (FW home, then VTOL landing via Q_RTL_MODE 1)
 BATT_FS_LOW_ACT,1

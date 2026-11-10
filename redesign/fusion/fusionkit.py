@@ -355,9 +355,13 @@ class Keepout:
         self.r, self.half, self.at, self.side = r, half, at, side
 
     def hits(self, box):
-        """True if the axis-aligned box ((lo), (hi)) enters this keep-out volume (coarse: whole bbox)."""
-        k = AX[self.axis]
+        """True if the axis-aligned box ((lo), (hi)) enters this keep-out volume (coarse: whole bbox).
+        A cylinder axis may be 'X'|'Y'|'Z' or a 3-vector (a canted prop disc, CR-E1-31b): the tilted case is solved
+        exactly as a convex feasibility problem (alternating projections between the box and the cylinder)."""
         lo, hi = box
+        if self.kind == 'cylinder' and not isinstance(self.axis, str):
+            return self._hits_tilted(lo, hi)
+        k = AX[self.axis]
         if self.kind == 'halfspace':
             return hi[k] > self.at + 1e-9 if self.side > 0 else lo[k] < self.at - 1e-9
         c = self.center
@@ -370,6 +374,38 @@ class Keepout:
             q = min(max(c[i], lo[i]), hi[i])          # closest point of the box to the axis, per coordinate
             d2 += (q - c[i]) ** 2
         return d2 < self.r ** 2 - 1e-12
+
+    def _hits_tilted(self, lo, hi, iters=2000, shrink=1e-6):
+        """Box vs finite cylinder of unit axis n: both are convex with exact projections (box: clamp; cylinder:
+        clamp the axial coordinate to +-half and the radial vector to r), so alternating projections converge to a
+        common point when they intersect and to the closest pair when they do not. The cylinder is shrunk by 1 um
+        so that touching is not a hit, as in the axis-aligned test."""
+        n = [float(v) for v in self.axis]
+        L = math.sqrt(sum(v * v for v in n))
+        n = [v / L for v in n]
+        c, r, half = self.center, self.r - shrink, self.half - shrink
+
+        def clamp_cyl(p):
+            d = [p[i] - c[i] for i in range(3)]
+            t = sum(d[i] * n[i] for i in range(3))
+            rad = [d[i] - t * n[i] for i in range(3)]
+            rr = math.sqrt(sum(v * v for v in rad))
+            t = min(max(t, -half), half)
+            s = 1.0 if rr <= r else r / rr
+            return tuple(c[i] + t * n[i] + s * rad[i] for i in range(3))
+
+        p = tuple(min(max(c[i], lo[i]), hi[i]) for i in range(3))
+        last = None
+        for _ in range(iters):
+            q = clamp_cyl(p)
+            p = tuple(min(max(q[i], lo[i]), hi[i]) for i in range(3))
+            gap = math.sqrt(sum((p[i] - q[i]) ** 2 for i in range(3)))
+            if gap < 1e-9:
+                return True
+            if last is not None and last - gap < 1e-13:
+                return False               # stalled at a positive gap: disjoint
+            last = gap
+        return False
 
 
 # ----------------------------------------------------------------------------- backend interface

@@ -2,6 +2,25 @@
 
 Numbers are from `team/E1/propulsion.py` (claims `CL-E1-…`) at the 2.6 kg gate. All of them are `UNVERIFIED` until `T-E1-STAND` runs.
 
+## Revision 4 (2026-11-09): propulsion CAD (`subsystems/propulsion/`, `MODELLED`)
+
+Numbers from `CALC-E1-CAD-STACK` / `CALC-E1-ADAPTER-STRIP` in `propulsion.py` and the CAD module
+`subsystems/propulsion/fusion/propulsion.py` (stations built on D3's canted plates).
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-E1-22 (rev) | D3, A1 | **Supersedes the 0.002 m in CR-E1-22.** D3: `fin_detail.mount.face_ahead_m` 0.001 → **0.0025 m**. A1: then `propulsion.stations.x_prop_plane_m` −0.0082 → **−0.0077 m** (source `CL-E1-CAD-HUB-X` after D3's change) | With the 7° cant the hub sits 37.3 × cos 7° = 37.0 mm ahead of the face along x: gap to the collar front = face_ahead + 37.0 mm ≥ 0.14 D = 39.1 mm needs 2.1 mm. Today `CL-E1-CAD-PROP-GAP` **0.97 FAIL** (38.0 mm). The plate corner moves to x 0.0269, still 1.6 mm outside `KO-PROP` |
+| CR-E1-29 | A1, A5 | (a) `propulsion.stations.x_prop_plane_m`: the modelled hub is at **x −0.0062** (`CL-E1-CAD-HUB-X`), 2.0 mm aft of `DP-PROP` (`CL-E1-CAD-HUB-VS-DATUM`); the keep-outs are registered on the modelled hub. Carry −0.0077 with CR-E1-22. (b) `propulsion.motor_length_m` 0.025 → **0.0265 m** (mount face to bell top, `ASM-E1-STACK`; the CAD reads the body length from `subsystems/propulsion/params.json` meanwhile) | One prop plane for the CAD, the datum sheet, B4 and the viewer |
+| CR-E1-30 | D3 | ESC pad height `fin_detail.esc_pad.h_m` 0.028 → **0.031 m** (slot inner edge 10.5 mm from the pad centre) | The 20 mm ESC (`ASM-E3-ESC`) covers 1 mm of each 3 mm strap slot: `CL-E1-ESC-SLOT` **0.90 FAIL**. The strap must enter the slot beside the ESC, not bend over its edge (E3 counts one 10 mm strap, CR-E3-02). Pad length 46 mm is fine (`CL-E1-ESC-PAD-LEN` 1.02) |
+| CR-E1-31 | A5 | (a) `fusion_backend.joint()`: E-FIN-61…64 join the rotated motor (`ctx.part(rotate=)`, 7° cant) to the unrotated mount; Fusion aligns both joint frames and will turn motor, adapter and prop back to 0° cant. Please build the joint-point sketch on a world-aligned plane for rotated components (the fix your docstring names). (b) `k9.prop_keepout` is an x-axis cylinder; the canted disc's tip moves **17.0 mm** axially (`CL-E1-KO-TILT` 25.0 of 33 mm), so 17 of the 25 mm clearance is geometry, not margin. Add an axis argument to `keepout_cylinder` or grow the axial half by R sin(cant) | `check.py` passes today; Fusion behaviour is `UNVERIFIED-IN-FUSION` |
+| CR-E1-32 | D3 (supports F4 CR-F4-11) | Cant sense: the CAD on D3's plate gives the UR thrust direction (−0.9925, −0.0622, +0.1048), a side-force moment of **+0.045 N·m per N about +x**, opposite to the CW (ω along +x) reaction torque on the airframe. Swap prints A/B or set `cant_sense_UR` −1; the propulsion module reads the key and follows | Same finding as F4's `CL-F4-CANT-SENSE-D3`, now from the geometry |
+| CR-E1-33 | C6 | `E-PRP-01…04`: adopted your 0.5 N·m + 243 on the tips. Engagement 2.5 mm, minimum **2.0 mm** cited to `CL-E1-ADAPTER-STRIP` (RF 1.70 ≥ 1.5 at 2.0 mm against the 0.83 kN tightening preload; service loads 14 N shear, 4 N axial): please list it as the one exception to the 1.0 d rule in `JOINTS.md`. `PRP-005` now carries your 0.20 N·m (CR-C6-10) | Vendor M3×4 in a ~2.5 mm bell top cannot reach 3.0 mm |
+| CR-E1-34 | A3 | `subsystems/propulsion/interfaces.json` now carries CAD-centroid CGs (UR: motor 0.0171 / 0.3193 / 0.1915 on the canted axis, prop −0.0062 / 0.3177 / 0.1939, adapter −0.0031, ESC 0.101 / 0.329 / 0.118). Mass unchanged: 475.6 g against 476 g | Replace the R3 estimates in the roll-up |
+
+Note on the task brief: it quoted a 430 g allocation, 11×4.5MR props, mount face x −0.10 and prop plane x −0.15.
+Those were superseded by D-04, D-05, D-28 and D-34/D-38 (476 g, 11×5.5MR, face 0.0309, plane −0.0082); the CAD
+follows `params.json`.
+
 ## Revision 3 (2026-11-09): CR-A1-32 (D-28, D-34, D-35, D-36), CR-A2-13, CR-D3-04/-06, CR-F1-03
 
 | # | To | What | Why / numbers |

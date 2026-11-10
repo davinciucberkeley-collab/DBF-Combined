@@ -5,19 +5,19 @@
  "parts": [
   {
    "id": "TRN-001",
-   "name": "Box base (floor, walls, end pads)",
+   "name": "Box base (floor, walls, end pads, nose pad)",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 2317.0,
+   "mass_g": 2339.0,
    "material": "Coroplast 4 mm (PP twin-wall)",
    "cg_xyz_m": [
-    0.1315,
+    0.0999,
     0.0,
-    -0.0921
+    -0.0832
    ],
    "make_or_buy": "make",
    "flight": false,
-   "notes": "incl. end pads, 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external"
+   "notes": "incl. 2 end pads, 1 in PE nose pad, 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external; aircraft 12 mm off the aft wall"
   },
   {
    "id": "TRN-005",
@@ -27,7 +27,7 @@
    "mass_g": 634.8,
    "material": "Coroplast 4 mm (PP twin-wall)",
    "cg_xyz_m": [
-    0.1265,
+    0.109,
     0.0,
     0.2293
    ],
@@ -43,9 +43,9 @@
    "mass_g": 69.8,
    "material": "XPS foam F-250 + PE foam 1.7 pcf (closed cell)",
    "cg_xyz_m": [
-    0.106,
+    0.1061,
     -0.2,
-    -0.1123
+    -0.1124
    ],
    "make_or_buy": "make",
    "flight": false,
@@ -59,9 +59,9 @@
    "mass_g": 69.8,
    "material": "XPS foam F-250 + PE foam 1.7 pcf (closed cell)",
    "cg_xyz_m": [
-    0.106,
+    0.1061,
     0.2,
-    -0.1123
+    -0.1124
    ],
    "make_or_buy": "make",
    "flight": false,
@@ -116,36 +116,36 @@
    "notes": ""
   },
   {
-   "id": "TRN-006-A",
-   "name": "Cam-buckle strap A",
+   "id": "TRN-006-L",
+   "name": "Cam-buckle strap L",
    "subsystem": "transport",
    "status": "MODELLED",
    "mass_g": 45.0,
    "material": "25 mm PP webbing + cam buckle",
    "cg_xyz_m": [
-    0.1265,
+    0.109,
     -0.4,
     -0.037
    ],
    "make_or_buy": "buy",
    "flight": false,
-   "notes": "EST mass; closes the lid, y -0.40"
+   "notes": "EST mass; closes the lid, y -0.40 (was TRN-006-A, A4 CR-A4-24)"
   },
   {
-   "id": "TRN-006-B",
-   "name": "Cam-buckle strap B",
+   "id": "TRN-006-R",
+   "name": "Cam-buckle strap R",
    "subsystem": "transport",
    "status": "MODELLED",
    "mass_g": 45.0,
    "material": "25 mm PP webbing + cam buckle",
    "cg_xyz_m": [
-    0.1265,
+    0.109,
     0.4,
     -0.037
    ],
    "make_or_buy": "buy",
    "flight": false,
-   "notes": "y +0.40"
+   "notes": "y +0.40 (was TRN-006-B)"
   },
   {
    "id": "TRN-007-C",
@@ -155,7 +155,7 @@
    "mass_g": 40.0,
    "material": "strap handle (bought)",
    "cg_xyz_m": [
-    -0.1635,
+    -0.181,
     0.0,
     0.153
    ],
@@ -171,7 +171,7 @@
    "mass_g": 40.0,
    "material": "strap handle (bought)",
    "cg_xyz_m": [
-    0.1265,
+    0.109,
     -0.64,
     0.153
    ],
@@ -187,7 +187,7 @@
    "mass_g": 40.0,
    "material": "strap handle (bought)",
    "cg_xyz_m": [
-    0.1265,
+    0.109,
     0.64,
     0.153
    ],
@@ -263,7 +263,14 @@
    "part_b": "TRN-001",
    "via": "CT-TRN-LSE-TAPE",
    "owner": "transport",
-   "notes": "column base on the floor + 2 zip ties through the floor"
+   "notes": "column base on the floor + 2 zip ties through the floor",
+   "retention": {
+    "item": "LSE tape 60 x 50 mm + 2 zip ties through the floor",
+    "count": 1,
+    "load_n": 10,
+    "load_basis": "C1 drop is compression; 10 N = half the aircraft weight at a 45 deg tilt, EST",
+    "inspection": "pull by hand before every trip"
+   }
   },
   {
    "id": "E-TRN-02",
@@ -271,7 +278,14 @@
    "part_b": "TRN-001",
    "via": "CT-TRN-LSE-TAPE",
    "owner": "transport",
-   "notes": "as E-TRN-01"
+   "notes": "as E-TRN-01",
+   "retention": {
+    "item": "LSE tape 60 x 50 mm + 2 zip ties through the floor",
+    "count": 1,
+    "load_n": 10,
+    "load_basis": "C1 drop is compression; 10 N = half the aircraft weight at a 45 deg tilt, EST",
+    "inspection": "pull by hand before every trip"
+   }
   },
   {
    "id": "E-TRN-03",
@@ -279,7 +293,14 @@
    "part_b": "TRN-001",
    "via": "CT-TRN-LSE-TAPE",
    "owner": "transport",
-   "notes": "tray on the floor between the cradles"
+   "notes": "tray on the floor between the cradles",
+   "retention": {
+    "item": "LSE tape, 4 strips",
+    "count": 1,
+    "load_n": 6,
+    "load_basis": "tray + props at 2 g, EST",
+    "inspection": "tray does not lift when the box is tipped"
+   }
   },
   {
    "id": "E-TRN-04",
@@ -287,7 +308,14 @@
    "part_b": "TRN-005",
    "via": "CT-TRN-LSE-TAPE",
    "owner": "transport",
-   "notes": "pillar on the lid shell"
+   "notes": "pillar on the lid shell",
+   "retention": {
+    "item": "LSE tape 100 x 60 mm",
+    "count": 1,
+    "load_n": 102,
+    "load_basis": "CL-C1-PILLAR-F-LIM (compression)",
+    "inspection": "pillar square on the lid; re-tape if it peels"
+   }
   },
   {
    "id": "E-TRN-05",
@@ -295,7 +323,14 @@
    "part_b": "TRN-005",
    "via": "CT-TRN-LSE-TAPE",
    "owner": "transport",
-   "notes": "pillar on the lid shell"
+   "notes": "pillar on the lid shell",
+   "retention": {
+    "item": "LSE tape 100 x 60 mm",
+    "count": 1,
+    "load_n": 102,
+    "load_basis": "CL-C1-PILLAR-F-LIM (compression)",
+    "inspection": "pillar square on the lid; re-tape if it peels"
+   }
   },
   {
    "id": "E-TRN-06",
@@ -303,7 +338,14 @@
    "part_b": "WNG-001",
    "via": "CT-CRADLE-CONTACT",
    "owner": "transport",
-   "notes": "saddle under the lower surface at y -0.20 (0.17-0.23), x -0.015..0.235 (spar line), 15 000 mm2 >= C2 1 080 mm2; 4 mm inboard of the brace anchors (0.234); elevons, fins, tubes, braces never pressed (P:transport.cradle). Wing keeps this patch free of servo covers and horns (CR-D7-04)"
+   "notes": "bears on the tape skin WNG-003 over the core (check.py bbox WARN on WNG-003 expected, CR-D7-19). Saddle under the lower surface at y -0.20 (0.17-0.23), x -0.015..0.235 (spar line), 15 000 mm2 >= C2 1 080 mm2; 4 mm inboard of the brace anchors (0.234); elevons, fins, tubes, braces never pressed (P:transport.cradle). Wing keeps this patch free of servo covers and horns (CR-D7-04)",
+   "retention": {
+    "item": "wing in the saddle, 6 mm LE lip",
+    "count": 1,
+    "load_n": 102,
+    "load_basis": "CL-C1-CRADLE-F-LIM",
+    "inspection": "chalk patch >= 40 x 40 mm after T-D7-BOX-DROP"
+   }
   },
   {
    "id": "E-TRN-07",
@@ -311,7 +353,14 @@
    "part_b": "WNG-001",
    "via": "CT-CRADLE-CONTACT",
    "owner": "transport",
-   "notes": "as E-TRN-06 at y +0.20"
+   "notes": "as E-TRN-06 at y +0.20",
+   "retention": {
+    "item": "wing in the saddle, 6 mm LE lip",
+    "count": 1,
+    "load_n": 102,
+    "load_basis": "CL-C1-CRADLE-F-LIM",
+    "inspection": "chalk patch >= 40 x 40 mm after T-D7-BOX-DROP"
+   }
   },
   {
    "id": "E-TRN-08",
@@ -319,7 +368,14 @@
    "part_b": "WNG-001",
    "via": "CT-TRN-PRELOAD-PAD",
    "owner": "transport",
-   "notes": "upper surface over the spar at y -0.20, x 0.03..0.13; replaces the strap of the A4 plan (E-TRN-07 there)"
+   "notes": "on the tape skin over the core; upper surface over the spar at y -0.20, x 0.03..0.13; replaces the strap of the A4 plan (E-TRN-07 there)",
+   "retention": {
+    "item": "lid pillar, 5 mm preload",
+    "count": 1,
+    "load_n": 102,
+    "load_basis": "ASM-C1-LID-PRELOAD 5 N static; CL-C1-PILLAR-F-LIM lid-down",
+    "inspection": "aircraft does not move when the closed box is tilted 45 deg"
+   }
   },
   {
    "id": "E-TRN-09",
@@ -327,7 +383,14 @@
    "part_b": "WNG-001",
    "via": "CT-TRN-PRELOAD-PAD",
    "owner": "transport",
-   "notes": "as E-TRN-08 at y +0.20"
+   "notes": "as E-TRN-08 at y +0.20",
+   "retention": {
+    "item": "lid pillar, 5 mm preload",
+    "count": 1,
+    "load_n": 102,
+    "load_basis": "ASM-C1-LID-PRELOAD 5 N static; CL-C1-PILLAR-F-LIM lid-down",
+    "inspection": "aircraft does not move when the closed box is tilted 45 deg"
+   }
   },
   {
    "id": "E-TRN-10",
@@ -335,23 +398,44 @@
    "part_b": "TRN-001",
    "via": "CT-TRN-PLUG-LID",
    "owner": "transport",
-   "notes": ""
+   "notes": "",
+   "retention": {
+    "item": "30 mm plug lip + 2 cam straps",
+    "count": 1,
+    "load_n": 102,
+    "load_basis": "rebound into the pillars, CL-C1-PILLAR-F-LIM",
+    "inspection": "lid seated, no gap > 3 mm"
+   }
   },
   {
    "id": "E-TRN-11",
-   "part_a": "TRN-006-A",
+   "part_a": "TRN-006-L",
    "part_b": "TRN-001",
    "via": "CT-TRN-CAM-STRAP",
    "owner": "transport",
-   "notes": "y -0.40"
+   "notes": "y -0.40",
+   "retention": {
+    "item": "25 mm PP webbing, cam buckle",
+    "count": 1,
+    "load_n": 50,
+    "load_basis": "hand-cinched tension, EST",
+    "inspection": "webbing not frayed, buckle bites"
+   }
   },
   {
    "id": "E-TRN-12",
-   "part_a": "TRN-006-B",
+   "part_a": "TRN-006-R",
    "part_b": "TRN-001",
    "via": "CT-TRN-CAM-STRAP",
    "owner": "transport",
-   "notes": "y +0.40"
+   "notes": "y +0.40",
+   "retention": {
+    "item": "25 mm PP webbing, cam buckle",
+    "count": 1,
+    "load_n": 50,
+    "load_basis": "hand-cinched tension, EST",
+    "inspection": "webbing not frayed, buckle bites"
+   }
   },
   {
    "id": "E-TRN-13",
@@ -373,7 +457,7 @@
     "tool": "2.5 mm hex key + 5.5 mm spanner",
     "access": "nut from inside the box, lid off",
     "install_order": 12,
-    "removal_order": 4
+    "removal_order": 9
    }
   },
   {
@@ -396,7 +480,7 @@
     "tool": "2.5 mm hex key + 5.5 mm spanner",
     "access": "nut from inside the box, lid off",
     "install_order": 13,
-    "removal_order": 3
+    "removal_order": 8
    }
   },
   {
@@ -419,7 +503,7 @@
     "tool": "2.5 mm hex key + 5.5 mm spanner",
     "access": "nut from inside the box, lid off",
     "install_order": 14,
-    "removal_order": 2
+    "removal_order": 7
    }
   },
   {
@@ -428,7 +512,94 @@
    "part_b": "TRN-003",
    "via": "CT-TRN-POCKET",
    "owner": "transport",
-   "notes": "pouch pocket at the tray aft end"
+   "notes": "pouch pocket at the tray aft end",
+   "retention": {
+    "item": "pouch in its pocket",
+    "count": 1,
+    "load_n": 3,
+    "load_basis": "pouch 0.15 kg at 2 g",
+    "inspection": "pocket not torn"
+   }
+  },
+  {
+   "id": "E-TRN-17",
+   "part_a": "PRP-003-UR",
+   "part_b": "TRN-003",
+   "via": "CT-TRN-POCKET",
+   "owner": "transport",
+   "notes": "prop UR on edge in a 285 x 30 x 40 mm tray slot, label to the motor colour",
+   "stowed": true,
+   "retention": {
+    "item": "prop on edge in its slot",
+    "count": 1,
+    "load_n": 2,
+    "load_basis": "prop 0.017 kg at 10 g (floor drop)",
+    "inspection": "slot walls whole; prop tips not touching the floor of the slot"
+   }
+  },
+  {
+   "id": "E-TRN-18",
+   "part_a": "PRP-003-UL",
+   "part_b": "TRN-003",
+   "via": "CT-TRN-POCKET",
+   "owner": "transport",
+   "notes": "as E-TRN-17",
+   "stowed": true,
+   "retention": {
+    "item": "prop on edge in its slot",
+    "count": 1,
+    "load_n": 2,
+    "load_basis": "prop 0.017 kg at 10 g (floor drop)",
+    "inspection": "slot walls whole; prop tips not touching the floor of the slot"
+   }
+  },
+  {
+   "id": "E-TRN-19",
+   "part_a": "PRP-003-LR",
+   "part_b": "TRN-003",
+   "via": "CT-TRN-POCKET",
+   "owner": "transport",
+   "notes": "as E-TRN-17",
+   "stowed": true,
+   "retention": {
+    "item": "prop on edge in its slot",
+    "count": 1,
+    "load_n": 2,
+    "load_basis": "prop 0.017 kg at 10 g (floor drop)",
+    "inspection": "slot walls whole; prop tips not touching the floor of the slot"
+   }
+  },
+  {
+   "id": "E-TRN-20",
+   "part_a": "PRP-003-LL",
+   "part_b": "TRN-003",
+   "via": "CT-TRN-POCKET",
+   "owner": "transport",
+   "notes": "as E-TRN-17",
+   "stowed": true,
+   "retention": {
+    "item": "prop on edge in its slot",
+    "count": 1,
+    "load_n": 2,
+    "load_basis": "prop 0.017 kg at 10 g (floor drop)",
+    "inspection": "slot walls whole; prop tips not touching the floor of the slot"
+   }
+  },
+  {
+   "id": "E-TRN-21",
+   "part_a": "AVN-005",
+   "part_b": "TRN-003",
+   "via": "CT-TRN-POCKET",
+   "owner": "transport",
+   "notes": "pitot boom in its 220 x 25 x 25 mm tray slot, tip cover on, tip end against the PE plug (CR-D7-09)",
+   "stowed": true,
+   "retention": {
+    "item": "boom in its slot, PE tip plug",
+    "count": 1,
+    "load_n": 1,
+    "load_basis": "boom about 0.01 kg at 10 g, EST",
+    "inspection": "tip cover on; slot not crushed"
+   }
   }
  ],
  "acknowledges": []

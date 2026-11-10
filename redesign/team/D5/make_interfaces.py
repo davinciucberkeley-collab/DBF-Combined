@@ -1,4 +1,4 @@
-"""Write redesign/subsystems/landing/{interfaces.json, parts.csv} from one place (D5, revision D5-R3).
+"""Write redesign/subsystems/landing/{interfaces.json, parts.csv} from one place (D5, revision D5-R4).
 
     python -I redesign/team/D5/feet_calc.py        # first: masses (CALC-D5-MASS), bond area, loads into claims.json
     python -I redesign/team/D5/make_interfaces.py  # then: parts, edges, CGs from the CAD centroids (stub build)
@@ -29,22 +29,22 @@ NAME = {'UR': 'upper right', 'UL': 'upper left', 'LR': 'lower right', 'LL': 'low
 # base id, name, material, make/buy, mass output (CALC-D5-MASS), instances, notes
 PARTS = [
     ('GER-001', 'Foot shoe', 'PETG (printed)', 'make', 'shoe_g', ST,
-     'sleeve 19.8 x 17.1 mm on the half-fin TE step, back wall on the step front and strip end faces, legs on both '
+     'sleeve 21.1 x 17.1 mm on the half-fin TE step, back wall on the step front and strip end faces, legs 7 mm down both '
      'faces, collar cheeks over the edge-strip ends, rim at the sleeve end; permanent; includes 0.35 g epoxy'),
     ('GER-002', 'Foot piston', 'PETG (printed)', 'make', 'piston_g', ST,
-     'tine 17.8 x 15.1 mm, two 6.5 mm snap fingers, stop flange, inspection windows, replace-mark groove; ORANGE on '
+     'tine 19.1 x 15.1 mm, two 6.5 mm snap fingers, stop flange, inspection windows, replace-mark groove; ORANGE on '
      'UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes'),
     ('GER-003', 'Crush cartridge type U (solid)', 'XPS foam F-250 (cut)', 'make', 'cartridge_upper_g', ('UR', 'UL'),
-     'two 44.5 mm segments 16 x 13.3 mm, crush axis = board thickness, orange stripe; plateau 36.6 N; bonded on the '
-     'piston floor; consumable'),
+     'two 44.5 mm segments 17.3 x 13.3 mm, each pre-crushed 1 mm (cut 45.5 mm), crush axis = board thickness, orange '
+     'stripe; plateau 39.6 N; bonded on the piston floor; consumable'),
     ('GER-004', 'Foot pad', 'neoprene 40A 1/16 in, adhesive back (bought sheet, cut)', 'make', 'pad_g', ST,
-     'ground contact 19.8 x 18.1 mm, mu >= 0.7 (CR-C1-02); outboard edge at z +/-0.219 (contact 0.218)'),
+     'ground contact 21.1 x 18.3 mm, mu >= 0.7 (CR-C1-02); outboard edge at z +/-0.219 (contact 0.218)'),
     ('GER-007', 'Wingtip TE corner cap', 'TPU (printed)', 'make', 'cap_g', ('R', 'L'),
      'TPU 95A U-cap over the fixed wingtip TE corner (y 0.5615-0.575) + tip wall, held by 2 wraps of 12 mm filament '
      'tape (CR-C5-04); includes 0.10 g tape'),
     ('GER-008', 'Crush cartridge type L (bored)', 'XPS foam F-250 (cut)', 'make', 'cartridge_lower_g', ('LR', 'LL'),
-     'type U with a 6.35 mm axial bore (sharpened 1/4 in brass tube), blue stripe; plateau 31.2 N; bonded on the '
-     'piston floor; consumable'),
+     'type U with a 5.56 mm axial bore (sharpened 7/32 in brass tube), pre-crushed, blue stripe; plateau 35.4 N; '
+     'bonded on the piston floor; consumable'),
 ]
 
 CT = [
@@ -58,6 +58,28 @@ CT = [
     {"id": "CT-GER-CAP-TAPE", "kind": "mechanical", "method": "taped",
      "spec": "TPU cap pushed over the TE corner, two wraps of 12 mm filament tape over its legs onto the tape skin"},
 ]
+
+
+def ground_lines(m):
+    """Ground items (spares, stock, shop tool): parts.csv lines and flight:false nodes (CR-A3-18)."""
+    return [
+        ('GER-005', 'Spare insert, upper (orange piston + type-U cartridge + pad, pre-glued)', 4, 'make',
+         'as GER-002/003/004', 'PETG / XPS / neoprene', round(m['insert_upper_g'], 2), 0.35, 'field kit',
+         'ground spare, not flying'),
+        ('GER-009', 'Spare insert, lower (blue piston + type-L cartridge + pad, pre-glued)', 4, 'make',
+         'as GER-002/008/004', 'PETG / XPS / neoprene', round(m['insert_lower_g'], 2), 0.35, 'field kit',
+         'ground spare, not flying'),
+        ('GER-010', 'Spare cartridge pair type U, loose (orange stripe)', 16, 'make', 'as GER-003', 'XPS F-250',
+         round(m['cartridge_upper_g'], 2), 0.0, 'field kit', 'ground spare, not flying (C5 CR-C5-06: 16 per type)'),
+        ('GER-011', 'Spare cartridge pair type L, loose (blue stripe)', 16, 'make', 'as GER-008', 'XPS F-250',
+         round(m['cartridge_lower_g'], 2), 0.0, 'field kit', 'ground spare, not flying (C5 CR-C5-06: 16 per type)'),
+        ('GER-012', 'Spare shoe', 2, 'make', 'as GER-001', 'PETG (printed)', round(m['shoe_g'] - 0.35, 2), 0.10,
+         'field kit', 'ground spare, not flying'),
+        ('GER-006', 'Neoprene sheet 1/16 in 40A adhesive back 12 x 12 in', 1, 'buy', 'bought', 'neoprene 40A', 0,
+         12.0, 'SRC-D5-NEOPRENE (UNVERIFIED price)', 'stock for GER-004 and spares; not flying (mass in GER-004)'),
+        ('GER-013', 'Brass tube 7/32 in OD (K&S), sharpened, cartridge bore cutter', 1, 'buy', 'bought', 'brass', 0,
+         3.0, 'hobby shop, K&S 7/32 in round tube (UNVERIFIED price)', 'shop tool, not flying'),
+    ]
 
 
 def claims():
@@ -120,7 +142,7 @@ def main():
             "id": "E-GER-%02d" % (1 + i), "part_a": "GER-001-" + st, "part_b": "FIN-001-" + st, "via": "CT-EPOXY",
             "owner": "landing",
             "notes": "shoe bonded on the half-fin TE step (D3 cuts the tip to |z| %.4f from x %.4f to the TE, CR-D5-11): "
-                     "sleeve floor on the step edge, legs 10 mm down both faces, back wall on the step front and the "
+                     "sleeve floor on the step edge, legs 7 mm down both faces, back wall on the step front and the "
                      "strip end faces, collar cheeks over both edge-strip ends (CR-C4-09). Permanent; a broken shoe is cut off with "
                      "a razor saw and a spare bonded (24 h cure)" % (ge['z_step_m'], ge['x_step_m']),
             "bond": {"adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)", "area_mm2": area,
@@ -180,9 +202,14 @@ def main():
     else:
         for e in caps:
             e["waits_for"] = [landing.CAP_HOST]
+    for pid, name, qty, mob, proc_, mat, mg, cost_, src, note in ground_lines(m):
+        parts.append({"id": pid, "name": name, "subsystem": "landing", "status": "PROPOSED", "flight": False,
+                      "mass_g": mg, "material": mat, "cg_xyz_m": None, "make_or_buy": mob,
+                      "notes": "GROUND ITEM, not flying (CR-A3-18): qty %d per kit line in parts.csv, one node per line "
+                               "(no station, no CAD); %s" % (qty, note)})
     doc = {"schema": "dbf-interfaces/1", "subsystem": "landing",
            "_note": "GENERATED by redesign/team/D5/make_interfaces.py (masses, bond area and loads: team/D5/claims.json; "
-                    "CGs: CAD centroids). D5, revision D5-R3. E-GER-01..04 point at the R3 half-fin ids FIN-001-UR/UL/"
+                    "CGs: CAD centroids). D5, revision D5-R4. E-GER-01..04 point at the R3 half-fin ids FIN-001-UR/UL/"
                     "LR/LL (D-26). Corner caps GER-007-R/L: PROPOSED (not built in CAD) and E-GER-21/22 in edges_pending until a "
                     "subsystem declares WNG-001; re-run this script then and they move to MODELLED / edges.",
            "parts": parts, "connection_types": CT, "edges": edges, "acknowledges": []}
@@ -201,10 +228,10 @@ def main():
               'GER-008': 'wing-core offcut, knife cut + brass-tube bore (BUILD.md step 4)'}
     proc = {'GER-001': 'FDM print, PETG, 0.2 mm layers, 2 perimeters (4 at the rim), back wall on the bed, no supports',
             'GER-002': 'FDM print, PETG, 0.2 mm layers, flange on the bed, 2 perimeters, slots cut in the slicer model',
-            'GER-003': 'cut from 2 in F-250: 16.0 x 13.3 mm sticks across the thickness, 44.5 mm long (2 per foot)',
-            'GER-004': 'scissors/knife from sheet, 19.8 x 18.1 mm, 1 mm corner round',
+            'GER-003': 'cut from 2 in F-250: 17.3 x 13.3 mm sticks across the thickness, 45.5 mm long (2 per foot), each pressed 1 mm to 44.5 mm',
+            'GER-004': 'scissors/knife from sheet, 21.1 x 18.3 mm, 1 mm corner round',
             'GER-007': 'FDM print, TPU 95A, 2 perimeters, open side up',
-            'GER-008': 'as GER-003, then a 6.35 mm axial bore with a sharpened 1/4 in K&S brass tube'}
+            'GER-008': 'as GER-003, then a 5.56 mm axial bore with a sharpened 7/32 in K&S brass tube (before pressing)'}
     with open(os.path.join(SUB, 'parts.csv'), 'w', encoding='utf-8', newline='') as f:
         w = csv.writer(f, lineterminator='\n')
         w.writerow(['part_id', 'name', 'qty', 'make_or_buy', 'process', 'material', 'mass_g', 'unit_cost_usd',
@@ -212,25 +239,7 @@ def main():
         for base, name, mat, mob, key, insts, notes in PARTS:
             w.writerow([base, '%s (%s)' % (name, ' '.join(insts)), len(insts), mob, proc[base], mat, round(m[key], 2),
                         cost[base], vendor[base], notes + '; mass per unit, EST from CALC-D5-MASS'])
-        ground = [
-            ('GER-005', 'Spare insert, upper (orange piston + type-U cartridge + pad, pre-glued)', 4, 'make',
-             'as GER-002/003/004', 'PETG / XPS / neoprene', round(m['insert_upper_g'], 2), 0.35, 'field kit',
-             'ground spare, not flying'),
-            ('GER-009', 'Spare insert, lower (blue piston + type-L cartridge + pad, pre-glued)', 4, 'make',
-             'as GER-002/008/004', 'PETG / XPS / neoprene', round(m['insert_lower_g'], 2), 0.35, 'field kit',
-             'ground spare, not flying'),
-            ('GER-010', 'Spare cartridge pair type U, loose (orange stripe)', 16, 'make', 'as GER-003', 'XPS F-250',
-             round(m['cartridge_upper_g'], 2), 0.0, 'field kit', 'ground spare, not flying (C5 CR-C5-06: 16 per type)'),
-            ('GER-011', 'Spare cartridge pair type L, loose (blue stripe)', 16, 'make', 'as GER-008', 'XPS F-250',
-             round(m['cartridge_lower_g'], 2), 0.0, 'field kit', 'ground spare, not flying (C5 CR-C5-06: 16 per type)'),
-            ('GER-012', 'Spare shoe', 2, 'make', 'as GER-001', 'PETG (printed)', round(m['shoe_g'] - 0.35, 2), 0.10,
-             'field kit', 'ground spare, not flying'),
-            ('GER-006', 'Neoprene sheet 1/16 in 40A adhesive back 12 x 12 in', 1, 'buy', 'bought', 'neoprene 40A', 0,
-             12.0, 'SRC-D5-NEOPRENE (UNVERIFIED price)', 'stock for GER-004 and spares; not flying (mass in GER-004)'),
-            ('GER-013', 'Brass tube 1/4 in OD (K&S), sharpened, cartridge bore cutter', 1, 'buy', 'bought', 'brass', 0,
-             3.0, 'hobby shop, K&S 1/4 in round tube (UNVERIFIED price)', 'shop tool, not flying'),
-        ]
-        for row in ground:
+        for row in ground_lines(m):
             w.writerow(row)
     print('wrote %d parts, %d edges' % (len(parts), len(edges)))
 

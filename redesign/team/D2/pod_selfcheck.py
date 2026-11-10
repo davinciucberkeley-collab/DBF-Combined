@@ -69,11 +69,12 @@ def main():
         pwr = {'schema': 'dbf-interfaces/1', 'subsystem': 'power',
                'parts': [dict(part('PWR-001', 'power', 'stand-in pack', 'LiPo', 550, [G['pack_c_nom'], 0, G['pack_z_c']]),
                               make_or_buy='buy')],
-               'edges': [], 'acknowledges': ['E-POD-05']}
+               'edges': [], 'acknowledges': ['E-POD-05', 'E-POD-12']}
         (tmp / 'wing' / 'interfaces.json').write_text(json.dumps(wing, indent=1), encoding='utf-8')
         (tmp / 'power' / 'interfaces.json').write_text(json.dumps(pwr, indent=1), encoding='utf-8')
         (tmp / 'modules.txt').write_text('wing\npod\npower\n', encoding='utf-8')
-        (tmp / 'mass_budget.json').write_text(json.dumps({'limit_g': 2600, 'allocations_g': {'pod': 122}}), encoding='utf-8')
+        alloc = json.loads((REDESIGN / 'params' / 'mass_budget.json').read_text(encoding='utf-8'))['allocations_g']['pod']
+        (tmp / 'mass_budget.json').write_text(json.dumps({'limit_g': 2600, 'allocations_g': {'pod': alloc}}), encoding='utf-8')
         ctx, results, issues = check.run_checks(str(tmp), str(tmp / 'modules.txt'), 0.002, str(tmp / 'mass_budget.json'),
                                                 datums=True)
         pod_ids = {c.id for c in ctx.components.values() if c.subsystem == 'pod'}
@@ -82,8 +83,8 @@ def main():
         for sub, f, ok, ms, _ in results:
             print('%-8s %s' % (sub, 'ok' if ok else 'FAIL'))
         pm = sum(c.mass_g for c in ctx.components.values() if c.subsystem == 'pod')
-        print('pod: %d parts, %d bodies, %.1f g (allocation 122 g)' % (
-            len(pod_ids), sum(len(c.shapes) for c in ctx.components.values() if c.subsystem == 'pod'), pm))
+        print('pod: %d parts, %d bodies, %.1f g (allocation %d g)' % (
+            len(pod_ids), sum(len(c.shapes) for c in ctx.components.values() if c.subsystem == 'pod'), pm, alloc))
         for sev, code, item, msg in issues:
             print('  %-5s %-16s %-16s %s' % (sev, code, item, msg))
         fail = [i for i in mine]

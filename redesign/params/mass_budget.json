@@ -1,22 +1,22 @@
 {
  "_note": "Written by redesign/team/A1/frame_claims.py from params/params.json#mass.allocation_g; do not edit by hand. limit_g is the hard as-built gate (P4). Allocations are flying mass per subsystem folder; growth_reserve_g (= limit - allocations) is held by A1 for growth by maturity and the first-build overrun; sized_g = allocations + requirements.growth_allowance_kg + requirements.build_overrun_kg (D-38: 170 + 100 g). A3 refines allocations in MASS-CG.md through a change request to A1.",
  "limit_g": 2600,
- "sized_g": 2594,
- "growth_reserve_g": 276,
+ "sized_g": 2600,
+ "growth_reserve_g": 245,
  "allocations_g": {
   "wing": 405,
-  "fins": 408,
-  "pod": 122,
+  "fins": 418,
+  "pod": 131,
   "landing": 43,
-  "propulsion": 476,
-  "power": 620,
-  "avionics": 80,
-  "harness": 105,
-  "mechanisms": 65
+  "propulsion": 462,
+  "power": 648,
+  "avionics": 45,
+  "harness": 123,
+  "mechanisms": 80
  },
  "cg_x_m": [
   0.05,
-  0.055
+  0.0549
  ],
  "cg_z_m": [
   -0.02,

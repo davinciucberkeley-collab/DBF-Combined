@@ -1,61 +1,280 @@
 {
- "_note": "Landing subsystem (GER) local numbers, owner D5, revision D5-R3 (CR-A1-34, D-30). Read by fusion/landing.py (ctx.local) and team/D5/feet_calc.py (P:landing.*). Shared numbers (fin TE x, half-fin height 0.21, board, foot height 0.048, CG, loads) come from params/params.json and are not repeated here. Frame: params.json#frame (x aft, y right, z up, metres). Each foot is a telescoping crush unit in the fin plane: a bonded PETG shoe seated on a 9.3 mm step cut in the half-fin TE tip (the shoe wraps the board and both edge-strip ends, CR-C4-09), a PETG piston (one tine, two snap fingers, stop flange) with a neoprene pad, and an XPS crush cartridge from the piston floor to the shoe back wall. Stack along +x (down in hover): back wall, cartridge, piston floor/flange, pad; the flange stops on the sleeve-end rim after stroke_max_m. Upper feet (UR, UL) take solid type-U cartridges, lower feet (LR, LL) bored type-L cartridges (x1.077 / x0.923 of the mean plateau, C5 CR-C5-10).",
+ "_note": "Landing subsystem (GER) local numbers, owner D5, revision D5-R4 (CR-A1-34, D-30; C5-R3 cartridges CR-C5-10 revised). Read by fusion/landing.py (ctx.local) and team/D5/feet_calc.py (P:landing.*). Shared numbers (fin TE x, half-fin height 0.21, board, foot height 0.048, CG, loads) come from params/params.json and are not repeated here. Frame: params.json#frame (x aft, y right, z up, metres). Each foot is a telescoping crush unit in the fin plane: a bonded PETG shoe seated on a 9.3 mm step cut in the half-fin TE tip (the shoe wraps the board and both edge-strip ends, CR-C4-09), a PETG piston (one tine, two snap fingers, stop flange) with a neoprene pad, and an XPS crush cartridge from the piston floor to the shoe back wall. Stack along +x (down in hover): back wall, cartridge, piston floor/flange, pad; the flange stops on the sleeve-end rim after stroke_max_m. Upper feet (UR, UL) take solid type-U cartridges, lower feet (LR, LL) bored type-L cartridges; every cartridge segment is pre-crushed 1 mm on a press (C5-R3: plateau upper 39.4 N, lower 35.6 N, bias x1.05 / x0.95, CR-C5-10 revised).",
  "landing": {
   "cartridge": {
-   "section_y_m": {"value": 0.016, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-CRUSH", "status": "PROPOSED", "note": "R3: wide and flat (16 x 13.3 mm) so the sleeve is only 17.1 mm deep and the fin step only 9.3 mm"},
-   "section_z_m": {"value": 0.0133, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-CRUSH", "status": "PROPOSED", "note": "type U area 212.8 mm2 -> 36.6 N at 172 kPa (C5 target 36.7 N); the tuning knob after T-D5-COUPON"},
-   "bore_lower_d_m": {"value": 0.00635, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-CRUSH", "status": "PROPOSED", "note": "type L = type U with a 1/4 in axial bore cut by a sharpened K&S brass tube: 181.1 mm2 -> 31.2 N (C5 target 31.4 N); same outside, so one piston and one shoe for all four feet"},
-   "segments": {"value": 2, "unit": "-", "source": "D5 choice", "note": "two 44.5 mm pieces cut across a 2 in F-250 board so the crush axis is the through-thickness axis of the board (the datasheet direction)"},
-   "material": {"value": "XPS foam F-250 (wing-core offcut)", "unit": "-", "source": "SRC-XPS-F250"},
-   "clear_m": {"value": 0.0001, "unit": "m", "source": "D5 choice", "note": "per side, cartridge in the piston bore"},
-   "preload_m": {"value": 0.0005, "unit": "m", "source": "D5 choice", "note": "cartridge cut 0.5 mm long so the hooks seat on the window aft edge without play"},
-   "colour_upper": {"value": "orange PETG piston + orange paint stripe on the cartridge (type U, solid)", "unit": "-", "source": "D5 choice (CR-A1-34)"},
-   "colour_lower": {"value": "blue PETG piston + blue paint stripe on the cartridge (type L, bored)", "unit": "-", "source": "D5 choice (CR-A1-34)"}
+   "section_y_m": {
+    "value": 0.0173,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
+    "status": "PROPOSED",
+    "note": "R4: 17.3 x 13.3 mm (was 16 x 13.3) so the solid type U gives C5-R3's 39.4 N upper plateau at 172 kPa; the z depth stays 13.3 mm so the fin step stays 9.5 mm (CR-D5-11)"
+   },
+   "section_z_m": {
+    "value": 0.0133,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
+    "status": "PROPOSED",
+    "note": "type U area 230.1 mm2 -> 39.6 N at 172 kPa (C5-R3 39.4 N); the tuning knob after T-D5-COUPON (y only, so the step depth does not move)"
+   },
+   "bore_lower_d_m": {
+    "value": 0.00556,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
+    "status": "PROPOSED",
+    "note": "R4: 7/32 in (5.56 mm) axial bore cut by a sharpened K&S 7/32 in brass tube (was 1/4 in): type L 205.8 mm2 -> 35.4 N (C5-R3 35.6 N), bias x1.056 vs C5's x1.05; same outside, so one piston and one shoe for all four feet"
+   },
+   "segments": {
+    "value": 2,
+    "unit": "-",
+    "source": "D5 choice",
+    "note": "two 44.5 mm pieces cut across a 2 in F-250 board so the crush axis is the through-thickness axis of the board (the datasheet direction)"
+   },
+   "material": {
+    "value": "XPS foam F-250 (wing-core offcut)",
+    "unit": "-",
+    "source": "SRC-XPS-F250"
+   },
+   "clear_m": {
+    "value": 0.0001,
+    "unit": "m",
+    "source": "D5 choice",
+    "note": "per side, cartridge in the piston bore"
+   },
+   "preload_m": {
+    "value": 0.0005,
+    "unit": "m",
+    "source": "D5 choice",
+    "note": "cartridge cut 0.5 mm long so the hooks seat on the window aft edge without play"
+   },
+   "colour_upper": {
+    "value": "orange PETG piston + orange paint stripe on the cartridge (type U, solid)",
+    "unit": "-",
+    "source": "D5 choice (CR-A1-34)"
+   },
+   "colour_lower": {
+    "value": "blue PETG piston + blue paint stripe on the cartridge (type L, bored)",
+    "unit": "-",
+    "source": "D5 choice (CR-A1-34)"
+   },
+   "precrush_m": {
+    "value": 0.002,
+    "unit": "m",
+    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-10",
+    "status": "PROPOSED",
+    "note": "each of the two segments is cut 1 mm long and pressed 1 mm on the drill press before assembly: removes the ~1.10 first-yield peak of BOTH segments (in series an un-pressed second segment would peak mid-stroke when the first densifies); the pressed length is the CAD length"
+   }
   },
-  "wall_t_m": {"value": 0.0008, "unit": "m", "source": "G3 practice", "note": "two 0.4 mm perimeters, 100 % solid; shoe sleeve and piston tine"},
-  "slide_clear_m": {"value": 0.0002, "unit": "m", "source": "G3 practice", "note": "per side, tine in sleeve (PETG on PETG); check with the first print"},
+  "wall_t_m": {
+   "value": 0.0008,
+   "unit": "m",
+   "source": "G3 practice",
+   "note": "two 0.4 mm perimeters, 100 % solid; shoe sleeve and piston tine"
+  },
+  "slide_clear_m": {
+   "value": 0.0002,
+   "unit": "m",
+   "source": "G3 practice",
+   "note": "per side, tine in sleeve (PETG on PETG); check with the first print"
+  },
   "shoe": {
-   "back_wall_t_m": {"value": 0.001, "unit": "m", "source": "D5 choice"},
-   "leg_depth_m": {"value": 0.010, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-BOND", "note": "legs bonded to both fin faces below the step"},
-   "glue_gap_m": {"value": 0.0002, "unit": "m", "source": "G3 practice", "note": "per side between shoe and fin (epoxy line)"},
-   "window_z_m": {"value": 0.006, "unit": "m", "source": "D5 choice", "note": "snap-finger window height in the two y walls of the sleeve"},
-   "rim_t_m": {"value": 0.0012, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-SIDE", "note": "extra wall (three more perimeters) round the sleeve end: bearing lip for the side load at the pad, and the end-of-stroke stop"},
-   "rim_len_m": {"value": 0.006, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-SIDE", "note": "must start aft of the fin TE"},
-   "collar_len_m": {"value": 0.008, "unit": "m", "source": "D5 choice (CR-C4-09)", "note": "two collar cheeks forward of the step front over both edge-strip ends (the strips end at the square-tip front, D3)"},
-   "lip_m": {"value": 0.0012, "unit": "m", "source": "D5 choice", "note": "the flange and pad reach this far beyond the sleeve roof (sleeve roof at z_outer - lip), so the rim stays inside the pad edge"}
+   "back_wall_t_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "D5 choice"
+   },
+   "leg_depth_m": {
+    "value": 0.007,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-BOND",
+    "note": "R4: 10 -> 7 mm to pay for the wider R4 cartridge (-1.2 g on four shoes); legs bonded to both fin faces below the step; bond RF stays >= 1.4 (CL-D5-BOND-SF)"
+   },
+   "glue_gap_m": {
+    "value": 0.0002,
+    "unit": "m",
+    "source": "G3 practice",
+    "note": "per side between shoe and fin (epoxy line)"
+   },
+   "window_z_m": {
+    "value": 0.006,
+    "unit": "m",
+    "source": "D5 choice",
+    "note": "snap-finger window height in the two y walls of the sleeve"
+   },
+   "rim_t_m": {
+    "value": 0.0012,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-SIDE",
+    "note": "extra wall (three more perimeters) round the sleeve end: bearing lip for the side load at the pad, and the end-of-stroke stop"
+   },
+   "rim_len_m": {
+    "value": 0.006,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-SIDE",
+    "note": "must start aft of the fin TE"
+   },
+   "collar_len_m": {
+    "value": 0.008,
+    "unit": "m",
+    "source": "D5 choice (CR-C4-09)",
+    "note": "two collar cheeks forward of the step front over both edge-strip ends (the strips end at the square-tip front, D3)"
+   },
+   "lip_m": {
+    "value": 0.0012,
+    "unit": "m",
+    "source": "D5 choice",
+    "note": "the flange and pad reach this far beyond the sleeve roof (sleeve roof at z_outer - lip), so the rim stays inside the pad edge"
+   }
   },
   "edge_strip": {
-   "w_m": {"value": 0.01, "unit": "m", "source": "subsystems/fins/params.json#fin_detail.edge_strip.w_m", "status": "PROPOSED", "note": "copied, D3 owns it: CF 10 x 1 mm on both faces along the half-fin top edge; ends at the step front, wrapped by the collar"},
-   "t_m": {"value": 0.001, "unit": "m", "source": "subsystems/fins/params.json#fin_detail.edge_strip.t_m", "status": "PROPOSED"}
+   "w_m": {
+    "value": 0.01,
+    "unit": "m",
+    "source": "subsystems/fins/params.json#fin_detail.edge_strip.w_m",
+    "status": "PROPOSED",
+    "note": "copied, D3 owns it: CF 10 x 1 mm on both faces along the half-fin top edge; ends at the step front, wrapped by the collar"
+   },
+   "t_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "subsystems/fins/params.json#fin_detail.edge_strip.t_m",
+    "status": "PROPOSED"
+   }
   },
   "piston": {
-   "flange_t_m": {"value": 0.0016, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-FLANGE", "note": "floor and stop flange; the R3 overhang beyond the tine is only 2 mm"},
-   "engage_m": {"value": 0.012, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-SIDE", "note": "tine engagement in the sleeve before any crush; grows to engage + stroke"},
-   "hook_protrusion_m": {"value": 0.0006, "unit": "m", "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12", "note": "hook through the 0.8 mm sleeve wall"},
-   "hook_len_m": {"value": 0.002, "unit": "m", "source": "D5 choice"},
-   "finger_len_m": {"value": 0.0065, "unit": "m", "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12", "note": "free finger length >= 6.0 mm (CL-C6-SNAP-L-MIN); 6.5 mm gives 1.7 % strain"},
-   "finger_w_m": {"value": 0.005, "unit": "m", "source": "D5 choice", "note": "finger width between the two slots"},
-   "slot_w_m": {"value": 0.0008, "unit": "m", "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12", "note": "two 0.8 mm slots in each tine y wall make the finger"},
-   "window_rail_m": {"value": 0.0015, "unit": "m", "source": "D5 choice", "note": "rail left each side of the inspection window in the tine z walls (colour check, lighter tine)"},
-   "replace_mark_m": {"value": 0.006, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-CRUSH", "note": "groove on the tine 6 mm aft of the rim: once it is inside the sleeve, less than the usable stroke is left; replace the insert"}
+   "flange_t_m": {
+    "value": 0.0016,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-FLANGE",
+    "note": "floor and stop flange; the R3 overhang beyond the tine is only 2 mm"
+   },
+   "engage_m": {
+    "value": 0.012,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-SIDE",
+    "note": "tine engagement in the sleeve before any crush; grows to engage + stroke"
+   },
+   "hook_protrusion_m": {
+    "value": 0.0006,
+    "unit": "m",
+    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12",
+    "note": "hook through the 0.8 mm sleeve wall"
+   },
+   "hook_len_m": {
+    "value": 0.002,
+    "unit": "m",
+    "source": "D5 choice"
+   },
+   "finger_len_m": {
+    "value": 0.0065,
+    "unit": "m",
+    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12",
+    "note": "free finger length >= 6.0 mm (CL-C6-SNAP-L-MIN); 6.5 mm gives 1.7 % strain"
+   },
+   "finger_w_m": {
+    "value": 0.005,
+    "unit": "m",
+    "source": "D5 choice",
+    "note": "finger width between the two slots"
+   },
+   "slot_w_m": {
+    "value": 0.0008,
+    "unit": "m",
+    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12",
+    "note": "two 0.8 mm slots in each tine y wall make the finger"
+   },
+   "window_rail_m": {
+    "value": 0.0015,
+    "unit": "m",
+    "source": "D5 choice",
+    "note": "rail left each side of the inspection window in the tine z walls (colour check, lighter tine)"
+   },
+   "replace_mark_m": {
+    "value": 0.003,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
+    "note": "R4: 6 -> 3 mm. Groove on the tine 3 mm aft of the rim: once it is inside the sleeve, less than C5's pair-first stroke (31.5 mm) plus the 3 mm guard is left; replace the insert (CL-D5-MARK-MARGIN)"
+   }
   },
   "pad": {
-   "t_m": {"value": 0.0016, "unit": "m", "source": "SRC-D5-NEOPRENE", "note": "1/16 in neoprene, 40A, adhesive back"},
-   "z_outer_m": {"value": 0.219, "unit": "m", "source": "team/D5/feet_calc.py#CALC-D5-TIPOVER", "status": "PROPOSED", "note": "outboard edge of the pad and flange (D-30, kept with the 0.21 m half-fins); tip-over pivot = z_outer - edge_r"},
-   "edge_r_m": {"value": 0.001, "unit": "m", "source": "D5 choice", "note": "edge round on the flange and pad"}
+   "t_m": {
+    "value": 0.0016,
+    "unit": "m",
+    "source": "SRC-D5-NEOPRENE",
+    "note": "1/16 in neoprene, 40A, adhesive back"
+   },
+   "z_outer_m": {
+    "value": 0.219,
+    "unit": "m",
+    "source": "team/D5/feet_calc.py#CALC-D5-TIPOVER",
+    "status": "PROPOSED",
+    "note": "outboard edge of the pad and flange (D-30, kept with the 0.21 m half-fins); tip-over pivot = z_outer - edge_r"
+   },
+   "edge_r_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "D5 choice",
+    "note": "edge round on the flange and pad"
+   }
   },
-  "stroke_max_m": {"value": 0.038, "unit": "m", "source": "params.json#requirements.foot_crush_stroke_min_m", "note": "flange-to-rim gap (D-30); the wing TE stays 10 mm off the ground at full stroke"},
+  "stroke_max_m": {
+   "value": 0.038,
+   "unit": "m",
+   "source": "params.json#requirements.foot_crush_stroke_min_m",
+   "note": "flange-to-rim gap (D-30); the wing TE stays 10 mm off the ground at full stroke"
+  },
   "cap": {
-   "span_m": {"value": 0.0135, "unit": "m", "source": "D5 choice (CR-C5-04)", "note": "spanwise length of the TPU corner cap on the fixed wingtip; inboard edge 1.5 mm outboard of the outboard elevon end (k9.elevon_spans: 0.560)"},
-   "chord_m": {"value": 0.020, "unit": "m", "source": "D5 choice (CR-C5-04)", "note": "chordwise depth of the cap legs forward of the TE"},
-   "wall_t_m": {"value": 0.0008, "unit": "m", "source": "G3 practice", "note": "TPU 95A, two perimeters"},
-   "tape_g": {"value": 0.10, "unit": "g", "source": "D5 estimate", "status": "UNVERIFIED", "note": "two wraps of 12 mm filament tape over the cap legs"}
+   "span_m": {
+    "value": 0.0135,
+    "unit": "m",
+    "source": "D5 choice (CR-C5-04)",
+    "note": "spanwise length of the TPU corner cap on the fixed wingtip; inboard edge 1.5 mm outboard of the outboard elevon end (k9.elevon_spans: 0.560)"
+   },
+   "chord_m": {
+    "value": 0.02,
+    "unit": "m",
+    "source": "D5 choice (CR-C5-04)",
+    "note": "chordwise depth of the cap legs forward of the TE"
+   },
+   "wall_t_m": {
+    "value": 0.0008,
+    "unit": "m",
+    "source": "G3 practice",
+    "note": "TPU 95A, two perimeters"
+   },
+   "tape_g": {
+    "value": 0.1,
+    "unit": "g",
+    "source": "D5 estimate",
+    "status": "UNVERIFIED",
+    "note": "two wraps of 12 mm filament tape over the cap legs"
+   }
   },
   "materials": {
-   "petg_density_kgm3": {"value": 1270.0, "unit": "kg/m3", "source": "SRC-D5-PETG", "status": "UNVERIFIED"},
-   "tpu_density_kgm3": {"value": 1210.0, "unit": "kg/m3", "source": "SRC-D5-TPU", "status": "UNVERIFIED"},
-   "neoprene_density_kgm3": {"value": 1300.0, "unit": "kg/m3", "source": "SRC-D5-NEOPRENE", "status": "UNVERIFIED"},
-   "glue_g_per_foot": {"value": 0.40, "unit": "g", "source": "D5 estimate", "status": "UNVERIFIED", "note": "epoxy on the shoe (0.35) + foam-safe CA on the cartridge (0.05)"}
+   "petg_density_kgm3": {
+    "value": 1270.0,
+    "unit": "kg/m3",
+    "source": "SRC-D5-PETG",
+    "status": "UNVERIFIED"
+   },
+   "tpu_density_kgm3": {
+    "value": 1210.0,
+    "unit": "kg/m3",
+    "source": "SRC-D5-TPU",
+    "status": "UNVERIFIED"
+   },
+   "neoprene_density_kgm3": {
+    "value": 1300.0,
+    "unit": "kg/m3",
+    "source": "SRC-D5-NEOPRENE",
+    "status": "UNVERIFIED"
+   },
+   "glue_g_per_foot": {
+    "value": 0.4,
+    "unit": "g",
+    "source": "D5 estimate",
+    "status": "UNVERIFIED",
+    "note": "epoxy on the shoe (0.35) + foam-safe CA on the cartridge (0.05)"
+   }
   }
  }
 }

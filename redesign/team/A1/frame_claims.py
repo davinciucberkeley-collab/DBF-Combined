@@ -112,6 +112,19 @@ def cg_range(x_range, x_fwd, x_aft, cg_centred, x_np, c, sm_min):
             "centred_aft_margin_m": x_range[1] - cg, "sm_at_aft_limit": (x_np - x_range[1]) / c - sm_min}
 
 
+@kit.calc("CALC-A1-PACK-STATION", title="Pack nominal station vs the station A3's roll-up needs (D-47)",
+          equation="miss = x_nom - x_req ; room_left = fwd_room - |miss| ; aft_room_left = aft_room - |miss|",
+          inputs={"x_nom": P + "pod.pack_x_nominal_m", "x_req": "CL-A3-PACK-X-REQ",
+                  "fwd_room": "CL-A3-PACK-FWD-ROOM", "aft_room": "CL-A3-PACK-AFT-ROOM"},
+          units={"x_nom": "m", "x_req": "m", "fwd_room": "m", "aft_room": "m"})
+def pack_station(x_nom, x_req, fwd_room, aft_room):
+    # D-47: the bay moved 21 mm forward with the nose, so the nominal pack centroid sits at pod.pack_x_nominal_m.
+    # A3's CL-A3-PACK-X-REQ is the centroid that puts the CG on 0.053 m; the difference must be inside the
+    # trim travel the bay keeps (CL-A3-PACK-FWD-ROOM 3.4 mm forward of nominal, spacers aft).
+    miss = x_nom - x_req
+    return {"miss_m": miss, "fwd_room_left_m": fwd_room - abs(miss), "aft_room_left_m": aft_room - abs(miss)}
+
+
 # ---------------------------------------------------------------- mass and the gate cases
 ALLOC = ["wing", "fins", "pod", "landing", "propulsion", "power", "avionics", "harness", "mechanisms"]
 
@@ -188,7 +201,7 @@ kit.claim("CL-A1-MASS-SIZED", "Sized take-off mass (allocations + planned growth
           how="A3 roll-up of every parts.csv against MASS-CG.md (CL-A3-MASS-PREDICTED is the maturity-based prediction); weigh the built aircraft with pack (H1).")
 kit.claim("CL-A1-RESERVE-COVERS", "A1 mass reserve covers the planned growth and overrun", calc="CALC-A1-MASS-SIZED",
           output="reserve_cover_g", unit="g", limit=(">=", 0.0), verifies=["R-MASS-GATE"],
-          how="growth_reserve_g in params.json minus (250 g growth allowance + 100 g build overrun); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.")
+          how="growth_reserve_g in params.json minus (growth allowance + 100 g build overrun; D-48: 145 + 100 = 245 g); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.")
 kit.claim("CL-A1-ALLOC-GATE", "Allocations plus reserve equal the gate", calc="CALC-A1-MASS-SIZED",
           output="gate_check_g", unit="g", limit=(">=", 0.0), verifies=["R-MASS-GATE"],
           how="2 600 - sum(allocation_g) - growth_reserve_g must be >= 0; A1 re-runs this script after any allocation change.")
@@ -197,7 +210,7 @@ kit.claim("CL-A1-HOVER-TW-GATE", "Hover T/W at the 2.6 kg gate", calc="CALC-A1-H
           how="Thrust stand, one station, 11x5.5MR on a fresh pack with the 100 A limiter (24.8 A per motor): thrust >= 1.3 kgf gives T/W 2.0 at 2.6 kg (H1, T-E1-STAND).")
 kit.claim("CL-A1-HOVER-TW-SAG", "Hover T/W at the gate, worst pack state", calc="CALC-A1-HOVER-TW", output="tw_gate_sag", unit="-",
           limit=(">=", P + "requirements.hover_tw_min_sag"), verifies=["R-HOVER-TW"],
-          note="D-35: voltage_sag 0.76 is E2's limiter-consistent factor (CL-E2-SAG-F-WORST); E1's CL-E1-TW-WORST 2.18 (factor 0.854) is the other bound until the two publish one claim.",
+          note="D-49: voltage_sag 0.851 is the one E1/E2 calculation (CALC-E1-WORST on E2's cell data and F1's r_ext 6.5 mOhm, CL-E1-SAG-FACTOR; CL-E1-TW-WORST 2.12); was 0.76 (D-35).",
           how="Thrust-stand run on a pack at 3.6 V/cell after a cold soak at 10 degC (H1 GT-02, pass line CL-H1-T-PASS-SAG >= 1.102 kgf), or the fresh value x CL-E2-SAG-F-WORST.")
 kit.claim("CL-A1-STALL-GATE", "Stall speed at the gate", calc="CALC-A1-STALL", output="vs_ms", unit="m/s",
           limit=("<=", P + "requirements.stall_max_ms"), verifies=["R-STALL"],
@@ -216,10 +229,15 @@ kit.claim("CL-A1-CG-RANGE-FWD", "params cg.x_range_m forward end is inside B3's 
 kit.claim("CL-A1-CG-RANGE-AFT", "params cg.x_range_m aft end is inside B3's R1 aft limit (SM 5 %)",
           calc="CALC-A1-CG-RANGE", output="aft_inside_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE", "R-STATIC-MARGIN"],
           how="As CL-A1-CG-RANGE-FWD; static margin at the aft mark from the twin's glide tests (T-B3-TWIN-NP).")
-kit.claim("CL-A1-CG-CENTRED", "Pack centred in the pod at x_le -0.105 layout: CG margin to the forward end of the range",
+kit.claim("CL-A1-CG-CENTRED", "Pack at B3's nominal station: CG margin to the forward end of the range (B3's roll-up input)",
           calc="CALC-A1-CG-RANGE", output="centred_fwd_margin_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
-          note="D-24: the pod stays; A3 sets the pack nominal centroid to x -0.001 m (4 mm aft of the old pod centre) and D2 lays the bay for it.",
-          how="A3 roll-up at the R3 allocations (CL-A3-CG-X-RANGE); balance test with the pack at the nominal station.")
+          note="D-24 set the pack at x -0.001; D-47 moves the bay 21 mm forward (pod.pack_x_nominal_m -0.022) after the delivered parts lists put the CG at 0.0577 m. B3's CL-B3-CG-CENTRED-AFT is still its R3 value (A3-R3 CG 0.0548): B3 re-runs on A3's next roll-up.",
+          how="A3 roll-up at the R4 allocations (CL-A3-CG-X-RANGE); balance test with the pack at the nominal station.")
+kit.claim("CL-A1-PACK-STATION", "Pack nominal station (D-47) is inside the forward trim room of the station A3 needs",
+          calc="CALC-A1-PACK-STATION", output="fwd_room_left_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
+          parts=["PWR-001", "POD-008"],
+          note="D-47: pod.pack_x_nominal_m -0.022 against CL-A3-PACK-X-REQ -0.0225 (A3-R5, CG 0.053 target); the 0.5 mm miss is 0.1 mm of CG and sits inside the 3.4 mm forward room. Per weighed pack: 680 g at -0.014, 550 g at -0.022, 503 g at -0.0245.",
+          how="D2 re-lays the bay (forward stop -0.1212), A3 re-runs the roll-up with the pack at the new station, then T-A3-CG-BALANCE with each pack at its marked station.")
 
 kit.test("T-A1-WEIGH","Weigh the assembled aircraft", verifies=["CL-A1-MASS-SIZED"], state="planned",
          procedure="Pack in, props on, 5 kg scale with 1 g resolution; record with the pack's own mass (H1).")

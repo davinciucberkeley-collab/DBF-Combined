@@ -1,0 +1,52 @@
+{
+  "_note": "Avionics-local numbers (F3, revision F3-R2 on params A1-R3, 2026-11-09). Shared numbers (pod LE, size, base, board thickness, pitot tip) come from redesign/params/params.json; pod stations (floor, plates, channels, tie posts, GPS pad, pitot socket) come from subsystems/pod/fusion/pod.py#layout() and subsystems/pod/params.json, so the avionics sit on the pod as D2 built it. Read by subsystems/avionics/fusion/avionics.py and team/F3/avn_data.py. Metres unless stated. Envelopes of bought parts are the seller's figures, UNVERIFIED until measured on arrival (T-F3-ARRIVAL).",
+
+  "fc_board_m": {"value": [0.052, 0.032, 0.008], "unit": "m", "source": "SRC-F3-AP-COREWING (52 x 32 footprint); height EST", "status": "UNVERIFIED",
+    "note": "CoreWing F405 Wing APP V2 FC board alone (top board + wireless app board), L x W x H. The power board (PWR-003) is separated and sits on the PDB plate (F2 ASM-F2-PWR-STACK, F1); measure the split stack on arrival"},
+  "fc_mass_g": {"value": 12.0, "unit": "g", "source": "SRC-F3-FC-ALONE (flymod.net 8.9 g FC) + 3 g wireless board EST", "status": "UNVERIFIED",
+    "note": "the 40 g catalogue figure is the full stack incl. the power board; the power board mass (~28 g EST) belongs to PWR-003 at its own station (CR-F3-13)"},
+  "fc_arrow": {"value": "-x", "unit": "-", "source": "SRC-F3-AP-TAILSITTER", "status": "PROPOSED", "note": "board flat, arrow to the cruise nose; AHRS_ORIENTATION 0"},
+
+  "pad_m": {"value": [0.005, 0.005, 0.005], "unit": "m", "source": "CALC-F3-VIBE (team/F3/avionics.py)", "status": "UNVERIFIED",
+    "note": "four silicone gel cubes (Zeal / alpha-gel class, 5 mm sheet) under the board corners; size set for f_n ~ 36 Hz with the 12 g board at E = 30 kPa (ASM-F3-ISOLATOR)"},
+  "pad_inset_m": {"value": 0.004, "unit": "m", "source": "F3 choice", "status": "PROPOSED", "note": "pad edge to board edge, keeps pads clear of edge components"},
+  "gel_kgm3": {"value": 1000.0, "unit": "kg/m3", "source": "EST (silicone gel)", "status": "UNVERIFIED"},
+  "gel_e_pa": {"value": 30000.0, "unit": "Pa", "source": "ASM-F3-ISOLATOR", "status": "UNVERIFIED",
+    "note": "compressive modulus of the gel at small strain; checked on the bench by the 100 g sag test (BUILD.md step 3)"},
+
+  "gps_m": {"value": [0.021, 0.021, 0.008], "unit": "m", "source": "SRC-F3-GPS-SPEC (21 x 21 x 8.02 mm, 7.73 g)", "status": "PROPOSED"},
+  "gps_mass_g": {"value": 7.73, "unit": "g", "source": "SRC-F3-GPS-SPEC", "status": "PROPOSED"},
+  "tape_t_m": {"value": 0.001, "unit": "m", "source": "3M VHB-class foam tape 1.1 mm (catalogue class)", "status": "PROPOSED"},
+
+  "rx_m": {"value": [0.013, 0.022, 0.004], "unit": "m", "source": "SRC-F3-RP3-SPEC (22 x 13 x 4 mm, 4.6 g with two 65 mm antennas)", "status": "PROPOSED",
+    "note": "laid crosswise (22 mm along y) on the avionics plate aft of the aft tie post, under antenna tube A (x -0.054)"},
+  "rx_mass_g": {"value": 4.6, "unit": "g", "source": "SRC-F3-RP3-SPEC", "status": "PROPOSED"},
+  "rx_gap_m": {"value": 0.0005, "unit": "m", "source": "F3 choice", "status": "PROPOSED", "note": "gap from the aft tie post to the RX front edge"},
+
+  "aspd_m": {"value": [0.020, 0.021, 0.013], "unit": "m", "source": "SRC-F3-RMRC-ASPD (20 x 21 x 13 mm incl. ports, 3.5 g board)", "status": "PROPOSED",
+    "note": "RMRC digital airspeed (MS4525DO) board, ports up; sits between D2's two tie posts (inner faces 20 mm apart: a locating fit, CR-F3-12 asks +1 mm)"},
+  "aspd_mass_g": {"value": 3.5, "unit": "g", "source": "SRC-F3-RMRC-ASPD", "status": "PROPOSED"},
+  "aspd_post_dx_m": {"value": [0.008, 0.032], "unit": "m", "source": "subsystems/pod/fusion/pod.py (tie posts at avn_plate_x_m[0] + 8 / + 32 mm; literals there, CR-F3-12)", "status": "PROPOSED"},
+  "aspd_port_m": {"value": [0.006, 0.004], "unit": "m", "source": "F3 choice (measure on arrival)", "status": "UNVERIFIED", "note": "port centres: x from the board front, y spacing (total, static)"},
+  "tube_m": {"value": [0.0045, 0.0025], "unit": "m", "source": "RMRC / Pixhawk-class silicone pitot tubing, OD x ID", "status": "UNVERIFIED"},
+  "tube_cut_m": {"value": 0.040, "unit": "m", "source": "F3 choice", "status": "PROPOSED", "note": "each line, sensor port to boom coupler, with a 10 mm service loop; limit 0.060"},
+  "silicone_kgm3": {"value": 1150.0, "unit": "kg/m3", "source": "EST (silicone rubber)", "status": "UNVERIFIED"},
+
+  "probe_od_m": {"value": 0.004, "unit": "m", "source": "UNVERIFIED (pitot-static tube in the RMRC kit; measure)", "status": "UNVERIFIED",
+    "note": "sleeve bore is printed to the measured OD + 0.1 mm and the probe bonded in"},
+  "probe_mass_g": {"value": 3.12, "unit": "g", "source": "SRC-F3-3DR-PITOT (3.12 g pitot tube)", "status": "UNVERIFIED"},
+  "barb_m": {"value": [0.0025, 0.008], "unit": "m", "source": "F3 choice (measure)", "status": "UNVERIFIED", "note": "probe root barbs: diameter x length aft of the sleeve, y spacing = aspd_port_m[1]"},
+  "coupler_g": {"value": 0.3, "unit": "g", "source": "EST (2.5 mm barbed nylon coupler)", "status": "UNVERIFIED"},
+  "sleeve_m": {"value": [0.006, 0.0056, 0.012], "unit": "m", "source": "params avionics.pitot_tip_xyz_m note (6 mm keyed boom) + F3", "status": "PROPOSED",
+    "note": "OD, width across the key flat (flat on +z), length ahead of the socket collar"},
+  "shoulder_m": {"value": [0.010, 0.003], "unit": "m", "source": "F3 choice", "status": "PROPOSED",
+    "note": "printed shoulder ring OD x length, bears on the socket collar's front face: drag in cruise and gravity in hover both push the boom home (+x)"},
+  "petg_kgm3": {"value": 1270.0, "unit": "kg/m3", "source": "SRC-PETG-DENSITY (datasheet class value)", "status": "UNVERIFIED"},
+
+  "sd_m": {"value": [0.015, 0.011, 0.001], "unit": "m", "source": "SD Association microSD outline", "status": "PROPOSED"},
+  "sd_mass_g": {"value": 0.4, "unit": "g", "source": "EST (microSD 0.25-0.5 g)", "status": "UNVERIFIED"},
+  "sd_proud_m": {"value": 0.002, "unit": "m", "source": "F3 choice (card slot at the FC fore edge, measure)", "status": "UNVERIFIED"},
+
+  "consumables_g": {"value": {"foam_tape": 1.0, "ties": 0.4, "fc_strap": 0.5}, "unit": "g", "source": "EST (catalogue class; weigh at build)", "status": "UNVERIFIED",
+    "note": "booked in AVN-006 with the gel pads: tape for GPS, RX, airspeed; 3 ties (airspeed, GPS cable, tubes); 10 mm hook-and-loop strap over the FC (C6 secondary retention)"}
+}

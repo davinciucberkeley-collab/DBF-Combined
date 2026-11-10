@@ -1,4 +1,4 @@
-"""K09-L landing (GER, D5, revision D5-R3): four crushable feet on the half-fin TE tips + two wingtip corner caps.
+"""K09-L landing (GER, D5, revision D5-R4): four crushable feet on the half-fin TE tips + two wingtip corner caps.
 
 Each foot is a telescoping crush unit in the fin plane, built for the UR station and mirrored to UL, LR, LL:
 
@@ -8,8 +8,8 @@ Each foot is a telescoping crush unit in the fin plane, built for the UR station
                       (CR-C4-09), and a rim round the sleeve end (side-load lip and end-of-stroke stop)
   GER-002 piston      PETG tine (4 walls, inspection windows in the z walls, one 6.5 mm snap finger in each y wall,
                       CR-C6-12) + floor/stop flange; orange on the upper feet, blue on the lower (colour-marked)
-  GER-003 cartridge   type U, solid XPS F-250 16 x 13.3 mm, two segments (upper feet UR, UL)
-  GER-008 cartridge   type L, the same with a 6.35 mm axial bore (lower feet LR, LL): plateau x0.923 vs x1.077
+  GER-003 cartridge   type U, solid XPS F-250 17.3 x 13.3 mm, two pre-crushed segments (upper feet UR, UL): 39.6 N
+  GER-008 cartridge   type L, the same with a 5.56 mm (7/32 in) axial bore (lower feet LR, LL): 35.4 N (C5-R3 x0.95/x1.05)
   GER-004 pad         1/16 in neoprene with adhesive back on the flange; the only part that reaches DP-GROUND
   GER-007 corner cap  TPU cap on the fixed wingtip TE corner (y 0.5615-0.575 + tip wall), CR-C5-04
 

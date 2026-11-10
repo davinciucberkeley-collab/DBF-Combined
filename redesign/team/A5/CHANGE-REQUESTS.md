@@ -53,3 +53,31 @@ Round 3 (R3 skeleton and datums):
 | (a) transport touch checks | Intended for cradles and straps: D7 models the box around the aircraft in the aircraft frame (`DX-BOX`), so a cradle-to-wing touch is a real fit check. Not intended for flight parts removed for transport: those edges carry `"stowed": true` and are not touch-checked. New `transport` check: a box wall, cradle or tray body overlapping a flight part it has no edge with is a WARN (pressed, or does not fit). Ground parts are now also left out of `ctx.rollup()`. | `fusion/check.py`, `fusionkit.Context.rollup`, `STANDARDS.md` §5–6, tests `test_transport_stowed_and_pressed` |
 | (b) harness bundle bodies | Yes, every modelled part needs a body. `k09kit.bundle(part, legs, dia)` builds axis-aligned cylinder legs along the route; the skeleton harness uses it. | `fusion/k09kit.py`, `skeleton/harness/` |
 | (c) thermal edges | `ctx.contact` is the right registration (thermal allows rigid or contact), and the parts must touch (bbox ≤ 2 mm). The skeleton carries `E-FIN-923…926` motor → mount `CT-THERMAL-PAD` beside the bolted edge. | `STANDARDS.md` §6, test `test_thermal_contact_and_bundle` |
+
+## Round 4: integration check over the ten delivered modules (2026-11-09)
+
+Requests to A5 answered this round (framework changes in `redesign/fusion/`, 31 tests OK, skeleton and examples
+`--strict` PASS):
+
+| # | From | Status | What changed |
+|---|---|---|---|
+| CR-D1-01, CR-F2-09, CR-A4-32 | D1, F2, A4 | done | `check.py` floating uses `merge_check.carried()` and load-bearing edges only: `WNG-020` and `HRN-001/002-L/R` no longer float (3 ERRORs gone). Test `test_carried_items_do_not_float` |
+| CR-D7-19 | D7 | done (D7 to apply, CR-A5-22) | transport edges may list `"also_contacts"`; each listed part must share a load-bearing edge with the flight partner, else ERROR. Test `test_transport_also_contacts`; trial on the real `subsystems/` clears both `WNG-003` WARNs |
+| CR-E1-31a | E1 | done, `UNVERIFIED-IN-FUSION` | `fusion_backend.joint()` makes an as-built joint whenever a part is rotated (rigid: no geometry; revolute/slider: axis point in the unrotated partner). Fake-adsk run on the real subsystems: 37 joints, 0 warnings. Test `test_rotated_parts_get_as_built_joints` |
+| CR-E1-31b | E1 | done (E1 to apply, CR-A5-21) | `Keepout` takes a vector axis and tests the tilted cylinder exactly (alternating projections, agrees with the axis-aligned test on 500 random boxes); `k9.prop_keepout(..., rotate=, blade_half=)`; `check.py` tests keep-outs against each body's box, not the component box. Trial with the 7° cant and E1's 10 mm half: 0 hits (the component box of the canted mount `FIN-003` over-reported 4 hits). Test `test_tilted_keepout` |
+| CR-E1-16 (A5 part) | E1 | done | the hub half-thickness is E1's number: pass `blade_half` (default stays 8 mm) |
+
+New requests:
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-A5-20 | A1 (A3, B3, D2, F1 informed) | **Assembled CG x 0.0577 m is 2.7 mm aft of the 0.055 aft limit** (`CL-A5-ASSY-CG-X` FAIL, range use 2.06; A3's roll-up gives the same 0.0577, and B3's latest aft limit is 0.0549). It is 5.5 mm aft of the allocation layout (0.0521). Shares (`INTEGRATION.md`): power +3.2 mm (F1's boxes sit at mean x +0.017, the layout had them at the pod nose), avionics +1.4 (43 g lighter forward: the FC power board moved to power), propulsion +1.2 (motor stack 6 mm further aft), mechanisms +1.1 (+17 g at x 0.22), pod +0.4; wing −0.8, fins −0.6, landing −0.4. Decide the lever: move the power boxes forward (79 g by 0.1 m ≈ −3.4 mm), the pod group (A3: −14.7 mm), or ballast | `ERROR graph:cg` in `check.py` and `merge_check.py`; the only configuration-level error |
+| CR-A5-21 | E1 | In `propulsion.py` call `k9.prop_keepout(ctx, ..., rotate=rot, blade_half=0.010)` (your −6 / +10 mm about the mid-plane with coning). Today the keep-out is the untilted x cylinder, so the 7° cant is not checked | trial: 0 parts in the canted keep-outs with the per-body test |
+| CR-A5-22 | D7 | Add `"also_contacts": ["WNG-003"]` to `E-TRN-06` and `E-TRN-07` (saddle on the tape skin) | clears the two 8 mm `transport` WARNs; validated |
+| CR-A5-23 | A4 | Document the optional edge key `also_contacts` in `interfaces/SCHEMA.md` next to `stowed` (transport edges only; parts bonded to the flight partner by a load-bearing edge) | `check.py` reads it; `merge_check.py` can ignore it |
+| CR-A5-24 | F2 | Re-run `team/F2/harness.py`: every id in `edges-pending.json#waiting_for` is declared now (`WNG-001`, `AVN-001…004`, `MEC-001-L/R`, `PWR-001…005`), so the 21 pending edges move into `interfaces.json` and `fusion/harness.py` must register them | 16 `unconnected` + 8 `unpowered` WARNs: no motor, servo or FC has a power path in the graph |
+| CR-A5-25 | D5 | Re-run `team/D5/make_interfaces.py`: `WNG-001` is declared, so `landing.py` builds `GER-007-R/L` and registers `E-GER-21/22`, but `interfaces.json` still has the caps `PROPOSED` and no edges | 4 ERRORs (2 register, 2 floating) + 4 WARNs |
+| CR-A5-26 | D3 / F3 | D3: acknowledge `E-PWR-11…14` (ESC caps taped on `FIN-001-<st>`). F3: acknowledge `E-TRN-21` (pitot boom stowed in the tray) | 5 `one-sided` WARNs |
+| CR-A5-27 | F2, D2 | Declared CG vs CAD centroid differs by > 10 mm: `HRN-002-R/L` 22.9 mm (declared y 0.260, bundle bodies 0.238), `POD-008` 29.9 mm (declared x −0.052, body −0.082), `POD-003` 10.5 mm. Recompute `cg_xyz_m` from the bodies or fix the bodies | aircraft CG effect ≤ 0.2 mm each; a declared CG must describe the modelled part |
+| CR-A5-28 | A1 (A3 informed) | Re-balance the allocations to where the mass went: avionics 36.5 / 80 g (the 28 g FC power board is `PWR-003`), power 638 / 620, harness 122.5 / 105, mechanisms 82 / 65, fins 417 / 408, pod 128 / 122. Sum 2 330 g vs 2 324 allocated | five `graph:mass` WARNs; the total is inside the 2 600 g gate (`CL-A5-ASSY-MASS` +10 %) |
+| CR-A5-29 | C3 (D2 informed) | `team/C3/pod_structures.py` fails in `build_graph.py`: `KeyError: 'stop_wall_h_m'` (line 33) in all eight `CALC-C3-*`; `subsystems/pod/params.json` (D2) no longer has any `stop*` key; C3 re-points or D2 restores it | found while re-running the proof graph |

@@ -1,51 +1,48 @@
 # F1 power distribution: summary
 
-Status `PROPOSED`. Numbers `MODELLED` in `team/F1/power.py` (31 claims in `claims.json`, revision F1-R2); none bench-tested. Details:
-`team/F1/POWER.md`, schematic `team/F1/power-schematic.svg`, derating data `team/F1/data/`.
+Status `PROPOSED`. Analysis F1-R2 (`team/F1/power.py`, 31 claims) + design PWR-R1 (`subsystems/power/`, 10 claims,
+CAD `MODELLED`); nothing bench-tested. Details: `team/F1/POWER.md`, `subsystems/power/SPEC.md`, `BUILD.md`.
 
 ## Decisions
 
 | Item | Decision | Key number | Claim | Status |
 |---|---|---|---|---|
-| Main disconnect (CR-A2-08, CR-A4-09, CR-J1-04) | **Amass AS150U**, anti-spark; packs re-terminated | 70 A cont ≥ 37.8 A; 140 A momentary ≥ 120 A | `CL-F1-AS150U-CONT`, `CL-F1-AS150U-BURST` (supersedes `CL-J1-XT60-BURST`) | `UNVERIFIED` (reseller ratings) |
-| XT60 | rejected | 35 / 30 A < 37.8 A; no cited rating ≥ 120 A | — | — |
-| Pack's own leads | ≥ 10 AWG, cut to 0.10 m at re-termination; 12 AWG pack not accepted | rise 16.4 °C vs 20 °C limit; 12 AWG 28.4 °C | `CL-F1-PACKLEAD-RISE`, `-PEAK` | `UNVERIFIED` (gauge not on listing) |
-| Pack-plug-to-bus path | 8 AWG, 0.15 m, twisted | rise 9.2 °C steady, 12.0 °C peak | `CL-F1-MAIN-RISE`, `-PEAK` | `MODELLED` |
-| ESC leads (CR-A3-06) | **16 AWG**, 0.5 m, two grooves in the wing | rise 9.2 °C; 18 AWG 16.4 °C fails | `CL-F1-ESC-RISE`, `CL-F1-ESC18-RISE` | `MODELLED` |
-| UBEC | **fitted**, 6 V 8 A class, 5 A fuse on its feed | required 5.2 A > FC servo BEC 4.5 A | `CL-F1-SERVO-BEC-REQ`, `CL-F1-UBEC-RATING` | `UNVERIFIED` (stall current) |
-| Propulsion fuse | none (a blown fuse = crash) | limiter worst case 105 A < 140 A | `CL-F1-ILIM-WORST` | `MODELLED` |
-| Sensing | FC power board, ≥ 38 A cont / ≥ 120 A peak | candidate 90 / 215 A | `CL-F1-SENSOR-CONT`, `-PEAK` | `UNVERIFIED` (F3) |
+| Main disconnect | **Amass AS150U**, packs re-terminated; XT60 rejected | 70 A ≥ 37.8 A; 140 A ≥ 120 A (XT60 35 A, no ≥ 120 A rating) | `CL-F1-AS150U-CONT`, `-BURST` | `UNVERIFIED` (reseller figures) |
+| Disconnect mount | aircraft half bonded in a printed cradle on the power frame | park bond RF 28 vs 3 | `CL-PWR-PARK-RF` | `UNVERIFIED` (pull test) |
+| Layout | one screwed stack in the left channel: bus board on the PDB plate, frame on D2's 4 inserts, power board on the deck | channel margin 1.9 mm; deck 11 mm over the bar joints | `CL-PWR-CHANNEL-FIT`, `-DECK-CLR` | `CHECKED` |
+| Main jumpers | **10 AWG**, ≤ 0.05 m (replaces 8 AWG 0.15 m) | 0.61 mΩ (budget 0.68); 0.5 °C over terminals | `CL-PWR-JUMPER-R`, `-RISE` | `CHECKED` |
+| Distribution | shop-made bus board, two tinned 8 AWG bars | 4 ESC pairs + fuse feed | — | `MODELLED` |
+| ESC leads | 16 AWG (F2 routes) | rise 9.2 °C | `CL-F1-ESC-RISE` | `MODELLED` |
+| Sensing | CoreWing V2 power board (separated, `PWR-003`) | 90 / 215 A ≥ 38 / 120 A | `CL-F1-SENSOR-*` | `UNVERIFIED` (outline, CR-F1-21) |
+| Protection | no propulsion fuse; 5 A fuse on the UBEC feed; 680 µF at each ESC | limiter worst 105 A < 140 A | `CL-F1-ILIM-WORST` | `MODELLED` |
+| Servo rail | UBEC 6.0 V 8 A class | 5.2 A required > FC BEC 4.5 A | `CL-F1-SERVO-BEC-REQ` | `UNVERIFIED` |
 
-## Key numbers
+## Mass
 
-| Parameter | Value | Unit | Source | Status |
-|---|---|---|---|---|
-| Continuous design current (max of hover 29.9, cruise 29.8, climb 30.2) | 30.3 | A | `CL-F1-I-CONT` | `MODELLED` |
-| Disconnect required, continuous / ≤ 60 s | 37.8 / 53.7 | A | `CL-F1-DISC-REQ-CONT`, `-SHORT` | `MODELLED` |
-| Pack terminals → ESC pads, equivalent hot | 6.5 | mΩ | `CL-F1-R-EXT` | `MODELLED` |
-| Drop at 30 A / at the 100 A limiter | 1.41 / 4.37 | % | `CL-F1-DROP-CONT`, `-PEAK` | `MODELLED` |
-| Anti-spark pre-charge t95 / inrush | 180 / 1.1 | ms / A | `CL-F1-PRECHARGE-T95`, `CL-F1-INRUSH` | `MODELLED` |
-| Power mass excluding the pack | 69 vs 45 allocated | g | `CL-F1-POWER-MASS` | **`FAIL`** (CR-F1-02 asks +25 g) |
-| ESC leads, 4 pairs (harness) | 64.6 | g | `CL-F1-ESC-MASS` | `MODELLED` |
+| Item | g | Status |
+|---|---|---|
+| Pack | 550 | `UNVERIFIED` (503–680 listed) |
+| AS150U half + jumpers 18.6 · power board 28 · bus 7.3 · UBEC 13 · frame 9 · fuse 3.5 · caps 8.8 | 88.2 | `EST` |
+| **Total vs 620 g allocation** | **638.2: `FAIL` −18.2 g** | CR-F1-19 moves the board's 28 g from avionics → 648 g, +9.8 g |
 
-## Checks run
+## Checks run (2026-11-09)
 
 | Check | Result |
 |---|---|
-| `python -I redesign/team/F1/power.py` | 31 claims; all margins ≥ +8 % except `CL-F1-POWER-MASS` (−53 % against 45 g) |
-| `python -I redesign/proofs/build_graph.py` | no F1 errors; the build fails on drift in other roles' scripts (A1, B1, E2), none in F1 |
-| Model hand check | 10 °C steady ampacity in free air: 18 AWG ~7.5 A, 16 AWG ~10 A, 10 AWG ~25 A; agrees with published single-wire charts from memory, `UNVERIFIED` until `T-F1-WIRE-HEAT` |
+| `python -I redesign/subsystems/power/make_power.py` | 11 nodes, 10 edges, 638.2 g |
+| `python -I redesign/subsystems/power/power_claims.py` | 10 claims; 9 pass (+11 % … +833 %), `CL-PWR-MASS` −3 % |
+| `python -I redesign/fusion/check.py` | power module ok: 11 parts, 23 bodies, 1 joint, **0 errors**; WARNs = mass (CR-F1-19), D2/D3 acks (CR-F1-16, -22), unconnected until F2 declares the wires (CR-F1-18). Overall FAIL from mechanisms (in progress) |
+| `python -I redesign/interfaces/merge_check.py` | 0 power errors; same power WARNs. Overall result moves with the partial aircraft (last run: 1 ERROR, aircraft CG x 0.058 with no wing modelled) |
+| `python -I redesign/proofs/build_graph.py` | no power errors; build fails on other roles' drift |
 
 ## Open issues
 
-| Issue | Owner | Status |
-|---|---|---|
-| AS150U and SpeedyBee ratings are from resellers and search results; open the maker sheets before ordering | F1 | `UNVERIFIED` |
-| 10 °C rule needs a duration basis (CR-F1-01); the 8 % margins depend on the routing in CR-F1-07 | A2, F2 | `PROPOSED` |
-| Servo stall current 1.3 A assumed; decides whether the UBEC stays | D6, F1 | `UNVERIFIED` |
-| Pack lead gauge unknown; must be ≥ 10 AWG (CR-F1-14) | I1, E2 | `UNVERIFIED` |
-| Connector park in the pod is 30 mm (XT60); AS150U needs 60 mm (CR-F1-13) | D2 | `PROPOSED` |
-| Bought items itemised (≈ $86 `EST`) in POWER.md; prices not quoted | I1 | `PROPOSED` |
-| `subsystems/power/` (SPEC, parts.csv, interfaces.json, Fusion module) not yet written; `PWR-003…005` warn as missing from interfaces | F1 | next |
+| Issue | Owner |
+|---|---|
+| CoreWing power board separable? outline ≤ 42 × 32 × 9 mm | F3 (CR-F1-21) |
+| Harness wires to re-point (W-PACK 31 mm off, W-MAIN, W-PMOD), fuse split, cap leads | F2 (CR-F1-18) |
+| Pod acks and UBEC plate; C6 nylon stack; D3 cap acks | D2, C6, D3 (CR-F1-16, -17, -20, -22) |
+| Amass sheet, UBEC datasheet, unplug force | F1, I1 (`T-PWR-ARRIVAL`) |
 
-Change requests: `team/F1/CHANGE-REQUESTS.md` (CR-F1-01 … 15).
+Change requests: `team/F1/CHANGE-REQUESTS.md` (CR-F1-01 … 22). Sources checked 2026-11-09: CoreWing F405 Wing V2
+(https://ardupilot.org/plane/docs/common-CoreWingF405WingV2.html; getfpv stack listing); no AS150U drawing found.

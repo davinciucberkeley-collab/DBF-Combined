@@ -7,7 +7,7 @@ wing is skinned**, and the half-fin roots are bonded **to bare foam**.
 
 | Cure | 30 min epoxy (+ ~5 % colloidal silica): handle after 1 h, load after 24 h at ≥ 18 °C; parts within 50 mm of a motor + 4 h at 50 °C (C6) · laminating epoxy: 24 h |
 |---|---|
-| Tools | fine-tooth saw, 120/220-grit paper, try square, calipers, 2.0 and 3.4 mm drills, pin vice, 2.5 mm hex key (short arm), 5.5 mm spanner, luggage scale (≥ 15 kg), spring scale, paint pen, masking tape, 1 g scale |
+| Tools | fine-tooth saw, 120/220-grit paper, try square, calipers, 2.0, 3.4 and 8 mm drills (or an 8 mm brass-tube cutter), pin vice, 2.5 mm hex key (short arm), 5.5 mm spanner, luggage scale (≥ 15 kg), spring scale, paint pen, masking tape, 1 g scale |
 | Prints | **ASA** (enclosed printer, D-42): 4 mounts (2 × print A, 2 × print B), 4 ESC pads. **PETG**: 2 blocks (3 perimeters, 15 % gyroid), 4 station collars (100 %, tongue 3 perimeters + 20 % gyroid), 4 anchors (80 %) |
 | Bought / cut | 2 tubes 22 × 20 × 344 mm, 2 plugs 20 × 18 × 53 mm, 4 braces 10 × 2 mm, 8 edge strips 10 × 1 × 229 mm, 48 pins Ø 2 × 12 mm, 8 boards (DXF of the half-fin outline from Fusion) |
 
@@ -19,15 +19,18 @@ wing is skinned**, and the half-fin roots are bonded **to bare foam**.
 2. **Laminate the boards.** Spray-glue pairs of boards face to face (3M 77 class, both faces, 1 min open time),
    roll flat and weight under a flat board for 1 h. Then knife-cut the four half-fin outlines through both layers
    from the DXF: LE notch for the collar tongue (40 × 11 mm at the top corner, plus the 1.7 mm step under the
-   ring), square 40 mm tip, and the link slot in the two lower halves. **Check:** 9.6 ± 0.3 mm, no delamination at
-   the edges, tip edge flat and square.
+   ring), square 40 mm tip, and the link slot in the two lower halves. Cut the Ø 8 mm ESC-lead hole in every
+   half-fin at x 0.086 m, centre 22 mm from the root edge (twist a sharpened 8 mm brass tube through both layers;
+   a twist drill tears the paper). **Check:** 9.6 ± 0.3 mm, no delamination at the edges, tip edge flat and square,
+   hole edge ≥ 17 mm from the root edge (clear of the 12 mm fillet and 15 mm tape lap).
 3. **Cut the tubes.** Two 344 mm lengths from the 1 000 mm stock: tape over the cut line, saw through the tape,
    square the ends on 120 grit. Mark the middle (z = 0). **Check:** 344 ± 0.5 mm.
 4. **Fit the plugs.** Sand each 53 mm piece of 20 × 18 tube to slide in the motor tube. Coat with laminating epoxy
    and push it in with a dowel to z −19.6 … +33.4 mm. Cure 24 h.
 5. **Test-fit the prints.** The 22.3 mm bores slide on the tube; the block spar bore slides on the spar; the boss
    slots take the 9.6 mm laminate; the collar tongue drops into the board notch with a strip on each face in the
-   tail slots; the mount collar passes over the collar tail cap. **Check:** slides with ≤ 0.3 mm play.
+   tail slots; the mount collar passes over the collar tail cap. A 2.5 mm cable tie threads each tie lug (two on each block, on
+   the inboard boss-tail walls; one on each collar, outboard). **Check:** slides with ≤ 0.3 mm play; ties pass.
 6. **Drill the motor plates.** Hold the motor on the canted plate face, centred on the shaft opening, and drill
    3.4 mm square to the face through the four pilots (follow the motor's real holes, not the pilots, if they
    differ). No slots (C6). **Check:** each M3×8 bites 3.5 mm (count the turns), no screw bottoms out.
@@ -42,7 +45,7 @@ wing is skinned**, and the half-fin roots are bonded **to bare foam**.
     Cure 24 h.
 11. **Half-fins.** Dry-fit each laminate: root LE in the boss slot, root on bare foam, LE ≤ 1 mm from the tube.
     Bond with 12 mm-leg microballoon fillets along the root (both sides) and an LE fillet to the tube up to the
-    notch. **Check:** vertical, lower link slot on the hinge line (x 0.238–0.262 m). Cure 1 h.
+    notch. Keep filler out of the lead hole and the boss tie lugs (F2 fits the grommets and ties, harness BUILD). **Check:** vertical, lower link slot on the hinge line (x 0.238–0.262 m). Cure 1 h.
 12. **Edge strips.** Scuff. Bond one strip on each face along the sloped top edge, from the LE to the square tip
     (x 0.280); the forward 40 mm stays free over the notch. Tape until cured. **Check:** no twist.
 13. **Station collars.** Butter the tongue, the tail slots and the ring bore. Drop each collar down the tube end

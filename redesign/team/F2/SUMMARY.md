@@ -4,7 +4,9 @@ Status `PROPOSED`, F2-R1, 2026-11-09 (first output, CR-A1-40). One script, `team
 wires as polylines through the real pod, wing, fin and propulsion geometry, checks the installation rules and
 writes the wire list, `subsystems/harness/` and 20 claims. Nothing is bench-tested. Re-run 15:32: `--check` exit 0,
 outputs fresh against current inputs; SPEC gained a removable-joint table (every removable joint has a disconnect or
-carries no wire; the pitot boom is pneumatic only).
+carries no wire; the pitot boom is pneumatic only). Re-verified 19:12 after the fins, landing, flight-software and
+transport updates: `--check` exit 0 (no stale output, same 122.6 g); no F2 drift in `build_graph.py`; CR-F2-01 to
+CR-F2-12 still open (allocation still 105 g in `params.json`).
 
 ## Deliverables
 

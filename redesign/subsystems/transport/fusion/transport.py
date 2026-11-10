@@ -2,6 +2,10 @@
 the pitot-boom and pouch pockets, cam straps, handles. Every part is `flight: false` (no mass, envelope, keep-out or
 floating checks). Built around the aircraft in its own frame: upright, cruise attitude, props off, pitot boom out.
 
+Fore-aft (aircraft x, round 3, C1 CR-C1-22): the foot pads sit 12 mm off the aft wall (trn.box.aft_gap_m) so the feet
+take an aft-wall drop; a 1 in PE nose pad on the front wall faces the pod nose. Props stowed in the tray are declared
+as `stowed` edges E-TRN-17...20 (the props stay at their flight station in CAD).
+
 Vertical stack (aircraft z): floor shell | free travel under the lower tube ends and feet (>= column bottoming stroke + 10 mm,
 team/D7/transport_calc.py CL-D7-TRAVEL) | aircraft envelope +/- env_z/2 | 10 mm | lid shell (no lining since D-31 round 2).
 Dimensions: params.json (wing, pod, cg, transport.envelope_props_off_m) and subsystems/transport/params.json (trn.*).
@@ -27,8 +31,9 @@ def frame(ctx):
     t, dbl, lin, gap = L(ctx, 'box.shell_t_m'), L(ctx, 'box.floor_doubler_t_m'), L(ctx, 'box.lid_lining_t_m'), \
         L(ctx, 'box.top_gap_min_m')
     env_z = v('transport.envelope_props_off_m', 'm')[2]
-    x0, x1 = v('pod.x_le_m', 'm'), v('wing.chord_m', 'm') + v('cg.foot_height_m', 'm')
-    xc = (x0 + x1) / 2
+    x1 = v('wing.chord_m', 'm') + v('cg.foot_height_m', 'm')            # foot pad tips (aft-most point)
+    xa = x1 + L(ctx, 'box.aft_gap_m') + t                                # aft wall outer face
+    xc = xa - Wb / 2
     travel = Hb - (t + dbl) - (t + lin) - env_z - gap
     zb = -env_z / 2 - travel - dbl - t
     return {'L': Lb, 'W': Wb, 'H': Hb, 't': t, 'dbl': dbl, 'lin': lin, 'xc': xc, 'xf': xc - Wb / 2, 'xa': xc + Wb / 2,
@@ -47,6 +52,9 @@ def build(ctx):
     base.box((xa - t, -Lh, zb + t), (xa, Lh, zt - t), name='aft wall')
     base.box((xf + t, -Lh, zb + t), (xa - t, -Lh + t, zt - t), name='end wall L')
     base.box((xf + t, Lh - t, zb + t), (xa - t, Lh, zt - t), name='end wall R')
+    npt, (npy, npz) = L(ctx, 'box.nose_pad_t_m'), L(ctx, 'box.nose_pad_size_m')
+    zn = v('pod.z_base_m', 'm') + v('pod.size_m', 'm')[2] / 2          # pod nose centre height
+    base.box((xf + t, -npy / 2, zn - npz / 2), (xf + t + npt, npy / 2, zn + npz / 2), name='nose pad')
     pt, (px, pz) = L(ctx, 'box.end_pad_t_m'), L(ctx, 'box.end_pad_size_m')
     xm = v('wing.chord_m', 'm') / 2
     for s in (1, -1):
@@ -72,12 +80,18 @@ def build(ctx):
     cr = ctx.part('TRN-002-R')
     cr.box((cx - fx / 2, yc - fy / 2, zf), (cx + fx / 2, yc + fy / 2, zf + ct), name='crush column')
     zs = zf + ct
-    n = 12
-    xs = [sx1 - (sx1 - 0.0) * i / n for i in range(n + 1)]                 # TE side -> LE along the lower surface
-    surf = [(x, k9.surface_z(coords, c, x / c, 'lower')) for x in xs]
+    zlow = lambda x: k9.surface_z(coords, c, x / c, 'lower')
     lip_z = L(ctx, 'cradle.cap_t_m')                                        # LE lip top, 6 mm above the chord plane
-    loop = [(sx0, zs), (sx1, zs)] + surf + [(-0.002, lip_z), (sx0, lip_z)]
-    cr.prism('Y', yc - cw / 2, [loop], cw, name='saddle')
+    # relief channel under the harness groove on the lower surface (round 3, F2 CR-F2-12): the saddle never bears on
+    # the taped ESC leads. Saddle = fore body (LE lip .. r0) + aft body (r1 .. sx1) + bridge under the channel.
+    (r0, r1), rd = L(ctx, 'cradle.relief_x_m'), L(ctx, 'cradle.relief_depth_m')
+    n = 8
+    aft = [sx1 - (sx1 - r1) * i / n for i in range(n + 1)]                  # TE side -> r1 along the lower surface
+    fore = [r0 - r0 * i / n for i in range(n + 1)]                          # r0 -> LE
+    cr.prism('Y', yc - cw / 2, [[(r1, zs), (sx1, zs)] + [(x, zlow(x)) for x in aft]], cw, name='saddle aft')
+    cr.prism('Y', yc - cw / 2, [[(sx0, zs), (r0, zs)] + [(x, zlow(x)) for x in fore] + [(-0.002, lip_z), (sx0, lip_z)]],
+             cw, name='saddle fore')
+    cr.box((r0, yc - cw / 2, zs), (r1, yc + cw / 2, min(zlow(r0), zlow(r1)) - rd), name='saddle bridge')
     k9.pair(ctx, 'TRN-002-R', 'TRN-002-L')
 
     # TRN-004-R hold-down pillar on the lid, over the spar, 5 mm preload onto the upper surface
@@ -95,9 +109,9 @@ def build(ctx):
     pouch = ctx.part('TRN-008')
     pouch.box((tx0 + tx - 0.15, -0.05, zb + t + tz - 0.045), (tx0 + tx - 0.01, 0.05, zb + t + tz), name='pouch')
 
-    # TRN-006-A/B cam straps around the box at y = +/-0.40; TRN-007 handles (side at y 0, both ends)
+    # TRN-006-L/R cam straps around the box at y = +/-0.40; TRN-007 handles (side at y 0, both ends)
     ys = L(ctx, 'box.strap_y_m')
-    for pid, y in (('TRN-006-A', -ys), ('TRN-006-B', ys)):
+    for pid, y in (('TRN-006-L', -ys), ('TRN-006-R', ys)):
         s = ctx.part(pid)
         s.box((xf - 0.002, y - 0.0125, zt), (xa + 0.002, y + 0.0125, zt + 0.002), name='over lid')
         s.box((xf - 0.002, y - 0.0125, zb - 0.002), (xa + 0.002, y + 0.0125, zb), name='under floor')
@@ -118,12 +132,16 @@ def build(ctx):
                     ('E-TRN-03', 'tray on the floor: LSE tape'),
                     ('E-TRN-04', 'pillar L on the lid shell: LSE tape'),
                     ('E-TRN-05', 'pillar R on the lid shell: LSE tape'),
-                    ('E-TRN-06', 'wing rests on cradle L (lower surface, spar line)'),
-                    ('E-TRN-07', 'wing rests on cradle R (lower surface, spar line)'),
-                    ('E-TRN-08', 'pillar L presses the upper surface over the spar, 5 mm preload'),
-                    ('E-TRN-09', 'pillar R presses the upper surface over the spar, 5 mm preload'),
+                    ('E-TRN-06', 'wing skin rests on cradle L (lower surface, spar line)'),
+                    ('E-TRN-07', 'wing skin rests on cradle R (lower surface, spar line)'),
+                    ('E-TRN-08', 'pillar L presses the upper skin over the spar, 5 mm preload'),
+                    ('E-TRN-09', 'pillar R presses the upper skin over the spar, 5 mm preload'),
                     ('E-TRN-10', 'plug lid on the base walls'),
                     ('E-TRN-11', 'cam strap A around the box'),
                     ('E-TRN-12', 'cam strap B around the box'),
                     ('E-TRN-16', 'field pouch in the tray pocket')):
         ctx.contact(e, note)
+    # stowed props (E1 PRP-003-*): registered, not touch-checked (the props stay at their flight station in CAD)
+    for e, st in (('E-TRN-17', 'UR'), ('E-TRN-18', 'UL'), ('E-TRN-19', 'LR'), ('E-TRN-20', 'LL')):
+        ctx.contact(e, 'prop %s stowed in a tray slot' % st)
+    ctx.contact('E-TRN-21', 'pitot boom AVN-005 stowed in its tray slot')

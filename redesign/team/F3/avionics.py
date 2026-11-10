@@ -11,6 +11,7 @@ Models (Python standard library only):
   airspeed:                                    dv = dq / (rho v); error budget RSS of independent terms
 All positions in the aircraft frame of params.json (x aft, y right, z up, origin wing root LE).
 """
+import json
 import math
 import sys
 from pathlib import Path
@@ -93,11 +94,17 @@ kit.assumption("ASM-F3-LOOP-AREAS", "Current-loop areas seen by the compass",
                      "pod path is twisted except over ~30 x 20 mm at the terminals; groove spacing from CR-F1-07. "
                      "Upper estimates; compassmot measures the real value",
                value=[1.0e-3, 6.0e-4, 0.005], unit="m2,m2,m", status="UNVERIFIED")
-kit.assumption("ASM-F3-ISOLATOR", "FC isolation mount", "natural frequency 35 Hz, damping ratio 0.10, board mass 0.042 kg",
-               basis="silicone gel pads (Kyosho Zeal class) under a ~40 g board; 35 Hz sits above the attitude "
-                     "control bandwidth (< 10 Hz, rule fn >= 20 Hz) and well below hover 1P (~90 Hz). zeta 0.10 is "
-                     "the low end for gel (less damping = better isolation, larger resonance)",
-               value=[35.0, 0.10, 0.042], unit="Hz,-,kg", status="UNVERIFIED")
+_AVN = Path(__file__).resolve().parents[2] / "subsystems" / "avionics"
+_AL = json.loads((_AVN / "params.json").read_text(encoding="utf-8"))
+_AIF = json.loads((_AVN / "interfaces.json").read_text(encoding="utf-8"))
+_alv = lambda k: _AL[k]["value"]
+kit.assumption("ASM-F3-ISOLATOR", "FC isolation mount (F3-R2: FC top board alone on 4 gel cubes)",
+               "[cube count, cube side m, cube height m, gel modulus Pa, damping ratio, board mass kg]",
+               basis="subsystems/avionics/params.json pad_m, gel_e_pa, fc_mass_g: silicone gel cubes (Zeal / alpha-gel "
+                     "class) under the corners of the 12 g FC board; the power board is split off to the PDB plate. "
+                     "E = 30 kPa and zeta 0.10 are class values: the 50 g sag test (BUILD.md) measures k",
+               value=[4, _alv("pad_m")[0], _alv("pad_m")[2], _alv("gel_e_pa"), 0.10, _alv("fc_mass_g") / 1000.0],
+               unit="-,m,m,Pa,-,kg", status="UNVERIFIED")
 kit.assumption("ASM-F3-ASPD-ERR", "Airspeed error terms after calibration",
                "MS4525DO resolution 1.05 Pa per count; zero drift in flight 3 Pa (after the pre-flight zero); "
                "ARSPD_RATIO residual after ARSPD_AUTOCAL and reciprocal GPS legs 2 %",
@@ -113,13 +120,13 @@ kit.assumption("ASM-F3-BEC", "FC BEC ratings carried", "FC 5 V BEC 2.4 A continu
                basis="lower of the maker manual and the ArduPilot page / listings (4 A, 8 A); the lower values are "
                      "carried until the manual PDF is opened",
                value=[2.4, 4.5], unit="A", status="UNVERIFIED", cites=["SRC-F3-COREWING-MANUAL", "SRC-F3-AP-COREWING"])
-kit.assumption("ASM-F3-MASS", "Avionics part masses",
-               "[part, g]: AVN-001 CoreWing F405 Wing APP V2 incl. power board 40 + pigtails 2; AVN-002 GPS 10; "
-               "AVN-003 RX + antennas 3; AVN-004 MS4525DO board 5; AVN-005 pitot tube, sleeve boom, 0.4 m tubing, "
-               "2 couplers 13; AVN-006 gel pads, tape, ties 5; AVN-007 microSD 0.5",
-               basis="FC from the ArduPilot page (40 g); the rest EST from listings and A3's model; weigh on arrival",
-               value=[["AVN-001", 42.0], ["AVN-002", 10.0], ["AVN-003", 3.0], ["AVN-004", 5.0], ["AVN-005", 13.0],
-                      ["AVN-006", 5.0], ["AVN-007", 0.5]], unit="g", status="UNVERIFIED",
+kit.assumption("ASM-F3-MASS", "Avionics part masses (from the CAD roll-up, team/F3/avn_data.py)",
+               "[part, g] as declared in subsystems/avionics/interfaces.json: FC top board + wireless board (no power "
+               "board, which is PWR-003), GPS, RX with antennas, MS4525DO board + 2 lines, pitot boom (probe, printed "
+               "sleeve, couplers), gel cubes + tape + ties + FC strap, microSD",
+               basis="seller figures where listed (GPS 7.73 g, RX 4.6 g, airspeed board 3.5 g, pitot 3.12 g); printed "
+                     "and silicone parts from CAD volume x density; FC 12 g EST; weigh on arrival (T-F3-ARRIVAL)",
+               value=[[p["id"], p["mass_g"]] for p in _AIF["parts"]], unit="g", status="UNVERIFIED",
                cites=["SRC-F3-AP-COREWING"])
 kit.assumption("ASM-F3-I2C-MAP", "Devices on the single I2C bus (I2C1)",
                "board baro SPL06 0x76; GPS compass QMC5883L 0x0D (or QMC5883P 0x2C); airspeed MS4525DO 0x28 (driver "
@@ -128,9 +135,11 @@ kit.assumption("ASM-F3-I2C-MAP", "Devices on the single I2C bus (I2C1)",
                value={"baro": [0x76], "compass": [0x0D, 0x2C], "airspeed_ms4525": [0x28, 0x36, 0x46],
                       "airspeed_ms5525": [0x76, 0x77]}, unit="-", status="PROPOSED",
                cites=["SRC-F3-HWDEF-COREWING", "SRC-F3-D7", "SRC-F3-AP-QMC5883"])
-kit.assumption("ASM-F3-FC-SIZE", "FC envelope on its mount", "52 x 32 x 17 mm board stack, no header pins, 6 mm gel/boss",
-               basis="ArduPilot page dimensions; signal leads soldered as 100 mm pigtails with in-line JR connectors",
-               value=[0.052, 0.032, 0.017, 0.006], unit="m", status="PROPOSED", cites=["SRC-F3-AP-COREWING"])
+kit.assumption("ASM-F3-FC-SIZE", "FC envelope on its mount", "FC top board L x W x H on 5 mm gel cubes",
+               basis="subsystems/avionics/params.json fc_board_m, pad_m; 52 x 32 footprint from the ArduPilot page; "
+                     "signal leads soldered as 100 mm pigtails with in-line JR connectors (no header pins)",
+               value=[_alv("fc_board_m")[0], _alv("fc_board_m")[1], _alv("fc_board_m")[2], _alv("pad_m")[2]], unit="m",
+               status="UNVERIFIED", cites=["SRC-F3-AP-COREWING"])
 kit.assumption("ASM-F3-GPS-TILT", "GPS antenna tilt", "patch normal tilted 45 deg from +z toward -x (the nose)",
                basis="a tailsitter arms, takes off and lands nose-up; a level patch faces the horizon then",
                value=45.0, unit="deg", status="PROPOSED")
@@ -181,19 +190,21 @@ def i2c(m):
 
 
 @kit.calc("CALC-F3-VIBE", title="FC isolation: transmissibility at hover 1P and 2P",
-          equation="T(r) = sqrt((1+(2 z r)^2)/((1-r^2)^2+(2 z r)^2)), r = f/fn, f1P = rpm/60, 2P = 2 f1P",
+          equation="k = n E a^2 / h; fn = sqrt(k/m)/2pi; T(r) = sqrt((1+(2 z r)^2)/((1-r^2)^2+(2 z r)^2)), r = f/fn, f1P = rpm/60",
           inputs={"rpm": "CL-B4-HOVER-RPM", "iso": "ASM-F3-ISOLATOR"}, units={"rpm": "rpm"})
 def vibe(rpm, iso):
-    fn, z, m = iso
+    n, a, h, E, z, m = iso
+    k = n * E * a * a / h                       # cubes in compression, parallel
+    fn = math.sqrt(k / m) / (2 * math.pi)
 
     def t(f):
         r = f / fn
         return math.sqrt((1 + (2 * z * r) ** 2) / ((1 - r * r) ** 2 + (2 * z * r) ** 2))
 
     f1 = rpm / 60.0
-    k = m * (2 * math.pi * fn) ** 2
     return {"f1p_hz": f1, "t_1p": t(f1), "t_2p": t(2 * f1), "r_1p": f1 / fn, "fn_hz": fn,
-            "k_total_n_per_m": k, "static_sag_mm": 9.80665 / (2 * math.pi * fn) ** 2 * 1000}
+            "fn_lateral_hz": fn / math.sqrt(3.0), "k_total_n_per_m": k,
+            "sag_50g_mm": 0.050 * 9.80665 / k * 1000}
 
 
 @kit.calc("CALC-F3-ASPD", title="Airspeed error budget at cruise",
@@ -289,7 +300,15 @@ kit.claim("CL-F3-VIBE-T1P", "FC mount transmissibility at hover 1P", calc="CALC-
           how="T-F3-VIBE: tethered hover, VIBE X/Y/Z < 30 m/s2, clip 0; batch-sampler FFT shows the 1P peak.")
 kit.claim("CL-F3-VIBE-FN", "FC mount natural frequency", calc="CALC-F3-VIBE", output="fn_hz", unit="Hz",
           limit=(">=", 20.0), parts=["AVN-006"],
-          how="Tap test on the mounted board with the IMU batch log; peak 25-45 Hz accepted.")
+          how="Bench: 50 g on the mounted board, caliper sag 0.6-1.2 mm (fn 32-45 Hz); then the batch-log tap test.")
+kit.claim("CL-F3-VIBE-FN-LAT", "FC mount lateral (shear) natural frequency", calc="CALC-F3-VIBE",
+          output="fn_lateral_hz", unit="Hz", limit=(">=", 15.0), parts=["AVN-006"],
+          note="shear modulus ~ E/3; must stay above the < 10 Hz attitude control band",
+          how="Batch-log tap test across the board; lateral peak above 15 Hz.")
+kit.claim("CL-F3-PAD-SAG", "Gel-cube sag under 50 g (bench acceptance value)", calc="CALC-F3-VIBE",
+          output="sag_50g_mm", unit="mm", limit=(">=", 0.6), parts=["AVN-006"],
+          note="0.6-1.2 mm accepted; less sag = stiffer than designed: use softer gel or smaller cubes",
+          how="BUILD.md step 3: 50 g mass on the board, caliper on the board edge before and after.")
 kit.claim("CL-F3-ASPD-ERR", "Airspeed error at cruise, RSS budget", calc="CALC-F3-ASPD", output="err_rss_ms",
           unit="m/s", limit=("<=", "P:requirements.airspeed_err_max_ms"), verifies=["R-AIRSPEED"],
           parts=["AVN-004", "AVN-005"],
@@ -320,7 +339,7 @@ kit.claim("CL-F3-SERVO-BEC", "FC servo BEC continuous rating carried", value=4.5
 kit.claim("CL-F3-MASS", "Avionics mass", calc="CALC-F3-MASS", output="value", unit="g",
           limit=("<=", "P:mass.allocation_g.avionics"),
           parts=["AVN-001", "AVN-002", "AVN-003", "AVN-004", "AVN-005", "AVN-006", "AVN-007"],
-          note="includes the CoreWing power board (PWR-003 position, 0 g in power); CR-F3-01 asks +5 g",
+          note="F3-R2: FC top board only; the CoreWing power board (~28 g) is PWR-003 at its own station (CR-F3-13)",
           how="Weigh each part on arrival; A3 replaces the EST rows.")
 kit.claim("CL-F3-FC-H", "FC height on its mount", calc="CALC-F3-FIT", output="h_mm", unit="mm",
           limit=("<=", 28.0), parts=["AVN-001", "POD-002"], note="limit from D2 CR-D2-06 (connectors up <= 28 mm)",

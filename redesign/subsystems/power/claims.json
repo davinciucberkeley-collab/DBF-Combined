@@ -1,0 +1,593 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/subsystems/power/power_claims.py",
+ "params": [
+  "../../params/params.json",
+  "params.json",
+  "../pod/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-PWR-BEND",
+   "type": "assumption",
+   "title": "Bend radius of fixed short jumpers",
+   "text": "Fine-strand silicone jumpers that are soldered at both ends, tied, and never flexed in service may be bent to an inside radius of 2 x OD",
+   "basis": "hobby practice for silicone power wire; NASA-STD-8739.4 class rules ask 3 x OD for general harness bundles that are handled. Check the formed jumper for insulation cracking at T-PWR-FIT",
+   "value": 2.0,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-PWR-R-BUDGET",
+   "type": "assumption",
+   "title": "Main-path wire resistance budget",
+   "text": "The aircraft-side wiring between the AS150U cups and the bus may add at most the 0.68 mOhm that the R2 8 AWG 0.15 m loop carried inside CL-F1-R-EXT 6.5 mOhm",
+   "basis": "team/F1/POWER.md voltage-drop table",
+   "value": 0.68,
+   "unit": "mOhm",
+   "status": "PROPOSED",
+   "cites": [
+    "CL-F1-R-EXT"
+   ]
+  },
+  {
+   "id": "ASM-PWR-BOND-PA",
+   "type": "assumption",
+   "title": "Epoxy on sanded nylon housing",
+   "text": "30 min epoxy on a 120-grit nylon (PA) connector housing gives >= 1 MPa lap shear",
+   "basis": "low-end class value; nylon bonds poorly unless abraded; coupon at T-PWR-ARRIVAL",
+   "value": 1.0,
+   "unit": "MPa",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-PWR-PARK-RF",
+   "type": "assumption",
+   "title": "Required reserve on the park bond",
+   "text": "The park bond needs a reserve factor of 3 on the unplug force (repeated every flight, peel at the housing edge, hand-mixed epoxy)",
+   "basis": "F1 choice, between C6's bond factors for printed parts",
+   "value": 3.0,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-PWR-JOINT-H",
+   "type": "assumption",
+   "title": "Room for the 16 AWG joints on the bars",
+   "text": "A 16 AWG lead soldered on top of a bus bar stands 2.6 mm (OD) + 2.4 mm fillet and heat-shrink proud",
+   "basis": "F1 estimate",
+   "value": 5.0,
+   "unit": "mm",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-PWR-MASS",
+   "type": "calculation",
+   "title": "Power subsystem flying mass",
+   "script": "redesign/subsystems/power/power_claims.py",
+   "function": "mass",
+   "equation": "m = pack + (AS150U half + 2 x (l1 + l2) x m'_10AWG) + board + bus + UBEC + frame + fuse + 4 x cap",
+   "inputs": {
+    "pack": "P:battery.mass_kg",
+    "as_g": "P:power.as150u_mass_g",
+    "jl": "P:power.jumper_len_m",
+    "wire": "P:power.wire_10awg",
+    "board": "P:power.board_mass_g",
+    "bus": "P:power.bus_mass_g",
+    "ubec": "P:power.ubec_mass_g",
+    "frame": "P:power.frame_mass_g",
+    "fuse": "P:power.fuse_mass_g",
+    "cap": "P:power.cap_mass_g"
+   },
+   "units": {
+    "pack": "kg",
+    "as_g": "g",
+    "board": "g"
+   },
+   "outputs": {
+    "total_g": 638.2,
+    "non_pack_g": 88.2,
+    "jumpers_g": 9.6
+   },
+   "input_values": {
+    "pack": 0.55,
+    "as_g": 9.0,
+    "jl": [
+     0.03,
+     0.05
+    ],
+    "wire": [
+     4.8,
+     3.28,
+     60.0
+    ],
+    "board": 28.0,
+    "bus": 7.3,
+    "ubec": 13.0,
+    "frame": 9.0,
+    "fuse": 3.5,
+    "cap": 2.2
+   }
+  },
+  {
+   "id": "CALC-PWR-JUMPER",
+   "type": "calculation",
+   "title": "10 AWG main jumpers: loop resistance and temperature rise",
+   "script": "redesign/subsystems/power/power_claims.py",
+   "function": "jumper",
+   "equation": "R = 2 (l1 + l2) r20 (1 + 0.00393 (T - 20)), T 60 degC; dT <= q L^2 / (8 k A), q = I^2 r (ends at terminal temperature)",
+   "inputs": {
+    "jl": "P:power.jumper_len_m",
+    "wire": "P:power.wire_10awg",
+    "i": "CL-F1-I-CONT",
+    "k": "P:power.k_cu_w_mk"
+   },
+   "units": {
+    "i": "A"
+   },
+   "outputs": {
+    "loop_mohm": 0.6072985599999999,
+    "rise_c": 0.5176967812848997,
+    "loss_w": 0.555981089598456
+   },
+   "input_values": {
+    "jl": [
+     0.03,
+     0.05
+    ],
+    "wire": [
+     4.8,
+     3.28,
+     60.0
+    ],
+    "i": 30.25721034830233,
+    "k": 400.0
+   }
+  },
+  {
+   "id": "CALC-PWR-BEND",
+   "type": "calculation",
+   "title": "Output-jumper drop vs two bends at the minimum radius",
+   "script": "redesign/subsystems/power/power_claims.py",
+   "function": "bend",
+   "equation": "ratio = drop / (2 k OD)",
+   "inputs": {
+    "drop": "P:power.jumper_drop_m",
+    "wire": "P:power.wire_10awg",
+    "k": "ASM-PWR-BEND"
+   },
+   "units": {
+    "drop": "m"
+   },
+   "outputs": {
+    "ratio": 1.2916666666666667
+   },
+   "input_values": {
+    "drop": 0.0248,
+    "wire": [
+     4.8,
+     3.28,
+     60.0
+    ],
+    "k": 2.0
+   }
+  },
+  {
+   "id": "CALC-PWR-ENGAGE",
+   "type": "calculation",
+   "title": "Frame screw thread engagement in the brass insert",
+   "script": "redesign/subsystems/power/power_claims.py",
+   "function": "engage",
+   "equation": "e = min(L - washer - deck - spacer, insert)",
+   "inputs": {
+    "s": "P:power.screw"
+   },
+   "outputs": {
+    "e_mm": 5.5,
+    "min_mm": 4.5
+   },
+   "input_values": {
+    "s": {
+     "len_mm": 18,
+     "deck_mm": 2.0,
+     "spacer_mm": 10.0,
+     "washer_mm": 0.5,
+     "insert_mm": 5.7,
+     "boss_bore_mm": 6.5
+    }
+   }
+  },
+  {
+   "id": "CALC-PWR-PARK",
+   "type": "calculation",
+   "title": "AS150U park bond reserve",
+   "script": "redesign/subsystems/power/power_claims.py",
+   "function": "park",
+   "equation": "RF = A tau / F_unplug",
+   "inputs": {
+    "a": "P:power.cradle_bond_mm2",
+    "tau": "P:power.bond_tau_pa",
+    "f": "P:power.unplug_force_n"
+   },
+   "units": {
+    "a": "mm2",
+    "f": "N"
+   },
+   "outputs": {
+    "rf": 28.0
+   },
+   "input_values": {
+    "a": 1400,
+    "tau": 1000000.0,
+    "f": 50.0
+   }
+  },
+  {
+   "id": "CALC-PWR-GEO",
+   "type": "calculation",
+   "title": "Power-stack geometry: GPS clearance, deck clearance over the bus joints, channel fit",
+   "script": "redesign/subsystems/power/power_claims.py",
+   "function": "geo",
+   "equation": "d = min |GPS - corner of any power box|; c = deck underside - bar top",
+   "inputs": {
+    "zb": "P:pod.z_base_m",
+    "tb": "P:fins.board_t_m",
+    "size": "P:pod.size_m",
+    "pack": "P:battery.size_m",
+    "tray_t": "P:tray_floor_t_m",
+    "plate_t": "P:plate_t_m",
+    "boss_h": "P:boss_h_m",
+    "bay": "P:bay_min_m",
+    "guide_t": "P:guide_t_m",
+    "aft": "P:pack_aft_face_m",
+    "pad_t": "P:pad_t_m",
+    "plate_x": "P:pdb_plate_x_m",
+    "pattern": "P:pdb_pattern_m",
+    "park": "P:park_x_m",
+    "ubec_x": "P:ubec_zone_x_m",
+    "stop": "P:aft_stop_m",
+    "bus_m": "P:power.bus_board_m",
+    "bar_m": "P:power.bar_m",
+    "spacer": "P:power.spacer_h_m",
+    "deck_t": "P:power.deck_t_m",
+    "board": "P:power.board_env_m",
+    "margin": "P:power.deck_margin_m",
+    "wall": "P:power.wall_t_m",
+    "win": "P:power.window_x_m",
+    "as_m": "P:power.as150u_half_m",
+    "wall_h": "P:power.cradle_wall_h_m",
+    "leg": "P:power.leg_m",
+    "fuse_m": "P:power.fuse_m",
+    "fuse_x0": "P:power.fuse_x0_m",
+    "ubec_m": "P:power.ubec_m",
+    "gps": "P:power.gps_xyz_m"
+   },
+   "outputs": {
+    "gps_m": 0.13783969856322234,
+    "deck_clr_mm": 11.140000000000004,
+    "channel_fit_mm": 1.850000000000001
+   },
+   "input_values": {
+    "zb": 0.015,
+    "tb": 0.0048,
+    "size": [
+     0.21,
+     0.14,
+     0.07
+    ],
+    "pack": [
+     0.14,
+     0.048,
+     0.05
+    ],
+    "tray_t": 0.001,
+    "plate_t": 0.0008,
+    "boss_h": 0.006,
+    "bay": [
+     0.16,
+     0.052,
+     0.053
+    ],
+    "guide_t": 0.0015,
+    "aft": [
+     0.069,
+     0.073
+    ],
+    "pad_t": 0.0025,
+    "plate_x": [
+     -0.038,
+     -0.004
+    ],
+    "pattern": 0.025,
+    "park": [
+     0.0,
+     0.06
+    ],
+    "ubec_x": [
+     0.044,
+     0.072
+    ],
+    "stop": [
+     0.003,
+     0.027
+    ],
+    "bus_m": [
+     0.036,
+     0.016,
+     0.0016
+    ],
+    "bar_m": [
+     0.025,
+     0.00326,
+     0.007
+    ],
+    "spacer": 0.01,
+    "deck_t": 0.002,
+    "board": [
+     0.042,
+     0.032,
+     0.009
+    ],
+    "margin": 0.001,
+    "wall": 0.002,
+    "win": 0.01,
+    "as_m": [
+     0.029,
+     0.022,
+     0.014
+    ],
+    "wall_h": 0.01,
+    "leg": [
+     0.004,
+     0.004
+    ],
+    "fuse_m": [
+     0.026,
+     0.011,
+     0.009
+    ],
+    "fuse_x0": 0.004,
+    "ubec_m": [
+     0.041,
+     0.023,
+     0.01
+    ],
+    "gps": [
+     0.076,
+     0.0,
+     0.178
+    ]
+   }
+  },
+  {
+   "id": "CL-PWR-MASS",
+   "type": "claim",
+   "title": "Power subsystem flying mass",
+   "calc": "CALC-PWR-MASS",
+   "output": "total_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mass.allocation_g.power"
+   },
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004",
+    "PWR-006",
+    "PWR-007",
+    "PWR-005"
+   ],
+   "how": "Weigh pack, frame stack and UBEC on a 1 g scale at T-PWR-ARRIVAL; fails today by the power board moved from avionics (CR-F1-19 transfers 28 g)",
+   "value": 638.2
+  },
+  {
+   "id": "CL-PWR-MASS-NONPACK",
+   "type": "claim",
+   "title": "Power mass without the pack",
+   "calc": "CALC-PWR-MASS",
+   "output": "non_pack_g",
+   "unit": "g",
+   "parts": [
+    "PWR-002",
+    "PWR-003",
+    "PWR-004",
+    "PWR-006",
+    "PWR-007",
+    "PWR-005"
+   ],
+   "how": "Weigh the built frame stack (board, bus, AS150U, fuse) and the UBEC",
+   "value": 88.2
+  },
+  {
+   "id": "CL-PWR-JUMPER-R",
+   "type": "claim",
+   "title": "Main jumpers loop resistance, hot",
+   "calc": "CALC-PWR-JUMPER",
+   "output": "loop_mohm",
+   "unit": "mOhm",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-PWR-R-BUDGET"
+   },
+   "parts": [
+    "PWR-002"
+   ],
+   "how": "4-wire milliohm reading AS150U cup to bus bar at T-F1-DROP",
+   "value": 0.6072985599999999
+  },
+  {
+   "id": "CL-PWR-JUMPER-RISE",
+   "type": "claim",
+   "title": "Main jumper temperature rise above its terminals at 30.3 A",
+   "calc": "CALC-PWR-JUMPER",
+   "output": "rise_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-002"
+   ],
+   "how": "Thermocouples on the jumper mid-point and the cup, 30 A for 10 min (T-F1-WIRE-HEAT)",
+   "value": 0.5176967812848997
+  },
+  {
+   "id": "CL-PWR-BEND",
+   "type": "claim",
+   "title": "Output jumper drop vs 2 bends at 2 x OD",
+   "calc": "CALC-PWR-BEND",
+   "output": "ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "PWR-002",
+    "PWR-006"
+   ],
+   "how": "Form the jumper on the printed frame before soldering (T-PWR-FIT); no insulation whitening",
+   "assumes": [
+    "ASM-PWR-BEND"
+   ],
+   "value": 1.2916666666666667
+  },
+  {
+   "id": "CL-PWR-ENGAGE",
+   "type": "claim",
+   "title": "Frame screw engagement in the M3 x 5.7 insert",
+   "calc": "CALC-PWR-ENGAGE",
+   "output": "e_mm",
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "value": 4.5
+   },
+   "parts": [
+    "PWR-006",
+    "POD-002"
+   ],
+   "how": "Count turns to seat (>= 9 turns of 0.5 mm) at T-PWR-FIT",
+   "value": 5.5
+  },
+  {
+   "id": "CL-PWR-PARK-RF",
+   "type": "claim",
+   "title": "AS150U park bond reserve on the unplug force",
+   "calc": "CALC-PWR-PARK",
+   "output": "rf",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-PWR-PARK-RF"
+   },
+   "parts": [
+    "PWR-002",
+    "PWR-006"
+   ],
+   "how": "Pull the bonded aircraft half with 150 N (3 x 50 N) on a luggage scale (T-PWR-PARK-PULL)",
+   "assumes": [
+    "ASM-PWR-BOND-PA"
+   ],
+   "value": 28.0
+  },
+  {
+   "id": "CL-PWR-GPS-CLR",
+   "type": "claim",
+   "title": "GPS to the nearest power item",
+   "calc": "CALC-PWR-GEO",
+   "output": "gps_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.gps_mast_clearance_m"
+   },
+   "parts": [
+    "PWR-002",
+    "PWR-003",
+    "PWR-004",
+    "PWR-006",
+    "PWR-007",
+    "PWR-005"
+   ],
+   "how": "Tape measure GPS centre to UBEC and AS150U on the built pod; COMPASSMOT at T-F3-COMPASSMOT",
+   "value": 0.13783969856322234
+  },
+  {
+   "id": "CL-PWR-DECK-CLR",
+   "type": "claim",
+   "title": "Deck underside above the bus bars",
+   "calc": "CALC-PWR-GEO",
+   "output": "deck_clr_mm",
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-PWR-JOINT-H"
+   },
+   "parts": [
+    "PWR-004",
+    "PWR-006"
+   ],
+   "how": "Dry-fit the deck over the soldered bus board (T-PWR-FIT): no contact",
+   "value": 11.140000000000004
+  },
+  {
+   "id": "CL-PWR-CHANNEL-FIT",
+   "type": "claim",
+   "title": "Frame deck inside the left channel",
+   "calc": "CALC-PWR-GEO",
+   "output": "channel_fit_mm",
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "parts": [
+    "PWR-006",
+    "POD-001"
+   ],
+   "how": "Drop the printed frame into the pod (T-PWR-FIT)",
+   "value": 1.850000000000001
+  },
+  {
+   "id": "T-PWR-ARRIVAL",
+   "type": "test",
+   "title": "Measure and weigh the bought power parts",
+   "verifies": [
+    "CL-PWR-MASS",
+    "CL-PWR-MASS-NONPACK"
+   ],
+   "state": "planned",
+   "procedure": "Calipers on the AS150U halves, the separated CoreWing power board (<= 42 x 32 x 9 mm) and the UBEC; 1 g scale on every part; unplug force of a mated AS150U pair with a luggage scale; epoxy coupon on a sanded spare housing"
+  },
+  {
+   "id": "T-PWR-FIT",
+   "type": "test",
+   "title": "Dry fit of the power stack in the pod",
+   "verifies": [
+    "CL-PWR-BEND",
+    "CL-PWR-ENGAGE",
+    "CL-PWR-DECK-CLR",
+    "CL-PWR-CHANNEL-FIT"
+   ],
+   "state": "planned",
+   "procedure": "Bus board taped, frame screwed (4 x M3x18 nylon), jumpers formed on the frame, AS150U seated, hatch closed"
+  },
+  {
+   "id": "T-PWR-PARK-PULL",
+   "type": "test",
+   "title": "Park bond pull",
+   "verifies": [
+    "CL-PWR-PARK-RF"
+   ],
+   "state": "planned",
+   "procedure": "After 24 h cure: 150 N along +x on the aircraft half through a mated pack half, 10 s; no movement"
+  }
+ ]
+}

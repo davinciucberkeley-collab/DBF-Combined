@@ -1,0 +1,17 @@
+part_id,name,qty,make_or_buy,process,material,mass_g,unit_cost_usd,vendor_or_file,notes
+PWR-001,"Flight pack 4S 6500 mAh (re-terminated AS150U, own 10 AWG leads 0.10 m)",1,buy,re-terminate (solder AS150U pack half),LiPo,550.0,41.49,team/I1/BOM.csv#P01 (Ovonic 4S 6500 130C 2-pack $82.97),"mass UNVERIFIED (listings 503-680 g, weigh on arrival); CG = pack centroid at the D-24 station; the body also shows the leads and the AS150U pack half"
+PWR-002,Main disconnect AS150U aircraft half + two 10 AWG main jumpers,1,buy,"solder, bond into PWR-006",electronics (bought),18.6,5.0,team/I1/BOM.csv#F01 (Amass AS150U pair),"AS150U half 9.0 g EST + 10 AWG jumpers 9.6 g (W-MAIN-1 0.030 m + W-MAIN-2 0.050 m, + and -); the wires are harness edges E-HRN-11/12, their mass is booked here (CR-F1-18)"
+PWR-003,"Power module: CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack",1,buy,"separate from the stack, foam-tape on PWR-006",electronics (bought),28.0,0.0,"team/I1/BOM.csv#A01 (part of the CoreWing V2 stack, F3)","90 A cont / 215 A peak sense, 64 A/V (CL-F3-SENSE-*); envelope allowance 42 x 32 x 9 mm UNVERIFIED; mass ~28 g EST moved from AVN-001 (F3 CR-F3-13, CR-F1-19)"
+PWR-004,Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -),1,make,"shear FR4, file isolation slot, solder bars",FR4 + copper (made),7.3,3.0,"FR4 1 oz single-sided sheet + 8 AWG offcut (team/I1/BOM.csv#F02, F08 replaced)","4 ESC pairs, the fuse feed and the main input solder to the bars; 36 x 16 mm between D2 boss rows"
+PWR-005,"UBEC 6.0 V, 8 A class, servo rail",1,buy,"set 6.0 V, foam-tape",electronics (bought),13.0,18.0,team/I1/BOM.csv#F05,"required 5.2 A (CL-F1-SERVO-BEC-REQ); output to the FC servo rail only, never paralleled with the FC BEC"
+PWR-006,"Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)",1,make,"FDM PETG, deck flat on the bed",PETG (printed),9.0,1.5,subsystems/power/fusion/power.py (export STL),"PETG 100 % (2 mm plates), 4 perimeters; screws, spacers, washers, tie and tape inside the mass"
+PWR-007,UBEC feed fuse 5 A mini blade in an inline holder,1,buy,"solder pigtails, snap into the clip",electronics (bought),3.5,6.0,team/I1/BOM.csv#F06,bus -> fuse -> UBEC (CR-F1-06); spare fuses in the field kit
+PWR-008,ESC capacitor 680 uF 25 V low-ESR (UR/UL/LR/LL),4,buy,"solder at the ESC pads, foam-tape",electronics (bought),2.2,1.0,"team/I1/BOM.csv#F07 (x5, 1 spare)","one per ESC, leads <= 20 mm"
+PWR-101,"M3x18 pan head screw, nylon PA66",6,buy,-,nylon PA66,0,0.1,any (nylon M3 assortment),4 + 2 spare; mass inside PWR-006
+PWR-102,"Nylon spacer M3, 10 mm, OD 6 / ID 3.2",6,buy,-,nylon PA66,0,0.1,any,4 + 2 spare; mass inside PWR-006
+PWR-103,M3 nylon washer 0.5 mm,6,buy,-,nylon PA66,0,0.02,any,mass inside PWR-006
+PWR-104,"Silicone wire 10 AWG red + black, 0.3 m each",1,buy,-,copper + silicone,0,4.0,team/I1/BOM.csv#F02 (replaces 8 AWG),main jumpers; mass inside PWR-002
+PWR-105,"FR4 sheet 1.6 mm, 1 oz copper one side, 100 x 70 mm",1,buy,-,FR4,0,3.0,any,bus board; 3 boards per sheet
+PWR-106,"Foam tape 3M VHB-class 1.1 mm, 25 mm wide",1,buy,-,acrylic foam,0,0.0,shared shop stock,"power board, bus board, UBEC, caps; mass inside each part"
+PWR-201,Second flight pack (ground: charge / rotate; flight false),1,buy,-,LiPo,0,41.49,team/I1/BOM.csv#P01,"not on the aircraft; 550 g in the LiPo bag, not in the flying roll-up"
+PWR-202,AS150U-to-XT60 charge lead (built from F01 + H03),1,make,solder,copper + PA,0,0.0,team/I1/BOM.csv#H03,ground item; 6.5 A charge

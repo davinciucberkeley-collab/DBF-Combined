@@ -40,3 +40,15 @@ Every dimension includes a 20 mm allowance for handles and straps. A pass on eit
 |---|---|---|---|---|---|
 | (car 1, named by the team lead) | | | | | |
 | (car 2, named by the team lead) | | | | | |
+
+## Loading the car (round 3)
+
+| Item | Where | How it is held | Why |
+|---|---|---|---|
+| Box 1.25 × 0.55 × 0.54 m, 5.8 kg | hatch floor lengthwise (seat folded), or across the back seat | a cam strap or the seat belt around the box; never on its end; nothing on the lid | the end-first and lid-down drops are label-only (`SPEC.md`) |
+| Battery can (2 packs), 3.3 kg | cabin floor behind a front seat | wedged by the seat; never in a closed trunk in the sun | packs 20–34 °C at flight (flight card, E2/H3); the can contains a pack fire |
+| Mat 0.8 × 0.4 m folded, 2.7 kg | flat under the box or on the floor beside it | under the box or wedged | a loose 2.7 kg panel must not slide into the box in a hard stop |
+| Tote, 0.6 kg | anywhere in the cabin | — | — |
+
+The car must take all four items at once with the box flat. A hatchback with one rear seat folded does this. In a
+sedan with the box across the back seat, the can and the mat go in the front footwell and the trunk.

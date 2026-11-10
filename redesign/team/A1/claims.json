@@ -125,7 +125,7 @@
     "gap_vertical_pair_m": 0.10060000000000002,
     "gap_lateral_pair_m": 0.36060000000000003,
     "gap_to_wingtip_m": 0.11529999999999996,
-    "gap_to_tube_face_m": 0.0422,
+    "gap_to_tube_face_m": 0.0417,
     "gap_disc_to_wing_plane_m": 0.03458800000000001,
     "gap_min_m": 0.03458800000000001
    },
@@ -135,7 +135,7 @@
     "z": 0.19,
     "b": 1.15,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "tube_od": 0.022,
     "t_c": 0.0982,
     "c": 0.32
@@ -168,9 +168,9 @@
    },
    "outputs": {
     "cg_height_corner_m": 0.318,
-    "cg_height_target_m": 0.3154,
+    "cg_height_target_m": 0.31579999999999997,
     "narrow_corner_deg": 30.591365808644905,
-    "narrow_target_deg": 34.65167747713215,
+    "narrow_target_deg": 34.61771919264407,
     "wide_corner_deg": 45.17961000574708,
     "footprint_m": [
      0.64,
@@ -181,9 +181,9 @@
     "c": 0.32,
     "x_range": [
      0.05,
-     0.055
+     0.0549
     ],
-    "x_target": 0.0526,
+    "x_target": 0.0522,
     "z_range": [
      -0.02,
      0.03
@@ -220,11 +220,11 @@
      0.49000000000000005
     ],
     "slack_m": [
-     0.050000000000000044,
-     0.017000000000000015,
+     0.04800000000000004,
+     0.0020000000000000018,
      0.052000000000000046
     ],
-    "slack_min_m": 0.017000000000000015
+    "slack_min_m": 0.0020000000000000018
    },
    "input_values": {
     "ext": [
@@ -234,8 +234,8 @@
     ],
     "wall": 0.025,
     "env": [
-     1.15,
-     0.483,
+     1.152,
+     0.498,
      0.438
     ]
    }
@@ -265,24 +265,55 @@
     "c": "m"
    },
    "outputs": {
-    "fwd_inside_m": 8.227511998068482e-05,
-    "aft_inside_m": 0.0002510582133526465,
-    "cg_pack_centred_m": 0.05152796462990878,
-    "centred_fwd_margin_m": 0.0015279646299087776,
-    "centred_aft_margin_m": 0.00347203537009122,
-    "sm_at_aft_limit": 0.0007845569167270194
+    "fwd_inside_m": 0.00047091634882622663,
+    "aft_inside_m": 5.437100749561968e-05,
+    "cg_pack_centred_m": 0.05480455674554822,
+    "centred_fwd_margin_m": 0.004804556745548215,
+    "centred_aft_margin_m": 9.54432544517797e-05,
+    "sm_at_aft_limit": 0.00016990939842381064
    },
    "input_values": {
     "x_range": [
      0.05,
-     0.055
+     0.0549
     ],
-    "x_fwd": 0.04991772488001932,
-    "x_aft": 0.05525105821335265,
-    "cg_centred": 0.0037230935834438664,
-    "x_np": 0.07125105821335265,
+    "x_fwd": 0.049529083651173776,
+    "x_aft": 0.05495437100749562,
+    "cg_centred": 0.00014981426194739939,
+    "x_np": 0.07095437100749562,
     "c": 0.32,
     "sm_min": 0.05
+   }
+  },
+  {
+   "id": "CALC-A1-PACK-STATION",
+   "type": "calculation",
+   "title": "Pack nominal station vs the station A3's roll-up needs (D-47)",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "pack_station",
+   "equation": "miss = x_nom - x_req ; room_left = fwd_room - |miss| ; aft_room_left = aft_room - |miss|",
+   "inputs": {
+    "x_nom": "P:pod.pack_x_nominal_m",
+    "x_req": "CL-A3-PACK-X-REQ",
+    "fwd_room": "CL-A3-PACK-FWD-ROOM",
+    "aft_room": "CL-A3-PACK-AFT-ROOM"
+   },
+   "units": {
+    "x_nom": "m",
+    "x_req": "m",
+    "fwd_room": "m",
+    "aft_room": "m"
+   },
+   "outputs": {
+    "miss_m": 0.00045496000000000425,
+    "fwd_room_left_m": 0.002945039999999996,
+    "aft_room_left_m": 0.272
+   },
+   "input_values": {
+    "x_nom": -0.022,
+    "x_req": -0.022454960000000003,
+    "fwd_room": 0.0034000000000000002,
+    "aft_room": 0.27245496
    }
   },
   {
@@ -323,23 +354,23 @@
     "gate_kg": "kg"
    },
    "outputs": {
-    "allocated_g": 2324,
-    "sized_kg": 2.594,
-    "reserve_cover_g": 6.0,
+    "allocated_g": 2355,
+    "sized_kg": 2.6,
+    "reserve_cover_g": 0.0,
     "gate_check_g": 0.0
    },
    "input_values": {
     "wing": 405,
-    "fins": 408,
-    "pod": 122,
+    "fins": 418,
+    "pod": 131,
     "landing": 43,
-    "propulsion": 476,
-    "power": 620,
-    "avionics": 80,
-    "harness": 105,
-    "mechanisms": 65,
-    "reserve": 276,
-    "growth_kg": 0.17,
+    "propulsion": 462,
+    "power": 648,
+    "avionics": 45,
+    "harness": 123,
+    "mechanisms": 80,
+    "reserve": 245,
+    "growth_kg": 0.145,
     "overrun_kg": 0.1,
     "gate_kg": 2.6
    }
@@ -369,16 +400,16 @@
    },
    "outputs": {
     "tw_gate": 2.4923076923076923,
-    "tw_gate_sag": 1.8941538461538463,
-    "tw_sized": 2.4980724749421745,
+    "tw_gate_sag": 2.120953846153846,
+    "tw_sized": 2.4923076923076923,
     "disk_loading_gate_Nm2": 103.9660028967778
    },
    "input_values": {
     "n": 4,
     "t_max": 1.62,
     "m_gate": 2.6,
-    "m_sized": 2.594,
-    "sag": 0.76,
+    "m_sized": 2.6,
+    "sag": 0.851,
     "D": 0.2794,
     "g": 9.80665
    }
@@ -434,11 +465,11 @@
     "spend": "USD"
    },
    "outputs": {
-    "reserve_usd": 319.6500000000001
+    "reserve_usd": 312.99
    },
    "input_values": {
     "budget": 2000.0,
-    "spend": 1680.35
+    "spend": 1687.01
    }
   },
   {
@@ -530,7 +561,7 @@
    "output": "narrow_target_deg",
    "unit": "deg",
    "how": "As CL-A1-TIPOVER with the pack at the target station; compare with C5's CL-C5-TIPOVER-R1 (32.8 deg, z_cg 0.017).",
-   "value": 34.65167747713215
+   "value": 34.61771919264407
   },
   {
    "id": "CL-A1-BOX-FIT",
@@ -547,7 +578,7 @@
     "R-TRANSPORT"
    ],
    "how": "Place the props-off aircraft in the built box on its cradles; lid closes without touching fins or tubes (D7).",
-   "value": 0.017000000000000015
+   "value": 0.0020000000000000018
   },
   {
    "id": "CL-A1-MASS-SIZED",
@@ -564,7 +595,7 @@
     "R-MASS-GATE"
    ],
    "how": "A3 roll-up of every parts.csv against MASS-CG.md (CL-A3-MASS-PREDICTED is the maturity-based prediction); weigh the built aircraft with pack (H1).",
-   "value": 2.594
+   "value": 2.6
   },
   {
    "id": "CL-A1-RESERVE-COVERS",
@@ -580,8 +611,8 @@
    "verifies": [
     "R-MASS-GATE"
    ],
-   "how": "growth_reserve_g in params.json minus (250 g growth allowance + 100 g build overrun); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.",
-   "value": 6.0
+   "how": "growth_reserve_g in params.json minus (growth allowance + 100 g build overrun; D-48: 145 + 100 = 245 g); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.",
+   "value": 0.0
   },
   {
    "id": "CL-A1-ALLOC-GATE",
@@ -632,8 +663,8 @@
     "R-HOVER-TW"
    ],
    "how": "Thrust-stand run on a pack at 3.6 V/cell after a cold soak at 10 degC (H1 GT-02, pass line CL-H1-T-PASS-SAG >= 1.102 kgf), or the fresh value x CL-E2-SAG-F-WORST.",
-   "note": "D-35: voltage_sag 0.76 is E2's limiter-consistent factor (CL-E2-SAG-F-WORST); E1's CL-E1-TW-WORST 2.18 (factor 0.854) is the other bound until the two publish one claim.",
-   "value": 1.8941538461538463
+   "note": "D-49: voltage_sag 0.851 is the one E1/E2 calculation (CALC-E1-WORST on E2's cell data and F1's r_ext 6.5 mOhm, CL-E1-SAG-FACTOR; CL-E1-TW-WORST 2.12); was 0.76 (D-35).",
+   "value": 2.120953846153846
   },
   {
    "id": "CL-A1-STALL-GATE",
@@ -685,7 +716,7 @@
     "R-BUDGET"
    ],
    "how": "I1 re-prices the BOM at order time; reserve = 2 000 - spend, pessimistic column.",
-   "value": 319.6500000000001
+   "value": 312.99
   },
   {
    "id": "CL-A1-CG-RANGE-FWD",
@@ -703,7 +734,7 @@
    ],
    "how": "Re-run after any B3 publish; the built aircraft is balanced at both marks (T-A3-CG-BALANCE, H1 GT-07).",
    "note": "D-24 (closes D-17): params carry B3's range rounded inward; recomputes when B3 re-runs for the 7 deg cant and 0.21 m fins.",
-   "value": 8.227511998068482e-05
+   "value": 0.00047091634882622663
   },
   {
    "id": "CL-A1-CG-RANGE-AFT",
@@ -721,12 +752,12 @@
     "R-STATIC-MARGIN"
    ],
    "how": "As CL-A1-CG-RANGE-FWD; static margin at the aft mark from the twin's glide tests (T-B3-TWIN-NP).",
-   "value": 0.0002510582133526465
+   "value": 5.437100749561968e-05
   },
   {
    "id": "CL-A1-CG-CENTRED",
    "type": "claim",
-   "title": "Pack centred in the pod at x_le -0.105 layout: CG margin to the forward end of the range",
+   "title": "Pack at B3's nominal station: CG margin to the forward end of the range (B3's roll-up input)",
    "calc": "CALC-A1-CG-RANGE",
    "output": "centred_fwd_margin_m",
    "unit": "m",
@@ -737,9 +768,31 @@
    "verifies": [
     "R-CG-RANGE"
    ],
-   "how": "A3 roll-up at the R3 allocations (CL-A3-CG-X-RANGE); balance test with the pack at the nominal station.",
-   "note": "D-24: the pod stays; A3 sets the pack nominal centroid to x -0.001 m (4 mm aft of the old pod centre) and D2 lays the bay for it.",
-   "value": 0.0015279646299087776
+   "how": "A3 roll-up at the R4 allocations (CL-A3-CG-X-RANGE); balance test with the pack at the nominal station.",
+   "note": "D-24 set the pack at x -0.001; D-47 moves the bay 21 mm forward (pod.pack_x_nominal_m -0.022) after the delivered parts lists put the CG at 0.0577 m. B3's CL-B3-CG-CENTRED-AFT is still its R3 value (A3-R3 CG 0.0548): B3 re-runs on A3's next roll-up.",
+   "value": 0.004804556745548215
+  },
+  {
+   "id": "CL-A1-PACK-STATION",
+   "type": "claim",
+   "title": "Pack nominal station (D-47) is inside the forward trim room of the station A3 needs",
+   "calc": "CALC-A1-PACK-STATION",
+   "output": "fwd_room_left_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "parts": [
+    "PWR-001",
+    "POD-008"
+   ],
+   "how": "D2 re-lays the bay (forward stop -0.1212), A3 re-runs the roll-up with the pack at the new station, then T-A3-CG-BALANCE with each pack at its marked station.",
+   "note": "D-47: pod.pack_x_nominal_m -0.022 against CL-A3-PACK-X-REQ -0.0225 (A3-R5, CG 0.053 target); the 0.5 mm miss is 0.1 mm of CG and sits inside the 3.4 mm forward room. Per weighed pack: 680 g at -0.014, 550 g at -0.022, 503 g at -0.0245.",
+   "value": 0.002945039999999996
   },
   {
    "id": "T-A1-WEIGH",

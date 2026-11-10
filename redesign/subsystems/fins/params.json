@@ -717,6 +717,108 @@
     "status": "PROPOSED",
     "note": "restrained ground run, per tie"
    }
+  },
+  "wire_hole": {
+   "x_m": {
+    "value": 0.086,
+    "unit": "m",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-05",
+    "status": "PROPOSED",
+    "note": "centre of the ESC-lead hole through every half-fin; 8 mm aft of the boss tail (x 0.074), 0 mm overlap with the ESC pad (z 0.104-0.132)"
+   },
+   "off_skin_m": {
+    "value": 0.022,
+    "unit": "m",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-05 (D3: raised from 10 mm, CR-D3-23)",
+    "status": "PROPOSED",
+    "note": "hole centre above the upper skin / below the lower skin at x_m. F2 asked 10 mm; raised so the hole edge (18 mm) and the grommet flange (17 mm) clear the 12 mm root fillet and the 15 mm skin-tape lap (CL-D3-WIRE-HOLE-CLEAR)"
+   },
+   "d_m": {
+    "value": 0.008,
+    "unit": "m",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-05",
+    "status": "PROPOSED",
+    "note": "drilled after laminating; F2 bonds a printed ASA grommet 10/7 mm (harness part, CA)"
+   }
+  },
+  "tie_lug": {
+   "slot_x_m": {
+    "value": 0.003,
+    "unit": "m",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-05",
+    "status": "PROPOSED",
+    "note": "tie slot along x, for a 2.5 x 100 mm cable tie"
+   },
+   "slot_y_m": {
+    "value": 0.0015,
+    "unit": "m",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-05",
+    "status": "PROPOSED",
+    "note": "tie slot normal to the face"
+   },
+   "skin_m": {
+    "value": 0.0007,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "printed skin between the slot and the face it stands on"
+   },
+   "bar_m": {
+    "value": 0.0012,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "outer bar over the slot (3 perimeters at 0.4 mm)"
+   },
+   "post_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "posts each side of the slot along x"
+   },
+   "embed_m": {
+    "value": 0.0005,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "lug sunk into the face it stands on (one body in the print)"
+   },
+   "h_m": {
+    "value": 0.005,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "lug height along z; slot open at both ends"
+   },
+   "boss_x_m": {
+    "value": 0.071,
+    "unit": "m",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-05",
+    "status": "PROPOSED",
+    "note": "boss-tail lug centre, inboard face of the bore-boss slot wall, upper and lower boss (E-HRN-03/05)"
+   },
+   "boss_clear_m": {
+    "value": 0.002,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "gap between the skin and the lug so the tie turns under it"
+   },
+   "collar_x_m": {
+    "value": 0.084,
+    "unit": "m",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-05",
+    "status": "PROPOSED",
+    "note": "collar-tail lug centre, outboard face of the outboard tail wall (E-HRN-06...09)"
+   },
+   "collar_drop_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "lug top below the tail top edge at the lug forward end (mount and cap stay clear)"
+   }
   }
  }
 }

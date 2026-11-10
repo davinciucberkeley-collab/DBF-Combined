@@ -33,7 +33,8 @@ opening): exact planes. The brace is a ruled Y-loft between two (x, z) rectangle
 UNVERIFIED-IN-FUSION: lofts of the canted plate and braces; the block socket is flat-topped at the local surface
 (sand flush); the brace slots in the ear and anchor are where the brace body overlaps them (cut with the brace body as
 the tool in Fusion); the pin holes are where the pins overlap strips and board (drilled after cure); C-shaped loops
-(slit collar, keyhole bosses) untested in Fusion.
+(slit collar, keyhole bosses) untested in Fusion. Harness provisions (CR-F2-05): an 8 mm lead hole in every
+half-fin and 3 x 1.5 mm tie lugs on the boss tails (inboard) and collar tails (outboard).
 """
 import json
 import math
@@ -226,6 +227,15 @@ def geometry(P, LP, coords):
     G['pad_z'], G['pad_t'] = l('esc_pad.z_m', 'm'), l('esc_pad.t_m', 'm')
     G['pad_slot'], G['pad_slot_edge'] = l('esc_pad.slot_m', 'm'), l('esc_pad.slot_edge_m', 'm')
 
+    # harness provisions (CR-F2-05): ESC-lead hole through every half-fin, tie lugs on the boss tail and collar tail
+    G['wh_x'], G['wh_r'] = l('wire_hole.x_m', 'm'), l('wire_hole.d_m', 'm') / 2
+    G['wh_z'] = G['zu'](G['wh_x']) + l('wire_hole.off_skin_m', 'm')            # upper; lower mirrors on zl
+    G['wh_zl'] = G['zl'](G['wh_x']) - l('wire_hole.off_skin_m', 'm')
+    G['tl'] = {k: l('tie_lug.' + k, 'm') for k in ('slot_x_m', 'slot_y_m', 'skin_m', 'bar_m', 'post_m', 'embed_m',
+                                                    'h_m', 'boss_x_m', 'boss_clear_m', 'collar_x_m', 'collar_drop_m')}
+    G['tl_depth'] = G['tl']['skin_m'] + G['tl']['slot_y_m'] + G['tl']['bar_m']    # proud of the face
+    G['tl_len'] = G['tl']['slot_x_m'] + 2 * G['tl']['post_m']
+
     # bond areas (mm2) for the interfaces.json bond blocks
     G['A_collar_tube'] = math.pi * G['od'] * G['sc_h'] * 1e6
     G['A_strip_tail'] = 2 * G['strip_tail_len'] * G['es_w'] * 1e6
@@ -300,8 +310,21 @@ def half_fin_loop(G, upper):
 
 
 def build_half_fin(part, G, upper):
-    return part.prism('Y', G['yf'] - G['t_fin'] / 2, [half_fin_loop(G, upper)], G['t_fin'],
+    """Laminate with the Ø 8 mm ESC-lead hole (CR-F2-05; drilled after laminating, F2's grommet goes in it)."""
+    hole = circle(G['wh_x'], G['wh_z'] if upper else G['wh_zl'], G['wh_r'], 24)
+    return part.prism('Y', G['yf'] - G['t_fin'] / 2, [half_fin_loop(G, upper), hole], G['t_fin'],
                       name='half-fin laminate (2 boards)')
+
+
+def tie_lug(part, G, xc, y_face, out, z0, name):
+    """Cable-tie bridge on a face normal to y at y_face, standing out in direction out (+1/-1): posts and an outer
+    bar around a 3 x 1.5 mm slot open at both z ends. One printed body with the part (sunk embed_m into the face)."""
+    t = G['tl']
+    ya, yb = y_face - out * t['embed_m'], y_face + out * G['tl_depth']
+    ys0, ys1 = y_face + out * t['skin_m'], y_face + out * (t['skin_m'] + t['slot_y_m'])
+    outer = rect(xc - G['tl_len'] / 2, min(ya, yb), xc + G['tl_len'] / 2, max(ya, yb))
+    slot = rect(xc - t['slot_x_m'] / 2, min(ys0, ys1), xc + t['slot_x_m'] / 2, max(ys0, ys1))
+    return part.prism('Z', z0, [outer, slot], t['h_m'], name=name)
 
 
 def build_edge_strip(part, G, outboard):
@@ -338,6 +361,10 @@ def build_station_collar(part, G):
     xc = G['xt'] + G['col_r'] + G['sc_clear'] * 2.5                 # cap starts aft of the mount collar (0.5 mm)
     cap = [(xc, top(xc)), (x1, top(x1)), (x1, top(x1) + G['sc_cap']), (xc, top(xc) + G['sc_cap'])]
     part.prism('Y', yf - yw - G['sc_wall'], [cap], 2 * (yw + G['sc_wall']), name='tail cap')
+    # phase-lead tie lug on the outboard wall (E-HRN-06...09, CR-F2-05); top below the tail edge at the lug's front
+    xl = G['tl']['collar_x_m']
+    zt = top(xl - G['tl_len'] / 2) - G['tl']['collar_drop_m']
+    tie_lug(part, G, xl, yf + yw + G['sc_wall'], 1, zt - G['tl']['h_m'], 'phase tie lug')
 
 
 def build_brace(part, G, upper):
@@ -373,6 +400,13 @@ def build_block(part, G):
         zc = z0 + G['eye_h'] / 2
         part.prism('X', xt - G['eye_t'] / 2, [rect(y0, z0, y1, z0 + G['eye_h']), circle(yh, zc, G['eye_hole_r'], 16)],
                    G['eye_t'], name='strap eye')
+    # ESC-lead tie lugs on the inboard face of the boss-tail slot wall, upper and lower boss (E-HRN-03/05, CR-F2-05)
+    t, xl = G['tl'], G['tl']['boss_x_m']
+    y_in = yf - G['boss_slot_hw'] - G['boss_slot_wall']
+    zs_u = max(G['zu'](xl + d * G['tl_len'] / 2) for d in (-1, 1)) + t['boss_clear_m']
+    zs_l = min(G['zl'](xl + d * G['tl_len'] / 2) for d in (-1, 1)) - t['boss_clear_m']
+    tie_lug(part, G, xl, y_in, -1, zs_u, 'lead tie lug (upper)')
+    tie_lug(part, G, xl, y_in, -1, zs_l - t['h_m'], 'lead tie lug (lower)')
 
 
 def plate_cells(G):
@@ -445,7 +479,7 @@ def part_specs(G=None):
     L = '%.0f mm' % (G['L_tube'] * 1000) if G else '344 mm'
     S = []
     for st in STATIONS:
-        S.append(('FIN-001-' + st, 'Half-fin %s, two-layer foam board, square 40 mm tip%s'
+        S.append(('FIN-001-' + st, 'Half-fin %s, two-layer foam board, square 40 mm tip, 8 mm lead hole%s'
                   % (SNAME[st], ', link slot' if st[0] == 'L' else ''), BOARD, 'make', 'board'))
     for s in ('R', 'L'):
         S.append(('FIN-002-' + s, 'Motor tube %s, CF 22x20 x %s' % (s, L), CF, 'buy', 'tube'))
@@ -453,7 +487,7 @@ def part_specs(G=None):
         S.append(('FIN-003-' + st, 'Motor mount %s, ASA, 7 deg canted plate, slip clamp (print %s)'
                   % (st, 'A' if st in ('UR', 'LL') else 'B'), ASA, 'make', 'mount'))
     for s in ('R', 'L'):
-        S.append(('FIN-004-' + s, 'Through-core block %s (tube socket + spar saddle + 2 strap eyes)' % s, PETG, 'make',
+        S.append(('FIN-004-' + s, 'Through-core block %s (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)' % s, PETG, 'make',
                   'block'))
     for s in ('R', 'L'):
         S.append(('FIN-006-' + s, 'Tube plug %s, CF 20x18 x 53 mm inside the tube at the block' % s,
@@ -461,7 +495,7 @@ def part_specs(G=None):
     for st in STATIONS:
         S.append(('FIN-007-' + st, 'ESC pad %s, ASA, on the outboard face of half-fin %s' % (st, st), ASA, 'make', 'pad'))
     for st in STATIONS:
-        S.append(('FIN-008-' + st, 'Station collar %s, 16 mm, 40 mm two-face tail + brace ear' % st, PETG, 'make',
+        S.append(('FIN-008-' + st, 'Station collar %s, 16 mm, 40 mm two-face tail + brace ear + tie lug' % st, PETG, 'make',
                   'collar'))
     for st in STATIONS:
         S.append(('FIN-009-' + st, 'Brace %s, CF strip 10 x %.0f' % (st, G['br_t'] * 1000 if G else 2), CFS, 'buy', 'brace'))

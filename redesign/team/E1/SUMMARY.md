@@ -1,8 +1,9 @@
 # E1 Propulsion — summary
 
-Status: `UNVERIFIED` (modelled from catalogue data; the thrust stand has not run). Revision 2, 2026-11-09.
-Detail: [`PROPULSION.md`](PROPULSION.md). Model and claims: `propulsion.py` → `claims.json` (38 claims) and
-`subsystems/propulsion/parts.csv`. Requests: [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md) (CR-E1-14 to -21 are new).
+Status: performance `UNVERIFIED` (catalogue data; the thrust stand has not run) · stations `MODELLED` (Fusion
+module; `check.py` propulsion 0 errors). Revision 4, 2026-11-09. Detail: [`PROPULSION.md`](PROPULSION.md). Model and
+claims: `propulsion.py` → `claims.json`. Subsystem: [`subsystems/propulsion/SPEC.md`](../../subsystems/propulsion/SPEC.md).
+Requests: [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md) (rev 4: CR-E1-22 rev, CR-E1-29 to -34).
 
 ## Decision
 
@@ -18,29 +19,34 @@ Detail: [`PROPULSION.md`](PROPULSION.md). Model and claims: `propulsion.py` → 
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Hover thrust per motor (download 1.06, cant 3°) | 6.77 | N | `CL-E1-HOVER-T` | `UNVERIFIED` |
-| Hover pack current / power | 27.1 / 335–401 | A / W | `CL-E1-HOVER-I-55` | `UNVERIFIED` |
-| T/W fresh pack with the limiter | 2.50 | — | `CL-E1-ILIM-TW-FRESH` | `UNVERIFIED` |
-| **T/W worst pack state (one E1 + E2 claim)** | **2.18** (limit 1.6) | — | `CL-E1-TW-WORST` | `UNVERIFIED` |
-| Sag factor, worst ÷ fresh (replaces params 0.72) | 0.854 | — | `CL-E1-SAG-FACTOR` | `UNVERIFIED` |
-| Per-motor current with the limiter | 24.8 | A | `CL-E1-ILIM-I` | `UNVERIFIED` |
-| Cruise pack power | 201–247 | W | `CL-E1-CRUISE-P-55` | `UNVERIFIED` |
-| Transition thrust margin (worst point) | 2.19 | — | `CL-E1-CORRIDOR-55` | `UNVERIFIED` |
-| Motor out: hover T/W / cruise roll torque | 1.09 (fatal: yaw) / 0.23 | — / N·m | `CL-E1-MOTOROUT-*` | `UNVERIFIED` |
-| Mount face to prop mid-plane | 37.3 | mm | `CL-E1-STACK-PROP-PLANE` | `UNVERIFIED` |
-| Propulsion mass incl. leads, adapters, screws | 475.6 (allocation 440) | g | `CL-E1-MASS-PRP` | `FAIL` |
+| Hover thrust per motor (download 1.06, cant 7°) | 6.81 | N | `CL-E1-HOVER-T` | `UNVERIFIED` |
+| Hover pack current | 27.3 | A | `CL-E1-HOVER-I-55` | `UNVERIFIED` |
+| T/W fresh pack with the limiter / worst pack state | 2.47 / 2.12 (limits 2.0 / 1.6) | — | `CL-E1-ILIM-TW-FRESH`, `CL-E1-TW-WORST` | `UNVERIFIED` |
+| Per-motor current with the limiter / unlimited burst at 16.8 V | 24.75 / 51.6 | A | `CL-E1-ILIM-I`, `CL-E1-IMAX-168-55` | `UNVERIFIED` |
+| Cruise propulsion power (16 m/s) | 234 | W | `CL-E1-CRUISE-P-55` | `UNVERIFIED` |
+| Mount face → prop mid-plane (stack) | 37.3 | mm | `CL-E1-STACK-PROP-PLANE` | `UNVERIFIED` |
+| Modelled hub x on the canted axis / vs datum `DP-PROP` | −0.0062 m / +2.0 mm | — | `CL-E1-CAD-HUB-X`, `-VS-DATUM` | `MODELLED` |
+| Prop plane to collar / 0.14 D | 0.97 | — | `CL-E1-CAD-PROP-GAP` | `FAIL` → CR-E1-22 |
+| Canted-disc tip excursion / keep-out half | 25.0 / 33 | mm | `CL-E1-KO-TILT` | `CHECKED` |
+| ESC strap-slot clearance ratio (pad 28 mm) | 0.90 | — | `CL-E1-ESC-SLOT` | `FAIL` → CR-E1-30 |
+| Adapter M3×4 thread strip RF (2.0 mm, 0.5 N·m) | 1.70 (≥ 1.5) | — | `CL-E1-ADAPTER-STRIP` | `UNVERIFIED` |
+| Propulsion mass vs allocation (D-34) | 475.6 / 476 | g | `CL-E1-MASS-PRP` | `UNVERIFIED` (weigh) |
 
-## Action items closed this revision
+## Rev 4 deliverables (`subsystems/propulsion/`)
 
-| Item | Result | Status |
+| File | What | Status |
 |---|---|---|
-| Re-run `propulsion.py` (drift) | Re-run on the current params (16 m/s, c 0.32, L/D 5.6, cant 3°); `build_graph.py` shows no `CALC-E1` drift. The remaining errors are A5, B2, B3 and E2 drift (E2 is downstream of my new cruise power) | `CHECKED` |
-| Sag 0.72 vs 0.86 | One claim, `CL-E1-TW-WORST` 2.18, from my station model with E2's pack assumptions. E2's (V/V)² on an already current-limited thrust counted the sag twice (CR-E1-15) | `MODELLED` |
-| CR-A3-05 | `subsystems/propulsion/parts.csv`: 5 lines, 118.9 g per station; motor 81 g with factory leads, ESC 11 g `EST` with leads | `MODELLED` |
-| CR-A4-06, CR-A5-06 | Bolt pattern not published: slotted mount until measured. M3×8, 5 mm plate, 3.0 mm engagement. Bolt-on M6 adapter (LH on CW motors). Hub 8.9 mm; stack 37.3 mm to the mid-plane, 48.1 mm to the post tip (CR-E1-16, -17) | `UNVERIFIED` |
+| `fusion/propulsion.py` | 16 components: motor (base boss, bell, shaft, E-clip, lead exit), adapter + washer + nut, prop (hub + twisted blades), ESC; each stack rotated 7° onto D3's canted plate; rigid joints `E-PRP-01…08`; `KO-PROP-<st>` | `MODELLED`, `UNVERIFIED-IN-FUSION` |
+| `make_propulsion.py` | writes `interfaces.json` (CAD-centroid CGs, joint stacks, 16 acknowledgements) from the module and `parts.csv` | `CHECKED` |
+| `params.json` · `parts.csv` | bought-part envelopes and spares · per-unit masses (written by `propulsion.py`) | `UNVERIFIED` |
+| `SPEC.md` · `BUILD.md` | one page · nine numbered steps for G4 | `PROPOSED` |
+
+Checks (2026-11-09): `fusion/check.py` propulsion `ok`, 0 errors, 8 WARN `unpowered` (ESC power edges wait for the
+`PWR` nodes); every touch, joint-origin, wire-end and keep-out check on PRP parts passes. `merge_check.py` 0
+propulsion errors. `build_graph.py` no `CALC-E1` drift (other roles' drift remains).
 
 ## Verify
 
-`python -I redesign/team/E1/propulsion.py` → `python -I redesign/proofs/build_graph.py` (no `CALC-E1` drift); then
-`T-E1-MOTOR-RM` (incoming: masses, bolt pattern, hole depth, lead length, R, I0) and `T-E1-STAND` (fresh pack and a cold
-pack at 3.73 V/cell).
+`python -I redesign/team/E1/propulsion.py` → `python -I redesign/subsystems/propulsion/make_propulsion.py` →
+`python -I redesign/fusion/check.py` → `python -I redesign/proofs/build_graph.py`; hardware `T-E1-MOTOR-RM`
+(masses, bolt pattern, hole and bell-thread depth, lead and post length, R, I0), `T-E1-STAND`, `T-C6-PROPNUT`.

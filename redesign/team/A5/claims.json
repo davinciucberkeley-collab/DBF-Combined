@@ -1640,6 +1640,297 @@
    "value": 1.2048449128526808
   },
   {
+   "id": "ASM-A5-ASSY-ROLLUP",
+   "type": "assumption",
+   "title": "Assembled CAD roll-up of the delivered subsystem modules",
+   "text": "Declared part masses and CGs (interfaces.json) of the ten modules check.py builds from redesign/subsystems, summed by merge_check.rollup; per subsystem [mass g, CG x m, share of the CG shift from the R3 skeleton mm]",
+   "basis": "python -I redesign/team/A5/integration_check.py (snapshot team/A5/integration.json, tables in INTEGRATION.md); declared masses are the designers' CAD/datasheet numbers, not weighed",
+   "value": {
+    "date": "2026-11-09",
+    "mass_g": 2330.3,
+    "cg_m": [
+     0.05766,
+     -0.00111,
+     0.01832
+    ],
+    "errors": 5,
+    "warnings": 47,
+    "skeleton_cg_x_m": 0.05214,
+    "by_subsystem": {
+     "wing": [
+      387.3,
+      0.1140104828298477,
+      -0.75
+     ],
+     "fins": [
+      417.3,
+      0.09661151634237529,
+      -0.59
+     ],
+     "pod": [
+      128.1,
+      0.00032349726775956225,
+      0.4
+     ],
+     "landing": [
+      42.5,
+      0.32032892133772994,
+      -0.39
+     ],
+     "propulsion": [
+      475.6,
+      0.020392346509671998,
+      1.22
+     ],
+     "mechanisms": [
+      82.3,
+      0.22041017731357784,
+      1.09
+     ],
+     "power": [
+      638.2,
+      0.0014359135067377,
+      3.23
+     ],
+     "avionics": [
+      36.5,
+      -0.019833442982456144,
+      1.35
+     ],
+     "harness": [
+      122.5,
+      0.06704514285714284,
+      -0.05
+     ],
+     "transport": [
+      0,
+      null,
+      0.0
+     ]
+    }
+   },
+   "unit": "mixed",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "CALC-A5-ASSY",
+   "type": "calculation",
+   "title": "Assembled CAD: mass, CG and check.py result",
+   "script": "redesign/team/A5/cad_claims.py",
+   "function": "assy",
+   "equation": "read the roll-up; range use = |x_cg - mid| / half-range; shift = x_cg - x_cg(skeleton)",
+   "inputs": {
+    "snap": "ASM-A5-ASSY-ROLLUP",
+    "x_range": "P:cg.x_range_m",
+    "z_range": "P:cg.z_range_m",
+    "gate_kg": "P:requirements.mtow_gate_kg"
+   },
+   "units": {
+    "snap": "mixed",
+    "x_range": "m",
+    "z_range": "m",
+    "gate_kg": "kg"
+   },
+   "assumes": [
+    "ASM-A5-ASSY-ROLLUP"
+   ],
+   "outputs": {
+    "mass_kg": 2.3303000000000003,
+    "cg_x_m": 0.05766,
+    "cg_y_m": -0.00111,
+    "cg_z_m": 0.01832,
+    "cg_x_range_use": 2.064,
+    "cg_x_shift_m": 0.005520000000000004,
+    "check_errors": 5
+   },
+   "input_values": {
+    "snap": {
+     "date": "2026-11-09",
+     "mass_g": 2330.3,
+     "cg_m": [
+      0.05766,
+      -0.00111,
+      0.01832
+     ],
+     "errors": 5,
+     "warnings": 47,
+     "skeleton_cg_x_m": 0.05214,
+     "by_subsystem": {
+      "wing": [
+       387.3,
+       0.1140104828298477,
+       -0.75
+      ],
+      "fins": [
+       417.3,
+       0.09661151634237529,
+       -0.59
+      ],
+      "pod": [
+       128.1,
+       0.00032349726775956225,
+       0.4
+      ],
+      "landing": [
+       42.5,
+       0.32032892133772994,
+       -0.39
+      ],
+      "propulsion": [
+       475.6,
+       0.020392346509671998,
+       1.22
+      ],
+      "mechanisms": [
+       82.3,
+       0.22041017731357784,
+       1.09
+      ],
+      "power": [
+       638.2,
+       0.0014359135067377,
+       3.23
+      ],
+      "avionics": [
+       36.5,
+       -0.019833442982456144,
+       1.35
+      ],
+      "harness": [
+       122.5,
+       0.06704514285714284,
+       -0.05
+      ],
+      "transport": [
+       0,
+       null,
+       0.0
+      ]
+     }
+    },
+    "x_range": [
+     0.05,
+     0.055
+    ],
+    "z_range": [
+     -0.02,
+     0.03
+    ],
+    "gate_kg": 2.6
+   }
+  },
+  {
+   "id": "CL-A5-ASSY-MASS",
+   "type": "claim",
+   "title": "Assembled CAD mass (declared part masses, pack 550 g)",
+   "calc": "CALC-A5-ASSY",
+   "output": "mass_kg",
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.mtow_gate_kg"
+   },
+   "verifies": [
+    "R-MASS-GATE"
+   ],
+   "how": "python -I redesign/fusion/check.py (TOTAL line), same basis as A3's CL-A3-MASS-BASIC; weigh the aircraft (T-A1-WEIGH).",
+   "assumes": [
+    "ASM-A5-ASSY-ROLLUP"
+   ],
+   "value": 2.3303000000000003
+  },
+  {
+   "id": "CL-A5-ASSY-CG-X",
+   "type": "claim",
+   "title": "Assembled CAD CG x against the aft limit",
+   "calc": "CALC-A5-ASSY",
+   "output": "cg_x_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-A5-CG-X-AFT-LIMIT"
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "check.py TOTAL line; independent code from A3's mass_rollup.py on the same declared data. T-A5-CG-BALANCE.",
+   "assumes": [
+    "ASM-A5-ASSY-ROLLUP"
+   ],
+   "value": 0.05766
+  },
+  {
+   "id": "CL-A5-ASSY-CG-X-RANGE-USE",
+   "type": "claim",
+   "title": "Assembled CAD CG x, |x - mid| / half-range",
+   "calc": "CALC-A5-ASSY",
+   "output": "cg_x_range_use",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "Same basis as CL-A3-CG-X-RANGE; T-A5-CG-BALANCE.",
+   "assumes": [
+    "ASM-A5-ASSY-ROLLUP"
+   ],
+   "value": 2.064
+  },
+  {
+   "id": "CL-A5-ASSY-CG-SHIFT",
+   "type": "claim",
+   "title": "Assembled CG x minus the allocation-layout CG (R3 skeleton)",
+   "calc": "CALC-A5-ASSY",
+   "output": "cg_x_shift_m",
+   "unit": "m",
+   "how": "Per-subsystem shares in team/A5/INTEGRATION.md (they sum to this value).",
+   "assumes": [
+    "ASM-A5-ASSY-ROLLUP",
+    "ASM-A5-MASS-SPLIT"
+   ],
+   "value": 0.005520000000000004
+  },
+  {
+   "id": "CL-A5-ASSY-CG-Z",
+   "type": "claim",
+   "title": "Assembled CAD CG z",
+   "calc": "CALC-A5-ASSY",
+   "output": "cg_z_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-A5-CG-Z-UP-LIMIT"
+   },
+   "how": "check.py TOTAL line; H1 hangs the aircraft from two points.",
+   "assumes": [
+    "ASM-A5-ASSY-ROLLUP"
+   ],
+   "value": 0.01832
+  },
+  {
+   "id": "CL-A5-ASSY-CHECK-ERRORS",
+   "type": "claim",
+   "title": "check.py errors on the delivered subsystems",
+   "calc": "CALC-A5-ASSY",
+   "output": "check_errors",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "how": "python -I redesign/fusion/check.py; the list by role is in team/A5/INTEGRATION.md.",
+   "assumes": [
+    "ASM-A5-ASSY-ROLLUP"
+   ],
+   "value": 5
+  },
+  {
    "id": "T-A5-CORE-COVER",
    "type": "test",
    "title": "Spar cover on the first cut core",
@@ -1658,7 +1949,10 @@
     "CL-A5-LAYOUT-CG-X",
     "CL-A5-LAYOUT-CG-X-FWD",
     "CL-A5-LAYOUT-CG-X-RANGE-USE",
-    "CL-A5-LAYOUT-CG-Z"
+    "CL-A5-LAYOUT-CG-Z",
+    "CL-A5-ASSY-CG-X",
+    "CL-A5-ASSY-CG-X-RANGE-USE",
+    "CL-A5-ASSY-CG-Z"
    ],
    "state": "planned",
    "procedure": "Pack in, props on; two knife edges under the wing at the fin roots; mark x (H1)."

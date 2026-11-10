@@ -1,0 +1,79 @@
+{
+  "_note": "Wing-local dimensions (D1, revision D1-R1 on params A1-R3, 2026-11-09). Shared numbers (span, chord, section, spar, elevon spans, hinge, pod station, fin and block positions) come from redesign/params/params.json, subsystems/fins/params.json (block, anchor, bond gap), subsystems/pod/params.json (saddle feet, tie) and subsystems/harness/params.json (grooves); this file holds only what the wing designer chooses. Read by subsystems/wing/fusion/wing.py, team/D1/wing_data.py and team/D1/wing_claims.py. Metres unless stated.",
+  "slot": {
+    "bond_gap_m": {"value": 0.0002, "unit": "m", "source": "team/C2/sizing.json#spar.slot", "status": "PROPOSED",
+      "note": "radial bond line: slot / bore 22.4 mm on the 22 mm spar, epoxy + glass microballoons 1:1 by volume"},
+    "fill_g": {"value": 15.0, "unit": "g", "source": "team/C2/sizing.json#mass_g.slot_fill_kg", "status": "UNVERIFIED",
+      "note": "thickened epoxy in the slot and the cap glue line, booked in the core (WNG-001); weigh the mixed batch"}
+  },
+  "recess": {
+    "slot_wall_m": {"value": 0.004, "unit": "m", "source": "team/D2/CHANGE-REQUESTS.md#CR-D2-04", "status": "PROPOSED",
+      "note": "foam left between the pod recess aft end and the spar (recess ends at x_spar - r_spar - 0.004 = 0.065); floor z = params pod.z_base_m, y = +/- pod width / 2; recess front = where the upper skin reaches the floor"}
+  },
+  "saddle_window": {
+    "tie_channel_m": {"value": [0.008, 0.002], "unit": "m", "source": "D1 choice (CR-D2-04 ties at y +/-0.036)", "status": "PROPOSED",
+      "note": "width along y x radial depth of the channel round the spar at each pod tie, so the 7.6 x 1.3 mm nylon tie passes under the spar in a 22.4 mm bore; tie laid in before the spar bond. y range of the open window and the tie station come from subsystems/pod/params.json foot_y_m, tie_y_m, tongue_cheek_frac"}
+  },
+  "anchor_pocket": {
+    "gap_m": {"value": 0.0005, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
+      "note": "per side along y round D3's 16 mm anchor (fins anchor.len_y_m); along x the pocket is the full 22.4 mm slot width so the 20 mm saddle sits on the spar with thickened epoxy filling 1.2 mm each side (E-FIN-57...60)"}
+  },
+  "servo_pocket": {
+    "x_m": {"value": [0.1722, 0.2075], "unit": "m", "source": "subsystems/mechanisms (D6-R1) MEC-008 frame x 0.1724-0.2073 + 0.2 mm bond line", "status": "PROPOSED",
+      "note": "open on the LOWER skin (D6: servo laid on its side, case base flush with the lower skin, pushrod and horns below); aft of x 0.12 (C2 CR-C2-01); team/D1/wing_selfcheck.py compares it with the built MEC-008"},
+    "y_m": {"value": [0.2527, 0.2879], "unit": "m", "source": "subsystems/mechanisms (D6-R1) MEC-008 frame y 0.2529-0.2877 + 0.2 mm", "status": "PROPOSED",
+      "note": "outboard of the transport cradle patch (0.23) and 2.2 mm clear of the brace-anchor pocket (0.2505); 15 mm inboard of the half-fin root fillet; the arm plane y 0.285 is inside it"},
+    "ceiling_z_m": {"value": 0.0075, "unit": "m", "source": "subsystems/mechanisms (D6-R1) MEC-008 top plate z 0.0073 + 0.2 mm", "status": "PROPOSED",
+      "note": "flat pocket ceiling; leaves >= 3.9 mm foam + upper skin over it at the aft wall"},
+    "lead_hole_x_m": {"value": [0.173, 0.177], "unit": "m", "source": "D1 choice (F2 CR-F2-04 servo groove, D6 lower pocket)", "status": "PROPOSED",
+      "note": "4 mm square pass (drill 5 mm) from the end of the upper servo-lead branch groove down into the pocket front, at y = the branch (0.283-0.287); straw liner"},
+    "doubler_w_m": {"value": 0.06, "unit": "m", "source": "team/C2/sizing.json#skin.doublers", "status": "PROPOSED",
+      "note": "chordwise tape band over the pocket edges, lower surface x 0.12 ... hinge, opening cut out (the cover is taped over it)"}
+  },
+  "grooves": {
+    "y_m": {"value": [0.086, 0.296], "unit": "m", "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-04", "status": "PROPOSED",
+      "note": "three ESC-lead grooves each surface, each side; x stations and sizes from subsystems/harness/params.json#harness.groove, #harness.groove_size_mm"},
+    "servo_y_m": {"value": [0.065, 0.285], "unit": "m", "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-04", "status": "PROPOSED",
+      "note": "servo-lead groove on the upper surface aft of the spar slot (x from harness.groove.x_servo_m), then a branch along x at y 0.285 to the lead hole (servo_pocket.lead_hole_x_m) down into the lower pocket"}
+  },
+  "elevon": {
+    "end_gap_m": {"value": 0.001, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
+      "note": "each panel end to the core cut-out (hot-wire kerf ~1 mm); fin-face and tip gaps are the params elevon spans (>= 15 mm)"},
+    "bevel_deg": {"value": 30.0, "unit": "deg", "source": "D1 choice", "status": "PROPOSED",
+      "note": "lower-edge bevel of the panel front face, measured from the vertical through the upper-skin hinge line: clears the core at +25 deg down with 1.07 mm; D6 uses it as the TE-down mechanical stop at about 28-30 deg"},
+    "tube_groove_gap_m": {"value": 0.0002, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
+      "note": "routed groove for D6's CF 5 x 4 torque tube (position and size from subsystems/mechanisms/params.json#mec.tube), open on the lower face, full panel length, 0.2 mm bond line round the tube, filled with epoxy + microballoons"},
+    "horn_slot_m": {"value": 0.0025, "unit": "m", "source": "subsystems/mechanisms/params.json#mec.horn.plate_t_m (2.4 mm) + 0.1 mm; D6 'slot cut 2.5 mm through the panel'", "status": "PROPOSED",
+      "note": "through-panel slot for the horn blade at the arm plane (inboard panel) and the link-horn plane (outboard panel); x from the torque-tube groove front to the blade end (mec.horn.blade_x_mm)"}
+  },
+  "skin": {
+    "model_t_m": {"value": 0.0001, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
+      "note": "CAD thickness of the tape bodies (one layer ~0.05 mm + overlap); mass comes from the surface arc length x params wing.skin.areal_mass_kgm2, not the CAD volume"},
+    "untaped_upper_x_m": {"value": [0.0, 0.095], "unit": "m", "source": "team/D2/CHANGE-REQUESTS.md#CR-D2-04", "status": "PROPOSED",
+      "note": "no tape on the upper surface under the pod (|y| <= pod width / 2): pod bonds to bare sanded foam (CR-C2-07)"},
+    "block_doubler_x_m": {"value": 0.12, "unit": "m", "source": "team/C2/sizing.json#skin.doublers", "status": "PROPOSED",
+      "note": "60 mm band (servo_pocket.doubler_w_m) wrapped round the LE from upper x 0.12 to lower x 0.12 over each through-core block pocket; slit round the tube and the half-fin roots"},
+    "tip_extra_layers": {"value": 1, "unit": "-", "source": "team/C2/sizing.json#tip.edge", "status": "PROPOSED",
+      "note": "one 48 mm strip folded round the tip edge over the normal skin = 2 layers at the tip (damage fuse, CR-C2-01)"},
+    "tip_tape_w_m": {"value": 0.048, "unit": "m", "source": "D1 choice", "status": "PROPOSED", "note": "standard packing-tape roll width"}
+  },
+  "label": {
+    "x_m": {"value": [0.115, 0.215], "unit": "m", "source": "D1 choice", "status": "PROPOSED",
+      "note": "upper surface, right wing, aft of the spar and ahead of the hinge: visible without tools (14 CFR 48.205), clear of the transport pillar (y 0.17-0.23), the servo doubler and the CG-jig patch (lower surface, |y| 0.45)"},
+    "y_m": {"value": [0.375, 0.405], "unit": "m", "source": "D1 choice", "status": "PROPOSED"},
+    "t_m": {"value": 0.0002, "unit": "m", "source": "D1 choice", "status": "PROPOSED"},
+    "mass_g": {"value": 0.5, "unit": "g", "source": "D1 estimate", "status": "UNVERIFIED", "note": "printed vinyl label 100 x 30 mm, laminated; weigh"}
+  },
+  "plugs": {
+    "od_m": {"value": 0.0198, "unit": "m", "source": "team/C2/sizing.json#plugs", "status": "PROPOSED", "note": "inside the 20 mm spar bore, bonded with thickened epoxy"},
+    "block_len_m": {"value": 0.036, "unit": "m", "source": "team/C2/sizing.json#plugs", "status": "PROPOSED", "note": "under the through-core block spar bore, centred on |y| fins.y_m"},
+    "anchor_len_m": {"value": 0.02, "unit": "m", "source": "team/C2/sizing.json#plugs.anchor_plugs", "status": "PROPOSED", "note": "under the brace anchors; upper and lower anchors share one plug per side"},
+    "block_mass_g": {"value": 7.0, "unit": "g", "source": "team/C2/sizing.json#plugs.mass_g_each", "status": "UNVERIFIED", "note": "PETG 4 perimeters 50 % gyroid + bond"},
+    "anchor_mass_g": {"value": 4.0, "unit": "g", "source": "team/C2/sizing.json#plugs.anchor_plugs.mass_g_each", "status": "UNVERIFIED", "note": "PETG + bond"}
+  },
+  "cost_usd": {
+    "value": {"xps_sheet": 59.97, "cores_per_sheet": 6, "tape_roll": 3.33, "rolls": 2, "spar": 28.32, "petg_plugs": 1.0, "epoxy": 6.0, "label": 1.0},
+    "unit": "USD", "source": "SRC-XPS-F250, SRC-CF-TUBE (fins parts.csv), D1 estimate", "status": "UNVERIFIED",
+    "note": "per wing; I1 owns the BOM prices"
+  }
+}

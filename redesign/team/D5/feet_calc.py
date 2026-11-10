@@ -1,4 +1,4 @@
-"""D5 landing designer: crushable fin-tip feet (GER) for the K09-L quad tailsitter, revision D5-R3 (CR-A1-34, D-30).
+"""D5 landing designer: crushable fin-tip feet (GER) for the K09-L quad tailsitter, revision D5-R4 (CR-A1-34, D-30; C5-R3 cartridges).
 
 Run:  python -I redesign/team/D5/feet_calc.py
 Writes claims.json beside this file. Every number is a pure function of params.json (P:...), the landing subsystem
@@ -9,6 +9,8 @@ calc and the CAD cannot drift; __main__ also builds the module on the stub backe
 R3 asks (CR-A1-34): foot 48 mm, >= 38 mm stroke (flange-to-rim gap), biased cartridges colour-marked (x1.077 upper,
 x0.923 lower), shoe for the 9.6 mm board plus the edge-strip ends, >= 6 mm snap fingers, TE corner caps, pad contact
 at z +/-0.218, mass against 43 g, FIN-001-<st> ids, CG-jig patch at |y| 0.45 left free.
+R4 (CR-C5-10 revised at C5-R3): every cartridge segment pre-crushed 1 mm (peak = plateau, ASM-C5-PRECRUSH-PEAK), plateau
+upper 39.4 N / lower 35.6 N (mean 37.5 N, bias x1.05): type U 17.3 x 13.3 mm solid, type L the same with a 7/32 in bore.
 """
 import math
 import sys
@@ -51,13 +53,16 @@ kit.assumption("ASM-D5-XPS-PLATEAU", "XPS crush plateau 172 kPa",
                basis="FOAMULAR 250 datasheet 25 psi; closed-cell XPS plateau is flat within ~10 % from 5 to 50 % "
                      "strain. The coupon test T-D5-COUPON replaces it; the cartridge section is the tuning knob",
                value=172000.0, unit="Pa", status="UNVERIFIED", cites=["SRC-D5-OC-F250", "SRC-XPS-F250"])
-kit.assumption("ASM-D5-PEAK-FACTOR", "Initial crush peak 1.10 x plateau",
-               "The first-yield peak of the XPS column is 10 % above the plateau", basis="typical XPS curve; coupon test",
-               value=1.10, unit="-", status="UNVERIFIED")
 kit.assumption("ASM-D5-YIELD-STRAIN", "Strain to reach the plateau 5 %",
                "Elastic ramp of the XPS column ends at 5 % strain; half of that ramp is lost against a flat-force model",
                basis="XPS modulus ~8-10 MPa vs 172 kPa plateau gives ~2 %; 5 % covers the knee", value=0.05, unit="-",
                status="UNVERIFIED")
+kit.assumption("ASM-D5-XPS-ELASTIC-STRAIN", "Recoverable strain of the pre-crushed XPS column 2 %",
+               "Below the plateau the pre-crushed XPS column is elastic to ~2 % strain and springs back; only that "
+               "energy is returned in a normal landing, the rest is permanent crush",
+               basis="plateau 172 kPa / modulus ~8-10 MPa (XPS) = 1.7-2.2 %; R3 credited the 5 % knee (ASM-D5-YIELD-"
+                     "STRAIN), which includes plastic crush and over-stated the life. H2 landing log replaces it",
+               value=0.02, unit="-", status="UNVERIFIED")
 kit.assumption("ASM-D5-DENSIFY", "Usable strain before densification 0.55",
                "The XPS force stays on its plateau to 55 % strain", basis="closed-cell XPS densifies at 0.6-0.7",
                value=0.55, unit="-", status="UNVERIFIED")
@@ -81,10 +86,6 @@ kit.assumption("ASM-D5-FIT-FACTOR", "Printed/bonded fitting factor 1.4375 on ult
                "(86.8 N / 60.4 N)", value=1.4375, unit="-", status="PROPOSED")
 kit.assumption("ASM-D5-ULT-FACTOR", "Ultimate = 1.5 x limit", "Ultimate load factor on limit loads",
                basis="C1 LOADS.md convention", value=1.5, unit="-", status="PROPOSED")
-kit.assumption("ASM-D5-BIAS-TARGET", "Upper-foot plateau bias x1.077 of the mean",
-               "Upper (pod-side) feet plateau 1.077 x the mean, lower 0.923 x, so a level landing has no net pitch "
-               "moment with the 17 mm z_cg offset", basis="C5 CR-C5-10, CHANGE-LOG D-30, CR-A1-34",
-               value=1.077, unit="-", status="PROPOSED")
 kit.assumption("ASM-D5-REPLACE-MIN", "Insert swap 3 min",
                "Press the two snap fingers through the windows, pull the insert out, push a pre-glued spare in until "
                "both click", basis="no tools, no cure; estimate until timed (T-D5-REPLACE)", value=3.0, unit="min",
@@ -129,22 +130,25 @@ def geom(**kw):
 
 # ---------------------------------------------------------------- crush energy, biased cartridges
 CRUSH_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "v": P + "requirements.landing_sink_ms",
-            "lam": "ASM-C1-LAND-LIFT", "sigma": "ASM-D5-XPS-PLATEAU", "k_pk": "ASM-D5-PEAK-FACTOR",
+            "lam": "ASM-C1-LAND-LIFT", "sigma": "ASM-D5-XPS-PLATEAU", "k_pk": "ASM-C5-PRECRUSH-PEAK",
             "eps_y": "ASM-D5-YIELD-STRAIN", "eps_d": "ASM-D5-DENSIFY", "fy": LP + "cartridge.section_y_m",
             "fz": LP + "cartridge.section_z_m", "d": LP + "cartridge.bore_lower_d_m", "L": "CL-D5-CART-LEN",
             "s_max": "CL-D5-STROKE-AVAIL", "v_norm": "ASM-D5-NORMAL-SINK", "mark": LP + "piston.replace_mark_m",
-            "guard": "ASM-C5-DROP-GUARD", "s_pair": "CL-C5-DROP-PAIR-PITCH", "bias_t": "ASM-D5-BIAS-TARGET",
-            "k_ult": "ASM-D5-ULT-FACTOR"}
+            "eps_e": "ASM-D5-XPS-ELASTIC-STRAIN", "guard": "ASM-C5-DROP-GUARD", "s_pair": "CL-C5-DROP-PAIR-PITCH", "bias_t": "CL-C5-CART-BIAS-UPPER",
+            "k_ult": "ASM-D5-ULT-FACTOR", "pre": LP + "cartridge.precrush_m", "F_t": "ASM-C5-F-PLATEAU-PROP"}
 
 
 @kit.calc("CALC-D5-CRUSH", title="Constant-force crush, biased cartridges (type U upper, type L lower)",
           inputs=CRUSH_IN,
           units={"m": "kg", "g": "m/s2", "v": "m/s", "fy": "m", "fz": "m", "d": "m", "L": "m", "s_max": "m",
-                 "sigma": "Pa", "v_norm": "m/s", "mark": "m", "guard": "m", "s_pair": "m"},
+                 "sigma": "Pa", "v_norm": "m/s", "mark": "m", "guard": "m", "s_pair": "m", "pre": "m", "F_t": "N"},
           equation="A_U = fy fz ; A_L = A_U - pi d^2/4 ; F_U,L = sigma A ; F_mean = (F_U + F_L)/2 ; bias = F_U / F_mean ; "
                    "level: 4 F_mean (s - eps_y L/2) = m v^2/2 + (1 - lam) m g s ; n = 4 k F_mean / (m g) ; usable = "
-                   "s_max - guard >= C5 pair-first stroke ; strain = s_max / L ; mark margin = s_max - mark - s_pair")
-def crush(m, g, v, lam, sigma, k_pk, eps_y, eps_d, fy, fz, d, L, s_max, v_norm, mark, guard, s_pair, bias_t, k_ult):
+                   "s_max - guard >= C5 pair-first stroke ; normal set = (m v_n^2/2 - 4 F_mean eps_e L/2) / (4 F_mean) ; "
+                   "no-set sink = sqrt(2 E_el / m) ; strain = (pre + s_max) / (L + pre) (pre-crush counted) ; mark margin = "
+                   "s_max - guard - mark - s_pair ; landings = mark / set ; mean error = F_mean / F_C5 - 1")
+def crush(m, g, v, lam, sigma, k_pk, eps_y, eps_e, eps_d, fy, fz, d, L, s_max, v_norm, mark, guard, s_pair, bias_t, k_ult,
+          pre, F_t):
     W = m * g
     A_U = fy * fz
     A_L = A_U - math.pi * d * d / 4
@@ -154,15 +158,16 @@ def crush(m, g, v, lam, sigma, k_pk, eps_y, eps_d, fy, fz, d, L, s_max, v_norm, 
     KE = 0.5 * m * v * v
     s = (KE + 4 * F_p * eps_y * L / 2) / (4 * F_p - (1 - lam) * W)
     eta = 4 * F_p * (s - eps_y * L / 2) / (4 * F_pk * s)
-    E_el = 4 * 0.5 * F_p * eps_y * L
+    E_el = 4 * 0.5 * F_p * eps_e * L                          # recoverable energy, four columns to the plateau
     set_norm = max(0.0, (0.5 * m * v_norm ** 2 - E_el) / (4 * F_p))
     bias = F_U / F_p
     return {"area_upper_m2": A_U, "area_lower_m2": A_L, "F_upper_N": F_U, "F_lower_N": F_L,
             "F_plateau_N": F_p, "F_peak_N": F_pk, "F_peak_upper_N": k_pk * F_U, "F_ult_upper_N": k_ult * k_pk * F_U,
             "bias_upper": bias, "bias_err": abs(bias - bias_t), "ratio_UL": F_U / F_L, "KE_J": KE,
             "stroke_used_m": s, "eta": eta, "n_land": 4 * F_pk / W, "usable_m": s_max - guard,
-            "strain_full": s_max / L, "strain_margin": eps_d - s_max / L, "set_normal_m": set_norm,
-            "mark_margin_m": s_max - mark - s_pair, "landings_per_cartridge": (s_max - guard - s_pair) / set_norm
+            "strain_full": (pre + s_max) / (L + pre), "strain_margin": eps_d - (pre + s_max) / (L + pre),
+            "set_normal_m": set_norm, "E_elastic_J": E_el, "v_no_set_ms": math.sqrt(2 * E_el / m), "mean_err": abs(F_p / F_t - 1), "cut_seg_len_m": L / 2 + pre / 2,
+            "mark_margin_m": s_max - guard - mark - s_pair, "landings_per_cartridge": mark / set_norm
             if set_norm > 0 else 999.0}
 
 
@@ -360,15 +365,17 @@ C = "CALC-D5-CRUSH"
 kit.claim("CL-D5-F-PLATEAU", "Crush plateau per foot, mean of the upper and lower types", calc=C,
           output="F_plateau_N", unit="N", parts=CARTS,
           note="C5 applies the bias to this mean (CR-C5-10); per type: CL-D5-F-PLATEAU-UPPER/-LOWER",
-          how="T-D5-COUPON: crush 3 pairs of each type 30 mm in a printed shoe + piston over a load cell.")
+          how="T-D5-COUPON: crush 3 pre-crushed pairs of each type 40 mm in a printed shoe + piston over a load cell.")
+kit.claim("CL-D5-F-MEAN-ERR", "Mean plateau vs C5-R3's 37.5 N", calc=C, output="mean_err", unit="-",
+          limit=("<=", 0.01), parts=CARTS, how="Mean of the type-U and type-L coupon plateaus.")
 kit.claim("CL-D5-F-PLATEAU-UPPER", "Crush plateau, type U (UR, UL; orange, solid)", calc=C, output="F_upper_N",
-          unit="N", parts=["GER-003-UR", "GER-003-UL"], how="T-D5-COUPON, type U; pass 34.5-38.5 N.")
-kit.claim("CL-D5-F-PLATEAU-LOWER", "Crush plateau, type L (LR, LL; blue, 6.35 mm bore)", calc=C, output="F_lower_N",
-          unit="N", parts=["GER-008-LR", "GER-008-LL"], how="T-D5-COUPON, type L; pass 29.5-33.0 N.")
+          unit="N", parts=["GER-003-UR", "GER-003-UL"], how="T-D5-COUPON, type U; pass 38.2-40.2 N (C5-R3 39.4 N -3/+2 %).")
+kit.claim("CL-D5-F-PLATEAU-LOWER", "Crush plateau, type L (LR, LL; blue, 5.56 mm bore)", calc=C, output="F_lower_N",
+          unit="N", parts=["GER-008-LR", "GER-008-LL"], how="T-D5-COUPON, type L; pass 34.6-36.3 N (C5-R3 35.6 N -3/+2 %).")
 kit.claim("CL-D5-BIAS-UPPER", "Upper-foot plateau / mean plateau", calc=C, output="bias_upper", unit="-",
           parts=CARTS, how="Ratio of the coupon plateaus.")
-kit.claim("CL-D5-BIAS-ERR", "Bias error against the x1.077 target", calc=C, output="bias_err", unit="-",
-          limit=("<=", 0.01), parts=CARTS, how="Ratio of the coupon plateaus; re-cut the bore if off by > 1 %.")
+kit.claim("CL-D5-BIAS-ERR", "Bias error against C5-R3's x1.05 target", calc=C, output="bias_err", unit="-",
+          limit=("<=", 0.01), parts=CARTS, how="Ratio of the coupon plateaus; change the bore tube (3/16 or 1/4 in) if off by > 1 %.")
 kit.claim("CL-D5-F-PEAK", "Mean peak foot force (limit) in the 1.5 m/s landing", calc=C, output="F_peak_N",
           unit="N", limit=("<=", "CL-C1-FOOT-MAX"), parts=FEET, how="T-D5-COUPON peak; drop test T-C1-FOOT-DROP.")
 kit.claim("CL-D5-F-PEAK-UPPER", "Peak force on an upper foot (limit)", calc=C, output="F_peak_upper_N", unit="N",
@@ -376,7 +383,7 @@ kit.claim("CL-D5-F-PEAK-UPPER", "Peak force on an upper foot (limit)", calc=C, o
           note="C1 R3 bound; C1 to carry the per-type split (CR-D5-14)",
           how="T-D5-COUPON type U peak.")
 kit.claim("CL-D5-F-ULT-UPPER", "Ultimate force on an upper foot (1.5 x peak)", calc=C, output="F_ult_upper_N",
-          unit="N", parts=FEET, how="Proof load a printed piston + shoe on a fin offcut to 61 N (T-D5-PROOF).")
+          unit="N", parts=FEET, how="Proof load a printed piston + shoe on a fin offcut to 88 N (T-D5-PROOF).")
 kit.claim("CL-D5-N-LAND", "Landing load factor, level 1.5 m/s, four feet", calc=C, output="n_land", unit="-",
           limit=("<=", P + "requirements.landing_n_design"), parts=FEET,
           how="T-C5-AIRCRAFT-DROP level, accelerometer at the CG.")
@@ -390,12 +397,18 @@ kit.claim("CL-D5-ETA", "Crush efficiency (energy / peak force x stroke)", calc=C
           limit=(">=", 0.8), how="Integrate the T-D5-COUPON force-stroke record.")
 kit.claim("CL-D5-STRAIN-MARGIN", "Cartridge strain margin to densification at the full 38 mm", calc=C,
           output="strain_margin", unit="-", limit=(">=", 0.0), parts=CARTS,
-          how="T-D5-COUPON: force still flat at 44 % strain.")
+          how="T-D5-COUPON: force still flat at 44 % strain (incl. the 1 mm pre-crush per segment).")
+kit.claim("CL-D5-CUT-SEG-LEN", "Cartridge segment cut length before the 1 mm pre-crush", calc=C, output="cut_seg_len_m",
+          unit="m", limit=("<=", 0.0508), note="<= the 2 in board thickness (crush axis = through-thickness)",
+          parts=CARTS, how="Calipers on the cut stick before pressing.")
 kit.claim("CL-D5-SET-NORMAL", "Permanent crush per normal 0.5 m/s landing", calc=C, output="set_normal_m", unit="m",
           how="Measure the flange gap after each of the first 10 hover landings (H2).")
+kit.claim("CL-D5-V-NO-SET", "Touchdown sink below which a landing leaves no permanent crush", calc=C,
+          output="v_no_set_ms", unit="m/s", note="Q_LAND_SPEED at or below this keeps the cartridges for hard "
+          "landings (CR-D5-21 to F4)", how="H2: gap before/after 10 landings at Q_LAND_SPEED 30 cm/s.")
 kit.claim("CL-D5-MARK-MARGIN", "Replace mark leaves C5's pair-first stroke", calc=C, output="mark_margin_m",
           unit="m", limit=(">=", 0.0), parts=PISTONS,
-          how="With the groove at the rim the remaining gap must be >= CL-C5-DROP-PAIR-PITCH.")
+          how="With the groove at the rim the remaining gap less the 3 mm guard must be >= CL-C5-DROP-PAIR-PITCH.")
 kit.claim("CL-D5-LANDINGS-PER-CART", "Normal landings before the replace mark", calc=C,
           output="landings_per_cartridge", unit="-", how="H2 landing log (T-C5-DRIFT-LOG).")
 
@@ -449,10 +462,11 @@ kit.claim("CL-D5-REPLACE-TIME", "Field replacement of a crushed foot insert", va
 
 kit.test("T-D5-COUPON", "Cartridge crush coupon, both types", verifies=["CL-D5-F-PLATEAU-UPPER",
          "CL-D5-F-PLATEAU-LOWER", "CL-D5-BIAS-ERR", "CL-D5-F-PEAK", "CL-D5-ETA", "CL-D5-STRAIN-MARGIN"],
-         procedure="Crush 3 type-U and 3 type-L cartridge pairs in a printed piston + shoe on a drill press over the H1 "
-         "load cell, 40 mm at < 10 mm/s; record force every 2 mm. Pass: U plateau 34.5-38.5 N, L 29.5-33.0 N, ratio "
-         "U/L 1.15-1.19, peak <= 1.15 x plateau, flat to 40 mm. Off target: change section_z_m (both) or the bore "
-         "(ratio) by the force ratio and re-run feet_calc.py.")
+         procedure="Pre-crush every segment 1 mm (drill-press stop). Crush 3 type-U and 3 type-L cartridge pairs in a printed "
+         "piston + shoe on the drill press over the H1 load cell, 40 mm at < 10 mm/s; record force every 2 mm. Pass "
+         "(C5-R3, mean force 5-35 mm): U 38.2-40.2 N, L 34.6-36.3 N, ratio U/L 1.09-1.14, peak <= 1.05 x plateau, "
+         "flat to 40 mm. Off target: change section_y_m (both types) by the force ratio, or the bore tube (ratio), and "
+         "re-run feet_calc.py.")
 kit.test("T-D5-PAD-MU", "Pad slide on a tilt board", verifies=["CL-D5-PAD-MU"],
          procedure="Foot with pad, 0.65 kg on it, on a board faced with concrete paver / asphalt shingle / the landing "
                    "mat; tilt until it slides; mu = tan(angle). Pass >= 0.7 dry.")

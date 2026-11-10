@@ -178,6 +178,32 @@ kit.assumption("ASM-D3-CF-E-STRIP", "Pultruded CF strip E 110 GPa", "Axial modul
 
 
 # ----------------------------------------------------------------------------- claims
+kit.assumption("ASM-D3-SKIN-Z-HOLE", "Upper skin height 22.7 mm at x 0.086", "Upper surface at the ESC-lead hole",
+               "S5010 at x/c 0.269 (k09kit.surface_z); the lower skin is 8.7 mm below the chord, so the upper hole is "
+               "the one closest to the ESC pad", 0.0227, "m", status="PROPOSED")
+kit.assumption("ASM-D3-TAPE-LAP", "Skin tape lapped 15 mm up the laminate", "Height of the skin-tape lap on both "
+               "laminate faces at the root", "README.md interface table; BUILD.md step 17", 0.015, "m", status="PROPOSED")
+kit.assumption("ASM-D3-GROMMET-OD", "Grommet flange OD 10 mm", "Printed ASA grommet 10/7 mm in the 8 mm lead hole (F2)",
+               "team/F2/CHANGE-REQUESTS.md#CR-F2-05", 0.010, "m", status="PROPOSED")
+
+
+@kit.calc("CALC-D3-WIRE-HOLE",
+          inputs={"x": "P:fin_detail.wire_hole.x_m", "off": "P:fin_detail.wire_hole.off_skin_m",
+                  "d": "P:fin_detail.wire_hole.d_m", "xt": "P:fins.tube.x_m", "od": "P:fins.tube.od_m",
+                  "tail": "P:fin_detail.boss.tail_m", "pz": "P:fin_detail.esc_pad.z_m", "ph": "P:fin_detail.esc_pad.h_m",
+                  "zsk": "ASM-D3-SKIN-Z-HOLE", "leg": "ASM-D3-FILLET-LEG", "lap": "ASM-D3-TAPE-LAP",
+                  "g": "ASM-D3-GROMMET-OD"},
+          equation="flange edge above the skin = off - g/2; root clearance = that - max(fillet leg, tape lap); boss "
+                   "clearance = x - g/2 - (x_tube + od/2 + boss tail); pad clearance = (pz - ph/2) - (zsk + off + g/2); "
+                   "min of the three",
+          title="ESC-lead hole through the half-fin (CR-F2-05): clear of the root joint, boss and ESC pad")
+def wire_hole(x, off, d, xt, od, tail, pz, ph, zsk, leg, lap, g):
+    root = off - g / 2 - max(leg, lap)
+    boss = x - g / 2 - (xt + od / 2 + tail)
+    pad = (pz - ph / 2) - (zsk + off + g / 2)
+    return {"root": root, "boss": boss, "pad": pad, "min": min(root, boss, pad)}
+
+
 MT = ["FIN-003-UR", "FIN-003-UL", "FIN-003-LR", "FIN-003-LL"]
 SC = ["FIN-008-UR", "FIN-008-UL", "FIN-008-LR", "FIN-008-LL"]
 HF = ["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"]
@@ -234,6 +260,12 @@ kit.claim("CL-D3-BRACE-L", "Brace length (upper), D3 geometry", calc="CALC-D3-BR
 kit.claim("CL-D3-BRACE-DZ", "Brace attach depth below the motor axis, D3 geometry", calc="CALC-D3-BRACE",
           output="attach_dz", unit="m", parts=["FIN-008-UR"],
           how="C4 modelled this value (CL-C4-D3-*); kept at R3 by the 12 mm ear flush with the collar top")
+
+kit.claim("CL-D3-WIRE-HOLE-CLEAR", "ESC-lead hole: least clearance of the grommet flange to the root joint, boss and "
+          "ESC pad", calc="CALC-D3-WIRE-HOLE", output="min", unit="m", limit=(">=", 0.001), verifies=["R-STRUCT-MARGIN"],
+          parts=HF, how="Measure the drilled hole position on the dry fit (BUILD.md step 11a)",
+          note="F2's 10 mm off the skin would put the hole edge 6 mm up, inside the 12 mm fillet and 15 mm tape lap "
+               "(clearance -10 mm); D3 set 22 mm (CR-D3-23 to F2)")
 
 for tid, title, ver, proc in (
         ("T-D3-SLIP", "Mount slip setting", ["CL-D3-SLIP-FUSE", "CL-D3-SLIP-HOLD"],

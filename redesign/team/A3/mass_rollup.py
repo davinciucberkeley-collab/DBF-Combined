@@ -8,7 +8,8 @@ then  python -I redesign/proofs/build_graph.py
 Sources, in precedence order (whole subsystem at a time, so nothing is counted twice):
   1. redesign/subsystems/<key>/parts.csv   designer's part list. mass_g is PER UNIT; line mass = qty x mass_g.
      Positions from the same folder's interfaces.json (cg_xyz_m per instance; id == part_id or part_id-<suffix>).
-     Status from interfaces.json: VERIFIED -> WEIGHED, CHECKED/MODELLED -> CAD, PROPOSED -> DATASHEET (buy) / EST.
+     Maturity (mass_maturity): VERIFIED -> WEIGHED; else the notes ('EST from CAD' -> CAD, 'EST from CALC' -> CALC,
+     'EST' -> EST); else bought -> DATASHEET, made and MODELLED/CHECKED -> CAD, otherwise EST. The pack grows 0 %.
      Subsystem `transport` and parts with "flight": false are ground items and are never counted.
   2. redesign/team/<role>/mass_estimate.csv  any role's estimate, same columns as team/A3/mass_model.csv;
      replaces an A3 model row with the same item_id, adds new item_ids. Ignored for a subsystem once 1 exists.
@@ -28,6 +29,7 @@ import csv
 import json
 import math
 import operator
+import re
 import sys
 from pathlib import Path
 
@@ -44,6 +46,25 @@ DISCIPLINES = ["structure", "propulsion", "energy", "electrical", "avionics", "c
 PREFIX_DISC = {"WNG": "structure", "FIN": "structure", "POD": "structure", "GER": "structure",
                "PRP": "propulsion", "PWR": "electrical", "AVN": "avionics", "HRN": "electrical", "MEC": "controls"}
 STATUS_MAT = {"VERIFIED": "WEIGHED", "CHECKED": "CAD", "MODELLED": "CAD"}
+
+
+def mass_maturity(status, make_or_buy, notes):
+    """Maturity of a parts.csv mass. An interfaces.json status describes the geometry, not the mass, so the
+    designer's own word in the notes wins: 'EST from CAD' -> CAD, 'EST from CALC' -> CALC, 'EST until weighed' on a
+    bought part -> DATASHEET (listing number, not weighed yet), any other 'EST' -> EST. VERIFIED -> WEIGHED."""
+    if status == "VERIFIED":
+        return "WEIGHED"
+    if re.search(r"\bEST from CAD\b", notes):
+        return "CAD"
+    if re.search(r"\bEST from CALC", notes):
+        return "CALC"
+    if make_or_buy == "buy" and re.search(r"\bEST until weighed\b", notes):
+        return "DATASHEET"
+    if re.search(r"\bEST\b", notes):
+        return "EST"
+    if make_or_buy == "buy":
+        return "DATASHEET"
+    return STATUS_MAT.get(status, "EST")
 COLS = ["id", "subsystem", "discipline", "mass_g", "x", "y", "z", "lx", "ly", "lz", "maturity", "growth_pct",
         "source"]                                           # one row per physical instance
 
@@ -390,7 +411,7 @@ def read_overrides():
     return out
 
 
-def subsystem_parts(sub_dir, model_cg, model_pos, overrides, warn, log):
+def subsystem_parts(sub_dir, model_cg, model_pos, overrides, warn, log, model_dims=None):
     """parts.csv (+ interfaces.json positions) -> instance rows, or None if there is no parts.csv.
 
     Position precedence: interfaces.json cg_xyz_m per instance; else the instances of the A3 model row whose
@@ -413,6 +434,7 @@ def subsystem_parts(sub_dir, model_cg, model_pos, overrides, warn, log):
             continue
         inst = [p for k, p in iface.items() if k == pid or k.startswith(pid + "-")]
         if any(p.get("flight") is False for p in inst):
+            log["ground"].append(f"{pid} ({src}, flight false): {r.get('name', '').strip()}")
             continue
         text = " ".join((r.get(k) or "") for k in ("name", "notes", "vendor_or_file")).lower()
         if not inst and any(w in text for w in GROUND_WORDS):
@@ -450,7 +472,7 @@ def subsystem_parts(sub_dir, model_cg, model_pos, overrides, warn, log):
                  f"of '{sub}'")
             pos = [model_cg.get(sub, [0.0, 0.0, 0.0])] * q
         status = (inst[0].get("status") if inst else "PROPOSED") or "PROPOSED"
-        mat = STATUS_MAT.get(status) or ("DATASHEET" if (r.get("make_or_buy") or "").strip() == "buy" else "EST")
+        mat = mass_maturity(status, (r.get("make_or_buy") or "").strip(), r.get("notes") or "")
         ov = overrides.get(pid)
         if ov:
             pos = [[float(ov[k]) if ov[k] else p[i] for i, k in enumerate(("x_m", "y_m", "z_m"))] for p in pos]
@@ -458,8 +480,10 @@ def subsystem_parts(sub_dir, model_cg, model_pos, overrides, warn, log):
             log["overrides"].append(f"{pid}: {ov['reason']}")
         disc = "energy" if sub == "power" and "LiPo" in (r.get("material") or "") + (r.get("name") or "") \
             else PREFIX_DISC.get(pid[:3], "structure")
+        dims = [round(v, 5) for v in (model_dims or {}).get(pid, (0.0, 0.0, 0.0))]   # box for self-inertia
+        gp = 0.0 if disc == "energy" else None      # pack: listing spread is a bounding case, not growth (ASM-A3-MGA)
         for p in pos:
-            rows.append([pid, sub, disc, round(m, 3), *(round(v, 5) for v in p), 0.0, 0.0, 0.0, mat, None, src])
+            rows.append([pid, sub, disc, round(m, 3), *(round(v, 5) for v in p), *dims, mat, gp, src])
     return rows
 
 
@@ -489,12 +513,20 @@ def gather(params):
     warn = log["warnings"].append
     log["budget"] = budget_check(params, warn)
     model = model_rows(HERE / "mass_model.csv", params, used, pk.repo_rel(HERE / "mass_model.csv"))
+    # Self-inertia boxes for parts.csv items: from the one A3 model row that names the part in part_ids (a
+    # parts.csv line is otherwise a point mass, which drops the span inertia of the wing core, spar and skin).
+    _dm = {}
+    for it in model.values():
+        for pid in it["part_ids"]:
+            _dm.setdefault(pid, []).append(it["rows"][0][7:10])
+    model_dims = {pid: d[0] for pid, d in _dm.items() if len(d) == 1}
     for est in sorted(RED.glob("team/*/mass_estimate.csv")):
         if est.parent.name == "A3":
             continue
         for iid, it in model_rows(est, params, used, pk.repo_rel(est)).items():
-            if iid in model:
-                warn(f"{iid}: A3 model row replaced by {pk.repo_rel(est)}")
+            sub = it["rows"][0][1] if it["rows"] else ""
+            if iid in model and not (RED / "subsystems" / sub / "parts.csv").exists():
+                warn(f"{iid}: A3 model row replaced by {pk.repo_rel(est)}")   # only matters while no parts.csv
             model[iid] = it
     flat = [r for it in model.values() if not it["adder"] for r in it["rows"]]
     model_cg = {}
@@ -510,7 +542,7 @@ def gather(params):
     for d in subs_dirs:
         if d.name in GROUND:
             continue
-        rows = subsystem_parts(d, model_cg, model_pos, overrides, warn, log)
+        rows = subsystem_parts(d, model_cg, model_pos, overrides, warn, log, model_dims)
         if rows is None:
             continue
         from_parts.add(d.name)
@@ -637,7 +669,8 @@ def report(kit, items, log):
     for key, head in (("adders", "A3 adders kept beside a designer's parts.csv (items the list does not carry yet)"),
                       ("overrides", "A3 position / maturity overrides (`team/A3/overrides.csv`)"),
                       ("positions_from_model", "Positions taken from the A3 model (no interfaces.json node)"),
-                      ("ground", "Excluded as ground items (no interface node, notes say not flying)")):
+                      ("ground", "Excluded as ground items (`flight: false` in interfaces.json, or no interface "
+                                  "node and notes say not flying)")):
         if log.get(key):
             L += [f"{head}: " + "; ".join(log[key]) + ".", ""]
     if log.get("zero_mass"):

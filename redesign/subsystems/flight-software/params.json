@@ -34,9 +34,9 @@
    "ap": "Q_M_SPIN_MAX"
   },
   "thr_max_pct": {
-   "value": 75,
+   "value": 70,
    "unit": "%",
-   "source": "F4 choice",
+   "source": "team/F4/fsw_check.py#CALC-F4-VLEVEL (CR-B1-17 b, CR-C1-20: level speed <= 21.8 m/s)",
    "ap": "THR_MAX"
   },
   "thr_min_pct": {
@@ -327,6 +327,18 @@
    "unit": "-",
    "source": "R-ARM-KILL",
    "ap": "RC9_OPTION"
+  },
+  "spin_min": {
+   "value": 0.15,
+   "unit": "-",
+   "source": "ArduPilot default, stated (CALC-F4-VLEVEL input); stand sets it (TUNING-PLAN step 2)",
+   "ap": "Q_M_SPIN_MIN"
+  },
+  "thst_expo": {
+   "value": 0.65,
+   "unit": "-",
+   "source": "ArduPilot default, stated (CALC-F4-VLEVEL input)",
+   "ap": "Q_M_THST_EXPO"
   }
  }
 }

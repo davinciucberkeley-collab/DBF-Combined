@@ -521,10 +521,19 @@ def prop_disc(part, hub, D, t=2 * PROP_BLADE_HALF_M):
     return part.cylinder('X', (hub[0] - t / 2, hub[1], hub[2]), t, D / 2, name='prop disc')
 
 
-def prop_keepout(ctx, name, hub, D, clearance, exempt):
+def prop_keepout(ctx, name, hub, D, clearance, exempt, rotate=None, blade_half=None):
     """Prop strike keep-out: disc radius D/2 + clearance, axial half blade + clearance (check.py ERROR if any
-    other part's bounding box enters)."""
-    ctx.keepout_cylinder(name, 'X', hub, D / 2 + clearance, PROP_BLADE_HALF_M + clearance, exempt)
+    other part's bounding box enters).
+
+    rotate (CR-E1-31b): the same (axis, deg) tuple the motor/prop components get from ctx.part(rotate=). The
+    keep-out axis is then the canted shaft axis (x turned by that rotation) and check.py tests the tilted cylinder
+    exactly, so the tilt is geometry and the clearance stays clearance. None keeps the x-axis cylinder.
+    blade_half: the owner's axial half-extent of the rotating prop about its mid-plane (E1, CR-E1-16: -6 / +10 mm
+    with coning, so pass 0.010); default PROP_BLADE_HALF_M."""
+    import fusionkit as fk
+    R, half = D / 2 + clearance, (PROP_BLADE_HALF_M if blade_half is None else blade_half) + clearance
+    axis = 'X' if not rotate else fk.mat_vec(fk.rot_matrix(*rotate), (1.0, 0.0, 0.0))
+    ctx.keepout_cylinder(name, axis, hub, R, half, exempt)
 
 
 def quad(ctx, ids):

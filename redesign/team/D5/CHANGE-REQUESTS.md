@@ -1,6 +1,20 @@
 # D5 change requests
 
-## Round R3 (2026-11-09, revision D5-R3, answers CR-A1-34 / D-30)
+## Round R4 (2026-11-09, revision D5-R4, answers CR-C5-10 revised, CR-A3-18, CR-H1-14)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-D5-21 | F4 (cc C5, H2, H3) | Set **`Q_LAND_SPEED` 30 cm/s** (was 50; `Q_LAND_FINAL_ALT` unchanged). | With C5-R3's pre-crushed cartridges the four columns return only 0.133 J elastically (2 % strain, `ASM-D5-XPS-ELASTIC-STRAIN`); a 0.5 m/s touchdown (0.325 J) crushes **1.28 mm** per landing (`CL-D5-SET-NORMAL`), so the 3 mm replace mark is reached in **2.3 landings** (`CL-D5-LANDINGS-PER-CART`). Below **0.32 m/s** (`CL-D5-V-NO-SET`) no permanent crush: cartridges are spent only by hard landings. Cost: ≈ +8 s per landing from a 6 m final. R3's 0.17 mm set credited the 5 % knee as elastic; it was optimistic. |
+| CR-D5-22 | C5 (cc C1, H1) | R4 adopts CR-C5-10 (revised): pre-crush **1 mm per segment** (two segments in series, so both must be pressed), plateau **U 39.6 N / L 35.4 N, mean 37.49 N** (`CL-D5-F-MEAN-ERR` 0.03 %), bias **1.056** (target 1.05; 7/32 in bore is the nearest stock tube; 3/16 in gives 1.041). Section is **17.3 × 13.3 mm** (y × z) with a bore for type L, not your 11 × 20.8 / 11 × 18.8 (same areas within 0.5 %): one piston and one shoe for both types, and the fin step stays 9.5 mm. Re-run `landing_calc.py` on `CL-D5-F-PLATEAU` 37.49, `CL-D5-F-PEAK` 37.49 (peak = plateau, your `ASM-C5-PRECRUSH-PEAK`), `CL-D5-ETA` 0.903, `CL-D5-SET-NORMAL` 1.28 mm (your `CL-C5-LANDINGS-PER-CARTRIDGE` ≥ 5 fails at 0.5 m/s until CR-D5-21). | `CL-D5-F-PLATEAU-UPPER/-LOWER`, `-BIAS-ERR` 0.006, `-STRAIN-MARGIN` 0.11 (40 mm crushed of 91 mm incl. pre-crush). |
+| CR-D5-23 | C1 (cc C4, C6) | Per-type feet at R4: upper peak **39.6 N** limit / **59.4 N** ult (was 40.3 / 60.4), lower 35.4 N limit; inside your 41.2 / 60.8 N bound. D5 still sizes the flange and bond to your 60.8 N. `CL-D5-ETA` is now 0.903 (your `CALC-C1-LANDING` drifts on it). | `CL-D5-F-PEAK-UPPER`, `CL-D5-F-ULT-UPPER`. |
+| CR-D5-24 | C6 | Bond block `E-GER-01…04`: area **1 350 mm²** (legs 10 → 7 mm to pay for the wider cartridge), design 87.4 N, RF **1.54** at 0.10 MPa. Rim lip SF **1.18** (sleeve 21.1 mm wide, was 19.8): review `CALC-D5-SIDE`. | `CL-D5-BOND-AREA`, `-BOND-SF`, `-SIDE-RIM-SF`. |
+| CR-D5-25 | H1 (cc G3) | Answer to CR-H1-14: the **claims.json lines govern** (CR-D5-08 is retired) and they change at R4: `T-D5-COUPON` pre-crushed pairs, 40 mm, mean force 5–35 mm **U 38.2–40.2 N, L 34.6–36.3 N** (C5-R3 −3/+2 %), U/L 1.09–1.14, peak ≤ 1.05 × plateau. `T-D5-PROOF` 88 N, `T-D5-SIDE` 32 N unchanged. Add to H2's log: flange gap before/after 10 landings at 30 cm/s (`CL-D5-V-NO-SET`). | `T-D5-COUPON` in `team/D5/claims.json`. |
+| CR-D5-26 | A3 (cc A4) | Answer to CR-A3-18: landing **42.50 g** `EST` (was 42.05; `CL-D5-MASS-TOTAL`), margin 0.50 g on 43 g. Ground lines `GER-005`, `-006`, `-009…013` are now nodes in `subsystems/landing/interfaces.json` with **`"flight": false`** (one node per kit line, qty in `parts.csv`; no CAD, so `check.py` lists them as PROPOSED/missing WARN). The A3 adder `GER-E02` can go: `parts.csv` carries the 48 mm feet. | `CALC-D5-MASS`. |
+| CR-D5-27 | I1 | BOM change: bore cutter **7/32 in** K&S brass tube (`GER-013`, was 1/4 in), ~$3. Neoprene sheet unchanged. | `subsystems/landing/parts.csv`. |
+| CR-D5-11 | D3 | **Still open** and unchanged by R4 (cartridge grew in y only): square tip 45.4 mm, step at \|z\| 0.2005 m from x 0.2746 m, strips end at x 0.2746. Your CR-D3-19 (flat 0.210 tip, strips end at x 0.280) predates it; the R3/R4 foot does not fit that tip. | `CL-D5-FIN-STEP-Z/-X/-DEPTH`. |
+| Note | A1 | The D5 task text still quotes the R0 feet (x 0.30–0.31, z ±0.19, 24 g, tip-over 37° at 0.25 m). D5 works to `params.json` A1-R3 (feet 48 mm, contact ±0.218, 43 g, ≥ 30°). | — |
+
+## Round R3 (2026-11-09, revision D5-R3, answers CR-A1-34 / D-30): superseded in part by R4 (CR-D5-12 → 24, -14 → 23, -15 → 22, -17 → 26, -19 → 25, -20 → 27)
 
 | Id | To | What | Why / numbers |
 |---|---|---|---|
