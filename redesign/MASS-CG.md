@@ -1,15 +1,29 @@
 # Mass, CG and inertia — K09-L
 
-Roll-up owner A3 (mass-properties); budget text A1. Status `PROPOSED`, budget revision **A1-R4a** (D-47, D-48, D-58,
-D-59) over roll-up revision **A3-R6a** (2026-11-10 re-run of A3-R6, answering CR-A1-44 and CR-A1-53; only change F2's harness
-+0.2 g). Every number in the generated
+Roll-up owner A3 (mass-properties); budget text A1. Status `PROPOSED`, budget revision **A1-R5** (D-61 … D-64 over
+D-47, D-48, D-58, D-59) over roll-up revision **A3-R6a** (2026-11-10 re-run of A3-R6, answering CR-A1-44 and CR-A1-53;
+the generated block below still carries the D-47 bay, the D-48 allocations and the 503 / 680 g pack cases: A3 re-runs
+on D2-R6, D3-R5, D5-R5 and E1's D-61 centroids, CR-A1-64). Every number in the generated
 block comes from `python -I redesign/team/A3/mass_rollup.py` (claims in `team/A3/claims.json`, every item in
 `team/A3/rollup/ROLLUP.md`). The block between the markers is regenerated on each run; the rest is hand-written and
 follows `params/CHANGE-LOG.md`. **All nine flying subsystems come from the designers' `parts.csv`**, the pod at D2-R5
 (D-47 bay) and the pack at F1's −0.022 node; A3's model is fallback and self-inertia boxes only. The station rule
 reads `pod.pack_aft_travel_m` (12 mm) and `pod.pack_spacer_step_m` (2 mm) from D-59.
 
-## Verdict
+## What A1-R5 changed (hand-written; the generated block follows A3's next run)
+
+| Item | A3-R6a (block below) | A1-R5 decision | Claim | Status |
+|---|---|---|---|---|
+| CG range | 0.050–0.0549 m at z 0 | **0.0466–0.0514 m, target 0.0490, with the CG 18.5 mm above the chord plane** (B3 V1: effective NP 3.4 mm forward at 1.3 Vs); `cg.z_target_m` 0.0185, `z_range_m` [0.010, 0.025] | `CL-B3-V-CG-FWD`, `-CG-AFT-ENV`, `CL-A1-CG-RANGE-*` | D-62 |
+| Take-off CG, 550 g pack | 0.0522 basic / 0.0536 predicted in the D-47 bay: **0.8 / 2.2 mm aft of the new limit** (SM 4.76 / 4.33 %) | bay 10 mm forward (datum −0.032, nose −0.140) −2.4 mm and prop plane 5 mm forward −0.9 mm: frame estimate **0.0485 → 0.0498** at −0.034 (14 mm spacer), margins +1.5 / +1.5 mm | `CL-A1-PACK-CG-FWD` / `-AFT` (`ASM-A1-A3-PACK-X`, `ASM-A1-STACK-DX` until A3 re-runs) | D-61, D-62 |
+| Pack cases | 503 / 550 / 680 g listings | **Ovonic 120C EC5 551 ± 5 g, 135 × 46 × 49 mm**; cases 546 / 550 / acceptance; the 503 and 680 g listings are retired | `CL-A1-PACK-ACCEPT`, `ASM-A1-PACK-CASES-G` | D-64 |
+| Pack acceptance (overrun covered) | 614 g (A3) | **592.6 g** = 550 + A3's 164 g gate margin − 100 g overrun − 21 g of R5 additions; the SKU maximum 556 g is 37 g under it; E2's `PACK_ACCEPT_KG` and T-E2-WEIGH follow it | `CL-A1-PACK-ACCEPT` | D-64 |
+| Allocations / reserve | 2 355 / 245 g (31 g free) | **2 386 / 214 g (0 g free)**: fins 437 (root fillets 30.6 g as drawn, pins 2.5 mm, collar 13 mm), pod 146 (C3's strut, flange, brackets +13.9; nose +2), landing 48 (shoe sleeve fix +5 `EST`), mechanisms 72 (D6-R2 70.7, 1/8 in CF rod) | `CL-A1-MASS-SIZED`, `CL-A1-RESERVE-COVERS`, `CL-A1-ALLOC-GATE` | D-63 |
+| Predicted take-off mass | 2 436 g | ≈ **2 458 g** with the 550 g pack (R5 additions ≈ 21 g, `ASM-A1-R5-ADDED-G`); gate margin ≈ 142 g, overrun covered | `CL-A3-MASS-PREDICTED` (A3 re-runs) | D-63 |
+| Stations | 550 g −0.022 (12 mm), 503 g −0.0254 (stack), 680 g −0.010 (none) | in the D-62 bay (stack −0.0379 for the 135 mm pack, no-spacer −0.020, 2 mm steps): frame estimate 546 g −0.036 (16 mm), 550 g −0.034 (14 mm), 590 g −0.028 (8 mm); **the flight card takes them from A3's re-run** (CR-A3-27) | `CALC-A1-PACK-CASES`, `CL-A3-CG-X-STATIONS` | D-62 |
+| Tip-over corner bound (fwd limit, top of the z range) | 30.66° | 30.98° (forward limit 0.0466, z 0.025); C5 re-runs | `CL-A1-TIPOVER` | D-62 |
+
+## Verdict (A3-R6a, before the R5 re-run)
 
 | Check | Result (A3-R6a: D2-R5 bay, D-48 allocations, D-59 stations, E1 CAD centroids) | Claim | Status |
 |---|---|---|---|
@@ -18,7 +32,7 @@ reads `pod.pack_aft_travel_m` (12 mm) and `pod.pack_spacer_step_m` (2 mm) from D
 | same, 503 g pack | +211 g | `CL-A3-GATE-MARGIN-503` | `MODELLED` |
 | same, 680 g pack | +34 g: under the gate, the 100 g overrun is not covered (covered up to a 614 g pack) | `CL-A3-GATE-MARGIN-680` → `R-PACK-MASS` | `FAIL` |
 | Worst subsystem vs allocation (D-48) | **fins 436.4 / 418 g (1.044)**: D3-R4 half-fin `FIN-001` 22.32 → 27.67 g each (two-layer board, D-54 stepped tip); pod 131.0 / 131 and propulsion 462.0 / 462 exactly on; the rest under | `CL-A3-ALLOC-WORST` → `R-MASS-ALLOC` | `FAIL` (CR-A3-26) |
-| **CG x in 0.050–0.0549 m**, 550 g pack at the −0.022 datum | **0.0522 m (16.3 % c)**, 0.10 of the half-range from mid; predicted 0.0536 m | `CL-A3-CG-X-RANGE` (0.10), `CL-A3-CG-X-PRED` → `R-CG-RANGE` | `MODELLED` |
+| **CG x in 0.050–0.0549 m** (the D-47 range at z 0), 550 g pack at the −0.022 datum | **0.0522 m (16.3 % c)**, 0.10 of the half-range from mid; predicted 0.0536 m. **Against the D-62 range [0.0466, 0.0514] both are outside** (−0.8 / −2.2 mm): fixed by the D-62 bay move and D-61 | `CL-A3-CG-X-RANGE` (0.10), `CL-A3-CG-X-PRED` → `R-CG-RANGE` | `MODELLED` (`FAIL` at D-62 until the bay moves) |
 | Each pack at its D-59 station, basic and predicted | all three inside; thinnest the 503 g pack on the crush stack, predicted 0.5 mm ahead of the aft limit | `CL-A3-CG-X-STATIONS` (0.78) → `R-CG-RANGE` | `MODELLED` (thin) |
 | 503–680 g packs trimmable with the spacers | yes, with D-59's 12 mm aft travel | `CL-A3-PACK-TRIM` (0 mm) → `R-CG-RANGE` | `MODELLED` |
 | Forward room at the datum | 3.4 mm (34.6 mm nose stack: stop face −0.1212, block ≥ 24.3, spreader 1.5) | `CL-A3-PACK-FWD-ROOM` | `MODELLED` |
@@ -57,37 +71,38 @@ up to a 614 g pack (601 g at A3-R5; 631 g at 20:35, before D3's fins). E2 names 
 D-47 itself cost the 15 mm nose (inside D2's 131.0 g), a 5 mm higher stance CG (0.315 m above the feet) and the pitot
 tip moving with the nose to x −0.210.
 
-## Adopted allocations (CHANGE-LOG D-48; was D-38, D-07)
+## Adopted allocations (CHANGE-LOG D-63; was D-48, D-38, D-07)
 
-Every allocation is now the designer's delivered `parts.csv` plus the reductions A1 directed inside it.
+Every allocation is the designer's delivered `parts.csv` plus the simulation-round structural fixes (D-63) and, where
+A1 directed one, a reduction inside it.
 
 | Subsystem | Allocation g | Basis (source claim) | Directed inside the allocation |
 |---|---|---|---|
 | wing | 405 | D1 CAD 387.3 g `EST` (`CL-D1-WING-MASS`: core 187, tape, spar 102, four plugs 22, elevons, label); the 17.7 g left is the cushion for XPS density and tape areal mass until `T-D1-WEIGH` | — |
-| fins | 418 | D3 CAD 417.3 g (`CL-D3-MASS`: two-layer 0.21 m half-fins, blocks, tubes 0.344, ASA mounts, 16 mm collars with the 40 mm tail 42.2, 10 × 2 braces, anchors, strips, CF pins 4.3, strap eyes 1.8, ESC pads, bonds); C4 416.8 | collar 16 → 12 mm (−3 g, C4 CR-C4-25, if the tongue fits) pays C6's 15 mm root fillets (+3 g, CR-C6-24) |
-| pod | 131 | D2-R4 128.1 g `EST` (`CL-D2-MASS`: shell, tray, hatch, stops, guides, crush block, spreader, spacers, handle, corner fillets, UBEC plate, tie bar) + 3 g nose extension (D-47); C5's full-section forward stop (+4 g) from the reserve if C3 adopts it | — |
-| landing | 43 | D5-R4 42.50 g `EST` (`CL-D5-MASS-TOTAL`: 4 feet 40.6 + 2 caps 1.45 + 48 mm); spares are ground items | — |
+| fins | 437 | D3-R4 434.8 g (`CL-D3-MASS`: two-layer 0.21 m half-fins, blocks, tubes 0.344, ASA mounts, 12 mm collars with the 40 mm tail, 10 × 2 braces, anchors, strips, pins, strap eyes, ESC pads, bonds, the 15 mm root fillets at 30.6 g as drawn) + C6's Ø 2.5 mm pins (+1.5) and 13 mm collar (+0.6) = 436.9 (D-63, D-70) | D3 returns what its levers give: microlight fillet filler −5.6, block 2 perimeters + 10 % gyroid −13.8 (if C4 keeps `CL-C4-D3-BLOCK-MS` ≥ 0), mount cheeks 12 → 8 mm −4 (if ≥ 1 100 N·m/rad); C4's shoe-cheek extension (+16 g) is not allocated, T-C4-FIN-PROOF decides |
+| pod | 146 | D2-R5 130.9 g (`CL-D2-MASS`) + C3's FEA fixes (aft-stop strut 3.7, forward-stop flange 1.5, handle-foot brackets 8.7 g `EST`, D-69) + 2 g for the D-62 nose (0.235 m shell) = 145.8 | D2's lighter levers (0.8 mm floor, lead window) are void |
+| landing | 48 | D5-R4 42.50 g `EST` (`CL-D5-MASS-TOTAL`: 4 feet 40.6 + 2 caps 1.45 + 48 mm) + 5 g `EST` for the shoe sleeve fix (wall 2.0, rim 3.0, 25 mm engagement, D-65; D5 reports the real figure); spares are ground items | — |
 | propulsion | 462 | E1 475.6 g (`CL-E1-MASS-PRP`) less 4 × 3.4 g | ESCs carried stripped of their factory power leads (F2 solders its own, CR-F2-07): `PRP-002` 7.6 g, E1 re-runs |
 | power | 648 | pack 550 (`UNVERIFIED`, 503–680) + non-pack 88.2 g (`CL-PWR-MASS-NONPACK`: AS150U pair, 10 AWG main path, power frame `PWR-006`, PDB plate, bus board, UBEC, fuse, four ESC caps, CoreWing power board `PWR-003` 28 g `EST`); F1 638.2 | — |
 | avionics | 45 | F3 36.5 g CAD (`CL-F3-MASS`: FC 12 without its power board, GPS, RX, MS4525DO + boom, gel cubes, microSD) + 8.5 growth; 7 g returned to the reserve | F5's two 150 mm T-antennas (+0.5 g) inside it |
 | harness | 123 | F2 routed 122.6 g (`CL-F2-MASS`: ESC leads 75.0 at 0.51–0.65 m, phase extensions 11.7 `EST`, signals/servo/GH 19.0, fittings 16.9 `EST`); CG x 0.067 m | 12 g return to the reserve if the factory phase leads reach (`T-E1-MOTOR-RM`) |
-| mechanisms | 80 | D6 82.3 g (`CL-D6-MASS`: Savox SH-0255MG+ 2 × 15.8, torque tubes 12.0, horns 13.1, frames 8.4, rods 8.3, rest 8.9) | 1/8 in → 3/32 in inter-panel rod (−3.6 g, effectiveness loss 7.1 → 8.5 %, D6's own fallback) |
-| **sum / A1 reserve / gate** | **2 355 / 245 / 2 600** | the reserve covers growth by maturity (114 g on the current roll-up) and the 100 g first-build overrun with 31 g free | |
+| mechanisms | 72 | D6-R2 70.68 g (`CL-D6-MASS`: Savox SH-0255MG+ 2 × 15.8, shortened inboard torque tubes, 1/8 in pultruded CF rod, trimmed horns and frames) + 1.3 g cushion until T-D6-WEIGH (D-63) | the D-48 "3/32 in rod" directive is withdrawn (CF rod: −6.6 g at 7.9 % loss) |
+| **sum / A1 reserve / gate** | **2 386 / 214 / 2 600** | the reserve equals growth by maturity (114 g on the A3-R6a roll-up) plus the 100 g first-build overrun: 0 g free; the next release needs a lever | |
 
 ## Budget rules
 
 | Rule | Value | Source |
 |---|---|---|
 | Hard gate (as built, ready to fly, pack in, props on) | 2 600 g | `params.json#requirements.mtow_gate_kg` |
-| Sized mass used by performance | 2 600 g (gate); `mtow_sized_kg` 2 600 g = allocations 2 355 + 145 g growth + 100 g overrun (D-48) | `params.json#requirements.mtow_sized_kg` |
+| Sized mass used by performance | 2 600 g (gate); `mtow_sized_kg` 2 600 g = allocations 2 386 + 114 g growth + 100 g overrun (D-63) | `params.json#requirements.mtow_sized_kg` |
 | Growth by maturity (added per item) | EST 20 % · CALC 10 % · DATASHEET 5 % · CAD 5 % · WEIGHED 1 % | `ASM-A3-MGA` |
-| Pack growth | 0 %: the 503 / 550 / 680 g listings are bounding cases, each with its own gate margin | `ASM-A3-PACK-RANGE`, `CL-A3-GATE-MARGIN(-503/-680)` |
+| Pack growth | 0 %: the Ovonic 120C EC5 listing 551 ± 5 g and the acceptance line (592.6 g, `CL-A1-PACK-ACCEPT`) are the bounding cases (D-64); the 503 / 680 g listings are retired | `ASM-A1-PACK-CASES-G`, `ASM-A3-PACK-RANGE` (A3 updates), `CL-A3-GATE-MARGIN` |
 | First-build overrun to keep free under the gate | 100 g | `params.json#requirements.build_overrun_kg` |
 | Ground items (box, cradles, tools, chargers) | never counted | subsystem `transport`, `"flight": false` |
-| CG target / range x | 0.0522 m / 0.050–0.0549 m (15.6–17.2 % chord), `UNVERIFIED` (B3 R3 at 7° cant, 0.21 m fins, 0.14 m pod; D-47) | `params.json#cg` |
-| Pack nominal centroid and flight stations | datum x −0.022 m (D-47; was −0.001, D-24); aft travel 12 mm to the no-spacer station −0.010, 2 mm spacer steps, forward limit −0.0254 (D-59); flight stations computed live by `CALC-A3-CG` (A3-R6a: 550 g −0.022, 503 g −0.0254 on the stack, 680 g −0.010); spacers `POD-008` 2/4/6/8/8 mm | `params.json#pod.pack_x_nominal_m`, `pod.pack_aft_travel_m`, `pod.pack_spacer_step_m`, `ASM-A3-PACK-STATIONS`, `CL-A3-CG-X-STATIONS` |
-| Room the pod nose needs ahead of the pack | 34.6 mm with the 8.8 mm nose block (stop at −0.1212, crush block 24.3, spreader 1.5): pack centroid ≥ −0.0254 m | `ASM-A3-NOSE-STACK` (D2-R5 params: stop face −0.1212) |
-| CG range z, lateral | −0.02 … +0.03 m; \|y\| ≤ 0.005 m | `params.json#cg` |
+| CG target / range x | 0.0490 m / 0.0466–0.0514 m (14.6–16.1 % chord), `UNVERIFIED` (B3 V1 on the CAD fins with the CG 18.5 mm above the chord plane; D-62) | `params.json#cg` |
+| Pack nominal centroid and flight stations | datum x −0.032 m (D-62; was −0.022, D-47; −0.001, D-24); aft travel 12 mm to the no-spacer station −0.020, 2 mm spacer steps, forward limit −0.0379 for the 135 mm pack (D-64); flight stations computed live by `CALC-A3-CG` on the day of the balance test (CR-A3-27); A1's frame estimate: 546 g −0.036, 550 g −0.034, 590 g −0.028 | `params.json#pod.pack_x_nominal_m`, `pod.pack_aft_travel_m`, `pod.pack_spacer_step_m`, `ASM-A3-PACK-STATIONS`, `CL-A3-CG-X-STATIONS`, `CALC-A1-PACK-CASES` |
+| Room the pod nose needs ahead of the pack | 34.6 mm with the 1 mm epoxy bed at the nose wall (stop at −0.1312, crush block 24.3, spreader 1.5): pack centroid ≥ −0.0379 m (135 mm pack) | `ASM-A3-NOSE-STACK` (D2-R6: stop face −0.1312) |
+| CG range z, lateral | +0.010 … +0.025 m (target +0.0185; each 10 mm costs 1.85 mm of aft limit and 0.27 s of spiral t2, D-62); \|y\| ≤ 0.005 m | `params.json#cg` |
 | Hover pitch-trim split upper/lower | ≤ 1.25 | `params.json#requirements.hover_split_max` (D-18) |
 
 <!-- rollup:begin (generated by team/A3/mass_rollup.py; edits here are overwritten) -->
@@ -196,11 +211,12 @@ parts.csv/interfaces.json mass mismatch, or a subsystem whose parts.csv is > 10 
 
 | Lever | Δ mass | Owner | Status |
 |---|---|---|---|
-| Weigh the pack (503–680 g listings vs 550 g carried; I1's listing 680 g) | −47 … +130 g | E2 (CR-I1-13, D-58) | `UNVERIFIED` |
+| Weigh the pack (Ovonic 120C EC5 551 ± 5 g vs 550 g carried; acceptance 592.6 g) | −4 … +6 g listed; up to +43 g accepted | E2 (D-64, T-E2-WEIGH) | `UNVERIFIED` |
+| D3's fins levers: microlight fillet filler, block fill 0.55 → 0.45, mount cheeks 12 → 8 mm | −5.6 / −13.8 / −4 g | D3, C4 (D-63) | `PROPOSED` |
 | ESC factory power leads removed (F2 solders its own 16 AWG leads to the pads) | −13.6 g, delivered (E1 `PRP-002` 7.6 g; propulsion 462.0 g) | E1 | taken |
 | Inter-panel rod and frames (D6 re-work: 1/8 in pultruded CF rod) | delivered: mechanisms 70.7 g against 80 g (9.3 g under) | D6 | taken |
 | Harness: factory phase leads reach (no extensions) | −12 g, returned to the reserve after `T-E1-MOTOR-RM` | F2, E1 | `UNVERIFIED` |
-| Station collar 16 → 12 mm | −2.4 g delivered (D3-R4 `FIN-008` 10.05 g); the half-fin boards went +21.4 g (`FIN-001`), so fins are 18.4 g over | D3, C4 | open (CR-A3-26) |
+| Station collar 16 → 12 mm | −2.0 g delivered; the 15 mm root fillets weigh 30.6 g as bodies (D-48 booked 3 g), so fins went to 437 g (D-63); collar back to 13 mm for C6's RF (+0.6 g) | D3, C4, C6 | closed (D-63, D-70) |
 | Tekko32 F4 45A AM32 ESCs instead of LANRC (+$60) | −21 g | E1, I1 | **rejected at R4** (reserve $313 vs the $309 crash, D-57) |
 | Aluminium prop nuts | −4 g | E1 | `PROPOSED` |
 | Brace strip 10 × 2 instead of 10 × 3 mm | taken (`FIN-009` is 10 × 2 mm in D3's parts.csv) | C4, D3 | closed |

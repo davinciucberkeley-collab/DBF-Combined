@@ -511,26 +511,27 @@ def mass(pm, n):
 
 
 def cruise_drag(V, m, g, rho, S, cd0, k, trim):
-    """B1's trimmed parabolic polar (CL-B1-CD0, CL-B1-K, ASM-B1-TRIM): D = q S (CD0 + k CL^2) trim (as CALC-B1-CRUISE)."""
+    """B1's as-designed polar (rev 8: CL-B1V-CD0, CL-B1V-K from AVL + XFOIL + SU2 fins; ASM-B1-TRIM):
+    D = q S (CD0 + k CL^2) trim (as CALC-B1V-CRUISE)."""
     cl = 2 * m * g / (rho * V * V * S)
     return 0.5 * rho * V * V * S * (cd0 + k * cl * cl) * trim
 
 
 @kit.calc("CALC-E1-CRUISE", title="Cruise point on B1's polar: four props share the drag",
-          equation="CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; "
-                   "solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D",
+          equation="CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's as-designed polar, = CALC-B1V-CRUISE "
+                   "drag_gate_n) ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; "
+                   "eta_tot = T V / P_bat ; L/D_eff = W / D ; p_check = (P_55 + avionics) / B1 gate power",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
-                  "S": "CL-A1-WING-AREA", "cd0": "CL-B1-CD0", "k": "CL-B1-K", "trim": "ASM-B1-TRIM",
-                  "ld_b1": "CL-B1-CRUISE-LD",
+                  "S": "CL-A1-WING-AREA", "cd0": "CL-B1V-CD0", "k": "CL-B1V-K", "trim": "ASM-B1-TRIM",
+                  "p_b1": "CL-B1V-CRUISE-P-GATE", "av": "ASM-B1-AVIONICS-W",
                   "V": P + "performance.cruise_ms", "n": P + "propulsion.n_motors", "kP": "CL-E1-KP", "kT": "CL-E1-KT",
                   "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC"},
-          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "V": "m/s", "S": "m2"},
+          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "V": "m/s", "S": "m2", "p_b1": "W", "av": "W"},
           assumes=["ASM-E1-CAL-TRANSFER", "ASM-B1-TRIM"], cites=["SRC-E1-APC-PER3"])
-def cruise(m, g, rho, S, cd0, k, trim, ld_b1, V, n, kP, kT, kv, rm, i0, esc):
+def cruise(m, g, rho, S, cd0, k, trim, p_b1, av, V, n, kP, kT, kv, rm, i0, esc):
     D = cruise_drag(V, m, g, rho, S, cd0, k, trim)
     T = D / n
-    # B1's CL-B1-CRUISE-LD is CL/CD of the untrimmed polar; the trimmed drag is that x trim: W/D = L/D_B1 / trim
-    out = {"drag_N": D, "T_per_motor_N": T, "cd0": cd0, "ld_eff": m * g / D, "ld_check": ld_b1 / trim * D / (m * g)}
+    out = {"drag_N": D, "T_per_motor_N": T, "cd0": cd0, "k": k, "ld_eff": m * g / D}
     for prop, tag in (("11x4.5MR", "45"), ("11x5.5MR", "55"), ("12x4.5MR", "12")):
         s = at_thrust(prop, T, V, rho, 1.0, kP, kv, r_hot(rm, 0.00393, 40.0), i0, esc[0], esc[1], 14.8)
         out[f"J_{tag}"] = s["J"]
@@ -543,6 +544,7 @@ def cruise(m, g, rho, S, cd0, k, trim, ld_b1, V, n, kP, kT, kv, rm, i0, esc):
         out[f"I_m_{tag}_A"] = s["I_m_A"]
         out[f"loss_motor_{tag}_W"] = s["P_loss_motor_W"]
         out[f"Q_{tag}_Nm"] = s["P_shaft_W"] / (s["rpm"] * 2 * math.pi / 60)
+    out["p_check"] = (out["P_total_55_W"] + av) / p_b1          # E1 station model vs B1's chain on the same drag
     return out
 
 
@@ -596,9 +598,9 @@ def corridor(prop, m, g, rho, S, b, cd0, k, trim, clmax, v_end, kT, kP, kv, rm, 
 
 @kit.calc("CALC-E1-CORRIDOR", title="Thrust margin along the level pitch-over corridor (sag case, 11x4.5MR and 11x5.5MR)",
           equation="min over V in [0, V_tr] of 4 T_full(V cos a, OCV 14.4 V, 80 degC) / T_req,min(V) ; "
-                   "T_req from T sin a + L = W, T cos a >= D ; polar CL-B1-CD0, CL-B1-K, ASM-B1-TRIM",
+                   "T_req from T sin a + L = W, T cos a >= D ; polar CL-B1V-CD0, CL-B1V-K, ASM-B1-TRIM (rev 8)",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
-                  "b": P + "wing.span_m", "S": "CL-A1-WING-AREA", "cd0": "CL-B1-CD0", "k": "CL-B1-K",
+                  "b": P + "wing.span_m", "S": "CL-A1-WING-AREA", "cd0": "CL-B1V-CD0", "k": "CL-B1V-K",
                   "trim": "ASM-B1-TRIM", "clmax": P + "performance.clmax",
                   "vtr": P + "performance.transition_min_ms", "n": P + "propulsion.n_motors", "kP": "CL-E1-KP",
                   "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC",
@@ -732,17 +734,21 @@ kit.claim("CL-E1-ILIM-TW-FRESH", "T/W with the limiter, fresh pack, 11x5.5MR", c
           output="tw_fresh_55", unit="-", limit=(">=", P + "requirements.hover_tw_min"), verifies=["R-HOVER-TW"],
           parts=MOTORS, how="Thrust stand on a fresh pack with the duty limit found on the bench.")
 kit.claim("CL-E1-CRUISE-DRAG", "Cruise drag at 16 m/s, gate mass (B1 polar)", calc="CALC-E1-CRUISE", output="drag_N",
-          unit="N", note="re-pointed at B1's polar (CR-A1-32): equals CL-B1-CRUISE-DRAG; was W / 5.6 from params",
+          unit="N", note="rev 8: B1's as-designed polar (CL-B1V-CD0 / -K, D-67); equals CALC-B1V-CRUISE drag_gate_n "
+                         "4.51 N. Rev 2-7 on the hand polar (CL-B1-CRUISE-DRAG); was W / 5.6 from params",
           how="B1 owns the polar; cruise power test with known prop data (H2).")
 kit.claim("CL-E1-CRUISE-LD-EFF", "Effective cruise L/D (W / trimmed drag)", calc="CALC-E1-CRUISE", output="ld_eff",
-          unit="-", note="CL-B1-CRUISE-LD 7.02 is CL/CD before the 2 % trim factor; W/D is the number the props see",
-          how="Equals CL-B1-CRUISE-LD / ASM-B1-TRIM (ld_check = 1 in CALC-E1-CRUISE).")
+          unit="-", note="rev 8 (D-67): on B1's as-designed polar CL-B1V-CD0 0.0579 / CL-B1V-K 0.0957 with the 2 % "
+                         "trim, at the 2.6 kg gate (B1's 5.57 is at the 2.436 kg predicted mass). A1 copies it to "
+                         "performance.ld_cruise. Was 6.2 on the hand polar (CL-B1-CD0 0.0515)",
+          how="T-B1-CRUISE-POWER legs at 16 m/s: W / (eta_tot P_pack / V) from logged power, rpm and airspeed.")
 kit.claim("CL-E1-CRUISE-P-45", "Cruise electrical power, 11x4.5MR (stand A/B prop, not flown)", calc="CALC-E1-CRUISE",
           output="P_total_45_W", unit="W", parts=MOTORS, note="comparison only since D-05; no requirement link",
           how="Log pack power in steady 15 m/s FBWA legs, both directions, calm morning.")
 kit.claim("CL-E1-CRUISE-P-55", "Cruise electrical power, 11x5.5MR", calc="CALC-E1-CRUISE", output="P_total_55_W",
           unit="W", limit=("<=", P + "performance.cruise_power_w"), verifies=["R-MISSION"], parts=MOTORS + ESCS,
-          note="propulsion only (no avionics); drag from B1's polar (CL-B1-CD0, CL-B1-K, ASM-B1-TRIM), CR-A1-32. "
+          note="propulsion only (no avionics); drag from B1's as-designed polar (CL-B1V-CD0, CL-B1V-K, ASM-B1-TRIM; "
+               "rev 8, D-67; was CL-B1-CD0 / CL-B1-K), CR-A1-32. p_check = (this + 6 W) / CL-B1V-CRUISE-P-GATE. "
                "The params limit is B1's pack power incl. 6 W avionics, so the comparison is 6 W conservative for B1",
           how="Log pack power in steady 16 m/s FBWA legs, both directions, calm morning; subtract the avionics draw.")
 kit.claim("CL-E1-CRUISE-P-55-LO", "Cruise power lower bound (kP = 1), 11x5.5MR", calc="CALC-E1-SENS",

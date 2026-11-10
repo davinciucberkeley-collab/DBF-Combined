@@ -1,66 +1,71 @@
-# A1 chief engineer: integration round, revision A1-R4b
+# A1 chief engineer: simulation round, revision A1-R5
 
-Status: `PROPOSED` frame at revision **A1-R4** (D-47 … D-58), addenda **A1-R4a** (D-59) and **A1-R4b** (D-60), 2026-11-10.
+Status: `PROPOSED` frame at revision **A1-R5** (D-61 … D-73, 2026-11-10) over A1-R4 / R4a / R4b (D-47 … D-60).
+Every change request written by the end of the simulation round is dispositioned in `params/CHANGE-LOG.md`
+("Revision A1-R5"); `params.json` is at A1-R5; `README.md` and `MASS-CG.md` carry the new frame. Re-derive:
+`python -I redesign/team/A1/frame_claims.py` (24 claims, writes `params/mass_budget.json`), then
+`python -I redesign/proofs/build_graph.py`.
 
-## A1-R4b (D-60): proof-chain drift on B3 R4
+## What the simulation round found and what A1 decided
 
-| Item | Decision | Numbers | Status |
-|---|---|---|---|
-| `CALC-A1-CG-RANGE` re-ran negative (fwd −0.85 mm, aft −0.002 mm, SM −7e-6) | `cg.x_range_m` [0.050, 0.0549] → **[0.0509, 0.0548] m**: B3 R4 0.05085 / 0.05490 rounded inward to 0.1 mm. B3 asked for 0.0549 (CR-B3-22), 2 µm aft of its own limit, so A1 carries 0.0548 (CR-A1-57) | fwd +0.05 mm, aft +0.10 mm, SM at aft mark 5.03 % | `MODELLED` (in params) |
-| Target 0.0522 → 0.0529 (CR-B3-22) | accepted, **not yet written**: the params edit was refused in this session; the CHANGE-LOG D-60 row is also owed | 550 g at −0.024 today; back on the −0.022 datum at 0.0529 (fwd +1.3 / aft +1.2 mm) | `PROPOSED` (open) |
-| `CALC-A1-PACK-CASES` drift (A3 M 2.305 → 2.322 kg) | Re-based: empty moment from A3's CG with the carried pack at the datum (the old inversion of `CL-A3-PACK-X-REQ` breaks whenever params and A3 hold different targets); growth read from `CL-A3-CG-X-PRED` (1.38 mm), `ASM-A1-CG-GROWTH-DX` retired; each pack's spacer step centres its basic-to-predicted band on the target | 503 g −0.024 (crush stack) 0.0533 → 0.0547; 550 g −0.024 0.0517 → 0.0531; 680 g −0.010 0.0516 → 0.0529 | `MODELLED` |
-| Pack margins | `CL-A1-PACK-CG-FWD` **+0.70 mm** (680 g), `-AFT` **+0.09 mm** (503 g, pinned at the crush stack), ballast 0 g (12.7 g/mm) | range closes, thin | `UNVERIFIED` |
-| merge_check "462 g > 462 g" and doubled one-sided warnings (E-HRN-30/31/32) | A4-owned tooling: CR-A1-59 gives the two fixes (`have > alloc + 0.05`; one warning per subsystem, not per end) | cosmetic, 0 g real overrun | open (A4) |
+| Finding (role) | As designed | Decision | Keys | Status |
+|---|---|---|---|---|
+| Static margin 4.76 % (A3 CG) / 4.33 % (predicted): the CG sits 18.5 mm above the chord plane, moving the effective NP 3.4 mm forward at 1.3 Vs (B3 V1, AVL 4 lattices) | `CL-B3-V-CG-A3-AFT-ENV` −0.77 mm `FAIL` | **D-62:** range [0.0466, 0.0514] m, target 0.0490, `cg.z_target_m` 0.0185, `z_range_m` [0.010, 0.025]; pod nose −0.140, pack bay 10 mm forward (datum −0.032, aft stop 0.050); pitot −0.220; envelope x 0.508 | `cg.*`, `pod.*`, `avionics.pitot_tip_xyz_m`, `transport.envelope_props_off_m` | `MODELLED` (D2 re-lays, A3 / B3 re-run) |
+| Blade swept volume 21.1 mm from the CF motor tube (E1, B4, A5 agree) | `CL-E1-TIP-GAP-TUBE` −16 % `FAIL` | **D-61:** `face_ahead_m` 0.0075 → tube 26.1 mm; prop plane −0.0127, plate face 0.0244; no tool exemption | `propulsion.stations.x_prop_plane_m`, `x_plate_face_m` | `MODELLED` (D3 publishes the exact values) |
+| Diagonal touchdown at 1.5 m/s bottoms the stroke from 5° of tilt; shoe RF 0.22 at the simulated 59 N side load; n 6.59 at 2.32 kg (C5 6-DOF + SU2 FEA) | `CL-C5-SIM3D-BOTTOM-TILT`, `-N`, `CL-C5-FEA-SHOE-SF` `FAIL` | **D-65:** 1.2 m/s at ≤ 10° any direction; n 6.6; side load 39.3 / 59.0 N; D5 shoe sleeve fix (+5 g) | `requirements.landing_sink_ms`, `landing_n_design` | `MODELLED` (A2 words it, D5 / C1 / C4 re-run) |
+| Spiral t2 3.51 s at the raised CG (B3) | `CL-B3-V-LAT-T2` `FAIL` | **D-66** (A1 position for A2): t2 ≥ 3.3 s, roll-stabilised modes only; no CG change | — | `PROPOSED` (A2 decides) |
+| Wing foam at the block-pocket corners 203 / 199 kPa ultimate (C2 FEA); fin-root tab if the fillet carries load | `CL-C2-FEA-FOAM-CORNER-*` `FAIL` | **D-68:** block edges R 3 mm, pocket fillet beads, cut-out radii, seam-free LE, fillet fail-safe only | — (D1, D3 local) | `PROPOSED` (C2 re-runs) |
+| Pod stops peel the board at 400 kPa vs 50; spar-clamped shell R 1.40 (C3 FEA) | `CL-C3-FEA-AFT-*`, `-TIED-*` `FAIL` | **D-69:** aft-stop strut, forward-stop floor flange, handle-foot brackets, recess fillet (+13.9 g) | — (D2 local) | `PROPOSED` (D2 draws) |
+| Fins 434.8 g (root fillets 30.6 g drawn); 2 mm pins bend; 12 mm collar RF 1.00 (D3, C4, C6) | `CL-D3-MASS`, `CL-C6-STRIP-PIN-RF` | **D-63 / D-70:** fins 437 g, pins Ø 2.5, collar 13 mm; allocations 2 386 g, reserve 214 g (0 g free); pod 146, landing 48, mechanisms 72 | `mass.allocation_g.*`, `growth_reserve_g`, `requirements.growth_allowance_kg` | `CHECKED` (`CL-A1-ALLOC-GATE` 0 g) |
+| Pack SKU named by E2: Ovonic 120C EC5 551 ± 5 g, 135 × 46 × 49 mm | `CL-E2-SKU-MASS-MARGIN` +45 g | **D-64:** SKU adopted, cart released with two checks; acceptance line `CL-A1-PACK-ACCEPT` 592.6 g; 503 / 680 g cases retired | `battery.pack`, `size_m` | `UNVERIFIED` (T-E2-WEIGH) |
+| Fin drag 1.23 × hand (B1 SU2): CD0 0.0579, 235 W at 2.436 kg; ESC pad h from CFD (E3): 56.1 °C, ceiling 44; F1 R_ext 6.69 mΩ | `CL-B1V-*`, `CL-E3-*`, `CL-F1-R-EXT` | **D-67:** 240 W stands, cruise after hover 12.0 / 6.4 min, `r_ext` 6.7, ceiling 44; `THR_MAX` 70 % stands | `performance.*`, `electrical.r_ext_mohm`, `env.ambient_ceiling_c` | `UNVERIFIED` |
+| Stall / transition +0.1 % at the forward CG; B1 vs B2 CLmax 0.862 / 0.787 | `CL-B2R3-VS-GATE-FWD` | **D-71:** judged at the gate, closed by `T-B2-STALL` on the twin and the first build; B1 / B2 / B3 reconcile; lower CLmax carried | — | `UNVERIFIED` (test gate) |
+| $6 T-antennas (F5) against a $3.99 reserve margin | `CL-A1-RESERVE` | **D-72:** released against I1's lever 1 (borrow the soldering kit); reserve reads $307 until Jacobs Hall's written yes | `cost.*` (I1 re-publishes) | `UNVERIFIED` |
+| SU2 FEA pitfalls (C2, C4) | — | **D-73:** tooling notes for `inputs/SIM-TOOLS.md`; A4's 0.05 g budget tolerance | — | — |
 
-Checks re-run 2026-11-10: `frame_claims.py` 22 claims, no negative margins; `merge_check.py` **PASS** (0 errors, total
-2 320 g, CG 0.052 m inside the new range). Its two warnings are the propulsion 462 g tie (CR-A1-59) and a new **fins
-435 g > 418 g** overrun (CR-A1-61 to D3). The doubled one-sided warnings did not appear in this run. `build_graph.py`
-was not completed: several other roles were running it at the same time.
-Other A1-R4b numbers: `CL-A1-CG-CENTRED` +1.6 mm, `CL-A1-TIPOVER` 30.66° (C5 re-runs, CR-A1-60). The tables below are
-the A1-R4a record; the CG rows in them are superseded by this table.
-Re-derive: `python -I redesign/team/A1/frame_claims.py` (22 claims, also writes `params/mass_budget.json`), then
-`python -I redesign/proofs/build_graph.py`. `interfaces/merge_check.py` now **passes** (0 errors; CG 0.051 m).
-
-## Action items this round
-
-| Item | Decision | Numbers | Status |
-|---|---|---|---|
-| CG 2.7 mm aft of the aft limit (CR-A4-36, CR-A5-20, CR-A3-22) | **D-47:** pod nose −0.115 → −0.130, nose stack 14.8 → 8.8 mm, whole pack bay 21 mm forward, datum `pod.pack_x_nominal_m` −0.022. Pod group (saddle `POD-007` cannot move), stations (not buildable), power boxes (−3.4 of 5.5 mm) and ballast (≈ 70 g) rejected | 0.0577 `FAIL` → 0.0513 m basic, 0.0526 predicted (A3, all nine parts.csv) | `MODELLED` |
-| B3's range (CR-B3-17) | adopted rounded inward: 0.050–0.0549 m, target 0.0522 | B3 0.04953 / 0.05495 | `UNVERIFIED` (B3) |
-| Re-check after the parts got lighter aft | **D-59:** aft travel 8 → 12 mm (`pod.pack_aft_travel_m`, aft stop 0.060), spacer step 2 mm (`pod.pack_spacer_step_m`); each pack flies at the step nearest the target | 680 g needed 9.5 mm aft (A3); see the table below | `MODELLED` |
-| R4 503 g station −0.0245 | superseded by the D-59 rule | it gave 0.0551 m predicted, 0.2 mm aft of the limit, on the A3-R5 roll-up | closed |
-| Six allocations over (CR-A4-37, CR-A3-21) | **D-48:** allocations 2 355 g (power 648 with the 28 g PWR-003 board, avionics 45, harness 123, mechanisms 80, fins 418, pod 131, propulsion 462 with stripped ESC leads); reserve 245 g | every subsystem now inside (`CL-A3-ALLOC-WORST` 1.00, propulsion 462.0 / 462) | `MODELLED` |
-| `frame_claims.py` drifts | `CALC-A1-PACK-STATION` replaced by `CALC-A1-PACK-CASES` (reads A3's live CG and mass, recovers the empty moment, checks every pack); A1 re-runs clean | 22 claims, no drift in A1 | `CHECKED` |
-
-## Pack stations (D-59, `CALC-A1-PACK-CASES` on A3's 20:35 roll-up)
-
-| Pack | Station x (m) | Spacer | CG basic → predicted (m) | Margin | Status |
-|---|---|---|---|---|---|
-| 550 g (carried) | −0.018 | 8 mm | 0.0522 → 0.0536 | fwd +2.2 / aft +1.3 mm | `MODELLED` |
-| 503 g | −0.024 | 14 mm | 0.0523 → 0.0538 | aft +1.1 mm; 1.4 mm travel left | `MODELLED` |
-| 680 g | −0.010 | none | 0.0507 → 0.0520 | fwd +0.7 mm | `MODELLED` (thin) |
-
-## Key numbers (2.6 kg gate)
+## Key numbers (2.6 kg gate; A1 claims, `team/A1/claims.json`)
 
 | Claim | Value | Limit | Margin | Status |
 |---|---|---|---|---|
-| `CL-A1-PACK-CG-FWD` / `-AFT` | +0.70 / +0.09 mm (D-60) | ≥ 0 | — | `UNVERIFIED` (A3, B3 inputs) |
-| `CL-A1-PACK-STATION` (503 g travel left) | 1.4 mm | ≥ 0 | — | `UNVERIFIED` (D2 re-lays) |
-| `CL-A1-NOSE-BALLAST` | 0 g | ≤ 10 g | — | `UNVERIFIED` |
-| `CL-A1-MASS-SIZED` / `-RESERVE-COVERS` | 2.600 kg / 0 g | ≤ 2.6 kg / ≥ 0 | +0 % | `UNVERIFIED` (A3: predicted 2 419 g, +181 g) |
-| `CL-A1-HOVER-TW-GATE` / `-SAG` | 2.49 / 2.12 | ≥ 2.0 / 1.6 | +25 % / +33 % | `UNVERIFIED` (stand) |
-| `CL-A1-STALL-GATE` / `-TRANSITION-GATE` | 11.91 / 15.48 m/s | ≤ 12 / 16 m/s | +1 % / +3 % | `UNVERIFIED` |
-| `CL-A1-CG-RANGE-FWD` / `-AFT` | +0.05 / +0.10 mm (D-60) | ≥ 0 | — | `UNVERIFIED` (B3) |
-| `CL-A1-TIPOVER` | 30.6° | ≥ 30° | +2 % | `UNVERIFIED` (C5 re-runs at the new CG) |
-| `CL-A1-PROP-CLEAR` / `CL-A1-BOX-FIT` | 34.6 mm / 2 mm | ≥ 25 mm / ≥ 0 | +38 % / — | `UNVERIFIED` / `CHECKED` |
-| `CL-A1-RESERVE` | $313 | ≥ $309 | +1 % | `UNVERIFIED` (I1) |
+| `CL-A1-CG-RANGE-FWD` / `-AFT` (params vs B3 V1 limits) | +0.004 / +0.04 mm | ≥ 0 | — | `UNVERIFIED` (B3) |
+| `CL-A1-CG-WIDTH` / `CL-A1-CG-TARGET-IN` | 4.8 / 2.4 mm | ≥ 4 / ≥ 2 mm | +20 % | `UNVERIFIED` |
+| `CL-A1-PACK-CG-FWD` / `-AFT` (546 / 550 / 590 g packs in the D-62 bay) | +1.5 / +1.5 mm | ≥ 0 | — | `UNVERIFIED` (frame estimate on A3-R6a + `ASM-A1-A3-PACK-X`, `-STACK-DX`) |
+| `CL-A1-PACK-STATION` / `CL-A1-NOSE-BALLAST` | 1.9 mm / 0 g | ≥ 0 / ≤ 10 g | — | `UNVERIFIED` |
+| `CL-A1-PACK-ACCEPT` | 592.6 g | ≥ 556 g (SKU max) | +7 % | `UNVERIFIED` (T-E2-WEIGH) |
+| `CL-A1-MASS-SIZED` / `-RESERVE-COVERS` / `-ALLOC-GATE` | 2.600 kg / 0 g / 0 g | ≤ 2.6 / ≥ 0 / ≥ 0 | +0 % | `CHECKED` |
+| `CL-A1-HOVER-TW-GATE` / `-SAG` | 2.49 / 2.12 | ≥ 2.0 / 1.6 | +25 / +33 % | `UNVERIFIED` (stand) |
+| `CL-A1-STALL-GATE` / `-TRANSITION-GATE` | 11.90 / 15.47 m/s | ≤ 12 / 16 | +1 / +3 % | `UNVERIFIED` |
+| `CL-A1-TIPOVER` (fwd limit 0.0466, z 0.025) | 30.98° | ≥ 30° | +3 % | `UNVERIFIED` (C5) |
+| `CL-A1-PROP-CLEAR` (frame bound; record: `CL-E1-TIP-GAP-AT-75` 26.1 mm) | 34.6 mm | ≥ 25 mm | +38 % | `UNVERIFIED` |
+| `CL-A1-BOX-FIT` (D7's real stack) | 17 mm | ≥ 0 | — | `CHECKED` |
+| `CL-A1-RESERVE` | $313 (I1-R3; $307 after D-72) | ≥ $309 | +1 % | `UNVERIFIED` (I1) |
+
+Frame estimate of the take-off CG after D-61 / D-62 (`CALC-A1-PACK-CASES`): 546 g at −0.036 (16 mm spacer)
+0.0481 → 0.0495 m; 550 g at −0.034 (14 mm) 0.0485 → 0.0498; 590 g at −0.028 (8 mm) 0.0486 → 0.0499; most forward
+centroid −0.0379 (135 mm pack on the crush stack), no-spacer station −0.020. The flight card takes the stations
+from A3's re-run, never from this table.
+
+## Checks run
+
+| Check | Result |
+|---|---|
+| `python -I redesign/team/A1/frame_claims.py` | 24 claims, no negative margin; `mass_budget.json` 2 386 + 214 = 2 600 g, `cg_x_m` [0.0466, 0.0514], `cg_z_m` [0.010, 0.025] |
+| `python -I redesign/interfaces/merge_check.py` | FAIL: 1 error (CG 0.052 m outside the D-62 range 0.047–0.051, expected until D2 re-lays the bay and A3 re-runs), 1 warning (propulsion 462 g float tie, CR-A1-59); the fins 435 / 418 g warning is cleared by D-63 |
+| `python -I redesign/proofs/build_graph.py` | not completed in this session (the build was still re-running other roles' scripts after 25 min); A1's 24 claims re-compute clean in frame_claims.py; drift is expected in every script that reads the R5 keys (B3, B4, B1, E1, E2, E3, C1, C3, C4, C5, D2, D3, D5, D7, F4, H1) until the owners re-run |
 
 ## Open issues
 
-1. **merge_check / check.py**: the CG error is gone in both (0.051 m). `check.py` still fails on 16 prop keep-out errors (E1's `prop_keepout` rotation, CR-A1-48) and two D2 parts with no mass (`POD-009/010`, D2-R5 in progress). The only mass warning is a float tie, "462 g > 462 g" (CR-A1-55 to A4).
-2. **The 680 g pack** is 0.7 mm inside the forward limit and still fails the 100 g overrun rule (+51 g). The SKU line is now 631 g (CR-A1-56); E2 decides.
-3. **A3's own station claims** (`CL-A3-CG-X-STATIONS` 1.17, `CL-A3-PACK-TRIM` 1.5 mm) still read 8 mm of aft travel: CR-A1-53. The predicted CG uses `ASM-A1-CG-GROWTH-DX` 1.4 mm until A3 publishes it.
-4. **Re-runs owed** on D-47/D-59: D2 (aft stop 0.060, CR-A1-54), B3 (`CALC-B3-CG-CHECK`), C5 (crash per pack, tip-over), B4 (pitot −0.210), D7 (nose pad). `CL-A1-CG-CENTRED` reads B3's R3 pack-centred CG and refreshes when B3 re-runs.
-5. Earlier open items (box height veto by car, budget reserve $4 over the crash cost) are unchanged; see `params/CHANGE-LOG.md` D-53 and D-57.
+1. **Three stop-gap assumptions** carry the D-61 / D-62 effect until A3 re-runs on D2-R6, D3-R5, D5-R5 and E1's
+   centroids: `ASM-A1-A3-PACK-X` (−0.022), `ASM-A1-STACK-DX` (−0.9 mm), `ASM-A1-R5-ADDED-G` (21.4 g). A3 tells A1
+   to retire them (CR-A1-64). Until then `CL-A3-CG-X-RANGE` reads the old bay and fails the D-62 range.
+2. **R-STALL at the new forward limit** (0.0466) is B3's 11.94 m/s with the CG height; B2's z 0 model would give
+   ≈ 12.05. B2 re-runs with z; the twin's slow-flight stall is the gate (D-71).
+3. **Spiral** is A2's call (D-66). **`R-LANDING-IMPACT`** text is A2's (D-65).
+4. **Reserve 0 g free** and the budget $2 under the crash cost until I1's lever 1 is confirmed: no further mass or
+   money release without a lever. D3's levers (up to −23 g) and the harness return (−12 g) are the next releases.
+5. **Owed re-runs on the R5 keys:** D2 (bay), D3 / E1 (mount, centroids), A3, B3, B4, B1, E2, E3, C1, C3, C4, C5, D5,
+   D7, F4, H1, A5 (`check.py` 0 keep-out errors), A2 (texts); listed per role in the CHANGE-LOG forward table.
 
-Files: `params/params.json` (two new keys, one note), `params/CHANGE-LOG.md` (D-59, A1-R4a row), `MASS-CG.md` (hand-written sections), `README.md` (two rows), `team/A1/frame_claims.py`, `team/A1/claims.json`, `team/A1/CHANGE-REQUESTS.md` (CR-A1-53 … 56).
+Files: `params/params.json` (A1-R5), `params/CHANGE-LOG.md` (A1-R4b, A1-R5 rows, D-60 … D-73, dispositions),
+`params/mass_budget.json`, `README.md`, `MASS-CG.md` (hand-written sections), `team/A1/frame_claims.py`,
+`team/A1/claims.json`, `team/A1/CHANGE-REQUESTS.md` (CR-A1-62 … 67).

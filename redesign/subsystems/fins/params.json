@@ -1,5 +1,5 @@
 {
- "_note": "Fins subsystem (FIN) local numbers, owner D3, design R4 (CR-A1-47; CHANGE-LOG D-26/27/28/42/48/51/52/54). Read by fusion/fins.py (ctx.local), make_fins.py and team/D3/fins_calcs.py (P:fin_detail.*); C4, C6 and E3 read some keys too: never rename a key. Shared numbers (fin station, tube x, tube OD/ID and length, half height, TE, motor height, cant, board thickness, layers, spar) come from params/params.json; tube_length_m and layers are copies for the C4/C6 readers and fins.py checks they agree. Frame: params.json#frame (metres, x aft, y right, z up).",
+ "_note": "Fins subsystem (FIN) local numbers, owner D3, design R5 (CR-A1-63; CHANGE-LOG D-26/27/28/42/48/51/52/54/61/68/70). Read by fusion/fins.py (ctx.local), make_fins.py and team/D3/fins_calcs.py (P:fin_detail.*); C4, C6 and E3 read some keys too: never rename a key. Shared numbers (fin station, tube x, tube OD/ID and length, half height, TE, motor height, cant, board thickness, layers, spar) come from params/params.json; tube_length_m and layers are copies for the C4/C6 readers and fins.py checks they agree. Frame: params.json#frame (metres, x aft, y right, z up).",
  "fin_detail": {
   "tube_length_m": {
    "value": 0.344,
@@ -36,6 +36,13 @@
     "source": "D3 choice",
     "status": "PROPOSED",
     "note": "boundary between the flat-topped tube socket (ahead) and the airfoil-contoured spar saddle (aft); mid-web between the bores (web 12.8 mm)"
+   },
+   "edge_r_m": {
+    "value": 0.003,
+    "unit": "m",
+    "source": "params/CHANGE-LOG.md#D-68 (team/C2/CHANGE-REQUESTS.md#CR-C2-11)",
+    "status": "PROPOSED",
+    "note": "R5: the block four vertical (plan-form) edges rounded R 3 mm: front corners on the tube socket (x0), aft corners on the spar saddle (x1). D1 cuts the core pocket to the same radius and lays >= 3 mm microballoon beads along the pocket edges (C2 CL-C2-FEA-FOAM-CORNER-S1/-S3)"
    },
    "fill_factor": {
     "value": 0.55,
@@ -219,11 +226,11 @@
     "status": "PROPOSED"
    },
    "face_ahead_m": {
-    "value": 0.0025,
+    "value": 0.0075,
     "unit": "m",
-    "source": "params/CHANGE-LOG.md#D-51 (CR-E1-22 rev, CR-A1-47)",
+    "source": "params/CHANGE-LOG.md#D-61 (CR-A1-63, CR-D3-26 option a at 7.5 mm, CR-E1-44/-48)",
     "status": "PROPOSED",
-    "note": "R4: motor face at the axis 2.5 mm ahead of the mount collar front, so the prop plane (E1 stack 37.3 mm, 37.0 mm along x at 7 deg) sits 39.5 mm ahead of the collar >= 0.14 D = 39.1 mm (CL-D3-PROP-GAP)"
+    "note": "R5 (D-61): motor face at the axis 7.5 mm ahead of the mount collar front (was 2.5 mm, D-51). Prop plane x = face - 37.3 cos 7 deg = -0.01267 (CL-D3-X-PROP), face 0.02435 (CL-D3-X-FACE); A1 copies both into propulsion.stations.x_prop_plane_m / x_plate_face_m. Collar-front gap 44.5 mm >= 0.14 D 39.1 mm; blade swept volume to the tube 26.1 mm (E1 CL-E1-TIP-GAP-AT-75), least face_ahead 6.5 mm"
    },
    "plate_t_m": {
     "value": 0.0045,
@@ -283,10 +290,11 @@
     "note": "inner face from the fin plane; clears the screw heads (8 + 2.75 = 10.75 mm) and overlaps the collar wall"
    },
    "cheek_len_m": {
-    "value": 0.012,
+    "value": 0.017,
     "unit": "m",
-    "source": "D3 choice",
-    "status": "PROPOSED"
+    "source": "params/CHANGE-LOG.md#D-61 (cheeks +5 mm, CR-A1-63)",
+    "status": "PROPOSED",
+    "note": "R5: cheeks run from the plate back face 17 mm aft (was 12 mm) so they still reach the slit collar to the tube axis after the plate moved 5 mm forward; C4 re-checks rocking stiffness >= 1 100 N m/rad (T-C4-MOUNT-STIFF, D-70). The 12 -> 8 mm mass lever (CR-D3-33 c) is withdrawn: the cheek length is now set by the reach"
    },
    "head_d_m": {
     "value": 0.0055,
@@ -497,11 +505,11 @@
   },
   "station_collar": {
    "height_m": {
-    "value": 0.012,
+    "value": 0.013,
     "unit": "m",
-    "source": "params/CHANGE-LOG.md#D-48 (C4 CR-C4-25, CR-A1-47)",
+    "source": "params/CHANGE-LOG.md#D-70 (team/C6/CHANGE-REQUESTS.md#CR-C6-32)",
     "status": "PROPOSED",
-    "note": "R4: 16 -> 12 mm. C4 needs 8.0 mm of bond for the envelope torsion + brace shear (CL-C4-D3-COLLAR-H-REQ); the strip-tail tongue (strip band + 1 mm, ~11.3 mm along z) fits under the ring top (fins.py raises if not). Top 0.5 mm below the mount collar, unchanged; the 12 mm brace ear is now the full ring height, so the brace end stays at |z| 0.1535. C6's re-run (CL-C6-COLLAR-L-REQ 12.0 mm on max(C1, C4)) leaves ratio 1.00: no margin, C6 confirms with T-C6-COLLAR (CR-D3-25)"
+    "note": "R5: 12 -> 13 mm (CL-C6-COLLAR-RF-13MM 1.09 on C1 7.4 N m). 12 mm only if T-C6-LAP-PETG mean >= 4.1 MPa before the collars print. Top stays 0.5 mm below the mount collar (|z| 0.1595); the ring grows 1 mm downward to 0.1465; ear (12 mm, mid 0.1535) and brace end unchanged; tongue fit 1.74 mm"
    },
    "gap_m": {
     "value": 0.0005,
@@ -677,11 +685,11 @@
     "status": "UNVERIFIED"
    },
    "pin_d_m": {
-    "value": 0.002,
+    "value": 0.0025,
     "unit": "m",
-    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-02",
+    "source": "params/CHANGE-LOG.md#D-70 (team/C6/CHANGE-REQUESTS.md#CR-C6-31)",
     "status": "PROPOSED",
-    "note": "pultruded CF rod 2 mm, through strip-board-strip, bonded flush (CL-C6-STRIP-PIN-RF 1.41)"
+    "note": "R5: pultruded CF rod 2.5 mm at the drawn 15 mm pitch, 2.5 mm drill, epoxy injected before the pin (CL-C6-STRIP-PIN-RF-PROP 1.59 at 72.7 N, 1.25 at 92 N). Fallback only if 2.5 mm rod cannot be bought: 2 mm at 9 mm pitch (CL-C6-STRIP-PIN-RF-ALT)"
    },
    "pin_pitch_m": {
     "value": 0.015,
@@ -865,18 +873,18 @@
     "note": "gap between the skin and the lug so the tie turns under it"
    },
    "collar_x_m": {
-    "value": 0.084,
+    "value": 0.06,
     "unit": "m",
-    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-05",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-16",
     "status": "PROPOSED",
-    "note": "collar-tail lug centre, outboard face of the outboard tail wall (E-HRN-06...09)"
+    "note": "R5: collar-tail phase-lead lug centre x 0.060 (was 0.084), outboard face of the outboard tail wall, slot OPEN ALONG X (the phase bundle runs up the face along z there); 5 mm long along x (0.0575-0.0625), front 2.1 mm aft of the ring at the wall plane; F2 free span 0.047 m <= 0.050 (CL-F2-FREE-SPAN). E-HRN-06...09"
    },
    "collar_drop_m": {
-    "value": 0.001,
+    "value": 0.0015,
     "unit": "m",
-    "source": "D3 choice",
+    "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-16",
     "status": "PROPOSED",
-    "note": "lug top below the tail top edge at the lug forward end (mount and cap stay clear)"
+    "note": "R5: lug top 1.5 mm below the tail top edge at the lug front (F2)"
    }
   }
  }

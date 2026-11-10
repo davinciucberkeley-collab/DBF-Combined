@@ -25,10 +25,36 @@ kit.assumption("ASM-A1-CLMAX", "CLmax 0.9 of the reflexed wing (SUPERSEDED)",
                      "S5010, SM 5 %), which CALC-A1-STALL now reads; the node stays only until B1, B3 and C1 re-point "
                      "their inputs (CHANGE-LOG D-02)", value=0.9, unit="-", status="UNVERIFIED",
                cites=["SRC-K09-CARD"])
-kit.assumption("ASM-A1-WALL", "Box wall and lining 25 mm per side",
-               "The transport box loses 25 mm per side to plywood/corrugated wall plus foam lining",
-               basis="1/4 in ply + ~18 mm foam; D7 re-derives with the real box", value=0.025, unit="m",
-               cites=["SRC-K09-REVIEW"])
+kit.assumption("ASM-A1-WALL", "Box wall stack 12.5 mm per side along the chord",
+               "The transport box loses 12.5 mm per side along the chord: 4 mm corrugated shell at both ends plus the "
+               "1/2 in PE nose pad (D7-R4 stack after D-62: 4 + 4 + 12.7 = 20.7 mm over two sides); the span and height "
+               "faces lose 4 mm plus the cradle and pillar preloads, less than this",
+               basis="D7 CL-D7-NOSE-GAP (12.95 mm at the 0.498 m envelope with a 3/4 in pad); D-62 moves the nose 10 mm and "
+                     "the pad goes to 1/2 in (CR-A1-66). Was 25 mm (R0 guess: 1/4 in ply + 18 mm foam)",
+               value=0.0125, unit="m", cites=["SRC-K09-REVIEW"])
+kit.assumption("ASM-A1-A3-PACK-X", "Pack station A3's current roll-up carries",
+               "The pack centroid x at which A3's published CL-A3-CG-X and CL-A3-MASS-BASIC were rolled up",
+               basis="A3-R6a (2026-11-10) rolled the carried pack at the D-47 datum -0.022 m. D-62 moves the datum to "
+                     "-0.032 m; until A3 re-runs on D2's R6 bay this assumption recovers the empty-aircraft moment from "
+                     "A3's numbers. Set it equal to pod.pack_x_nominal_m (and retire it) once A3 has re-run",
+               value=-0.022, unit="m", status="UNVERIFIED", cites=["SRC-K09-REVIEW"])
+kit.assumption("ASM-A1-STACK-DX", "Aircraft CG shift from D-61 not yet in A3's roll-up",
+               "D-61 moves the four motor stacks (motor, adapter, prop, nut; about 108 g each) 5 mm forward "
+               "(face_ahead_m 0.0025 -> 0.0075): about -0.9 mm on the take-off CG",
+               basis="E1 CR-E1-44 estimate (4 x 108 g x 5 mm / 2 322 g = 0.93 mm). Set to 0 once A3 re-runs on E1's "
+                     "D-61 centroids", value=-0.0009, unit="m", status="UNVERIFIED", cites=["SRC-K09-REVIEW"])
+kit.assumption("ASM-A1-PACK-CASES-G", "Pack masses the frame checks (D-64)",
+               "Lightest and heaviest flight pack the CG and gate checks run with: the Ovonic 120C EC5 listing minus "
+               "its tolerance (546 g) and the acceptance line A1 set in D-64 (590 g; CALC-A1-PACK-ACCEPT gives the exact "
+               "figure from A3's gate margin)",
+               basis="E2 CR-E2-24: listing 551 +/- 5 g. D-64 retires the 503 / 680 g bounding listings of D-58/D-59 as "
+                     "flight cases; A3 updates ASM-A3-PACK-RANGE to the same pair", value=[546.0, 590.0], unit="g",
+               status="PROPOSED", cites=["SRC-E2-OVONIC-120C-EC5"])
+kit.assumption("ASM-A1-R5-ADDED-G", "Flying mass added by the R5 decisions, not yet in A3's roll-up",
+               "C3's pod fixes +13.9 g EST (CR-C3-14/-15/-16), D-62 nose shell +2 g, C6 pins 2.5 mm +1.5 g and collar "
+               "13 mm +0.6 g, D3's sealing bead -1.6 g, C5's shoe sleeve fix +5 g EST (CR-C5-18): +21.4 g",
+               basis="D-63; set to 0 once D2, D3 and D5 publish and A3 re-runs", value=21.4, unit="g",
+               status="UNVERIFIED", cites=["SRC-K09-REVIEW"])
 
 
 # ---------------------------------------------------------------- geometry
@@ -97,25 +123,26 @@ def box_fit(ext, wall, env):
 
 
 # ---------------------------------------------------------------- CG range vs the B3 claims (D-24 closed D-17)
-@kit.calc("CALC-A1-CG-RANGE", title="params cg range sits inside B3's R1 claims and holds the pack-centred CG",
-          equation="fwd_ok = x_range[0] - x_fwd ; aft_ok = x_aft - x_range[1] ; "
-                   "centred_fwd = cg_centred - x_range[0] ; centred_aft = x_range[1] - cg_centred ; sm_aft = (x_np - x_range[1]) / c",
-          inputs={"x_range": P + "cg.x_range_m", "x_fwd": "CL-B3-CG-FWD", "x_aft": "CL-B3-CG-AFT",
-                  "cg_centred": "CL-B3-CG-CENTRED-AFT", "x_np": "CL-B3-XNP", "c": P + "wing.chord_m",
+@kit.calc("CALC-A1-CG-RANGE", title="params cg range sits inside B3's V1 claims (CG height included) and holds the target",
+          equation="fwd_ok = x_range[0] - x_fwd ; aft_ok = x_aft - x_range[1] ; width = x_range[1] - x_range[0] ; "
+                   "target_fwd = x_t - x_range[0] ; target_aft = x_range[1] - x_t ; sm_aft = (x_np - x_range[1]) / c - sm_min",
+          inputs={"x_range": P + "cg.x_range_m", "x_fwd": "CL-B3-V-CG-FWD", "x_aft": "CL-B3-V-CG-AFT-ENV",
+                  "x_t": P + "cg.x_target_m", "x_np": "CL-B3-V-XNP-ENV", "c": P + "wing.chord_m",
                   "sm_min": P + "requirements.static_margin_min"},
-          units={"x_range": "m", "x_fwd": "m", "x_aft": "m", "cg_centred": "m", "x_np": "m", "c": "m"})
-def cg_range(x_range, x_fwd, x_aft, cg_centred, x_np, c, sm_min):
-    # CL-B3-CG-CENTRED-AFT is B3's aft margin (m) of the pack-centred CG; recover the CG itself from the aft limit.
-    cg = x_aft - cg_centred
+          units={"x_range": "m", "x_fwd": "m", "x_aft": "m", "x_t": "m", "x_np": "m", "c": "m"})
+def cg_range(x_range, x_fwd, x_aft, x_t, x_np, c, sm_min):
+    # D-62: B3's V1 limits carry the take-off CG height (cg.z_target_m); the R4 ids CL-B3-CG-FWD/-AFT (z = 0) are
+    # superseded. The old pack-centred check (CL-B3-CG-CENTRED-AFT, B3 R3) is retired: CALC-A1-PACK-CASES checks
+    # every pack against the range on A3's live roll-up.
     return {"fwd_inside_m": x_range[0] - x_fwd, "aft_inside_m": x_aft - x_range[1],
-            "cg_pack_centred_m": cg, "centred_fwd_margin_m": cg - x_range[0],
-            "centred_aft_margin_m": x_range[1] - cg, "sm_at_aft_limit": (x_np - x_range[1]) / c - sm_min}
+            "width_m": x_range[1] - x_range[0], "target_fwd_margin_m": x_t - x_range[0],
+            "target_aft_margin_m": x_range[1] - x_t, "sm_at_aft_limit": (x_np - x_range[1]) / c - sm_min}
 
 
-@kit.calc("CALC-A1-PACK-CASES", title="CG per weighed pack at its D-60 flight station in the D-47 bay",
-          assumes=["ASM-A3-NOSE-STACK"],
-          equation="x_cg = CL-A3-CG-X * c ; dx = CL-A3-CG-X-PRED - x_cg ; M_e x_e = M x_cg - m_p x_nom (A3 rolls the "
-                   "carried pack at the datum) ; x_fwd = x_pod_le + nose + L/2 ; x_aft = x_nom + aft_travel ; "
+@kit.calc("CALC-A1-PACK-CASES", title="CG per weighed pack at its D-60 flight station in the D-62 bay",
+          assumes=["ASM-A3-NOSE-STACK", "ASM-A1-A3-PACK-X", "ASM-A1-STACK-DX", "ASM-A1-PACK-CASES-G"],
+          equation="x_cg = CL-A3-CG-X * c + dx_stack ; dx = CL-A3-CG-X-PRED - CL-A3-CG-X * c ; M_e x_e = M x_cg - m_p x_a3 "
+                   "(A3 rolls the carried pack at x_a3) ; x_fwd = x_pod_le + nose + L/2 ; x_aft = x_nom + aft_travel ; "
                    "g(m) = dx M / (M_e + m) ; x_p(m) = x_aft - k step, k >= 0 the whole step that puts the mid of basic "
                    "and predicted CG, x_cg(m) + g(m)/2, nearest x_t, x_p >= x_fwd ; "
                    "x_cg(m) = (M_e x_e + m x_p) / (M_e + m) ; x_pred = x_cg + g(m) ; "
@@ -126,23 +153,25 @@ def cg_range(x_range, x_fwd, x_aft, cg_centred, x_np, c, sm_min):
                   "x_rng": P + "cg.x_range_m", "pod_le": P + "pod.x_le_m", "pack": P + "battery.size_m",
                   "nose": "ASM-A3-NOSE-STACK", "x_nom": P + "pod.pack_x_nominal_m",
                   "aft_travel": P + "pod.pack_aft_travel_m", "step": P + "pod.pack_spacer_step_m",
-                  "pack_rng": "ASM-A3-PACK-RANGE"},
+                  "pack_rng": "ASM-A1-PACK-CASES-G", "x_a3": "ASM-A1-A3-PACK-X", "dx_stack": "ASM-A1-STACK-DX"},
           units={"M_kg": "kg", "c": "m", "x_pred_a3": "m", "x_t": "m", "mp_kg": "kg", "x_rng": "m", "pod_le": "m",
-                 "pack": "m", "nose": "m", "x_nom": "m", "aft_travel": "m", "step": "m", "pack_rng": "g"})
+                 "pack": "m", "nose": "m", "x_nom": "m", "aft_travel": "m", "step": "m", "pack_rng": "g", "x_a3": "m",
+                 "dx_stack": "m"})
 def pack_cases(M_kg, cg_frac, x_pred_a3, c, x_t, mp_kg, x_rng, pod_le, pack, nose, x_nom, aft_travel, step,
-               pack_rng):
-    # D-60. The empty-aircraft moment comes from A3's published CG and mass with the carried pack at the D-47 datum
-    # (PWR-001 at pod.pack_x_nominal_m in A3's roll-up). It no longer inverts CL-A3-PACK-X-REQ: that claim is
-    # computed on A3's copy of cg.x_target_m, so a target change made the inversion wrong until A3 re-ran (the
-    # D-59 version moved the 550 g pack 4 mm on a 0.7 mm target change). Growth by maturity is A3's own
-    # CL-A3-CG-X-PRED (CR-A1-53 closed; ASM-A1-CG-GROWTH-DX retired). Each weighed pack flies at the whole spacer
-    # step that puts the middle of its basic-to-predicted CG band nearest the target, never ahead of the crush
-    # stack: basic is the forward-limit case and predicted the aft-limit case, so the band is centred on B3's target.
+               pack_rng, x_a3, dx_stack):
+    # D-60. The empty-aircraft moment comes from A3's published CG and mass with the carried pack at the station A3
+    # rolled it at (ASM-A1-A3-PACK-X; equal to pod.pack_x_nominal_m once A3 re-runs on the D-62 bay). It no longer
+    # inverts CL-A3-PACK-X-REQ: that claim is computed on A3's copy of cg.x_target_m, so a target change made the
+    # inversion wrong until A3 re-ran. Growth by maturity is A3's own CL-A3-CG-X-PRED. D-61's 5 mm stack move
+    # enters as ASM-A1-STACK-DX until A3 re-runs on E1's centroids. Each weighed pack flies at the whole spacer step
+    # that puts the middle of its basic-to-predicted CG band nearest the target, never ahead of the crush stack:
+    # basic is the forward-limit case and predicted the aft-limit case, so the band is centred on B3's target.
+    # D-64: the packs checked are the SKU listing minus tolerance, the carried mass and the acceptance line.
     M, mp = M_kg * 1000.0, mp_kg * 1000.0
-    x_cg = cg_frac * c
-    dx_growth = x_pred_a3 - x_cg
+    x_cg = cg_frac * c + dx_stack
+    dx_growth = x_pred_a3 - cg_frac * c
     Me = M - mp
-    mom_e = M * x_cg - mp * x_nom
+    mom_e = M * x_cg - mp * x_a3
     x_fwd = pod_le + nose + pack[0] / 2.0
     x_aft = x_nom + aft_travel
     k_max = int((x_aft - x_fwd) / step + 1e-9)
@@ -168,6 +197,20 @@ def pack_cases(M_kg, cg_frac, x_pred_a3, c, x_t, mp_kg, x_rng, pod_le, pack, nos
             "ballast_g_per_mm": (Me + mp) * 0.001 / (x_t - pod_le)}
 
 
+@kit.calc("CALC-A1-PACK-ACCEPT", title="Heaviest flight pack the first-build overrun still covers (D-64 acceptance line)",
+          assumes=["ASM-A1-R5-ADDED-G", "ASM-A1-PACK-CASES-G"],
+          equation="accept = m_pack + gate_margin - overrun - added ; margin_sku = accept - (sku_min + 10)",
+          inputs={"m_pack_kg": P + "battery.mass_kg", "gate_margin_kg": "CL-A3-GATE-MARGIN",
+                  "overrun_kg": P + "requirements.build_overrun_kg", "added_g": "ASM-A1-R5-ADDED-G",
+                  "sku_g": "ASM-A1-PACK-CASES-G"},
+          units={"m_pack_kg": "kg", "gate_margin_kg": "kg", "overrun_kg": "kg", "added_g": "g", "sku_g": "g"})
+def pack_accept(m_pack_kg, gate_margin_kg, overrun_kg, added_g, sku_g):
+    # CL-A3-GATE-MARGIN is the predicted gate margin (growth by maturity applied) with the carried pack; a heavier
+    # pack eats it gram for gram (A3 carries the pack at 0 % growth). The SKU's listed maximum is 551 + 5 = 556 g.
+    accept = m_pack_kg * 1000.0 + gate_margin_kg * 1000.0 - overrun_kg * 1000.0 - added_g
+    return {"accept_g": accept, "margin_to_sku_max_g": accept - (sku_g[0] + 10.0)}
+
+
 # ---------------------------------------------------------------- mass and the gate cases
 ALLOC = ["wing", "fins", "pod", "landing", "propulsion", "power", "avionics", "harness", "mechanisms"]
 
@@ -182,8 +225,8 @@ ALLOC = ["wing", "fins", "pod", "landing", "propulsion", "power", "avionics", "h
           units={**{k: "g" for k in ALLOC + ["reserve"]}, "growth_kg": "kg", "overrun_kg": "kg", "gate_kg": "kg"})
 def sized_mass(reserve, growth_kg, overrun_kg, gate_kg, **alloc):
     s = sum(alloc.values())
-    planned = 1000.0 * (growth_kg + overrun_kg)
-    return {"allocated_g": s, "sized_kg": (s + planned) / 1000.0, "reserve_cover_g": reserve - planned,
+    planned = round(1000.0 * (growth_kg + overrun_kg), 6)          # whole grams: no float-dust negative margin
+    return {"allocated_g": s, "sized_kg": (s + planned) / 1000.0, "reserve_cover_g": round(reserve - planned, 6),
             "gate_check_g": 1000.0 * gate_kg - s - reserve}
 
 
@@ -225,10 +268,13 @@ kit.claim("CL-A1-WING-AR", "Aspect ratio", calc="CALC-A1-WING", output="AR", uni
 kit.claim("CL-A1-ELEVON-FRAC", "Elevon area fraction", calc="CALC-A1-ELEVON", output="frac", unit="-",
           limit=(">=", 0.15), verifies=["R-ELEVON-AREA"],
           how="Measure the cut elevon panels; B3 confirms authority with AVL and the foam-board twin (upper bound 0.25 is checked by B3).")
-kit.claim("CL-A1-PROP-CLEAR", "Minimum prop clearance", calc="CALC-A1-PROP-CLEAR", output="gap_min_m", unit="m",
+kit.claim("CL-A1-PROP-CLEAR", "Minimum prop clearance (frame bound: disc edge to the wing plane)", calc="CALC-A1-PROP-CLEAR", output="gap_min_m", unit="m",
           limit=(">=", P + "requirements.prop_clearance_min_m"), verifies=["R-PROP-CLEAR"],
-          how="Fusion interference check (A5) then a ruler on the built aircraft: prop tip to tube face, to the other prop, to the wing tip.")
-kit.claim("CL-A1-TIPOVER", "Tip-over angle toward the pod side, worst flying CG corner (forward limit, z +0.03)",
+          note="D-61: this frame bound (uncanted disc, hub mid-plane) is not the governing clearance. The claims of record are E1's "
+               "CL-E1-TIP-GAP-TUBE / B4's CL-B4-GAP-TUBE-ENV (blade swept volume to the CF motor tube at the 7 deg cant: 21.1 mm at "
+               "face_ahead 2.5 mm, 26.1 mm at the D-61 7.5 mm, CL-E1-TIP-GAP-AT-75) and B4's CL-B4-TIP-WING (34.2 mm to the upper skin).",
+          how="check.py hull keep-out test (A5) on D3's R5 mount, then a 25 mm printed gauge on the built aircraft between the blade tip and the tube (T-B4-INSTALLED).")
+kit.claim("CL-A1-TIPOVER", "Tip-over angle toward the pod side, worst flying CG corner (forward limit, top of cg.z_range_m)",
           calc="CALC-A1-TIPOVER", output="narrow_corner_deg", unit="deg",
           limit=(">=", P + "requirements.tipover_min_deg"), verifies=["R-TIPOVER"], parts=["GER-001-UR", "GER-001-UL", "GER-001-LR", "GER-001-LL"],
           note="D-30: frame-level corner bound with D5's pad contact z (CL-D5-CONTACT-Z); C5's CL-C5-TIPOVER-WORST (32.4 deg) is the claim of record.",
@@ -244,7 +290,7 @@ kit.claim("CL-A1-MASS-SIZED", "Sized take-off mass (allocations + planned growth
           how="A3 roll-up of every parts.csv against MASS-CG.md (CL-A3-MASS-PREDICTED is the maturity-based prediction); weigh the built aircraft with pack (H1).")
 kit.claim("CL-A1-RESERVE-COVERS", "A1 mass reserve covers the planned growth and overrun", calc="CALC-A1-MASS-SIZED",
           output="reserve_cover_g", unit="g", limit=(">=", 0.0), verifies=["R-MASS-GATE"],
-          how="growth_reserve_g in params.json minus (growth allowance + 100 g build overrun; D-48: 145 + 100 = 245 g); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.")
+          how="growth_reserve_g in params.json minus (growth allowance + 100 g build overrun; D-63: 114 + 100 = 214 g, 0 g free); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.")
 kit.claim("CL-A1-ALLOC-GATE", "Allocations plus reserve equal the gate", calc="CALC-A1-MASS-SIZED",
           output="gate_check_g", unit="g", limit=(">=", 0.0), verifies=["R-MASS-GATE"],
           how="2 600 - sum(allocation_g) - growth_reserve_g must be >= 0; A1 re-runs this script after any allocation change.")
@@ -254,7 +300,7 @@ kit.claim("CL-A1-HOVER-TW-GATE", "Hover T/W at the 2.6 kg gate", calc="CALC-A1-H
 kit.claim("CL-A1-HOVER-TW-SAG", "Hover T/W at the gate, worst pack state", calc="CALC-A1-HOVER-TW", output="tw_gate_sag", unit="-",
           limit=(">=", P + "requirements.hover_tw_min_sag"), verifies=["R-HOVER-TW"],
           note="D-49: voltage_sag 0.851 is the one E1/E2 calculation (CALC-E1-WORST on E2's cell data and F1's r_ext 6.5 mOhm, CL-E1-SAG-FACTOR; CL-E1-TW-WORST 2.12); was 0.76 (D-35).",
-          how="Thrust-stand run on a pack at 3.6 V/cell after a cold soak at 10 degC (H1 GT-02, pass line CL-H1-T-PASS-SAG >= 1.102 kgf), or the fresh value x CL-E2-SAG-F-WORST.")
+          how="Thrust-stand run on a pack at 3.6 V/cell after a cold soak at 10 degC (H1 GT-02, pass line CL-H1-T-PASS-SAG >= 1.102 kgf), or the fresh value x CL-E1-SAG-FACTOR (CL-E1-TW-WORST).")
 kit.claim("CL-A1-STALL-GATE", "Stall speed at the gate", calc="CALC-A1-STALL", output="vs_ms", unit="m/s",
           limit=("<=", P + "requirements.stall_max_ms"), verifies=["R-STALL"],
           how="Trimmed CLmax from B2 (CL-B2-CLMAX-DESIGN); flight test: slow-flight stall in FBWA at altitude with airspeed logged (H2, T-B2-STALL).")
@@ -265,38 +311,47 @@ kit.claim("CL-A1-RESERVE", "Pessimistic reserve at order", calc="CALC-A1-RESERVE
           limit=(">=", P + "requirements.crash_cost_usd"), verifies=["R-RESERVE", "R-BUDGET"],
           how="I1 re-prices the BOM at order time; reserve = 2 000 - spend, pessimistic column.")
 
-kit.claim("CL-A1-CG-RANGE-FWD", "params cg.x_range_m forward end is inside B3's R1 forward limit",
+kit.claim("CL-A1-CG-RANGE-FWD", "params cg.x_range_m forward end is inside B3's V1 forward limit (trim at the stall, CG height included)",
           calc="CALC-A1-CG-RANGE", output="fwd_inside_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
-          note="D-60 (CR-B3-22): params carry B3's R4 range rounded inward to 0.1 mm, [0.0509, 0.0548]; B3 moved the forward limit 1.3 mm aft (D6 elevon effectiveness and half the free play out of the trim budget) and the aft limit 0.06 mm forward. Was [0.050, 0.0549] (D-47).",
+          note="D-62 (CR-B3-25): params carry B3's V1 range rounded inward to 0.1 mm, [0.0466, 0.0514]; the take-off CG 18.5 mm above the chord plane moves the effective NP 3.4 mm forward at 1.3 Vs, so the whole range slides 4.3 mm forward at the same width (4.8 mm). Was [0.0509, 0.0548] (D-60, B3 R4 at z = 0), [0.050, 0.0549] (D-47).",
           how="Re-run after any B3 publish; the built aircraft is balanced at both marks (T-A3-CG-BALANCE, H1 GT-07).")
-kit.claim("CL-A1-CG-RANGE-AFT", "params cg.x_range_m aft end is inside B3's R1 aft limit (SM 5 %)",
+kit.claim("CL-A1-CG-RANGE-AFT", "params cg.x_range_m aft end is inside B3's V1 aft limit (SM 5 % at 1.3 Vs, CG height included)",
           calc="CALC-A1-CG-RANGE", output="aft_inside_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE", "R-STATIC-MARGIN"],
           how="As CL-A1-CG-RANGE-FWD; static margin at the aft mark from the twin's glide tests (T-B3-TWIN-NP).")
-kit.claim("CL-A1-CG-CENTRED", "Pack at B3's nominal station: CG margin to the forward end of the range (B3's roll-up input)",
-          calc="CALC-A1-CG-RANGE", output="centred_fwd_margin_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
-          note="D-24 set the pack at x -0.001; D-47 moves the bay 21 mm forward (pod.pack_x_nominal_m -0.022) after the delivered parts lists put the CG at 0.0577 m. B3's CL-B3-CG-CENTRED-AFT is still its R3 value (A3-R3 CG 0.0548): B3 re-runs on A3's next roll-up.",
-          how="A3 roll-up at the R4 allocations (CL-A3-CG-X-RANGE); balance test with the pack at the nominal station.")
+kit.claim("CL-A1-CG-WIDTH", "Width of the CG range between the balance marks",
+          calc="CALC-A1-CG-RANGE", output="width_m", unit="m", limit=(">=", 0.004), verifies=["R-CG-RANGE"],
+          note="B3's CL-B3-V-CG-WIDTH-ENV 4.85 mm on the unrounded limits; the full D6 free-play band (not half) would take it to 3.3 mm (CR-B3-23: D6 centres each servo in its band).",
+          how="Distance between the two marks on the fin roots.")
+kit.claim("CL-A1-CG-TARGET-IN", "CG target sits inside the range with the smaller of its two margins",
+          calc="CALC-A1-CG-RANGE", output="target_fwd_margin_m", unit="m", limit=(">=", 0.002), verifies=["R-CG-RANGE"],
+          note="D-62: target 0.0490 = range mid (2.4 mm to each mark); replaces CL-A1-CG-CENTRED (B3's R3 pack-centred CG, retired with CL-B3-CG-CENTRED-AFT).",
+          how="Balance the built aircraft with the carried pack at its flight-card station: the CG mark falls between the two limit marks.")
 kit.claim("CL-A1-PACK-STATION", "Lightest pack at its D-60 station: forward travel left to the crush stack",
           calc="CALC-A1-PACK-CASES", output="travel_left_fwd_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
           parts=["PWR-001", "POD-008"], assumes=["ASM-A3-NOSE-STACK"],
-          note="A1-R4a (D-59): was nominal-vs-required against CL-A3-PACK-FWD-ROOM (R4). Most forward centroid = pod.x_le_m "
-               "+ 34.6 mm + L/2 = -0.0254 m; the 503 g pack flies at -0.024.",
-          how="D2 re-lays the bay (CR-A1-43, CR-A1-54); T-A3-CG-BALANCE with each pack at its flight-card station.")
-kit.claim("CL-A1-PACK-CG-FWD", "Every pack (503 / 550 / 680 g) at its D-60 station: basic CG margin to the forward limit",
+          note="D-62 bay: most forward centroid = pod.x_le_m (-0.140) + 34.6 mm + L/2 = -0.0379 m for the 135 mm Ovonic EC5 pack (D-64); "
+               "the no-spacer station is -0.020 (aft stop 0.050). A1-R4a (D-59) had -0.0254 / -0.010 in the D-47 bay.",
+          how="D2 re-lays the bay (CR-A1-62); T-A3-CG-BALANCE with each pack at its flight-card station.")
+kit.claim("CL-A1-PACK-CG-FWD", "Every pack (546 / 550 / 590 g, D-64) at its D-60 station: basic CG margin to the forward limit",
           calc="CALC-A1-PACK-CASES", output="fwd_margin_min_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
           parts=["PWR-001", "POD-008"],
-          note="Worst case is the 680 g pack with no spacer (nominal + pod.pack_aft_travel_m 12 mm, D-59/D-60); growth moves the "
-               "CG aft, so basic is the forward-limit case. With the R4 8 mm travel it was -0.4 mm (A3: 9.5 mm needed).",
+          note="Worst case is the heaviest pack at the no-spacer station (nominal + pod.pack_aft_travel_m 12 mm, D-59/D-60); growth moves the "
+               "CG aft, so basic is the forward-limit case. D-62 estimate on A3-R6a with ASM-A1-A3-PACK-X and ASM-A1-STACK-DX; A3 re-runs on D2's R6 bay.",
           how="T-A3-CG-BALANCE / H1 GT-07 with each weighed pack at its flight-card station.")
 kit.claim("CL-A1-PACK-CG-AFT", "Every pack at its D-60 station: predicted CG (growth by maturity) margin to the aft limit",
           calc="CALC-A1-PACK-CASES", output="aft_margin_pred_min_m", unit="m", limit=(">=", 0.0),
           verifies=["R-CG-RANGE", "R-STATIC-MARGIN"], parts=["PWR-001", "POD-008"],
-          note="D-60: worst case is the 503 g listing at the crush stack (-0.024), whatever the target; growth is A3's CL-A3-CG-X-PRED scaled by mass.",
+          note="D-62: worst case is the lightest pack (546 g) at or near the crush stack; growth is A3's CL-A3-CG-X-PRED scaled by mass. The 503 g listing is no longer a flight case (D-64).",
           how="T-A3-CG-BALANCE on the built aircraft; never fly aft of the aft mark (B3).")
 kit.claim("CL-A1-NOSE-BALLAST", "Nose ballast the predicted CG needs with the worst pack (D-59 cap 10 g, D-60 rule)",
           calc="CALC-A1-PACK-CASES", output="nose_ballast_max_g", unit="g", limit=("<=", 10.0), verifies=["R-CG-RANGE"],
           note="About 13 g per mm of CG at the pod nose, from the A1 reserve; beyond 10 g A1 re-opens the station.",
           how="Balance the built aircraft; add lead tape behind the nose block until the CG is 0.5 mm ahead of the aft mark; weigh it.")
+kit.claim("CL-A1-PACK-ACCEPT", "Heaviest flight pack the 100 g first-build overrun still covers (D-64 acceptance line)",
+          calc="CALC-A1-PACK-ACCEPT", output="accept_g", unit="g", limit=(">=", 556.0), verifies=["R-MASS-GATE", "R-PACK-MASS"],
+          parts=["PWR-001"],
+          note="D-64: replaces the D-58/D-59 lines (601 -> 631 g on the old bounding listings). The Ovonic 120C EC5 lists 551 +/- 5 g, so the limit here is its maximum 556 g; E2's PACK_ACCEPT_KG and the T-E2-WEIGH pass line follow this claim. A3 publishes the same figure from its roll-up (CL-A3-GATE-MARGIN) once D2, D3 and D5 deliver the R5 parts.",
+          how="Weigh each pack on arrival (T-E2-WEIGH, 1 g scale); a pack above this line is returned or the first build must come in under its allocations.")
 
 kit.test("T-A1-WEIGH","Weigh the assembled aircraft", verifies=["CL-A1-MASS-SIZED"], state="planned",
          procedure="Pack in, props on, 5 kg scale with 1 g resolution; record with the pack's own mass (H1).")
@@ -314,7 +369,7 @@ def write_mass_budget(kit, path):
         "_note": "Written by redesign/team/A1/frame_claims.py from params/params.json#mass.allocation_g; do not edit by hand. "
                  "limit_g is the hard as-built gate (P4). Allocations are flying mass per subsystem folder; growth_reserve_g "
                  "(= limit - allocations) is held by A1 for growth by maturity and the first-build overrun; sized_g = "
-                 "allocations + requirements.growth_allowance_kg + requirements.build_overrun_kg (D-38: 170 + 100 g). "
+                 "allocations + requirements.growth_allowance_kg + requirements.build_overrun_kg (D-63: 114 + 100 g). "
                  "A3 refines allocations in MASS-CG.md through a change request to A1.",
         "limit_g": gate_g,
         "sized_g": sum(alloc.values()) + planned_g,

@@ -1,94 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1128 853" width="1128" height="853" role="img" aria-label="K09-L general arrangement, three views to scale">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1131 856" width="1131" height="856" role="img" aria-label="K09-L general arrangement, three views to scale">
 <text x="347.5" y="40.0" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="12" font-weight="600" fill="#121619" text-anchor="middle">TOP (nose up)</text>
-<rect x="60.0" y="103.8" width="575.0" height="160.0" fill="#4C8DE0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<rect x="382.5" y="228.7" width="115.0" height="35.2" fill="none" stroke="#121619" stroke-width="1" stroke-dasharray="6 4"/>
-<rect x="517.5" y="228.7" width="110.0" height="35.2" fill="none" stroke="#121619" stroke-width="1" stroke-dasharray="6 4"/>
-<rect x="197.5" y="228.7" width="115.0" height="35.2" fill="none" stroke="#121619" stroke-width="1" stroke-dasharray="6 4"/>
-<rect x="67.5" y="228.7" width="110.0" height="35.2" fill="none" stroke="#121619" stroke-width="1" stroke-dasharray="6 4"/>
-<line x1="97.5" y1="143.8" x2="597.5" y2="143.8" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
-<rect x="312.5" y="38.8" width="70.0" height="112.5" fill="#7F8C9E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<line x1="507.5" y1="126.3" x2="507.5" y2="263.9" stroke="#2BA6A0" stroke-width="3"/>
-<circle cx="507.5" cy="126.3" r="5.5" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
-<rect x="498.0" y="107.6" width="19.0" height="13.2" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<rect x="60.0" y="106.3" width="575.0" height="160.0" fill="#4C8DE0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<rect x="382.5" y="231.2" width="115.0" height="35.2" fill="none" stroke="#121619" stroke-width="1" stroke-dasharray="6 4"/>
+<rect x="517.5" y="231.2" width="110.0" height="35.2" fill="none" stroke="#121619" stroke-width="1" stroke-dasharray="6 4"/>
+<rect x="197.5" y="231.2" width="115.0" height="35.2" fill="none" stroke="#121619" stroke-width="1" stroke-dasharray="6 4"/>
+<rect x="67.5" y="231.2" width="110.0" height="35.2" fill="none" stroke="#121619" stroke-width="1" stroke-dasharray="6 4"/>
+<line x1="97.5" y1="146.3" x2="597.5" y2="146.3" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<rect x="312.5" y="36.3" width="70.0" height="117.5" fill="#7F8C9E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<line x1="507.5" y1="128.8" x2="507.5" y2="266.4" stroke="#2BA6A0" stroke-width="3"/>
+<circle cx="507.5" cy="128.8" r="5.5" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
+<rect x="498.0" y="110.1" width="19.0" height="13.2" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
 <line x1="437.6" y1="100.0" x2="577.4" y2="100.0" stroke="#6B7280" stroke-width="2" stroke-dasharray="6 4"/>
-<line x1="187.5" y1="126.3" x2="187.5" y2="263.9" stroke="#2BA6A0" stroke-width="3"/>
-<circle cx="187.5" cy="126.3" r="5.5" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
-<rect x="178.0" y="107.6" width="19.0" height="13.2" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<line x1="187.5" y1="128.8" x2="187.5" y2="266.4" stroke="#2BA6A0" stroke-width="3"/>
+<circle cx="187.5" cy="128.8" r="5.5" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
+<rect x="178.0" y="110.1" width="19.0" height="13.2" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
 <line x1="117.7" y1="100.0" x2="257.4" y2="100.0" stroke="#6B7280" stroke-width="2" stroke-dasharray="6 4"/>
-<g transform="translate(347.5,129.9)"><circle r="6" fill="#fff" stroke="#121619" stroke-width="1"/><path d="M0,0 L6,0 A6,6 0 0 0 0,-6 Z M0,0 L-6,0 A6,6 0 0 0 0,6 Z" fill="#121619"/></g>
-<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="60.0" y1="289.9" x2="635.0" y2="289.9"/>
-<line x1="60.0" y1="283.9" x2="60.0" y2="295.9"/><line x1="635.0" y1="283.9" x2="635.0" y2="295.9"/>
-</g><text x="347.5" y="307.9" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="middle">span 1150 mm</text>
-<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="665.0" y1="103.8" x2="665.0" y2="263.9"/>
-<line x1="659.0" y1="103.8" x2="671.0" y2="103.8"/><line x1="659.0" y1="263.9" x2="671.0" y2="263.9"/>
-</g><text x="673.0" y="187.8" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="start">chord 320 mm</text>
-<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="187.5" y1="90.3" x2="507.5" y2="90.3"/>
-<line x1="187.5" y1="84.3" x2="187.5" y2="96.3"/><line x1="507.5" y1="84.3" x2="507.5" y2="96.3"/>
-</g><text x="347.5" y="84.3" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="middle">motors ±320 mm</text>
-<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="30.0" y1="103.8" x2="30.0" y2="129.9"/>
-<line x1="24.0" y1="103.8" x2="36.0" y2="103.8"/><line x1="24.0" y1="129.9" x2="36.0" y2="129.9"/>
-</g><text x="24.0" y="133.9" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="end">CG 52 mm</text>
-<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="40.0" y1="333.85" x2="40.0" y2="359.85"/><circle cx="40.0" cy="359.85" r="2"/></g>
-<text x="40.0" y="353.9" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+x</text>
-<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="40.0" y1="333.85" x2="66.0" y2="333.85"/><circle cx="66.0" cy="333.85" r="2"/></g>
-<text x="72.0" y="337.9" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+y</text>
-<text x="173.8" y="383.9" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="12" font-weight="600" fill="#121619" text-anchor="middle">SIDE (nose left)</text>
-<rect x="116.3" y="473.7" width="137.5" height="210.0" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<rect x="110.8" y="492.7" width="11.0" height="172.0" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<rect x="97.6" y="474.2" width="13.2" height="19.0" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<line x1="90.0" y1="413.9" x2="90.0" y2="553.6" stroke="#6B7280" stroke-width="2" stroke-dasharray="6 4"/>
-<rect x="253.8" y="469.7" width="24.0" height="8.0" fill="#B07A3A" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<rect x="97.6" y="664.2" width="13.2" height="19.0" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<line x1="90.0" y1="603.9" x2="90.0" y2="743.6" stroke="#6B7280" stroke-width="2" stroke-dasharray="6 4"/>
-<rect x="253.8" y="679.7" width="24.0" height="8.0" fill="#B07A3A" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<path d="M93.8,578.7 Q113.0,569.0 141.8,570.8 Q213.8,575.6 253.8,578.4 Q213.8,581.5 141.8,585.0 Q109.8,585.0 93.8,578.7 Z" fill="#4C8DE0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
-<rect x="28.8" y="536.2" width="112.5" height="35.0" fill="#7F8C9E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<g transform="translate(119.9,578.7)"><circle r="6" fill="#fff" stroke="#121619" stroke-width="1"/><path d="M0,0 L6,0 A6,6 0 0 0 0,-6 Z M0,0 L-6,0 A6,6 0 0 0 0,6 Z" fill="#121619"/></g>
-<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="76.3" y1="473.7" x2="76.3" y2="683.7"/>
-<line x1="70.3" y1="473.7" x2="82.3" y2="473.7"/><line x1="70.3" y1="683.7" x2="82.3" y2="683.7"/>
-</g><text x="70.3" y="582.7" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="end">fin 420 mm</text>
-<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="116.3" y1="653.7" x2="253.8" y2="653.7"/>
-<line x1="116.3" y1="647.7" x2="116.3" y2="659.7"/><line x1="253.8" y1="647.7" x2="253.8" y2="659.7"/>
-</g><text x="185.1" y="635.7" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="middle">fin chord 275 mm</text>
-<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="40.0" y1="413.9" x2="40.0" y2="553.6"/>
-<line x1="34.0" y1="413.9" x2="46.0" y2="413.9"/><line x1="34.0" y1="553.6" x2="46.0" y2="553.6"/>
-</g><text x="34.0" y="487.7" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="end">prop 279 mm</text>
-<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="96.35" y1="603.7" x2="122.35" y2="603.7"/><circle cx="122.35" cy="603.7" r="2"/></g>
-<text x="128.3" y="607.7" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+x</text>
-<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="96.35" y1="603.7" x2="96.35" y2="577.7"/><circle cx="96.35" cy="577.7" r="2"/></g>
-<text x="96.3" y="571.7" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+z</text>
-<text x="701.4" y="383.9" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="12" font-weight="600" fill="#121619" text-anchor="middle">FRONT (from the nose)</text>
-<rect x="413.9" y="570.8" width="575.0" height="15.7" fill="#4C8DE0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<rect x="666.4" y="536.2" width="70.0" height="35.0" fill="#7F8C9E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<rect x="855.9" y="492.7" width="11.0" height="172.0" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<circle cx="861.4" cy="483.7" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
-<circle cx="861.4" cy="483.7" r="69.8" fill="none" stroke="#6B7280" stroke-width="1" stroke-dasharray="6 4"/>
-<circle cx="861.4" cy="673.7" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
-<circle cx="861.4" cy="673.7" r="69.8" fill="none" stroke="#6B7280" stroke-width="1" stroke-dasharray="6 4"/>
-<rect x="535.9" y="492.7" width="11.0" height="172.0" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
-<circle cx="541.4" cy="483.7" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
-<circle cx="541.4" cy="483.7" r="69.8" fill="none" stroke="#6B7280" stroke-width="1" stroke-dasharray="6 4"/>
-<circle cx="541.4" cy="673.7" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
-<circle cx="541.4" cy="673.7" r="69.8" fill="none" stroke="#6B7280" stroke-width="1" stroke-dasharray="6 4"/>
-<g transform="translate(701.4,578.7)"><circle r="6" fill="#fff" stroke="#121619" stroke-width="1"/><path d="M0,0 L6,0 A6,6 0 0 0 0,-6 Z M0,0 L-6,0 A6,6 0 0 0 0,6 Z" fill="#121619"/></g>
-<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="1018.9" y1="483.7" x2="1018.9" y2="673.7"/>
-<line x1="1012.9" y1="483.7" x2="1024.8" y2="483.7"/><line x1="1012.9" y1="673.7" x2="1024.8" y2="673.7"/>
-</g><text x="1026.8" y="582.7" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="start">motors ±190 mm</text>
-<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="393.85" y1="603.7" x2="419.85" y2="603.7"/><circle cx="419.85" cy="603.7" r="2"/></g>
-<text x="425.9" y="607.7" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+y</text>
-<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="393.85" y1="603.7" x2="393.85" y2="577.7"/><circle cx="393.85" cy="577.7" r="2"/></g>
-<text x="393.9" y="571.7" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+z</text>
-<g stroke="#121619" stroke-width="1"><line x1="60" y1="813.5500000000001" x2="310.0" y2="813.5500000000001"/><line x1="60" y1="809.5500000000001" x2="60" y2="817.5500000000001"/><line x1="310.0" y1="809.5500000000001" x2="310.0" y2="817.5500000000001"/></g>
-<text x="60.0" y="829.6" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#121619" text-anchor="start">0 — 500 mm</text>
-<rect x="350.0" y="805.5500000000001" width="14" height="14" fill="#4C8DE0" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
-<text x="370.0" y="817.6" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">wing</text>
-<rect x="424.0" y="805.5500000000001" width="14" height="14" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
-<text x="444.0" y="817.6" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">fins + motor tubes</text>
-<rect x="603.0" y="805.5500000000001" width="14" height="14" fill="#7F8C9E" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
-<text x="623.0" y="817.6" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">pod</text>
-<rect x="669.5" y="805.5500000000001" width="14" height="14" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
-<text x="689.5" y="817.6" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">propulsion</text>
-<rect x="788.5" y="805.5500000000001" width="14" height="14" fill="#B07A3A" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
-<text x="808.5" y="817.6" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">feet</text>
-<text x="862.5" y="817.6" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">dashed: prop disc, hidden spar, elevon hinge  ·  frame: x aft from the wing LE, y right, z up (cruise)</text>
+<g transform="translate(347.5,130.8)"><circle r="6" fill="#fff" stroke="#121619" stroke-width="1"/><path d="M0,0 L6,0 A6,6 0 0 0 0,-6 Z M0,0 L-6,0 A6,6 0 0 0 0,6 Z" fill="#121619"/></g>
+<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="60.0" y1="292.4" x2="635.0" y2="292.4"/>
+<line x1="60.0" y1="286.4" x2="60.0" y2="298.4"/><line x1="635.0" y1="286.4" x2="635.0" y2="298.4"/>
+</g><text x="347.5" y="310.4" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="middle">span 1150 mm</text>
+<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="665.0" y1="106.3" x2="665.0" y2="266.4"/>
+<line x1="659.0" y1="106.3" x2="671.0" y2="106.3"/><line x1="659.0" y1="266.4" x2="671.0" y2="266.4"/>
+</g><text x="673.0" y="190.3" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="start">chord 320 mm</text>
+<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="187.5" y1="92.8" x2="507.5" y2="92.8"/>
+<line x1="187.5" y1="86.8" x2="187.5" y2="98.8"/><line x1="507.5" y1="86.8" x2="507.5" y2="98.8"/>
+</g><text x="347.5" y="86.8" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="middle">motors ±320 mm</text>
+<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="30.0" y1="106.3" x2="30.0" y2="130.8"/>
+<line x1="24.0" y1="106.3" x2="36.0" y2="106.3"/><line x1="24.0" y1="130.8" x2="36.0" y2="130.8"/>
+</g><text x="24.0" y="134.8" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="end">CG 49 mm</text>
+<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="40.0" y1="336.35" x2="40.0" y2="362.35"/><circle cx="40.0" cy="362.35" r="2"/></g>
+<text x="40.0" y="356.4" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+x</text>
+<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="40.0" y1="336.35" x2="66.0" y2="336.35"/><circle cx="66.0" cy="336.35" r="2"/></g>
+<text x="72.0" y="340.4" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+y</text>
+<text x="176.3" y="386.4" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="12" font-weight="600" fill="#121619" text-anchor="middle">SIDE (nose left)</text>
+<rect x="118.8" y="476.2" width="137.5" height="210.0" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<rect x="113.3" y="495.2" width="11.0" height="172.0" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<rect x="100.1" y="476.7" width="13.2" height="19.0" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<line x1="90.0" y1="416.4" x2="90.0" y2="556.1" stroke="#6B7280" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="256.4" y="472.2" width="24.0" height="8.0" fill="#B07A3A" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<rect x="100.1" y="666.7" width="13.2" height="19.0" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<line x1="90.0" y1="606.4" x2="90.0" y2="746.1" stroke="#6B7280" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="256.4" y="682.2" width="24.0" height="8.0" fill="#B07A3A" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<path d="M96.3,581.2 Q115.5,571.5 144.3,573.3 Q216.3,578.1 256.4,580.9 Q216.3,584.0 144.3,587.5 Q112.3,587.5 96.3,581.2 Z" fill="#4C8DE0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
+<rect x="26.3" y="538.7" width="117.5" height="35.0" fill="#7F8C9E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<g transform="translate(120.8,572.0)"><circle r="6" fill="#fff" stroke="#121619" stroke-width="1"/><path d="M0,0 L6,0 A6,6 0 0 0 0,-6 Z M0,0 L-6,0 A6,6 0 0 0 0,6 Z" fill="#121619"/></g>
+<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="78.8" y1="476.2" x2="78.8" y2="686.2"/>
+<line x1="72.8" y1="476.2" x2="84.8" y2="476.2"/><line x1="72.8" y1="686.2" x2="84.8" y2="686.2"/>
+</g><text x="72.8" y="585.2" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="end">fin 420 mm</text>
+<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="118.8" y1="656.2" x2="256.4" y2="656.2"/>
+<line x1="118.8" y1="650.2" x2="118.8" y2="662.2"/><line x1="256.4" y1="650.2" x2="256.4" y2="662.2"/>
+</g><text x="187.6" y="638.2" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="middle">fin chord 275 mm</text>
+<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="40.0" y1="416.4" x2="40.0" y2="556.1"/>
+<line x1="34.0" y1="416.4" x2="46.0" y2="416.4"/><line x1="34.0" y1="556.1" x2="46.0" y2="556.1"/>
+</g><text x="34.0" y="490.2" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="end">prop 279 mm</text>
+<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="98.85" y1="606.2" x2="124.85" y2="606.2"/><circle cx="124.85" cy="606.2" r="2"/></g>
+<text x="130.8" y="610.2" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+x</text>
+<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="98.85" y1="606.2" x2="98.85" y2="580.2"/><circle cx="98.85" cy="580.2" r="2"/></g>
+<text x="98.8" y="574.2" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+z</text>
+<text x="703.9" y="386.4" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="12" font-weight="600" fill="#121619" text-anchor="middle">FRONT (from the nose)</text>
+<rect x="416.4" y="573.3" width="575.0" height="15.7" fill="#4C8DE0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<rect x="668.9" y="538.7" width="70.0" height="35.0" fill="#7F8C9E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<rect x="858.4" y="495.2" width="11.0" height="172.0" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<circle cx="863.9" cy="486.2" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
+<circle cx="863.9" cy="486.2" r="69.8" fill="none" stroke="#6B7280" stroke-width="1" stroke-dasharray="6 4"/>
+<circle cx="863.9" cy="676.2" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
+<circle cx="863.9" cy="676.2" r="69.8" fill="none" stroke="#6B7280" stroke-width="1" stroke-dasharray="6 4"/>
+<rect x="538.4" y="495.2" width="11.0" height="172.0" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5" />
+<circle cx="543.9" cy="486.2" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
+<circle cx="543.9" cy="486.2" r="69.8" fill="none" stroke="#6B7280" stroke-width="1" stroke-dasharray="6 4"/>
+<circle cx="543.9" cy="676.2" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
+<circle cx="543.9" cy="676.2" r="69.8" fill="none" stroke="#6B7280" stroke-width="1" stroke-dasharray="6 4"/>
+<g transform="translate(703.9,572.0)"><circle r="6" fill="#fff" stroke="#121619" stroke-width="1"/><path d="M0,0 L6,0 A6,6 0 0 0 0,-6 Z M0,0 L-6,0 A6,6 0 0 0 0,6 Z" fill="#121619"/></g>
+<g stroke="#1F5FC7" stroke-width="1.25" fill="none"><line x1="1021.4" y1="486.2" x2="1021.4" y2="676.2"/>
+<line x1="1015.4" y1="486.2" x2="1027.3" y2="486.2"/><line x1="1015.4" y1="676.2" x2="1027.3" y2="676.2"/>
+</g><text x="1029.3" y="585.2" font-family="'IBM Plex Mono', monospace" font-size="12" fill="#1F5FC7" text-anchor="start">motors ±190 mm</text>
+<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="396.35" y1="606.2" x2="422.35" y2="606.2"/><circle cx="422.35" cy="606.2" r="2"/></g>
+<text x="428.4" y="610.2" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+y</text>
+<g stroke="#6B7280" stroke-width="1" fill="#6B7280"><line x1="396.35" y1="606.2" x2="396.35" y2="580.2"/><circle cx="396.35" cy="580.2" r="2"/></g>
+<text x="396.4" y="574.2" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">+z</text>
+<g stroke="#121619" stroke-width="1"><line x1="60" y1="816.0500000000001" x2="310.0" y2="816.0500000000001"/><line x1="60" y1="812.0500000000001" x2="60" y2="820.0500000000001"/><line x1="310.0" y1="812.0500000000001" x2="310.0" y2="820.0500000000001"/></g>
+<text x="60.0" y="832.1" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="#121619" text-anchor="start">0 — 500 mm</text>
+<rect x="350.0" y="808.0500000000001" width="14" height="14" fill="#4C8DE0" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
+<text x="370.0" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">wing</text>
+<rect x="424.0" y="808.0500000000001" width="14" height="14" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
+<text x="444.0" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">fins + motor tubes</text>
+<rect x="603.0" y="808.0500000000001" width="14" height="14" fill="#7F8C9E" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
+<text x="623.0" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">pod</text>
+<rect x="669.5" y="808.0500000000001" width="14" height="14" fill="#D45C8E" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
+<text x="689.5" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">propulsion</text>
+<rect x="788.5" y="808.0500000000001" width="14" height="14" fill="#B07A3A" fill-opacity="0.35" stroke="#121619" stroke-width="1"/>
+<text x="808.5" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#4B5563" text-anchor="start">feet</text>
+<text x="862.5" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="#6B7280" text-anchor="start">dashed: prop disc, hidden spar, elevon hinge  ·  frame: x aft from the wing LE, y right, z up (cruise)</text>
 </svg>

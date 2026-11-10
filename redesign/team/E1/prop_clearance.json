@@ -136,6 +136,10 @@
      "e1_m": 0.0247,
      "sym_m": 0.0208
     },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.0276,
+     "sym_m": 0.0236
+    },
     "FIN-004-R / bore boss": {
      "e1_m": 0.0281,
      "sym_m": 0.0254
@@ -144,17 +148,17 @@
      "e1_m": 0.0291,
      "sym_m": 0.026
     },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.0296,
+     "sym_m": 0.0256
+    },
     "FIN-009-UR / CF brace": {
      "e1_m": 0.0318,
      "sym_m": 0.0279
     },
-    "FIN-003-UR / canted plate": {
-     "e1_m": 0.0325,
-     "sym_m": 0.0285
-    },
     "FIN-008-UR / collar ring": {
-     "e1_m": 0.0332,
-     "sym_m": 0.0292
+     "e1_m": 0.0331,
+     "sym_m": 0.0291
     },
     "FIN-004-R / tube socket": {
      "e1_m": 0.0335,
@@ -163,10 +167,6 @@
     "FIN-003-UR / collar": {
      "e1_m": 0.0341,
      "sym_m": 0.0301
-    },
-    "FIN-003-UR / cheek": {
-     "e1_m": 0.0345,
-     "sym_m": 0.0305
     },
     "WNG-003 / tape doubler block upper": {
      "e1_m": 0.0351,
@@ -247,6 +247,10 @@
      "e1_m": 0.0252,
      "sym_m": 0.0213
     },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.0281,
+     "sym_m": 0.0241
+    },
     "FIN-004-R / bore boss": {
      "e1_m": 0.0285,
      "sym_m": 0.0257
@@ -255,17 +259,17 @@
      "e1_m": 0.0295,
      "sym_m": 0.0264
     },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.0301,
+     "sym_m": 0.0261
+    },
     "FIN-009-UR / CF brace": {
      "e1_m": 0.0323,
      "sym_m": 0.0284
     },
-    "FIN-003-UR / canted plate": {
-     "e1_m": 0.033,
-     "sym_m": 0.029
-    },
     "FIN-008-UR / collar ring": {
-     "e1_m": 0.0337,
-     "sym_m": 0.0297
+     "e1_m": 0.0336,
+     "sym_m": 0.0296
     },
     "FIN-004-R / tube socket": {
      "e1_m": 0.0338,
@@ -274,10 +278,6 @@
     "FIN-003-UR / collar": {
      "e1_m": 0.0346,
      "sym_m": 0.0306
-    },
-    "FIN-003-UR / cheek": {
-     "e1_m": 0.035,
-     "sym_m": 0.031
     },
     "WNG-003 / tape doubler block upper": {
      "e1_m": 0.0353,
@@ -358,6 +358,10 @@
      "e1_m": 0.0262,
      "sym_m": 0.0223
     },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.029,
+     "sym_m": 0.025
+    },
     "FIN-004-R / bore boss": {
      "e1_m": 0.0293,
      "sym_m": 0.0265
@@ -366,21 +370,21 @@
      "e1_m": 0.0304,
      "sym_m": 0.0272
     },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.0311,
+     "sym_m": 0.0271
+    },
     "FIN-009-UR / CF brace": {
      "e1_m": 0.0333,
      "sym_m": 0.0293
-    },
-    "FIN-003-UR / canted plate": {
-     "e1_m": 0.034,
-     "sym_m": 0.03
     },
     "FIN-004-R / tube socket": {
      "e1_m": 0.0344,
      "sym_m": 0.0326
     },
     "FIN-008-UR / collar ring": {
-     "e1_m": 0.0347,
-     "sym_m": 0.0307
+     "e1_m": 0.0346,
+     "sym_m": 0.0306
     },
     "WNG-003 / tape doubler block upper": {
      "e1_m": 0.0356,
@@ -397,10 +401,6 @@
     "WNG-001 / xps core y0.302-0.338": {
      "e1_m": 0.0359,
      "sym_m": 0.0349
-    },
-    "FIN-003-UR / cheek": {
-     "e1_m": 0.036,
-     "sym_m": 0.032
     },
     "WNG-001 / xps core y0.338-0.340": {
      "e1_m": 0.0363,
@@ -473,9 +473,17 @@
      "e1_m": 0.0313,
      "sym_m": 0.0284
     },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.0315,
+     "sym_m": 0.0275
+    },
     "FIN-006-R / tube plug": {
      "e1_m": 0.0326,
      "sym_m": 0.0293
+    },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.0335,
+     "sym_m": 0.0295
     },
     "FIN-009-UR / CF brace": {
      "e1_m": 0.0358,
@@ -493,21 +501,17 @@
      "e1_m": 0.0365,
      "sym_m": 0.0355
     },
-    "FIN-003-UR / canted plate": {
-     "e1_m": 0.0365,
-     "sym_m": 0.0325
-    },
     "WNG-001 / xps core y0.302-0.338": {
      "e1_m": 0.0368,
      "sym_m": 0.0359
     },
+    "FIN-008-UR / collar ring": {
+     "e1_m": 0.0371,
+     "sym_m": 0.0331
+    },
     "WNG-001 / xps core y0.338-0.340": {
      "e1_m": 0.0372,
      "sym_m": 0.0363
-    },
-    "FIN-008-UR / collar ring": {
-     "e1_m": 0.0372,
-     "sym_m": 0.0332
     },
     "WNG-001 / xps core y0.340-0.500": {
      "e1_m": 0.0373,
@@ -524,10 +528,6 @@
     "WNG-001 / xps core y0.296-0.300": {
      "e1_m": 0.0382,
      "sym_m": 0.0373
-    },
-    "FIN-003-UR / cheek": {
-     "e1_m": 0.0385,
-     "sym_m": 0.0345
     },
     "WNG-001 / xps core y0.288-0.296": {
      "e1_m": 0.0388,

@@ -1,6 +1,6 @@
 # A1 hand-off: team-lead actions and the pod-station rule
 
-Status: `PROPOSED`, A1, 2026-11-09 (closes CR-A1-21 on A1's side). This is the A1 draft of the team-lead section
+Status: `PROPOSED`, A1, 2026-11-10 (pack thresholds at D-64; first written 2026-11-09, closes CR-A1-21 on A1's side). This is the A1 draft of the team-lead section
 for `redesign/HANDOFF.md` (README: A1 owns it, written last). Numbers come from
 `python -I redesign/team/A1/frame_claims.py` (`CALC-A1-POD-RULE`) and A3's roll-up (`CALC-A3-CG`).
 
@@ -20,10 +20,10 @@ unchanged. Do not fix geometry in Fusion by hand.
 
 | Measured | Threshold | Meaning | Action |
 |---|---|---|---|
-| Pack mass | ≤ 550 g | as carried | none |
-| Pack mass | 551–658 g | gate margin after growth falls below 108 g; CG moves forward about 0.03 mm per gram (A3: 680 g gives 0.040 m, the forward limit) | A3 re-runs; pack slides aft to re-trim |
-| Pack mass | > 658 g | the 2.6 kg gate fails after growth by maturity (A3 margin 108 g) | stop the second pack order; A1 re-opens the pack choice (E2, E1) |
-| Pack length | > 140 mm | the pack-room numbers below shrink by half the excess at each end | D2 and A1 re-check the pod station |
+| Pack mass | 546–556 g (Ovonic 120C EC5 listing 551 ± 5 g, D-64) | as carried | none; log it in `team/E2/pack_log.csv` |
+| Pack mass | 557–592 g | still under the D-64 acceptance line `CL-A1-PACK-ACCEPT` (592.6 g: the 100 g first-build overrun stays covered); CG moves forward about 0.03 mm per gram, re-trimmed by the spacer station (A3 re-runs) | A3 re-runs; station from the roll-up |
+| Pack mass | > 592.6 g | the overrun is no longer covered (gate margin < 100 g after growth) | return the pack or A1 picks a mass lever (D3's fins levers, harness return) before the build; also check the 10 AWG leads (12 AWG → stop, E2 / F1) |
+| Pack length | > 135 mm (+3 mm tolerance) | the crush-stack room shrinks by half the excess (most forward centroid −0.0379 m at 135 mm) | D2 and A1 re-check the pod station |
 | Spar mass | > 112 g (CALC 102 g + 10 % growth) | growth beyond what the wing allocation carries | A3 moves the wing line to `WEIGHED`; any excess comes from A1's reserve (50 g cover) |
 
 ## 2. Pod station: the D-17 rule (closed by D-24, kept for the record)

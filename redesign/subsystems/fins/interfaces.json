@@ -2144,11 +2144,11 @@
    "owner": "fins",
    "thermal": {
     "heat_w": "2.4 W source loss, hover design (E3 hover_loss_esc_des_w); ~0 W credited through this contact",
-    "t_max_c": 85.0,
+    "t_max_c": 85,
     "t_ambient_c": 30,
     "path": "ESC FET face -> hover slipstream (exposed ~1 360 mm2, h ~50 W/m2 K, half velocity behind the tube) + radiation; pad side adiabatic; the ASA pad sees at most the ESC case temperature (ASA HDT 93 - 10 K)",
     "sized_by": "E3, D3",
-    "t_design_c": 61.6,
+    "t_design_c": 56.1,
     "claim": "CL-E3-ESC-PEAK"
    }
   },
@@ -2161,11 +2161,11 @@
    "owner": "fins",
    "thermal": {
     "heat_w": "2.4 W source loss, hover design (E3 hover_loss_esc_des_w); ~0 W credited through this contact",
-    "t_max_c": 85.0,
+    "t_max_c": 85,
     "t_ambient_c": 30,
     "path": "ESC FET face -> hover slipstream (exposed ~1 360 mm2, h ~50 W/m2 K, half velocity behind the tube) + radiation; pad side adiabatic; the ASA pad sees at most the ESC case temperature (ASA HDT 93 - 10 K)",
     "sized_by": "E3, D3",
-    "t_design_c": 61.6,
+    "t_design_c": 56.1,
     "claim": "CL-E3-ESC-PEAK"
    }
   },
@@ -2178,11 +2178,11 @@
    "owner": "fins",
    "thermal": {
     "heat_w": "2.4 W source loss, hover design (E3 hover_loss_esc_des_w); ~0 W credited through this contact",
-    "t_max_c": 85.0,
+    "t_max_c": 85,
     "t_ambient_c": 30,
     "path": "ESC FET face -> hover slipstream (exposed ~1 360 mm2, h ~50 W/m2 K, half velocity behind the tube) + radiation; pad side adiabatic; the ASA pad sees at most the ESC case temperature (ASA HDT 93 - 10 K)",
     "sized_by": "E3, D3",
-    "t_design_c": 61.6,
+    "t_design_c": 56.1,
     "claim": "CL-E3-ESC-PEAK"
    }
   },
@@ -2195,11 +2195,11 @@
    "owner": "fins",
    "thermal": {
     "heat_w": "2.4 W source loss, hover design (E3 hover_loss_esc_des_w); ~0 W credited through this contact",
-    "t_max_c": 85.0,
+    "t_max_c": 85,
     "t_ambient_c": 30,
     "path": "ESC FET face -> hover slipstream (exposed ~1 360 mm2, h ~50 W/m2 K, half velocity behind the tube) + radiation; pad side adiabatic; the ASA pad sees at most the ESC case temperature (ASA HDT 93 - 10 K)",
     "sized_by": "E3, D3",
-    "t_design_c": 61.6,
+    "t_design_c": 56.1,
     "claim": "CL-E3-ESC-PEAK"
    }
   }
