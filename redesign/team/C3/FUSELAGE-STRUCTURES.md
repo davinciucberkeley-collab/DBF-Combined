@@ -1,6 +1,8 @@
 # Pod structures — K09-L
 
-Owner C3 (pod structures; the fuselage role re-scoped by A1). Revision **C3-R2**, 2026-11-09, against params A1-R4
+Owner C3 (pod structures; the fuselage role re-scoped by A1). Revision **C3-R3**, 2026-11-10: FEA verification
+round on D2-R5a and A3-R6a (`SIMULATION-REPORT.md`, `pod_fea.py`). The FEA governs where it disagrees with the hand
+rows below. C3-R2 text follows, at params A1-R4
 (D-47: nose −0.130 m, pod 0.225 × 0.14 × 0.07 m), C1 loads (`team/C1/data/joints.csv`), D2's pod at D2-R5, the D-47 re-lay
 (`subsystems/pod/params.json`) and C6's pod allowables (CR-C6-16). Re-run in < 1 s:
 `python -I redesign/team/C3/pod_structures.py`, then `python -I redesign/proofs/build_graph.py`. The build reports no
@@ -15,7 +17,18 @@ R2 changes: re-pointed at D2's R4 keys (`stop_wall_h_m` retired → `fwd_stop_m[
 `CALC-C3-NOSE-PATH` for the D-47 nose; the full-section forward stop (CR-C5-13) decided; the hatch re-sized for the
 longer nose.
 
-## 1. Verdict
+## 0. R3 verdict (FEA, SU2 ELASTICITY, 3–4 mesh levels)
+
+| Question | Answer | Claim | Status |
+|---|---|---|---|
+| Pod-to-wing bond, design | **No, as drawn**: R 1.405 (5 mm mean 1.263). The shear concentrates at the recess aft step, nearest the spar. With the handle feet bonded to the walls (CR-C3-16): R 0.559 | `CL-C3-FEA-BOND-R-DESIGN`, `CL-C3-FEA-TIED-R-DESIGN` | `FAIL` → +44 % |
+| Bond, 12.75 g crash | **No**: −z / −x peel at the re-entrant step corner (R 11, singular). With CR-C3-16: +z 0.95, +x 0.23; −z 4.5 remains → CR-C3-17 corner fillet + `T-C3-POD-PROOF` | `CL-C3-FEA-BOND-R-CRASH`, `-TIED-R-CRASH` | `FAIL` |
+| Aft stop | **No, as drawn**: board peel 408 vs 50 kPa, tray 48.2 vs 25 MPa. Strut to the spar bridge (CR-C3-14): 1.1 kPa | `CL-C3-FEA-AFT-*`, `CL-C3-STRUT-*` | `FAIL` → +98 % |
+| Forward stop (−x 85 N) | **No, as built**: board peel 391 kPa with the 1 mm bed. Anchor flange (CR-C3-15) still to be drawn | `CL-C3-FEA-FWD-BED-PEEL` | `FAIL` |
+| Overhang, crash | Yes: 6.95 MPa (the hand's 8.10 is conservative) | `CL-C3-FEA-OVERHANG-CRASH` | +30 % |
+| Mass with the fixes | about 144 g vs 131 g allocation (CR-C3-19) | — | `EST` |
+
+## 1. Verdict (C3-R2 hand calcs; rows on the bond and the stops are superseded by section 0)
 
 | Question | Answer | Claim | Status |
 |---|---|---|---|

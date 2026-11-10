@@ -29,6 +29,8 @@ plt.rcParams.update({"font.family": ["IBM Plex Sans", "DejaVu Sans"], "font.size
                      "legend.frameon": False, "legend.fontsize": 8})
 MONO = {"family": ["IBM Plex Mono", "DejaVu Sans Mono"], "size": 8}
 C = PAR["wing"]["chord_m"]["value"]
+A3C = json.loads((HERE.parents[0] / "A3" / "claims.json").read_text())
+PRED = next(n["value"] for n in A3C["nodes"] if n["id"] == "CL-A3-CG-X-PRED")
 
 
 def fig_lattice():
@@ -63,7 +65,7 @@ def fig_cfd():
     h = [1 / math.sqrt(lv[k]["cells"]) * 1e3 for k in ks]
     e = [lv[k]["eta_cm"] for k in ks]
     fig, ax = plt.subplots(figsize=(5.2, 3.2))
-    ax.plot(h, e, color=ACCENT, marker="o", ms=4, lw=1.6, label="SU2 RANS SA, 3 meshes")
+    ax.plot(h, e, color=ACCENT, marker="o", ms=4, lw=1.6, label=f"SU2 RANS SA, {len(ks)} converged meshes (L3 not converged)")
     g = CFD.get("gci_eta_cm", {})
     if g.get("f_ext"):
         ax.plot([0], [g["f_ext"]], marker="D", ms=5, color=ACCENT, ls="none", label="Richardson extrapolation")
@@ -84,9 +86,10 @@ def fig_cfd():
     ax.annotate("-20 %: CG range closes (FAIL)", (0.2, 0.606 * 0.8), xytext=(0, 4), textcoords="offset points",
                 fontsize=7, color=FAIL)
     ax.set_xlim(left=-0.2)
+    ax.set_ylim(0.45, 0.95)
     ax.set_xlabel("mesh size h = 1/sqrt(cells) (x 1e-3)")
     ax.set_ylabel("eta = (dcm/ddelta) / thin airfoil")
-    ax.legend(loc="lower left")
+    ax.legend(loc="center right")
     fig.tight_layout()
     fig.savefig(FIG / "B3-V2-cfd-eta.svg")
     plt.close(fig)
@@ -94,11 +97,12 @@ def fig_cfd():
 
 def fig_cg():
     cg = V["CALC-B3-V-CG"]
+    env = V["CALC-B3-V-NP-CL"]
     r4 = R4["CALC-B3-CG-LIMITS"]
-    rows = [("R4 model, 2.6 kg", r4["x_fwd"], r4["x_aft"], FG3),
-            ("As designed, 2.6 kg gate", cg["x_fwd_gate"], cg["x_aft_gate"], ACCENT),
-            ("As designed, 2.436 kg predicted", cg["x_fwd_pred"], cg["x_aft_pred"], ACCENT)]
-    fig, ax = plt.subplots(figsize=(7, 2.4))
+    rows = [("R4 model (CG on chord plane, alpha 4)", r4["x_fwd"], r4["x_aft"], FG3),
+            ("As designed, alpha 4 basis", cg["x_fwd_gate"], cg["x_aft_gate"], FG3),
+            ("As designed, SM 5 % at 1.3 Vs (governs)", cg["x_fwd_gate"], env["x_aft_env"], ACCENT)]
+    fig, ax = plt.subplots(figsize=(7.4, 2.6))
     for i, (lab, f, a, col) in enumerate(rows):
         y = len(rows) - 1 - i
         ax.barh(y, (a - f) * 1000, left=f * 1000, height=0.42, color=col, alpha=0.30 if col == FG3 else 0.45,
@@ -107,14 +111,54 @@ def fig_cg():
         ax.text(a * 1000 + 0.1, y, f"{a * 1000:.1f}", ha="left", va="center", fontdict=MONO, color=FG2)
     ax.set_yticks(range(len(rows)))
     ax.set_yticklabels([r[0] for r in rows][::-1])
-    x3, x3p = cg["x_a3"] * 1000, V["CALC-B3-V-CG"].get("x_a3_pred_m", None)
+    x3 = cg["x_a3"] * 1000
+    x3p = PRED * 1000
     ax.axvline(x3, color=FG, lw=1.2)
-    ax.annotate("A3-R6a CG 550 g pack", (x3, len(rows) - 0.55), xytext=(3, 0), textcoords="offset points",
-                fontsize=7, color=FG)
-    ax.set_xlabel("x from the wing LE (mm)")
+    ax.axvline(x3p, color=FG, lw=0.8, ls=(0, (2, 2)))
+    ax.annotate("A3 CG", (x3, len(rows) - 0.45), xytext=(-3, 0), textcoords="offset points", fontsize=7,
+                color=FG, ha="right")
+    ax.annotate("A3 predicted", (x3p, len(rows) - 0.45), xytext=(3, 0), textcoords="offset points", fontsize=7,
+                color=FG)
+    if env["a3_aft_margin_env"] < 0:
+        ax.annotate(f"FAIL: A3 CG {-env['a3_aft_margin_env'] * 1000:.1f} mm aft of the limit", (x3, -0.45),
+                    xytext=(-3, 0), ha="right", textcoords="offset points", fontsize=7, color=FAIL)
+    ax.set_ylim(-0.6, len(rows) - 0.3)
+    ax.set_xlim(45.0, 56.0)
+    ax.set_xlabel("CG x from the wing LE (mm)")
     ax.grid(axis="y", visible=False)
     fig.tight_layout()
     fig.savefig(FIG / "B3-V3-cg-range.svg")
+    plt.close(fig)
+
+
+def fig_npcl():
+    env = V["CALC-B3-V-NP-CL"]
+    rows = sorted(env["rows"].values(), key=lambda r: r["CL"])
+    CL = [r["CL"] for r in rows]
+    fig, ax = plt.subplots(figsize=(6.2, 3.2))
+    d = env["dprop_pod"]
+    ax.plot(CL, [(r["xnp_aero_z0"] + d) * 1000 for r in rows], color=FG3, marker="o", ms=3.5, lw=1.2,
+            label="CG on the chord plane (R4 basis, z = 0)")
+    ax.plot(CL, [r["xnp"] * 1000 for r in rows], color=ACCENT, marker="o", ms=4, lw=1.8,
+            label="A3 CG height z = +18.5 mm (AVL)")
+    ax.plot(CL, [(r["xnp_aero_z0"] + r["dxnp_hand"] + d) * 1000 for r in rows], color=ACCENT, lw=0.9,
+            ls=(0, (3, 2)), label="hand formula on z = 0")
+    lim = [(r["xnp"] - 0.05 * C) * 1000 for r in rows]
+    ax.plot(CL, lim, color=FG, lw=1.0, ls=(0, (4, 3)), label="aft CG limit (SM 5 %)")
+    x3 = V["CALC-B3-V-CG"]["x_a3"] * 1000
+    ax.axhline(x3, color=FAIL, lw=0.9)
+    ax.annotate(f"A3 CG {x3:.1f} mm: aft of the limit at 1.3 Vs (FAIL)" if env["a3_aft_margin_env"] < 0 else
+                f"A3 CG {x3:.1f} mm", (CL[-1], x3), xytext=(0, 4), textcoords="offset points", fontsize=7,
+                color=FAIL, ha="right")
+    for r in rows:
+        ax.annotate(f"{r['V']:.1f} m/s", (r["CL"], r["xnp"] * 1000), xytext=(3, -10), textcoords="offset points",
+                    fontsize=7, color=FG3)
+    ax.set_xlabel("trim CL (gate mass 2.6 kg)")
+    ax.set_ylabel("x from the wing LE (mm)")
+    ax.set_ylim(46, 76)
+    ax.legend(loc="upper right", ncol=2)
+    fig.tight_layout()
+    fig.savefig(FIG / "B3-V6-np-vs-cl.svg")
     plt.close(fig)
 
 
@@ -142,8 +186,8 @@ def fig_cnb():
     ax.set_xticks(range(len(cases)))
     ax.set_xticklabels([c[0] for c in cases])
     ax.set_ylabel("Cn_beta (1/rad), 1.3 Vs, aft limit")
-    ax.set_ylim(0, 0.058)
-    ax.text(0.0, -0.18, "left bar: AVL wing + fins; right bar: total with props (Ribner), tubes/motors and pod",
+    ax.set_ylim(0, 0.085)
+    ax.text(0.0, -0.27, "left bar: AVL wing + fins; right bar: total with props (Ribner), tubes/motors and pod",
             transform=ax.transAxes, fontsize=7, color=FG3)
     ax.grid(axis="x", visible=False)
     fig.tight_layout()
@@ -181,4 +225,5 @@ if __name__ == "__main__":
     fig_cg()
     fig_cnb()
     fig_fin()
+    fig_npcl()
     print("wrote", sorted(p.name for p in FIG.glob("B3-V*.svg")))

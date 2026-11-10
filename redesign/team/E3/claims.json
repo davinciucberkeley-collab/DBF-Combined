@@ -2924,7 +2924,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 80.0
+    "ref": "P:thermal.motor_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -2970,7 +2970,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 85.0
+    "ref": "P:thermal.esc_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -2993,7 +2993,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 85.0
+    "ref": "P:thermal.esc_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -3071,7 +3071,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 50.0
+    "ref": "P:thermal.pack_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -3105,7 +3105,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 85.0
+    "ref": "P:thermal.fc_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -3125,7 +3125,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 85.0
+    "ref": "P:thermal.fc_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -3501,7 +3501,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 80.0
+    "ref": "P:thermal.motor_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -3524,7 +3524,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 85.0
+    "ref": "P:thermal.esc_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -3547,7 +3547,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 50.0
+    "ref": "P:thermal.pack_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -3567,7 +3567,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 85.0
+    "ref": "P:thermal.fc_temp_max_c"
    },
    "verifies": [
     "R-THERMAL"
@@ -3645,7 +3645,7 @@
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 50.0
+    "ref": "P:thermal.pack_temp_max_c"
    },
    "parts": [
     "PWR-001"

@@ -213,12 +213,33 @@
     "status": "MODELLED",
     "note": "S5010 clmax at the stall Re, 160/220/300/400 panels"
    },
+   "ch_inv_m10_max": {
+    "value": 0.011805,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "max |H/(q c^2)|, inviscid, delta -10 deg, alpha -4..8"
+   },
+   "ch_inv_m5_max": {
+    "value": 0.008326,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "max |H/(q c^2)|, inviscid, delta -5 deg, alpha -4..8"
+   },
    "clmax_re_slope_per_1e5": {
     "value": 0.034209320186079445,
     "unit": "1/1e5",
     "source": "SRC-B2-XFOIL",
     "status": "MODELLED",
     "note": "relative clmax change per 1e5 of Re, S5010 Re 2.0-3.0e5 (linear fit)"
+   },
+   "clmax_tripped": {
+    "value": 1.0946,
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "S5010, Re 2.6e+05, transition fixed at x/c 0.02 both surfaces; last converged point (alpha 9.5 deg), so a lower bound on the fully turbulent clmax"
    }
   },
   "hand": {
@@ -235,6 +256,129 @@
     "source": "B2 hand calc",
     "status": "MODELLED",
     "note": "Helmbold, AR 3.59, a0 6.61 /rad (XFOIL)"
+   }
+  },
+  "cfd": {
+   "clmax_2d": {
+    "value": 0.896479099991,
+    "unit": "-",
+    "source": "SRC-B2-SU2",
+    "status": "MODELLED",
+    "note": "S5010 SA fully turbulent, Re 2.6e+05, L2 mesh, max over alpha [4.0, 8.0, 10.0, 12.0, 14.0] (at 10.0 deg)"
+   },
+   "alpha_clmax": {
+    "value": 10.0,
+    "unit": "deg",
+    "source": "SRC-B2-SU2",
+    "status": "MODELLED",
+    "note": "alpha of the highest converged cl"
+   },
+   "ch_m25_a0": {
+    "value": 0.012538089305959873,
+    "unit": "-",
+    "source": "SRC-B2-SU2",
+    "status": "MODELLED",
+    "note": "H/(q c^2), delta -25 deg, alpha 0 deg, Re 4.4e+05, L2 mesh, pressure only, cl oscillation 0.027 (unsteady)"
+   },
+   "ch_m25_am4": {
+    "value": 0.012759045952375281,
+    "unit": "-",
+    "source": "SRC-B2-SU2",
+    "status": "MODELLED",
+    "note": "H/(q c^2), delta -25 deg, alpha -4 deg, Re 4.4e+05, L2 mesh, pressure only, cl oscillation 0.019 (usable)"
+   },
+   "ch_p25_a4": {
+    "value": -0.009738270913853675,
+    "unit": "-",
+    "source": "SRC-B2-SU2",
+    "status": "MODELLED",
+    "note": "H/(q c^2), delta +25 deg, alpha 4 deg, Re 4.4e+05, L2 mesh, pressure only, cl oscillation 0.049 (unsteady)"
+   },
+   "ch_m8_a2": {
+    "value": 0.006642688060187352,
+    "unit": "-",
+    "source": "SRC-B2-SU2",
+    "status": "MODELLED",
+    "note": "H/(q c^2), delta -8.33 deg, alpha 2 deg, Re 5.9e+05, L2 mesh, pressure only, cl oscillation 0.018 (usable)"
+   },
+   "ch_m25_a0_bound": {
+    "value": 0.01859960580041615,
+    "unit": "-",
+    "source": "SRC-B2-SU2",
+    "status": "MODELLED",
+    "note": "largest |H/(q c^2)| at delta -25, alpha 0 over L1/L2/L3 and the Richardson extrapolation (p floored at 0.5): the SU2 upper estimate"
+   },
+   "gci_f-25_a0_re4.4e5": {
+    "value": {
+     "CL": {
+      "L1": -0.858095862901,
+      "L2": -1.2722843543599998,
+      "L3": -1.176958930055,
+      "gci_fine": 0.3037237171283827,
+      "p": null
+     },
+     "CD": {
+      "L1": 0.04121774249079999,
+      "L2": 0.06849963346184999,
+      "L3": 0.0462713167087,
+      "gci_fine": 1.8014656541779308,
+      "p": null
+     },
+     "CMz": {
+      "L1": -0.14855108616999999,
+      "L2": -0.2350412960185,
+      "L3": -0.21101817378749999,
+      "gci_fine": 0.4269144536193804,
+      "p": null
+     },
+     "ch": {
+      "L1": 0.011428666825505656,
+      "L2": 0.012538089305959873,
+      "L3": 0.013502498309226604,
+      "gci_fine": 0.4718670736387507,
+      "p": 0.40418368012225075
+     }
+    },
+    "unit": "-",
+    "source": "SRC-B2-SU2",
+    "status": "MODELLED",
+    "note": "3-level grid study, cells [12617, 25104, 49710]"
+   },
+   "gci_f+0_a12_re2.6e5": {
+    "value": {
+     "CL": {
+      "L1": 0.789483145855,
+      "L2": 0.86338291166,
+      "L3": 0.966979056032,
+      "gci_fine": 0.7077812830899073,
+      "p": -0.9746572250475588
+     },
+     "CD": {
+      "L1": 0.07531236507435,
+      "L2": 0.0724818102782,
+      "L3": 0.06873286555024999,
+      "gci_fine": 0.360343868210748,
+      "p": -0.8107994056593836
+     },
+     "CMz": {
+      "L1": 0.009022620707210001,
+      "L2": 0.004575250124995,
+      "L3": 0.005744644445762,
+      "gci_fine": 0.7633594636324914,
+      "p": null
+     },
+     "ch": {
+      "L1": -0.0025367474888016084,
+      "L2": -0.0024559211718474744,
+      "L3": -0.0026064707147144565,
+      "gci_fine": 0.2165997041762395,
+      "p": null
+     }
+    },
+    "unit": "-",
+    "source": "SRC-B2-SU2",
+    "status": "MODELLED",
+    "note": "3-level grid study, cells [12440, 25022, 50294]"
    }
   }
  }

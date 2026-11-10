@@ -25,11 +25,12 @@ MARKER_CLAMPED= ( {clamped} )
 MARKER_LOAD= ( {loads} )
 MESH_FILENAME= mesh.su2
 MESH_FORMAT= SU2
-LINEAR_SOLVER= CONJUGATE_GRADIENT
+LINEAR_SOLVER= {solver}
 LINEAR_SOLVER_PREC= ILU
 LINEAR_SOLVER_ILU_FILL_IN= {fill}
 LINEAR_SOLVER_ERROR= {tol}
 LINEAR_SOLVER_ITER= {iters}
+LINEAR_SOLVER_RESTART_FREQUENCY= 200
 INNER_ITER= 1
 OUTPUT_FILES= (RESTART_ASCII)
 RESTART_FILENAME= restart.csv
@@ -52,7 +53,7 @@ def write_mesh(path, nodes, hexes, markers):
 
 
 def run(case_dir, nodes, hexes, mat, mats, markers, clamped, loads, threads=4, tol=1e-12, iters=20000, fill=1,
-        keep=False):
+        keep=False, solver="CONJUGATE_GRADIENT", check=True):
     """mats: [(E, nu)] per material index; loads: [(marker, traction Pa, (dx, dy, dz))].
     Returns (displacement (nn, 3), info dict)."""
     d = Path(case_dir)
@@ -66,7 +67,8 @@ def run(case_dir, nodes, hexes, mat, mats, markers, clamped, loads, threads=4, t
     ld = ", ".join("%s, 1.0, %.12g, %.12g, %.12g, %.12g" % (m, t, v[0], v[1], v[2]) for m, t, v in loads)
     cfg = CFG.format(E=", ".join("%.8g" % e for e, _ in mats), nu=", ".join("%.6g" % n for _, n in mats),
                      rho=", ".join("1000" for _ in mats), alpha=", ".join("0" for _ in mats),
-                     clamped=", ".join(clamped), loads=ld, tol=tol, iters=iters, fill=fill)
+                     clamped=", ".join(clamped), loads=ld, tol=tol, iters=iters, fill=fill,
+                     solver=solver)
     (d / "case.cfg").write_text(cfg)
     t0 = time.time()
     p = subprocess.run([str(SU2_CFD), "-t", str(threads), "case.cfg"], cwd=d, capture_output=True, text=True)

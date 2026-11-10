@@ -168,6 +168,12 @@ def boundary_quads(hexes):
     return F[once], owner[once]
 
 
+def spd_lu(A):
+    """SuperLU for a symmetric matrix: symmetric mode, no off-diagonal pivoting, MMD on A^T + A ordering
+    (about 30x faster than the default on the fin quarter, which is what made the first attempt stall)."""
+    return spla.splu(A.tocsc(), permc_spec="MMD_AT_PLUS_A", diag_pivot_thresh=0.0, options=dict(SymmetricMode=True))
+
+
 # ------------------------------------------------------------------ constrained model (ties, springs, masses)
 def skew(r):
     return np.array([[0, -r[2], r[1]], [r[2], 0, -r[0]], [-r[1], r[0], 0]])
@@ -272,14 +278,24 @@ class Model:
         return self
 
     def solve(self, F):
-        """F: full-length load vector (hex DOFs then master DOFs). Returns the full displacement vector."""
-        ur = spla.spsolve(self.Kr, self.T.T @ F)
+        """F: full-length load vector (hex DOFs then master DOFs). Returns the full displacement vector.
+        One symmetric-mode SuperLU factorisation per model (reused for every load case) plus two steps of
+        iterative refinement; the relative residual is kept in self.last_resid."""
+        if getattr(self, "_lu", None) is None:
+            self._lu = spd_lu(self.Kr)
+        b = self.T.T @ F
+        ur = self._lu.solve(b)
+        for _ in range(2):
+            ur = ur + self._lu.solve(b - self.Kr @ ur)
+        self.last_resid = float(np.linalg.norm(self.Kr @ ur - b) / max(np.linalg.norm(b), 1e-300))
         return self.T @ ur
 
     def modes(self, n=12, shift_hz=30.0):
         sig = (2 * math.pi * shift_hz) ** 2
         v0 = np.ones(self.Kr.shape[0])
-        w2, V = spla.eigsh(self.Kr, k=n, M=self.Mr, sigma=sig, which="LM", v0=v0)
+        lu = spd_lu((self.Kr - sig * self.Mr).tocsc())
+        op = spla.LinearOperator(self.Kr.shape, matvec=lu.solve, dtype=float)
+        w2, V = spla.eigsh(self.Kr, k=n, M=self.Mr, sigma=sig, which="LM", v0=v0, OPinv=op)
         o = np.argsort(w2)
         w2, V = w2[o], V[:, o]
         return np.sqrt(np.abs(w2)) / (2 * math.pi), self.T @ V

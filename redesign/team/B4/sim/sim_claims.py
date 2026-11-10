@@ -137,6 +137,14 @@ def bemt_validation(rho, rpm_h):
             out[f"tunnel_ct_err_J{r['J']:.3f}__{foil}"] = b["Ct"] / r["Ct"] - 1 if abs(r["Ct"]) > 0.005 else None
             out[f"tunnel_eta__J{r['J']:.3f}__{foil}"] = b["eta"]
             out[f"tunnel_eta_meas__J{r['J']:.3f}"] = r["eta"]
+    for foil in ("naca4412", "naca3410"):
+        e = [abs(out[f"tunnel_ct_err_J{r['J']:.3f}__{foil}"]) for r in tu
+             if r["J"] <= 0.47 and out[f"tunnel_ct_err_J{r['J']:.3f}__{foil}"] is not None]
+        out[f"tunnel_ct_abserr_max_Jle047__{foil}"] = max(e)
+        rc = min(tu, key=lambda q: abs(q["J"] - 0.578))           # nearest measured point to the cruise J
+        out[f"tunnel_ct_err_near_cruise__{foil}"] = out[f"tunnel_ct_err_J{rc['J']:.3f}__{foil}"]
+        out[f"tunnel_eta_err_near_cruise__{foil}"] = out[f"tunnel_eta__J{rc['J']:.3f}__{foil}"] / rc["eta"] - 1
+        out["tunnel_J_near_cruise"] = rc["J"]
     out["static_ct_err_max"] = max(errs_ct)
     out["static_cp_err_max"] = max(errs_cp)
     # FM: BEMT and UIUC at the measured static rpm nearest the hover rpm, vs PER3 for the same prop
@@ -196,6 +204,10 @@ def incidence(m, g, rho, kdl, cant, V):
         out[f"H_n__i{int(i)}"] = b["H"]
         out[f"H_over_T__i{int(i)}"] = b["H"] / b["T"] if b["T"] > 0 else None
     out["H_n_max"] = max(out[f"H_n__i{int(i)}"] for i in INCS)
+    # section bound: NACA 3410 (matches UIUC in the tunnel within 4 % for J <= 0.47, CL-B4-SIM-BEMT-FWD)
+    hb = [bemt.rotor("11x5.5E", rpm, V=V, inc_deg=i, rho=rho, N=20, M=12, foil="naca3410")["H"] for i in INCS]
+    out["H_n_max__naca3410"] = max(hb)
+    out["H_ratio_3410_over_4412"] = out["H_n_max__naca3410"] / max(out[f"H_n__i{int(i)}"] for i in INCS)
     out["H_4props_max_n"] = 4 * out["H_n_max"]
     hts = [out[f"H_over_T__i{int(i)}"] for i in INCS if i > 0]
     out["H_over_T_max"] = max(hts)
@@ -224,11 +236,13 @@ def incidence(m, g, rho, kdl, cant, V):
                   "d": P + "fins.tube.od_m", "tube_len": P + "fins.tube.length_m", "grip": P + "fin_detail.mount.grip_m",
                   "sc_gap": P + "fin_detail.station_collar.gap_m", "x_tube": P + "fins.tube.x_m",
                   "c": P + "wing.chord_m", "te": P + "fins.te_x_m", "bt": P + "fins.board_t_m",
-                  "layers": P + "fins.layers", "V": P + "performance.cruise_ms", "kdl": P + "propulsion.download_factor"},
+                  "layers": P + "fins.layers", "V": P + "performance.cruise_ms", "kdl": P + "propulsion.download_factor",
+                  "b1": "ASM-B1-DRAG"},
           units={"m": "kg", "rho": "kg/m3", "d": "m", "tube_len": "m", "grip": "m", "sc_gap": "m", "x_tube": "m",
                  "c": "m", "te": "m", "bt": "m", "V": "m/s"})
-def tubefin(k, D_tube, m, g, rho, cd, d, tube_len, grip, sc_gap, x_tube, c, te, bt, layers, V, kdl):
+def tubefin(k, D_tube, m, g, rho, cd, d, tube_len, grip, sc_gap, x_tube, c, te, bt, layers, V, kdl, b1):
     out = {}
+    cf_b1, ff_b1, cd_tube_b1, _, _, if_b1 = b1                 # B1's cruise build-up for the same section
     t = bt * layers
     Lb = te - x_tube - d / 2
     nu = 1.81e-5 / rho
@@ -270,6 +284,11 @@ def tubefin(k, D_tube, m, g, rho, cd, d, tube_len, grip, sc_gap, x_tube, c, te, 
     out["cruise_tubeboard_n_4st"] = 4 * out["cd_cfd__cru"] * q * d * h
     out["cruise_tubeboard_hand_n_4st"] = 4 * out["cd_hand__cru"] * q * d * h
     out["cruise_delta_n_4st"] = out["cruise_tubeboard_n_4st"] - out["cruise_tubeboard_hand_n_4st"]
+    # B1's build-up on the same section (what the cruise drag polar actually carries): IF (Cd_tube + 2 Cf FF L_b / D)
+    out["cd_b1hand__cru"] = if_b1 * (cd_tube_b1 + 2 * cf_b1 * ff_b1 * Lb / d)
+    out["ratio_cfd_b1__cru"] = out["cd_cfd__cru"] / out["cd_b1hand__cru"]
+    out["cruise_tubeboard_b1_n_4st"] = 4 * out["cd_b1hand__cru"] * q * d * h
+    out["cruise_delta_b1_n_4st"] = out["cruise_tubeboard_n_4st"] - out["cruise_tubeboard_b1_n_4st"]
     out["cruise_cd_on_chord"] = out["cd_cfd__cru"] * d / (te - x_tube + d / 2)
     # validation case
     v = CFD["studies"]["val_lam"]
@@ -306,7 +325,12 @@ c("CL-B4-SIM-BEMT-STATIC", "BEMT static Ct error vs UIUC 11x5.5E (worst of 5 rpm
 c("CL-B4-SIM-FM-RATIO", "Static FM, UIUC measured / APC PER3 (11x5.5E, nearest hover rpm)", calc="CALC-B4-SIM-BEMT",
   output="fm_ratio_uiuc_over_per3", unit="-", how="Basis of ASM-B4-SIM-PER3-FM; T-B4-STAND gives the MR value.")
 c("CL-B4-SIM-FM-BEMT", "Static FM, BEMT / APC PER3 (11x5.5E)", calc="CALC-B4-SIM-BEMT",
-  output="fm_ratio_bemt_over_per3", unit="-", how="Independent model agrees with the measured ratio in sign.")
+  output="fm_ratio_bemt_over_per3", unit="-", how="Diagnostic only: BEMT (NACA 4412) over-predicts static FM by "
+  "~9 % against UIUC (Ct +3 %, Cp -2 to -6 %), so ASM-B4-SIM-PER3-FM rests on the UIUC data, not on BEMT.")
+c("CL-B4-SIM-BEMT-FWD", "BEMT Ct error vs UIUC 11x5.5E in the tunnel, worst for J <= 0.47 (NACA 3410 section)",
+  calc="CALC-B4-SIM-BEMT", output="tunnel_ct_abserr_max_Jle047__naca3410", unit="-", limit=("<=", 0.05),
+  how="Re-run sim_claims.py. Near the cruise J (0.57) the sections miss by +34 % (4412) and -43 % (3410) in Ct, so "
+      "cruise numbers stay on PER3 x the UIUC cross-check (CALC-B4-XCHECK), not on BEMT.")
 c("CL-B4-SIM-BEMT-CONV", "BEMT thrust change 40 -> 80 radial elements", calc="CALC-B4-SIM-BEMT",
   output="conv_T_change_40_80", unit="-", limit=("<=", 0.005), how="Re-run with N = 160.")
 c("CL-B4-SIM-H-MAX", "In-plane H-force per prop in the pitch-over, worst incidence, 15.6 m/s",
@@ -325,7 +349,8 @@ c("CL-B4-SIM-T-I90", "Thrust edgewise (90 deg) / static, fixed hover rpm, 15.6 m
 c("CL-B4-SIM-INC-CONV", "BEMT H-force change 12 -> 24 azimuth stations (i 45 deg)", calc="CALC-B4-SIM-INC",
   output="conv_H_change_12_24", unit="-", limit=("<=", 0.01), how="Re-run with M = 48.")
 c("CL-B4-SIM-CFD-VAL", "SU2 cylinder at Re 40 vs Dennis and Chang 1.522 (relative error)", calc="CALC-B4-SIM-TUBEFIN",
-  output="val_err_vs_dennis_chang", unit="-", how="Re-run tubefin.py val_lam_L1..L3; published 1.498-1.522.")
+  output="val_err_vs_dennis_chang", unit="-", limit=("<=", 0.03),
+  how="Re-run tubefin.py val_lam_L1..L3; published 1.498-1.522.")
 c("CL-B4-SIM-CD-TUBEFIN", "Tube + board section Cd on D, hover slipstream (SU2 SA, Richardson)",
   calc="CALC-B4-SIM-TUBEFIN", output="cd_cfd__hov", unit="-", parts=FINS,
   how="T-B4-INSTALLED: thrust loss with the board on vs the bare tube at equal rpm.")
@@ -339,8 +364,13 @@ c("CL-B4-SIM-DOWNLOAD", "Hover download factor with the CFD tube + board section
 c("CL-B4-SIM-CRUISE-TUBEFIN", "Cruise drag of the board-backed tube spans, 4 stations, 16 m/s (CFD)",
   calc="CALC-B4-SIM-TUBEFIN", output="cruise_tubeboard_n_4st", unit="N", parts=FINS,
   how="Flight: B1's drag polar fit from logged cruise power.")
-c("CL-B4-SIM-CRUISE-DELTA", "Cruise drag change vs the hand build-up on those spans (negative = less)",
+c("CL-B4-SIM-CRUISE-DELTA", "Cruise drag change vs B4's bare-cylinder build-up on those spans (negative = less)",
   calc="CALC-B4-SIM-TUBEFIN", output="cruise_delta_n_4st", unit="N", how="As CL-B4-SIM-CRUISE-TUBEFIN.")
+c("CL-B4-SIM-CD-B1-RATIO", "Tube + board section Cd at 16 m/s, CFD / B1's build-up (ASM-B1-DRAG)",
+  calc="CALC-B4-SIM-TUBEFIN", output="ratio_cfd_b1__cru", unit="-", parts=FINS,
+  how="Cross-check of B1's cruise polar on this section; flight drag-polar fit (B1).")
+c("CL-B4-SIM-CRUISE-DELTA-B1", "Cruise drag change vs B1's build-up on the board-backed tube spans, 4 stations",
+  calc="CALC-B4-SIM-TUBEFIN", output="cruise_delta_b1_n_4st", unit="N", how="As CL-B4-SIM-CD-B1-RATIO.")
 
 
 def _write_results():

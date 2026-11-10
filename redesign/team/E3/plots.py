@@ -28,12 +28,14 @@ plt.rcParams.update({"font.family": ["IBM Plex Sans", "DejaVu Sans"], "font.size
                      "grid.color": LINE, "grid.linewidth": 0.6})
 OUT = HERE / "figs"
 OUT.mkdir(exist_ok=True)
+M_ASD = next(n["value"] for n in json.loads((HERE.parent / "A3" / "claims.json").read_text(encoding="utf-8"))["nodes"]
+             if n["id"] == "CL-A3-MASS-PREDICTED")
 CFD = json.loads((HERE / "sim" / "cfd" / "results.json").read_text(encoding="utf-8"))
 
 
 def save(fig, name, source):
     fig.text(0.01, 0.005, source, color=FG3, fontsize=7, family=["IBM Plex Mono", "DejaVu Sans Mono"])
-    fig.savefig(OUT / name, bbox_inches="tight")
+    fig.savefig(OUT / name, bbox_inches="tight", dpi=200)
     plt.close(fig)
     print("wrote", OUT / name)
 
@@ -61,7 +63,7 @@ def fig_mission():
     for ax, (key, title, L) in zip(axs.flat, parts):
         for tag, col, lw, ls, lab in (("r2", LINE3, 1.0, (0, (4, 2)), "R2 (judged ESC wake)"),
                                       ("gate", INK, 1.4, "-", "2.6 kg gate, design inputs"),
-                                      ("asd", ACCENT, 1.4, "-", "as designed, 2.436 kg")):
+                                      ("asd", ACCENT, 1.4, "-", f"as designed, {M_ASD:.3f} kg")):
             if key != "esc" and tag == "r2":
                 continue
             t = [p[0] / 60 for p in tr[tag]]
@@ -125,8 +127,8 @@ def fig_grid():
         ax.grid(True, axis="y")
     axs[0].set_ylabel("ESC film coefficient h, W/m² K")
     hd, lb = axs[0].get_legend_handles_labels()
-    fig.legend(hd, lb, loc="lower center", ncol=4, frameon=False, fontsize=7.5, bbox_to_anchor=(0.5, -0.04))
-    fig.tight_layout(w_pad=3, rect=(0, 0.06, 1, 1))
+    fig.legend(hd, lb, loc="upper center", ncol=4, frameon=False, fontsize=7.5, bbox_to_anchor=(0.5, 1.0))
+    fig.tight_layout(w_pad=3, rect=(0, 0.03, 1, 0.92))
     save(fig, "fig-e3-02-cfd-grid.svg", "FIG E3-02 — ESC average film coefficient vs grid. Source: "
          "team/E3/sim/cfd/esc_cfd.py, results.json (SU2 8.5 INC_RANS).")
 
@@ -179,7 +181,7 @@ def fig_mesh():
         if all(-0.016 < p[0] < 0.090 and -0.012 < p[1] < 0.03 for p in poly):
             polys.append([(p[0] * 1000, p[1] * 1000) for p in poly])
     fig, ax = plt.subplots(figsize=(8.4, 2.9))
-    ax.add_collection(PolyCollection(polys, facecolors="none", edgecolors=LINE3, linewidths=0.15))
+    ax.add_collection(PolyCollection(polys, facecolors="none", edgecolors=LINE3, linewidths=0.15, rasterized=True))
     g = CFD["geometry"]
     x0 = (g["pad_x0"] - g["x_tube"] + (g["pad_len"] - g["esc_len"]) / 2) * 1000
     t = g["t"] * 1000
@@ -200,7 +202,7 @@ def fig_mesh():
     ax.set_ylabel("y, mm")
     fig.tight_layout()
     save(fig, "fig-e3-04-mesh.svg", "FIG E3-04 — Mesh L2 (36 k cells) near the tube and ESC; quad layers on "
-         "every wall, y+ < 1. Source: sim/cfd/mesh/esc_L2.su2.")
+         "every wall, y+ max 1.5. Source: sim/cfd/mesh/esc_L2.su2.")
 
 
 def fig_margins():
@@ -232,7 +234,7 @@ def fig_margins():
     hd = [Line2D([], [], marker="o", ls="", color=INK, ms=5), Line2D([], [], marker="o", ls="", color=ACCENT, ms=5),
           Line2D([], [], marker="o", ls="", mfc="none", color=FG3, ms=5), Line2D([], [], marker="|", ls="", color=FAIL,
                                                                                  ms=9, mew=1.4)]
-    ax.legend(hd, ["2.6 kg gate", "as designed, 2.436 kg", "R2 judged ESC wake", "limit"], loc="lower center",
+    ax.legend(hd, ["2.6 kg gate", f"as designed, {M_ASD:.3f} kg", "R2 judged ESC wake", "limit"], loc="lower center",
               ncol=4, frameon=False, fontsize=7.5, bbox_to_anchor=(0.45, 1.0))
     fig.tight_layout()
     save(fig, "fig-e3-05-margins.svg", "FIG E3-05 — Peaks against limits, margins for the gate case. Source: "

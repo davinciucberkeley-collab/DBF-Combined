@@ -252,8 +252,11 @@ def write_props(path, blocks):
         f.writelines(f"{i} {m} 0 {m} 0\n" for i, m in enumerate(mats))
 
 
-def write_cfg(path, mesh, props, E, nu, clamped, loads, restart="restart.csv", tol=1e-9, iters=40000, prec="ILU"):
-    """loads: list of (marker, tx, ty, tz) tractions in Pa."""
+def write_cfg(path, mesh, props, E, nu, clamped, loads, restart="restart.csv", tol=1e-8, iters=80000, prec="LU_SGS"):
+    """loads: list of (marker, tx, ty, tz) tractions in Pa.
+    Preconditioner LU_SGS: SU2 8.5's ILU diverges on these meshes (tube test 2026-11-10: CG+ILU(0) and ILU(2)
+    residual grows, w_tip ~ 0 after 40 000 iterations; CG+LU_SGS reaches 1e-8 in 2 830 iterations and matches the
+    direct solve). Always check linsol_info() for the final residual."""
     # SU2's parser splits on ':' and reads '\' as a continuation: use paths relative to the run folder
     here = Path(path).resolve().parent
     mesh = Path(os.path.relpath(Path(mesh).resolve(), here)).as_posix()
@@ -360,6 +363,8 @@ def centroid_strain(X, U, vtk, conn):
 
 
 def hooke(eps, E, nu):
+    if isinstance(E, dict):            # tube: axial stress governs; isotropic recovery with the axial modulus
+        E, nu = E["Ea"], E["nu_at"]
     lam = E * nu / ((1 + nu) * (1 - 2 * nu))
     mu = E / (2 * (1 + nu))
     tr = np.trace(eps, axis1=1, axis2=2)
@@ -411,17 +416,57 @@ def _Dmat(E, nu):
     return D
 
 
+VOIGT = [(0, 0), (1, 1), (2, 2), (0, 1), (1, 2), (2, 0)]   # same order as the B rows below (engineering shear)
+
+
+def tube_D(cen, mat):
+    """Element stiffness (n, 6, 6) of a roll-wrapped tube along +y, transversely isotropic about its own axis:
+    mat = {"Ea", "Et", "Gat", "nu_at", "nu_tt", "center": (xc, zc)}. Local axes 1 = axial (y), 2 = hoop, 3 = radial,
+    taken at each element centroid, rotated to the global frame as a 4th-order tensor."""
+    Ea, Et, Gat, nat, ntt = mat["Ea"], mat["Et"], mat["Gat"], mat["nu_at"], mat["nu_tt"]
+    S = np.zeros((6, 6))
+    S[:3, :3] = [[1 / Ea, -nat / Ea, -nat / Ea], [-nat / Ea, 1 / Et, -ntt / Et], [-nat / Ea, -ntt / Et, 1 / Et]]
+    S[3, 3], S[4, 4], S[5, 5] = 1 / Gat, 2 * (1 + ntt) / Et, 1 / Gat     # 12 axial-hoop, 23 hoop-radial, 31 radial-axial
+    C = np.linalg.inv(S)
+    c = np.zeros((3, 3, 3, 3))
+    for I, (i, j) in enumerate(VOIGT):
+        for J, (k, l) in enumerate(VOIGT):
+            for a, b_ in ((i, j), (j, i)):
+                for cc, d in ((k, l), (l, k)):
+                    c[a, b_, cc, d] = C[I, J]
+    xc, zc = mat["center"]
+    dx, dz = cen[:, 0] - xc, cen[:, 2] - zc
+    r = np.hypot(dx, dz)
+    er = np.stack([dx / r, np.zeros_like(r), dz / r], 1)
+    ey = np.tile([0.0, 1.0, 0.0], (len(r), 1))
+    eh = np.cross(ey, er)
+    R = np.stack([ey, eh, er], 1)                 # R[n, local, global]
+    cg = np.einsum("npi,nqj,nrk,nsl,pqrs->nijkl", R, R, R, R, c, optimize=True)
+    D = np.empty((len(r), 6, 6))
+    for I, (i, j) in enumerate(VOIGT):
+        for J, (k, l) in enumerate(VOIGT):
+            D[:, I, J] = cg[:, i, j, k, l]
+    return D
+
+
 def assemble(X, blocks, E, nu):
+    """E[m] is a Young's modulus (isotropic with nu[m]) or a tube_D material dict."""
     import scipy.sparse as sp
-    rows, cols, vals = [], [], []
+    K = None
     for vtk, conn, mats in blocks:
         na = conn.shape[1]
         pts, wts = _gauss(vtk)
         P = X[conn]
+        chunks = []
         for m in np.unique(mats):
-            sel = mats == m
+            idx = np.where(mats == m)[0]
+            chunks.extend((m, idx[i:i + 60000]) for i in range(0, len(idx), 60000))
+        for m, sel in chunks:
             Pm, cm = P[sel], conn[sel]
-            D = _Dmat(E[m], nu[m])
+            if isinstance(E[m], dict):
+                D = tube_D(Pm.mean(1), E[m])
+            else:
+                D = np.broadcast_to(_Dmat(E[m], nu[m]), (len(cm), 6, 6))
             Ke = np.zeros((len(cm), 3 * na, 3 * na))
             for p, w in zip(pts, wts):
                 dN = _dN(vtk, p)
@@ -438,13 +483,14 @@ def assemble(X, blocks, E, nu):
                 B[:, 4, 2::3] = dNdx[:, :, 1]
                 B[:, 5, 0::3] = dNdx[:, :, 2]
                 B[:, 5, 2::3] = dNdx[:, :, 0]
-                Ke += np.einsum("nki,kl,nlj->nij", B, D, B) * (w * det)[:, None, None]
-            dof = (3 * cm[:, :, None] + np.arange(3)).reshape(len(cm), -1)
-            rows.append(np.repeat(dof, 3 * na, 1).ravel())
-            cols.append(np.tile(dof, (1, 3 * na)).ravel())
-            vals.append(Ke.ravel())
-    n = 3 * len(X)
-    return sp.csr_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=(n, n))
+                Ke += np.einsum("nki,nkl,nlj->nij", B, D, B, optimize=True) * (w * det)[:, None, None]
+            dof = (3 * cm[:, :, None] + np.arange(3)).reshape(len(cm), -1).astype(np.int32)
+            # sum each chunk into CSR at once: keeps the peak memory to one chunk's COO triplets (level 3: 1.3 M dofs)
+            part = sp.csr_matrix((Ke.ravel(), (np.repeat(dof, 3 * na, 1).ravel(), np.tile(dof, (1, 3 * na)).ravel())),
+                                 shape=(3 * len(X), 3 * len(X)))
+            del Ke
+            K = part if K is None else K + part
+    return K.tocsr()
 
 
 def traction_vector(X, markers, loads):

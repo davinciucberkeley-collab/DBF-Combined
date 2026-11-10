@@ -175,7 +175,7 @@ def fea_shoe(k, lever, side_sim, side_hand, k_ult, allow, sf_d5):
     s_hand = k * lever * k_ult * side_hand
     s_sim = k * lever * k_ult * side_sim
     return {"sigma_hand_MPa": s_hand, "sf_hand": a / s_hand, "sigma_sim_MPa": s_sim, "sf_sim": a / s_sim,
-            "sf_d5_beam": sf_d5, "fea_over_beam": (a / sf_d5) / s_hand,
+            "sf_d5_beam": sf_d5, "fea_over_beam": s_hand / (a / sf_d5),
             "side_capacity_N": a / (k * lever * k_ult)}
 
 

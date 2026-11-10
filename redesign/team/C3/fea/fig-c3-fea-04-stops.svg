@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 416" font-family="IBM Plex Sans, system-ui, sans-serif">
+<line x1="330.0" y1="40" x2="330.0" y2="386" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="330.0" y="404" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">0</text>
+<line x1="379.7" y1="40" x2="379.7" y2="386" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="379.7" y="404" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">1</text>
+<line x1="429.3" y1="40" x2="429.3" y2="386" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="429.3" y="404" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">2</text>
+<line x1="528.6" y1="40" x2="528.6" y2="386" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="528.6" y="404" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">4</text>
+<line x1="627.9" y1="40" x2="627.9" y2="386" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="627.9" y="404" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">6</text>
+<line x1="727.2" y1="40" x2="727.2" y2="386" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="727.2" y="404" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">8</text>
+<line x1="826.6" y1="40" x2="826.6" y2="386" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="826.6" y="404" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">10</text>
+<line x1="379.7" y1="34" x2="379.7" y2="386" stroke="#B42323" stroke-width="1.25" stroke-dasharray="6 4"/>
+<text x="385.7" y="30" font-size="12" fill="#B42323">allowable</text>
+<circle cx="330.0" cy="14.0" r="6" fill="#1F5FC7"/>
+<text x="340" y="18" font-size="12" fill="#4B5563">stop root σ1 / 15 MPa</text>
+<rect x="574.5" y="8.5" width="11" height="11" fill="#121619"/>
+<text x="590" y="18" font-size="12" fill="#4B5563">tray bending / 25 MPa</text>
+<polygon points="830.0,7.0 837.0,14.0 830.0,21.0 823.0,14.0" fill="#D9480F"/>
+<text x="840" y="18" font-size="12" fill="#4B5563">board peel / 50 kPa</text>
+<text x="316" y="74" font-size="12" fill="#4B5563" text-anchor="end">aft, as drawn + 2 mm fillet (y 0)</text>
+<line x1="330" y1="70" x2="1090" y2="70" stroke="#E3E7ED" stroke-width="0.75"/>
+<circle cx="476.5" cy="70.0" r="6" fill="#1F5FC7"/>
+<rect x="406.9" y="64.5" width="11" height="11" fill="#121619"/>
+<polygon points="1053.8,63.0 1060.8,70.0 1053.8,77.0 1046.8,70.0" fill="#D9480F"/>
+<text x="316" y="130" font-size="12" fill="#4B5563" text-anchor="end">aft, as drawn + fillet (tray edge)</text>
+<line x1="330" y1="126" x2="1090" y2="126" stroke="#E3E7ED" stroke-width="0.75"/>
+<circle cx="494.5" cy="126.0" r="6" fill="#1F5FC7"/>
+<rect x="419.7" y="120.5" width="11" height="11" fill="#121619"/>
+<polygon points="734.4,119.0 741.4,126.0 734.4,133.0 727.4,126.0" fill="#D9480F"/>
+<text x="316" y="186" font-size="12" fill="#4B5563" text-anchor="end">aft + 2 mm heel</text>
+<line x1="330" y1="182" x2="1090" y2="182" stroke="#E3E7ED" stroke-width="0.75"/>
+<circle cx="381.6" cy="182.0" r="6" fill="#1F5FC7"/>
+<rect x="352.2" y="176.5" width="11" height="11" fill="#121619"/>
+<polygon points="524.5,175.0 531.5,182.0 524.5,189.0 517.5,182.0" fill="#D9480F"/>
+<text x="316" y="242" font-size="12" fill="#4B5563" text-anchor="end">aft + strut to the spar bridge</text>
+<line x1="330" y1="238" x2="1090" y2="238" stroke="#E3E7ED" stroke-width="0.75"/>
+<circle cx="330.1" cy="238.0" r="6" fill="#1F5FC7"/>
+<rect x="324.6" y="232.5" width="11" height="11" fill="#121619"/>
+<polygon points="331.1,231.0 338.1,238.0 331.1,245.0 324.1,238.0" fill="#D9480F"/>
+<text x="316" y="298" font-size="12" fill="#4B5563" text-anchor="end">forward, cantilever + fillet</text>
+<line x1="330" y1="294" x2="1090" y2="294" stroke="#E3E7ED" stroke-width="0.75"/>
+<circle cx="484.4" cy="294.0" r="6" fill="#1F5FC7"/>
+<rect x="472.3" y="288.5" width="11" height="11" fill="#121619"/>
+<polygon points="729.3,287.0 736.3,294.0 729.3,301.0 722.3,294.0" fill="#D9480F"/>
+<text x="316" y="354" font-size="12" fill="#4B5563" text-anchor="end">forward + 1 mm bed to nose wall</text>
+<line x1="330" y1="350" x2="1090" y2="350" stroke="#E3E7ED" stroke-width="0.75"/>
+<circle cx="415.9" cy="350.0" r="6" fill="#1F5FC7"/>
+<rect x="372.5" y="344.5" width="11" height="11" fill="#121619"/>
+<polygon points="713.5,343.0 720.5,350.0 713.5,357.0 706.5,350.0" fill="#D9480F"/>
+</svg>

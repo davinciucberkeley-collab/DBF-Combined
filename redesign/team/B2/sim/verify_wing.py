@@ -176,6 +176,13 @@ def write_params(res):
                  "helmbold_cla": e(helm, "1/rad", "B2 hand calc", f"Helmbold, AR {ar:.2f}, a0 {a0:.2f} /rad (XFOIL)"),
              },
          }}
+    trf = HERE / "out" / "xfoil_tripped.json"
+    if trf.exists():
+        T = json.loads(trf.read_text())
+        p["b2sim"]["xfoil"]["clmax_tripped"] = e(T["clmax_tripped"], "-", "SRC-B2-XFOIL",
+                                                 f"S5010, Re {T['re_stall']:.2g}, transition fixed at x/c {T['xtr']} both "
+                                                 f"surfaces; last converged point (alpha {T['alpha_clmax_tripped']} deg), "
+                                                 "so a lower bound on the fully turbulent clmax")
     cfdf = HERE / "out" / "cfd2d_results.json"
     if cfdf.exists():
         C = json.loads(cfdf.read_text())
@@ -195,12 +202,23 @@ def cfd_params(C, e):
                             f"S5010 SA fully turbulent, Re {C['re']['stall']:.2g}, L2 mesh, max over alpha "
                             f"{[c['alpha'] for c in clean]} (at {clean[i]['alpha']} deg)")
         out["alpha_clmax"] = e(clean[i]["alpha"], "deg", "SRC-B2-SU2", "alpha of the highest converged cl")
+    allc = C["cases"]
     for dl, a, tag in ((-25.0, 0.0, "ch_m25_a0"), (-25.0, -4.0, "ch_m25_am4"), (25.0, 4.0, "ch_p25_a4"),
                        (C["d_vd_deg"], 2.0, "ch_p8_a2"), (-C["d_vd_deg"], 2.0, "ch_m8_a2")):
-        r = [c for c in cs if c["delta"] == dl and c["alpha"] == a and c["level"] == 2]
+        # the hinge moment is read from every L2 case: it settles even where the lift still oscillates (separated
+        # elevon); the note says whether the case met the lift-oscillation criterion
+        r = [c for c in allc if c["delta"] == dl and c["alpha"] == a and c["level"] == 2]
         if r:
             out[tag] = e(r[0]["ch"], "-", "SRC-B2-SU2", f"H/(q c^2), delta {dl:+g} deg, alpha {a:g} deg, "
-                                                        f"Re {r[0]['re']:.2g}, L2 mesh, pressure only")
+                                                        f"Re {r[0]['re']:.2g}, L2 mesh, pressure only, "
+                                                        f"cl oscillation {r[0]['CL_osc_last200']:.3f} "
+                                                        f"({'usable' if r[0]['usable'] else 'unsteady'})")
+    g = C.get("gci", {}).get("f-25_a0_re4.4e5")
+    if g:
+        vals = [abs(g["ch"][k]) for k in ("L1", "L2", "L3")] + ([abs(g["ch"]["f_exact"])] if g["ch"].get("f_exact") else [])
+        out["ch_m25_a0_bound"] = e(max(vals), "-", "SRC-B2-SU2",
+                                   "largest |H/(q c^2)| at delta -25, alpha 0 over L1/L2/L3 and the Richardson "
+                                   "extrapolation (p floored at 0.5): the SU2 upper estimate")
     for key, g in C.get("gci", {}).items():
         out[f"gci_{key}"] = e({q: {"L1": g[q]["L1"], "L2": g[q]["L2"], "L3": g[q]["L3"], "gci_fine": g[q]["gci_fine"],
                                    "p": g[q].get("p")} for q in ("CL", "CD", "CMz", "ch")},

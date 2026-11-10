@@ -1,5 +1,9 @@
 # Wing aerodynamics — K09-L (B2)
 
+> **R3 (2026-11-10):** the as-designed numbers (A1-R4 geometry, A3-R5 masses, CG range 0.0509–0.0548 m) are in
+> [`SIMULATION-REPORT.md`](SIMULATION-REPORT.md) and supersede the stall, forward-CG and servo rows below. Stall at
+> the forward CG is now 11.99 m/s (+0.1 %), and the servo requirement is 3.49 kgf·cm through D6's linkage at VD.
+
 Status: `PROPOSED` (analysis complete, nothing flown). Revision B2-R2 (2026-11-09), re-run at params A1-R2: chord
 0.32 m, half-fins 0.275 m chord at x 0.045–0.32 m, CG target 0.044 m, cruise 16 m/s (CR-A1-14). Covers section,
 planform, twist, stall progression, elevon hinge moments and the spanwise loading that C1/C2 size the wing from.

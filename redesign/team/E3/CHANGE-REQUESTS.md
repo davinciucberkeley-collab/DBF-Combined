@@ -1,5 +1,21 @@
 # Change requests from E3 (thermal engineer)
 
+**R3 (2026-11-10, simulation round).** No requirement fails on the settled CAD (`SIMULATION-REPORT.md`). CR-E3-01 to
+-12 below are R2 and are closed or adopted (D-42, D-24/25, D-46, H1 GT-04) unless the table says otherwise. R3 adds
+CR-E3-13 to -18: these update quoted numbers and add one stand test. Design case, 30 °C ambient, gate mass 2.6 kg.
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-E3-13 | D3 (cc A4) | Update the thermal blocks of `E-FIN-85…88` (ESC → pad): `t_design_c` 61.6 → **56.1**; `path` text "h ~50 W/m2 K, half velocity behind the tube" → "h 64.6 W/m² K design (SU2 RANS, SA; `CL-E3-CFD-FEQ` f 1.13)". `E-FIN-81…84` stay (66.3 °C, 24.5 W). `fins/SPEC.md` thermal row: 66.3 / 83, **56.1** / 85 °C | `CL-E3-ESC-PEAK` 56.05 °C (was 61.6 with the judged wake) |
+| CR-E3-14 | E1 | `propulsion/SPEC.md` row "ESC / motor peak": **56.1 / 64.8 °C** (was 61.6 / 65.8); limiter: ESC 80.1 °C after 30 s (+4.9 K), motor 13.6 s to 80 °C (rule 10 s unchanged) | `CL-E3-ESC-PEAK`, `CL-E3-MOTOR-PEAK`, `CL-E3-ESC-ABUSE`, `CL-E3-BURST-MAX` |
+| CR-E3-15 | D2 (cc F3) | `E-POD-12` `t_design_c` 47.1 → **44.8**; `E-AVN-10` FC peak 57.0 → **54.9 °C** (vented), 68.9 °C hover-only; pod SPEC row "47.1 °C at landing" → 44.8 | `CL-E3-PACK-END`, `CL-E3-FC-PEAK`, `CL-E3-FC-HOVERONLY` |
+| CR-E3-16 | A1 | `env.ambient_ceiling_c` 43 → **44** (`CL-E3-CEIL-MISSION` 44.2; as designed 46.9 `CL-E3-CEIL-ASD`; hover-only 40.8; pack ≤ 50 °C at landing up to 35.2). Notes of `thermal.esc_temp_max_c` / `pack_temp_max_c` / `fc_temp_max_c`: 61.6 / 47.1 / 57.0 → 56.1 / 44.8 / 54.9 °C. `env.pack_takeoff_max_c` **stays 34** (pack lands ≤ 50 °C from ≤ 39.1 °C, so 5 K in hand: `CL-E3-PACK-START-MAX`); `env.full_throttle_max_s` stays 10 | values changed in R3; keys unchanged |
+| CR-E3-17 | H1 (cc I1) | Add `T-E3-ESC-PAD-CFD` to GT-04: on the half-fin mock-up behind the 22 mm tube, a 45 × 20 × 6 mm aluminium dummy ESC with a 3 W resistor and a thermocouple, at hover power until steady (≈ 5 min); h = (P − radiation) / (A ΔT). Pass: f = (h / h_lam)² ≥ 1.13. GT-04 pass lines unchanged (ESC rise ≤ 33 K, motor ≤ 38 K; R3 predicts 27.0 / 38.1 K). Parts ≈ $3 `EST` (scrap aluminium, 10 Ω 5 W resistor) | validates the CFD that replaced the judged wake factor |
+| CR-E3-18 | A2 | `R-THERMAL` evidence: add `CL-E3-ASD-MOTOR-PEAK`, `-ASD-ESC-PEAK`, `-ASD-PACK-END`, `-ASD-FC-PEAK`, `-CEIL-ASD` and test `T-E3-ESC-PAD-CFD`. CR-A2-24 is done: the PETG claims are gone (ASA, D-42) and the limits cite `P:thermal.*` | traceability |
+| CR-A4-34 (answer) | A4 | The thermal blocks of `E-FIN-81…88`, `E-POD-12` and `E-AVN-10` already carry `heat_w`, `t_max_c`, `t_ambient_c`, `path`, `sized_by`, `t_design_c` and the claim; only the R3 values above change. Closed by E3 | — |
+
+## R2 change requests (2026-11-09)
+
 Revision E3-R2, 2026-11-09. Numbers from `team/E3/thermal.py` → `team/E3/claims.json`. All are `UNVERIFIED` until
 `T-E3-MOTOR-TAU`, `T-E3-ESC-PAD` and `T-E2-IR` have run. Design case at 30 °C ambient unless stated. R2 updates
 CR-E3-01, -02, -06 and -08 and adds CR-E3-10 to -12.

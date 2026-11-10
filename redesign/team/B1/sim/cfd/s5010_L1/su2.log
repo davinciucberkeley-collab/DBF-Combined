@@ -62,14 +62,14 @@ Using a LU-SGS preconditioning.
 Convergence criteria of the linear solver: 1e-05.
 Max number of linear iterations: 10.
 CFL adaptation. Factor down: 0.5, factor up: 1.1,
-                lower limit: 1, upper limit: 20,
+                lower limit: 0.5, upper limit: 5,
                 acceptable linear residual: 0.001'
                 starting iteration: 0.
-Courant-Friedrichs-Lewy number:        1
+Courant-Friedrichs-Lewy number:      0.5
 Euler implicit time integration for the turbulence model.
 
 ------------------ Convergence Criteria  ( Zone 0 ) ---------------------
-Maximum number of solver subiterations: 5000.
+Maximum number of solver subiterations: 9000.
 Begin convergence monitoring at iteration 5.
 Residual minimum value: 1e-10.
 Cauchy series min. value: 1e-10.
@@ -113,12 +113,12 @@ Volume output fields: COORDINATES, SOLUTION, PRIMITIVE
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Two dimensional problem.
-9563 grid points.
-14617 volume elements.
+9565 grid points.
+14621 volume elements.
 2 surface markers.
 178 boundary elements in index 0 (Marker = wall).
 105 boundary elements in index 1 (Marker = farfield).
-10391 triangles.
+10395 triangles.
 4226 quadrilaterals.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
@@ -204,7 +204,7 @@ No energy equation.
 +------------------------------------------------------------------------------+
 All ranks use edge coloring.
 Among the ranks that use edge coloring,
-         the minimum efficiency is 0.983887,
+         the minimum efficiency is 0.984131,
          the maximum number of colors is 3,
          the minimum edge color group size is 512.
 Initialize Jacobian structure (Navier-Stokes). MG level: 0.
@@ -220,3 +220,69 @@ Euler/Navier-Stokes/RANS fluid iteration.
 ------------------------------ Begin Solver -----------------------------
 
 Simulation Run using the Single-zone Driver
++---------------------------------------------------+
+|  Inner_Iter|      rms[P]|          CL|          CD|
++---------------------------------------------------+
+|           0|   -4.147041|    0.081628|    0.199668|
+|         200|   -4.896852|    0.423531|    0.051947|
+|         400|   -5.374836|    0.398895|    0.022887|
+|         600|   -5.558833|    0.297156|    0.027041|
+|         800|   -5.751044|    0.340272|    0.006626|
+|        1000|   -6.069651|    0.374142|    0.019118|
+|        1200|   -6.050452|    0.353888|    0.014726|
+|        1400|   -6.554317|    0.351568|    0.015336|
+|        1600|   -6.577043|    0.357265|    0.013678|
+|        1800|   -6.988513|    0.362962|    0.014613|
+|        2000|   -6.896681|    0.362558|    0.013903|
+|        2200|   -7.410780|    0.363205|    0.013769|
+|        2400|   -7.490266|    0.363607|    0.013523|
+|        2600|   -7.675281|    0.364514|    0.013470|
+|        2800|   -7.981766|    0.365307|    0.013353|
+|        3000|   -8.055905|    0.366268|    0.013267|
+|        3200|   -8.504371|    0.366997|    0.013215|
+|        3400|   -8.437173|    0.367697|    0.013167|
+|        3600|   -8.749959|    0.368281|    0.013134|
+|        3800|   -8.799694|    0.368810|    0.013103|
+|        4000|   -8.966542|    0.369240|    0.013084|
+|        4200|   -9.103328|    0.369606|    0.013065|
+|        4400|   -9.174585|    0.369907|    0.013053|
+|        4600|   -9.311558|    0.370153|    0.013042|
+|        4800|   -9.404905|    0.370350|    0.013034|
+|        5000|   -9.520600|    0.370508|    0.013028|
+|        5200|   -9.624983|    0.370633|    0.013023|
+|        5400|   -9.737130|    0.370732|    0.013019|
+|        5600|   -9.849212|    0.370809|    0.013015|
+|        5800|   -9.956131|    0.370869|    0.013013|
+|        5868|  -10.000513|    0.370887|    0.013012|
+
+----------------------------- Solver Exit -------------------------------
+All convergence criteria satisfied.
++-----------------------------------------------------------------------+
+|      Convergence Field     |     Value    |   Criterion  |  Converged |
++-----------------------------------------------------------------------+
+|                      rms[P]|      -10.0005|         < -10|         Yes|
++-----------------------------------------------------------------------+
+-------------------------------------------------------------------------
++-----------------------------------------------------------------------+
+|        File Writing Summary       |              Filename             |
++-----------------------------------------------------------------------+
+|CSV file                           |surface_flow.csv                   |
++-----------------------------------------------------------------------+
+
+--------------------------- Finalizing Solver ---------------------------
+Deleted CNumerics container.
+Deleted CIntegration container.
+Deleted CSolver container.
+Deleted CIteration container.
+Deleted CInterface container.
+Deleted CGeometry container.
+Deleted CFreeFormDefBox class.
+Deleted CSurfaceMovement class.
+Deleted CVolumetricMovement class.
+Deleted CConfig container.
+Deleted nInst container.
+Deleted COutput class.
+-------------------------------------------------------------------------
+
+------------------------- Exit Success (SU2_CFD) ------------------------
+

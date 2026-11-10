@@ -3,12 +3,22 @@
 Evidence for every row: `team/B1/PERFORMANCE.md` and `team/B1/claims.json` (run `python -I redesign/team/B1/performance.py`).
 All numbers are at 2.6 kg and 16 m/s unless marked. Rev 3 (2026-11-09) answers CR-A1-30 (D-25, D-29, D-35, D-36).
 
+## Open (simulation round, 2026-11-10)
+
+Evidence: `team/B1/SIMULATION-REPORT.md`, `team/B1/claims.verify.json` (`python -I redesign/team/B1/sim_verify.py`).
+As-designed mass 2.436 kg (A3 predicted) unless marked. No B1 requirement fails; these rows protect thin margins.
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-B1-20 | A1, E2 (copy E1, F4) | Replace the rev 3 cruise values (CR-B1-19) with the as-designed ones: `CL-B1V-CRUISE-P` **235.2 W** (pessimistic 312.4 W, 238.9 W at 2.6 kg), current 15.9 A, `CL-B1V-CD0` **0.0579**, `CL-B1V-K` 0.0957, cruise L/D 5.57, L/D max 6.72, `CL-B1V-TRANS-ENERGY` 0.83 Wh, hover 355 W at 2.436 kg (392 W at 2.6 kg, 7° cant). Cruise time 16.2 min (11.9 pessimistic). E2 re-runs `CALC-E2-BUDGET-*` | SU2 2-D RANS puts the fins and tubes at 1.23 × the hand drag (square board edges, blunt base, proud tube; GCI 5.8 %); CD0 +12.5 %. The lower A3 mass offsets most of it |
+| CR-B1-21 | F4, C1 (copy A1) | Keep THR_MAX at 70 % in fixed-wing modes (`CL-F4-FW-RPM-CAP` 7 749 rpm); do not raise it without C1 re-running VD. Treat THR_MAX as a loads limit in the parameter file comments | As designed, VH is **21.0 m/s** at the cap, so 1.25 VH = 26.3 m/s against VD 27.2 m/s (+3.4 %). Without the cap (9 350 rpm VTOL limit) VH is 25.4 m/s and VD would have to be 31.8 m/s. This closes CR-B1-17 |
+| CR-B1-22 | A3, A1 | Hold the 2.6 kg gate as the hard stall limit: at CLmax 0.787 (B2, SM 0.063) Vs reaches 12.0 m/s at **2.605 kg**. Any mass growth past 2.6 kg, or a CG move forward of 0.0536 m (larger SM, lower trimmed CLmax), fails R-STALL | `CL-B1V-VS-GATE` 11.99 m/s against 12.0 (+0.1 %); at 2.436 kg it is 11.60 m/s (+3.3 %) |
+| CR-B1-23 | B2 (copy B3) | Reconcile trimmed CLmax: B1's AVL + XFOIL critical-section run at the A3 CG gives **0.862** (trim elevon −8.2°), B2's table gives 0.787 at SM 0.063. B1 uses the lower value. If B2 confirms the higher value, Vs at 2.6 kg falls to 11.45 m/s | A 9 % CLmax difference is the whole stall margin at the gate. The NP also differs: 0.0708 m (B1 AVL, wing + fins, props off, no pod) against 0.0738 m (B2, same scope); a 3 mm NP shift is 0.9 % SM |
+
 ## Open (rev 3)
 
 | # | To | What | Why / numbers |
 |---|---|---|---|
-| CR-B1-17 | C1, F4 (copy A1) | **VH is 25.7 m/s, not 21.8 m/s** (`CL-B1-VMAX` 25.68, at the 9 350 rpm cap, fresh pack, base drag; ± 1.5 m/s). Choose one: (a) C1 re-runs VD = 1.25 VH = **32.1 m/s** (q 631 Pa, against 454 Pa now), or (b) F4 adds a fixed-wing rpm or THR_MAX cap of about **7 950 rpm**, which holds level speed at 21.8 m/s (8 000 rpm gives 21.9 m/s, 8 590 rpm gives 23.6 m/s). With (b), H2 shows it in the first full-throttle level log. If the cap fails, VH is 34.5 m/s (`CL-B1-VMAX-NOCAP`, 12 550 rpm). | The proxy assumes zero thrust at the 5.5 in geometric pitch. APC puts zero thrust at J 0.64 (27.8 m/s at the cap). At 25 m/s the drag is only about 8 N. The cap binds on both packs: 11.6 V is needed and 13.6 V is available at the worst state |
-| CR-B1-19 | A1, E2 (copy E1) | Rev 3 cruise values for `params.json#performance` and E2's budget: `CL-B1-CRUISE-P` **227.8 W** (pessimistic `-P-PESS` 300.6 W), current 15.4 / 20.3 A, `CL-B1-CRUISE-LD` 6.34, `CL-B1-CD0` 0.0513, `CL-B1-TRANS-ENERGY` 0.88 Wh, `CL-B1-CRUISE-ETA-PROP` 0.444, `CL-B1-CRUISE-ETA-DRIVE` 0.667. B1 level-cruise time is 16.3 min (12.0 pessimistic); E2 re-runs `CALC-E2-BUDGET-*`. `lean_*`, `stall_ms` and `hover_only_min` are unchanged. | Pod pressure drag +0.14 N (3.4 %), braces and collars +0.37 N (9 %), shorter tubes −0.18 N. The ids are unchanged, so every calc that reads them now drifts and needs a re-run |
 | CR-B1-18 | C4, D3 | Give the four fin braces a rounded or elliptical section (10 × 3 mm strip with a radiused leading and trailing edge, Cd about 0.4), or fair them. | At Cd 0.80 the braces are 0.23 N (0.26 N with interference), the top of C4's 0.07–0.24 N range, and 6 % of cruise drag. Rounding them saves about 0.13 N, or 7 W and 0.5 min of cruise |
 | CR-B1-12 | F4 | Rev 3 values: `AIRSPEED_CRUISE` 16, `AIRSPEED_MIN` 15.6 (D-36), `AIRSPEED_MAX` 18, `Q_ASSIST_SPEED` 13, **`Q_TAILSIT_RAT_FW` 12 °/s** (unchanged), `TECS_CLMB_MAX` 3 m/s, the fixed-wing rpm cap from CR-B1-17 (b). After the cold-pack stand run confirms a sag of at least 0.76, you may raise the rate to 15 °/s. Run the SITL pitch-over at 12 and 16 °/s on a sagged-pack battery model and log thrust saturation. | At sag 0.76 (D-35) the peak thrust fraction is 0.70 at 12 °/s, 0.77 at 15, 0.79 at 16 and 0.88 at 20. FW climb is 13.7 m/s at 80 % thrust (motor model) |
 | CR-B1-14 | C5, H3 | Splay the feet, or otherwise raise the narrow-axis tip-over angle. Flight card: fin-tip landings only in steady wind ≤ 5 m/s; lay the aircraft flat when gusts exceed 8 m/s. | At a tip-over angle of 30.6° the landing wind limit is 5.8 m/s (+15 %). The parked tip-over wind is 8.9 m/s at 2.32 kg (+11 %) |
@@ -19,6 +29,8 @@ All numbers are at 2.6 kg and 16 m/s unless marked. Rev 3 (2026-11-09) answers C
 
 | # | To | Closed by |
 |---|---|---|
+| CR-B1-17 | C1, F4 | answered by F4's THR_MAX 70 % cap (`CL-F4-FW-RPM-CAP`); as-designed VH 21.0 m/s, follow-up in CR-B1-21 |
+| CR-B1-19 | A1, E2 | superseded by CR-B1-20 (as-designed values) |
 | CR-B1-01 | A1 | D-01: `performance.cruise_ms` 16 |
 | CR-B1-02 | A1 | superseded by CR-B1-10 |
 | CR-B1-03 | B2 | CR-B2-08 answered |

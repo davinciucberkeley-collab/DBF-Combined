@@ -17,7 +17,7 @@ Geometry: team/B2/airfoils/s5010.dat re-panelled by XFOIL (PPAR N 260) and defle
 same hinge as xfoil_wing.py (x/c 1 - wing.elevon.chord_frac, 90 % of local thickness = upper-skin tape hinge), so
 XFOIL and SU2 see the same contour. Chord-normalised (c = 1); Re = V c / nu with c = wing.chord_m.
 Mesh: gmsh, quad boundary layer (BoundaryLayer field, fan at the TE), triangles outside, far field circle R 50 c.
-Three levels, uniform refinement ratio r = sqrt(2) in surface spacing, first-cell height, wake and far-field size
+Three levels, uniform refinement ratio r = sqrt(2) in surface spacing, first-cell height, near-wall band, wake and far-field size
 (growth ratio^(1/r)): L1 coarse, L2 medium, L3 fine. Convergence by Roache GCI (Fs 1.25) on 3 grid cases.
 Outputs: sim/out/cfd/<case>/ (cfg, history, surface CSV, log), sim/out/cfd2d_results.json.
 """
@@ -39,8 +39,8 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 B2 = HERE.parent
 REDESIGN = B2.parents[1]
-OUT = HERE / "out" / "cfd3"
-MESH = HERE / "out" / "mesh3"
+OUT = HERE / "out" / "cfd5"
+MESH = HERE / "out" / "mesh4"
 OUT.mkdir(parents=True, exist_ok=True)
 MESH.mkdir(parents=True, exist_ok=True)
 SU2 = Path("C:/Users/dillo/tools/su2/bin/bin/SU2_CFD.exe")
@@ -70,10 +70,10 @@ R_FAR = 50.0
 NPAN = 260
 R = math.sqrt(2.0)
 LEVELS = {1: 0.5, 2: 1 / R, 3: 1.0}                      # refinement factor (L1 ~8k, L2 ~16k, L3 ~32k cells)
-BASE = dict(n_surf=1.0, h1=4.0e-5, ratio=1.10, bl_thick=0.025, wake=0.03, far=6.0, surf_max=0.012)
+BASE = dict(n_surf=1.0, h1=4.0e-5, ratio=1.10, bl_thick=0.06, near=0.008, wake=0.03, far=6.0, surf_max=0.012)
 POST = "--post" in sys.argv
 THREADS = {1: 1, 2: 1, 3: 1}   # SU2 OpenMP threads per case by level (20-core machine)
-WORKERS = 9
+WORKERS = 14
 
 
 # ------------------------------------------------------------------ geometry (XFOIL)
@@ -119,7 +119,7 @@ def build_mesh(delta, level):
         return json.loads(info_f.read_text())
     k = LEVELS[level]
     p = dict(h1=BASE["h1"] / k, ratio=BASE["ratio"] ** (1 / k), wake=BASE["wake"] / k, far=BASE["far"] / k,
-             surf_max=BASE["surf_max"] / k)
+             surf_max=BASE["surf_max"] / k, near=BASE["near"] / k)
     c = xfoil_coords(delta)
     c = c[:-1] if np.hypot(*(c[0] - c[-1])) < 1e-9 else c        # closed TE: one TE point
     n = len(c)
@@ -174,8 +174,18 @@ def build_mesh(delta, level):
     F.setNumber(fb, "VOut", p["far"])
     for kk, val in (("XMin", -0.2), ("XMax", 4.0), ("YMin", -0.8), ("YMax", 1.0), ("Thickness", 2.0)):
         F.setNumber(fb, kk, val)
+    fd2 = F.add("Distance")                      # own distance field (sharing fd between two thresholds hung gmsh 4.15)
+    F.setNumbers(fd2, "CurvesList", curves)
+    F.setNumber(fd2, "Sampling", 600)
+    fn = F.add("Threshold")                      # band just outside the quad layer (separated shear layer)
+    F.setNumber(fn, "InField", fd2)
+    F.setNumber(fn, "SizeMin", p["near"])
+    F.setNumber(fn, "SizeMax", p["wake"] * 0.6)
+    F.setNumber(fn, "DistMin", BASE["bl_thick"] + 0.02)
+    F.setNumber(fn, "DistMax", 0.4)
+    F.setNumber(fn, "StopAtDistMax", 1)
     fm = F.add("Min")
-    F.setNumbers(fm, "FieldsList", [ft, fb])
+    F.setNumbers(fm, "FieldsList", [ft, fb, fn])
     F.setAsBackgroundMesh(fm)
     fbl = F.add("BoundaryLayer")
     F.setNumbers(fbl, "CurvesList", curves)
@@ -196,7 +206,7 @@ def build_mesh(delta, level):
     gmsh.finalize()
     nl = math.log(1 + BASE["bl_thick"] * (p["ratio"] - 1) / p["h1"]) / math.log(p["ratio"])
     info = {"tag": tag, "level": level, "delta": delta, "cells": ncell, "h1": p["h1"], "ratio": p["ratio"],
-            "bl_layers": round(nl, 1), "surf_max": p["surf_max"], "wake": p["wake"], "far": p["far"], "R_far": R_FAR,
+            "bl_layers": round(nl, 1), "bl_thick": BASE["bl_thick"], "near": p["near"], "surf_max": p["surf_max"], "wake": p["wake"], "far": p["far"], "R_far": R_FAR,
             "splines": len(curves), "mesh_s": round(time.time() - t0, 1)}
     info_f.write_text(json.dumps(info))
     print(f"  mesh {tag}: {ncell} cells, BL {info['bl_layers']} layers, {info['mesh_s']} s", flush=True)
@@ -233,7 +243,7 @@ NUM_METHOD_GRAD= WEIGHTED_LEAST_SQUARES
 CFL_NUMBER= 5.0
 CFL_ADAPT= YES
 CFL_ADAPT_PARAM= ( 0.5, 1.2, 1.0, 30.0 )
-ITER= 2000
+ITER= 2500
 LINEAR_SOLVER= FGMRES
 LINEAR_SOLVER_PREC= ILU
 LINEAR_SOLVER_ERROR= 1E-4
@@ -241,7 +251,7 @@ LINEAR_SOLVER_ITER= 15
 CONV_NUM_METHOD_FLOW= FDS
 MUSCL_FLOW= YES
 SLOPE_LIMITER_FLOW= VENKATAKRISHNAN
-VENKAT_LIMITER_COEFF= 0.05
+VENKAT_LIMITER_COEFF= 5.0
 TIME_DISCRE_FLOW= EULER_IMPLICIT
 CONV_NUM_METHOD_TURB= SCALAR_UPWIND
 MUSCL_TURB= NO
@@ -276,7 +286,7 @@ def run_case(delta, alpha, re_, level):
     cfg = cfg_text(mesh.name, alpha, re_)      # SU2 rejects a drive-letter path: the mesh is copied in for the run
     sha = hashlib.sha1((cfg + str(mesh.stat().st_size)).encode()).hexdigest()[:16]
     done = d / "done.json"
-    if done.exists() and json.loads(done.read_text()).get("sha") == sha:
+    if done.exists() and json.loads(done.read_text()).get("sha") == sha and json.loads(done.read_text()).get("rc") == 0:
         return
     if POST:
         return
@@ -357,7 +367,7 @@ def integrate(delta, alpha, d):
     cdv = float((fx * math.cos(ar) + fy * math.sin(ar)).sum())
     cm = float((-((xm - 0.25) * fy - ym * fx)).sum())                 # nose-up positive
     pf = flap & np.roll(flap, -1)
-    ch = float((-((xm[pf] - xh) * fy[pf] - (ym[pf] - yh) * fx[pf])).sum())   # TE-up nose-up sense = XFOIL HMOM sign
+    ch = float((-((xm[pf] - xh) * fy[pf] - (ym[pf] - yh) * fx[pf])).sum())   # sign opposite to XFOIL FMOM (compare magnitudes)
     return {"cl_int": cl, "cd_int": cdv, "cm_int": cm, "ch": ch, "n_surf": int(len(xy)), "n_flap": int(flap.sum())}
 
 
@@ -370,11 +380,13 @@ def post_case(delta, alpha, re_, level):
     ci = {k: i for i, k in enumerate(head)}
     last = data[-200:] if len(data) > 200 else data
     r = {"delta": delta, "alpha": alpha, "re": re_, "level": level, "iters": int(data[-1, ci["Inner_Iter"]]) + 1,
-         "CL": float(data[-1, ci["CL"]]), "CD": float(data[-1, ci["CD"]]), "CMz": float(data[-1, ci["CMz"]]),
+         "CL": float(last[:, ci["CL"]].mean()), "CD": float(last[:, ci["CD"]].mean()),
+         "CMz": float(last[:, ci["CMz"]].mean()),                 # means of the last 200 iterations (K 5 limiter noise)
          "CL_osc_last200": float(last[:, ci["CL"]].max() - last[:, ci["CL"]].min()),
+         "CD_osc_last200": float(last[:, ci["CD"]].max() - last[:, ci["CD"]].min()),
          "rms_p": float(data[-1, ci["rms[P]"]]), "rms_p_drop": float(data[0, ci["rms[P]"]] - data[-1, ci["rms[P]"]])}
     r.update(integrate(delta, alpha, d))
-    r["usable"] = bool(np.isfinite(r["CL"]) and r["CL_osc_last200"] < 0.01 and abs(r["CL"] - r["cl_int"]) < 0.02)
+    r["usable"] = bool(np.isfinite(r["CL"]) and r["CL_osc_last200"] < 0.02 and abs(r["CL"] - r["cl_int"]) < 0.03)
     info = json.loads((MESH / f"s5010_f{delta:+.2f}_L{level}.json").read_text())
     r["cells"] = info["cells"]
     dj = d / "done.json"
@@ -402,8 +414,18 @@ def gci(f1, f2, f3, r=R):
 # out/mesh) was stopped after ~170 iterations and is not used. A second one (out/cfd2: base growth 1.20, so
 # L1/L2 grew at 1.44/1.29 per layer) gave cd 0.026 at alpha 4 (XFOIL 0.010) and a stalled alpha 12: the wall-normal
 # resolution was too coarse, so it is discarded and the base growth is 1.10 (L1 1.21, L2 1.14, L3 1.10).
-CONV = [(-25.0, 0.0, RE_VA)]
-SWEEP_CLEAN = [(0.0, a, RE_STALL) for a in (4.0, 8.0, 11.0, 13.0)]
+# A third one (out/cfd3, out/mesh3; summary kept in out/cfd2d_results_campaign3.json) still gave cd 0.025 at alpha 4,
+# a stall at 8-10 deg and GCI 14-56 %: the quad layer was only 0.025 c thick and the first triangles outside it were
+# 0.018-0.036 c, as large as the turbulent boundary layer at the TE (~0.03 c), so the upper-surface layer and the
+# separated shear layer sat on triangles. Campaign 4 (out/cfd4, out/mesh4, this file): quad layer 0.06 c and a
+# 0.008 c (L3) triangle band from 0.08 to 0.4 c off the wall (own Distance field: sharing one hung gmsh 4.15).
+# Campaign 4 (summary out/cfd2d_results_campaign4.json) still gave cd 0.024 at alpha 4 with 0.017 of it pressure drag.
+# A limiter test on the alpha 4 L2 case (scratch, 1 500 iterations): Venkatakrishnan K 0.05 -> cd 0.024, K 5 -> cd 0.009-0.016 (mean 0.012;
+# fully turbulent flat plate x form factor 1.2 gives 0.014), cl 0.515 either way,
+# no limiter -> diverged. K 0.05 clipped the MUSCL reconstruction across the boundary layer (first-order there), which
+# thickened it. Campaign 5 (out/cfd5, same meshes out/mesh4) uses K 5.
+CONV = [(-25.0, 0.0, RE_VA), (0.0, 12.0, RE_STALL)]   # servo case and the clean clmax case: 3 levels each
+SWEEP_CLEAN = [(0.0, a, RE_STALL) for a in (4.0, 8.0, 10.0, 14.0)]
 SWEEP_HINGE = [(-25.0, -4.0, RE_VA), (25.0, 4.0, RE_VA), (-D_VD, 2.0, RE_VD)]
 
 

@@ -1,13 +1,13 @@
 {
- "cells": 78406,
+ "cells": 78374,
  "h1_m": 1.2e-05,
  "s_wall_m": 0.0011,
  "bl_layers": 21,
  "R_far_m": 5.5,
- "rc": 1,
+ "rc": 0,
  "attempt": 1,
  "converged": true,
- "wall_s": 2084.3,
+ "wall_s": 1386.8,
  "alpha_deg": 0.0,
  "chord_m": 0.275
 }

@@ -669,7 +669,7 @@ def tube_fin(tube, od, id, t_root, h, amb_range, lim):
 # ---------------------------------------------------------------- claims
 TH = "Thermocouple (K type) on the part, mission flown or run on the stand at the stated power, log every 5 s; "
 kit.claim("CL-E3-MOTOR-PEAK", "Motor (winding/stator) peak, design mission at 30 degC", calc="CALC-E3-MISSION",
-          output="motor_peak_des_c", unit="degC", limit=("<=", 80.0), verifies=["R-THERMAL"],
+          output="motor_peak_des_c", unit="degC", limit=("<=", P + "thermal.motor_temp_max_c"), verifies=["R-THERMAL"],
           parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL"],
           how=TH + "T-E3-MOTOR-TAU fits R_th and tau on the stand; T-E3-MISSION reads the can by IR within 30 s of landing.")
 kit.claim("CL-E3-MOUNT-ASA", "Motor base on an ASA mount vs HDT 93 - 10 K, hover-only sortie at 30 degC",
@@ -678,12 +678,12 @@ kit.claim("CL-E3-MOUNT-ASA", "Motor base on an ASA mount vs HDT 93 - 10 K, hover
           how="T-E3-MOTOR-TAU: thermocouple between motor base and mount, continuous hover power until steady; mount "
               "shows no sag or loss of pinch-bolt preload (slip torque re-checked, D-23).")
 kit.claim("CL-E3-ESC-PEAK", "ESC peak on its fin pad, design mission at 30 degC", calc="CALC-E3-MISSION",
-          output="esc_peak_des_c", unit="degC", limit=("<=", 85.0), verifies=["R-THERMAL"],
+          output="esc_peak_des_c", unit="degC", limit=("<=", P + "thermal.esc_temp_max_c"), verifies=["R-THERMAL"],
           parts=["PRP-002-UR", "PRP-002-UL", "PRP-002-LR", "PRP-002-LL"],
           how="T-E3-ESC-PAD: thermocouple under the heat-shrink on the FET side, ESC on a fin-pad mock-up behind a "
               "22 mm tube on the thrust stand, hover power 10 min then 30 s at the limiter.")
 kit.claim("CL-E3-ESC-ABUSE", "ESC peak with 30 s at the 100 A limiter after the first hover, design, 30 degC",
-          calc="CALC-E3-MISSION", output="esc_peak_abuse_des_c", unit="degC", limit=("<=", 85.0),
+          calc="CALC-E3-MISSION", output="esc_peak_abuse_des_c", unit="degC", limit=("<=", P + "thermal.esc_temp_max_c"),
           verifies=["R-THERMAL"], parts=["PRP-002-UR", "PRP-002-UL", "PRP-002-LR", "PRP-002-LL"],
           how="T-E3-ESC-PAD, the 30 s limiter step.")
 kit.claim("CL-E3-MOTOR-ABUSE", "Motor peak with 30 s at the 100 A limiter after the first hover, design, 30 degC",
@@ -699,17 +699,17 @@ kit.claim("CL-E3-PACK-START-MAX", "Highest pack temperature at take-off for <= 5
           calc="CALC-E3-OPS", output="pack_start_max_c", unit="degC", limit=(">=", 30.0), parts=["PWR-001"],
           how="IR thermometer on the pack before it goes in the pod; log it on the flight card.")
 kit.claim("CL-E3-PACK-END", "Pack at landing, design mission at 30 degC (5 mOhm/cell, vented pod)",
-          calc="CALC-E3-MISSION", output="pack_end_des_c", unit="degC", limit=("<=", 50.0), verifies=["R-THERMAL"],
+          calc="CALC-E3-MISSION", output="pack_end_des_c", unit="degC", limit=("<=", P + "thermal.pack_temp_max_c"), verifies=["R-THERMAL"],
           parts=["PWR-001"], how="T-E2-MISSION-LOG: IR thermometer on the pack's largest face within 60 s of landing.")
 kit.claim("CL-E3-PACK-RISE-COLD", "Pack self-heating over the design mission on a 10 degC morning",
           calc="CALC-E3-MISSION", output="pack_rise_cold_des_k", unit="K", parts=["PWR-001"],
           how="T-E2-MISSION-LOG on a cold morning: pack temperature at take-off and at landing.",
           note="E2's adiabatic 22.9 K (CR-E2-07) less the pod losses and the R(T) drop as the pack warms")
 kit.claim("CL-E3-FC-PEAK", "Flight controller peak, design mission at 30 degC, vented pod", calc="CALC-E3-MISSION",
-          output="fc_peak_des_c", unit="degC", limit=("<=", 85.0), verifies=["R-THERMAL"], parts=["AVN-001"],
+          output="fc_peak_des_c", unit="degC", limit=("<=", P + "thermal.fc_temp_max_c"), verifies=["R-THERMAL"], parts=["AVN-001"],
           how="ArduPilot logs the IMU temperature (IMU.T); fly the mission and read the peak.")
 kit.claim("CL-E3-FC-HOVERONLY", "Flight controller peak, design hover-only sortie at 30 degC (no ram air)",
-          calc="CALC-E3-MISSION", output="fc_peak_hoveronly_des_c", unit="degC", limit=("<=", 85.0),
+          calc="CALC-E3-MISSION", output="fc_peak_hoveronly_des_c", unit="degC", limit=("<=", P + "thermal.fc_temp_max_c"),
           verifies=["R-THERMAL"], parts=["AVN-001"], how="IMU.T in the logs of the tethered and hover-only flights.")
 kit.claim("CL-E3-ESC-PAD-IN-WASH", "ESC pad inside the contracted slipstream (radial margin)", calc="CALC-E3-MISSION",
           output="pad_r_margin_m", unit="m", limit=(">=", 0.0), parts=["FIN-007-UR", "FIN-007-UL", "FIN-007-LR",
@@ -778,16 +778,16 @@ kit.claim("CL-E3-ESC-PAD-ASA", "ESC (and its ASA pad) peak vs ASA HDT 93 - 10 K,
           note="as designed (fins params esc_pad.material ASA, D-42); pad taken at the ESC temperature (conservative). "
                "R2's PETG claims (CL-E3-MOUNT-PETG, CL-E3-ESC-PAD-PETG) are retired: CR-E3-01 was accepted")
 kit.claim("CL-E3-ASD-MOTOR-PEAK", "Motor peak, as-designed mass (A3 predicted), design inputs, 30 degC",
-          calc="CALC-E3-MISSION", output="motor_peak_asd_c", unit="degC", limit=("<=", 80.0), verifies=["R-THERMAL"],
+          calc="CALC-E3-MISSION", output="motor_peak_asd_c", unit="degC", limit=("<=", P + "thermal.motor_temp_max_c"), verifies=["R-THERMAL"],
           parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL"], how=TH + "T-E3-MISSION at the weighed mass.")
 kit.claim("CL-E3-ASD-ESC-PEAK", "ESC peak, as-designed mass, design inputs, 30 degC", calc="CALC-E3-MISSION",
-          output="esc_peak_asd_c", unit="degC", limit=("<=", 85.0), verifies=["R-THERMAL"],
+          output="esc_peak_asd_c", unit="degC", limit=("<=", P + "thermal.esc_temp_max_c"), verifies=["R-THERMAL"],
           parts=["PRP-002-UR", "PRP-002-UL", "PRP-002-LR", "PRP-002-LL"], how="T-E3-MISSION, IR on the ESC FET side.")
 kit.claim("CL-E3-ASD-PACK-END", "Pack at landing, as-designed mass, design inputs, 30 degC", calc="CALC-E3-MISSION",
-          output="pack_end_asd_c", unit="degC", limit=("<=", 50.0), verifies=["R-THERMAL"], parts=["PWR-001"],
+          output="pack_end_asd_c", unit="degC", limit=("<=", P + "thermal.pack_temp_max_c"), verifies=["R-THERMAL"], parts=["PWR-001"],
           how="T-E2-MISSION-LOG: IR on the pack within 60 s of landing.")
 kit.claim("CL-E3-ASD-FC-PEAK", "FC peak, as-designed mass, design inputs, 30 degC", calc="CALC-E3-MISSION",
-          output="fc_peak_asd_c", unit="degC", limit=("<=", 85.0), verifies=["R-THERMAL"], parts=["AVN-001"],
+          output="fc_peak_asd_c", unit="degC", limit=("<=", P + "thermal.fc_temp_max_c"), verifies=["R-THERMAL"], parts=["AVN-001"],
           how="IMU.T in the mission log.")
 kit.claim("CL-E3-CEIL-ASD", "Field-ambient ceiling, as-designed mass, design inputs, ASA mounts", calc="CALC-E3-CEILING",
           output="mission_asd__min_asa_c", unit="degC", limit=(">=", 30.0), verifies=["R-THERMAL"],
@@ -802,7 +802,7 @@ kit.claim("CL-E3-COLLAR-T", "CF tube temperature at the PETG station collar, des
           how="Thermocouple on the tube at the collar during T-E3-MOTOR-TAU (600 s hover power).",
           note="limit 58 = PETG HDT 68 - 10 K; the collar stays PETG")
 kit.claim("CL-E3-PACK-15-WARMED", "Pack at landing on a 15 degC morning, pack warmed to 20 degC before take-off, design",
-          calc="CALC-E3-SWEEP", output="pack_end_15_warmed_des_c", unit="degC", limit=("<=", 50.0), parts=["PWR-001"],
+          calc="CALC-E3-SWEEP", output="pack_end_15_warmed_des_c", unit="degC", limit=("<=", P + "thermal.pack_temp_max_c"), parts=["PWR-001"],
           how="T-E2-MISSION-LOG on a cool morning.")
 
 # ---------------------------------------------------------------- tests

@@ -152,6 +152,27 @@ def span_breaks(g):
     return out
 
 
+def station_kind(g, strip):
+    """'blk' for a strip inside the through-core block span, 'anc' inside the brace-anchor pocket, else ''."""
+    ym = 0.5 * (strip[0] + strip[1])
+    if g["blk_y"][0] <= ym <= g["blk_y"][1]:
+        return "blk"
+    if g["anc_y"][0] <= ym <= g["anc_y"][1]:
+        return "anc"
+    return ""
+
+
+def hard_class(g, strip, cx):
+    """'H' if a skin face sits over the hard point that carries this strip's station load (the PETG block between
+    blk_x, or the anchor column |x - xs| < COL_HALF), else 'O'."""
+    kind = station_kind(g, strip)
+    if kind == "blk":
+        return "H" if g["blk_x"][0] <= cx <= g["blk_x"][1] else "O"
+    if kind == "anc":
+        return "H" if abs(cx - g["xs"]) < COL_HALF else "O"
+    return "O"
+
+
 def strips_from(breaks):
     st = []
     for a, b_ in zip(breaks[:-1], breaks[1:]):
@@ -196,7 +217,7 @@ def build(level, g):
         if np.all(outline_flag[list(nd)]) and np.ptp(P[:, 1]) > 0:
             cx, cy, cz = P.mean(0)
             k = next(i for i, (a, b_) in enumerate(strips) if a - 1e-12 <= cy <= b_ + 1e-12)
-            key = f"S{k:02d}{'U' if cz >= zc_of(cx) else 'L'}{'F' if cx < g['xs'] else 'A'}"
+            key = f"S{k:02d}{'U' if cz >= zc_of(cx) else 'L'}{'F' if cx < g['xs'] else 'A'}{hard_class(g, strips[k], cx)}"
             patch.setdefault(key, []).append((ft, nd))
         else:
             free.append((ft, nd))
@@ -245,7 +266,13 @@ def strip_loads(rows, strips, xs):
     return out, r
 
 
-def tractions(model, rows, xs):
+INTRO = "block"     # "block": station strips loaded on the hard point only (C4 primary path: tube -> block / brace
+                    # -> anchor -> spar; fin root fillet cracked); "distributed": every strip over its whole skin
+                    # (fin root fillet carries the station load into the core along the chord: sensitivity case)
+
+
+def tractions(model, rows, xs, intro=None):
+    intro = intro or INTRO
     X, mk, strips = model["X"], model["markers"], model["strips"]
     loads_k, r = strip_loads(rows, strips, xs)
     res = []
@@ -254,6 +281,9 @@ def tractions(model, rows, xs):
     for k, (F, Mo) in enumerate(loads_k):
         ref = np.array([xs, 0.5 * (strips[k][0] + strips[k][1]), 0.0])
         names = [n for n in mk if n.startswith(f"S{k:02d}")]
+        if intro == "block" and any(n.endswith("H") for n in names):
+            res.extend((n, 0.0, 0.0, 0.0) for n in names if not n.endswith("H"))
+            names = [n for n in names if n.endswith("H")]
         if not names:
             if np.linalg.norm(F) + np.linalg.norm(Mo) > 1e-9:
                 raise RuntimeError(f"strip {k} has load but no skin patch")
@@ -458,14 +488,20 @@ def main():
     ap.add_argument("--levels", type=int, nargs="+", default=[1, 2, 3])
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--keep-runs", action="store_true")
+    ap.add_argument("--jobs", nargs="+", default=None, help="subset as CASE/SET, e.g. G2-HANG-MOTOR/B")
+    ap.add_argument("--out", default="wing_fea.json")
+    ap.add_argument("--no-validation", action="store_true")
+    ap.add_argument("--intro", default="block", choices=["block", "distributed"])
     a = ap.parse_args()
+    global INTRO
+    INTRO = a.intro
     OUT.mkdir(exist_ok=True)
     g = d1_geometry()
     msets = materials(g)
     cases = ws.read_spanwise()
     stations = list(np.round(np.arange(0.025, 0.5751, 0.025), 4))
     prev = {}
-    pth = OUT / "wing_fea.json"
+    pth = OUT / a.out
     if pth.exists():
         prev = json.loads(pth.read_text())
     result = {"inputs": {"geometry_source": "team/D1/wing_data.py -> subsystems/wing/fusion/wing.py (D1-R1)",
@@ -476,8 +512,10 @@ def main():
                          "span_breaks": span_breaks(g), "col_half_m": COL_HALF},
               "levels": prev.get("levels", {}), "validation": prev.get("validation")}
     t0 = time.time()
-    result["validation"] = validation(2)
-    print("validation", json.dumps(result["validation"]), flush=True)
+    result["intro"] = a.intro
+    if not a.no_validation:
+        result["validation"] = validation(2)
+        print("validation", json.dumps(result["validation"]), flush=True)
     for lev in a.levels:
         model = build(lev, g)
         st = model["stats"]
@@ -488,7 +526,7 @@ def main():
         sf.write_props(d / "props.dat", model["blocks"])
         vols = sf.element_volumes(model["X"], model["blocks"])
         st["min_signed_volume"] = float(vols.min())
-        jobs = [(cs, ms) for cs in CASES for ms in ("B", "T")]
+        jobs = [(cs, ms) for cs in CASES for ms in ("B", "T") if a.jobs is None or f"{cs[0]}/{ms}" in a.jobs]
 
         def job(j):
             cs, ms = j
@@ -505,6 +543,11 @@ def main():
             print(f"  L{lev} {k}: w_tip {p['w'][-1] * 1e3:.3f} mm, u_tip {p['u'][-1] * 1e3:.3f} mm, "
                   f"twist_tip {math.degrees(p['twist'][-1]):.3f} deg, {v['info']['seconds']} s", flush=True)
         pth.write_text(json.dumps(result, indent=1, default=float))
+    if a.no_validation:
+        result["wall_s"] = round(time.time() - t0, 1)
+        pth.write_text(json.dumps(result, indent=1, default=float))
+        print("done", result["wall_s"], "s")
+        return
     result["beam"] = {f"{cs[0]}/{cs[1]}": {"tape0": beam_reference(cases[cs]["rows"], stations, 0.0),
                                             "tape50": beam_reference(cases[cs]["rows"], stations, 0.5)} for cs in CASES}
     result["wall_s"] = round(time.time() - t0, 1)

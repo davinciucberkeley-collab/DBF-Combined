@@ -466,6 +466,132 @@ kit.claim("CL-B3-V-VT", "1.3 Vs at the as-designed forward limit, gate mass", ca
           how="F4 ARSPD_FBW_MIN >= this; first-transition log (H2).")
 
 
+# ------------------------------------------------------------------------------------------- V1 finding: NP vs CL
+# The R4 chain ran AVL with zref = P:cg.z_target_m = 0 (CG on the chord plane). A3-R6a puts the CG 18.5 mm above it
+# (the pod and pack sit on the upper surface). With the CG above the wing, the lift vector (which tilts forward in
+# body axes as alpha grows) makes a nose-up moment that grows with CL: the effective NP becomes a function of CL.
+# AVL includes this (moments about Xref, Zref); the hand formula below reproduces it.
+V_ENV = ("vmax", "vc", "vt")      # wingborne envelope speeds checked for the SM requirement (fastest .. 1.3 Vs)
+
+
+@kit.calc("CALC-B3-V-NP-CL", title="Effective neutral point vs CL with the A3 CG height; SM-limited aft CG over the "
+          "wingborne envelope",
+          inputs={"b": P + "wing.span_m", "c": P + "wing.chord_m", "ef": P + "wing.elevon.chord_frac",
+                  "yin": P + "wing.elevon.inboard_y_m", "yout": P + "wing.elevon.outboard_y_m", "fy": P + "fins.y_m",
+                  "fh": P + "fins.half_height_m", "fle": P + "fins.le_x_m", "fte": P + "fins.te_x_m",
+                  "fin": "ASM-B3-V-FIN-CAD", "gap": "ASM-B3-V-ELEVON-GAP", "zcg": "ASM-B3-V-ZCG",
+                  "xnp_av": "CL-B3-V-XNP-AERO", "xnp_v": "CL-B3-V-XNP", "cgf": "CL-A3-CG-X",
+                  "x_a3_pred": "CL-A3-CG-X-PRED", "x_fwd": "CL-B3-V-CG-FWD",
+                  "sm_min": P + "requirements.static_margin_min", "m": P + "requirements.mtow_gate_kg",
+                  "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3", "S": "CL-A1-WING-AREA",
+                  "vmax": "ASM-B3-V-VMAX", "vc": P + "performance.cruise_ms", "vt": "CL-B3-V-VT"},
+          units={"b": "m", "c": "m", "yin": "m", "yout": "m", "fy": "m", "fh": "m", "fle": "m", "fte": "m",
+                 "gap": "m", "zcg": "m", "xnp_av": "m", "xnp_v": "m", "x_a3_pred": "m", "x_fwd": "m", "m": "kg",
+                 "g": "m/s2", "rho": "kg/m3", "S": "m2", "vmax": "m/s", "vc": "m/s", "vt": "m/s"},
+          cites=["SRC-B3-AVL"],
+          equation="AVL Xnp_aero(CL) at zref = A3 z and at zref = 0 ; Xnp(CL) = Xnp_aero(CL) + (Xnp - Xnp_aero) "
+                   "[props + pod, CL-independent] ; x_aft_env = min over V in {Vmax, Vcruise, 1.3 Vs} of "
+                   "Xnp(CL(V)) - SMmin c ; hand: dXnp = -z (sin a + CL cos a / CLa - 2 CL / (pi e AR))")
+def np_cl(b, c, ef, yin, yout, fy, fh, fle, fte, fin, gap, zcg, xnp_av, xnp_v, cgf, x_a3_pred, x_fwd, sm_min, m,
+          g, rho, S, vmax, vc, vt):
+    yi, yo = as_built(yin, yout, gap)
+    secs = fin_sections(fin, "BOARD")
+    dprop = xnp_v - xnp_av
+    x_a3 = cgf * c
+    AR = b * b / S
+    speeds = {"vmax": vmax, "vc": vc, "vt": vt, "vs": vt / 1.3}
+    out = {"dprop_pod": dprop, "rows": {}}
+    for tag, V in speeds.items():
+        CL = 2 * m * g / (rho * V * V * S)
+        row = {"V": V, "CL": CL}
+        for zt, z in (("z", zcg), ("z0", 0.0)):
+            geo = AV.geometry_from(b, c, ef, yi, yo, fy, fh, fle, fte, 0.0529, z, fin_sections=secs)
+            d = AV.derivatives_cl(geo, CL, "fine")
+            row[f"xnp_aero_{zt}"], row[f"alpha_{zt}"], row[f"CLa_{zt}"] = d["Xnp"], d["Alpha"], d["CLa"]
+            row[f"e_{zt}"] = d.get("e")
+        row["dxnp_avl"] = row["xnp_aero_z"] - row["xnp_aero_z0"]
+        a = math.radians(row["alpha_z"])
+        e = row["e_z0"] or 1.0
+        row["dxnp_hand"] = -zcg * (math.sin(a) + CL * math.cos(a) / row["CLa_z"] - 2 * CL / (math.pi * e * AR))
+        row["xnp"] = row["xnp_aero_z"] + dprop
+        row["x_aft"] = row["xnp"] - sm_min * c
+        row["sm_a3"] = (row["xnp"] - x_a3) / c
+        out["rows"][tag] = row
+    env = [out["rows"][k] for k in V_ENV]
+    worst = min(env, key=lambda r: r["x_aft"])
+    out["x_aft_env"], out["xnp_env"], out["cl_env"] = worst["x_aft"], worst["xnp"], worst["CL"]
+    out["xnp_cruise"] = out["rows"]["vc"]["xnp"]
+    out["width_env"] = out["x_aft_env"] - x_fwd
+    out["x_target_env"] = 0.5 * (out["x_aft_env"] + x_fwd)
+    out["a3_aft_margin_env"] = out["x_aft_env"] - x_a3
+    out["a3pred_aft_margin_env"] = out["x_aft_env"] - x_a3_pred
+    out["sm_a3_env"] = (worst["xnp"] - x_a3) / c
+    out["sm_a3pred_env"] = (worst["xnp"] - x_a3_pred) / c
+    out["sm_a3_stall"] = out["rows"]["vs"]["sm_a3"]
+    r = out["rows"]["vt"]
+    out["dxnp_dz_vt"] = r["dxnp_avl"] / zcg
+    out["hand_vs_avl_vt"] = r["dxnp_hand"] / r["dxnp_avl"] - 1
+    out["a3_shift_req"] = max(0.0, x_a3 - out["x_aft_env"])
+    out["a3pred_shift_req"] = max(0.0, x_a3_pred - out["x_aft_env"])
+    return out
+
+
+kit.assumption("ASM-B3-V-VMAX", "Fastest wingborne speed for the SM check", "F4 AIRSPEED_MAX",
+               basis="performance.cruise_ms note (D-01): F4 AIRSPEED_MAX 18 m/s; at higher speed CL is lower and the "
+                     "CG-height NP loss smaller, so 18 m/s does not bind", value=18.0, unit="m/s", status="PROPOSED")
+kit.claim("CL-B3-V-XNP-ENV", "Effective NP (whole aircraft) at 1.3 Vs with the A3 CG height", calc="CALC-B3-V-NP-CL",
+          output="xnp_env", unit="m", how="T-B3-TWIN-NP flown at 15.6 m/s with the A3 CG height.")
+kit.claim("CL-B3-V-XNP-CRUISE", "Effective NP (whole aircraft) at cruise 16 m/s with the A3 CG height",
+          calc="CALC-B3-V-NP-CL", output="xnp_cruise", unit="m", how="As CL-B3-V-XNP-ENV at 16 m/s.")
+kit.claim("CL-B3-V-CG-AFT-ENV", "Aft CG limit (SM 5 % at every wingborne speed), as designed, A3 CG height",
+          calc="CALC-B3-V-NP-CL", output="x_aft_env", unit="m", how="T-B3-CG-BALANCE + T-B3-TWIN-NP.")
+kit.claim("CL-B3-V-CG-WIDTH-ENV", "CG range width, envelope aft limit to the as-designed forward limit",
+          calc="CALC-B3-V-NP-CL", output="width_env", unit="m", limit=(">=", 0.004), how="Follows from the limits.")
+kit.claim("CL-B3-V-CG-A3-AFT-ENV", "A3-R6a CG (550 g, -0.022) ahead of the envelope aft limit",
+          calc="CALC-B3-V-NP-CL", output="a3_aft_margin_env", unit="m", limit=(">=", 0.0),
+          verifies=["R-CG-RANGE", "R-STATIC-MARGIN"], how="H1 balance of the built aircraft (T-B3-CG-BALANCE).")
+kit.claim("CL-B3-V-CG-A3PRED-AFT-ENV", "A3 predicted CG ahead of the envelope aft limit", calc="CALC-B3-V-NP-CL",
+          output="a3pred_aft_margin_env", unit="m", limit=(">=", 0.0), how="As CL-B3-V-CG-A3-AFT-ENV.")
+kit.claim("CL-B3-V-SM-A3-ENV", "Static margin at the A3-R6a CG, worst wingborne speed (1.3 Vs)",
+          calc="CALC-B3-V-NP-CL", output="sm_a3_env", unit="-", limit=(">=", P + "requirements.static_margin_min"),
+          verifies=["R-STATIC-MARGIN"], how="T-B3-TWIN-NP.")
+kit.claim("CL-B3-V-DXNP-DZ", "Effective NP shift per metre of CG height at 1.3 Vs", calc="CALC-B3-V-NP-CL",
+          output="dxnp_dz_vt", unit="-", how="AVL at zref 0 and A3 z; hand formula agrees within CL-B3-V-NPZ-HAND.")
+kit.claim("CL-B3-V-NPZ-HAND", "CG-height NP shift: hand formula vs AVL (relative)", calc="CALC-B3-V-NP-CL",
+          output="hand_vs_avl_vt", unit="-", limit=("<=", 0.10), how="Re-run verify_asdesigned.py.")
+kit.claim("CL-B3-V-CG-SHIFT-REQ", "Forward CG move A3-R6a needs to hold SM 5 % over the envelope (basic)",
+          calc="CALC-B3-V-NP-CL", output="a3_shift_req", unit="m", how="A3 roll-up after the fix.")
+kit.claim("CL-B3-V-CG-SHIFT-REQ-PRED", "Forward CG move needed, predicted mass and CG", calc="CALC-B3-V-NP-CL",
+          output="a3pred_shift_req", unit="m", how="A3 roll-up after the fix.")
+
+
+MIN = {**SC.LATIN, "fin": "ASM-B3-V-FIN-CAD", "gap": "ASM-B3-V-ELEVON-GAP", "zcg": "ASM-B3-V-ZCG",
+       "xnp_c": "CL-B3-V-XNP-CRUISE", "cgf": "CL-A3-CG-X", "m_basic": "CL-A3-MASS-BASIC", "Ixx": "CL-A3-IXX",
+       "Iyy": "CL-A3-IYY", "Izz": "CL-A3-IZZ", "V": P + "performance.cruise_ms", "cd0": "ASM-B3-CD0",
+       "e": P + "wing.oswald_e"}
+MU = {**SC.LATU, "gap": "m", "zcg": "m", "xnp_c": "m", "V": "m/s"}
+
+
+@kit.calc("CALC-B3-V-MODES", title="Rigid-body modes at cruise, as designed (A3-R6a CG and inertia, CAD fins)",
+          inputs=MIN, units=MU, assumes=["ASM-B3-PROP-CNA", "ASM-B3-CD0"], cites=["SRC-B3-AVL"],
+          equation="CALC-B3-MODES (sc_analysis.modes, Etkin 4x4) with the CAD fin outline, zref = A3 z, CG = A3 x, "
+                   "Cma from the effective cruise NP CL-B3-V-XNP-CRUISE")
+def modes_v(fin, gap, zcg, xnp_c, cgf, m_basic, Ixx, Iyy, Izz, V, cd0, e, **kw):
+    kw = dict(kw)
+    kw["zref"] = zcg
+    kw["yin"], kw["yout"] = as_built(kw["yin"], kw["yout"], gap)
+    with patched_geometry({"fin_sections": fin_sections(fin, "BOARD")}):
+        return SC.modes(xnp_c, cgf * kw["c"], m_basic, Ixx, Iyy, Izz, V, cd0, e, **kw)
+
+
+kit.claim("CL-B3-V-SP-ZETA", "Short-period damping, cruise, as designed", calc="CALC-B3-V-MODES", output="sp_zeta",
+          unit="-", limit=(">=", "ASM-B3-ZETA-SP-MIN"), how="As CL-B3-SP-ZETA.")
+kit.claim("CL-B3-V-DR-ZETA", "Dutch-roll damping, cruise, as designed", calc="CALC-B3-V-MODES", output="dr_zeta",
+          unit="-", limit=(">=", "ASM-B3-ZETA-DR-MIN"), verifies=["R-DIRECTIONAL"], how="As CL-B3-DR-ZETA.")
+kit.claim("CL-B3-V-LAT-T2", "Spiral time to double, cruise, as designed", calc="CALC-B3-V-MODES", output="lat_t2_s",
+          unit="s", limit=(">=", 4.0), how="As CL-B3-LAT-T2.")
+
+
 def main():
     now, loop = cad_check()
     res = kit.write()

@@ -1,0 +1,33 @@
+redesign/team/B3/claims.verify.json: 32 claims
+  CL-B3-V-XNP-LATTICE         1.875e-05   margin +100%
+  CL-B3-V-CNB-GCI                0.1333   margin +93%
+  CL-B3-V-VLM-XNP             -0.001096   margin +111%
+  CL-B3-V-FIN-HAND               0.1404
+  CL-B3-V-XNP-AERO            0.07195 m
+  CL-B3-V-XNP                 0.06904 m
+  CL-B3-V-CG-FWD               0.0466 m
+  CL-B3-V-CG-AFT              0.05304 m
+  CL-B3-V-CG-WIDTH           0.006441 m   margin +61%
+  CL-B3-V-CG-A3-FWD          0.005613 m
+  CL-B3-V-CG-A3-AFT         0.0008285 m
+  CL-B3-V-CG-A3PRED-AFT    -0.0005537 m
+  CL-B3-V-SM-A3                 0.05259   margin +5%
+  CL-B3-V-CNB             0.06152 1/rad   margin +105%
+  CL-B3-V-CNB-TUBE        0.04791 1/rad   margin +60%
+  CL-B3-V-CNB-CRUISE       0.0627 1/rad   margin +109%
+  CL-B3-V-VS-A3               11.77 m/s   margin +2%
+  CL-B3-V-VT                  15.52 m/s   margin +3%
+  CL-B3-V-XNP-ENV             0.06744 m
+  CL-B3-V-XNP-CRUISE          0.06768 m
+  CL-B3-V-CG-AFT-ENV          0.05144 m
+  CL-B3-V-CG-WIDTH-ENV       0.004846 m   margin +21%
+  CL-B3-V-CG-A3-AFT-ENV    -0.0007665 m
+  CL-B3-V-CG-A3PRED-AFT-ENV    -0.002149 m
+  CL-B3-V-SM-A3-ENV              0.0476   margin -5%   FAILS
+  CL-B3-V-DXNP-DZ               -0.1849
+  CL-B3-V-NPZ-HAND            -0.004311   margin +104%
+  CL-B3-V-CG-SHIFT-REQ      0.0007665 m
+  CL-B3-V-CG-SHIFT-REQ-PRED     0.002149 m
+  CL-B3-V-SP-ZETA                0.4809   margin +60%
+  CL-B3-V-DR-ZETA                0.2779   margin +247%
+  CL-B3-V-LAT-T2                3.509 s   margin -12%   FAILS

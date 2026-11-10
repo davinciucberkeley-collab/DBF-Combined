@@ -3,43 +3,43 @@
  "b1sim": {
   "cfd": {
    "fin_a_cd": {
-    "value": 0.081994,
+    "value": 0.047206,
     "unit": "-",
     "source": "SRC-B1-SIM-CFD",
-    "note": "fin section through the motor tube (22 mm tube + 9.6 mm board, 3 mm fillet, square TE), SA, 16 m/s, on the 0.275 m fin chord, L3 grid"
+    "note": "fin section through the motor tube (22 mm tube + 9.6 mm board, 3 mm fillet, square TE), SA, 16 m/s, on the 0.275 m fin chord, L4 grid"
    },
    "fin_b_cd": {
-    "value": 0.037148,
+    "value": 0.03639,
     "unit": "-",
     "source": "SRC-B1-SIM-CFD",
     "note": "bare 9.6 mm board, square LE and TE, SA, on the fin chord, L3 grid"
    },
    "fin_a_gci_pct": {
-    "value": 3.984123,
+    "value": 5.810546,
     "unit": "%",
     "source": "SRC-B1-SIM-CFD",
-    "note": "Celik GCI, fine grid, Fs 1.25"
+    "note": "Celik GCI, fine grid, Fs 1.25, levels L2-L4"
    },
    "fin_b_gci_pct": {
-    "value": 3.832778,
+    "value": 2.086485,
     "unit": "%",
     "source": "SRC-B1-SIM-CFD",
     "note": "Celik GCI, fine grid, Fs 1.25"
    },
    "s5010_cd_sa": {
-    "value": 0.043187,
+    "value": 0.011889,
     "unit": "-",
     "source": "SRC-B1-SIM-CFD",
     "note": "S5010, alpha 2.5 deg, fully turbulent SA, L3"
    },
    "s5010_cl_sa": {
-    "value": 0.334207,
+    "value": 0.370509,
     "unit": "-",
     "source": "SRC-B1-SIM-CFD",
     "note": "S5010, alpha 2.5 deg, fully turbulent SA, L3"
    },
    "s5010_gci_pct": {
-    "value": 0.0,
+    "value": 1.966181,
     "unit": "%",
     "source": "SRC-B1-SIM-CFD",
     "note": "Celik GCI on cd, fine grid"

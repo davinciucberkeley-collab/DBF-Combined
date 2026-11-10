@@ -4,6 +4,20 @@ Numbers from `python -I redesign/team/B3/sc_analysis.py` and `run_avl_study.py` 
 roll-up; B4 R3 swirl; D6 R3 elevon; C2 modes; F4 R4 crossovers). All inputs are read live from the claim graph.
 Detail: `S-AND-C.md`. Answers the A1 R4 forward (CR-A3-23, CR-A2-19, CR-B4-13, CR-C2-03, CR-D6-08, CR-B3-19/20/21).
 
+## Open (V1 verification round, 2026-11-10)
+
+Numbers from `python -I redesign/team/B3/verify_asdesigned.py` (`claims.verify.json`) and `sens_zcg.py` on the CAD
+fins (`fins.py` R4), the wing CAD elevon gaps and the A3-R6a roll-up. Detail: `SIMULATION-REPORT.md`.
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| **CR-B3-25** | **A1** (copy A3, D2, F1, C5, H1, J1) | **R-STATIC-MARGIN fails as designed.** Set `cg.x_range_m` = **[0.0466, 0.0514]** and `cg.x_target_m` = **0.0490** (14.6–16.1 % c) for the A3 CG height +0.0185 m, then bring the take-off CG forward to the target: **−3.2 mm** (basic) / **−4.6 mm** (predicted). Pack slide alone gives 0.8 mm (3.4 mm room × 0.237). Order of size: ~41 g at the pod nose (x −0.13) for the basic case, or the pack bay moved ~10 mm forward. Alternative: lower the CG (each 10 mm lower moves the aft limit 1.85 mm aft) | `CL-B3-V-CG-AFT-ENV` 0.05144 m; A3-R6a 0.0522 is **0.77 mm aft** (`CL-B3-V-CG-A3-AFT-ENV`, SM 4.76 % at 1.3 Vs), predicted 0.0536 is **2.15 mm aft** (SM 4.33 %). The R4 chain put the CG on the chord plane (`cg.z_target_m` 0); A3's CG is 18.5 mm above it, which moves the effective NP 3.4 mm forward at 1.3 Vs (AVL, hand formula within 0.4 %). Forward limit `CL-B3-V-CG-FWD` 0.0466 (trim at stall, z included); width 4.85 mm (≥ 4) |
+| **CR-B3-26** | **A2** (copy A1, F4, H2) | **Spiral fails as designed:** t2 **3.51 s** < 4 s (`CL-B3-V-LAT-T2`). Decide one: (a) lower the CG to z ≤ 0 (t2 4.0 s at z 0); (b) keep z and amend R-SPIRAL to "≥ 3.3 s, wingborne flight only in roll-stabilised modes (FBWA / AUTO / QSTABILIZE), no MANUAL above 5 m" with F4 setting `FLTMODE*` accordingly | CG 18.5 mm above the fin side-force centre gives Cl_β +0.023 (R4 0.004): `sens_zcg.py` t2 = 4.01 / 3.84 / 3.68 / 3.51 / 3.34 s at z 0 / 6 / 12 / 18.5 / 25 mm. Dutch roll 0.28, short period 0.48 stay above their floors |
+| CR-B3-24 | A3 | Publish the take-off CG height as a claim in metres (`CL-A3-CG-Z`), basic and predicted | B3 now carries it as `ASM-B3-V-ZCG` 0.0185 from `rollup.json`; it drives CR-B3-25 and -26 |
+| CR-B3-27 | A1 | Change `cg.z_target_m` from 0 to the A3 value (or a limit, e.g. z ≤ +0.010 m) and narrow `cg.z_range_m` [−0.02, +0.03]: at +0.03 the aft limit is 5.5 mm further forward than at 0 | Every R0–R4 S&C number used z = 0 |
+| CR-B3-28 | B2 (info) | Elevon η: XFOIL is not panel-converged (η_cm at α 4: 0.569 / 0.598 / 0.614 at 160 / 240 / 320 panels, extrapolated 0.69, GCI 15 %); SU2 SA (fully turbulent) gives a higher η, see `SIMULATION-REPORT.md` §4. `CL-B2-ELEVON-ETA` 0.606 is the low (conservative) end; the −20 % case that closed the R4 range is not supported by either method | No change needed; firm up with T-B3-TWIN-NP |
+| CR-B3-29 | H1 (copy C5) | Balance marks for T-B3-CG-BALANCE: **0.0466 / 0.0514 m** once A1 adopts CR-B3-25 (was 0.0509 / 0.0549) | |
+
 ## Open (R4 re-run)
 
 | # | To | What | Why / numbers |

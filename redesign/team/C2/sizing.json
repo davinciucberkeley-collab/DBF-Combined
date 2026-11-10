@@ -47,7 +47,9 @@
   "material": "XPS F-250, one piece",
   "ribs": "none: the core is the rib; the blocks FIN-004-L/R are the hard points at |y| 0.32",
   "pockets": "block pocket full depth at |y| 0.32 (C4/D3 size), brace anchor pockets 20 x 16 mm to the spar at |y| 0.242, servo pockets aft of x 0.12 m only",
-  "keep_out": "no cut deeper than 50 % of the local thickness between x 0.06 and 0.10 m except the spar slot and block pockets"
+  "keep_out": "no cut deeper than 50 % of the local thickness between x 0.06 and 0.10 m except the spar slot and block pockets",
+  "pocket_corners": "C2-R2 3-D FEA (CR-C2-11): block pocket vertical edges R 3 mm (block edges rounded or chamfered 3 mm to match, D3) plus a thickened-epoxy fillet bead >= 3 mm along the inboard and outboard pocket edges on both surfaces; foam peak at the sharp corner 203 kPa tension / 199 kPa compression ult vs 150 / 120 kPa",
+  "elevon_cutout_corners": "R >= 3 mm where the elevon cut-outs meet the fin-root tab (|y| 0.30, 0.34) at the hinge line; tape carried round the cut-out edge (CR-C2-13)"
  },
  "tip": {
   "unspanned_m": 0.075,

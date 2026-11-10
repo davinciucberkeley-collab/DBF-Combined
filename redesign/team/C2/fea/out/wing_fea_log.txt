@@ -1,0 +1,12 @@
+validation {"shear": {"w_fe_mm": 1.6003936859825658, "w_beam_mm": 1.638641566100277, "err": -0.02334121195810701, "sigma_fe_mpa": 0.0, "sigma_beam_mpa": 7.450207150767998, "sigma_err": -1.0}, "torque": {"twist_fe_deg": 0.14641840955252428, "twist_beam_deg": 0.14596088880048672, "err": 0.003134543478033658}, "mesh": {"level": 2, "elements": 15360, "nodes": 20736}}
+level 1: {'level': 1, 'nth': 32, 'nr': 2, 'h_near': 0.0022, 'h_far': 0.01, 'hy': 0.0125, 'nodes': 36510, 'elements': 51955, 'hex': 3456, 'wedge': 48499, 'layers': 54, 'section_nodes': 853, 'patches': 132}
+  L1 L1-LEVEL/MC-C/B: w_tip 0.021 mm, u_tip -1.780 mm, twist_tip -0.155 deg, 1401.0 s
+  L1 L1-LEVEL/MC-C/T: w_tip 0.183 mm, u_tip -3.253 mm, twist_tip -0.767 deg, 1298.0 s
+  L1 G2-HANG-MOTOR/MC-P/B: w_tip -2.238 mm, u_tip 0.376 mm, twist_tip 0.413 deg, 1398.7 s
+  L1 G2-HANG-MOTOR/MC-P/T: w_tip -17.982 mm, u_tip 0.481 mm, twist_tip 1.168 deg, 1287.3 s
+  L1 L4-CORNER-SIDE-Y/MC-C/B: w_tip 1.075 mm, u_tip 0.337 mm, twist_tip -0.717 deg, 1426.7 s
+  L1 L4-CORNER-SIDE-Y/MC-C/T: w_tip 9.629 mm, u_tip 0.743 mm, twist_tip -3.419 deg, 1301.1 s
+  L1 F1-PULLUP-VD/MC-C/B: w_tip 0.968 mm, u_tip -0.062 mm, twist_tip 0.351 deg, 1406.7 s
+  L1 F1-PULLUP-VD/MC-C/T: w_tip 7.256 mm, u_tip -0.051 mm, twist_tip 1.117 deg, 1312.6 s
+done 2154.1 s
+EXIT 0

@@ -14,7 +14,7 @@ Inputs
 Every calculation is a pure function of its named inputs and reuses the helpers in performance.py.
 
 Run (after cfd_sections.py, vlm_xfoil.py, sim_to_params.py):  python -I redesign/team/B1/sim_verify.py
-Writes claims.verify.json, sim/sim_verify_results.json and the FIG B1-03 ... B1-06 SVGs.
+Writes claims.verify.json, sim/sim_verify_results.json and the FIG B1-03 ... B1-07 SVGs (PNG copies in sim/png/).
 """
 import json
 import math
@@ -26,6 +26,8 @@ sys.path.insert(0, str(HERE.parents[1] / "proofs"))
 sys.path.insert(0, str(HERE))
 import proofkit as pk  # noqa: E402
 import performance as perf  # noqa: E402  (pure helpers; its own Kit is not written)
+import logging  # noqa: E402
+logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)   # IBM Plex is named in the SVG, not needed here
 
 kit = pk.Kit(__file__, params=["../../params/params.json", "../B2/params.json", "params.json"],
              out="claims.verify.json")
@@ -382,7 +384,7 @@ def _style(plt):
                          "axes.labelcolor": INK2, "xtick.color": INK3, "ytick.color": INK3, "axes.grid": True,
                          "grid.color": GRID, "grid.linewidth": 0.8, "axes.spines.top": False,
                          "axes.spines.right": False, "svg.fonttype": "none", "figure.facecolor": "white",
-                         "axes.facecolor": "white", "legend.frameon": False})
+                         "axes.facecolor": "white", "legend.frameon": False, "axes.axisbelow": True})
 
 
 def figures(res):
@@ -403,27 +405,30 @@ def figures(res):
     fig, axs = plt.subplots(1, 3, figsize=(10, 3.2))
     for case, lab in (("finA", "fin, tube + board"), ("finB", "fin, bare board"), ("s5010", "S5010, SA, 2.5°")):
         L = cfd["cases"][case]
-        h = [1 / math.sqrt(L[f"L{i}"]["cells"]) for i in (1, 2, 3)]
-        cd = [L[f"L{i}"]["cd"] for i in (1, 2, 3)]
-        g = cfd["gci"][case]["cd"]
+        lv = [i for i in (1, 2, 3, 4) if f"L{i}" in L]
+        h = [1 / math.sqrt(L[f"L{i}"]["cells"]) for i in lv]
+        cd = [L[f"L{i}"]["cd"] for i in lv]
+        g = cfd.get("gci4", {}).get(case, cfd["gci"][case])["cd"]
         col = ACC if case == "finA" else (INK2 if case == "finB" else AX)
-        axs[0].plot(h, cd, "o-", color=col, lw=1.5, ms=4, label=f"{lab}  GCI {g['gci_fine_pct']:.1f} %")
+        axs[0].plot(h, cd, "o-", color=col, lw=1.5, ms=4, label=f"{lab}  GCI {g['gci_fine_pct']:.1f} %" + (" (L2–L4)" if 4 in lv else ""))
         if g.get("p"):
-            axs[0].plot([0], [g["f_ext"]], "x", color=col, ms=6)
+            axs[0].plot([0], [g["f_ext"]], "x", color=col, ms=6, clip_on=False)
     axs[0].set_xlim(left=0); axs[0].set_xlabel("1/√cells"); axs[0].set_ylabel("section cd (on own chord)")
-    axs[0].set_title("SU2 2-D RANS, 3 grids", loc="left", fontsize=9, color=INK)
-    axs[0].legend(fontsize=7, loc="upper left")
+    axs[0].set_title("SU2 2-D RANS, 3–4 grids", loc="left", fontsize=9, color=INK)
+    axs[0].legend(fontsize=7, loc="center", bbox_to_anchor=(0.5, 0.42))
     ac = vx["avl_convergence"]
     n = [ac[f"L{i}"]["n_strips_half"] for i in (1, 2, 3)]
     axs[1].plot(n, [ac[f"L{i}"]["e"] for i in (1, 2, 3)], "o-", color=ACC, lw=1.5, ms=4, label="span efficiency e")
     ax2 = axs[1].twinx(); ax2.grid(False)
     ax2.plot(n, [ac[f"L{i}"]["elevon_deg"] for i in (1, 2, 3)], "s--", color=INK3, lw=1, ms=4, label="trim elevon")
     ax2.set_ylabel("trim elevon (deg)", color=INK3); ax2.spines["right"].set_visible(True)
+    e_m = sum(ac[f"L{i}"]["e"] for i in (1, 2, 3)) / 3; axs[1].set_ylim(0.97 * e_m, 1.03 * e_m)   # ±3 % scale
     axs[1].set_xlabel("spanwise strips per half wing"); axs[1].set_ylabel("e (AVL, Trefftz)")
     axs[1].set_title("AVL, 3 lattices, cruise trim", loc="left", fontsize=9, color=INK)
     pc = vx["xfoil_panel_convergence"]
     ks = sorted(pc, key=int)
     axs[2].plot([int(k) for k in ks], [1e4 * pc[k]["cd_at_cl"] for k in ks], "o-", color=ACC, lw=1.5, ms=4)
+    c_m = sum(1e4 * pc[k]["cd_at_cl"] for k in ks) / len(ks); axs[2].set_ylim(0.97 * c_m, 1.03 * c_m)   # ±3 % scale
     axs[2].set_xlabel("XFOIL panels"); axs[2].set_ylabel("cd at cruise cl (counts)")
     axs[2].set_title("XFOIL, 3 panel counts, Ncrit 9", loc="left", fontsize=9, color=INK)
     fig.tight_layout(); fig.savefig(HERE / "fig-b1-convergence.svg"); fig.savefig(PNG / "fig-b1-convergence.png", dpi=110); plt.close(fig)
@@ -471,13 +476,77 @@ def figures(res):
     fig, ax = plt.subplots(figsize=(7, 0.32 * len(m) + 0.9))
     for i, (lab, val) in enumerate(m):
         ax.barh(i, 100 * val, 0.6, color=ACC if val >= 0 else FAIL)
-        ax.text(100 * val + (2 if val >= 0 else -2), i, f"{100 * val:+.0f} %", va="center",
+        ax.text(100 * val + (2 if val >= 0 else -2), i, (f"{100 * val:+.1f} %" if abs(val) < 0.1 else f"{100 * val:+.0f} %"), va="center",
                 ha="left" if val >= 0 else "right", fontsize=7, color=INK, family="IBM Plex Mono")
     ax.axvline(0, color=INK, lw=0.8)
     ax.set_yticks(range(len(m))); ax.set_yticklabels([x[0] for x in m], fontsize=8); ax.invert_yaxis()
     ax.set_xlabel("margin against the requirement (%)")
     ax.set_title("As-designed margins", loc="left", fontsize=10, color=INK)
     fig.tight_layout(); fig.savefig(HERE / "fig-b1-margins.svg"); fig.savefig(PNG / "fig-b1-margins.png", dpi=110); plt.close(fig)
+    # FIG B1-07 transition corridor, as designed: pitch band and power vs airspeed (level flight)
+    cr = res["corridor_rows"]                 # V, theta, theta_lo, T/W, T/Tmax, P_el, stalled
+    hr = json.loads((HERE / "performance_results.json").read_text(encoding="utf-8"))["corridor"]
+    fig, axs = plt.subplots(1, 2, figsize=(10, 3.4))
+    V = [r[0] for r in cr]
+    axs[0].fill_between(V, [r[2] for r in cr], [r[1] for r in cr], color=ACC, alpha=0.15, lw=0,
+                        label="pitch band at ≤ 80 % thrust")
+    axs[0].plot(V, [r[1] for r in cr], "-", color=ACC, lw=2, label="minimum-thrust pitch, as designed")
+    axs[0].plot([r[0] for r in hr], [r[1] for r in hr], "-", color=AX, lw=1.2, label="rev 3 hand, 2.6 kg")
+    vw = res["transition"]["v_wingborne_ms"]
+    for ax in axs:
+        ax.axvspan(0, vw - 0.5, color=GRID, alpha=0.5, lw=0)
+        ax.axvline(res["stall"]["vt_pred_ms"], color=INK3, lw=0.8, ls=":")
+    axs[0].text(0.3, 4, "wing stalled", fontsize=7, color=INK3)
+    axs[0].text(res["stall"]["vt_pred_ms"] + 0.2, 55, "1.3 Vs", fontsize=7, color=INK3)
+    axs[0].set_xlabel("airspeed (m/s)"); axs[0].set_ylabel("pitch above horizon (deg)"); axs[0].set_ylim(0, 95)
+    axs[0].legend(fontsize=7, loc="upper right")
+    axs[0].set_title("Level-flight pitch vs airspeed", loc="left", fontsize=9, color=INK)
+    axs[1].plot(V, [r[5] for r in cr], "-", color=ACC, lw=2, label="electrical power, as designed")
+    axs[1].plot([r[0] for r in hr], [r[5] for r in hr], "-", color=AX, lw=1.2, label="rev 3 hand, 2.6 kg")
+    ax2 = axs[1].twinx(); ax2.grid(False); ax2.spines["right"].set_visible(True)
+    ax2.plot(V, [r[4] for r in cr], "--", color=INK2, lw=1, label="thrust fraction")
+    ax2.axhline(0.8, color=INK3, lw=0.8, ls="-."); ax2.text(V[-1], 0.81, "thrust limit 0.80", fontsize=7, color=INK3, ha="right")
+    ax2.set_ylim(0, 1); ax2.set_ylabel("thrust / available thrust (dashed)", color=INK2)
+    axs[1].set_xlabel("airspeed (m/s)"); axs[1].set_ylabel("electrical power (W)")
+    axs[1].legend(fontsize=7, loc="upper center")
+    axs[1].set_title("Power and thrust fraction, A3 predicted mass", loc="left", fontsize=9, color=INK)
+    fig.tight_layout(); fig.savefig(HERE / "fig-b1-corridor-asdesigned.svg")
+    fig.savefig(PNG / "fig-b1-corridor-asdesigned.png", dpi=110); plt.close(fig)
+
+
+def sensitivity(N, res):
+    """Report-only (not in the chain): cruise power and time when one modelling choice changes. Each case
+    re-calls the chain's own functions with the chain's inputs and one override."""
+    args = lambda cid: {k: kit.value(r) for k, r in N[cid]["inputs"].items()}
+    a_cr, a_mi = args("CALC-B1V-CRUISE"), args("CALC-B1V-MISSION")
+    ae = args("CALC-B1V-AERO")
+    S = ae["b"] * ae["c"]
+    interf = ae["drag"][5]
+    base_cd0, base_k = a_cr["cd0"], a_cr["k"]
+    wing_part = res["aero"]["cd0_parts"][0]
+    L_b = 2 * ae["fin_h"] - min(ae["tube_l"], 2 * ae["fin_h"])
+    finb_part = interf * 2 * ae["fin_c"] * ae["cd_b"] * L_b / S
+    # FIN-B 3-D: in the CAD the board above the tube end has no square front face (station collar to 12 mm, then
+    # the top edge rises 26 mm over 230 mm, swept 83 deg) and its area is ~0.67 of the 2-D strip: turbulent flat
+    # plate both faces (2 x 0.074 Re^-0.2) + the SU2 square-base drag, on 0.67 of the strip
+    re_f = 1.225 * a_cr["vc"] * ae["fin_c"] / 1.813e-5
+    cd_b3 = 2 * 0.074 * re_f ** -0.2 + 0.0067
+    cases = [("baseline (claims)", base_cd0, base_k),
+             ("fin above tube end: CAD planform, no square LE", base_cd0 - finb_part * (1 - 0.67 * cd_b3 / ae["cd_b"]), base_k),
+             ("fin sections at + GCI", base_cd0 + res["aero"]["cd0_parts"][1] * max(kit.value(P + "b1sim.cfd.fin_a_gci_pct"), kit.value(P + "b1sim.cfd.fin_b_gci_pct")) / 100, base_k),
+             ("wing Ncrit 5 (gusty field)", base_cd0 - wing_part + interf * ae["rough"] * kit.value(P + "b1sim.wing.cd0_fit_ncrit5"),
+              kit.value(P + "b1sim.wing.k_fit_ncrit5")),
+             ("wing fully turbulent (tripped at 2 % c)", base_cd0 - wing_part + interf * kit.value(P + "b1sim.wing.cd0_fit_tripped"),
+              kit.value(P + "b1sim.wing.k_fit_tripped")),
+             ("all fins + tubes x 1.20 (3-D junctions)", base_cd0 + 0.2 * res["aero"]["cd0_parts"][1], base_k)]
+    rows = []
+    for name, cd0, k in cases:
+        c = cruise_asdesigned(**{**a_cr, "cd0": cd0, "k": k})
+        mi = mission_asdesigned(**{**a_mi, "p_c": c["p_el_w"], "p_cp": c["p_el_pess_w"]})
+        rows.append([name, round(cd0, 5), round(k, 5), round(c["drag_n"], 3), round(c["p_el_w"], 1),
+                     round(mi["t_cruise_min"], 2), round(mi["t_cruise_pess_min"], 2)])
+    return {"cols": ["case", "CD0", "k", "drag_N", "P_cruise_W", "t_cruise_min", "t_cruise_pess_min"], "rows": rows,
+            "finb_part_cd0": finb_part, "cd_b_3d": cd_b3}
 
 
 if __name__ == "__main__":
@@ -508,6 +577,7 @@ if __name__ == "__main__":
         lv = kit.value(n["limit"]["ref"]) if lv is None else lv
         margins.append((lab, pk.margin(n["value"], lv, n["limit"]["op"])))
     res["margins"] = margins
+    res["sensitivity"] = sensitivity(N, res)
     (HERE / "sim" / "sim_verify_results.json").write_text(json.dumps(res, indent=1, default=float))
     figures(res)
-    print("sim/sim_verify_results.json and fig-b1-convergence/-drag-breakdown/-cruise-power/-margins.svg written")
+    print("sim/sim_verify_results.json and fig-b1-convergence/-drag-breakdown/-cruise-power/-margins/-corridor-asdesigned.svg written")

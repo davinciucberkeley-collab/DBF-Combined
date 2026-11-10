@@ -20,6 +20,8 @@ def main():
     cfd = json.loads((SIM / "cfd" / "cfd_results.json").read_text())
     vx = json.loads((SIM / "vlm_xfoil_results.json").read_text())
     C, G = cfd["cases"], cfd["gci"]
+    FA = "L4" if "L4" in C["finA"] else "L3"          # finest fin-A level and the GCI that goes with it
+    GA = cfd["gci4"]["finA"] if FA == "L4" else G["finA"]
     cr, fit, conv = vx["cruise"], vx["fit_CDwing_A_plus_K_CL2"], vx["avl_convergence"]
     es = [conv[k]["e"] for k in ("L1", "L2", "L3")]
     pc = vx["xfoil_panel_convergence"]
@@ -29,9 +31,9 @@ def main():
                     "Do not edit by hand.",
            "b1sim": {
                "cfd": {
-                   "fin_a_cd": ent(C["finA"]["L3"]["cd"], "-", S_CFD, "fin section through the motor tube (22 mm tube + 9.6 mm board, 3 mm fillet, square TE), SA, 16 m/s, on the 0.275 m fin chord, L3 grid"),
+                   "fin_a_cd": ent(C["finA"][FA]["cd"], "-", S_CFD, f"fin section through the motor tube (22 mm tube + 9.6 mm board, 3 mm fillet, square TE), SA, 16 m/s, on the 0.275 m fin chord, {FA} grid"),
                    "fin_b_cd": ent(C["finB"]["L3"]["cd"], "-", S_CFD, "bare 9.6 mm board, square LE and TE, SA, on the fin chord, L3 grid"),
-                   "fin_a_gci_pct": ent(G["finA"]["cd"]["gci_fine_pct"], "%", S_CFD, "Celik GCI, fine grid, Fs 1.25"),
+                   "fin_a_gci_pct": ent(GA["cd"]["gci_fine_pct"], "%", S_CFD, f"Celik GCI, fine grid, Fs 1.25, levels {'L2-L4' if FA == 'L4' else 'L1-L3'}"),
                    "fin_b_gci_pct": ent(G["finB"]["cd"]["gci_fine_pct"], "%", S_CFD, "Celik GCI, fine grid, Fs 1.25"),
                    "s5010_cd_sa": ent(C["s5010"]["L3"]["cd"], "-", S_CFD, "S5010, alpha 2.5 deg, fully turbulent SA, L3"),
                    "s5010_cl_sa": ent(C["s5010"]["L3"]["cl"], "-", S_CFD, "S5010, alpha 2.5 deg, fully turbulent SA, L3"),

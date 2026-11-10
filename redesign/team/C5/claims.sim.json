@@ -1,0 +1,766 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/C5/landing_sim_claims.py",
+ "params": [
+  "../../params/params.json",
+  "../../subsystems/landing/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-C5-SIM3D-STROKE",
+   "type": "assumption",
+   "title": "3-D sim: worst stroke, 10 deg envelope",
+   "text": "Largest foot stroke in the 1.5 m/s design landing (lift 2/3 W) over every touchdown tilt <= 10 deg in any direction, at the 2.6 kg gate mass (A3-R6a inertia scaled)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run); dt 40 us, dt ladder to 5 us changes it by 0.00 mm",
+   "value": 0.03858711436679396,
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-STROKE-AXES",
+   "type": "assumption",
+   "title": "3-D sim: worst stroke, pitch-only or roll-only",
+   "text": "As ASM-C5-SIM3D-STROKE, touchdown tilt about one stance axis only (the planar model's cases)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run)",
+   "value": 0.03752870413389396,
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-STROKE-A3",
+   "type": "assumption",
+   "title": "3-D sim: worst stroke at the A3 basic mass",
+   "text": "As ASM-C5-SIM3D-STROKE at the as-designed A3-R6a basic mass 2.322 kg",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run)",
+   "value": 0.03839755711927331,
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-BOTTOM-TILT",
+   "type": "assumption",
+   "title": "3-D sim: tilt that uses up the stroke",
+   "text": "Smallest touchdown tilt magnitude (2.5 deg steps, any direction, 1.5 m/s, gate mass) at which a foot passes the usable stroke",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run)",
+   "value": 4.999999999999999,
+   "unit": "deg",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-V-SINK-10",
+   "type": "assumption",
+   "title": "3-D sim: sink speed limit at 10 deg",
+   "text": "Largest sink speed (0.1 m/s steps) at which a 10 deg touchdown in any of 24 directions stays inside the usable stroke, gate mass",
+   "basis": "sim/out/sink_sweep.json (sim/sink_sweep.py)",
+   "value": 1.2,
+   "unit": "m/s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-N",
+   "type": "assumption",
+   "title": "3-D sim: peak load factor, level, A3 basic mass",
+   "text": "Peak crusher force on the airframe / weight, level 1.5 m/s landing at the as-designed A3-R6a basic mass (the lightest flying mass: the plateau was sized at the 2.6 kg gate)",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run)",
+   "value": 6.586185990598918,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-SIDE",
+   "type": "assumption",
+   "title": "3-D sim: sustained foot side load",
+   "text": "Largest transverse (side) load on one foot, 1 ms filtered, over every design-envelope and sink-sweep case that stays inside the usable stroke, mu 0.7",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run); the unfiltered peak includes the 0.2 ms piston-mass impact on the pad (292.8 N)",
+   "value": 39.30402300642076,
+   "unit": "N",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-STRIKE-TILT",
+   "type": "assumption",
+   "title": "3-D sim: wingtip strike onset tilt",
+   "text": "Smallest touchdown tilt (1.5 m/s, any direction) at which the wingtip TE corner reaches the ground",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run) (wingtip contact itself not modelled: the corner cap GER-007 takes it)",
+   "value": 7.499999999999999,
+   "unit": "deg",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-V-BROADSIDE",
+   "type": "assumption",
+   "title": "3-D sim: broadside landing wind limit",
+   "text": "Largest wind (0.5 m/s steps) for which a touchdown tilted by the hover lean + 10 deg toward the narrow pod-side pad line, drifting 0.3 m/s toward it, does not tip; wind gone at touchdown (lull), sink 0.5 and 1.5 m/s, A3 basic mass",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run)",
+   "value": 4.0,
+   "unit": "m/s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-V-SPANWISE",
+   "type": "assumption",
+   "title": "3-D sim: span-into-wind landing wind limit",
+   "text": "As ASM-C5-SIM3D-V-BROADSIDE, lean and error toward a wide (fin) pad line",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run) (12 m/s is the top of the sweep)",
+   "value": 8.0,
+   "unit": "m/s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-DRIFT-TIPS",
+   "type": "assumption",
+   "title": "3-D sim: drift cases that tip",
+   "text": "Number of the 128 drift cases (0.3 m/s, 8 directions x 8 tilts of 10 deg x 2 sinks) that tip over",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run)",
+   "value": 0.0,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-SIM3D-INPUTS",
+   "type": "assumption",
+   "title": "3-D sim: input snapshot",
+   "text": "Input values the simulation ran with, in the order of the CALC-C5-SIM-STALE inputs",
+   "basis": "sim/out/sim3d.json (sim/landing_sim3d.py, 1580 s run)",
+   "value": [
+    2.6,
+    2.32162,
+    2.4359720000000005,
+    39.57548,
+    35.39940863779142,
+    0.038,
+    0.667,
+    0.7,
+    0.018496346506928663,
+    0.3,
+    0.08899999999999997
+   ],
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-FEA-K-SHOE",
+   "type": "assumption",
+   "title": "Shoe FEA: von Mises per newton of lip reaction",
+   "text": "Governing von Mises stress in the printed shoe GER-001 per newton of tine lip reaction at the sleeve end, away from sharp corners (rim body >= 1 mm from the rim step, aft box >= 1 mm from the window end): case +y, zone rim",
+   "basis": "sim/out/fea_shoe.json (sim/fea_shoe.py + SU2 8.5 ELASTICITY, trilinear hexahedra, 3 levels h 0.4 / 0.32 / 0.267 mm, Richardson; verification strip vs beam theory)",
+   "value": 0.9583120475239606,
+   "unit": "MPa/N",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C5-FEA-LEVER",
+   "type": "assumption",
+   "title": "Shoe FEA: lip reaction per newton of side load",
+   "text": "D5's tine lever R / F = (a + e) / (e + eps_y L_cart) for the as-designed stack",
+   "basis": "CALC-D5-SIDE geometry, recomputed in sim/fea_shoe.py",
+   "value": 3.234042553191489,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-C5-SIM3D",
+   "type": "calculation",
+   "title": "3-D touchdown simulation results against the live limits",
+   "script": "redesign/team/C5/landing_sim_claims.py",
+   "function": "sim3d",
+   "equation": "results of sim/landing_sim3d.py (6-DOF rigid body, 4 elastic-plastic piston feet, 16 pad corners with Coulomb friction) ; ratios to the planar / hand values ; ultimate side load = k_ult x side",
+   "inputs": {
+    "s": "ASM-C5-SIM3D-STROKE",
+    "n": "ASM-C5-SIM3D-N",
+    "s_ax": "ASM-C5-SIM3D-STROKE-AXES",
+    "s_a3": "ASM-C5-SIM3D-STROKE-A3",
+    "bt": "ASM-C5-SIM3D-BOTTOM-TILT",
+    "v10": "ASM-C5-SIM3D-V-SINK-10",
+    "side": "ASM-C5-SIM3D-SIDE",
+    "strike": "ASM-C5-SIM3D-STRIKE-TILT",
+    "vb": "ASM-C5-SIM3D-V-BROADSIDE",
+    "vs": "ASM-C5-SIM3D-V-SPANWISE",
+    "tips": "ASM-C5-SIM3D-DRIFT-TIPS",
+    "side_hand": "CL-C5-FOOT-SIDE-LOAD",
+    "s_hand": "CL-C5-DYN-PAIR-CUR",
+    "vb_hand": "CL-C5-V-LAND-BROADSIDE",
+    "k_ult": "P:requirements.safety_factor_ult"
+   },
+   "units": {
+    "s": "m",
+    "s_ax": "m",
+    "s_a3": "m",
+    "bt": "deg",
+    "v10": "m/s",
+    "side": "N",
+    "strike": "deg",
+    "vb": "m/s",
+    "vs": "m/s",
+    "side_hand": "N",
+    "s_hand": "m",
+    "vb_hand": "m/s"
+   },
+   "outputs": {
+    "stroke_m": 0.03858711436679396,
+    "stroke_axes_m": 0.03752870413389396,
+    "stroke_a3_m": 0.03839755711927331,
+    "bottom_tilt_deg": 4.999999999999999,
+    "v_sink_10_ms": 1.2,
+    "n": 6.586185990598918,
+    "side_N": 39.30402300642076,
+    "side_ult_N": 58.956034509631145,
+    "side_vs_hand": 1.7233813749323164,
+    "stroke_vs_planar": 1.2245494981228722,
+    "strike_tilt_deg": 7.499999999999999,
+    "v_broadside_ms": 4.0,
+    "v_broadside_vs_hand": 0.9021013930307391,
+    "v_spanwise_ms": 8.0,
+    "drift_tips": 0.0
+   },
+   "input_values": {
+    "s": 0.03858711436679396,
+    "n": 6.586185990598918,
+    "s_ax": 0.03752870413389396,
+    "s_a3": 0.03839755711927331,
+    "bt": 4.999999999999999,
+    "v10": 1.2,
+    "side": 39.30402300642076,
+    "strike": 7.499999999999999,
+    "vb": 4.0,
+    "vs": 8.0,
+    "tips": 0.0,
+    "side_hand": 22.80634082398876,
+    "s_hand": 0.03151127367733575,
+    "vb_hand": 4.434091368112653,
+    "k_ult": 1.5
+   }
+  },
+  {
+   "id": "CALC-C5-SIM-STALE",
+   "type": "calculation",
+   "title": "Simulation inputs still current",
+   "script": "redesign/team/C5/landing_sim_claims.py",
+   "function": "stale",
+   "equation": "count of inputs whose current value differs from the snapshot the simulation ran with (rel 1e-6)",
+   "inputs": {
+    "snap": "ASM-C5-SIM3D-INPUTS",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "m_a3": "CL-A3-MASS-BASIC",
+    "m_pred": "CL-A3-MASS-PREDICTED",
+    "F_up": "CL-D5-F-PLATEAU-UPPER",
+    "F_lo": "CL-D5-F-PLATEAU-LOWER",
+    "s_av": "CL-D5-STROKE-AVAIL",
+    "lam": "ASM-C1-LAND-LIFT",
+    "mu": "ASM-D5-PAD-MU",
+    "z_cg": "CL-C5-CG-Z-R1",
+    "v_td": "ASM-C5-TD-DRIFT",
+    "L_cart": "CL-D5-CART-LEN"
+   },
+   "outputs": {
+    "stale_count": 0.0,
+    "stale_inputs": []
+   },
+   "input_values": {
+    "snap": [
+     2.6,
+     2.32162,
+     2.4359720000000005,
+     39.57548,
+     35.39940863779142,
+     0.038,
+     0.667,
+     0.7,
+     0.018496346506928663,
+     0.3,
+     0.08899999999999997
+    ],
+    "m_gate": 2.6,
+    "m_a3": 2.32162,
+    "m_pred": 2.4359720000000005,
+    "F_up": 39.57548,
+    "F_lo": 35.39940863779142,
+    "s_av": 0.038,
+    "lam": 0.667,
+    "mu": 0.7,
+    "z_cg": 0.018496346506928663,
+    "v_td": 0.3,
+    "L_cart": 0.08899999999999997
+   }
+  },
+  {
+   "id": "CALC-C5-FEA-SHOE",
+   "type": "calculation",
+   "title": "Shoe GER-001 stress under the landing side load (SU2 FEA, linear)",
+   "script": "redesign/team/C5/landing_sim_claims.py",
+   "function": "fea_shoe",
+   "equation": "sigma = k x lever x k_ult x F_side (linear FEA) ; SF = allow / sigma ; F_side = hand (C5-R5, D5's basis) or 3-D sim ; side load the shoe can take at SF 1 = allow / (k lever k_ult)",
+   "inputs": {
+    "k": "ASM-C5-FEA-K-SHOE",
+    "lever": "ASM-C5-FEA-LEVER",
+    "side_sim": "ASM-C5-SIM3D-SIDE",
+    "side_hand": "CL-C5-FOOT-SIDE-LOAD",
+    "k_ult": "P:requirements.safety_factor_ult",
+    "allow": "ASM-D5-PETG-SIGMA",
+    "sf_d5": "CL-D5-SIDE-RIM-SF"
+   },
+   "units": {
+    "k": "MPa/N",
+    "side_sim": "N",
+    "side_hand": "N",
+    "allow": "Pa"
+   },
+   "outputs": {
+    "sigma_hand_MPa": 106.02286781100082,
+    "sf_hand": 0.37727709904343526,
+    "sigma_sim_MPa": 182.7178357023898,
+    "sf_sim": 0.21891677868356466,
+    "sf_d5_beam": 1.0495645045143158,
+    "fea_over_beam": 2.781945968030997,
+    "side_capacity_N": 8.604310105870347
+   },
+   "input_values": {
+    "k": 0.9583120475239606,
+    "lever": 3.234042553191489,
+    "side_sim": 39.30402300642076,
+    "side_hand": 22.80634082398876,
+    "k_ult": 1.5,
+    "allow": 40000000.0,
+    "sf_d5": 1.0495645045143158
+   }
+  },
+  {
+   "id": "CL-C5-SIM3D-STROKE",
+   "type": "claim",
+   "title": "3-D sim worst foot stroke, 10 deg any direction",
+   "calc": "CALC-C5-SIM3D",
+   "output": "stroke_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-D5-STROKE-USABLE"
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP corner drops (tilted board), flange-to-rim gap before and after.",
+   "note": "cross-checks CL-C5-DYN-PAIR-CUR (planar) with 6 DOF, friction, combined pitch + roll and pad edges",
+   "value": 0.03858711436679396
+  },
+  {
+   "id": "CL-C5-SIM3D-N",
+   "type": "claim",
+   "title": "3-D sim load factor at the as-designed mass",
+   "calc": "CALC-C5-SIM3D",
+   "output": "n",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.landing_n_design"
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP accelerometer at the CG, 100 Hz low-pass, at the weighed mass.",
+   "note": "FAILS: n = 4 x 37.5 N / (2.32 kg g) = 6.6; the plateau was sized for n 5.88 at the 2.6 kg gate",
+   "value": 6.586185990598918
+  },
+  {
+   "id": "CL-C5-SIM3D-STROKE-AXES",
+   "type": "claim",
+   "title": "3-D sim worst stroke, pitch-only or roll-only",
+   "calc": "CALC-C5-SIM3D",
+   "output": "stroke_axes_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-D5-STROKE-USABLE"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP pitch and roll drops.",
+   "value": 0.03752870413389396
+  },
+  {
+   "id": "CL-C5-SIM3D-STROKE-A3",
+   "type": "claim",
+   "title": "3-D sim worst stroke at the A3 basic mass",
+   "calc": "CALC-C5-SIM3D",
+   "output": "stroke_a3_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-D5-STROKE-USABLE"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "As CL-C5-SIM3D-STROKE at the weighed mass.",
+   "value": 0.03839755711927331
+  },
+  {
+   "id": "CL-C5-SIM3D-BOTTOM-TILT",
+   "type": "claim",
+   "title": "Touchdown tilt that uses up the foot stroke",
+   "calc": "CALC-C5-SIM3D",
+   "output": "bottom_tilt_deg",
+   "unit": "deg",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.landing_attitude_err_deg"
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP corner drop at 7.5 deg diagonal (expected to bottom; do it on the rig, 0.65 kg).",
+   "note": "a diagonal touchdown lands on one foot, which takes the energy alone and reaches the rim stop",
+   "value": 4.999999999999999
+  },
+  {
+   "id": "CL-C5-SIM3D-V-SINK-10",
+   "type": "claim",
+   "title": "Sink speed limit for 10 deg in any direction",
+   "calc": "CALC-C5-SIM3D",
+   "output": "v_sink_10_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.landing_sink_ms"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "As CL-C5-SIM3D-BOTTOM-TILT.",
+   "note": "FAILS against 1.5 m/s; holds at 1.2 m/s (CR-C5-17)",
+   "value": 1.2
+  },
+  {
+   "id": "CL-C5-SIM3D-SIDE-LOAD",
+   "type": "claim",
+   "title": "3-D sim sustained foot side load (limit)",
+   "calc": "CALC-C5-SIM3D",
+   "output": "side_N",
+   "unit": "N",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C5-FOOT-SIDE-LOAD"
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "T-D5-SIDE at the ultimate of this value; T-C5-AIRCRAFT-DROP with a side-load witness (crack check).",
+   "note": "FAILS against the hand value that D5 (CALC-D5-SIDE) and D3/C4 (root fillet) use: pads scrub at mu 0.7 while the aircraft rotates over the first pad pair, so the side load approaches mu x plateau plus the tilt component. Replaces CL-C5-FOOT-SIDE-LOAD as the design side load (CR-C5-16)",
+   "value": 39.30402300642076
+  },
+  {
+   "id": "CL-C5-SIM3D-SIDE-ULT",
+   "type": "claim",
+   "title": "3-D sim foot side load, ultimate",
+   "calc": "CALC-C5-SIM3D",
+   "output": "side_ult_N",
+   "unit": "N",
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL",
+    "GER-004-UR",
+    "GER-004-UL",
+    "GER-004-LR",
+    "GER-004-LL",
+    "GER-003-UR",
+    "GER-003-UL",
+    "GER-008-LR",
+    "GER-008-LL"
+   ],
+   "how": "T-D5-SIDE.",
+   "value": 58.956034509631145
+  },
+  {
+   "id": "CL-C5-SIM3D-STRIKE-TILT",
+   "type": "claim",
+   "title": "Touchdown tilt that grounds the wingtip TE corner",
+   "calc": "CALC-C5-SIM3D",
+   "output": "strike_tilt_deg",
+   "unit": "deg",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.landing_attitude_err_deg"
+   },
+   "parts": [
+    "GER-007-R",
+    "GER-007-L"
+   ],
+   "how": "T-C5-AIRCRAFT-DROP roll drop: witness tape on the corner caps.",
+   "note": "FAILS by design intent: inside the 10 deg envelope a mostly-roll touchdown crushes the low fin's feet far enough for the wingtip TE corner to touch; the TPU corner cap (CR-C5-04) is the protection",
+   "value": 7.499999999999999
+  },
+  {
+   "id": "CL-C5-SIM3D-V-BROADSIDE",
+   "type": "claim",
+   "title": "3-D sim broadside landing wind limit",
+   "calc": "CALC-C5-SIM3D",
+   "output": "v_broadside_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.wind_limit_ms"
+   },
+   "verifies": [
+    "R-WIND"
+   ],
+   "how": "Landing practice in measured wind (H2), anemometer; count tip-overs.",
+   "note": "dynamic re-check of CL-C5-V-LAND-BROADSIDE (static, pivot stuck): crushing feet, friction, sink",
+   "value": 4.0
+  },
+  {
+   "id": "CL-C5-SIM3D-V-SPANWISE",
+   "type": "claim",
+   "title": "3-D sim span-into-wind landing wind limit",
+   "calc": "CALC-C5-SIM3D",
+   "output": "v_spanwise_ms",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.gust_survive_ms"
+   },
+   "verifies": [
+    "R-WIND"
+   ],
+   "how": "As above, wingtip into the wind.",
+   "value": 8.0
+  },
+  {
+   "id": "CL-C5-SIM3D-DRIFT-TIPS",
+   "type": "claim",
+   "title": "Drift landings that tip (0.3 m/s, 10 deg)",
+   "calc": "CALC-C5-SIM3D",
+   "output": "drift_tips",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-TIPOVER"
+   ],
+   "how": "T-C5-DRIFT-LOG landings: no tip-over in the first 20.",
+   "value": 0.0
+  },
+  {
+   "id": "CL-C5-SIM-INPUTS-STALE",
+   "type": "claim",
+   "title": "Simulation inputs changed since the run",
+   "calc": "CALC-C5-SIM-STALE",
+   "output": "stale_count",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.0
+   },
+   "how": "Re-run sim/landing_sim3d.py and sim/run_fea.sh, then this script, whenever this is > 0.",
+   "value": 0.0
+  },
+  {
+   "id": "CL-C5-FEA-SHOE-SF-HAND",
+   "type": "claim",
+   "title": "Shoe FEA reserve factor at D5's side-load basis",
+   "calc": "CALC-C5-FEA-SHOE",
+   "output": "sf_hand",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "how": "T-D5-SIDE (35 N at the pad, both axes): no crack at the rim or the window ends.",
+   "note": "same load as CL-D5-SIDE-RIM-SF (beam, 1.05); the FEA includes the snap windows, the free roof and the sleeve past the fin TE",
+   "value": 0.37727709904343526
+  },
+  {
+   "id": "CL-C5-FEA-SHOE-SF",
+   "type": "claim",
+   "title": "Shoe FEA reserve factor at the 3-D sim side load",
+   "calc": "CALC-C5-FEA-SHOE",
+   "output": "sf_sim",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "how": "T-D5-SIDE at 1.5 x CL-C5-SIM3D-SIDE-LOAD.",
+   "value": 0.21891677868356466
+  },
+  {
+   "id": "CL-C5-FEA-OVER-BEAM",
+   "type": "claim",
+   "title": "Shoe stress, FEA / D5 beam model",
+   "calc": "CALC-C5-FEA-SHOE",
+   "output": "fea_over_beam",
+   "unit": "-",
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "how": "Compare T-D5-SIDE strain-gauge or failure load with both.",
+   "value": 2.781945968030997
+  },
+  {
+   "id": "CL-C5-FEA-SIDE-CAPACITY",
+   "type": "claim",
+   "title": "Side load the as-designed shoe takes at RF 1",
+   "calc": "CALC-C5-FEA-SHOE",
+   "output": "side_capacity_N",
+   "unit": "N",
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL"
+   ],
+   "how": "T-D5-SIDE load to failure on a spare shoe.",
+   "value": 8.604310105870347
+  },
+  {
+   "id": "T-C5-SHOE-SIDE-FAIL",
+   "type": "test",
+   "title": "Shoe side load to failure",
+   "verifies": [
+    "CL-C5-FEA-SIDE-CAPACITY",
+    "CL-C5-FEA-SHOE-SF"
+   ],
+   "state": "planned",
+   "procedure": "Spare shoe bonded on a stepped foam-board offcut (as T-D5-PROOF), insert pushed 4.5 mm in; load the pad sideways along +y, then a second shoe along +z, in 5 N steps to failure; record the load and where it cracks (rim, window end, roof). Pass: failure load >= 1.5 x CL-C5-SIM3D-SIDE-LOAD."
+  }
+ ]
+}

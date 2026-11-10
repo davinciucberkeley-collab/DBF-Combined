@@ -148,11 +148,11 @@
     "SRC-C2-ROARK"
    ],
    "outputs": {
-    "sigma_pa": 61516572.001447745,
+    "sigma_pa": 59277952.87905242,
     "I_m4": 3.645032876327555e-09
    },
    "input_values": {
-    "Mb": 20.384538853113476,
+    "Mb": 19.642735189594703,
     "D": 0.022,
     "d": 0.02
    }
@@ -171,11 +171,11 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 11774370.032241136
+    "value": 12267384.287505623
    },
    "input_values": {
-    "T": 6.945309112482081,
-    "V": 42.70376241550614,
+    "T": 7.480864215536013,
+    "V": 32.31009818148411,
     "D": 0.022,
     "d": 0.02
    }
@@ -219,11 +219,11 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 66154851.21180489
+    "value": 59771082.9350503
    },
    "input_values": {
-    "Mx": 14.005343119851746,
-    "Fb": 145.890892,
+    "Mx": 12.023901506083249,
+    "Fb": 143.422702,
     "y_fin": 0.32,
     "D": 0.022,
     "d": 0.02
@@ -241,10 +241,10 @@
     "k": "ASM-C2-AE-FACTOR"
    },
    "outputs": {
-    "value": 32.654875
+    "value": 32.04
    },
    "input_values": {
-    "VD": 27.212395833333332,
+    "VD": 26.7,
     "k": 1.2
    }
   },
@@ -260,10 +260,10 @@
     "b": "P:wing.span_m"
    },
    "outputs": {
-    "value": 0.005038260869565218
+    "value": 0.004380869565217392
    },
    "input_values": {
-    "w": 0.002897,
+    "w": 0.002519,
     "b": 1.15
    }
   },
@@ -278,10 +278,10 @@
     "m": "P:c2.fe.wing_mass_kg"
    },
    "outputs": {
-    "value": 397.433
+    "value": 389.433
    },
    "input_values": {
-    "m": 0.397433
+    "m": 0.389433
    }
   },
   {
@@ -295,10 +295,10 @@
     "v": "P:c2.fe.spar_sigma_ult_max_pa"
    },
    "outputs": {
-    "value": 61516454.750311
+    "value": 59277846.683703
    },
    "input_values": {
-    "v": 61516454.750311
+    "v": 59277846.683703
    }
   },
   {
@@ -312,10 +312,10 @@
     "v": "P:c2.fe.twist_flight_deg"
    },
    "outputs": {
-    "value": 2.766828
+    "value": 1.836171
    },
    "input_values": {
-    "v": 2.766828
+    "v": 1.836171
    }
   },
   {
@@ -363,10 +363,10 @@
     "v": "P:c2.fe.V_flutter_ms"
    },
    "outputs": {
-    "value": 81.637187
+    "value": 80.1
    },
    "input_values": {
-    "v": 81.637187
+    "v": 80.1
    }
   },
   {
@@ -380,10 +380,10 @@
     "v": "P:c2.fe.eff_vd"
    },
    "outputs": {
-    "value": 0.775008
+    "value": 0.775213
    },
    "input_values": {
-    "v": 0.775008
+    "v": 0.775213
    }
   },
   {
@@ -397,10 +397,10 @@
     "v": "P:c2.fe.mode_sep_worst"
    },
    "outputs": {
-    "value": 0.076653
+    "value": 0.071656
    },
    "input_values": {
-    "v": 0.076653
+    "v": 0.071656
    }
   },
   {
@@ -414,10 +414,10 @@
     "v": "P:c2.fe.f_torsion_anti_hz"
    },
    "outputs": {
-    "value": 11.705633
+    "value": 11.884864
    },
    "input_values": {
-    "v": 11.705633
+    "v": 11.884864
    }
   },
   {
@@ -431,10 +431,10 @@
     "v": "P:c2.fe.f_torsion_sym_hz"
    },
    "outputs": {
-    "value": 21.689836
+    "value": 24.08554
    },
    "input_values": {
-    "v": 21.689836
+    "v": 24.08554
    }
   },
   {
@@ -465,10 +465,10 @@
     "v": "P:c2.fe.ring_anchor_sigma_pa"
    },
    "outputs": {
-    "value": 77758053.315274
+    "value": 76442538.602036
    },
    "input_values": {
-    "v": 77758053.315274
+    "v": 76442538.602036
    }
   },
   {
@@ -499,10 +499,10 @@
     "v": "P:c2.fe.spar_bond_tau_ult_pa"
    },
    "outputs": {
-    "value": 8094.765092
+    "value": 6167.543417
    },
    "input_values": {
-    "v": 8094.765092
+    "v": 6167.543417
    }
   },
   {
@@ -516,10 +516,10 @@
     "v": "P:c2.fe.chord_tape_sigma_ult_pa"
    },
    "outputs": {
-    "value": 13020209.381177
+    "value": 13008350.110374
    },
    "input_values": {
-    "v": 13020209.381177
+    "v": 13008350.110374
    }
   },
   {
@@ -533,10 +533,10 @@
     "v": "P:c2.fe.chord_foam_only_sigma_ult_pa"
    },
    "outputs": {
-    "value": 109429.887373
+    "value": 109330.214731
    },
    "input_values": {
-    "v": 109429.887373
+    "v": 109330.214731
    }
   },
   {
@@ -550,10 +550,10 @@
     "v": "P:c2.fe.tip_foam_sigma_ult_pa"
    },
    "outputs": {
-    "value": 4923.735828
+    "value": 3697.421484
    },
    "input_values": {
-    "v": 4923.735828
+    "v": 3697.421484
    }
   },
   {
@@ -567,10 +567,10 @@
     "v": "P:c2.fe.tape_sigma_root_ult_pa"
    },
    "outputs": {
-    "value": 7503720.880622
+    "value": 7254151.454467
    },
    "input_values": {
-    "v": 7503720.880622
+    "v": 7254151.454467
    }
   },
   {
@@ -584,10 +584,10 @@
     "v": "P:c2.fe.pod_tau_pa"
    },
    "outputs": {
-    "value": 8745.663953
+    "value": 5359.604932
    },
    "input_values": {
-    "v": 8745.663953
+    "v": 5359.604932
    }
   },
   {
@@ -601,10 +601,10 @@
     "v": "P:c2.fe.cradle_area_req_m2"
    },
    "outputs": {
-    "value": 0.00108
+    "value": 0.001165
    },
    "input_values": {
-    "v": 0.00108
+    "v": 0.001165
    }
   },
   {
@@ -618,10 +618,10 @@
     "v": "P:c2.fe.mesh_conv_freq"
    },
    "outputs": {
-    "value": 0.000213
+    "value": 0.00025
    },
    "input_values": {
-    "v": 0.000213
+    "v": 0.00025
    }
   },
   {
@@ -635,10 +635,10 @@
     "v": "P:c2.fe.mesh_conv_static"
    },
    "outputs": {
-    "value": 0.000526
+    "value": 0.000517
    },
    "input_values": {
-    "v": 0.000526
+    "v": 0.000517
    }
   },
   {
@@ -652,10 +652,10 @@
     "v": "P:c2.fe.fe_vs_integration"
    },
    "outputs": {
-    "value": 0.002241
+    "value": 0.002239
    },
    "input_values": {
-    "v": 0.002241
+    "v": 0.002239
    }
   },
   {
@@ -693,7 +693,7 @@
     "WNG-002"
    ],
    "how": "T-C2-WING-PROOF: wing on the two block stations, limit load hung at the tip and pod; no crack, no set",
-   "value": 61516572.001447745
+   "value": 59277952.87905242
   },
   {
    "id": "CL-C2-SPAR-SIGMA-ENV",
@@ -713,7 +713,7 @@
     "WNG-002"
    ],
    "how": "Re-run wing_struct.py; equals CL-C2-SPAR-SIGMA-ULT when the root governs",
-   "value": 61516454.750311
+   "value": 59277846.683703
   },
   {
    "id": "CL-C2-SPAR-TAU-ULT",
@@ -733,7 +733,7 @@
     "WNG-002"
    ],
    "how": "T-C2-TWIST loads the wing in torsion to 1.5 x 4.6 N m",
-   "value": 11774370.032241136
+   "value": 12267384.287505623
   },
   {
    "id": "CL-C2-SPAR-BUCKLE",
@@ -775,7 +775,7 @@
     "FIN-004-R"
    ],
    "how": "T-C4-BLOCK-PROOF on a spar stub with the brace fitted",
-   "value": 66154851.21180489
+   "value": 59771082.9350503
   },
   {
    "id": "CL-C2-TIP-DEFL-FRAC",
@@ -797,7 +797,7 @@
     "WNG-003"
    ],
    "how": "T-C2-WING-PROOF: dial gauge or ruler at the tip at limit load",
-   "value": 0.005038260869565218
+   "value": 0.004380869565217392
   },
   {
    "id": "CL-C2-TWIST-FLIGHT",
@@ -812,7 +812,7 @@
     "WNG-003"
    ],
    "how": "T-C2-TWIST: measure GJ, re-run wing_struct.py with it",
-   "value": 2.766828
+   "value": 1.836171
   },
   {
    "id": "CL-C2-V-AE-REQ",
@@ -822,7 +822,7 @@
    "output": "value",
    "unit": "m/s",
    "how": "Follows CL-C1-VD",
-   "value": 32.654875
+   "value": 32.04
   },
   {
    "id": "CL-C2-V-REVERSAL",
@@ -897,7 +897,7 @@
    "cites": [
     "SRC-C2-THEODORSEN"
    ],
-   "value": 81.637187
+   "value": 80.1
   },
   {
    "id": "CL-C2-ROLL-EFF-VD",
@@ -912,7 +912,7 @@
     "WNG-003"
    ],
    "how": "B3/F4 use it for the gain schedule; T-C2-TWIST replaces GJ",
-   "value": 0.775008
+   "value": 0.775213
   },
   {
    "id": "CL-C2-WING-MODE-SEP",
@@ -936,7 +936,7 @@
     "FIN-002-R"
    ],
    "how": "T-C2-TAP-TEST on the built airframe with motors fitted; hover VIBE < 30 m/s2 with the F4 harmonic notch",
-   "value": 0.076653
+   "value": 0.071656
   },
   {
    "id": "CL-C2-F-TORSION-ANTI",
@@ -951,7 +951,7 @@
     "WNG-003"
    ],
    "how": "T-C2-TAP-TEST (tap a fin tip, phone accelerometer at the pod)",
-   "value": 11.705633
+   "value": 11.884864
   },
   {
    "id": "CL-C2-F-TORSION-SYM",
@@ -966,7 +966,7 @@
     "WNG-003"
    ],
    "how": "T-C2-TAP-TEST",
-   "value": 21.689836
+   "value": 24.08554
   },
   {
    "id": "CL-C2-RING-NO-PLUG",
@@ -1011,7 +1011,7 @@
    "assumes": [
     "ASM-C2-CONTACT"
    ],
-   "value": 77758053.315274
+   "value": 76442538.602036
   },
   {
    "id": "CL-C2-PLUG-BEARING",
@@ -1054,7 +1054,7 @@
     "WNG-002"
    ],
    "how": "T-C2-XPS-COUPON (foam shear) and T-C2-WING-PROOF",
-   "value": 8094.765092
+   "value": 6167.543417
   },
   {
    "id": "CL-C2-CHORD-TAPE",
@@ -1074,7 +1074,7 @@
     "WNG-003"
    ],
    "how": "T-C2-XPS-COUPON: taped foam strip in 3-point bending",
-   "value": 13020209.381177
+   "value": 13008350.110374
   },
   {
    "id": "CL-C2-CHORD-FOAM",
@@ -1091,7 +1091,7 @@
     "WNG-001"
    ],
    "how": "T-C2-XPS-COUPON: bare foam strip",
-   "value": 109429.887373
+   "value": 109330.214731
   },
   {
    "id": "CL-C2-TIP-FOAM",
@@ -1111,7 +1111,7 @@
     "WNG-001"
    ],
    "how": "T-C2-WING-PROOF",
-   "value": 4923.735828
+   "value": 3697.421484
   },
   {
    "id": "CL-C2-ROOT-TAPE",
@@ -1131,7 +1131,7 @@
     "WNG-003"
    ],
    "how": "T-C2-WING-PROOF",
-   "value": 7503720.880622
+   "value": 7254151.454467
   },
   {
    "id": "CL-C2-POD-FOAM",
@@ -1151,7 +1151,7 @@
     "WNG-001"
    ],
    "how": "Bond on bare sanded foam; C3 proof-pulls the pod",
-   "value": 8745.663953
+   "value": 5359.604932
   },
   {
    "id": "CL-C2-CRADLE-AREA",
@@ -1164,7 +1164,7 @@
     "WNG-001"
    ],
    "how": "D7 pad >= 40 x 40 mm under the spar line",
-   "value": 0.00108
+   "value": 0.001165
   },
   {
    "id": "CL-C2-WING-MASS",
@@ -1186,7 +1186,7 @@
     "WNG-003"
    ],
    "how": "Weigh the core, the tube and the finished wing (A3 M-items)",
-   "value": 397.433
+   "value": 389.433
   },
   {
    "id": "CL-C2-FE-CONV-FREQ",
@@ -1200,7 +1200,7 @@
     "ref": "ASM-C2-FE-TOL"
    },
    "how": "Re-run wing_struct.py; out/results.json#modal_conv",
-   "value": 0.000213
+   "value": 0.00025
   },
   {
    "id": "CL-C2-FE-CONV-STATIC",
@@ -1214,7 +1214,7 @@
     "ref": "ASM-C2-FE-TOL"
    },
    "how": "out/results.json#fe_static_conv",
-   "value": 0.000526
+   "value": 0.000517
   },
   {
    "id": "CL-C2-FE-VS-BEAM",
@@ -1228,7 +1228,7 @@
     "ref": "ASM-C2-FE-AGREE"
    },
    "how": "out/results.json#fe_vs_integration",
-   "value": 0.002241
+   "value": 0.002239
   },
   {
    "id": "CL-C2-RING-VALIDATION",

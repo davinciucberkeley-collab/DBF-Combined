@@ -30,9 +30,9 @@ def save(fig, name):
     print("wrote", FIG / name)
 
 
-def limit(ax, y, text, fail=False, x=0.99):
+def limit(ax, y, text, fail=False, x=0.99, va="bottom"):
     ax.axhline(y, color=FAIL if fail else FG3, lw=1.0, ls=(0, (6, 4)))
-    ax.text(x, y, " " + text, transform=ax.get_yaxis_transform(), ha="right", va="bottom", fontsize=8,
+    ax.text(x, y, " " + text, transform=ax.get_yaxis_transform(), ha="right", va=va, fontsize=8,
             color=FAIL if fail else FG3)
 
 
@@ -45,8 +45,8 @@ def fig_envelope(S):
         az = [math.degrees(math.atan2(r[1], r[0])) % 360 for r in rows]
         axs[0].plot(az, [r[2] * 1000 for r in rows], color=col, marker="o", ms=3, label="|tilt| %.1f°" % mag)
         axs[1].plot(az, [r[3] for r in rows], color=col, marker="o", ms=3, label="|tilt| %.1f°" % mag)
-    limit(axs[0], S["inputs"]["s_av"] * 1000 - S["inputs"]["guard"] * 1000, "usable 35 mm")
-    limit(axs[0], S["inputs"]["s_av"] * 1000, "rim stop 38 mm", fail=True, x=0.62)
+    limit(axs[0], S["inputs"]["s_av"] * 1000 - S["inputs"]["guard"] * 1000, "usable 35 mm", x=0.33)
+    limit(axs[0], S["inputs"]["s_av"] * 1000, "rim stop 38 mm", fail=True, x=0.33)
     axs[0].axhline(S["inputs"]["planar"]["cur_pair_design_m"] * 1000, color=HL, lw=1.0)
     axs[0].text(2, S["inputs"]["planar"]["cur_pair_design_m"] * 1000, "planar worst 31.5 mm", color=HL,
                 fontsize=8, va="bottom")
@@ -132,12 +132,12 @@ def fig_fea(F):
                                 ("+y", "aft box", "#E0A070", "s")):
         rows = [r for r in lv if r["case"] == case]
         ax.plot([0.8 / r["h_mm"] for r in rows], [r["zones"][zone]["vm_max_MPa"] for r in rows], color=col,
-                marker=mk, ms=4, label="%s, %s" % (case, zone))
+                marker=mk, ms=4, label="%s, %s%s" % (case, zone, " (clamp edge, not used)" if (case, zone) == ("+z", "aft box") else ""))
         c = F["convergence"]["%s|%s" % (case, zone)]
         if c.get("f_ext"):
             ax.plot([3.4], [c["f_ext"]], marker=mk, mfc="none", color=col, ms=6)
     limit(ax, 40.0, "PETG allowable 40 MPa", fail=True)
-    limit(ax, F["inputs"]["d5_sigma_rim_MPa"], "D5 beam %.1f MPa" % F["inputs"]["d5_sigma_rim_MPa"], x=0.6)
+    limit(ax, F["inputs"]["d5_sigma_rim_MPa"], "D5 beam %.1f MPa" % F["inputs"]["d5_sigma_rim_MPa"], x=0.6, va="top")
     ax.set_xlabel("elements through the 0.8 mm wall (open marker: Richardson)")
     ax.set_ylabel("von Mises at %.0f N lip reaction (MPa)" % R)
     ax.set_ylim(0, None)

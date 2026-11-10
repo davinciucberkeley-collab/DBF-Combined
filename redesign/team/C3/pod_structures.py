@@ -107,8 +107,15 @@ def _fea_summary():
     fp, bd, m2 = r["M1_FOOTPRINT"], r["M1_BONDED"], r["M2"]
 
     def best(conv, fine):
+        """Conservative: the largest of the finest-mesh value, every coarser level, and the Richardson extrapolation
+        when the observed order is > 0.5 (a singular, non-converging corner value therefore reports its finest level)."""
+        v = max([fine] + list(conv.get("q", [])))
         q = conv.get("q_ext")
-        return max(fine, q) if (q is not None and conv.get("p") is not None and conv["p"] > 0.5) else fine
+        return max(v, q) if (q is not None and conv.get("p") is not None and conv["p"] > 0.5) else v
+
+    def crash_max(m, lv_):
+        return max(best(m["convergence"]["crash_%s_R_d0" % d], lv_["crash_%s" % d]["R_peak_d0"])
+                   for d in ("up", "dn", "px", "mx"))
 
     lf, lb = fp["levels"][-1], bd["levels"][-1]
     out = {"R_design_inplane_fea": best(fp["convergence"]["design_R_d0"], lf["design"]["R_peak_d0"]),
@@ -121,7 +128,19 @@ def _fea_summary():
            "R_bonded_design_fea": lb["design"]["R_peak_d0"],
            "R_bonded_crash_fea": max(lb[k]["R_peak_d0"] for k in ("crash_up", "crash_dn", "crash_px", "crash_mx")),
            "overhang_crash_fea_pa": best(fp["convergence"]["overhang_crash_top"], lf["overhang_crash_top_pa"]),
-           "group_mass_kg": fp["group_mass_kg"]}
+           "group_mass_kg": fp["group_mass_kg"],
+           "R_design_5mm_fea": lf["design"]["R_peak_5mm"],
+           "R_crash_5mm_fea": max(lf[k]["R_peak_5mm"] for k in ("crash_up", "crash_dn", "crash_px", "crash_mx"))}
+    for key, tag in (("M1_TIED_FOOTPRINT", "tied"), ("M1_TIED_STEPGAP", "fix")):
+        if key in r:
+            m = r[key]
+            lt = m["levels"][-1]
+            out["R_%s_design_fea" % tag] = best(m["convergence"]["design_R_d0"], lt["design"]["R_peak_d0"])
+            out["R_%s_crash_fea" % tag] = crash_max(m, lt)
+            out["R_%s_crash_5mm_fea" % tag] = max(lt[k]["R_peak_5mm"] for k in ("crash_up", "crash_dn", "crash_px",
+                                                                                 "crash_mx"))
+            out["F_%s_saddle_crash_n" % tag] = max(math.hypot(*f) for c, f in m["F_saddle_N"].items()
+                                                   if c.startswith("CRASH")) if "F_saddle_N" in m else None
     for k, v in m2.items():
         lv_ = v["levels"][-1]
         c = v["convergence"]
@@ -129,6 +148,9 @@ def _fea_summary():
                   "tray_peak_pa": best(c["tray_peak_pa"], lv_["tray_peak_pa"]),
                   "peel_pa": best(c["peel_peak_d0_pa"], lv_["peel_peak_d0_pa"]),
                   "sigma_lin_pa": lv_["sigma_lin_pa"]}
+        for q in ("wall_face_peak_pa", "bed_peel_peak_pa", "tray_path_share"):
+            if q in lv_:
+                out[k][q] = best(c[q], lv_[q]) if q in c else lv_[q]
     return out
 
 
@@ -146,6 +168,19 @@ kit.assumption("ASM-C3-XPS-E", "XPS F-250 modulus 20 MPa (FEA)", "Young's modulu
 kit.assumption("ASM-C3-PETG-E", "Printed PETG modulus 1.8 GPa (FEA)", "Young's modulus of the printed tray and stops, "
                "nu 0.38", basis="Prusament-class PETG 1.5-2.0 GPa (SRC-D5-PETG class data)", value=1.8e9, unit="Pa",
                status="UNVERIFIED", cites=SRC)
+kit.assumption("ASM-C3-EPOXY-E", "Bed epoxy modulus 3.0 GPa (FEA)", "Young's modulus of the 1 mm microballoon-epoxy "
+               "bed between the forward stop and the nose wall, nu 0.35", basis="laminating epoxy 2.5-3.5 GPa, filled; "
+               "the bed is thin, so the result is insensitive to it", value=3.0e9, unit="Pa", status="UNVERIFIED",
+               cites=SRC)
+kit.assumption("ASM-C3-STRUT", "Aft-stop strut to the handle foot bridge (CR-C3-14)",
+               "[length x, n ribs, rib thickness y, rib height z, pad width y, pad thickness x] of printed PETG ribs on the "
+               "handle foot bridge (POD-007) ending in a pad that bears on the aft stop's back face, z 0.026-0.040 (the "
+               "FEA prop face)",
+               basis="length = bridge_x0_m - (aft_stop_x_m + aft_stop_m[0]) from subsystems/pod/params.json; 3 ribs "
+                     "3 x 14 mm; pad 40 x 14 x 2 mm (inside the legs, clear of the guides)",
+               value=[round(_pv("bridge_x0_m") - _pv("aft_stop_x_m") - _pv("aft_stop_m")[0], 4), 3, 0.003, 0.014,
+                      0.040, 0.002],
+               unit="m", status="PROPOSED", cites=SRC)
 kit.assumption("ASM-C3-FEA-D0", "Bond peak averaging length 2 mm", "Peel / shear peaks at the bi-material bond corners "
                "are singular in linear FEA; the margin uses the mean over 2 mm (about 10 XPS cells) and the report shows "
                "the raw and 5 mm values", basis="point/average-stress practice for foam bonds; T-C3-POD-PROOF",
@@ -438,18 +473,37 @@ def nose_path(x_le, tb, d47, fs, rec, pack_rng, m_nom, v, n_pack, sigma, eps_d, 
                    "overhang = wall-top face stress E_f exx at x = 0 (section fit); stops: peak principal stress at the "
                    "root fillet, tray bending peak, board flat-wise peel (paper face to core, 2 mm mean), per variant",
           inputs={"fea": "ASM-C3-FEA", "rh": "CL-C3-BOND-R-DESIGN", "d0": "ASM-C3-FEA-D0", "e_xps": "ASM-C3-XPS-E",
-                  "e_petg": "ASM-C3-PETG-E"})
-def fea(fea, rh, d0, e_xps, e_petg):
+                  "e_petg": "ASM-C3-PETG-E", "tp": "CL-C3-ALLOW-PAPER-SHEAR"})
+def fea(fea, rh, d0, e_xps, e_petg, tp):
     if not fea:
         raise ValueError("fea/fea_results.json missing: run python -I redesign/team/C3/pod_fea.py first")
     k = fea["R_design_inplane_fea"] / fea["R_design_inplane_hand"]
     out = {"k_bond_design": k, "R_design_corrected": rh * k, "R_crash_fea": fea["R_crash_fea"],
            "R_bonded_crash_fea": fea["R_bonded_crash_fea"], "overhang_crash_pa": fea["overhang_crash_fea_pa"],
-           "d0_m": d0, "E_xps_pa": e_xps, "E_petg_pa": e_petg}
-    for v in ("AFT_FILLET_SOLID", "AFT_FILLET_WIN", "AFT_HEEL_FILLET", "AFT_PROPPED_WIN", "FWD_FILLET"):
-        for q in ("stop_peak_pa", "tray_peak_pa", "peel_pa"):
-            out["%s_%s" % (v.lower(), q)] = fea[v][q]
+           "d0_m": d0, "E_xps_pa": e_xps, "E_petg_pa": e_petg,
+           "R_design_5mm": fea["R_design_5mm_fea"], "R_crash_5mm": fea["R_crash_5mm_fea"]}
+    if "R_tied_design_fea" in fea:            # fix study: handle feet bonded to the pod walls (CR-C3-16)
+        out.update({"R_tied_design": fea["R_tied_design_fea"], "R_tied_crash": fea["R_tied_crash_fea"],
+                    "R_tied_crash_5mm": fea["R_tied_crash_5mm_fea"], "saddle_F_crash_n": fea["F_tied_saddle_crash_n"],
+                    "saddle_bond_area_req_m2": fea["F_tied_saddle_crash_n"] / tp})
+    if "R_fix_design_fea" in fea:
+        out.update({"R_stepgap_design": fea["R_fix_design_fea"], "R_stepgap_crash": fea["R_fix_crash_fea"]})
+    for v in ("AFT_FILLET_SOLID", "AFT_FILLET_WIN", "AFT_HEEL_FILLET", "AFT_PROPPED_WIN", "FWD_FILLET", "FWD_BEDDED"):
+        for q in ("stop_peak_pa", "tray_peak_pa", "peel_pa", "wall_face_peak_pa", "bed_peel_peak_pa", "tray_path_share"):
+            if q in fea[v]:
+                out["%s_%s" % (v.lower(), q)] = fea[v][q]
     return out
+
+
+@kit.calc("CALC-C3-STRUT", title="Aft-stop strut to the handle foot bridge (CR-C3-14 fix)",
+          equation="rib bearing sigma = F / (n t h); Euler per rib (pinned, conservative) pi^2 E (h t^3 / 12) / L^2, "
+                   "x n; bridge: F vs the 2 spar ties (+x along the spar); mass = rho (n t h L + w_p h t_p)",
+          inputs={"F": "CL-C3-AFT-STOP-BOND", "st": "ASM-C3-STRUT", "E": "ASM-C3-PETG-E", "cap": "CL-C3-HANDLE-TIE-CAP"})
+def strut(F, st, E, cap):
+    L, n, t, h, wp, tp = st
+    I = h * t ** 3 / 12
+    return {"sigma_bearing_pa": F / (n * t * h), "P_cr_n": n * math.pi ** 2 * E * I / L ** 2, "F_n": F,
+            "tie_cap_n": cap, "L_m": L, "mass_g": 1270.0 * (n * t * h * L + wp * h * tp) * 1000}
 
 
 # ---------------------------------------------------------------- claims
@@ -463,6 +517,26 @@ kit.claim("CL-C3-FEA-BOND-R-CRASH", "Pod-to-wing bond interaction, 12.75 g crash
           calc="CALC-C3-FEA", output="R_crash_fea", limit=("<=", 1.0), verifies=["R-PACK-RETENTION"],
           parts=[SHELL, "WNG-001"], how=_FEA_HOW + "T-C3-POD-PROOF crash-direction pulls.",
           note="+-x, +-z at the A3 group CG with the 680 g pack at the most forward station; +-y stays the hand calc")
+kit.claim("CL-C3-FEA-BOND-R-DESIGN-5MM", "Pod-to-wing bond interaction, design, FEA peak averaged over 5 mm (reference)",
+          calc="CALC-C3-FEA", output="R_design_5mm", parts=[SHELL, "WNG-001"], how=_FEA_HOW + "T-C3-POD-PROOF.",
+          note="no limit: shows the failure is not an artefact of the 2 mm averaging length (converged, GCI < 1 %)")
+kit.claim("CL-C3-FEA-TIED-R-DESIGN", "Bond interaction, design, with the handle feet bonded to the pod walls (CR-C3-16)",
+          calc="CALC-C3-FEA", output="R_tied_design", limit=("<=", 1.0), verifies=["R-STRUCT-MARGIN"],
+          parts=[SHELL, HANDLE, "WNG-001"], how=_FEA_HOW + "T-C3-POD-PROOF on the pod built with the brackets.",
+          note="fix study, 3 mesh levels; feet smeared as PETG over 48 of the 140 mm model depth; wall edges aft of the "
+               "recess not bonded")
+kit.claim("CL-C3-FEA-TIED-R-CRASH", "Bond interaction, 12.75 g crash, with the feet bonded to the walls (CR-C3-16)",
+          calc="CALC-C3-FEA", output="R_tied_crash", limit=("<=", 1.0), verifies=["R-PACK-RETENTION"],
+          parts=[SHELL, HANDLE, "WNG-001"], how=_FEA_HOW + "T-C3-POD-PROOF down and forward pulls.",
+          note="+z 0.95, +x 0.23 pass; -z and -x peel at the re-entrant recess-step corner (singular, does not "
+               "converge) governs; CR-C3-17 fills that corner, T-C3-POD-PROOF decides")
+kit.claim("CL-C3-FEA-SADDLE-TIES", "Pod force into the handle feet in the crash vs the 2 spar ties (CR-C3-16)",
+          calc="CALC-C3-FEA", output="saddle_F_crash_n", unit="N", limit=("<=", "CL-C3-HANDLE-TIE-CAP"),
+          verifies=["R-PACK-RETENTION"], parts=[HANDLE, "WNG-002"],
+          how="T-D2-HANDLE-PULL repeated at 200 N along +x and -z on the pod.")
+kit.claim("CL-C3-FEA-SADDLE-BOND-AREA", "Bracket bond area needed, handle feet to pod walls (paper face shear)",
+          calc="CALC-C3-FEA", output="saddle_bond_area_req_m2", unit="m2", parts=[HANDLE, SHELL],
+          how="D2 draws >= this area per aircraft (both brackets together); T-C3-BOND-COUPON paper lap shear.")
 kit.claim("CL-C3-FEA-BOND-WALL-EDGE", "Side-wall edge bonds aft of the recess end, crash peak interaction (reference)",
           calc="CALC-C3-FEA", output="R_bonded_crash_fea", parts=[SHELL, "WNG-001"],
           how=_FEA_HOW + "inspect the wall-edge bond lines after T-C3-POD-PROOF.",
@@ -495,6 +569,22 @@ kit.claim("CL-C3-FEA-FWD-PEEL", "Board peel under the forward stop as a cantilev
           output="fwd_fillet_peel_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"), verifies=["R-PACK-RETENTION"],
           parts=[TRAY, SHELL], how=_FEA_HOW + "T-C3-STOP-PUSH in -x on the built front with the nose-wall bed.",
           note="the 1 mm bed to the nose wall is not modelled (2-D); the realistic -x crash is nose-in, ground-backed")
+kit.claim("CL-C3-FEA-FWD-BED-PEEL", "Board peel under the forward stop with the 1 mm bed to the nose wall, 85 N (FEA)",
+          calc="CALC-C3-FEA", output="fwd_bedded_peel_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"),
+          verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL],
+          how=_FEA_HOW + "T-C3-STOP-PUSH in -x on a built nose (stop, bed, nose wall, floor).",
+          note="as built (D2-R5); plane strain, nose wall free at the top (hatch and side walls left out: conservative)")
+kit.claim("CL-C3-STRUT-BEARING", "Aft-stop strut bearing stress, design (CR-C3-14)", calc="CALC-C3-STRUT",
+          output="sigma_bearing_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"), verifies=["R-PACK-RETENTION"],
+          parts=[TRAY, HANDLE], how="T-C3-STOP-PUSH with the strut fitted.",
+          note="compression, checked against the across-layer tension allowable (conservative)")
+kit.claim("CL-C3-STRUT-BUCKLE", "Aft-stop strut Euler load vs the design stop load (CR-C3-14)", calc="CALC-C3-STRUT",
+          output="P_cr_n", unit="N", limit=(">=", "CL-C3-AFT-STOP-BOND"), verifies=["R-PACK-RETENTION"],
+          parts=[HANDLE], how="T-C3-STOP-PUSH with the strut fitted.")
+kit.claim("CL-C3-STRUT-BRIDGE", "Stop load into the handle foot bridge vs the 2 spar ties (CR-C3-14)", calc="CALC-C3-STRUT",
+          output="F_n", unit="N", limit=("<=", "CL-C3-HANDLE-TIE-CAP"), verifies=["R-PACK-RETENTION"],
+          parts=[HANDLE, "WNG-002"], how="T-D2-HANDLE-PULL repeated along +x (90 N, 10 s), no slip on the spar.",
+          note="the feet are also epoxied to the spar saddle; ties alone are the conservative path")
 kit.claim("CL-C3-FEA-FWD-TRAY-BEND", "Tray front piece bending under the forward stop, 85 N crash (FEA)",
           calc="CALC-C3-FEA", output="fwd_fillet_tray_peak_pa", unit="Pa", limit=("<=", "ASM-C3-PETG-INPLANE"),
           verifies=["R-PACK-RETENTION"], parts=[TRAY], how=_FEA_HOW + "T-C3-STOP-PUSH in -x.")
@@ -624,10 +714,13 @@ kit.test("T-C3-BOND-COUPON", "Bond coupons: epoxy on F-250 and on paper-faced bo
                    "failure (spring scale or luggage scale). Three 25 x 50 mm lap shears on F-250. Record failure load and mode "
                    "(foam / paper / adhesive). Allowable = mean - 2 s, foam or paper failure required.")
 kit.test("T-C3-STOP-PUSH", "Printed stop wall and guide push test",
-         verifies=["CL-C3-AFT-STOP-REC", "CL-C3-FWD-STOP-REC", "CL-C3-GUIDE-REC"],
-         procedure="Print a 60 mm tray offcut with a 3.0 mm stop wall and 1.5 mm guides, same settings as flight. Push a "
-                   "50 x 50 mm block at 12 mm height to 90 N (stop) and 85 N spread over 60 mm (guide); no crack, "
-                   "set < 0.5 mm. Then to failure once to learn the allowable.")
+         verifies=["CL-C3-AFT-STOP-REC", "CL-C3-FWD-STOP-REC", "CL-C3-GUIDE-REC", "CL-C3-FEA-AFT-PROP-PEEL",
+                   "CL-C3-FEA-FWD-BED-PEEL", "CL-C3-STRUT-BEARING"],
+         procedure="Print the tray rear piece (with the strut on a handle-bridge offcut) and the tray front piece, same "
+                   "settings as flight, and epoxy each to a foam-board floor offcut as built (the FEA shows the board peel "
+                   "governs, so a bare tray proves nothing). Push a 50 x 50 mm block at 16 mm above the tray to 90 N "
+                   "(aft, +x) and at 13 mm to 85 N (forward, -x, with the 1 mm bed and a nose-wall offcut), 85 N spread "
+                   "over 60 mm (guide); no crack, no board delamination, set < 0.5 mm. Then to failure once.")
 kit.test("T-C3-POD-PROOF", "Built pod on the wing: proof loads with a 680 g dummy pack",
          verifies=["CL-C3-BOND-R-CRASH", "CL-C3-OVERHANG-DESIGN", "CL-C3-OVERHANG-CRASH", "CL-C3-FLOOR-GLUE"],
          procedure="Wing on its spar ends. Dummy pack (680 g, pack size) strapped in. Pull the dummy pack with a luggage "

@@ -191,7 +191,7 @@ def fig_stops(res, out):
     rows = []
     names = {"AFT_FILLET_WIN": "aft, as drawn + 2 mm fillet (y 0)", "AFT_FILLET_SOLID": "aft, as drawn + fillet (tray edge)",
              "AFT_HEEL_FILLET": "aft + 2 mm heel", "AFT_PROPPED_WIN": "aft + strut to the spar bridge",
-             "FWD_FILLET": "forward, cantilever + fillet"}
+             "FWD_FILLET": "forward, cantilever + fillet", "FWD_BEDDED": "forward + 1 mm bed to nose wall"}
     for k, nm in names.items():
         if k not in res["M2"]:
             continue
@@ -227,6 +227,42 @@ def fig_stops(res, out):
     (out / "fig-c3-fea-04-stops.svg").write_text("\n".join(o), encoding="utf-8")
 
 
+def fig_bond_variants(res, out):
+    """FIG C3-FEA-05: pod-to-wing bond interaction per load case and per bond-layout variant (finest mesh, 2 mm mean)."""
+    rows = [("as drawn: walls bonded (wall edges)", "M1_BONDED"), ("as drawn: footprint only", "M1_FOOTPRINT"),
+            ("fix: feet tied to walls", "M1_TIED_FOOTPRINT"), ("fix + floor end released", "M1_TIED_STEPGAP")]
+    rows = [(n, res[k]["levels"][-1]) for n, k in rows if k in res]
+    cases = [("design", "design", "circle", ACCENT), ("crash +z", "crash_up", "square", FG),
+             ("crash −z", "crash_dn", "diamond", ORANGE), ("crash +x", "crash_px", "circle", FG3),
+             ("crash −x", "crash_mx", "square", FAIL)]
+    W, H = 1200, 80 + 56 * len(rows)
+    o = _svg(W, H)
+    x0, w = 330, 760
+    vmax = 12.0
+    sx = lambda v: x0 + math.log10(max(v, 0.1) / 0.1) / math.log10(vmax / 0.1) * w
+    for t in [0.1, 0.2, 0.5, 1, 2, 5, 10]:
+        o.append(f'<line x1="{sx(t):.1f}" y1="40" x2="{sx(t):.1f}" y2="{H - 30}" stroke="{LINE}" stroke-width="0.75"/>')
+        o.append(f'<text x="{sx(t):.1f}" y="{H - 12}" font-size="12" {MONO} fill="{FG3}" text-anchor="middle">{t:g}</text>')
+    o.append(f'<line x1="{sx(1):.1f}" y1="34" x2="{sx(1):.1f}" y2="{H - 30}" stroke="{FAIL}" stroke-width="1.25" '
+             f'stroke-dasharray="6 4"/>')
+    o.append(f'<text x="{sx(1) + 6:.1f}" y="{H - 34}" font-size="12" fill="{FAIL}">R = 1</text>')
+    for i, (lab, _, shp, col) in enumerate(cases):
+        x = 330 + i * 160
+        o.append(_mark(shp, x, 14, col))
+        o.append(f'<text x="{x + 10}" y="18" font-size="12" fill="{FG2}">{lab}</text>')
+    for j, (name, lv) in enumerate(rows):
+        y = 70 + 56 * j
+        o.append(f'<text x="{x0 - 14}" y="{y + 4}" font-size="12" fill="{FG2}" text-anchor="end">{name}</text>')
+        o.append(f'<line x1="{x0}" y1="{y}" x2="{x0 + w}" y2="{y}" stroke="{LINE}" stroke-width="0.75"/>')
+        for _, key, shp, col in cases:
+            v = lv[key]["R_peak_d0"]
+            o.append(_mark(shp, sx(min(v, vmax)), y, col))
+            if v > vmax:
+                o.append(f'<text x="{sx(vmax) + 8:.1f}" y="{y + 4}" font-size="11" {MONO} fill="{FG3}">{v:.0f}</text>')
+    o.append("</svg>")
+    (out / "fig-c3-fea-05-bond-variants.svg").write_text("\n".join(o), encoding="utf-8")
+
+
 def _mark(shp, x, y, col):
     if shp == "circle":
         return f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="{col}"/>'
@@ -241,4 +277,5 @@ def draw(res, out):
     fig_bond(res, out)
     fig_convergence(res, out)
     fig_stops(res, out)
+    fig_bond_variants(res, out)
     print("figures written to %s" % out)

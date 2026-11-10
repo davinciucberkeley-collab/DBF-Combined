@@ -113,12 +113,12 @@ Volume output fields: COORDINATES, SOLUTION, PRIMITIVE
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Two dimensional problem.
-30640 grid points.
-50526 volume elements.
+30630 grid points.
+50506 volume elements.
 2 surface markers.
 358 boundary elements in index 0 (Marker = wall).
 210 boundary elements in index 1 (Marker = farfield).
-40340 triangles.
+40320 triangles.
 10186 quadrilaterals.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
@@ -204,7 +204,7 @@ No energy equation.
 +------------------------------------------------------------------------------+
 All ranks use edge coloring.
 Among the ranks that use edge coloring,
-         the minimum efficiency is 0.990796,
+         the minimum efficiency is 0.99043,
          the maximum number of colors is 5,
          the minimum edge color group size is 512.
 Initialize Jacobian structure (Navier-Stokes). MG level: 0.
@@ -223,22 +223,22 @@ Simulation Run using the Single-zone Driver
 +---------------------------------------------------+
 |  Inner_Iter|      rms[P]|          CL|          CD|
 +---------------------------------------------------+
-|           0|   -4.551179|    0.145450|    0.393455|
-|         200|   -6.134567|    0.410236|    0.019074|
-|         400|   -6.882506|    0.364761|    0.016451|
-|         600|   -7.591840|    0.368541|    0.012800|
-|         800|   -8.366750|    0.367459|    0.012362|
-|        1000|   -9.110055|    0.368648|    0.012089|
-|        1200|   -9.417531|    0.369717|    0.011958|
-|        1400|   -9.759385|    0.370413|    0.011897|
-|        1552|  -10.001446|    0.370721|    0.011875|
+|           0|   -4.551108|    0.145450|    0.393455|
+|         200|   -6.134725|    0.410230|    0.019066|
+|         400|   -6.883017|    0.364746|    0.016450|
+|         600|   -7.592278|    0.368532|    0.012800|
+|         800|   -8.367205|    0.367447|    0.012363|
+|        1000|   -9.109524|    0.368634|    0.012089|
+|        1200|   -9.417326|    0.369702|    0.011958|
+|        1400|   -9.759253|    0.370397|    0.011897|
+|        1552|  -10.001486|    0.370705|    0.011875|
 
 ----------------------------- Solver Exit -------------------------------
 All convergence criteria satisfied.
 +-----------------------------------------------------------------------+
 |      Convergence Field     |     Value    |   Criterion  |  Converged |
 +-----------------------------------------------------------------------+
-|                      rms[P]|      -10.0014|         < -10|         Yes|
+|                      rms[P]|      -10.0015|         < -10|         Yes|
 +-----------------------------------------------------------------------+
 -------------------------------------------------------------------------
 +-----------------------------------------------------------------------+

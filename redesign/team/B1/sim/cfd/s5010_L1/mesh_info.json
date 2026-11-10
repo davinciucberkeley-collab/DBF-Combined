@@ -4,8 +4,10 @@
  "s_wall_m": 0.0025599999999999998,
  "bl_layers": 23,
  "R_far_m": 6.4,
- "rc": 1,
- "wall_s": 1246.0,
+ "rc": 0,
+ "attempt": 2,
+ "converged": true,
+ "wall_s": 2255.1,
  "alpha_deg": 2.5,
  "chord_m": 0.32
 }

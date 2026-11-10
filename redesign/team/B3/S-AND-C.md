@@ -1,5 +1,9 @@
 # K09-L stability and control (B3), R4 re-run
 
+> **V1 verification (2026-11-10) supersedes §2 (CG range) and the spiral line of §5.** With A3-R6a's CG 18.5 mm above
+> the chord plane (this report assumes 0) the range is 0.0466–0.0514 m, A3's CG fails SM 5 % by 0.77 mm and spiral t2
+> is 3.51 s. See `SIMULATION-REPORT.md` and CR-B3-25 / -26.
+
 Status: `PROPOSED` (B3, 2026-11-10, params A1-R4a, A3-R5 roll-up, B4 R3 swirl, D6 R3 elevon, C2 torsion modes, F4 R4
 crossovers, all read live from the claim graph). AVL 3.52 whole-aircraft model plus hand models for what AVL leaves
 out. Re-check: `python -I redesign/team/B3/sc_analysis.py`, `python -I redesign/team/B3/run_avl_study.py`,

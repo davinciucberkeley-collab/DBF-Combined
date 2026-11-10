@@ -1,5 +1,9 @@
 # K09-L whole-aircraft performance
 
+> Simulation round (2026-11-10): the as-designed re-run is in `SIMULATION-REPORT.md` (claims `CL-B1V-*`). It
+> replaces this rev 3 hand-estimate report for current values: CD0 0.0579, cruise 235 W, 16.2 min, VH 21.0 m/s at
+> THR_MAX 70 %. This report stays as the hand calculation the simulations are compared against.
+
 Status: `MODELLED` (B1, rev 3, 2026-11-09, answers CR-A1-30). Rev 3 adds five changes to the model:
 
 - the pressure drag of the 0.14 m pod (D-25)

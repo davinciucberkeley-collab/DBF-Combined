@@ -62,14 +62,14 @@ Using a LU-SGS preconditioning.
 Convergence criteria of the linear solver: 1e-05.
 Max number of linear iterations: 10.
 CFL adaptation. Factor down: 0.5, factor up: 1.2,
-                lower limit: 1, upper limit: 50,
+                lower limit: 1, upper limit: 10,
                 acceptable linear residual: 0.001'
                 starting iteration: 0.
-Courant-Friedrichs-Lewy number:        2
+Courant-Friedrichs-Lewy number:      0.5
 Euler implicit time integration for the turbulence model.
 
 ------------------ Convergence Criteria  ( Zone 0 ) ---------------------
-Maximum number of solver subiterations: 5000.
+Maximum number of solver subiterations: 8000.
 Begin convergence monitoring at iteration 300.
 Residual minimum value: 1e-9.
 Cauchy series min. value: 2e-06.
@@ -204,7 +204,7 @@ No energy equation.
 +------------------------------------------------------------------------------+
 All ranks use edge coloring.
 Among the ranks that use edge coloring,
-         the minimum efficiency is 0.993345,
+         the minimum efficiency is 0.974532,
          the maximum number of colors is 7,
          the minimum edge color group size is 512.
 Initialize Jacobian structure (Navier-Stokes). MG level: 0.

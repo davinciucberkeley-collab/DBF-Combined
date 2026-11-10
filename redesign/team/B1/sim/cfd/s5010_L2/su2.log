@@ -113,12 +113,12 @@ Volume output fields: COORDINATES, SOLUTION, PRIMITIVE
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Two dimensional problem.
-16953 grid points.
-26803 volume elements.
+16954 grid points.
+26805 volume elements.
 2 surface markers.
 252 boundary elements in index 0 (Marker = wall).
 149 boundary elements in index 1 (Marker = farfield).
-20101 triangles.
+20103 triangles.
 6702 quadrilaterals.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
@@ -204,7 +204,7 @@ No energy equation.
 +------------------------------------------------------------------------------+
 All ranks use edge coloring.
 Among the ranks that use edge coloring,
-         the minimum efficiency is 0.890218,
+         the minimum efficiency is 0.890279,
          the maximum number of colors is 4,
          the minimum edge color group size is 512.
 Initialize Jacobian structure (Navier-Stokes). MG level: 0.
@@ -220,3 +220,50 @@ Euler/Navier-Stokes/RANS fluid iteration.
 ------------------------------ Begin Solver -----------------------------
 
 Simulation Run using the Single-zone Driver
++---------------------------------------------------+
+|  Inner_Iter|      rms[P]|          CL|          CD|
++---------------------------------------------------+
+|           0|   -4.346564|    0.144439|    0.301059|
+|         200|   -6.151778|    0.377695|    0.017773|
+|         400|   -7.201318|    0.358275|    0.013806|
+|         600|   -7.418405|    0.365212|    0.013208|
+|         800|   -7.418972|    0.364167|    0.012792|
+|        1000|   -8.837636|    0.364690|    0.012617|
+|        1200|   -8.846246|    0.365822|    0.012453|
+|        1400|   -9.218620|    0.367097|    0.012319|
+|        1600|   -9.422293|    0.367849|    0.012259|
+|        1800|   -9.650121|    0.368340|    0.012226|
+|        2000|   -9.802393|    0.368621|    0.012209|
+|        2154|  -10.001620|    0.368728|    0.012203|
+
+----------------------------- Solver Exit -------------------------------
+All convergence criteria satisfied.
++-----------------------------------------------------------------------+
+|      Convergence Field     |     Value    |   Criterion  |  Converged |
++-----------------------------------------------------------------------+
+|                      rms[P]|      -10.0016|         < -10|         Yes|
++-----------------------------------------------------------------------+
+-------------------------------------------------------------------------
++-----------------------------------------------------------------------+
+|        File Writing Summary       |              Filename             |
++-----------------------------------------------------------------------+
+|CSV file                           |surface_flow.csv                   |
++-----------------------------------------------------------------------+
+
+--------------------------- Finalizing Solver ---------------------------
+Deleted CNumerics container.
+Deleted CIntegration container.
+Deleted CSolver container.
+Deleted CIteration container.
+Deleted CInterface container.
+Deleted CGeometry container.
+Deleted CFreeFormDefBox class.
+Deleted CSurfaceMovement class.
+Deleted CVolumetricMovement class.
+Deleted CConfig container.
+Deleted nInst container.
+Deleted COutput class.
+-------------------------------------------------------------------------
+
+------------------------- Exit Success (SU2_CFD) ------------------------
+

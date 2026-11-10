@@ -21,6 +21,8 @@ Method
             eta_cl; GCI of each; XFOIL at the same Re / alpha / geometry with 3 panel counts (160 / 240 / 320).
 
 Run: python -I redesign/team/B3/cfd_elevon.py           (~40-60 min on 20 cores the first time; then cached)
+     python -I redesign/team/B3/cfd_elevon.py --core    (V1: re-run only the SA alpha 4 mesh-study cases that were
+                                                          killed; env B3_SU2_EXE = renamed SU2 copy, B3_SU2_THREADS)
      python -I redesign/team/B3/cfd_elevon.py --parse   (re-read finished cases only)
 Writes team/B3/cfd/geom/*.dat, cfd/mesh/*.su2 (git-ignored), cfd/cases/<case>/{case.cfg,history.csv,
 surface_flow.csv,done.txt}, cfd/cfd_results.json.
@@ -232,11 +234,26 @@ SCREEN_WRT_FREQ_INNER= 200
 """
 
 
-def case_list():
+def case_list(core_only=False):
     c = [(L, d, 4.0, "SA") for L in (1, 2, 3) for d in DELTAS]
+    if core_only:            # the 3-level mesh study only (V1 re-run: the machine is shared with other agents)
+        return c
     c += [(2, d, 8.0, "SA") for d in DELTAS]
     c += [(2, d, 4.0, "SSTLM") for d in DELTAS]
     return c
+
+
+def reset_unconverged(specs, min_iters=1500):
+    """V1: cases killed by machine contention (rc != 0, or fewer than min_iters iterations) are re-run."""
+    for s in specs:
+        d = CASES / case_name(*s)
+        f = d / "done.json"
+        if f.exists():
+            done = json.loads(f.read_text())
+            r = parse(d)
+            if done.get("rc") != 0 or r.get("iters", 0) < min_iters:
+                f.unlink()
+                print(f"  reset {d.name}: rc {done.get('rc')}, {r.get('iters')} iterations")
 
 
 def case_name(level, delta, alpha, model):
@@ -293,7 +310,7 @@ def run_case(spec, threads=2, parse_only=False):
         cfg = case_cfg(level, delta, alpha, model, safe)
         key = hashlib.sha1(cfg.encode()).hexdigest()[:12]
         done = json.loads((d / "done.json").read_text()) if (d / "done.json").exists() else {}
-        if done.get("key") == key or (parse_only and done):
+        if done.get("key") == key or (parse_only and done) or (done and safe is False and done.get("rc") == 0):
             r = parse(d)
             if r["usable"] or safe or parse_only:
                 return {**r, "case": d.name}
@@ -385,12 +402,17 @@ def main(parse_only=False):
         for L in (1, 2, 3):
             for d in DELTAS:
                 mesh(d, L)
+    core = "--core" in sys.argv
     specs = case_list()
+    run_specs = case_list(core_only=core)
     if parse_only:
         res = [run_case(s, parse_only=True) for s in specs]
     else:
-        with ThreadPoolExecutor(max_workers=len(specs)) as ex:
-            res = list(ex.map(lambda s: run_case(s, threads=2), specs))
+        reset_unconverged(run_specs)
+        thr = int(os.environ.get("B3_SU2_THREADS", "2"))
+        with ThreadPoolExecutor(max_workers=len(run_specs)) as ex:
+            list(ex.map(lambda s: run_case(s, threads=thr), run_specs))
+        res = [run_case(s, parse_only=True) for s in specs]
     R = {case_name(*s): {**r, "level": s[0], "delta": s[1], "alpha": s[2], "model": s[3]} for s, r in zip(specs, res)}
     meshes = {f"d{d:+.0f}_L{L}": json.loads((MESH / f"s5010_d{d:+.0f}_L{L}.json").read_text())
               for L in (1, 2, 3) for d in DELTAS if (MESH / f"s5010_d{d:+.0f}_L{L}.json").exists()}
@@ -403,10 +425,14 @@ def main(parse_only=False):
     lv = {}
     for L in (1, 2, 3):
         a, b = g(L, 0.0), g(L, -10.0)
-        if a.get("usable") and b.get("usable"):
+        if a.get("usable") and b.get("usable") and a.get("steady") and b.get("steady"):
             lv[L] = {"eta_cm": eta_cm(b["cm"], a["cm"], -10.0), "eta_cl": eta_cl(b["cl"], a["cl"], -10.0),
                      "cm0": a["cm"], "cl0": a["cl"], "cells": meshes.get(f"d+0_L{L}", {}).get("cells")}
     out["levels_SA"] = lv
+    out["levels_rejected"] = {L: {"dp0": {k: g(L, 0.0).get(k) for k in ("cl", "cm", "cl_std", "cm_std", "iters", "steady")},
+                                  "dm10": {k: g(L, -10.0).get(k) for k in ("cl", "cm", "cl_std", "cm_std", "iters",
+                                                                           "steady")}}
+                              for L in (1, 2, 3) if L not in lv}
     if len(lv) == 3:
         out["gci_eta_cm"] = gci(lv[3]["eta_cm"], lv[2]["eta_cm"], lv[1]["eta_cm"])
         out["gci_eta_cl"] = gci(lv[3]["eta_cl"], lv[2]["eta_cl"], lv[1]["eta_cl"])
@@ -414,6 +440,8 @@ def main(parse_only=False):
         out["gci_cl0"] = gci(lv[3]["cl0"], lv[2]["cl0"], lv[1]["cl0"])
     # eta at cl 0.5 (B2's definition) on L2 SA from alpha 4 and 8
     try:
+        if not all(g(2, d, a).get("steady") for d in DELTAS for a in (4.0, 8.0)):
+            raise KeyError("alpha 8 cases not converged (V1: not re-run)")
         cm05 = {d: cm_at_cl([(g(2, d, a)["cl"], g(2, d, a)["cm"]) for a in (4.0, 8.0)]) for d in DELTAS}
         out["eta_cm_cl05_L2_SA"] = eta_cm(cm05[-10.0], cm05[0.0], -10.0)
         out["dcm_dcl_L2_SA"] = {d: (g(2, d, 8.0)["cm"] - g(2, d, 4.0)["cm"]) / (g(2, d, 8.0)["cl"] - g(2, d, 4.0)["cl"])

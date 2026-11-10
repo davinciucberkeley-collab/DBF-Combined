@@ -341,7 +341,7 @@ def summary():
     meshes = json.loads((HERE / "mesh" / "cells.json").read_text())
     out = {"geometry": GEOM, "rho": RHO, "mu": MU, "cases": {}, "studies": {}}
     for name in CASES:
-        if (HERE / "cases" / name / "history.csv").exists():
+        if any((HERE / "cases" / name).glob("history_leg*.csv")):
             shape, lv, turb, U = CASES[name]
             r = summarise(name)
             r.update({"shape": shape, "level": lv, "model": turb, "U_ms": U, "Re_D": U * GEOM["D"] / NU,

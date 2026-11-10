@@ -86,18 +86,22 @@ def fig_conv():
     axs[1].set_xlabel("AVL chordwise vortices")
     axs[1].set_ylabel("trimmed CLmax, SM 5 %")
     if C and C["gci"]:
-        g = list(C["gci"].values())[0]
-        cells = g["cells"]
-        h = [1 / math.sqrt(c) for c in cells]
-        ch = [abs(g["ch"][k]) for k in ("L1", "L2", "L3")]
-        axs[2].plot(h, ch, "o-", color=ACCENT, lw=1.4, ms=4)
-        fx = g["ch"].get("f_exact")
-        if fx:
-            axs[2].plot([0], [abs(fx)], "s", color=FG2, ms=4)
-            axs[2].annotate("Richardson", (0, abs(fx)), xytext=(4, 4), textcoords="offset points", fontsize=7, color=FG2)
+        for key, q, col, lab in (("f-25_a0_re4.4e5", "ch", ACCENT, "|C_h| x10, elevon -25"),
+                                 ("f+0_a12_re2.6e5", "CL", FG2, "cl, clean, alpha 12")):
+            g = C["gci"].get(key)
+            if not g:
+                continue
+            sc = 10.0 if q == "ch" else 1.0
+            h = [1 / math.sqrt(c) for c in g["cells"]]
+            vals = [abs(g[q][k]) * sc for k in ("L1", "L2", "L3")]
+            axs[2].plot(h, vals, "o-", color=col, lw=1.4, ms=4, label=lab)
+            fx = g[q].get("f_exact")
+            if fx and (g[q].get("p") or 0) > 0:          # Richardson only where the order is positive
+                axs[2].plot([0], [abs(fx) * sc], "s", color=col, ms=4, mfc="none")
         axs[2].set_xlim(left=-0.0005)
-        axs[2].set_xlabel("h = 1/sqrt(cells)")
-        axs[2].set_ylabel("|C_h|, -25 deg, SU2")
+        axs[2].set_xlabel("h = 1/sqrt(cells)  (square: Richardson)")
+        axs[2].set_ylabel("SU2 value")
+        axs[2].legend(frameon=False, fontsize=7)
     for ax in axs:
         ax.ticklabel_format(useOffset=False, axis="y")
     fig.tight_layout()
@@ -109,9 +113,16 @@ def fig_cfd():
         return
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(8, 3.3))
     t = np.array(X["polars"][f"s5010_re{X['re_stall']/1e5:.1f}e5_n9_f+0_p220"]["table"])
-    a1.plot(t[:, 0], t[:, 1], color=FG2, lw=1.2, label="XFOIL Ncrit 9")
+    a1.plot(t[:, 0], t[:, 1], color=FG2, lw=1.2, label="XFOIL free (Ncrit 9)")
+    trf = HERE / "out" / "xfoil_tripped.json"
+    if trf.exists():
+        tt = np.array(json.loads(trf.read_text())["clean_tripped"])
+        a1.plot(tt[:, 0], tt[:, 1], color=FG2, lw=1.2, ls="--", label="XFOIL tripped 2 % c")
+    for c in C["cases"]:
+        if c["delta"] == 0.0 and c["level"] in (1, 3):
+            a1.plot([c["alpha"]], [c["CL"]], "^" if c["level"] == 3 else "v", color=ACCENT, ms=5, mfc="none")
     cs = sorted([c for c in C["cases"] if c["delta"] == 0.0 and c["level"] == 2], key=lambda c: c["alpha"])
-    a1.plot([c["alpha"] for c in cs], [c["CL"] for c in cs], "o", color=ACCENT, ms=5, label="SU2 SA (L2)")
+    a1.plot([c["alpha"] for c in cs], [c["CL"] for c in cs], "o", color=ACCENT, ms=5, label="SU2 SA L2 (L1 v, L3 ^)")
     a1.set_xlabel("alpha (deg)")
     a1.set_ylabel("cl, Re 2.6e5")
     a1.legend(frameon=False, fontsize=8)
@@ -129,7 +140,11 @@ def fig_cfd():
         a2.fill_between(ds, lo, hi, color=LINE3 if vis == "i" else "#C2C8D0", alpha=0.5, lw=0)
         a2.plot(ds, [(a + b) / 2 for a, b in zip(lo, hi)], color=FG2, lw=1.0, ls=ls, label=lab)
     hs = [c for c in C["cases"] if c["delta"] != 0.0 and c["level"] == 2]
-    a2.plot([c["delta"] for c in hs], [c["ch"] for c in hs], "o", color=ACCENT, ms=5, label="SU2 SA (L2)")
+    # cfd2d_section.integrate() returns ch with the opposite sign to XFOIL's FMOM: flip for the comparison
+    a2.plot([c["delta"] for c in hs], [-c["ch"] for c in hs], "o", color=ACCENT, ms=5, label="SU2 SA (L2)")
+    g = C["gci"].get("f-25_a0_re4.4e5")
+    if g:
+        a2.plot([-25, -25], [-g["ch"]["L1"], -g["ch"]["L3"]], "_", color=ACCENT, ms=8, mew=1.5)
     a2.set_xlabel("elevon deflection (deg, + TE down)")
     a2.set_ylabel("C_h = H / (q c^2)")
     a2.legend(frameon=False, fontsize=7)

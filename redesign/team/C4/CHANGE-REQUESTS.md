@@ -3,6 +3,20 @@
 Raised 2026-11-09 by C4 (fin / motor-tube structures). R3 and R2 numbers from `team/C4/claims.d3.json` and
 `out/results_d3.json`; report `BOOM-STRUCTURES.md`. R1 numbers (CR-C4-01…13) came from `claims.json`.
 
+## S1 simulation round (2026-11-10: 3-D solid FE, `SIMULATION-REPORT.md`, `claims.sim.json`)
+
+| Id | To | What | Why | Numbers |
+|---|---|---|---|---|
+| CR-C4-36 | **D5**, H1 (cc D3, A1, A3) | **Hold CR-C4-30.** Build the `T-C4-FIN-PROOF` test article with the D5 shoe **as drawn** (legs 7 mm, 8 mm collar cheeks over both strip ends, cheeks bonded to both strips). Pass at 1.5 × L4 both senses: D5 keeps the drawn shoe and saves the ≈ 16 g `EST` CR-C4-30 would add. Fail: fit the extended cheeks (to \|z\| 0.171 m) on the flight shoes | 3-D FE does not reproduce the R4 tip `FAIL`: the strip pair, clamped in the cheeks, carries 53 % of the side-load moment that the shell put through the bare board | `CL-C4-SIM-MS-FACE-DRAWN` +0.11 (bound; +0.03 with the global-mesh check) vs R4 `CL-C4-D3-MS-FACE` −0.54; extended cheeks `CL-C4-SIM-MS-FACE-PROP` +1.70; `CL-C4-SIM-BOARD-SHARE` 0.47 vs shell 1.06 |
+| CR-C4-37 | **D3** (cc C6, I1) | Make the **strip-tail bond in the station-collar tail a build inspection item** in `BUILD.md`: strips run to the tube surface, epoxy fills both slots over the full 40 mm, tongue printed with its 3 perimeters under each strip (no voids). Add a tap/pull check per tail before the fin is closed | With the tongue unbonded (foam-like) the face at the LE tail corner reaches 8.07 MPa limit (MS −0.17 ult); at ≥ 0.2 GPa it is 4.7 MPa (MS +0.43). The tail also halves the foot deflection | `sim/out/sens_tail.json`; `ASM-C4-SIM-TAIL-E` 1 GPa |
+| CR-C4-38 | H1 (I1) | On the `T-C4-FIN-PROOF` article add two strain gauges: paper face 5 mm below the leg edge at x ≈ 0.30 m, and one strip 10 mm forward of the collar cheek; dial gauge at the pad. Predictions at 1.0 × L4 (limit): face ≈ 3.4–4.3 MPa (≈ 0.9–1.1 × 10⁻³ strain at 4 GPa), strip ≈ 88 MPa (≈ 0.8 × 10⁻³ at 110 GPa), pad 3.7 mm (shell said 9.3 mm). Tap the board centre in `T-C4-TAP-D3` (panel mode 71–73 Hz predicted) | Measured strain split decides between the shell and 3-D load paths | `CL-C4-SIM-FOOT-DEFL`, `CL-C4-SIM-MS-STRIP`, `CL-C4-SIM-F1-UP`, `-F1-LO` |
+| CR-C4-39 | A1, A2 | `R-VIBRATION` margin fell: separation **0.29** (3-D, lower station 255.5 Hz vs 2P cruise 198.2 Hz at the new 5 946 rpm, A3 motor 84.2 g). Still ≥ 0.20. Any further cruise-rpm rise above ≈ 6 390 rpm or station mass growth > ≈ 15 % needs a C4 re-run | Inputs moved: `CL-B4-CRUISE-RPM` 5 894 → 5 946, motor 81 → 84.2 g | `CL-C4-SIM-SEP` 0.289; shell with the same inputs 0.335 |
+| CR-C4-40 | A1 (proofs) | SU2 v8 in this install has **no direct solver** (`PASTIX_*` → "not compiled with -DHAVE_PASTIX") and its CG/ILU and FGMRES/ILU do not converge on laminated foam-board solids (log₁₀ residual +0.15 after 6 000 iterations; FGMRES orthogonalization failure). C4 uses its hex8 code (SU2's element to 4.7 × 10⁻¹¹ on the benchmark) with SciPy SuperLU. Other structures roles: expect the same; a PaStiX build of SU2 would let the quarter run in SU2 | Tooling note for `inputs/SIM-TOOLS.md` | `CALC-C4-SIM-CODES`, `CL-C4-SIM-BENCH-CODES` |
+| CR-C4-41 | **H1**, D3 (cc I1) | Raise the `T-C4-MOUNT-STIFF` pass level from 1 000 to **≥ 1 100 N·m/rad** (both rocking axes) and re-run `ground_tests.py` | R4 re-run on today's cruise rpm (5 946): rocking stiffness needed for 0.20 separation rose to **1 030 N·m/rad**, above the old pass level. Estimate is 3 000 | `CL-C4-D3-MOUNT-K-REQ` 1 030 (was 971) |
+
+Status of R4 requests after S1: CR-C4-30 held by CR-C4-36 (decided by test). CR-C4-33 amended by CR-C4-36/38 (test
+article as drawn, gauges). CR-C4-34: fins re-run at **434.8 g** vs 418 g (−16.8 g). Others unchanged.
+
 ## R4 (2026-11-10: D3-R4 fin with the D5 tip step, 12 mm collar, C1 corner 32.6 N × μ 0.7, B4 swirl, G3)
 
 | Id | To | What | Why | Numbers |

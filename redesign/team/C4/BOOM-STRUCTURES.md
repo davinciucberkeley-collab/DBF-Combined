@@ -10,6 +10,13 @@ then `python -I redesign/proofs/build_graph.py`. Numbers: `claims.d3.json` (`CL-
 `fin_structures.py` (R1 concept model, `claims.json`) stays only for the shared assumptions, sources and tube tests
 that C2, C3, C6 and H1 read; none of its claims verifies a requirement.
 
+## S1 simulation round (2026-11-10) — read first
+
+3-D solid FE of the as-designed quarters (`SIMULATION-REPORT.md`, `claims.sim.json`) supersedes two R4 answers below:
+the drawn-shoe face is **MS +0.11** in 3-D (R4 shell −0.54; CR-C4-30 held until `T-C4-FIN-PROOF` on an as-drawn
+article, CR-C4-36), and the separation is **0.29** (3-D, today's cruise rpm 5 946 and A3 masses). The R4 tables stay as
+the sizing record; `fin_structures_d3.py` was re-run today (separation 0.35, mount need 1 030 N·m/rad, fins 434.8 g).
+
 ## What R4 changed
 
 | Item | R3 | R4 | Claim |

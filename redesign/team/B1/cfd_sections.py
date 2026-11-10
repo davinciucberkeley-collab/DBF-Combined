@@ -15,7 +15,10 @@ wing.chord_m) and the S5010 file B2 checked (team/B2/airfoils/s5010.dat). Flow: 
 wake, far field), GCI after Celik et al. (2008). Meshes are deleted after each run (re-made by this script);
 case.cfg, history.csv, surface_flow.csv and the log stay in sim/cfd/<case>/.
 
-Usage: python -I redesign/team/B1/cfd_sections.py [--parse-only]      (~10-20 min on 16 threads)
+Usage: python -I redesign/team/B1/cfd_sections.py [--parse-only] [case ...]
+Fin A also has a 4th level (L4, f 1/sqrt2) because its L1-L3 GCI came out at 9.8 %; it is run with
+cfd_sections.run('finA', 4) and parsed here when present (GCI over L2-L4 in 'gci4').
+      (~10-20 min on 16 threads)
 Writes sim/cfd/cfd_results.json. Requires gmsh (Python API) and numpy, SU2_CFD.exe from SIM-TOOLS.md.
 """
 import json
@@ -53,7 +56,7 @@ R_TUBE = pv("fins.tube.od_m") / 2
 T_FIN = pv("fins.board_t_m") * pv("fins.layers")
 R_FILLET = 0.003                               # m, tube-board epoxy fillet radius (fins.fin.le_gap_m filled, ASM-B1-CFD-EDGE)
 R_EDGE = 0.0                                    # m: board edges modelled sharp and square (ASM-B1-CFD-EDGE)
-LEVELS = {1: 2.0, 2: math.sqrt(2.0), 3: 1.0}   # size factor f; ratio sqrt(2) between levels
+LEVELS = {1: 2.0, 2: math.sqrt(2.0), 3: 1.0, 4: math.sqrt(0.5)}   # size factor f; ratio sqrt(2) between levels; L4 only where L1-L3 GCI > 5 %
 N_JOBS, THREADS = 3, 4
 ALPHA_WING = 2.5                               # deg; gives cl ~0.42-0.45 in SA (as-designed cruise cl 0.41)
 
@@ -353,6 +356,13 @@ def main():
         res["cases"][c] = {f"L{L}": lv[L] for L in lv}
         res["gci"][c] = {q: gci(lv[3][q], lv[2][q], lv[1][q], lv[3]["cells"], lv[2]["cells"], lv[1]["cells"])
                          for q in ("cd", "cl")}
+        if (OUT / f"{c}_L4" / "mesh_info.json").exists():     # 4th level where L1-L3 left GCI near the limit
+            lv[4] = parse(c, 4)
+            res["cases"][c]["L4"] = lv[4]
+            res.setdefault("gci4", {})[c] = {q: gci(lv[4][q], lv[3][q], lv[2][q], lv[4]["cells"], lv[3]["cells"],
+                                                    lv[2]["cells"]) for q in ("cd", "cl")}
+            print(c, "L4", lv[4]["cells"], round(lv[4]["cd"], 5), "GCI(L2-L4) cd %.1f %%"
+                  % res["gci4"][c]["cd"]["gci_fine_pct"])
         print(c, {f"L{L}": (lv[L]["cells"], round(lv[L]["cd"], 5), round(lv[L]["cl"], 4)) for L in lv},
               "GCI cd %.1f %%" % res["gci"][c]["cd"]["gci_fine_pct"])
     (OUT / "cfd_results.json").write_text(json.dumps(res, indent=1))

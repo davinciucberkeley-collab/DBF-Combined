@@ -51,7 +51,12 @@ CASES = ["+y", "+z"]                     # -z (floor past the TE, on the fin) is
 # design-fix study: C5_FEA_VARIANT="w=0.0016,rim_t=0.002" overrides D5 inputs (m); outputs get a _v suffix
 import os  # noqa: E402
 VARIANT = {k: float(v) for k, v in (kv.split("=") for kv in os.environ.get("C5_FEA_VARIANT", "").split(",") if kv)}
-SUFFIX = ("_v_" + "_".join("%s%g" % (k, v * 1000) for k, v in sorted(VARIANT.items()))) if VARIANT else ""
+if "r_in" in VARIANT:                                     # printed inside corner radius (m), not a D5 input
+    R_IN = VARIANT.pop("r_in") * 1000.0
+    _RTAG = "_rin%g" % R_IN
+else:
+    _RTAG = ""
+SUFFIX = (("_v_" + "_".join("%s%g" % (k, v * 1000) for k, v in sorted(VARIANT.items()))) if VARIANT else "") + _RTAG
 
 
 def d5_inputs():
@@ -294,11 +299,12 @@ def strip_check():
                        [("tip", P / (b * t), (0, 0, -1))], ["free"])
         x = r["xyz"]
         uz = float(r["Displacement"][np.abs(x[:, 0] - L) < 1e-6, 2].mean())
-        sx = float(r["Sxx"][(np.abs(x[:, 0] - 10) < 1e-6) & (x[:, 2] > t - 1e-6) & (np.abs(x[:, 1] - b / 2) < 1.5)]
+        xm = float(x[np.argmin(np.abs(x[:, 0] - L / 2)), 0])          # node plane nearest mid-span
+        sx = float(r["Sxx"][(np.abs(x[:, 0] - xm) < 1e-6) & (x[:, 2] > t - 1e-6) & (np.abs(x[:, 1] - b / 2) < 1.5)]
                    .mean())
         I_ = b * t ** 3 / 12
         out.append({"nz": nz, "hexes": int(len(h8)), "uz_mm": uz, "uz_beam_mm": -P * L ** 3 / (3 * E_PETG * I_),
-                    "sxx_mid_MPa": sx, "sxx_beam_MPa": P * (L / 2) * (t / 2) / I_})
+                    "x_mid_mm": xm, "sxx_mid_MPa": sx, "sxx_beam_MPa": P * (L - xm) * (t / 2) / I_})
     return out
 
 

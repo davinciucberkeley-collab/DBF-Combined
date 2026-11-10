@@ -1,7 +1,7 @@
 """C3 pod FEA (verification round): gmsh meshes + SU2 ELASTICITY on the as-designed pod (D2-R5a CAD, A3-R6a masses).
 
 Run:  python -I redesign/team/C3/pod_fea.py            (all parts in sequence, then combine; ~1.5 h single-thread)
-      python -I redesign/team/C3/pod_fea.py --part m1f   (one part: bench, m1f, m1b, m2; parts can run in parallel)
+      python -I redesign/team/C3/pod_fea.py --part m1f   (one part: bench, m1f, m1b, m2, m2x; parts can run in parallel)
       python -I redesign/team/C3/pod_fea.py --combine    (merge fea/parts/*.json into fea/fea_results.json + figures)
       python -I redesign/team/C3/pod_fea.py --plots    (re-draw the figures from fea/fea_results.json only)
 then  python -I redesign/team/C3/pod_structures.py      (reads fea/fea_results.json into ASM-C3-FEA-*, writes the claims)
@@ -85,6 +85,7 @@ MAT = {
     "E_xps": 20.0e6, "nu_xps": 0.25,          # ASM-C3-XPS-E: 2 G (1 + nu), G 8 MPa (ASM-D6-XPS-G)
     "E_petg": 1.8e9, "nu_petg": 0.38,         # ASM-C3-PETG-E: printed PETG, Prusament class 1.5-2.0 GPa
     "nu_board": 0.30, "nu_core": 0.10,
+    "E_epoxy": 3.0e9, "nu_epoxy": 0.35,       # ASM-C3-EPOXY-E: laminating epoxy with microballoons, 2.5-3.5 GPa
 }
 TB = gv("fins.board_t_m")
 MAT["E_board"] = (2 * MAT["E_face"] * MAT["t_face"] + MAT["E_core"] * (TB - 2 * MAT["t_face"])) / TB
@@ -317,7 +318,7 @@ B_REF = gv("pod.size_m")[1]                   # 0.14 m: reference depth (pod wid
 SEG = 0.005                                    # floor-top load segment length
 
 
-def m1_geometry(bonded=True):
+def m1_geometry(bonded=True, stepgap=False):
     """bonded: the side walls aft of the recess end are bonded to the wing skin line (as drawn, E-POD-01).
     bonded=False: a 0.3 mm gap there, so the pod reaches the wing only through the floor / LE filler footprint (the
     hand calc's footprint; the wall-edge bonds are assumed already peeled)."""
@@ -342,12 +343,20 @@ def m1_geometry(bonded=True):
     else:
         walls = [(g["xn"], g["zf"]), (g["x_rec1"] - gap, g["zf"]), (g["x_rec1"] - gap, aft[0][1] + gap)] +                 [(x, z + gap) for x, z in aft] + [(g["x1"], g["zh"]), (g["xn"], g["zh"])]
     nseg = max(1, round((g["x_rec1"] - g["xn"]) / SEG))
-    segx = np.linspace(g["xn"], g["x_rec1"], nseg + 1)
+    # stepgap (C3-R3 detail fix): the floor's aft end face is kept 0.3 mm off the recess step (release tape), so the
+    # floor bonds to the recess floor only and the re-entrant step corner carries nothing
+    segx = np.linspace(g["xn"], g["x_rec1"] - (0.0003 if stepgap else 0.0), nseg + 1)
     return {"wing": wing, "filler": filler, "walls": walls, "segx": segx, "x_cut": x_cut}
 
 
-def m1_mesh(gmsh, h, bonded=True):
-    g, G = GEO, m1_geometry(bonded)
+SADDLE_X = (0.0688, 0.0912)                    # wing saddle windows (subsystems/wing SPEC: x 0.0688-0.0912, y 0.029-0.053)
+SADDLE_FRAC = 2 * (0.053 - 0.029) / gv("pod.size_m")[1]   # share of the 0.14 m model depth the two printed feet fill
+
+
+def m1_mesh(gmsh, h, bonded=True, tied=False, stepgap=False):
+    """tied (C3-R3 fix candidate, CR-C3-16): the handle feet in the saddle windows are bonded to the pod side walls,
+    so the pod reaches the spar through printed PETG (smeared over the model depth) as well as through the XPS."""
+    g, G = GEO, m1_geometry(bonded, stepgap)
     o = gmsh.model.occ
     gmsh.model.add("m1")
 
@@ -365,13 +374,22 @@ def m1_mesh(gmsh, h, bonded=True):
     segs = [o.addRectangle(a, g["zb"], 0, b - a, g["zf"] - g["zb"]) for a, b in zip(G["segx"][:-1], G["segx"][1:])]
     inputs = [(2, wing), (2, filler), (2, walls), (2, nose)] + [(2, s) for s in segs]
     kinds = ["wing", "filler", "walls", "nose"] + ["floor"] * len(segs)
+    if tied:
+        zs_ = gv("wing.spar.z_m")
+        top = [(x, k9.surface_z(COORDS, gv("wing.chord_m"), x / gv("wing.chord_m"), "upper") + (0.0 if bonded else 0.0003))
+               for x in np.linspace(SADDLE_X[1], SADDLE_X[0], 9)]
+        sad = poly([(SADDLE_X[0], zs_), (SADDLE_X[1], zs_)] + top)
+        sad = o.cut([(2, sad)], [(2, o.addDisk(gv("wing.spar.x_m"), zs_, 0, gv("wing.spar.od_m") / 2,
+                                               gv("wing.spar.od_m") / 2))])[0][0][1]
+        inputs = [(2, sad)] + inputs
+        kinds = ["saddle"] + kinds
     _, omap = o.fragment(inputs, [])
     o.synchronize()
     kind_of = {}
     for k, children in zip(kinds, omap):
         for d, t in children:
             kind_of.setdefault(t, k)          # first owner wins (walls overlap nose/floor only by touching)
-    MID = {"wing": 0, "filler": 1, "walls": 2, "floor": 3, "nose": 4}
+    MID = {"wing": 0, "filler": 1, "walls": 2, "floor": 3, "nose": 4, "saddle": 5}
     surf_mat = {t: MID[k] for t, k in kind_of.items()}
     # curves
     xs, zs, rs = gv("wing.spar.x_m"), gv("wing.spar.z_m"), gv("wing.spar.od_m") / 2
@@ -380,9 +398,12 @@ def m1_mesh(gmsh, h, bonded=True):
     for _, cv in gmsh.model.getEntities(1):
         bb = gmsh.model.getBoundingBox(1, cv)
         cx, cz = (bb[0] + bb[3]) / 2, (bb[1] + bb[4]) / 2
-        if abs(cx - xs) < rs * 1.01 and abs(cz - zs) < rs * 1.01 and bb[3] - bb[0] > rs and bb[4] - bb[1] > 0.5 * rs:
-            spar.append(cv)
-            continue
+        if abs(cx - xs) < rs * 1.01 and abs(cz - zs) < rs * 1.01:
+            lo_, hi_ = gmsh.model.getParametrizationBounds(1, cv)
+            pts = gmsh.model.getValue(1, cv, list(np.linspace(lo_[0], hi_[0], 5))).reshape(-1, 3)
+            if np.all(np.abs(np.hypot(pts[:, 0] - xs, pts[:, 1] - zs) - rs) < 1e-6):
+                spar.append(cv)
+                continue
         up, _ = gmsh.model.getAdjacencies(1, cv)
         ks = {kind_of.get(int(s)) for s in up}
         if len(up) == 2 and "wing" in ks and len(ks) == 2:
@@ -419,8 +440,9 @@ def m1_mesh(gmsh, h, bonded=True):
 
 def m1_mats():
     Eb, nb = MAT["E_board"], MAT["nu_board"]
+    e_sad = SADDLE_FRAC * MAT["E_petg"] + (1 - SADDLE_FRAC) * MAT["E_xps"]
     return [(MAT["E_xps"], MAT["nu_xps"]), (MAT["E_xps"], MAT["nu_xps"]),
-            (Eb * 2 * TB / B_REF, nb), (Eb * GEO["W"] / B_REF, nb), (Eb * GEO["W"] / B_REF, nb)]
+            (Eb * 2 * TB / B_REF, nb), (Eb * GEO["W"] / B_REF, nb), (Eb * GEO["W"] / B_REF, nb), (e_sad, 0.35)]
 
 
 def seg_forces_from_items(segx, items):
@@ -459,13 +481,13 @@ def m1_cases(segx):
     return cases, xc, float(mdn.sum())
 
 
-def run_m1(level_factor, bonded=True, h0=0.004):
+def run_m1(level_factor, bonded=True, h0=0.004, tied=False, stepgap=False):
     import gmsh
     h = h0 * level_factor
     gmsh.initialize()
     gmsh.option.setNumber("General.Terminal", 0)
     try:
-        xyz, tris, emat, markers, segx = m1_mesh(gmsh, h, bonded)
+        xyz, tris, emat, markers, segx = m1_mesh(gmsh, h, bonded, tied, stepgap)
     finally:
         gmsh.finalize()
     mats = m1_mats()
@@ -474,7 +496,7 @@ def run_m1(level_factor, bonded=True, h0=0.004):
     res = {"h_m": h, "n_elem": int(len(tris)), "n_node": int(len(xyz)), "cases": {}}
     for name, F in cases.items():
         loads = {"seg%02d" % j: (F[j][0] / (B_REF * L[j]), F[j][1] / (B_REF * L[j])) for j in range(len(L))}
-        rd = RUNS / ("M1-BONDED" if bonded else "M1-FOOTPRINT") / ("L%d" % LEVELS.index(level_factor)) / name
+        rd = RUNS / (("M1-TIED" if bonded else "M1-TIED-FP-GAP" if stepgap else "M1-TIED-FP") if tied else "M1-BONDED" if bonded else "M1-FOOTPRINT") / ("L%d" % LEVELS.index(level_factor)) / name
         u, dt = run_su2(rd, xyz, tris, emat, mats, markers, ["spar"], loads, "PLANE_STRESS")
         eps, sig, cen, area = tri_strain_stress(xyz, tris, emat, mats, u, "PLANE_STRESS")
         it = interface_tractions(xyz, tris, emat, sig, {0}, {1, 2, 3, 4})
@@ -491,6 +513,8 @@ def run_m1(level_factor, bonded=True, h0=0.004):
                "F_applied_N": [float(sum(f[0] for f in F)), float(sum(f[1] for f in F))],
                "face_top_pa": float(face_top), "face_bot_pa": float(face_bot), "su2_s": dt,
                "u_max_m": float(np.abs(u).max())}
+        if tied:      # force the pod puts into the saddle (walls -> printed feet), real N
+            rec["F_saddle_N"] = (nodal_interface_force(xyz, tris, emat, sig, area, {5}, {2, 3, 4}) * B_REF).tolist()
         (rd / "summary.json").write_text(json.dumps({k: v for k, v in rec.items() if k != "interface"}, indent=1))
         res["cases"][name] = rec
         print("  M1 %s L%d %-9s %6d el  %5.1f s  F_int %s vs %s" % ("B" if bonded else "F", LEVELS.index(level_factor), name, len(tris), dt,
@@ -500,7 +524,7 @@ def run_m1(level_factor, bonded=True, h0=0.004):
     return res
 
 
-def combine(cases, coeffs):
+def m1_combine(cases, coeffs):
     """Linear combination of interface traction rows (same mesh) and face stresses."""
     base = np.array(cases[next(iter(coeffs))]["interface"])
     sn = sum(c * np.array(cases[k]["interface"])[:, 3] for k, c in coeffs.items())
@@ -565,22 +589,22 @@ def m1_post(levels):
     for lev in levels:
         cs, xc = lev["cases"], lev["xc_seg"]
         row = {"h_m": lev["h_m"], "n_elem": lev["n_elem"]}
-        base, sn, tau, _, _ = combine(cs, coeffs_for(Fx, Fz, My, xc))
+        base, sn, tau, _, _ = m1_combine(cs, coeffs_for(Fx, Fz, My, xc))
         row["design"] = bond_metrics(base, sn, tau)
         if lev is levels[-1]:
             out["profile_design"] = {"x": base[:, 0].tolist(), "z": base[:, 1].tolist(), "sigma": sn.tolist(),
                                      "tau": tau.tolist()}
-        base, sn, tau, top, bot = combine(cs, {"CRASH_UP": 1.0})
+        base, sn, tau, top, bot = m1_combine(cs, {"CRASH_UP": 1.0})
         row["crash_up"] = bond_metrics(base, sn, tau)
         if lev is levels[-1]:
             out["profile_crash_up"] = {"x": base[:, 0].tolist(), "sigma": sn.tolist(), "tau": tau.tolist()}
-        base, sn, tau, top, bot = combine(cs, {"CRASH_DN": 1.0})
+        base, sn, tau, top, bot = m1_combine(cs, {"CRASH_DN": 1.0})
         row["crash_dn"] = bond_metrics(base, sn, tau)
         row["overhang_crash_top_pa"] = abs(top)
         row["overhang_crash_bot_pa"] = abs(bot)
         row["overhang_design_top_pa"] = abs(top) * N_DESIGN_OVH / N_CRASH
         for sgn, nm in ((1, "crash_px"), (-1, "crash_mx")):
-            base, sn, tau, _, _ = combine(cs, coeffs_for(sgn * Fc, 0.0, sgn * Fc * (zcg - zb), xc))
+            base, sn, tau, _, _ = m1_combine(cs, coeffs_for(sgn * Fc, 0.0, sgn * Fc * (zcg - zb), xc))
             row[nm] = bond_metrics(base, sn, tau)
         row["equilibrium_err"] = max(abs(c["F_interface_N"][i] - c["F_applied_N"][i]) / max(1.0, max(map(abs, c["F_applied_N"])))
                                      for c in cs.values() for i in (0, 1))
@@ -622,7 +646,15 @@ def m2_variants():
                                 r=0.002, prop=(0.026 - zt, 0.040 - zt), F=None),
         "FWD_FILLET": dict(t=fs_t, h=fs_h, z0=0.002, z1=fs_h, ahead=lv("tray_front_solid_m") - fs_t, behind=0.0,
                            xps=False, r=0.002, F=None),
+        # as built (CR-D2-11c, D2-R5): the forward stop's fore face bonded to the 4.8 mm board nose wall with the 1 mm
+        # epoxy bed; the wall stands on the floor end (butt bond) and is free at the top (hatch and side walls left out:
+        # conservative in 2-D); floor underside held (the overhang is checked in M1)
+        "FWD_BEDDED": dict(t=fs_t, h=fs_h, z0=0.002, z1=fs_h, ahead=lv("tray_front_solid_m") - fs_t, behind=0.0,
+                           xps=False, r=0.002, wall=lv("nose_block_l_m"), F=None),
     }
+
+
+M2X = ("FWD_BEDDED",)                           # added in C3-R3: run as part "m2x", merged into M2 by combine()
 
 
 def m2_mesh(gmsh, v, h):
@@ -637,6 +669,10 @@ def m2_mesh(gmsh, v, h):
     board_s0, board_s1 = s0 - 0.015, s1 + (0.0 if v["behind"] > 0 else 0.0)
     if v["behind"] == 0:
         board_s1 = s1 + 0.005                      # floor continues past the tray front (nose wall line)
+    bed = v.get("wall")
+    sw0 = t + bed if bed else None                  # nose wall inner face
+    if bed:
+        board_s1 = sw0
     zf = 0.0 - tt
     layers = []
     zc = zf - tb
@@ -645,6 +681,12 @@ def m2_mesh(gmsh, v, h):
     layers.append(("face", o.addRectangle(board_s0, zc, 0, board_s1 - board_s0, tf)))
     layers.append(("core", o.addRectangle(board_s0, zc + tf, 0, board_s1 - board_s0, tb - 2 * tf)))
     layers.append(("face", o.addRectangle(board_s0, zf - tf, 0, board_s1 - board_s0, tf)))
+    if bed:
+        hw = GEO["zh"] - GEO["zb"]
+        layers.append(("face", o.addRectangle(sw0, zc, 0, tf, hw)))
+        layers.append(("core", o.addRectangle(sw0 + tf, zc, 0, tb - 2 * tf, hw)))
+        layers.append(("face", o.addRectangle(sw0 + tb - tf, zc, 0, tf, hw)))
+        layers.append(("epoxy", o.addRectangle(t, zf, 0, bed, hh - zf)))
     tray = o.addRectangle(s0, zf, 0, s1 - s0, tt)
     # stop split at the load start height so the loaded face is its own curve
     cuts = sorted({0.0, v["z0"], hh} | set(v.get("prop", ())))
@@ -665,7 +707,7 @@ def m2_mesh(gmsh, v, h):
     kinds = [k for k, _ in layers] + ["petg"] * len(petg_f)
     _, omap = o.fragment(all_in, [])
     o.synchronize()
-    MID = {"petg": 0, "face": 1, "core": 2, "xps": 3}
+    MID = {"petg": 0, "face": 1, "core": 2, "xps": 3, "epoxy": 4}
     surf_mat = {}
     for k, ch in zip(kinds, omap):
         for _, tg in ch:
@@ -678,7 +720,7 @@ def m2_mesh(gmsh, v, h):
         if abs(bb[0]) < 2e-6 and abs(bb[3]) < 2e-6 and bb[1] >= v["z0"] - 2e-6 and bb[4] <= v["z1"] + 2e-6 \
                 and bb[4] - bb[1] > 1e-6:
             load.append(cv)
-        if abs(bb[1] - zbot) < 2e-6 and abs(bb[4] - zbot) < 2e-6:
+        if abs(bb[1] - zbot) < 2e-6 and abs(bb[4] - zbot) < 2e-6 and (not bed or bb[3] <= sw0 + 1e-6):
             bottom.append(cv)
         if pz and abs(bb[0] - t) < 2e-6 and abs(bb[3] - t) < 2e-6 and bb[1] >= pz[0] - 2e-6 and bb[4] <= pz[1] + 2e-6:
             prop.append(cv)
@@ -715,7 +757,7 @@ def m2_mesh(gmsh, v, h):
         if not prop:
             raise RuntimeError("M2 prop face not found")
         mk["prop"] = curve_edges(gmsh, idx, prop)
-    return xyz, tris, emat, mk, zf
+    return xyz, tris, emat, mk, zf, sw0
 
 
 def m2_force(name):
@@ -729,11 +771,11 @@ def run_m2(name, v, level_factor):
     gmsh.initialize()
     gmsh.option.setNumber("General.Terminal", 0)
     try:
-        xyz, tris, emat, markers, zf = m2_mesh(gmsh, v, h)
+        xyz, tris, emat, markers, zf, sw0 = m2_mesh(gmsh, v, h)
     finally:
         gmsh.finalize()
     mats = [(MAT["E_petg"], MAT["nu_petg"]), (MAT["E_face"], MAT["nu_board"]), (MAT["E_core"], MAT["nu_core"]),
-            (MAT["E_xps"], MAT["nu_xps"])]
+            (MAT["E_xps"], MAT["nu_xps"]), (MAT["E_epoxy"], MAT["nu_epoxy"])]
     b = lv("bay_min_m")[1] + 2 * lv("guide_t_m")
     F = m2_force(name)
     p = F / (b * (v["z1"] - v["z0"]))
@@ -773,6 +815,16 @@ def run_m2(name, v, level_factor):
            "peel_tray_line_d0_pa": window_avg(it2[:, 0], it2[:, 3], it2[:, 2], D0),
            "shear_peak_d0_pa": window_avg(it[:, 0], np.abs(it[:, 4]), it[:, 2], D0),
            "profile": {"s": it[:, 0].tolist(), "peel": peel.tolist(), "tau": it[:, 4].tolist()}}
+    if sw0 is not None:
+        wf = (emat == 1) & (cen[:, 0] > sw0 - 1e-9)                      # nose wall paper faces (vertical)
+        rec["wall_face_peak_pa"] = float(np.abs(szz[wf]).max())
+        bd = emat == 4                                                  # epoxy bed: normal stress across it (s)
+        rec["bed_peel_peak_pa"] = float(max(sxx[bd].max(), 0.0))
+        rec["bed_comp_mean_pa"] = float(-(sxx[bd] * area[bd]).sum() / area[bd].sum())
+        # wall-to-floor butt joint: shear along the joint line (floor end), wall side
+        # share of the stop load that reaches the floor through the tray (the rest goes through the bed into the wall)
+        ft = nodal_interface_force(xyz, tris, emat, sig, area, {0}, {1})
+        rec["tray_path_share"] = float(abs(ft[0]) / (F / b))
     (rd / "summary.json").write_text(json.dumps({k: v_ for k, v_ in rec.items() if k != "profile"}, indent=1))
     print("  M2 %-17s L%d %6d el %5.1f s  lin %.2f MPa (exact %.2f)  stop peak %.2f  tray peak %.2f MPa  peel %.0f "
           "kPa (raw %.0f)" % (name, LEVELS.index(level_factor), len(tris), dt, sig_lin / 1e6,
@@ -864,9 +916,16 @@ def run_part(name):
         bonded = name == "m1b"
         print("%s pod on the wing:" % ("M1_BONDED" if bonded else "M1_FOOTPRINT"), flush=True)
         out = m1_variant([run_m1(f, bonded) for f in LEVELS])
-    elif name == "m2":
+    elif name in ("m1t", "m1tf", "m1tg"):
+        print("%s pod on the wing (3 levels):" % PARTS_X[name], flush=True)
+        lv3 = [run_m1(f, name == "m1t", tied=True, stepgap=name == "m1tg") for f in LEVELS[:3]]
+        out = m1_variant(lv3)
+        out["F_saddle_N"] = {c: lv3[-1]["cases"][c]["F_saddle_N"] for c in lv3[-1]["cases"]}
+    elif name in ("m2", "m2x"):
         out = {}
         for nm, v in m2_variants().items():
+            if (nm in M2X) != (name == "m2x"):
+                continue
             recs = [run_m2(nm, v, f) for f in LEVELS]
             hs = [r["h_m"] for r in recs]
             out[nm] = {"variant": {k: v.get(k) for k in ("t", "h", "z0", "z1", "ahead", "behind", "xps", "r", "tt")},
@@ -874,7 +933,8 @@ def run_part(name):
                        "profile_finest": recs[-1]["profile"],
                        "convergence": {k: conv_table(hs, [r[k] for r in recs])
                                        for k in ("sigma_lin_pa", "peak_s1_pa", "tray_peak_pa", "peel_peak_d0_pa",
-                                                 "peel_peak_raw_pa")}}
+                                                 "peel_peak_raw_pa", "wall_face_peak_pa", "bed_peel_peak_pa",
+                                                 "tray_path_share") if k in recs[0]}}
     else:
         raise SystemExit("unknown part " + name)
     (OUT / "parts").mkdir(parents=True, exist_ok=True)
@@ -884,6 +944,9 @@ def run_part(name):
 
 
 PARTS = {"bench": "benchmark", "m1f": "M1_FOOTPRINT", "m1b": "M1_BONDED", "m2": "M2"}
+# C3-R3 fix studies (3 levels each): handle feet tied to the pod walls (with / without the wall-edge bonds), and the
+# same with the floor end face released from the recess step
+PARTS_X = {"m1t": "M1_TIED", "m1tf": "M1_TIED_FOOTPRINT", "m1tg": "M1_TIED_STEPGAP", "m2x": "M2 (FWD_BEDDED)"}
 
 
 def combine():
@@ -893,6 +956,19 @@ def combine():
         d = _load(OUT / "parts" / (part + ".json"))
         res[key] = d["result"]
         res["wall_s"][part] = d["wall_s"]
+    for part, key in PARTS_X.items():
+        if not part.startswith("m1"):
+            continue
+        pt = OUT / "parts" / (part + ".json")
+        if pt.exists():
+            d = _load(pt)
+            res[key] = d["result"]
+            res["wall_s"][part] = d["wall_s"]
+    px = OUT / "parts" / "m2x.json"
+    if px.exists():
+        d = _load(px)
+        res["M2"].update(d["result"])
+        res["wall_s"]["m2x"] = d["wall_s"]
     # keep the results file small: drop the raw interface rows of every level (profiles of the finest mesh stay)
     for key in ("M1_FOOTPRINT", "M1_BONDED"):
         res[key].pop("raw", None)
@@ -904,7 +980,7 @@ def combine():
 
 def main():
     OUT.mkdir(exist_ok=True)
-    for part in PARTS:
+    for part in list(PARTS) + list(PARTS_X):
         run_part(part)
     combine()
 

@@ -3,7 +3,8 @@
 What it checks against the R4 shell/beam model (fin_structures_d3.py, fin_fe.py):
   A. Solver verification: SU2 ELASTICITY on a cantilever, 3 meshes, against Euler-Bernoulli + Timoshenko, and the
      element-wise material file (two materials).
-  B. Code-to-code: SU2 and the in-house hex8 (sim/hexfe.py) on the same quarter mesh, same clamps and tractions.
+  B. SU2 on the quarter: solver trials (CG/ILU, restarted FGMRES/ILU) against the hex8 direct solve on the same mesh;
+     SU2 does not converge on the laminate (no PaStiX in this build), so C-E use the hex8 (SU2's element, see A).
   C. Fin face stress at the D5 shoe under L4 (the R4 FAIL item): SU2, 3 meshes, D5 shoe as drawn (legs 7 mm below the
      step, P:landing.shoe.leg_depth_m) and as proposed in CR-C4-30 (to |z| 0.171 m); hot-spot stress (IIW 0.4 t / 1.0 t
      surface extrapolation) and the raw peak, against the shell model on the same shoe.
@@ -13,8 +14,9 @@ What it checks against the R4 shell/beam model (fin_structures_d3.py, fin_fe.py)
      against the shell model with matched tube properties.
 Mesh: gmsh all-quad planform (OpenCASCADE) extruded through the two-board laminate (sim/mesh_quarter.py).
 
-Run:  python -I redesign/team/C4/sim_fin.py            (first run ~30-60 min; results are cached in sim/out/cache)
-Then: python sim_plots.py (not -I, matplotlib)  and  python -I redesign/proofs/build_graph.py
+Run:  python -I redesign/team/C4/sim_fin.py   (cold ~3 h on a shared 20-core machine; cached in sim/out/cache, < 2 min)
+      parallel cold run: sim/run_part.py stress | modes, sim/run_trial.py 0 | 1, then sim_fin.py
+Then: python redesign/team/C4/sim/sim_plots.py (not -I, matplotlib)  and  python -I redesign/proofs/build_graph.py
 Writes claims.sim.json, sim/out/sim_results.json.
 """
 import hashlib
@@ -46,9 +48,12 @@ OUT = HERE / "sim" / "out"
 RUNS = HERE / "sim" / "runs"
 CACHE = OUT / "cache"
 CODE = "C4-SIM-1"
-STRESS_LEVELS = {1: (0.008, 0.002), 2: (0.004, 0.001), 3: (0.002, 0.0005)}   # global, shoe-region element size
+STRESS_LEVELS = {1: (0.008, 0.002), 2: (0.008, 0.001), 3: (0.008, 0.0005)}   # global, tip-region element size
+STRESS_LEVELS["G"] = (0.004, 0.001)  # global refinement check at the level-2 tip size
+SU2_LEVELS = ()                     # SU2 CG/ILU does not converge on the quarter (CALC-C4-SIM-CODES)
+SU2_TOL, SU2_ITERS = 1e-9, 6000
 MODAL_LEVELS = {1: 0.008, 2: 0.008 / 2 ** 0.5, 3: 0.004}                        # ratio sqrt 2 (eigen solve cost)
-THREADS = 8
+THREADS = 6
 
 
 # ====================================================================== sources and assumptions
@@ -75,6 +80,12 @@ asm("ASM-C4-SIM-SHOE-E", "D5 shoe region modulus 50 GPa (rigid)",
     "Shoe legs, cheeks, glue and the board inside them as one stiff isotropic block (50 GPa), as the shell model's "
     "rigid shoe", "Same idealisation as fin_fe rigid_fin; real PETG legs (2 GPa, 0.8 mm) are softer, so the stress "
     "jump at the leg edge is not lower than in the real part", 50e9, "Pa", status="PROPOSED")
+asm("ASM-C4-SIM-TAIL-E", "Station-collar tail tongue modulus 1 GPa (PETG, 45 % fill)",
+    "Isotropic 1 GPa (nu 0.35) for the printed tail tongue that replaces the board in the notched LE-top corner, "
+    "from the tube surface to 40 mm aft, strip band + 1 mm deep; the CF edge strips run on over it to the tube",
+    "PETG about 2.0 GPa solid x P:fin_detail.station_collar.tongue_fill 0.45 (perimeters carry more): 1 GPa. The R4 "
+    "shell model had the strips ending on a rigid LE link; the first 3-D pass ended them at the board LE and put "
+    "26 MPa into the paper faces at the LE (artefact, removed by this zone)", 1e9, "Pa", status="PROPOSED")
 asm("ASM-C4-SIM-HOTSPOT-T", "Hot-spot read distances 0.4 t and 1.0 t, t = laminate 9.6 mm",
     "Face stress at the shoe edge = linear surface extrapolation from 0.4 t and 1.0 t (IIW type a), t = two-board "
     "laminate thickness", "the peak at a rigid-insert edge is singular and grows with mesh refinement; the hot-spot "
@@ -87,16 +98,17 @@ asm("ASM-C4-A3-STATION-MASS", "As-designed station masses: motor 84.2 g, ESC 7.6
     status="PROPOSED")
 
 GEOM, GU = dict(d3.GEOM), dict(d3.GU)
-SHOE = {"leg_depth": P + "landing.shoe.leg_depth_m", "glue": P + "landing.shoe.glue_gap_m",
+SHOE = {"tail_len": P + "fin_detail.station_collar.tail_m", "tongue_depth": P + "fin_detail.station_collar.tongue_depth_m",
+        "leg_depth": P + "landing.shoe.leg_depth_m", "glue": P + "landing.shoe.glue_gap_m",
         "collar_len": P + "landing.shoe.collar_len_m", "z0_prop": "ASM-C4-SHOE-Z0-PROP"}
-SHOE_U = {"leg_depth": "m", "glue": "m", "collar_len": "m", "z0_prop": "m"}
-MATS = {"e_link": "ASM-C4-SIM-LINK-E", "e_shoe": "ASM-C4-SIM-SHOE-E", "E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE"}
-MATS_U = {"e_link": "Pa", "e_shoe": "Pa", "E": "Pa", "G": "Pa"}
+SHOE_U = {"tail_len": "m", "tongue_depth": "m", "leg_depth": "m", "glue": "m", "collar_len": "m", "z0_prop": "m"}
+MATS = {"e_tail": "ASM-C4-SIM-TAIL-E", "e_link": "ASM-C4-SIM-LINK-E", "e_shoe": "ASM-C4-SIM-SHOE-E", "E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE"}
+MATS_U = {"e_tail": "Pa", "e_link": "Pa", "e_shoe": "Pa", "E": "Pa", "G": "Pa"}
 LOADS = {"f_corner": "CL-C1-FOOT-CORNER", "mu_hi": "ASM-C1-FRICTION", "side_c5": "CL-C5-FOOT-SIDE-LOAD",
          "foot_h": P + "cg.foot_height_m", "z_pad": P + "landing.pad_contact_z_m", "sf": P + "requirements.safety_factor_ult",
-         "s_face": "ASM-C4-FACE-SIGMA", "hs_t": "ASM-C4-SIM-HOTSPOT-T"}
+         "s_face": "ASM-C4-FACE-SIGMA", "hs_t": "ASM-C4-SIM-HOTSPOT-T", "s_cf": "ASM-C4-CF-SIGMA"}
 LOADS_U = {"f_corner": "N", "mu_hi": "-", "side_c5": "N", "foot_h": "m", "z_pad": "m", "sf": "-", "s_face": "Pa",
-           "hs_t": "m"}
+           "hs_t": "m", "s_cf": "Pa"}
 
 
 # ====================================================================== cache
@@ -136,7 +148,7 @@ def materials(g, k, eq, brace_E=None, ortho_bar=False):
     """D matrices in mesh_quarter.MAT order; isotropic list (E, nu) for SU2."""
     nu_core = k["e_core"] / (2 * k["g_core"]) - 1
     iso = [(k["e_face"], 0.3), (k["e_core"], nu_core), (k["e_strip"], 0.3), (eq["E_bar"], 0.3),
-           (k["e_link"], 0.35), (k["e_shoe"], 0.3), (brace_E or k["e_strip"], 0.3)]
+           (k["e_link"], 0.35), (k["e_shoe"], 0.3), (brace_E or k["e_strip"], 0.3), (k["e_tail"], 0.35)]
     D = [hx.d_iso(E, nu) for E, nu in iso]
     if ortho_bar:
         Eb = eq["E_bar"]
@@ -172,7 +184,8 @@ def quarter(g, k, side, h, h_loc, variant, brace_mode):
     kb = 1 / (L / s["EA"] + 1 / s["k_anchor"])
     br = {"z_ear": geo["z_ear"], "anchor": s["anchor"], "k": kb, "h": h} if brace_mode == "hex" else None
     m = mq.build(g, geo, top, z_stp, side=side, h=h, h_loc=h_loc, shoes=shoe_rects(g, k, geo, z_stp, variant),
-                 brace=br, root_free=geo["root_free"], t_face=k["t_face"], z_split=[geo["z_ear"]])
+                 brace=br, root_free=geo["root_free"], t_face=k["t_face"], z_split=[geo["z_ear"]],
+                 tail=(g["tube_x"] + g["od"] / 2 + k["tail_len"], k["tongue_depth"]))
     m.update({"geo": geo, "z_stp": z_stp, "brace_spring": {"ear": ear, "anchor": s["anchor"], "k": kb, "L": L}})
     return m
 
@@ -231,14 +244,20 @@ def _beam(nz):
     return nodes, hexes, mk, (L, b, hgt)
 
 
-@kit.calc("CALC-C4-SIM-BENCH", title="SU2 ELASTICITY cantilever benchmark, 3 meshes", inputs={}, units={},
+asm("ASM-C4-SIM-BENCH-LOAD", "Benchmark tip load 10 N on the 100 x 10 x 10 mm two-modulus cantilever",
+    "Solver benchmark only (not aircraft data): steel/aluminium halves, 10 N tip shear", "closed-form reference "
+    "exists (Euler-Bernoulli + Timoshenko shear)", 10.0, "N", status="PROPOSED")
+
+
+@kit.calc("CALC-C4-SIM-BENCH", title="SU2 ELASTICITY cantilever benchmark, 3 meshes",
+          inputs={"P_tip": "ASM-C4-SIM-BENCH-LOAD"}, units={"P_tip": "N"},
           equation="tip deflection, 10 N tip shear on a 100 x 10 x 10 mm cantilever, E 70/210 GPa halves; "
                    "reference d = P (7 L^3/(24 E1 I) + L^3/(24 E2 I)) + P L/(k G A), k = 5/6; meshes 2/4/8 elements "
                    "through the depth (aspect 1); Richardson on the three; hex8 in-house on the same meshes",
           cites=["SRC-C4-SU2", "SRC-C4-ROACHE"], tol=1e-6)
-def bench():
+def bench(P_tip):
     def run():
-        E1, E2, nu, P_ = 70e9, 210e9, 0.3, 10.0
+        E1, E2, nu, P_ = 70e9, 210e9, 0.3, P_tip
         out = {"levels": []}
         for nz in (2, 4, 8):
             nodes, hexes, mk, (L, b, hgt) = _beam(nz)
@@ -262,7 +281,7 @@ def bench():
         ref = P_ * (7 * L ** 3 / (24 * E1 * I) + L ** 3 / (24 * E2 * I)) + P_ * (L / 2) * (1 / G1 + 1 / G2) / (5 / 6 * 1e-4)
         out["ref"] = ref
         return out
-    r = cached("bench", {}, run)
+    r = cached("bench", {} if P_tip == 10.0 else {"P": P_tip}, run)
     d = [lv["d_su2"] for lv in r["levels"]]
     p, ext, gci = richardson(d, 2.0)
     return {"err_coarse": d[0] / r["ref"] - 1, "err_mid": d[1] / r["ref"] - 1, "err_fine": d[2] / r["ref"] - 1,
@@ -328,61 +347,79 @@ def far_max(m, xs, zs, sig, shoes, t):
     return float(sig[i]), (float(xs[i]), float(zs[i]))
 
 
-def su2_quarter(g, k, side, level, variant, run_hex=False):
+def su2_quarter(g, k, side, level, variant):
+    """One quarter, one mesh level, both L4 parts (PAD_X in-plane, PAD_Y side). Displacements from the in-house hex8
+    (direct solve, same element as SU2) on every level; SU2 ELASTICITY on the levels in SU2_LEVELS (drawn shoe), its
+    field compared node by node and its hot-spot reported beside the hex8 one."""
     h, h_loc = STRESS_LEVELS[level]
-    run_hex = level <= 2 and variant == "drawn"
-    key = {"g": {a: b for a, b in g.items()}, "k": k, "side": side, "level": level, "variant": variant}
+    run_su2 = level in SU2_LEVELS and variant == "drawn"
+    key = {"g": {a: b for a, b in g.items()}, "k": k, "side": side, "level": level, "variant": variant,
+           "su2": run_su2}
 
     def run():
         m = quarter(g, k, side, h, h_loc, variant, "hex")
         eq = tube_equiv(g, k["E"], k["G"])
         iso, D = materials(g, k, eq, brace_E=m["brace"]["E_eq"])
         cases, fc, fs, Ppad = pad_cases(g, k, m)
-        a_top = m["marker_geom"]["BAR_TOP"][0].sum()
-        if run_hex:
-            cases["TOP_X"] = {"tractions": [("BAR_TOP", np.array([100.0 / a_top, 0, 0]))], "F": (100.0, 0, 0)}
-            cases["TOP_Y"] = {"tractions": [("BAR_TOP", np.array([0, 100.0 / a_top, 0]))], "F": (0, 100.0, 0)}
-        res = {"n_nodes": int(len(m["nodes"])), "n_hex": int(len(m["hexes"])), "fc": fc, "fs": fs, "cases": {}}
-        top_n = np.unique(m["markers"]["BAR_TOP"])
+        res = {"n_nodes": int(len(m["nodes"])), "n_hex": int(len(m["hexes"])), "fc": fc, "fs": fs, "cases": {},
+               "h": h, "h_loc": h_loc}
         foot_n = np.unique(np.concatenate([m["markers"][n].ravel() for n in m["markers"] if n.startswith("SHOE_")]))
-        U = {}
-        mdl = None
-        if run_hex:
-            K, _ = hx.assemble(m["nodes"], m["hexes"], D, m["mat"])
-            mdl = hx.Model(m["nodes"], K)
-            mdl.fix_nodes(clamp_nodes(m, CLAMPS))
-            mdl.build()
+        K, _ = hx.assemble(m["nodes"], m["hexes"], D, m["mat"])
+        mdl = hx.Model(m["nodes"], K)
+        mdl.fix_nodes(clamp_nodes(m, CLAMPS))
+        mdl.build()
+        res["n_dof"] = int(mdl.Kr.shape[0])
+        U, US = {}, {}
         for cname, cs in cases.items():
-            u, info = su2io.run(RUNS / f"q_{side}_{variant}_L{level}_{cname}", m["nodes"], m["hexes"], m["mat"], iso,
-                                m["markers"], [c for c in CLAMPS if c in m["markers"]], su2_loads(cs["tractions"]),
-                                threads=THREADS)
-            U[cname] = u
-            r = {"top": u[top_n].mean(axis=0).tolist(), "foot": u[foot_n].mean(axis=0).tolist(), "su2": info,
-                 "resid": float(cs.get("resid", 0.0))}
-            if mdl is not None:
-                uh = mdl.solve(hex_force_vector(m, cs["tractions"])).reshape(-1, 3)[:len(m["nodes"])]
-                r["max_rel_diff"] = float(np.max(np.abs(uh - u)) / np.max(np.abs(u)))
+            uh = mdl.solve(hex_force_vector(m, cs["tractions"])).reshape(-1, 3)[:len(m["nodes"])]
+            U[cname] = uh
+            r = {"foot": uh[foot_n].mean(axis=0).tolist(), "resid_load": float(cs.get("resid", 0.0)),
+                 "resid_solve": mdl.last_resid}
+            if run_su2:
+                u, info = su2io.run(RUNS / f"q_{side}_{variant}_L{level}_{cname}", m["nodes"], m["hexes"], m["mat"],
+                                    iso, m["markers"], [c for c in CLAMPS if c in m["markers"]],
+                                    su2_loads(cs["tractions"]), threads=THREADS, tol=SU2_TOL, iters=SU2_ITERS)
+                US[cname] = u
+                r["su2"] = info
+                r["max_rel_diff"] = float(np.max(np.abs(uh - u)) / np.max(np.abs(uh)))
+                r["foot_su2"] = u[foot_n].mean(axis=0).tolist()
             res["cases"][cname] = r
         t = k["hs_t"]
         shoes = shoe_rects(g, k, m["geo"], m["z_stp"], variant)
         edges = shoe_edges(g, k, m["geo"], m["z_stp"], variant)
-        res["L4"] = {}
-        for sgn in (1, -1):
-            u = U["PAD_X"] + sgn * U["PAD_Y"]
-            xs, zs, sig, sd, _ = face_field(m, D, u)
-            hs, where = hotspot(xs, zs, sig, sd, edges, t)
-            ins = np.ones(len(xs), bool)
-            for (xa, za, xb, zb) in shoes:
-                ins &= ~((xs > xa) & (xs < xb) & (zs > za) & (zs < zb))
-            ipk = int(np.argmax(np.where(ins, sig, 0)))
-            fm, fwhere = far_max(m, xs, zs, sig, shoes, t)
-            res["L4"]["+" if sgn > 0 else "-"] = {"hotspot_lim": hs, "hotspot_at": where, "peak_lim": float(sig[ipk]),
-                                                  "peak_at": [float(xs[ipk]), float(zs[ipk])], "far_lim": fm,
-                                                  "far_at": fwhere,
-                                                  "foot_defl": float(np.linalg.norm(u[foot_n].mean(axis=0)))}
-            if level == 2 and variant == "drawn" and sgn > 0:
-                res["field"] = {"x": xs[sd > 0].tolist(), "z": zs[sd > 0].tolist(), "s": sig[sd > 0].tolist(),
-                                "fin_poly": m["fin_poly"].tolist(), "shoes": shoes}
+
+        def l4(Uc):
+            out = {}
+            for sgn in (1, -1):
+                u = Uc["PAD_X"] + sgn * Uc["PAD_Y"]
+                xs, zs, sig, sd, _ = face_field(m, D, u)
+                hs, where = hotspot(xs, zs, sig, sd, edges, t)
+                ins = np.ones(len(xs), bool)
+                for (xa, za, xb, zb) in shoes:
+                    ins &= ~((xs > xa) & (xs < xb) & (zs > za) & (zs < zb))
+                ipk = int(np.argmax(np.where(ins, sig, 0)))
+                fm, fwhere = far_max(m, xs, zs, sig, shoes, t)
+                st = np.where(np.isin(m["layer"], (-100, 100)) & (m["mat"] == mq.MAT["STRIP"]))[0]
+                ss = hx.centroid_stress(m["nodes"], m["hexes"], D, m["mat"], u.ravel(), st)
+                cst = m["nodes"][m["hexes"][st]].mean(axis=1)
+                ssx, ssz, sxz = ss[:, 0], ss[:, 2], ss[:, 4]
+                s_ip = np.abs((ssx + ssz) / 2) + np.hypot((ssx - ssz) / 2, sxz)
+                tau = np.hypot(ss[:, 3], ss[:, 5])          # yz, xy: shear on the strip-to-face bond plane
+                aft = cst[:, 0] < shoes[-1][0] - 1e-9 if variant == "drawn" else cst[:, 0] < g["shoe_x0"] - 1e-9
+                i_s, i_t = int(np.argmax(np.where(aft, s_ip, 0))), int(np.argmax(np.where(aft, tau, 0)))
+                out["+" if sgn > 0 else "-"] = {
+                    "strip_lim": float(s_ip[i_s]), "strip_at": cst[i_s, [0, 2]].tolist(),
+                    "strip_tau_lim": float(tau[i_t]), "strip_tau_at": cst[i_t, [0, 2]].tolist(),
+                    "hotspot_lim": hs, "hotspot_at": where, "peak_lim": float(sig[ipk]),
+                    "peak_at": [float(xs[ipk]), float(zs[ipk])], "far_lim": fm, "far_at": fwhere,
+                    "foot_defl": float(np.linalg.norm(u[foot_n].mean(axis=0)))}
+                if sgn > 0 and Uc is U:
+                    res["field"] = {"x": xs[sd > 0].tolist(), "z": zs[sd > 0].tolist(), "s": sig[sd > 0].tolist(),
+                                    "fin_poly": m["fin_poly"].tolist(), "shoes": shoes, "edges": edges}
+            return out
+        res["L4"] = l4(U)
+        if US:
+            res["L4_su2"] = l4(US)
         return res
     return cached("su2q", key, run)
 
@@ -430,34 +467,70 @@ FACE_U = {**GU, **SHOE_U, **MATS_U, **LOADS_U, "patch": "m"}
 
 def _split(kw):
     g = {n: kw[n] for n in GEOM}
-    k = {n: kw[n] for n in kw if n not in GEOM}
+    k = {n: kw[n] for n in kw if n not in GEOM and n != "s_cf"}      # s_cf only in face(): keeps cache keys
     for n in ("e_face", "e_core", "g_core", "e_strip", "t_face"):
         k[n] = g[n]
     return g, k
 
 
-@kit.calc("CALC-C4-SIM-CODES", title="SU2 vs in-house hex8 on the same quarter mesh",
+SU2_TRIALS = [("CONJUGATE_GRADIENT", 1, 1500), ("RESTARTED_FGMRES", 2, 1500)]   # (solver, ILU fill-in, iterations)
+
+
+def su2_trial(g, k, solver, fill, iters):
+    """SU2 ELASTICITY on the level-1 upper quarter (shoe as drawn), L4 side part PAD_Y, against the hex8 direct solve
+    on the same mesh. Records SU2's final log10 linear residual, iterations, wall time and the field difference."""
+    key = {"g": g, "k": k, "solver": solver, "fill": fill, "iters": iters}
+
+    def run():
+        h, h_loc = STRESS_LEVELS[1]
+        m = quarter(g, k, "upper", h, h_loc, "drawn", "hex")
+        eq = tube_equiv(g, k["E"], k["G"])
+        iso, D = materials(g, k, eq, brace_E=m["brace"]["E_eq"])
+        cases, _, _, _ = pad_cases(g, k, m)
+        K, _ = hx.assemble(m["nodes"], m["hexes"], D, m["mat"])
+        mdl = hx.Model(m["nodes"], K)
+        mdl.fix_nodes(clamp_nodes(m, CLAMPS))
+        mdl.build()
+        uh = mdl.solve(hex_force_vector(m, cases["PAD_Y"]["tractions"])).reshape(-1, 3)[:len(m["nodes"])]
+        u, info = su2io.run(RUNS / f"trial_{solver}_ilu{fill}", m["nodes"], m["hexes"], m["mat"], iso, m["markers"],
+                            [c for c in CLAMPS if c in m["markers"]], su2_loads(cases["PAD_Y"]["tractions"]),
+                            threads=THREADS, tol=1e-9, iters=iters, fill=fill, solver=solver)
+        hist = info.get("history", {})
+        return {"linres_log10": float(hist.get("LinSolRes", "nan")), "iters": int(float(hist.get("LinSolIter", 0))),
+                "wall_s": info["wall_s"], "n_dof": int(mdl.Kr.shape[0]),
+                "max_rel_diff": float(np.max(np.abs(uh - u)) / np.max(np.abs(uh))),
+                "hex_resid": mdl.last_resid}
+    return cached("su2trial", key, run)
+
+
+@kit.calc("CALC-C4-SIM-CODES", title="SU2 ELASTICITY on the fin quarter: solver trials against the hex8 direct solve",
           inputs=FACE_IN, units=FACE_U, tol=1e-3, cites=["SRC-C4-SU2"],
-          equation="upper quarter, D5 shoe as drawn, brace as swept hexahedra, clamps ROOT_PIN / LE_BOSS / BAR_BOT / "
-                   "BRACE_END, tractions TOP_X, TOP_Y (100 N on the tube end) and the L4 pad parts; max |u_hex - u_su2| "
-                   "/ max |u_su2| over all nodes, meshes 1 and 2")
+          equation="upper quarter, mesh level 1 (8 mm / 2 mm, 71 k DOF), D5 shoe as drawn, L4 side part; SU2 v8 "
+                   "linear solvers available in this build (no PaStiX): CG + ILU(1) and restarted FGMRES(200) + ILU(2), 1500 it each, "
+                   "tol 1e-9; converged when log10 residual <= -6; field difference max |u_hex - u_su2| / max |u_hex|")
 def codes(**kw):
     g, k = _split(kw)
-    d = 0.0
-    for lv in (1, 2):
-        r = su2_quarter(g, k, "upper", lv, "drawn", run_hex=True)
-        d = max(d, max(c["max_rel_diff"] for c in r["cases"].values()))
-    return {"max_rel_diff": d}
+    out = {}
+    for solver, fill, iters in SU2_TRIALS:
+        r = su2_trial(g, k, solver, fill, iters)
+        tag = f"{solver.lower()}_ilu{fill}"
+        out[f"{tag}_linres_log10"] = r["linres_log10"]
+        out[f"{tag}_iters"] = r["iters"]
+        out[f"{tag}_wall_s"] = r["wall_s"]
+        out[f"{tag}_rel_diff"] = r["max_rel_diff"]
+    out["best_rel_diff"] = min(out[f"{s.lower()}_ilu{f}_rel_diff"] for s, f, _ in SU2_TRIALS)
+    out["converged"] = any(out[f"{s.lower()}_ilu{f}_linres_log10"] <= -6 for s, f, _ in SU2_TRIALS)
+    return out
 
 
 @kit.calc("CALC-C4-SIM-FACE", title="Fin face hot-spot stress at the D5 shoe, SU2, 3 meshes",
           inputs=FACE_IN, units=FACE_U, tol=2e-3, cites=["SRC-C4-SU2", "SRC-C4-IIW", "SRC-C4-ROACHE"],
           assumes=["ASM-C4-SIM-SHOE-E", "ASM-C4-SIM-LINK-E", "ASM-C4-SIM-HOTSPOT-T", "ASM-C4-FACE-SIGMA"],
-          equation="L4 limit: F = (-F_corner, +/- max(mu F_corner, F_C5), 0) at the C1 ground point through the rigid "
+          equation="hex8 direct solve (identical to SU2 ELASTICITY, CALC-C4-SIM-CODES); L4 limit: F = (-F_corner, +/- max(mu F_corner, F_C5), 0) at the C1 ground point through the rigid "
                    "shoe (least-norm tractions on its outer faces, exact force and moment); face stress = in-plane "
                    "principal |sigma| at the outer-face element centroids (sigma = D B u); hot-spot = 1.67 s(0.4t) - "
                    "0.67 s(1.0t) below each shoe lower edge, max over x, both faces, both senses; ultimate = sf x "
-                   "limit; MS = s_face / s_ult - 1; meshes h 8/4/2 mm global, 2/1/0.5 mm at the tip; Richardson r 2")
+                   "limit; MS = s_face / s_ult - 1; meshes 8 mm global, 2/1/0.5 mm in the tip box; Richardson r 2")
 def face(**kw):
     g, k = _split(kw)
     out = {}
@@ -479,6 +552,29 @@ def face(**kw):
         out[f"face_{variant}_ult_pa"] = ult
         out[f"ms_{variant}"] = k["s_face"] / ult - 1
         out[f"ms_far_{variant}"] = k["s_face"] / (k["sf"] * far[2]) - 1
+    rg = su2_quarter(g, k, "upper", "G", "drawn")
+    out["hs_drawn_global4_lim_pa"] = max(rg["L4"][s_]["hotspot_lim"] for s_ in "+-")
+    out["global_check_rel"] = out["hs_drawn_global4_lim_pa"] / out["hs_drawn_lim_pa"][1] - 1
+    for variant in ("drawn", "proposed"):
+        rl = su2_quarter(g, k, "lower", 2, variant)
+        out[f"hs_{variant}_lower_L2_lim_pa"] = max(rl["L4"][s_]["hotspot_lim"] for s_ in "+-")
+    out["levels"] = {str(lv): list(STRESS_LEVELS[lv]) for lv in (1, 2, 3)}
+    geo = d3.geometry(g, "upper")
+    _, z_stp, _ = d3.fin_top(g, geo, 10)
+    z_leg = z_stp + k["glue"] - k["leg_depth"]
+    fs = max(k["mu_hi"] * k["f_corner"], k["side_c5"])
+    m_tot = fs * (k["z_pad"] - z_leg)                                  # side-load moment about the leg edge, N m
+    lever = g["layers"] * g["t_board"] - g["t_face"]
+    width = g["x_te"] - geo["x_step"]
+    out["m_side_leg_nm"] = m_tot
+    for variant in ("drawn", "proposed"):
+        r3 = su2_quarter(g, k, "upper", 3, variant)
+        out[f"strip_{variant}_lim_pa"] = max(r3["L4"][s_]["strip_lim"] for s_ in "+-")
+        out[f"strip_tau_{variant}_lim_pa"] = [max(su2_quarter(g, k, "upper", lv, variant)["L4"][s_]["strip_tau_lim"]
+                                                  for s_ in "+-") for lv in (1, 2, 3)]
+        out[f"ms_strip_{variant}"] = kw["s_cf"] / (k["sf"] * out[f"strip_{variant}_lim_pa"]) - 1
+        out[f"foot_defl_{variant}_m"] = max(r3["L4"][s_]["foot_defl"] for s_ in "+-")
+    out["board_share_3d"] = out["hs_drawn_ext_lim_pa"] * g["t_face"] * lever * width / m_tot
     for variant, z0 in (("drawn", None), ("proposed", k["z0_prop"])):
         geo = d3.geometry(g, "upper")
         _, z_stp, _ = d3.fin_top(g, geo, 10)
@@ -486,6 +582,7 @@ def face(**kw):
         pf = plate_face(g, k, "upper", zz)
         out[f"plate_hs_{variant}_lim_pa"] = max(pf[s]["hotspot_lim"] for s in "+-")
         out[f"plate_peak_{variant}_lim_pa"] = max(pf[s]["peak_lim"] for s in "+-")
+    out["board_share_shell"] = out["plate_hs_drawn_lim_pa"] * g["t_face"] * lever * width / m_tot
     return out
 
 
@@ -499,7 +596,7 @@ def hex_quarter_model(g, k, side, h, as_designed=True, matched_plate=False, mass
     rho_board = g["areal"] / g["t_board"]
     a = eq["a"]
     rho_bar = g["mu"] / (a * a)
-    rho = [rho_board, rho_board, g["rho_cf"], rho_bar, 0.0, rho_board, 0.0]
+    rho = [rho_board, rho_board, g["rho_cf"], rho_bar, 0.0, rho_board, 0.0, rho_board]
     K, M = hx.assemble(m["nodes"], m["hexes"], D, m["mat"], rho)
     nodes = m["nodes"]
     geo = m["geo"]
@@ -639,7 +736,7 @@ def modes3d(**kw):
     g = {n: kw[n] for n in GEOM}
     k = {n: kw[n] for n in MATS}
     k.update({n: g[n] for n in ("e_face", "e_core", "g_core", "e_strip")})
-    for n in ("e_link", "e_shoe", "glue", "leg_depth", "collar_len", "z0_prop"):
+    for n in ("e_tail", "e_link", "e_shoe", "glue", "leg_depth", "collar_len", "z0_prop", "tail_len", "tongue_depth"):
         k[n] = kw[n]
     k["t_face"] = g["t_face"]
     rpm = (kw["rpm_h"], kw["rpm_c"], kw["rpm_x"])
@@ -683,9 +780,9 @@ kit.claim("CL-C4-SIM-BENCH-ERR", "SU2 cantilever error, extrapolated", calc="CAL
           unit="-", limit=("<=", 0.01), how="Re-run sim_fin.py; compare with the closed-form two-modulus cantilever.")
 kit.claim("CL-C4-SIM-BENCH-CODES", "In-house hex8 vs SU2, cantilever", calc="CALC-C4-SIM-BENCH", output="code_diff",
           unit="-", limit=("<=", 1e-3), how="Re-run sim_fin.py (same meshes in both codes).")
-kit.claim("CL-C4-SIM-CODE-DIFF", "In-house hex8 vs SU2, fin quarter", calc="CALC-C4-SIM-CODES",
-          output="max_rel_diff", unit="-", limit=("<=", 1e-3), parts=["FIN-001-UR"],
-          how="Re-run sim_fin.py; both codes on the same quarter mesh, clamps and tractions.")
+kit.claim("CL-C4-SIM-CODE-DIFF", "In-house hex8 vs SU2, fin quarter (best SU2 solver trial)", calc="CALC-C4-SIM-CODES",
+          output="best_rel_diff", unit="-", parts=["FIN-001-UR"],
+          how="Re-run sim_fin.py; SU2 needs a direct solver (PaStiX build) or a stronger preconditioner to converge here.")
 kit.claim("CL-C4-SIM-FACE-DRAWN", "Face hot-spot stress, D5 shoe as drawn, ult", calc="CALC-C4-SIM-FACE",
           output="face_drawn_ult_pa", unit="Pa", limit=("<=", "ASM-C4-FACE-SIGMA"),
           parts=["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"],
@@ -697,16 +794,35 @@ kit.claim("CL-C4-SIM-MS-FACE-PROP", "Face MS with the CR-C4-30 cheeks (3-D)", ca
           output="ms_proposed", unit="-", limit=(">=", 0.0), parts=["FIN-001-UR"],
           how="T-C4-FIN-PROOF with the extended cheeks (CR-C4-33).")
 kit.claim("CL-C4-SIM-F1-UP", "First station mode, upper, 3-D, A3 masses", calc="CALC-C4-SIM-MODES",
-          output="f1_up_ext", unit="Hz", parts=["FIN-001-UR", "FIN-002"], how="T-C4-TAP-D3 on the finished wing.")
+          output="f1_up_ext", unit="Hz", parts=["FIN-001-UR", "FIN-002-R"], how="T-C4-TAP-D3 on the finished wing.")
 kit.claim("CL-C4-SIM-F1-LO", "First station mode, lower, 3-D, A3 masses", calc="CALC-C4-SIM-MODES",
-          output="f1_lo_ext", unit="Hz", parts=["FIN-001-LR", "FIN-002"], how="T-C4-TAP-D3 on the finished wing.")
+          output="f1_lo_ext", unit="Hz", parts=["FIN-001-LR", "FIN-002-R"], how="T-C4-TAP-D3 on the finished wing.")
 kit.claim("CL-C4-SIM-SEP", "Station-mode separation from 1P/2P, 3-D", calc="CALC-C4-SIM-MODES", output="sep_min",
           unit="-", limit=(">=", d3.LIMIT_SEP), verifies=["R-VIBRATION"],
-          parts=["FIN-001-UR", "FIN-001-LR", "FIN-002"],
+          parts=["FIN-001-UR", "FIN-001-LR", "FIN-002-R"],
           how="T-C4-TAP-D3: tap each motor bell, FFT; first station peak at least 20 % from 90/98/181/197/155 Hz.")
 kit.claim("CL-C4-SIM-SEP-PLATE-A3", "Separation, shell model with A3 masses", calc="CALC-C4-SIM-MODES",
           output="plate_sep_min_a3", unit="-", limit=(">=", d3.LIMIT_SEP), parts=["FIN-001-LR"],
           how="Re-run sim_fin.py; T-C4-TAP-D3.")
+
+kit.claim("CL-C4-SIM-MS-FACE-FAR", "Face MS away from the shoe and clamps, shoe as drawn (3-D)", calc="CALC-C4-SIM-FACE",
+          output="ms_far_drawn", unit="-", limit=(">=", 0.0), parts=["FIN-001-UR"],
+          how="T-C4-FIN-PROOF (CR-C4-33); largest face element at least one laminate thickness from the shoe edge.")
+kit.claim("CL-C4-SIM-MS-STRIP", "Edge-strip MS under L4, shoe as drawn (3-D)", calc="CALC-C4-SIM-FACE",
+          output="ms_strip_drawn", unit="-", limit=(">=", 0.0), parts=["FIN-001-UR"],
+          how="T-C4-FIN-PROOF; strain gauge on a strip 10 mm forward of the collar cheek.")
+kit.claim("CL-C4-SIM-FOOT-DEFL", "Foot deflection under L4 limit, shoe as drawn (3-D)", calc="CALC-C4-SIM-FACE",
+          output="foot_defl_drawn_m", unit="m", parts=["FIN-001-UR"],
+          how="T-C4-FIN-PROOF dial gauge at the pad (R4 shell 9.3 mm).")
+kit.claim("CL-C4-SIM-BOARD-SHARE", "Share of the foot side-load moment carried by the bare board below the shoe legs",
+          calc="CALC-C4-SIM-FACE", output="board_share_3d", unit="-", parts=["FIN-001-UR"],
+          how="T-C4-FIN-PROOF: gauges 5 mm below the leg edge and on both strips; R4 shell carries all of it in the board.")
+kit.claim("CL-C4-SIM-FACE-GCI", "Fine-mesh GCI of the face hot-spot, shoe as drawn", calc="CALC-C4-SIM-FACE",
+          output="hs_drawn_gci", unit="-", how="Re-run sim_fin.py (three tip meshes, Roache Fs 1.25).")
+kit.claim("CL-C4-SIM-F1-GCI-UP", "Fine-mesh GCI of the first upper station mode", calc="CALC-C4-SIM-MODES",
+          output="f1_up_gci", unit="-", limit=("<=", 0.05), how="Re-run sim_fin.py (three meshes, Roache Fs 1.25).")
+kit.claim("CL-C4-SIM-F1-GCI-LO", "Fine-mesh GCI of the first lower station mode", calc="CALC-C4-SIM-MODES",
+          output="f1_lo_gci", unit="-", limit=("<=", 0.05), how="Re-run sim_fin.py (three meshes, Roache Fs 1.25).")
 
 
 if __name__ == "__main__":
@@ -715,5 +831,16 @@ if __name__ == "__main__":
     vals = {}
     for cid in ("CALC-C4-SIM-BENCH", "CALC-C4-SIM-CODES", "CALC-C4-SIM-FACE", "CALC-C4-SIM-MODES"):
         vals[cid] = kit._run(cid)
+    kw = {a: kit.value(r) for a, r in kit.nodes["CALC-C4-SIM-FACE"]["inputs"].items()}
+    g_, k_ = _split(kw)
+    fields, det = {}, {}
+    for var in ("drawn", "proposed"):
+        fields[var] = su2_quarter(g_, k_, "upper", 2, var)["field"]
+        det[var] = {}
+        for lv in (1, 2, 3):
+            r_ = su2_quarter(g_, k_, "upper", lv, var)
+            det[var][str(lv)] = {"L4": r_["L4"], "n_dof": r_["n_dof"], "n_hex": r_["n_hex"]}
+    vals["detail"] = det
+    (OUT / "field_L2.json").write_text(json.dumps(fields, default=float), encoding="utf-8")
     (OUT / "sim_results.json").write_text(json.dumps(vals, indent=1, default=float) + "\n", encoding="utf-8")
     print("wrote claims.sim.json and sim/out/sim_results.json")

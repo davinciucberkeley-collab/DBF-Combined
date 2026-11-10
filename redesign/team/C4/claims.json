@@ -651,7 +651,7 @@
     "e_dz": 0.0,
     "rho_cf": 1550.0,
     "rpm_h": 5415.791721033196,
-    "rpm_c": 5893.84461466498,
+    "rpm_c": 5945.8472778193645,
     "rpm_x": 9319.452696615961,
     "E": 100000000000.0,
     "G": 5000000000.0,
@@ -820,7 +820,7 @@
     "e_dz": 0.0,
     "rho_cf": 1550.0,
     "rpm_h": 5415.791721033196,
-    "rpm_c": 5893.84461466498,
+    "rpm_c": 5945.8472778193645,
     "rpm_x": 9319.452696615961,
     "E": 100000000000.0,
     "G": 5000000000.0,
@@ -946,7 +946,7 @@
     "f_st1": 390.13847999995977,
     "f_st2": 422.873570331069,
     "f_panel": 66.4231124431628,
-    "sep_op": 0.985826767620694,
+    "sep_op": 0.9684586322390849,
     "sep_band": 0.18223781818169638
    },
    "input_values": {
@@ -989,7 +989,7 @@
     "e_dz": 0.0,
     "rho_cf": 1550.0,
     "rpm_h": 5415.791721033196,
-    "rpm_c": 5893.84461466498,
+    "rpm_c": 5945.8472778193645,
     "rpm_x": 9319.452696615961,
     "E": 100000000000.0,
     "G": 5000000000.0,
@@ -1115,7 +1115,7 @@
     "f_st1": 293.9267439435253,
     "f_st2": 305.9650878230089,
     "f_panel": 54.02539493021223,
-    "sep_op": 0.49610362926186213,
+    "sep_op": 0.4830186357460029,
     "sep_band": -0.10931289714083237
    },
    "input_values": {
@@ -1158,7 +1158,7 @@
     "e_dz": 0.0,
     "rho_cf": 1550.0,
     "rpm_h": 5415.791721033196,
-    "rpm_c": 5893.84461466498,
+    "rpm_c": 5945.8472778193645,
     "rpm_x": 9319.452696615961,
     "E": 100000000000.0,
     "G": 5000000000.0,
@@ -1282,7 +1282,7 @@
     "ASM-C4-G-TUBE-HI"
    ],
    "outputs": {
-    "sep_op_worst": 0.9234584704073105,
+    "sep_op_worst": 0.9066358111201851,
     "f_station_min": 377.8855115780623
    },
    "input_values": {
@@ -1325,7 +1325,7 @@
     "e_dz": 0.0,
     "rho_cf": 1550.0,
     "rpm_h": 5415.791721033196,
-    "rpm_c": 5893.84461466498,
+    "rpm_c": 5945.8472778193645,
     "rpm_x": 9319.452696615961,
     "layers": 2,
     "E0": 100000000000.0,
@@ -1451,7 +1451,7 @@
     "ASM-C4-G-TUBE-HI"
    ],
    "outputs": {
-    "sep_op_worst": 0.4405061736503053,
+    "sep_op_worst": 0.4279074381261696,
     "f_station_min": 283.00398513201696
    },
    "input_values": {
@@ -1494,7 +1494,7 @@
     "e_dz": 0.0,
     "rho_cf": 1550.0,
     "rpm_h": 5415.791721033196,
-    "rpm_c": 5893.84461466498,
+    "rpm_c": 5945.8472778193645,
     "rpm_x": 9319.452696615961,
     "layers": 1,
     "E0": 100000000000.0,
@@ -1757,7 +1757,7 @@
     "ASM-C1-BELL-INERTIA"
    ],
    "outputs": {
-    "sep_whirl": 0.9833049180773938
+    "sep_whirl": 0.9659148572211216
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1799,7 +1799,7 @@
     "e_dz": 0.0,
     "rho_cf": 1550.0,
     "rpm_h": 5415.791721033196,
-    "rpm_c": 5893.84461466498,
+    "rpm_c": 5945.8472778193645,
     "rpm_x": 9319.452696615961,
     "E": 100000000000.0,
     "G": 5000000000.0,
@@ -2619,7 +2619,7 @@
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.985826767620694
+   "value": 0.9684586322390849
   },
   {
    "id": "CL-C4-SEP-REC-WORST",
@@ -2638,7 +2638,7 @@
    ],
    "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the US-stock tube (I1), then T-C4-TAP.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.9234584704073105
+   "value": 0.9066358111201851
   },
   {
    "id": "CL-C4-SEP-REC-WHIRL",
@@ -2657,7 +2657,7 @@
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.9833049180773938
+   "value": 0.9659148572211216
   },
   {
    "id": "CL-C4-SEP-BAND-REC",
@@ -2718,7 +2718,7 @@
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.49610362926186213
+   "value": 0.4830186357460029
   },
   {
    "id": "CL-C4-SEP-1LB-WORST",
@@ -2737,7 +2737,7 @@
    ],
    "how": "Passes only if the measured tube E and G are near nominal (T-C4-TUBE-BEND/TORSION).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.4405061736503053
+   "value": 0.4279074381261696
   },
   {
    "id": "CL-C4-MS-FACE-2L",

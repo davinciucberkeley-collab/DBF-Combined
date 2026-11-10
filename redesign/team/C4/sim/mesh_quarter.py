@@ -13,7 +13,7 @@ import math
 
 import numpy as np
 
-MAT = {"FACE": 0, "CORE": 1, "STRIP": 2, "BAR": 3, "LINK": 4, "SHOE": 5, "BRACE": 6}
+MAT = {"FACE": 0, "CORE": 1, "STRIP": 2, "BAR": 3, "LINK": 4, "SHOE": 5, "BRACE": 6, "TAIL": 7}
 
 
 def _poly_contains(poly, pts):
@@ -29,7 +29,7 @@ def _poly_contains(poly, pts):
     return inside
 
 
-def planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, z_split):
+def planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, z_split, tail=None):
     """gmsh all-quad planform mesh. Returns xz (n, 2), quads (m, 4) CCW in (x, z), zone label per quad."""
     import gmsh
     gmsh.initialize(["-noenv"])
@@ -57,6 +57,13 @@ def planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, z_split):
     dw = g["e_w"] * math.sqrt(1 + slope * slope)
     strip = poly([(x_le, z_tl), (x_s, g["hh"]), (x_s, g["hh"] - dw), (x_le, z_tl - dw)])
     tools = [(2, strip)]
+    xb = x_t + a_bar / 2
+    tools.append((2, poly([(xb, z_tl - dw), (x_le, z_tl - dw), (x_le, z_tl), (xb, z_tl)])))   # strip over the link
+    if tail:                            # station-collar tail tongue under the strip band (D3 R3/R4)
+        x1, td = tail
+        zt1 = z_tl + slope * (x1 - x_le)
+        tools.append((2, poly([(xb, z_tl - dw - td), (x_le, z_tl - dw - td), (x1, zt1 - dw - td), (x1, zt1 - dw),
+                               (x_le, z_tl - dw), (xb, z_tl - dw)])))
     for (xa, za, xb, zb) in shoes:
         tools.append((2, occ.addRectangle(xa, za, 0, xb - xa, zb - za)))
     zs = sorted({z0, *[z for z in z_split if z0 < z < z_end], z_end})
@@ -129,7 +136,10 @@ def planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, z_split):
     return xz, quads, fin_arr, zr
 
 
-def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace=None, root_free=(), z_split=()):
+def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace=None, root_free=(), z_split=(),
+          tail=None):
+    """tail: None or (x_end, depth below the strip band): the PETG collar tail tongue replaces the board there and
+    the edge strips run on over the LE link to the tube bar (strip tails bonded in the collar slots)."""
     """Layered hex mesh. shoes: [(x0, z0, x1, z1)] rigid D5 regions; brace: None or dict(z_ear, anchor (x, y, z),
     k (N/m)). Returns a dict with nodes, hexes, mat, markers and the node sets the drivers need."""
     t_b = g["layers"] * g["t_board"]
@@ -139,7 +149,7 @@ def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace
     z0, z_end, z_tl = geo["z_clamp"], geo["z_end"], geo["z_top_le"]
     box = (geo["x_step"] - 0.035, g["x_te"] + 0.001, z_stp - 0.06, g["hh"] + 0.001)
     splits = list(z_split) + ([brace["z_ear"]] if brace else [])
-    xz, quads, fin_poly, zr = planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, splits)
+    xz, quads, fin_poly, zr = planform(g, geo, top, z_stp, shoes, h, h_loc, box, a_bar, splits, tail)
     c = xz[quads].mean(axis=1)
     zone = np.full(len(quads), "FIN", object)
     in_bar = (np.abs(c[:, 0] - x_t) <= a_bar / 2) & (c[:, 1] >= z0) & (c[:, 1] <= z_end)
@@ -147,13 +157,18 @@ def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace
     slope = (g["hh"] - z_tl) / (geo["x_step"] - geo["x_le"])
     ztop = z_tl + slope * (c[:, 0] - geo["x_le"])
     dw = g["e_w"] * math.sqrt(1 + slope * slope)
-    in_strip = (c[:, 0] > geo["x_le"]) & (c[:, 0] < geo["x_step"]) & (c[:, 1] > ztop - dw)
+    x_s0 = (x_t + a_bar / 2) if tail else geo["x_le"]
+    ztop = np.where(c[:, 0] < geo["x_le"], z_tl, ztop)
+    in_strip = (c[:, 0] > x_s0) & (c[:, 0] < geo["x_step"]) & (c[:, 1] > ztop - dw)
+    in_tail = np.zeros(len(quads), bool)
+    if tail:
+        in_tail = (c[:, 0] > x_s0) & (c[:, 0] < tail[0]) & (c[:, 1] > ztop - dw - tail[1])
     in_shoe = np.zeros(len(quads), bool)
     for (xa, za, xb, zb) in shoes:
         in_shoe |= (c[:, 0] > xa) & (c[:, 0] < xb) & (c[:, 1] > za) & (c[:, 1] < zb)
     zone[in_strip] = "STRIP"
     zone[in_shoe] = "SHOE"
-    zone[in_link] = "LINK"
+    zone[in_link & ~in_strip] = "LINK"
     zone[in_bar] = "BAR"
     # through-thickness levels
     tf, hb = t_face, t_b / 2
@@ -183,6 +198,7 @@ def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace
         kind = kinds[k]
         m = np.array([zmat[z] if zmat[z] is not None else (MAT["CORE"] if kind == "core" else MAT["FACE"])
                       for z in zone])
+        m[in_tail & np.isin(zone, ["FIN", "STRIP", "LINK"])] = MAT["TAIL"]
         mat.append(m)
         lay.append(np.full(len(q), k))
         qid.append(np.arange(len(q)))
@@ -195,6 +211,7 @@ def build(g, geo, top, z_stp, *, side, h, h_loc, shoes, nc=2, t_face=1e-4, brace
         qid.append(sel)
     hexes, mat, lay, qid = np.vstack(hexes), np.concatenate(mat), np.concatenate(lay), np.concatenate(qid)
     out = {"nodes": nodes, "hexes": hexes, "mat": mat, "layer": lay, "quad": qid, "xz": xz, "quads": quads,
+           "in_tail": in_tail,
            "zone": zone, "levels": lv, "kinds": kinds, "y_out": (y_lo, y_hi), "a_bar": a_bar, "fin_poly": fin_poly,
            "zr": zr, "npf": npf}
     if brace:

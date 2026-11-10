@@ -137,11 +137,14 @@ def fig_cp():
     k = {kk.strip().strip('"'): kk for kk in rows[0]}
     x = [float(r[k["x"]]) for r in rows]
     y = [float(r[k["y"]]) for r in rows]
-    cp = [float(r[k["Pressure_Coefficient"]]) for r in rows]
+    U = CFD["cases"]["hov_sa_L2"]["U_ms"]
+    qinf = 0.5 * CFD["rho"] * U * U                      # SU2 incompressible, dimensional: far-field gauge p = 0
+    cp = [float(r[k["Pressure"]]) / qinf for r in rows]
     cf = [float(r[k["Skin_Friction_Coefficient_x"]]) for r in rows] if "Skin_Friction_Coefficient_x" in k else None
     pts = sorted(zip(x, y, cp, cf or [0] * len(x)))
     up = [p for p in pts if p[1] >= 0]
     fig, ax = plt.subplots(2, 1, figsize=(12, 5.2), sharex=True, gridspec_kw={"height_ratios": [3, 1.3]})
+    ax[0].tick_params(labelbottom=True)
     ax[0].plot([p[0] * 1000 for p in up], [p[2] for p in up], color=ACC)
     ax[0].invert_yaxis()
     ax[0].set(ylabel="pressure coefficient Cp")
@@ -150,7 +153,10 @@ def fig_cp():
                    color=HL, lw=1.0)
         ax[1].axhline(0, color=LINE3, lw=0.75)
         ax[1].set(ylabel="Cf_x", ylim=(-0.01, 0.03))
-    ax[1].set(xlabel="x from the tube centre (mm), upper half; board TE at 275 mm")
+    else:
+        ax[1].axis("off")
+    ax[0].set_title("Tube + board, hover slipstream 10 m/s, finest grid (SU2 SA), upper half", color=FG2, fontsize=12)
+    ax[0].set(xlabel="x from the tube centre (mm); board TE at 275 mm")
     save(fig, "fig-b4-sim-05-tubefin-cp.svg")
 
 

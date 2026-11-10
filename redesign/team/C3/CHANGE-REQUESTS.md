@@ -1,9 +1,24 @@
 # Change requests from C3 (pod structures)
 
-Revision **C3-R2**, 2026-11-09. Numbers from `python -I redesign/team/C3/pod_structures.py` at params A1-R4 (D-47),
-D2-R5 pod (D-47 re-lay), C1's latest loads and C6's pod allowables. Details: `FUSELAGE-STRUCTURES.md` sections 5 and 8.
+Revision **C3-R3**, 2026-11-10 (FEA verification round on D2-R5a and A3-R6a). Numbers from `fea/fea_results.json`
+and `python -I redesign/team/C3/pod_structures.py`. Details: `SIMULATION-REPORT.md`.
 
-## R2 requests (new)
+## R3 requests (new, from the FEA)
+
+| # | To | What | Why | Numbers |
+|---|---|---|---|---|
+| **CR-C3-14** | D2 (cc A3, F2, C5) | **Back the aft stop with a strut to the handle foot bridge.** Three PETG ribs, 3 mm (y) × 14 mm (z), each 14 mm long (x 0.063 → bridge 0.077), printed with `POD-007`, ending in a 40 × 14 × 2 mm pad that bears on the aft stop's back face over z 0.026–0.040. Keep it clear of the ESC/servo leads that pass over the aft stop. Keep the 2 mm root fillets | As drawn, the 3 mm stop is a cantilever on the 1 mm tray, and its 1.4 N·m root moment peels the board under the tray. A 2 mm heel does not fix the peel (196 kPa) | As drawn: board peel **408 vs 50 kPa**, tray **48.2 vs 25 MPa**, fillet **49.9 vs 15 MPa** (`CL-C3-FEA-AFT-*`, `FAIL`). With the strut: 1.1 kPa / 0.03 / 0.04 MPa; ribs 0.68 MPa bearing, Euler 8 565 N (`CL-C3-STRUT-*`). +3.7 g `EST` |
+| **CR-C3-15** | D2 (cc C5, C1) | **Forward stop: take the −x root moment out of the tray-to-board joint.** C3's preferred option: carry the stop down through a 3 × 54 mm slot in the floor, with a 12 mm PETG flange bonded under the floor (the stop then clamps the floor instead of peeling it). D2 to draw it or propose another; C3 re-runs M2 on the drawing | As built (1 mm bed to the nose wall), the 2-D nose wall rotates and the tray-board joint still carries the moment. The nose wall alone holds about 1/10 of the moment (`CL-C3-NOSE-WALL-M`) | `CL-C3-FEA-FWD-BED-PEEL` **391 vs 50 kPa** (`FAIL`); cantilever `CL-C3-FEA-FWD-PEEL` 402 kPa. ≈ +1.5 g `EST` |
+| **CR-C3-16** | D2 (cc A3, D1, C1) | **Bond the handle feet to the pod side walls**: one PETG bracket per side, from the foot (y 0.053) to the wall inner face (y 0.065), with ≥ 1 000 mm² epoxied to the wall per side (e.g. a 40 × 25 mm flange). Do **not** count the wall-edge bonds aft of the recess (E-POD-01) as structure | Bare XPS clamped only at the spar sends the pod's shear to the recess aft step. Footprint bond design R is 1.40 (hand 0.87). The wall edges peel at design load (R 8.5). With the feet tied, the spar takes the moment directly | Design R **1.405 → 0.559**, crash +z 1.09 → 0.95, +x 0.80 → 0.23 (`CL-C3-FEA-TIED-*`). Feet force 200 N crash vs ties 444 N (+55 %, `CL-C3-FEA-SADDLE-TIES`); bracket bond area ≥ 1 996 mm² total (`CL-C3-FEA-SADDLE-BOND-AREA`). ≈ +8.7 g `EST` |
+| **CR-C3-17** | D1, D2 | **Fill the re-entrant recess-step corner** (x 0.065, z 0.015–0.0198) with a 5 mm microballoon-epoxy fillet, laid before the pod goes in. Keep the floor's end face bonded (releasing it moved the peak and was worse: design R 2.0) | The −z / −x crash peel concentrates at the sharp step corner. In linear FEA it is singular and does not converge | Tied, as drawn: −z R 4.5 (5 mm mean 3.3), −x 2.2. Not verified in FEA; `T-C3-POD-PROOF` down and forward pulls decide |
+| **CR-C3-18** | D2 (cc C6) | Retire `CL-D2-AFT-STOP-BOND` (403 N shear area) as the aft-stop check. It does not see the moment. The stop is covered by `CL-C3-FEA-AFT-PROP-PEEL` once CR-C3-14 is in | one check per failure mode | — |
+| **CR-C3-19** | A1 (cc A3, D2) | Pod allocation 131 → **144 g** (13 g from the reserve) for CR-C3-14, -15 and -16 | the FEA fixes are structural, not optional | strut 3.7 + brackets 8.7 + anchor 1.5 g `EST`. D2's lighter levers (tray floor 0.8 mm, lead window) are void: the tray already fails in bending |
+| **CR-C3-20** | H1 (cc C6) | `T-C3-STOP-PUSH` now bonds each printed tray piece to a foam-board offcut (procedure in `claims.json`). `T-C3-POD-PROOF` adds 200 N on the feet brackets along +x and −z | a bare printed tray hides the governing peel failure | — |
+| CR-C3-11 (re-stated) | C6 | Re-run `joints.py` | `CALC-C6-POD-ALLOW` drifts: `CL-C3-BOND-R-DESIGN` 0.8855 → 0.8684, `-R-CRASH` 0.724 → 0.750 (A3-R6a group 0.926 kg) | the governing bond checks are now `CL-C3-FEA-*` |
+
+Also note: the hand `CL-C3-AFT-STOP-D2` / `-REC` now fails (16.6 vs 15 MPa, needs 3.2 mm). The pack bears from the 2.5 mm pad top, so the lever is pad + h/2. With CR-C3-14 the stop root no longer carries the moment.
+
+## R2 requests
 
 | # | To | What | Why | Numbers |
 |---|---|---|---|---|

@@ -9,6 +9,18 @@ from params), `cant_sense_UR` −1 (D-52, now matches F4 and `ASM-B4-WAKE-SENSE`
 
 **Decision (unchanged).** Fly the **APC 11×5.5MR / 11×5.5MRP**. The 11×5.5E/EP is the alternate.
 
+## Simulation round (2026-11-10): [`SIMULATION-REPORT.md`](SIMULATION-REPORT.md)
+
+| Result | Hand → sim | Unit | Claim | Status |
+|---|---|---|---|---|
+| Tube + board Cd on D, hover (SU2 SA, 3 grids, GCI 3.4 %; cylinder validation +0.6 %) | 1.48 → 0.599 | — | `CL-B4-SIM-CD-TUBEFIN` | `MODELLED` |
+| Download factor (limit 1.06) | 1.038 → 1.025 | — | `CL-B4-SIM-DOWNLOAD` | `MODELLED` |
+| Upper-prop hover thrust / rpm, A3 2.436 kg, split 1.216 | 6.81 / 5 416 → 7.00 / 5 491 | N / rpm | `CL-B4-SIM-T-UPPER`, `-RPM-UPPER` | `MODELLED` |
+| T/W at the cap / upper headroom, 680 g pack | 3.40 / 2.78 | — | `CL-B4-SIM-TW-CAP`, `-HEADROOM` | `MODELLED` |
+| H-force per prop in the pitch-over (new, to B3) | 0.43 (0.88 at hover thrust) | N | `CL-B4-SIM-H-MAX`, `-H-HOVERT` | `MODELLED` |
+| Cruise section Cd vs B1's build-up | 0.995 × | — | `CL-B4-SIM-CD-B1-RATIO` | `CHECKED` |
+| Blade to CF tube on the settled CAD | 21.1 (limit 25) `FAIL` | mm | `CL-B4-GAP-TUBE-ENV` | `CHECKED`; CR-B4-25 |
+
 ## R4 action item: prop-tip-to-wing clearance
 
 The "≈ 23 mm" figure (wing skin 0.163 m from the canted axis, against R 0.1397 m) **does not reproduce**.

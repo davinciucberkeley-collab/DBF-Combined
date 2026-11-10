@@ -41,8 +41,8 @@ Spatial discretization using the Finite Element Method.
 --------------- Time Numerical Integration  ( Zone 0 ) ------------------
 Static structural analysis.
 A Conjugate Gradient method is used for solving the linear system.
-Convergence criteria of the linear solver: 1e-13.
-Max number of iterations: 100000.
+Convergence criteria of the linear solver: 1e-10.
+Max number of iterations: 200000.
 
 ------------------ Convergence Criteria  ( Zone 0 ) ---------------------
 Maximum number of solver subiterations: 1.
@@ -210,7 +210,7 @@ All convergence criteria satisfied.
 +-----------------------------------------------------------------------+
 |      Convergence Field     |     Value    |   Criterion  |  Converged |
 +-----------------------------------------------------------------------+
-|                  rms[DispX]|      -9.92251|         < -14|          No|
+|                  rms[DispX]|      -10.2161|         < -14|          No|
 +-----------------------------------------------------------------------+
 -------------------------------------------------------------------------
 +-----------------------------------------------------------------------+
