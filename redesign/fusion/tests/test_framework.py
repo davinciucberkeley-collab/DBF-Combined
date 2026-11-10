@@ -171,7 +171,7 @@ class K09(unittest.TestCase):
     def test_skeleton_passes_strict(self):
         code, out = quiet(check.main, ['--skeleton', '--strict'])
         self.assertEqual(code, 0, out)
-        self.assertIn('43 datums, 5 keep-outs', out)
+        self.assertIn('52 datums, 5 keep-outs', out)
 
     def test_skeleton_rollup_is_the_allocations(self):
         ctx = quiet(check.run_checks, *build_all.roots(skeleton=True))[0][0]
@@ -194,6 +194,42 @@ class K09(unittest.TestCase):
         self.assertAlmostEqual(ext[1][2] - ext[0][2], v('requirements.box_external_m')[2])
         self.assertEqual(d['DX-BOX']['p'], _c)
         self.assertFalse(k9.datums_md_stale(self.P), 'run python -I redesign/fusion/k09kit.py --datums-md')
+
+    def test_r3_datums_match_the_designers(self):
+        # CR-D3-14 / CR-D5-02: DX-COLLAR / DX-ANCHOR are D3's brace ends, DP-MOTOR-FACE D3's plate face (D-28),
+        # DX-FOOT the D5 pad contact (CL-D5-CONTACT-Z 0.218) on DP-GROUND (TE + 48 mm)
+        import importlib.util
+        d = {s[0]: s[2] for s in k9.datum_specs(self.P)}
+        v = lambda k: k9.val(self.P, k)
+        self.assertAlmostEqual(d['DP-GROUND']['offset'], v('wing.te_x_m') + v('cg.foot_height_m'))
+        self.assertAlmostEqual(d['DP-TUBE']['offset'], v('fins.tube.x_m'))
+        self.assertAlmostEqual(abs(d['DX-FOOT-LL']['p'][2]), k9.foot_contact_z(self.P))
+        path = os.path.join(k9.REDESIGN, 'subsystems', 'fins', 'fusion', 'fins.py')
+        if not os.path.exists(path):
+            self.skipTest('D3 fins module not published')
+        spec = importlib.util.spec_from_file_location('d3_fins_for_test', path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        G = mod.geometry(self.P, mod.load_local(), k9.section(self.P)[0])
+        for st, upper in (('UR', True), ('LR', False)):
+            anc, ear = G['brace_ends'](upper)
+            for a, b in ((d['DX-ANCHOR-' + st]['p'], anc), (d['DX-COLLAR-' + st]['p'], ear)):
+                for i in range(3):
+                    self.assertAlmostEqual(a[i], b[i], places=6)
+        self.assertAlmostEqual(d['DP-MOTOR-FACE']['offset'], G['x_face'], places=6)
+
+    def test_strut(self):
+        ctx = fk.Context(fk.Backend())
+        ctx.sub = 't'
+        p = ctx.part('T-9')
+        a, b = (0.045, 0.30, 0.15), (0.08, 0.24, 0.03)
+        k9.strut(p, a, b, 0.01, 0.003)
+        vol, cen = p.volume_centroid()
+        L = math.dist(a, b)
+        self.assertAlmostEqual(vol, 0.01 * 0.003 * math.hypot(a[1] - b[1], a[2] - b[2]), places=9)
+        for i in range(3):
+            self.assertAlmostEqual(cen[i], (a[i] + b[i]) / 2, places=6)
+        self.assertGreater(L, 0)
 
     def test_section_and_dat_reader(self):
         s = k9.reflex_placeholder(0.0985)
@@ -293,7 +329,7 @@ class K09(unittest.TestCase):
 
 class FusionBackendSmoke(unittest.TestCase):
     def test_runs_skeleton_with_fake_adsk(self):
-        self._run(build_all.roots(skeleton=True), datums=43)
+        self._run(build_all.roots(skeleton=True), datums=52)
 
     def test_runs_examples_with_fake_adsk(self):
         self._run(build_all.roots(True), datums=0)

@@ -2,7 +2,10 @@
  "schema": "proofs/1",
  "generated_by": "redesign/team/A5/cad_claims.py",
  "params": [
-  "../../params/params.json"
+  "../../params/params.json",
+  "../../subsystems/fins/params.json",
+  "../../subsystems/landing/params.json",
+  "../../subsystems/pod/params.json"
  ],
  "nodes": [
   {
@@ -292,9 +295,9 @@
   {
    "id": "ASM-A5-MASS-SPLIT",
    "type": "assumption",
-   "title": "Allocation split and lump stations used for the layout CG (R1 skeleton)",
-   "text": "Within each allocation: wing = spar (mass/m x length); the rest split between core and elevon panels with the tape skin by planform area and foam/fill/consumables by section volume; fins = 4 half-fins (rest) + 2 x 43 tube + 4 x 18 mount + 2 x 20 through-core block + 2 x 30 clip set; propulsion = 4 x prop (params) at the prop plane + rest (motor, ESC, adapter, nut) as the motor envelope; power = pack centred in the pod + rest at the pod nose; pod and avionics in the pod; mechanisms 23.5 mm ahead of the hinge; harness as two bundle legs (channel 14 mm aft of the spar surface, tube inboard face); printed walls 3 mm; growth reserve not placed",
-   "basis": "params.json#mass.allocation_g notes (CHANGE-LOG D-07); the skeleton modules (redesign/fusion/skeleton/*/fusion) use the same numbers",
+   "title": "Allocation split and lump stations used for the layout CG (R3 skeleton)",
+   "text": "Within each allocation: wing = spar (mass/m x length); the rest split between core and elevon panels with the tape skin by planform area and foam/fill/consumables by section volume; fins = 2 tubes (spar mass/m x tube length) + per station mount 11.0, station collar 10.6, CF brace 5.2, anchor 3.2 g + 2 x 41.0 g through-core blocks (D3 R3 CAD unit masses, rounded) and 4 half-fins carrying the rest (board, edge strips, pins, ESC pad, plug share); propulsion = 4 x prop (params) at the prop plane + rest (motor, ESC, adapter, nut) as the motor envelope from DP-MOTOR-FACE; power = pack at the D-24 station (D2's aft face less half the pack length) + rest at the pod nose; pod and avionics in the pod; mechanisms 23.5 mm ahead of the hinge; harness as two bundle legs (channel 14 mm aft of the spar surface, tube inboard face); feet from 12 mm ahead of the TE to DP-GROUND; printed walls 3 mm; growth reserve not placed",
+   "basis": "params.json#mass.allocation_g (CHANGE-LOG D-38) and subsystems/fins/parts.csv (D3 R3); the skeleton modules (redesign/fusion/skeleton/*/fusion) use the same numbers",
    "status": "UNVERIFIED",
    "cites": [
     "SRC-K09-CARD",
@@ -865,11 +868,14 @@
    "title": "Elevon end gaps",
    "script": "redesign/team/A5/cad_claims.py",
    "function": "elevon_gaps",
-   "equation": "pod = y_in0 - w_pod/2 ; fin_in = (y_fin - t_fin/2) - y_in1 ; fin_out = y_out0 - (y_fin + t_fin/2) ; tip = b/2 - y_out1 ; t_fin = layers t_board",
+   "equation": "pod = distance between the inboard panel (x >= x_h, y >= y_in0) and the pod box (x <= x_pod + L, |y| <= w_pod/2) = hypot(max(0, x_h - x_pod_end), max(0, y_in0 - w_pod/2)) ; fin_in = (y_fin - t_fin/2) - y_in1 ; fin_out = y_out0 - (y_fin + t_fin/2) ; tip = b/2 - y_out1 ; t_fin = layers t_board ; x_h = c (1 - f)",
    "inputs": {
     "yin": "P:wing.elevon.inboard_y_m",
     "yout": "P:wing.elevon.outboard_y_m",
     "pod": "P:pod.size_m",
+    "pod_x": "P:pod.x_le_m",
+    "c": "P:wing.chord_m",
+    "f": "P:wing.elevon.chord_frac",
     "y_fin": "P:fins.y_m",
     "layers": "P:fins.layers",
     "t_board": "P:fins.board_t_m",
@@ -879,16 +885,20 @@
     "yin": "m",
     "yout": "m",
     "pod": "m",
+    "pod_x": "m",
+    "c": "m",
     "y_fin": "m",
     "t_board": "m",
     "b": "m"
    },
    "outputs": {
-    "gap_pod_m": 0.020000000000000004,
+    "gap_pod_m": 0.15460000000000002,
     "gap_fin_inboard_m": 0.015199999999999991,
     "gap_fin_outboard_m": 0.015199999999999991,
     "gap_tip_m": 0.014999999999999902,
     "gap_min_m": 0.014999999999999902,
+    "gap_pod_spanwise_m": 0.0,
+    "pod_end_to_hinge_m": 0.15460000000000002,
     "fin_thickness_m": 0.0096
    },
    "input_values": {
@@ -901,10 +911,13 @@
      0.56
     ],
     "pod": [
-     0.2,
-     0.1,
+     0.21,
+     0.14,
      0.07
     ],
+    "pod_x": -0.115,
+    "c": 0.32,
+    "f": 0.22,
     "y_fin": 0.32,
     "layers": 2,
     "t_board": 0.0048,
@@ -914,10 +927,10 @@
   {
    "id": "CALC-A5-LAYOUT-CG",
    "type": "calculation",
-   "title": "Layout CG: allocations at the R1 datum stations",
+   "title": "Layout CG: allocations at the R3 datum stations",
    "script": "redesign/team/A5/cad_claims.py",
    "function": "layout_cg",
-   "equation": "x_cg = sum(m_i x_i) / sum(m_i), z likewise (lump centroids from the k09kit geometry); pack x for x_target = x_pack + M (x_target - x_cg) / m_pack ; hover split upper/lower = (z_m + z_cg) / (z_m - z_cg)",
+   "equation": "x_cg = sum(m_i x_i) / sum(m_i), z likewise (lump centroids from the k09kit geometry); pack x for x_target = x_pack + M (x_target - x_cg) / m_pack ; range use = |x_cg - mid| / half range ; hover split upper/lower = (z_m + z_cg) / (z_m - z_cg)",
    "inputs": {
     "a_wing": "P:mass.allocation_g.wing",
     "a_fins": "P:mass.allocation_g.fins",
@@ -959,7 +972,20 @@
     "pack_size": "P:battery.size_m",
     "x_target": "P:cg.x_target_m",
     "x_range": "P:cg.x_range_m",
-    "z_range": "P:cg.z_range_m"
+    "z_range": "P:cg.z_range_m",
+    "tube_l": "P:fins.tube.length_m",
+    "bond_gap": "P:fin_detail.bond_gap_m",
+    "col_wall": "P:fin_detail.mount.collar_wall_m",
+    "face_ahead": "P:fin_detail.mount.face_ahead_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "plate_hz": "P:fin_detail.mount.plate_half_z_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "ear_h": "P:fin_detail.station_collar.ear_h_m",
+    "tail": "P:fin_detail.station_collar.tail_m",
+    "proud": "P:fin_detail.anchor.proud_m",
+    "blk_wall": "P:fin_detail.block.wall_m",
+    "pack_aft": "P:pack_aft_face_m"
    },
    "units": {
     "a_wing": "g",
@@ -1000,33 +1026,48 @@
     "pack_size": "m",
     "x_target": "m",
     "x_range": "m",
-    "z_range": "m"
+    "z_range": "m",
+    "tube_l": "m",
+    "bond_gap": "m",
+    "col_wall": "m",
+    "face_ahead": "m",
+    "grip": "m",
+    "plate_hz": "m",
+    "sc_gap": "m",
+    "sc_h": "m",
+    "ear_h": "m",
+    "tail": "m",
+    "proud": "m",
+    "blk_wall": "m",
+    "pack_aft": "m"
    },
    "assumes": [
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
    "outputs": {
-    "mass_g": 2200.0,
-    "cg_x_m": 0.05306939223862401,
-    "cg_z_m": 0.017550173702324354,
-    "cg_x_frac_chord": 0.16584185074570001,
-    "cg_x_fwd_limit_m": 0.04,
-    "cg_x_aft_limit_m": 0.049,
+    "mass_g": 2324.0,
+    "cg_x_m": 0.05212681602022075,
+    "cg_z_m": 0.017652277135289784,
+    "cg_x_frac_chord": 0.16289630006318984,
+    "cg_x_fwd_limit_m": 0.05,
+    "cg_x_aft_limit_m": 0.055,
     "cg_z_up_limit_m": 0.03,
-    "pack_x_for_target_m": -0.04127756895449604,
-    "pack_shift_m": -0.03627756895449605,
-    "hover_upper_pair_share": 0.5461846676376957,
-    "hover_split_ratio": 1.2035394767174772
+    "cg_x_range_use": 0.14927359191170284,
+    "pack_x_m": -0.0010000000000000009,
+    "pack_x_for_target_m": 0.000999417398194515,
+    "pack_shift_m": 0.001999417398194516,
+    "hover_upper_pair_share": 0.5464533608823415,
+    "hover_split_ratio": 1.2048449128526808
    },
    "input_values": {
     "a_wing": 405,
-    "a_fins": 370,
-    "a_pod": 105,
-    "a_land": 40,
-    "a_prop": 440,
-    "a_pwr": 595,
-    "a_avn": 75,
+    "a_fins": 408,
+    "a_pod": 122,
+    "a_land": 43,
+    "a_prop": 476,
+    "a_pwr": 620,
+    "a_avn": 80,
     "a_hrn": 105,
     "a_mec": 65,
     "m_pack_kg": 0.55,
@@ -1298,17 +1339,17 @@
     "te": 0.32,
     "od": 0.022,
     "y_fin": 0.32,
-    "hh": 0.19,
+    "hh": 0.21,
     "can_l": 0.025,
     "can_d": 0.038,
     "x_mount": 0.045,
-    "x_prop": -0.005,
+    "x_prop": -0.0082,
     "z_m": 0.19,
-    "foot": 0.045,
-    "pod_x": -0.105,
+    "foot": 0.048,
+    "pod_x": -0.115,
     "pod_size": [
-     0.2,
-     0.1,
+     0.21,
+     0.14,
      0.07
     ],
     "pod_z": 0.015,
@@ -1317,14 +1358,30 @@
      0.048,
      0.05
     ],
-    "x_target": 0.044,
+    "x_target": 0.0526,
     "x_range": [
-     0.04,
-     0.049
+     0.05,
+     0.055
     ],
     "z_range": [
      -0.02,
      0.03
+    ],
+    "tube_l": 0.344,
+    "bond_gap": 0.00015,
+    "col_wall": 0.002,
+    "face_ahead": 0.001,
+    "grip": 0.012,
+    "plate_hz": 0.015,
+    "sc_gap": 0.0005,
+    "sc_h": 0.016,
+    "ear_h": 0.012,
+    "tail": 0.04,
+    "proud": 0.008,
+    "blk_wall": 0.006,
+    "pack_aft": [
+     0.069,
+     0.073
     ]
    }
   },
@@ -1433,12 +1490,22 @@
    "output": "cg_x_aft_limit_m",
    "unit": "m",
    "how": "B3 re-derives the range at R1 geometry (CHANGE-LOG D-17, CR-A1-10).",
-   "value": 0.049
+   "value": 0.055
+  },
+  {
+   "id": "CL-A5-CG-X-FWD-LIMIT",
+   "type": "claim",
+   "title": "Forward CG limit (params cg.x_range_m[0])",
+   "calc": "CALC-A5-LAYOUT-CG",
+   "output": "cg_x_fwd_limit_m",
+   "unit": "m",
+   "how": "B3: elevon trim at CLmax (CL-B3-CG-FWD, D-24).",
+   "value": 0.05
   },
   {
    "id": "CL-A5-LAYOUT-CG-X",
    "type": "claim",
-   "title": "Layout CG x (allocations at the R1 datum stations, pack centred)",
+   "title": "Layout CG x (allocations at the R3 datum stations, pack at the D-24 station)",
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "cg_x_m",
    "unit": "m",
@@ -1447,14 +1514,56 @@
     "ref": "CL-A5-CG-X-AFT-LIMIT"
    },
    "verifies": [
-    "R-STATIC-MARGIN"
+    "R-CG-RANGE"
    ],
    "how": "Equals the CAD roll-up (python -I redesign/fusion/check.py --skeleton, TOTAL line; this script stops if they differ by > 1 mm). A3 replaces the allocations with part masses (MASS-CG.md); H1 balances the built aircraft on two knife edges (T-A5-CG-BALANCE).",
    "assumes": [
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 0.05306939223862401
+   "value": 0.05212681602022075
+  },
+  {
+   "id": "CL-A5-LAYOUT-CG-X-FWD",
+   "type": "claim",
+   "title": "Layout CG x against the forward limit",
+   "calc": "CALC-A5-LAYOUT-CG",
+   "output": "cg_x_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A5-CG-X-FWD-LIMIT"
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "Same value as CL-A5-LAYOUT-CG-X, tested against cg.x_range_m[0]; T-A5-CG-BALANCE.",
+   "assumes": [
+    "ASM-A5-MASS-SPLIT",
+    "ASM-A5-SECTION"
+   ],
+   "value": 0.05212681602022075
+  },
+  {
+   "id": "CL-A5-LAYOUT-CG-X-RANGE-USE",
+   "type": "claim",
+   "title": "Layout CG x in the range, |x - mid| / half-range",
+   "calc": "CALC-A5-LAYOUT-CG",
+   "output": "cg_x_range_use",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "Same basis as CL-A3-CG-X-RANGE (A3's bottom-up value); T-A5-CG-BALANCE.",
+   "assumes": [
+    "ASM-A5-MASS-SPLIT",
+    "ASM-A5-SECTION"
+   ],
+   "value": 0.14927359191170284
   },
   {
    "id": "CL-A5-PACK-X-FOR-CG",
@@ -1467,24 +1576,24 @@
     "PWR-001",
     "POD-002"
    ],
-   "how": "D2/A3: compare with the pod (nose at pod.x_le_m) and the +/-0.03 m tray slide; A3's CL-A3-PACK-X-REQ is the same quantity from the bottom-up model.",
+   "how": "D2/A3: compare with the bay (forward stop subsystems/pod/params.json#fwd_stop_x_m, aft-only spacers); A3's CL-A3-PACK-X-REQ is the same quantity from the bottom-up model.",
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": -0.04127756895449604
+   "value": 0.000999417398194515
   },
   {
    "id": "CL-A5-PACK-SHIFT",
    "type": "claim",
-   "title": "Pack shift from the pod centre for the CG target",
+   "title": "Pack shift from the D-24 station for the CG target",
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "pack_shift_m",
    "unit": "m",
-   "how": "Negative = forward. D2 provides +/-0.03 m of slide (params pod.x_le_m note); beyond that the pod moves (D-17).",
+   "how": "Negative = forward. The bay has aft-only spacers (D2); a forward shift needs the forward stop moved.",
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": -0.03627756895449605
+   "value": 0.001999417398194516
   },
   {
    "id": "CL-A5-CG-Z-UP-LIMIT",
@@ -1499,7 +1608,7 @@
   {
    "id": "CL-A5-LAYOUT-CG-Z",
    "type": "claim",
-   "title": "Layout CG z (allocations at the R1 datum stations)",
+   "title": "Layout CG z (allocations at the R3 datum stations)",
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "cg_z_m",
    "unit": "m",
@@ -1511,7 +1620,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.017550173702324354
+   "value": 0.017652277135289784
   },
   {
    "id": "CL-A5-HOVER-SPLIT",
@@ -1528,7 +1637,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 1.2035394767174772
+   "value": 1.2048449128526808
   },
   {
    "id": "T-A5-CORE-COVER",
@@ -1547,6 +1656,8 @@
    "title": "CG balance of the built aircraft",
    "verifies": [
     "CL-A5-LAYOUT-CG-X",
+    "CL-A5-LAYOUT-CG-X-FWD",
+    "CL-A5-LAYOUT-CG-X-RANGE-USE",
     "CL-A5-LAYOUT-CG-Z"
    ],
    "state": "planned",

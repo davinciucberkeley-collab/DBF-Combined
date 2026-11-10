@@ -64,9 +64,15 @@ A("ASM-E2-OCV-20", "OCV at 20 % charge 3.73 V/cell", "Resting voltage at the 20 
 A("ASM-E2-R-CELL", "Cell resistance 4.0 mOhm at 25 degC", "DC internal resistance per cell of a new 4S 6500 hard-case pack",
   basis="hobby 6000-6500 mAh packs measure 2.5-5 mOhm/cell new; C-rating labels (130C) are not physical. "
         "Measure with a load step (T-E2-IR)", value=0.0040, unit="ohm", status="UNVERIFIED")
-A("ASM-E2-R-EXT", "Pack lead, connector and PDB 3 mOhm", "Series resistance between cells and the ESC power pads",
-  basis="XT60/AS150U pair ~0.5 mOhm + ~0.15 m 12 AWG x 2 (~1.6 mOhm) + PDB/solder ~1 mOhm; F1 owns the harness",
-  value=0.0030, unit="ohm", status="UNVERIFIED")
+R_EXT_MIRROR_OHM = 0.0065     # = P:electrical.r_ext_mohm / 1000 (CL-F1-R-EXT); checked against params in __main__
+A("ASM-E2-R-EXT", "Pack lead, connector and harness 6.5 mOhm (mirror of params electrical.r_ext_mohm)",
+  "Series resistance between the cells and the ESC power pads, hot: F1's CL-F1-R-EXT via params "
+  "electrical.r_ext_mohm (D-32)",
+  basis="E2's own calcs read P:electrical.r_ext_mohm directly. This id is kept only for the calcs of other roles that "
+        "still read it (E1 CALC-E1-WORST, E3, H1), so they re-run on 6.5 instead of the old 3 mOhm; it retires when "
+        "they re-point to the parameter (CR-E2-17). energy_claims.py stops if the two ever differ. Was 3 mOhm "
+        "(E2 estimate before F1's harness model)",
+  value=R_EXT_MIRROR_OHM, unit="ohm", status="UNVERIFIED", cites=["CL-F1-R-EXT"])
 A("ASM-E2-COLD-R", "Cold-pack resistance factor 1.5", "Cell resistance at 10 degC = 1.5 x the 25 degC value",
   basis="LiPo IR roughly doubles from 25 to 0 degC; 10 degC is the bottom of params env.ambient_design_c "
         "(March-April 07:00 at RFS). Keeping packs in the car cabin removes most of it", value=1.5, unit="-",
@@ -151,10 +157,16 @@ def cruise_bus_w(m_kg, g, rho, S, b, e, V, cd0, eta_p, eta_m, trim, circuit, avn
     return D * V * trim * circuit / (eta_p * eta_m) + avn
 
 
+PHASE_KEYS = {"ground, armed checks": "ground", "climb 0-50 m": "climb", "hover (mission)": "hover",
+              "transition forward": "trans_fwd", "back-transition": "trans_back", "descent 50-0 m": "descent",
+              "cruise": "cruise"}
+
+
 def budget(m_kg, pess, *, n, table, download, esc, avn, g, rho, D, S, b, e, V, cells, ah, ocv, r_cell, r_ext,
            cold, hmargin, prof, aero, cap_frac, reserve, pc_b, pc_p, m_ref, p_scale=1.0):
-    """Phase table [name, s, W, A, Ah] and the cruise time to the reserve line."""
+    """Phase table [name, s, W, A, Ah] and the cruise time to the reserve line. r_ext in mOhm (params unit)."""
     k = 1 if pess else 0
+    r_ext = r_ext / 1000.0
     r = cells * r_cell * (cold if pess else 1.0) + r_ext
     voc = cells * ocv
     ph = hover_bus_w(m_kg, n, table, download, esc, avn) * (hmargin if pess else 1.0)
@@ -185,10 +197,15 @@ def budget(m_kg, pess, *, n, table, download, esc, avn, g, rho, D, S, b, e, V, c
     ah_cruise = ah_avail - ah_fixed
     rows.append(["cruise", ah_cruise / ic * 3600, pc, ic, ah_cruise])
     ih = pack_current(ph, voc, r)
-    return {"phases": rows, "cruise_min": ah_cruise / ic * 60, "ah_fixed": ah_fixed, "ah_avail": ah_avail,
-            "hover_w": ph, "hover_a": ih, "cruise_w": pc, "cruise_a": ic, "cruise_w_e2_model": pc_e2,
-            "hover_only_min": (ah_avail - rows[0][4]) / ih * 60,
-            "flight_min": (sum(x[1] for x in rows) - prof["ground_s"]) / 60, "r_pack": r}
+    out = {"phases": rows, "cruise_min": ah_cruise / ic * 60, "ah_fixed": ah_fixed, "ah_avail": ah_avail,
+           "hover_w": ph, "hover_a": ih, "cruise_w": pc, "cruise_a": ic, "cruise_w_e2_model": pc_e2,
+           "hover_only_min": (ah_avail - rows[0][4]) / ih * 60,
+           "flight_min": (sum(x[1] for x in rows) - prof["ground_s"]) / 60, "r_pack": r}
+    for name, t, _, i, _ in rows:                   # flat per-phase outputs, so each can be a claim (CR-F1-04)
+        out[f"i_{PHASE_KEYS[name]}_a"] = i
+        out[f"t_{PHASE_KEYS[name]}_s"] = t
+    out["i_max_phase_a"] = max(x[3] for x in rows)
+    return out
 
 
 COMMON = {"n": P + "propulsion.n_motors", "table": P + "propulsion.thrust_table_g_w",
@@ -196,13 +213,13 @@ COMMON = {"n": P + "propulsion.n_motors", "table": P + "propulsion.thrust_table_
           "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3", "D": P + "propulsion.prop_diameter_m",
           "S": "CL-A1-WING-AREA", "b": P + "wing.span_m", "e": P + "wing.oswald_e", "V": P + "performance.cruise_ms",
           "cells": P + "battery.cells_s", "ah": P + "battery.capacity_ah", "ocv": "ASM-E2-OCV-AVG",
-          "r_cell": "ASM-E2-R-CELL", "r_ext": "ASM-E2-R-EXT", "cold": "ASM-E2-COLD-R",
+          "r_cell": "ASM-E2-R-CELL", "r_ext": P + "electrical.r_ext_mohm", "cold": "ASM-E2-COLD-R",
           "hmargin": "ASM-E2-HOVER-MARGIN", "prof": "ASM-E2-PROFILE", "aero": "ASM-E2-CRUISE-AERO",
-          "cap_frac": "ASM-A2-PACK-CAPACITY-FRAC", "reserve": P + "requirements.energy_reserve_frac",
+          "cap_frac": P + "requirements.pack_capacity_min_frac", "reserve": P + "requirements.energy_reserve_frac",
           "pc_b": "CL-B1-CRUISE-P", "pc_p": "CL-B1-CRUISE-P-PESS", "m_ref": P + "requirements.mtow_gate_kg"}
 CU = {"g": "m/s2", "rho": "kg/m3", "D": "m", "S": "m2", "b": "m", "V": "m/s", "ah": "Ah", "ocv": "V",
-      "r_cell": "ohm", "r_ext": "ohm", "pc_b": "W", "pc_p": "W", "m_ref": "kg"}
-ASSUMES = ["ASM-E2-ESC-EFF", "ASM-E2-AVIONICS-W", "ASM-E2-OCV-AVG", "ASM-E2-R-CELL", "ASM-E2-R-EXT",
+      "r_cell": "ohm", "r_ext": "mOhm", "pc_b": "W", "pc_p": "W", "m_ref": "kg"}
+ASSUMES = ["ASM-E2-ESC-EFF", "ASM-E2-AVIONICS-W", "ASM-E2-OCV-AVG", "ASM-E2-R-CELL",
            "ASM-E2-PROFILE", "ASM-E2-CRUISE-AERO"]
 
 
@@ -218,7 +235,7 @@ def budget_base(m, **kw):
 
 
 @kit.calc("CALC-E2-BUDGET-PESS", title="Energy budget per phase, pessimistic (2.6 kg gate)",
-          assumes=ASSUMES + ["ASM-E2-COLD-R", "ASM-E2-HOVER-MARGIN", "ASM-A2-PACK-CAPACITY-FRAC"],
+          assumes=ASSUMES + ["ASM-E2-COLD-R", "ASM-E2-HOVER-MARGIN"],
           equation="as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic "
                    "(CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions",
           inputs={"m": P + "requirements.mtow_gate_kg", **COMMON}, units={"m": "kg", **CU})
@@ -226,37 +243,39 @@ def budget_pess(m, **kw):
     return budget(m, True, **kw)
 
 
-@kit.calc("CALC-E2-SAG", title="Full-throttle bus voltage and thrust factor vs pack state",
-          equation="V = Voc - R I_full (V/V_tab)^2 ; thrust factor = (V/V_tab)^2 ; T/W = n T_max f / m_gate",
-          inputs={"cells": P + "battery.cells_s", "v_tab": P + "battery.v_nom", "i_motor": P + "propulsion.current_max_per_motor_a",
-                  "n": P + "propulsion.n_motors", "ocv20": "ASM-E2-OCV-20", "r_cell": "ASM-E2-R-CELL",
-                  "r_ext": "ASM-E2-R-EXT", "cold": "ASM-E2-COLD-R", "t_max": P + "propulsion.thrust_max_per_motor_kg",
-                  "m": P + "requirements.mtow_gate_kg", "ah": P + "battery.capacity_ah"},
-          units={"v_tab": "V", "i_motor": "A", "ocv20": "V", "r_cell": "ohm", "r_ext": "ohm", "t_max": "kg", "m": "kg",
-                 "ah": "Ah"},
-          assumes=["ASM-E2-OCV-20", "ASM-E2-R-CELL", "ASM-E2-R-EXT", "ASM-E2-COLD-R"])
-def sag(cells, v_tab, i_motor, n, ocv20, r_cell, r_ext, cold, t_max, m, ah):
-    i_full = n * i_motor
-
-    def solve(voc, r):
-        v = voc
-        for _ in range(200):                       # fixed point, contracts quickly
-            v = voc - r * i_full * (v / v_tab) ** 2
-        return v
-
+@kit.calc("CALC-E2-SAG", title="Bus voltage at the 100 A limiter vs pack state; bracket on the thrust factor",
+          equation="V_bus = Voc - R I_lim (limiter binds when I_unlim(V) = n I_148 (V/14.8)^2 > I_lim) ; "
+                   "thrust factor worst/fresh bracketed by (V_w/V_f) (thrust prop. to power) and (V_w/V_f)^(2/3) "
+                   "(ideal rotor at fixed current) ; old rule (V/V_tab)^2 kept for the record (unlimited motor) ; "
+                   "bracket margin = min(f_E1 - lower, upper - f_E1)",
+          inputs={"cells": P + "battery.cells_s", "i_lim": P + "performance.full_throttle_current_a",
+                  "i148": "CL-E1-IMAX-148-55", "n": P + "propulsion.n_motors", "ocv20": "ASM-E2-OCV-20",
+                  "r_cell": "ASM-E2-R-CELL", "r_ext": P + "electrical.r_ext_mohm", "cold": "ASM-E2-COLD-R",
+                  "ah": P + "battery.capacity_ah", "f_e1": "CL-E1-SAG-FACTOR"},
+          units={"i_lim": "A", "i148": "A", "ocv20": "V", "r_cell": "ohm", "r_ext": "mOhm", "ah": "Ah"},
+          assumes=["ASM-E2-OCV-20", "ASM-E2-R-CELL", "ASM-E2-COLD-R"])
+def sag(cells, i_lim, i148, n, ocv20, r_cell, r_ext, cold, ah, f_e1):
+    r_ext = r_ext / 1000.0
     cases = {"full_warm": (cells * 4.20, cells * r_cell + r_ext),
              "res20_warm": (cells * ocv20, cells * r_cell + r_ext),
              "res20_cold": (cells * ocv20, cells * r_cell * cold + r_ext)}
     out = {}
     for k, (voc, r) in cases.items():
-        v = solve(voc, r)
+        v = voc - r * i_lim
         out[f"v_{k}"] = v
-        out[f"f_{k}"] = (v / v_tab) ** 2
-        out[f"i_{k}"] = i_full * (v / v_tab) ** 2
-    f = out["f_res20_cold"]
-    out["tw_worst"] = n * t_max * f / m
-    out["c_peak"] = i_full / ah
+        out[f"r_{k}_ohm"] = r
+        out[f"i_unlim_{k}"] = n * i148 * (v / 14.8) ** 2      # four motors at full duty; prop load I ~ V^2
+        out[f"limiter_binds_{k}"] = 1.0 if out[f"i_unlim_{k}"] > i_lim else 0.0
+    ratio = out["v_res20_cold"] / out["v_full_warm"]
+    out["f_lower_thrust_prop_v"] = ratio
+    out["f_upper_ideal_rotor"] = ratio ** (2.0 / 3.0)
+    out["f_old_v2_rule"] = (out["v_res20_cold"] / 14.8) ** 2   # D-06 / E2-R2 rule: double-counts under the limiter
+    out["f_e1"] = f_e1
+    out["e1_bracket_margin"] = min(f_e1 - ratio, ratio ** (2.0 / 3.0) - f_e1)
+    out["e1_exponent"] = math.log(f_e1) / math.log(ratio)
+    out["c_peak"] = i_lim / ah
     out["sag_v_per_cell_worst"] = (cells * ocv20 - out["v_res20_cold"]) / cells
+    out["v_cell_worst_loaded"] = out["v_res20_cold"] / cells
     return out
 
 
@@ -320,24 +339,6 @@ def failsafe_rows(b, ah, reserve):
     return {"crt_mah": crt, "low_mah": low, "land_need_mah": need * 1000, "cruise_to_low_min": to_low}
 
 
-@kit.calc("CALC-E2-PROP55-SENS", title="Indicative: B1's cruise power scaled to the 11x5.5MR by E1's prop ratio",
-          equation="P_cruise = P_B1(11x4.5MR, 16 m/s) x P_E1(11x5.5MR) / P_E1(11x4.5MR) (both E1 points at 15 m/s) ; "
-                   "then the base and pessimistic budgets and the BATT_LOW check as above",
-          inputs={"m_b": "CL-A1-MASS-SIZED", "m_p": P + "requirements.mtow_gate_kg", "p55": "CL-E1-CRUISE-P-55",
-                  "p45": "CL-E1-CRUISE-P-45", **COMMON},
-          units={"m_b": "kg", "m_p": "kg", "p55": "W", "p45": "W", **CU},
-          assumes=ASSUMES + ["ASM-E2-COLD-R", "ASM-E2-HOVER-MARGIN", "ASM-A2-PACK-CAPACITY-FRAC"])
-def prop55_sens(m_b, m_p, p55, p45, **kw):
-    """Not a design value: mixes B1's 16 m/s model with E1's 15 m/s prop ratio until B1 re-runs (CR-E2-11)."""
-    f = p55 / p45
-    base = budget(m_b, False, p_scale=f, **kw)
-    pess = budget(m_p, True, p_scale=f, **kw)
-    fs = failsafe_rows(pess["phases"], kw["ah"], kw["reserve"])
-    return {"ratio": f, "cruise_w_pess": pess["cruise_w"], "cruise_min_base": base["cruise_min"],
-            "cruise_min_pess": pess["cruise_min"], "low_mah": fs["low_mah"],
-            "cruise_to_low_min": fs["cruise_to_low_min"]}
-
-
 @kit.calc("CALC-E2-TESTDAY", title="Sorties per test day and charge time",
           equation="sorties_window = floor(window / (t_flight + t_turn)) ; sorties = min(packs, window) (D-12: 2) ; "
                    "window used = sorties t_flight + (sorties - 1) t_turn ; "
@@ -392,20 +393,48 @@ kit.claim("CL-E2-HOVER-I-GATE", "Hover pack current at the gate, 5 m/s wind", ca
           how="Tethered hover at gate mass (ballast) with the 150 A watt meter; F1 sizes wires and the disconnect on it.")
 kit.claim("CL-E2-CRUISE-I-PESS", "Cruise pack current, pessimistic", calc="CALC-E2-BUDGET-PESS",
           output="cruise_a", unit="A", how="Fixed-wing tune flights: mean BAT.Curr in level cruise at 16 m/s.")
+PHASE_CLAIMS = [("climb", "Climb 0-50 m at 2 m/s"), ("trans_fwd", "Forward transition"),
+                ("trans_back", "Back-transition"), ("descent", "Descent 50-0 m at 1 m/s")]
+for key, label in PHASE_CLAIMS:
+    tag = key.upper().replace("_", "-")
+    kit.claim(f"CL-E2-I-{tag}-PESS", f"{label}: pack current, pessimistic (gate, 10 degC)",
+              calc="CALC-E2-BUDGET-PESS", output=f"i_{key}_a", unit="A",
+              how="DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; "
+                  "F1 sizes harness heating on the phase profile (ASM-F1-PROFILE).")
+    kit.claim(f"CL-E2-T-{tag}-PESS", f"{label}: duration, pessimistic", calc="CALC-E2-BUDGET-PESS",
+              output=f"t_{key}_s", unit="s", how="Phase duration on the full-mission log (MODE and QTUN messages).")
+kit.claim("CL-E2-T-HOVER-PESS", "Mission hover: duration", calc="CALC-E2-BUDGET-PESS", output="t_hover_s", unit="s",
+          how="Phase duration on the full-mission log.")
+kit.claim("CL-E2-T-CRUISE-PESS", "Cruise to the 20 % line: duration, pessimistic", calc="CALC-E2-BUDGET-PESS",
+          output="t_cruise_s", unit="s", how="As CL-E2-CRUISE-MIN-PESS x 60.")
+kit.claim("CL-E2-I-MAX-PHASE-PESS", "Highest mission-phase pack current, pessimistic", calc="CALC-E2-BUDGET-PESS",
+          output="i_max_phase_a", unit="A", limit=("<=", P + "performance.full_throttle_current_a"),
+          how="Largest phase-mean BAT.Curr on the full-mission log; stays under the 100 A limiter.")
 kit.claim("CL-E2-C-PEAK", "Peak discharge rate, all motors full", calc="CALC-E2-SAG", output="c_peak", unit="1/h",
           limit=("<=", 25.0),
-          how="Momentary (<5 s) 120 A = 18.5C; any hobby 6500 pack with IR <= 5 mOhm/cell carries it (T-E2-IR). "
+          how="Limiter 100 A = 15.4C (unlimited momentary 120 A = 18.5C); any hobby 6500 pack with IR <= 5 mOhm/cell carries it (T-E2-IR). "
               "Limit 25C = realistic continuous rating of a hard-case pack labelled 100C+.")
-kit.claim("CL-E2-SAG-F-WORST", "Full-throttle thrust factor, 20 % charge, 10 degC pack", calc="CALC-E2-SAG",
-          output="f_res20_cold", unit="-",
-          how="Thrust stand: pack discharged to 3.73 V/cell rest and chilled to 10 degC; full-throttle thrust / thrust "
-              "at 14.8 V bench supply.")
-kit.claim("CL-E2-TW-SAG-WORST", "Hover T/W at the gate, worst pack state", calc="CALC-E2-SAG", output="tw_worst",
-          unit="-", limit=(">=", P + "requirements.hover_tw_min_sag"), verifies=["R-HOVER-TW"],
-          how="Same thrust-stand run as CL-E2-SAG-F-WORST x 4 / 2.6 kg.")
+kit.claim("CL-E2-SAG-BRACKET", "E1's worst/fresh thrust factor lies inside E2's physical bracket (D-35)",
+          calc="CALC-E2-SAG", output="e1_bracket_margin", unit="-", limit=(">=", 0.0),
+          note="D-35 resolved: E2 adopts E1's station model (CL-E1-SAG-FACTOR, CL-E1-TW-WORST) as the one worst-state "
+               "claim. The limiter binds in every pack state, so the pack current is fixed at 100 A and thrust "
+               "follows power (lower bound, thrust ~ V) or the ideal rotor (upper, ~ V^(2/3)); E1 lies between. "
+               "Retires CL-E2-SAG-F-WORST and CL-E2-TW-SAG-WORST (the (V/14.8)^2 rule counted the sag twice)",
+          how="T-E1-STAND fresh and worst-state runs: measured thrust ratio between the measured bus-voltage ratio "
+              "and its 2/3 power.")
+kit.claim("CL-E2-LIMITER-BINDS-WORST", "Unlimited pack current at 20 % charge, 10 degC (limiter still binds)",
+          calc="CALC-E2-SAG", output="i_unlim_res20_cold", unit="A",
+          limit=(">=", P + "performance.full_throttle_current_a"),
+          how="Same stand run with Q_M_BAT_CURR_MAX disabled for one 1 s punch (props on the stand only): pack "
+              "current at full duty above 100 A. If it is not, the V^2 rule applies below the limiter and D-35 "
+              "re-opens.")
+kit.claim("CL-E2-V-BUS-WORST", "Bus voltage at 100 A, 20 % charge, 10 degC pack", calc="CALC-E2-SAG",
+          output="v_res20_cold", unit="V",
+          how="Logged BAT.Volt during a full-throttle punch on the cold-pack stand run (T-E2-IR); F4 sets "
+              "BATT_FS_VOLTSRC 1 (sag-compensated) and Q_M_BAT_VOLT_MIN below it.")
 kit.claim("CL-E2-SAG-V-WORST", "Cell sag at 120 A, 20 % charge, 10 degC", calc="CALC-E2-SAG",
           output="sag_v_per_cell_worst", unit="V",
-          how="Load-step IR test (T-E2-IR) scaled to 120 A; F4 uses it for BATT_FS_VOLTSRC 1 and Q_M_BAT_VOLT_MIN.")
+          how="Load-step IR test (T-E2-IR) scaled to 100 A; F4 uses it for BATT_FS_VOLTSRC 1 and Q_M_BAT_VOLT_MIN.")
 kit.claim("CL-E2-PACK-T-END", "Pack temperature at landing, worst morning (adiabatic)", calc="CALC-E2-HEAT",
           output="t_end_max_c", unit="degC", limit=("<=", 50.0), verifies=["R-THERMAL"],
           how="IR thermometer on the pack face at landing; E3 adds the pod's heat path. 50 degC leaves 10 K to the "
@@ -433,15 +462,6 @@ kit.claim("CL-E2-CHARGE-MIN", "Charge time per pack from the 20 % line", calc="C
 kit.claim("CL-E2-CHARGE-H-4", "Attended charge time for 4 packs, one port", calc="CALC-E2-TESTDAY",
           output="charge_h_4_packs", unit="h", limit=("<=", 5.0),
           how="Sum of logged charge times after a test day; must fit one attended afternoon (<= 5 h).")
-kit.claim("CL-E2-CRUISE-MIN-PESS-55", "Indicative pessimistic cruise with the 11x5.5MR (E1 ratio on B1)",
-          calc="CALC-E2-PROP55-SENS", output="cruise_min_pess", unit="min",
-          limit=(">=", P + "requirements.cruise_time_min"),
-          how="Not a design value. Replaced by CL-E2-CRUISE-MIN-PESS once B1 re-runs CALC-B1-CRUISE with the "
-              "11x5.5MR at 16 m/s and c 0.32 (CR-E2-11).")
-kit.claim("CL-E2-CRUISE-TO-LOW-PESS-55", "Indicative cruise before BATT_LOW, pessimistic, 11x5.5MR",
-          calc="CALC-E2-PROP55-SENS", output="cruise_to_low_min", unit="min",
-          limit=(">=", P + "requirements.cruise_time_min"),
-          how="As CL-E2-CRUISE-MIN-PESS-55; SITL with logged currents once the twin flies the 11x5.5MR.")
 kit.claim("CL-E2-WINDOW-USED", "Window minutes used by the planned sorties (2 packs, D-12)", calc="CALC-E2-TESTDAY",
           output="window_used_min", unit="min", limit=("<=", 180.0),
           how="Log take-off and landing times on the first test day; I2 plans the day on it.")
@@ -483,15 +503,20 @@ else:
 kit.test("T-E2-CAPACITY", "Discharge capacity test at 1C", verifies=["CL-E2-CRUISE-MIN-PESS", "CL-E2-CHARGE-MIN"],
          state="planned", procedure="Charger discharge mode is limited in power: discharge through the thrust stand "
          "at ~6.5 A to 3.5 V/cell under load, log mAh with the watt meter; pass >= 6.0 Ah (R-PACK-MASS).")
-kit.test("T-E2-IR", "Pack resistance by load step", verifies=["CL-E2-SAG-F-WORST", "CL-E2-TW-SAG-WORST", "CL-E2-C-PEAK"],
+kit.test("T-E2-IR", "Pack resistance by load step", verifies=["CL-E2-SAG-BRACKET", "CL-E2-V-BUS-WORST", "CL-E2-SAG-V-WORST", "CL-E2-C-PEAK"],
          state="planned", procedure="Thrust stand, one motor: rest voltage, then 20 A step; R = dV / dI after 2 s; "
          "repeat at 10 degC (pack 1 h in a fridge, bagged). Pass <= 5 mOhm/cell at 25 degC.")
 kit.test("T-E2-MISSION-LOG", "Full-mission current log", verifies=["CL-E2-CRUISE-MIN-BASE", "CL-E2-HOVER-I-GATE",
-         "CL-E2-CRUISE-I-PESS", "CL-E2-PACK-T-END"], state="planned",
+         "CL-E2-CRUISE-I-PESS", "CL-E2-PACK-T-END", "CL-E2-I-CLIMB-PESS", "CL-E2-I-TRANS-FWD-PESS",
+         "CL-E2-I-TRANS-BACK-PESS", "CL-E2-I-DESCENT-PESS", "CL-E2-I-MAX-PHASE-PESS"], state="planned",
          procedure="DataFlash BAT messages; IR thermometer on pack before/after; compare row by row with the phase table.")
 
 
 if __name__ == "__main__":
+    r_param = kit.value(P + "electrical.r_ext_mohm") / 1000.0
+    if abs(r_param - R_EXT_MIRROR_OHM) > 1e-9:
+        raise SystemExit(f"ASM-E2-R-EXT mirror {R_EXT_MIRROR_OHM} ohm != params electrical.r_ext_mohm {r_param} ohm: "
+                         "update R_EXT_MIRROR_OHM and re-run")
     kit.write()
     for cid in ("CALC-E2-BUDGET-BASE", "CALC-E2-BUDGET-PESS"):
         o = kit.nodes[cid]["outputs"]
@@ -506,7 +531,6 @@ if __name__ == "__main__":
         print("TRADE", r)
     print("FAILSAFE", kit.nodes["CALC-E2-FAILSAFE"]["outputs"])
     print("TESTDAY", {k: round(v, 2) for k, v in kit.nodes["CALC-E2-TESTDAY"]["outputs"].items()})
-    print("PROP55", {k: round(v, 3) for k, v in kit.nodes["CALC-E2-PROP55-SENS"]["outputs"].items()})
     for cid in ("CALC-E2-BUDGET-BASE", "CALC-E2-BUDGET-PESS"):
         print(cid, "E2 cross-check cruise W", round(kit.nodes[cid]["outputs"]["cruise_w_e2_model"], 1))
     print("PACK LOG", f"{len(WEIGHED)} weighed pack(s)" if WEIGHED else "no pack weighed yet (order ~20 Nov)")

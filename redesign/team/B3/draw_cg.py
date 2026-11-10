@@ -1,4 +1,4 @@
-"""B3: draw the chordwise station diagram (NP, CG limits, A3 CG cases) from results/sc_results.json and params.json.
+"""B3 (R3): draw the chordwise station diagram (NP, CG limits, A3 CG cases) from results/sc_results.json and params.json.
 
 Run: python -I redesign/team/B3/draw_cg.py  ->  team/B3/fig-b3-cg-stations.svg   (design-system/diagram-style.md)
 """
@@ -47,8 +47,9 @@ xa = np_["xnp"] - np_["dx_props"] - np_["dx_pod"]
 lab = [(lim["x_fwd"], f'fwd {lim["x_fwd"]:.4f}', ACC, 72), (lim["x_aft"], f'aft {lim["x_aft"]:.4f}', ACC, 54),
        (lim["x_target"], f'target {lim["x_target"]:.4f}', ACC, 36),
        (np_["xnp"], f'NP {np_["xnp"]:.4f}', FG, 236), (xa, f'NP wing+fins {xa:.4f}', FG3, 256),
-       (chk["x_now"], f'A3 CG, pack 29 mm fwd {chk["x_now"]:.4f}', HI, 216),
-       (chk["x_centred"], f'pack centred {chk["x_centred"]:.4f}', FAIL if chk["centred_margin_aft"] < 0 else FG2, 276)]
+       (chk["x_centred"], f'A3 R3 CG, pack at x -0.001 {chk["x_centred"]:.4f}',
+        FAIL if chk["centred_margin_aft"] < 0 else HI, 216),
+       (chk["cg_slide_fwd"], f'pack at its fwd stop {chk["cg_slide_fwd"]:.4f}', FG2, 276)]
 for x, t, col, y in lab:
     y0 = 96 if y < 96 else 166
     s.append(f'<line x1="{X(x):.1f}" y1="{y0}" x2="{X(x):.1f}" y2="{y + 4 if y < 96 else y - 14}" stroke="{col}" stroke-width="1.25"/>')

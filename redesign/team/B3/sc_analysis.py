@@ -1,4 +1,9 @@
-"""B3 stability and control: proof-chain claims for the K09-L quad tailsitter (R1 geometry, A1-R2 params).
+"""B3 stability and control: proof-chain claims for the K09-L quad tailsitter (R3 geometry, A1-R3 params).
+
+R3 re-run (CR-A1-26): 7 deg cant (D-27), half-fins 0.21 m (D-26), pod 0.21 x 0.14 x 0.07 at -0.115 (D-25), prop
+plane -0.0082 (D-28), pack nominal x -0.001 (D-24) on A3's R3 roll-up and inertia, B4's swirl factor. Added: the
+Ribner prop normal force evaluated at the aft CG limit (CR-J1-11, CALC-B3-PROP-AFT) and the hover rate loops with
+the first wing torsion modes (CR-C2-03 / D-45, CALC-B3-HOVER-FLEX, model in hover_loop.py).
 
 Run (from the repo root, AVL 3.52 at C:/Users/dillo/tools/avl/avl352.exe; first run ~3 min, then cached):
     python -I redesign/team/B3/sc_analysis.py       # AVL + hand models -> claims.json, results/sc_results.json
@@ -22,6 +27,7 @@ sys.path.insert(0, str(HERE.parents[1] / "proofs"))
 import proofkit as pk  # noqa: E402
 import avl_model as AV  # noqa: E402
 import flight_models as FM  # noqa: E402
+import hover_loop as HL  # noqa: E402
 
 kit = pk.Kit(__file__, params=["../../params/params.json"])
 P = "P:"
@@ -108,6 +114,49 @@ kit.assumption("ASM-B3-ZETA-SP-MIN", "Short-period damping minimum", "Level 1 sh
                basis="MIL-F-8785C 3.2.2.1.2, cat. B Level 1", value=0.30, unit="-", cites=["SRC-B3-MIL8785C"])
 kit.assumption("ASM-B3-ZETA-DR-MIN", "Dutch-roll damping minimum", "Level 1 Dutch-roll damping ratio",
                basis="MIL-F-8785C 3.3.1.1, cat. B Level 1", value=0.08, unit="-", cites=["SRC-B3-MIL8785C"])
+kit.assumption("ASM-B3-SWIRL-LOW", "Hover yaw factor, low bracket", "Reaction-torque factor if the fins remove "
+               "swirl instead of adding side force about the body axis", basis="B4 R0-R2 CL-B4-YAW 0.48 (moment about "
+               "the motor axis); B4 R3 gives 1.79 (side force about the body x-axis). Kept as the bracket until "
+               "T-B4-YAW", value=0.48, unit="-", status="UNVERIFIED")
+kit.assumption("ASM-B3-PACK-X-NOM", "Pack nominal centroid station (D-24)", "x of the pack centroid at its nominal "
+               "station, the forward end of its trim travel", basis="params/CHANGE-LOG.md D-24 (B3 CR-B3-11): -0.001 m; "
+               "A3 R3 roll-up uses the same station (ASM-A3-PACK-SLIDE: 0 ... 23 mm aft only)", value=-0.001, unit="m")
+
+# hover loop with the wing torsion modes (CR-C2-03, D-45)
+kit.source("SRC-B3-MIL9490", "MIL-F-9490D Flight control systems, general specification (1975)", "standard",
+           url="http://everyspec.com/MIL-SPECS/MIL-SPECS-MIL-F/MIL-F-9490D_6264/",
+           where="3.1.3.6.1 stability margins: 6 dB gain, 45 deg phase at the lowest mode frequencies")
+kit.assumption("ASM-B3-STATION-IYY", "Fin station pitch inertia about the spar, per side",
+               "Motors, mounts, props, ESCs and the two half-fins of one station about the spar axis",
+               basis="team/C2/CHANGE-REQUESTS.md CR-C2-03: ~0.0125 kg m2 per side (C2 modal model)", value=0.0125,
+               unit="kg m2", status="UNVERIFIED")
+kit.assumption("ASM-B3-TORSION-HIGH", "Wing torsion mode frequencies, high corner [antisymmetric, symmetric]",
+               "Upper end of C2's frequency bands (GJ 45 N m2); the low corners are C2's claims",
+               basis="team/C2/CHANGE-REQUESTS.md CR-C2-03: antisymmetric 11.7-14.9 Hz, symmetric 21-27 Hz",
+               value=[14.9, 27.0], unit="Hz", status="UNVERIFIED")
+kit.assumption("ASM-B3-FLEX-ZETA", "Structural damping of the torsion modes", "Modal damping ratio, foam/CF wing "
+               "with taped skin", basis="0.02 is the low end for bonded foam-core/CF structures (1-3 %); T-C2-TAP-TEST "
+               "measures it", value=0.02, unit="-", status="UNVERIFIED")
+kit.assumption("ASM-B3-MOTOR-TAU", "Motor + 11 in prop thrust time constant", "First-order lag from ESC command to "
+               "thrust at hover", basis="X3108S-class motor with an 11x5.5 prop: 30-50 ms typical for 10-12 in props on "
+               "BLHeli_S without active braking; 0.04 s used", value=0.04, unit="s", status="UNVERIFIED")
+kit.assumption("ASM-B3-LOOP-DELAY", "Rate-loop transport delay", "Sample, compute and DShot output delay",
+               basis="400 Hz main loop (2.5 ms) + DShot frame and ESC (~1.5 ms)", value=0.004, unit="s")
+kit.assumption("ASM-B3-FSW-FILT", "Gyro low-pass and D-term filter [INS_GYRO_FILTER, Q_A_RAT_*_FLTD]",
+               "2nd-order gyro filter and 1st-order D filter cut-offs", basis="subsystems/flight-software/K09L.param "
+               "(F4): INS_GYRO_FILTER 40, Q_A_RAT_PIT_FLTD 32", value=[40.0, 32.0], unit="Hz", status="PROPOSED")
+kit.assumption("ASM-B3-FSW-PID-PIT", "Hover pitch rate PID shape [P, I, D]", "F4's starting gains; only the ratios "
+               "matter here (the gain is scaled to the crossover)", basis="K09L.param Q_A_RAT_PIT_P/I/D",
+               value=[0.08, 0.08, 0.002], unit="-", status="PROPOSED")
+kit.assumption("ASM-B3-FSW-PID-YAW", "Hover yaw rate PID shape [P, I, D]", "F4's starting gains (no D)",
+               basis="K09L.param Q_A_RAT_YAW_P/I", value=[0.40, 0.04, 0.0], unit="-", status="PROPOSED")
+kit.assumption("ASM-B3-XOVER", "Hover rate-loop crossovers [pitch, yaw]", "F4's predicted crossovers at the "
+               "starting gains", basis="K09L.param comments (CL-F4-XOVER-PIT 4.0 Hz, CL-F4-XOVER-YAW 1.8 Hz; not yet "
+               "published as claims)", value=[4.0, 1.8], unit="Hz", status="PROPOSED")
+kit.assumption("ASM-B3-GM-MIN", "Loop gain margin minimum", "Gain margin at every -180 deg crossing, structural "
+               "modes included", basis="MIL-F-9490D 3.1.3.6.1", value=6.0, unit="dB", cites=["SRC-B3-MIL9490"])
+kit.assumption("ASM-B3-PM-MIN", "Loop phase margin minimum", "Phase margin at every 0 dB crossing",
+               basis="MIL-F-9490D 3.1.3.6.1", value=45.0, unit="deg", cites=["SRC-B3-MIL9490"])
 
 GEO = {"b": P + "wing.span_m", "c": P + "wing.chord_m", "ef": P + "wing.elevon.chord_frac",
        "yin": P + "wing.elevon.inboard_y_m", "yout": P + "wing.elevon.outboard_y_m", "fy": P + "fins.y_m",
@@ -305,40 +354,83 @@ kit.claim("CL-B3-SM-TARGET", "Static margin at the CG target", calc="CALC-B3-CG-
           assumes=["ASM-B3-PROP-CNA"], how="T-B3-TWIN-NP: elevon-trim-vs-CL slope at two CG positions (FBWA glides).")
 
 
-@kit.calc("CALC-B3-CG-CHECK", title="A3 CG (pack at the A3 station and pack centred) against the B3 range",
+@kit.calc("CALC-B3-PROP-AFT", title="Ribner prop normal force at the aft CG limit (CR-J1-11)",
+          assumes=["ASM-B3-PROP-CNA", "ASM-B3-UPWASH"], cites=["SRC-B3-RIBNER", "SRC-B3-PERKINS"],
+          inputs={"n": P + "propulsion.n_motors", "D": P + "propulsion.prop_diameter_m",
+                  "x_prop": P + "propulsion.stations.x_prop_plane_m", "x_aft": "CL-B3-CG-AFT", "xnp": "CL-B3-XNP",
+                  "xnp_a": "CL-B3-XNP-AERO", "CLa": "CL-B3-CLA", "S": "CL-A1-WING-AREA", "c": P + "wing.chord_m",
+                  "b": P + "wing.span_m", "cna": "ASM-B3-PROP-CNA", "up": "ASM-B3-UPWASH", "vt": "CL-B3-VT-TRIM",
+                  "rho": P + "env.rho_kgm3", "m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2",
+                  "ld": P + "performance.ld_cruise"},
+          units={"D": "m", "x_prop": "m", "x_aft": "m", "xnp": "m", "xnp_a": "m", "S": "m2", "c": "m", "b": "m",
+                 "vt": "m/s", "rho": "kg/m3", "m": "kg", "g": "m/s2"},
+          equation="arm = x_aft - x_prop ; dCma_p = n cna A/S up arm/c ; dCnb_p = -n cna A/S arm/b (per rad, about "
+                   "the aft CG) ; N_p = n cna A q per rad at 1.3 Vs ; Tc = (W/(L/D))/n / (rho V^2 D^2) (light loading "
+                   "check) ; SM at the aft limit without the props = SM_min + (Xnp_props - Xnp)/c")
+def prop_aft(n, D, x_prop, x_aft, xnp, xnp_a, CLa, S, c, b, cna, up, vt, rho, m, g, ld):
+    p = FM.prop_terms(n, D, x_prop, x_aft, S, c, b, cna, up)
+    A = math.pi * D * D / 4
+    q = 0.5 * rho * vt * vt
+    T1 = m * g / ld / n
+    p_np = FM.prop_terms(n, D, x_prop, xnp_a, S, c, b, cna, up)
+    dx_props = -p_np["dCma"] / (CLa + p_np["dCLa"]) * c
+    return {"arm_m": x_aft - x_prop, "dCma_props": p["dCma"], "dCnb_props": p["dCnb"], "dCYb_props": p["dCYb"],
+            "N_props_per_deg_N": n * cna * A * q * math.pi / 180, "Tc": T1 / (rho * vt * vt * D * D),
+            "dxnp_props_m": dx_props, "sm_aft_if_props_ignored": (xnp - dx_props - x_aft) / c, "sm_aft": (xnp - x_aft) / c}
+
+
+kit.claim("CL-B3-PROP-ARM-AFT", "Prop plane ahead of the aft CG limit", calc="CALC-B3-PROP-AFT", output="arm_m",
+          unit="m", how="Follows from CL-B3-CG-AFT and the prop plane (D3 CAD).",
+          note="J1 CL-J1-PROP-ARM 0.049 m at R1")
+kit.claim("CL-B3-PROP-CNB-AFT", "Prop Ribner yaw term at the aft CG limit", calc="CALC-B3-PROP-AFT",
+          output="dCnb_props", unit="1/rad", assumes=["ASM-B3-PROP-CNA"],
+          how="Included in CL-B3-CNB; T-B3-YAW-DOUBLET with and without props (glide) brackets it.")
+kit.claim("CL-B3-PROP-DXNP", "NP shift from the props (Ribner, all four)", calc="CALC-B3-PROP-AFT",
+          output="dxnp_props_m", unit="m", assumes=["ASM-B3-PROP-CNA"],
+          how="T-B3-TWIN-NP: NP from powered vs gliding trim-vs-CL slopes.")
+
+
+@kit.calc("CALC-B3-CG-CHECK", title="A3 CG (pack at the D-24 nominal station) against the B3 range",
           inputs={"cg_frac": "CL-A3-CG-X", "c": P + "wing.chord_m", "x_fwd": "CL-B3-CG-FWD", "x_aft": "CL-B3-CG-AFT",
-                  "x_t": "CL-B3-CG-TARGET", "pod_le": P + "pod.x_le_m", "pod": P + "pod.size_m",
-                  "x_pack": "CL-A3-PACK-X-REQ", "m_pack": P + "battery.mass_kg", "m_basic": "CL-A3-MASS-BASIC",
+                  "x_t": "CL-B3-CG-TARGET", "x_t_a3": P + "cg.x_target_m", "x_nom": "ASM-B3-PACK-X-NOM",
+                  "x_req": "CL-A3-PACK-X-REQ", "m_pack": P + "battery.mass_kg", "m_basic": "CL-A3-MASS-BASIC",
                   "slide": "ASM-A3-PACK-SLIDE"},
-          units={"c": "m", "x_fwd": "m", "x_aft": "m", "x_t": "m", "pod_le": "m", "pod": "m", "m_pack": "kg"},
-          equation="x_now = cg_frac c ; x_centred = x_now + (x_pod_centre - x_pack) m_pack/m ; margins to the limits ; "
-                   "pack station for the target = x_pack + (x_t - x_now) m/m_pack")
-def cg_check(cg_frac, c, x_fwd, x_aft, x_t, pod_le, pod, x_pack, m_pack, m_basic, slide):
+          units={"c": "m", "x_fwd": "m", "x_aft": "m", "x_t": "m", "x_t_a3": "m", "x_nom": "m", "x_req": "m",
+                 "m_pack": "kg", "slide": "m"},
+          equation="x_now = cg_frac c ; A3 pack station x_p = x_req - (x_t,A3 - x_now) m/m_pack ; "
+                   "x_nom CG = x_now + (x_nom - x_p) m_pack/m ; margins to the limits ; pack station for the B3 target "
+                   "= x_p + (x_t - x_now) m/m_pack ; slide left = distance to the nearer end of [x_nom + s0, x_nom + s1]")
+def cg_check(cg_frac, c, x_fwd, x_aft, x_t, x_t_a3, x_nom, x_req, m_pack, m_basic, slide):
+    s0, s1 = (slide if isinstance(slide, (list, tuple)) else (-slide, slide))
     x = cg_frac * c
-    x_pc = pod_le + pod[0] / 2
-    xc = x + (x_pc - x_pack) * m_pack / m_basic
-    xp_t = x_pack + (x_t - x) * m_basic / m_pack
-    return {"x_now": x, "margin_fwd": x - x_fwd, "margin_aft": x_aft - x, "to_target": x_t - x,
+    xp = x_req - (x_t_a3 - x) * m_basic / m_pack
+    xc = x + (x_nom - xp) * m_pack / m_basic
+    xp_t = xp + (x_t - x) * m_basic / m_pack
+    off = xp_t - x_nom
+    return {"x_now": x, "pack_x_a3": xp, "margin_fwd": x - x_fwd, "margin_aft": x_aft - x, "to_target": x_t - x,
             "x_centred": xc, "centred_margin_fwd": xc - x_fwd, "centred_margin_aft": x_aft - xc,
-            "pack_x_target": xp_t, "pack_offset_target": xp_t - x_pc,
-            "pack_slide_left": slide - abs(xp_t - x_pc),
-            "cg_slide_fwd": xc - slide * m_pack / m_basic, "cg_slide_aft": xc + slide * m_pack / m_basic}
+            "pack_x_target": xp_t, "pack_offset_target": off, "pack_slide_left": min(off - s0, s1 - off),
+            "cg_slide_fwd": xc + s0 * m_pack / m_basic, "cg_slide_aft": xc + s1 * m_pack / m_basic,
+            "pack_shift_into_range_m": (x_aft - xc) * m_basic / m_pack if xc > x_aft else 0.0}
 
 
-kit.claim("CL-B3-CG-NOW-FWD", "A3 CG (pack 29 mm forward) behind the forward limit", calc="CALC-B3-CG-CHECK",
+kit.claim("CL-B3-CG-NOW-FWD", "A3 CG (A3 roll-up as published) behind the forward limit", calc="CALC-B3-CG-CHECK",
           output="margin_fwd", unit="m", limit=(">=", 0.0),
           how="Re-run after A3 updates the roll-up; T-B3-CG-BALANCE on the built aircraft.")
-kit.claim("CL-B3-CG-NOW-AFT", "A3 CG (pack 29 mm forward) ahead of the aft limit", calc="CALC-B3-CG-CHECK",
+kit.claim("CL-B3-CG-NOW-AFT", "A3 CG (A3 roll-up as published) ahead of the aft limit", calc="CALC-B3-CG-CHECK",
           output="margin_aft", unit="m", limit=(">=", 0.0), how="As CL-B3-CG-NOW-FWD.")
-kit.claim("CL-B3-CG-CENTRED-AFT", "CG with the pack centred, ahead of the aft limit (D-17 test)",
+kit.claim("CL-B3-CG-CENTRED-AFT", "CG with the pack at its D-24 nominal station (x -0.001), ahead of the aft limit",
           calc="CALC-B3-CG-CHECK", output="centred_margin_aft", unit="m", limit=(">=", 0.0),
-          how="A3 roll-up with the pack at the pod centre; T-B3-CG-BALANCE.",
-          note="D-17: if negative, A1 moves the pod nose to -0.125 m")
-kit.claim("CL-B3-CG-CENTRED-FWD", "CG with the pack centred, behind the forward limit", calc="CALC-B3-CG-CHECK",
-          output="centred_margin_fwd", unit="m", limit=(">=", 0.0), how="As CL-B3-CG-CENTRED-AFT.")
-kit.claim("CL-B3-PACK-SLIDE-LEFT", "Pack slide left with the pack at the target station", calc="CALC-B3-CG-CHECK",
-          output="pack_slide_left", unit="m", limit=(">=", 0.0),
-          how="D2 marks the pack station on the tray; H1 balance confirms the CG on target.")
+          how="A3 roll-up with the pack at x -0.001; T-B3-CG-BALANCE.",
+          note="id kept for A1's CALC-A1-CG-RANGE; 'centred' now means the D-24 nominal station (pod centre at R3 is "
+               "-0.010)")
+kit.claim("CL-B3-CG-CENTRED-FWD", "CG with the pack at its D-24 nominal station, behind the forward limit",
+          calc="CALC-B3-CG-CHECK", output="centred_margin_fwd", unit="m", limit=(">=", 0.0),
+          how="As CL-B3-CG-CENTRED-AFT.")
+kit.claim("CL-B3-PACK-SLIDE-LEFT", "Pack trim travel left with the pack at the B3 target station",
+          calc="CALC-B3-CG-CHECK", output="pack_slide_left", unit="m", limit=(">=", 0.0),
+          how="D2 marks the pack station on the tray; H1 balance confirms the CG on target.",
+          note="negative: the target station is outside the bay's 0 ... 23 mm aft-only travel (ASM-A3-PACK-SLIDE)")
 
 
 # ---------------------------------------------------------------------------------------------- trimmed stall
@@ -654,7 +746,7 @@ HOV_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "dl": P + 
           "S": "CL-A1-WING-AREA", "c": P + "wing.chord_m", "b": P + "wing.span_m", "x_t": "CL-B3-CG-TARGET",
           "cn90": "ASM-B3-CN90", "xcp": "ASM-B3-XCP-HOVER", "fc": P + "fins.chord_m", "fh": P + "fins.half_height_m",
           "fle": P + "fins.le_x_m", "asym": "ASM-B3-GUST-ASYM", "fac": P + "requirements.hover_ctrl_factor",
-          "amin": P + "requirements.hover_ctrl_accel_min"}
+          "amin": P + "requirements.hover_ctrl_accel_min", "swirl_lo": "ASM-B3-SWIRL-LOW"}
 HOV_U = {"m": "kg", "g": "m/s2", "tmax": "kg", "y": "m", "z": "m", "cant": "deg", "rho": "kg/m3", "Vw": "m/s",
          "S": "m2", "c": "m", "b": "m", "x_t": "m", "fc": "m", "fh": "m", "fle": "m", "amin": "rad/s2"}
 
@@ -666,7 +758,7 @@ HOV_U = {"m": "kg", "g": "m/s2", "tmax": "kg", "y": "m", "z": "m", "cant": "deg"
                    "q S CN90 arm (pitch), fins (roll), asym F b/4 (yaw) ; cant_req: smallest cant meeting both "
                    "the accel floor and fac x disturbance on yaw")
 def hover(m, g, dl, split, tmax, sag, y, z, Qh, swirl, cant, dfrac, Ixx, Iyy, Izz, m_basic, rho, Vw, S, c, b, x_t,
-          cn90, xcp, fc, fh, fle, asym, fac, amin):
+          cn90, xcp, fc, fh, fle, asym, fac, amin, swirl_lo):
     k = m / m_basic
     z_cg = z * (split - 1) / (split + 1)        # CG height implied by the A3 split (lever balance)
     dist = FM.hover_disturbance(rho, Vw, S, c, x_t, cn90, xcp, 2 * fc * 2 * fh, fle + fc / 2, asym, b)
@@ -682,6 +774,10 @@ def hover(m, g, dl, split, tmax, sag, y, z, Qh, swirl, cant, dfrac, Ixx, Iyy, Iz
     r["ratio_yaw_nocant"], r["acc_yaw_nocant_rads2"] = r0["ratio_yaw"], r0["acc_yaw_rads2"]
     rf = FM.hover_authority(m, g, dl, split, Tmx, y, z, z_cg, kq, cant, II, dd, 1.0)
     r["ratio_yaw_fulldiff"], r["acc_yaw_fulldiff_rads2"], r["dT_full_N"] = rf["ratio_yaw"], rf["acc_yaw_rads2"], rf["dT_N"]
+    rs = FM.hover_authority(m, g, dl, split, Tmx, y, z, z_cg, kq_iso * swirl_lo, cant, II, dd, dfrac)   # low bracket
+    r["ratio_yaw_low"], r["acc_yaw_low_rads2"] = rs["ratio_yaw"], rs["acc_yaw_rads2"]
+    r0c = FM.hover_authority(m, g, dl, split, Tmx, y, z, z_cg, 0.0, cant, II, dd, dfrac)
+    r["yaw_cant_share"] = r0c["M_yaw_Nm"] / r["M_yaw_Nm"]
     # smallest cant that meets both yaw criteria with the capped differential
     rr = math.hypot(y, z)
     M_need = max(amin * II[0], fac * dist["M_yaw"])
@@ -704,6 +800,119 @@ for ax in ("pitch", "roll", "yaw"):
 kit.claim("CL-B3-HOVER-CANT-REQ", "Motor cant needed for hover yaw at 30 % differential", calc="CALC-B3-HOVER",
           output="cant_req_deg", unit="deg", limit=("<=", P + "propulsion.stations.cant_deg"),
           verifies=["R-HOVER-AUTHORITY"], how="Bench yaw torque on a turntable with canted mounts; hover yaw steps (H2).")
+
+
+kit.claim("CL-B3-HOVER-YAW-RATIO-LOW", "Hover yaw control / 5 m/s disturbance, low swirl bracket (B4 R0-R2 factor)",
+          calc="CALC-B3-HOVER", output="ratio_yaw_low", unit="-", limit=(">=", P + "requirements.hover_ctrl_factor"),
+          assumes=["ASM-B3-SWIRL-LOW"], how="T-B4-YAW stand test settles the factor between the two brackets.")
+kit.claim("CL-B3-HOVER-YAW-ACCEL-LOW", "Hover yaw acceleration, 30 % differential, low swirl bracket",
+          calc="CALC-B3-HOVER", output="acc_yaw_low_rads2", unit="rad/s2",
+          limit=(">=", P + "requirements.hover_ctrl_accel_min"), assumes=["ASM-B3-SWIRL-LOW"],
+          how="As CL-B3-HOVER-YAW-RATIO-LOW.")
+
+
+FLEX_IN = {"Iyy": "CL-A3-IYY", "Ixx": "CL-A3-IXX", "m_basic": "CL-A3-MASS-BASIC", "m": P + "requirements.mtow_gate_kg",
+           "g": P + "env.g_ms2", "dl": P + "propulsion.download_factor", "Qh": "CL-B4-HOVER-Q", "swirl": "CL-B4-YAW",
+           "y": P + "propulsion.stations.y_m", "z": P + "propulsion.stations.z_m",
+           "cant": P + "propulsion.stations.cant_deg", "f_anti": "CL-C2-F-TORSION-ANTI",
+           "f_sym": "CL-C2-F-TORSION-SYM", "f_hi": "ASM-B3-TORSION-HIGH", "Is": "ASM-B3-STATION-IYY",
+           "zeta": "ASM-B3-FLEX-ZETA", "tau": "ASM-B3-MOTOR-TAU", "delay": "ASM-B3-LOOP-DELAY",
+           "filt": "ASM-B3-FSW-FILT", "pid_p": "ASM-B3-FSW-PID-PIT", "pid_y": "ASM-B3-FSW-PID-YAW",
+           "xo": "ASM-B3-XOVER", "gm_min": "ASM-B3-GM-MIN", "pm_min": "ASM-B3-PM-MIN"}
+FLEX_U = {"m": "kg", "g": "m/s2", "y": "m", "z": "m", "cant": "deg", "f_anti": "Hz", "f_sym": "Hz", "f_hi": "Hz",
+          "tau": "s", "delay": "s", "filt": "Hz", "xo": "Hz", "gm_min": "dB", "pm_min": "deg"}
+
+
+@kit.calc("CALC-B3-HOVER-FLEX", title="Hover pitch and yaw rate loops with the wing torsion modes (CR-C2-03)",
+          inputs=FLEX_IN, units=FLEX_U, cites=["SRC-B3-MIL9490"],
+          assumes=["ASM-B3-STATION-IYY", "ASM-B3-FLEX-ZETA", "ASM-B3-MOTOR-TAU", "ASM-B3-FSW-FILT", "ASM-B3-XOVER"],
+          equation="L = C_PID(F4 ratios, scaled to the rigid crossover) x motor lag x Pade delay x structure x gyro LPF ;"
+                   " pitch: two-inertia, stations 2 I_s on the torsion spring, gyro on the body, free-free f_sym ; "
+                   "yaw: rigid k_y/(Ixx s) + thrust tilt of the antisymmetric twist 16 T y z sigma/(2 I_s (s^2+2 zeta w s"
+                   "+w^2)) ; GM = min over -180 deg crossings, PM = min over 0 dB crossings, at both frequency corners "
+                   "(and sigma = +/-1 for yaw) ; max crossover = highest f_c with GM >= 6 dB and PM >= 45 deg")
+def hover_flex(Iyy, Ixx, m_basic, m, g, dl, Qh, swirl, y, z, cant, f_anti, f_sym, f_hi, Is, zeta, tau, delay, filt,
+               pid_p, pid_y, xo, gm_min, pm_min):
+    k = m / m_basic
+    T = m * g * dl / 4
+    ky = 4 * (Qh / T * swirl + math.hypot(y, z) * math.sin(math.radians(cant)))
+    ph = {"pitch": dict(k=4 * z, I=Iyy * k, I_st=2 * Is),
+          "yaw": dict(k=ky, I=Ixx * k, I_st=2 * Is, T=T, y=y, z=z)}
+    flt = (tau, delay, filt[0], filt[1])
+    corners = {"pitch": [(f_sym, 1.0), (f_hi[1], 1.0)],
+               "yaw": [(f_anti, 1.0), (f_hi[0], 1.0), (f_anti, -1.0), (f_hi[0], -1.0)]}
+    pid = {"pitch": pid_p, "yaw": pid_y}
+
+    def worst(ax, fc, nominal_only=False, rigid=True):
+        rows = []
+        for fm, sg in corners[ax]:
+            if nominal_only and sg < 0:
+                continue
+            r = HL.loop(ax, fc, fm, zeta, pid[ax], flt, ph[ax], sg, rigid_margins=rigid)
+            row = {"f_mode": fm, "sigma": sg, "gm_db": r["flex"]["gm_db"], "f_gm": r["flex"]["f_gm_hz"],
+                   "pm_deg": r["flex"]["pm_deg"], "stable": r["flex"]["stable"], "peak_db": r["mode_peak_db"]}
+            if rigid:
+                row.update({"gm_rigid_db": r["rigid"]["gm_db"], "pm_rigid_deg": r["rigid"]["pm_deg"]})
+            rows.append(row)
+        return rows
+
+    def ok(ax, fc):
+        return all(r["gm_db"] >= gm_min and r["pm_deg"] >= pm_min and r["stable"]
+                   for r in worst(ax, fc, nominal_only=True, rigid=False))
+
+    out = {}
+    for i, ax in enumerate(("pitch", "yaw")):
+        rows = worst(ax, xo[i])
+        out[f"{ax}_cases"] = [{kk: (round(v, 3) if isinstance(v, float) else v) for kk, v in r.items()} for r in rows]
+        nom = [r for r in rows if r["sigma"] > 0]
+        out[f"gm_{ax}_db"] = min(r["gm_db"] for r in nom)
+        out[f"pm_{ax}_deg"] = min(r["pm_deg"] for r in nom)
+        out[f"gm_{ax}_any_map_db"] = min(r["gm_db"] for r in rows)
+        out[f"stable_{ax}"] = int(all(r["stable"] for r in rows))
+        out[f"gm_{ax}_rigid_db"], out[f"pm_{ax}_rigid_deg"] = rows[0]["gm_rigid_db"], rows[0]["pm_rigid_deg"]
+        fc = round(xo[i], 1)                          # 0.1 Hz steps from F4's crossover, up while it passes
+        if ok(ax, fc):
+            while fc < 10.0 and ok(ax, round(fc + 0.1, 1)):
+                fc = round(fc + 0.1, 1)
+        else:
+            while fc > 0.2 and not ok(ax, fc):
+                fc = round(fc - 0.1, 1)
+        out[f"xover_max_{ax}_hz"] = fc
+        r5 = worst(ax, 5.0, nominal_only=True, rigid=False)
+        out[f"gm_{ax}_at_5hz_db"] = min(r["gm_db"] for r in r5)
+        out[f"pm_{ax}_at_5hz_deg"] = min(r["pm_deg"] for r in r5)
+    # static aeroelastic change of hover yaw control power (antisymmetric twist tilts the thrust), low corner
+    w = 2 * math.pi * f_anti
+    out["yaw_flex_static_frac"] = 16 * T * y * z / (2 * Is * w * w * ky)
+    out["ky_Nm_per_N"] = ky
+    return out
+
+
+kit.claim("CL-B3-FLEX-GM-PITCH", "Hover pitch loop gain margin with the symmetric torsion mode, F4 crossover",
+          calc="CALC-B3-HOVER-FLEX", output="gm_pitch_db", unit="dB", limit=(">=", "ASM-B3-GM-MIN"),
+          verifies=["R-HOVER-AUTHORITY"], assumes=["ASM-B3-FLEX-ZETA", "ASM-B3-MOTOR-TAU"],
+          how="T-C2-TAP-TEST gives f and zeta; tethered hover: raise Q_A_RAT_PIT_P until oscillation (gyro FFT), "
+              "margin = 20 log(P_osc / P_used).")
+kit.claim("CL-B3-FLEX-GM-YAW", "Hover yaw loop gain margin with the antisymmetric torsion mode, F4 crossover",
+          calc="CALC-B3-HOVER-FLEX", output="gm_yaw_db", unit="dB", limit=(">=", "ASM-B3-GM-MIN"),
+          verifies=["R-HOVER-AUTHORITY"], assumes=["ASM-B3-FLEX-ZETA", "ASM-B3-MOTOR-TAU"],
+          how="As CL-B3-FLEX-GM-PITCH with Q_A_RAT_YAW_P.")
+kit.claim("CL-B3-FLEX-PM-PITCH", "Hover pitch loop phase margin, flexible, F4 crossover", calc="CALC-B3-HOVER-FLEX",
+          output="pm_pitch_deg", unit="deg", limit=(">=", "ASM-B3-PM-MIN"),
+          how="Tethered hover step responses: overshoot <= 25 % (gyro log).")
+kit.claim("CL-B3-FLEX-PM-YAW", "Hover yaw loop phase margin, flexible, F4 crossover", calc="CALC-B3-HOVER-FLEX",
+          output="pm_yaw_deg", unit="deg", limit=(">=", "ASM-B3-PM-MIN"), how="As CL-B3-FLEX-PM-PITCH.")
+kit.claim("CL-B3-XOVER-MAX-PITCH", "Highest hover pitch crossover with 6 dB / 45 deg, torsion mode in",
+          calc="CALC-B3-HOVER-FLEX", output="xover_max_pitch_hz", unit="Hz", limit=(">=", 4.0),
+          how="F4 tuning ceiling (TUNING-PLAN.md): do not raise pitch P above the value giving this crossover "
+              "until a notch is set from T-C2-TAP-TEST.", note="limit 4.0 Hz = F4's starting crossover (ASM-B3-XOVER)")
+kit.claim("CL-B3-XOVER-MAX-YAW", "Highest hover yaw crossover with 6 dB / 45 deg, torsion mode in",
+          calc="CALC-B3-HOVER-FLEX", output="xover_max_yaw_hz", unit="Hz", limit=(">=", 1.8),
+          how="As CL-B3-XOVER-MAX-PITCH for yaw P.", note="limit 1.8 Hz = F4's starting crossover (ASM-B3-XOVER)")
+kit.claim("CL-B3-HOVER-YAW-FLEX-STATIC", "Static change of hover yaw control power from the antisymmetric twist",
+          calc="CALC-B3-HOVER-FLEX", output="yaw_flex_static_frac", unit="-",
+          how="Turntable yaw-torque bench test on the built wing vs the rigid prediction.",
+          note="positive = adds to the rigid moment with F4's motor map; not credited in CL-B3-HOVER-YAW-RATIO")
 
 
 @kit.calc("CALC-B3-HOVER-TRIM", title="Hover pitch-trim share", inputs={"split": "CL-A3-HOVER-SPLIT"},

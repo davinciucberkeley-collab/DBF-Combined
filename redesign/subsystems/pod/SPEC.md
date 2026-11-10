@@ -1,84 +1,68 @@
 # Pod
 
-Status: `MODELLED` (D2, 2026-11-09). Centre pod on the wing upper surface: pack bay with aft trim, FC and avionics
-side channels, hatch, pitot socket, and a carry handle on the spar that also carries the GPS mast. CAD
-`fusion/pod.py`; masses and CGs from the CAD by `team/D2/pod_data.py`; claims `team/D2/pod_claims.py`.
+Status: `MODELLED` (D2, revision D2-R3 on params A1-R3, 2026-11-09). Answers CR-A1-27 (D-24, D-25). Centre pod on
+the wing upper surface: pack bay with a crush block ahead and spacers behind, FC and avionics side channels, hatch,
+pitot socket, vents, two antenna exits, and a carry handle on the spar that also carries the aft stop and the GPS
+mast. CAD `fusion/pod.py`; masses and CGs from the CAD by `team/D2/pod_data.py`; claims `team/D2/pod_claims.py`.
 
 ## Purpose
 
-Hold the 4S 6500 pack where it balances the aircraft (nominal station forward, trim aft only), survive a 12.75 g
-crash with the pack in, give one place to lift the aircraft (on the spar, not the motors, D-23), and mount the FC,
-RX, airspeed sensor, power items, GPS and pitot. Field use: open the hatch, strap the pack, plug in, close. No tools.
+Hold the 4S 6500 pack at the station that balances the aircraft (nominal centroid x −0.001 m), keep it to ≤ 100 g
+in a 5 m/s nose-in crash (crush block, C5) and in place at 12.75 g (straps, stops, C3), give one place to lift the
+aircraft (on the spar, D-23), and mount the FC, RX, airspeed sensor, power items, GPS and pitot. Field use: hatch
+open, pack in with its block and spacer, strap, plug, close. No tools.
+
+## Bay, front to back (x, m)
+
+| Item | x | Part | Status |
+|---|---|---|---|
+| Nose wall (foam board 4.8 mm), inside face | −0.115 … −0.1102 | `POD-001` | `MODELLED` |
+| Fixed XPS nose block (block A), bonded to nose and side walls | −0.1102 … −0.1032 (7.0 mm) | `POD-001` | `MODELLED` |
+| Forward stop, 3 mm PETG, 25 × 54 mm, on the tray (C3) | −0.1032 … −0.1002 | `POD-002` | `MODELLED` |
+| Crush block B (XPS F-250, cut per pack) + 1.5 mm spreader | −0.1002 … −0.071 (27.7 + 1.5 mm nominal) | `POD-008` | `MODELLED` |
+| Pack, nominal / 680 g | −0.071 … 0.069 / −0.067 … 0.073 | `PWR-001` | `MODELLED` |
+| U-spacers (set 2 / 4 / 8 / 8 mm), nominal 8, 680 g 4 | 0.069 … 0.077 | `POD-008` | `MODELLED` |
+| Aft stop, 3 mm + 2 gussets, on a bridge between the spar saddles | 0.077 … 0.080 | `POD-007` | `MODELLED` |
 
 ## Key numbers
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Pod x range · width · height (outside) | −0.105 … 0.095 · 0.140 · 0.070 | m | `params.json#pod`, width `CR-D2-01` | `PROPOSED` |
-| Pack bay inside L × W × H | 0.164 × 0.052 × 0.059 (≥ 0.160 × 0.052 × 0.053) | m | `CL-D2-BAY-L/-W/-H` | `CHECKED` |
-| Pack centroid at the forward stop · ahead of pod centre | −0.0302 · 25 | m · mm | `CL-D2-PACK-X-FWD`, `CL-D2-PACK-AHEAD` (D-17 asked 29, `CR-D2-02`) | `CHECKED` |
-| Aft trim travel (spacers 5 / 8 / 10 mm) | 23.7 (need 18) | mm | `CL-D2-PACK-TRAVEL` | `UNVERIFIED` (need from A3) |
-| Pack centroid height | 0.046 | m | `CL-D2-PACK-Z` | `CHECKED` |
-| Recess D1 cuts: x · depth at aft end · foam left under | 0.023 … 0.065 · 6.9 · 23.5 | m · mm · mm | `CL-D2-RECESS-*` | `CHECKED` |
-| Strap capacity vs pack crash load | 200 vs 85 | N | `CL-D2-STRAP-CAP`, `CL-C1-PACK-CRASH-LOAD` | `UNVERIFIED` (pull test) |
-| Spar-tie capacity vs pod-group crash load | 444 vs 113 | N | `CL-D2-TIE-CAP`, `CL-D2-POD-CRASH-F` | `UNVERIFIED` (tie rating) |
-| Handle load, 2 g lift, ultimate | 76 | N | `CL-D2-HANDLE-F-ULT` | `CHECKED` |
-| Pod-to-wing bond: area · stress (L1 ult) vs allowable | 10 014 mm² · 37 vs 100 | kPa | `CL-D2-BOND-STRESS` (C3 sizes, `CR-D2-05`) | `UNVERIFIED` |
-| Pitot tip · boom length · socket depth | (−0.185, −0.046, 0.045) · 107 · 35 | m · mm · mm | `CL-D2-PITOT-*`, y `CR-D2-03` | `PROPOSED` |
-| GPS antenna centre | (0.080, 0, 0.169) | m | `pod.py#layout` | `MODELLED` |
-| Mass · CG | 100.4 · (0.012, −0.001, 0.052) | g · m | `CL-D2-MASS` | `UNVERIFIED` (`EST`) |
+| Pod x range · width · height (outside) | −0.115 … 0.095 · 0.140 · 0.070 | m | `params.json#pod` (D-25) | `PROPOSED` |
+| Bay inside L × W × H (≥ 0.160 × 0.052 × 0.053) | 0.177 × 0.052 × 0.057 | m | `CL-D2-BAY-L/-W/-H` | `CHECKED` |
+| Pack centroid nominal · 680 g · aft reach | −0.001 · 0.003 · 0.007 | m | `CL-D2-PACK-X-NOM/-HEAVY`, `CL-D2-AFT-REACH` (≥ C5 heavy −0.0016) | `CHECKED` |
+| Most forward centroid that keeps C5's block B · spacer set vs range | −0.0038 · 22 vs 10.8 | m · mm | `CL-D2-PACK-X-FWD-MIN`, `CL-D2-SPACER-SUM` | `CHECKED` |
+| Block B nominal · section · block A | 27.7 (≥ 24.9) · 2 849 · 7.0 | mm · mm² · mm | `CL-D2-BLOCK-B-NOM`, `-BLOCK-SECTION`, `-NOSE-BLOCK-L` | `CHECKED` |
+| Pack centroid height · underside clearance over the spar slot | 0.048 · 0.78 | m · mm | `CL-D2-PACK-Z`, `CL-D2-OVERHANG-CLR` (2.5 mm EVA pads) | `CHECKED` |
+| Recess D1 cuts: x · depth at aft end · foam left under | 0.023 … 0.065 · 6.9 · 23.5 | m · mm · mm | `CL-D2-RECESS-*` (unchanged) | `CHECKED` |
+| Straps vs pack crash load · ties vs handle load | 200 vs 85 · 444 vs 76 | N | `CL-D2-STRAP-CAP`, `CL-D2-TIE-CAP` | `UNVERIFIED` (pull tests) |
+| Pitot tip · boom length · socket depth · flange | (−0.195, −0.046, 0.045) · 107 · 35 · 32 × 32 | m · mm · mm · mm | `CL-D2-PITOT-*`, CR-C6-09 | `PROPOSED` |
+| Antenna A / B element to pack (≥ 30.7 mm) · GPS to power items (≥ 0.10 m) | 34.6 / 44 · 0.153 | mm · m | `CL-D2-ANT-A/B-CLR`, `CL-D2-GPS-CLR` | `CHECKED` |
+| GPS centre · pad | (0.076, 0, 0.178) · 45° toward the nose | m | `pod.py#layout`, CR-F3-03 | `MODELLED` |
+| Mass · CG | 127.3 (allocation 122) · (0.001, −0.003, 0.052) | g · m | `CL-D2-MASS` | `UNVERIFIED` (`EST`; CR-D2-09) |
 
-## Parts
+## Channels (y ±0.0275 … ±0.0652, 37.7 mm)
 
-| Id | Part | Make | Mass g |
+| Left (−y), front to back | x | Right (+y) | x |
 |---|---|---|---|
-| `POD-001` | Shell: foam-board floor, walls, nose, aft wall, aft deck; XPS LE filler; printed nose lip | knife/laser, hot wire, FDM | 19.8 |
-| `POD-002` | Tray: bay floor + guides + aft stop; FC plate (4 × M3 inserts); avionics plate (2 × M2) | FDM PETG ×3 | 23.9 |
-| `POD-003` | Hatch: foam board, printed tongue, hook-and-loop tab | knife, FDM | 7.2 |
-| `POD-004` | 2 pack straps 20 mm + 2 silicone pads | buy | 10.1 |
-| `POD-005` | GPS mast, plugs into the grip | FDM | 5.6 |
-| `POD-006` | Pitot socket, left channel, through the nose wall | FDM | 3.1 |
-| `POD-007` | Carry handle: 2 spar-saddle feet, 2 legs, grip, mast socket; 2 ties; label | FDM | 26.5 |
-| `POD-008` | Trim spacers 5 / 8 / 10 mm | FDM | 4.2 |
+| Pitot socket + flange; antenna B tube below it (z 0.0245) | −0.110 … −0.088 | free | −0.103 … −0.041 |
+| Airspeed MS4525DO (foam tape + 1 tie), RX behind (tape); antenna A tube above the RX | −0.088 … −0.044 | FC on 2 gel pads between end stops | −0.041 … 0.021 |
+| PDB on 4 M3 inserts (25 mm pattern `UNVERIFIED`), fuse holder | −0.042 … 0.000 | — | — |
+| AS150U park (60 mm) | 0.000 … 0.060 | UBEC zone (tape) | 0.042 … 0.088 |
+| Pack leads turn in, harness exit 11 × 16 mm | 0.060 … 0.090 | harness exit 11 × 16 mm | 0.088 … 0.090 |
+
+Vents (CR-E3-03): 30 × 15 mm inlet top centre of the nose wall and nose block, 30 × 8 mm groove over the crush block,
+6.9 mm over the pack, 30 × 15 mm exit in the aft wall. Pack leads exit aft over the stop (top z 0.050), turn left
+inboard of the handle leg (y ±0.048) to the park.
 
 ## Interfaces
 
 | Edge | To | How | Sized by |
 |---|---|---|---|
-| `E-POD-01` | `WNG-001` core | shell bonded in the recess, tape skin off under the pod (10 014 mm²) | C3 |
-| `E-POD-09` | `WNG-002` spar | handle feet bonded on the spar top + 1 nylon tie each round foot and spar | C3, C2 |
-| `E-POD-05` | `PWR-001` pack | 2 straps (z, y); nose wall / spacers / aft stop (x); +x hover landing into the aft stop | C3, C1 |
-| `E-POD-06` | mast ↔ handle | M3x16 SHCS + nyloc across the socket | D2 |
-| `E-POD-02/03/04/07/08/10` | internal | bonded / tongue + tab / strap slots / bonded / bonded / trapped | D2 |
-| acknowledged | `E-PWR-01…04` `E-AVN-01…05` `E-HRN-01` | FC M3 on the right plate; airspeed M2 on the left plate; RX, UBEC, PM, XT60 on the left floor; pitot in the socket | F1, F3, F2 |
+| `E-POD-01` | `WNG-001` core | shell bonded in the recess to bare foam (10 014 mm²) | C3, C6 |
+| `E-POD-09` | `WNG-002` spar | handle saddles + stop bridge bonded (1 445 mm²), 1 tie per foot at y ±0.036 | C3, C2 |
+| `E-POD-05` | `PWR-001` pack | 2 straps + guides + pads (z, y); block / forward stop and spacers / aft stop (x) | C3, C5, C1 |
+| `E-POD-06` | mast ↔ handle | M3x16 brass SHCS + brass nut + Loctite 222, grip 10.0 mm, 5.5 past | C6, F3 |
+| `E-POD-10` / `-11` | trim kit ↔ aft stop / forward stop | trapped | C3, C5 |
 
-Layout (looking aft): bay in the middle (y ±0.026), right channel y 0.027…0.065 = FC (x −0.040…0.020),
-left channel = airspeed sensor at the front, RX, power module, UBEC, XT60 parked at x 0.030…0.060. Pack leads
-leave the pack aft face over the stop wall and turn into the left channel. Harness exits: two 16 × 12 mm holes in
-the aft wall at y ±0.042…0.058.
-
-## Mass budget
-
-| Allocation | CAD estimate | Margin | Status |
-|---|---|---|---|
-| 105 g (`params.json#mass.allocation_g.pod`) | 100.4 g | +4.6 g (4 %) | `UNVERIFIED` (foam board 0.20 kg/m² and PETG fill are estimates) |
-
-## Open issues
-
-| # | Issue | Owner |
-|---|---|---|
-| 1 | Width 0.10 → 0.14 m to fit the FC beside the pack (`CR-D2-01`); B1 re-runs pod drag (+0.003 m² frontal) | A1, B1 |
-| 2 | Pack nominal 25 mm, not 29 mm, ahead of the pod centre; slide is 0 … +23.7 mm aft, not ±30 (`CR-D2-02`) | A1, A3 |
-| 3 | Pitot tip y 0 → −0.046 m; boom OD 6 mm assumed (`CR-D2-03`) | F3, B4, A1 |
-| 4 | Recess, skin-off area, open spar slot at the feet and ties laid under the spar (`CR-D2-04`) | D1 |
-| 5 | FC 30.5 mm pattern and MS5525 2-hole pitch are placeholders (`CR-D2-06`) | F3 |
-| 6 | Bond and retention numbers above are first cuts (`CR-D2-05`) | C3 |
-
-## How to verify
-
-| Check | Command or test |
-|---|---|
-| CAD builds, touches, registers | `python -I redesign/fusion/check.py`; until D1/F1 publish: `python -I redesign/team/D2/pod_selfcheck.py` |
-| Masses and CGs match the CAD | `python -I redesign/team/D2/pod_data.py --check` |
-| Claims re-run | `python -I redesign/team/D2/pod_claims.py` then `python -I redesign/proofs/build_graph.py` |
-| Bench | `T-D2-WEIGH`, `T-D2-FIT`, `T-D2-STRAP-PULL`, `T-D2-HANDLE-PULL`, `T-D2-BOND-PULL` (BUILD.md) |
+Retired at R3: `CL-D2-BOND-STRESS` (C3's `CL-C3-BOND-R-*` own it, CR-C3-04). Open: `team/D2/CHANGE-REQUESTS.md`.

@@ -1,7 +1,23 @@
 # C4 change requests
 
-Raised 2026-11-09 by C4 (fin / motor-tube structures). R2 numbers from `team/C4/claims.d3.json` and
+Raised 2026-11-09 by C4 (fin / motor-tube structures). R3 and R2 numbers from `team/C4/claims.d3.json` and
 `out/results_d3.json`; report `BOOM-STRUCTURES.md`. R1 numbers (CR-C4-01…13) came from `claims.json`.
+
+## R3 (params A1-R3, D3 R3 fin, 7° cant, μ 0.7)
+
+| Id | To | What | Why | Numbers |
+|---|---|---|---|---|
+| CR-C4-23 | C6 | Re-run `joints.py` on C4's R3 claims. (a) Collar: replace `ASM-C6-C4-COLLAR-T` 9.3 N·m (not a C4 output) with **max(C1 `J-FINHALF` Mz, `CL-C4-D3-COLLAR-T`) + `CL-C4-D3-BRACE-F`** as shear. (b) Strip tail: size to `CL-C4-D3-STRIP-END-F` **908 N** design per face, not 1 348 N. (c) Pins: `CL-C4-D3-STRIP-PIN-F` **64 N** design per pin. (d) Brace force is now 164 N (10 × 2). This closes CR-C6-02a and CR-C6-03 on C4's side | One torsion number for the collar; FE loads replace the hand estimates | Collar 4.61 N·m limit (cracked LE, worst), 4.52 intact; C1 5.29. Bond needs 8.0 / 9.0 mm: **12 mm passes both** (MS +0.49 / +0.33), 16 mm +0.99 / +0.78. Paper bare MS −0.77 (0.43 vs 0.10 MPa design): pins stay |
+| CR-C4-24 | C1 | Publish the half-fin torsion about the tube as a claim (C6 reads it today through `ASM-C6-FINHALF-MZ-ULT`) and re-issue it with the μ 0.7 side load (CR-C5-09). C4's FE gives less (4.61 vs 5.29 N·m) because the root fillet on the skin takes part. C4 proposes that C6 sizes to the larger of the two | Agree the collar torsion (CR-C6-03) | `CL-C4-D3-COLLAR-T` 4.61, `CL-C4-D3-TUBE-T-ROOT` 4.63 N·m limit, side load 20.4 N |
+| CR-C4-25 | D3 | Keep the Ø 2 mm strip pins at ≤ 15 mm and the 40 mm two-face tail: both are **required**. The 10 × 2 brace is confirmed (CR-C4-16 closed). The station collar needs only 9 mm of bond for torsion: if the strip-tail tongue fits in 12 mm, go back to 12 mm (≈ 3 g `EST` toward CR-D3-16). Set the `T-C4-MOUNT-STIFF` pass level to **≥ 1 000 N·m/rad** | Strip couple shear crosses the board; mass is over by 8.8 g | `CL-C4-D3-MS-STRIP-PAPER` −0.77, `-STRIP-PIN-F` 64 N, `-COLLAR-H-REQ` 8.0 mm, `-MOUNT-K-REQ` 905 N·m/rad, `-BRACE-10X2-MS` +0.82, `-BRACE-10X2-SEP` 0.39 |
+| CR-C4-26 | D3, C2 | Stop reading the R1 concept model: D3 `CALC-D3-BRACE` reads `CL-C4-STRUT-LEN` → use `CALC-C4-D3-STATIC` `brace_len_m` (0.155 m) or its own CAD; C2 `wing_struct.py` reads `CL-C4-SPAR-COUPLE` → `CL-C4-D3-SPAR-COUPLE` (same 961 N). C4 then retires `fin_structures.py` | R1 no longer matches the geometry (fin top above the tube end); its claims drift with every upstream change | — |
+| CR-C4-27 | H1 (I1) | `T-C4-FIN-PROOF` at R3 loads: 1.5 × L4 with the 20.4 N side load (μ 0.7) both senses, 1.5 × G2 both senses; pins fitted; one quarter built with the LE fillet left unbonded (the fail-safe case); witness lines on the collar and on the strip ends; dial gauge at the foot (6.8 mm limit) | Face MS is +0.10 with the fillet cracked; the strips carry 92 % of the side load | `CL-C4-D3-MS-FACE`, `-FOOT-DEFL` |
+| CR-C4-28 | A1, A3 | Fins are 416.8 g against 408 g (D3 CR-D3-16). Structures need every R3 item (2 layers, strips + pins, 40 mm tail, brace); the only C4 lever is the collar 16 → 12 mm (≈ 3 g `EST`). A 10 × 3 brace is **not** needed | Allocation decision | `CL-C4-D3-FINS-MASS` 416.8 g, `-BRACE-SAVE` 9.3 g already taken |
+
+Status of R2 requests after R3: CR-C4-14 accepted (D-26). CR-C4-15 closed (allocation 408 g, D-38). CR-C4-16 closed
+(D3 drew 10 × 2). CR-C4-17 kept, with the pass level raised to 1 000 N·m/rad (CR-C4-25). CR-C4-18 forwarded to D1/C2
+by A1. CR-C4-19 open (D3's SPEC to point at the R3 claims listed in `BOOM-STRUCTURES.md`). CR-C4-20 accepted (D-26). CR-C4-21 open. CR-C4-22
+delivered by C6 and superseded by CR-C4-23.
 
 ## R2 (after D3's as-designed fin, CR-D3-10)
 

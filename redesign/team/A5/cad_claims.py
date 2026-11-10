@@ -5,8 +5,9 @@ Every calculation is a pure function of params.json ids and the A5 assumptions b
 redesign/fusion/k09kit.py (the same helper the CAD modules use), so the CAD and the claims cannot disagree.
 Section: subsystems/wing/s5010.dat (B2's UIUC file, copied 2026-11-09, CR-B2-04 / CR-A1-12), carried into the
 graph as assumption ASM-A5-SECTION so the calculations stay pure.
-The layout CG reproduces the R1 skeleton (redesign/fusion/skeleton) in closed form: allocated masses at the
-DATUMS.md stations. Running this script also builds the skeleton on the stub backend and stops if the two
+The layout CG reproduces the R3 skeleton (redesign/fusion/skeleton) in closed form: allocated masses at the
+DATUMS.md stations. The R3 datums D3 and D5 own (brace ends, motor face, pad contact) and D2's pack station are read
+from their subsystem params.json files (P:fin_detail.*, P:landing.*, P:pack_aft_face_m), the same keys k09kit reads. Running this script also builds the skeleton on the stub backend and stops if the two
 differ by more than 1 mm (cross-check printed at the end).
 """
 import sys
@@ -20,7 +21,8 @@ import proofkit as pk  # noqa: E402
 import k09kit as k9    # noqa: E402
 import fusionkit as fk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/fins/params.json",
+                              "../../subsystems/landing/params.json", "../../subsystems/pod/params.json"])
 P = "P:"
 DAT = REDESIGN / "subsystems" / "wing" / "s5010.dat"
 _COORDS = [[round(x, 6), round(y, 6)] for x, y in k9.read_dat(str(DAT))]
@@ -39,21 +41,23 @@ kit.assumption("ASM-A5-MIN-GAP", "Minimum elevon end gap",
                "Each elevon panel end stays at least 10 mm from the pod side, the fin face and the wing tip",
                basis="A5 modelling standard: room for tape, a horn and +/-25 deg travel without rubbing; D6 confirms",
                value=0.010, unit="m", cites=["SRC-K09-CARD"])
-kit.assumption("ASM-A5-MASS-SPLIT", "Allocation split and lump stations used for the layout CG (R1 skeleton)",
+kit.assumption("ASM-A5-MASS-SPLIT", "Allocation split and lump stations used for the layout CG (R3 skeleton)",
                "Within each allocation: wing = spar (mass/m x length); the rest split between core and elevon panels "
-               "with the tape skin by planform area and foam/fill/consumables by section volume; fins = "
-               "4 half-fins (rest) + 2 x 43 tube + 4 x 18 mount + 2 x 20 through-core block + 2 x 30 clip set; "
-               "propulsion = 4 x prop (params) at the prop plane + rest (motor, ESC, adapter, nut) as the motor envelope; "
-               "power = pack centred in the pod + rest at the pod nose; pod and avionics in the pod; mechanisms 23.5 mm "
-               "ahead of the hinge; harness as two bundle legs (channel 14 mm aft of the spar surface, tube inboard face); "
-               "printed walls 3 mm; growth reserve not placed",
-               basis="params.json#mass.allocation_g notes (CHANGE-LOG D-07); the skeleton modules "
-                     "(redesign/fusion/skeleton/*/fusion) use the same numbers",
+               "with the tape skin by planform area and foam/fill/consumables by section volume; fins = 2 tubes "
+               "(spar mass/m x tube length) + per station mount 11.0, station collar 10.6, CF brace 5.2, anchor 3.2 g "
+               "+ 2 x 41.0 g through-core blocks (D3 R3 CAD unit masses, rounded) and 4 half-fins carrying the rest "
+               "(board, edge strips, pins, ESC pad, plug share); propulsion = 4 x prop (params) at the prop plane + rest "
+               "(motor, ESC, adapter, nut) as the motor envelope from DP-MOTOR-FACE; power = pack at the D-24 station "
+               "(D2's aft face less half the pack length) + rest at the pod nose; pod and avionics in the pod; mechanisms "
+               "23.5 mm ahead of the hinge; harness as two bundle legs (channel 14 mm aft of the spar surface, tube "
+               "inboard face); feet from 12 mm ahead of the TE to DP-GROUND; printed walls 3 mm; growth reserve not placed",
+               basis="params.json#mass.allocation_g (CHANGE-LOG D-38) and subsystems/fins/parts.csv (D3 R3); the skeleton "
+                     "modules (redesign/fusion/skeleton/*/fusion) use the same numbers",
                value=None, unit=None, status="UNVERIFIED", cites=["SRC-K09-CARD", "SRC-K09-REVIEW"])
 
-WALL, CLIP_D, TIP_OFF, FOOT_CAP = 0.003, 0.010, 0.03, 0.012   # skeleton constants (ASM-A5-MASS-SPLIT)
-TUBE_G, MOUNT_G, BLOCK_G, CLIP_G = 43.0, 18.0, 20.0, 30.0
-BLOCK_HALF_Y, CHANNEL_AFT, SHAFT_R = 0.012, 0.014, 0.0025
+WALL, FOOT_CAP = 0.003, 0.012                               # skeleton constants (ASM-A5-MASS-SPLIT)
+MOUNT_G, BLOCK_G, COLLAR_G, BRACE_G, ANCHOR_G = 11.0, 41.0, 10.6, 5.2, 3.2
+BLOCK_HALF_Y, CHANNEL_AFT, SHAFT_R, TIP_OFF = 0.012, 0.014, 0.0025, 0.03
 
 
 def _sec(coords):
@@ -88,26 +92,33 @@ def spar_cover(c, sec, x_s, z_s, od):
 
 
 @kit.calc("CALC-A5-ELEVON-GAPS", title="Elevon end gaps",
-          equation="pod = y_in0 - w_pod/2 ; fin_in = (y_fin - t_fin/2) - y_in1 ; fin_out = y_out0 - (y_fin + t_fin/2) ; "
-                   "tip = b/2 - y_out1 ; t_fin = layers t_board",
+          equation="pod = distance between the inboard panel (x >= x_h, y >= y_in0) and the pod box (x <= x_pod + L, "
+                   "|y| <= w_pod/2) = hypot(max(0, x_h - x_pod_end), max(0, y_in0 - w_pod/2)) ; "
+                   "fin_in = (y_fin - t_fin/2) - y_in1 ; fin_out = y_out0 - (y_fin + t_fin/2) ; "
+                   "tip = b/2 - y_out1 ; t_fin = layers t_board ; x_h = c (1 - f)",
           inputs={"yin": P + "wing.elevon.inboard_y_m", "yout": P + "wing.elevon.outboard_y_m",
-                  "pod": P + "pod.size_m", "y_fin": P + "fins.y_m", "layers": P + "fins.layers",
+                  "pod": P + "pod.size_m", "pod_x": P + "pod.x_le_m", "c": P + "wing.chord_m",
+                  "f": P + "wing.elevon.chord_frac", "y_fin": P + "fins.y_m", "layers": P + "fins.layers",
                   "t_board": P + "fins.board_t_m", "b": P + "wing.span_m"},
-          units={"yin": "m", "yout": "m", "pod": "m", "y_fin": "m", "t_board": "m", "b": "m"})
-def elevon_gaps(yin, yout, pod, y_fin, layers, t_board, b):
+          units={"yin": "m", "yout": "m", "pod": "m", "pod_x": "m", "c": "m", "y_fin": "m", "t_board": "m", "b": "m"})
+def elevon_gaps(yin, yout, pod, pod_x, c, f, y_fin, layers, t_board, b):
     t = layers * t_board
-    g = {"gap_pod_m": yin[0] - pod[1] / 2, "gap_fin_inboard_m": (y_fin - t / 2) - yin[1],
+    dx = max(0.0, c * (1 - f) - (pod_x + pod[0]))          # pod aft end ahead of the hinge line
+    dy = max(0.0, yin[0] - pod[1] / 2)                  # pod side to the panel's inboard end
+    g = {"gap_pod_m": (dx * dx + dy * dy) ** 0.5, "gap_fin_inboard_m": (y_fin - t / 2) - yin[1],
          "gap_fin_outboard_m": yout[0] - (y_fin + t / 2), "gap_tip_m": b / 2 - yout[1]}
     g["gap_min_m"] = min(g.values())
+    g["gap_pod_spanwise_m"] = yin[0] - pod[1] / 2
+    g["pod_end_to_hinge_m"] = c * (1 - f) - (pod_x + pod[0])
     g["fin_thickness_m"] = t
     return g
 
 
-@kit.calc("CALC-A5-LAYOUT-CG", title="Layout CG: allocations at the R1 datum stations",
+@kit.calc("CALC-A5-LAYOUT-CG", title="Layout CG: allocations at the R3 datum stations",
           assumes=["ASM-A5-MASS-SPLIT", "ASM-A5-SECTION"],
           equation="x_cg = sum(m_i x_i) / sum(m_i), z likewise (lump centroids from the k09kit geometry); "
-                   "pack x for x_target = x_pack + M (x_target - x_cg) / m_pack ; hover split upper/lower = "
-                   "(z_m + z_cg) / (z_m - z_cg)",
+                   "pack x for x_target = x_pack + M (x_target - x_cg) / m_pack ; range use = |x_cg - mid| / half "
+                   "range ; hover split upper/lower = (z_m + z_cg) / (z_m - z_cg)",
           inputs={"a_wing": P + "mass.allocation_g.wing", "a_fins": P + "mass.allocation_g.fins",
                   "a_pod": P + "mass.allocation_g.pod", "a_land": P + "mass.allocation_g.landing",
                   "a_prop": P + "mass.allocation_g.propulsion", "a_pwr": P + "mass.allocation_g.power",
@@ -125,16 +136,26 @@ def elevon_gaps(yin, yout, pod, y_fin, layers, t_board, b):
                   "x_mount": P + "propulsion.stations.x_mount_m", "x_prop": P + "propulsion.stations.x_prop_plane_m",
                   "z_m": P + "propulsion.stations.z_m", "foot": P + "cg.foot_height_m", "pod_x": P + "pod.x_le_m",
                   "pod_size": P + "pod.size_m", "pod_z": P + "pod.z_base_m", "pack_size": P + "battery.size_m",
-                  "x_target": P + "cg.x_target_m", "x_range": P + "cg.x_range_m", "z_range": P + "cg.z_range_m"},
+                  "x_target": P + "cg.x_target_m", "x_range": P + "cg.x_range_m", "z_range": P + "cg.z_range_m",
+                  "tube_l": P + "fins.tube.length_m", "bond_gap": P + "fin_detail.bond_gap_m",
+                  "col_wall": P + "fin_detail.mount.collar_wall_m", "face_ahead": P + "fin_detail.mount.face_ahead_m",
+                  "grip": P + "fin_detail.mount.grip_m", "plate_hz": P + "fin_detail.mount.plate_half_z_m",
+                  "sc_gap": P + "fin_detail.station_collar.gap_m", "sc_h": P + "fin_detail.station_collar.height_m",
+                  "ear_h": P + "fin_detail.station_collar.ear_h_m", "tail": P + "fin_detail.station_collar.tail_m",
+                  "proud": P + "fin_detail.anchor.proud_m", "blk_wall": P + "fin_detail.block.wall_m",
+                  "pack_aft": P + "pack_aft_face_m"},
           units={"a_wing": "g", "a_fins": "g", "a_pod": "g", "a_land": "g", "a_prop": "g", "a_pwr": "g", "a_avn": "g",
                  "a_hrn": "g", "a_mec": "g", "m_pack_kg": "kg", "spar_kgm": "kg/m", "spar_l": "m", "prop_kg": "kg",
                  "c": "m", "b": "m", "skin_kgm2": "kg/m2", "yin": "m", "yout": "m", "x_s": "m", "z_s": "m", "od_s": "m", "xt": "m", "te": "m", "od": "m", "y_fin": "m",
                  "hh": "m", "can_l": "m", "can_d": "m", "x_mount": "m", "x_prop": "m", "z_m": "m", "foot": "m",
                  "pod_x": "m", "pod_size": "m", "pod_z": "m", "pack_size": "m", "x_target": "m", "x_range": "m",
-                 "z_range": "m"})
+                 "z_range": "m", "tube_l": "m", "bond_gap": "m", "col_wall": "m", "face_ahead": "m", "grip": "m",
+                 "plate_hz": "m", "sc_gap": "m", "sc_h": "m", "ear_h": "m", "tail": "m", "proud": "m", "blk_wall": "m",
+                 "pack_aft": "m"})
 def layout_cg(a_wing, a_fins, a_pod, a_land, a_prop, a_pwr, a_avn, a_hrn, a_mec, m_pack_kg, spar_kgm, spar_l, prop_kg,
               c, sec, f, b, skin_kgm2, yin, yout, x_s, z_s, od_s, xt, te, od, y_fin, hh, can_l, can_d, x_mount, x_prop, z_m, foot, pod_x,
-              pod_size, pod_z, pack_size, x_target, x_range, z_range):
+              pod_size, pod_z, pack_size, x_target, x_range, z_range, tube_l, bond_gap, col_wall, face_ahead, grip,
+              plate_hz, sc_gap, sc_h, ear_h, tail, proud, blk_wall, pack_aft):
     s = _sec(sec)
     cen = lambda loop: fk.poly_area_centroid(loop)
     spar_g = spar_kgm * spar_l * 1000.0
@@ -152,18 +173,21 @@ def layout_cg(a_wing, a_fins, a_pod, a_land, a_prop, a_pwr, a_avn, a_hrn, a_mec,
     l_el = 2 * ((yin[1] - yin[0]) + (yout[1] - yout[0]))
     vf, va = af * b, aa * (b - l_el)
     sx, sz = (vf * fx + va * ax_) / (vf + va), (vf * fz + va * az) / (vf + va)
-    # fins: half-fins (upper + lower, area-weighted), block, clip set (two boxes), mounts (z cancels), tubes
+    # fins (R3): half-fins (upper + lower, area-weighted), tubes, blocks; mounts, collars and feet are exact z-mirrors
+    # (z cancels); braces from DX-COLLAR to DX-ANCHOR; anchors from the spar face to proud of the skin
     _, (hu_x, hu_z) = cen(k9.half_fin_outline(s, c, xt + od / 2, te, hh))
     _, (hl_x, hl_z) = cen(k9.half_fin_outline(s, c, xt + od / 2, te, -hh))
-    m_hf = (a_fins - 2 * TUBE_G - 4 * MOUNT_G - 2 * BLOCK_G - 2 * CLIP_G) / 4
-    _, (bx, bz) = cen(k9.section_loop(s, c, (0.0, 0.0), (xt - od / 2 - WALL) / c, (x_s + od_s / 2 + WALL) / c, 8))
-    zr_u = k9.surface_z(s, c, (xt + od / 2) / c, "upper")
-    zr_l = k9.surface_z(s, c, (xt + od / 2) / c, "lower")
-    ztop = z_m - TIP_OFF
-    h_u, h_l = ztop - zr_u, zr_l + ztop
-    clip_z = (h_u * (zr_u + ztop) / 2 + h_l * (zr_l - ztop) / 2) / (h_u + h_l)
-    face = x_mount - od / 2
+    tube_g = spar_kgm * tube_l * 1000.0
+    m_hf = (a_fins - 2 * tube_g - 2 * BLOCK_G - 4 * (MOUNT_G + COLLAR_G + BRACE_G + ANCHOR_G)) / 4
+    _, (bx, bz) = cen(k9.section_loop(s, c, (0.0, 0.0), (xt - od / 2 - blk_wall) / c, (x_s + od_s / 2 + blk_wall) / c, 8))
+    face = xt - od / 2 - bond_gap - col_wall - face_ahead                  # DP-MOTOR-FACE
     mount_x = (face + xt + od / 2 + WALL) / 2
+    collar_x = (xt - od / 2 - WALL + xt + od / 2 + tail) / 2
+    z_ear = tube_l / 2 - grip - sc_gap - ear_h / 2                          # DX-COLLAR |z|
+    zs_u, zs_l = k9.surface_z(s, c, x_s / c, "upper"), k9.surface_z(s, c, x_s / c, "lower")
+    za_u, za_l = zs_u + proud / 2, zs_l - proud / 2                         # DX-ANCHOR z, upper / lower
+    brace_z = ((z_ear + za_u) / 2 + (-z_ear + za_l) / 2) / 2                # mean of the four brace midpoints
+    anchor_z = ((z_s + od_s / 2 + zs_u + proud) / 2 + (zs_l - proud + z_s - od_s / 2) / 2) / 2
     # propulsion: motor envelope (can + shaft to the prop plane), prop disc
     shaft_l = (face - can_l) - x_prop
     R = can_d / 2
@@ -173,20 +197,22 @@ def layout_cg(a_wing, a_fins, a_pod, a_land, a_prop, a_pwr, a_avn, a_hrn, a_mec,
     # harness: channel leg (pod side -> block face) and tube leg, mass by length
     x_ch = x_s + od_s / 2 + CHANNEL_AFT
     z_ch = (k9.surface_z(s, c, x_ch / c, "upper") + k9.surface_z(s, c, x_ch / c, "lower")) / 2
+    ztop = z_m - TIP_OFF
     l_a, l_b = (y_fin - BLOCK_HALF_Y) - pod_size[1] / 2, 2 * ztop
     m_pack = m_pack_kg * 1000.0
     pod_cx, pod_cz = pod_x + pod_size[0] / 2, pod_z + pod_size[2] / 2
+    pack_x = pack_aft[0] - pack_size[0] / 2                                 # D-24 station (D2's aft face)
     tray = pod_z + WALL
     pack_z = tray + pack_size[2] / 2
-    pwr_x1 = min(pod_x + 0.005 + 0.02, pod_cx - pack_size[0] / 2)
+    pwr_x1 = min(pod_x + 0.005 + 0.02, pack_x - pack_size[0] / 2)
     items = [  # (mass g, x m, z m)
         (cs - m_el, sx, sz), (m_el, ax_, az), (spar_g, x_s, z_s),
         (2 * m_hf, hu_x, hu_z), (2 * m_hf, hl_x, hl_z),                 # each half-fin carries m_hf
-        (2 * TUBE_G, xt, 0.0), (4 * MOUNT_G, mount_x, 0.0), (2 * BLOCK_G, bx, bz),
-        (2 * CLIP_G, xt + od / 2 + CLIP_D / 2, clip_z),
+        (2 * tube_g, xt, 0.0), (4 * MOUNT_G, mount_x, 0.0), (2 * BLOCK_G, bx, bz),
+        (4 * COLLAR_G, collar_x, 0.0), (4 * BRACE_G, (xt + x_s) / 2, brace_z), (4 * ANCHOR_G, x_s, anchor_z),
         (a_prop - 4 * prop_g, face + ca, 0.0), (4 * prop_g, x_prop, 0.0),
         (a_land, (te - FOOT_CAP + te + foot) / 2, 0.0),
-        (a_pod, pod_cx, pod_cz), (m_pack, pod_cx, pack_z),
+        (a_pod, pod_cx, pod_cz), (m_pack, pack_x, pack_z),
         (a_pwr - m_pack, (pod_x + 0.005 + pwr_x1) / 2, tray + 0.01),
         (a_avn, pod_x + 0.095, pod_z + pod_size[2] - 0.0115),
         (a_mec, c * (1 - f) - 0.0235, 0.0),
@@ -194,10 +220,12 @@ def layout_cg(a_wing, a_fins, a_pod, a_land, a_prop, a_pwr, a_avn, a_hrn, a_mec,
     M = sum(m for m, _, _ in items)
     x = sum(m * xi for m, xi, _ in items) / M
     z = sum(m * zi for m, _, zi in items) / M
-    pack_x = pod_cx + M * (x_target - x) / m_pack
+    pack_req = pack_x + M * (x_target - x) / m_pack
+    mid, half = (x_range[0] + x_range[1]) / 2, (x_range[1] - x_range[0]) / 2
     return {"mass_g": M, "cg_x_m": x, "cg_z_m": z, "cg_x_frac_chord": x / c,
             "cg_x_fwd_limit_m": x_range[0], "cg_x_aft_limit_m": x_range[1], "cg_z_up_limit_m": z_range[1],
-            "pack_x_for_target_m": pack_x, "pack_shift_m": pack_x - pod_cx,
+            "cg_x_range_use": abs(x - mid) / half, "pack_x_m": pack_x,
+            "pack_x_for_target_m": pack_req, "pack_shift_m": pack_req - pack_x,
             "hover_upper_pair_share": (z_m + z) / (2 * z_m), "hover_split_ratio": (z_m + z) / (z_m - z)}
 
 
@@ -221,22 +249,33 @@ kit.claim("CL-A5-ELEVON-GAP-MIN", "Smallest elevon end gap", calc="CALC-A5-ELEVO
           how="check.py --skeleton (bounding boxes); on the aircraft, feeler gauge at each panel end at +/-25 deg.")
 kit.claim("CL-A5-CG-X-AFT-LIMIT", "Aft CG limit (params cg.x_range_m[1])", calc="CALC-A5-LAYOUT-CG",
           output="cg_x_aft_limit_m", unit="m", how="B3 re-derives the range at R1 geometry (CHANGE-LOG D-17, CR-A1-10).")
-kit.claim("CL-A5-LAYOUT-CG-X", "Layout CG x (allocations at the R1 datum stations, pack centred)", calc="CALC-A5-LAYOUT-CG",
-          output="cg_x_m", unit="m", limit=("<=", "CL-A5-CG-X-AFT-LIMIT"), verifies=["R-STATIC-MARGIN"],
+kit.claim("CL-A5-CG-X-FWD-LIMIT", "Forward CG limit (params cg.x_range_m[0])", calc="CALC-A5-LAYOUT-CG",
+          output="cg_x_fwd_limit_m", unit="m", how="B3: elevon trim at CLmax (CL-B3-CG-FWD, D-24).")
+kit.claim("CL-A5-LAYOUT-CG-X", "Layout CG x (allocations at the R3 datum stations, pack at the D-24 station)",
+          calc="CALC-A5-LAYOUT-CG", output="cg_x_m", unit="m", limit=("<=", "CL-A5-CG-X-AFT-LIMIT"),
+          verifies=["R-CG-RANGE"],
           assumes=["ASM-A5-MASS-SPLIT", "ASM-A5-SECTION"],
           how="Equals the CAD roll-up (python -I redesign/fusion/check.py --skeleton, TOTAL line; this script stops if they "
               "differ by > 1 mm). A3 replaces the allocations with part masses (MASS-CG.md); H1 balances the built "
               "aircraft on two knife edges (T-A5-CG-BALANCE).")
+kit.claim("CL-A5-LAYOUT-CG-X-FWD", "Layout CG x against the forward limit", calc="CALC-A5-LAYOUT-CG",
+          output="cg_x_m", unit="m", limit=(">=", "CL-A5-CG-X-FWD-LIMIT"), verifies=["R-CG-RANGE"],
+          assumes=["ASM-A5-MASS-SPLIT", "ASM-A5-SECTION"],
+          how="Same value as CL-A5-LAYOUT-CG-X, tested against cg.x_range_m[0]; T-A5-CG-BALANCE.")
+kit.claim("CL-A5-LAYOUT-CG-X-RANGE-USE", "Layout CG x in the range, |x - mid| / half-range", calc="CALC-A5-LAYOUT-CG",
+          output="cg_x_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"],
+          assumes=["ASM-A5-MASS-SPLIT", "ASM-A5-SECTION"],
+          how="Same basis as CL-A3-CG-X-RANGE (A3's bottom-up value); T-A5-CG-BALANCE.")
 kit.claim("CL-A5-PACK-X-FOR-CG", "Pack centre needed for the CG target", calc="CALC-A5-LAYOUT-CG",
           output="pack_x_for_target_m", unit="m", assumes=["ASM-A5-MASS-SPLIT"], parts=["PWR-001", "POD-002"],
-          how="D2/A3: compare with the pod (nose at pod.x_le_m) and the +/-0.03 m tray slide; A3's CL-A3-PACK-X-REQ is "
-              "the same quantity from the bottom-up model.")
-kit.claim("CL-A5-PACK-SHIFT", "Pack shift from the pod centre for the CG target", calc="CALC-A5-LAYOUT-CG",
+          how="D2/A3: compare with the bay (forward stop subsystems/pod/params.json#fwd_stop_x_m, aft-only spacers); "
+              "A3's CL-A3-PACK-X-REQ is the same quantity from the bottom-up model.")
+kit.claim("CL-A5-PACK-SHIFT", "Pack shift from the D-24 station for the CG target", calc="CALC-A5-LAYOUT-CG",
           output="pack_shift_m", unit="m", assumes=["ASM-A5-MASS-SPLIT"],
-          how="Negative = forward. D2 provides +/-0.03 m of slide (params pod.x_le_m note); beyond that the pod moves (D-17).")
+          how="Negative = forward. The bay has aft-only spacers (D2); a forward shift needs the forward stop moved.")
 kit.claim("CL-A5-CG-Z-UP-LIMIT", "Upper CG z limit (params cg.z_range_m[1])", calc="CALC-A5-LAYOUT-CG",
           output="cg_z_up_limit_m", unit="m", how="B3 / A1 set the range.")
-kit.claim("CL-A5-LAYOUT-CG-Z", "Layout CG z (allocations at the R1 datum stations)", calc="CALC-A5-LAYOUT-CG",
+kit.claim("CL-A5-LAYOUT-CG-Z", "Layout CG z (allocations at the R3 datum stations)", calc="CALC-A5-LAYOUT-CG",
           output="cg_z_m", unit="m", limit=("<=", "CL-A5-CG-Z-UP-LIMIT"), assumes=["ASM-A5-MASS-SPLIT"],
           how="H1: hang the aircraft from two points to find z; A3 tracks in MASS-CG.md.")
 kit.claim("CL-A5-HOVER-SPLIT", "Hover pitch-trim thrust split, upper / lower pair", calc="CALC-A5-LAYOUT-CG",
@@ -247,7 +286,8 @@ kit.claim("CL-A5-HOVER-SPLIT", "Hover pitch-trim thrust split, upper / lower pai
 
 kit.test("T-A5-CORE-COVER", "Spar cover on the first cut core", verifies=["CL-A5-SPAR-COVER", "CL-A5-SPAR-COVER-CAMBER"],
          state="planned", procedure="Cut a 100 mm core section, cut the slot, depth-gauge foam above and below the slot (G2).")
-kit.test("T-A5-CG-BALANCE", "CG balance of the built aircraft", verifies=["CL-A5-LAYOUT-CG-X", "CL-A5-LAYOUT-CG-Z"],
+kit.test("T-A5-CG-BALANCE", "CG balance of the built aircraft",
+         verifies=["CL-A5-LAYOUT-CG-X", "CL-A5-LAYOUT-CG-X-FWD", "CL-A5-LAYOUT-CG-X-RANGE-USE", "CL-A5-LAYOUT-CG-Z"],
          state="planned", procedure="Pack in, props on; two knife edges under the wing at the fin roots; mark x (H1).")
 
 
@@ -259,6 +299,7 @@ def cross_check():
     M, cg = ctx.rollup()
     P_ = k9.load_params()
     v = lambda k: k9.val(P_, k)
+    f = lambda k: k9.val(k9.local("fins"), "fin_detail." + k)
     args = dict(a_wing=v("mass.allocation_g.wing"), a_fins=v("mass.allocation_g.fins"), a_pod=v("mass.allocation_g.pod"),
                 a_land=v("mass.allocation_g.landing"), a_prop=v("mass.allocation_g.propulsion"),
                 a_pwr=v("mass.allocation_g.power"), a_avn=v("mass.allocation_g.avionics"),
@@ -273,7 +314,12 @@ def cross_check():
                 x_mount=v("propulsion.stations.x_mount_m"), x_prop=v("propulsion.stations.x_prop_plane_m"),
                 z_m=v("propulsion.stations.z_m"), foot=v("cg.foot_height_m"), pod_x=v("pod.x_le_m"),
                 pod_size=v("pod.size_m"), pod_z=v("pod.z_base_m"), pack_size=v("battery.size_m"),
-                x_target=v("cg.x_target_m"), x_range=v("cg.x_range_m"), z_range=v("cg.z_range_m"))
+                x_target=v("cg.x_target_m"), x_range=v("cg.x_range_m"), z_range=v("cg.z_range_m"),
+                tube_l=v("fins.tube.length_m"), bond_gap=f("bond_gap_m"), col_wall=f("mount.collar_wall_m"),
+                face_ahead=f("mount.face_ahead_m"), grip=f("mount.grip_m"), plate_hz=f("mount.plate_half_z_m"),
+                sc_gap=f("station_collar.gap_m"), sc_h=f("station_collar.height_m"), ear_h=f("station_collar.ear_h_m"),
+                tail=f("station_collar.tail_m"), proud=f("anchor.proud_m"), blk_wall=f("block.wall_m"),
+                pack_aft=k9.val(k9.local("pod"), "pack_aft_face_m"))
     r = layout_cg(**args)
     dx, dz = r["cg_x_m"] - cg[0], r["cg_z_m"] - cg[2]
     print("cross-check: closed form %.1f g (%.4f, %.4f) m; CAD skeleton %.1f g (%.4f, %.4f) m; dx %.1f mm dz %.1f mm"

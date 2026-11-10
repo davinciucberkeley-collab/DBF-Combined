@@ -11,9 +11,9 @@
    "mass_g": 2317.0,
    "material": "Coroplast 4 mm (PP twin-wall)",
    "cg_xyz_m": [
-    0.1344,
+    0.1315,
     0.0,
-    -0.0925
+    -0.0921
    ],
    "make_or_buy": "make",
    "flight": false,
@@ -21,47 +21,47 @@
   },
   {
    "id": "TRN-005",
-   "name": "Lid with PE lining and plug lip",
+   "name": "Lid with plug lip (no lining, D-31)",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 743.9,
+   "mass_g": 634.8,
    "material": "Coroplast 4 mm (PP twin-wall)",
    "cg_xyz_m": [
-    0.13,
+    0.1265,
     0.0,
-    0.2269
+    0.2293
    ],
    "make_or_buy": "make",
    "flight": false,
-   "notes": "lip 30 mm inside the walls"
+   "notes": "lip 30 mm inside the walls; pillars taped to the shell"
   },
   {
    "id": "TRN-002-L",
    "name": "Spar cradle L (saddle + crush column)",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 68.3,
+   "mass_g": 69.8,
    "material": "XPS foam F-250 + PE foam 1.7 pcf (closed cell)",
    "cg_xyz_m": [
-    0.1057,
+    0.106,
     -0.2,
-    -0.1106
+    -0.1123
    ],
    "make_or_buy": "make",
    "flight": false,
-   "notes": "column 60 x 50 x 127 mm under the spar; 6 mm PE cap"
+   "notes": "column 60 x 50 x 120 mm under the spar; saddle 60 x 250 mm at y 0.17-0.23 (4 mm inboard of the brace anchor); 6 mm PE cap"
   },
   {
    "id": "TRN-002-R",
    "name": "Spar cradle R (saddle + crush column)",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 68.3,
+   "mass_g": 69.8,
    "material": "XPS foam F-250 + PE foam 1.7 pcf (closed cell)",
    "cg_xyz_m": [
-    0.1057,
+    0.106,
     0.2,
-    -0.1106
+    -0.1123
    ],
    "make_or_buy": "make",
    "flight": false,
@@ -69,7 +69,7 @@
   },
   {
    "id": "TRN-003",
-   "name": "Prop tray with pitot-boom and pouch pockets",
+   "name": "Prop tray with pitot-boom slot and pouch pocket",
    "subsystem": "transport",
    "status": "MODELLED",
    "mass_g": 149.0,
@@ -77,23 +77,23 @@
    "cg_xyz_m": [
     0.12,
     0.0,
-    -0.2735
+    -0.273
    ],
    "make_or_buy": "make",
    "flight": false,
-   "notes": "8 prop slots on edge, pitot pocket 220 x 25 x 25 mm"
+   "notes": "8 prop slots on edge; pitot slot 220 x 25 x 25 mm with a PE tip plug; props stowed here, packs never in the box"
   },
   {
    "id": "TRN-004-L",
    "name": "Lid hold-down pillar L",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 36.9,
+   "mass_g": 37.9,
    "material": "PE foam 1.7 pcf (closed cell)",
    "cg_xyz_m": [
     0.08,
     -0.2,
-    0.1225
+    0.1258
    ],
    "make_or_buy": "make",
    "flight": false,
@@ -104,12 +104,12 @@
    "name": "Lid hold-down pillar R",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 36.9,
+   "mass_g": 37.9,
    "material": "PE foam 1.7 pcf (closed cell)",
    "cg_xyz_m": [
     0.08,
     0.2,
-    0.1225
+    0.1258
    ],
    "make_or_buy": "make",
    "flight": false,
@@ -123,9 +123,9 @@
    "mass_g": 45.0,
    "material": "25 mm PP webbing + cam buckle",
    "cg_xyz_m": [
-    0.13,
+    0.1265,
     -0.4,
-    -0.0375
+    -0.037
    ],
    "make_or_buy": "buy",
    "flight": false,
@@ -139,9 +139,9 @@
    "mass_g": 45.0,
    "material": "25 mm PP webbing + cam buckle",
    "cg_xyz_m": [
-    0.13,
+    0.1265,
     0.4,
-    -0.0375
+    -0.037
    ],
    "make_or_buy": "buy",
    "flight": false,
@@ -155,9 +155,9 @@
    "mass_g": 40.0,
    "material": "strap handle (bought)",
    "cg_xyz_m": [
-    -0.16,
+    -0.1635,
     0.0,
-    0.1525
+    0.153
    ],
    "make_or_buy": "buy",
    "flight": false,
@@ -171,9 +171,9 @@
    "mass_g": 40.0,
    "material": "strap handle (bought)",
    "cg_xyz_m": [
-    0.13,
+    0.1265,
     -0.64,
-    0.1525
+    0.153
    ],
    "make_or_buy": "buy",
    "flight": false,
@@ -187,9 +187,9 @@
    "mass_g": 40.0,
    "material": "strap handle (bought)",
    "cg_xyz_m": [
-    0.13,
+    0.1265,
     0.64,
-    0.1525
+    0.153
    ],
    "make_or_buy": "buy",
    "flight": false,
@@ -197,7 +197,7 @@
   },
   {
    "id": "TRN-008",
-   "name": "Field pouch (wrench if needed, spare nuts, tape, checklist card)",
+   "name": "Field pouch (10 mm prop spanner, spare M6 prop nuts, 2.5 mm key, tape, checklist card)",
    "subsystem": "transport",
    "status": "MODELLED",
    "mass_g": 150.0,
@@ -205,7 +205,7 @@
    "cg_xyz_m": [
     0.27,
     0.0,
-    -0.266
+    -0.2655
    ],
    "make_or_buy": "buy",
    "flight": false,
@@ -250,10 +250,10 @@
    "spec": "item sits in a cut foam pocket, no fastening"
   },
   {
-   "id": "CT-TRN-M5-BOLT",
+   "id": "CT-TRN-M3-BOLT",
    "kind": "mechanical",
    "method": "fastened",
-   "spec": "M5 pan-head bolt through the Coroplast wall, fender washer both sides, nyloc inside"
+   "spec": "M3 SHCS through handle strap and Coroplast wall, M3 x 12 mm fender washer outside, 3 mm plywood backing strip and nyloc inside"
   }
  ],
  "edges": [
@@ -287,7 +287,7 @@
    "part_b": "TRN-005",
    "via": "CT-TRN-LSE-TAPE",
    "owner": "transport",
-   "notes": "pillar on the lid lining"
+   "notes": "pillar on the lid shell"
   },
   {
    "id": "E-TRN-05",
@@ -295,7 +295,7 @@
    "part_b": "TRN-005",
    "via": "CT-TRN-LSE-TAPE",
    "owner": "transport",
-   "notes": "pillar on the lid lining"
+   "notes": "pillar on the lid shell"
   },
   {
    "id": "E-TRN-06",
@@ -303,7 +303,7 @@
    "part_b": "WNG-001",
    "via": "CT-CRADLE-CONTACT",
    "owner": "transport",
-   "notes": "saddle under the lower surface at y -0.20, x -0.015..0.235 (spar line); elevons, fins, tubes never pressed (P:transport.cradle). Wing must keep this patch free of servo covers and horns (CR-D7-04)"
+   "notes": "saddle under the lower surface at y -0.20 (0.17-0.23), x -0.015..0.235 (spar line), 15 000 mm2 >= C2 1 080 mm2; 4 mm inboard of the brace anchors (0.234); elevons, fins, tubes, braces never pressed (P:transport.cradle). Wing keeps this patch free of servo covers and horns (CR-D7-04)"
   },
   {
    "id": "E-TRN-07",
@@ -357,20 +357,20 @@
    "id": "E-TRN-13",
    "part_a": "TRN-007-C",
    "part_b": "TRN-001",
-   "via": "CT-TRN-M5-BOLT",
+   "via": "CT-TRN-M3-BOLT",
    "owner": "transport",
    "notes": "side handle at the box CG",
    "joint_stack": {
-    "fastener": "M5x16 pan head",
+    "fastener": "M3x16 SHCS",
     "count": 2,
     "grade": "A2-70",
-    "hole": "5.5 mm clearance through handle strap and 4 mm wall; 15 mm fender washer each side",
+    "hole": "3.4 mm clearance through handle strap, 4 mm wall and 3 mm backing strip; M3 x 12 mm fender washer outside",
     "insert": "none",
-    "engagement_mm": 5.0,
-    "min_engagement_mm": 5.0,
-    "washer_nut": "M5 nyloc + fender washer (inside)",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "M3 nyloc on a 140 x 30 x 3 mm plywood backing strip (inside, TRN-105)",
     "torque": "snug (wall must not crush)",
-    "tool": "3 mm hex key + 8 mm spanner",
+    "tool": "2.5 mm hex key + 5.5 mm spanner",
     "access": "nut from inside the box, lid off",
     "install_order": 12,
     "removal_order": 4
@@ -380,20 +380,20 @@
    "id": "E-TRN-14",
    "part_a": "TRN-007-L",
    "part_b": "TRN-001",
-   "via": "CT-TRN-M5-BOLT",
+   "via": "CT-TRN-M3-BOLT",
    "owner": "transport",
    "notes": "end handle",
    "joint_stack": {
-    "fastener": "M5x16 pan head",
+    "fastener": "M3x16 SHCS",
     "count": 2,
     "grade": "A2-70",
-    "hole": "5.5 mm clearance through handle strap and 4 mm wall; 15 mm fender washer each side",
+    "hole": "3.4 mm clearance through handle strap, 4 mm wall and 3 mm backing strip; M3 x 12 mm fender washer outside",
     "insert": "none",
-    "engagement_mm": 5.0,
-    "min_engagement_mm": 5.0,
-    "washer_nut": "M5 nyloc + fender washer (inside)",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "M3 nyloc on a 140 x 30 x 3 mm plywood backing strip (inside, TRN-105)",
     "torque": "snug (wall must not crush)",
-    "tool": "3 mm hex key + 8 mm spanner",
+    "tool": "2.5 mm hex key + 5.5 mm spanner",
     "access": "nut from inside the box, lid off",
     "install_order": 13,
     "removal_order": 3
@@ -403,20 +403,20 @@
    "id": "E-TRN-15",
    "part_a": "TRN-007-R",
    "part_b": "TRN-001",
-   "via": "CT-TRN-M5-BOLT",
+   "via": "CT-TRN-M3-BOLT",
    "owner": "transport",
    "notes": "end handle",
    "joint_stack": {
-    "fastener": "M5x16 pan head",
+    "fastener": "M3x16 SHCS",
     "count": 2,
     "grade": "A2-70",
-    "hole": "5.5 mm clearance through handle strap and 4 mm wall; 15 mm fender washer each side",
+    "hole": "3.4 mm clearance through handle strap, 4 mm wall and 3 mm backing strip; M3 x 12 mm fender washer outside",
     "insert": "none",
-    "engagement_mm": 5.0,
-    "min_engagement_mm": 5.0,
-    "washer_nut": "M5 nyloc + fender washer (inside)",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "M3 nyloc on a 140 x 30 x 3 mm plywood backing strip (inside, TRN-105)",
     "torque": "snug (wall must not crush)",
-    "tool": "3 mm hex key + 8 mm spanner",
+    "tool": "2.5 mm hex key + 5.5 mm spanner",
     "access": "nut from inside the box, lid off",
     "install_order": 14,
     "removal_order": 2

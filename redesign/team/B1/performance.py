@@ -8,6 +8,8 @@ Writes, beside this file:
   fig-b1-endurance.svg     FIG B1-02 cruise time after the 2 min hover vs cruise speed
 
 Method (first order where B2/B3/B4/E1 data do not exist yet). Rev 2 (CR-A1-13): c 0.32, S5010, 11x5.5MR.
+Rev 3 (CR-A1-30): 0.14 m pod pressure drag, fin braces and collars, sag 0.76, top speed at the 9 350 rpm cap with
+a motor-limited full-throttle model (voltage, limiter current, rpm cap), which also feeds the fixed-wing climb.
   aero      wing: B2 S5010 trimmed polar (XFOIL section drag in AVL: CD0_wing, e, CLa; B2 alpha0, trimmed CLmax)
             x a tape-seam roughness factor; fins, tubes, motors, pod: component build-up. Linear lift to CLmax
             then a decay (e-folding 4 deg) onto a flat plate (CN = CD90 sin a): valid 0-90 deg, which a
@@ -110,6 +112,33 @@ kit.assumption("ASM-B1-WING-ROUGH", "Tape-seam factor on the S5010 wing profile 
                      "the ratio 1.10 stands in for early transition at spanwise tape seams. A trip-strip XFOIL run "
                      "(B2) or the cruise-power test replaces it", value=1.10, unit="-", status="PROPOSED",
                cites=["SRC-B2-XFOIL"])
+kit.assumption("ASM-B1-DRAG-ADDONS", "Fin brace and station-collar drag",
+               "[n braces, brace length m, brace width across the flow m, brace Cd, n collars, collar OD m, "
+               "collar height m, collar Cd] = [4, 0.15, 0.003, 0.80, 4, 0.026, 0.012, 0.70]; each collar replaces "
+               "a 12 mm length of faired motor tube (tube Cd from ASM-B1-DRAG is subtracted)",
+               basis="D3 CR-D3-15 geometry (braces 10 x 3 mm CF strip, 3 mm across the cruise flow, 4 x 0.15 m; "
+                     "collars 26 x 12 mm at |z| 0.148-0.160). Brace: sharp-edged rectangular section l/h 3.3, "
+                     "2-D Cd ~0.9 (Hoerner ch. 3), x 0.9 for finite length -> 0.80, 0.23 N at 16 m/s, the top of "
+                     "C4's 0.07-0.24 N (CR-C4-08). Collar: short cylinder l/d 0.46 in cross-flow, Cd 0.70 (Hoerner "
+                     "finite cylinder). Slipstream over the braces ignored (cruise thrust per prop < 1 N). ESC pads "
+                     "sit in the existing per-motor CdA", value=[4, 0.15, 0.003, 0.80, 4, 0.026, 0.012, 0.70],
+               unit="-", status="PROPOSED", cites=["SRC-B1-HOERNER"])
+kit.assumption("ASM-B1-POD-FRONT", "Pressure drag of the pod widening (D-25)",
+               "[Cd on the added frontal area, reference pod width m] = [0.20, 0.10]: the 0.14 m pod carries "
+               "Cd 0.20 on the frontal area (w - 0.10) x h on top of its friction drag in ASM-B1-DRAG",
+               basis="D-25 (D2 CR-D2-01): +0.0028 m2 frontal, estimated +3 % cruise drag. The friction build-up "
+                     "(Cf FF Swet) of rev 2 was accepted for the 0.10 m pod; the extra 20 mm side channels are "
+                     "blunt-sided box ahead of the wing LE (fineness ~1.5 on 0.14 m), so a forebody/base "
+                     "pressure term is added: Cd 0.20, rounded-edge block of fineness 2-3 (Hoerner ch. 3). "
+                     "With the friction growth the pod adds 0.14 N at 16 m/s (3.4 % of the rev 3 cruise drag) against "
+                     "D-25's 3 % estimate",
+               value=[0.20, 0.10], unit="-", status="PROPOSED", cites=["SRC-B1-HOERNER"])
+kit.assumption("ASM-B1-VTERM", "Pack terminal voltage at full throttle",
+               "[fresh, worst state] = [16.0, 13.6] V at the ESC input under full-throttle load",
+               basis="fresh: 16.8 V full charge less ~0.8 V at 60-100 A on the 6.5 Ah 130C pack; worst state: "
+                     "E2's 20 % charge, 10 degC, 27 mOhm pack under the 100 A limiter (3.4 V/cell, the "
+                     "CR-B1-16 stand point). The ESC passes full duty at full throttle; ESC drop neglected",
+               value=[16.0, 13.6], unit="V", status="PROPOSED", cites=["SRC-K09-CARD"])
 kit.assumption("ASM-B1-CD90", "Flat-plate normal-force coefficient",
                "Wing normal-force coefficient beyond stall CN = CD90 sin(alpha), CD90 = 1.28",
                basis="Hoerner flat plate; the value the K09 card used for hover lean, kept so the numbers compare. "
@@ -154,12 +183,14 @@ kit.assumption("ASM-B1-LAND-ERR", "Landing attitude error",
 kit.assumption("ASM-B1-TRANS", "Pitch-over schedule",
                "[pitch rate deg/s, assist speed as a fraction of Vs, back-transition energy as a fraction of "
                "the forward pitch-over] = [12, 1.10, 1.0]",
-               basis="12 deg/s is the fastest whole-number pitch-down rate that keeps peak thrust <= 80 % of "
-                     "available in CALC-B1-PITCHOVER on the worst-case pack (sag 0.72, D-06): 13 deg/s gives 0.79, "
-                     "15 gives 0.84, 20 gives 0.96 (rev 1 used 20 at sag 0.93). On a fresh pack 20 deg/s gives 0.59 "
-                     "(performance_results.json#sensitivity). Proposed first-flight Q_TAILSIT_RAT_FW; thrust holds "
-                     "altitude below 1.1 Vs (Q_ASSIST_SPEED analogue); the back-transition is a pitch-up deceleration "
-                     "of similar length at similar thrust", value=[12.0, 1.10, 1.0], unit="-", status="PROPOSED",
+               basis="Rev 3 (sag 0.76, D-35): 12 deg/s gives a peak of 0.70 of available thrust in CALC-B1-PITCHOVER "
+                     "on the worst-state pack; 14 gives 0.75, 15 gives 0.77, 16 gives 0.79 and 20 gives 0.88 "
+                     "(performance_results.json#sensitivity). 16 deg/s is now the fastest whole-number rate that "
+                     "keeps <= 0.80, but with no margin while the sag is UNVERIFIED (E1 0.854, E2 0.76; the cold-pack "
+                     "stand run decides), so 12 deg/s stays the first-flight Q_TAILSIT_RAT_FW (rev 2 derived it at "
+                     "sag 0.72, peak 0.76). On a fresh pack 20 deg/s gives 0.59. Thrust holds altitude below 1.1 Vs "
+                     "(Q_ASSIST_SPEED analogue); the back-transition is a pitch-up deceleration of similar length at "
+                     "similar thrust", value=[12.0, 1.10, 1.0], unit="-", status="PROPOSED",
                cites=["SRC-B1-ARDUPILOT-TS"])
 
 
@@ -214,6 +245,37 @@ def motor_input_w(p_shaft, n, motor):
     kt = 60.0 / (2 * math.pi * kv)
     i = p_shaft / (2 * math.pi * n) / kt + i0
     return (n * 60.0 / kv + i * rm) * i
+
+
+def full_throttle_rps(tab, Va, D, rho, motor, v_term, i_lim, n_cap, kq=1.0):
+    """Prop speed (rev/s) at full throttle and axial inflow Va: the lowest of (a) the speed where the DC motor's
+    back-EMF plus I Rm uses the whole terminal voltage, (b) the speed where the motor current reaches the limiter
+    share i_lim, (c) the rpm cap n_cap. Prop torque Cp rho n^2 D^5 / 2 pi, times kq. Returns (n, binding)."""
+    kv, rm, i0 = motor
+    kt = 60.0 / (2 * math.pi * kv)
+
+    def amps(n):
+        return kq * prop_cp(tab, Va / (n * D)) * rho * n * n * D ** 5 / (2 * math.pi) / kt + i0
+
+    def volts(n):
+        return n * 60.0 / kv + amps(n) * rm
+    lo = max(1.0, Va / (tab[-1][0] * D) * 1.0001)
+    out = []
+    for f, lim in ((volts, v_term), (amps, i_lim)):
+        a, b = lo, 1000.0
+        if f(a) >= lim:
+            out.append(a)
+            continue
+        for _ in range(80):
+            m = 0.5 * (a + b)
+            if f(m) > lim:
+                b = m
+            else:
+                a = m
+        out.append(0.5 * (a + b))
+    cands = {"voltage": out[0], "current": out[1], "rpm cap": n_cap}
+    key = min(cands, key=cands.get)
+    return cands[key], key
 
 
 def table_power_w(table_gw, thrust_g):
@@ -281,7 +343,8 @@ def aero_from(cla, a0, clmax, cd0, k, cd90):
 
 # ================================================================== calculations
 @kit.calc("CALC-B1-AERO", title="Aero model: CD0, k, lift slope, stall angle",
-          equation="CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod] / S, "
+          equation="CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod "
+                   "+ Cd_front (w - w_ref) h + n_b Cd_b w_b l_b + n_c (Cd_c D_c - Cd_tube d) h_c] / S, "
                    "Swet_fin = 2 A (1 + 0.2 t/c) ; k = 1/(pi AR e_B2) ; k_pess = 1/(pi AR e_params) ; "
                    "a = CLa (B2 AVL) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))",
           inputs={"b": P + "wing.span_m", "c": P + "wing.chord_m", "tc": P + "wing.t_c",
@@ -289,12 +352,17 @@ def aero_from(cla, a0, clmax, cd0, k, cd90):
                   "rough": "ASM-B1-WING-ROUGH", "cla": P + "b2.avl.cla_per_rad",
                   "fin_h": P + "fins.half_height_m", "fin_c": P + "fins.chord_m", "tube_l": P + "fins.tube.length_m",
                   "tube_d": P + "fins.tube.od_m", "pod": P + "pod.size_m", "n": P + "propulsion.n_motors",
-                  "drag": "ASM-B1-DRAG", "a0": P + "b2.xfoil.alpha0_2d_deg", "clmax": "CL-B2-CLMAX-DESIGN"},
+                  "drag": "ASM-B1-DRAG", "a0": P + "b2.xfoil.alpha0_2d_deg", "clmax": "CL-B2-CLMAX-DESIGN",
+                  "addons": "ASM-B1-DRAG-ADDONS", "podf": "ASM-B1-POD-FRONT"},
           units={"b": "m", "c": "m", "fin_h": "m", "fin_c": "m", "tube_l": "m", "tube_d": "m", "pod": "m",
                  "a0": "deg", "cla": "1/rad"},
-          assumes=["ASM-B1-DRAG", "ASM-B1-WING-ROUGH"], cites=["SRC-B2-AVL", "SRC-B2-XFOIL"])
-def aero_build(b, c, tc, e_b2, e_pess, cd0_w, rough, cla, fin_h, fin_c, tube_l, tube_d, pod, n, drag, a0, clmax):
+          assumes=["ASM-B1-DRAG", "ASM-B1-WING-ROUGH", "ASM-B1-DRAG-ADDONS", "ASM-B1-POD-FRONT"],
+          cites=["SRC-B2-AVL", "SRC-B2-XFOIL"])
+def aero_build(b, c, tc, e_b2, e_pess, cd0_w, rough, cla, fin_h, fin_c, tube_l, tube_d, pod, n, drag, a0, clmax,
+               addons, podf):
     cf_b, ff_f, cd_tube, cda_m, ff_pod, interf = drag
+    nb, lb, wb, cdb, nc, dc, hc, cdc = addons
+    cd_front, w_ref = podf
     S = b * c
     AR = b * b / S
     wet = 2.0 * (1.0 + 0.2 * tc)
@@ -304,13 +372,20 @@ def aero_build(b, c, tc, e_b2, e_pess, cd0_w, rough, cla, fin_h, fin_c, tube_l, 
         "motor_tubes": 2 * cd_tube * tube_d * tube_l / S,
         "motors": n * cda_m / S,
         "pod": cf_b * ff_pod * 2 * (pod[0] * pod[1] + pod[0] * pod[2] + pod[1] * pod[2]) / S,
+        "pod_front": cd_front * max(0.0, pod[1] - w_ref) * pod[2] / S,
+        "braces": nb * cdb * wb * lb / S,
+        "collars": nc * (cdc * dc - cd_tube * tube_d) * hc / S,
     }
+    pod_ref = cf_b * ff_pod * 2 * (pod[0] * w_ref + pod[0] * pod[2] + w_ref * pod[2]) / S
     cd0 = interf * sum(parts.values())
     k = 1.0 / (math.pi * AR * e_b2)
     return {"S_m2": S, "AR": AR, "cd0": cd0, "k": k, "k_pess": 1.0 / (math.pi * AR * e_pess), "cla_per_rad": cla,
             "alpha_stall_deg": a0 + clmax / cla / DEG, "ld_max": 1 / (2 * math.sqrt(cd0 * k)),
             "cl_ldmax": math.sqrt(cd0 / k),
-            "cd0_parts": [round(interf * parts[p], 6) for p in ("wing", "fins", "motor_tubes", "motors", "pod")]}
+            "cd0_parts": [round(interf * parts[p], 6) for p in ("wing", "fins", "motor_tubes", "motors", "pod",
+                                                                    "pod_front", "braces", "collars")],
+            "d_cd0_pod_wide": interf * (parts["pod"] + parts["pod_front"] - pod_ref),
+            "d_cd0_braces_collars": interf * (parts["braces"] + parts["collars"])}
 
 
 @kit.calc("CALC-B1-STALL", title="Stall and transition speeds",
@@ -660,33 +735,64 @@ def wind(m, m_sized, growth, g, rho, S, cd90, tip, err, z_fin, c, foot, tw_sag, 
 
 
 @kit.calc("CALC-B1-CLIMB", title="Vertical climb, fixed-wing climb and top speed",
-          equation="VTOL: T = W DL + q S_front CD0 at Vc, prop at J = Vc/(nD) ; FW: ROC = (n T_max(V) f - D) V / W ; "
-                   "V_max: n T_max(V) = D(V)",
-          inputs={**CRUISE_INPUTS, "vc": "ASM-B1-VCRUISE", "nmax": "CL-B1-NMAX-SAG", "frac": "ASM-B1-CTRL-RESERVE",
-                  "dl": P + "propulsion.download_factor"},
-          units={**CRUISE_UNITS, "vc": "m/s", "nmax": "rev/s"},
-          assumes=["ASM-B1-CTRL-RESERVE"])
-def climb(m, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, nmax, frac, dl):
+          equation="VTOL: T = W DL + q S_front CD0 at Vc, prop at J = Vc/(nD) ; full throttle at V: n = min(n_V, n_I, "
+                   "n_cap) from V_term = n 60/Kv + I Rm, I = Q/kt + I0 <= I_lim ; T = n_props Ct(J) rho n^2 D^4 ; "
+                   "FW: ROC = (f T(V) - D) V / W (worst pack) ; V_max: T(V) = D(V) ; "
+                   "V_H at the rpm cap, fresh pack, base drag ; V_max,sag worst pack ; pitch speed = p n_cap",
+          inputs={**CRUISE_INPUTS, "vc": "ASM-B1-VCRUISE", "frac": "ASM-B1-CTRL-RESERVE",
+                  "dl": P + "propulsion.download_factor", "rpm_cap": P + "propulsion.rpm_max",
+                  "i_lim": P + "propulsion.current_max_per_motor_a", "vterm": "ASM-B1-VTERM",
+                  "pess": "ASM-B1-PESS"},
+          units={**CRUISE_UNITS, "vc": "m/s", "rpm_cap": "rpm", "i_lim": "A", "vterm": "V"},
+          assumes=["ASM-B1-CTRL-RESERVE", "ASM-B1-VTERM", "ASM-B1-PESS"])
+def climb(m, g, rho, S, cd0, k, k_pess, trim, n, tab, kv, rm, i0, kcal, D, esc, av, vc, frac, dl, rpm_cap, i_lim,
+          vterm, pess):
     motor = (kv, rm, i0)
     W = m * g
+    n_cap = rpm_cap / 60.0
     v_up = 2.5                                            # Q_PILOT_SPD_UP-class vertical climb, m/s
     T_up = W * dl + 0.5 * rho * v_up ** 2 * S * cd0       # nose-first climb: wing edge-on, cruise-like drag
     rps, ps, _ = prop_operating_point(tab, T_up / n, v_up, D, rho)
     p_up = n * kcal * motor_input_w(ps, rps, motor) / esc + av
 
-    def drag(V):
+    def drag(V, c0=cd0, kk=k):
         cl = 2 * W / (rho * V * V * S)
-        return 0.5 * rho * V * V * S * (cd0 + k * cl * cl) * trim
-    roc = (frac * n * prop_tmax(tab, vc, nmax, D, rho) - drag(vc)) * vc / W
-    vmax = None
-    V = vc
-    while V < 40:
-        if n * prop_tmax(tab, V, nmax, D, rho) < drag(V):
-            vmax = V
-            break
-        V += 0.05
+        return 0.5 * rho * V * V * S * (c0 + kk * cl * cl) * trim
+
+    def thrust(V, vt, kq):
+        nn, why = full_throttle_rps(tab, V, D, rho, motor, vt, i_lim, n_cap, kq)
+        return n * prop_ct(tab, V / (nn * D)) * rho * nn * nn * D ** 4, nn, why
+
+    def vmax(vt, kq, c0=cd0, kk=k):
+        V = vc
+        while V < 45:
+            if thrust(V, vt, kq)[0] < drag(V, c0, kk):
+                return V
+            V += 0.01
+        return 45.0
+    v_h = vmax(vterm[0], 1.0)                     # fresh pack, APC torque: highest credible level speed
+    v_sag = vmax(vterm[1], kcal)                  # worst pack, calibrated torque
+    v_sag_pess = vmax(vterm[1], kcal, cd0 * pess[0], k_pess)
+    n_cap_save = n_cap
+    n_cap = 1.0e4                                 # failure case: no rpm cap
+    v_nocap = vmax(vterm[0], 1.0)
+    _, n_nc, why_nc = thrust(v_nocap, vterm[0], 1.0)
+    n_cap = n_cap_save
+    t16, n16, why16 = thrust(vc, vterm[1], kcal)
+    roc = (frac * t16 - drag(vc)) * vc / W
+    _, n_h, why_h = thrust(v_h, vterm[0], 1.0)
+    _, n_s, why_s = thrust(v_sag, vterm[1], kcal)
+    kt = 60.0 / (2 * math.pi * kv)
+    q_h = prop_cp(tab, v_h / (n_h * D)) * rho * n_h ** 2 * D ** 5 / (2 * math.pi)
+    v_need_cap = n_h * 60.0 / kv + (q_h / kt + i0) * rm
     return {"p_vclimb_2p5_w": p_up, "roc_fw_max_ms": roc, "climb_angle_fw_deg": math.asin(min(1.0, roc / vc)) / DEG,
-            "v_max_level_ms": vmax if vmax else 40.0}
+            "v_max_level_ms": v_h, "v_max_sag_ms": v_sag, "v_max_sag_pess_ms": v_sag_pess,
+            "rpm_at_vmax": n_h * 60, "vmax_limited_by": why_h, "v_term_needed_at_cap_v": v_need_cap,
+            "rpm_at_vmax_sag": n_s * 60, "vmax_sag_limited_by": why_s, "rpm_full_16ms_sag": n16 * 60,
+            "full_16ms_limited_by": why16, "thrust_full_16ms_sag_n": t16,
+            "pitch_speed_geom_cap_ms": 5.5 * 0.0254 * n_cap, "zero_thrust_speed_cap_ms": tab[-1][0] * D * n_cap,
+            "q_vmax_pa": 0.5 * rho * v_h * v_h, "v_max_nocap_ms": v_nocap, "rpm_at_vmax_nocap": n_nc * 60,
+            "vmax_nocap_limited_by": why_nc}
 
 
 # ================================================================== claims
@@ -823,10 +929,17 @@ kit.claim("CL-B1-VCLIMB-P", "Power in a 2.5 m/s vertical climb", calc="CALC-B1-C
           unit="W", how="Pack W during QHOVER climbs (H2).")
 kit.claim("CL-B1-ROC-FW", "Fixed-wing climb rate at 16 m/s", calc="CALC-B1-CLIMB", output="roc_fw_max_ms",
           unit="m/s", how="Full-throttle climb at 16 m/s in FBWA (H2); TECS limits set below it (F4).")
-kit.claim("CL-B1-VMAX", "Top level speed (prop runs out)", calc="CALC-B1-CLIMB", output="v_max_level_ms",
+kit.claim("CL-B1-VMAX", "Top level speed at the 9 350 rpm cap, fresh pack (C1's VH)", calc="CALC-B1-CLIMB",
+          output="v_max_level_ms", unit="m/s", limit=(">=", 18.0),
+          how="Full-throttle level run in FBWA at altitude on a fresh pack with rpm telemetry (H2), only after the "
+              "loads case at VD is cleared; until then AIRSPEED_MAX and THR_MAX keep it below VA. Limit 18 m/s "
+              "= cruise 16 + 2 m/s speed-hold headroom. C1 reads it as VH (upper value: base drag, APC torque).")
+kit.claim("CL-B1-VMAX-SAG", "Top level speed, worst-state pack", calc="CALC-B1-CLIMB", output="v_max_sag_ms",
           unit="m/s", limit=(">=", 18.0),
-          how="Full-throttle level run in FBWA at altitude (H2); AIRSPEED_MAX set 2 m/s below it (F4). Limit 18 m/s "
-              "= cruise 16 + 2 m/s speed-hold headroom.")
+          how="As CL-B1-VMAX on a low pack; F4 sets AIRSPEED_MAX at least 2 m/s below it.")
+kit.claim("CL-B1-VMAX-NOCAP", "Top level speed if the rpm cap fails, fresh pack", calc="CALC-B1-CLIMB",
+          output="v_max_nocap_ms", unit="m/s",
+          how="Not flown. C1 failure case: F4's rpm cap lost, motor voltage- or current-limited on a fresh pack.")
 
 kit.test("T-B1-CRUISE-POWER", "Cruise power and speed polar", verifies=["CL-B1-CRUISE-P", "CL-B1-CD0", "CL-B1-V-MINPOWER"],
          state="planned", procedure="Twin, then the aircraft: 60 s level legs at 14, 16, 18 m/s both directions, "
@@ -938,7 +1051,7 @@ if __name__ == "__main__":
     sens = {"pitch_rate_deg_s": {}, "clmax": {}}
     sens["pitch_rate_fresh_pack_deg_s"] = {}
     n_fresh = calcs["CALC-B1-PROPCAL"]["outputs"]["n_max_rps"]
-    for r in (10.0, 12.0, 13.0, 15.0, 20.0, 30.0, 50.0):
+    for r in (10.0, 12.0, 13.0, 14.0, 15.0, 16.0, 18.0, 20.0, 30.0, 50.0):
         pv2 = dict(pv, trans=[r] + list(pv["trans"][1:]))
         sens["pitch_rate_deg_s"][str(r)] = simulate_pitchover(**pv2)["summary"]
         sens["pitch_rate_fresh_pack_deg_s"][str(r)] = simulate_pitchover(**dict(pv2, nmax=n_fresh))["summary"]
@@ -948,6 +1061,9 @@ if __name__ == "__main__":
                                   if k in ("vs_gate_ms", "vt_gate_ms", "cruise_over_vt")}
     ci = calcs["CALC-B1-CRUISE"]["input_values"]
     sens["cruise_uncalibrated_p_el_w"] = cruise(**dict(ci, kcal=1.0))["p_el_w"]
+    cl_in = calcs["CALC-B1-CLIMB"]["input_values"]
+    sens["vmax_vs_fw_rpm_cap"] = {str(r): round(climb(**dict(cl_in, rpm_cap=float(r)))["v_max_level_ms"], 2)
+                                  for r in (7500, 8000, 8200, 8400, 8590, 8800, 9000, 9350)}
     out["sensitivity"] = sens
     (HERE / "performance_results.json").write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
     svg_corridor(corr["rows_V_th_thlo_TW_Tfrac_P_stalled"], st["vs_gate_ms"], st["vt_gate_ms"],

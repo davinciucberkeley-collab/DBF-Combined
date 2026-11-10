@@ -40,8 +40,8 @@
    "title": "OVONIC US 2 x 4S 6500 mAh 130C listing",
    "kind": "web",
    "url": "https://us.ovonicshop.com/products/2-x-ovonic-4s-6500mah-14-8v-130c-lipo-battery-with-xt60-to-tra-plug-for-1-8-1-10-scale-rc-car-truck-boat",
-   "where": "search 2026-11-09: $79.25, list $119.88, In Stock, automatic $5 discount at checkout; reseller rcdrone.top shows $142.24 sold out",
-   "note": "title says 'XT60 to TRA plug': confirm the XT60 connector; mass not on the page",
+   "where": "fetched 2026-11-09: $82.97 sale, list $119.88, in stock, XT60 plug with a TRA adapter, 12 AWG leads, 680 g per pack; an earlier search snippet showed $79.25; reseller rcdrone.top $142.24 sold out",
+   "note": "12 AWG leads fail F1's >= 10 AWG rule and 680 g exceeds the mass gate by 4 g (A3): the SKU needs E2/F1 sign-off before ordering (CR-I1-13)",
    "status": "UNVERIFIED"
   },
   {
@@ -113,13 +113,15 @@
     "SRC-I1-OVONIC"
    ],
    "outputs": {
-    "goods_base": 1309.78,
-    "goods_pess": 1359.05,
-    "tax_base": 134.25,
-    "tax_pess": 139.3,
-    "spend_base": 1569.03,
-    "spend_pess": 1680.35,
-    "early_goods_tax": 921.88
+    "spend_pess_allin": 1872.0,
+    "spend_base_allin": 1764.78,
+    "goods_base": 1319.54,
+    "goods_pess": 1365.09,
+    "tax_base": 135.25,
+    "tax_pess": 139.92,
+    "spend_base": 1579.79,
+    "spend_pess": 1687.01,
+    "early_goods_tax": 1004.26
    },
    "input_values": {
     "tax": 0.1025
@@ -128,10 +130,10 @@
   {
    "id": "CALC-I1-BRIDGE",
    "type": "calculation",
-   "title": "Bottom-up minus tie-break bridge",
+   "title": "Bottom-up minus R1-bridge (pessimistic spend)",
    "script": "redesign/team/I1/build_bom.py",
    "function": "spend_bridge",
-   "equation": "delta = spend_pess(bottom-up) - [1678.58 + sum(line deltas) x (1 + tax)]",
+   "equation": "delta = spend_pess(bottom-up) - [1680.35 (R1) + sum(R2 line deltas) x (1 + tax)]",
    "inputs": {
     "tax": "P:requirements.tax_rate",
     "sp": "CL-I1-SPEND-PESS"
@@ -144,11 +146,11 @@
     "SRC-TIEBREAK"
    ],
    "outputs": {
-    "delta_usd": -0.01
+    "delta_usd": 0.0
    },
    "input_values": {
     "tax": 0.1025,
-    "sp": 1680.35
+    "sp": 1687.01
    }
   },
   {
@@ -169,13 +171,64 @@
     "sb": "USD"
    },
    "outputs": {
-    "reserve_pess": 319.65,
-    "reserve_base": 430.97
+    "reserve_pess": 312.99,
+    "reserve_base": 420.21
    },
    "input_values": {
     "budget": 2000.0,
-    "sp": 1680.35,
-    "sb": 1569.03
+    "sp": 1687.01,
+    "sb": 1579.79
+   }
+  },
+  {
+   "id": "CALC-I1-ALLIN",
+   "type": "calculation",
+   "title": "All-in spend if every gated BOM line (X07, X08) were also bought",
+   "script": "redesign/team/I1/build_bom.py",
+   "function": "allin",
+   "equation": "all-in spend = spend + gated lines x (1 + tax); reserve = budget - spend",
+   "inputs": {
+    "tax": "P:requirements.tax_rate",
+    "budget": "P:requirements.budget_usd"
+   },
+   "units": {
+    "tax": "-",
+    "budget": "USD"
+   },
+   "assumes": [
+    "ASM-I1-SHIPPING",
+    "ASM-I1-ADDERS"
+   ],
+   "outputs": {
+    "reserve_pess_allin": 128.0,
+    "reserve_base_allin": 235.22
+   },
+   "input_values": {
+    "tax": 0.1025,
+    "budget": 2000.0
+   }
+  },
+  {
+   "id": "CALC-I1-GROUNDTEST",
+   "type": "calculation",
+   "title": "New bought ground-test purchase (line G12)",
+   "script": "redesign/team/I1/build_bom.py",
+   "function": "groundtest",
+   "equation": "sum of BOM lines with group 'groundtest', pre-tax",
+   "inputs": {
+    "tax": "P:requirements.tax_rate"
+   },
+   "units": {
+    "tax": "-"
+   },
+   "cites": [
+    "SRC-I1-CARRIED"
+   ],
+   "outputs": {
+    "bought_usd": 17.0
+   },
+   "input_values": {
+    "tax": 0.1025
    }
   },
   {
@@ -193,7 +246,7 @@
     "R-BUDGET"
    ],
    "how": "Re-run build_bom.py after re-pricing each line on the day of the order; compare with the order confirmations.",
-   "value": 1569.03
+   "value": 1579.79
   },
   {
    "id": "CL-I1-SPEND-PESS",
@@ -210,12 +263,12 @@
     "R-BUDGET"
    ],
    "how": "Same lines at list price plus the DECISION section 9 adders; CL-I1-BRIDGE-DELTA must be 0.",
-   "value": 1680.35
+   "value": 1687.01
   },
   {
    "id": "CL-I1-BRIDGE-DELTA",
    "type": "claim",
-   "title": "Bottom-up minus tie-break bridge (USD)",
+   "title": "Bottom-up minus R1 bridge (USD)",
    "calc": "CALC-I1-BRIDGE",
    "output": "delta_usd",
    "unit": "USD",
@@ -224,7 +277,7 @@
     "value": 0.02
    },
    "how": "Non-zero means a BOM line changed without the bridge table in build_bom.py bridge() being updated.",
-   "value": -0.01
+   "value": 0.0
   },
   {
    "id": "CL-I1-RESERVE-PESS",
@@ -242,7 +295,7 @@
     "R-BUDGET"
    ],
    "how": "2 000 minus CL-I1-SPEND-PESS must be >= 309 (one class-S crash incl. tax). On the day: re-price every CARRY line.",
-   "value": 319.65
+   "value": 312.99
   },
   {
    "id": "CL-I1-RESERVE-BASE",
@@ -259,7 +312,41 @@
     "R-RESERVE"
    ],
    "how": "2 000 minus CL-I1-SPEND-BASE must be >= 150 (planned reserve, P2).",
-   "value": 430.97
+   "value": 420.21
+  },
+  {
+   "id": "CL-I1-RESERVE-PESS-ALLIN",
+   "type": "claim",
+   "title": "Pessimistic reserve if the gated lines X07 and X08 were also bought",
+   "calc": "CALC-I1-ALLIN",
+   "output": "reserve_pess_allin",
+   "unit": "USD",
+   "how": "2 000 minus the all-in pessimistic spend. Information, not a gate: the committed order holds >= 309 by deferring X07 and X08 until their gate passes. Below 309 means every gated line cannot be bought on pessimistic numbers.",
+   "value": 128.0
+  },
+  {
+   "id": "CL-I1-GROUNDTEST-BOUGHT",
+   "type": "claim",
+   "title": "New bought ground-test purchase, pre-tax (USD)",
+   "calc": "CALC-I1-GROUNDTEST",
+   "output": "bought_usd",
+   "unit": "USD",
+   "limit": {
+    "op": "<=",
+    "value": 20.0
+   },
+   "how": "D-39: ground-test equipment is borrowed from Jacobs Hall first; at most $20 is bought (G12). The 20 kgf cell kit G06 ($17.97) was already in the baseline.",
+   "value": 17.0
+  },
+  {
+   "id": "T-I1-CONNECTOR-LEADS",
+   "type": "test",
+   "title": "Confirm the pack connector and lead gauge before ordering",
+   "verifies": [
+    "CL-I1-SPEND-PESS"
+   ],
+   "state": "planned",
+   "procedure": "Before the pack order: read the listing photos or ask the vendor for lead gauge (needs >= 10 AWG, F1 CL-F1-PACKLEAD-RISE) and connector (XT60). The 2026-11-09 listing says 12 AWG, 680 g: do not order it. On arrival: measure the lead conductor with calipers, weigh both packs."
   },
   {
    "id": "T-I1-LISTINGS",
@@ -270,7 +357,17 @@
     "CL-I1-RESERVE-PESS"
    ],
    "state": "planned",
-   "procedure": "On 20 Nov and 15 Dec open: LANRC ASIN B0D2HS4Y4J, SunnySky X3108S, Ovonic 2-pack (connector, price), Aloft tube, Small Parts 4114, APC 11x5.5MR/11x4.5MR; log price and stock in team/I1/listing_log.csv; re-run build_bom.py."
+   "procedure": "On 20 Nov and 15 Dec open: LANRC ASIN B0D2HS4Y4J, SunnySky X3108S, Ovonic 2-pack (connector, lead gauge, mass, price), Aloft tube, APC 11x5.5MR/11x4.5MR; log price and stock in team/I1/listing_log.csv; re-run build_bom.py."
+  },
+  {
+   "id": "T-I1-BORROW",
+   "type": "test",
+   "title": "Jacobs Hall confirms the H1 rig loan in writing",
+   "verifies": [
+    "CL-I1-GROUNDTEST-BOUGHT"
+   ],
+   "state": "planned",
+   "procedure": "Before 20 Nov ask Jacobs Hall staff, by email, to lend the items in ORDER-PLAN.md 'Borrow list' for 25 Nov - 8 Dec (stand campaign) and the build-end weigh-in; file the reply in team/I1/borrow_confirmation.txt. A refusal moves the item to a BOM line (price in the table)."
   },
   {
    "id": "T-I1-ARRIVAL",

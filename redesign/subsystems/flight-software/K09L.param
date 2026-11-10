@@ -1,16 +1,16 @@
-# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R1, 2026-11-09)
+# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R3, 2026-11-09)
 # Status: PROPOSED. Not loaded on hardware, not run in SITL (SITL not installed): UNVERIFIED.
-# Firmware: ArduPlane stable with tailsitter support (R-FC-STABLE; board chosen by F3).
+# Firmware: ArduPlane 4.7.x stable, target CoreWingF405WingV2 (D-33; bdshot on outputs 1-4, no Lua on this board).
 # Parameter names checked 2026-11-09 against ArduPilot master source and the Plane parameter index
-#   (ArduPlane/quadplane.cpp, tailsitter.cpp, Parameters.cpp, AP_Vehicle/AP_FixedWing.h,
-#    AP_Motors/AP_MotorsMulticopter.cpp, AC_WPNav/AC_WPNav.cpp). Before loading on the installed
-#    stable build, run the name check in subsystems/flight-software/SITL-PLAN.md S1 (R-FSW-PARAMS).
-# Two lines are deliberately duplicated under a legacy name (cm/s units in older builds): the loader
-#   skips the name the installed build does not know. Marked LEGACY.
-# Format: one comment line (or more) above every parameter, then NAME,VALUE. "(default)" marks a line
-#   that repeats the firmware default on purpose because a forwarded request names it.
-# Frame: params.json#frame (x aft, y right, z up, cruise attitude). Hover copter frame: forward = belly
-#   (-z), right = right wing (+y), down = tail (+x). Motor map: subsystems/flight-software/SPEC.md.
+#   (ArduPlane/quadplane.cpp, tailsitter.cpp, Attitude.cpp, Parameters.cpp, AP_Vehicle/AP_FixedWing.h,
+#    AC_AttitudeControl/AC_WeatherVane.cpp, RC_Channel/RC_Channels_VarInfo.h, AP_Motors). Before loading on the
+#    board, run the name check in SITL-PLAN.md S1 on the 4.7.x tag (R-FSW-PARAMS).
+# LEGACY lines duplicate a parameter under its older name (cm/s units or the pre-4.6 GPS name); the loader skips the
+#   name the installed build does not know. fsw_check.py checks each pair holds the same value.
+# Format: one comment line (or more) above every parameter, then NAME,VALUE. "(default, stated)" marks a line that
+#   repeats the firmware default on purpose because a request names it.
+# Frame: params.json#frame (x aft, y right, z up, cruise attitude). Hover copter frame: forward = belly (-z),
+#   right = right wing (+y), down = tail (+x). Motor map: SPEC.md. Bench/stand set: K09L-STAND.param (load after).
 # Re-check: python -I redesign/team/F4/fsw_check.py
 
 # ---------------------------------------------------------------- 1 Frame: copter-motor tailsitter
@@ -20,7 +20,7 @@ Q_ENABLE,1
 Q_TAILSIT_ENABLE,1
 # copter frame class Quad (default, stated: R-FSW-PARAMS)
 Q_FRAME_CLASS,1
-# copter frame type X (default, stated). Not 17 NYT_X: elevons have no hover authority (CR-B4-06e), hover yaw is motor torque + 3 deg cant
+# copter frame type X (default, stated). Not 17 NYT_X: elevons have no hover authority (CR-B4-06e); hover yaw is prop torque + 7 deg cant
 Q_FRAME_TYPE,1
 # all four motors stay active in fixed-wing flight (bitmask motors 1-4): they are the cruise propulsion
 Q_TAILSIT_MOTMX,15
@@ -29,33 +29,35 @@ Q_OPTIONS,262400
 # start in QSTABILIZE, never MANUAL (default MANUAL would pass raw sticks to a hovering tailsitter)
 INITIAL_MODE,17
 
-# ---------------------------------------------------------------- 2 Outputs (FC ports: F3 confirms timer groups; F2 writes signal.fc_port)
-# out 1 = Motor 1 = station LR (lower right), CCW seen from the nose (11x5.5MR)
+# ---------------------------------------------------------------- 2 Outputs (F3 CR-F3-02: outputs 1-4 bdshot on TIM4/TIM3, elevons 5-6 on TIM8 PWM, 7 unused)
+# out 1 = Motor 1 = station LR (lower right), CCW seen from the nose, 11x5.5MR, right-hand-thread adapter
 SERVO1_FUNCTION,33
-# out 2 = Motor 2 = station UL (upper left), CCW seen from the nose (11x5.5MR)
+# out 2 = Motor 2 = station UL (upper left), CCW seen from the nose, 11x5.5MR, right-hand-thread adapter
 SERVO2_FUNCTION,34
-# out 3 = Motor 3 = station LL (lower left), CW seen from the nose (11x5.5MRP)
+# out 3 = Motor 3 = station LL (lower left), CW seen from the nose, 11x5.5MRP, LEFT-hand-thread adapter (CR-E1-21: prop drag tightens the nut)
 SERVO3_FUNCTION,35
-# out 4 = Motor 4 = station UR (upper right), CW seen from the nose (11x5.5MRP)
+# out 4 = Motor 4 = station UR (upper right), CW seen from the nose, 11x5.5MRP, LEFT-hand-thread adapter (CR-E1-21)
 SERVO4_FUNCTION,36
-# out 5 = left elevon servo MEC-001-L (ElevonLeft); direction, trim and +/-25 deg throw set on the bench (SERVO5_MIN/MAX/TRIM/REVERSED)
+# out 5 = left elevon servo (ElevonLeft); direction, trim and +/-25 deg throw set on the bench (SERVO5_MIN/MAX/TRIM/REVERSED)
 SERVO5_FUNCTION,77
-# out 6 = right elevon servo MEC-001-R (ElevonRight)
+# out 6 = right elevon servo (ElevonRight)
 SERVO6_FUNCTION,78
-# motor outputs DShot300 (Bluejay reflash of the LANRC BLHeli_S ESC, E1); needs a bdshot firmware build for the board
+# motor outputs DShot300 (Bluejay reflash of the LANRC BLHeli_S ESC, E1)
 Q_M_PWM_TYPE,5
 # bidirectional DShot on outputs 1-4 for ESC rpm telemetry (harmonic notch, rpm cap check)
 SERVO_BLH_BDMASK,15
-# motor magnet poles for rpm = eRPM / (poles/2); X3108S 12N14P (UNVERIFIED: count the magnets)
+# motor magnet poles for rpm = eRPM / (poles/2); X3108S 12N14P (UNVERIFIED: count the magnets, CR-F4-06)
 SERVO_BLH_POLES,14
 # ESC type for DShot commands: 1 = BLHeli32/BLHeli_S/Kiss family (UNVERIFIED for Bluejay; bench check)
 SERVO_DSHOT_ESC,1
 
-# ---------------------------------------------------------------- 3 Motor limits (E1, B4, C1)
-# output at full demand: holds rpm <= 9 350 on a 16.8 V pack (CL-B4-SPIN-MAX 0.849). Documented range is 0.9-1.0: SITL S1 confirms the value is kept; the stand (T-F4-RPM-CAP) confirms rpm with ESC telemetry
+# ---------------------------------------------------------------- 3 Motor limits (E1, B4, C1, A2)
+# output at full demand: holds rpm <= 9 350 on a 16.8 V pack (CL-B4-SPIN-MAX 0.849). Documented range is 0.9-1.0: SITL S1 confirms the value is kept; the stand (T-F4-STAND-RPM-CAP) confirms rpm
 Q_M_SPIN_MAX,0.84
-# pack-current limiter 100 A (CR-E1-08, R-ESC-CURRENT a)
+# pack-current limiter 100 A (CR-A2-14, CR-E3-05, CR-F1-10; R-ESC-CURRENT part a; claim CL-F4-BAT-CURR-MAX)
 Q_M_BAT_CURR_MAX,100
+# limiter reads battery monitor 0 = the flight pack (default, stated: CR-A2-14)
+Q_M_BAT_IDX,0
 # limiter time constant 1 s (default 5 s): C1 shows a step to full throttle outruns a slow limiter (CL-C1-T-CAP)
 Q_M_BAT_CURR_TC,1
 # voltage compensation range, 4S full / empty (CR-E1-08)
@@ -64,127 +66,152 @@ Q_M_BAT_VOLT_MAX,16.8
 Q_M_BAT_VOLT_MIN,13.2
 # hover throttle start value (E1: duty 0.49 on the 11x5.5MR); learnt in flight (Q_M_HOVER_LEARN 2, default)
 Q_M_THST_HOVER,0.49
-# fixed-wing throttle ceiling 75 %: FW motor output bypasses Q_M_SPIN_MAX; 0.75 + 0.0875 yaw differential = 0.84 (CL-F4-FW-ACT-MAX)
+# fixed-wing throttle ceiling 75 %: FW motor output bypasses Q_M_SPIN_MAX; 0.75 + 0.0875 yaw = 0.84 (CL-F4-FW-ACT-MAX); level speed then <= 0.89 VH (CL-F4-VLEVEL-VH); never sustained full throttle (CR-E3-05)
 THR_MAX,75
-# fixed-wing throttle floor 10 %: keeps differential-thrust yaw authority when TECS idles (CR-B3-04)
+# fixed-wing throttle floor 10 %: keeps differential-thrust yaw damping when TECS idles (CR-B3-15: optional damping)
 THR_MIN,10
 
 # ---------------------------------------------------------------- 4 Hover (Q modes)
-# hover lean limit 30 deg (default, stated): 5 m/s lean 15 deg (CL-B1-LEAN-5MS), tip-over 30.6 deg (CL-A1-TIPOVER)
+# hover lean limit 30 deg (default, stated): 5 m/s lean 16 deg (P:performance.lean_5ms_deg), tip-over 30 deg
 Q_A_ANGLE_MAX,30
 # hover body-rate limits (deg/s): <= 3 rad/s = 172 deg/s assumed by C1 (CR-C1-08)
 Q_A_RATE_R_MAX,120
 # copter pitch = upper vs lower pair
 Q_A_RATE_P_MAX,120
-# copter yaw = plane roll about the thrust axis; slowest axis (torque + cant)
+# copter yaw = rotation about the aircraft x axis; slowest axis (prop torque + 7 deg cant)
 Q_A_RATE_Y_MAX,90
-# starting rate gains (PROPOSED; tuned per TUNING-PLAN.md). Copter roll = left/right pairs, arm 0.32 m
+# starting rate gains (PROPOSED). Crossover <= 5 Hz (CR-C2-03): copter roll (L/R pairs, arm 0.32 m, Izz from A3) 1.1 Hz at these gains (CL-F4-XOVER-RLL); P ceiling 0.38
 Q_A_RAT_RLL_P,0.08
 Q_A_RAT_RLL_I,0.08
 Q_A_RAT_RLL_D,0.002
-# copter pitch = upper/lower pairs, arm 0.19 m
+# D-term filter 32 Hz (default 20): >= 2 x the 14.9 Hz top of the wing torsion band (CL-F4-FILT-SEP)
+Q_A_RAT_RLL_FLTD,32
+# copter pitch = upper/lower pairs, arm 0.19 m, the stiffest axis, 2.6 Hz at these gains (CL-F4-XOVER-PIT); P ceiling 0.15 with D 0.002
 Q_A_RAT_PIT_P,0.08
 Q_A_RAT_PIT_I,0.08
 Q_A_RAT_PIT_D,0.002
-# copter yaw: reaction torque + 3 deg cant (CL-B4-YAW-CANT 1.65)
+# D-term filter 32 Hz, as roll
+Q_A_RAT_PIT_FLTD,32
+# copter yaw: prop torque + 7 deg cant (needs CR-F4-11 fixed), 1.0 Hz at these gains (CL-F4-XOVER-YAW)
 Q_A_RAT_YAW_P,0.40
 Q_A_RAT_YAW_I,0.04
 # auto/QRTL descent 1.2 m/s: vortex-ring onset 1.88 m/s (CL-B4-DESCENT); B4 asks <= 1.5 (CR-B4-06b). Units m/s
 Q_WP_SPD_DN,1.2
-# LEGACY name of the line above (cm/s), older stable builds
+# LEGACY name of the line above (cm/s)
 Q_WP_SPEED_DN,120
 # pilot descent in QHOVER/QLOITER 1.2 m/s (default 0 = uses the 2.5 m/s climb limit, above VRS onset)
 Q_PILOT_SPD_DN,1.2
 # LEGACY name of the line above (cm/s)
 Q_PILOT_SPEED_DN,120
-# final landing descent 0.5 m/s (default, stated: CR-B4-06b, R-LANDING-IMPACT basis). Units m/s
+# final landing descent 0.5 m/s (default, stated: CR-D5-09, CR-B4-06b); the velocity controller holds thrust to contact
 Q_LAND_FINAL_SPD,0.5
 # LEGACY name of the line above (cm/s)
 Q_LAND_SPEED,50
-# weathervane belly into wind in QLOITER/QLAND/QRTL (CR-J1-05): wind then loads copter pitch (CL-B3-HOVER-PITCH-RATIO 8.3), fins edge-on
+# weathervane in hover: 1 = belly (copter nose) into wind (default on Plane, stated; J1 CR-J1-05: wind loads copter pitch, the strongest axis)
 Q_WVANE_ENABLE,1
 # weathervane gain start 1 (J1, ArduPilot weathervaning page)
 Q_WVANE_GAIN,1
+# landing override 3 = side into wind = a wingtip into wind (CR-C5-05a: spanwise limit 8.4 m/s vs broadside 4.33 m/s)
+Q_WVANE_LAND,3
+# take-off override 3 = side into wind: same fin-tip stance as landing
+Q_WVANE_TAKEOFF,3
 
 # ---------------------------------------------------------------- 5 Transition (TRANSITION section of SPEC.md)
-# forward pitch-over rate 12 deg/s: peak thrust 0.76 on a sagged pack (CR-B1-12 supersedes CR-B1-07's 20; raise to 20 for fresh-pack flights after logs)
+# forward pitch-over rate 12 deg/s: peak thrust 0.76 on a sagged pack at sag 0.72 (CR-B1-12); kept until B1 re-checks at sag 0.76 (D-35); 20 only on fresh packs after logs
 Q_TAILSIT_RAT_FW,12
-# back-transition pitch-up rate 30 deg/s (default 50); SITL S5 sweeps 20/30/50 against B3's 1.0 N*m nose-up demand (CR-B3-04d)
+# back-transition pitch-up rate 30 deg/s (default 50); SITL S5 sweeps 20/30/50 (CR-B3-15: motors hold 1.03 N*m nose-up at 8-11 m/s)
 Q_TAILSIT_RAT_VT,30
-# plane controller takes over at 70 deg nose-down from vertical = 20 deg above the horizon: airspeed is read near zero AoA (CR-B4-06d)
+# plane controller takes over at 70 deg nose-down from vertical = 20 deg above the horizon (CR-B4-06d)
 Q_TAILSIT_ANGLE,70
 # back-transition throttle 55 % (default -1 = hover throttle 49 %): keeps thrust and wash up in the flare (J1 failure mode 3)
 Q_TAILSIT_THR_VT,55
-# gain scaling on throttle only (default, stated): bit 2 (disk theory) would schedule on airspeed in the pitch-over, which B4 forbids (CR-B4-06d)
+# gain scaling on throttle only (default, stated): bit 2 would schedule on airspeed in the pitch-over, which B4 forbids (CR-B4-06d)
 Q_TAILSIT_GSCMSK,1
-# disk loading 2.6 kg / 0.245 m^2 (CR-J1-05); inert while GSCMSK bit 2 is off, set so the switch is one parameter
+# disk loading 2.6 kg / 0.245 m^2 (CR-J1-05); inert while GSCMSK bit 2 is off
 Q_TAILSIT_DSKLD,10.6
-# copter assist below 13 m/s = 1.10 Vs (CR-B1-12)
+# copter assist below 13 m/s = 1.09 Vs (CR-B1-12)
 Q_ASSIST_SPEED,13
 # copter assist below 15 m above home in fixed-wing modes
 Q_ASSIST_ALT,15
-# transition time limit 15 s (B1 needs 7.7 s to 1.3 Vs at 12 deg/s, CL-B1-TRANS-TIME)
+# transition time limit 15 s (B1 needs 7.8 s to 1.3 Vs at 12 deg/s, CL-B1-TRANS-TIME)
 Q_TRANS_FAIL,15
 # on transition failure: QRTL (R-FAILSAFES)
 Q_TRANS_FAIL_ACT,1
 
-# ---------------------------------------------------------------- 6 Fixed-wing envelope (B1, B3, C1)
-# cruise target 16 m/s (P:performance.cruise_ms; >= 1.3 Vs 15.42, CL-A1-TRANSITION-GATE)
+# ---------------------------------------------------------------- 6 Fixed-wing envelope and elevon schedule (B1, B3, C1: D-29, D-36)
+# cruise target 16 m/s (P:performance.cruise_ms)
 AIRSPEED_CRUISE,16
-# TECS floor 15 m/s = 1.26 Vs (CR-B1-12; integer parameter). D-21: re-check against B3's R1 trimmed stall
-AIRSPEED_MIN,15
-# TECS ceiling 18 m/s (CR-B1-12; <= 20 asked by C1 CR-C1-08; manoeuvre speed VA 20.1)
+# TECS floor 16 m/s: D-36 asks 15.6 (1.3 Vs at the forward CG, CL-B3-VT-TRIM); the parameter is an integer (AP_Int16), so the next integer up. Pre-4.5 name ARSPD_FBW_MIN
+AIRSPEED_MIN,16
+# TECS ceiling 18 m/s (CR-B1-12) <= 22 asked for ARSPD_FBW_MAX (CR-C1-08; that is this parameter's pre-4.5 name) and < VA 20.5
 AIRSPEED_MAX,18
-# stall speed for stall-prevention bank scaling (CL-A1-STALL-GATE 11.86 m/s)
+# stall speed for stall-prevention bank scaling (CL-B3-VS-TRIM 11.9 m/s)
 AIRSPEED_STALL,12
-# airspeed the FW gains are tuned at = cruise
+# airspeed the FW gains are tuned at = cruise. Surface demand scales by 16/V: 0.78 at VA 20.5, 0.59 at VD 27.2 (floor 0.44 = 16/(2 x AIRSPEED_MAX))
 SCALING_SPEED,16
-# bank limit 45 deg: n = 1.41 against the +3.0 limit (P:requirements.load_factor_limit_pos)
+# bank limit 45 deg: n = 1.41 against the +3.4 limit (P:requirements.load_factor_limit_pos)
 ROLL_LIMIT_DEG,45
-# pitch limits (deg)
+# pitch-up limit 20 deg
 PTCH_LIM_MAX_DEG,20
-PTCH_LIM_MIN_DEG,-15
+# pitch-down limit 10 deg (was 15): steady dive at idle then tops out at 17.8 m/s (20.1 at B1's older L/D 7.16) <= VA 20.5, so the full-travel speed is not exceeded in a FW mode (CL-F4-VDIVE-VA; at 15 deg: 26 m/s)
+PTCH_LIM_MIN_DEG,-10
 # FW body-rate limits (deg/s) <= 172 deg/s (C1); roll >= 90 deg/s requirement (P:requirements.roll_rate_min_degs)
 RLL2SRV_RMAX,150
+# pitch rate limits up / down
 PTCH2SRV_RMAX_UP,100
 PTCH2SRV_RMAX_DN,100
 # TECS climb 3 m/s (CR-B1-12; FW climb 4.7 m/s at 80 % thrust)
 TECS_CLMB_MAX,3
-# TECS sink 4 m/s
-TECS_SINK_MAX,4
-# airspeed sensor MS5525 auto-address (F3 resolves the 0x76 clash, OI-08); used in FW only
-ARSPD_TYPE,3
+# TECS sink 2.5 m/s = 9 deg path at 16 m/s, inside the 10 deg pitch floor (was 4)
+TECS_SINK_MAX,2.5
+# airspeed sensor MS4525DO on I2C 0x28 (D-33, CR-F3-02)
+ARSPD_TYPE,1
+# I2C bus 0 (CR-F3-02)
+ARSPD_BUS,0
+# pitot tube order 2 = auto-detect (CR-F3-02)
+ARSPD_TUBE_ORDR,2
 # use the sensor for TECS and gain scaling (default 1, stated)
 ARSPD_USE,1
 
-# ---------------------------------------------------------------- 7 Fixed-wing yaw by differential thrust (CR-B3-04a, CR-J1-05)
-# rudder output -> left/right motor differential, % of full output per unit rudder (default 10). Needs 28 % for 1.0 N*m (CL-F4-RUDD-DT-REQ)
+# ---------------------------------------------------------------- 7 Fixed-wing yaw by differential thrust (CR-B3-15: optional damping, Cn_beta > 0)
+# rudder output -> left/right motor differential, % of full output per unit rudder (default 10); 32 % holds 1.0 N*m (CL-F4-RUDD-DT-REQ)
 RUDD_DT_GAIN,35
 # yaw damper on the (virtual) rudder channel; builders 0.08-0.12 (J1)
 YAW2SRV_DAMP,0.1
 # no sideslip feedback until the twin's yaw doublet (T-B3-YAW-DOUBLET) shows it is needed
 YAW2SRV_SLIP,0
 
-# ---------------------------------------------------------------- 8 Vibration: harmonic notch on ESC rpm (CR-B4-06c, CR-J1-12)
+# ---------------------------------------------------------------- 8 IMU filtering (CR-C2-03, CR-C2-04, CR-C4-07, CR-J1-12)
+# gyro sample rate 0 = 1 kHz (default, stated: CR-F3-02)
+INS_GYRO_RATE,0
+# gyro low-pass 40 Hz (default 20): 2.7 x the 14.9 Hz top of the antisymmetric wing torsion band; motor noise is taken by the notch
+INS_GYRO_FILTER,40
+# rpm-tracking harmonic notch on
 INS_HNTCH_ENABLE,1
 # mode 3 = ESC telemetry (bidirectional DShot)
 INS_HNTCH_MODE,3
-# lowest tracked fundamental 70 Hz (hover 1P 90 Hz, CL-B4-HOVER-RPM; descent throttle lower)
+# reference 1: required for rpm/ESC tracking (0 freezes the notch at INS_HNTCH_FREQ)
+INS_HNTCH_REF,1
+# lowest tracked fundamental 70 Hz (hover 1P 90 Hz, CL-B4-HOVER-RPM; 1P sweep 90-156 Hz, CR-J1-12)
 INS_HNTCH_FREQ,70
 # bandwidth half the minimum frequency
 INS_HNTCH_BW,35
-# harmonics 1, 2, 3 (bitmask 7): 1P, blade pass 2P (180-311 Hz), 3P; one notch set on mean rpm (F405 CPU)
+# harmonics 1, 2, 3 (bitmask 7): 1P, blade pass 2P (180-312 Hz), 3P; one notch set on mean rpm (F405 CPU)
 INS_HNTCH_HMNCS,7
-# log raw + filtered gyro batches on tuning flights (FFT check of the notch)
+# log raw + filtered gyro batches on tuning flights (FFT check of the notch and the 12-15 Hz mode, T-C2-TAP-TEST)
 INS_LOG_BAT_MASK,1
 INS_LOG_BAT_OPT,4
 
-# ---------------------------------------------------------------- 9 Battery (E2: CL-E2-BATT-LOW-MAH, CL-E2-BATT-CRT-MAH)
-# analog voltage + current (power module; F1 sets BATT_VOLT_MULT and BATT_AMP_PERVLT on the bench)
+# ---------------------------------------------------------------- 9 Battery (E2: CL-E2-BATT-LOW-MAH, CL-E2-BATT-CRT-MAH; F1/F3 sensor)
+# analog voltage + current (FC power board)
 BATT_MONITOR,4
+# voltage divider 11.05 (CR-F3-02); replace with the T-F1-SENSOR-CAL value
+BATT_VOLT_MULT,11.05
+# current sensor 64 A/V (CR-F3-02, CR-F1-10); replace with the T-F1-SENSOR-CAL value
+BATT_AMP_PERVLT,64
 # nameplate 6 500 mAh; lower to the measured capacity (T-E2-CAPACITY)
 BATT_CAPACITY,6500
-# low at 2 700 mAh remaining -> RTL (CR-E2-13 provisional; 2 600 when E2 re-emits the claim)
+# low at 2 700 mAh remaining -> RTL (CL-E2-BATT-LOW-MAH)
 BATT_LOW_MAH,2700
 # critical at 1 300 mAh = 20 % reserve -> QLAND
 BATT_CRT_MAH,1300
@@ -193,22 +220,32 @@ BATT_LOW_VOLT,14.0
 BATT_CRT_VOLT,13.6
 # sag-compensated voltage for the failsafe: a transition sag must not trigger it
 BATT_FS_VOLTSRC,1
-# low action 1 = RTL (FW home, then QRTL landing via Q_RTL_MODE 1)
+# low action 1 = RTL (FW home, then VTOL landing via Q_RTL_MODE 1)
 BATT_FS_LOW_ACT,1
 # critical action 4 = QLAND
 BATT_FS_CRT_ACT,4
 # refuse to arm below 4.10 V/cell: the mAh counter assumes a full pack
 BATT_ARM_VOLT,16.4
 
-# ---------------------------------------------------------------- 10 RC link and failsafes
-# RC failsafe on (default 1, stated); ELRS/CRSF loss of frames triggers it
+# ---------------------------------------------------------------- 10 RC link (ELRS/CRSF, CR-F5-01) and failsafes
+# receiver on SERIAL6 (F3's DMA UART): 23 = RCIN (CRSF)
+SERIAL6_PROTOCOL,23
+# RSSI from the receiver protocol (CRSF)
+RSSI_TYPE,3
+# 8480 = bit 8 CRSF passthrough telemetry + bit 13 ELRS 420 kbaud (CR-F5-01: 8448) + bit 5 throttle-at-zero arming check (the firmware default, kept: CR-F4-13)
+RC_OPTIONS,8480
+# RC failsafe on (default 1, stated); ELRS loss of frames triggers it
 THR_FAILSAFE,1
+# short failsafe after 1.5 s (default, stated: CR-F5-01)
+FS_SHORT_TIMEOUT,1.5
 # short failsafe in FW: 0 = continue in AUTO/GUIDED, else circle; Q modes go to QLAND (Q_OPTIONS bit 5 off)
 FS_SHORT_ACTN,0
 # long failsafe in FW: 1 = RTL
 FS_LONG_ACTN,1
 # long failsafe after 5 s (default, stated)
 FS_LONG_TIMEOUT,5
+# no GCS failsafe: telemetry rides the RC link, so RC failsafe covers it (CR-F5-01)
+FS_GCS_ENABL,0
 # RTL: fly home fixed-wing, then back-transition and land vertically
 Q_RTL_MODE,1
 # RTL cruise altitude 50 m (>= transition altitude, P:requirements.transition_alt_min_m)
@@ -220,8 +257,8 @@ RTL_RADIUS,60
 WP_LOITER_RAD,60
 # EKF failsafe threshold (default 0.8, stated); in Q modes it lands (QLAND), GPS loss lands without position hold
 FS_EKF_THRESH,0.8
-# flight-mode channel 5; positions set with F5 on the transmitter
-FLTMODE_CH,5
+# flight-mode channel 6 (CR-F5-01: ELRS sends ch 5 as a 2-position bit)
+FLTMODE_CH,6
 # QSTABILIZE
 FLTMODE1,17
 # QHOVER
@@ -234,13 +271,16 @@ FLTMODE4,5
 FLTMODE5,7
 # RTL
 FLTMODE6,11
-# arm/disarm switch on channel 8 (R-ARM-KILL); rudder-stick arming off
-RC8_OPTION,153
+# arm/disarm switch on channel 5 (CR-F5-01, R-ARM-KILL)
+RC5_OPTION,153
+# channel 8 has no function (was arm/disarm in R1)
+RC8_OPTION,0
+# rudder-stick arming off
 ARMING_RUDDER,0
-# emergency motor stop on channel 9 (R-ARM-KILL, <= 1 s; SITL S13 times it)
+# motor emergency stop on channel 9 (R-ARM-KILL); also the touchdown cut, <= 0.5 s from contact (CR-C5-05b, CL-F4-TD-CUT)
 RC9_OPTION,31
 
-# ---------------------------------------------------------------- 11 Geofence (RFS, P17)
+# ---------------------------------------------------------------- 11 Geofence (RFS)
 FENCE_ENABLE,1
 # 3 = max altitude + home circle; 7 once the sub-field polygon is uploaded (H3 provides the corners)
 FENCE_TYPE,3
@@ -251,3 +291,27 @@ FENCE_ALT_MAX,110
 # 250 m circle around home, inside VLOS 500 m (P:requirements.vlos_max_m)
 FENCE_RADIUS,250
 FENCE_MARGIN,10
+
+# ---------------------------------------------------------------- 12 Board and sensor placement (F3, CR-F3-02)
+# FC flat, arrow toward the nose (-x): fixed-wing attitude (the tailsitter code rotates for hover)
+AHRS_ORIENTATION,0
+# GPS on SERIAL5: 5 = GPS
+SERIAL5_PROTOCOL,5
+# IMU position from the CG in the FRD body frame (m), from F3
+INS_POS1_X,0.054
+INS_POS1_Y,0.046
+INS_POS1_Z,-0.035
+# second IMU slot, same chip position (F3)
+INS_POS2_X,0.054
+INS_POS2_Y,0.046
+INS_POS2_Z,-0.035
+# GPS antenna position from the CG (m), from F3 (4.6+ name)
+GPS1_POS_X,-0.036
+GPS1_POS_Y,0
+GPS1_POS_Z,-0.169
+# LEGACY names of the three lines above (before 4.6)
+GPS_POS1_X,-0.036
+GPS_POS1_Y,0
+GPS_POS1_Z,-0.169
+# compass orientation auto-detected and stored (F3 expects 36 on the 45-deg mast pad)
+COMPASS_AUTO_ROT,2

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680" role="img" aria-label="Harness route, right half: top view and fin outboard face">
+<rect x="40.0" y="204.0" width="504.0" height="384.0" fill="#4C8DE0" fill-opacity="0.08" stroke="#121619" stroke-width="1.5"/>
+<rect x="40.0" y="286.6" width="504.0" height="26.9" fill="none" stroke="#5A6472" stroke-width="0.75" stroke-dasharray="6 4"/>
+<rect x="40.0" y="66.0" width="84.0" height="252.0" fill="#7F8C9E" fill-opacity="0.25" stroke="#121619" stroke-width="1.5"/>
+<rect x="418.2" y="258.0" width="11.5" height="330.0" fill="#2BA6A0" fill-opacity="0.35" stroke="#121619" stroke-width="1.5"/>
+<rect x="402.4" y="237.6" width="43.2" height="82.8" fill="none" stroke="#121619" stroke-width="0.75"/>
+<circle cx="424.0" cy="258.0" r="13.2" fill="#121619" fill-opacity="0.2" stroke="#121619" stroke-width="1.5"/>
+<circle cx="40.0" cy="300.0" r="6" fill="none" stroke="#121619" stroke-width="1.25"/>
+<polyline points="68.2,308.2 100.4,298.6 106.2,280.6 128.8,280.6 143.2,278.2 395.2,278.2 414.6,289.2 424.0,307.2 434.0,314.4 434.0,367.2 434.0,367.2 436.5,354.0" fill="none" stroke="#E0613A" stroke-width="2"/>
+<polyline points="68.2,308.2 100.4,298.6 106.2,280.6 128.8,280.6 148.0,278.2 188.8,278.2 395.2,278.2 414.6,289.2 424.0,307.2 434.0,314.4 434.0,367.2 434.0,367.2 436.5,354.0" fill="none" stroke="#E0613A" stroke-width="2" stroke-dasharray="5 3"/>
+<polyline points="436.5,296.4 434.0,283.2 434.0,283.2 450.4,253.0 449.2,239.8" fill="none" stroke="#E0613A" stroke-width="2"/>
+<polyline points="436.5,296.4 434.0,283.2 434.0,283.2 450.4,253.0 449.2,239.8" fill="none" stroke="#E0613A" stroke-width="2" stroke-dasharray="5 3"/>
+<polyline points="95.2,220.8 95.2,240.0" fill="none" stroke="#4C8DE0" stroke-width="2"/>
+<polyline points="95.2,246.0 95.6,256.6 106.2,280.6 128.8,280.6 145.6,269.2 395.2,269.2 414.6,289.2 424.0,307.2 434.0,314.4 434.0,360.0 436.5,354.0" fill="none" stroke="#4C8DE0" stroke-width="2"/>
+<polyline points="88.0,220.8 88.0,240.0" fill="none" stroke="#4C8DE0" stroke-width="2"/>
+<polyline points="84.4,220.8 84.4,240.0" fill="none" stroke="#4C8DE0" stroke-width="2"/>
+<polyline points="84.4,246.0 95.6,256.6 106.2,280.6 128.8,280.6 148.0,278.2 188.8,278.2 205.6,269.2 395.2,269.2 414.6,289.2 424.0,307.2 434.0,314.4 434.0,360.0 436.5,354.0" fill="none" stroke="#4C8DE0" stroke-width="2" stroke-dasharray="5 3"/>
+<polyline points="91.6,220.8 91.6,240.0" fill="none" stroke="#4C8DE0" stroke-width="2"/>
+<polyline points="102.4,220.8 102.4,240.0" fill="none" stroke="#5DB24D" stroke-width="2"/>
+<polyline points="102.4,246.0 65.8,309.4 110.2,309.4 110.2,322.8 115.0,329.0 134.2,333.8 364.0,333.8 382.0,357.8 382.0,432.0" fill="none" stroke="#5DB24D" stroke-width="2"/>
+<polyline points="92.8,220.8 88.0,232.8 88.0,288.0 97.6,300.0 97.6,300.0 47.2,300.0 40.0,300.0 40.0,292.8" fill="none" stroke="#8E6FD8" stroke-width="2"/>
+<polyline points="92.8,220.8 88.0,232.8 88.0,288.0 97.6,300.0 97.6,300.0 47.2,300.0 40.0,300.0 40.0,292.8" fill="none" stroke="#8E6FD8" stroke-width="2"/>
+<text x="286.0" y="261.2" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">grooves: sig 54 · + 59 · − 64 mm</text>
+<text x="286.0" y="349.8" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">servo groove x 108 mm</text>
+<text x="478.0" y="304.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">spar slot</text>
+<text x="52.0" y="108.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">pod</text>
+<text x="50.0" y="304.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">GPS mast</text>
+<text x="416.0" y="333.2" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="end">fin hole</text>
+<text x="137.6" y="294.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">P1</text>
+<text x="434.0" y="448.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">fin</text>
+<line x1="40.0" y1="606.0" x2="160.0" y2="606.0" stroke="#121619" stroke-width="1"/>
+<text x="40.0" y="620.0" font-family="IBM Plex Mono, monospace" font-size="11" fill="#121619">0 — 100 mm</text>
+<text x="40" y="40" font-family="IBM Plex Sans, system-ui" font-size="12" font-weight="500" fill="#121619">TOP · right half, nose up</text>
+<rect x="776.2" y="77.5" width="343.8" height="525.0" fill="#2BA6A0" fill-opacity="0.18" stroke="#121619" stroke-width="1.5"/>
+<rect x="720.0" y="311.8" width="400.0" height="39.0" fill="#4C8DE0" fill-opacity="0.12" stroke="#121619" stroke-width="1"/>
+<rect x="817.5" y="175.0" width="57.5" height="35.0" fill="#E0613A" fill-opacity="0.35" stroke="#121619" stroke-width="1.25"/>
+<rect x="742.3" y="78.8" width="32.5" height="47.5" fill="#121619" fill-opacity="0.25" stroke="#121619" stroke-width="1.25"/>
+<circle cx="827.5" cy="299.1" r="6.2" fill="none" stroke="#121619" stroke-width="1.25"/>
+<rect x="762.5" y="134.4" width="77.5" height="20.0" fill="none" stroke="#121619" stroke-width="0.75"/>
+<rect x="817.5" y="470.0" width="57.5" height="35.0" fill="#E0613A" fill-opacity="0.35" stroke="#121619" stroke-width="1.25"/>
+<rect x="742.3" y="553.8" width="32.5" height="47.5" fill="#121619" fill-opacity="0.25" stroke="#121619" stroke-width="1.25"/>
+<circle cx="827.5" cy="363.4" r="6.2" fill="none" stroke="#121619" stroke-width="1.25"/>
+<rect x="762.5" y="525.6" width="77.5" height="20.0" fill="none" stroke="#121619" stroke-width="0.75"/>
+<rect x="762.5" y="125.0" width="27.5" height="430.0" fill="#121619" fill-opacity="0.15" stroke="#121619" stroke-width="1"/>
+<polyline points="808.8,307.0 827.5,299.1 835.0,294.1 890.0,230.0 890.0,197.5 876.2,192.5" fill="none" stroke="#E0613A" stroke-width="2"/>
+<polyline points="808.8,355.8 827.5,363.4 835.0,368.4 890.0,450.0 890.0,482.5 876.2,487.5" fill="none" stroke="#E0613A" stroke-width="2"/>
+<polyline points="816.2,192.5 802.5,185.0 802.5,139.4 771.1,115.0 757.3,102.5" fill="none" stroke="#E0613A" stroke-width="2"/>
+<polyline points="816.2,487.5 802.5,495.0 802.5,540.6 771.1,565.0 757.3,577.5" fill="none" stroke="#E0613A" stroke-width="2"/>
+<polyline points="808.8,307.0 827.5,299.1 835.0,294.1 882.5,220.0 876.2,202.5" fill="none" stroke="#4C8DE0" stroke-width="2"/>
+<polyline points="808.8,355.8 827.5,363.4 835.0,368.4 882.5,460.0 876.2,477.5" fill="none" stroke="#4C8DE0" stroke-width="2"/>
+<text x="899.0" y="196.5" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">ESC UR</text>
+<text x="899.0" y="491.5" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">ESC LR</text>
+<text x="742.3" y="74.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">motor UR</text>
+<text x="857.2" y="143.4" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">collar tie</text>
+<text x="835.5" y="287.8" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">hole + grommet</text>
+<text x="1020.0" y="344.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">wing</text>
+<text x="720" y="40" font-family="IBM Plex Sans, system-ui" font-size="12" font-weight="500" fill="#121619">FIN UR/LR · outboard face, nose left</text>
+<line x1="40" y1="660" x2="64" y2="660" stroke="#E0613A" stroke-width="2"/>
+<text x="70" y="664" font-family="IBM Plex Sans, system-ui" font-size="11" fill="#121619">power / phase</text>
+<line x1="190" y1="660" x2="214" y2="660" stroke="#4C8DE0" stroke-width="2"/>
+<text x="220" y="664" font-family="IBM Plex Sans, system-ui" font-size="11" fill="#121619">DShot</text>
+<line x1="340" y1="660" x2="364" y2="660" stroke="#5DB24D" stroke-width="2"/>
+<text x="370" y="664" font-family="IBM Plex Sans, system-ui" font-size="11" fill="#121619">servo</text>
+<line x1="490" y1="660" x2="514" y2="660" stroke="#8E6FD8" stroke-width="2"/>
+<text x="520" y="664" font-family="IBM Plex Sans, system-ui" font-size="11" fill="#121619">GPS</text>
+<text x="640" y="664" font-family="IBM Plex Sans, system-ui" font-size="11" fill="#5A6472">dashed = lower surface (via P1)</text>
+</svg>

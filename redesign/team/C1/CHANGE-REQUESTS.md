@@ -1,32 +1,35 @@
 # Change requests from C1 (loads engineer)
 
-Revision C1-R2 (2026-11-09). Numbers from `python -I redesign/team/C1/loads.py` at params A1-R2.
+Revision C1-R3 (2026-11-09). Numbers from `python -I redesign/team/C1/loads.py` at params A1-R3.
 
-## New in R2 (open)
+## New in R3 (open)
 
 | # | To | What | Why / numbers |
 |---|---|---|---|
-| CR-C1-12 | A1 (cc E1, F4, B4) | Set `requirements.thrust_limit_per_motor_n` 17.8 → **21.1 N**. Alternative: F4 lowers the output cap so the fresh-pack rpm stays ≤ 8 590 rpm (T ≤ 17.8 N, fresh T/W 2.79). | `CL-C1-T-CAP` 21.08 N = APC 11×5.5MR at the 9 350 rpm cap (`P:propulsion.rpm_max`, B4) × E1 k_T 1.039. The 100 A limiter (`ASM-E1-ILIM`, 15.9 N per motor) is time-filtered and does not bound a step to full throttle. Only mount and motor loads change (+18 %); spar, fin joint, pod and feet are landing-governed. |
-| CR-C1-13 | A1 (cc F4, A2) | Set `requirements.vd_ms` 22.4 → **27.2 m/s** (q 454 Pa). Alternative: F4 limits fixed-wing THR_MAX so level speed ≤ 17.9 m/s, shown in flight logs, and keeps 22.4. | `CL-C1-VD` = 1.25 × VH; VH = 21.8 m/s, the 11×5.5MR pitch speed at the 9 350 rpm cap (B1's 19.7 m/s was with the 11×4.5MR). VC 16 m/s does not govern. The envelope already runs at 27.2 (`CL-C1-VD-ENV`). |
-| CR-C1-14 | B1 | Re-run `CL-B1-VMAX` with the 11×5.5MR, the 9 350 rpm cap and c 0.32; C1 then replaces the pitch-speed proxy in `CL-C1-VH`. | VH sets VD and every flight q; B1's 11×4.5MR top speed (19.7) already exceeds that prop's pitch speed at the cap (17.8), so the proxy may be low. |
-| CR-C1-15 | B2, D6 (cc F4) | Re-size the elevon hinge moment and servo torque at VD 27.2 m/s (B2 used 19.5 m/s: ×1.95 → ~5.9 kgf·cm at 25°), or adopt a deflection schedule (full travel to VA 20.5 m/s, ≤ 1/3 at VD, FAR 23.441 practice) that F4 enforces. Elevon panel limit load 31.9 N/m at CN 1.0 (`data/envelope.json`). | `CL-C1-Q-VD` 454 Pa vs 233 Pa at 19.5 m/s |
-| CR-C1-16 | A1 (cc A2) | Set `requirements.load_factor_limit_pos` 3.0 → **3.4**; keep `load_factor_limit_neg` −1.5. | `CL-C1-GUST-N-POS` 3.36 at 21.8 m/s with B2's CL_α 3.58 /rad and the 8 m/s gust line to VD 27.2. Spar sizing is unchanged (landing governs); wing shear and torsion use 3.36 already. |
-| CR-C1-17 | A1, C5, D5 | Restate `requirements.foot_crush_stroke_min_m`: **≥ 41 mm at η 0.5, or ≥ 26 mm with a constant-force crush core (η ≥ 0.8)**. Recommend the constant-force core: a linear foam foot 45 mm tall bottoms at ~70 % strain (~32 mm, n_L ≈ 7.6). | `CL-C1-N-LAND-STROKE-MIN` 6.07 at 40 mm (−1 %); `CL-C1-FOOT-STROKE-REQ` 40.5 mm. Foot height stays ≥ 45 mm: the wingtip clears a 10° roll error by 0.01° (`CL-C1-WINGTIP-STRIKE-ANGLE` 10.01°). |
-| CR-C1-18 | B2 | Re-run `out/loads_spanwise.json` at c 0.32 (AR 3.59) with the R1 CG range; C1 re-runs on it. | `ASM-C1-B2-SPANLOAD` is the c 0.30 run (centroid 0.423 b/2) |
-| CR-C1-19 | A3 | Confirm the pack station `CL-A3-PACK-X-REQ` (−0.034 m) after CR-A3-11; C1 reads it. MC-C (402 g growth at the pod centre) puts the CG at 0.036 m, ahead of the 0.040 m limit: if A1 places growth elsewhere, tell C1. | Mass configurations bound the root bending and the station loads |
+| CR-C1-20 | A1 (cc F4, B1, B2, D6) | Decide VD. **Recommended:** F4 caps the fixed-wing `THR_MAX` so level speed ≤ **21.8 m/s** (= 27.2 / 1.25), B1 gives the throttle %, H2 shows it in logs; then C1 reads the capped VH and keeps `requirements.vd_ms` 27.2 and n⁺ 3.4. **Alternative:** raise `vd_ms` to **32.1 m/s** and `load_factor_limit_pos` to **3.6** (neg −1.6). | `CL-B1-VMAX` 25.7 m/s (11×5.5MR at the cap) → `CL-C1-VD` 32.1 (`FAIL` −18 %), gust n +3.58 / −1.58. Structure is insensitive (`data/sensitivity_vd.json`: spar, fin joint, mounts, pod, feet unchanged; wing Vz +3 %); q at VD rises 453 → 631 Pa (+39 %): elevon hinge, horns and servo (B2, D6) and the stall-line n 5.2 → 7.3 (F4). Until decided the envelope runs at 32.1. |
+| CR-C1-21 | C4 (cc C6, D3) | Re-run `CALC-C4-D3-STATIC` on `ASM-C1-FRICTION` **0.7** and `CL-C1-FOOT-CORNER` 29.1 N; publish the station-collar torque as a claim (limit) that C6 reads; add an equilibrium check: the FE section torque at the wing plane in L4 equals `CL-C1-FINHALF-T-LIM` (6.60 N·m) within 5 %. | Agreement on CR-C6-03: C1's 6.60 N·m is the **section total** about the tube axis; C4's collar value is an **internal** path quantity (strip end + brace-ear couple) and may exceed it. C6 sizes the collar to the larger (expect ≈ 11.6 N·m limit = 9.3 × 6.60/5.29). |
+| CR-C1-22 | D7 (cc A2) | End and side impacts: either label the box "keep upright, do not drop on end or side" and make them test-only, or add crush foam: **≥ 54 mm** (end) and **≥ 57 mm** (side) of stroke for a 0.3 m drop. Lid-down: pillars carry **102 N** per side (limit) at n 10.1 with the same stroke; size the pillar and pad for it. | `CL-C1-TRANSPORT-N-ALLOW-X/-Y` 12.13 / 11.53, `CL-C1-BOX-STROKE-REQ-X/-Y`; box gaps 16 / 36 mm (CR-D7-02b). Floor drop passes: n_T 10.09 vs 12.45 on your 66 mm (`CL-D7-CRADLE-STROKE`). |
+| CR-C1-23 | H1 | Replace the equivalent point of GT-08 with `data/whiffletree.json`: aircraft inverted on the pod, four pads per side (y 0.120 / 0.260 / 0.355 / 0.465 m; **limit** 9.93 / 7.98 / 4.69 / 6.40 N, sum 29.0 N) and an **upward relief pull 20.0 N** at each motor tube. Proof at limit; ultimate (× 1.5) on a sacrificial wing only. | CR-H1-03 answered. `CL-C1-WING-SHEAR-ULT` **is ultimate** (33.4 N; limit 22.2 N, case F7-VA). The old point (P = V_ult/1.5 at y = Mx_ult/V_ult) mixed a flight shear with the G2 handling moment. |
+| CR-C1-24 | C4, C6 (cc H3) | Size the motor mount for the set-down case G3: **23.2 N** per lower motor can at 2 g (mount force 20.9 N limit, 31.3 N ult), or H3 adds to the flight card "set it on its feet or on the foam pad, never on the motors". | `CL-C1-MOUNT-F-ULT` now governed by G3, +6 % over the flight/hover value (H5 0.65 N·m still sets the moment). |
+| CR-C1-25 | A3 | Re-run the R3 roll-up with the pack at x −0.001 m and publish the pack station claim on that basis; C1's lumped model needs a +16/+18 mm centre-group shift to sit on the CG limits. | `data/mass_model.csv` (TRIM rows); open issue 3 in LOADS.md |
+| CR-C1-26 | J1 | CR-J1-10 done: `team/C1/claims.json` names no `ASM-J1-*` id (mount mass is now `ASM-C1-MOUNT-MASS`). J1 may delete `ASM-J1-APC-KT` and `ASM-J1-MH45-CM0`. | — |
 
-## Carried from R1
+## Answered or closed in R3
+
+| # | State |
+|---|---|
+| CR-C1-04 (carry point / G2) | Closed: L4 at μ 0.7 (8.34 N·m) now sets the fin-joint moment, G2 does not. A "do not lift by the motors" label stays good practice. |
+| CR-C1-12, -13, -16, -17 | Adopted by A1 (D-29, D-30). CR-C1-13/-16 are reopened by B1's VH as CR-C1-20. |
+| CR-C1-14 | Answered by B1 (`CL-B1-VMAX` 25.7 m/s), now read. |
+| CR-C1-15 | Deflection schedule adopted (D-29, forwarded to F4); C1 runs F6/F7 at full travel to VA and ⅓ at VD (`ASM-C1-ELEVON-VD-FRAC`). Hinge sizing waits on CR-C1-20. |
+| CR-D7-02 (a, b, c), CR-C5-09, CR-C6-03, CR-H1-03, CR-J1-10 | Done in C1-R3 (LOADS.md, action-item table). |
+| CR-C1-05, CR-C1-11 | Closed (D-22 / C6 RF 3.26). |
+
+## Still open from R1/R2
 
 | # | To | What | State |
 |---|---|---|---|
-| CR-C1-01 | C5, D5 | Feet 45 mm beyond the TE, crush stroke for n_L ≤ 6 | Adopted (D-11, D-14); stroke wording refined by CR-C1-17 |
-| CR-C1-02 | H3, C5 | Parked on its feet in 8 m/s it slides (μ needed 0.68 > 0.5) and tips at 8.8 m/s: lay it flat between flights in gusts, or grip pads μ ≥ 0.7 | Open (`CL-C1-STANCE-MU-REQ`, `CL-C1-STANCE-TIP-WIND`) |
-| CR-C1-03 | C4, D3, C5 | Tip-over onto the upper tube ends (4.6 J, 1.56 m/s) is a damage case: mounts fail before the tube | Adopted (D-23) |
-| CR-C1-04 | D3, D7, H3 | Marked carry point + "do not lift by the motors" label, or C4 sizes the fin joint to G2 (9.4 vs 7.2 N·m limit) | Open |
-| CR-C1-05 | D7 | Box cradle foam stroke ≥ 64 mm for the 0.3 m drop | Closed by D-22 (70 mm): n_T 9.57 ≤ 10.34. D7: 70 mm is **stroke**, ~0.10–0.12 m of block |
-| CR-C1-06 | A1 | Requirement keys for n, VD, landing n, thrust limit | Done (D-14); values updated by CR-C1-12, -13, -16 |
-| CR-C1-07 | E1, H1 | Stand test on a 16.8 V pack, now with the **11×5.5MR**, the F4 output cap and the 100 A limiter as flown: step to full throttle, log peak thrust, torque, rpm (`T-C1-THRUST-FRESH`) | Open |
-| CR-C1-08 | F4 | `ARSPD_FBW_MAX` ≤ 22 m/s and pitch/elevon limits in manual modes above VA 20.5 m/s (stall-line n at VD 5.26 > 3.36); body rates ≤ 3 rad/s; confirm the motor spin map (C1 assumes UR and LL alike) | Open, numbers updated |
-| CR-C1-09 | B2, B3 | CLmax, CLmin, lift slope, Cm, elevon effectiveness, strip loads | Closed by CR-B2-07 (now used) |
-| CR-C1-10 | A2 | `R-LOADS` basis | Superseded by CR-C1-12, -13, -16, -17 |
-| CR-C1-11 | C6 | Size the mount clamp for the prop-nut torque 1.5 N·m (3.2 N·m design); use `data/envelope.json#joints` for every other joint | Open |
+| CR-C1-02 | H3, C5 | Parked stance: μ needed 0.68 vs mat 0.70 (3 % margin); lay flat above 5 m/s (C5 S1–S8) | Forwarded to H2/H3 |
+| CR-C1-07 | E1, H1 | Stand test, fresh pack, 11×5.5MR, F4 cap and limiter as flown (`T-C1-THRUST-FRESH`) | Open |
+| CR-C1-08 | F4 | `ARSPD_FBW_MAX` and pitch/elevon limits above VA (stall-line n at VD 7.3); body rates ≤ 3 rad/s; confirm the spin map and the cant sense | Open |
+| CR-C1-18 | B2 | `loads_spanwise.json` at c 0.32 with the R3 CG range | Forwarded by A1 |

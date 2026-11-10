@@ -42,7 +42,7 @@
    "text": "Reserve at order time on pessimistic numbers >= one bad crash ($309 incl. tax); planned reserve >= $150",
    "ref": "redesign/config-study/tiebreak/DECISION.md#1"},
   {"id": "R-TRANSPORT", "type": "requirement", "title": "One-piece transport",
-   "text": "Aircraft travels in one piece in one foam-lined box <= 1.25 x 0.55 x 0.45 m external, <= 6 kg loaded; field-ready in <= 5 min by one person without tools",
+   "text": "Aircraft travels in one piece in one foam-lined box no larger than requirements.box_external_m (1.25 x 0.55 x 0.54 m at D-31; 0.50 at D-16, 0.45 at P9), <= 6 kg loaded without the flight packs (LiPo bag); field-ready in <= 5 min by one person with no tool other than the 10 mm prop spanner in the pouch (D-40)",
    "ref": "redesign/config-study/REQUIREMENTS-PROPOSED.md#P9"},
   {"id": "R-DISCONNECT", "type": "requirement", "title": "Connectors carry the current",
    "text": "Every power connector and the main disconnect are rated >= 1.25 x the highest continuous current through them; wire temperature rise <= 10 degC",

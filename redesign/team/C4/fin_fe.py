@@ -523,7 +523,8 @@ def build_q(cfg):
       tube {x, E, G, od, id, rho, z_clamp (bore end = boss top), z_end (tube end)}, n_free (tube elements between
       the clamp and the first fin LE node), n_ext (tube elements above the fin top), k_root (rx = ry spring at the
       clamp, N m/rad, None = clamped);
-      fin {props or None, x_le, x_te, root [(x, z)] skin profile, z_top_le, z_top_te, root_free [(x0, x1)]}, nx, nz;
+      fin {props or None, x_le, x_te, root [(x, z)] skin profile, z_top_le, z_top_te, root_free [(x0, x1)],
+           le_bonds [(z0, z1)] optional: LE nodes above the bore end tied to the tube only inside these bands}, nx, nz;
       station {parts [(m, offset from the station node, J)], k_rock (rx, ry), k_twist (rz), N m/rad, None = rigid};
       the station node sits on the tube axis at the tube end;
       tube_masses [(m, z)], fin_masses [(m, (x, z))];
@@ -655,11 +656,15 @@ def build_q(cfg):
         slave[i_station] = (i_end, np.zeros(3))
     if has_fin:
         free = fn.get("root_free") or []
+        bands = fn.get("le_bonds")                            # None = LE fillet bonded over the whole height
         for j in range(nz + 1):
             n = fin_id[(0, j)]
             z = nodes[n][2]
             if z <= z0 + 1e-4:
                 fixed.update(dofs_of(n))                      # board LE in the boss slot, bonded
+            elif bands is not None and not any(a - 1e-6 <= z <= b + 1e-6 for a, b in bands):
+                fixed.add(NDOF * n + 4)                       # LE fillet cracked here: board edge free of the tube
+                continue                                      # (no drilling DOF in the shell)
             else:
                 m = nearest_tube(z)
                 slave[n] = (m, np.array(nodes[n]) - np.array(nodes[m]))

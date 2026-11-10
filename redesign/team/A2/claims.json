@@ -6,7 +6,7 @@
    "id": "R-ENVELOPE",
    "type": "requirement",
    "title": "Props-off envelope",
-   "text": "The props-off aircraft fits a 1.15 x 0.47 x 0.425 m box envelope (span x depth x height incl. the tube ends, params.json#transport.envelope_props_off_m) in one piece with no structural field joint; span may grow only if the measured car box (R-CAR-FIT) allows",
+   "text": "The props-off aircraft fits a 1.15 x 0.483 x 0.438 m box envelope (span x depth x height incl. the tube ends, params.json#transport.envelope_props_off_m) in one piece with no structural field joint; span may grow only if the measured car box (R-CAR-FIT) allows",
    "ref": "redesign/params/params.json#transport.envelope_props_off_m",
    "note": "P6; owner A5; method A+I; see team/A2/REQUIREMENTS.md"
   },
@@ -14,7 +14,7 @@
    "id": "R-MASS-ALLOC",
    "type": "requirement",
    "title": "Subsystem mass allocations",
-   "text": "Each subsystem's flying mass (sum of mass_g over its parts.csv) <= its allocation in params/mass_budget.json; every part has a mass and a status word; the growth reserve (400 g) is released only by A1 through a change request",
+   "text": "Each subsystem's flying mass (sum of mass_g over its parts.csv) <= its allocation in params/mass_budget.json; every part has a mass and a status word; the growth reserve (276 g) is released only by A1 through a change request",
    "ref": "redesign/params/mass_budget.json",
    "note": "P4; owner A3; method A+T; see team/A2/REQUIREMENTS.md"
   },
@@ -22,7 +22,7 @@
    "id": "R-CG-RANGE",
    "type": "requirement",
    "title": "As-built CG range",
-   "text": "As-built CG with the flight pack: x inside params.json#cg.x_range_m (0.04 to 0.049 m, B3's forward and aft limits), z inside cg.z_range_m (-0.02 to 0.03 m), |y| <= 0.005 m; trim ballast counts inside the mass gate",
+   "text": "As-built CG with the flight pack: x inside params.json#cg.x_range_m (0.05 to 0.055 m: forward limit = elevon trim <= 0.5 of travel at the trimmed CLmax, aft limit = static margin 0.05, B3 at R1 geometry, D-24; B3 re-runs once at 7 deg cant and 0.21 m fins and republishes CL-B3-CG-FWD/-AFT under the same ids), z inside cg.z_range_m (-0.02 to 0.03 m), |y| <= 0.005 m; the pack slide on its tray covers the 503-680 g listing spread; trim ballast counts inside the mass gate",
    "ref": "redesign/params/params.json#cg",
    "note": "P4/P25; owner A3; method A+T; see team/A2/REQUIREMENTS.md"
   },
@@ -54,7 +54,7 @@
    "id": "R-HOVER-AUTHORITY",
    "type": "requirement",
    "title": "Hover control authority",
-   "text": "At the gate mass in hover, motor-differential control gives an angular acceleration on each body axis >= 2 rad/s2 and >= 1.5 x the acceleration the 5 m/s wind moment demands, using <= 30 % of hover thrust per motor as differential after the pitch-trim split (R-HOVER-SPLIT); yaw (about the hover vertical, from the 3 deg tangential cant plus prop reaction torque) is the axis to show",
+   "text": "At the gate mass in hover, motor-differential control gives an angular acceleration on each body axis >= 2 rad/s2 and >= 1.5 x the acceleration the 5 m/s wind moment demands, using <= 30 % of hover thrust per motor as differential after the pitch-trim split (R-HOVER-SPLIT); the 30 % cap applies on every axis, yaw included (CR-B3-16: D-27 raised the cant to 7 deg rather than lift the cap); yaw (about the hover vertical, from the 7 deg tangential cant plus prop reaction torque) is the axis to show",
    "ref": "redesign/config-study/REQUIREMENTS-PROPOSED.md#P8",
    "note": "P8/P16; owner B3; method A+D; see team/A2/REQUIREMENTS.md"
   },
@@ -70,7 +70,7 @@
    "id": "R-SERVO-TORQUE",
    "type": "requirement",
    "title": "Elevon servo torque",
-   "text": "Each elevon servo's rated stall torque >= 1.5 x the summed hinge moment of its panels at -25 to 25 deg deflection at the design dive speed VD = 22.4 m/s, hinge moment from XFOIL (B2, CL-B2-SERVO-TORQUE-REQ); the linkage holds that load without the horn or clevis slipping",
+   "text": "Each elevon servo's rated stall torque >= 1.5 x the summed hinge moment of its panels at -25 to 25 deg deflection at the design dive speed VD = 27.2 m/s, hinge moment from XFOIL (B2, CL-B2-SERVO-TORQUE-REQ); the linkage holds that load without the horn or clevis slipping",
    "ref": "redesign/config-study/REQUIREMENTS-PROPOSED.md#P16",
    "note": "P16; owner D6; method A+T; see team/A2/REQUIREMENTS.md"
   },
@@ -78,7 +78,7 @@
    "id": "R-AIRSPEED",
    "type": "requirement",
    "title": "Airspeed sensor placement and accuracy",
-   "text": "The pitot sits outside the prop slipstream in cruise (>= 1 prop radius laterally clear of every disc edge, or ahead of the prop plane; B4's wash-error bound CL-B4-PITOT <= 2 % is the working form), and after ARSPD_AUTOCAL the airspeed reads within +/-1 m/s of GPS-derived true airspeed in a calm-air box pattern",
+   "text": "The pitot sits outside the prop slipstream in cruise (>= 1 prop radius laterally clear of every disc edge, or ahead of the prop plane; B4's wash-error bound CL-B4-PITOT <= 2 % is the working form), and the airspeed error at cruise (16 m/s), taken as the root-sum-square of the error budget (sensor, prop wash, calibration residual, resolution) after ARSPD_AUTOCAL and reciprocal legs, is <= 0.5 m/s (D-37: the margin from cruise down to 1.3 Vs is 0.49-0.58 m/s); in flight, the mean of |ARSPD - GPS-derived true airspeed| over a four-leg reciprocal box in calm air is within that limit",
    "ref": "redesign/config-study/tiebreak/DECISION.md#5.1",
    "note": "P16; owner F3; method A+T; see team/A2/REQUIREMENTS.md"
   },
@@ -86,7 +86,7 @@
    "id": "R-ESC-CURRENT",
    "type": "requirement",
    "title": "Motor and ESC current with the pack-current limiter",
-   "text": "(a) Q_M_BAT_CURR_MAX <= 100 A is set in the flight-software parameter file and verified on the bench (four motors, props on, restrained frame, fresh pack, 2 s full throttle: BAT.Curr <= 100 A); (b) per-motor battery current with the limiter <= 25 A (SunnySky X3108S rating, 30 s); (c) unlimited single-motor burst at 16.8 V <= 55 A (ESC 10 s rating; the 45 A continuous rating is never reached in a limited flight); (d) hover pack current within +/-0.15 x 27 A of that value on the thrust stand and in the tethered hover. Unlimited full throttle at 14.8 V is not a requirement: the limiter is the design case (CR-E1-07)",
+   "text": "(a) Q_M_BAT_CURR_MAX <= 100 A is set in the flight-software parameter file and verified on the bench (four motors, props on, restrained frame, fresh pack, 2 s full throttle: BAT.Curr <= 100 A); (b) per-motor battery current with the limiter <= 25 A (motor rating, 30 s, propulsion.motor_max_a); (c) unlimited single-motor burst at 16.8 V <= 55 A (ESC 10 s rating, propulsion.esc_burst_a; the 45 A continuous rating is never reached in a limited flight) and no full-throttle run longer than 10 s from a hover-warm motor (D-42); (d) hover pack current within +/-0.15 x 27 A of that value on the thrust stand and in the tethered hover. Unlimited full throttle at 14.8 V is not a requirement: the limiter is the design case (CR-E1-07)",
    "ref": "redesign/team/E1/CHANGE-REQUESTS.md#CR-E1-07",
    "note": "P13; owner E1; method I+A+T; see team/A2/REQUIREMENTS.md"
   },
@@ -102,7 +102,7 @@
    "id": "R-LOADS",
    "type": "requirement",
    "title": "Load cases defined",
-   "text": "C1 publishes numbered load cases for every structure before sizing: flight limit load factor +3 / -1.5 at the gate mass with ultimate = 1.5 x limit, VD = 22.4 m/s; hover at the thrust limit (17.8 N per motor) at the motor stations; transition (thrust limit plus 1.3 Vs aero load); fin-tip landing at 1.5 m/s sink with 10 deg attitude error on one foot pair (n <= 6); tip-over onto a wingtip; transport (0.3 m box drop); handling (one-hand carry at the pod)",
+   "text": "C1 publishes numbered load cases for every structure before sizing: flight limit load factor +3.4 / -1.5 at the gate mass with ultimate = 1.5 x limit, VD = 27.2 m/s; hover at the thrust limit (21.1 N per motor) at the motor stations; transition (thrust limit plus 1.3 Vs aero load); fin-tip landing at 1.5 m/s sink with 10 deg attitude error on one foot pair (n <= 6); tip-over onto a wingtip; transport (0.3 m box drop); handling (one-hand carry at the pod)",
    "ref": "redesign/TEAM.md#C1",
    "note": "P24; owner C1; method A; see team/A2/REQUIREMENTS.md"
   },
@@ -118,23 +118,23 @@
    "id": "R-FIN-TUBE-JOINT",
    "type": "requirement",
    "title": "Fin-tube-block joint",
-   "text": "The fin, motor tube and printed through-core block transfer the motor-station loads (17.8 N per motor at the thrust limit, plus the landing case and the tip-over case G2) into the spar across the tube-to-spar offset (tube at x 0.045 m) with margin >= 0 at ultimate, using printed parts and epoxy on a real 22 mm tube; a printed clip is fit-checked on the tube before the December order",
+   "text": "The fin, motor tube and printed through-core block transfer the motor-station loads (21.1 N per motor at the thrust limit, plus the landing case and the tip-over case G2) into the spar across the tube-to-spar offset (tube at x 0.045 m) with margin >= 0 at ultimate, using printed parts and epoxy on a real 22 mm tube; a printed clip is fit-checked on the tube before the December order",
    "ref": "redesign/config-study/REQUIREMENTS-PROPOSED.md#P25",
    "note": "P25; owner C4; method A+I; see team/A2/REQUIREMENTS.md"
   },
   {
    "id": "R-VIBRATION",
    "type": "requirement",
-   "title": "Motor-tube vibration",
-   "text": "The first bending and torsion natural frequencies of each motor tube plus fin assembly with motors fitted lie outside +/-0.2 of the 1P frequency at hover rpm and of 2P (blade pass), or a tap test shows the mode damped; the flight-controller vibration (ArduPilot VIBE) stays < 30 m/s2 in hover with Clip = 0",
-   "ref": "redesign/TEAM.md#C4",
+   "title": "Rotor-excited vibration",
+   "text": "(a) Fin stations: the first bending and torsion natural frequencies of each motor tube + through-core block + half-fins + mount assembly with motors fitted lie outside +/-0.2 of 1P at hover rpm and of 2P (blade pass) at hover and cruise rpm; the operating points are the criterion of record and B4's 80-330 Hz whole-band rule is advisory (CR-C4-06); C4's CL-C4-D3-SEP on the two-layer fin (D-26) supersedes CL-J1-TUBE-MODE-SEP. (b) Wing modes: the station-participating wing modes (antisymmetric torsion 12-15 Hz, in-plane ~215 Hz) cannot clear the same windows with any spar from 16 to 25 mm (CL-C2-WING-MODE-SEP, D-45), so they are closed by the tap-test branch: the tap test of the finished wing with motors fitted (T-C2-TAP-TEST) shows each such mode either damped or inside the rpm-tracking harmonic notch (F4 INS_HNTCH_* on ESC rpm, CL-F4-NOTCH-LOW, covering 1P and 2P over the rpm range), the rate-loop crossover stays <= 5 Hz, and B3 carries the 12-15 Hz antisymmetric torsion mode in the hover loop model. (c) The flight-controller vibration (ArduPilot VIBE) stays < 30 m/s2 in hover with Clip = 0",
+   "ref": "redesign/params/CHANGE-LOG.md#D-45",
    "note": "P24; owner C4; method A+T; see team/A2/REQUIREMENTS.md"
   },
   {
    "id": "R-PACK-RETENTION",
    "type": "requirement",
    "title": "Pack retained in a crash",
-   "text": "The pack stays in the pod and the hatch stays closed under a 12 g deceleration in any axis (5 m/s arrested in 0.10 m of foam crush); the strap, tray and pod-to-wing bond carry that load with margin >= 0",
+   "text": "The pack stays in the pod and the hatch stays closed under a 12 g deceleration in any axis (5 m/s arrested in 0.10 m of foam crush); the strap, tray, stops and pod-to-wing bond carry that load with margin >= 0, and the XPS crush block ahead of the pack (D-25) holds any 503-680 g pack to <= 100 g in a 5 m/s nose-in crash",
    "ref": "redesign/TEAM.md#C3",
    "note": "P24; owner C3; method A+T; see team/A2/REQUIREMENTS.md"
   },
@@ -142,8 +142,8 @@
    "id": "R-LANDING-IMPACT",
    "type": "requirement",
    "title": "Fin-tip landing",
-   "text": "A vertical landing at 1.5 m/s sink (3 x the 0.5 m/s Q_LAND_SPEED default) with up to 10 deg attitude error is absorbed by the four replaceable feet (crush stroke >= 0.04 m, airframe load factor <= 6) with no damage beyond the feet; a foot is replaced in <= 10 min in the field with a knife and CA",
-   "ref": "redesign/TEAM.md#C5",
+   "text": "The four replaceable constant-force feet absorb a vertical landing at 1.5 m/s sink (3 x the 0.5 m/s Q_LAND_SPEED default) with 2/3 W of lift still on, at any touchdown tilt <= 10 deg in pitch or roll (level, pad-pair first, one fin's pair first), with airframe load factor <= 6 and >= 3 mm of the usable stroke left (foot stroke >= 0.038 m, C5's 3 mm guard), no damage beyond the feet; shown by C5's planar landing model validated by T-C5-AIRCRAFT-DROP; a foot is replaced in <= 10 min in the field (snap-fit piston, no adhesive)",
+   "ref": "redesign/team/C5/CHANGE-REQUESTS.md#CR-C5-03",
    "note": "P8/P12; owner C5; method A+T; see team/A2/REQUIREMENTS.md"
   },
   {
@@ -190,7 +190,7 @@
    "id": "R-RC-LINK",
    "type": "requirement",
    "title": "RC link and telemetry",
-   "text": "The ELRS ground range check at the lowest power setting passes at >= 100 m with no failsafe; link quality stays >= 0.9 in the flight logs across the sub-field out to the 500 m VLOS limit at 400 ft; RSSI/LQ and telemetry are logged",
+   "text": "The ELRS ground range check at 25 mW (the RadioMaster Pocket's lowest setting; 10 mW is not offered) passes at 100 m with LQ >= 0.9, no failsafe, and the better of 1RSS/2RSS >= -93.8 dBm in every position (the RSSI line that proves >= 10 dB of fade margin at the 500 m VLOS limit at 100 mW); in flight, link quality stays >= 0.9 and RSSI >= -102 dBm in the logs out to the geofence radius (CL-F4-FENCE-RADIUS, half the VLOS limit), and the 500 m case at 400 ft is covered by analysis (CL-F5-LINK-MARGIN); RSSI/LQ and telemetry are logged",
    "ref": "redesign/TEAM.md#F5",
    "note": "P17; owner F5; method T; see team/A2/REQUIREMENTS.md"
   },
@@ -198,7 +198,7 @@
    "id": "R-COMPASS",
    "type": "requirement",
    "title": "Compass and GPS",
-   "text": "Compass interference from the motor currents <= 0.3 (COMPASS_MOT calibration at hover current); the GPS/compass mast keeps >= 0.1 m from the main power leads; HDOP <= 1.2 before arming",
+   "text": "Compass interference from the motor and pack currents, expressed as the field they add at the compass divided by the total Earth field (the compassmot convention, CR-F3-09), <= 0.3 at hover current (the 100 A limiter case is information); the GPS/compass mast keeps >= 0.1 m from the main power leads, PDB and UBEC; HDOP <= 1.2 before arming",
    "ref": "redesign/TEAM.md#F3",
    "note": "P15; owner F3; method T+I; see team/A2/REQUIREMENTS.md"
   },
@@ -206,15 +206,15 @@
    "id": "R-FIELD-SETUP",
    "type": "requirement",
    "title": "Field set-up time",
-   "text": "From the closed box to the arm check in <= 5 min by one person with no tools: fit four props, seat and strap the pack, close the pack plug, arm check; the sequence is the checklist in the box",
-   "ref": "redesign/config-study/REQUIREMENTS-PROPOSED.md#P9",
+   "text": "From the closed box to the arm check in <= 5 min by one person with no tool other than the one 10 mm prop spanner kept in the box pouch (D-40: the M6 prop nuts at 1.5 N m, left-hand thread on the CW motors, are the only field joint that needs a tool): transmitter on, fit four props, plug in the pitot boom, pack in from the LiPo bag and strap, close the AS150U, arm check; the sequence is the checklist in the box (transport.field_steps)",
+   "ref": "redesign/params/CHANGE-LOG.md#D-40",
    "note": "P9; owner D7; method D; see team/A2/REQUIREMENTS.md"
   },
   {
    "id": "R-CAR-FIT",
    "type": "requirement",
    "title": "Box fits two cars",
-   "text": "The loaded box (1.25 x 0.55 x 0.5 m external; fallback 0.48 m high with a 12 mm lining, D-16) fits in at least two team members' cars (back seat or hatch), measured with the box dimensions and recorded before P6/P9 are frozen",
+   "text": "The loaded box (1.25 x 0.55 x 0.54 m external; fallback 0.50 m high with a 'max drop 0.15 m' label, D-31) fits in at least two team members' cars (back seat or hatch), measured with the box dimensions and recorded in subsystems/transport/CAR-FIT.md before the box height and P6/P9 are frozen",
    "ref": "redesign/config-study/REQUIREMENTS-PROPOSED.md#P9",
    "note": "P9/P25; owner D7; method D; see team/A2/REQUIREMENTS.md"
   },
@@ -254,8 +254,8 @@
    "id": "R-JOINT-STACK",
    "type": "requirement",
    "title": "Joint stacks",
-   "text": "Every fastened or bonded joint in the README joint table has a joint-stack entry: fastener size x length and grade or adhesive, hole or insert, thread engagement >= 1 x diameter in a heat-set insert (or >= 2.0 x in bare plastic), torque or 'snug + threadlocker', tool, access direction, install and removal order",
-   "ref": "redesign/inputs/ADVISOR-XV24-LESSONS.md#2",
+   "text": "Every fastened or bonded joint in the README joint table has a joint-stack entry (team/C6/joint_stacks.json, M3 only): fastener size x length and grade or adhesive, hole or insert, thread engagement by type >= 1 x nominal diameter into metal, >= 1.5 x into a heat-set insert, >= 2 x self-tapping into printed plastic, a nyloc fully on with >= 2 pitches showing (D-41), torque or 'snug + threadlocker', tool, access direction, install and removal order",
+   "ref": "redesign/params/CHANGE-LOG.md#D-41",
    "note": "P24; owner C6; method I; see team/A2/REQUIREMENTS.md"
   },
   {
@@ -302,7 +302,7 @@
    "id": "R-TWIN",
    "type": "requirement",
    "title": "Foam-board twin gate",
-   "text": "The foam-board twin on the real motors, FC and pack holds position within 1 m in calm air and in a 5 m/s fan or breeze with logged lean <= 20 deg; flies QLOITER at >= 30 m; completes a transition at >= 1.3 Vs, two laps and a back-transition; hover current within +/-0.15 x 27 A of that value and cruise near 20.7 A; the elevon size that gives clean FBWA authority is recorded. A wind fail triggers the K11 planform test, then the K01 fallback (CONFIGURATION.md)",
+   "text": "The foam-board twin on the real motors, FC and pack holds position within 1 m in calm air and in a 5 m/s fan or breeze with logged lean <= 20 deg; flies QLOITER at >= 30 m; completes a transition at >= 1.3 Vs, two laps and a back-transition; hover current within +/-0.15 x 27 A of that value and cruise near 14.7 A; the elevon size that gives clean FBWA authority is recorded. A wind fail triggers the K11 planform test, then the K01 fallback (CONFIGURATION.md)",
    "ref": "redesign/config-study/tiebreak/DECISION.md#8",
    "note": "P23; owner H2; method D; see team/A2/REQUIREMENTS.md"
   },
@@ -335,20 +335,6 @@
     "P:requirements.servo_torque_factor"
    ],
    "note": "RETIRED; cite P:requirements.servo_torque_factor"
-  },
-  {
-   "id": "ASM-A2-PACK-CAPACITY-FRAC",
-   "type": "assumption",
-   "title": "RETIRED alias of P:requirements.pack_capacity_min_frac",
-   "text": "Retired 2026-11-09 (CHANGE-LOG D-14): the limit lives in params.json#requirements.pack_capacity_min_frac. This node only carries the parameter's value so the scripts that still cite it build; they point at the P: id and A2 then deletes this node",
-   "basis": "Value copied from params.json#requirements.pack_capacity_min_frac by build_requirements.py at every run; cited by redesign/team/E2/claims.json, redesign/team/E2/energy_claims.py",
-   "value": 0.92,
-   "unit": "-",
-   "status": "PROPOSED",
-   "cites": [
-    "P:requirements.pack_capacity_min_frac"
-   ],
-   "note": "RETIRED; cite P:requirements.pack_capacity_min_frac"
   }
  ]
 }

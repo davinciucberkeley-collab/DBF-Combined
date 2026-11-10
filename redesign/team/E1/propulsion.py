@@ -20,9 +20,19 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[1] / "proofs"))          # redesign/proofs (python -I adds no paths)
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "../../subsystems/fins/params.json"])
 P = "P:"
-MOTORS = ["PRP-901", "PRP-902", "PRP-903", "PRP-904"]       # skeleton ids UR UL LR LL (fusion/skeleton/propulsion)
+ST = ["UR", "UL", "LR", "LL"]                               # = params.json#propulsion.stations.ids
+MOTORS = [f"PRP-001-{s}" for s in ST]                      # instance ids (interfaces SCHEMA, CR-A1-32)
+ESCS = [f"PRP-002-{s}" for s in ST]
+PROPS_ID = [f"PRP-003-{s}" for s in ST]
+ADAPTERS = [f"PRP-004-{s}" for s in ST]
+STATION = MOTORS + ESCS + PROPS_ID + ADAPTERS
+# F4 motor map (subsystems/flight-software/SPEC.md, K09L.param): rotation seen from the nose = from the prop side.
+# Prop drag makes the prop lag the shaft, so a CW motor needs a LH-thread post for the nut to self-tighten.
+ROT = {"UR": "CW", "LL": "CW", "UL": "CCW", "LR": "CCW"}
+PROP_SKU = {"CW": "11x5.5MRP (LP11055MRP)", "CCW": "11x5.5MR (LP11055MR)"}
+THREAD = {"CW": "LH", "CCW": "RH"}
 
 # ================================================================== catalogue data (verbatim, cited)
 # SunnySky X3108S KV900 + APC "1147" (11x4.7), 14.8 V: [battery A, thrust gf, rpm, input W]; 94 degC after the 30 A row.
@@ -133,6 +143,12 @@ kit.assumption("ASM-E1-PACK", "Pack + harness 24 mOhm, avionics 1 A", "4S 6500 1
                "aged) plus 4 mOhm main lead and connector; avionics + servos 1 A from the bus",
                basis="E2 measures pack IR with the charger; F1 owns the harness resistance", value=[0.024, 1.0],
                unit="ohm,A", status="UNVERIFIED")
+# Rev 3: E1's own calcs use the cell part below + F1's harness value P:electrical.r_ext_mohm (CR-F1-03). ASM-E1-PACK
+# stays (unchanged) because B4's props.py reads it; CR-E1-26 asks B4 to move to the same two inputs.
+kit.assumption("ASM-E1-PACK-CELLS", "Pack cells 20 mOhm, avionics 1 A", "4S 6500 130C pack, cells only: 4 x 5 mOhm "
+               "(part-aged, 25 degC); avionics + servos 1 A from the bus. Harness from params electrical.r_ext_mohm",
+               basis="E2's new-pack value is 4.0 mOhm/cell (ASM-E2-R-CELL); 5 mOhm/cell covers a season of cycling. "
+                     "E2 measures pack IR by load step (T-E2-IR)", value=[0.020, 1.0], unit="ohm,A", status="UNVERIFIED")
 kit.assumption("ASM-E1-OCV", "Pack OCV states", "open-circuit pack voltage: full 4.20, mid 3.80, low 3.60 V/cell (4S)",
                basis="3.60 V/cell OCV is the 20 % reserve point of a LiPo; the sag case uses it", value=[16.8, 15.2, 14.4],
                unit="V")
@@ -169,12 +185,12 @@ kit.assumption("ASM-E1-STACK", "Prop stack dimensions", "motor body (mount face 
                "page (hub), ISO 4032 / ISO 7089 (nut, washer); measure the supplied adapter on arrival",
                value=[0.0265, 0.00635, 0.0152, 0.00889, 0.0010, 0.0052], unit="m", status="UNVERIFIED",
                cites=["SRC-E1-X3108S-HIMODEL", "SRC-E1-SPCNC-ADAPTER", "SRC-E1-APC-PAGES"])
-kit.assumption("ASM-E1-MOUNT-SCREW", "Motor-to-mount screw stack", "D3 mount plate 5.0 mm thick at the screw bosses, "
-               "no washer, M3x8 SHCS (A2 stainless, same size as the old design's F01); thread engagement in the motor "
-               "base 2.5-3.5 mm (>= 5 threads, tip clear of the stator)",
+kit.assumption("ASM-E1-MOUNT-SCREW", "Motor screw length and engagement window", "M3x8 SHCS (A2 stainless, same size "
+               "as the old design's F01), no washer; thread engagement in the motor base 2.5-3.5 mm (>= 5 threads, tip "
+               "clear of the stator). The plate and pad heights under the head are D3's (P:fin_detail.mount.*)",
                basis="X3108S base thread depth is not published: 3.5 mm is a conservative limit for a 31 mm stator "
                      "base; probe the hole depth on arrival, the screw tip must stop >= 0.5 mm short of the bottom",
-               value=[0.0050, 0.008, 0.0025, 0.0035], unit="m", status="UNVERIFIED")
+               value=[0.008, 0.0025, 0.0035], unit="m", status="UNVERIFIED")
 kit.assumption("ASM-E1-PART-MASS", "Per-unit flying masses incl. leads, g", "motor with factory leads 81.0 (no bullets: "
                "harness HRN-E03); ESC with factory power and signal leads and heat-shrink 11.0 (6.6 g bare board + "
                "2 x 80 mm 16 AWG + signal lead + shrink); prop 17.0; bolt-on adapter 3.0 + 4 x M3x4 1.2 + M6 nut 1.9 + "
@@ -347,12 +363,13 @@ def hover(m, g, kdl, cant, n, rho, kP, kT, kv, rm, i0, esc, tc, rth):
                    "current limits (bus held 14.8 / 16.8 V, 25 degC)",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "n": P + "propulsion.n_motors",
                   "rho": P + "env.rho_kgm3", "kP": "CL-E1-KP", "kT": "CL-E1-KT", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM",
-                  "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC", "pack": "ASM-E1-PACK", "ocv": "ASM-E1-OCV",
-                  "tc": "ASM-E1-TCOPPER"},
-          units={"m": "kg", "g": "m/s2", "rho": "kg/m3"},
-          assumes=["ASM-E1-CAL-TRANSFER", "ASM-E1-PACK"], cites=["SRC-E1-APC-PER3"])
-def full(m, g, n, rho, kP, kT, kv, rm, i0, esc, pack, ocv, tc):
+                  "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC", "pack": "ASM-E1-PACK-CELLS",
+                  "rext": P + "electrical.r_ext_mohm", "ocv": "ASM-E1-OCV", "tc": "ASM-E1-TCOPPER"},
+          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "rext": "mOhm"},
+          assumes=["ASM-E1-CAL-TRANSFER", "ASM-E1-PACK-CELLS"], cites=["SRC-E1-APC-PER3"])
+def full(m, g, n, rho, kP, kT, kv, rm, i0, esc, pack, rext, ocv, tc):
     W = m * g
+    pack = (pack[0] + rext / 1000.0, pack[1])
     out = {}
     for prop, tag in (("11x4.5MR", "45"), ("11x5.5MR", "55"), ("12x4.5MR", "12")):
         a = (prop, 0.0, rho, kT, kP, kv)
@@ -367,6 +384,7 @@ def full(m, g, n, rho, kP, kT, kv, rm, i0, esc, pack, ocv, tc):
         out[f"I_168_{tag}_A"] = hi["I_bat_A"]
         out[f"P_148_{tag}_W"] = tb["P_bat_W"]
         out[f"Ipack_sag_{tag}_A"] = n * sg["I_bat_A"] + pack[1]
+        out[f"Ipack_fresh_{tag}_A"] = n * hi["I_bat_A"] + pack[1]   # bus held 16.8 V: upper bound, no pack sag
         out[f"Vbus_sag_{tag}_V"] = sg["V_bus_V"]
         out[f"rpm_148_{tag}"] = tb["rpm"]
         out[f"loss_148_{tag}_W"] = tb["P_loss_motor_W"]
@@ -393,12 +411,13 @@ def limited(prop, rho, kT, kP, kv, rm, i0, esc, v_ocv, r_pack, i_avn, n, i_lim):
                    "25 degC) and low (OCV 14.4 V, 80 degC), with R_pack",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "n": P + "propulsion.n_motors",
                   "rho": P + "env.rho_kgm3", "kP": "CL-E1-KP", "kT": "CL-E1-KT", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM",
-                  "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC", "pack": "ASM-E1-PACK", "ocv": "ASM-E1-OCV",
-                  "tc": "ASM-E1-TCOPPER", "ilim": "ASM-E1-ILIM"},
-          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "ilim": "A"},
-          assumes=["ASM-E1-CAL-TRANSFER", "ASM-E1-PACK", "ASM-E1-ILIM"])
-def limit_calc(m, g, n, rho, kP, kT, kv, rm, i0, esc, pack, ocv, tc, ilim):
+                  "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC", "pack": "ASM-E1-PACK-CELLS",
+                  "rext": P + "electrical.r_ext_mohm", "ocv": "ASM-E1-OCV", "tc": "ASM-E1-TCOPPER", "ilim": "ASM-E1-ILIM"},
+          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "ilim": "A", "rext": "mOhm"},
+          assumes=["ASM-E1-CAL-TRANSFER", "ASM-E1-PACK-CELLS", "ASM-E1-ILIM"])
+def limit_calc(m, g, n, rho, kP, kT, kv, rm, i0, esc, pack, rext, ocv, tc, ilim):
     W = m * g
+    pack = (pack[0] + rext / 1000.0, pack[1])
     out = {}
     for prop, tag in (("11x4.5MR", "45"), ("11x5.5MR", "55")):
         fr = limited(prop, rho, kT, kP, kv, rm, i0, esc, ocv[0], pack[0], pack[1], n, ilim)
@@ -407,6 +426,7 @@ def limit_calc(m, g, n, rho, kP, kT, kv, rm, i0, esc, pack, ocv, tc, ilim):
         out[f"tw_fresh_{tag}"] = n * fr["T_N"] / W
         out[f"tw_low_{tag}"] = n * lo["T_N"] / W
         out[f"I_motor_low_{tag}_A"] = lo["I_bat_A"]
+        out[f"Ipack_fresh_{tag}_A"] = n * fr["I_bat_A"] + pack[1]
     return out
 
 
@@ -417,15 +437,16 @@ def limit_calc(m, g, n, rho, kP, kT, kv, rm, i0, esc, pack, ocv, tc, ilim):
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "n": P + "propulsion.n_motors",
                   "rho": P + "env.rho_kgm3", "cant": P + "propulsion.stations.cant_deg", "cells": P + "battery.cells_s",
                   "kP": "CL-E1-KP", "kT": "CL-E1-KT", "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0",
-                  "esc": "ASM-E1-ESC", "pack": "ASM-E1-PACK", "tc": "ASM-E1-TCOPPER", "ilim": "ASM-E1-ILIM",
+                  "esc": "ASM-E1-ESC", "pack": "ASM-E1-PACK-CELLS", "tc": "ASM-E1-TCOPPER", "ilim": "ASM-E1-ILIM",
                   "state": "ASM-E1-WORST-STATE", "ocv20": "ASM-E2-OCV-20", "r_cell": "ASM-E2-R-CELL",
-                  "r_ext": "ASM-E2-R-EXT", "cold": "ASM-E2-COLD-R"},
+                  "r_ext": P + "electrical.r_ext_mohm", "cold": "ASM-E2-COLD-R"},
           units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "cant": "deg", "ilim": "A", "ocv20": "V", "r_cell": "ohm",
-                 "r_ext": "ohm"},
+                 "r_ext": "mOhm"},
           assumes=["ASM-E1-WORST-STATE", "ASM-E1-CAL-TRANSFER", "ASM-E1-ILIM", "ASM-E2-OCV-20", "ASM-E2-R-CELL",
-                   "ASM-E2-R-EXT", "ASM-E2-COLD-R"])
+                   "ASM-E2-COLD-R"])
 def worst(m, g, n, rho, cant, cells, kP, kT, kv, rm, i0, esc, pack, tc, ilim, state, ocv20, r_cell, r_ext, cold):
     W = m * g
+    r_ext = r_ext / 1000.0
     cc = math.cos(math.radians(cant))
     r_warm = cells * r_cell + r_ext
     r_cold = cells * r_cell * cold + r_ext
@@ -443,22 +464,38 @@ def worst(m, g, n, rho, cant, cells, kP, kT, kv, rm, i0, esc, pack, tc, ilim, st
         out[f"I_motor_{k}_A"] = s["I_bat_A"]
         out[f"limited_{k}"] = 1.0 if "duty_max" in s else 0.0
     out["f_sag"] = out["T_worst_gf"] / out["T_fresh_gf"]
+    # closed-form cross-check: limiter binding in both states -> same pack current; static thrust ~ P^(2/3)
+    # (momentum theory, fixed disc), P ~ V_bus I_lim, winding temperature ignored (so it bounds f_sag from above)
+    v_f = cells * 4.20 - ilim * r_warm
+    v_w = cells * ocv20 - ilim * r_cold
+    out["f_sag_closed_form"] = (v_w / v_f) ** (2.0 / 3.0)
     out["f_sag_land"] = out["T_land_cold_gf"] / out["T_fresh_gf"]
     return out
 
 
-@kit.calc("CALC-E1-STACK", title="Prop stack: mount face to prop plane, nut engagement, motor screws",
-          equation="x_hub = L_body + t_base + h_hub / 2 ; x_tip = L_body + t_base + L_post ; "
-                   "e_nut = L_post - h_hub - t_washer >= h_nut ; e_screw = L_screw - t_plate",
-          inputs={"st": "ASM-E1-STACK", "sc": "ASM-E1-MOUNT-SCREW"}, assumes=["ASM-E1-STACK", "ASM-E1-MOUNT-SCREW"])
-def stack(st, sc):
+@kit.calc("CALC-E1-STACK", title="Prop stack, prop-to-structure gap, nut and motor-screw engagement",
+          equation="s = L_body + t_base + h_hub / 2 ; x_tip = L_body + t_base + L_post ; "
+                   "e_nut = L_post - h_hub - t_washer - h_nut ; gap = face_ahead + s >= 0.14 D (B4) ; "
+                   "e_screw = L_screw - t_plate (D3 R3: plate canted with the motor, uniform under every head)",
+          inputs={"st": "ASM-E1-STACK", "sc": "ASM-E1-MOUNT-SCREW", "d3_stack": P + "fin_detail.mount.prop_stack_m",
+                  "ahead": P + "fin_detail.mount.face_ahead_m", "D": P + "propulsion.prop_diameter_m",
+                  "tp": P + "fin_detail.mount.plate_t_m", "ls": P + "fin_detail.mount.motor_screw_len_m"},
+          units={"st": "m", "sc": "m", "d3_stack": "m", "ahead": "m", "D": "m", "tp": "m", "ls": "m"},
+          assumes=["ASM-E1-STACK", "ASM-E1-MOUNT-SCREW"])
+def stack(st, sc, d3_stack, ahead, D, tp, ls):
     body, base, post, hub, wash, nut = st
-    t_plate, l_screw, e_min, e_max = sc
-    return {"mount_to_prop_plane_m": body + base + hub / 2, "mount_to_hub_front_m": body + base + hub,
+    _, e_min, e_max = sc
+    s = body + base + hub / 2
+    e = ls - tp
+    return {"mount_to_prop_plane_m": s, "mount_to_hub_front_m": body + base + hub,
             "mount_to_post_tip_m": body + base + post, "hub_half_m": hub / 2,
-            "nut_engagement_m": post - hub - wash, "nut_margin_m": post - hub - wash - nut,
-            "screw_engagement_m": l_screw - t_plate, "screw_margin_m": min(l_screw - t_plate - e_min,
-                                                                           e_max - (l_screw - t_plate))}
+            "stack_minus_d3_m": s - d3_stack,
+            "gap_e1_m": ahead + s, "gap_ratio_e1": (ahead + s) / (0.14 * D),
+            "ahead_needed_m": 0.14 * D - s,
+            "nut_engagement_m": post - hub - wash, "nut_margin_m": round(post - hub - wash - nut, 9),
+            "screw_engagement_m": e, "screw_margin_m": round(min(e - e_min, e_max - e), 9),
+            "hole_depth_min_m": e + 0.0005,
+            "seat_for_mid_window_m": ls - 0.5 * (e_min + e_max)}
 
 
 @kit.calc("CALC-E1-MASS", title="Propulsion flying mass, four stations, per-unit masses incl. leads",
@@ -471,31 +508,27 @@ def mass(pm, n):
             "total_ex_screws_g": n * (station - pm["motor_screws"])}
 
 
-def cruise_drag(V, m, g, rho, S, b, e, ld_ref, v_ref):
-    """Parabolic polar anchored on the cruise L/D at v_ref (params): CD0 from that point, K = 1/(pi e AR)."""
-    AR = b * b / S
-    K = 1 / (math.pi * e * AR)
-    W = m * g
-    cl_ref = 2 * W / (rho * v_ref ** 2 * S)
-    cd0 = cl_ref / ld_ref - K * cl_ref ** 2
-    cl = 2 * W / (rho * V * V * S)
-    return 0.5 * rho * V * V * S * (cd0 + K * cl * cl), cd0
+def cruise_drag(V, m, g, rho, S, cd0, k, trim):
+    """B1's trimmed parabolic polar (CL-B1-CD0, CL-B1-K, ASM-B1-TRIM): D = q S (CD0 + k CL^2) trim (as CALC-B1-CRUISE)."""
+    cl = 2 * m * g / (rho * V * V * S)
+    return 0.5 * rho * V * V * S * (cd0 + k * cl * cl) * trim
 
 
-@kit.calc("CALC-E1-CRUISE", title="Cruise point: four props share the drag at 15 m/s",
-          equation="D = q S (CD0 + K CL^2), CD0 from L/D 5.9 at 15 m/s ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; "
-                   "eta_prop = T V / P_shaft ; eta_tot = T V / P_bat",
+@kit.calc("CALC-E1-CRUISE", title="Cruise point on B1's polar: four props share the drag",
+          equation="CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; "
+                   "solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
-                  "b": P + "wing.span_m", "c": P + "wing.chord_m", "e": P + "wing.oswald_e", "ld": P + "performance.ld_cruise",
+                  "S": "CL-A1-WING-AREA", "cd0": "CL-B1-CD0", "k": "CL-B1-K", "trim": "ASM-B1-TRIM",
+                  "ld_b1": "CL-B1-CRUISE-LD",
                   "V": P + "performance.cruise_ms", "n": P + "propulsion.n_motors", "kP": "CL-E1-KP", "kT": "CL-E1-KT",
                   "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC"},
-          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "V": "m/s", "b": "m", "c": "m"},
-          assumes=["ASM-E1-CAL-TRANSFER"], cites=["SRC-E1-APC-PER3"])
-def cruise(m, g, rho, b, c, e, ld, V, n, kP, kT, kv, rm, i0, esc):
-    S = b * c
-    D, cd0 = cruise_drag(V, m, g, rho, S, b, e, ld, V)
+          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "V": "m/s", "S": "m2"},
+          assumes=["ASM-E1-CAL-TRANSFER", "ASM-B1-TRIM"], cites=["SRC-E1-APC-PER3"])
+def cruise(m, g, rho, S, cd0, k, trim, ld_b1, V, n, kP, kT, kv, rm, i0, esc):
+    D = cruise_drag(V, m, g, rho, S, cd0, k, trim)
     T = D / n
-    out = {"drag_N": D, "T_per_motor_N": T, "cd0": cd0}
+    # B1's CL-B1-CRUISE-LD is CL/CD of the untrimmed polar; the trimmed drag is that x trim: W/D = L/D_B1 / trim
+    out = {"drag_N": D, "T_per_motor_N": T, "cd0": cd0, "ld_eff": m * g / D, "ld_check": ld_b1 / trim * D / (m * g)}
     for prop, tag in (("11x4.5MR", "45"), ("11x5.5MR", "55"), ("12x4.5MR", "12")):
         s = at_thrust(prop, T, V, rho, 1.0, kP, kv, r_hot(rm, 0.00393, 40.0), i0, esc[0], esc[1], 14.8)
         out[f"J_{tag}"] = s["J"]
@@ -522,14 +555,15 @@ def wing_cl_cd(alpha, cla, clmax, cd0, K):
     return cn * math.cos(alpha), cd0 + cn * math.sin(alpha)
 
 
-def corridor(prop, m, g, rho, S, b, e, ld, vref, clmax, v_end, kT, kP, kv, rm, i0, esc, pack, ocv, n, steps=30):
+def corridor(prop, m, g, rho, S, b, cd0, k, trim, clmax, v_end, kT, kP, kv, rm, i0, esc, pack, ocv, n, steps=30):
     """Level pitch-over corridor: at each V find the body angle alpha (thrust axis above horizontal) that needs the
-    least thrust for level unaccelerated flight, and the full thrust available there (axial inflow V cos alpha)."""
+    least thrust for level unaccelerated flight, and the full thrust available there (axial inflow V cos alpha).
+    Attached-flow polar = B1's trimmed polar (cd0 trim, k trim)."""
     AR = b * b / S
     cla = 2 * math.pi * AR / (AR + 2)
-    K = 1 / (math.pi * e * AR)
+    K = k * trim
+    cd0 = cd0 * trim
     W = m * g
-    _, cd0 = cruise_drag(vref, m, g, rho, S, b, e, ld, vref)
     worst = None
     rows = []
     for i in range(steps + 1):
@@ -559,21 +593,21 @@ def corridor(prop, m, g, rho, S, b, e, ld, vref, clmax, v_end, kT, kP, kv, rm, i
 
 
 @kit.calc("CALC-E1-CORRIDOR", title="Thrust margin along the level pitch-over corridor (sag case, 11x4.5MR and 11x5.5MR)",
-          equation="min over V in [0, 1.3 Vs] of 4 T_full(V cos a, OCV 14.4 V, 80 degC) / T_req,min(V) ; "
-                   "T_req from T sin a + L = W, T cos a >= D",
+          equation="min over V in [0, V_tr] of 4 T_full(V cos a, OCV 14.4 V, 80 degC) / T_req,min(V) ; "
+                   "T_req from T sin a + L = W, T cos a >= D ; polar CL-B1-CD0, CL-B1-K, ASM-B1-TRIM",
           inputs={"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "rho": P + "env.rho_kgm3",
-                  "b": P + "wing.span_m", "c": P + "wing.chord_m", "e": P + "wing.oswald_e", "ld": P + "performance.ld_cruise",
-                  "vref": P + "performance.cruise_ms", "clmax": P + "performance.clmax",
+                  "b": P + "wing.span_m", "S": "CL-A1-WING-AREA", "cd0": "CL-B1-CD0", "k": "CL-B1-K",
+                  "trim": "ASM-B1-TRIM", "clmax": P + "performance.clmax",
                   "vtr": P + "performance.transition_min_ms", "n": P + "propulsion.n_motors", "kP": "CL-E1-KP",
-                  "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC", "pack": "ASM-E1-PACK",
-                  "ocv": "ASM-E1-OCV"},
-          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "vref": "m/s", "vtr": "m/s", "b": "m", "c": "m"},
-          assumes=["ASM-E1-POSTSTALL", "ASM-E1-CAL-TRANSFER", "ASM-E1-PACK"])
-def corridor_calc(m, g, rho, b, c, e, ld, vref, clmax, vtr, n, kP, kv, rm, i0, esc, pack, ocv):
-    S = b * c
+                  "kv": "ASM-E1-KV", "rm": "ASM-E1-RM", "i0": "ASM-E1-I0", "esc": "ASM-E1-ESC",
+                  "pack": "ASM-E1-PACK-CELLS", "rext": P + "electrical.r_ext_mohm", "ocv": "ASM-E1-OCV"},
+          units={"m": "kg", "g": "m/s2", "rho": "kg/m3", "vtr": "m/s", "b": "m", "S": "m2", "rext": "mOhm"},
+          assumes=["ASM-E1-POSTSTALL", "ASM-E1-CAL-TRANSFER", "ASM-E1-PACK-CELLS", "ASM-B1-TRIM"])
+def corridor_calc(m, g, rho, b, S, cd0, k, trim, clmax, vtr, n, kP, kv, rm, i0, esc, pack, rext, ocv):
+    pack = (pack[0] + rext / 1000.0, pack[1])
     out = {}
     for prop, tag in (("11x4.5MR", "45"), ("11x5.5MR", "55")):
-        worst, _ = corridor(prop, m, g, rho, S, b, e, ld, vref, clmax, vtr, 1.0, kP, kv, rm, i0, esc, pack, ocv, n)
+        worst, _ = corridor(prop, m, g, rho, S, b, cd0, k, trim, clmax, vtr, 1.0, kP, kv, rm, i0, esc, pack, ocv, n)
         out[f"margin_{tag}"] = worst[3]
         out[f"V_worst_{tag}_ms"] = worst[0]
         out[f"Treq_over_W_{tag}"] = worst[2]
@@ -623,6 +657,14 @@ def sens(Th, Tc, V, n, rho, kv, rm, i0, esc):
     return out
 
 
+@kit.calc("CALC-E1-HOVER-I-BAND", title="Hover-current pass line from R-ESC-CURRENT (d)",
+          equation="I_max = I_hover (1 + tol)", inputs={"i": P + "performance.hover_current_a",
+                                                         "tol": P + "requirements.hover_current_tol"},
+          units={"i": "A"})
+def hover_i_band(i, tol):
+    return {"i_max_a": i * (1 + tol), "i_min_a": i * (1 - tol)}
+
+
 # ================================================================== claims
 kit.claim("CL-E1-KT", "PER3 thrust factor kT (fit)", calc="CALC-E1-CAL", output="kT", unit="-",
           how="Re-run; compare with T-E1-STAND rows (thrust vs rpm) for the fitted prop.")
@@ -635,51 +677,72 @@ kit.claim("CL-E1-MAKER-SUPPLY", "Maker's supply at the 30 A row (inferred)", cal
           "14.8 V x 30 A bookkeeping, not a measurement at 14.8 V",
           how="Thrust stand at a held 14.8 V bench supply: full-throttle rpm should exceed 7 500 (T-E1-STAND).")
 kit.claim("CL-E1-HOVER-T", "Hover thrust per motor at the gate", calc="CALC-E1-HOVER", output="T_per_motor_N", unit="N",
-          parts=MOTORS, how="m_gate g k_download / 4; compare with the tethered-hover throttle and log.")
-kit.claim("CL-E1-HOVER-I", "Hover pack current, 11x4.5MR, 14.8 V", calc="CALC-E1-HOVER", output="I_pack_45_A", unit="A",
-          limit=("<=", 27.6), verifies=["R-ESC-CURRENT"], parts=MOTORS,
-          how="Log battery current in a 30 s tethered hover at 2.6 kg; within 24 A +/- 15 % (limit 27.6 A).")
+          parts=MOTORS, how="m_gate g k_download / (4 cos cant); compare with the tethered-hover throttle and log.")
+kit.claim("CL-E1-HOVER-I-MAX", "Hover-current pass line, 27 A + 15 %", calc="CALC-E1-HOVER-I-BAND", output="i_max_a",
+          unit="A", how="Arithmetic on performance.hover_current_a and requirements.hover_current_tol (A2 CR-A2-13).")
+kit.claim("CL-E1-HOVER-I", "Hover pack current, 11x4.5MR (stand A/B prop, not flown)", calc="CALC-E1-HOVER",
+          output="I_pack_45_A", unit="A", limit=("<=", "CL-E1-HOVER-I-MAX"), parts=MOTORS,
+          note="information since D-05: no requirement link",
+          how="Thrust stand with the 11x4.5MR at hover thrust (T-E1-STAND A/B).")
 kit.claim("CL-E1-HOVER-I-55", "Hover pack current, 11x5.5MR, 14.8 V", calc="CALC-E1-HOVER", output="I_pack_55_A",
-          unit="A", limit=("<=", 27.6), verifies=["R-ESC-CURRENT"], parts=MOTORS,
-          how="As CL-E1-HOVER-I with the 11x5.5MR fitted.")
-kit.claim("CL-E1-HOVER-GW", "Hover efficiency, 11x4.5MR", calc="CALC-E1-HOVER", output="gW_45", unit="gf/W",
-          how="Thrust stand: gf / W at 689 gf (T-E1-STAND).")
-kit.claim("CL-E1-HOVER-DT", "Hover winding temperature rise", calc="CALC-E1-HOVER", output="dT_wind_45_K", unit="K",
-          limit=("<=", 50.0), verifies=["R-THERMAL"], parts=MOTORS,
+          unit="A", limit=("<=", "CL-E1-HOVER-I-MAX"), verifies=["R-ESC-CURRENT"], parts=MOTORS + ESCS,
+          how="Log battery current in a 30 s tethered hover at 2.6 kg: within 27 A +/- 15 % (R-ESC-CURRENT d).")
+kit.claim("CL-E1-HOVER-GW", "Hover efficiency, 11x5.5MR", calc="CALC-E1-HOVER", output="gW_55", unit="gf/W",
+          parts=MOTORS, how="Thrust stand: gf / W at the hover thrust per motor (T-E1-STAND).")
+kit.claim("CL-E1-HOVER-DT", "Hover winding temperature rise, 11x5.5MR", calc="CALC-E1-HOVER", output="dT_wind_55_K",
+          unit="K", limit=("<=", 50.0), verifies=["R-THERMAL"], parts=MOTORS,
           how="IR thermometer on the can after a 2 min tethered hover; E3 owns the limit (80 degC can at 30 degC ambient).")
-kit.claim("CL-E1-TW-TABLE", "Hover T/W at the gate, 11x4.5MR, bus 14.8 V", calc="CALC-E1-FULL", output="tw_table_45",
-          unit="-", limit=(">=", P + "requirements.hover_tw_min"), verifies=["R-HOVER-TW"], parts=MOTORS,
-          how="Thrust stand at a held 14.8 V: full-throttle thrust >= 1 300 gf per motor (T-E1-STAND).")
-kit.claim("CL-E1-IMAX-148", "Full-throttle current per motor at 14.8 V, 11x4.5MR", calc="CALC-E1-FULL",
-          output="I_148_45_A", unit="A", limit=("<=", 36.0), verifies=["R-ESC-CURRENT"], parts=MOTORS,
+kit.claim("CL-E1-TW-TABLE", "Hover T/W at the gate, 11x5.5MR, bus held 14.8 V, no limiter", calc="CALC-E1-FULL",
+          output="tw_table_55", unit="-", limit=(">=", P + "requirements.hover_tw_min"), verifies=["R-HOVER-TW"],
+          parts=MOTORS, how="Thrust stand at a held 14.8 V: full-throttle thrust per motor x 4 / 2.6 kg (T-E1-STAND).")
+kit.claim("CL-E1-IMAX-148", "Full-throttle current per motor at 14.8 V, 11x4.5MR, no limiter", calc="CALC-E1-FULL",
+          output="I_148_45_A", unit="A", parts=MOTORS + ESCS,
+          note="information only since R-ESC-CURRENT A2-R1: unlimited 14.8 V is not a requirement (CR-A2-13)",
           how="Thrust stand at a held 14.8 V, 3 s full throttle, clamp meter on the ESC lead.")
-kit.claim("CL-E1-IMAX-168", "Full-throttle current per motor at 16.8 V, 11x4.5MR", calc="CALC-E1-FULL",
-          output="I_168_45_A", unit="A", limit=("<=", 45.0), verifies=["R-ESC-CURRENT"], parts=MOTORS,
+kit.claim("CL-E1-IMAX-168", "Unlimited burst per motor at 16.8 V, 11x4.5MR", calc="CALC-E1-FULL",
+          output="I_168_45_A", unit="A", limit=("<=", P + "propulsion.esc_burst_a"), parts=MOTORS + ESCS,
+          note="stand A/B prop, not flown: no requirement link",
           how="Thrust stand on a fresh pack (16.8 V), 2 s full throttle.")
-kit.claim("CL-E1-IMAX-168-55", "Full-throttle current per motor at 16.8 V, 11x5.5MR", calc="CALC-E1-FULL",
-          output="I_168_55_A", unit="A", limit=("<=", 45.0), verifies=["R-ESC-CURRENT"], parts=MOTORS,
-          how="As CL-E1-IMAX-168 with the 11x5.5MR.")
-kit.claim("CL-E1-IMAX-148-55", "Full-throttle current per motor at 14.8 V, 11x5.5MR", calc="CALC-E1-FULL",
-          output="I_148_55_A", unit="A", limit=("<=", 36.0), verifies=["R-ESC-CURRENT"], parts=MOTORS,
-          how="As CL-E1-IMAX-148 with the 11x5.5MR.")
-kit.claim("CL-E1-IPACK-PEAK", "Peak pack current, all four full throttle (sag case)", calc="CALC-E1-FULL",
-          output="Ipack_sag_45_A", unit="A", parts=MOTORS,
-          how="F1 sizes the disconnect and main leads on this (replaces params 120 A); log on the stand with 4 motors.")
-kit.claim("CL-E1-ILIM-I", "Per-motor current with the 100 A limiter, fresh pack, 11x5.5MR", calc="CALC-E1-LIMIT",
-          output="I_motor_fresh_55_A", unit="A", limit=("<=", 25.0), verifies=["R-ESC-CURRENT"], parts=MOTORS,
+kit.claim("CL-E1-IMAX-168-55", "Unlimited burst per motor at 16.8 V, 11x5.5MR", calc="CALC-E1-FULL",
+          output="I_168_55_A", unit="A", limit=("<=", P + "propulsion.esc_burst_a"), verifies=["R-ESC-CURRENT"],
+          parts=MOTORS + ESCS, how="Thrust stand on a fresh pack (16.8 V), 2 s full throttle, no limiter "
+                                   "(R-ESC-CURRENT c: <= 55 A, ESC 10 s rating).")
+kit.claim("CL-E1-IMAX-148-55", "Full-throttle current per motor at 14.8 V, 11x5.5MR, no limiter", calc="CALC-E1-FULL",
+          output="I_148_55_A", unit="A", parts=MOTORS + ESCS,
+          note="information only since R-ESC-CURRENT A2-R1 (CR-A2-13)", how="As CL-E1-IMAX-148 with the 11x5.5MR.")
+kit.claim("CL-E1-IPACK-PEAK", "Peak pack current, four motors, no limiter, low pack, 11x5.5MR", calc="CALC-E1-FULL",
+          output="Ipack_sag_55_A", unit="A", limit=("<=", P + "electrical.peak_current_a"), parts=ESCS,
+          note="wiring and disconnect design case if the limiter is not set; the bus-held 16.8 V upper bound is "
+               "Ipack_fresh_55_A in CALC-E1-FULL. With the limiter the pack current is CL-E1-IPACK-LIM",
+          how="Log on the stand with four motors on a flight pack, limiter off, 2 s.")
+kit.claim("CL-E1-IPACK-LIM", "Pack current, four motors full throttle, 100 A limiter, fresh pack", calc="CALC-E1-LIMIT",
+          output="Ipack_fresh_55_A", unit="A", limit=("<=", P + "performance.full_throttle_current_a"),
+          verifies=["R-ESC-CURRENT"], parts=ESCS,
+          note="equals Q_M_BAT_CURR_MAX by construction: the claim states the model honours the limiter; the bench "
+               "run (R-ESC-CURRENT a) is the evidence. F1's sensor error (+5 %) is in CL-F1-ILIM-WORST",
           how="Bench: all four motors, props on, fresh pack, full throttle 2 s in QSTABILIZE on a restrained frame; "
               "dataflash BAT.Curr <= 100 A.")
+kit.claim("CL-E1-ILIM-I", "Per-motor current with the 100 A limiter, fresh pack, 11x5.5MR", calc="CALC-E1-LIMIT",
+          output="I_motor_fresh_55_A", unit="A", limit=("<=", P + "propulsion.motor_max_a"), verifies=["R-ESC-CURRENT"],
+          parts=MOTORS + ESCS,
+          how="Same bench run as CL-E1-IPACK-LIM; per-ESC current from the ESC telemetry or a clamp meter <= 25 A.")
 kit.claim("CL-E1-ILIM-TW-FRESH", "T/W with the limiter, fresh pack, 11x5.5MR", calc="CALC-E1-LIMIT",
           output="tw_fresh_55", unit="-", limit=(">=", P + "requirements.hover_tw_min"), verifies=["R-HOVER-TW"],
           parts=MOTORS, how="Thrust stand on a fresh pack with the duty limit found on the bench.")
-kit.claim("CL-E1-CRUISE-DRAG", "Cruise drag at 15 m/s, gate mass", calc="CALC-E1-CRUISE", output="drag_N", unit="N",
-          how="B1 owns the polar; this is W / (L/D) from params.json.")
+kit.claim("CL-E1-CRUISE-DRAG", "Cruise drag at 16 m/s, gate mass (B1 polar)", calc="CALC-E1-CRUISE", output="drag_N",
+          unit="N", note="re-pointed at B1's polar (CR-A1-32): equals CL-B1-CRUISE-DRAG; was W / 5.6 from params",
+          how="B1 owns the polar; cruise power test with known prop data (H2).")
+kit.claim("CL-E1-CRUISE-LD-EFF", "Effective cruise L/D (W / trimmed drag)", calc="CALC-E1-CRUISE", output="ld_eff",
+          unit="-", note="CL-B1-CRUISE-LD 7.02 is CL/CD before the 2 % trim factor; W/D is the number the props see",
+          how="Equals CL-B1-CRUISE-LD / ASM-B1-TRIM (ld_check = 1 in CALC-E1-CRUISE).")
 kit.claim("CL-E1-CRUISE-P-45", "Cruise electrical power, 11x4.5MR (stand A/B prop, not flown)", calc="CALC-E1-CRUISE",
           output="P_total_45_W", unit="W", parts=MOTORS, note="comparison only since D-05; no requirement link",
           how="Log pack power in steady 15 m/s FBWA legs, both directions, calm morning.")
 kit.claim("CL-E1-CRUISE-P-55", "Cruise electrical power, 11x5.5MR", calc="CALC-E1-CRUISE", output="P_total_55_W",
-          unit="W", limit=("<=", P + "performance.cruise_power_w"), verifies=["R-MISSION"], parts=MOTORS,
-          how="As CL-E1-CRUISE-P-45 with the 11x5.5MR.")
+          unit="W", limit=("<=", P + "performance.cruise_power_w"), verifies=["R-MISSION"], parts=MOTORS + ESCS,
+          note="propulsion only (no avionics); drag from B1's polar (CL-B1-CD0, CL-B1-K, ASM-B1-TRIM), CR-A1-32. "
+               "The params limit is B1's pack power incl. 6 W avionics, so the comparison is 6 W conservative for B1",
+          how="Log pack power in steady 16 m/s FBWA legs, both directions, calm morning; subtract the avionics draw.")
 kit.claim("CL-E1-CRUISE-P-55-LO", "Cruise power lower bound (kP = 1), 11x5.5MR", calc="CALC-E1-SENS",
           output="P_cruise_55_W", unit="W", how="Bounds the band with CL-E1-CRUISE-P-55; flight log decides.")
 kit.claim("CL-E1-CRUISE-P-45-LO", "Cruise power lower bound (kP = 1), 11x4.5MR", calc="CALC-E1-SENS",
@@ -702,53 +765,82 @@ kit.claim("CL-E1-HOVER-YAW", "Hover yaw moment from +/-30 % thrust differential"
           how="B3 uses it for R-HOVER-AUTHORITY (yaw); thrust stand torque arm or a yaw-step in tethered hover.")
 kit.claim("CL-E1-MOTOROUT-ROLL", "Cruise roll torque, one motor out", calc="CALC-E1-MOTOR-OUT",
           output="roll_torque_cruise_Nm", unit="N*m", parts=MOTORS,
-          how="B3 compares with elevon roll authority at 15 m/s (CR-E1-04).")
+          how="B3 compares with elevon roll authority at 16 m/s (CR-E1-04).")
 
 kit.claim("CL-E1-TW-WORST", "Hover T/W at the gate, worst pack state (one team claim, E1 + E2)", calc="CALC-E1-WORST",
           output="tw_worst", unit="-", limit=(">=", P + "requirements.hover_tw_min_sag"), verifies=["R-HOVER-TW"],
           parts=MOTORS, note="replaces CL-E1-TW-SAG, CL-E1-TW-SAG-55, CL-E1-ILIM-TW-LOW and, by agreement requested "
           "in CR-E1-15, CL-E2-TW-SAG-WORST: 11x5.5MR, 20 % charge, 10 degC pack, 80 degC winding, 100 A limiter",
           how="Thrust stand on a flight pack discharged to 3.73 V/cell rest and cold-soaked to 10 degC, motor warmed by "
-              "a 2 min run at hover thrust, full throttle with the 25 A per-motor duty cap: thrust x 4 x cos 3 deg / "
+              "a 2 min run at hover thrust, full throttle with the 25 A per-motor duty cap: thrust x 4 x cos(cant) / "
               "2.6 kg (T-E1-STAND).")
 kit.claim("CL-E1-SAG-FACTOR", "Thrust factor worst / fresh with the limiter (replaces params voltage_sag)",
           calc="CALC-E1-WORST", output="f_sag", unit="-",
           note="to be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to "
-               "that already current-limited thrust, which double-counts",
+               "that already current-limited thrust, which double-counts. Bounded above by CL-E1-SAG-XCHECK",
           how="Ratio of the two T-E1-STAND full-throttle runs: worst-state pack / fresh pack.")
+kit.claim("CL-E1-SAG-XCHECK", "Sag factor, closed form (limiter, T ~ P^2/3)", calc="CALC-E1-WORST",
+          output="f_sag_closed_form", unit="-",
+          note="independent of the prop tables and the motor model: same pack current in both states, so P ~ V_bus "
+               "and T ~ P^(2/3) for a static prop; ignores the hot winding, so it sits just above CL-E1-SAG-FACTOR",
+          how="Hand calculation from the E2 pack assumptions and F1's r_ext; the T-E1-STAND ratio settles both.")
 kit.claim("CL-E1-TMAX-WORST", "Full thrust per motor, worst pack state, 11x5.5MR", calc="CALC-E1-WORST",
           output="T_worst_gf", unit="gf", parts=MOTORS, how="As CL-E1-TW-WORST, per motor.")
 kit.claim("CL-E1-TW-LAND-COLD", "Hover T/W below the reserve line (3.60 V/cell, cold), sensitivity",
           calc="CALC-E1-WORST", output="tw_land_cold", unit="-", limit=(">=", 1.3), parts=MOTORS,
           how="Same stand run on a pack at 3.60 V/cell rest; 1.3 is the emergency-landing floor, not R-HOVER-TW.")
 kit.claim("CL-E1-STACK-PROP-PLANE", "Mount face to prop mid-plane (hub centre)", calc="CALC-E1-STACK",
-          output="mount_to_prop_plane_m", unit="m", parts=MOTORS,
-          how="Calipers on the assembled station: mount face to hub front face minus half the hub (8.9 / 2 mm).")
+          output="mount_to_prop_plane_m", unit="m", parts=MOTORS + ADAPTERS + PROPS_ID,
+          how="Calipers on the first assembled station (T-E1-MOTOR-RM): mount face to hub front face minus half the "
+              "hub (8.9 / 2 mm).")
+kit.claim("CL-E1-STACK-VS-D3", "E1 stack minus D3's 39 mm (fin_detail.mount.prop_stack_m)", calc="CALC-E1-STACK",
+          output="stack_minus_d3_m", unit="m", parts=MOTORS,
+          note="negative = the prop sits closer to the collar than D3's CAD assumes (D-28)",
+          how="Same caliper measurement; D3 sets prop_stack_m to the measured value.")
+kit.claim("CL-E1-PROP-GAP", "Prop plane to collar front with E1's stack / 0.14 D", calc="CALC-E1-STACK",
+          output="gap_ratio_e1", unit="-", limit=(">=", 1.0), parts=MOTORS + PROPS_ID,
+          note="D3's CL-D3-PROP-GAP uses the 39 mm stack; with E1's 37.3 mm and the same 1 mm face_ahead the gap is "
+               "below B4's 0.14 D. Fix: face_ahead_m >= CALC-E1-STACK ahead_needed_m (CR-E1-23)",
+          how="Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.")
+kit.claim("CL-E1-AHEAD-NEEDED", "Motor face ahead of the collar needed for 0.14 D", calc="CALC-E1-STACK",
+          output="ahead_needed_m", unit="m", parts=MOTORS,
+          how="D3 sets fin_detail.mount.face_ahead_m to at least this (rounded up to 0.5 mm).")
 kit.claim("CL-E1-STACK-POST-TIP", "Mount face to adapter post tip (rotating envelope end)", calc="CALC-E1-STACK",
           output="mount_to_post_tip_m", unit="m", parts=MOTORS, how="Calipers on the assembled station.")
 kit.claim("CL-E1-NUT-ENGAGE", "M6 nut thread engagement margin over full nut height", calc="CALC-E1-STACK",
-          output="nut_margin_m", unit="m", limit=(">=", 0.0), parts=MOTORS,
+          output="nut_margin_m", unit="m", limit=(">=", 0.0), parts=ADAPTERS + PROPS_ID,
           how="Assemble prop, washer and nut: the post end must be flush with or proud of the nut face.")
-kit.claim("CL-E1-SCREW-ENGAGE", "Motor screw engagement inside the 2.5-3.5 mm window", calc="CALC-E1-STACK",
+kit.claim("CL-E1-SCREW-ENGAGE", "Motor screw engagement window, worst hole on the canted face", calc="CALC-E1-STACK",
           output="screw_margin_m", unit="m", limit=(">=", 0.0), parts=MOTORS,
-          how="Probe each base hole depth with a 2 mm drill shank; M3x8 through the 5.0 mm plate leaves the tip >= 0.5 mm "
-              "short of the bottom (T-E1-MOTOR-RM incoming check).")
+          note="D3 R3 plate 4.5 mm, canted with the motor so every head bears flat: M3x8 engages 3.5 mm at every hole, "
+               "the top of the window. Passes only if the base holes are >= 4.0 mm deep (CL-E1-HOLE-DEPTH-MIN)",
+          how="Probe each base hole depth with a 2 mm drill shank; the M3x8 tip must stop >= 0.5 mm short of the bottom "
+              "and engage >= 2.5 mm (T-E1-MOTOR-RM incoming check).")
+kit.claim("CL-E1-HOLE-DEPTH-MIN", "Motor base thread depth needed for M3x8", calc="CALC-E1-STACK",
+          output="hole_depth_min_m", unit="m", parts=MOTORS,
+          note="engagement + 0.5 mm tip clearance; if the first motor's holes are shallower, D3 thickens the plate to "
+               "CL-E1-SCREW-SEAT or E1 changes to M3x6 + 1 mm washer (CR-E1-24)",
+          how="Probe each base hole with a 2 mm drill shank and calipers (T-E1-MOTOR-RM).")
+kit.claim("CL-E1-SCREW-SEAT", "Plate under the head for mid-window engagement", calc="CALC-E1-STACK",
+          output="seat_for_mid_window_m", unit="m", parts=MOTORS,
+          note="plate thickness that gives 3.0 mm engagement with M3x8; the fallback if the holes are shallow",
+          how="Calipers on the printed plate.")
 kit.claim("CL-E1-MASS-PRP", "Propulsion flying mass, four stations incl. leads, adapters and motor screws",
           calc="CALC-E1-MASS", output="total_g", unit="g", limit=("<=", P + "mass.allocation_g.propulsion"),
-          parts=MOTORS, how="Weigh each part on the 0.1 g scale on arrival (one of each), update ASM-E1-PART-MASS, re-run.")
+          parts=STATION, how="Weigh each part on the 0.1 g scale on arrival (one of each), update ASM-E1-PART-MASS, re-run.")
 
 kit.test("T-E1-STAND", "Thrust stand, one station, both candidate props", verifies=["CL-E1-TW-TABLE", "CL-E1-TW-WORST",
-         "CL-E1-IMAX-148", "CL-E1-IMAX-168", "CL-E1-HOVER-GW", "CL-E1-KT", "CL-E1-KP", "CL-E1-MAKER-SUPPLY"],
+         "CL-E1-SAG-FACTOR", "CL-E1-IMAX-168-55", "CL-E1-HOVER-GW", "CL-E1-KT", "CL-E1-KP", "CL-E1-MAKER-SUPPLY"],
          procedure="H1 stand (20 kg cell + HX711), X3108S + LANRC 45 A, 11x4.5MR then 11x5.5MR; held 14.8 V bench supply "
                    "(>= 40 A) and then a flight pack; 10 % throttle steps to 100 %, 3 s each; log gf, A, V, rpm (optical "
                    "tach or ESC telemetry), can temperature; one 60 s run at 689 gf for g/W; ten 10 -> 100 % throttle "
                    "punches in < 50 ms with no desync")
 kit.test("T-E1-MOTOR-RM", "Incoming check: resistance, no-load current, mass, bolt pattern, hole depth",
-         verifies=["CL-E1-KP", "CL-E1-MASS-PRP", "CL-E1-SCREW-ENGAGE", "CL-E1-STACK-PROP-PLANE"],
+         verifies=["CL-E1-KP", "CL-E1-MASS-PRP", "CL-E1-SCREW-ENGAGE", "CL-E1-STACK-PROP-PLANE", "CL-E1-PROP-GAP"],
          procedure="Weigh motor, ESC, prop, adapter set (0.1 g); calipers: base bolt pattern, hole depth, lead length, "
                    "body length, adapter base and post; 4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load "
                    "current and rpm at 10.0 V without prop (Kv = rpm / (V - I0 R))")
-kit.test("T-E1-HOVER-LOG", "Tethered hover current", verifies=["CL-E1-HOVER-I", "CL-E1-HOVER-DT"],
+kit.test("T-E1-HOVER-LOG", "Tethered hover current", verifies=["CL-E1-HOVER-I-55", "CL-E1-HOVER-DT"],
          procedure="XPS aircraft at 2.6 kg, 30 s tethered hover; pack current from the power module; can temperature "
                    "by IR at landing")
 
@@ -758,7 +850,8 @@ def report():
     vals = {n["id"]: n for n in kit.nodes.values()}
     print("\n--- E1 propulsion summary ---")
     for cid in ("CALC-E1-CAL", "CALC-E1-HOVER", "CALC-E1-FULL", "CALC-E1-CRUISE", "CALC-E1-CORRIDOR", "CALC-E1-MOTOR-OUT",
-                "CALC-E1-LIMIT", "CALC-E1-SENS", "CALC-E1-WORST", "CALC-E1-STACK", "CALC-E1-MASS"):
+                "CALC-E1-LIMIT", "CALC-E1-SENS", "CALC-E1-WORST", "CALC-E1-STACK", "CALC-E1-MASS",
+                "CALC-E1-HOVER-I-BAND"):
         print(cid)
         for k, v in vals[cid]["outputs"].items():
             print(f"   {k:<22} {v:10.4g}")
@@ -766,31 +859,33 @@ def report():
 
 def write_parts():
     """redesign/subsystems/propulsion/parts.csv (assigned by A1, CR-A3-05): flown quantities, per-unit flying mass
-    incl. leads from ASM-E1-PART-MASS, so A3's roll-up and CL-E1-MASS-PRP use one set of numbers."""
+    incl. leads from ASM-E1-PART-MASS, so A3's roll-up and CL-E1-MASS-PRP use one set of numbers. Rev 3: the four
+    motor screws are booked inside PRP-001 (fins convention for fasteners: a 1xx line with mass 0), so qty = number
+    of instance nodes in interfaces.json for every line that carries mass."""
     import csv
     pm = kit.nodes["ASM-E1-PART-MASS"]["value"]
     rows = [
-        ["PRP-001", "Motor SunnySky X3108S KV900", 4, "buy", "-", "-", pm["motor"], 24.99,
-         "https://sunnyskyusa.com/products/sunnysky-x3108s-motors",
-         "mass incl. factory leads, no bullets (HRN-E03); buy 5 (1 spare); base bolt pattern and lead length not "
-         "published: measure on arrival (T-E1-MOTOR-RM); UNVERIFIED"],
+        ["PRP-001", "Motor SunnySky X3108S KV900 (with its 4 x M3x8 mount screws)", 4, "buy", "-", "-",
+         round(pm["motor"] + pm["motor_screws"], 2), 24.99, "https://sunnyskyusa.com/products/sunnysky-x3108s-motors",
+         "81.0 g with factory leads, no bullets (HRN-E03) + 3.2 g screws (PRP-005); buy 5 (1 spare); base bolt "
+         "pattern, hole depth and lead length not published: measure the first motor (T-E1-MOTOR-RM); UNVERIFIED"],
         ["PRP-002", "ESC LANRC BLHeli_S 45 A (55 A 10 s) 2-6S, Bluejay reflash", 4, "buy", "-", "-", pm["esc"], 7.50,
          "https://www.amazon.com/dp/B0D2HS4Y4J",
          "6.6 g bare board; mass with factory power/signal leads and heat-shrink is EST; 4-pack $30.00, buy 2 packs "
          "(4 spare); fallback Holybro Tekko32 F4 45A AM32 $22.50 (readymaderc.com); price UNVERIFIED"],
-        ["PRP-003", "Prop APC 11x5.5MR (LP11055MR) / 11x5.5MRP (LP11055MRP)", 4, "buy", "-", "glass-filled nylon",
-         pm["prop"], 3.83, "https://www.apcprop.com/product/11x5-5mr/",
-         "2 MR + 2 MRP flown (diagonal pairs); hub 16.5 mm dia x 8.9 mm, 1/4 in bore, centre on the M6 post with an "
-         "APC LPAR06E ring; buy 8 + 4 x 11x4.5MR/MRP for the stand A/B"],
-        ["PRP-004", "Prop adapter, bolt-on M6x1 (RH or LH) + 4 x M3x4 SHCS + M6 nut ISO 4032 + M6 washer", 4, "buy",
-         "-", "aluminium / steel", pm["adapter_nut"], 5.99,
+        ["PRP-003", "Prop APC 11x5.5MR (LP11055MR) on UL/LR, 11x5.5MRP (LP11055MRP) on UR/LL", 4, "buy", "-",
+         "glass-filled nylon", pm["prop"], 3.83, "https://www.apcprop.com/product/11x5-5mr/",
+         "rotation per F4's motor map (UR, LL CW from the nose = MRP); hub 16.5 mm dia x 8.9 mm, 1/4 in bore, "
+         "centred on the M6 post with an APC LPAR06E ring; buy 8 + 4 x 11x4.5MR/MRP for the stand A/B"],
+        ["PRP-004", "Prop adapter, bolt-on M6x1 (LH on UR/LL, RH on UL/LR) + 4 x M3x4 SHCS + M6 nut ISO 4032 + washer",
+         4, "buy", "-", "aluminium / steel", pm["adapter_nut"], 5.99,
          "https://www.smallpartscnc.com/index.php?product_id=174&route=product%2Fproduct",
          "set of 4 (2 RH + 2 LH) $23.95, out of stock 2026-11-09; fallback: the adapter in each motor box (one thread "
          "hand) with Loctite 243 on the nut; LH thread on the CW motors so drag torque tightens the nut"],
-        ["PRP-005", "Motor screw M3x8 SHCS ISO 4762 A2", 16, "buy", "-", "A2 stainless", round(pm["motor_screws"] / 4, 2),
-         0.10, "Bolt Depot (same size as the old design's F01)",
-         "4 per motor through the 5.0 mm printed mount plate, 3.0 mm engagement, Loctite 243, 0.5 N*m; "
-         "screw-hole depth probed on arrival (CL-E1-SCREW-ENGAGE)"],
+        ["PRP-005", "Motor screw M3x8 SHCS ISO 4762 A2", 16, "buy", "-", "A2 stainless", 0, 0.10,
+         "Bolt Depot (same size as the old design's F01)",
+         "mass inside PRP-001 (0.8 g each); buy 20 (4 spare); joint stack in fins E-FIN-61..64 (D3 owns the edge); "
+         "Loctite 243; engagement window 2.5-3.5 mm (CL-E1-SCREW-ENGAGE), hole depth probed on arrival"],
     ]
     out = HERE.parents[1] / "subsystems" / "propulsion" / "parts.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -801,9 +896,99 @@ def write_parts():
         w.writerows(rows)
     total = sum(r[2] * r[6] for r in rows)
     print(f"{out.relative_to(HERE.parents[2]).as_posix()}: {len(rows)} lines, {total:.1f} g flying")
+    return {r[0]: r for r in rows}
+
+
+def write_interfaces(rows):
+    """redesign/subsystems/propulsion/interfaces.json (CR-A1-32): one node per instance, PRP-00N-<UR|UL|LR|LL>.
+    CG in the aircraft frame from params.json: station y, z; prop plane x_prop_plane_m (D-28); the motor face is
+    x_prop + fin_detail.mount.prop_stack_m (D3's CAD stack, so every subsystem draws the same plane until the first
+    motor is measured). ESC CG = D3's pad CG moved 5 mm outboard (ESC on the outboard face)."""
+    import json
+    par = json.loads((HERE.parents[1] / "params" / "params.json").read_text(encoding="utf-8"))
+    fpar = json.loads((HERE.parents[1] / "subsystems" / "fins" / "params.json").read_text(encoding="utf-8"))
+    fins = json.loads((HERE.parents[1] / "subsystems" / "fins" / "interfaces.json").read_text(encoding="utf-8"))
+    pads = {p["id"]: p["cg_xyz_m"] for p in fins["parts"]}
+    stn = par["propulsion"]["stations"]
+    y0, z0, xp = stn["y_m"]["value"], stn["z_m"]["value"], stn["x_prop_plane_m"]["value"]
+    x_face = xp + fpar["fin_detail"]["mount"]["prop_stack_m"]["value"]
+    st = kit.nodes["CALC-E1-STACK"]["outputs"]
+    body = kit.nodes["ASM-E1-STACK"]["value"][0]
+    r3 = lambda v: [round(c, 4) for c in v]                                    # noqa: E731
+    parts, edges = [], []
+    for i, s in enumerate(ST):
+        sy = 1 if s[1] == "R" else -1
+        sz = 1 if s[0] == "U" else -1
+        y, z = sy * y0, sz * z0
+        rot = ROT[s]
+        pad = pads.get(f"FIN-007-{s}")
+        esc_cg = [pad[0], pad[1] + sy * 0.005, pad[2]] if pad else [0.10, y, sz * 0.118]
+        parts += [
+            {"id": f"PRP-001-{s}", "name": f"Motor {s} SunnySky X3108S KV900 ({rot} from the nose)",
+             "subsystem": "propulsion", "status": "PROPOSED", "mass_g": rows["PRP-001"][6], "material": "steel / NdFeB / Al",
+             "cg_xyz_m": r3([x_face - 0.45 * body, y, z]), "make_or_buy": "buy", "electrical": "sink",
+             "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); CG 45 % of the 26.5 mm body ahead "
+                      "of the mount face (EST); axis canted 7 deg tangentially (params cant_deg), not drawn in the CG"},
+            {"id": f"PRP-002-{s}", "name": f"ESC {s} LANRC 45 A", "subsystem": "propulsion", "status": "PROPOSED",
+             "mass_g": rows["PRP-002"][6], "material": "PCB / copper", "cg_xyz_m": r3(esc_cg), "make_or_buy": "buy",
+             "electrical": "bus", "notes": "11.0 g EST with leads and heat-shrink; on the outboard face of FIN-007, "
+                                           "heat-sink side out in the slipstream"},
+            {"id": f"PRP-003-{s}", "name": f"Prop {s} APC {PROP_SKU[rot]}", "subsystem": "propulsion",
+             "status": "PROPOSED", "mass_g": rows["PRP-003"][6], "material": "glass-filled nylon",
+             "cg_xyz_m": r3([xp, y, z]), "make_or_buy": "buy",
+             "notes": f"hub centre on the prop plane x {xp} m (params, D-28); E1's stack puts it "
+                      f"{-st['stack_minus_d3_m'] * 1000:.1f} mm further aft until measured"},
+            {"id": f"PRP-004-{s}", "name": f"Prop adapter {s} M6x1 {THREAD[rot]} + nut + washer", "subsystem": "propulsion",
+             "status": "PROPOSED", "mass_g": rows["PRP-004"][6], "material": "6061 aluminium / steel",
+             "cg_xyz_m": r3([x_face - body - 0.005, y, z]), "make_or_buy": "buy",
+             "notes": f"{THREAD[rot]} thread: prop drag tightens the nut on a {rot} motor (CR-E1-21)"},
+        ]
+        edges += [
+            {"id": f"E-PRP-{i + 1:02d}", "part_a": f"PRP-004-{s}", "part_b": f"PRP-001-{s}", "via": "CT-PROP-ADAPTER",
+             "owner": "propulsion", "notes": "adapter pilot on the 4 mm shaft, four screws into the bell top on a "
+                                             "12 mm circle (vendor fit list names the X3108S KV900)",
+             "joint_stack": {"fastener": "M3x4 SHCS (supplied with the adapter)", "count": 4, "grade": "12.9 (vendor)",
+                             "hole": "counterbored clearance in the adapter base; tapped M3 in the bell",
+                             "insert": "none (bell tapped by the maker)", "engagement_mm": 2.5,
+                             "min_engagement_mm": 2.0,
+                             "washer_nut": "none", "torque": "0.6 N m + Loctite 243",
+                             "tool": "2.0 mm hex key", "access": "from the front (-x) with the prop off",
+                             "install_order": 2, "removal_order": 3},
+             "retention": {"item": "Loctite 243", "count": 4, "load_n": "prop torque 0.33 N m at full throttle on a "
+                           "6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial",
+                           "inspection": "witness mark on each head, checked at every field set-up"}},
+            {"id": f"E-PRP-{i + 5:02d}", "part_a": f"PRP-003-{s}", "part_b": f"PRP-004-{s}", "via": "CT-PROP-NUT",
+             "owner": "propulsion", "field_joint": True,
+             "notes": f"{PROP_SKU[rot]} on a {THREAD[rot]} post; LPAR06E ring centres the 1/4 in bore on the M6 post; "
+                      "prop off for transport",
+             "joint_stack": {"fastener": f"M6x1 hex nut ISO 4032 ({THREAD[rot]}) + M6 washer ISO 7089",
+                             "count": 1, "grade": "8 (steel)", "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
+                             "insert": "none (threaded aluminium post)",
+                             "engagement_mm": round(st["nut_engagement_m"] * 1000, 2),
+                             "min_engagement_mm": 5.2, "washer_nut": "M6 washer under the nut",
+                             "torque": "1.5 N m EST (nylon hub; snug, no crushing)",
+                             "tool": "10 mm open or socket wrench", "access": "from the front (-x)",
+                             "install_order": 3, "removal_order": 1}},
+        ]
+    doc = {"schema": "dbf-interfaces/1", "subsystem": "propulsion",
+           "_note": "Written by team/E1/propulsion.py (do not hand-edit). Instance nodes per station (UR UL LR LL). "
+                    "Motor-to-mount (E-FIN-61..64) and ESC-to-pad (E-FIN-65..68) edges are D3's; every electrical edge "
+                    "(ESC power, phase, signal) is harness's (D-20) and is acknowledged when harness publishes it.",
+           "parts": parts,
+           "connection_types": [
+               {"id": "CT-PROP-ADAPTER", "kind": "mechanical", "method": "fastened",
+                "spec": "bolt-on prop adapter, 4 x M3x4 SHCS into the motor bell, pilot on the shaft"},
+               {"id": "CT-PROP-NUT", "kind": "mechanical", "method": "fastened",
+                "spec": "M6x1 nut and washer clamp the prop hub on the adapter post (field joint)"}],
+           "edges": edges,
+           "acknowledges": [f"E-FIN-{n}" for n in range(61, 69)]}
+    out = HERE.parents[1] / "subsystems" / "propulsion" / "interfaces.json"
+    out.write_text(json.dumps(doc, indent=1) + "\n", encoding="utf-8")
+    print(f"{out.relative_to(HERE.parents[2]).as_posix()}: {len(parts)} parts, {len(edges)} edges, "
+          f"{sum(p['mass_g'] for p in parts):.1f} g")
 
 
 if __name__ == "__main__":
     kit.write()
-    write_parts()
+    write_interfaces(write_parts())
     report()

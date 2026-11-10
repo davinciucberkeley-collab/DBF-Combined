@@ -107,17 +107,31 @@ def fig_slipstream():
         ex, ez = P(c * (1 - fe) + c * fe * math.cos(math.radians(d)), -c * fe * math.sin(math.radians(d)))
         b.append(f'<line x1="{hx:.1f}" y1="{hz:.1f}" x2="{ex:.1f}" y2="{ez:.1f}" stroke="{HL}" stroke-width="2.5"/>')
     b.append(text(hx + 10, hz + 52, "elevon ±25°", fill=HL))
-    # props and hover slipstream (contracting), with the mixing-layer edge
+    # props (canted 7 deg, F4 sense: disc edge on the wing side swings aft) and the leaning hover slipstream
+    cant = v("propulsion.stations.cant_deg")
+    stack = json.loads((HERE.parents[1] / "subsystems" / "fins" / "params.json").read_text(
+        encoding="utf-8"))["fin_detail"]["mount"]["prop_stack_m"]["value"]
+    ym = v("propulsion.stations.y_m")
     for sz in (1, -1):
-        a, bb = P(xp, sz * zm + Rr), P(xp, sz * zm - Rr)
+        zz = sz * zm
+        hub = pp.hub_centre(xp, ym, zz, cant, 1, stack)
+        e = pp.wake_axis(ym, zz, cant, 1)
+        _, tz = pp.thrust_side(ym, zz, 1)
+        n = (-math.cos(math.radians(cant)), 0.0, math.sin(math.radians(cant)) * tz)     # disc normal (thrust), x-z
+        # disc edge points in the x-z plane: offset +/-R along the in-plane direction normal to the shaft
+        ux, uz = n[2], -n[0]
+        nn = math.hypot(ux, uz)
+        a = P(hub[0] + Rr * ux / nn, hub[2] + Rr * uz / nn)
+        bb = P(hub[0] - Rr * ux / nn, hub[2] - Rr * uz / nn)
         b.append(f'<line x1="{a[0]:.1f}" y1="{a[1]:.1f}" x2="{bb[0]:.1f}" y2="{bb[1]:.1f}" stroke="{FG}" stroke-width="3"/>')
         for side in (1, -1):
             pts, pts2 = [], []
             for i in range(61):
-                xd = 0.5 * i / 60
-                r = pp._r_slip(xd, Rr)
-                pts.append(P(xp + xd, sz * zm + side * r))
-                pts2.append(P(xp + xd, sz * zm + side * (r + mix * xd)))
+                xb = hub[0] + 0.5 * i / 60
+                _, zc, s_ax = pp.wake_centre(xb, hub, e)
+                r = pp._r_slip(max(s_ax, 0.0), Rr)
+                pts.append(P(xb, zc + side * r))
+                pts2.append(P(xb, zc + side * (r + mix * max(s_ax, 0.0))))
             b.append(f'<polyline fill="none" stroke="{ACC}" stroke-width="1.5" points="' +
                      " ".join(f"{x:.1f},{y:.1f}" for x, y in pts) + '"/>')
             b.append(f'<polyline fill="none" stroke="{ACC}" stroke-width="0.75" stroke-dasharray="6 4" points="' +
@@ -127,12 +141,12 @@ def fig_slipstream():
     gx2, gz2 = P(c + 0.02, 0.0279 + gap)
     b.append(f'<line x1="{gx:.1f}" y1="{gz:.1f}" x2="{gx2:.1f}" y2="{gz2:.1f}" stroke="{ACC}" stroke-width="1.25"/>')
     b.append(text(gx + 8, (gz + gz2) / 2 + 4, f"{gap * 1000:.0f} mm clear", fill=ACC, mono=True))
-    # pitot (pod nose, y = 0, drawn projected)
+    # pitot (pod nose, left channel, drawn projected)
     tip_x, tip_z = RES["CALC-B4-PITOT"]["tip_x_m"], RES["CALC-B4-PITOT"]["tip_z_m"]
     px, pz = P(tip_x, tip_z)
     px2, pz2 = P(v("pod.x_le_m"), tip_z)
     b.append(f'<line x1="{px:.1f}" y1="{pz:.1f}" x2="{px2:.1f}" y2="{pz2:.1f}" stroke="{HL}" stroke-width="2"/>')
-    b.append(text(px - 6, pz - 8, "pitot (y = 0)", fill=HL, anchor="end"))
+    b.append(text(px - 6, pz - 8, f"pitot (y = {RES['CALC-B4-PITOT']['tip_y_m']:.3f})", fill=HL, anchor="end"))
     b.append(text(P(xp, zm + Rr)[0], P(xp, zm + Rr)[1] - 10, "prop plane", fill=FG3, anchor="middle"))
     b.append(text(P(0.42, 0.20)[0], P(0.42, 0.20)[1], "hover wake →", fill=ACC))
     # scale bar

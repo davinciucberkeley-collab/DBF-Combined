@@ -28,11 +28,11 @@
     "note": "no doubler: peak column pressure in the drop is 9.6 x 10 N / 3 000 mm2 = 32 kPa on a floor backed by the ground; dropped to save 0.12 kg for the 6 kg limit. Floor stack = 4 mm shell"
    },
    "lid_lining_t_m": {
-    "value": 0.006,
+    "value": 0.0,
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "closed-cell PE foam 6 mm on the lid underside only; lid stack 10 mm"
+    "note": "D-31 round 2: no full lid lining (was 6 mm PE). It only protected the upper tube ends and foot pads, and the hold-down pillars stop the rebound well before they reach the lid (ASM-D7-REBOUND). Lid stack = 4 mm shell; +6 mm drop travel"
    },
    "lid_lip_m": {
     "value": 0.03,
@@ -53,7 +53,7 @@
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "upper tube ends to the lid lining, static"
+    "note": "upper tube ends / upper foot pads to the bare lid shell, static"
    },
    "end_pad_t_m": {
     "value": 0.03,
@@ -78,6 +78,20 @@
     "source": "D7 choice",
     "status": "PROPOSED",
     "note": "+/-; two cam-buckle straps around the outside of the box, outboard of the cradles"
+   },
+   "fallback_height_m": {
+    "value": 0.5,
+    "unit": "m",
+    "source": "team/D7/CHANGE-REQUESTS.md#CR-D7-01",
+    "status": "PROPOSED",
+    "note": "height of the fallback box if a measured car rejects 0.54 m (CAR-FIT.md); the box then carries a MAX DROP 0.15 m label"
+   },
+   "fallback_label_drop_m": {
+    "value": 0.15,
+    "unit": "m",
+    "source": "D7 choice",
+    "status": "PROPOSED",
+    "note": "drop height printed on the fallback 0.50 m box; must stay <= CL-D7-FALLBACK-DROP-ALLOW"
    }
   },
   "cradle": {
@@ -113,11 +127,11 @@
     "note": "6 mm PE cap on the saddle contour (no point load on the tape skin)"
    },
    "crush_t_m": {
-    "value": 0.127,
+    "value": 0.12,
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "2 + 2 + 1 in PE plank laminated (5 in); usable stroke = eps_use x t"
+    "note": "PE plank 2 + 2 + 1 in laminated (127 mm) and band-sawn to 120 mm: >= t_req (CALC-D7-STROKE) for the 0.3 m drop, and bottoms (0.6 x 120 = 72 mm) >= 10 mm above the floor under the lower tube ends in the 0.54 m box (window 109-123 mm at n_allow 11.0)"
    },
    "crush_footprint_m": {
     "value": [
@@ -127,7 +141,7 @@
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "x by y per cradle, centred under the spar (x 0.08); static stress ~3.3 kPa (0.5 psi), confirm the density with T-D7-CUSHION"
+    "note": "x by y per cradle, centred under the spar (x 0.08), y 0.175-0.225; static stress ~3.3 kPa (0.5 psi), confirm the density with T-D7-CUSHION"
    },
    "crush_x_m": {
     "value": 0.08,
@@ -135,6 +149,20 @@
     "source": "P:wing.spar.x_m",
     "status": "PROPOSED",
     "note": "column centred under the spar line"
+   },
+   "brace_anchor_y_in_m": {
+    "value": 0.234,
+    "unit": "m",
+    "source": "team/D3/CHANGE-REQUESTS.md#CR-D3-11",
+    "status": "PROPOSED",
+    "note": "inboard edge of the fin brace anchors on the spar (D3: y +/-(0.234-0.250)); cradles and pillars stay inboard of it, never press it. Copy of a D3 number: A1 to add it to params.json (CR-D7-08)"
+   },
+   "pad_min_m": {
+    "value": 0.04,
+    "unit": "m",
+    "source": "team/C2/CHANGE-REQUESTS.md#CR-C2-05",
+    "status": "PROPOSED",
+    "note": "C2: foam pad >= 40 x 40 mm (CL-C2-CRADLE-AREA 1 080 mm2) under the spar line; smallest side of the saddle contact and of the pillar face"
    }
   },
   "foam": {
@@ -180,14 +208,14 @@
   "tray": {
    "size_m": {
     "value": [
-     0.46,
+     0.47,
      0.3,
      0.06
     ],
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "x by y by z, on the floor between the cradles; 8 prop slots (4 flight + 4 spare) 285 x 30 x 40 mm on edge, a pitot-boom pocket 220 x 25 x 25 mm and a field-pouch pocket 140 x 100 x 45 mm"
+    "note": "x by y by z, on the floor between the cradles; 8 prop slots (4 flight + 4 spare) 285 x 30 x 40 mm on edge (8 x 30 + 9 x 8 = 312 mm along x); the last 150 mm along x holds a pitot-boom slot 220 x 25 x 25 mm (along y) with a 30 mm PE plug at the tip end, the field-pouch pocket 100 x 140 x 45 mm and the spare-cartridge pocket 100 x 120 x 45 mm (round 3, C5 CR-C5-06). Was 0.46 m"
    },
    "x_lo_m": {
     "value": -0.11,
@@ -224,7 +252,7 @@
     "unit": "kg",
     "source": "D7 estimate",
     "status": "UNVERIFIED",
-    "note": "EST, bought strap handle with two M5 bolts and fender washers; 3 fitted"
+    "note": "EST, bought strap handle with 2 x M3x16 SHCS, M3 x 12 mm fender washers and nylocs (C6 CR-C6-08); 3 fitted"
    },
    "cam_strap_kg": {
     "value": 0.045,
@@ -245,14 +273,14 @@
     "unit": "kg",
     "source": "D7 estimate",
     "status": "UNVERIFIED",
-    "note": "EST, LSE tape, hot-melt, zip ties, M5 hardware"
+    "note": "EST, LSE tape, hot-melt, zip ties, M3 handle hardware"
    },
    "pouch_kg": {
     "value": 0.15,
     "unit": "kg",
     "source": "D7 estimate",
     "status": "UNVERIFIED",
-    "note": "EST, field pouch: prop wrench (if E1 keeps a nut), 4 spare nuts, tape, laminated checklist"
+    "note": "EST, field pouch: 10 mm prop spanner (D-40, the one allowed tool), 4 spare M6 prop nuts, 2.5 mm hex key, tape, laminated checklist"
    },
    "spare_props": {
     "value": 4,
@@ -260,6 +288,20 @@
     "source": "P:propulsion.prop",
     "status": "PROPOSED",
     "note": "spares carried in the tray"
+   },
+   "handle_backing_kg": {
+    "value": 0.008,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, 3 mm laser-cut plywood strip 140 x 30 mm inside the wall behind each handle (600 kg/m3 -> 7.6 g): spreads the M3 nut load over 4 200 mm2 of Coroplast instead of a 12 mm washer"
+   },
+   "spare_cartridges_kg": {
+    "value": 0.015,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, 32 pre-crushed XPS foot cartridges (16 per type, C5 CR-C5-06) of about 11 x 21 x 45 mm at 33 kg/m3, in a zip bag in the tray pocket"
    }
   },
   "setup_steps_s": {
@@ -307,7 +349,7 @@
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "x by y footprint of each lid hold-down pillar, centred over the spar (x 0.08) at y +/-0.20, directly above the cradle: the clamp load goes straight through the wing into the cradle"
+    "note": "x by y footprint of each lid hold-down pillar, centred over the spar (x 0.08) at y +/-0.20 (y 0.17-0.23, inboard of the brace anchors at 0.234), directly above the cradle; taped to the bare lid shell"
    },
    "preload_m": {
     "value": 0.005,
@@ -322,6 +364,55 @@
     "source": "P:wing.spar.x_m",
     "status": "PROPOSED",
     "note": "over the spar line"
+   },
+   "xps_bearing_kpa": {
+    "value": 120.0,
+    "unit": "kPa",
+    "source": "CL-C2-CRADLE-AREA",
+    "status": "UNVERIFIED",
+    "note": "XPS F-250 compressive strength C2 uses for the cradle patch (86 N x 1.5 over 1 080 mm2); the same skin over the spar carries the pillar"
+   },
+   "bearing_sf": {
+    "value": 1.5,
+    "unit": "-",
+    "source": "CL-C2-CRADLE-AREA",
+    "status": "PROPOSED",
+    "note": "ultimate factor C2 applies to the patch bearing"
+   }
+  },
+  "_note_r2": "D7 round 2 (2026-11-09, CR-A1-35 / D-31): column 127 -> 120 mm so it cannot bottom within 10 mm of the floor in the 0.54 m box (envelope grew to 0.438 m); lid lining dropped (the pillars arrest the rebound, ASM-D7-REBOUND), +6 mm travel; M3 handles with plywood backing strips (C6 CR-C6-08); cradle pad and brace gap checked (C2 CR-C2-05, D3 CR-D3-11)",
+  "field_bag": {
+   "_note": "Second carried item (round 3): LiPo bag with both packs plus the folding landing mat. Packs never in the box (ASM-D7-PACK-OUT); the mat is C5's (CR-C5-06, CR-I1-18) and is too heavy for the box under the 6 kg limit.",
+   "mat_size_m": {
+    "value": [
+     0.8,
+     0.8
+    ],
+    "unit": "m",
+    "source": "team/C5/LANDING.md#S1",
+    "status": "PROPOSED",
+    "note": "C5 stance rule S1: >= 0.8 x 0.8 m, rubber on ply; two 0.8 x 0.4 m panels hinged with cloth tape, folds to 0.8 x 0.4 m"
+   },
+   "mat_ply_kgm2": {
+    "value": 2.04,
+    "unit": "kg/m2",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "3 mm birch ply at 680 kg/m3 (laser-cut stock); weigh"
+   },
+   "mat_rubber_kgm2": {
+    "value": 2.1,
+    "unit": "kg/m2",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "1.5 mm SBR/neoprene sheet at 1 400 kg/m3; C5 to confirm 1.5 mm keeps mu 0.7"
+   },
+   "lipo_bag_kg": {
+    "value": 0.2,
+    "unit": "kg",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, fire-resistant LiPo bag sized for two 4S packs (E2)"
    }
   }
  }

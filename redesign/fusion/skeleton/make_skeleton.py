@@ -3,10 +3,13 @@ cg_xyz_m from its CAD centroid (stub build). Owner: A5.
 
     python -I redesign/fusion/skeleton/make_skeleton.py
 
-The skeleton is the reference layout every designer starts from, at params.json revision A1-R2 (geometry R1:
-motor tubes through the core at x 0.045, upper and lower half-fins, printed through-core blocks, 45 mm feet, pod at
-x -0.105, 11x5.5MR props, transport box 1.25 x 0.55 x 0.50 m). One envelope per part at the DATUMS.md stations,
-masses split from params.json#mass.allocation_g (sum = the 2 200 g allocations; the 400 g A1 reserve is not placed).
+The skeleton is the reference layout every designer starts from, at params.json revision A1-R3 (geometry R3:
+motor tubes 0.344 m through the core at x 0.045, upper and lower 0.21 m half-fins, each braced by a CF strip from a
+station collar (DX-COLLAR) to an anchor on the spar (DX-ANCHOR), printed through-core blocks, mounts on the tube
+ends with the motor face at DP-MOTOR-FACE (7 deg cant not modelled), 48 mm feet splayed to the pad contact
+(DX-FOOT), pod 0.21 x 0.14 at x -0.115 with the pack at the D-24 station, 11x5.5MR props, transport box from
+requirements.box_external_m). One envelope per part at the DATUMS.md stations, masses split from
+params.json#mass.allocation_g (sum = the 2 324 g allocations, D-38; the 276 g A1 reserve is not placed).
 Part ids <PREFIX>-9xx (9xx is reserved for the skeleton; real subsystems number from 001); one node per physical
 instance, id <part>-<UR|UL|LR|LL|L|R> (README, CR-A3-09). It is not the design. Re-run after any params.json change,
 then python -I redesign/fusion/check.py --skeleton --strict.
@@ -32,8 +35,13 @@ SIDE = {'UR': 'R', 'UL': 'L', 'LR': 'R', 'LL': 'L'}
 
 # ---------------------------------------------------------------- mass split (ASM-A5-MASS-SPLIT, team/A5/cad_claims.py)
 SPAR_G = round(V('wing.spar.mass_per_m_kgm', 'kg/m') * V('wing.spar.length_m', 'm') * 1000.0, 1)   # 102 g
-FIN_TUBE_G, FIN_MOUNT_G, FIN_BLOCK_G, FIN_CLIP_G = 43.0, 18.0, 20.0, 30.0   # each; fins allocation note: 86/72/40/60 g
-HALF_FIN_G = (A('fins') - 2 * FIN_TUBE_G - 4 * FIN_MOUNT_G - 2 * FIN_BLOCK_G - 2 * FIN_CLIP_G) / 4   # board + consumables
+# fins (R3): tube from the spar's mass per metre (same 22 x 20 CF); the printed and CF parts at D3's R3 CAD unit
+# masses (subsystems/fins/parts.csv, rounded, EST); each half-fin carries the rest (two-layer board, edge strips,
+# pins, ESC pad, plug share, fillets)
+FIN_TUBE_G = round(V('wing.spar.mass_per_m_kgm', 'kg/m') * V('fins.tube.length_m', 'm') * 1000.0, 1)   # 35.1 g
+FIN_MOUNT_G, FIN_BLOCK_G, FIN_COLLAR_G, FIN_BRACE_G, FIN_ANCHOR_G = 11.0, 41.0, 10.6, 5.2, 3.2       # each
+HALF_FIN_G = (A('fins') - 2 * FIN_TUBE_G - 2 * FIN_BLOCK_G
+              - 4 * (FIN_MOUNT_G + FIN_COLLAR_G + FIN_BRACE_G + FIN_ANCHOR_G)) / 4
 PROP_G = round(V('propulsion.prop_mass_kg', 'kg') * 1000.0, 1)                       # 17 g
 MOTOR_G = A('propulsion') / 4 - PROP_G                                               # motor + ESC + adapter + nut
 PACK_G = round(V('battery.mass_kg', 'kg') * 1000.0, 1)                               # 550 g
@@ -63,6 +71,8 @@ CORE, ELI, ELO = wing_split(P, k9.section(P)[0])
 FOAM = 'XPS foam F-250 + packing-tape skin'
 CF = 'CF tube 22x20 (bought)'
 PETG = 'PETG (printed)'
+ASA = 'ASA (printed)'
+CFS = 'CF strip 10x3, pultruded (bought)'
 BOARD = 'foam board 4.8 mm, paper faced'
 
 
@@ -87,6 +97,11 @@ MOTOR_STACK = {'fastener': 'M3x8 SHCS', 'count': 4, 'grade': 'A2-70', 'hole': '3
                'access': 'from +x through the mount, before the mount is clamped on the tube',
                'install_order': 2, 'removal_order': 1}
 
+PROP_STACK = {'fastener': 'M6x1 hex nut ISO 4032 (LH on the CW motors) + M6 washer', 'count': 1, 'grade': '8 (steel)',
+              'hole': '6.35 mm prop bore with adapter ring to 6 mm', 'insert': 'none (threaded aluminium post)',
+              'engagement_mm': 5.3, 'min_engagement_mm': 5.2, 'washer_nut': 'M6 washer under the nut',
+              'torque': '1.5 N m EST (nylon hub)', 'tool': '10 mm spanner (D-40, the one field tool)',
+              'access': 'from the front (-x)', 'install_order': 3, 'removal_order': 1}
 PROP = str(V('propulsion.prop')).split(' (')[0].split('/')[0]          # "APC 11x5.5MR"
 SPEC = {
     'wing': {
@@ -98,17 +113,21 @@ SPEC = {
                  [edge('E-WNG-%d' % (902 + i), p, 'WNG-901', 'CT-TAPE-HINGE', 'wing', 'upper-surface tape hinge',
                        motion={'axis': 'Y', 'range_deg': list(V('wing.elevon.deflection_deg'))})
                   for i, p in enumerate(('WNG-903-R', 'WNG-904-R', 'WNG-903-L', 'WNG-904-L'))],
-        'acknowledges': ['E-FIN-%d' % n for n in (905, 906, 907, 908, 909, 910, 911, 912)] +
+        'acknowledges': ['E-FIN-%d' % n for n in (905, 906, 907, 908, 909, 910, 911, 912, 939, 940, 941, 942)] +
                         ['E-POD-901', 'E-MEC-901', 'E-MEC-902', 'E-HRN-901', 'E-HRN-902', 'E-TRN-904', 'E-TRN-905']},
     'fins': {
-        'parts': [part('FIN-901-' + s, 'Half-fin %s (2-layer foam board + consumables)' % s,
+        'parts': [part('FIN-901-' + s, 'Half-fin %s (2-layer foam board, edge strips, pins, ESC pad)' % s,
                        HALF_FIN_G, BOARD) for s in ST] +
-                 [part('FIN-902-' + s, 'Motor tube %s CF 22x20x420 (through the core)' % s, FIN_TUBE_G, CF, 'buy')
-                  for s in 'RL'] +
-                 [part('FIN-903-' + s, 'Motor mount ' + s, FIN_MOUNT_G, PETG) for s in ST] +
+                 [part('FIN-902-' + s, 'Motor tube %s CF 22x20x%.0f (through the core)'
+                       % (s, V('fins.tube.length_m', 'm') * 1000), FIN_TUBE_G, CF, 'buy') for s in 'RL'] +
+                 [part('FIN-903-' + s, 'Motor mount %s (slip clamp on the tube end, canted plate)' % s, FIN_MOUNT_G, ASA)
+                  for s in ST] +
                  [part('FIN-904-' + s, 'Through-core block %s (tube + spar bores)' % s, FIN_BLOCK_G, PETG) for s in 'RL'] +
-                 [part('FIN-905-' + s, 'Fin-to-tube clip set + bond %s (along the tube aft face)' % s, FIN_CLIP_G, PETG)
-                  for s in 'RL'],
+                 [part('FIN-905-' + s, 'Station collar %s (ring, brace ear, two-face tail)' % s, FIN_COLLAR_G, PETG)
+                  for s in ST] +
+                 [part('FIN-906-' + s, 'Brace %s CF strip, DX-COLLAR to DX-ANCHOR' % s, FIN_BRACE_G, CFS, 'buy')
+                  for s in ST] +
+                 [part('FIN-907-' + s, 'Brace anchor %s on the spar' % s, FIN_ANCHOR_G, PETG) for s in ST],
         'edges': [edge('E-FIN-%d' % (901 + i), 'FIN-901-' + s, 'FIN-902-' + SIDE[s], 'CT-EPOXY', 'fins',
                        'half-fin LE bonded to the tube') for i, s in enumerate(ST)] +
                  [edge('E-FIN-%d' % (905 + i), 'FIN-901-' + s, 'WNG-901', 'CT-EPOXY', 'fins',
@@ -120,27 +139,35 @@ SPEC = {
                  [edge('E-FIN-%d' % (913 + i), 'FIN-904-' + s, 'FIN-902-' + s, 'CT-EPOXY', 'fins', 'tube through the block bore')
                   for i, s in enumerate('RL')] +
                  [edge('E-FIN-%d' % (915 + i), 'FIN-903-' + s, 'FIN-902-' + SIDE[s], 'CT-TUBE-CLAMP', 'fins',
-                       'split clamp on the tube end') for i, s in enumerate(ST)] +
+                       'slit collar clamped on the tube end (slip clamp, D-23 fuse)') for i, s in enumerate(ST)] +
                  [edge('E-FIN-%d' % (919 + i), 'PRP-901-' + s, 'FIN-903-' + s, 'CT-M3-SHCS-MOTOR', 'fins',
                        'example joint stack; C6 sizes', joint_stack=MOTOR_STACK) for i, s in enumerate(ST)] +
-                 [edge('E-FIN-%d' % (927 + i), 'FIN-905-' + s, 'FIN-902-' + s, 'CT-EPOXY', 'fins', 'clips bonded to the tube')
-                  for i, s in enumerate('RL')] +
-                 [edge('E-FIN-%d' % (923 + i), 'PRP-901-' + s, 'FIN-903-' + s, 'CT-THERMAL-PAD', 'fins',
-                       'motor base heat into the printed mount (E3: PETG HDT ~70 degC EST); registered with ctx.contact')
-                  for i, s in enumerate(ST)],
+                 [edge('E-FIN-%d' % (923 + i), 'PRP-901-' + s, 'FIN-903-' + s, 'CT-THERMAL-CONTACT', 'fins',
+                       'motor base heat into the printed ASA mount (D-42); registered with ctx.contact')
+                  for i, s in enumerate(ST)] +
+                 [edge('E-FIN-%d' % (927 + i), 'FIN-905-' + s, 'FIN-902-' + SIDE[s], 'CT-EPOXY', 'fins',
+                       'station collar bonded on the tube under the mount') for i, s in enumerate(ST)] +
+                 [edge('E-FIN-%d' % (931 + i), 'FIN-906-' + s, 'FIN-905-' + s, 'CT-EPOXY', 'fins',
+                       'brace end bonded in the collar ear slot') for i, s in enumerate(ST)] +
+                 [edge('E-FIN-%d' % (935 + i), 'FIN-906-' + s, 'FIN-907-' + s, 'CT-EPOXY', 'fins',
+                       'brace end bonded in the anchor slot') for i, s in enumerate(ST)] +
+                 [edge('E-FIN-%d' % (939 + i), 'FIN-907-' + s, 'WNG-902', 'CT-EPOXY', 'fins',
+                       'anchor foot bonded on the spar through a core pocket') for i, s in enumerate(ST)] +
+                 [edge('E-FIN-%d' % (943 + i), 'FIN-905-' + s, 'FIN-901-' + s, 'CT-EPOXY', 'fins',
+                       'collar tail tongue bonded in the notched LE-top corner') for i, s in enumerate(ST)],
         'acknowledges': ['E-GER-%d' % (901 + i) for i in range(4)] + ['E-HRN-903', 'E-HRN-904']},
     'propulsion': {
         'parts': [part('PRP-901-' + s, 'Motor %s X3108S (+ ESC, adapter, nut lumped)' % s, MOTOR_G, 'motor (bought)', 'buy')
                   for s in ST] +
                  [part('PRP-902-' + s, 'Prop %s %s (disc)' % (s, PROP), PROP_G, 'nylon-glass prop (bought)', 'buy')
                   for s in ST],
-        'connection_types': [{'id': 'CT-PROP-ADAPTER', 'kind': 'mechanical', 'method': 'clamped',
-                              'spec': 'prop adapter (collet) + prop nut, per motor maker'}],
-        'edges': [edge('E-PRP-%d' % (901 + i), 'PRP-902-' + s, 'PRP-901-' + s, 'CT-PROP-ADAPTER', 'propulsion')
-                  for i, s in enumerate(ST)],
+        'edges': [edge('E-PRP-%d' % (901 + i), 'PRP-902-' + s, 'PRP-901-' + s, 'CT-PROP-NUT', 'propulsion',
+                       'prop on the adapter post (adapter lumped in the motor); field joint, example stack from E1',
+                       field_joint=True, joint_stack=PROP_STACK) for i, s in enumerate(ST)],
         'acknowledges': ['E-FIN-%d' % (919 + i) for i in range(8)] + ['E-TRN-%d' % (906 + i) for i in range(4)]},
     'landing': {
-        'parts': [part('GER-901-' + s, 'Foot %s (crushable, 45 mm)' % s, A('landing') / 4, 'TPU or PETG (printed, crushable)')
+        'parts': [part('GER-901-' + s, 'Foot %s (crush cartridge, %.0f mm, splayed pad)' % (s, V('cg.foot_height_m', 'm') * 1000),
+                       A('landing') / 4, 'PETG shoe + piston, XPS cartridge, neoprene pad')
                   for s in ST],
         'edges': [edge('E-GER-%d' % (901 + i), 'GER-901-' + s, 'FIN-901-' + s, 'CT-EPOXY', 'landing',
                        'cap bonded on the half-fin TE tip') for i, s in enumerate(ST)]},
@@ -149,7 +176,7 @@ SPEC = {
         'edges': [edge('E-POD-901', 'POD-901', 'WNG-901', 'CT-EPOXY', 'pod', 'bonded + strapped')],
         'acknowledges': ['E-PWR-901', 'E-PWR-902', 'E-AVN-901']},
     'power': {
-        'parts': [part('PWR-901', 'Flight pack 4S 6500 (envelope, centred in the pod)', PACK_G, 'LiPo', 'buy'),
+        'parts': [part('PWR-901', 'Flight pack 4S 6500 (envelope at the D-24 station)', PACK_G, 'LiPo', 'buy'),
                   part('PWR-902', 'Disconnect, main leads, UBEC (lump)', A('power') - PACK_G, 'copper + PVC', 'buy')],
         'edges': [edge('E-PWR-901', 'PWR-901', 'POD-901', 'CT-STRAP-VELCRO', 'power'),
                   edge('E-PWR-902', 'PWR-902', 'POD-901', 'CT-CA', 'power', 'foam tape (bond)')]},
@@ -169,7 +196,8 @@ SPEC = {
                  [edge('E-HRN-%d' % (903 + i), 'HRN-901-' + s, 'FIN-902-' + s, 'CT-CA', 'harness',
                        'tied along the tube inboard face, clear of the prop discs') for i, s in enumerate('RL')]},
     'transport': {
-        'parts': [part('TRN-901', 'Transport box 1.25 x 0.55 x 0.50 (six walls, lining lumped)',
+        'parts': [part('TRN-901', 'Transport box %s (six walls, lining lumped)' % ' x '.join('%.2f' % d for d in
+                                                                            V('requirements.box_external_m', 'm')),
                        BOX_G - 2 * CRADLE_G - TRAY_G, 'corrugated PP + PE foam lining', flight=False)] +
                  [part('TRN-902-' + s, 'Spar cradle %s (crush foam >= 70 mm)' % s, CRADLE_G, 'PE foam', flight=False)
                   for s in 'RL'] +
@@ -177,10 +205,10 @@ SPEC = {
         'edges': [edge('E-TRN-901', 'TRN-902-R', 'TRN-901', 'CT-EPOXY', 'transport', 'cradle bonded to the floor'),
                   edge('E-TRN-902', 'TRN-902-L', 'TRN-901', 'CT-EPOXY', 'transport', 'cradle bonded to the floor'),
                   edge('E-TRN-903', 'TRN-903', 'TRN-901', 'CT-EPOXY', 'transport', 'tray bonded to the floor')] +
-                 [edge('E-TRN-%d' % (904 + i), 'TRN-902-' + s, 'WNG-901', 'CT-STRAP-VELCRO', 'transport',
+                 [edge('E-TRN-%d' % (904 + i), 'TRN-902-' + s, 'WNG-901', 'CT-CRADLE-CONTACT', 'transport',
                        'wing lower skin rests on the cradle under the spar; fins and tubes never pressed')
                   for i, s in enumerate('RL')] +
-                 [edge('E-TRN-%d' % (906 + i), 'PRP-902-' + s, 'TRN-903', 'CT-STRAP-VELCRO', 'transport',
+                 [edge('E-TRN-%d' % (906 + i), 'PRP-902-' + s, 'TRN-903', 'CT-CRADLE-CONTACT', 'transport',
                        'prop off for transport, one slot each', stowed=True) for i, s in enumerate(ST)]},
 }
 
@@ -189,8 +217,8 @@ def write_interfaces():
     for sub, s in SPEC.items():
         os.makedirs(os.path.join(HERE, sub), exist_ok=True)
         doc = {'schema': 'dbf-interfaces/1', 'subsystem': sub,
-               '_note': 'GENERATED by redesign/fusion/skeleton/make_skeleton.py - K09-L skeleton (params A1-R2, '
-                        'geometry R1), not the design',
+               '_note': 'GENERATED by redesign/fusion/skeleton/make_skeleton.py - K09-L skeleton (params %s, '
+                        'geometry R3), not the design' % V('meta.revision'),
                'parts': [dict(p, subsystem=sub) for p in s['parts']]}
         if s.get('connection_types'):
             doc['connection_types'] = s['connection_types']
@@ -233,9 +261,9 @@ def main():
     write_interfaces()
     ctx = fill_cg()
     M, cg = ctx.rollup()
-    print('skeleton: %d parts (%d flight), %.1f g flight, CG %s m; half-fin %.1f g, motor lump %.1f g, elevons %.1f / %.1f g'
-          % (len(ctx.components), sum(1 for c in ctx.components.values() if c.flight), M,
-             ', '.join('%.4f' % v for v in cg), HALF_FIN_G, MOTOR_G, ELI, ELO))
+    print('skeleton: %d parts (%d flight), %.1f g flight, CG %s m; half-fin %.1f g, tube %.1f g, motor lump %.1f g, '
+          'elevons %.1f / %.1f g' % (len(ctx.components), sum(1 for c in ctx.components.values() if c.flight), M,
+                                     ', '.join('%.4f' % v for v in cg), HALF_FIN_G, FIN_TUBE_G, MOTOR_G, ELI, ELO))
     return 0
 
 

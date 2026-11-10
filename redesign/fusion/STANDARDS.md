@@ -1,6 +1,6 @@
 # K09-L CAD modelling standards
 
-Status: `PROPOSED` (A5, 2026-11-09; R1 geometry, params A1-R2). Applies to every `subsystems/<key>/fusion/<key>.py`. A module that breaks a
+Status: `PROPOSED` (A5, 2026-11-09; R3 geometry, params A1-R3). Applies to every `subsystems/<key>/fusion/<key>.py`. A module that breaks a
 rule here fails CAD review even when `check.py` passes. Exceptions: a change request to A5.
 
 ## 1. Build order
@@ -9,9 +9,9 @@ rule here fails CAD review even when `check.py` passes. Exceptions: a change req
 
 | # | Key | Designer | Joins to | Registers |
 |---|---|---|---|---|
-| 0 | datums | A5 (`k09kit.build_datums`) | — | 43 datums, aircraft envelope |
+| 0 | datums | A5 (`k09kit.build_datums`) | — | 52 datums (R3: `DP-MOTOR-FACE`, `DX-COLLAR-*`, `DX-ANCHOR-*`, `DX-FOOT-*` at the pad contact), aircraft envelope |
 | 1 | `wing` | D1 | — (base part: the core) | spar bond, 4 elevon hinges |
-| 2 | `fins` | D3 | wing spar, core | half-fins, tubes, through-core blocks, clip sets, mounts, motor-to-mount stacks, motor–mount thermal edges |
+| 2 | `fins` | D3 | wing spar, core | half-fins, tubes, through-core blocks, station collars, braces (`k9.strut`, `DX-COLLAR` → `DX-ANCHOR`), anchors on the spar, mounts, motor-to-mount stacks, motor–mount thermal edges |
 | 3 | `pod` | D2 | wing core | pod bond |
 | 4 | `landing` | D5 | fins | feet; `KO-GROUND` |
 | 5 | `propulsion` | E1 | fin mounts | prop adapters; `KO-PROP-UR/UL/LR/LL` |
@@ -48,7 +48,7 @@ rule here fails CAD review even when `check.py` passes. Exceptions: a change req
 | No fastener, tape or glue bodies: fasteners live in the joint stack, tape and skin mass in the part they cover | mass and BOM stay single-entry |
 | Wing section from `k9.section()` (`subsystems/wing/s5010.dat`, B2's UIUC file) | the CAD and `cad_claims.py` use the same coordinates |
 | Half-fins with `k9.half_fin()`: build the upper and the lower one (the section is cambered; a z-mirror leaves a gap or overlap at the root) | the root bonds flat on the skin |
-| Lumped-mass parts (harness bundles, clip sets) still get a body where the mass sits (`k9.bundle()`, a box) | `check.py` needs a body for every modelled part and the CG comes from it |
+| Lumped-mass parts (harness bundles, edge-strip pin sets) still get a body where the mass sits (`k9.bundle()`, a box) | `check.py` needs a body for every modelled part and the CG comes from it |
 | Trailing edges ≥ 0.6 mm (`k9.TE_MIN_M`), foam cover over tubes ≥ 2 mm (`ASM-A5-MIN-COVER`) | hot-wire and slot practice |
 | Keep shapes to prism / revolve / loft on axis-aligned planes (`fusionkit`) | the stub, Fusion and Blender build the same thing |
 | Wires: `ctx.wire` routes with support points, never lines between parts | wiring is an installation |
@@ -69,7 +69,9 @@ an information-only mass (`backends/fusion_backend.py#MATERIALS`, `UNVERIFIED-IN
 | Wing core, elevons | `XPS foam F-250 + packing-tape skin` | Polystyrene | 30 kg/m³ + 0.065 kg/m² | `params.json#wing.core`, `#wing.skin` |
 | Spar, motor tubes | `CF tube 22x20 (bought)` | Carbon Fiber | 0.102 kg/m | `params.json#wing.spar.mass_per_m_kgm` |
 | Fins | `foam board 4.8 mm, paper faced` | Polystyrene | 0.20 kg/m² per layer | `params.json#fins.areal_mass_kgm2` |
-| Mounts, through-core blocks, tray, clips | `PETG (printed)` | PET Plastic | declared (infill) | G3 |
+| Through-core blocks, station collars, anchors, tray | `PETG (printed)` | PET Plastic | declared (infill) | G3 |
+| Motor mounts, ESC pads (D-42: PETG fails by 8 K) | `ASA (printed)` | ABS Plastic (nearest) | declared | E3, G3 |
+| Braces, edge strips, pins | `CF strip 10x3, pultruded (bought)` (or 10x1, rod 2 mm) | Carbon Fiber | declared | D3 |
 | Feet | `TPU (printed, crushable)` or `PETG (printed)` | Thermoplastic Polyurethane / PET | declared | C5, G3 |
 | Pod shell | `foam board + PETG` | Polystyrene | declared | D2 |
 | Bought electronics, motors, pack | `motor (bought)`, `servo (bought)`, `LiPo`, `electronics (bought)` | none (default) | declared | datasheet / scale |

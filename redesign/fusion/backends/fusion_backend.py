@@ -51,8 +51,9 @@ JDIR = {'X': adsk.fusion.JointDirections.XAxisJointDirection,
 MATERIALS = [
     (r'6061|7075', ['Aluminum 6061', 'Aluminum']),
     (r'alum\w*', ['Aluminum 6061', 'Aluminum']),
-    (r'carbon|cfrp?', ['Carbon Fiber', 'Carbon Fiber Reinforced Polymer']),
+    (r'carbon|cfrp?|cf', ['Carbon Fiber', 'Carbon Fiber Reinforced Polymer']),   # 'CF tube', 'CF strip' (whole words: see _material())
     (r'petg', ['PET Plastic', 'Polyethylene Terephthalate', 'ABS Plastic']),
+    (r'asa|abs', ['ABS Plastic']),               # ASA mounts and ESC pads (D-42): ABS is the nearest library entry
     (r'pla', ['PLA', 'ABS Plastic']),
     (r'pa6|pa12|nylon', ['Nylon 6', 'Nylon']),
     (r'tpu', ['Thermoplastic Polyurethane', 'Rubber, Silicone', 'Rubber']),

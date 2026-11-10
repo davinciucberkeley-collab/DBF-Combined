@@ -1,12 +1,15 @@
-"""D3 fins and motor tubes, design R2: the checks that belong to the fins CAD (subsystems/fins). Emits claims.json.
+"""D3 fins and motor tubes, design R3: the checks that belong to the fins CAD (subsystems/fins). Emits claims.json.
 
     python -I redesign/subsystems/fins/make_fins.py     (CAD -> interfaces.json, masses)
     python -I redesign/team/D3/fins_calcs.py            then   python -I redesign/proofs/build_graph.py
 
-Vibration, fin-face, tube and block strength are C4's (team/C4/fin_structures.py: CL-C4-SEP-1LB, CL-C4-MS-FACE-1L,
-CL-C4-BLOCK-MS). This script checks what D3's geometry adds or changes: the slip-clamp fuse (D-23), prop gap (B4),
-screw engagement on the canted face (D-09), ESC pads in the wash, the root fillet, the brace geometry against C4's
-model, and the mass. Every input is a params key, another role's claim or an ASM-D3 assumption. Python 3 stdlib.
+Vibration, fin-face, tube, brace and block strength are C4's (team/C4/fin_structures_d3.py: CL-C4-D3-SEP,
+CL-C4-D3-SEP-WORST, CL-C4-D3-F1-LO, CL-C4-D3-MS-FACE, CL-C4-D3-BLOCK-MS, CL-C4-D3-MOUNT-K-REQ); joint strength is
+C6's (team/C6/joints.py). This script checks what D3's R3 geometry adds or changes: the slip-clamp fuse (D-23), prop
+gap (B4), screw engagement on the 7 deg canted plate (D-27), the collar height and tail length against C6's
+requirements, the strap eye (H1), the square foot tip (D5), ESC pads in the wash, the root fillet, the brace geometry
+against C4's model, and the mass. Every input is a params key, another role's claim or an ASM-D3 assumption.
+Python 3 stdlib.
 """
 import json
 import math
@@ -27,15 +30,20 @@ kit.assumption("ASM-D3-XPS-TENSILE", "XPS tensile 0.25 MPa", "Through-thickness 
 kit.assumption("ASM-D3-ROOT-LEFF", "Root joint effective length 0.15 m", "Root length that reacts a foot side load at the "
                "TE tip", "~55 % of the 0.26 m root; load enters at the aft end", 0.15, "m", status="UNVERIFIED")
 kit.assumption("ASM-D3-ROOT-SHARE", "Root carries 50 % of the foot side load", "Share of the L4 side load at the foot "
-               "reacted by the root fillets; the rest goes up the CF edge strips to the station collar and brace",
-               "C4 static FE: edge strips carry the L4 side load to the tube (ASM-C4-EDGE-W note); 0.5 is conservative",
+               "reacted by the root fillets; the rest goes up the pinned CF edge strips to the station collar and brace",
+               "C4 static FE: edge strips carry the L4 side load to the tube; 0.5 is conservative",
                0.5, "-", status="UNVERIFIED")
 kit.assumption("ASM-D3-FILLET-LEG", "Root fillet leg 12 mm", "Microballoon-epoxy fillet leg on the skin, each side",
-               "BUILD.md step 10", 0.012, "m", status="PROPOSED")
+               "BUILD.md", 0.012, "m", status="PROPOSED")
 kit.assumption("ASM-D3-WASH", "Slipstream radius 0.71 R", "Fully contracted hover slipstream radius = R / sqrt 2",
                "momentum theory", 0.7071, "-", status="PROPOSED")
 kit.assumption("ASM-D3-HUB", "Hub dead zone 0.2 R", "Inner radius below which the wash is weak", "11 in MR prop hub "
                "16.5 mm + root cut-out", 0.2, "-", status="PROPOSED")
+kit.assumption("ASM-D3-PETG-SHEAR", "Printed PETG shear 15 MPa", "Shear strength of printed PETG, load across the "
+               "perimeters (eye ligaments), 100 % walls", "about 1/3 of the 45-50 MPa bulk tensile on PETG TDS, knocked "
+               "down for layer adhesion; coupon with T-D3-EYE", 15e6, "Pa", status="UNVERIFIED")
+kit.assumption("ASM-D3-SHOE-LEN", "Foot shoe length 37 mm", "Length of D5's shoe sleeve along the tip edge",
+               "team/D5/CHANGE-REQUESTS.md#CR-D5-03 (37 x 9.6 mm floor)", 0.037, "m", status="PROPOSED")
 
 
 # ----------------------------------------------------------------------------- calculations
@@ -71,16 +79,52 @@ def prop_gap(ahead, stack, D, xt, od, gap, wall):
 
 @kit.calc("CALC-D3-SCREW-ENGAGE",
           inputs={"Ls": "P:fin_detail.mount.motor_screw_len_m", "tp": "P:fin_detail.mount.plate_t_m",
-                  "hp": "P:fin_detail.mount.pad_h_m", "pat": "P:fin_detail.mount.bolt_pattern_m",
-                  "cant": "P:propulsion.stations.cant_deg", "ym": "P:propulsion.stations.y_m",
-                  "zm": "P:propulsion.stations.z_m"},
-          equation="engagement = L_screw - (plate + pad + tan(cant) max|t . hole|), t = tangential unit vector",
-          title="Motor screw thread engagement on the canted face")
-def screw_engage(Ls, tp, hp, pat, cant, ym, zm):
+                  "pat": "P:fin_detail.mount.bolt_pattern_m", "cant": "P:propulsion.stations.cant_deg",
+                  "ym": "P:propulsion.stations.y_m", "zm": "P:propulsion.stations.z_m"},
+          equation="R3 canted plate (front and back faces both on the cant plane): engagement = L_screw - t_plate at "
+                   "every hole; for comparison the R2 flat plate + canted pads would give L - (t + tan(cant) max|t.hole|)",
+          title="Motor screw thread engagement on the 7 deg canted plate")
+def screw_engage(Ls, tp, pat, cant, ym, zm):
     n = math.hypot(ym, zm)
     dmax = max(abs(-zm / n * pat[0] / 2), abs(ym / n * pat[1] / 2))
-    stack = tp + hp + math.tan(math.radians(cant)) * dmax
-    return {"engage": Ls - stack, "stack_max": stack}
+    return {"engage": Ls - tp, "stack_max": tp, "flat_plate_engage": Ls - (tp + math.tan(math.radians(cant)) * dmax),
+            "head_tilt_flat_deg": cant}
+
+
+@kit.calc("CALC-D3-COLLAR",
+          inputs={"h": "P:fin_detail.station_collar.height_m", "h_req": "CL-C6-COLLAR-L-REQ",
+                  "tail": "P:fin_detail.station_collar.tail_m", "gap": "P:fin_detail.fin.le_gap_m",
+                  "embed_req": "CL-C6-STRIP-EMBED-REQ"},
+          equation="collar ratio = h / h_req (C6, on C4's 9.3 N m torsion); strip embedment = tail - LE gap, "
+                   "ratio = embedment / embed_req (C6, two faces bonded: tongue + wall)",
+          title="Station collar height and two-face tail length against C6")
+def collar(h, h_req, tail, gap, embed_req):
+    emb = tail - gap
+    return {"h_ratio": h / h_req, "embed": emb, "embed_ratio": emb / embed_req}
+
+
+@kit.calc("CALC-D3-STRAP-EYE",
+          inputs={"F": "P:fin_detail.strap_eye.load_n", "L": "P:fin_detail.strap_eye.len_m",
+                  "yh": "P:fin_detail.strap_eye.hole_y_m", "d": "P:fin_detail.strap_eye.hole_d_m",
+                  "h": "P:fin_detail.strap_eye.h_m", "t": "P:fin_detail.strap_eye.t_m",
+                  "tau": "ASM-D3-PETG-SHEAR", "sf": "P:requirements.safety_factor_ult",
+                  "pf": "ASM-C1-PRINTED-FACTOR"},
+          equation="worst ligament e = min(L - yh - d/2, (h - d)/2); shear-out capacity 2 e t tau; "
+                   "RF = capacity / (F sf pf)",
+          title="Strap eye on the block boss (H1 restrained run)")
+def strap_eye(F, L, yh, d, h, t, tau, sf, pf):
+    e = min(L - yh - d / 2, (h - d) / 2)
+    cap = 2 * e * t * tau
+    return {"lig": e, "capacity": cap, "rf": cap / (F * sf * pf)}
+
+
+@kit.calc("CALC-D3-TIP",
+          inputs={"sq": "P:fin_detail.fin.tip_square_m", "shoe": "ASM-D3-SHOE-LEN", "tb": "P:fins.board_t_m",
+                  "n": "P:fins.layers"},
+          equation="square-tip ratio = flat tip length / shoe length; tip edge width = n t_board",
+          title="Square foot tip for D5's shoe")
+def tip(sq, shoe, tb, n):
+    return {"ratio": sq / shoe, "width": n * tb}
 
 
 @kit.calc("CALC-D3-ESC-WASH",
@@ -95,7 +139,7 @@ def esc_wash(zm, zp, h, D, wash, hub):
 
 @kit.calc("CALC-D3-ROOT",
           inputs={"F": "CL-C1-FOOT-F-ULT", "mu": "ASM-C1-FRICTION", "pf": "ASM-C1-PRINTED-FACTOR",
-                  "hh": "P:fins.half_height_m", "tb": "P:fins.board_t_m", "n": "P:fin_detail.layers",
+                  "hh": "P:fins.half_height_m", "tb": "P:fins.board_t_m", "n": "P:fins.layers",
                   "share": "ASM-D3-ROOT-SHARE", "leg": "ASM-D3-FILLET-LEG", "Leff": "ASM-D3-ROOT-LEFF",
                   "sx": "ASM-D3-XPS-TENSILE"},
           equation="M = share mu F_foot pf h; fillet couple capacity M_cap = sigma_xps leg L_eff (t_fin + leg)",
@@ -106,36 +150,37 @@ def root(F, mu, pf, hh, tb, n, share, leg, Leff, sx):
 
 
 @kit.calc("CALC-D3-BRACE",
-          inputs={"L_tube": "P:fin_detail.tube_length_m", "grip": "P:fin_detail.mount.grip_m",
-                  "g_sc": "P:fin_detail.station_collar.gap_m", "h_sc": "P:fin_detail.station_collar.height_m",
+          inputs={"L_tube": "P:fins.tube.length_m", "grip": "P:fin_detail.mount.grip_m",
+                  "g_sc": "P:fin_detail.station_collar.gap_m", "ear_h": "P:fin_detail.station_collar.ear_h_m",
                   "zm": "P:propulsion.stations.z_m", "xt": "P:fins.tube.x_m", "yf": "P:fins.y_m",
                   "od": "P:fins.tube.od_m", "gap": "P:fin_detail.bond_gap_m",
                   "wall": "P:fin_detail.station_collar.ring_wall_m", "ear": "P:fin_detail.station_collar.ear_len_m",
                   "xs": "P:wing.spar.x_m", "ya": "P:fin_detail.brace.anchor_y_m", "zsk": "ASM-D3-SKIN-Z-SPAR",
-                  "proud": "P:fin_detail.anchor.proud_m", "L_c4": "CL-C4-STRUT-LEN", "dz_c4": "ASM-C4-STRUT-DZ",
-                  "dy_c4": "ASM-C4-STRUT-DY", "core_c4": "ASM-C4-CORE-T-TUBE", "t": "P:fin_detail.brace.t_m",
-                  "t_c4": "ASM-C4-STRUT-T"},
-          equation="ear point (x_t, y_f - r_collar - ear/2, z_sc_mid), anchor (x_s, y_a, z_skin + proud/2); "
-                   "Pcr ratio = (t/t_C4)^3 (L_C4 / L)^2 (pinned strip, buckles about its thin axis); lateral axial "
-                   "stiffness ratio = [t (dy/L)^2/L] / same for C4's strut (station - (od/2, od/2, dz) to (x_s, y_f - dy_C4, core/2 + 2 mm))",
-          title="Brace geometry against C4's braced model")
-def brace(L_tube, grip, g_sc, h_sc, zm, xt, yf, od, gap, wall, ear, xs, ya, zsk, proud, L_c4, dz_c4, dy_c4, core_c4,
-          t, t_c4):
-    z_mid = L_tube / 2 - grip - g_sc - h_sc / 2
+                  "proud": "P:fin_detail.anchor.proud_m", "t": "P:fin_detail.brace.t_m",
+                  "w": "P:fin_detail.brace.w_m", "F_d": "CL-C4-D3-BRACE-F", "E": "ASM-D3-CF-E-STRIP"},
+          equation="ear point (x_t, y_f - r_collar - ear/2, z_ear_mid = L_tube/2 - grip - gap - ear_h/2), anchor (x_s, "
+                   "y_a, z_skin + proud/2); Pcr = pi^2 E (w t^3/12) / L^2 (pinned, thin axis); Pcr ratio = Pcr / F_design "
+                   "(C4); lateral axial stiffness ky = E w t (dy/L)^2 / L (information). R3: no longer reads C4's R1 strut "
+                   "(CR-C4-26)",
+          title="Brace geometry, D3 R3")
+def brace(L_tube, grip, g_sc, ear_h, zm, xt, yf, od, gap, wall, ear, xs, ya, zsk, proud, t, w, F_d, E):
+    z_mid = L_tube / 2 - grip - g_sc - ear_h / 2
     e = (xt, yf - (od / 2 + gap + wall) - ear / 2, z_mid)
     a = (xs, ya, zsk + proud / 2)
     L = math.dist(e, a)
-    e4 = (xt - od / 2, yf - od / 2, zm - dz_c4)
-    a4 = (xs, yf - dy_c4, core_c4 / 2 + 0.002)
-    L4 = math.dist(e4, a4)
-    ky = ((e[1] - a[1]) / L) ** 2 / L
-    ky4 = ((e4[1] - a4[1]) / L4) ** 2 / L4
-    return {"L": L, "pcr_ratio": (t / t_c4) ** 3 * (L_c4 / L) ** 2, "ky_ratio": t * ky / (t_c4 * ky4), "attach_dz": zm - z_mid,
-            "attach_dz_ratio": (zm - z_mid) / dz_c4, "L_c4_check": L4}
+    ky = E * w * t * ((e[1] - a[1]) / L) ** 2 / L
+    pcr = math.pi ** 2 * E * (w * t ** 3 / 12) / L ** 2
+    return {"L": L, "pcr": pcr, "pcr_ratio": pcr / F_d, "ky": ky, "attach_dz": zm - z_mid}
+
+
+kit.assumption("ASM-D3-CF-E-STRIP", "Pultruded CF strip E 110 GPa", "Axial modulus of a pultruded CF strip",
+               "typical pultruded CF 110-135 GPa (vendor sheets); low end", 110e9, "Pa", status="UNVERIFIED")
 
 
 # ----------------------------------------------------------------------------- claims
 MT = ["FIN-003-UR", "FIN-003-UL", "FIN-003-LR", "FIN-003-LL"]
+SC = ["FIN-008-UR", "FIN-008-UL", "FIN-008-LR", "FIN-008-LL"]
+HF = ["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"]
 kit.claim("CL-D3-SLIP-FUSE", "Fin-joint design moment / root moment when the mount slips", calc="CALC-D3-MOUNT-SLIP",
           output="fuse_ratio", unit="-", limit=(">=", 1.0), verifies=["R-CRASH-REPAIR"], parts=MT + ["FIN-004-R"],
           how="T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 85 and 100 N")
@@ -146,41 +191,57 @@ kit.claim("CL-D3-SLIP-F", "Side force at the motor can that turns the collar", c
           output="F_side", unit="N", parts=MT, how="T-D3-SLIP")
 kit.claim("CL-D3-PROP-GAP", "Prop plane to collar front / B4 minimum 0.14 D", calc="CALC-D3-PROP-GAP", output="ratio",
           unit="-", limit=(">=", 1.0), verifies=["R-PROP-CLEAR"], parts=MT,
-          how="Measure motor face to prop hub face on the built station; Fusion interference check")
+          how="Measure motor face to prop hub face on the built station; Fusion interference check",
+          note="the canted plate corners sit up to 2.5 mm ahead of the face at the axis, inside the motor-base shadow")
 kit.claim("CL-D3-X-PROP", "Prop plane x with the D3 mount", calc="CALC-D3-PROP-GAP", output="x_prop", unit="m",
-          parts=MT, how="CR-D3-04: A1 updates propulsion.stations.x_prop_plane_m (-0.005 -> this value)")
+          parts=MT, how="D-28: params propulsion.stations.x_prop_plane_m carries this value")
 kit.claim("CL-D3-X-FACE", "Motor face x at the axis (D3 mount)", calc="CALC-D3-PROP-GAP", output="x_face", unit="m",
-          parts=MT, how="CR-D3-04: A1 notes the mount face in propulsion.stations.x_mount_m")
-kit.claim("CL-D3-SCREW-ENGAGE", "Motor-screw engagement, worst hole on the canted face", calc="CALC-D3-SCREW-ENGAGE",
+          parts=MT, how="D-28: noted in propulsion.stations.x_mount_m")
+kit.claim("CL-D3-SCREW-ENGAGE", "Motor-screw engagement, every hole, 7 deg canted plate", calc="CALC-D3-SCREW-ENGAGE",
           output="engage", unit="m", limit=(">=", 0.003), verifies=["R-JOINT-STACK"], parts=MT,
-          how="Probe the motor screw-hole depth on arrival (CL-E1-SCREW-ENGAGE); count turns on assembly",
-          note="limit = requirements.thread_engagement_min 1.0 x d, d = 3 mm")
+          how="Probe the motor screw-hole depth on arrival (T-E1-MOTOR-RM); count turns on assembly",
+          note="limit = requirements.thread_engagement_min 1.0 x d, d = 3 mm; the R2 flat plate + pads gives 2.5 mm at 7 deg")
+kit.claim("CL-D3-COLLAR-H", "Station collar height / C6 required bond length", calc="CALC-D3-COLLAR", output="h_ratio",
+          unit="-", limit=(">=", 1.0), verifies=["R-FIN-TUBE-JOINT"], parts=SC,
+          how="C6 coupon T-C6-COLLAR; measure the printed collar")
+kit.claim("CL-D3-TAIL-EMBED", "Edge-strip embedment in the collar tail / C6 required", calc="CALC-D3-COLLAR",
+          output="embed_ratio", unit="-", limit=(">=", 1.0), verifies=["R-FIN-TUBE-JOINT"],
+          parts=SC + ["FIN-011-URO"], how="Measure on the dry fit; C6 strip-anchor coupon")
+kit.claim("CL-D3-STRAP-EYE-RF", "Strap eye shear-out reserve factor at the H1 tie load", calc="CALC-D3-STRAP-EYE",
+          output="rf", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=["FIN-004-R", "FIN-004-L"],
+          how="T-D3-EYE: spring scale on a printed eye to 2 x 29.4 N, then to failure")
+kit.claim("CL-D3-TIP-SQUARE", "Square tip length / D5 shoe length", calc="CALC-D3-TIP", output="ratio", unit="-",
+          limit=(">=", 1.0), verifies=["R-LANDING-IMPACT"], parts=HF, how="Dry-fit the D5 shoe on the cut half-fin")
+kit.claim("CL-D3-TIP-W", "Tip edge width for the D5 shoe (two layers)", calc="CALC-D3-TIP", output="width", unit="m",
+          parts=HF, how="Calliper on the laminate")
 kit.claim("CL-D3-ESC-WASH", "ESC pad outer edge / slipstream radius", calc="CALC-D3-ESC-WASH", output="r_out_frac", unit="-",
           limit=("<=", 1.0), verifies=["R-THERMAL"], parts=["FIN-007-UR"], how="Tuft on the pad in a tethered hover; ESC "
           "temperature log in the E3 hover test")
 kit.claim("CL-D3-ESC-HUB", "ESC pad inner edge / hub dead zone", calc="CALC-D3-ESC-WASH", output="r_in_over_hub", unit="-",
           limit=(">=", 1.0), parts=["FIN-007-UR"], how="as CL-D3-ESC-WASH")
 kit.claim("CL-D3-ROOT-FILLET-RF", "Half-fin root fillet joint reserve factor, foot side load", calc="CALC-D3-ROOT",
-          output="rf_fillet", unit="-", limit=(">=", 1.0), verifies=["R-LANDING-IMPACT"], parts=["FIN-001-RU"],
+          output="rf_fillet", unit="-", limit=(">=", 1.0), verifies=["R-LANDING-IMPACT"], parts=["FIN-001-UR"],
           how="T-D3-ROOT: side pull at the fin TE tip on a core offcut to 1.25 x 28 N, then to failure")
-kit.claim("CL-D3-BRACE-PCR", "Brace buckling load / C4's modelled brace", calc="CALC-D3-BRACE", output="pcr_ratio", unit="-",
-          limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=["FIN-009-UR"],
-          how="C4 re-runs CALC-C4-STATIC-1L with CL-D3-BRACE-L (CR-D3-10)")
-kit.claim("CL-D3-BRACE-KY", "Brace lateral axial stiffness / C4's modelled brace", calc="CALC-D3-BRACE",
-          output="ky_ratio", unit="-", limit=(">=", 1.0), verifies=["R-VIBRATION"], parts=["FIN-009-UR"], how="C4 re-runs the modes with the D3 brace (CR-D3-10)",
-          note="anchor moved outboard to y 0.242 to clear D7's cradles; steeper brace, 10 x 3 strip restores the stiffness")
-kit.claim("CL-D3-BRACE-L", "Brace length, D3 geometry", calc="CALC-D3-BRACE", output="L", unit="m", parts=["FIN-009-UR"],
-          how="Measure on the jig")
+kit.claim("CL-D3-BRACE-PCR", "Brace (10 x 2) Euler load / C4 design brace force", calc="CALC-D3-BRACE",
+          output="pcr_ratio", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=["FIN-009-LR"],
+          how="C4 CL-C4-D3-MS-BRACE; T-C4-TAP-D3")
+kit.claim("CL-D3-BRACE-KY", "Brace lateral axial stiffness at the ear, upper (information)", calc="CALC-D3-BRACE",
+          output="ky", unit="N/m", parts=["FIN-009-UR"],
+          how="Information only since C4 CR-C4-16: the brace stores 2-6 % of the modal strain energy; the mode check "
+              "is CL-C4-D3-SEP (two layers, brace 10 x 2: 0.39)")
+kit.claim("CL-D3-BRACE-L", "Brace length (upper), D3 geometry", calc="CALC-D3-BRACE", output="L", unit="m",
+          parts=["FIN-009-UR"], how="Measure on the jig")
 kit.claim("CL-D3-BRACE-DZ", "Brace attach depth below the motor axis, D3 geometry", calc="CALC-D3-BRACE",
           output="attach_dz", unit="m", parts=["FIN-008-UR"],
-          how="C4 re-runs the modes with this value (C4 assumed 25 mm; CR-D3-10)",
-          note="deeper than C4's 25 mm because the mount collar and its slip stroke sit directly under the motor")
+          how="C4 modelled this value (CL-C4-D3-*); kept at R3 by the 12 mm ear flush with the collar top")
 
 for tid, title, ver, proc in (
         ("T-D3-SLIP", "Mount slip setting", ["CL-D3-SLIP-FUSE", "CL-D3-SLIP-HOLD"],
          "luggage scale hooked on the motor can, pull along y; adjust the pinch bolt until the collar turns at 85-100 N"),
         ("T-D3-ROOT", "Half-fin root side pull", ["CL-D3-ROOT-FILLET-RF"],
-         "half-fin bonded to a core offcut per BUILD step 10; pull at the TE tip along y to 35 N, then to failure"),
+         "half-fin bonded to a core offcut per BUILD.md; pull at the TE tip along y to 35 N, then to failure"),
+        ("T-D3-EYE", "Strap eye pull", ["CL-D3-STRAP-EYE-RF"],
+         "printed block offcut with one eye; spring scale through the eye along z and along y to 60 N, then to failure"),
         ("T-D3-WEIGH", "Weigh every fins part", ["CL-D3-MASS"], "1 g scale; update mass_g and status VERIFIED")):
     kit.test(tid, title, ver, procedure=proc)
 
@@ -190,10 +251,11 @@ def _mass():
     return round(sum(p["mass_g"] for p in d["parts"]), 1)
 
 
-kit.claim("CL-D3-MASS", "Fins subsystem flying mass (one-layer boards, CR-D3-02)", value=_mass(), unit="g",
-          limit=("<=", "P:mass.allocation_g.fins"), verifies=["R-MASS-ALLOC"], parts=["FIN-001-RU"],
+kit.claim("CL-D3-MASS", "Fins subsystem flying mass, design R3", value=_mass(), unit="g",
+          limit=("<=", "P:mass.allocation_g.fins"), verifies=["R-MASS-ALLOC"], parts=HF,
           how="T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
-          note="from make_fins.py (CAD volumes x densities); with two board layers it is about 396 g (CR-D3-02)")
+          note="from make_fins.py (CAD volumes x densities). Over the 408 g allocation: the R3 joint additions (16 mm "
+               "collar with 40 mm two-face tail, pins, strap eyes) were not in C4's 402 g basis; CR-D3-16 to A1")
 
 if __name__ == "__main__":
     kit.write()

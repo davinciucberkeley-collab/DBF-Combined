@@ -40,8 +40,8 @@
    "id": "ASM-D3-ROOT-SHARE",
    "type": "assumption",
    "title": "Root carries 50 % of the foot side load",
-   "text": "Share of the L4 side load at the foot reacted by the root fillets; the rest goes up the CF edge strips to the station collar and brace",
-   "basis": "C4 static FE: edge strips carry the L4 side load to the tube (ASM-C4-EDGE-W note); 0.5 is conservative",
+   "text": "Share of the L4 side load at the foot reacted by the root fillets; the rest goes up the pinned CF edge strips to the station collar and brace",
+   "basis": "C4 static FE: edge strips carry the L4 side load to the tube; 0.5 is conservative",
    "value": 0.5,
    "unit": "-",
    "status": "UNVERIFIED"
@@ -51,7 +51,7 @@
    "type": "assumption",
    "title": "Root fillet leg 12 mm",
    "text": "Microballoon-epoxy fillet leg on the skin, each side",
-   "basis": "BUILD.md step 10",
+   "basis": "BUILD.md",
    "value": 0.012,
    "unit": "m",
    "status": "PROPOSED"
@@ -74,6 +74,26 @@
    "basis": "11 in MR prop hub 16.5 mm + root cut-out",
    "value": 0.2,
    "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-D3-PETG-SHEAR",
+   "type": "assumption",
+   "title": "Printed PETG shear 15 MPa",
+   "text": "Shear strength of printed PETG, load across the perimeters (eye ligaments), 100 % walls",
+   "basis": "about 1/3 of the 45-50 MPa bulk tensile on PETG TDS, knocked down for layer adhesion; coupon with T-D3-EYE",
+   "value": 15000000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-D3-SHOE-LEN",
+   "type": "assumption",
+   "title": "Foot shoe length 37 mm",
+   "text": "Length of D5's shoe sleeve along the tip edge",
+   "basis": "team/D5/CHANGE-REQUESTS.md#CR-D5-03 (37 x 9.6 mm floor)",
+   "value": 0.037,
+   "unit": "m",
    "status": "PROPOSED"
   },
   {
@@ -103,8 +123,8 @@
     "F_side": 93.80863039399624,
     "F_hub": 47.03668861712135,
     "M_root": 17.823639774859284,
-    "fuse_ratio": 1.1377531195309802,
-    "hold_ratio": 2.049634580210593,
+    "fuse_ratio": 1.0092851718547118,
+    "hold_ratio": 1.785246517348847,
     "F_axial": 227.27272727272728,
     "clamp_n": 241.1438531695384
    },
@@ -118,10 +138,10 @@
     "can": 0.025,
     "stack": 0.039,
     "zm": 0.19,
-    "M_mount": 0.8485075591395999,
+    "M_mount": 0.9741682271226486,
     "ff": 1.15,
     "pf": 1.25,
-    "M_joint": 20.27890175524261,
+    "M_joint": 17.98913533324533,
     "mu": 0.3
    }
   },
@@ -161,34 +181,120 @@
   {
    "id": "CALC-D3-SCREW-ENGAGE",
    "type": "calculation",
-   "title": "Motor screw thread engagement on the canted face",
+   "title": "Motor screw thread engagement on the 7 deg canted plate",
    "script": "redesign/team/D3/fins_calcs.py",
    "function": "screw_engage",
-   "equation": "engagement = L_screw - (plate + pad + tan(cant) max|t . hole|), t = tangential unit vector",
+   "equation": "R3 canted plate (front and back faces both on the cant plane): engagement = L_screw - t_plate at every hole; for comparison the R2 flat plate + canted pads would give L - (t + tan(cant) max|t.hole|)",
    "inputs": {
     "Ls": "P:fin_detail.mount.motor_screw_len_m",
     "tp": "P:fin_detail.mount.plate_t_m",
-    "hp": "P:fin_detail.mount.pad_h_m",
     "pat": "P:fin_detail.mount.bolt_pattern_m",
     "cant": "P:propulsion.stations.cant_deg",
     "ym": "P:propulsion.stations.y_m",
     "zm": "P:propulsion.stations.z_m"
    },
    "outputs": {
-    "engage": 0.0030719007625085283,
-    "stack_max": 0.004928099237491472
+    "engage": 0.0035000000000000005,
+    "stack_max": 0.0045,
+    "flat_plate_engage": 0.002497019571953742,
+    "head_tilt_flat_deg": 7.0
    },
    "input_values": {
     "Ls": 0.008,
-    "tp": 0.0025,
-    "hp": 0.002,
+    "tp": 0.0045,
     "pat": [
      0.016,
      0.019
     ],
-    "cant": 3.0,
+    "cant": 7.0,
     "ym": 0.32,
     "zm": 0.19
+   }
+  },
+  {
+   "id": "CALC-D3-COLLAR",
+   "type": "calculation",
+   "title": "Station collar height and two-face tail length against C6",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "collar",
+   "equation": "collar ratio = h / h_req (C6, on C4's 9.3 N m torsion); strip embedment = tail - LE gap, ratio = embedment / embed_req (C6, two faces bonded: tongue + wall)",
+   "inputs": {
+    "h": "P:fin_detail.station_collar.height_m",
+    "h_req": "CL-C6-COLLAR-L-REQ",
+    "tail": "P:fin_detail.station_collar.tail_m",
+    "gap": "P:fin_detail.fin.le_gap_m",
+    "embed_req": "CL-C6-STRIP-EMBED-REQ"
+   },
+   "outputs": {
+    "h_ratio": 1.0884653458737508,
+    "embed": 0.0395,
+    "embed_ratio": 1.7405822102613602
+   },
+   "input_values": {
+    "h": 0.016,
+    "h_req": 0.014699595224279941,
+    "tail": 0.04,
+    "gap": 0.0005,
+    "embed_req": 0.022693556079760695
+   }
+  },
+  {
+   "id": "CALC-D3-STRAP-EYE",
+   "type": "calculation",
+   "title": "Strap eye on the block boss (H1 restrained run)",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "strap_eye",
+   "equation": "worst ligament e = min(L - yh - d/2, (h - d)/2); shear-out capacity 2 e t tau; RF = capacity / (F sf pf)",
+   "inputs": {
+    "F": "P:fin_detail.strap_eye.load_n",
+    "L": "P:fin_detail.strap_eye.len_m",
+    "yh": "P:fin_detail.strap_eye.hole_y_m",
+    "d": "P:fin_detail.strap_eye.hole_d_m",
+    "h": "P:fin_detail.strap_eye.h_m",
+    "t": "P:fin_detail.strap_eye.t_m",
+    "tau": "ASM-D3-PETG-SHEAR",
+    "sf": "P:requirements.safety_factor_ult",
+    "pf": "ASM-C1-PRINTED-FACTOR"
+   },
+   "outputs": {
+    "lig": 0.002999999999999999,
+    "capacity": 539.9999999999999,
+    "rf": 9.795918367346937
+   },
+   "input_values": {
+    "F": 29.4,
+    "L": 0.011,
+    "yh": 0.006,
+    "d": 0.004,
+    "h": 0.01,
+    "t": 0.006,
+    "tau": 15000000.0,
+    "sf": 1.5,
+    "pf": 1.25
+   }
+  },
+  {
+   "id": "CALC-D3-TIP",
+   "type": "calculation",
+   "title": "Square foot tip for D5's shoe",
+   "script": "redesign/team/D3/fins_calcs.py",
+   "function": "tip",
+   "equation": "square-tip ratio = flat tip length / shoe length; tip edge width = n t_board",
+   "inputs": {
+    "sq": "P:fin_detail.fin.tip_square_m",
+    "shoe": "ASM-D3-SHOE-LEN",
+    "tb": "P:fins.board_t_m",
+    "n": "P:fins.layers"
+   },
+   "outputs": {
+    "ratio": 1.0810810810810811,
+    "width": 0.0096
+   },
+   "input_values": {
+    "sq": 0.04,
+    "shoe": 0.037,
+    "tb": 0.0048,
+    "n": 2
    }
   },
   {
@@ -232,23 +338,23 @@
     "pf": "ASM-C1-PRINTED-FACTOR",
     "hh": "P:fins.half_height_m",
     "tb": "P:fins.board_t_m",
-    "n": "P:fin_detail.layers",
+    "n": "P:fins.layers",
     "share": "ASM-D3-ROOT-SHARE",
     "leg": "ASM-D3-FILLET-LEG",
     "Leff": "ASM-D3-ROOT-LEFF",
     "sx": "ASM-D3-XPS-TENSILE"
    },
    "outputs": {
-    "M": 3.363066814917207,
-    "rf_fillet": 2.2479482020597663
+    "M": 5.588938990956248,
+    "rf_fillet": 1.739149419188228
    },
    "input_values": {
-    "F": 56.64112530386875,
-    "mu": 0.5,
+    "F": 60.83198901721087,
+    "mu": 0.7,
     "pf": 1.25,
-    "hh": 0.19,
+    "hh": 0.21,
     "tb": 0.0048,
-    "n": 1,
+    "n": 2,
     "share": 0.5,
     "leg": 0.012,
     "Leff": 0.15,
@@ -258,15 +364,15 @@
   {
    "id": "CALC-D3-BRACE",
    "type": "calculation",
-   "title": "Brace geometry against C4's braced model",
+   "title": "Brace geometry, D3 R3",
    "script": "redesign/team/D3/fins_calcs.py",
    "function": "brace",
-   "equation": "ear point (x_t, y_f - r_collar - ear/2, z_sc_mid), anchor (x_s, y_a, z_skin + proud/2); Pcr ratio = (t/t_C4)^3 (L_C4 / L)^2 (pinned strip, buckles about its thin axis); lateral axial stiffness ratio = [t (dy/L)^2/L] / same for C4's strut (station - (od/2, od/2, dz) to (x_s, y_f - dy_C4, core/2 + 2 mm))",
+   "equation": "ear point (x_t, y_f - r_collar - ear/2, z_ear_mid = L_tube/2 - grip - gap - ear_h/2), anchor (x_s, y_a, z_skin + proud/2); Pcr = pi^2 E (w t^3/12) / L^2 (pinned, thin axis); Pcr ratio = Pcr / F_design (C4); lateral axial stiffness ky = E w t (dy/L)^2 / L (information). R3: no longer reads C4's R1 strut (CR-C4-26)",
    "inputs": {
-    "L_tube": "P:fin_detail.tube_length_m",
+    "L_tube": "P:fins.tube.length_m",
     "grip": "P:fin_detail.mount.grip_m",
     "g_sc": "P:fin_detail.station_collar.gap_m",
-    "h_sc": "P:fin_detail.station_collar.height_m",
+    "ear_h": "P:fin_detail.station_collar.ear_h_m",
     "zm": "P:propulsion.stations.z_m",
     "xt": "P:fins.tube.x_m",
     "yf": "P:fins.y_m",
@@ -278,26 +384,23 @@
     "ya": "P:fin_detail.brace.anchor_y_m",
     "zsk": "ASM-D3-SKIN-Z-SPAR",
     "proud": "P:fin_detail.anchor.proud_m",
-    "L_c4": "CL-C4-STRUT-LEN",
-    "dz_c4": "ASM-C4-STRUT-DZ",
-    "dy_c4": "ASM-C4-STRUT-DY",
-    "core_c4": "ASM-C4-CORE-T-TUBE",
     "t": "P:fin_detail.brace.t_m",
-    "t_c4": "ASM-C4-STRUT-T"
+    "w": "P:fin_detail.brace.w_m",
+    "F_d": "CL-C4-D3-BRACE-F",
+    "E": "ASM-D3-CF-E-STRIP"
    },
    "outputs": {
     "L": 0.14477110381564406,
-    "pcr_ratio": 5.85304096669291,
-    "ky_ratio": 1.0466802890965279,
-    "attach_dz": 0.03650000000000003,
-    "attach_dz_ratio": 1.4600000000000013,
-    "L_c4_check": 0.19064954759977795
+    "pcr": 345.3324581569849,
+    "pcr_ratio": 2.101296549033731,
+    "ky": 2632031.764132316,
+    "attach_dz": 0.03650000000000003
    },
    "input_values": {
     "L_tube": 0.344,
     "grip": 0.012,
     "g_sc": 0.0005,
-    "h_sc": 0.012,
+    "ear_h": 0.012,
     "zm": 0.19,
     "xt": 0.045,
     "yf": 0.32,
@@ -309,13 +412,21 @@
     "ya": 0.242,
     "zsk": 0.0226,
     "proud": 0.008,
-    "L_c4": 0.19064954759977798,
-    "dz_c4": 0.025,
-    "dy_c4": 0.12,
-    "core_c4": 0.027,
-    "t": 0.003,
-    "t_c4": 0.002
+    "t": 0.002,
+    "w": 0.01,
+    "F_d": 164.34256188912698,
+    "E": 110000000000.0
    }
+  },
+  {
+   "id": "ASM-D3-CF-E-STRIP",
+   "type": "assumption",
+   "title": "Pultruded CF strip E 110 GPa",
+   "text": "Axial modulus of a pultruded CF strip",
+   "basis": "typical pultruded CF 110-135 GPa (vendor sheets); low end",
+   "value": 110000000000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED"
   },
   {
    "id": "CL-D3-SLIP-FUSE",
@@ -339,7 +450,7 @@
     "FIN-004-R"
    ],
    "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 85 and 100 N",
-   "value": 1.1377531195309802
+   "value": 1.0092851718547118
   },
   {
    "id": "CL-D3-SLIP-HOLD",
@@ -362,7 +473,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP; witness line checked before every flight",
-   "value": 2.049634580210593
+   "value": 1.785246517348847
   },
   {
    "id": "CL-D3-SLIP-F",
@@ -401,6 +512,7 @@
     "FIN-003-LL"
    ],
    "how": "Measure motor face to prop hub face on the built station; Fusion interference check",
+   "note": "the canted plate corners sit up to 2.5 mm ahead of the face at the axis, inside the motor-base shadow",
    "value": 1.0225994477962983
   },
   {
@@ -416,7 +528,7 @@
     "FIN-003-LR",
     "FIN-003-LL"
    ],
-   "how": "CR-D3-04: A1 updates propulsion.stations.x_prop_plane_m (-0.005 -> this value)",
+   "how": "D-28: params propulsion.stations.x_prop_plane_m carries this value",
    "value": -0.008150000000000004
   },
   {
@@ -432,13 +544,13 @@
     "FIN-003-LR",
     "FIN-003-LL"
    ],
-   "how": "CR-D3-04: A1 notes the mount face in propulsion.stations.x_mount_m",
+   "how": "D-28: noted in propulsion.stations.x_mount_m",
    "value": 0.030849999999999995
   },
   {
    "id": "CL-D3-SCREW-ENGAGE",
    "type": "claim",
-   "title": "Motor-screw engagement, worst hole on the canted face",
+   "title": "Motor-screw engagement, every hole, 7 deg canted plate",
    "calc": "CALC-D3-SCREW-ENGAGE",
    "output": "engage",
    "unit": "m",
@@ -455,9 +567,116 @@
     "FIN-003-LR",
     "FIN-003-LL"
    ],
-   "how": "Probe the motor screw-hole depth on arrival (CL-E1-SCREW-ENGAGE); count turns on assembly",
-   "note": "limit = requirements.thread_engagement_min 1.0 x d, d = 3 mm",
-   "value": 0.0030719007625085283
+   "how": "Probe the motor screw-hole depth on arrival (T-E1-MOTOR-RM); count turns on assembly",
+   "note": "limit = requirements.thread_engagement_min 1.0 x d, d = 3 mm; the R2 flat plate + pads gives 2.5 mm at 7 deg",
+   "value": 0.0035000000000000005
+  },
+  {
+   "id": "CL-D3-COLLAR-H",
+   "type": "claim",
+   "title": "Station collar height / C6 required bond length",
+   "calc": "CALC-D3-COLLAR",
+   "output": "h_ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
+   "value": 1.0884653458737508
+  },
+  {
+   "id": "CL-D3-TAIL-EMBED",
+   "type": "claim",
+   "title": "Edge-strip embedment in the collar tail / C6 required",
+   "calc": "CALC-D3-COLLAR",
+   "output": "embed_ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-FIN-TUBE-JOINT"
+   ],
+   "parts": [
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL",
+    "FIN-011-URO"
+   ],
+   "how": "Measure on the dry fit; C6 strip-anchor coupon",
+   "value": 1.7405822102613602
+  },
+  {
+   "id": "CL-D3-STRAP-EYE-RF",
+   "type": "claim",
+   "title": "Strap eye shear-out reserve factor at the H1 tie load",
+   "calc": "CALC-D3-STRAP-EYE",
+   "output": "rf",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-STRUCT-MARGIN"
+   ],
+   "parts": [
+    "FIN-004-R",
+    "FIN-004-L"
+   ],
+   "how": "T-D3-EYE: spring scale on a printed eye to 2 x 29.4 N, then to failure",
+   "value": 9.795918367346937
+  },
+  {
+   "id": "CL-D3-TIP-SQUARE",
+   "type": "claim",
+   "title": "Square tip length / D5 shoe length",
+   "calc": "CALC-D3-TIP",
+   "output": "ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "Dry-fit the D5 shoe on the cut half-fin",
+   "value": 1.0810810810810811
+  },
+  {
+   "id": "CL-D3-TIP-W",
+   "type": "claim",
+   "title": "Tip edge width for the D5 shoe (two layers)",
+   "calc": "CALC-D3-TIP",
+   "output": "width",
+   "unit": "m",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "Calliper on the laminate",
+   "value": 0.0096
   },
   {
    "id": "CL-D3-ESC-WASH",
@@ -511,15 +730,15 @@
     "R-LANDING-IMPACT"
    ],
    "parts": [
-    "FIN-001-RU"
+    "FIN-001-UR"
    ],
    "how": "T-D3-ROOT: side pull at the fin TE tip on a core offcut to 1.25 x 28 N, then to failure",
-   "value": 2.2479482020597663
+   "value": 1.739149419188228
   },
   {
    "id": "CL-D3-BRACE-PCR",
    "type": "claim",
-   "title": "Brace buckling load / C4's modelled brace",
+   "title": "Brace (10 x 2) Euler load / C4 design brace force",
    "calc": "CALC-D3-BRACE",
    "output": "pcr_ratio",
    "unit": "-",
@@ -531,36 +750,28 @@
     "R-STRUCT-MARGIN"
    ],
    "parts": [
-    "FIN-009-UR"
+    "FIN-009-LR"
    ],
-   "how": "C4 re-runs CALC-C4-STATIC-1L with CL-D3-BRACE-L (CR-D3-10)",
-   "value": 5.85304096669291
+   "how": "C4 CL-C4-D3-MS-BRACE; T-C4-TAP-D3",
+   "value": 2.101296549033731
   },
   {
    "id": "CL-D3-BRACE-KY",
    "type": "claim",
-   "title": "Brace lateral axial stiffness / C4's modelled brace",
+   "title": "Brace lateral axial stiffness at the ear, upper (information)",
    "calc": "CALC-D3-BRACE",
-   "output": "ky_ratio",
-   "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0
-   },
-   "verifies": [
-    "R-VIBRATION"
-   ],
+   "output": "ky",
+   "unit": "N/m",
    "parts": [
     "FIN-009-UR"
    ],
-   "how": "C4 re-runs the modes with the D3 brace (CR-D3-10)",
-   "note": "anchor moved outboard to y 0.242 to clear D7's cradles; steeper brace, 10 x 3 strip restores the stiffness",
-   "value": 1.0466802890965279
+   "how": "Information only since C4 CR-C4-16: the brace stores 2-6 % of the modal strain energy; the mode check is CL-C4-D3-SEP (two layers, brace 10 x 2: 0.39)",
+   "value": 2632031.764132316
   },
   {
    "id": "CL-D3-BRACE-L",
    "type": "claim",
-   "title": "Brace length, D3 geometry",
+   "title": "Brace length (upper), D3 geometry",
    "calc": "CALC-D3-BRACE",
    "output": "L",
    "unit": "m",
@@ -580,8 +791,7 @@
    "parts": [
     "FIN-008-UR"
    ],
-   "how": "C4 re-runs the modes with this value (C4 assumed 25 mm; CR-D3-10)",
-   "note": "deeper than C4's 25 mm because the mount collar and its slip stroke sit directly under the motor",
+   "how": "C4 modelled this value (CL-C4-D3-*); kept at R3 by the 12 mm ear flush with the collar top",
    "value": 0.03650000000000003
   },
   {
@@ -603,7 +813,17 @@
     "CL-D3-ROOT-FILLET-RF"
    ],
    "state": "planned",
-   "procedure": "half-fin bonded to a core offcut per BUILD step 10; pull at the TE tip along y to 35 N, then to failure"
+   "procedure": "half-fin bonded to a core offcut per BUILD.md; pull at the TE tip along y to 35 N, then to failure"
+  },
+  {
+   "id": "T-D3-EYE",
+   "type": "test",
+   "title": "Strap eye pull",
+   "verifies": [
+    "CL-D3-STRAP-EYE-RF"
+   ],
+   "state": "planned",
+   "procedure": "printed block offcut with one eye; spring scale through the eye along z and along y to 60 N, then to failure"
   },
   {
    "id": "T-D3-WEIGH",
@@ -618,7 +838,7 @@
   {
    "id": "CL-D3-MASS",
    "type": "claim",
-   "title": "Fins subsystem flying mass (one-layer boards, CR-D3-02)",
+   "title": "Fins subsystem flying mass, design R3",
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -628,11 +848,14 @@
     "R-MASS-ALLOC"
    ],
    "parts": [
-    "FIN-001-RU"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
-   "value": 364.5,
-   "note": "from make_fins.py (CAD volumes x densities); with two board layers it is about 396 g (CR-D3-02)"
+   "value": 416.8,
+   "note": "from make_fins.py (CAD volumes x densities). Over the 408 g allocation: the R3 joint additions (16 mm collar with 40 mm two-face tail, pins, strap eyes) were not in C4's 402 g basis; CR-D3-16 to A1"
   }
  ]
 }

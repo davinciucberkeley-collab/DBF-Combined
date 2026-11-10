@@ -1,6 +1,7 @@
 """K09-L skeleton - propulsion: four motor envelopes (ESC, adapter and nut mass lumped in) and four prop discs at
-the stations; registers the prop-strike keep-outs. Reference layout for E1. The 3 deg tangential cant
-(propulsion.stations.cant_deg) is not modelled in the skeleton: E1/D3 tilt the mount face in their modules."""
+the stations, motor face on DP-MOTOR-FACE (D-28), shaft to the prop plane DP-PROP; registers the prop-strike
+keep-outs. Reference layout for E1. The 7 deg tangential cant (propulsion.stations.cant_deg, D-27) is not modelled in
+the skeleton: D3 tilts the mount plate in its module."""
 import k09kit as k9
 
 
@@ -8,7 +9,7 @@ def build(ctx):
     v = ctx.value
     st = ctx.D('DX-MOTOR-UR')
     hub = ctx.D('DX-HUB-UR')
-    face = (ctx.D('DP-MOUNT'), st[1], st[2])
+    face = (ctx.D('DP-MOTOR-FACE'), st[1], st[2])
     can_l = v('propulsion.motor_length_m', 'm')
     shaft_l = (face[0] - can_l) - hub[0]                                  # shaft + adapter reach the prop plane
     k9.motor_envelope(ctx.part('PRP-901-UR'), face, v('propulsion.motor_diameter_m', 'm'), can_l, shaft_l=shaft_l)

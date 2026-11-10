@@ -1,58 +1,69 @@
 {
  "money": {
-  "goods_base": 1309.78,
-  "goods_pess": 1359.05,
-  "tax_base": 134.25,
-  "tax_pess": 139.3,
-  "spend_base": 1569.03,
-  "spend_pess": 1680.35,
-  "early_goods_tax": 921.88
+  "spend_pess_allin": 1872.0,
+  "spend_base_allin": 1764.78,
+  "goods_base": 1319.54,
+  "goods_pess": 1365.09,
+  "tax_base": 135.25,
+  "tax_pess": 139.92,
+  "spend_base": 1579.79,
+  "spend_pess": 1687.01,
+  "early_goods_tax": 1004.26
  },
- "reserve_pess": 319.65,
- "reserve_base": 430.97,
+ "reserve_pess": 312.99,
+ "reserve_base": 420.21,
  "bridge": {
-  "value": 1680.36,
+  "value": 1687.01,
   "deltas": {
-   "elevon servos 2 x 19.99 replace the DECISION's $30 (horns and hinge are in the hardware kit)": 9.979999999999997,
-   "carbon tubes: 1 + 2 Aloft-or-overseas replace 3 overseas": -4.320000000000007,
-   "Small Parts adapter set (CR-E1-20)": 23.95,
-   "16 + 4 M3x8 screws (CR-E1-20)": 2.0,
-   "second ESC pack deferred (X01)": -30.0,
-   "prop and ring lines unchanged (12 x 3.83, 12 x 0.50)": 0.0
+   "old $124.01 wiring/hardware lump (H01 55.00 + H02 69.01) removed": -124.01,
+   "old H03 AS150U re-termination $15.00 and old H04 plywood box $60.00 removed": -75.0,
+   "new H01 12.00 + H02 24.00 residual harness and mechanism consumables + H03 5.00 charger XT60 stub": 41.0,
+   "F01-F09 power items (CR-F1-12): 25 + 8 + 8 + 4 + 18 + 6 + 5 + 6 + 6": 86.0,
+   "C01-C05 fastener, insert, rod, Loctite, epoxy kit (CR-C6-11)": 40.0,
+   "D01-D04 CF strips, CF tube 20x18, straps (CR-D3-09)": 56.0,
+   "D05 neoprene (CR-D5-10) and D06 pack straps (D2)": 18.0,
+   "W08 ASA spool (D-42, not in CR-A1-39)": 24.99,
+   "A05 microSD (CR-F3-06)": 6.0,
+   "G12 ground-test additions (CR-A1-39, <= $20)": 17.0,
+   "B06 Small Parts adapter set to gated X05 (D-39)": -23.95,
+   "A04 airspeed sensor held behind gate X08": -59.99,
+   "T01-T06 D7 box and field kit held behind gate X07 (0 in the spend)": 0.0
   }
  },
  "vendors": {
   "SunnySky USA": 124.95,
-  "Amazon": 297.55,
+  "Amazon": 508.55,
   "APC": 51.96,
-  "Small Parts CNC": 23.95,
-  "Bolt Depot": 2.0,
-  "OVONIC US": 79.25,
+  "Bolt Depot": 7.0,
+  "OVONIC US": 82.97,
   "ReadyMadeRC": 67.26,
   "RaceDayQuads": 20.49,
   "RadioMaster": 84.98,
-  "Holybro": 59.99,
   "EMAX USA": 39.98,
-  "Home Depot El Cerrito": 134.97,
-  "Aloft Hobbies": 72.0,
-  "West3D": 20.99,
-  "mixed (F1/F2 itemise)": 124.01,
-  "mixed": 15.0,
+  "Home Depot El Cerrito": 74.97,
+  "Aloft Hobbies": 120.0,
+  "West3D": 45.98,
   "GetFPV": 24.49,
   "Pyrodrone": 19.98,
   "Harbor Freight": 19.99,
   "Pine64": 25.99
  },
  "by_order": {
-  "EARLY": 836.17,
-  "DEC": 318.65,
-  "LOCAL": 154.96
+  "EARLY": 910.89,
+  "DEC": 313.69,
+  "LOCAL": 94.96
  },
+ "reserve_pess_allin": 128.0,
+ "reserve_base_allin": 235.22,
  "gated": {
   "X01": 33.08,
   "X02": 22.04,
   "X03": 18.39,
-  "X04": 87.37,
-  "X05": 44.09
+  "X04": 91.47,
+  "X05": 26.4,
+  "X06": 44.09,
+  "X07": 118.85,
+  "X08": 66.14,
+  "X09": 16.54
  }
 }

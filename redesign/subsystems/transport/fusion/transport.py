@@ -2,8 +2,8 @@
 the pitot-boom and pouch pockets, cam straps, handles. Every part is `flight: false` (no mass, envelope, keep-out or
 floating checks). Built around the aircraft in its own frame: upright, cruise attitude, props off, pitot boom out.
 
-Vertical stack (aircraft z): floor shell | free travel under the lower tube ends (= column bottoming stroke + 10 mm,
-team/D7/transport_calc.py CL-D7-TRAVEL) | aircraft envelope +/- env_z/2 | 10 mm | lid lining | lid shell.
+Vertical stack (aircraft z): floor shell | free travel under the lower tube ends and feet (>= column bottoming stroke + 10 mm,
+team/D7/transport_calc.py CL-D7-TRAVEL) | aircraft envelope +/- env_z/2 | 10 mm | lid shell (no lining since D-31 round 2).
 Dimensions: params.json (wing, pod, cg, transport.envelope_props_off_m) and subsystems/transport/params.json (trn.*).
 
 UNVERIFIED-IN-FUSION: the saddle prism (airfoil lower-surface contour on a Y-normal sketch) and the mirrored left
@@ -53,10 +53,11 @@ def build(ctx):
         y_in, y_out = s * (Lh - t - pt), s * (Lh - t)
         base.box((xm - px / 2, min(y_in, y_out), -pz / 2), (xm + px / 2, max(y_in, y_out), pz / 2), name='end pad')
 
-    # TRN-005 lid: shell, PE lining, plug lip inside the walls
+    # TRN-005 lid: shell, plug lip inside the walls (PE lining only if trn.box.lid_lining_t_m > 0)
     lid = ctx.part('TRN-005')
     lid.box((xf, -Lh, zt - t), (xa, Lh, zt), name='lid shell')
-    lid.box((xf + t, -Lh + t, zt - t - f['lin']), (xa - t, Lh - t, zt - t), name='lid lining')
+    if f['lin'] > 0:                                                    # D-31 round 2: no lining (lin = 0)
+        lid.box((xf + t, -Lh + t, zt - t - f['lin']), (xa - t, Lh - t, zt - t), name='lid lining')
     lip = L(ctx, 'box.lid_lip_m')
     lid.box((xf + t, -Lh + t, zt - t - lip), (xf + 2 * t, Lh - t, zt - t), name='lip front')
     lid.box((xa - 2 * t, -Lh + t, zt - t - lip), (xa - t, Lh - t, zt - t), name='lip aft')
@@ -86,7 +87,7 @@ def build(ctx):
     hp.box((hxc - hx / 2, yc - hy / 2, z_up), (hxc + hx / 2, yc + hy / 2, zt - t - f['lin']), name='pillar')
     k9.pair(ctx, 'TRN-004-R', 'TRN-004-L')
 
-    # TRN-003 prop tray (8 props on edge, pitot-boom pocket, pouch pocket) on the floor between the cradles
+    # TRN-003 prop tray (8 props on edge, pitot-boom slot with tip plug, pouch pocket) on the floor between the cradles
     tx, ty, tz = L(ctx, 'tray.size_m')
     tx0 = L(ctx, 'tray.x_lo_m')
     tray = ctx.part('TRN-003')
@@ -115,8 +116,8 @@ def build(ctx):
     for e, note in (('E-TRN-01', 'cradle L column on the floor: LSE tape + 2 zip ties'),
                     ('E-TRN-02', 'cradle R column on the floor: LSE tape + 2 zip ties'),
                     ('E-TRN-03', 'tray on the floor: LSE tape'),
-                    ('E-TRN-04', 'pillar L on the lid lining: LSE tape'),
-                    ('E-TRN-05', 'pillar R on the lid lining: LSE tape'),
+                    ('E-TRN-04', 'pillar L on the lid shell: LSE tape'),
+                    ('E-TRN-05', 'pillar R on the lid shell: LSE tape'),
                     ('E-TRN-06', 'wing rests on cradle L (lower surface, spar line)'),
                     ('E-TRN-07', 'wing rests on cradle R (lower surface, spar line)'),
                     ('E-TRN-08', 'pillar L presses the upper surface over the spar, 5 mm preload'),

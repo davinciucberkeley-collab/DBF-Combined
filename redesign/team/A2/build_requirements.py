@@ -15,8 +15,10 @@ Writes team/A2/claims.json         (new R-... requirement nodes; alias nodes for
 
 Exit 1 when the inventory is inconsistent (duplicate id, unknown shared id, a P1-P25 line with no requirement,
 a requirement in the graph that has no row here, a method letter outside A/I/T/D, a {P:key} or source key missing
-from params.json, a row that still names a retired ASM-A2-* id) or when build_graph.py reports an error on an A2
-node. Other roles' drift is printed and counted but does not fail A2's check. Standard library only.
+from params.json, a row that still names a retired ASM-A2-* id, an r3_text on a shared row that A1 has already
+adopted) or when build_graph.py reports an error on an A2 node. Other roles' drift is printed and counted but does
+not fail A2's check. Standard library only. build_graph.py re-runs every role's script and takes 2-3 min on this
+repo; --no-graph regenerates the two Markdown files from the graph.json on disk in < 1 s.
 """
 import argparse
 import datetime as dt
@@ -129,7 +131,11 @@ def validate(inv, shared, params):
                 errors.append(f"{r['id']}: missing field {k!r}")
         if r.get("group") not in inv["groups"]:
             errors.append(f"{r['id']}: unknown group {r.get('group')!r}")
-        for k in ("text", "value", "how"):
+        if new and "r3_text" in r:
+            errors.append(f"{r['id']}: r3_text is only for shared rows (edit 'text' directly)")
+        if not new and "r3_text" in r and r["id"] in shared_req and shared_req[r["id"]]["text"].strip() == subst(r["r3_text"], params, [], "").strip():
+            errors.append(f"{r['id']}: A1's text in {rel(SHARED)} now equals r3_text; delete the field")
+        for k in ("text", "r3_text", "value", "how"):
             if k in r:
                 if RETIRED_RE.search(r[k]):
                     errors.append(f"{r['id']}: {k} still names a retired ASM-A2-* id")
@@ -146,6 +152,12 @@ def validate(inv, shared, params):
     for p in P_IDS:
         if p not in covered:
             errors.append(f"{p} maps to no requirement")
+    for i, d in enumerate(inv.get("differences", [])):
+        for k in ("p", "proposed", "set", "why"):
+            if k not in d:
+                errors.append(f"differences[{i}]: missing field {k!r}")
+            else:
+                subst(d[k], params, errors, f"differences[{i}].{k}")
     lim_ids = [l["id"] for l in inv["retired_limits"]]
     for i in lim_ids:
         if lim_ids.count(i) > 1:
@@ -283,7 +295,9 @@ def write_requirements(inv, shared_req, params, cited):
     L.append("| P | The P1–P25 line(s) of `REQUIREMENTS-PROPOSED.md` it comes from. |")
     L.append("| Value · Unit | What a claim is tested against; `—` for text requirements (closed by inspection or demonstration). |")
     L.append("| Source | The `params.json` key(s) that hold the number (`requirements.*` for limits, CHANGE-LOG D-14), or a decision file. |")
-    L.append("| Owner · Method | Role that writes the claim; A analysis · I inspection · T test · D demonstration. Support roles: the matrix. |\n")
+    L.append("| Owner · Method | Role that writes the claim; A analysis · I inspection · T test · D demonstration. Support roles: the matrix. |")
+    L.append("| *R3 wording* | On a shared id (A1's node): A2's text for A1's next edit of `params/claims.json`; the proof graph "
+             "carries A1's current text until then (table \"Shared nodes awaiting A1's edit\"). |\n")
     L.append("## How a role closes a requirement\n")
     L.append("- Numeric: `kit.claim(..., limit=('<=', 'P:requirements.<key>'), verifies=['R-…'], how=…)` "
              "→ `CHECKED` when the calculation re-runs with checked inputs and the margin is ≥ 0. Never type the limit value.")
@@ -302,9 +316,22 @@ def write_requirements(inv, shared_req, params, cited):
                 title, text = r["title"], subst(r["text"], params, e, r["id"])
             else:
                 title, text = shared_req[r["id"]]["title"], shared_req[r["id"]]["text"]
+                if "r3_text" in r:
+                    text += f" *R3 wording (A2):* {subst(r['r3_text'], params, e, r['id'])}"
             L.append(f"| `{r['id']}` | {' '.join(r['p'])} | **{esc(title)}.** {esc(text)} | {esc(subst(r['value'], params, e, r['id']))} | "
                      f"{esc(r['unit']) or '—'} | {esc(r['source'])} | {r['owner']} | {r['method']} |")
         L.append("")
+    pending = [r for r in rows if "r3_text" in r]
+    L.append("## Shared nodes awaiting A1's edit\n")
+    if pending:
+        L.append("These ids live in `params/claims.json` (A1). A2 cannot edit that file, so the R3 wording below is what A1 pastes "
+                 "in (`team/A2/CHANGE-REQUESTS.md`); the build removes a row from this table once A1's text equals it.\n")
+        L.append("| ID | A1's text today | R3 wording (A2) |\n|---|---|---|")
+        for r in pending:
+            L.append(f"| `{r['id']}` | {esc(shared_req[r['id']]['text'])} | {esc(subst(r['r3_text'], params, e, r['id']))} |")
+    else:
+        L.append("None: every shared node's text matches the R3 set.")
+    L.append("")
     L.append("## P1–P25 → requirement ids\n")
     L.append("| P | Requirement ids |\n|---|---|")
     for p in P_IDS:
@@ -343,21 +370,11 @@ def write_requirements(inv, shared_req, params, cited):
         L.append(f"| `{l['id']}` | {' '.join(f'`{k}`' for k in keys)} | {' '.join(f'`{w}`' for w in who) or '—'} |")
     L.append("")
     L.append("## Differences from REQUIREMENTS-PROPOSED.md\n")
+    L.append("Rows are data in `requirements.json#differences`; numbers are read from `params.json` at build time.\n")
     L.append("| P | Proposed text | This set | Why |\n|---|---|---|---|")
-    L.append("| P6 | fin height 0.40 m | 0.38 m (2 × `fins.half_height_m` 0.19), confirmed D-15 | 0.40 m was the old fin *chord* |")
-    L.append("| P6 / P9 | envelope 1.15 × 0.445 × 0.39 m; box 0.45 m high | envelope `transport.envelope_props_off_m` "
-             f"({fmt(params['transport.envelope_props_off_m']['value'])} m, tube ends included); box `requirements.box_external_m` "
-             f"({fmt(params['requirements.box_external_m']['value'])} m, D-16) | the tube ends (±0.21 m) set the height; `CL-A1-BOX-FIT` +25 mm at 0.50 m; D7 measures two cars |")
-    L.append("| P14 | ≥ 3 packs | 2 flight packs (D-12); packs 3–4 only if the pessimistic reserve stays ≥ $309 + $87 | Tie-break §5.1, CHANGE-LOG D-12 |")
-    L.append("| P16 | airspeed sensor optional | fitted (`R-CONFIG`, `R-AIRSPEED`) | Tie-break decision §5.1 conditions the probability claim on it |")
-    L.append("| P2 | planned reserve ≥ $150 | ≥ $309 pessimistic (`R-RESERVE`) and ≥ $150 planned | Gate 1 of the tie-break is the binding rule |")
-    L.append("| P13 | full throttle ≈ 30 A per motor, ESC 45 A | `R-ESC-CURRENT` around the 100 A pack-current limiter (`Q_M_BAT_CURR_MAX`): "
-             "≤ 25 A per motor with the limiter, unlimited burst ≤ 55 A at 16.8 V (ESC 10 s rating), hover 27 A ± 15 % | "
-             "unlimited full throttle on the 11×5.5MR is 42.4 / 51.6 A at 14.8 / 16.8 V and the motor is rated 25 A / 30 s: the limiter is the design case (CR-E1-07, A1 concurs, CR-A1-17) |")
-    L.append("| P8 | 8 m/s gust \"survive-and-land\" | `R-GUST-LEAN`: lean ≤ `Q_A_ANGLE_MAX` − 5° with thrust headroom ≥ 1.3; landing upright in 8 m/s is not required (flight card 5 m/s) | The 8 m/s lean (34–36°) is within a few degrees of the tip-over angle: a landing in a gust may tip, and the feet (`R-LANDING-IMPACT`) take it |")
-    L.append("| — | no hover-trim number | `R-HOVER-SPLIT`: upper/lower pair thrust ratio ≤ `requirements.hover_split_max` (D-18) | A3's roll-up gives 1.19; B3 allows 12.5 % of the pitch differential for trim |")
-    L.append("| — | no structural requirements in P1–P25 | `R-LOADS`, `R-STRUCT-MARGIN`, `R-FIN-TUBE-JOINT`, `R-VIBRATION`, `R-PACK-RETENTION`, `R-LANDING-IMPACT` | The structures roles (C1–C6) need numbers to size against |")
-    L.append("| — | no control-authority numbers | `R-HOVER-AUTHORITY`, `R-CRUISE-AUTHORITY`, `R-SERVO-TORQUE`, `R-AIRSPEED`, `R-COMPASS`, `R-RC-LINK` | B3, D6, F3, F5 need pass/fail values |")
+    for i, d in enumerate(inv.get("differences", [])):
+        cells = [esc(subst(d[k], params, e, f"differences[{i}].{k}")) for k in ("p", "proposed", "set", "why")]
+        L.append("| " + " | ".join(cells) + " |")
     L.append("")
     (HERE / "REQUIREMENTS.md").write_text("\n".join(L), encoding="utf-8")
     return unused
@@ -388,7 +405,8 @@ def write_matrix(inv, shared_req, params, gs, graph_meta, graph_ok, cited):
     L.append(f"| {len(rows)} | {covered} | {counts['VERIFIED']} | {counts['CHECKED']} | {counts['PROPOSED']} | {counts['UNVERIFIED']} | {len(fails)} |\n")
     if fails:
         L.append("Failing now: " + ", ".join(f"`{f}` ({'; '.join(gs[f]['reasons'])})" for f in fails) + ".\n")
-    L.append("Method: A analysis · I inspection · T test · D demonstration. On disk: evidence files that exist today / listed. "
+    L.append("Method: A analysis · I inspection · T test · D demonstration. On disk: evidence files that exist today / listed "
+             "(a `logs/<test id>_*.csv` entry is H1's raw-data name per CR-H1-07 and counts when any dated file matches). "
              "`UNVERIFIED (no claim)` means the owner has not yet emitted a claim naming the id.\n")
     L.append("## Matrix\n")
     L.append("| ID | Title | Owner | Support | Method | Evidence | On disk | Claims | Margin | Status |\n|---|---|---|---|---|---|---|---|---|---|")
@@ -396,7 +414,7 @@ def write_matrix(inv, shared_req, params, gs, graph_meta, graph_ok, cited):
         title = r["title"] if "text" in r else shared_req[r["id"]]["title"]
         g = gs.get(r["id"])
         ev = r["evidence"]
-        present = sum(1 for e in ev if (REPO / e).exists())
+        present = sum(1 for e in ev if (any(REPO.glob(e)) if "*" in e else (REPO / e).exists()))
         ev_cells = " ".join(f"`{e.removeprefix('redesign/')}`" for e in ev)
         claims = " ".join(f"`{c}`" for c in g["claims"]) if g and g["claims"] else "—"
         L.append(f"| `{r['id']}` | {esc(title)} | {r['owner']} | {' '.join(r.get('support', [])) or '—'} | {r['method']} | "

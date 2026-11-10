@@ -5,123 +5,123 @@
  "parts": [
   {
    "id": "POD-001",
-   "name": "Pod shell (foam-board box, XPS LE filler, printed nose lip)",
+   "name": "Pod shell (foam-board box, XPS LE filler and nose block, printed nose lip and antenna tube)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 19.8,
+   "mass_g": 23.4,
    "material": "foam board + PETG",
    "cg_xyz_m": [
-    -0.0182,
-    0.0001,
-    0.0451
+    -0.0313,
+    -0.0003,
+    0.0443
    ],
    "make_or_buy": "make",
-   "notes": "floor, 2 side walls, nose wall, aft wall, aft deck; walls follow the S5010 upper surface aft of the recess; mass EST from CAD (team/D2/pod_data.py): PETG plate 1.9 g, XPS 0.5 g, foam board 13.4 g, glue_shell 4.0 g"
+   "notes": "floor, 2 side walls, nose wall (pitot, vent and antenna holes), aft wall (vent + harness exits), aft deck; 7 mm XPS nose block bonded to the nose and side walls; light tape on the top (CR-E3-03); mass EST from CAD (team/D2/pod_data.py): PETG plate 2.3 g, XPS 1.8 g, foam board 13.7 g, glue_shell 4.0 g, tape_light 1.5 g"
   },
   {
    "id": "POD-002",
-   "name": "Tray: bay floor + guides + aft stop, FC plate, avionics plate (printed PETG)",
+   "name": "Tray: bay floor + 3 mm forward stop + 1.5 mm guides, FC plate, avionics plate, PDB plate (printed PETG)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 23.9,
+   "mass_g": 30.0,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0201,
-    0.0026,
-    0.0223
+    -0.0352,
+    -0.0027,
+    0.0238
    ],
    "make_or_buy": "make",
-   "notes": "4 strap slots 31 x 1.8 mm; 4 M3 heat-set inserts (FC, 30.5 mm pattern UNVERIFIED) + 2 M2 bosses (airspeed); mass EST from CAD (team/D2/pod_data.py): PETG plate 21.5 g, glue_tray 1.0 g, inserts_m3 1.4 g"
+   "notes": "4 strap slots 37 x 1.8 mm; FC on 2 gel pads between end stops (no screws, CR-F3-03); airspeed on foam tape + 1 tie (no M2, CR-C6-07); PDB on 4 M3 heat-set inserts (25 mm pattern UNVERIFIED, F1); mass EST from CAD (team/D2/pod_data.py): PETG plate 27.1 g, glue_tray 1.5 g, inserts_m3 1.4 g"
   },
   {
    "id": "POD-003",
-   "name": "Hatch (foam board, printed tongue, hook-and-loop latch tab)",
+   "name": "Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 7.2,
+   "mass_g": 8.5,
    "material": "foam board + PETG",
    "cg_xyz_m": [
-    -0.0246,
-    0.0,
-    0.0825
+    -0.0295,
+    -0.0035,
+    0.083
    ],
    "make_or_buy": "make",
-   "notes": "tool-free, no magnets: tongue under the nose lip, hook-and-loop tab on the aft deck; mass EST from CAD (team/D2/pod_data.py): PETG plate 1.7 g, foam board 4.5 g, velcro_tab 1.0 g"
+   "notes": "tool-free, no magnets: tongue under the nose lip, hook-and-loop tab on the aft deck; receiver antenna A up the tube; mass EST from CAD (team/D2/pod_data.py): PETG plate 2.4 g, foam board 4.8 g, velcro_tab 1.3 g"
   },
   {
    "id": "POD-004",
-   "name": "Pack straps (2, 20 mm hook-and-loop, rubber-backed) + anti-slip pad",
+   "name": "Pack straps (2, 20 mm hook-and-loop, rubber-backed) + 2 EVA pads 2.5 mm",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 10.1,
-   "material": "nylon hook-and-loop + silicone",
+   "mass_g": 9.1,
+   "material": "nylon hook-and-loop + EVA",
    "cg_xyz_m": [
-    -0.0302,
+    -0.0012,
     0.0,
-    0.0404
+    0.0436
    ],
    "make_or_buy": "buy",
-   "notes": "two straps at the pack quarter points; slots let them follow the 23 mm trim travel; mass EST from CAD (team/D2/pod_data.py): rubber 2.1 g, strap (bought) 8.0 g"
+   "notes": "two straps at the pack quarter points, overlap >= 50 mm marked; slots let them follow the station range; mass EST from CAD (team/D2/pod_data.py): EVA 1.1 g, strap (bought) 8.0 g"
   },
   {
    "id": "POD-005",
-   "name": "GPS mast (printed PETG, plugs into the handle grip)",
+   "name": "GPS mast with 45 deg pad (printed PETG, plugs into the handle grip)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 5.6,
+   "mass_g": 6.6,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.08,
+    0.0805,
     0.0,
-    0.149
+    0.1559
    ],
    "make_or_buy": "make",
-   "notes": "GPS taped on the 30 mm top plate; cable runs down the mast and a handle leg; mass EST from CAD (team/D2/pod_data.py): PETG plate 4.1 g, mast_hw 1.5 g"
+   "notes": "GPS taped on the pad tilted 45 deg toward the nose, arrow forward; brass bolt (no steel within 50 mm); mass EST from CAD (team/D2/pod_data.py): PETG plate 5.1 g, mast_hw 1.5 g"
   },
   {
    "id": "POD-006",
-   "name": "Pitot boom socket (printed PETG, pod nose, left channel)",
+   "name": "Pitot boom socket with 32 mm flange (printed PETG, pod nose, left channel)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 3.1,
+   "mass_g": 5.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0956,
+    -0.1071,
     -0.046,
     0.045
    ],
    "make_or_buy": "make",
-   "notes": "bore 6.2 mm for a 6 mm boom (UNVERIFIED, F3), keyed; 35 mm deep; mass EST from CAD (team/D2/pod_data.py): PETG block 3.1 g"
+   "notes": "bore 6.2 mm for the 6 mm keyed boom (F3 accepted); flange bonded to the nose wall inside face (CR-C6-09); mass EST from CAD (team/D2/pod_data.py): PETG block 3.1 g, PETG plate 2.2 g, glue_socket 0.5 g"
   },
   {
    "id": "POD-007",
-   "name": "Carry handle on the spar (printed PETG) + 'LIFT HERE - do not lift by the motors' label",
+   "name": "Carry handle on the spar with the aft stop bridge (printed PETG) + 'LIFT HERE - do not lift by the motors' label",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 26.5,
+   "mass_g": 34.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0797,
+    0.08,
     -0.0,
-    0.064
+    0.0609
    ],
    "make_or_buy": "make",
-   "notes": "feet saddle the spar top in the open slot, one 7.6 mm nylon tie each round foot + spar; legs through the aft deck; mass EST from CAD (team/D2/pod_data.py): PETG block 12.1 g, PETG plate 8.9 g, glue_handle 1.0 g, label 0.5 g, tie_each 4.0 g"
+   "notes": "feet saddle the spar top in the open slot, one 7.6 mm nylon tie each round foot + spar; bridge between the feet carries the 3 mm aft stop and 2 gussets; legs through the aft deck; mass EST from CAD (team/D2/pod_data.py): PETG block 11.7 g, PETG plate 17.6 g, glue_handle 1.0 g, label 0.5 g, tie_each 4.0 g"
   },
   {
    "id": "POD-008",
-   "name": "Trim spacer set (3 printed U-spacers 5 / 8 / 10 mm)",
+   "name": "Trim kit: XPS crush block (cut per pack), 1.5 mm PETG spreader, PETG U-spacers 2 / 4 / 8 / 8 mm",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 4.2,
-   "material": "PETG (printed)",
+   "mass_g": 9.1,
+   "material": "XPS + PETG (printed)",
    "cg_xyz_m": [
-    0.0513,
+    -0.0522,
     0.0,
-    0.0251
+    0.0447
    ],
    "make_or_buy": "make",
-   "notes": "in front of or behind the pack: 0 ... 23 mm aft trim in 8 steps; mass EST from CAD (team/D2/pod_data.py): PETG block 4.2 g"
+   "notes": "block ahead of the pack (CR-C5-02), spacers behind it; CAD and mass: nominal 550 g pack = block 27.7 mm + spreader + 8 mm spacer; 2 / 4 / 8 mm spare spacers in the field kit; mass EST from CAD (team/D2/pod_data.py): PETG block 1.5 g, PETG plate 5.3 g, XPS 2.3 g"
   }
  ],
  "connection_types": [
@@ -148,6 +148,12 @@
    "kind": "mechanical",
    "method": "slid",
    "spec": "loose printed spacer trapped between two stops"
+  },
+  {
+   "id": "CT-M3-BRASS-NUT",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "M3 brass SHCS through clearance hole, brass nut + Loctite 222 (non-magnetic, near a compass)"
   }
  ],
  "edges": [
@@ -157,7 +163,7 @@
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
    "owner": "pod",
-   "notes": "shell floor, XPS LE filler, side walls and aft wall bonded to bare foam: D1 cuts the recess (x_rec0 ... x_rec1, z = pod base, full pod width) and leaves the tape skin off under the pod; skin then taped over the shell foot (CR-D2-04)",
+   "notes": "shell floor, XPS LE filler, side walls and aft wall bonded to bare, sanded foam: D1 cuts the recess (x_rec0 ... x_rec1, z = pod base, full pod width) and leaves the tape skin off under the pod (CR-C2-07); skin then taped over the shell foot (CR-D2-04)",
    "bond": {
     "adhesive": "30 min epoxy thickened with microballoons (foam-safe; no CA on XPS)",
     "area_mm2": 10014,
@@ -174,10 +180,10 @@
    "part_b": "POD-001",
    "via": "CT-EPOXY",
    "owner": "pod",
-   "notes": "tray, FC plate and avionics plate bonded to the foam-board floor (paper face scuffed)",
+   "notes": "tray (with the forward stop), FC, avionics and PDB plates epoxied full-area to the foam-board floor (paper face scuffed); floor-to-side-wall fillets over x -0.100 ... 0 (CR-C3-01)",
    "bond": {
     "adhesive": "30 min epoxy",
-    "area_mm2": 13505,
+    "area_mm2": 14680,
     "prep": "PETG underside sanded 120 grit; board face scuffed",
     "cure": "24 h",
     "load_n": "pack straps 85 N ultimate (CL-C1-PACK-CRASH-LOAD) into the floor",
@@ -193,9 +199,9 @@
    "owner": "pod",
    "notes": "opened every flight, tool-free, no magnets; the hatch carries no pack load",
    "retention": {
-    "item": "tongue under the nose lip + 30 mm hook-and-loop tab",
+    "item": "tongue under the nose lip + 12 x 40 mm hook-and-loop tab (CR-C3-01)",
     "count": 1,
-    "load_n": "hatch weight only (7 g)",
+    "load_n": "hatch weight only (< 10 g)",
     "inspection": "tab grips, tongue seated: pre-flight card"
    }
   },
@@ -207,7 +213,7 @@
    "owner": "pod",
    "notes": "each strap passes down a slot, under the tray in a 1 mm groove cut in the foam floor, up the other slot",
    "retention": {
-    "item": "strap in 2 slots 31 x 1.8 mm",
+    "item": "strap in 2 slots 37 x 1.8 mm",
     "count": 2,
     "load_n": "see E-POD-05",
     "inspection": "no fraying at the slot edges: pre-flight card"
@@ -219,31 +225,31 @@
    "part_b": "POD-002",
    "via": "CT-STRAP-VELCRO",
    "owner": "pod",
-   "notes": "field joint. z/y: 2 straps + guides + pad; fore-aft: nose wall in front, aft stop behind, POD-008 spacers fill the 23 mm (aft-only trim, CR-D2-02). Hover landing loads (+x) go into the aft stop, not the straps",
+   "notes": "field joint. z/y: 2 straps + guides + EVA pads; fore-aft: crush block + spreader ahead (on the forward stop, x -0.1002), U-spacers + aft stop (x 0.077, on the handle bridge) behind. Nominal centroid x -0.001 (aft face 0.069, 8 mm spacer); 680 g pack aft face 0.073 (4 mm spacer); block cut per pack. Leads exit aft over the stop",
    "retention": {
-    "item": "2 hook-and-loop straps + guides; nose wall, aft stop, spacers fore-aft",
+    "item": "2 hook-and-loop straps (>= 50 mm overlap) + 1.5 mm guides + EVA pads; crush block on the forward stop ahead, spacers on the aft stop behind",
     "count": 2,
     "load_n": "85 N any axis ultimate (CL-C1-PACK-CRASH-LOAD, 680 g x 12.75 g); preload 40 N per strap (ASM-C1-STRAP-PRELOAD); +x hover landing 6 g x 680 g = 40 N on the aft stop",
-    "inspection": "strap cinched, spacer set complete, pack against a stop: pre-flight card"
+    "inspection": "strap cinched, overlap mark covered, block and spacer for this pack fitted, no fore-aft play: pre-flight card"
    }
   },
   {
    "id": "E-POD-06",
    "part_a": "POD-005",
    "part_b": "POD-007",
-   "via": "CT-M3-SHCS-NYLOC",
+   "via": "CT-M3-BRASS-NUT",
    "owner": "pod",
-   "notes": "mast plugs 10 mm into the grip socket; cross-bolted; replace the mast after a tip-over (A4 planned mast-to-shell bond: changed so the mast is replaceable and on structure)",
+   "notes": "mast plugs 8 mm into the grip socket; cross-bolted with brass hardware (F3: no steel within 50 mm of the compass, the bolt is about 0.06 m from the GPS); 6.5 mm counterbore 4.5 deep on +y keeps the grip at 10 mm (CR-C6-09); replace the mast after a tip-over",
    "joint_stack": {
-    "fastener": "M3x16 SHCS",
+    "fastener": "M3x16 SHCS, brass (DIN 912 CuZn)",
     "count": 1,
-    "grade": "A2-70",
-    "hole": "3.4 mm clearance across the socket boss (POD-007) and the mast base (POD-005)",
+    "grade": "brass CuZn39Pb3",
+    "hole": "3.4 mm clearance across the socket boss (POD-007, 14 mm, counterbored to a 9.5 mm grip) and the mast (POD-005)",
     "insert": "none",
-    "engagement_mm": 4.0,
-    "min_engagement_mm": 3.0,
-    "washer_nut": "M3 nyloc + M3 washer",
-    "torque": "snug, about 0.3 N m (printed parts)",
+    "engagement_mm": 5.5,
+    "min_engagement_mm": 5.0,
+    "washer_nut": "M3 brass nut + 1 nylon washer 0.5 mm; Loctite 222 on the nut (grip 10.0 mm, 5.5 mm past the grip)",
+    "torque": "snug, <= 0.3 N m (printed parts, brass)",
     "tool": "2.5 mm hex key + 5.5 mm spanner",
     "access": "from +y beside the grip, above the pod",
     "install_order": 7,
@@ -256,15 +262,15 @@
    "part_b": "POD-001",
    "via": "CT-EPOXY",
    "owner": "pod",
-   "notes": "socket through a 14 mm square hole in the nose wall, bonded both faces; boom bending (handling, 1 kg on the tip) goes into the nose wall and the left side wall",
+   "notes": "socket through a 12 mm square hole in the nose wall; 32 x 32 mm flange bonded to the wall inside face (CR-C6-09); the nose block is cut round the flange; boom bending (1 kg on the tip in handling, 0.8 N m) goes into the nose wall",
    "bond": {
     "adhesive": "30 min epoxy",
-    "area_mm2": 230,
-    "prep": "PETG sanded; hole edges sealed",
+    "area_mm2": 1110,
+    "prep": "PETG sanded; hole edges sealed; flange face to the paper face, clamped",
     "cure": "24 h",
     "load_n": "1 kg on the boom tip in handling, about 0.8 N m",
     "load_case": "handling",
-    "sized_by": "C3"
+    "sized_by": "C6 (CR-C6-09), C3"
    }
   },
   {
@@ -273,7 +279,7 @@
    "part_b": "POD-001",
    "via": "CT-EPOXY",
    "owner": "pod",
-   "notes": "handle legs pass through 8.8 mm slots in the aft deck, bonded: locates the deck; the shell crash load bears on the legs",
+   "notes": "handle legs pass through 7.8 mm slots in the aft deck at y +/-0.048, bonded: locates the deck",
    "bond": {
     "adhesive": "30 min epoxy",
     "area_mm2": 269,
@@ -290,35 +296,49 @@
    "part_b": "WNG-002",
    "via": "CT-SPAR-TIE",
    "owner": "pod",
-   "notes": "carry point on the spar (D-23): feet saddle the spar top in the open slot, bonded (scuffed CF, 30 min epoxy) and one 7.6 mm nylon tie per foot laid under the spar before D1 bonds it (CR-D2-04). Also the positive pod retention",
+   "notes": "carry point on the spar (D-23): feet saddle the spar top in the open slot (y 0.029 ... 0.053), bonded (scuffed CF, 30 min epoxy), one 7.6 mm nylon tie per foot at y +/-0.036 laid under the spar before D1 bonds it (CR-D2-04); the stop bridge between the feet sits on the slot fill (|y| < 0.029). Also the aft-stop load path: pack +x -> stop -> bridge -> saddles -> spar",
    "retention": {
     "item": "7.6 mm nylon cable tie round foot + spar (50 lb class, 222 N each)",
     "count": 2,
-    "load_n": "CL-D2-POD-CRASH-F (pod group 12.75 g) and CL-D2-HANDLE-F-ULT (2 g lift)",
+    "load_n": "CL-D2-HANDLE-F-ULT (2 g lift, handling; CR-C3-04: the crash path is straps -> tray -> floor -> bond)",
     "inspection": "ties tight, foot not lifting off the spar: weekly and after any hard landing"
    },
    "bond": {
     "adhesive": "30 min epoxy",
-    "area_mm2": 680,
+    "area_mm2": 1445,
     "prep": "spar top scuffed 120 grit and wiped with IPA; PETG sanded",
     "cure": "24 h",
-    "load_n": "lift by the handle 2 g at 2.6 kg (51 N limit, 77 N ultimate); pod group crash (CL-D2-POD-CRASH-F)",
-    "load_case": "G1 handling; C1 crash",
-    "sized_by": "C3, C2 (spar bearing)"
+    "load_n": "lift by the handle 2 g at 2.6 kg (51 N limit, 77 N ultimate); pack +x on the aft stop (40 N hover landing limit, 85 N crash ultimate)",
+    "load_case": "G1 handling; L1 hover landing; C1 crash",
+    "sized_by": "C3 (CR-D2-05), C2 (spar bearing)"
    }
   },
   {
    "id": "E-POD-10",
    "part_a": "POD-008",
+   "part_b": "POD-007",
+   "via": "CT-SLIDE-STOP",
+   "owner": "pod",
+   "notes": "U-spacers stand between the pack aft face and the aft stop, held by the pack; the pack leads pass over them",
+   "retention": {
+    "item": "trapped between the pack and the aft stop",
+    "count": 1,
+    "load_n": "pack +x: 40 N hover landing limit, 85 N crash ultimate",
+    "inspection": "spacer set for this pack fitted (label on the pack): pre-flight card"
+   }
+  },
+  {
+   "id": "E-POD-11",
+   "part_a": "POD-008",
    "part_b": "POD-002",
    "via": "CT-SLIDE-STOP",
    "owner": "pod",
-   "notes": "spacers stand on the tray between the guides, held by the pack and the stops; unused ones ride behind the pack",
+   "notes": "crush block (with the spreader on the pack fore face) against the 3 mm forward stop, between the guides; cut per pack (length = pack fore face - 1.5 mm - (-0.1002)); in a nose-in crash the stop breaks at ~100 N and rides into the nose block (CR-C3-06)",
    "retention": {
-    "item": "trapped between pack and nose wall / aft stop",
-    "count": 3,
-    "load_n": "pack +x hover landing, see E-POD-05",
-    "inspection": "all three spacers in the pod: pre-flight card"
+    "item": "trapped between the forward stop and the pack",
+    "count": 1,
+    "load_n": "pack -x: 85 N ultimate; crash: crush, <= 100 g on the pack (C5)",
+    "inspection": "block intact, not crushed, labelled for this pack: pre-flight card"
    }
   }
  ],

@@ -1,4 +1,4 @@
-"""B3 design studies on the R1 AVL model (not part of the proof chain; feeds S-AND-C.md tables).
+"""B3 design studies on the R3 AVL model (not part of the proof chain; feeds S-AND-C.md tables).
 
 Run: python -I redesign/team/B3/run_avl_study.py   (after sc_analysis.py; shares the AVL cache)
 Writes: avl/k09l.avl, avl/k09l.mass (baseline model files, open them in AVL 3.52 directly),
@@ -63,16 +63,16 @@ def main():
     (HERE / "avl" / "k09l.avl").write_text(AV.avl_geometry(gb, "fine"))
     (HERE / "avl" / "k09l.mass").write_text(AV.avl_mass(m, xt, zcg, I["Ixx"] * k, I["Iyy"] * k, I["Izz"] * k,
                                                         I["Ixz"] * k, rho, g0))
-    # ---- D-17: where the A3 layout sits for each pack station / pack mass, and the pod at -0.125
-    dpod = A3["cg"]["dxcg_dx"]["pod_group"]
+    # ---- where the A3 R3 layout sits for each pack mass and the pack trim travel (D-24 station x -0.001)
     chk = RES["CALC-B3-CG-CHECK"]
     xc = chk["x_centred"]
-    lay = {"x_centred": xc, "x_pod_m0125_centred": xc - 0.020 * dpod,
+    lay = {"x_pack_nominal": xc, "x_pack_fwd_stop": chk["cg_slide_fwd"], "x_pack_aft_stop": chk["cg_slide_aft"],
+           "pack_x_for_target": chk["pack_x_target"], "dxcg_dx_pack": A3["cg"]["dxcg_dx"]["pack"],
            "pack_light_503g_at_A3_station": A3["cg"]["cg_x_pack_light_heavy_m"][0],
            "pack_heavy_680g_at_A3_station": A3["cg"]["cg_x_pack_light_heavy_m"][1],
            "slide_cg_range": A3["cg"]["cg_x_trim_range_m"], "x_fwd": lim["x_fwd"], "x_aft": lim["x_aft"]}
-    out["layout_d17"] = lay
-    print("D-17 layout:", json.dumps(lay))
+    out["layout_r3"] = lay
+    print("R3 layout:", json.dumps(lay))
     # ---- sensitivities of NP / aft limit / trimmed stall (CG held at the target)
     long = RES["CALC-B3-AVL-LONG"]
     sens = []
@@ -110,8 +110,8 @@ def main():
     other = lat["Cnb"] - lat["Cnb_avl"]
     CLvt = 2 * m * g0 / (rho * vt * vt * S)
     dirs = []
-    for label, mod in (("R1 baseline", {}), ("half-fin TE +15 mm (fte 0.335, feet move aft)", {"fte": 0.335}),
-                       ("half-fin TE +30 mm", {"fte": 0.35}), ("half-fins 0.21 high, full chord (fin tips at z +/-0.21 = tube ends)", {"fh": 0.21})):
+    for label, mod in (("R3 baseline (half-fins 0.21 m, D-26)", {}), ("R1 half-fins 0.19 m", {"fh": 0.19}),
+                       ("half-fin TE +15 mm (fte 0.335, feet move aft)", {"fte": 0.335})):
         gg = dict(geo, **mod)
         d = AV.derivatives_cl(AV.geometry_from(**gg, xref=lim["x_aft"], zref=0.0), CLvt, "fine")
         dirs.append({"option": label, "Cnb_avl": d["Cnb"], "Cnb_total": d["Cnb"] + other, "Xnp_aero": d.get("Xnp")})
@@ -121,7 +121,7 @@ def main():
     hv = RES["CALC-B3-HOVER"]
     r_ = math.hypot(pv("propulsion.stations.y_m"), pv("propulsion.stations.z_m"))
     cants = []
-    for cd_ in (3.0, 5.0, 6.0, 7.0, 8.0):
+    for cd_ in (3.0, 5.0, 7.0, 8.0):
         M = 4 * hv["dT_N"] * (hv["kq_eff_m"] + r_ * math.sin(math.radians(cd_)))
         cants.append({"cant_deg": cd_, "M_yaw_Nm": M, "ratio": M / hv["dist_yaw_Nm"],
                       "acc_rads2": M / (I["Ixx"] * k), "thrust_loss_frac": 1 - math.cos(math.radians(cd_))})

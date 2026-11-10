@@ -62,6 +62,11 @@ kit.assumption("ASM-C5-PACK-G-MAX", "Pack deceleration limit 100 g",
                value=100.0, unit="-", status="UNVERIFIED", cites=["SRC-C5-UN383"])
 kit.assumption("ASM-C5-NOSE-WALL", "Pod nose wall 2 mm", "Thickness of the pod nose skin ahead of the crush block",
                basis="foam board or printed shell (D2)", value=0.002, unit="m", status="PROPOSED")
+kit.assumption("ASM-C5-MU-GRASS", "Pad friction on grass 0.5",
+               "Friction coefficient of the neoprene pad on mown RFS grass (parked-stance slide check)",
+               basis="C1-R2 value for grass; C1 moved ASM-C1-FRICTION to the mat value 0.7 (CR-C5-09), so the grass "
+                     "case carries its own number; H1 spring-scale pull on grass", value=0.5, unit="-",
+               status="UNVERIFIED")
 kit.assumption("ASM-C5-DROP-GUARD", "Drop-test stroke guard 3 mm",
                "Stroke that must remain unused at the end of the design drop (scatter of the XPS plateau)",
                basis="10 % of the 32 mm stroke", value=0.003, unit="m", status="PROPOSED")
@@ -156,8 +161,8 @@ def stance(items, c, foot, z_fin, y_fin, z_pad, m_feet, pack_rng, x_t, x_fwd, x_
     trims = {"B3 target, 550 g": (x_t, 1.0), "B3 target, 680 g": (x_t, hi), "B3 target, 503 g": (x_t, lo),
              "B3 fwd limit, 680 g": (x_fwd, hi), "B3 fwd limit, 503 g": (x_fwd, lo),
              "B3 aft limit, 550 g": (x_aft, 1.0)}
-    cases = {"A3 R1 layout, feet 4 x 6 g": _cg(items) + (pack[4],),
-             "A3 R1 layout + D5 feet (pack 29 mm fwd)": _cg(items, drop=("landing",), add=feet) + (pack[4],)}
+    cases = {"A3 roll-up as listed": _cg(items) + (pack[4],),
+             "A3 roll-up + D5 feet, pack at A3 station": _cg(items, drop=("landing",), add=feet) + (pack[4],)}
     for k, (xg, sc) in trims.items():
         cases[k] = _trim(items, feet, xg, sc)
     m0, x0, z0 = _cg(items, drop=("landing", "PWR-E01"), add=feet)
@@ -179,8 +184,8 @@ def stance(items, c, foot, z_fin, y_fin, z_pad, m_feet, pack_rng, x_t, x_fwd, x_
     psi = math.atan(r1["h_m"] / z_arm)
     tip_lam = math.degrees(math.acos(lam * z_arm / R) - psi)
     lam_max = R * math.cos(math.radians(err) + psi) / z_arm
-    a1_r1 = table["A3 R1 layout, feet 4 x 6 g"]
-    a3l = table["A3 R1 layout + D5 feet (pack 29 mm fwd)"]
+    a1_r1 = table["A3 roll-up as listed"]
+    a3l = table["A3 roll-up + D5 feet, pack at A3 station"]
     return {"cases": table, "a1_feet_r1_narrow_deg": a1_r1["a1_narrow_deg"],
             "a1_feet_r1_nozcg_deg": math.degrees(math.atan(z_fin / a1_r1["h_m"])),
             "d5_a3_layout_deg": a3l["d5_narrow_pos_deg"], "x_pack_target_m": r1["x_pack_m"],
@@ -203,11 +208,12 @@ kit.claim("CL-C5-TIPOVER-A1-R1-ZCG", "Tip-over, unsplayed feet, R1 CG with z off
           note="superseded unsplayed cap; do not fly it. CR-A3-10 re-check: CL-A1-TIPOVER 30.6 deg ignores the CG height above the chord plane (z +0.017 m); "
                "toward the pod side the arm is 0.19 - 0.017 m",
           how="Tilting board, feet at the fin tips without splay (first build before D5's pads): angle toward the pod side.")
-kit.claim("CL-C5-TIPOVER-A3-LAYOUT", "Tip-over, D5 pads, A3 R1 layout (pack 29 mm forward)", calc="CALC-C5-STANCE",
-          output="d5_a3_layout_deg", unit="deg", limit=(">=", P + "requirements.tipover_min_deg"), parts=PADS,
-          note="C5-R1 reference case; B3 puts this CG 5.9 mm ahead of the forward limit (CL-B3-CG-NOW-FWD), so it "
-               "is no longer a flying case once CR-B3-11 is adopted",
-          how="T-C5-TILT-BOARD with the pack at the forward stop.")
+kit.claim("CL-C5-TIPOVER-A3-LAYOUT", "Tip-over, D5 pads, A3 roll-up with the pack at A3's station",
+          calc="CALC-C5-STANCE", output="d5_a3_layout_deg", unit="deg", limit=(">=", P + "requirements.tipover_min_deg"),
+          parts=PADS,
+          note="reference case: at A3-R3 (pack -0.001 m) this CG is 0.056 m, aft of B3's range (MASS-CG.md), so it is "
+               "not a flying case; the trimmed cases below are",
+          how="T-C5-TILT-BOARD with the pack at A3's nominal station.")
 kit.claim("CL-C5-TIPOVER-R1", "Tip-over, D5 splayed pads, B3 target CG, pod side", calc="CALC-C5-STANCE",
           output="d5_r1_narrow_deg", unit="deg", limit=(">=", P + "requirements.tipover_min_deg"),
           verifies=["R-TIPOVER"], parts=PADS,
@@ -250,7 +256,7 @@ WIND_IN = {"g": P + "env.g_ms2", "rho": P + "env.rho_kgm3", "b": P + "wing.span_
            "err": P + "requirements.landing_attitude_err_deg", "v_td": "ASM-C5-TD-DRIFT",
            "m": "CL-C5-MASS-R1", "z_cg": "CL-C5-CG-Z-R1", "h": "CL-C5-CG-H-R1", "m_e": "CL-C5-MASS-EMPTY",
            "z_e": "CL-C5-CG-Z-EMPTY", "Iyy": "CL-A3-IYY", "Izz": "CL-A3-IZZ", "m_a3": "CL-A3-MASS-BASIC",
-           "mu_pad": "ASM-D5-PAD-MU", "mu_grass": "ASM-C1-FRICTION", "sf": "ASM-C5-PARK-SF",
+           "mu_pad": "ASM-D5-PAD-MU", "mu_grass": "ASM-C5-MU-GRASS", "sf": "ASM-C5-PARK-SF",
            "gf": "ASM-C5-GUST-FACTOR", "cl_flat": "ASM-C5-CL-FLAT"}
 
 
@@ -321,8 +327,9 @@ kit.claim("CL-C5-CG-H-R1", "CG height above the pads in the stance", calc="CALC-
           unit="m", how="T-A3-CG-BALANCE x position; h = chord + foot - x_cg.")
 kit.claim("CL-C5-PACK-X-B3", "Pack centroid station that puts the CG on the B3 target", calc="CALC-C5-STANCE",
           output="x_pack_target_m", unit="m",
-          note="C5's own trim of A3's item list (550 g pack); B3 quotes -0.001 m in CR-B3-11. Sets the room ahead "
-               "of the pack for the crush block (CALC-C5-CRASH)",
+          note="C5's own trim of A3's item list (550 g pack); A3 carries -0.001 m as nominal, A3-R3's roll-up needs "
+               "-0.015 m for the target (CL-A3-PACK-X-REQ). Sets the room ahead of the pack for the crush block "
+               "(CALC-C5-CRASH)",
           how="T-A3-CG-BALANCE: mark the pack station that balances on the target line.")
 kit.claim("CL-C5-PACK-X-B3-LIGHT", "Pack station on the B3 target, 503 g pack", calc="CALC-C5-STANCE",
           output="x_pack_light_m", unit="m", how="As CL-C5-PACK-X-B3 with the weighed pack.")
@@ -502,6 +509,16 @@ kit.assumption("ASM-C5-STROKE-PROP", "Proposed foot stroke 38 mm",
 kit.assumption("ASM-C5-FOOT-PROP", "Proposed foot height 48 mm beyond the TE",
                "cg.foot_height_m C5 asks A1 for (CR-C5-11)", basis="keeps the wing TE >= 10 mm off the ground at "
                "the full 38 mm stroke (C1 D-11 rule)", value=0.048, unit="m", status="PROPOSED")
+kit.assumption("ASM-C5-F-PLATEAU-PROP", "Proposed mean cartridge plateau 37.5 N per foot (C5-R3)",
+               "Mean of the upper and lower cartridge plateau forces C5 asks D5 for (CR-C5-10 revised)",
+               basis="highest mean plateau that keeps the level free drop at n <= 6 with a pre-crushed cartridge "
+                     "(4 x 37.5 / (2.6 x 9.807) = 5.88); needed because A3-R3's pitch inertia (0.0300 kg m2, was "
+                     "0.0426) lets the second pad pair land harder", value=37.5, unit="N", status="PROPOSED")
+kit.assumption("ASM-C5-PRECRUSH-PEAK", "Pre-crushed cartridge: initial peak = plateau",
+               "Ratio of the initial crush peak to the plateau after a 2 mm press pre-crush of each cartridge",
+               basis="pre-crushing closed-cell foam past its yield strain removes the initial peak (D5 models 1.10 "
+                     "uncrushed); 2 mm of the 42 mm usable crush in the 77 mm cartridge is spent, 40 mm left >= 38. "
+                     "T-D5-COUPON must show it", value=1.0, unit="-", status="UNVERIFIED")
 
 
 def _foot_force(s, s_max, F_p, F_pk, s_y, s_av):
@@ -561,44 +578,60 @@ DYN_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "v": P + "
           "Iyy": "CL-A3-IYY", "Izz": "CL-A3-IZZ", "m_a3": "CL-A3-MASS-BASIC",
           "err": P + "requirements.landing_attitude_err_deg", "b": P + "wing.span_m", "foot": P + "cg.foot_height_m",
           "s_prop": "ASM-C5-STROKE-PROP", "foot_prop": "ASM-C5-FOOT-PROP", "s_hand": "CL-C5-DROP-STROKE",
-          "mu_pad": "ASM-D5-PAD-MU", "mu_c1": "ASM-C1-FRICTION", "F_corner": "CL-C1-FOOT-CORNER"}
+          "mu_pad": "ASM-D5-PAD-MU", "mu_c1": "ASM-C1-FRICTION", "F_corner": "CL-C1-FOOT-CORNER",
+          "F_prop": "ASM-C5-F-PLATEAU-PROP", "pk_prop": "ASM-C5-PRECRUSH-PEAK", "sigma": "ASM-D5-XPS-PLATEAU",
+          "sec_y": P + "landing.cartridge.section_y_m", "sf_ult": P + "requirements.safety_factor_ult"}
 
 
 @kit.calc("CALC-C5-DROP-DYN", title="Planar landing dynamics: level and pad pair first (pitch, roll), current and "
           "proposed foot; foot side load", inputs=DYN_IN,
           units={"m": "kg", "g": "m/s2", "v": "m/s", "F_p": "N", "F_pk": "N", "s_av": "m", "L": "m", "guard": "m",
                  "z_cg": "m", "h": "m", "z_pad": "m", "y_fin": "m", "Iyy": "kg m2", "Izz": "kg m2", "m_a3": "kg",
-                 "err": "deg", "b": "m", "foot": "m", "s_prop": "m", "foot_prop": "m", "s_hand": "m", "F_corner": "N"},
+                 "err": "deg", "b": "m", "foot": "m", "s_prop": "m", "foot_prop": "m", "s_hand": "m", "F_corner": "N",
+                 "F_prop": "N", "pk_prop": "-", "sigma": "Pa", "sec_y": "m", "sf_ult": "-"},
           equation="m Y'' = sum f_i - (1 - lam) m g ; I th'' = sum f_i x_i ; f_i = 2 x crusher(s_i), s_i = pad "
                    "penetration (ramp to F_pk at eps_y L/2, plateau F_p, no rebound, stiff stop at s_av) ; pitch: "
                    "Iyy, arms z_pad - z_cg and -(z_pad + z_cg) ; roll: Izz, arms +/- y_fin ; tilt scanned -err..+err "
-                   "in 1 deg steps, worst kept ; design = sink v with lift lam W, test = free drop ; bias: upper "
-                   "(pod-side) plateau x 2 a_- / (a_+ + a_-), lower x 2 a_+ / (a_+ + a_-) (no level moment, same sum) ; "
-                   "explicit Euler 40 us, governing case re-run at 10 us ; side load = mu_pad F_corner")
+                   "in 1 deg steps, worst kept ; design = sink v with lift lam W, test = free drop ; current = D5 "
+                   "today (F_p, F_pk, equal feet) ; proposed = mean plateau F_prop, peak pk_prop F, bias upper "
+                   "(pod-side) x b_u, lower x (2 - b_u), b_u in 1.000..1.100 (0.005 steps) minimising the worst pitch "
+                   "stroke ; zero-level-moment bias 2 a_- / (a_+ + a_-) reported ; section z = F / (sigma sec_y) ; "
+                   "ultimate = sf_ult x upper plateau ; explicit Euler 40 us, governing case re-run at 10 us and at "
+                   "0.25 deg tilt steps ; side load = mu_pad F_corner")
 def drop_dyn(m, g, v, lam, F_p, F_pk, s_av, L, eps_y, guard, z_cg, h, z_pad, y_fin, Iyy, Izz, m_a3, err, b, foot,
-             s_prop, foot_prop, s_hand, mu_pad, mu_c1, F_corner):
+             s_prop, foot_prop, s_hand, mu_pad, mu_c1, F_corner, F_prop, pk_prop, sigma, sec_y, sf_ult):
     k = m / m_a3
     s_y = eps_y * L / 2
     a_p, a_n = z_pad - z_cg, z_pad + z_cg
     pitch, roll = (a_p, -a_n), (y_fin, -y_fin)
-    bias = (2 * a_n / (a_p + a_n), 2 * a_p / (a_p + a_n))
+    bias0 = (2 * a_n / (a_p + a_n), 2 * a_p / (a_p + a_n))
     tilts = [t for t in range(-int(err), int(err) + 1)]
+    Fq, Fqk = F_prop, F_prop * pk_prop
 
-    def worst(arms, I, sc, sav, lam_i, vv, tip=None):
+    def worst(arms, I, sc, sav, lam_i, vv, Fa, Fb, tip=None, ts=tilts):
         best = (0.0, 0.0, 0.0, float("inf"))
-        for t in tilts:
-            s, n, tp = _sim2d(m, I, arms, sc, h, vv, t, lam_i, g, F_p, F_pk, s_y, sav, tip=tip)
+        for t in ts:
+            s, n, tp = _sim2d(m, I, arms, sc, h, vv, t, lam_i, g, Fa, Fb, s_y, sav, tip=tip)
             if max(s) > best[1]:
                 best = (t, max(s), n, tp)
         return best
+    # proposed bias: minimise the worst pad-pair-first pitch stroke at the design sink
+    scan = []
+    for i in range(21):
+        bu = 1.0 + 0.005 * i
+        scan.append((worst(pitch, Iyy * k, (bu, 2 - bu), s_prop, lam, v, Fq, Fqk)[1], bu))
+    bu = min(scan)[1]
+    bias = (bu, 2 - bu)
     res = {}
-    for tag, sav, sc, ft in (("current", s_av, (1.0, 1.0), foot), ("proposed", s_prop, bias, foot_prop)):
-        lv = _sim2d(m, Iyy * k, pitch, sc, h, v, 0.0, lam, g, F_p, F_pk, s_y, sav)
-        lvf = _sim2d(m, Iyy * k, pitch, sc, h, v, 0.0, 0.0, g, F_p, F_pk, s_y, sav)
-        pw = worst(pitch, Iyy * k, sc, sav, lam, v)
-        rw = worst(roll, Izz * k, (1.0, 1.0), sav, lam, v, tip=(b / 2, -h + ft))
+    for tag, sav, sc, ft, Fa, Fb in (("current", s_av, (1.0, 1.0), foot, F_p, F_pk),
+                                     ("proposed", s_prop, bias, foot_prop, Fq, Fqk)):
+        lv = _sim2d(m, Iyy * k, pitch, sc, h, v, 0.0, lam, g, Fa, Fb, s_y, sav)
+        lvf = _sim2d(m, Iyy * k, pitch, sc, h, v, 0.0, 0.0, g, Fa, Fb, s_y, sav)
+        pw = worst(pitch, Iyy * k, sc, sav, lam, v, Fa, Fb)
+        rw = worst(roll, Izz * k, (1.0, 1.0), sav, lam, v, Fa, Fb, tip=(b / 2, -h + ft))
         res[tag] = {"s_av_m": sav, "usable_m": sav - guard, "scales": list(sc),
-                    "level_design_m": max(lv[0]), "level_free_m": max(lvf[0]), "level_free_n": lvf[1],
+                    "level_design_m": max(lv[0]), "level_design_pairs_m": list(lv[0]),
+                    "level_free_m": max(lvf[0]), "level_free_n": lvf[1],
                     "pitch_worst_tilt_deg": pw[0], "pitch_design_m": pw[1], "pitch_n": pw[2],
                     "roll_worst_tilt_deg": rw[0], "roll_design_m": rw[1], "roll_n": rw[2],
                     "roll_wingtip_min_m": rw[3], "te_clear_full_stroke_m": ft - sav}
@@ -608,16 +641,23 @@ def drop_dyn(m, g, v, lam, F_p, F_pk, s_av, L, eps_y, guard, z_cg, h, z_pad, y_f
     for _ in range(14):
         mid = 0.5 * (lo + hi)
         s, _, _ = _sim2d(m, Iyy * k, pitch, bias, h, math.sqrt(2 * g * mid), p["pitch_worst_tilt_deg"], 0.0, g,
-                         F_p, F_pk, s_y, s_prop)
+                         Fq, Fqk, s_y, s_prop)
         lo, hi = (mid, hi) if max(s) <= s_prop - guard else (lo, mid)
-    # validation: symmetric CG, free level drop vs the hand energy balance; time-step check on the governing case
+    # validation: symmetric CG, free level drop vs the hand energy balance (D5's foot); time-step and tilt-step checks
     sym = _sim2d(m, Iyy * k, (z_pad, -z_pad), (1.0, 1.0), h, v, 0.0, 0.0, g, F_p, F_pk, s_y, 1.0)
-    fine = _sim2d(m, Iyy * k, pitch, bias, h, v, p["pitch_worst_tilt_deg"], lam, g, F_p, F_pk, s_y, s_prop, dt=1e-5)
+    fine = _sim2d(m, Iyy * k, pitch, bias, h, v, p["pitch_worst_tilt_deg"], lam, g, Fq, Fqk, s_y, s_prop, dt=1e-5)
+    t0 = p["pitch_worst_tilt_deg"]
+    fine_t = worst(pitch, Iyy * k, bias, s_prop, lam, v, Fq, Fqk, ts=[t0 + 0.25 * j for j in range(-4, 5)])
     c = res["current"]
+    F_up, F_lo = Fq * bias[0], Fq * bias[1]
     return {"cases": res, "bias_upper": bias[0], "bias_lower": bias[1],
+            "bias_zero_moment_upper": bias0[0], "bias_scan": [[b_, s_] for s_, b_ in scan],
+            "plateau_upper_N": F_up, "plateau_lower_N": F_lo,
+            "section_z_upper_m": F_up / (sigma * sec_y), "section_z_lower_m": F_lo / (sigma * sec_y),
+            "ult_upper_N": sf_ult * F_up * pk_prop, "pitch_fine_tilt_m": fine_t[1],
             "cur_level_design_m": c["level_design_m"], "cur_pair_design_m": max(c["pitch_design_m"], c["roll_design_m"]),
             "cur_usable_m": c["usable_m"],
-            "prop_level_design_m": p["level_design_m"], "prop_pitch_design_m": p["pitch_design_m"],
+            "prop_level_design_m": p["level_design_m"], "prop_pitch_design_m": max(p["pitch_design_m"], fine_t[1]),
             "prop_roll_design_m": p["roll_design_m"], "prop_level_free_m": p["level_free_m"],
             "prop_level_free_n": p["level_free_n"], "prop_n_tilted": max(p["pitch_n"], p["roll_n"]),
             "prop_usable_m": p["usable_m"], "prop_worst_tilt_deg": p["pitch_worst_tilt_deg"],
@@ -684,24 +724,47 @@ kit.claim("CL-C5-FOOT-SIDE-LOAD", "Foot side load at the pad, mat friction, one 
           note="the landing mat and neoprene pad (mu 0.7) raise C1's L4/L5 side load (mu 0.5) by 40 %; C4's fin "
                "face stress scales with it (CR-C5-09)",
           how="T-D5-PAD-MU gives mu; C4's T-C4-FIN-PROOF at 1.5 x this load.")
-kit.claim("CL-C5-FOOT-SIDE-C1", "Foot side load in C1 case L4 (mu 0.5)", calc="CALC-C5-DROP-DYN",
+kit.claim("CL-C5-FOOT-SIDE-C1", "Foot side load in C1 case L4 (C1 friction as carried)", calc="CALC-C5-DROP-DYN",
           output="side_load_c1_N", unit="N", how="C1 LOADS.md case L4.")
+kit.claim("CL-C5-CART-BIAS-UPPER", "Cartridge bias, upper (pod-side) feet, proposed", calc="CALC-C5-DROP-DYN",
+          output="bias_upper", unit="-",
+          note="chosen to minimise the worst pitch pair-first stroke; lower feet get 2 - bias. The zero-level-moment "
+               "bias (R2's 1.077) is reported as bias_zero_moment_upper: it now leaves the lower pair 1 mm short",
+          how="Coupon plateau ratio of the two marked cartridge types (T-D5-COUPON).")
+kit.claim("CL-C5-CART-PLATEAU-UPPER", "Cartridge plateau force, upper feet UR/UL (pre-crushed)",
+          calc="CALC-C5-DROP-DYN", output="plateau_upper_N", unit="N", parts=["GER-003-UR", "GER-003-UL"],
+          how="T-D5-COUPON: mean force 5-35 mm of a pre-crushed cartridge, +/- 3 %.")
+kit.claim("CL-C5-CART-PLATEAU-LOWER", "Cartridge plateau force, lower feet LR/LL (pre-crushed)",
+          calc="CALC-C5-DROP-DYN", output="plateau_lower_N", unit="N", parts=["GER-003-LR", "GER-003-LL"],
+          how="T-D5-COUPON: mean force 5-35 mm of a pre-crushed cartridge, +/- 3 %.")
+kit.claim("CL-C5-CART-SECTION-UPPER", "Cartridge crush section z length, upper feet (y fixed by D5)",
+          calc="CALC-C5-DROP-DYN", output="section_z_upper_m", unit="m", parts=["GER-003-UR", "GER-003-UL"],
+          note="at D5's 172 kPa XPS plateau and its 11 mm section width; re-cut after the coupon",
+          how="Calipers on the cut cartridge.")
+kit.claim("CL-C5-CART-SECTION-LOWER", "Cartridge crush section z length, lower feet (y fixed by D5)",
+          calc="CALC-C5-DROP-DYN", output="section_z_lower_m", unit="m", parts=["GER-003-LR", "GER-003-LL"],
+          how="Calipers on the cut cartridge.")
+kit.claim("CL-C5-CART-ULT-UPPER", "Ultimate axial load per upper foot (flange, shoe bond)", calc="CALC-C5-DROP-DYN",
+          output="ult_upper_N", unit="N", parts=["GER-001-UR", "GER-001-UL", "GER-002-UR", "GER-002-UL"],
+          how="D5 / C6: shoe-bond and flange proof at this load on a coupon fin tip.")
 
 
 kit.test("T-C5-FOOT-RIG", "Single-foot drop rig", verifies=["CL-C5-DROP-STROKE", "CL-C5-DROP-N"],
          procedure="A foot (shoe bonded on a 2-layer foam-board offcut clamped vertical) under a 0.65 kg sled on two "
                    "guide rods; free drop 0.115 m onto plywood; phone or logger accelerometer on the sled. 3 drops, "
                    "new cartridge each. Pass: stroke <= 29 mm, sled peak <= 6.0 g (100 Hz filter), no shoe-bond crack. "
-                   "With the biased cartridges (CR-C5-10) use a 0.70 kg sled for an upper-foot cartridge and 0.60 kg "
-                   "for a lower one. Run before the aircraft drop; cheap and repeatable.")
+                   "With the biased, pre-crushed cartridges (CR-C5-10, R3) use a 0.68 kg sled for an upper-foot "
+                   "cartridge and 0.62 kg for a lower one (quarter gate mass x bias). Run before the aircraft drop; "
+                   "cheap and repeatable.")
 kit.test("T-C5-AIRCRAFT-DROP", "Aircraft drop (= T-C1-FOOT-DROP), proposed foot",
          verifies=["CL-C5-DYN-LEVEL-FREE-PROP", "CL-C5-DYN-N-LEVEL", "CL-C5-DYN-N-TILTED", "CL-C5-DROP-PAIR-PITCH",
                    "CL-C5-DROP-PAIR-ROLL", "CL-C5-DYN-LEVEL-PROP", "CL-C5-WINGTIP-CLEAR-ROLL"],
          procedure="Complete aircraft, props off, LiPo replaced by a sandbag of the weighed pack mass (ballast to "
                    "2.6 kg), FC on a small 2S pack logging IMU at >= 1 kHz. Quick-release hook over plywood. (1) Level, "
                    "0.115 m pad-to-floor, x2, new cartridges each: pass CG peak <= 6.0 g (100 Hz low-pass), every "
-                   "stroke <= 35 mm, upper and lower pair strokes within 3 mm of each other (bias check). (2) Pitch "
-                   "4 deg both ways and roll 8 deg, at 0.082 m (CL-C5-TEST-TILT-H): pass when each pair's stroke is "
+                   "stroke <= 35 mm, each pair's stroke within 3 mm of the model (the R3 bias leaves the upper pair "
+                   "~3 mm deeper by design). (2) Pitch 4 deg both ways and roll 8 deg, at 0.093 m (CL-C5-TEST-TILT-H): "
+                   "pass when each pair's stroke is "
                    "within 3 mm of the model re-run at the measured height and tilt, and the wing TE stays clear except "
                    "the wingtip corner cap. The model then carries the design case (1.5 m/s with 2/3 W lift). After "
                    "every drop: shoe bonds, fin tips, tube block and pod bond checked.")
@@ -718,65 +781,93 @@ CRASH_IN = {"pack_rng": "ASM-A3-PACK-RANGE", "m_nom": P + "battery.mass_kg", "v"
             "bay_w": "CL-D2-BAY-W", "bay_h": "CL-D2-BAY-H", "x_stop": "CL-D2-PACK-X-FWD", "travel": "CL-D2-PACK-TRAVEL",
             "x_pack": "CL-C5-PACK-X-B3", "x_light": "CL-C5-PACK-X-B3-LIGHT", "x_heavy": "CL-C5-PACK-X-B3-HEAVY",
             "t_sp": "ASM-C5-SPREADER-T", "box": P + "requirements.box_external_m",
-            "bwall": "ASM-A1-WALL", "env": P + "transport.envelope_props_off_m"}
+            "bwall": "ASM-A1-WALL", "env": P + "transport.envelope_props_off_m",
+            "x_le": P + "pod.x_le_m", "t_nose": P + "fins.board_t_m", "c3": "ASM-C3-REC", "h_stop": "ASM-C3-STOP-H"}
 
 
-@kit.calc("CALC-C5-CRASH", title="Crush block ahead of the pack (5 m/s nose-in)", inputs=CRASH_IN,
+@kit.calc("CALC-C5-CRASH", title="Crush block ahead of the pack (5 m/s nose-in), R3 pod nose at -0.115 m",
+          inputs=CRASH_IN,
           units={"pack_rng": "g", "m_nom": "kg", "v": "m/s", "g": "m/s2", "sigma": "Pa", "pack": "m", "bay_w": "m",
                  "bay_h": "m", "x_stop": "m", "travel": "m", "x_pack": "m", "x_light": "m", "x_heavy": "m",
-                 "t_sp": "m", "box": "m", "bwall": "m", "env": "m"},
-          equation="per weighed pack mass m (503 / 550 / 680 g): F = min(n_pack m g, sigma A_bay) ; s = m v^2 / (2 F) ; "
-                   "L = s / (eps_d - eps_y / 2) ; room = L + t_spreader (if F / sigma > pack face) ; pack trimmed to "
-                   "the B3 target at x_p(m) ; nose wall inside face needed = x_p - pack_L / 2 - room ; today = "
-                   "x_stop - pack_L / 2 ; extension = most forward need - today ; box x slack = box_x - 2 wall - "
-                   "(envelope_x + extension)")
+                 "t_sp": "m", "box": "m", "bwall": "m", "env": "m", "x_le": "m", "t_nose": "m", "c3": "m",
+                 "h_stop": "m"},
+          equation="per weighed pack mass m (503 / 550 / 680 g), pack trimmed to the B3 target at x_p(m): "
+                   "F = min(n_pack m g, sigma A_bay) ; KE = m v^2 / 2 ; eff = eps_d - eps_y / 2 ; nose wall inside "
+                   "face x_n = x_le + t_nose (foam-board wall) ; C3 forward stop (t_stop = c3[1]) aft face at "
+                   "x_stop - pack_L / 2, breaks off at ~100 N and rides into block A (x_n .. stop fore face, L_A) ; "
+                   "block B fills stop aft face .. pack fore face behind a t_sp spreader ; capacities add: gap_B "
+                   "needed = t_sp + max(0, KE - F_A eff L_A) / (F eff), F_A = min(F, sigma A_stop) ; design: stop "
+                   "over the full bay section (A_stop = A_bay) ; as drawn by C3: A_stop = h_stop bay_w ; room = "
+                   "pack fore face - x_n, needed = L_A + t_stop + gap_B ; extension = max(0, needed - room) ; box x "
+                   "slack = box_x - 2 wall - (envelope_x + extension) (envelope already holds the R3 nose)")
 def crash(pack_rng, m_nom, v, g, n_pack, sigma, eps_d, eps_y, pack, bay_w, bay_h, x_stop, travel, x_pack, x_light,
-          x_heavy, t_sp, box, bwall, env):
+          x_heavy, t_sp, box, bwall, env, x_le, t_nose, c3, h_stop):
     A_bay = bay_w * bay_h
     face = pack[1] * pack[2]
     eff = eps_d - eps_y / 2
-    nose_now = x_stop - pack[0] / 2
+    x_n = x_le + t_nose
+    t_stop = c3[1]
+    stop_aft = x_stop - pack[0] / 2
+    L_A = (stop_aft - t_stop) - x_n
     rows = {}
     for tag, mp, xp in (("503 g", min(pack_rng) / 1000.0, x_light), ("550 g", m_nom, x_pack),
                         ("680 g", max(pack_rng) / 1000.0, x_heavy)):
         F = min(n_pack * mp * g, sigma * A_bay)
-        s = 0.5 * mp * v * v / F
+        KE = 0.5 * mp * v * v
         A = F / sigma
-        L = s / eff
-        room = L + (t_sp if A > face else 0.0)
-        rows[tag] = {"x_pack_m": xp, "F_N": F, "A_m2": A, "n": F / (mp * g), "stroke_m": s, "L_m": L,
-                     "spreader": A > face, "room_needed_m": room, "room_avail_m": xp - x_stop,
-                     "x_nose_inner_req_m": xp - pack[0] / 2 - room}
+        sp = t_sp if A > face else 0.0
+        fore = xp - pack[0] / 2
+        gap = fore - stop_aft
+
+        def gap_need(A_stop):
+            F_A = min(F, sigma * A_stop)
+            return sp + max(0.0, KE - F_A * eff * L_A) / (F * eff)
+        g_full, g_c3 = gap_need(A_bay), gap_need(h_stop * bay_w)
+        rows[tag] = {"x_pack_m": xp, "F_N": F, "n": F / (mp * g), "stroke_m": KE / F, "L_m": KE / F / eff,
+                     "spreader": A > face, "gap_avail_m": gap, "gap_need_full_m": g_full, "gap_need_c3_m": g_c3,
+                     "room_avail_m": fore - x_n, "room_needed_m": L_A + t_stop + g_full,
+                     "margin_full_m": gap - g_full, "margin_c3_m": gap - g_c3}
     nom = rows["550 g"]
-    req = min(r["x_nose_inner_req_m"] for r in rows.values())
-    ext = max(0.0, nose_now - req)
-    ext_nom = max(0.0, nose_now - nom["x_nose_inner_req_m"])
-    return {"A_bay_m2": A_bay, "A_pack_face_m2": face, "packs": rows,
+    worst = min(rows.values(), key=lambda r: r["margin_full_m"])
+    worst_c3 = min(rows.values(), key=lambda r: r["margin_c3_m"])
+    ext = max(0.0, -worst["margin_full_m"])
+    return {"A_bay_m2": A_bay, "A_pack_face_m2": face, "packs": rows, "x_nose_inner_m": x_n, "L_A_m": L_A,
             "room_needed_nom_m": nom["room_needed_m"], "room_avail_m": nom["room_avail_m"],
-            "block_L_nom_m": nom["L_m"], "n_pack_nom": nom["n"], "n_pack_max": max(r["n"] for r in rows.values()),
+            "room_margin_worst_m": worst["margin_full_m"], "room_margin_c3_stop_m": worst_c3["margin_c3_m"],
+            "gap_B_nom_m": nom["gap_avail_m"], "block_L_nom_m": nom["L_m"], "n_pack_nom": nom["n"],
+            "n_pack_max": max(r["n"] for r in rows.values()),
             "room_ideal_m": 0.5 * v * v / (n_pack * g) / eff, "room_in_travel_m": travel,
-            "x_nose_inner_now_m": nose_now, "x_nose_inner_req_m": req, "nose_ext_nom_m": ext_nom, "nose_ext_m": ext,
-            "box_x_slack_m": (box[1] - 2 * bwall) - (env[1] + ext)}
+            "nose_ext_m": ext, "box_x_slack_m": (box[1] - 2 * bwall) - (env[1] + ext)}
 
 
-kit.claim("CL-C5-PACK-ROOM-AVAIL", "Room ahead of the pack at the B3 target station", calc="CALC-C5-CRASH",
-          output="room_avail_m", unit="m",
-          note="CR-B3-11 moves the pack aft from D2's forward stop; the gap between the pack fore face and the nose "
-               "wall is the crush zone. At A3's old station it was 1 mm (CL-A3-PACK-FWD-ROOM)",
+kit.claim("CL-C5-PACK-ROOM-AVAIL", "Room ahead of the pack at the B3 target station (R3 nose -0.115)",
+          calc="CALC-C5-CRASH", output="room_avail_m", unit="m", parts=["POD-001", "POD-008"],
+          note="nose wall inside face (x_le + 4.8 mm foam board = -0.1102) to the 550 g pack fore face; holds the "
+               "crush block A ahead of C3's 3 mm forward stop, the stop, and block B behind it",
           how="Built pod, pack at the balanced station: rule from the nose wall inside face to the pack fore face.")
-kit.claim("CL-C5-PACK-NOSE-ROOM", "Room the crush block needs, weighed 550 g pack", calc="CALC-C5-CRASH",
+kit.claim("CL-C5-PACK-NOSE-ROOM", "Room the crush blocks need, weighed 550 g pack", calc="CALC-C5-CRASH",
           output="room_needed_nom_m", unit="m", limit=("<=", "CL-C5-PACK-ROOM-AVAIL"), verifies=["R-PACK-RETENTION"],
-          note="XPS F-250 over the full bay section behind a 1.5 mm spreader; the n_pack limit, not the foam, sets "
-               "the floor (ideal 24.3 mm). Short by the nose extension CL-C5-NOSE-EXT (CR-C5-02)",
+          parts=["POD-008"],
+          note="XPS F-250 over the full bay section in two blocks either side of the 3 mm forward stop (which breaks "
+               "off and spreads into block A), block B behind a 1.5 mm spreader; the n_pack limit sets the force. "
+               "Requires the forward stop plate over the full bay section (CR-C5-12)",
           how="Crush a block coupon (T-D5-COUPON method) to get the force; weigh the pack (E2).")
-kit.claim("CL-C5-NOSE-EXT", "Pod nose extension for the block, any pack 503-680 g", calc="CALC-C5-CRASH",
+kit.claim("CL-C5-PACK-ROOM-MARGIN-WORST", "Block B gap margin, worst listed pack (503-680 g)", calc="CALC-C5-CRASH",
+          output="room_margin_worst_m", unit="m", limit=(">=", 0.0), verifies=["R-PACK-RETENTION"],
+          parts=["POD-008"],
+          note="the 503 g pack trims furthest forward and governs; full-section forward stop",
+          how="As CL-C5-PACK-NOSE-ROOM with the weighed pack at its balanced station.")
+kit.claim("CL-C5-PACK-ROOM-C3-STOP", "Block B gap margin, worst pack, forward stop as drawn (25 mm tall)",
+          calc="CALC-C5-CRASH", output="room_margin_c3_stop_m", unit="m", limit=(">=", 0.0), parts=["POD-002"],
+          note="a 25 x 52 mm stop crushes block A at only sigma x 1300 mm2 (~230 N), so block A takes less energy; "
+               "the reason for CR-C5-12",
+          how="Geometry of the printed stop (D2 CAD).")
+kit.claim("CL-C5-NOSE-EXT", "Further pod nose extension needed beyond R3 (-0.115 m)", calc="CALC-C5-CRASH",
           output="nose_ext_m", unit="m",
-          note="the 503 g pack trims furthest forward and sets it; a weighed 550 g pack alone needs CL-C5-NOSE-EXT-550",
-          how="D2 geometry: nose wall inside face at CL-C5-NOSE-INNER-REQ or ahead.")
-kit.claim("CL-C5-NOSE-EXT-550", "Pod nose extension for the block, 550 g pack", calc="CALC-C5-CRASH",
-          output="nose_ext_nom_m", unit="m", how="As CL-C5-NOSE-EXT.")
-kit.claim("CL-C5-NOSE-INNER-REQ", "Nose wall inside face station needed (any pack)", calc="CALC-C5-CRASH",
-          output="x_nose_inner_req_m", unit="m", how="D2 CAD: nose wall inside face x.")
+          note="the 503 g pack, trimmed furthest forward, sets it (full-section forward stop). Zero when the pack sits "
+               "near A3's nominal station (-0.001 m); A3-R3's aft CG moves the trimmed pack ~14 mm forward and makes "
+               "it ~9 mm. Moving the pod group instead of the pack keeps it zero (CR-C5-12)",
+          how="D2 geometry: nose wall inside face at -0.1102 m or ahead.")
 kit.claim("CL-C5-PACK-CRASH-G", "Largest pack deceleration in its block, 5 m/s nose-in", calc="CALC-C5-CRASH",
           output="n_pack_max", unit="-", limit=("<=", "ASM-C5-PACK-G-MAX"),
           how="Block coupon crush force x section; pack mass weighed (E2).")
@@ -784,6 +875,7 @@ kit.claim("CL-C5-BLOCK-L", "Crush block length (F-250, weighed 550 g pack)", cal
           output="block_L_nom_m", unit="m", parts=["POD-008"], how="Cut length; rule.")
 kit.claim("CL-C5-BOX-X-SLACK-NOSE", "Box length slack with the nose extended", calc="CALC-C5-CRASH",
           output="box_x_slack_m", unit="m", limit=(">=", 0.0), verifies=["R-TRANSPORT"],
+          note="the R3 envelope (0.483 m) already holds the 10 mm nose and the 48 mm feet",
           how="D7: close the box on the built aircraft with the extended nose.")
 
 

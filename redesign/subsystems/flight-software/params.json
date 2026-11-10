@@ -1,10 +1,10 @@
 {
- "_note": "flight-software (FSW) local numbers, owner F4. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
+ "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R4. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
  "fsw": {
   "firmware": {
-   "value": "ArduPlane stable with tailsitter support",
+   "value": "ArduPlane 4.7.x stable, target CoreWingF405WingV2",
    "unit": "-",
-   "source": "R-FC-STABLE",
+   "source": "D-33 (P:avionics.flight_controller)",
    "status": "PROPOSED"
   },
   "airspeed_cruise_ms": {
@@ -14,17 +14,18 @@
    "ap": "AIRSPEED_CRUISE"
   },
   "airspeed_min_ms": {
-   "value": 15,
+   "value": 16,
    "unit": "m/s",
-   "source": "team/B1/CHANGE-REQUESTS.md#CR-B1-12",
+   "source": "D-36 (15.6 m/s, CL-B3-VT-TRIM) rounded up: AP_Int16",
    "ap": "AIRSPEED_MIN",
-   "note": "integer parameter (AP_Int16)"
+   "note": "integer parameter (AP_Int16); pre-4.5 name ARSPD_FBW_MIN"
   },
   "airspeed_max_ms": {
    "value": 18,
    "unit": "m/s",
    "source": "team/B1/CHANGE-REQUESTS.md#CR-B1-12",
-   "ap": "AIRSPEED_MAX"
+   "ap": "AIRSPEED_MAX",
+   "note": "pre-4.5 name ARSPD_FBW_MAX (C1 asks <= 22)"
   },
   "spin_max": {
    "value": 0.84,
@@ -47,13 +48,13 @@
   "rudd_dt_gain_pct": {
    "value": 35,
    "unit": "%",
-   "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-04",
+   "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-15",
    "ap": "RUDD_DT_GAIN"
   },
   "bat_curr_max_a": {
    "value": 100,
    "unit": "A",
-   "source": "team/E1/CHANGE-REQUESTS.md#CR-E1-08",
+   "source": "team/A2/CHANGE-REQUESTS.md#CR-A2-14",
    "ap": "Q_M_BAT_CURR_MAX"
   },
   "wp_spd_dn_ms": {
@@ -115,11 +116,11 @@
   "gyro_rate_hz": {
    "value": 1000,
    "unit": "Hz",
-   "source": "ArduPilot INS_GYRO_RATE default 0 = 1 kHz",
-   "status": "UNVERIFIED"
+   "source": "INS_GYRO_RATE 0 = 1 kHz (CR-F3-02)",
+   "status": "PROPOSED"
   },
   "batt_low_mah": {
-   "value": 2700,
+   "value": 2600,
    "unit": "mAh",
    "source": "CL-E2-BATT-LOW-MAH",
    "ap": "BATT_LOW_MAH"
@@ -172,7 +173,9 @@
      "rotation_from_behind": "CW",
      "prop": "APC 11x5.5MR",
      "harness_edge": "E-HRN-26",
-     "esc": "PRP-002-LR"
+     "esc": "PRP-002-LR",
+     "adapter_thread": "RH",
+     "cant_print": "A"
     },
     {
      "station": "UL",
@@ -184,7 +187,9 @@
      "rotation_from_behind": "CW",
      "prop": "APC 11x5.5MR",
      "harness_edge": "E-HRN-25",
-     "esc": "PRP-002-UL"
+     "esc": "PRP-002-UL",
+     "adapter_thread": "RH",
+     "cant_print": "A"
     },
     {
      "station": "LL",
@@ -196,7 +201,9 @@
      "rotation_from_behind": "CCW",
      "prop": "APC 11x5.5MRP",
      "harness_edge": "E-HRN-27",
-     "esc": "PRP-002-LL"
+     "esc": "PRP-002-LL",
+     "adapter_thread": "LH",
+     "cant_print": "B"
     },
     {
      "station": "UR",
@@ -208,13 +215,15 @@
      "rotation_from_behind": "CCW",
      "prop": "APC 11x5.5MRP",
      "harness_edge": "E-HRN-24",
-     "esc": "PRP-002-UR"
+     "esc": "PRP-002-UR",
+     "adapter_thread": "LH",
+     "cant_print": "B"
     }
    ],
    "unit": "-",
    "source": "team/F4/fsw_check.py#CALC-F4-MOTOR-MAP",
    "status": "PROPOSED",
-   "note": "hover copter frame: forward = belly (-z), right = +y; ArduPilot Quad X: M1 front-right CCW, M2 back-left CCW, M3 front-left CW, M4 back-right CW (viewed from above in hover = from the nose). UNVERIFIED until the props-off motor test (T-F4-BENCH-MAP)"
+   "note": "hover copter frame: forward = belly (-z), right = +y; ArduPilot Quad X: M1 front-right CCW, M2 back-left CCW, M3 front-left CW, M4 back-right CW (viewed from above in hover = from the nose). UNVERIFIED until the props-off motor test (T-F4-BENCH-MAP). adapter_thread: LH on the CW motors so prop drag tightens the nut (CR-E1-21). cant_print: the mount print each station needs with the prints as D3 defines them today (print A gives UR thrust a side component along +t = x_hat x r_hat); the map needs UR along -t, so UR and LL take print B (CR-F4-11)"
   },
   "elevon_outputs": {
    "value": [
@@ -240,6 +249,84 @@
    "unit": "-",
    "source": "team/E1/CHANGE-REQUESTS.md#CR-E1-08",
    "ap": "Q_M_THST_HOVER"
+  },
+  "pitch_lim_min_deg": {
+   "value": -10,
+   "unit": "deg",
+   "source": "team/F4/fsw_check.py#CALC-F4-DIVE (elevon schedule, D-29)",
+   "ap": "PTCH_LIM_MIN_DEG"
+  },
+  "tecs_sink_max_ms": {
+   "value": 2.5,
+   "unit": "m/s",
+   "source": "F4 choice: inside the 10 deg pitch floor",
+   "ap": "TECS_SINK_MAX"
+  },
+  "scaling_speed_ms": {
+   "value": 16,
+   "unit": "m/s",
+   "source": "P:performance.cruise_ms",
+   "ap": "SCALING_SPEED"
+  },
+  "gyro_filter_hz": {
+   "value": 40,
+   "unit": "Hz",
+   "source": "team/C2/CHANGE-REQUESTS.md#CR-C2-03",
+   "ap": "INS_GYRO_FILTER"
+  },
+  "rate_fltd_hz": {
+   "value": [
+    32,
+    32
+   ],
+   "unit": "Hz",
+   "source": "team/C2/CHANGE-REQUESTS.md#CR-C2-03",
+   "ap": "Q_A_RAT_RLL_FLTD,Q_A_RAT_PIT_FLTD"
+  },
+  "rate_p": {
+   "value": [
+    0.08,
+    0.08,
+    0.4
+   ],
+   "unit": "-",
+   "source": "F4 starting gains (TUNING-PLAN.md)",
+   "ap": "Q_A_RAT_RLL_P,Q_A_RAT_PIT_P,Q_A_RAT_YAW_P",
+   "note": "ArduPilot rate PID: output (-1..1) per rad/s of rate error"
+  },
+  "rate_d": {
+   "value": [
+    0.002,
+    0.002
+   ],
+   "unit": "-",
+   "source": "F4 starting gains",
+   "ap": "Q_A_RAT_RLL_D,Q_A_RAT_PIT_D"
+  },
+  "bat_idx": {
+   "value": 0,
+   "unit": "-",
+   "source": "team/A2/CHANGE-REQUESTS.md#CR-A2-14",
+   "ap": "Q_M_BAT_IDX"
+  },
+  "wvane_land": {
+   "value": 3,
+   "unit": "-",
+   "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-05",
+   "ap": "Q_WVANE_LAND",
+   "note": "3 = side (wingtip) into wind"
+  },
+  "fltmode_ch": {
+   "value": 6,
+   "unit": "-",
+   "source": "team/F5/CHANGE-REQUESTS.md#CR-F5-01",
+   "ap": "FLTMODE_CH"
+  },
+  "estop_ch_option": {
+   "value": 31,
+   "unit": "-",
+   "source": "R-ARM-KILL",
+   "ap": "RC9_OPTION"
   }
  }
 }

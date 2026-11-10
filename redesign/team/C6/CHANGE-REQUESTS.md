@@ -1,31 +1,49 @@
 # C6 change requests
 
-Raised 2026-11-09 by C6 (joints and fasteners). Numbers from `team/C6/claims.json` (`python -I redesign/team/C6/joints.py`);
-report `JOINTS.md`; copy-ready blocks in `joint_stacks.json`.
+Revision C6-R2, 2026-11-09 (params A1-R3). Numbers from `team/C6/claims.json`
+(`python -I redesign/team/C6/joints.py`); report `JOINTS.md`; copy-ready blocks in `joint_stacks.json`.
+
+## New in C6-R2
 
 | Id | To | What | Why | Numbers |
 |---|---|---|---|---|
-| CR-C6-01 | D3 (cc C4) | Station collar `FIN-008`: lengthen the strip tail 20 → **40 mm** (`fin_detail.station_collar.tail_m` 0.040) and make it a solid PETG tongue between the two edge strips (board notched 40 mm at the LE top corner), so both strip faces bond to PETG | The strip force cannot pass through 200 mm² of one-face bond | design 1 348 N; RF 0.30 now (`CL-C6-STRIP-ANCHOR-RF`), 1.19 with the tail (`-PROP`); need ≥ 33.7 mm (`CL-C6-STRIP-EMBED-REQ`); ≈ +1 g per collar |
-| CR-C6-02 | C4, D3 | (a) C4: check the strip-to-paper shear flow in the FE (strips modelled as perfectly bonded). (b) D3: after the strips cure, drill Ø 2.0 mm through strip–board–strip every 15 mm along the top edge (18 per half-fin) and bond Ø 2 mm pultruded CF pins flush. Alternative: a 10 × 5 mm basswood cap replacing the top 10 mm of board (+≈ 5 g per half-fin) | Flange shear flow goes through the paper-to-foam interface | q 5.1 N/mm, 0.51 MPa vs 0.10 MPa, RF 0.20 (`CL-C6-STRIP-FACE-RF`); pins 77 N each, RF 1.41 (`CL-C6-STRIP-PIN-RF`); +≈ 3 g total |
-| CR-C6-03 | C4, C1 (cc D3) | Agree the tube torsion the station collar carries: C1 `J-FINHALF` Mz 5.29 N·m limit vs C4's 9.3 N·m. D3: collar height 12 → **16 mm** covers both | Collar bond RF 1.60 (C1) vs 0.91 (C4) | `CL-C6-COLLAR-RF`, `CL-C6-COLLAR-L-REQ` 13.2 mm needed on C4's number |
-| CR-C6-04 | E3 (cc G2, D3) | Estimate the station-collar and mount-collar temperature (0.5 mm below the motor base at 66 °C). C6 adds a 4 h / 50 °C post-cure for every bond within 50 mm of a motor; if the collar runs > 45 °C, buy a laminating epoxy with Tg ≥ 70 °C after post-cure | 30 min hobby epoxies have Tg ≈ 50–60 °C | `CL-E3-*` motor base 65.8 °C |
-| CR-C6-05 | A1, A2 (cc E1, D7) | Field set-up "no tools" (P9) conflicts with the M6 prop nut (`params.json#transport.field_steps`). Allow one 10 mm prop spanner in the field kit (recommended), or E1 finds a tool-free prop retention | The prop nut is the only field joint needing a tool | 1.5 N·m nut torque (`ASM-C1-PROP-NUT-TORQUE`) |
-| CR-C6-06 | A1, A2 | Replace `requirements.thread_engagement_min` (1.0 d) with the per-type minimums: **1.0 d into metal, 1.5 d into a heat-set insert (= `interfaces/SCHEMA.md`), 2.0 d self-tapping into plastic, nyloc fully on + 2 pitches**; `R-JOINT-STACK` text to match | A2 (1.0 d in an insert) and SCHEMA (1.5 d) disagree | `team/C6/params.json#joints.insert_engage_min_d` |
-| CR-C6-07 | D2, F3 | Mount the MS5525 airspeed board on foam tape + one tie and drop the 2 M2 bosses from `POD-002` | Removes the only bought M2 size; 6 g part | — |
-| CR-C6-08 | D7 | Box handles `E-TRN-13…15`: M3x16 SHCS + M3 × 12 mm fender washers + nyloc instead of M5 (ground item, optional) | One thread, one key for the whole kit | 59 N per bolt (6 kg × 2 g / 2) |
-| CR-C6-09 | D2 (cc C3) | Pitot socket `POD-006`: add a ≥ 30 × 30 mm flange bonded to the inside face of the nose wall; check the GPS-mast bolt grip ≤ 10.5 mm (M3x16 + 1 washer + nyloc, ≥ 5.0 mm past the grip) and correct `E-POD-06` engagement to the nyloc rule | A 14 mm hole edge in foam board cannot bear the boom moment; the nyloc rule is 2 pitches past a 4 mm nut | 0.8 N·m handling; `joint_stacks.json#E-POD-06` |
-| CR-C6-10 | E1, D3 | Motor screws `PRP-005` / `E-FIN-61…64`: **0.20 N·m** (not 0.5), Loctite 243 on the tip only, no washer; drill the plate to the measured pattern (no radial slots: a 3.4 mm slot under a 5.5 mm head leaves ¼ of the bearing area). Pinch bolts `E-FIN-05…08`: engagement 5.5 mm past the grip, minimum 5.0 (not 4.0 / 3.0) | Head bearing on the printed plate at 66 °C | 57 MPa, RF 0.53 at 0.5 N·m; 22.7 MPa, RF 1.32 at 0.20 N·m (`CL-C6-MOTOR-HEAD-RF`); preload 333 N still 4.8 × the screw tension |
-| CR-C6-11 | I1 | Fastener kit: M3x8 ×20, M3x10 ×10, M3x16 ×8 (SHCS A2-70, ISO 4762); M3 nyloc ×10; M3 washer ×15; M3 × 5.7 brass heat-set insert ×12; M3 nylon washers + FC grommets ×8; CF rod Ø 2 × 1 000 mm ×1; 30 min laminating epoxy, colloidal silica, glass microballoons; Loctite 243; paint pen | `JOINTS.md` kit table | ≈ $25 `EST` |
-| CR-C6-12 | D5 | Snap hooks on `GER-002`: free finger length ≥ **6.0 mm** (two 0.8 mm slots in the skirt) for 0.6 mm hook at 0.8 mm wall | Strain ≤ 2 % for repeated swaps | `CL-C6-SNAP-L-MIN`; CR-D5-04 answered: board allowable 0.10 MPa (0.5 × your 0.20), shoe RF 1.35 |
-| CR-C6-13 | D6 | Servo frames `MEC-008` and horns `MEC-004`: bonded area into XPS ≥ **720 mm²** each; horn as a through-panel horn with a backplate; servo screws into printed or ply bosses, never foam; silicone keeper on every clevis | 90 N pushrod design force at VD 27.2 m/s | `CL-C6-LINK-BOND-AREA-MIN` |
-| CR-C6-14 | H1 | Run the C6 coupons with the first PETG prints (before the fin build): `T-C6-LAP-PETG`, `-BOARD-LAP`, `-XPS-PULL`, `-INSERT`, `-HEAD-CREEP`, `-STRIP-ANCHOR`, `-PROPNUT` | Every C6 claim is `UNVERIFIED` until then | procedures in `claims.json` |
-| CR-C6-15 | A4 | Merge `joint_stacks.json` blocks as the owners adopt them; add `CT-M3-SHCS-INSERT` stacks to `E-AVN-01` / `E-PWR-03` and change `E-AVN-04` to `CT-TAPE-FOAM` if CR-C6-07 is accepted | P24 joint stacks | 67 edges |
+| CR-C6-16 | C3 (cc D2, D5) | Point the pod allowables at the C6 values: XPS tension 125 kPa (keep your 100 kPa if you prefer, it is conservative), XPS shear 100 kPa, **board flat-wise 50 kPa** (not 100), **epoxy on paper face 100 kPa** (not 200, which is the undiscounted `ASM-D5-BOND-TAU`), PETG across layers 15 MPa, hook-and-loop 5 / 2.5 N/cm². Re-run `CL-C3-TRAY-FLAT` and `CL-C3-FLOOR-GLUE` limits on these | CR-C3-05: C6 owns the joint allowables | `CALC-C6-POD-ALLOW`; tray RF 2.54, floor glue RF 0.90 |
+| CR-C6-17 | D2 (cc C3) | Inside `POD-001`, run a **6 mm-leg microballoon-epoxy fillet** along both floor-to-side-wall corners over ± 30 mm of each pack strap | The floor edge glued to the wall face carries the strap pull through the paper: 111 kPa vs 100 kPa | `CL-C6-POD-FLOOR-RF` 0.90 → `-RF-PROP` 2.03; ≈ +1.5 g `EST`; `T-C6-BOARD-CORNER` |
+| CR-C6-18 | D2 (cc F3, I1) | GPS mast cross-bolt `E-POD-06`: **M3x16 PA66 screw + PA66 nut**, finger tight + ¼ turn, grip ≤ 11.0 mm; drop the A2 nyloc and washer here | F3: no steel within 50 mm of the compass; the mast is the fuse, so a nylon pin is enough | `joint_stacks.json#E-POD-06` |
+| CR-C6-19 | F3, D2 | FC on gel pads `E-AVN-01`: add one 3 mm tie or 10 mm hook-and-loop strap over the board, 1–2 mm slack (does not bridge the isolation); D2 leaves two tie slots in `POD-002` beside the right channel | Gel-pad tack is not a crash retention | 10 N any axis (`ASM-C6-AVN-CRASH`) |
+| CR-C6-20 | C4 (cc A4) | `CALC-C4-D3-STATIC` / the FE re-run gives a singular matrix and NaN on the current fin inputs (D3 R3: collar 16 mm, 40 mm tail); `build_graph.py` then stops in `proofkit.fmt` on the NaN before any later check. A4: make `fmt` print `nan` instead of raising | No chain check runs past it | `proofs/proofkit.py` line 108 |
+| CR-C6-21 | C1 (cc A1, C4) | (a) Add the 7° tangential cant to the J-MOTOR and J-FINHALF cases: side force 12.2 % of thrust (2.57 N at the 21.1 N limit), 0.10 N·m at the motor base; C6 carries it locally (`CALC-C6-MOTOR-SCREW`, `CALC-C6-MOUNT-SIDE`). (b) `CL-C1-VD-ENV` now reads 32.1 m/s against `requirements.vd_ms` 27.2 (D-29): confirm which is meant | (a) D-27 asks C4/C6 to check it; it belongs in the envelope. (b) the servo frame and horn bond area moves 720 → 1 002 mm² | `CL-C6-MOTOR-SEP-RF` 4.12; `CL-C6-LINK-BOND-AREA-MIN` |
+| CR-C6-22 | I1 | Kit at R2: M3x8 ×20, M3x10 ×6, M3x16 A2 ×6, **M3x16 PA66 ×3 + PA66 nut ×3**, M3 nyloc ×8, M3 washer ×15 → 12, M3 × 5.7 insert ×12, nylon washer 0.8 mm ×6 + 2 mm nylon spacer ×6, **CF rod Ø 2 × 1 000 mm ×2** (72 pins); FC grommets dropped (gel pads, F3) | `JOINTS.md` kit table | ≈ $26 `EST` |
+| CR-C6-23 | D6 (cc B2) | Servo frames `MEC-008` and horns `MEC-004`: bonded area into XPS ≥ **1 002 mm²** each at C1's current VD (replaces 720 in CR-C6-13; falls back to 720 if C1 confirms 27.2 m/s) | Pushrod design force 125 N | `CL-C6-LINK-BOND-AREA-MIN` |
+| CR-C6-24 | D3 (cc C5, C4) | Half-fin root fillets `E-FIN-53…56`: leg 12 → **15 mm** (microballoon epoxy, both faces, full root chord), or carry the C6 XPS allowable 0.125 MPa in `CALC-D3-ROOT` and size the leg there | At μ 0.7 and 0.21 m half-fins the root moment is 5.59 N·m; D3's RF 1.74 uses the undiscounted 0.25 MPa XPS strength | `CL-C6-FIN-ROOT-RF` 0.87 → 1.24 with 15 mm (leg needed 13.1 mm); ≈ +3 g `EST` for four roots |
+
+## Status of the R1 requests
+
+| Id | To | Request (short) | Status |
+|---|---|---|---|
+| CR-C6-01 | D3 | 40 mm two-face collar tail | **Adopted** (`fin_detail.station_collar.tail_m` 0.04); RF 1.76 |
+| CR-C6-02 | C4, D3 | strip shear flow in the FE; Ø 2 mm CF pins every 15 mm | Pins **adopted** (`fin_detail.edge_strip.pin_*`), RF 1.15 at C4's latest strip force (908 N); (a) C4 FE check still open |
+| CR-C6-03 | C4, C1, D3 | agree the collar torsion; collar 16 mm | Collar **adopted** (16 mm, RF 1.09 on 9.3 N·m + brace shear); torsion agreement open (C1 4.93, C4 R3 3.46, C4 R2 9.3 N·m limit) |
+| CR-C6-04 | E3 | collar temperature vs epoxy Tg; post-cure | Forwarded by A1 (G2, G3, E3) |
+| CR-C6-05 | A1, A2 | one 10 mm prop spanner | **Accepted** (D-40) |
+| CR-C6-06 | A1, A2 | per-type thread engagement | **Accepted** (D-41) |
+| CR-C6-07 | D2, F3 | airspeed board on foam tape, no M2 | **Accepted** (D-33, CR-F3-03) |
+| CR-C6-08 | D7 | box handles M3 | Forwarded (D-31) |
+| CR-C6-09 | D2 | pitot flange ≥ 30 × 30 mm; mast grip | Forwarded; mast bolt now CR-C6-18 |
+| CR-C6-10 | E1, D3 | motor screws 0.20 N·m, drilled pattern | Drilled pattern **adopted** by D3 (canted 4.5 mm plate, holes square to it); E1 torque value still to change in `PRP-005` |
+| CR-C6-11 | I1 | fastener kit | Superseded by CR-C6-22 |
+| CR-C6-12 | D5 | snap finger ≥ 6.0 mm | Forwarded (D-30) |
+| CR-C6-13 | D6 | servo frame / horn bond area | Forwarded; area updated by CR-C6-23 |
+| CR-C6-14 | H1 | coupons with the first prints | Forwarded; now **nine** tests (`JOINTS.md` test table): add `T-C6-BOARD-CORNER`, `T-C6-CANT-SEAT`, flat-wise pulls in `-BOARD-LAP`, shear pushes in `-XPS-PULL` |
+| CR-C6-15 | A4 | merge `joint_stacks.json` | Forwarded; R2 adds `E-AVN-01` gel-pad retention block and `E-PWR-03` PDB stack |
 
 ## Answers to requests addressed to C6
 
 | Request | Answer |
 |---|---|
-| CR-C1-11 (mount clamp vs prop-nut torque 3.2 N·m) | Closed: collar bearing 6.1 MPa, RF 3.26; tube hoop RF 5.94 (`CL-C6-MOUNT-ROCK-RF`, `-HOOP-RF`) |
-| CR-A4-10 / CR-A4-20 (joint stacks, M2/M3 only) | `joint_stacks.json`; M3 only bought |
-| CR-C4-10 (collar, strips, brace ends, block bonds; coupons) | Block bonds RF 5.7–6.3; brace RF 1.8–2.9; collar and strips fail as drawn → CR-C6-01…03; coupons CR-C6-14 |
-| CR-D5-04 (board allowable, snap hook) | CR-C6-12 |
+| CR-C3-05 (own the pod allowables) | Done: `JOINTS.md` pod-allowables table, `CALC-C6-POD-ALLOW`; four confirmed, two halved → CR-C6-16, -17 |
+| CR-C4-22 (collar, brace ends, anchor joint stacks) | `joint_stacks.json` E-FIN-13…16, 37…44, 57…60: collar RF 1.09 at 9.3 N·m + 209 N, brace ends 2.30, anchor 1.32 (same contact area as C4) |
+| D-27 (C4/C6 check the 12 % side component) | Mount slip RF 16.6 (torsion) / 48 (axial); motor-screw separation RF 4.12; engagement 3.5 mm on D3's canted plate |
+| CR-C1-11 (mount clamp vs prop-nut torque) | Closed at R1: RF 3.26 bearing, 5.94 hoop |
+| CR-A4-10 / CR-A4-20 (joint stacks, M2/M3 only) | `joint_stacks.json` (69 edges); M3 only bought |
+| CR-D5-04 (board allowable, snap hook) | Board 0.10 MPa shear design; finger ≥ 6.0 mm |

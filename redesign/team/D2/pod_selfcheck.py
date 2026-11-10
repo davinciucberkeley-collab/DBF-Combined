@@ -4,7 +4,7 @@ have not declared yet (wing core WNG-001, spar WNG-002 from D1; flight pack PWR-
     python -I redesign/team/D2/pod_selfcheck.py
 
 Builds a throw-away root in a temp folder: the real subsystems/pod files + a stand-in wing (S5010 core loft and
-the 22 mm spar from params.json) + a stand-in pack (params battery.size_m at the pod's forward stop), with both
+the 22 mm spar from params.json) + a stand-in pack (params battery.size_m at the nominal station, aft face 0.069), with both
 stand-ins acknowledging the pod edges. Runs fusion/check.py's run_checks with the K09-L datums, --strict on the
 pod's own items. Proves the pod geometry touches what it bonds/ties/straps to, every pod edge is registered with
 the right kind, nothing of the pod floats, and the joint stacks / blocks are complete. It does NOT replace the
@@ -39,7 +39,7 @@ PWR_PY = '''import json, os
 def build(ctx):
     L, W, H = ctx.value('battery.size_m', 'm')
     g = json.load(open(os.path.join(os.path.dirname(ctx.dir), 'pod_layout.json')))
-    x0 = g['xn']
+    x0 = g['x_pack0']
     ctx.part('PWR-001').box((x0, -W / 2, g['zp']), (x0 + L, W / 2, g['zp'] + H), name='stand-in pack')
 '''
 
@@ -51,7 +51,7 @@ def main():
     tmp = Path(tempfile.mkdtemp(prefix='pod_selfcheck_'))
     try:
         shutil.copytree(POD, tmp / 'pod', ignore=shutil.ignore_patterns('__pycache__'))
-        (tmp / 'pod_layout.json').write_text(json.dumps({'xn': G['xn'], 'zp': G['zp']}), encoding='utf-8')
+        (tmp / 'pod_layout.json').write_text(json.dumps({'x_pack0': G['pack_fore_nom'], 'zp': G['zp']}), encoding='utf-8')
         for sub, py in (('wing', WING_PY), ('power', PWR_PY)):
             (tmp / sub / 'fusion').mkdir(parents=True)
             (tmp / sub / 'fusion' / (sub + '.py')).write_text(py, encoding='utf-8')
@@ -67,13 +67,13 @@ def main():
                            'notes': 'stand-in'}],
                 'acknowledges': ['E-POD-01', 'E-POD-09']}
         pwr = {'schema': 'dbf-interfaces/1', 'subsystem': 'power',
-               'parts': [dict(part('PWR-001', 'power', 'stand-in pack', 'LiPo', 550, [G['pack_fwd_c'], 0, G['pack_z_c']]),
+               'parts': [dict(part('PWR-001', 'power', 'stand-in pack', 'LiPo', 550, [G['pack_c_nom'], 0, G['pack_z_c']]),
                               make_or_buy='buy')],
                'edges': [], 'acknowledges': ['E-POD-05']}
         (tmp / 'wing' / 'interfaces.json').write_text(json.dumps(wing, indent=1), encoding='utf-8')
         (tmp / 'power' / 'interfaces.json').write_text(json.dumps(pwr, indent=1), encoding='utf-8')
         (tmp / 'modules.txt').write_text('wing\npod\npower\n', encoding='utf-8')
-        (tmp / 'mass_budget.json').write_text(json.dumps({'limit_g': 2600, 'allocations_g': {'pod': 105}}), encoding='utf-8')
+        (tmp / 'mass_budget.json').write_text(json.dumps({'limit_g': 2600, 'allocations_g': {'pod': 122}}), encoding='utf-8')
         ctx, results, issues = check.run_checks(str(tmp), str(tmp / 'modules.txt'), 0.002, str(tmp / 'mass_budget.json'),
                                                 datums=True)
         pod_ids = {c.id for c in ctx.components.values() if c.subsystem == 'pod'}
@@ -82,7 +82,7 @@ def main():
         for sub, f, ok, ms, _ in results:
             print('%-8s %s' % (sub, 'ok' if ok else 'FAIL'))
         pm = sum(c.mass_g for c in ctx.components.values() if c.subsystem == 'pod')
-        print('pod: %d parts, %d bodies, %.1f g (allocation 105 g)' % (
+        print('pod: %d parts, %d bodies, %.1f g (allocation 122 g)' % (
             len(pod_ids), sum(len(c.shapes) for c in ctx.components.values() if c.subsystem == 'pod'), pm))
         for sev, code, item, msg in issues:
             print('  %-5s %-16s %-16s %s' % (sev, code, item, msg))

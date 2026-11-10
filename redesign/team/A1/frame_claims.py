@@ -25,19 +25,6 @@ kit.assumption("ASM-A1-CLMAX", "CLmax 0.9 of the reflexed wing (SUPERSEDED)",
                      "S5010, SM 5 %), which CALC-A1-STALL now reads; the node stays only until B1, B3 and C1 re-point "
                      "their inputs (CHANGE-LOG D-02)", value=0.9, unit="-", status="UNVERIFIED",
                cites=["SRC-K09-CARD"])
-kit.assumption("ASM-A1-POD-GROUP", "Mass that moves with the pod",
-               "Pod shell, tray and hatch, the flight pack and power items, and the avionics move together when "
-               "pod.x_le_m changes",
-               basis="A3 CALC-A3-CG output pod_group_mass_g (subsystems pod + power + avionics), revision A3-R3 "
-                     "2026-11-09. Typed here because A3 publishes it only as a calc output; CR-A1-22 asks A3 for a "
-                     "claim so this node can be retired", value=763.0, unit="g", status="PROPOSED")
-kit.assumption("ASM-A1-POD-ALT", "Pod nose station if the D-17 trigger fires",
-               "The pod moves 20 mm forward to x_le = -0.125 m with the pack centred in it",
-               basis="CHANGE-LOG D-17 (A1 choice)", value=-0.125, unit="m", status="PROPOSED")
-kit.assumption("ASM-A1-POD-WALL", "Pod nose wall thickness ahead of the pack",
-               "Printed PETG / foam-board nose wall between the pack fore face and the pod outside skin",
-               basis="A3 CR-A3-11 option (a) used 3 mm; D2 confirms on the pod drawing", value=0.003, unit="m",
-               status="PROPOSED")
 kit.assumption("ASM-A1-WALL", "Box wall and lining 25 mm per side",
                "The transport box loses 25 mm per side to plywood/corrugated wall plus foam lining",
                basis="1/4 in ply + ~18 mm foam; D7 re-derives with the real box", value=0.025, unit="m",
@@ -79,15 +66,23 @@ def prop_clearances(D, y, z, b, x_mount, x_prop, tube_od, t_c, c):
     return gaps
 
 
-@kit.calc("CALC-A1-TIPOVER", title="Stance tip-over angles",
-          equation="h = c - x_cg + foot ; narrow = atan(z_fin / h) ; wide = atan(y_fin / h)",
-          inputs={"c": P + "wing.chord_m", "x_cg": P + "cg.x_target_m", "foot": P + "cg.foot_height_m",
-                  "z_fin": P + "fins.half_height_m", "y_fin": P + "fins.y_m"},
-          units={"c": "m", "x_cg": "m", "foot": "m", "z_fin": "m", "y_fin": "m"})
-def tipover(c, x_cg, foot, z_fin, y_fin):
-    h = c - x_cg + foot
-    return {"cg_height_m": h, "narrow_deg": math.degrees(math.atan(z_fin / h)),
-            "wide_deg": math.degrees(math.atan(y_fin / h)), "footprint_m": [2 * y_fin, 2 * z_fin]}
+@kit.calc("CALC-A1-TIPOVER", title="Stance tip-over angles toward the pod side (narrow axis) and the wing tip",
+          equation="h = c - x_cg + foot ; narrow = atan((z_pad - z_cg) / h) ; wide = atan(y_fin / h) ; "
+                   "corner bound at x_cg = x_range[0], z_cg = z_range[1]; target at x_target, z_cg = z_target_a3",
+          inputs={"c": P + "wing.chord_m", "x_range": P + "cg.x_range_m", "x_target": P + "cg.x_target_m",
+                  "z_range": P + "cg.z_range_m", "foot": P + "cg.foot_height_m",
+                  "z_pad": "CL-D5-CONTACT-Z", "y_fin": P + "fins.y_m"},
+          units={"c": "m", "x_range": "m", "x_target": "m", "z_range": "m", "foot": "m", "z_pad": "m", "y_fin": "m"})
+def tipover(c, x_range, x_target, z_range, foot, z_pad, y_fin):
+    # CHANGE-LOG D-30 (C5 CR-C5-01, D5 CR-D5-01): pivot = pad contact z (splayed feet), CG height above the
+    # chord plane subtracted (the pod side is +z), worst flying CG = forward limit and the top of the z range.
+    h_corner = c - x_range[0] + foot
+    h_target = c - x_target + foot
+    return {"cg_height_corner_m": h_corner, "cg_height_target_m": h_target,
+            "narrow_corner_deg": math.degrees(math.atan((z_pad - z_range[1]) / h_corner)),
+            "narrow_target_deg": math.degrees(math.atan(z_pad / h_target)),
+            "wide_corner_deg": math.degrees(math.atan(y_fin / h_corner)),
+            "footprint_m": [2 * y_fin, 2 * z_pad]}
 
 
 @kit.calc("CALC-A1-BOX", title="Box fit", assumes=["ASM-A1-WALL"],
@@ -101,43 +96,20 @@ def box_fit(ext, wall, env):
     return {"internal_m": inner, "slack_m": slack, "slack_min_m": min(slack)}
 
 
-# ---------------------------------------------------------------- D-17 pod-station rule
-@kit.calc("CALC-A1-POD-RULE", title="D-17 pod-station trigger and the -0.125 m fallback",
-          assumes=["ASM-A1-POD-GROUP", "ASM-A1-POD-ALT", "ASM-A1-POD-WALL", "ASM-A1-WALL"],
-          equation="x_pc = pod_le + L_pod/2 ; cg_centred = x_t + (m_p/M)(x_pc - x_req) ; "
-                   "trigger: move the pod if x_aft < cg_centred ; "
-                   "cg_alt = cg_centred + (m_grp/M)(x_alt - pod_le) ; "
-                   "room_fwd_alt = (x_alt + L_pod/2 - L_p/2) - (x_alt + wall) ; "
-                   "box_x_slack_alt = (ext_2nd - 2 wall_box) - (env_2nd + pod_le - x_alt)",
-          inputs={"x_t": "CL-B3-CG-TARGET", "x_req": "CL-A3-PACK-X-REQ", "M": "CL-A3-MASS-BASIC",
-                  "m_p": P + "battery.mass_kg", "pack": P + "battery.size_m", "pod_le": P + "pod.x_le_m",
-                  "pod": P + "pod.size_m", "m_grp": "ASM-A1-POD-GROUP", "x_alt": "ASM-A1-POD-ALT",
-                  "wall": "ASM-A1-POD-WALL", "x_aft": "CL-B3-CG-AFT", "x_fwd": "CL-B3-CG-FWD",
-                  "ext": P + "requirements.box_external_m", "wall_box": "ASM-A1-WALL",
-                  "env": P + "transport.envelope_props_off_m"},
-          units={"x_t": "m", "x_req": "m", "M": "kg", "m_p": "kg", "pack": "m", "pod_le": "m", "pod": "m",
-                 "m_grp": "g", "x_alt": "m", "wall": "m", "x_aft": "m", "x_fwd": "m", "ext": "m",
-                 "wall_box": "m", "env": "m"})
-def pod_rule(x_t, x_req, M, m_p, pack, pod_le, pod, m_grp, x_alt, wall, x_aft, x_fwd, ext, wall_box, env):
-    L_pod, L_p = pod[0], pack[0]
-    x_pc = pod_le + L_pod / 2
-    cg_centred = x_t + (m_p / M) * (x_pc - x_req)                 # pack centred in the pod at the held station
-    cg_alt = cg_centred + (m_grp / 1000.0 / M) * (x_alt - pod_le)  # whole pod group moved, pack still centred
-    x_pc_alt = x_alt + L_pod / 2
-    inner = sorted((e - 2 * wall_box for e in ext), reverse=True)
-    envs = sorted(env, reverse=True)                               # env[1] = pod nose to foot tips (x)
-    pack_fwd_need = (cg_centred - x_t) * M / m_p                   # pack ahead of the pod centre to reach x_t
-    held_room = (x_pc - L_p / 2) - (pod_le + wall)                 # forward slide available at the held station
-    return {"cg_pack_centred_m": cg_centred,
-            "pack_fwd_need_m": pack_fwd_need, "held_fwd_room_m": held_room,
-            "held_room_left_m": held_room - pack_fwd_need,         # < 0: the pack cannot reach the target (CR-A3-11)
-            "trigger_margin_m": x_aft - cg_centred,                # < 0: the move is indicated by the stored range
-            "cg_alt_m": cg_alt,
-            "alt_aft_margin_m": x_aft - cg_alt, "alt_fwd_margin_m": cg_alt - x_fwd,
-            "pack_fwd_room_alt_m": (x_pc_alt - L_p / 2) - (x_alt + wall),
-            "pack_aft_room_alt_m": (x_alt + L_pod) - (x_pc_alt + L_p / 2) - wall,
-            "box_x_slack_now_m": inner[1] - envs[1],
-            "box_x_slack_alt_m": inner[1] - (envs[1] + pod_le - x_alt)}
+# ---------------------------------------------------------------- CG range vs the B3 claims (D-24 closed D-17)
+@kit.calc("CALC-A1-CG-RANGE", title="params cg range sits inside B3's R1 claims and holds the pack-centred CG",
+          equation="fwd_ok = x_range[0] - x_fwd ; aft_ok = x_aft - x_range[1] ; "
+                   "centred_fwd = cg_centred - x_range[0] ; centred_aft = x_range[1] - cg_centred ; sm_aft = (x_np - x_range[1]) / c",
+          inputs={"x_range": P + "cg.x_range_m", "x_fwd": "CL-B3-CG-FWD", "x_aft": "CL-B3-CG-AFT",
+                  "cg_centred": "CL-B3-CG-CENTRED-AFT", "x_np": "CL-B3-XNP", "c": P + "wing.chord_m",
+                  "sm_min": P + "requirements.static_margin_min"},
+          units={"x_range": "m", "x_fwd": "m", "x_aft": "m", "cg_centred": "m", "x_np": "m", "c": "m"})
+def cg_range(x_range, x_fwd, x_aft, cg_centred, x_np, c, sm_min):
+    # CL-B3-CG-CENTRED-AFT is B3's aft margin (m) of the pack-centred CG; recover the CG itself from the aft limit.
+    cg = x_aft - cg_centred
+    return {"fwd_inside_m": x_range[0] - x_fwd, "aft_inside_m": x_aft - x_range[1],
+            "cg_pack_centred_m": cg, "centred_fwd_margin_m": cg - x_range[0],
+            "centred_aft_margin_m": x_range[1] - cg, "sm_at_aft_limit": (x_np - x_range[1]) / c - sm_min}
 
 
 # ---------------------------------------------------------------- mass and the gate cases
@@ -200,9 +172,14 @@ kit.claim("CL-A1-ELEVON-FRAC", "Elevon area fraction", calc="CALC-A1-ELEVON", ou
 kit.claim("CL-A1-PROP-CLEAR", "Minimum prop clearance", calc="CALC-A1-PROP-CLEAR", output="gap_min_m", unit="m",
           limit=(">=", P + "requirements.prop_clearance_min_m"), verifies=["R-PROP-CLEAR"],
           how="Fusion interference check (A5) then a ruler on the built aircraft: prop tip to tube face, to the other prop, to the wing tip.")
-kit.claim("CL-A1-TIPOVER", "Tip-over angle, narrow axis", calc="CALC-A1-TIPOVER", output="narrow_deg", unit="deg",
-          limit=(">=", P + "requirements.tipover_min_deg"), verifies=["R-TIPOVER"],
-          how="Stand the aircraft on a tilting board (C5 test): record the angle at which it tips about the fin axis.")
+kit.claim("CL-A1-TIPOVER", "Tip-over angle toward the pod side, worst flying CG corner (forward limit, z +0.03)",
+          calc="CALC-A1-TIPOVER", output="narrow_corner_deg", unit="deg",
+          limit=(">=", P + "requirements.tipover_min_deg"), verifies=["R-TIPOVER"], parts=["GER-001-UR", "GER-001-UL", "GER-001-LR", "GER-001-LL"],
+          note="D-30: frame-level corner bound with D5's pad contact z (CL-D5-CONTACT-Z); C5's CL-C5-TIPOVER-WORST (32.4 deg) is the claim of record.",
+          how="Stand the aircraft on a tilting board with the pack at the forward limit (C5 T-C5-TIPOVER / H1 GT-10): record the angle at which it tips toward the pod.")
+kit.claim("CL-A1-TIPOVER-TARGET", "Tip-over angle toward the pod side at the CG target, z_cg 0",
+          calc="CALC-A1-TIPOVER", output="narrow_target_deg", unit="deg",
+          how="As CL-A1-TIPOVER with the pack at the target station; compare with C5's CL-C5-TIPOVER-R1 (32.8 deg, z_cg 0.017).")
 kit.claim("CL-A1-BOX-FIT", "Aircraft fits the box", calc="CALC-A1-BOX", output="slack_min_m", unit="m",
           limit=(">=", 0.0), verifies=["R-TRANSPORT"],
           how="Place the props-off aircraft in the built box on its cradles; lid closes without touching fins or tubes (D7).")
@@ -220,7 +197,8 @@ kit.claim("CL-A1-HOVER-TW-GATE", "Hover T/W at the 2.6 kg gate", calc="CALC-A1-H
           how="Thrust stand, one station, 11x5.5MR on a fresh pack with the 100 A limiter (24.8 A per motor): thrust >= 1.3 kgf gives T/W 2.0 at 2.6 kg (H1, T-E1-STAND).")
 kit.claim("CL-A1-HOVER-TW-SAG", "Hover T/W at the gate, worst pack state", calc="CALC-A1-HOVER-TW", output="tw_gate_sag", unit="-",
           limit=(">=", P + "requirements.hover_tw_min_sag"), verifies=["R-HOVER-TW"],
-          how="Thrust-stand run on a pack at 20 % charge after a cold soak at 10 degC (E2 T-E2-IR), or the fresh value x CL-E2-SAG-F-WORST.")
+          note="D-35: voltage_sag 0.76 is E2's limiter-consistent factor (CL-E2-SAG-F-WORST); E1's CL-E1-TW-WORST 2.18 (factor 0.854) is the other bound until the two publish one claim.",
+          how="Thrust-stand run on a pack at 3.6 V/cell after a cold soak at 10 degC (H1 GT-02, pass line CL-H1-T-PASS-SAG >= 1.102 kgf), or the fresh value x CL-E2-SAG-F-WORST.")
 kit.claim("CL-A1-STALL-GATE", "Stall speed at the gate", calc="CALC-A1-STALL", output="vs_ms", unit="m/s",
           limit=("<=", P + "requirements.stall_max_ms"), verifies=["R-STALL"],
           how="Trimmed CLmax from B2 (CL-B2-CLMAX-DESIGN); flight test: slow-flight stall in FBWA at altitude with airspeed logged (H2, T-B2-STALL).")
@@ -231,31 +209,17 @@ kit.claim("CL-A1-RESERVE", "Pessimistic reserve at order", calc="CALC-A1-RESERVE
           limit=(">=", P + "requirements.crash_cost_usd"), verifies=["R-RESERVE", "R-BUDGET"],
           how="I1 re-prices the BOM at order time; reserve = 2 000 - spend, pessimistic column.")
 
-kit.claim("CL-A1-POD-TRIGGER", "D-17 trigger: CG with the pack centred in the pod at the held station (x_le -0.105 m)",
-          calc="CALC-A1-POD-RULE", output="cg_pack_centred_m", unit="m",
-          note="Rule part 1 (D-17 as refined in team/A1/HANDOFF.md): if B3's R1 aft limit (CL-B3-CG-AFT) is below this "
-               "value, A1 moves pod.x_le_m to -0.125; part 2 is CL-A1-POD-HELD-ROOM < 0. Supersedes the 0.051 m written in "
-               "D-17 (same rule, current A3/B3 numbers). "
-               "Trigger margin = CL-B3-CG-AFT - this value; the stored CL-B3-CG-AFT is still the R0 value.",
-          how="Recomputes when B3 re-runs sc_analysis.py at R1 (CR-A1-10); then balance the built aircraft with the pack "
-              "centred (T-A3-CG-BALANCE).")
-kit.claim("CL-A1-POD-HELD-ROOM", "Held pod (x_le -0.105): forward pack room left after trimming to the CG target",
-          calc="CALC-A1-POD-RULE", output="held_room_left_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
-          note="D-17 rule part 2: negative means the pack cannot reach CL-B3-CG-TARGET inside the pod nose wall at the "
-               "held station, so the pod moves to -0.125 when B3 publishes the R1 range (CR-A3-11).",
-          how="D2 pod drawing: pack fore face to the inside of the nose wall with the pack at A3's CL-A3-PACK-X-REQ.")
-kit.claim("CL-A1-POD-ALT-AFT", "Fallback pod at -0.125 m, pack centred: CG within the aft limit",
-          calc="CALC-A1-POD-RULE", output="cg_alt_m", unit="m", limit=("<=", "CL-B3-CG-AFT"), verifies=["R-CG-RANGE"],
-          how="A3 re-runs the roll-up with pod.x_le_m -0.125; balance test T-A3-CG-BALANCE on the built aircraft.")
-kit.claim("CL-A1-POD-ALT-FWD", "Fallback pod at -0.125 m, pack centred: CG behind the forward limit",
-          calc="CALC-A1-POD-RULE", output="alt_fwd_margin_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
-          how="As CL-A1-POD-ALT-AFT; the heavy 680 g pack slides aft to re-trim.")
-kit.claim("CL-A1-POD-ALT-PACK-ROOM", "Fallback pod: forward pack slide left inside the nose wall",
-          calc="CALC-A1-POD-RULE", output="pack_fwd_room_alt_m", unit="m", limit=(">=", 0.0),
-          how="D2 pod drawing at x_le -0.125: pack fore face to the inside of the nose wall.")
-kit.claim("CL-A1-POD-ALT-BOX", "Fallback pod: box slack along the chord (pod nose to foot tips, pitot off)",
-          calc="CALC-A1-POD-RULE", output="box_x_slack_alt_m", unit="m", limit=(">=", 0.0), verifies=["R-TRANSPORT"],
-          how="D7 box at 0.50 m inner chordwise length; pitot tube removed for transport.")
+kit.claim("CL-A1-CG-RANGE-FWD", "params cg.x_range_m forward end is inside B3's R1 forward limit",
+          calc="CALC-A1-CG-RANGE", output="fwd_inside_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
+          note="D-24 (closes D-17): params carry B3's range rounded inward; recomputes when B3 re-runs for the 7 deg cant and 0.21 m fins.",
+          how="Re-run after any B3 publish; the built aircraft is balanced at both marks (T-A3-CG-BALANCE, H1 GT-07).")
+kit.claim("CL-A1-CG-RANGE-AFT", "params cg.x_range_m aft end is inside B3's R1 aft limit (SM 5 %)",
+          calc="CALC-A1-CG-RANGE", output="aft_inside_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE", "R-STATIC-MARGIN"],
+          how="As CL-A1-CG-RANGE-FWD; static margin at the aft mark from the twin's glide tests (T-B3-TWIN-NP).")
+kit.claim("CL-A1-CG-CENTRED", "Pack centred in the pod at x_le -0.105 layout: CG margin to the forward end of the range",
+          calc="CALC-A1-CG-RANGE", output="centred_fwd_margin_m", unit="m", limit=(">=", 0.0), verifies=["R-CG-RANGE"],
+          note="D-24: the pod stays; A3 sets the pack nominal centroid to x -0.001 m (4 mm aft of the old pod centre) and D2 lays the bay for it.",
+          how="A3 roll-up at the R3 allocations (CL-A3-CG-X-RANGE); balance test with the pack at the nominal station.")
 
 kit.test("T-A1-WEIGH","Weigh the assembled aircraft", verifies=["CL-A1-MASS-SIZED"], state="planned",
          procedure="Pack in, props on, 5 kg scale with 1 g resolution; record with the pack's own mass (H1).")
@@ -273,8 +237,8 @@ def write_mass_budget(kit, path):
         "_note": "Written by redesign/team/A1/frame_claims.py from params/params.json#mass.allocation_g; do not edit by hand. "
                  "limit_g is the hard as-built gate (P4). Allocations are flying mass per subsystem folder; growth_reserve_g "
                  "(= limit - allocations) is held by A1 for growth by maturity and the first-build overrun; sized_g = "
-                 "allocations + the planned 250 g growth + 100 g overrun. A3 refines allocations in MASS-CG.md through a "
-                 "change request to A1.",
+                 "allocations + requirements.growth_allowance_kg + requirements.build_overrun_kg (D-38: 170 + 100 g). "
+                 "A3 refines allocations in MASS-CG.md through a change request to A1.",
         "limit_g": gate_g,
         "sized_g": sum(alloc.values()) + planned_g,
         "growth_reserve_g": growth,

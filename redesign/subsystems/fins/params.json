@@ -1,12 +1,12 @@
 {
- "_note": "Fins subsystem (FIN) local numbers, owner D3. Read by fusion/fins.py (ctx.local), make_fins.py and team/D3/fins_calcs.py (P:fin_detail.*). Shared numbers (fin station, tube x, tube OD/ID, fin height, TE, motor height, cant, board thickness, layers, spar) come from params/params.json and are not repeated here. Frame: params.json#frame (metres, x aft, y right, z up). Values marked CR are proposals to A1 (team/D3/CHANGE-REQUESTS.md); the module uses them until A1 decides.",
+ "_note": "Fins subsystem (FIN) local numbers, owner D3, design R3 (CR-A1-28, CHANGE-LOG D-26/27/28/42). Read by fusion/fins.py (ctx.local), make_fins.py and team/D3/fins_calcs.py (P:fin_detail.*); C4, C6 and E3 read some keys too: never rename a key. Shared numbers (fin station, tube x, tube OD/ID and length, half height, TE, motor height, cant, board thickness, layers, spar) come from params/params.json; tube_length_m and layers are copies for the C4/C6 readers and fins.py checks they agree. Frame: params.json#frame (metres, x aft, y right, z up).",
  "fin_detail": {
   "tube_length_m": {
    "value": 0.344,
    "unit": "m",
-   "source": "team/D3/CHANGE-REQUESTS.md#CR-D3-01",
+   "source": "params.json#fins.tube.length_m (D-26, CR-D3-01 accepted)",
    "status": "PROPOSED",
-   "note": "CR to A1 (params fins.tube.length_m 0.42): the tube ends 18 mm below the motor axis, under the mount lip cap, so the four motor screws are reachable from behind the plate; the printed mount carries the motor beyond the tube end. Saves 2 x 7.8 g"
+   "note": "copy of the shared key for the C4/C6 readers; fins.py reads params.json#fins.tube.length_m and checks they agree"
   },
   "bond_gap_m": {
    "value": 0.00015,
@@ -65,14 +65,21 @@
     "unit": "g",
     "source": "ASM-D3-ROOT-JOINT",
     "status": "UNVERIFIED",
-    "note": "per half-fin: microballoon-epoxy fillets 2 x 0.26 m + skin-tape laps 15 mm up both faces + LE fillet to the tube"
+    "note": "per half-fin: microballoon-epoxy fillets 2 x 0.26 m + skin-tape laps 15 mm up both faces + LE fillet to the tube (same fillet legs with two layers)"
    },
    "top_edge": {
-    "value": "straight line from the station-collar top at the LE to the TE tip at the half height",
+    "value": "straight line from the station-collar top at the LE to the start of the square tip at the half height, then flat to the TE",
     "unit": "-",
     "source": "C4 ASM-C4-EDGE-DZ",
     "status": "PROPOSED",
-    "note": "the edge strips run along it and end inside the station collar; the LE-top corner under the mount is cut away"
+    "note": "the edge strips run along the sloped part and end at the square tip; the LE-top corner is notched for the collar tongue (station_collar.tail_m)"
+   },
+   "tip_square_m": {
+    "value": 0.04,
+    "unit": "m",
+    "source": "team/D5/CHANGE-REQUESTS.md#CR-D5-03 (CR-A1-28)",
+    "status": "PROPOSED",
+    "note": "last 40 mm of each half-fin (x 0.280-0.320) has a flat top edge at |z| = fins.half_height_m and nothing on it but the foot shoe; the edge strips end at its forward edge"
    }
   },
   "link_slot": {
@@ -158,46 +165,28 @@
     "unit": "m",
     "source": "team/D3/fins_calcs.py#CALC-D3-PROP-GAP",
     "status": "PROPOSED",
-    "note": "motor face this far ahead of the collar front so the collar sits >= 39 mm behind the prop plane (CR-B4-04)"
-   },
-   "pad_h_m": {
-    "value": 0.002,
-    "unit": "m",
-    "source": "D3 choice",
-    "status": "PROPOSED",
-    "note": "canted bearing pads, height at the motor axis; the pad tops lie on the 3 deg canted plane"
+    "note": "motor face at the axis this far ahead of the collar front so the collar sits >= 39 mm behind the prop plane (CR-B4-04); the canted plate corners reach about 2 mm further forward, inside the motor-base shadow"
    },
    "plate_t_m": {
-    "value": 0.0025,
+    "value": 0.0045,
     "unit": "m",
     "source": "team/D3/fins_calcs.py#CALC-D3-SCREW-ENGAGE",
     "status": "PROPOSED",
-    "note": "plate + pads = 4.5 mm under the screw head at the axis (CR-D3-06 to E1: M3x8 gives 3.1-3.9 mm engagement)"
+    "note": "R3: the whole motor plate is canted (front and back faces parallel to the 7 deg motor face), uniform 4.5 mm under every screw head: M3x8 engages 3.5 mm at every hole and the head bears flat (C6 CL-C6-MOTOR-HEAD-RF). Replaces the R2 flat plate + canted pads (2.5 mm engagement at 7 deg)"
    },
    "plate_half_y_m": {
-    "value": 0.017,
-    "unit": "m",
-    "source": "D3 choice",
-    "status": "PROPOSED"
-   },
-   "plate_half_z_m": {
-    "value": 0.0175,
-    "unit": "m",
-    "source": "D3 choice",
-    "status": "PROPOSED"
-   },
-   "pad_centre_m": {
-    "value": 0.008,
+    "value": 0.0145,
     "unit": "m",
     "source": "D3 choice",
     "status": "PROPOSED",
-    "note": "pads centred at (+/-8, +/-8) mm from the axis, 4 x 4 mm: clear of the screw holes, inside a 28 mm base"
+    "note": "R3: screw-head edge at 8 + 2.75 = 10.75 mm, cheeks to 14 mm; 0.5 mm beyond the cheeks"
    },
-   "pad_half_m": {
-    "value": 0.002,
+   "plate_half_z_m": {
+    "value": 0.015,
     "unit": "m",
     "source": "D3 choice",
-    "status": "PROPOSED"
+    "status": "PROPOSED",
+    "note": "R3: screw-head edge at 9.5 + 2.75 = 12.25 mm + 2.75 mm edge"
    },
    "bolt_pattern_m": {
     "value": [
@@ -207,7 +196,7 @@
     "unit": "m",
     "source": "SRC-X3108S",
     "status": "UNVERIFIED",
-    "note": "cross pattern, 16 mm across y, 19 mm across z; not published, E1 measures on arrival (T-E1-MOTOR-RM): drill the plate from the measured pattern"
+    "note": "cross pattern, 16 mm across y, 19 mm across z; not published. The plate is printed with 2.5 mm square pilots on this pattern and DRILLED 3.4 mm square to the face to the measured pattern, motor as template (C6 CR-C6-10: no slots)"
    },
    "screw_hole_d_m": {
     "value": 0.0034,
@@ -220,7 +209,7 @@
     "unit": "m",
     "source": "D3 choice",
     "status": "PROPOSED",
-    "note": "rear shaft and circlip clearance; UNVERIFIED against the motor"
+    "note": "rear shaft and circlip clearance, printed as a 10 mm square opening in the canted plate; UNVERIFIED against the motor"
    },
    "cheek_t_m": {
     "value": 0.0025,
@@ -259,28 +248,28 @@
     "unit": "-",
     "source": "team/D3/CHANGE-REQUESTS.md#CR-D3-07",
     "status": "UNVERIFIED",
-    "note": "+1: the UR thrust gets a component along +t = x_hat x r_hat (right-handed about +x). Mounts A (UR, LL) and B (UL, LR) are mirror prints; if F4's spin map needs the other sense, swap A and B, no reprint"
+    "note": "+1: the UR thrust gets a component along +t = x_hat x r_hat (right-handed about +x). Sense unchanged at 7 deg (D-27). Prints A (UR, LL) and B (UL, LR) are mirror images; if F4 needs the other sense, swap A and B, no reprint"
    },
    "slip_torque_nm": {
     "value": 2.5,
     "unit": "N m",
     "source": "team/D3/fins_calcs.py#CALC-D3-MOUNT-SLIP",
     "status": "PROPOSED",
-    "note": "pinch-bolt setting: the collar turns on the tube at this torque (the D-23 fuse, side loads at the motor); set with a luggage scale, BUILD.md step 14"
+    "note": "pinch-bolt setting: the collar turns on the tube at this torque (the D-23 fuse, side loads at the motor); set with a luggage scale (BUILD.md)"
    },
    "mu_petg_cf": {
     "value": 0.3,
     "unit": "-",
     "source": "ASM-D3-MU",
     "status": "UNVERIFIED",
-    "note": "PETG on matte CF, dry; only used to estimate the bolt preload, the setting is measured"
+    "note": "ASA (was PETG) on matte CF, dry; key name kept for the E3/C6 readers; only used to estimate the bolt preload, the setting is measured (T-D3-SLIP)"
    },
    "fill_factor": {
     "value": 0.9,
     "unit": "-",
     "source": "G3 practice",
     "status": "UNVERIFIED",
-    "note": "2-3 mm walls print almost solid"
+    "note": "2-4.5 mm ASA walls print almost solid"
    },
    "hardware_g": {
     "value": 1.4,
@@ -295,6 +284,20 @@
     "source": "subsystems/propulsion/parts.csv#PRP-005",
     "status": "PROPOSED",
     "note": "M3x8 SHCS supplied by propulsion"
+   },
+   "pilot_m": {
+    "value": 0.0025,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "square printed pilot at each motor-screw hole, drilled out to screw_hole_d_m"
+   },
+   "material": {
+    "value": "ASA",
+    "unit": "-",
+    "source": "CHANGE-LOG D-42 (CR-E3-01)",
+    "status": "PROPOSED",
+    "note": "HDT 93 degC; motor base 66.4 degC steady hover (CL-E3-MOUNT-ASA); PETG fails by 8 K"
    }
   },
   "esc_pad": {
@@ -352,6 +355,13 @@
     "source": "G3 practice",
     "status": "PROPOSED",
     "note": "strap slot edge to pad edge"
+   },
+   "material": {
+    "value": "ASA",
+    "unit": "-",
+    "source": "CHANGE-LOG D-42 (CR-E3-01)",
+    "status": "PROPOSED",
+    "note": "ESC pad 61.6 degC (CL-E3-ESC-PEAK) against PETG 58 degC"
    }
   },
   "materials": {
@@ -381,15 +391,22 @@
     "source": "ASM-D3-BOND",
     "status": "UNVERIFIED",
     "note": "per block: tube bore + spar bore + core faces"
+   },
+   "asa_gcc": {
+    "value": 1.07,
+    "unit": "g/cm3",
+    "source": "SRC-ASA-TDS (typical ASA filament 1.05-1.07)",
+    "status": "UNVERIFIED",
+    "note": "mounts and ESC pads (D-42)"
    }
   },
-  "_note": "Design R2 (D3): braced fin per C4 (team/C4/fin_structures.py CALC-C4-MODES-1LB): one-layer board, CF brace from a station collar to the spar, CF edge strips on the top edge, internal tube plug at the block.",
+  "_note": "Design R3 (D3): two-layer braced fin (D-26): two 4.8 mm boards laminated, CF 10 x 3 brace from a 16 mm station collar to the spar, CF 10 x 1 edge strips pinned with 2 mm CF pins every 15 mm and anchored 40 mm in a two-face collar tail (C6), internal tube plug at the block, square 40 mm tips for the feet, a strap eye on each block boss, ASA mounts (7 deg canted plate) and ESC pads (D-42).",
   "layers": {
-   "value": 1,
+   "value": 2,
    "unit": "-",
-   "source": "team/D3/CHANGE-REQUESTS.md#CR-D3-02",
-   "status": "PROPOSED",
-   "note": "CR to A1 (params fins.layers 2): C4 recommends one layer + brace + edge strips (CL-C4-SEP-1LB 0.48, CL-C4-MS-FACE-1L 0.28); saves 38 g and pays for the braces. The module uses this value until A1 decides"
+   "source": "params.json#fins.layers (D-26, CR-C4-14)",
+   "status": "CHECKED",
+   "note": "copy of the shared key for the C4/C6 readers (two 4.8 mm boards laminated, CL-C4-D3-SEP 0.41); one layer (CR-D3-02) rejected; fins.py reads params.json#fins.layers and checks they agree"
   },
   "plug": {
    "od_m": {
@@ -421,11 +438,11 @@
   },
   "station_collar": {
    "height_m": {
-    "value": 0.012,
+    "value": 0.016,
     "unit": "m",
-    "source": "D3 choice",
+    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-03 (CR-A1-28)",
     "status": "PROPOSED",
-    "note": "directly below the mount collar (0.5 mm gap); carries the LE top of the board, both edge-strip ends and the brace ear"
+    "note": "R3: 16 mm (was 12) covers C4 torsion 9.3 N m (CL-C6-COLLAR-L-REQ 13.2 mm). Top 0.5 mm below the mount collar, grows downward; the brace ear keeps its R2 height (ear_h_m) so the brace end stays at |z| 0.1535 as C4 modelled"
    },
    "gap_m": {
     "value": 0.0005,
@@ -440,17 +457,18 @@
     "status": "PROPOSED"
    },
    "slot_wall_m": {
-    "value": 0.0016,
+    "value": 0.0012,
     "unit": "m",
     "source": "G3 practice",
-    "status": "PROPOSED"
+    "status": "PROPOSED",
+    "note": "R3: tail outer walls 3 perimeters (bond face for the strip outer face only)"
    },
    "tail_m": {
-    "value": 0.02,
+    "value": 0.04,
     "unit": "m",
-    "source": "D3 choice",
+    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-01 (CR-A1-28)",
     "status": "PROPOSED",
-    "note": "slot length aft of the tube surface: the edge strips are bonded 20 mm into it"
+    "note": "R3: two-face tail 40 mm aft of the tube surface (>= 33.7 mm, CL-C6-STRIP-EMBED-REQ): a solid tongue of board thickness fills the notched LE-top corner of the board, the strips lie in slots between the tongue and two outer walls, joined by a cap over the top edge; slots open downward"
    },
    "ear_len_m": {
     "value": 0.01,
@@ -471,29 +489,71 @@
     "unit": "-",
     "source": "G3 practice",
     "status": "PROPOSED"
+   },
+   "ear_h_m": {
+    "value": 0.012,
+    "unit": "m",
+    "source": "team/C4/CHANGE-REQUESTS.md#CR-C4-16",
+    "status": "PROPOSED",
+    "note": "brace ear height, flush with the collar top: brace end at |z| 0.1535 as accepted by C4"
+   },
+   "cap_t_m": {
+    "value": 0.0012,
+    "unit": "m",
+    "source": "G3 practice",
+    "status": "PROPOSED",
+    "note": "cap over the strip tops joining tongue and walls (3 perimeters)"
+   },
+   "strip_slot_clear_m": {
+    "value": 0.0002,
+    "unit": "m",
+    "source": "G3 practice",
+    "status": "PROPOSED",
+    "note": "per side, strip in its tail slot (epoxy gap)"
+   },
+   "material": {
+    "value": "PETG",
+    "unit": "-",
+    "source": "CHANGE-LOG D-42",
+    "status": "PROPOSED",
+    "note": "at ambient, 30 mm below the motor plate"
+   },
+   "tongue_fill": {
+    "value": 0.45,
+    "unit": "-",
+    "source": "G3 practice",
+    "status": "UNVERIFIED",
+    "note": "tail tongue (9.6 mm thick): 3 perimeters (1.2 mm) under each strip face + 20 % gyroid core; the faces carry the bond, the tail carries ~1 350 N design tension at ~14 MPa over walls + cap + tongue perimeters (C6 re-checks, CR-D3-17); weigh the first print"
+   },
+   "tongue_depth_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "tongue and walls reach this far below the strip band (strip 10 mm wide + 1 mm), not the full 16 mm ring height: the board notch is only as deep as the strip"
    }
   },
   "brace": {
    "w_m": {
     "value": 0.01,
     "unit": "m",
-    "source": "team/C4/fin_structures.py#ASM-C4-STRUT-W",
+    "source": "team/C4/CHANGE-REQUESTS.md#CR-C4-25",
     "status": "PROPOSED",
-    "note": "pultruded CF strip 10 x 3 mm, 10 mm side along x (cruise flow)"
+    "note": "pultruded CF strip 10 mm wide (10 x 2, brace.t_m), 10 mm side along x (cruise flow); C4-R3 sizing sheet"
    },
    "t_m": {
-    "value": 0.003,
+    "value": 0.002,
     "unit": "m",
-    "source": "team/D3/fins_calcs.py#CALC-D3-BRACE",
+    "source": "team/C4/CHANGE-REQUESTS.md#CR-C4-16",
     "status": "PROPOSED",
-    "note": "10 x 3 mm (C4 modelled 10 x 2): with the anchor moved outboard to clear the transport cradles the brace is steeper, the thicker strip restores the lateral axial stiffness (CL-D3-BRACE-KY >= 1)"
+    "note": "R3: 10 x 2 mm strip, accepted by C4 on the D3 geometry (P_cr 293 N vs 166 N design, separation 0.39 with two layers; the brace stores 2-6 % of the modal strain energy, so its stiffness hardly matters); saves 9 g against 10 x 3"
    },
    "anchor_y_m": {
     "value": 0.242,
     "unit": "m",
     "source": "team/D3/fins_calcs.py#CALC-D3-BRACE",
     "status": "PROPOSED",
-    "note": "|y| of the anchor on the spar line, just outboard of D7's spar cradle and lid pillar (y 0.17-0.23, CR-D3-11): gives the same lateral axial stiffness EA (dy/L)^2/L as C4's brace anchored 0.12 m inboard (CL-D3-BRACE-KY); clear of the elevons (x < 0.2496) and the pod"
+    "note": "|y| of the anchor on the spar line, just outboard of D7's spar cradle and lid pillar (y 0.17-0.23, CR-D3-11): C4-R3 modelled the brace at this anchor (CL-C4-D3-BRACE-F, CL-C4-D3-SEP 0.39); lateral stiffness CL-D3-BRACE-KY is information only; clear of the elevons (x < 0.2496) and the pod"
    },
    "engage_m": {
     "value": 0.01,
@@ -543,7 +603,7 @@
     "unit": "m",
     "source": "team/C4/fin_structures.py#ASM-C4-EDGE-W",
     "status": "PROPOSED",
-    "note": "pultruded CF strip 10 x 1 mm on both faces of each half-fin along the top edge, from inside the station collar to the foot"
+    "note": "pultruded CF strip 10 x 1 mm on both faces of each half-fin along the sloped top edge, from the tube surface (inside the collar tail) to the square tip"
    },
    "t_m": {
     "value": 0.001,
@@ -556,6 +616,27 @@
     "unit": "g",
     "source": "ASM-D3-BOND",
     "status": "UNVERIFIED"
+   },
+   "pin_d_m": {
+    "value": 0.002,
+    "unit": "m",
+    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-02",
+    "status": "PROPOSED",
+    "note": "pultruded CF rod 2 mm, through strip-board-strip, bonded flush (CL-C6-STRIP-PIN-RF 1.41)"
+   },
+   "pin_pitch_m": {
+    "value": 0.015,
+    "unit": "m",
+    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-02",
+    "status": "PROPOSED",
+    "note": "along the strip, first pin half a pitch aft of the collar tail"
+   },
+   "pin_epoxy_g": {
+    "value": 0.4,
+    "unit": "g",
+    "source": "ASM-D3-BOND",
+    "status": "UNVERIFIED",
+    "note": "per half-fin pin set"
    }
   },
   "boss": {
@@ -591,6 +672,50 @@
     "source": "G3 practice",
     "status": "PROPOSED",
     "note": "per side, board in the clip slot"
+   }
+  },
+  "strap_eye": {
+   "len_m": {
+    "value": 0.011,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "tab beyond the boss ring, outboard side (y), on every bore boss of the block: one eye per fin root (CR-H1-08)"
+   },
+   "h_m": {
+    "value": 0.01,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "above the upper skin / below the lower skin"
+   },
+   "t_m": {
+    "value": 0.006,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "along x, centred on the tube axis"
+   },
+   "hole_d_m": {
+    "value": 0.004,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "cord or 3.6 mm cable tie; hole axis along x"
+   },
+   "hole_y_m": {
+    "value": 0.006,
+    "unit": "m",
+    "source": "D3 choice",
+    "status": "PROPOSED",
+    "note": "hole centre outboard of the ring outer radius"
+   },
+   "load_n": {
+    "value": 29.4,
+    "unit": "N",
+    "source": "team/H1/claims.json#CL-H1-RESTRAINT-PER-TIE",
+    "status": "PROPOSED",
+    "note": "restrained ground run, per tie"
    }
   }
  }

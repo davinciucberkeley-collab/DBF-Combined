@@ -26,9 +26,10 @@ kT, kP, _ = pm.calibrate(RHO, KV, RM, I0, ESC)
 RM_WARM = pm.r_hot(RM, 0.00393, 40.0)
 _PJ = __import__("json").loads((HERE.parents[1] / "params" / "params.json").read_text(encoding="utf-8"))
 M = _PJ["requirements"]["mtow_gate_kg"]["value"]
-B, E = _PJ["wing"]["span_m"]["value"], _PJ["wing"]["oswald_e"]["value"]
-S = B * _PJ["wing"]["chord_m"]["value"]
-LD, VREF = _PJ["performance"]["ld_cruise"]["value"], _PJ["performance"]["cruise_ms"]["value"]
+VREF = _PJ["performance"]["cruise_ms"]["value"]
+_CR = {n["id"]: n for n in __import__("json").loads((HERE / "claims.json").read_text(encoding="utf-8"))["nodes"]}
+_IN = _CR["CALC-E1-CRUISE"]["input_values"]                  # B1's polar as read by CALC-E1-CRUISE (CR-A1-32)
+S, CD0, K, TRIM = _IN["S"], _IN["cd0"], _IN["k"], _IN["trim"]
 
 
 def eff_map():
@@ -49,9 +50,9 @@ def eff_map():
         cs = ax.contour(Vs, Ts, Z, levels=[0.1, 0.2, 0.3, 0.4, 0.5], colors=FG3, linewidths=0.75)
         ax.clabel(cs, fmt="%.1f", fontsize=8, colors=FG2)
         vd = [12 + 0.25 * i for i in range(33)]
-        td = [pm.cruise_drag(v, M, G, RHO, S, B, E, LD, VREF)[0] / 4 for v in vd]
+        td = [pm.cruise_drag(v, M, G, RHO, S, CD0, K, TRIM) / 4 for v in vd]
         ax.plot(vd, td, color=col, lw=2)
-        tc = pm.cruise_drag(VREF, M, G, RHO, S, B, E, LD, VREF)[0] / 4
+        tc = pm.cruise_drag(VREF, M, G, RHO, S, CD0, K, TRIM) / 4
         s = pm.at_thrust(prop, tc, VREF, RHO, 1.0, kP, KV, RM_WARM, I0, ESC[0], ESC[1], 14.8)
         ax.plot([VREF], [tc], "o", color=col, ms=6)
         ax.annotate(f"cruise {VREF:.0f} m/s\n{4 * s['P_bat_W']:.0f} W, eta {tc * VREF / s['P_bat_W']:.2f}", (VREF, tc),

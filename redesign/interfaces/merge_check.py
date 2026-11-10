@@ -7,6 +7,12 @@ Run (repo root):
 
 Exit code 1 if any ERROR (or any WARN with --strict). Schema: redesign/interfaces/SCHEMA.md.
 Also imported by redesign/fusion/ (fusionkit, check.py) so CAD and the graph read the same data.
+
+D-46 (A4, 2026-11-09): harness-owned electrical edges are exempt from the 'owner' warning (D-20); connection types
+marked "structural": false (ties, wire channels, labels, pitot tubing) do not count as a load path in the floating
+check; a part flagged "carried": true (harness bundle, label, consumables) held only by them is not floating, any
+other part held only by them is; 'unpowered' follows power-carrying wires from
+part_a (supply) to part_b (load), skipping "signal_only" leads and radio links; method "radio" (no wire block).
 Python 3 stdlib only.
 """
 import argparse
@@ -23,7 +29,7 @@ SCHEMA_ID = 'dbf-interfaces/1'
 STATUS = ('PROPOSED', 'MODELLED', 'CHECKED', 'VERIFIED')
 KINDS = ('mechanical', 'electrical', 'thermal', 'kinematic')
 METHODS = ('fastened', 'bonded', 'clamped', 'press_fit', 'taped', 'strapped', 'hinged', 'slid',
-           'connector', 'soldered', 'conductive')
+           'connector', 'soldered', 'conductive', 'radio')
 MAKE_OR_BUY = ('make', 'buy')
 ELEC_ROLES = ('source', 'bus', 'sink')
 
@@ -36,6 +42,8 @@ WIRE_FIELDS = ('gauge_awg', 'connector', 'route_id', 'support_points', 'bend_rad
                'disconnect')
 MOTION_FIELDS = ('axis', 'range_deg')
 STRUCTURAL = ('mechanical', 'kinematic')      # edge kinds that hold a part in place
+WIRELESS = ('radio',)                         # electrical methods with no wire (no wire block, no power)
+HARNESS = 'harness'                           # owns every electrical edge although it holds neither side (D-20)
 
 
 class Graph:
@@ -65,6 +73,16 @@ class Graph:
 
     def flight_parts(self):
         return {k: p for k, p in self.parts.items() if p.get('flight', True)}
+
+    def load_bearing(self, edge):
+        """True if the edge can hold a part in place: a mechanical/kinematic type not marked "structural": false."""
+        ct = self.ctypes.get(edge.get('via'))
+        return bool(ct) and ct['kind'] in STRUCTURAL and ct.get('structural', True) is not False
+
+    def carries_power(self, edge):
+        """True for a wire that carries supply current: electrical, not a radio link, not "signal_only"."""
+        ct = self.ctypes.get(edge.get('via'))
+        return bool(ct) and ct['kind'] == 'electrical' and ct['method'] not in WIRELESS and not edge.get('signal_only')
 
 
 # ----------------------------------------------------------------------------- loading
@@ -209,11 +227,13 @@ def _check_edges(g):
             miss = _missing(e.get('motion') or {}, MOTION_FIELDS)
             if miss:
                 g.add('ERROR', 'motion', eid, 'hinged edge missing motion.' + ', motion.'.join(miss))
-        if ct['kind'] == 'electrical':
+        if ct['kind'] == 'electrical' and ct['method'] not in WIRELESS:
             miss = _missing(e.get('wire') or {}, WIRE_FIELDS)
             if miss:
                 g.add('ERROR', 'wire', eid, 'electrical edge missing wire.' + ', wire.'.join(miss))
         subs = {g.parts[e[s]]['subsystem'] for s in ('part_a', 'part_b') if e.get(s) in g.parts}
+        if e.get('owner') == HARNESS and ct['kind'] == 'electrical':
+            continue                           # D-20: the wire is the installation; harness owns it, power/avionics hold the ends
         if e.get('owner') and subs and e['owner'] not in subs:
             g.add('WARN', 'owner', eid, 'owner "%s" is neither side (%s)' % (e['owner'], ', '.join(sorted(subs))))
 
@@ -231,13 +251,14 @@ def _check_one_sided(g):
             g.add('WARN', 'one-sided', eid, '%s acknowledges an edge nobody declares' % sub)
 
 
-def clusters(g, kinds=STRUCTURAL, parts=None):
-    """Connected groups of parts joined by edges of the given kinds (largest first)."""
+def clusters(g, kinds=STRUCTURAL, parts=None, load_only=True):
+    """Connected groups of parts joined by edges of the given kinds (largest first). load_only: skip connection
+    types marked "structural": false (a tie or a label does not hold a part on)."""
     parts = parts if parts is not None else g.flight_parts()
     adj = {p: set() for p in parts}
     for e in g.edges.values():
         a, b = e.get('part_a'), e.get('part_b')
-        if a in adj and b in adj and g.kind(e) in kinds:
+        if a in adj and b in adj and g.kind(e) in kinds and (not load_only or g.load_bearing(e)):
             adj[a].add(b)
             adj[b].add(a)
     seen, out = set(), []
@@ -256,8 +277,25 @@ def clusters(g, kinds=STRUCTURAL, parts=None):
     return out
 
 
+def carried(g, parts=None):
+    """Flight parts flagged "carried": true (harness bundles, labels, consumables) that are located by at least one
+    non-structural type and held by no load-bearing edge: carried items, exempt from the floating check. A part
+    without the flag held only by ties (a pack on a cable tie) still floats."""
+    parts = parts if parts is not None else g.flight_parts()
+    held, located = set(), set()
+    for e in g.edges.values():
+        if g.kind(e) not in STRUCTURAL:
+            continue
+        for s in ('part_a', 'part_b'):
+            (held if g.load_bearing(e) else located).add(e.get(s))
+    return {p for p in parts if p in located and p not in held and (g.parts.get(p) or {}).get('carried')}
+
+
 def _check_floating(g):
-    groups = clusters(g)
+    keep = g.flight_parts()
+    for p in carried(g, keep):
+        keep.pop(p)
+    groups = clusters(g, parts=keep)
     for grp in groups[1:]:
         ids = ', '.join(sorted(grp))
         if len(grp) == 1:
@@ -267,10 +305,13 @@ def _check_floating(g):
 
 
 def _check_electrical(g):
+    """'unconnected': an electrical part with no wire at all. 'unpowered': no power-carrying wire path from a
+    source, followed part_a (supply) -> part_b (load); signal-only leads and radio links do not feed a part."""
     elec = {k: p for k, p in g.parts.items() if p.get('electrical')}
-    adj = {k: set() for k in elec}
+    adj = {k: set() for k in elec}          # any wire, undirected (connectedness)
+    feed = {k: set() for k in elec}         # power wires, directed supply -> load
     for eid, e in g.edges.items():
-        if g.kind(e) != 'electrical':
+        if g.kind(e) != 'electrical' or g.method(e) in WIRELESS:
             continue
         for s in ('part_a', 'part_b'):
             p = g.parts.get(e.get(s))
@@ -280,17 +321,20 @@ def _check_electrical(g):
         if a in adj and b in adj:
             adj[a].add(b)
             adj[b].add(a)
+            if g.carries_power(e):
+                feed[a].add(b)
     live = set(k for k, p in elec.items() if p['electrical'] == 'source')
     stack = list(live)
     while stack:
-        for q in adj[stack.pop()] - live:
+        for q in feed[stack.pop()] - live:
             live.add(q)
             stack.append(q)
     for k, p in sorted(elec.items()):
         if not adj[k]:
             g.add('WARN', 'unconnected', k, 'electrical %s with no electrical edge' % p['electrical'])
         elif k not in live:
-            g.add('WARN', 'unpowered', k, 'no electrical path to any source')
+            g.add('WARN', 'unpowered', k, 'no power-carrying wire from a source (followed part_a -> part_b, '
+                                          'signal-only leads skipped)')
 
 
 # ----------------------------------------------------------------------------- mass / CG

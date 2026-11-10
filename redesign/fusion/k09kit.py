@@ -21,6 +21,9 @@ propulsion, landing, pod and mechanisms designers build from the same numbers an
 | `spar_y`, `tube_z` | spanwise spar, vertical motor tube |
 | `fin_plate`, `half_fin` | foam-board fin centred on its plane; upper/lower half-fin whose root follows the skin (R1) |
 | `core_block` | printed through-core block: section-shaped plug between two chord stations (tube + spar bores) |
+| `strut` | straight rectangular strip between two points (fin brace: DX-COLLAR-<st> -> DX-ANCHOR-<st>) |
+| `local(sub)`, `lval(local, key, unit, default)` | a subsystem's own params.json (datums D3 / D5 own) |
+| `fin_brace_points`, `foot_contact_z`, `motor_face_x` | R3 brace ends, foot pad contact, motor plate face |
 | `bundle` | harness bundle body: axis-aligned cylinder legs along a route (gives a lumped bundle part its body) |
 | `box_frame`, `box_shell` | transport box placed around the aircraft (DX-BOX), six wall bodies (flight: false) |
 | `motor_envelope`, `prop_disc`, `prop_keepout` | motor can + shaft along -x, prop disc, prop strike keep-out |
@@ -213,6 +216,79 @@ def thickness_at(coords, chord, frac):
     return (surface_y(coords, frac, 'upper') - surface_y(coords, frac, 'lower')) * chord
 
 
+# ----------------------------------------------------------------------------- subsystem-local numbers
+_LOCAL = {}
+
+
+def local(sub):
+    """redesign/subsystems/<sub>/params.json (cached; {} when the file does not exist yet)."""
+    if sub not in _LOCAL:
+        path = os.path.join(REDESIGN, 'subsystems', sub, 'params.json')
+        try:
+            with open(path, encoding='utf-8') as f:
+                _LOCAL[sub] = json.load(f)
+        except (OSError, ValueError):
+            _LOCAL[sub] = {}
+    return _LOCAL[sub]
+
+
+def lval(LP, key, unit=None, default=None):
+    """Value of a subsystem params.json leaf (dotted key from the file root), unit-checked; `default` when the key
+    (or the file) is missing, so the framework still builds before the designer has published the number."""
+    try:
+        return val(LP, key, unit)
+    except KeyError:
+        if default is None:
+            raise
+        return default
+
+
+def fin_brace_points(params, coords=None):
+    """Brace end points of the R3 braced fin (D3, subsystems/fins/params.json#fin_detail): {st: (collar_end,
+    anchor_end)}. Collar end = centre of the station-collar brace ear (tube axis x, inboard of the ring, ear
+    mid-height, the ear top 0.5 mm below the mount grip); anchor end = brace slot centre in the anchor on the spar line
+    at |y| brace.anchor_y_m, half the anchor's proud height above the upper (below the lower) skin. Same rule as
+    subsystems/fins/fusion/fins.py geometry()['brace_ends'] (tests/test_framework.py cross-checks)."""
+    P, F = params, local('fins')
+    l = lambda k, u, d: lval(F, 'fin_detail.' + k, u, d)
+    coords = coords or section(P)[0]
+    c = val(P, 'wing.chord_m', 'm')
+    xt, yf = val(P, 'fins.tube.x_m', 'm'), val(P, 'fins.y_m', 'm')
+    xs = val(P, 'wing.spar.x_m', 'm')
+    r_b = val(P, 'fins.tube.od_m', 'm') / 2 + l('bond_gap_m', 'm', 0.00015)
+    z_ear = (val(P, 'fins.tube.length_m', 'm') / 2 - l('mount.grip_m', 'm', 0.012) - l('station_collar.gap_m', 'm', 0.0005)
+             - l('station_collar.ear_h_m', 'm', 0.012) / 2)
+    y_ear = yf - r_b - l('station_collar.ring_wall_m', 'm', 0.0016) - l('station_collar.ear_len_m', 'm', 0.010) / 2
+    y_an, proud = l('brace.anchor_y_m', 'm', 0.242), l('anchor.proud_m', 'm', 0.008)
+    out = {}
+    for st in STATIONS:
+        sy, sz = SIGNS[st]
+        za = surface_z(coords, c, xs / c, 'upper' if sz > 0 else 'lower') + sz * proud / 2
+        out[st] = ((xt, sy * y_ear, sz * z_ear), (xs, sy * y_an, za))
+    return out
+
+
+def foot_contact_z(params):
+    """|z| of the foot pad contact (tip-over pivot): D5's pad outer edge less its edge round
+    (subsystems/landing/params.json#landing.pad, CL-D5-CONTACT-Z 0.218, CHANGE-LOG D-30); the fin tip if D5 has not
+    published it."""
+    L = local('landing')
+    try:
+        return val(L, 'landing.pad.z_outer_m', 'm') - val(L, 'landing.pad.edge_r_m', 'm')
+    except KeyError:
+        return val(params, 'fins.half_height_m', 'm')
+
+
+def motor_face_x(params):
+    """Motor base plate face on the motor axis (CHANGE-LOG D-28: x 0.0309): ahead of the tube front face by the
+    printed mount's bore gap, collar wall and face_ahead (subsystems/fins/params.json#fin_detail.mount); the tube
+    front face (DP-MOUNT) if D3 has not published them."""
+    F = local('fins')
+    l = lambda k: lval(F, 'fin_detail.' + k, 'm', 0.0)
+    return (val(params, 'fins.tube.x_m', 'm') - val(params, 'fins.tube.od_m', 'm') / 2 - l('bond_gap_m')
+            - l('mount.collar_wall_m') - l('mount.face_ahead_m'))
+
+
 # ----------------------------------------------------------------------------- datums
 def datum_specs(params):
     """The K09-L datum sheet, every entry from params.json. [(name, kind, geometry dict, params key, note)].
@@ -230,6 +306,7 @@ def datum_specs(params):
     pod_x, pod_z = val(P, 'pod.x_le_m', 'm'), val(P, 'pod.z_base_m', 'm')
     od = val(P, 'fins.tube.od_m', 'm')
     spar_half = val(P, 'wing.spar.length_m', 'm') / 2
+    zc, brace = foot_contact_z(P), fin_brace_points(P)
     S = []
     add = lambda name, kind, key, note, **g: S.append((name, kind, g, key, note))
     add('DP-SYM', 'plane', 'frame.symmetry_plane', 'symmetry plane; ctx.mirror(plane="XZ")', axis='Y', offset=0.0)
@@ -241,9 +318,13 @@ def datum_specs(params):
     add('DP-CG', 'plane', 'cg.x_target_m', 'CG target station (range in cg.x_range_m)', axis='X', offset=val(P, 'cg.x_target_m', 'm'))
     add('DP-POD-LE', 'plane', 'pod.x_le_m', 'pod front face', axis='X', offset=pod_x)
     add('DP-TUBE', 'plane', 'fins.tube.x_m', 'motor-tube centreline station = fin LE', axis='X', offset=xt)
-    add('DP-MOUNT', 'plane', 'propulsion.stations.x_mount_m', 'motor mount face = tube x - tube OD/2', axis='X', offset=xm - od / 2)
+    add('DP-MOUNT', 'plane', 'propulsion.stations.x_mount_m', 'tube front face = tube x - tube OD/2 (D-28: stays here)',
+        axis='X', offset=xm - od / 2)
+    add('DP-MOTOR-FACE', 'plane', 'fins/params.json#fin_detail.mount', 'motor base plate face on the motor axis (D-28); '
+        'the plate is canted 7 deg about this point', axis='X', offset=motor_face_x(P))
     add('DP-PROP', 'plane', 'propulsion.stations.x_prop_plane_m', 'propeller disc plane (all four props)', axis='X', offset=xp)
-    add('DP-GROUND', 'plane', 'cg.foot_height_m', 'ground in hover = TE + foot; nothing but feet beyond it', axis='X', offset=c + foot)
+    add('DP-GROUND', 'plane', 'cg.foot_height_m', 'ground in hover = TE + foot (D-30: 48 mm); nothing but feet beyond it',
+        axis='X', offset=c + foot)
     for s, tag in ((1, 'R'), (-1, 'L')):
         add('DP-FIN-' + tag, 'plane', 'fins.y_m', 'fin mid-plane, motor stations, through-core block', axis='Y', offset=s * yf)
         add('DP-TIP-' + tag, 'plane', 'wing.span_m', 'wing tip', axis='Y', offset=s * b / 2)
@@ -253,14 +334,21 @@ def datum_specs(params):
     add('DP-POD-BASE', 'plane', 'pod.z_base_m', 'pod floor on the upper skin', axis='Z', offset=pod_z)
     add('DA-SPAR', 'axis', 'wing.spar.x_m', 'spar axis, along Y', axis='Y', p=(xs, 0.0, zs))
     for s, tag in ((1, 'R'), (-1, 'L')):
-        add('DA-TUBE-' + tag, 'axis', 'fins.tube.x_m', 'motor-tube axis, along Z', axis='Z', p=(xt, s * yf, 0.0))
+        add('DA-TUBE-' + tag, 'axis', 'fins.tube.length_m', 'motor-tube axis, along Z; tube ends at z +/-%.3f' % (
+            val(P, 'fins.tube.length_m', 'm') / 2), axis='Z', p=(xt, s * yf, 0.0))
         add('DA-HINGE-' + tag, 'axis', 'wing.elevon.chord_frac', 'hinge line (z = upper surface, set by the module)', axis='Y', p=(xh, s * (b / 4), 0.0))
     for st in STATIONS:
         sy, sz = SIGNS[st]
         add('DX-MOTOR-' + st, 'point', 'propulsion.stations', 'motor station: tube centreline at motor height; shaft along -x',
             p=(xm, sy * ym, sz * zm))
         add('DX-HUB-' + st, 'point', 'propulsion.stations.x_prop_plane_m', 'prop hub centre on the prop plane', p=(xp, sy * ym, sz * zm))
-        add('DX-FOOT-' + st, 'point', 'cg.foot_height_m', 'foot contact point (fin TE tip + foot)', p=(c + foot, sy * yf, sz * hf))
+        add('DX-FOOT-' + st, 'point', 'landing/params.json#landing.pad', 'foot pad contact on DP-GROUND: z = +/-(pad outer '
+            'edge - edge round), CL-D5-CONTACT-Z, D-30 splay; tip-over pivot', p=(c + foot, sy * yf, sz * zc))
+        col, anc = brace[st]
+        add('DX-COLLAR-' + st, 'point', 'fins/params.json#fin_detail.station_collar', 'brace end in the station-collar '
+            'ear (tube axis x, ear just below the mount grip)', p=col)
+        add('DX-ANCHOR-' + st, 'point', 'fins/params.json#fin_detail.brace', 'brace end in the anchor on the spar line '
+            '(transport cradles stay inboard of it)', p=anc)
     for s, tag in ((1, 'R'), (-1, 'L')):
         add('DX-BLOCK-' + tag, 'point', 'fins.saddle', 'through-core block centre: tube bore on DA-TUBE, spar bore on DA-SPAR',
             p=((xt + xs) / 2, s * yf, zs))
@@ -375,6 +463,20 @@ def core_block(part, coords, chord, y_mid, width, x0, x1, n=8):
     return part.prism('Y', y_mid - width / 2, [loop], width, name='through-core block')
 
 
+def strut(part, a, b, w, t, name='strut'):
+    """Straight rectangular strip from point a to point b (fin brace): w along x (the cruise flow), t across the strip
+    in the y-z plane. Built as a ruled loft along Z between two horizontal rectangles (the strip must not be
+    horizontal); the horizontal section is t / sin(elevation) wide in y so the true thickness is t."""
+    dy, dz = b[1] - a[1], b[2] - a[2]
+    if abs(dz) < 1e-6:
+        raise ValueError('strut %s -> %s is horizontal: build it as a box' % (a, b))
+    ty = t * math.hypot(dy, dz) / abs(dz) / 2
+    rect = lambda p: [(p[0] - w / 2, p[1] - ty), (p[0] + w / 2, p[1] - ty), (p[0] + w / 2, p[1] + ty),
+                      (p[0] - w / 2, p[1] + ty)]
+    lo, hi = (a, b) if a[2] < b[2] else (b, a)
+    return part.loft('Z', [(lo[2], rect(lo)), (hi[2], rect(hi))], name=name)
+
+
 def bundle(part, legs, dia):
     """Harness bundle body (lumped harness mass part, A4 HRN-001/-002): each leg = (start, end) points that differ in
     one coordinate only (route along the channel, the tube, the pod floor). One cylinder per leg."""
@@ -464,7 +566,11 @@ BEGIN, END = '<!-- datums:begin (generated by k09kit.py --datums-md; do not edit
 
 
 def _fmt(v):
-    return '%.3f' % v if abs(v) > 5e-4 else '0'
+    """3 decimals (mm), 4 when the tenth of a mm matters (e.g. the collar ear at 0.1535)."""
+    if abs(v) <= 5e-5:
+        return '0'
+    t = '%.4f' % v
+    return t[:-1] if t.endswith('0') else t
 
 
 def datums_table(params):

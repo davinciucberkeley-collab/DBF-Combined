@@ -2,7 +2,7 @@ K09-L quad tailsitter, B3 (team/B3/avl_model.py), lattice fine
 0.0                     | Mach
 0 0 0.0                 | iYsym iZsym Zsym
 0.36800 0.32000 1.15000   | Sref Cref Bref
-0.05258 0.0 0.01683   | Xref Yref Zref = CG
+0.05224 0.0 0.01649   | Xref Yref Zref = CG
 0.0                     | CDp (not used: AVL gives induced drag only)
 #
 SURFACE
@@ -79,8 +79,8 @@ Fin
 YDUPLICATE
 0.0
 SECTION
-0.04500 0.32000 -0.19000 0.27500 0.0  24 1.0
+0.04500 0.32000 -0.21000 0.27500 0.0  26 1.0
 SECTION
-0.04500 0.32000 0.00000 0.27500 0.0  24 1.0
+0.04500 0.32000 0.00000 0.27500 0.0  26 1.0
 SECTION
-0.04500 0.32000 0.19000 0.27500 0.0  24 1.0
+0.04500 0.32000 0.21000 0.27500 0.0  26 1.0

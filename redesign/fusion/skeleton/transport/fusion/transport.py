@@ -1,10 +1,11 @@
-"""K09-L skeleton - transport (flight: false): the 1.25 x 0.55 x 0.50 m box (CHANGE-LOG D-16) around the aircraft
+"""K09-L skeleton - transport (flight: false): the requirements.box_external_m box (1.25 x 0.55 x 0.54 m, CHANGE-LOG
+D-31) around the aircraft
 in its transport position (aircraft frame, upright, props off, box centre DX-BOX), two spar cradles under the
 lower skin and a prop tray. check.py touch-checks the cradle-to-wing edges, skips the stowed prop edges and warns
 when a cradle, the tray or a box wall overlaps a flight part (pressed, or does not fit). Reference layout for D7."""
 import k09kit as k9
 
-CRADLE_Y = 0.20          # cradle station |y| (m): C1's assumption behind the 70 mm crush foam (CHANGE-LOG D-22)
+CRADLE_Y = 0.20          # cradle station |y| (m): params transport.cradle; stays inboard of DX-ANCHOR (|y| 0.242)
 CRADLE_L, CRADLE_W = 0.06, 0.05     # cradle length along x, width along y (m), EST: D7 sizes
 
 

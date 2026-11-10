@@ -3,12 +3,12 @@
  "limit_g": 2600,
  "allocations_g": {
   "wing": 405.0,
-  "fins": 370.0,
-  "propulsion": 440.0,
-  "landing": 40.0,
-  "pod": 105.0,
-  "power": 595.0,
-  "avionics": 75.0,
+  "fins": 408.0,
+  "propulsion": 476.0,
+  "landing": 43.0,
+  "pod": 122.0,
+  "power": 620.0,
+  "avionics": 80.0,
   "mechanisms": 65.0,
   "harness": 105.0
  }

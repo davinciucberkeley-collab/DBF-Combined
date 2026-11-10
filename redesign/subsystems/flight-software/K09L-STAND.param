@@ -1,0 +1,13 @@
+# K09-L thrust-stand overlay (owner F4, revision F4-R3, 2026-11-09). CR-H1-04. Status PROPOSED, UNVERIFIED.
+# Load K09L.param first, then this file. Same output cap (Q_M_SPIN_MAX 0.84), protocol (DShot300 bidirectional)
+#   and notch as the flight file; only the lines below differ. Reload K09L.param before any flight: a stand set
+#   left on the aircraft would cap the pack at 25 A (no hover). RC failsafe stays on: TX loss stops the run.
+# Use: one station on the stand, props on, Mission Planner motor test (Setup > Optional > Motor Test) or QSTABILIZE.
+# Re-check: python -I redesign/team/F4/fsw_check.py (lints this file too)
+
+# pack-current limiter for one station: 100 A / 4 motors = 25 A (CR-H1-04, P:propulsion.motor_max_a)
+Q_M_BAT_CURR_MAX,25
+# no geofence on the bench (no GPS fix indoors)
+FENCE_ENABLE,0
+# log from arming including ESC telemetry (rpm, current, temperature) for GT-02d
+LOG_DISARMED,1

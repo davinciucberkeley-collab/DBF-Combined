@@ -9,8 +9,8 @@
    "id": "ASM-D2-POD-WIDTH",
    "type": "assumption",
    "title": "Pod outside width",
-   "text": "Pod outside width that holds the 52 mm bay and two 37 mm side channels",
-   "basis": "subsystems/pod/params.json#width_m; params.json pod.size_m[1] = 0.10 until A1 decides CR-D2-01",
+   "text": "Pod outside width that holds the 52 mm bay and two 37.7 mm side channels",
+   "basis": "params.json pod.size_m[1] (D-25 adopted CR-D2-01)",
    "value": 0.14,
    "unit": "m",
    "status": "PROPOSED",
@@ -34,10 +34,10 @@
   {
    "id": "ASM-D2-FLOOR-STACK",
    "type": "assumption",
-   "title": "Tray floor + anti-slip pad under the pack",
+   "title": "Tray floor + EVA pad under the pack",
    "text": "Height from the foam-board floor top to the pack underside",
-   "basis": "subsystems/pod/params.json tray_floor_t_m + pad_t_m",
-   "value": 0.0015,
+   "basis": "subsystems/pod/params.json tray_floor_t_m + pad_t_m (R3: 2.5 mm pads lift the pack over the wing surface aft of the recess)",
+   "value": 0.0035,
    "unit": "m",
    "status": "PROPOSED",
    "cites": [
@@ -61,8 +61,66 @@
    "id": "ASM-D2-STOP-T",
    "type": "assumption",
    "title": "Aft stop wall thickness",
-   "text": "Printed wall at the recess end, the pack's aft stop",
-   "basis": "subsystems/pod/params.json stop_wall_t_m",
+   "text": "Printed aft stop on the handle bridge, the pack's aft stop",
+   "basis": "C3 CR-C3-01 (3.0 mm, 2 mm root fillet), adopted at R3",
+   "value": 0.003,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-FWD-STOP",
+   "type": "assumption",
+   "title": "Forward stop: aft face x, thickness",
+   "text": "Printed forward stop on the tray, backstop of the crush block",
+   "basis": "CHANGE-LOG D-25 (x -0.1002 unchanged), C3 CR-C3-01 (3.0 mm)",
+   "value": [
+    -0.1002,
+    0.003
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-AFT-STOP-X",
+   "type": "assumption",
+   "title": "Aft stop face x",
+   "text": "Face of the aft stop the spacers bear on",
+   "basis": "subsystems/pod/params.json aft_stop_x_m: A1's 0.073 heavy-pack aft face + 4 mm",
+   "value": 0.077,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-PACK-AFT",
+   "type": "assumption",
+   "title": "Pack aft face, nominal and 680 g",
+   "text": "A1's stations: aft face for the nominal centroid x -0.001 and with a 680 g pack",
+   "basis": "team/A1/CHANGE-REQUESTS.md#CR-A1-27 (D-24, D-25)",
+   "value": [
+    0.069,
+    0.073
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-SPREADER-T",
+   "type": "assumption",
+   "title": "Spreader on the pack fore face",
+   "text": "Printed PETG plate between the pack and the crush block",
+   "basis": "C5 CR-C5-02 / ASM-C5-SPREADER-T",
    "value": 0.0015,
    "unit": "m",
    "status": "PROPOSED",
@@ -71,14 +129,36 @@
    ]
   },
   {
-   "id": "ASM-D2-TRIM-NEED",
+   "id": "ASM-D2-BLOCK-SEC",
    "type": "assumption",
-   "title": "Aft trim travel needed",
-   "text": "Pack travel aft of the forward stop that re-trims a 680 g pack to the 0.044 m target",
-   "basis": "A3 MASS-CG.md: 680 g pack at the nominal station gives CG 0.040 m; 0.26 mm CG per mm of pack: (0.0447 - 0.040) / 0.26 = 18 mm",
-   "value": 0.018,
+   "title": "Crush block section inputs",
+   "text": "Tray floor thickness under the block, vent groove width x depth in its top",
+   "basis": "subsystems/pod/params.json tray_floor_t_m, block_groove_m (vent path over the pack, CR-E3-03)",
+   "value": [
+    0.001,
+    0.03,
+    0.008
+   ],
    "unit": "m",
-   "status": "UNVERIFIED",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-SPACERS",
+   "type": "assumption",
+   "title": "Aft spacer set",
+   "text": "Printed U-spacers behind the pack (2 mm steps)",
+   "basis": "subsystems/pod/params.json spacer_set_m",
+   "value": [
+    0.002,
+    0.004,
+    0.008,
+    0.008
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
    "cites": [
     "SRC-K09-CARD"
    ]
@@ -166,7 +246,7 @@
    "type": "assumption",
    "title": "XPS bond allowable (tension)",
    "text": "Allowable tensile stress at an epoxy-to-XPS F-250 bond line, foam failure",
-   "basis": "ESTIMATE, conservative for 25 psi XPS (compressive 172 kPa); C3 confirms with T-D2-BOND-PULL",
+   "basis": "ESTIMATE, conservative for 25 psi XPS (compressive 172 kPa); C6 owns it (CR-C3-05), T-D2-BOND-PULL",
    "value": 100000.0,
    "unit": "Pa",
    "status": "UNVERIFIED",
@@ -181,14 +261,14 @@
    "text": "Declared masses of POD-001 ... POD-008 (g), body volumes x densities",
    "basis": "team/D2/pod_data.py from subsystems/pod/fusion/pod.py; foam board areal mass and PETG fill are estimates; weigh (T-D2-WEIGH)",
    "value": [
-    19.8,
-    23.9,
-    7.2,
-    10.1,
-    5.6,
-    3.1,
-    26.5,
-    4.2
+    23.4,
+    30.0,
+    8.5,
+    9.1,
+    6.6,
+    5.8,
+    34.8,
+    9.1
    ],
    "unit": "g",
    "status": "UNVERIFIED",
@@ -201,7 +281,7 @@
    "type": "assumption",
    "title": "Pitot boom lateral station",
    "text": "Boom on the left side-channel centre, beside the pack",
-   "basis": "subsystems/pod/params.json pitot_y_m; CR-D2-03 asks F3/B4/A1 to move the tip from y 0",
+   "basis": "params.json avionics.pitot_tip_xyz_m[1] (D-25 adopted CR-D2-03)",
    "value": -0.046,
    "unit": "m",
    "status": "PROPOSED",
@@ -226,54 +306,148 @@
    ]
   },
   {
+   "id": "ASM-D2-GEOM-CAD",
+   "type": "assumption",
+   "title": "Pod CAD geometry read-outs",
+   "text": "Values the CAD layout computes from the wing section and pod params: [pad-to-wing clearance over the overhang, antenna A element to pack, antenna B element to pack, GPS to the nearest power item (PDB / AS150U park / UBEC)] (m)",
+   "basis": "subsystems/pod/fusion/pod.py#layout() via team/D2/pod_data.py (S5010 section, pod params)",
+   "value": [
+    0.00078,
+    0.0346,
+    0.044,
+    0.15268
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-D2-MAST-BOLT",
+   "type": "assumption",
+   "title": "GPS mast bolt: length, grip",
+   "text": "Brass M3 bolt length and clamped grip (counterbored boss + 1 washer)",
+   "basis": "subsystems/pod/params.json socket_boss_m and E-POD-06 joint stack",
+   "value": [
+    0.016,
+    0.0105
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
    "id": "CALC-D2-BAY",
    "type": "calculation",
    "title": "bay",
    "script": "redesign/team/D2/pod_claims.py",
    "function": "bay",
-   "equation": "bay L = (spar x - r - slot wall - stop t) - (pod LE + board t); H = (base + H - t) - (base + t + floor stack); pack centroid fwd = pod LE + t + L_pack/2; travel = bay L - L_pack",
+   "equation": "x_fs = forward stop aft face; bay L = x_as - x_fs; H = (base + H - t) - (base + t + floor stack); x_nose_in = pod LE + t; nose block = (x_fs - t_fs) - x_nose_in; centroid against the forward stop = x_fs + L_pack/2 ; nominal / heavy centroid = aft face - L_pack/2 ; spacer = x_as - aft face ; block B (nominal) = (aft_nom - L_pack - t_sp) - x_fs ; block section = bw (zh - tray top) - groove ; aft reach = x_as - L_pack/2 ; travel = bay L - L_pack",
    "inputs": {
     "x_le": "P:pod.x_le_m",
     "size": "P:pod.size_m",
     "z_base": "P:pod.z_base_m",
     "t": "P:fins.board_t_m",
-    "xs": "P:wing.spar.x_m",
-    "od": "P:wing.spar.od_m",
-    "wall": "ASM-D2-SLOT-WALL",
-    "stop": "ASM-D2-STOP-T",
+    "fs": "ASM-D2-FWD-STOP",
+    "x_as": "ASM-D2-AFT-STOP-X",
+    "aft": "ASM-D2-PACK-AFT",
+    "t_sp": "ASM-D2-SPREADER-T",
     "stack": "ASM-D2-FLOOR-STACK",
     "bw": "ASM-D2-BAY-W",
-    "pack": "P:battery.size_m"
+    "pack": "P:battery.size_m",
+    "sec": "ASM-D2-BLOCK-SEC"
    },
    "outputs": {
-    "bay_l": 0.1637,
+    "bay_l": 0.1772,
     "bay_w": 0.052,
-    "bay_h": 0.05890000000000001,
+    "bay_h": 0.056900000000000006,
     "pack_x_fwd": -0.03019999999999999,
-    "pack_ahead_of_centre": 0.0252,
-    "travel": 0.0237,
-    "pack_z": 0.0463,
-    "x_stop": 0.0635
+    "pack_x_nom": -0.0010000000000000009,
+    "pack_x_hvy": 0.002999999999999989,
+    "aft_reach": 0.006999999999999992,
+    "spacer_nom": 0.007999999999999993,
+    "spacer_hvy": 0.0040000000000000036,
+    "block_nom": 0.02769999999999999,
+    "nose_in": -0.1102,
+    "nose_block": 0.007000000000000006,
+    "block_area": 0.0028488000000000003,
+    "travel": 0.03719999999999998,
+    "pack_z": 0.048299999999999996
    },
    "input_values": {
-    "x_le": -0.105,
+    "x_le": -0.115,
     "size": [
-     0.2,
-     0.1,
+     0.21,
+     0.14,
      0.07
     ],
     "z_base": 0.015,
     "t": 0.0048,
-    "xs": 0.08,
-    "od": 0.022,
-    "wall": 0.004,
-    "stop": 0.0015,
-    "stack": 0.0015,
+    "fs": [
+     -0.1002,
+     0.003
+    ],
+    "x_as": 0.077,
+    "aft": [
+     0.069,
+     0.073
+    ],
+    "t_sp": 0.0015,
+    "stack": 0.0035,
     "bw": 0.052,
     "pack": [
      0.14,
      0.048,
      0.05
+    ],
+    "sec": [
+     0.001,
+     0.03,
+     0.008
+    ]
+   }
+  },
+  {
+   "id": "CALC-D2-STATION",
+   "type": "calculation",
+   "title": "station",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "station",
+   "equation": "most forward centroid that keeps C5's block B = x_fs + t_sp + L_B + L_pack/2 ; station range = aft reach - that ; spacer sum >= range",
+   "inputs": {
+    "fs": "ASM-D2-FWD-STOP",
+    "t_sp": "ASM-D2-SPREADER-T",
+    "LB": "CL-C5-BLOCK-L",
+    "pack": "P:battery.size_m",
+    "reach": "CL-D2-AFT-REACH",
+    "sp": "ASM-D2-SPACERS"
+   },
+   "outputs": {
+    "x_fwd_min": -0.0038419925542403366,
+    "range": 0.010841992554240329,
+    "spacer_sum": 0.022
+   },
+   "input_values": {
+    "fs": [
+     -0.1002,
+     0.003
+    ],
+    "t_sp": 0.0015,
+    "LB": 0.024858007445759646,
+    "pack": [
+     0.14,
+     0.048,
+     0.05
+    ],
+    "reach": 0.006999999999999992,
+    "sp": [
+     0.002,
+     0.004,
+     0.008,
+     0.008
     ]
    }
   },
@@ -553,6 +727,31 @@
    }
   },
   {
+   "id": "CALC-D2-CAD",
+   "type": "calculation",
+   "title": "cad",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "cad",
+   "equation": "read-outs of pod.py#layout(): pad clearance, antenna A / B to pack, GPS to nearest power item",
+   "inputs": {
+    "g": "ASM-D2-GEOM-CAD"
+   },
+   "outputs": {
+    "overhang_clr": 0.00078,
+    "ant_a": 0.0346,
+    "ant_b": 0.044,
+    "gps": 0.15268
+   },
+   "input_values": {
+    "g": [
+     0.00078,
+     0.0346,
+     0.044,
+     0.15268
+    ]
+   }
+  },
+  {
    "id": "CALC-D2-STRAPS",
    "type": "calculation",
    "title": "straps",
@@ -588,13 +787,13 @@
     "g": "P:env.g_ms2"
    },
    "outputs": {
-    "mass_g": 905.0,
-    "force_n": 113.125
+    "mass_g": 952.0,
+    "force_n": 118.99999999999999
    },
    "input_values": {
-    "pod": 105,
-    "avn": 75,
-    "pwr": 595,
+    "pod": 122,
+    "avn": 80,
+    "pwr": 620,
     "pack_nom": 0.55,
     "pack_rng": [
      503.0,
@@ -647,39 +846,6 @@
    }
   },
   {
-   "id": "CALC-D2-BOND",
-   "type": "calculation",
-   "title": "bond",
-   "script": "redesign/team/D2/pod_claims.py",
-   "function": "bond",
-   "equation": "sigma = F/A + M / (b L^2 / 6); A = b L, b = pod width, L = pod TE - recess start",
-   "inputs": {
-    "F": "CL-C1-POD-F-ULT",
-    "M": "ASM-D2-POD-M-ULT",
-    "b": "ASM-D2-POD-WIDTH",
-    "x_le": "P:pod.x_le_m",
-    "size": "P:pod.size_m",
-    "x0": "CL-D2-RECESS-X0"
-   },
-   "outputs": {
-    "stress_pa": 36509.207998474456,
-    "length_m": 0.07242812001552194,
-    "area_m2": 0.010139936802173073
-   },
-   "input_values": {
-    "F": 121.67880282098471,
-    "M": 3.0,
-    "b": 0.14,
-    "x_le": -0.105,
-    "size": [
-     0.2,
-     0.1,
-     0.07
-    ],
-    "x0": 0.02257187998447807
-   }
-  },
-  {
    "id": "CALC-D2-PITOT",
    "type": "calculation",
    "title": "pitot",
@@ -699,15 +865,36 @@
    },
    "input_values": {
     "tip": [
-     -0.185,
-     0.0,
+     -0.195,
+     -0.046,
      0.045
     ],
-    "x_le": -0.105,
+    "x_le": -0.115,
     "t": 0.0048,
     "sock": [
      0.022,
      0.008
+    ]
+   }
+  },
+  {
+   "id": "CALC-D2-MAST-BOLT",
+   "type": "calculation",
+   "title": "mast bolt",
+   "script": "redesign/team/D2/pod_claims.py",
+   "function": "mast_bolt",
+   "equation": "past the grip = bolt length - grip ; nyloc-rule equivalent: >= 5.0 mm (C6 E-POD-06)",
+   "inputs": {
+    "b": "ASM-D2-MAST-BOLT"
+   },
+   "outputs": {
+    "past": 0.0055,
+    "grip": 0.0105
+   },
+   "input_values": {
+    "b": [
+     0.016,
+     0.0105
     ]
    }
   },
@@ -722,25 +909,25 @@
     "parts": "ASM-D2-PART-MASSES"
    },
    "outputs": {
-    "mass_g": 100.4
+    "mass_g": 127.3
    },
    "input_values": {
     "parts": [
-     19.8,
-     23.9,
-     7.2,
-     10.1,
-     5.6,
-     3.1,
-     26.5,
-     4.2
+     23.4,
+     30.0,
+     8.5,
+     9.1,
+     6.6,
+     5.8,
+     34.8,
+     9.1
     ]
    }
   },
   {
    "id": "CL-D2-BAY-L",
    "type": "claim",
-   "title": "Pack bay inside length (nose wall to aft stop)",
+   "title": "Pack bay inside length (forward stop to aft stop)",
    "calc": "CALC-D2-BAY",
    "output": "bay_l",
    "unit": "m",
@@ -753,14 +940,15 @@
    ],
    "parts": [
     "POD-001",
-    "POD-002"
+    "POD-002",
+    "POD-007"
    ],
-   "how": "Measure nose wall to aft stop inside the built pod; drop the real pack in with the spacers out.",
+   "how": "Measure forward stop to aft stop inside the built pod; drop the real pack in with the block and spacers out.",
    "cites": [
     "SRC-K09-CARD"
    ],
    "note": "E2 CR-E2-02 minimum 0.160 m",
-   "value": 0.1637
+   "value": 0.1772
   },
   {
    "id": "CL-D2-BAY-W",
@@ -803,12 +991,12 @@
     "POD-003"
    ],
    "how": "Close the hatch over the strapped pack with the balance lead parked: no bulge.",
-   "value": 0.05890000000000001
+   "value": 0.056900000000000006
   },
   {
    "id": "CL-D2-PACK-X-FWD",
    "type": "claim",
-   "title": "Pack centroid at the forward stop (nominal station)",
+   "title": "Pack centroid if it sat against the forward stop (block out)",
    "calc": "CALC-D2-BAY",
    "output": "pack_x_fwd",
    "unit": "m",
@@ -816,45 +1004,154 @@
     "POD-001",
     "POD-002"
    ],
-   "how": "Mark the pack centre; measure from the wing LE with the pack against the nose wall.",
-   "note": "D-17 asks for 29 mm ahead of the pod centre (-0.034 m); the nose wall allows 25 mm (CR-D2-02, CR-A3-11 option a)",
+   "how": "Mark the pack centre; measure from the wing LE with the pack against the forward stop.",
+   "note": "R3: the forward stop aft face (x -0.1002) is unchanged, so this reference is unchanged; the pack never flies here (the crush block is ahead of it)",
    "value": -0.03019999999999999
   },
   {
-   "id": "CL-D2-PACK-AHEAD",
+   "id": "CL-D2-PACK-X-NOM",
    "type": "claim",
-   "title": "Pack centroid ahead of the pod centre at the forward stop",
+   "title": "Pack centroid, nominal station (aft face 0.069, 8 mm spacer)",
    "calc": "CALC-D2-BAY",
-   "output": "pack_ahead_of_centre",
+   "output": "pack_x_nom",
    "unit": "m",
    "parts": [
     "POD-001",
-    "POD-002"
+    "POD-002",
+    "POD-008"
    ],
-   "how": "As CL-D2-PACK-X-FWD.",
-   "value": 0.0252
+   "how": "Pack strapped with its block and spacer; measure the centre mark from the wing LE.",
+   "note": "CR-A1-27: x -0.001 m",
+   "value": -0.0010000000000000009
+  },
+  {
+   "id": "CL-D2-PACK-X-HEAVY",
+   "type": "claim",
+   "title": "Pack centroid, 680 g station (aft face 0.073, 4 mm spacer)",
+   "calc": "CALC-D2-BAY",
+   "output": "pack_x_hvy",
+   "unit": "m",
+   "parts": [
+    "POD-001",
+    "POD-002",
+    "POD-008"
+   ],
+   "how": "As CL-D2-PACK-X-NOM with the 4 mm spacer.",
+   "value": 0.002999999999999989
+  },
+  {
+   "id": "CL-D2-AFT-REACH",
+   "type": "claim",
+   "title": "Most aft pack centroid the bay allows (no spacer)",
+   "calc": "CALC-D2-BAY",
+   "output": "aft_reach",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C5-PACK-X-B3-HEAVY"
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "parts": [
+    "POD-007"
+   ],
+   "how": "Pack against the aft stop with no spacer: centre mark from the wing LE.",
+   "note": "also >= A1's 680 g station (CL-D2-PACK-X-HEAVY) by 4 mm",
+   "value": 0.006999999999999992
+  },
+  {
+   "id": "CL-D2-SPACER-NOM",
+   "type": "claim",
+   "title": "Aft spacer at the nominal station",
+   "calc": "CALC-D2-BAY",
+   "output": "spacer_nom",
+   "unit": "m",
+   "parts": [
+    "POD-008"
+   ],
+   "how": "Spacer thickness fitted behind the nominal pack.",
+   "value": 0.007999999999999993
+  },
+  {
+   "id": "CL-D2-BLOCK-B-NOM",
+   "type": "claim",
+   "title": "Crush block length at the nominal station (forward stop to spreader)",
+   "calc": "CALC-D2-BAY",
+   "output": "block_nom",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C5-BLOCK-L"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-008"
+   ],
+   "how": "Cut length of the block for a 550 g pack; rule.",
+   "value": 0.02769999999999999
+  },
+  {
+   "id": "CL-D2-BLOCK-SECTION",
+   "type": "claim",
+   "title": "Crush block B section (52 mm x tray top to hatch, less the vent groove)",
+   "calc": "CALC-D2-BAY",
+   "output": "block_area",
+   "unit": "m2",
+   "parts": [
+    "POD-008"
+   ],
+   "how": "Calipers on the cut block.",
+   "note": "C5 uses bay W x bay H (pad top to hatch) for A_bay; the block stands on the tray, 2.5 mm lower than the pack",
+   "value": 0.0028488000000000003
+  },
+  {
+   "id": "CL-D2-NOSE-INNER",
+   "type": "claim",
+   "title": "Nose wall inside face x (front of the fixed nose block)",
+   "calc": "CALC-D2-BAY",
+   "output": "nose_in",
+   "unit": "m",
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Built pod: rule from the wing LE to the nose wall inside face.",
+   "note": "foam-board nose wall 4.8 mm (C5 assumes 2 mm, ASM-C5-NOSE-WALL)",
+   "value": -0.1102
+  },
+  {
+   "id": "CL-D2-NOSE-BLOCK-L",
+   "type": "claim",
+   "title": "Fixed XPS nose block length (block A)",
+   "calc": "CALC-D2-BAY",
+   "output": "nose_block",
+   "unit": "m",
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Cut length; rule.",
+   "value": 0.007000000000000006
   },
   {
    "id": "CL-D2-PACK-TRAVEL",
    "type": "claim",
-   "title": "Pack aft trim travel (forward stop to aft stop)",
+   "title": "Stop-to-stop room beyond the pack length (block B + spreader + spacers)",
    "calc": "CALC-D2-BAY",
    "output": "travel",
    "unit": "m",
-   "limit": {
-    "op": ">=",
-    "ref": "ASM-D2-TRIM-NEED"
-   },
    "verifies": [
     "R-CG-RANGE"
    ],
    "parts": [
     "POD-001",
     "POD-002",
+    "POD-007",
     "POD-008"
    ],
-   "how": "Slide the real pack from the nose wall to the aft stop; record the travel; balance at both ends (T-A3-CG-BALANCE).",
-   "value": 0.0237
+   "how": "Slide the real pack from the forward stop to the aft stop (block and spacers out); record the travel.",
+   "value": 0.03719999999999998
   },
   {
    "id": "CL-D2-PACK-Z",
@@ -868,7 +1165,161 @@
     "POD-002"
    ],
    "how": "Measure pad top above the chord line + half the pack height.",
-   "value": 0.0463
+   "value": 0.048299999999999996
+  },
+  {
+   "id": "CL-D2-PACK-X-FWD-MIN",
+   "type": "claim",
+   "title": "Most forward pack centroid that keeps C5's crush block B",
+   "calc": "CALC-D2-STATION",
+   "output": "x_fwd_min",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-D2-PACK-X-NOM"
+   },
+   "verifies": [
+    "R-PACK-RETENTION"
+   ],
+   "parts": [
+    "POD-008"
+   ],
+   "how": "Pack strapped with a block cut to CL-C5-BLOCK-L: centre mark from the wing LE.",
+   "note": "any trim forward of this needs the pod nose (or the whole pod group) forward by the same amount (CR-C5-12 is A1's call)",
+   "value": -0.0038419925542403366
+  },
+  {
+   "id": "CL-D2-SPACER-SUM",
+   "type": "claim",
+   "title": "Aft spacer set total",
+   "calc": "CALC-D2-STATION",
+   "output": "spacer_sum",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-D2-STATION-RANGE"
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "parts": [
+    "POD-008"
+   ],
+   "how": "Stack the spacers; calipers.",
+   "value": 0.022
+  },
+  {
+   "id": "CL-D2-STATION-RANGE",
+   "type": "claim",
+   "title": "Pack station range inside the bay (forward minimum to aft reach)",
+   "calc": "CALC-D2-STATION",
+   "output": "range",
+   "unit": "m",
+   "parts": [
+    "POD-008"
+   ],
+   "how": "As CL-D2-AFT-REACH and CL-D2-PACK-X-FWD-MIN.",
+   "value": 0.010841992554240329
+  },
+  {
+   "id": "CL-D2-OVERHANG-CLR",
+   "type": "claim",
+   "title": "Pack underside above the wing surface where it overhangs the recess end",
+   "calc": "CALC-D2-CAD",
+   "output": "overhang_clr",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0005
+   },
+   "parts": [
+    "POD-004",
+    "POD-007"
+   ],
+   "how": "Pack strapped at the 0.077 aft face: feeler gauge between the pack and the wing over the spar slot.",
+   "value": 0.00078
+  },
+  {
+   "id": "CL-D2-ANT-A-CLR",
+   "type": "claim",
+   "title": "Antenna A (hatch tube) element base to the pack",
+   "calc": "CALC-D2-CAD",
+   "output": "ant_a",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F5-ANT-CLEAR"
+   },
+   "verifies": [
+    "R-RC-LINK"
+   ],
+   "parts": [
+    "POD-003"
+   ],
+   "how": "Rule from the tube top to the pack top edge.",
+   "value": 0.0346
+  },
+  {
+   "id": "CL-D2-ANT-B-CLR",
+   "type": "claim",
+   "title": "Antenna B (nose tube) element base to the pack fore face",
+   "calc": "CALC-D2-CAD",
+   "output": "ant_b",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F5-ANT-CLEAR"
+   },
+   "verifies": [
+    "R-RC-LINK"
+   ],
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Rule from the nose skin to the pack fore face.",
+   "value": 0.044
+  },
+  {
+   "id": "CL-D2-GPS-CLR",
+   "type": "claim",
+   "title": "GPS to the nearest power item (PDB, AS150U park, UBEC zone)",
+   "calc": "CALC-D2-CAD",
+   "output": "gps",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.gps_mast_clearance_m"
+   },
+   "verifies": [
+    "R-COMPASS"
+   ],
+   "parts": [
+    "POD-005",
+    "POD-002"
+   ],
+   "how": "Rule from the GPS puck centre to the PDB, the parked AS150U and the UBEC as installed.",
+   "value": 0.15268
+  },
+  {
+   "id": "CL-D2-MAST-BOLT-PAST",
+   "type": "claim",
+   "title": "GPS mast bolt length past the grip",
+   "calc": "CALC-D2-MAST-BOLT",
+   "output": "past",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.005
+   },
+   "verifies": [
+    "R-JOINT-STACK"
+   ],
+   "parts": [
+    "POD-005",
+    "POD-007"
+   ],
+   "how": "Assembled: thread showing past the brass nut >= 2 pitches; grip measured with calipers.",
+   "value": 0.0055
   },
   {
    "id": "CL-D2-RECESS-X0",
@@ -947,27 +1398,7 @@
     "POD-007"
    ],
    "how": "Recompute from weighed masses.",
-   "value": 113.125
-  },
-  {
-   "id": "CL-D2-TIE-CAP",
-   "type": "claim",
-   "title": "Spar ties: pod retention capacity",
-   "calc": "CALC-D2-TIES",
-   "output": "capacity_n",
-   "unit": "N",
-   "limit": {
-    "op": ">=",
-    "ref": "CL-D2-POD-CRASH-F"
-   },
-   "verifies": [
-    "R-PACK-RETENTION"
-   ],
-   "parts": [
-    "POD-007"
-   ],
-   "how": "T-D2-HANDLE-PULL: 120 N on the handle grip for 10 s, no tie slip, no foot lift.",
-   "value": 444.0
+   "value": 118.99999999999999
   },
   {
    "id": "CL-D2-HANDLE-F-ULT",
@@ -983,24 +1414,25 @@
    "value": 76.49187
   },
   {
-   "id": "CL-D2-BOND-STRESS",
+   "id": "CL-D2-TIE-CAP",
    "type": "claim",
-   "title": "Pod-to-wing bond stress, L1 ultimate, first cut (C3 sizes)",
-   "calc": "CALC-D2-BOND",
-   "output": "stress_pa",
-   "unit": "Pa",
+   "title": "Spar ties: carry-handle capacity (handling)",
+   "calc": "CALC-D2-TIES",
+   "output": "capacity_n",
+   "unit": "N",
    "limit": {
-    "op": "<=",
-    "ref": "ASM-D2-XPS-ALLOW"
+    "op": ">=",
+    "ref": "CL-D2-HANDLE-F-ULT"
    },
    "verifies": [
     "R-STRUCT-MARGIN"
    ],
    "parts": [
-    "POD-001"
+    "POD-007"
    ],
-   "how": "T-D2-BOND-PULL: 50 x 50 mm coupon of the same epoxy on F-250 pulled to foam failure; C3 replaces this first cut.",
-   "value": 36509.207998474456
+   "how": "T-D2-HANDLE-PULL: 120 N on the handle grip for 10 s, no tie slip, no foot lift.",
+   "note": "CR-C3-04: handling (G1) only; the crash path is straps -> tray -> floor -> bond (C3 claims)",
+   "value": 444.0
   },
   {
    "id": "CL-D2-PITOT-BOOM-L",
@@ -1015,7 +1447,7 @@
    "parts": [
     "POD-006"
    ],
-   "how": "F3 cuts the boom to this length; check the tip at x -0.185 m with the boom seated.",
+   "how": "F3 cuts the boom to this length; check the tip at x -0.195 m with the boom seated.",
    "value": 0.1068
   },
   {
@@ -1056,7 +1488,8 @@
     "POD-008"
    ],
    "how": "T-D2-WEIGH: weigh every pod part before bonding; update interfaces.json.",
-   "value": 100.4
+   "note": "over the 122 g allocation: CR-D2-09 asks A1 for 128 g",
+   "value": 127.3
   },
   {
    "id": "T-D2-WEIGH",
@@ -1066,7 +1499,7 @@
     "CL-D2-MASS"
    ],
    "state": "planned",
-   "procedure": "0.1 g scale; each printed part and board piece; record in subsystems/pod/parts.csv"
+   "procedure": "0.1 g scale; each printed part, board piece and XPS block; record in subsystems/pod/parts.csv"
   },
   {
    "id": "T-D2-FIT",
@@ -1076,10 +1509,13 @@
     "CL-D2-BAY-L",
     "CL-D2-BAY-W",
     "CL-D2-BAY-H",
-    "CL-D2-PACK-TRAVEL"
+    "CL-D2-PACK-TRAVEL",
+    "CL-D2-AFT-REACH",
+    "CL-D2-OVERHANG-CLR",
+    "CL-D2-PACK-X-NOM"
    ],
    "state": "planned",
-   "procedure": "Both packs: in through the hatch, strapped at both trim ends, XT60 and balance lead reachable, hatch closes"
+   "procedure": "Both packs: in through the hatch, tucked under the deck, strapped at the nominal and the aft-reach stations, block and spacer fitted, leads over the aft stop to the AS150U park, hatch closes; feeler gauge under the overhang"
   },
   {
    "id": "T-D2-STRAP-PULL",
@@ -1100,16 +1536,6 @@
    ],
    "state": "planned",
    "procedure": "Wing supported at the spar ends; 12 kg on the grip for 10 s; feet stay on the spar, ties do not slip"
-  },
-  {
-   "id": "T-D2-BOND-PULL",
-   "type": "test",
-   "title": "Epoxy-on-XPS pull-off coupon",
-   "verifies": [
-    "CL-D2-BOND-STRESS"
-   ],
-   "state": "planned",
-   "procedure": "Two 50 x 50 mm PETG pads bonded to F-250 offcut with the build epoxy, 24 h cure, pull to failure; foam must fail"
   }
  ]
 }

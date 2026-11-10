@@ -40,6 +40,14 @@
    "status": "UNVERIFIED"
   },
   {
+   "id": "ASM-D7-REBOUND",
+   "type": "assumption",
+   "title": "Lid pillars stop the rebound before the upper tube ends reach the lid",
+   "text": "After the floor drop the aircraft rebounds into the two PE hold-down pillars; they arrest it before the upper tube ends and foot pads close the 10 mm static gap to the bare lid shell, so the lid needs no lining",
+   "basis": "EST: rebound at e = 0.5 from 2.43 m/s gives ~1.1 J on 2.05 kg; two 100 x 60 mm PE pillars ~0.23 m tall at ~40 kPa over 15 mm (5 preload + 10 gap) store ~3.6 J (3x). T-D7-BOX-DROP checks it: chalk on the upper motor caps, no mark on the lid",
+   "status": "UNVERIFIED"
+  },
+  {
    "id": "CALC-D7-STROKE",
    "type": "calculation",
    "title": "Cradle crush column: stroke, load factor, free travel",
@@ -67,17 +75,17 @@
     "SRC-D7-PE-FOAM"
    ],
    "outputs": {
-    "s_use_m": 0.06985000000000001,
-    "n_T": 9.589835361488904,
-    "s_bottom_m": 0.0762,
-    "travel_req_m": 0.0862,
-    "t_req_m": 0.11681436624690078
+    "s_use_m": 0.066,
+    "n_T": 10.09090909090909,
+    "s_bottom_m": 0.072,
+    "travel_req_m": 0.08199999999999999,
+    "t_req_m": 0.09530563951080591
    },
    "input_values": {
     "h": 0.3,
     "eta": 0.5,
-    "n_allow": 10.338826429990018,
-    "t": 0.127,
+    "n_allow": 12.446427478044484,
+    "t": 0.12,
     "eu": 0.55,
     "eb": 0.6,
     "margin": 0.01
@@ -121,13 +129,13 @@
     "margin": "m"
    },
    "outputs": {
-    "H_req_m": 0.5352,
-    "travel_m": 0.09100000000000004,
-    "clear_bottoming_m": 0.014800000000000035,
-    "x_clear_m": 0.03600000000000003,
+    "H_req_m": 0.538,
+    "travel_m": 0.08400000000000003,
+    "clear_bottoming_m": 0.012000000000000038,
+    "x_clear_m": 0.029500000000000026,
     "tip_to_pad_m": 0.016000000000000042,
-    "travel_a1_m": 0.051,
-    "h_allow_a1_m": 0.17549211333022907
+    "travel_a1_m": 0.08400000000000003,
+    "h_allow_a1_m": 0.388224665297009
    },
    "input_values": {
     "ext": [
@@ -138,25 +146,93 @@
     "ext_a1": [
      1.25,
      0.55,
-     0.5
+     0.54
     ],
     "env": [
      1.15,
-     0.47,
-     0.425
+     0.483,
+     0.438
     ],
     "shell": 0.004,
     "dbl": 0.0,
-    "lin": 0.006,
+    "lin": 0.0,
     "gap": 0.01,
     "pad": 0.03,
-    "travel_req": 0.0862,
-    "s_bot": 0.0762,
+    "travel_req": 0.08199999999999999,
+    "s_bot": 0.072,
     "margin": 0.01,
     "eb": 0.6,
     "eu": 0.55,
     "eta": 0.5,
-    "n_allow": 10.338826429990018
+    "n_allow": 12.446427478044484
+   }
+  },
+  {
+   "id": "CALC-D7-CRADLE-PATCH",
+   "type": "calculation",
+   "title": "Cradle saddle and pillar footprint against C2 and the brace anchors",
+   "script": "redesign/team/D7/transport_calc.py",
+   "function": "cradle_patch",
+   "equation": "A_saddle = w (x1 - x0) ; side_min = min(w, x1 - x0, hx, hy) ; gap_brace = y_anchor - (y_c + max(w, hy, fy) / 2)",
+   "inputs": {
+    "w": "P:trn.cradle.width_m",
+    "sx": "P:trn.cradle.saddle_x_m",
+    "yc": "P:trn.cradle.y_m",
+    "hd": "P:trn.holddown.size_m",
+    "fp": "P:trn.cradle.crush_footprint_m",
+    "ya": "P:trn.cradle.brace_anchor_y_in_m"
+   },
+   "units": {
+    "w": "m",
+    "sx": "m",
+    "yc": "m",
+    "hd": "m",
+    "fp": "m",
+    "ya": "m"
+   },
+   "outputs": {
+    "A_saddle_m2": 0.015,
+    "A_pillar_m2": 0.006,
+    "side_min_m": 0.06,
+    "gap_brace_m": 0.0040000000000000036
+   },
+   "input_values": {
+    "w": 0.06,
+    "sx": [
+     -0.015,
+     0.235
+    ],
+    "yc": 0.2,
+    "hd": [
+     0.1,
+     0.06
+    ],
+    "fp": [
+     0.06,
+     0.05
+    ],
+    "ya": 0.234
+   }
+  },
+  {
+   "id": "CALC-D7-HANDLE",
+   "type": "calculation",
+   "title": "Handle bolt load and wall bearing behind the 140 x 30 mm backing strip",
+   "script": "redesign/team/D7/transport_calc.py",
+   "function": "handle",
+   "equation": "F_bolt = m_loaded (2 g) / 2 ; p = 2 F_bolt / (0.140 x 0.030)",
+   "inputs": {
+    "m": "CL-D7-LOADED-MASS"
+   },
+   "units": {
+    "m": "kg"
+   },
+   "outputs": {
+    "F_bolt_N": 57.058039540319996,
+    "p_strip_kpa": 27.170495019199993
+   },
+   "input_values": {
+    "m": 5.8183008
    }
   },
   {
@@ -197,7 +273,7 @@
    "title": "Box mass and loaded mass",
    "script": "redesign/team/D7/transport_calc.py",
    "function": "masses",
-   "equation": "shell = areal (1 + flaps) [L W + 2 (L + W)(H - t) + L W + 2 (L + W) lip] ; box = shell + doublers + lining + pads + cradles + tray + straps + handles + corners + consumables ; loaded = box + (gate - pack) + spare props + pouch",
+   "equation": "shell = areal (1 + flaps) [L W + 2 (L + W)(H - t) + L W + 2 (L + W) lip] ; box = shell + doublers + lining + pads + cradles + tray + straps + handles + backing + corners + consumables ; loaded = box + (gate - pack) + spare props + pouch",
    "inputs": {
     "ext": "P:trn.box.external_m",
     "t": "P:trn.box.shell_t_m",
@@ -220,6 +296,7 @@
     "tray": "P:trn.tray.size_m",
     "solid": "P:trn.tray.solid_frac",
     "handle": "P:trn.mass.handle_kg",
+    "backing": "P:trn.mass.handle_backing_kg",
     "cam": "P:trn.mass.cam_strap_kg",
     "hd": "P:trn.holddown.size_m",
     "pre": "P:trn.holddown.preload_m",
@@ -242,7 +319,9 @@
     "rho_xps": "kg/m3",
     "gate": "kg",
     "pack": "kg",
-    "prop": "kg"
+    "prop": "kg",
+    "handle": "kg",
+    "backing": "kg"
    },
    "assumes": [
     "ASM-D7-PACK-OUT"
@@ -253,14 +332,14 @@
    ],
    "outputs": {
     "base_kg": 2.3170458000000003,
-    "lid_kg": 0.743861568,
-    "cradle_each_kg": 0.06831450000000001,
+    "lid_kg": 0.6348090000000001,
+    "cradle_each_kg": 0.06979500000000001,
     "tray_kg": 0.14904000000000003,
-    "pillar_each_kg": 0.036855000000000006,
-    "box_kg": 3.6302863680000006,
+    "pillar_each_kg": 0.037908000000000004,
+    "box_kg": 3.5503008000000005,
     "aircraft_kg": 2.05,
-    "loaded_kg": 5.898286368000001,
-    "loaded_with_packs_kg": 6.9982863680000005
+    "loaded_kg": 5.8183008,
+    "loaded_with_packs_kg": 6.918300800000001
    },
    "input_values": {
     "ext": [
@@ -273,7 +352,7 @@
     "flaps": 0.05,
     "areal": 0.76,
     "dbl": 0.0,
-    "lin": 0.006,
+    "lin": 0.0,
     "rho_pe": 27.0,
     "rho_xps": 30.0,
     "pad_t": 0.03,
@@ -286,17 +365,17 @@
      -0.015,
      0.235
     ],
-    "ct": 0.127,
+    "ct": 0.12,
     "fp": [
      0.06,
      0.05
     ],
     "cap": 0.006,
-    "travel": 0.09100000000000004,
+    "travel": 0.08400000000000003,
     "env": [
      1.15,
-     0.47,
-     0.425
+     0.483,
+     0.438
     ],
     "tray": [
      0.46,
@@ -305,6 +384,7 @@
     ],
     "solid": 0.6,
     "handle": 0.04,
+    "backing": 0.008,
     "cam": 0.045,
     "hd": [
      0.1,
@@ -383,7 +463,7 @@
     "TRN-002-R"
    ],
    "how": "T-D7-CUSHION: crush a column to bottoming on the shop press, measure the stroke.",
-   "value": 0.0762
+   "value": 0.072
   },
   {
    "id": "CL-D7-TRAVEL-REQ",
@@ -397,7 +477,7 @@
     "TRN-002-R"
    ],
    "how": "Ruler in the built box: lower tube end to floor.",
-   "value": 0.0862
+   "value": 0.08199999999999999
   },
   {
    "id": "CL-D7-CRADLE-STROKE",
@@ -419,12 +499,12 @@
     "TRN-002-R"
    ],
    "how": "T-D7-CUSHION coupon drop, then T-D7-BOX-DROP with an accelerometer on the spar.",
-   "value": 0.06985000000000001
+   "value": 0.066
   },
   {
    "id": "CL-D7-DROP-N",
    "type": "claim",
-   "title": "Box drop load factor with the 127 mm columns",
+   "title": "Box drop load factor with the 120 mm columns",
    "calc": "CALC-D7-STROKE",
    "output": "n_T",
    "unit": "-",
@@ -441,7 +521,7 @@
     "TRN-002-R"
    ],
    "how": "T-D7-BOX-DROP: 0.3 m flat drop of the loaded box, accelerometer on the spar, peak <= n_allow.",
-   "value": 9.589835361488904
+   "value": 10.09090909090909
   },
   {
    "id": "CL-D7-BOX-H-REQ",
@@ -457,8 +537,8 @@
     "TRN-001",
     "TRN-005"
    ],
-   "how": "Stack-up check on the built box; CR-D7-01 asks A1 for 0.54 m.",
-   "value": 0.5352
+   "how": "Stack-up check on the built box (0.54 m, D-31).",
+   "value": 0.538
   },
   {
    "id": "CL-D7-TRAVEL",
@@ -472,7 +552,7 @@
     "TRN-005"
    ],
    "how": "Ruler in the built box: lower tube end to floor.",
-   "value": 0.09100000000000004
+   "value": 0.08400000000000003
   },
   {
    "id": "CL-D7-TUBE-CLEAR-DROP",
@@ -494,8 +574,11 @@
     "TRN-002-L",
     "TRN-002-R"
    ],
-   "how": "T-D7-BOX-DROP: chalk on the lower motor caps; no mark on the floor.",
-   "value": 0.014800000000000035
+   "how": "T-D7-BOX-DROP: chalk on the lower motor caps and foot pads; no mark on the floor.",
+   "assumes": [
+    "ASM-D7-REBOUND"
+   ],
+   "value": 0.012000000000000038
   },
   {
    "id": "CL-D7-SIDE-CLEAR",
@@ -516,7 +599,7 @@
     "TRN-005"
    ],
    "how": "Place the aircraft on the cradles; feeler of 10 mm foam between nose / feet and walls.",
-   "value": 0.03600000000000003
+   "value": 0.029500000000000026
   },
   {
    "id": "CL-D7-TIP-PAD-GAP",
@@ -542,7 +625,7 @@
   {
    "id": "CL-D7-A1-BOX-DROP-ALLOW",
    "type": "claim",
-   "title": "Drop height the 0.50 m box allows (column limited by free travel)",
+   "title": "Drop height A1's box (requirements.box_external_m) allows, column limited by travel",
    "calc": "CALC-D7-BOX-STACK",
    "output": "h_allow_a1_m",
    "unit": "m",
@@ -551,14 +634,117 @@
     "ref": "P:requirements.box_drop_m"
    },
    "verifies": [
+    "R-LOADS",
     "R-TRANSPORT"
    ],
    "parts": [
     "TRN-001",
-    "TRN-005"
+    "TRN-005",
+    "TRN-002-L",
+    "TRN-002-R"
    ],
-   "how": "Why D7 asks for 0.54 m (CR-D7-01): the 0.50 m box leaves too little travel under the tube ends.",
-   "value": 0.17549211333022907
+   "how": "T-D7-BOX-DROP at 0.3 m in the 0.54 m box. If a car forces 0.50 m this re-runs to ~0.2 m and the box carries the 'max drop 0.15 m' label (D-31).",
+   "assumes": [
+    "ASM-D7-REBOUND"
+   ],
+   "value": 0.388224665297009
+  },
+  {
+   "id": "CL-D7-CRADLE-PAD-AREA",
+   "type": "claim",
+   "title": "Saddle contact area on the wing lower surface, each cradle",
+   "calc": "CALC-D7-CRADLE-PATCH",
+   "output": "A_saddle_m2",
+   "unit": "m2",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C2-CRADLE-AREA"
+   },
+   "verifies": [
+    "R-TRANSPORT"
+   ],
+   "parts": [
+    "TRN-002-L",
+    "TRN-002-R"
+   ],
+   "how": "Chalk the wing lower surface at y +/-0.20, set it in the saddle, measure the chalked patch (>= 40 x 40 mm, C2).",
+   "value": 0.015
+  },
+  {
+   "id": "CL-D7-PAD-SIDE-MIN",
+   "type": "claim",
+   "title": "Smallest side of the saddle and pillar faces",
+   "calc": "CALC-D7-CRADLE-PATCH",
+   "output": "side_min_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:trn.cradle.pad_min_m"
+   },
+   "parts": [
+    "TRN-002-L",
+    "TRN-002-R",
+    "TRN-004-L",
+    "TRN-004-R"
+   ],
+   "how": "Ruler on the built saddle and pillar.",
+   "value": 0.06
+  },
+  {
+   "id": "CL-D7-BRACE-GAP",
+   "type": "claim",
+   "title": "Cradle / pillar / column outboard edge to the fin brace anchor",
+   "calc": "CALC-D7-CRADLE-PATCH",
+   "output": "gap_brace_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.002
+   },
+   "verifies": [
+    "R-TRANSPORT"
+   ],
+   "parts": [
+    "TRN-002-L",
+    "TRN-002-R",
+    "TRN-004-L",
+    "TRN-004-R",
+    "FIN-010-UR",
+    "FIN-010-LR",
+    "FIN-010-UL",
+    "FIN-010-LL"
+   ],
+   "how": "Aircraft in the box: a 2 mm feeler passes between each saddle / pillar and the brace anchor (D3 CR-D3-11).",
+   "value": 0.0040000000000000036
+  },
+  {
+   "id": "CL-D7-HANDLE-BOLT-F",
+   "type": "claim",
+   "title": "Load per M3 handle bolt, loaded box at 2 g",
+   "calc": "CALC-D7-HANDLE",
+   "output": "F_bolt_N",
+   "unit": "N",
+   "parts": [
+    "TRN-007-C",
+    "TRN-007-L",
+    "TRN-007-R"
+   ],
+   "how": "C6 checks the M3 stack (CR-C6-08: 59 N); T-D7-HANDLE-PULL.",
+   "value": 57.058039540319996
+  },
+  {
+   "id": "CL-D7-HANDLE-BEARING",
+   "type": "claim",
+   "title": "Wall bearing pressure behind a handle backing strip",
+   "calc": "CALC-D7-HANDLE",
+   "output": "p_strip_kpa",
+   "unit": "kPa",
+   "parts": [
+    "TRN-007-C",
+    "TRN-001"
+   ],
+   "how": "T-D7-HANDLE-PULL: Coroplast face shows no dent behind the strip.",
+   "value": 27.170495019199993
   },
   {
    "id": "CL-D7-CRADLE-STRESS",
@@ -595,7 +781,7 @@
     "TRN-004-R"
    ],
    "how": "T-D7-WEIGH-BOX: 10 kg luggage scale.",
-   "value": 3.6302863680000006
+   "value": 3.5503008000000005
   },
   {
    "id": "CL-D7-LOADED-MASS",
@@ -616,7 +802,7 @@
     "TRN-005"
    ],
    "how": "T-D7-WEIGH-BOX: weigh the loaded box, packs in their LiPo bag outside.",
-   "value": 5.898286368000001
+   "value": 5.8183008
   },
   {
    "id": "CL-D7-LOADED-WITH-PACKS",
@@ -626,7 +812,7 @@
    "output": "loaded_with_packs_kg",
    "unit": "kg",
    "how": "Shows why packs ride in the LiPo bag (ASM-D7-PACK-OUT).",
-   "value": 6.9982863680000005
+   "value": 6.918300800000001
   },
   {
    "id": "CL-D7-SETUP-MIN",
@@ -659,7 +845,7 @@
     "CL-D7-CRADLE-STRESS"
    ],
    "state": "planned",
-   "procedure": "Two 60 x 50 x 127 mm PE columns under a 2.05 kg dummy on a saddle; drop 0.3 m onto concrete, phone accelerometer on the dummy (>= 400 Hz app); 1.7 and 2.2 pcf; pick the lower peak"
+   "procedure": "Two 60 x 50 x 120 mm PE columns under a 2.05 kg dummy on a saddle; drop 0.3 m onto concrete, phone accelerometer on the dummy (>= 400 Hz app); 1.7 and 2.2 pcf; pick the lower peak"
   },
   {
    "id": "T-D7-BOX-DROP",
@@ -667,10 +853,11 @@
    "title": "Loaded box drop",
    "verifies": [
     "CL-D7-DROP-N",
-    "CL-D7-TUBE-CLEAR-DROP"
+    "CL-D7-TUBE-CLEAR-DROP",
+    "CL-D7-A1-BOX-DROP-ALLOW"
    ],
    "state": "planned",
-   "procedure": "Box loaded with the aircraft (or a ballasted spar-and-tube dummy first), 0.3 m flat drop and one bottom-edge drop; accelerometer taped on the spar at y 0; chalk on the lower motor caps"
+   "procedure": "Box loaded with the aircraft (or a ballasted spar-and-tube dummy first), 0.3 m flat drop and one bottom-edge drop; accelerometer taped on the spar at y 0; chalk on the lower and upper motor caps and foot pads (no mark on floor or lid)"
   },
   {
    "id": "T-D7-WEIGH-BOX",
@@ -682,6 +869,17 @@
    ],
    "state": "planned",
    "procedure": "10 kg luggage scale, 3 readings each"
+  },
+  {
+   "id": "T-D7-HANDLE-PULL",
+   "type": "test",
+   "title": "Handle pull test",
+   "verifies": [
+    "CL-D7-HANDLE-BOLT-F",
+    "CL-D7-HANDLE-BEARING"
+   ],
+   "state": "planned",
+   "procedure": "Loaded box hung from each handle in turn for 1 min, then jerked 3 times from 50 mm slack; no pull-through, no dent"
   },
   {
    "id": "T-D7-SETUP",

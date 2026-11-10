@@ -1,0 +1,493 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "propulsion",
+ "_note": "Written by team/E1/propulsion.py (do not hand-edit). Instance nodes per station (UR UL LR LL). Motor-to-mount (E-FIN-61..64) and ESC-to-pad (E-FIN-65..68) edges are D3's; every electrical edge (ESC power, phase, signal) is harness's (D-20) and is acknowledged when harness publishes it.",
+ "parts": [
+  {
+   "id": "PRP-001-UR",
+   "name": "Motor UR SunnySky X3108S KV900 (CW from the nose)",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 84.2,
+   "material": "steel / NdFeB / Al",
+   "cg_xyz_m": [
+    0.0189,
+    0.32,
+    0.19
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); CG 45 % of the 26.5 mm body ahead of the mount face (EST); axis canted 7 deg tangentially (params cant_deg), not drawn in the CG"
+  },
+  {
+   "id": "PRP-002-UR",
+   "name": "ESC UR LANRC 45 A",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 11.0,
+   "material": "PCB / copper",
+   "cg_xyz_m": [
+    0.101,
+    0.3304,
+    0.118
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "11.0 g EST with leads and heat-shrink; on the outboard face of FIN-007, heat-sink side out in the slipstream"
+  },
+  {
+   "id": "PRP-003-UR",
+   "name": "Prop UR APC 11x5.5MRP (LP11055MRP)",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 17.0,
+   "material": "glass-filled nylon",
+   "cg_xyz_m": [
+    -0.0082,
+    0.32,
+    0.19
+   ],
+   "make_or_buy": "buy",
+   "notes": "hub centre on the prop plane x -0.0082 m (params, D-28); E1's stack puts it 1.7 mm further aft until measured"
+  },
+  {
+   "id": "PRP-004-UR",
+   "name": "Prop adapter UR M6x1 LH + nut + washer",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 6.7,
+   "material": "6061 aluminium / steel",
+   "cg_xyz_m": [
+    -0.0007,
+    0.32,
+    0.19
+   ],
+   "make_or_buy": "buy",
+   "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21)"
+  },
+  {
+   "id": "PRP-001-UL",
+   "name": "Motor UL SunnySky X3108S KV900 (CCW from the nose)",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 84.2,
+   "material": "steel / NdFeB / Al",
+   "cg_xyz_m": [
+    0.0189,
+    -0.32,
+    0.19
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); CG 45 % of the 26.5 mm body ahead of the mount face (EST); axis canted 7 deg tangentially (params cant_deg), not drawn in the CG"
+  },
+  {
+   "id": "PRP-002-UL",
+   "name": "ESC UL LANRC 45 A",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 11.0,
+   "material": "PCB / copper",
+   "cg_xyz_m": [
+    0.101,
+    -0.3304,
+    0.118
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "11.0 g EST with leads and heat-shrink; on the outboard face of FIN-007, heat-sink side out in the slipstream"
+  },
+  {
+   "id": "PRP-003-UL",
+   "name": "Prop UL APC 11x5.5MR (LP11055MR)",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 17.0,
+   "material": "glass-filled nylon",
+   "cg_xyz_m": [
+    -0.0082,
+    -0.32,
+    0.19
+   ],
+   "make_or_buy": "buy",
+   "notes": "hub centre on the prop plane x -0.0082 m (params, D-28); E1's stack puts it 1.7 mm further aft until measured"
+  },
+  {
+   "id": "PRP-004-UL",
+   "name": "Prop adapter UL M6x1 RH + nut + washer",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 6.7,
+   "material": "6061 aluminium / steel",
+   "cg_xyz_m": [
+    -0.0007,
+    -0.32,
+    0.19
+   ],
+   "make_or_buy": "buy",
+   "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21)"
+  },
+  {
+   "id": "PRP-001-LR",
+   "name": "Motor LR SunnySky X3108S KV900 (CCW from the nose)",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 84.2,
+   "material": "steel / NdFeB / Al",
+   "cg_xyz_m": [
+    0.0189,
+    0.32,
+    -0.19
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); CG 45 % of the 26.5 mm body ahead of the mount face (EST); axis canted 7 deg tangentially (params cant_deg), not drawn in the CG"
+  },
+  {
+   "id": "PRP-002-LR",
+   "name": "ESC LR LANRC 45 A",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 11.0,
+   "material": "PCB / copper",
+   "cg_xyz_m": [
+    0.101,
+    0.3304,
+    -0.118
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "11.0 g EST with leads and heat-shrink; on the outboard face of FIN-007, heat-sink side out in the slipstream"
+  },
+  {
+   "id": "PRP-003-LR",
+   "name": "Prop LR APC 11x5.5MR (LP11055MR)",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 17.0,
+   "material": "glass-filled nylon",
+   "cg_xyz_m": [
+    -0.0082,
+    0.32,
+    -0.19
+   ],
+   "make_or_buy": "buy",
+   "notes": "hub centre on the prop plane x -0.0082 m (params, D-28); E1's stack puts it 1.7 mm further aft until measured"
+  },
+  {
+   "id": "PRP-004-LR",
+   "name": "Prop adapter LR M6x1 RH + nut + washer",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 6.7,
+   "material": "6061 aluminium / steel",
+   "cg_xyz_m": [
+    -0.0007,
+    0.32,
+    -0.19
+   ],
+   "make_or_buy": "buy",
+   "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21)"
+  },
+  {
+   "id": "PRP-001-LL",
+   "name": "Motor LL SunnySky X3108S KV900 (CW from the nose)",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 84.2,
+   "material": "steel / NdFeB / Al",
+   "cg_xyz_m": [
+    0.0189,
+    -0.32,
+    -0.19
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); CG 45 % of the 26.5 mm body ahead of the mount face (EST); axis canted 7 deg tangentially (params cant_deg), not drawn in the CG"
+  },
+  {
+   "id": "PRP-002-LL",
+   "name": "ESC LL LANRC 45 A",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 11.0,
+   "material": "PCB / copper",
+   "cg_xyz_m": [
+    0.101,
+    -0.3304,
+    -0.118
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "11.0 g EST with leads and heat-shrink; on the outboard face of FIN-007, heat-sink side out in the slipstream"
+  },
+  {
+   "id": "PRP-003-LL",
+   "name": "Prop LL APC 11x5.5MRP (LP11055MRP)",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 17.0,
+   "material": "glass-filled nylon",
+   "cg_xyz_m": [
+    -0.0082,
+    -0.32,
+    -0.19
+   ],
+   "make_or_buy": "buy",
+   "notes": "hub centre on the prop plane x -0.0082 m (params, D-28); E1's stack puts it 1.7 mm further aft until measured"
+  },
+  {
+   "id": "PRP-004-LL",
+   "name": "Prop adapter LL M6x1 LH + nut + washer",
+   "subsystem": "propulsion",
+   "status": "PROPOSED",
+   "mass_g": 6.7,
+   "material": "6061 aluminium / steel",
+   "cg_xyz_m": [
+    -0.0007,
+    -0.32,
+    -0.19
+   ],
+   "make_or_buy": "buy",
+   "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21)"
+  }
+ ],
+ "connection_types": [
+  {
+   "id": "CT-PROP-ADAPTER",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "bolt-on prop adapter, 4 x M3x4 SHCS into the motor bell, pilot on the shaft"
+  },
+  {
+   "id": "CT-PROP-NUT",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "M6x1 nut and washer clamp the prop hub on the adapter post (field joint)"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-PRP-01",
+   "part_a": "PRP-004-UR",
+   "part_b": "PRP-001-UR",
+   "via": "CT-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "adapter pilot on the 4 mm shaft, four screws into the bell top on a 12 mm circle (vendor fit list names the X3108S KV900)",
+   "joint_stack": {
+    "fastener": "M3x4 SHCS (supplied with the adapter)",
+    "count": 4,
+    "grade": "12.9 (vendor)",
+    "hole": "counterbored clearance in the adapter base; tapped M3 in the bell",
+    "insert": "none (bell tapped by the maker)",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "0.6 N m + Loctite 243",
+    "tool": "2.0 mm hex key",
+    "access": "from the front (-x) with the prop off",
+    "install_order": 2,
+    "removal_order": 3
+   },
+   "retention": {
+    "item": "Loctite 243",
+    "count": 4,
+    "load_n": "prop torque 0.33 N m at full throttle on a 6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial",
+    "inspection": "witness mark on each head, checked at every field set-up"
+   }
+  },
+  {
+   "id": "E-PRP-05",
+   "part_a": "PRP-003-UR",
+   "part_b": "PRP-004-UR",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "field_joint": true,
+   "notes": "11x5.5MRP (LP11055MRP) on a LH post; LPAR06E ring centres the 1/4 in bore on the M6 post; prop off for transport",
+   "joint_stack": {
+    "fastener": "M6x1 hex nut ISO 4032 (LH) + M6 washer ISO 7089",
+    "count": 1,
+    "grade": "8 (steel)",
+    "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
+    "insert": "none (threaded aluminium post)",
+    "engagement_mm": 5.31,
+    "min_engagement_mm": 5.2,
+    "washer_nut": "M6 washer under the nut",
+    "torque": "1.5 N m EST (nylon hub; snug, no crushing)",
+    "tool": "10 mm open or socket wrench",
+    "access": "from the front (-x)",
+    "install_order": 3,
+    "removal_order": 1
+   }
+  },
+  {
+   "id": "E-PRP-02",
+   "part_a": "PRP-004-UL",
+   "part_b": "PRP-001-UL",
+   "via": "CT-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "adapter pilot on the 4 mm shaft, four screws into the bell top on a 12 mm circle (vendor fit list names the X3108S KV900)",
+   "joint_stack": {
+    "fastener": "M3x4 SHCS (supplied with the adapter)",
+    "count": 4,
+    "grade": "12.9 (vendor)",
+    "hole": "counterbored clearance in the adapter base; tapped M3 in the bell",
+    "insert": "none (bell tapped by the maker)",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "0.6 N m + Loctite 243",
+    "tool": "2.0 mm hex key",
+    "access": "from the front (-x) with the prop off",
+    "install_order": 2,
+    "removal_order": 3
+   },
+   "retention": {
+    "item": "Loctite 243",
+    "count": 4,
+    "load_n": "prop torque 0.33 N m at full throttle on a 6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial",
+    "inspection": "witness mark on each head, checked at every field set-up"
+   }
+  },
+  {
+   "id": "E-PRP-06",
+   "part_a": "PRP-003-UL",
+   "part_b": "PRP-004-UL",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "field_joint": true,
+   "notes": "11x5.5MR (LP11055MR) on a RH post; LPAR06E ring centres the 1/4 in bore on the M6 post; prop off for transport",
+   "joint_stack": {
+    "fastener": "M6x1 hex nut ISO 4032 (RH) + M6 washer ISO 7089",
+    "count": 1,
+    "grade": "8 (steel)",
+    "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
+    "insert": "none (threaded aluminium post)",
+    "engagement_mm": 5.31,
+    "min_engagement_mm": 5.2,
+    "washer_nut": "M6 washer under the nut",
+    "torque": "1.5 N m EST (nylon hub; snug, no crushing)",
+    "tool": "10 mm open or socket wrench",
+    "access": "from the front (-x)",
+    "install_order": 3,
+    "removal_order": 1
+   }
+  },
+  {
+   "id": "E-PRP-03",
+   "part_a": "PRP-004-LR",
+   "part_b": "PRP-001-LR",
+   "via": "CT-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "adapter pilot on the 4 mm shaft, four screws into the bell top on a 12 mm circle (vendor fit list names the X3108S KV900)",
+   "joint_stack": {
+    "fastener": "M3x4 SHCS (supplied with the adapter)",
+    "count": 4,
+    "grade": "12.9 (vendor)",
+    "hole": "counterbored clearance in the adapter base; tapped M3 in the bell",
+    "insert": "none (bell tapped by the maker)",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "0.6 N m + Loctite 243",
+    "tool": "2.0 mm hex key",
+    "access": "from the front (-x) with the prop off",
+    "install_order": 2,
+    "removal_order": 3
+   },
+   "retention": {
+    "item": "Loctite 243",
+    "count": 4,
+    "load_n": "prop torque 0.33 N m at full throttle on a 6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial",
+    "inspection": "witness mark on each head, checked at every field set-up"
+   }
+  },
+  {
+   "id": "E-PRP-07",
+   "part_a": "PRP-003-LR",
+   "part_b": "PRP-004-LR",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "field_joint": true,
+   "notes": "11x5.5MR (LP11055MR) on a RH post; LPAR06E ring centres the 1/4 in bore on the M6 post; prop off for transport",
+   "joint_stack": {
+    "fastener": "M6x1 hex nut ISO 4032 (RH) + M6 washer ISO 7089",
+    "count": 1,
+    "grade": "8 (steel)",
+    "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
+    "insert": "none (threaded aluminium post)",
+    "engagement_mm": 5.31,
+    "min_engagement_mm": 5.2,
+    "washer_nut": "M6 washer under the nut",
+    "torque": "1.5 N m EST (nylon hub; snug, no crushing)",
+    "tool": "10 mm open or socket wrench",
+    "access": "from the front (-x)",
+    "install_order": 3,
+    "removal_order": 1
+   }
+  },
+  {
+   "id": "E-PRP-04",
+   "part_a": "PRP-004-LL",
+   "part_b": "PRP-001-LL",
+   "via": "CT-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "adapter pilot on the 4 mm shaft, four screws into the bell top on a 12 mm circle (vendor fit list names the X3108S KV900)",
+   "joint_stack": {
+    "fastener": "M3x4 SHCS (supplied with the adapter)",
+    "count": 4,
+    "grade": "12.9 (vendor)",
+    "hole": "counterbored clearance in the adapter base; tapped M3 in the bell",
+    "insert": "none (bell tapped by the maker)",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "washer_nut": "none",
+    "torque": "0.6 N m + Loctite 243",
+    "tool": "2.0 mm hex key",
+    "access": "from the front (-x) with the prop off",
+    "install_order": 2,
+    "removal_order": 3
+   },
+   "retention": {
+    "item": "Loctite 243",
+    "count": 4,
+    "load_n": "prop torque 0.33 N m at full throttle on a 6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial",
+    "inspection": "witness mark on each head, checked at every field set-up"
+   }
+  },
+  {
+   "id": "E-PRP-08",
+   "part_a": "PRP-003-LL",
+   "part_b": "PRP-004-LL",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "field_joint": true,
+   "notes": "11x5.5MRP (LP11055MRP) on a LH post; LPAR06E ring centres the 1/4 in bore on the M6 post; prop off for transport",
+   "joint_stack": {
+    "fastener": "M6x1 hex nut ISO 4032 (LH) + M6 washer ISO 7089",
+    "count": 1,
+    "grade": "8 (steel)",
+    "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
+    "insert": "none (threaded aluminium post)",
+    "engagement_mm": 5.31,
+    "min_engagement_mm": 5.2,
+    "washer_nut": "M6 washer under the nut",
+    "torque": "1.5 N m EST (nylon hub; snug, no crushing)",
+    "tool": "10 mm open or socket wrench",
+    "access": "from the front (-x)",
+    "install_order": 3,
+    "removal_order": 1
+   }
+  }
+ ],
+ "acknowledges": [
+  "E-FIN-61",
+  "E-FIN-62",
+  "E-FIN-63",
+  "E-FIN-64",
+  "E-FIN-65",
+  "E-FIN-66",
+  "E-FIN-67",
+  "E-FIN-68"
+ ]
+}

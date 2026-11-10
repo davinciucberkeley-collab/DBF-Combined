@@ -25,6 +25,27 @@ Round 2 (CR-A1-12 and CR-A4-11 work):
 | CR-A5-14 | D7 | Model the box around the aircraft in the aircraft frame (`k9.box_frame()`, centre `DX-BOX`; skeleton `transport/`), every part `"flight": false`, props with `"stowed": true` edges to the tray. `check.py` touch-checks the cradle edges and warns if a cradle or wall overlaps a flight part. Your current module passes; confirm the cradle station (skeleton y ±0.20 m, C1's assumption behind the 70 mm foam, D-22). | CR-A4-11a, CR-A1-19 |
 | CR-A5-15 | A1 | `params.json#fins.pieces_per_fin` note names half-fin ids `FIN-nnn-LU/LD/RU/RD`; the README instance rule allows `UR UL LR LL L R`. Use the station codes (`FIN-001-UR` = upper right) in the note. | one id rule |
 
+Round 2 status after `params/CHANGE-LOG.md` (A1-R3):
+
+| # | Status | Note |
+|---|---|---|
+| CR-A5-10 | closed (D-46) | A4's `merge_check.py` change is in; A5 re-ran `fusion/tests` (27 OK) and `check.py --skeleton --strict` (PASS) |
+| CR-A5-11 | closed (D-24) | range 0.050–0.055; R3 layout CG 0.0521 m is inside (see CR-A5-17) |
+| CR-A5-12 | forwarded to F2, D1 | open |
+| CR-A5-13 | forwarded to E1 | open |
+| CR-A5-14 | forwarded to D7 (D-31) | D7's module passes `check.py` (0 errors, 0 warnings) |
+| CR-A5-15 | closed (D-26) | station codes |
+| CR-D3-14, CR-D3-21, CR-D5-02 (to A5) | done | skeleton at R3, `DX-COLLAR-*`, `DX-ANCHOR-*`, `DX-FOOT-*` at the pad contact, `DP-GROUND` 0.368, hover lift 0.368, box 0.54 |
+
+Round 3 (R3 skeleton and datums):
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-A5-16 | A1 | Promote the four shared R3 stations to `params.json` so they stop living only in designer files: the brace collar end (x 0.045, \|y\| 0.3023, \|z\| 0.1535), the brace anchor (\|y\| 0.242 on the spar line), the foot pad contact \|z\| 0.218 (D5 publishes `CL-D5-CONTACT-Z`), the motor plate face x 0.0309 (D-28 already quotes it). Until then `k09kit` reads `subsystems/fins/params.json#fin_detail` and `subsystems/landing/params.json#landing.pad`, and `check.py` warns when DATUMS.md goes stale against them. | D5, D7, C4, C5 and `CALC-A1-TIPOVER` depend on these numbers; the datum rule says a datum moves only when `params.json` changes |
+| CR-A5-17 | A1, A3 (B3 informed) | The allocation-based layout CG is **0.0521 m** (16.3 % c): `CL-A5-LAYOUT-CG-X` +5 % to the aft limit, `CL-A5-LAYOUT-CG-X-FWD` +4 % to the forward limit, range use 0.15; the pack sits at the D-24 station x −0.001 and the target needs it at +0.001 (+2 mm). This does not close `R-CG-RANGE`: A3's bottom-up 0.0556 m (`CL-A3-CG-X-RANGE` FAIL) carries the designers' real masses (fins 417 / 408 g, harness 112.6 / 105 g) and positions (feet at x 0.33, braces, pod handle). The skeleton moves the pack with D2's `pack_aft_face_m` as soon as D-24 is changed (A3's CR-A3-15 asks for −0.012). | lets A1 see that the shift is from mass growth aft of the CG, not from the layout |
+| CR-A5-18 | A1 | Two stale notes: `wing.elevon.inboard_y_m` says "20 mm clear of the pod (y = 0.05)"; the pod is 0.14 m wide since D-25, so the panel end is 0 mm outboard of the pod side. The gap is still real because the pod ends at x 0.095, 155 mm ahead of the hinge (`CALC-A5-ELEVON-GAPS` now measures the corner distance). And `DP-MOUNT` is the tube front face (0.034), not the motor face (0.0309, D-28). | a designer reading the note would widen the centre strip for nothing |
+| CR-A5-19 | D3, D5 | The datums read these keys of yours; rename or remove them only with a heads-up to A5: D3 `fin_detail.bond_gap_m`, `mount.grip_m`, `mount.collar_wall_m`, `mount.face_ahead_m`, `station_collar.gap_m`, `station_collar.ear_h_m`, `station_collar.ring_wall_m`, `station_collar.ear_len_m`, `brace.anchor_y_m`, `anchor.proud_m`; D5 `landing.pad.z_outer_m`, `landing.pad.edge_r_m`. `tests/test_framework.py` checks `DX-COLLAR`, `DX-ANCHOR` and `DP-MOTOR-FACE` against D3's `fins.geometry()` (`brace_ends`, `x_face`), so keep those names too. | a renamed key falls back to the R3 default without warning in the skeleton |
+
 ## Answer to CR-A4-11 (A4)
 
 | Item | Answer | Where |

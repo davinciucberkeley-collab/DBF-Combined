@@ -262,6 +262,19 @@
    "status": "UNVERIFIED"
   },
   {
+   "id": "ASM-C1-ELEVON-VD-FRAC",
+   "type": "assumption",
+   "title": "Elevon travel at VD is 1/3 of full",
+   "text": "Roll elevon deflection at VD as a fraction of the full travel; full travel up to VA",
+   "basis": "requirements.vd_ms note (D-29, CR-C1-15) and FAR 23.455 (aileron 1/3 at VD); F4 enforces the schedule in every mode (forwarded by A1)",
+   "value": 0.3333333333333333,
+   "unit": "-",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-C1-FAR23"
+   ]
+  },
+  {
    "id": "ASM-C1-ADAPTER-MASS",
    "type": "assumption",
    "title": "Prop adapter and nut 5 g",
@@ -297,12 +310,32 @@
   {
    "id": "ASM-C1-FRICTION",
    "type": "assumption",
-   "title": "Ground friction 0.5",
+   "title": "Ground friction 0.7 (neoprene pad on the landing mat)",
    "text": "Side load / vertical load at a foot",
-   "basis": "dry grass / packed dirt",
-   "value": 0.5,
+   "basis": "CHANGE-LOG D-30 and CR-C5-09: flight-card rule S1 puts every fin-tip landing on the mat, so the friction is D5's neoprene pad value (ASM-D5-PAD-MU 0.7, UNVERIFIED until H1's pad pull test). Was 0.5 (grass) at C1-R2; the higher value raises L4/L5 side loads by 40 %; it also sets the parked-stance slide check (higher = less margin needed)",
+   "value": 0.7,
    "unit": "-",
    "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-C1-FOOT-BIAS",
+   "type": "assumption",
+   "title": "Upper-foot cartridge bias 1.077",
+   "text": "Upper (pod-side) foot plateau / mean foot plateau; the lower feet carry 2 - bias",
+   "basis": "CHANGE-LOG D-30 (C5 CR-C5-10): biased cartridges, upper x1.077, lower x0.923, so the pod-side pair that lands first and harder gets the stiffer core. C1 applies it to the level landing L1",
+   "value": 1.077,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-C1-MOUNT-MASS",
+   "type": "assumption",
+   "title": "Printed motor mount 18 g",
+   "text": "One printed ASA motor mount with its collar and screws",
+   "basis": "inside the C4 fins allocation (D3 CAD; replaces J1's mount-mass assumption, CR-J1-10: C1 reads no J1 ids)",
+   "value": 0.018,
+   "unit": "kg",
+   "status": "PROPOSED"
   },
   {
    "id": "ASM-C1-CONTACT-STROKE",
@@ -368,12 +401,22 @@
    "status": "PROPOSED"
   },
   {
-   "id": "ASM-C1-CRADLE-STROKE",
+   "id": "ASM-C1-LID-PRELOAD",
    "type": "assumption",
-   "title": "Cradle foam stroke 70 mm",
-   "text": "Usable crush stroke of the cradle/box foam in a drop",
-   "basis": "CHANGE-LOG D-22: D7 puts >= 70 mm crush foam under the spar cradles (CR-C1-05). Read as usable STROKE; a foam block bottoms at ~60-70 % strain, so D7 needs ~0.10-0.12 m of block thickness for it",
-   "value": 0.07,
+   "title": "Lid pillar preload 5 N per pillar",
+   "text": "Downward force of each lid hold-down pillar on the upper wing surface over the spar at a cradle station (y = +/-0.20 m), reacted by the cradle directly below",
+   "basis": "D7 CR-D7-02(c): about 2 x 5 N, EST, until D7 sizes the pillar spring",
+   "value": 5.0,
+   "unit": "N",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-C1-CRADLE-PAD",
+   "type": "assumption",
+   "title": "Cradle pad 40 x 40 mm",
+   "text": "Bearing area of one cradle saddle or lid pillar pad on the skin",
+   "basis": "CHANGE-LOG forward to D7 (CR-A2-18 group): cradle pads >= 40 x 40 mm at y +/-0.20; D7's saddle is 60 mm wide",
+   "value": 0.04,
    "unit": "m",
    "status": "PROPOSED"
   },
@@ -426,7 +469,7 @@
    "title": "Rotor limit loads per motor and design dive speed",
    "script": "redesign/team/C1/loads.py",
    "function": "rotor_calc",
-   "equation": "T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_cap/60 ; VH = max(V_pitch, VH_B1) ; VD = f_D max(Vc, VH) ; n_hover = n T_lim / (m g)",
+   "equation": "T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_cap/60 ; VH = max(V_pitch, VH_B1) ; VD = f_D max(Vc, VH) rounded to 0.1 m/s ; n_hover = n T_lim / (m g)",
    "inputs": {
     "T_h": "CL-B4-HOVER-T",
     "rpm_h": "CL-B4-HOVER-RPM",
@@ -471,28 +514,28 @@
     "SRC-C1-FAR23"
    ],
    "outputs": {
-    "T_cap_N": 21.081435423502242,
+    "T_cap_N": 21.08256994715679,
     "T_ilim_N": 15.886773,
-    "T_lim_N": 21.081435423502242,
-    "rpm": 9350.0,
-    "omega": 979.1297103688189,
-    "Q_Nm": 0.4201119002257222,
+    "T_lim_N": 21.1,
+    "rpm": 9353.864266175053,
+    "omega": 979.5343753763876,
+    "Q_Nm": 0.42037891319631054,
     "I_rot": 0.00012559117666666666,
-    "H_Nms": 0.12297005243451249,
-    "M_gyro_Nm": 0.3689101573035375,
+    "H_Nms": 0.12302087478896888,
+    "M_gyro_Nm": 0.3690626243669066,
     "V_pitch_ms": 21.769916666666667,
-    "VH_ms": 21.769916666666667,
-    "VD_ms": 27.212395833333332,
-    "n_hover_max": 3.307243306798839
+    "VH_ms": 25.680000000001513,
+    "VD_ms": 32.1,
+    "n_hover_max": 3.3101557067437364
    },
    "input_values": {
-    "T_h": 6.75678185,
-    "rpm_h": 5395.714905199311,
-    "Q_h": 0.11286625933312935,
+    "T_h": 6.807524102357015,
+    "rpm_h": 5415.791721033196,
+    "Q_h": 0.11368602568504906,
     "kT": 1.0390466549306472,
     "kP": 1.2395830229048008,
     "rpm_cap": 9350,
-    "T_req": 17.8,
+    "T_req": 21.1,
     "t_ilim": 1.62,
     "g": 9.80665,
     "m_p": 0.017,
@@ -501,7 +544,7 @@
     "q_max": 3.0,
     "pitch": 0.1397,
     "Vc": 16.0,
-    "VH_b1": 19.300000000000047,
+    "VH_b1": 25.680000000001513,
     "fD": 1.25,
     "m": 2.6,
     "n_mot": 4
@@ -557,19 +600,19 @@
     "mu": 10.366384121776907,
     "kg": 0.5822925032511584,
     "Vs": 11.907860674939258,
-    "VA": 20.625019698446216,
+    "VA": 21.957010176770435,
     "Vs_neg": 16.816672258164196,
     "VG": 20.59613310205981,
-    "n_stall_VD": 5.22235114487924,
+    "n_stall_VD": 7.266789425103522,
     "dn_gust_VC": 2.2911483861122073,
-    "n_gust_pos": 3.3163408958183305,
-    "V_gust_pos": 21.685194804408766,
-    "n_gust_neg": -1.3560227666803892,
-    "V_gust_neg": 19.612494418562058,
-    "n_design_pos": 3.3163408958183305,
-    "n_design_neg": -1.5,
-    "VD_env": 27.212395833333332,
-    "q_VD_Pa": 453.56512328138564
+    "n_gust_pos": 3.58292005104954,
+    "V_gust_pos": 24.125448752928236,
+    "n_gust_neg": -1.5829200510495398,
+    "V_gust_neg": 24.125448752928236,
+    "n_design_pos": 3.58292005104954,
+    "n_design_neg": -1.5829200510495398,
+    "VD_env": 32.1,
+    "q_VD_Pa": 631.1261250000001
    },
    "input_values": {
     "g": 9.80665,
@@ -580,13 +623,13 @@
     "clmax": 0.7977606717984604,
     "clmin": 0.4,
     "a": 3.4773,
-    "nlim": 3.0,
+    "nlim": 3.4,
     "nneg": -1.5,
     "Vc": 16.0,
     "ude_c": 8.0,
     "ude_d_frac": 0.5,
-    "Vd_req": 22.4,
-    "Vd_c1": 27.212395833333332
+    "Vd_req": 27.2,
+    "Vd_c1": 32.1
    }
   },
   {
@@ -595,7 +638,7 @@
    "title": "Landing, wingtip strike, tip-over and stance-in-wind loads",
    "script": "redesign/team/C1/loads.py",
    "function": "landing_calc",
-   "equation": "n_L = v^2/(2 g eta s) + 1 - L/W at s = s_min (requirement) and s = foot height (bound) ; s_req = v^2 / (2 g eta (n_target - 1 + L/W)) ; F_foot = m_eff v^2/(2 eta s) + (1 - L/W) W/4 with m_eff = 1/(1/m + (r x n).I^-1.(r x n)) ; wingtip strike roll = atan(foot / (b/2 - y_fin)) ; foot_req = (b/2 - y_fin) tan(attitude) ; tip-over: KE = m g r (1 - cos(phi0 + theta_c)) ; F = KE / (eta s) ; stance wind: q S CD h = W d",
+   "equation": "feet (constant-force cartridge, eta_f): n_L = v^2/(2 g eta_f s) + 1 - L/W at s = s_min (requirement) and s = foot height (bound) ; s_req = v^2 / (2 g eta_f (n_target - 1 + L/W)) ; F_foot at n_target = m_eff g (n_target - 1 + L/W) + (1 - L/W) W/4 with m_eff = 1/(1/m + (r x n).I^-1.(r x n)) ; level upper foot x bias ; wingtip strike roll = atan(foot / (b/2 - y_fin)) ; foot_req = (b/2 - y_fin) tan(attitude) ; tip-over: KE = m g r (1 - cos(phi0 + theta_c)) ; F = KE / (eta s) ; stance wind: q S CD h = W d",
    "inputs": {
     "g": "P:env.g_ms2",
     "rho": "P:env.rho_kgm3",
@@ -641,12 +684,16 @@
     "a_avionics": "P:mass.allocation_g.avionics",
     "a_harness": "P:mass.allocation_g.harness",
     "a_mech": "P:mass.allocation_g.mechanisms",
-    "mount_m": "ASM-J1-MOUNT-MASS",
+    "mount_m": "ASM-C1-MOUNT-MASS",
     "adapter_m": "ASM-C1-ADAPTER-MASS",
     "pack_x": "CL-A3-PACK-X-REQ",
+    "x_cg_rng": "P:cg.x_range_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "foot_bias": "ASM-C1-FOOT-BIAS",
     "v": "P:requirements.landing_sink_ms",
     "eta": "ASM-C1-CRUSH-EFF",
     "lw": "ASM-C1-LAND-LIFT",
+    "eta_f": "CL-D5-ETA",
     "n_t": "P:requirements.landing_n_design",
     "att": "P:requirements.landing_attitude_err_deg",
     "s_min": "P:requirements.foot_crush_stroke_min_m",
@@ -702,6 +749,9 @@
     "mount_m": "kg",
     "adapter_m": "kg",
     "pack_x": "m",
+    "x_cg_rng": "m",
+    "cant": "deg",
+    "foot_bias": "-",
     "v": "m/s",
     "att": "deg",
     "s_min": "m",
@@ -712,7 +762,8 @@
    "assumes": [
     "ASM-C1-CRUSH-EFF",
     "ASM-C1-LAND-LIFT",
-    "ASM-C1-CONTACT-STROKE"
+    "ASM-C1-CONTACT-STROKE",
+    "ASM-C1-FOOT-BIAS"
    ],
    "cites": [
     "SRC-C1-FAR23"
@@ -720,28 +771,29 @@
    "outputs": {
     "m_kg": 2.6,
     "W_N": 25.49729,
-    "n_L_stroke_min": 6.068903698000846,
-    "n_L_full_foot": 5.431581064889642,
-    "F_foot_stroke_min_N": 38.6851493925,
-    "stroke_req_m": 0.0404863504358627,
-    "F_foot_level_N": 38.245934999999996,
-    "F_foot_pair_narrow_N": 26.89130849735659,
-    "F_foot_pair_wide_N": 27.819784654857102,
-    "F_foot_corner_N": 32.904349974686895,
-    "F_foot_max_N": 38.245934999999996,
-    "F_side_max_N": 19.122967499999998,
-    "m_eff_corner_kg": 0.5538838741254299,
-    "wingtip_strike_deg": 10.00797980144134,
+    "n_L_stroke_min": 3.97259250076222,
+    "n_L_full_foot": 3.2143440631034244,
+    "F_foot_stroke_min_N": 25.322585760939887,
+    "stroke_req_m": 0.024405243520198405,
+    "F_foot_level_N": 38.245935,
+    "F_foot_level_upper_N": 41.190871995,
+    "F_foot_pair_narrow_N": 22.187953290992873,
+    "F_foot_pair_wide_N": 27.98715378344169,
+    "F_foot_corner_N": 29.07810614139855,
+    "F_foot_max_N": 41.190871995,
+    "F_side_max_N": 28.8336103965,
+    "m_eff_corner_kg": 0.48503469693095413,
+    "wingtip_strike_deg": 10.660348294535337,
     "foot_protrusion_req_m": 0.04496338008065856,
-    "tipover_deg_with_req_foot": 30.62416841089471,
-    "m_eff_wingtip_kg": 0.38390137591555135,
-    "F_wingtip_N": 86.37780958099906,
-    "tipover_theta_contact_deg": 86.42366562500266,
-    "tipover_KE_J": 4.621509378639882,
-    "tipover_v_contact_ms": 1.5564539733677825,
-    "F_tipover_total_N": 924.3018757279764,
+    "tipover_deg_with_req_foot": 33.912700391377484,
+    "m_eff_wingtip_kg": 0.38715843969733543,
+    "F_wingtip_N": 87.11064893190049,
+    "tipover_theta_contact_deg": 90.0,
+    "tipover_KE_J": 4.6178182253420665,
+    "tipover_v_contact_ms": 1.5806426127982403,
+    "F_tipover_total_N": 923.5636450684133,
     "stance_drag_8ms_N": 17.31072,
-    "stance_tip_wind_ms": 8.779240573475738,
+    "stance_tip_wind_ms": 9.245814543527244,
     "stance_mu_req_8ms": 0.678923917012357,
     "n_L_design": 6.0
    },
@@ -768,13 +820,13 @@
      25
     ],
     "fin_y": 0.32,
-    "fin_hh": 0.19,
+    "fin_hh": 0.21,
     "fin_le": 0.045,
     "fin_te": 0.32,
     "fin_am": 0.2,
     "fin_layers": 2,
     "tube_od": 0.022,
-    "tube_len": 0.42,
+    "tube_len": 0.344,
     "tube_x": 0.045,
     "motor_m": 0.081,
     "motor_len": 0.025,
@@ -782,15 +834,15 @@
     "prop_D": 0.2794,
     "esc_m": 0.0066,
     "x_mount": 0.045,
-    "x_prop": -0.005,
+    "x_prop": -0.0082,
     "st_y": 0.32,
     "st_z": 0.19,
     "pod_size": [
-     0.2,
-     0.1,
+     0.21,
+     0.14,
      0.07
     ],
-    "pod_xle": -0.105,
+    "pod_xle": -0.115,
     "pod_zb": 0.015,
     "batt_m": 0.55,
     "batt_size": [
@@ -798,29 +850,36 @@
      0.048,
      0.05
     ],
-    "foot_h": 0.045,
+    "foot_h": 0.048,
     "a_wing": 405,
-    "a_fins": 370,
-    "a_pod": 105,
-    "a_landing": 40,
-    "a_power": 595,
-    "a_avionics": 75,
+    "a_fins": 408,
+    "a_pod": 122,
+    "a_landing": 43,
+    "a_power": 620,
+    "a_avionics": 80,
     "a_harness": 105,
     "a_mech": 65,
     "mount_m": 0.018,
     "adapter_m": 0.005,
-    "pack_x": -0.03417859345454549,
+    "pack_x": -0.010375178181818191,
+    "x_cg_rng": [
+     0.05,
+     0.055
+    ],
+    "cant": 7.0,
+    "foot_bias": 1.077,
     "v": 1.5,
     "eta": 0.5,
     "lw": 0.667,
+    "eta_f": 0.8294600789857955,
     "n_t": 6.0,
     "att": 10.0,
-    "s_min": 0.04,
+    "s_min": 0.038,
     "s_c": 0.01,
     "cdp": 1.2,
     "v_gust": 8.0,
-    "x_cg_t": 0.044,
-    "mu": 0.5
+    "x_cg_t": 0.0526,
+    "mu": 0.7
    }
   },
   {
@@ -850,7 +909,7 @@
    "outputs": {
     "n_crash": 12.746452662224103,
     "F_pack_N": 85.0,
-    "F_avionics_N": 9.374999999999998
+    "F_avionics_N": 10.0
    },
    "input_values": {
     "v": 5.0,
@@ -860,7 +919,7 @@
      503.0,
      680.0
     ],
-    "fc": 75
+    "fc": 80
    }
   },
   {
@@ -873,20 +932,20 @@
    "inputs": {
     "h": "P:requirements.box_drop_m",
     "eta": "ASM-C1-CRUSH-EFF",
-    "s": "ASM-C1-CRADLE-STROKE"
+    "s": "CL-D7-CRADLE-STROKE"
    },
    "units": {
     "h": "m",
     "s": "m"
    },
    "outputs": {
-    "n_T": 9.571428571428571,
+    "n_T": 10.09090909090909,
     "v_impact_ms": 2.4256937152080846
    },
    "input_values": {
     "h": 0.3,
     "eta": 0.5,
-    "s": 0.07
+    "s": 0.066
    }
   },
   {
@@ -941,9 +1000,12 @@
     "a_avionics": "P:mass.allocation_g.avionics",
     "a_harness": "P:mass.allocation_g.harness",
     "a_mech": "P:mass.allocation_g.mechanisms",
-    "mount_m": "ASM-J1-MOUNT-MASS",
+    "mount_m": "ASM-C1-MOUNT-MASS",
     "adapter_m": "ASM-C1-ADAPTER-MASS",
     "pack_x": "CL-A3-PACK-X-REQ",
+    "x_cg_rng": "P:cg.x_range_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "foot_bias": "ASM-C1-FOOT-BIAS",
     "T_lim": "CL-C1-T-LIMIT",
     "Q": "CL-C1-MOTOR-TORQUE",
     "H": "CL-C1-ROTOR-H",
@@ -980,7 +1042,10 @@
     "n_T": "CL-C1-TRANSPORT-N",
     "y_cr": "ASM-C1-CRADLE-Y",
     "h_drop": "P:requirements.box_drop_m",
-    "s_cr": "ASM-C1-CRADLE-STROKE",
+    "s_cr": "CL-D7-CRADLE-STROKE",
+    "p_lid": "ASM-C1-LID-PRELOAD",
+    "pad": "ASM-C1-CRADLE-PAD",
+    "el_vd": "ASM-C1-ELEVON-VD-FRAC",
     "eta": "ASM-C1-CRUSH-EFF",
     "sf": "P:requirements.safety_factor_ult",
     "kfit": "ASM-C1-FITTING-FACTOR",
@@ -1032,6 +1097,9 @@
     "mount_m": "kg",
     "adapter_m": "kg",
     "pack_x": "m",
+    "x_cg_rng": "m",
+    "cant": "deg",
+    "foot_bias": "-",
     "Vc": "m/s",
     "VD": "m/s",
     "VA": "m/s",
@@ -1043,6 +1111,8 @@
     "y_cr": "m",
     "h_drop": "m",
     "s_cr": "m",
+    "p_lid": "N",
+    "pad": "m",
     "T_lim": "N",
     "F_lvl": "N",
     "F_pn": "N",
@@ -1064,74 +1134,123 @@
     "SRC-C1-FAR23"
    ],
    "outputs": {
-    "residual_N": 5.684341886080801e-13,
-    "spar_Mb_lim": 13.589692568742317,
-    "spar_Mb_ult": 20.384538853113476,
+    "residual_N": 4.547473508864641e-13,
+    "n_T_allow_x": 12.132359446617262,
+    "n_T_governing_x": "J-POD:M",
+    "stroke_req_x_m": 0.05389693019500185,
+    "n_T_allow_y": 11.531556202766208,
+    "n_T_governing_y": "J-POD:M",
+    "stroke_req_y_m": 0.056971637282095554,
+    "n_T_allow_z": 12.446427478044484,
+    "n_T_governing_z": "J-FIN:F",
+    "stroke_req_z_m": 0.05241810173094325,
+    "n_T_allow_lid": 12.446427478044484,
+    "n_T_governing_lid": "J-FIN:F",
+    "stroke_req_lid_m": 0.05241810173094325,
+    "cradle_F_static_N": 14.62032365,
+    "cradle_F_floor_drop_N": 102.07781137727271,
+    "pillar_F_lid_drop_N": 102.07781137727271,
+    "pad_p_static_Pa": 9137.70228125,
+    "pad_p_drop_Pa": 63798.63211079544,
+    "proof_y_support_m": 0.07,
+    "proof_case": "F2-PULLUP-VA/MC-C",
+    "proof_Vz_root_lim_N": 15.417321963825248,
+    "proof_Mx_root_lim_Nm": 2.463899000860872,
+    "proof_Mx_fin_out_lim_Nm": 1.1919132720037697,
+    "proof_selfweight_N": 6.414691787913043,
+    "proof_x_pad_m": 0.08,
+    "proof_P_side_lim_N": 28.98882359682475,
+    "proof_P_side_ult_N": 43.48323539523713,
+    "proof_R_relief_lim_N": 19.986193420912546,
+    "proof_R_relief_ult_N": 29.97929013136882,
+    "proof_cover_min": 0.8416723318129558,
+    "proof_cover_max": 1.0856401932031923,
+    "proof_cover_env_min": 0.3390961095350866,
+    "proof_hanger_lim_N": 57.9776471936495,
+    "proof_pivot_in_y_m": 0.18238571907855375,
+    "proof_pivot_out_y_m": 0.41849579665368886,
+    "proof_pivot_side_y_m": 0.27266227098025353,
+    "proof_y1_m": 0.12,
+    "proof_P1_lim_N": 9.926291975742261,
+    "proof_P1_ult_N": 14.889437963613393,
+    "proof_y2_m": 0.26,
+    "proof_P2_lim_N": 7.978671648290009,
+    "proof_P2_ult_N": 11.968007472435012,
+    "proof_y3_m": 0.355,
+    "proof_P3_lim_N": 4.685873436698003,
+    "proof_P3_ult_N": 7.028810155047005,
+    "proof_y4_m": 0.465,
+    "proof_P4_lim_N": 6.3979865360944785,
+    "proof_P4_ult_N": 9.596979804141718,
+    "finhalf_T_wingplane_lim": 6.582814779762868,
+    "finhalf_T_wingplane_case": "L4-CORNER-SIDE-Y",
+    "spar_Mb_lim": 13.376217497783296,
+    "spar_Mb_ult": 20.064326246674945,
     "spar_Mb_case": "L1-LEVEL",
-    "spar_Mx_lim": 9.336895413234497,
-    "spar_Mx_ult": 14.005343119851746,
+    "spar_Mx_lim": 8.020430237508599,
+    "spar_Mx_ult": 12.030645356262898,
     "spar_Mx_case": "G2-HANG-MOTOR",
-    "spar_Mz_lim": 13.553433076671912,
-    "spar_Mz_ult": 20.33014961500787,
+    "spar_Mz_lim": 13.37396450965195,
+    "spar_Mz_ult": 20.060946764477926,
     "spar_Mz_case": "L1-LEVEL",
-    "wing_T_lim": 4.630206074988054,
-    "wing_T_ult": 6.945309112482081,
-    "wing_T_case": "F7-ROLLPULL-VD",
-    "wing_Vz_lim": 28.46917494367076,
-    "wing_Vz_ult": 42.70376241550614,
-    "wing_Vz_case": "F7-ROLLPULL-VD",
-    "wing_Vx_lim": 50.52788711215437,
-    "wing_Vx_ult": 75.79183066823155,
+    "wing_T_lim": 4.579491990348781,
+    "wing_T_ult": 6.869237985523171,
+    "wing_T_case": "H6-DIAG-A",
+    "wing_Vz_lim": 22.246595248908797,
+    "wing_Vz_ult": 33.3698928733632,
+    "wing_Vz_case": "F7-ROLLPULL-VA",
+    "wing_Vx_lim": 49.92082066682514,
+    "wing_Vx_ult": 74.88123100023772,
     "wing_Vx_case": "L1-LEVEL",
-    "finjoint_F_lim": 56.32278633303212,
-    "finjoint_F_ult": 84.48417949954818,
+    "finjoint_F_lim": 55.57218729093495,
+    "finjoint_F_ult": 83.35828093640242,
     "finjoint_F_case": "L1-LEVEL",
-    "finjoint_M_lim": 9.40470806040237,
-    "finjoint_M_ult": 14.107062090603556,
-    "finjoint_M_case": "G2-HANG-MOTOR",
-    "finhalf_Mb_lim": 8.734375924506208,
-    "finhalf_Mb_ult": 13.101563886759312,
-    "finhalf_Mb_case": "G2-HANG-MOTOR",
-    "finhalf_T_lim": 5.300312051493604,
-    "finhalf_T_ult": 7.950468077240406,
+    "finjoint_M_lim": 8.34278740092537,
+    "finjoint_M_ult": 12.514181101388056,
+    "finjoint_M_case": "L4-CORNER-SIDE-Y",
+    "finhalf_Mb_lim": 7.730233141461554,
+    "finhalf_Mb_ult": 11.59534971219233,
+    "finhalf_Mb_case": "L1-LEVEL",
+    "finhalf_T_lim": 6.599465329449555,
+    "finhalf_T_ult": 9.899197994174333,
     "finhalf_T_case": "L4-CORNER-SIDE-Y",
-    "mount_F_lim": 19.61836287881295,
-    "mount_F_ult": 29.427544318219425,
-    "mount_F_case": "H6-DIAG-A",
-    "mount_M_lim": 0.5656717060930666,
-    "mount_M_ult": 0.8485075591395999,
-    "mount_M_case": "T3-FLARE-LOWER",
-    "motor_F_lim": 19.835826504537835,
-    "motor_F_ult": 29.753739756806752,
-    "motor_F_case": "H6-DIAG-A",
-    "motor_M_lim": 0.5653772512711942,
-    "motor_M_ult": 0.8480658769067912,
-    "motor_M_case": "T3-FLARE-LOWER",
-    "pod_F_lim": 81.11920188065648,
-    "pod_F_ult": 121.67880282098471,
+    "mount_F_lim": 20.870831816279072,
+    "mount_F_ult": 31.306247724418608,
+    "mount_F_case": "G3-BENCH",
+    "mount_M_lim": 0.6494454847484324,
+    "mount_M_ult": 0.9741682271226486,
+    "mount_M_case": "H5-SIDE-RIGHT",
+    "motor_F_lim": 21.223871216279072,
+    "motor_F_ult": 31.835806824418608,
+    "motor_F_case": "G3-BENCH",
+    "motor_M_lim": 0.6494400007528202,
+    "motor_M_ult": 0.9741600011292302,
+    "motor_M_case": "H5-SIDE-RIGHT",
+    "pod_F_lim": 80.12275723830673,
+    "pod_F_ult": 120.18413585746009,
     "pod_F_case": "L1-LEVEL",
-    "pod_M_lim": 2.337538327700714,
-    "pod_M_ult": 3.506307491551071,
+    "pod_M_lim": 2.382468202507064,
+    "pod_M_ult": 3.5737023037605957,
     "pod_M_case": "L1-LEVEL",
-    "pack_F_lim": 41.543299146981866,
-    "pack_F_ult": 62.3149487204728,
+    "pack_F_lim": 40.664960421831154,
+    "pack_F_ult": 60.99744063274673,
     "pack_F_case": "L1-LEVEL",
-    "foot_F_lim": 37.76075020257917,
-    "foot_F_ult": 56.64112530386875,
+    "foot_F_lim": 40.55465934480725,
+    "foot_F_ult": 60.83198901721087,
     "foot_F_case": "L1-LEVEL",
-    "finjoint_F_design": 121.4460080306005,
-    "finjoint_M_design": 20.27890175524261,
-    "mount_F_design": 42.30209495744042,
-    "mount_M_design": 1.2197296162631748,
-    "pod_F_design": 174.91327905516553,
-    "finjoint_M_nohandling_lim": 7.212496566594682,
+    "finjoint_F_design": 119.82752884607848,
+    "finjoint_M_design": 17.98913533324533,
+    "mount_F_design": 45.002731103851744,
+    "mount_M_design": 1.4003668264888072,
+    "pod_F_design": 172.76469529509885,
+    "finjoint_M_nohandling_lim": 8.34278740092537,
     "finjoint_M_nohandling_case": "L4-CORNER-SIDE-Y",
-    "finhalf_Mb_nohandling_lim": 6.745295540312902,
+    "finhalf_Mb_nohandling_lim": 7.730233141461554,
     "finhalf_Mb_nohandling_case": "L1-LEVEL",
-    "n_T_allow": 10.338826429990018,
-    "h_drop_allow_m": 0.32685892504965064,
-    "n_T_governing": "J-POD:M",
-    "cradle_stroke_req_m": 0.06424790143579542
+    "n_T_allow": 12.446427478044484,
+    "h_drop_allow_m": 0.377732106775468,
+    "n_T_governing": "J-FIN:F",
+    "cradle_stroke_req_m": 0.05241810173094325
    },
    "input_values": {
     "g": 9.80665,
@@ -1156,13 +1275,13 @@
      25
     ],
     "fin_y": 0.32,
-    "fin_hh": 0.19,
+    "fin_hh": 0.21,
     "fin_le": 0.045,
     "fin_te": 0.32,
     "fin_am": 0.2,
     "fin_layers": 2,
     "tube_od": 0.022,
-    "tube_len": 0.42,
+    "tube_len": 0.344,
     "tube_x": 0.045,
     "motor_m": 0.081,
     "motor_len": 0.025,
@@ -1170,15 +1289,15 @@
     "prop_D": 0.2794,
     "esc_m": 0.0066,
     "x_mount": 0.045,
-    "x_prop": -0.005,
+    "x_prop": -0.0082,
     "st_y": 0.32,
     "st_z": 0.19,
     "pod_size": [
-     0.2,
-     0.1,
+     0.21,
+     0.14,
      0.07
     ],
-    "pod_xle": -0.105,
+    "pod_xle": -0.115,
     "pod_zb": 0.015,
     "batt_m": 0.55,
     "batt_size": [
@@ -1186,25 +1305,31 @@
      0.048,
      0.05
     ],
-    "foot_h": 0.045,
+    "foot_h": 0.048,
     "a_wing": 405,
-    "a_fins": 370,
-    "a_pod": 105,
-    "a_landing": 40,
-    "a_power": 595,
-    "a_avionics": 75,
+    "a_fins": 408,
+    "a_pod": 122,
+    "a_landing": 43,
+    "a_power": 620,
+    "a_avionics": 80,
     "a_harness": 105,
     "a_mech": 65,
     "mount_m": 0.018,
     "adapter_m": 0.005,
-    "pack_x": -0.03417859345454549,
-    "T_lim": 21.081435423502242,
-    "Q": 0.4201119002257222,
-    "H": 0.12297005243451249,
-    "omega_lim": 979.1297103688189,
+    "pack_x": -0.010375178181818191,
+    "x_cg_rng": [
+     0.05,
+     0.055
+    ],
+    "cant": 7.0,
+    "foot_bias": 1.077,
+    "T_lim": 21.1,
+    "Q": 0.42037891319631054,
+    "H": 0.12302087478896888,
+    "omega_lim": 979.5343753763876,
     "q_max": 3.0,
     "Vc": 16.0,
-    "ld": 5.6,
+    "ld": 6.9,
     "e": 0.8,
     "span": [
      [
@@ -1339,33 +1464,36 @@
      ]
     ],
     "el_eff": 0.606,
-    "n_pos": 3.3163408958183305,
-    "n_neg": -1.5,
-    "VD": 27.212395833333332,
-    "VA": 20.625019698446216,
-    "n_gp": 3.3163408958183305,
-    "V_gp": 21.685194804408766,
-    "n_gn": -1.3560227666803892,
-    "V_gn": 19.612494418562058,
+    "n_pos": 3.58292005104954,
+    "n_neg": -1.5829200510495398,
+    "VD": 32.1,
+    "VA": 21.957010176770435,
+    "n_gp": 3.58292005104954,
+    "V_gp": 24.125448752928236,
+    "n_gn": -1.5829200510495398,
+    "V_gn": 24.125448752928236,
     "v_gust": 8.0,
     "cdp": 1.2,
     "clmax": 0.7977606717984604,
-    "V_tr": 15.423453530287729,
-    "F_lvl": 38.245934999999996,
-    "F_pn": 26.89130849735659,
-    "F_pw": 27.819784654857102,
-    "F_cor": 32.904349974686895,
-    "F_tip": 86.37780958099906,
-    "th_to": 86.42366562500266,
-    "F_to": 924.3018757279764,
+    "V_tr": 15.480218877421036,
+    "F_lvl": 38.245935,
+    "F_pn": 22.187953290992873,
+    "F_pw": 27.98715378344169,
+    "F_cor": 29.07810614139855,
+    "F_tip": 87.11064893190049,
+    "th_to": 90.0,
+    "F_to": 923.5636450684133,
     "lw": 0.667,
     "att": 10.0,
-    "mu": 0.5,
+    "mu": 0.7,
     "n_h": 2.0,
-    "n_T": 9.571428571428571,
+    "n_T": 10.09090909090909,
     "y_cr": 0.2,
     "h_drop": 0.3,
-    "s_cr": 0.07,
+    "s_cr": 0.066,
+    "p_lid": 5.0,
+    "pad": 0.04,
+    "el_vd": 0.3333333333333333,
     "eta": 0.5,
     "sf": 1.5,
     "kfit": 1.15,
@@ -1388,7 +1516,7 @@
    ],
    "how": "T-C1-THRUST-FRESH: thrust stand on a 16.8 V pack with the F4 output cap; peak thrust <= the requirement.",
    "note": "The 100 A pack-current limiter is filtered (seconds), so a step to full throttle reaches the rpm cap before it acts: the limiter does not bound an instantaneous structural load (CR-C1-12).",
-   "value": 21.081435423502242
+   "value": 21.08256994715679
   },
   {
    "id": "CL-C1-T-ILIM",
@@ -1412,7 +1540,7 @@
    ],
    "how": "= max(requirements.thrust_limit_per_motor_n, CL-C1-T-CAP); T-C1-THRUST-FRESH confirms.",
    "note": "Every rotor, mount, fin and in-plane spar load scales with it.",
-   "value": 21.081435423502242
+   "value": 21.1
   },
   {
    "id": "CL-C1-MOTOR-TORQUE",
@@ -1422,7 +1550,7 @@
    "output": "Q_Nm",
    "unit": "N m",
    "how": "Thrust stand with a torque cell (T-B4-STAND) at T_lim.",
-   "value": 0.4201119002257222
+   "value": 0.42037891319631054
   },
   {
    "id": "CL-C1-ROTOR-H",
@@ -1432,7 +1560,7 @@
    "output": "H_Nms",
    "unit": "N m s",
    "how": "Prop and bell inertia by bifilar swing; rpm from the stand.",
-   "value": 0.12297005243451249
+   "value": 0.12302087478896888
   },
   {
    "id": "CL-C1-ROTOR-OMEGA",
@@ -1442,7 +1570,7 @@
    "output": "omega",
    "unit": "rad/s",
    "how": "Optical tachometer or rpm telemetry on the thrust stand.",
-   "value": 979.1297103688189
+   "value": 979.5343753763876
   },
   {
    "id": "CL-C1-GYRO-MOMENT",
@@ -1452,7 +1580,7 @@
    "output": "M_gyro_Nm",
    "unit": "N m",
    "how": "Calculated; check q_max against flight logs (RATE.*) after the first transitions.",
-   "value": 0.3689101573035375
+   "value": 0.3690626243669066
   },
   {
    "id": "CL-C1-VH",
@@ -1463,7 +1591,7 @@
    "unit": "m/s",
    "how": "Level full-throttle pass with airspeed logging on the twin; B1 re-runs CL-B1-VMAX with the 11x5.5MR.",
    "note": "max(prop pitch speed at the 9 350 rpm cap, B1's top speed with the 11x4.5MR); B1's 11x5.5MR value replaces it (CR-C1-14).",
-   "value": 21.769916666666667
+   "value": 25.680000000001513
   },
   {
    "id": "CL-C1-VD",
@@ -1481,7 +1609,7 @@
    ],
    "how": "Flight logs: airspeed never exceeds VD; F4 sets ARSPD_FBW_MAX and the fixed-wing THR_MAX below it.",
    "note": "1.25 x VH: VC 16 m/s does not govern; the 11x5.5MR at the rpm cap does. A FAIL here means requirements.vd_ms is below the derived value (CR-C1-13); the envelope runs at the larger one.",
-   "value": 27.212395833333332
+   "value": 32.1
   },
   {
    "id": "CL-C1-HOVER-N-MAX",
@@ -1491,7 +1619,7 @@
    "output": "n_hover_max",
    "unit": "-",
    "how": "Thrust stand x 4 / weighed mass.",
-   "value": 3.307243306798839
+   "value": 3.3101557067437364
   },
   {
    "id": "CL-C1-VD-ENV",
@@ -1501,7 +1629,7 @@
    "output": "VD_env",
    "unit": "m/s",
    "how": "= max(requirements.vd_ms, CL-C1-VD).",
-   "value": 27.212395833333332
+   "value": 32.1
   },
   {
    "id": "CL-C1-Q-VD",
@@ -1511,7 +1639,7 @@
    "output": "q_VD_Pa",
    "unit": "Pa",
    "how": "0.5 rho VD^2; B2/D6 size the elevon hinge and servo at it (CR-C1-15).",
-   "value": 453.56512328138564
+   "value": 631.1261250000001
   },
   {
    "id": "CL-C1-VS",
@@ -1531,7 +1659,7 @@
    "output": "VA",
    "unit": "m/s",
    "how": "Vs sqrt(n+) with B2's trimmed CLmax; moves with T-B2-STALL.",
-   "value": 20.625019698446216
+   "value": 21.957010176770435
   },
   {
    "id": "CL-C1-N-LIMIT-POS",
@@ -1549,7 +1677,7 @@
    ],
    "how": "Wing proof load test (T-C1-WING-PROOF) at this n x the gate weight; flight logs: IMU n stays below it.",
    "note": "= max(requirement, gust peak); a FAIL means the gust exceeds requirements.load_factor_limit_pos.",
-   "value": 3.3163408958183305
+   "value": 3.58292005104954
   },
   {
    "id": "CL-C1-N-LIMIT-NEG",
@@ -1566,7 +1694,7 @@
     "R-LOADS"
    ],
    "how": "As the positive case, inverted.",
-   "value": -1.5
+   "value": -1.5829200510495398
   },
   {
    "id": "CL-C1-GUST-N-POS",
@@ -1583,7 +1711,7 @@
     "R-LOADS"
    ],
    "how": "B2's CL_alpha and trimmed CLmax; the gust line is stall-limited below the peak speed.",
-   "value": 3.3163408958183305
+   "value": 3.58292005104954
   },
   {
    "id": "CL-C1-GUST-V-POS",
@@ -1593,7 +1721,7 @@
    "output": "V_gust_pos",
    "unit": "m/s",
    "how": "Calculated.",
-   "value": 21.685194804408766
+   "value": 24.125448752928236
   },
   {
    "id": "CL-C1-GUST-N-NEG",
@@ -1607,7 +1735,7 @@
     "ref": "P:requirements.load_factor_limit_neg"
    },
    "how": "Calculated.",
-   "value": -1.3560227666803892
+   "value": -1.5829200510495398
   },
   {
    "id": "CL-C1-GUST-V-NEG",
@@ -1617,7 +1745,7 @@
    "output": "V_gust_neg",
    "unit": "m/s",
    "how": "Calculated.",
-   "value": 19.612494418562058
+   "value": 24.125448752928236
   },
   {
    "id": "CL-C1-N-STALL-VD",
@@ -1632,12 +1760,12 @@
    },
    "how": "F4: limit pitch rate / elevon in manual modes so a full pull at VD cannot reach the stall line.",
    "note": "Above VA a full elevon pull can exceed the design n; the flight software must prevent it (CR-C1-08).",
-   "value": 5.22235114487924
+   "value": 7.266789425103522
   },
   {
    "id": "CL-C1-N-LAND-STROKE-MIN",
    "type": "claim",
-   "title": "Landing factor at the minimum foot stroke (40 mm requirement)",
+   "title": "Landing factor, energy bound at the 38 mm requirement stroke (cartridge eta)",
    "calc": "CALC-C1-LANDING",
    "output": "n_L_stroke_min",
    "unit": "-",
@@ -1649,23 +1777,23 @@
     "R-LANDING-IMPACT"
    ],
    "how": "Drop test T-C1-FOOT-DROP: 0.115 m free drop (1.5 m/s) on the feet with an accelerometer at the CG.",
-   "note": "Replaces CL-C1-N-LAND-NOW (10 mm foot, retired). Rigid airframe, crush efficiency 0.5.",
-   "value": 6.068903698000846
+   "note": "Uniform energy balance with D5's constant-force cartridge efficiency (CL-D5-ETA). The cartridge plateau, not the stroke, sets the actual peak (CL-D5-N-LAND, C5's tilted cases); C1 sizes every landing load at the requirement n_L 6, which bounds both.",
+   "value": 3.97259250076222
   },
   {
    "id": "CL-C1-N-LAND-FULL-FOOT",
    "type": "claim",
-   "title": "Landing factor if the whole 45 mm foot crushes (bound)",
+   "title": "Landing factor if the whole 48 mm foot crushes (bound)",
    "calc": "CALC-C1-LANDING",
    "output": "n_L_full_foot",
    "unit": "-",
-   "how": "Lower bound: a printed foot cannot crush to zero height; the drop test decides.",
-   "value": 5.431581064889642
+   "how": "Lower bound: the cartridge cannot crush to zero height; the drop test decides.",
+   "value": 3.2143440631034244
   },
   {
    "id": "CL-C1-FOOT-STROKE-REQ",
    "type": "claim",
-   "title": "Foot crush stroke required for n_L 6",
+   "title": "Foot crush stroke required for n_L 6 (cartridge eta)",
    "calc": "CALC-C1-LANDING",
    "output": "stroke_req_m",
    "unit": "m",
@@ -1674,17 +1802,28 @@
     "ref": "P:requirements.foot_crush_stroke_min_m"
    },
    "how": "C5/D5 design the foot to this stroke; drop test T-C1-FOOT-DROP confirms n <= 6.",
-   "value": 0.0404863504358627
+   "note": "Level landing only; C5's pair-first tilted landings need more (CL-C5-DROP-PAIR-PITCH 38 mm), which is why the requirement is 38 mm.",
+   "value": 0.024405243520198405
   },
   {
    "id": "CL-C1-FOOT-LEVEL",
    "type": "claim",
-   "title": "Foot load, level landing (limit)",
+   "title": "Foot load, level landing, mean of four feet (limit)",
    "calc": "CALC-C1-LANDING",
    "output": "F_foot_level_N",
    "unit": "N",
    "how": "Drop test with load cell / accelerometer.",
-   "value": 38.245934999999996
+   "value": 38.245935
+  },
+  {
+   "id": "CL-C1-FOOT-LEVEL-UPPER",
+   "type": "claim",
+   "title": "Foot load, level landing, upper (pod-side) biased foot (limit)",
+   "calc": "CALC-C1-LANDING",
+   "output": "F_foot_level_upper_N",
+   "unit": "N",
+   "how": "Drop test with a load cell under one upper foot; compare with D5's biased plateau x peak factor.",
+   "value": 41.190871995
   },
   {
    "id": "CL-C1-FOOT-PAIR-NARROW",
@@ -1694,7 +1833,7 @@
    "output": "F_foot_pair_narrow_N",
    "unit": "N",
    "how": "Drop test tilted 10 deg in pitch.",
-   "value": 26.89130849735659
+   "value": 22.187953290992873
   },
   {
    "id": "CL-C1-FOOT-PAIR-WIDE",
@@ -1704,7 +1843,7 @@
    "output": "F_foot_pair_wide_N",
    "unit": "N",
    "how": "Drop test tilted 10 deg in roll (after the wingtip fix).",
-   "value": 27.819784654857102
+   "value": 27.98715378344169
   },
   {
    "id": "CL-C1-FOOT-CORNER",
@@ -1714,7 +1853,7 @@
    "output": "F_foot_corner_N",
    "unit": "N",
    "how": "Drop test tilted 10 deg in pitch and roll.",
-   "value": 32.904349974686895
+   "value": 29.07810614139855
   },
   {
    "id": "CL-C1-FOOT-MAX",
@@ -1724,7 +1863,7 @@
    "output": "F_foot_max_N",
    "unit": "N",
    "how": "Envelope of the four foot cases.",
-   "value": 38.245934999999996
+   "value": 41.190871995
   },
   {
    "id": "CL-C1-WINGTIP-STRIKE-ANGLE",
@@ -1742,7 +1881,7 @@
    ],
    "how": "Stand the aircraft on its feet and tilt it about the right foot pair until the wingtip TE touches.",
    "note": "With 10 mm feet the wing TE tip is the first contact for any roll error above this angle (CR-C1-01).",
-   "value": 10.00797980144134
+   "value": 10.660348294535337
   },
   {
    "id": "CL-C1-FOOT-PROTRUSION-REQ",
@@ -1769,7 +1908,7 @@
     "R-TIPOVER"
    ],
    "how": "Tilt-table test after the foot change (H1 tip-over board).",
-   "value": 30.62416841089471
+   "value": 33.912700391377484
   },
   {
    "id": "CL-C1-WINGTIP-FORCE",
@@ -1779,7 +1918,7 @@
    "output": "F_wingtip_N",
    "unit": "N",
    "how": "Not a sizing case once the feet protrude; kept for C2 damage tolerance.",
-   "value": 86.37780958099906
+   "value": 87.11064893190049
   },
   {
    "id": "CL-C1-TIPOVER-ANGLE-CONTACT",
@@ -1789,7 +1928,7 @@
    "output": "tipover_theta_contact_deg",
    "unit": "deg",
    "how": "Geometry from params.json.",
-   "value": 86.42366562500266
+   "value": 90.0
   },
   {
    "id": "CL-C1-TIPOVER-ENERGY",
@@ -1799,7 +1938,7 @@
    "output": "tipover_KE_J",
    "unit": "J",
    "how": "Tip-over board test (H1): drop from the balance point onto foam; bumper must absorb this.",
-   "value": 4.621509378639882
+   "value": 4.6178182253420665
   },
   {
    "id": "CL-C1-TIPOVER-FORCE",
@@ -1809,7 +1948,7 @@
    "output": "F_tipover_total_N",
    "unit": "N",
    "how": "Damage-tolerance case; falls with bumper stroke (CR-C1-03).",
-   "value": 924.3018757279764
+   "value": 923.5636450684133
   },
   {
    "id": "CL-C1-STANCE-TIP-WIND",
@@ -1823,7 +1962,7 @@
     "ref": "P:requirements.gust_survive_ms"
    },
    "how": "Parked on its feet, motors off: fan or measured wind until a foot lifts.",
-   "value": 8.779240573475738
+   "value": 9.245814543527244
   },
   {
    "id": "CL-C1-STANCE-MU-REQ",
@@ -1836,8 +1975,8 @@
     "op": "<=",
     "ref": "ASM-C1-FRICTION"
    },
-   "how": "Pull test of a foot on the RFS grass with a spring scale.",
-   "note": "Above the friction available the parked aircraft slides before it tips: feet need spikes or a rubber pad, or it is laid flat between flights (CR-C1-02).",
+   "how": "Pull test of a neoprene-padded foot on the landing mat with a spring scale (H1).",
+   "note": "Against the mat friction (rule S1). On grass (~0.5) the parked aircraft slides before it tips: lay it flat above 5 m/s (C5 S1-S8, CR-C1-02).",
    "value": 0.678923917012357
   },
   {
@@ -1873,7 +2012,7 @@
   {
    "id": "CL-C1-TRANSPORT-N",
    "type": "claim",
-   "title": "Box drop load factor (cradle stroke as assumed)",
+   "title": "Box floor-drop load factor on D7's cradle stroke",
    "calc": "CALC-C1-TRANSPORT-N",
    "output": "n_T",
    "unit": "-",
@@ -1882,7 +2021,8 @@
     "ref": "CL-C1-TRANSPORT-N-ALLOW"
    },
    "how": "Drop the loaded box 0.3 m with an accelerometer on the spar.",
-   "value": 9.571428571428571
+   "note": "Reads CL-D7-CRADLE-STROKE (CR-D7-02a); ASM-C1-CRADLE-STROKE retired.",
+   "value": 10.09090909090909
   },
   {
    "id": "CL-C1-SPAR-MB-ULT",
@@ -1895,7 +2035,7 @@
     "R-LOADS"
    ],
    "how": "C2 sizes the spar; wing proof test at limit (T-C1-WING-PROOF).",
-   "value": 20.384538853113476
+   "value": 20.064326246674945
   },
   {
    "id": "CL-C1-SPAR-MX-ULT",
@@ -1908,7 +2048,7 @@
     "R-LOADS"
    ],
    "how": "As above.",
-   "value": 14.005343119851746
+   "value": 12.030645356262898
   },
   {
    "id": "CL-C1-SPAR-MZ-ULT",
@@ -1921,7 +2061,7 @@
     "R-LOADS"
    ],
    "how": "As above; in-plane load from the motor thrust at the fins.",
-   "value": 20.33014961500787
+   "value": 20.060946764477926
   },
   {
    "id": "CL-C1-WING-TORSION-ULT",
@@ -1934,7 +2074,7 @@
     "R-LOADS"
    ],
    "how": "C2: foam core + skin torsion; twist test at limit.",
-   "value": 6.945309112482081
+   "value": 6.869237985523171
   },
   {
    "id": "CL-C1-WING-SHEAR-ULT",
@@ -1947,7 +2087,7 @@
     "R-LOADS"
    ],
    "how": "C2: spar slot bond shear.",
-   "value": 42.70376241550614
+   "value": 33.3698928733632
   },
   {
    "id": "CL-C1-FINJOINT-F-ULT",
@@ -1960,7 +2100,7 @@
     "R-LOADS"
    ],
    "how": "C4/C6 size the saddle and fin root; proof load at the motor stations.",
-   "value": 84.48417949954818
+   "value": 83.35828093640242
   },
   {
    "id": "CL-C1-FINJOINT-M-ULT",
@@ -1973,7 +2113,7 @@
     "R-LOADS"
    ],
    "how": "As above.",
-   "value": 14.107062090603556
+   "value": 12.514181101388056
   },
   {
    "id": "CL-C1-FINJOINT-M-DESIGN",
@@ -1986,7 +2126,7 @@
     "R-LOADS"
    ],
    "how": "C6 sizes the printed/bonded saddle to this value.",
-   "value": 20.27890175524261
+   "value": 17.98913533324533
   },
   {
    "id": "CL-C1-FINHALF-MB-ULT",
@@ -1999,7 +2139,7 @@
     "R-LOADS"
    ],
    "how": "C4 splits between tube and fin board; tube proof hang test.",
-   "value": 13.101563886759312
+   "value": 11.59534971219233
   },
   {
    "id": "CL-C1-MOUNT-F-ULT",
@@ -2012,7 +2152,7 @@
     "R-LOADS"
    ],
    "how": "C4/C6: mount clamp proof load.",
-   "value": 29.427544318219425
+   "value": 31.306247724418608
   },
   {
    "id": "CL-C1-MOUNT-M-ULT",
@@ -2025,7 +2165,7 @@
     "R-LOADS"
    ],
    "how": "As above.",
-   "value": 0.8485075591395999
+   "value": 0.9741682271226486
   },
   {
    "id": "CL-C1-MOTOR-F-ULT",
@@ -2038,7 +2178,7 @@
     "R-LOADS"
    ],
    "how": "C6: M3 screw sizing.",
-   "value": 29.753739756806752
+   "value": 31.835806824418608
   },
   {
    "id": "CL-C1-POD-F-ULT",
@@ -2051,7 +2191,7 @@
     "R-LOADS"
    ],
    "how": "C3: pod bond and strap; crash is separate (CL-C1-PACK-CRASH-LOAD).",
-   "value": 121.67880282098471
+   "value": 120.18413585746009
   },
   {
    "id": "CL-C1-FOOT-F-ULT",
@@ -2064,12 +2204,38 @@
     "R-LOADS"
    ],
    "how": "C5: foot bond; drop test.",
-   "value": 56.64112530386875
+   "value": 60.83198901721087
+  },
+  {
+   "id": "CL-C1-FINHALF-T-LIM",
+   "type": "claim",
+   "title": "Fin + tube torsion about the tube axis, section total, limit",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "finhalf_T_lim",
+   "unit": "N m",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "External torque on the half-fin section; C4's FE splits it between tube, board, strips and brace. The station-collar torque is C4's internal FE value (CR-C6-03), which may exceed this total.",
+   "value": 6.599465329449555
+  },
+  {
+   "id": "CL-C1-FINHALF-T-ULT",
+   "type": "claim",
+   "title": "Fin + tube torsion about the tube axis, section total, ultimate",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "finhalf_T_ult",
+   "unit": "N m",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "As above x 1.5.",
+   "value": 9.899197994174333
   },
   {
    "id": "CL-C1-TRANSPORT-N-ALLOW",
    "type": "claim",
-   "title": "Box drop factor the airframe tolerates",
+   "title": "Box floor-drop (z) factor the airframe tolerates",
    "calc": "CALC-C1-ENVELOPE",
    "output": "n_T_allow",
    "unit": "-",
@@ -2077,7 +2243,205 @@
     "R-LOADS"
    ],
    "how": "Calculated: the drop must not exceed any flight/landing/handling limit load.",
-   "value": 10.338826429990018
+   "value": 12.446427478044484
+  },
+  {
+   "id": "CL-C1-TRANSPORT-N-ALLOW-X",
+   "type": "claim",
+   "title": "Box end-impact (x) factor the airframe tolerates",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "n_T_allow_x",
+   "unit": "-",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "D7: no stroke at the end pads today (16 mm gap): test-only (CR-D7-02b).",
+   "value": 12.132359446617262
+  },
+  {
+   "id": "CL-C1-TRANSPORT-N-ALLOW-Y",
+   "type": "claim",
+   "title": "Box side-impact (y) factor the airframe tolerates",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "n_T_allow_y",
+   "unit": "-",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "D7: no stroke at the side walls today (36 mm gap): test-only (CR-D7-02b).",
+   "value": 11.531556202766208
+  },
+  {
+   "id": "CL-C1-TRANSPORT-N-ALLOW-LID",
+   "type": "claim",
+   "title": "Box lid-down (-z) factor the airframe tolerates",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "n_T_allow_lid",
+   "unit": "-",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "Reacted by the lid pillars over the spar (CR-D7-02c).",
+   "value": 12.446427478044484
+  },
+  {
+   "id": "CL-C1-BOX-STROKE-REQ-X",
+   "type": "claim",
+   "title": "Crush stroke an end impact from 0.3 m would need",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "stroke_req_x_m",
+   "unit": "m",
+   "how": "D7: end-pad foam if an end drop must be survivable.",
+   "value": 0.05389693019500185
+  },
+  {
+   "id": "CL-C1-BOX-STROKE-REQ-Y",
+   "type": "claim",
+   "title": "Crush stroke a side impact from 0.3 m would need",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "stroke_req_y_m",
+   "unit": "m",
+   "how": "D7: side-wall foam if a side drop must be survivable.",
+   "value": 0.056971637282095554
+  },
+  {
+   "id": "CL-C1-PILLAR-F-LIM",
+   "type": "claim",
+   "title": "Lid pillar force per side, lid-down drop (limit)",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "pillar_F_lid_drop_N",
+   "unit": "N",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "D7 sizes the pillar and its pad; C2 checks skin bearing over the spar.",
+   "value": 102.07781137727271
+  },
+  {
+   "id": "CL-C1-CRADLE-F-LIM",
+   "type": "claim",
+   "title": "Cradle force per side, floor drop with lid preload (limit)",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "cradle_F_floor_drop_N",
+   "unit": "N",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "D7 cradle and C2 skin bearing.",
+   "value": 102.07781137727271
+  },
+  {
+   "id": "CL-C1-CRADLE-PAD-P-LIM",
+   "type": "claim",
+   "title": "Cradle pad bearing pressure in the floor drop (limit)",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "pad_p_drop_Pa",
+   "unit": "Pa",
+   "verifies": [
+    "R-LOADS"
+   ],
+   "how": "C2: foam/skin crush allowable over the spar; D7 pad >= 40 x 40 mm.",
+   "value": 63798.63211079544
+  },
+  {
+   "id": "CL-C1-PROOF-Y1",
+   "type": "claim",
+   "title": "Wing proof pad 1 station per side",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_y1_m",
+   "unit": "m",
+   "how": "H1 GT-08 whiffletree; pads 40 mm over the spar line.",
+   "value": 0.12
+  },
+  {
+   "id": "CL-C1-PROOF-Y2",
+   "type": "claim",
+   "title": "Wing proof pad 2 station per side",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_y2_m",
+   "unit": "m",
+   "how": "As above.",
+   "value": 0.26
+  },
+  {
+   "id": "CL-C1-PROOF-Y3",
+   "type": "claim",
+   "title": "Wing proof pad 3 station per side",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_y3_m",
+   "unit": "m",
+   "how": "As above.",
+   "value": 0.355
+  },
+  {
+   "id": "CL-C1-PROOF-P1-LIM",
+   "type": "claim",
+   "title": "Wing proof pad 1 load per side, LIMIT",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_P1_lim_N",
+   "unit": "N",
+   "how": "H1 GT-08 at limit (no permanent set); x 1.5 only on a sacrificial wing.",
+   "value": 9.926291975742261
+  },
+  {
+   "id": "CL-C1-PROOF-P2-LIM",
+   "type": "claim",
+   "title": "Wing proof pad 2 load per side, LIMIT",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_P2_lim_N",
+   "unit": "N",
+   "how": "As above.",
+   "value": 7.978671648290009
+  },
+  {
+   "id": "CL-C1-PROOF-P3-LIM",
+   "type": "claim",
+   "title": "Wing proof pad 3 load per side, LIMIT",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_P3_lim_N",
+   "unit": "N",
+   "how": "As above.",
+   "value": 4.685873436698003
+  },
+  {
+   "id": "CL-C1-PROOF-P-SIDE-LIM",
+   "type": "claim",
+   "title": "Wing proof load per side, LIMIT",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_P_side_lim_N",
+   "unit": "N",
+   "how": "As above.",
+   "value": 28.98882359682475
+  },
+  {
+   "id": "CL-C1-PROOF-P-SIDE-ULT",
+   "type": "claim",
+   "title": "Wing proof load per side, ULTIMATE (1.5 x limit)",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_P_side_ult_N",
+   "unit": "N",
+   "how": "Sacrificial wing only.",
+   "value": 43.48323539523713
+  },
+  {
+   "id": "CL-C1-PROOF-MX-ROOT-LIM",
+   "type": "claim",
+   "title": "Flap bending at the pod edge the proof reproduces, LIMIT",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_Mx_root_lim_Nm",
+   "unit": "N m",
+   "how": "Strain gauge or tip deflection vs the model.",
+   "value": 2.463899000860872
+  },
+  {
+   "id": "CL-C1-PROOF-COVER-MIN",
+   "type": "claim",
+   "title": "Proof Mx / governing-case Mx, minimum outboard of the pod",
+   "calc": "CALC-C1-ENVELOPE",
+   "output": "proof_cover_min",
+   "unit": "-",
+   "how": "Calculated; the two-pad tree under-tests outboard stations by this ratio.",
+   "value": 0.8416723318129558
   },
   {
    "id": "CL-C1-FINJOINT-M-FLIGHT-LIM",
@@ -2090,7 +2454,7 @@
     "R-LOADS"
    ],
    "how": "Applies only if lifting by a motor tube is ruled out by a handle and a label (CR-C1-04).",
-   "value": 7.212496566594682
+   "value": 8.34278740092537
   },
   {
    "id": "CL-C1-DROP-HEIGHT-ALLOW",
@@ -2103,7 +2467,7 @@
     "R-LOADS"
    ],
    "how": "Box drop test with accelerometer; D7 label 'do not drop'.",
-   "value": 0.32685892504965064
+   "value": 0.377732106775468
   },
   {
    "id": "CL-C1-CRADLE-STROKE-REQ",
@@ -2116,7 +2480,7 @@
     "R-LOADS"
    ],
    "how": "D7 sizes the cradle foam; box drop test with accelerometer.",
-   "value": 0.06424790143579542
+   "value": 0.05241810173094325
   },
   {
    "id": "CL-C1-EQUILIBRIUM-RESIDUAL",
@@ -2130,7 +2494,7 @@
     "value": 1e-06
    },
    "how": "Self-check: every case is in equilibrium.",
-   "value": 5.684341886080801e-13
+   "value": 4.547473508864641e-13
   },
   {
    "id": "T-C1-WING-PROOF",
@@ -2141,7 +2505,7 @@
     "CL-C1-N-LIMIT-POS"
    ],
    "state": "planned",
-   "procedure": "Support at the pod, sandbag the wing to the F1 spanwise shear (data/wing_spanwise.csv) at limit; no permanent set after unloading; tip deflection logged."
+   "procedure": "Aircraft inverted, supported under the pod with the half-fins hanging free; three-pad whiffletree per side over the spar at CL-C1-PROOF-Y1/-Y2/-Y3 loaded to CL-C1-PROOF-P1/P2/P3-LIM (LIMIT; data/whiffletree.json); hold 3 s, no permanent set after unloading; tip deflection logged. Ultimate (x 1.5) on a sacrificial wing only. Torsion is proven separately (twist test at CL-C1-WING-TORSION-ULT / 1.5)."
   },
   {
    "id": "T-C1-FOOT-DROP",

@@ -1,26 +1,114 @@
 {
- "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
+ "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Revision C6-R2 (params A1-R3). Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
  "joints": {
-  "m3_d_m": {"value": 0.003, "unit": "m", "source": "ISO 261", "status": "PROPOSED", "note": "every bought structural fastener is M3 (one thread, one 2.5 mm hex key)"},
-  "m3_pitch_m": {"value": 0.0005, "unit": "m", "source": "ISO 261 coarse", "status": "PROPOSED"},
-  "washer_t_m": {"value": 0.0005, "unit": "m", "source": "ISO 7089 M3 (7 mm OD, 0.5 mm)", "status": "PROPOSED"},
-  "nyloc_h_m": {"value": 0.004, "unit": "m", "source": "ISO 10511 M3 (m = 4.0 mm)", "status": "PROPOSED"},
-  "nyloc_protrusion_min_threads": {"value": 2, "unit": "-", "source": "C6 rule (nylon ring fully engaged)", "status": "PROPOSED", "note": "bolt end at least 2 pitches past the nyloc nut"},
-  "insert_len_m": {"value": 0.0057, "unit": "m", "source": "Ruthex RX-M3x5.7 / CNC Kitchen M3 standard insert", "status": "PROPOSED", "note": "hole 4.0 mm, blind depth >= engagement + 0.5 mm, boss wall >= 1.6 mm"},
-  "insert_engage_min_d": {"value": 1.5, "unit": "-", "source": "interfaces/SCHEMA.md joint-stack rule", "status": "PROPOSED", "note": "x d into a heat-set insert; 1.0 d into metal; 2.0 d self-tapping into plastic"},
-  "pinch_screw_len_m": {"value": 0.016, "unit": "m", "source": "FIN-101 M3x16 SHCS", "status": "PROPOSED"},
-  "pinch_washers": {"value": 2, "unit": "-", "source": "E-FIN-05..08 joint stack", "status": "PROPOSED"},
-  "fc_screw_len_m": {"value": 0.010, "unit": "m", "source": "C6 choice", "status": "PROPOSED", "note": "FC (and PDB if a PCB) on 4 M3 heat-set inserts; M3x8 is too short through a grommet stack"},
-  "fc_stack_m": {"value": 0.0044, "unit": "m", "source": "C6 estimate", "status": "UNVERIFIED", "note": "nylon washer 0.8 + grommet flange 1.0 + PCB 1.6 + grommet flange 1.0; F3 measures the chosen board"},
-  "torque": {
-   "motor_screw_nm": {"value": 0.2, "unit": "N m", "source": "team/C6/joints.py#CALC-C6-MOTOR-SCREW", "status": "PROPOSED", "note": "M3 into the aluminium motor base, head on a printed plate, no washer; 4 N (0.41 kg) on a luggage scale hooked 50 mm out on the hex key"},
-   "insert_nm": {"value": 0.4, "unit": "N m", "source": "C6 choice", "status": "PROPOSED", "note": "M3 into a brass heat-set insert in PETG; insert torque-out is several times higher"},
-   "printed_max_nm": {"value": 0.4, "unit": "N m", "source": "C6 choice", "status": "PROPOSED", "note": "ceiling for any M3 whose head or nut bears on a printed part"}
+  "m3_d_m": {
+   "value": 0.003,
+   "unit": "m",
+   "source": "ISO 261",
+   "status": "PROPOSED",
+   "note": "every bought structural fastener is M3 (one thread, one 2.5 mm hex key)"
   },
-  "strip_bonded_faces_now": {"value": 1, "unit": "-", "source": "subsystems/fins (E-FIN-29..36): strip outer face on the PETG slot wall, inner face on the board paper", "status": "PROPOSED"},
-  "strip_bonded_faces_prop": {"value": 2, "unit": "-", "source": "C6 proposal CR-C6-01: solid PETG tongue between the strips in the collar tail", "status": "PROPOSED"},
-  "strip_embed_prop_m": {"value": 0.040, "unit": "m", "source": "C6 proposal CR-C6-01", "status": "PROPOSED"},
-  "pin_d_m": {"value": 0.002, "unit": "m", "source": "C6 proposal CR-C6-02: pultruded CF rod 2 mm", "status": "PROPOSED"},
-  "pin_pitch_m": {"value": 0.015, "unit": "m", "source": "C6 proposal CR-C6-02", "status": "PROPOSED"}
+  "m3_pitch_m": {
+   "value": 0.0005,
+   "unit": "m",
+   "source": "ISO 261 coarse",
+   "status": "PROPOSED"
+  },
+  "washer_t_m": {
+   "value": 0.0005,
+   "unit": "m",
+   "source": "ISO 7089 M3 (7 mm OD, 0.5 mm)",
+   "status": "PROPOSED"
+  },
+  "nyloc_h_m": {
+   "value": 0.004,
+   "unit": "m",
+   "source": "ISO 10511 M3 (m = 4.0 mm)",
+   "status": "PROPOSED"
+  },
+  "nyloc_protrusion_min_threads": {
+   "value": 2,
+   "unit": "-",
+   "source": "C6 rule (nylon ring fully engaged)",
+   "status": "PROPOSED",
+   "note": "bolt end at least 2 pitches past the nyloc nut"
+  },
+  "insert_len_m": {
+   "value": 0.0057,
+   "unit": "m",
+   "source": "Ruthex RX-M3x5.7 / CNC Kitchen M3 standard insert",
+   "status": "PROPOSED",
+   "note": "hole 4.0 mm, blind depth >= engagement + 0.5 mm, boss wall >= 1.6 mm"
+  },
+  "insert_engage_min_d": {
+   "value": 1.5,
+   "unit": "-",
+   "source": "interfaces/SCHEMA.md joint-stack rule",
+   "status": "PROPOSED",
+   "note": "x d into a heat-set insert; 1.0 d into metal; 2.0 d self-tapping into plastic"
+  },
+  "pinch_screw_len_m": {
+   "value": 0.016,
+   "unit": "m",
+   "source": "FIN-101 M3x16 SHCS",
+   "status": "PROPOSED"
+  },
+  "pinch_washers": {
+   "value": 2,
+   "unit": "-",
+   "source": "E-FIN-05..08 joint stack",
+   "status": "PROPOSED"
+  },
+  "torque": {
+   "motor_screw_nm": {
+    "value": 0.2,
+    "unit": "N m",
+    "source": "team/C6/joints.py#CALC-C6-MOTOR-SCREW",
+    "status": "PROPOSED",
+    "note": "M3 into the aluminium motor base, head on a printed plate, no washer; 4 N (0.41 kg) on a luggage scale hooked 50 mm out on the hex key"
+   },
+   "insert_nm": {
+    "value": 0.4,
+    "unit": "N m",
+    "source": "C6 choice",
+    "status": "PROPOSED",
+    "note": "M3 into a brass heat-set insert in PETG; insert torque-out is several times higher"
+   },
+   "printed_max_nm": {
+    "value": 0.4,
+    "unit": "N m",
+    "source": "C6 choice",
+    "status": "PROPOSED",
+    "note": "ceiling for any M3 whose head or nut bears on a printed part"
+   }
+  },
+  "strip_bonded_faces_now": {
+   "value": 2,
+   "unit": "-",
+   "source": "subsystems/fins/params.json#fin_detail.station_collar.tail_m note (D3 R3, CR-C6-01)",
+   "status": "PROPOSED",
+   "note": "R3: both strip faces bond to PETG in the 40 mm two-face tail (tongue between the strips)"
+  },
+  "pdb_screw_len_m": {
+   "value": 0.01,
+   "unit": "m",
+   "source": "C6 choice",
+   "status": "PROPOSED",
+   "note": "bus PDB (F1, bare 2 oz PCB) on 4 M3 heat-set inserts in POD-002; the FC is on gel pads (D-33, CR-F3-03), not on inserts"
+  },
+  "pdb_stack_m": {
+   "value": 0.0044,
+   "unit": "m",
+   "source": "C6 estimate",
+   "status": "UNVERIFIED",
+   "note": "nylon washer 0.8 + PCB 1.6 + nylon spacer 2.0 mm; F1 measures the board"
+  },
+  "fillet_leg_m": {
+   "value": 0.006,
+   "unit": "m",
+   "source": "C6 proposal CR-C6-17",
+   "status": "PROPOSED",
+   "note": "microballoon-epoxy fillet leg in the pod floor-to-side-wall corner under the strap"
+  }
  }
 }

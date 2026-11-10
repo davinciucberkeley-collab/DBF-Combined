@@ -1,4 +1,4 @@
-"""Seeded-fault self-test for interface_plan.py: the plan is clean, and each injected fault is caught.
+"""Seeded-fault self-test for interface_plan.py (plan A4-R3): the plan is clean, and each injected fault is caught.
 
 Run (repo root):  python -I redesign/team/A4/test_interface_plan.py      (exit 1 on any miss)
 """
@@ -25,6 +25,14 @@ def with_part(plan, pid, sub):
     return p
 
 
+def uncarried(plan, pid):
+    p = copy.deepcopy(plan)
+    for q in p["parts"]:
+        if q["id"] == pid:
+            q.pop("carried", None)
+    return p
+
+
 def codes(plan):
     return {(i[1], i[2]) for i in ip.check_plan(plan)[1]}
 
@@ -33,23 +41,31 @@ def main():
     base = ip.build_plan()
     cases = [
         ("baseline is clean", base, lambda c: not c),
-        ("pack strap removed -> pack floats", without(base, "E-POD-05"), lambda c: ("floating", "PWR-001") in c),
-        ("tube L held only by harness ties (block bond and both clip bonds cut) -> load path",
-         without(base, "E-FIN-07", "E-FIN-03", "E-FIN-35"),
+        ("pack strap removed -> pack floats (its thermal edge does not hold it)", without(base, "E-POD-05"),
+         lambda c: ("floating", "PWR-001") in c),
+        ("tube L cut from block and both collars -> tube, mounts, motors reach the aircraft only by harness ties",
+         without(base, "E-FIN-02", "E-FIN-14", "E-FIN-16"),
          lambda c: any(k == "load-path" and "FIN-002-L" in item for k, item in c)),
-        ("half-fin LR root and clip bonds cut -> foot, ESC pad, half-fin float",
-         without(base, "E-FIN-34", "E-FIN-38"),
-         lambda c: any(k == "floating" and "FIN-001-LR" in item for k, item in c)),
+        ("shoe LR bond to the half-fin cut -> foot LR group floats", without(base, "E-GER-03"),
+         lambda c: any(k == "floating" and "GER-001-LR" in item for k, item in c)),
+        ("harness bundle without the carried flag -> held only by ties, load path", uncarried(base, "HRN-001"),
+         lambda c: ("load-path", "HRN-001") in c),
         ("skeleton id FIN-901 in the plan -> id rule", with_part(base, "FIN-901", "fins"),
          lambda c: ("id-rule", "FIN-901") in c),
         ("retired id FIN-001-L reused -> id rule", with_part(base, "FIN-001-L", "fins"),
          lambda c: ("id-retired", "FIN-001-L") in c),
         ("FIN-003 with both station and side suffixes -> id rule", with_part(base, "FIN-003-L", "fins"),
          lambda c: ("id-rule", "FIN-003") in c),
+        ("face letter other than I/O (FIN-011-URX) -> id rule", with_part(base, "FIN-011-URX", "fins"),
+         lambda c: ("id-rule", "FIN-011-URX") in c),
+        ("letter suffix A (as TRN-006-A was declared) -> id rule", with_part(base, "TRN-009-A", "transport"),
+         lambda c: ("id-rule", "TRN-009-A") in c),
         ("power module -> PDB cut -> ESCs unpowered (not fed back through UBEC/FC)", without(base, "E-HRN-12"),
          lambda c: ("power-path", "PRP-002-UR") in c and ("power-path", "PWR-004") in c),
         ("ESC UR power lead cut -> ESC UR unpowered although its signal lead exists", without(base, "E-HRN-13"),
          lambda c: ("power-path", "PRP-002-UR") in c),
+        ("FC -> receiver lead cut -> receiver unpowered although the radio link exists", without(base, "E-HRN-31"),
+         lambda c: ("power-path", "AVN-003") in c),
         ("pack plug removed -> no field disconnect", without(base, "E-HRN-10"),
          lambda c: ("field-disconnect", "plan") in c),
     ]

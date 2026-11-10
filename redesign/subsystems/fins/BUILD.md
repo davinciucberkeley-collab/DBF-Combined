@@ -1,78 +1,83 @@
 # Fins and motor tubes: build notes for G4
 
-Design R2 (`SPEC.md`). All dimensions come from `fusion/fins.py` and `params.json`. Positions are in the aircraft
-frame: x aft from the wing LE, y to the right tip, z up from the chord plane. Left parts mirror right parts.
-This subsystem slots into the wing build (D1): the blocks and anchors go in **before the wing is skinned**, and the
-half-fin roots are bonded **to bare foam**.
+Design R3 (`SPEC.md`). All dimensions come from `fusion/fins.py` and `params.json`. Positions are in the aircraft
+frame: x aft from the wing LE, y to the right tip, z up from the chord plane. Left parts mirror right parts; lower
+parts mirror upper parts. This subsystem slots into the wing build (D1): the blocks and anchors go in **before the
+wing is skinned**, and the half-fin roots are bonded **to bare foam**.
 
-| Cure | 30 min epoxy: handle after 1 h, load after 24 h at ≥ 20 °C · laminating epoxy: 24 h |
+| Cure | 30 min epoxy (+ ~5 % colloidal silica): handle after 1 h, load after 24 h at ≥ 18 °C; parts within 50 mm of a motor + 4 h at 50 °C (C6) · laminating epoxy: 24 h |
 |---|---|
-| Tools | fine-tooth saw, 120-grit paper, try square, calipers, 2.5 mm hex key (short arm), 5.5 mm wrench, luggage scale (≥ 15 kg), paint pen, masking tape, 1 g scale |
-| Prints (PETG) | 2 blocks (3–4 perimeters, 40 % gyroid), 4 mounts (2 × print A, 2 × print B), 4 station collars, 4 anchors, 4 ESC pads; all 100 % unless noted in `parts.csv` |
-| Bought / cut | 2 tubes 22 × 20 × 344 mm, 2 plugs 20 × 18 × 53 mm, 4 braces 10 × 3 mm, 8 edge strips 10 × 1 mm, 4 one-layer boards (DXF of the outline from Fusion) |
+| Tools | fine-tooth saw, 120/220-grit paper, try square, calipers, 2.0 and 3.4 mm drills, pin vice, 2.5 mm hex key (short arm), 5.5 mm spanner, luggage scale (≥ 15 kg), spring scale, paint pen, masking tape, 1 g scale |
+| Prints | **ASA** (enclosed printer, D-42): 4 mounts (2 × print A, 2 × print B), 4 ESC pads. **PETG**: 2 blocks (3 perimeters, 15 % gyroid), 4 station collars (100 %, tongue 3 perimeters + 20 % gyroid), 4 anchors (80 %) |
+| Bought / cut | 2 tubes 22 × 20 × 344 mm, 2 plugs 20 × 18 × 53 mm, 4 braces 10 × 2 mm, 8 edge strips 10 × 1 × 229 mm, 48 pins Ø 2 × 12 mm, 8 boards (DXF of the half-fin outline from Fusion) |
 
 ## Steps
 
-1. **Measure the stock** before anything is cut: tube OD and ID, board thickness, and the motor base pattern and
-   screw-hole depth (E1). **Check:** OD 22.0 ± 0.1 mm. Board 4.8 ± 0.2 mm. Pattern 16 × 19 mm. If a value is off,
-   tell D3, because the print bores and slots are drawn from it.
-2. **Cut the tubes.** Cut two 344 mm lengths from the 1 000 mm stock. Wrap tape over the cut line and saw through
-   the tape. Square the ends on 120-grit paper. Mark the middle (z = 0). **Check:** 344 ± 0.5 mm, ends square.
-3. **Fit the plugs.** Sand each 53 mm piece of 20 × 18 tube until it slides into the motor tube. Coat it with
-   laminating epoxy and push it in with a dowel until its centre is 7 mm above the tube middle (it spans z −19.6 to
-   +33.4 mm). Wipe out the excess. Cure 24 h.
-4. **Test-fit the prints.** The 22.3 mm bores must slide on the tube, and the block spar bore must slide on the spar.
-   The block boss slots must take the board, and the collar slots must take the board with a strip on each face.
-   **Check:** every fit is a slide with no play over 0.3 mm. Ream or reprint before going on.
-5. **Blocks on the spar (with D1).** Thread both blocks onto the spar with the keyhole slots aft (+x) and the tube
-   bore vertical. Set them with the spar jig at y = ±0.320 m and bond with 30 min epoxy. D1 then bonds the spar and
-   both blocks into the core (full-depth pockets at x 0.028–0.097 m, 36 mm wide). **Check:** each block within ±1 mm
-   of y = 0.320, and the tube bore square to the chord plane within 1°.
-6. **Sand flush.** Sand only the front edge of each tube socket flush with the core contour (up to 2.8 mm proud).
-   Leave the bosses alone.
-7. **Anchors.** D1 cuts the four 20 × 16 mm pockets down to the spar at y = ±0.242 m, top and bottom. Bond each
-   anchor foot onto the spar with thickened epoxy, with the brace slot aimed at the tube (use the paper template from
-   Fusion). Cure 1 h.
-8. **Tubes in.** Scuff the tube over the bore zone. Slide the tube down through the upper boss, the block and the
-   lower boss until it stands 141.6 mm above the upper boss top and 155.4 mm below the lower boss bottom. Make it
-   vertical with the square in both views, then epoxy it in the bore. **Check:** the tube ends are at ±0.172 m and
-   the tube is vertical within 0.5°. Cure 24 h before loading it.
-9. **Station collars (dry).** Put a 12.5 mm spacer on each tube end and slide a collar up to it: slot aft, brace ear
-   inboard. Do not glue it yet.
-10. **Half-fins.** Dry-fit each board: root LE in the boss slot, top LE in the collar slot, root on bare foam. Then
-    epoxy both slots, bond the collar to the tube, run a microballoon fillet along the board LE to the tube on both
-    sides, and run 12 mm-leg fillets along the root on both sides. **Check:** the board is vertical, the LE gap is
-    ≤ 1 mm, and the lower half-fin's link slot sits on the hinge line (x 0.238–0.262 m). Cure 1 h.
-11. **Edge strips.** Scuff the strips. Bond one on each face along the top edge, with the end 20 mm inside the
-    collar slot and the other end flush with the TE tip. Hold them with tape while they cure. **Check:** the board
-    has no twist (lay a straight edge on it).
-12. **Braces.** Measure each brace between the bottom of the ear slot and the bottom of the anchor slot (about
-    145 mm upper, 157 mm lower). Cut the 10 × 3 strip to that length, scuff the ends and epoxy it into both slots.
-    **Check:** the tube is still vertical (square) after the brace is in, because the brace must not pull the tube.
-13. **ESC pads.** Bond each pad to the outboard board face at x 78–124 mm and |z| 104–132 mm. Knife two 12 × 3 mm
-    slots through the board, matching the pad slots, for the strap.
-14. **Skin (D1).** Tape-skin the wing. Lap the tape 15 mm up both board faces at the root, and cut it around the
-    bosses and anchors.
-15. **Motor mounts.** (a) Check the plate holes against the real motor and drill them out if the pattern differs.
-    (b) Screw the motor to the mount with 4 × M3x8, Loctite 243, 0.5 N·m. **Check:** every screw bites at least 3 mm
-    (count the turns). (c) Fit print A on UR and LL and print B on UL and LR, unless F4's spin map says otherwise
-    (CR-D3-07). (d) Slide each mount onto the tube end until the lip cap seats. Line the plate up square to the fin
-    with the try square, then snug the pinch bolt (M3x16, 2 washers, nyloc).
-16. **Set the slip (T-D3-SLIP).** Prop off. Hook the luggage scale on the motor can and pull along y, square to the
-    fin. Tighten the pinch bolt in 1/8 turns until the collar just turns at **85–100 N (8.7–10.2 kgf)**. Turn it back
-    to square and draw a paint-pen witness line across the collar and the tube. **Check:** it holds 60 N without
-    moving.
-17. **Final checks.** Weigh each part or sub-assembly and record it in `interfaces.json` (T-D3-WEIGH). The gap from
-    the motor face to the collar front must be at least 1 mm (prop plane ≥ 39 mm ahead of all structure). Hand the
-    aircraft to C4/H1 for the tap test (T-C4-TAP). The witness lines go on the preflight card.
+1. **Measure the stock** first: tube OD and ID, board thickness, and the motor base pattern, base diameter and
+   screw-hole depth (E1). **Check:** OD 22.0 ± 0.1 mm, board 4.8 ± 0.2 mm, pattern 16 × 19 mm, base ≥ 28 mm. If a
+   value is off, tell D3, because the print bores and slots are drawn from it.
+2. **Laminate the boards.** Spray-glue pairs of boards face to face (3M 77 class, both faces, 1 min open time),
+   roll flat and weight under a flat board for 1 h. Then knife-cut the four half-fin outlines through both layers
+   from the DXF: LE notch for the collar tongue (40 × 11 mm at the top corner, plus the 1.7 mm step under the
+   ring), square 40 mm tip, and the link slot in the two lower halves. **Check:** 9.6 ± 0.3 mm, no delamination at
+   the edges, tip edge flat and square.
+3. **Cut the tubes.** Two 344 mm lengths from the 1 000 mm stock: tape over the cut line, saw through the tape,
+   square the ends on 120 grit. Mark the middle (z = 0). **Check:** 344 ± 0.5 mm.
+4. **Fit the plugs.** Sand each 53 mm piece of 20 × 18 tube to slide in the motor tube. Coat with laminating epoxy
+   and push it in with a dowel to z −19.6 … +33.4 mm. Cure 24 h.
+5. **Test-fit the prints.** The 22.3 mm bores slide on the tube; the block spar bore slides on the spar; the boss
+   slots take the 9.6 mm laminate; the collar tongue drops into the board notch with a strip on each face in the
+   tail slots; the mount collar passes over the collar tail cap. **Check:** slides with ≤ 0.3 mm play.
+6. **Drill the motor plates.** Hold the motor on the canted plate face, centred on the shaft opening, and drill
+   3.4 mm square to the face through the four pilots (follow the motor's real holes, not the pilots, if they
+   differ). No slots (C6). **Check:** each M3×8 bites 3.5 mm (count the turns), no screw bottoms out.
+7. **Blocks on the spar (with D1).** Thread both blocks onto the spar, keyhole slots aft (+x), tube bore vertical,
+   strap eyes outboard. Set them with the spar jig at y = ±0.320 m, bond with 30 min epoxy. D1 bonds the spar and
+   both blocks into the core (pockets x 0.028–0.097 m, 36 mm wide). **Check:** ±1 mm on y, bore square within 1°.
+8. **Sand flush.** Sand only the front edge of each tube socket flush with the core contour. Leave bosses and eyes.
+9. **Anchors.** D1 cuts four 20 × 16 mm pockets to the spar at y = ±0.242 m (top and bottom, C2 plug inside the
+   spar). Bond each anchor foot with thickened epoxy, slot aimed at the tube (paper template). Cure 1 h.
+10. **Tubes in.** Scuff the bore zone. Slide each tube through upper boss, block and lower boss until its ends are at
+    z ±0.172 m (141.6 mm above the upper boss top). Square in both views, epoxy. **Check:** vertical within 0.5°.
+    Cure 24 h.
+11. **Half-fins.** Dry-fit each laminate: root LE in the boss slot, root on bare foam, LE ≤ 1 mm from the tube.
+    Bond with 12 mm-leg microballoon fillets along the root (both sides) and an LE fillet to the tube up to the
+    notch. **Check:** vertical, lower link slot on the hinge line (x 0.238–0.262 m). Cure 1 h.
+12. **Edge strips.** Scuff. Bond one strip on each face along the sloped top edge, from the LE to the square tip
+    (x 0.280); the forward 40 mm stays free over the notch. Tape until cured. **Check:** no twist.
+13. **Station collars.** Butter the tongue, the tail slots and the ring bore. Drop each collar down the tube end
+    (tail aft, ear inboard): the tongue goes between the strips into the notch, the walls outside the strips, until
+    the ring top is 12.5 mm below the tube end (spacer). **Check:** ring top at |z| 0.1595, strips seated. Cure 24 h.
+14. **Pins.** Drill Ø 2.0 mm through strip–laminate–strip at the 12 marked points (every 15 mm, x 0.103 to 0.264,
+    5 mm below the edge) with a drill guide square to the face. Bond the pins, sand flush.
+15. **Braces.** Measure each brace between the ear-slot bottom and the anchor-slot bottom (≈ 145 mm upper,
+    157 mm lower). Cut the 10 × 2 strip, scuff the ends, epoxy into both slots (10 mm each). **Check:** the tube is
+    still vertical.
+16. **ESC pads.** Bond each ASA pad to the outboard face at x 78–124 mm, |z| 104–132 mm. Knife two 12 × 3 mm
+    strap slots through the laminate, matching the pad.
+17. **Skin (D1).** Tape-skin the wing. Lap the tape 15 mm up both laminate faces at the root; cut it around bosses,
+    eyes and anchors.
+18. **Motor mounts.** Screw each motor to its mount: 4 × M3×8, Loctite 243 on the tip only, no washer, **0.20 N·m**
+    (4 N on the luggage scale 50 mm out on the key). Print A on UR and LL, print B on UL and LR (CR-D3-07). Slide
+    each mount onto the tube end until the lip cap seats, square the plate to the fin, snug the pinch bolt (M3×16,
+    2 washers, nyloc, engagement ≥ 5 mm past the nut).
+19. **Set the slip (T-D3-SLIP).** Prop off. Luggage scale on the motor can, pull along y, square to the fin. Tighten
+    in 1/8 turns until the collar just turns at **85–100 N**; never above 0.4 N·m on the bolt. Square it back, draw a
+    witness line across collar and tube. **Check:** holds 60 N.
+20. **Final checks.** Weigh each part (T-D3-WEIGH) and record it in `params.json`/`interfaces.json` via D3. Motor
+    face to collar front ≥ 1 mm. Hand over for the tap test (T-C4-TAP-D3) and the mount stiffness test
+    (T-C4-MOUNT-STIFF). Witness lines go on the preflight card. Ground-run restraint ties go through the four strap
+    eyes (29.4 N each, H1).
 
 ## Repair
 
 | Damage | Fix | Time |
 |---|---|---|
-| Mount slipped (witness line off) | loosen, square, re-run step 16 | 5 min |
-| Mount or plate cracked | swap in a spare print; motor screws stay with the motor | 10 min + step 16 |
-| Brace cracked or debonded | cut it out, re-run step 12 | 1 h cure |
-| Board broken | cut along the root fillet and the LE, sand the slots clean, bond a new board (steps 10–11) | 2 h cure |
+| Mount slipped (witness line off) | loosen, square, re-run step 19 | 5 min |
+| Mount or plate cracked | swap in a spare ASA print (drill it, step 6); motor screws stay with the motor | 10 min + step 19 |
+| Brace cracked or debonded | cut it out, re-run step 15 | 1 h cure |
+| Strip debonded | cut the pins flush, re-bond the strip, re-drill beside the old holes | 24 h cure |
+| Half-fin broken | cut along the root fillet and LE, warm and pull the collar tail off, bond a new laminate (11–14) | 24 h cure |
 
-Animation candidate for J3: the mount sliding onto the tube end and the slip test (step 15d–16), 6 s.
+Animation candidate for J3: the station collar's tongue dropping between the strips into the notch (step 13), then
+the mount sliding onto the tube end and the slip test (steps 18–19), 8 s.

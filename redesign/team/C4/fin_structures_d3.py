@@ -1,4 +1,9 @@
-"""C4 R2: fin / motor-tube structures on D3's as-designed geometry (CR-D3-10), K09-L.
+"""C4 R3: fin / motor-tube structures on D3's as-designed geometry (CR-D3-10), K09-L, params A1-R3.
+
+R3 (2026-11-09): 0.21 m half-fins, two layers, tube 0.344, 7 deg tangential cant (thrust side component on the
+mount, collar and tube, prop spin axis tilted in the whirl model), foot side load at the pad friction 0.7
+(CR-C5-09), station-collar torsion from the tube torque jump with the LE fillet intact and cracked (CR-C6-03),
+edge-strip-to-paper shear flow from the FE (CR-C6-02a), brace 10 x 2 vs 10 x 3 trade (CR-C4-16).
 
 Run:  python -I redesign/team/C4/fin_structures_d3.py      (about 20 s)
 Writes claims.d3.json beside this file (proof chain), out/results_d3.json and fig-c4-02-campbell-d3.svg.
@@ -10,7 +15,7 @@ What changed against R1 (fin_structures.py, kept for the concept study and for D
   * clamp at the ends of D3's 47 mm bore (bosses 8 mm proud of the skin, CF plug inside), root rotational spring;
   * tube ends at 0.172 m (CR-D3-01): the printed mount carries the motor 18 mm beyond the tube end; the mount is a
     rotational spring (rocking and twist) between the tube end and the motor/prop/mount rigid body (CAD CG);
-  * brace 10 x 3 mm on a station collar at z 0.1535 (ear 17.8 mm inboard of the tube axis) to an anchor on the spar
+  * brace (fin_detail.brace.t_m: 10 x 2 since R3, CR-C4-16) on a station collar at z 0.1535 (ear 17.8 mm inboard of the tube axis) to an anchor on the spar
     at y 0.242, anchor/spar compliance in series;
   * fin = one board, mapped mesh between the curved skin root and the straight top edge (collar top 0.1595 m at the
     LE to the TE tip at the half height), edge strips on the top edge, lower root free over the link slot.
@@ -82,6 +87,17 @@ asm("ASM-C4-PEEL-KD", "Peel knock-down 0.5 on bond allowables for joints loaded 
     "Factor on ASM-C4-BOND-SHEAR for the anchor on the spar and the collar ear", "PETG bonds peel at a fraction of "
     "lap shear; C6 coupons replace it", 0.5, "-")
 
+asm("ASM-C4-D3-MASS-BASIS", "Basis of CL-D3-MASS: two board layers, half height 0.21 m, 10 x 2 braces (D3 R3)",
+    "[layers, half height m, brace strip t m] that D3's make_fins.py mass (CL-D3-MASS) was computed with; C4 corrects "
+    "the boards and braces from this basis to the params values until D3 re-runs at R3",
+    "team/D3/fins_calcs.py CL-D3-MASS 'Fins subsystem flying mass, design R3' (416.8 g, 2026-11-09 15:03): two layers, "
+    "0.21 m, 10 x 2 braces, 16 mm collars with 40 mm tails, strip pins; R2 basis was (1, 0.19, 0.003)",
+    [2, 0.21, 0.002], "-, m, m", status="UNVERIFIED")
+asm("ASM-C4-BRACE-T-3", "Brace strip option 10 x 3 mm", "Thicker pultruded CF strip of the CR-C4-16 trade",
+    "stock pultruded strip sizes 10 x 1/2/3 mm", 0.003, "m", status="PROPOSED")
+asm("ASM-C4-BRACE-T-2", "Brace strip option 10 x 2 mm", "Thinner pultruded CF strip of the CR-C4-16 trade",
+    "stock pultruded strip sizes 10 x 1/2/3 mm", 0.002, "m", status="PROPOSED")
+
 LIMIT_SEP = P + "requirements.vibration_sep_frac"
 SF, FIT, PRT = P + "requirements.safety_factor_ult", "ASM-C1-FITTING-FACTOR", "ASM-C1-PRINTED-FACTOR"
 
@@ -100,6 +116,7 @@ GEOM = {"tube_x": P + "fins.tube.x_m", "y_fin": P + "fins.y_m", "od": P + "fins.
         "mount": "ASM-C4-MOUNT-CAD", "cb_mass": "ASM-C4-COLLAR-BRACE-MASS", "m_esc": P + "propulsion.esc_mass_kg",
         "esc_x0": P + "fin_detail.esc_pad.x0_m", "esc_len": P + "fin_detail.esc_pad.len_m",
         "esc_z": P + "fin_detail.esc_pad.z_m", "landing_g": P + "mass.allocation_g.landing",
+        "cant": P + "propulsion.stations.cant_deg",
         "t_board": P + "fins.board_t_m", "areal": P + "fins.areal_mass_kgm2", "layers": P + "fin_detail.layers",
         "t_face": "ASM-C4-FACE-T", "e_face": "ASM-C4-FACE-E", "e_core": "ASM-C4-CORE-E", "g_core": "ASM-C4-CORE-G",
         "x_spar": P + "wing.spar.x_m", "y_anchor": P + "fin_detail.brace.anchor_y_m",
@@ -112,7 +129,7 @@ GU = {"tube_x": "m", "y_fin": "m", "od": "m", "idd": "m", "mu": "kg/m", "tube_le
       "x_prop": "m", "x_te": "m", "hh": "m", "le_gap": "m", "grip": "m", "sc_gap": "m", "sc_h": "m", "sc_wall": "m",
       "ear_len": "m", "bond_gap": "m", "skin": "m", "bore_z": "m", "m_motor": "kg", "d_motor": "m", "l_motor": "m",
       "m_prop": "kg", "m_adapt": "kg", "ip": "kg m2", "i_bell": "kg m2", "mount": "kg, m", "cb_mass": "kg",
-      "m_esc": "kg", "esc_x0": "m", "esc_len": "m", "esc_z": "m", "landing_g": "g", "t_board": "m", "areal": "kg/m2",
+      "m_esc": "kg", "esc_x0": "m", "esc_len": "m", "esc_z": "m", "landing_g": "g", "cant": "deg", "t_board": "m", "areal": "kg/m2",
       "layers": "-", "t_face": "m", "e_face": "Pa", "e_core": "Pa", "g_core": "Pa", "x_spar": "m", "y_anchor": "m",
       "proud": "m", "b_w": "m", "b_t": "m", "e_strip": "Pa", "e_w": "m", "e_t": "m", "rho_cf": "kg/m3", "chord": "m",
       "el_frac": "-", "slot_hw": "m", "k_rock": "N m/rad", "k_twist": "N m/rad", "k_root": "N m/rad",
@@ -145,7 +162,8 @@ def geometry(g, side):
             "root_free": [(x_hinge - g["slot_hw"], x_hinge + g["slot_hw"])] if side == "lower" else []}
 
 
-def model_cfg(g, E, G, side, mesh=MESH, brace=True, edge=True, k_rock="nom", k_root="nom", hh=None, layers=None):
+def model_cfg(g, E, G, side, mesh=MESH, brace=True, edge=True, k_rock="nom", k_root="nom", hh=None, layers=None,
+              le_cracked=False):
     geo = geometry(g, side)
     A = math.pi / 4 * (g["od"] ** 2 - g["idd"] ** 2)
     dz_st = g["z_st"] - geo["z_end"]                                             # motor axis above the tube end
@@ -168,7 +186,8 @@ def model_cfg(g, E, G, side, mesh=MESH, brace=True, edge=True, k_rock="nom", k_r
            "n_free": 2, "n_ext": 2, "k_root": g["k_root"] if k_root == "nom" else k_root,
            "fin": {"props": pr, "x_le": geo["x_le"], "x_te": g["x_te"], "root": geo["root"],
                    "z_top_le": geo["z_top_le"], "z_top_te": g["hh"] if hh is None else hh,
-                   "root_free": geo["root_free"]},
+                   "root_free": geo["root_free"],
+                   "le_bonds": [(geo["z_top_le"] - g["sc_h"], geo["z_top_le"])] if le_cracked else None},
            "nx": mesh[0], "nz": mesh[1],
            "station": {"parts": parts, "k_rock": kr, "k_twist": None if kr is None else g["k_twist"]},
            "tube_masses": [(m_col + (m_br / 2 if brace else 0.0), geo["z_sc"])],
@@ -272,8 +291,9 @@ def _ins(extra=None, extra_u=None):
 INS, UNS = _ins({"lo": "ASM-C4-BAND-LO", "hi": "ASM-C4-BAND-HI"}, {"lo": "Hz", "hi": "Hz"})
 
 
-@kit.calc("CALC-C4-D3-MODES", title="Station modes, D3 as designed (fin_detail.layers board), upper UR and lower LR, nominal E/G",
-          inputs=INS, units=UNS, tol=1e-4,
+@kit.calc("CALC-C4-D3-MODES", title="Station modes, one board layer (rejected option CR-D3-02) on the R3 geometry, upper "
+          "UR and lower LR, nominal E/G",
+          inputs={**INS, "lay_1l": "ASM-C4-ONE-LAYER"}, units={**UNS, "lay_1l": "-"}, tol=1e-4,
           equation="FE (fin_fe.build_q): tube frame + 1-layer board (mapped Q4 shell) + edge strips + brace (EA/L in "
                    "series with the anchor) + mount springs + motor/prop/mount rigid body; station mode = >= 10 % of "
                    "kinetic energy in the rigid body; sep = min |f/f_k - 1| over 1P/2P hover, 1P/2P cruise, 1P cap",
@@ -284,7 +304,7 @@ def modes_d3(**k):
     rpm = (k["rpm_h"], k["rpm_c"], k["rpm_x"])
     out = {}
     for side in SIDES:
-        r = summary(g, k["E"], k["G"], side, rpm, k["lo"], k["hi"])
+        r = summary(g, k["E"], k["G"], side, rpm, k["lo"], k["hi"], layers=k["lay_1l"])
         s = side[:2]
         out.update({f"f1_{s}": r["f_st1"], f"f2_{s}": r["f_st2"], f"panel_{s}": r["f_panel"], f"sep_{s}": r["sep_op"],
                     f"band_{s}": r["sep_band"]})
@@ -393,12 +413,25 @@ def convergence_d3(**k):
     return out
 
 
-def station_whirl(mdl, ip_spin, rpm, n_modes=16):
+def spin_axis(g):
+    """Prop spin axis in the quarter frame with the tangential cant (thrust along -x, tilted toward the tangent)."""
+    ty, tz = tangent(g)
+    c = math.radians(g["cant"])
+    return (-math.cos(c), math.sin(c) * ty, math.sin(c) * tz)
+
+
+def tangent(g):
+    """Unit tangent of the motor circle at the station, (y, z) in the quarter frame (D3 CR-D3-07 sense)."""
+    r = math.hypot(g["y_fin"], g["z_st"])
+    return -g["z_st"] / r, g["y_fin"] / r
+
+
+def station_whirl(mdl, ip_spin, rpm, n_modes=16, axis=(-1.0, 0.0, 0.0)):
     f0, Phi, _ = fe.modes(mdl, n_modes)
     cl = fe.classify(mdl, Phi)
     keep = [i for i, c in enumerate(cl) if c["ke_station"] >= ST_PART]
     w = 2 * math.pi * f0
-    Gm = Phi.T @ (fe.gyro_matrix(mdl, ip_spin) @ Phi)
+    Gm = Phi.T @ (fe.gyro_matrix(mdl, ip_spin, axis) @ Phi)
     n = len(w)
     Om = rpm * 2 * math.pi / 60
     A = np.zeros((2 * n, 2 * n))
@@ -415,7 +448,8 @@ def station_whirl(mdl, ip_spin, rpm, n_modes=16):
 
 @kit.calc("CALC-C4-D3-CAMPBELL", title="Gyroscopic whirl separation, recommended design (both sides)",
           inputs={**GEOM, **RPM, **TUBE, **REC}, units={**GU, **RU, **TU, **REC_U}, tol=1e-4,
-          equation="M q'' + Omega G q' + K q = 0 on 16 modes, G = -[Ip_spin e_shaft]x at the station; sep over 1P/2P "
+          equation="M q'' + Omega G q' + K q = 0 on 16 modes, G = -[Ip_spin e_shaft]x at the station, e_shaft = (-cos c, "
+                   "sin c t_y, sin c t_z) with the tangential cant c; sep over 1P/2P "
                    "at hover and cruise and 1P at the cap, station whirl modes only",
           assumes=["ASM-C4-PROP-IP", "ASM-C1-BELL-INERTIA"])
 def campbell_d3(**k):
@@ -424,46 +458,70 @@ def campbell_d3(**k):
     for side in SIDES:
         mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, layers=k["lay_rec"]))
         for name, rpm in (("hover", k["rpm_h"]), ("cruise", k["rpm_c"]), ("max", k["rpm_x"])):
-            for f in station_whirl(mdl, g["ip"] + g["i_bell"], rpm):
+            for f in station_whirl(mdl, g["ip"] + g["i_bell"], rpm, axis=spin_axis(g)):
                 for p in ((1,) if name == "max" else (1, 2)):
                     worst = min(worst, abs(f / (p * rpm / 60) - 1))
     return {"sep_whirl": worst}
 
 
-STAT_IN = {"f_level": "CL-C1-FOOT-LEVEL", "f_corner": "CL-C1-FOOT-CORNER", "mu_g": "ASM-C1-FRICTION",
+STAT_IN = {"f_level": "CL-C1-FOOT-LEVEL", "f_corner": "CL-C1-FOOT-CORNER", "mu_hi": "ASM-D5-PAD-MU",
+           "side_c5": "CL-C5-FOOT-SIDE-LOAD",
            "n_h": "ASM-C1-HANDLING-N", "m_gate": P + "requirements.mtow_gate_kg", "grav": P + "env.g_ms2",
            "t_lim": "CL-C1-T-LIMIT", "q_mot": "CL-C1-MOTOR-TORQUE", "sf": SF, "fit": FIT, "prt": PRT,
            "s_face": "ASM-C4-FACE-SIGMA", "s_cf": "ASM-C4-CF-SIGMA", "patch": "ASM-C4-FOOT-PATCH",
            "s_bond": "ASM-C4-BOND-SHEAR", "peel": "ASM-C4-PEEL-KD", "engage": P + "fin_detail.brace.engage_m",
            "a_lx": P + "fin_detail.anchor.len_x_m", "a_ly": P + "fin_detail.anchor.len_y_m",
            "d_spar": P + "wing.spar.od_m", "ear_w": P + "fin_detail.station_collar.ear_w_m",
-           "s_ten": "ASM-C4-PETG-TENSILE"}
-STAT_U = {"f_level": "N", "f_corner": "N", "mu_g": "-", "n_h": "-", "m_gate": "kg", "grav": "m/s2", "t_lim": "N",
-          "q_mot": "N m", "sf": "-", "fit": "-", "prt": "-", "s_face": "Pa", "s_cf": "Pa", "patch": "m", "s_bond": "Pa",
-          "peel": "-", "engage": "m", "a_lx": "m", "a_ly": "m", "d_spar": "m", "ear_w": "m", "s_ten": "Pa"}
+           "s_ten": "ASM-C4-PETG-TENSILE", "kd_foam": "ASM-C6-FOAM-KD", "tau_board": "ASM-D5-BOND-TAU",
+           "pin_pitch": P + "fin_detail.edge_strip.pin_pitch_m"}
+STAT_U = {"f_level": "N", "f_corner": "N", "mu_hi": "-", "side_c5": "N", "n_h": "-", "m_gate": "kg", "grav": "m/s2",
+          "t_lim": "N", "q_mot": "N m", "sf": "-", "fit": "-", "prt": "-", "s_face": "Pa", "s_cf": "Pa", "patch": "m",
+          "s_bond": "Pa", "peel": "-", "engage": "m", "a_lx": "m", "a_ly": "m", "d_spar": "m", "ear_w": "m",
+          "s_ten": "Pa", "kd_foam": "-", "tau_board": "Pa", "pin_pitch": "m"}
 
 
-def fin_static(g, k, side):
-    mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, layers=k["lay_rec"]))
+def tube_torques(mdl, u, E, G):
+    """Internal torque (global Mz) in each tube element, bottom to top."""
+    nodes, out = mdl.nodes, []
+    for e in range(mdl.n_tube - 1):
+        ke, _ = fe.frame_element(nodes[e], nodes[e + 1], E, G, mdl.A_t, mdl.I_t, mdl.I_t, mdl.J_t, 1.0)
+        out.append(float((ke @ np.concatenate([u[6 * e:6 * e + 6], u[6 * e + 6:6 * e + 12]]))[11]))
+    return out
+
+
+def fin_static(g, k, side, le_cracked=False):
+    """One quarter, every limit case. Returns per-case results and the brace length."""
+    mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, layers=k["lay_rec"], le_cracked=le_cracked))
     pr = mdl.cfg["fin"]["props"]
     nodes = mdl.nodes
+    geo = geometry(g, side)
     corner = np.array([g["x_te"], 0.0, g["hh"]])
     foot = [n for n in mdl.fin_id.values() if np.linalg.norm(nodes[n] - corner) <= k["patch"] + 1e-9]
-    nf, fc, mu = len(foot), k["f_corner"], k["mu_g"]
+    nf, fc = len(foot), k["f_corner"]
+    fs = max(k["mu_hi"] * fc, k["side_c5"])                                     # foot side load at the pad friction
     G2 = k["n_h"] * k["m_gate"] * k["grav"]
+    T, Q, c = k["t_lim"], k["q_mot"], math.radians(g["cant"])
+    ty, tz = tangent(g)
+    r = np.array([g["x_prop"] - g["tube_x"], 0.0, g["z_st"] - geo["z_end"]])    # prop centre from the station node
     cases = {"L1": [(n, (-k["f_level"] / nf, 0, 0, 0, 0, 0)) for n in foot],
-             "L4+": [(n, (-fc / nf, mu * fc / nf, 0, 0, 0, 0)) for n in foot],
-             "L4-": [(n, (-fc / nf, -mu * fc / nf, 0, 0, 0, 0)) for n in foot],
-             "L5": [(n, (-fc / nf, 0, -mu * fc / nf, 0, 0, 0)) for n in foot],
+             "L4+": [(n, (-fc / nf, fs / nf, 0, 0, 0, 0)) for n in foot],
+             "L4-": [(n, (-fc / nf, -fs / nf, 0, 0, 0, 0)) for n in foot],
+             "L5": [(n, (-fc / nf, 0, -fs / nf, 0, 0, 0)) for n in foot],
              "G2+": [(mdl.i_end, (0, G2, 0, 0, 0, 0))],
-             "G2-": [(mdl.i_end, (0, -G2, 0, 0, 0, 0))],
-             "H2": [(mdl.i_station, (-k["t_lim"], 0, 0, k["q_mot"], 0, 0))]}
+             "G2-": [(mdl.i_end, (0, -G2, 0, 0, 0, 0))]}
+    for s_c, s_q in itertools.product((1, -1), (1, -1)):                        # H2 with the 7 deg cant, both prints
+        F = np.array([-T * math.cos(c), s_c * T * math.sin(c) * ty, s_c * T * math.sin(c) * tz])
+        M = np.cross(r, F) + s_q * Q * F / np.linalg.norm(F)
+        cases[f"H2c{'+' if s_c > 0 else '-'}{'+' if s_q > 0 else '-'}"] = [(mdl.i_station, (*F, *M))]
     nu = pr["nu"]
     Qf = g["e_face"] / (1 - nu * nu) * np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1 - nu) / 2]])
     C3 = np.array([[1, nu, 0], [nu, 1, 0], [0, 0, (1 - nu) / 2]])
     s = mdl.strut_info[0]
-    le_top = mdl.fin_id[(0, mdl.cfg["nz"])]
-    ear = np.array(nodes[s["node"]]) - np.array([g["tube_x"], 0.0, nodes[s["node"]][2]])
+    zt = [float(nodes[i][2]) for i in range(mdl.n_tube)]
+    z_bot, z_top = geo["z_top_le"] - g["sc_h"], geo["z_top_le"]
+    e_lo = min(i for i, z in enumerate(zt) if z >= z_bot - 1e-4) - 1                # element just below the collar
+    e_hi = max(i for i, z in enumerate(zt) if z <= z_top + 1e-4)                   # element just above the collar
+    top_row = [mdl.fin_id[(i, mdl.cfg["nz"])] for i in range(mdl.cfg["nx"] + 1)]
     res = {}
     for cname, loads in cases.items():
         u = fe.static(mdl, loads)
@@ -479,28 +537,47 @@ def fin_static(g, k, side):
         fn = ke @ np.concatenate([u[0:6], u[6:12]])
         m_root = math.hypot(fn[3], fn[4])
         f_br = -s["k"] * float(np.dot(s["n"], u[6 * s["node"]:6 * s["node"] + 3]))      # + = compression
-        s_edge, mz_strip = 0.0, 0.0
+        tt = tube_torques(mdl, u, k["E"], k["G"])
+        t_collar = abs(tt[e_lo] - tt[e_hi])                                         # torque the collar band puts in
+        # edge strips: axial N, out-of-plane shear V and moment M per element (both faces together)
+        s_edge, Ns, Vs, Ls, M0, d = 0.0, [], [], [], 0.0, None
         for n1, n2, stf in mdl.stf_elems:
             ke, _ = fe.frame_element(nodes[n1], nodes[n2], stf["E"], stf["G"], stf["A"], 1e-15, stf["I_out"], stf["J"],
                                      1.0)
             fe_ = ke @ np.concatenate([u[6 * n1:6 * n1 + 6], u[6 * n2:6 * n2 + 6]])
             s_edge = max(s_edge, max(abs(fe_[5]), abs(fe_[11])) * stf["d"] / 2 / stf["I_out"] + abs(fe_[0]) / stf["A"])
-            if n1 == le_top:
-                mz_strip = abs(fe_[5])
-        f_vec = -f_br * s["n"]                                                       # brace force on the ear
-        t_collar = mz_strip + abs(ear[0] * f_vec[1] - ear[1] * f_vec[0])
+            e1 = (nodes[n2] - nodes[n1]) / np.linalg.norm(nodes[n2] - nodes[n1])
+            Ns.append(float(np.dot(fe_[6:9], e1)))
+            Vs.append(abs(float(fe_[7])))
+            Ls.append(float(np.linalg.norm(nodes[n2] - nodes[n1])))
+            if n1 == top_row[0]:
+                M0, d = abs(float(fe_[5])), stf["d"]
+        q_face = 0.0                                                                # per face, paper interface, N/m
+        for i in range(1, len(Ns)):
+            if top_row[i] in foot:
+                continue                                                            # foot shoe wraps the strip ends
+            q = abs(Ns[i] - Ns[i - 1]) / 2 / ((Ls[i] + Ls[i - 1]) / 2) + max(Vs[i], Vs[i - 1]) / d
+            q_face = max(q_face, q)
         res[cname] = {"face": smax, "edge": s_edge, "tube": m_root * g["od"] / 2 / mdl.I_t, "mroot": m_root,
-                      "brace": f_br, "t_collar": t_collar,
+                      "brace": f_br, "t_collar": t_collar, "t_root": abs(tt[0]), "q_face": q_face,
+                      "strip_end": abs(Ns[0]) / 2 + M0 / d,
                       "dfoot": max(float(np.linalg.norm(u[6 * n:6 * n + 3])) for n in foot)}
     return res, s["L"]
 
 
-@kit.calc("CALC-C4-D3-STATIC", title="Fin, tube, brace, collar and anchor strength, recommended design (both sides)",
+@kit.calc("CALC-C4-D3-STATIC", title="Fin, tube, brace, collar, edge-strip bond and anchor strength, recommended "
+          "design (both sides, LE fillet intact and cracked)",
           inputs={**GEOM, **TUBE, **STAT_IN, **REC}, units={**GU, **TU, **STAT_U, **REC_U}, tol=1e-4,
-          equation="FE static, cases L1, L4 (both friction senses), L5, G2 (both senses, n_h m g at the tube end), H2; "
-                   "ultimate = sf x limit (joints x fit x prt); face = Q_f (eps0 + z kappa); brace Pcr = pi^2 E w t^3 "
-                   "/ (12 L^2); brace-end bond tau = F / (2 (w + t) engage); ear root s = 6 F (ear/2) / (w_ear h^2) + F / (w_ear h) (interlayer); collar bond tau = T / (2 pi r^2 h) + F / "
-                   "(pi d h); anchor tau = F / (len_y pi d_spar / 4) vs peel x bond allowable",
+          equation="FE static, limit cases L1, L4 (side = max(mu_pad F_corner, C5 side load), both senses), L5, G2 (both "
+                   "senses, n_h m g at the tube end), H2c (T_lim along the 7 deg canted shaft at the prop centre + Q "
+                   "about the shaft, 4 sign combinations); envelope over upper/lower quarter and LE fillet intact / "
+                   "cracked between the boss and the collar; ultimate = sf x limit (joints x fit x prt); face = Q_f "
+                   "(eps0 + z kappa); collar torque = jump of the tube torque across the collar band; strip-to-paper "
+                   "shear flow per face q = |dN|/2/ds + |V|/d (foot-shoe nodes excluded), tau = q/w vs kd tau_board; "
+                   "strip end force per face = |N0|/2 + |M0|/d; pin force = q jf pitch; brace Pcr = pi^2 E w t^3 / (12 L^2); brace-end bond "
+                   "tau = F / (2 (w + t) engage); ear root s = 6 F (ear/2) / (w_ear h^2) + F / (w_ear h); collar bond "
+                   "tau = T / (2 pi r^2 h) + F / (pi d h), h_req at MS 0; anchor tau = F / (len_y pi d_spar / 4) vs "
+                   "peel x bond allowable",
           assumes=["ASM-C4-FACE-SIGMA", "ASM-C4-BOND-SHEAR", "ASM-C4-PEEL-KD", "ASM-C4-FOOT-PATCH"],
           cites=["SRC-C4-ALLEN", "SRC-C4-ROARK"])
 def static_d3(**k):
@@ -508,23 +585,28 @@ def static_d3(**k):
     jf = k["sf"] * k["fit"] * k["prt"]
     out = {}
     agg = {"face": 0.0, "edge": 0.0, "tube": 0.0, "comp": 0.0, "tens": 0.0, "t_collar": 0.0, "f_collar": 0.0,
-           "dfoot_L4": 0.0, "mroot": 0.0}
-    for side in SIDES:
-        res, L = fin_static(g, k, side)
+           "dfoot_L4": 0.0, "mroot": 0.0, "t_root": 0.0, "q_face": 0.0, "strip_end": 0.0, "t_collar_intact": 0.0,
+           "q_face_intact": 0.0, "face_intact": 0.0}
+    for side, cr in itertools.product(SIDES, (False, True)):
+        res, L = fin_static(g, k, side, le_cracked=cr)
+        tag = side[:2] + ("_cr" if cr else "")
         out[f"brace_len_{side[:2]}_m"] = L
         for c, r in res.items():
-            agg["face"] = max(agg["face"], r["face"])
-            agg["edge"] = max(agg["edge"], r["edge"])
-            agg["tube"] = max(agg["tube"], r["tube"])
-            agg["mroot"] = max(agg["mroot"], r["mroot"])
+            for key in ("face", "edge", "tube", "mroot", "t_collar", "t_root", "q_face", "strip_end"):
+                agg[key] = max(agg[key], r[key])
+            if not cr:
+                agg["t_collar_intact"] = max(agg["t_collar_intact"], r["t_collar"])
+                agg["q_face_intact"] = max(agg["q_face_intact"], r["q_face"])
+                agg["face_intact"] = max(agg["face_intact"], r["face"])
             agg["comp"] = max(agg["comp"], r["brace"])
             agg["tens"] = max(agg["tens"], -r["brace"])
-            agg["t_collar"] = max(agg["t_collar"], r["t_collar"])
             agg["f_collar"] = max(agg["f_collar"], abs(r["brace"]))
             if c.startswith("L4"):
                 agg["dfoot_L4"] = max(agg["dfoot_L4"], r["dfoot"])
-            out[f"face_{side[:2]}_{c}_mpa"] = r["face"] * k["sf"] / 1e6
-            out[f"brace_{side[:2]}_{c}_n"] = r["brace"]
+            out[f"face_{tag}_{c}_mpa"] = r["face"] * k["sf"] / 1e6
+            out[f"brace_{tag}_{c}_n"] = r["brace"]
+            out[f"tcollar_{tag}_{c}_nm"] = r["t_collar"]
+            out[f"qface_{tag}_{c}_npm"] = r["q_face"]
     L = max(out["brace_len_up_m"], out["brace_len_lo_m"])
     face_u, edge_u, tube_u = agg["face"] * k["sf"], agg["edge"] * k["sf"], agg["tube"] * k["sf"]
     comp_d, tens_d = agg["comp"] * k["sf"] * k["fit"], agg["tens"] * k["sf"] * k["fit"]
@@ -532,21 +614,96 @@ def static_d3(**k):
     f_end = max(agg["comp"], agg["tens"]) * jf
     tau_end = f_end / (2 * (g["b_w"] + g["b_t"]) * k["engage"])
     r_t, h_c = g["od"] / 2, g["sc_h"]
-    tau_collar = agg["t_collar"] * jf / (2 * math.pi * r_t ** 2 * h_c) + agg["f_collar"] * jf / (math.pi * g["od"] * h_c)
+    per_h = agg["t_collar"] * jf / (2 * math.pi * r_t ** 2) + agg["f_collar"] * jf / (math.pi * g["od"])
+    tau_collar = per_h / h_c
     tau_anchor = agg["tens"] * jf / (k["a_ly"] * math.pi * k["d_spar"] / 4)
     f_ear = max(agg["comp"], agg["tens"]) * jf                       # brace force on the collar ear, design
     s_ear = 6 * f_ear * g["ear_len"] / 2 / (k["ear_w"] * g["sc_h"] ** 2) + f_ear / (k["ear_w"] * g["sc_h"])
+    tau_strip = agg["q_face"] * jf / g["e_w"]
     ms = {"ms_face": k["s_face"] / face_u - 1, "ms_edge": k["s_cf"] / edge_u - 1, "ms_tube": k["s_cf"] / tube_u - 1,
           "ms_brace_buckling": pcr / max(comp_d, 1e-9) - 1, "ms_brace_end_bond": k["s_bond"] / tau_end - 1,
           "ms_collar_bond": k["s_bond"] / tau_collar - 1,
           "ms_anchor_bond": k["s_bond"] * k["peel"] / max(tau_anchor, 1.0) - 1,
           "ms_ear_root": k["s_ten"] / s_ear - 1}
-    out.update({"face_ult_pa": face_u, "edge_ult_pa": edge_u, "tube_ult_pa": tube_u, "root_m_lim_nm": agg["mroot"],
+    ms_strip = k["kd_foam"] * k["tau_board"] / tau_strip - 1
+    out.update({"face_ult_pa": face_u, "face_ult_intact_pa": agg["face_intact"] * k["sf"], "edge_ult_pa": edge_u,
+                "tube_ult_pa": tube_u, "root_m_lim_nm": agg["mroot"],
                 "brace_comp_design_n": comp_d, "brace_tens_design_n": tens_d, "brace_pcr_n": pcr,
-                "brace_len_m": L, "collar_t_lim_nm": agg["t_collar"], "tau_collar_pa": tau_collar,
-                "tau_anchor_pa": tau_anchor, "s_ear_pa": s_ear, "tau_brace_end_pa": tau_end, "dfoot_L4_m": agg["dfoot_L4"], **ms,
-                "ms_min": min(ms.values())})
+                "brace_len_m": L, "collar_t_lim_nm": agg["t_collar"], "collar_t_lim_intact_nm": agg["t_collar_intact"],
+                "collar_t_design_nm": agg["t_collar"] * jf, "collar_f_lim_n": agg["f_collar"],
+                "tau_collar_pa": tau_collar, "collar_h_req_m": per_h / k["s_bond"],
+                "tube_t_root_lim_nm": agg["t_root"], "side_load_n": max(k["mu_hi"] * k["f_corner"], k["side_c5"]),
+                "strip_q_lim_npm": agg["q_face"], "strip_q_lim_intact_npm": agg["q_face_intact"],
+                "strip_tau_design_pa": tau_strip, "ms_strip_paper": ms_strip,
+                "strip_end_face_design_n": agg["strip_end"] * jf,
+                "strip_pin_design_n": agg["q_face"] * jf * k["pin_pitch"],
+                "tau_anchor_pa": tau_anchor, "s_ear_pa": s_ear, "tau_brace_end_pa": tau_end,
+                "dfoot_L4_m": agg["dfoot_L4"], **ms, "ms_min": min(ms.values())})
     return out
+
+
+@kit.calc("CALC-C4-D3-BRACE-TRADE", title="Brace strip 10 x 2 against 10 x 3 (CR-C4-16), recommended design",
+          inputs={**GEOM, **TUBE, **RPM, **REC, "t3": "ASM-C4-BRACE-T-3", "t2": "ASM-C4-BRACE-T-2",
+                  "n_h": "ASM-C1-HANDLING-N",
+                  "m_gate": P + "requirements.mtow_gate_kg", "grav": P + "env.g_ms2", "sf": SF, "fit": FIT},
+          units={**GU, **TU, **RU, **REC_U, "t3": "m", "t2": "m", "n_h": "-", "m_gate": "kg", "grav": "m/s2", "sf": "-",
+                 "fit": "-"}, tol=1e-4,
+          equation="for t in (10 x 3, 10 x 2): sep_op (both quarters, nominal E/G); G2 brace force from the FE (limit, both "
+                   "quarters) x sf x fit vs Pcr = pi^2 E w t^3 / (12 L^2); mass of four braces = 4 rho w t L_mean")
+def brace_trade(**k):
+    g0 = {n: k[n] for n in GEOM}
+    rpm = (k["rpm_h"], k["rpm_c"], k["rpm_x"])
+    G2 = k["n_h"] * k["m_gate"] * k["grav"]
+    out = {}
+    for tag, t in (("t3", k["t3"]), ("t2", k["t2"])):
+        g = {**g0, "b_t": t}
+        sep, fmax, Ls = 9.0, 0.0, []
+        for side in SIDES:
+            sep = min(sep, summary(g, k["E"], k["G"], side, rpm, layers=k["lay_rec"])["sep_op"])
+            mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, layers=k["lay_rec"]))
+            st = mdl.strut_info[0]
+            for sgn in (1, -1):
+                u = fe.static(mdl, [(mdl.i_end, (0, sgn * G2, 0, 0, 0, 0))])
+                fmax = max(fmax, abs(st["k"] * float(np.dot(st["n"], u[6 * st["node"]:6 * st["node"] + 3]))))
+            Ls.append(st["L"])
+        pcr = math.pi ** 2 * g["e_strip"] * g["b_w"] * t ** 3 / 12 / max(Ls) ** 2
+        f_d = fmax * k["sf"] * k["fit"]
+        out.update({f"sep_{tag}": sep, f"pcr_{tag}_n": pcr, f"f_design_{tag}_n": f_d, f"ms_buckle_{tag}": pcr / f_d - 1,
+                    f"mass4_{tag}_g": 4 * g["rho_cf"] * g["b_w"] * t * sum(Ls) / len(Ls) * 1000})
+    out["mass_saving_g"] = out["mass4_t3_g"] - out["mass4_t2_g"]
+    out["sep_loss"] = out["sep_t3"] - out["sep_t2"]
+    return out
+
+
+@kit.calc("CALC-C4-D3-MOUNT-CANT", title="Motor mount on the tube end with the 7 deg tangential cant",
+          inputs={"T": "CL-C1-T-LIMIT", "Q": "CL-C1-MOTOR-TORQUE", "cant": P + "propulsion.stations.cant_deg",
+                  "y_fin": P + "fins.y_m", "z_st": P + "propulsion.stations.z_m", "x_prop": "CL-D3-X-PROP",
+                  "tube_x": P + "fins.tube.x_m", "tube_len": P + "fin_detail.tube_length_m", "od": P + "fins.tube.od_m",
+                  "slip": P + "fin_detail.mount.slip_torque_nm", "m_c1": "CL-C1-MOUNT-M-ULT",
+                  "f_c1": "CL-C1-MOUNT-F-ULT", "sf": SF, "fit": FIT, "prt": PRT},
+          units={"T": "N", "Q": "N m", "cant": "deg", "y_fin": "m", "z_st": "m", "x_prop": "m", "tube_x": "m",
+                 "tube_len": "m", "od": "m", "slip": "N m", "m_c1": "N m", "f_c1": "N", "sf": "-", "fit": "-",
+                 "prt": "-"}, tol=1e-6,
+          equation="t = (-z_st, y_fin)/|.| (motor-circle tangent); F = T (-cos c, sin c t_y, sin c t_z) at r = (x_prop - "
+                   "x_tube, 0, z_st - L_tube/2) from the tube end; side = T sin c; axial = T sin c |t_z|; twist "
+                   "about the tube = |r_x| T sin c |t_y| + Q sin c |t_z|; rocking = |r x F| in x-y (worst sign) + Q cos c; design "
+                   "= limit x sf x fit x prt; slip-clamp use = sqrt((F_ax,d / (T_slip / r))^2 + ((M_tw,d + M_C1,ult "
+                   "fit prt) / T_slip)^2) (C1's mount moment taken wholly about the tube: conservative)")
+def mount_cant(T, Q, cant, y_fin, z_st, x_prop, tube_x, tube_len, od, slip, m_c1, f_c1, sf, fit, prt):
+    c = math.radians(cant)
+    rr = math.hypot(y_fin, z_st)
+    ty, tz = -z_st / rr, y_fin / rr
+    rx, rz = x_prop - tube_x, z_st - tube_len / 2
+    side, ax, lat = T * math.sin(c), T * math.sin(c) * abs(tz), T * math.sin(c) * abs(ty)
+    tw = abs(rx) * lat + Q * math.sin(c) * abs(tz)
+    rock = math.hypot(abs(rz) * lat, abs(rz) * T * math.cos(c) + abs(rx) * ax) + Q * math.cos(c)   # worst print sense
+    jf = sf * fit * prt
+    r = od / 2
+    use = math.hypot(ax * jf / (slip / r), (tw * jf + m_c1 * fit * prt) / slip)
+    return {"side_frac": math.sin(c), "side_lim_n": side, "axial_lim_n": ax, "lateral_lim_n": lat,
+            "twist_lim_nm": tw, "rock_lim_nm": rock, "axial_design_n": ax * jf, "twist_design_nm": tw * jf,
+            "rock_design_nm": rock * jf, "shear_design_n": math.hypot(T * math.cos(c), lat) * jf,
+            "c1_force_ratio": T * jf / max(f_c1 * fit * prt, 1e-9), "slip_use": use, "ms_slip_hold": 1 / use - 1}
 
 
 @kit.calc("CALC-C4-D3-BLOCK", title="Through-core block on D3's geometry (bosses not credited for strength)",
@@ -579,28 +736,38 @@ def block_d3(m_des_c1, m_task, f_ult, my_lim, sf, fit, prt, d, d_spar, skin, x_t
             "tube_couple_n": 1.5 * M / h}
 
 
-@kit.calc("CALC-C4-D3-MASS", title="Fins mass, recommended design (second board layer on D3's CAD)",
-          inputs={"m_d3": "CL-D3-MASS", "lay_d3": P + "fin_detail.layers", "lay_rec": P + "fins.layers",
-                  "areal": P + "fins.areal_mass_kgm2", "adh": P + "fin_detail.fin.adhesive_kgm2",
-                  "skin": "ASM-C4-SKIN-PTS", "tube_x": P + "fins.tube.x_m", "od": P + "fins.tube.od_m",
-                  "le_gap": P + "fin_detail.fin.le_gap_m", "x_te": P + "fins.te_x_m", "hh": P + "fins.half_height_m",
-                  "tube_len": P + "fin_detail.tube_length_m", "grip": P + "fin_detail.mount.grip_m",
-                  "sc_gap": P + "fin_detail.station_collar.gap_m"},
-          units={"m_d3": "g", "lay_d3": "-", "lay_rec": "-", "areal": "kg/m2", "adh": "kg/m2", "skin": "m", "tube_x": "m",
-                 "od": "m", "le_gap": "m", "x_te": "m", "hh": "m", "tube_len": "m", "grip": "m", "sc_gap": "m"},
-          equation="half-fin area = integral over x_le..x_te of (z_top(x) - z_skin(x)), z_top linear from the collar "
-                   "top to hh; added = (lay_rec - lay_d3) (areal + adh) x (2 upper + 2 lower areas); total = CL-D3-MASS "
-                   "+ added", tol=1e-6)
-def fins_mass_d3(m_d3, lay_d3, lay_rec, areal, adh, skin, tube_x, od, le_gap, x_te, hh, tube_len, grip, sc_gap):
-    sk = np.array(skin, float)
-    x_le = tube_x + od / 2 + le_gap
-    z_top_le = tube_len / 2 - grip - sc_gap
-    xs = np.linspace(x_le, x_te, 201)
-    top = z_top_le + (hh - z_top_le) * (xs - x_le) / (x_te - x_le)
-    a_up = float(np.trapezoid(top - np.interp(xs, sk[:, 0], sk[:, 1]), xs))
-    a_lo = float(np.trapezoid(top + np.interp(xs, sk[:, 0], sk[:, 2]), xs))
-    added = (lay_rec - lay_d3) * (areal + adh) * 2 * (a_up + a_lo) * 1000
-    return {"area_up_m2": a_up, "area_lo_m2": a_lo, "added_g": added, "total_g": m_d3 + added}
+@kit.calc("CALC-C4-D3-MASS", title="Fins mass, recommended design (D3's CAD corrected to two layers, the 0.21 m half "
+          "height and the brace strip as drawn)",
+          inputs={**GEOM, "m_d3": "CL-D3-MASS", "basis": "ASM-C4-D3-MASS-BASIS", "lay_rec": P + "fins.layers",
+                  "adh": P + "fin_detail.fin.adhesive_kgm2"},
+          units={**GU, "m_d3": "g", "basis": "-, m, m", "lay_rec": "-", "adh": "kg/m2"},
+          equation="half-fin area A(hh) = integral over x_le..x_te of (z_top(x) - z_skin(x)), z_top linear from the "
+                   "collar top to hh, 2 upper + 2 lower; boards = (areal + adh) [lay_rec A(hh) - lay_b A(hh_b)]; braces "
+                   "= rho_cf w (t - t_b) sum of the four lengths (ear to anchor); (lay_b, hh_b, t_b) = CL-D3-MASS "
+                   "basis; total = CL-D3-MASS + boards + braces", tol=1e-6)
+def fins_mass_d3(**k):
+    g = {n: k[n] for n in GEOM}
+    sk = np.array(g["skin"], float)
+    x_le = g["tube_x"] + g["od"] / 2 + g["le_gap"]
+    z_top_le = g["tube_len"] / 2 - g["grip"] - g["sc_gap"]
+    xs = np.linspace(x_le, g["x_te"], 201)
+
+    def areas(h):
+        top = z_top_le + (h - z_top_le) * (xs - x_le) / (g["x_te"] - x_le)
+        return (float(np.trapezoid(top - np.interp(xs, sk[:, 0], sk[:, 1]), xs)),
+                float(np.trapezoid(top + np.interp(xs, sk[:, 0], sk[:, 2]), xs)))
+    lay_b, hh_b, t_b = k["basis"]
+    a_up, a_lo = areas(g["hh"])
+    b_up, b_lo = areas(hh_b)
+    boards = (g["areal"] + k["adh"]) * 2 * (k["lay_rec"] * (a_up + a_lo) - lay_b * (b_up + b_lo)) * 1000
+    L = 0.0
+    for side in SIDES:
+        geo = geometry(g, side)
+        ear = np.array([g["tube_x"], geo["ear"][1], geo["z_sc"]])
+        L += 2 * float(np.linalg.norm(np.array(geo["anchor"]) - ear))
+    braces = g["rho_cf"] * g["b_w"] * (g["b_t"] - t_b) * L * 1000
+    return {"area_up_m2": a_up, "area_lo_m2": a_lo, "added_g": boards, "brace_delta_g": braces,
+            "total_g": k["m_d3"] + boards + braces}
 
 
 # ====================================================================== claims
@@ -621,11 +788,12 @@ kit.claim("CL-C4-D3-Q4-SKEW", "Skewed-mesh cantilever plate vs Leissa", calc="CA
           unit="-", limit=("<=", 0.02), cites=["SRC-C4-LEISSA"], how="Re-run fin_structures_d3.py (16 x 16, 20 % skew).")
 kit.claim("CL-C4-D3-MESH-CONV", "Mesh convergence of the station modes, D3 quarter", calc="CALC-C4-D3-CONVERGENCE",
           output="change", unit="-", limit=("<=", 0.03), how="Meshes 6x5, 12x10, 24x20 on both quarters.")
-kit.claim("CL-C4-D3-SEP-1L", "Mode separation, D3 as designed (one board layer), nominal", calc="CALC-C4-D3-MODES",
+kit.claim("CL-C4-D3-SEP-1L", "Mode separation with one board layer (rejected option), R3 geometry, nominal",
+          calc="CALC-C4-D3-MODES",
           output="sep_op", unit="-", limit=(">=", LIMIT_SEP), parts=TUBES + HALF + BRACE + MOUNT, how=TAP,
           note="FAILS: motor twist about the tube coupled with fore-aft nodding near 2P cruise (200 Hz); the one-layer "
                "board stores 45-70 % of the strain energy. Not the design of record: see CL-C4-D3-SEP.")
-kit.claim("CL-C4-D3-F1-1L", "First station mode, D3 as designed (one board layer), lower quarter",
+kit.claim("CL-C4-D3-F1-1L", "First station mode with one board layer (rejected option), lower quarter",
           calc="CALC-C4-D3-MODES", output="f1_lo", unit="Hz", parts=TUBES + HALF, how=TAP)
 kit.claim("CL-C4-D3-F1-UP", "First station mode, recommended (two layers), upper quarter", calc="CALC-C4-D3-MODES-REC",
           output="f1_up", unit="Hz", parts=TUBES + HALF[:2] + BRACE[:2] + MOUNT[:2], how=TAP)
@@ -659,7 +827,8 @@ kit.claim("CL-C4-D3-MS-EDGE", "Edge-strip margin, recommended design", calc="CAL
           limit=(">=", 0.0), verifies=R_SM, parts=HALF, how="T-C4-FIN-PROOF.")
 kit.claim("CL-C4-D3-MS-TUBE", "Motor tube bending margin at the bore end", calc="CALC-C4-D3-STATIC", output="ms_tube",
           unit="-", limit=(">=", 0.0), verifies=R_SM, parts=TUBES, how="T-C4-FIN-PROOF (G2 at the tube end).")
-kit.claim("CL-C4-D3-MS-BRACE", "Brace buckling margin (10 x 3 strip, design load incl. fitting factor)",
+kit.claim("CL-C4-D3-MS-BRACE", "Brace buckling margin (strip as drawn, fin_detail.brace.t_m; design load incl. fitting "
+          "factor)",
           calc="CALC-C4-D3-STATIC", output="ms_brace_buckling", unit="-", limit=(">=", 0.0), verifies=R_SM, parts=BRACE,
           how="T-C4-FIN-PROOF G2 both senses; no visible bow.")
 kit.claim("CL-C4-D3-BRACE-F", "Brace design force (compression, incl. 1.5 x 1.15)", calc="CALC-C4-D3-STATIC",
@@ -676,6 +845,53 @@ kit.claim("CL-C4-D3-MS-ANCHOR", "Anchor bond margin on the spar (brace tension, 
 kit.claim("CL-C4-D3-MS-EAR", "Station-collar ear root margin (brace force, interlayer bending)", calc="CALC-C4-D3-STATIC",
           output="ms_ear_root", unit="-", limit=(">=", 0.0), verifies=R_SM, parts=COLLAR,
           how="T-C4-FIN-PROOF G2 both senses; print the collar with layers in x-y (ear bending loads the layer lines).")
+COLLAR_H = P + "fin_detail.station_collar.height_m"
+kit.claim("CL-C4-D3-COLLAR-T", "Station-collar torsion into the tube, limit (envelope: LE fillet intact or cracked, "
+          "both quarters, every case)", calc="CALC-C4-D3-STATIC", output="collar_t_lim_nm", unit="N m", parts=COLLAR,
+          how="T-C4-FIN-PROOF with the LE fillet left unbonded on one quarter; witness line across collar and tube.",
+          note="The number C6 sizes the collar bond to (CR-C6-03). Supersedes the 9.3 N m C6 carried in "
+               "ASM-C6-C4-COLLAR-T, which is not a C4 output.")
+kit.claim("CL-C4-D3-COLLAR-T-INTACT", "Station-collar torsion, limit, LE fillet intact", calc="CALC-C4-D3-STATIC",
+          output="collar_t_lim_intact_nm", unit="N m", parts=COLLAR, how="As CL-C4-D3-COLLAR-T.")
+kit.claim("CL-C4-D3-COLLAR-H-REQ", "Station-collar height needed for MS 0 on the envelope torsion + brace shear",
+          calc="CALC-C4-D3-STATIC", output="collar_h_req_m", unit="m", limit=("<=", COLLAR_H), verifies=R_JNT,
+          parts=COLLAR, how="C6 lap-shear coupon on scuffed CF; T-C4-FIN-PROOF.")
+kit.claim("CL-C4-D3-TUBE-T-ROOT", "Tube torsion at the bore end, limit (for C1's J-FINHALF comparison)",
+          calc="CALC-C4-D3-STATIC", output="tube_t_root_lim_nm", unit="N m", parts=TUBES, how="T-C4-FIN-PROOF.")
+kit.claim("CL-C4-D3-SIDE-LOAD", "Foot side load used (pad friction 0.7, CR-C5-09)", calc="CALC-C4-D3-STATIC",
+          output="side_load_n", unit="N", parts=HALF, how="D5 pad friction coupon (ASM-D5-PAD-MU).")
+kit.claim("CL-C4-D3-STRIP-Q", "Edge-strip-to-paper shear flow per face, limit, FE (CR-C6-02a)", calc="CALC-C4-D3-STATIC",
+          output="strip_q_lim_npm", unit="N/m", parts=HALF, how="T-C4-FIN-PROOF: no strip lift; T-C6-BOARD-LAP.")
+kit.claim("CL-C4-D3-MS-STRIP-PAPER", "Edge strip bonded to the paper face only (no pins): margin on the paper-to-foam "
+          "shear", calc="CALC-C4-D3-STATIC", output="ms_strip_paper", unit="-", limit=(">=", 0.0), verifies=R_SM,
+          parts=HALF, how="T-C6-BOARD-LAP for the allowable; T-C4-FIN-PROOF at 1.5 x L4.")
+kit.claim("CL-C4-D3-STRIP-END-F", "Edge-strip force per face at the collar end, design (for C6's tail anchorage)",
+          calc="CALC-C4-D3-STATIC", output="strip_end_face_design_n", unit="N", parts=COLLAR + HALF,
+          how="T-C6-STRIP-ANCHOR.", note="Replaces the 1 348 N C6 derived from the strip allowable (CR-C6-01).")
+kit.claim("CL-C4-D3-STRIP-PIN-F", "Through-pin shear per pin if the pins carry the whole strip shear flow, design "
+          "(CR-C6-02b)", calc="CALC-C4-D3-STATIC", output="strip_pin_design_n", unit="N", parts=HALF,
+          how="T-C4-FIN-PROOF with pins fitted; C6 pin coupon.",
+          note="C6 sized the pins to 77 N (CL-C6-STRIP-PIN-RF 1.41); the FE load is lower.")
+kit.claim("CL-C4-D3-BRACE-10X2-SEP", "Mode separation with a 10 x 2 brace", calc="CALC-C4-D3-BRACE-TRADE",
+          output="sep_t2", unit="-", limit=(">=", LIMIT_SEP), parts=BRACE, how="T-C4-TAP-D3 on a 10 x 2 quarter.")
+kit.claim("CL-C4-D3-BRACE-10X2-MS", "Brace buckling margin with a 10 x 2 strip (G2 design)",
+          calc="CALC-C4-D3-BRACE-TRADE", output="ms_buckle_t2", unit="-", limit=(">=", 0.0), parts=BRACE,
+          how="T-C4-FIN-PROOF G2 both senses.")
+kit.claim("CL-C4-D3-BRACE-10X3-SEP", "Mode separation with a 10 x 3 brace", calc="CALC-C4-D3-BRACE-TRADE",
+          output="sep_t3", unit="-", limit=(">=", LIMIT_SEP), parts=BRACE, how="T-C4-TAP-D3.")
+kit.claim("CL-C4-D3-BRACE-SAVE", "Mass saved by 10 x 2 braces instead of 10 x 3 (four braces)",
+          calc="CALC-C4-D3-BRACE-TRADE", output="mass_saving_g", unit="g", parts=BRACE, how="Weigh the strips.")
+kit.claim("CL-C4-D3-CANT-SIDE", "Thrust side component at 7 deg cant (fraction of thrust)", calc="CALC-C4-D3-MOUNT-CANT",
+          output="side_frac", unit="-", parts=MOUNT, how="Check the printed plate angle with a protractor.")
+kit.claim("CL-C4-D3-MOUNT-AXIAL", "Mount pull-off load along the tube from the cant, design", calc="CALC-C4-D3-MOUNT-CANT",
+          output="axial_design_n", unit="N", parts=MOUNT, how="T-D3-SLIP.")
+kit.claim("CL-C4-D3-MOUNT-TWIST", "Mount twist about the tube from the cant, design", calc="CALC-C4-D3-MOUNT-CANT",
+          output="twist_design_nm", unit="N m", parts=MOUNT, how="T-D3-SLIP.")
+kit.claim("CL-C4-D3-MOUNT-ROCK", "Mount rocking moment at T_lim with the cant, design", calc="CALC-C4-D3-MOUNT-CANT",
+          output="rock_design_nm", unit="N m", parts=MOUNT, how="T-C4-MOUNT-STIFF (load to 1.5 x limit).")
+kit.claim("CL-C4-D3-MS-MOUNT-SLIP", "Slip clamp holds in flight with the cant (C1 moment + cant twist + pull-off)",
+          calc="CALC-C4-D3-MOUNT-CANT", output="ms_slip_hold", unit="-", limit=(">=", 0.0), verifies=R_SM,
+          parts=MOUNT, how="T-D3-SLIP: set 2.5 N m; witness line checked before every flight.")
 kit.claim("CL-C4-D3-FOOT-DEFL", "Foot deflection under L4 (limit), recommended design", calc="CALC-C4-D3-STATIC",
           output="dfoot_L4_m", unit="m", parts=HALF, how="T-C4-FIN-PROOF: dial gauge at the foot.")
 kit.claim("CL-C4-D3-BLOCK-MS", "Through-core block minimum margin, D3 geometry", calc="CALC-C4-D3-BLOCK",
@@ -687,8 +903,10 @@ kit.claim("CL-C4-D3-SPAR-COUPLE", "Bearing couple on the spar at each block (des
 kit.claim("CL-C4-D3-FINS-MASS", "Fins subsystem mass, recommended design (D3 CAD + second board layer)",
           calc="CALC-C4-D3-MASS", output="total_g", unit="g", limit=("<=", P + "mass.allocation_g.fins"),
           parts=HALF, how="T-D3-WEIGH; A3 roll-up.",
-          note="Over the 370 g allocation: A1 decides between raising the allocation and the reserve (CR-C4-15).")
-kit.claim("CL-C4-D3-LAYER-ADD", "Mass of the second board layer, four half-fins", calc="CALC-C4-D3-MASS",
+          note="Allocation 408 g since D-26/D-38 (CR-C4-15 closed). Falls back to CL-D3-MASS alone once D3 re-runs "
+               "make_fins.py at R3 and ASM-C4-D3-MASS-BASIS is set to (2, 0.21).")
+kit.claim("CL-C4-D3-LAYER-ADD", "Board mass added to CL-D3-MASS: second layer and 0.21 m half height, four half-fins",
+          calc="CALC-C4-D3-MASS",
           output="added_g", unit="g", parts=HALF, how="Weigh the boards before and after laminating.")
 
 kit.test("T-C4-MOUNT-STIFF", "Mount rocking stiffness on the bench", verifies=["CL-C4-D3-MOUNT-K-REQ"],
@@ -751,9 +969,9 @@ if __name__ == "__main__":
     rpm = tuple(kit.value(RPM[k]) for k in ("rpm_h", "rpm_c", "rpm_x"))
     res = {"inputs": {k: v for k, v in g.items() if k != "skin"}, "geometry": {s: geometry(g, s) for s in SIDES},
            "configs": {}, "sensitivity": {}}
-    variants = {"D3 as designed (1 layer)": {},
+    variants = {"1 layer (CR-D3-02, rejected)": {"layers": 1},
                 "recommended (2 layers)": {"layers": 2},
-                "2 layers, brace 10 x 2": {"layers": 2, "_g": {"b_t": 0.002}},
+                "2 layers, brace 10 x 3": {"layers": 2, "_g": {"b_t": 0.003}},
                 "2 layers, no brace": {"layers": 2, "brace": False},
                 "2 layers, no edge strips": {"layers": 2, "edge": False},
                 "2 layers, no brace, no strips": {"layers": 2, "brace": False, "edge": False},
@@ -761,8 +979,9 @@ if __name__ == "__main__":
                 "2 layers, mount 1 000 N m/rad": {"layers": 2, "k_rock": 1000.0},
                 "2 layers, rigid root": {"layers": 2, "k_root": None},
                 "2 layers, root 3 000 N m/rad": {"layers": 2, "k_root": 3000.0},
-                "2 layers, half height 0.21 m (CR-B3-14)": {"layers": 2, "hh": 0.21},
-                "1 layer, rigid mount and root": {"k_rock": None, "k_root": None}}
+                "2 layers, half height 0.19 m (R2)": {"layers": 2, "hh": 0.19},
+                "2 layers, LE fillet cracked": {"layers": 2, "le_cracked": True},
+                "1 layer, rigid mount and root": {"layers": 1, "k_rock": None, "k_root": None}}
     for name, kw in variants.items():
         for side in SIDES:
             kw2 = {a: b for a, b in kw.items() if a != "_g"}
@@ -779,11 +998,11 @@ if __name__ == "__main__":
         res["sensitivity"][side] = rows
     rpms = np.linspace(0, 10000, 41)
     curves = {}
-    for label, side, lay, colour, dash in (("D3 as designed, 1 layer, lower", "lower", 1, "#6B7280", "8 5"),
+    for label, side, lay, colour, dash in (("1 layer (rejected), lower", "lower", 1, "#6B7280", "8 5"),
                                            ("recommended, 2 layers, upper", "upper", 2, "#9AA4B1", None),
                                            ("recommended, 2 layers, lower (governs)", "lower", 2, "#1F5FC7", None)):
         mdl = fe.build_q(model_cfg(g, E0, G0, side, layers=lay))
-        fr = [(station_whirl(mdl, g["ip"] + g["i_bell"], r) + [np.nan] * 4)[:4] for r in rpms]
+        fr = [(station_whirl(mdl, g["ip"] + g["i_bell"], r, axis=spin_axis(g)) + [np.nan] * 4)[:4] for r in rpms]
         curves[label] = (rpms, np.array(fr, float), colour, dash)
         res.setdefault("campbell", {})[label] = {"rpm": rpms.tolist(), "f_hz": np.array(fr, float).tolist()}
     campbell_svg(HERE / "fig-c4-02-campbell-d3.svg", curves, {"hover": rpm[0], "cruise": rpm[1], "F4 cap": rpm[2]})

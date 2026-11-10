@@ -1,29 +1,53 @@
 # Change requests from H1 (ground test engineer)
 
-Revision H1-R1, 2026-11-09. Requests received and how H1 resolved them are at the end.
+Revision H1-R2, 2026-11-09. Open requests first, then closed ones, then requests received and how H1 resolved them.
 
-## New requests
+## Open requests
 
 | # | To | What | Why | Numbers |
 |---|---|---|---|---|
-| CR-H1-01 | A1 | After GT-02d, replace `requirements.thrust_limit_per_motor_n` (17.8 N, `team/C1/LOADS.md`) with the measured peak static thrust (max of 3 steps, unlimited, at the F4 output cap, 16.8 V, ρ-corrected), rounded up to 0.5 N. Until then use C1's 21.1 N. | 17.8 N is already below C1's own prediction at the rpm cap (`CL-C1-T-CAP` 21.1 N), so that claim fails against the parameter today | predicted 21.1 N; stand pass line ≤ 21.1 N |
-| CR-H1-02 | A1 | Say whether ground test equipment counts against the $2 000 budget; if yes, add a ground-test line. | Rigs are never flying mass but cost money | ≈ $160–180 `EST` (list in `GROUND-TEST-PLAN.md`) |
-| CR-H1-03 | C1 | Issue the wing proof whiffletree at limit (load points and magnitudes per side, support stations) and confirm whether `CL-C1-WING-SHEAR-ULT` is ultimate or limit. | H1 uses one equivalent point per side: P = V_ult/1.5 at y = Mx_ult/V_ult. 42.7 N is close to n_lim·W/2 = 42.8 N, which reads like a limit value | interim 28.5 N at y 0.328 m per side; tip deflection ≤ 28.8 mm |
-| CR-H1-04 | F4 | Provide a stand parameter set: same output cap and ESC protocol as the flight file, `Q_M_BAT_CURR_MAX` = 25 A for one station, motor test enabled, ESC rpm telemetry (Bluejay bidirectional DShot) logged. | GT-02d needs cap and limiter as flown on a single motor | 25 A = 100 A / 4 |
-| CR-H1-05 | E1 | Confirm `ASM-E1-RM` 86 mΩ is line-to-line at 25 °C. | GT-02a measures line-to-line, 4-wire, corrected to 25 °C | accept band 69–103 mΩ |
-| CR-H1-06 | E3 | Give the ESC case-temperature limit and the ambient scaling for GT-04. | No datasheet value; H1 uses 80 °C at 30 °C ambient as a placeholder | placeholder 80 °C |
-| CR-H1-07 | A2 | H1 evidence file names: `team/H1/claims.json` (exists), `team/H1/GROUND-TEST-PLAN.md`, raw data `team/H1/logs/<test id>_<YYYYMMDD>.csv`; pack rows in `team/E2/pack_log.csv`. Add `GROUND-TEST-PLAN.md` as H1 evidence for `R-TIPOVER`, `R-ARM-KILL`, `R-COMPASS`, `R-PACK-RETENTION`. | CR-A2-10 | — |
-| CR-H1-08 | D3, D5 | Leave a strap point at each fin root (or a printed eye) rated ≥ 29.4 N for the restrained run; keep the outboard wing lower surface at \|y\| 0.45 m free of hardware for the CG jig pins. | GT-07, GT-13 | 4 × 29.4 N (`CL-H1-RESTRAINT-PER-TIE`) |
+| CR-H1-01 (R2) | A1, C1 | After GT-02d, set `requirements.thrust_limit_per_motor_n` to the measured peak (max of 3 unlimited steps at the F4 cap, 16.8 V, ρ-corrected) rounded up to 0.5 N. Expect 21.5 N: the prediction is inside the stand's guard band | `CL-C1-T-CAP` 21.08 N vs 21.1 N leaves 0.02 N; stand U95 is 0.12 N | pass ≤ 20.98 N (`CL-H1-T-PEAK-ACCEPT`); 20.98–21.1 N retest; > 21.1 N C1 re-runs loads |
+| CR-H1-04 | F4 | Confirmed by CR-F4-06 (`K09L-STAND.param`). Still open: if the build clamps `Q_M_SPIN_MAX` to 0.9, say which Bluejay max-throttle value the stand uses | GT-02d must run the cap as flown | cap 0.84 |
+| CR-H1-05 | E1 | Confirm `ASM-E1-RM` 86 mΩ is line-to-line at 25 °C | GT-02a measures line-to-line, 4-wire | band 69–103 mΩ |
+| CR-H1-08 | D3, D5 | Strap eye at each fin root ≥ 29.5 N; outboard lower surface at \|y\| 0.45 m free for the CG pins | GT-07, GT-13 | 4 × 29.5 N (`CL-H1-RESTRAINT-PER-TIE`) |
+| CR-H1-09 | C1 | Publish whiffletree pad 4 as claims (`CL-C1-PROOF-Y4` 0.465 m, `-P4-LIM` 6.398 N); fix `pad_mass_kg_limit` and the `tree` text in `data/whiffletree.json`, which list pads 1–3 only | Pads 1–3 sum to 22.6 N, `CL-C1-PROOF-P-SIDE-LIM` is 29.0 N; H1 derives pad 4 from the difference (`ASM-H1-PAD4-Y` `UNVERIFIED`) | pad 4 0.652 kg; centroid 0.273 m = your `proof_pivot_side_y_m` |
+| CR-H1-10 | C4 | Change `T-C4-MOUNT-STIFF` readout to an optical lever (mirrors on can and collar, wall at 3.0 m) and loads 0.5/1.0/1.5 kg | Two 0.01 mm dial gauges 30 mm apart see 8.7 µm at 0.5 kg at the pass stiffness, under one division | pass: net spot ≤ 4.69 mm at 1.5 kg (`CL-H1-MSTIFF-SPOT-ACCEPT`); U 9.6 % |
+| CR-H1-11 | C2, J1 | `T-C2-TAP-TEST`: use the FC raw IMU at ≥ 1 kHz for anything above 80 Hz; the phone (~400 Hz) only for the 12–22 Hz wing modes. J1: retire `T-J1-TAP-TEST` (superseded by `T-C4-TAP-D3`) | A 400 Hz phone reads to 160 Hz; fin modes are ~275 Hz, 2P at the cap 312 Hz | need 935 Hz (`CL-H1-TAP-FS-REQ`) |
+| CR-H1-12 | C6 | Publish the strip-anchor design force as a claim and fix the `T-C6-STRIP-ANCHOR` text (700 N) to match `CALC-C6-STRIP` | H1 sizes the lever frame on it (`ASM-H1-COUPON-MAX` `UNVERIFIED`) | 907.7 N; lever 1 177 N vs 1 135 N needed |
+| CR-H1-13 | C1, C2 | Agree one wing limit proof. C2's `T-C2-WING-PROOF` (2 × 25 N per side over \|y\| 0.33–0.50, + 51 N at an upper tube end) vs C1's tree (29.0 N per side) | Two different limit cases on one flight wing; C2's is 1.7 × C1's total | GT-08 runs C1's tree; C2's case is held |
+| CR-H1-14 | D5 | Confirm `T-D5-COUPON` pass lines: claims.json (U 34.5–38.5 N, L 29.5–33.0 N, 40 mm) or CR-D5-08 (30–37 N, peak ≤ 38 N, 30 mm). GT-15 uses claims.json | Texts disagree | ratio U95 0.006 (`CL-H1-D5-RATIO-U`) |
+| CR-H1-15 | J1, F1, A2 | Retire `T-J1-XT60-HEAT` (AS150U replaced the XT60; `T-F1-CONN-HEAT` covers it); `T-J1-TUBE-BEND` = `T-C4-TUBE-BEND` | One test per claim chain | — |
+| CR-H1-16 | I1 | Borrow table is in `GROUND-TEST-PLAN.md` (end). Keep `G12` at $17.00; `X09` ($15) only if Jacobs has no DMM with a K input (answer by 18 Nov). Tube result for CR-I1-08 by 10 Dec | CR-A1-39 | bought new $17.00 ≤ $20 |
+| CR-H1-17 | C4 | `T-C4-FIN-PROOF` is at 1.5 × (ultimate level): run on a test-article fin quarter, not a flight fin; add its materials | Proof of a flight part stops at limit | 49 + 25 N, 77 N |
+| CR-H1-18 | F3, F4 | Set raw-IMU batch logging ≥ 1 kHz (INS_LOG_BAT_MASK, INS_LOG_BAT_OPT) in the bench parameter set | GT-18 assumes 1 000 Hz | need 935 Hz; margin 6 % |
+| CR-H1-19 | A2 | Test ids published (CR-A2-25): `T-H1-RESTRAINED-RUN` (verifies `CL-E1-ILIM-I`, `CL-F4-SPIN-MAX`, `CL-F4-BAT-CURR-MAX`), `T-H1-PACK-PULL`, `T-H1-ARM-KILL`; point `R-ESC-CURRENT` (a) and `R-ARM-KILL` at them | `R-ESC-CURRENT` (a) had no test | — |
+
+## Closed
+
+| # | Closed by |
+|---|---|
+| CR-H1-02 | D-39: rigs count; buy ≤ $20, borrow the rest |
+| CR-H1-03 | C1 whiffletree (`team/C1/data/whiffletree.json`, CR-A1-33); follow-up CR-H1-09 |
+| CR-H1-06 | CR-E3-06: ESC ≤ 33 K, motor ≤ 38 K, hard stops 70 / 80 °C at T₃₀ |
+| CR-H1-07 | A2 adopted the names |
 
 ## Requests received
 
 | # | From | Resolution in this folder |
 |---|---|---|
-| CR-B1-06 / CR-B1-16 | B1 | GT-02c: static at 690 gf, full throttle at 14.0 V and 13.6 V with the limiter; A/B hover ratio in GT-02b |
-| CR-C1-07 | C1 | GT-02d: peak thrust and torque on a fresh 16.8 V pack, unlimited and limited; pass ≤ 21.1 N / 0.42 N·m; CR-H1-01 replaces 17.8 N |
-| CR-E1-11 | E1 | GT-02a (`T-E1-MOTOR-RM`, 5 motors) and GT-02b (`T-E1-STAND`): stand rated 20 kgf vs 2.69 kgf needed; supply ≥ 44.6 A or pack with V logged; both props |
-| CR-B4-09 | B4 | GT-01 torque cell (1 kgf at 0.100 m) and rpm logging; GT-02b A/B; GT-03 installed run with mock-up on the carriage, plus a grounded-mock-up run; `T-B4-YAW` |
-| CR-E2-09 | E2 | GT-05 fills `team/E2/pack_log.csv` (mass, size, capacity, IR at 25 and 10 °C) |
-| CR-B3-09 | B3 | GT-07 `T-B3-CG-BALANCE` with marks at the fin roots; flight tests are H2's |
-| CR-A2-10 | A2 | `team/H1/claims.json` written; names in CR-H1-07 |
-| `T-A1-WEIGH` | A1 | GT-06: guard-banded line 2.595 kg |
+| CR-A1-41 | A1 | GT-02d (guard band), GT-02e (cold pack), GT-04 (E3 lines, 600 s), GT-15 coupons, GT-16 tube by 10 Dec, GT-17, GT-18, GT-12 `T-F3-I2C-SCAN`, GT-14 `T-F5-RANGE`; borrow list |
+| CR-A1-39 | A1 (to I1) | H1's borrow list written; only `G12` bought new |
+| CR-A2-14, CR-A2-25 | A2 | `T-H1-RESTRAINED-RUN`, `T-H1-PACK-PULL`, `T-H1-ARM-KILL`; A2's ids used for every log |
+| CR-A3-19 | A3 | re-run on A3-R4: weigh U/margin 4.9 % |
+| CR-B1-16 | B1 | GT-02c |
+| CR-C2-08 | C2 | GT-08 (`-TWIST`, `-WING-PROOF` held), GT-15 (`-XPS-COUPON`), GT-18 (`-TAP-TEST`) |
+| CR-C3-07 | C3 | GT-15 (`-BOND-COUPON`, `-STOP-PUSH`), GT-09 (`-POD-PROOF`) |
+| CR-C4-11, CR-C4-21 | C4 | GT-16, GT-17, GT-18, GT-09 (`-FIN-PROOF`, `-BLOCK-PROOF`), GT-15 (`-BOARD-COUPON`) |
+| CR-C6-14 | C6 | all nine tests in GT-15 / GT-17 |
+| CR-D5-08 | D5 | GT-15 (`-COUPON`, `-PAD-MU`), GT-09 (`-PROOF`, `-SIDE`), GT-10 (`-REPLACE`) |
+| CR-E3-06 | E3 | GT-04 |
+| CR-F3-10 | F3 | GT-12 (`-FW-LOAD`, `-I2C-SCAN`, `-5V`), GT-13 (`-COMPASSMOT`); `-VIBE`, `-HDOP` to H2 |
+| CR-F4-06 | F4 | GT-01 signal and GT-02d use `K09L-STAND.param` |
+| CR-F5-05 | F5 | GT-14 = `T-F5-RANGE`; `T-F5-FS-BENCH` in GT-12 |
+| CR-I1-08 | I1 | GT-16, result by 10 Dec |
+| CR-B1-06, CR-C1-07, CR-E1-11, CR-B4-09, CR-E2-09, CR-B3-09, CR-A2-10 | — | as R1 (GT-02, GT-03, GT-05, GT-07) |

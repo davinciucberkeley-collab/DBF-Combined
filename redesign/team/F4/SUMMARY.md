@@ -1,39 +1,44 @@
 # F4 — flight-control software
 
-Status `PROPOSED`, revision F4-R1, 2026-11-09. Deliverables in `subsystems/flight-software/`: `K09L.param` (116
-lines, every line commented), `SPEC.md` (map, transition, failsafes), `SITL-PLAN.md` (15 cases incl. motor-failure
-injection), `TUNING-PLAN.md`, `params.json`. Check: `python -I redesign/team/F4/fsw_check.py` → lint OK, mirror OK,
-19 claims, none failing; `build_graph.py` shows no F4 error (B1/B3 drift is theirs).
+Status `PROPOSED`, revision **F4-R3**, 2026-11-09. Deliverables in `subsystems/flight-software/`: `K09L.param` (149
+lines, every line commented; ArduPlane 4.7.x on the CoreWing F405 Wing V2), `K09L-STAND.param` (stand overlay),
+`SPEC.md`, `SITL-PLAN.md` (17 cases), `TUNING-PLAN.md`, `params.json`. Check: `python -I redesign/team/F4/fsw_check.py`
+→ lint OK on both files, mirror OK, 30 claims, one with a negative margin (D3 cant sense, below); `build_graph.py`
+reports no F4 error. Nothing loaded, flown or run in SITL: every behaviour `UNVERIFIED`.
 
-## Forwarded requests, resolved
+## CR-A1-36 items, resolved
 
-| Request | Set | Unit | Claim | Status |
+| Item | Set | Unit | Claim (value) | Status |
 |---|---|---|---|---|
-| `Q_M_BAT_CURR_MAX`, `_VOLT_MAX/MIN` (CR-E1-08) | 100, 16.8 / 13.2; TC 1 s | A, V | R-ESC-CURRENT | `UNVERIFIED` |
-| Output cap ~0.85 from rpm (CR-B4-06a) | `Q_M_SPIN_MAX` 0.84; FW `THR_MAX` 75 + yaw 0.0875 | — | `CL-F4-SPIN-MAX`, `CL-F4-FW-ACT-MAX` (+1 %) | `UNVERIFIED` (range 0.9–1.0 documented) |
-| `AIRSPEED_CRUISE` 16, `ARSPD_FBW_MIN` (D-21), `MAX` ≤ 20 | 16, `AIRSPEED_MIN` 15, `AIRSPEED_MAX` 18 (4.5+ names) | m/s | `CL-F4-ARSPD-MIN-FACTOR` 1.26, `-CRUISE-TRANS` 1.03, `-MAX-VA` | `UNVERIFIED` (B3 R1 stall pending) |
-| `Q_TAILSIT_RAT_FW` 20 | **12** (CR-B1-12 supersedes; 20 on fresh packs after logs) | °/s | B1 peak 0.76 sagged | `UNVERIFIED` |
-| `Q_WP_SPEED_DN` ≤ 150, `Q_LAND_SPEED` 50 | `Q_WP_SPD_DN` 1.2, `Q_PILOT_SPD_DN` 1.2 (default would be 2.5), `Q_LAND_FINAL_SPD` 0.5; legacy cm/s lines kept | m/s | `CL-F4-DESCENT` +36 % vs VRS 1.88 | `UNVERIFIED` |
-| `BATT_LOW_MAH` 2600 / `CRT` 1300 / `ARM_VOLT` 16.4 | **2 700** (E2's live claim, CR-E2-13) / 1 300 / 16.4 | mAh, V | `CL-F4-BATT-LOW`, `-CRT` | `PROPOSED` |
-| Harmonic notch on ESC rpm | mode 3, 70 Hz, harmonics 1–3, bdshot on outputs 1–4 | Hz | `CL-F4-NOTCH-LOW` 1.29, `-TOP` 0.94 | `UNVERIFIED` |
-| FW yaw by differential thrust (CR-B3-04, CR-J1-05) | `RUDD_DT_GAIN` 35, `YAW2SRV_DAMP` 0.1, `THR_MIN` 10 | % | `CL-F4-RUDD-DT-REQ` 31.8 % | `UNVERIFIED` |
-| `Q_WVANE_ENABLE` 1 | 1, gain 1 | — | — | `PROPOSED` |
-| No airspeed gain scheduling in the pitch-over | `Q_TAILSIT_GSCMSK` 1; hand-over 20° above horizon | — | — | `PROPOSED` |
-| Motor map (CR-A4-12, CR-B4-04) | LR M1 CCW · UL M2 CCW · LL M3 CW · UR M4 CW (seen from nose) | — | `CL-F4-MOTOR-MAP-ERR` 0 | `CHECKED` (calc), bench `UNVERIFIED` |
-| Body rates ≤ 3 rad/s (CR-C1-08) | max 150 °/s | rad/s | `CL-F4-BODY-RATE` 2.62 | `UNVERIFIED` |
-| SITL plan with motor failure (CR-E1-08) | S11: `SIM_ENGINE_FAIL` + `SIM_ENGINE_MUL` 0 | — | T-F4-SITL-MOTOR-OUT | `UNVERIFIED` (no SITL) |
+| `AIRSPEED_MIN` 15.6 (D-36) | **16**: the parameter is an integer (`AP_Int16`, checked in source) | m/s | `CL-F4-ARSPD-MIN-FLOOR` 16 ≥ 15.6 | `UNVERIFIED` (upstream stall) |
+| `Q_TAILSIT_RAT_FW` | 12 until B1 re-checks at sag 0.76 | °/s | — | `UNVERIFIED` |
+| Elevon schedule to VD 27.2 | no FW raw-stick mode; `PTCH_LIM_MIN_DEG` −10 (was −15); `TECS_SINK_MAX` 2.5 | °, m/s | `CL-F4-VDIVE-VA` 17.8 ≤ 20.5 | `UNVERIFIED` |
+| `AIRSPEED_MAX` 18, `ARSPD_FBW_MAX` ≤ 22 | 18 (`ARSPD_FBW_MAX` is its pre-4.5 name) | m/s | `CL-F4-ARSPD-MAX-CAP` +18 % | `UNVERIFIED` |
+| `THR_MAX` so level speed < VH | 75 | % | `CL-F4-VLEVEL-VH` 0.89 | `UNVERIFIED` |
+| Rate-loop crossover ≤ 5 Hz | roll / pitch / yaw 1.1 / 2.6 / 1.0; P ceilings 0.38 / 0.15 / 1.9 in TUNING-PLAN | Hz | `CL-F4-XOVER-*` | `UNVERIFIED` |
+| Gyro low-pass ≥ 2 × from 12 Hz | `INS_GYRO_FILTER` 40, `Q_A_RAT_RLL/PIT_FLTD` 32 against the 14.9 Hz band top | Hz | `CL-F4-FILT-SEP` 2.15 | `PROPOSED` |
+| Notch on ESC rpm | mode 3, `INS_HNTCH_REF` 1 (added: 0 freezes it), 70 Hz, harmonics 1–3 | Hz | `CL-F4-NOTCH-LOW` 1.28, `-TOP` 0.94 | `UNVERIFIED` |
+| Cant sense A/B at 7° vs the map | **D3's sense is reversed** → CR-F4-11 | — | `CL-F4-CANT-SENSE-D3` −1 (**FAILS**) | `CHECKED` (calc) |
+| Spin-min ≤ 0.5 s after touchdown | RC9 cut at contact (auto-disarm needs ≥ 5 s in ArduPilot) | s | `CL-F4-TD-CUT` 0.46 | `UNVERIFIED` |
+| Wingtip-into-wind landing | `Q_WVANE_LAND` 3, `Q_WVANE_TAKEOFF` 3 (side into wind) | — | — | `PROPOSED` |
+| `ARSPD_TYPE` 1 (MS4525DO) | 1, `ARSPD_BUS` 0, `ARSPD_TUBE_ORDR` 2 | — | — | `PROPOSED` |
+| ELRS map (CR-F5-01) | arm ch 5, modes ch 6, e-stop ch 9, `SERIAL6_PROTOCOL` 23, `RSSI_TYPE` 3, `RC_OPTIONS` 8480, `FS_GCS_ENABL` 0 | — | — | `PROPOSED` |
+| LH adapters on CW motors | LL and UR (outputs 3, 4); in `params.json#fsw.motor_map` | — | — | `PROPOSED` |
+| `Q_M_BAT_CURR_MAX` 100 (CR-A2-14) | 100, `Q_M_BAT_IDX` 0, TC 1 s | A | `CL-F4-BAT-CURR-MAX` → R-ESC-CURRENT, R-FSW-PARAMS | `PROPOSED` |
+
+Also applied: CR-F3-02 board lines (`AHRS_ORIENTATION`, battery scaling 11.05 / 64, sensor offsets, SERIAL5 GPS),
+CR-H1-04 stand overlay (25 A), CR-E3-05 (no mode demands sustained full throttle), CR-D5-09 (0.5 m/s final).
 
 ## Findings others depend on
 
 | Finding | Effect |
 |---|---|
-| Copter frame of a tailsitter: forward = belly, so the *lower* motors are ArduPilot's front pair | wiring and props follow the map, not intuition |
-| In FW the tailsitter writes throttle straight to the motors (`output_motor_mask`), bypassing `Q_M_SPIN_MAX` and the current limiter | rpm cap in FW is `THR_MAX`; SITL S4 confirms |
-| FW differential thrust is symmetric about throttle; it cannot raise one side only | B3's "raise one side" is not available without Lua (CR-F4-02) |
-| `AIRSPEED_MIN/MAX` are integers | 15 m/s needs B3's R1 Vs ≤ 12.5 m/s |
-| Default pilot descent in QHOVER is 2.5 m/s, above VRS onset | set to 1.2 m/s |
+| D3's printed cant gives UR thrust along +t; the map needs −t | hover yaw would reverse on first spin-up; swap prints (CR-F4-11) |
+| ArduPilot has no airspeed-scheduled surface limit; no Lua on the F405 | ≤ 1/3 at VD held only by the envelope (CR-F4-12) |
+| Steady idle dive at −15° pitch reaches 26 m/s (near VD); at −10°, 17.8–20.1 m/s | pitch floor −10° |
+| Quadplane land detector: motors at lower limit ≥ 5 s before disarm | touchdown cut is a pilot action (CR-F4-14) |
+| Upstream claims re-run differently from their stored values (A3 inertia, B1 L/D, VMAX) | F4 numbers follow the re-run; the dive is 20.1 m/s on B1's stored L/D 7.16, still ≤ 20.5 |
 
 ## Open
 
-CR-F4-01…10 filed (B3 ×2, E1/D3, F2, F3, E1/H1, A1, E2, A2, H2/H3). 50 parameter names wait for SITL S1 on the
-installed build. Nothing has flown or run in SITL: all behaviour `UNVERIFIED`.
+CR-F4-11 … 14 new (D3, A1/C1/B2, F5, H2/H3); CR-F4-03/04/06/09/10 open. 76 of 143 names wait for SITL S1 on the 4.7.x tag.

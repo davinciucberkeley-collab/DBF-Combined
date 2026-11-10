@@ -1,0 +1,14 @@
+part_id,name,qty,make_or_buy,process,material,mass_g,unit_cost_usd,vendor_or_file,notes
+HRN-001,Pod harness bundle (lumped),1,make,"cut, twist, solder, crimp",copper + silicone,41.2,0,subsystems/harness/WIRE-LIST.csv,every lead's pod run + GPS cable + JR row + GH plugs; position from interfaces.json
+HRN-002,"Wing-fin harness bundle (lumped, per side; R and L differ)",2,make,"cut, twist, solder, lay in grooves",copper + silicone,40.68,0,subsystems/harness/WIRE-LIST.csv,per unit = mean of R 40.7 g and L 40.6 g; instance masses in interfaces.json
+HRN-101,Silicone wire 16 AWG red 3 m + black 3 m + yellow 1.5 m (phases),1,buy,-,-,0,14.0,https://www.amazon.com/s?k=BNTECHGO+16+AWG+silicone+wire,mass carried in HRN-001/002. ESC leads 4 x 2 + phase extensions; replaces the 16 AWG line in F1 POWER.md (CR-F2 to F1/I1)
+HRN-102,Silicone wire 20 AWG red + black 1 m each,1,buy,-,-,0,4.0,https://www.amazon.com/s?k=20+AWG+silicone+wire,mass carried in HRN-001/002. UBEC feed and rail; replaces the 20 AWG line in F1 POWER.md
+HRN-103,"Servo extension wire 26 AWG 3-core, 2 m",1,buy,-,-,0,5.0,https://www.amazon.com/s?k=26AWG+servo+extension+wire,mass carried in HRN-001/002. elevon leads + pigtails
+HRN-104,"Silicone wire 28 AWG, 3 colours x 3 m",1,buy,-,-,0,7.0,https://www.amazon.com/s?k=28+AWG+silicone+wire,mass carried in HRN-001/002. DShot pairs and pigtails
+HRN-105,"JR/Futaba connector kit (housings + crimp contacts), 10 sets",1,buy,-,-,0,7.0,https://www.amazon.com/s?k=JR+servo+connector+kit,mass carried in HRN-001/002. 8 used
+HRN-106,JST-GH 1.25 mm housings 4/6-pin + pre-crimped 28 AWG leads 150 mm,1,buy,-,-,0,12.0,https://www.amazon.com/s?k=JST+GH+pre-crimped+cable+kit,mass carried in HRN-001/002. no crimp tool needed: insert contacts
+HRN-107,Adhesive-lined heat-shrink 3:1 assortment (2.4-9.5 mm),1,buy,-,-,0,9.0,https://www.amazon.com/s?k=adhesive+lined+heat+shrink+3%3A1,mass carried in HRN-001/002.
+HRN-108,"Cable ties 2.5 x 100 mm, 100 pack",1,buy,-,-,0,4.0,https://www.amazon.com/s?k=cable+ties+100mm,mass carried in HRN-001/002.
+HRN-109,"PET expandable braided sleeve 6 mm, 2 m",1,buy,-,-,0,6.0,https://www.amazon.com/s?k=PET+braided+sleeve+6mm,mass carried in HRN-001/002. exit and crossing chafe sleeves
+HRN-110,"Fin-hole grommet ASA 10/7 x 12 mm (printed, G3)",4,make,-,-,0,0.0,subsystems/harness/BUILD.md,mass carried in HRN-001/002. 4 + 2 spare
+HRN-111,"Straw liner 7 mm PP, 40 mm (P1 pass-through)",2,make,-,-,0,0.0,drinking straw,mass carried in HRN-001/002.

@@ -26,12 +26,22 @@ unchanged. Do not fix geometry in Fusion by hand.
 | Pack length | > 140 mm | the pack-room numbers below shrink by half the excess at each end | D2 and A1 re-check the pod station |
 | Spar mass | > 112 g (CALC 102 g + 10 % growth) | growth beyond what the wing allocation carries | A3 moves the wing line to `WEIGHED`; any excess comes from A1's reserve (50 g cover) |
 
-## 2. Pod station: the D-17 rule, made checkable
+## 2. Pod station: the D-17 rule (closed by D-24, kept for the record)
 
-D-17 holds the pod nose at x = −0.105 m until B3 re-derives the CG range at R1 geometry (CR-A1-10), and moves it to
-−0.125 m "if the re-derived aft limit is < 0.051 m". The 0.051 m was A3's pack-centred CG at the time. With today's
-roll-up it is 0.0519 m, and A3 has since shown (CR-A3-11) that the held station fails for a second reason: the
-pack cannot reach the CG target inside the nose wall. The rule is therefore re-stated in two parts, each a claim:
+**Outcome (A1-R3, CHANGE-LOG D-24):** B3 published the R1 range, 0.050–0.055 m (`CL-B3-CG-FWD` 0.0499,
+`CL-B3-CG-AFT` 0.0553, target 0.0526). The pack-centred CG 0.0515 m is inside it, so neither part of the rule fires:
+the pod stays at the D-08 layout, the pack's nominal centroid moves to x −0.001 m (4 mm aft of the old pod centre),
+and the −0.125 m fallback, `CALC-A1-POD-RULE` and the `ASM-A1-POD-*` assumptions are retired (replaced by
+`CALC-A1-CG-RANGE`). The preview below was wrong about the mechanism: at R1 the forward limit is set by elevon
+trim (≤ 12.5° at CLmax), not by static margin, and it moved 10 mm aft. The pod nose shell alone later grew 10 mm
+to −0.115 m for the crush block (D-25); that is not a station move.
+
+### The rule as it stood at A1-R2
+
+D-17 held the pod nose at x = −0.105 m until B3 re-derived the CG range at R1 geometry (CR-A1-10), and moved it to
+−0.125 m "if the re-derived aft limit is < 0.051 m". The 0.051 m was A3's pack-centred CG at the time. With the
+A3-R3 roll-up it was 0.0519 m, and A3 had shown (CR-A3-11) that the held station failed for a second reason: the
+pack could not reach the then CG target inside the nose wall. The rule was re-stated in two parts, each a claim:
 
 | Part | The pod moves to −0.125 m when | Claim (value today) | Today, on B3's stored (R0) range |
 |---|---|---|---|

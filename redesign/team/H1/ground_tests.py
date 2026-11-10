@@ -158,11 +158,46 @@ kit.claim("CL-H1-T-PRED-SAG", "Predicted thrust, worst pack state", calc="CALC-H
           unit="kgf", how="params.json thrust_max x voltage_sag; measured on a 3.6 V/cell 10 degC pack.")
 kit.claim("CL-H1-T-PASS-FRESH", "Stand pass line, fresh pack (T/W 2.0)", calc="CALC-H1-TW-PASS",
           output="pass_fresh_kgf", unit="kgf", limit=("<=", "CL-H1-T-PRED-FRESH"),
-          how="Card GT-02 step 6: isolated full-throttle thrust at the per-motor limiter share (25 A) on a "
-              "16.8 V pack must be >= this value.")
+          how="Card GT-02d: isolated full-throttle thrust at the per-motor limiter share (25 A) on a "
+              "16.8 V pack must be >= CL-H1-T-FRESH-ACCEPT.")
 kit.claim("CL-H1-T-PASS-SAG", "Stand pass line, worst pack (T/W 1.6)", calc="CALC-H1-TW-PASS",
           output="pass_sag_kgf", unit="kgf", limit=("<=", "CL-H1-T-PRED-SAG"),
-          how="Card GT-02 step 8: full-throttle thrust on a 3.6 V/cell (20 %) pack at 10 degC must be >= this value.")
+          how="Card GT-02e: full-throttle thrust on a 3.6 V/cell (20 %) pack at 10 degC must be >= CL-H1-T-SAG-ACCEPT.")
+
+
+# ---------------------------------------------------------------- 3b. guard bands on the stand pass lines (CR-A1-41)
+kit.assumption("ASM-H1-CAL-U", "Calibrated thrust-cell U95 = 0.5 % of the 2.5 kgf calibration span",
+               "After T-H1-STAND-CAL the thrust reading is within 0.5 % of the 2.5 kgf dead-weight span (12.5 gf) "
+               "anywhere in that span, including drift between the start and end calibration.",
+               basis="GT-01 pass lines: linearity <= 0.5 % FS and start/end drift <= 0.5 %", value=0.005, unit="-")
+kit.assumption("ASM-H1-CAL-SPAN", "Thrust-cell calibration span 2.5 kgf", "Dead weights 0.5/1.0/2.0/2.5 kg on the "
+               "thrust axis (GT-01 step 2); the top weight covers 1.25 x the 21.1 N limit thrust (2.69 kgf) within 7 %.",
+               basis="largest water-jug/dead-weight set that can be hung on the axle cord safely", value=2.5, unit="kgf")
+
+
+@kit.calc("CALC-H1-GUARD", equation="U = u_cal span ; T_peak_acc = T_lim - U g ; T_fresh_acc = T_pass_fresh + U ; "
+          "T_sag_acc = T_pass_sag + U",
+          inputs={"u": "ASM-H1-CAL-U", "span": "ASM-H1-CAL-SPAN", "t_lim": P + "requirements.thrust_limit_per_motor_n",
+                  "pf": "CL-H1-T-PASS-FRESH", "ps": "CL-H1-T-PASS-SAG", "g": P + "env.g_ms2"},
+          units={"t_lim": "N", "g": "m/s2"})
+def guard(u, span, t_lim, pf, ps, g):
+    u_kgf = u * span
+    return {"u_kgf": u_kgf, "u_n": u_kgf * g, "peak_accept_n": t_lim - u_kgf * g,
+            "fresh_accept_kgf": pf + u_kgf, "sag_accept_kgf": ps + u_kgf}
+
+
+kit.claim("CL-H1-T-U95", "Thrust-cell U95 after calibration", calc="CALC-H1-GUARD", output="u_n", unit="N",
+          how="T-H1-STAND-CAL: linearity and drift of the 2.5 kg dead-weight set.")
+kit.claim("CL-H1-T-PEAK-ACCEPT", "GT-02d peak-thrust acceptance (limit thrust minus U95)", calc="CALC-H1-GUARD",
+          output="peak_accept_n", unit="N",
+          how="Card GT-02d: max of 3 unlimited steps at the F4 cap, rho-corrected, <= this value passes; between this "
+              "and 21.1 N is a retest (5 more steps); above 21.1 N C1 re-runs the loads (CR-H1-01).")
+kit.claim("CL-H1-T-FRESH-ACCEPT", "GT-02d limited-thrust acceptance, fresh pack", calc="CALC-H1-GUARD",
+          output="fresh_accept_kgf", unit="kgf", limit=("<=", "CL-H1-T-PRED-FRESH"),
+          how="Card GT-02d step 3: thrust with the 25 A per-motor limiter share >= this value.")
+kit.claim("CL-H1-T-SAG-ACCEPT", "GT-02e cold-pack acceptance, 3.6 V/cell at 10 degC", calc="CALC-H1-GUARD",
+          output="sag_accept_kgf", unit="kgf", limit=("<=", "CL-H1-T-PRED-SAG"),
+          how="Card GT-02e: full-throttle thrust with the limiter share on the cold 20 % pack >= this value.")
 
 
 # ---------------------------------------------------------------- 4. weigh and CG measurement uncertainty
@@ -210,26 +245,46 @@ kit.claim("CL-H1-CG-ACCEPT-AFT", "CG acceptance, aft line (guard-banded)", calc=
 
 
 # ---------------------------------------------------------------- 5. proof loads (limit = ultimate / 1.5)
-@kit.calc("CALC-H1-PROOF", equation="P = V_ult/SF at y = Mx_ult/V_ult ; d_max = k b/2 ; F_mount = F_ult/SF ; "
-          "F_fin = M_fin_ult / (SF z_station)",
-          inputs={"v_ult": "CL-C1-WING-SHEAR-ULT", "mx_ult": "CL-C1-SPAR-MX-ULT", "sf": P + "requirements.safety_factor_ult",
+kit.assumption("ASM-H1-PAD4-Y", "C1 whiffletree pad 4 at y 0.465 m", "Fourth pad station per side as listed in "
+               "team/C1/data/whiffletree.json (proof_y4_m 0.465, proof_P4_lim_N 6.398); C1's claims publish pads 1-3 "
+               "and the per-side total only.", basis="team/C1/data/whiffletree.json", value=0.465, unit="m",
+               status="UNVERIFIED")
+# R2: the wing proof uses C1's four-pad whiffletree at LIMIT (CR-H1-03 answered by CR-A1-33); the pad masses are
+# what the card hangs. Mount and fin loads stay ultimate / 1.5.
+@kit.calc("CALC-H1-PROOF", equation="m_i = P_i,lim / g at y_i (C1 whiffletree) ; P_side = sum P_i ; "
+          "y_c = sum P_i y_i / P_side ; d_max = k b/2 ; F_mount = F_ult/SF ; F_fin = M_fin_ult / (SF z_station)",
+          inputs={"p1": "CL-C1-PROOF-P1-LIM", "p2": "CL-C1-PROOF-P2-LIM", "p3": "CL-C1-PROOF-P3-LIM",
+                  "y1": "CL-C1-PROOF-Y1", "y2": "CL-C1-PROOF-Y2", "y3": "CL-C1-PROOF-Y3",
+                  "p_side": "CL-C1-PROOF-P-SIDE-LIM", "y4": "ASM-H1-PAD4-Y",
+                  "sf": P + "requirements.safety_factor_ult",
                   "k_def": P + "requirements.spar_deflection_max", "b": P + "wing.span_m",
                   "f_mount_ult": "CL-C1-MOUNT-F-ULT", "m_fin_ult": "CL-C1-FINHALF-MB-ULT",
                   "z_st": P + "propulsion.stations.z_m", "f_pack": "CL-C1-PACK-CRASH-LOAD", "g": P + "env.g_ms2"},
           units={"b": "m", "z_st": "m", "g": "m/s2"})
-def proof_loads(v_ult, mx_ult, sf, k_def, b, f_mount_ult, m_fin_ult, z_st, f_pack, g):
-    p = v_ult / sf
+def proof_loads(p1, p2, p3, y1, y2, y3, p_side, y4, sf, k_def, b, f_mount_ult, m_fin_ult, z_st, f_pack, g):
+    p = p_side
+    p4 = p_side - (p1 + p2 + p3)                               # C1's fourth pad, published only in whiffletree.json
     f_fin = m_fin_ult / sf / z_st
-    return {"wing_p_n": p, "wing_p_kg": p / g, "wing_y_m": mx_ult / v_ult, "wing_defl_max_m": k_def * b / 2.0,
+    return {"wing_p_n": p, "wing_p_kg": p / g, "wing_y_m": (p1 * y1 + p2 * y2 + p3 * y3 + p4 * y4) / p,
+            "pad1_kg": p1 / g, "pad2_kg": p2 / g, "pad3_kg": p3 / g, "pad4_kg": p4 / g,
+            "wing_defl_max_m": k_def * b / 2.0,
             "mount_f_n": f_mount_ult / sf, "mount_f_kg": f_mount_ult / sf / g,
             "fin_f_n": f_fin, "fin_f_kg": f_fin / g, "pack_pull_n": f_pack, "pack_pull_kg": f_pack / g}
 
 
-kit.claim("CL-H1-WING-PROOF-P", "Wing proof load per side (limit)", calc="CALC-H1-PROOF", output="wing_p_n",
-          unit="N", parts=["WNG-001"], how="Card GT-08: sandbag at y = CL-H1-WING-PROOF-Y each side; "
-          "C1 confirms the load points (CR-H1-03).")
-kit.claim("CL-H1-WING-PROOF-Y", "Wing proof load station", calc="CALC-H1-PROOF", output="wing_y_m", unit="m",
-          limit=("<=", 0.575), how="Equivalent point that reproduces root flap moment and shear.")
+kit.claim("CL-H1-WING-PROOF-P", "Wing proof load per side (limit, C1's four pads)", calc="CALC-H1-PROOF",
+          output="wing_p_n", unit="N", parts=["WNG-001"],
+          how="Card GT-08: four padded sandbags per side at CL-C1-PROOF-Y1/Y2/Y3 and y 0.465, masses CL-H1-WP-M1..M4.")
+kit.claim("CL-H1-WING-PROOF-Y", "Wing proof load centroid per side", calc="CALC-H1-PROOF", output="wing_y_m", unit="m",
+          limit=("<=", 0.575), how="Moment centroid of C1's pads; check against the pad positions marked on the wing.")
+kit.claim("CL-H1-WP-M1", "Wing proof pad 1 mass per side (limit)", calc="CALC-H1-PROOF", output="pad1_kg", unit="kg",
+          how="Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.")
+kit.claim("CL-H1-WP-M2", "Wing proof pad 2 mass per side (limit)", calc="CALC-H1-PROOF", output="pad2_kg", unit="kg",
+          how="Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.")
+kit.claim("CL-H1-WP-M4", "Wing proof pad 4 mass per side (limit; P_side minus pads 1-3)", calc="CALC-H1-PROOF",
+          output="pad4_kg", unit="kg", how="Card GT-08; C1 to publish pad 4 as claims (CR-H1-09).")
+kit.claim("CL-H1-WP-M3", "Wing proof pad 3 mass per side (limit)", calc="CALC-H1-PROOF", output="pad3_kg", unit="kg",
+          how="Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.")
 kit.claim("CL-H1-WING-DEFL-MAX", "Tip deflection allowed at limit", calc="CALC-H1-PROOF", output="wing_defl_max_m",
           unit="m", how="Card GT-08: dial gauge or ruler at the tip; and no permanent set after unloading.")
 kit.claim("CL-H1-MOUNT-PROOF-F", "Motor-mount proof load (limit)", calc="CALC-H1-PROOF", output="mount_f_n",
@@ -273,6 +328,189 @@ kit.claim("CL-H1-PACK-IR10-MAX", "Pack IR acceptance at 10 degC", calc="CALC-H1-
           how="Card GT-05 (T-E2-IR): E2's 5 mOhm/cell at 25 degC x the cold factor; pack_log.csv ir_mohm_cell_10c.")
 
 
+# ---------------------------------------------------------------- 8. R2 rigs for the structures and avionics tests (CR-A1-41)
+kit.source("SRC-H1-JACOBS-EQUIP", "Jacobs Institute, UC Berkeley: Labs and equipment", kind="web",
+           url="https://jacobsinstitute.berkeley.edu/our-spaces-at-a-glance/labs-and-equipment/",
+           where="Electronics Lab (studio 110): soldering irons, oscilloscopes and power supplies, multi-meters, Saleae "
+                 "logic analyzer, heat guns. Woodshop: Delta variable-speed drill press, band saw, table saw. Metal shop: "
+                 "Clausing drill press, Bailey 20-ton press, hand tools. No tool-lending list on the page; use in the "
+                 "lab is with a Maker Pass. Read 2026-11-09.", status="CHECKED")
+kit.assumption("ASM-H1-OPTLEVER", "Mount-stiffness rig: optical lever and load steps",
+               "T-C4-MOUNT-STIFF read by a laser pointer reflected off a 10 mm mirror bonded to the motor can, onto "
+               "mm paper on a wall L = 3.0 m away (spot moves 2 theta L); a second mirror on the collar subtracts tube "
+               "and stub rotation. Spot read to +/-0.5 mm. Loads 0.5, 1.0, 1.5 kg at the prop nut. For comparison, "
+               "C4's two dial gauges (0.01 mm) are 0.030 m apart on the can.",
+               basis="optical lever is the standard way to read sub-milliradian rotations without a fine gauge; "
+                     "laser pointer and mirror cost < $5 or are team-owned",
+               value={"L_m": 3.0, "read_mm": 0.5, "load_kg": [0.5, 1.0, 1.5], "dial_res_mm": 0.01,
+                      "gauge_s_m": 0.030}, unit="m,mm,kg,mm,m")
+
+
+@kit.calc("CALC-H1-MOUNT-STIFF", equation="a = x_mount - x_prop ; theta = F a / k ; spot = 2 theta L ; "
+          "u_k = read / spot_pass ; dial = theta(0.5 kg) s",
+          inputs={"k_req": "CL-C4-D3-MOUNT-K-REQ", "k_nom": "ASM-C4-MOUNT-K-ROCK", "xm": P + "propulsion.stations.x_mount_m",
+                  "xp": P + "propulsion.stations.x_prop_plane_m", "rig": "ASM-H1-OPTLEVER", "f_proof": "CL-H1-MOUNT-PROOF-F",
+                  "g": P + "env.g_ms2"},
+          units={"xm": "m", "xp": "m", "g": "m/s2"})
+def mount_stiff(k_req, k_nom, xm, xp, rig, f_proof, g):
+    a = xm - xp                                                # load point no closer than the prop plane: least signal
+    f_max = max(rig["load_kg"]) * g
+    th_pass = f_max * a / k_req
+    th_nom = f_max * a / k_nom
+    spot_pass = 2.0 * th_pass * rig["L_m"] * 1000.0
+    th_dial = min(rig["load_kg"]) * g * a / k_req
+    return {"arm_m": a, "spot_pass_mm": spot_pass, "spot_nom_mm": 2.0 * th_nom * rig["L_m"] * 1000.0,
+            "spot_accept_mm": spot_pass - rig["read_mm"], "u_k_frac": rig["read_mm"] / spot_pass,
+            "dial_diff_um": th_dial * rig["gauge_s_m"] * 1e6, "load_frac": f_max / f_proof}
+
+
+kit.claim("CL-H1-MSTIFF-SPOT-ACCEPT", "T-C4-MOUNT-STIFF acceptance: spot travel at 1.5 kg (can minus collar)",
+          calc="CALC-H1-MOUNT-STIFF", output="spot_accept_mm", unit="mm",
+          how="Card GT-17: net spot travel at 1.5 kg <= this value in y and in z passes CL-C4-D3-MOUNT-K-REQ.")
+kit.claim("CL-H1-MSTIFF-U", "Mount stiffness relative U95 at the pass line", calc="CALC-H1-MOUNT-STIFF",
+          output="u_k_frac", unit="-", limit=("<=", 0.10), how="T-H1-RIG-CHECK: read a 1.00 mm shim step on the wall.")
+kit.claim("CL-H1-MSTIFF-DIAL-UM", "Dial-gauge difference at C4's 0.5 kg load, at the pass stiffness",
+          calc="CALC-H1-MOUNT-STIFF", output="dial_diff_um", unit="um",
+          how="Informational: below one 10 um division, so C4's dial-gauge readout cannot resolve the pass line "
+              "(CR-H1-10); GT-17 uses the optical lever.")
+kit.claim("CL-H1-MSTIFF-LOAD-FRAC", "Largest mount-stiffness load / mount proof load", calc="CALC-H1-MOUNT-STIFF",
+          output="load_frac", unit="-", limit=("<=", 0.8), how="Load steps set in ASM-H1-OPTLEVER.")
+
+kit.assumption("ASM-H1-TAP", "Tap-test acquisition", "FFT of FC raw IMU (INS_LOG_BAT_MASK, batch sampler) at "
+               "1 000 Hz or more; the sampling rate must be >= 2.5 x the highest frequency to be read (anti-alias "
+               "margin). A phone accelerometer app (typically ~400 Hz) is used only for the wing modes below 80 Hz.",
+               basis="Nyquist 2 x plus a 25 % roll-off margin of the IMU's digital low-pass",
+               value={"fs_fc_hz": 1000.0, "fs_phone_hz": 400.0, "k_fs": 2.5}, unit="Hz,Hz,-", status="UNVERIFIED")
+
+
+@kit.calc("CALC-H1-TAP", equation="f_op = n/60 x {1, 2} at hover, cruise, cap ; window = f_op (1 +/- s) ; "
+          "fs_req = k max(f_pred, top window)",
+          inputs={"n_h": "CL-B4-HOVER-RPM", "n_c": "CL-B4-CRUISE-RPM", "n_cap": P + "propulsion.rpm_max",
+                  "s": P + "requirements.vibration_sep_frac", "f_up": "CL-C4-D3-F1-UP", "f_lo": "CL-C4-D3-F1-LO",
+                  "acq": "ASM-H1-TAP"},
+          units={"n_cap": "rpm"})
+def tap(n_h, n_c, n_cap, s, f_up, f_lo, acq):
+    rows = []
+    for name, n in (("hover", n_h), ("cruise", n_c), ("cap", n_cap)):
+        for h in (1, 2):
+            f = n / 60.0 * h
+            rows.append([f"{h}P {name}", round(f, 1), round(f * (1 - s), 1), round(f * (1 + s), 1)])
+    top = max(r[3] for r in rows)
+    fs_req = acq["k_fs"] * max(top, f_up, f_lo)
+    return {"windows": rows, "top_hz": top, "fs_req_hz": fs_req, "fs_fc_hz": acq["fs_fc_hz"],
+            "phone_max_hz": acq["fs_phone_hz"] / acq["k_fs"]}
+
+
+kit.claim("CL-H1-TAP-FS-FC", "FC raw-IMU sampling rate used for tap tests", calc="CALC-H1-TAP", output="fs_fc_hz",
+          unit="Hz", how="F4/F3 log setting; confirm in the .bin header (T-H1-RIG-CHECK).")
+kit.claim("CL-H1-TAP-FS-REQ", "Tap-test sampling rate needed", calc="CALC-H1-TAP", output="fs_req_hz", unit="Hz",
+          limit=("<=", "CL-H1-TAP-FS-FC"),
+          how="T-H1-RIG-CHECK: log a 200 Hz tuning-fork / phone-speaker tone on the FC raw IMU and find it in the FFT.")
+kit.claim("CL-H1-TAP-PHONE-MAX", "Highest frequency a ~400 Hz phone accelerometer reads", calc="CALC-H1-TAP",
+          output="phone_max_hz", unit="Hz",
+          how="Informational: the fin-station modes (~273-281 Hz) and 2P at the cap (312 Hz) are above it (CR-H1-11).")
+
+kit.assumption("ASM-H1-BEND", "Tube bend rig", "Span 0.80 m on two 22 mm dowels, centre load 0.5-4.0 kg through a "
+               "printed 22 mm saddle; deflection by a dial indicator on a magnetic base (0.01 mm) if Jacobs lends one, "
+               "else a digital caliper depth rod against a fixed reference bar (0.02 mm read, +/-0.03 mm U95).",
+               basis="C4's T-C4-TUBE-BEND procedure; caliper fallback from the borrow list",
+               value={"span_m": 0.80, "load_kg": 4.0, "u_defl_mm": 0.03}, unit="m,kg,mm")
+
+
+@kit.calc("CALC-H1-BEND", equation="I = pi/64 (D^4 - d^4) ; delta = F L^3 / (48 E I) ; sigma = F L D / (8 I) ; "
+          "u_E = u_delta / delta",
+          inputs={"od": P + "fins.tube.od_m", "idm": P + "fins.tube.id_m", "e_lo": "ASM-C4-E-TUBE-LO",
+                  "rig": "ASM-H1-BEND", "g": P + "env.g_ms2"},
+          units={"od": "m", "idm": "m", "g": "m/s2"})
+def bend(od, idm, e_lo, rig, g):
+    i = math.pi / 64.0 * (od ** 4 - idm ** 4)
+    f = rig["load_kg"] * g
+    d = f * rig["span_m"] ** 3 / (48.0 * e_lo * i)
+    return {"I_m4": i, "defl_elo_mm": d * 1000.0, "defl_accept_mm": d * 1000.0 - rig["u_defl_mm"],
+            "sigma_mpa": f * rig["span_m"] * od / (8.0 * i) / 1e6, "u_e_frac": rig["u_defl_mm"] / (d * 1000.0)}
+
+
+kit.claim("CL-H1-TUBE-DEFL-ACCEPT", "Aloft tube bend acceptance: centre deflection at 4 kg (E >= 70 GPa)",
+          calc="CALC-H1-BEND", output="defl_accept_mm", unit="mm", parts=["WNG-002"],
+          how="Card GT-16 (T-C4-TUBE-BEND on BOM line W03 by 10 Dec): slope of 8 load steps; deflection at 4 kg <= "
+              "this value passes; result to I1 (CR-I1-08) and C4.")
+kit.claim("CL-H1-TUBE-SIGMA", "Bend-test peak stress at 4 kg", calc="CALC-H1-BEND", output="sigma_mpa", unit="MPa",
+          limit=("<=", 100.0), how="Far below any CF tube strength: the spare tube stays usable after the test.")
+kit.claim("CL-H1-TUBE-E-U", "Tube modulus relative U95 from the deflection read", calc="CALC-H1-BEND",
+          output="u_e_frac", unit="-", limit=("<=", 0.05), how="T-H1-RIG-CHECK: read a 1.00 mm gauge block.")
+
+kit.assumption("ASM-H1-LEVER", "Coupon lever frame 6:1, water jugs to 20 kg", "2x4 lever on an M8 bolt pivot "
+               "clamped to the bench; coupon on the short arm (0.10 m), water jugs filled slowly on the long arm "
+               "(0.60 m); failure load = 6 x jug mass x g, jug weighed after failure on the 1 g scale.",
+               basis="one rig covers every pull test from 50 N to ~1 kN with a hose and two 10 L jugs",
+               value={"ratio": 6.0, "jug_max_kg": 20.0}, unit="-,kg")
+kit.assumption("ASM-H1-COUPON-MAX", "Largest coupon pass load: C6 strip anchor 908 N", "The largest single pass "
+               "load in the coupon set is C6's edge-strip anchor design force (CALC-C6-STRIP F_design_n 907.7 N; "
+               "the T-C6-STRIP-ANCHOR text still says 700 N).",
+               basis="team/C6/claims.json CALC-C6-STRIP output; C6 to publish it as a claim (CR-H1-12)",
+               value=907.7, unit="N", status="UNVERIFIED")
+
+
+@kit.calc("CALC-H1-LEVER", equation="F_cap = r m_jug g ; F_need = 1.25 max(F_strip, F_insert)",
+          inputs={"lev": "ASM-H1-LEVER", "f_strip": "ASM-H1-COUPON-MAX", "f_ins": "ASM-C6-INSERT-PULL",
+                  "k": "ASM-H1-RANGE-FACTOR", "g": P + "env.g_ms2"},
+          units={"g": "m/s2"})
+def lever(lev, f_strip, f_ins, k, g):
+    return {"cap_n": lev["ratio"] * lev["jug_max_kg"] * g, "need_n": k * max(f_strip, f_ins)}
+
+
+kit.claim("CL-H1-LEVER-CAP", "Coupon lever capacity", calc="CALC-H1-LEVER", output="cap_n", unit="N",
+          how="T-H1-LEVER-CAL: 2.000 kg check mass on the short arm balances 0.333 kg on the long arm within 2 %.")
+kit.claim("CL-H1-LEVER-NEED", "Coupon load the lever must reach", calc="CALC-H1-LEVER", output="need_n", unit="N",
+          limit=("<=", "CL-H1-LEVER-CAP"), how="Re-run when C6/C3 change a pass load.")
+
+
+@kit.calc("CALC-H1-D5", equation="F_req = k F_peak,U / g [kgf] ; u_ratio = sqrt2 U_cell / F_plateau,L ; "
+          "theta_acc = atan(mu) + u_theta",
+          inputs={"f_pk": "CL-D5-F-PEAK-UPPER", "f_l": "CL-D5-F-PLATEAU-LOWER", "k": "ASM-H1-RANGE-FACTOR",
+                  "u_t": "CL-H1-T-U95", "mu": "ASM-D5-PAD-MU", "inc": "ASM-H1-INCLINO", "g": P + "env.g_ms2"},
+          units={"g": "m/s2"})
+def d5(f_pk, f_l, k, u_t, mu, inc, g):
+    return {"cell_req_kgf": k * f_pk / g, "ratio_u": math.sqrt(2.0) * u_t / f_l,
+            "mu_angle_deg": math.degrees(math.atan(mu)), "mu_accept_deg": math.degrees(math.atan(mu)) + inc}
+
+
+kit.assumption("ASM-H1-INCLINO", "Phone inclinometer U95 0.3 deg on a tilt board", "Phone level app on the board "
+               "face, zeroed on the flat board, read at the moment of slip from video; U95 0.3 deg.",
+               basis="typical phone MEMS inclinometer after a two-way zero", value=0.3, unit="deg", status="UNVERIFIED")
+kit.claim("CL-H1-D5-CELL-REQ", "Thrust cell range needed for the D5 crush coupon", calc="CALC-H1-D5",
+          output="cell_req_kgf", unit="kgf", limit=("<=", "CL-H1-THRUST-CAP"),
+          how="Card GT-15 D5 block: the 20 kgf cell under the drill-press table carries the crush.")
+kit.claim("CL-H1-D5-RATIO-U", "U95 of the U/L plateau ratio", calc="CALC-H1-D5", output="ratio_u", unit="-",
+          limit=("<=", 0.01), how="Against D5's bias tolerance 0.01 (CL-D5-BIAS-ERR); from T-H1-STAND-CAL.")
+kit.claim("CL-H1-MU-ANGLE-ACCEPT", "T-D5-PAD-MU acceptance slip angle (mu 0.7 + U95)", calc="CALC-H1-D5",
+          output="mu_accept_deg", unit="deg",
+          how="Card GT-15: mean slip angle of 5 runs per surface >= this value passes mu >= 0.7.")
+
+kit.assumption("ASM-H1-GPS-U", "Phone GPS distance U95 5 m", "Distance to the 100 m point from two phone GPS fixes "
+               "(or a pace count checked against a 30 m tape); U95 5 m.", basis="consumer GPS open-sky CEP",
+               value=5.0, unit="m", status="UNVERIFIED")
+kit.assumption("ASM-H1-LOG-DT", "Output log step 0.1 s", "RCOU / ESC rpm are read from the DataFlash log at "
+               "10 Hz or faster; the stop time is resolved to 0.1 s.", basis="ArduPilot default log rates",
+               value=0.1, unit="s", status="UNVERIFIED")
+
+
+@kit.calc("CALC-H1-FIELD", equation="d_walk = d_min + U_gps ; t_stop_acc = t_max - dt_log",
+          inputs={"d": P + "requirements.range_check_min_m", "u": "ASM-H1-GPS-U",
+                  "t": P + "requirements.estop_time_max_s", "dt": "ASM-H1-LOG-DT"},
+          units={"d": "m", "t": "s"})
+def field(d, u, t, dt):
+    return {"walk_m": d + u, "stop_accept_s": t - dt}
+
+
+kit.claim("CL-H1-RANGE-WALK", "T-F5-RANGE walk-out distance (guard-banded)", calc="CALC-H1-FIELD", output="walk_m",
+          unit="m", how="Card GT-14: read RSSI/LQ at >= this distance, 25 mW, 8 positions; pass LQ >= 0.9 and "
+          "best RSSI >= P:requirements.rc_rssi_check_min_dbm (-93.8 dBm) in every position.")
+kit.claim("CL-H1-ESTOP-ACCEPT", "Arm/kill acceptance: switch to zero output in the log", calc="CALC-H1-FIELD",
+          output="stop_accept_s", unit="s", how="Card GT-12 (T-H1-ARM-KILL): <= this value from the switch edge "
+          "to all RCOU at the disarmed value, 5 trials.")
+
+
 # ---------------------------------------------------------------- tests of the rig itself (the campaign tests are owned by E1, B4, C1, E2, A1, A3, B3)
 kit.test("T-H1-STAND-CAL", "Thrust stand calibration and noise",
          ["CL-H1-THRUST-CELL-REQ", "CL-H1-TORQUE-CELL-REQ", "CL-H1-THRUST-RES", "CL-H1-TORQUE-RES"],
@@ -285,8 +523,33 @@ kit.test("T-H1-SCALE-CAL", "Scale and CG-jig calibration",
                    "recover x; record in logs/T-H1-SCALE-CAL.csv.",
          evidence="redesign/team/H1/logs/T-H1-SCALE-CAL.csv")
 kit.test("T-H1-RESTRAINT-PULL", "Restraint pull before props-on runs", ["CL-H1-RESTRAINT-F", "CL-H1-RESTRAINT-PER-TIE"],
-         procedure="Card GT-03: spring scale on each strap to the per-strap force, no slip at the table anchor.",
+         procedure="Card GT-13: spring scale (or the lever frame) on each strap to the per-strap force, no slip at "
+                   "the table anchor.",
          evidence="redesign/team/H1/logs/T-H1-RESTRAINT-PULL.csv")
+kit.test("T-H1-RESTRAINED-RUN", "Restrained four-motor run (CR-A2-25)",
+         ["CL-E1-ILIM-I", "CL-F4-SPIN-MAX", "CL-F4-BAT-CURR-MAX", "CL-H1-RESTRAINT-F"],
+         procedure="Card GT-13: aircraft strapped at the four root eyes after T-H1-RESTRAINT-PULL; fresh pack; "
+                   "QSTABILIZE, 2 s full throttle: BAT.Curr <= 100 A, each ESC rpm <= the cap (Q_M_SPIN_MAX 0.84), "
+                   "per-motor current <= 25 A from ESC telemetry; then 30 s at hover throttle for compassmot (T-F3-COMPASSMOT).",
+         evidence="redesign/team/H1/logs/T-H1-RESTRAINED-RUN.csv")
+kit.test("T-H1-PACK-PULL", "Pack retention pull with a dummy pack (GT-10)", ["CL-H1-PACK-PULL-F"],
+         procedure="Card GT-10: 680 g plywood/sand dummy strapped as flown; pull 85 N in +-x, +-y, +z with the lever "
+                   "frame or a luggage scale, 10 s each; slip <= 5 mm, hatch stays closed. Never a LiPo.",
+         evidence="redesign/team/H1/logs/T-H1-PACK-PULL.csv")
+kit.test("T-H1-ARM-KILL", "Arm refusal and kill switch, props off (GT-12)", ["CL-H1-ESTOP-ACCEPT"],
+         procedure="Card GT-12: arm refused with each failed pre-arm check; kill switch at 50 % throttle, 5 trials, "
+                   "switch edge to all RCOU at disarm in the log <= CL-H1-ESTOP-ACCEPT.",
+         evidence="redesign/team/H1/logs/T-H1-ARM-KILL.csv")
+kit.test("T-H1-LEVER-CAL", "Coupon lever calibration", ["CL-H1-LEVER-CAP", "CL-H1-LEVER-NEED"],
+         procedure="Card GT-15 step 0: 2.000 kg check mass on the short-arm hook; balance with water on the long arm; "
+                   "ratio = 2.000 / jug mass; repeat 3x; within 2 % of 6.0.",
+         evidence="redesign/team/H1/logs/T-H1-LEVER-CAL.csv")
+kit.test("T-H1-RIG-CHECK", "Readout checks: optical lever, tube deflection, tap acquisition, inclinometer",
+         ["CL-H1-MSTIFF-U", "CL-H1-TUBE-E-U", "CL-H1-TAP-FS-REQ", "CL-H1-D5-RATIO-U", "CL-H1-D5-CELL-REQ"],
+         procedure="Optical lever: 1.00 mm shim under the mirror base edge, spot step matches 2 L t/b; caliper or dial "
+                   "on a 1.00 mm gauge block; FC raw IMU logs a 200 Hz phone-speaker tone at the right bin; phone "
+                   "inclinometer against a 30 deg printed wedge.",
+         evidence="redesign/team/H1/logs/T-H1-RIG-CHECK.csv")
 
 
 if __name__ == "__main__":

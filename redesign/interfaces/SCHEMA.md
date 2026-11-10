@@ -14,7 +14,8 @@ ground). Never model or report in the hover attitude.
 
 **Subsystems and ids (K09-L)**: folder names and prefixes are the README table: `wing` `WNG`, `fins` `FIN`, `pod`
 `POD`, `landing` `GER`, `propulsion` `PRP`, `power` `PWR`, `avionics` `AVN`, `harness` `HRN`, `mechanisms` `MEC`,
-`transport` `TRN` (`flight-software` `FSW` has no parts). Part numbers `NNN` are 001–899; **`9xx` is reserved for
+`transport` `TRN`, `ground` `GND` (ground equipment, every part `"flight": false`; F5, D-46/CR-F5-10)
+(`flight-software` `FSW` has no parts). Part numbers `NNN` are 001–899; **`9xx` is reserved for
 `fusion/skeleton/`** so the skeleton can be merged with real subsystems without an id clash. The planned ids, owners
 and edges are in [`team/A4/INTERFACE-PLAN.md`](../team/A4/INTERFACE-PLAN.md); use them.
 
@@ -27,15 +28,20 @@ and edges are in [`team/A4/INTERFACE-PLAN.md`](../team/A4/INTERFACE-PLAN.md); us
   "parts": [ ... ],
   "connection_types": [ ... ],                 // optional: types not in the shared library
   "edges": [ ... ],                            // edges THIS subsystem owns/declares
-  "acknowledges": ["E-BMS-01"]                 // edges declared by another subsystem that touch our parts
+  "acknowledges": ["E-BMS-01"],                // edges declared by another subsystem that touch our parts
+  "edges_pending": [ ... ]                     // optional: complete edges to parts nobody has declared yet
 }
 ```
+
+`edges_pending` (D3 practice, adopted A4-R3): an edge whose other side does not exist yet would be a `dangling`
+ERROR, so the owner parks it here with `"waits_for": [part ids]`. `merge_check.py` ignores the list; `--compare`
+counts these edges as declared-pending, not missing. Move each one into `edges` as soon as its part is declared.
 
 ## Part
 
 | Field | Required | Values | Notes |
 |---|---|---|---|
-| `id` | yes | `WNG-001`, `PRP-001-UR` | `<PREFIX>-NNN` for a single part. A multi-instance part has **one node per instance**, id `<PREFIX>-NNN-<UR\|UL\|LR\|LL\|L\|R>` (motor stations upper/lower right/left, or side), each with its own `cg_xyz_m`; one part number uses one suffix family. Two different parts on one side get two numbers, not a new suffix (CR-A3-09) |
+| `id` | yes | `WNG-001`, `PRP-001-UR`, `FIN-011-URO` | `<PREFIX>-NNN` for a single part. A multi-instance part has **one node per instance**, id `<PREFIX>-NNN-<UR\|UL\|LR\|LL\|L\|R\|C>[I\|O]` (motor stations upper/lower right/left, or side left/right/centre; the optional `I`/`O` = inboard/outboard face when the same part sits twice at one station, A4-R3), each with its own `cg_xyz_m`; one part number uses one suffix family. Two different parts on one side get two numbers, not a new suffix (CR-A3-09) |
 | `name` | yes | text | |
 | `subsystem` | yes | folder name | |
 | `status` | yes | `PROPOSED` `MODELLED` `CHECKED` `VERIFIED` | proposal / in a Fusion script / passes check.py or calc / bench evidence |
@@ -45,6 +51,7 @@ and edges are in [`team/A4/INTERFACE-PLAN.md`](../team/A4/INTERFACE-PLAN.md); us
 | `make_or_buy` | yes | `make` `buy` | |
 | `electrical` | if electrical | `source` `bus` `sink` | battery = source; PDB/ESC = bus; motor/servo/FC = sink |
 | `flight` | optional | `false` for ground tools/fixtures | excluded from mass and floating checks |
+| `carried` | optional | `true` for a lumped or carried item held only by non-structural types (harness bundle, label, consumables set) | exempt from the floating check; without it, a part held only by ties floats (D-46) |
 | `notes` | optional | text | |
 
 ## Connection type
@@ -53,8 +60,9 @@ and edges are in [`team/A4/INTERFACE-PLAN.md`](../team/A4/INTERFACE-PLAN.md); us
 |---|---|
 | `id` | `CT-...` (shared ones in `connection_types.json`; duplicates must be identical) |
 | `kind` | `mechanical` `electrical` `thermal` `kinematic` |
-| `method` | `fastened` `bonded` `clamped` `press_fit` `taped` `strapped` `hinged` `slid` `connector` `soldered` `conductive` |
+| `method` | `fastened` `bonded` `clamped` `press_fit` `taped` `strapped` `hinged` `slid` `connector` `soldered` `conductive` `radio` (electrical, no wire: a radio link, D-46) |
 | `spec` | one line, e.g. `M3 SHCS into M3 brass heat-set insert`, `JST-GH 6-pin`, `revolute hinge` |
+| `structural` | optional; `false` on a type that locates a part but never carries its flight load (`CT-TIE`, `CT-WIRE-CHANNEL`, `CT-LABEL`, `CT-PITOT-TUBING`). Such edges do not join parts in the floating check, and a part flagged `"carried": true` held only by them is not floating; any other part held only by them is (D-46) |
 
 ## Edge
 
@@ -63,12 +71,13 @@ and edges are in [`team/A4/INTERFACE-PLAN.md`](../team/A4/INTERFACE-PLAN.md); us
 | `id` | yes | `E-<PREFIX of owner>-NN`; ids in the A4 plan are fixed, retired ids are never reused |
 | `part_a`, `part_b` | yes | part ids (any subsystem). **Electrical: `part_a` is the supply side, `part_b` the load** (pack → disconnect → power module → PDB → ESC → motor; FC → servo for signals) |
 | `via` | yes | connection type id |
-| `owner` | yes | subsystem responsible for the joint; it declares the edge and the other side lists it under `acknowledges`. Rules (CHANGE-LOG D-20): the owner holds one side of every edge it declares, except **`harness`, which owns every electrical edge** (every wire and connector, incl. the ESC power and motor leads; `power` owns the boxes: pack, disconnect, power module, PDB, UBEC); the **elevon hinge is a `wing` edge** (D6 designs it); no edge under two owners |
+| `owner` | yes | subsystem responsible for the joint; it declares the edge and the other side lists it under `acknowledges`. Rules (CHANGE-LOG D-20): the owner holds one side of every edge it declares, except **`harness`, which owns every electrical edge** (every wire and connector, incl. the ESC power and motor leads; `power` owns the boxes: pack, disconnect, power module, PDB, UBEC; `merge_check.py` does not warn `owner` on them, D-46); the **elevon hinge is a `wing` edge** (D6 designs it); no edge under two owners |
 | `notes` | yes (may be `""`) | |
 | `joint_stack` | if `via.method = fastened` | table below |
 | `motion` | if `via.method = hinged` | `{"axis": "Y", "range_deg": [-25, 25]}` |
-| `wire` | if `via.kind = electrical` | table below |
-| `signal_only` | optional, electrical | `true` on a lead that carries no power (ESC signal); A4's power-path check skips it |
+| `wire` | if `via.kind = electrical` (not on `method: radio`) | table below |
+| `signal_only` | optional, electrical | `true` on a lead that carries no power (ESC signal); the power-path check skips it |
+| `stowed` | optional, transport | `true` on a transport edge whose flight part is removed for transport and stored in the box (props, pitot boom in the tray). The part stays at its flight station in CAD, so `fusion/check.py` does not touch-check the edge and exempts the part from the box-overlap check (CR-A5-10, D-31) |
 
 **A4 data blocks** (optional fields on the same edge; `merge_check.py` ignores them, `team/A4/interface_plan.py
 --compare` reports each as owed until filled; numbers carry units, unknown is `"—"`):
@@ -80,8 +89,8 @@ and edges are in [`team/A4/INTERFACE-PLAN.md`](../team/A4/INTERFACE-PLAN.md); us
 | `retention` | `taped` `strapped` `slid` `press_fit` | `item`, `count`, `load_n`, `inspection` |
 | `clearance_mm` | `hinged` | clearance at both stops, plus `hinge_moment_nmm` |
 | `current_a` | electrical, power | `{"cont": A, "peak": A}` |
-| `signal` | electrical, signal | `fc_port`, `protocol`, `i2c_addr` |
-| `thermal` | `conductive` | `heat_w`, `t_max_c`, `t_ambient_c`, `path`, `sized_by` |
+| `signal` | electrical, signal or radio | `fc_port`, `protocol`, `i2c_addr` (radio: `band`, `tx_power_mw`) |
+| `thermal` | `conductive` | `heat_w`, `t_max_c`, `t_ambient_c`, `path`, `sized_by` (E3 adds `t_design_c` and the claim id) |
 | `field_joint` | any | `true` on a joint made at every field set-up (prop nuts, pitot boom, pack strap, pack plug) |
 
 **Joint stack** (every field required; text is fine where a number does not fit):
@@ -118,36 +127,39 @@ and edges are in [`team/A4/INTERFACE-PLAN.md`](../team/A4/INTERFACE-PLAN.md); us
 | Severity | Check |
 |---|---|
 | ERROR | broken JSON; missing/invalid fields; duplicate part/edge ids; differing duplicate connection types; dangling edge (unknown part or `via`); missing joint-stack / motion / wire fields; thread engagement below minimum; aircraft mass over `limit_g`; CG outside `cg_x_m` |
-| WARN | floating parts (no structural edge path to the main aircraft); electrical part unconnected or unpowered (no path to a `source`); one-sided interface (other side has not acknowledged); missing mass/CG; subsystem over its allocation; owner not a side (expected today on every `harness` wire, D-20: `merge_check.py` does not yet exempt them; A4's `--compare` does) |
+| WARN | floating parts (no load-bearing edge path to the main aircraft; types with `"structural": false` do not count; a part held only by them floats unless flagged `"carried": true`); electrical part unconnected (no wire) or unpowered (no power-carrying wire path from a `source`, followed `part_a` → `part_b`, `signal_only` leads and radio links skipped); one-sided interface (other side has not acknowledged); missing mass/CG; subsystem over its allocation; owner not a side (never on a `harness` electrical edge, D-20/D-46) |
 
 `--strict` makes warnings fail (use at integration gates). Mass budget is read from `redesign/params/mass_budget.json`
 (written by `team/A1/frame_claims.py` from `params.json#mass.allocation_g`; K09-L: `{"limit_g": 2600,
 "allocations_g": {"wing": 405, ...}, "cg_x_m": [0.040, 0.049]}`) or else the first table in `redesign/MASS-CG.md`
 with a `subsystem` and an `alloc` column (row `total` = limit).
 
-Checks that `merge_check.py` does not make (A4, `team/A4/interface_plan.py`): the part-id rule above; a load path
-that does not rely on ties, tape channels, labels or pitot tubing; power reach along power wires `part_a` → `part_b`
-with `signal_only` leads excluded; exactly one field disconnect (the pack plug).
+Checks that `merge_check.py` does not make (A4, `team/A4/interface_plan.py`): the part-id rule above; exactly one
+field disconnect (the pack plug); every planned edge declared and acknowledged, with its data blocks
+(`--compare`, which also reads `edges_pending` and `team/C6/joint_stacks.json`). Since D-46 the load-path and
+power-path rules run in `merge_check.py` itself.
 
 ## Minimal example
 
-K09-L motor UR on its mount (values illustrative until C6 sizes the joint). The motor is a `propulsion` part; the
-mount and the joint belong to `fins`, so `propulsion` lists `E-FIN-17` under `acknowledges`, and `fins` lists the
-foot edge `E-GER-02` that `landing` declares on half-fin `FIN-001-UL`:
+K09-L motor UR on its mount (R3: D3 declaration, C6 stack in `team/C6/joint_stacks.json`). The motor is a
+`propulsion` part; the mount and the joint belong to `fins`, so `propulsion` lists `E-FIN-61` under `acknowledges`,
+and `fins` lists the foot edge `E-GER-01` that `landing` declares on half-fin `FIN-001-UR`:
 
 ```json
 {"schema": "dbf-interfaces/1", "subsystem": "fins",
  "parts": [
-  {"id": "FIN-003-UR", "name": "Motor mount UR (3 deg cant)", "subsystem": "fins", "status": "PROPOSED", "mass_g": 18,
-   "material": "PETG", "cg_xyz_m": [0.040, 0.32, 0.19], "make_or_buy": "make"}],
+  {"id": "FIN-003-UR", "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp", "subsystem": "fins",
+   "status": "MODELLED", "mass_g": 11.0, "material": "ASA (printed)", "cg_xyz_m": [0.0396, 0.3215, 0.181],
+   "make_or_buy": "make"}],
  "edges": [
-  {"id": "E-FIN-17", "part_a": "PRP-001-UR", "part_b": "FIN-003-UR", "via": "CT-M3-SHCS-MOTOR", "owner": "fins", "notes": "",
-   "joint_stack": {"fastener": "M3x6 SHCS", "count": 4, "grade": "A2-70", "hole": "3.4 mm clearance in the mount plate",
-    "insert": "none (motor base tapped)", "engagement_mm": 3.0, "min_engagement_mm": 3.0, "washer_nut": "none",
-    "torque": "snug + threadlocker", "tool": "2.5 mm hex key", "access": "from the tube side (+x)",
-    "install_order": 3, "removal_order": 1}}],
- "acknowledges": ["E-GER-02"]}
+  {"id": "E-FIN-61", "part_a": "PRP-001-UR", "part_b": "FIN-003-UR", "via": "CT-M3-SHCS-MOTOR", "owner": "fins", "notes": "",
+   "joint_stack": {"fastener": "M3x8 SHCS ISO 4762", "count": 4, "grade": "A2-70",
+    "hole": "3.4 mm drilled square to the canted plate face on the measured motor pattern",
+    "insert": "none (motor base tapped M3)", "engagement_mm": 3.5, "min_engagement_mm": 3.0,
+    "max_engagement_mm": "probed hole depth - 0.5", "washer_nut": "none", "torque": "0.20 N m + Loctite 243",
+    "tool": "2.5 mm hex key", "access": "from behind the plate (+x)", "install_order": 3, "removal_order": 1}}],
+ "acknowledges": ["E-GER-01"]}
 ```
 
-`mass_g` 18 is one mount: `parts.csv` carries `FIN-003, qty 4, mass_g 18` and `interfaces.json` four nodes
+`mass_g` 11.0 is one mount: `parts.csv` carries `FIN-003, qty 4, mass_g 11.0` and `interfaces.json` four nodes
 `FIN-003-UR/UL/LR/LL`, each with its own `cg_xyz_m`.

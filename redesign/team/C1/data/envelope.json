@@ -3,305 +3,305 @@
  "joints": {
   "J-FIN": {
    "F_res_N": {
-    "limit": 56.3228,
-    "ultimate": 84.4842,
-    "joint_design": 97.1568,
-    "printed_bonded_design": 121.446,
+    "limit": 55.5722,
+    "ultimate": 83.3583,
+    "joint_design": 95.862,
+    "printed_bonded_design": 119.8275,
     "case": "L1-LEVEL/MC-C/J-FIN-R"
    },
    "M_res_Nm": {
-    "limit": 9.4047,
-    "ultimate": 14.1071,
-    "joint_design": 16.2231,
-    "printed_bonded_design": 20.2789,
-    "case": "G2-HANG-MOTOR/MC-C/J-FIN-R"
+    "limit": 8.3428,
+    "ultimate": 12.5142,
+    "joint_design": 14.3913,
+    "printed_bonded_design": 17.9891,
+    "case": "L4-CORNER-SIDE-Y/MC-C/J-FIN-R"
    },
    "Mbend_Nm": {
-    "limit": 9.4047,
-    "ultimate": 14.1071,
-    "joint_design": 16.2231,
-    "printed_bonded_design": 20.2789,
-    "case": "G2-HANG-MOTOR/MC-C/J-FIN-R"
+    "limit": 8.3428,
+    "ultimate": 12.5142,
+    "joint_design": 14.3913,
+    "printed_bonded_design": 17.9891,
+    "case": "L4-CORNER-SIDE-Y/MC-C/J-FIN-R"
    },
    "Fx_N": {
-    "limit": 56.3123,
-    "ultimate": 84.4684,
-    "joint_design": 97.1387,
-    "printed_bonded_design": 121.4233,
+    "limit": 55.5693,
+    "ultimate": 83.3539,
+    "joint_design": 95.857,
+    "printed_bonded_design": 119.8213,
     "case": "L1-LEVEL/MC-C/J-FIN-R"
    },
    "Fy_N": {
-    "limit": 36.8036,
-    "ultimate": 55.2054,
-    "joint_design": 63.4862,
-    "printed_bonded_design": 79.3578,
+    "limit": 38.2436,
+    "ultimate": 57.3653,
+    "joint_design": 65.9701,
+    "printed_bonded_design": 82.4627,
     "case": "G2-HANG-MOTOR/MC-C/J-FIN-R"
    },
    "Fz_N": {
-    "limit": 44.7698,
-    "ultimate": 67.1547,
-    "joint_design": 77.228,
-    "printed_bonded_design": 96.5349,
-    "case": "F7-ROLLPULL-VD/MC-P/J-FIN-R"
+    "limit": 34.3344,
+    "ultimate": 51.5016,
+    "joint_design": 59.2268,
+    "printed_bonded_design": 74.0335,
+    "case": "F7-ROLLPULL-VA/MC-P/J-FIN-R"
    },
    "Mx_Nm": {
-    "limit": 9.2356,
-    "ultimate": 13.8534,
-    "joint_design": 15.9314,
-    "printed_bonded_design": 19.9142,
+    "limit": 7.9351,
+    "ultimate": 11.9027,
+    "joint_design": 13.688,
+    "printed_bonded_design": 17.1101,
     "case": "G2-HANG-MOTOR/MC-C/J-FIN-R"
    },
    "My_Nm": {
-    "limit": 4.4777,
-    "ultimate": 6.7165,
-    "joint_design": 7.724,
-    "printed_bonded_design": 9.655,
-    "case": "L4-CORNER-SIDE-Y/MC-C/J-FIN-R"
+    "limit": 4.4864,
+    "ultimate": 6.7296,
+    "joint_design": 7.739,
+    "printed_bonded_design": 9.6738,
+    "case": "H6-DIAG-A/MC-C/J-FIN-R"
    },
    "Mz_Nm": {
-    "limit": 4.8413,
-    "ultimate": 7.262,
-    "joint_design": 8.3512,
-    "printed_bonded_design": 10.4391,
+    "limit": 6.0282,
+    "ultimate": 9.0423,
+    "joint_design": 10.3986,
+    "printed_bonded_design": 12.9983,
     "case": "L4-CORNER-SIDE-Y/MC-P/J-FIN-R"
    }
   },
   "J-FINHALF": {
    "F_res_N": {
-    "limit": 47.4658,
-    "ultimate": 71.1986,
-    "joint_design": 81.8784,
-    "printed_bonded_design": 102.348,
+    "limit": 47.4839,
+    "ultimate": 71.2259,
+    "joint_design": 81.9098,
+    "printed_bonded_design": 102.3872,
     "case": "G2-HANG-MOTOR/MC-C/J-FINHALF-UR"
    },
    "M_res_Nm": {
-    "limit": 8.7345,
-    "ultimate": 13.1018,
-    "joint_design": 15.0671,
-    "printed_bonded_design": 18.8338,
-    "case": "G2-HANG-MOTOR/MC-C/J-FINHALF-UR"
+    "limit": 9.2511,
+    "ultimate": 13.8766,
+    "joint_design": 15.9581,
+    "printed_bonded_design": 19.9476,
+    "case": "L4-CORNER-SIDE-Y/MC-C/J-FINHALF-UR"
    },
    "Mbend_Nm": {
-    "limit": 8.7344,
-    "ultimate": 13.1016,
-    "joint_design": 15.0668,
-    "printed_bonded_design": 18.8335,
-    "case": "G2-HANG-MOTOR/MC-C/J-FINHALF-UR"
+    "limit": 7.7302,
+    "ultimate": 11.5953,
+    "joint_design": 13.3347,
+    "printed_bonded_design": 16.6683,
+    "case": "L1-LEVEL/MC-C/J-FINHALF-UR"
    },
    "Fx_N": {
-    "limit": 33.3157,
-    "ultimate": 49.9735,
-    "joint_design": 57.4695,
-    "printed_bonded_design": 71.8369,
+    "limit": 34.5663,
+    "ultimate": 51.8494,
+    "joint_design": 59.6269,
+    "printed_bonded_design": 74.5336,
     "case": "L1-LEVEL/MC-C/J-FINHALF-UR"
    },
    "Fy_N": {
-    "limit": 40.9356,
-    "ultimate": 61.4034,
-    "joint_design": 70.6139,
-    "printed_bonded_design": 88.2674,
+    "limit": 42.9582,
+    "ultimate": 64.4374,
+    "joint_design": 74.103,
+    "printed_bonded_design": 92.6287,
     "case": "G2-HANG-MOTOR/MC-C/J-FINHALF-UR"
    },
    "Fz_N": {
-    "limit": 24.1497,
-    "ultimate": 36.2246,
-    "joint_design": 41.6583,
-    "printed_bonded_design": 52.0729,
-    "case": "G2-HANG-MOTOR/MC-P/J-FINHALF-UR"
+    "limit": 21.9866,
+    "ultimate": 32.9799,
+    "joint_design": 37.9269,
+    "printed_bonded_design": 47.4087,
+    "case": "G3-BENCH/MC-C/J-FINHALF-LR"
    },
    "Mx_Nm": {
-    "limit": 8.7302,
-    "ultimate": 13.0953,
-    "joint_design": 15.0596,
-    "printed_bonded_design": 18.8245,
+    "limit": 7.4039,
+    "ultimate": 11.1059,
+    "joint_design": 12.7718,
+    "printed_bonded_design": 15.9648,
     "case": "G2-HANG-MOTOR/MC-C/J-FINHALF-UR"
    },
    "My_Nm": {
-    "limit": 6.7448,
-    "ultimate": 10.1171,
-    "joint_design": 11.6347,
-    "printed_bonded_design": 14.5434,
+    "limit": 7.7291,
+    "ultimate": 11.5936,
+    "joint_design": 13.3326,
+    "printed_bonded_design": 16.6658,
     "case": "L1-LEVEL/MC-C/J-FINHALF-UR"
    },
    "Mz_Nm": {
-    "limit": 5.2941,
-    "ultimate": 7.9412,
-    "joint_design": 9.1324,
-    "printed_bonded_design": 11.4155,
+    "limit": 6.5828,
+    "ultimate": 9.8742,
+    "joint_design": 11.3554,
+    "printed_bonded_design": 14.1942,
     "case": "L4-CORNER-SIDE-Y/MC-C/J-FINHALF-UR"
    }
   },
   "J-MOTOR": {
    "F_res_N": {
-    "limit": 19.8358,
-    "ultimate": 29.7537,
-    "joint_design": 34.2168,
-    "printed_bonded_design": 42.771,
-    "case": "H6-DIAG-A/MC-C/J-MOTOR-UR"
+    "limit": 21.2239,
+    "ultimate": 31.8358,
+    "joint_design": 36.6112,
+    "printed_bonded_design": 45.764,
+    "case": "G3-BENCH/MC-C/J-MOTOR-LR"
    },
    "M_res_Nm": {
-    "limit": 0.5654,
-    "ultimate": 0.8481,
-    "joint_design": 0.9753,
-    "printed_bonded_design": 1.2191,
-    "case": "T3-FLARE-LOWER/MC-P/J-MOTOR-LR"
+    "limit": 0.6494,
+    "ultimate": 0.9742,
+    "joint_design": 1.1203,
+    "printed_bonded_design": 1.4004,
+    "case": "H5-SIDE-RIGHT/MC-P/J-MOTOR-UR"
    },
    "Mbend_Nm": {
-    "limit": 0.3784,
-    "ultimate": 0.5675,
-    "joint_design": 0.6527,
-    "printed_bonded_design": 0.8158,
-    "case": "T3-FLARE-LOWER/MC-P/J-MOTOR-LR"
+    "limit": 0.495,
+    "ultimate": 0.7425,
+    "joint_design": 0.8539,
+    "printed_bonded_design": 1.0674,
+    "case": "H5-SIDE-RIGHT/MC-P/J-MOTOR-UR"
    },
    "Fx_N": {
-    "limit": 19.8352,
-    "ultimate": 29.7528,
-    "joint_design": 34.2158,
-    "printed_bonded_design": 42.7697,
+    "limit": 19.7121,
+    "ultimate": 29.5682,
+    "joint_design": 34.0034,
+    "printed_bonded_design": 42.5043,
     "case": "H6-DIAG-A/MC-C/J-MOTOR-UR"
    },
    "Fy_N": {
-    "limit": 5.4605,
-    "ultimate": 8.1908,
-    "joint_design": 9.4194,
-    "printed_bonded_design": 11.7743,
-    "case": "F6-ROLL-VD/MC-C/J-MOTOR-LR"
+    "limit": 3.5737,
+    "ultimate": 5.3606,
+    "joint_design": 6.1647,
+    "printed_bonded_design": 7.7059,
+    "case": "F7-ROLLPULL-VA/MC-C/J-MOTOR-LL"
    },
    "Fz_N": {
-    "limit": 10.8706,
-    "ultimate": 16.3058,
-    "joint_design": 18.7517,
-    "printed_bonded_design": 23.4397,
-    "case": "F7-ROLLPULL-VD/MC-P/J-MOTOR-UR"
+    "limit": 21.2239,
+    "ultimate": 31.8358,
+    "joint_design": 36.6112,
+    "printed_bonded_design": 45.764,
+    "case": "G3-BENCH/MC-C/J-MOTOR-LR"
    },
    "Mx_Nm": {
-    "limit": 0.4201,
-    "ultimate": 0.6302,
-    "joint_design": 0.7247,
-    "printed_bonded_design": 0.9059,
+    "limit": 0.4204,
+    "ultimate": 0.6306,
+    "joint_design": 0.7252,
+    "printed_bonded_design": 0.9064,
     "case": "H2-MAX-THRUST/MC-C/J-MOTOR-UR"
    },
    "My_Nm": {
-    "limit": 0.3694,
-    "ultimate": 0.5542,
-    "joint_design": 0.6373,
-    "printed_bonded_design": 0.7966,
-    "case": "H5-SIDE-RIGHT/MC-P/J-MOTOR-UR"
+    "limit": 0.4889,
+    "ultimate": 0.7333,
+    "joint_design": 0.8433,
+    "printed_bonded_design": 1.0542,
+    "case": "H5-SIDE-RIGHT/MC-C/J-MOTOR-UR"
    },
    "Mz_Nm": {
-    "limit": 0.3689,
-    "ultimate": 0.5534,
-    "joint_design": 0.6364,
-    "printed_bonded_design": 0.7955,
+    "limit": 0.4389,
+    "ultimate": 0.6584,
+    "joint_design": 0.7571,
+    "printed_bonded_design": 0.9464,
     "case": "H3-PITCH-UPPER/MC-C/J-MOTOR-UR"
    }
   },
   "J-MOUNT": {
    "F_res_N": {
-    "limit": 19.6184,
-    "ultimate": 29.4275,
-    "joint_design": 33.8417,
-    "printed_bonded_design": 42.3021,
-    "case": "H6-DIAG-A/MC-C/J-MOUNT-UR"
+    "limit": 20.8708,
+    "ultimate": 31.3062,
+    "joint_design": 36.0022,
+    "printed_bonded_design": 45.0027,
+    "case": "G3-BENCH/MC-C/J-MOUNT-LR"
    },
    "M_res_Nm": {
-    "limit": 0.5657,
-    "ultimate": 0.8485,
-    "joint_design": 0.9758,
-    "printed_bonded_design": 1.2197,
-    "case": "T3-FLARE-LOWER/MC-P/J-MOUNT-LR"
-   },
-   "Mbend_Nm": {
-    "limit": 0.5594,
-    "ultimate": 0.8391,
-    "joint_design": 0.965,
-    "printed_bonded_design": 1.2063,
+    "limit": 0.6494,
+    "ultimate": 0.9742,
+    "joint_design": 1.1203,
+    "printed_bonded_design": 1.4004,
     "case": "H5-SIDE-RIGHT/MC-P/J-MOUNT-UR"
    },
+   "Mbend_Nm": {
+    "limit": 0.6448,
+    "ultimate": 0.9672,
+    "joint_design": 1.1122,
+    "printed_bonded_design": 1.3903,
+    "case": "H5-SIDE-RIGHT/MC-C/J-MOUNT-UR"
+   },
    "Fx_N": {
-    "limit": 19.6174,
-    "ultimate": 29.4262,
-    "joint_design": 33.8401,
-    "printed_bonded_design": 42.3001,
+    "limit": 19.4971,
+    "ultimate": 29.2456,
+    "joint_design": 33.6324,
+    "printed_bonded_design": 42.0405,
     "case": "H6-DIAG-A/MC-C/J-MOUNT-UR"
    },
    "Fy_N": {
-    "limit": 6.4126,
-    "ultimate": 9.619,
-    "joint_design": 11.0618,
-    "printed_bonded_design": 13.8272,
-    "case": "F6-ROLL-VD/MC-C/J-MOUNT-LR"
+    "limit": 4.1744,
+    "ultimate": 6.2616,
+    "joint_design": 7.2009,
+    "printed_bonded_design": 9.0011,
+    "case": "F7-ROLLPULL-VA/MC-C/J-MOUNT-LL"
    },
    "Fz_N": {
-    "limit": 12.7703,
-    "ultimate": 19.1554,
-    "joint_design": 22.0287,
-    "printed_bonded_design": 27.5359,
-    "case": "F7-ROLLPULL-VD/MC-P/J-MOUNT-UR"
+    "limit": 20.8708,
+    "ultimate": 31.3062,
+    "joint_design": 36.0022,
+    "printed_bonded_design": 45.0027,
+    "case": "G3-BENCH/MC-C/J-MOUNT-LR"
    },
    "Mx_Nm": {
-    "limit": 0.4201,
-    "ultimate": 0.6302,
-    "joint_design": 0.7247,
-    "printed_bonded_design": 0.9059,
+    "limit": 0.4204,
+    "ultimate": 0.6306,
+    "joint_design": 0.7252,
+    "printed_bonded_design": 0.9064,
     "case": "H2-MAX-THRUST/MC-C/J-MOUNT-UR"
    },
    "My_Nm": {
-    "limit": 0.3694,
-    "ultimate": 0.5541,
-    "joint_design": 0.6372,
-    "printed_bonded_design": 0.7965,
-    "case": "H5-SIDE-RIGHT/MC-P/J-MOUNT-UR"
+    "limit": 0.4889,
+    "ultimate": 0.7333,
+    "joint_design": 0.8433,
+    "printed_bonded_design": 1.0542,
+    "case": "H5-SIDE-RIGHT/MC-C/J-MOUNT-UR"
    },
    "Mz_Nm": {
-    "limit": 0.3689,
-    "ultimate": 0.5534,
-    "joint_design": 0.6364,
-    "printed_bonded_design": 0.7955,
+    "limit": 0.4389,
+    "ultimate": 0.6584,
+    "joint_design": 0.7571,
+    "printed_bonded_design": 0.9464,
     "case": "H3-PITCH-UPPER/MC-C/J-MOUNT-UR"
    }
   },
   "J-FOOT": {
    "F_res_N": {
-    "limit": 37.7608,
-    "ultimate": 56.6411,
-    "joint_design": 65.1373,
-    "printed_bonded_design": 81.4216,
+    "limit": 40.5547,
+    "ultimate": 60.832,
+    "joint_design": 69.9568,
+    "printed_bonded_design": 87.446,
     "case": "L1-LEVEL/MC-C/J-FOOT-UR"
    },
    "M_res_Nm": {
-    "limit": 0.7407,
-    "ultimate": 1.111,
-    "joint_design": 1.2777,
-    "printed_bonded_design": 1.5971,
+    "limit": 0.9753,
+    "ultimate": 1.463,
+    "joint_design": 1.6825,
+    "printed_bonded_design": 2.1031,
     "case": "L4-CORNER-SIDE-Y/MC-C/J-FOOT-UR"
    },
    "Mbend_Nm": {
-    "limit": 0.7407,
-    "ultimate": 1.111,
-    "joint_design": 1.2777,
-    "printed_bonded_design": 1.5971,
+    "limit": 0.9753,
+    "ultimate": 1.463,
+    "joint_design": 1.6825,
+    "printed_bonded_design": 2.1031,
     "case": "L4-CORNER-SIDE-Y/MC-C/J-FOOT-UR"
    },
    "Fx_N": {
-    "limit": 37.7595,
-    "ultimate": 56.6393,
-    "joint_design": 65.1352,
-    "printed_bonded_design": 81.4189,
+    "limit": 40.5545,
+    "ultimate": 60.8318,
+    "joint_design": 69.9566,
+    "printed_bonded_design": 87.4457,
     "case": "L1-LEVEL/MC-C/J-FOOT-UR"
    },
    "Fy_N": {
-    "limit": 16.4642,
-    "ultimate": 24.6964,
-    "joint_design": 28.4008,
-    "printed_bonded_design": 35.501,
+    "limit": 20.281,
+    "ultimate": 30.4215,
+    "joint_design": 34.9847,
+    "printed_bonded_design": 43.7309,
     "case": "L4-CORNER-SIDE-Y/MC-C/J-FOOT-UR"
    },
    "Fz_N": {
-    "limit": 16.2747,
-    "ultimate": 24.412,
-    "joint_design": 28.0738,
-    "printed_bonded_design": 35.0923,
+    "limit": 20.0226,
+    "ultimate": 30.0339,
+    "joint_design": 34.539,
+    "printed_bonded_design": 43.1738,
     "case": "L5-CORNER-SIDE-Z/MC-P/J-FOOT-UR"
    },
    "Mx_Nm": {
@@ -312,91 +312,91 @@
     "case": ""
    },
    "My_Nm": {
-    "limit": 0.7364,
-    "ultimate": 1.1045,
-    "joint_design": 1.2702,
-    "printed_bonded_design": 1.5878,
+    "limit": 0.9691,
+    "ultimate": 1.4536,
+    "joint_design": 1.6716,
+    "printed_bonded_design": 2.0895,
     "case": "L5-CORNER-SIDE-Z/MC-P/J-FOOT-UR"
    },
    "Mz_Nm": {
-    "limit": 0.7406,
-    "ultimate": 1.1109,
-    "joint_design": 1.2776,
-    "printed_bonded_design": 1.597,
+    "limit": 0.9753,
+    "ultimate": 1.4629,
+    "joint_design": 1.6823,
+    "printed_bonded_design": 2.1029,
     "case": "L4-CORNER-SIDE-Y/MC-C/J-FOOT-UR"
    }
   },
   "J-POD": {
    "F_res_N": {
-    "limit": 81.1192,
-    "ultimate": 121.6788,
-    "joint_design": 139.9306,
-    "printed_bonded_design": 174.9133,
+    "limit": 80.1228,
+    "ultimate": 120.1841,
+    "joint_design": 138.2118,
+    "printed_bonded_design": 172.7647,
     "case": "L1-LEVEL/MC-C/J-POD"
    },
    "M_res_Nm": {
-    "limit": 2.3375,
-    "ultimate": 3.5063,
-    "joint_design": 4.0323,
-    "printed_bonded_design": 5.0403,
+    "limit": 2.3825,
+    "ultimate": 3.5737,
+    "joint_design": 4.1098,
+    "printed_bonded_design": 5.1372,
     "case": "L1-LEVEL/MC-C/J-POD"
    },
    "Mbend_Nm": {
-    "limit": 2.3375,
-    "ultimate": 3.5063,
-    "joint_design": 4.0323,
-    "printed_bonded_design": 5.0403,
+    "limit": 2.3825,
+    "ultimate": 3.5737,
+    "joint_design": 4.1098,
+    "printed_bonded_design": 5.1372,
     "case": "L1-LEVEL/MC-C/J-POD"
    },
    "Fx_N": {
-    "limit": 80.8448,
-    "ultimate": 121.2672,
-    "joint_design": 139.4572,
-    "printed_bonded_design": 174.3215,
+    "limit": 80.1055,
+    "ultimate": 120.1583,
+    "joint_design": 138.1821,
+    "printed_bonded_design": 172.7276,
     "case": "L1-LEVEL/MC-C/J-POD"
    },
    "Fy_N": {
-    "limit": 21.6782,
-    "ultimate": 32.5173,
-    "joint_design": 37.3949,
-    "printed_bonded_design": 46.7437,
+    "limit": 22.0132,
+    "ultimate": 33.0197,
+    "joint_design": 37.9727,
+    "printed_bonded_design": 47.4659,
     "case": "G2-HANG-MOTOR/MC-C/J-POD"
    },
    "Fz_N": {
-    "limit": 41.6804,
-    "ultimate": 62.5207,
-    "joint_design": 71.8988,
-    "printed_bonded_design": 89.8735,
-    "case": "F1-PULLUP-VD/MC-C/J-POD"
+    "limit": 43.5903,
+    "ultimate": 65.3854,
+    "joint_design": 75.1932,
+    "printed_bonded_design": 93.9915,
+    "case": "F2-PULLUP-VA/MC-C/J-POD"
    },
    "Mx_Nm": {
-    "limit": 0.6594,
-    "ultimate": 0.989,
-    "joint_design": 1.1374,
-    "printed_bonded_design": 1.4218,
+    "limit": 0.656,
+    "ultimate": 0.984,
+    "joint_design": 1.1316,
+    "printed_bonded_design": 1.4145,
     "case": "G2-HANG-MOTOR/MC-C/J-POD"
    },
    "My_Nm": {
-    "limit": 2.3375,
-    "ultimate": 3.5063,
-    "joint_design": 4.0323,
-    "printed_bonded_design": 5.0403,
+    "limit": 2.3825,
+    "ultimate": 3.5737,
+    "joint_design": 4.1098,
+    "printed_bonded_design": 5.1372,
     "case": "L1-LEVEL/MC-C/J-POD"
    },
    "Mz_Nm": {
-    "limit": 0.2772,
-    "ultimate": 0.4158,
-    "joint_design": 0.4781,
-    "printed_bonded_design": 0.5977,
+    "limit": 0.0169,
+    "ultimate": 0.0254,
+    "joint_design": 0.0292,
+    "printed_bonded_design": 0.0365,
     "case": "G2-HANG-MOTOR/MC-P/J-POD"
    }
   },
   "J-PACK": {
    "F_res_N": {
-    "limit": 41.5433,
-    "ultimate": 62.3149,
-    "joint_design": 71.6622,
-    "printed_bonded_design": 89.5777,
+    "limit": 40.665,
+    "ultimate": 60.9974,
+    "joint_design": 70.1471,
+    "printed_bonded_design": 87.6838,
     "case": "L1-LEVEL/MC-P/J-PACK"
    },
    "M_res_Nm": {
@@ -414,24 +414,24 @@
     "case": ""
    },
    "Fx_N": {
-    "limit": 41.4023,
-    "ultimate": 62.1034,
-    "joint_design": 71.4189,
-    "printed_bonded_design": 89.2737,
+    "limit": 40.6632,
+    "ultimate": 60.9948,
+    "joint_design": 70.144,
+    "printed_bonded_design": 87.68,
     "case": "L1-LEVEL/MC-P/J-PACK"
    },
    "Fy_N": {
-    "limit": 10.9298,
-    "ultimate": 16.3948,
-    "joint_design": 18.854,
-    "printed_bonded_design": 23.5675,
+    "limit": 11.0417,
+    "ultimate": 16.5626,
+    "joint_design": 19.0469,
+    "printed_bonded_design": 23.8087,
     "case": "G2-HANG-MOTOR/MC-P/J-PACK"
    },
    "Fz_N": {
-    "limit": 21.1548,
-    "ultimate": 31.7322,
-    "joint_design": 36.4921,
-    "printed_bonded_design": 45.6151,
+    "limit": 21.9756,
+    "ultimate": 32.9635,
+    "joint_design": 37.908,
+    "printed_bonded_design": 47.385,
     "case": "F1-PULLUP-VD/MC-P/J-PACK"
    },
    "Mx_Nm": {
@@ -458,66 +458,66 @@
   },
   "J-SPAR-ROOT": {
    "F_res_N": {
-    "limit": 40.5596,
-    "ultimate": 60.8394,
-    "joint_design": 69.9653,
-    "printed_bonded_design": 87.4566,
+    "limit": 40.0649,
+    "ultimate": 60.0973,
+    "joint_design": 69.1119,
+    "printed_bonded_design": 86.3899,
     "case": "L1-LEVEL/MC-C/J-SPAR-ROOT"
    },
    "M_res_Nm": {
-    "limit": 13.6713,
-    "ultimate": 20.507,
-    "joint_design": 23.583,
-    "printed_bonded_design": 29.4788,
+    "limit": 13.4879,
+    "ultimate": 20.2319,
+    "joint_design": 23.2667,
+    "printed_bonded_design": 29.0834,
     "case": "L1-LEVEL/MC-C/J-SPAR-ROOT"
    },
    "Mbend_Nm": {
-    "limit": 13.5897,
-    "ultimate": 20.3845,
-    "joint_design": 23.4422,
-    "printed_bonded_design": 29.3028,
+    "limit": 13.3762,
+    "ultimate": 20.0643,
+    "joint_design": 23.074,
+    "printed_bonded_design": 28.8425,
     "case": "L1-LEVEL/MC-C/J-SPAR-ROOT"
    },
    "Fx_N": {
-    "limit": 40.4224,
-    "ultimate": 60.6336,
-    "joint_design": 69.7286,
-    "printed_bonded_design": 87.1608,
+    "limit": 40.0528,
+    "ultimate": 60.0792,
+    "joint_design": 69.091,
+    "printed_bonded_design": 86.3638,
     "case": "L1-LEVEL/MC-C/J-SPAR-ROOT"
    },
    "Fy_N": {
-    "limit": 32.8286,
-    "ultimate": 49.2429,
-    "joint_design": 56.6293,
-    "printed_bonded_design": 70.7866,
+    "limit": 34.0737,
+    "ultimate": 51.1106,
+    "joint_design": 58.7772,
+    "printed_bonded_design": 73.4715,
     "case": "G2-HANG-MOTOR/MC-C/J-SPAR-ROOT"
    },
    "Fz_N": {
-    "limit": 25.9592,
-    "ultimate": 38.9388,
-    "joint_design": 44.7796,
-    "printed_bonded_design": 55.9745,
-    "case": "F7-ROLLPULL-VD/MC-C/J-SPAR-ROOT"
+    "limit": 22.2466,
+    "ultimate": 33.3699,
+    "joint_design": 38.3754,
+    "printed_bonded_design": 47.9692,
+    "case": "F7-ROLLPULL-VA/MC-C/J-SPAR-ROOT"
    },
    "Mx_Nm": {
-    "limit": 4.5119,
-    "ultimate": 6.7679,
-    "joint_design": 7.7831,
-    "printed_bonded_design": 9.7289,
+    "limit": 4.7846,
+    "ultimate": 7.1769,
+    "joint_design": 8.2534,
+    "printed_bonded_design": 10.3167,
     "case": "T3-FLARE-LOWER/MC-C/J-SPAR-ROOT"
    },
    "My_Nm": {
-    "limit": 4.3813,
-    "ultimate": 6.572,
-    "joint_design": 7.5578,
-    "printed_bonded_design": 9.4472,
+    "limit": 4.5795,
+    "ultimate": 6.8692,
+    "joint_design": 7.8996,
+    "printed_bonded_design": 9.8745,
     "case": "H6-DIAG-A/MC-C/J-SPAR-ROOT"
    },
    "Mz_Nm": {
-    "limit": 13.5534,
-    "ultimate": 20.3301,
-    "joint_design": 23.3797,
-    "printed_bonded_design": 29.2246,
+    "limit": 13.374,
+    "ultimate": 20.0609,
+    "joint_design": 23.0701,
+    "printed_bonded_design": 28.8376,
     "case": "L1-LEVEL/MC-C/J-SPAR-ROOT"
    }
   }
@@ -530,36 +530,60 @@
    "crash": "ultimate as given (emergency case, no further factor)"
   },
   "landing": {
-   "CL-C1-N-LAND-STROKE-MIN": 6.068903698000846,
-   "CL-C1-N-LAND-FULL-FOOT": 5.431581064889642,
-   "CL-C1-FOOT-STROKE-REQ": 0.0404863504358627,
-   "CL-C1-FOOT-LEVEL": 38.245934999999996,
-   "CL-C1-FOOT-PAIR-NARROW": 26.89130849735659,
-   "CL-C1-FOOT-PAIR-WIDE": 27.819784654857102,
-   "CL-C1-FOOT-CORNER": 32.904349974686895,
-   "CL-C1-FOOT-MAX": 38.245934999999996
+   "CL-C1-N-LAND-STROKE-MIN": 3.97259250076222,
+   "CL-C1-N-LAND-FULL-FOOT": 3.2143440631034244,
+   "CL-C1-FOOT-STROKE-REQ": 0.024405243520198405,
+   "CL-C1-FOOT-LEVEL": 38.245935,
+   "CL-C1-FOOT-LEVEL-UPPER": 41.190871995,
+   "CL-C1-FOOT-PAIR-NARROW": 22.187953290992873,
+   "CL-C1-FOOT-PAIR-WIDE": 27.98715378344169,
+   "CL-C1-FOOT-CORNER": 29.07810614139855,
+   "CL-C1-FOOT-MAX": 41.190871995
   },
-  "foot_side_load_limit_N": 19.122967499999998,
+  "foot_side_load_limit_N": 28.8336103965,
   "crash_ultimate": {
    "n": 12.746452662224103,
    "pack_N_any_axis": 85.0,
-   "avionics_N_any_axis": 9.374999999999998
+   "avionics_N_any_axis": 10.0
   },
   "assembly": {
    "prop_nut_torque_Nm_about_shaft": 1.5,
    "pack_strap_preload_N": 40.0
   },
-  "elevon_panel_limit_load_per_m_N": 31.930984679009548,
-  "elevon_panel_limit_pressure_Pa": 453.56512328138564,
+  "elevon_panel_limit_load_per_m_N": 44.431279200000006,
+  "elevon_panel_limit_pressure_Pa": 631.1261250000001,
   "rotor_per_motor": {
-   "T_lim_N": 21.081435423502242,
-   "Q_Nm": 0.4201119002257222,
-   "M_gyro_Nm": 0.3689101573035375
+   "T_lim_N": 21.1,
+   "Q_Nm": 0.42037891319631054,
+   "M_gyro_Nm": 0.3690626243669066
   },
   "transport": {
-   "n_T": 9.571428571428571,
-   "n_T_allow": 10.338826429990018,
-   "cradle_stroke_req_m": 0.06424790143579542
+   "n_T_floor_drop": 10.09090909090909,
+   "cradle_stroke_m": 0.066,
+   "n_T_allow": {
+    "z_floor": 12.446427478044484,
+    "x_end": 12.132359446617262,
+    "y_side": 11.531556202766208,
+    "lid_down": 12.446427478044484
+   },
+   "stroke_req_0p3m_drop_m": {
+    "z_floor": 0.05241810173094325,
+    "x_end": 0.05389693019500185,
+    "y_side": 0.056971637282095554
+   },
+   "lid_preload_per_pillar_N": 5.0,
+   "cradle_F_per_side_static_N": 14.62032365,
+   "cradle_F_per_side_floor_drop_limit_N": 102.07781137727271,
+   "pillar_F_per_side_lid_drop_limit_N": 102.07781137727271,
+   "pad_pressure_static_Pa": 9137.70228125,
+   "pad_pressure_floor_drop_limit_Pa": 63798.63211079544,
+   "note": "pinch preload is self-equilibrated at each station (bearing only, no wing bending); x and y impacts have no designed stroke today (D7), so they are test-only"
+  },
+  "fin_torsion_collar": {
+   "section_total_limit_Nm": 6.599465329449555,
+   "wing_plane_limit_Nm": 6.582814779762868,
+   "case": "L4-CORNER-SIDE-Y",
+   "agreement": "C1 gives the external section torque; the station collar carries C4's FE internal torque (strip end + brace-ear couple), which can exceed it. C6 sizes the collar to max(C4 FE collar torque, C1 section total)."
   }
  }
 }

@@ -1,56 +1,48 @@
 # B4 rotor / propeller aero: summary
 
-Status `PROPOSED`, 2026-11-09. Full report: [`PROPS.md`](PROPS.md). Calculations: `props.py` → `claims.json`
-(44 claims, 4 planned tests); figures: `figures.py` → `out/`; data: `data/` (APC PER3 tables for five props, UIUC
-measurements for two; S5010 section read from `team/B2/airfoils/`). Re-run 2026-11-09 at R2 geometry (motor tube at
-x 0.045 m, prop plane at x −0.005 m, half-fins 0.275 m, cruise 16 m/s at L/D 5.6, pitot tip at x −0.185 m):
-`build_graph.py` reports no B4 drift or error. The build as a whole still fails on drift in A5, B1, B2, B3, C1, E1
-and J1. All claims are `UNVERIFIED` until the thrust stand runs.
+Status `PROPOSED`, 2026-11-09, re-run at **A1-R3** (CR-A1-29). Full report: [`PROPS.md`](PROPS.md).
+Calculations: `props.py` → `claims.json` (66 claims, 4 planned tests); figures: `figures.py` → `out/`; data:
+`data/` (APC PER3 for five props, UIUC for two). R3 inputs: 7° cant, prop plane x −0.0082, pitot tip
+(−0.195, −0.046, 0.045), collars, ears, braces and ESC pads from D3's `fin_detail.*`, 0.21 m half-fins, L/D 6.9,
+half-fin ids `FIN-001-UR/UL/LR/LL`. `build_graph.py` shows no B4 drift or error. It does show downstream drift
+in B3, C4 and E3 on the new B4 values, so those roles re-run. All claims are `UNVERIFIED` until the stand runs.
 
-**Decision.** Fly the **APC 11×5.5MR / 11×5.5MRP**, as E1 proposed in CR-E1-06. The 11×5.5E/EP is the alternate.
-The 11×4.7SF is rejected because its rpm limit is 5 909 rpm. The 12×4.5MR is rejected on cruise power and rpm.
+**Decision (unchanged).** Fly the **APC 11×5.5MR / 11×5.5MRP**. The 11×5.5E/EP is the alternate.
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Hover per prop: thrust / rpm / shaft power / FM | 6.76 / 5 396 / 63.8 / 0.711 | N / rpm / W / — | `CL-B4-HOVER-*`, `CL-B4-FM` | `UNVERIFIED` |
-| Disk loading at the gate | 110 | N/m² | `CL-B4-DL` | `UNVERIFIED` |
-| Cruise per prop (1.14 N, 16 m/s): J / η_prop | 0.573 / 0.465 (11×4.5MR: 0.374) | — | `CL-B4-CRUISE-J`, `-ETA` | `UNVERIFIED` |
-| Cruise pack power, 4 motors | 205 (11×4.5MR: 249) | W | `CL-B4-CRUISE-W` | `UNVERIFIED` |
-| PER3 vs UIUC measured (2 APC 11 in props): cruise η / static FM | ±3.5 % / −4.5 % | — | `CALC-B4-XCHECK` | `CHECKED` against data |
-| Full-throttle rpm on a fresh pack, no cap (APC MR limit 9 545) | 10 637 | rpm | `CL-B4-RPM-MAX-FULL` | `FAIL` → output cap 0.85 (`CL-B4-SPIN-MAX`) |
-| T/W at the rpm cap, installed | 3.03 | — | `CL-B4-TW-CAP` | `UNVERIFIED` |
-| Download factor, modelled (design value kept) | 1.034–1.043 (1.06) | — | `CL-B4-DOWNLOAD`, `-HIGH` | `UNVERIFIED` |
-| Slipstream clearance to the wing skin (disc edge 28 mm above the S5010 crest) | 45 (wing download 0) | mm | `CL-B4-WING-GAP` | `UNVERIFIED` |
-| Swirl on each half-fin in hover: side force / root moment | 0.94 / 0.11 | N / N·m | `CL-B4-SWIRL-FIN`, `-M` | `UNVERIFIED` |
-| Slipstream drag on each motor tube in hover | 0.11 (0.15 peaked) | N | `CL-B4-TUBE-LOAD` | `UNVERIFIED` |
-| Elevon tip clear of the hover slipstream | 33 | mm | `CL-B4-ELEVON-HOVER` | `UNVERIFIED` |
-| Hover yaw authority left by fin swirl recovery / with 3° cant | 0.48 / 1.65 | × isolated | `CL-B4-YAW`, `-CANT` | `UNVERIFIED` |
-| Pitot error, boom tip at x = −0.185 m (worst case, transition) | 1.66 (limit 2; was 0.75 at R0 geometry) | % | `CL-B4-PITOT` | `UNVERIFIED` |
-| Max vertical descent (vortex-ring onset 0.28 v_h) | 1.88 | m/s | `CL-B4-DESCENT` | `UNVERIFIED` |
-| Vertical prop tip gap (≥ 25 mm) | 101 | mm | `CL-B4-GAP-V` | `UNVERIFIED` |
-| Hover 1P / BPF; BPF at the cap | 90 / 180; 311 | Hz | `CL-B4-BPF`, `-BPF-MAX` | `UNVERIFIED` |
+| Hover per prop: thrust (÷ cos 7°) / rpm / shaft power / FM | 6.81 / 5 416 / 64.5 / 0.711 | N / rpm / W / — | `CL-B4-HOVER-*`, `CL-B4-FM` | `UNVERIFIED` |
+| Cruise per prop (0.92 N, 16 m/s, L/D 6.9): J / η_prop / pack power | 0.583 / 0.421 / 185 (11×4.5MR 229) | — / — / W | `CL-B4-CRUISE-*` | `UNVERIFIED` |
+| Full-throttle rpm on a fresh pack / output cap / T/W at the cap | 10 637 / 0.85 / 3.01 | rpm / — / — | `CL-B4-RPM-MAX-FULL` (`FAIL` → cap), `-SPIN-MAX`, `-TW-CAP` | `UNVERIFIED` |
+| Download factor, modelled with the R3 hardware (design value kept) | 1.038 / 1.049 peaked (1.06) | — | `CL-B4-DOWNLOAD`, `-HIGH` | `UNVERIFIED` |
+| **Hover yaw factor, body axis (reaction + fin)**, at 7° / half fin force | **1.79 / 1.40** (R2: 0.48) | × reaction torque | `CL-B4-YAW`, `-LOW` | `UNVERIFIED` |
+| Yaw moment per N of differential thrust at 7°: full / half / no fin credit | 0.075 / 0.069 / 0.062 (B3 needs 0.048) | m | `CL-B4-K-YAW`, `-LOW` | `UNVERIFIED` |
+| Side force on each half-fin, hover, at 7° / root moment | 0.57 / 0.083 (R2: 0.94 / 0.11) | N / N·m | `CL-B4-SWIRL-FIN`, `-M` | `UNVERIFIED` |
+| Blade tip over the tube face, canted disc / collars | **27.3** / 36.0 (limit 25; uncanted 40.2) | mm | `CL-B4-GAP-TUBE`, `-COLLAR` | `UNVERIFIED` (9 % margin) |
+| Elevon tip clear of the hover slipstream (wake leans away) / if the map were mirrored | 61 / 2.5 | mm | `CL-B4-ELEVON-HOVER`, `-ALT` | `UNVERIFIED` |
+| Wing-skin clearance / ESC pad edge in the wake | 45 mm / 0.89 r_s | — | `CL-B4-WING-GAP`, `CL-B4-ESC-WASH` | `UNVERIFIED` |
+| **Pitot error at (−0.195, −0.046, 0.045)**, transition / cruise | **1.72 % / 0.27 %** (limit 2 %) | % | `CL-B4-PITOT`, `-CRUISE` | `UNVERIFIED` (14 % margin) |
+| Cruise drag of the R3 fin hardware, all / not in B1 rev 3 | 0.64 (ΔCD0 0.011) / 0.39 (ΔCD0 0.0067) | N | `CL-B4-ITEMS-DRAG`, `-NOT-B1` | `UNVERIFIED` |
+| Vertical tip gap / max descent / BPF hover, at the cap | 94 mm / 1.88 m/s / 181, 311 Hz | — | `CL-B4-GAP-V`, `-DESCENT`, `-BPF` | `UNVERIFIED` |
 
 ## Findings others depend on
 
 | Finding | Effect | To |
 |---|---|---|
-| The props sit 0.19 m off the wing plane, and the hover slipstream misses the elevons by 33 mm and the wing skin by 45 mm | No elevon authority at zero airspeed; all hover control comes from the motors | B3, F4, B1 |
-| The fin acts as a stator and recovers about half of the prop swirl | Hover yaw (about body x) drops to ≈ 0.48 ×; E1's 0.149 N·m becomes ≈ 0.07 N·m | B3, E1 |
-| A 3° tangential motor cant restores yaw authority to 1.6 × for 0.14 % of thrust | Printed mounts with a cant | D3, B3, F4 |
-| Each half-fin carries 0.94 N of swirl side force (0.11 N·m at the skin); both halves of one fin push the same way | Fin-to-tube and fin-to-skin bonds, saddle | C4, D3 |
-| Both MR props exceed APC's rpm limit at full throttle on a fresh pack | Cap the output at ≈ 0.85 and check with rpm telemetry; T/W stays 3.0 | F4, E1 |
-| PER3 over-predicts static FM by about 4.5 % | Hover shaft power about 5 % above the PER3 value | E1, B1 |
-| Pitot boom on the pod nose: 1.66 % worst case with the props at x −0.005 (the tip is near the peak of the props' upstream field, about 0.25 m ahead of them); a longer boom does not help below about 0.6 m | Keep the 80 mm boom (`POD-006`); thrust-dependent part 0.21 m/s | D2, F3, A1 |
+| R0–R2 had the hover-yaw sign wrong. The fin's swirl side force acts 0.16 m from the body x-axis and adds to the reaction torque, so the factor is 1.79, not 0.48 | B3's yaw authority roughly triples; its cant requirement falls from 6.1° to 2.6° (B3 model, mid) | B3, A1, F4 |
+| 5° is the smallest cant that meets B3's yaw need with no fin credit; 7° gives 1.30× with none | A1 may hold 7° or return to 5°: 5° gives +4.3 mm tube gap and half the thrust cost (0.38 % vs 0.75 %) | A1, B3, D3 |
+| D3's `cant_sense_UR +1` is the opposite of F4's motor map. Printed that way, the differential-thrust yaw falls to about zero (k −0.003 m) | Swap mounts A and B (D3's own fallback). H1/F4 check the sense on the motor test before the first hover | D3, F4, H1 |
+| At 7° the canted disc's wing-side edge swings 13 mm aft. The blade passes 27 mm in front of the tube (0.098 D) | Meets 25 mm. Do not move the prop plane aft; D3 confirms in CAD. Expect a stronger 2P tone | D3, C4, A1 |
+| The ears, mount collars and ESC pads add ΔCD0 0.0067 that B1 does not carry; the ears alone cost 0.21 N | B1 adds them. D3 can turn the pinch ear aft and sweep the brace ear along x to save ~0.2 N (≈ 10 W) | B1, D3 |
+| Pitot moved to the left channel: 1.72 %; the thrust-dependent part is 0.23 m/s | F3 carries 0.23 m/s in the 0.5 m/s RSS budget | F3, D2 |
+| Hover rpm 5 416, thrust 6.81 N, torque 0.114 N·m, cruise rpm 5 894 | C4 (Campbell) and E3 (thermal) re-run | C4, E3, E1 |
 
 ## Open issues
 
-- No measured data exist for any MR prop: UIUC has none. `T-B4-STAND` (A/B with the 11×4.5MR) settles it.
-- The fin-swirl estimate (low-aspect-ratio plate) is uncertain by about 2×. `T-B4-YAW` measures it.
-- The download model treats the half-fin as a flat sheet and does not model entrainment suction on the wing skin
-  28 mm below the disc edge. Hold 1.06 until `T-B4-INSTALLED` (now with a wing strip). Re-run when D3 draws the
-  fin-tube joint and the saddle.
-- The pitot margin fell from 63 % to 17 % with the R2 geometry. If the pod moves to x −0.125 (D-17), the tip moves to
-  −0.205 and the error rises to about 1.7 %. Still inside 2 %.
-- In transition the props run at high incidence, and the pitot under-reads at high angle of attack. Neither is
-  modelled here: F4 and SITL.
-- Change requests: [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md) (A1, E1, B1, B3, D2/F3, D3, C4, F4, H1, E3, I1).
+- No measured data exist for any MR prop. `T-B4-STAND` (A/B with the 11×4.5MR) settles it.
+- The fin side force is uncertain by about 2× (low-AR plate on an end wall, actuator-disk swirl). Until
+  `T-B4-YAW` runs, B3 sizes on `CL-B4-YAW-LOW`. `T-B4-YAW` now measures the fin's side force and centre of
+  pressure, because a motor-axis torque cell would read only 0.16 (`CL-B4-F-AXIS`).
+- The blade-to-tube gap ignores blade thickness and flap, about 1–2 mm at the tip. `T-B4-INSTALLED` measures it.
+- ESC dimensions are assumed (`ASM-B4-ESC`). The brace Cd of 1.2 is at the high end (B1 uses 0.8).
+- Change requests: [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md) (R3 rows CR-B4-13 to CR-B4-21).
