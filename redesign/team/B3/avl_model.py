@@ -31,7 +31,7 @@ NL = chr(10)
 AIRFOIL = AVL_DIR / "s5010.dat"           # UIUC coordinate file (copy of team/B2/airfoils/s5010.dat, SRC-B2-S5010-COORD)
 
 # lattice levels for the convergence check: (chordwise vortices, target spanwise spacing m)
-LATTICE = {"coarse": (8, 0.025), "medium": (12, 0.0125), "fine": (16, 0.008), "xfine": (24, 0.0055)}
+LATTICE = {"coarse": (8, 0.025), "medium": (12, 0.0125), "fine": (16, 0.008), "xfine": (18, 0.0076)}   # xfine: AVL NVMAX 5000
 DEFAULT_LATTICE = "medium"
 
 
@@ -227,7 +227,7 @@ def run_case(geom_text: str, case: list, mass_text: str | None = None, want=("st
             cmds += ["MODE", "N", "W", "k.eig", "", ""]
         cmds += ["QUIT"]
         p = subprocess.run([str(AVL_EXE)], input="\n".join(cmds) + "\n", text=True, capture_output=True,
-                           cwd=str(tmp), timeout=120)
+                           cwd=str(tmp), timeout=3600)
         res = {}
         if "st" in want:
             t = (tmp / "st.txt").read_text()
@@ -285,7 +285,7 @@ def trim_sweep(g, cls, cm_t=0.0, lattice=DEFAULT_LATTICE):
                      "ft", f"ft{i}.txt", "fs", f"fs{i}.txt"]
         cmds += ["", "QUIT"]
         subprocess.run([str(AVL_EXE)], input=NL.join(cmds) + NL, text=True, capture_output=True, cwd=str(tmp),
-                       timeout=300)
+                       timeout=3600)
         for i, c in enumerate(case["cls"]):
             ft = (tmp / f"ft{i}.txt").read_text()
             st = parse_st(ft)

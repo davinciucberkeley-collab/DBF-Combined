@@ -51,9 +51,10 @@ C_WING = pv("wing.chord_m")
 C_FIN = pv("fins.chord_m")                     # from the tube axis (fins.le_x_m = fins.tube.x_m) to the TE
 R_TUBE = pv("fins.tube.od_m") / 2
 T_FIN = pv("fins.board_t_m") * pv("fins.layers")
+R_FILLET = 0.003                               # m, tube-board epoxy fillet radius (fins.fin.le_gap_m filled, ASM-B1-CFD-EDGE)
 R_EDGE = 0.0                                    # m: board edges modelled sharp and square (ASM-B1-CFD-EDGE)
 LEVELS = {1: 2.0, 2: math.sqrt(2.0), 3: 1.0}   # size factor f; ratio sqrt(2) between levels
-N_JOBS, THREADS = 3, 5
+N_JOBS, THREADS = 3, 4
 ALPHA_WING = 2.5                               # deg; gives cl ~0.42-0.45 in SA (as-designed cruise cl 0.41)
 
 
@@ -116,13 +117,18 @@ def build_mesh(case, level):
         c = C_FIN
         h = T_FIN / 2
         if case == "finA":
-            xj = math.sqrt(R_TUBE ** 2 - h ** 2)
-            pj_top, pj_bot = occ.addPoint(xj, h, 0), occ.addPoint(xj, -h, 0)
+            rf = R_FILLET                          # epoxy fillet between tube and board (concave, both faces)
+            xc = math.sqrt((R_TUBE + rf) ** 2 - (h + rf) ** 2)
+            k = R_TUBE / (R_TUBE + rf)
             ctr = occ.addPoint(0, 0, 0)
             p_le = occ.addPoint(-R_TUBE, 0, 0)
-            arc_front = [occ.addCircleArc(pj_top, ctr, p_le), occ.addCircleArc(p_le, ctr, pj_bot)]
+            ft_t, fl_t = occ.addPoint(xc * k, (h + rf) * k, 0), occ.addPoint(xc, h, 0)
+            ft_b, fl_b = occ.addPoint(xc * k, -(h + rf) * k, 0), occ.addPoint(xc, -h, 0)
+            fc_t, fc_b = occ.addPoint(xc, h + rf, 0), occ.addPoint(xc, -h - rf, 0)
             tb, tt = occ.addPoint(C_FIN, -h, 0), occ.addPoint(C_FIN, h, 0)
-            wall = [arc_front[0], arc_front[1], occ.addLine(pj_bot, tb), occ.addLine(tb, tt), occ.addLine(tt, pj_top)]
+            wall = [occ.addCircleArc(ft_t, ctr, p_le), occ.addCircleArc(p_le, ctr, ft_b),
+                    occ.addCircleArc(ft_b, fc_b, fl_b), occ.addLine(fl_b, tb), occ.addLine(tb, tt),
+                    occ.addLine(tt, fl_t), occ.addCircleArc(fl_t, fc_t, ft_t)]
             fans = [tb, tt]
         else:
             x0 = R_TUBE + 0.0005
@@ -154,19 +160,20 @@ def build_mesh(case, level):
     fd.setNumber(box, "XMin", -0.1 * c); fd.setNumber(box, "XMax", 3.0 * c)
     fd.setNumber(box, "YMin", -0.25 * c); fd.setNumber(box, "YMax", 0.25 * c); fd.setNumber(box, "Thickness", c)
     fields = [thr, box]
-    if case != "s5010":                            # fine spots at the separation edges
-        pts_edge = [t for _, t in gmsh.model.getBoundary([(1, w) for w in wall], combined=False, oriented=False)]
-        de = fd.add("Distance"); fd.setNumbers(de, "PointsList", list(set(pts_edge)))
-        te = fd.add("Threshold"); fd.setNumber(te, "InField", de)
-        fd.setNumber(te, "SizeMin", s_edge); fd.setNumber(te, "SizeMax", s_wall)
-        fd.setNumber(te, "DistMin", 0.001); fd.setNumber(te, "DistMax", 0.01)
-        fields.append(te)
+    if case != "s5010":                            # fine spacing at the separation edges, through the 1-D mesh
+        for w in wall:
+            L = gmsh.model.occ.getMass(1, w)
+            if L < 0.03:                           # blunt base, LE face, tube arcs: uniform s_edge
+                gmsh.model.mesh.setTransfiniteCurve(w, max(6, int(round(L / s_edge)) + 1))
+            else:                                  # board faces: clustered to s_edge at both ends
+                gmsh.model.mesh.setTransfiniteCurve(w, max(20, int(round(1.6 * L / s_wall)) + 1), "Bump", 0.12)
     mn = fd.add("Min"); fd.setNumbers(mn, "FieldsList", fields); fd.setAsBackgroundMesh(mn)
     bl = fd.add("BoundaryLayer"); fd.setNumbers(bl, "CurvesList", wall)
     if fans:
         fd.setNumbers(bl, "FanPointsList", fans)
     ratio = 1.15 ** (f ** -0.0)                    # same growth on every level; layer count follows h1
-    nl = int(round(math.log(1 + 0.004 * (ratio - 1) / h1) / math.log(ratio)))
+    t_bl = 0.004 if case == "s5010" else 0.0015      # m; on the fins below the 3 mm fillet radius (concave corner)
+    nl = int(round(math.log(1 + t_bl * (ratio - 1) / h1) / math.log(ratio)))
     fd.setNumber(bl, "Size", h1); fd.setNumber(bl, "Ratio", ratio); fd.setNumber(bl, "Quads", 1)
     fd.setNumber(bl, "Thickness", h1 * (ratio ** nl - 1) / (ratio - 1))
     fd.setAsBoundaryLayer(bl)
@@ -210,9 +217,9 @@ MARKER_FAR= ( farfield )
 MARKER_PLOTTING= ( wall )
 MARKER_MONITORING= ( wall )
 NUM_METHOD_GRAD= WEIGHTED_LEAST_SQUARES
-CFL_NUMBER= 1.0
+CFL_NUMBER= {cfl0}
 CFL_ADAPT= YES
-CFL_ADAPT_PARAM= ( 0.5, 1.1, 0.5, 20.0 )
+CFL_ADAPT_PARAM= ( 0.5, 1.1, {cfl0}, {cflmax} )
 ITER= {iters}
 LINEAR_SOLVER= FGMRES
 LINEAR_SOLVER_PREC= LU_SGS
@@ -243,25 +250,48 @@ SCREEN_WRT_FREQ_INNER= 200
 
 
 def case_list():
-    return [(c, L) for c in ("finA", "finB", "s5010") for L in (1, 2, 3)]
+    only = [a for a in sys.argv[1:] if not a.startswith("--")]     # e.g. finA s5010: re-run those sections only
+    return [(c, L) for c in ("finA", "finB", "s5010") for L in (1, 2, 3) if not only or c in only]
 
 
-def run(case, level, iters=5000):
+NUMERICS = [(1.0, 20.0, 5000), (0.5, 5.0, 9000)]   # (CFL start, CFL max, iterations): first try, safe retry
+
+
+def _converged(d):
+    try:
+        lines = (d / "history.csv").read_text().splitlines()
+        head = [h.strip().strip('"') for h in lines[0].split(",")]
+        last = [float(x) for x in lines[-1].split(",")]
+        r = last[head.index("rms[P]")]
+        return math.isfinite(r) and r < -7.0 and abs(last[head.index("CD")]) < 1.0
+    except (OSError, ValueError, IndexError):
+        return False
+
+
+def run(case, level, iters=None, info=None):
+    """Mesh (main thread only: gmsh) unless info is given, then run SU2. A run that ends without convergence
+    (diverged, or the process was killed) is repeated once with the safe numerics."""
     d = OUT / f"{case}_L{level}"
     t0 = time.time()
-    info = build_mesh(case, level)
+    info = info or build_mesh(case, level)
     alpha = ALPHA_WING if case == "s5010" else 0.0
     c = C_WING if case == "s5010" else C_FIN
     a = math.radians(alpha)
-    (d / "case.cfg").write_text(CFG.format(case=case, level=level, rho=RHO, vx=V * math.cos(a), vy=V * math.sin(a),
-                                           mu=MU, alpha=alpha, xm=0.25 * c, c=c, iters=iters))
-    with open(d / "su2.log", "w") as log:
-        rc = subprocess.run([str(SU2), "-t", str(THREADS), "case.cfg"], cwd=str(d), stdout=log,
-                            stderr=subprocess.STDOUT).returncode
+    rc, attempt = None, 0
+    for attempt, (cfl0, cflmax, it) in enumerate(NUMERICS, 1):
+        (d / "case.cfg").write_text(CFG.format(case=case, level=level, rho=RHO, vx=V * math.cos(a), vy=V * math.sin(a),
+                                               mu=MU, alpha=alpha, xm=0.25 * c, c=c, iters=iters or it, cfl0=cfl0,
+                                               cflmax=cflmax))
+        with open(d / "su2.log", "w") as log:
+            rc = subprocess.run([str(SU2), "-t", str(THREADS), "case.cfg"], cwd=str(d), stdout=log,
+                                stderr=subprocess.STDOUT).returncode
+        if _converged(d):
+            break
     (d / "mesh.su2").unlink(missing_ok=True)
     for p in d.glob("restart*"):
         p.unlink()
-    info.update({"rc": rc, "wall_s": round(time.time() - t0, 1), "alpha_deg": alpha, "chord_m": c})
+    info.update({"rc": rc, "attempt": attempt, "converged": _converged(d), "wall_s": round(time.time() - t0, 1),
+                 "alpha_deg": alpha, "chord_m": c})
     (d / "mesh_info.json").write_text(json.dumps(info, indent=1))
     return info
 
@@ -273,14 +303,15 @@ def parse(case, level):
     rows = np.array([[float(x) for x in l.split(",")] for l in lines[1:] if l.strip()])
     col = {h: i for i, h in enumerate(head)}
     n = len(rows)
-    win = rows[max(0, n - 1000):]                          # average over the last 1000 iterations
+    win = rows[max(0, n - 200):]                           # last 200 iterations (cases stop at rms[P] -10)
     cd, cl = win[:, col["CD"]], win[:, col["CL"]]
     info = json.loads((d / "mesh_info.json").read_text())
     return {"cells": info["cells"], "iters": n, "rms_p_final": float(rows[-1, col["rms[P]"]]),
             "rms_p_drop": float(rows[-1, col["rms[P]"]] - rows[:, col["rms[P]"]].max()),
             "cd": float(cd.mean()), "cd_osc": float(cd.max() - cd.min()), "cl": float(cl.mean()),
             "cl_osc": float(cl.max() - cl.min()), "alpha_deg": info["alpha_deg"], "chord_m": info["chord_m"],
-            "wall_s": info["wall_s"], "h1_m": info["h1_m"]}
+            "wall_s": info["wall_s"], "h1_m": info["h1_m"], "converged": info.get("converged", info["rc"] == 0),
+            "attempt": info.get("attempt", 1)}
 
 
 def gci(f1, f2, f3, n1, n2, n3, Fs=1.25):
@@ -302,15 +333,20 @@ def gci(f1, f2, f3, n1, n2, n3, Fs=1.25):
 
 def main():
     if "--parse-only" not in sys.argv:
+        meshes = {}
+        for c, L in case_list():                 # gmsh is not thread-safe: mesh first, in the main thread
+            meshes[(c, L)] = build_mesh(c, L)
+            print(f"mesh {c} L{L}: {meshes[(c, L)]['cells']} cells", flush=True)
         with ThreadPoolExecutor(N_JOBS) as ex:
-            futs = {ex.submit(run, c, L): (c, L) for c, L in case_list()}
+            futs = {ex.submit(run, c, L, None, meshes[(c, L)]): (c, L) for c, L in case_list()}
             for fu, (c, L) in futs.items():
                 r = fu.result()
-                print(f"{c} L{L}: {r['cells']} cells, rc {r['rc']}, {r['wall_s']} s")
+                print(f"{c} L{L}: {r['cells']} cells, rc {r['rc']}, attempt {r['attempt']}, converged {r['converged']}, "
+                      f"{r['wall_s']} s", flush=True)
     res = {"_note": "Written by team/B1/cfd_sections.py. Coefficients per unit span on the section chord; averages of "
-                    "the last 1000 iterations; *_osc = max - min over that window.",
+                    "the last 200 iterations; *_osc = max - min over that window.",
            "flow": {"rho": RHO, "V_ms": V, "mu": MU, "Re_fin": RHO * V * C_FIN / MU, "Re_wing": RHO * V * C_WING / MU},
-           "geometry": {"c_fin_m": C_FIN, "r_tube_m": R_TUBE, "t_fin_m": T_FIN, "r_edge_m": R_EDGE, "c_wing_m": C_WING},
+           "geometry": {"c_fin_m": C_FIN, "r_tube_m": R_TUBE, "t_fin_m": T_FIN, "r_edge_m": R_EDGE, "r_fillet_m": R_FILLET, "c_wing_m": C_WING},
            "cases": {}, "gci": {}}
     for c in ("finA", "finB", "s5010"):
         lv = {L: parse(c, L) for L in (1, 2, 3)}

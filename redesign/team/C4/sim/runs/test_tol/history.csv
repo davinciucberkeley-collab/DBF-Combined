@@ -1,0 +1,2 @@
+"Time_Iter","Outer_Iter","Inner_Iter","LinSolIter",    "LinSolRes"   ,   "rms[DispX]"   ,   "rms[DispY]"   ,   "rms[DispZ]"   
+          0,           0,           0,        3000,   7.574911375e-09,      -1.397803567,        -1.4550289,      -1.279149716

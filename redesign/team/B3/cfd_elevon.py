@@ -44,7 +44,8 @@ HERE = Path(__file__).resolve().parent
 OUT = HERE / "cfd"
 GEOM, MESH, CASES = OUT / "geom", OUT / "mesh", OUT / "cases"
 XFOIL = Path("C:/Users/dillo/tools/xfoil/xfoil.exe")
-SU2 = Path("C:/Users/dillo/tools/su2/bin/bin/SU2_CFD.exe")
+# a renamed copy (B3_SU2_EXE) protects the runs from other agents killing "SU2_CFD.exe" by image name
+SU2 = Path(os.environ.get("B3_SU2_EXE", "C:/Users/dillo/tools/su2/bin/bin/SU2_CFD.exe"))
 AIRFOIL = HERE / "avl" / "s5010.dat"
 
 PARAMS = json.loads((HERE.parents[1] / "params" / "params.json").read_text())

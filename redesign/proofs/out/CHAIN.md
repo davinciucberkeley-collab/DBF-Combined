@@ -54,26 +54,11 @@ Parameter files: `redesign/params/params.json`, `redesign/subsystems/fins/params
 > - DRIFT CALC-A3-CG.station_cases: stored {'503': {'pack_x_m': -0.025400000000000006, 'offset_m': -0.003400000000000007, 'spacer_m': 0.015400000000000007, 'x_cg_m': 0.052989808407558195, 'x_cg_pred_m': 0.05436175128883889, 'range_use': 0.7803066485056717, 'fwd_margin_m': 0.002989808407558192, 'aft_margin_m': 0.0005382487111611073, 'ideal_offset_m': -0.006971598409542784, 'clamped': True}, '550': {'pack_x_m': -0.022, 'offset_m': 0.0, 'spacer_m': 0.012, 'x_cg_m': 0.052208319190909805, 'x_cg_pred_m': 0.05359047710729024, 'range_use': 0.4655008601184658, 'fwd_margin_m': 0.002208319190909802, 'aft_margin_m': 0.0013095228927097607, 'ideal_offset_m': -3.5116363636397e-05, 'clamped': False}, '680': {'pack_x_m': -0.009999999999999998, 'offset_m': 0.012, 'spacer_m': 0.0, 'x_cg_m': 0.051601748231781444, 'x_cg_pred_m': 0.05294091350178412, 'range_use': 0.3462252115177769, 'fwd_margin_m': 0.0016017482317814413, 'aft_margin_m': 0.001959086498215877, 'ideal_offset_m': 0.014156891176470563, 'clamped': True}}, re-runs to {'503': {'pack_x_m': -0.025400000000000006, 'offset_m': -0.003400000000000007, 'spacer_m': 0.015400000000000007, 'x_cg_m': 0.052989808407558195, 'x_cg_pred_m': 0.05436175128883889, 'range_use': 0.7752570711994301, 'fwd_margin_m': 0.002089808407558194, 'aft_margin_m': 0.00043824871116111136, 'ideal_offset_m': -0.006971598409542784, 'clamped': True}, '550': {'pack_x_m': -0.022, 'offset_m': 0.0, 'spacer_m': 0.012, 'x_cg_m': 0.052208319190909805, 'x_cg_pred_m': 0.05359047710729024, 'range_use': 0.3797318498924284, 'fwd_margin_m': 0.001308319190909804, 'aft_margin_m': 0.0012095228927097648, 'ideal_offset_m': -3.5116363636397e-05, 'clamped': False}, '680': {'pack_x_m': -0.009999999999999998, 'offset_m': 0.012, 'spacer_m': 0.0, 'x_cg_m': 0.051601748231781444, 'x_cg_pred_m': 0.05294091350178412, 'range_use': 0.6401291119069522, 'fwd_margin_m': 0.0007017482317814433, 'aft_margin_m': 0.0018590864982158811, 'ideal_offset_m': 0.014156891176470563, 'clamped': True}}. Changed inputs: x_rng table (2 rows) -> table (2 rows) (P:cg.x_range_m). Re-run redesign/team/A3/mass_rollup.py
 > - DRIFT CALC-A3-CG.cg_x_station_range_use: stored 0.7803, re-runs to 0.7753. Changed inputs: x_rng table (2 rows) -> table (2 rows) (P:cg.x_range_m). Re-run redesign/team/A3/mass_rollup.py
 > - DRIFT CALC-A3-CG.cg_x_pred_range_use: stored 0.4655, re-runs to 0.3797. Changed inputs: x_rng table (2 rows) -> table (2 rows) (P:cg.x_range_m). Re-run redesign/team/A3/mass_rollup.py
-> - DRIFT CALC-B1-AERO.cd0: stored 0.05128, re-runs to 0.05146. Changed inputs: pod table (3 rows) -> table (3 rows) (P:pod.size_m). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-AERO.ld_max: stored 7.192, re-runs to 7.179. Changed inputs: pod table (3 rows) -> table (3 rows) (P:pod.size_m). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-AERO.cl_ldmax: stored 0.7375, re-runs to 0.7388. Changed inputs: pod table (3 rows) -> table (3 rows) (P:pod.size_m). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-AERO.cd0_parts: stored table (8 rows), re-runs to table (8 rows). Changed inputs: pod table (3 rows) -> table (3 rows) (P:pod.size_m). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-AERO.d_cd0_pod_wide: stored 0.002387, re-runs to 0.002421. Changed inputs: pod table (3 rows) -> table (3 rows) (P:pod.size_m). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-STALL.vs_sized_ms: stored 11.89, re-runs to 11.91. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-PROPCAL.n_max_sag_rps: stored 120.1, re-runs to 127.1. Changed inputs: sag 0.76 -> 0.851 (P:propulsion.voltage_sag). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-HOVER.p_sized_w: stored 385.6, re-runs to 386.9. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED); sag 0.76 -> 0.851 (P:propulsion.voltage_sag). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-HOVER.i_sized_a: stored 26.05, re-runs to 26.14. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED); sag 0.76 -> 0.851 (P:propulsion.voltage_sag). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-HOVER.hover_only_sized_min: stored 11.97, re-runs to 11.93. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED); sag 0.76 -> 0.851 (P:propulsion.voltage_sag). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-HOVER.throttle_frac_gate_sag: stored 0.5596, re-runs to 0.4998. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED); sag 0.76 -> 0.851 (P:propulsion.voltage_sag). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-HOVER.tw_gate_sag_download: stored 1.787, re-runs to 2.001. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED); sag 0.76 -> 0.851 (P:propulsion.voltage_sag). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-WIND.lean_allowed_deg: stored 20.59, re-runs to 20.66. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED); growth 276 -> 245 (P:mass.growth_reserve_g); tip 30.59 -> 30.66 (CL-A1-TIPOVER). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-WIND.v_hover_max_ms: stored 5.762, re-runs to 5.773. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED); growth 276 -> 245 (P:mass.growth_reserve_g); tip 30.59 -> 30.66 (CL-A1-TIPOVER). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-WIND.v_ground_tip_ms: stored 8.919, re-runs to 8.99. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED); growth 276 -> 245 (P:mass.growth_reserve_g); tip 30.59 -> 30.66 (CL-A1-TIPOVER). Re-run redesign/team/B1/performance.py
-> - DRIFT CALC-B1-WIND.m_min_kg: stored 2.318, re-runs to 2.355. Changed inputs: m_sized 2.594 -> 2.6 (CL-A1-MASS-SIZED); growth 276 -> 245 (P:mass.growth_reserve_g); tip 30.59 -> 30.66 (CL-A1-TIPOVER). Re-run redesign/team/B1/performance.py
 > - DRIFT CALC-B2-STALL-FWD.SM_fwd: stored 0.07812, re-runs to 0.06219. Changed inputs: xr table (2 rows) -> table (2 rows) (P:cg.x_range_m). Re-run redesign/team/B2/wing_claims.py
 > - DRIFT CALC-B2-STALL-FWD.CLmax_fwd: stored 0.7778, re-runs to 0.7868. Changed inputs: xr table (2 rows) -> table (2 rows) (P:cg.x_range_m). Re-run redesign/team/B2/wing_claims.py
 > - DRIFT CALC-B2-STALL-FWD.Vs_fwd_ms: stored 12.06, re-runs to 11.99. Changed inputs: xr table (2 rows) -> table (2 rows) (P:cg.x_range_m). Re-run redesign/team/B2/wing_claims.py
 > - DRIFT CALC-B2-STALL-FWD.Vtr_fwd_ms: stored 15.68, re-runs to 15.59. Changed inputs: xr table (2 rows) -> table (2 rows) (P:cg.x_range_m). Re-run redesign/team/B2/wing_claims.py
+> - DRIFT CALC-C1-ROTOR.VD_uncapped_ms: stored 32.1, re-runs to 32.09. Changed inputs: VH_b1 25.68 -> 25.67 (CL-B1-VMAX). Re-run redesign/team/C1/loads.py
 > - DRIFT CALC-C1-LANDING.F_foot_pair_narrow_N: stored 25.4, re-runs to 25.4. Changed inputs: pack_x -0.02205 -> -0.02204 (CL-A3-PACK-X-REQ); x_cg_rng table (2 rows) -> table (2 rows) (P:cg.x_range_m); iyy_a3 0.0442 -> 0.0442 (CL-A3-IYY); m_a3 2.323 -> 2.322 (CL-A3-MASS-BASIC). Re-run redesign/team/C1/loads.py
 > - DRIFT CALC-C1-LANDING.F_foot_pair_wide_N: stored 29.22, re-runs to 29.22. Changed inputs: pack_x -0.02205 -> -0.02204 (CL-A3-PACK-X-REQ); x_cg_rng table (2 rows) -> table (2 rows) (P:cg.x_range_m); iyy_a3 0.0442 -> 0.0442 (CL-A3-IYY); m_a3 2.323 -> 2.322 (CL-A3-MASS-BASIC). Re-run redesign/team/C1/loads.py
 > - DRIFT CALC-C1-LANDING.m_eff_wingtip_kg: stored 0.4113, re-runs to 0.4113. Changed inputs: pack_x -0.02205 -> -0.02204 (CL-A3-PACK-X-REQ); x_cg_rng table (2 rows) -> table (2 rows) (P:cg.x_range_m); iyy_a3 0.0442 -> 0.0442 (CL-A3-IYY); m_a3 2.323 -> 2.322 (CL-A3-MASS-BASIC). Re-run redesign/team/C1/loads.py
@@ -156,8 +141,28 @@ Parameter files: `redesign/params/params.json`, `redesign/subsystems/fins/params
 > - DRIFT CALC-C1-ENVELOPE.cradle_stroke_req_m: stored 0.05242, re-runs to 0.05242. Changed inputs: pack_x -0.02205 -> -0.02204 (CL-A3-PACK-X-REQ); x_cg_rng table (2 rows) -> table (2 rows) (P:cg.x_range_m); iyy_a3 0.0442 -> 0.0442 (CL-A3-IYY); m_a3 2.323 -> 2.322 (CL-A3-MASS-BASIC). Re-run redesign/team/C1/loads.py
 > - DRIFT CALC-C2-SPAR-ROOT.sigma_pa: stored 6.152e+07, re-runs to 5.928e+07. Changed inputs: Mb 20.38 -> 19.64 (CL-C1-SPAR-MB-ULT). Re-run redesign/team/C2/c2_claims.py
 > - DRIFT CALC-C2-SPAR-TAU.value: stored 1.177e+07, re-runs to 1.227e+07. Changed inputs: T 6.945 -> 7.481 (CL-C1-WING-TORSION-ULT); V 42.7 -> 32.31 (CL-C1-WING-SHEAR-ULT). Re-run redesign/team/C2/c2_claims.py
-> - DRIFT CALC-C2-SPAR-BRACE.value: stored 6.615e+07, re-runs to 6.018e+07. Changed inputs: Mx 14.01 -> 12.02 (CL-C1-SPAR-MX-ULT). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-SPAR-BRACE.value: stored 6.615e+07, re-runs to 5.977e+07. Changed inputs: Mx 14.01 -> 12.02 (CL-C1-SPAR-MX-ULT); Fb 145.9 -> 143.4 (P:c2.fe.F_brace_design_N). Re-run redesign/team/C2/c2_claims.py
 > - DRIFT CALC-C2-AE-REQ.value: stored 32.65, re-runs to 32.04. Changed inputs: VD 27.21 -> 26.7 (CL-C1-VD). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-DEFL.value: stored 0.005038, re-runs to 0.004381. Changed inputs: w 0.002897 -> 0.002519 (P:c2.fe.w_tip_env_m). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-MASS.value: stored 397.4, re-runs to 389.4. Changed inputs: m 0.3974 -> 0.3894 (P:c2.fe.wing_mass_kg). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-SPAR-ENV.value: stored 6.152e+07, re-runs to 5.928e+07. Changed inputs: v 6.152e+07 -> 5.928e+07 (P:c2.fe.spar_sigma_ult_max_pa). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-TWIST.value: stored 2.767, re-runs to 1.836. Changed inputs: v 2.767 -> 1.836 (P:c2.fe.twist_flight_deg). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-VFL.value: stored 81.64, re-runs to 80.1. Changed inputs: v 81.64 -> 80.1 (P:c2.fe.V_flutter_ms). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-EFF.value: stored 0.775, re-runs to 0.7752. Changed inputs: v 0.775 -> 0.7752 (P:c2.fe.eff_vd). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-MODESEP.value: stored 0.07665, re-runs to 0.07166. Changed inputs: v 0.07665 -> 0.07166 (P:c2.fe.mode_sep_worst). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-FTORS.value: stored 11.71, re-runs to 11.88. Changed inputs: v 11.71 -> 11.88 (P:c2.fe.f_torsion_anti_hz). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-FTORS-S.value: stored 21.69, re-runs to 24.09. Changed inputs: v 21.69 -> 24.09 (P:c2.fe.f_torsion_sym_hz). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-RING-ANCHOR.value: stored 7.776e+07, re-runs to 7.644e+07. Changed inputs: v 7.776e+07 -> 7.644e+07 (P:c2.fe.ring_anchor_sigma_pa). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-BOND.value: stored 8095, re-runs to 6168. Changed inputs: v 8095 -> 6168 (P:c2.fe.spar_bond_tau_ult_pa). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-CHORD-TAPE.value: stored 1.302e+07, re-runs to 1.301e+07. Changed inputs: v 1.302e+07 -> 1.301e+07 (P:c2.fe.chord_tape_sigma_ult_pa). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-CHORD-FOAM.value: stored 1.094e+05, re-runs to 1.093e+05. Changed inputs: v 1.094e+05 -> 1.093e+05 (P:c2.fe.chord_foam_only_sigma_ult_pa). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-TIP.value: stored 4924, re-runs to 3697. Changed inputs: v 4924 -> 3697 (P:c2.fe.tip_foam_sigma_ult_pa). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-ROOT-TAPE.value: stored 7.504e+06, re-runs to 7.254e+06. Changed inputs: v 7.504e+06 -> 7.254e+06 (P:c2.fe.tape_sigma_root_ult_pa). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-POD.value: stored 8746, re-runs to 5360. Changed inputs: v 8746 -> 5360 (P:c2.fe.pod_tau_pa). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-CRADLE.value: stored 0.00108, re-runs to 0.001165. Changed inputs: v 0.00108 -> 0.001165 (P:c2.fe.cradle_area_req_m2). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-CONV-F.value: stored 0.000213, re-runs to 0.00025. Changed inputs: v 0.000213 -> 0.00025 (P:c2.fe.mesh_conv_freq). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-CONV-S.value: stored 0.000526, re-runs to 0.000517. Changed inputs: v 0.000526 -> 0.000517 (P:c2.fe.mesh_conv_static). Re-run redesign/team/C2/c2_claims.py
+> - DRIFT CALC-C2-FE-INT.value: stored 0.002241, re-runs to 0.002239. Changed inputs: v 0.002241 -> 0.002239 (P:c2.fe.fe_vs_integration). Re-run redesign/team/C2/c2_claims.py
 > - DRIFT CALC-C4-D3-MODES.sep_up: stored 0.1151, re-runs to 0.1054. Changed inputs: rpm_c 5894 -> 5946 (CL-B4-CRUISE-RPM). Re-run redesign/team/C4/fin_structures_d3.py
 > - DRIFT CALC-C4-D3-MODES.sep_lo: stored 0.08819, re-runs to 0.07867. Changed inputs: rpm_c 5894 -> 5946 (CL-B4-CRUISE-RPM). Re-run redesign/team/C4/fin_structures_d3.py
 > - DRIFT CALC-C4-D3-MODES.sep_op: stored 0.08819, re-runs to 0.07867. Changed inputs: rpm_c 5894 -> 5946 (CL-B4-CRUISE-RPM). Re-run redesign/team/C4/fin_structures_d3.py
@@ -227,6 +232,60 @@ Parameter files: `redesign/params/params.json`, `redesign/subsystems/fins/params
 > - DRIFT CALC-D5-SIDE.sf_rim: stored 1.05, re-runs to 1.054. Changed inputs: F_lim 22.9 -> 22.81 (CL-C5-FOOT-SIDE-LOAD). Re-run redesign/team/D5/feet_calc.py
 > - DRIFT CALC-D5-SIDE.sigma_tine_Pa: stored 1.279e+07, re-runs to 1.274e+07. Changed inputs: F_lim 22.9 -> 22.81 (CL-C5-FOOT-SIDE-LOAD). Re-run redesign/team/D5/feet_calc.py
 > - DRIFT CALC-D5-SIDE.sf_tine: stored 3.127, re-runs to 3.14. Changed inputs: F_lim 22.9 -> 22.81 (CL-C5-FOOT-SIDE-LOAD). Re-run redesign/team/D5/feet_calc.py
+> - DRIFT CALC-E1-CRUISE.drag_N: stored 4.101, re-runs to 4.112. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.T_per_motor_N: stored 1.025, re-runs to 1.028. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.cd0: stored 0.05128, re-runs to 0.05146. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.ld_eff: stored 6.217, re-runs to 6.201. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.J_45: stored 0.499, re-runs to 0.4989. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.rpm_45: stored 6886, re-runs to 6888. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.eta_prop_45: stored 0.2768, re-runs to 0.2772. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.eta_motor_45: stored 0.8123, re-runs to 0.8123. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.eta_tot_45: stored 0.2211, re-runs to 0.2214. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.P_total_45_W: stored 296.8, re-runs to 297.2. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.I_pack_45_A: stored 20.06, re-runs to 20.08. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.I_m_45_A: stored 8.646, re-runs to 8.653. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.loss_motor_45_W: stored 13.69, re-runs to 13.71. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.Q_45_Nm: stored 0.08219, re-runs to 0.08226. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.J_55: stored 0.578, re-runs to 0.5779. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.rpm_55: stored 5944, re-runs to 5945. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.eta_prop_55: stored 0.3577, re-runs to 0.3581. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.eta_motor_55: stored 0.7989, re-runs to 0.7989. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.eta_tot_55: stored 0.2803, re-runs to 0.2807. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.P_total_55_W: stored 234.1, re-runs to 234.4. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.I_pack_55_A: stored 15.82, re-runs to 15.84. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.I_m_55_A: stored 7.844, re-runs to 7.852. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.loss_motor_55_W: stored 11.55, re-runs to 11.56. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.Q_55_Nm: stored 0.07368, re-runs to 0.07376. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.J_12: stored 0.475, re-runs to 0.4749. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.rpm_12: stored 6631, re-runs to 6632. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.eta_prop_12: stored 0.2316, re-runs to 0.232. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.eta_motor_12: stored 0.8092, re-runs to 0.8092. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.eta_tot_12: stored 0.1841, re-runs to 0.1844. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.P_total_12_W: stored 356.5, re-runs to 356.9. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.I_pack_12_A: stored 24.09, re-runs to 24.11. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.I_m_12_A: stored 10.51, re-runs to 10.52. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.loss_motor_12_W: stored 16.7, re-runs to 16.71. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E1-CRUISE.Q_12_Nm: stored 0.102, re-runs to 0.1021. Changed inputs: cd0 0.05128 -> 0.05146 (CL-B1-CD0); ld_b1 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/E1/propulsion.py
+> - DRIFT CALC-E2-BUDGET-BASE.phases: stored table (7 rows), re-runs to table (7 rows). Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-BASE.cruise_min: stored 12.64, re-runs to 12.62. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-BASE.cruise_w: stored 239.2, re-runs to 239.5. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-BASE.cruise_a: stored 16.58, re-runs to 16.6. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-BASE.flight_min: stored 16.22, re-runs to 16.21. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-BASE.i_cruise_a: stored 16.58, re-runs to 16.6. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-BASE.t_cruise_s: stored 758.3, re-runs to 757.4. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-PESS.phases: stored table (7 rows), re-runs to table (7 rows). Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-PESS.cruise_min: stored 6.781, re-runs to 6.77. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-PESS.cruise_w: stored 315.6, re-runs to 316.1. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-PESS.cruise_a: stored 22.35, re-runs to 22.39. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-PESS.flight_min: stored 10.7, re-runs to 10.69. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-PESS.i_cruise_a: stored 22.35, re-runs to 22.39. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-PESS.t_cruise_s: stored 406.9, re-runs to 406.2. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-PACK-TRADE.table: stored table (7 rows), re-runs to table (7 rows). Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-240.k: stored 1.053, re-runs to 1.052. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-240.cruise_min_pess: stored 6.42, re-runs to 6.418. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-240.cruise_w_pess: stored 332.5, re-runs to 332.6. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-240.cruise_a_pess: stored 23.61, re-runs to 23.62. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
+> - DRIFT CALC-E2-BUDGET-240.cruise_to_low_min: stored 6.066, re-runs to 6.064. Changed inputs: pc_b 227.8 -> 228.1 (CL-B1-CRUISE-P); pc_p 300.6 -> 301 (CL-B1-CRUISE-P-PESS). Re-run redesign/team/E2/energy_claims.py
 > - DRIFT CALC-E3-MISSION.motor_peak_des_c: stored 65.84, re-runs to 64.76. Changed inputs: x_prop -0.005 -> -0.0077 (P:propulsion.stations.x_prop_plane_m); T_h 6.757 -> 6.808 (CL-B4-HOVER-T); Q_h 0.1129 -> 0.1137 (CL-B4-HOVER-Q); n_h 5396 -> 5416 (CL-B4-HOVER-RPM); n_c 6000 -> 5946 (CL-B4-CRUISE-RPM); P_c 39.18 -> 37.11 (CL-B4-CRUISE-SHAFT); r_ext 0.003 -> 0.0065 (ASM-E2-R-EXT); pod_size table (3 rows) -> table (3 rows) (P:pod.size_m); pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); t_hov_only 9.355 -> 9.28 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py
 > - DRIFT CALC-E3-MISSION.esc_peak_des_c: stored 61.56, re-runs to 60.12. Changed inputs: x_prop -0.005 -> -0.0077 (P:propulsion.stations.x_prop_plane_m); T_h 6.757 -> 6.808 (CL-B4-HOVER-T); Q_h 0.1129 -> 0.1137 (CL-B4-HOVER-Q); n_h 5396 -> 5416 (CL-B4-HOVER-RPM); n_c 6000 -> 5946 (CL-B4-CRUISE-RPM); P_c 39.18 -> 37.11 (CL-B4-CRUISE-SHAFT); r_ext 0.003 -> 0.0065 (ASM-E2-R-EXT); pod_size table (3 rows) -> table (3 rows) (P:pod.size_m); pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); t_hov_only 9.355 -> 9.28 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py
 > - DRIFT CALC-E3-MISSION.pack_end_des_c: stored 47.08, re-runs to 45.11. Changed inputs: x_prop -0.005 -> -0.0077 (P:propulsion.stations.x_prop_plane_m); T_h 6.757 -> 6.808 (CL-B4-HOVER-T); Q_h 0.1129 -> 0.1137 (CL-B4-HOVER-Q); n_h 5396 -> 5416 (CL-B4-HOVER-RPM); n_c 6000 -> 5946 (CL-B4-CRUISE-RPM); P_c 39.18 -> 37.11 (CL-B4-CRUISE-SHAFT); r_ext 0.003 -> 0.0065 (ASM-E2-R-EXT); pod_size table (3 rows) -> table (3 rows) (P:pod.size_m); pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); t_hov_only 9.355 -> 9.28 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py
@@ -317,6 +376,15 @@ Parameter files: `redesign/params/params.json`, `redesign/subsystems/fins/params
 > - DRIFT CALC-E3-GT04.esc_rise_nom_k: stored 30.22, re-runs to 30.16. Changed inputs: x_prop -0.005 -> -0.0077 (P:propulsion.stations.x_prop_plane_m); T_h 6.757 -> 6.808 (CL-B4-HOVER-T); Q_h 0.1129 -> 0.1137 (CL-B4-HOVER-Q); n_h 5396 -> 5416 (CL-B4-HOVER-RPM); n_c 6000 -> 5946 (CL-B4-CRUISE-RPM); P_c 39.18 -> 37.11 (CL-B4-CRUISE-SHAFT); r_ext 0.003 -> 0.0065 (ASM-E2-R-EXT); pod_size table (3 rows) -> table (3 rows) (P:pod.size_m); pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); t_hov_only 9.355 -> 9.28 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py
 > - DRIFT CALC-E3-GT04.esc_peak_rise_nom_k: stored 30.64, re-runs to 30.61. Changed inputs: x_prop -0.005 -> -0.0077 (P:propulsion.stations.x_prop_plane_m); T_h 6.757 -> 6.808 (CL-B4-HOVER-T); Q_h 0.1129 -> 0.1137 (CL-B4-HOVER-Q); n_h 5396 -> 5416 (CL-B4-HOVER-RPM); n_c 6000 -> 5946 (CL-B4-CRUISE-RPM); P_c 39.18 -> 37.11 (CL-B4-CRUISE-SHAFT); r_ext 0.003 -> 0.0065 (ASM-E2-R-EXT); pod_size table (3 rows) -> table (3 rows) (P:pod.size_m); pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); t_hov_only 9.355 -> 9.28 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py
 > - DRIFT CALC-E3-GT04.motor_peak_rise_nom_k: stored 35.42, re-runs to 35.41. Changed inputs: x_prop -0.005 -> -0.0077 (P:propulsion.stations.x_prop_plane_m); T_h 6.757 -> 6.808 (CL-B4-HOVER-T); Q_h 0.1129 -> 0.1137 (CL-B4-HOVER-Q); n_h 5396 -> 5416 (CL-B4-HOVER-RPM); n_c 6000 -> 5946 (CL-B4-CRUISE-RPM); P_c 39.18 -> 37.11 (CL-B4-CRUISE-SHAFT); r_ext 0.003 -> 0.0065 (ASM-E2-R-EXT); pod_size table (3 rows) -> table (3 rows) (P:pod.size_m); pess table (7 rows) -> table (7 rows) (CL-E2-BUDGET-PESS-TABLE); base table (7 rows) -> table (7 rows) (CL-E2-BUDGET-BASE-TABLE); t_hov_only 9.355 -> 9.28 (CL-E2-HOVER-ONLY-MIN-PESS). Re-run redesign/team/E3/thermal.py
+> - DRIFT CALC-F1-I-DESIGN.i_cont_a: stored 30.27, re-runs to 30.27. Changed inputs: p_climb 448 -> 448 (CL-B1-VCLIMB-P). Re-run redesign/team/F1/power.py
+> - DRIFT CALC-F1-I-DESIGN.i_req_cont_a: stored 37.84, re-runs to 37.84. Changed inputs: p_climb 448 -> 448 (CL-B1-VCLIMB-P). Re-run redesign/team/F1/power.py
+> - DRIFT CALC-F4-DIVE.v_dive: stored 17.75, re-runs to 17.71. Changed inputs: ld 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/F4/fsw_check.py
+> - DRIFT CALC-F4-DIVE.cd0: stored 0.04806, re-runs to 0.04824. Changed inputs: ld 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/F4/fsw_check.py
+> - DRIFT CALC-F4-VLEVEL.v_lvl: stored 21.28, re-runs to 21.27. Changed inputs: vmax 25.68 -> 25.67 (CL-B1-VMAX). Re-run redesign/team/F4/fsw_check.py
+> - DRIFT CALC-F4-VLEVEL.ratio: stored 0.978, re-runs to 0.9777. Changed inputs: vmax 25.68 -> 25.67 (CL-B1-VMAX). Re-run redesign/team/F4/fsw_check.py
+> - DRIFT CALC-F4-YAW-DT.gain_req_pct: stored 30.25, re-runs to 30.21. Changed inputs: ld 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/F4/fsw_check.py
+> - DRIFT CALC-F4-YAW-DT.a_cruise: stored 0.1946, re-runs to 0.1948. Changed inputs: ld 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/F4/fsw_check.py
+> - DRIFT CALC-F4-YAW-DT.a_low_side: stored 0.119, re-runs to 0.1193. Changed inputs: ld 6.341 -> 6.325 (CL-B1-CRUISE-LD). Re-run redesign/team/F4/fsw_check.py
 > - DRIFT CALC-H1-TW-PASS.pred_sag_kgf: stored 1.231, re-runs to 1.379. Changed inputs: sag 0.76 -> 0.851 (P:propulsion.voltage_sag). Re-run redesign/team/H1/ground_tests.py
 > - DRIFT CALC-H1-WEIGH.u_frac: stored 0.04882, re-runs to 0.0319. Changed inputs: margin 0.1072 -> 0.164 (CL-A3-GATE-MARGIN). Re-run redesign/team/H1/ground_tests.py
 > - DRIFT CALC-H1-CG.u95_m: stored 0.0006145, re-runs to 0.0006139. Changed inputs: xr table (2 rows) -> table (2 rows) (P:cg.x_range_m); xt 0.0526 -> 0.0522 (P:cg.x_target_m). Re-run redesign/team/H1/ground_tests.py
@@ -387,7 +455,7 @@ Parameter files: `redesign/params/params.json`, `redesign/subsystems/fins/params
 | [R-HARNESS-INSTALL](#r-harness-install) Wiring is an installation | **UNVERIFIED** | 6 | +2% |
 | [R-HOVER-AUTHORITY](#r-hover-authority) Hover control authority | **UNVERIFIED** | 9 | +46% |
 | [R-HOVER-SPLIT](#r-hover-split) Hover pitch-trim thrust split | **UNVERIFIED** | 1 | +3% |
-| [R-HOVER-TW](#r-hover-tw) Hover thrust-to-weight | **UNVERIFIED** | 8 | +7% |
+| [R-HOVER-TW](#r-hover-tw) Hover thrust-to-weight | **UNVERIFIED** | 8 | +17% |
 | [R-JOINT-STACK](#r-joint-stack) Joint stacks | **UNVERIFIED** | 9 | +4% |
 | [R-LANDING-IMPACT](#r-landing-impact) Fin-tip landing | **UNVERIFIED** | 11 | +0% |
 | [R-LEGAL](#r-legal) FAA and university compliance | **UNVERIFIED** | 0 | — |
@@ -523,6 +591,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
         - `ld` ← param `P:performance.ld_cruise` = 6.2 — **UNVERIFIED**
           - ⚠ cites CL-E1-CRUISE-LD-EFF, which is UNVERIFIED
           - claim **CL-E1-CRUISE-LD-EFF** Effective cruise L/D (W / trimmed drag) = **6.217** — **UNVERIFIED**
+            - ⚠ CALC-E1-CRUISE does not re-run
             - ⚠ uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
             - ⚠ uses CL-B1-CD0, which is UNVERIFIED
             - ⚠ uses CL-B1-K, which is UNVERIFIED
@@ -532,13 +601,13 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
             - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
             - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
             - how to verify: Equals CL-B1-CRUISE-LD / ASM-B1-TRIM (ld_check = 1 in CALC-E1-CRUISE).
-            - calc `CALC-E1-CRUISE` `redesign/team/E1/propulsion.py::cruise()`: `CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D` — **CHECKED**
+            - calc `CALC-E1-CRUISE` `redesign/team/E1/propulsion.py::cruise()`: `CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D` — **UNVERIFIED**
+              - ⚠ does not re-run to its stored outputs (see build errors)
               - `m` ← `P:requirements.mtow_gate_kg` (see above)
               - `g` ← `P:env.g_ms2` (see above)
               - `rho` ← `P:env.rho_kgm3` (see above)
               - `S` ← claim **CL-A1-WING-AREA** Wing reference area = **0.368 m2** — **CHECKED** — chain under [R-CONFIG](#r-config)
-              - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05128** — **UNVERIFIED**
-                - ⚠ CALC-B1-AERO does not re-run
+              - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05146** — **UNVERIFIED**
                 - ⚠ uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
                 - ⚠ uses SRC-B2-XFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
                 - ⚠ uses ASM-B1-DRAG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -551,8 +620,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                 - ⚠ uses P:b2.xfoil.alpha0_2d_deg, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)
                 - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
                 - how to verify: B2/B3 AVL + XFOIL profile drag; flight: glide or power-off sink at 16 m/s, or cruise power at known prop data (H2).
-                - calc `CALC-B1-AERO` `redesign/team/B1/performance.py::aero_build()`: `CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod + Cd_front (w - w_ref) h + n_b Cd_b w_b l_b + n_c (Cd_c D_c - Cd_tube d) h_c] / S, Swet_fin = 2 A (1 + 0.2 t/c) ; k = 1/(pi AR e_B2) ; k_pess = 1/(pi AR e_params) ; a = CLa (B2 AVL) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))` — **UNVERIFIED**
-                  - ⚠ does not re-run to its stored outputs (see build errors)
+                - calc `CALC-B1-AERO` `redesign/team/B1/performance.py::aero_build()`: `CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod + Cd_front (w - w_ref) h + n_b Cd_b w_b l_b + n_c (Cd_c D_c - Cd_tube d) h_c] / S, Swet_fin = 2 A (1 + 0.2 t/c) ; k = 1/(pi AR e_B2) ; k_pess = 1/(pi AR e_params) ; a = CLa (B2 AVL) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))` — **CHECKED**
                   - `b` ← param `P:wing.span_m` = 1.15 m — **CHECKED**
                     - `SRC-K09-CARD` (see above)
                   - `c` ← param `P:wing.chord_m` = 0.32 m (team/B2/CHANGE-REQUESTS.md#CR-B2-01) — **PROPOSED**
@@ -620,7 +688,6 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                   - `ASM-B1-POD-FRONT` (see above)
                 - test `T-B1-CRUISE-POWER` Cruise power and speed polar (planned) — **PROPOSED**
               - `k` ← claim **CL-B1-K** Lift-dependent drag factor (B2 trimmed polar, e 0.93) = **0.09427** — **UNVERIFIED**
-                - ⚠ CALC-B1-AERO does not re-run
                 - ⚠ uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
                 - ⚠ uses SRC-B2-XFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
                 - ⚠ uses ASM-B1-DRAG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -636,7 +703,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                 - `CALC-B1-AERO` (see above)
               - `trim` ← assumption `ASM-B1-TRIM` Trim adds 2 % to cruise drag on top of B2's trimmed wing polar = 1.02 (basis: B2's polar (P:b2.avl.e_oswald, cd0_wing) is already trimmed, elevon profile drag included; B3 finds +0.2 % induced trim drag at 16 m/s (CR-B3-07). The 2 % left covers the up-trimmed elevon gap and pod/fin junctions. Was 1.05 (K09 card) before B2/B3 answered) — **PROPOSED**
                 - `SRC-B2-AVL` (see above)
-              - `ld_b1` ← claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.341** — **UNVERIFIED**
+              - `ld_b1` ← claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.325** — **UNVERIFIED**
                 - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                 - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                 - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -656,7 +723,6 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                   - `cd0` ← `CL-B1-CD0` (see above)
                   - `k` ← `CL-B1-K` (see above)
                   - `k_pess` ← claim **CL-B1-K-PESS** Lift-dependent drag factor, pessimistic (e 0.80) = **0.1107** — **UNVERIFIED**
-                    - ⚠ CALC-B1-AERO does not re-run
                     - ⚠ uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
                     - ⚠ uses SRC-B2-XFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
                     - ⚠ uses ASM-B1-DRAG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -687,7 +753,6 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                     - `SRC-E1-X3108S-SPEC` (see above)
                     - `SRC-E1-X3108S-HIMODEL` (see above)
                   - `kcal` ← claim **CL-B1-KCAL** Chain calibration to the maker table = **1.132** — **UNVERIFIED**
-                    - ⚠ CALC-B1-PROPCAL does not re-run
                     - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                     - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                     - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -696,8 +761,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                     - ⚠ uses P:propulsion.thrust_max_per_motor_kg, which is UNVERIFIED (cites CL-E1-ILIM-TW-FRESH, which is UNVERIFIED)
                     - ⚠ uses P:propulsion.voltage_sag, which is UNVERIFIED (cites CL-E1-SAG-FACTOR, which is UNVERIFIED)
                     - how to verify: Thrust stand: measured W at 690 gf replaces the maker point; k_cal re-derives (H1).
-                    - calc `CALC-B1-PROPCAL` `redesign/team/B1/performance.py::prop_calibration()`: `n_max = sqrt(T0/(Ct0 rho D^4)) (11x5.5MR) ; n_max,sag = n_max sqrt(sag) ; k_cal = P_table(690 gf) / P_motor(11x4.5MR model at 690 gf, J = 0) ; FM = T^1.5/(sqrt(2 rho A) P_shaft) (11x5.5MR)` — **UNVERIFIED**
-                      - ⚠ does not re-run to its stored outputs (see build errors)
+                    - calc `CALC-B1-PROPCAL` `redesign/team/B1/performance.py::prop_calibration()`: `n_max = sqrt(T0/(Ct0 rho D^4)) (11x5.5MR) ; n_max,sag = n_max sqrt(sag) ; k_cal = P_table(690 gf) / P_motor(11x4.5MR model at 690 gf, J = 0) ; FM = T^1.5/(sqrt(2 rho A) P_shaft) (11x5.5MR)` — **CHECKED**
                       - `tab` ← `ASM-B1-PROP` (see above)
                       - `tab_ref` ← assumption `ASM-B1-PROP-REF` APC PER3 11x4.5MR at 6 000 rpm, rows [J, Ct, Cp]; used only to calibrate the chain to the maker table (11x4.7) and for the 11x5.5MR / 11x4.5MR hover power ratio = table (30 rows) (basis: APC data file read 2026-11-09 (rev 1 of this script); the 11x4.5MR is closer in pitch to the maker's 11x4.7 than the 11x5.5MR, so it carries the calibration with less prop error) — **PROPOSED**
                         - source `SRC-B1-APC-PER3` [APC PER3 performance file, 11x4.5MR](https://www.apcprop.com/files/PER3_11x45MR.dat), block 'PROP RPM = 6000', columns J, Ct, Cp (all 30 rows to zero thrust at J 0.545), checked 2026-11-09 — **CHECKED**
@@ -802,6 +866,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                 - parts: PWR-001, PWR-002, PWR-003, PWR-004, PRP-002-UR, PRP-002-UL, PRP-002-LR, PRP-002-LL
                                 - calc `CALC-F1-WIRES` `redesign/team/F1/power.py::wires()`: `see module docstring; ESC lead current = I_pack / n x 2s/(1+s) (heavier pair at the hover split s, applied to every branch); R_ext = R_common + 1/sum(1/R_branch_i); drop = I R_common + I_esc R_branch,max` — **CHECKED**
                                   - `i_cont` ← claim **CL-F1-I-CONT** Continuous design current, pack path = **30.27 A** — **UNVERIFIED**
+                                    - ⚠ CALC-F1-I-DESIGN does not re-run
                                     - ⚠ uses CL-E2-HOVER-I-GATE, which is UNVERIFIED
                                     - ⚠ uses CL-E2-CRUISE-I-PESS, which is UNVERIFIED
                                     - ⚠ uses CL-B1-VCLIMB-P, which is UNVERIFIED
@@ -810,8 +875,10 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                     - ⚠ uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)
                                     - how to verify: Mean BAT.Curr over a 60 s hover and a 60 s cruise segment at the gate mass (T-E2-MISSION-LOG); the larger must be <= this value.
                                     - parts: PWR-001, PWR-002, PWR-003, PWR-004
-                                    - calc `CALC-F1-I-DESIGN` `redesign/team/F1/power.py::design_currents()`: `I_cont = max(I_hover, I_cruise, P_vclimb / V_nom) ; I_short = max profile phase <= 60 s ; I_req = k I` — **CHECKED**
+                                    - calc `CALC-F1-I-DESIGN` `redesign/team/F1/power.py::design_currents()`: `I_cont = max(I_hover, I_cruise, P_vclimb / V_nom) ; I_short = max profile phase <= 60 s ; I_req = k I` — **UNVERIFIED**
+                                      - ⚠ does not re-run to its stored outputs (see build errors)
                                       - `i_hover` ← claim **CL-E2-HOVER-I-GATE** Hover pack current at the gate, 5 m/s wind = **30.13 A** — **UNVERIFIED**
+                                        - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                         - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                         - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                         - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -832,7 +899,8 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                         - ⚠ uses CL-B1-CRUISE-P, which is UNVERIFIED
                                         - ⚠ uses CL-B1-CRUISE-P-PESS, which is UNVERIFIED
                                         - how to verify: Tethered hover at gate mass (ballast) with the 150 A watt meter; F1 sizes wires and the disconnect on it.
-                                        - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **CHECKED**
+                                        - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **UNVERIFIED**
+                                          - ⚠ does not re-run to its stored outputs (see build errors)
                                           - `m` ← `P:requirements.mtow_gate_kg` (see above)
                                           - `n` ← `P:propulsion.n_motors` (see above)
                                           - `table` ← `P:propulsion.thrust_table_g_w` (see above)
@@ -874,8 +942,8 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                           - `cap_frac` ← param `P:requirements.pack_capacity_min_frac` = 0.92 (team/A2/REQUIREMENTS.md) — **PROPOSED**
                                           - `reserve` ← param `P:requirements.energy_reserve_frac` = 0.2 — **CHECKED**
                                             - `SRC-REQ-PROPOSED` (see above)
-                                          - `pc_b` ← claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **227.8 W** — **UNVERIFIED** — chain under [R-MISSION](#r-mission)
-                                          - `pc_p` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **300.6 W** — **UNVERIFIED**
+                                          - `pc_b` ← claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **228.1 W** — **UNVERIFIED** — chain under [R-MISSION](#r-mission)
+                                          - `pc_p` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **301 W** — **UNVERIFIED**
                                             - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -899,6 +967,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                           - `ASM-E2-HOVER-MARGIN` (see above)
                                         - test `T-E2-MISSION-LOG` Full-mission current log (planned) — **PROPOSED**
                                       - `i_cruise` ← claim **CL-E2-CRUISE-I-PESS** Cruise pack current, pessimistic = **22.35 A** — **UNVERIFIED**
+                                        - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                         - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                         - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                         - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -992,6 +1061,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                           - `ground` ← assumption `ASM-F1-GROUND` [duration s, pack current A] armed on the ground (FC, RX, GPS, servos idle) = table (2 rows) s,A (basis: E2's pessimistic budget ground row (team/E2/ENERGY.md); E2 emits no claim for it. It does not move any wire result (0.4 A)) — **UNVERIFIED**
                                             - ⚠ assumption marked UNVERIFIED by its author
                                           - `i_climb` ← claim **CL-E2-I-CLIMB-PESS** Climb 0-50 m at 2 m/s: pack current, pessimistic (gate, 10 degC) = **35.53 A** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1015,6 +1085,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                             - `CALC-E2-BUDGET-PESS` (see above)
                                             - `T-E2-MISSION-LOG` (see above)
                                           - `t_climb` ← claim **CL-E2-T-CLIMB-PESS** Climb 0-50 m at 2 m/s: duration, pessimistic = **25 s** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1038,6 +1109,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                             - `CALC-E2-BUDGET-PESS` (see above)
                                           - `i_hover` ← `CL-E2-HOVER-I-GATE` (see above)
                                           - `t_hover` ← claim **CL-E2-T-HOVER-PESS** Mission hover: duration = **120 s** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1060,6 +1132,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                             - how to verify: Phase duration on the full-mission log.
                                             - `CALC-E2-BUDGET-PESS` (see above)
                                           - `i_fwd` ← claim **CL-E2-I-TRANS-FWD-PESS** Forward transition: pack current, pessimistic (gate, 10 degC) = **43.45 A** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1083,6 +1156,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                             - `CALC-E2-BUDGET-PESS` (see above)
                                             - `T-E2-MISSION-LOG` (see above)
                                           - `t_fwd` ← claim **CL-E2-T-TRANS-FWD-PESS** Forward transition: duration, pessimistic = **20 s** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1106,6 +1180,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                             - `CALC-E2-BUDGET-PESS` (see above)
                                           - `i_cruise` ← `CL-E2-CRUISE-I-PESS` (see above)
                                           - `t_cruise` ← claim **CL-E2-T-CRUISE-PESS** Cruise to the 20 % line: duration, pessimistic = **406.9 s** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1128,6 +1203,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                             - how to verify: As CL-E2-CRUISE-MIN-PESS x 60.
                                             - `CALC-E2-BUDGET-PESS` (see above)
                                           - `i_back` ← claim **CL-E2-I-TRANS-BACK-PESS** Back-transition: pack current, pessimistic (gate, 10 degC) = **40.04 A** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1151,6 +1227,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                             - `CALC-E2-BUDGET-PESS` (see above)
                                             - `T-E2-MISSION-LOG` (see above)
                                           - `t_back` ← claim **CL-E2-T-TRANS-BACK-PESS** Back-transition: duration, pessimistic = **20 s** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1173,6 +1250,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                             - how to verify: Phase duration on the full-mission log (MODE and QTUN messages).
                                             - `CALC-E2-BUDGET-PESS` (see above)
                                           - `i_desc` ← claim **CL-E2-I-DESCENT-PESS** Descent 50-0 m at 1 m/s: pack current, pessimistic (gate, 10 degC) = **30.13 A** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1196,6 +1274,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                             - `CALC-E2-BUDGET-PESS` (see above)
                                             - `T-E2-MISSION-LOG` (see above)
                                           - `t_desc` ← claim **CL-E2-T-DESCENT-PESS** Descent 50-0 m at 1 m/s: duration, pessimistic = **50 s** — **UNVERIFIED**
+                                            - ⚠ CALC-E2-BUDGET-PESS does not re-run
                                             - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
                                             - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -3047,6 +3126,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
         - `g` ← `P:env.g_ms2` (see above)
         - `rho` ← `P:env.rho_kgm3` (see above)
         - `drag` ← claim **CL-E1-CRUISE-DRAG** Cruise drag at 16 m/s, gate mass (B1 polar) = **4.101 N** — **UNVERIFIED**
+          - ⚠ CALC-E1-CRUISE does not re-run
           - ⚠ uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
           - ⚠ uses CL-B1-CD0, which is UNVERIFIED
           - ⚠ uses CL-B1-K, which is UNVERIFIED
@@ -3056,17 +3136,18 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
           - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
           - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
           - how to verify: B1 owns the polar; cruise power test with known prop data (H2).
-          - calc `CALC-E1-CRUISE` `redesign/team/E1/propulsion.py::cruise()`: `CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D` — **CHECKED**
+          - calc `CALC-E1-CRUISE` `redesign/team/E1/propulsion.py::cruise()`: `CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D` — **UNVERIFIED**
+            - ⚠ does not re-run to its stored outputs (see build errors)
             - `m` ← `P:requirements.mtow_gate_kg` (see above)
             - `g` ← `P:env.g_ms2` (see above)
             - `rho` ← `P:env.rho_kgm3` (see above)
             - `S` ← `CL-A1-WING-AREA` (see above)
-            - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05128** — **UNVERIFIED** — chain printed above
+            - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05146** — **UNVERIFIED** — chain printed above
             - `k` ← claim **CL-B1-K** Lift-dependent drag factor (B2 trimmed polar, e 0.93) = **0.09427** — **UNVERIFIED** — chain printed above
             - `trim` ← assumption `ASM-B1-TRIM` Trim adds 2 % to cruise drag on top of B2's trimmed wing polar = 1.02 (basis: B2's polar (P:b2.avl.e_oswald, cd0_wing) is already trimmed, elevon profile drag included; B3 finds +0.2 % induced trim drag at 16 m/s (CR-B3-07). The 2 % left covers the up-trimmed elevon gap and pod/fin junctions. Was 1.05 (K09 card) before B2/B3 answered) — **PROPOSED**
               - source `SRC-B2-AVL` [AVL 3.52 runs, team/B2/avl_wing.py](https://web.mit.edu/drela/Public/web/avl/), team/B2/out/avl_results.json; 3 lattice levels; geometry from params.json (A1-R2: wing 1.15 x 0.32 m, half-fins x 0.045..0.32 m, 0.275 m chord, +/-0.19 m) — **UNVERIFIED**
                 - ⚠ value never compared with the source (no 'checked' date)
-            - `ld_b1` ← claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.341** — **UNVERIFIED** — chain printed above
+            - `ld_b1` ← claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.325** — **UNVERIFIED** — chain printed above
             - `V` ← param `P:performance.cruise_ms` = 16 m/s — **PROPOSED**
               - assumption `ASM-B1-VCRUISE` B1 proposes AIRSPEED_CRUISE = 16 m/s (params.json#performance.cruise_ms, CHANGE-LOG D-01) = 16 m/s (basis: lowest whole-number speed above 1.3 Vs at the 2.6 kg gate with B2's trimmed CLmax 0.80 on the c 0.32 wing (15.43 m/s, CL-B1-VT-GATE); +3.7 %, about 0.6 m/s for airspeed-hold and sensor error (R-AIRSPEED-ERR allows 1 m/s, so the margin is thin)) — **PROPOSED**
             - `n` ← `P:propulsion.n_motors` (see above)
@@ -3342,6 +3423,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P18
     - ⚠ marked PROPOSED in redesign/params/params.json: P18 ESTIMATE; steady rise of aircraft-side wiring at the continuous design current (R-DISCONNECT, D-56)
     - source `SRC-REQ-PROPOSED` Proposed requirements P1-P25 for K09, redesign/config-study/REQUIREMENTS-PROPOSED.md, checked 2026-11-09 — **CHECKED**
 - claim **CL-F1-DISC-REQ-CONT** Required disconnect continuous rating = **37.84 A** — **UNVERIFIED**
+  - ⚠ CALC-F1-I-DESIGN does not re-run
   - ⚠ uses CL-E2-HOVER-I-GATE, which is UNVERIFIED
   - ⚠ uses CL-E2-CRUISE-I-PESS, which is UNVERIFIED
   - ⚠ uses CL-B1-VCLIMB-P, which is UNVERIFIED
@@ -3350,7 +3432,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P18
   - ⚠ uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)
   - how to verify: 1.25 x CL-F1-I-CONT; re-run after any change to E2/B1 currents.
   - parts: PWR-002
-  - calc `CALC-F1-I-DESIGN` `redesign/team/F1/power.py::design_currents()`: `I_cont = max(I_hover, I_cruise, P_vclimb / V_nom) ; I_short = max profile phase <= 60 s ; I_req = k I` — **CHECKED**
+  - calc `CALC-F1-I-DESIGN` `redesign/team/F1/power.py::design_currents()`: `I_cont = max(I_hover, I_cruise, P_vclimb / V_nom) ; I_short = max profile phase <= 60 s ; I_req = k I` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `i_hover` ← claim **CL-E2-HOVER-I-GATE** Hover pack current at the gate, 5 m/s wind = **30.13 A** — **UNVERIFIED** — chain printed above
     - `i_cruise` ← claim **CL-E2-CRUISE-I-PESS** Cruise pack current, pessimistic = **22.35 A** — **UNVERIFIED** — chain printed above
     - `p_climb` ← claim **CL-B1-VCLIMB-P** Power in a 2.5 m/s vertical climb = **448 W** — **UNVERIFIED** — chain printed above
@@ -3366,6 +3449,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P18
       - claim **CL-E1-IPACK-PEAK** Peak pack current, four motors, no limiter, low pack, 11x5.5MR = **108.3 A** (limit <= 120 A, margin +10%) — **UNVERIFIED** — chain printed above
     - `tol` ← assumption `ASM-F1-SENSOR-TOL` BATT_AMP_PERVLT calibrated within +/-5 % at 24-30 A (R-AVIONICS-POWER) = 0.05 (basis: requirement value; the 100 A limiter acts on the sensed current) — **PROPOSED**
 - claim **CL-F1-DISC-REQ-SHORT** Required disconnect short-time (<= 60 s) rating = **54.31 A** — **UNVERIFIED**
+  - ⚠ CALC-F1-I-DESIGN does not re-run
   - ⚠ uses CL-E2-HOVER-I-GATE, which is UNVERIFIED
   - ⚠ uses CL-E2-CRUISE-I-PESS, which is UNVERIFIED
   - ⚠ uses CL-B1-VCLIMB-P, which is UNVERIFIED
@@ -3376,6 +3460,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P18
   - parts: PWR-002
   - `CALC-F1-I-DESIGN` (see above)
 - claim **CL-F1-ILIM-WORST** Limited peak with a 5 % sensor under-read = **105.3 A** (limit <= 140 A, margin +25%) — **UNVERIFIED**
+  - ⚠ CALC-F1-I-DESIGN does not re-run
   - ⚠ uses CL-E2-HOVER-I-GATE, which is UNVERIFIED
   - ⚠ uses CL-E2-CRUISE-I-PESS, which is UNVERIFIED
   - ⚠ uses CL-B1-VCLIMB-P, which is UNVERIFIED
@@ -3944,6 +4029,7 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D10
   - how to verify: SITL and bench (props off): set BATT_CAPACITY 6500, inject current, confirm QLAND at this count.
   - calc `CALC-E2-FAILSAFE` `redesign/team/E2/energy_claims.py::failsafe()`: `CRT_MAH = reserve C ; LOW_MAH = CRT + Ah(back-transition + descent + 60 s return cruise + 30 s landing hover), pessimistic currents, rounded up to 100 mAh` — **CHECKED**
     - `b` ← claim **CL-E2-BUDGET-PESS-TABLE** Phase table, pessimistic [phase, s, W, A, Ah] = **table (7 rows)** — **UNVERIFIED**
+      - ⚠ CALC-E2-BUDGET-PESS does not re-run
       - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -3964,7 +4050,8 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D10
       - ⚠ uses CL-B1-CRUISE-P, which is UNVERIFIED
       - ⚠ uses CL-B1-CRUISE-P-PESS, which is UNVERIFIED
       - how to verify: Pessimistic phase table: compare each row with the DataFlash log (BAT.Curr, BAT.CurrTot) of a full mission; rows within +/-15 %.
-      - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **CHECKED**
+      - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **UNVERIFIED**
+        - ⚠ does not re-run to its stored outputs (see build errors)
         - `m` ← param `P:requirements.mtow_gate_kg` = 2.6 kg — **CHECKED**
           - source `SRC-REQ-PROPOSED` Proposed requirements P1-P25 for K09, redesign/config-study/REQUIREMENTS-PROPOSED.md, checked 2026-11-09 — **CHECKED**
         - `n` ← param `P:propulsion.n_motors` = 4 — **CHECKED**
@@ -4023,8 +4110,8 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D10
         - `cap_frac` ← param `P:requirements.pack_capacity_min_frac` = 0.92 (team/A2/REQUIREMENTS.md) — **PROPOSED**
         - `reserve` ← param `P:requirements.energy_reserve_frac` = 0.2 — **CHECKED**
           - `SRC-REQ-PROPOSED` (see above)
-        - `pc_b` ← claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **227.8 W** — **UNVERIFIED** — chain under [R-MISSION](#r-mission)
-        - `pc_p` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **300.6 W** — **UNVERIFIED** — chain printed above
+        - `pc_b` ← claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **228.1 W** — **UNVERIFIED** — chain under [R-MISSION](#r-mission)
+        - `pc_p` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **301 W** — **UNVERIFIED** — chain printed above
         - `m_ref` ← `P:requirements.mtow_gate_kg` (see above)
         - `ASM-E2-ESC-EFF` (see above)
         - `ASM-E2-AVIONICS-W` (see above)
@@ -5108,6 +5195,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P25
     - `grav` ← `P:env.g_ms2` (see above)
     - `t_lim` ← claim **CL-C1-T-LIMIT** Limit thrust per motor used for every load case = **21.1 N** — **UNVERIFIED** — chain under [R-LOADS](#r-loads)
     - `q_mot` ← claim **CL-C1-MOTOR-TORQUE** Motor reaction torque at T_lim = **0.4204 N m** — **UNVERIFIED**
+      - ⚠ CALC-C1-ROTOR does not re-run
       - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
       - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -5122,7 +5210,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P25
       - ⚠ uses CL-F4-FW-RPM-CAP, which is UNVERIFIED
       - ⚠ uses CL-B1-VMAX, which is UNVERIFIED
       - how to verify: Thrust stand with a torque cell (T-B4-STAND) at T_lim.
-      - calc `CALC-C1-ROTOR` `redesign/team/C1/loads.py::rotor_calc()`: `T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_fw/60 (fixed-wing rpm at F4's THR_MAX) ; VH = max(V_pitch, V_lvl_F4) ; VD = f_D max(Vc, VH) rounded UP to 0.1 m/s ; VD_uncapped = f_D max(Vc, VMAX_B1) (information) ; n_hover = n T_lim / (m g)` — **CHECKED**
+      - calc `CALC-C1-ROTOR` `redesign/team/C1/loads.py::rotor_calc()`: `T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_fw/60 (fixed-wing rpm at F4's THR_MAX) ; VH = max(V_pitch, V_lvl_F4) ; VD = f_D max(Vc, VH) rounded UP to 0.1 m/s ; VD_uncapped = f_D max(Vc, VMAX_B1) (information) ; n_hover = n T_lim / (m g)` — **UNVERIFIED**
+        - ⚠ does not re-run to its stored outputs (see build errors)
         - `T_h` ← `CL-B4-HOVER-T` (see above)
         - `rpm_h` ← claim **CL-B4-HOVER-RPM** Hover rpm, 11x5.5MR = **5416 rpm** — **UNVERIFIED** — chain printed above
         - `Q_h` ← `CL-B4-HOVER-Q` (see above)
@@ -5145,6 +5234,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P25
         - `Vc` ← param `P:performance.cruise_ms` = 16 m/s — **PROPOSED**
           - assumption `ASM-B1-VCRUISE` B1 proposes AIRSPEED_CRUISE = 16 m/s (params.json#performance.cruise_ms, CHANGE-LOG D-01) = 16 m/s (basis: lowest whole-number speed above 1.3 Vs at the 2.6 kg gate with B2's trimmed CLmax 0.80 on the c 0.32 wing (15.43 m/s, CL-B1-VT-GATE); +3.7 %, about 0.6 m/s for airspeed-hold and sensor error (R-AIRSPEED-ERR allows 1 m/s, so the margin is thin)) — **PROPOSED**
         - `VH_f4` ← claim **CL-F4-VLEVEL** Highest level speed at THR_MAX 70 %, fresh pack = **21.28 m/s** (limit >= 18 m/s, margin +18%) — **UNVERIFIED**
+          - ⚠ CALC-F4-VLEVEL does not re-run
           - ⚠ uses ASM-F4-FW-PASSTHRU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
           - ⚠ uses ASM-F4-RPM-LIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
           - ⚠ uses CL-B1-VMAX, which is UNVERIFIED
@@ -5152,8 +5242,9 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P25
           - ⚠ uses P:fsw.spin_max, which is UNVERIFIED (cites CL-B4-SPIN-MAX, which is UNVERIFIED)
           - how to verify: As CL-F4-VLEVEL-VH; the same log shows AIRSPEED_MAX 18 m/s is reachable.
           - parts: AVN-001
-          - calc `CALC-F4-VLEVEL` `redesign/team/F4/fsw_check.py::vlevel()`: `a_pass = THR_MAX/100 ; a_lin = s_min + (s_max - s_min) (sqrt((1-e)^2 + 4 e THR_MAX/100) - (1-e)) / (2 e) ; a = max(a_pass, a_lin) ; V_lvl = VMAX(9 350 rpm) x a / a(9 350 rpm) ; VH_req = VD / 1.25 ; r = V_lvl / VH_req (fresh pack: worst case, voltage scaling 1)` — **CHECKED**
-            - `vmax` ← claim **CL-B1-VMAX** Top level speed at the 9 350 rpm cap, fresh pack (C1's VH) = **25.68 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED**
+          - calc `CALC-F4-VLEVEL` `redesign/team/F4/fsw_check.py::vlevel()`: `a_pass = THR_MAX/100 ; a_lin = s_min + (s_max - s_min) (sqrt((1-e)^2 + 4 e THR_MAX/100) - (1-e)) / (2 e) ; a = max(a_pass, a_lin) ; V_lvl = VMAX(9 350 rpm) x a / a(9 350 rpm) ; VH_req = VD / 1.25 ; r = V_lvl / VH_req (fresh pack: worst case, voltage scaling 1)` — **UNVERIFIED**
+            - ⚠ does not re-run to its stored outputs (see build errors)
+            - `vmax` ← claim **CL-B1-VMAX** Top level speed at the 9 350 rpm cap, fresh pack (C1's VH) = **25.67 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED**
               - ⚠ uses CL-B1-CD0, which is UNVERIFIED
               - ⚠ uses CL-B1-K, which is UNVERIFIED
               - ⚠ uses CL-B1-K-PESS, which is UNVERIFIED
@@ -5168,7 +5259,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P25
                 - `g` ← `P:env.g_ms2` (see above)
                 - `rho` ← `P:env.rho_kgm3` (see above)
                 - `S` ← claim **CL-A1-WING-AREA** Wing reference area = **0.368 m2** — **CHECKED** — chain under [R-CONFIG](#r-config)
-                - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05128** — **UNVERIFIED** — chain printed above
+                - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05146** — **UNVERIFIED** — chain printed above
                 - `k` ← claim **CL-B1-K** Lift-dependent drag factor (B2 trimmed polar, e 0.93) = **0.09427** — **UNVERIFIED** — chain printed above
                 - `k_pess` ← claim **CL-B1-K-PESS** Lift-dependent drag factor, pessimistic (e 0.80) = **0.1107** — **UNVERIFIED** — chain printed above
                 - `trim` ← assumption `ASM-B1-TRIM` Trim adds 2 % to cruise drag on top of B2's trimmed wing polar = 1.02 (basis: B2's polar (P:b2.avl.e_oswald, cd0_wing) is already trimmed, elevon profile drag included; B3 finds +0.2 % induced trim drag at 16 m/s (CR-B3-07). The 2 % left covers the up-trimmed elevon gap and pod/fin junctions. Was 1.05 (K09 card) before B2/B3 answered) — **PROPOSED**
@@ -5220,6 +5311,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P25
               - ⚠ assumption marked UNVERIFIED by its author
           - param `P:fsw.airspeed_max_ms` = 18 m/s (team/B1/CHANGE-REQUESTS.md#CR-B1-12) — **PROPOSED**
         - `rpm_fw` ← claim **CL-F4-FW-RPM-CAP** Motor rpm at THR_MAX in fixed-wing flight, fresh pack = **7749 rpm** (limit <= 7950 rpm, margin +3%) — **UNVERIFIED**
+          - ⚠ CALC-F4-VLEVEL does not re-run
           - ⚠ uses ASM-F4-FW-PASSTHRU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
           - ⚠ uses ASM-F4-RPM-LIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
           - ⚠ uses CL-B1-VMAX, which is UNVERIFIED
@@ -6733,6 +6825,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
   - ⚠ uses CL-A3-MASS-BASIC, which is UNVERIFIED
   - ⚠ uses CL-B4-HOVER-Q, which is UNVERIFIED
   - ⚠ uses CL-B4-YAW, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-ANTI, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-SYM, which is UNVERIFIED
   - ⚠ uses ASM-B3-TORSION-HIGH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-STATION-IYY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-FLEX-ZETA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -6756,17 +6850,21 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
     - `y` ← `P:propulsion.stations.y_m` (see above)
     - `z` ← `P:propulsion.stations.z_m` (see above)
     - `cant` ← `P:propulsion.stations.cant_deg` (see above)
-    - `f_anti` ← claim **CL-C2-F-TORSION-ANTI** First wing mode: antisymmetric torsion with the fin stations, low corner = **11.71 Hz** — **CHECKED**
+    - `f_anti` ← claim **CL-C2-F-TORSION-ANTI** First wing mode: antisymmetric torsion with the fin stations, low corner = **11.71 Hz** — **UNVERIFIED**
+      - ⚠ CALC-C2-FTORS does not re-run
       - how to verify: T-C2-TAP-TEST (tap a fin tip, phone accelerometer at the pod)
       - parts: WNG-001, WNG-002, WNG-003
-      - calc `CALC-C2-FTORS` `redesign/team/C2/c2_claims.py::pt_calc_c2_ftors()`: `value from wing_struct.py` — **CHECKED**
-        - `v` ← param `P:c2.fe.f_torsion_anti_hz` = 11.71 Hz (team/C2/wing_struct.py) — **PROPOSED**
+      - calc `CALC-C2-FTORS` `redesign/team/C2/c2_claims.py::pt_calc_c2_ftors()`: `value from wing_struct.py` — **UNVERIFIED**
+        - ⚠ does not re-run to its stored outputs (see build errors)
+        - `v` ← param `P:c2.fe.f_torsion_anti_hz` = 11.88 Hz (team/C2/wing_struct.py) — **PROPOSED**
       - test `T-C2-TAP-TEST` Wing modal tap test with motors fitted (planned) — **PROPOSED**
-    - `f_sym` ← claim **CL-C2-F-TORSION-SYM** Symmetric wing torsion mode (hover pitch control path), low corner = **21.69 Hz** — **CHECKED**
+    - `f_sym` ← claim **CL-C2-F-TORSION-SYM** Symmetric wing torsion mode (hover pitch control path), low corner = **21.69 Hz** — **UNVERIFIED**
+      - ⚠ CALC-C2-FTORS-S does not re-run
       - how to verify: T-C2-TAP-TEST
       - parts: WNG-001, WNG-002, WNG-003
-      - calc `CALC-C2-FTORS-S` `redesign/team/C2/c2_claims.py::pt_calc_c2_ftors_s()`: `value from wing_struct.py` — **CHECKED**
-        - `v` ← param `P:c2.fe.f_torsion_sym_hz` = 21.69 Hz (team/C2/wing_struct.py) — **PROPOSED**
+      - calc `CALC-C2-FTORS-S` `redesign/team/C2/c2_claims.py::pt_calc_c2_ftors_s()`: `value from wing_struct.py` — **UNVERIFIED**
+        - ⚠ does not re-run to its stored outputs (see build errors)
+        - `v` ← param `P:c2.fe.f_torsion_sym_hz` = 24.09 Hz (team/C2/wing_struct.py) — **PROPOSED**
       - `T-C2-TAP-TEST` (see above)
     - `f_hi` ← assumption `ASM-B3-TORSION-HIGH` Upper end of C2's frequency bands (GJ 45 N m2); the low corners are C2's claims = table (2 rows) Hz (basis: team/C2/CHANGE-REQUESTS.md CR-C2-03: antisymmetric 11.7-14.9 Hz, symmetric 21-27 Hz) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
@@ -6801,6 +6899,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
   - ⚠ uses CL-A3-MASS-BASIC, which is UNVERIFIED
   - ⚠ uses CL-B4-HOVER-Q, which is UNVERIFIED
   - ⚠ uses CL-B4-YAW, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-ANTI, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-SYM, which is UNVERIFIED
   - ⚠ uses ASM-B3-TORSION-HIGH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-STATION-IYY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-FLEX-ZETA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -6946,8 +7046,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P5
   - param `P:requirements.hover_tw_min_sag` = 1.6 — **CHECKED**
     - `SRC-REQ-PROPOSED` (see above)
   - `T-A1-THRUST-STATION` (see above)
-- claim **CL-B1-HOVER-THROTTLE** Hover thrust fraction, sagged pack = **0.5596** (limit <= 0.6, margin +7%) — **UNVERIFIED**
-  - ⚠ CALC-B1-HOVER does not re-run
+- claim **CL-B1-HOVER-THROTTLE** Hover thrust fraction, sagged pack = **0.4998** (limit <= 0.6, margin +17%) — **UNVERIFIED**
   - ⚠ uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)
@@ -6958,8 +7057,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P5
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: Hover throttle in the log (MOT_THST_HOVER learned) at the gate mass and low pack (F4/H2).
-  - calc `CALC-B1-HOVER` `redesign/team/B1/performance.py::hover()`: `T_motor = m DL / n ; r = P_motor(11x5.5MR, T) / P_motor(11x4.5MR, T) ; P = n P_table(T_motor) r / eta_esc + P_av ; I = P / V ; t_hover = E (1 - reserve) / P ; throttle = m g DL / (n T_max sag)` — **UNVERIFIED**
-    - ⚠ does not re-run to its stored outputs (see build errors)
+  - calc `CALC-B1-HOVER` `redesign/team/B1/performance.py::hover()`: `T_motor = m DL / n ; r = P_motor(11x5.5MR, T) / P_motor(11x4.5MR, T) ; P = n P_table(T_motor) r / eta_esc + P_av ; I = P / V ; t_hover = E (1 - reserve) / P ; throttle = m g DL / (n T_max sag)` — **CHECKED**
     - `m_gate` ← `P:requirements.mtow_gate_kg` (see above)
     - `m_sized` ← `CL-A1-MASS-SIZED` (see above)
     - `table` ← param `P:propulsion.thrust_table_g_w` = table (4 rows) gf,W — **UNVERIFIED**
@@ -7001,8 +7099,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P5
     - `ASM-B1-AVIONICS-W` (see above)
     - `ASM-B1-PESS` (see above)
   - test `T-B1-TETHER-HOVER` Tethered hover power (planned) — **PROPOSED**
-- claim **CL-B1-HOVER-TW-SAG** Hover T/W with sag and download = **1.787** (limit >= 1.6, margin +12%) — **UNVERIFIED**
-  - ⚠ CALC-B1-HOVER does not re-run
+- claim **CL-B1-HOVER-TW-SAG** Hover T/W with sag and download = **2.001** (limit >= 1.6, margin +25%) — **UNVERIFIED**
   - ⚠ uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)
@@ -7877,6 +7974,7 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D1
 Defined in: redesign/TEAM.md#C1
 
 - claim **CL-C1-T-CAP** Peak static thrust per motor at the F4 rpm cap = **21.08 N** (limit <= 21.1 N, margin +0%) — **UNVERIFIED**
+  - ⚠ CALC-C1-ROTOR does not re-run
   - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -7891,7 +7989,8 @@ Defined in: redesign/TEAM.md#C1
   - ⚠ uses CL-F4-FW-RPM-CAP, which is UNVERIFIED
   - ⚠ uses CL-B1-VMAX, which is UNVERIFIED
   - how to verify: T-C1-THRUST-FRESH: thrust stand on a 16.8 V pack with the F4 output cap; peak thrust <= the requirement.
-  - calc `CALC-C1-ROTOR` `redesign/team/C1/loads.py::rotor_calc()`: `T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_fw/60 (fixed-wing rpm at F4's THR_MAX) ; VH = max(V_pitch, V_lvl_F4) ; VD = f_D max(Vc, VH) rounded UP to 0.1 m/s ; VD_uncapped = f_D max(Vc, VMAX_B1) (information) ; n_hover = n T_lim / (m g)` — **CHECKED**
+  - calc `CALC-C1-ROTOR` `redesign/team/C1/loads.py::rotor_calc()`: `T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_fw/60 (fixed-wing rpm at F4's THR_MAX) ; VH = max(V_pitch, V_lvl_F4) ; VD = f_D max(Vc, VH) rounded UP to 0.1 m/s ; VD_uncapped = f_D max(Vc, VMAX_B1) (information) ; n_hover = n T_lim / (m g)` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `T_h` ← claim **CL-B4-HOVER-T** Hover thrust per prop at the gate incl. download = **6.808 N** — **UNVERIFIED** — chain printed above
     - `rpm_h` ← claim **CL-B4-HOVER-RPM** Hover rpm, 11x5.5MR = **5416 rpm** — **UNVERIFIED** — chain printed above
     - `Q_h` ← claim **CL-B4-HOVER-Q** Prop torque at hover, 11x5.5MR (reaction torque for yaw) = **0.1137 N*m** — **UNVERIFIED** — chain printed above
@@ -7919,7 +8018,7 @@ Defined in: redesign/TEAM.md#C1
       - assumption `ASM-B1-VCRUISE` B1 proposes AIRSPEED_CRUISE = 16 m/s (params.json#performance.cruise_ms, CHANGE-LOG D-01) = 16 m/s (basis: lowest whole-number speed above 1.3 Vs at the 2.6 kg gate with B2's trimmed CLmax 0.80 on the c 0.32 wing (15.43 m/s, CL-B1-VT-GATE); +3.7 %, about 0.6 m/s for airspeed-hold and sensor error (R-AIRSPEED-ERR allows 1 m/s, so the margin is thin)) — **PROPOSED**
     - `VH_f4` ← claim **CL-F4-VLEVEL** Highest level speed at THR_MAX 70 %, fresh pack = **21.28 m/s** (limit >= 18 m/s, margin +18%) — **UNVERIFIED** — chain printed above
     - `rpm_fw` ← claim **CL-F4-FW-RPM-CAP** Motor rpm at THR_MAX in fixed-wing flight, fresh pack = **7749 rpm** (limit <= 7950 rpm, margin +3%) — **UNVERIFIED** — chain printed above
-    - `VH_b1` ← claim **CL-B1-VMAX** Top level speed at the 9 350 rpm cap, fresh pack (C1's VH) = **25.68 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED** — chain printed above
+    - `VH_b1` ← claim **CL-B1-VMAX** Top level speed at the 9 350 rpm cap, fresh pack (C1's VH) = **25.67 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED** — chain printed above
     - `fD` ← assumption `ASM-C1-VD-FACTOR` Design dive speed = 1.25 x max(VC, VH) = 1.25 (basis: FAR 23.335(b) VD >= 1.25 VC with VC = the highest level speed the aircraft can hold; VH = max(prop pitch speed at the F4 rpm cap, B1's top level speed)) — **PROPOSED**
       - source `SRC-C1-FAR23` 14 CFR Part 23 (pre-Amdt 23-64) loads, 23.321-23.351 flight loads, 23.341 gust formula, 23.473 landing (lift 2/3 W), 23.561 emergency landing, 23.619/23.625 special and fitting factors, 23.303 factor of safety 1.5 — **UNVERIFIED**
         - ⚠ value never compared with the source (no 'checked' date)
@@ -7934,6 +8033,7 @@ Defined in: redesign/TEAM.md#C1
   - `P:requirements.thrust_limit_per_motor_n` (see above)
   - test `T-C1-THRUST-FRESH` Max thrust on a fresh pack (planned) — **PROPOSED**
 - claim **CL-C1-T-LIMIT** Limit thrust per motor used for every load case = **21.1 N** — **UNVERIFIED**
+  - ⚠ CALC-C1-ROTOR does not re-run
   - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -7951,6 +8051,7 @@ Defined in: redesign/TEAM.md#C1
   - `CALC-C1-ROTOR` (see above)
   - `T-C1-THRUST-FRESH` (see above)
 - claim **CL-C1-VD** Design dive speed VD = 1.25 VH, re-derived on the capped VH = **26.7 m/s** (limit <= 27.2 m/s, margin +2%) — **UNVERIFIED**
+  - ⚠ CALC-C1-ROTOR does not re-run
   - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -8214,6 +8315,7 @@ Defined in: redesign/TEAM.md#C1
     - `T_lim` ← `CL-C1-T-LIMIT` (see above)
     - `Q` ← claim **CL-C1-MOTOR-TORQUE** Motor reaction torque at T_lim = **0.4204 N m** — **UNVERIFIED** — chain printed above
     - `H` ← claim **CL-C1-ROTOR-H** Rotor angular momentum at T_lim = **0.123 N m s** — **UNVERIFIED**
+      - ⚠ CALC-C1-ROTOR does not re-run
       - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
       - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -8230,6 +8332,7 @@ Defined in: redesign/TEAM.md#C1
       - how to verify: Prop and bell inertia by bifilar swing; rpm from the stand.
       - `CALC-C1-ROTOR` (see above)
     - `omega_lim` ← claim **CL-C1-ROTOR-OMEGA** Rotor speed at T_lim = **979.5 rad/s** — **UNVERIFIED**
+      - ⚠ CALC-C1-ROTOR does not re-run
       - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
       - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -10905,11 +11008,13 @@ Defined in: redesign/params/mass_budget.json
     - `ASM-A3-MGA` (see above)
     - `ASM-A3-PACK-RANGE` (see above)
 - claim **CL-C2-WING-MASS** Wing structure mass (core, tape, spar, fill, 6 plugs) = **397.4 g** (limit <= 405 g, margin +2%) — **UNVERIFIED**
+  - ⚠ CALC-C2-MASS does not re-run
   - ⚠ uses P:mass.allocation_g.wing, which is UNVERIFIED (cites CL-D1-WING-MASS, which is UNVERIFIED)
   - how to verify: Weigh the core, the tube and the finished wing (A3 M-items)
   - parts: WNG-001, WNG-002, WNG-003
-  - calc `CALC-C2-MASS` `redesign/team/C2/c2_claims.py::wing_mass()`: `m = core + tape + spar + fill + plugs` — **CHECKED**
-    - `m` ← param `P:c2.fe.wing_mass_kg` = 0.3974 kg (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-MASS` `redesign/team/C2/c2_claims.py::wing_mass()`: `m = core + tape + spar + fill + plugs` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `m` ← param `P:c2.fe.wing_mass_kg` = 0.3894 kg (team/C2/wing_struct.py) — **PROPOSED**
   - `P:mass.allocation_g.wing` (see above)
 - claim **CL-C3-POD-MASS-REC** Pod mass with the C3 sizing (D2 model + any C3 delta) = **130.9 g** (limit <= 131 g, margin +0%) — **UNVERIFIED**
   - ⚠ uses CL-D2-MASS, which is UNVERIFIED
@@ -11141,7 +11246,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P4
 **Mission endurance** — Hover >= 2 min total plus cruise >= 5 min on one pack with 20 % energy reserve, no payload — **UNVERIFIED**  
 Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
 
-- claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **227.8 W** — **UNVERIFIED**
+- claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **228.1 W** — **UNVERIFIED**
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -11161,7 +11266,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
     - `rho` ← param `P:env.rho_kgm3` = 1.225 kg/m3 — **CHECKED**
       - `SRC-ISA` (see above)
     - `S` ← claim **CL-A1-WING-AREA** Wing reference area = **0.368 m2** — **CHECKED** — chain under [R-CONFIG](#r-config)
-    - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05128** — **UNVERIFIED** — chain printed above
+    - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05146** — **UNVERIFIED** — chain printed above
     - `k` ← claim **CL-B1-K** Lift-dependent drag factor (B2 trimmed polar, e 0.93) = **0.09427** — **UNVERIFIED** — chain printed above
     - `k_pess` ← claim **CL-B1-K-PESS** Lift-dependent drag factor, pessimistic (e 0.80) = **0.1107** — **UNVERIFIED** — chain printed above
     - `trim` ← assumption `ASM-B1-TRIM` Trim adds 2 % to cruise drag on top of B2's trimmed wing polar = 1.02 (basis: B2's polar (P:b2.avl.e_oswald, cd0_wing) is already trimmed, elevon profile drag included; B3 finds +0.2 % induced trim drag at 16 m/s (CR-B3-07). The 2 % left covers the up-trimmed elevon gap and pod/fin junctions. Was 1.05 (K09 card) before B2/B3 answered) — **PROPOSED**
@@ -11206,7 +11311,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
     - `ASM-E1-RM` (see above)
     - `ASM-E1-I0` (see above)
   - test `T-B1-CRUISE-POWER` Cruise power and speed polar (planned) — **PROPOSED**
-- claim **CL-B1-CRUISE-TIME** Cruise after 2 min hover, 20 % reserve = **16.29 min** (limit >= 5 min, margin +226%) — **UNVERIFIED**
+- claim **CL-B1-CRUISE-TIME** Cruise after 2 min hover, 20 % reserve = **16.27 min** (limit >= 5 min, margin +225%) — **UNVERIFIED**
   - ⚠ uses P:performance.hover_power_w, which is UNVERIFIED (cites CL-E1-HOVER-I-55, which is UNVERIFIED)
   - ⚠ uses CL-B1-HOVER-P-GATE, which is UNVERIFIED
   - ⚠ uses CL-B1-TRANS-ENERGY, which is UNVERIFIED
@@ -11223,7 +11328,6 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
       - claim **CL-E1-HOVER-I-55** Hover pack current, 11x5.5MR, 14.8 V = **27.33 A** (limit <= 31.05 A, margin +12%) — **UNVERIFIED** — chain under [R-ESC-CURRENT](#r-esc-current)
     - `pess` ← `ASM-B1-PESS` (see above)
     - `p_hover_b1` ← claim **CL-B1-HOVER-P-GATE** Hover power at 2.6 kg, 11x5.5MR (B1 cross-check of E1) = **386.9 W** (limit <= 400 W, margin +3%) — **UNVERIFIED**
-      - ⚠ CALC-B1-HOVER does not re-run
       - ⚠ uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
       - ⚠ uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)
@@ -11235,8 +11339,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
       - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses P:performance.hover_power_w, which is UNVERIFIED (cites CL-E1-HOVER-I-55, which is UNVERIFIED)
       - how to verify: Tethered hover at the gate mass (ballast), log pack W for 60 s (H2); thrust stand first (H1).
-      - calc `CALC-B1-HOVER` `redesign/team/B1/performance.py::hover()`: `T_motor = m DL / n ; r = P_motor(11x5.5MR, T) / P_motor(11x4.5MR, T) ; P = n P_table(T_motor) r / eta_esc + P_av ; I = P / V ; t_hover = E (1 - reserve) / P ; throttle = m g DL / (n T_max sag)` — **UNVERIFIED**
-        - ⚠ does not re-run to its stored outputs (see build errors)
+      - calc `CALC-B1-HOVER` `redesign/team/B1/performance.py::hover()`: `T_motor = m DL / n ; r = P_motor(11x5.5MR, T) / P_motor(11x4.5MR, T) ; P = n P_table(T_motor) r / eta_esc + P_av ; I = P / V ; t_hover = E (1 - reserve) / P ; throttle = m g DL / (n T_max sag)` — **CHECKED**
         - `m_gate` ← `P:requirements.mtow_gate_kg` (see above)
         - `m_sized` ← claim **CL-A1-MASS-SIZED** Sized take-off mass (allocations + planned growth + overrun) = **2.6 kg** (limit <= 2.6 kg, margin +0%) — **UNVERIFIED** — chain under [R-MASS-GATE](#r-mass-gate)
         - `table` ← param `P:propulsion.thrust_table_g_w` = table (4 rows) gf,W — **UNVERIFIED**
@@ -11274,7 +11377,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
       - test `T-B1-TETHER-HOVER` Tethered hover power (planned) — **PROPOSED**
     - `t_hover` ← param `P:requirements.hover_time_min` = 2 min — **CHECKED**
       - `SRC-REQ-PROPOSED` (see above)
-    - `e_tr` ← claim **CL-B1-TRANS-ENERGY** Energy of one pitch-over = **0.8816 Wh** — **UNVERIFIED**
+    - `e_tr` ← claim **CL-B1-TRANS-ENERGY** Energy of one pitch-over = **0.8814 Wh** — **UNVERIFIED**
       - ⚠ uses CL-B1-CLA, which is UNVERIFIED
       - ⚠ uses P:b2.xfoil.alpha0_2d_deg, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)
       - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
@@ -11293,7 +11396,6 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
         - `rho` ← `P:env.rho_kgm3` (see above)
         - `S` ← `CL-A1-WING-AREA` (see above)
         - `cla` ← claim **CL-B1-CLA** Wing lift slope (B2 AVL, c 0.30 run) = **3.477 1/rad** — **UNVERIFIED**
-          - ⚠ CALC-B1-AERO does not re-run
           - ⚠ uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
           - ⚠ uses SRC-B2-XFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
           - ⚠ uses ASM-B1-DRAG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -11306,8 +11408,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
           - ⚠ uses P:b2.xfoil.alpha0_2d_deg, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)
           - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
           - how to verify: B3 AVL CLa with fins and pod at c 0.32.
-          - calc `CALC-B1-AERO` `redesign/team/B1/performance.py::aero_build()`: `CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod + Cd_front (w - w_ref) h + n_b Cd_b w_b l_b + n_c (Cd_c D_c - Cd_tube d) h_c] / S, Swet_fin = 2 A (1 + 0.2 t/c) ; k = 1/(pi AR e_B2) ; k_pess = 1/(pi AR e_params) ; a = CLa (B2 AVL) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))` — **UNVERIFIED**
-            - ⚠ does not re-run to its stored outputs (see build errors)
+          - calc `CALC-B1-AERO` `redesign/team/B1/performance.py::aero_build()`: `CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod + Cd_front (w - w_ref) h + n_b Cd_b w_b l_b + n_c (Cd_c D_c - Cd_tube d) h_c] / S, Swet_fin = 2 A (1 + 0.2 t/c) ; k = 1/(pi AR e_B2) ; k_pess = 1/(pi AR e_params) ; a = CLa (B2 AVL) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))` — **CHECKED**
             - `b` ← param `P:wing.span_m` = 1.15 m — **CHECKED**
               - `SRC-K09-CARD` (see above)
             - `c` ← param `P:wing.chord_m` = 0.32 m (team/B2/CHANGE-REQUESTS.md#CR-B2-01) — **PROPOSED**
@@ -11369,8 +11470,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
         - `rm` ← `ASM-E1-RM` (see above)
         - `i0` ← `ASM-E1-I0` (see above)
         - `kcal` ← `CL-B1-KCAL` (see above)
-        - `nmax` ← claim **CL-B1-NMAX-SAG** Prop speed at full throttle, sagged = **120.1 rev/s** — **UNVERIFIED**
-          - ⚠ CALC-B1-PROPCAL does not re-run
+        - `nmax` ← claim **CL-B1-NMAX-SAG** Prop speed at full throttle, sagged = **127.1 rev/s** — **UNVERIFIED**
           - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
           - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
           - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -11379,8 +11479,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
           - ⚠ uses P:propulsion.thrust_max_per_motor_kg, which is UNVERIFIED (cites CL-E1-ILIM-TW-FRESH, which is UNVERIFIED)
           - ⚠ uses P:propulsion.voltage_sag, which is UNVERIFIED (cites CL-E1-SAG-FACTOR, which is UNVERIFIED)
           - how to verify: Thrust stand at 14.0 V, full throttle, optical tachometer (H1, T-A1-THRUST-STATION).
-          - calc `CALC-B1-PROPCAL` `redesign/team/B1/performance.py::prop_calibration()`: `n_max = sqrt(T0/(Ct0 rho D^4)) (11x5.5MR) ; n_max,sag = n_max sqrt(sag) ; k_cal = P_table(690 gf) / P_motor(11x4.5MR model at 690 gf, J = 0) ; FM = T^1.5/(sqrt(2 rho A) P_shaft) (11x5.5MR)` — **UNVERIFIED**
-            - ⚠ does not re-run to its stored outputs (see build errors)
+          - calc `CALC-B1-PROPCAL` `redesign/team/B1/performance.py::prop_calibration()`: `n_max = sqrt(T0/(Ct0 rho D^4)) (11x5.5MR) ; n_max,sag = n_max sqrt(sag) ; k_cal = P_table(690 gf) / P_motor(11x4.5MR model at 690 gf, J = 0) ; FM = T^1.5/(sqrt(2 rho A) P_shaft) (11x5.5MR)` — **CHECKED**
             - `tab` ← `ASM-B1-PROP` (see above)
             - `tab_ref` ← `ASM-B1-PROP-REF` (see above)
             - `kv` ← `ASM-E1-KV` (see above)
@@ -11413,13 +11512,13 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
         - `ASM-B1-CTRL-RESERVE` (see above)
     - `trans` ← `ASM-B1-TRANS` (see above)
     - `p_c` ← `CL-B1-CRUISE-P` (see above)
-    - `p_c_pess` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **300.6 W** — **UNVERIFIED** — chain printed above
+    - `p_c_pess` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **301 W** — **UNVERIFIED** — chain printed above
     - `vc` ← `ASM-B1-VCRUISE` (see above)
     - `ASM-B1-TRANS` (see above)
     - `ASM-B1-PESS` (see above)
   - param `P:requirements.cruise_time_min` = 5 min — **CHECKED**
     - `SRC-REQ-PROPOSED` (see above)
-- claim **CL-B1-CRUISE-TIME-PESS** Cruise after hover, pessimistic = **12.05 min** (limit >= 5 min, margin +141%) — **UNVERIFIED**
+- claim **CL-B1-CRUISE-TIME-PESS** Cruise after hover, pessimistic = **12.03 min** (limit >= 5 min, margin +141%) — **UNVERIFIED**
   - ⚠ uses P:performance.hover_power_w, which is UNVERIFIED (cites CL-E1-HOVER-I-55, which is UNVERIFIED)
   - ⚠ uses CL-B1-HOVER-P-GATE, which is UNVERIFIED
   - ⚠ uses CL-B1-TRANS-ENERGY, which is UNVERIFIED
@@ -11429,6 +11528,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
   - `CALC-B1-MISSION` (see above)
   - `P:requirements.cruise_time_min` (see above)
 - claim **CL-E1-CRUISE-P-55** Cruise electrical power, 11x5.5MR = **234.1 W** (limit <= 240 W, margin +2%) — **UNVERIFIED**
+  - ⚠ CALC-E1-CRUISE does not re-run
   - ⚠ uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
   - ⚠ uses CL-B1-K, which is UNVERIFIED
@@ -11440,7 +11540,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
   - ⚠ uses P:performance.cruise_power_w, which is UNVERIFIED
   - how to verify: Log pack power in steady 16 m/s FBWA legs, both directions, calm morning; subtract the avionics draw.
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL, PRP-002-UR, PRP-002-UL, PRP-002-LR, PRP-002-LL
-  - calc `CALC-E1-CRUISE` `redesign/team/E1/propulsion.py::cruise()`: `CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D` — **CHECKED**
+  - calc `CALC-E1-CRUISE` `redesign/team/E1/propulsion.py::cruise()`: `CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `m` ← `P:requirements.mtow_gate_kg` (see above)
     - `g` ← `P:env.g_ms2` (see above)
     - `rho` ← `P:env.rho_kgm3` (see above)
@@ -11448,7 +11549,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
     - `cd0` ← `CL-B1-CD0` (see above)
     - `k` ← `CL-B1-K` (see above)
     - `trim` ← `ASM-B1-TRIM` (see above)
-    - `ld_b1` ← claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.341** — **UNVERIFIED** — chain printed above
+    - `ld_b1` ← claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.325** — **UNVERIFIED** — chain printed above
     - `V` ← param `P:performance.cruise_ms` = 16 m/s — **PROPOSED**
       - `ASM-B1-VCRUISE` (see above)
     - `n` ← `P:propulsion.n_motors` (see above)
@@ -11466,6 +11567,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
     - ⚠ cites CL-E1-CRUISE-P-55, which is UNVERIFIED
     - `CL-E1-CRUISE-P-55` (see above)
 - claim **CL-E2-CRUISE-MIN-BASE** Cruise after 2 min hover to the 20 % line, base = **12.64 min** (limit >= 5 min, margin +153%) — **UNVERIFIED**
+  - ⚠ CALC-E2-BUDGET-BASE does not re-run
   - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -11485,7 +11587,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
   - ⚠ uses CL-B1-CRUISE-P, which is UNVERIFIED
   - ⚠ uses CL-B1-CRUISE-P-PESS, which is UNVERIFIED
   - how to verify: Full-mission flight (R-TEST-ORDER gate 9): land when BAT.CurrTot reaches 80 % of 6 500 mAh; logged cruise time >= this value.
-  - calc `CALC-E2-BUDGET-BASE` `redesign/team/E2/energy_claims.py::budget_base()`: `I = (Voc - sqrt(Voc^2 - 4 R P)) / (2 R) per phase ; Ah = I t ; P_cruise = P_B1(gate) x circuit x P_E2(m) / P_E2(gate) ; t_cruise = (C - 0.2 C - sum Ah_fixed) / I_cruise` — **CHECKED**
+  - calc `CALC-E2-BUDGET-BASE` `redesign/team/E2/energy_claims.py::budget_base()`: `I = (Voc - sqrt(Voc^2 - 4 R P)) / (2 R) per phase ; Ah = I t ; P_cruise = P_B1(gate) x circuit x P_E2(m) / P_E2(gate) ; t_cruise = (C - 0.2 C - sum Ah_fixed) / I_cruise` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `m` ← `CL-A1-MASS-SIZED` (see above)
     - `n` ← `P:propulsion.n_motors` (see above)
     - `table` ← `P:propulsion.thrust_table_g_w` (see above)
@@ -11541,6 +11644,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
   - `P:requirements.cruise_time_min` (see above)
   - test `T-E2-MISSION-LOG` Full-mission current log (planned) — **PROPOSED**
 - claim **CL-E2-CRUISE-MIN-PESS** Cruise after 2 min hover to the 20 % line, pessimistic = **6.781 min** (limit >= 5 min, margin +36%) — **UNVERIFIED**
+  - ⚠ CALC-E2-BUDGET-PESS does not re-run
   - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -11561,7 +11665,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
   - ⚠ uses CL-B1-CRUISE-P, which is UNVERIFIED
   - ⚠ uses CL-B1-CRUISE-P-PESS, which is UNVERIFIED
   - how to verify: Same flight; also re-run this script with the twin's logged hover and cruise currents in place of the model (ASM-E2-HOVER-MARGIN, ASM-E2-CRUISE-AERO).
-  - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **CHECKED**
+  - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `m` ← `P:requirements.mtow_gate_kg` (see above)
     - `n` ← `P:propulsion.n_motors` (see above)
     - `table` ← `P:propulsion.thrust_table_g_w` (see above)
@@ -12934,12 +13039,10 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P7
   - param `P:requirements.stall_max_ms` = 12 m/s — **CHECKED**
     - `SRC-REQ-PROPOSED` (see above)
 - claim **CL-B1-VS-GATE** Stall speed at 2.6 kg = **11.91 m/s** (limit <= 12 m/s, margin +1%) — **UNVERIFIED**
-  - ⚠ CALC-B1-STALL does not re-run
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
   - how to verify: B2 trimmed CLmax 0.80 (XFOIL + AVL); flight: slow-flight stall in FBWA at >= 50 m with airspeed logged (H2, T-B2-STALL).
-  - calc `CALC-B1-STALL` `redesign/team/B1/performance.py::stall_speeds()`: `Vs = sqrt(2 m g/(rho S CLmax)) ; Vt = 1.3 Vs ; Vs30 = Vs/sqrt(cos 30) ; margin = Vcruise/Vt - 1` — **UNVERIFIED**
-    - ⚠ does not re-run to its stored outputs (see build errors)
+  - calc `CALC-B1-STALL` `redesign/team/B1/performance.py::stall_speeds()`: `Vs = sqrt(2 m g/(rho S CLmax)) ; Vt = 1.3 Vs ; Vs30 = Vs/sqrt(cos 30) ; margin = Vcruise/Vt - 1` — **CHECKED**
     - `m_gate` ← `P:requirements.mtow_gate_kg` (see above)
     - `m_sized` ← claim **CL-A1-MASS-SIZED** Sized take-off mass (allocations + planned growth + overrun) = **2.6 kg** (limit <= 2.6 kg, margin +0%) — **UNVERIFIED** — chain under [R-MASS-GATE](#r-mass-gate)
     - `g` ← `P:env.g_ms2` (see above)
@@ -12950,8 +13053,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P7
     - `vc` ← assumption `ASM-B1-VCRUISE` B1 proposes AIRSPEED_CRUISE = 16 m/s (params.json#performance.cruise_ms, CHANGE-LOG D-01) = 16 m/s (basis: lowest whole-number speed above 1.3 Vs at the 2.6 kg gate with B2's trimmed CLmax 0.80 on the c 0.32 wing (15.43 m/s, CL-B1-VT-GATE); +3.7 %, about 0.6 m/s for airspeed-hold and sensor error (R-AIRSPEED-ERR allows 1 m/s, so the margin is thin)) — **PROPOSED**
     - `ASM-B1-VCRUISE` (see above)
   - `P:requirements.stall_max_ms` (see above)
-- claim **CL-B1-VS-SIZED** Stall speed at sized mass = **11.89 m/s** (limit <= 12 m/s, margin +1%) — **UNVERIFIED**
-  - ⚠ CALC-B1-STALL does not re-run
+- claim **CL-B1-VS-SIZED** Stall speed at sized mass = **11.91 m/s** (limit <= 12 m/s, margin +1%) — **UNVERIFIED**
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
   - how to verify: As CL-B1-VS-GATE at the weighed mass.
@@ -13235,11 +13337,13 @@ Defined in: redesign/README.md#joints-both-sides-of-every-interface
     - `ASM-C2-SPAR-SIGMA` (see above)
   - test `T-C2-WING-PROOF` Wing proof load to limit (planned) — **PROPOSED**
 - claim **CL-C2-SPAR-SIGMA-ENV** Spar bending stress, max along the span, ultimate = **6.152e+07 Pa** (limit <= 3.5e+08 Pa, margin +82%) — **UNVERIFIED**
+  - ⚠ CALC-C2-SPAR-ENV does not re-run
   - ⚠ uses P:c2.inputs.spar_sigma_allow_pa, which is UNVERIFIED (cites ASM-C2-SPAR-SIGMA, which is UNVERIFIED)
   - how to verify: Re-run wing_struct.py; equals CL-C2-SPAR-SIGMA-ULT when the root governs
   - parts: WNG-002
-  - calc `CALC-C2-SPAR-ENV` `redesign/team/C2/c2_claims.py::pt_calc_c2_spar_env()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.spar_sigma_ult_max_pa` = 6.152e+07 Pa (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-SPAR-ENV` `redesign/team/C2/c2_claims.py::pt_calc_c2_spar_env()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.spar_sigma_ult_max_pa` = 5.928e+07 Pa (team/C2/wing_struct.py) — **PROPOSED**
   - `P:c2.inputs.spar_sigma_allow_pa` (see above)
 - claim **CL-C2-SPAR-TAU-ULT** Spar shear stress, all torsion and shear on the spar, ultimate = **1.177e+07 Pa** (limit <= 3e+07 Pa, margin +61%) — **UNVERIFIED**
   - ⚠ CALC-C2-SPAR-TAU does not re-run
@@ -13287,17 +13391,19 @@ Defined in: redesign/README.md#joints-both-sides-of-every-interface
   - calc `CALC-C2-SPAR-BRACE` `redesign/team/C2/c2_claims.py::spar_brace()`: `sigma = (Mx_ult + F_brace/(1.15 x 1.25) x (y_fin - 0.242)) (D/2) / I` — **UNVERIFIED**
     - ⚠ does not re-run to its stored outputs (see build errors)
     - `Mx` ← claim **CL-C1-SPAR-MX-ULT** Spar flap bending, ultimate = **12.02 N m** — **UNVERIFIED** — chain under [R-LOADS](#r-loads)
-    - `Fb` ← param `P:c2.fe.F_brace_design_N` = 145.9 N (team/C4/claims.json) — **PROPOSED**
+    - `Fb` ← param `P:c2.fe.F_brace_design_N` = 143.4 N (team/C4/claims.json) — **PROPOSED**
     - `y_fin` ← param `P:fins.y_m` = 0.32 m — **CHECKED**
       - source `SRC-K09-CARD` K09 concept card and sizing script, redesign/config-study/cards/K09/{CARD.md, sizing.py, sizing.json, cost.csv}; geometry constants in sizing.py ASSUMPTIONS block, checked 2026-11-09 — **CHECKED**
     - `D` ← `P:wing.spar.od_m` (see above)
     - `d` ← `P:wing.spar.id_m` (see above)
   - `P:c2.inputs.spar_sigma_allow_pa` (see above)
-- claim **CL-C2-TIP-DEFL-FRAC** Wing tip deflection / semi-span at limit, worst case (G2), E 70 GPa = **0.005038** (limit <= 0.05, margin +90%) — **CHECKED**
+- claim **CL-C2-TIP-DEFL-FRAC** Wing tip deflection / semi-span at limit, worst case (G2), E 70 GPa = **0.005038** (limit <= 0.05, margin +90%) — **UNVERIFIED**
+  - ⚠ CALC-C2-DEFL does not re-run
   - how to verify: T-C2-WING-PROOF: dial gauge or ruler at the tip at limit load
   - parts: WNG-001, WNG-002, WNG-003
-  - calc `CALC-C2-DEFL` `redesign/team/C2/c2_claims.py::defl()`: `w_tip_max / (b/2)` — **CHECKED**
-    - `w` ← param `P:c2.fe.w_tip_env_m` = 0.002897 m (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-DEFL` `redesign/team/C2/c2_claims.py::defl()`: `w_tip_max / (b/2)` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `w` ← param `P:c2.fe.w_tip_env_m` = 0.002519 m (team/C2/wing_struct.py) — **PROPOSED**
     - `b` ← param `P:wing.span_m` = 1.15 m — **CHECKED**
       - `SRC-K09-CARD` (see above)
   - param `P:requirements.spar_deflection_max` = 0.05 (team/A2/REQUIREMENTS.md) — **PROPOSED**
@@ -13333,13 +13439,15 @@ Defined in: redesign/README.md#joints-both-sides-of-every-interface
   - `CL-C2-V-AE-REQ` (see above)
   - `T-C2-TWIST` (see above)
 - claim **CL-C2-V-FLUTTER** Flutter screen: no unstable root up to this speed = **81.64 m/s** (limit >= 32.65 m/s, margin +150%) — **UNVERIFIED**
+  - ⚠ CALC-C2-VFL does not re-run
   - ⚠ uses SRC-C2-THEODORSEN, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses CL-C2-V-AE-REQ, which is UNVERIFIED
   - how to verify: T-C2-TAP-TEST frequencies within 15 % of the model; elevons servo-held with < 1 deg free play
   - parts: WNG-001, WNG-002, WNG-003
   - `SRC-C2-THEODORSEN` (see above)
-  - calc `CALC-C2-VFL` `redesign/team/C2/c2_claims.py::pt_calc_c2_vfl()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.V_flutter_ms` = 81.64 m/s (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-VFL` `redesign/team/C2/c2_claims.py::pt_calc_c2_vfl()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.V_flutter_ms` = 80.1 m/s (team/C2/wing_struct.py) — **PROPOSED**
   - `CL-C2-V-AE-REQ` (see above)
   - test `T-C2-TAP-TEST` Wing modal tap test with motors fitted (planned) — **PROPOSED**
 - claim **CL-C2-PLUG-BEARING** Plug bearing stress at the block, plug fitted, design = **5.341e+06 Pa** (limit <= 2e+07 Pa, margin +73%) — **UNVERIFIED**
@@ -13354,49 +13462,59 @@ Defined in: redesign/README.md#joints-both-sides-of-every-interface
       - ⚠ assumption marked UNVERIFIED by its author
       - source `SRC-C4-PETG` [Prusament PETG technical data sheet (2023)](https://prusament.com/media/2023/06/PETG_TDS_2023_EN.pdf), tensile yield 47 MPa (XY), 30 MPa (Z, interlayer); flexural 60 MPa — **UNVERIFIED**
 - claim **CL-C2-SPAR-BOND-TAU** Spar slot bond shear from the distributed air load, ultimate = **8095 Pa** (limit <= 1e+05 Pa, margin +92%) — **UNVERIFIED**
+  - ⚠ CALC-C2-BOND does not re-run
   - ⚠ uses P:c2.inputs.xps_shear_allow_pa, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C2/params.json: XPS shear strength 150-250 kPa (EN 12090 grades near 200 kPa compression), knocked down)
   - how to verify: T-C2-XPS-COUPON (foam shear) and T-C2-WING-PROOF
   - parts: WNG-001, WNG-002
-  - calc `CALC-C2-BOND` `redesign/team/C2/c2_claims.py::pt_calc_c2_bond()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.spar_bond_tau_ult_pa` = 8095 Pa (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-BOND` `redesign/team/C2/c2_claims.py::pt_calc_c2_bond()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.spar_bond_tau_ult_pa` = 6168 Pa (team/C2/wing_struct.py) — **PROPOSED**
   - param `P:c2.inputs.xps_shear_allow_pa` = 1e+05 Pa (ASM-C2-XPS-SHEAR) — **UNVERIFIED**
     - ⚠ marked UNVERIFIED in redesign/team/C2/params.json: XPS shear strength 150-250 kPa (EN 12090 grades near 200 kPa compression), knocked down
   - `T-C2-WING-PROOF` (see above)
   - test `T-C2-XPS-COUPON` XPS and taped-foam coupons (planned) — **PROPOSED**
 - claim **CL-C2-CHORD-TAPE** Tape stress, chordwise bending of the core aft of the spar, CN 1 at VD, ultimate = **1.302e+07 Pa** (limit <= 6e+07 Pa, margin +78%) — **UNVERIFIED**
+  - ⚠ CALC-C2-CHORD-TAPE does not re-run
   - ⚠ uses P:c2.inputs.tape_sigma_allow_pa, which is UNVERIFIED (cites ASM-C2-TAPE, which is UNVERIFIED)
   - how to verify: T-C2-XPS-COUPON: taped foam strip in 3-point bending
   - parts: WNG-003
-  - calc `CALC-C2-CHORD-TAPE` `redesign/team/C2/c2_claims.py::pt_calc_c2_chord_tape()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.chord_tape_sigma_ult_pa` = 1.302e+07 Pa (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-CHORD-TAPE` `redesign/team/C2/c2_claims.py::pt_calc_c2_chord_tape()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.chord_tape_sigma_ult_pa` = 1.301e+07 Pa (team/C2/wing_struct.py) — **PROPOSED**
   - param `P:c2.inputs.tape_sigma_allow_pa` = 6e+07 Pa — **UNVERIFIED**
     - ⚠ cites ASM-C2-TAPE, which is UNVERIFIED
     - assumption `ASM-C2-TAPE` BOPP film, machine direction, structural thickness 40 um x 1.1 overlap (basis: BOPP E 1.7-2.5 GPa, tensile 100-150 MPa; adhesive not counted) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
   - `T-C2-XPS-COUPON` (see above)
 - claim **CL-C2-TIP-FOAM** Foam stress outboard of the spar end, flight and landing, ultimate = **4924 Pa** (limit <= 1.5e+05 Pa, margin +97%) — **UNVERIFIED**
+  - ⚠ CALC-C2-TIP does not re-run
   - ⚠ uses P:c2.inputs.xps_tens_allow_pa, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C2/params.json: XPS tensile/flexural 250-500 kPa at this density, halved for hot-wire surface damage)
   - how to verify: T-C2-WING-PROOF
   - parts: WNG-001
-  - calc `CALC-C2-TIP` `redesign/team/C2/c2_claims.py::pt_calc_c2_tip()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.tip_foam_sigma_ult_pa` = 4924 Pa (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-TIP` `redesign/team/C2/c2_claims.py::pt_calc_c2_tip()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.tip_foam_sigma_ult_pa` = 3697 Pa (team/C2/wing_struct.py) — **PROPOSED**
   - param `P:c2.inputs.xps_tens_allow_pa` = 1.5e+05 Pa (ASM-C2-XPS-TENS) — **UNVERIFIED**
     - ⚠ marked UNVERIFIED in redesign/team/C2/params.json: XPS tensile/flexural 250-500 kPa at this density, halved for hot-wire surface damage
   - `T-C2-WING-PROOF` (see above)
 - claim **CL-C2-ROOT-TAPE** Tape stress at the root (in-plane + flap), ultimate = **7.504e+06 Pa** (limit <= 6e+07 Pa, margin +87%) — **UNVERIFIED**
+  - ⚠ CALC-C2-ROOT-TAPE does not re-run
   - ⚠ uses P:c2.inputs.tape_sigma_allow_pa, which is UNVERIFIED (cites ASM-C2-TAPE, which is UNVERIFIED)
   - how to verify: T-C2-WING-PROOF
   - parts: WNG-003
-  - calc `CALC-C2-ROOT-TAPE` `redesign/team/C2/c2_claims.py::pt_calc_c2_root_tape()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.tape_sigma_root_ult_pa` = 7.504e+06 Pa (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-ROOT-TAPE` `redesign/team/C2/c2_claims.py::pt_calc_c2_root_tape()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.tape_sigma_root_ult_pa` = 7.254e+06 Pa (team/C2/wing_struct.py) — **PROPOSED**
   - `P:c2.inputs.tape_sigma_allow_pa` (see above)
   - `T-C2-WING-PROOF` (see above)
 - claim **CL-C2-POD-FOAM** Pod bond shear in the wing foam, design (x 1.15 x 1.25) = **8746 Pa** (limit <= 1e+05 Pa, margin +91%) — **UNVERIFIED**
+  - ⚠ CALC-C2-POD does not re-run
   - ⚠ uses P:c2.inputs.xps_shear_allow_pa, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C2/params.json: XPS shear strength 150-250 kPa (EN 12090 grades near 200 kPa compression), knocked down)
   - how to verify: Bond on bare sanded foam; C3 proof-pulls the pod
   - parts: WNG-001
-  - calc `CALC-C2-POD` `redesign/team/C2/c2_claims.py::pt_calc_c2_pod()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.pod_tau_pa` = 8746 Pa (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-POD` `redesign/team/C2/c2_claims.py::pt_calc_c2_pod()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.pod_tau_pa` = 5360 Pa (team/C2/wing_struct.py) — **PROPOSED**
   - `P:c2.inputs.xps_shear_allow_pa` (see above)
   - `T-C2-XPS-COUPON` (see above)
 - claim **CL-C3-BOND-R-DESIGN** Pod-to-wing bond interaction, flight/ground envelope (design) = **0.8684** (limit <= 1, margin +13%) — **UNVERIFIED**
@@ -15648,6 +15766,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P19
     - `pod_size` ← param `P:pod.size_m` = table (3 rows) m (team/D2/CHANGE-REQUESTS.md#CR-D2-16) — **PROPOSED**
     - `pess` ← `CL-E2-BUDGET-PESS-TABLE` (see above)
     - `base` ← claim **CL-E2-BUDGET-BASE-TABLE** Phase table, base [phase, s, W, A, Ah] = **table (7 rows)** — **UNVERIFIED**
+      - ⚠ CALC-E2-BUDGET-BASE does not re-run
       - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -15667,7 +15786,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P19
       - ⚠ uses CL-B1-CRUISE-P, which is UNVERIFIED
       - ⚠ uses CL-B1-CRUISE-P-PESS, which is UNVERIFIED
       - how to verify: Base phase table: compare each row with the DataFlash log (BAT.Curr, BAT.CurrTot) of a full mission; rows within +/-15 %.
-      - calc `CALC-E2-BUDGET-BASE` `redesign/team/E2/energy_claims.py::budget_base()`: `I = (Voc - sqrt(Voc^2 - 4 R P)) / (2 R) per phase ; Ah = I t ; P_cruise = P_B1(gate) x circuit x P_E2(m) / P_E2(gate) ; t_cruise = (C - 0.2 C - sum Ah_fixed) / I_cruise` — **CHECKED**
+      - calc `CALC-E2-BUDGET-BASE` `redesign/team/E2/energy_claims.py::budget_base()`: `I = (Voc - sqrt(Voc^2 - 4 R P)) / (2 R) per phase ; Ah = I t ; P_cruise = P_B1(gate) x circuit x P_E2(m) / P_E2(gate) ; t_cruise = (C - 0.2 C - sum Ah_fixed) / I_cruise` — **UNVERIFIED**
+        - ⚠ does not re-run to its stored outputs (see build errors)
         - `m` ← claim **CL-A1-MASS-SIZED** Sized take-off mass (allocations + planned growth + overrun) = **2.6 kg** (limit <= 2.6 kg, margin +0%) — **UNVERIFIED** — chain under [R-MASS-GATE](#r-mass-gate)
         - `n` ← `P:propulsion.n_motors` (see above)
         - `table` ← param `P:propulsion.thrust_table_g_w` = table (4 rows) gf,W — **UNVERIFIED**
@@ -15713,8 +15833,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P19
         - `cap_frac` ← param `P:requirements.pack_capacity_min_frac` = 0.92 (team/A2/REQUIREMENTS.md) — **PROPOSED**
         - `reserve` ← param `P:requirements.energy_reserve_frac` = 0.2 — **CHECKED**
           - `SRC-REQ-PROPOSED` (see above)
-        - `pc_b` ← claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **227.8 W** — **UNVERIFIED** — chain under [R-MISSION](#r-mission)
-        - `pc_p` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **300.6 W** — **UNVERIFIED** — chain printed above
+        - `pc_b` ← claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **228.1 W** — **UNVERIFIED** — chain under [R-MISSION](#r-mission)
+        - `pc_p` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **301 W** — **UNVERIFIED** — chain printed above
         - `m_ref` ← `P:requirements.mtow_gate_kg` (see above)
         - `ASM-E2-ESC-EFF` (see above)
         - `ASM-E2-AVIONICS-W` (see above)
@@ -15744,6 +15864,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P19
       - source `SRC-E3-STM32F405` [STM32F405RGT6 ambient rating -40 to +85 degC (6-suffix)](https://hken.rs-online.com/web/p/microcontrollers/7468217), checked 2026-11-02 for the previous design (docs/research/thermal.md section 4); the F405 wing boards on the shortlist use this part. IMU ICM-42688-P is rated to +85 degC too — **UNVERIFIED**
     - `amb_range` ← `P:env.ambient_design_c` (see above)
     - `t_hov_only` ← claim **CL-E2-HOVER-ONLY-MIN-PESS** Hover-only sortie to the 20 % line, pessimistic = **9.28 min** (limit >= 2 min, margin +364%) — **UNVERIFIED**
+      - ⚠ CALC-E2-BUDGET-PESS does not re-run
       - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -15764,7 +15885,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P19
       - ⚠ uses CL-B1-CRUISE-P, which is UNVERIFIED
       - ⚠ uses CL-B1-CRUISE-P-PESS, which is UNVERIFIED
       - how to verify: Tethered hover (R-TEST-ORDER gate 3): log BAT.CurrTot vs time; minutes to 5 200 mAh >= this value.
-      - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **CHECKED**
+      - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **UNVERIFIED**
+        - ⚠ does not re-run to its stored outputs (see build errors)
         - `m` ← `P:requirements.mtow_gate_kg` (see above)
         - `n` ← `P:propulsion.n_motors` (see above)
         - `table` ← `P:propulsion.thrust_table_g_w` (see above)
@@ -16708,14 +16830,12 @@ Defined in: redesign/params/params.json#requirements.tipover_min_deg
     - `y_fin` ← param `P:fins.y_m` = 0.32 m — **CHECKED**
       - source `SRC-K09-CARD` K09 concept card and sizing script, redesign/config-study/cards/K09/{CARD.md, sizing.py, sizing.json, cost.csv}; geometry constants in sizing.py ASSUMPTIONS block, checked 2026-11-09 — **CHECKED**
   - param `P:requirements.tipover_min_deg` = 30 deg (A1 choice) — **PROPOSED**
-- claim **CL-B1-GROUND-TIP-WIND** Wind that tips the parked aircraft = **8.919 m/s** (limit >= 8 m/s, margin +11%) — **UNVERIFIED**
-  - ⚠ CALC-B1-WIND does not re-run
+- claim **CL-B1-GROUND-TIP-WIND** Wind that tips the parked aircraft = **8.99 m/s** (limit >= 8 m/s, margin +12%) — **UNVERIFIED**
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses CL-A1-TIPOVER, which is UNVERIFIED
   - ⚠ uses CL-B1-HOVER-TW-SAG, which is UNVERIFIED
   - how to verify: Tilt-board tip angle (C5) and a fan test at the lightest flying mass; never leave it standing disarmed in gusts.
-  - calc `CALC-B1-WIND` `redesign/team/B1/performance.py::wind()`: `lean = atan(0.5 rho V^2 S CD90 / W) ; lean_allowed = tipover - err ; V_hover,max: lean = lean_allowed ; T/W at 8 m/s = 1/cos(lean) ; V_ground,tip = sqrt(2 m_min g z_fin / (h_cp rho S CD90)), h_cp = c/2 + foot` — **UNVERIFIED**
-    - ⚠ does not re-run to its stored outputs (see build errors)
+  - calc `CALC-B1-WIND` `redesign/team/B1/performance.py::wind()`: `lean = atan(0.5 rho V^2 S CD90 / W) ; lean_allowed = tipover - err ; V_hover,max: lean = lean_allowed ; T/W at 8 m/s = 1/cos(lean) ; V_ground,tip = sqrt(2 m_min g z_fin / (h_cp rho S CD90)), h_cp = c/2 + foot` — **CHECKED**
     - `m` ← param `P:requirements.mtow_gate_kg` = 2.6 kg — **CHECKED**
       - source `SRC-REQ-PROPOSED` Proposed requirements P1-P25 for K09, redesign/config-study/REQUIREMENTS-PROPOSED.md, checked 2026-11-09 — **CHECKED**
     - `m_sized` ← claim **CL-A1-MASS-SIZED** Sized take-off mass (allocations + planned growth + overrun) = **2.6 kg** (limit <= 2.6 kg, margin +0%) — **UNVERIFIED** — chain under [R-MASS-GATE](#r-mass-gate)
@@ -16733,7 +16853,7 @@ Defined in: redesign/params/params.json#requirements.tipover_min_deg
     - `z_fin` ← param `P:fins.half_height_m` = 0.21 m (team/B3/CHANGE-REQUESTS.md#CR-B3-14) — **PROPOSED**
     - `c` ← `P:wing.chord_m` (see above)
     - `foot` ← `P:cg.foot_height_m` (see above)
-    - `tw_sag` ← claim **CL-B1-HOVER-TW-SAG** Hover T/W with sag and download = **1.787** (limit >= 1.6, margin +12%) — **UNVERIFIED** — chain under [R-HOVER-TW](#r-hover-tw)
+    - `tw_sag` ← claim **CL-B1-HOVER-TW-SAG** Hover T/W with sag and download = **2.001** (limit >= 1.6, margin +25%) — **UNVERIFIED** — chain under [R-HOVER-TW](#r-hover-tw)
     - `frac` ← assumption `ASM-B1-CTRL-RESERVE` Steady flight may use at most 80 % of available thrust (sagged pack); 20 % stays for control = 0.8 (basis: common multirotor practice (hover throttle <= 50-60 %, never saturate in steady state); a tailsitter controls pitch in hover and transition by differential thrust only) — **PROPOSED**
     - `vw` ← param `P:requirements.wind_limit_ms` = 5 m/s — **CHECKED**
       - `SRC-REQ-PROPOSED` (see above)
@@ -17083,12 +17203,10 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P7
   - param `P:performance.cruise_ms` = 16 m/s — **PROPOSED**
     - assumption `ASM-B1-VCRUISE` B1 proposes AIRSPEED_CRUISE = 16 m/s (params.json#performance.cruise_ms, CHANGE-LOG D-01) = 16 m/s (basis: lowest whole-number speed above 1.3 Vs at the 2.6 kg gate with B2's trimmed CLmax 0.80 on the c 0.32 wing (15.43 m/s, CL-B1-VT-GATE); +3.7 %, about 0.6 m/s for airspeed-hold and sensor error (R-AIRSPEED-ERR allows 1 m/s, so the margin is thin)) — **PROPOSED**
 - claim **CL-B1-VT-GATE** Transition-complete airspeed 1.3 Vs = **15.48 m/s** (limit <= 16 m/s, margin +3%) — **UNVERIFIED**
-  - ⚠ CALC-B1-STALL does not re-run
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
   - how to verify: 16 m/s cruise (D-01) over 1.3 Vs with B2's trimmed CLmax 0.80 at c 0.32. Log airspeed at 'Transition done' (F4/H2).
-  - calc `CALC-B1-STALL` `redesign/team/B1/performance.py::stall_speeds()`: `Vs = sqrt(2 m g/(rho S CLmax)) ; Vt = 1.3 Vs ; Vs30 = Vs/sqrt(cos 30) ; margin = Vcruise/Vt - 1` — **UNVERIFIED**
-    - ⚠ does not re-run to its stored outputs (see build errors)
+  - calc `CALC-B1-STALL` `redesign/team/B1/performance.py::stall_speeds()`: `Vs = sqrt(2 m g/(rho S CLmax)) ; Vt = 1.3 Vs ; Vs30 = Vs/sqrt(cos 30) ; margin = Vcruise/Vt - 1` — **CHECKED**
     - `m_gate` ← `P:requirements.mtow_gate_kg` (see above)
     - `m_sized` ← claim **CL-A1-MASS-SIZED** Sized take-off mass (allocations + planned growth + overrun) = **2.6 kg** (limit <= 2.6 kg, margin +0%) — **UNVERIFIED** — chain under [R-MASS-GATE](#r-mass-gate)
     - `g` ← `P:env.g_ms2` (see above)
@@ -17099,7 +17217,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P7
     - `vc` ← `ASM-B1-VCRUISE` (see above)
     - `ASM-B1-VCRUISE` (see above)
   - `ASM-B1-VCRUISE` (see above)
-- claim **CL-B1-CORR-THRUST** Peak steady thrust fraction in transition = **0.5596** (limit <= 0.8, margin +30%) — **UNVERIFIED**
+- claim **CL-B1-CORR-THRUST** Peak steady thrust fraction in transition = **0.4998** (limit <= 0.8, margin +38%) — **UNVERIFIED**
   - ⚠ uses CL-B1-CLA, which is UNVERIFIED
   - ⚠ uses P:b2.xfoil.alpha0_2d_deg, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)
   - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
@@ -17122,7 +17240,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P7
       - source `SRC-B2-XFOIL` [XFOIL 6.99 runs, team/B2/xfoil_wing.py](https://web.mit.edu/drela/Public/web/xfoil/), team/B2/out/xfoil_results.json; panels 220 (160/300 convergence), Ncrit 9, Re 2.0-4.5e5; design Re follow wing.chord_m (c 0.32 m: stall 2.6e5, cruise 3.5e5, dive 4.5e5) — **UNVERIFIED**
         - ⚠ value never compared with the source (no 'checked' date)
     - `clmax` ← `CL-B2-CLMAX-DESIGN` (see above)
-    - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05128** — **UNVERIFIED** — chain printed above
+    - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05146** — **UNVERIFIED** — chain printed above
     - `k` ← claim **CL-B1-K** Lift-dependent drag factor (B2 trimmed polar, e 0.93) = **0.09427** — **UNVERIFIED** — chain printed above
     - `cd90` ← assumption `ASM-B1-CD90` Wing normal-force coefficient beyond stall CN = CD90 sin(alpha), CD90 = 1.28 = 1.28 (basis: Hoerner flat plate; the value the K09 card used for hover lean, kept so the numbers compare. Low-AR wings with end plates keep more post-stall lift, so this under-predicts lift in transition (conservative)) — **PROPOSED**
       - source `SRC-B1-HOERNER` Hoerner, Fluid-Dynamic Drag (1965), ch. 3: flat plate normal to flow CD 1.17-1.28 by aspect ratio; ch. 2-6 component drag — **UNVERIFIED**
@@ -17144,7 +17262,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P7
       - `SRC-E1-X3108S-SPEC` (see above)
       - `SRC-E1-X3108S-HIMODEL` (see above)
     - `kcal` ← claim **CL-B1-KCAL** Chain calibration to the maker table = **1.132** — **UNVERIFIED** — chain printed above
-    - `nmax` ← claim **CL-B1-NMAX-SAG** Prop speed at full throttle, sagged = **120.1 rev/s** — **UNVERIFIED** — chain printed above
+    - `nmax` ← claim **CL-B1-NMAX-SAG** Prop speed at full throttle, sagged = **127.1 rev/s** — **UNVERIFIED** — chain printed above
     - `D` ← param `P:propulsion.prop_diameter_m` = 0.2794 m — **CHECKED**
       - `SRC-APC-11X55MR` (see above)
     - `esc` ← assumption `ASM-B1-ESC` ESC efficiency 0.95 in hover and cruise = 0.95 (basis: K09 card value; BLHeli_S at 7-30 A) — **UNVERIFIED**
@@ -17161,7 +17279,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P7
     - `ASM-B1-CTRL-RESERVE` (see above)
   - `ASM-B1-CTRL-RESERVE` (see above)
   - test `T-B1-TRANSITION-LOG` First transitions logged (planned) — **PROPOSED**
-- claim **CL-B1-TRANS-ALT-LOSS** Altitude lost in the pitch-over = **0.154 m** (limit <= 10 m, margin +98%) — **UNVERIFIED**
+- claim **CL-B1-TRANS-ALT-LOSS** Altitude lost in the pitch-over = **0.1538 m** (limit <= 10 m, margin +98%) — **UNVERIFIED**
   - ⚠ uses CL-B1-CLA, which is UNVERIFIED
   - ⚠ uses P:b2.xfoil.alpha0_2d_deg, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)
   - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
@@ -17206,7 +17324,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P7
     - `ASM-B1-CD90` (see above)
     - `ASM-B1-CTRL-RESERVE` (see above)
   - `T-B1-TRANSITION-LOG` (see above)
-- claim **CL-B1-TRANS-THRUST** Peak thrust fraction in the pitch-over = **0.7039** (limit <= 0.8, margin +12%) — **UNVERIFIED**
+- claim **CL-B1-TRANS-THRUST** Peak thrust fraction in the pitch-over = **0.592** (limit <= 0.8, margin +26%) — **UNVERIFIED**
   - ⚠ uses CL-B1-CLA, which is UNVERIFIED
   - ⚠ uses P:b2.xfoil.alpha0_2d_deg, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)
   - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
@@ -17754,7 +17872,8 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P9
   - `CALC-D7-BOX-STACK` (see above)
   - `P:requirements.box_drop_m` (see above)
   - `T-D7-BOX-DROP` (see above)
-- claim **CL-D7-CRADLE-PAD-AREA** Saddle contact area on the wing lower surface, each cradle = **0.01446 m2** (limit >= 0.00108 m2, margin +1239%) — **CHECKED**
+- claim **CL-D7-CRADLE-PAD-AREA** Saddle contact area on the wing lower surface, each cradle = **0.01446 m2** (limit >= 0.00108 m2, margin +1239%) — **UNVERIFIED**
+  - ⚠ uses CL-C2-CRADLE-AREA, which is UNVERIFIED
   - how to verify: Chalk the wing lower surface at y +/-0.20, set it in the saddle, measure the chalked patch (>= 40 x 40 mm, C2).
   - parts: TRN-002-L, TRN-002-R
   - calc `CALC-D7-CRADLE-PATCH` `redesign/team/D7/transport_calc.py::cradle_patch()`: `A_saddle = w (x1 - x0 - relief) ; side_min = min(w, x1 - x0, hx, hy) ; gap_brace = y_anchor - (y_c + max(w, hy, fy) / 2)` — **CHECKED**
@@ -17766,11 +17885,13 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P9
     - `fp` ← param `P:trn.cradle.crush_footprint_m` = table (2 rows) m (D7 choice) — **PROPOSED**
     - `ya` ← param `P:trn.cradle.brace_anchor_y_in_m` = 0.234 m (team/D3/CHANGE-REQUESTS.md#CR-D3-11) — **PROPOSED**
     - `rx` ← param `P:trn.cradle.relief_x_m` = table (2 rows) m (team/F2/CHANGE-REQUESTS.md#CR-F2-12) — **PROPOSED**
-  - claim **CL-C2-CRADLE-AREA** Foam pad area each transport cradle needs (X3 drop x 1.5) = **0.00108 m2** — **CHECKED**
+  - claim **CL-C2-CRADLE-AREA** Foam pad area each transport cradle needs (X3 drop x 1.5) = **0.00108 m2** — **UNVERIFIED**
+    - ⚠ CALC-C2-CRADLE does not re-run
     - how to verify: D7 pad >= 40 x 40 mm under the spar line
     - parts: WNG-001
-    - calc `CALC-C2-CRADLE` `redesign/team/C2/c2_claims.py::pt_calc_c2_cradle()`: `value from wing_struct.py` — **CHECKED**
-      - `v` ← param `P:c2.fe.cradle_area_req_m2` = 0.00108 m2 (team/C2/wing_struct.py) — **PROPOSED**
+    - calc `CALC-C2-CRADLE` `redesign/team/C2/c2_claims.py::pt_calc_c2_cradle()`: `value from wing_struct.py` — **UNVERIFIED**
+      - ⚠ does not re-run to its stored outputs (see build errors)
+      - `v` ← param `P:c2.fe.cradle_area_req_m2` = 0.001165 m2 (team/C2/wing_struct.py) — **PROPOSED**
 - claim **CL-D7-BRACE-GAP** Cradle / pillar / column outboard edge to the fin brace anchor = **0.004 m** (limit >= 0.002 m, margin +100%) — **CHECKED**
   - how to verify: Aircraft in the box: a 2 mm feeler passes between each saddle / pillar and the brace anchor (D3 CR-D3-11).
   - parts: TRN-002-L, TRN-002-R, TRN-004-L, TRN-004-R, FIN-010-UR, FIN-010-LR, FIN-010-UL, FIN-010-LL
@@ -17904,10 +18025,12 @@ Defined in: redesign/params/CHANGE-LOG.md#D-45
 
 - claim **CL-C2-WING-MODE-SEP** Wing modes with >= 10 % motor/mount energy: separation from hover/cruise 1P, 2P = **0.07665** (limit >= 0.2, margin -62%) — **UNVERIFIED** **FAILS**
   - ⚠ FAILS: margin -61.7% (0.07665 vs >= 0.2)
+  - ⚠ CALC-C2-MODESEP does not re-run
   - how to verify: T-C2-TAP-TEST on the built airframe with motors fitted; hover VIBE < 30 m/s2 with the F4 harmonic notch
   - parts: WNG-001, WNG-002, WNG-003, FIN-002-L, FIN-002-R
-  - calc `CALC-C2-MODESEP` `redesign/team/C2/c2_claims.py::pt_calc_c2_modesep()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.mode_sep_worst` = 0.07665 (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-MODESEP` `redesign/team/C2/c2_claims.py::pt_calc_c2_modesep()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.mode_sep_worst` = 0.07166 (team/C2/wing_struct.py) — **PROPOSED**
   - param `P:requirements.vibration_sep_frac` = 0.2 (team/A2/REQUIREMENTS.md) — **PROPOSED**
   - test `T-C2-TAP-TEST` Wing modal tap test with motors fitted (planned) — **PROPOSED**
 - claim **CL-C4-D3-SEP** Mode separation from the 1P/2P operating points, recommended design (nominal) = **0.3651** (limit >= 0.2, margin +83%) — **UNVERIFIED**
@@ -18475,6 +18598,8 @@ Defined in: redesign/params/CHANGE-LOG.md#D-45
       - ⚠ uses CL-A3-MASS-BASIC, which is UNVERIFIED
       - ⚠ uses CL-B4-HOVER-Q, which is UNVERIFIED
       - ⚠ uses CL-B4-YAW, which is UNVERIFIED
+      - ⚠ uses CL-C2-F-TORSION-ANTI, which is UNVERIFIED
+      - ⚠ uses CL-C2-F-TORSION-SYM, which is UNVERIFIED
       - ⚠ uses ASM-B3-TORSION-HIGH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-B3-STATION-IYY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-B3-FLEX-ZETA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -18496,8 +18621,8 @@ Defined in: redesign/params/CHANGE-LOG.md#D-45
         - `y` ← `P:propulsion.stations.y_m` (see above)
         - `z` ← `P:propulsion.stations.z_m` (see above)
         - `cant` ← `P:propulsion.stations.cant_deg` (see above)
-        - `f_anti` ← claim **CL-C2-F-TORSION-ANTI** First wing mode: antisymmetric torsion with the fin stations, low corner = **11.71 Hz** — **CHECKED** — chain printed above
-        - `f_sym` ← claim **CL-C2-F-TORSION-SYM** Symmetric wing torsion mode (hover pitch control path), low corner = **21.69 Hz** — **CHECKED** — chain printed above
+        - `f_anti` ← claim **CL-C2-F-TORSION-ANTI** First wing mode: antisymmetric torsion with the fin stations, low corner = **11.71 Hz** — **UNVERIFIED** — chain printed above
+        - `f_sym` ← claim **CL-C2-F-TORSION-SYM** Symmetric wing torsion mode (hover pitch control path), low corner = **21.69 Hz** — **UNVERIFIED** — chain printed above
         - `f_hi` ← assumption `ASM-B3-TORSION-HIGH` Upper end of C2's frequency bands (GJ 45 N m2); the low corners are C2's claims = table (2 rows) Hz (basis: team/C2/CHANGE-REQUESTS.md CR-C2-03: antisymmetric 11.7-14.9 Hz, symmetric 21-27 Hz) — **UNVERIFIED**
           - ⚠ assumption marked UNVERIFIED by its author
         - `Is` ← assumption `ASM-B3-STATION-IYY` Motors, mounts, props, ESCs and the two half-fins of one station about the spar axis = 0.0125 kg m2 (basis: team/C2/CHANGE-REQUESTS.md CR-C2-03: ~0.0125 kg m2 per side (C2 modal model)) — **UNVERIFIED**
@@ -18532,6 +18657,8 @@ Defined in: redesign/params/CHANGE-LOG.md#D-45
       - ⚠ uses CL-A3-MASS-BASIC, which is UNVERIFIED
       - ⚠ uses CL-B4-HOVER-Q, which is UNVERIFIED
       - ⚠ uses CL-B4-YAW, which is UNVERIFIED
+      - ⚠ uses CL-C2-F-TORSION-ANTI, which is UNVERIFIED
+      - ⚠ uses CL-C2-F-TORSION-SYM, which is UNVERIFIED
       - ⚠ uses ASM-B3-TORSION-HIGH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-B3-STATION-IYY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
       - ⚠ uses ASM-B3-FLEX-ZETA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -18665,15 +18792,13 @@ Defined in: redesign/params/CHANGE-LOG.md#D-45
 **Wind** — Hover and fin-tip landing controllable in 5 m/s steady wind; 8 m/s gust is survive-and-land — **UNVERIFIED**  
 Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
 
-- claim **CL-B1-LEAN-5MS** Hover lean at 5 m/s, flat plate = **15.8 deg** (limit <= 20.59 deg, margin +23%) — **UNVERIFIED**
-  - ⚠ CALC-B1-WIND does not re-run
+- claim **CL-B1-LEAN-5MS** Hover lean at 5 m/s, flat plate = **15.8 deg** (limit <= 20.66 deg, margin +24%) — **UNVERIFIED**
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses CL-A1-TIPOVER, which is UNVERIFIED
   - ⚠ uses CL-B1-HOVER-TW-SAG, which is UNVERIFIED
   - ⚠ uses CL-B1-LEAN-ALLOWED, which is UNVERIFIED
   - how to verify: QLOITER in 5 m/s wind measured with the handheld anemometer; log pitch and roll (H2).
-  - calc `CALC-B1-WIND` `redesign/team/B1/performance.py::wind()`: `lean = atan(0.5 rho V^2 S CD90 / W) ; lean_allowed = tipover - err ; V_hover,max: lean = lean_allowed ; T/W at 8 m/s = 1/cos(lean) ; V_ground,tip = sqrt(2 m_min g z_fin / (h_cp rho S CD90)), h_cp = c/2 + foot` — **UNVERIFIED**
-    - ⚠ does not re-run to its stored outputs (see build errors)
+  - calc `CALC-B1-WIND` `redesign/team/B1/performance.py::wind()`: `lean = atan(0.5 rho V^2 S CD90 / W) ; lean_allowed = tipover - err ; V_hover,max: lean = lean_allowed ; T/W at 8 m/s = 1/cos(lean) ; V_ground,tip = sqrt(2 m_min g z_fin / (h_cp rho S CD90)), h_cp = c/2 + foot` — **CHECKED**
     - `m` ← param `P:requirements.mtow_gate_kg` = 2.6 kg — **CHECKED**
       - source `SRC-REQ-PROPOSED` Proposed requirements P1-P25 for K09, redesign/config-study/REQUIREMENTS-PROPOSED.md, checked 2026-11-09 — **CHECKED**
     - `m_sized` ← claim **CL-A1-MASS-SIZED** Sized take-off mass (allocations + planned growth + overrun) = **2.6 kg** (limit <= 2.6 kg, margin +0%) — **UNVERIFIED** — chain under [R-MASS-GATE](#r-mass-gate)
@@ -18691,7 +18816,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
     - `z_fin` ← param `P:fins.half_height_m` = 0.21 m (team/B3/CHANGE-REQUESTS.md#CR-B3-14) — **PROPOSED**
     - `c` ← param `P:wing.chord_m` = 0.32 m (team/B2/CHANGE-REQUESTS.md#CR-B2-01) — **PROPOSED**
     - `foot` ← param `P:cg.foot_height_m` = 0.048 m (team/C5/CHANGE-REQUESTS.md#CR-C5-11) — **PROPOSED**
-    - `tw_sag` ← claim **CL-B1-HOVER-TW-SAG** Hover T/W with sag and download = **1.787** (limit >= 1.6, margin +12%) — **UNVERIFIED** — chain under [R-HOVER-TW](#r-hover-tw)
+    - `tw_sag` ← claim **CL-B1-HOVER-TW-SAG** Hover T/W with sag and download = **2.001** (limit >= 1.6, margin +25%) — **UNVERIFIED** — chain under [R-HOVER-TW](#r-hover-tw)
     - `frac` ← assumption `ASM-B1-CTRL-RESERVE` Steady flight may use at most 80 % of available thrust (sagged pack); 20 % stays for control = 0.8 (basis: common multirotor practice (hover throttle <= 50-60 %, never saturate in steady state); a tailsitter controls pitch in hover and transition by differential thrust only) — **PROPOSED**
     - `vw` ← param `P:requirements.wind_limit_ms` = 5 m/s — **CHECKED**
       - `SRC-REQ-PROPOSED` (see above)
@@ -18701,31 +18826,27 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
     - `ASM-B1-CD90` (see above)
     - `ASM-B1-LAND-ERR` (see above)
     - `ASM-B1-CTRL-RESERVE` (see above)
-  - claim **CL-B1-LEAN-ALLOWED** Wind lean allowed at touchdown = **20.59 deg** — **UNVERIFIED**
-    - ⚠ CALC-B1-WIND does not re-run
+  - claim **CL-B1-LEAN-ALLOWED** Wind lean allowed at touchdown = **20.66 deg** — **UNVERIFIED**
     - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
     - ⚠ uses CL-A1-TIPOVER, which is UNVERIFIED
     - ⚠ uses CL-B1-HOVER-TW-SAG, which is UNVERIFIED
     - how to verify: Tilt-board tip-over test (C5) minus the landing attitude error from the twin's logs.
     - `CALC-B1-WIND` (see above)
-- claim **CL-B1-WIND-HOVER-MAX** Steady wind for a safe fin-tip landing = **5.762 m/s** (limit >= 5 m/s, margin +15%) — **UNVERIFIED**
-  - ⚠ CALC-B1-WIND does not re-run
+- claim **CL-B1-WIND-HOVER-MAX** Steady wind for a safe fin-tip landing = **5.773 m/s** (limit >= 5 m/s, margin +15%) — **UNVERIFIED**
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses CL-A1-TIPOVER, which is UNVERIFIED
   - ⚠ uses CL-B1-HOVER-TW-SAG, which is UNVERIFIED
   - how to verify: As CL-B1-LEAN-5MS; flight card stays at 5 m/s.
   - `CALC-B1-WIND` (see above)
   - `P:requirements.wind_limit_ms` (see above)
-- claim **CL-B1-GUST-8-THRUST** Thrust fraction holding 8 m/s gust lean = **0.6909** (limit <= 0.8, margin +14%) — **UNVERIFIED**
-  - ⚠ CALC-B1-WIND does not re-run
+- claim **CL-B1-GUST-8-THRUST** Thrust fraction holding 8 m/s gust lean = **0.6171** (limit <= 0.8, margin +23%) — **UNVERIFIED**
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses CL-A1-TIPOVER, which is UNVERIFIED
   - ⚠ uses CL-B1-HOVER-TW-SAG, which is UNVERIFIED
   - how to verify: Thrust stand T/W (H1) and the 8 m/s lean from the logs.
   - `CALC-B1-WIND` (see above)
   - `ASM-B1-CTRL-RESERVE` (see above)
-- claim **CL-B1-GROUND-TIP-WIND** Wind that tips the parked aircraft = **8.919 m/s** (limit >= 8 m/s, margin +11%) — **UNVERIFIED**
-  - ⚠ CALC-B1-WIND does not re-run
+- claim **CL-B1-GROUND-TIP-WIND** Wind that tips the parked aircraft = **8.99 m/s** (limit >= 8 m/s, margin +12%) — **UNVERIFIED**
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses CL-A1-TIPOVER, which is UNVERIFIED
   - ⚠ uses CL-B1-HOVER-TW-SAG, which is UNVERIFIED
@@ -19712,12 +19833,11 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: python -I redesign/fusion/check.py; the list by role is in team/A5/INTEGRATION.md.
   - `ASM-A5-ASSY-ROLLUP` (see above)
   - `CALC-A5-ASSY` (see above)
-- claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05128** — **UNVERIFIED** — chain printed above
+- claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05146** — **UNVERIFIED** — chain printed above
 - claim **CL-B1-K** Lift-dependent drag factor (B2 trimmed polar, e 0.93) = **0.09427** — **UNVERIFIED** — chain printed above
 - claim **CL-B1-K-PESS** Lift-dependent drag factor, pessimistic (e 0.80) = **0.1107** — **UNVERIFIED** — chain printed above
 - claim **CL-B1-CLA** Wing lift slope (B2 AVL, c 0.30 run) = **3.477 1/rad** — **UNVERIFIED** — chain printed above
-- claim **CL-B1-LDMAX** Maximum lift-to-drag ratio = **7.192** — **UNVERIFIED**
-  - ⚠ CALC-B1-AERO does not re-run
+- claim **CL-B1-LDMAX** Maximum lift-to-drag ratio = **7.179** — **UNVERIFIED**
   - ⚠ uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses SRC-B2-XFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-B1-DRAG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -19730,8 +19850,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:b2.xfoil.alpha0_2d_deg, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)
   - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
   - how to verify: Glide test at best-glide speed with airspeed and baro logged (H2).
-  - calc `CALC-B1-AERO` `redesign/team/B1/performance.py::aero_build()`: `CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod + Cd_front (w - w_ref) h + n_b Cd_b w_b l_b + n_c (Cd_c D_c - Cd_tube d) h_c] / S, Swet_fin = 2 A (1 + 0.2 t/c) ; k = 1/(pi AR e_B2) ; k_pess = 1/(pi AR e_params) ; a = CLa (B2 AVL) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))` — **UNVERIFIED**
-    - ⚠ does not re-run to its stored outputs (see build errors)
+  - calc `CALC-B1-AERO` `redesign/team/B1/performance.py::aero_build()`: `CD0 = IF [CD0_wing,B2 f_rough + Cf FF Swet_fins + Cd_tube d L + n CdA_motor + Cf FF Swet_pod + Cd_front (w - w_ref) h + n_b Cd_b w_b l_b + n_c (Cd_c D_c - Cd_tube d) h_c] / S, Swet_fin = 2 A (1 + 0.2 t/c) ; k = 1/(pi AR e_B2) ; k_pess = 1/(pi AR e_params) ; a = CLa (B2 AVL) ; alpha_s = alpha0 + CLmax/a ; L/D max = 1/(2 sqrt(CD0 k))` — **CHECKED**
     - `b` ← `P:wing.span_m` (see above)
     - `c` ← `P:wing.chord_m` (see above)
     - `tc` ← param `P:wing.t_c` = 0.0982 — **CHECKED**
@@ -19779,7 +19898,6 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `ASM-B1-DRAG-ADDONS` (see above)
     - `ASM-B1-POD-FRONT` (see above)
 - claim **CL-B1-ALPHA-STALL** Wing stall angle of attack = **11.97 deg** — **UNVERIFIED**
-  - ⚠ CALC-B1-AERO does not re-run
   - ⚠ uses SRC-B2-AVL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses SRC-B2-XFOIL, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-B1-DRAG, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -19794,12 +19912,10 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: B2 XFOIL CLmax and AVL; tuft the twin at slow flight.
   - `CALC-B1-AERO` (see above)
 - claim **CL-B1-CLMAX-FOR-15** CLmax that would keep 15 m/s cruise = **0.8497** — **UNVERIFIED**
-  - ⚠ CALC-B1-STALL does not re-run
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
   - how to verify: B2 compares with the XFOIL/AVL CLmax with elevon up-trim; if B2 shows >= this value, 15 m/s also passes.
-  - calc `CALC-B1-STALL` `redesign/team/B1/performance.py::stall_speeds()`: `Vs = sqrt(2 m g/(rho S CLmax)) ; Vt = 1.3 Vs ; Vs30 = Vs/sqrt(cos 30) ; margin = Vcruise/Vt - 1` — **UNVERIFIED**
-    - ⚠ does not re-run to its stored outputs (see build errors)
+  - calc `CALC-B1-STALL` `redesign/team/B1/performance.py::stall_speeds()`: `Vs = sqrt(2 m g/(rho S CLmax)) ; Vt = 1.3 Vs ; Vs30 = Vs/sqrt(cos 30) ; margin = Vcruise/Vt - 1` — **CHECKED**
     - `m_gate` ← `P:requirements.mtow_gate_kg` (see above)
     - `m_sized` ← claim **CL-A1-MASS-SIZED** Sized take-off mass (allocations + planned growth + overrun) = **2.6 kg** (limit <= 2.6 kg, margin +0%) — **UNVERIFIED** — chain under [R-MASS-GATE](#r-mass-gate)
     - `g` ← param `P:env.g_ms2` = 9.807 m/s2 — **CHECKED**
@@ -19812,10 +19928,9 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
       - `SRC-REQ-PROPOSED` (see above)
     - `vc` ← assumption `ASM-B1-VCRUISE` B1 proposes AIRSPEED_CRUISE = 16 m/s (params.json#performance.cruise_ms, CHANGE-LOG D-01) = 16 m/s (basis: lowest whole-number speed above 1.3 Vs at the 2.6 kg gate with B2's trimmed CLmax 0.80 on the c 0.32 wing (15.43 m/s, CL-B1-VT-GATE); +3.7 %, about 0.6 m/s for airspeed-hold and sensor error (R-AIRSPEED-ERR allows 1 m/s, so the margin is thin)) — **PROPOSED**
     - `ASM-B1-VCRUISE` (see above)
-- claim **CL-B1-NMAX-SAG** Prop speed at full throttle, sagged = **120.1 rev/s** — **UNVERIFIED** — chain printed above
+- claim **CL-B1-NMAX-SAG** Prop speed at full throttle, sagged = **127.1 rev/s** — **UNVERIFIED** — chain printed above
 - claim **CL-B1-KCAL** Chain calibration to the maker table = **1.132** — **UNVERIFIED** — chain printed above
 - claim **CL-B1-FM** Prop figure of merit, static (APC) = **0.7164** — **UNVERIFIED**
-  - ⚠ CALC-B1-PROPCAL does not re-run
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -19824,8 +19939,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:propulsion.thrust_max_per_motor_kg, which is UNVERIFIED (cites CL-E1-ILIM-TW-FRESH, which is UNVERIFIED)
   - ⚠ uses P:propulsion.voltage_sag, which is UNVERIFIED (cites CL-E1-SAG-FACTOR, which is UNVERIFIED)
   - how to verify: Thrust stand gf and shaft W (from current, Kv, Rm) at hover thrust (H1).
-  - calc `CALC-B1-PROPCAL` `redesign/team/B1/performance.py::prop_calibration()`: `n_max = sqrt(T0/(Ct0 rho D^4)) (11x5.5MR) ; n_max,sag = n_max sqrt(sag) ; k_cal = P_table(690 gf) / P_motor(11x4.5MR model at 690 gf, J = 0) ; FM = T^1.5/(sqrt(2 rho A) P_shaft) (11x5.5MR)` — **UNVERIFIED**
-    - ⚠ does not re-run to its stored outputs (see build errors)
+  - calc `CALC-B1-PROPCAL` `redesign/team/B1/performance.py::prop_calibration()`: `n_max = sqrt(T0/(Ct0 rho D^4)) (11x5.5MR) ; n_max,sag = n_max sqrt(sag) ; k_cal = P_table(690 gf) / P_motor(11x4.5MR model at 690 gf, J = 0) ; FM = T^1.5/(sqrt(2 rho A) P_shaft) (11x5.5MR)` — **CHECKED**
     - `tab` ← assumption `ASM-B1-PROP` The fitted prop (APC 11x5.5MR, params propulsion.prop) follows APC's PER3 Ct(J), Cp(J) at 6 000 rpm at every operating point; rows are [J, Ct, Cp]; last row extrapolated to zero thrust = table (20 rows) (basis: B4's copy of the APC file; cruise runs at 6 000 rpm (CL-B4-CRUISE-RPM); Re effect between the 5 000 and 7 000 rpm blocks < 1 % on Ct, Cp; the hover-table calibration (CALC-B1-PROPCAL) absorbs APC's static optimism) — **PROPOSED**
       - source `SRC-B1-B4-PER3-55` [APC PER3 11x5.5MR rows as copied by B4](https://www.apcprop.com/files/PER3_11x55MR.dat), team/B4/data/apc_per3_11x55MR.csv, rows rpm = 6000 (19 rows, J 0 to 0.624), checked 2026-11-09 — **CHECKED**
       - `SRC-APC-11X55MR` (see above)
@@ -19862,7 +19976,6 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `ASM-E1-I0` (see above)
 - claim **CL-B1-HOVER-P-GATE** Hover power at 2.6 kg, 11x5.5MR (B1 cross-check of E1) = **386.9 W** (limit <= 400 W, margin +3%) — **UNVERIFIED** — chain printed above
 - claim **CL-B1-HOVER-P-PESS** Hover power at 2.6 kg, pessimistic = **425.6 W** — **UNVERIFIED**
-  - ⚠ CALC-B1-HOVER does not re-run
   - ⚠ uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)
@@ -19873,8 +19986,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: As CL-B1-HOVER-P-GATE.
-  - calc `CALC-B1-HOVER` `redesign/team/B1/performance.py::hover()`: `T_motor = m DL / n ; r = P_motor(11x5.5MR, T) / P_motor(11x4.5MR, T) ; P = n P_table(T_motor) r / eta_esc + P_av ; I = P / V ; t_hover = E (1 - reserve) / P ; throttle = m g DL / (n T_max sag)` — **UNVERIFIED**
-    - ⚠ does not re-run to its stored outputs (see build errors)
+  - calc `CALC-B1-HOVER` `redesign/team/B1/performance.py::hover()`: `T_motor = m DL / n ; r = P_motor(11x5.5MR, T) / P_motor(11x4.5MR, T) ; P = n P_table(T_motor) r / eta_esc + P_av ; I = P / V ; t_hover = E (1 - reserve) / P ; throttle = m g DL / (n T_max sag)` — **CHECKED**
     - `m_gate` ← `P:requirements.mtow_gate_kg` (see above)
     - `m_sized` ← `CL-A1-MASS-SIZED` (see above)
     - `table` ← `P:propulsion.thrust_table_g_w` (see above)
@@ -19910,7 +20022,6 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `ASM-B1-AVIONICS-W` (see above)
     - `ASM-B1-PESS` (see above)
 - claim **CL-B1-HOVER-I-GATE** Hover current at 2.6 kg = **26.14 A** — **UNVERIFIED**
-  - ⚠ CALC-B1-HOVER does not re-run
   - ⚠ uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)
@@ -19923,7 +20034,6 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: Current sensor log in tethered hover; F1 sizes the disconnect on it (x 1.25).
   - `CALC-B1-HOVER` (see above)
 - claim **CL-B1-HOVER-PROP-RATIO** Hover power ratio 11x5.5MR / 11x4.5MR = **1.019** — **UNVERIFIED**
-  - ⚠ CALC-B1-HOVER does not re-run
   - ⚠ uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)
@@ -19936,7 +20046,6 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: Thrust stand A/B of both props at 690 gf (H1, CR-B1-06).
   - `CALC-B1-HOVER` (see above)
 - claim **CL-B1-HOVER-ONLY** Hover-only endurance, 20 % reserve = **11.93 min** — **UNVERIFIED**
-  - ⚠ CALC-B1-HOVER does not re-run
   - ⚠ uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-A1-MASS-SIZED, which is UNVERIFIED
   - ⚠ uses P:propulsion.thrust_table_g_w, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: [thrust gf, input W] per motor, KV900, APC 11x4.7, maker rows match the page image (E1 2026-11-09) but the supply sagged: the top row is at ~11.2 V and W = 14.8 x A bookkeeping (CL-E1-MAKER-SUPPLY). Replace with T-E1-STAND rows)
@@ -19948,8 +20057,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: Not flown; follows from the measured hover power.
   - `CALC-B1-HOVER` (see above)
-- claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **300.6 W** — **UNVERIFIED** — chain printed above
-- claim **CL-B1-CRUISE-I** Cruise current = **15.39 A** — **UNVERIFIED**
+- claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **301 W** — **UNVERIFIED** — chain printed above
+- claim **CL-B1-CRUISE-I** Cruise current = **15.41 A** — **UNVERIFIED**
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -19966,7 +20075,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `g` ← `P:env.g_ms2` (see above)
     - `rho` ← `P:env.rho_kgm3` (see above)
     - `S` ← `CL-A1-WING-AREA` (see above)
-    - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05128** — **UNVERIFIED** — chain printed above
+    - `cd0` ← claim **CL-B1-CD0** Zero-lift drag coefficient = **0.05146** — **UNVERIFIED** — chain printed above
     - `k` ← claim **CL-B1-K** Lift-dependent drag factor (B2 trimmed polar, e 0.93) = **0.09427** — **UNVERIFIED** — chain printed above
     - `k_pess` ← claim **CL-B1-K-PESS** Lift-dependent drag factor, pessimistic (e 0.80) = **0.1107** — **UNVERIFIED** — chain printed above
     - `trim` ← assumption `ASM-B1-TRIM` Trim adds 2 % to cruise drag on top of B2's trimmed wing polar = 1.02 (basis: B2's polar (P:b2.avl.e_oswald, cd0_wing) is already trimmed, elevon profile drag included; B3 finds +0.2 % induced trim drag at 16 m/s (CR-B3-07). The 2 % left covers the up-trimmed elevon gap and pod/fin junctions. Was 1.05 (K09 card) before B2/B3 answered) — **PROPOSED**
@@ -19990,8 +20099,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `ASM-E1-KV` (see above)
     - `ASM-E1-RM` (see above)
     - `ASM-E1-I0` (see above)
-- claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.341** — **UNVERIFIED** — chain printed above
-- claim **CL-B1-CRUISE-DRAG** Cruise drag at 16 m/s, 2.6 kg = **4.101 N** — **UNVERIFIED**
+- claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.325** — **UNVERIFIED** — chain printed above
+- claim **CL-B1-CRUISE-DRAG** Cruise drag at 16 m/s, 2.6 kg = **4.112 N** — **UNVERIFIED**
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -20004,7 +20113,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)
   - how to verify: Follows from CD0, k and trim; cruise power test with known prop data (H2).
   - `CALC-B1-CRUISE` (see above)
-- claim **CL-B1-CRUISE-DRAG-PESS** Cruise drag, pessimistic = **5.196 N** — **UNVERIFIED**
+- claim **CL-B1-CRUISE-DRAG-PESS** Cruise drag, pessimistic = **5.209 N** — **UNVERIFIED**
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -20017,7 +20126,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)
   - how to verify: As CL-B1-CRUISE-DRAG.
   - `CALC-B1-CRUISE` (see above)
-- claim **CL-B1-CRUISE-P-SHAFT** Cruise shaft power, 4 props = **147.9 W** — **UNVERIFIED**
+- claim **CL-B1-CRUISE-P-SHAFT** Cruise shaft power, 4 props = **148.1 W** — **UNVERIFIED**
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -20043,7 +20152,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)
   - how to verify: Thrust stand at cruise rpm and torque (H1); replaces E2's eta_motor 0.72.
   - `CALC-B1-CRUISE` (see above)
-- claim **CL-B1-CRUISE-I-PESS** Cruise current, pessimistic = **20.31 A** — **UNVERIFIED**
+- claim **CL-B1-CRUISE-I-PESS** Cruise current, pessimistic = **20.34 A** — **UNVERIFIED**
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -20056,7 +20165,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)
   - how to verify: Current sensor in cruise (H2).
   - `CALC-B1-CRUISE` (see above)
-- claim **CL-B1-CRUISE-ETA-PROP** Prop efficiency in cruise = **0.4437** — **UNVERIFIED**
+- claim **CL-B1-CRUISE-ETA-PROP** Prop efficiency in cruise = **0.4442** — **UNVERIFIED**
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -20069,7 +20178,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:battery.v_nom, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)
   - how to verify: B4 confirms from APC data and a car-top or wind-tunnel prop test; flight: rpm (ESC telemetry) vs airspeed.
   - `CALC-B1-CRUISE` (see above)
-- claim **CL-B1-CRUISE-J** Cruise advance ratio = **0.578** — **UNVERIFIED**
+- claim **CL-B1-CRUISE-J** Cruise advance ratio = **0.5779** — **UNVERIFIED**
   - ⚠ uses ASM-E1-RM, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -20119,14 +20228,14 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
       - claim **CL-E1-HOVER-I-55** Hover pack current, 11x5.5MR, 14.8 V = **27.33 A** (limit <= 31.05 A, margin +12%) — **UNVERIFIED** — chain under [R-ESC-CURRENT](#r-esc-current)
     - `t_hover` ← param `P:requirements.hover_time_min` = 2 min — **CHECKED**
       - `SRC-REQ-PROPOSED` (see above)
-    - `e_tr` ← claim **CL-B1-TRANS-ENERGY** Energy of one pitch-over = **0.8816 Wh** — **UNVERIFIED** — chain printed above
+    - `e_tr` ← claim **CL-B1-TRANS-ENERGY** Energy of one pitch-over = **0.8814 Wh** — **UNVERIFIED** — chain printed above
     - `trans` ← assumption `ASM-B1-TRANS` [pitch rate deg/s, assist speed as a fraction of Vs, back-transition energy as a fraction of the forward pitch-over] = [12, 1.10, 1.0] = table (3 rows) (basis: Rev 3 (sag 0.76, D-35): 12 deg/s gives a peak of 0.70 of available thrust in CALC-B1-PITCHOVER on the worst-state pack; 14 gives 0.75, 15 gives 0.77, 16 gives 0.79 and 20 gives 0.88 (performance_results.json#sensitivity). 16 deg/s is now the fastest whole-number rate that keeps <= 0.80, but with no margin while the sag is UNVERIFIED (E1 0.854, E2 0.76; the cold-pack stand run decides), so 12 deg/s stays the first-flight Q_TAILSIT_RAT_FW (rev 2 derived it at sag 0.72, peak 0.76). On a fresh pack 20 deg/s gives 0.59. Thrust holds altitude below 1.1 Vs (Q_ASSIST_SPEED analogue); the back-transition is a pitch-up deceleration of similar length at similar thrust) — **PROPOSED**
       - source `SRC-B1-ARDUPILOT-TS` [ArduPilot Plane tailsitter and airspeed parameters](https://ardupilot.org/plane/docs/guide-tailsitter.html), Q_TAILSIT_ANGLE, Q_TAILSIT_RAT_FW, Q_ASSIST_SPEED, AIRSPEED_MIN/CRUISE — **UNVERIFIED**
         - ⚠ value never compared with the source (no 'checked' date)
     - `ASM-B1-PESS` (see above)
     - `ASM-B1-TRANS` (see above)
   - test `T-B1-CRUISE-POWER` Cruise power and speed polar (planned) — **PROPOSED**
-- claim **CL-B1-CRUISE-TIME-B1H** Cruise after hover with B1's own hover power = **16.41 min** (limit >= 5 min, margin +228%) — **UNVERIFIED**
+- claim **CL-B1-CRUISE-TIME-B1H** Cruise after hover with B1's own hover power = **16.39 min** (limit >= 5 min, margin +228%) — **UNVERIFIED**
   - ⚠ uses P:performance.hover_power_w, which is UNVERIFIED (cites CL-E1-HOVER-I-55, which is UNVERIFIED)
   - ⚠ uses CL-B1-HOVER-P-GATE, which is UNVERIFIED
   - ⚠ uses CL-B1-TRANS-ENERGY, which is UNVERIFIED
@@ -20142,8 +20251,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `t_hover` ← `P:requirements.hover_time_min` (see above)
     - `e_tr` ← `CL-B1-TRANS-ENERGY` (see above)
     - `trans` ← `ASM-B1-TRANS` (see above)
-    - `p_c` ← claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **227.8 W** — **UNVERIFIED** — chain under [R-MISSION](#r-mission)
-    - `p_c_pess` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **300.6 W** — **UNVERIFIED** — chain printed above
+    - `p_c` ← claim **CL-B1-CRUISE-P** Cruise electrical power, 16 m/s, 2.6 kg = **228.1 W** — **UNVERIFIED** — chain under [R-MISSION](#r-mission)
+    - `p_c_pess` ← claim **CL-B1-CRUISE-P-PESS** Cruise power, pessimistic = **301 W** — **UNVERIFIED** — chain printed above
     - `vc` ← `ASM-B1-VCRUISE` (see above)
     - `ASM-B1-TRANS` (see above)
     - `ASM-B1-PESS` (see above)
@@ -20187,7 +20296,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `rm` ← `ASM-E1-RM` (see above)
     - `i0` ← `ASM-E1-I0` (see above)
     - `kcal` ← `CL-B1-KCAL` (see above)
-    - `nmax` ← claim **CL-B1-NMAX-SAG** Prop speed at full throttle, sagged = **120.1 rev/s** — **UNVERIFIED** — chain printed above
+    - `nmax` ← claim **CL-B1-NMAX-SAG** Prop speed at full throttle, sagged = **127.1 rev/s** — **UNVERIFIED** — chain printed above
     - `D` ← `P:propulsion.prop_diameter_m` (see above)
     - `esc` ← `ASM-B1-ESC` (see above)
     - `av` ← `ASM-B1-AVIONICS-W` (see above)
@@ -20209,7 +20318,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses ASM-B1-ESC, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: Angle of attack (pitch minus flight-path) and airspeed in the transition log.
   - `CALC-B1-CORRIDOR` (see above)
-- claim **CL-B1-LEAN-5MS-LIFT** Hover lean at 5 m/s, wing lift counted = **16.39 deg** — **UNVERIFIED**
+- claim **CL-B1-LEAN-5MS-LIFT** Hover lean at 5 m/s, wing lift counted = **16.4 deg** — **UNVERIFIED**
   - ⚠ uses CL-B1-CLA, which is UNVERIFIED
   - ⚠ uses P:b2.xfoil.alpha0_2d_deg, which is UNVERIFIED (cites SRC-B2-XFOIL, which is UNVERIFIED)
   - ⚠ uses CL-B2-CLMAX-DESIGN, which is UNVERIFIED
@@ -20265,8 +20374,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `ASM-B1-CD90` (see above)
     - `ASM-B1-CTRL-RESERVE` (see above)
   - test `T-B1-TRANSITION-LOG` First transitions logged (planned) — **PROPOSED**
-- claim **CL-B1-TRANS-ENERGY** Energy of one pitch-over = **0.8816 Wh** — **UNVERIFIED** — chain printed above
-- claim **CL-B1-LEAN-ALLOWED** Wind lean allowed at touchdown = **20.59 deg** — **UNVERIFIED** — chain printed above
+- claim **CL-B1-TRANS-ENERGY** Energy of one pitch-over = **0.8814 Wh** — **UNVERIFIED** — chain printed above
+- claim **CL-B1-LEAN-ALLOWED** Wind lean allowed at touchdown = **20.66 deg** — **UNVERIFIED** — chain printed above
 - claim **CL-B1-VCLIMB-P** Power in a 2.5 m/s vertical climb = **448 W** — **UNVERIFIED** — chain printed above
 - claim **CL-B1-ROC-FW** Fixed-wing climb rate at 16 m/s = **13.65 m/s** — **UNVERIFIED**
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
@@ -20310,8 +20419,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `ASM-B1-CTRL-RESERVE` (see above)
     - `ASM-B1-VTERM` (see above)
     - `ASM-B1-PESS` (see above)
-- claim **CL-B1-VMAX** Top level speed at the 9 350 rpm cap, fresh pack (C1's VH) = **25.68 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED** — chain printed above
-- claim **CL-B1-VMAX-SAG** Top level speed, worst-state pack = **25.68 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED**
+- claim **CL-B1-VMAX** Top level speed at the 9 350 rpm cap, fresh pack (C1's VH) = **25.67 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED** — chain printed above
+- claim **CL-B1-VMAX-SAG** Top level speed, worst-state pack = **25.67 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED**
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
   - ⚠ uses CL-B1-K, which is UNVERIFIED
   - ⚠ uses CL-B1-K-PESS, which is UNVERIFIED
@@ -20322,7 +20431,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:propulsion.current_max_per_motor_a, which is UNVERIFIED (cites CL-E1-ILIM-I, which is UNVERIFIED)
   - how to verify: As CL-B1-VMAX on a low pack; F4 sets AIRSPEED_MAX at least 2 m/s below it.
   - `CALC-B1-CLIMB` (see above)
-- claim **CL-B1-VMAX-NOCAP** Top level speed if the rpm cap fails, fresh pack = **34.54 m/s** — **UNVERIFIED**
+- claim **CL-B1-VMAX-NOCAP** Top level speed if the rpm cap fails, fresh pack = **34.53 m/s** — **UNVERIFIED**
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
   - ⚠ uses CL-B1-K, which is UNVERIFIED
   - ⚠ uses CL-B1-K-PESS, which is UNVERIFIED
@@ -21154,6 +21263,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses CL-A3-MASS-BASIC, which is UNVERIFIED
   - ⚠ uses CL-B4-HOVER-Q, which is UNVERIFIED
   - ⚠ uses CL-B4-YAW, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-ANTI, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-SYM, which is UNVERIFIED
   - ⚠ uses ASM-B3-TORSION-HIGH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-STATION-IYY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-FLEX-ZETA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -21171,8 +21282,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `y` ← `P:propulsion.stations.y_m` (see above)
     - `z` ← `P:propulsion.stations.z_m` (see above)
     - `cant` ← `P:propulsion.stations.cant_deg` (see above)
-    - `f_anti` ← claim **CL-C2-F-TORSION-ANTI** First wing mode: antisymmetric torsion with the fin stations, low corner = **11.71 Hz** — **CHECKED** — chain printed above
-    - `f_sym` ← claim **CL-C2-F-TORSION-SYM** Symmetric wing torsion mode (hover pitch control path), low corner = **21.69 Hz** — **CHECKED** — chain printed above
+    - `f_anti` ← claim **CL-C2-F-TORSION-ANTI** First wing mode: antisymmetric torsion with the fin stations, low corner = **11.71 Hz** — **UNVERIFIED** — chain printed above
+    - `f_sym` ← claim **CL-C2-F-TORSION-SYM** Symmetric wing torsion mode (hover pitch control path), low corner = **21.69 Hz** — **UNVERIFIED** — chain printed above
     - `f_hi` ← assumption `ASM-B3-TORSION-HIGH` Upper end of C2's frequency bands (GJ 45 N m2); the low corners are C2's claims = table (2 rows) Hz (basis: team/C2/CHANGE-REQUESTS.md CR-C2-03: antisymmetric 11.7-14.9 Hz, symmetric 21-27 Hz) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
     - `Is` ← assumption `ASM-B3-STATION-IYY` Motors, mounts, props, ESCs and the two half-fins of one station about the spar axis = 0.0125 kg m2 (basis: team/C2/CHANGE-REQUESTS.md CR-C2-03: ~0.0125 kg m2 per side (C2 modal model)) — **UNVERIFIED**
@@ -21208,6 +21319,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses CL-A3-MASS-BASIC, which is UNVERIFIED
   - ⚠ uses CL-B4-HOVER-Q, which is UNVERIFIED
   - ⚠ uses CL-B4-YAW, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-ANTI, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-SYM, which is UNVERIFIED
   - ⚠ uses ASM-B3-TORSION-HIGH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-STATION-IYY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-FLEX-ZETA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -21227,6 +21340,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses CL-A3-MASS-BASIC, which is UNVERIFIED
   - ⚠ uses CL-B4-HOVER-Q, which is UNVERIFIED
   - ⚠ uses CL-B4-YAW, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-ANTI, which is UNVERIFIED
+  - ⚠ uses CL-C2-F-TORSION-SYM, which is UNVERIFIED
   - ⚠ uses ASM-B3-TORSION-HIGH, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-STATION-IYY, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-B3-FLEX-ZETA, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -22084,6 +22199,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: From rpm on the stand.
   - `CALC-B4-GEOM` (see above)
 - claim **CL-C1-T-ILIM** Thrust per motor held by the 100 A limiter (steady) = **15.89 N** — **UNVERIFIED**
+  - ⚠ CALC-C1-ROTOR does not re-run
   - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -22098,7 +22214,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses CL-F4-FW-RPM-CAP, which is UNVERIFIED
   - ⚠ uses CL-B1-VMAX, which is UNVERIFIED
   - how to verify: E1 CL-E1-ILIM-TW-FRESH; stand with the limiter active.
-  - calc `CALC-C1-ROTOR` `redesign/team/C1/loads.py::rotor_calc()`: `T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_fw/60 (fixed-wing rpm at F4's THR_MAX) ; VH = max(V_pitch, V_lvl_F4) ; VD = f_D max(Vc, VH) rounded UP to 0.1 m/s ; VD_uncapped = f_D max(Vc, VMAX_B1) (information) ; n_hover = n T_lim / (m g)` — **CHECKED**
+  - calc `CALC-C1-ROTOR` `redesign/team/C1/loads.py::rotor_calc()`: `T_cap = kT_E1 T_h (rpm_cap/rpm_h)^2 ; T_ilim = t_ilim g ; T_lim = max(T_req, T_cap) ; rpm_lim = rpm_h sqrt(T_lim / (kT_E1 T_h)) ; Q = kP_E1 Q_h (rpm_lim/rpm_h)^2 ; H = (m_p D^2/12 + I_bell) omega ; M_gyro = H q_max ; V_pitch = p rpm_fw/60 (fixed-wing rpm at F4's THR_MAX) ; VH = max(V_pitch, V_lvl_F4) ; VD = f_D max(Vc, VH) rounded UP to 0.1 m/s ; VD_uncapped = f_D max(Vc, VMAX_B1) (information) ; n_hover = n T_lim / (m g)` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `T_h` ← `CL-B4-HOVER-T` (see above)
     - `rpm_h` ← `CL-B4-HOVER-RPM` (see above)
     - `Q_h` ← `CL-B4-HOVER-Q` (see above)
@@ -22119,7 +22236,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `Vc` ← `P:performance.cruise_ms` (see above)
     - `VH_f4` ← claim **CL-F4-VLEVEL** Highest level speed at THR_MAX 70 %, fresh pack = **21.28 m/s** (limit >= 18 m/s, margin +18%) — **UNVERIFIED** — chain printed above
     - `rpm_fw` ← claim **CL-F4-FW-RPM-CAP** Motor rpm at THR_MAX in fixed-wing flight, fresh pack = **7749 rpm** (limit <= 7950 rpm, margin +3%) — **UNVERIFIED** — chain printed above
-    - `VH_b1` ← claim **CL-B1-VMAX** Top level speed at the 9 350 rpm cap, fresh pack (C1's VH) = **25.68 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED** — chain printed above
+    - `VH_b1` ← claim **CL-B1-VMAX** Top level speed at the 9 350 rpm cap, fresh pack (C1's VH) = **25.67 m/s** (limit >= 18 m/s, margin +43%) — **UNVERIFIED** — chain printed above
     - `fD` ← assumption `ASM-C1-VD-FACTOR` Design dive speed = 1.25 x max(VC, VH) = 1.25 (basis: FAR 23.335(b) VD >= 1.25 VC with VC = the highest level speed the aircraft can hold; VH = max(prop pitch speed at the F4 rpm cap, B1's top level speed)) — **PROPOSED**
       - source `SRC-C1-FAR23` 14 CFR Part 23 (pre-Amdt 23-64) loads, 23.321-23.351 flight loads, 23.341 gust formula, 23.473 landing (lift 2/3 W), 23.561 emergency landing, 23.619/23.625 special and fitting factors, 23.303 factor of safety 1.5 — **UNVERIFIED**
         - ⚠ value never compared with the source (no 'checked' date)
@@ -22133,6 +22250,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
 - claim **CL-C1-ROTOR-H** Rotor angular momentum at T_lim = **0.123 N m s** — **UNVERIFIED** — chain printed above
 - claim **CL-C1-ROTOR-OMEGA** Rotor speed at T_lim = **979.5 rad/s** — **UNVERIFIED** — chain printed above
 - claim **CL-C1-GYRO-MOMENT** Gyroscopic moment per rotor at q_max = **0.3691 N m** — **UNVERIFIED**
+  - ⚠ CALC-C1-ROTOR does not re-run
   - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -22149,6 +22267,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: Calculated; check q_max against flight logs (RATE.*) after the first transitions.
   - `CALC-C1-ROTOR` (see above)
 - claim **CL-C1-VH** Highest level speed used for VD (F4 THR_MAX cap) = **21.28 m/s** — **UNVERIFIED**
+  - ⚠ CALC-C1-ROTOR does not re-run
   - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -22165,6 +22284,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: H2 first full-throttle FBWB level leg, fresh pack: logged airspeed <= this value (same log as CL-F4-VLEVEL-VH).
   - `CALC-C1-ROTOR` (see above)
 - claim **CL-C1-VD-UNCAPPED** VD the uncapped propulsion would need (information) = **32.1 m/s** — **UNVERIFIED**
+  - ⚠ CALC-C1-ROTOR does not re-run
   - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -22181,6 +22301,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: Information only: 1.25 x B1's 9 350 rpm top speed; the 32.1 m/s alternative was rejected (D-50).
   - `CALC-C1-ROTOR` (see above)
 - claim **CL-C1-HOVER-N-MAX** Hover load factor at full thrust = **3.31** — **UNVERIFIED**
+  - ⚠ CALC-C1-ROTOR does not re-run
   - ⚠ uses SRC-C1-FAR23, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C1-PITCH-RATE, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B4-HOVER-T, which is UNVERIFIED
@@ -24174,20 +24295,24 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses CL-A3-IZZ, which is UNVERIFIED
   - how to verify: Information (CR-C1-25).
   - `CALC-C1-MASS-XCHECK` (see above)
-- claim **CL-C2-TWIST-FLIGHT** Wing twist at limit, flight cases (F7 rolling pull-up at VD) = **2.767 deg** — **CHECKED**
+- claim **CL-C2-TWIST-FLIGHT** Wing twist at limit, flight cases (F7 rolling pull-up at VD) = **2.767 deg** — **UNVERIFIED**
+  - ⚠ CALC-C2-TWIST does not re-run
   - how to verify: T-C2-TWIST: measure GJ, re-run wing_struct.py with it
   - parts: WNG-001, WNG-002, WNG-003
-  - calc `CALC-C2-TWIST` `redesign/team/C2/c2_claims.py::pt_calc_c2_twist()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.twist_flight_deg` = 2.767 deg (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-TWIST` `redesign/team/C2/c2_claims.py::pt_calc_c2_twist()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.twist_flight_deg` = 1.836 deg (team/C2/wing_struct.py) — **PROPOSED**
   - test `T-C2-TWIST` Wing torsion stiffness (planned) — **PROPOSED**
 - claim **CL-C2-V-AE-REQ** Aeroelastic clearance speed required (1.2 VD) = **32.65 m/s** — **UNVERIFIED** — chain printed above
-- claim **CL-C2-ROLL-EFF-VD** Elevon roll effectiveness at VD, flexible / rigid = **0.775** — **CHECKED**
+- claim **CL-C2-ROLL-EFF-VD** Elevon roll effectiveness at VD, flexible / rigid = **0.775** — **UNVERIFIED**
+  - ⚠ CALC-C2-EFF does not re-run
   - how to verify: B3/F4 use it for the gain schedule; T-C2-TWIST replaces GJ
   - parts: WNG-001, WNG-002, WNG-003
-  - calc `CALC-C2-EFF` `redesign/team/C2/c2_claims.py::pt_calc_c2_eff()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.eff_vd` = 0.775 (team/C2/wing_struct.py) — **PROPOSED**
-- claim **CL-C2-F-TORSION-ANTI** First wing mode: antisymmetric torsion with the fin stations, low corner = **11.71 Hz** — **CHECKED** — chain printed above
-- claim **CL-C2-F-TORSION-SYM** Symmetric wing torsion mode (hover pitch control path), low corner = **21.69 Hz** — **CHECKED** — chain printed above
+  - calc `CALC-C2-EFF` `redesign/team/C2/c2_claims.py::pt_calc_c2_eff()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.eff_vd` = 0.7752 (team/C2/wing_struct.py) — **PROPOSED**
+- claim **CL-C2-F-TORSION-ANTI** First wing mode: antisymmetric torsion with the fin stations, low corner = **11.71 Hz** — **UNVERIFIED** — chain printed above
+- claim **CL-C2-F-TORSION-SYM** Symmetric wing torsion mode (hover pitch control path), low corner = **21.69 Hz** — **UNVERIFIED** — chain printed above
 - claim **CL-C2-RING-NO-PLUG** Spar wall ring stress at the block bore end without a plug, design = **9.109e+08 Pa** (limit <= 4e+07 Pa, margin -2177%) — **UNVERIFIED** **FAILS**
   - ⚠ FAILS: margin -2177.2% (9.109e+08 Pa vs <= 4e+07 Pa)
   - ⚠ uses SRC-C2-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))
@@ -24207,38 +24332,48 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
       - ⚠ assumption marked UNVERIFIED by its author
 - claim **CL-C2-RING-ANCHOR** Spar wall ring stress under the brace anchor without a plug, design = **7.776e+07 Pa** (limit <= 4e+07 Pa, margin -94%) — **UNVERIFIED** **FAILS**
   - ⚠ FAILS: margin -94.4% (7.776e+07 Pa vs <= 4e+07 Pa)
+  - ⚠ CALC-C2-RING-ANCHOR does not re-run
   - ⚠ uses ASM-C2-CONTACT, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:c2.inputs.spar_hoop_allow_pa, which is UNVERIFIED (cites ASM-C2-SPAR-HOOP, which is UNVERIFIED)
   - how to verify: Shows the anchor plug is required (expected FAIL)
   - parts: WNG-002
   - `ASM-C2-CONTACT` (see above)
-  - calc `CALC-C2-RING-ANCHOR` `redesign/team/C2/c2_claims.py::pt_calc_c2_ring_anchor()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.ring_anchor_sigma_pa` = 7.776e+07 Pa (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-RING-ANCHOR` `redesign/team/C2/c2_claims.py::pt_calc_c2_ring_anchor()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.ring_anchor_sigma_pa` = 7.644e+07 Pa (team/C2/wing_struct.py) — **PROPOSED**
   - `P:c2.inputs.spar_hoop_allow_pa` (see above)
 - claim **CL-C2-CHORD-FOAM** Same, bare foam (tape lost) = **1.094e+05 Pa** (limit <= 1.5e+05 Pa, margin +27%) — **UNVERIFIED**
+  - ⚠ CALC-C2-CHORD-FOAM does not re-run
   - ⚠ uses P:c2.inputs.xps_tens_allow_pa, which is UNVERIFIED (marked UNVERIFIED in redesign/team/C2/params.json: XPS tensile/flexural 250-500 kPa at this density, halved for hot-wire surface damage)
   - how to verify: T-C2-XPS-COUPON: bare foam strip
   - parts: WNG-001
-  - calc `CALC-C2-CHORD-FOAM` `redesign/team/C2/c2_claims.py::pt_calc_c2_chord_foam()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.chord_foam_only_sigma_ult_pa` = 1.094e+05 Pa (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-CHORD-FOAM` `redesign/team/C2/c2_claims.py::pt_calc_c2_chord_foam()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.chord_foam_only_sigma_ult_pa` = 1.093e+05 Pa (team/C2/wing_struct.py) — **PROPOSED**
   - param `P:c2.inputs.xps_tens_allow_pa` = 1.5e+05 Pa (ASM-C2-XPS-TENS) — **UNVERIFIED**
     - ⚠ marked UNVERIFIED in redesign/team/C2/params.json: XPS tensile/flexural 250-500 kPa at this density, halved for hot-wire surface damage
   - test `T-C2-XPS-COUPON` XPS and taped-foam coupons (planned) — **PROPOSED**
-- claim **CL-C2-CRADLE-AREA** Foam pad area each transport cradle needs (X3 drop x 1.5) = **0.00108 m2** — **CHECKED** — chain printed above
-- claim **CL-C2-FE-CONV-FREQ** FE modal convergence, 48 -> 96 elements per half = **0.000213** (limit <= 0.01, margin +98%) — **CHECKED**
+- claim **CL-C2-CRADLE-AREA** Foam pad area each transport cradle needs (X3 drop x 1.5) = **0.00108 m2** — **UNVERIFIED** — chain printed above
+- claim **CL-C2-FE-CONV-FREQ** FE modal convergence, 48 -> 96 elements per half = **0.000213** (limit <= 0.01, margin +98%) — **UNVERIFIED**
+  - ⚠ CALC-C2-CONV-F does not re-run
   - how to verify: Re-run wing_struct.py; out/results.json#modal_conv
-  - calc `CALC-C2-CONV-F` `redesign/team/C2/c2_claims.py::pt_calc_c2_conv_f()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.mesh_conv_freq` = 0.000213 (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-CONV-F` `redesign/team/C2/c2_claims.py::pt_calc_c2_conv_f()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.mesh_conv_freq` = 0.00025 (team/C2/wing_struct.py) — **PROPOSED**
   - assumption `ASM-C2-FE-TOL` Result change between the two finest meshes = 0.01 (basis: SIM-TOOLS professional practice: 3+ levels, change < 1 %) — **PROPOSED**
-- claim **CL-C2-FE-CONV-STATIC** FE static convergence, 48 -> 96 elements per half = **0.000526** (limit <= 0.01, margin +95%) — **CHECKED**
+- claim **CL-C2-FE-CONV-STATIC** FE static convergence, 48 -> 96 elements per half = **0.000526** (limit <= 0.01, margin +95%) — **UNVERIFIED**
+  - ⚠ CALC-C2-CONV-S does not re-run
   - how to verify: out/results.json#fe_static_conv
-  - calc `CALC-C2-CONV-S` `redesign/team/C2/c2_claims.py::pt_calc_c2_conv_s()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.mesh_conv_static` = 0.000526 (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-CONV-S` `redesign/team/C2/c2_claims.py::pt_calc_c2_conv_s()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.mesh_conv_static` = 0.000517 (team/C2/wing_struct.py) — **PROPOSED**
   - `ASM-C2-FE-TOL` (see above)
-- claim **CL-C2-FE-VS-BEAM** FE vs beam integration of C1 cut loads (F1 w, L1 u, F7 twist) = **0.002241** (limit <= 0.02, margin +89%) — **CHECKED**
+- claim **CL-C2-FE-VS-BEAM** FE vs beam integration of C1 cut loads (F1 w, L1 u, F7 twist) = **0.002241** (limit <= 0.02, margin +89%) — **UNVERIFIED**
+  - ⚠ CALC-C2-FE-INT does not re-run
   - how to verify: out/results.json#fe_vs_integration
-  - calc `CALC-C2-FE-INT` `redesign/team/C2/c2_claims.py::pt_calc_c2_fe_int()`: `value from wing_struct.py` — **CHECKED**
-    - `v` ← param `P:c2.fe.fe_vs_integration` = 0.002241 (team/C2/wing_struct.py) — **PROPOSED**
+  - calc `CALC-C2-FE-INT` `redesign/team/C2/c2_claims.py::pt_calc_c2_fe_int()`: `value from wing_struct.py` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
+    - `v` ← param `P:c2.fe.fe_vs_integration` = 0.002239 (team/C2/wing_struct.py) — **PROPOSED**
   - assumption `ASM-C2-FE-AGREE` Two independent methods on the same loads = 0.02 (basis: both are beam theory; residual is load lumping) — **PROPOSED**
 - claim **CL-C2-RING-VALIDATION** Ring model vs Roark two-point ring = **0.003689** (limit <= 0.01, margin +63%) — **UNVERIFIED**
   - ⚠ uses SRC-C2-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))
@@ -31299,7 +31434,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:trn.offaxis.foot_stroke_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: usable crush of one pre-crushed foot cartridge (42 mm, 2 mm pre-crush; C5 R3 table); T-C5-FOOT-RIG)
   - ⚠ uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)
   - ⚠ uses CL-C1-PILLAR-F-LIM, which is UNVERIFIED
-  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: XPS F-250 compressive strength C2 uses for the cradle patch (86 N x 1.5 over 1 080 mm2); the same skin over the spar carries the pillar)
+  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
+  - ⚠ uses P:trn.holddown.bearing_sf, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
   - ⚠ uses ASM-D7-FLAT-DROP, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: Label-and-test case (C1 CR-C1-22): T-D7-BOX-DROP end drop at this height with the dummy; no tip crush.
   - parts: TRN-001, TRN-005
@@ -31324,10 +31460,10 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `f_pil` ← claim **CL-C1-PILLAR-F-LIM** Lid pillar force per side, lid-down drop (limit) = **102.1 N** — **UNVERIFIED** — chain under [R-LOADS](#r-loads)
     - `hd` ← `P:trn.holddown.size_m` (see above)
     - `sxps` ← param `P:trn.holddown.xps_bearing_kpa` = 120 kPa — **UNVERIFIED**
-      - ⚠ marked UNVERIFIED in redesign/subsystems/transport/params.json: XPS F-250 compressive strength C2 uses for the cradle patch (86 N x 1.5 over 1 080 mm2); the same skin over the spar carries the pillar
-      - claim **CL-C2-CRADLE-AREA** Foam pad area each transport cradle needs (X3 drop x 1.5) = **0.00108 m2** — **CHECKED** — chain printed above
-    - `sf` ← param `P:trn.holddown.bearing_sf` = 1.5 — **PROPOSED**
-      - ⚠ marked PROPOSED in redesign/subsystems/transport/params.json: ultimate factor C2 applies to the patch bearing
+      - ⚠ cites CL-C2-CRADLE-AREA, which is UNVERIFIED
+      - claim **CL-C2-CRADLE-AREA** Foam pad area each transport cradle needs (X3 drop x 1.5) = **0.00108 m2** — **UNVERIFIED** — chain printed above
+    - `sf` ← param `P:trn.holddown.bearing_sf` = 1.5 — **UNVERIFIED**
+      - ⚠ cites CL-C2-CRADLE-AREA, which is UNVERIFIED
       - `CL-C2-CRADLE-AREA` (see above)
     - `SRC-D7-PE-FOAM` (see above)
     - `ASM-D7-PACK-OUT` (see above)
@@ -31344,7 +31480,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:trn.offaxis.foot_stroke_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: usable crush of one pre-crushed foot cartridge (42 mm, 2 mm pre-crush; C5 R3 table); T-C5-FOOT-RIG)
   - ⚠ uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)
   - ⚠ uses CL-C1-PILLAR-F-LIM, which is UNVERIFIED
-  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: XPS F-250 compressive strength C2 uses for the cradle patch (86 N x 1.5 over 1 080 mm2); the same skin over the spar carries the pillar)
+  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
+  - ⚠ uses P:trn.holddown.bearing_sf, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
   - how to verify: T-D7-BOX-DROP front-wall drop with the dummy.
   - parts: TRN-001, TRN-005
   - `CALC-D7-OFFAXIS` (see above)
@@ -31361,7 +31498,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:trn.offaxis.foot_stroke_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: usable crush of one pre-crushed foot cartridge (42 mm, 2 mm pre-crush; C5 R3 table); T-C5-FOOT-RIG)
   - ⚠ uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)
   - ⚠ uses CL-C1-PILLAR-F-LIM, which is UNVERIFIED
-  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: XPS F-250 compressive strength C2 uses for the cradle patch (86 N x 1.5 over 1 080 mm2); the same skin over the spar carries the pillar)
+  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
+  - ⚠ uses P:trn.holddown.bearing_sf, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
   - ⚠ uses CL-C1-TRANSPORT-N-ALLOW-X, which is UNVERIFIED
   - how to verify: T-D7-BOX-DROP aft-wall drop with the dummy on real feet; accelerometer on the spar.
   - parts: TRN-001, TRN-005
@@ -31380,7 +31518,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:trn.offaxis.foot_stroke_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: usable crush of one pre-crushed foot cartridge (42 mm, 2 mm pre-crush; C5 R3 table); T-C5-FOOT-RIG)
   - ⚠ uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)
   - ⚠ uses CL-C1-PILLAR-F-LIM, which is UNVERIFIED
-  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: XPS F-250 compressive strength C2 uses for the cradle patch (86 N x 1.5 over 1 080 mm2); the same skin over the spar carries the pillar)
+  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
+  - ⚠ uses P:trn.holddown.bearing_sf, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
   - how to verify: T-D7-BOX-DROP aft-wall drop; measure cartridge crush against the 40 mm usable.
   - parts: TRN-001, TRN-005
   - `CALC-D7-OFFAXIS` (see above)
@@ -31397,7 +31536,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:trn.offaxis.foot_stroke_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: usable crush of one pre-crushed foot cartridge (42 mm, 2 mm pre-crush; C5 R3 table); T-C5-FOOT-RIG)
   - ⚠ uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)
   - ⚠ uses CL-C1-PILLAR-F-LIM, which is UNVERIFIED
-  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: XPS F-250 compressive strength C2 uses for the cradle patch (86 N x 1.5 over 1 080 mm2); the same skin over the spar carries the pillar)
+  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
+  - ⚠ uses P:trn.holddown.bearing_sf, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
   - how to verify: Label-and-test case: THIS SIDE UP. T-D7-BOX-DROP lid-down drop at this height with the dummy.
   - parts: TRN-001, TRN-005, TRN-004-L, TRN-004-R
   - `CALC-D7-OFFAXIS` (see above)
@@ -31414,7 +31554,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:trn.offaxis.foot_stroke_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: usable crush of one pre-crushed foot cartridge (42 mm, 2 mm pre-crush; C5 R3 table); T-C5-FOOT-RIG)
   - ⚠ uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)
   - ⚠ uses CL-C1-PILLAR-F-LIM, which is UNVERIFIED
-  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: XPS F-250 compressive strength C2 uses for the cradle patch (86 N x 1.5 over 1 080 mm2); the same skin over the spar carries the pillar)
+  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
+  - ⚠ uses P:trn.holddown.bearing_sf, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
   - how to verify: C2's XPS F-250 compressive strength and factor (CL-C2-CRADLE-AREA).
   - `CALC-D7-OFFAXIS` (see above)
 - claim **CL-D7-PILLAR-P** Lid-pillar bearing on the wing upper surface, lid-down drop (C1 102 N limit) = **17.01 kPa** (limit <= 80 kPa, margin +79%) — **UNVERIFIED**
@@ -31429,7 +31570,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:trn.offaxis.foot_stroke_m, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: usable crush of one pre-crushed foot cartridge (42 mm, 2 mm pre-crush; C5 R3 table); T-C5-FOOT-RIG)
   - ⚠ uses P:battery.mass_kg, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: listings 503-680 g conflict; weigh on arrival (P14). The mass budget carries 0.55)
   - ⚠ uses CL-C1-PILLAR-F-LIM, which is UNVERIFIED
-  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/transport/params.json: XPS F-250 compressive strength C2 uses for the cradle patch (86 N x 1.5 over 1 080 mm2); the same skin over the spar carries the pillar)
+  - ⚠ uses P:trn.holddown.xps_bearing_kpa, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
+  - ⚠ uses P:trn.holddown.bearing_sf, which is UNVERIFIED (cites CL-C2-CRADLE-AREA, which is UNVERIFIED)
   - ⚠ uses CL-D7-PILLAR-P-ALLOW, which is UNVERIFIED
   - how to verify: Chalk the pillar face; lid-down dummy drop; no dent in the skin.
   - parts: TRN-004-L, TRN-004-R
@@ -31701,6 +31843,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
 - claim **CL-E1-CRUISE-DRAG** Cruise drag at 16 m/s, gate mass (B1 polar) = **4.101 N** — **UNVERIFIED** — chain printed above
 - claim **CL-E1-CRUISE-LD-EFF** Effective cruise L/D (W / trimmed drag) = **6.217** — **UNVERIFIED** — chain printed above
 - claim **CL-E1-CRUISE-P-45** Cruise electrical power, 11x4.5MR (stand A/B prop, not flown) = **296.8 W** — **UNVERIFIED**
+  - ⚠ CALC-E1-CRUISE does not re-run
   - ⚠ uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
   - ⚠ uses CL-B1-K, which is UNVERIFIED
@@ -31711,7 +31854,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses ASM-E1-I0, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: Log pack power in steady 15 m/s FBWA legs, both directions, calm morning.
   - parts: PRP-001-UR, PRP-001-UL, PRP-001-LR, PRP-001-LL
-  - calc `CALC-E1-CRUISE` `redesign/team/E1/propulsion.py::cruise()`: `CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D` — **CHECKED**
+  - calc `CALC-E1-CRUISE` `redesign/team/E1/propulsion.py::cruise()`: `CL = 2W/(rho V^2 S) ; D = q S (CD0 + k CL^2) trim (B1's polar, = CL-B1-CRUISE-DRAG) ; T_m = D / 4 ; solve rpm: T(rpm, J) = T_m ; eta_prop = T V / P_shaft ; eta_tot = T V / P_bat ; L/D_eff = W / D` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `m` ← `P:requirements.mtow_gate_kg` (see above)
     - `g` ← `P:env.g_ms2` (see above)
     - `rho` ← `P:env.rho_kgm3` (see above)
@@ -31719,7 +31863,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `cd0` ← `CL-B1-CD0` (see above)
     - `k` ← `CL-B1-K` (see above)
     - `trim` ← `ASM-B1-TRIM` (see above)
-    - `ld_b1` ← claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.341** — **UNVERIFIED** — chain printed above
+    - `ld_b1` ← claim **CL-B1-CRUISE-LD** Cruise L/D at 16 m/s = **6.325** — **UNVERIFIED** — chain printed above
     - `V` ← `P:performance.cruise_ms` (see above)
     - `n` ← `P:propulsion.n_motors` (see above)
     - `kP` ← `CL-E1-KP` (see above)
@@ -31755,6 +31899,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: Bounds the band with CL-E1-CRUISE-P-45; flight log decides.
   - `CALC-E1-SENS` (see above)
 - claim **CL-E1-CRUISE-ETA-45** Cruise prop efficiency, 11x4.5MR = **0.2768** — **UNVERIFIED**
+  - ⚠ CALC-E1-CRUISE does not re-run
   - ⚠ uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
   - ⚠ uses CL-B1-K, which is UNVERIFIED
@@ -31766,6 +31911,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: PER3 at J of the cruise point; check with logged rpm (bidirectional DShot) and power.
   - `CALC-E1-CRUISE` (see above)
 - claim **CL-E1-CRUISE-ETA-55** Cruise prop efficiency, 11x5.5MR = **0.3577** — **UNVERIFIED**
+  - ⚠ CALC-E1-CRUISE does not re-run
   - ⚠ uses ASM-E1-CAL-TRANSFER, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CD0, which is UNVERIFIED
   - ⚠ uses CL-B1-K, which is UNVERIFIED
@@ -32214,6 +32360,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
 - claim **CL-E2-T-HOVER-PESS** Mission hover: duration = **120 s** — **UNVERIFIED** — chain printed above
 - claim **CL-E2-T-CRUISE-PESS** Cruise to the 20 % line: duration, pessimistic = **406.9 s** — **UNVERIFIED** — chain printed above
 - claim **CL-E2-I-MAX-PHASE-PESS** Highest mission-phase pack current, pessimistic = **43.45 A** (limit <= 100 A, margin +57%) — **UNVERIFIED**
+  - ⚠ CALC-E2-BUDGET-PESS does not re-run
   - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -32235,7 +32382,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses CL-B1-CRUISE-P-PESS, which is UNVERIFIED
   - ⚠ uses P:performance.full_throttle_current_a, which is UNVERIFIED (cites CL-E1-IPACK-PEAK, which is UNVERIFIED)
   - how to verify: Largest phase-mean BAT.Curr on the full-mission log; stays under the 100 A limiter.
-  - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **CHECKED**
+  - calc `CALC-E2-BUDGET-PESS` `redesign/team/E2/energy_claims.py::budget_pess()`: `as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 pessimistic (CD0 x 1.3, eta_prop x 0.85) x circuit, 20 s transitions` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `m` ← `P:requirements.mtow_gate_kg` (see above)
     - `n` ← `P:propulsion.n_motors` (see above)
     - `table` ← `P:propulsion.thrust_table_g_w` (see above)
@@ -32403,6 +32551,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `ASM-E2-R-CELL` (see above)
     - `ASM-E2-COLD-R` (see above)
 - claim **CL-E2-PACK-LARGEST** Largest candidate pack passing gate, mission and current = **6.5 Ah** (limit >= 6.5 Ah, margin +0%) — **UNVERIFIED**
+  - ⚠ CALC-E2-PACK-TRADE does not re-run
   - ⚠ uses ASM-E2-PACK-CANDIDATES, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -32426,7 +32575,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses CL-B1-CRUISE-P-PESS, which is UNVERIFIED
   - ⚠ uses P:battery.capacity_ah, which is UNVERIFIED (cites SRC-OVONIC-4S6500, which is UNVERIFIED)
   - how to verify: Re-run with the weighed pack masses; the 6.5 Ah choice stands while it is the largest passing pack.
-  - calc `CALC-E2-PACK-TRADE` `redesign/team/E2/energy_claims.py::pack_trade()`: `m = m_sized - m_pack_baseline + m_cand ; pessimistic at m + (gate - m_sized) ; pass = m <= gate AND t_cruise_pess >= 5 min AND I_cont >= I_full` — **CHECKED**
+  - calc `CALC-E2-PACK-TRADE` `redesign/team/E2/energy_claims.py::pack_trade()`: `m = m_sized - m_pack_baseline + m_cand ; pessimistic at m + (gate - m_sized) ; pass = m <= gate AND t_cruise_pess >= 5 min AND I_cont >= I_full` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `cands` ← assumption `ASM-E2-PACK-CANDIDATES` Candidate flight packs, all 4S LiPo (KV900 motors fix 4S), plus one Li-ion option = table (7 rows) (basis: Admiral 4000: Motion RC listing 386 g. 5000 and 8000: typical hard-case class masses (EST). 6500: params battery.mass_kg. Li-ion 4S2P 21700 (P45B class, 9 Ah, 90 A cont): 8 x 70 g + 60 g. Continuous A = realistic cell limit, not the label C) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
       - source `SRC-E2-OVONIC-120C-EC5` [Ovonic 14.8V 120C 4S 6500 mAh hard-case LiPo, EC5, 2-pack (named SKU, D-58)](https://www.ampow.com/products/2-pack-ovonic-4s-6500mah-120c-lipo-hardcase-ec5-1-8-rc-car), product page read 2026-11-10: 6500 mAh, 120C, net weight 551 g (+/-5 g) per piece, 135 x 46 x 49 mm (+/-3 mm), EC5 plug, JST-XHR-5P balance, 2 packs, in stock, EUR 98.69 shown (EU storefront; another snippet EUR 113.30). Lead gauge not stated on the page: the EC5 contact takes 8-10 AWG, so 10 AWG is inferred, not read, checked 2026-11-10 — **CHECKED**
@@ -32540,6 +32690,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - `CALC-E2-SKU-CHECK` (see above)
   - `T-E2-WEIGH` (see above)
 - claim **CL-E2-CRUISE-MIN-BASE-240** Cruise after 2 min hover, base, at the params' 240 W (sensitivity) = **11.98 min** (limit >= 5 min, margin +140%) — **UNVERIFIED**
+  - ⚠ CALC-E2-BUDGET-240 does not re-run
   - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -32562,7 +32713,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses CL-B1-CRUISE-P, which is UNVERIFIED
   - ⚠ uses CL-B1-CRUISE-P-PESS, which is UNVERIFIED
   - how to verify: As CL-E2-CRUISE-MIN-BASE; the first tune flight's logged cruise current decides between B1 and E1.
-  - calc `CALC-E2-BUDGET-240` `redesign/team/E2/energy_claims.py::budget_240()`: `as CALC-E2-BUDGET-BASE / -PESS with B1's level cruise power x k, k = P_params / P_B1 (base 240 / 227.8 W; pessimistic B1 300.6 W x the same k) ; BATT_LOW count as CALC-E2-FAILSAFE` — **CHECKED**
+  - calc `CALC-E2-BUDGET-240` `redesign/team/E2/energy_claims.py::budget_240()`: `as CALC-E2-BUDGET-BASE / -PESS with B1's level cruise power x k, k = P_params / P_B1 (base 240 / 227.8 W; pessimistic B1 300.6 W x the same k) ; BATT_LOW count as CALC-E2-FAILSAFE` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `m_b` ← `CL-A1-MASS-SIZED` (see above)
     - `m_p` ← `P:requirements.mtow_gate_kg` (see above)
     - `p_par` ← param `P:performance.cruise_power_w` = 240 W — **UNVERIFIED**
@@ -32604,6 +32756,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `ASM-E2-HOVER-MARGIN` (see above)
   - `P:requirements.cruise_time_min` (see above)
 - claim **CL-E2-CRUISE-MIN-PESS-240** Cruise after 2 min hover, pessimistic, at the params' 240 W (sensitivity) = **6.42 min** (limit >= 5 min, margin +28%) — **UNVERIFIED**
+  - ⚠ CALC-E2-BUDGET-240 does not re-run
   - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -32629,6 +32782,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - `CALC-E2-BUDGET-240` (see above)
   - `P:requirements.cruise_time_min` (see above)
 - claim **CL-E2-CRUISE-TO-LOW-PESS-240** Cruise before BATT_LOW (2600 mAh), pessimistic, at 240 W (sensitivity) = **6.066 min** (limit >= 5 min, margin +21%) — **UNVERIFIED**
+  - ⚠ CALC-E2-BUDGET-240 does not re-run
   - ⚠ uses ASM-E2-ESC-EFF, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-AVIONICS-W, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-E2-R-CELL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -34581,12 +34735,14 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `vmax` ← param `P:fsw.airspeed_max_ms` = 18 m/s (team/B1/CHANGE-REQUESTS.md#CR-B1-12) — **PROPOSED**
   - assumption `ASM-F4-MIN-FACTOR` AIRSPEED_MIN >= 1.2 x trimmed stall speed, wings level; stall prevention (AIRSPEED_STALL) raises it in turns = 1.2 (basis: usual ArduPilot practice; B1 CR-B1-12 sets 15 m/s = 1.26 Vs) — **PROPOSED**
 - claim **CL-F4-VDIVE-VA** Steady dive speed at the pitch floor, idle, against the full-travel speed VA = **17.75 m/s** (limit <= 20.5 m/s, margin +13%) — **UNVERIFIED**
+  - ⚠ CALC-F4-DIVE does not re-run
   - ⚠ uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))
   - ⚠ uses CL-B1-CRUISE-LD, which is UNVERIFIED
   - ⚠ uses CL-C1-VD, which is UNVERIFIED
   - how to verify: FBWA full-down stick at >= 80 m, throttle idle, 20 s: logged airspeed <= 20.5 m/s (T-F4-DIVE).
   - parts: AVN-001
-  - calc `CALC-F4-DIVE` `redesign/team/F4/fsw_check.py::dive()`: `CD0 = CL_c/LD - k CL_c^2 ; W sin(theta) = q S CD0 + W^2 k /(q S) -> V_dive ; s(V) = max(min(0.5, SCALING_SPEED/(2 AIRSPEED_MAX)), SCALING_SPEED / V)` — **CHECKED**
+  - calc `CALC-F4-DIVE` `redesign/team/F4/fsw_check.py::dive()`: `CD0 = CL_c/LD - k CL_c^2 ; W sin(theta) = q S CD0 + W^2 k /(q S) -> V_dive ; s(V) = max(min(0.5, SCALING_SPEED/(2 AIRSPEED_MAX)), SCALING_SPEED / V)` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `m` ← `P:requirements.mtow_gate_kg` (see above)
     - `g` ← `P:env.g_ms2` (see above)
     - `rho` ← `P:env.rho_kgm3` (see above)
@@ -34605,6 +34761,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - `ASM-F4-VA-SCHED` (see above)
   - test `T-F4-DIVE` FBWA full-down stick, idle, 20 s at >= 80 m on the twin then K09-L (planned) — **PROPOSED**
 - claim **CL-F4-SCALER-VD** Surface demand scaling at VD (fraction of the cruise deflection per unit demand) = **0.5993** (limit <= 1, margin +40%) — **UNVERIFIED**
+  - ⚠ CALC-F4-DIVE does not re-run
   - ⚠ uses P:wing.oswald_e, which is UNVERIFIED (marked UNVERIFIED in redesign/params/params.json: kept conservative for the whole aircraft: B2's AVL at R2 gives 0.94 (SM 5 %) / 0.92 (CG 0.044) for wing + 0.275 m half-fins, props off, no pod (P:b2.avl.e_oswald, CR-B2-14); B1 carries k 0.0950 base (e 0.93) and 0.1107 pessimistic (e 0.80))
   - ⚠ uses CL-B1-CRUISE-LD, which is UNVERIFIED
   - ⚠ uses CL-C1-VD, which is UNVERIFIED
@@ -34612,6 +34769,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - parts: AVN-001
   - `CALC-F4-DIVE` (see above)
 - claim **CL-F4-VLEVEL-VH** Highest level speed at THR_MAX over the VH that VD 27.2 m/s assumes (21.8 m/s) = **0.978** (limit <= 1, margin +2%) — **UNVERIFIED**
+  - ⚠ CALC-F4-VLEVEL does not re-run
   - ⚠ uses ASM-F4-FW-PASSTHRU, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-F4-RPM-LIN, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-VMAX, which is UNVERIFIED
@@ -34619,7 +34777,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses P:fsw.spin_max, which is UNVERIFIED (cites CL-B4-SPIN-MAX, which is UNVERIFIED)
   - how to verify: FBWB full-throttle level leg, fresh pack, >= 60 m (H2): logged airspeed <= 21.8 m/s and ESC rpm <= 7 950 (CR-B1-17 b, CR-C1-20); TECS caps demand at AIRSPEED_MAX 18 in normal flight.
   - parts: AVN-001
-  - calc `CALC-F4-VLEVEL` `redesign/team/F4/fsw_check.py::vlevel()`: `a_pass = THR_MAX/100 ; a_lin = s_min + (s_max - s_min) (sqrt((1-e)^2 + 4 e THR_MAX/100) - (1-e)) / (2 e) ; a = max(a_pass, a_lin) ; V_lvl = VMAX(9 350 rpm) x a / a(9 350 rpm) ; VH_req = VD / 1.25 ; r = V_lvl / VH_req (fresh pack: worst case, voltage scaling 1)` — **CHECKED**
+  - calc `CALC-F4-VLEVEL` `redesign/team/F4/fsw_check.py::vlevel()`: `a_pass = THR_MAX/100 ; a_lin = s_min + (s_max - s_min) (sqrt((1-e)^2 + 4 e THR_MAX/100) - (1-e)) / (2 e) ; a = max(a_pass, a_lin) ; V_lvl = VMAX(9 350 rpm) x a / a(9 350 rpm) ; VH_req = VD / 1.25 ; r = V_lvl / VH_req (fresh pack: worst case, voltage scaling 1)` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `vmax` ← `CL-B1-VMAX` (see above)
     - `a_cap` ← claim **CL-B4-SPIN-MAX** Motor output cap that holds 11x5.5MR rpm at 98 % of the APC limit, fresh pack = **0.8495** — **UNVERIFIED** — chain printed above
     - `thr` ← param `P:fsw.thr_max_pct` = 70 % (team/F4/fsw_check.py#CALC-F4-VLEVEL (CR-B1-17 b, CR-C1-20: level speed <= 21.8 m/s)) — **PROPOSED**
@@ -34758,6 +34917,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - `CL-B4-SPIN-MAX` (see above)
   - test `T-F4-SITL-TRANSITION` Pitch-over 12/16 deg/s (CR-B1-12) and back-transition 20/30/50 deg/s on a sagged pack (planned) — **PROPOSED**
 - claim **CL-F4-RUDD-DT-REQ** RUDD_DT_GAIN needed for 1.0 N*m cruise yaw = **30.25 %** (limit <= 35 %, margin +14%) — **UNVERIFIED**
+  - ⚠ CALC-F4-YAW-DT does not re-run
   - ⚠ uses ASM-F4-THRUST-SQ, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-F4-DT-MIX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CRUISE-LD, which is UNVERIFIED
@@ -34765,7 +34925,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - ⚠ uses ASM-F4-DT-MIX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: FBWA yaw doublet on the twin, then on K09-L at 16 m/s (T-B3-YAW-DOUBLET): yaw rate damps in < 2 cycles.
   - parts: PRP-002-UR, PRP-002-UL, PRP-002-LR, PRP-002-LL
-  - calc `CALC-F4-YAW-DT` `redesign/team/F4/fsw_check.py::yaw_dt()`: `T_c = m g /(L/D)/n ; k = (m g / n)/a_h^2 ; a_c = sqrt(T_c/k) ; dT = M/(n y) ; da = dT/(2 k a_c) ; gain = da / 0.25` — **CHECKED**
+  - calc `CALC-F4-YAW-DT` `redesign/team/F4/fsw_check.py::yaw_dt()`: `T_c = m g /(L/D)/n ; k = (m g / n)/a_h^2 ; a_c = sqrt(T_c/k) ; dT = M/(n y) ; da = dT/(2 k a_c) ; gain = da / 0.25` — **UNVERIFIED**
+    - ⚠ does not re-run to its stored outputs (see build errors)
     - `m` ← `P:requirements.mtow_gate_kg` (see above)
     - `g` ← `P:env.g_ms2` (see above)
     - `ld` ← `CL-B1-CRUISE-LD` (see above)
@@ -34779,6 +34940,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `ASM-F4-DT-MIX` (see above)
   - `P:fsw.rudd_dt_gain_pct` (see above)
 - claim **CL-F4-YAW-LOW-SIDE** Output of the slow side at full yaw demand in cruise = **0.119** (limit >= 0.05, margin +138%) — **UNVERIFIED**
+  - ⚠ CALC-F4-YAW-DT does not re-run
   - ⚠ uses ASM-F4-THRUST-SQ, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses ASM-F4-DT-MIX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses CL-B1-CRUISE-LD, which is UNVERIFIED

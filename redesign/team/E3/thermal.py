@@ -17,6 +17,13 @@ conduction and, with the recommended vents, ram-air exchange in cruise. Every te
 rating; the field-ambient ceiling is the ambient at which the first part reaches its rating (bisection). Checks:
 time-step convergence (3 levels), steady hover vs the hand value loss x R_th, adiabatic pack vs E2's `CL-E2-PACK-T-END`.
 R2 (2026-11-09): ESC pad moved to D3's layout, strap area, 15-30 degC ambient sweep, GT-04 pass lines for H1.
+R3 (2026-11-10, simulation round on the settled CAD): (1) ESC film coefficient from a 2-D SU2 RANS section of the
+as-designed tube + board + pad + ESC with a 3-level grid study (team/E3/sim/cfd/esc_cfd.py -> sim/claims.json,
+CL-E3-CFD-FEQ) replaces the judged wake factor ASM-E3-WAKE, which is kept as the R2 comparison; (2) an as-designed
+case at A3's predicted take-off mass (CL-A3-MASS-PREDICTED) beside the 2.6 kg gate case; (3) pod heat split as
+built: FC top board on gel cubes (F3's loads), the CoreWing power board PWR-003 and the UBEC PWR-005 heat the pod
+air, and only the common harness path (2.9 of F1's 6.5 mOhm) is inside the pod; (4) stripped ESC 7.6 g (A3);
+(5) CF tube fin check for the PETG station collar below the ASA mount.
 Python 3 standard library only.
 """
 import math
@@ -74,8 +81,9 @@ A("ASM-E3-RTH-DESIGN", "Motor thermal resistance 1.5 K/W (design)", "winding-to-
   value=1.5, unit="K/W", status="UNVERIFIED", cites=["SRC-E1-X3108S-DATA"])
 A("ASM-E3-ESC", "ESC body 45 x 20 x 6 mm, 11 g, 700 J/kg K", "LANRC 45 A in heat-shrink, strapped flat on the fin pad, "
   "FET side out; the pad face is adiabatic (foam board); the leads' fin effect is ignored (conservative)",
-  basis="typical 45 A BLHeli_S 2-6S board size (LANRC publishes no drawing); mass from E1's 11 g with leads "
-        "(ASM-E1-PART-MASS); c_p FR4 + copper + parts. Measure on arrival", value=[0.045, 0.020, 0.006, 0.011, 700.0],
+  basis="typical 45 A BLHeli_S 2-6S board size (LANRC publishes no drawing; propulsion_detail.esc.size_m); mass "
+        "7.6 g stripped (D-48: 6.6 g bare board + 1.0 g signal lead and shrink, A3 overrides.csv PRP-002; was 11 g "
+        "with factory leads); c_p FR4 + copper + parts. Measure on arrival", value=[0.045, 0.020, 0.006, 0.0076, 700.0],
   unit="m,m,m,kg,J/kg K", status="UNVERIFIED")
 A("ASM-E3-ESC-PAD", "ESC pad centre at x 0.101 m, 0.072 m from the motor axis (D3 layout)", "pad FIN-007 on the "
   "half-fin face from x 0.078 to 0.124 m, centre |z| 0.118 m (72 mm toward the wing from the motor axis), ESC long "
@@ -100,10 +108,37 @@ A("ASM-E3-PACK", "Pack c_p 1 000 J/kg K, cell R 5 mOhm design, R(T) x 1.5 per 15
   "R(T) = R25 x 1.5^((25 - T)/15) below 25 degC, R25 above (no credit for warm cells)",
   basis="E2 ASM-E2-R-CELL, ASM-E2-COLD-R and T-E2-IR pass value; c_p as E2 (LiPo 1 000-1 100)", value=[1000.0, 0.005],
   unit="J/kg K,ohm", status="UNVERIFIED", cites=["SRC-OVONIC-4S6500"])
-A("ASM-E3-FC", "Flight controller 2.0 W, 50 x 36 mm, 20 J/K", "FC board dissipation: MCU, IMU/baro, OSD and its 5 V "
-  "regulator (servo BEC in a separate UBEC); board both faces exchange with the pod air",
-  basis="previous design itemisation 2.0 W (docs/research/thermal.md section 2); F405 wing boards 50-54 x 32-36 mm; "
-        "F3 replaces with the bench current", value=[2.0, 0.050, 0.036, 20.0], unit="W,m,m,J/K", status="UNVERIFIED")
+A("ASM-E3-FC", "Flight controller top board 52 x 32 mm, 15 J/K; the R2 2.0 W lumped value is kept as the bound",
+  "FC node = CoreWing F405 Wing APP V2 top board + wireless board alone, on four 5 mm gel cubes, both faces exchange "
+  "with the pod air; its dissipation now comes from F3 (CALC-E3-* read ASM-F3-5V-LOADS); the 5 V regulator sits on "
+  "the separated power board PWR-003",
+  basis="subsystems/avionics/params.json fc_board_m [0.052, 0.032] and fc_mass_g 12 (c ~ 1 000 J/kg K + gel and "
+        "strap -> 15 J/K); F3-R2 split of the stack (CR-F3-13). Index 0 is the R2 bound (2.0 W total, F3's limit "
+        "line for CL-F3-FC-DISS)", value=[2.0, 0.052, 0.032, 15.0], unit="W,m,m,J/K", status="UNVERIFIED")
+A("ASM-E3-POD-AUX", "Other pod heat: power-board regulator + idle from F3, UBEC 0.8 W, design factor 1.25",
+  "heat released straight into the pod air by the CoreWing power board PWR-003 (5 V regulator losses and servo-BEC "
+  "idle: CL-F3-FC-DISS minus the FC's own 5 V x (FC + wireless) load) and by the servo UBEC PWR-005 (right "
+  "channel); every pod source (FC, power board, UBEC) is multiplied by the design factor until T-F3-5V runs",
+  basis="UBEC: two elevon servos, mean 0.3-0.5 A at 6.0 V in gusty flight = 1.8-3.0 W out, eta 0.80 -> 0.45-0.75 W; "
+        "0.8 W carried. Factor 1.25 for unmeasured loads (F3 5 V budget is EST)", value=[0.8, 1.25], unit="W,-",
+  status="UNVERIFIED", cites=["CL-F3-FC-DISS"])
+A("ASM-E3-R-POD", "Harness resistance inside the pod 2.9 mOhm", "of F1's 6.5 mOhm pack-to-ESC path only the common "
+  "path (pack leads, AS150U, bus board, fuse) is inside the pod; the four 14.5 mOhm ESC branches (3.6 mOhm "
+  "equivalent) run in the wing and fins and their heat leaves there",
+  basis="params electrical.r_ext_mohm note (D-32): 'common path 2.9 + four 14.5 branches in parallel'. R2 put E2's "
+        "old 3 mOhm all in the pod; reading the new 6.5 mOhm whole would double-count 3.6 mOhm of wing wiring",
+  value=0.0029, unit="ohm", status="UNVERIFIED", cites=["CL-F1-R-EXT"])
+A("ASM-E3-MASS-SCALE", "Power scaling from the 2.6 kg gate to the as-designed mass", "hover, climb, transitions and "
+  "descent: P ~ m^1.5 (momentum theory, constant figure of merit); cruise: P ~ m^1.0 (about half the cruise drag is "
+  "induced at 16 m/s, so dP/P = 2 x 0.5 x dm/m); currents scale with power; cruise time re-solved so the mission "
+  "still ends on E2's 20 % line (same energy as the gate table)",
+  basis="E2 ASM-E2-CRUISE-AERO scales B1's level-flight power with mass the same way; induced share 0.4-0.6 at "
+        "CL 0.37 (B1)", value=[1.5, 1.0], unit="-", status="PROPOSED")
+A("ASM-E3-TUBE", "CF motor tube as a cooling fin below the mount", "22 x 20 mm CF tube, axial conductivity 5 W/m K "
+  "(quasi-isotropic layup, fibre share along the axis), outer surface in the slipstream at the CFD film coefficient, "
+  "inside still; root at the mount temperature (taken = motor peak, conservative); PETG station collar 30 mm below",
+  basis="CF/epoxy tubes 3-10 W/m K along the axis (roll-wrapped); collar distance subsystems/fins/params.json "
+        "station_collar note ('30 mm below the motor plate')", value=[5.0, 0.030], unit="W/m K,m", status="UNVERIFIED")
 A("ASM-E3-POD", "Pod shell and vents", "shell foam board 5 mm, k 0.035 W/m K, the face on the wing adiabatic; pod air "
   "10 J/K; recommended vents: inlet 15 x 30 mm at the pod nose and an equal exit at the rear, internal velocity "
   "0.25 x airspeed in cruise, no vent flow credited in hover",
@@ -196,7 +231,7 @@ def build_phases(table, avn_w, split, i_lim, v_nom, t_abuse, hover_only_s=None, 
 
 
 def simulate(amb, phases, k, rth, wake, r_cell, vented, dt=0.5, pack_start=None, adiabatic_pack=False,
-             pack_r_const=None):
+             pack_r_const=None, trace=None):
     """Integrate all nodes over the phase list. k: shared constants. Returns peaks and end values (degC)."""
     air, eps, h_nat = k["air"], k["eps"], k["h_nat"]
     L, W, t, m_esc, cp_esc = k["esc"]
@@ -207,10 +242,13 @@ def simulate(amb, phases, k, rth, wake, r_cell, vented, dt=0.5, pack_start=None,
     a_pack = 2 * (pk_ * pw + pk_ * ph_ + pw * ph_) - pk_ * pw          # tray face excluded
     c_pack = k["m_pack"] * k["cp_pack"]
     q_fc, fl, fw, c_fc = k["fc"]
+    q_aux = k.get("q_aux", 0.0)
     a_fc = 2 * fl * fw
     sl, sw, sh = k["pod_size"]
     a_shell = 2 * (sl * sh + sw * sh) + sl * sw                           # bottom on the wing excluded
     t_w, k_w, c_air, a_vent, f_vent = k["pod"]
+    if not isinstance(wake, (list, tuple)):
+        wake = (wake, wake)
     T = {"mot": amb, "esc": amb, "fc": amb, "air": amb,
          "pack": amb if pack_start is None else pack_start}
     peak = dict(T)
@@ -233,7 +271,9 @@ def simulate(amb, phases, k, rth, wake, r_cell, vented, dt=0.5, pack_start=None,
                 v_loc = k["V_c"]
                 v_air = k["V_c"]
             g_mot = 1.0 / rth
+            w_eff = wake[0] if regime == "static" else wake[1]
         else:
+            w_eff = 0.0
             pts, v_loc, v_air, g_mot = None, 0.0, 0.0, 0.04
         steps = max(1, int(round(dur / dt)))
         h = dur / steps
@@ -242,7 +282,7 @@ def simulate(amb, phases, k, rth, wake, r_cell, vented, dt=0.5, pack_start=None,
                 f = (T["mot"] - 25.0) / 100.0
                 q_m = pts[0]["loss_m"] + f * (pts[1]["loss_m"] - pts[0]["loss_m"])
                 q_e = pts[0]["loss_e"] + f * (pts[1]["loss_e"] - pts[0]["loss_e"])
-                h_e = film(wake * v_loc, L, air) + h_rad(T["esc"], eps)
+                h_e = film(w_eff * v_loc, L, air) + h_rad(T["esc"], eps)
             else:
                 q_m = 0.0
                 q_e = k["pfix"]
@@ -262,6 +302,7 @@ def simulate(amb, phases, k, rth, wake, r_cell, vented, dt=0.5, pack_start=None,
             h_in_f = (film(v_in, fl, air) if v_in > 0 else h_nat) + h_rad(T["fc"], eps)
             g_pa = 0.0 if adiabatic_pack else h_in_p * a_pack
             g_fa = h_in_f * a_fc
+            q_ext += q_aux
             d = {
                 "mot": (q_m - g_mot * (T["mot"] - amb)) / c_mot,
                 "esc": (q_e - h_e * a_esc * (T["esc"] - amb)) / c_esc,
@@ -277,6 +318,8 @@ def simulate(amb, phases, k, rth, wake, r_cell, vented, dt=0.5, pack_start=None,
                 T[key] += h * d[key]
             T["air"] = T_air_eq + (T["air"] - T_air_eq) * math.exp(-h * g_air / c_air)
             time += h
+            if trace is not None:
+                trace.append((time, name, dict(T)))
             for key in T:
                 if T[key] > peak[key]:
                     peak[key], peak_t[key] = T[key], time
@@ -288,14 +331,17 @@ def simulate(amb, phases, k, rth, wake, r_cell, vented, dt=0.5, pack_start=None,
 
 
 def consts(rho, D, x_prop, x_pad_r, strap, kv, rm, i0, esc, tcu, kP, kT, T_h, Q_h, n_h, n_c, P_c, V_c, m_motor, cp_motor,
-           esc_geom, air, emiss, pack, cells, m_pack, pack_size, cold, r_ext, fc, pod, pod_size):
-    return {"rho": rho, "R": D / 2, "x_prop": x_prop, "x_pad": x_pad_r[0], "strap": strap, "kv": kv, "rm": rm, "i0": i0,
+           esc_geom, air, emiss, pack, cells, m_pack, pack_size, cold, r_ext, fc, pod, pod_size, f3_loads, f3_diss, aux):
+    p_fc = 5.0 * (f3_loads[0] + f3_loads[1])           # F3: FC MCU + wireless board on the 5 V rail
+    q_fc = aux[1] * p_fc
+    q_aux = aux[1] * ((f3_diss - p_fc) + aux[0])        # power-board regulator + idle, UBEC
+    return {"q_aux": q_aux,"rho": rho, "R": D / 2, "x_prop": x_prop, "x_pad": x_pad_r[0], "strap": strap, "kv": kv, "rm": rm, "i0": i0,
             "resc": esc[0], "pfix": esc[1], "a_cu": tcu[0], "kT": kT, "T_h": T_h, "n_h": n_h,
             "c_static": kP * Q_h / n_h ** 2,
             "c_cruise": kP * (P_c / (2 * math.pi * n_c / 60)) / n_c ** 2, "V_c": V_c,
             "m_motor": m_motor, "cp_motor": cp_motor, "esc": esc_geom, "air": air, "eps": emiss[0],
             "h_nat": emiss[1], "cp_pack": pack[0], "cells": cells, "m_pack": m_pack, "pack_size": pack_size,
-            "cold": cold, "r_ext": r_ext, "fc": fc, "pod": pod, "pod_size": pod_size}
+            "cold": cold, "r_ext": r_ext, "fc": (q_fc, fc[1], fc[2], fc[3]), "pod": pod, "pod_size": pod_size}
 
 
 def limits_dict(lim):
@@ -330,17 +376,43 @@ COMMON = {"rho": P + "env.rho_kgm3", "D": P + "propulsion.prop_diameter_m",
           "m_motor": P + "propulsion.motor_mass_kg", "cp_motor": "ASM-E3-MOTOR-CP", "esc_geom": "ASM-E3-ESC",
           "air": "ASM-E3-AIR", "emiss": "ASM-E3-EMISS", "pack": "ASM-E3-PACK", "cells": P + "battery.cells_s",
           "m_pack": P + "battery.mass_kg", "pack_size": P + "battery.size_m", "cold": "ASM-E2-COLD-R",
-          "r_ext": "ASM-E2-R-EXT", "fc": "ASM-E3-FC", "pod": "ASM-E3-POD", "pod_size": P + "pod.size_m"}
+          "r_ext": "ASM-E3-R-POD", "fc": "ASM-E3-FC", "pod": "ASM-E3-POD", "pod_size": P + "pod.size_m",
+          "f3_loads": "ASM-F3-5V-LOADS", "f3_diss": "CL-F3-FC-DISS", "aux": "ASM-E3-POD-AUX"}
 CU = {"rho": "kg/m3", "D": "m", "x_prop": "m", "V_c": "m/s", "m_motor": "kg", "m_pack": "kg", "pack_size": "m",
-      "pod_size": "m"}
+      "pod_size": "m", "f3_diss": "W"}
 CASE = {"pess": "CL-E2-BUDGET-PESS-TABLE", "base": "CL-E2-BUDGET-BASE-TABLE", "avn": "ASM-E2-AVIONICS-W",
         "rth_nom": "ASM-E1-RTH", "rth_des": "ASM-E3-RTH-DESIGN", "wake": "ASM-E3-WAKE", "r_nom": "ASM-E2-R-CELL",
         "prof": "ASM-E3-PROFILE", "i_lim": "CL-E1-ILIM-I", "v_nom": P + "battery.v_nom", "lim": "ASM-E3-LIMITS",
-        "amb_range": P + "env.ambient_design_c", "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS"}
-CASE_U = {"v_nom": "V", "amb_range": "degC", "t_hov_only": "min"}
+        "amb_range": P + "env.ambient_design_c", "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS",
+        "wake_cfd": "CL-E3-CFD-FEQ", "m_pred": "CL-A3-MASS-PREDICTED", "m_gate": P + "requirements.mtow_gate_kg",
+        "mscale": "ASM-E3-MASS-SCALE"}
+CASE_U = {"v_nom": "V", "amb_range": "degC", "t_hov_only": "min", "m_pred": "kg", "m_gate": "kg"}
 ASSUMES = ["ASM-E3-AIR", "ASM-E3-MOTOR-CP", "ASM-E3-RTH-DESIGN", "ASM-E3-ESC", "ASM-E3-ESC-PAD", "ASM-E3-ESC-STRAP", "ASM-E3-WAKE",
            "ASM-E3-EMISS", "ASM-E3-PACK", "ASM-E3-FC", "ASM-E3-POD", "ASM-E3-PROFILE", "ASM-E3-LIMITS",
+           "ASM-E3-POD-AUX", "ASM-E3-R-POD", "ASM-E3-MASS-SCALE",
            "ASM-E1-RTH", "ASM-E1-RM", "ASM-E1-I0", "ASM-E1-ESC", "ASM-E2-R-CELL", "ASM-E2-COLD-R"]
+
+
+def scale_table(table, m, m_gate, expo):
+    """E2 phase table [name, s, W, A, Ah] at the gate -> at mass m (ASM-E3-MASS-SCALE); cruise time re-solved so the
+    total energy (to E2's 20 % line) is unchanged."""
+    e_hov, e_cru = expo
+    out, e_tot, e_other = [], 0.0, 0.0
+    for name, t, pw, ia, ah in table:
+        e_tot += pw * t
+        if name.startswith("ground"):
+            k = 1.0
+        else:
+            k = (m / m_gate) ** (e_cru if name == "cruise" else e_hov)
+        out.append([name, t, pw * k, ia * k, ah * k])
+        if name != "cruise":
+            e_other += pw * k * t
+    for row in out:
+        if row[0] == "cruise":
+            t_new = (e_tot - e_other) / row[2]
+            row[4] *= t_new / row[1]
+            row[1] = t_new
+    return out
 
 
 def setup(kw):
@@ -349,15 +421,18 @@ def setup(kw):
     c = {a: kw[a] for a in kw if a in case_keys}
     lim = limits_dict(c["lim"])
     split, t_abuse = c["prof"]
-    design = dict(table=c["pess"], rth=c["rth_des"], wake=c["wake"][1], r_cell=kw["pack"][1])
-    nominal = dict(table=c["base"], rth=c["rth_nom"], wake=c["wake"][0], r_cell=c["r_nom"])
+    wk = c["wake_cfd"]                                  # [hover design, cruise design, hover nominal, cruise nominal]
+    design = dict(table=c["pess"], rth=c["rth_des"], wake=(wk[0], wk[1]), r_cell=kw["pack"][1])
+    nominal = dict(table=c["base"], rth=c["rth_nom"], wake=(wk[2], wk[3]), r_cell=c["r_nom"])
+    c["asd"] = dict(design, table=scale_table(c["pess"], c["m_pred"], c["m_gate"], c["mscale"]))
+    c["r2"] = dict(design, wake=c["wake"][1])          # R2 judgement (0.5) for the comparison
     return k, c, lim, split, t_abuse, design, nominal
 
 
-def run_case(k, c, case, amb, split, t_abuse, vented=True, abuse=False, hover_only=False, dt=0.5):
+def run_case(k, c, case, amb, split, t_abuse, vented=True, abuse=False, hover_only=False, dt=0.5, trace=None):
     ph = build_phases(case["table"], c["avn"], split, c["i_lim"], c["v_nom"], t_abuse,
                       hover_only_s=c["t_hov_only"] * 60 if hover_only else None, abuse=abuse)
-    return simulate(amb, ph, k, case["rth"], case["wake"], case["r_cell"], vented, dt=dt)
+    return simulate(amb, ph, k, case["rth"], case["wake"], case["r_cell"], vented, dt=dt, trace=trace)
 
 
 # ---------------------------------------------------------------- calculations
@@ -380,6 +455,13 @@ def mission(**kw):
         out[f"fc_peak_{tag}_c"] = r["peak"]["fc"]
         if tag == "des":
             out["phase_log_des"] = [[n, t, T, op] for n, t, T, op in r["log"]]
+    # as-designed mass (A3 predicted) with the design inputs; and the R2 judged wake factor for the comparison
+    r = run_case(k, c, c["asd"], amb, split, t_abuse)
+    out["motor_peak_asd_c"], out["esc_peak_asd_c"] = r["peak"]["mot"], r["peak"]["esc"]
+    out["pack_end_asd_c"], out["fc_peak_asd_c"] = r["end"]["pack"], r["peak"]["fc"]
+    out["asd_table"] = [[row[0], round(row[1], 1), round(row[2], 1), round(row[3], 2)] for row in c["asd"]["table"]]
+    r = run_case(k, c, c["r2"], amb, split, t_abuse)
+    out["esc_peak_r2wake_des_c"] = r["peak"]["esc"]
     r = run_case(k, c, design, amb, split, t_abuse, vented=False)
     out["fc_peak_sealed_des_c"] = r["peak"]["fc"]
     out["pack_end_sealed_des_c"] = r["end"]["pack"]
@@ -428,6 +510,7 @@ def ceilings(**kw):
         "hoveronly_des": lambda a: worst(run_case(k, c, design, a, split, t_abuse, hover_only=True, vented=False,
                                                   dt=1.0)),
         "abuse_des": lambda a: worst(run_case(k, c, design, a, split, t_abuse, abuse=True, dt=1.0)),
+        "mission_asd": lambda a: worst(run_case(k, c, c["asd"], a, split, t_abuse, dt=1.0)),
     }
     for rn, fn in runs.items():
         for key in ("motor", "petg", "asa", "esc", "pack", "pack_life", "fc"):
@@ -523,7 +606,7 @@ def sweep(**kw):
     amb_list = kw.pop("sweep")
     k, c, lim, split, t_abuse, design, nominal = setup(kw)
     out = {}
-    for tag, case in (("des", design), ("nom", nominal)):
+    for tag, case in (("des", design), ("nom", nominal), ("asd", c["asd"])):
         rows = []
         for amb in amb_list:
             r = run_case(k, c, case, amb, split, t_abuse)
@@ -565,22 +648,35 @@ def gt04(**kw):
     return out
 
 
+@kit.calc("CALC-E3-TUBE-FIN", title="CF motor tube as a fin: temperature at the PETG station collar (design, 30 degC)",
+          equation="T(x) - T_amb = (T_root - T_amb) cosh(m (L - x)) / cosh(m L) -> long fin: theta(x)/theta_0 = "
+                   "exp(-m x), m = sqrt(h P / (k A)), P = pi D_o, A = pi (D_o^2 - D_i^2) / 4 ; h = CFD film at the "
+                   "design hover slipstream ; root at the motor peak",
+          inputs={"tube": "ASM-E3-TUBE", "od": P + "fins.tube.od_m", "id": P + "fins.tube.id_m",
+                  "t_root": "CL-E3-MOTOR-PEAK", "h": "CL-E3-CFD-H-HOV", "amb_range": P + "env.ambient_design_c",
+                  "lim": "ASM-E3-LIMITS"},
+          units={"od": "m", "id": "m", "t_root": "degC", "h": "W/m2 K", "amb_range": "degC"},
+          assumes=["ASM-E3-TUBE"])
+def tube_fin(tube, od, id, t_root, h, amb_range, lim):
+    k_ax, x = tube
+    amb = amb_range[1]
+    a = math.pi * (od * od - id * id) / 4
+    m = math.sqrt(h * math.pi * od / (k_ax * a))
+    t_col = amb + (t_root - amb) * math.exp(-m * x)
+    return {"m_per_m": m, "decay_len_m": 1 / m, "t_collar_c": t_col, "petg_allow_c": lim[1] - 10.0}
+
+
 # ---------------------------------------------------------------- claims
 TH = "Thermocouple (K type) on the part, mission flown or run on the stand at the stated power, log every 5 s; "
 kit.claim("CL-E3-MOTOR-PEAK", "Motor (winding/stator) peak, design mission at 30 degC", calc="CALC-E3-MISSION",
           output="motor_peak_des_c", unit="degC", limit=("<=", 80.0), verifies=["R-THERMAL"],
           parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL"],
           how=TH + "T-E3-MOTOR-TAU fits R_th and tau on the stand; T-E3-MISSION reads the can by IR within 30 s of landing.")
-kit.claim("CL-E3-MOUNT-PETG", "Motor base on a PETG mount vs HDT 68 - 10 K, design mission at 30 degC",
-          calc="CALC-E3-MISSION", output="motor_peak_des_c", unit="degC", limit=("<=", 58.0), verifies=["R-THERMAL"],
-          parts=["FIN-003-UR", "FIN-003-UL", "FIN-003-LR", "FIN-003-LL"],
-          how="T-E3-MOTOR-TAU: thermocouple between motor base and mount; peak after 90 s hover power + 20 s "
-              "transition power from 30 degC must stay < 58 degC (10 K below HDT) for PETG to be accepted.",
-          note="10 K below HDT for screw preload and creep under vibration. Fails: the printed motor mount is ASA (HDT 93) or PA-CF, not PETG (CR-E3-01)")
 kit.claim("CL-E3-MOUNT-ASA", "Motor base on an ASA mount vs HDT 93 - 10 K, hover-only sortie at 30 degC",
           calc="CALC-E3-MISSION", output="motor_peak_hoveronly_des_c", unit="degC", limit=("<=", 83.0),
           verifies=["R-THERMAL"], parts=["FIN-003-UR", "FIN-003-UL", "FIN-003-LR", "FIN-003-LL"],
-          how="As CL-E3-MOUNT-PETG, continuous hover power until steady; mount shows no sag or loss of screw preload.")
+          how="T-E3-MOTOR-TAU: thermocouple between motor base and mount, continuous hover power until steady; mount "
+              "shows no sag or loss of pinch-bolt preload (slip torque re-checked, D-23).")
 kit.claim("CL-E3-ESC-PEAK", "ESC peak on its fin pad, design mission at 30 degC", calc="CALC-E3-MISSION",
           output="esc_peak_des_c", unit="degC", limit=("<=", 85.0), verifies=["R-THERMAL"],
           parts=["PRP-002-UR", "PRP-002-UL", "PRP-002-LR", "PRP-002-LL"],
@@ -675,27 +771,51 @@ kit.claim("CL-E3-GT04-MOTOR-RISE", "Motor can rise at the end of the GT-04 seque
           output="motor_rise_des_k", unit="K", limit=("<=", 50.0), parts=["PRP-001-UR"],
           how="GT-04: thermocouple on the can during the run; pass if the rise is <= this value.",
           note="limit 50 K = H1's GT-04 line (80 degC at 30 degC)")
-kit.claim("CL-E3-ESC-PAD-PETG", "ESC (and its pad) peak vs PETG HDT 68 - 10 K, design mission at 30 degC",
-          calc="CALC-E3-MISSION", output="esc_peak_des_c", unit="degC", limit=("<=", 58.0),
+kit.claim("CL-E3-ESC-PAD-ASA", "ESC (and its ASA pad) peak vs ASA HDT 93 - 10 K, design mission at 30 degC",
+          calc="CALC-E3-MISSION", output="esc_peak_des_c", unit="degC", limit=("<=", 83.0),
           parts=["FIN-007-UR", "FIN-007-UL", "FIN-007-LR", "FIN-007-LL"],
-          how="T-E3-ESC-PAD: thermocouple between the hook-and-loop and the pad face; pad < 58 degC from 30 degC.",
-          note="conservative: pad taken at the ESC temperature (the hook-and-loop between them insulates). "
-               "Fails: print the four pads in ASA with the motor mounts (CR-E3-01), no mass or cost change")
+          how="T-E3-ESC-PAD: thermocouple between the hook-and-loop and the pad face.",
+          note="as designed (fins params esc_pad.material ASA, D-42); pad taken at the ESC temperature (conservative). "
+               "R2's PETG claims (CL-E3-MOUNT-PETG, CL-E3-ESC-PAD-PETG) are retired: CR-E3-01 was accepted")
+kit.claim("CL-E3-ASD-MOTOR-PEAK", "Motor peak, as-designed mass (A3 predicted), design inputs, 30 degC",
+          calc="CALC-E3-MISSION", output="motor_peak_asd_c", unit="degC", limit=("<=", 80.0), verifies=["R-THERMAL"],
+          parts=["PRP-001-UR", "PRP-001-UL", "PRP-001-LR", "PRP-001-LL"], how=TH + "T-E3-MISSION at the weighed mass.")
+kit.claim("CL-E3-ASD-ESC-PEAK", "ESC peak, as-designed mass, design inputs, 30 degC", calc="CALC-E3-MISSION",
+          output="esc_peak_asd_c", unit="degC", limit=("<=", 85.0), verifies=["R-THERMAL"],
+          parts=["PRP-002-UR", "PRP-002-UL", "PRP-002-LR", "PRP-002-LL"], how="T-E3-MISSION, IR on the ESC FET side.")
+kit.claim("CL-E3-ASD-PACK-END", "Pack at landing, as-designed mass, design inputs, 30 degC", calc="CALC-E3-MISSION",
+          output="pack_end_asd_c", unit="degC", limit=("<=", 50.0), verifies=["R-THERMAL"], parts=["PWR-001"],
+          how="T-E2-MISSION-LOG: IR on the pack within 60 s of landing.")
+kit.claim("CL-E3-ASD-FC-PEAK", "FC peak, as-designed mass, design inputs, 30 degC", calc="CALC-E3-MISSION",
+          output="fc_peak_asd_c", unit="degC", limit=("<=", 85.0), verifies=["R-THERMAL"], parts=["AVN-001"],
+          how="IMU.T in the mission log.")
+kit.claim("CL-E3-CEIL-ASD", "Field-ambient ceiling, as-designed mass, design inputs, ASA mounts", calc="CALC-E3-CEILING",
+          output="mission_asd__min_asa_c", unit="degC", limit=(">=", 30.0), verifies=["R-THERMAL"],
+          parts=["PRP-001-UR", "PRP-002-UR", "PWR-001", "AVN-001"], how="As CL-E3-CEIL-MISSION, at the weighed mass.")
+kit.claim("CL-E3-ESC-PEAK-R2WAKE", "ESC peak with R2's judged wake factor 0.5 (comparison with the CFD value)",
+          calc="CALC-E3-MISSION", output="esc_peak_r2wake_des_c", unit="degC", parts=["PRP-002-UR"],
+          how="T-E3-ESC-PAD decides between the two.",
+          note="hand-calc baseline of the simulation round; the design case now uses CL-E3-CFD-FEQ")
+kit.claim("CL-E3-COLLAR-T", "CF tube temperature at the PETG station collar, design, 30 degC", calc="CALC-E3-TUBE-FIN",
+          output="t_collar_c", unit="degC", limit=("<=", 58.0), parts=["FIN-008-UR", "FIN-008-UL", "FIN-008-LR",
+                                                                         "FIN-008-LL"],
+          how="Thermocouple on the tube at the collar during T-E3-MOTOR-TAU (600 s hover power).",
+          note="limit 58 = PETG HDT 68 - 10 K; the collar stays PETG")
 kit.claim("CL-E3-PACK-15-WARMED", "Pack at landing on a 15 degC morning, pack warmed to 20 degC before take-off, design",
           calc="CALC-E3-SWEEP", output="pack_end_15_warmed_des_c", unit="degC", limit=("<=", 50.0), parts=["PWR-001"],
           how="T-E2-MISSION-LOG on a cool morning.")
 
 # ---------------------------------------------------------------- tests
 kit.test("T-E3-MOTOR-TAU", "Motor thermal resistance and time constant on the thrust stand",
-         verifies=["CL-E3-MOTOR-PEAK", "CL-E3-MOUNT-PETG", "CL-E3-MOUNT-ASA", "CL-E3-MOTOR-ABUSE", "CL-E3-MOTOR-STEADY",
+         verifies=["CL-E3-MOTOR-PEAK", "CL-E3-MOUNT-ASA", "CL-E3-COLLAR-T", "CL-E3-MOTOR-ABUSE", "CL-E3-MOTOR-STEADY",
                    "CL-E3-GT04-MOTOR-RISE", "CL-E3-BURST-MAX"],
          procedure="One station on the H1 stand with the real printed mount, 11x5.5MR, 14.8 V. K-type thermocouples on "
                    "the stator (through the base vent), between base and mount, and on the bell (IR). From ambient: hover "
                    "power (~100 W bus) for 10 min, log every 5 s; fit T = T_inf - (T_inf - T_0) e^(-t/tau): R_th = "
                    "(T_inf - T_amb) / loss, loss = P_in - torque x omega. Then 30 s at 24.8 A. Pass: R_th <= 1.5 K/W, "
-                   "base < 58 degC at hover power from 30 degC (PETG) or < 83 degC (ASA).")
+                   "base < 83 degC (ASA) at hover power from 30 degC; tube at the station collar < 58 degC (PETG).")
 kit.test("T-E3-ESC-PAD", "ESC on a fin-pad mock-up in the slipstream",
-         verifies=["CL-E3-ESC-PEAK", "CL-E3-ESC-ABUSE", "CL-E3-ESC-PAD-IN-WASH", "CL-E3-ESC-PAD-PETG",
+         verifies=["CL-E3-ESC-PEAK", "CL-E3-ESC-ABUSE", "CL-E3-ESC-PAD-IN-WASH", "CL-E3-ESC-PAD-ASA",
                    "CL-E3-GT04-ESC-RISE"],
          procedure="Foam-board half-fin with a 22 mm tube LE behind the stand prop; ESC strapped on the pad at x 0.101 m, "
                    "0.072 m from the axis, FET side out; thermocouple under the heat-shrink on the FETs. Hover power 10 min, "
@@ -724,8 +844,10 @@ if __name__ == "__main__":
         print("  ", row)
     print("\nmission outputs:")
     for kk, vv in m.items():
-        if kk != "phase_log_des":
+        if isinstance(vv, (int, float)):
             print(f"   {kk:32s} {vv:8.2f}")
+        elif kk != "phase_log_des":
+            print(f"   {kk}: {vv}")
     print("\nceilings (degC):")
     for kk, vv in c.items():
         print(f"   {kk:32s} {vv:8.1f}")

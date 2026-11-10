@@ -33,9 +33,13 @@ def section_mesh(outline, cuts, circles, n_theta, n_rad, h_near, h_far, dist=(0.
     gmsh.option.setNumber("General.Terminal", 0)
     gmsh.model.add("sec")
     occ = gmsh.model.occ
+    outline = np.asarray(outline, float)
+    x_, z_ = outline[:, 0], outline[:, 1]
+    if 0.5 * (x_ * np.roll(z_, -1) - np.roll(x_, -1) * z_).sum() < 0:
+        outline = outline[::-1]                           # counter-clockwise, or OCC builds an empty face
     pts = [occ.addPoint(x, z, 0) for x, z in outline]
     lines = [occ.addLine(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts))]
-    face = occ.addPlaneSurface([occ.addCurveLoop(lines)])
+    face = occ.addPlaneSurface([occ.addWire(lines)])      # addCurveLoop rejects the 160-point S5010 loop
     xc, zc, radii = circles
     disks = [occ.addDisk(xc, zc, 0, r, r) for r in radii]
     cut_lines = []
@@ -250,11 +254,15 @@ def write_props(path, blocks):
 
 def write_cfg(path, mesh, props, E, nu, clamped, loads, restart="restart.csv", tol=1e-9, iters=40000, prec="ILU"):
     """loads: list of (marker, tx, ty, tz) tractions in Pa."""
+    # SU2's parser splits on ':' and reads '\' as a continuation: use paths relative to the run folder
+    here = Path(path).resolve().parent
+    mesh = Path(os.path.relpath(Path(mesh).resolve(), here)).as_posix()
+    props = Path(os.path.relpath(Path(props).resolve(), here)).as_posix()
     mk = []
     for name, tx, ty, tz in loads:
         mag = math.sqrt(tx * tx + ty * ty + tz * tz)
         if mag == 0:
-            mk.append(f"{name}, 0.0, 0.0, 0.0, 0.0, 1.0")
+            mk.append(f"{name}, 1.0, 0.0, 0.0, 0.0, 1.0")
         else:
             mk.append(f"{name}, 1.0, {mag:.9e}, {tx / mag:.9f}, {ty / mag:.9f}, {tz / mag:.9f}")
     txt = f"""SOLVER= ELASTICITY
@@ -289,7 +297,10 @@ def run_su2(cfg, cwd, log="su2.log", threads=None):
     if threads:
         env["OMP_NUM_THREADS"] = str(threads)
     with open(Path(cwd) / log, "w") as f:
-        r = subprocess.run([str(SU2), Path(cfg).name], cwd=cwd, stdout=f, stderr=subprocess.STDOUT, env=env)
+        # one OpenMP thread per process: this SU2 8.5 Windows build stalls in the FEA solver with the default
+        # thread count (seen 2026-11-10); parallelism comes from running load cases side by side instead
+        r = subprocess.run([str(SU2), "-t", str(threads or 1), Path(cfg).name], cwd=cwd, stdout=f,
+                           stderr=subprocess.STDOUT, env=env)
     txt = (Path(cwd) / log).read_text(errors="ignore")
     if r.returncode != 0 or "Exit Success" not in txt:
         raise RuntimeError(f"SU2 failed in {cwd}: see {log}\n" + txt[-1500:])
@@ -352,4 +363,126 @@ def hooke(eps, E, nu):
     lam = E * nu / ((1 + nu) * (1 - 2 * nu))
     mu = E / (2 * (1 + nu))
     tr = np.trace(eps, axis1=1, axis2=2)
-    return lam * tr[:, None, N
+    return lam * tr[:, None, None] * np.eye(3) + 2 * mu * eps
+
+
+# ------------------------------------------------------------------------------------------------ direct solver
+# Same discretisation as SU2's FEA solver (linear hexahedra 2x2x2 Gauss, linear wedges 3 x 2 Gauss, isotropic
+# linear elasticity, clamped markers, uniform traction markers), assembled in SciPy and solved with SuperLU.
+# Used for the levels where SU2's Krylov solvers do not converge in reasonable time (see SIMULATION-REPORT.md).
+def _gauss(vtk):
+    if vtk == VTK_HEX:
+        a = 1 / math.sqrt(3)
+        pts = np.array([[i, j, k] for k in (-a, a) for j in (-a, a) for i in (-a, a)])
+        return pts, np.ones(8)
+    tri = np.array([[1 / 6, 1 / 6], [2 / 3, 1 / 6], [1 / 6, 2 / 3]])
+    a = 1 / math.sqrt(3)
+    pts = np.array([[r, s, t] for t in (-a, a) for r, s in tri])
+    return pts, np.full(6, 1 / 6)
+
+
+def _dN(vtk, p):
+    r, s, t = p
+    if vtk == VTK_HEX:
+        sg = np.array([[-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
+                       [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]], float)
+        d = np.zeros((8, 3))
+        for a_ in range(8):
+            xr, xs_, xt = sg[a_]
+            d[a_] = [xr * (1 + xs_ * s) * (1 + xt * t) / 8, xs_ * (1 + xr * r) * (1 + xt * t) / 8,
+                     xt * (1 + xr * r) * (1 + xs_ * s) / 8]
+        return d
+    L = [1 - r - s, r, s]
+    dL = [(-1, -1), (1, 0), (0, 1)]
+    d = np.zeros((6, 3))
+    for i in range(3):
+        d[i] = [dL[i][0] * (1 - t) / 2, dL[i][1] * (1 - t) / 2, -L[i] / 2]
+        d[i + 3] = [dL[i][0] * (1 + t) / 2, dL[i][1] * (1 + t) / 2, L[i] / 2]
+    return d
+
+
+def _Dmat(E, nu):
+    lam = E * nu / ((1 + nu) * (1 - 2 * nu))
+    mu = E / (2 * (1 + nu))
+    D = np.zeros((6, 6))
+    D[:3, :3] = lam
+    D[np.arange(3), np.arange(3)] += 2 * mu
+    D[3:, 3:] = np.eye(3) * mu
+    return D
+
+
+def assemble(X, blocks, E, nu):
+    import scipy.sparse as sp
+    rows, cols, vals = [], [], []
+    for vtk, conn, mats in blocks:
+        na = conn.shape[1]
+        pts, wts = _gauss(vtk)
+        P = X[conn]
+        for m in np.unique(mats):
+            sel = mats == m
+            Pm, cm = P[sel], conn[sel]
+            D = _Dmat(E[m], nu[m])
+            Ke = np.zeros((len(cm), 3 * na, 3 * na))
+            for p, w in zip(pts, wts):
+                dN = _dN(vtk, p)
+                J = np.einsum("nai,aj->nij", Pm, dN)
+                det = np.abs(np.linalg.det(J))
+                dNdx = np.einsum("aj,nji->nai", dN, np.linalg.inv(J))
+                B = np.zeros((len(cm), 6, 3 * na))
+                B[:, 0, 0::3] = dNdx[:, :, 0]
+                B[:, 1, 1::3] = dNdx[:, :, 1]
+                B[:, 2, 2::3] = dNdx[:, :, 2]
+                B[:, 3, 0::3] = dNdx[:, :, 1]
+                B[:, 3, 1::3] = dNdx[:, :, 0]
+                B[:, 4, 1::3] = dNdx[:, :, 2]
+                B[:, 4, 2::3] = dNdx[:, :, 1]
+                B[:, 5, 0::3] = dNdx[:, :, 2]
+                B[:, 5, 2::3] = dNdx[:, :, 0]
+                Ke += np.einsum("nki,kl,nlj->nij", B, D, B) * (w * det)[:, None, None]
+            dof = (3 * cm[:, :, None] + np.arange(3)).reshape(len(cm), -1)
+            rows.append(np.repeat(dof, 3 * na, 1).ravel())
+            cols.append(np.tile(dof, (1, 3 * na)).ravel())
+            vals.append(Ke.ravel())
+    n = 3 * len(X)
+    return sp.csr_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=(n, n))
+
+
+def traction_vector(X, markers, loads):
+    f = np.zeros(3 * len(X))
+    a = 1 / math.sqrt(3)
+    for name, tx, ty, tz in loads:
+        t = np.array([tx, ty, tz])
+        for ft, nd in markers.get(name, []):
+            P = X[list(nd)]
+            if ft == VTK_TRI:
+                A = 0.5 * np.linalg.norm(np.cross(P[1] - P[0], P[2] - P[0]))
+                w = np.full(3, A / 3)
+            else:
+                w = np.zeros(4)
+                for r in (-a, a):
+                    for s in (-a, a):
+                        N = np.array([(1 - r) * (1 - s), (1 + r) * (1 - s), (1 + r) * (1 + s), (1 - r) * (1 + s)]) / 4
+                        dr = np.array([-(1 - s), (1 - s), (1 + s), -(1 + s)]) / 4
+                        ds = np.array([-(1 - r), -(1 + r), (1 + r), (1 - r)]) / 4
+                        w += N * np.linalg.norm(np.cross(dr @ P, ds @ P))
+            for k, node in enumerate(nd):
+                f[3 * node:3 * node + 3] += w[k] * t
+    return f
+
+
+def solve_direct(K, f, fixed_nodes):
+    import scipy.sparse.linalg as spla
+    n = K.shape[0]
+    fixed = np.zeros(n, bool)
+    for node in fixed_nodes:
+        fixed[3 * node:3 * node + 3] = True
+    free = ~fixed
+    Kff = K[free][:, free].tocsc()
+    lu = spla.splu(Kff, permc_spec="MMD_AT_PLUS_A")
+    return lu, free
+
+
+def apply_lu(lu, free, f):
+    u = np.zeros(len(f))
+    u[free] = lu.solve(f[free])
+    return u.reshape(-1, 3)

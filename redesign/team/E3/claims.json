@@ -103,12 +103,12 @@
    "type": "assumption",
    "title": "ESC body 45 x 20 x 6 mm, 11 g, 700 J/kg K",
    "text": "LANRC 45 A in heat-shrink, strapped flat on the fin pad, FET side out; the pad face is adiabatic (foam board); the leads' fin effect is ignored (conservative)",
-   "basis": "typical 45 A BLHeli_S 2-6S board size (LANRC publishes no drawing); mass from E1's 11 g with leads (ASM-E1-PART-MASS); c_p FR4 + copper + parts. Measure on arrival",
+   "basis": "typical 45 A BLHeli_S 2-6S board size (LANRC publishes no drawing; propulsion_detail.esc.size_m); mass 7.6 g stripped (D-48: 6.6 g bare board + 1.0 g signal lead and shrink, A3 overrides.csv PRP-002; was 11 g with factory leads); c_p FR4 + copper + parts. Measure on arrival",
    "value": [
     0.045,
     0.02,
     0.006,
-    0.011,
+    0.0076,
     700.0
    ],
    "unit": "m,m,m,kg,J/kg K",
@@ -185,16 +185,71 @@
   {
    "id": "ASM-E3-FC",
    "type": "assumption",
-   "title": "Flight controller 2.0 W, 50 x 36 mm, 20 J/K",
-   "text": "FC board dissipation: MCU, IMU/baro, OSD and its 5 V regulator (servo BEC in a separate UBEC); board both faces exchange with the pod air",
-   "basis": "previous design itemisation 2.0 W (docs/research/thermal.md section 2); F405 wing boards 50-54 x 32-36 mm; F3 replaces with the bench current",
+   "title": "Flight controller top board 52 x 32 mm, 15 J/K; the R2 2.0 W lumped value is kept as the bound",
+   "text": "FC node = CoreWing F405 Wing APP V2 top board + wireless board alone, on four 5 mm gel cubes, both faces exchange with the pod air; its dissipation now comes from F3 (CALC-E3-* read ASM-F3-5V-LOADS); the 5 V regulator sits on the separated power board PWR-003",
+   "basis": "subsystems/avionics/params.json fc_board_m [0.052, 0.032] and fc_mass_g 12 (c ~ 1 000 J/kg K + gel and strap -> 15 J/K); F3-R2 split of the stack (CR-F3-13). Index 0 is the R2 bound (2.0 W total, F3's limit line for CL-F3-FC-DISS)",
    "value": [
     2.0,
-    0.05,
-    0.036,
-    20.0
+    0.052,
+    0.032,
+    15.0
    ],
    "unit": "W,m,m,J/K",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-E3-POD-AUX",
+   "type": "assumption",
+   "title": "Other pod heat: power-board regulator + idle from F3, UBEC 0.8 W, design factor 1.25",
+   "text": "heat released straight into the pod air by the CoreWing power board PWR-003 (5 V regulator losses and servo-BEC idle: CL-F3-FC-DISS minus the FC's own 5 V x (FC + wireless) load) and by the servo UBEC PWR-005 (right channel); every pod source (FC, power board, UBEC) is multiplied by the design factor until T-F3-5V runs",
+   "basis": "UBEC: two elevon servos, mean 0.3-0.5 A at 6.0 V in gusty flight = 1.8-3.0 W out, eta 0.80 -> 0.45-0.75 W; 0.8 W carried. Factor 1.25 for unmeasured loads (F3 5 V budget is EST)",
+   "value": [
+    0.8,
+    1.25
+   ],
+   "unit": "W,-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "CL-F3-FC-DISS"
+   ]
+  },
+  {
+   "id": "ASM-E3-R-POD",
+   "type": "assumption",
+   "title": "Harness resistance inside the pod 2.9 mOhm",
+   "text": "of F1's 6.5 mOhm pack-to-ESC path only the common path (pack leads, AS150U, bus board, fuse) is inside the pod; the four 14.5 mOhm ESC branches (3.6 mOhm equivalent) run in the wing and fins and their heat leaves there",
+   "basis": "params electrical.r_ext_mohm note (D-32): 'common path 2.9 + four 14.5 branches in parallel'. R2 put E2's old 3 mOhm all in the pod; reading the new 6.5 mOhm whole would double-count 3.6 mOhm of wing wiring",
+   "value": 0.0029,
+   "unit": "ohm",
+   "status": "UNVERIFIED",
+   "cites": [
+    "CL-F1-R-EXT"
+   ]
+  },
+  {
+   "id": "ASM-E3-MASS-SCALE",
+   "type": "assumption",
+   "title": "Power scaling from the 2.6 kg gate to the as-designed mass",
+   "text": "hover, climb, transitions and descent: P ~ m^1.5 (momentum theory, constant figure of merit); cruise: P ~ m^1.0 (about half the cruise drag is induced at 16 m/s, so dP/P = 2 x 0.5 x dm/m); currents scale with power; cruise time re-solved so the mission still ends on E2's 20 % line (same energy as the gate table)",
+   "basis": "E2 ASM-E2-CRUISE-AERO scales B1's level-flight power with mass the same way; induced share 0.4-0.6 at CL 0.37 (B1)",
+   "value": [
+    1.5,
+    1.0
+   ],
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E3-TUBE",
+   "type": "assumption",
+   "title": "CF motor tube as a cooling fin below the mount",
+   "text": "22 x 20 mm CF tube, axial conductivity 5 W/m K (quasi-isotropic layup, fibre share along the axis), outer surface in the slipstream at the CFD film coefficient, inside still; root at the mount temperature (taken = motor peak, conservative); PETG station collar 30 mm below",
+   "basis": "CF/epoxy tubes 3-10 W/m K along the axis (roll-wrapped); collar distance subsystems/fins/params.json station_collar note ('30 mm below the motor plate')",
+   "value": [
+    5.0,
+    0.03
+   ],
+   "unit": "W/m K,m",
    "status": "UNVERIFIED"
   },
   {
@@ -333,10 +388,13 @@
     "m_pack": "P:battery.mass_kg",
     "pack_size": "P:battery.size_m",
     "cold": "ASM-E2-COLD-R",
-    "r_ext": "ASM-E2-R-EXT",
+    "r_ext": "ASM-E3-R-POD",
     "fc": "ASM-E3-FC",
     "pod": "ASM-E3-POD",
     "pod_size": "P:pod.size_m",
+    "f3_loads": "ASM-F3-5V-LOADS",
+    "f3_diss": "CL-F3-FC-DISS",
+    "aux": "ASM-E3-POD-AUX",
     "pess": "CL-E2-BUDGET-PESS-TABLE",
     "base": "CL-E2-BUDGET-BASE-TABLE",
     "avn": "ASM-E2-AVIONICS-W",
@@ -349,7 +407,11 @@
     "v_nom": "P:battery.v_nom",
     "lim": "ASM-E3-LIMITS",
     "amb_range": "P:env.ambient_design_c",
-    "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS"
+    "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS",
+    "wake_cfd": "CL-E3-CFD-FEQ",
+    "m_pred": "CL-A3-MASS-PREDICTED",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "mscale": "ASM-E3-MASS-SCALE"
    },
    "units": {
     "rho": "kg/m3",
@@ -360,9 +422,12 @@
     "m_pack": "kg",
     "pack_size": "m",
     "pod_size": "m",
+    "f3_diss": "W",
     "v_nom": "V",
     "amb_range": "degC",
-    "t_hov_only": "min"
+    "t_hov_only": "min",
+    "m_pred": "kg",
+    "m_gate": "kg"
    },
    "assumes": [
     "ASM-E3-AIR",
@@ -378,6 +443,9 @@
     "ASM-E3-POD",
     "ASM-E3-PROFILE",
     "ASM-E3-LIMITS",
+    "ASM-E3-POD-AUX",
+    "ASM-E3-R-POD",
+    "ASM-E3-MASS-SCALE",
     "ASM-E1-RTH",
     "ASM-E1-RM",
     "ASM-E1-I0",
@@ -389,20 +457,20 @@
     "SRC-E3-INCROPERA"
    ],
    "outputs": {
-    "motor_peak_des_c": 65.83864104836263,
-    "esc_peak_des_c": 61.556247570758956,
-    "pack_end_des_c": 47.079408122462624,
-    "fc_peak_des_c": 57.0376285866216,
+    "motor_peak_des_c": 64.7551805923974,
+    "esc_peak_des_c": 56.05290183649909,
+    "pack_end_des_c": 44.836257538349436,
+    "fc_peak_des_c": 54.906200715137196,
     "phase_log_des": [
      [
       "ground",
       180.0,
       {
        "mot": 30.0,
-       "esc": 39.43,
-       "fc": 44.62,
-       "air": 31.06,
-       "pack": 30.06
+       "esc": 42.42,
+       "fc": 45.36,
+       "air": 33.06,
+       "pack": 30.26
       },
       null
      ],
@@ -411,17 +479,17 @@
       205.0,
       {
        "mot": 42.78,
-       "esc": 45.86,
-       "fc": 46.37,
-       "air": 35.92,
-       "pack": 31.24
+       "esc": 48.52,
+       "fc": 47.12,
+       "air": 37.49,
+       "pack": 31.49
       },
       {
        "rpm": 5662,
        "I_m_A": 15.42,
        "loss_motor_W": 26.11,
        "loss_esc_W": 2.88,
-       "v_local_ms": 11.51
+       "v_local_ms": 11.58
       }
      ],
      [
@@ -429,17 +497,17 @@
       265.0,
       {
        "mot": 56.29,
-       "esc": 54.02,
-       "fc": 50.42,
-       "air": 36.81,
-       "pack": 33.34
+       "esc": 52.72,
+       "fc": 51.09,
+       "air": 38.11,
+       "pack": 33.66
       },
       {
-       "rpm": 5379,
+       "rpm": 5380,
        "I_m_A": 14.01,
        "loss_motor_W": 22.25,
        "loss_esc_W": 2.46,
-       "v_local_ms": 10.94
+       "v_local_ms": 11.0
       }
      ],
      [
@@ -447,120 +515,169 @@
       285.0,
       {
        "mot": 62.9,
-       "esc": 58.02,
-       "fc": 51.76,
-       "air": 40.49,
-       "pack": 34.74
+       "esc": 56.05,
+       "fc": 52.4,
+       "air": 41.53,
+       "pack": 35.11
       },
       {
-       "rpm": 6017,
+       "rpm": 6018,
        "I_m_A": 17.3,
        "loss_motor_W": 31.75,
        "loss_esc_W": 3.49,
-       "v_local_ms": 12.23
+       "v_local_ms": 12.31
       }
      ],
      [
       "cruise",
-      592.8,
+      691.9,
       {
-       "mot": 59.01,
-       "esc": 52.07,
-       "fc": 47.49,
-       "air": 34.13,
-       "pack": 42.58
+       "mot": 52.22,
+       "esc": 40.89,
+       "fc": 44.95,
+       "air": 33.46,
+       "pack": 40.12
       },
       {
-       "rpm": 7167,
-       "I_m_A": 11.29,
-       "loss_motor_W": 18.14,
-       "loss_esc_W": 1.78,
+       "rpm": 6564,
+       "I_m_A": 9.39,
+       "loss_motor_W": 14.14,
+       "loss_esc_W": 1.38,
        "v_local_ms": 16.0
       }
      ],
      [
       "back-transition",
-      612.8,
+      711.9,
       {
-       "mot": 63.91,
-       "esc": 55.84,
-       "fc": 49.0,
-       "air": 42.28,
-       "pack": 43.66
+       "mot": 58.75,
+       "esc": 47.36,
+       "fc": 46.57,
+       "air": 41.68,
+       "pack": 41.25
       },
       {
        "rpm": 5872,
        "I_m_A": 16.51,
-       "loss_motor_W": 29.33,
+       "loss_motor_W": 29.32,
        "loss_esc_W": 3.23,
-       "v_local_ms": 11.94
+       "v_local_ms": 12.01
       }
      ],
      [
       "hover 2",
-      672.8,
+      771.9,
       {
-       "mot": 65.31,
-       "esc": 59.66,
-       "fc": 53.61,
-       "air": 43.35,
-       "pack": 45.54
+       "mot": 63.11,
+       "esc": 52.24,
+       "fc": 51.41,
+       "air": 42.45,
+       "pack": 43.22
       },
       {
-       "rpm": 5379,
+       "rpm": 5380,
        "I_m_A": 14.01,
        "loss_motor_W": 22.25,
        "loss_esc_W": 2.46,
-       "v_local_ms": 10.94
+       "v_local_ms": 11.0
       }
      ],
      [
       "descent",
-      722.8,
+      821.9,
       {
-       "mot": 65.84,
-       "esc": 61.56,
-       "fc": 57.04,
-       "air": 44.44,
-       "pack": 47.08
+       "mot": 64.76,
+       "esc": 53.64,
+       "fc": 54.91,
+       "air": 43.43,
+       "pack": 44.84
       },
       {
-       "rpm": 5379,
+       "rpm": 5380,
        "I_m_A": 14.01,
        "loss_motor_W": 22.25,
        "loss_esc_W": 2.46,
-       "v_local_ms": 10.94
+       "v_local_ms": 11.0
       }
      ]
     ],
-    "motor_peak_nom_c": 50.55131766854838,
-    "esc_peak_nom_c": 54.39379074914977,
-    "pack_end_nom_c": 40.78169334404193,
-    "fc_peak_nom_c": 54.32568540018328,
-    "fc_peak_sealed_des_c": 70.26556904861572,
-    "pack_end_sealed_des_c": 49.260389549490334,
-    "motor_peak_abuse_des_c": 102.16075340674551,
-    "esc_peak_abuse_des_c": 78.67289818353277,
-    "motor_peak_hoveronly_des_c": 66.33912400923867,
-    "esc_peak_hoveronly_des_c": 64.583808745718,
-    "fc_peak_hoveronly_des_c": 70.74371508949001,
-    "pack_end_hoveronly_des_c": 48.69402799073202,
-    "pack_rise_cold_des_k": 19.207460224296035,
-    "pad_r_margin_m": 0.028288892166830476,
+    "motor_peak_nom_c": 50.85990715755338,
+    "esc_peak_nom_c": 47.79229714172831,
+    "pack_end_nom_c": 39.1979587460309,
+    "fc_peak_nom_c": 52.634019733224314,
+    "motor_peak_asd_c": 61.3344355435237,
+    "esc_peak_asd_c": 54.0653063315117,
+    "pack_end_asd_c": 43.199083642491516,
+    "fc_peak_asd_c": 54.32358739304736,
+    "asd_table": [
+     [
+      "ground, armed checks",
+      180,
+      6.0,
+      0.41
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      441.9,
+      32.22
+     ],
+     [
+      "hover (mission)",
+      120,
+      379.3,
+      27.32
+     ],
+     [
+      "transition forward",
+      20,
+      531.0,
+      39.41
+     ],
+     [
+      "back-transition",
+      20,
+      493.0,
+      36.31
+     ],
+     [
+      "descent 50-0 m",
+      50.0,
+      379.3,
+      27.32
+     ],
+     [
+      "cruise",
+      467.6,
+      295.7,
+      20.94
+     ]
+    ],
+    "esc_peak_r2wake_des_c": 62.934690627718474,
+    "fc_peak_sealed_des_c": 68.27169376514381,
+    "pack_end_sealed_des_c": 47.19715659728157,
+    "motor_peak_abuse_des_c": 102.15541423507776,
+    "esc_peak_abuse_des_c": 80.08907300088353,
+    "motor_peak_hoveronly_des_c": 66.33606113368629,
+    "esc_peak_hoveronly_des_c": 54.50109847783756,
+    "fc_peak_hoveronly_des_c": 68.90269255010197,
+    "pack_end_hoveronly_des_c": 49.17595742408221,
+    "pack_rise_cold_des_k": 16.905626433021066,
+    "pad_r_margin_m": 0.0279592032808883,
     "pad_hub_margin_m": 0.031999999999999994,
-    "hover_loss_motor_des_w": 24.49836152327176,
-    "hover_loss_esc_des_w": 2.3940254748016896,
-    "hover_im_des_a": 13.762359807829796,
-    "hover_loss_motor_nom_w": 20.88528934920111,
-    "hover_loss_esc_nom_w": 2.1661039574787506,
-    "limiter_loss_motor_w": 100.7246623241763,
-    "limiter_loss_esc_w": 9.367066634658086,
-    "limiter_im_a": 29.777620178009666
+    "hover_loss_motor_des_w": 24.496953238662066,
+    "hover_loss_esc_des_w": 2.3938491460575686,
+    "hover_im_des_a": 13.761719173335752,
+    "hover_loss_motor_nom_w": 21.29998924899922,
+    "hover_loss_esc_nom_w": 2.2064439285916038,
+    "limiter_loss_motor_w": 100.71749887160418,
+    "limiter_loss_esc_w": 9.366325249286541,
+    "limiter_im_a": 29.776375281901828
    },
    "input_values": {
     "rho": 1.225,
     "D": 0.2794,
-    "x_prop": -0.005,
+    "x_prop": -0.0077,
     "x_pad_r": [
      0.101,
      0.072
@@ -579,11 +696,11 @@
     ],
     "kP": 1.2395830229048008,
     "kT": 1.0390466549306472,
-    "T_h": 6.75678185,
-    "Q_h": 0.11286625933312935,
-    "n_h": 5395.714905199311,
-    "n_c": 5999.940094063748,
-    "P_c": 39.17961919414616,
+    "T_h": 6.807524102357015,
+    "Q_h": 0.11368602568504906,
+    "n_h": 5415.791721033196,
+    "n_c": 5945.8472778193645,
+    "P_c": 37.11109926458564,
     "V_c": 16.0,
     "m_motor": 0.081,
     "cp_motor": 540.0,
@@ -591,7 +708,7 @@
      0.045,
      0.02,
      0.006,
-     0.011,
+     0.0076,
      700.0
     ],
     "air": [
@@ -615,12 +732,12 @@
      0.05
     ],
     "cold": 1.5,
-    "r_ext": 0.003,
+    "r_ext": 0.0029,
     "fc": [
      2.0,
-     0.05,
-     0.036,
-     20.0
+     0.052,
+     0.032,
+     15.0
     ],
     "pod": [
      0.005,
@@ -630,59 +747,72 @@
      0.25
     ],
     "pod_size": [
-     0.2,
-     0.1,
+     0.225,
+     0.14,
      0.07
+    ],
+    "f3_loads": [
+     0.2,
+     0.05,
+     0.05,
+     0.08,
+     0.003,
+     0.05
+    ],
+    "f3_diss": 1.7320588235294119,
+    "aux": [
+     0.8,
+     1.25
     ],
     "pess": [
      [
       "ground, armed checks",
       180,
       6.0,
-      0.4057056839021911,
-      0.020285284195109554
+      0.40574467409371096,
+      0.020287233704685548
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.184975047740565,
-      0.24434010449819835
+      35.527682331163604,
+      0.24672001618863615
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      29.887212687580682,
-      0.996240422919356
+      30.128266889279534,
+      1.0042755629759845
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      42.921584683462626,
-      0.23845324824145905
+      43.4515962719601,
+      0.241397757066445
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      39.595054048711916,
-      0.21997252249284396
+      40.03860041484158,
+      0.22243666897134215
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      29.887212687580682,
-      0.41510017621639833
+      30.128266889279534,
+      0.4184481512399935
      ],
      [
       "cruise",
-      307.7792683054986,
-      416.7357886783673,
-      29.775201298079654,
-      2.5456082414366357
+      406.86301631672296,
+      315.6032215345145,
+      22.354365549879198,
+      2.5264346098529136
      ]
     ],
     "base": [
@@ -690,50 +820,50 @@
       "ground, armed checks",
       180,
       6.0,
-      0.4056166197298264,
-      0.02028083098649132
+      0.4056555756781519,
+      0.020282778783907593
      ],
      [
       "climb 0-50 m",
       25.0,
-      435.26981509477594,
-      30.613247472295676,
-      0.21259199633538664
+      443.0110036732609,
+      31.435492045729458,
+      0.21830202809534344
      ],
      [
       "hover (mission)",
       120,
-      372.99771167048056,
-      26.075428596182313,
-      0.8691809532060771
+      380.19374523264685,
+      26.778972721858295,
+      0.8926324240619432
      ],
      [
       "transition forward",
       10,
-      522.1967963386727,
-      37.04538117576856,
-      0.10290383659935712
+      532.2712433257055,
+      38.180441245544316,
+      0.1060567812376231
      ],
      [
       "back-transition",
       10,
-      484.89702517162476,
-      34.27112984069031,
-      0.09519758289080642
+      494.2518688024409,
+      35.288562748036355,
+      0.0980237854112121
      ],
      [
       "descent 50-0 m",
       50.0,
-      372.99771167048056,
-      26.075428596182313,
-      0.36215873050253217
+      380.19374523264685,
+      26.778972721858295,
+      0.3719301766924763
      ],
      [
       "cruise",
-      574.4629141830798,
-      318.7731286102657,
-      22.169698923448404,
-      3.5376860694793493
+      758.3306205968872,
+      239.2147246562352,
+      16.581130909214657,
+      3.4927720257174943
      ]
     ],
     "avn": 6.0,
@@ -748,7 +878,7 @@
      0.5,
      30.0
     ],
-    "i_lim": 24.750000000000682,
+    "i_lim": 24.749999999985736,
     "v_nom": 14.8,
     "lim": [
      80.0,
@@ -763,7 +893,19 @@
      10,
      30
     ],
-    "t_hov_only": 9.354598766731806
+    "t_hov_only": 9.279749379716302,
+    "wake_cfd": [
+     1.131384201435432,
+     1.3722365338096265,
+     2.285872862313591,
+     2.60137761811015
+    ],
+    "m_pred": 2.4359720000000005,
+    "m_gate": 2.6,
+    "mscale": [
+     1.5,
+     1.0
+    ]
    }
   },
   {
@@ -802,10 +944,13 @@
     "m_pack": "P:battery.mass_kg",
     "pack_size": "P:battery.size_m",
     "cold": "ASM-E2-COLD-R",
-    "r_ext": "ASM-E2-R-EXT",
+    "r_ext": "ASM-E3-R-POD",
     "fc": "ASM-E3-FC",
     "pod": "ASM-E3-POD",
     "pod_size": "P:pod.size_m",
+    "f3_loads": "ASM-F3-5V-LOADS",
+    "f3_diss": "CL-F3-FC-DISS",
+    "aux": "ASM-E3-POD-AUX",
     "pess": "CL-E2-BUDGET-PESS-TABLE",
     "base": "CL-E2-BUDGET-BASE-TABLE",
     "avn": "ASM-E2-AVIONICS-W",
@@ -818,7 +963,11 @@
     "v_nom": "P:battery.v_nom",
     "lim": "ASM-E3-LIMITS",
     "amb_range": "P:env.ambient_design_c",
-    "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS"
+    "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS",
+    "wake_cfd": "CL-E3-CFD-FEQ",
+    "m_pred": "CL-A3-MASS-PREDICTED",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "mscale": "ASM-E3-MASS-SCALE"
    },
    "units": {
     "rho": "kg/m3",
@@ -829,9 +978,12 @@
     "m_pack": "kg",
     "pack_size": "m",
     "pod_size": "m",
+    "f3_diss": "W",
     "v_nom": "V",
     "amb_range": "degC",
-    "t_hov_only": "min"
+    "t_hov_only": "min",
+    "m_pred": "kg",
+    "m_gate": "kg"
    },
    "assumes": [
     "ASM-E3-AIR",
@@ -847,6 +999,9 @@
     "ASM-E3-POD",
     "ASM-E3-PROFILE",
     "ASM-E3-LIMITS",
+    "ASM-E3-POD-AUX",
+    "ASM-E3-R-POD",
+    "ASM-E3-MASS-SCALE",
     "ASM-E1-RTH",
     "ASM-E1-RM",
     "ASM-E1-I0",
@@ -855,47 +1010,56 @@
     "ASM-E2-COLD-R"
    ],
    "outputs": {
-    "mission_des__motor": 43.161672838032246,
-    "mission_des__petg": 32.00412021949887,
-    "mission_des__asa": 55.249021500349045,
-    "mission_des__esc": 54.739587027579546,
-    "mission_des__pack": 42.96596974134445,
-    "mission_des__pack_life": 32.93008554726839,
-    "mission_des__fc": 58.741461131721735,
-    "mission_des__min_asa_c": 42.96596974134445,
-    "mission_des__min_petg_c": 32.00412021949887,
-    "mission_nom__motor": 58.23937181383371,
-    "mission_nom__petg": 46.73009255900979,
-    "mission_nom__asa": 70.70775769650936,
-    "mission_nom__esc": 61.70568812638521,
-    "mission_nom__pack": 49.28317565470934,
-    "mission_nom__pack_life": 39.24864960834384,
-    "mission_nom__fc": 61.57201316207647,
-    "mission_nom__min_asa_c": 49.28317565470934,
-    "mission_nom__min_petg_c": 46.73009255900979,
-    "hoveronly_des__motor": 42.67810016870499,
-    "hoveronly_des__petg": 31.541102305054665,
-    "hoveronly_des__asa": 54.7431811876595,
-    "hoveronly_des__esc": 51.867771819233894,
-    "hoveronly_des__pack": 41.310133431106806,
-    "hoveronly_des__pack_life": 31.30766574293375,
-    "hoveronly_des__fc": 45.40441773831844,
-    "hoveronly_des__min_asa_c": 41.310133431106806,
-    "hoveronly_des__min_petg_c": 31.541102305054665,
-    "abuse_des__motor": 10.846027377992868,
-    "abuse_des__petg": 0.5378972925245762,
-    "abuse_des__asa": 22.013168428093195,
-    "abuse_des__esc": 36.68308371677995,
-    "abuse_des__pack": 35.02126971259713,
-    "abuse_des__pack_life": 24.936742819845676,
-    "abuse_des__fc": 55.67607145756483,
-    "abuse_des__min_asa_c": 10.846027377992868,
-    "abuse_des__min_petg_c": 0.5378972925245762
+    "mission_des__motor": 44.19856445863843,
+    "mission_des__petg": 33.01265362650156,
+    "mission_des__asa": 56.31663456559181,
+    "mission_des__esc": 59.99075446277857,
+    "mission_des__pack": 45.21791471168399,
+    "mission_des__pack_life": 35.181407649070024,
+    "mission_des__fc": 60.89933032169938,
+    "mission_des__min_asa_c": 44.19856445863843,
+    "mission_des__min_petg_c": 33.01265362650156,
+    "mission_nom__motor": 57.85918051376939,
+    "mission_nom__petg": 46.3716709241271,
+    "mission_nom__asa": 70.30398242175579,
+    "mission_nom__esc": 68.01713502034545,
+    "mission_nom__pack": 50.865710359066725,
+    "mission_nom__pack_life": 40.834387596696615,
+    "mission_nom__fc": 63.286336902529,
+    "mission_nom__min_asa_c": 50.865710359066725,
+    "mission_nom__min_petg_c": 46.3716709241271,
+    "hoveronly_des__motor": 42.68101120367646,
+    "hoveronly_des__petg": 31.543937250971794,
+    "hoveronly_des__asa": 54.74617473781109,
+    "hoveronly_des__esc": 61.70998366549611,
+    "hoveronly_des__pack": 40.83209412172437,
+    "hoveronly_des__pack_life": 30.825603492558002,
+    "hoveronly_des__fc": 47.45102871209383,
+    "hoveronly_des__min_asa_c": 40.83209412172437,
+    "hoveronly_des__min_petg_c": 31.543937250971794,
+    "abuse_des__motor": 10.850459076464176,
+    "abuse_des__petg": 0.542241632938385,
+    "abuse_des__asa": 22.017694655805826,
+    "abuse_des__esc": 35.14973597601056,
+    "abuse_des__pack": 38.16176664084196,
+    "abuse_des__pack_life": 28.065136559307575,
+    "abuse_des__fc": 58.38489403948188,
+    "abuse_des__min_asa_c": 10.850459076464176,
+    "abuse_des__min_petg_c": 0.542241632938385,
+    "mission_asd__motor": 47.52523146569729,
+    "mission_asd__petg": 36.251964904367924,
+    "mission_asd__asa": 59.73793689161539,
+    "mission_asd__esc": 61.95333918556571,
+    "mission_asd__pack": 46.86014626175165,
+    "mission_asd__pack_life": 36.82409377768636,
+    "mission_asd__fc": 61.520116329193115,
+    "mission_asd__min_asa_c": 46.86014626175165,
+    "mission_asd__min_petg_c": 36.251964904367924
    },
    "input_values": {
     "rho": 1.225,
     "D": 0.2794,
-    "x_prop": -0.005,
+    "x_prop": -0.0077,
     "x_pad_r": [
      0.101,
      0.072
@@ -914,11 +1078,11 @@
     ],
     "kP": 1.2395830229048008,
     "kT": 1.0390466549306472,
-    "T_h": 6.75678185,
-    "Q_h": 0.11286625933312935,
-    "n_h": 5395.714905199311,
-    "n_c": 5999.940094063748,
-    "P_c": 39.17961919414616,
+    "T_h": 6.807524102357015,
+    "Q_h": 0.11368602568504906,
+    "n_h": 5415.791721033196,
+    "n_c": 5945.8472778193645,
+    "P_c": 37.11109926458564,
     "V_c": 16.0,
     "m_motor": 0.081,
     "cp_motor": 540.0,
@@ -926,7 +1090,7 @@
      0.045,
      0.02,
      0.006,
-     0.011,
+     0.0076,
      700.0
     ],
     "air": [
@@ -950,12 +1114,12 @@
      0.05
     ],
     "cold": 1.5,
-    "r_ext": 0.003,
+    "r_ext": 0.0029,
     "fc": [
      2.0,
-     0.05,
-     0.036,
-     20.0
+     0.052,
+     0.032,
+     15.0
     ],
     "pod": [
      0.005,
@@ -965,59 +1129,72 @@
      0.25
     ],
     "pod_size": [
-     0.2,
-     0.1,
+     0.225,
+     0.14,
      0.07
+    ],
+    "f3_loads": [
+     0.2,
+     0.05,
+     0.05,
+     0.08,
+     0.003,
+     0.05
+    ],
+    "f3_diss": 1.7320588235294119,
+    "aux": [
+     0.8,
+     1.25
     ],
     "pess": [
      [
       "ground, armed checks",
       180,
       6.0,
-      0.4057056839021911,
-      0.020285284195109554
+      0.40574467409371096,
+      0.020287233704685548
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.184975047740565,
-      0.24434010449819835
+      35.527682331163604,
+      0.24672001618863615
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      29.887212687580682,
-      0.996240422919356
+      30.128266889279534,
+      1.0042755629759845
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      42.921584683462626,
-      0.23845324824145905
+      43.4515962719601,
+      0.241397757066445
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      39.595054048711916,
-      0.21997252249284396
+      40.03860041484158,
+      0.22243666897134215
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      29.887212687580682,
-      0.41510017621639833
+      30.128266889279534,
+      0.4184481512399935
      ],
      [
       "cruise",
-      307.7792683054986,
-      416.7357886783673,
-      29.775201298079654,
-      2.5456082414366357
+      406.86301631672296,
+      315.6032215345145,
+      22.354365549879198,
+      2.5264346098529136
      ]
     ],
     "base": [
@@ -1025,50 +1202,50 @@
       "ground, armed checks",
       180,
       6.0,
-      0.4056166197298264,
-      0.02028083098649132
+      0.4056555756781519,
+      0.020282778783907593
      ],
      [
       "climb 0-50 m",
       25.0,
-      435.26981509477594,
-      30.613247472295676,
-      0.21259199633538664
+      443.0110036732609,
+      31.435492045729458,
+      0.21830202809534344
      ],
      [
       "hover (mission)",
       120,
-      372.99771167048056,
-      26.075428596182313,
-      0.8691809532060771
+      380.19374523264685,
+      26.778972721858295,
+      0.8926324240619432
      ],
      [
       "transition forward",
       10,
-      522.1967963386727,
-      37.04538117576856,
-      0.10290383659935712
+      532.2712433257055,
+      38.180441245544316,
+      0.1060567812376231
      ],
      [
       "back-transition",
       10,
-      484.89702517162476,
-      34.27112984069031,
-      0.09519758289080642
+      494.2518688024409,
+      35.288562748036355,
+      0.0980237854112121
      ],
      [
       "descent 50-0 m",
       50.0,
-      372.99771167048056,
-      26.075428596182313,
-      0.36215873050253217
+      380.19374523264685,
+      26.778972721858295,
+      0.3719301766924763
      ],
      [
       "cruise",
-      574.4629141830798,
-      318.7731286102657,
-      22.169698923448404,
-      3.5376860694793493
+      758.3306205968872,
+      239.2147246562352,
+      16.581130909214657,
+      3.4927720257174943
      ]
     ],
     "avn": 6.0,
@@ -1083,7 +1260,7 @@
      0.5,
      30.0
     ],
-    "i_lim": 24.750000000000682,
+    "i_lim": 24.749999999985736,
     "v_nom": 14.8,
     "lim": [
      80.0,
@@ -1098,7 +1275,19 @@
      10,
      30
     ],
-    "t_hov_only": 9.354598766731806
+    "t_hov_only": 9.279749379716302,
+    "wake_cfd": [
+     1.131384201435432,
+     1.3722365338096265,
+     2.285872862313591,
+     2.60137761811015
+    ],
+    "m_pred": 2.4359720000000005,
+    "m_gate": 2.6,
+    "mscale": [
+     1.5,
+     1.0
+    ]
    }
   },
   {
@@ -1137,10 +1326,13 @@
     "m_pack": "P:battery.mass_kg",
     "pack_size": "P:battery.size_m",
     "cold": "ASM-E2-COLD-R",
-    "r_ext": "ASM-E2-R-EXT",
+    "r_ext": "ASM-E3-R-POD",
     "fc": "ASM-E3-FC",
     "pod": "ASM-E3-POD",
     "pod_size": "P:pod.size_m",
+    "f3_loads": "ASM-F3-5V-LOADS",
+    "f3_diss": "CL-F3-FC-DISS",
+    "aux": "ASM-E3-POD-AUX",
     "pess": "CL-E2-BUDGET-PESS-TABLE",
     "base": "CL-E2-BUDGET-BASE-TABLE",
     "avn": "ASM-E2-AVIONICS-W",
@@ -1154,6 +1346,10 @@
     "lim": "ASM-E3-LIMITS",
     "amb_range": "P:env.ambient_design_c",
     "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS",
+    "wake_cfd": "CL-E3-CFD-FEQ",
+    "m_pred": "CL-A3-MASS-PREDICTED",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "mscale": "ASM-E3-MASS-SCALE",
     "e2_t_end": "CL-E2-PACK-T-END"
    },
    "units": {
@@ -1165,9 +1361,12 @@
     "m_pack": "kg",
     "pack_size": "m",
     "pod_size": "m",
+    "f3_diss": "W",
     "v_nom": "V",
     "amb_range": "degC",
     "t_hov_only": "min",
+    "m_pred": "kg",
+    "m_gate": "kg",
     "e2_t_end": "degC"
    },
    "assumes": [
@@ -1184,6 +1383,9 @@
     "ASM-E3-POD",
     "ASM-E3-PROFILE",
     "ASM-E3-LIMITS",
+    "ASM-E3-POD-AUX",
+    "ASM-E3-R-POD",
+    "ASM-E3-MASS-SCALE",
     "ASM-E1-RTH",
     "ASM-E1-RM",
     "ASM-E1-I0",
@@ -1192,37 +1394,37 @@
     "ASM-E2-COLD-R"
    ],
    "outputs": {
-    "dt_conv_k": 0.005141812369458876,
+    "dt_conv_k": 0.0135464468163633,
     "peaks_dt_1_05_025": [
      [
-      65.84455924720922,
-      61.5665537854079,
-      47.08007848638839,
-      57.03523063399685
+      64.76809115589836,
+      56.08010212373814,
+      44.836754136138005,
+      54.90466406311751
      ],
      [
-      65.83864104836263,
-      61.556247570758956,
-      47.079408122462624,
-      57.0376285866216
+      64.7551805923974,
+      56.05290183649909,
+      44.836257538349436,
+      54.906200715137196
      ],
      [
-      65.83568213899215,
-      61.5511057583895,
-      47.07909168089079,
-      57.03881557125062
+      64.74873442639498,
+      56.039355389682726,
+      44.83603212025248,
+      54.906951229588245
      ]
     ],
-    "steady_hover_rise_k": 36.35169026412267,
-    "steady_hand_k": 36.48279581170882,
-    "steady_err_k": -0.13110554758615223,
-    "pack_vs_e2_k": -8.810729923425242e-13,
-    "motor_steady_hover_des_c": 66.35169026412267
+    "steady_hover_rise_k": 36.349455249834605,
+    "steady_hand_k": 36.48053881551306,
+    "steady_err_k": -0.13108356567845192,
+    "pack_vs_e2_k": 1.9468870959826745e-12,
+    "motor_steady_hover_des_c": 66.3494552498346
    },
    "input_values": {
     "rho": 1.225,
     "D": 0.2794,
-    "x_prop": -0.005,
+    "x_prop": -0.0077,
     "x_pad_r": [
      0.101,
      0.072
@@ -1241,11 +1443,11 @@
     ],
     "kP": 1.2395830229048008,
     "kT": 1.0390466549306472,
-    "T_h": 6.75678185,
-    "Q_h": 0.11286625933312935,
-    "n_h": 5395.714905199311,
-    "n_c": 5999.940094063748,
-    "P_c": 39.17961919414616,
+    "T_h": 6.807524102357015,
+    "Q_h": 0.11368602568504906,
+    "n_h": 5415.791721033196,
+    "n_c": 5945.8472778193645,
+    "P_c": 37.11109926458564,
     "V_c": 16.0,
     "m_motor": 0.081,
     "cp_motor": 540.0,
@@ -1253,7 +1455,7 @@
      0.045,
      0.02,
      0.006,
-     0.011,
+     0.0076,
      700.0
     ],
     "air": [
@@ -1277,12 +1479,12 @@
      0.05
     ],
     "cold": 1.5,
-    "r_ext": 0.003,
+    "r_ext": 0.0029,
     "fc": [
      2.0,
-     0.05,
-     0.036,
-     20.0
+     0.052,
+     0.032,
+     15.0
     ],
     "pod": [
      0.005,
@@ -1292,59 +1494,72 @@
      0.25
     ],
     "pod_size": [
-     0.2,
-     0.1,
+     0.225,
+     0.14,
      0.07
+    ],
+    "f3_loads": [
+     0.2,
+     0.05,
+     0.05,
+     0.08,
+     0.003,
+     0.05
+    ],
+    "f3_diss": 1.7320588235294119,
+    "aux": [
+     0.8,
+     1.25
     ],
     "pess": [
      [
       "ground, armed checks",
       180,
       6.0,
-      0.4057056839021911,
-      0.020285284195109554
+      0.40574467409371096,
+      0.020287233704685548
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.184975047740565,
-      0.24434010449819835
+      35.527682331163604,
+      0.24672001618863615
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      29.887212687580682,
-      0.996240422919356
+      30.128266889279534,
+      1.0042755629759845
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      42.921584683462626,
-      0.23845324824145905
+      43.4515962719601,
+      0.241397757066445
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      39.595054048711916,
-      0.21997252249284396
+      40.03860041484158,
+      0.22243666897134215
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      29.887212687580682,
-      0.41510017621639833
+      30.128266889279534,
+      0.4184481512399935
      ],
      [
       "cruise",
-      307.7792683054986,
-      416.7357886783673,
-      29.775201298079654,
-      2.5456082414366357
+      406.86301631672296,
+      315.6032215345145,
+      22.354365549879198,
+      2.5264346098529136
      ]
     ],
     "base": [
@@ -1352,50 +1567,50 @@
       "ground, armed checks",
       180,
       6.0,
-      0.4056166197298264,
-      0.02028083098649132
+      0.4056555756781519,
+      0.020282778783907593
      ],
      [
       "climb 0-50 m",
       25.0,
-      435.26981509477594,
-      30.613247472295676,
-      0.21259199633538664
+      443.0110036732609,
+      31.435492045729458,
+      0.21830202809534344
      ],
      [
       "hover (mission)",
       120,
-      372.99771167048056,
-      26.075428596182313,
-      0.8691809532060771
+      380.19374523264685,
+      26.778972721858295,
+      0.8926324240619432
      ],
      [
       "transition forward",
       10,
-      522.1967963386727,
-      37.04538117576856,
-      0.10290383659935712
+      532.2712433257055,
+      38.180441245544316,
+      0.1060567812376231
      ],
      [
       "back-transition",
       10,
-      484.89702517162476,
-      34.27112984069031,
-      0.09519758289080642
+      494.2518688024409,
+      35.288562748036355,
+      0.0980237854112121
      ],
      [
       "descent 50-0 m",
       50.0,
-      372.99771167048056,
-      26.075428596182313,
-      0.36215873050253217
+      380.19374523264685,
+      26.778972721858295,
+      0.3719301766924763
      ],
      [
       "cruise",
-      574.4629141830798,
-      318.7731286102657,
-      22.169698923448404,
-      3.5376860694793493
+      758.3306205968872,
+      239.2147246562352,
+      16.581130909214657,
+      3.4927720257174943
      ]
     ],
     "avn": 6.0,
@@ -1410,7 +1625,7 @@
      0.5,
      30.0
     ],
-    "i_lim": 24.750000000000682,
+    "i_lim": 24.749999999985736,
     "v_nom": 14.8,
     "lim": [
      80.0,
@@ -1425,8 +1640,20 @@
      10,
      30
     ],
-    "t_hov_only": 9.354598766731806,
-    "e2_t_end": 45.24064372527234
+    "t_hov_only": 9.279749379716302,
+    "wake_cfd": [
+     1.131384201435432,
+     1.3722365338096265,
+     2.285872862313591,
+     2.60137761811015
+    ],
+    "m_pred": 2.4359720000000005,
+    "m_gate": 2.6,
+    "mscale": [
+     1.5,
+     1.0
+    ],
+    "e2_t_end": 43.35375728248336
    }
   },
   {
@@ -1453,9 +1680,9 @@
    ],
    "outputs": {
     "skin_rise_dark_k": 31.5,
-    "pack_rise_dark_k": 3.5636363636363644,
+    "pack_rise_dark_k": 5.612727272727274,
     "skin_rise_white_k": 10.5,
-    "pack_rise_white_k": 1.1878787878787884
+    "pack_rise_white_k": 1.8709090909090913
    },
    "input_values": {
     "sun": [
@@ -1473,8 +1700,8 @@
      0.25
     ],
     "pod_size": [
-     0.2,
-     0.1,
+     0.225,
+     0.14,
      0.07
     ],
     "m": 0.55,
@@ -1520,10 +1747,13 @@
     "m_pack": "P:battery.mass_kg",
     "pack_size": "P:battery.size_m",
     "cold": "ASM-E2-COLD-R",
-    "r_ext": "ASM-E2-R-EXT",
+    "r_ext": "ASM-E3-R-POD",
     "fc": "ASM-E3-FC",
     "pod": "ASM-E3-POD",
     "pod_size": "P:pod.size_m",
+    "f3_loads": "ASM-F3-5V-LOADS",
+    "f3_diss": "CL-F3-FC-DISS",
+    "aux": "ASM-E3-POD-AUX",
     "pess": "CL-E2-BUDGET-PESS-TABLE",
     "base": "CL-E2-BUDGET-BASE-TABLE",
     "avn": "ASM-E2-AVIONICS-W",
@@ -1536,7 +1766,11 @@
     "v_nom": "P:battery.v_nom",
     "lim": "ASM-E3-LIMITS",
     "amb_range": "P:env.ambient_design_c",
-    "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS"
+    "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS",
+    "wake_cfd": "CL-E3-CFD-FEQ",
+    "m_pred": "CL-A3-MASS-PREDICTED",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "mscale": "ASM-E3-MASS-SCALE"
    },
    "units": {
     "rho": "kg/m3",
@@ -1547,9 +1781,12 @@
     "m_pack": "kg",
     "pack_size": "m",
     "pod_size": "m",
+    "f3_diss": "W",
     "v_nom": "V",
     "amb_range": "degC",
-    "t_hov_only": "min"
+    "t_hov_only": "min",
+    "m_pred": "kg",
+    "m_gate": "kg"
    },
    "assumes": [
     "ASM-E3-AIR",
@@ -1565,6 +1802,9 @@
     "ASM-E3-POD",
     "ASM-E3-PROFILE",
     "ASM-E3-LIMITS",
+    "ASM-E3-POD-AUX",
+    "ASM-E3-R-POD",
+    "ASM-E3-MASS-SCALE",
     "ASM-E1-RTH",
     "ASM-E1-RM",
     "ASM-E1-I0",
@@ -1573,13 +1813,13 @@
     "ASM-E2-COLD-R"
    ],
    "outputs": {
-    "burst_max_s": 13.551932573318481,
-    "pack_start_max_c": 34.54751613549888
+    "burst_max_s": 13.554879426956177,
+    "pack_start_max_c": 39.06519346870482
    },
    "input_values": {
     "rho": 1.225,
     "D": 0.2794,
-    "x_prop": -0.005,
+    "x_prop": -0.0077,
     "x_pad_r": [
      0.101,
      0.072
@@ -1598,11 +1838,11 @@
     ],
     "kP": 1.2395830229048008,
     "kT": 1.0390466549306472,
-    "T_h": 6.75678185,
-    "Q_h": 0.11286625933312935,
-    "n_h": 5395.714905199311,
-    "n_c": 5999.940094063748,
-    "P_c": 39.17961919414616,
+    "T_h": 6.807524102357015,
+    "Q_h": 0.11368602568504906,
+    "n_h": 5415.791721033196,
+    "n_c": 5945.8472778193645,
+    "P_c": 37.11109926458564,
     "V_c": 16.0,
     "m_motor": 0.081,
     "cp_motor": 540.0,
@@ -1610,7 +1850,7 @@
      0.045,
      0.02,
      0.006,
-     0.011,
+     0.0076,
      700.0
     ],
     "air": [
@@ -1634,12 +1874,12 @@
      0.05
     ],
     "cold": 1.5,
-    "r_ext": 0.003,
+    "r_ext": 0.0029,
     "fc": [
      2.0,
-     0.05,
-     0.036,
-     20.0
+     0.052,
+     0.032,
+     15.0
     ],
     "pod": [
      0.005,
@@ -1649,59 +1889,72 @@
      0.25
     ],
     "pod_size": [
-     0.2,
-     0.1,
+     0.225,
+     0.14,
      0.07
+    ],
+    "f3_loads": [
+     0.2,
+     0.05,
+     0.05,
+     0.08,
+     0.003,
+     0.05
+    ],
+    "f3_diss": 1.7320588235294119,
+    "aux": [
+     0.8,
+     1.25
     ],
     "pess": [
      [
       "ground, armed checks",
       180,
       6.0,
-      0.4057056839021911,
-      0.020285284195109554
+      0.40574467409371096,
+      0.020287233704685548
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.184975047740565,
-      0.24434010449819835
+      35.527682331163604,
+      0.24672001618863615
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      29.887212687580682,
-      0.996240422919356
+      30.128266889279534,
+      1.0042755629759845
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      42.921584683462626,
-      0.23845324824145905
+      43.4515962719601,
+      0.241397757066445
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      39.595054048711916,
-      0.21997252249284396
+      40.03860041484158,
+      0.22243666897134215
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      29.887212687580682,
-      0.41510017621639833
+      30.128266889279534,
+      0.4184481512399935
      ],
      [
       "cruise",
-      307.7792683054986,
-      416.7357886783673,
-      29.775201298079654,
-      2.5456082414366357
+      406.86301631672296,
+      315.6032215345145,
+      22.354365549879198,
+      2.5264346098529136
      ]
     ],
     "base": [
@@ -1709,50 +1962,50 @@
       "ground, armed checks",
       180,
       6.0,
-      0.4056166197298264,
-      0.02028083098649132
+      0.4056555756781519,
+      0.020282778783907593
      ],
      [
       "climb 0-50 m",
       25.0,
-      435.26981509477594,
-      30.613247472295676,
-      0.21259199633538664
+      443.0110036732609,
+      31.435492045729458,
+      0.21830202809534344
      ],
      [
       "hover (mission)",
       120,
-      372.99771167048056,
-      26.075428596182313,
-      0.8691809532060771
+      380.19374523264685,
+      26.778972721858295,
+      0.8926324240619432
      ],
      [
       "transition forward",
       10,
-      522.1967963386727,
-      37.04538117576856,
-      0.10290383659935712
+      532.2712433257055,
+      38.180441245544316,
+      0.1060567812376231
      ],
      [
       "back-transition",
       10,
-      484.89702517162476,
-      34.27112984069031,
-      0.09519758289080642
+      494.2518688024409,
+      35.288562748036355,
+      0.0980237854112121
      ],
      [
       "descent 50-0 m",
       50.0,
-      372.99771167048056,
-      26.075428596182313,
-      0.36215873050253217
+      380.19374523264685,
+      26.778972721858295,
+      0.3719301766924763
      ],
      [
       "cruise",
-      574.4629141830798,
-      318.7731286102657,
-      22.169698923448404,
-      3.5376860694793493
+      758.3306205968872,
+      239.2147246562352,
+      16.581130909214657,
+      3.4927720257174943
      ]
     ],
     "avn": 6.0,
@@ -1767,7 +2020,7 @@
      0.5,
      30.0
     ],
-    "i_lim": 24.750000000000682,
+    "i_lim": 24.749999999985736,
     "v_nom": 14.8,
     "lim": [
      80.0,
@@ -1782,7 +2035,19 @@
      10,
      30
     ],
-    "t_hov_only": 9.354598766731806
+    "t_hov_only": 9.279749379716302,
+    "wake_cfd": [
+     1.131384201435432,
+     1.3722365338096265,
+     2.285872862313591,
+     2.60137761811015
+    ],
+    "m_pred": 2.4359720000000005,
+    "m_gate": 2.6,
+    "mscale": [
+     1.5,
+     1.0
+    ]
    }
   },
   {
@@ -1821,10 +2086,13 @@
     "m_pack": "P:battery.mass_kg",
     "pack_size": "P:battery.size_m",
     "cold": "ASM-E2-COLD-R",
-    "r_ext": "ASM-E2-R-EXT",
+    "r_ext": "ASM-E3-R-POD",
     "fc": "ASM-E3-FC",
     "pod": "ASM-E3-POD",
     "pod_size": "P:pod.size_m",
+    "f3_loads": "ASM-F3-5V-LOADS",
+    "f3_diss": "CL-F3-FC-DISS",
+    "aux": "ASM-E3-POD-AUX",
     "pess": "CL-E2-BUDGET-PESS-TABLE",
     "base": "CL-E2-BUDGET-BASE-TABLE",
     "avn": "ASM-E2-AVIONICS-W",
@@ -1838,6 +2106,10 @@
     "lim": "ASM-E3-LIMITS",
     "amb_range": "P:env.ambient_design_c",
     "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS",
+    "wake_cfd": "CL-E3-CFD-FEQ",
+    "m_pred": "CL-A3-MASS-PREDICTED",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "mscale": "ASM-E3-MASS-SCALE",
     "sweep": "ASM-E3-AMB-SWEEP"
    },
    "units": {
@@ -1849,9 +2121,12 @@
     "m_pack": "kg",
     "pack_size": "m",
     "pod_size": "m",
+    "f3_diss": "W",
     "v_nom": "V",
     "amb_range": "degC",
     "t_hov_only": "min",
+    "m_pred": "kg",
+    "m_gate": "kg",
     "sweep": "degC"
    },
    "assumes": [
@@ -1868,6 +2143,9 @@
     "ASM-E3-POD",
     "ASM-E3-PROFILE",
     "ASM-E3-LIMITS",
+    "ASM-E3-POD-AUX",
+    "ASM-E3-R-POD",
+    "ASM-E3-MASS-SCALE",
     "ASM-E1-RTH",
     "ASM-E1-RM",
     "ASM-E1-I0",
@@ -1880,81 +2158,117 @@
     "rows_des": [
      [
       15.0,
-      49.70635948951239,
-      47.3226292441928,
-      32.993502411651775,
-      42.68470879905154,
-      29.943948471055585
+      48.66406621122836,
+      41.566787955992055,
+      30.661579266705225,
+      40.51083222093525,
+      28.90334022079336
      ],
      [
       20.0,
-      55.0837866757958,
-      52.06946859901033,
-      37.32166729991616,
-      47.362861736621255,
-      34.57549373634015
+      54.027771004951354,
+      46.397147690271034,
+      35.03996538342743,
+      45.20844101024303,
+      33.5817351963022
      ],
      [
       25.0,
-      60.461213862079234,
-      56.81398312962208,
-      42.096381526486944,
-      52.16881914887059,
-      39.449776634882916
+      59.39147579867437,
+      51.2258427357836,
+      39.85330036445186,
+      50.03201653630579,
+      38.466847906757074
      ],
      [
       30.0,
-      65.83864104836263,
-      61.556247570758956,
-      47.079408122462624,
-      57.0376285866216,
-      44.438993437818084
+      64.7551805923974,
+      56.05290183649909,
+      44.836257538349436,
+      54.906200715137196,
+      43.434004449192706
      ]
     ],
-    "motor_rise_spread_des_k": 1.132281558850245,
-    "esc_rise_spread_des_k": -0.7663816734338411,
+    "motor_rise_spread_des_k": 1.0911143811690351,
+    "esc_rise_spread_des_k": -0.513886119492966,
     "rows_nom": [
      [
       15.0,
-      34.91201112181801,
-      39.895225250045435,
-      26.690600490651864,
-      39.9770924843931,
-      25.62943752523823
+      35.191950259606216,
+      33.10076891519763,
+      25.077488645694366,
+      38.23952536042864,
+      25.58217046766578
      ],
      [
       20.0,
-      40.125113304061465,
-      44.72990237153551,
-      30.982327703405254,
-      44.64881842692688,
-      30.241664914964495
+      40.414602558921935,
+      37.99898828808488,
+      29.35570937614904,
+      42.934470616501926,
+      30.213298667563862
      ],
      [
       25.0,
-      45.33821548630491,
-      49.56274578335007,
-      35.7975874585892,
-      49.46191703494579,
-      35.132595595628175
+      45.63725485823766,
+      42.89615999058679,
+      34.21224729990763,
+      47.76584921300302,
+      35.111072790505155
      ],
      [
       30.0,
-      50.55131766854838,
-      54.39379074914977,
-      40.78169334404193,
-      54.32568540018328,
-      40.11481899757949
+      50.85990715755338,
+      47.79229714172831,
+      39.1979587460309,
+      52.634019733224314,
+      40.069867062712255
      ]
     ],
-    "motor_rise_spread_nom_k": 0.6393065467303671,
-    "esc_rise_spread_nom_k": -0.5014345008956624,
-    "pack_end_15_warmed_des_c": 35.6217416880373
+    "motor_rise_spread_nom_k": 0.667956897947164,
+    "esc_rise_spread_nom_k": -0.3084717734693143,
+    "rows_asd": [
+     [
+      15.0,
+      45.367929505348656,
+      39.53280648511501,
+      29.03075982282279,
+      39.93730395038806,
+      27.553909242191665
+     ],
+     [
+      20.0,
+      50.69009818474029,
+      44.3785720704003,
+      33.391817154345986,
+      44.62866420213796,
+      32.22805246509381
+     ],
+     [
+      25.0,
+      56.01226686413198,
+      49.222729600926094,
+      38.21579832863465,
+      49.45244981665164,
+      37.12117832474056
+     ],
+     [
+      30.0,
+      61.3344355435237,
+      54.0653063315117,
+      43.199083642491516,
+      54.32358739304736,
+      42.09097706334084
+     ]
+    ],
+    "motor_rise_spread_asd_k": 0.9665060381750479,
+    "esc_rise_spread_asd_k": -0.46750015360331076,
+    "pack_end_15_warmed_des_c": 32.99137737161378
    },
    "input_values": {
     "rho": 1.225,
     "D": 0.2794,
-    "x_prop": -0.005,
+    "x_prop": -0.0077,
     "x_pad_r": [
      0.101,
      0.072
@@ -1973,11 +2287,11 @@
     ],
     "kP": 1.2395830229048008,
     "kT": 1.0390466549306472,
-    "T_h": 6.75678185,
-    "Q_h": 0.11286625933312935,
-    "n_h": 5395.714905199311,
-    "n_c": 5999.940094063748,
-    "P_c": 39.17961919414616,
+    "T_h": 6.807524102357015,
+    "Q_h": 0.11368602568504906,
+    "n_h": 5415.791721033196,
+    "n_c": 5945.8472778193645,
+    "P_c": 37.11109926458564,
     "V_c": 16.0,
     "m_motor": 0.081,
     "cp_motor": 540.0,
@@ -1985,7 +2299,7 @@
      0.045,
      0.02,
      0.006,
-     0.011,
+     0.0076,
      700.0
     ],
     "air": [
@@ -2009,12 +2323,12 @@
      0.05
     ],
     "cold": 1.5,
-    "r_ext": 0.003,
+    "r_ext": 0.0029,
     "fc": [
      2.0,
-     0.05,
-     0.036,
-     20.0
+     0.052,
+     0.032,
+     15.0
     ],
     "pod": [
      0.005,
@@ -2024,59 +2338,72 @@
      0.25
     ],
     "pod_size": [
-     0.2,
-     0.1,
+     0.225,
+     0.14,
      0.07
+    ],
+    "f3_loads": [
+     0.2,
+     0.05,
+     0.05,
+     0.08,
+     0.003,
+     0.05
+    ],
+    "f3_diss": 1.7320588235294119,
+    "aux": [
+     0.8,
+     1.25
     ],
     "pess": [
      [
       "ground, armed checks",
       180,
       6.0,
-      0.4057056839021911,
-      0.020285284195109554
+      0.40574467409371096,
+      0.020287233704685548
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.184975047740565,
-      0.24434010449819835
+      35.527682331163604,
+      0.24672001618863615
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      29.887212687580682,
-      0.996240422919356
+      30.128266889279534,
+      1.0042755629759845
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      42.921584683462626,
-      0.23845324824145905
+      43.4515962719601,
+      0.241397757066445
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      39.595054048711916,
-      0.21997252249284396
+      40.03860041484158,
+      0.22243666897134215
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      29.887212687580682,
-      0.41510017621639833
+      30.128266889279534,
+      0.4184481512399935
      ],
      [
       "cruise",
-      307.7792683054986,
-      416.7357886783673,
-      29.775201298079654,
-      2.5456082414366357
+      406.86301631672296,
+      315.6032215345145,
+      22.354365549879198,
+      2.5264346098529136
      ]
     ],
     "base": [
@@ -2084,50 +2411,50 @@
       "ground, armed checks",
       180,
       6.0,
-      0.4056166197298264,
-      0.02028083098649132
+      0.4056555756781519,
+      0.020282778783907593
      ],
      [
       "climb 0-50 m",
       25.0,
-      435.26981509477594,
-      30.613247472295676,
-      0.21259199633538664
+      443.0110036732609,
+      31.435492045729458,
+      0.21830202809534344
      ],
      [
       "hover (mission)",
       120,
-      372.99771167048056,
-      26.075428596182313,
-      0.8691809532060771
+      380.19374523264685,
+      26.778972721858295,
+      0.8926324240619432
      ],
      [
       "transition forward",
       10,
-      522.1967963386727,
-      37.04538117576856,
-      0.10290383659935712
+      532.2712433257055,
+      38.180441245544316,
+      0.1060567812376231
      ],
      [
       "back-transition",
       10,
-      484.89702517162476,
-      34.27112984069031,
-      0.09519758289080642
+      494.2518688024409,
+      35.288562748036355,
+      0.0980237854112121
      ],
      [
       "descent 50-0 m",
       50.0,
-      372.99771167048056,
-      26.075428596182313,
-      0.36215873050253217
+      380.19374523264685,
+      26.778972721858295,
+      0.3719301766924763
      ],
      [
       "cruise",
-      574.4629141830798,
-      318.7731286102657,
-      22.169698923448404,
-      3.5376860694793493
+      758.3306205968872,
+      239.2147246562352,
+      16.581130909214657,
+      3.4927720257174943
      ]
     ],
     "avn": 6.0,
@@ -2142,7 +2469,7 @@
      0.5,
      30.0
     ],
-    "i_lim": 24.750000000000682,
+    "i_lim": 24.749999999985736,
     "v_nom": 14.8,
     "lim": [
      80.0,
@@ -2157,7 +2484,19 @@
      10,
      30
     ],
-    "t_hov_only": 9.354598766731806,
+    "t_hov_only": 9.279749379716302,
+    "wake_cfd": [
+     1.131384201435432,
+     1.3722365338096265,
+     2.285872862313591,
+     2.60137761811015
+    ],
+    "m_pred": 2.4359720000000005,
+    "m_gate": 2.6,
+    "mscale": [
+     1.5,
+     1.0
+    ],
     "sweep": [
      15.0,
      20.0,
@@ -2202,10 +2541,13 @@
     "m_pack": "P:battery.mass_kg",
     "pack_size": "P:battery.size_m",
     "cold": "ASM-E2-COLD-R",
-    "r_ext": "ASM-E2-R-EXT",
+    "r_ext": "ASM-E3-R-POD",
     "fc": "ASM-E3-FC",
     "pod": "ASM-E3-POD",
     "pod_size": "P:pod.size_m",
+    "f3_loads": "ASM-F3-5V-LOADS",
+    "f3_diss": "CL-F3-FC-DISS",
+    "aux": "ASM-E3-POD-AUX",
     "pess": "CL-E2-BUDGET-PESS-TABLE",
     "base": "CL-E2-BUDGET-BASE-TABLE",
     "avn": "ASM-E2-AVIONICS-W",
@@ -2219,6 +2561,10 @@
     "lim": "ASM-E3-LIMITS",
     "amb_range": "P:env.ambient_design_c",
     "t_hov_only": "CL-E2-HOVER-ONLY-MIN-PESS",
+    "wake_cfd": "CL-E3-CFD-FEQ",
+    "m_pred": "CL-A3-MASS-PREDICTED",
+    "m_gate": "P:requirements.mtow_gate_kg",
+    "mscale": "ASM-E3-MASS-SCALE",
     "gt": "ASM-E3-GT04"
    },
    "units": {
@@ -2230,9 +2576,12 @@
     "m_pack": "kg",
     "pack_size": "m",
     "pod_size": "m",
+    "f3_diss": "W",
     "v_nom": "V",
     "amb_range": "degC",
-    "t_hov_only": "min"
+    "t_hov_only": "min",
+    "m_pred": "kg",
+    "m_gate": "kg"
    },
    "assumes": [
     "ASM-E3-AIR",
@@ -2248,6 +2597,9 @@
     "ASM-E3-POD",
     "ASM-E3-PROFILE",
     "ASM-E3-LIMITS",
+    "ASM-E3-POD-AUX",
+    "ASM-E3-R-POD",
+    "ASM-E3-MASS-SCALE",
     "ASM-E1-RTH",
     "ASM-E1-RM",
     "ASM-E1-I0",
@@ -2257,20 +2609,20 @@
     "ASM-E3-GT04"
    ],
    "outputs": {
-    "hover_bus_w": 98.452468737655,
-    "motor_rise_des_k": 38.15889205239494,
-    "esc_rise_des_k": 33.00739470769533,
-    "esc_peak_rise_des_k": 33.00739470769533,
-    "motor_peak_rise_des_k": 44.000665461207916,
-    "motor_rise_nom_k": 25.620196734010463,
-    "esc_rise_nom_k": 30.223279921766093,
-    "esc_peak_rise_nom_k": 30.64496787392914,
-    "motor_peak_rise_nom_k": 35.419405875502086
+    "hover_bus_w": 98.42384891011109,
+    "motor_rise_des_k": 38.146874461229245,
+    "esc_rise_des_k": 27.025101136286594,
+    "esc_peak_rise_des_k": 33.462179641061105,
+    "motor_peak_rise_des_k": 43.990005213156806,
+    "motor_rise_nom_k": 25.612116576368514,
+    "esc_rise_nom_k": 19.771070615918305,
+    "esc_peak_rise_nom_k": 28.01927501701241,
+    "motor_peak_rise_nom_k": 35.41177572053981
    },
    "input_values": {
     "rho": 1.225,
     "D": 0.2794,
-    "x_prop": -0.005,
+    "x_prop": -0.0077,
     "x_pad_r": [
      0.101,
      0.072
@@ -2289,11 +2641,11 @@
     ],
     "kP": 1.2395830229048008,
     "kT": 1.0390466549306472,
-    "T_h": 6.75678185,
-    "Q_h": 0.11286625933312935,
-    "n_h": 5395.714905199311,
-    "n_c": 5999.940094063748,
-    "P_c": 39.17961919414616,
+    "T_h": 6.807524102357015,
+    "Q_h": 0.11368602568504906,
+    "n_h": 5415.791721033196,
+    "n_c": 5945.8472778193645,
+    "P_c": 37.11109926458564,
     "V_c": 16.0,
     "m_motor": 0.081,
     "cp_motor": 540.0,
@@ -2301,7 +2653,7 @@
      0.045,
      0.02,
      0.006,
-     0.011,
+     0.0076,
      700.0
     ],
     "air": [
@@ -2325,12 +2677,12 @@
      0.05
     ],
     "cold": 1.5,
-    "r_ext": 0.003,
+    "r_ext": 0.0029,
     "fc": [
      2.0,
-     0.05,
-     0.036,
-     20.0
+     0.052,
+     0.032,
+     15.0
     ],
     "pod": [
      0.005,
@@ -2340,59 +2692,72 @@
      0.25
     ],
     "pod_size": [
-     0.2,
-     0.1,
+     0.225,
+     0.14,
      0.07
+    ],
+    "f3_loads": [
+     0.2,
+     0.05,
+     0.05,
+     0.08,
+     0.003,
+     0.05
+    ],
+    "f3_diss": 1.7320588235294119,
+    "aux": [
+     0.8,
+     1.25
     ],
     "pess": [
      [
       "ground, armed checks",
       180,
       6.0,
-      0.4057056839021911,
-      0.020285284195109554
+      0.40574467409371096,
+      0.020287233704685548
      ],
      [
       "climb 0-50 m",
       25.0,
       487.3121040405871,
-      35.184975047740565,
-      0.24434010449819835
+      35.527682331163604,
+      0.24672001618863615
      ],
      [
       "hover (mission)",
       120,
       418.2131197559116,
-      29.887212687580682,
-      0.996240422919356
+      30.128266889279534,
+      1.0042755629759845
      ],
      [
       "transition forward",
       20,
       585.4983676582762,
-      42.921584683462626,
-      0.23845324824145905
+      43.4515962719601,
+      0.241397757066445
      ],
      [
       "back-transition",
       20,
       543.677055682685,
-      39.595054048711916,
-      0.21997252249284396
+      40.03860041484158,
+      0.22243666897134215
      ],
      [
       "descent 50-0 m",
       50.0,
       418.2131197559116,
-      29.887212687580682,
-      0.41510017621639833
+      30.128266889279534,
+      0.4184481512399935
      ],
      [
       "cruise",
-      307.7792683054986,
-      416.7357886783673,
-      29.775201298079654,
-      2.5456082414366357
+      406.86301631672296,
+      315.6032215345145,
+      22.354365549879198,
+      2.5264346098529136
      ]
     ],
     "base": [
@@ -2400,50 +2765,50 @@
       "ground, armed checks",
       180,
       6.0,
-      0.4056166197298264,
-      0.02028083098649132
+      0.4056555756781519,
+      0.020282778783907593
      ],
      [
       "climb 0-50 m",
       25.0,
-      435.26981509477594,
-      30.613247472295676,
-      0.21259199633538664
+      443.0110036732609,
+      31.435492045729458,
+      0.21830202809534344
      ],
      [
       "hover (mission)",
       120,
-      372.99771167048056,
-      26.075428596182313,
-      0.8691809532060771
+      380.19374523264685,
+      26.778972721858295,
+      0.8926324240619432
      ],
      [
       "transition forward",
       10,
-      522.1967963386727,
-      37.04538117576856,
-      0.10290383659935712
+      532.2712433257055,
+      38.180441245544316,
+      0.1060567812376231
      ],
      [
       "back-transition",
       10,
-      484.89702517162476,
-      34.27112984069031,
-      0.09519758289080642
+      494.2518688024409,
+      35.288562748036355,
+      0.0980237854112121
      ],
      [
       "descent 50-0 m",
       50.0,
-      372.99771167048056,
-      26.075428596182313,
-      0.36215873050253217
+      380.19374523264685,
+      26.778972721858295,
+      0.3719301766924763
      ],
      [
       "cruise",
-      574.4629141830798,
-      318.7731286102657,
-      22.169698923448404,
-      3.5376860694793493
+      758.3306205968872,
+      239.2147246562352,
+      16.581130909214657,
+      3.4927720257174943
      ]
     ],
     "avn": 6.0,
@@ -2458,7 +2823,7 @@
      0.5,
      30.0
     ],
-    "i_lim": 24.750000000000682,
+    "i_lim": 24.749999999985736,
     "v_nom": 14.8,
     "lim": [
      80.0,
@@ -2473,12 +2838,80 @@
      10,
      30
     ],
-    "t_hov_only": 9.354598766731806,
+    "t_hov_only": 9.279749379716302,
+    "wake_cfd": [
+     1.131384201435432,
+     1.3722365338096265,
+     2.285872862313591,
+     2.60137761811015
+    ],
+    "m_pred": 2.4359720000000005,
+    "m_gate": 2.6,
+    "mscale": [
+     1.5,
+     1.0
+    ],
     "gt": [
      120.0,
      6.77,
      10.0,
      60.0
+    ]
+   }
+  },
+  {
+   "id": "CALC-E3-TUBE-FIN",
+   "type": "calculation",
+   "title": "CF motor tube as a fin: temperature at the PETG station collar (design, 30 degC)",
+   "script": "redesign/team/E3/thermal.py",
+   "function": "tube_fin",
+   "equation": "T(x) - T_amb = (T_root - T_amb) cosh(m (L - x)) / cosh(m L) -> long fin: theta(x)/theta_0 = exp(-m x), m = sqrt(h P / (k A)), P = pi D_o, A = pi (D_o^2 - D_i^2) / 4 ; h = CFD film at the design hover slipstream ; root at the motor peak",
+   "inputs": {
+    "tube": "ASM-E3-TUBE",
+    "od": "P:fins.tube.od_m",
+    "id": "P:fins.tube.id_m",
+    "t_root": "CL-E3-MOTOR-PEAK",
+    "h": "CL-E3-CFD-H-HOV",
+    "amb_range": "P:env.ambient_design_c",
+    "lim": "ASM-E3-LIMITS"
+   },
+   "units": {
+    "od": "m",
+    "id": "m",
+    "t_root": "degC",
+    "h": "W/m2 K",
+    "amb_range": "degC"
+   },
+   "assumes": [
+    "ASM-E3-TUBE"
+   ],
+   "outputs": {
+    "m_per_m": 132.3828614646581,
+    "decay_len_m": 0.007553847899465198,
+    "t_collar_c": 30.654975662028964,
+    "petg_allow_c": 58.0
+   },
+   "input_values": {
+    "tube": [
+     5.0,
+     0.03
+    ],
+    "od": 0.022,
+    "id": 0.02,
+    "t_root": 64.7551805923974,
+    "h": 83.64310504567904,
+    "amb_range": [
+     10,
+     30
+    ],
+    "lim": [
+     80.0,
+     68.0,
+     93.0,
+     85.0,
+     60.0,
+     50.0,
+     85.0
     ]
    }
   },
@@ -2503,31 +2936,7 @@
     "PRP-001-LL"
    ],
    "how": "Thermocouple (K type) on the part, mission flown or run on the stand at the stated power, log every 5 s; T-E3-MOTOR-TAU fits R_th and tau on the stand; T-E3-MISSION reads the can by IR within 30 s of landing.",
-   "value": 65.83864104836263
-  },
-  {
-   "id": "CL-E3-MOUNT-PETG",
-   "type": "claim",
-   "title": "Motor base on a PETG mount vs HDT 68 - 10 K, design mission at 30 degC",
-   "calc": "CALC-E3-MISSION",
-   "output": "motor_peak_des_c",
-   "unit": "degC",
-   "limit": {
-    "op": "<=",
-    "value": 58.0
-   },
-   "verifies": [
-    "R-THERMAL"
-   ],
-   "parts": [
-    "FIN-003-UR",
-    "FIN-003-UL",
-    "FIN-003-LR",
-    "FIN-003-LL"
-   ],
-   "how": "T-E3-MOTOR-TAU: thermocouple between motor base and mount; peak after 90 s hover power + 20 s transition power from 30 degC must stay < 58 degC (10 K below HDT) for PETG to be accepted.",
-   "note": "10 K below HDT for screw preload and creep under vibration. Fails: the printed motor mount is ASA (HDT 93) or PA-CF, not PETG (CR-E3-01)",
-   "value": 65.83864104836263
+   "value": 64.7551805923974
   },
   {
    "id": "CL-E3-MOUNT-ASA",
@@ -2549,8 +2958,8 @@
     "FIN-003-LR",
     "FIN-003-LL"
    ],
-   "how": "As CL-E3-MOUNT-PETG, continuous hover power until steady; mount shows no sag or loss of screw preload.",
-   "value": 66.33912400923867
+   "how": "T-E3-MOTOR-TAU: thermocouple between motor base and mount, continuous hover power until steady; mount shows no sag or loss of pinch-bolt preload (slip torque re-checked, D-23).",
+   "value": 66.33606113368629
   },
   {
    "id": "CL-E3-ESC-PEAK",
@@ -2573,7 +2982,7 @@
     "PRP-002-LL"
    ],
    "how": "T-E3-ESC-PAD: thermocouple under the heat-shrink on the FET side, ESC on a fin-pad mock-up behind a 22 mm tube on the thrust stand, hover power 10 min then 30 s at the limiter.",
-   "value": 61.556247570758956
+   "value": 56.05290183649909
   },
   {
    "id": "CL-E3-ESC-ABUSE",
@@ -2596,7 +3005,7 @@
     "PRP-002-LL"
    ],
    "how": "T-E3-ESC-PAD, the 30 s limiter step.",
-   "value": 78.67289818353277
+   "value": 80.08907300088353
   },
   {
    "id": "CL-E3-MOTOR-ABUSE",
@@ -2611,7 +3020,7 @@
    ],
    "how": "T-E3-MOTOR-TAU limiter step.",
    "note": "above the 80 degC winding limit: sustained full throttle is limited by CL-E3-BURST-MAX, not by ambient",
-   "value": 102.16075340674551
+   "value": 102.15541423507776
   },
   {
    "id": "CL-E3-BURST-MAX",
@@ -2634,7 +3043,7 @@
    ],
    "how": "T-E3-MOTOR-TAU limiter step: time from hover-steady to 80 degC stator.",
    "note": "limit 10 s = a climb-out or gust recovery (E3 choice); flight card: no full throttle longer than this",
-   "value": 13.551932573318481
+   "value": 13.554879426956177
   },
   {
    "id": "CL-E3-PACK-START-MAX",
@@ -2651,7 +3060,7 @@
     "PWR-001"
    ],
    "how": "IR thermometer on the pack before it goes in the pod; log it on the flight card.",
-   "value": 34.54751613549888
+   "value": 39.06519346870482
   },
   {
    "id": "CL-E3-PACK-END",
@@ -2671,7 +3080,7 @@
     "PWR-001"
    ],
    "how": "T-E2-MISSION-LOG: IR thermometer on the pack's largest face within 60 s of landing.",
-   "value": 47.079408122462624
+   "value": 44.836257538349436
   },
   {
    "id": "CL-E3-PACK-RISE-COLD",
@@ -2685,7 +3094,7 @@
    ],
    "how": "T-E2-MISSION-LOG on a cold morning: pack temperature at take-off and at landing.",
    "note": "E2's adiabatic 22.9 K (CR-E2-07) less the pod losses and the R(T) drop as the pack warms",
-   "value": 19.207460224296035
+   "value": 16.905626433021066
   },
   {
    "id": "CL-E3-FC-PEAK",
@@ -2705,7 +3114,7 @@
     "AVN-001"
    ],
    "how": "ArduPilot logs the IMU temperature (IMU.T); fly the mission and read the peak.",
-   "value": 57.0376285866216
+   "value": 54.906200715137196
   },
   {
    "id": "CL-E3-FC-HOVERONLY",
@@ -2725,7 +3134,7 @@
     "AVN-001"
    ],
    "how": "IMU.T in the logs of the tethered and hover-only flights.",
-   "value": 70.74371508949001
+   "value": 68.90269255010197
   },
   {
    "id": "CL-E3-ESC-PAD-IN-WASH",
@@ -2745,7 +3154,7 @@
     "FIN-007-LL"
    ],
    "how": "Tuft or ribbon on the pad on the thrust stand at hover power: it streams aft and does not flap.",
-   "value": 0.028288892166830476
+   "value": 0.0279592032808883
   },
   {
    "id": "CL-E3-HOVER-LOSS",
@@ -2759,7 +3168,7 @@
    ],
    "how": "T-E1-STAND: input power minus shaft power (thrust stand torque x rpm) at hover thrust.",
    "note": "E1 CR-E1-10 gives 20.7-22.8 W at the calm gate hover; this includes E2's 1.10 wind factor",
-   "value": 24.49836152327176
+   "value": 24.496953238662066
   },
   {
    "id": "CL-E3-LIMITER-LOSS",
@@ -2773,7 +3182,7 @@
    ],
    "how": "T-E1-STAND at 24.8 A battery current.",
    "note": "E1 CR-E1-10: 79-86 W",
-   "value": 100.7246623241763
+   "value": 100.71749887160418
   },
   {
    "id": "CL-E3-CEIL-MISSION",
@@ -2797,7 +3206,7 @@
    ],
    "how": "Replace ASM-E3-RTH-DESIGN, ASM-E3-WAKE and ASM-E3-PACK with the T-E3-* and T-E2-IR results and re-run; the ceiling is then MODELLED on measured inputs.",
    "note": "limit 30 degC = upper end of params env.ambient_design_c [10, 30]",
-   "value": 42.96596974134445
+   "value": 44.19856445863843
   },
   {
    "id": "CL-E3-CEIL-MISSION-PETG",
@@ -2807,7 +3216,7 @@
    "output": "mission_des__min_petg_c",
    "unit": "degC",
    "how": "As CL-E3-CEIL-MISSION.",
-   "value": 32.00412021949887
+   "value": 33.01265362650156
   },
   {
    "id": "CL-E3-CEIL-HOVERONLY",
@@ -2826,7 +3235,7 @@
     "AVN-001"
    ],
    "how": "Tethered-hover test (H2): thermocouples on one motor base and one ESC, IMU.T, pack IR at landing.",
-   "value": 41.310133431106806
+   "value": 40.83209412172437
   },
   {
    "id": "CL-E3-CEIL-PACK-LIFE",
@@ -2839,7 +3248,7 @@
     "PWR-001"
    ],
    "how": "Pack IR at landing on the warmest test morning; the flight card start-temperature rule follows.",
-   "value": 32.93008554726839
+   "value": 35.181407649070024
   },
   {
    "id": "CL-E3-DT-CONV",
@@ -2853,7 +3262,7 @@
     "value": 0.2
    },
    "how": "Re-run this script; CALC-E3-CHECKS prints the three levels.",
-   "value": 0.005141812369458876
+   "value": 0.0135464468163633
   },
   {
    "id": "CL-E3-STEADY-CHECK",
@@ -2863,7 +3272,7 @@
    "output": "steady_err_k",
    "unit": "K",
    "how": "Hand: Q_m(T) x R_th from motor_point at the final winding temperature.",
-   "value": -0.13110554758615223
+   "value": -0.13108356567845192
   },
   {
    "id": "CL-E3-PACK-VS-E2",
@@ -2873,7 +3282,7 @@
    "output": "pack_vs_e2_k",
    "unit": "K",
    "how": "Same inputs as CALC-E2-HEAT (hot case): the two must agree within 0.1 K.",
-   "value": -8.810729923425242e-13
+   "value": 1.9468870959826745e-12
   },
   {
    "id": "CL-E3-MOTOR-STEADY",
@@ -2891,7 +3300,7 @@
     "FIN-003-UR"
    ],
    "how": "T-E3-MOTOR-TAU run to steady state (10 min).",
-   "value": 66.35169026412267
+   "value": 66.3494552498346
   },
   {
    "id": "CL-E3-SUN-PACK",
@@ -2905,7 +3314,7 @@
     "POD-001"
    ],
    "how": "IR thermometer on the pod skin and the pack after 10 min of morning sun, dark vs white tape.",
-   "value": 3.5636363636363644
+   "value": 5.612727272727274
   },
   {
    "id": "CL-E3-SWEEP-DES",
@@ -2927,35 +3336,35 @@
    "value": [
     [
      15.0,
-     49.70635948951239,
-     47.3226292441928,
-     32.993502411651775,
-     42.68470879905154,
-     29.943948471055585
+     48.66406621122836,
+     41.566787955992055,
+     30.661579266705225,
+     40.51083222093525,
+     28.90334022079336
     ],
     [
      20.0,
-     55.0837866757958,
-     52.06946859901033,
-     37.32166729991616,
-     47.362861736621255,
-     34.57549373634015
+     54.027771004951354,
+     46.397147690271034,
+     35.03996538342743,
+     45.20844101024303,
+     33.5817351963022
     ],
     [
      25.0,
-     60.461213862079234,
-     56.81398312962208,
-     42.096381526486944,
-     52.16881914887059,
-     39.449776634882916
+     59.39147579867437,
+     51.2258427357836,
+     39.85330036445186,
+     50.03201653630579,
+     38.466847906757074
     ],
     [
      30.0,
-     65.83864104836263,
-     61.556247570758956,
-     47.079408122462624,
-     57.0376285866216,
-     44.438993437818084
+     64.7551805923974,
+     56.05290183649909,
+     44.836257538349436,
+     54.906200715137196,
+     43.434004449192706
     ]
    ]
   },
@@ -2976,35 +3385,35 @@
    "value": [
     [
      15.0,
-     34.91201112181801,
-     39.895225250045435,
-     26.690600490651864,
-     39.9770924843931,
-     25.62943752523823
+     35.191950259606216,
+     33.10076891519763,
+     25.077488645694366,
+     38.23952536042864,
+     25.58217046766578
     ],
     [
      20.0,
-     40.125113304061465,
-     44.72990237153551,
-     30.982327703405254,
-     44.64881842692688,
-     30.241664914964495
+     40.414602558921935,
+     37.99898828808488,
+     29.35570937614904,
+     42.934470616501926,
+     30.213298667563862
     ],
     [
      25.0,
-     45.33821548630491,
-     49.56274578335007,
-     35.7975874585892,
-     49.46191703494579,
-     35.132595595628175
+     45.63725485823766,
+     42.89615999058679,
+     34.21224729990763,
+     47.76584921300302,
+     35.111072790505155
     ],
     [
      30.0,
-     50.55131766854838,
-     54.39379074914977,
-     40.78169334404193,
-     54.32568540018328,
-     40.11481899757949
+     50.85990715755338,
+     47.79229714172831,
+     39.1979587460309,
+     52.634019733224314,
+     40.069867062712255
     ]
    ]
   },
@@ -3021,7 +3430,7 @@
    },
    "how": "Two GT-04 runs on mornings 10 K apart give the same rise within the IR accuracy.",
    "note": "small: the rise is nearly independent of ambient, so a stand reading scales to 30 degC by adding (30 - T_amb)",
-   "value": 1.132281558850245
+   "value": 1.0911143811690351
   },
   {
    "id": "CL-E3-GT04-ESC-RISE",
@@ -3042,7 +3451,7 @@
    ],
    "how": "GT-04 (H1): IR on the ESC FET side within 10 s of stop; pass if the rise is <= this value (design inputs are then conservative); any reading scaled to 30 degC must be <= 70 degC.",
    "note": "limit 40 K = 85 degC MCU rating - 30 degC - 15 K for case-to-die and IR error",
-   "value": 33.00739470769533
+   "value": 27.025101136286594
   },
   {
    "id": "CL-E3-GT04-MOTOR-RISE",
@@ -3060,18 +3469,18 @@
    ],
    "how": "GT-04: thermocouple on the can during the run; pass if the rise is <= this value.",
    "note": "limit 50 K = H1's GT-04 line (80 degC at 30 degC)",
-   "value": 38.15889205239494
+   "value": 38.146874461229245
   },
   {
-   "id": "CL-E3-ESC-PAD-PETG",
+   "id": "CL-E3-ESC-PAD-ASA",
    "type": "claim",
-   "title": "ESC (and its pad) peak vs PETG HDT 68 - 10 K, design mission at 30 degC",
+   "title": "ESC (and its ASA pad) peak vs ASA HDT 93 - 10 K, design mission at 30 degC",
    "calc": "CALC-E3-MISSION",
    "output": "esc_peak_des_c",
    "unit": "degC",
    "limit": {
     "op": "<=",
-    "value": 58.0
+    "value": 83.0
    },
    "parts": [
     "FIN-007-UR",
@@ -3079,9 +3488,153 @@
     "FIN-007-LR",
     "FIN-007-LL"
    ],
-   "how": "T-E3-ESC-PAD: thermocouple between the hook-and-loop and the pad face; pad < 58 degC from 30 degC.",
-   "note": "conservative: pad taken at the ESC temperature (the hook-and-loop between them insulates). Fails: print the four pads in ASA with the motor mounts (CR-E3-01), no mass or cost change",
-   "value": 61.556247570758956
+   "how": "T-E3-ESC-PAD: thermocouple between the hook-and-loop and the pad face.",
+   "note": "as designed (fins params esc_pad.material ASA, D-42); pad taken at the ESC temperature (conservative). R2's PETG claims (CL-E3-MOUNT-PETG, CL-E3-ESC-PAD-PETG) are retired: CR-E3-01 was accepted",
+   "value": 56.05290183649909
+  },
+  {
+   "id": "CL-E3-ASD-MOTOR-PEAK",
+   "type": "claim",
+   "title": "Motor peak, as-designed mass (A3 predicted), design inputs, 30 degC",
+   "calc": "CALC-E3-MISSION",
+   "output": "motor_peak_asd_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "value": 80.0
+   },
+   "verifies": [
+    "R-THERMAL"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-001-UL",
+    "PRP-001-LR",
+    "PRP-001-LL"
+   ],
+   "how": "Thermocouple (K type) on the part, mission flown or run on the stand at the stated power, log every 5 s; T-E3-MISSION at the weighed mass.",
+   "value": 61.3344355435237
+  },
+  {
+   "id": "CL-E3-ASD-ESC-PEAK",
+   "type": "claim",
+   "title": "ESC peak, as-designed mass, design inputs, 30 degC",
+   "calc": "CALC-E3-MISSION",
+   "output": "esc_peak_asd_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "value": 85.0
+   },
+   "verifies": [
+    "R-THERMAL"
+   ],
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "T-E3-MISSION, IR on the ESC FET side.",
+   "value": 54.0653063315117
+  },
+  {
+   "id": "CL-E3-ASD-PACK-END",
+   "type": "claim",
+   "title": "Pack at landing, as-designed mass, design inputs, 30 degC",
+   "calc": "CALC-E3-MISSION",
+   "output": "pack_end_asd_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "value": 50.0
+   },
+   "verifies": [
+    "R-THERMAL"
+   ],
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "T-E2-MISSION-LOG: IR on the pack within 60 s of landing.",
+   "value": 43.199083642491516
+  },
+  {
+   "id": "CL-E3-ASD-FC-PEAK",
+   "type": "claim",
+   "title": "FC peak, as-designed mass, design inputs, 30 degC",
+   "calc": "CALC-E3-MISSION",
+   "output": "fc_peak_asd_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "value": 85.0
+   },
+   "verifies": [
+    "R-THERMAL"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "IMU.T in the mission log.",
+   "value": 54.32358739304736
+  },
+  {
+   "id": "CL-E3-CEIL-ASD",
+   "type": "claim",
+   "title": "Field-ambient ceiling, as-designed mass, design inputs, ASA mounts",
+   "calc": "CALC-E3-CEILING",
+   "output": "mission_asd__min_asa_c",
+   "unit": "degC",
+   "limit": {
+    "op": ">=",
+    "value": 30.0
+   },
+   "verifies": [
+    "R-THERMAL"
+   ],
+   "parts": [
+    "PRP-001-UR",
+    "PRP-002-UR",
+    "PWR-001",
+    "AVN-001"
+   ],
+   "how": "As CL-E3-CEIL-MISSION, at the weighed mass.",
+   "value": 46.86014626175165
+  },
+  {
+   "id": "CL-E3-ESC-PEAK-R2WAKE",
+   "type": "claim",
+   "title": "ESC peak with R2's judged wake factor 0.5 (comparison with the CFD value)",
+   "calc": "CALC-E3-MISSION",
+   "output": "esc_peak_r2wake_des_c",
+   "unit": "degC",
+   "parts": [
+    "PRP-002-UR"
+   ],
+   "how": "T-E3-ESC-PAD decides between the two.",
+   "note": "hand-calc baseline of the simulation round; the design case now uses CL-E3-CFD-FEQ",
+   "value": 62.934690627718474
+  },
+  {
+   "id": "CL-E3-COLLAR-T",
+   "type": "claim",
+   "title": "CF tube temperature at the PETG station collar, design, 30 degC",
+   "calc": "CALC-E3-TUBE-FIN",
+   "output": "t_collar_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "value": 58.0
+   },
+   "parts": [
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ],
+   "how": "Thermocouple on the tube at the collar during T-E3-MOTOR-TAU (600 s hover power).",
+   "note": "limit 58 = PETG HDT 68 - 10 K; the collar stays PETG",
+   "value": 30.654975662028964
   },
   {
    "id": "CL-E3-PACK-15-WARMED",
@@ -3098,7 +3651,7 @@
     "PWR-001"
    ],
    "how": "T-E2-MISSION-LOG on a cool morning.",
-   "value": 35.6217416880373
+   "value": 32.99137737161378
   },
   {
    "id": "T-E3-MOTOR-TAU",
@@ -3106,15 +3659,15 @@
    "title": "Motor thermal resistance and time constant on the thrust stand",
    "verifies": [
     "CL-E3-MOTOR-PEAK",
-    "CL-E3-MOUNT-PETG",
     "CL-E3-MOUNT-ASA",
+    "CL-E3-COLLAR-T",
     "CL-E3-MOTOR-ABUSE",
     "CL-E3-MOTOR-STEADY",
     "CL-E3-GT04-MOTOR-RISE",
     "CL-E3-BURST-MAX"
    ],
    "state": "planned",
-   "procedure": "One station on the H1 stand with the real printed mount, 11x5.5MR, 14.8 V. K-type thermocouples on the stator (through the base vent), between base and mount, and on the bell (IR). From ambient: hover power (~100 W bus) for 10 min, log every 5 s; fit T = T_inf - (T_inf - T_0) e^(-t/tau): R_th = (T_inf - T_amb) / loss, loss = P_in - torque x omega. Then 30 s at 24.8 A. Pass: R_th <= 1.5 K/W, base < 58 degC at hover power from 30 degC (PETG) or < 83 degC (ASA)."
+   "procedure": "One station on the H1 stand with the real printed mount, 11x5.5MR, 14.8 V. K-type thermocouples on the stator (through the base vent), between base and mount, and on the bell (IR). From ambient: hover power (~100 W bus) for 10 min, log every 5 s; fit T = T_inf - (T_inf - T_0) e^(-t/tau): R_th = (T_inf - T_amb) / loss, loss = P_in - torque x omega. Then 30 s at 24.8 A. Pass: R_th <= 1.5 K/W, base < 83 degC (ASA) at hover power from 30 degC; tube at the station collar < 58 degC (PETG)."
   },
   {
    "id": "T-E3-ESC-PAD",
@@ -3124,7 +3677,7 @@
     "CL-E3-ESC-PEAK",
     "CL-E3-ESC-ABUSE",
     "CL-E3-ESC-PAD-IN-WASH",
-    "CL-E3-ESC-PAD-PETG",
+    "CL-E3-ESC-PAD-ASA",
     "CL-E3-GT04-ESC-RISE"
    ],
    "state": "planned",

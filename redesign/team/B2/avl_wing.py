@@ -181,7 +181,7 @@ def write_avl(path, foil, eta, fins=True, twist=0.0, nc=12, ns_scale=1.0):
 
 
 def run_avl(avl_file, cmds):
-    p = subprocess.run([str(AVL), avl_file.name], input=cmds, text=True, capture_output=True, cwd=str(OUT), timeout=120)
+    p = subprocess.run([str(AVL), avl_file.name], input=cmds, text=True, capture_output=True, cwd=str(OUT), timeout=1200)
     return p.stdout
 
 

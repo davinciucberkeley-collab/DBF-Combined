@@ -48,7 +48,8 @@ Input mesh file name: ../../mesh/esc_L1.su2
 --------------- Space Numerical Integration ( Zone 0 ) ------------------
 Flux difference splitting (FDS) upwind scheme for the flow inviscid terms.
 Second order integration in space, with slope limiter.
-No slope-limiting method. 
+Venkatakrishnan slope-limiting method, with constant: 0.05.
+The reference element size is: 1. 
 Average of gradients with correction (viscous flow terms).
 Average of gradients with correction (viscous turbulence terms).
 Gradient for upwind reconstruction: inverse-distance weighted Least-Squares.
@@ -69,10 +70,10 @@ Courant-Friedrichs-Lewy number:        5
 Euler implicit time integration for the turbulence model.
 
 ------------------ Convergence Criteria  ( Zone 0 ) ---------------------
-Maximum number of solver subiterations: 8000.
-Begin convergence monitoring at iteration 1500.
+Maximum number of solver subiterations: 3000.
+Begin convergence monitoring at iteration 400.
 Residual minimum value: 1e-11.
-Cauchy series min. value: 1e-06.
+Cauchy series min. value: 1e-05.
 Number of Cauchy elements: 300.
 Begin windowed time average at iteration 0.
 
@@ -118,13 +119,13 @@ Volume output fields: COORDINATES, SOLUTION, PRIMITIVE
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Two dimensional problem.
-12666 grid points.
-17997 volume elements.
+12639 grid points.
+17943 volume elements.
 3 surface markers.
-463 boundary elements in index 0 (Marker = body).
-58 boundary elements in index 1 (Marker = esc).
+443 boundary elements in index 0 (Marker = body).
+78 boundary elements in index 1 (Marker = esc).
 62 boundary elements in index 2 (Marker = farfield).
-11245 triangles.
+11191 triangles.
 6752 quadrilaterals.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
@@ -139,7 +140,7 @@ Area of the computational grid: 6.59676.
 Searching for the closest normal neighbors to the surfaces.
 Storing a mapping from global to local point index.
 Compute the surface curvature.
-Max K: 1889.52. Mean K: 33.7264. Standard deviation K: 210.017.
+Max K: 1889.52. Mean K: 33.6777. Standard deviation K: 209.588.
 Computing mesh quality statistics for the dual control volumes.
 +--------------------------------------------------------------+
 |           Mesh Quality Metric|        Minimum|        Maximum|
@@ -149,10 +150,10 @@ Computing mesh quality statistics for the dual control volumes.
 |           CV Sub-Volume Ratio|              1|        139.967|
 +--------------------------------------------------------------+
 Finding max control volume width.
-Wetted area = 0.045 m.
-Area projection in the x-plane = 0 m, y-plane = 0 m.
+Wetted area = 0.0589626 m.
+Area projection in the x-plane = 0.0072 m, y-plane = 0 m.
 Max. coordinate in the x-direction = 0.0785 m, y-direction = 0.012 m.
-Min. coordinate in the x-direction = 0.0335 m, y-direction = 0.012 m.
+Min. coordinate in the x-direction = 0.0335 m, y-direction = 0.0048 m.
 Computing wall distances.
 
 -------------------- Solver Preprocessing ( Zone 0 ) --------------------
@@ -212,7 +213,7 @@ Energy equation is active and decoupled.
 +------------------------------------------------------------------------------+
 All ranks use edge coloring.
 Among the ranks that use edge coloring,
-         the minimum efficiency is 0.93576,
+         the minimum efficiency is 0.905007,
          the maximum number of colors is 4,
          the minimum edge color group size is 512.
 Initialize Jacobian structure (Navier-Stokes). MG level: 0.
@@ -231,12 +232,49 @@ Simulation Run using the Single-zone Driver
 +----------------------------------------------------------------+
 |  Inner_Iter|      rms[P]|      rms[U]|          HF|          CD|
 +----------------------------------------------------------------+
-|           0|   -3.065909|  -15.582759| -1.1116e+04|    0.202643|
+|           0|   -3.065446|  -15.576769| -1.4297e+04|    1.280372|
+|         100|   -5.614364|   -4.016100| -1.3081e+02|   -0.027949|
+|         200|   -6.076645|   -4.453659| -1.3530e+02|   -0.022940|
+|         300|   -7.044490|   -5.317169| -1.3381e+02|   -0.024444|
+|         400|   -7.427823|   -5.700344| -1.3248e+02|   -0.025478|
+|         500|   -5.681432|   -4.548288| -1.3152e+02|   -0.025979|
+|         600|   -8.488748|   -6.579003| -1.3097e+02|   -0.026247|
+|         700|   -8.015414|   -6.171041| -1.3054e+02|   -0.026228|
+|         800|   -6.986624|   -5.473211| -1.3025e+02|   -0.026326|
+|         900|   -5.796734|   -4.599281| -1.3001e+02|   -0.026365|
+|        1000|   -6.153480|   -5.021299| -1.2986e+02|   -0.026431|
+|        1100|   -7.754910|   -6.178189| -1.2974e+02|   -0.026270|
+|        1198|   -7.798502|   -5.989841| -1.2964e+02|   -0.026338|
 
-
-Error in "void CSolver::SetResidual_RMS(const CGeometry*, const CConfig*)": 
+----------------------------- Solver Exit -------------------------------
+All convergence criteria satisfied.
++-----------------------------------------------------------------------+
+|      Convergence Field     |     Value    |   Criterion  |  Converged |
++-----------------------------------------------------------------------+
+|                  Cauchy[HF]|   9.87995e-06|       < 1e-05|         Yes|
++-----------------------------------------------------------------------+
 -------------------------------------------------------------------------
-SU2 has diverged (Residual > 10^20 detected).
------------------------------- Error Exit -------------------------------
++-----------------------------------------------------------------------+
+|        File Writing Summary       |              Filename             |
++-----------------------------------------------------------------------+
+|CSV file                           |surface_flow.csv                   |
+|Paraview                           |flow.vtu                           |
++-----------------------------------------------------------------------+
 
+--------------------------- Finalizing Solver ---------------------------
+Deleted CNumerics container.
+Deleted CIntegration container.
+Deleted CSolver container.
+Deleted CIteration container.
+Deleted CInterface container.
+Deleted CGeometry container.
+Deleted CFreeFormDefBox class.
+Deleted CSurfaceMovement class.
+Deleted CVolumetricMovement class.
+Deleted CConfig container.
+Deleted nInst container.
+Deleted COutput class.
+-------------------------------------------------------------------------
+
+------------------------- Exit Success (SU2_CFD) ------------------------
 

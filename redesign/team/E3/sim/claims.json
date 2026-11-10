@@ -1,0 +1,365 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/E3/sim/cfd_claims.py",
+ "params": [
+  "../../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-E3-CFD-RESULTS",
+   "type": "source",
+   "title": "E3 ESC-section CFD: SU2 8.5 INC_RANS SST/LM, 3 meshes, results.json",
+   "kind": "web",
+   "url": "redesign/team/E3/sim/cfd/results.json",
+   "where": "studies.hov_sst / cru_sst (GCI), cases.hov_lm_tu1_L2 / cru_lm_tu1_L2 (transition, quiet inflow), cases.hov_sst_tu1_L2, hov_sa_L2, hov_lm_L2 (sensitivity); script sim/cfd/esc_cfd.py"
+  },
+  {
+   "id": "SRC-E3-CELIK-GCI",
+   "type": "source",
+   "title": "Celik et al. (2008), Procedure for estimation and reporting of uncertainty due to discretization in CFD applications, J. Fluids Eng. 130(7) 078001",
+   "kind": "paper",
+   "url": "https://doi.org/10.1115/1.2960953",
+   "where": "three-grid Richardson extrapolation, GCI with Fs 1.25"
+  },
+  {
+   "id": "CL-E3-CFD-H-HOV",
+   "type": "claim",
+   "title": "ESC film coefficient, hover slipstream, SST Tu 5 %, fine grid (L3)",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 83.64310504567904
+  },
+  {
+   "id": "CL-E3-CFD-H-HOV-EXT",
+   "type": "claim",
+   "title": "ESC film coefficient, hover, SST, Richardson-extrapolated (or L3 if not asymptotic)",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 91.83355113414504
+  },
+  {
+   "id": "CL-E3-CFD-H-HOV-LOW",
+   "type": "claim",
+   "title": "ESC film coefficient, hover, SST, lower GCI band",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 80.59296906127373
+  },
+  {
+   "id": "CL-E3-CFD-H-CRU-EXT",
+   "type": "claim",
+   "title": "ESC film coefficient, cruise 16 m/s, SST, extrapolated",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 118.69263862014759
+  },
+  {
+   "id": "CL-E3-CFD-H-CRU-LOW",
+   "type": "claim",
+   "title": "ESC film coefficient, cruise, SST, lower GCI band",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 108.67177845401685
+  },
+  {
+   "id": "CL-E3-CFD-H-HOV-LMTU1",
+   "type": "claim",
+   "title": "ESC film coefficient, hover, LM transition, quiet inflow Tu 1 % (L2)",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 87.77186882839507
+  },
+  {
+   "id": "CL-E3-CFD-H-CRU-LMTU1",
+   "type": "claim",
+   "title": "ESC film coefficient, cruise, LM transition, Tu 1 % (L2)",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 113.87530204612796
+  },
+  {
+   "id": "CL-E3-CFD-H-HOV-SA",
+   "type": "claim",
+   "title": "ESC film coefficient, hover, Spalart-Allmaras, Tu 5 % (L2): turbulence-model bracket",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 64.60712233973065
+  },
+  {
+   "id": "CL-E3-CFD-H-HOV-L2",
+   "type": "claim",
+   "title": "ESC film coefficient, hover, SST (L2), same grid as the model brackets",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 79.35361053389452
+  },
+  {
+   "id": "CL-E3-CFD-H-CRU-L2",
+   "type": "claim",
+   "title": "ESC film coefficient, cruise, SST (L2)",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD: ESC on the half-fin mock-up behind the 22 mm tube at hover power; h = (loss - radiation) / (A (T_esc - T_amb)); within the band of CL-E3-CFD-FEQ.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 105.88217839685747
+  },
+  {
+   "id": "CL-E3-CFD-U",
+   "type": "claim",
+   "title": "CFD inflow speeds [hover slipstream at the pad, cruise]",
+   "unit": "m/s",
+   "how": "Hover value from thermal.py's design hover (B4 momentum model at the pad); cruise = params.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": [
+    10.9,
+    16.0
+   ]
+  },
+  {
+   "id": "CL-E3-CFD-GCI-HOV",
+   "type": "claim",
+   "title": "Grid convergence index on the hover film coefficient (fine grid)",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.15
+   },
+   "how": "Re-run esc_cfd.py mesh/run/summary; three levels L1-L3. An L4 (~150 k cells) would tighten it.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS",
+    "SRC-E3-CELIK-GCI"
+   ],
+   "value": 0.12240169234500939,
+   "note": "h rises monotonically with refinement, so the fine-grid and lower-band values used for design are on the cool side of the converged answer; limit 15 % = E3 acceptance for a design input carried with the lower band"
+  },
+  {
+   "id": "CL-E3-CFD-YPLUS-L2",
+   "type": "claim",
+   "title": "Largest first-cell y+ on the ESC (L2; L3 is 1.5 x finer)",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 2.0
+   },
+   "how": "surface_flow.vtk Y_Plus on the esc marker.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "value": 1.475334
+  },
+  {
+   "id": "CL-E3-CFD-GCI-CRU",
+   "type": "claim",
+   "title": "Grid convergence index on the cruise film coefficient (fine grid)",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.15
+   },
+   "how": "As CL-E3-CFD-GCI-HOV.",
+   "cites": [
+    "SRC-E3-CFD-RESULTS",
+    "SRC-E3-CELIK-GCI"
+   ],
+   "value": 0.0844269727476573
+  },
+  {
+   "id": "CALC-E3-CFD-FEQ",
+   "type": "calculation",
+   "title": "Local-velocity factor the lumped ESC model needs to reproduce the CFD film",
+   "script": "redesign/team/E3/sim/cfd_claims.py",
+   "function": "feq",
+   "equation": "h_lam(fU) = 0.664 (f U L/nu)^0.5 Pr^1/3 k/L  =>  f = (h / h_lam(U))^2 ; model factor k_m = h_SA / h_SST (hover, L2) ; design = min(SST lower GCI band, LM Tu 1 %, k_m x SST L2) per regime (the lowest of the three turbulence models on the same grid) ; nominal = SST extrapolated",
+   "inputs": {
+    "u": "CL-E3-CFD-U",
+    "air": "ASM-E3-AIR",
+    "esc": "ASM-E3-ESC",
+    "h_hov": "CL-E3-CFD-H-HOV-EXT",
+    "h_hov_low": "CL-E3-CFD-H-HOV-LOW",
+    "h_hov_lm": "CL-E3-CFD-H-HOV-LMTU1",
+    "h_cru": "CL-E3-CFD-H-CRU-EXT",
+    "h_cru_low": "CL-E3-CFD-H-CRU-LOW",
+    "h_cru_lm": "CL-E3-CFD-H-CRU-LMTU1",
+    "h_hov_sa": "CL-E3-CFD-H-HOV-SA",
+    "h_hov_l2": "CL-E3-CFD-H-HOV-L2",
+    "h_cru_l2": "CL-E3-CFD-H-CRU-L2",
+    "wake_r2": "ASM-E3-WAKE"
+   },
+   "units": {
+    "u": "m/s",
+    "h_hov": "W/m2 K",
+    "h_hov_low": "W/m2 K",
+    "h_hov_lm": "W/m2 K",
+    "h_cru": "W/m2 K",
+    "h_cru_low": "W/m2 K",
+    "h_cru_lm": "W/m2 K",
+    "h_hov_sa": "W/m2 K",
+    "h_hov_l2": "W/m2 K",
+    "h_cru_l2": "W/m2 K"
+   },
+   "assumes": [
+    "ASM-E3-AIR",
+    "ASM-E3-ESC"
+   ],
+   "cites": [
+    "SRC-E3-CFD-RESULTS"
+   ],
+   "outputs": {
+    "value": [
+     1.131384201435432,
+     1.3722365338096265,
+     2.285872862313591,
+     2.60137761811015
+    ],
+    "all": {
+     "hov": 2.285872862313591,
+     "hov_low": 1.7605307942736628,
+     "hov_lm": 2.0881418890362853,
+     "cru": 2.60137761811015,
+     "cru_low": 2.1806671388031535,
+     "cru_lm": 2.3945003999350294,
+     "hov_sa": 1.131384201435432,
+     "cru_sa_est": 1.3722365338096265
+    },
+    "model_factor_sa_sst": 0.8141673945905061,
+    "h_lam_hov": 60.74007762461778,
+    "h_lam_cru": 73.59055613368784,
+    "h_r2_design_hov": 42.949720778164526,
+    "h_r2_nominal_hov": 50.81879495709452,
+    "ratio_design_vs_r2": 2.262768402870864
+   },
+   "input_values": {
+    "u": [
+     10.9,
+     16.0
+    ],
+    "air": [
+     1.589e-05,
+     0.0263,
+     0.707
+    ],
+    "esc": [
+     0.045,
+     0.02,
+     0.006,
+     0.011,
+     700.0
+    ],
+    "h_hov": 91.83355113414504,
+    "h_hov_low": 80.59296906127373,
+    "h_hov_lm": 87.77186882839507,
+    "h_cru": 118.69263862014759,
+    "h_cru_low": 108.67177845401685,
+    "h_cru_lm": 113.87530204612796,
+    "h_hov_sa": 64.60712233973065,
+    "h_hov_l2": 79.35361053389452,
+    "h_cru_l2": 105.88217839685747,
+    "wake_r2": [
+     0.7,
+     0.5
+    ]
+   }
+  },
+  {
+   "id": "CL-E3-CFD-FEQ",
+   "type": "claim",
+   "title": "ESC local-velocity factor from CFD [hover design, cruise design, hover nominal, cruise nominal]",
+   "calc": "CALC-E3-CFD-FEQ",
+   "output": "value",
+   "unit": "-",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "T-E3-ESC-PAD back-solves f = (h_meas / h_lam(U))^2; pass if f_meas >= the design value.",
+   "note": "replaces the judged ASM-E3-WAKE (0.5 design / 0.7 nominal) in thermal.py R3",
+   "value": [
+    1.131384201435432,
+    1.3722365338096265,
+    2.285872862313591,
+    2.60137761811015
+   ]
+  },
+  {
+   "id": "T-E3-ESC-PAD-CFD",
+   "type": "test",
+   "title": "ESC film coefficient on the half-fin mock-up (validates the CFD)",
+   "verifies": [
+    "CL-E3-CFD-FEQ",
+    "CL-E3-CFD-H-HOV"
+   ],
+   "state": "planned",
+   "procedure": "As T-E3-ESC-PAD: foam-board half-fin with the 22 mm tube and the ASA pad behind the stand prop at hover power; ESC replaced by a 45 x 20 x 6 mm aluminium dummy with a 3 W resistor and a thermocouple; steady rise -> h. Pass: f_meas >= design value of CL-E3-CFD-FEQ."
+  }
+ ]
+}

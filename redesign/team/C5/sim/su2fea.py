@@ -1,10 +1,13 @@
-"""Small SU2 linear-elasticity driver for gmsh meshes (C5 simulation round).
+"""Small SU2 linear-elasticity driver (C5 simulation round). Library only.
 
-Library only. Units are whatever the caller uses consistently (C5 uses mm, N, MPa).
-  write_su2(path, nodes, tets, markers)  -> SU2 native mesh (3-D, linear tetrahedra, triangle markers)
-  run(case_dir, mesh, E, nu, clamped, loads, free, threads) -> dict of nodal arrays from the ASCII restart
-`loads` = [(marker, traction magnitude, (dx, dy, dz))]: SU2 MARKER_LOAD applies magnitude x area along the unit
-direction (a traction, force per unit area), checked against the reaction in fea_shoe.py's cantilever case.
+Units are whatever the caller uses consistently (C5 uses mm, N, MPa).
+  write_su2(path, nodes, cells, markers)  SU2 native mesh: tetra (M,4) or hexahedra (M,8); triangle/quad markers
+  run(case_dir, nodes, cells, markers, E, nu, clamped, loads, free)  -> nodal fields of the solution (vol.vtk)
+`loads` = [(marker, traction, (dx, dy, dz))]. SU2 MARKER_LOAD applies traction x face area along the unit direction;
+fea_shoe.py checks this against beam theory on a cantilever strip before it is used.
+
+SU2 v8.5.0 on this machine: linear elements only (tetra, hexa). Linear solver CG + Jacobi: CG + ILU and BCGSTAB were
+5-20x slower, FGMRES stopped with an error, PASTIX is not compiled in (bench 2026-11-10, 12 000-hex strip).
 """
 import subprocess
 from pathlib import Path
@@ -12,57 +15,34 @@ from pathlib import Path
 import numpy as np
 
 SU2_CFD = Path("C:/Users/dillo/tools/su2/bin/bin/SU2_CFD.exe")
+VTK_CELL = {4: 10, 8: 12}          # nodes per cell -> VTK type (tetra, hexahedron)
+VTK_FACE = {3: 5, 4: 9}            # triangle, quad
 
 
-def gmsh_arrays(gmsh, surface_groups):
-    """Nodes (N,3), tets (M,4) 0-based, and {marker: tris (K,3)} from the current gmsh model.
-    surface_groups = {marker: [surface entity tags]}; every boundary surface must be in exactly one group."""
-    tags, xyz, _ = gmsh.model.mesh.getNodes()
-    xyz = np.asarray(xyz).reshape(-1, 3)
-    idx = {int(t): i for i, t in enumerate(tags)}
-    tets = []
-    for _, vtag in gmsh.model.getEntities(3):
-        et, _, en = gmsh.model.mesh.getElements(3, vtag)
-        for t, conn in zip(et, en):
-            if t != 4:
-                raise RuntimeError("non-tetra 3-D element type %d" % t)
-            tets.append(np.asarray(conn).reshape(-1, 4))
-    tets = np.vectorize(idx.get)(np.vstack(tets))
-    markers = {}
-    for name, stags in surface_groups.items():
-        tris = []
-        for s in stags:
-            et, _, en = gmsh.model.mesh.getElements(2, s)
-            for t, conn in zip(et, en):
-                if t != 2:
-                    raise RuntimeError("non-triangle surface element type %d" % t)
-                tris.append(np.asarray(conn).reshape(-1, 3))
-        markers[name] = np.vectorize(idx.get)(np.vstack(tris)) if tris else np.zeros((0, 3), int)
-    # keep only used nodes (OCC can leave orphan geometry nodes)
-    used = np.unique(tets)
-    remap = -np.ones(len(xyz), int)
-    remap[used] = np.arange(len(used))
-    return xyz[used], remap[tets], {k: remap[v] for k, v in markers.items()}
+def write_su2(path, nodes, cells, markers):
+    cells = np.asarray(cells)
+    vt = VTK_CELL[cells.shape[1]]
+    lines = ["NDIME= 3", "NELEM= %d" % len(cells)]
+    lines += ["%d %s %d" % (vt, " ".join(map(str, c)), i) for i, c in enumerate(cells.tolist())]
+    lines.append("NPOIN= %d" % len(nodes))
+    lines += ["%.9g %.9g %.9g %d" % (p[0], p[1], p[2], i) for i, p in enumerate(np.asarray(nodes).tolist())]
+    lines.append("NMARK= %d" % len(markers))
+    for name, f in markers.items():
+        f = np.asarray(f)
+        lines += ["MARKER_TAG= %s" % name, "MARKER_ELEMS= %d" % len(f)]
+        lines += ["%d %s" % (VTK_FACE[f.shape[1]], " ".join(map(str, q))) for q in f.tolist()]
+    Path(path).write_text("\n".join(lines) + "\n")
 
 
-def write_su2(path, nodes, tets, markers):
-    with open(path, "w") as f:
-        f.write("NDIME= 3\nNELEM= %d\n" % len(tets))
-        for i, t in enumerate(tets):
-            f.write("10 %d %d %d %d %d\n" % (t[0], t[1], t[2], t[3], i))
-        f.write("NPOIN= %d\n" % len(nodes))
-        for i, p in enumerate(nodes):
-            f.write("%.9g %.9g %.9g %d\n" % (p[0], p[1], p[2], i))
-        f.write("NMARK= %d\n" % len(markers))
-        for name, tris in markers.items():
-            f.write("MARKER_TAG= %s\nMARKER_ELEMS= %d\n" % (name, len(tris)))
-            for t in tris:
-                f.write("5 %d %d %d\n" % (t[0], t[1], t[2]))
-
-
-def tri_area(nodes, tris):
-    a, b, c = nodes[tris[:, 0]], nodes[tris[:, 1]], nodes[tris[:, 2]]
-    return 0.5 * np.linalg.norm(np.cross(b - a, c - a), axis=1).sum()
+def face_area(nodes, f):
+    """Total area of triangles (K,3) or planar quads (K,4)."""
+    f = np.asarray(f)
+    a, b, c = nodes[f[:, 0]], nodes[f[:, 1]], nodes[f[:, 2]]
+    A = 0.5 * np.linalg.norm(np.cross(b - a, c - a), axis=1)
+    if f.shape[1] == 4:
+        d = nodes[f[:, 3]]
+        A = A + 0.5 * np.linalg.norm(np.cross(c - a, d - a), axis=1)
+    return float(A.sum())
 
 
 CFG = """% generated by redesign/team/C5/sim/su2fea.py
@@ -77,21 +57,21 @@ MARKER_CLAMPED= ( {clamped} )
 MARKER_LOAD= ( {loads} )
 MARKER_PRESSURE= ( {free} )
 LINEAR_SOLVER= CONJUGATE_GRADIENT
-LINEAR_SOLVER_PREC= ILU
-LINEAR_SOLVER_ERROR= 1E-10
-LINEAR_SOLVER_ITER= 20000
+LINEAR_SOLVER_PREC= JACOBI
+LINEAR_SOLVER_ERROR= 1E-9
+LINEAR_SOLVER_ITER= 30000
 INNER_ITER= 1
 MESH_FILENAME= mesh.su2
 MESH_FORMAT= SU2
 OUTPUT_FILES= ( PARAVIEW_ASCII )
 VOLUME_FILENAME= vol
 VOLUME_OUTPUT= ( COORDINATES, SOLUTION, STRESS )
-SCREEN_OUTPUT= ( INNER_ITER, RMS_UTOL, VMS )
+SCREEN_OUTPUT= ( INNER_ITER, LINSOL_ITER, LINSOL_RESIDUAL )
 """
 
 
 def read_vtk(path):
-    """Legacy ASCII VTK from SU2 (PARAVIEW_ASCII): points, displacement and every scalar field (nodal values)."""
+    """Legacy ASCII VTK written by SU2 (PARAVIEW_ASCII): points, displacement and every scalar (nodal values)."""
     tok = Path(path).read_text().split()
     out, i = {}, 0
     while i < len(tok):
@@ -101,15 +81,12 @@ def read_vtk(path):
             out["xyz"] = np.array(tok[i + 3:i + 3 + 3 * n], float).reshape(-1, 3)
             i += 3 + 3 * n
         elif w == "VECTORS":
-            name = tok[i + 1]
             n = len(out["xyz"])
-            out[name] = np.array(tok[i + 3:i + 3 + 3 * n], float).reshape(-1, 3)
+            out[tok[i + 1]] = np.array(tok[i + 3:i + 3 + 3 * n], float).reshape(-1, 3)
             i += 3 + 3 * n
         elif w == "SCALARS":
-            name = tok[i + 1]
-            n = len(out["xyz"])
-            j = i + 3
-            if tok[j] != "LOOKUP_TABLE":          # optional component count present
+            name, n, j = tok[i + 1], len(out["xyz"]), i + 3
+            if tok[j] != "LOOKUP_TABLE":
                 j += 1
             j += 2
             out[name] = np.array(tok[j:j + n], float)
@@ -119,12 +96,11 @@ def read_vtk(path):
     return out
 
 
-def run(case_dir, nodes, tets, markers, E, nu, clamped, loads, free, threads=1, keep=False):
-    """Write the mesh and config, run SU2_CFD (one thread: the threaded build is slower on these sizes), return the
-    nodal fields of vol.vtk plus the solver log summary."""
+def run(case_dir, nodes, cells, markers, E, nu, clamped, loads, free, threads=3, keep=False):
+    """Write mesh + config, run SU2_CFD, return the nodal fields plus linear-solver iterations and log10 residual."""
     case_dir = Path(case_dir)
     case_dir.mkdir(parents=True, exist_ok=True)
-    write_su2(case_dir / "mesh.su2", nodes, tets, markers)
+    write_su2(case_dir / "mesh.su2", nodes, cells, markers)
     ld = ", ".join("%s, 1.0, %.10g, %.6g, %.6g, %.6g" % (m, t, d[0], d[1], d[2]) for m, t, d in loads)
     fr = ", ".join("%s, 0.0" % m for m in free)
     (case_dir / "case.cfg").write_text(CFG.format(E=E, nu=nu, clamped=", ".join(clamped), loads=ld, free=fr))
@@ -134,8 +110,14 @@ def run(case_dir, nodes, tets, markers, E, nu, clamped, loads, free, threads=1, 
     if log.returncode != 0 or not (case_dir / "vol.vtk").exists():
         raise RuntimeError("SU2 failed in %s (see su2.log)" % case_dir)
     out = read_vtk(case_dir / "vol.vtk")
+    rows = [l for l in log.stdout.splitlines() if l.strip().startswith("|") and l.count("|") == 4]
+    try:
+        cols = rows[-1].strip().strip("|").split("|")
+        out["linsol_iter"], out["linsol_log_res"] = int(cols[1]), float(cols[2])
+    except (IndexError, ValueError):
+        out["linsol_iter"], out["linsol_log_res"] = None, None
     if not keep:                                    # the script regenerates everything; keep the folder small
-        for f in ("mesh.su2", "vol.vtk", "restart.csv"):
+        for f in ("mesh.su2", "vol.vtk", "restart.csv", "restart.dat"):
             if (case_dir / f).exists():
                 (case_dir / f).unlink()
     return out

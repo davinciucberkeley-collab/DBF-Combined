@@ -1,0 +1,241 @@
+{
+ "_note": "Written by team/B2/sim/verify_wing.py (B2-R3 verification round) from AVL / XFOIL re-runs on the as-designed params (A1-R4: half-fins 0.21 m, pod 0.14 m, CG range 0.0509-0.0548 m) and by cfd2d_section.py (SU2). Do not edit by hand.",
+ "b2sim": {
+  "avl": {
+   "clmax_vs_sm": {
+    "value": [
+     [
+      0.04,
+      0.8298908323324987
+     ],
+     [
+      0.0425,
+      0.8217728995837391
+     ],
+     [
+      0.045,
+      0.8139805518224494
+     ],
+     [
+      0.0475,
+      0.8061889805111392
+     ],
+     [
+      0.05,
+      0.7986129864986298
+     ],
+     [
+      0.0525,
+      0.7937706777064372
+     ],
+     [
+      0.055,
+      0.7915435206295915
+     ],
+     [
+      0.0575,
+      0.7900621118012421
+     ],
+     [
+      0.06,
+      0.7887596899224805
+     ],
+     [
+      0.0625,
+      0.7873839009287926
+     ],
+     [
+      0.065,
+      0.7860896445131376
+     ],
+     [
+      0.0675,
+      0.7847222222222222
+     ],
+     [
+      0.07,
+      0.7833846153846155
+     ],
+     [
+      0.0725,
+      0.7820769230769231
+     ],
+     [
+      0.075,
+      0.7807515337423312
+     ],
+     [
+      0.0775,
+      0.7794478527607361
+     ],
+     [
+      0.08,
+      0.7781345565749235
+     ]
+    ],
+    "unit": "-",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "[static margin, trimmed CLmax], critical section, props-off NP of the wing + fins; SM 4-8 % by 0.25 %"
+   },
+   "elev_vs_sm": {
+    "value": [
+     [
+      0.04,
+      -8.230581386174643
+     ],
+     [
+      0.0425,
+      -8.618342769087093
+     ],
+     [
+      0.045,
+      -8.99399122413044
+     ],
+     [
+      0.0475,
+      -9.371631419328018
+     ],
+     [
+      0.05,
+      -9.73693048889839
+     ],
+     [
+      0.0525,
+      -10.126661095810316
+     ],
+     [
+      0.055,
+      -10.559636959326172
+     ],
+     [
+      0.0575,
+      -10.995837701863351
+     ],
+     [
+      0.06,
+      -11.427888294573641
+     ],
+     [
+      0.0625,
+      -11.869194256965944
+     ],
+     [
+      0.065,
+      -12.305063863987636
+     ],
+     [
+      0.0675,
+      -12.738651666666666
+     ],
+     [
+      0.07,
+      -13.171700246153847
+     ],
+     [
+      0.0725,
+      -13.60425563076923
+     ],
+     [
+      0.075,
+      -14.035453742331287
+     ],
+     [
+      0.0775,
+      -14.466046134969321
+     ],
+     [
+      0.08,
+      -14.89542116207951
+     ]
+    ],
+    "unit": "deg",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "[static margin, elevon at the trimmed CLmax]"
+   },
+   "xnp_props_off_m": {
+    "value": 0.073765,
+    "unit": "m",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "wing + 0.21 m half-fins, props off, no pod"
+   },
+   "lattice_clmax": {
+    "value": [
+     0.7968968446096718,
+     0.7896704696086033,
+     0.7990040775303117,
+     0.8028555921113297
+    ],
+    "unit": "-",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "trimmed CLmax at SM 5 %, lattice 6x0.5 / 8x0.6 / 12x1 / 16x1.4"
+   },
+   "lattice_xnp": {
+    "value": [
+     0.073711,
+     0.073736,
+     0.073749,
+     0.073782
+    ],
+    "unit": "m",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "same 4 levels"
+   },
+   "cnb_a4": {
+    "value": 0.054174,
+    "unit": "1/rad",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "alpha 4 deg, ref CG target, props off"
+   },
+   "ybar_frac": {
+    "value": 0.421827908643917,
+    "unit": "-",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "lift centroid / semispan, trimmed CL 0.8, SM 5 %"
+   }
+  },
+  "xfoil": {
+   "panel_clmax": {
+    "value": [
+     1.2462,
+     1.2563,
+     1.2625,
+     1.2678
+    ],
+    "unit": "-",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "S5010 clmax at the stall Re, 160/220/300/400 panels"
+   },
+   "clmax_re_slope_per_1e5": {
+    "value": 0.034209320186079445,
+    "unit": "1/1e5",
+    "source": "SRC-B2-XFOIL",
+    "status": "MODELLED",
+    "note": "relative clmax change per 1e5 of Re, S5010 Re 2.0-3.0e5 (linear fit)"
+   }
+  },
+  "hand": {
+   "schrenk_ybar_frac": {
+    "value": 0.46219368514733894,
+    "unit": "-",
+    "source": "B2 hand calc",
+    "status": "MODELLED",
+    "note": "Schrenk rectangular wing, lift centroid / semispan"
+   },
+   "helmbold_cla": {
+    "value": 3.790107138040169,
+    "unit": "1/rad",
+    "source": "B2 hand calc",
+    "status": "MODELLED",
+    "note": "Helmbold, AR 3.59, a0 6.61 /rad (XFOIL)"
+   }
+  }
+ }
+}

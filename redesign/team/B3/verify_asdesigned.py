@@ -221,7 +221,7 @@ GEOU = SC.GEOU
           units={**GEOU, "gap": "m", "zref": "m", "S": "m2", "m": "kg", "rho": "kg/m3", "vt": "m/s"},
           cites=["SRC-B3-AVL"],
           equation="AVL at CL(1.3 Vs, gate) about the A3 CG on coarse / medium / fine / xfine lattices; "
-                   "GCI (Celik 2008) on fine/medium/... triplet (xfine, fine, medium) with r = sqrt(N ratio)")
+                   "GCI (Celik 2008) on (fine, medium, coarse) with r = sqrt(N ratio); xfine as a check")
 def lattice(b, c, ef, yin, yout, fy, fh, fle, fte, fin, gap, cgf, zref, S, m, g, rho, vt):
     xref = cgf * c
     yi, yo = as_built(yin, yout, gap)
@@ -232,11 +232,15 @@ def lattice(b, c, ef, yin, yout, fy, fh, fle, fte, fin, gap, cgf, zref, S, m, g,
         d = AV.derivatives_cl(geo, CL, lv)
         cnt[lv] = lattice_count(AV.avl_geometry(geo, lv))
         rows[lv] = {k: d[k] for k in ("Xnp", "CLa", "Cmd01", "Cld02", "Cnb", "Clb", "Cnr", "Clp", "Alpha")}
-    r21 = math.sqrt(cnt["xfine"] / cnt["fine"])
-    r32 = math.sqrt(cnt["fine"] / cnt["medium"])
+    # GCI on coarse / medium / fine (r 1.42 / 1.67 in sqrt(N)); xfine (AVL's 5000-vortex ceiling, r 1.10) is the
+    # independent check that the extrapolated value is approached from the right side
+    r21 = math.sqrt(cnt["fine"] / cnt["medium"])
+    r32 = math.sqrt(cnt["medium"] / cnt["coarse"])
     out = {"N": cnt, "rows": rows, "r21": r21, "r32": r32, "CL": CL}
     for k in ("Xnp", "CLa", "Cmd01", "Cld02", "Cnb"):
-        out[f"gci_{k}"] = gci3(rows["xfine"][k], rows["fine"][k], rows["medium"][k], r21, r32)
+        out[f"gci_{k}"] = gci3(rows["fine"][k], rows["medium"][k], rows["coarse"][k], r21, r32)
+        fe = out[f"gci_{k}"]["f_ext"]
+        out[f"gci_{k}"]["xfine_minus_ext_rel"] = (rows["xfine"][k] - fe) / fe if fe else None
     out["xnp_xfine"] = rows["xfine"]["Xnp"]
     out["xnp_ext"] = out["gci_Xnp"]["f_ext"]
     out["dxnp_fine_xfine_c"] = abs(rows["xfine"]["Xnp"] - rows["fine"]["Xnp"]) / c
@@ -249,7 +253,7 @@ kit.claim("CL-B3-V-XNP-LATTICE", "Xnp change fine -> xfine lattice, as designed"
           output="dxnp_fine_xfine_c", unit="-", limit=("<=", 0.005),
           how="Re-run verify_asdesigned.py with avl/cache deleted; four-lattice table in results/verify.json.")
 kit.claim("CL-B3-V-CNB-GCI", "Cn_beta (AVL) GCI on the fine lattice, as designed", calc="CALC-B3-V-LATTICE",
-          output="cnb_gci_pct", unit="%", limit=("<=", 2.0), how="As CL-B3-V-XNP-LATTICE.")
+          output="cnb_gci_pct", unit="-", limit=("<=", 2.0), how="As CL-B3-V-XNP-LATTICE.")
 
 
 @kit.calc("CALC-B3-V-HAND", title="Independent checks of AVL: flat-plate VLM, DATCOM fin Cn_beta, strip roll power",
@@ -307,6 +311,7 @@ kit.claim("CL-B3-V-FIN-HAND", "Fin Cn_beta: DATCOM-style hand calc vs AVL (relat
           output="fin_hand_vs_avl", unit="-", how="As CL-B3-V-VLM-XNP.")
 
 
+V_SM_GRID = [0.05, 0.06, 0.07, 0.08]
 VIN = {**SC.CS_IN, "fin": "ASM-B3-V-FIN-CAD", "gap": "ASM-B3-V-ELEVON-GAP", "sm_min": P + "requirements.static_margin_min",
        "travel": P + "wing.elevon.deflection_deg", "tfrac": P + "requirements.elevon_trim_travel_max",
        "kslop": "ASM-B3-SLOP-TRIM-FRAC", "zcg": "ASM-B3-V-ZCG", "m_pred": "CL-A3-MASS-PREDICTED",
@@ -333,13 +338,21 @@ def cg_v(b, c, ef, yin, yout, fy, fh, fle, fte, zref, dcm, eta, tab, m, g, rho, 
     xnp_a = d["Xnp"]
     npv = SC.neutral_point(xnp_a, d["CLa"], n, D, x_prop, S, c, b, cna, up, pod, kpod)
     out = {"x_a3": x_a3, "xnp_aero": xnp_a, "xnp": npv["xnp"], "CLa": d["CLa"], "Cmd": d["Cmd01"], "Cld": d["Cld02"]}
+    grid0 = SC.SM_GRID
+    SC.SM_GRID = V_SM_GRID       # bracket the R4 crossing (SM 0.063) only: 4 AVL trim sweeps per mass instead of 12
     with patched_geometry({"fin_sections": secs}):
+      try:
         for tag, mm in (("gate", m), ("pred", m_pred)):
             r = SC.cg_limits(b, c, ef, yi, yo, fy, fh, fle, fte, zcg, xnp_a, npv["xnp"], dcm, eta, tab, mm, g, rho,
                             S, lo, li, va, slop, vmax, sm_min, travel, tfrac, kslop)
             out[f"x_fwd_{tag}"], out[f"x_aft_{tag}"], out[f"width_{tag}"] = r["x_fwd"], r["x_aft"], r["width"]
             out[f"binding_{tag}"], out[f"x_target_{tag}"] = r["binding"], r["x_target"]
             out[f"table_{tag}"] = r["table"]
+            out[f"sm_fwd_{tag}"] = r["sm_fwd"]
+      finally:
+        SC.SM_GRID = grid0
+    if not (V_SM_GRID[0] < out["sm_fwd_gate"] < V_SM_GRID[-1]):
+        raise RuntimeError("forward-limit crossing outside V_SM_GRID: widen it")
     out["a3_fwd_margin"] = x_a3 - out["x_fwd_gate"]
     out["a3_aft_margin"] = out["x_aft_gate"] - x_a3
     out["a3pred_fwd_margin"] = x_a3_pred - out["x_fwd_pred"]
@@ -454,7 +467,7 @@ kit.claim("CL-B3-V-VT", "1.3 Vs at the as-designed forward limit, gate mass", ca
 
 
 def main():
-    now, _ = cad_check()
+    now, loop = cad_check()
     res = kit.write()
     out = {}
     data = json.loads((HERE / "claims.verify.json").read_text())
@@ -462,6 +475,7 @@ def main():
         if nd.get("type") == "calculation":
             out[nd["id"]] = nd.get("outputs")
     out["cad_now"] = now
+    out["cad_loop"] = [[round(x, 5), round(z, 5)] for x, z in loop]
     out["fin_sections_board"] = fin_sections(FIN_CAD, "BOARD")
     out["fin_sections_tube"] = fin_sections(FIN_CAD, "TUBE")
     (HERE / "results").mkdir(exist_ok=True)
@@ -469,4 +483,5 @@ def main():
     return res
 
 
-if __name__ == "__ma
+if __name__ == "__main__":
+    main()
