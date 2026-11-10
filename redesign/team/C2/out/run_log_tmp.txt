@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\C2\wing_struct.py", line 1225, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\C2\wing_struct.py", line 986, in main
+    mods, nr = modal(nh, sec_lo)
+               ~~~~~^^^^^^^^^^^^
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\C2\wing_struct.py", line 457, in modal
+    Mg, st, _ = assemble_M(ys, sec_fn, config)
+                ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\C2\wing_struct.py", line 383, in assemble_M
+    items = read_mass_items(config)
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\C2\wing_struct.py", line 353, in read_mass_items
+    items.append({"group": r["group"], "station": r["station"], "m": float(r["mass_kg"]),
+                                                                     ~~~~~^^^^^^^^^^^^^^
+ValueError: could not convert string to float: ''

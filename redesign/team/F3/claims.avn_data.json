@@ -21,8 +21,8 @@
    },
    "outputs": {
     "post_clear_m": 0.0,
-    "rx_overhang_m": 0.0035,
-    "tube_path_m": 0.0186,
+    "rx_overhang_m": 0.0,
+    "tube_path_m": 0.0336,
     "gps_tilt_deg": 45.0,
     "ant_offset_m": 0.0005
    },
@@ -30,15 +30,36 @@
     "fit": [
      0.02,
      0.02,
-     0.0035,
-     0.0186,
+     0.0,
+     0.0336,
      45.0,
      0.0005
     ],
     "tmax": [
-     -0.195,
+     -0.21,
      -0.046,
      0.045
+    ]
+   }
+  },
+  {
+   "id": "CALC-F3-CAD-BOOM",
+   "type": "calculation",
+   "title": "Pitot boom stowed envelope",
+   "script": "redesign/team/F3/avn_data.py",
+   "function": "cad_boom",
+   "equation": "L = x_coupler - x_tip; W = max(OD_shoulder, dy + d_barb)",
+   "inputs": {
+    "b": "ASM-F3-CAD-BOOM"
+   },
+   "outputs": {
+    "length_m": 0.1148,
+    "width_m": 0.01
+   },
+   "input_values": {
+    "b": [
+     0.1148,
+     0.01
     ]
    }
   },
@@ -54,14 +75,14 @@
    },
    "outputs": {
     "mass_g": 36.48,
-    "cg_x_m": -0.0198,
+    "cg_x_m": -0.0219,
     "cg_y_m": 0.0011,
     "cg_z_m": 0.062
    },
    "input_values": {
     "r": [
      36.48,
-     -0.0198,
+     -0.0219,
      0.0011,
      0.062
     ]
@@ -75,7 +96,7 @@
    "basis": "team/F3/avn_data.py: seller masses on the envelopes, volumes x densities for printed, gel and silicone parts",
    "value": [
     36.48,
-    -0.0198,
+    -0.0219,
     0.0011,
     0.062
    ],
@@ -91,12 +112,25 @@
    "value": [
     0.02,
     0.02,
-    0.0035,
-    0.0186,
+    0.0,
+    0.0336,
     45.0,
     0.0005
    ],
    "unit": "m,m,m,m,deg,m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F3-CAD-BOOM",
+   "type": "assumption",
+   "title": "Pitot boom stowed envelope from the CAD",
+   "text": "[length m tip to coupler ends, width m]",
+   "basis": "layout(): probe tip to the coupler ends on the root barbs; width = max(shoulder OD, barb spread + barb OD)",
+   "value": [
+    0.1148,
+    0.01
+   ],
+   "unit": "m,m",
    "status": "PROPOSED"
   },
   {
@@ -176,7 +210,7 @@
     "AVN-007"
    ],
    "how": "From the weighed parts at their CAD stations; A3 roll-up.",
-   "value": -0.0198
+   "value": -0.0219
   },
   {
    "id": "CL-F3-AVN-CG-Y",
@@ -233,7 +267,7 @@
    ],
    "how": "Dry fit on the printed tray.",
    "note": "CR-F3-12 asks D2 to extend the plate",
-   "value": 0.0035
+   "value": 0.0
   },
   {
    "id": "CL-F3-PITOT-LINE",
@@ -251,7 +285,7 @@
     "AVN-005"
    ],
    "how": "Cut 40 mm lines, fit, no kink with the boom in and out.",
-   "value": 0.0186
+   "value": 0.0336
   },
   {
    "id": "CL-F3-GPS-TILT-CAD",
@@ -272,16 +306,56 @@
    "value": 45.0
   },
   {
+   "id": "CL-F3-BOOM-STOW-L",
+   "type": "claim",
+   "title": "Pitot boom stowed length, tip to coupler ends (transport slot 220 mm)",
+   "calc": "CALC-F3-CAD-BOOM",
+   "output": "length_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "value": 0.22
+   },
+   "parts": [
+    "AVN-005",
+    "TRN-003"
+   ],
+   "how": "Ruler on the built boom; lay it in the tray slot with the PE plug.",
+   "note": "limit = D7 tray slot length (CR-D7-06, E-TRN-21)",
+   "value": 0.1148
+  },
+  {
+   "id": "CL-F3-BOOM-STOW-W",
+   "type": "claim",
+   "title": "Pitot boom stowed width (transport slot 25 mm)",
+   "calc": "CALC-F3-CAD-BOOM",
+   "output": "width_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "value": 0.025
+   },
+   "parts": [
+    "AVN-005",
+    "TRN-003"
+   ],
+   "how": "Caliper across shoulder and couplers.",
+   "note": "limit = D7 tray slot section 25 x 25 mm (CR-D7-06)",
+   "value": 0.01
+  },
+  {
    "id": "T-F3-ARRIVAL",
    "type": "test",
    "title": "Avionics parts on arrival: weigh, measure, confirm the CoreWing stack split",
    "verifies": [
     "CL-F3-AVN-CAD-MASS",
     "CL-F3-ASPD-POST-CLR",
-    "CL-F3-RX-OVERHANG"
+    "CL-F3-RX-OVERHANG",
+    "CL-F3-BOOM-STOW-L",
+    "CL-F3-BOOM-STOW-W"
    ],
    "state": "planned",
-   "procedure": "0.01 g scale on every AVN part; calipers on FC board, airspeed board (incl. ports), RX, GPS, probe OD; confirm the FC top board runs from the power board on a cable (else fallback: whole stack on the PDB plate on gel cubes, 8 AWG leads with a 30 mm flex loop tied to the tray); record the connector positions for F2; update subsystems/avionics/params.json and re-run avn_data.py"
+   "procedure": "0.01 g scale on every AVN part; calipers on FC board, airspeed board (incl. ports), RX, GPS, probe OD; confirm the FC top board runs from the power board on a cable (else fallback: whole stack on the PDB plate on gel cubes, 8 AWG leads with a 30 mm flex loop tied to the tray); confirm which board carries the output pads 1-6 and the Vx rail and that Vx is not on the GH-6 link (CR-F1-29; if the outputs are on the power board, E-HRN-22/24-29 end on PWR-003 and F2 re-routes); record the connector positions for F2; update subsystems/avionics/params.json and re-run avn_data.py"
   }
  ]
 }

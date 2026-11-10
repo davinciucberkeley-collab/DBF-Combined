@@ -111,11 +111,11 @@
      "note": "aft of the hinge line the elevon panel ends are 15.2 mm from each laminate face: a 15 mm leg leaves 0.2 mm, 13 mm leaves 2.2 mm for the bead edge"
     },
     "leg_fwd_m": {
-     "value": 0.006,
+     "value": 0.004,
      "unit": "m",
-     "source": "D3 choice",
+     "source": "D3 choice (R4b, CR-A3-26)",
      "status": "PROPOSED",
-     "note": "sealing fillet from the boss tail to the start of the effective length (no strength credit)"
+     "note": "sealing fillet from the boss tail to the start of the effective length (no strength credit in CL-D3-ROOT-FILLET-RF or CL-C6-FIN-ROOT-RF). R4b: 6 -> 4 mm (-1.5 g for four roots, mass action CR-A3-26); the 15 mm tape laps still seal the root, the wire hole clears it further"
     },
     "eff_len_m": {
      "value": 0.15,

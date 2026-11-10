@@ -113,8 +113,13 @@ A joint that touches a part placed with `ctx.part(rotate=)` (the 7° canted moto
 UNVERIFIED-IN-FUSION: check the cant after BuildAll). Register it like any other joint.
 
 Keep-outs: `k9.prop_keepout(ctx, name, hub, D, clearance, exempt, rotate=<the motor's rotate tuple>,
-blade_half=<owner's axial half-extent>)` registers the canted prop cylinder; `check.py` tests it exactly against
-each body's box (CR-E1-31b), so the cant is geometry, not margin.
+fwd=<blade envelope ahead of the hub mid-plane>, aft=<behind it>)` (or the symmetric `blade_half=`) registers the
+canted prop zone: swept blade volume plus `clearance` on every face. `check.py` first tests each body's box
+(pre-filter), then the convex hull of the body's vertices (CR-E1-45; revolves as a circumscribed 24-gon), and
+reports a hit only when the hull is closer than `clearance` to the swept blade volume, with that distance in mm.
+Exact for convex bodies; split a strongly concave body (an L-bracket) into convex bodies if it reports a hit its
+material does not make. Do not exempt structure to clear a hit: the owner (E1) and the structure's designer settle
+the gap.
 
 ## 7. Status words
 

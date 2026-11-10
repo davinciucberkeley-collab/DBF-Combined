@@ -41,7 +41,45 @@ def _readouts():
     return r, g
 
 
+def _prop_gap():
+    """Lower bound of the gap from the real wing surfaces (core WNG-001, tape WNG-003) to the upper prop keep-outs
+    KO-PROP-UR/UL (canted cylinders, R = D/2 + requirements.prop_clearance_min_m). Every body's section polygon is
+    sampled densely (21 points per edge x 41 stations across the body span); per point max(|a| - half, rad - R) is a
+    lower bound of its distance to the finite cylinder, so the minimum is a lower bound of the surface gap. check.py's
+    per-body bounding box over-reports here (CR-E1-45, CR-D1-11)."""
+    import build_all
+    from backends.stub_backend import StubBackend
+    root, lst = build_all.roots(False, None, False)
+    ctx, _, _ = build_all.build(StubBackend(), root, lst)
+    best = None
+    for ko in [k for k in ctx.keepouts if k.name.startswith("KO-PROP-U")]:
+        n = [float(v) for v in ko.axis]
+        ln = math.sqrt(sum(v * v for v in n))
+        n = [v / ln for v in n]
+        for pid in ("WNG-001", "WNG-003"):
+            c = ctx.components[pid]
+            for sh in c.shapes:
+                pts = [c.to_world(p) for p in sh.points()]
+                ys = sorted(set(round(p[1], 6) for p in pts))
+                if len(ys) != 2:
+                    continue
+                prof = [p for p in pts if abs(p[1] - ys[0]) < 1e-6]
+                for i in range(len(prof)):
+                    p, q = prof[i], prof[(i + 1) % len(prof)]
+                    for t in range(21):
+                        for k in range(41):
+                            w = (p[0] + (q[0] - p[0]) * t / 20, ys[0] + (ys[1] - ys[0]) * k / 40, p[2] + (q[2] - p[2]) * t / 20)
+                            d = [w[j] - ko.center[j] for j in range(3)]
+                            a = sum(d[j] * n[j] for j in range(3))
+                            rad = math.sqrt(max(0.0, sum(x * x for x in d) - a * a))
+                            gap = max(abs(a) - ko.half, rad - ko.r)
+                            if best is None or gap < best:
+                                best = gap
+    return best
+
+
 _R, _G = _readouts()
+_PROP_GAP = _prop_gap()
 _PARTS = [(p["id"], p["mass_g"], p["cg_xyz_m"]) for p in _IF["parts"]]
 
 # ---------------------------------------------------------------- assumptions (wing-local numbers and CAD read-outs)
@@ -74,7 +112,21 @@ kit.assumption("ASM-D1-RECESS", "Pod recess cut", "Recess front x (upper skin = 
                unit="m", cites=SRC)
 
 
+kit.assumption("ASM-D1-PROP-GAP", "Wing surface outside the upper prop keep-outs (CAD)",
+               "Lower bound of the gap from the core and tape surfaces to KO-PROP-UR/UL (keep-out radius already includes "
+               "requirements.prop_clearance_min_m)",
+               basis="team/D1/wing_claims.py#_prop_gap: all modules stub-built, wing section polygons sampled densely against the "
+                     "canted keep-out cylinders registered by subsystems/propulsion/fusion/propulsion.py",
+               value=round(_PROP_GAP, 5), unit="m", cites=SRC)
+
+
 # ---------------------------------------------------------------- calculations
+@kit.calc("CALC-D1-PROP-GAP", equation="gap = min over sampled wing surface points of max(|a| - half, rad - R) to each KO-PROP-U*",
+          inputs={"g": "ASM-D1-PROP-GAP"})
+def prop_gap(g):
+    return {"gap": g}
+
+
 @kit.calc("CALC-D1-MASS", equation="wing mass = sum of the CAD part masses; CG x = sum(m x) / sum(m)",
           inputs={"m": "ASM-D1-PART-MASSES", "x": "ASM-D1-PART-CGX"})
 def mass(m, x):
@@ -147,6 +199,10 @@ kit.claim("CL-D1-RECESS-X1", "Pod recess aft end (4 mm of foam ahead of the spar
           parts=CORE + ["POD-001"], how="Steel rule from the LE on the cut recess (CR-D2-04: 0.065).")
 kit.claim("CL-D1-RECESS-UNDER", "Foam under the pod recess floor at its aft end", calc="CALC-D1-RECESS", output="under", unit="m",
           limit=(">=", 0.010), parts=CORE + ["POD-001"], how="Depth gauge in the recess; subtract from the local thickness.")
+kit.claim("CL-D1-PROP-SURF-GAP", "Wing surface outside the upper prop keep-outs (real surface, not bounding box)", calc="CALC-D1-PROP-GAP",
+          output="gap", unit="m", limit=(">=", 0.0), parts=CORE + ["WNG-003", "PRP-001-UR", "PRP-001-UL"],
+          how="On the first assembled wing: rule from each upper prop tip, turned by hand, to the upper skin near the LE "
+              "at |y| 0.30-0.34; must exceed requirements.prop_clearance_min_m plus this gap.")
 
 kit.test("T-D1-WEIGH", "Weigh every wing part", verifies=["CL-D1-WING-MASS", "CL-D1-WING-CG-X"],
          procedure="1 g scale: core after cutting and pocketing, spar, 4 plugs, tape roll before / after skinning, each elevon, finished wing; "

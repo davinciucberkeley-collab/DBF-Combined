@@ -60,6 +60,9 @@ slot in where marked **→**.
 12. **→ Mechanisms (D6):** torque tubes in the panel grooves, servo frames in the pockets (lead up through the hole),
     horns, link through the lower fin slot, hinge tape, covers.
     **Check (T-D1-THROW):** each panel ±25° by hand, a 0.5 mm feeler passes at the lower edge at +25°.
+    **→ Landing (D5):** after the tip tape layer, D5 fits the TPU corner caps `GER-007-L/R` on the fixed TE tip
+    corners (|y| 560–575 mm, outboard of the elevon end) with two wraps of 12 mm filament tape (`E-GER-21/22`);
+    keep the cap off the outboard elevon (1 mm gap at y 559) and off the CG-jig patch at |y| 450.
 13. **Label.** FAA number on the right upper skin, x 115–215, y 375–405 mm; clear tape round the edge.
 14. **Weigh and balance (T-D1-WEIGH).** Weigh each part as it is made (core after step 9, tube + plugs after step 6,
     tape roll before / after step 11, panels, label): sum 387.3 g `EST` (allocation 405 g). Record in the `team/A3`

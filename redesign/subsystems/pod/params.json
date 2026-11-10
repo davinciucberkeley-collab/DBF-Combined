@@ -1,5 +1,5 @@
 {
- "_note": "Pod-local dimensions (D2, revision D2-R5 on params A1-R4, D-47 re-lay). Shared numbers (pod LE, L x W x H, base, board thickness, pack size, pack nominal centroid, spar station, pitot tip) come from redesign/params/params.json; these are the pod-only ones. Read by subsystems/pod/fusion/pod.py, team/D2/pod_data.py and team/D2/pod_claims.py. Metres unless stated.",
+ "_note": "Pod-local dimensions (D2, revision D2-R5a on params A1-R4a, D-47 re-lay + D-59 aft travel). Shared numbers (pod LE, L x W x H, base, board thickness, pack size, pack nominal centroid, spar station, pitot tip) come from redesign/params/params.json; these are the pod-only ones. Read by subsystems/pod/fusion/pod.py, team/D2/pod_data.py and team/D2/pod_claims.py. Metres unless stated.",
  "nose_block_l_m": {
   "value": 0.001,
   "unit": "m",
@@ -21,19 +21,19 @@
  "pack_aft_face_m": {
   "value": [
    0.048,
-   0.056
+   0.06
   ],
   "unit": "m",
-  "source": "params/CHANGE-LOG.md#D-47",
+  "source": "params/CHANGE-LOG.md#D-47, #D-59 (CR-A1-54)",
   "status": "PROPOSED",
-  "note": "pack aft face: nominal 550 g pack at pod.pack_x_nominal_m -0.022 (8 mm spacer) and the 680 g pack at -0.014 (no spacer, on the aft stop). Pack 0.140 long. Read by F2 harness.py and A5 cad_claims.py; pod.py checks it against pod.pack_x_nominal_m"
+  "note": "pack aft face: CAD pack at the datum pod.pack_x_nominal_m -0.022 (12 mm stack, blue 8 + yellow 4, CR-A1-54) and the 680 g pack at -0.010 (no spacer, on the aft stop, D-59). Pack 0.140 long. Read by F2 harness.py and A5 cad_claims.py; pod.py checks item 0 against pod.pack_x_nominal_m"
  },
  "aft_stop_x_m": {
-  "value": 0.056,
+  "value": 0.06,
   "unit": "m",
-  "source": "params/CHANGE-LOG.md#D-47",
+  "source": "params/CHANGE-LOG.md#D-59 (CR-A1-54)",
   "status": "PROPOSED",
-  "note": "aft stop face (D-47: 0.077 -> 0.056): the 680 g pack's aft face at -0.014, so the heaviest listed pack flies with no spacer"
+  "note": "aft stop face = pod.pack_x_nominal_m + L_pack/2 + pod.pack_aft_travel_m = -0.022 + 0.070 + 0.012 = 0.060 (D-59; was 0.056 at D-47, 0.077 before). The no-spacer station is -0.010 (680 g). Back face 0.063, 2 mm ahead of the tray end 0.065; spar saddle POD-007 stays at x 0.080"
  },
  "aft_stop_m": {
   "value": [
@@ -43,17 +43,17 @@
   "unit": "m",
   "source": "team/C3/CHANGE-REQUESTS.md#CR-C3-01 + D2",
   "status": "PROPOSED",
-  "note": "thickness (C3: 3.0 mm, 2 mm root fillet) x top above the pack underside (pack centroid + 2 mm). R5: printed with the tray rear piece (POD-002) with 2 gussets; at x 0.056 it is 9 mm ahead of the recess end, over the tray, so it no longer stands on the handle bridge. +x load: stop -> tray rear bond (3 960 mm2) -> floor -> pod-wing bond"
+  "note": "thickness (C3: 3.0 mm, 2 mm root fillet) x top above the pack underside (pack centroid + 2 mm). Printed with the tray rear piece (POD-002). R5a (D-59): at x 0.060 the back face is 0.063, 2 mm ahead of the recess end; C3 sized the stop without the gussets (CL-C3-AFT-STOP-D2, 14.0 vs 15 MPa across layers), so the 2 mm root ribs are a fillet, not a load path. +x load: stop -> tray rear bond -> floor -> pod-wing bond"
  },
  "gusset_m": {
   "value": [
-   0.006,
+   0.002,
    0.003
   ],
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "two triangular gussets behind the aft stop at the bay edges, on the tray rear piece: length aft (to the tray end 0.065) x thickness (CR-C5-07: the stop is not a cantilever off the floor alone)"
+  "note": "R5a (D-59): two root ribs behind the aft stop at the bay edges, length aft x thickness; with the stop face at 0.060 only 2 mm of tray remain behind it (tray end 0.065), so they shrink 6 -> 2 mm and act as the C3 root fillet at the edges. C3's stop check ignores them (CR-D2-23)"
  },
  "bay_min_m": {
   "value": [
@@ -128,16 +128,17 @@
   "unit": "m",
   "source": "params/CHANGE-LOG.md#D-47",
   "status": "PROPOSED",
-  "note": "printed U-spacers behind the pack (POD-008): any even stack 0-28 mm. Crash-safe stack per pack = 35.7 mm - C5 block minimum for that mass: 680 g <= 2 mm, 550 g <= 10 mm, 503 g <= 12 mm (D-47 0-22 mm is the bay travel, not the crash-safe range). Colour by thickness: 2 white, 4 yellow, 6 green, 8 blue; each pack label carries its stack: 680 g none, 550 g blue, 503 g blue + white"
+  "note": "printed U-spacers behind the pack (POD-008): any even stack 0-28 mm. D-59 (aft stop 0.060): stop-to-stop room beyond the pack and spreader is 39.7 mm, so the crash-safe stack per pack = 39.7 mm - C5 block minimum for that mass: 680 g <= 6 mm, 550 g <= 14 mm, 503 g <= 16 mm. Colour by thickness: 2 white, 4 yellow, 6 green, 8 blue; each pack label carries its stack (D-59): 680 g none, 550 g blue (8), 503 g blue + green (14)"
  },
  "spacer_flown_m": {
   "value": [
-   0.008
+   0.008,
+   0.004
   ],
   "unit": "m",
-  "source": "D2 choice",
+  "source": "team/A1/CHANGE-REQUESTS.md#CR-A1-54",
   "status": "PROPOSED",
-  "note": "spacers in the CAD (nominal 550 g pack: one blue 8 mm); the rest live in the field kit"
+  "note": "spacers in the CAD: the pack at the datum -0.022 with a 12 mm stack (blue 8 + yellow 4), as CR-A1-54 asks; the 550 g flight station is -0.018 with blue alone (D-59). The rest live in the field kit"
  },
  "spacer_h_m": {
   "value": 0.012,
@@ -146,10 +147,11 @@
   "status": "PROPOSED"
  },
  "spacer_bar_m": {
-  "value": 0.005,
+  "value": 0.004,
   "unit": "m",
   "source": "D2 choice",
-  "status": "PROPOSED"
+  "status": "PROPOSED",
+  "note": "U-spacer leg width and bar (bar height 0.6 x this). R5a: 5 -> 4 mm (-0.4 g on the 12 mm CAD stack) to pay for the D-59 12 mm stack inside the 131 g allocation; bearing on the pack aft face 200 mm2 per 12 mm stack, 0.4 MPa at the 85 N crash load"
  },
  "spreader_t_m": {
   "value": 0.0015,
@@ -199,7 +201,7 @@
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "strap slot centres: quarter points of the 140 mm pack at the middle of the D-47 stations (centroid -0.019); the 37 mm slots follow the pack from -0.026 to -0.012"
+  "note": "strap slot centres: quarter points of the 140 mm pack at the middle of the D-47 stations (centroid -0.019). D-59 range -0.024 ... -0.010: the 37 mm slots keep a 20 mm strap on the quarter points for centroids -0.0275 ... -0.0105; the 680 g pack at -0.010 has its straps 0.5 mm forward of its quarter points (strap at the slot end), accepted"
  },
  "strap_slot_m": {
   "value": [
@@ -330,7 +332,7 @@
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "hatch opening ends here; fixed aft deck behind it. R5: every pack (aft face <= 0.056) and the aft stop are now inside the opening, nothing tucks under the deck"
+  "note": "hatch opening ends here; fixed aft deck behind it. R5a: every pack (aft face <= 0.060) and the aft stop (back face 0.063) are inside the opening"
  },
  "lip_m": {
   "value": [
@@ -665,14 +667,14 @@
  },
  "pack_x_per_pack_m": {
   "value": {
-   "503": -0.0245,
-   "550": -0.022,
-   "680": -0.014
+   "503": -0.024,
+   "550": -0.018,
+   "680": -0.01
   },
   "unit": "m",
-  "source": "params/CHANGE-LOG.md#D-47 (pod.pack_x_nominal_m note)",
+  "source": "params/CHANGE-LOG.md#D-59 (CR-A1-54)",
   "status": "PROPOSED",
-  "note": "A1's centroid station per weighed pack (g -> m). D2 meets each with the 2 mm spacer steps: 680 g no spacer (-0.014), 550 g 8 mm (-0.022), 503 g 10 mm (-0.024, 0.5 mm aft of -0.0245: +0.12 mm CG). Other pack masses: interpolate, round the spacer to 2 mm"
+  "note": "A1 D-59 flight station per weighed pack (g -> m), met with 2 mm spacer steps: 680 g none (-0.010, on the aft stop), 550 g 8 mm blue (-0.018), 503 g 14 mm blue + green (-0.024). H3 writes the station from A3's roll-up re-run on the balance-test day (CR-A3-27); this table is the D-59 decision, not the live roll-up"
  },
  "spacer_colour": {
   "value": {

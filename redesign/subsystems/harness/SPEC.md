@@ -1,7 +1,7 @@
 # Harness (HRN)
 
 Owner F2 · gauges F1 · status `PROPOSED` (routes `MODELLED` in `fusion/harness.py`, numbers `CHECKED` by
-`team/F2/harness.py`) · revision F2-R2, 2026-11-09. Re-check: `python -I redesign/team/F2/harness.py` → `python -I
+`team/F2/harness.py`) · revision F2-R3, 2026-11-10. Re-check: `python -I redesign/team/F2/harness.py` → `python -I
 redesign/fusion/check.py` → `python -I redesign/interfaces/merge_check.py` → `python -I redesign/proofs/build_graph.py`.
 
 **Purpose.** Every wire and connector between the pack, power stack, FC, sensors, ESCs, caps, motors and servos,
@@ -22,17 +22,17 @@ their wire mass, so the declared CG is the CAD centroid (CR-A5-27).
 | ESC power leads 16 AWG, routed UR / UL / LR / LL | 0.595 / 0.475 / 0.620 / 0.497 | m | `CL-F2-ESC-LEN-*` | `CHECKED` (calc) |
 | 10 AWG jumpers cups → board / board → bars (F1 sized 0.030 / 0.050); path ≤ 0.15 | 0.030 / 0.050; 0.080 | m | `CL-F2-MAIN-1-LEN`, `-2-LEN`, `CL-F2-MAIN-LEN` | `UNVERIFIED` (`ASM-F2-PWR-STACK`) |
 | ESC cap legs, cap → pads (≤ 0.020) | 0.011 | m | `CL-F2-CAP-LEAD` | `CHECKED` |
-| Phase reach ESC pad → motor lead exit / extension needed (≤ 0.10) | 0.121 / 0.061 | m | `CL-F2-PHASE-REACH`, `-EXT` | `UNVERIFIED` (motor lead unpublished) |
+| Phase reach ESC pad → motor lead exit / extension needed (≤ 0.10) | 0.116 / 0.056 | m | `CL-F2-PHASE-REACH`, `-EXT` | `UNVERIFIED` (motor lead unpublished) |
 | I²C bus total (≤ 0.5) / RX lead (≤ 0.15) | 0.461 / 0.116 | m | `CL-F2-I2C-LEN`, `CL-F2-RX-LEN` | `UNVERIFIED` (`ASM-F2-FC-PORTS`, ±10 mm) |
 | Longest DShot lead (≤ 0.7 `ASM`) | 0.674 | m | `CL-F2-DSHOT-LEN` | `UNVERIFIED` (+4 %, `T-F2-DSHOT`) |
 | Longest servo circuit FC → servo case / terminal voltage, both stalled at 1.4 A (≥ 5.7) | 0.558 / 5.74 | m / V | `CL-F2-SERVO-LEN`, `-SERVO-V` | `UNVERIFIED` (+1 %) |
 | ESC-lead grooves to the GPS module (≥ 0.12) | 0.180 | m | `CL-F2-GROOVE-MAST` | `CHECKED` |
 | Worst bend: allowed / required radius (k × OD) | 1.02 | — | `CL-F2-BEND` | `CHECKED` |
-| Longest free span in the slipstream (≤ 0.05) | 0.049 | m | `CL-F2-FREE-SPAN` | `CHECKED` (phase run) |
+| Longest free span in the slipstream (≤ 0.05) | 0.047 | m | `CL-F2-FREE-SPAN` | `CHECKED` (phase run) |
 | Fullest pass (straw / grommet, ≤ 0.40) | 0.31 | — | `CL-F2-FILL` | `CHECKED` |
-| Harness mass, basic (allocation 123, D-48) | 118.1 (106 if no phase extension) | g | `CL-F2-MASS` | `CHECKED` (+4 %) |
+| Harness mass, basic (allocation 123, D-48) | 117.3 (106.4 if no phase extension) | g | `CL-F2-MASS` | `CHECKED` (+5 %) |
 | Harness CG x (wire mass) | 0.064 | m | `CL-F2-CG-X` | `CHECKED` |
-| Declared CG (body centroid) vs wire-mass CG, worst bundle (≤ 0.010) | 6.4 (pod), 0.4 (wing-fin) | mm | `CL-F2-CG-BODY` | `CHECKED` |
+| Declared CG (body centroid) vs wire-mass CG, worst bundle (≤ 0.010) | 6.4 (pod), 0.5 (wing-fin) | mm | `CL-F2-CG-BODY` | `CHECKED` |
 
 ## Routing (aircraft frame, m)
 
@@ -46,7 +46,7 @@ their wire mass, so the declared CG is the CAD centroid (CR-A5-27).
 | Wing, lower | LR/LL pair + DShot through P1 (7 mm straw, 45° slant, y 0.092 → 0.122), same grooves on the lower surface | straw liner, lips sanded R ≥ 12 mm |
 | Fin root | groove end → tie at the boss-tail lug (x 0.071, inboard) → Ø 8 mm hole through the half-fin at x 0.086, **22 mm off the skin** (z +0.0447 / −0.0307, D3) → outboard face | printed ASA grommet 10/7 mm; the tie point resets the free span |
 | Fin face | tape strips every ≤ 50 mm; the pair rises **below** the ESC and lands on its aft-end power pads from underneath (x 0.122); the 680 µF cap sits in line aft of the ESC (x 0.127–0.147) and its legs fold forward onto the same pads (11 mm) | never under the ESC strap or over its FET face (E3) |
-| Phase | ESC phase end (x 0.078) → collar-tail lug tie → motor lead exit; 3 staggered soldered splices, outer sleeve | ≥ 5 mm off the bell; phase order labelled (F4 rotation) |
+| Phase | ESC phase end (x 0.078) → up the outboard face at x 0.066 → tie at the collar-tail front (x 0.060, 1.5 mm under the tail top edge, on the outboard wall face) → free 47 mm → motor lead exit; 3 staggered soldered splices, outer sleeve | ≥ 5 mm off the bell; phase order labelled (F4 rotation). D3's lug sits at x 0.084 today, where the free run would be 62 mm: CR-F2-16 moves it |
 | Servo | aft exit → groove x 0.108 (aft of the slot) → D1 upper branch groove along \|y\| 0.285 → JR in-line in an 18 × 10 × 5 mm recess (x 0.150–0.168, CR-F2-14) → servo's own lead (cut to 40 mm, re-terminated) → D1 lead hole x 0.173–0.177 (4 mm straw) → D6 lower pocket → case front | 4.0 × 1.6 mm groove; recess under a re-openable tape flap |
 | GPS / sensors | GPS cable up the right side wall (z 0.06) → right handle-leg window and bore → grip → mast → connector (0.081, 0, 0.183); RX, airspeed I²C branch and power-board link cross under the pack in D2's floor channel at **x −0.0245**; left-side runs pass inboard of the RX | GPS cable alone, crosses power at 90°, ≥ 25 mm above the UBEC |
 
@@ -71,7 +71,7 @@ the propulsion path, −15.6 g vs 12 × 3.5 mm bullets).
 | Id | Part | Qty | Each g |
 |---|---|---|---|
 | `HRN-001` | Pod bundle (lumped, carried) | 1 | 40.7 |
-| `HRN-002-R/L` | Wing-fin bundle (lumped, carried) | 2 | 38.7 / 38.6 |
+| `HRN-002-R/L` | Wing-fin bundle (lumped, carried) | 2 | 38.3 / 38.2 |
 | `HRN-101…112` | wire 16/20/26/28 AWG, JR and JST-GH kits, heat-shrink, ties, PET sleeve, grommets, straws | — | 0 (in bundles); $68 `EST`, prices `UNVERIFIED` |
 
 ## Interfaces
@@ -79,22 +79,22 @@ the propulsion path, −15.6 g vs 12 × 3.5 mm bullets).
 | With | Edges | State |
 |---|---|---|
 | pod (D2) | `E-HRN-01` tie bar on the tray | declared, acknowledged |
-| wing (D1) | `E-HRN-02/04` groove channels | declared; wing to acknowledge |
-| fins (D3) | `E-HRN-03/05` boss-tail ties, `E-HRN-06…09` collar ties | declared, acknowledged (CR-D3-23) |
-| power (F1) | `E-HRN-10…16`, `-21…23`, `-33`; caps `-34…37` | declared; power to acknowledge (CR-F1-18 says it will) |
-| propulsion (E1) | `E-HRN-13…20`, `-24…27`, `-34…37` | declared; propulsion to acknowledge |
-| avionics (F3) | `E-HRN-22…32` | declared; avionics to acknowledge |
-| mechanisms (D6) | `E-HRN-28/29` | declared; mechanisms to acknowledge (CR-D6-05) |
+| wing (D1) | `E-HRN-02/04` groove channels | declared; wing to acknowledge (CR-F2-04) |
+| fins (D3) | `E-HRN-03/05` boss-tail ties, `E-HRN-06…09` collar ties | declared, acknowledged (CR-D3-23); collar lug position CR-F2-16 |
+| power (F1) | `E-HRN-10…16`, `-21…23`, `-33`; caps `-34…37` | declared, acknowledged |
+| propulsion (E1) | `E-HRN-13…20`, `-24…27`, `-34…37` | declared, acknowledged |
+| avionics (F3) | `E-HRN-22…32` | declared; avionics to acknowledge (CR-F2-17) |
+| mechanisms (D6) | `E-HRN-28/29` | declared, acknowledged |
 
 ## Mass budget
 
 | Item | g | Maturity |
 |---|---|---|
 | ESC power leads 16 AWG (R pair 39.3, L pair 31.4) | 70.6 | CALC |
-| Phase extensions (0 if the factory leads reach) | 11.8 | EST |
+| Phase extensions (0 if the factory leads reach) | 10.9 | EST |
 | DShot 5.3 · servo + fuse/UBEC feed + rail 9.0 · JST-GH cables 4.3 | 18.5 | CALC |
 | Fittings (JR, GH, splices, grommets, ties, tape, sleeves, straws) | 17.2 | EST |
-| **Total / allocation** | **118.1 / 123** | `CHECKED` +4 % |
+| **Total / allocation** | **117.3 / 123** | `CHECKED` +5 % |
 
 Not booked here: 10 AWG jumpers (PWR-002), cap legs (PWR-008), pack lead (PWR-001), servo's own lead (MEC-001).
 

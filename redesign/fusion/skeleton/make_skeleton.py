@@ -3,13 +3,15 @@ cg_xyz_m from its CAD centroid (stub build). Owner: A5.
 
     python -I redesign/fusion/skeleton/make_skeleton.py
 
-The skeleton is the reference layout every designer starts from, at params.json revision A1-R3 (geometry R3:
-motor tubes 0.344 m through the core at x 0.045, upper and lower 0.21 m half-fins, each braced by a CF strip from a
-station collar (DX-COLLAR) to an anchor on the spar (DX-ANCHOR), printed through-core blocks, mounts on the tube
-ends with the motor face at DP-MOTOR-FACE (7 deg cant not modelled), 48 mm feet splayed to the pad contact
-(DX-FOOT), pod 0.21 x 0.14 at x -0.115 with the pack at the D-24 station, 11x5.5MR props, transport box from
-requirements.box_external_m). One envelope per part at the DATUMS.md stations, masses split from
-params.json#mass.allocation_g (sum = the 2 324 g allocations, D-38; the 276 g A1 reserve is not placed).
+The skeleton is the reference layout every designer starts from. Geometry R3 with the R4 stations read from
+params.json (revision shown in each generated file's _note): motor tubes 0.344 m through the core at x 0.045, upper
+and lower 0.21 m half-fins, each braced by a CF strip from a station collar (DX-COLLAR) to an anchor on the spar
+(DX-ANCHOR), printed through-core blocks, mounts on the tube ends with the motor face at DP-MOTOR-FACE (7 deg cant
+not modelled), 48 mm feet splayed to the pad contact (DX-FOOT), pod from pod.x_le_m / pod.size_m with the pack at
+D2's pack_aft_face_m (D-47 datum), 11x5.5MR props, transport box from requirements.box_external_m. One envelope per
+part at the DATUMS.md stations, masses split from params.json#mass.allocation_g (sum = the allocations, 2 355 g at
+D-48; the A1 reserve is not placed). The lumps are allocations, not parts: since D-47 the layout CG sits about
+5.5 mm ahead of the delivered aircraft, so it is information only (team/A5/cad_claims.py, CR-A5-31).
 Part ids <PREFIX>-9xx (9xx is reserved for the skeleton; real subsystems number from 001); one node per physical
 instance, id <part>-<UR|UL|LR|LL|L|R> (README, CR-A3-09). It is not the design. Re-run after any params.json change,
 then python -I redesign/fusion/check.py --skeleton --strict.
@@ -176,7 +178,7 @@ SPEC = {
         'edges': [edge('E-POD-901', 'POD-901', 'WNG-901', 'CT-EPOXY', 'pod', 'bonded + strapped')],
         'acknowledges': ['E-PWR-901', 'E-PWR-902', 'E-AVN-901']},
     'power': {
-        'parts': [part('PWR-901', 'Flight pack 4S 6500 (envelope at the D-24 station)', PACK_G, 'LiPo', 'buy'),
+        'parts': [part('PWR-901', 'Flight pack 4S 6500 (envelope at the D-47 bay datum)', PACK_G, 'LiPo', 'buy'),
                   part('PWR-902', 'Disconnect, main leads, UBEC (lump)', A('power') - PACK_G, 'copper + PVC', 'buy')],
         'edges': [edge('E-PWR-901', 'PWR-901', 'POD-901', 'CT-STRAP-VELCRO', 'power'),
                   edge('E-PWR-902', 'PWR-902', 'POD-901', 'CT-CA', 'power', 'foam tape (bond)')]},

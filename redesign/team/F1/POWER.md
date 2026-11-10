@@ -1,17 +1,19 @@
 # Power distribution — K09-L
 
-F1, revision F1-R3, 2026-11-09. R3 re-runs the analysis on F2's routed ESC leads (CR-F2-02), the 10 AWG main
+F1, revision F1-R4, 2026-11-10. R3 re-ran the analysis on F2's routed ESC leads (CR-F2-02), the 10 AWG main
 jumpers of the PWR-R1 stack, E2's phase claims (CR-E2-19), the D-56 limit keys, D6's servo (CR-D6-06) and the
-D-48 allocations. Status: `PROPOSED`. Every number is `MODELLED` by `team/F1/power.py`. Nothing is bench-tested.
+D-48 allocations. R4 re-runs it on F2's harness re-run of 2026-11-09 (ESC leads trimmed to 0.475–0.620 m), adds
+the power-board link check (`CL-F1-PMOD-*`) and acknowledges the power wires in `subsystems/power/interfaces.json`. Status: `PROPOSED`. Every number is `MODELLED` by `team/F1/power.py`. Nothing is bench-tested.
 Re-check: `python -I redesign/team/F1/power.py`, `python -I redesign/team/F1/draw_schematic.py`, then
 `python -I redesign/proofs/build_graph.py`. Physical design: `subsystems/power/SPEC.md`.
 
 **Verdict:** the main disconnect is the **Amass AS150U** (anti-spark). The pack plugs into a screwed stack in the
 pod's left channel: AS150U cradle, then two **10 AWG jumpers of 50 mm or less**, the CoreWing power board (sensing),
-and a bus board with two 8 AWG bars. Four **16 AWG** ESC leads run from the bars, routed by F2 at 0.512–0.650 m.
-A **6 V UBEC** feeds the servos through a 5 A fuse. The propulsion path has no fuse. R3 leaves one check failing: the
-voltage drop at the 100 A limiter is 5.03 % against the 5 % target, because the LR lead is 7 mm longer than the
-0.643 m that target allows (CR-F1-25).
+and a bus board with two 8 AWG bars. Four **16 AWG** ESC leads run from the bars, routed by F2 at 0.475–0.620 m.
+A **6 V UBEC** feeds the servos through a 5 A fuse. The propulsion path has no fuse. In R4 every F1 check passes:
+F2's trim brought the LR lead to 0.620 m, inside the 0.643 m that keeps the drop at the 100 A limiter under 5 %
+(4.89 %), so CR-F1-25 is closed. The tightest margins are the drop at 100 A (+2 %) and the bundled 16 AWG
+runs (+5 %).
 
 ![K09-L power schematic](power-schematic.svg)
 
@@ -74,12 +76,14 @@ All three were F1 assumptions in R2. The six rise claims now point at these keys
 | Same if the pack ships with 12 AWG | 12 AWG | 0.10 m | 30.3 A | **28.5 °C, fails** | — / 43.7 °C | 1.22 mΩ | 0.25 % | — | `CL-F1-PACKLEAD12-RISE` | pack not accepted |
 | Main jumpers AS150U → board → bars (W-MAIN-1 + -2) | **10 AWG** | 0.030 + 0.050 m | 30.3 A | **0.5 °C above the joints** | 17.2 / 19.5 °C | 0.59 mΩ | 0.12 % | 9.8 g | `CL-F1-MAIN-RISE`, `-PEAK` | `MODELLED` |
 | Same 10 AWG if run long (bound only) | 10 AWG | — | 30.3 A | 16.4 °C, over the limit | — | — | — | — | `CL-F1-MAIN-RISE-LONG` | never extend the jumpers |
-| Bus → ESC ×4, open groove run (UR/UL/LR/LL) | **16 AWG** | 0.626 / 0.512 / 0.650 / 0.534 m | 8.4 A | 9.2 °C | 13.8 / 17.6 °C | 14.8–18.8 mΩ | 1.07 % (LR) | 75.1 g | `CL-F1-ESC-RISE`, `-PEAK`, `-MASS` | `MODELLED` |
+| Bus → ESC ×4, open groove run (UR/UL/LR/LL) | **16 AWG** | 0.595 / 0.475 / 0.620 / 0.497 m | 8.4 A | 9.2 °C | 13.8 / 17.6 °C | 13.7–17.9 mΩ | 1.02 % (LR) | 70.7 g | `CL-F1-ESC-RISE`, `-PEAK`, `-MASS` | `MODELLED` |
 | Bundle: P1 straw, LR + LL pairs | 16 AWG | 0.05 m | 8.4 A | 9.5 °C | — / 23.7 °C | — | — | — | `CL-F1-BUNDLE-RISE`, `-PEAK` | `MODELLED` |
 | Bundle: pod crossing, 2 twisted pairs stacked | 16 AWG | 0.09 m | 8.4 A | 9.5 °C | — / 18.8 °C | — | — | — | same | `MODELLED` |
-| 18 AWG ESC alternative | 18 AWG | 0.650 m | 8.4 A | **16.4 °C, fails** | 31.0 / 41.8 °C | 30.7 mΩ | 1.74 % | 46.2 g | `CL-F1-ESC18-RISE` | rejected |
+| 18 AWG ESC alternative | 18 AWG | 0.620 m | 8.4 A | **16.4 °C, fails** | 31.0 / 41.8 °C | 29.2 mΩ | 1.66 % | 43.5 g | `CL-F1-ESC18-RISE` | rejected |
 | Bars → fuse → UBEC | 20 AWG | 0.15 m | 1.3 A (servos stalled) | 0.8 °C | — | 10.6 mΩ | 0.10 % | 2.0 g | `CL-F1-FEED-RISE` | `MODELLED` |
 | UBEC → servo bus | 20 AWG | 0.35 m | 2.8 A (both stalled) | 3.6 °C | — | 25.1 mΩ | 0.47 % of 6 V rail | 4.6 g | `CL-F1-BUS-RISE` | `MODELLED` |
+| Power-board link to the FC, 5 V conductor (W-PMOD, GH-6) | 28 AWG | 0.164 m | 0.87 A (2 × FC 5 V load, `CL-F3-5V-REQ`) | 2.7 °C | — | — | — | F2 | `CL-F1-PMOD-RISE` | `MODELLED` |
+| Same link if the servo current ran through it | 28 AWG | 0.164 m | 2.8 A (both stalled) | **24.7 °C, fails** | — | — | — | — | `CL-F1-PMOD-SERVO-RISE` | not accepted: no Vx on the link (CR-F1-29) |
 | Motor phase leads | motor's own + F2 extension | F2 | — | — | — | — | — | F2 | — | F2 |
 
 The 10 AWG jumpers are short enough that conduction to their soldered ends sets their temperature. Their mid-point
@@ -106,17 +110,17 @@ Steady rise by gauge (`data/gauge_sweep.csv`):
 | Item | Value | Unit | Source | Status |
 |---|---|---|---|---|
 | Common path: 2 AS150U contacts 1.6 + board/shunt/joints 0.6 + 10 AWG jumper loop 0.59 | 2.79 | mΩ | `ASM-F1-R-CONTACT`, `ASM-F1-R-BOARD`, `CALC-F1-WIRES` | `UNVERIFIED` |
-| ESC branch loops, hot (UL shortest … LR longest) | 14.8 … 18.8 | mΩ | `CALC-F1-WIRES` | `MODELLED` |
-| Equivalent pack terminals → ESC pads (4 branches in parallel), hot | **6.94** (was 6.5) | mΩ | `CL-F1-R-EXT` | `MODELLED` |
-| Drop to the farthest ESC at 30.3 A | 1.64 (limit 2) | % | `CL-F1-DROP-CONT` | `MODELLED` |
-| Drop to the farthest ESC at the 100 A limiter, 24.8 A per ESC | **5.03 (limit 5): fails by 0.03 pp** | % | `CL-F1-DROP-PEAK` | `MODELLED` |
-| Longest 16 AWG lead for 5 % | 0.643 vs LR 0.650 | m | `CL-F1-ESC-LEN-ALLOW` | `MODELLED` |
+| ESC branch loops, hot (UL shortest … LR longest) | 13.7 … 17.9 | mΩ | `CALC-F1-WIRES` | `MODELLED` |
+| Equivalent pack terminals → ESC pads (4 branches in parallel), hot | **6.69** (R3 6.94, params 6.5) | mΩ | `CL-F1-R-EXT` | `MODELLED` |
+| Drop to the farthest ESC at 30.3 A | 1.59 (limit 2) | % | `CL-F1-DROP-CONT` | `MODELLED` |
+| Drop to the farthest ESC at the 100 A limiter, 24.8 A per ESC | **4.89 (limit 5): passes, +2 %** | % | `CL-F1-DROP-PEAK` | `MODELLED` |
+| Longest 16 AWG lead for 5 % | 0.643 vs LR 0.620 (+4 %) | m | `CL-F1-ESC-LEN-ALLOW` | `MODELLED` |
 | Loss in the common path at 30.3 A | 2.6 | W | `CALC-F1-WIRES` | `MODELLED` |
 
-The fix is the cheapest of three: F2 trims 10 mm from the LR cut (service loop or crossing), which leaves every lead
-at 0.640 m or less. The fallback is 14 AWG on LR only, about +12 g. The third option, accepting 5.03 %, is not
-proposed. `CL-F1-R-EXT` rises 6.5 → 6.94 mΩ, so `P:electrical.r_ext_mohm` should follow (CR-F1-24). The effect on
-E1's worst-state T/W is small, but E1 re-runs it.
+R3 failed this check by 0.03 pp (LR 0.650 m). F2's harness re-run trimmed all four leads (LR 0.620 m), so it now
+passes and the 14 AWG fallback is not needed (CR-F1-25 closed). Keep every cut at or under 0.640 m; a lead that grows
+past 0.643 m fails again. `CL-F1-R-EXT` is 6.69 mΩ against the 6.5 mΩ in `P:electrical.r_ext_mohm` (+3 %).
+CR-F1-24 now asks for **6.7** (it asked 6.9 in R3). The effect on E1's worst-state T/W is small, but E1 re-runs it.
 
 ## Protection, sensing, BECs
 
@@ -127,12 +131,14 @@ E1's worst-state T/W is small, but E1 re-runs it.
 | Current/voltage sense | CoreWing F405 Wing V2 power board (`PWR-003`) | 90 A cont / 215 A peak ≥ 37.8 / 120 A; 64 A/V, calibrate within 5 % at 25–30 A | `CL-F1-SENSOR-CONT`, `-PEAK` | `UNVERIFIED` |
 | Servo supply | **UBEC 6 V, 8 A class, kept** | D6 SH-0255MG+ stall 1.4 A at 6 V: 2 × 2 × 1.4 = 5.6 A required > CoreWing servo BEC 4.5 A (manual) | `CL-F1-SERVO-BEC-REQ`, `CL-F1-UBEC-RATING` (+43 %) | `UNVERIFIED` (stall from a retailer) |
 | UBEC drop rule | ≤ 1.1 A per servo **and** FC servo BEC ≥ 4.5 A | 1.4 A: **not met**, so the UBEC stays (CR-D6-06) | `T-F1-SERVO-STALL` | closed |
-| UBEC wiring | UBEC + to the servo bus only; FC Vx not connected to it; common ground | — | — | `PROPOSED` |
-| ESC capacitors | +680 µF 25 V low-ESR at each ESC's pads (leads 0.51–0.65 m) | ripple ≤ 1.0 V p-p | `ASM-F1-ESC-CAP`, `T-F1-RIPPLE` | `PROPOSED` |
+| UBEC wiring | UBEC + to the FC servo rail only; the power board's Vx is **not** carried on the GH link (Vx pin cut or not wired), so the UBEC is never in parallel with the CoreWing servo BEC and servo current never runs in the 28 AWG link; common ground | link 2.7 °C at 0.87 A; 24.7 °C if 2.8 A stall current ran through it | `CL-F1-PMOD-RISE`, `-SERVO-RISE` | `PROPOSED` (CR-F1-29) |
+| ESC capacitors | +680 µF 25 V low-ESR at each ESC's pads (leads 0.47–0.62 m) | ripple ≤ 1.0 V p-p | `ASM-F1-ESC-CAP`, `T-F1-RIPPLE` | `PROPOSED` |
 
 ## CoreWing power board: does it separate? (CR-F1-21)
 
-Status: **not confirmed, `UNVERIFIED`**. Order the board only after this is settled.
+Status: **answered from published sources; confirmed only on arrival (`UNVERIFIED`)**. R4: nothing new is published.
+The order goes ahead on the unsoldered-pins SKU (item 1), which separates by construction: no header is soldered,
+so the boards are joined only by the wires F2 solders. F3 measures the outline at `T-F3-ARRIVAL` (CR-F1-26).
 
 | Question | Finding 2026-11-09 | Source |
 |---|---|---|
@@ -193,9 +199,26 @@ Prices are `EST`, not quotes.
 | Pack | 550 g | `UNVERIFIED` (listings 503–680) |
 | AS150U half + jumpers 18.6 · power board 28 · bus 7.3 · UBEC 13 · frame 9 · fuse 3.5 · caps 8.8 | 88.2 g | `EST` (`CL-PWR-MASS-NONPACK`) |
 | **Power total vs 648 g allocation** | **638.2 g, passes (+1.5 %)** | `CL-PWR-MASS`, `CL-F1-POWER-MASS` 88.2 ≤ 98 g |
-| ESC leads, 4 × 16 AWG pairs (F2's harness, not power) | 75.1 g, = F2's 75.0 g | `CL-F1-ESC-MASS` |
+| ESC leads, 4 × 16 AWG pairs (F2's harness, not power) | 70.7 g on the trimmed leads (R3 75.1) | `CL-F1-ESC-MASS` |
 
 The avionics allocation is 45 g (F3's number, D-48), not the 52 g F1 proposed in CR-F1-19.
+
+## Harness edges acknowledged (R4)
+
+F2's harness re-run (2026-11-09) declared the power wires; power now lists them under `acknowledges` in
+`subsystems/power/interfaces.json` (`make_power.py`). Each was checked against this analysis before acknowledging.
+
+| Edge | Wire | Gauge, cut length | Checked against | Result |
+|---|---|---|---|---|
+| E-HRN-10 | W-PACK, pack → AS150U | 10 AWG (pack lead), 0.066 m | `CL-F1-PACKLEAD-RISE` at 0.10 m | passes; shorter is lower drop |
+| E-HRN-11, -12 | W-MAIN-1, -2 | 10 AWG, 0.030 / 0.050 m | `P:power.jumper_len_m`, `CL-PWR-JUMPER-R` | match |
+| E-HRN-13…16 | W-PWR-UR/UL/LR/LL | 16 AWG, 0.595 / 0.475 / 0.620 / 0.497 m | `CL-F1-ESC-LEN-ALLOW` 0.643 m | all pass |
+| E-HRN-21, -33 | W-FUSE-IN, W-UBEC-IN (fuse between) | 20 AWG, 0.031 + 0.173 m | `CL-F1-FEED-RISE` | passes |
+| E-HRN-22 | W-UBEC-OUT → FC servo rail | 20 AWG, 0.065 m | `CL-F1-BUS-RISE` | passes |
+| E-HRN-23 | W-PMOD, power board → FC | 28 AWG × 6, 0.164 m | `CL-F1-PMOD-RISE` | passes **if no Vx on the link** (CR-F1-29) |
+| E-HRN-34…37 | W-CAP, cap legs at the ESC pads | 22 AWG legs, 0.011 m | `ASM-F1-ESC-CAP` (≤ 20 mm) | passes |
+
+merge_check: 0 power warnings; E-HRN-22 and -23 still wait for avionics' acknowledgement (F3).
 
 ## Tests (all planned)
 
@@ -205,5 +228,5 @@ The avionics allocation is 45 g (F3's number, D-48), not the 52 g F1 proposed in
 | `T-F1-CONN-HEAT` | AS150U continuous | 38 A for 10 min, housing rise ≤ 30 °C |
 | `T-F1-DROP` | `CL-F1-R-EXT`, drops | 20 A step; ≤ 2 % at 30 A to the LR pads |
 | `T-F1-SENSOR-CAL` | limiter accuracy | BAT.Curr within 5 % of a clamp meter at 5–30 A |
-| `T-F1-SERVO-STALL` | UBEC margin | measured stall; rail ≥ 5.8 V with both servos stalled, FC ≥ 4.8 V |
+| `T-F1-SERVO-STALL` | UBEC margin, link current | measured stall; rail ≥ 5.8 V with both servos stalled, FC ≥ 4.8 V; GH-link 5 V current ≤ 0.87 A; FC servo-rail + to power-board Vx open |
 | `T-F1-PRECHARGE` / `T-F1-RIPPLE` | anti-spark, ESC supply | bus ≥ 95 % before the main pins close; ≤ 1.0 V p-p at the ESC pads |

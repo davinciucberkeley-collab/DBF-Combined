@@ -1,7 +1,7 @@
 # Pod
 
-Status: `MODELLED` (D2, revision D2-R5 on params A1-R4, 2026-11-09). R5 is the D-47 re-lay (CR-A1-43, CR-A3-22) and
-the CR-A5-27 CG fix. CAD `fusion/pod.py`; masses and CGs from the CAD by `team/D2/pod_data.py`; claims
+Status: `MODELLED` (D2, revision D2-R5a on params A1-R4a, 2026-11-10). R5 is the D-47 re-lay (CR-A1-43, CR-A3-22) and
+the CR-A5-27 CG fix; R5a adds D-59 (CR-A1-54): aft stop 0.056 → 0.060, D-59 flight stations, 12 mm CAD stack. CAD `fusion/pod.py`; masses and CGs from the CAD by `team/D2/pod_data.py`; claims
 `team/D2/pod_claims.py`; per-pack station table `team/D2/pod_station_options.py`.
 
 ## Purpose
@@ -19,26 +19,26 @@ with its block, spreader and spacer stack, strap, plug, close. No tools.
 | Forward stop 3 × 25 × 54 mm (C3), on the solid tray front piece | −0.1242 … −0.1212 | `POD-002` |
 | Crush block B, cut per pack · 1.5 mm spreader | −0.1212 … −0.0935 · … −0.092 (550 g) | `POD-009` · `POD-010` |
 | Forward strap · wire channel (F2, 10 mm) · aft strap | slot −0.0725 … −0.0355 · −0.0295 … −0.0195 · slot −0.0025 … 0.0345 | `POD-004` · `POD-002` |
-| Pack 0.140 long: 550 g nominal · 680 g · 503 g | −0.092 … 0.048 · −0.084 … 0.056 · −0.094 … 0.046 | `PWR-001` |
-| U-spacers 2 / 4 / 6 / 8 / 8 · aft stop 3 mm + 2 gussets on the tray rear piece | 0.048 … 0.056 (550 g) · 0.056 … 0.059 | `POD-008` · `POD-002` |
+| Pack 0.140 long: CAD at the −0.022 datum · 550 g · 680 g · 503 g (D-59) | −0.092 … 0.048 · −0.088 … 0.052 · −0.080 … 0.060 · −0.094 … 0.046 | `PWR-001` |
+| U-spacers 2 / 4 / 6 / 8 / 8 · aft stop 3 mm + 2 mm root ribs on the tray rear piece | 0.048 … 0.060 (CAD, 12 mm) · 0.060 … 0.063 (tray end 0.065) | `POD-008` · `POD-002` |
 
 ## Key numbers
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
 | Pod x range · width · height (outside) | −0.130 … 0.095 · 0.140 · 0.070 | m | `params.json#pod` (D-47) | `PROPOSED` |
-| Nose skin to forward stop face · stop face · aft stop face | 8.8 · −0.1212 · 0.056 | mm · m · m | `CL-D2-NOSE-TO-STOP`, `-FWD-STOP-X`, `ASM-D2-AFT-STOP-X` | `CHECKED` |
-| Bay inside L × W × H (≥ 0.160 × 0.052 × 0.053) | 0.177 × 0.052 × 0.057 | m | `CL-D2-BAY-L/-W/-H` | `CHECKED` |
-| Pack centroid 550 g (= `pod.pack_x_nominal_m`) · 680 g · 503 g | −0.022 · −0.014 · −0.024 | m | `CL-D2-PACK-X-NOM/-HEAVY/-LIGHT` | `CHECKED` |
-| Spacer stack 680 · 550 · 503 g | none · 8 blue · 8 blue + 2 white | mm | `CL-D2-SPACER-HEAVY/-NOM/-LIGHT` | `CHECKED` |
-| Block B 680 · 550 · 503 g (min: C5 25.7 mm at 550 g, scaled with mass) | 35.7 (≥ 31.8) · 27.7 (≥ 25.7) · 25.7 (≥ 23.5) | mm | `CL-D2-BLOCK-B-HEAVY/-NOM/-LIGHT` | `CHECKED` (scaling `UNVERIFIED`) |
+| Nose skin to forward stop face · stop face · aft stop face | 8.8 · −0.1212 · 0.060 (D-59) | mm · m · m | `CL-D2-NOSE-TO-STOP`, `-FWD-STOP-X`, `ASM-D2-AFT-STOP-X` | `CHECKED` |
+| Bay inside L × W × H (≥ 0.160 × 0.052 × 0.053) | 0.181 × 0.052 × 0.057 | m | `CL-D2-BAY-L/-W/-H` | `CHECKED` |
+| Pack centroid: datum (CAD) · 550 · 680 · 503 g (D-59) | −0.022 · −0.018 · −0.010 · −0.024 | m | `CL-D2-PACK-X-NOM/-550/-HEAVY/-LIGHT` | `CHECKED` |
+| Spacer stack: CAD · 680 · 550 · 503 g | 12 blue + yellow · none · 8 blue · 14 blue + green | mm | `CL-D2-SPACER-NOM/-HEAVY/-LIGHT` | `CHECKED` |
+| Block B 680 · 550 · 503 g (min: C5 25.7 mm at 550 g, scaled with mass) | 39.7 (≥ 31.8) · 31.7 (≥ 25.7) · 25.7 (≥ 23.5) | mm | `CL-D2-BLOCK-B-HEAVY/-550/-LIGHT` | `CHECKED` (scaling `UNVERIFIED`) |
 | Forward trim room at 550 g · most forward centroid with block B | 2.0 · −0.0240 | mm · m | `CL-D2-PACK-FWD-ROOM`, `-PACK-X-FWD-MIN` | `CHECKED` |
-| Block section · stop bonds front / rear (≥ 85) | 2 849 · 182 / 417 | mm² · N | `CL-D2-BLOCK-SECTION`, `-FWD-STOP-BOND`, `-AFT-STOP-BOND` | `CHECKED` |
+| Block section · stop bonds front / rear (≥ 85) | 2 849 · 182 / 403 | mm² · N | `CL-D2-BLOCK-SECTION`, `-FWD-STOP-BOND`, `-AFT-STOP-BOND` | `CHECKED` |
 | Wire channel under the pack · crossing gap · crossing height | 3.5 (≥ 3.0) · 6.7 (≥ 6.7) · 54 (≥ 26) | mm | `CL-D2-FLOOR-CH-H`, `-CROSS-GAP`, `-CROSS-H` | `CHECKED` |
 | Straps vs pack crash load · ties vs handle load | 200 vs 85 · 444 vs 76 | N | `CL-D2-STRAP-CAP`, `-TIE-CAP` | `UNVERIFIED` |
 | Pitot tip · boom (AVN-005, unchanged) · socket depth · key flat | (−0.210, −0.046, 0.045) · 107 · 35 · 5.8 | m · mm · mm · mm | `CL-D2-PITOT-*` | `PROPOSED` |
 | Antenna A / B to pack (≥ 30.7) · GPS to power items (≥ 100) | 34.6 / 38 · 152 | mm | `CL-D2-ANT-A/B-CLR`, `-GPS-CLR` | `CHECKED` |
-| Mass · CG | 131.0 (allocation 131, D-48) · (−0.007, −0.003, 0.050) | g · m | `CL-D2-MASS` `EST` | `CHECKED`, 0 g margin |
+| Mass · CG | 130.9 (allocation 131, D-48) · (−0.007, −0.003, 0.050) | g · m | `CL-D2-MASS` `EST` | `CHECKED`, 0.1 g margin |
 
 ## Channels (y ±0.0275 … ±0.0652)
 
@@ -69,7 +69,7 @@ Acknowledged: `E-PWR-03/-04/-05`, `E-AVN-01 … -05, -07, -10`, `E-HRN-01`.
 
 ## Mass budget
 
-131.0 g `EST` against 131 g (D-48): R4 128.1 g, + nose shell and hatch 15 mm longer, + tray 21 mm longer at the
+130.9 g `EST` against 131 g (D-48). R5a (D-59): 12 mm CAD stack (+0.7 g) paid by U-spacer legs 5 → 4 mm (−0.4 g) and the shorter gussets and rear windows (−0.4 g). R5: R4 128.1 g, + nose shell and hatch 15 mm longer, + tray 21 mm longer at the
 front and the aft stop (5.3 g) moved onto it from the handle, − XPS block A, − the handle's aft stop and gussets.
 Levers if the weigh-in is heavy (each needs C3): a lead window in the aft stop −1.5 g; tray floor 1.0 → 0.8 mm −2.4 g.
 
@@ -79,7 +79,9 @@ Levers if the weigh-in is heavy (each needs C3): a lead window in the aft stop �
 |---|---|
 | Crash path changed: block A gone, the stop is backed by the nose wall; the crush plateau now loads the nose wall | C5, C3 (CR-D2-10, -11) |
 | Forward trim room 2.0 mm with C5's 25.7 mm block (D-47 quotes 3.4 mm with 24.3 mm) | A3, C5 |
-| A 157 mm alternative pack SKU does not fit at −0.014 (aft face 0.0645 > 0.056) | E2 |
+| A 157 mm alternative pack SKU leaves an 18.7 mm block at most; at −0.010 its aft face is 0.0685 > 0.060 (CR-D2-22) | E2 |
+| Aft stop at 0.060 leaves 2 mm of tray behind it: gussets are 2 mm root ribs; C3's 3 mm stop check (+7 %) ignores them; `T-C3-STOP-PUSH` decides | C3 (CR-D2-23) |
+| Crash per pack at the D-59 stations (503 g block 25.7 mm, on the stack) | C5 (CR-D2-23) |
 | `POD-001` / `POD-003` mass CG vs uniform body centroid 14.7 / 10.0 mm (bonded multi-material parts) | A5 (CR-D2-19) |
 
 ## How to verify

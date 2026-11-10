@@ -14,3 +14,25 @@
 | CR-F2-10 | D6 | Servo pocket open to the **upper** surface, JR plug at x ≤ 0.19 m, y ±0.285 (`ASM-F2-SERVO-POCKET`); servo rating at 6.0 V, the harness gives ≥ 5.75 V at stall (26 AWG, `CL-F2-SERVO-V`); a lower pocket needs one more 4 mm straw | lead route aft of the spar, no spar crossing |
 | CR-F2-11 | I1 | BOM: `subsystems/harness/parts.csv` `HRN-101…111`, ≈ $68 `EST` (prices UNVERIFIED), inside the H01/H02 wiring lump | CR-I1-01 |
 | CR-F2-12 | D7 | No change: grooves under the saddle and pillar (y 0.17–0.23) are recessed 0.5 mm, the PE faces bear on foam | information |
+| CR-F2-13 | F1 | Re-run `power.py` (R_ext, drop, `CL-F1-ESC-MASS`) on the R3 routed ESC leads `CL-F2-ESC-LEN-UR/UL/LR/LL` **0.595 / 0.475 / 0.620 / 0.497 m** (F2-R1 sent 0.626 / 0.512 / 0.650 / 0.534; F1's original assumption 4 × 0.5 m) | lengths changed with F3's port points and the PWR-R1 stack (CR-F1-18) |
+| CR-F2-14 | D1 | JR in-line recess **18 × 10 × 5 mm** in the core at x 0.150–0.168 on the servo branch groove (\|y\| 0.285, upper surface), both sides, cut before skinning; acknowledge `E-HRN-02/04` in `subsystems/wing/interfaces.json` (still one-sided in merge_check) | servo swap without opening the skin: lift a tape flap, unplug |
+| CR-F2-15 | D6 | Accept the servo's own lead **shortened to 0.040 m** and re-terminated with a JR male (HRN-105), passed up D1's 4 mm lead hole (x 0.173–0.177) to the recess | the factory lead (≈ 0.25 m) does not fit the pocket; 26 AWG gives ≥ 5.73 V at stall (`CL-F2-SERVO-V`, +1 %) |
+| CR-F2-16 | D3 | Move the phase-lead tie lug on the collar tail outboard wall (`fin_detail.tie_lug.collar_x_m`) **0.084 → 0.060 m** (2 mm aft of the ring, 1.5 mm below the tail top edge) and turn its slot to open **along x** (the bundle runs up the face, mostly along z, there). All four stations | the phase bundle rises at x 0.066 ahead of the ESC (pads at x 0.078); from a tie at x 0.084 the free run to the motor lead exit is **0.062 m > 0.050** (`free_span_max_m`) and the bundle would double back over the ESC; at x 0.060 it is **0.047 m** (`CL-F2-FREE-SPAN`). Until then BUILD step 7 tapes the sleeve to the wall face (no pull rating) |
+| CR-F2-17 | F3 | Acknowledge `E-HRN-22…32` in `subsystems/avionics/interfaces.json` (11 edges, still one-sided in merge_check and check.py) | power, propulsion and mechanisms have acknowledged theirs |
+| CR-F2-18 | F1 | Check the `PWR-008` 680 µF / 25 V ripple-current rating against the cap-leg current now on `E-HRN-34…37`: **4.2 A RMS** at hover (`CL-F2-CAP-RIPPLE-CONT`), **12.4 A RMS** < 5 s at the per-motor max (`CL-F2-CAP-RIPPLE-PEAK`), both upper bounds (D = 0.5, leads carry the DC). If one can is short of it, name the part (polymer / two in parallel) and its size so F2 can re-form the legs (≤ 20 mm, `CL-F2-CAP-LEAD`) | a typical 680 µF 25 V low-ESR electrolytic is rated ≈ 1.5–2 A RMS at 100 kHz; the ESC's own caps share part of the ripple, but nothing in POWER.md bounds that share. Closes the A4 OWED data item on the four cap edges |
+
+## Status (F2-R3, 2026-11-10)
+
+| Id | State |
+|---|---|
+| CR-F2-01 | CLOSED: D-48 sets the harness allocation to 123 g; routed 117.3 g (+5 %); 12 g return after `T-E1-MOTOR-RM` stays open with A1 |
+| CR-F2-02 | superseded by CR-F2-13 (new lengths) |
+| CR-F2-03, -05, -10 | applied by D2 / D3 / D1-D6 (side exits, fin hole raised to 22 mm by CR-D3-23, lower pocket via D1's lead hole) |
+| CR-F2-04 | open: `E-HRN-02/04` not yet acknowledged by wing (see CR-F2-14) |
+| CR-F2-06, -07 | applied (A4 plan ids, E1 acknowledged the propulsion edges) |
+| CR-F2-08 | answered by F3 CR-F3-16 (port points ±10 mm); pin-out still unpublished |
+| CR-F2-09 | CLOSED: check.py reports the harness module ok, no floating errors |
+| CR-F2-11 | open with I1: `parts.csv` HRN-101…112, ≈ $68 `EST`, prices `UNVERIFIED` |
+| CR-F2-12 | information |
+| CR-F2-13 … 17 | new, open |
+| CR-F2-18 | new, open (F1: cap ripple rating vs 4.2 / 12.4 A RMS) |

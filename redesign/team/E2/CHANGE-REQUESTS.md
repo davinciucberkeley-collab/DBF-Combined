@@ -1,9 +1,19 @@
 # Change requests from E2 (battery / energy engineer)
 
-Revision E2-R3, 2026-11-09. Numbers are from `team/E2/energy_claims.py` → `team/E2/claims.json`. All are
+Revision E2-R4, 2026-11-10. Numbers are from `team/E2/energy_claims.py` → `team/E2/claims.json`. All are
 `UNVERIFIED` until `T-E2-WEIGH`, `T-E2-CAPACITY` and `T-E2-IR` have run.
 
-## Open (new in R3)
+## Open (new in R4)
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-E2-24 | I1 (cc F1, A3, A1) | **Answer to CR-I1-13 / D-58: release the pack cart on a new `P01`.** Buy **2 × Ovonic 14.8V 120C 4S 6500 mAh hard-case LiPo, EC5 plug (2-pack)**, listed 551 ± 5 g, 135 × 46 × 49 mm, JST-XH balance (https://www.ampow.com/products/2-pack-ovonic-4s-6500mah-120c-lipo-hardcase-ec5-1-8-rc-car, or the same SKU from Ovonic US). Two checks before paying: (a) the listing or the seller confirms **10 AWG** discharge leads (the page does not print the gauge; EC5 contacts take 8–10 AWG); 12 AWG → stop, tell E2 and F1; (b) EC5, 4S, 6500 mAh, hard case, 2 packs in the cart. Price seen: EUR 98.69 for the pair on the EU page; re-price `P01` in USD. Do **not** buy the held 130C XT60 SKU (680 g, 12 AWG). Fallback only if the EC5 SKU is unavailable and A1 accepts the 613 g line: Tattu 4S 6750 25C XT90 (605 ± 10 g, 10 AWG stated, about USD 74–83 each). | `CL-E2-SKU-MASS-MARGIN` +45 g under 601 g on the worst listed mass; `CL-E2-SKU-BAY-CLEAR` 1 mm (height, +3 mm tolerance); `CL-E2-SKU-LEAD-AWG` 10 (inferred). The pessimistic pack line ($119.88) covers the EUR price. E2 does not accept re-leading the 680 g pack: A3-R6 gives +33 g margin against the 100 g overrun, and replacing the lead means cutting at the cell tabs |
+| CR-E2-25 | A1 | `params.json#battery`: `pack` → "Ovonic 4S 6500 mAh 120C hard case EC5, re-terminated to AS150U", source `SRC-E2-OVONIC-120C-EC5`; `size_m` → **[0.135, 0.046, 0.049]** (source same, `UNVERIFIED` until measured); `mass_kg` stays **0.55** (listing 551 ± 5 g; note "D-58 line 601 g, CL-E2-SKU-MASS-MARGIN"). The pack-acceptance limit is now 0.601 kg in E2 (`PACK_ACCEPT_KG`). | D-58 closed from E2's side; `CL-E2-PACK-MASS` limit 0.68 → 0.601 |
+| CR-E2-23 | A1 | (a) `CL-A1-HOVER-TW-SAG` how-line in `frame_claims.py`: replace "fresh value x CL-E2-SAG-F-WORST" with "fresh value x CL-E1-SAG-FACTOR (CL-E1-TW-WORST)"; this is the last pointer to a retired E2 sag id (D-49 item "re-point at `CL-E1-TW-WORST`"). (b) `performance.cruise_after_hover_min` 12.7 → **12.6** (`CL-E2-CRUISE-MIN-BASE` 12.64 on the 2.600 kg sized mass); `_pess_min` stays 6.8. (c) If B1 adopts E1's 240 W, carry `CL-E2-CRUISE-MIN-BASE-240` **12.0**, `-PESS-240` **6.4** instead; `BATT_LOW_MAH` stays 2600 (`CL-E2-CRUISE-TO-LOW-PESS-240` 6.1 min ≥ 5). | D-49 asked E2 to re-run at 240 W if E1 and B1 reconcile; they have not (B1 stores 227.8 W), so E2 publishes both |
+| CR-E2-26 | F1, D2 | The named pack ships **EC5**, not XT60: F1's re-termination step (EC5 → AS150U, ENERGY.md §6) and the H03 line follow. D2: listed body 135 × 46 × 49 mm (was 139 × 47 × 49); at +3 mm tolerance the height leaves 1 mm in the 53 mm bay; the lead exits one 46 × 49 end. | `CL-E2-SKU-BAY-CLEAR` 0.001 m |
+| CR-E2-27 | E3 | Still reading `ASM-E2-R-EXT` (now a 6.5 mΩ mirror): re-point `thermal.py` to `P:electrical.r_ext_mohm` (mOhm) and re-run; your stored `CALC-E3-MISSION` drifts on it and on `CL-E2-HOVER-ONLY-MIN-PESS` 9.355 → 9.28. | repeat of CR-E2-17 for E3 |
+
+## Open from R3
 
 | # | To | What | Why / numbers |
 |---|---|---|---|
@@ -34,6 +44,15 @@ Revision E2-R3, 2026-11-09. Numbers are from `team/E2/energy_claims.py` → `tea
 | CR-E2-14 | F1 | forwarded | superseded by CR-E2-19 |
 | CR-E2-15 | A3 | open | unchanged: replace the 550 g pack line with the heaviest weighed pack |
 | CR-E2-16 | I2 | forwarded | numbers in CR-E2-22 |
+
+## Requests to E2 answered in R4
+
+| From | Request | Answer |
+|---|---|---|
+| CR-I1-13, D-58, CR-A1-56, CR-A3-24 | Name a 4S 6500 SKU ≤ 601 g with ≥ 10 AWG leads, or accept re-leading and 680 g | Named: Ovonic 120C 4S 6500 hard case EC5, 551 ± 5 g (CR-E2-24). Re-leading and 680 g not accepted |
+| D-58 | Weigh the first pack on arrival (`battery.mass_kg`) | `T-E2-WEIGH` planned; pass ≤ 601 g plus a lead-gauge step (ENERGY.md §8) |
+| D-49, CR-E1-25 | `voltage_sag` 0.851; re-point `CL-E2-TW-SAG-WORST` at `CL-E1-TW-WORST` | E2 reads `CL-E1-SAG-FACTOR` 0.851 (bracket +0.022); `CL-E2-TW-SAG-WORST` was retired in R3; A1's how-line is the last pointer (CR-E2-23a) |
+| D-49, CR-A1-50 | Re-run the budget if E1 and B1 reconcile at 240 W | Not reconciled; sensitivity published (`CALC-E2-BUDGET-240`: 12.0 / 6.4 / 6.1 min, all ≥ 5) |
 
 ## Requests to E2 answered in R3
 

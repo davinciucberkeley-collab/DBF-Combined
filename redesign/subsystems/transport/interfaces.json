@@ -8,16 +8,16 @@
    "name": "Box base (floor, walls, end pads, nose pad)",
    "subsystem": "transport",
    "status": "MODELLED",
-   "mass_g": 2339.0,
+   "mass_g": 2333.5,
    "material": "Coroplast 4 mm (PP twin-wall)",
    "cg_xyz_m": [
-    0.0999,
+    0.1037,
     0.0,
-    -0.0832
+    -0.0853
    ],
    "make_or_buy": "make",
    "flight": false,
-   "notes": "incl. 2 end pads, 1 in PE nose pad, 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external; aircraft 12 mm off the aft wall"
+   "notes": "incl. 2 end pads, 3/4 in PE nose pad (round 4), 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external; aircraft 12 mm off the aft wall"
   },
   {
    "id": "TRN-005",
@@ -45,7 +45,7 @@
    "cg_xyz_m": [
     0.1061,
     -0.2,
-    -0.1124
+    -0.1125
    ],
    "make_or_buy": "make",
    "flight": false,
@@ -61,7 +61,7 @@
    "cg_xyz_m": [
     0.1061,
     0.2,
-    -0.1124
+    -0.1125
    ],
    "make_or_buy": "make",
    "flight": false,
@@ -338,13 +338,18 @@
    "part_b": "WNG-001",
    "via": "CT-CRADLE-CONTACT",
    "owner": "transport",
-   "notes": "bears on the tape skin WNG-003 over the core (check.py bbox WARN on WNG-003 expected, CR-D7-19). Saddle under the lower surface at y -0.20 (0.17-0.23), x -0.015..0.235 (spar line), 15 000 mm2 >= C2 1 080 mm2; 4 mm inboard of the brace anchors (0.234); elevons, fins, tubes, braces never pressed (P:transport.cradle). Wing keeps this patch free of servo covers and horns (CR-D7-04)",
+   "notes": "bears on the tape skin WNG-003 over the core (also_contacts WNG-003, CR-D7-19 / CR-A4-46; saddle cut to the outer skin face, preload 0). Saddle under the lower surface at y -0.20 (0.17-0.23), x -0.015..0.235 (spar line), 15 000 mm2 >= C2 1 080 mm2; 4 mm inboard of the brace anchors (0.234); elevons, fins, tubes, braces never pressed (P:transport.cradle). Wing keeps this patch free of servo covers and horns (CR-D7-04)",
+   "also_contacts": [
+    "WNG-003"
+   ],
    "retention": {
-    "item": "wing in the saddle, 6 mm LE lip",
+    "item": "wing in the saddle, 6 mm LE lip; saddle cut to the outer skin face, no preload",
     "count": 1,
     "load_n": 102,
     "load_basis": "CL-C1-CRADLE-F-LIM",
-    "inspection": "chalk patch >= 40 x 40 mm after T-D7-BOX-DROP"
+    "inspection": "chalk patch >= 40 x 40 mm after T-D7-BOX-DROP",
+    "preload_m": 0.0,
+    "preload_basis": "trn.cradle.saddle_preload_m: modelled at contact with the outer face of WNG-003, rests by weight"
    }
   },
   {
@@ -354,12 +359,17 @@
    "via": "CT-CRADLE-CONTACT",
    "owner": "transport",
    "notes": "as E-TRN-06 at y +0.20",
+   "also_contacts": [
+    "WNG-003"
+   ],
    "retention": {
-    "item": "wing in the saddle, 6 mm LE lip",
+    "item": "wing in the saddle, 6 mm LE lip; saddle cut to the outer skin face, no preload",
     "count": 1,
     "load_n": 102,
     "load_basis": "CL-C1-CRADLE-F-LIM",
-    "inspection": "chalk patch >= 40 x 40 mm after T-D7-BOX-DROP"
+    "inspection": "chalk patch >= 40 x 40 mm after T-D7-BOX-DROP",
+    "preload_m": 0.0,
+    "preload_basis": "as E-TRN-06"
    }
   },
   {
@@ -368,13 +378,18 @@
    "part_b": "WNG-001",
    "via": "CT-TRN-PRELOAD-PAD",
    "owner": "transport",
-   "notes": "on the tape skin over the core; upper surface over the spar at y -0.20, x 0.03..0.13; replaces the strap of the A4 plan (E-TRN-07 there)",
+   "notes": "on the tape skin over the core (also_contacts WNG-003); upper surface over the spar at y -0.20, x 0.03..0.13; replaces the strap of the A4 plan (E-TRN-07 there)",
+   "also_contacts": [
+    "WNG-003"
+   ],
    "retention": {
     "item": "lid pillar, 5 mm preload",
     "count": 1,
     "load_n": 102,
     "load_basis": "ASM-C1-LID-PRELOAD 5 N static; CL-C1-PILLAR-F-LIM lid-down",
-    "inspection": "aircraft does not move when the closed box is tilted 45 deg"
+    "inspection": "aircraft does not move when the closed box is tilted 45 deg",
+    "preload_m": 0.005,
+    "preload_basis": "trn.holddown.preload_m: pillar cut 5 mm long, modelled at contact (preload not modelled as overlap)"
    }
   },
   {
@@ -384,12 +399,17 @@
    "via": "CT-TRN-PRELOAD-PAD",
    "owner": "transport",
    "notes": "as E-TRN-08 at y +0.20",
+   "also_contacts": [
+    "WNG-003"
+   ],
    "retention": {
     "item": "lid pillar, 5 mm preload",
     "count": 1,
     "load_n": 102,
     "load_basis": "ASM-C1-LID-PRELOAD 5 N static; CL-C1-PILLAR-F-LIM lid-down",
-    "inspection": "aircraft does not move when the closed box is tilted 45 deg"
+    "inspection": "aircraft does not move when the closed box is tilted 45 deg",
+    "preload_m": 0.005,
+    "preload_basis": "as E-TRN-08"
    }
   },
   {
@@ -444,20 +464,23 @@
    "via": "CT-TRN-M3-BOLT",
    "owner": "transport",
    "notes": "side handle at the box CG",
+   "ground_joint": true,
    "joint_stack": {
-    "fastener": "M3x16 SHCS",
+    "fastener": "M3x16 SHCS ISO 4762",
     "count": 2,
     "grade": "A2-70",
-    "hole": "3.4 mm clearance through handle strap, 4 mm wall and 3 mm backing strip; M3 x 12 mm fender washer outside",
+    "hole": "3.4 mm through handle strap, 4 mm Coroplast wall and 3 mm ply backing strip",
     "insert": "none",
-    "engagement_mm": 4.0,
-    "min_engagement_mm": 3.0,
-    "washer_nut": "M3 nyloc on a 140 x 30 x 3 mm plywood backing strip (inside, TRN-105)",
-    "torque": "snug (wall must not crush)",
+    "engagement_mm": 5.5,
+    "min_engagement_mm": 5.0,
+    "washer_nut": "M3 x 12 mm fender washer outside; M3 nyloc on the 140 x 30 x 3 mm ply strip inside (TRN-105)",
+    "torque": "snug, wall not crushed",
     "tool": "2.5 mm hex key + 5.5 mm spanner",
-    "access": "nut from inside the box, lid off",
+    "access": "nut inside, lid off",
     "install_order": 12,
-    "removal_order": 9
+    "removal_order": 9,
+    "load": "57-59 N per bolt (CL-D7-HANDLE-BOLT-F); confirmed by C6 (CR-D7-10): the ply strip spreads it to 27 kPa on the Coroplast; min engagement = nyloc 4.0 + 2 pitches (D-41), not 3.0",
+    "engagement_basis": "CL-D7-HANDLE-ENGAGE: grip 10.5 mm (strap 2.5 EST + washer 1.0 + wall 4.0 + ply 3.0); strap tab <= 3.0 mm keeps M3x16, else M3x20; inspect: nyloc fully on, 2 threads showing"
    }
   },
   {
@@ -467,20 +490,23 @@
    "via": "CT-TRN-M3-BOLT",
    "owner": "transport",
    "notes": "end handle",
+   "ground_joint": true,
    "joint_stack": {
-    "fastener": "M3x16 SHCS",
+    "fastener": "M3x16 SHCS ISO 4762",
     "count": 2,
     "grade": "A2-70",
-    "hole": "3.4 mm clearance through handle strap, 4 mm wall and 3 mm backing strip; M3 x 12 mm fender washer outside",
+    "hole": "3.4 mm through handle strap, 4 mm Coroplast wall and 3 mm ply backing strip",
     "insert": "none",
-    "engagement_mm": 4.0,
-    "min_engagement_mm": 3.0,
-    "washer_nut": "M3 nyloc on a 140 x 30 x 3 mm plywood backing strip (inside, TRN-105)",
-    "torque": "snug (wall must not crush)",
+    "engagement_mm": 5.5,
+    "min_engagement_mm": 5.0,
+    "washer_nut": "M3 x 12 mm fender washer outside; M3 nyloc on the 140 x 30 x 3 mm ply strip inside (TRN-105)",
+    "torque": "snug, wall not crushed",
     "tool": "2.5 mm hex key + 5.5 mm spanner",
-    "access": "nut from inside the box, lid off",
-    "install_order": 13,
-    "removal_order": 8
+    "access": "nut inside, lid off",
+    "install_order": 12,
+    "removal_order": 9,
+    "load": "57-59 N per bolt (CL-D7-HANDLE-BOLT-F); confirmed by C6 (CR-D7-10): the ply strip spreads it to 27 kPa on the Coroplast; min engagement = nyloc 4.0 + 2 pitches (D-41), not 3.0",
+    "engagement_basis": "CL-D7-HANDLE-ENGAGE: grip 10.5 mm (strap 2.5 EST + washer 1.0 + wall 4.0 + ply 3.0); strap tab <= 3.0 mm keeps M3x16, else M3x20; inspect: nyloc fully on, 2 threads showing"
    }
   },
   {
@@ -490,20 +516,23 @@
    "via": "CT-TRN-M3-BOLT",
    "owner": "transport",
    "notes": "end handle",
+   "ground_joint": true,
    "joint_stack": {
-    "fastener": "M3x16 SHCS",
+    "fastener": "M3x16 SHCS ISO 4762",
     "count": 2,
     "grade": "A2-70",
-    "hole": "3.4 mm clearance through handle strap, 4 mm wall and 3 mm backing strip; M3 x 12 mm fender washer outside",
+    "hole": "3.4 mm through handle strap, 4 mm Coroplast wall and 3 mm ply backing strip",
     "insert": "none",
-    "engagement_mm": 4.0,
-    "min_engagement_mm": 3.0,
-    "washer_nut": "M3 nyloc on a 140 x 30 x 3 mm plywood backing strip (inside, TRN-105)",
-    "torque": "snug (wall must not crush)",
+    "engagement_mm": 5.5,
+    "min_engagement_mm": 5.0,
+    "washer_nut": "M3 x 12 mm fender washer outside; M3 nyloc on the 140 x 30 x 3 mm ply strip inside (TRN-105)",
+    "torque": "snug, wall not crushed",
     "tool": "2.5 mm hex key + 5.5 mm spanner",
-    "access": "nut from inside the box, lid off",
-    "install_order": 14,
-    "removal_order": 7
+    "access": "nut inside, lid off",
+    "install_order": 12,
+    "removal_order": 9,
+    "load": "57-59 N per bolt (CL-D7-HANDLE-BOLT-F); confirmed by C6 (CR-D7-10): the ply strip spreads it to 27 kPa on the Coroplast; min engagement = nyloc 4.0 + 2 pitches (D-41), not 3.0",
+    "engagement_basis": "CL-D7-HANDLE-ENGAGE: grip 10.5 mm (strap 2.5 EST + washer 1.0 + wall 4.0 + ply 3.0); strap tab <= 3.0 mm keeps M3x16, else M3x20; inspect: nyloc fully on, 2 threads showing"
    }
   },
   {

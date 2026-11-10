@@ -1,6 +1,6 @@
 # flight-software — SITL plan
 
-Revision F4-R4b, 2026-11-09. Status `UNVERIFIED`: ArduPilot SITL is not installed on the design machine; nothing below has run. Owner F4; the
+Revision F4-R4c, 2026-11-10. Status `UNVERIFIED`: ArduPilot SITL is not installed on the design machine; nothing below has run. Owner F4; the
 pilot's ≥ 10 h (`R-PILOT`, `P:requirements.sitl_hours_min`) run on the same set-up after S1–S13 pass.
 
 ## Set-up

@@ -1,6 +1,6 @@
 # flight-software — tuning plan
 
-Revision F4-R4b, 2026-11-09. Status `PROPOSED`; nothing below has been done. Order follows CONFIGURATION.md (twin
+Revision F4-R4c, 2026-11-10. Status `PROPOSED`; nothing below has been done. Order follows CONFIGURATION.md (twin
 first, fixed-wing tune before any transition) and the ArduPilot tailsitter tuning guide. Each step has a stop
 condition; a failed step is repeated, not skipped. Owner F4 with H1 (bench, stand) and H2 (flight).
 

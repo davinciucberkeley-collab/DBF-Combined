@@ -230,9 +230,9 @@
    "id": "ASM-F4-CG-Z",
    "type": "assumption",
    "title": "CG height for the sensor offsets",
-   "text": "+0.018 m above the chord plane, take-off case",
-   "basis": "MASS-CG.md CG table (A3-R5, take-off basic and predicted both +0.018); A3 publishes no CG-z claim, only CL-A3-CG-Z-RANGE",
-   "value": 0.018,
+   "text": "+0.0185 m above the chord plane, take-off basic case",
+   "basis": "team/A3/claims.json CALC-A3-CG outputs.cg_m[2] = 0.01850 m (2026-11-10 roll-up; MASS-CG.md table rounds it to +0.019 basic, +0.018 predicted). A3 publishes no CG-z claim, only CL-A3-CG-Z-RANGE (CR-F4-19)",
+   "value": 0.0185,
    "unit": "m",
    "status": "UNVERIFIED"
   },
@@ -557,12 +557,12 @@
     "ASM-F4-QT-ARM"
    ],
    "outputs": {
-    "f_rll_hz": 1.0382281785568142,
-    "p_ceiling_rll": 0.3467445860508399,
-    "f_pit_hz": 2.437949061549758,
-    "p_ceiling_pit": 0.14766510329430543,
-    "f_yaw_hz": 1.0105707033988331,
-    "p_ceiling_yaw": 0.9499582728563675
+    "f_rll_hz": 1.0372704749995239,
+    "p_ceiling_rll": 0.3470647325618376,
+    "f_pit_hz": 2.4782692384560154,
+    "p_ceiling_pit": 0.14526266735420698,
+    "f_yaw_hz": 1.0136967872133522,
+    "p_ceiling_yaw": 0.9470287487435327
    },
    "input_values": {
     "T": 21.1,
@@ -570,9 +570,9 @@
     "z": 0.19,
     "cant": 7.0,
     "qt": 0.02,
-    "izz": 0.16779524020721423,
-    "iyy": 0.04484018801013867,
-    "ixx": 0.17374033509679151,
+    "izz": 0.16794615232325408,
+    "iyy": 0.04420463610965501,
+    "ixx": 0.17320454682526285,
     "p": [
      0.08,
      0.08,
@@ -634,11 +634,11 @@
     "ASM-F4-SAG"
    ],
    "outputs": {
-    "a_up": 0.6713136160793005,
+    "a_up": 0.671343592816169,
     "a_up_at_limit": 0.6755223233592841
    },
    "input_values": {
-    "s": 1.2155978991283574,
+    "s": 1.2158384609085338,
     "smax": 1.25,
     "a_h": 0.49,
     "d": 0.3,
@@ -936,12 +936,12 @@
     "ins_derived_m": [
      0.062200000000000005,
      0.046,
-     -0.021
+     -0.0205
     ],
     "gps_derived_m": [
      -0.022799999999999994,
      0.0,
-     -0.16
+     -0.1595
     ],
     "err_m": 0.00020000000000000573
    },
@@ -959,16 +959,16 @@
      ]
     },
     "xcg": 0.0522,
-    "zcg": 0.018,
+    "zcg": 0.0185,
     "ins": [
      0.062,
      0.046,
-     -0.021
+     -0.0205
     ],
     "gps": [
      -0.023,
      0,
-     -0.16
+     -0.1595
     ]
    }
   },
@@ -1044,7 +1044,7 @@
    },
    "outputs": {
     "d_pitch_deg": 12.5,
-    "ratio": 0.8822284257228873,
+    "ratio": 0.8763342936014912,
     "gain_over_trim_limit": 1.0
    },
    "input_values": {
@@ -1053,7 +1053,7 @@
      -25,
      25
     ],
-    "ds": -11.02785532153609,
+    "ds": -10.95417867001864,
     "half": 0.5
    }
   },
@@ -1290,7 +1290,7 @@
     "AVN-001"
    ],
    "how": "Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.",
-   "value": 1.0382281785568142
+   "value": 1.0372704749995239
   },
   {
    "id": "CL-F4-XOVER-PIT",
@@ -1310,7 +1310,7 @@
     "AVN-001"
    ],
    "how": "As roll; after QAUTOTUNE reject any Q_A_RAT_PIT_P above p_ceiling_pit.",
-   "value": 2.437949061549758
+   "value": 2.4782692384560154
   },
   {
    "id": "CL-F4-XOVER-YAW",
@@ -1327,7 +1327,7 @@
     "AVN-001"
    ],
    "how": "As roll.",
-   "value": 1.0105707033988331
+   "value": 1.0136967872133522
   },
   {
    "id": "CL-F4-FILT-SEP",
@@ -1408,7 +1408,7 @@
     "PRP-002-LL"
    ],
    "how": "Tethered-hover log on a pack near BATT_LOW: mean RCOU of the upper pair (UR, UL) / lower pair gives the split; peak upper-pair RCOU during pitch inputs stays below 0.84 (CR-A3-04, R-HOVER-SPLIT).",
-   "value": 0.6713136160793005
+   "value": 0.671343592816169
   },
   {
    "id": "CL-F4-SPLIT-OUT-LIMIT",
@@ -1871,7 +1871,7 @@
     "AVN-001"
    ],
    "how": "T-B2-STALL slow flight in FBWA: elevon output not at the pitch end at the stall break.",
-   "value": 0.8822284257228873
+   "value": 0.8763342936014912
   },
   {
    "id": "T-F4-SITL-NAMES",

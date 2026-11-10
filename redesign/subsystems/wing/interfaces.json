@@ -393,6 +393,10 @@
   "E-FIN-58",
   "E-FIN-59",
   "E-FIN-60",
+  "E-GER-21",
+  "E-GER-22",
+  "E-HRN-02",
+  "E-HRN-04",
   "E-MEC-01",
   "E-MEC-02",
   "E-MEC-11",
@@ -414,26 +418,5 @@
   "E-TRN-08",
   "E-TRN-09"
  ],
- "acknowledges_pending": [
-  {
-   "id": "E-GER-21",
-   "owner": "landing (D5)",
-   "note": "declared by its owner in edges_pending (or not yet); moves to acknowledges when declared"
-  },
-  {
-   "id": "E-GER-22",
-   "owner": "landing (D5)",
-   "note": "declared by its owner in edges_pending (or not yet); moves to acknowledges when declared"
-  },
-  {
-   "id": "E-HRN-02",
-   "owner": "harness (F2)",
-   "note": "declared by its owner in edges_pending (or not yet); moves to acknowledges when declared"
-  },
-  {
-   "id": "E-HRN-04",
-   "owner": "harness (F2)",
-   "note": "declared by its owner in edges_pending (or not yet); moves to acknowledges when declared"
-  }
- ]
+ "acknowledges_pending": []
 }

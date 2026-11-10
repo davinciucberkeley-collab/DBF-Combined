@@ -1,52 +1,57 @@
 # A5 CAD lead: Fusion framework for K09-L
 
-Status: `CHECKED` framework and R3 skeleton, `UNVERIFIED-IN-FUSION` backend (A5, 2026-11-09, params revision A1-R3).
+Status: `CHECKED` framework, skeleton and datum sheet, `UNVERIFIED-IN-FUSION` backend (A5, 2026-11-10, params A1-R4 / D-60).
 Re-check: `python -I redesign/fusion/tests/test_framework.py` · `python -I redesign/fusion/check.py --skeleton --strict`
-· `python -I redesign/team/A5/cad_claims.py` then `python -I redesign/proofs/build_graph.py`.
+· `python -I redesign/team/A5/integration_check.py` · `python -I redesign/team/A5/cad_claims.py` then `python -I redesign/proofs/build_graph.py`.
 
-## This round (A1-R3 action items: CR-D3-14/21, CR-D5-02, D-46)
+## This round (action items: keep-out false positives, stale DATUMS.md, layout CG drift)
 
 | Item | Done | Status |
 |---|---|---|
-| Re-test after A4's `merge_check.py` change (D-46) | `fusion/tests` and `check.py --strict` re-run on the new module | `CHECKED` |
-| Skeleton fins to R3 | tube 0.344 m (ends z ±0.172), 0.21 m half-fins, mounts as a tube-end grip + plate to z ±0.2075 with the motor on `DP-MOTOR-FACE`, new station collars, CF braces (`k9.strut`) and spar anchors; fins 408 g split from D3's R3 unit masses. The 7° cant is not modelled (D3 cants the plate) | `MODELLED` |
-| Rest of the skeleton to R3 | allocations 2 324 g (D-38), 48 mm feet splayed to the pad contact, pod 0.21 × 0.14 at −0.115, pack at the D-24 station (x −0.001, from D2's `pack_aft_face_m`), box 1.25 × 0.55 × 0.54, library types `CT-PROP-NUT`, `CT-CRADLE-CONTACT`, `CT-THERMAL-CONTACT` | `MODELLED` |
-| DATUMS.md (52 datums, was 43) | `DP-TUBE` 0.045, `DP-TE` 0.320, `DP-GROUND` 0.368, new `DP-MOTOR-FACE` 0.0309, `DX-FOOT-*` at the pad contact (0.368, ±0.320, ±0.218), new `DX-COLLAR-*` (0.045, ±0.3023, ±0.1535), new `DX-ANCHOR-*` (0.080, ±0.242, +0.0266 / −0.0127), `DX-BOX` x 0.1265; hover lift 0.368 m; section 4 at R3 | `CHECKED` (matches D3's `fins.geometry()` to 1e-6 m, test) |
-| `cad_claims.py` re-run | closed form rebuilt for R3; cross-check against the CAD roll-up: 0.0 mm. `CL-A5-LAYOUT-CG-X` now verifies `R-CG-RANGE` against 0.050–0.055, with `-FWD` and `-RANGE-USE` claims | `CHECKED` (0 A5 drift) |
-| Also fixed | the elevon pod gap read 0 mm after the pod widened to 0.14 m; it is now the true corner distance (the pod ends 155 mm ahead of the hinge). Fusion material map: "CF tube" and "CF strip" did not match Carbon Fiber, and ASA had no entry | `CHECKED` |
+| Keep-out test (blocker) | `check.py` still runs the per-body box first as a pre-filter. It then tests the **convex hull of the body's vertices** against the canted cylinder (`Shape.hull_points`: prism and loft vertices; a revolve is swept as a circumscribed 24-gon, at most 0.9 % of r larger). The distance comes from a pairwise Frank-Wolfe solver (`fusionkit._hull_cyl_dist2`), checked against brute-force edge sampling. For a `k9.prop_keepout` zone, a hit means the hull is closer than `clearance` to the swept blade volume, and the message gives that distance in mm. Boxes the hull clears are printed as a note, not an issue | `CHECKED` (2 new tests, 33 OK) |
+| Asymmetric blade envelope (CR-E1-45) | `k9.prop_keepout(..., fwd=, aft=)` shifts the cylinder by (aft − fwd)/2 along the shaft. E1 now passes 0.010 / 0.006 | `CHECKED` |
+| DATUMS.md | Regenerated: `DP-POD-LE` −0.130, `DP-CG` 0.0522, `DP-MOTOR-FACE` 0.0294, `DP-PROP` and `DX-HUB-*` at x −0.0077, `DX-POD` x −0.0175, `DX-BOX` x 0.119. 52 datums, no longer stale | `CHECKED` |
+| Skeleton and `CALC-A5-LAYOUT-CG` | Skeleton regenerated at the D-48 allocations (2 355 g) with D2's D-47 pack bay. The closed form and the CAD skeleton agree to 0.0 mm. Claims rewritten, 0 A5 drift | `CHECKED` |
+| Layout CG role | The allocation layout CG is now **0.0466 m, 4.3 mm ahead of the 0.0509 forward limit**. The delivered aircraft sits at 0.0521 m. The difference is where the allocation lumps are placed, not where the parts are. The layout claims are now information only. `R-CG-RANGE` is verified on the assembled CAD, including the new `CL-A5-ASSY-CG-X-FWD` (CR-A5-31) | `CHECKED` |
+
+## Keep-out result on the delivered subsystems
+
+| Body | Zone | Box test (old) | Hull distance to swept blades | Verdict |
+|---|---|---|---|---|
+| `FIN-009-*` CF brace | KO-PROP, all four | hit | ≥ 34.9 mm (9.9 mm outside the zone) | box artefact, cleared |
+| `WNG-001` core; `WNG-003` skin and doubler | KO-PROP-UR/UL | hit | ≥ 33.5 mm | box artefact, cleared |
+| `FIN-004` boss and eye; `FIN-006` plug | KO-PROP-UR/UL | hit | ≥ 27 mm (fwd/aft envelope) | cleared |
+| **`FIN-002-R/L` motor tube** | **all four** | hit | **21.0 mm, limit 25 mm** | **real: A1 decides CR-D3-26 (CR-A5-30)** |
 
 ## Check results
 
 | Run | Result |
 |---|---|
-| `check.py --skeleton --strict` | PASS: 10 modules, 54 parts (50 flight), 52 datums, 5 keep-outs, 0 errors, 0 warnings; 2 324 g, CG (0.052, 0, 0.018) m |
+| `check.py --skeleton --strict` | PASS: 10 modules, 54 parts, 52 datums, 5 keep-outs, 0 errors, 0 warnings; 2 355 g, CG (0.047, 0, 0.017) m |
 | `check.py --examples --strict` | PASS: 3 modules, 0 errors, 0 warnings |
-| `tests/test_framework.py` | 27 tests OK (2 new: R3 datums against D3 and D5, strut volume and centroid) |
-| `check.py` (real `subsystems/`: D3 fins, D2 pod, D5 landing, D7 transport) | FAIL, as expected: 9 dangling edges to `WNG-001/002` and `PWR-001` and the partial-aircraft CG, until D1 and F1 ship. No framework errors; the modules build with the R3 datums |
-| `build_graph.py` | no A5 errors or drift; the build reports drift in A1, B2, C2, C3 and C4 claims (theirs) |
+| `tests/test_framework.py` | 33 tests OK |
+| `check.py` (delivered `subsystems/`) | FAIL: 4 errors (the motor-tube clearance above; there were 16 keep-out errors), 3 warnings; 2 320 g, CG x 0.0521 m |
+| `build_graph.py` | No A5 errors or drift. The build fails on drift in A3, B1, B2 and B3 claims (D-60 range, pod size, sag); those roles must re-run |
 
 ## Claims others build on
 
 | Claim | Value | Unit | Limit | Status |
 |---|---|---|---|---|
-| `CL-A5-HINGE-X` / `CL-A5-HINGE-Z` | 0.2496 / 0.0056 | m | — | `CHECKED` |
-| `CL-A5-SPAR-COVER` (spar z 0.0066) | 0.0043 | m | ≥ 0.002 | `CHECKED` |
+| `CL-A5-HINGE-X` / `-Z` | 0.2496 / 0.0056 | m | — | `CHECKED` |
+| `CL-A5-SPAR-COVER` | 0.0043 | m | ≥ 0.002 | `CHECKED` |
 | `CL-A5-ELEVON-GAP-MIN` | 0.015 | m | ≥ 0.010 | `CHECKED` |
-| `CL-A5-LAYOUT-CG-X` / `-FWD` (allocations, pack at −0.001) | 0.0521 (16.3 % c) | m | 0.050–0.055 | `UNVERIFIED` (+4 % / +5 %) |
-| `CL-A5-LAYOUT-CG-X-RANGE-USE` | 0.15 | — | ≤ 1 | `UNVERIFIED` |
-| `CL-A5-PACK-X-FOR-CG` · `CL-A5-PACK-SHIFT` | +0.001 · +0.002 | m | — | `UNVERIFIED` |
-| `CL-A5-LAYOUT-CG-Z` | 0.0177 | m | ≤ 0.030 | `UNVERIFIED` |
-| `CL-A5-HOVER-SPLIT` (upper / lower) | 1.20 | — | ≤ 1.25 | `UNVERIFIED` (+4 %) |
-
-**The layout CG is inside the range only on allocated masses.** A3's bottom-up 0.0556 m is 0.6 mm aft of the aft limit
-(`CL-A3-CG-X-RANGE` FAIL) because the real fins, harness and feet are heavier and sit further aft. A3's number governs
-`R-CG-RANGE`; this one shows the layout itself is not the cause (CR-A5-17).
+| `CL-A5-ASSY-CG-X` / `-FWD` (delivered CAD, pack at −0.022) | 0.0521 | m | 0.0509–0.0548 | `UNVERIFIED` (+5 % / +2 %) |
+| `CL-A5-ASSY-CG-X-RANGE-USE` | 0.37 | — | ≤ 1 | `UNVERIFIED` |
+| `CL-A5-ASSY-MASS` | 2.320 | kg | ≤ 2.600 | `UNVERIFIED` |
+| `CL-A5-ASSY-CHECK-ERRORS` | 4 | — | ≤ 0 | `UNVERIFIED` (FAIL, see CR-A5-30) |
+| `CL-A5-LAYOUT-CG-X` (information) | 0.0466 | m | — | `UNVERIFIED` |
+| `CL-A5-LAYOUT-CG-Z` · `CL-A5-HOVER-SPLIT` | 0.0169 · 1.195 | m · — | ≤ 0.030 · ≤ 1.25 | `UNVERIFIED` |
 
 ## Open issues
 
-1. `R-CG-RANGE` rests on A3's bottom-up CG and D-24's pack station (CR-A3-15). The skeleton follows D2's `pack_aft_face_m` once it changes.
-2. The R3 datums D3 and D5 own are read from their `params.json` files until A1 promotes them (CR-A5-16, CR-A5-19).
-3. `fusion_backend.py` has never run in Fusion (CR-A5-08). The R3 skeleton is ready for BuildAll.
-4. Checks use one bounding box per body, which is coarse for diagonal parts such as the braces. Real clearances need a Fusion interference check.
+1. The motor tube's 21.0 mm prop clearance is the only `check.py` error. It is real geometry, not a test artefact (CR-A5-30 to A1).
+2. The skeleton's mass lumps use R3 placements. Designers should read the CG from `integration_check.py`, not from the skeleton.
+3. The hull test is exact only for convex bodies. A concave body (for example an L-bracket) can over-report and should be split into convex bodies. In Fusion, a smooth loft through three or more sections can bulge slightly past its hull.
+4. `fusion_backend.py` has never run in Fusion (CR-A5-08).
 
-Change requests: `team/A5/CHANGE-REQUESTS.md` (round 2 status; CR-A5-16 … 19 to A1, A3, D3, D5).
+Change requests: `team/A5/CHANGE-REQUESTS.md` (round 4: CR-E1-45 done, CR-A5-30 to A1, CR-A5-31 to A2).

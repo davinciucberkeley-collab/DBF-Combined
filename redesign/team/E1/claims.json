@@ -2268,6 +2268,173 @@
    }
   },
   {
+   "id": "ASM-E1-BLADE-ENV",
+   "type": "assumption",
+   "title": "Prop swept envelope about the hub mid-plane: 10 mm forward, 6 mm aft",
+   "text": "axial extent of the rotating APC 11 in MR disc about its hub mid-plane, forward (thrust side, with coning) and aft: the real envelope behind ASM-E1-BLADE-HALF's symmetric 10 mm (CR-E1-16)",
+   "basis": "CAD root section (14 mm chord at 48 deg) reaches 5.5 mm either side; the blades cone forward under thrust (EST 4 mm at hover), never aft (no reverse thrust on K09-L)",
+   "value": [
+    0.01,
+    0.006
+   ],
+   "unit": "m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-E1-TIP-GAP",
+   "type": "calculation",
+   "title": "Canted prop disc to the CF motor tube: true clearance and the face_ahead it needs",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "tip_gap",
+   "equation": "hub = face + s t(cant, sense) ; gap = min over the tube surface of dist(point, disc volume r <= D/2, -fwd <= axial <= +aft) ; face_ahead_needed: smallest face_ahead (0.5 mm steps) with gap >= clr",
+   "inputs": {
+    "st": "ASM-E1-STACK",
+    "env": "ASM-E1-BLADE-ENV",
+    "hb": "ASM-E1-BLADE-HALF",
+    "xt": "P:fins.tube.x_m",
+    "od": "P:fins.tube.od_m",
+    "lt": "P:fins.tube.length_m",
+    "yf": "P:fins.y_m",
+    "ys": "P:propulsion.stations.y_m",
+    "zs": "P:propulsion.stations.z_m",
+    "bg": "P:fin_detail.bond_gap_m",
+    "cw": "P:fin_detail.mount.collar_wall_m",
+    "ahead": "P:fin_detail.mount.face_ahead_m",
+    "sense": "P:fin_detail.mount.cant_sense_UR",
+    "cant": "P:propulsion.stations.cant_deg",
+    "D": "P:propulsion.prop_diameter_m",
+    "clr": "P:requirements.prop_clearance_min_m"
+   },
+   "units": {
+    "st": "m",
+    "env": "m",
+    "hb": "m",
+    "xt": "m",
+    "od": "m",
+    "lt": "m",
+    "yf": "m",
+    "ys": "m",
+    "zs": "m",
+    "bg": "m",
+    "cw": "m",
+    "ahead": "m",
+    "sense": "-",
+    "cant": "deg",
+    "D": "m",
+    "clr": "m"
+   },
+   "assumes": [
+    "ASM-E1-STACK",
+    "ASM-E1-BLADE-ENV",
+    "ASM-E1-BLADE-HALF"
+   ],
+   "outputs": {
+    "gap_m": 0.02110611502564124,
+    "gap_sym_m": 0.017128410156546217,
+    "gap_sense_plus_m": 0.03782949137852568,
+    "gap_untilted_m": 0.035945,
+    "ahead_needed_m": 0.0065,
+    "gap_at_needed_m": 0.025098267345611144,
+    "stack_add_m": 0.004,
+    "gap_at_75_m": 0.02609632039371878
+   },
+   "input_values": {
+    "st": [
+     0.0265,
+     0.00635,
+     0.0152,
+     0.00889,
+     0.001,
+     0.0052
+    ],
+    "env": [
+     0.01,
+     0.006
+    ],
+    "hb": 0.01,
+    "xt": 0.045,
+    "od": 0.022,
+    "lt": 0.344,
+    "yf": 0.32,
+    "ys": 0.32,
+    "zs": 0.19,
+    "bg": 0.00015,
+    "cw": 0.002,
+    "ahead": 0.0025,
+    "sense": -1,
+    "cant": 7.0,
+    "D": 0.2794,
+    "clr": 0.025
+   }
+  },
+  {
+   "id": "CL-E1-TIP-GAP-TUBE",
+   "type": "claim",
+   "title": "Canted prop disc (-6 / +10 mm envelope) to the CF motor tube, true surface gap",
+   "calc": "CALC-E1-TIP-GAP",
+   "output": "gap_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "verifies": [
+    "R-PROP-CLEAR"
+   ],
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL",
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "Built station: printed 25 mm gauge between the blade trailing face at the tip and the tube, blade turned through the wing-side position (T-E1-MOTOR-RM).",
+   "note": "D-52 (cant sense -1) swings the wing-side blade tip aft over the tube: about 21 mm, against 38 mm with sense +1 (gap_sense_plus_m). Same finding as D3's CR-D3-26 (20.9 mm). The nearest tube point is at r 143.8 mm, 4 mm OUTBOARD of the 139.7 mm tip, 26.8 mm aft of the mid-plane: a tip-to-structure gap, so the mount chain is not exempted from KO-PROP and a hub-radius annulus would not remove it (rev 7). check.py 21.0 mm (hull), probe 21.2 mm (surface samples); every other flight part >= 25 mm (bore boss 25.4, tube plug 26.1, wing >= 33.5 mm)",
+   "value": 0.02110611502564124
+  },
+  {
+   "id": "CL-E1-FACE-AHEAD-FOR-CLR",
+   "type": "claim",
+   "title": "Mount face_ahead that gives the 25 mm tube clearance (E1 envelope)",
+   "calc": "CALC-E1-TIP-GAP",
+   "output": "ahead_needed_m",
+   "unit": "m",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL",
+    "FIN-003-UR"
+   ],
+   "how": "Recompute after any change to the stack, cant, cant sense or tube station.",
+   "note": "for A1's CR-D3-26 decision: this is the least; E1 proposes 0.0075 m (CL-E1-TIP-GAP-AT-75, about +1 mm margin). Rev 7: with KO-PROP on E1's envelope and check.py's hull + distance test, check.py reports 0 keep-out errors at 0.0065 and 0.0075 and 4 (the tube, 24.5 mm) at 0.0060 (in-memory trials, team/E1/prop_clearance.json)",
+   "value": 0.0065
+  },
+  {
+   "id": "CL-E1-TIP-GAP-AT-75",
+   "type": "claim",
+   "title": "Prop disc to motor tube with face_ahead 0.0075 m (E1's proposal for CR-D3-26)",
+   "calc": "CALC-E1-TIP-GAP",
+   "output": "gap_at_75_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL",
+    "FIN-002-R",
+    "FIN-002-L"
+   ],
+   "how": "As CL-E1-TIP-GAP-TUBE on the R5 mount.",
+   "note": "+5.0 mm of stack: prop plane x -0.0077 -> about -0.0127, hub 5 mm further from the collar (CL-E1-CAD-PROP-GAP rises); mount cheeks +5 mm (D3, C4 rocking stiffness)",
+   "value": 0.02609632039371878
+  },
+  {
    "id": "CL-E1-CAD-HUB-X",
    "type": "claim",
    "title": "Modelled prop hub centre x on the 7 deg canted axis",
@@ -2323,7 +2490,7 @@
     "PRP-001-LL"
    ],
    "how": "Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.",
-   "note": "same finding as CL-E1-PROP-GAP with the 7 deg cant included: fixed by face_ahead_m 0.002 (CR-E1-22)",
+   "note": "same finding as CL-E1-PROP-GAP with the 7 deg cant included; passes since D3 carries face_ahead_m 0.0025 (D-51). A larger face_ahead (CR-D3-26, CL-E1-FACE-AHEAD-FOR-CLR) only raises it",
    "value": 1.0102517825305015
   },
   {
@@ -2340,14 +2507,46 @@
     "PRP-003-LL"
    ],
    "how": "Recompute from the CAD bounding box of PRP-003-<st> after any cant or prop change.",
-   "note": "information only since rev 5: KO-PROP-<st> is now the cylinder on the canted shaft axis (k9.prop_keepout rotate=rot, CR-A5-21), so this excursion is geometry inside the keep-out and the full 25 mm clearance is margin; check.py tests the tilted cylinder exactly",
+   "note": "information only since rev 5: KO-PROP-<st> is now the cylinder on the canted shaft axis (k9.prop_keepout rotate=rot, CR-A5-21), so this excursion is geometry inside the keep-out and the full 25 mm clearance is margin; check.py tests the tilted cylinder exactly. Since D-52 (sense -1) the wing-side tip swings aft, toward the motor tube: CL-E1-TIP-GAP-TUBE",
    "value": 0.027025147273699104
+  },
+  {
+   "id": "CALC-E1-KO-ENV",
+   "type": "calculation",
+   "title": "Prop keep-out KO-PROP-<st> on E1's swept envelope (rev 7)",
+   "script": "redesign/team/E1/propulsion.py",
+   "function": "ko_env",
+   "equation": "aft face = aft + clr ; fwd face = fwd + clr ; half = (fwd + aft)/2 + clr ; centre shift ahead of the hub = (fwd - aft)/2 (k9.prop_keepout fwd=, aft=)",
+   "inputs": {
+    "env": "ASM-E1-BLADE-ENV",
+    "clr": "P:requirements.prop_clearance_min_m"
+   },
+   "units": {
+    "env": "m",
+    "clr": "m"
+   },
+   "assumes": [
+    "ASM-E1-BLADE-ENV"
+   ],
+   "outputs": {
+    "ko_half_m": 0.033,
+    "ko_fwd_m": 0.035,
+    "ko_aft_m": 0.031,
+    "ko_shift_m": 0.002
+   },
+   "input_values": {
+    "env": [
+     0.01,
+     0.006
+    ],
+    "clr": 0.025
+   }
   },
   {
    "id": "CL-E1-KO-HALF",
    "type": "claim",
-   "title": "Prop keep-out axial half-length on the canted axis (blade half + clearance)",
-   "calc": "CALC-E1-CAD-STACK",
+   "title": "Prop keep-out axial half-length on the canted axis (swept envelope / 2 + clearance)",
+   "calc": "CALC-E1-KO-ENV",
    "output": "ko_half_m",
    "unit": "m",
    "parts": [
@@ -2356,8 +2555,41 @@
     "PRP-003-LR",
     "PRP-003-LL"
    ],
-   "how": "python -I redesign/fusion/check.py: 0 parts inside KO-PROP-<st> (per-body test).",
-   "note": "the value KO-PROP-<st> carries (subsystems/propulsion/fusion/propulsion.py, blade_half 0.010); radius D/2 + 25 mm",
+   "how": "python -I redesign/fusion/check.py (hull + distance) and python -I redesign/team/E1/prop_clearance.py (surface samples).",
+   "note": "rev 7: KO-PROP-<st> is registered with fwd 0.010 / aft 0.006 (ASM-E1-BLADE-ENV, A5's CR-E1-45 arguments), radius D/2 + 25 mm, centred 2 mm ahead of the hub; was 35 mm symmetric (ASM-E1-BLADE-HALF), which placed 4 mm of non-existent blade aft of the disc. check.py now reports the distance to the swept volume: only the CF motor tube is inside, at 21.0 mm (CL-E1-TIP-GAP-TUBE). The mount chain is NOT exempted: the tube's nearest point is 4 mm outboard of the tip, not behind the hub",
+   "value": 0.033
+  },
+  {
+   "id": "CL-E1-KO-AFT",
+   "type": "claim",
+   "title": "Prop keep-out reach aft of the hub mid-plane (toward the mount, tube and wing)",
+   "calc": "CALC-E1-KO-ENV",
+   "output": "ko_aft_m",
+   "unit": "m",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "Stand: photograph the tip against a scale at idle with 15 m/s blown across the disc (T-E1-STAND).",
+   "note": "6 mm swept envelope (blade section at the root; at the tip about 1 mm of section plus 5 mm for aft deflection when windmilling in a throttle-cut descent) + 25 mm",
+   "value": 0.031
+  },
+  {
+   "id": "CL-E1-KO-FWD",
+   "type": "claim",
+   "title": "Prop keep-out reach ahead of the hub mid-plane (with coning)",
+   "calc": "CALC-E1-KO-ENV",
+   "output": "ko_fwd_m",
+   "unit": "m",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "As CL-E1-KO-AFT at full throttle (coning forward).",
    "value": 0.035
   },
   {
@@ -2572,10 +2804,11 @@
     "CL-E1-ADAPTER-THREAD-D58",
     "CL-E1-ADAPTER-M3X5-DEPTH",
     "CL-E1-HOLE-DEPTH-MIN",
-    "CL-E1-ESC-PROUD"
+    "CL-E1-ESC-PROUD",
+    "CL-E1-TIP-GAP-TUBE"
    ],
    "state": "planned",
-   "procedure": "Weigh motor, stripped ESC, prop, adapter set (0.1 g); calipers: base diameter (D3 needs >= 28 mm), base bolt pattern (D3 prints 16 x 19 mm), base hole depth (>= 4.0 mm, CL-E1-HOLE-DEPTH-MIN), bell-top thread length (>= 2.5 mm for D-58; >= 3.0 mm with >= 4.0 mm free depth -> M3x5, CR-A4-43), adapter flange under the screw head, motor phase-lead length from the base (F2's routed reach 0.121 m, CL-F2-PHASE-REACH: if the leads reach, no splice and F2 returns 12 g), ESC strapped on a printed pad (height proud), body length, adapter base and post; 4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load current and rpm at 10.0 V without prop (Kv = rpm / (V - I0 R))"
+   "procedure": "Weigh motor, stripped ESC, prop, adapter set (0.1 g); calipers: base diameter (D3 needs >= 28 mm), base bolt pattern (D3 prints 16 x 19 mm), base hole depth (>= 4.0 mm, CL-E1-HOLE-DEPTH-MIN), bell-top thread length (>= 2.5 mm for D-58; >= 3.0 mm with >= 4.0 mm free depth -> M3x5, CR-A4-43), adapter flange under the screw head, motor phase-lead length from the base (F2's routed reach 0.121 m, CL-F2-PHASE-REACH: if the leads reach, no splice and F2 returns 12 g), ESC strapped on a printed pad (height proud), body length, adapter base and post; on the first built station a printed 25 mm gauge between the blade's aft face at the tip and the CF tube, blade turned through the wing-side position (R-PROP-CLEAR); 4-wire: 2.00 A from a bench supply through two phases, read the voltage drop (R = V / I); no-load current and rpm at 10.0 V without prop (Kv = rpm / (V - I0 R))"
   },
   {
    "id": "T-E1-HOVER-LOG",

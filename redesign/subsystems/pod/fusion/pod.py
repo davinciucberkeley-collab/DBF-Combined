@@ -3,7 +3,7 @@ and aft stops and guides, hatch with antenna tube, pack straps and pads, crush b
 parts), GPS mast with the 45 deg pad, pitot socket with flange, carry handle on the spar.
 R5 (D-47, CR-A1-43, CR-A3-22, CR-A5-27): pod nose x -0.130, length 0.225; XPS nose block A deleted, the forward stop
 and the tray front sit on a 1 mm epoxy line against the nose wall (nose skin to stop face 8.8 mm); whole pack bay 21 mm
-forward (forward stop -0.1212, aft stop 0.056 now on the tray rear piece with 2 gussets, handle bridge no longer a
+forward (forward stop -0.1212, aft stop on the tray rear piece, at 0.060 since D-59 (was 0.056 at D-47), handle bridge no longer a
 stop); pack nominal centroid = params pod.pack_x_nominal_m (-0.022), per-pack stations and spacer stacks in
 pack_x_per_pack_m; straps to -0.054 / 0.016; the wire channel to -0.0245 (the forward strap now sits over -0.0655);
 crush block POD-009 and spreader POD-010 split from the spacer set POD-008 so each declared CG is its body centroid.
@@ -20,7 +20,7 @@ the mass roll-up and the claims cannot disagree.
 Arrangement (SPEC.md): the pack bay runs down the middle. From the nose aft: foam-board nose wall (x_le -0.130) ->
 1 mm epoxy line -> 3 mm printed forward stop on the tray (aft face x -0.1212) -> removable XPS crush block cut per pack
 (POD-009) -> 1.5 mm spreader (POD-010) -> pack (nominal centroid x -0.022) -> printed U-spacers (POD-008) -> 3 mm aft
-stop at x 0.056 on the tray rear piece. The pack sits wholly on the tray (aft face <= 0.056, recess end 0.065).
+stop at x 0.060 on the tray rear piece (D-59). The pack sits wholly on the tray (aft face <= 0.060, recess end 0.065).
 FC on gel pads in the right channel, UBEC behind it; airspeed sensor, receiver, PDB, fuse and the AS150U park in the
 left channel; pitot socket with its flange at the left of the nose; ram-air vent over the pack; two antenna exits.
 
@@ -150,7 +150,7 @@ def layout(get, L, coords):
     g['sp_t'] = lv('spreader_t_m')
     g['block_nom'] = g['pack_fore_nom'] - g['sp_t'] - g['x_fs']
     g['bay'] = (g['x_as'] - g['x_fs'], g['bw'], g['zh'] - g['zp'])
-    # D-47 stations per weighed pack: spacer rounded to the 2 mm set, centroid achieved, crush block B cut length
+    # D-59 stations per weighed pack: spacer rounded to the 2 mm set, centroid achieved, crush block B cut length
     step = min(lv('spacer_set_m'))
     g['stations'] = {}
     for m, x_t in sorted(lv('pack_x_per_pack_m').items(), key=lambda kv: float(kv[0])):
@@ -367,7 +367,7 @@ def build(ctx):
 
     # ---------------------------------------------------------------- R5 (CR-A5-27): the trim kit is three single-material parts, so
     # each declared CG is both the mass centroid and the body centroid. POD-009 crush block, POD-010 spreader, POD-008 aft
-    # spacers (nominal 550 g pack: one 8 mm blue spacer)
+    # spacers (CAD pack at the -0.022 datum: blue 8 + yellow 4 mm, CR-A1-54)
     gw, gd = lv('block_groove_m')
     sec = _notched(-bw / 2 + 0.0003, bw / 2 - 0.0003, zt, zh - 0.0005, gw, gd)
     ctx.part('POD-009').prism('X', x_fs, [sec], G['block_nom'], name='xps crush block')
@@ -425,7 +425,7 @@ def build(ctx):
         for z0_, z1_, op in ((G['zfoot'], w0, None), (w0, w1, 1), (w1, t0, None), (t0, G['z_grip0'], -1)):
             loops = sq_leg if op is None else [_keyhole(xs, ly, lg / 2, rb, op)]
             hd.prism('Z', z0_, loops, z1_ - z0_, name='petg leg')
-    # R5: the aft stop moved to the tray (x 0.056); the bridge stays as the tie between the two feet, on the slot fill
+    # R5: the aft stop moved to the tray (x 0.060 since D-59); the bridge stays as the tie between the two feet, on the slot fill
     hd.box((lv('bridge_x0_m'), -fy0, G['z_aft']), (xf1, fy0, G['zfoot']), name='petg foot bridge')
     gx, gz = lv('grip_m')
     sb = lv('socket_boss_m')

@@ -1,0 +1,16 @@
+{
+ "level": 1,
+ "delta": -10.0,
+ "cells": 38891,
+ "nodes": 22568,
+ "bl_thickness_c": 0.042620008795407276,
+ "n_side": 110,
+ "h1": 8e-05,
+ "ratio": 1.22,
+ "nlayers": 24,
+ "wake": 0.028,
+ "far": 5.0,
+ "R_far_c": 50.0,
+ "mesh_s": 3.7,
+ "file": "s5010_d-10_L1.su2"
+}

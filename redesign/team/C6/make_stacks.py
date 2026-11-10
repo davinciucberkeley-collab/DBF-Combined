@@ -1,9 +1,11 @@
 """Write team/C6/joint_stacks.json: C6's joint-stack, clamp and bond blocks per interface id, in the
 interfaces/SCHEMA.md field names, for the edge owners (D3, D2, D6, E1, F1, F3, D5) to copy into their
 interfaces.json. Numbers come from team/C6/claims.json (run joints.py first). Python 3 stdlib.
-Revision C6-R3: C4 R3 loads read directly (collar max(C1, C4) + brace shear, strip 908 N per face, pins 64 N; CR-C4-23),
-D3 R4 geometry (12 mm collar, CR-D3-17), D5 bond 1 350 mm2 (CR-D5-24), F1 power frame on PA66 M3x18 (CR-F1-20,
-CR-A4-44), PA66 mast bolt as adopted by D2 (CR-C6-18), D-58 deviations; E-MEC-03/04 and E-PWR-05 withdrawn.
+Revision C6-R4: C4 loads read live from team/C4/claims.d3.json (collar max(C1, C4) + brace shear, strip force per
+face, pin force; CR-C4-23), D3 R4 geometry (12 mm collar, zoned 15 mm root fillet, CR-D3-17 / CR-D3-25; strip and root
+areas from D3), D5 bond 1 350 mm2 (CR-D5-24), F1 power frame on PA66 M3x18 (CR-F1-20, CR-A4-44), PA66 mast bolt as
+adopted by D2 (CR-C6-18), D-58 deviations; pins 2.5 mm at 15 mm (CR-C6-31), E-FIN-69...80 blocks added;
+E-MEC-03/04 and E-PWR-05 withdrawn.
 
     python -I redesign/team/C6/joints.py && python -I redesign/team/C6/make_stacks.py
 """
@@ -137,8 +139,9 @@ for i, s in enumerate(ST):
                                      f"{tb['T_collar_design_nm']:.1f} N m design from max(C1 section, C4 FE) = "
                                      f"{tb['T_collar_lim_nm']:.2f} N m limit + {tb['F_brace_design_n']:.0f} N brace "
                                      f"shear, {tb['tau_collar_mpa']:.2f} MPa, RF {tb['rf_collar']:.2f} (needs "
-                                     f"{tb['L_collar_req_m'] * 1e3:.1f} mm; 16 mm fallback RF "
-                                     f"{tb['rf_collar_alt']:.2f} if T-C6-LAP-PETG < 2.0 MPa)", "L4 / G2")
+                                     f"{tb['L_collar_req_m'] * 1e3:.2f} mm; C6 asks 13 mm, RF {tb['rf_collar_min']:.2f}, "
+                                     f"CR-C6-32; 16 mm fallback RF {tb['rf_collar_alt']:.2f} if T-C6-LAP-PETG "
+                                     "< 2.0 MPa)", "L4 / G2")
     stacks[f"E-FIN-{37 + i}"] = bond(EPOXY, 260, PREP_P, f"{br['F_design_n']:.0f} N design; RF {br['rf_end']:.2f} "
                                      "(CL-C6-BRACE-END-RF)", "G2")
     stacks[f"E-FIN-{41 + i}"] = bond(EPOXY, 260, PREP_P, f"{br['F_design_n']:.0f} N design; RF {br['rf_end']:.2f}",
@@ -146,10 +149,12 @@ for i, s in enumerate(ST):
     stacks[f"E-FIN-{57 + i}"] = bond(EPOXY, round(br["anchor_area_mm2"]), PREP_P + "; spar face too",
                                      f"{br['F_design_n']:.0f} N pull-off on the 90 deg saddle contact; RF "
                                      f"{br['rf_anchor']:.2f} (CL-C6-ANCHOR-PULL-RF)", "G2")
-    stacks[f"E-FIN-{53 + i}"] = bond(FOAMEPOXY, 6300, "foam dusted off; board edges scuffed; fillet leg 15 mm "
-                                     "both faces (D-48), stopped over the link notch on the lower roots",
-                                     f"12 mm leg RF {fb['rf_root']:.2f}, 15 mm leg RF {fb['rf_root_prop']:.2f} at "
-                                     f"0.125 MPa (needs {fb['leg_req_m'] * 1e3:.1f} mm; CL-C6-FIN-ROOT-RF-PROP)",
+    stacks[f"E-FIN-{53 + i}"] = bond(FOAMEPOXY, 5318 if s[0] == "U" else 5078,
+                                     "foam dusted off; board edges scuffed; fillet zoned as D3 R4 draws it "
+                                     "(CR-D3-25, accepted): 15 mm legs both faces over the effective root, 13 mm aft "
+                                     "of the hinge, 6 mm bead ahead, none over the link slot on the lower roots",
+                                     f"RF {fb['rf_root']:.2f} at 0.125 MPa (CL-C6-FIN-ROOT-RF = 0.5 x "
+                                     f"CL-D3-ROOT-FILLET-RF; full leg needed {fb['leg_req_m'] * 1e3:.1f} mm)",
                                      "L4 side load", "D3, C6")
     stacks[f"E-GER-0{1 + i}"] = bond(EPOXY, round(fb["foot_area_mm2"]),
                                      "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends IPA; "
@@ -158,17 +163,30 @@ for i, s in enumerate(ST):
                                      "L1 with the C5 biased upper foot", "D5, C6")
     for k, f in enumerate(("O", "I")):
         stacks[f"E-FIN-{21 + 2 * i + k}"] = bond(
-            EPOXY, 2640, "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
+            EPOXY, 2239, "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
             f"C4 FE shear flow {st['q_design_npm'] / 1e3:.2f} N/mm design: paper face alone RF {st['rf_face']:.2f}, "
-            f"so 2 mm CF pins through strip-board-board-strip ({st['pin_len_m'] * 1e3:.1f} mm): at 15 mm pitch "
-            f"{st['pin_load_n']:.0f} N per pin, RF {st['rf_pin']:.2f}; at 12 mm pitch (CR-C6-25) "
-            f"{st['pin_load_prop_n']:.0f} N, RF {st['rf_pin_prop']:.2f}, {st['pins_per_strip_pair_prop']} per pair, "
-            "first half a pitch aft of the tail", "L4")
+            "so the pins (E-FIN-69...80) carry it all; the bond locates the strip", "L4")
         stacks[f"E-FIN-{29 + 2 * i + k}"] = bond(
             EPOXY, round(2 * 10 * st["embed_m"] * 1e3), PREP_P,
             f"{st['F_design_n']:.0f} N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x "
             f"{st['embed_m'] * 1e3:.1f} mm: RF {st['rf_anchor']:.2f} (needs {st['L_req_m'] * 1e3:.1f} mm); tail net "
             f"section {st['tail_net_mpa']:.1f} MPa, RF {st['rf_tail_net']:.2f}", "L4")
+
+PIN = ("30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in")
+PIN_PREP = "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA"
+for i, s in enumerate(ST):
+    stacks[f"E-FIN-{69 + i}"] = bond(
+        PIN, round(3.14159265 * 2.5 * st["pin_len_m"] * 1e3 * 12), PIN_PREP,
+        f"12 pins per half-fin, 2.5 mm CF rod x {st['pin_len_m'] * 1e3:.1f} mm, 15 mm pitch (CR-C6-31), first half a "
+        f"pitch aft of the tail: {st['pin_load_prop_n']:.0f} N per pin design, RF {st['rf_pin_prop']:.2f} "
+        f"(CL-C6-STRIP-PIN-RF-PROP; bending bound). As drawn (2 mm) RF {st['rf_pin']:.2f}. Fallback 2 mm at 9 mm "
+        f"RF {st['rf_pin_alt']:.2f}", "L4", "C6")
+    for k, f in enumerate(("O", "I")):
+        stacks[f"E-FIN-{73 + 2 * i + k}"] = bond(
+            PIN, round(3.14159265 * 2.5 * 1.0 * 12), PIN_PREP,
+            f"{st['pin_load_prop_n']:.0f} N per pin bearing on the 1 mm strip: RF {st['rf_pin_bearing']:.2f} "
+            f"(CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF {st['rf_strip_net_pin']:.2f} "
+            "(CL-C6-STRIP-NET-PIN-RF)", "L4", "C6")
 
 stacks["E-POD-01"] = bond(FOAMEPOXY, 10014, "tape skin off under the pod; foam and board faces scuffed, dust off",
                           f"C3 interaction R at C6-confirmed allowables (XPS 0.125 MPa tension, 0.10 MPa shear): RF "
@@ -195,7 +213,7 @@ WITHDRAWN = {"E-MEC-03": "servo held in MEC-008 ear slots, no screws (D6 CR-D6-1
              "E-PWR-05": "bus board on foam tape (F1), retention block owned by power; no C6 stack (CR-A4-44b)"}
 
 doc = {"_note": "C6 joint stacks / clamp / bond / retention blocks per edge id (interfaces/SCHEMA.md names). Generated "
-                "by team/C6/make_stacks.py from team/C6/claims.json, revision C6-R3 (params A1-R4). Edge owners copy "
+                "by team/C6/make_stacks.py from team/C6/claims.json, revision C6-R4 (params A1-R4). Edge owners copy "
                 "the block into their interfaces.json; C6 does not edit other folders. Status PROPOSED.",
        "withdrawn": WITHDRAWN, "edges": dict(sorted(stacks.items()))}
 (HERE / "joint_stacks.json").write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")

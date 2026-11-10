@@ -35,3 +35,14 @@ Round 3, 2026-11-09, answering C1 CR-C1-22, A4 CR-A4-24, C5 CR-C5-06/-12, I1 CR-
 | CR-D7-18 | A4 | Done in `subsystems/transport/interfaces.json`: `TRN-006-A/B` → `TRN-006-L/R`; `retention` blocks on `E-TRN-01…12, 16…20`; `E-TRN-17…20` declared `stowed`. Please mark the pack plug, pack strap, pitot boom and prop-nut edges `"field_joint": true` (`FIELD-JOINTS.md` rows 1–4) when you merge | CR-A4-24 | 13 parts, 20 edges |
 | CR-D7-19 | A5 (cc D1) | `check.py` transport overlap: treat a part bonded to an edge partner (here `WNG-003` tape skin on `WNG-001` core) as a partner too, or let a transport edge list `also_contacts`. Today the saddle on the lower skin gives an 8 mm bbox WARN that no geometry change can clear (curved contact) | the saddle bears on the skin by design; moving the edges to `WNG-003` only moves the WARN to `WNG-001` (15 mm) | 2 WARN, `TRN-002-L/R` vs `WNG-003` |
 | CR-D7-20 | F3 | Acknowledge `E-TRN-21` (`AVN-005` pitot boom stowed in `TRN-003`, `"stowed": true`) | declared now that `AVN-005` exists (CR-D7-09) | 1 edge |
+
+Round 4, 2026-11-10, answering A4 CR-A4-46 and `team/A4/PLAN-STATUS.md` (E-TRN-13…15), and the D-47 forward (nose at
+−0.130). Numbers from `transport_calc.py` (40 claims, 0 FAIL).
+
+| Id | Target | What | Why | Numbers |
+|---|---|---|---|---|
+| CR-D7-21 | A4 (cc A5, D1) | Done: `also_contacts: ["WNG-003"]` on `E-TRN-06…09`; `retention.preload_m` stated (saddles 0, pillars 0.005); saddle contour cut to the outer skin face (core − `wing skin.model_t_m`), pillars at contact on the outer skin. Close CR-A4-46 | the saddle rests by weight; hold-down is the pillars only | `check.py`: 0 transport warnings (was 2 × 8 mm on `WNG-003`) |
+| CR-D7-22 | C6 (cc A4) | Done: your `ground_joint` + `joint_stack` for `E-TRN-13…15` copied verbatim; `engagement_mm` 5.5 (number, was 4.0), `min_engagement_mm` 5.0 (was 3.0). Please confirm the 2.5 mm strap-tab estimate is acceptable, and that M3 × 20 is the fallback if the bought tab is > 3.0 mm | grip 10.5 mm = tab 2.5 `EST` + washer 1.0 + wall 4.0 + ply 3.0; 16 − 10.5 = 5.5 ≥ nyloc 4.0 + 2 × 0.5 (D-41) | `CL-D7-HANDLE-ENGAGE` 5.5 mm (+10 %); `CL-D7-HANDLE-STRAP-T-MAX` 3.0 mm |
+| CR-D7-23 | D2, F3 (cc A1) | Re-state CR-D7-13 against the D-47 nose: antenna tube B ends ≤ 10 mm ahead of x −0.130 (x ≥ −0.140) | the nose pad is now 3/4 in, 12.95 mm ahead of the nose | `CL-D7-ANTENNA-PAD-GAP` 2.95 mm ≥ 2 |
+| CR-D7-24 | C1 (cc A2) | Note only: nose pad 1 in → 3/4 in, so the nose-first (label-and-test) drop allowed falls 0.079 → 0.059 m. The floor drop and the aft-wall drop are unchanged | box W 0.55 is A1's (D-16); with the nose at −0.130 a 1 in pad left 6.6 mm < 10 mm | `CL-D7-NOSE-GAP` 12.95 mm; `CL-D7-NOSE-DROP-ALLOW` 0.059 m |
+| CR-D7-25 | A1 | No change to `mass.transport_box_kg` 3.57 (box 3.567 kg, loaded 5.835 kg, +3 % to 6 kg) | thinner nose pad −5 g | `CL-D7-BOX-MASS`, `CL-D7-LOADED-MASS` |

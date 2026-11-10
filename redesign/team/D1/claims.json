@@ -158,6 +158,37 @@
    ]
   },
   {
+   "id": "ASM-D1-PROP-GAP",
+   "type": "assumption",
+   "title": "Wing surface outside the upper prop keep-outs (CAD)",
+   "text": "Lower bound of the gap from the core and tape surfaces to KO-PROP-UR/UL (keep-out radius already includes requirements.prop_clearance_min_m)",
+   "basis": "team/D1/wing_claims.py#_prop_gap: all modules stub-built, wing section polygons sampled densely against the canted keep-out cylinders registered by subsystems/propulsion/fusion/propulsion.py",
+   "value": 0.00583,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "CALC-D1-PROP-GAP",
+   "type": "calculation",
+   "title": "prop gap",
+   "script": "redesign/team/D1/wing_claims.py",
+   "function": "prop_gap",
+   "equation": "gap = min over sampled wing surface points of max(|a| - half, rad - R) to each KO-PROP-U*",
+   "inputs": {
+    "g": "ASM-D1-PROP-GAP"
+   },
+   "outputs": {
+    "gap": 0.00583
+   },
+   "input_values": {
+    "g": 0.00583
+   }
+  },
+  {
    "id": "CALC-D1-MASS",
    "type": "calculation",
    "title": "mass",
@@ -593,6 +624,26 @@
    ],
    "how": "Depth gauge in the recess; subtract from the local thickness.",
    "value": 0.02348
+  },
+  {
+   "id": "CL-D1-PROP-SURF-GAP",
+   "type": "claim",
+   "title": "Wing surface outside the upper prop keep-outs (real surface, not bounding box)",
+   "calc": "CALC-D1-PROP-GAP",
+   "output": "gap",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "PRP-001-UR",
+    "PRP-001-UL"
+   ],
+   "how": "On the first assembled wing: rule from each upper prop tip, turned by hand, to the upper skin near the LE at |y| 0.30-0.34; must exceed requirements.prop_clearance_min_m plus this gap.",
+   "value": 0.00583
   },
   {
    "id": "T-D1-WEIGH",

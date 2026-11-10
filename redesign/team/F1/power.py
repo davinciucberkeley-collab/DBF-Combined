@@ -12,6 +12,7 @@ Wire model (CALC-F1-WIRES), per metre of conductor, Python standard library only
             theta_mid = theta_inf - (theta_inf - theta_end) / cosh(m L / 2),  m = sqrt(h pi OD / (k_Cu A))
 The mission current profile (CL-F1-PROFILE) is built from E2's pessimistic phase claims (CR-E2-19) with short
 punches inserted after each transition (limited 100 A normal case, 120 A unlimited / 51.6 A single-ESC fault case).
+R4 (2026-11-10): F2 harness re-run (ESC leads 0.475-0.620 m), power-board link check (CALC-F1-PMOD).
 R3 (2026-11-09): routed ESC lengths from F2 (CR-F2-02), 10 AWG main jumpers from subsystems/power (PWR-R1), limits
 from P:electrical.* (D-56), servo stall 1.4 A (CR-D6-06), mass from CL-PWR-MASS-NONPACK (D-48).
 """
@@ -81,7 +82,7 @@ kit.assumption("ASM-F1-BUNDLE", "Short bundled ESC-lead sections (F2 routing, CR
 kit.assumption("ASM-F1-WIRE-OD", "Silicone wire outside diameter by gauge",
                "[AWG, OD mm] for high-strand silicone hobby wire",
                basis="typical maker tables (BNTECHGO, Turnigy) +/-0.2 mm; measure the reel",
-               value=[[8, 6.0], [10, 4.8], [12, 4.0], [14, 3.2], [16, 2.6], [18, 2.0], [20, 1.7], [22, 1.4]],
+               value=[[8, 6.0], [10, 4.8], [12, 4.0], [14, 3.2], [16, 2.6], [18, 2.0], [20, 1.7], [22, 1.4], [28, 0.9]],
                unit="AWG,mm", status="UNVERIFIED")
 kit.assumption("ASM-F1-COOLING", "Cooling derates",
                "[f_pod, f_channel, f_pair, emissivity]: f_pod 1.0 in the vented pod (still air); f_channel 0.75 "
@@ -367,6 +368,19 @@ def power_mass(nonpack, alloc, pack):
     return {"mass_g": nonpack, "budget_g": alloc - pack * 1000}
 
 
+@kit.calc("CALC-F1-PMOD", title="Power-board link (JST-GH 6, 28 AWG): 5 V conductor heating",
+          equation="same steady wire model as CALC-F1-WIRES, 28 AWG, pod still air, f_pair for the 6-way cable; "
+                   "I_5V = CL-F3-5V-REQ (2 x the FC 5 V load); stall case = CL-F1-SERVO-STALL-BUS",
+          inputs={"i_5v": "CL-F3-5V-REQ", "i_stall": "CL-F1-SERVO-STALL-BUS", "od": "ASM-F1-WIRE-OD",
+                  "cool": "ASM-F1-COOLING", "amb": "P:env.ambient_design_c"},
+          units={"i_5v": "A", "i_stall": "A", "amb": "degC"})
+def pmod(i_5v, i_stall, od, cool, amb):
+    ta = max(amb)
+    w = wire_props(28, od)
+    c = (cool[0], cool[2], cool[3])
+    return {"rise_5v_c": steady_rise(i_5v, w, ta, c), "rise_stall_c": steady_rise(i_stall, w, ta, c)}
+
+
 # ---------------------------------------------------------------- claims: currents and disconnect
 kit.claim("CL-F1-PROFILE", "Mission current profile used for wire heating (E2 pessimistic phases)",
           calc="CALC-F1-PROFILE", output="profile", unit="s,A", parts=PARTS_MAIN,
@@ -482,7 +496,7 @@ kit.claim("CL-F1-BUS-RISE", "Servo bus 20 AWG, steady rise at both servos stalle
 kit.claim("CL-F1-R-EXT", "Resistance pack terminals to ESC pads (equivalent, hot)", calc=W, output="r_ext_mohm",
           unit="mOhm", parts=PARTS_MAIN + ESC_IDS,
           how="T-F1-DROP: 20 A load step, read pack-terminal and ESC-pad voltages with one meter.",
-          note="R3: routed ESC lengths and 10 AWG jumpers; P:electrical.r_ext_mohm follows (CR-F1-24).")
+          note="R4: F2 routed ESC lengths 0.475-0.620 m and 10 AWG jumpers; P:electrical.r_ext_mohm follows (CR-F1-24).")
 kit.claim("CL-F1-DROP-CONT", "Voltage drop pack to the farthest ESC at the continuous current", calc=W,
           output="drop_cont_pct", unit="%", limit=("<=", 2.0), parts=PARTS_MAIN + ESC_IDS, how="T-F1-DROP at 30 A.")
 kit.claim("CL-F1-DROP-PEAK", "Voltage drop pack to the farthest ESC at the 100 A limiter", calc=W,
@@ -517,6 +531,16 @@ kit.claim("CL-F1-POWER-MASS", "Power subsystem mass excluding the pack", calc="C
 kit.claim("CL-F1-POWER-BUDGET", "Power allocation left after the pack", calc="CALC-F1-MASS", output="budget_g",
           unit="g", how="P:mass.allocation_g.power minus P:battery.mass_kg; follows A1's allocation.")
 
+kit.claim("CL-F1-PMOD-RISE", "Power-board link 28 AWG 5 V conductor, steady rise at 2 x FC 5 V load",
+          calc="CALC-F1-PMOD", output="rise_5v_c", unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"),
+          verifies=["R-AVIONICS-POWER"], parts=["PWR-003"],
+          how="T-F1-SERVO-STALL: meter in the 5 V line of the GH link while the FC, GPS, RX and airspeed run.")
+kit.claim("CL-F1-PMOD-SERVO-RISE", "Power-board link if servo stall current ran through it (not accepted)",
+          calc="CALC-F1-PMOD", output="rise_stall_c", unit="degC", parts=["PWR-003", "PWR-005"],
+          how="Continuity check on the built stack: FC servo-rail + to the power-board Vx pad open (no path).",
+          note="above P:electrical.wire_temp_rise_max_c: the servo rail is fed by the UBEC only and the CoreWing "
+               "Vx must not reach the FC servo rail through the link (CR-F1-29). Also above the ~1 A per JST-GH pin.")
+
 # ---------------------------------------------------------------- tests
 kit.test("T-F1-WIRE-HEAT", "Wire heat runs", verifies=["CL-F1-MAIN-RISE", "CL-F1-MAIN-PEAK", "CL-F1-ESC-RISE",
                                                          "CL-F1-ESC-PEAK", "CL-F1-BUNDLE-RISE", "CL-F1-BUNDLE-PEAK",
@@ -534,7 +558,7 @@ kit.test("T-F1-DROP", "Path resistance", verifies=["CL-F1-R-EXT", "CL-F1-DROP-CO
 kit.test("T-F1-SENSOR-CAL", "Current sensor calibration", verifies=["CL-F1-ILIM-WORST", "CL-F1-SENSOR-CONT"],
          procedure="Clamp meter on the main lead at 5, 15, 25, 30 A (motors on the restrained frame); set "
                    "BATT_AMP_PERVLT so BAT.Curr is within 5 %; record the value for F4.")
-kit.test("T-F1-SERVO-STALL", "Servo stall current and rail voltage", verifies=["CL-F1-SERVO-BEC-REQ",
+kit.test("T-F1-SERVO-STALL", "Servo stall current and rail voltage", verifies=["CL-F1-SERVO-BEC-REQ", "CL-F1-PMOD-RISE",
                                                                                "CL-F1-UBEC-RATING"],
          procedure="Each servo blocked at full deflection 2 s on the UBEC at 6 V, meter in series; both together: "
                    "rail >= 5.8 V at the servo and FC 5 V rail >= 4.8 V.")

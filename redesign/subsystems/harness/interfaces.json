@@ -24,32 +24,32 @@
    "name": "Wing-fin harness bundle R (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 38.8,
+   "mass_g": 38.3,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0761,
-    0.2566,
-    0.0056
+    0.0763,
+    0.2556,
+    0.0057
    ],
    "make_or_buy": "make",
    "carried": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.076, 0.257, 0.0055] m, 0.4 mm away (CL-F2-CG-BODY)"
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.076, 0.256, 0.0056] m, 0.5 mm away (CL-F2-CG-BODY)"
   },
   {
    "id": "HRN-002-L",
    "name": "Wing-fin harness bundle L (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 38.7,
+   "mass_g": 38.2,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0761,
-    -0.2566,
-    0.0056
+    0.0763,
+    -0.2556,
+    0.0057
    ],
    "make_or_buy": "make",
    "carried": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.076, -0.257, 0.0055] m, 0.5 mm away (CL-F2-CG-BODY)"
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.076, -0.2561, 0.0056] m, 0.5 mm away (CL-F2-CG-BODY)"
   }
  ],
  "edges": [
@@ -403,22 +403,23 @@
    "part_b": "PRP-001-UR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.122 m",
+   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.116 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UR phase pads (solder) -> motor UR factory leads (staggered in-line splices)",
     "route_id": "R-HRN-PH-UR",
     "support_points": [
      "outboard board face (tape strips)",
-     "collar tie",
-     "free 30 mm to the motor base",
+     "tie at the collar-tail front (x 0.060",
+     "CR-F2-16)",
+     "free <= 50 mm to the motor base",
      ">= 5 mm off the bell"
     ],
     "bend_radius_mm": 10.4,
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.122,
+    "length_m": 0.116,
     "wires": [
      "W-PH-UR"
     ]
@@ -434,22 +435,23 @@
    "part_b": "PRP-001-UL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.122 m",
+   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.116 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UL phase pads (solder) -> motor UL factory leads (staggered in-line splices)",
     "route_id": "R-HRN-PH-UL",
     "support_points": [
      "outboard board face (tape strips)",
-     "collar tie",
-     "free 30 mm to the motor base",
+     "tie at the collar-tail front (x 0.060",
+     "CR-F2-16)",
+     "free <= 50 mm to the motor base",
      ">= 5 mm off the bell"
     ],
     "bend_radius_mm": 10.4,
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.122,
+    "length_m": 0.116,
     "wires": [
      "W-PH-UL"
     ]
@@ -465,22 +467,23 @@
    "part_b": "PRP-001-LR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.122 m",
+   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.116 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LR phase pads (solder) -> motor LR factory leads (staggered in-line splices)",
     "route_id": "R-HRN-PH-LR",
     "support_points": [
      "outboard board face (tape strips)",
-     "collar tie",
-     "free 30 mm to the motor base",
+     "tie at the collar-tail front (x 0.060",
+     "CR-F2-16)",
+     "free <= 50 mm to the motor base",
      ">= 5 mm off the bell"
     ],
     "bend_radius_mm": 10.4,
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.122,
+    "length_m": 0.116,
     "wires": [
      "W-PH-LR"
     ]
@@ -496,22 +499,23 @@
    "part_b": "PRP-001-LL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.122 m",
+   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.116 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LL phase pads (solder) -> motor LL factory leads (staggered in-line splices)",
     "route_id": "R-HRN-PH-LL",
     "support_points": [
      "outboard board face (tape strips)",
-     "collar tie",
-     "free 30 mm to the motor base",
+     "tie at the collar-tail front (x 0.060",
+     "CR-F2-16)",
+     "free <= 50 mm to the motor base",
      ">= 5 mm off the bell"
     ],
     "bend_radius_mm": 10.4,
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.122,
+    "length_m": 0.116,
     "wires": [
      "W-PH-LL"
     ]
@@ -969,6 +973,11 @@
     "wires": [
      "W-CAP-UR"
     ]
+   },
+   "current_a": {
+    "cont": 4.2,
+    "peak": 12.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
    }
   },
   {
@@ -994,6 +1003,11 @@
     "wires": [
      "W-CAP-UL"
     ]
+   },
+   "current_a": {
+    "cont": 4.2,
+    "peak": 12.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
    }
   },
   {
@@ -1019,6 +1033,11 @@
     "wires": [
      "W-CAP-LR"
     ]
+   },
+   "current_a": {
+    "cont": 4.2,
+    "peak": 12.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
    }
   },
   {
@@ -1044,6 +1063,11 @@
     "wires": [
      "W-CAP-LL"
     ]
+   },
+   "current_a": {
+    "cont": 4.2,
+    "peak": 12.4,
+    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"
    }
   }
  ],

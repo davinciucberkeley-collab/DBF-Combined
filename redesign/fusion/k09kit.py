@@ -521,19 +521,34 @@ def prop_disc(part, hub, D, t=2 * PROP_BLADE_HALF_M):
     return part.cylinder('X', (hub[0] - t / 2, hub[1], hub[2]), t, D / 2, name='prop disc')
 
 
-def prop_keepout(ctx, name, hub, D, clearance, exempt, rotate=None, blade_half=None):
-    """Prop strike keep-out: disc radius D/2 + clearance, axial half blade + clearance (check.py ERROR if any
-    other part's bounding box enters).
+def prop_keepout(ctx, name, hub, D, clearance, exempt, rotate=None, blade_half=None, fwd=None, aft=None):
+    """Prop strike keep-out: disc radius D/2 + clearance, axial blade envelope + clearance (check.py ERROR if any
+    other part's body enters: box pre-filter, then the body's convex hull, CR-E1-45; the message gives the
+    distance to the swept blade volume, which is the keep-out less `clearance` on every face).
 
     rotate (CR-E1-31b): the same (axis, deg) tuple the motor/prop components get from ctx.part(rotate=). The
     keep-out axis is then the canted shaft axis (x turned by that rotation) and check.py tests the tilted cylinder
     exactly, so the tilt is geometry and the clearance stays clearance. None keeps the x-axis cylinder.
-    blade_half: the owner's axial half-extent of the rotating prop about its mid-plane (E1, CR-E1-16: -6 / +10 mm
-    with coning, so pass 0.010); default PROP_BLADE_HALF_M."""
+    Axial envelope about the hub mid-plane, measured along the shaft axis:
+      blade_half: symmetric half-extent (default PROP_BLADE_HALF_M), or
+      fwd / aft (CR-E1-45): the owner's asymmetric extents, forward (-x, upstream, includes coning) and aft (+x,
+      towards the mount), e.g. E1's ASM-E1-BLADE-ENV fwd=0.010, aft=0.006. Both must be given; they replace
+      blade_half. The cylinder is then centred (aft - fwd) / 2 along the axis from the hub."""
     import fusionkit as fk
-    R, half = D / 2 + clearance, (PROP_BLADE_HALF_M if blade_half is None else blade_half) + clearance
     axis = 'X' if not rotate else fk.mat_vec(fk.rot_matrix(*rotate), (1.0, 0.0, 0.0))
-    ctx.keepout_cylinder(name, axis, hub, R, half, exempt)
+    if (fwd is None) != (aft is None):
+        raise ValueError('prop_keepout %s: give both fwd and aft, or neither' % name)
+    if fwd is not None:
+        if fwd < 0 or aft < 0:
+            raise ValueError('prop_keepout %s: fwd and aft are extents (>= 0 m)' % name)
+        n = fk._unit_axis(axis)
+        shift = (aft - fwd) / 2.0
+        centre = tuple(hub[i] + shift * n[i] for i in range(3))
+        core_half = (fwd + aft) / 2.0
+    else:
+        centre, core_half = tuple(hub), (PROP_BLADE_HALF_M if blade_half is None else blade_half)
+    ctx.keepout_cylinder(name, axis, centre, D / 2 + clearance, core_half + clearance, exempt)
+    ctx.keepouts[-1].clearance = clearance
 
 
 def quad(ctx, ids):

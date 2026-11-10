@@ -47,7 +47,7 @@ kit.assumption("ASM-A5-MASS-SPLIT", "Allocation split and lump stations used for
                "(spar mass/m x tube length) + per station mount 11.0, station collar 10.6, CF brace 5.2, anchor 3.2 g "
                "+ 2 x 41.0 g through-core blocks (D3 R3 CAD unit masses, rounded) and 4 half-fins carrying the rest "
                "(board, edge strips, pins, ESC pad, plug share); propulsion = 4 x prop (params) at the prop plane + rest "
-               "(motor, ESC, adapter, nut) as the motor envelope from DP-MOTOR-FACE; power = pack at the D-24 station "
+               "(motor, ESC, adapter, nut) as the motor envelope from DP-MOTOR-FACE; power = pack at the D-47 bay datum "
                "(D2's aft face less half the pack length) + rest at the pod nose; pod and avionics in the pod; mechanisms "
                "23.5 mm ahead of the hinge; harness as two bundle legs (channel 14 mm aft of the spar surface, tube "
                "inboard face); feet from 12 mm ahead of the TE to DP-GROUND; printed walls 3 mm; growth reserve not placed",
@@ -201,7 +201,7 @@ def layout_cg(a_wing, a_fins, a_pod, a_land, a_prop, a_pwr, a_avn, a_hrn, a_mec,
     l_a, l_b = (y_fin - BLOCK_HALF_Y) - pod_size[1] / 2, 2 * ztop
     m_pack = m_pack_kg * 1000.0
     pod_cx, pod_cz = pod_x + pod_size[0] / 2, pod_z + pod_size[2] / 2
-    pack_x = pack_aft[0] - pack_size[0] / 2                                 # D-24 station (D2's aft face)
+    pack_x = pack_aft[0] - pack_size[0] / 2                                 # D-47 bay datum (D2's aft face)
     tray = pod_z + WALL
     pack_z = tray + pack_size[2] / 2
     pwr_x1 = min(pod_x + 0.005 + 0.02, pack_x - pack_size[0] / 2)
@@ -250,27 +250,27 @@ kit.claim("CL-A5-ELEVON-GAP-MIN", "Smallest elevon end gap", calc="CALC-A5-ELEVO
 kit.claim("CL-A5-CG-X-AFT-LIMIT", "Aft CG limit (params cg.x_range_m[1])", calc="CALC-A5-LAYOUT-CG",
           output="cg_x_aft_limit_m", unit="m", how="B3 re-derives the range at R1 geometry (CHANGE-LOG D-17, CR-A1-10).")
 kit.claim("CL-A5-CG-X-FWD-LIMIT", "Forward CG limit (params cg.x_range_m[0])", calc="CALC-A5-LAYOUT-CG",
-          output="cg_x_fwd_limit_m", unit="m", how="B3: elevon trim at CLmax (CL-B3-CG-FWD, D-24).")
-kit.claim("CL-A5-LAYOUT-CG-X", "Layout CG x (allocations at the R3 datum stations, pack at the D-24 station)",
-          calc="CALC-A5-LAYOUT-CG", output="cg_x_m", unit="m", limit=("<=", "CL-A5-CG-X-AFT-LIMIT"),
-          verifies=["R-CG-RANGE"],
+          output="cg_x_fwd_limit_m", unit="m", how="B3: elevon trim at CLmax (CL-B3-CG-FWD, D-60).")
+# R4 (2026-11-10): all ten subsystems are delivered, so R-CG-RANGE is verified on the assembled CAD (CL-A5-ASSY-CG-X,
+# -FWD, -RANGE-USE below) and by A3's roll-up. The allocation layout is kept as information only: with D-47's pack
+# bay (pack at -0.022) and the D-48 allocations its lumps sit 5.5 mm forward of the delivered parts (shares in
+# INTEGRATION.md), so it no longer stands for the aircraft's CG (CR-A5-31).
+kit.claim("CL-A5-LAYOUT-CG-X", "Layout CG x (information: allocations at the skeleton stations, pack at the D-47 datum)",
+          calc="CALC-A5-LAYOUT-CG", output="cg_x_m", unit="m",
           assumes=["ASM-A5-MASS-SPLIT", "ASM-A5-SECTION"],
           how="Equals the CAD roll-up (python -I redesign/fusion/check.py --skeleton, TOTAL line; this script stops if they "
               "differ by > 1 mm). A3 replaces the allocations with part masses (MASS-CG.md); H1 balances the built "
               "aircraft on two knife edges (T-A5-CG-BALANCE).")
-kit.claim("CL-A5-LAYOUT-CG-X-FWD", "Layout CG x against the forward limit", calc="CALC-A5-LAYOUT-CG",
-          output="cg_x_m", unit="m", limit=(">=", "CL-A5-CG-X-FWD-LIMIT"), verifies=["R-CG-RANGE"],
+kit.claim("CL-A5-LAYOUT-CG-X-RANGE-USE", "Layout CG x, |x - mid| / half-range (information; > 1 = outside)",
+          calc="CALC-A5-LAYOUT-CG", output="cg_x_range_use", unit="-",
           assumes=["ASM-A5-MASS-SPLIT", "ASM-A5-SECTION"],
-          how="Same value as CL-A5-LAYOUT-CG-X, tested against cg.x_range_m[0]; T-A5-CG-BALANCE.")
-kit.claim("CL-A5-LAYOUT-CG-X-RANGE-USE", "Layout CG x in the range, |x - mid| / half-range", calc="CALC-A5-LAYOUT-CG",
-          output="cg_x_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"],
-          assumes=["ASM-A5-MASS-SPLIT", "ASM-A5-SECTION"],
-          how="Same basis as CL-A3-CG-X-RANGE (A3's bottom-up value); T-A5-CG-BALANCE.")
+          how="Information only (allocation lumps, not parts). The verifying values are CL-A5-ASSY-CG-X-RANGE-USE and "
+              "A3's CL-A3-CG-X-RANGE; T-A5-CG-BALANCE.")
 kit.claim("CL-A5-PACK-X-FOR-CG", "Pack centre needed for the CG target", calc="CALC-A5-LAYOUT-CG",
           output="pack_x_for_target_m", unit="m", assumes=["ASM-A5-MASS-SPLIT"], parts=["PWR-001", "POD-002"],
           how="D2/A3: compare with the bay (forward stop subsystems/pod/params.json#fwd_stop_x_m, aft-only spacers); "
               "A3's CL-A3-PACK-X-REQ is the same quantity from the bottom-up model.")
-kit.claim("CL-A5-PACK-SHIFT", "Pack shift from the D-24 station for the CG target", calc="CALC-A5-LAYOUT-CG",
+kit.claim("CL-A5-PACK-SHIFT", "Pack shift from the D-47 bay datum for the CG target", calc="CALC-A5-LAYOUT-CG",
           output="pack_shift_m", unit="m", assumes=["ASM-A5-MASS-SPLIT"],
           how="Negative = forward. The bay has aft-only spacers (D2); a forward shift needs the forward stop moved.")
 kit.claim("CL-A5-CG-Z-UP-LIMIT", "Upper CG z limit (params cg.z_range_m[1])", calc="CALC-A5-LAYOUT-CG",
@@ -324,6 +324,9 @@ kit.claim("CL-A5-ASSY-MASS", "Assembled CAD mass (declared part masses, pack 550
 kit.claim("CL-A5-ASSY-CG-X", "Assembled CAD CG x against the aft limit", calc="CALC-A5-ASSY", output="cg_x_m", unit="m",
           limit=("<=", "CL-A5-CG-X-AFT-LIMIT"), verifies=["R-CG-RANGE"], assumes=["ASM-A5-ASSY-ROLLUP"],
           how="check.py TOTAL line; independent code from A3's mass_rollup.py on the same declared data. T-A5-CG-BALANCE.")
+kit.claim("CL-A5-ASSY-CG-X-FWD", "Assembled CAD CG x against the forward limit", calc="CALC-A5-ASSY", output="cg_x_m",
+          unit="m", limit=(">=", "CL-A5-CG-X-FWD-LIMIT"), verifies=["R-CG-RANGE"], assumes=["ASM-A5-ASSY-ROLLUP"],
+          how="Same value as CL-A5-ASSY-CG-X against cg.x_range_m[0]; T-A5-CG-BALANCE.")
 kit.claim("CL-A5-ASSY-CG-X-RANGE-USE", "Assembled CAD CG x, |x - mid| / half-range", calc="CALC-A5-ASSY",
           output="cg_x_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"], assumes=["ASM-A5-ASSY-ROLLUP"],
           how="Same basis as CL-A3-CG-X-RANGE; T-A5-CG-BALANCE.")
@@ -340,8 +343,7 @@ kit.claim("CL-A5-ASSY-CHECK-ERRORS", "check.py errors on the delivered subsystem
 kit.test("T-A5-CORE-COVER", "Spar cover on the first cut core", verifies=["CL-A5-SPAR-COVER", "CL-A5-SPAR-COVER-CAMBER"],
          state="planned", procedure="Cut a 100 mm core section, cut the slot, depth-gauge foam above and below the slot (G2).")
 kit.test("T-A5-CG-BALANCE", "CG balance of the built aircraft",
-         verifies=["CL-A5-LAYOUT-CG-X", "CL-A5-LAYOUT-CG-X-FWD", "CL-A5-LAYOUT-CG-X-RANGE-USE", "CL-A5-LAYOUT-CG-Z",
-                   "CL-A5-ASSY-CG-X", "CL-A5-ASSY-CG-X-RANGE-USE", "CL-A5-ASSY-CG-Z"],
+         verifies=["CL-A5-ASSY-CG-X", "CL-A5-ASSY-CG-X-FWD", "CL-A5-ASSY-CG-X-RANGE-USE", "CL-A5-ASSY-CG-Z"],
          state="planned", procedure="Pack in, props on; two knife edges under the wing at the fin roots; mark x (H1).")
 
 

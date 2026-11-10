@@ -1,6 +1,7 @@
 # Loads — K09-L quad tailsitter
 
-Owner: C1 (loads engineer). Revision **C1-R4** (D-50 action items), 2026-11-09, at params revision **A1-R4** (CG range
+Owner: C1 (loads engineer). Revision **C1-R4** (D-50 action items), 2026-11-09, re-run 2026-11-10 on A3's live roll-up
+(basic mass 2.3225 kg; every published load unchanged to 4 figures; requests CR-C1-27…34 in `CHANGE-REQUESTS.md`), at params revision **A1-R4** (CG range
 0.050–0.0549 m, pod nose −0.130 m, allocations 2 355 g, VD 27.2 m/s, n⁺ 3.4, T_lim 21.1 N, 7° cant). Status: the
 calculation is `CHECKED` (equilibrium, convergence, two hand checks, 0 C1 drift in the proof chain); its inputs are
 `PROPOSED`/`UNVERIFIED` (thrust, CLmax, masses, the capped VH), so every load is `UNVERIFIED` until the stand, the

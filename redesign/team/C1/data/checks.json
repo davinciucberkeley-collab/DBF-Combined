@@ -2,8 +2,8 @@
  "strip_convergence_F1_root": [
   {
    "dy_m": 0.01,
-   "Mx_Nm": 3.443924362406316,
-   "Mbend_Nm": 3.47569606751607
+   "Mx_Nm": 3.4439243661878227,
+   "Mbend_Nm": 3.475696026901921
   },
   {
    "dy_m": 0.005,
@@ -21,15 +21,15 @@
   "model_Nm": 1.0131774300171956,
   "diff_frac": 0.014534195319783616
  },
- "equilibrium_residual_max": 2.1600499167107046e-12,
+ "equilibrium_residual_max": 2.2737367544323206e-13,
  "hand_check_B2_root_lift_moment_1g": {
   "model_Nm": 3.094249078179696,
   "B2_Nm": 3.094191756337499,
   "diff_frac": 1.8525626952324698e-05
  },
  "cant_side_force_in_J_MOTOR_H2": {
-  "J_MOTOR_UR_Fside_N": 2.6952393449959797,
+  "J_MOTOR_UR_Fside_N": 2.696261038340759,
   "T_lim_sin_cant_N": 2.5714431458486118,
-  "J_MOTOR_UR_Fx_N": -18.3078497196379
+  "J_MOTOR_UR_Fx_N": -18.313449751226358
  }
 }

@@ -1,7 +1,7 @@
 # flight-software (FSW)
 
 ArduPilot Plane tailsitter set-up for K09-L: parameter file, output map, transition logic, elevon schedule,
-failsafes, tuning and SITL plans. Owner F4. No parts. Status `PROPOSED`, revision F4-R4b, 2026-11-09. Firmware
+failsafes, tuning and SITL plans. Owner F4. No parts. Status `PROPOSED`, revision F4-R4c, 2026-11-10. Firmware
 ArduPlane 4.7.x stable on the CoreWing F405 Wing V2 (D-33, no Lua). Not loaded on any board and not run in SITL
 (SITL is not installed): every flight behaviour below is `UNVERIFIED`. Re-check: `python -I redesign/team/F4/fsw_check.py`.
 
@@ -30,7 +30,7 @@ ArduPlane 4.7.x stable on the CoreWing F405 Wing V2 (D-33, no Lua). Not loaded o
 | Descent auto / pilot / final (below 6 m) | 1.2 / 1.2 / **0.3** (VRS onset 1.88; foot cartridges take ≤ 0.32 without set, CR-D5-21) | m/s | `CL-F4-DESCENT`, `CL-F4-LAND-SPD` | `UNVERIFIED` |
 | Elevon servo ends L / R (trim 1500, ±25° at the TE) | 1003–1976 rev / 1024–1997 (starting values; T-D6-THROW sets them) | µs | `CL-F4-ELEVON-PWM-ERR`, `-SPAN` 497 ≤ 500 (CR-D6-09) | `PROPOSED` |
 | `MIXING_GAIN` → pure-pitch travel | 0.5 → 12.5 (trimmed CLmax needs 11.0) | —, ° | `CL-F4-MIX-PITCH` 0.88 | `UNVERIFIED` |
-| `INS_POS1/2` / `GPS1_POS` (FRD from CG x 0.0522, z 0.018) | (0.062, 0.046, −0.021) / (−0.023, 0, −0.160) | m | `CL-F4-SENSOR-POS-ERR` (CR-F3-20) | `UNVERIFIED` |
+| `INS_POS1/2` / `GPS1_POS` (FRD from CG x 0.0522, z 0.0185) | (0.062, 0.046, −0.0205) / (−0.023, 0, −0.1595) | m | `CL-F4-SENSOR-POS-ERR` (CR-F3-20) | `UNVERIFIED` |
 | Touchdown to motors stopped (RC9 cut) | 0.46 (≤ 0.5) | s | `CL-F4-TD-CUT` | `UNVERIFIED` |
 | `BATT_LOW_MAH` → RTL / `BATT_CRT_MAH` → QLAND | 2 600 / 1 300 (CR-E2-20) | mAh | `CL-F4-BATT-LOW`, `-CRT` | `PROPOSED` |
 | Geofence ceiling, circle | 110 (≤ 121.9), 250 | m | `CL-F4-FENCE-*` | `CHECKED` |
@@ -126,7 +126,7 @@ so it cannot meet 0.5 s: **the pilot flips the RC9 cut at contact** (0.25 s reac
 | `THR_MAX` 70 holds VD 27.2 only if A1 accepts the cap (CR-C1-20 option) | A1, C1 (CR-F4-15) |
 | 88 names still to match on the 4.7.x tag; 6 LEGACY duplicates | F4 (S1) |
 | Elevon servo ends are starting values from D6's linkage and an assumed ±45° per 1000–2000 µs servo; span 497 of 500 µs | D6, H1 (T-D6-THROW) |
-| Sensor offsets use CG z +0.018 (A3 model) where F3's calc uses z 0; IMU z inferred from "board 4 mm higher" | F3 (CR-F4-19), A3 |
+| Sensor offsets use CG z +0.0185 (A3 `CALC-A3-CG`) where F3's calc uses z 0; IMU z inferred from "board 4 mm higher" | F3 (CR-F4-19), A3 |
 
 ## How to verify
 

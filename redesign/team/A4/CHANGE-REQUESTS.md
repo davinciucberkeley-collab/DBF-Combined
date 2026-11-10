@@ -91,3 +91,12 @@ file named) and noting the CR id; A4 updates the plan and re-runs `interface_pla
 | CR-A4-45 | F5 | Create `subsystems/ground/interfaces.json` with `GND-001` (`"flight": false`); `E-AVN-09` is parked waiting for it (repeats CR-A4-30). | `CL-F5-LINK-MARGIN` names a part in no interfaces.json |
 | CR-A4-46 | D7 | `check.py`: tape skin `WNG-003` overlaps the fore saddles `TRN-002-L/R` by 8 mm. Model the saddle at contact, or state the foam preload in the `E-TRN-*` retention block. | 2 `transport` WARN |
 | CR-A4-47 | C4, C5 | Claims name retired ids: C4 `FIN-001-LU/LD/RU/RD` → `FIN-001-UR/UL/LR/LL`; C5 `GER-003-LR/LL` → `GER-008-LR/LL`. | `build_graph.py` warns "part not in any interfaces.json" |
+
+## Round 5 dispositions (plan A4-R5, 2026-11-10)
+
+| Request | From | Disposition | Where |
+|---|---|---|---|
+| CR-D2-20 (supersedes CR-D2-17) | D2 | Accepted and re-baselined (pod only): `POD-009` crush block and `POD-010` spreader added; `POD-008` = trim spacer set; `E-POD-10` `POD-008`–`POD-002`; `E-POD-11` `POD-009`–`POD-002`; new `E-POD-13` `POD-010`–`POD-009` `CT-SLIDE-STOP`. CR-D2-17 items (`CT-M3-PA66-NUT`, `E-POD-05` field joint, `E-POD-12` thermal, acknowledgements) unchanged | `baseline-R5.json`, `INTERFACE-PLAN.md` "What changed in A4-R5"; `--compare` 0 deviations |
+
+No new change requests from A4 this round.
+

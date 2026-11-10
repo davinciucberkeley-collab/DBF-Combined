@@ -563,11 +563,12 @@
    "title": "RC, telemetry and GCS spend beyond BOM lines A03, R01, R02",
    "unit": "USD",
    "parts": [
-    "GND-001"
+    "GND-001",
+    "AVN-003"
    ],
-   "how": "BOM.csv: A03 $22.04 + R01 $71.65 + R02 $27.00 incl. tax = $120.69; telemetry rides on the ELRS link and the GCS is Mission Planner on a team laptop (no purchase).",
-   "value": 0.0,
-   "note": "A separate 915 MHz SiK pair (~$35-60) would cut the $12 reserve margin over one crash to below zero"
+   "how": "BOM.csv: A03 $22.04 + R01 $71.65 + R02 $27.00 incl. tax = $120.69 already carried; the only addition is a pair of 150 mm U.FL 2.4 GHz T-antennas for the RP3 V2 (CR-F3-15: stock 65 mm leads do not reach the hatch-top and nose tubes). I1 prices it at order (CR-F5-11). Telemetry rides on the ELRS link and the GCS is Mission Planner on a team laptop (no purchase).",
+   "value": 6.0,
+   "note": "Estimate from CR-F3-15 (~$6), UNVERIFIED until I1 fetches a listing. The pessimistic reserve is $312.99 vs the $309 crash (+$3.99, D-57), so A1 pulls I1's first lever (borrow the soldering kit, +$94.82). A 915 MHz SiK pair (~$35-60) stays out"
   },
   {
    "id": "T-F5-BENCH",

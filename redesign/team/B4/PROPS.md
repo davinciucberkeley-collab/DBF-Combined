@@ -1,8 +1,8 @@
 # Props and rotor aero (B4)
 
-Status `PROPOSED`, 2026-11-09, re-run at **A1-R3** (CR-A1-29). Everything below is `UNVERIFIED` until the thrust
-stand runs (`T-B4-STAND`, `T-B4-INSTALLED`, `T-B4-YAW`). Calculations: `team/B4/props.py` → `claims.json`
-(66 claims, 4 planned tests), `out/props_results.json`. Figures: `team/B4/figures.py`. Data: `team/B4/data/` (APC
+Status `PROPOSED`, 2026-11-10, re-run at **R4** (prop plane x −0.0077, cant sense −1 per D-52, L/D 6.2, pitot tip
+x −0.21). Everything below is `UNVERIFIED` until the thrust stand runs (`T-B4-STAND`, `T-B4-INSTALLED`, `T-B4-YAW`).
+Calculations: `team/B4/props.py` → `claims.json` (74 claims, 4 planned tests), `out/props_results.json`. Figures: `team/B4/figures.py`. Data: `team/B4/data/` (APC
 PER3 tables for five props, UIUC measurements for two). Python standard library only. `props.py` now also reads
 D3's `subsystems/fins/params.json` (`P:fin_detail.*`) for the collars, ears, braces and ESC pads.
 
@@ -11,16 +11,30 @@ than the 11×4.5MR and saves 19 % in cruise. Five installation results matter mo
 1. **The hover-yaw sign was wrong in R0–R2.** The fin's swirl side force acts 0.16 m from the body x-axis and turns
    the airframe *with* the reaction torque. Hover yaw authority is **1.79 ×** the isolated reaction torque at 7°
    cant (1.40 × with half the modelled fin force), not 0.48 ×. Add the cant and the total is 4.5 ×.
-2. **The 7° cant (D-27) is more than yaw needs.** With no fin credit at all, 5° meets B3's yaw requirement. At 7°
-   the canted disc swings its wing-side edge 13 mm toward the tube: the blade tip passes **27 mm** in front of
-   the tube face (limit 25 mm, `CL-B4-GAP-TUBE`).
+2. **R4: the wing is clear; the tube is not.** Measured exactly in 3D against the blade's swept volume (E1's
+   +10 / −6 mm envelope), the blade passes **34.2 mm** from the wing upper skin at the upper stations and 42.2 mm
+   from the lower skin at the lower ones (limit 25 mm, `CL-B4-TIP-WING`, `-LOWER`). The "23 mm" radial estimate
+   does not reproduce (§3.0). The same exact test gives **21.1 mm to the CF motor tube, a `FAIL`**
+   (`CL-B4-GAP-TUBE-ENV`, equal to E1's `CL-E1-TIP-GAP-TUBE`). E1's fix, the mount face 5 mm forward, gives
+   26.1 mm (`CL-B4-GAP-TUBE-FIX5`). The 7° cant is still more than yaw needs, and 5° also fixes the tube.
 3. **The cant sense has to match F4's spin map, and D3's print sense is the opposite.** If the mounts are
    printed as D3's `cant_sense_UR +1` with F4's rotations, differential-thrust yaw drops to about zero.
-4. **The pitot at R3, tip (−0.195, −0.046, 0.045), reads 1.72 % high in transition** (limit 2 %, margin 14 %).
+4. **The pitot at R4, tip (−0.21, −0.046, 0.045), reads 1.75 % high in transition** (limit 2 %, margin 13 %).
    Moving it into the left channel costs 0.06 points against the centreline.
 5. **The new fin hardware adds 0.64 N of cruise drag** (ΔCD0 0.011; 17 % of cruise drag, 32 W). B1 rev 3
    already carries the braces and station collars. The ears, mount collars and ESC pads (ΔCD0 0.0067) are not
    carried, and the ears alone cost as much as the braces. Hover download is 1.038 (keep 1.06).
+
+## 0a. What changed at R4 (action item: prop-tip-to-wing clearance)
+
+| Input / method | R3 | R4 | Effect on B4 numbers |
+|---|---|---|---|
+| `propulsion.stations.x_prop_plane_m` | −0.0082 | **−0.0077** (D-51, = `CL-E1-CAD-HUB-X`) | hub 0.5 mm closer to the tube and the wing |
+| Hub x on the canted axis | x_prop + stack (1 − cos 7°) (0.28 mm aft) | **x_prop** (params already gives the canted-axis hub x) | tube mid-plane gap 27.3 → 27.1 mm |
+| `fin_detail.mount.cant_sense_UR` | +1 (opposite of F4) | **−1** (D-52), now the same as `ASM-B4-WAKE-SENSE` | CR-B4-15a closed; B4's numbers were already on this sense |
+| Clearance method | hub mid-plane to the tube face, zero-thickness blade | **exact distance from every wing-skin and tube-surface point to the swept volume** (`CALC-B4-TIP-WING`) | adds the wing; the tube falls to 21.1 mm (answers CR-E1-46a) |
+| `performance.ld_cruise` | 6.9 | **6.2** | cruise 0.92 → 1.03 N per prop; pack 185 → 195 W |
+| `pod.x_le_m` (pitot tip x) | tip −0.195 | tip −0.21 | transition error 1.72 → 1.75 % |
 
 ## 0. What changed at R3
 
@@ -37,21 +51,21 @@ than the 11×4.5MR and saves 19 % in cruise. Five installation results matter mo
 
 ## 1. Prop selection
 
-Conditions: 2.6 kg gate, download 1.06 and cant 7° (6.81 N per prop in hover), 16 m/s cruise at L/D 6.9 (0.92 N
-per prop), ρ 1.225 kg/m³. Props are from APC PER3. Electrical power uses E1's motor constants (`ASM-E1-*`); E1 owns
+Conditions: 2.6 kg gate, download 1.06 and cant 7° (6.81 N per prop in hover), 16 m/s cruise at L/D 6.2 (1.03 N
+per prop, R4), ρ 1.225 kg/m³. Props are from APC PER3. Electrical power uses E1's motor constants (`ASM-E1-*`); E1 owns
 the electrical numbers.
 
 | Prop | Hover rpm | FM | Hover pack W | Cruise J | η_prop | Cruise pack W | Full-throttle rpm, 14.8 V hot / APC limit | Mass | Verdict |
 |---|---|---|---|---|---|---|---|---|---|
-| **11×5.5MR/MRP** | 5 416 | 0.711 | 346 | 0.583 | **0.421** | **185** | 9 319 / 9 545 (+2 %) | 17 g | `PROPOSED` (selected) |
-| 11×4.5MR/MRP | 5 816 | 0.718 | 336 | 0.503 | 0.333 | 229 | 9 778 / 9 545 (**−2 %**) | 17 g | stand A/B only |
-| 11×5.5E/EP | 5 830 | 0.696 | 347 | 0.577 | 0.469 | 167 | 9 735 / 13 636 | 23 g | alternate |
-| 11×4.7SF | 5 098 | 0.757 | 329 | 0.549 | 0.312 | 245 | 9 019 / **5 909** | 20 g | rejected: SF rpm limit |
-| 12×4.5MR | 5 066 | 0.715 | 319 | 0.478 | 0.275 | 276 | 9 087 / 8 750 (−4 %) | 20 g | rejected: cruise, clearance |
+| **11×5.5MR/MRP** | 5 416 | 0.711 | 346 | 0.578 | **0.443** | **195** | 9 319 / 9 545 (+2 %) | 17 g | `PROPOSED` (selected) |
+| 11×4.5MR/MRP | 5 816 | 0.718 | 336 | 0.499 | 0.354 | 239 | 9 778 / 9 545 (**−2 %**) | 17 g | stand A/B only |
+| 11×5.5E/EP | 5 830 | 0.696 | 347 | 0.571 | 0.490 | 177 | 9 735 / 13 636 | 23 g | alternate |
+| 11×4.7SF | 5 098 | 0.757 | 329 | 0.545 | 0.331 | 256 | 9 019 / **5 909** | 20 g | rejected: SF rpm limit |
+| 12×4.5MR | 5 066 | 0.715 | 319 | 0.475 | 0.295 | 286 | 9 087 / 8 750 (−4 %) | 20 g | rejected: cruise, clearance |
 
 - **The 11×4.7SF never flies.** Its APC limit (65 000 / D) is 5 909 rpm and hover alone needs 5 098 rpm
   (`CL-B4-SF-RPM` `FAIL`).
-- **The 11×5.5E** is the most efficient cruise prop (167 W against 185 W). It is 6 g heavier per prop, has more
+- **The 11×5.5E** is the most efficient cruise prop (177 W against 195 W at R4's L/D 6.2). It is 6 g heavier per prop, has more
   rotational inertia and a 0.41 in hub. Keep it as the alternate if the stand shows the MR worse than predicted.
 - **Data trust.** UIUC wind-tunnel data for two APC 11 in props sit within ±5 % of the PER3 cruise efficiency
   (ratios 0.95 and 1.05 at R3's lighter cruise thrust, `CL-B4-UIUC-ETA`, `-E`). In static thrust PER3 over-predicts
@@ -68,8 +82,8 @@ the electrical numbers.
 | Hover thrust per prop / disk loading (incl. download 1.06 and cos 7°) | 6.81 / 111 | N / N/m² | `CL-B4-HOVER-T`, `CL-B4-DL` | `UNVERIFIED` |
 | Hover rpm / torque / shaft power | 5 416 / 0.114 / 64.5 | rpm / N·m / W | `CL-B4-HOVER-RPM`, `-Q`, `-SHAFT` | `UNVERIFIED` |
 | Hover FM (PER3; × 0.955 measured trend) | 0.711 (≈ 0.68) | — | `CL-B4-FM`, `CALC-B4-XCHECK` | `UNVERIFIED` |
-| Cruise rpm / J / η_prop / shaft power (16 m/s, 0.92 N) | 5 894 / 0.583 / 0.421 / 35.1 | rpm / — / — / W | `CL-B4-CRUISE-*` | `UNVERIFIED` |
-| Cruise pack power, 4 motors (E1 constants, no fin-hardware drag) | 185 (11×4.5MR: 229) | W | `CL-B4-CRUISE-W`, `-OLD` | `UNVERIFIED` |
+| Cruise rpm / J / η_prop / shaft power (16 m/s, 1.03 N, L/D 6.2) | 5 946 / 0.578 / 0.443 / 37.1 | rpm / — / — / W | `CL-B4-CRUISE-*` | `UNVERIFIED` |
+| Cruise pack power, 4 motors (E1 constants, no fin-hardware drag) | 195 (11×4.5MR: 239) | W | `CL-B4-CRUISE-W`, `-OLD` | `UNVERIFIED` |
 | Full-throttle rpm, 16.8 V fresh, no cap | 10 637 (limit 9 545) | rpm | `CL-B4-RPM-MAX-FULL` | `FAIL` (cap below) |
 | Output cap for ≤ 9 350 rpm on a fresh pack | 0.85 | — | `CL-B4-SPIN-MAX` | `UNVERIFIED` |
 | T/W at the rpm cap (installed, cos 7°) | 3.01 (≥ 2.0) | — | `CL-B4-TW-CAP` | `UNVERIFIED` |
@@ -90,9 +104,50 @@ slices, both collars, both ears, 100 brace segments and 10 ESC strips. Elements 
 | ESC pad in the leaning wake | outer (wing-side) edge at 0.89 r_s | still inside the slipstream; 11 % margin (D3's untilted check reads 0.87 R) | `CL-B4-ESC-WASH` |
 | Cruise slipstream vs elevon | tip 6 mm inside the mixing layer at full throw | negligible | `CL-B4-ELEVON-CRUISE` |
 | Rotor–rotor: vertical tip gap 94 mm (0.34 D, canted discs), lateral 0.361 m | mean thrust change < 2 % (rotor-pair data) | no correction; watch vibration | `CL-B4-GAP-V` |
-| **Blade over the tube with the disc canted 7°**: the wing-side edge swings 13 mm aft | tube face **27.3 mm** at the tip (uncanted 40.2), collars 36.0 mm; 45.7 mm if mirrored | **meets 25 mm by 9 %**; below the 0.14 D (39 mm) B4 asked for in CR-B4-04 | `CL-B4-GAP-TUBE`, `-COLLAR`, `-TUBE-ALT` |
+| **Blade over the tube with the disc canted 7°**: the wing-side edge swings about 15 mm aft | hub mid-plane to the tube face 27.1 mm; **blade swept volume to the tube surface 21.1 mm** (§3.0); collars 36.2 mm (mid-plane); 45.5 mm if mirrored | **`FAIL` by 16 %** (limit 25 mm). E1's mount face +5 mm gives 26.1 mm | `CL-B4-GAP-TUBE-ENV`, `-FIX5`, `CL-B4-GAP-TUBE`, `-COLLAR`, `-TUBE-ALT` |
+| **Blade over the wing skin** (upper stations face the cambered upper surface) | **34.2 mm** upper, 42.2 mm lower (exact 3D, E1 envelope); 35.8 mm with the +5 mm fix | meets 25 mm by 37 % | `CL-B4-TIP-WING`, `-LOWER`, `-FIX5` |
 | Vortex ring state in vertical descent | v_h 6.71 m/s → onset ≈ 1.9 m/s | descent ≤ 1.5 m/s, landing 0.5 m/s (F4) | `CL-B4-DESCENT` |
 | Ground effect at take-off | prop 0.376 m (2.7 R) above ground: +0.9 % | ignore | `CALC-B4-GEOM` |
+
+### 3.0 Blade-tip clearance, exact (R4 action item)
+
+The action item read a 23 mm tip-to-wing gap from a radial-only estimate: wing upper skin about 0.163 m from the
+canted shaft axis against a blade radius of 0.1397 m. `CALC-B4-TIP-WING` replaces that estimate with an exact
+distance. It samples the S5010 upper and lower skins (B2's coordinates; 0.25 mm in x to x = 0.08 m and 2 mm aft of
+that; 1 mm in y over |y − 0.32| ≤ R + 30 mm) and the 22 mm tube surface (0.5 mm × 2.5°). For each point it
+measures the distance to the prop's swept volume: radius R about the 7° canted axis, from 10 mm ahead of the hub
+mid-plane to 6 mm behind it (`ASM-E1-BLADE-ENV`; the blades cone forward and never reverse). The hub sits at
+(−0.0077, 0.3223, 0.1861) m: x from params, y and z moved 37.3 mm × sin 7° along the thrust-side direction (D-52 sense).
+
+| Surface (stations) | Exact gap, E1 envelope | Symmetric ±10 mm | Zero-thickness blade | Radial only, in the KO band | Closest point (x, y, z) m | Limit | Status |
+|---|---|---|---|---|---|---|---|
+| Wing upper skin (UR, UL) | **34.2 mm** | 33.6 mm | 35.5 mm | 31.2 mm (r 0.171 m) | (0.023, 0.323, 0.015) | 25 mm | `CHECKED` +37 % |
+| Wing lower skin (LR, LL) | 42.2 mm | 42.1 mm | 42.4 mm | 42.1 mm | (0.018, 0.322, −0.006) | 25 mm | `MODELLED` +69 % |
+| CF motor tube (all four) | **21.1 mm** | 17.2 mm | 27.1 mm (to the face) | — | — | 25 mm | **`FAIL`** −16 % (`CHECKED` vs E1) |
+| Tube, mount face 5 mm forward (E1 CR-E1-44) | 26.1 mm | — | — | — | — | 25 mm | `MODELLED` +5 % |
+| Wing upper skin, mount face 5 mm forward | 35.8 mm | — | — | — | — | 25 mm | `MODELLED` +43 % |
+| Wing upper / tube if the cant sense were mirrored | 51.6 / 37.9 mm | — | — | — | — | — | trade point |
+
+Why the 23 mm figure is not the clearance:
+- **No wing point is 0.163 m from the axis.** The least radial distance from the canted UR axis to the S5010 upper
+  skin anywhere at the fin station is 0.1708 m, at x 0.045–0.060 m (radial gap 31 mm). A 0.163 m reading needs the
+  skin about 8 mm higher than S5010's 9.8 % section, or the hub about 8 mm lower than the params station.
+- **Radial distance is not clearance once the point is behind the blade.** At the wing's thickest stations (x 0.06
+  to 0.10 m) the skin is 50–90 mm aft of the blade mid-plane, so the blade is 54–91 mm away. The real minimum is
+  at x 0.023 m. There the skin is 12 mm behind the mid-plane (6 mm behind the blade's aft face) and 33.6 mm
+  outside the tip circle: √(6.2² + 33.6²) = 34.2 mm.
+- **A cylinder keep-out (R + 25 mm, ±35 mm) sees the wing at 31.2 mm radial,** so an exact surface test against
+  `KO-PROP-UR` passes. A bounding-box test will flag the wing core or tape blocks because the box corners reach
+  inside the cylinder (`CL-B4-TIP-WING-KO`).
+- **Independent cross-check:** E1's dense-surface CAD probe (`team/E1/prop_clearance.json`) gives 34.1 mm for WNG-003
+  (tape doubler block, upper) and 34.2 mm for WNG-001 (core) with the same envelope. That is a different code
+  working on the CAD bodies, and it agrees with B4 to 0.1 mm. B4's tube value (21.14 mm) equals E1's
+  `CL-E1-TIP-GAP-TUBE` (21.1 mm, analytic) and their probe (21.2 mm).
+- Not counted: tape skin and doubler thickness (≈ 0.1–0.3 mm; E1's probe includes them), blade flap beyond E1's
+  +10 / −6 mm envelope, and a misprinted cant (±1° moves the wing-side tip about ±2.1 mm in x).
+
+**Consequence.** The wing does not constrain the prop station. The tube does, and only the tube. A1's CR-D3-26
+choice (face_ahead 0.0075 m, or a 5° cant) clears it. With the face 5 mm forward the wing gap rises to 35.8 mm.
 
 ![Side view at the fin station with the hover slipstream](out/fig-b4-02-slipstream.svg)
 

@@ -3,6 +3,24 @@
 Raised 2026-11-09 by C4 (fin / motor-tube structures). R3 and R2 numbers from `team/C4/claims.d3.json` and
 `out/results_d3.json`; report `BOOM-STRUCTURES.md`. R1 numbers (CR-C4-01…13) came from `claims.json`.
 
+## R4 (2026-11-10: D3-R4 fin with the D5 tip step, 12 mm collar, C1 corner 32.6 N × μ 0.7, B4 swirl, G3)
+
+| Id | To | What | Why | Numbers |
+|---|---|---|---|---|
+| CR-C4-30 | **D5** (cc D3, C6, H1) | **Extend both shoe cheeks toward the wing to a lower edge at \|z\| ≤ 0.171 m** (25 mm deeper than drawn; x 0.2666–0.320 m unchanged), bonded to both board faces over the full strip band. Then set `ASM-C4-SHOE-Z0` to the drawn value (C4 re-runs). C6: check the cheek-to-paper bond and peel at the new cheek edge | The strips stop at the step front, so the 45 mm square tip is bare board. The 22.8 N side load at the pad bends it below the cheek edge: face MS **−0.54** (21.8 MPa ult vs 10 MPa) | `CL-C4-D3-MS-FACE` −0.54 → `-MS-FACE-SHOE-INTACT` +0.18, `-MS-FACE-SHOE-FS` +0.01 (limit); `CL-C4-D3-SHOE-EXT` 0.025 m; sweep in `out/results_d3.json` `shoe_sweep`. Mass ≈ +4 g per foot at 1.2 mm PETG walls (+16 g for four) `EST` |
+| CR-C4-29 | C1 | Publish the G3 set-down force on a lower can as a claim (`CL-C1-G3-CAN-F`); C4 reads it today as `ASM-C4-G3-CAN-F` 23.2 N | One source for the number | G3 never governs: cap MS +38.6, brace 0.61 N, rocking 1.45 N·m design |
+| CR-C4-31 | B1, D3 | CR-B1-18: **no new brace section.** Keep the flat CF 10 × 2 and wrap it in clear packing tape as a fairing (1.4 g for four). Sanding both edges round cuts the weak-axis I by 8 % (MS +0.79 → +0.65) and changes the station stiffness, so C4 does not accept it. B1 credits drag only for what the tape wrap gives | Stiffness of the 10 × 2 unchanged | `CL-C4-D3-BRACE-ROUND-I` 0.918, `-BRACE-ROUND-MS` +0.65, `-BRACE-TAPE-MASS` 1.43 g |
+| CR-C4-32 | C6 | Re-run `joints.py` on the R4 claims: collar torque **6.24 N·m** limit (`CL-C4-D3-COLLAR-T`, published for you; was 4.61), brace 163 N design, strip end **1 243 N**/face design (was 908), pin **72.4 N** design (was 64), strip q 2 240 N/m. C4's collar bond at 12 mm: MS +0.16 (needs 10.3 mm) | Loads rose with the 32.6 N corner and μ 0.7 | `CL-C4-D3-COLLAR-T`, `-BRACE-F`, `-STRIP-END-F`, `-STRIP-PIN-F`, `-STRIP-Q`, `-COLLAR-H-REQ` |
+| CR-C4-33 | H1 (I1) | `T-C4-FIN-PROOF` is now on a **test article** (CR-H1-17 accepted): lower quarter, D5 shoe with the extended cheeks, LE fillet unbonded. Loads 1.5 × limit: L4 **49 N along + 34 N across** both senses, G2 77 N both senses, G3 35 N, 30 s each; then L4 to failure. Flight fins: 1.0 × L4 hand check only | Fail-safe face margin +0.01 rests on a corner that does not converge with mesh; the test decides | procedure in `claims.d3.json` |
+| CR-C4-34 | A1, A3 | Fins **436.4 g** vs 418 g allocated (−18.4 g). No structural item can be removed (each of brace, strips, second layer drops separation to ≤ 0.09); the collar is already 12 mm. CR-C4-30 adds ≈ 16 g `EST` to landing (D5) | Allocation decision | `CL-C4-D3-FINS-MASS` |
+| CR-C4-35 | D3 | Point the SPEC at R4: `CL-C4-D3-MS-FACE` now `FAIL` as drawn (cleared by CR-C4-30); `CL-C4-D3-SEP` 0.37; `-MOUNT-K-REQ` 971 N·m/rad (bench pass level stays ≥ 1 000); `-COLLAR-H-REQ` 10.3 mm (12 mm passes, MS +0.16) | One answer per question | `claims.d3.json` |
+
+Incoming items closed in R4: CR-C1-21 (μ 0.7 on `CL-C1-FOOT-CORNER`, collar torque published as `CL-C4-D3-COLLAR-T`,
+wing-plane torsion agrees with C1 within 0.08 %), CR-C1-24 (G3 case added), CR-B4-19 (swirl 1.43 N misbuilt scaled to
+T_lim, Campbell at 5 416 / 5 894 rpm), CR-C6-20 (no NaN; 0 C4 calculation errors in `build_graph.py`), CR-A4-47 (ids
+renamed in both scripts), CR-B1-18 (answered by CR-C4-31), CR-H1-17 (CR-C4-33). R3 items: CR-C4-23 superseded by
+CR-C4-32; CR-C4-27 by CR-C4-33; CR-C4-28 by CR-C4-34; CR-C4-25 done by D3 (12 mm collar, pins, 40 mm tail).
+
 ## R3 (params A1-R3, D3 R3 fin, 7° cant, μ 0.7)
 
 | Id | To | What | Why | Numbers |

@@ -80,7 +80,14 @@ def build(ctx):
     cr = ctx.part('TRN-002-R')
     cr.box((cx - fx / 2, yc - fy / 2, zf), (cx + fx / 2, yc + fy / 2, zf + ct), name='crush column')
     zs = zf + ct
-    zlow = lambda x: k9.surface_z(coords, c, x / c, 'lower')
+    # Round 4 (A4 CR-A4-46): the saddle is modelled AT CONTACT with the outer face of the tape skin WNG-003, not
+    # with the bare core: contour = core lower surface less the skin model thickness (wing skin.model_t_m), so the
+    # true solid interference is zero. Preload 0 (the aircraft rests by its weight, trn.cradle.saddle_preload_m).
+    # check.py's bbox test still sees the curved skin strip's box around the saddle; E-TRN-06/07 therefore list
+    # WNG-003 in also_contacts (CR-D7-19, accepted by A5).
+    t_sk = k9.lval(k9.local('wing'), 'skin.model_t_m', 'm', default=0.0001)
+    pre_s = L(ctx, 'cradle.saddle_preload_m')
+    zlow = lambda x: k9.surface_z(coords, c, x / c, 'lower') - t_sk + pre_s
     lip_z = L(ctx, 'cradle.cap_t_m')                                        # LE lip top, 6 mm above the chord plane
     # relief channel under the harness groove on the lower surface (round 3, F2 CR-F2-12): the saddle never bears on
     # the taped ESC leads. Saddle = fore body (LE lip .. r0) + aft body (r1 .. sx1) + bridge under the channel.
@@ -94,9 +101,10 @@ def build(ctx):
     cr.box((r0, yc - cw / 2, zs), (r1, yc + cw / 2, min(zlow(r0), zlow(r1)) - rd), name='saddle bridge')
     k9.pair(ctx, 'TRN-002-R', 'TRN-002-L')
 
-    # TRN-004-R hold-down pillar on the lid, over the spar, 5 mm preload onto the upper surface
+    # TRN-004-R hold-down pillar on the lid, over the spar, 5 mm preload onto the upper surface (modelled at contact
+    # with the outer skin face; the preload is a cut length, trn.holddown.preload_m, not a modelled interference)
     (hx, hy), hxc = L(ctx, 'holddown.size_m'), L(ctx, 'holddown.x_m')
-    z_up = max(k9.surface_z(coords, c, x / c, 'upper') for x in (hxc - hx / 2, hxc, hxc + hx / 2))
+    z_up = max(k9.surface_z(coords, c, x / c, 'upper') for x in (hxc - hx / 2, hxc, hxc + hx / 2)) + t_sk
     hp = ctx.part('TRN-004-R')
     hp.box((hxc - hx / 2, yc - hy / 2, z_up), (hxc + hx / 2, yc + hy / 2, zt - t - f['lin']), name='pillar')
     k9.pair(ctx, 'TRN-004-R', 'TRN-004-L')

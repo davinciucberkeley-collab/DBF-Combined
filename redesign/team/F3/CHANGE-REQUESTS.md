@@ -28,3 +28,10 @@
 | CR-F3-19 | C6 | `E-AVN-01` retention updated: 12 g board, 4 gel cubes 5 mm, 10 mm strap through the end-stop slots with 1–2 mm slack (crash 1.5 N on the strap) | board mass 40 → 12 g after the split |
 | CR-F3-20 | F4 | GPS centre now (0.075, 0, 0.178) m (was 0.080, 0, 0.169): `GPS1_POS` ≈ (−0.023, 0, −0.178) m FRD from CG x 0.0526 (re-measure as built). FC unchanged at (−0.010, 0.046), board 4 mm higher (z 0.030). Compass still `COMPASS_AUTO_ROT 2`, expect 36 | `subsystems/avionics/interfaces.json` cg |
 | CR-F3-21 | A1 | Task text says MS5525 and 90 g; the baseline is **MS4525DO** (D-33, 0x76 clash) and the allocation file says 80 g. F3 designs to 80 g (now 36.5 g) and asks for 45 g (CR-F3-13) | `params/mass_budget.json` |
+
+## F3-R3 (interface acknowledgements, 2026-11-10)
+
+| Id | To | What | Why (numbers) |
+|---|---|---|---|
+| CR-F3-22 | F2, A4 | Avionics now acknowledges `E-HRN-22`…`32`. Each was checked against AVIONICS.md §5.1: outputs 1–4 DShot300 bidir (LR/UL/LL/UR), 5/6 elevons, SERIAL5 GPS + I2C1, SERIAL6 CRSF, airspeed Y-branch 0x28. The I²C total of 0.461 m is ≤ 0.5 m (`CL-F2-I2C-LEN`). F2: if `T-F3-ARRIVAL` finds the output pads and Vx on the CoreWing power board, re-end `E-HRN-22` and `-24`…`-29` on `PWR-003` (CR-F1-29). F3 reports this on arrival | merge_check one-sided warnings 12 → 0 |
+| CR-F3-23 | D7, F5, A4 | `E-TRN-21` acknowledged (answers CR-D7-20). The boom is 0.115 m × 10 mm in the 220 × 25 mm slot (`CL-F3-BOOM-STOW-L` +48 %, `-W` +60 %); 4.84 g, below D7's 10 g load basis. `E-AVN-09` moved from `edges_pending` to `edges` now that F5 declares `GND-001` (closes CR-F3-18's pending note) | clears "ground acknowledges an edge nobody declares" |

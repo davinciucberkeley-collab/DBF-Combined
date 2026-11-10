@@ -61,7 +61,8 @@ cheap re-cut. No ribs, no wing joint: the core is the rib, the through-core bloc
 | `E-WNG-02` skin ↔ core · `E-WNG-03` label ↔ skin | tape, 10 % overlap, LE wrap 15 mm · label | C2 · H3 |
 | `E-WNG-04…07` elevon ↔ core | upper tape hinge, ±25°; tape, horns, torque tubes, link by D6 | D6, B2 (0.257 N·m/servo) |
 | `E-WNG-08…11` plugs ↔ spar | thickened epoxy inside the tube | C2 (MS +2.7) |
-| Acknowledged (32) | `E-FIN-49…60`, `E-MEC-01/02/11/12/17/18/23…28/33/34`, `E-POD-01/09`, `E-TRN-06…09`; pending owners: `E-GER-21/22` (D5), `E-HRN-02/04` (F2) | — |
+| Acknowledged (36) | `E-FIN-49…60`, `E-GER-21/22` (TPU tip corner caps over the tape, fixed core \|y\| 0.560–0.575), `E-HRN-02/04` (ESC and servo grooves, wing params `grooves.*`), `E-MEC-01/02/11/12/17/18/23…28/33/34`, `E-POD-01/09`, `E-TRN-06…09`; none pending | D5 · F2 |
+| Prop keep-out (upper props) | real core and tape surface ≥ 5.8 mm outside `KO-PROP-UR/UL` (`CL-D1-PROP-SURF-GAP`); `check.py` lists the box hits as artefacts | A5, E1 |
 
 Keep clear (no cut, no cover): cradle patch lower \|y\| 0.17–0.23 and pillar patch upper x 0.03–0.13 (D7); CG-jig
 patch lower \|y\| 0.45 (H1); half-fin roots and pod footprint bare foam (D3, D2).

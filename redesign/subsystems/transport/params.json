@@ -101,11 +101,11 @@
     "note": "round 3 (C1 CR-C1-22): the aircraft sits 12 mm off the aft wall (foot pads, x 0.368) instead of centred; the four crushable feet take an aft-wall-first drop along their own stroke axis (CALC-D7-OFFAXIS). The slack moves to the nose side"
    },
    "nose_pad_t_m": {
-    "value": 0.0254,
+    "value": 0.01905,
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "1 in PE plank on the front wall facing the pod nose (C1 CR-C1-22); front gap left >= 10 mm even if the pod nose moves 9.3 mm forward (C5 CR-C5-12)"
+    "note": "round 4 (D-47/D-53 forward): 3/4 in PE plank on the front wall facing the pod nose (was 1 in). With the nose at -0.130 (envelope x 0.498) the 1 in pad left 6.6 mm < 10 mm; 3/4 in leaves 12.95 mm (CL-D7-NOSE-GAP). Box W stays 0.55 (A1 D-16). Costs nose-first drop height 0.079 -> 0.059 m (label-and-test case, KEEP UPRIGHT)"
    },
    "nose_pad_size_m": {
     "value": [
@@ -115,7 +115,7 @@
     "unit": "m",
     "source": "D7 choice",
     "status": "PROPOSED",
-    "note": "y by z, centred on the pod nose (y 0, z +0.05); 0.2 m tall so the nose still faces it after the 72 mm floor-drop sink; 12 mm relief hole for antenna B (pod y -0.046, z 0.0245)"
+    "note": "y by z, centred on the pod nose (y 0, z +0.05); 0.2 m tall so the nose still faces it after the 72 mm floor-drop sink. Round 4: antenna tube B ends <= 10 mm ahead of the nose (CR-D7-13) and so stops 2.9 mm short of the pad (CL-D7-ANTENNA-PAD-GAP); a 12 mm wide vertical relief slot (antenna z +6 mm down 90 mm, covers the 72 mm sink) is kept as margin"
    },
    "labels": {
     "value": [
@@ -130,6 +130,13 @@
     "source": "D7 choice",
     "status": "PROPOSED",
     "note": "lid and both end walls; the end-first and lid-down drops are label-and-test only (CL-D7-END-DROP-ALLOW, CL-D7-LID-DROP-ALLOW)"
+   },
+   "antenna_ext_max_m": {
+    "value": 0.01,
+    "unit": "m",
+    "source": "team/D7/CHANGE-REQUESTS.md#CR-D7-13",
+    "status": "PROPOSED",
+    "note": "antenna tube B may end at most 10 mm ahead of the pod nose (D2/F3 accepted under D-47 forward); not in the props-off envelope"
    }
   },
   "cradle": {
@@ -218,6 +225,13 @@
     "source": "D7 choice",
     "status": "PROPOSED",
     "note": "channel depth below the lower-surface contour (cut with the knife after hot-wiring)"
+   },
+   "saddle_preload_m": {
+    "value": 0.0,
+    "unit": "m",
+    "source": "team/A4/CHANGE-REQUESTS.md#CR-A4-46",
+    "status": "PROPOSED",
+    "note": "round 4: the saddle is cut to the OUTER face of the tape skin WNG-003 (core lower surface less wing skin.model_t_m) and carries no preload: the aircraft rests on it by its weight (static 3.3 kPa on the column, CL-D7-CRADLE-STRESS). Hold-down comes only from the lid pillars (trn.holddown.preload_m 5 mm). E-TRN-06/07 list WNG-003 in also_contacts (CR-D7-19)"
    }
   },
   "foam": {
@@ -519,6 +533,52 @@
     "note": "half the out-of-plane thickness of an APC 11 x 5.5MR at the hub (prop on, clocked spanwise; option CR-D7-15); measure a prop"
    }
   },
-  "_note_r3": "D7 round 3 (2026-11-09): off-axis drops (C1 CR-C1-22): aircraft 12 mm off the aft wall so the feet take an aft-wall drop, 1 in PE nose pad, labels for end-first and lid-down; strap ids L/R (A4 CR-A4-24); stowed prop edges; landing spares and mat in the field tote (C5 CR-C5-06, I1 CR-I1-18); set-up steps +25 s"
+  "_note_r3": "D7 round 3 (2026-11-09): off-axis drops (C1 CR-C1-22): aircraft 12 mm off the aft wall so the feet take an aft-wall drop, 1 in PE nose pad, labels for end-first and lid-down; strap ids L/R (A4 CR-A4-24); stowed prop edges; landing spares and mat in the field tote (C5 CR-C5-06, I1 CR-I1-18); set-up steps +25 s",
+  "handle": {
+   "_note": "Round 4 (A4 PLAN-STATUS, C6 joint_stacks.json E-TRN-13...15, D-41): grip stack of each M3 handle bolt. Engagement = bolt length - grip, measured from the nut bearing face; must be >= nyloc height + requirements.nyloc_pitches_min x pitch (5.0 mm, C6 min_engagement_mm). CALC-D7-HANDLE-GRIP",
+   "bolt_len_m": {
+    "value": 0.016,
+    "unit": "m",
+    "source": "team/C6/joint_stacks.json#E-TRN-13",
+    "status": "PROPOSED",
+    "note": "M3x16 SHCS ISO 4762 A2-70 (TRN-102)"
+   },
+   "pitch_m": {
+    "value": 0.0005,
+    "unit": "m",
+    "source": "ISO 261 M3 coarse",
+    "status": "PROPOSED",
+    "note": "M3 x 0.5"
+   },
+   "nyloc_h_m": {
+    "value": 0.004,
+    "unit": "m",
+    "source": "DIN 985 M3 (m = 4.0 mm)",
+    "status": "PROPOSED",
+    "note": "nylon-insert lock nut height"
+   },
+   "strap_t_m": {
+    "value": 0.0025,
+    "unit": "m",
+    "source": "D7 estimate",
+    "status": "UNVERIFIED",
+    "note": "EST, thickness of the bought strap handle's end tab under the washer; measure with calipers on receipt. Max allowed 3.0 mm with M3x16 (CL-D7-HANDLE-STRAP-T-MAX); thicker -> buy M3x20 (protrudes 9 mm inside, clear of the pads)"
+   },
+   "washer_t_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "ISO 7093-1 M3 (0.8 mm) rounded up",
+    "status": "PROPOSED",
+    "note": "M3 x 12 mm fender washer outside"
+   },
+   "backing_t_m": {
+    "value": 0.003,
+    "unit": "m",
+    "source": "TRN-105",
+    "status": "PROPOSED",
+    "note": "3 mm birch ply backing strip inside the wall"
+   }
+  },
+  "_note_r4": "D7 round 4 (2026-11-10): saddle modelled at contact with the outer skin face, preload 0 (CR-A4-46); handle grip stack and engagement >= 5.0 mm (D-41, C6 E-TRN-13...15); C6 ground_joint / joint_stack blocks copied into E-TRN-13...15"
  }
 }

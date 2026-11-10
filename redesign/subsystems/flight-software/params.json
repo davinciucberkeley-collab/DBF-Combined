@@ -1,5 +1,5 @@
 {
- "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R4b. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
+ "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R4c. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
  "fsw": {
   "firmware": {
    "value": "ArduPlane 4.7.x stable, target CoreWingF405WingV2",
@@ -382,10 +382,10 @@
    "value": [
     0.062,
     0.046,
-    -0.021
+    -0.0205
    ],
    "unit": "m",
-   "source": "CALC-F4-SENSOR-POS (CR-F3-20 IMU point, CG x 0.0522, z 0.018)",
+   "source": "CALC-F4-SENSOR-POS (CR-F3-20 IMU point, CG x 0.0522, z 0.0185)",
    "ap": "INS_POS1_X,INS_POS1_Y,INS_POS1_Z",
    "status": "UNVERIFIED",
    "note": "FRD from the CG; INS_POS2 the same"
@@ -394,10 +394,10 @@
    "value": [
     -0.023,
     0,
-    -0.16
+    -0.1595
    ],
    "unit": "m",
-   "source": "CALC-F4-SENSOR-POS (CR-F3-20 GPS centre (0.075, 0, 0.178), CG x 0.0522, z 0.018)",
+   "source": "CALC-F4-SENSOR-POS (CR-F3-20 GPS centre (0.075, 0, 0.178), CG x 0.0522, z 0.0185)",
    "ap": "GPS1_POS_X,GPS1_POS_Y,GPS1_POS_Z",
    "status": "UNVERIFIED",
    "note": "FRD from the CG; re-measure as built"

@@ -200,10 +200,11 @@ def wake_axis(y, z, cant, k, V=0.0, v=1.0):
 
 def hub_centre(x_prop, y, z, cant, k, stack):
     """Prop hub centre: the motor base sits on the canted pads at the axis, the hub is `stack` along the canted
-    shaft; x_prop (params) is the mid-plane station on the uncanted axis."""
-    s, c = math.sin(math.radians(cant)), math.cos(math.radians(cant))
+    shaft. R4: x_prop (params, = CL-E1-CAD-HUB-X) is already the hub x on the canted axis (its x projection is
+    stack cos(cant), fins params prop_stack_m note), so only y and z move. R3 added stack (1 - cos) = 0.28 mm aft."""
+    s = math.sin(math.radians(cant))
     ty, tz = thrust_side(y, z, k)
-    return x_prop + stack * (1 - c), y + stack * s * ty, z + stack * s * tz
+    return x_prop, y + stack * s * ty, z + stack * s * tz
 
 
 def wake_centre(x, hub, e):
@@ -923,6 +924,115 @@ def geometry(foot_h, m, kdl, g, rho, vrs, rpm_h, rpm_max, **geo):
     return out
 
 
+# ---------------------------------------------------------------- 9b. exact blade-tip clearance to the wing (R4)
+def _vol_gap(p, hub, n, R, fwd, aft):
+    """Distance (m) from point p to the prop's swept volume: radius R about the canted axis, axial -fwd..+aft about
+    the hub mid-plane (+ = aft, toward the wing). Also returns the axial offset t and the radial distance rr."""
+    d = (p[0] - hub[0], p[1] - hub[1], p[2] - hub[2])
+    t = -(d[0] * n[0] + d[1] * n[1] + d[2] * n[2])
+    rr = math.sqrt(max(0.0, d[0] * d[0] + d[1] * d[1] + d[2] * d[2] - t * t))
+    dt = max(0.0, -fwd - t, t - aft)
+    return (dt if rr <= R else math.hypot(dt, rr - R)), t, rr
+
+
+def _wing_points(c, y0, y1, zs_up, zs_lo, dy=0.001):
+    """S5010 upper and lower surface points (x, y, z) over y0..y1: 0.25 mm in x to 0.08 m, then 2 mm to the TE."""
+    xs = [i * 0.00025 for i in range(321)] + [0.08 + i * 0.002 for i in range(1, int((c - 0.08) / 0.002) + 1)]
+    ys = [y0 + j * dy for j in range(int((y1 - y0) / dy) + 1)]
+    up = [(x, zs_up(x)) for x in xs]
+    lo = [(x, zs_lo(x)) for x in xs]
+    return ys, up, lo
+
+
+@kit.calc("CALC-B4-TIP-WING", title="Exact blade-tip clearance to the wing skin and to the tube, canted disc, blade "
+          "envelope (R4)", assumes=["ASM-B4-WAKE-SENSE", "ASM-E1-BLADE-ENV"],
+          equation="hub = (x_prop, y + s sin(cant) t_y, z + s sin(cant) t_z) ; n = (-cos, sin t_y, sin t_z) ; for "
+                   "every S5010 surface point p (x 0..c, |y - y_m| <= R + 30 mm): t = -(p - hub).n (+ aft), "
+                   "rr = |(p - hub) - (-t) n| ; dt = max(0, -fwd - t, t - aft) ; gap = dt if rr <= R else "
+                   "hypot(dt, rr - R) ; min over the surface ; upper stations see the upper surface, lower stations "
+                   "the lower (mirror) ; same for the tube surface (z 0..L/2) ; keep-out cylinder test = rr - R "
+                   "for points with -(10 mm + clr) <= t <= 10 mm + clr",
+          inputs={"D": P + "propulsion.prop_diameter_m", "x_prop": P + "propulsion.stations.x_prop_plane_m",
+                  "y_m": P + "propulsion.stations.y_m", "z_m": P + "propulsion.stations.z_m",
+                  "cant": P + "propulsion.stations.cant_deg", "k": "ASM-B4-WAKE-SENSE",
+                  "stack": P + "fin_detail.mount.prop_stack_m", "c": P + "wing.chord_m", "b": P + "wing.span_m",
+                  "env": "ASM-E1-BLADE-ENV", "clr": P + "requirements.prop_clearance_min_m",
+                  "x_tube": P + "fins.tube.x_m", "d_tube": P + "fins.tube.od_m", "tube_len": P + "fins.tube.length_m",
+                  "y_fin": P + "fins.y_m"},
+          units={"D": "m", "x_prop": "m", "y_m": "m", "z_m": "m", "cant": "deg", "stack": "m", "c": "m", "b": "m",
+                 "env": "m", "clr": "m", "x_tube": "m", "d_tube": "m", "tube_len": "m", "y_fin": "m"})
+def tip_wing(D, x_prop, y_m, z_m, cant, k, stack, c, b, env, clr, x_tube, d_tube, tube_len, y_fin):
+    R = D / 2
+    fwd, aft = env
+    sym = 0.010                                            # A1's symmetric keep-out half-thickness (KO-PROP)
+    s, co = math.sin(math.radians(cant)), math.cos(math.radians(cant))
+    up, lo = _airfoil_surfaces()
+    xu, zu = [q[0] for q in up], [q[1] for q in up]
+    xl, zl = [q[0] for q in lo], [q[1] for q in lo]
+    zs_up = lambda x: _interp(xu, zu, min(max(x / c, 0.0), 1.0)) * c
+    zs_lo = lambda x: -_interp(xl, zl, min(max(x / c, 0.0), 1.0)) * c     # lower surface, mirrored to +z
+    y0, y1 = max(y_m - R - 0.03, 0.0), min(y_m + R + 0.03, b / 2)
+    ys, pu, pl = _wing_points(c, y0, y1, zs_up, zs_lo)
+    out = {}
+    for tag, kk in (("", k), ("_alt", -k)):
+        hub = hub_centre(x_prop, y_m, z_m, cant, kk, stack)
+        ty, tz = thrust_side(y_m, z_m, kk)
+        n = (-co, s * ty, s * tz)
+        for st, prof in (("upper", pu), ("lower", pl)):     # UR/UL face the upper skin; LR/LL (mirror) the lower
+            best = {"env": (9.0, None), "sym": (9.0, None), "mid": (9.0, None), "ko": (9.0, None)}
+            for y in ys:
+                for x, z in prof:
+                    p = (x, y, z)
+                    g_e, t, rr = _vol_gap(p, hub, n, R, fwd, aft)
+                    if g_e < best["env"][0]:
+                        best["env"] = (g_e, (x, y, z, t, rr))
+                    g_s = _vol_gap(p, hub, n, R, sym, sym)[0]
+                    if g_s < best["sym"][0]:
+                        best["sym"] = (g_s, (x, y, z, t, rr))
+                    g_m = math.hypot(t, rr - R) if rr > R else abs(t)   # zero-thickness tip circle / disc
+                    if g_m < best["mid"][0]:
+                        best["mid"] = (g_m, (x, y, z, t, rr))
+                    if -(sym + clr) <= t <= sym + clr and rr - R < best["ko"][0]:
+                        best["ko"] = (rr - R, (x, y, z, t, rr))
+            pre = f"wing_{st}"
+            out[f"{pre}_gap_env_m{tag}"] = best["env"][0]
+            out[f"{pre}_gap_sym_m{tag}"] = best["sym"][0]
+            out[f"{pre}_gap_midplane_m{tag}"] = best["mid"][0]
+            out[f"{pre}_ko_radial_gap_m{tag}"] = best["ko"][0]
+            if tag == "":
+                x, y, z, t, rr = best["env"][1]
+                out[f"{pre}_closest_xyz_m"] = [round(x, 4), round(y, 4), round(z, 4)]
+                out[f"{pre}_closest_axial_m"] = t
+                out[f"{pre}_closest_radial_m"] = rr
+                x, y, z, t, rr = best["ko"][1]
+                out[f"{pre}_ko_point_xyz_m"] = [round(x, 4), round(y, 4), round(z, 4)]
+                out[f"{pre}_ko_point_axial_m"] = t
+                out[f"{pre}_ko_point_radial_m"] = rr
+        # bare 22 mm CF tube (z 0..L/2), same envelope: restates CL-B4-GAP-TUBE against ASM-E1-BLADE-ENV (CR-E1-46a)
+        g_t = g_ts = 9.0
+        for i in range(int(tube_len / 2 / 0.0005) + 1):
+            z = i * 0.0005
+            for j in range(144):
+                ph = 2 * math.pi * j / 144
+                p = (x_tube + d_tube / 2 * math.cos(ph), y_fin + d_tube / 2 * math.sin(ph), z)
+                g_t = min(g_t, _vol_gap(p, hub, n, R, fwd, aft)[0])
+                g_ts = min(g_ts, _vol_gap(p, hub, n, R, sym, sym)[0])
+        out["tube_gap_env_m" + tag] = g_t
+        out["tube_gap_sym_m" + tag] = g_ts
+        out["hub_xyz_m" + tag] = [round(q, 5) for q in hub]
+        if tag == "":                                      # trade point: E1's CR-E1-44 fix, mount face 5 mm forward
+            hub5 = (hub[0] - 0.005, hub[1], hub[2])
+            out["tube_gap_env_fix5_m"] = min(
+                _vol_gap((x_tube + d_tube / 2 * math.cos(2 * math.pi * j / 144),
+                          y_fin + d_tube / 2 * math.sin(2 * math.pi * j / 144), i * 0.0005), hub5, n, R, fwd, aft)[0]
+                for i in range(int(tube_len / 2 / 0.0005) + 1) for j in range(144))
+            out["wing_upper_gap_env_fix5_m"] = min(_vol_gap((x, y, z), hub5, n, R, fwd, aft)[0]
+                                                  for y in ys for x, z in pu)
+    out["wing_gap_env_min_m"] = min(out["wing_upper_gap_env_m"], out["wing_lower_gap_env_m"])
+    out["wing_ko_radial_min_m"] = min(out["wing_upper_ko_radial_gap_m"], out["wing_lower_ko_radial_gap_m"])
+    return out
+
+
 # ---------------------------------------------------------------- 10. cross-check against UIUC measurements
 def _uiuc(prop, kind):
     return [r for r in UIUC if r["prop"] == prop and r["kind"] == kind]
@@ -1150,7 +1260,43 @@ c("CL-B4-GAP-V", "Vertical prop-to-prop tip gap (canted discs)", calc="CALC-B4-G
   unit="m", limit=(">=", P + "requirements.prop_clearance_min_m"), verifies=["R-PROP-CLEAR"], parts=PRP,
   cites=["SRC-B4-ZHOU-ROTOR"], how="Measure on the built airframe with props fitted. About 0.33 D tip gap: mean "
   "thrust change < 2 % per the cited rotor-pair data.")
-c("CL-B4-GAP-TUBE", "Blade-to-tube axial gap, canted disc over the bare tube (minimum, tip side)", calc="CALC-B4-GEOM",
+c("CL-B4-TIP-WING", "Blade swept volume (E1 envelope +10/-6 mm) to the wing upper skin, upper stations, exact 3D",
+  calc="CALC-B4-TIP-WING", output="wing_upper_gap_env_m", unit="m",
+  limit=(">=", P + "requirements.prop_clearance_min_m"), verifies=["R-PROP-CLEAR"], parts=PRP + ["WNG-001", "WNG-003"],
+  note="R4 action item: the 23 mm figure (0.163 m radial vs R 0.1397) does not reproduce. The least radial distance "
+       "from the canted UR axis to the S5010 upper skin anywhere at the fin station is 0.171 m, and the point that "
+       "sets it lies 35-50 mm behind the blade, so a radial-only number is not a clearance. The true minimum is at "
+       "x 0.023, 0.6 mm aft of the 6 mm blade envelope's reach in x; agrees with E1's CAD probe (WNG-003 34.1 mm)",
+  how="Built airframe, props fitted: turn the blade through the wing-side position and pass a printed 25 mm gauge "
+      "between the blade tip and the wing upper skin at y 0.32 (T-B4-INSTALLED; same gauge as CL-E1-TIP-GAP-TUBE).")
+c("CL-B4-TIP-WING-LOWER", "Blade swept volume (E1 envelope) to the wing lower skin, lower stations, exact 3D",
+  calc="CALC-B4-TIP-WING", output="wing_lower_gap_env_m", unit="m",
+  limit=(">=", P + "requirements.prop_clearance_min_m"), verifies=["R-PROP-CLEAR"], parts=PRP + ["WNG-001", "WNG-003"],
+  how="As CL-B4-TIP-WING at LR / LL.")
+c("CL-B4-TIP-WING-SYM", "Blade swept volume (A1's symmetric +/-10 mm) to the wing upper skin, exact 3D",
+  calc="CALC-B4-TIP-WING", output="wing_upper_gap_sym_m", unit="m",
+  limit=(">=", P + "requirements.prop_clearance_min_m"), how="As CL-B4-TIP-WING.")
+c("CL-B4-TIP-WING-KO", "Radial clearance of the wing upper skin inside the KO-PROP axial band (what a cylinder "
+  "keep-out test of R + 25 mm, half 35 mm, sees)", calc="CALC-B4-TIP-WING", output="wing_upper_ko_radial_gap_m",
+  unit="m", limit=(">=", P + "requirements.prop_clearance_min_m"),
+  how="For A5: the exact surface test (check.py) against the KO-PROP-UR cylinder must give this, not a box hit.")
+c("CL-B4-TIP-WING-ALT", "Blade to wing upper skin if the cant sense were mirrored (R3 print)", calc="CALC-B4-TIP-WING",
+  output="wing_upper_gap_env_m_alt", unit="m", how="Trade point only.")
+c("CL-B4-GAP-TUBE-ENV", "Blade swept volume (E1 envelope) to the bare CF motor tube surface, exact 3D (CR-E1-46a)",
+  calc="CALC-B4-TIP-WING", output="tube_gap_env_m", unit="m",
+  limit=(">=", P + "requirements.prop_clearance_min_m"), verifies=["R-PROP-CLEAR"], parts=PRP + FINS,
+  note="the R4 controlling prop clearance. CL-B4-GAP-TUBE is the hub mid-plane to the tube face (zero-thickness "
+       "blade); the blade's aft face is 6 mm behind it. Same value as E1's CL-E1-TIP-GAP-TUBE (independent code)",
+  how="Printed 25 mm gauge between the blade trailing face at the tip and the tube, blade over the wing-side "
+      "position (T-B4-INSTALLED, T-E1-MOTOR-RM).")
+c("CL-B4-GAP-TUBE-FIX5", "Blade to tube with the mount face 5 mm forward (E1 CR-E1-44, face_ahead 0.0075)",
+  calc="CALC-B4-TIP-WING", output="tube_gap_env_fix5_m", unit="m",
+  limit=(">=", P + "requirements.prop_clearance_min_m"), how="As CL-B4-GAP-TUBE-ENV on the R5 mount.")
+c("CL-B4-TIP-WING-FIX5", "Blade to wing upper skin with the mount face 5 mm forward", calc="CALC-B4-TIP-WING",
+  output="wing_upper_gap_env_fix5_m", unit="m", limit=(">=", P + "requirements.prop_clearance_min_m"),
+  how="As CL-B4-TIP-WING on the R5 mount.")
+c("CL-B4-GAP-TUBE", "Blade-to-tube axial gap, hub mid-plane (zero-thickness blade) over the bare tube face",
+  calc="CALC-B4-GEOM",
   output="gap_tube_face_m", unit="m", limit=(">=", P + "requirements.prop_clearance_min_m"),
   verifies=["R-PROP-CLEAR"], parts=PRP + FINS,
   how="On the built airframe: ruler from the blade tip, turned over the tube, to the tube face.")
@@ -1170,7 +1316,8 @@ kit.test("T-B4-STAND", "Isolated static thrust A/B: 11x5.5MR and 11x4.5MR on one
          verifies=["CL-B4-FM", "CL-B4-HOVER-SHAFT", "CL-B4-RPM-MAX", "CL-B4-HOVER-Q", "CL-B4-FM-OLD"], state="planned",
          procedure="H1 stand (shared with T-E1-STAND), 14.8 V, 10 % throttle steps; log thrust, torque, rpm, V, A.")
 kit.test("T-B4-INSTALLED", "Installed thrust with the R3 fin station mock-up and a wing strip",
-         verifies=["CL-B4-DOWNLOAD", "CL-B4-TUBE-LOAD", "CL-B4-WING-GAP", "CL-B4-ITEMS-HOVER", "CL-B4-GAP-TUBE"],
+         verifies=["CL-B4-DOWNLOAD", "CL-B4-TUBE-LOAD", "CL-B4-WING-GAP", "CL-B4-ITEMS-HOVER", "CL-B4-GAP-TUBE",
+                   "CL-B4-GAP-TUBE-ENV", "CL-B4-TIP-WING"],
          state="planned",
          procedure="Same stand; the printed 7 deg canted mount on a 22 mm tube cut to the R3 end (0.172 m from the "
                    "chord plane), mount and station collars with their ears, one 10 x 3 mm brace strip to a dummy "

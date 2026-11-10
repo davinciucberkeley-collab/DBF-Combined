@@ -19,8 +19,8 @@
     "connected_frac": 1.0,
     "powered_frac": 1.0,
     "field_disconnects": 1,
-    "edges": 251,
-    "parts": 160,
+    "edges": 252,
+    "parts": 162,
     "id_violations": 0
    },
    "input_values": {
@@ -98,7 +98,7 @@
    "output": "edges",
    "unit": "-",
    "how": "interface_plan.py --compare: every planned edge declared and acknowledged",
-   "value": 251
+   "value": 252
   }
  ]
 }

@@ -1,42 +1,62 @@
 # Fin and motor-tube structures — K09-L
 
-Owner C4 (fin / motor-tube structures). Revision **C4-R3**, 2026-11-09: re-run at params A1-R3 (0.21 m half-fins,
-two layers, tube 0.344 m, 7° tangential cant), D3's R3 fin (`subsystems/fins/params.json`: 16 mm station collar with
-40 mm tail, 10 × 2 brace, Ø 2 mm strip pins), C1 loads and B4 rpm as of 2026-11-09 15:00. Analysis `MODELLED`; every
-input that is not a catalogue value is `UNVERIFIED` until the tests at the end have run.
+Owner C4. Revision **C4-R4**, 2026-11-10. Geometry: D3-R4 fin (`subsystems/fins/params.json`): two board layers,
+CF 10 × 2 brace, 12 mm station collar with a 40 mm strip tail, Ø 2 mm strip pins at 15 mm, D5 square tip (step at
+|z| 0.2005 m from x 0.2746 m, strips end at the step front). Loads: C1 and B4 claims as of 2026-11-10. Analysis
+`MODELLED`; every input that is not a catalogue value is `UNVERIFIED` until the tests at the end have run.
 
-Re-run (about 40 s): `python -I redesign/team/C4/fin_structures_d3.py` and `python -I redesign/team/C4/fin_structures.py`,
-then `python -I redesign/proofs/build_graph.py` (0 errors in C4's own calculations; the remaining C4-related errors are
-C6 calculations that read C4 claims and need a C6 re-run). Numbers below are in `claims.d3.json` (`CL-C4-D3-…`) or
-`out/results_d3.json`. R1 (`fin_structures.py`, `claims.json`) is the concept model. It no longer matches the
-geometry: the fin top is now above the tube end. It is kept only because D3 and C2 still read `CL-C4-STRUT-LEN` and
-`CL-C4-SPAR-COUPLE` from it. None of its claims verify a requirement, and its `FAIL` flags are not design findings.
+Re-run (about 2 min): `python -I redesign/team/C4/fin_structures_d3.py`, `python -I redesign/team/C4/fin_structures.py`,
+then `python -I redesign/proofs/build_graph.py`. Numbers: `claims.d3.json` (`CL-C4-D3-…`), `out/results_d3.json`.
+`fin_structures.py` (R1 concept model, `claims.json`) stays only for the shared assumptions, sources and tube tests
+that C2, C3, C6 and H1 read; none of its claims verifies a requirement.
 
-## What changed in R3 and why it matters
+## What R4 changed
 
-| Change | Effect | Claim |
-|---|---|---|
-| Half-fin 0.19 → 0.21 m | lower-quarter station mode 278 → 273 Hz; panel mode 66.7 → 65.2 Hz | `results_d3.json` "half height 0.19 m (R2)" |
-| B4 rpm: hover 5 416, cruise 5 894 (2P 196.5 Hz) | separation measured against the new 2P cruise | `CL-B4-*-RPM` |
-| Brace 10 × 3 → 10 × 2 (D3 R3, CR-C4-16) | separation 0.40 → 0.39; buckling MS +5.06 → +0.82; −9.3 g | `CL-C4-D3-BRACE-*` |
-| Station collar 12 → 16 mm (D3, CR-C6-03) | brace ear 2 mm lower; collar bond MS +0.99 | `CL-C4-D3-MS-COLLAR` |
-| 7° cant | thrust side component 12.2 % of T on the mount, collar and tube; prop spin axis tilted in the whirl model | `CL-C4-D3-CANT-SIDE`, `CALC-C4-D3-MOUNT-CANT` |
-| Foot friction 0.5 → 0.7 (CR-C5-09) | L4/L5 side load 20.4 N (was 15.2 N); face and strip loads +34 % | `CL-C4-D3-SIDE-LOAD` |
-| New in the FE: LE fillet cracked case, tube-torque jump at the collar, strip shear flow | answers CR-C6-03 and CR-C6-02a | `CL-C4-D3-COLLAR-T`, `-STRIP-Q` |
+| Item | R3 | R4 | Claim |
+|---|---|---|---|
+| Corner foot load × μ 0.7 (CR-C1-21) | 29.1 N × 0.7 = 20.4 N | **32.6 N × 0.7 = 22.8 N** | `CL-C4-D3-SIDE-LOAD` |
+| Foot load path | 30 mm patch at the tip | D5 shoe on the square tip, rigid, load at the C1 ground point (x 0.368, z 0.218 m) | `ASM-C4-SHOE-Z0` |
+| B4 swirl (CR-B4-19), misbuilt 1.43 N scaled to T_lim | — | 4.73 N per half-fin at the B4 cp, both senses, with H2c | `CL-C4-D3-SWIRL-F` |
+| G3 set-down, lower can (CR-C1-24) | — | 23.2 N toward the wing | `CL-C4-D3-BRACE-G3`, `-MS-CAP-G3` |
+| Station collar | 16 mm | **12 mm** (16 mm kept as a check) | `CL-C4-D3-MS-COLLAR`, `-MS-COLLAR-16` |
+| Face criterion | envelope at ultimate | intact at ultimate; LE fillet cracked = fail-safe at limit | `CL-C4-D3-MS-FACE` |
+| Section-torque check vs C1 (CR-C1-21) | — | FE 7.37 N·m = C1 7.37 N·m (0.08 %) | `CL-C4-D3-SEC-T-VS-C1` |
+| NaN / singular matrix (CR-C6-20) | build stopped | fixed ARPACK start vector + guard; 0 C4 calculation errors | build log |
+| Part ids (CR-A4-47) | `FIN-001-LU/LD/RU/RD` | `FIN-001-UR/UL/LR/LL` (both scripts) | — |
+| `T-C4-FIN-PROOF` (CR-H1-17) | flight quarter, in both claim files | test article, `claims.d3.json` only | — |
 
 ## Verdict
 
 | Question | Answer | Claim | Status |
 |---|---|---|---|
-| `R-VIBRATION`, design as drawn (2 layers, 10 × 2 brace, strips) | **Met.** 273 Hz lower / 281 Hz upper; **0.39** from 2P cruise (196.5 Hz) | `CL-C4-D3-SEP` | `UNVERIFIED` |
-| Worst tube E/G corner; with prop gyroscopics (7° axis) | 0.32; 0.39 | `CL-C4-D3-SEP-WORST`, `-WHIRL` | `UNVERIFIED` |
-| One board layer (CR-D3-02, rejected) on R3 geometry | 222 Hz, **0.13** | `CL-C4-D3-SEP-1L` | `FAIL` (kept as the record) |
-| B4 whole-band rule 80–330 Hz | −0.17. `R-VIBRATION` on the operating points is the criterion of record (D-45); rpm notch is the backup | `CL-C4-D3-SEP-BAND` | `FAIL` (by intent) |
-| Strength, every part, envelope of LE fillet intact and cracked | positive. Tightest: fin face **+0.10** (fillet cracked; +0.78 intact), anchor +0.35 | `CL-C4-D3-MS-*` | `UNVERIFIED` |
-| Edge strip on bare paper (CR-C6-02a) | **Fails without pins:** 1.99 N/mm per face (limit), 0.43 MPa design against 0.10 MPa, MS −0.77. **Pins required** (D3 has them); 64 N per pin | `CL-C4-D3-MS-STRIP-PAPER`, `-STRIP-PIN-F` | `FAIL` bare / pins `PROPOSED` |
-| Collar torsion (CR-C6-03) | **4.61 N·m limit** (9.95 N·m design) + brace 95 N limit; needs 8.0 mm of bond; 16 mm gives MS +0.99 | `CL-C4-D3-COLLAR-T`, `-H-REQ` | `UNVERIFIED` |
-| Mount with 7° cant | slip clamp holds: utilisation 0.66 (MS +0.52) incl. C1's mount moment; pull-off 4.8 N design | `CL-C4-D3-MS-MOUNT-SLIP` | `UNVERIFIED` |
-| Mass | fins **416.8 g** (D3 R3 CAD) vs 408 g allocated | `CL-C4-D3-FINS-MASS` | `FAIL` (A1, CR-D3-16) |
+| `R-VIBRATION` (2 layers, 10 × 2 brace, strips) | **Met.** 275 Hz upper / 268 Hz lower; **0.37** from 2P cruise (196.5 Hz) | `CL-C4-D3-SEP` | `UNVERIFIED` |
+| Worst tube E/G corner; with prop gyroscopics | 0.29; 0.36 | `-SEP-WORST`, `-SEP-WHIRL` | `UNVERIFIED` |
+| Fin face, D5 shoe as drawn (cheeks to \|z\| 0.196 m) | **Fails: MS −0.54** (21.8 MPa ult vs 10 MPa) below the cheek edge on the square tip, L4 | `CL-C4-D3-MS-FACE` | `FAIL` |
+| Fin face, cheeks extended to \|z\| 0.171 m (CR-C4-30) | intact **+0.18** (ult); LE fillet cracked **+0.01** (limit, see below) | `-MS-FACE-SHOE-INTACT`, `-MS-FACE-SHOE-FS` | `PROPOSED` |
+| Other strength items | all positive; tightest collar +0.16, anchor +0.35 | `CL-C4-D3-MS-*` | `UNVERIFIED` |
+| Edge strip on bare paper | fails without pins (MS −0.79); pins carry **72 N** each | `-MS-STRIP-PAPER`, `-STRIP-PIN-F` | pins `PROPOSED` |
+| Collar torque for C6 | **6.24 N·m limit** (fillet cracked; 6.12 intact) + brace 95 N limit | `CL-C4-D3-COLLAR-T` | `UNVERIFIED` |
+| Brace section (CR-B1-18) | keep 10 × 2 and **fair with tape** (1.4 g for four); sanding the edges round cuts I by 8 % | `-BRACE-ROUND-I`, `-BRACE-TAPE-MASS` | `PROPOSED` |
+| Mass | fins **436.4 g** vs 418 g allocated (−18.4 g) | `CL-C4-D3-FINS-MASS` | `FAIL` (A1) |
+
+## Why the tip fails, and the fix
+
+The strips now stop at the step front (x 0.2746 m). Between there and the TE the 45 mm square tip is bare board. The
+side load (22.8 N) acts at the pad, 17.5 mm above the step, and enters the board through the shoe cheeks. The board
+carries it as plate bending just below the cheek edge: about 10 N·m/m, face stress 14.5 MPa limit. That moment is the
+same on every mesh (9–11 N·m/m); the peak element rises from 15 to 24 MPa ult as the mesh refines (stiffness step at
+the cheek edge). The overload is real, not a mesh artefact.
+
+| Cheek lower edge \|z\|, m (36 × 30 mesh) | 0.196 (drawn) | 0.186 | 0.181 | 0.176 | **0.171** | 0.166 |
+|---|---|---|---|---|---|---|
+| Face MS intact, ultimate | −0.50 | −0.29 | −0.24 | +0.04 | **+0.18** | +0.18 |
+| Face MS LE fillet cracked, limit | −0.25 | 0.00 | 0.00 | +0.01 | **+0.01** | +0.02 |
+
+Extending the cheeks 25 mm toward the wing makes the shoe overlap the strip ends over the full strip band, so the
+foot load enters the strips. From 0.171 m down the tip no longer governs; the peak moves to the LE root. The cracked
+case (+0.01) peaks at the end of the bonded LE band (x 0.060, z 0.033 / 0.149 m), a corner that does not converge
+with mesh (7.9 / 9.9 MPa limit at 24 × 20 / 36 × 30). The test-article quarter is built with the fillet unbonded, so
+`T-C4-FIN-PROOF` decides it.
 
 ## Forcing and criterion
 
@@ -46,160 +66,100 @@ geometry: the fin top is now above the tube end. It is kept only because D3 and 
 | Cruise, 16 m/s | 5 894 | 98.2 | 196.5 | `CL-B4-CRUISE-RPM` |
 | F4 cap | 9 319 | 155.3 | 310.6 (transient, not counted) | `CL-B4-RPM-MAX` |
 
-`R-VIBRATION`: every station mode ≥ `P:requirements.vibration_sep_frac` 0.20 from each point above. A station mode
-has ≥ 10 % of its kinetic energy in the motor + prop + mount body.
+`R-VIBRATION`: every station mode ≥ `P:requirements.vibration_sep_frac` 0.20 from each point above. The B4 band rule
+(80–330 Hz, −0.19) is not met by intent (D-45: operating points + tap test, rpm notch as backup).
 
-## Model (`fin_fe.build_q`, one quarter, upper UR and lower LR)
-
-| Item | Value | Source | Status |
-|---|---|---|---|
-| Tube | CF 22 × 20, frame elements, clamp at the bore ends z +30.4 / −16.6 mm, root spring 10 000 N·m/rad (swept 3 000–rigid) | `ASM-C4-BORE-Z`, `ASM-C4-ROOT-K` | `UNVERIFIED` |
-| Tube E, G | 100 GPa (70–135), 5 GPa (3–10) | `ASM-J1-E-TUBE`, `ASM-C4-G-TUBE` | `UNVERIFIED` |
-| Tube end / motor axis | z 0.172 / 0.190 m | `fin_detail.tube_length_m` 0.344 | `PROPOSED` |
-| Mount | spring tube end → motor body: rocking 3 000, twist 30 000 N·m/rad | `ASM-C4-MOUNT-K-*` | `UNVERIFIED` |
-| Half-fin | mapped Q4 Mindlin shell between the S5010 skin and the straight top edge (collar top 0.1595 → TE tip 0.21 m); LE tied to the tube (epoxy fillet) or, in the cracked case, only inside the 16 mm collar band | `fin_detail`, `fin_fe.py` `le_bonds` | `PROPOSED` |
-| Board | 2 layers × 4.8 mm, faces 0.10 mm paper E 4 GPa, core E 10 / G 4 MPa | `ASM-C4-FACE-*`, `-CORE-*` | `UNVERIFIED` |
-| Edge strips | CF 10 × 1, both faces, top edge, collar to foot; beam with I = w t d²/2 (d = 10.6 mm) | `fin_detail.edge_strip` | `PROPOSED` |
-| Brace | CF 10 × 2 as drawn (10 × 3 compared); L 0.143 / 0.155 m; anchor + spar 3e7 N/m in series | `fin_detail.brace` | `PROPOSED` |
-| Prop spin axis | (−cos 7°, sin 7° t_y, sin 7° t_z), t = motor-circle tangent | `P:propulsion.stations.cant_deg` | `PROPOSED` |
-
-| Check | Result | Limit | Claim | Status |
-|---|---|---|---|---|
-| Quad shell = R1 rectangle element on a rectangle | 1e-15 | ≤ 1e-9 | `CL-C4-D3-Q4-RECT` | `CHECKED` |
-| Skewed 16 × 16 cantilever plate vs Leissa | 0.9 % | ≤ 2 % | `CL-C4-D3-Q4-SKEW` | `CHECKED` |
-| Mesh 12 × 10 / 24 × 20 (used) / 36 × 30, station mode and separation | 0.25 % | ≤ 3 % | `CL-C4-D3-MESH-CONV` | `CHECKED` |
-| Strip shear flow, mesh 24 × 20 / 36 × 30 / 48 × 40 (L4, upper, intact) | 1.85 / 1.84 / 1.84 N/mm | converged | diagnostic run | `CHECKED` |
-
-## Modes (nominal E, G; first three station modes, Hz; separation = nearest operating point)
+## Modes (nominal E, G; first three station modes, Hz)
 
 | Configuration | Upper | Lower | Separation | Source |
 |---|---|---|---|---|
-| **As drawn: 2 layers, 10 × 2 brace, strips** | **281**, 332, 365 | **273**, 331, 358 | **0.39** | `CL-C4-D3-SEP` |
-| same, 10 × 3 brace | 283, 333, 371 | 275, 331, 364 | 0.40 | `CL-C4-D3-BRACE-10X3-SEP` |
-| same, LE fillet cracked (boss to collar) | 268 | 259 | 0.32 | `results_d3.json` |
-| same, half height 0.19 m (R2) | 286 | 278 | 0.42 | same |
-| same, mount 1 000 N·m/rad | 255 | 250 | 0.27 | same |
-| same, root 3 000 N·m/rad | 270 | 264 | 0.34 | same |
-| 2 layers, no brace | 156 | 142 | 0.00 `FAIL` | same |
-| 2 layers, no edge strips (or strips debonded) | 186 | 182 | 0.01 `FAIL` | same |
-| 1 layer (rejected) | 228 | 222 | 0.13 `FAIL` | `CL-C4-D3-SEP-1L` |
+| **As drawn: 2 layers, 10 × 2 brace, strips** | **275**, 319, 373 | **268**, 315, 366 | **0.37** | `CL-C4-D3-SEP` |
+| same, 10 × 3 brace | 278 | 271 | 0.38 | `CL-C4-D3-BRACE-10X3-SEP` |
+| same, LE fillet cracked | 260 | 252 | 0.28 | `out/results_d3.json` |
+| same, mount 1 000 N·m/rad | 251 | 247 | 0.26 | same |
+| same, root 3 000 N·m/rad | 266 | 260 | 0.32 | same |
+| 2 layers, no brace | 154 | 140 | 0.01 `FAIL` | same |
+| 2 layers, no edge strips | 205 | 195 | 0.01 `FAIL` | same |
+| 1 layer (rejected) | 219 | 214 | 0.09 `FAIL` | `CL-C4-D3-SEP-1L` |
 
-Panel mode (TE tip with the foot) 65.2 Hz, below 1P hover, < 10 % energy at the motor (`CL-C4-D3-PANEL`).
-Mount rocking stiffness needed for 0.20: **905 N·m/rad** (low E/G corner; 770 nominal), estimate 3 000
-(`CL-C4-D3-MOUNT-K-REQ`, margin +70 %). The bench test pass level becomes **≥ 1 000 N·m/rad**.
-
-The edge strips are the second structural member of the station: if they debond from the board, separation drops to
-0.01. The strip-to-board joint (pins below) therefore governs the vibration margin as well as strength.
+Panel mode 76.5 Hz (< 10 % energy at the motor). Mount rocking stiffness needed for 0.20: **971 N·m/rad**
+(`CL-C4-D3-MOUNT-K-REQ`; estimate 3 000); the bench pass level stays **≥ 1 000 N·m/rad**. Whirl at cruise rpm, both
+cant senses: 267 Hz (`CL-C4-D3-F-WHIRL-CRUISE`).
 
 ![Campbell diagram](fig-c4-02-campbell-d3.svg)
 
 `FIG FIN-C4-02 — Station whirl frequency vs rpm with the 7° spin axis, against 1P and 2P ± 20 %; dashed: one layer (rejected).`
 
-## Strength (as drawn; ultimate = 1.5 × C1 limit; joints × 1.15 × 1.25; envelope over both quarters and LE fillet intact / cracked)
+## Strength (ultimate = 1.5 × C1 limit; joints × 1.15 × 1.25; both quarters, LE fillet intact and cracked)
 
-Limit cases per quarter: L1 level foot 38.2 N; L4 foot 29.1 N + side 20.4 N (μ 0.7, both senses); L5 the same along;
-G2 51 N lateral at the tube end (both senses); **H2c** thrust 21.1 N along the 7° canted shaft at the prop centre +
-0.42 N·m about the shaft (four sign combinations, both prints). Foot load over 30 mm.
+Limit cases per quarter: L1 level foot (`CL-C1-FOOT-MAX`); L4 corner 32.6 N + side 22.8 N, both senses; L5 the same
+along; G2 51 N lateral at the tube end, both senses; H2c thrust along the 7° shaft + motor torque (4 sign
+combinations); H2s = H2c + swirl 4.73 N, both senses; G3 23.2 N on the lower can toward the wing.
 
 | Item | Ultimate / design | Allowable | MS | Governing | Claim |
 |---|---|---|---|---|---|
-| Fin face (paper), LE fillet cracked / intact | 9.1 / 5.6 MPa | 10 MPa | **+0.10** / +0.78 | L4 | `CL-C4-D3-MS-FACE` |
-| Edge strips 10 × 1 | 63 MPa | 400 MPa | +5.3 | L4 | `CL-C4-D3-MS-EDGE` |
-| Tube at the bore end | 19.8 MPa | 400 MPa | +19 | G2 | `CL-C4-D3-MS-TUBE` |
-| Brace buckling, 10 × 2 (10 × 3) | 164 N design (G2) | P_cr 300 N (1 012 N) | +0.82 (+5.06) | G2 | `CL-C4-D3-MS-BRACE`, `-BRACE-10X2-MS` |
-| Brace-end bond, 10 mm engagement | 0.86 MPa | 2 MPa | +1.34 | G2 | `CL-C4-D3-MS-BRACE-END` |
-| Station-collar bond, 16 mm (torsion 9.95 N·m + brace shear, design) | 1.00 MPa | 2 MPa | +0.99 | L4 / G2 | `CL-C4-D3-MS-COLLAR` |
-| Collar ear root, interlayer bending | 2.3 MPa | 15 MPa | +5.5 | G2 | `CL-C4-D3-MS-EAR` |
-| Anchor bond on the spar (pull-off, 0.5 peel) | 0.74 MPa | 1 MPa | +0.35 | G2 | `CL-C4-D3-MS-ANCHOR` |
-| **Edge strip on the paper face, no pins** | 0.43 MPa | 0.10 MPa | **−0.77** | L4 | `CL-C4-D3-MS-STRIP-PAPER` |
-| Foot deflection, L4 limit | 6.8 mm | — | — | L4 | `CL-C4-D3-FOOT-DEFL` |
+| Fin face, shoe as drawn | 21.8 MPa | 10 MPa | **−0.54** | L4 | `CL-C4-D3-MS-FACE` |
+| Fin face, cheeks to 0.171 m: intact ult / cracked limit | 8.5 / 9.9 MPa | 10 MPa | +0.18 / +0.01 | L4 | `-MS-FACE-SHOE-INTACT`, `-MS-FACE-SHOE-FS` |
+| Edge strips 10 × 1 | — | 400 MPa | +3.63 | L4 | `CL-C4-D3-MS-EDGE` |
+| Tube at the bore end | — | 400 MPa | +14.7 | L4 | `CL-C4-D3-MS-TUBE` |
+| Brace buckling, 10 × 2 | 163 N | P_cr 293 N | +0.79 | G2 | `CL-C4-D3-MS-BRACE` |
+| Brace, edges sanded round (rejected) | 163 N | 269 N | +0.65 | G2 | `-BRACE-ROUND-MS` |
+| Brace-end bond, 10 mm | — | 2 MPa | +1.35 | G2 | `-MS-BRACE-END` |
+| Station-collar bond, 12 mm (16 mm) | 13.4 N·m + brace shear | 2 MPa | **+0.16** (+0.55); needs 10.3 mm | L4 | `-MS-COLLAR`, `-COLLAR-H-REQ` |
+| Collar ear root | — | 15 MPa | +3.03 | G2 | `-MS-EAR` |
+| Anchor on the spar (0.5 peel) | — | 1 MPa | +0.35 | G2 | `-MS-ANCHOR` |
+| Edge strip on paper, no pins | 0.48 MPa | 0.10 MPa | **−0.79** | L4 | `-MS-STRIP-PAPER` |
+| Mount slip clamp with the cant | use 0.66 | 1 | +0.52 | H2c | `-MS-MOUNT-SLIP` |
+| Lip cap bearing, G3 | 0.76 MPa | 30 MPa | +38.6 | G3 | `-MS-CAP-G3` |
+| Through-core block | 6.4 MPa | 10 MPa | +0.55 | C1 | `CL-C4-D3-BLOCK-MS` |
+| Foot deflection, L4 limit | 9.3 mm | — | — | L4 | `CL-C4-D3-FOOT-DEFL` |
 
-### Collar torsion (CR-C6-03)
+Swirl and G3 never govern: swirl face stress 2.6 MPa ult, brace 17.9 N limit, collar torque 0.55 N·m; G3 brace
+0.61 N, mount rocking 1.45 N·m design.
 
-The FE gives the torque that enters the tube across the 16 mm collar band as the jump in tube torque. The edge strips
-carry the foot side load to the collar as a cantilever, so their out-of-plane moment (4.3 N·m) makes up most of it.
+### Loads published for C6, C1 and D3
 
-| Case | Collar torque, limit | Tube torque at the bore end | Source |
-|---|---|---|---|
-| LE fillet intact, worst (L4, upper) | 4.52 N·m | 4.63 N·m | `CL-C4-D3-COLLAR-T-INTACT`, `-TUBE-T-ROOT` |
-| **LE fillet cracked, worst (L4, upper)** | **4.61 N·m** | — | `CL-C4-D3-COLLAR-T` |
-| H2c with the 7° cant | ≤ 0.07 N·m | — | `CALC-C4-D3-STATIC` per case |
-| C1 `J-FINHALF` Mz (whole half-fin about the tube, μ 0.5) | 5.29 N·m | — | `ASM-C6-FINHALF-MZ-ULT` / 1.5 |
+| Quantity | Value | Claim |
+|---|---|---|
+| Collar torque into the tube, limit (envelope; intact) | **6.24 N·m** (6.12) | `CL-C4-D3-COLLAR-T`, `-COLLAR-T-INTACT` |
+| Brace force, design | 163 N | `CL-C4-D3-BRACE-F` |
+| Strip shear flow per face, limit | 2 240 N/m | `CL-C4-D3-STRIP-Q` |
+| Strip force per face into the collar tail, design | 1 243 N | `CL-C4-D3-STRIP-END-F` |
+| Pin shear, Ø 2 mm at 15 mm, design | 72.4 N | `CL-C4-D3-STRIP-PIN-F` |
+| Wing-plane half-fin torsion, L4 limit; difference to C1 | 7.37 N·m; 0.08 % | `-SEC-T-L4`, `-SEC-T-VS-C1` |
+| Spar couple at each block, design | 961 N | `CL-C4-D3-SPAR-COUPLE` |
 
-C6's 9.3 N·m (`ASM-C6-C4-COLLAR-T`) is not a C4 number. It is close to C1's fin-joint bending moment of 9.4 N·m. The
-agreed basis I propose: **the collar carries the larger of C1's 5.29 N·m and `CL-C4-D3-COLLAR-T`, plus the brace force
-`CL-C4-D3-BRACE-F`**. On C1's 5.29 N·m the bond needs 9.0 mm (MS +0.33 at 12 mm, +0.78 at 16 mm). On C4's it needs
-8.0 mm. **Both pass at 12 mm.** The 16 mm collar is justified only by the strip tail tongue (D3/C6 geometry), not by
-torsion.
-
-### Edge-strip shear flow (CR-C6-02a)
-
-Per face, at each top-edge node outside the foot shoe: q = |ΔN|/2/Δs (axial) + |V|/d (couple). The couple term is
-92–98 % of it and nearly constant along the strip. The strip pair carries about 18 N of the 20.4 N side load back to
-the collar, and that shear has to cross the board between the two faces.
-
-| Quantity | Limit | Design (× 2.16) | Allowable | Result | Claim |
-|---|---|---|---|---|---|
-| q per face, worst (L4, LE fillet cracked) | 1.99 N/mm | 4.29 N/mm | — | intact 1.85 N/mm | `CL-C4-D3-STRIP-Q` |
-| τ on the paper face (w 10 mm) | 0.20 MPa | 0.43 MPa | 0.10 MPa (0.5 × 0.20) | **MS −0.77** | `CL-C4-D3-MS-STRIP-PAPER` |
-| Pin shear, Ø 2 mm at 15 mm pitch, pins carry it all | — | **64 N** | C6 sized 77 N (RF 1.41) | holds | `CL-C4-D3-STRIP-PIN-F` |
-| Strip force per face into the collar tail | — | **908 N** | C6 used 1 348 N; 40 mm two-face tail 1 600 N | RF 1.76 | `CL-C4-D3-STRIP-END-F` |
-
-The FE confirms C6's finding (C6: 0.51 MPa from a hand estimate; FE 0.43 MPa). The pins and the 40 mm tail are
-required; the drawn bare-paper bond is not enough on its own.
-
-### Mount with the 7° cant (`CALC-C4-D3-MOUNT-CANT`)
-
-| Quantity | Limit | Design | Note | Claim |
-|---|---|---|---|---|
-| Side component | 2.57 N (12.2 % of T) | — | sin 7° | `CL-C4-D3-CANT-SIDE` |
-| Pull-off along the tube (t_z 0.86) | 2.21 N | 4.77 N | slip-clamp friction capacity 227 N; lip cap takes the push | `CL-C4-D3-MOUNT-AXIAL` |
-| Twist about the tube | 0.11 N·m | 0.25 N·m | Fy 1.31 N × 53 mm + Q sin 7° | `CL-C4-D3-MOUNT-TWIST` |
-| Rocking at the tube end | 0.91 N·m | 1.97 N·m | for C6 / D3 mount strength | `CL-C4-D3-MOUNT-ROCK` |
-| Slip clamp (2.5 N·m) use, cant + C1 mount moment 0.85 N·m ult | 0.66 | — | MS +0.52 | `CL-C4-D3-MS-MOUNT-SLIP` |
-
-The cant adds 2–6 % to the tube, collar and brace loads (H2c never governs). Its effect on the whirl frequencies is
-below 1 %.
-
-## Through-core block (`FIN-004-R/L`), unchanged geometry
-
-| Check | Stress | Allowable | MS | Claim |
-|---|---|---|---|---|
-| Design moment 23.1 N·m, force 120 N | — | — | — | `CALC-C4-D3-BLOCK` |
-| Tube-bore wall shear-out (7 mm walls) | 6.4 MPa | 10 MPa | **+0.55** | `CL-C4-D3-BLOCK-MS` |
-| Couple on the spar / on the tube (design) | 961 N / 1 249 N | — | — | `CL-C4-D3-SPAR-COUPLE` |
-
-## Sizing sheet for D3 (R3)
+## Sizing sheet for D3 / D5 (R4)
 
 | Feature | Size | Basis | Status |
 |---|---|---|---|
-| Board | 2 layers (9.6 mm), laminated, all four half-fins | `CL-C4-D3-SEP` 0.39 vs 0.13 with 1 | `PROPOSED` |
-| Edge strips | CF 10 × 1, both faces, collar to foot, **Ø 2 mm CF through-pins at ≤ 15 mm pitch** (as drawn) | MS −0.77 bare; 64 N/pin | `PROPOSED` |
-| Strip tail in the collar | 40 mm, both faces on PETG (as drawn) | 908 N/face design | `PROPOSED` |
-| Brace | **CF 10 × 2 confirmed** (CR-C4-16 closed); 10 × 3 adds 9.3 g for +0.01 separation | MS +0.82, sep 0.39 | `PROPOSED` |
-| Station collar | ≥ 12 mm for torsion (8.0 / 9.0 mm needed); 16 mm as drawn is fine | `CL-C4-D3-COLLAR-H-REQ` | `PROPOSED` |
-| LE fillet to the tube | keep it, but it is not credited: every margin holds with it cracked | face +0.10 cracked | `PROPOSED` |
-| Mount | rocking stiffness **≥ 1 000 N·m/rad** (needed 905); slip torque 2.5 N·m holds with the cant | `-MOUNT-K-REQ`, `-MS-MOUNT-SLIP` | `UNVERIFIED` |
-| Tube, block, anchor | 22 × 20 × 0.344 m; block 69 × 36 mm; anchor saddle 20 × 16 mm | +19 / +0.55 / +0.35 | `PROPOSED` |
+| Board | 2 layers (9.6 mm), laminated | sep 0.37 vs 0.09 with one | `PROPOSED` |
+| Edge strips | CF 10 × 1 both faces, collar to step front, Ø 2 mm CF pins ≤ 15 mm pitch | MS −0.79 bare; 72 N/pin | `PROPOSED` |
+| Strip tail in the collar | 40 mm, both faces | 1 243 N/face design | `PROPOSED` |
+| **D5 shoe cheeks** | **lower edge at \|z\| ≤ 0.171 m** (25 mm deeper), x 0.2666–0.320, bonded to both faces | face MS −0.54 → +0.18 | `PROPOSED` (CR-C4-30) |
+| Brace | CF 10 × 2 flat, wrapped in packing tape as a fairing; edges not sanded | MS +0.79, sep 0.37 | `PROPOSED` |
+| Station collar | 12 mm (needs 10.3 mm) | MS +0.16 | `PROPOSED` |
+| LE fillet | keep; credited only in the intact case | fail-safe +0.01 at limit | `PROPOSED` |
+| Mount | rocking ≥ 1 000 N·m/rad; slip 2.5 N·m | needs 971 | `UNVERIFIED` |
 
 ## Open issues
 
 | # | Issue | Owner | Status |
 |---|---|---|---|
-| 1 | Fins 416.8 g vs 408 g allocated | A1, A3 (CR-D3-16) | open |
-| 2 | Tube E, G, board faces, paper bond, mount and root stiffness, prop inertia are assumptions | I1, H1, C6 | `UNVERIFIED` |
-| 3 | Band rule (80–330 Hz) not met; `R-VIBRATION` met | A2, B4, F4 | closed by D-45 (tap test + notch) |
-| 4 | C6 joints.py still carries 9.3 N·m and 1 348 N; needs a re-run on C4's R3 claims | C6 | open (CR-C4-23) |
-| 5 | R1 concept model retired once D3 and C2 stop reading `CL-C4-STRUT-LEN` / `CL-C4-SPAR-COUPLE` | D3, C2 | open (CR-C4-26) |
+| 1 | Square tip fails with the cheeks as drawn | D5 (CR-C4-30) | open |
+| 2 | Fins 436.4 g vs 418 g | A1, A3 (CR-C4-34) | open |
+| 3 | Fail-safe face +0.01 rests on a non-converging corner | H1 (`T-C4-FIN-PROOF`) | open |
+| 4 | Tube E/G, faces, paper bond, mount and root stiffness, prop inertia are assumptions | I1, H1, C6 | `UNVERIFIED` |
+| 5 | G3 force is an assumption until C1 publishes it | C1 (CR-C4-29) | open |
+| 6 | C2 still reads `CL-C4-SPAR-COUPLE` (R1) | C2 (CR-C4-26) | open |
 
-## How to verify (planned tests in `claims.d3.json` / `claims.json`)
+## How to verify
 
 | Test | What | Verifies |
 |---|---|---|
-| `T-C4-TUBE-BEND`, `-TORSION` | E, G of the bought tube (I1 by 10 Dec) | `CL-C4-D3-SEP-WORST` |
-| `T-C4-MOUNT-STIFF` | mount rocking stiffness ≥ 1 000 N·m/rad, both directions | `CL-C4-D3-MOUNT-K-REQ` |
-| `T-C4-TAP-D3` | tap each motor bell of the finished wing, FFT vs 1P/2P | every frequency claim |
-| `T-C4-FIN-PROOF` | 1.5 × L4 at μ 0.7 and 1.5 × G2, both senses; pins fitted; witness lines on collar and strips; one quarter with the LE fillet left unbonded | face, strips, pins, brace, collar, anchor |
+| `T-C4-FIN-PROOF` | **test article** lower quarter (never flown), cheeks to 0.171 m, LE fillet unbonded: 1.5 × L4 49 N + 34 N both senses, G2 77 N both senses, G3 35 N, 30 s each, then L4 to failure | face, strips, pins, brace, collar, anchor, cap |
+| `T-C4-MOUNT-STIFF` | mount rocking ≥ 1 000 N·m/rad both directions | `CL-C4-D3-MOUNT-K-REQ` |
+| `T-C4-TAP-D3` | tap each bell of the finished wing, FFT vs 1P/2P | every frequency claim |
+| `T-C4-TUBE-BEND`, `-TORSION` | E, G of the bought tube | `CL-C4-D3-SEP-WORST` |
 | `T-C6-BOARD-LAP`, `T-C6-STRIP-ANCHOR` | paper allowable; strip tail pull-out | `-MS-STRIP-PAPER`, `-STRIP-END-F` |
-| `T-D3-SLIP` | slip torque 2.5 N·m set and holding | `CL-C4-D3-MS-MOUNT-SLIP` |
-| `T-C4-BLOCK-PROOF` | 30 N·m on a block in a core offcut, 1 min | `CL-C4-D3-BLOCK-MS` |
+| `T-C4-BLOCK-PROOF` | 30 N·m on a block in a core offcut | `CL-C4-D3-BLOCK-MS` |

@@ -11,9 +11,9 @@
    "mass_g": 84.2,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.0171,
-    0.3193,
-    0.1915
+    0.0156,
+    0.321,
+    0.1885
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -43,12 +43,12 @@
    "mass_g": 17.0,
    "material": "glass-filled nylon",
    "cg_xyz_m": [
-    -0.0062,
-    0.3177,
-    0.1939
+    -0.0077,
+    0.3223,
+    0.1861
    ],
    "make_or_buy": "buy",
-   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0062; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0077; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
   },
   {
    "id": "PRP-004-UR",
@@ -58,9 +58,9 @@
    "mass_g": 6.7,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
-    -0.0031,
-    0.3179,
-    0.1936
+    -0.0046,
+    0.3221,
+    0.1864
    ],
    "make_or_buy": "buy",
    "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21); CG = CAD centroid"
@@ -73,9 +73,9 @@
    "mass_g": 84.2,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.0171,
-    -0.3193,
-    0.1915
+    0.0156,
+    -0.321,
+    0.1885
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -105,12 +105,12 @@
    "mass_g": 17.0,
    "material": "glass-filled nylon",
    "cg_xyz_m": [
-    -0.0062,
-    -0.3177,
-    0.1939
+    -0.0077,
+    -0.3223,
+    0.1861
    ],
    "make_or_buy": "buy",
-   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0062; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0077; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
   },
   {
    "id": "PRP-004-UL",
@@ -120,9 +120,9 @@
    "mass_g": 6.7,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
-    -0.0031,
-    -0.3179,
-    0.1936
+    -0.0046,
+    -0.3221,
+    0.1864
    ],
    "make_or_buy": "buy",
    "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21); CG = CAD centroid"
@@ -135,9 +135,9 @@
    "mass_g": 84.2,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.0171,
-    0.3193,
-    -0.1915
+    0.0156,
+    0.321,
+    -0.1885
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -167,12 +167,12 @@
    "mass_g": 17.0,
    "material": "glass-filled nylon",
    "cg_xyz_m": [
-    -0.0062,
-    0.3177,
-    -0.1939
+    -0.0077,
+    0.3223,
+    -0.1861
    ],
    "make_or_buy": "buy",
-   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0062; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0077; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
   },
   {
    "id": "PRP-004-LR",
@@ -182,9 +182,9 @@
    "mass_g": 6.7,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
-    -0.0031,
-    0.3179,
-    -0.1936
+    -0.0046,
+    0.3221,
+    -0.1864
    ],
    "make_or_buy": "buy",
    "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21); CG = CAD centroid"
@@ -197,9 +197,9 @@
    "mass_g": 84.2,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.0171,
-    -0.3193,
-    -0.1915
+    0.0156,
+    -0.321,
+    -0.1885
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -229,12 +229,12 @@
    "mass_g": 17.0,
    "material": "glass-filled nylon",
    "cg_xyz_m": [
-    -0.0062,
-    -0.3177,
-    -0.1939
+    -0.0077,
+    -0.3223,
+    -0.1861
    ],
    "make_or_buy": "buy",
-   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0062; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0077; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
   },
   {
    "id": "PRP-004-LL",
@@ -244,9 +244,9 @@
    "mass_g": 6.7,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
-    -0.0031,
-    -0.3179,
-    -0.1936
+    -0.0046,
+    -0.3221,
+    -0.1864
    ],
    "make_or_buy": "buy",
    "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21); CG = CAD centroid"
@@ -497,16 +497,6 @@
   "E-FIN-66",
   "E-FIN-67",
   "E-FIN-68",
-  "E-HRN-17",
-  "E-HRN-18",
-  "E-HRN-19",
-  "E-HRN-20",
-  "E-TRN-17",
-  "E-TRN-18",
-  "E-TRN-19",
-  "E-TRN-20"
- ],
- "acknowledges_pending": [
   "E-FIN-81",
   "E-FIN-82",
   "E-FIN-83",
@@ -519,6 +509,10 @@
   "E-HRN-14",
   "E-HRN-15",
   "E-HRN-16",
+  "E-HRN-17",
+  "E-HRN-18",
+  "E-HRN-19",
+  "E-HRN-20",
   "E-HRN-24",
   "E-HRN-25",
   "E-HRN-26",
@@ -526,6 +520,11 @@
   "E-HRN-34",
   "E-HRN-35",
   "E-HRN-36",
-  "E-HRN-37"
- ]
+  "E-HRN-37",
+  "E-TRN-17",
+  "E-TRN-18",
+  "E-TRN-19",
+  "E-TRN-20"
+ ],
+ "acknowledges_pending": []
 }

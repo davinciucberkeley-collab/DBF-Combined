@@ -22,20 +22,20 @@
    },
    "outputs": {
     "esc_UR": 0.5952434249332912,
-    "phase_reach_UR": 0.1218219047970856,
+    "phase_reach_UR": 0.11640869165054257,
     "dshot_UR": 0.5178052030955371,
     "esc_UL": 0.47457282819139573,
-    "phase_reach_UL": 0.1218219047970856,
+    "phase_reach_UL": 0.11640869165054257,
     "dshot_UL": 0.6518345486326025,
     "esc_LR": 0.6198757768843773,
-    "phase_reach_LR": 0.1218219047970856,
+    "phase_reach_LR": 0.11640869165054257,
     "dshot_LR": 0.5436854700915872,
     "esc_LL": 0.4971059610438657,
-    "phase_reach_LL": 0.1218219047970856,
+    "phase_reach_LL": 0.11640869165054257,
     "dshot_LL": 0.6742097239815884,
     "esc_max": 0.6198757768843773,
     "esc_min": 0.47457282819139573,
-    "phase_reach_max": 0.1218219047970856,
+    "phase_reach_max": 0.11640869165054257,
     "dshot_max": 0.6742097239815884,
     "main_path": 0.07951778132367027,
     "main_1": 0.02994415989232806,
@@ -472,9 +472,9 @@
         "B"
        ],
        [
-        0.066,
-        0.3283,
-        0.1611,
+        0.0597,
+        0.3299,
+        0.1588,
         "T"
        ],
        [
@@ -515,9 +515,9 @@
         "B"
        ],
        [
-        0.066,
-        -0.3283,
-        0.1611,
+        0.0597,
+        -0.3299,
+        0.1588,
         "T"
        ],
        [
@@ -558,9 +558,9 @@
         "B"
        ],
        [
-        0.066,
-        0.3283,
-        -0.1611,
+        0.0597,
+        0.3299,
+        -0.1588,
         "T"
        ],
        [
@@ -601,9 +601,9 @@
         "B"
        ],
        [
-        0.066,
-        -0.3283,
-        -0.1611,
+        0.0597,
+        -0.3299,
+        -0.1588,
         "T"
        ],
        [
@@ -1935,10 +1935,10 @@
     "leads": "ASM-F2-FACTORY-LEADS"
    },
    "outputs": {
-    "ext": 0.0618219047970856
+    "ext": 0.056408691650542575
    },
    "input_values": {
-    "reach": 0.1218219047970856,
+    "reach": 0.11640869165054257,
     "leads": [
      0.06,
      0.0
@@ -1962,12 +1962,12 @@
     "od": "AWG,mm"
    },
    "outputs": {
-    "mass_g": 118.31105352987603,
-    "cg_x": 0.06429047012921091,
-    "cg_y": -0.0005694580705247776,
-    "cg_z": 0.014402788450973137,
+    "mass_g": 117.26197282207598,
+    "cg_x": 0.0641861862128514,
+    "cg_y": -0.0005745527100000579,
+    "cg_z": 0.014531642564022795,
     "pod_g": 40.74380707200861,
-    "side_g": 38.851011342454434
+    "side_g": 38.32647098855443
    },
    "input_values": {
     "wires": [
@@ -2395,9 +2395,9 @@
         "B"
        ],
        [
-        0.066,
-        0.3283,
-        0.1611,
+        0.0597,
+        0.3299,
+        0.1588,
         "T"
        ],
        [
@@ -2438,9 +2438,9 @@
         "B"
        ],
        [
-        0.066,
-        -0.3283,
-        0.1611,
+        0.0597,
+        -0.3299,
+        0.1588,
         "T"
        ],
        [
@@ -2481,9 +2481,9 @@
         "B"
        ],
        [
-        0.066,
-        0.3283,
-        -0.1611,
+        0.0597,
+        0.3299,
+        -0.1588,
         "T"
        ],
        [
@@ -2524,9 +2524,9 @@
         "B"
        ],
        [
-        0.066,
-        -0.3283,
-        -0.1611,
+        0.0597,
+        -0.3299,
+        -0.1588,
         "T"
        ],
        [
@@ -4236,7 +4236,7 @@
    },
    "outputs": {
     "bend_ratio": 1.0188971449551107,
-    "free_span": 0.05036499961379097,
+    "free_span": 0.04671176904019017,
     "mast_clear": 0.17987695794625835
    },
    "input_values": {
@@ -4665,9 +4665,9 @@
         "B"
        ],
        [
-        0.066,
-        0.3283,
-        0.1611,
+        0.0597,
+        0.3299,
+        0.1588,
         "T"
        ],
        [
@@ -4708,9 +4708,9 @@
         "B"
        ],
        [
-        0.066,
-        -0.3283,
-        0.1611,
+        0.0597,
+        -0.3299,
+        0.1588,
         "T"
        ],
        [
@@ -4751,9 +4751,9 @@
         "B"
        ],
        [
-        0.066,
-        0.3283,
-        -0.1611,
+        0.0597,
+        0.3299,
+        -0.1588,
         "T"
        ],
        [
@@ -4794,9 +4794,9 @@
         "B"
        ],
        [
-        0.066,
-        -0.3283,
-        -0.1611,
+        0.0597,
+        -0.3299,
+        -0.1588,
         "T"
        ],
        [
@@ -6352,6 +6352,34 @@
    }
   },
   {
+   "id": "CALC-F2-CAP-RIPPLE",
+   "type": "calculation",
+   "title": "ESC bus-cap leg current (E-HRN-34..37): AC ripple RMS, no DC",
+   "script": "redesign/team/F2/harness.py",
+   "function": "calc_cap_ripple",
+   "equation": "I_esc,cont = I_hover / 4 x split_max; I_esc,peak = I_motor,max; I_cap,rms = I_esc sqrt(D (1 - D)) <= 0.5 I_esc (worst D = 0.5, leads carry the DC)",
+   "inputs": {
+    "i_hover": "P:performance.hover_current_a",
+    "split": "P:requirements.hover_split_max",
+    "i_max": "P:propulsion.current_max_per_motor_a"
+   },
+   "units": {
+    "i_hover": "A",
+    "split": "-",
+    "i_max": "A"
+   },
+   "outputs": {
+    "esc_cont": 8.4375,
+    "cap_rms_cont": 4.21875,
+    "cap_rms_peak": 12.4
+   },
+   "input_values": {
+    "i_hover": 27.0,
+    "split": 1.25,
+    "i_max": 24.8
+   }
+  },
+  {
    "id": "CALC-F2-BODIES",
    "type": "calculation",
    "title": "CAD bundle legs sized by the wire mass they carry; body centroid vs wire-mass CG",
@@ -6371,7 +6399,7 @@
    "outputs": {
     "cg_gap_max": 0.006422414673240248,
     "gap_pod": 0.006422414673240248,
-    "gap_side": 0.00040490309564190897
+    "gap_side": 0.0004557809349947448
    },
    "input_values": {
     "wires": [
@@ -6799,9 +6827,9 @@
         "B"
        ],
        [
-        0.066,
-        0.3283,
-        0.1611,
+        0.0597,
+        0.3299,
+        0.1588,
         "T"
        ],
        [
@@ -6842,9 +6870,9 @@
         "B"
        ],
        [
-        0.066,
-        -0.3283,
-        0.1611,
+        0.0597,
+        -0.3299,
+        0.1588,
         "T"
        ],
        [
@@ -6885,9 +6913,9 @@
         "B"
        ],
        [
-        0.066,
-        0.3283,
-        -0.1611,
+        0.0597,
+        0.3299,
+        -0.1588,
         "T"
        ],
        [
@@ -6928,9 +6956,9 @@
         "B"
        ],
        [
-        0.066,
-        -0.3283,
-        -0.1611,
+        0.0597,
+        -0.3299,
+        -0.1588,
         "T"
        ],
        [
@@ -8720,7 +8748,7 @@
        [
         0.066,
         0.3283,
-        0.1631
+        0.1603
        ],
        0.0059
       ],
@@ -8733,7 +8761,7 @@
        [
         0.066,
         0.3283,
-        -0.1631
+        -0.1603
        ],
        0.0059
       ],
@@ -9269,6 +9297,36 @@
    "value": 0.010784349485562263
   },
   {
+   "id": "CL-F2-CAP-RIPPLE-CONT",
+   "type": "claim",
+   "title": "ESC bus-cap leg ripple current, hover (RMS, upper-bound D = 0.5)",
+   "calc": "CALC-F2-CAP-RIPPLE",
+   "output": "cap_rms_cont",
+   "unit": "A",
+   "parts": [
+    "PWR-008-UR",
+    "PRP-002-UR"
+   ],
+   "how": "T-F1-RIPPLE: current probe on one cap leg at hover throttle, props on, tethered",
+   "note": "current_a.cont of E-HRN-34..37; F1 checks the PWR-008 ripple rating against it",
+   "value": 4.21875
+  },
+  {
+   "id": "CL-F2-CAP-RIPPLE-PEAK",
+   "type": "claim",
+   "title": "ESC bus-cap leg ripple current, per-motor max (RMS, upper-bound D = 0.5)",
+   "calc": "CALC-F2-CAP-RIPPLE",
+   "output": "cap_rms_peak",
+   "unit": "A",
+   "parts": [
+    "PWR-008-UR",
+    "PRP-002-UR"
+   ],
+   "how": "T-F1-RIPPLE: current probe on one cap leg at full throttle burst (< 5 s)",
+   "note": "current_a.peak of E-HRN-34..37; 22 AWG legs 11 mm long carry it with negligible rise",
+   "value": 12.4
+  },
+  {
    "id": "CL-F2-I2C-LEN",
    "type": "claim",
    "title": "I2C bus total (FC to GPS + Y-branch to airspeed)",
@@ -9316,7 +9374,7 @@
     "PRP-002-UR"
    ],
    "how": "Hold the motor on its mount and the ESC on its pad, measure the reach (T-E1-MOTOR-RM)",
-   "value": 0.1218219047970856
+   "value": 0.11640869165054257
   },
   {
    "id": "CL-F2-PHASE-EXT",
@@ -9333,7 +9391,7 @@
     "PRP-001-UR"
    ],
    "how": "T-E1-MOTOR-RM measures the factory leads; cut ext = reach - leads",
-   "value": 0.0618219047970856
+   "value": 0.056408691650542575
   },
   {
    "id": "CL-F2-DSHOT-LEN",
@@ -9404,7 +9462,7 @@
     "HRN-002-L"
    ],
    "how": "T-F2-WEIGH: weigh each made-up lead before installation",
-   "value": 118.31105352987603
+   "value": 117.26197282207598
   },
   {
    "id": "CL-F2-CG-X",
@@ -9419,7 +9477,7 @@
     "HRN-002-L"
    ],
    "how": "from the weighed leads and their stations",
-   "value": 0.06429047012921091
+   "value": 0.0641861862128514
   },
   {
    "id": "CL-F2-BEND",
@@ -9453,7 +9511,7 @@
     "R-HARNESS-INSTALL"
    ],
    "how": "T-F2-FIT: tape or tie at every support in WIRE-LIST.csv",
-   "value": 0.05036499961379097
+   "value": 0.04671176904019017
   },
   {
    "id": "CL-F2-GROOVE-MAST",

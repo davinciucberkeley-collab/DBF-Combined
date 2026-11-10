@@ -1,4 +1,4 @@
-"""Seeded-fault self-test for interface_plan.py (plan A4-R4): the plan is clean, and each injected fault is caught.
+"""Seeded-fault self-test for interface_plan.py (plan A4-R5): the plan is clean, and each injected fault is caught.
 
 Run (repo root):  python -I redesign/team/A4/test_interface_plan.py      (exit 1 on any miss)
 """
@@ -74,6 +74,11 @@ def main():
          lambda c: ("power-path", "PWR-008-UR") in c),
         ("A4-R4: power frame bolts cut -> AS150U half, board and frame float", without(base, "E-PWR-03"),
          lambda c: any(k in ("floating", "load-path") and "PWR-006" in item for k, item in c)),
+        ("A4-R5: crush block -> forward stop cut -> crush block and spreader float (D2-R5a)", without(base, "E-POD-11"),
+         lambda c: any(k in ("floating", "load-path") and "POD-009" in item for k, item in c)
+         and any(k in ("floating", "load-path") and "POD-010" in item for k, item in c)),
+        ("A4-R5: spreader -> crush block cut -> spreader floats (D2-R5a)", without(base, "E-POD-13"),
+         lambda c: any(k in ("floating", "load-path") and "POD-010" in item for k, item in c)),
     ]
     bad = 0
     for name, plan, ok in cases:

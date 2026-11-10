@@ -348,8 +348,8 @@ def read_mass_items(config="MC-P"):
     items = []
     with open(C1D / "mass_model.csv", newline="") as f:
         for r in csv.DictReader(f):
-            if r["mass_config"] != config or r["group"] in ("TOTAL",):
-                continue
+            if r["mass_config"] != config or r["group"] in ("TOTAL",) or not r["mass_kg"].strip():
+                continue                   # C1-R4 adds TRIM_/SPREAD_/INERTIA_ summary rows with no mass
             items.append({"group": r["group"], "station": r["station"], "m": float(r["mass_kg"]),
                           "x": float(r["x_m"]), "y": float(r["y_m"]), "z": float(r["z_m"])})
     return items
@@ -798,7 +798,7 @@ def main():
     m_tape = s_nom["m_tape"] * b
     m_spar = spar_mpm * 2 * y_spar_end
     m_fill = M["slot_fill_kgm"] * 2 * y_spar_end
-    m_plugs = 2 * M["plug_mass_kg"] + 4 * M["anchor_plug_mass_kg"]
+    m_plugs = 2 * M["plug_mass_kg"] + 2 * M["anchor_plug_mass_kg"]   # 4 plugs as built (D1 WNG-004/005 L/R)
     res["mass"] = {"core_kg": m_core, "tape_kg": m_tape, "spar_kg": m_spar, "slot_fill_kg": m_fill,
                    "plugs_kg": m_plugs, "total_kg": m_core + m_tape + m_spar + m_fill + m_plugs,
                    "allocation_kg": pv("mass.allocation_g.wing") / 1000}
@@ -958,14 +958,14 @@ def main():
     conv = []
     for nh in (6, 12, 24, 48, 96):
         out = {"n_half": nh}
-        for cid in ("F1-PULLUP-VD", "L1-LEVEL", "F7-ROLLPULL-VD"):
+        for cid in ("F1-PULLUP-VD", "L1-LEVEL", "L4-CORNER-SIDE-Y"):
             ys, u = static_fe(cases[(cid, "MC-P")]["rows"], nh, sec_lo)
             out[cid] = {"w_tip_mm": float(u[-6 + 2] * 1000), "u_tip_mm": float(u[-6 + 0] * 1000),
                         "th_tip_deg": float(math.degrees(u[-6 + 4]))}
         conv.append(out)
     res["fe_static_conv"] = conv
     ref = {}
-    for cid in ("F1-PULLUP-VD", "L1-LEVEL", "F7-ROLLPULL-VD"):
+    for cid in ("F1-PULLUP-VD", "L1-LEVEL", "L4-CORNER-SIDE-Y"):
         sy, w, u, th = integrate_case(cases[(cid, "MC-P")]["rows"], 1, sec_lo)
         ref[cid] = {"w_tip_mm": float(w[-1] * 1000), "u_tip_mm": float(u[-1] * 1000),
                     "th_tip_deg": float(math.degrees(th[-1]))}
@@ -974,7 +974,7 @@ def main():
     res["fe_vs_integration"] = {
         "F1_w_err": abs(fin["F1-PULLUP-VD"]["w_tip_mm"] / ref["F1-PULLUP-VD"]["w_tip_mm"] - 1),
         "L1_u_err": abs(fin["L1-LEVEL"]["u_tip_mm"] / ref["L1-LEVEL"]["u_tip_mm"] - 1),
-        "F7_th_err": abs(fin["F7-ROLLPULL-VD"]["th_tip_deg"] / ref["F7-ROLLPULL-VD"]["th_tip_deg"] - 1)}
+        "L4_th_err": abs(fin["L4-CORNER-SIDE-Y"]["th_tip_deg"] / ref["L4-CORNER-SIDE-Y"]["th_tip_deg"] - 1)}   # R2: L4 governs twist (F7 tip twist ~0.01 deg on R4 loads)
     # hand check: uniform-load cantilever from the F1 root moment, spar EI only
     Mr = float(side(cases[("F1-PULLUP-VD", "MC-P")]["rows"], 1)[0, 4])
     res["hand_w_tip_F1_mm"] = {"uniform_load_mm": Mr * L_half ** 2 / (4 * s_lo["EI_flap"]) * 1000,
@@ -1137,7 +1137,7 @@ def write_params(res):
                       "mesh_conv_freq": P(fconv, "-", "max change of the first 4 frequencies, 48 -> 96 elements per half"),
                       "mesh_conv_static": P(sc, "-", "F1 tip deflection change, 48 -> 96 elements per half"),
                       "fe_vs_integration": P(max(res["fe_vs_integration"].values()), "-",
-                                             "FE (96/half) vs beam integration, F1 w, L1 u, F7 twist"),
+                                             "FE (96/half) vs beam integration, F1 w, L1 u, L4 twist"),
                       "ring_validation_err": P(res["ring_validation"]["err"], "-", "ring model vs Roark two-point-load ring, P R / pi"),
                       "F_brace_design_N": P(res["local_spar"]["F_brace_N"], "N", "C4 design brace load (CALC-C4-STATIC-1L)", source="team/C4/claims.json"),
                       "anchor_plug_bearing_pa": P(res["local_spar"]["w_anchor_Npm"] / d_sp, "Pa", "anchor plug bearing, design"),

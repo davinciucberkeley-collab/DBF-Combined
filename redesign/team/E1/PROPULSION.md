@@ -1,17 +1,77 @@
 # Propulsion — K09-L quad tailsitter
 
-Owner: E1 (propulsion engineer), revision 5, 2026-11-09. Model and claims: `team/E1/propulsion.py` →
-`team/E1/claims.json` (61 claims, `CL-E1-…`), `subsystems/propulsion/parts.csv` and
-`subsystems/propulsion/interfaces.json`. Figures: `team/E1/plots.py`. Every number is at the 2.6 kg gate and reads
-`params.json` as of this revision: cruise 16 m/s, chord 0.32 m, CLmax 0.80, **7° motor cant** (D-27), harness
-6.5 mΩ (D-32), and B1's rev 3 polar (CD0 0.0513, k 0.0943, trim 1.02).
+Owner: E1 (propulsion engineer), revision 6, 2026-11-10. Model and claims: `team/E1/propulsion.py` →
+`team/E1/claims.json` (64 claims, `CL-E1-…`), `subsystems/propulsion/parts.csv` and
+`subsystems/propulsion/interfaces.json`; CAD clearance probe `team/E1/prop_clearance.py` → `prop_clearance.json`.
+Figures: `team/E1/plots.py`. Every number is at the 2.6 kg gate and reads `params.json` as of this revision:
+cruise 16 m/s, chord 0.32 m, CLmax 0.80, **7° motor cant, sense −1** (D-27, D-52), harness 6.5 mΩ (D-32), and
+B1's rev 3 polar (CD0 0.0513, k 0.0943, trim 1.02).
 
 **Verdict.** Keep the SunnySky X3108S KV900, the LANRC 45 A ESC and the APC 11×5.5MR/MRP. Full throttle stays
 current-limited (`Q_M_BAT_CURR_MAX` 100 A). The worst-state hover T/W is **2.12** (limit 1.6). Propulsion is
-**462.0 g** against the 462 g allocation (D-48, ESCs carried stripped of their power leads), zero margin. Three
-claims fail, all fixed by D3 values A1 has already adopted (D-51) but `subsystems/fins/params.json` does not carry yet:
-the prop-to-collar gap (`face_ahead_m` 0.001 → 0.0025, CR-E1-22) twice, and the ESC strap slot (pad 28 → 31 mm,
-CR-E1-30). Every number is `UNVERIFIED` until `T-E1-MOTOR-RM` and `T-E1-STAND` run.
+**462.0 g** against the 462 g allocation (D-48), zero margin. The three rev 5 failures are closed (D3 now carries
+D-51: prop gap 1.01, ESC slot 1.05). **One claim fails, new in rev 6:** with D-52's cant sense the wing-side blade tip
+passes **21.1 mm** from the CF motor tube (`CL-E1-TIP-GAP-TUBE`, limit 25 mm, `R-PROP-CLEAR`). E1 proposes
+`face_ahead_m` 0.0025 → **0.0075** (26.1 mm) for A1's CR-D3-26 decision. Every number is `UNVERIFIED` until
+`T-E1-MOTOR-RM` and `T-E1-STAND` run.
+
+## Revision 7 (2026-11-10): prop keep-out on the real envelope; mount chain not exempted
+
+The task asked E1 to exempt the fin mount chain (`FIN-002/004/006-L/R`) from `KO-PROP-<st>`, or to make the keep-out an
+annulus with a hub inner radius, on the premise that those parts sit inside the disc behind the hub. The measured
+nearest points say otherwise:
+
+| Body (UR station) | Gap to swept volume (+10 / −6 mm) | Axial aft of mid-plane | Radius from shaft | Where |
+|---|---|---|---|---|
+| `FIN-002-R` motor tube | 21.2 mm (`check.py` hull 21.0) | 26.8 mm | 143.8 mm | 4 mm **outboard** of the 139.7 mm tip |
+| `FIN-004-R` bore boss | 25.4 mm | 22.7 mm | 158.9 mm | outboard of the tip |
+| `FIN-006-R` tube plug | 26.1 mm (`check.py` 26.3) | 25.9 mm | 156.6 mm | outboard of the tip |
+
+None of the critical points is behind the hub, so an annulus would remove nothing. An exemption would turn a real
+tip-to-structure gap of 21 mm (requirement 25 mm) into a silent pass. E1 therefore did two things. `KO-PROP-<st>` now uses E1's swept
+envelope through A5's `fwd=0.010, aft=0.006` arguments: 35 mm forward and 31 mm aft of the mid-plane (`CL-E1-KO-FWD`, `-KO-AFT`),
+radius 164.7 mm. The exempt list stays the station's own motor, adapter and prop. `check.py` keep-out ERRORs went
+from 8 to 4. The tube is the only part still inside, and `face_ahead_m` ≥ 0.0065 m clears it: in-memory `check.py` trials give
+4 / 4 / 0 / 0 ERRORs at 0.0025 / 0.0060 / 0.0065 / 0.0075 m (`prop_clearance.json`). E1 asks A1 and D3 for 0.0075 m (CR-E1-48).
+
+The aft envelope of 6 mm comes from the root section half-depth of 5.5 mm. At the tip, the section takes about 1 mm, which leaves about
+5 mm for aft bending when the prop windmills in a throttle-cut descent. That allowance is `UNVERIFIED` and goes into
+`T-E1-STAND` (`CL-E1-KO-AFT`).
+
+## Revision 6 (2026-11-10): re-run on the R4 fins; prop clearance after D-52 (CR-D3-26)
+
+| Item | Resolution | Numbers | Claim | Status |
+|---|---|---|---|---|
+| Re-run (params, README, MASS-CG re-read) | `propulsion.py`, `make_propulsion.py`, `check.py`, `build_graph.py` on the current tree | no `CALC-E1` drift; propulsion 462.0 / 462 g | `CL-E1-MASS-PRP` | `UNVERIFIED` (weigh) |
+| D3 keys adopted (CR-E1-38 closed) | `face_ahead_m` 0.0025, `prop_stack_m` 0.0373, pad 31 mm, `cant_sense_UR` −1 now in `fins/params.json` | prop gap **1.017**, CAD gap **1.01**, ESC slot **1.05**; CAD hub x **−0.0077** = datum (+0.03 mm) | `CL-E1-PROP-GAP`, `-CAD-PROP-GAP`, `-ESC-SLOT`, `-CAD-HUB-VS-DATUM` | `MODELLED` |
+| CAD centroids (CR-A1-48) | regenerated on the reversed cant: motor 0.0156 / 0.321 / 0.1885, prop −0.0077 / 0.3223 / 0.1861, adapter −0.0046 (UR); ESC unchanged | — | `interfaces.json` | `MODELLED` |
+| Acknowledgements | F2, D3 and D7 have declared every planned edge | **36 acknowledged, 0 pending** (`E-HRN-13…20`, `-24…27`, `-34…37`, `E-TRN-17…20`, `E-FIN-61…68`, `-81…88`) | `make_propulsion.py` | `CHECKED` |
+| Prop keep-out (CR-A5-21) | unchanged as A1 set it: `k9.prop_keepout(..., rotate=rot, blade_half=0.010)` | R 164.7 mm, half 35 mm | `CL-E1-KO-HALF` | `MODELLED`; `check.py` now **16 hits** |
+| True blade-to-structure gap | analytic calc on the tube + dense-surface CAD probe | motor tube **21.1 mm** (E1 envelope −6 / +10 mm), 17.1 mm with the symmetric 10 mm; next: bore boss 25.4, plug 26.1, brace ≥ 28.3, wing ≥ 33.5 mm | `CL-E1-TIP-GAP-TUBE` | **`FAIL`** −16 % |
+| Fix for A1 (CR-D3-26) | least `face_ahead_m` for 25 mm: **0.0065**; E1 proposes **0.0075** | tube gap 26.1 mm; prop plane x −0.0077 → about −0.0127 | `CL-E1-FACE-AHEAD-FOR-CLR`, `-TIP-GAP-AT-75` | `PROPOSED` |
+| Adapter screws (CR-A4-43, D-58) | unchanged from rev 5; C6 lists D-58 in `JOINTS.md` | thread ≥ 2.5 mm for M3×4; M3×5 if ≥ 3.0 mm thread and ≥ 4.0 mm free depth | `CL-E1-ADAPTER-*` | `UNVERIFIED` (measure) |
+| `CL-E1-IPACK-LIM` (CR-E1-36) | A2's matrix now lists it under `R-ESC-CURRENT` | 100 A, margin 0 % | — | closed |
+| `ASM-E1-PACK` | kept: B4's `props.py` line 305 still reads it | — | — | open (CR-E1-44) |
+
+**Prop clearance after D-52.** The 7° cant is tangential; reversing its sense (D-52, for yaw authority) tips the
+disc so that the blade passing the wing-side of the station runs about 15 mm further aft. There it crosses the 22 mm
+CF tube that carries the mount. Gap from the blade's swept volume to the tube surface, by trial `face_ahead_m`
+(`prop_clearance.json`):
+
+| `face_ahead_m` (m) | Stack added (mm) | Tube gap, E1 envelope (mm) | Tube gap, symmetric 10 mm (mm) | `check.py` box hits |
+|---|---|---|---|---|
+| 0.0025 (now) | 0 | 21.2 | 17.3 | 16 |
+| 0.0065 | 4.0 | 25.2 | 21.3 | 12 |
+| **0.0075 (E1)** | 5.0 | **26.2** | 22.3 | 12 |
+| 0.010 | 7.5 | 28.7 | 24.7 | 10 |
+| 0.0165 | 14.0 | 35.2 | 31.2 | 2 |
+| 0.020 (D3 a) | 17.5 | 38.6 | 34.7 | 0 |
+
+The box hits that remain at 0.0075 are bounding-box corners, not material: the nearest real surfaces are 26.2 mm
+(tube), 29.3 mm (bore boss) and 30.4 mm (plug). Going to 0.020 to silence the box test would add 12.5 mm more
+cantilever to the mount (C4 rocking stiffness, D3 mass) for clearance the geometry already has. The aft blade
+envelope is 6 mm, not 10: APC MR blades cone forward under thrust and K09-L never reverses. CR-E1-45 asks A5 for a
+surface test so `check.py` can certify the 0.0075 station; until then `R-PROP-CLEAR` evidence is the probe.
 
 ## Revision 5 (2026-11-09): CR-A1-48, CR-A4-43, CR-A5-21, CR-D3-22, CR-B4-20
 
@@ -64,7 +124,7 @@ a CW motor needs a left-hand post for the nut to tighten itself.
 | Unlimited pack peak, low pack (wiring case) | 108 A | ≤ 120 A (`electrical.peak_current_a`) | `CL-E1-IPACK-PEAK` | `UNVERIFIED` |
 | Cruise drag 16 m/s (B1 polar, W/D 6.22) | 4.10 N, 1.03 N per prop | — | `CL-E1-CRUISE-DRAG` | `UNVERIFIED` |
 | Cruise J, η_prop, rpm | 0.58, 0.36, 5 944 | — | `CL-E1-CRUISE-ETA-55` | `UNVERIFIED` |
-| Cruise propulsion power (kP 1 → 1.24) | 191–234 W, 15.8 A | ≤ 218 W (params, stale) | `CL-E1-CRUISE-P-55` | `FAIL` (CR-E1-24) |
+| Cruise propulsion power (kP 1 → 1.24) | 191–234 W, 15.8 A | ≤ 240 W (`performance.cruise_power_w`, D-49) | `CL-E1-CRUISE-P-55` | `UNVERIFIED` (+2 %) |
 | Transition corridor margin, worst point | 2.13 at 1.6 m/s | ≥ 1.3 | `CL-E1-CORRIDOR-55` | `UNVERIFIED` |
 | Winding rise in hover (R_th 1.0 K/W `EST`) | 23 K | ≤ 50 K | `CL-E1-HOVER-DT` | `UNVERIFIED` |
 
@@ -102,8 +162,9 @@ Both values pass 1.6. The cold-pack stand run settles it (CR-E1-25).
 | Motor screw | M3×8 through D3's 4.5 mm canted plate: **3.5 mm** engagement at every hole (window 2.5–3.5) | mm | `CL-E1-SCREW-ENGAGE` | `UNVERIFIED` |
 | Base hole depth needed | ≥ 4.0 (else plate 5.0 mm, `CL-E1-SCREW-SEAT`) | mm | `CL-E1-HOLE-DEPTH-MIN` | `UNVERIFIED` (probe) |
 | Prop adapter | bolt-on, 4 × M3×4 on Ø12 mm, M6×1 post 15.2 mm, base 6.35 mm | mm | Small Parts CNC | `CHECKED` (vendor fit list) |
-| **Mount face to prop mid-plane** | **37.3** (D3's CAD: 39.0) | mm | `CL-E1-STACK-PROP-PLANE`, `CL-E1-STACK-VS-D3` −1.7 | `UNVERIFIED` |
-| Prop plane to collar front ÷ 0.14 D (with 1 mm `face_ahead`) | 0.979 | — | `CL-E1-PROP-GAP` | `FAIL` → `face_ahead_m` 2 mm (CR-E1-22) |
+| **Mount face to prop mid-plane** | **37.3** (D3 carries 37.3, D-51) | mm | `CL-E1-STACK-PROP-PLANE`, `CL-E1-STACK-VS-D3` 0.0 | `UNVERIFIED` |
+| Prop plane to collar front ÷ 0.14 D (`face_ahead` 2.5 mm, D-51) | 1.017 | — | `CL-E1-PROP-GAP` | `UNVERIFIED` (+2 %) |
+| Blade swept volume to the CF motor tube (cant sense −1, D-52) | 21.1 (needs `face_ahead` ≥ 6.5 mm; E1 proposes 7.5 → 26.1) | mm | `CL-E1-TIP-GAP-TUBE` | **`FAIL`** (CR-E1-44) |
 | Mount face to hub front / post tip | 41.7 / 48.1 | mm | `CL-E1-STACK-POST-TIP` | `UNVERIFIED` |
 | M6 nut: thread past the full nut height | 0.1 | mm | `CL-E1-NUT-ENGAGE` | `UNVERIFIED` (tight) |
 
@@ -155,9 +216,9 @@ electrical nodes warn `unpowered` until harness declares `E-HRN-13…16`.
 
 | Issue | Owner | Status |
 |---|---|---|
-| Stack 37.3 vs 39 mm and the 0.14 D gap: `face_ahead_m` 2 mm | D3 / A1 | `FAIL` until CR-E1-22 |
-| `performance.cruise_power_w` 218 W is stale (B1 228, E1 240 W with avionics) | A1 | `FAIL` until CR-E1-24 |
-| Sag factor 0.851 (E1) vs 0.758 (E2) | E2 / A1 | open, CR-E1-25 |
+| Prop tip 21.1 mm from the motor tube after D-52 (`R-PROP-CLEAR` 25 mm); `check.py` 4 keep-out ERRORs | A1 (D3, C4) | `FAIL` until CR-D3-26 / CR-E1-44 / CR-E1-48 |
+| `check.py` box test cannot certify the canted disc near a round tube | A5 | open, CR-E1-45 |
+| Adapter-screw thread (D-58 condition), base Ø, pattern, hole depth, lead reach | E1 at `T-E1-MOTOR-RM` | `UNVERIFIED` (motors ordered mid-December) |
 | Bolt pattern, hole depth (≥ 4.0 mm), lead length unpublished | E1 / D3 | `UNVERIFIED` |
 | Nut margin 0.1 mm: if the boxed adapter's post is shorter, use a flanged nut | E1 | `UNVERIFIED` |
 | PER3 correction transfer, R, I0, pack IR | H1 / E2 | `UNVERIFIED` |

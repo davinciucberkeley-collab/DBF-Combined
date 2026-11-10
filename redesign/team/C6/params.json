@@ -1,5 +1,5 @@
 {
- "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Revision C6-R3 (params A1-R4, D-50, D-58). Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
+ "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Revision C6-R4 (params A1-R4, D-50, D-58; C4 FE re-run of 2026-11-09 20:44). Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
  "joints": {
   "m3_d_m": {
    "value": 0.003,
@@ -148,14 +148,35 @@
    "unit": "m",
    "source": "team/C6/CHANGE-REQUESTS.md CR-C6-24, adopted in D-48",
    "status": "PROPOSED",
-   "note": "half-fin root microballoon fillet leg, both faces; D3 still draws 12 mm (ASM-D3-FILLET-LEG)"
+   "note": "half-fin root microballoon fillet leg, both faces; D3 draws 15 mm over the effective root (zoned, CR-D3-25: 13 mm aft of the hinge, 6 mm bead ahead); C6 accepts the zoning"
   },
   "pin_pitch_prop_m": {
-   "value": 0.012,
+   "value": 0.015,
    "unit": "m",
-   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-25",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-31",
    "status": "PROPOSED",
-   "note": "strip through-pin pitch proposed to D3 (drawn 15 mm) at C4's 64 N pin force"
+   "note": "C6-R4: keep D3's drawn 15 mm pitch and go to the 2.5 mm pin (pin_d_prop_m); supersedes the 12 mm of CR-C6-25, which fails at C4's 92 N"
+  },
+  "pin_d_prop_m": {
+   "value": 0.0025,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-31",
+   "status": "PROPOSED",
+   "note": "pultruded CF rod 2.5 mm (stock size); bending capacity x (2.5/2)^3 = 1.95"
+  },
+  "pin_pitch_alt_m": {
+   "value": 0.009,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-31",
+   "status": "PROPOSED",
+   "note": "fallback if 2.5 mm rod cannot be bought: 2 mm pins at 9 mm pitch"
+  },
+  "collar_min_h_m": {
+   "value": 0.013,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-32",
+   "status": "PROPOSED",
+   "note": "station collar height C6 asks D3 for: 12 mm now gives RF 1.00 (-0.01 %) on C1's 7.42 N m; 13 mm gives RF 1.08 for ~+0.5 g EST total"
   }
  }
 }

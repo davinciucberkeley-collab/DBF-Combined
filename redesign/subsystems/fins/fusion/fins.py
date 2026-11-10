@@ -24,7 +24,7 @@ and two outer walls (both strip faces bonded to PETG over 40 mm). Nothing wraps 
 Load path: motor -> canted plate -> mount collar (friction clamp, the D-23 fuse) -> tube -> station collar -> brace
 (axial) -> anchor -> spar, and tube -> block (socket bore, CF plug inside) -> spar bore -> spar; fin top edge -> CF
 edge strips (pinned to the board) -> collar tail -> tube; fin root -> cove fillets (15 mm on the effective root
-length, 13 mm aft of the hinge for the elevon end gaps, 6 mm sealing bead ahead of it, none over the D6 link slot on
+length, 13 mm aft of the hinge for the elevon end gaps, 4 mm sealing bead ahead of it, none over the D6 link slot on
 the lower roots) and tape laps -> core.
 
 Cant (D-27, 7 deg; sense D-52): the motor plate is a slab whose front and back faces are both planes through the motor

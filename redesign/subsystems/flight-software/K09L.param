@@ -1,4 +1,4 @@
-# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R4b, 2026-11-09)
+# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R4c, 2026-11-10)
 # Status: PROPOSED. Not loaded on hardware, not run in SITL (SITL not installed): UNVERIFIED.
 # Firmware: ArduPlane 4.7.x stable, target CoreWingF405WingV2 (D-33; bdshot on outputs 1-4, no Lua on this board).
 # Parameter names checked 2026-11-09 against ArduPilot master source and the Plane parameter index
@@ -338,21 +338,21 @@ AHRS_ORIENTATION,0
 # GPS on SERIAL5: 5 = GPS
 SERIAL5_PROTOCOL,5
 # IMU position from the CG in the FRD body frame (m): F3's IMU (-0.010, 0.046, 0.039) aircraft frame (CR-F3-20: board
-#   4 mm higher) from CG x 0.0522 (P:cg.x_target_m), z +0.018 (MASS-CG.md take-off case). CALC-F4-SENSOR-POS. Re-measure as built
+#   4 mm higher) from CG x 0.0522 (P:cg.x_target_m), z +0.0185 (A3 CALC-A3-CG cg_m, 2026-11-10). CALC-F4-SENSOR-POS. Re-measure as built
 INS_POS1_X,0.062
 INS_POS1_Y,0.046
-INS_POS1_Z,-0.021
+INS_POS1_Z,-0.0205
 # second IMU slot, same chip position (F3)
 INS_POS2_X,0.062
 INS_POS2_Y,0.046
-INS_POS2_Z,-0.021
+INS_POS2_Z,-0.0205
 # GPS antenna position from the CG (m): F3's GPS centre (0.075, 0, 0.178) (CR-F3-20) from the same CG (4.6+ name). CALC-F4-SENSOR-POS
 GPS1_POS_X,-0.023
 GPS1_POS_Y,0
-GPS1_POS_Z,-0.160
+GPS1_POS_Z,-0.1595
 # LEGACY names of the three lines above (before 4.6)
 GPS_POS1_X,-0.023
 GPS_POS1_Y,0
-GPS_POS1_Z,-0.160
+GPS_POS1_Z,-0.1595
 # compass orientation auto-detected and stored (F3 expects 36 on the 45-deg mast pad)
 COMPASS_AUTO_ROT,2

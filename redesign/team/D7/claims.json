@@ -79,12 +79,12 @@
     "n_T": 10.09090909090909,
     "s_bottom_m": 0.072,
     "travel_req_m": 0.08199999999999999,
-    "t_req_m": 0.09530563951080591
+    "t_req_m": 0.09531238277759696
    },
    "input_values": {
     "h": 0.3,
     "eta": 0.5,
-    "n_allow": 12.446427478044484,
+    "n_allow": 12.445617653423175,
     "t": 0.12,
     "eu": 0.55,
     "eb": 0.6,
@@ -97,7 +97,7 @@
    "title": "Box stack-up: height needed, clearances, drop allowed by the 0.50 m box",
    "script": "redesign/team/D7/transport_calc.py",
    "function": "box_stack",
-   "equation": "floor = shell + doubler ; lid = shell + lining ; H_req = floor + travel_req + env_z + gap_min + lid ; travel = H - floor - lid - env_z - gap_min ; clear_bottoming = travel - s_bottom ; nose_gap = W - 2 shell - env_x - aft_gap - nose_pad (- nose_ext) ; x_clear = min(nose_gap_ext, aft_gap) ; tip_to_pad = (L - 2 shell - env_y) / 2 - pad ; A1 box: t_max = (travel_A1 - margin) / eps_bottom, h_allow = (n_allow - 1) eta eps_use t_max",
+   "equation": "floor = shell + doubler ; lid = shell + lining ; H_req = floor + travel_req + env_z + gap_min + lid ; travel = H - floor - lid - env_z - gap_min ; clear_bottoming = travel - s_bottom ; nose_gap = W - 2 shell - env_x - aft_gap - nose_pad (- nose_ext) ; x_clear = min(nose_gap_ext, aft_gap) ; tip_to_pad = (L - 2 shell - env_y) / 2 - pad ; antenna_gap = nose_gap_ext - antenna_ext ; A1 box: t_max = (travel_A1 - margin) / eps_bottom, h_allow = (n_allow - 1) eta eps_use t_max",
    "inputs": {
     "ext": "P:trn.box.external_m",
     "ext_a1": "P:requirements.box_external_m",
@@ -116,9 +116,11 @@
     "eb": "P:trn.foam.eps_bottom",
     "eu": "P:trn.foam.eps_use",
     "eta": "ASM-C1-CRUSH-EFF",
-    "n_allow": "CL-C1-TRANSPORT-N-ALLOW"
+    "n_allow": "CL-C1-TRANSPORT-N-ALLOW",
+    "ant": "P:trn.box.antenna_ext_max_m"
    },
    "units": {
+    "ant": "m",
     "ext": "m",
     "ext_a1": "m",
     "env": "m",
@@ -139,12 +141,13 @@
     "travel_m": 0.08400000000000003,
     "clear_bottoming_m": 0.012000000000000038,
     "aft_gap_m": 0.012,
-    "nose_gap_m": 0.021600000000000057,
-    "nose_gap_ext_m": 0.012326386716209128,
+    "nose_gap_m": 0.012950000000000041,
+    "nose_gap_ext_m": 0.012950000000000041,
     "x_clear_m": 0.012,
-    "tip_to_pad_m": 0.016000000000000042,
+    "tip_to_pad_m": 0.015000000000000041,
     "travel_a1_m": 0.08400000000000003,
-    "h_allow_a1_m": 0.388224665297009
+    "h_allow_a1_m": 0.38819719874526964,
+    "antenna_gap_m": 0.002950000000000041
    },
    "input_values": {
     "ext": [
@@ -158,8 +161,8 @@
      0.54
     ],
     "env": [
-     1.15,
-     0.483,
+     1.152,
+     0.498,
      0.438
     ],
     "shell": 0.004,
@@ -168,15 +171,16 @@
     "gap": 0.01,
     "pad": 0.03,
     "aft_gap": 0.012,
-    "nose_pad": 0.0254,
-    "nose_ext": 0.009273613283790928,
+    "nose_pad": 0.01905,
+    "nose_ext": 0.0,
     "travel_req": 0.08199999999999999,
     "s_bot": 0.072,
     "margin": 0.01,
     "eb": 0.6,
     "eu": 0.55,
     "eta": 0.5,
-    "n_allow": 12.446427478044484
+    "n_allow": 12.445617653423175,
+    "ant": 0.01
    }
   },
   {
@@ -246,11 +250,54 @@
     "m": "kg"
    },
    "outputs": {
-    "F_bolt_N": 57.27325235855999,
-    "p_strip_kpa": 27.27297731359999
+    "F_bolt_N": 57.219449153999996,
+    "p_strip_kpa": 27.247356739999997
    },
    "input_values": {
-    "m": 5.8402464
+    "m": 5.83476
+   }
+  },
+  {
+   "id": "CALC-D7-HANDLE-GRIP",
+   "type": "calculation",
+   "title": "Handle bolt grip stack and thread engagement past the nyloc (D-41)",
+   "script": "redesign/team/D7/transport_calc.py",
+   "function": "handle_grip",
+   "equation": "grip = strap + washer + wall + backing ; e = L_bolt - grip ; e_min = h_nyloc + n_p p ; strap_max = L_bolt - e_min - washer - wall - backing",
+   "inputs": {
+    "Lb": "P:trn.handle.bolt_len_m",
+    "p": "P:trn.handle.pitch_m",
+    "hn": "P:trn.handle.nyloc_h_m",
+    "np": "P:requirements.nyloc_pitches_min",
+    "st": "P:trn.handle.strap_t_m",
+    "wt": "P:trn.handle.washer_t_m",
+    "wall": "P:trn.box.shell_t_m",
+    "bt": "P:trn.handle.backing_t_m"
+   },
+   "units": {
+    "Lb": "m",
+    "p": "m",
+    "hn": "m",
+    "st": "m",
+    "wt": "m",
+    "wall": "m",
+    "bt": "m"
+   },
+   "outputs": {
+    "grip_mm": 10.499999999999998,
+    "engage_mm": 5.500000000000002,
+    "engage_min_mm": 5.0,
+    "strap_max_mm": 2.9999999999999982
+   },
+   "input_values": {
+    "Lb": 0.016,
+    "p": 0.0005,
+    "hn": 0.004,
+    "np": 2,
+    "st": 0.0025,
+    "wt": 0.001,
+    "wall": 0.004,
+    "bt": 0.003
    }
   },
   {
@@ -353,15 +400,15 @@
     "SRC-D7-PE-FOAM"
    ],
    "outputs": {
-    "base_kg": 2.3389914000000003,
+    "base_kg": 2.333505,
     "lid_kg": 0.6348090000000001,
     "cradle_each_kg": 0.06979500000000001,
     "tray_kg": 0.14904000000000003,
     "pillar_each_kg": 0.037908000000000004,
-    "box_kg": 3.5722464000000005,
+    "box_kg": 3.5667600000000004,
     "aircraft_kg": 2.05,
-    "loaded_kg": 5.8402464,
-    "loaded_with_packs_kg": 6.9402463999999995
+    "loaded_kg": 5.83476,
+    "loaded_with_packs_kg": 6.934760000000001
    },
    "input_values": {
     "ext": [
@@ -382,7 +429,7 @@
      0.2,
      0.15
     ],
-    "npt": 0.0254,
+    "npt": 0.01905,
     "nps": [
      0.16,
      0.2
@@ -400,8 +447,8 @@
     "cap": 0.006,
     "travel": 0.08400000000000003,
     "env": [
-     1.15,
-     0.483,
+     1.152,
+     0.498,
      0.438
     ],
     "tray": [
@@ -530,24 +577,24 @@
     "SRC-D7-PE-FOAM"
    ],
    "outputs": {
-    "h_end_m": 0.08688533867282121,
-    "h_nose_m": 0.07775953073462158,
+    "h_end_m": 0.09303376035588172,
+    "h_nose_m": 0.0591052159169582,
     "n_aft": 7.46133814374094,
     "h_aft_m": 0.24645352574963755,
-    "h_lid_m": 0.05723213739022242,
+    "h_lid_m": 0.05722808826711588,
     "p_pillar_kpa": 17.012968562878786,
     "p_allow_kpa": 80.0
    },
    "input_values": {
-    "nX": 12.132359446617262,
-    "nY": 11.531556202766208,
-    "nL": 12.446427478044484,
+    "nX": 12.282312749598319,
+    "nY": 12.276819437076572,
+    "nL": 12.445617653423175,
     "eta": 0.5,
     "eu": 0.55,
     "t_end": 0.03,
-    "t_nose": 0.0254,
-    "f_up": 39.375,
-    "f_lo": 35.625,
+    "t_nose": 0.01905,
+    "f_up": 39.5625,
+    "f_lo": 35.4375,
     "s_foot": 0.04,
     "aft_gap": 0.012,
     "gate": 2.6,
@@ -604,9 +651,9 @@
     "can_kg": 3.3000000000000003,
     "tote_kg": 0.565,
     "item_max_kg": 3.3000000000000003,
-    "person_a_kg": 6.405246399999999,
+    "person_a_kg": 6.399760000000001,
     "person_b_kg": 5.999600000000001,
-    "all_kg": 12.4048464
+    "all_kg": 12.39936
    },
    "input_values": {
     "mat": [
@@ -623,7 +670,7 @@
     "tote": 0.15,
     "tx": 0.35,
     "spares": 0.065,
-    "box": 5.8402464
+    "box": 5.83476
    }
   },
   {
@@ -666,8 +713,8 @@
     "D": 0.2794,
     "tb": 0.012,
     "env": [
-     1.15,
-     0.483,
+     1.152,
+     0.498,
      0.438
     ],
     "travel": 0.08400000000000003,
@@ -829,7 +876,7 @@
   {
    "id": "CL-D7-NOSE-GAP",
    "type": "claim",
-   "title": "Pod nose to the nose pad, today's pod (x_le -0.115)",
+   "title": "Pod nose (x -0.130, D-47) to the 3/4 in nose pad",
    "calc": "CALC-D7-BOX-STACK",
    "output": "nose_gap_m",
    "unit": "m",
@@ -842,7 +889,25 @@
     "TRN-005"
    ],
    "how": "Ruler in the built box.",
-   "value": 0.021600000000000057
+   "value": 0.012950000000000041
+  },
+  {
+   "id": "CL-D7-ANTENNA-PAD-GAP",
+   "type": "claim",
+   "title": "Antenna tube B tip (<= 10 mm ahead of the nose, CR-D7-13) to the 3/4 in nose pad",
+   "calc": "CALC-D7-BOX-STACK",
+   "output": "antenna_gap_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.002
+   },
+   "parts": [
+    "TRN-001",
+    "TRN-005"
+   ],
+   "how": "Aircraft in the box against the LE lips: a 2 mm feeler passes between the antenna tip and the nose pad.",
+   "value": 0.002950000000000041
   },
   {
    "id": "CL-D7-TIP-PAD-GAP",
@@ -863,7 +928,7 @@
     "TRN-005"
    ],
    "how": "Ruler in the built box.",
-   "value": 0.016000000000000042
+   "value": 0.015000000000000041
   },
   {
    "id": "CL-D7-A1-BOX-DROP-ALLOW",
@@ -890,7 +955,7 @@
    "assumes": [
     "ASM-D7-REBOUND"
    ],
-   "value": 0.388224665297009
+   "value": 0.38819719874526964
   },
   {
    "id": "CL-D7-CRADLE-PAD-AREA",
@@ -973,7 +1038,7 @@
     "TRN-007-R"
    ],
    "how": "C6 checks the M3 stack (CR-C6-08: 59 N); T-D7-HANDLE-PULL.",
-   "value": 57.27325235855999
+   "value": 57.219449153999996
   },
   {
    "id": "CL-D7-HANDLE-BEARING",
@@ -987,7 +1052,63 @@
     "TRN-001"
    ],
    "how": "T-D7-HANDLE-PULL: Coroplast face shows no dent behind the strip.",
-   "value": 27.27297731359999
+   "value": 27.247356739999997
+  },
+  {
+   "id": "CL-D7-HANDLE-ENGAGE-MIN",
+   "type": "claim",
+   "title": "Minimum thread past the nut face for an M3 nyloc (D-41: nyloc + 2 pitches)",
+   "calc": "CALC-D7-HANDLE-GRIP",
+   "output": "engage_min_mm",
+   "unit": "mm",
+   "parts": [
+    "TRN-102"
+   ],
+   "how": "Equals C6 min_engagement_mm 5.0 for E-TRN-13...15 (joint_stacks.json).",
+   "value": 5.0
+  },
+  {
+   "id": "CL-D7-HANDLE-ENGAGE",
+   "type": "claim",
+   "title": "M3x16 handle bolt: thread past the nyloc bearing face",
+   "calc": "CALC-D7-HANDLE-GRIP",
+   "output": "engage_mm",
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-D7-HANDLE-ENGAGE-MIN"
+   },
+   "verifies": [
+    "R-TRANSPORT"
+   ],
+   "parts": [
+    "TRN-007-C",
+    "TRN-007-L",
+    "TRN-007-R",
+    "TRN-102",
+    "TRN-105"
+   ],
+   "how": "On assembly: nyloc fully on and at least 2 full threads (1.0 mm) showing past it on every handle bolt; caliper the strap tab first (<= CL-D7-HANDLE-STRAP-T-MAX, else M3x20).",
+   "value": 5.500000000000002
+  },
+  {
+   "id": "CL-D7-HANDLE-STRAP-T-MAX",
+   "type": "claim",
+   "title": "Thickest strap-handle tab M3x16 still engages 5.0 mm",
+   "calc": "CALC-D7-HANDLE-GRIP",
+   "output": "strap_max_mm",
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "value": 2.5
+   },
+   "parts": [
+    "TRN-007-C",
+    "TRN-007-L",
+    "TRN-007-R"
+   ],
+   "how": "Caliper the bought handle tab on receipt; limit is the 2.5 mm estimate used in the stack.",
+   "value": 2.9999999999999982
   },
   {
    "id": "CL-D7-CRADLE-STRESS",
@@ -1024,7 +1145,7 @@
     "TRN-004-R"
    ],
    "how": "T-D7-WEIGH-BOX: 10 kg luggage scale.",
-   "value": 3.5722464000000005
+   "value": 3.5667600000000004
   },
   {
    "id": "CL-D7-LOADED-MASS",
@@ -1045,7 +1166,7 @@
     "TRN-005"
    ],
    "how": "T-D7-WEIGH-BOX: weigh the loaded box, packs in their LiPo bag outside.",
-   "value": 5.8402464
+   "value": 5.83476
   },
   {
    "id": "CL-D7-LOADED-WITH-PACKS",
@@ -1055,7 +1176,7 @@
    "output": "loaded_with_packs_kg",
    "unit": "kg",
    "how": "Shows why packs ride in the LiPo bag (ASM-D7-PACK-OUT).",
-   "value": 6.9402463999999995
+   "value": 6.934760000000001
   },
   {
    "id": "CL-D7-END-DROP-ALLOW",
@@ -1072,12 +1193,12 @@
    "assumes": [
     "ASM-D7-FLAT-DROP"
    ],
-   "value": 0.08688533867282121
+   "value": 0.09303376035588172
   },
   {
    "id": "CL-D7-NOSE-DROP-ALLOW",
    "type": "claim",
-   "title": "Drop height on the front wall (pod nose into the 1 in nose pad)",
+   "title": "Drop height on the front wall (pod nose into the 3/4 in nose pad)",
    "calc": "CALC-D7-OFFAXIS",
    "output": "h_nose_m",
    "unit": "m",
@@ -1086,7 +1207,7 @@
     "TRN-005"
    ],
    "how": "T-D7-BOX-DROP front-wall drop with the dummy.",
-   "value": 0.07775953073462158
+   "value": 0.0591052159169582
   },
   {
    "id": "CL-D7-AFT-N",
@@ -1134,7 +1255,7 @@
     "TRN-004-R"
    ],
    "how": "Label-and-test case: THIS SIDE UP. T-D7-BOX-DROP lid-down drop at this height with the dummy.",
-   "value": 0.05723213739022242
+   "value": 0.05722808826711588
   },
   {
    "id": "CL-D7-PILLAR-P-ALLOW",
@@ -1206,7 +1327,7 @@
    "output": "person_a_kg",
    "unit": "kg",
    "how": "Sum of T-D7-WEIGH-BOX readings.",
-   "value": 6.405246399999999
+   "value": 6.399760000000001
   },
   {
    "id": "CL-D7-CARRY-B",
@@ -1226,7 +1347,7 @@
    "output": "all_kg",
    "unit": "kg",
    "how": "Sum of T-D7-WEIGH-BOX readings.",
-   "value": 12.4048464
+   "value": 12.39936
   },
   {
    "id": "CL-D7-PROPS-ON-ZMARGIN",

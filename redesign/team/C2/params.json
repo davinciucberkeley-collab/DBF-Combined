@@ -266,98 +266,98 @@
   },
   "fe": {
    "w_tip_env_m": {
-    "value": 0.002897,
+    "value": 0.002519,
     "unit": "m",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max flap tip deflection, envelope cases, limit, low corner: G2-HANG-MOTOR/MC-P/R"
    },
    "w_tip_flight_m": {
-    "value": 0.001075,
+    "value": 0.001001,
     "unit": "m",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "flight cases only: F1-PULLUP-VD/MC-C/R"
    },
    "w_max_env_m": {
-    "value": 0.002897,
+    "value": 0.002519,
     "unit": "m",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max |w| anywhere: G2-HANG-MOTOR/MC-P/R"
    },
    "u_max_env_m": {
-    "value": 0.001483,
+    "value": 0.001429,
     "unit": "m",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max in-plane |u|: L1-LEVEL/MC-C/R"
    },
    "twist_env_rad": {
-    "value": 0.04829,
+    "value": 0.050323,
     "unit": "rad",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
-    "note": "max twist: F7-ROLLPULL-VD/MC-C/L"
+    "note": "max twist: L4-CORNER-SIDE-Y/MC-C/R"
    },
    "twist_flight_rad": {
-    "value": 0.04829,
+    "value": 0.032047,
     "unit": "rad",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
-    "note": "max twist, flight: F7-ROLLPULL-VD/MC-C/L"
+    "note": "max twist, flight: F7-ROLLPULL-VA/MC-C/L"
    },
    "spar_sigma_ult_max_pa": {
-    "value": 61516454.750311,
+    "value": 59277846.683703,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "spar alone, envelope Mbend ultimate, y 0.000 m"
    },
    "tape_sigma_root_ult_pa": {
-    "value": 7503720.880622,
+    "value": 7254151.454467,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "tape at full stiffness, root, Mx and Mz ult combined"
    },
    "foam_sigma_root_ult_pa": {
-    "value": 37518.604403,
+    "value": 36270.757272,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "foam fibre stress, root, ult"
    },
    "tip_foam_sigma_ult_pa": {
-    "value": 4923.735828,
+    "value": 3697.421484,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "foam outboard of the spar end, ult"
    },
    "tip_tape_sigma_ult_pa": {
-    "value": 984747.165586,
+    "value": 739484.296824,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "tape outboard of the spar end, ult"
    },
    "chord_tape_sigma_ult_pa": {
-    "value": 13020209.381177,
+    "value": 13008350.110374,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "chordwise bending of the core aft of the spar, CN 1 at q_VD, ult, tape faces"
    },
    "chord_foam_only_sigma_ult_pa": {
-    "value": 109429.887373,
+    "value": 109330.214731,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "same, bare foam (no tape)"
    },
    "spar_bond_tau_ult_pa": {
-    "value": 8094.765092,
+    "value": 6167.543417,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
@@ -378,56 +378,56 @@
     "note": "plug bearing with the plug fitted, design"
    },
    "ring_anchor_sigma_pa": {
-    "value": 77758053.315274,
+    "value": 76442538.602036,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "spar wall ring bending under the brace anchor saddle, design, no plug"
    },
    "cradle_area_req_m2": {
-    "value": 0.00108,
+    "value": 0.001165,
     "unit": "m2",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "foam pad area per cradle, X3 drop x 1.5"
    },
    "pod_tau_pa": {
-    "value": 8745.663953,
+    "value": 5359.604932,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "pod bond shear on the wing foam, design"
    },
    "mode_sep_worst": {
-    "value": 0.076653,
+    "value": 0.071656,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
-    "note": "worst separation of a station-participating wing mode (215.3 Hz in-plane sym, corner E100-G5-tape0.5)"
+    "note": "worst separation of a station-participating wing mode (83.8 Hz flap antisym, corner E100-G5-tape0.5)"
    },
    "mode_worst_f_hz": {
-    "value": 215.328433,
+    "value": 83.795265,
     "unit": "Hz",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "frequency of that mode"
    },
    "mode_sep_worst_all": {
-    "value": 0.001815,
+    "value": 0.006807,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
-    "note": "same over all 12 stiffness corners (199.6 Hz, E100-G3-tape0.0)"
+    "note": "same over all 12 stiffness corners (98.4 Hz, E100-G3-tape0.0)"
    },
    "f_torsion_anti_hz": {
-    "value": 11.705633,
+    "value": 11.884864,
     "unit": "Hz",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "first wing mode, low corner: antisymmetric torsion (fin stations rocking)"
    },
    "f_torsion_sym_hz": {
-    "value": 21.689836,
+    "value": 24.08554,
     "unit": "Hz",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
@@ -448,7 +448,7 @@
     "note": "roll reversal, spar-only GJ bound"
    },
    "eff_vd": {
-    "value": 0.775008,
+    "value": 0.775213,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
@@ -462,32 +462,32 @@
     "note": "divergence, spar-only GJ, shear centre 20 mm aft"
    },
    "V_flutter_ms": {
-    "value": 81.637187,
+    "value": 80.1,
     "unit": "m/s",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "flutter screen (modal p-k, 6 modes): no crossing up to this speed"
    },
    "mesh_conv_freq": {
-    "value": 0.000213,
+    "value": 0.00025,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max change of the first 4 frequencies, 48 -> 96 elements per half"
    },
    "mesh_conv_static": {
-    "value": 0.000526,
+    "value": 0.000517,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "F1 tip deflection change, 48 -> 96 elements per half"
    },
    "fe_vs_integration": {
-    "value": 0.002241,
+    "value": 0.002239,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
-    "note": "FE (96/half) vs beam integration, F1 w, L1 u, F7 twist"
+    "note": "FE (96/half) vs beam integration, F1 w, L1 u, L4 twist"
    },
    "ring_validation_err": {
     "value": 0.003689,
@@ -497,28 +497,28 @@
     "note": "ring model vs Roark two-point-load ring, P R / pi"
    },
    "F_brace_design_N": {
-    "value": 145.890892,
+    "value": 143.422702,
     "unit": "N",
     "source": "team/C4/claims.json",
     "status": "CHECKED",
     "note": "C4 design brace load (CALC-C4-STATIC-1L)"
    },
    "anchor_plug_bearing_pa": {
-    "value": 455909.037083,
+    "value": 448195.944733,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "anchor plug bearing, design"
    },
    "twist_flight_deg": {
-    "value": 2.766828,
+    "value": 1.836171,
     "unit": "deg",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max twist, flight, limit, low corner"
    },
    "wing_mass_kg": {
-    "value": 0.397433,
+    "value": 0.389433,
     "unit": "kg",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",

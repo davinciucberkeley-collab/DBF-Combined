@@ -7,22 +7,22 @@
  "CALC-C3-BOND": {
   "area_m2": 0.0091,
   "length_m": 0.065,
-  "sigma_design_pa": 77866.67862426034,
-  "tau_design_pa": 8938.485576923076,
-  "R_design": 0.8680516420118342,
+  "sigma_design_pa": 77908.34364433643,
+  "tau_design_pa": 8932.206387362638,
+  "R_design": 0.8684055003169907,
   "case": "L2-PAIR-NARROW/MC-C",
-  "group_mass_kg": 0.954,
-  "group_cg_x": -0.01652139333382031,
-  "crash_F_n": 119.24999999999999,
-  "sigma_crash_pa": 72402.46311132448,
+  "group_mass_kg": 0.9539,
+  "group_cg_x": -0.01652438331110659,
+  "crash_F_n": 119.23749999999998,
+  "sigma_crash_pa": 72398.49016119767,
   "tau_crash_pa": 0.0,
-  "R_crash": 0.7240246311132448,
+  "R_crash": 0.7239849016119767,
   "crash_dir": "+z"
  },
  "CALC-C3-STOPS": {
   "F_aft_n": 85.51730625,
   "F_fwd_n": 85.0,
-  "F_fwd_flight_n": 1.7817093750000002,
+  "F_fwd_flight_n": 1.69265625,
   "sigma_aft_d2_pa": 13993741.022727273,
   "t_req_m": 0.002897627411113507,
   "sigma_aft_rec_pa": 13993741.022727273,
@@ -65,9 +65,9 @@
  },
  "CALC-C3-MASS": {
   "dm_g": 0.0,
-  "mass_g": 131.0,
+  "mass_g": 130.9,
   "full_section_dm_g": 6.320028000000001,
-  "mass_full_section_g": 137.320028
+  "mass_full_section_g": 137.220028
  },
  "CALC-C3-NOSE-PATH": {
   "L_A_m": 0.0010000000000000009,

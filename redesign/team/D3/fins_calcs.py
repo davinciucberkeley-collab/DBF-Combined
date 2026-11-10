@@ -331,7 +331,7 @@ kit.claim("CL-D3-WIRE-HOLE-CLEAR", "ESC-lead hole: least clearance of the gromme
           "ESC pad", calc="CALC-D3-WIRE-HOLE", output="min", unit="m", limit=(">=", 0.001), verifies=["R-STRUCT-MARGIN"],
           parts=HF, how="Measure the drilled hole position on the dry fit (BUILD.md step 11a)",
           note="F2's 10 mm off the skin would put the hole edge 6 mm up, inside the fillet and 15 mm tape lap "
-               "(clearance -10 mm); D3 set 22 mm (CR-D3-23 to F2). R4: the hole (x 0.086) sits over the 6 mm sealing "
+               "(clearance -10 mm); D3 set 22 mm (CR-D3-23 to F2). R4: the hole (x 0.086) sits over the 4 mm sealing "
                "bead; the 15 mm tape lap governs")
 
 for tid, title, ver, proc in (
@@ -370,10 +370,27 @@ kit.claim("CL-D3-MASS", "Fins subsystem flying mass, design R4", value=_mass(), 
           note="from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g "
                "(not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root "
                "fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g "
-               "where D-48 booked +3 g. Levers in CR-D3-27")
+               "where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did "
+               "not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet, asked of A1 in CR-D3-33 "
+               "with the levers that may return it")
 kit.claim("CL-D3-FILLET-MASS", "Root fillets, four half-fins (CAD volume x fillet density)", value=_fillet_mass(),
           unit="g", parts=HF, how="T-D3-WEIGH (half-fin before / after fillets)",
           note="ASM-D3-FILLET-DENSITY 0.55 g/cm3; was carried inside fin.root_joint_g 3.0 g per half-fin with the laps")
+
+def _laminate_mass():
+    """Mean half-fin laminate mass without fillets and tape laps (answers CR-A3-26: what grew FIN-001)."""
+    hf = [p for p in _parts() if p["id"].startswith("FIN-001-")]
+    lam = [p["mass_g"] for p in hf]
+    return round((sum(lam) - _fillet_mass()) / len(hf) - 0.4, 2)
+
+
+kit.claim("CL-D3-LAMINATE-MASS", "Half-fin two-board laminate without root fillets and tape laps, mean of four",
+          value=_laminate_mass(), unit="g", parts=HF, how="T-D3-WEIGH (half-fin before its root fillets)",
+          note="R3 FIN-001 22.32 g = laminate 19.32 + 3.0 g root-joint estimate. R4 laminate is the same within 0.1 g "
+               "(D-54 stepped tip removes a little board); FIN-001 grew because the C6 15 mm fillets are now CAD bodies "
+               "(CL-D3-FILLET-MASS). A one-layer tip zone is not offered: the square tip already needs the extended D5 "
+               "cheeks to pass (CL-C4-D3-MS-FACE -0.54 as drawn)")
+
 
 if __name__ == "__main__":
     kit.write()

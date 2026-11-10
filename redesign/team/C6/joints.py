@@ -2,8 +2,10 @@
 
     python -I redesign/team/C6/joints.py        then   python -I redesign/proofs/build_graph.py
 
-Revision C6-R3 (params A1-R4, D-50/D-58; C1 envelope R4; C4 R3 claims CL-C4-D3-* read directly, CR-C4-23; D3 R3
-geometry, CR-D3-17; D5 bond block, CR-D5-24; F1 power frame E-PWR-03, CR-F1-20 / CR-A4-44).
+Revision C6-R4 (params A1-R4, D-50/D-58; C1 envelope R4; C4 claims CL-C4-D3-* read directly from
+team/C4/claims.d3.json, CR-C4-23, re-run of 2026-11-09 20:44: strip 1 198 N, pin 92 N, collar 6.03 N m; D3 R4 geometry,
+CR-D3-17 / CR-D3-25, root fillet read from fins params; D5 bond block, CR-D5-24; F1 power frame E-PWR-03, CR-F1-20 /
+CR-A4-44).
 Loads are C1's (claims CL-C1-*, or C1 data/envelope.json values entered as ASM-C6-* with the file as basis) and C4's
 fin model (CL-C4-D3-*). The 7 deg motor cant (D-27) is not in C1's cases: C6 adds its side component here.
 Every check is a reserve factor RF = allowable / applied at the design load; RF >= 1.0 passes (margin = RF - 1).
@@ -53,6 +55,9 @@ kit.assumption("ASM-C6-AL-SHEAR", "Motor base thread shear 160 MPa", "Shear yiel
 kit.assumption("ASM-C6-INSERT-PULL", "Heat-set insert pull-out 300 N", "Design pull-out of one M3 x 5.7 mm brass "
                "heat-set insert in PETG", "~0.4 x the 700-1 000 N measured in published PLA/PETG tests "
                "(CNC Kitchen insert tests); T-C6-INSERT", 300.0, "N", status="UNVERIFIED")
+kit.assumption("ASM-C6-CF-BEARING", "Pultruded CF strip pin bearing 100 MPa", "Bearing allowable of a 1 mm "
+               "pultruded CF strip on a bonded pin", "UD pultrusions split at ~200-300 MPa pin bearing; half, and the "
+               "pin is bonded in (no clearance); T-C4-FIN-PROOF with pins fitted", 100e6, "Pa", status="UNVERIFIED")
 kit.assumption("ASM-C6-PIN-TAU", "CF rod transverse shear 50 MPa", "Transverse shear allowable of a 2 mm pultruded "
                "CF rod", "typical pultruded rod 60-90 MPa interlaminar/transverse, knocked down", 50e6, "Pa",
                status="UNVERIFIED")
@@ -84,7 +89,7 @@ kit.assumption("ASM-C6-FIN-MY-ULT", "Fin group torsion about the spar 6.73 N m (
                status="UNVERIFIED")
 kit.assumption("ASM-C6-STRIP-L", "Edge strip length 229 mm", "Length of one edge strip from the collar tail to the "
                "square tip (pin count only)", "team/D3/CHANGE-REQUESTS.md CR-D3-18 (R3 square tip, strips end at "
-               "x 0.280)", 0.229, "m", status="PROPOSED")
+               "x 0.280); D3 R4 E-FIN-21 strip 224 mm", 0.224, "m", status="PROPOSED")
 kit.assumption("ASM-C6-TAIL-NET-A", "Collar tail net section 95 mm2", "Effective PETG area carrying one strip's "
                "force along the two-face tail: walls 1.2 mm + cap 1.2 mm + tongue at 0.45 fill",
                "team/D3/CHANGE-REQUESTS.md CR-D3-17 (D3 estimate); T-C6-STRIP-ANCHOR fails the tail or the bond",
@@ -249,14 +254,14 @@ def pwr_frame(L, stack, bore, sp, d, p, kmin, Li, T, K, share, s_pa, mu, un, Fc,
                   "Ls": "P:fin_detail.block.width_m", "Lc": "P:fin_detail.station_collar.height_m",
                   "Tz": "ASM-C6-FIN-MZ-ULT", "Ty": "ASM-C6-FIN-MY-ULT",
                   "Tc1": "CL-C1-FINHALF-T-LIM", "Tc4": "CL-C4-D3-COLLAR-T", "Fb": "CL-C4-D3-BRACE-F",
-                  "h12": "P:joints.collar_alt_h_m",
+                  "h12": "P:joints.collar_alt_h_m", "h13": "P:joints.collar_min_h_m",
                   "sf": "P:requirements.safety_factor_ult", "ff": "ASM-C1-FITTING-FACTOR",
                   "pf": "ASM-C1-PRINTED-FACTOR", "tau": "ASM-C4-BOND-SHEAR"},
           equation="tau = T / (2 pi r^2 L), T = T_ult ff pf; spar OD = tube OD (22 mm); tube bore L = core + 2 bosses; "
                    "collar (CR-C4-23): T_lim = max(C1 J-FINHALF section torsion, C4 FE collar torsion); tau = T_lim sf "
                    "ff pf / (2 pi r^2 h) + F_brace pf / (pi d h) (F_brace already x 1.5 x 1.15); "
                    "h_req = (T/(2 pi r^2) + F/(pi d)) / tau")
-def tube_bonds(od, core, boss, Ls, Lc, Tz, Ty, Tc1, Tc4, Fb, h12, sf, ff, pf, tau):
+def tube_bonds(od, core, boss, Ls, Lc, Tz, Ty, Tc1, Tc4, Fb, h12, h13, sf, ff, pf, tau):
     r = od / 2
     k = 2 * math.pi * r ** 2
     Lb = core + 2 * boss
@@ -271,7 +276,7 @@ def tube_bonds(od, core, boss, Ls, Lc, Tz, Ty, Tc1, Tc4, Fb, h12, sf, ff, pf, ta
             "area_collar_mm2": 2 * math.pi * r * Lc * 1e6, "T_collar_lim_nm": T_lim,
             "collar_c1_governs": 1.0 if Tc1 >= Tc4 else 0.0,
             "T_collar_design_nm": T_c, "F_brace_design_n": F, "tau_collar_mpa": q / Lc / 1e6,
-            "rf_collar": tau * Lc / q, "rf_collar_alt": tau * h12 / q, "L_collar_req_m": q / tau}
+            "rf_collar": tau * Lc / q, "rf_collar_alt": tau * h12 / q, "rf_collar_min": tau * h13 / q, "L_collar_req_m": q / tau}
 
 
 @kit.calc("CALC-C6-STRIP", title="Edge-strip anchorage in the station collar and strip-to-board shear flow",
@@ -285,30 +290,39 @@ def tube_bonds(od, core, boss, Ls, Lc, Tz, Ty, Tc1, Tc4, Fb, h12, sf, ff, pf, ta
                   "kd": "ASM-C6-FOAM-KD", "tau_b": "ASM-D5-BOND-TAU", "tb": "P:fins.board_t_m",
                   "nl": "P:fins.layers", "dp": "P:fin_detail.edge_strip.pin_d_m",
                   "pp": "P:fin_detail.edge_strip.pin_pitch_m", "pp_new": "P:joints.pin_pitch_prop_m",
-                  "Ls": "ASM-C6-STRIP-L", "tau_pin": "ASM-C6-PIN-TAU"},
+                  "Ls": "ASM-C6-STRIP-L", "tau_pin": "ASM-C6-PIN-TAU",
+                  "dp2": "P:joints.pin_d_prop_m", "pp_alt": "P:joints.pin_pitch_alt_m",
+                  "s_brg": "ASM-C6-CF-BEARING"},
           equation="C4 R3 FE (CR-C4-23): F = strip force per face at the collar end, design; anchor tau = "
                    "F/(n w (tail - gap)); L_req = F/(2 w tau); tail net section sigma = F / A_net vs PETG; paper face "
                    "if unpinned: tau = q_lim sf ff pf / w vs kd tau_board; pins carry the whole shear flow: "
                    "P = C4 pin force at the drawn pitch, shear P/(pi d^2/4), bending (pin loaded at the strip, "
                    "reacted at the board mid-plane, bound) 32 P (n tb + t)/2 / (pi d^3); at a proposed pitch "
-                   "P' = P pitch'/pitch")
+                   "P' = P pitch'/pitch; proposal (CR-C6-31): pin d' at pitch'; fallback d at pitch_alt; "
+                   "max pitch for d = pitch x RF(d); strip bearing P'/(d' t) vs CF bearing; strip net section at "
+                   "the pin F/((w - d') t) vs CF")
 def strip(s_cf, F, q_lim, Pp, w, t, sf, ff, pf, tail, gap, n_now, tau, A_net, s_pet, kd, tau_b, tb, nl, dp, pp,
-          pp_new, Ls, tau_pin):
+          pp_new, Ls, tau_pin, dp2, pp_alt, s_brg):
     emb = tail - gap
     q = q_lim * sf * ff * pf
 
-    def pin_rf(P):
-        sh = tau_pin * math.pi * dp ** 2 / 4 / P
-        sig = 32 * P * (nl * tb + t) / 2 / (math.pi * dp ** 3)
+    def pin_rf(P, d=dp):
+        sh = tau_pin * math.pi * d ** 2 / 4 / P
+        sig = 32 * P * (nl * tb + t) / 2 / (math.pi * d ** 3)
         return min(sh, s_cf / sig), sh, s_cf / sig
     rf_p, rf_sh, rf_b = pin_rf(Pp)
     P2 = Pp * pp_new / pp
+    P3 = Pp * pp_alt / pp
     return {"F_design_n": F, "embed_m": emb, "rf_anchor": tau * n_now * w * emb / F, "L_req_m": F / (2 * w * tau),
             "tail_net_mpa": F / A_net / 1e6, "rf_tail_net": s_pet * A_net / F, "q_design_npm": q,
             "tau_face_mpa": q / w / 1e6, "rf_face": kd * tau_b / (q / w), "pin_load_n": Pp, "rf_pin_shear": rf_sh,
-            "rf_pin_bend": rf_b, "rf_pin": rf_p, "pin_load_prop_n": P2, "rf_pin_prop": pin_rf(P2)[0],
+            "rf_pin_bend": rf_b, "rf_pin": rf_p, "pin_load_prop_n": P2, "rf_pin_prop": pin_rf(P2, dp2)[0],
+            "rf_pin_prop_shear": pin_rf(P2, dp2)[1], "rf_pin_alt": pin_rf(P3)[0], "pin_load_alt_n": P3,
+            "pitch_max_d_m": pp * rf_p, "rf_pin_bearing": s_brg * dp2 * t / P2,
+            "rf_strip_net_pin": s_cf * (w - dp2) * t / F,
             "pin_len_m": nl * tb + 2 * t, "pins_per_strip_pair": math.ceil(Ls / pp),
-            "pins_per_strip_pair_prop": math.ceil(Ls / pp_new)}
+            "pins_per_strip_pair_prop": math.ceil(Ls / pp_new),
+            "pins_per_strip_pair_alt": math.ceil(Ls / pp_alt)}
 
 
 @kit.calc("CALC-C6-BRACE", title="Brace ends in their slots and the anchor saddle on the spar",
@@ -329,7 +343,7 @@ def brace(F, pf, w, t, e, ay, ds, tau, peel):
 @kit.calc("CALC-C6-FOAM-BONDS", title="Foot shoe and fin root bonds at the C6 allowables",
           inputs={"kd": "ASM-C6-FOAM-KD", "sf_d5": "CL-D5-BOND-SF", "A_d5": "CL-D5-BOND-AREA",
                   "tau_b": "ASM-D5-BOND-TAU", "rf_d3": "CL-D3-ROOT-FILLET-RF", "s_xps": "ASM-D3-XPS-TENSILE",
-                  "leg0": "ASM-D3-FILLET-LEG", "leg1": "P:joints.root_fillet_leg_m", "tb": "P:fins.board_t_m",
+                  "leg0": "P:fin_detail.fin.root_fillet.leg_m", "leg1": "P:joints.root_fillet_leg_m", "tb": "P:fins.board_t_m",
                   "nl": "P:fins.layers"},
           equation="foot shoe (CR-D5-24): D5 now sizes at the C6 allowable kd tau_board, so RF = SF_D5; design load "
                    "= kd tau A / SF; fin root RF = RF_D3 x (C6 XPS allowable / D3's 0.25 MPa) = RF_D3 kd; with leg "
@@ -443,6 +457,8 @@ rf("CL-C6-BLOCK-SPAR-RF", "Block-on-spar bond, torsion about the spar", "CALC-C6
 rf("CL-C6-COLLAR-RF", "Station collar bond at the drawn height: max(C1, C4) torsion + brace shear (CR-C4-23)",
    "CALC-C6-TUBE-BONDS", "rf_collar", COLLARS + TUBES, "T-C6-LAP-PETG; T-C4-FIN-PROOF (1.5 x L4) with the collar "
    "witness-marked", ver=R_SM + R_FT)
+rf("CL-C6-COLLAR-RF-13MM", "Station collar bond at the 13 mm C6 asks for (CR-C6-32), same case", "CALC-C6-TUBE-BONDS",
+   "rf_collar_min", COLLARS + TUBES, "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked", ver=R_SM + R_FT)
 rf("CL-C6-COLLAR-RF-16MM", "Station collar bond at the 16 mm fallback (R3 ring), same case", "CALC-C6-TUBE-BONDS",
    "rf_collar_alt", COLLARS + TUBES, "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked", ver=R_SM + R_FT)
 kit.claim("CL-C6-COLLAR-L-REQ", "Station collar bond height needed for max(C1, C4) torsion + brace shear",
@@ -458,16 +474,25 @@ kit.claim("CL-C6-STRIP-EMBED-REQ", "Edge-strip embedment needed, both faces on P
           output="L_req_m", unit="m", limit=("<=", "P:fin_detail.station_collar.tail_m"), verifies=R_SM + R_FT,
           parts=COLLARS, how="T-C6-STRIP-ANCHOR on the 40 mm two-face tail")
 rf("CL-C6-STRIP-TAIL-NET-RF", "Collar tail net section in tension, one strip's force (D3 area estimate)",
-   "CALC-C6-STRIP", "rf_tail_net", COLLARS, "T-C6-STRIP-ANCHOR: the tail must not break before 908 N",
+   "CALC-C6-STRIP", "rf_tail_net", COLLARS, f"T-C6-STRIP-ANCHOR: the tail must not break before {kit.value('CL-C4-D3-STRIP-END-F'):.0f} N",
    ver=R_SM + R_FT)
 kit.claim("CL-C6-STRIP-FACE-RF", "Edge-strip shear flow onto the board paper face if unpinned (why the pins exist; "
           "no limit: R3 carries the pins)", calc="CALC-C6-STRIP", output="rf_face", unit="-", verifies=R_SM,
           parts=STRIPS + HALVES, how="T-C6-BOARD-LAP (allowable); C4 FE CL-C4-D3-STRIP-Q (= C4 MS -0.77)")
-rf("CL-C6-STRIP-PIN-RF", "Through-pins at the drawn 15 mm pitch, C4 pin force 64 N, weaker of shear and bending "
-   "(bending bound: reaction at the board mid-plane)", "CALC-C6-STRIP", "rf_pin", STRIPS + HALVES,
+rf("CL-C6-STRIP-PIN-RF", "Through-pins as drawn (2 mm at 15 mm pitch) at C4's FE pin force, weaker of shear and "
+   "bending (bending bound: reaction at the board mid-plane)", "CALC-C6-STRIP", "rf_pin", STRIPS + HALVES,
    "T-C4-FIN-PROOF with pins fitted; no strip lift at the tip", ver=R_SM)
-rf("CL-C6-STRIP-PIN-RF-PROP", "Through-pins at the proposed 12 mm pitch (CR-C6-25)", "CALC-C6-STRIP", "rf_pin_prop",
-   STRIPS + HALVES, "T-C4-FIN-PROOF with pins fitted at 12 mm", ver=R_SM)
+rf("CL-C6-STRIP-PIN-RF-PROP", "Through-pins 2.5 mm at the drawn 15 mm pitch (CR-C6-31)", "CALC-C6-STRIP",
+   "rf_pin_prop", STRIPS + HALVES, "T-C4-FIN-PROOF with 2.5 mm pins fitted", ver=R_SM)
+rf("CL-C6-STRIP-PIN-RF-ALT", "Through-pins 2 mm at 9 mm pitch (CR-C6-31 fallback)", "CALC-C6-STRIP", "rf_pin_alt",
+   STRIPS + HALVES, "T-C4-FIN-PROOF with pins fitted at 9 mm", ver=R_SM)
+kit.claim("CL-C6-STRIP-PIN-PITCH-MAX", "Largest pitch for 2 mm pins at C4's shear flow (bending bound)",
+          calc="CALC-C6-STRIP", output="pitch_max_d_m", unit="m", verifies=R_SM, parts=STRIPS + HALVES,
+          how="D3 keeps fin_detail.edge_strip.pin_pitch_m <= this if the pins stay 2 mm")
+rf("CL-C6-STRIP-PIN-BRG-RF", "Strip bearing on a 2.5 mm pin (CR-C6-31)", "CALC-C6-STRIP", "rf_pin_bearing",
+   STRIPS, "T-C4-FIN-PROOF: no strip split at a pin hole", ver=R_SM)
+rf("CL-C6-STRIP-NET-PIN-RF", "Strip net section at a 2.5 mm pin hole under the collar-end force", "CALC-C6-STRIP",
+   "rf_strip_net_pin", STRIPS, "T-C4-FIN-PROOF", ver=R_SM)
 rf("CL-C6-BRACE-END-RF", "Brace ends bonded in the ear and anchor slots", "CALC-C6-BRACE", "rf_end",
    [f"FIN-009-{s}" for s in ST] + COLLARS + [f"FIN-010-{s}" for s in ST], "T-C6-LAP-PETG; T-C4-FIN-PROOF (G2)",
    ver=R_SM + R_FT)
@@ -475,9 +500,9 @@ rf("CL-C6-ANCHOR-PULL-RF", "Brace anchor saddle pull-off from the spar", "CALC-C
    [f"FIN-010-{s}" for s in ST] + ["WNG-002"], "T-C4-FIN-PROOF (G2 in tension on the brace)", ver=R_SM + R_FT)
 rf("CL-C6-FOOT-SHOE-RF", "Foot shoe bond on the fin tip, 1 350 mm2 at the C6 board allowable (CR-D5-24)",
    "CALC-C6-FOAM-BONDS", "rf_foot", [f"GER-001-{s}" for s in ST] + HALVES, "T-C6-BOARD-LAP; T-C1-FOOT-DROP")
-rf("CL-C6-FIN-ROOT-RF", "Half-fin root fillet on XPS at the C6 foam allowable, leg as drawn by D3 (12 mm)",
+rf("CL-C6-FIN-ROOT-RF", "Half-fin root fillet on XPS at the C6 foam allowable, as drawn by D3 (15 mm, zoned)",
    "CALC-C6-FOAM-BONDS", "rf_root", HALVES + ["WNG-001"], "T-C6-XPS-PULL; D3 T-D3-ROOT side pull", ver=R_SM + R_FT)
-rf("CL-C6-FIN-ROOT-RF-PROP", "Same root fillet with the 15 mm leg adopted in D-48 (CR-C6-24)", "CALC-C6-FOAM-BONDS",
+rf("CL-C6-FIN-ROOT-RF-PROP", "Same root fillet at the C6 leg (15 mm, D-48); equals the drawn value since D3 R4", "CALC-C6-FOAM-BONDS",
    "rf_root_prop", HALVES + ["WNG-001"], "T-C6-XPS-PULL; D3 T-D3-ROOT side pull on a 15 mm-leg coupon",
    ver=R_SM + R_FT)
 rf("CL-C6-POD-WING-RF", "Pod shell bond on the core, design envelope (1 / C3 interaction at C6-confirmed allowables)",
@@ -506,7 +531,7 @@ kit.claim("CL-C6-SNAP-L-MIN", "Foot snap-hook finger length for 2 % strain", cal
 
 # ----------------------------------------------------------------------------- tests (H1 runs them with the first prints)
 kit.test("T-C6-LAP-PETG", "Epoxy lap shear on abraded PETG, ASA and CF",
-         ["CL-C6-TUBE-BLOCK-RF", "CL-C6-BLOCK-SPAR-RF", "CL-C6-COLLAR-RF", "CL-C6-COLLAR-RF-16MM",
+         ["CL-C6-TUBE-BLOCK-RF", "CL-C6-BLOCK-SPAR-RF", "CL-C6-COLLAR-RF", "CL-C6-COLLAR-RF-13MM", "CL-C6-COLLAR-RF-16MM",
           "CL-C6-BRACE-END-RF", "CL-C6-STRIP-ANCHOR-RF"],
          procedure="5 single-lap coupons each: PETG-CF and ASA-CF tube offcut, 25 x 12.5 mm overlap, 120 grit + "
                    "IPA, 30 min epoxy, 24 h cure (+ 4 h at 50 degC for the ASA set); hang water jugs on a luggage "
@@ -546,7 +571,8 @@ kit.test("T-C6-STRIP-ANCHOR", "Edge-strip pull-out from the collar tail",
          ["CL-C6-STRIP-ANCHOR-F", "CL-C6-STRIP-ANCHOR-RF", "CL-C6-STRIP-EMBED-REQ", "CL-C6-STRIP-TAIL-NET-RF"],
          procedure="Print the 40 mm two-face station collar (ring + tail) alone; bond a 10 x 1 strip pair in it as "
                    "built (board offcut as the tongue spacer); pull ONE strip along its axis on H1's lever frame "
-                   "with the ring held on a 22 mm mandrel; pass >= CL-C6-STRIP-ANCHOR-F (908 N) with neither the bond "
+                   f"with the ring held on a 22 mm mandrel; pass >= CL-C6-STRIP-ANCHOR-F "
+                   f"({kit.value('CL-C4-D3-STRIP-END-F'):.0f} N) with neither the bond "
                    "nor the tail failing. Record the failure mode")
 kit.test("T-C6-PROPNUT", "Prop-nut torque on a finished mount", ["CL-C6-MOUNT-ROCK-RF", "CL-C6-MOUNT-HOOP-RF"],
          procedure="Bell held by hand, prop nut to 1.5 N m and off 10 times; collar witness line and lip cap unmoved")

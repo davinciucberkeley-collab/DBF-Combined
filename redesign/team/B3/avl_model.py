@@ -31,7 +31,7 @@ NL = chr(10)
 AIRFOIL = AVL_DIR / "s5010.dat"           # UIUC coordinate file (copy of team/B2/airfoils/s5010.dat, SRC-B2-S5010-COORD)
 
 # lattice levels for the convergence check: (chordwise vortices, target spanwise spacing m)
-LATTICE = {"coarse": (8, 0.025), "medium": (12, 0.0125), "fine": (16, 0.008)}
+LATTICE = {"coarse": (8, 0.025), "medium": (12, 0.0125), "fine": (16, 0.008), "xfine": (24, 0.0055)}
 DEFAULT_LATTICE = "medium"
 
 
@@ -57,6 +57,14 @@ def avl_geometry(g: dict, lattice: str = DEFAULT_LATTICE) -> str:
     # fins: vertical flat plates at y = +/- fy, z = -fh..+fh, break at the wing plane so strip edges align
     fle_tip = g.get("fin_le_tip", g["fle"])
     fins = ["#", "SURFACE", "Fin", f"{max(6, nc - 2)} 1.0", "YDUPLICATE", "0.0"]
+    if g.get("fin_sections"):
+        # as-designed outline (verify_asdesigned.py): [(z, x_le, chord)] for z >= 0, mirrored to the lower half-fin
+        up = sorted(g["fin_sections"])
+        secs = [(-z, x, ch) for z, x, ch in reversed(up) if z > 0] + up
+        for i, (z, xle, ch) in enumerate(secs):
+            n = _nspan(secs[i + 1][0] - z, ds) if i + 1 < len(secs) else 1
+            fins += ["SECTION", f"{xle:.5f} {g['fy']:.5f} {z:.5f} {ch:.5f} 0.0  {n} 1.0"]
+        return text + "\n".join(fins) + "\n"
     nz = _nspan(g["fh"], ds)
     for z, xle in ((-g["fh"], fle_tip), (0.0, g["fle"]), (g["fh"], fle_tip)):
         fins += ["SECTION", f"{xle:.5f} {g['fy']:.5f} {z:.5f} {g['fte'] - xle:.5f} 0.0  {nz} 1.0"]

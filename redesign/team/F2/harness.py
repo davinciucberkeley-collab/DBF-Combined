@@ -336,6 +336,17 @@ def calc_servo_v(L, I, elec):
     return {"v_servo": v_ubec - I * (2 * L * r_per_m + n_contacts * r_contact)}
 
 
+@kit.calc("CALC-F2-CAP-RIPPLE", title="ESC bus-cap leg current (E-HRN-34..37): AC ripple RMS, no DC",
+          equation="I_esc,cont = I_hover / 4 x split_max; I_esc,peak = I_motor,max; "
+                   "I_cap,rms = I_esc sqrt(D (1 - D)) <= 0.5 I_esc (worst D = 0.5, leads carry the DC)",
+          inputs={"i_hover": "P:performance.hover_current_a", "split": "P:requirements.hover_split_max",
+                  "i_max": "P:propulsion.current_max_per_motor_a"},
+          units={"i_hover": "A", "split": "-", "i_max": "A"}, output="cap_rms_peak")
+def calc_cap_ripple(i_hover, split, i_max):
+    i_cont = i_hover / 4 * split
+    return {"esc_cont": i_cont, "cap_rms_cont": 0.5 * i_cont, "cap_rms_peak": 0.5 * i_max}
+
+
 @kit.calc("CALC-F2-BODIES", title="CAD bundle legs sized by the wire mass they carry; body centroid vs wire-mass CG",
           equation="d_leg = sqrt(4 m_leg / (pi L_leg rho)); cg_body = sum(d^2 L r_mid) / sum(d^2 L); gap = |cg_body - cg_wire|",
           inputs={"wires": "P:harness.wire_table", "od": "P:harness.wire_od_mm",
@@ -418,6 +429,14 @@ kit.claim("CL-F2-CAP-LEAD", "Longest ESC-cap lead (cap body to ESC power pad) in
           output="cap_lead_max", unit="m", limit=("<=", "P:harness.rules.cap_lead_max_m"),
           parts=["PRP-002-UR", "PWR-008-UR"], how="T-F2-FIT: measure each cap leg after forming, before soldering",
           verifies=["R-HARNESS-INSTALL"])
+kit.claim("CL-F2-CAP-RIPPLE-CONT", "ESC bus-cap leg ripple current, hover (RMS, upper-bound D = 0.5)",
+          calc="CALC-F2-CAP-RIPPLE", output="cap_rms_cont", unit="A", parts=["PWR-008-UR", "PRP-002-UR"],
+          how="T-F1-RIPPLE: current probe on one cap leg at hover throttle, props on, tethered",
+          note="current_a.cont of E-HRN-34..37; F1 checks the PWR-008 ripple rating against it")
+kit.claim("CL-F2-CAP-RIPPLE-PEAK", "ESC bus-cap leg ripple current, per-motor max (RMS, upper-bound D = 0.5)",
+          calc="CALC-F2-CAP-RIPPLE", output="cap_rms_peak", unit="A", parts=["PWR-008-UR", "PRP-002-UR"],
+          how="T-F1-RIPPLE: current probe on one cap leg at full throttle burst (< 5 s)",
+          note="current_a.peak of E-HRN-34..37; 22 AWG legs 11 mm long carry it with negligible rise")
 kit.claim("CL-F2-I2C-LEN", "I2C bus total (FC to GPS + Y-branch to airspeed)", calc="CALC-F2-LENGTHS",
           output="i2c_total", unit="m", limit=("<=", "P:harness.rules.i2c_max_m"), parts=["AVN-001", "AVN-002", "AVN-004"],
           how="T-F3-I2C-SCAN with the routed cables; all three addresses found, no bus errors in 10 min")
@@ -500,6 +519,17 @@ def airfoil(path, chord):
     return (lambda x: z(up, x)), (lambda x: z(lo, x))
 
 
+def fins_geometry(P):
+    """D3's own derived fin dimensions (subsystems/fins/fusion/fins.py geometry()), so the collar tail and its tie lug
+    are read, never re-typed. Pure Python (k09kit + the section file); no CAD backend."""
+    for d in (RED / "fusion", RED / "subsystems" / "fins" / "fusion"):
+        if str(d) not in sys.path:
+            sys.path.append(str(d))
+    import k09kit  # noqa: E402
+    import fins as fins_mod  # noqa: E402
+    return fins_mod.geometry(P, fins_mod.load_local(), k09kit.section(P)[0])
+
+
 def geometry():
     P = load_json(RED / "params/params.json")
     F = load_json(RED / "subsystems/fins/params.json")
@@ -523,6 +553,11 @@ def geometry():
     g["esc_z"] = pv(F, "fin_detail.esc_pad.z_m")
     g["esc_y"] = prp_if["PRP-002-UR"]["cg_xyz_m"][1]
     g["collar_z"] = fins_if["FIN-008-UR"]["cg_xyz_m"][2]
+    FG = fins_geometry(P)
+    g["tail_x0"] = FG["xt"] + FG["sc_r_out"] + 0.002                    # collar tail wall, 2 mm aft of the ring
+    g["tail_top"] = FG["ztop"]                                          # tail top edge |z| at x (D3)
+    g["lug_x"] = FG["tl"]["collar_x_m"]                                 # D3's phase tie lug today (x 0.084)
+    g["tail_face_y"] = FG["yf"] + FG["t_fin"] / 2 + FG["es_t"] + 2 * FG["sc_clear"] + FG["sc_wall"]
     g["zm"] = pv(P, "propulsion.stations.z_m")
     g["x_face"] = d3["CL-D3-X-FACE"]["value"]
     g["r_motor"] = pv(P, "propulsion.motor_diameter_m") / 2
@@ -645,7 +680,7 @@ def build(g):
         sz = 1 if st[0] == "U" else -1
         r = [[g["esc_x0"] - 0.001, sy * g["esc_y"], sz * g["esc_z"], "B"],
              [g["esc_x0"] - 0.012, sy * yo, sz * (g["esc_z"] + 0.006), "B"],
-             [g["esc_x0"] - 0.012, sy * yo, sz * (g["collar_z"] + 0.004), "T"],   # collar-tail lug
+             [g["tail_x0"], sy * (g["tail_face_y"] + 0.0025), sz * (g["tail_top"](g["tail_x0"]) - 0.0015), "T"],  # collar-tail front tie (CR-F2-16)
              [g["x_face"] + 0.010, sy * (g["yf"] + g["r_motor"] + 0.003), sz * (g["zm"] - 0.010), "F"],
              [g["x_face"] - 0.001, sy * (g["yf"] + g["r_motor"] + 0.002), sz * g["zm"], "E"]]
         wires.append(["W-PH-" + st, eid, 16, 3, 1, 0.030, 0.020, 16.15, 0.06, r])
@@ -827,8 +862,8 @@ def build(g):
         [[x_boss, g["y_in"] - 0.003, zL(x_boss)], [x_boss, g["y_in"] - 0.003, zh_l]],   # boss tie -> hole, lower
         [[x_face, yo, zh_u], [x_face, yo, g["esc_z"] - 0.014]],                     # outboard face, upper
         [[x_face, yo, zh_l], [x_face, yo, -g["esc_z"] + 0.014]],                    # outboard face, lower
-        [[g["esc_x0"] - 0.012, yo, g["esc_z"]], [g["esc_x0"] - 0.012, yo, g["collar_z"] + 0.006]],   # phase, upper
-        [[g["esc_x0"] - 0.012, yo, -g["esc_z"]], [g["esc_x0"] - 0.012, yo, -g["collar_z"] - 0.006]],  # phase, lower
+        [[g["esc_x0"] - 0.012, yo, g["esc_z"]], [g["esc_x0"] - 0.012, yo, g["tail_top"](g["tail_x0"])]],   # phase, up
+        [[g["esc_x0"] - 0.012, yo, -g["esc_z"]], [g["esc_x0"] - 0.012, yo, -g["tail_top"](g["tail_x0"])]],  # phase, low
         [[x_srv, g["aft_exit"][1] + 0.004, zU(x_srv) - 0.003], [x_srv, 0.285, zU(x_srv) - 0.003]],  # servo groove
         [[x_srv, 0.285, zU(x_rec[0]) - 0.003], [x_rec[1], 0.285, zU(x_rec[0]) - 0.003]],    # branch + JR recess
     ]
@@ -940,7 +975,7 @@ def wire_text(w):
         st = wid[-2:]
         return ("Motor %s phases A/B/C" % st, "ESC %s phase pads (solder)" % st,
                 "motor %s factory leads (staggered in-line splices)" % st,
-                "outboard board face (tape strips), collar tie, free 30 mm to the motor base, >= 5 mm off the bell",
+                "outboard board face (tape strips), tie at the collar-tail front (x 0.060, CR-F2-16), free <= 50 mm to the motor base, >= 5 mm off the bell",
                 "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
                 "none: motor swap = 3 splices (bench); phase order recorded on a label (F4 rotation)")
     if wid.startswith("W-SIG-") and wid.endswith("-P"):
@@ -1134,6 +1169,11 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
         cur[eid] = {"cont": 8.4, "peak": 24.8}
     for st, eid in zip(STATIONS, ("E-HRN-17", "E-HRN-18", "E-HRN-19", "E-HRN-20")):
         cur[eid] = {"cont": round(8.4 * math.sqrt(2 / 3), 1), "peak": round(24.8 * math.sqrt(2 / 3), 1)}
+    rip = calc_cap_ripple(kit.value("P:performance.hover_current_a"), kit.value("P:requirements.hover_split_max"),
+                          kit.value("P:propulsion.current_max_per_motor_a"))
+    for eid in ("E-HRN-34", "E-HRN-35", "E-HRN-36", "E-HRN-37"):    # cap legs: AC ripple only (CALC-F2-CAP-RIPPLE)
+        cur[eid] = {"cont": round(rip["cap_rms_cont"], 1), "peak": round(rip["cap_rms_peak"], 1),
+                    "kind": "AC ripple RMS, no DC (CL-F2-CAP-RIPPLE-CONT / -PEAK)"}
     for eid in sorted(EDGE_INFO):
         pa, pb, via = EDGE_INFO[eid]
         ws = by_edge[eid]
@@ -1449,11 +1489,25 @@ def main():
             print("    BEND", round(rr, 2), wh)
     print("  free span max %.3f m; groove-to-mast %.3f m" % (free_span(wires), mast_clear(wires, g["gps"])))
 
+    # install rules (the --check promise): a broken rule fails the run, not only a stale file
+    R = {k: (v["value"] if isinstance(v, dict) else v)
+         for k, v in json.loads(out[SUB / "params.json"])["harness"]["rules"].items()}
+    fails = [n for n, ok in (
+        ("free span %.4f > %.3f m" % (free_span(wires), R["free_span_max_m"]), free_span(wires) <= R["free_span_max_m"]),
+        ("bend ratio %.3f < 1" % ratio, ratio >= 1.0),
+        ("main path %.3f > %.3f m" % (L["main_path"], R["main_path_max_m"]), L["main_path"] <= R["main_path_max_m"]),
+        ("cap lead %.3f > %.3f m" % (L["cap_lead_max"], R["cap_lead_max_m"]), L["cap_lead_max"] <= R["cap_lead_max_m"]),
+        ("I2C %.3f > %.3f m" % (L["i2c_total"], R["i2c_max_m"]), L["i2c_total"] <= R["i2c_max_m"]),
+        ("RX %.3f > %.3f m" % (L["rx"], R["rx_max_m"]), L["rx"] <= R["rx_max_m"]),
+        ("groove-to-mast %.3f < %.3f m" % (mast_clear(wires, g["gps"]), R["groove_mast_min_m"]),
+         mast_clear(wires, g["gps"]) >= R["groove_mast_min_m"])) if not ok]
+    for f in fails:
+        print("RULE FAIL", f)
     if args.check:
         stale = [p for p, t in out.items() if not p.exists() or p.read_text(encoding="utf-8") != t]
         for p in stale:
             print("STALE", pk.repo_rel(p))
-        sys.exit(1 if stale else 0)
+        sys.exit(1 if stale or fails else 0)
     for p, t in out.items():
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(t, encoding="utf-8")

@@ -184,6 +184,28 @@ class Shape:
                     pts.append(tuple(p))
         return pts
 
+    def hull_points(self, n=24):
+        """Points whose convex hull contains the body (component-local), for the keep-out vertex test (CR-E1-45).
+        prism / loft: their vertices (exact hull of a convex section; a concave section's hull is a superset; a
+        smooth loft through 3+ sections may bulge slightly past it in Fusion). revolve: each profile point swept as
+        a regular n-gon circumscribing its circle (radius r / cos(pi/n)), so the hull contains the solid and is at
+        most 0.9 % of r larger (n = 24), instead of the square box points() uses."""
+        if self.kind != 'revolve':
+            return self.points()
+        k = AX[self.axis]
+        i, j = [q for q in range(3) if q != k]
+        s = 1.0 / math.cos(math.pi / n)
+        pts = []
+        for a, r in self.profile:
+            for m in range(n if r > 0 else 1):
+                t = 2 * math.pi * m / n
+                p = list(self.center)
+                p[k] += a
+                p[i] += r * s * math.cos(t)
+                p[j] += r * s * math.sin(t)
+                pts.append(tuple(p))
+        return pts
+
     def volume_centroid(self):
         if self.kind == 'prism':
             A, (cu, cv) = loops_area_centroid(self.loops)
@@ -344,7 +366,7 @@ class Datum:
 
 
 class Keepout:
-    """Volume no other part may enter (bounding-box test in check.py).
+    """Volume no other part may enter (check.py: body box as a pre-filter, then the body's convex hull, CR-E1-45).
     kind 'cylinder': axis, center (world m), r, half (half-length along the axis) - e.g. a prop disc + clearance.
     kind 'halfspace': axis, at, side (+1: nothing beyond `at` in +axis, -1: nothing below) - e.g. the hover ground
     plane at the feet. `exempt` = part ids allowed inside (the prop itself, its motor, the feet)."""
@@ -353,6 +375,7 @@ class Keepout:
         self.name, self.kind, self.axis, self.exempt, self.sub = name, kind, axis, set(exempt), sub
         self.center = None if center is None else tuple(map(float, center))
         self.r, self.half, self.at, self.side = r, half, at, side
+        self.clearance = None              # set by k9.prop_keepout: the zone = swept blade volume + this on every face
 
     def hits(self, box):
         """True if the axis-aligned box ((lo), (hi)) enters this keep-out volume (coarse: whole bbox).
@@ -406,6 +429,117 @@ class Keepout:
                 return False               # stalled at a positive gap: disjoint
             last = gap
         return False
+
+    # --- vertex (convex-hull) test, CR-E1-45: the box test above is the coarse pre-filter
+    def hull_hits(self, pts, inset=0.0):
+        """True if the convex hull of world points `pts` enters this keep-out shrunk by `inset` m on every face.
+        Exact for convex bodies (a brace, a tube, a prism of a convex section); for a concave body the hull is a
+        superset, so a hit is still conservative and a miss is certain. Touching (< 1 um) is not a hit."""
+        if self.kind == 'halfspace':
+            k = AX[self.axis]
+            return (max(p[k] for p in pts) > self.at + inset + 1e-9 if self.side > 0
+                    else min(p[k] for p in pts) < self.at - inset - 1e-9)
+        r, half = self.r - inset - 1e-6, self.half - inset - 1e-6
+        if r <= 0 or half <= 0:
+            return False
+        return _hull_cyl_dist2(pts, self.center, _unit_axis(self.axis), r, half) == 0.0
+
+    def hull_depth(self, pts, resolution=1e-5):
+        """How far the hull enters (m): the largest uniform inset of the keep-out's faces (radial and axial; for a
+        half-space the plane) that the hull still enters. 0 = clear. For a prop zone with clearance c, a depth below
+        c means the body is in the clearance band but not in the swept blade volume."""
+        if not self.hull_hits(pts):
+            return 0.0
+        if self.kind == 'halfspace':
+            k = AX[self.axis]
+            return (max(p[k] for p in pts) - self.at) if self.side > 0 else (self.at - min(p[k] for p in pts))
+        lo, hi = 0.0, min(self.r, self.half)
+        while hi - lo > resolution:
+            mid = (lo + hi) / 2
+            lo, hi = (mid, hi) if self.hull_hits(pts, mid) else (lo, mid)
+        return lo
+
+
+    def core_distance(self, pts):
+        """Distance (m) from the convex hull of `pts` to the keep-out less its clearance (the swept blade volume of
+        a prop zone); None when no clearance is registered or for a half-space."""
+        if self.kind != 'cylinder' or not self.clearance:
+            return None
+        d2 = _hull_cyl_dist2(pts, self.center, _unit_axis(self.axis), self.r - self.clearance,
+                             self.half - self.clearance, exact=True)
+        return math.sqrt(d2)
+
+
+def _unit_axis(axis):
+    n = [0.0, 0.0, 0.0]
+    if isinstance(axis, str):
+        n[AX[axis]] = 1.0
+    else:
+        n = [float(v) for v in axis]
+    L = math.sqrt(sum(v * v for v in n))
+    return [v / L for v in n]
+
+
+def _hull_cyl_dist2(pts, c, n, r, half, exact=False, iters=6000, tol2=1e-14, eps=2e-6, cap_tol=2e-5):
+    """Squared distance between conv(pts) and the finite cylinder (centre c, unit axis n, radius r, half-length
+    half); 0.0 if they meet. Pairwise Frank-Wolfe over the hull weights (linear convergence on a polytope)
+    minimising f(x) = |x - P(x)|^2 (P = projection on the cylinder; f convex, gradient 2 (x - P(x))), with exact
+    line search. Stops on f <= tol2 (meet). Not exact: also stops as soon as the duality-gap lower bound f - gap is
+    positive (certainly apart; the returned f is then an upper bound). exact=True: runs until the bound brackets
+    the distance to eps (2 um). At the iteration cap a distance under cap_tol (20 um) counts as a meet."""
+    def proj(p):
+        d = [p[i] - c[i] for i in range(3)]
+        t = sum(d[i] * n[i] for i in range(3))
+        rad = [d[i] - t * n[i] for i in range(3)]
+        rr = math.sqrt(sum(v * v for v in rad))
+        t = min(max(t, -half), half)
+        s = 1.0 if rr <= r else r / rr
+        return [c[i] + t * n[i] + s * rad[i] for i in range(3)]
+
+    def f_g(x):
+        q = proj(x)
+        g = [x[i] - q[i] for i in range(3)]
+        return sum(v * v for v in g), g
+
+    pts = [tuple(p) for p in pts]
+    k0 = min(range(len(pts)), key=lambda k: f_g(pts[k])[0])
+    w = {k0: 1.0}                                     # active vertex weights
+    x = list(pts[k0])
+    f = None
+    for _ in range(iters):
+        f, g = f_g(x)
+        if f <= tol2:
+            return 0.0
+        dot = lambda k: g[0] * pts[k][0] + g[1] * pts[k][1] + g[2] * pts[k][2]
+        ks = min(range(len(pts)), key=dot)            # toward vertex
+        kv = max(w, key=dot)                          # away vertex (active)
+        gap = 2.0 * (sum(g[i] * x[i] for i in range(3)) - dot(ks))     # FW duality gap >= f - f*
+        lower = f - gap
+        if not exact and lower > tol2:
+            return f                                  # apart
+        if exact and (gap <= 1e-18 or (lower > 0 and math.sqrt(f) - math.sqrt(lower) <= eps)):
+            return f
+        d = [pts[ks][i] - pts[kv][i] for i in range(3)]
+        amax = w[kv]
+        if sum(v * v for v in d) == 0.0:
+            break
+        a, b = 0.0, amax                              # exact line search on the directional derivative
+        for _ in range(40):
+            m = (a + b) / 2
+            _, gm = f_g([x[i] + m * d[i] for i in range(3)])
+            if sum(gm[i] * d[i] for i in range(3)) > 0:
+                b = m
+            else:
+                a = m
+        if a <= 0.0:
+            break
+        x = [x[i] + a * d[i] for i in range(3)]
+        w[ks] = w.get(ks, 0.0) + a
+        w[kv] -= a
+        if w[kv] <= 1e-15:
+            del w[kv]
+    f, _ = f_g(x)
+    return 0.0 if f <= cap_tol ** 2 else f
 
 
 # ----------------------------------------------------------------------------- backend interface

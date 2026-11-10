@@ -1,7 +1,8 @@
 # Mass, CG and inertia — K09-L
 
 Roll-up owner A3 (mass-properties); budget text A1. Status `PROPOSED`, budget revision **A1-R4a** (D-47, D-48, D-58,
-D-59) over roll-up revision **A3-R6** (2026-11-09 20:41, answering CR-A1-44 and CR-A1-53). Every number in the generated
+D-59) over roll-up revision **A3-R6a** (2026-11-10 re-run of A3-R6, answering CR-A1-44 and CR-A1-53; only change F2's harness
++0.2 g). Every number in the generated
 block comes from `python -I redesign/team/A3/mass_rollup.py` (claims in `team/A3/claims.json`, every item in
 `team/A3/rollup/ROLLUP.md`). The block between the markers is regenerated on each run; the rest is hand-written and
 follows `params/CHANGE-LOG.md`. **All nine flying subsystems come from the designers' `parts.csv`**, the pod at D2-R5
@@ -10,47 +11,49 @@ reads `pod.pack_aft_travel_m` (12 mm) and `pod.pack_spacer_step_m` (2 mm) from D
 
 ## Verdict
 
-| Check | Result (A3-R6: D2-R5 bay, D-48 allocations, D-59 stations) | Claim | Status |
+| Check | Result (A3-R6a: D2-R5 bay, D-48 allocations, D-59 stations, E1 CAD centroids) | Claim | Status |
 |---|---|---|---|
-| Take-off mass vs 2 600 g gate | basic 2 323 g, predicted 2 437 g (growth 114 g of the 245 g reserve) | `CL-A3-MASS-BASIC`, `CL-A3-MASS-PREDICTED` → `R-MASS-GATE` | `MODELLED` |
-| Gate margin after growth ≥ 100 g overrun, 550 g pack | +163 g | `CL-A3-GATE-MARGIN` | `MODELLED` (+58 %) |
-| same, 503 g pack | +210 g | `CL-A3-GATE-MARGIN-503` | `MODELLED` |
-| same, 680 g pack | +33 g: under the gate, the 100 g overrun is not covered (covered up to a 613 g pack) | `CL-A3-GATE-MARGIN-680` → `R-PACK-MASS` | `FAIL` |
+| Take-off mass vs 2 600 g gate | basic 2 322 g, predicted 2 436 g (growth 114 g of the 245 g reserve) | `CL-A3-MASS-BASIC`, `CL-A3-MASS-PREDICTED` → `R-MASS-GATE` | `MODELLED` |
+| Gate margin after growth ≥ 100 g overrun, 550 g pack | +164 g | `CL-A3-GATE-MARGIN` | `MODELLED` (+64 %) |
+| same, 503 g pack | +211 g | `CL-A3-GATE-MARGIN-503` | `MODELLED` |
+| same, 680 g pack | +34 g: under the gate, the 100 g overrun is not covered (covered up to a 614 g pack) | `CL-A3-GATE-MARGIN-680` → `R-PACK-MASS` | `FAIL` |
 | Worst subsystem vs allocation (D-48) | **fins 436.4 / 418 g (1.044)**: D3-R4 half-fin `FIN-001` 22.32 → 27.67 g each (two-layer board, D-54 stepped tip); pod 131.0 / 131 and propulsion 462.0 / 462 exactly on; the rest under | `CL-A3-ALLOC-WORST` → `R-MASS-ALLOC` | `FAIL` (CR-A3-26) |
-| **CG x in 0.050–0.0549 m**, 550 g pack at the −0.022 datum | **0.0525 m (16.4 % c)**, 0.01 of the half-range from mid; predicted 0.0539 m | `CL-A3-CG-X-RANGE` (0.01), `CL-A3-CG-X-PRED` → `R-CG-RANGE` | `MODELLED` |
-| Each pack at its D-59 station, basic and predicted | all three inside; thinnest the 503 g pack on the crush stack, predicted 0.3 mm ahead of the aft limit | `CL-A3-CG-X-STATIONS` (0.89) → `R-CG-RANGE` | `MODELLED` (thin) |
+| **CG x in 0.050–0.0549 m**, 550 g pack at the −0.022 datum | **0.0522 m (16.3 % c)**, 0.10 of the half-range from mid; predicted 0.0536 m | `CL-A3-CG-X-RANGE` (0.10), `CL-A3-CG-X-PRED` → `R-CG-RANGE` | `MODELLED` |
+| Each pack at its D-59 station, basic and predicted | all three inside; thinnest the 503 g pack on the crush stack, predicted 0.5 mm ahead of the aft limit | `CL-A3-CG-X-STATIONS` (0.78) → `R-CG-RANGE` | `MODELLED` (thin) |
 | 503–680 g packs trimmable with the spacers | yes, with D-59's 12 mm aft travel | `CL-A3-PACK-TRIM` (0 mm) → `R-CG-RANGE` | `MODELLED` |
 | Forward room at the datum | 3.4 mm (34.6 mm nose stack: stop face −0.1212, block ≥ 24.3, spreader 1.5) | `CL-A3-PACK-FWD-ROOM` | `MODELLED` |
 | Lateral CG ≤ 5 mm | −1.1 mm | `CL-A3-CG-Y` → `R-CG-RANGE` | `MODELLED` |
-| CG z in −0.02 … +0.03 m | +0.018 m | `CL-A3-CG-Z-RANGE` → `R-CG-RANGE` | `MODELLED` |
+| CG z in −0.02 … +0.03 m | +0.019 m | `CL-A3-CG-Z-RANGE` → `R-CG-RANGE` | `MODELLED` |
 | Hover pitch-trim split ≤ 1.25 | 1.216 (+3 %) | `CL-A3-HOVER-SPLIT` → `R-HOVER-SPLIT` | `MODELLED` (thin) |
-| Inertia about the CG | Ixx 0.173, Iyy 0.045, Izz 0.167 kg·m² | `CL-A3-IXX/IYY/IZZ` | `MODELLED` |
+| Inertia about the CG | Ixx 0.173, Iyy 0.044, Izz 0.168 kg·m² | `CL-A3-IXX/IYY/IZZ` | `MODELLED` |
 
 **The D-47 bay puts the CG on the range mid-point; the D-59 travel keeps every listed pack inside.** During this
 re-run three deliveries landed in turn, and the CG followed them. E1 stripped the ESC power leads (−13.6 g at x 0.101)
 and D6 re-worked the mechanisms (−11.6 g at x 0.19–0.27): 0.0513 m at 20:35, which pushed the 680 g pack 0.4 mm off
 the forward limit and led A1 to D-59 (aft travel 8 → 12 mm). Then D3-R4's heavier half-fins (+21.4 g, centroid aft of
-the CG) and D2-R5's pod (+2.9 g) brought it back to 0.0525 m; F2's harness re-run (−4.5 g) left it there. On today's files the stations fall back to A1's first
-D-59 table, not the 20:35 one now in the `pod.pack_x_nominal_m` note:
+the CG) and D2-R5's pod (+2.9 g) brought it back to 0.0525 m; F2's harness re-run (−4.5 g) left it there. At A3-R6a (2026-11-10) E1's CAD motor centroids
+(|z| 0.189, x 0.016; props 2 mm aft) and a pod/power update moved it 0.3 mm forward to 0.0522 m, and F2's harness
+lost 1 g. The carried pack now flies at the −0.022 datum; the `pod.pack_x_nominal_m` note (20:35 stations) is stale:
 
 | Pack | D-59 station x (m) | Spacers | CG basic → predicted (m) | Margin fwd / aft (mm) | Status |
 |---|---|---|---|---|---|
-| 550 g (carried) | −0.024 | 14 mm | 0.0520 → 0.0534 | +2.0 / +1.5 | `MODELLED` |
-| 503 g | −0.0254 (on the crush stack; wants −0.0305) | 14 mm + 1.4 mm play | 0.0533 → 0.0546 | +3.3 / **+0.3** | `MODELLED` (thin) |
-| 680 g | −0.010 (no spacer, on the 0.060 stop; wants −0.009) | 0 mm | 0.0519 → 0.0532 | +1.9 / +1.7 | `MODELLED` |
+| 550 g (carried) | −0.022 (datum) | 12 mm | 0.0522 → 0.0536 | +2.2 / +1.3 | `MODELLED` |
+| 503 g | −0.0254 (on the crush stack; wants −0.029) | 14 mm + 1.4 mm play | 0.0530 → 0.0544 | +3.0 / **+0.5** | `MODELLED` (thin) |
+| 680 g | −0.010 (no spacer, on the 0.060 stop; wants −0.008) | 0 mm | 0.0516 → 0.0529 | +1.6 / +2.0 | `MODELLED` |
 
 Each 4 g placed 0.1 m from the CG moves the CG 0.17 mm and a station 0.7 mm, so H3 takes the stations from the
-roll-up re-run on the day of the balance test, not from a note (CR-A3-27). D2-R5 still has the aft stop at 0.056. The D-59 face is 0.060
-(CR-A1-54). With 0.056 the 680 g pack sits at −0.014: CG 0.0508 m, still +0.8 mm inside. If the fins come down to their
-418 g (board centroid x 0.204), the CG moves 1.2 mm forward: the 503 g aft margin grows to about 1.5 mm and the 680 g
-forward margin falls to about 0.8 mm.
+roll-up re-run on the day of the balance test, not from a note (CR-A3-27). A1's own case table puts the 503 g pack at
+−0.024 (14 mm, predicted 0.0547 m, 0.17 mm inside); the two rules differ only there (CR-A3-29). D2-R5 still has the aft stop at 0.056. The D-59 face is 0.060
+(CR-A1-54). With 0.056 the 680 g pack sits at −0.014: CG 0.0505 m, still +0.5 mm inside. If the fins come down to their
+418 g (board centroid x 0.204), the CG moves 1.2 mm forward: the 503 g aft margin grows to about 1.7 mm and the 680 g
+forward margin falls to about 0.4 mm.
 
 If the built aircraft with a light pack balances aft of the aft mark, lead tape goes behind the nose: about 13 g per mm
 of CG, capped at 10 g from the A1 reserve (`CL-A1-NOSE-BALLAST`, 0 g today). Beyond 10 g A1 re-opens the station.
 
-**The gate holds with the carried 550 g pack** (+163 g predicted margin, of which 100 g is the first-build overrun). A
-680 g pack leaves the aircraft under the gate (2 567 g predicted) but eats 67 g of the overrun. The overrun is covered
-up to a 613 g pack (601 g at A3-R5; 631 g at 20:35, before D3's fins). E2 names a SKU and weighs it (CR-I1-13, D-58).
+**The gate holds with the carried 550 g pack** (+164 g predicted margin, of which 100 g is the first-build overrun). A
+680 g pack leaves the aircraft under the gate (2 566 g predicted) but eats 66 g of the overrun. The overrun is covered
+up to a 614 g pack (601 g at A3-R5; 631 g at 20:35, before D3's fins). E2 names a SKU and weighs it (CR-I1-13, D-58).
 D-47 itself cost the 15 mm nose (inside D2's 131.0 g), a 5 mm higher stance CG (0.315 m above the feet) and the pitot
 tip moving with the nose to x −0.210.
 
@@ -82,7 +85,7 @@ Every allocation is now the designer's delivered `parts.csv` plus the reductions
 | First-build overrun to keep free under the gate | 100 g | `params.json#requirements.build_overrun_kg` |
 | Ground items (box, cradles, tools, chargers) | never counted | subsystem `transport`, `"flight": false` |
 | CG target / range x | 0.0522 m / 0.050–0.0549 m (15.6–17.2 % chord), `UNVERIFIED` (B3 R3 at 7° cant, 0.21 m fins, 0.14 m pod; D-47) | `params.json#cg` |
-| Pack nominal centroid and flight stations | datum x −0.022 m (D-47; was −0.001, D-24); aft travel 12 mm to the no-spacer station −0.010, 2 mm spacer steps, forward limit −0.0254 (D-59); flight stations computed live by `CALC-A3-CG` (A3-R6: 550 g −0.024, 503 g −0.0254 on the stack, 680 g −0.010); spacers `POD-008` 2/4/6/8/8 mm | `params.json#pod.pack_x_nominal_m`, `pod.pack_aft_travel_m`, `pod.pack_spacer_step_m`, `ASM-A3-PACK-STATIONS`, `CL-A3-CG-X-STATIONS` |
+| Pack nominal centroid and flight stations | datum x −0.022 m (D-47; was −0.001, D-24); aft travel 12 mm to the no-spacer station −0.010, 2 mm spacer steps, forward limit −0.0254 (D-59); flight stations computed live by `CALC-A3-CG` (A3-R6a: 550 g −0.022, 503 g −0.0254 on the stack, 680 g −0.010); spacers `POD-008` 2/4/6/8/8 mm | `params.json#pod.pack_x_nominal_m`, `pod.pack_aft_travel_m`, `pod.pack_spacer_step_m`, `ASM-A3-PACK-STATIONS`, `CL-A3-CG-X-STATIONS` |
 | Room the pod nose needs ahead of the pack | 34.6 mm with the 8.8 mm nose block (stop at −0.1212, crush block 24.3, spreader 1.5): pack centroid ≥ −0.0254 m | `ASM-A3-NOSE-STACK` (D2-R5 params: stop face −0.1212) |
 | CG range z, lateral | −0.02 … +0.03 m; \|y\| ≤ 0.005 m | `params.json#cg` |
 | Hover pitch-trim split upper/lower | ≤ 1.25 | `params.json#requirements.hover_split_max` (D-18) |
@@ -97,64 +100,64 @@ Sources: `wing` ← redesign/subsystems/wing/parts.csv; `fins` ← redesign/subs
 |---|---|---|---|---|---|
 | wing | 405 | 387 | 407 | -18 | `PROPOSED` |
 | fins | 418 | 436 | 458 | +18 | `FAIL` |
-| pod | 131 | 131 | 138 | +0 | `PROPOSED` |
+| pod | 131 | 131 | 137 | -0 | `PROPOSED` |
 | landing | 43 | 42 | 47 | -0 | `PROPOSED` |
 | propulsion | 462 | 462 | 490 | +0 | `PROPOSED` |
 | power | 648 | 638 | 650 | -10 | `PROPOSED` |
 | avionics | 45 | 36 | 39 | -8 | `PROPOSED` |
-| harness | 123 | 118 | 130 | -5 | `PROPOSED` |
+| harness | 123 | 117 | 129 | -6 | `PROPOSED` |
 | mechanisms | 80 | 71 | 80 | -9 | `PROPOSED` |
-| **total** | **2 600** | **2 323** | **2 437** | allocated 2 355 + growth 245 | gate margin +163 g |
+| **total** | **2 600** | **2 322** | **2 436** | allocated 2 355 + growth 245 | gate margin +164 g |
 
 | Gate case (predicted, all other items with growth) | Pack g | Predicted g | Gate margin g | Overrun to cover g | Claim | Status |
 |---|---|---|---|---|---|---|
-| lightest listing | 503 | 2 390 | +210 | 100 | `CL-A3-GATE-MARGIN-503` | `MODELLED` |
-| as carried (`battery.mass_kg`) | 550 | 2 437 | +163 | 100 | `CL-A3-GATE-MARGIN` | `MODELLED` |
-| heaviest listing | 680 | 2 567 | +33 | 100 | `CL-A3-GATE-MARGIN-680` | `FAIL` |
+| lightest listing | 503 | 2 389 | +211 | 100 | `CL-A3-GATE-MARGIN-503` | `MODELLED` |
+| as carried (`battery.mass_kg`) | 550 | 2 436 | +164 | 100 | `CL-A3-GATE-MARGIN` | `MODELLED` |
+| heaviest listing | 680 | 2 566 | +34 | 100 | `CL-A3-GATE-MARGIN-680` | `FAIL` |
 
 | Discipline | Basic g | Predicted g | Share |
 |---|---|---|---|
 | structure | 997 | 1 049 | 43 % |
 | propulsion | 462 | 490 | 20 % |
 | energy | 550 | 550 | 24 % |
-| electrical | 206 | 229 | 9 % |
+| electrical | 205 | 228 | 9 % |
 | avionics | 36 | 39 | 2 % |
 | controls | 71 | 80 | 3 % |
 
 | CG case | x m (% chord) | y m | z m | Status |
 |---|---|---|---|---|
 | Allowable (A1/B3) | 0.050–0.055 (16%–17%) | ±0.005 | -0.020…+0.030 | `PROPOSED` |
-| Take-off, basic | 0.052 (16.4%) | -0.0011 | +0.019 | `CHECKED` |
-| Take-off, predicted (growth pro rata) | 0.054 (16.8%) | -0.0013 | +0.018 | `CHECKED` |
-| Pack slid -3.4 … +12.0 mm (spacers, crush stack) | 0.0517 … 0.0553 | | | — |
-| Pack 503 g: nominal station → slid +0.0 mm (+ aft) | 0.0540 → 0.0540 | | | `CHECKED` |
-| Pack 550 g: nominal station → slid +0.0 mm (+ aft) | 0.0525 → 0.0525 | | | `CHECKED` |
-| Pack 680 g: nominal station → slid +5.3 mm (+ aft) | 0.0485 → 0.0500 | | | `CHECKED` |
-| Pack 503 g at its D-59 station x -0.0254 (spacers 15 mm, clamped): basic → predicted | 0.0533 → 0.0546 (fwd +3.3 / aft +0.3 mm) | | | `CHECKED` |
-| Pack 550 g at its D-59 station x -0.0240 (spacers 14 mm): basic → predicted | 0.0520 → 0.0534 (fwd +2.0 / aft +1.5 mm) | | | `CHECKED` |
-| Pack 680 g at its D-59 station x -0.0100 (spacers 0 mm, clamped): basic → predicted | 0.0519 → 0.0532 (fwd +1.9 / aft +1.7 mm) | | | `CHECKED` |
-| No pack (handling) | 0.076 (23.6%) | -0.0015 | +0.009 | — |
+| Take-off, basic | 0.052 (16.3%) | -0.0011 | +0.019 | `CHECKED` |
+| Take-off, predicted (growth pro rata) | 0.054 (16.7%) | -0.0013 | +0.018 | `CHECKED` |
+| Pack slid -3.4 … +12.0 mm (spacers, crush stack) | 0.0514 … 0.0551 | | | — |
+| Pack 503 g: nominal station → slid +0.0 mm (+ aft) | 0.0537 → 0.0537 | | | `CHECKED` |
+| Pack 550 g: nominal station → slid +0.0 mm (+ aft) | 0.0522 → 0.0522 | | | `CHECKED` |
+| Pack 680 g: nominal station → slid +6.2 mm (+ aft) | 0.0483 → 0.0500 | | | `CHECKED` |
+| Pack 503 g at its D-59 station x -0.0254 (spacers 15 mm, clamped): basic → predicted | 0.0530 → 0.0544 (fwd +3.0 / aft +0.5 mm) | | | `CHECKED` |
+| Pack 550 g at its D-59 station x -0.0220 (spacers 12 mm): basic → predicted | 0.0522 → 0.0536 (fwd +2.2 / aft +1.3 mm) | | | `CHECKED` |
+| Pack 680 g at its D-59 station x -0.0100 (spacers 0 mm, clamped): basic → predicted | 0.0516 → 0.0529 (fwd +1.6 / aft +2.0 mm) | | | `CHECKED` |
+| No pack (handling) | 0.075 (23.5%) | -0.0015 | +0.009 | — |
 
 | CG result | Value | Unit | Source |
 |---|---|---|---|
-| Pack centroid now / needed for x = 0.052 m | -0.022 / -0.023 | m | `CL-A3-PACK-X-REQ` |
-| Pack shift still needed for the target (+ aft) | -1 | mm | `CALC-A3-CG` |
-| or the whole pod group (806 g: pod, power, avionics) by | -1 | mm | `CALC-A3-CG` |
-| or the four motor stations (propulsion, 462 g) by | -1 | mm | `CALC-A3-CG` |
-| Pack aft face to wing TE at that station | 273 | mm | `CL-A3-PACK-AFT-ROOM` |
+| Pack centroid now / needed for x = 0.052 m | -0.022 / -0.022 | m | `CL-A3-PACK-X-REQ` |
+| Pack shift still needed for the target (+ aft) | +0 | mm | `CALC-A3-CG` |
+| or the whole pod group (806 g: pod, power, avionics) by | +0 | mm | `CALC-A3-CG` |
+| or the four motor stations (propulsion, 462 g) by | +0 | mm | `CALC-A3-CG` |
+| Pack aft face to wing TE at that station | 272 | mm | `CL-A3-PACK-AFT-ROOM` |
 | CG shift per mm moved: pack / pod group / stations | 0.24 / 0.35 / 0.20 | mm/mm | `CALC-A3-CG` |
 | Forward room at the nominal station (nose block, stop, crush block, spreader taken) | 3 | mm | `CL-A3-PACK-FWD-ROOM` |
 | Hover trim split upper/lower pair (limit 1.25, D-18) | 1.216 | — | `CL-A3-HOVER-SPLIT` → `R-HOVER-SPLIT` |
 | Pack slide needed for 503–680 g beyond the trim travel | 0.0 | mm | `CL-A3-PACK-TRIM` |
 | Most forward pack centroid the nose stack allows | -0.0254 | m | `CALC-A3-CG` |
-| CG x range use: basic / packs at their stations (worst) / predicted | 0.01 / 0.89 / 0.58 | — | `CL-A3-CG-X-RANGE` / `CL-A3-CG-X-STATIONS` / `CL-A3-CG-X-PRED-RANGE` |
+| CG x range use: basic / packs at their stations (worst) / predicted | 0.10 / 0.78 / 0.47 | — | `CL-A3-CG-X-RANGE` / `CL-A3-CG-X-STATIONS` / `CL-A3-CG-X-PRED-RANGE` |
 | Lateral CG offset / allowed 5 mm | 0.23 (-1.1 mm) | — | `CL-A3-CG-Y` |
 | CG height above the feet in the stance | 0.316 | m | `CALC-A3-CG` |
 
 | Inertia about the CG | Ixx (roll, cruise) | Iyy (pitch) | Izz (yaw, cruise) | Ixz | Unit |
 |---|---|---|---|---|---|
-| Basic, take-off | 0.1733 | 0.0448 | 0.1673 | -0.0023 | kg·m² |
-| Radius of gyration | 0.273 | 0.139 | 0.268 | | m |
+| Basic, take-off | 0.1732 | 0.0442 | 0.1679 | -0.0023 | kg·m² |
+| Radius of gyration | 0.273 | 0.138 | 0.269 | | m |
 
 Allocations read from `params.json#mass.allocation_g` and checked equal to `params/mass_budget.json` (2 355 g + reserve 245 g = 2 600 g).
 

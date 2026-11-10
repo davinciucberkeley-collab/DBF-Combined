@@ -33,6 +33,20 @@ kit.source("SRC-E2-OVONIC-LISTINGS", "Ovonic 4S 6500 hard-case listings (mass, s
                  "157 x 48 x 43 mm, XT60 + JST-XH (rcdrone.top)",
            note="none of these is the exact 130C XT60 SKU the BOM buys; weigh and measure the first pack (T-E2-WEIGH)",
            status="UNVERIFIED")
+kit.source("SRC-E2-OVONIC-120C-EC5", "Ovonic 14.8V 120C 4S 6500 mAh hard-case LiPo, EC5, 2-pack (named SKU, D-58)",
+           kind="web", url="https://www.ampow.com/products/2-pack-ovonic-4s-6500mah-120c-lipo-hardcase-ec5-1-8-rc-car",
+           checked="2026-11-10",
+           where="product page read 2026-11-10: 6500 mAh, 120C, net weight 551 g (+/-5 g) per piece, 135 x 46 x 49 mm "
+                 "(+/-3 mm), EC5 plug, JST-XHR-5P balance, 2 packs, in stock, EUR 98.69 shown (EU storefront; "
+                 "another snippet EUR 113.30). Lead gauge not stated on the page: the EC5 contact takes 8-10 AWG, so "
+                 "10 AWG is inferred, not read",
+           note="checked = mass, size, plug and balance lead compared with the page; the lead gauge and the US price "
+                "are confirmed by I1 at order (photo or seller answer) and by E2 on arrival (T-E2-WEIGH step 3a)")
+kit.source("SRC-E2-TATTU-6750", "Tattu 4S 6750 mAh 25C LiPo, XT90 (fallback SKU)", kind="web",
+           url="https://www.gensace.de/tattu-6750mah-14-8v-25c-4s1p-lipo-battery-with-xt90.html",
+           where="search results 2026-11-10 (page not opened): net weight 605 g (+/-10 g), wire gauge 10#, XT90, "
+                 "about 138 x 42 x 44 mm; NextFPV USD 74 sale / 83 list per pack, stock 'contact us'; Grepow 620 g",
+           status="UNVERIFIED")
 kit.source("SRC-E2-HTRC-C150", "HTRC C150 150 W AC/DC balance charger", kind="web",
            url="https://www.amazon.com/dp/B0H4QLJYHY",
            where="config-study/cards/K09/cost.csv ground line ($56.99, 2026-11-01); 150 W AC rating from the BOM line",
@@ -105,9 +119,26 @@ A("ASM-E2-PACK-CANDIDATES", "4S pack candidates [name, Ah, kg, continuous A]",
         "params battery.mass_kg. Li-ion 4S2P 21700 (P45B class, 9 Ah, 90 A cont): 8 x 70 g + 60 g. "
         "Continuous A = realistic cell limit, not the label C",
   value=[["Admiral 4S 4000 LiPo", 4.0, 0.386, 120.0], ["4S 5000 hard-case LiPo (EST)", 5.0, 0.46, 150.0],
-         ["Ovonic 4S 6500 hard-case LiPo", 6.5, 0.55, 195.0], ["4S 8000 hard-case LiPo (EST)", 8.0, 0.70, 240.0],
+         ["Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)", 6.5, 0.55, 195.0],
+         ["Tattu 4S 6750 25C XT90 (605 g listed)", 6.75, 0.605, 168.75],
+         ["Ovonic 4S 6500 130C XT60 (680 g listed, 12 AWG)", 6.5, 0.68, 195.0],
+         ["4S 8000 hard-case LiPo (EST)", 8.0, 0.70, 240.0],
          ["Li-ion 4S2P 21700 9 Ah (EST)", 9.0, 0.62, 90.0]], unit="-", status="UNVERIFIED",
-  cites=["SRC-E2-OVONIC-LISTINGS", "SRC-K09-CARD"])
+  cites=["SRC-E2-OVONIC-120C-EC5", "SRC-E2-TATTU-6750", "SRC-E2-OVONIC-LISTINGS", "SRC-K09-CARD"])
+A("ASM-E2-PACK-SKU", "Named flight-pack SKU (D-58): listed data",
+  "Ovonic 14.8V 120C 4S 6500 mAh hard case, EC5, 2-pack: 0.551 kg +/- 0.005 per pack, 135 x 46 x 49 mm +/- 3 mm, "
+  "factory discharge leads 10 AWG (inferred from the EC5 plug), JST-XH 5-pin balance lead",
+  basis="SRC-E2-OVONIC-120C-EC5 read 2026-11-10. The 120C label is not a physical continuous rating; the real limit "
+        "is the cell IR (ASM-E2-R-CELL, T-E2-IR). Re-terminated EC5 -> AS150U on arrival as before (D-32)",
+  value={"mass_kg": 0.551, "mass_tol_kg": 0.005, "size_m": [0.135, 0.046, 0.049], "size_tol_m": 0.003,
+         "lead_awg": 10}, unit="-", status="UNVERIFIED", cites=["SRC-E2-OVONIC-120C-EC5"])
+A("ASM-E2-PACK-LIMITS", "Pack acceptance limits (D-58, D-15, CR-F1-14)",
+  "Pack mass <= 0.601 kg (D-58: the mass above which the first-build overrun is no longer covered; A3-R6 re-ran it "
+  "to 0.613 kg, the stricter D-58 value is used); body fits the D2 bay 0.160 x 0.052 x 0.053 m (D-15); discharge "
+  "leads 10 AWG or heavier (AWG number <= 10, CR-F1-14, CL-F1-PACKLEAD12-RISE)",
+  basis="params/CHANGE-LOG.md D-58, D-15; MASS-CG.md A3-R6 (covered up to 613 g); F1 pack-lead rise rule "
+        "electrical.pack_lead_rise_max_c 20 K (12 AWG 28.4 K)",
+  value={"mass_max_kg": 0.601, "bay_m": [0.160, 0.052, 0.053], "awg_max": 10}, unit="-", status="PROPOSED")
 A("ASM-E2-TESTDAY", "Test-day window and turnaround",
   "Flying window 180 min (07:00-10:00 flight card); 20 min on the ground between sorties (log check, feet and "
   "prop inspection, pack swap, re-brief); one fully charged pack per sortie; no charging at the field",
@@ -365,6 +396,35 @@ A("ASM-E2-CHARGER-W", "Charger output 150 W", "HTRC C150 delivers 150 W into one
   value=150.0, unit="W", status="UNVERIFIED", cites=["SRC-E2-HTRC-C150"])
 
 
+@kit.calc("CALC-E2-SKU-CHECK", title="Named pack SKU against the D-58 mass line, the bay and the lead rule",
+          equation="m_worst = m_listed + tol ; mass margin = m_max - m_worst ; bay clearance = min_i(bay_i - "
+                   "(size_i + tol)) (pack length along the bay) ; lead AWG number <= awg_max",
+          inputs={"sku": "ASM-E2-PACK-SKU", "lim": "ASM-E2-PACK-LIMITS"}, assumes=["ASM-E2-PACK-SKU",
+          "ASM-E2-PACK-LIMITS"])
+def sku_check(sku, lim):
+    worst = sku["mass_kg"] + sku["mass_tol_kg"]
+    clear = [b - (s + sku["size_tol_m"]) for b, s in zip(lim["bay_m"], sku["size_m"])]
+    return {"mass_worst_kg": worst, "mass_margin_kg": lim["mass_max_kg"] - worst, "bay_clear_min_m": min(clear),
+            "bay_clear_m": clear, "lead_awg": sku["lead_awg"], "awg_max": lim["awg_max"]}
+
+
+@kit.calc("CALC-E2-BUDGET-240", title="Budget sensitivity at the params cruise power (E1 240 W, D-49 / D-13 rule)",
+          assumes=ASSUMES + ["ASM-E2-COLD-R", "ASM-E2-HOVER-MARGIN"],
+          equation="as CALC-E2-BUDGET-BASE / -PESS with B1's level cruise power x k, k = P_params / P_B1 "
+                   "(base 240 / 227.8 W; pessimistic B1 300.6 W x the same k) ; BATT_LOW count as CALC-E2-FAILSAFE",
+          inputs={"m_b": "CL-A1-MASS-SIZED", "m_p": P + "requirements.mtow_gate_kg",
+                  "p_par": P + "performance.cruise_power_w", **COMMON},
+          units={"m_b": "kg", "m_p": "kg", "p_par": "W", **CU})
+def budget_240(m_b, m_p, p_par, **kw):
+    k = p_par / kw["pc_b"]
+    base = budget(m_b, False, p_scale=k, **kw)
+    pess = budget(m_p, True, p_scale=k, **kw)
+    fs = failsafe_rows(pess["phases"], kw["ah"], kw["reserve"])
+    return {"k": k, "cruise_min_base": base["cruise_min"], "cruise_min_pess": pess["cruise_min"],
+            "cruise_w_base": base["cruise_w"], "cruise_w_pess": pess["cruise_w"], "cruise_a_pess": pess["cruise_a"],
+            "low_mah": fs["low_mah"], "cruise_to_low_min": fs["cruise_to_low_min"]}
+
+
 # ---------------------------------------------------------------- claims
 def table_out(calc, title):
     return dict(calc=calc, output="phases", unit="-", how=f"{title}: compare each row with the DataFlash log "
@@ -465,6 +525,29 @@ kit.claim("CL-E2-CHARGE-H-4", "Attended charge time for 4 packs, one port", calc
 kit.claim("CL-E2-WINDOW-USED", "Window minutes used by the planned sorties (2 packs, D-12)", calc="CALC-E2-TESTDAY",
           output="window_used_min", unit="min", limit=("<=", 180.0),
           how="Log take-off and landing times on the first test day; I2 plans the day on it.")
+kit.claim("CL-E2-SKU-MASS-MARGIN", "Named pack (listed mass + tolerance) under the D-58 line of 601 g",
+          calc="CALC-E2-SKU-CHECK", output="mass_margin_kg", unit="kg", limit=(">=", 0.0), verifies=["R-PACK-MASS"],
+          parts=["PWR-001"],
+          how="T-E2-WEIGH: every pack <= 0.601 kg on a 1 g scale, leads included (pack_log.csv).")
+kit.claim("CL-E2-SKU-BAY-CLEAR", "Named pack body (listed + 3 mm) inside the D2 bay, tightest axis",
+          calc="CALC-E2-SKU-CHECK", output="bay_clear_min_m", unit="m", limit=(">=", 0.0), parts=["PWR-001"],
+          how="T-E2-WEIGH step 3: calipers L x W x H against the bay 160 x 52 x 53 mm; lead exit routed per D2.")
+kit.claim("CL-E2-SKU-LEAD-AWG", "Named pack discharge-lead gauge (AWG number)", calc="CALC-E2-SKU-CHECK",
+          output="lead_awg", unit="-", limit=("<=", 10.0), parts=["PWR-001"],
+          note="10 AWG inferred from the EC5 plug (the page does not state it); I1 confirms at order, E2 on arrival",
+          how="T-E2-WEIGH step 3a: read the print on the lead insulation, or strip 5 mm of the cut-off end at "
+              "re-termination and measure the bundle (10 AWG ~2.6 mm, 12 AWG ~2.1 mm).")
+kit.claim("CL-E2-CRUISE-MIN-BASE-240", "Cruise after 2 min hover, base, at the params' 240 W (sensitivity)",
+          calc="CALC-E2-BUDGET-240", output="cruise_min_base", unit="min",
+          limit=(">=", P + "requirements.cruise_time_min"),
+          how="As CL-E2-CRUISE-MIN-BASE; the first tune flight's logged cruise current decides between B1 and E1.")
+kit.claim("CL-E2-CRUISE-MIN-PESS-240", "Cruise after 2 min hover, pessimistic, at the params' 240 W (sensitivity)",
+          calc="CALC-E2-BUDGET-240", output="cruise_min_pess", unit="min",
+          limit=(">=", P + "requirements.cruise_time_min"), how="As CL-E2-CRUISE-MIN-PESS.")
+kit.claim("CL-E2-CRUISE-TO-LOW-PESS-240", "Cruise before BATT_LOW (2600 mAh), pessimistic, at 240 W (sensitivity)",
+          calc="CALC-E2-BUDGET-240", output="cruise_to_low_min", unit="min",
+          limit=(">=", P + "requirements.cruise_time_min"),
+          how="SITL with the logged currents, as CL-E2-CRUISE-TO-LOW-PESS.")
 
 
 # ---------------------------------------------------------------- measured packs (T-E2-WEIGH)
@@ -479,25 +562,27 @@ def read_pack_log(path):
 
 PACK_LOG = HERE / "pack_log.csv"
 WEIGHED = read_pack_log(PACK_LOG)
-PACK_ACCEPT_KG = 0.68       # A3 carries pack growth to 680 g (ASM-A3-PACK-RANGE); above that, reject the SKU
+PACK_ACCEPT_KG = 0.601      # D-58: above 601 g the first-build overrun is not covered (= ASM-E2-PACK-LIMITS)
 if WEIGHED:
     m_meas = max(float(r["mass_g"]) for r in WEIGHED) / 1000.0
     kit.claim("CL-E2-PACK-MASS", "Flight pack mass, heaviest weighed pack", value=m_meas, unit="kg",
               limit=("<=", PACK_ACCEPT_KG), verifies=["R-PACK-MASS"], cites=["SRC-E2-OVONIC-LISTINGS"],
               how="Weighed on arrival (T-E2-WEIGH, pack_log.csv). A3 replaces the 550 g line with this value; "
                   "A1 may then set checked on SRC-OVONIC-4S6500.")
-    kit.test("T-E2-WEIGH", "Weigh and measure every pack on arrival", verifies=["CL-E2-PACK-MASS"], state="run",
+    kit.test("T-E2-WEIGH", "Weigh and measure every pack on arrival", verifies=["CL-E2-PACK-MASS", "CL-E2-SKU-MASS-MARGIN", "CL-E2-SKU-BAY-CLEAR", "CL-E2-SKU-LEAD-AWG"], state="run",
              result="pass" if m_meas <= PACK_ACCEPT_KG else "fail", measured=m_meas,
              date=max(r.get("received", "") for r in WEIGHED), evidence="redesign/team/E2/pack_log.csv",
              procedure="1 g scale, calipers L x W x H incl. lead exit; one row per pack in pack_log.csv.")
 else:
     kit.claim("CL-E2-PACK-MASS", "Flight pack mass carried in the budget (not yet weighed)", value=0.55, unit="kg",
               limit=("<=", PACK_ACCEPT_KG), verifies=["R-PACK-MASS"], status="UNVERIFIED",
-              cites=["SRC-E2-OVONIC-LISTINGS"],
-              how="Weigh each pack on arrival on a 1 g scale (T-E2-WEIGH) and enter it in pack_log.csv, then re-run; "
-                  "listings say 522-551 g, one 680 g. Accept <= 0.68 kg (A3's growth bound); 0.55-0.68 kg: A3 "
-                  "updates the roll-up; > 0.68 kg: return the pack and buy another SKU.")
-    kit.test("T-E2-WEIGH", "Weigh and measure every pack on arrival", verifies=["CL-E2-PACK-MASS"], state="planned",
+              cites=["SRC-E2-OVONIC-120C-EC5", "SRC-E2-OVONIC-LISTINGS"],
+              note="named SKU (D-58): Ovonic 120C 4S 6500 hard case EC5, listed 551 +/- 5 g; 0.55 kg stays the "
+                   "carried value until weighed",
+              how="Weigh each pack on arrival on a 1 g scale (T-E2-WEIGH) and enter it in pack_log.csv, then re-run. "
+                  "Accept <= 0.601 kg (D-58); 0.551-0.601 kg: A3 replaces the 550 g line; 0.602-0.613 kg: A1 "
+                  "decides (A3-R6 still covers the overrun to 613 g); > 0.613 kg: return the pair.")
+    kit.test("T-E2-WEIGH", "Weigh and measure every pack on arrival", verifies=["CL-E2-PACK-MASS", "CL-E2-SKU-MASS-MARGIN", "CL-E2-SKU-BAY-CLEAR", "CL-E2-SKU-LEAD-AWG"], state="planned",
              procedure="1 g scale; calipers L x W x H incl. lead exit; one row per pack (E2-P1, E2-P2) in "
                        "redesign/team/E2/pack_log.csv, then re-run this script and build_graph.py.")
 kit.test("T-E2-CAPACITY", "Discharge capacity test at 1C", verifies=["CL-E2-CRUISE-MIN-PESS", "CL-E2-CHARGE-MIN"],
@@ -533,4 +618,6 @@ if __name__ == "__main__":
     print("TESTDAY", {k: round(v, 2) for k, v in kit.nodes["CALC-E2-TESTDAY"]["outputs"].items()})
     for cid in ("CALC-E2-BUDGET-BASE", "CALC-E2-BUDGET-PESS"):
         print(cid, "E2 cross-check cruise W", round(kit.nodes[cid]["outputs"]["cruise_w_e2_model"], 1))
+    print("SKU", kit.nodes["CALC-E2-SKU-CHECK"]["outputs"])
+    print("AT 240 W", {k: round(v, 3) for k, v in kit.nodes["CALC-E2-BUDGET-240"]["outputs"].items()})
     print("PACK LOG", f"{len(WEIGHED)} weighed pack(s)" if WEIGHED else "no pack weighed yet (order ~20 Nov)")

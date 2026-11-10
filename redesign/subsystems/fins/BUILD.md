@@ -51,7 +51,7 @@ wing is skinned**, and the half-fin roots are bonded **to bare foam**.
 
     | Zone (x, m) | Upper roots | Lower roots |
     |---|---|---|
-    | 0.074 → start of full zone | 6 mm sealing bead | 6 mm sealing bead |
+    | 0.074 → start of full zone | 4 mm sealing bead | 4 mm sealing bead |
     | full zone → hinge 0.2496 | **15 mm** from x 0.170 | **15 mm** from x 0.146 to 0.2376 |
     | link slot 0.2376–0.2616 | (15 mm to the hinge, then 13 mm) | **no fillet, both faces** (D6 rod, CR-D6-04) |
     | aft of the hinge → 0.318 | **13 mm** (elevon end 2.2 mm clear) | **13 mm** from x 0.2616 |

@@ -9,7 +9,7 @@ Run (repo root):
 
 The plan reuses redesign/interfaces/merge_check.py (same Graph, same floating / electrical / one-sided checks), so a
 plan that passes here becomes a merged graph that passes there once the owners fill in their data blocks.
-Python 3 standard library only. Edit the plan in this file (build_parts / build_edges / RENAME; declared subsystems via --rebaseline); never edit the generated
+Python 3 standard library only. Edit the plan in this file (build_parts / build_edges / RENAME; declared subsystems via --rebaseline [subsystem ...]); never edit the generated
 interface_plan.json, PLAN-STATUS.md or the register section of INTERFACE-PLAN.md by hand.
 """
 import json
@@ -78,8 +78,12 @@ A4_BLOCKS = {"clamp": ("clamped",), "bond": ("bonded",), "retention": ("taped", 
 # (configuration control). Later changes by the owner show up in --compare as deviations until A4 re-baselines with
 # `python -I redesign/team/A4/interface_plan.py --rebaseline` after reviewing them. Edges parked in `edges_pending`
 # are part of the baseline. A4 overrides (target ids, flags) and additions are applied on top, below.
-REVISION = "A4-R4"
-BASELINE = HERE / "baseline-R4.json"          # baseline-R3.json is kept as the record of the R3 freeze
+REVISION = "A4-R5"
+BASELINE = HERE / "baseline-R5.json"          # baseline-R3/-R4.json are kept as the records of those freezes
+PREV_BASELINE = HERE / "baseline-R4.json"     # A4-R5: start of a partial re-baseline when BASELINE does not exist
+# A4-R5 (2026-11-10): pod re-baselined only (D2-R5a, CR-D2-20): POD-009 crush block, POD-010 spreader, E-POD-10
+# spacers -> tray aft stop (POD-002), E-POD-11 crush block POD-009 -> forward stop, E-POD-13 spreader -> block.
+# The other nine subsystems stay at their R4 freeze: `--rebaseline pod` replaces only the named subsystems.
 # A4-R4: every subsystem with parts has declared (2026-11-09 integration check); ground (F5) has not.
 BASELINED = ("wing", "fins", "pod", "landing", "propulsion", "power", "avionics", "harness", "mechanisms", "transport")
 PENDING_FILES = ("edges-pending.json",)       # F2 parks pending edges in a sibling file instead of "edges_pending"
@@ -98,11 +102,32 @@ def pending_edges(folder, doc):
     return out
 
 
-def rebaseline(root=REDESIGN / "subsystems"):
-    """Snapshot the declared parts, local connection types and edges (incl. pending edges) of BASELINED."""
+def rebaseline(root=REDESIGN / "subsystems", subs=None):
+    """Snapshot the declared parts, local connection types and edges (incl. pending edges) of BASELINED.
+
+    subs: refresh only these subsystems (A4-R5); the rest are carried over unchanged from the current baseline
+    (or PREV_BASELINE when BASELINE does not exist yet), so a reviewed change in one owner's file does not pull
+    unreviewed changes of the others into the freeze."""
     out = {"schema": "a4-baseline/1", "revision": REVISION, "taken_from": {}, "parts": [], "connection_types": [],
            "edges": []}
-    for sub in BASELINED:
+    if subs:
+        bad = sorted(set(subs) - set(BASELINED))
+        if bad:
+            raise SystemExit("rebaseline: not a baselined subsystem: %s" % ", ".join(bad))
+        src = BASELINE if BASELINE.exists() else PREV_BASELINE
+        old = json.loads(src.read_text(encoding="utf-8"))
+        keep = [k for k in BASELINED if k not in subs]
+        prefix = {SUBS[k][0] for k in subs}
+        mine = lambda pid: pid.split("-")[0] in prefix
+        out["taken_from"] = {k: dict(v, frozen_in=v.get("frozen_in", old.get("revision"))) for k, v in old["taken_from"].items() if k in keep}
+        out["parts"] = [p for p in old["parts"] if p.get("subsystem") not in subs]
+        out["edges"] = [e for e in old["edges"] if e.get("owner") not in subs]
+        fresh_ct = set()
+        for sub in subs:
+            fresh_ct |= {c["id"] for c in json.loads((root / sub / "interfaces.json").read_text(encoding="utf-8")).get("connection_types", [])}
+        out["connection_types"] = [c for c in old["connection_types"] if c["id"] not in fresh_ct]
+        assert not [p for p in out["parts"] if mine(p["id"])], "a refreshed prefix is still held by a kept subsystem"
+    for sub in (subs or BASELINED):
         path = root / sub / "interfaces.json"
         doc = json.loads(path.read_text(encoding="utf-8"))
         pend = pending_edges(path.parent, doc)
@@ -899,7 +924,9 @@ def write_status(plan, g, rows):
 
 def main(argv):
     if "--rebaseline" in argv:
-        b = rebaseline()
+        i = argv.index("--rebaseline")
+        subs = [a for a in argv[i + 1:] if not a.startswith("--")]     # A4-R5: `--rebaseline pod` = partial
+        b = rebaseline(subs=subs or None)
         print("rebaseline: %s" % ", ".join("%s %d parts / %d edges / %d pending" % (k, v["parts"], v["edges"], v["edges_pending"])
                                            for k, v in b["taken_from"].items()))
     plan = build_plan()

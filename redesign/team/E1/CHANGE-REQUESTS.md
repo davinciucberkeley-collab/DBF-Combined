@@ -2,6 +2,38 @@
 
 Numbers are from `team/E1/propulsion.py` (claims `CL-E1-…`) at the 2.6 kg gate. All of them are `UNVERIFIED` until `T-E1-STAND` runs.
 
+## Revision 7 (2026-11-10): KO-PROP blocker (check.py 8 ERRORs on the fin mount chain)
+
+The action item proposed exempting `FIN-002/004/006-L/R` from `KO-PROP-<st>` or using an annulus with a hub inner
+radius, on the premise that the mount chain sits behind the hub. **The geometry does not support that.** The motor
+tube's nearest point is at r **143.8 mm**, 4 mm **outboard** of the 139.7 mm tip, 26.8 mm aft of the mid-plane
+(`prop_clearance.py`). That makes it a tip-to-structure gap, which `requirements.prop_clearance_min_m` (25 mm)
+covers. An exemption would hide a 21 mm gap, and an annulus would not remove it. E1 did two things instead:
+(1) `KO-PROP-<st>` now uses E1's real swept envelope, +10 mm forward and −6 mm aft (`ASM-E1-BLADE-ENV`), through A5's new `fwd=`/`aft=`
+arguments (CR-E1-45 done by A5). The old symmetric ±10 mm placed 4 mm of non-existent blade aft of the disc. (2) The exempt list
+stays the station's own stack. Result: `check.py` **8 → 4** keep-out ERRORs. The bore boss (25.4 mm) and the tube plug (26.3 mm) clear.
+The motor tube remains at **21.0 mm** (`CL-E1-TIP-GAP-TUBE`, 21.1 mm analytic).
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-E1-48 | A1, D3 (C4, A3, B4, A5) | **Close the blocker with CR-E1-44: `fin_detail.mount.face_ahead_m` 0.0025 → 0.0075 m** (least 0.0065). Then A1: `propulsion.stations.x_prop_plane_m` −0.0077 → about −0.0127, `x_plate_face_m` → about 0.0244. Do **not** exempt the mount chain | In-memory `check.py` trials on the rev 7 keep-out: **0 keep-out ERRORs at 0.0065 and 0.0075**, 4 at 0.0060 (tube 24.5 mm), 4 at 0.0025 (21.0 mm). Tube gap at 0.0075: 26.1 mm (`CL-E1-TIP-GAP-AT-75`, +4 %). Cost: mount cheeks +5 mm (C4 rocking stiffness), prop plane 5 mm further from the collar (`CL-E1-CAD-PROP-GAP` rises) |
+| CR-E1-49 | A5 | Thanks for `fwd`/`aft` and the hull + distance message. `KO-PROP-<st>` now registers `fwd=0.010, aft=0.006`. Please keep the exempt list as registered (PRP only). If the integrator wants to waive the tube, it should be an A1 requirement change (for example a separate axial-gap rule for structure aft of the disc), not an exemption in the tool | `CL-E1-KO-HALF` 33 mm, `CL-E1-KO-FWD` 35 mm, `CL-E1-KO-AFT` 31 mm |
+| CR-E1-50 | B4 | Re-state `CL-B4-GAP-TUBE` against `ASM-E1-BLADE-ENV` (repeat of CR-E1-46a): 21.0–21.2 mm, not 27.3 mm | Same tube point as above |
+
+## Revision 6 (2026-11-10): re-run on the R4 fins; prop clearance after D-52 (CR-D3-26)
+
+Numbers from the rev 6 run of `propulsion.py` (64 claims), `make_propulsion.py` (36 acknowledged, 0 pending) and
+the CAD probe `prop_clearance.py`. `build_graph.py`: no `CALC-E1` drift, no E1 errors. Closed since rev 5:
+CR-E1-36 (A2 lists `CL-E1-IPACK-LIM`), CR-E1-38 (D3 carries D-51/D-52), CR-E1-39 (F2 declared the edges),
+CR-E1-35 (C6 lists D-58 in `JOINTS.md`; `merge_check` gives no `E-PRP` warning).
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-E1-44 | A1 (D3, C4, A3, A2) | **CR-D3-26, E1's input: take option (a) at `fin_detail.mount.face_ahead_m` 0.0025 → 0.0075 m**, not 0.020. The least value for 25 mm is **0.0065** (`CL-E1-FACE-AHEAD-FOR-CLR`); 0.0075 gives **26.1 mm** (`CL-E1-TIP-GAP-AT-75`). Then `propulsion.stations.x_prop_plane_m` −0.0077 → about **−0.0127** and `x_plate_face_m` → about 0.0244 (D3's `CL-D3-X-PROP` gives the exact values). A2: list `CL-E1-TIP-GAP-TUBE` under `R-PROP-CLEAR`. A3: the four stacks (108 g each) move 5 mm forward, about −0.9 mm on the aircraft CG. C4: the mount cheeks grow 5 mm | `CL-E1-TIP-GAP-TUBE` **21.1 mm FAIL** (limit 25): the D-52 sense swings the wing-side blade about 15 mm aft over the 22 mm CF tube. Concurs with D3's 20.9 mm. Every other flight part is ≥ 25.4 mm (bore boss), wing ≥ 33.5 mm. 0.020 buys 12.5 mm more cantilever only to satisfy the box test (CR-E1-45). Option (c), 5° cant, gives 25.5 mm at the tube and costs yaw authority (F4/B3) |
+| CR-E1-45 | A5 | `check.py` keep-out test: the per-body **bounding box** over-reports near a round tube or an airfoil. At `face_ahead` 0.0075 it still reports 12 hits (tube, block, plug, wing) where the nearest material is 26.2 / 29.3 / 30.4 / ≥ 33.5 mm. Please test revolve and prism bodies by their surfaces (e.g. sample as `team/E1/prop_clearance.py` does), and add `fwd` / `aft` arguments to `k9.prop_keepout` so the keep-out can carry E1's real −6 / +10 mm envelope (`ASM-E1-BLADE-ENV`) instead of the symmetric 10 mm. Until then I keep `blade_half=0.010` as A1 set it | The symmetric term costs 4 mm at the tube (17.1 vs 21.1 mm today). Without a surface test `check.py` cannot pass the station whatever A1 picks below 0.020 |
+| CR-E1-46 | B4 | (a) `CL-B4-GAP-TUBE` 27.3 mm is the mid-plane to the tube face. The blade's aft face is 6 mm behind the mid-plane, so the clearance is **21.3 mm** (E1 21.1); please re-state it against `ASM-E1-BLADE-ENV`. (b) Repeat of CR-E1-37 / -27: `props.py` line 305 still reads `ASM-E1-PACK`; move to `ASM-E1-PACK-CELLS` + `P:electrical.r_ext_mohm` ÷ 1000, then I retire `ASM-E1-PACK`. (c) ESC envelope stands: 7.5 mm proud, 172.5 mm² (`CL-E1-ESC-PROUD`, `-FRONTAL`) | One clearance number for `R-PROP-CLEAR`; one harness value |
+| CR-E1-47 | A3, A4 | CAD centroids regenerated on the reversed cant (UR): motor **0.0156 / 0.3210 / 0.1885**, prop **−0.0077 / 0.3223 / 0.1861**, adapter **−0.0046 / 0.3221 / 0.1864**; ESC unchanged 0.101 / 0.329 / 0.118. Mass unchanged 462.0 g. A4: the WARN "462 g > 462 g" is a floating-point sum at zero margin; please compare at 0.1 g in `merge_check.check_budget` (repeat of CR-E1-40) | `subsystems/propulsion/interfaces.json` |
+
 ## Revision 5 (2026-11-09): CR-A1-48, CR-A4-43, CR-A5-21, CR-D3-22, CR-B4-20, CR-E2-17
 
 Numbers from the rev 5 run of `propulsion.py` (61 claims) and `make_propulsion.py`. `build_graph.py`: no `CALC-E1`

@@ -1,6 +1,23 @@
-# A1 chief engineer: integration round, revision A1-R4a
+# A1 chief engineer: integration round, revision A1-R4b
 
-Status: `PROPOSED` frame at revision **A1-R4** (D-47 … D-58) plus addendum **A1-R4a** (D-59), 2026-11-09.
+Status: `PROPOSED` frame at revision **A1-R4** (D-47 … D-58), addenda **A1-R4a** (D-59) and **A1-R4b** (D-60), 2026-11-10.
+
+## A1-R4b (D-60): proof-chain drift on B3 R4
+
+| Item | Decision | Numbers | Status |
+|---|---|---|---|
+| `CALC-A1-CG-RANGE` re-ran negative (fwd −0.85 mm, aft −0.002 mm, SM −7e-6) | `cg.x_range_m` [0.050, 0.0549] → **[0.0509, 0.0548] m**: B3 R4 0.05085 / 0.05490 rounded inward to 0.1 mm. B3 asked for 0.0549 (CR-B3-22), 2 µm aft of its own limit, so A1 carries 0.0548 (CR-A1-57) | fwd +0.05 mm, aft +0.10 mm, SM at aft mark 5.03 % | `MODELLED` (in params) |
+| Target 0.0522 → 0.0529 (CR-B3-22) | accepted, **not yet written**: the params edit was refused in this session; the CHANGE-LOG D-60 row is also owed | 550 g at −0.024 today; back on the −0.022 datum at 0.0529 (fwd +1.3 / aft +1.2 mm) | `PROPOSED` (open) |
+| `CALC-A1-PACK-CASES` drift (A3 M 2.305 → 2.322 kg) | Re-based: empty moment from A3's CG with the carried pack at the datum (the old inversion of `CL-A3-PACK-X-REQ` breaks whenever params and A3 hold different targets); growth read from `CL-A3-CG-X-PRED` (1.38 mm), `ASM-A1-CG-GROWTH-DX` retired; each pack's spacer step centres its basic-to-predicted band on the target | 503 g −0.024 (crush stack) 0.0533 → 0.0547; 550 g −0.024 0.0517 → 0.0531; 680 g −0.010 0.0516 → 0.0529 | `MODELLED` |
+| Pack margins | `CL-A1-PACK-CG-FWD` **+0.70 mm** (680 g), `-AFT` **+0.09 mm** (503 g, pinned at the crush stack), ballast 0 g (12.7 g/mm) | range closes, thin | `UNVERIFIED` |
+| merge_check "462 g > 462 g" and doubled one-sided warnings (E-HRN-30/31/32) | A4-owned tooling: CR-A1-59 gives the two fixes (`have > alloc + 0.05`; one warning per subsystem, not per end) | cosmetic, 0 g real overrun | open (A4) |
+
+Checks re-run 2026-11-10: `frame_claims.py` 22 claims, no negative margins; `merge_check.py` **PASS** (0 errors, total
+2 320 g, CG 0.052 m inside the new range). Its two warnings are the propulsion 462 g tie (CR-A1-59) and a new **fins
+435 g > 418 g** overrun (CR-A1-61 to D3). The doubled one-sided warnings did not appear in this run. `build_graph.py`
+was not completed: several other roles were running it at the same time.
+Other A1-R4b numbers: `CL-A1-CG-CENTRED` +1.6 mm, `CL-A1-TIPOVER` 30.66° (C5 re-runs, CR-A1-60). The tables below are
+the A1-R4a record; the CG rows in them are superseded by this table.
 Re-derive: `python -I redesign/team/A1/frame_claims.py` (22 claims, also writes `params/mass_budget.json`), then
 `python -I redesign/proofs/build_graph.py`. `interfaces/merge_check.py` now **passes** (0 errors; CG 0.051 m).
 
@@ -27,13 +44,13 @@ Re-derive: `python -I redesign/team/A1/frame_claims.py` (22 claims, also writes 
 
 | Claim | Value | Limit | Margin | Status |
 |---|---|---|---|---|
-| `CL-A1-PACK-CG-FWD` / `-AFT` | +0.7 / +1.1 mm | ≥ 0 | — | `UNVERIFIED` (A3, B3 inputs) |
+| `CL-A1-PACK-CG-FWD` / `-AFT` | +0.70 / +0.09 mm (D-60) | ≥ 0 | — | `UNVERIFIED` (A3, B3 inputs) |
 | `CL-A1-PACK-STATION` (503 g travel left) | 1.4 mm | ≥ 0 | — | `UNVERIFIED` (D2 re-lays) |
 | `CL-A1-NOSE-BALLAST` | 0 g | ≤ 10 g | — | `UNVERIFIED` |
 | `CL-A1-MASS-SIZED` / `-RESERVE-COVERS` | 2.600 kg / 0 g | ≤ 2.6 kg / ≥ 0 | +0 % | `UNVERIFIED` (A3: predicted 2 419 g, +181 g) |
 | `CL-A1-HOVER-TW-GATE` / `-SAG` | 2.49 / 2.12 | ≥ 2.0 / 1.6 | +25 % / +33 % | `UNVERIFIED` (stand) |
 | `CL-A1-STALL-GATE` / `-TRANSITION-GATE` | 11.91 / 15.48 m/s | ≤ 12 / 16 m/s | +1 % / +3 % | `UNVERIFIED` |
-| `CL-A1-CG-RANGE-FWD` / `-AFT` | +0.5 / +0.05 mm | ≥ 0 | — | `UNVERIFIED` (B3) |
+| `CL-A1-CG-RANGE-FWD` / `-AFT` | +0.05 / +0.10 mm (D-60) | ≥ 0 | — | `UNVERIFIED` (B3) |
 | `CL-A1-TIPOVER` | 30.6° | ≥ 30° | +2 % | `UNVERIFIED` (C5 re-runs at the new CG) |
 | `CL-A1-PROP-CLEAR` / `CL-A1-BOX-FIT` | 34.6 mm / 2 mm | ≥ 25 mm / ≥ 0 | +38 % / — | `UNVERIFIED` / `CHECKED` |
 | `CL-A1-RESERVE` | $313 | ≥ $309 | +1 % | `UNVERIFIED` (I1) |

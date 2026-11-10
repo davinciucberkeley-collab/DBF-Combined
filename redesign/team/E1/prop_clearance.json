@@ -1,0 +1,563 @@
+{
+ "envelope_m": {
+  "fwd": 0.01,
+  "aft": 0.006,
+  "sym": 0.01
+ },
+ "clearance_m": 0.025,
+ "trials": {
+  "0.0025": {
+   "box_hits": 4,
+   "box_hit_parts": [
+    "FIN-002-L",
+    "FIN-002-R"
+   ],
+   "min_gap": {
+    "body": "FIN-002-R / motor tube",
+    "e1_m": 0.0212,
+    "sym_m": 0.0173
+   },
+   "bodies_within_40mm": {
+    "FIN-002-R / motor tube": {
+     "e1_m": 0.0212,
+     "sym_m": 0.0173
+    },
+    "FIN-004-R / bore boss": {
+     "e1_m": 0.0254,
+     "sym_m": 0.023
+    },
+    "FIN-006-R / tube plug": {
+     "e1_m": 0.0261,
+     "sym_m": 0.0232
+    },
+    "FIN-009-UR / CF brace": {
+     "e1_m": 0.0283,
+     "sym_m": 0.0244
+    },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.029,
+     "sym_m": 0.025
+    },
+    "FIN-008-UR / collar ring": {
+     "e1_m": 0.0297,
+     "sym_m": 0.0257
+    },
+    "FIN-003-UR / collar": {
+     "e1_m": 0.0307,
+     "sym_m": 0.0267
+    },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.0311,
+     "sym_m": 0.0271
+    },
+    "FIN-004-R / tube socket": {
+     "e1_m": 0.0318,
+     "sym_m": 0.0305
+    },
+    "FIN-003-UR / lip cap": {
+     "e1_m": 0.0319,
+     "sym_m": 0.0279
+    },
+    "FIN-004-R / strap eye": {
+     "e1_m": 0.0337,
+     "sym_m": 0.0306
+    },
+    "WNG-003 / tape doubler block upper": {
+     "e1_m": 0.0341,
+     "sym_m": 0.0334
+    },
+    "WNG-001 / xps core y0.302-0.338": {
+     "e1_m": 0.0342,
+     "sym_m": 0.0335
+    },
+    "WNG-003 / tape skin upper": {
+     "e1_m": 0.0342,
+     "sym_m": 0.0335
+    },
+    "WNG-001 / xps core y0.338-0.340": {
+     "e1_m": 0.0349,
+     "sym_m": 0.0342
+    },
+    "WNG-001 / xps core y0.340-0.500": {
+     "e1_m": 0.035,
+     "sym_m": 0.0344
+    },
+    "FIN-008-UR / brace ear": {
+     "e1_m": 0.0352,
+     "sym_m": 0.0312
+    },
+    "WNG-001 / xps core y0.300-0.302": {
+     "e1_m": 0.0356,
+     "sym_m": 0.0349
+    },
+    "WNG-001 / xps core y0.296-0.300": {
+     "e1_m": 0.0358,
+     "sym_m": 0.0351
+    },
+    "WNG-001 / xps core y0.288-0.296": {
+     "e1_m": 0.0364,
+     "sym_m": 0.0357
+    },
+    "FIN-003-UR / pinch ear": {
+     "e1_m": 0.0376,
+     "sym_m": 0.0336
+    },
+    "WNG-001 / xps core y0.287-0.288": {
+     "e1_m": 0.0378,
+     "sym_m": 0.0371
+    },
+    "WNG-001 / xps core y0.285-0.287": {
+     "e1_m": 0.038,
+     "sym_m": 0.0373
+    },
+    "WNG-001 / xps core y0.283-0.285": {
+     "e1_m": 0.0384,
+     "sym_m": 0.0377
+    },
+    "WNG-001 / xps core y0.253-0.283": {
+     "e1_m": 0.0388,
+     "sym_m": 0.0381
+    }
+   }
+  },
+  "0.0060": {
+   "box_hits": 4,
+   "box_hit_parts": [
+    "FIN-002-L",
+    "FIN-002-R"
+   ],
+   "min_gap": {
+    "body": "FIN-002-R / motor tube",
+    "e1_m": 0.0247,
+    "sym_m": 0.0208
+   },
+   "bodies_within_40mm": {
+    "FIN-002-R / motor tube": {
+     "e1_m": 0.0247,
+     "sym_m": 0.0208
+    },
+    "FIN-004-R / bore boss": {
+     "e1_m": 0.0281,
+     "sym_m": 0.0254
+    },
+    "FIN-006-R / tube plug": {
+     "e1_m": 0.0291,
+     "sym_m": 0.026
+    },
+    "FIN-009-UR / CF brace": {
+     "e1_m": 0.0318,
+     "sym_m": 0.0279
+    },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.0325,
+     "sym_m": 0.0285
+    },
+    "FIN-008-UR / collar ring": {
+     "e1_m": 0.0332,
+     "sym_m": 0.0292
+    },
+    "FIN-004-R / tube socket": {
+     "e1_m": 0.0335,
+     "sym_m": 0.0319
+    },
+    "FIN-003-UR / collar": {
+     "e1_m": 0.0341,
+     "sym_m": 0.0301
+    },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.0345,
+     "sym_m": 0.0305
+    },
+    "WNG-003 / tape doubler block upper": {
+     "e1_m": 0.0351,
+     "sym_m": 0.0344
+    },
+    "WNG-003 / tape skin upper": {
+     "e1_m": 0.0352,
+     "sym_m": 0.0345
+    },
+    "FIN-003-UR / lip cap": {
+     "e1_m": 0.0354,
+     "sym_m": 0.0314
+    },
+    "WNG-001 / xps core y0.302-0.338": {
+     "e1_m": 0.0355,
+     "sym_m": 0.0345
+    },
+    "WNG-001 / xps core y0.338-0.340": {
+     "e1_m": 0.0358,
+     "sym_m": 0.0351
+    },
+    "WNG-001 / xps core y0.340-0.500": {
+     "e1_m": 0.036,
+     "sym_m": 0.0353
+    },
+    "WNG-001 / xps core y0.300-0.302": {
+     "e1_m": 0.0367,
+     "sym_m": 0.0358
+    },
+    "FIN-004-R / strap eye": {
+     "e1_m": 0.0367,
+     "sym_m": 0.0335
+    },
+    "WNG-001 / xps core y0.296-0.300": {
+     "e1_m": 0.0369,
+     "sym_m": 0.036
+    },
+    "WNG-001 / xps core y0.288-0.296": {
+     "e1_m": 0.0375,
+     "sym_m": 0.0366
+    },
+    "FIN-008-UR / brace ear": {
+     "e1_m": 0.0387,
+     "sym_m": 0.0347
+    },
+    "WNG-001 / xps core y0.287-0.288": {
+     "e1_m": 0.0389,
+     "sym_m": 0.038
+    },
+    "WNG-001 / xps core y0.285-0.287": {
+     "e1_m": 0.0391,
+     "sym_m": 0.0382
+    },
+    "WNG-001 / xps core y0.283-0.285": {
+     "e1_m": 0.0395,
+     "sym_m": 0.0386
+    },
+    "WNG-001 / xps core y0.253-0.283": {
+     "e1_m": 0.0399,
+     "sym_m": 0.0391
+    },
+    "FIN-003-UR / pinch ear": {
+     "e1_m": 0.0411,
+     "sym_m": 0.0371
+    }
+   }
+  },
+  "0.0065": {
+   "box_hits": 0,
+   "box_hit_parts": [],
+   "min_gap": {
+    "body": "FIN-002-R / motor tube",
+    "e1_m": 0.0252,
+    "sym_m": 0.0213
+   },
+   "bodies_within_40mm": {
+    "FIN-002-R / motor tube": {
+     "e1_m": 0.0252,
+     "sym_m": 0.0213
+    },
+    "FIN-004-R / bore boss": {
+     "e1_m": 0.0285,
+     "sym_m": 0.0257
+    },
+    "FIN-006-R / tube plug": {
+     "e1_m": 0.0295,
+     "sym_m": 0.0264
+    },
+    "FIN-009-UR / CF brace": {
+     "e1_m": 0.0323,
+     "sym_m": 0.0284
+    },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.033,
+     "sym_m": 0.029
+    },
+    "FIN-008-UR / collar ring": {
+     "e1_m": 0.0337,
+     "sym_m": 0.0297
+    },
+    "FIN-004-R / tube socket": {
+     "e1_m": 0.0338,
+     "sym_m": 0.0321
+    },
+    "FIN-003-UR / collar": {
+     "e1_m": 0.0346,
+     "sym_m": 0.0306
+    },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.035,
+     "sym_m": 0.031
+    },
+    "WNG-003 / tape doubler block upper": {
+     "e1_m": 0.0353,
+     "sym_m": 0.0345
+    },
+    "WNG-003 / tape skin upper": {
+     "e1_m": 0.0354,
+     "sym_m": 0.0346
+    },
+    "WNG-001 / xps core y0.302-0.338": {
+     "e1_m": 0.0356,
+     "sym_m": 0.0346
+    },
+    "FIN-003-UR / lip cap": {
+     "e1_m": 0.0359,
+     "sym_m": 0.0319
+    },
+    "WNG-001 / xps core y0.338-0.340": {
+     "e1_m": 0.036,
+     "sym_m": 0.0353
+    },
+    "WNG-001 / xps core y0.340-0.500": {
+     "e1_m": 0.0362,
+     "sym_m": 0.0355
+    },
+    "WNG-001 / xps core y0.300-0.302": {
+     "e1_m": 0.0368,
+     "sym_m": 0.0359
+    },
+    "WNG-001 / xps core y0.296-0.300": {
+     "e1_m": 0.0371,
+     "sym_m": 0.0362
+    },
+    "FIN-004-R / strap eye": {
+     "e1_m": 0.0371,
+     "sym_m": 0.0339
+    },
+    "WNG-001 / xps core y0.288-0.296": {
+     "e1_m": 0.0377,
+     "sym_m": 0.0367
+    },
+    "WNG-001 / xps core y0.287-0.288": {
+     "e1_m": 0.0391,
+     "sym_m": 0.0382
+    },
+    "FIN-008-UR / brace ear": {
+     "e1_m": 0.0392,
+     "sym_m": 0.0352
+    },
+    "WNG-001 / xps core y0.285-0.287": {
+     "e1_m": 0.0393,
+     "sym_m": 0.0383
+    },
+    "WNG-001 / xps core y0.283-0.285": {
+     "e1_m": 0.0397,
+     "sym_m": 0.0387
+    },
+    "WNG-001 / xps core y0.253-0.283": {
+     "e1_m": 0.0401,
+     "sym_m": 0.0392
+    },
+    "FIN-003-UR / pinch ear": {
+     "e1_m": 0.0416,
+     "sym_m": 0.0376
+    }
+   }
+  },
+  "0.0075": {
+   "box_hits": 0,
+   "box_hit_parts": [],
+   "min_gap": {
+    "body": "FIN-002-R / motor tube",
+    "e1_m": 0.0262,
+    "sym_m": 0.0223
+   },
+   "bodies_within_40mm": {
+    "FIN-002-R / motor tube": {
+     "e1_m": 0.0262,
+     "sym_m": 0.0223
+    },
+    "FIN-004-R / bore boss": {
+     "e1_m": 0.0293,
+     "sym_m": 0.0265
+    },
+    "FIN-006-R / tube plug": {
+     "e1_m": 0.0304,
+     "sym_m": 0.0272
+    },
+    "FIN-009-UR / CF brace": {
+     "e1_m": 0.0333,
+     "sym_m": 0.0293
+    },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.034,
+     "sym_m": 0.03
+    },
+    "FIN-004-R / tube socket": {
+     "e1_m": 0.0344,
+     "sym_m": 0.0326
+    },
+    "FIN-008-UR / collar ring": {
+     "e1_m": 0.0347,
+     "sym_m": 0.0307
+    },
+    "WNG-003 / tape doubler block upper": {
+     "e1_m": 0.0356,
+     "sym_m": 0.0347
+    },
+    "FIN-003-UR / collar": {
+     "e1_m": 0.0356,
+     "sym_m": 0.0316
+    },
+    "WNG-003 / tape skin upper": {
+     "e1_m": 0.0357,
+     "sym_m": 0.0348
+    },
+    "WNG-001 / xps core y0.302-0.338": {
+     "e1_m": 0.0359,
+     "sym_m": 0.0349
+    },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.036,
+     "sym_m": 0.032
+    },
+    "WNG-001 / xps core y0.338-0.340": {
+     "e1_m": 0.0363,
+     "sym_m": 0.0356
+    },
+    "WNG-001 / xps core y0.340-0.500": {
+     "e1_m": 0.0365,
+     "sym_m": 0.0357
+    },
+    "FIN-003-UR / lip cap": {
+     "e1_m": 0.0369,
+     "sym_m": 0.0329
+    },
+    "WNG-001 / xps core y0.300-0.302": {
+     "e1_m": 0.0371,
+     "sym_m": 0.0362
+    },
+    "WNG-001 / xps core y0.296-0.300": {
+     "e1_m": 0.0374,
+     "sym_m": 0.0365
+    },
+    "WNG-001 / xps core y0.288-0.296": {
+     "e1_m": 0.038,
+     "sym_m": 0.037
+    },
+    "FIN-004-R / strap eye": {
+     "e1_m": 0.038,
+     "sym_m": 0.0348
+    },
+    "WNG-001 / xps core y0.287-0.288": {
+     "e1_m": 0.0394,
+     "sym_m": 0.0384
+    },
+    "WNG-001 / xps core y0.285-0.287": {
+     "e1_m": 0.0396,
+     "sym_m": 0.0386
+    },
+    "WNG-001 / xps core y0.283-0.285": {
+     "e1_m": 0.04,
+     "sym_m": 0.039
+    },
+    "FIN-008-UR / brace ear": {
+     "e1_m": 0.0402,
+     "sym_m": 0.0362
+    },
+    "WNG-001 / xps core y0.253-0.283": {
+     "e1_m": 0.0404,
+     "sym_m": 0.0395
+    },
+    "FIN-003-UR / pinch ear": {
+     "e1_m": 0.0426,
+     "sym_m": 0.0386
+    }
+   }
+  },
+  "0.0100": {
+   "box_hits": 0,
+   "box_hit_parts": [],
+   "min_gap": {
+    "body": "FIN-002-R / motor tube",
+    "e1_m": 0.0287,
+    "sym_m": 0.0247
+   },
+   "bodies_within_40mm": {
+    "FIN-002-R / motor tube": {
+     "e1_m": 0.0287,
+     "sym_m": 0.0247
+    },
+    "FIN-004-R / bore boss": {
+     "e1_m": 0.0313,
+     "sym_m": 0.0284
+    },
+    "FIN-006-R / tube plug": {
+     "e1_m": 0.0326,
+     "sym_m": 0.0293
+    },
+    "FIN-009-UR / CF brace": {
+     "e1_m": 0.0358,
+     "sym_m": 0.0318
+    },
+    "FIN-004-R / tube socket": {
+     "e1_m": 0.0359,
+     "sym_m": 0.0339
+    },
+    "WNG-003 / tape skin upper": {
+     "e1_m": 0.0365,
+     "sym_m": 0.0356
+    },
+    "WNG-003 / tape doubler block upper": {
+     "e1_m": 0.0365,
+     "sym_m": 0.0355
+    },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.0365,
+     "sym_m": 0.0325
+    },
+    "WNG-001 / xps core y0.302-0.338": {
+     "e1_m": 0.0368,
+     "sym_m": 0.0359
+    },
+    "WNG-001 / xps core y0.338-0.340": {
+     "e1_m": 0.0372,
+     "sym_m": 0.0363
+    },
+    "FIN-008-UR / collar ring": {
+     "e1_m": 0.0372,
+     "sym_m": 0.0332
+    },
+    "WNG-001 / xps core y0.340-0.500": {
+     "e1_m": 0.0373,
+     "sym_m": 0.0364
+    },
+    "WNG-001 / xps core y0.300-0.302": {
+     "e1_m": 0.038,
+     "sym_m": 0.037
+    },
+    "FIN-003-UR / collar": {
+     "e1_m": 0.0381,
+     "sym_m": 0.0341
+    },
+    "WNG-001 / xps core y0.296-0.300": {
+     "e1_m": 0.0382,
+     "sym_m": 0.0373
+    },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.0385,
+     "sym_m": 0.0345
+    },
+    "WNG-001 / xps core y0.288-0.296": {
+     "e1_m": 0.0388,
+     "sym_m": 0.0378
+    },
+    "FIN-003-UR / lip cap": {
+     "e1_m": 0.0394,
+     "sym_m": 0.0354
+    },
+    "WNG-001 / xps core y0.287-0.288": {
+     "e1_m": 0.0402,
+     "sym_m": 0.0393
+    },
+    "FIN-004-R / strap eye": {
+     "e1_m": 0.0402,
+     "sym_m": 0.0369
+    },
+    "WNG-001 / xps core y0.285-0.287": {
+     "e1_m": 0.0404,
+     "sym_m": 0.0394
+    },
+    "WNG-001 / xps core y0.283-0.285": {
+     "e1_m": 0.0408,
+     "sym_m": 0.0399
+    },
+    "FIN-008-UR / brace ear": {
+     "e1_m": 0.0426,
+     "sym_m": 0.0386
+    }
+   }
+  }
+ }
+}

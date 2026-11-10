@@ -58,7 +58,7 @@
    -0.2,
    0.2
   ],
-  "pad_area_min_m2": 0.00108,
+  "pad_area_min_m2": 0.00117,
   "pad_min_mm": "40 x 40 under the spar line (D7)"
  },
  "pod": {
@@ -69,8 +69,8 @@
   "tape_kg": 48.6,
   "spar_kg": 102.0,
   "slot_fill_kg": 15.0,
-  "plugs_kg": 30.0,
-  "total_kg": 397.4,
+  "plugs_kg": 22.0,
+  "total_kg": 389.4,
   "allocation_kg": 405.0
  }
 }

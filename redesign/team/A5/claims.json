@@ -296,7 +296,7 @@
    "id": "ASM-A5-MASS-SPLIT",
    "type": "assumption",
    "title": "Allocation split and lump stations used for the layout CG (R3 skeleton)",
-   "text": "Within each allocation: wing = spar (mass/m x length); the rest split between core and elevon panels with the tape skin by planform area and foam/fill/consumables by section volume; fins = 2 tubes (spar mass/m x tube length) + per station mount 11.0, station collar 10.6, CF brace 5.2, anchor 3.2 g + 2 x 41.0 g through-core blocks (D3 R3 CAD unit masses, rounded) and 4 half-fins carrying the rest (board, edge strips, pins, ESC pad, plug share); propulsion = 4 x prop (params) at the prop plane + rest (motor, ESC, adapter, nut) as the motor envelope from DP-MOTOR-FACE; power = pack at the D-24 station (D2's aft face less half the pack length) + rest at the pod nose; pod and avionics in the pod; mechanisms 23.5 mm ahead of the hinge; harness as two bundle legs (channel 14 mm aft of the spar surface, tube inboard face); feet from 12 mm ahead of the TE to DP-GROUND; printed walls 3 mm; growth reserve not placed",
+   "text": "Within each allocation: wing = spar (mass/m x length); the rest split between core and elevon panels with the tape skin by planform area and foam/fill/consumables by section volume; fins = 2 tubes (spar mass/m x tube length) + per station mount 11.0, station collar 10.6, CF brace 5.2, anchor 3.2 g + 2 x 41.0 g through-core blocks (D3 R3 CAD unit masses, rounded) and 4 half-fins carrying the rest (board, edge strips, pins, ESC pad, plug share); propulsion = 4 x prop (params) at the prop plane + rest (motor, ESC, adapter, nut) as the motor envelope from DP-MOTOR-FACE; power = pack at the D-47 bay datum (D2's aft face less half the pack length) + rest at the pod nose; pod and avionics in the pod; mechanisms 23.5 mm ahead of the hinge; harness as two bundle legs (channel 14 mm aft of the spar surface, tube inboard face); feet from 12 mm ahead of the TE to DP-GROUND; printed walls 3 mm; growth reserve not placed",
    "basis": "params.json#mass.allocation_g (CHANGE-LOG D-38) and subsystems/fins/parts.csv (D3 R3); the skeleton modules (redesign/fusion/skeleton/*/fusion) use the same numbers",
    "status": "UNVERIFIED",
    "cites": [
@@ -911,11 +911,11 @@
      0.56
     ],
     "pod": [
-     0.21,
+     0.225,
      0.14,
      0.07
     ],
-    "pod_x": -0.115,
+    "pod_x": -0.13,
     "c": 0.32,
     "f": 0.22,
     "y_fin": 0.32,
@@ -1046,30 +1046,30 @@
     "ASM-A5-SECTION"
    ],
    "outputs": {
-    "mass_g": 2324.0,
-    "cg_x_m": 0.05212681602022075,
-    "cg_z_m": 0.017652277135289784,
-    "cg_x_frac_chord": 0.16289630006318984,
-    "cg_x_fwd_limit_m": 0.05,
-    "cg_x_aft_limit_m": 0.055,
+    "mass_g": 2355.0,
+    "cg_x_m": 0.046590904953270576,
+    "cg_z_m": 0.0168816321243692,
+    "cg_x_frac_chord": 0.14559657797897055,
+    "cg_x_fwd_limit_m": 0.0509,
+    "cg_x_aft_limit_m": 0.0548,
     "cg_z_up_limit_m": 0.03,
-    "cg_x_range_use": 0.14927359191170284,
-    "pack_x_m": -0.0010000000000000009,
-    "pack_x_for_target_m": 0.000999417398194515,
-    "pack_shift_m": 0.001999417398194516,
-    "hover_upper_pair_share": 0.5464533608823415,
-    "hover_split_ratio": 1.2048449128526808
+    "cg_x_range_use": 3.2097923316561148,
+    "pack_x_m": -0.022000000000000006,
+    "pack_x_for_target_m": 0.0020171251546323606,
+    "pack_shift_m": 0.024017125154632366,
+    "hover_upper_pair_share": 0.5444253476957084,
+    "hover_split_ratio": 1.1950299362398915
    },
    "input_values": {
     "a_wing": 405,
-    "a_fins": 408,
-    "a_pod": 122,
+    "a_fins": 418,
+    "a_pod": 131,
     "a_land": 43,
-    "a_prop": 476,
-    "a_pwr": 620,
-    "a_avn": 80,
-    "a_hrn": 105,
-    "a_mec": 65,
+    "a_prop": 462,
+    "a_pwr": 648,
+    "a_avn": 45,
+    "a_hrn": 123,
+    "a_mec": 80,
     "m_pack_kg": 0.55,
     "spar_kgm": 0.102,
     "spar_l": 1.0,
@@ -1340,15 +1340,15 @@
     "od": 0.022,
     "y_fin": 0.32,
     "hh": 0.21,
-    "can_l": 0.025,
+    "can_l": 0.0265,
     "can_d": 0.038,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "z_m": 0.19,
     "foot": 0.048,
-    "pod_x": -0.115,
+    "pod_x": -0.13,
     "pod_size": [
-     0.21,
+     0.225,
      0.14,
      0.07
     ],
@@ -1358,10 +1358,10 @@
      0.048,
      0.05
     ],
-    "x_target": 0.0526,
+    "x_target": 0.0522,
     "x_range": [
-     0.05,
-     0.055
+     0.0509,
+     0.0548
     ],
     "z_range": [
      -0.02,
@@ -1370,18 +1370,18 @@
     "tube_l": 0.344,
     "bond_gap": 0.00015,
     "col_wall": 0.002,
-    "face_ahead": 0.001,
+    "face_ahead": 0.0025,
     "grip": 0.012,
     "plate_hz": 0.015,
     "sc_gap": 0.0005,
-    "sc_h": 0.016,
+    "sc_h": 0.012,
     "ear_h": 0.012,
     "tail": 0.04,
     "proud": 0.008,
     "blk_wall": 0.006,
     "pack_aft": [
-     0.069,
-     0.073
+     0.048,
+     0.06
     ]
    }
   },
@@ -1490,7 +1490,7 @@
    "output": "cg_x_aft_limit_m",
    "unit": "m",
    "how": "B3 re-derives the range at R1 geometry (CHANGE-LOG D-17, CR-A1-10).",
-   "value": 0.055
+   "value": 0.0548
   },
   {
    "id": "CL-A5-CG-X-FWD-LIMIT",
@@ -1499,71 +1499,36 @@
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "cg_x_fwd_limit_m",
    "unit": "m",
-   "how": "B3: elevon trim at CLmax (CL-B3-CG-FWD, D-24).",
-   "value": 0.05
+   "how": "B3: elevon trim at CLmax (CL-B3-CG-FWD, D-60).",
+   "value": 0.0509
   },
   {
    "id": "CL-A5-LAYOUT-CG-X",
    "type": "claim",
-   "title": "Layout CG x (allocations at the R3 datum stations, pack at the D-24 station)",
+   "title": "Layout CG x (information: allocations at the skeleton stations, pack at the D-47 datum)",
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "cg_x_m",
    "unit": "m",
-   "limit": {
-    "op": "<=",
-    "ref": "CL-A5-CG-X-AFT-LIMIT"
-   },
-   "verifies": [
-    "R-CG-RANGE"
-   ],
    "how": "Equals the CAD roll-up (python -I redesign/fusion/check.py --skeleton, TOTAL line; this script stops if they differ by > 1 mm). A3 replaces the allocations with part masses (MASS-CG.md); H1 balances the built aircraft on two knife edges (T-A5-CG-BALANCE).",
    "assumes": [
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 0.05212681602022075
-  },
-  {
-   "id": "CL-A5-LAYOUT-CG-X-FWD",
-   "type": "claim",
-   "title": "Layout CG x against the forward limit",
-   "calc": "CALC-A5-LAYOUT-CG",
-   "output": "cg_x_m",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "ref": "CL-A5-CG-X-FWD-LIMIT"
-   },
-   "verifies": [
-    "R-CG-RANGE"
-   ],
-   "how": "Same value as CL-A5-LAYOUT-CG-X, tested against cg.x_range_m[0]; T-A5-CG-BALANCE.",
-   "assumes": [
-    "ASM-A5-MASS-SPLIT",
-    "ASM-A5-SECTION"
-   ],
-   "value": 0.05212681602022075
+   "value": 0.046590904953270576
   },
   {
    "id": "CL-A5-LAYOUT-CG-X-RANGE-USE",
    "type": "claim",
-   "title": "Layout CG x in the range, |x - mid| / half-range",
+   "title": "Layout CG x, |x - mid| / half-range (information; > 1 = outside)",
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "cg_x_range_use",
    "unit": "-",
-   "limit": {
-    "op": "<=",
-    "value": 1.0
-   },
-   "verifies": [
-    "R-CG-RANGE"
-   ],
-   "how": "Same basis as CL-A3-CG-X-RANGE (A3's bottom-up value); T-A5-CG-BALANCE.",
+   "how": "Information only (allocation lumps, not parts). The verifying values are CL-A5-ASSY-CG-X-RANGE-USE and A3's CL-A3-CG-X-RANGE; T-A5-CG-BALANCE.",
    "assumes": [
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 0.14927359191170284
+   "value": 3.2097923316561148
   },
   {
    "id": "CL-A5-PACK-X-FOR-CG",
@@ -1580,12 +1545,12 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.000999417398194515
+   "value": 0.0020171251546323606
   },
   {
    "id": "CL-A5-PACK-SHIFT",
    "type": "claim",
-   "title": "Pack shift from the D-24 station for the CG target",
+   "title": "Pack shift from the D-47 bay datum for the CG target",
    "calc": "CALC-A5-LAYOUT-CG",
    "output": "pack_shift_m",
    "unit": "m",
@@ -1593,7 +1558,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.001999417398194516
+   "value": 0.024017125154632366
   },
   {
    "id": "CL-A5-CG-Z-UP-LIMIT",
@@ -1620,7 +1585,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.017652277135289784
+   "value": 0.0168816321243692
   },
   {
    "id": "CL-A5-HOVER-SPLIT",
@@ -1637,7 +1602,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 1.2048449128526808
+   "value": 1.1950299362398915
   },
   {
    "id": "ASM-A5-ASSY-ROLLUP",
@@ -1646,31 +1611,31 @@
    "text": "Declared part masses and CGs (interfaces.json) of the ten modules check.py builds from redesign/subsystems, summed by merge_check.rollup; per subsystem [mass g, CG x m, share of the CG shift from the R3 skeleton mm]",
    "basis": "python -I redesign/team/A5/integration_check.py (snapshot team/A5/integration.json, tables in INTEGRATION.md); declared masses are the designers' CAD/datasheet numbers, not weighed",
    "value": {
-    "date": "2026-11-09",
-    "mass_g": 2330.3,
+    "date": "2026-11-10",
+    "mass_g": 2320.0,
     "cg_m": [
-     0.05766,
-     -0.00111,
-     0.01832
+     0.05213,
+     -0.00114,
+     0.01845
     ],
-    "errors": 5,
-    "warnings": 47,
-    "skeleton_cg_x_m": 0.05214,
+    "errors": 4,
+    "warnings": 3,
+    "skeleton_cg_x_m": 0.0466,
     "by_subsystem": {
      "wing": [
       387.3,
       0.1140104828298477,
-      -0.75
+      -0.79
      ],
      "fins": [
-      417.3,
-      0.09661151634237529,
-      -0.59
+      434.8,
+      0.10290019781028616,
+      0.38
      ],
      "pod": [
-      128.1,
-      0.00032349726775956225,
-      0.4
+      130.9,
+      -0.006988846447669976,
+      0.6
      ],
      "landing": [
       42.5,
@@ -1678,29 +1643,29 @@
       -0.39
      ],
      "propulsion": [
-      475.6,
-      0.020392346509671998,
-      1.22
+      462.0,
+      0.01661818181818181,
+      0.82
      ],
      "mechanisms": [
-      82.3,
-      0.22041017731357784,
-      1.09
+      70.7,
+      0.21660489530277302,
+      -1.01
      ],
      "power": [
       638.2,
-      0.0014359135067377,
-      3.23
+      -0.01663898464431213,
+      5.69
      ],
      "avionics": [
       36.5,
-      -0.019833442982456144,
-      1.35
+      -0.021922478070175448,
+      0.51
      ],
      "harness": [
-      122.5,
-      0.06704514285714284,
-      -0.05
+      117.2,
+      0.06650699658703071,
+      -0.27
      ],
      "transport": [
       0,
@@ -1738,41 +1703,41 @@
     "ASM-A5-ASSY-ROLLUP"
    ],
    "outputs": {
-    "mass_kg": 2.3303000000000003,
-    "cg_x_m": 0.05766,
-    "cg_y_m": -0.00111,
-    "cg_z_m": 0.01832,
-    "cg_x_range_use": 2.064,
-    "cg_x_shift_m": 0.005520000000000004,
-    "check_errors": 5
+    "mass_kg": 2.32,
+    "cg_x_m": 0.05213,
+    "cg_y_m": -0.00114,
+    "cg_z_m": 0.01845,
+    "cg_x_range_use": 0.36923076923076836,
+    "cg_x_shift_m": 0.00553,
+    "check_errors": 4
    },
    "input_values": {
     "snap": {
-     "date": "2026-11-09",
-     "mass_g": 2330.3,
+     "date": "2026-11-10",
+     "mass_g": 2320.0,
      "cg_m": [
-      0.05766,
-      -0.00111,
-      0.01832
+      0.05213,
+      -0.00114,
+      0.01845
      ],
-     "errors": 5,
-     "warnings": 47,
-     "skeleton_cg_x_m": 0.05214,
+     "errors": 4,
+     "warnings": 3,
+     "skeleton_cg_x_m": 0.0466,
      "by_subsystem": {
       "wing": [
        387.3,
        0.1140104828298477,
-       -0.75
+       -0.79
       ],
       "fins": [
-       417.3,
-       0.09661151634237529,
-       -0.59
+       434.8,
+       0.10290019781028616,
+       0.38
       ],
       "pod": [
-       128.1,
-       0.00032349726775956225,
-       0.4
+       130.9,
+       -0.006988846447669976,
+       0.6
       ],
       "landing": [
        42.5,
@@ -1780,29 +1745,29 @@
        -0.39
       ],
       "propulsion": [
-       475.6,
-       0.020392346509671998,
-       1.22
+       462.0,
+       0.01661818181818181,
+       0.82
       ],
       "mechanisms": [
-       82.3,
-       0.22041017731357784,
-       1.09
+       70.7,
+       0.21660489530277302,
+       -1.01
       ],
       "power": [
        638.2,
-       0.0014359135067377,
-       3.23
+       -0.01663898464431213,
+       5.69
       ],
       "avionics": [
        36.5,
-       -0.019833442982456144,
-       1.35
+       -0.021922478070175448,
+       0.51
       ],
       "harness": [
-       122.5,
-       0.06704514285714284,
-       -0.05
+       117.2,
+       0.06650699658703071,
+       -0.27
       ],
       "transport": [
        0,
@@ -1812,8 +1777,8 @@
      }
     },
     "x_range": [
-     0.05,
-     0.055
+     0.0509,
+     0.0548
     ],
     "z_range": [
      -0.02,
@@ -1840,7 +1805,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 2.3303000000000003
+   "value": 2.32
   },
   {
    "id": "CL-A5-ASSY-CG-X",
@@ -1860,7 +1825,27 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 0.05766
+   "value": 0.05213
+  },
+  {
+   "id": "CL-A5-ASSY-CG-X-FWD",
+   "type": "claim",
+   "title": "Assembled CAD CG x against the forward limit",
+   "calc": "CALC-A5-ASSY",
+   "output": "cg_x_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-A5-CG-X-FWD-LIMIT"
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "Same value as CL-A5-ASSY-CG-X against cg.x_range_m[0]; T-A5-CG-BALANCE.",
+   "assumes": [
+    "ASM-A5-ASSY-ROLLUP"
+   ],
+   "value": 0.05213
   },
   {
    "id": "CL-A5-ASSY-CG-X-RANGE-USE",
@@ -1880,7 +1865,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 2.064
+   "value": 0.36923076923076836
   },
   {
    "id": "CL-A5-ASSY-CG-SHIFT",
@@ -1894,7 +1879,7 @@
     "ASM-A5-ASSY-ROLLUP",
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.005520000000000004
+   "value": 0.00553
   },
   {
    "id": "CL-A5-ASSY-CG-Z",
@@ -1911,7 +1896,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 0.01832
+   "value": 0.01845
   },
   {
    "id": "CL-A5-ASSY-CHECK-ERRORS",
@@ -1928,7 +1913,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 5
+   "value": 4
   },
   {
    "id": "T-A5-CORE-COVER",
@@ -1946,11 +1931,8 @@
    "type": "test",
    "title": "CG balance of the built aircraft",
    "verifies": [
-    "CL-A5-LAYOUT-CG-X",
-    "CL-A5-LAYOUT-CG-X-FWD",
-    "CL-A5-LAYOUT-CG-X-RANGE-USE",
-    "CL-A5-LAYOUT-CG-Z",
     "CL-A5-ASSY-CG-X",
+    "CL-A5-ASSY-CG-X-FWD",
     "CL-A5-ASSY-CG-X-RANGE-USE",
     "CL-A5-ASSY-CG-Z"
    ],

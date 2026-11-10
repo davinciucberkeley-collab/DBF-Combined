@@ -1,6 +1,6 @@
 # Transport box — build steps
 
-Status `PROPOSED` (D7, round 3, 2026-11-09). About 6 h for two people plus glue cure, and 1.5 h for the mat. Build after the first wing core exists
+Status `PROPOSED` (D7, round 4, 2026-11-10: 3/4 in nose pad, saddle cut to the skinned surface, handle-bolt engagement check). About 6 h for two people plus glue cure, and 1.5 h for the mat. Build after the first wing core exists
 (the saddles are cut to it) and after `CAR-FIT.md` has two measured cars.
 
 | Tools | Materials |
@@ -19,14 +19,15 @@ Status `PROPOSED` (D7, round 3, 2026-11-09). About 6 h for two people plus glue 
 5. **Make the two crush columns.** Laminate PE 2 in + 2 in + 1 in with LSE tape, band-saw to 60 × 50 × **120** mm.
    CHECK: height 120 ± 2 mm (the 109–123 mm window in `SPEC.md`); about 10 g each.
 6. **Hot-wire the two saddles** from 3 stacked 2 in XPS offcuts with the wing's lower-surface template
-   (`subsystems/wing/s5010.dat`, chord 320 mm), x −15 … 235 mm, **width 60 mm (y 0.17–0.23)**, 6 mm LE lip. Tape a
+   (`subsystems/wing/s5010.dat`, chord 320 mm; trace the template from a **taped** wing rib or add the tape thickness, so
+   the saddle fits the skin, not the bare core: no preload, `trn.cradle.saddle_preload_m` 0), x −15 … 235 mm, **width 60 mm (y 0.17–0.23)**, 6 mm LE lip. Tape a
    6 mm PE cap on the contour. Knife a **9 mm wide, 3 mm deep relief channel** across the cap at x 57–66 mm, under
    the ESC-lead groove (`trn.cradle.relief_x_m`). CHECK: the wing sits in the saddle with no rock; the chalked contact
    patch is ≥ 40 × 40 mm (C2); no chalk on the lead tape; the elevon hinge line is ≥ 10 mm behind the saddle.
 7. **Bond each saddle on its column** (LSE tape), column centred under the spar line (x 80 mm).
 8. **Place the cradles** on the floor at y ±200 mm from the box centre, with x set so that the foot pads are **12 mm
-   from the aft wall** (`trn.box.aft_gap_m`; the feet take an aft-wall drop) and the pod nose is about 22 mm from the
-   nose pad (step 11). Tape and 2 zip ties through the floor for each. CHECK with the aircraft in: lower feet
+   from the aft wall** (`trn.box.aft_gap_m`; the feet take an aft-wall drop) and the pod nose is about 13 mm from the
+   nose pad (step 11; ≥ 10 mm, design 13 mm). Tape and 2 zip ties through the floor for each. CHECK with the aircraft in: lower feet
    and tube ends ≥ 82 mm above the floor (design 84 mm); upper tube ends ≥ 10 mm under the lid; a 2 mm feeler passes
    between each saddle and the brace anchor (y 0.234); nothing else touches.
 9. **Cut the tray** (XPS, 460 × 300 × 60 mm): 8 slots 285 × 30 × 40 mm for props on edge, a 220 × 25 × 25 mm
@@ -37,9 +38,11 @@ Status `PROPOSED` (D7, round 3, 2026-11-09). About 6 h for two people plus glue 
     the lid closes with light hand pressure; the aircraft does not move when the closed box is tilted 45°.
 11. **Fit the handles.** Laser-cut 3 backing strips 140 × 30 × 3 mm ply with two 3.4 mm holes 100 mm apart. Side
     handle on the front wall at y 0, 80 mm below the top; end handles on both ends. M3 × 16 SHCS from outside with a
-    fender washer, backing strip and nyloc inside, snug only. Glue the end pads (PE 200 × 150 × 30 mm) on the end
-    walls and the **nose pad** (PE 1 in, 160 × 200 mm, centred on the pod nose at 50 mm above the chord plane, with a
-    12 mm hole for antenna B) on the front wall. CHECK: `T-D7-HANDLE-PULL`, no pull-through; nose to pad ≥ 10 mm.
+    fender washer, backing strip and nyloc inside, snug only. Before bolting, caliper each handle's end tab: ≤ 3.0 mm
+    keeps M3 × 16 (`CL-D7-HANDLE-STRAP-T-MAX`), thicker → M3 × 20. CHECK on every bolt: nyloc fully on and **at least 2
+    full threads showing** past it (≥ 5.0 mm past the nut face, D-41; design 5.5 mm, `CL-D7-HANDLE-ENGAGE`). Glue the end pads (PE 200 × 150 × 30 mm) on the end
+    walls and the **nose pad** (PE **3/4 in**, 160 × 200 mm, centred on the pod nose at 50 mm above the chord plane, with a
+    12 mm wide vertical relief slot for antenna B from 6 mm above it to 90 mm below) on the front wall. CHECK: `T-D7-HANDLE-PULL`, no pull-through; nose to pad ≥ 10 mm; antenna B tip to pad ≥ 2 mm.
 12. **Label** the lid and both end walls with the six lines of `trn.box.labels` (`TRN-109`): THIS SIDE UP · KEEP FLAT:
     NEVER STAND ON END · LIFT BY HANDLES · AIRCRAFT INSIDE: NO LOAD ON LID · PACKS TRAVEL IN THE BATTERY CAN, NEVER IN
     THE BOX · PROPS AND PITOT IN THE TRAY. Add "MAX DROP 0.15 m" on the 0.50 m fallback box only. The end-first and

@@ -58,14 +58,14 @@ kit.assumption("ASM-D2-FWD-STOP", "Nose-wall bond line (was block A), forward st
                basis="CHANGE-LOG D-47 (nose skin to stop face 14.8 -> 8.8 mm, stop face -0.1212 at x_le -0.130), C3 CR-C3-01 (3.0 mm)",
                value=[_lv("nose_block_l_m"), _lv("fwd_stop_m")[0]], unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-AFT-STOP-X", "Aft stop face x", "Face of the aft stop the spacers bear on",
-               basis="CHANGE-LOG D-47 (aft stop 0.077 -> 0.056 = the 680 g pack's aft face at -0.014)", value=_lv("aft_stop_x_m"), unit="m", cites=SRC_POD)
+               basis="CHANGE-LOG D-59, CR-A1-54 (aft stop 0.056 -> 0.060 = datum -0.022 + L/2 + pod.pack_aft_travel_m 0.012; 680 g pack at -0.010, no spacer)", value=_lv("aft_stop_x_m"), unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-PACK-AFT", "Pack aft face, nominal and 680 g", "A1's stations: aft face for the nominal centroid "
-               "pod.pack_x_nominal_m -0.022 (8 mm spacer) and for the 680 g pack at -0.014 (no spacer)",
+               "pod.pack_x_nominal_m -0.022 (12 mm stack, CAD) and for the 680 g pack at -0.010 (no spacer, D-59)",
                basis="CHANGE-LOG D-47, team/A1/CHANGE-REQUESTS.md#CR-A1-43", value=list(_lv("pack_aft_face_m")), unit="m", cites=SRC_POD)
-kit.assumption("ASM-D2-PACK-STATIONS", "Pack centroid stations for the lightest and heaviest listed packs", "A1's per-pack stations "
-               "for 503 g and 680 g (the nominal 550 g one is pod.pack_x_nominal_m)",
-               basis="CHANGE-LOG D-47, params.json pod.pack_x_nominal_m note; subsystems/pod/params.json pack_x_per_pack_m",
-               value=[_lv("pack_x_per_pack_m")["503"], _lv("pack_x_per_pack_m")["680"]], unit="m", cites=SRC_POD)
+kit.assumption("ASM-D2-PACK-STATIONS", "Pack centroid flight stations for the 503 g, 680 g and 550 g packs", "A1's D-59 per-pack "
+               "stations (lightest, heaviest listing, nominal 550 g); the CAD pack sits at the datum pod.pack_x_nominal_m",
+               basis="CHANGE-LOG D-59, team/A1/CHANGE-REQUESTS.md#CR-A1-54; subsystems/pod/params.json pack_x_per_pack_m",
+               value=[_lv("pack_x_per_pack_m")["503"], _lv("pack_x_per_pack_m")["680"], _lv("pack_x_per_pack_m")["550"]], unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-SPREADER-T", "Spreader on the pack fore face", "Printed PETG plate between the pack and the crush block",
                basis="C5 CR-C5-02 / ASM-C5-SPREADER-T", value=_lv("spreader_t_m"), unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-BLOCK-SEC", "Crush block section inputs", "Tray floor thickness under the block, vent groove width x depth in its top",
@@ -187,7 +187,7 @@ def pod_bonds(g, tau):
 def pack_stations(x_fs, x_as, t_sp, LB, pack, m_nom, rng, st, sp):
     step = min(sp)
     out = {}
-    for tag, m, x_t in (("light", min(rng), st[0]), ("heavy", max(rng), st[1])):
+    for tag, m, x_t in (("light", min(rng), st[0]), ("heavy", max(rng), st[1]), ("mid", m_nom * 1000, st[2])):
         s = max(0.0, round((x_as - (x_t + pack[0] / 2)) / step) * step)
         x = x_as - s - pack[0] / 2
         out.update({"spacer_" + tag: s, "x_" + tag: x, "block_" + tag: (x - pack[0] / 2 - t_sp) - x_fs,
@@ -251,16 +251,24 @@ kit.claim("CL-D2-BAY-H", "Pack bay inside height (pad top to hatch underside)", 
 kit.claim("CL-D2-PACK-X-FWD", "Pack centroid if it sat against the forward stop (block out)", calc="CALC-D2-BAY", output="pack_x_fwd", unit="m",
           parts=PODP, how="Mark the pack centre; measure from the wing LE with the pack against the forward stop.",
           note="R5 (D-47): the forward stop face moved -0.1002 -> -0.1212, so this reference moved 21 mm forward; the pack never flies here (the crush block is ahead of it)")
-kit.claim("CL-D2-PACK-X-NOM", "Pack centroid, nominal 550 g station (aft face 0.048, 8 mm blue spacer)", calc="CALC-D2-BAY", output="pack_x_nom",
+kit.claim("CL-D2-PACK-X-NOM", "Pack centroid at the bay datum, CAD (aft face 0.048, 12 mm stack blue + yellow)", calc="CALC-D2-BAY", output="pack_x_nom",
           unit="m", limit=("<=", P + "pod.pack_x_nominal_m"), verifies=["R-CG-RANGE"], parts=PODP + ["POD-008", "POD-009", "POD-010"],
           how="Pack strapped with its block, spreader and spacer; measure the centre mark from the wing LE.",
           note="D-47 / CR-A1-43: pod.pack_x_nominal_m -0.022 m (was -0.001, D-24)")
-kit.claim("CL-D2-PACK-X-HEAVY", "Pack centroid, 680 g station (aft face 0.056, no spacer, on the aft stop)", calc="CALC-D2-BAY", output="pack_x_hvy",
-          unit="m", parts=PODP + ["POD-009", "POD-010"], how="As CL-D2-PACK-X-NOM with no spacer.", note="D-47: -0.014 m")
-kit.claim("CL-D2-PACK-X-LIGHT", "Pack centroid, 503 g station (10 mm spacer, blue + white)", calc="CALC-D2-PACK-STATIONS", output="x_light",
+kit.claim("CL-D2-PACK-X-HEAVY", "Pack centroid, 680 g station (aft face 0.060, no spacer, on the aft stop)", calc="CALC-D2-BAY", output="pack_x_hvy",
+          unit="m", parts=PODP + ["POD-009", "POD-010"], how="As CL-D2-PACK-X-NOM with no spacer.", note="D-59: -0.010 m (was -0.014 at D-47)")
+kit.claim("CL-D2-PACK-X-LIGHT", "Pack centroid, 503 g station (14 mm stack, blue + green)", calc="CALC-D2-PACK-STATIONS", output="x_light",
           unit="m", verifies=["R-CG-RANGE"], parts=PODP + ["POD-008", "POD-009", "POD-010"],
-          how="As CL-D2-PACK-X-NOM with the 8 + 2 mm spacers.",
-          note="D-47 asks -0.0245; the 2 mm spacer steps give -0.024 (0.5 mm aft, +0.12 mm CG at A3's 0.236 mm/mm); a 12 mm stack gives -0.026 with block B 23.7 mm")
+          how="As CL-D2-PACK-X-NOM with the 8 + 6 mm spacers.",
+          note="D-59: -0.024 with 14 mm (D-47 asked -0.0245 with 10 mm at the 0.056 stop)")
+kit.claim("CL-D2-PACK-X-550", "Pack centroid, 550 g flight station (8 mm blue spacer)", calc="CALC-D2-PACK-STATIONS", output="x_mid",
+          unit="m", verifies=["R-CG-RANGE"], parts=PODP + ["POD-008", "POD-009", "POD-010"],
+          how="As CL-D2-PACK-X-NOM with the blue 8 mm spacer alone.",
+          note="D-59 station; the CAD keeps the pack at the -0.022 datum with 12 mm (CR-A1-54)")
+kit.claim("CL-D2-BLOCK-B-550", "Crush block length at the 550 g flight station", calc="CALC-D2-PACK-STATIONS", output="block_mid", unit="m",
+          limit=(">=", "CL-D2-BLOCK-MIN-550"), verifies=["R-PACK-RETENTION"], parts=["POD-009"], how="Cut length for the 550 g pack; rule.")
+kit.claim("CL-D2-BLOCK-MIN-550", "Crush block B minimum for the 550 g pack (C5's length)", calc="CALC-D2-PACK-STATIONS",
+          output="block_min_mid", unit="m", parts=["POD-009"], how="C5's CL-C5-BLOCK-L.")
 kit.claim("CL-D2-SPACER-LIGHT", "Aft spacer stack for the 503 g pack", calc="CALC-D2-PACK-STATIONS", output="spacer_light", unit="m",
           parts=["POD-008"], how="Stack on the pack label; calipers.")
 kit.claim("CL-D2-SPACER-HEAVY", "Aft spacer stack for the 680 g pack", calc="CALC-D2-PACK-STATIONS", output="spacer_heavy", unit="m",
@@ -280,8 +288,8 @@ kit.claim("CL-D2-PACK-FWD-ROOM", "Forward trim room at the nominal station with 
 kit.claim("CL-D2-AFT-REACH", "Most aft pack centroid the bay allows (no spacer)", calc="CALC-D2-BAY", output="aft_reach", unit="m",
           limit=(">=", "CL-D2-PACK-X-HEAVY"), verifies=["R-CG-RANGE"], parts=["POD-002"],
           how="Pack against the aft stop with no spacer: centre mark from the wing LE.",
-          note="D-47: the aft stop is the 680 g pack's aft face, so the heaviest listing flies with no spacer (C5's pre-D-47 stations superseded)")
-kit.claim("CL-D2-SPACER-NOM", "Aft spacer at the nominal station (one blue 8 mm)", calc="CALC-D2-BAY", output="spacer_nom", unit="m", parts=["POD-008"],
+          note="D-59: the aft stop is 12 mm (pod.pack_aft_travel_m) behind the datum pack's aft face; the 680 g pack flies here with no spacer")
+kit.claim("CL-D2-SPACER-NOM", "Aft spacer stack at the bay datum, CAD (blue 8 + yellow 4 mm)", calc="CALC-D2-BAY", output="spacer_nom", unit="m", parts=["POD-008"],
           how="Spacer thickness fitted behind the nominal pack.")
 kit.claim("CL-D2-BLOCK-B-NOM", "Crush block length at the nominal station (forward stop to spreader)", calc="CALC-D2-BAY", output="block_nom",
           unit="m", limit=(">=", "CL-C5-BLOCK-L"), verifies=["R-PACK-RETENTION"], parts=["POD-009"],
@@ -378,7 +386,7 @@ kit.test("T-D2-WEIGH", "Weigh every pod part before assembly", verifies=["CL-D2-
 kit.test("T-D2-FIT", "Real pack fit", verifies=["CL-D2-BAY-L", "CL-D2-BAY-W", "CL-D2-BAY-H", "CL-D2-PACK-TRAVEL", "CL-D2-AFT-REACH",
                                                  "CL-D2-OVERHANG-CLR", "CL-D2-PACK-X-NOM", "CL-D2-PACK-X-LIGHT"],
          procedure="Both packs weighed and labelled with their spacer stack: in through the hatch, strapped at their station "
-                   "(680 g none, 550 g blue, 503 g blue + white), block cut for the pack and spreader fitted, leads over the aft stop "
+                   "(680 g none, 550 g blue, 503 g blue + green), block cut for the pack and spreader fitted, leads over the aft stop "
                    "to the AS150U park, hatch closes; centre mark measured from the wing LE")
 kit.test("T-D2-STRAP-PULL", "Strap loop pull test", verifies=["CL-D2-STRAP-CAP"],
          procedure="Spring scale, one installed loop on a tray offcut, 170 N for 10 s; no slip, no tear at the slot")

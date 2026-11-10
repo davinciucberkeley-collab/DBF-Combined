@@ -117,16 +117,24 @@ EDGES = [
      'thermal': {'heat_w': '0.5 EST (FC top board + wireless at 5 V, ASM-F3-5V-LOADS); BEC losses ~1.2 W move to PWR-003',
                  't_max_c': 85, 't_ambient_c': 'E3 pod air', 'path': 'convection to vented pod air; gel cubes treated as insulating',
                  'sized_by': 'E3 (CL-E3-FC-PEAK), F3'}},
-]
-PENDING = [
+    # F3-R3: GND-001 is now declared by F5 (subsystems/ground), so the radio edge leaves edges_pending
     {'id': 'E-AVN-09', 'part_a': 'GND-001', 'part_b': 'AVN-003', 'via': 'CT-ELRS-RF', 'owner': E,
      'notes': 'ELRS 2.4 GHz radio link, CRSF 420 kbaud to the FC; telemetry through ELRS (ratio 1:4), no separate radio; range test T-F5-RANGE',
-     'signal': {'fc_port': 'SERIAL6 (via the RX)', 'protocol': 'ELRS 2.4 GHz -> CRSF 420 kbaud', 'band': '2.4 GHz', 'tx_power_mw': 100},
-     'waits_for': ['GND-001']},
+     'signal': {'fc_port': 'SERIAL6 (via the RX)', 'protocol': 'ELRS 2.4 GHz -> CRSF 420 kbaud', 'band': '2.4 GHz', 'tx_power_mw': 100}},
 ]
+PENDING = []
 LOCAL_CT = [{'id': 'CT-CARD-SLOT', 'kind': 'mechanical', 'method': 'press_fit',
              'spec': 'card pushed into a board-mounted push-push slot (microSD); the slot holds the card'}]
-ACK = []
+# Edges other roles declare that touch avionics parts, checked against AVIONICS.md and acknowledged (F3-R3):
+#   E-HRN-22 UBEC -> FC servo rail (Vx of the power board not wired, CR-F1-29 / CR-F3-04)
+#   E-HRN-23 power-board GH-6 link (Vbat, current, 5 V, GND; BATT_MONITOR 4)
+#   E-HRN-24..27 FC outputs 1-4 -> ESCs, DShot300 bidirectional (TIM4 1-2, TIM3 3-4; CL-F3-BDSHOT-OUTS),
+#                map LR/UL/LL/UR = 1/2/3/4 as F4 flight-software motor_map
+#   E-HRN-28/29 FC outputs 5/6 -> elevons L/R, PWM 50 Hz (TIM8)
+#   E-HRN-30 GPS: SERIAL5 + I2C1, compass 0x0D / 0x2C;  E-HRN-31 RX: SERIAL6 CRSF
+#   E-HRN-32 airspeed Y-branch on I2C1 at 0x28; bus total 0.461 m <= 0.5 m (CL-F2-I2C-LEN)
+#   E-TRN-21 pitot boom stowed in the 220 x 25 x 25 mm tray slot (CL-F3-BOOM-STOW-L/-W)
+ACK = ['E-HRN-%d' % i for i in range(22, 33)] + ['E-TRN-21']
 
 
 def build():
@@ -253,6 +261,13 @@ def _declare(g, M, tot, cg):
                    value=[round(g['post_gap'], 4), lv(A_, 'aspd_m')[0], round(g['rx_overhang'], 4), round(g['tube_path'], 4),
                           round(g['gps_tilt_deg'], 2), round(g['rx_lo'][0] - g['ant_a_xy'][0], 4)],
                    unit="m,m,m,m,deg,m", status="PROPOSED")
+    tipx = g['tip'][0]
+    dy = lv(A_, 'aspd_port_m')[1]
+    bd = lv(A_, 'barb_m')[0]
+    kit.assumption("ASM-F3-CAD-BOOM", "Pitot boom stowed envelope from the CAD", "[length m tip to coupler ends, width m]",
+                   basis="layout(): probe tip to the coupler ends on the root barbs; width = max(shoulder OD, barb spread + barb OD)",
+                   value=[round(g['coupler_x'] - tipx, 4), round(max(g['shoulder_od'], dy + bd), 4)], unit="m,m",
+                   status="PROPOSED")
     kit.assumption("ASM-F3-PORTS", "Avionics connector points for the harness (F2)", "name -> [x, y, z] m in the aircraft frame",
                    basis="layout() ports: pin-outs of the FC, GPS and RX are not published; +/- 10 mm until measured (T-F3-ARRIVAL)",
                    value={k: [round(c, 4) for c in v] for k, v in g['ports'].items()}, unit="m", status="UNVERIFIED")
@@ -264,6 +279,12 @@ def cad_fit(fit, tmax):
     gap, alen, overhang, path, tilt, ant = fit
     return {"post_clear_m": gap - alen, "rx_overhang_m": overhang, "tube_path_m": path, "gps_tilt_deg": tilt,
             "ant_offset_m": abs(ant)}
+
+
+@kit.calc("CALC-F3-CAD-BOOM", title="Pitot boom stowed envelope", equation="L = x_coupler - x_tip; W = max(OD_shoulder, dy + d_barb)",
+          inputs={"b": "ASM-F3-CAD-BOOM"})
+def cad_boom(b):
+    return {"length_m": b[0], "width_m": b[1]}
 
 
 @kit.calc("CALC-F3-CAD-MASS", title="Avionics CAD mass and CG", equation="sum m_i; CG = sum m_i r_i / sum m_i",
@@ -292,11 +313,19 @@ def _claims():
               how="Cut 40 mm lines, fit, no kink with the boom in and out.")
     kit.claim("CL-F3-GPS-TILT-CAD", "GPS module tilt toward the nose in the CAD", calc="CALC-F3-CAD-FIT", output="gps_tilt_deg",
               unit="deg", limit=("<=", 50.0), parts=["AVN-002", "POD-005"], how="Protractor on the built mast pad.")
+    kit.claim("CL-F3-BOOM-STOW-L", "Pitot boom stowed length, tip to coupler ends (transport slot 220 mm)", calc="CALC-F3-CAD-BOOM",
+              output="length_m", unit="m", limit=("<=", 0.220), parts=["AVN-005", "TRN-003"],
+              note="limit = D7 tray slot length (CR-D7-06, E-TRN-21)", how="Ruler on the built boom; lay it in the tray slot with the PE plug.")
+    kit.claim("CL-F3-BOOM-STOW-W", "Pitot boom stowed width (transport slot 25 mm)", calc="CALC-F3-CAD-BOOM",
+              output="width_m", unit="m", limit=("<=", 0.025), parts=["AVN-005", "TRN-003"],
+              note="limit = D7 tray slot section 25 x 25 mm (CR-D7-06)", how="Caliper across shoulder and couplers.")
     kit.test("T-F3-ARRIVAL", "Avionics parts on arrival: weigh, measure, confirm the CoreWing stack split",
-             verifies=["CL-F3-AVN-CAD-MASS", "CL-F3-ASPD-POST-CLR", "CL-F3-RX-OVERHANG"],
+             verifies=["CL-F3-AVN-CAD-MASS", "CL-F3-ASPD-POST-CLR", "CL-F3-RX-OVERHANG", "CL-F3-BOOM-STOW-L", "CL-F3-BOOM-STOW-W"],
              procedure="0.01 g scale on every AVN part; calipers on FC board, airspeed board (incl. ports), RX, GPS, probe OD; "
                        "confirm the FC top board runs from the power board on a cable (else fallback: whole stack on the PDB "
-                       "plate on gel cubes, 8 AWG leads with a 30 mm flex loop tied to the tray); record the connector "
+                       "plate on gel cubes, 8 AWG leads with a 30 mm flex loop tied to the tray); confirm which board carries "
+                       "the output pads 1-6 and the Vx rail and that Vx is not on the GH-6 link (CR-F1-29; if the outputs are "
+                       "on the power board, E-HRN-22/24-29 end on PWR-003 and F2 re-routes); record the connector "
                        "positions for F2; update subsystems/avionics/params.json and re-run avn_data.py")
 
 

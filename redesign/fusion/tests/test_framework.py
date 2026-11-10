@@ -398,6 +398,54 @@ class K09(unittest.TestCase):
         self.assertAlmostEqual(ko.half, 0.035)
         self.assertAlmostEqual(ko.axis[1], math.sin(math.radians(7.0)))
 
+    def test_hull_keepout(self):
+        # CR-E1-45: a diagonal strip whose box enters the zone but whose material does not is cleared by the hull
+        n = fk.mat_vec(fk.rot_matrix('Y', -6.0), (1.0, 0.0, 0.0))
+        ko = fk.Keepout('KO', 'cylinder', n, center=(0.0, 0.0, 0.19), r=0.165, half=0.035)
+        ko.clearance = 0.025
+        brace = fk.Shape('loft', 'brace', axis='Z', smooth=False,
+                         sections=[(0.024, [(0.080, -0.06), (0.085, -0.06), (0.085, -0.055), (0.080, -0.055)]),
+                                   (0.156, [(0.045, -0.005), (0.050, -0.005), (0.050, 0.0), (0.045, 0.0)])])
+        pts = brace.hull_points()
+        box = (tuple(min(q[i] for q in pts) for i in range(3)), tuple(max(q[i] for q in pts) for i in range(3)))
+        self.assertTrue(ko.hits(box))                                   # the box corner (x 0.045, z 0.024) is in
+        self.assertFalse(ko.hull_hits(pts))                             # the strip itself is not
+        # a point just inside the axial face is a hit, at the right depth and blade distance
+        inside = [(0.030, 0.0, 0.19)]
+        self.assertTrue(ko.hull_hits(inside))
+        self.assertAlmostEqual(ko.hull_depth(inside), 0.035 - 0.030 * n[0], delta=2e-5)   # axial: t = 0.030 n_x
+        self.assertAlmostEqual(ko.core_distance(inside), 0.030 * n[0] - 0.010, delta=1e-5)
+        # a revolve's hull is the circumscribed 24-gon, not the square: a tube 1 mm clear diagonally is clear
+        tube = fk.Shape('revolve', 't', axis='Z', center=(0.0, 0.0, 0.0), profile=[(0, 0), (0, 0.011), (0.1, 0.011),
+                                                                                    (0.1, 0)])
+        u = fk.Keepout('U', 'cylinder', 'Z', center=(0.0, 0.0, 0.05), r=0.5, half=0.5)
+        far = fk.Keepout('F', 'cylinder', 'Z', center=(0.0228, 0.0228, 0.05), r=0.02, half=0.1)
+        self.assertTrue(u.hull_hits(tube.hull_points()))
+        self.assertTrue(far.hits(((-0.011, -0.011, 0.0), (0.011, 0.011, 0.1))))   # square corner reaches it
+        self.assertFalse(far.hull_hits(tube.hull_points()))                         # the round tube does not
+        # hull distance agrees with a brute-force sample of the hull edges
+        import random
+        rnd = random.Random(3)
+        cloud = [tuple(rnd.uniform(0.02, 0.08) for _ in range(3)) for _ in range(12)]
+        exact = math.sqrt(fk._hull_cyl_dist2(cloud, (0, 0, 0), [1.0, 0.0, 0.0], 0.01, 0.01, exact=True))
+        brute = min(math.sqrt(fk._hull_cyl_dist2([tuple(a[i] * (1 - t) + b[i] * t for i in range(3))],
+                                                  (0, 0, 0), [1.0, 0.0, 0.0], 0.01, 0.01))
+                    for a in cloud for b in cloud for t in [k / 40 for k in range(41)])
+        self.assertLessEqual(exact, brute + 1e-6)
+        self.assertGreater(exact, brute - 1e-3)       # brute samples edges only: the face can be closer
+
+    def test_prop_keepout_fwd_aft(self):
+        # CR-E1-45: asymmetric axial envelope (fwd 10, aft 6 mm) -> cylinder centred 2 mm forward, half 8 + clearance
+        ctx = fk.Context(None, params=self.P)
+        k9.prop_keepout(ctx, 'KO', (0.0, 0.0, 0.0), 0.2794, 0.025, (), fwd=0.010, aft=0.006)
+        ko = ctx.keepouts[-1]
+        self.assertAlmostEqual(ko.half, 0.033)
+        self.assertAlmostEqual(ko.center[0], -0.002)
+        self.assertAlmostEqual(ko.clearance, 0.025)
+        self.assertAlmostEqual(ko.core_distance([(0.031, 0.0, 0.0)]), 0.025, places=6)   # 6 mm aft + 25 mm
+        with self.assertRaises(ValueError):
+            k9.prop_keepout(ctx, 'KO2', (0, 0, 0), 0.2794, 0.025, (), fwd=0.010)
+
     def test_revolve_centroid(self):
         self.assertAlmostEqual(fk.revolve_volume_centroid([(0, 0), (1, 0), (0, 1)])[1], 0.25)     # cone
         V, c = fk.revolve_volume_centroid([(0, 0), (2, 0), (2, 1), (0, 1)])

@@ -1,62 +1,67 @@
-# B3 stability and control: K09-L summary (R3)
+# B3 stability and control: K09-L summary (R4)
 
-Status: `PROPOSED` (B3, 2026-11-09, params A1-R3, A3 roll-up and B4 swirl as of 15:04). Full report: `S-AND-C.md`.
-Requests: `CHANGE-REQUESTS.md` (CR-B3-17…21 new). Re-check: `python -I redesign/team/B3/sc_analysis.py` (2 s with
-the AVL cache), `run_avl_study.py`, `draw_cg.py`, then `python -I redesign/proofs/build_graph.py` (no B3 drift or id
-errors; A1's `CALC-A1-CG-RANGE` and C5's stance calc drift on the new B3 CG claims and must re-run).
+Status: `PROPOSED` (B3, 2026-11-10, A1-R4a params, A3-R5 roll-up, B4 R3, D6 R3, C2 modes, F4 R4, read live from the
+claim graph). Full report: `S-AND-C.md`. Requests: `CHANGE-REQUESTS.md` (CR-B3-22, -23 new).
+Re-check: `python -I redesign/team/B3/sc_analysis.py`, `run_avl_study.py`, `draw_cg.py`, then
+`python -I redesign/proofs/build_graph.py`. On 2026-11-10 there is no `CALC-B3-*` drift and no B3 id error. Two
+downstream calcs drift on the new B3 claims and must re-run: A1's `CALC-A1-CG-RANGE` and C5's `CALC-C5-STANCE`.
 
-**CR-A1-26 answer: both R1 failures are closed at R3, and the claim ids are unchanged.** Cn_β is now 0.0357 /rad and
-hover yaw 3.15×. The range moves 0.3 mm forward to 0.0495–0.0550 m. Two new findings. First, the pack at x −0.001
-leaves the CG only 0.15 mm ahead of the aft limit, so move its mark to −0.012 (CR-B3-18). Second, the 21.7 Hz
-symmetric torsion mode caps the hover pitch crossover at 4.5 Hz (CR-B3-19).
+**R4 answer.** The claim ids are unchanged. **The forward limit moves 1.3 mm aft to 0.0509 m**, because D6's elevon
+effectiveness and half of its 0.84° free play now come out of the trim budget. The range is **0.0509–0.0549 m**
+(4.05 mm wide, minimum 4) and the target is **0.0529**. A1's carried 0.050 is now ahead of the forward limit, so A1
+narrows the range (CR-B3-22). The D-47 bay works: the 550 g pack at −0.022 gives CG 0.0525 m, +1.6 / +2.4 mm. The task
+text's 0.0577 m is the pre-D-47 bay, not A3-R5's published CG. The cant is sized on B4's 1.40 factor: 3.8° is needed
+and 7° is kept. The 12–15 Hz torsion band leaves ≥ 12.8 dB in the hover yaw loop.
 
 ## Key numbers
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| NP: wing + fins (AVL) / whole aircraft (props −1.95 mm, pod −0.95 mm) | 0.0738 / 0.07095 | m | `CL-B3-XNP-AERO` / `CL-B3-XNP` | `CHECKED` / `UNVERIFIED` |
-| **CG range** (fwd – aft) | **0.04953 – 0.05495** (15.5–17.2 % c) | m | `CL-B3-CG-FWD`, `CL-B3-CG-AFT` | `UNVERIFIED` |
-| CG target, static margin there | 0.05224, 5.85 % | m, — | `CL-B3-CG-TARGET`, `CL-B3-SM-TARGET` | `UNVERIFIED` |
-| A3 R3 CG, pack at x −0.001 | 0.0548: +5.3 mm fwd / **+0.15 mm aft** margin | m | `CL-B3-CG-CENTRED-FWD/AFT` | `UNVERIFIED` (thin) → CR-B3-18 |
-| Pack station for the target (550 g) / forward travel left | −0.0119 / 3.1 | m / mm | `CL-B3-PACK-SLIDE-LEFT` | `UNVERIFIED` |
-| Ribner props at the aft limit: arm, Cn_β, NP shift | 63.2 mm, −0.0040 /rad, −1.95 mm | — | `CL-B3-PROP-ARM-AFT`, `-CNB-AFT`, `-DXNP` | `UNVERIFIED` |
-| Trimmed CLmax / Vs at target, 2.6 kg | 0.797 / 11.91 (≤ 12) | —, m/s | `CL-B3-CLMAX-TRIM`, `CL-B3-VS-TRIM` | `UNVERIFIED` |
-| **1.3 Vs at the forward limit** (`ARSPD_FBW_MIN` 15.6 stands) | **15.53** (≤ 16) | m/s | `CL-B3-VT-TRIM` | `UNVERIFIED` |
-| Elevon trim / α at 16 m/s | −6.1 (TE up) / 8.4 | deg | `CL-B3-ELEVON-TRIM-CRUISE`, `-ALPHA-CRUISE` | `UNVERIFIED` |
-| Elevons: chord, area, travel; trim at 1.3 Vs; roll rate | 22 % c, 17.2 % S, ±25°; 29 %; 267°/s | — | `CL-B3-ELEVON-FRAC-*`, `-TRIM-USE-VT`, `-ROLL-RATE-VT` | `CHECKED` / `UNVERIFIED` |
-| **Cn_β, aft limit, 1.3 Vs** / cruise, target | **0.0357** / 0.0390 (≥ 0.03) | /rad | `CL-B3-CNB` / `CL-B3-CNB-CRUISE` | `UNVERIFIED` (pass +19 %) |
-| Short period ζ / Dutch roll ζ / spiral t2 | 0.45 / 0.32 / 4.07 s | — | `CL-B3-SP-ZETA`, `-DR-ZETA`, `-LAT-T2` | `UNVERIFIED` |
-| Hover 5 m/s ratio, 30 % diff: pitch / roll | 2.48 / 4.69 (≥ 1.5) | — | `CL-B3-HOVER-PITCH/ROLL-RATIO` | `UNVERIFIED` |
-| **Hover yaw at 7°: ratio / accel** (B4 R3 1.79; low bracket 0.48) | **3.15 / 3.22 rad/s²** (2.23 / 2.28) | — | `CL-B3-HOVER-YAW-RATIO/ACCEL` (`-LOW`) | `UNVERIFIED` (pass) |
-| **Hover pitch loop GM with the 21.7 Hz mode** (F4 4.0 Hz) / max crossover | **7.4 dB** / **4.5 Hz** (5 Hz gives 5.1 dB) | dB / Hz | `CL-B3-FLEX-GM-PITCH`, `CL-B3-XOVER-MAX-PITCH` | `MODELLED` |
-| Hover yaw loop GM with the 11.7 Hz mode (F4 1.8 Hz) / max crossover | 16.3 dB / 2.4 Hz | dB / Hz | `CL-B3-FLEX-GM-YAW`, `CL-B3-XOVER-MAX-YAW` | `MODELLED` |
+| NP: wing + fins (AVL) / whole aircraft | 0.07385 / 0.07090 | m | `CL-B3-XNP-AERO` / `CL-B3-XNP` | `CHECKED` / `UNVERIFIED` |
+| **CG range** (fwd – aft) | **0.05085 – 0.05490** (15.9–17.2 % c) | m | `CL-B3-CG-FWD`, `CL-B3-CG-AFT` | `UNVERIFIED` |
+| CG width (≥ 4 mm) | 4.05 (full play band: 3.3, fails) | mm | `CL-B3-CG-WIDTH` | `UNVERIFIED` (thin) |
+| CG target, static margin there | 0.05287, 5.63 % | m, — | `CL-B3-CG-TARGET`, `CL-B3-SM-TARGET` | `UNVERIFIED` |
+| A3-R5 CG, 550 g at the −0.022 datum | 0.0525: +1.6 fwd / +2.4 aft | m / mm | `CL-B3-CG-NOW-FWD/-AFT` | `UNVERIFIED` |
+| Packs at D-59 stations on 0.0529 (503 / 550 / 680 g at −0.024 / −0.020 / −0.010) | worst +1.0 fwd (680 g) / +1.3 aft (503 g) | mm | `CL-B3-CG-PACKS-FWD/-AFT` | `UNVERIFIED` |
+| Trimmed CLmax / Vs at target, 2.6 kg | 0.798 / 11.90 (≤ 12) | —, m/s | `CL-B3-CLMAX-TRIM`, `CL-B3-VS-TRIM` | `UNVERIFIED` |
+| **1.3 Vs at the forward limit** (`ARSPD_FBW_MIN` 15.6 stands) | **15.51** (≤ 16) | m/s | `CL-B3-VT-TRIM` | `UNVERIFIED` |
+| Elevon trim / α at 16 m/s, target | −6.2 (TE up) / 8.4 | deg | `CL-B3-ELEVON-TRIM-CRUISE`, `-ALPHA-CRUISE` | `UNVERIFIED` |
+| Elevons 22 % c, 17.2 % S, ±25°: trim at 1.3 Vs / roll rate (D6 terms in) | 30.5 % / 244°/s | — | `CL-B3-TRIM-USE-VT`, `-ROLL-RATE-VT` | `UNVERIFIED` |
+| Cn_β, aft limit, 1.3 Vs / cruise | 0.0354 / 0.0378 (≥ 0.03) | /rad | `CL-B3-CNB`, `-CNB-CRUISE` | `UNVERIFIED` |
+| Short period ζ / Dutch roll ζ / spiral t2 | 0.45 / 0.33 / 4.08 s | — | `CL-B3-SP-ZETA`, `-DR-ZETA`, `-LAT-T2` | `UNVERIFIED` |
+| Hover 5 m/s ratio: pitch / roll | 2.50 / 4.72 (≥ 1.5) | — | `CL-B3-HOVER-PITCH/ROLL-RATIO` | `UNVERIFIED` |
+| **Hover yaw at 7°, factor 1.40 (sizing) / 1.79** | **2.87× / 2.88 rad/s²** / 3.15× / 3.15 rad/s² | — | `CL-B3-HOVER-YAW-*-LOW` / `-YAW-*` | `UNVERIFIED` |
+| Cant needed (factor 1.40 / 1.79) | 3.8 / 2.7 (installed 7) | deg | `CL-B3-HOVER-CANT-REQ` | `UNVERIFIED` |
+| Hover trim share, split 1.216 | 10.8 % (≤ 12.5 %) | — | `CL-B3-HOVER-TRIM-USE` | `UNVERIFIED` |
+| Hover pitch loop GM at F4 2.6 Hz (21.7 Hz mode) / max crossover | 11.6 dB / 4.5 Hz | dB / Hz | `CL-B3-FLEX-GM-PITCH`, `-XOVER-MAX-PITCH` | `MODELLED` |
+| Hover yaw loop GM at F4 1.0 Hz / max crossover / band 11.7–14.9 Hz at the ceiling | 22.0 dB / 2.4 Hz / ≥ 12.8 dB | — | `CL-B3-FLEX-GM-YAW`, `-XOVER-MAX-YAW` | `MODELLED` |
 | Transition: worst motor pitch share | 0.20 (≤ 0.60) at 8 m/s | — | `CL-B3-TRANS-PITCH-USE` | `UNVERIFIED` |
 
 ## What others must do
 
 | # | Request | To |
 |---|---|---|
-| CR-B3-17 | `cg.x_range_m` [0.050, 0.0549], `cg.x_target_m` 0.0522; re-run `CALC-A1-CG-RANGE` | A1 (A3, C5) |
-| CR-B3-18 | Pack mark x −0.012 for 550 g (680 g: 0.000; 503 g: forward stop) | A1, A3, D2 (H1, H3) |
-| CR-B3-19 | Hover pitch crossover ≤ 4.5 Hz, gyro filter ≤ 40 Hz, static notch after the tap test, measure motor lag | F4 (C2, H2) |
-| CR-B3-20 | T-B4-YAW to settle the yaw factor (0.48 vs 1.79) | B4 (H1) |
-| CR-B3-21 | Publish torsion high corners, damping, station inertia as claims | C2 |
-| CR-B3-13, -16, -09 | B2 clmax table and AVL cross-check; A2 `R-CG-RANGE` text; H1/H2 tests (marks at 0.050 / 0.0549) | B2, A2, H1, H2 |
+| CR-B3-22 | `cg.x_range_m` [0.0509, 0.0549], `cg.x_target_m` 0.0529; re-run `CALC-A1-CG-RANGE`, `CALC-C5-STANCE`; D-59 stations 503 / 550 / 680 g at −0.024 / −0.020 / −0.010 | A1 (A3, C5, H1, J1) |
+| CR-B3-23 | Centre each elevon servo in its play band, report the band (≤ 0.84°) | D6 (H1, F4) |
+| CR-B3-19 | Hover crossovers ≤ 4.5 Hz pitch / 2.4 Hz yaw until the tap test, then notches | F4 (C2, H2) |
+| CR-B3-20 | T-B4-YAW; 5° acceptable only if the factor is ≥ 0.92 | B4 (H1) |
+| CR-B3-21, -13, -16, -09 | C2 mode claims; B2 η (−20 % closes the range); A2 text; H1/H2 tests (marks 0.0509 / 0.0549) | C2, B2, A2, H1, H2 |
 
 ## Files
 
 | File | What |
 |---|---|
-| `sc_analysis.py` → `claims.json`, `results/sc_results.json` | AVL, NP, CG limits, Ribner at the aft limit, stall, trim, authority, modes, hover, torsion-mode loops, transition |
-| `hover_loop.py` | hover rate-loop models with the torsion modes (standard library; margins and closed-loop roots) |
-| `avl_model.py` · `avl/k09l.avl` · `avl/k09l.mass` · `avl/s5010.dat` | AVL generator, runner, cache; R3 model files for AVL 3.52 |
+| `sc_analysis.py` → `claims.json` (66 claims), `results/sc_results.json` | AVL, NP, CG limits with D6 terms, pack stations, stall, trim, authority, modes, hover and cant, torsion-mode loops, transition |
+| `hover_loop.py` | hover rate-loop models with the torsion modes |
+| `avl_model.py` · `avl/k09l.avl` · `avl/k09l.mass` · `avl/s5010.dat` | AVL generator, runner, cache; R4 model files (A3-R5 inertia at 2.6 kg) |
 | `flight_models.py` | props/tubes/pod terms, hover authority, slipstream gap, quasi-steady transition |
-| `run_avl_study.py` → `results/study.json` | R3 layout, sensitivities, elevon chord sweep, fin options, cant sweep, AVL MODE check, trim drag |
+| `run_avl_study.py` → `results/study.json` | sensitivities, elevon chord sweep, fin options, cant sweep, AVL MODE check, trim drag |
 | `draw_cg.py` → `fig-b3-cg-stations.svg` | FIG B3-01 chordwise NP / CG range / A3 CG |
 
 ## Open issues
 
-1. Aft CG margin 0.15 mm with the pack at −0.001 until CR-B3-18 lands; T-B3-CG-BALANCE on the built aircraft decides.
-2. Hover pitch margin rests on a 40 ms motor lag and C2's 21.7 Hz mode (both `UNVERIFIED`); 25 ms lag gives 4.2 dB.
-3. The forward limit rests on B2's η and Δcm: ±20 % η moves the stall trim ±2.3° (~3 mm of CG).
-4. Hover yaw factor 0.48–1.79 between B4's models; both pass at 7°. Spiral t2 4.07 s is 2 % over its limit.
+1. The CG width is 4.05 mm against a 4 mm minimum. It depends on centring the servo in the play band (CR-B3-23).
+2. B2's η −20 % closes the range. The twin glides (T-B3-TWIN-NP) measure η.
+3. A3's predicted CG with a 503 g pack sits at the aft limit. The D-59 nose ballast (≤ 10 g, 0.8 mm) covers it.
+4. The hover pitch margin rests on a 40 ms motor lag and the 21.7 Hz mode (both `UNVERIFIED`). Spiral t2 4.08 s is 2 %
+   over its limit.

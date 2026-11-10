@@ -47,12 +47,12 @@ never edited by hand.
 | `DP-TE` | plane | 0.320 | — | — | X | `wing.te_x_m` | wing and fin trailing edge |
 | `DP-SPAR` | plane | 0.080 | — | — | X | `wing.spar.x_m` | spar centreline station (25.0 % chord) |
 | `DP-HINGE` | plane | 0.2496 | — | — | X | `wing.elevon.chord_frac` | elevon hinge line = c (1 - chord_frac) |
-| `DP-CG` | plane | 0.0526 | — | — | X | `cg.x_target_m` | CG target station (range in cg.x_range_m) |
-| `DP-POD-LE` | plane | -0.115 | — | — | X | `pod.x_le_m` | pod front face |
+| `DP-CG` | plane | 0.0522 | — | — | X | `cg.x_target_m` | CG target station (range in cg.x_range_m) |
+| `DP-POD-LE` | plane | -0.130 | — | — | X | `pod.x_le_m` | pod front face |
 | `DP-TUBE` | plane | 0.045 | — | — | X | `fins.tube.x_m` | motor-tube centreline station = fin LE |
 | `DP-MOUNT` | plane | 0.034 | — | — | X | `propulsion.stations.x_mount_m` | tube front face = tube x - tube OD/2 (D-28: stays here) |
-| `DP-MOTOR-FACE` | plane | 0.0309 | — | — | X | `fins/params.json#fin_detail.mount` | motor base plate face on the motor axis (D-28); the plate is canted 7 deg about this point |
-| `DP-PROP` | plane | -0.0082 | — | — | X | `propulsion.stations.x_prop_plane_m` | propeller disc plane (all four props) |
+| `DP-MOTOR-FACE` | plane | 0.0294 | — | — | X | `fins/params.json#fin_detail.mount` | motor base plate face on the motor axis (D-28); the plate is canted 7 deg about this point |
+| `DP-PROP` | plane | -0.0077 | — | — | X | `propulsion.stations.x_prop_plane_m` | propeller disc plane (all four props) |
 | `DP-GROUND` | plane | 0.368 | — | — | X | `cg.foot_height_m` | ground in hover = TE + foot (D-30: 48 mm); nothing but feet beyond it |
 | `DP-FIN-R` | plane | — | 0.320 | — | Y | `fins.y_m` | fin mid-plane, motor stations, through-core block |
 | `DP-TIP-R` | plane | — | 0.575 | — | Y | `wing.span_m` | wing tip |
@@ -69,30 +69,30 @@ never edited by hand.
 | `DA-TUBE-L` | axis | 0.045 | -0.320 | 0 | Z | `fins.tube.length_m` | motor-tube axis, along Z; tube ends at z +/-0.172 |
 | `DA-HINGE-L` | axis | 0.2496 | ±panel | upper skin | Y | `wing.elevon.chord_frac` | hinge line (z = upper surface, set by the module) |
 | `DX-MOTOR-UR` | point | 0.045 | 0.320 | 0.190 | — | `propulsion.stations` | motor station: tube centreline at motor height; shaft along -x |
-| `DX-HUB-UR` | point | -0.0082 | 0.320 | 0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
+| `DX-HUB-UR` | point | -0.0077 | 0.320 | 0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
 | `DX-FOOT-UR` | point | 0.368 | 0.320 | 0.218 | — | `landing/params.json#landing.pad` | foot pad contact on DP-GROUND: z = +/-(pad outer edge - edge round), CL-D5-CONTACT-Z, D-30 splay; tip-over pivot |
 | `DX-COLLAR-UR` | point | 0.045 | 0.3023 | 0.1535 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
 | `DX-ANCHOR-UR` | point | 0.080 | 0.242 | 0.0266 | — | `fins/params.json#fin_detail.brace` | brace end in the anchor on the spar line (transport cradles stay inboard of it) |
 | `DX-MOTOR-UL` | point | 0.045 | -0.320 | 0.190 | — | `propulsion.stations` | motor station: tube centreline at motor height; shaft along -x |
-| `DX-HUB-UL` | point | -0.0082 | -0.320 | 0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
+| `DX-HUB-UL` | point | -0.0077 | -0.320 | 0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
 | `DX-FOOT-UL` | point | 0.368 | -0.320 | 0.218 | — | `landing/params.json#landing.pad` | foot pad contact on DP-GROUND: z = +/-(pad outer edge - edge round), CL-D5-CONTACT-Z, D-30 splay; tip-over pivot |
 | `DX-COLLAR-UL` | point | 0.045 | -0.3023 | 0.1535 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
 | `DX-ANCHOR-UL` | point | 0.080 | -0.242 | 0.0266 | — | `fins/params.json#fin_detail.brace` | brace end in the anchor on the spar line (transport cradles stay inboard of it) |
 | `DX-MOTOR-LR` | point | 0.045 | 0.320 | -0.190 | — | `propulsion.stations` | motor station: tube centreline at motor height; shaft along -x |
-| `DX-HUB-LR` | point | -0.0082 | 0.320 | -0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
+| `DX-HUB-LR` | point | -0.0077 | 0.320 | -0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
 | `DX-FOOT-LR` | point | 0.368 | 0.320 | -0.218 | — | `landing/params.json#landing.pad` | foot pad contact on DP-GROUND: z = +/-(pad outer edge - edge round), CL-D5-CONTACT-Z, D-30 splay; tip-over pivot |
 | `DX-COLLAR-LR` | point | 0.045 | 0.3023 | -0.1535 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
 | `DX-ANCHOR-LR` | point | 0.080 | 0.242 | -0.0127 | — | `fins/params.json#fin_detail.brace` | brace end in the anchor on the spar line (transport cradles stay inboard of it) |
 | `DX-MOTOR-LL` | point | 0.045 | -0.320 | -0.190 | — | `propulsion.stations` | motor station: tube centreline at motor height; shaft along -x |
-| `DX-HUB-LL` | point | -0.0082 | -0.320 | -0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
+| `DX-HUB-LL` | point | -0.0077 | -0.320 | -0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
 | `DX-FOOT-LL` | point | 0.368 | -0.320 | -0.218 | — | `landing/params.json#landing.pad` | foot pad contact on DP-GROUND: z = +/-(pad outer edge - edge round), CL-D5-CONTACT-Z, D-30 splay; tip-over pivot |
 | `DX-COLLAR-LL` | point | 0.045 | -0.3023 | -0.1535 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
 | `DX-ANCHOR-LL` | point | 0.080 | -0.242 | -0.0127 | — | `fins/params.json#fin_detail.brace` | brace end in the anchor on the spar line (transport cradles stay inboard of it) |
 | `DX-BLOCK-R` | point | 0.0625 | 0.320 | 0.0066 | — | `fins.saddle` | through-core block centre: tube bore on DA-TUBE, spar bore on DA-SPAR |
 | `DX-BLOCK-L` | point | 0.0625 | -0.320 | 0.0066 | — | `fins.saddle` | through-core block centre: tube bore on DA-TUBE, spar bore on DA-SPAR |
-| `DX-CG` | point | 0.0526 | 0 | 0 | — | `cg.x_target_m` | CG target |
-| `DX-POD` | point | -0.010 | 0 | 0.050 | — | `pod.size_m` | pod box centre |
-| `DX-BOX` | point | 0.1265 | 0 | 0 | — | `requirements.box_external_m` | transport box centre: aircraft upright, span along the box length, centred on the props-off envelope (box_frame) |
+| `DX-CG` | point | 0.0522 | 0 | 0 | — | `cg.x_target_m` | CG target |
+| `DX-POD` | point | -0.0175 | 0 | 0.050 | — | `pod.size_m` | pod box centre |
+| `DX-BOX` | point | 0.119 | 0 | 0 | — | `requirements.box_external_m` | transport box centre: aircraft upright, span along the box length, centred on the props-off envelope (box_frame) |
 <!-- datums:end -->
 
 ## 4. Derived geometry designers need

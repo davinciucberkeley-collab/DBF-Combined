@@ -17,7 +17,7 @@ mounted on D3's canted ASA mounts and ESC pads. They lift 2.6 kg in hover and dr
 | Stack: base face → bell top → hub centre → post tip | 26.5 → 32.85 → 37.3 → 48.05 | mm | `ASM-E1-STACK`, `CL-E1-STACK-PROP-PLANE` | `UNVERIFIED` |
 | Modelled prop hub x (datum `DP-PROP` −0.0077) | −0.0062 (−0.0077 once D3 sets `face_ahead_m` 0.0025) | m | `CL-E1-CAD-HUB-X` | `MODELLED` |
 | Prop plane to mount collar / 0.14 D | 38.0 / 39.1 mm = 0.97 | — | `CL-E1-CAD-PROP-GAP` | **FAIL** → CR-E1-22 |
-| Prop keep-out on the canted axis: radius / axial half (blade 10 + 25) | 164.7 / 35 | mm | `CL-E1-KO-HALF` (CR-A5-21) | `MODELLED` (`check.py` 0 hits) |
+| Prop keep-out on the canted axis: radius / reach fwd / reach aft (swept envelope +10 / −6 mm, + 25) | 164.7 / 35 / 31 | mm | `CL-E1-KO-HALF`, `-KO-FWD`, `-KO-AFT` (rev 7) | `MODELLED` (`check.py`: 4 hits, motor tube 21.0 mm < 25; 0 at `face_ahead` ≥ 0.0065) |
 | M6 prop nut: thread left past the full nut | 0.11 | mm | `CL-E1-NUT-ENGAGE` | `UNVERIFIED` |
 | Adapter screws M3×4 strip RF at 2.0 / 2.5 mm, 0.5 N·m (deviation D-58, needs ≥ 2.5 mm bell thread; M3×5 if ≥ 3.0 mm thread and 4.0 mm free depth) | 1.70 / 2.12 (≥ 1.5) | — | `CL-E1-ADAPTER-STRIP`, `-RF-NOM`, `-THREAD-D58` | `UNVERIFIED` |
 | ESC on pad: length ratio / strap-slot clearance ratio | 1.02 / 0.90 | — | `CL-E1-ESC-PAD-LEN`, `CL-E1-ESC-SLOT` | **FAIL** slot → CR-E1-30 |
@@ -49,7 +49,7 @@ Rotation from the nose (F4): UR, LL CW (MRP, LH adapter); UL, LR CCW (MR, RH ada
 | `E-TRN-17…20` | prop → box tray slot (stowed) | prop on edge in a 285 × 30 × 40 slot | transport (acknowledged) |
 | Pending (`acknowledges_pending`) | ESC power `E-HRN-13…16`, DShot `E-HRN-24…27`, cap leads `E-HRN-34…37`; thermal `E-FIN-81…88` | in A4's plan, not yet declared | harness, fins |
 
-Keep-outs `KO-PROP-<st>` (Ø 0.279 + 2 × 0.025, ±0.035 axial) sit on the modelled hubs along the 7° canted shaft axis (CR-A5-21).
+Keep-outs `KO-PROP-<st>` (Ø 0.279 + 2 × 0.025; axially 0.035 forward and 0.031 aft of the hub mid-plane, `k9.prop_keepout(fwd=0.010, aft=0.006)`) sit on the modelled hubs along the 7° canted shaft axis (CR-A5-21). The exempt list is the station's own motor, adapter and prop only: the fin mount chain is not exempted, because the motor tube's nearest point is outboard of the blade tip (rev 7).
 
 ## Open issues
 

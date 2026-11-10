@@ -107,7 +107,7 @@ Keep geometry simple (envelopes for bought parts). Mark anything that depends on
 | every edge has a registration of the right kind (wire / revolute / rigid-or-contact) | real masses (declared mass is used) |
 | parts of each structural edge touch (bounding boxes within 2 mm); joint origins and wire ends sit on their parts | wire bend radii, clearances, access for tools |
 | no modelled group floats (same `carried` rule as `merge_check.py`); all `merge_check.py` graph checks | anything about the real aircraft configuration |
-| no body enters a prop keep-out (canted discs tested exactly against per-body boxes) or reaches the hover ground plane; flight parts inside the aircraft envelope; DATUMS.md fresh | real prop-tip clearance under blade flex; interpenetration of real bodies |
+| no body comes closer than the clearance to a (canted) swept prop volume: box pre-filter, then the convex hull of each body's vertices (CR-E1-45), distance reported in mm; nothing reaches the hover ground plane; flight parts inside the aircraft envelope; DATUMS.md fresh | real prop-tip clearance under blade flex; interpenetration of real bodies; a concave body's hull over-reports |
 
 `tests/test_framework.py` also runs `fusion_backend.py` end to end against a fake `adsk` module: that catches
 Python mistakes in the backend, not Fusion API behaviour.

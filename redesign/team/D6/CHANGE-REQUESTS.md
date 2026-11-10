@@ -27,3 +27,11 @@ R2 rows (CR-D6-13 onward) supersede CR-D6-01 and amend CR-D6-03(a, c), CR-D6-08 
 | CR-D6-16 | I1 | Rod line for `MEC-005`: one 1 m × 1/8 in (3.18 mm) **pultruded carbon rod**, about $5, replaces the 36 in music wire. Torque tube line unchanged (1 m covers 2 × 0.21 + 2 × 0.16 m) | R2 rod change | `parts.csv` MEC-005 $1.50 per cut piece, MEC-009 lengths |
 | CR-D6-17 | C6 | (a) `E-MEC-01/02` now cite `CL-D6-BOND-FRAME` 1 855 mm² ≥ your 1 002 mm² (need at servo stall 612 mm², `CL-D6-BOND-FRAME-NEED`): the frame top plate is a 4 mm rim with a window. (b) Horn area 1 109 mm² (+11 %). (c) `E-MEC-19…22` bond a scuffed CF rod (not steel) in the PETG bosses: please include a CF-rod-in-PETG pull in `T-C6-LAP-PETG` | Mass reduction | `CL-D6-BOND-FRAME`, `CL-D6-BOND-HORN` |
 | CR-D6-18 | H1 (cc J1) | Tap-test the outboard panel rotation mode on the bridge rod: hand estimate falls from ≈ 300 to ≈ 220 Hz with the CF rod (stiffness × 0.55), still inside the motor band | Resonance check | `CL-D6-BRIDGE-LAG-VA` 0.42° |
+
+## Status 2026-11-10 (re-run against A3-R6 / A1-R4a)
+
+| Id | To | What | Why | Numbers |
+|---|---|---|---|---|
+| CR-D6-05 | F2 | **Closed.** `E-HRN-28/29` are now in `edges`; `make_mechanisms.py` acknowledges them (interfaces.json `acknowledges`) | — | check.py: mechanisms 0 err, 0 warn |
+| CR-D6-13 | A1 (cc A3) | **Still open.** `mass.allocation_g.mechanisms` is 80 g and its note still quotes D6-R1 (82.3 g, 3/32 in rod directive). Mechanisms are 70.7 g; please set 72 g, return 8 g to the reserve and rewrite the note to D6-R2 (1/8 in pultruded CF rod, `CL-D6-EFF-LOSS-OUT` 7.9 %). The A3 action item "82.3 g vs 65 g, worst subsystem" is stale: the roll-up already shows mechanisms −9 g against allocation | Reserve and a correct directive | `CL-D6-MASS` 70.68 g |
+| CR-D6-19 | A1 | FYI: `build_graph.py` fails on DRIFT in `CALC-A1-CG-RANGE` and `CALC-A1-PACK-CASES` (B3 CG limits and A3-R6 roll-up moved); re-run `team/A1/frame_claims.py`. No D6 calc drifts | Proof chain green | — |

@@ -1,6 +1,6 @@
 # Transport (TRN)
 
-Status `PROPOSED`, D7 round 3, 2026-11-09 (C1 CR-C1-22, A4 CR-A4-24, C5 CR-C5-06, I1 CR-I1-18). Designer D7, loads
+Status `PROPOSED`, D7 round 4, 2026-11-10 (A4 CR-A4-46 and PLAN-STATUS, D-47 nose at −0.130; round 3: C1 CR-C1-22, A4 CR-A4-24, C5 CR-C5-06, I1 CR-I1-18). Designer D7, loads
 C1. Every part is a ground item (`flight: false`). Numbers: `team/D7/transport_calc.py` (claims `CL-D7-*`) and
 `subsystems/transport/params.json` (`trn.*`). Field joints: `FIELD-JOINTS.md`. Set-up card: `CHECKLIST.md`.
 
@@ -21,14 +21,16 @@ boom and the pack strap and plug.
 | Floor drop: column stroke vs C1 need / load factor vs allowable | 66 vs 52 / 10.1 vs 12.4 | mm / — | `CL-D7-CRADLE-STROKE`, `CL-D7-DROP-N` | `UNVERIFIED` (`T-D7-BOX-DROP`) |
 | Floor drop height the 0.54 m box allows (needs 0.30) | 0.39 | m | `CL-D7-A1-BOX-DROP-ALLOW` | `UNVERIFIED` |
 | Lower tube ends to floor when the columns bottom (≥ 10) | 12 | mm | `CL-D7-TUBE-CLEAR-DROP` | `UNVERIFIED` |
-| Aft gap (feet to wall) / nose to nose pad (with C5's +9.3 mm nose) | 12 / 21.6 (12.3) | mm | `CL-D7-SIDE-CLEAR`, `CL-D7-NOSE-GAP` | `UNVERIFIED` |
-| Wingtip to end pad / upper tube ends to lid | 16 / 10 | mm | `CL-D7-TIP-PAD-GAP`, `trn.box.top_gap_min_m` | `UNVERIFIED` |
-| Off-axis drop allowed: aft wall (feet crush) / end / nose / lid-down | 0.25 / 0.087 / 0.078 / 0.057 | m | `CL-D7-AFT-`, `-END-`, `-NOSE-`, `-LID-DROP-ALLOW` | `UNVERIFIED` (label + test) |
+| Aft gap (feet to wall) / pod nose (x −0.130) to 3/4 in nose pad / antenna B tip to pad | 12 / 12.95 / 2.95 | mm | `CL-D7-SIDE-CLEAR`, `CL-D7-NOSE-GAP`, `CL-D7-ANTENNA-PAD-GAP` | `CHECKED` (geometry) |
+| Wingtip to end pad / upper tube ends to lid | 15 / 10 | mm | `CL-D7-TIP-PAD-GAP`, `trn.box.top_gap_min_m` | `UNVERIFIED` |
+| Off-axis drop allowed: aft wall (feet crush) / end / nose / lid-down | 0.25 / 0.087 / 0.059 / 0.057 | m | `CL-D7-AFT-`, `-END-`, `-NOSE-`, `-LID-DROP-ALLOW` | `UNVERIFIED` (label + test) |
 | Aft-wall drop load factor (feet plateau) vs C1 x allowable | 7.5 vs 12.1 | — | `CL-D7-AFT-N` | `UNVERIFIED` |
 | Pillar bearing, lid-down 102 N vs skinned XPS | 17 vs 80 | kPa | `CL-D7-PILLAR-P` | `UNVERIFIED` |
 | Saddle contact vs C2 need / gap to the brace anchor | 15 000 vs 1 080 mm² / 4 mm | — | `CL-D7-CRADLE-PAD-AREA`, `CL-D7-BRACE-GAP` | `CHECKED` |
 | Crush column (PE 1.7 pcf), per cradle; static stress (band 2–7) | 60 × 50 × 120 mm; 3.35 | mm; kPa | `trn.cradle.*`, `CL-D7-CRADLE-STRESS` | `UNVERIFIED` |
 | Handle: load per M3 bolt at 2 g / wall bearing | 57 / 27 | N / kPa | `CL-D7-HANDLE-BOLT-F`, `-BEARING` | `UNVERIFIED` |
+| Handle M3 × 16: grip / thread past the nyloc vs D-41 minimum (nyloc 4.0 + 2 × 0.5) / thickest strap tab | 10.5 / 5.5 vs 5.0 / 3.0 | mm | `CL-D7-HANDLE-ENGAGE`, `-ENGAGE-MIN`, `-STRAP-T-MAX` | `CHECKED` (strap tab `EST` 2.5) |
+| Saddle and pillar to the tape skin `WNG-003`: modelled gap / saddle preload / pillar preload | 0 / 0 / 5 | mm | `trn.cradle.saddle_preload_m`, `trn.holddown.preload_m` | `MODELLED` |
 | Empty box / loaded box (aircraft less pack, spares, pouch) vs 6 kg | 3.57 / 5.84 | kg | `CL-D7-BOX-MASS`, `CL-D7-LOADED-MASS` | `UNVERIFIED` (`EST`, +3 %) |
 | Battery can (2 packs) / landing mat / tote | 3.30 / 2.70 / 0.57 | kg | `CL-D7-CAN-MASS`, `-MAT-MASS`, `CALC-D7-CARRY` | `UNVERIFIED` (`EST`) |
 | Carrier A (box + tote) / carrier B (can + mat) | 6.4 / 6.0 | kg | `CL-D7-CARRY-A`, `-B` | `UNVERIFIED` |
@@ -38,14 +40,15 @@ boom and the pack strap and plug.
 their own axis, the same load path as a hard landing, at n 7.5, and they allow 0.25 m. The cartridges are replaced
 afterwards from the spares. The end, nose and lid-down faces cannot get 54–57 mm of stroke unless the box grows by
 about 0.2 m, and then no car takes it. These faces are label-and-test cases: "THIS SIDE UP", "KEEP FLAT: NEVER STAND
-ON END". The aircraft sits 12 mm off the aft wall, and the slack goes to a 1 in PE nose pad.
+ON END". The aircraft sits 12 mm off the aft wall, and the slack goes to a 3/4 in PE nose pad (round 4: the pod nose
+moved to −0.130 under D-47, and the 1 in pad left only 6.6 mm).
 **Fallback 0.50 m box** (if a car rejects 0.54): 56 mm columns, a 0.15 m floor-drop label.
 
 ## Parts
 
 | Id | Part | Mass g | Make/buy |
 |---|---|---|---|
-| `TRN-001` | Box base: floor, walls, end pads, nose pad, corners | 2 339 | make (Coroplast) |
+| `TRN-001` | Box base: floor, walls, end pads, 3/4 in nose pad, corners | 2 334 | make (Coroplast) |
 | `TRN-005` | Plug lid (no lining) | 635 | make |
 | `TRN-002-L/R` | Spar cradle: XPS saddle (S5010 lower surface, LE lip, 9 mm harness relief) on a 120 mm PE column | 70 each | make |
 | `TRN-004-L/R` | Lid hold-down pillar, PE 100 × 60 mm, 5 mm preload over the spar | 38 each | make |
@@ -62,11 +65,11 @@ The battery can and LiPo bags are `GND-003/004` (E2). Cost about $150 `EST`.
 
 | Edge | To | How |
 |---|---|---|
-| `E-TRN-06/07` | `wing: WNG-001` lower surface at y ±0.20 | rests in the saddle (`CT-CRADLE-CONTACT`); elevons, fins, tubes, braces, feet never touched |
-| `E-TRN-08/09` | `wing: WNG-001` upper surface over the spar at y ±0.20 | lid pillar, 5 mm preload (`CT-TRN-PRELOAD-PAD`) |
+| `E-TRN-06/07` | `wing: WNG-001` lower surface at y ±0.20, `also_contacts` `WNG-003` | rests in the saddle (`CT-CRADLE-CONTACT`), contour cut to the outer skin face, preload 0 (`retention.preload_m`); elevons, fins, tubes, braces, feet never touched |
+| `E-TRN-08/09` | `wing: WNG-001` upper surface over the spar at y ±0.20, `also_contacts` `WNG-003` | lid pillar, 5 mm preload (`CT-TRN-PRELOAD-PAD`, `retention.preload_m` 0.005) |
 | `E-TRN-17…20` | `propulsion: PRP-003-UR/UL/LR/LL` | `stowed` in a tray slot (`CT-TRN-POCKET`) |
 | `E-TRN-21` | `avionics: AVN-005` pitot boom | `stowed` in its slot, tip plug; F3 to acknowledge |
-| `E-TRN-01…05, 10…16` | internal | LSE tape + zip ties, plug lid, cam straps, M3 handle bolts (joint stack); every non-bolted edge has a `retention` block |
+| `E-TRN-01…05, 10…16` | internal | LSE tape + zip ties, plug lid, cam straps, M3 handle bolts (`E-TRN-13…15`: C6 `ground_joint` + `joint_stack` copied, engagement 5.5 ≥ 5.0 mm); every non-bolted edge has a `retention` block |
 
 ## Mass budget
 
@@ -81,8 +84,9 @@ packaged weight), a 3 mm Coroplast lid (about −0.15 kg `EST`).
 | 1 | Two measured cars in `CAR-FIT.md` before the 0.54 m box freezes (CR-A1-42) | team lead, D7, A1 |
 | 2 | PE density from a coupon drop (`T-D7-CUSHION`); the column window is 109–123 mm | D7 |
 | 3 | End, nose and lid-down drops are label-and-test only (0.06–0.09 m); A2 to confirm `R-TRANSPORT` means the floor drop | A2, C1 |
-| 4 | `check.py` warns that the saddle overlaps the tape skin `WNG-003` by 8 mm. The saddle bears on the skin by design, and a bounding box cannot follow the curve (CR-D7-19) | A5 |
-| 5 | Antenna B (pod nose) must not protrude more than 10 mm ahead of x −0.115 (CR-D7-13) | D2, F3 |
+| 4 | Closed round 4: saddle–skin overlap (CR-A4-46). Saddle cut to the outer skin face, preload 0, `also_contacts` `WNG-003` on `E-TRN-06…09`; `check.py` shows no transport warning | — |
+| 5 | Antenna B (pod nose) must not protrude more than 10 mm ahead of the nose at x −0.130 (CR-D7-13); 2.95 mm left to the pad | D2, F3 |
+| 7 | Caliper the bought handle tab: > 3.0 mm needs M3 × 20 (`CL-D7-HANDLE-STRAP-T-MAX`) | D7 |
 | 6 | Props-on transport (CR-D7-15) would save 140 s and the tool; the geometry fits (17 mm, 5 mm saddle notch). A1's call | A1, E1 |
 
 ## How to verify
@@ -95,4 +99,4 @@ packaged weight), a 3 mm Coroplast lid (about −0.15 kg `EST`).
 | `T-D7-WEIGH-BOX` | luggage scale: box empty and loaded, can, mat, tote | masses, carry split |
 | `T-D7-SETUP` | `CHECKLIST.md`, one person, timed by a second, three field days | `CL-D7-SETUP-MIN` |
 | `R-CAR-FIT` | `CAR-FIT.md` filled for two cars | car fit |
-| CAD | `python -I redesign/fusion/check.py`: transport module ok, 0 transport errors; 3 warnings (`E-TRN-21` one-sided, saddle–skin bbox × 2) | interfaces, touch, box overlap |
+| CAD | `python -I redesign/fusion/check.py`: transport module ok, 0 transport errors, 0 transport warnings (round 4; `E-TRN-21` acknowledged) | interfaces, touch, box overlap |

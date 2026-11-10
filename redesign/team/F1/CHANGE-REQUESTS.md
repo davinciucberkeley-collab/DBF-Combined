@@ -50,3 +50,24 @@
 | D-56 / CR-A2-20b | A1 | Done. `CL-F1-MAIN-PEAK`, `-ESC-PEAK`, `-PACKLEAD-PEAK` and `-BUNDLE-PEAK` use `P:electrical.wire_temp_rise_short_max_c`; `CL-F1-PACKLEAD-RISE` uses `P:electrical.pack_lead_rise_max_c`; the steady claims keep `wire_temp_rise_max_c`. `ASM-F1-TRANSIENT-LIMIT` and `ASM-F1-PACKLEAD-LIMIT` removed |
 | D-48 | A1 | Accepted: power 648 g (`CL-PWR-MASS` 638.2 g, +1.5 %), avionics 45 g (F3). `CL-F1-POWER-MASS` now reads `CL-PWR-MASS-NONPACK` (88.2 g ≤ 98 g); the stale R2 item list (69 g) is removed |
 | E-HRN-10…16, -21…23, -33…37 acks | A4 / F2 | **Pending**: F2 has not re-run `harness.py` yet; the edges are still in `subsystems/harness/edges-pending.json`, and merge_check lists `PWR-*` as unconnected. F1 adds them to `make_power.py` acknowledges as soon as they appear in `subsystems/harness/interfaces.json` |
+
+## F1-R4 (F2 harness re-run, acknowledgements, power-board link, 2026-11-10)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-F1-24 (rev) | A1 (cc E1, E2, E3, H1) | `params.json#electrical.r_ext_mohm` 6.5 → **6.7**, not the 6.9 asked in R3 | `CL-F1-R-EXT` is 6.69 mΩ on F2's trimmed leads (0.475–0.620 m): common path 2.79 mΩ + four 16 AWG branches of 13.7–17.9 mΩ in parallel |
+| CR-F1-28 | F2 | (a) `ASM-F2-WIRE-GPM`: cite **`CL-F1-W16-GPM` 16.16 g/m** for 16 AWG, not `CL-F1-ESC-MASS / 4.0 m` (that claim is now 70.7 g on your trimmed leads, so the quotient would read 17.7 g/m). (b) Keep every ESC power cut ≤ **0.640 m** (`CL-F1-ESC-LEN-ALLOW` 0.643 m): LR at 0.620 m leaves 23 mm. (c) Thanks for the trim: CR-F1-25 is closed | (a) is the open part of CR-F1-23a. Your value 16.15 is right; only the citation is wrong and would hide drift |
+| CR-F1-29 | F3, F2 | The power-board link (`E-HRN-23`, 6 × 28 AWG) carries Vbat sense, current sense, 5 V and GND only, at ≤ 0.87 A on the 5 V line (`CL-F1-PMOD-RISE` 2.7 °C). **Vx (the CoreWing servo BEC) must not be wired** across it: the UBEC (`E-HRN-22`) feeds the FC servo rail alone. F3: on arrival (`T-F3-ARRIVAL`) confirm from the board which header pins carry Vx and whether the servo/motor output headers sit on the FC or on the PDB. If the outputs are on the PDB, the link carries 6 more signals and F2 re-sizes `W-PMOD` | If 2.8 A of servo stall current ran through one 28 AWG conductor it would rise 24.7 °C (`CL-F1-PMOD-SERVO-RISE`, limit 10), well above a JST-GH pin's ~1 A, and the UBEC would sit in parallel with the 4.5 A BEC |
+| CR-F1-30 | F3 (avionics) | Acknowledge `E-HRN-22` and `E-HRN-23` in `subsystems/avionics/interfaces.json` | merge_check lists only these two as one-sided on the power wires; power acknowledged its side in R4 |
+
+### Closed or answered in R4
+
+| Request | From | Answer |
+|---|---|---|
+| CR-F1-25 | F1 → F2 | Closed. F2's re-run gives LR 0.620 m; `CL-F1-DROP-PEAK` 4.89 % ≤ 5 % and `CL-F1-ESC-LEN-ALLOW` 0.643 m ≥ 0.620 m both pass |
+| E-HRN-10…16, -21…23, -33…37 acks | A4 / F2 | Done. All 15 sit under `acknowledges` in `subsystems/power/interfaces.json` and each was checked (POWER.md § Harness edges acknowledged). merge_check: 0 power warnings |
+| CR-F1-21 / -26 | F1 → F3 | Settled on paper. The CoreWing V2 PDB is a separate board; ordering the unsoldered-pins SKU makes the separation certain. Outline assumed 52 × 32 mm and mass 28 g `EST` until F3 measures at `T-F3-ARRIVAL` |
+| D-56 limit keys | A1 | Unchanged from R3 and re-checked. Short-time limit `P:electrical.wire_temp_rise_short_max_c` (30 °C) applies to `CL-F1-MAIN-PEAK`, `-ESC-PEAK`, `-BUNDLE-PEAK` and `-PACKLEAD-PEAK`. Pack-lead limit `P:electrical.pack_lead_rise_max_c` (20 °C) applies to `CL-F1-PACKLEAD-RISE`. The two rejected options (`-PACKLEAD12-RISE`, `-ESC18-RISE`) have no limit and their notes cite the keys. All limits pass |
+| CR-E2-19 | E2 | Unchanged: `CALC-F1-PROFILE` reads the `CL-E2-*-PESS` claims. CR-F1-27 (E2's leftover text reference) is still open |
+| CR-D6-06 | D6 | Unchanged: 1.4 A stall, UBEC kept (+43 %) |
+| D-48 | A1 | Unchanged: power 648 g, `CL-PWR-MASS` 638.2 g; avionics 45 g |

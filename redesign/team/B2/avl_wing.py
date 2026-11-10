@@ -149,6 +149,15 @@ def write_avl(path, foil, eta, fins=True, twist=0.0, nc=12, ns_scale=1.0):
     ctrl = {(YIN[0], YIN[1]), (YOUT[0], YOUT[1])}
     nseg = [max(1, round(n * ns_scale)) for n in (2, 1, 10, 1, 1, 10, 1)]
     nseg[3] = nseg[4] = 1                                   # one strip each side of the fin plane (no control point on it)
+    # B2-R3: since D-25 the pod half-width (0.07) equals the inboard elevon end (0.07). A zero-width segment hangs
+    # AVL 3.52, so a coincident station is dropped and its segment merged into the one before it.
+    i = 1
+    while i < len(ys):
+        if ys[i] - ys[i - 1] < 1e-6:
+            ys.pop(i)
+            nseg.pop(i - 1 if i - 1 < len(nseg) else -1)
+        else:
+            i += 1
     s = [f"K09-L wing + fins ({foil}, eta {eta:.3f}, twist {twist:+.1f} deg, fins {fins}) - team/B2/avl_wing.py",
          "0.0", "0 0 0.0", f"{S:.5f} {CHORD:.5f} {SPAN:.5f}", f"{XCG:.5f} 0.0 0.0", "0.0",
          "#", "SURFACE", "Wing", f"{nc} 1.0", "YDUPLICATE", "0.0", "CDCL", cdcl(foil)]

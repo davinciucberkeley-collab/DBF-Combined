@@ -422,7 +422,7 @@
     "v_no_set_ms": 0.3204027534877226,
     "mean_err": 0.0003348181627810254,
     "cut_seg_len_m": 0.045499999999999985,
-    "mark_margin_m": 0.0005538993160152592,
+    "mark_margin_m": 0.0005661577467836673,
     "landings_per_cartridge": 2.3485344987150687
    },
    "input_values": {
@@ -443,7 +443,7 @@
     "mark": 0.003,
     "eps_e": 0.02,
     "guard": 0.003,
-    "s_pair": 0.031446100683984735,
+    "s_pair": 0.031433842253216326,
     "bias_t": 1.055,
     "k_ult": 1.5,
     "pre": 0.002,
@@ -697,13 +697,13 @@
     "allow": "Pa"
    },
    "outputs": {
-    "F_N": 59.63141581818816,
-    "sigma_Pa": 14572250.607229086,
-    "sf": 2.744943185382536
+    "F_N": 59.631416940952306,
+    "sigma_Pa": 14572250.88160125,
+    "sf": 2.7449431336996484
    },
    "input_values": {
     "F": 59.36322,
-    "F_c1": 59.63141581818816,
+    "F_c1": 59.631416940952306,
     "a": 0.0022000000000000075,
     "b": [
      0.0211,
@@ -814,10 +814,10 @@
    },
    "outputs": {
     "area_m2": 0.0013499199999999992,
-    "design_N": 85.72016023864548,
-    "tau_Pa": 63500.17796509832,
+    "design_N": 85.72016185261894,
+    "tau_Pa": 63500.17916070507,
     "allow_Pa": 100000.0,
-    "sf": 1.5747987360754032
+    "sf": 1.5747987064244633
    },
    "input_values": {
     "te": 0.32,
@@ -863,7 +863,7 @@
     "airfoil": "S5010",
     "t_c": 0.0982,
     "F": 59.36322,
-    "F_c1": 59.63141581818816,
+    "F_c1": 59.631416940952306,
     "ff": 1.4375,
     "tau": 200000.0,
     "kd": 0.5
@@ -1785,7 +1785,7 @@
     "GER-002-LL"
    ],
    "how": "With the groove at the rim the remaining gap less the 3 mm guard must be >= CL-C5-DROP-PAIR-PITCH.",
-   "value": 0.0005538993160152592
+   "value": 0.0005661577467836673
   },
   {
    "id": "CL-D5-LANDINGS-PER-CART",
@@ -2014,7 +2014,7 @@
     "GER-002-LL"
    ],
    "how": "Load a printed flange edge to 61 N; no crack (T-D5-PROOF).",
-   "value": 2.744943185382536
+   "value": 2.7449431336996484
   },
   {
    "id": "CL-D5-BOND-AREA",
@@ -2050,7 +2050,7 @@
     "GER-001-LL"
    ],
    "how": "Pull test of a shoe bonded on a stepped two-layer offcut to 88 N along x (T-D5-PROOF, C6 coupon).",
-   "value": 1.5747987360754032
+   "value": 1.5747987064244633
   },
   {
    "id": "CL-D5-SIDE-RIM-SF",

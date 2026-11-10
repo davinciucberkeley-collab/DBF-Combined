@@ -168,6 +168,10 @@
     [
      22,
      1.4
+    ],
+    [
+     28,
+     0.9
     ]
    ],
    "unit": "AWG,mm",
@@ -480,30 +484,30 @@
     "main_od_mm": 4.8,
     "main_gpm": 61.227271243472906,
     "esc_awg": 16,
-    "esc_len_m": 0.6500808687234587,
+    "esc_len_m": 0.6198757768843773,
     "esc_i_cont_a": 8.408916112307065,
     "esc_rise_long_c": 9.165616032649012,
     "esc_rise_c": 9.165616032649012,
     "esc_peak_normal_c": 13.80874106009567,
     "esc_peak_fault_c": 17.550413903721555,
-    "esc_r_loop_mohm": 18.78708477608142,
-    "esc_mass_g": 75.07110506382587,
+    "esc_r_loop_mohm": 17.91416934609121,
+    "esc_mass_g": 70.67458511403593,
     "esc_od_mm": 2.6000000000000005,
     "esc_gpm": 16.15937672414052,
     "esc18_awg": 18,
-    "esc18_len_m": 0.6500808687234587,
+    "esc18_len_m": 0.6198757768843773,
     "esc18_i_cont_a": 8.408916112307065,
     "esc18_rise_long_c": 16.40112945513694,
     "esc18_rise_c": 16.40112945513694,
     "esc18_peak_normal_c": 30.99276927147732,
     "esc18_peak_fault_c": 41.77059834046172,
-    "esc18_r_loop_mohm": 30.662580836100638,
-    "esc18_mass_g": 46.15778229329919,
+    "esc18_r_loop_mohm": 29.237887209911705,
+    "esc18_mass_g": 43.45456365121293,
     "esc18_od_mm": 2.0,
     "esc18_gpm": 9.935660227648604,
-    "esc_r_loop_max_mohm": 18.78708477608142,
-    "esc_r_loop_min_mohm": 14.80775158232712,
-    "esc_len_total_m": 2.3228341768800096,
+    "esc_r_loop_max_mohm": 17.91416934609121,
+    "esc_r_loop_min_mohm": 13.714970528457789,
+    "esc_len_total_m": 2.18679799105293,
     "bundle0_rise_c": 9.523325098707332,
     "bundle0_rise_long_c": 21.485808950150968,
     "bundle0_peak_fault_c": 23.663336686421395,
@@ -525,9 +529,9 @@
     "bus_mass_g": 4.61071578732857,
     "bus_r_loop_mohm": 25.050084358720753,
     "r_common_mohm": 2.7902382038051052,
-    "r_ext_mohm": 6.943116454376004,
-    "drop_cont_pct": 1.6381444880933453,
-    "drop_peak_pct": 5.033402181265742,
+    "r_ext_mohm": 6.689261511778811,
+    "drop_cont_pct": 1.5885480514451957,
+    "drop_peak_pct": 4.887129865970084,
     "main_loss_w_cont": 2.5569740600019077,
     "esc_len_allow_m": 0.6431833505518345
    },
@@ -617,6 +621,10 @@
      [
       22,
       1.4
+     ],
+     [
+      28,
+      0.9
      ]
     ],
     "g_main": 10,
@@ -625,10 +633,10 @@
      0.05
     ],
     "k_cu": 400.0,
-    "l_ur": 0.6262053685126567,
-    "l_ul": 0.5123858292658543,
-    "l_lr": 0.6500808687234587,
-    "l_ll": 0.53416211037804,
+    "l_ur": 0.5952434249332912,
+    "l_ul": 0.47457282819139573,
+    "l_lr": 0.6198757768843773,
+    "l_ll": 0.4971059610438657,
     "bundle": [
      [
       "P1 straw, LR + LL pairs",
@@ -803,6 +811,10 @@
      [
       22,
       1.4
+     ],
+     [
+      28,
+      0.9
      ]
     ],
     "cool": [
@@ -891,6 +903,82 @@
     "nonpack": 88.2,
     "alloc": 648,
     "pack": 0.55
+   }
+  },
+  {
+   "id": "CALC-F1-PMOD",
+   "type": "calculation",
+   "title": "Power-board link (JST-GH 6, 28 AWG): 5 V conductor heating",
+   "script": "redesign/team/F1/power.py",
+   "function": "pmod",
+   "equation": "same steady wire model as CALC-F1-WIRES, 28 AWG, pod still air, f_pair for the 6-way cable; I_5V = CL-F3-5V-REQ (2 x the FC 5 V load); stall case = CL-F1-SERVO-STALL-BUS",
+   "inputs": {
+    "i_5v": "CL-F3-5V-REQ",
+    "i_stall": "CL-F1-SERVO-STALL-BUS",
+    "od": "ASM-F1-WIRE-OD",
+    "cool": "ASM-F1-COOLING",
+    "amb": "P:env.ambient_design_c"
+   },
+   "units": {
+    "i_5v": "A",
+    "i_stall": "A",
+    "amb": "degC"
+   },
+   "outputs": {
+    "rise_5v_c": 2.694592888827316,
+    "rise_stall_c": 24.723849871846625
+   },
+   "input_values": {
+    "i_5v": 0.866,
+    "i_stall": 2.8,
+    "od": [
+     [
+      8,
+      6.0
+     ],
+     [
+      10,
+      4.8
+     ],
+     [
+      12,
+      4.0
+     ],
+     [
+      14,
+      3.2
+     ],
+     [
+      16,
+      2.6
+     ],
+     [
+      18,
+      2.0
+     ],
+     [
+      20,
+      1.7
+     ],
+     [
+      22,
+      1.4
+     ],
+     [
+      28,
+      0.9
+     ]
+    ],
+    "cool": [
+     1.0,
+     0.75,
+     0.85,
+     0.9
+    ],
+    "amb": [
+     10,
+     30
+    ]
    }
   },
   {
@@ -1313,7 +1401,7 @@
    ],
    "how": "Weigh the four cut pairs before soldering.",
    "note": "Harness mass is F2's (HRN-101/102, CL-F2-MASS); F2 reads the per-metre value CL-F1-W16-GPM instead of dividing this by 4.0 m (CR-F1-23).",
-   "value": 75.07110506382587
+   "value": 70.67458511403593
   },
   {
    "id": "CL-F1-ESC-LEN-ALLOW",
@@ -1459,8 +1547,8 @@
     "PRP-002-LL"
    ],
    "how": "T-F1-DROP: 20 A load step, read pack-terminal and ESC-pad voltages with one meter.",
-   "note": "R3: routed ESC lengths and 10 AWG jumpers; P:electrical.r_ext_mohm follows (CR-F1-24).",
-   "value": 6.943116454376004
+   "note": "R4: F2 routed ESC lengths 0.475-0.620 m and 10 AWG jumpers; P:electrical.r_ext_mohm follows (CR-F1-24).",
+   "value": 6.689261511778811
   },
   {
    "id": "CL-F1-DROP-CONT",
@@ -1484,7 +1572,7 @@
     "PRP-002-LL"
    ],
    "how": "T-F1-DROP at 30 A.",
-   "value": 1.6381444880933453
+   "value": 1.5885480514451957
   },
   {
    "id": "CL-F1-DROP-PEAK",
@@ -1508,7 +1596,7 @@
     "PRP-002-LL"
    ],
    "how": "T-F1-DROP scaled; stand log at full throttle.",
-   "value": 5.033402181265742
+   "value": 4.887129865970084
   },
   {
    "id": "CL-F1-SERVO-BEC-REQ",
@@ -1637,6 +1725,41 @@
    "value": 98.0
   },
   {
+   "id": "CL-F1-PMOD-RISE",
+   "type": "claim",
+   "title": "Power-board link 28 AWG 5 V conductor, steady rise at 2 x FC 5 V load",
+   "calc": "CALC-F1-PMOD",
+   "output": "rise_5v_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003"
+   ],
+   "how": "T-F1-SERVO-STALL: meter in the 5 V line of the GH link while the FC, GPS, RX and airspeed run.",
+   "value": 2.694592888827316
+  },
+  {
+   "id": "CL-F1-PMOD-SERVO-RISE",
+   "type": "claim",
+   "title": "Power-board link if servo stall current ran through it (not accepted)",
+   "calc": "CALC-F1-PMOD",
+   "output": "rise_stall_c",
+   "unit": "degC",
+   "parts": [
+    "PWR-003",
+    "PWR-005"
+   ],
+   "how": "Continuity check on the built stack: FC servo-rail + to the power-board Vx pad open (no path).",
+   "note": "above P:electrical.wire_temp_rise_max_c: the servo rail is fed by the UBEC only and the CoreWing Vx must not reach the FC servo rail through the link (CR-F1-29). Also above the ~1 A per JST-GH pin.",
+   "value": 24.723849871846625
+  },
+  {
    "id": "T-F1-WIRE-HEAT",
    "type": "test",
    "title": "Wire heat runs",
@@ -1692,6 +1815,7 @@
    "title": "Servo stall current and rail voltage",
    "verifies": [
     "CL-F1-SERVO-BEC-REQ",
+    "CL-F1-PMOD-RISE",
     "CL-F1-UBEC-RATING"
    ],
    "state": "planned",

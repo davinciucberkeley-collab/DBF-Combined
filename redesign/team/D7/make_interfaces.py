@@ -14,7 +14,11 @@ RED = os.path.dirname(os.path.dirname(HERE))
 SUB = os.path.join(RED, 'subsystems', 'transport')
 sys.path.insert(0, os.path.join(RED, 'fusion'))
 
-M = {n['id']: n for n in json.load(open(os.path.join(HERE, 'claims.json'), encoding='utf-8'))['nodes']}['CALC-D7-MASS']['outputs']
+NODES = {n['id']: n for n in json.load(open(os.path.join(HERE, 'claims.json'), encoding='utf-8'))['nodes']}
+M = NODES['CALC-D7-MASS']['outputs']
+GRIP = NODES['CALC-D7-HANDLE-GRIP']['outputs']
+# C6 owns the handle joint stacks (joint_stacks.json, CR-C6-15): copied verbatim, then the engagement is the D7 number
+C6 = json.load(open(os.path.join(RED, 'team', 'C6', 'joint_stacks.json'), encoding='utf-8'))
 LOC = json.load(open(os.path.join(SUB, 'params.json'), encoding='utf-8'))['trn']['mass']
 g = lambda kg: round(1000.0 * kg, 1)
 
@@ -23,7 +27,7 @@ COR, PE, XPS = 'Coroplast 4 mm (PP twin-wall)', 'PE foam 1.7 pcf (closed cell)',
 # id, name, mass_g, material, make_or_buy, process, unit cost USD (EST), vendor/file, notes
 PARTS = [
     ('TRN-001', 'Box base (floor, walls, end pads, nose pad)', g(M['base_kg']), COR, 'make', 'scored, folded, LSE tape + hot-melt',
-     30.0, 'Home Depot Coroplast 48x96 4 mm (2 sheets incl. lid)', 'incl. 2 end pads, 1 in PE nose pad, 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external; aircraft 12 mm off the aft wall'),
+     30.0, 'Home Depot Coroplast 48x96 4 mm (2 sheets incl. lid)', 'incl. 2 end pads, 3/4 in PE nose pad (round 4), 8 corner protectors, consumables; 1.25 x 0.55 x 0.54 m external; aircraft 12 mm off the aft wall'),
     ('TRN-005', 'Lid with plug lip (no lining, D-31)', g(M['lid_kg']), COR, 'make', 'scored, folded', 6.0,
      'from TRN-001 sheets', 'lip 30 mm inside the walls; pillars taped to the shell'),
     ('TRN-002-L', 'Spar cradle L (saddle + crush column)', g(M['cradle_each_kg']), XPS + ' + ' + PE, 'make',
@@ -85,21 +89,28 @@ CT = [
     {"id": "CT-TRN-M3-BOLT", "kind": "mechanical", "method": "fastened",
      "spec": "M3 SHCS through handle strap and Coroplast wall, M3 x 12 mm fender washer outside, 3 mm plywood backing strip and nyloc inside"},
 ]
-STACK = {"fastener": "M3x16 SHCS", "count": 2, "grade": "A2-70",
-         "hole": "3.4 mm clearance through handle strap, 4 mm wall and 3 mm backing strip; M3 x 12 mm fender washer outside",
-         "insert": "none", "engagement_mm": 4.0, "min_engagement_mm": 3.0,
-         "washer_nut": "M3 nyloc on a 140 x 30 x 3 mm plywood backing strip (inside, TRN-105)",
-         "torque": "snug (wall must not crush)", "tool": "2.5 mm hex key + 5.5 mm spanner", "access": "nut from inside the box, lid off",
-         "install_order": 0, "removal_order": 0}
+
+
+def c6_blocks(eid):
+    """C6's ground_joint and joint_stack for a handle edge, with engagement_mm = the CALC-D7-HANDLE-GRIP number
+    (bolt 16 - grip strap 2.5 + washer 1.0 + wall 4 + ply 3 = 5.5 mm >= nyloc 4.0 + 2 x 0.5, D-41)."""
+    src = (C6.get('edges') or C6).get(eid) or {}
+    js = dict(src.get('joint_stack') or {})
+    js['engagement_mm'] = round(GRIP['engage_mm'], 2)
+    js['min_engagement_mm'] = round(GRIP['engage_min_mm'], 2)
+    js['engagement_basis'] = ('CL-D7-HANDLE-ENGAGE: grip %.1f mm (strap 2.5 EST + washer 1.0 + wall 4.0 + ply 3.0); '
+                              'strap tab <= %.1f mm keeps M3x16, else M3x20; inspect: nyloc fully on, 2 threads showing'
+                              % (GRIP['grip_mm'], GRIP['strap_max_mm']))
+    return {'ground_joint': bool(src.get('ground_joint', True)), 'joint_stack': js}
 E = [
     ('E-TRN-01', 'TRN-002-L', 'TRN-001', 'CT-TRN-LSE-TAPE', 'column base on the floor + 2 zip ties through the floor'),
     ('E-TRN-02', 'TRN-002-R', 'TRN-001', 'CT-TRN-LSE-TAPE', 'as E-TRN-01'),
     ('E-TRN-03', 'TRN-003', 'TRN-001', 'CT-TRN-LSE-TAPE', 'tray on the floor between the cradles'),
     ('E-TRN-04', 'TRN-004-L', 'TRN-005', 'CT-TRN-LSE-TAPE', 'pillar on the lid shell'),
     ('E-TRN-05', 'TRN-004-R', 'TRN-005', 'CT-TRN-LSE-TAPE', 'pillar on the lid shell'),
-    ('E-TRN-06', 'TRN-002-L', 'WNG-001', 'CT-CRADLE-CONTACT', 'bears on the tape skin WNG-003 over the core (check.py bbox WARN on WNG-003 expected, CR-D7-19). Saddle under the lower surface at y -0.20 (0.17-0.23), x -0.015..0.235 (spar line), 15 000 mm2 >= C2 1 080 mm2; 4 mm inboard of the brace anchors (0.234); elevons, fins, tubes, braces never pressed (P:transport.cradle). Wing keeps this patch free of servo covers and horns (CR-D7-04)'),
+    ('E-TRN-06', 'TRN-002-L', 'WNG-001', 'CT-CRADLE-CONTACT', 'bears on the tape skin WNG-003 over the core (also_contacts WNG-003, CR-D7-19 / CR-A4-46; saddle cut to the outer skin face, preload 0). Saddle under the lower surface at y -0.20 (0.17-0.23), x -0.015..0.235 (spar line), 15 000 mm2 >= C2 1 080 mm2; 4 mm inboard of the brace anchors (0.234); elevons, fins, tubes, braces never pressed (P:transport.cradle). Wing keeps this patch free of servo covers and horns (CR-D7-04)'),
     ('E-TRN-07', 'TRN-002-R', 'WNG-001', 'CT-CRADLE-CONTACT', 'as E-TRN-06 at y +0.20'),
-    ('E-TRN-08', 'TRN-004-L', 'WNG-001', 'CT-TRN-PRELOAD-PAD', 'on the tape skin over the core; upper surface over the spar at y -0.20, x 0.03..0.13; replaces the strap of the A4 plan (E-TRN-07 there)'),
+    ('E-TRN-08', 'TRN-004-L', 'WNG-001', 'CT-TRN-PRELOAD-PAD', 'on the tape skin over the core (also_contacts WNG-003); upper surface over the spar at y -0.20, x 0.03..0.13; replaces the strap of the A4 plan (E-TRN-07 there)'),
     ('E-TRN-09', 'TRN-004-R', 'WNG-001', 'CT-TRN-PRELOAD-PAD', 'as E-TRN-08 at y +0.20'),
     ('E-TRN-10', 'TRN-005', 'TRN-001', 'CT-TRN-PLUG-LID', ''),
     ('E-TRN-11', 'TRN-006-L', 'TRN-001', 'CT-TRN-CAM-STRAP', 'y -0.40'),
@@ -120,7 +131,7 @@ RET = {
     'E-TRN-01': ('LSE tape 60 x 50 mm + 2 zip ties through the floor', 1, 10, 'C1 drop is compression; 10 N = half the aircraft weight at a 45 deg tilt, EST', 'pull by hand before every trip'),
     'E-TRN-03': ('LSE tape, 4 strips', 1, 6, 'tray + props at 2 g, EST', 'tray does not lift when the box is tipped'),
     'E-TRN-04': ('LSE tape 100 x 60 mm', 1, 102, 'CL-C1-PILLAR-F-LIM (compression)', 'pillar square on the lid; re-tape if it peels'),
-    'E-TRN-06': ('wing in the saddle, 6 mm LE lip', 1, 102, 'CL-C1-CRADLE-F-LIM', 'chalk patch >= 40 x 40 mm after T-D7-BOX-DROP'),
+    'E-TRN-06': ('wing in the saddle, 6 mm LE lip; saddle cut to the outer skin face, no preload', 1, 102, 'CL-C1-CRADLE-F-LIM', 'chalk patch >= 40 x 40 mm after T-D7-BOX-DROP'),
     'E-TRN-08': ('lid pillar, 5 mm preload', 1, 102, 'ASM-C1-LID-PRELOAD 5 N static; CL-C1-PILLAR-F-LIM lid-down', 'aircraft does not move when the closed box is tilted 45 deg'),
     'E-TRN-10': ('30 mm plug lip + 2 cam straps', 1, 102, 'rebound into the pillars, CL-C1-PILLAR-F-LIM', 'lid seated, no gap > 3 mm'),
     'E-TRN-11': ('25 mm PP webbing, cam buckle', 1, 50, 'hand-cinched tension, EST', 'webbing not frayed, buckle bites'),
@@ -131,6 +142,14 @@ RET['E-TRN-02'], RET['E-TRN-05'], RET['E-TRN-07'], RET['E-TRN-09'], RET['E-TRN-1
                                                                                       RET['E-TRN-06'], RET['E-TRN-08'], RET['E-TRN-11'])
 for _e in ('E-TRN-18', 'E-TRN-19', 'E-TRN-20'):
     RET[_e] = RET['E-TRN-17']
+# CR-A4-46 / CR-D7-19: the saddles and pillars bear on the tape skin bonded over the core
+ALSO = {e: ['WNG-003'] for e in ('E-TRN-06', 'E-TRN-07', 'E-TRN-08', 'E-TRN-09')}
+_LOCC = json.load(open(os.path.join(SUB, 'params.json'), encoding='utf-8'))['trn']
+_ps, _pp = _LOCC['cradle']['saddle_preload_m']['value'], _LOCC['holddown']['preload_m']['value']
+PRELOAD = {'E-TRN-06': (_ps, 'trn.cradle.saddle_preload_m: modelled at contact with the outer face of WNG-003, rests by weight'),
+           'E-TRN-07': (_ps, 'as E-TRN-06'),
+           'E-TRN-08': (_pp, 'trn.holddown.preload_m: pillar cut 5 mm long, modelled at contact (preload not modelled as overlap)'),
+           'E-TRN-09': (_pp, 'as E-TRN-08')}
 RET['E-TRN-21'] = ('boom in its slot, PE tip plug', 1, 1, 'boom about 0.01 kg at 10 g, EST', 'tip cover on; slot not crushed')
 
 
@@ -146,12 +165,16 @@ def main():
     for i, (eid, a, b, via, note) in enumerate(E):
         e = {"id": eid, "part_a": a, "part_b": b, "via": via, "owner": "transport", "notes": note}
         if via == 'CT-TRN-M3-BOLT':
-            e["joint_stack"] = dict(STACK, install_order=i, removal_order=len(E) - i)
+            e.update(c6_blocks(eid))
+        if eid in ALSO:
+            e["also_contacts"] = ALSO[eid]
         if eid in STOWED:
             e["stowed"] = True
         if eid in RET:
             item, n, load, basis, insp = RET[eid]
             e["retention"] = {"item": item, "count": n, "load_n": load, "load_basis": basis, "inspection": insp}
+            if eid in PRELOAD:
+                e["retention"]["preload_m"], e["retention"]["preload_basis"] = PRELOAD[eid]
         edges.append(e)
     doc = {"schema": "dbf-interfaces/1", "subsystem": "transport",
            "_note": "GENERATED by redesign/team/D7/make_interfaces.py from team/D7/claims.json (masses) and the stub CAD "

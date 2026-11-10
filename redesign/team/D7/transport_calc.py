@@ -67,7 +67,7 @@ def stroke(h, eta, n_allow, t, eu, eb, margin):
           equation="floor = shell + doubler ; lid = shell + lining ; H_req = floor + travel_req + env_z + gap_min + lid ; "
                    "travel = H - floor - lid - env_z - gap_min ; clear_bottoming = travel - s_bottom ; "
                    "nose_gap = W - 2 shell - env_x - aft_gap - nose_pad (- nose_ext) ; x_clear = min(nose_gap_ext, aft_gap) ; "
-                   "tip_to_pad = (L - 2 shell - env_y) / 2 - pad ; "
+                   "tip_to_pad = (L - 2 shell - env_y) / 2 - pad ; antenna_gap = nose_gap_ext - antenna_ext ; "
                    "A1 box: t_max = (travel_A1 - margin) / eps_bottom, h_allow = (n_allow - 1) eta eps_use t_max",
           inputs={"ext": P + "trn.box.external_m", "ext_a1": P + "requirements.box_external_m",
                   "env": P + "transport.envelope_props_off_m", "shell": P + "trn.box.shell_t_m",
@@ -76,11 +76,11 @@ def stroke(h, eta, n_allow, t, eu, eb, margin):
                   "aft_gap": P + "trn.box.aft_gap_m", "nose_pad": P + "trn.box.nose_pad_t_m", "nose_ext": "CL-C5-NOSE-EXT",
                   "travel_req": "CL-D7-TRAVEL-REQ", "s_bot": "CL-D7-S-BOTTOM", "margin": P + "trn.foam.travel_margin_m",
                   "eb": P + "trn.foam.eps_bottom", "eu": P + "trn.foam.eps_use", "eta": "ASM-C1-CRUSH-EFF",
-                  "n_allow": "CL-C1-TRANSPORT-N-ALLOW"},
-          units={"ext": "m", "ext_a1": "m", "env": "m", "shell": "m", "dbl": "m", "lin": "m", "gap": "m", "pad": "m",
+                  "n_allow": "CL-C1-TRANSPORT-N-ALLOW", "ant": P + "trn.box.antenna_ext_max_m"},
+          units={"ant": "m", "ext": "m", "ext_a1": "m", "env": "m", "shell": "m", "dbl": "m", "lin": "m", "gap": "m", "pad": "m",
                  "aft_gap": "m", "nose_pad": "m", "nose_ext": "m", "travel_req": "m", "s_bot": "m", "margin": "m"})
 def box_stack(ext, ext_a1, env, shell, dbl, lin, gap, pad, aft_gap, nose_pad, nose_ext, travel_req, s_bot, margin, eb,
-              eu, eta, n_allow):
+              eu, eta, n_allow, ant):
     L, W, H = ext
     floor, lid = shell + dbl, shell + lin
     env_y, env_x, env_z = env
@@ -93,7 +93,8 @@ def box_stack(ext, ext_a1, env, shell, dbl, lin, gap, pad, aft_gap, nose_pad, no
             "nose_gap_ext_m": W - 2 * shell - env_x - aft_gap - nose_pad - nose_ext,
             "x_clear_m": min(W - 2 * shell - env_x - aft_gap - nose_pad - nose_ext, aft_gap),
             "tip_to_pad_m": (L - 2 * shell - env_y) / 2 - pad, "travel_a1_m": travel_a1,
-            "h_allow_a1_m": (n_allow - 1) * eta * eu * t_max_a1}
+            "h_allow_a1_m": (n_allow - 1) * eta * eu * t_max_a1,
+            "antenna_gap_m": W - 2 * shell - env_x - aft_gap - nose_pad - nose_ext - ant}
 
 
 @kit.calc("CALC-D7-CRADLE-PATCH", title="Cradle saddle and pillar footprint against C2 and the brace anchors",
@@ -115,6 +116,20 @@ def cradle_patch(w, sx, yc, hd, fp, ya, rx):
 def handle(m):
     f = m * 2 * G / 2
     return {"F_bolt_N": f, "p_strip_kpa": 2 * f / (0.140 * 0.030) / 1000.0}
+
+
+@kit.calc("CALC-D7-HANDLE-GRIP", title="Handle bolt grip stack and thread engagement past the nyloc (D-41)",
+          equation="grip = strap + washer + wall + backing ; e = L_bolt - grip ; e_min = h_nyloc + n_p p ; "
+                   "strap_max = L_bolt - e_min - washer - wall - backing",
+          inputs={"Lb": P + "trn.handle.bolt_len_m", "p": P + "trn.handle.pitch_m", "hn": P + "trn.handle.nyloc_h_m",
+                  "np": P + "requirements.nyloc_pitches_min", "st": P + "trn.handle.strap_t_m",
+                  "wt": P + "trn.handle.washer_t_m", "wall": P + "trn.box.shell_t_m", "bt": P + "trn.handle.backing_t_m"},
+          units={"Lb": "m", "p": "m", "hn": "m", "st": "m", "wt": "m", "wall": "m", "bt": "m"})
+def handle_grip(Lb, p, hn, np, st, wt, wall, bt):
+    grip = st + wt + wall + bt
+    e_min = hn + np * p
+    return {"grip_mm": 1000 * grip, "engage_mm": 1000 * (Lb - grip), "engage_min_mm": 1000 * e_min,
+            "strap_max_mm": 1000 * (Lb - e_min - wt - wall - bt)}
 
 
 @kit.calc("CALC-D7-CRADLE-STRESS", title="Static stress on the crush columns",
@@ -262,9 +277,12 @@ kit.claim("CL-D7-SIDE-CLEAR", "Smaller of pod nose to nose pad (with C5's 9.3 mm
           unit="m", limit=(">=", P + "trn.box.top_gap_min_m"), verifies=["R-TRANSPORT"], parts=PARTS_BOX,
           how="Place the aircraft on the cradles; a 10 mm foam feeler passes between nose and nose pad and between the "
               "foot pads and the aft wall.")
-kit.claim("CL-D7-NOSE-GAP", "Pod nose to the nose pad, today's pod (x_le -0.115)", calc="CALC-D7-BOX-STACK",
+kit.claim("CL-D7-NOSE-GAP", "Pod nose (x -0.130, D-47) to the 3/4 in nose pad", calc="CALC-D7-BOX-STACK",
           output="nose_gap_m", unit="m", limit=(">=", P + "trn.box.top_gap_min_m"), parts=PARTS_BOX,
           how="Ruler in the built box.")
+kit.claim("CL-D7-ANTENNA-PAD-GAP", "Antenna tube B tip (<= 10 mm ahead of the nose, CR-D7-13) to the 3/4 in nose pad",
+          calc="CALC-D7-BOX-STACK", output="antenna_gap_m", unit="m", limit=(">=", 0.002), parts=PARTS_BOX,
+          how="Aircraft in the box against the LE lips: a 2 mm feeler passes between the antenna tip and the nose pad.")
 kit.claim("CL-D7-TIP-PAD-GAP", "Wingtip to end pad", calc="CALC-D7-BOX-STACK", output="tip_to_pad_m", unit="m",
           limit=(">=", 0.0), verifies=["R-TRANSPORT"], parts=PARTS_BOX, how="Ruler in the built box.")
 kit.claim("CL-D7-A1-BOX-DROP-ALLOW", "Drop height A1's box (requirements.box_external_m) allows, column limited by travel",
@@ -289,6 +307,17 @@ kit.claim("CL-D7-HANDLE-BOLT-F", "Load per M3 handle bolt, loaded box at 2 g", c
 kit.claim("CL-D7-HANDLE-BEARING", "Wall bearing pressure behind a handle backing strip", calc="CALC-D7-HANDLE",
           output="p_strip_kpa", unit="kPa", parts=["TRN-007-C", "TRN-001"],
           how="T-D7-HANDLE-PULL: Coroplast face shows no dent behind the strip.")
+kit.claim("CL-D7-HANDLE-ENGAGE-MIN", "Minimum thread past the nut face for an M3 nyloc (D-41: nyloc + 2 pitches)",
+          calc="CALC-D7-HANDLE-GRIP", output="engage_min_mm", unit="mm", parts=["TRN-102"],
+          how="Equals C6 min_engagement_mm 5.0 for E-TRN-13...15 (joint_stacks.json).")
+kit.claim("CL-D7-HANDLE-ENGAGE", "M3x16 handle bolt: thread past the nyloc bearing face", calc="CALC-D7-HANDLE-GRIP",
+          output="engage_mm", unit="mm", limit=(">=", "CL-D7-HANDLE-ENGAGE-MIN"), verifies=["R-TRANSPORT"],
+          parts=["TRN-007-C", "TRN-007-L", "TRN-007-R", "TRN-102", "TRN-105"],
+          how="On assembly: nyloc fully on and at least 2 full threads (1.0 mm) showing past it on every handle bolt; "
+              "caliper the strap tab first (<= CL-D7-HANDLE-STRAP-T-MAX, else M3x20).")
+kit.claim("CL-D7-HANDLE-STRAP-T-MAX", "Thickest strap-handle tab M3x16 still engages 5.0 mm", calc="CALC-D7-HANDLE-GRIP",
+          output="strap_max_mm", unit="mm", limit=(">=", 2.5), parts=["TRN-007-C", "TRN-007-L", "TRN-007-R"],
+          how="Caliper the bought handle tab on receipt; limit is the 2.5 mm estimate used in the stack.")
 kit.claim("CL-D7-CRADLE-STRESS", "Static stress on each crush column", calc="CALC-D7-CRADLE-STRESS",
           output="sigma_kpa", unit="kPa", limit=(">=", 2.0), parts=PARTS_CR,
           how="Inside the 2-7 kPa cushion band of 1.7-2.2 pcf PE; T-D7-CUSHION picks the density.")
@@ -302,7 +331,7 @@ kit.claim("CL-D7-LOADED-WITH-PACKS", "Loaded box if both packs were put in (not 
 kit.claim("CL-D7-END-DROP-ALLOW", "Drop height on a box end (wingtip into the 30 mm end pad)", calc="CALC-D7-OFFAXIS",
           output="h_end_m", unit="m", parts=PARTS_BOX, assumes=["ASM-D7-FLAT-DROP"],
           how="Label-and-test case (C1 CR-C1-22): T-D7-BOX-DROP end drop at this height with the dummy; no tip crush.")
-kit.claim("CL-D7-NOSE-DROP-ALLOW", "Drop height on the front wall (pod nose into the 1 in nose pad)", calc="CALC-D7-OFFAXIS",
+kit.claim("CL-D7-NOSE-DROP-ALLOW", "Drop height on the front wall (pod nose into the 3/4 in nose pad)", calc="CALC-D7-OFFAXIS",
           output="h_nose_m", unit="m", parts=PARTS_BOX, how="T-D7-BOX-DROP front-wall drop with the dummy.")
 kit.claim("CL-D7-AFT-N", "Load factor when the four feet take an aft-wall drop", calc="CALC-D7-OFFAXIS", output="n_aft",
           unit="-", limit=("<=", "CL-C1-TRANSPORT-N-ALLOW-X"), parts=PARTS_BOX,

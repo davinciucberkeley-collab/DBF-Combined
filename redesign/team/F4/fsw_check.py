@@ -107,9 +107,10 @@ kit.assumption("ASM-F4-AVN-POINTS", "IMU and GPS centres in the aircraft frame",
                "GPS centre (0.075, 0, 0.178) m", basis="team/F3/CHANGE-REQUESTS.md CR-F3-20 (F3's CALC-F3-OFFSETS "
                "still holds the R3 layout); re-measure as built", value={"imu": [-0.010, 0.046, 0.039],
                "gps": [0.075, 0.0, 0.178]}, unit="m", status="UNVERIFIED")
-kit.assumption("ASM-F4-CG-Z", "CG height for the sensor offsets", "+0.018 m above the chord plane, take-off case",
-               basis="MASS-CG.md CG table (A3-R5, take-off basic and predicted both +0.018); A3 publishes no CG-z "
-               "claim, only CL-A3-CG-Z-RANGE", value=0.018, unit="m", status="UNVERIFIED")
+kit.assumption("ASM-F4-CG-Z", "CG height for the sensor offsets", "+0.0185 m above the chord plane, take-off basic case",
+               basis="team/A3/claims.json CALC-A3-CG outputs.cg_m[2] = 0.01850 m (2026-11-10 roll-up; MASS-CG.md "
+               "table rounds it to +0.019 basic, +0.018 predicted). A3 publishes no CG-z claim, only "
+               "CL-A3-CG-Z-RANGE (CR-F4-19)", value=0.0185, unit="m", status="UNVERIFIED")
 kit.assumption("ASM-F4-THETA-DN", "Servo angle for 25 deg TE down", "-42.9 deg (D6 linkage solution)",
                basis="team/D6/claims.json CALC-D6-KIN output theta_dn_deg -42.87 (no claim id published; "
                "CR-D6-09 quotes it)", value=-42.87, unit="deg", status="UNVERIFIED")

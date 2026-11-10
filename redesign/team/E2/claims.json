@@ -16,6 +16,25 @@
    "status": "UNVERIFIED"
   },
   {
+   "id": "SRC-E2-OVONIC-120C-EC5",
+   "type": "source",
+   "title": "Ovonic 14.8V 120C 4S 6500 mAh hard-case LiPo, EC5, 2-pack (named SKU, D-58)",
+   "kind": "web",
+   "url": "https://www.ampow.com/products/2-pack-ovonic-4s-6500mah-120c-lipo-hardcase-ec5-1-8-rc-car",
+   "checked": "2026-11-10",
+   "where": "product page read 2026-11-10: 6500 mAh, 120C, net weight 551 g (+/-5 g) per piece, 135 x 46 x 49 mm (+/-3 mm), EC5 plug, JST-XHR-5P balance, 2 packs, in stock, EUR 98.69 shown (EU storefront; another snippet EUR 113.30). Lead gauge not stated on the page: the EC5 contact takes 8-10 AWG, so 10 AWG is inferred, not read",
+   "note": "checked = mass, size, plug and balance lead compared with the page; the lead gauge and the US price are confirmed by I1 at order (photo or seller answer) and by E2 on arrival (T-E2-WEIGH step 3a)"
+  },
+  {
+   "id": "SRC-E2-TATTU-6750",
+   "type": "source",
+   "title": "Tattu 4S 6750 mAh 25C LiPo, XT90 (fallback SKU)",
+   "kind": "web",
+   "url": "https://www.gensace.de/tattu-6750mah-14-8v-25c-4s1p-lipo-battery-with-xt90.html",
+   "where": "search results 2026-11-10 (page not opened): net weight 605 g (+/-10 g), wire gauge 10#, XT90, about 138 x 42 x 44 mm; NextFPV USD 74 sale / 83 list per pack, stock 'contact us'; Grepow 620 g",
+   "status": "UNVERIFIED"
+  },
+  {
    "id": "SRC-E2-HTRC-C150",
    "type": "source",
    "title": "HTRC C150 150 W AC/DC balance charger",
@@ -205,9 +224,21 @@
      150.0
     ],
     [
-     "Ovonic 4S 6500 hard-case LiPo",
+     "Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)",
      6.5,
      0.55,
+     195.0
+    ],
+    [
+     "Tattu 4S 6750 25C XT90 (605 g listed)",
+     6.75,
+     0.605,
+     168.75
+    ],
+    [
+     "Ovonic 4S 6500 130C XT60 (680 g listed, 12 AWG)",
+     6.5,
+     0.68,
      195.0
     ],
     [
@@ -226,9 +257,52 @@
    "unit": "-",
    "status": "UNVERIFIED",
    "cites": [
+    "SRC-E2-OVONIC-120C-EC5",
+    "SRC-E2-TATTU-6750",
     "SRC-E2-OVONIC-LISTINGS",
     "SRC-K09-CARD"
    ]
+  },
+  {
+   "id": "ASM-E2-PACK-SKU",
+   "type": "assumption",
+   "title": "Named flight-pack SKU (D-58): listed data",
+   "text": "Ovonic 14.8V 120C 4S 6500 mAh hard case, EC5, 2-pack: 0.551 kg +/- 0.005 per pack, 135 x 46 x 49 mm +/- 3 mm, factory discharge leads 10 AWG (inferred from the EC5 plug), JST-XH 5-pin balance lead",
+   "basis": "SRC-E2-OVONIC-120C-EC5 read 2026-11-10. The 120C label is not a physical continuous rating; the real limit is the cell IR (ASM-E2-R-CELL, T-E2-IR). Re-terminated EC5 -> AS150U on arrival as before (D-32)",
+   "value": {
+    "mass_kg": 0.551,
+    "mass_tol_kg": 0.005,
+    "size_m": [
+     0.135,
+     0.046,
+     0.049
+    ],
+    "size_tol_m": 0.003,
+    "lead_awg": 10
+   },
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-E2-OVONIC-120C-EC5"
+   ]
+  },
+  {
+   "id": "ASM-E2-PACK-LIMITS",
+   "type": "assumption",
+   "title": "Pack acceptance limits (D-58, D-15, CR-F1-14)",
+   "text": "Pack mass <= 0.601 kg (D-58: the mass above which the first-build overrun is no longer covered; A3-R6 re-ran it to 0.613 kg, the stricter D-58 value is used); body fits the D2 bay 0.160 x 0.052 x 0.053 m (D-15); discharge leads 10 AWG or heavier (AWG number <= 10, CR-F1-14, CL-F1-PACKLEAD12-RISE)",
+   "basis": "params/CHANGE-LOG.md D-58, D-15; MASS-CG.md A3-R6 (covered up to 613 g); F1 pack-lead rise rule electrical.pack_lead_rise_max_c 20 K (12 AWG 28.4 K)",
+   "value": {
+    "mass_max_kg": 0.601,
+    "bay_m": [
+     0.16,
+     0.052,
+     0.053
+    ],
+    "awg_max": 10
+   },
+   "unit": "-",
+   "status": "PROPOSED"
   },
   {
    "id": "ASM-E2-TESTDAY",
@@ -929,7 +1003,7 @@
       false
      ],
      [
-      "Ovonic 4S 6500 hard-case LiPo",
+      "Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)",
       6.5,
       0.55,
       2.6,
@@ -937,6 +1011,26 @@
       6.8,
       195.0,
       true
+     ],
+     [
+      "Tattu 4S 6750 25C XT90 (605 g listed)",
+      6.75,
+      0.605,
+      2.655,
+      13.0,
+      7.0,
+      168.75,
+      false
+     ],
+     [
+      "Ovonic 4S 6500 130C XT60 (680 g listed, 12 AWG)",
+      6.5,
+      0.68,
+      2.73,
+      11.7,
+      6.1,
+      195.0,
+      false
      ],
      [
       "4S 8000 hard-case LiPo (EST)",
@@ -960,7 +1054,7 @@
      ]
     ],
     "largest_passing_ah": 6.5,
-    "largest_passing": "Ovonic 4S 6500 hard-case LiPo"
+    "largest_passing": "Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)"
    },
    "input_values": {
     "cands": [
@@ -977,9 +1071,21 @@
       150.0
      ],
      [
-      "Ovonic 4S 6500 hard-case LiPo",
+      "Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)",
       6.5,
       0.55,
+      195.0
+     ],
+     [
+      "Tattu 4S 6750 25C XT90 (605 g listed)",
+      6.75,
+      0.605,
+      168.75
+     ],
+     [
+      "Ovonic 4S 6500 130C XT60 (680 g listed, 12 AWG)",
+      6.5,
+      0.68,
       195.0
      ],
      [
@@ -1259,6 +1365,203 @@
    "cites": [
     "SRC-E2-HTRC-C150"
    ]
+  },
+  {
+   "id": "CALC-E2-SKU-CHECK",
+   "type": "calculation",
+   "title": "Named pack SKU against the D-58 mass line, the bay and the lead rule",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "sku_check",
+   "equation": "m_worst = m_listed + tol ; mass margin = m_max - m_worst ; bay clearance = min_i(bay_i - (size_i + tol)) (pack length along the bay) ; lead AWG number <= awg_max",
+   "inputs": {
+    "sku": "ASM-E2-PACK-SKU",
+    "lim": "ASM-E2-PACK-LIMITS"
+   },
+   "assumes": [
+    "ASM-E2-PACK-SKU",
+    "ASM-E2-PACK-LIMITS"
+   ],
+   "outputs": {
+    "mass_worst_kg": 0.556,
+    "mass_margin_kg": 0.04499999999999993,
+    "bay_clear_min_m": 0.000999999999999994,
+    "bay_clear_m": [
+     0.021999999999999992,
+     0.0029999999999999957,
+     0.000999999999999994
+    ],
+    "lead_awg": 10,
+    "awg_max": 10
+   },
+   "input_values": {
+    "sku": {
+     "mass_kg": 0.551,
+     "mass_tol_kg": 0.005,
+     "size_m": [
+      0.135,
+      0.046,
+      0.049
+     ],
+     "size_tol_m": 0.003,
+     "lead_awg": 10
+    },
+    "lim": {
+     "mass_max_kg": 0.601,
+     "bay_m": [
+      0.16,
+      0.052,
+      0.053
+     ],
+     "awg_max": 10
+    }
+   }
+  },
+  {
+   "id": "CALC-E2-BUDGET-240",
+   "type": "calculation",
+   "title": "Budget sensitivity at the params cruise power (E1 240 W, D-49 / D-13 rule)",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "budget_240",
+   "equation": "as CALC-E2-BUDGET-BASE / -PESS with B1's level cruise power x k, k = P_params / P_B1 (base 240 / 227.8 W; pessimistic B1 300.6 W x the same k) ; BATT_LOW count as CALC-E2-FAILSAFE",
+   "inputs": {
+    "m_b": "CL-A1-MASS-SIZED",
+    "m_p": "P:requirements.mtow_gate_kg",
+    "p_par": "P:performance.cruise_power_w",
+    "n": "P:propulsion.n_motors",
+    "table": "P:propulsion.thrust_table_g_w",
+    "download": "P:propulsion.download_factor",
+    "esc": "ASM-E2-ESC-EFF",
+    "avn": "ASM-E2-AVIONICS-W",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "S": "CL-A1-WING-AREA",
+    "b": "P:wing.span_m",
+    "e": "P:wing.oswald_e",
+    "V": "P:performance.cruise_ms",
+    "cells": "P:battery.cells_s",
+    "ah": "P:battery.capacity_ah",
+    "ocv": "ASM-E2-OCV-AVG",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "cold": "ASM-E2-COLD-R",
+    "hmargin": "ASM-E2-HOVER-MARGIN",
+    "prof": "ASM-E2-PROFILE",
+    "aero": "ASM-E2-CRUISE-AERO",
+    "cap_frac": "P:requirements.pack_capacity_min_frac",
+    "reserve": "P:requirements.energy_reserve_frac",
+    "pc_b": "CL-B1-CRUISE-P",
+    "pc_p": "CL-B1-CRUISE-P-PESS",
+    "m_ref": "P:requirements.mtow_gate_kg"
+   },
+   "units": {
+    "m_b": "kg",
+    "m_p": "kg",
+    "p_par": "W",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "D": "m",
+    "S": "m2",
+    "b": "m",
+    "V": "m/s",
+    "ah": "Ah",
+    "ocv": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "pc_b": "W",
+    "pc_p": "W",
+    "m_ref": "kg"
+   },
+   "assumes": [
+    "ASM-E2-ESC-EFF",
+    "ASM-E2-AVIONICS-W",
+    "ASM-E2-OCV-AVG",
+    "ASM-E2-R-CELL",
+    "ASM-E2-PROFILE",
+    "ASM-E2-CRUISE-AERO",
+    "ASM-E2-COLD-R",
+    "ASM-E2-HOVER-MARGIN"
+   ],
+   "outputs": {
+    "k": 1.053446857680429,
+    "cruise_min_base": 11.980562000939118,
+    "cruise_min_pess": 6.419504491739326,
+    "cruise_w_base": 252.00000000000003,
+    "cruise_w_pess": 332.47122199935455,
+    "cruise_a_pess": 23.61336093560447,
+    "low_mah": 2600,
+    "cruise_to_low_min": 6.0660219523379
+   },
+   "input_values": {
+    "m_b": 2.6,
+    "m_p": 2.6,
+    "p_par": 240.0,
+    "n": 4,
+    "table": [
+     [
+      690,
+      89.0
+     ],
+     [
+      750,
+      104.0
+     ],
+     [
+      870,
+      133.0
+     ],
+     [
+      1580,
+      447.0
+     ]
+    ],
+    "download": 1.06,
+    "esc": 0.95,
+    "avn": 6.0,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "S": 0.368,
+    "b": 1.15,
+    "e": 0.8,
+    "V": 16.0,
+    "cells": 4,
+    "ah": 6.5,
+    "ocv": 3.7,
+    "r_cell": 0.004,
+    "r_ext": 6.5,
+    "cold": 1.5,
+    "hmargin": 1.1,
+    "prof": {
+     "ground_s": 180,
+     "alt_m": 50,
+     "climb_ms": 2.0,
+     "descent_ms": 1.0,
+     "hover_s": 120,
+     "trans_s": [
+      10,
+      20
+     ],
+     "trans_fwd_factor": 1.4,
+     "trans_back_factor": 1.3
+    },
+    "aero": {
+     "cd0": 0.0593,
+     "cd0_pess": 1.3,
+     "eta_prop": [
+      0.47,
+      0.35
+     ],
+     "eta_motor": 0.72,
+     "trim": 1.05,
+     "circuit": 1.05
+    },
+    "cap_frac": 0.92,
+    "reserve": 0.2,
+    "pc_b": 227.82354729165257,
+    "pc_p": 300.5744966995376,
+    "m_ref": 2.6
+   }
   },
   {
    "id": "CL-E2-BUDGET-BASE-TABLE",
@@ -1768,30 +2071,132 @@
    "value": 58.44435401989624
   },
   {
+   "id": "CL-E2-SKU-MASS-MARGIN",
+   "type": "claim",
+   "title": "Named pack (listed mass + tolerance) under the D-58 line of 601 g",
+   "calc": "CALC-E2-SKU-CHECK",
+   "output": "mass_margin_kg",
+   "unit": "kg",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-PACK-MASS"
+   ],
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "T-E2-WEIGH: every pack <= 0.601 kg on a 1 g scale, leads included (pack_log.csv).",
+   "value": 0.04499999999999993
+  },
+  {
+   "id": "CL-E2-SKU-BAY-CLEAR",
+   "type": "claim",
+   "title": "Named pack body (listed + 3 mm) inside the D2 bay, tightest axis",
+   "calc": "CALC-E2-SKU-CHECK",
+   "output": "bay_clear_min_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "T-E2-WEIGH step 3: calipers L x W x H against the bay 160 x 52 x 53 mm; lead exit routed per D2.",
+   "value": 0.000999999999999994
+  },
+  {
+   "id": "CL-E2-SKU-LEAD-AWG",
+   "type": "claim",
+   "title": "Named pack discharge-lead gauge (AWG number)",
+   "calc": "CALC-E2-SKU-CHECK",
+   "output": "lead_awg",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 10.0
+   },
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "T-E2-WEIGH step 3a: read the print on the lead insulation, or strip 5 mm of the cut-off end at re-termination and measure the bundle (10 AWG ~2.6 mm, 12 AWG ~2.1 mm).",
+   "note": "10 AWG inferred from the EC5 plug (the page does not state it); I1 confirms at order, E2 on arrival",
+   "value": 10
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-BASE-240",
+   "type": "claim",
+   "title": "Cruise after 2 min hover, base, at the params' 240 W (sensitivity)",
+   "calc": "CALC-E2-BUDGET-240",
+   "output": "cruise_min_base",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "As CL-E2-CRUISE-MIN-BASE; the first tune flight's logged cruise current decides between B1 and E1.",
+   "value": 11.980562000939118
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-PESS-240",
+   "type": "claim",
+   "title": "Cruise after 2 min hover, pessimistic, at the params' 240 W (sensitivity)",
+   "calc": "CALC-E2-BUDGET-240",
+   "output": "cruise_min_pess",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "As CL-E2-CRUISE-MIN-PESS.",
+   "value": 6.419504491739326
+  },
+  {
+   "id": "CL-E2-CRUISE-TO-LOW-PESS-240",
+   "type": "claim",
+   "title": "Cruise before BATT_LOW (2600 mAh), pessimistic, at 240 W (sensitivity)",
+   "calc": "CALC-E2-BUDGET-240",
+   "output": "cruise_to_low_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "SITL with the logged currents, as CL-E2-CRUISE-TO-LOW-PESS.",
+   "value": 6.0660219523379
+  },
+  {
    "id": "CL-E2-PACK-MASS",
    "type": "claim",
    "title": "Flight pack mass carried in the budget (not yet weighed)",
    "unit": "kg",
    "limit": {
     "op": "<=",
-    "value": 0.68
+    "value": 0.601
    },
    "verifies": [
     "R-PACK-MASS"
    ],
-   "how": "Weigh each pack on arrival on a 1 g scale (T-E2-WEIGH) and enter it in pack_log.csv, then re-run; listings say 522-551 g, one 680 g. Accept <= 0.68 kg (A3's growth bound); 0.55-0.68 kg: A3 updates the roll-up; > 0.68 kg: return the pack and buy another SKU.",
+   "how": "Weigh each pack on arrival on a 1 g scale (T-E2-WEIGH) and enter it in pack_log.csv, then re-run. Accept <= 0.601 kg (D-58); 0.551-0.601 kg: A3 replaces the 550 g line; 0.602-0.613 kg: A1 decides (A3-R6 still covers the overrun to 613 g); > 0.613 kg: return the pair.",
    "cites": [
+    "SRC-E2-OVONIC-120C-EC5",
     "SRC-E2-OVONIC-LISTINGS"
    ],
    "value": 0.55,
-   "status": "UNVERIFIED"
+   "status": "UNVERIFIED",
+   "note": "named SKU (D-58): Ovonic 120C 4S 6500 hard case EC5, listed 551 +/- 5 g; 0.55 kg stays the carried value until weighed"
   },
   {
    "id": "T-E2-WEIGH",
    "type": "test",
    "title": "Weigh and measure every pack on arrival",
    "verifies": [
-    "CL-E2-PACK-MASS"
+    "CL-E2-PACK-MASS",
+    "CL-E2-SKU-MASS-MARGIN",
+    "CL-E2-SKU-BAY-CLEAR",
+    "CL-E2-SKU-LEAD-AWG"
    ],
    "state": "planned",
    "procedure": "1 g scale; calipers L x W x H incl. lead exit; one row per pack (E2-P1, E2-P2) in redesign/team/E2/pack_log.csv, then re-run this script and build_graph.py."

@@ -33,6 +33,8 @@ motor or foot. The joints and their checks are in `FIELD-JOINTS.md`.
    (tip end against the PE plug).
 3. Put the spanner back in the pouch and the pouch in its pocket.
 4. Check the feet. Swap any insert past its replace mark now (3 min, `FIELD-JOINTS.md`).
-5. Set the aircraft on the cradles with the wing seated in both saddles, the pod nose toward the nose pad and nothing
-   touching the braces or tubes.
+5. Set the aircraft on the cradles with the wing seated in both saddles and the LE against both saddle lips, the pod
+   nose toward the nose pad (gap about 13 mm, antenna B clear of it) and nothing touching the braces or tubes.
 6. Put the lid on, close the 2 cam straps and fold the mat. Carry the box flat.
+7. Before each trip (lid off, 30 s): every handle nyloc fully on with 2 threads showing past it, no handle tab torn
+   (`E-TRN-13…15`, D-41).

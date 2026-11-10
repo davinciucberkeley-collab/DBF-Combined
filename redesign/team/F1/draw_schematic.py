@@ -122,7 +122,7 @@ box(460, 450, 150, 92, "MEC", "MEC servos", "2 × elevon servo",
 # --- avionics
 box(240, 330, 170, 92, "AVN", "AVN-001", "Flight controller",
     ["BATT_MONITOR 4", "Q_M_BAT_CURR_MAX 100"])
-sig("615,262 615,300 325,300 325,330", "JST-GH 6 · V, I, 5 V", 470, 294, data=True)
+sig("615,262 615,300 325,300 325,330", "GH-6 · V, I, 5 V · no Vx", 470, 294, data=True)
 sig("410,400 430,400 430,560 1190,560 1190,110", "DShot ×4", 1120, 552)
 sig("325,422 325,496 460,496", "PWM ×2", 392, 488)
 

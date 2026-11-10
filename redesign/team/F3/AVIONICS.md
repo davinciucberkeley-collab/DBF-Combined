@@ -1,14 +1,14 @@
 # Avionics hardware (F3)
 
-Status `PROPOSED`, revision F3-R1, 2026-11-09. Numbers come from `team/F3/avionics.py` (26 claims in
-`team/F3/claims.json`). Re-check: `python -I redesign/team/F3/avionics.py`, then
+Status `PROPOSED`, revision F3-R3, 2026-11-10 (R3: harness and transport edges acknowledged, §5.1). Numbers come from `team/F3/avionics.py` (28 claims in
+`team/F3/claims.json`) and `team/F3/avn_data.py` (CAD claims in `claims.avn_data.json`). Re-check: `python -I redesign/team/F3/avionics.py`, then
 `python -I redesign/proofs/build_graph.py`. Nothing has been bench-tested yet.
 
 **Verdict:** fly the **CoreWing F405 Wing APP V2**. It is already in the BOM and it has a stable ArduPilot Plane
 4.7.2 build with QuadPlane. Use an **MS4525DO** airspeed sensor at 0x28 instead of the MS5525, which sits at 0x76,
 the same address as the board's barometer on the board's only I2C bus. Use the **HGLRC M100-5883** GPS on the pod
-mast, **tilted 45° toward the nose**. Mount the flight controller on gel pads. The avionics come to 3.5 g over their
-allocation, and the board's servo BEC does not let F1 drop the UBEC.
+mast, **tilted 45° toward the nose**. Mount the flight controller on gel pads. With the power board carried by F1 as `PWR-003`, the avionics
+come to 36.5 g against a 45 g allocation. The board's servo BEC is too weak for F1 to drop the UBEC.
 
 ## 1. Flight controller
 
@@ -69,14 +69,14 @@ plus 0.08 m to the airspeed sensor.
 | GPS patch off-boresight to zenith, worst attitude: tilted / level | 45 / 90 | ° | `CL-F3-GPS-SKY` | `PROPOSED` (`T-F3-HDOP`) |
 | Hover 1P / mount natural frequency | 89.9 / 35 | Hz | `CL-B4-HOVER-RPM`, `CL-F3-VIBE-FN` | `UNVERIFIED` |
 | Mount transmissibility at 1P / 2P | 0.20 / 0.06 (limit 0.3) | — | `CL-F3-VIBE-T1P` | `UNVERIFIED` (`T-F3-VIBE`) |
-| Airspeed error at 16 m/s, RSS / linear sum | 0.44 / 0.77 (limit 1.0) | m/s | `CL-F3-ASPD-ERR`, `-LIN` | `UNVERIFIED` |
+| Airspeed error at 16 m/s, RSS / linear sum | 0.45 / 0.78 (limit 1.0) | m/s | `CL-F3-ASPD-ERR`, `-LIN` | `UNVERIFIED` |
 | Airspeed resolution at 16 m/s (one count) | 0.054 | m/s | `CL-F3-ASPD-RES` | `PROPOSED` |
 | 5 V load ×2 vs FC BEC | 0.87 vs 2.4 | A | `CL-F3-5V-REQ` | `UNVERIFIED` (`T-F3-5V`) |
 | FC board dissipation (for E3) | 1.73 (E3 assumed 2.0) | W | `CL-F3-FC-DISS` | `UNVERIFIED` |
 | Current sensing vs need | 90 / 215 vs 37.8 / 120 | A | `CL-F3-SENSE-CONT`, `-PEAK` | `PROPOSED` |
-| Servo BEC vs F1 need | 4.5 vs 5.2: **FAIL** (UBEC stays) | A | `CL-F3-SERVO-BEC` | `UNVERIFIED` |
-| FC envelope on its mount, h × w × l | 23 × 32 × 52 (≤ 28 × 36 × 56) | mm | `CL-F3-FC-H/-W/-L` | `PROPOSED` |
-| Avionics mass vs allocation | 78.5 vs 75: **FAIL** −3.5 g | g | `CL-F3-MASS` | `UNVERIFIED` (`EST`) |
+| Servo BEC vs F1 need | 4.5 vs 5.6: **FAIL** −20 % (UBEC stays, by design) | A | `CL-F3-SERVO-BEC` | `UNVERIFIED` |
+| FC envelope on its mount, h × w × l | 13 × 32 × 52 (top board on 5 mm gel cubes) (≤ 28 × 36 × 56) | mm | `CL-F3-FC-H/-W/-L` | `PROPOSED` |
+| Avionics mass vs allocation (CAD roll-up, F3-R2) | 36.48 vs 45 (+19 %) | g | `CL-F3-MASS`, `CL-F3-AVN-CAD-MASS` | `UNVERIFIED` (`EST`) |
 
 Airspeed budget at 16 m/s: prop wash 0.27 m/s (B4 1.66 %), `ARSPD_RATIO` residual 0.32 m/s (2 %), zero drift
 0.15 m/s (3 Pa), quantisation 0.03 m/s. The RSS meets B1's proposed 0.5 m/s (CR-B1-13) with 11 % to spare. The
@@ -110,20 +110,42 @@ and cruise.
 
 | Id | Part | Qty | Mass g | Cost | Note |
 |---|---|---|---|---|---|
-| `AVN-001` | CoreWing F405 Wing APP V2 (with its power board, which fills the `PWR-003` slot) | 1 | 42 `EST` | BOM `A01` $67.26 | order with the early electronics (~20 Nov) |
-| `AVN-002` | HGLRC M100-5883 | 1 | 10 `EST` | `A02` $20.49 | — |
-| `AVN-003` | RadioMaster RP3 V2 | 1 | 3 `EST` | `A03` $19.99 | F5 |
-| `AVN-004` | RMRC digital airspeed (MS4525DO) + pitot | 1 | 5 `EST` | `A04` $59.99 (was MS5525, same price) | December order |
-| `AVN-005` | Pitot boom: sleeve, tube, couplers, 0.4 m silicone | 1 | 13 `EST` | in `A04` + consumables | plug-in field joint |
-| `AVN-006` | Gel pads, foam tape, ties | 1 set | 5 `EST` | shop consumables | — |
-| `AVN-007` | microSD 16–32 GB | 1 | 0.5 | team stock (else ≈ $6) | — |
+| `AVN-001` | CoreWing F405 Wing APP V2, FC top board + wireless board (the power board is `PWR-003` on the PDB plate, CR-F3-13) | 1 | 12.0 `EST` | BOM `A01` $67.26 | order with the early electronics (~20 Nov) |
+| `AVN-002` | HGLRC M100-5883 | 1 | 7.73 `EST` | `A02` $20.49 | — |
+| `AVN-003` | RadioMaster RP3 V2 | 1 | 4.6 `EST` | `A03` $19.99 | F5 |
+| `AVN-004` | RMRC digital airspeed (MS4525DO) + pitot lines | 1 | 4.51 `EST` | `A04` $59.99 (was MS5525, same price) | December order |
+| `AVN-005` | Pitot boom: keyed sleeve, probe, 2 couplers (115 mm × Ø10 mm stowed) | 1 | 4.84 `EST` | in `A04` + consumables | plug-in field joint |
+| `AVN-006` | Gel cubes, foam tape, ties, FC strap | 1 set | 2.4 `EST` | shop consumables | — |
+| `AVN-007` | microSD 16–32 GB | 1 | 0.4 | team stock (else ≈ $6) | — |
+
+Masses are the CAD roll-up written by `avn_data.py` to `subsystems/avionics/interfaces.json`: **36.48 g** total
+(`CL-F3-AVN-CAD-MASS`, `CL-F3-MASS`), allocation 45 g asked (CR-F3-13 / -21). That file is the source of truth.
+
+### 5.1 Edges other roles declare on avionics parts (acknowledged F3-R3, 2026-11-10)
+
+Each row was checked against this document before it went into `acknowledges`. The radio edge `E-AVN-09` moved from
+`edges_pending` to `edges` now that F5 declares `GND-001`.
+
+| Edge | Owner | Avionics end | Checked against | Result |
+|---|---|---|---|---|
+| `E-HRN-22` | F2 | UBEC 6 V → FC servo rail | CR-F3-04, CR-F1-29: UBEC alone on the rail, Vx not on the link | `CHECKED` (paper); Vx pin location `UNVERIFIED` until `T-F3-ARRIVAL` |
+| `E-HRN-23` | F2 | Power board GH-6 → FC: Vbat, current, 5 V, GND | `BATT_MONITOR` 4, 0.87 A on 5 V (`CL-F3-5V-REQ`) | `CHECKED` |
+| `E-HRN-24`…`27` | F2 | Outputs 1–4 → ESCs LR, UL, LL, UR, DShot300 bidirectional | `CL-F3-BDSHOT-OUTS` (TIM4 1–2, TIM3 3–4); F4 `motor_map` | `CHECKED` (map `UNVERIFIED` until `T-F4-BENCH-MAP`) |
+| `E-HRN-28`, `29` | F2 | Outputs 5, 6 → elevons L, R, PWM 50 Hz | TIM8 group 5–7, nothing on 7 | `CHECKED` |
+| `E-HRN-30` | F2 | GPS: SERIAL5 + I2C1, compass 0x0D / 0x2C | §2 I²C map | `CHECKED` |
+| `E-HRN-31` | F2 | RX: SERIAL6 CRSF 420 kbaud | §1 serial map | `CHECKED` |
+| `E-HRN-32` | F2 | Airspeed: Y-branch of I2C1, 0x28 | §2; bus total 0.461 m ≤ 0.5 m (`CL-F2-I2C-LEN`, +8 %) | `CHECKED` |
+| `E-TRN-21` | D7 | Pitot boom stowed in the 220 × 25 × 25 mm tray slot | boom 0.115 m × 10 mm (`CL-F3-BOOM-STOW-L` +48 %, `-W` +60 %) | `MODELLED` |
+
+One condition is still open on arrival. If the CoreWing output pads and Vx sit on the power board rather than on the FC
+top board, `E-HRN-22` and `-24`…`-29` end on `PWR-003` and F2 re-routes. `T-F3-ARRIVAL` now checks this (CR-F1-29).
 
 ## 6. Open issues
 
 | Issue | Owner | Status |
 |---|---|---|
 | Servo BEC continuous rating: 8 A (page) vs 4.5 A (manual). The UBEC stays until `T-F1-SERVO-STALL` | F1, F3 | `UNVERIFIED` |
-| Avionics 3.5 g over the allocation (CR-F3-01) | A1, A3 | open |
+| Avionics mass: closed by D-48 (36.48 g CAD vs 45 g after the stack split) | A1, A3 | closed |
 | CoreWing hole pattern and power-board layout (one stack or two boards) not published: measure on arrival before D2 prints | F3, D2 | open |
 | No Lua on F405: F4's Lua fallbacks (CR-F4-02, -06) are not available | F4 | `PROPOSED` |
 | Compass loop areas and the Earth field are estimates; compassmot decides | F3, H1 | `UNVERIFIED` |

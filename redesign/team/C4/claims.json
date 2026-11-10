@@ -605,11 +605,11 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 147.5231995522721,
-    "f_st2": 327.231102566278,
-    "f_panel": 37.214672705521735,
-    "sep_op": 0.0502240570038619,
-    "sep_band": -0.5529600013567513
+    "f_st1": 146.72724495343502,
+    "f_st2": 328.34247961752607,
+    "f_panel": 37.2144580956832,
+    "sep_op": 0.055348529168151805,
+    "sep_band": -0.5553719849895908
    },
    "input_values": {
     "tube_x": 0.045,
@@ -619,13 +619,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -774,11 +774,11 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 144.67552787881132,
-    "f_st2": 274.2044413557528,
-    "f_panel": 20.047990167473827,
-    "sep_op": 0.06855778388351963,
-    "sep_band": -0.5615893094581474
+    "f_st1": 143.88184490993385,
+    "f_st2": 274.0206927410459,
+    "f_panel": 20.04798088214673,
+    "sep_op": 0.07366763096176498,
+    "sep_band": -0.5639944093638368
    },
    "input_values": {
     "tube_x": 0.045,
@@ -788,13 +788,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -943,11 +943,11 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 390.4954850914023,
-    "f_st2": 423.0565059739237,
-    "f_panel": 66.43333550119918,
-    "sep_op": 0.9876439435802751,
-    "sep_band": 0.18331965179212828
+    "f_st1": 390.13847999995977,
+    "f_st2": 422.873570331069,
+    "f_panel": 66.4231124431628,
+    "sep_op": 0.985826767620694,
+    "sep_band": 0.18223781818169638
    },
    "input_values": {
     "tube_x": 0.045,
@@ -957,13 +957,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -1112,11 +1112,11 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "f_st1": 294.235272609309,
-    "f_st2": 306.12837066770385,
-    "f_panel": 54.02959270467359,
-    "sep_op": 0.4976740574931189,
-    "sep_band": -0.10837796178997272
+    "f_st1": 293.9267439435253,
+    "f_st2": 305.9650878230089,
+    "f_panel": 54.02539493021223,
+    "sep_op": 0.49610362926186213,
+    "sep_band": -0.10931289714083237
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1126,13 +1126,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -1282,8 +1282,8 @@
     "ASM-C4-G-TUBE-HI"
    ],
    "outputs": {
-    "sep_op_worst": 0.9251835178805967,
-    "f_station_min": 378.2244169700779
+    "sep_op_worst": 0.9234584704073105,
+    "f_station_min": 377.8855115780623
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1293,13 +1293,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -1451,8 +1451,8 @@
     "ASM-C4-G-TUBE-HI"
    ],
    "outputs": {
-    "sep_op_worst": 0.44296929081451575,
-    "f_station_min": 283.487892793136
+    "sep_op_worst": 0.4405061736503053,
+    "f_station_min": 283.00398513201696
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1462,13 +1462,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -1600,13 +1600,13 @@
    },
    "tol": 0.0001,
    "outputs": {
-    "f1_coarse": 390.7362061096036,
-    "f2_coarse": 507.7706487294793,
-    "f1_used": 390.49548509130216,
-    "f2_used": 423.0565059744151,
-    "f1_fine": 390.65006961597607,
-    "f2_fine": 492.2728425388985,
-    "change": 0.14060563692179318
+    "f1_coarse": 390.33044563637503,
+    "f2_coarse": 505.3687156634297,
+    "f1_used": 390.13847999995977,
+    "f2_used": 422.873570331069,
+    "f1_fine": 390.35199917874746,
+    "f2_fine": 490.1669762055748,
+    "change": 0.13728669849492903
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1616,13 +1616,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -1757,7 +1757,7 @@
     "ASM-C1-BELL-INERTIA"
    ],
    "outputs": {
-    "sep_whirl": 0.9851430566798882
+    "sep_whirl": 0.9833049180773938
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1767,13 +1767,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -1936,25 +1936,25 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "face_ult_pa": 4429313.491422085,
-    "ms_face": 1.2576862124043013,
-    "face_L4_pa": 4429313.491422085,
+    "face_ult_pa": 4962812.551889629,
+    "ms_face": 1.014986440741636,
+    "face_L4_pa": 4962812.551889629,
     "face_L1_pa": 1296721.8081295907,
     "face_G2_pa": 564657.5851035174,
-    "tube_ult_pa": 48181282.23173046,
-    "ms_tube": 7.301979139454582,
-    "edge_ult_pa": 59509751.405299075,
-    "ms_edge": 5.721587480272717,
-    "strut_comp_design_n": 128.00485686164302,
+    "tube_ult_pa": 53984589.86759278,
+    "ms_tube": 6.409521883579632,
+    "edge_ult_pa": 66677543.10176504,
+    "ms_edge": 4.999021280515831,
+    "strut_comp_design_n": 143.42270231469635,
     "strut_tens_design_n": 6.323900791340096,
     "strut_pcr_n": 199.12675358196822,
-    "ms_strut_buckling": 0.5556187356015634,
+    "ms_strut_buckling": 0.388390752428069,
     "strut_len_m": 0.19064954759977798,
-    "dfoot_L4_m": 0.006825608918419682,
+    "dfoot_L4_m": 0.007647735406532396,
     "mroot_G2_nm": 2.281078781348766,
-    "mroot_L4_nm": 10.643779258077224,
+    "mroot_L4_nm": 11.925794235299097,
     "strut_G2_n": 61.86257571460439,
-    "strut_L4_n": 74.20571412269162
+    "strut_L4_n": 83.14359554475152
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1964,13 +1964,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -1999,7 +1999,7 @@
     "G": 5000000000.0,
     "layers": 2,
     "f_level": 38.245935,
-    "f_corner": 29.07810614139855,
+    "f_corner": 32.58048689141251,
     "mu_g": 0.7,
     "n_h": 2.0,
     "m_gate": 2.6,
@@ -2143,25 +2143,25 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "face_ult_pa": 5169372.761855256,
-    "ms_face": 0.934470671913987,
-    "face_L4_pa": 4819476.849357713,
+    "face_ult_pa": 5792009.99836399,
+    "ms_face": 0.7265163566403714,
+    "face_L4_pa": 5399970.051375468,
     "face_L1_pa": 2160365.4834240824,
     "face_G2_pa": 459921.18917567184,
-    "tube_ult_pa": 53772747.39925186,
-    "ms_tube": 6.438712346796794,
-    "edge_ult_pa": 121817034.64590484,
-    "ms_edge": 2.2836130116178865,
-    "strut_comp_design_n": 149.9272475897174,
+    "tube_ult_pa": 60249532.18195714,
+    "ms_tube": 5.63905569908786,
+    "edge_ult_pa": 136489573.32787767,
+    "ms_edge": 1.9306267888984672,
+    "strut_comp_design_n": 167.98558685384418,
     "strut_tens_design_n": 4.738350107084737,
     "strut_pcr_n": 199.12675358196822,
-    "ms_strut_buckling": 0.32815586748372416,
+    "ms_strut_buckling": 0.18537999188715149,
     "strut_len_m": 0.19064954759977798,
-    "dfoot_L4_m": 0.011593825887182104,
+    "dfoot_L4_m": 0.012990271460667828,
     "mroot_G2_nm": 2.4938681299641443,
-    "mroot_L4_nm": 11.878995886104853,
+    "mroot_L4_nm": 13.309789429490234,
     "strut_G2_n": 60.14662861977095,
-    "strut_L4_n": 86.91434642882169
+    "strut_L4_n": 97.38294890077924
    },
    "input_values": {
     "tube_x": 0.045,
@@ -2171,13 +2171,13 @@
     "tube_len": 0.344,
     "z_st": 0.19,
     "x_mount": 0.045,
-    "x_prop": -0.0082,
+    "x_prop": -0.0077,
     "x_te": 0.32,
     "hh": 0.21,
     "core_t": 0.027,
     "m_motor": 0.081,
     "d_motor": 0.038,
-    "l_motor": 0.025,
+    "l_motor": 0.0265,
     "m_prop": 0.017,
     "m_adapt": 0.005,
     "ip": 7.5e-05,
@@ -2206,7 +2206,7 @@
     "G": 5000000000.0,
     "layers": 1,
     "f_level": 38.245935,
-    "f_corner": 29.07810614139855,
+    "f_corner": 32.58048689141251,
     "mu_g": 0.7,
     "n_h": 2.0,
     "m_gate": 2.6,
@@ -2281,21 +2281,21 @@
    ],
    "outputs": {
     "M_design_nm": 23.071874999999995,
-    "F_design_n": 119.82752884607848,
-    "s_tube_bore_pa": 8833183.26966231,
+    "F_design_n": 118.98537345190232,
+    "s_tube_bore_pa": 8831765.499638444,
     "tau_shear_out_pa": 6781856.261022926,
-    "s_spar_bore_pa": 5006489.935411716,
+    "s_spar_bore_pa": 5005426.607893817,
     "s_web_pa": 5274777.091906721,
     "tau_web_pa": 4186331.0253227944,
     "tau_bond_torsion_pa": 407307.0394941735,
-    "tau_bond_axial_pa": 64212.604492727514,
-    "ms_tube_bore": 1.2641894082159801,
+    "tau_bond_axial_pa": 63761.31427779607,
+    "ms_tube_bore": 1.2645528802614567,
     "ms_shear_out": 0.47452255180820835,
-    "ms_spar_bore": 2.9948147820165887,
+    "ms_spar_bore": 2.995663420268507,
     "ms_web_bend": 1.8437220642015446,
     "ms_web_torsion": 1.3887265339292973,
     "ms_bond_torsion": 3.910300598987339,
-    "ms_bond_axial": 30.146532924490124,
+    "ms_bond_axial": 30.366982043161403,
     "ms_min": 0.47452255180820835,
     "block_len_m": 0.06899999999999999,
     "mass_kg": 0.030119067982376978,
@@ -2303,9 +2303,9 @@
     "tube_couple_n": 1281.770833333333
    },
    "input_values": {
-    "m_des_c1": 17.98913533324533,
+    "m_des_c1": 20.6097123059372,
     "m_task": 10.7,
-    "f_ult": 83.35828093640242,
+    "f_ult": 82.77243370567118,
     "my_lim": 5.17,
     "sf": 1.5,
     "fit": 1.15,
@@ -2438,7 +2438,7 @@
    },
    "how": "Three meshes 6x5, 12x10, 24x20; 12x10 is used for every claim.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.14060563692179318
+   "value": 0.13728669849492903
   },
   {
    "id": "CL-C4-F1-1LB",
@@ -2450,14 +2450,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 294.235272609309
+   "value": 293.9267439435253
   },
   {
    "id": "CL-C4-F-LT-2L",
@@ -2469,14 +2469,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). Tube bends out of the fin plane and twists; the foam-board fin adds < 3 % here.",
-   "value": 147.5231995522721
+   "value": 146.72724495343502
   },
   {
    "id": "CL-C4-F-FA-2L",
@@ -2488,14 +2488,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). Bare tube 180 Hz; the bonded fin lifts it to ~330 Hz.",
-   "value": 327.231102566278
+   "value": 328.34247961752607
   },
   {
    "id": "CL-C4-SEP-2L",
@@ -2511,14 +2511,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). FAILS: the lateral-torsion mode sits at ~149 Hz, 4 % from 1P at the F4 cap and 17 % below 2P hover.",
-   "value": 0.0502240570038619
+   "value": 0.055348529168151805
   },
   {
    "id": "CL-C4-SEP-1L",
@@ -2534,14 +2534,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.06855778388351963
+   "value": 0.07366763096176498
   },
   {
    "id": "CL-C4-F-LT-REC",
@@ -2553,14 +2553,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 390.4954850914023
+   "value": 390.13847999995977
   },
   {
    "id": "CL-C4-F-FA-REC",
@@ -2572,14 +2572,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 423.0565059739237
+   "value": 422.873570331069
   },
   {
    "id": "CL-C4-F-PANEL-REC",
@@ -2589,14 +2589,14 @@
    "output": "f_panel",
    "unit": "Hz",
    "parts": [
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap the fin TE tip with the foot fitted; expect 50-70 Hz, below the 1P band.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). Local flapping of the free TE corner; < 2 % of its energy reaches the station. Below the forcing band.",
-   "value": 66.43333550119918
+   "value": 66.4231124431628
   },
   {
    "id": "CL-C4-SEP-REC",
@@ -2612,14 +2612,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.9876439435802751
+   "value": 0.985826767620694
   },
   {
    "id": "CL-C4-SEP-REC-WORST",
@@ -2638,7 +2638,7 @@
    ],
    "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the US-stock tube (I1), then T-C4-TAP.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.9251835178805967
+   "value": 0.9234584704073105
   },
   {
    "id": "CL-C4-SEP-REC-WHIRL",
@@ -2657,7 +2657,7 @@
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.9851430566798882
+   "value": 0.9833049180773938
   },
   {
    "id": "CL-C4-SEP-BAND-REC",
@@ -2676,7 +2676,7 @@
    ],
    "how": "Needs every station mode >= 396 Hz. R-VIBRATION (A2) is met on the operating points instead, with an rpm-tracking harmonic notch as the backup (F4).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). With 2 layers the first station mode is 392 Hz: 1 % short of the band rule. A2's R-VIBRATION is the basis.",
-   "value": 0.18331965179212828
+   "value": 0.18223781818169638
   },
   {
    "id": "CL-C4-SEP-BAND-1LB",
@@ -2695,7 +2695,7 @@
    ],
    "how": "As CL-C4-SEP-BAND-REC.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py). FAILS (first station mode ~296 Hz inside the band); passes R-VIBRATION.",
-   "value": -0.10837796178997272
+   "value": -0.10931289714083237
   },
   {
    "id": "CL-C4-SEP-1LB",
@@ -2711,14 +2711,14 @@
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.4976740574931189
+   "value": 0.49610362926186213
   },
   {
    "id": "CL-C4-SEP-1LB-WORST",
@@ -2737,7 +2737,7 @@
    ],
    "how": "Passes only if the measured tube E and G are near nominal (T-C4-TUBE-BEND/TORSION).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.44296929081451575
+   "value": 0.4405061736503053
   },
   {
    "id": "CL-C4-MS-FACE-2L",
@@ -2751,14 +2751,14 @@
     "value": 0.0
    },
    "parts": [
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Foam-board coupon bend test (T-C4-BOARD-COUPON) for the face allowable; proof-load one fin quarter to 1.5 x L4 at the foot (T-C4-FIN-PROOF).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 1.2576862124043013
+   "value": 1.014986440741636
   },
   {
    "id": "CL-C4-MS-FACE-1L",
@@ -2772,14 +2772,14 @@
     "value": 0.0
    },
    "parts": [
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "Foam-board coupon bend test (T-C4-BOARD-COUPON) for the face allowable; proof-load one fin quarter to 1.5 x L4 at the foot (T-C4-FIN-PROOF).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.934470671913987
+   "value": 0.7265163566403714
   },
   {
    "id": "CL-C4-MS-EDGE",
@@ -2793,14 +2793,14 @@
     "value": 0.0
    },
    "parts": [
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 2.2836130116178865
+   "value": 1.9306267888984672
   },
   {
    "id": "CL-C4-MS-TUBE",
@@ -2819,7 +2819,7 @@
    ],
    "how": "T-C4-FIN-PROOF (G2 load at the tube end).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 6.438712346796794
+   "value": 5.63905569908786
   },
   {
    "id": "CL-C4-MS-STRUT",
@@ -2838,7 +2838,7 @@
    ],
    "how": "Proof-load G2 at the tube end with the brace fitted; no visible bow.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.5556187356015634
+   "value": 0.388390752428069
   },
   {
    "id": "CL-C4-STRUT-LEN",
@@ -2859,14 +2859,14 @@
    "output": "dfoot_L4_m",
    "unit": "m",
    "parts": [
-    "FIN-001-RU",
-    "FIN-001-LU",
-    "FIN-001-RD",
-    "FIN-001-LD"
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF: dial gauge at the foot.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.011593825887182104
+   "value": 0.012990271460667828
   },
   {
    "id": "CL-C4-BLOCK-M-DESIGN",
@@ -3004,30 +3004,6 @@
    ],
    "state": "planned",
    "procedure": "Three 50 x 300 mm strips per layer count, four-point bend, span 250 mm, load to failure: face allowable and D. Weigh 0.1 m2 for the areal mass."
-  },
-  {
-   "id": "T-C4-FIN-PROOF",
-   "type": "test",
-   "title": "Proof load of one fin quarter",
-   "verifies": [
-    "CL-C4-MS-FACE-2L",
-    "CL-C4-MS-FACE-1L",
-    "CL-C4-MS-TUBE",
-    "CL-C4-MS-EDGE",
-    "CL-C4-FOOT-DEFL-L4",
-    "CL-C4-MS-STRUT",
-    "CL-C4-D3-MS-FACE",
-    "CL-C4-D3-MS-EDGE",
-    "CL-C4-D3-MS-TUBE",
-    "CL-C4-D3-MS-BRACE",
-    "CL-C4-D3-MS-BRACE-END",
-    "CL-C4-D3-MS-COLLAR",
-    "CL-C4-D3-MS-EAR",
-    "CL-C4-D3-MS-ANCHOR",
-    "CL-C4-D3-FOOT-DEFL"
-   ],
-   "state": "planned",
-   "procedure": "1.5 x L4 at the foot (49 N along the fin + 25 N across), then 1.5 x G2 (77 N lateral at the tube end); no cracking or face wrinkle; record the foot deflection."
   },
   {
    "id": "T-C4-BLOCK-PROOF",

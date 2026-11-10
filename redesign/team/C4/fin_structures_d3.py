@@ -126,6 +126,9 @@ asm("ASM-C4-SHOE-Z0", "D5 shoe cheeks reach down to |z| 0.196 m",
     "team/D5/CHANGE-REQUESTS.md CR-D5-11 ('nothing else on x >= 0.2666 m, |z| >= 0.196 m', cheeks 17 x 51 mm, strip "
     "termination bonded into the shoe); subsystems/fins/params.json fin_detail.fin.tip_clear_x_m note", 0.196, "m",
     status="PROPOSED")
+asm("ASM-C4-SHOE-Z0-PROP", "Proposed D5 shoe cheeks down to |z| 0.171 m (CR-C4-30)",
+    "C4 sizing proposal: the two D5 shoe cheeks (x >= fin_detail.fin.tip_clear_x_m) extended 25 mm toward the wing, bonded to both board faces, so the foot side load enters the board below the strip ends",
+    "C4 R4 sweep (out/results_d3.json shoe_sweep, mesh 36 x 30): |z| 0.196 (as drawn) MS -0.5, 0.176 about 0, 0.171 positive with the LE root governing; a D5 printed part, D5 confirms fit and mass", 0.171, "m", status="PROPOSED")
 asm("ASM-C4-ASA-BEARING", "ASA printed bearing allowable 30 MPa",
     "Compressive bearing allowable of the printed ASA lip cap on the tube end",
     "ASA filament TDS compressive strength 50-60 MPa x 0.5 for layer lines and voids; G3 coupon not planned "
@@ -615,9 +618,9 @@ def applied_torque(mdl, loads, g):
     return t
 
 
-def fin_static(g, k, side, le_cracked=False):
+def fin_static(g, k, side, le_cracked=False, mesh=MESH):
     """One quarter, every limit case. Returns per-case results and the brace length."""
-    mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, layers=k["lay_rec"], le_cracked=le_cracked))
+    mdl = fe.build_q(model_cfg(g, k["E"], k["G"], side, mesh=mesh, layers=k["lay_rec"], le_cracked=le_cracked))
     pr = mdl.cfg["fin"]["props"]
     nodes = mdl.nodes
     geo = geometry(g, side)
@@ -705,8 +708,8 @@ def fin_static(g, k, side, le_cracked=False):
                 M0, d = abs(float(fe_[5])), stf["d"]
         q_face = 0.0                                                                # per face, paper interface, N/m
         for i in range(1, len(Ns)):
-            if top_row[i] in foot:
-                continue                                                            # foot shoe wraps the strip ends
+            if top_row[i] in foot or nodes[top_row[i]][0] >= g["shoe_x0"] - 1e-9:
+                continue                                    # strip end inside the D5 shoe: bonded into the shoe walls
             q = abs(Ns[i] - Ns[i - 1]) / 2 / ((Ls[i] + Ls[i - 1]) / 2) + max(Vs[i], Vs[i - 1]) / d
             q_face = max(q_face, q)
         t_sec, t_tu, t_fi, t_bra = section_torque(mdl, u, loads, g)
@@ -731,9 +734,10 @@ def fin_static(g, k, side, le_cracked=False):
                    "motor body toward the wing; envelope over upper/lower quarter and LE fillet intact / "
                    "cracked between the boss and the collar; section torque at the wing plane from the FE reactions "
                    "(fin root + boss nodes, tube root spring, brace anchor) vs C1's wing-plane torque, equilibrium "
-                   "residual vs the applied torque; ultimate = sf x limit (joints x fit x prt); face = Q_f "
+                   "residual vs the applied torque; ultimate = sf x limit (joints x fit x prt); face MS = min(intact at "
+                   "ultimate, LE fillet cracked at limit (fail-safe)), face stress = Q_f "
                    "(eps0 + z kappa); collar torque = jump of the tube torque across the collar band; strip-to-paper "
-                   "shear flow per face q = |dN|/2/ds + |V|/d (foot-shoe nodes excluded), tau = q/w vs kd tau_board; "
+                   "shear flow per face q = |dN|/2/ds + |V|/d (nodes inside the D5 shoe, x >= tip_clear_x, excluded), tau = q/w vs kd tau_board; "
                    "strip end force per face = |N0|/2 + |M0|/d; pin force = q jf pitch; brace Pcr = pi^2 E w t^3 / (12 L^2); brace-end bond "
                    "tau = F / (2 (w + t) engage); ear root s = 6 F (ear/2) / (w_ear h^2) + F / (w_ear h); collar bond "
                    "tau = T / (2 pi r^2 h) + F / (pi d h), h_req at MS 0; anchor tau = F / (len_y pi d_spar / 4) vs "
@@ -747,11 +751,11 @@ def static_d3(**k):
     out = {}
     agg = {"face": 0.0, "edge": 0.0, "tube": 0.0, "comp": 0.0, "tens": 0.0, "t_collar": 0.0, "f_collar": 0.0,
            "dfoot_L4": 0.0, "mroot": 0.0, "t_root": 0.0, "q_face": 0.0, "strip_end": 0.0, "t_collar_intact": 0.0,
-           "q_face_intact": 0.0, "face_intact": 0.0, "eq_resid": 0.0, "t_sec_L4": 0.0, "brace_g3": 0.0,
+           "q_face_intact": 0.0, "face_intact": 0.0, "face_cracked": 0.0, "eq_resid": 0.0, "t_sec_L4": 0.0, "brace_g3": 0.0,
            "tube_g3": 0.0, "face_sw": 0.0, "brace_sw": 0.0, "t_collar_sw": 0.0}
     gov = {}
     for side, cr in itertools.product(SIDES, (False, True)):
-        res, L = fin_static(g, k, side, le_cracked=cr)
+        res, L = fin_static(g, k, side, le_cracked=cr, mesh=k.get("_mesh", MESH))
         tag = side[:2] + ("_cr" if cr else "")
         out[f"brace_len_{side[:2]}_m"] = L
         for c, r in res.items():
@@ -776,6 +780,8 @@ def static_d3(**k):
                 agg["t_collar_intact"] = max(agg["t_collar_intact"], r["t_collar"])
                 agg["q_face_intact"] = max(agg["q_face_intact"], r["q_face"])
                 agg["face_intact"] = max(agg["face_intact"], r["face"])
+            else:
+                agg["face_cracked"] = max(agg["face_cracked"], r["face"])
             agg["comp"] = max(agg["comp"], r["brace"])
             agg["tens"] = max(agg["tens"], -r["brace"])
             agg["f_collar"] = max(agg["f_collar"], abs(r["brace"]))
@@ -798,13 +804,19 @@ def static_d3(**k):
     f_ear = max(agg["comp"], agg["tens"]) * jf                       # brace force on the collar ear, design
     s_ear = 6 * f_ear * g["ear_len"] / 2 / (k["ear_w"] * g["sc_h"] ** 2) + f_ear / (k["ear_w"] * g["sc_h"])
     tau_strip = agg["q_face"] * jf / g["e_w"]
-    ms = {"ms_face": k["s_face"] / face_u - 1, "ms_edge": k["s_cf"] / edge_u - 1, "ms_tube": k["s_cf"] / tube_u - 1,
+    # face criterion (R4): intact at ultimate; LE fillet cracked = fail-safe case at limit (its peak sits at the end
+    # of the bonded LE band, a corner that does not converge with mesh; T-C4-FIN-PROOF builds that quarter)
+    ms_face_int = k["s_face"] / (agg["face_intact"] * k["sf"]) - 1
+    ms_face_fs = k["s_face"] / agg["face_cracked"] - 1
+    ms = {"ms_face": min(ms_face_int, ms_face_fs), "ms_edge": k["s_cf"] / edge_u - 1, "ms_tube": k["s_cf"] / tube_u - 1,
           "ms_brace_buckling": pcr / max(comp_d, 1e-9) - 1, "ms_brace_end_bond": k["s_bond"] / tau_end - 1,
           "ms_collar_bond": k["s_bond"] / tau_collar - 1,
           "ms_anchor_bond": k["s_bond"] * k["peel"] / max(tau_anchor, 1.0) - 1,
           "ms_ear_root": k["s_ten"] / s_ear - 1}
     ms_strip = k["kd_foam"] * k["tau_board"] / tau_strip - 1
-    out.update({"face_ult_pa": face_u, "face_ult_intact_pa": agg["face_intact"] * k["sf"], "edge_ult_pa": edge_u,
+    out.update({"face_ult_pa": face_u, "face_ult_intact_pa": agg["face_intact"] * k["sf"],
+                "face_lim_cracked_pa": agg["face_cracked"], "ms_face_intact_ult": ms_face_int,
+                "ms_face_failsafe_lim": ms_face_fs, "ms_face_envelope_ult": k["s_face"] / face_u - 1, "edge_ult_pa": edge_u,
                 "tube_ult_pa": tube_u, "root_m_lim_nm": agg["mroot"],
                 "brace_comp_design_n": comp_d, "brace_tens_design_n": tens_d, "brace_pcr_n": pcr,
                 "brace_len_m": L, "collar_t_lim_nm": agg["t_collar"], "collar_t_lim_intact_nm": agg["t_collar_intact"],
@@ -870,6 +882,29 @@ def brace_trade(**k):
                 "ms_buckle_t2_round": out["pcr_t2_n"] * i_frac / out["f_design_t2_n"] - 1,
                 "tape_mass4_g": 4 * k["tape"] * (2 * w + math.pi * t) * 1.5 * sum(Ls) / len(Ls) * 1000})
     return out
+
+
+SHOE_MESH = (36, 30)
+
+
+@kit.calc("CALC-C4-D3-SHOE", title="Fin face with the D5 shoe cheeks extended (CR-C4-30), recommended design",
+          inputs={**GEOM, **TUBE, **STAT_IN, **REC, "z0_prop": "ASM-C4-SHOE-Z0-PROP"},
+          units={**GU, **TU, **STAT_U, **REC_U, "z0_prop": "m"}, tol=1e-4,
+          equation="CALC-C4-D3-STATIC envelope re-run on a 36 x 30 fin mesh with the rigid D5 shoe region x >= "
+                   "tip_clear_x, |z| >= z0_prop instead of ASM-C4-SHOE-Z0; reports the face, strip and collar "
+                   "margins and the face stress with the cheeks as drawn on the same mesh",
+          assumes=["ASM-C4-SHOE-Z0-PROP", "ASM-C4-FACE-SIGMA"])
+def shoe_d3(**k):
+    base = {n: v for n, v in k.items() if n != "z0_prop"}
+    r_p = static_d3(**{**base, "shoe_z0": k["z0_prop"], "_mesh": SHOE_MESH})
+    r_d = static_d3(**{**base, "_mesh": SHOE_MESH})
+    return {"ms_face_prop": r_p["ms_face"], "face_ult_prop_pa": r_p["face_ult_pa"],
+            "ms_face_intact_prop": r_p["ms_face_intact_ult"], "ms_face_failsafe_prop": r_p["ms_face_failsafe_lim"],
+            "ms_face_envelope_prop": r_p["ms_face_envelope_ult"],
+            "ms_face_drawn_fine": r_d["ms_face"], "face_ult_drawn_fine_pa": r_d["face_ult_pa"],
+            "ms_min_prop": r_p["ms_min"], "ms_strip_paper_prop": r_p["ms_strip_paper"],
+            "collar_t_lim_prop_nm": r_p["collar_t_lim_nm"], "dfoot_L4_prop_m": r_p["dfoot_L4_m"],
+            "governing_prop": r_p["governing"], "cheek_extension_m": k["shoe_z0"] - k["z0_prop"]}
 
 
 @kit.calc("CALC-C4-D3-MOUNT-CANT", title="Motor mount on the tube end with the 7 deg tangential cant",
@@ -1028,7 +1063,8 @@ kit.claim("CL-C4-D3-MOUNT-K-REQ", "Mount rocking stiffness needed for 20 % separ
           verifies=R_VIB, parts=MOUNT,
           how="T-C4-MOUNT-STIFF: side load at the prop nut on a mount clamped on a tube stub; rotation from two dial "
               "gauges; k = F a / theta.")
-kit.claim("CL-C4-D3-MS-FACE", "Fin face margin, recommended design, worst case and side", calc="CALC-C4-D3-STATIC",
+kit.claim("CL-C4-D3-MS-FACE", "Fin face margin as drawn (D5 cheeks to |z| 0.196): min(intact at ultimate, LE fillet "
+          "cracked at limit), both quarters", calc="CALC-C4-D3-STATIC",
           output="ms_face", unit="-", limit=(">=", 0.0), verifies=R_SM, parts=HALF,
           how="T-C4-BOARD-COUPON for the face allowable; T-C4-FIN-PROOF at 1.5 x L4.")
 kit.claim("CL-C4-D3-MS-EDGE", "Edge-strip margin, recommended design", calc="CALC-C4-D3-STATIC", output="ms_edge", unit="-",
@@ -1156,6 +1192,22 @@ kit.claim("CL-C4-D3-BRACE-ROUND-I", "Weak-axis I of the 10 x 2 brace with both e
 kit.claim("CL-C4-D3-BRACE-ROUND-MS", "Brace buckling margin if the 10 x 2 edges are sanded round (G2 design)",
           calc="CALC-C4-D3-BRACE-TRADE", output="ms_buckle_t2_round", unit="-", limit=(">=", 0.0), parts=BRACE,
           how="T-C4-FIN-PROOF G2 both senses.")
+kit.claim("CL-C4-D3-MS-FACE-SHOE", "Fin face margin with the D5 shoe cheeks to |z| 0.171 m (CR-C4-30), 36 x 30 mesh",
+          calc="CALC-C4-D3-SHOE", output="ms_face_prop", unit="-", limit=(">=", 0.0), verifies=R_SM, parts=HALF,
+          how="T-C4-FIN-PROOF with the extended shoe; T-C4-BOARD-COUPON for the face allowable.")
+kit.claim("CL-C4-D3-MS-FACE-SHOE-INTACT", "Fin face margin, cheeks to |z| 0.171 m, LE fillet intact, ultimate",
+          calc="CALC-C4-D3-SHOE", output="ms_face_intact_prop", unit="-", limit=(">=", 0.0), parts=HALF,
+          how="T-C4-FIN-PROOF (bonded quarter) at 1.5 x L4.")
+kit.claim("CL-C4-D3-MS-FACE-SHOE-FS", "Fin face margin, cheeks to |z| 0.171 m, LE fillet cracked (fail-safe), limit",
+          calc="CALC-C4-D3-SHOE", output="ms_face_failsafe_prop", unit="-", limit=(">=", 0.0), parts=HALF,
+          how="T-C4-FIN-PROOF: the test-article quarter is built with the LE fillet unbonded.",
+          note="Peak at the end of the bonded LE band (x 0.060, z 0.033 / 0.149): a corner that does not converge "
+               "with mesh (24 x 20: 7.9, 36 x 30: 9.9 MPa limit); the test decides.")
+kit.claim("CL-C4-D3-MS-FACE-DRAWN-FINE", "Fin face margin with the shoe cheeks as drawn (|z| 0.196), 36 x 30 mesh",
+          calc="CALC-C4-D3-SHOE", output="ms_face_drawn_fine", unit="-", limit=(">=", 0.0), parts=HALF,
+          how="Mesh check of CL-C4-D3-MS-FACE (24 x 20); both fail.")
+kit.claim("CL-C4-D3-SHOE-EXT", "D5 shoe cheek extension toward the wing needed (CR-C4-30)", calc="CALC-C4-D3-SHOE",
+          output="cheek_extension_m", unit="m", parts=HALF, how="D5 CAD: cheek lower edge at |z| <= 0.171 m.")
 kit.claim("CL-C4-D3-BRACE-TAPE-MASS", "Tape fairing on four braces (CR-B1-18), mass", calc="CALC-C4-D3-BRACE-TRADE",
           output="tape_mass4_g", unit="g", parts=BRACE, how="Weigh the tape for one brace.")
 
@@ -1163,16 +1215,16 @@ kit.test("T-C4-FIN-PROOF", "Ultimate proof of one TEST-ARTICLE fin quarter (not 
          verifies=["CL-C4-D3-MS-FACE", "CL-C4-D3-MS-EDGE", "CL-C4-D3-MS-TUBE", "CL-C4-D3-MS-BRACE",
                    "CL-C4-D3-MS-BRACE-END", "CL-C4-D3-MS-COLLAR", "CL-C4-D3-MS-EAR", "CL-C4-D3-MS-ANCHOR",
                    "CL-C4-D3-FOOT-DEFL", "CL-C4-D3-MS-STRIP-PAPER", "CL-C4-D3-STRIP-PIN-F", "CL-C4-D3-MS-CAP-G3",
-                   "CL-C4-D3-SEC-T-L4", "CL-C4-D3-COLLAR-H-REQ"],
+                   "CL-C4-D3-SEC-T-L4", "CL-C4-D3-COLLAR-H-REQ", "CL-C4-D3-MS-FACE-SHOE"],
          procedure="Test article built with flight processes but never flown: one LOWER quarter (it carries G3 and "
                    "the longer free tube) = one 0.21 m half-fin cut from the flight board batch (two 4.8 mm layers "
                    "laminated), CF 22 x 20 tube offcut 0.20 m, PETG through-core block bonded on a 0.15 m spar "
                    "offcut in a 0.15 m core offcut, plug, station collar (as drawn, 12 mm), CF 10 x 2 brace 0.16 m "
                    "with anchor saddle on the same spar offcut, CF 10 x 1 edge strips x 2 with 2 mm CF pins at 15 mm, "
-                   "ASA mount with a dummy motor (steel slug at the motor CG, M3 x 8 into the plate), D5 shoe and "
-                   "foot, LE fillet LEFT UNBONDED (fail-safe case), 30 min epoxy as in BUILD. Steps, each held 30 s, "
+                   "ASA mount with a dummy motor (steel slug at the motor CG, M3 x 8 into the plate), D5 shoe (cheeks "
+                   "to |z| 0.171 m, CR-C4-30) and foot, LE fillet LEFT UNBONDED (fail-safe case), 30 min epoxy as in BUILD. Steps, each held 30 s, "
                    "loads at 1.5 x limit through a hand-held spring scale or hung weights: (1) L4 at the C1 ground "
-                   "point 44 N along + 31 N across, both senses; (2) G2 77 N lateral at the tube end, both senses; "
+                   "point 49 N along + 34 N across, both senses; (2) G2 77 N lateral at the tube end, both senses; "
                    "(3) G3 35 N on the dummy can toward the wing. Pass: no crack, face wrinkle, strip lift, pin "
                    "push-out or bond-line movement (witness lines on collar, strip ends, brace ends, anchor); foot "
                    "deflection at 1.0 x L4 <= 1.2 x CL-C4-D3-FOOT-DEFL. Then load step (1) to failure and record the "
@@ -1275,6 +1327,13 @@ if __name__ == "__main__":
         print(f"collar {h * 1000:.0f} mm: T {r_h['collar_t_lim_nm']:.2f} N m (intact {r_h['collar_t_lim_intact_nm']:.2f}),"
               f" MS bond {r_h['ms_collar_bond']:+.2f}, h_req {r_h['collar_h_req_m'] * 1000:.1f} mm, MS face "
               f"{r_h['ms_face']:+.2f}")
+    # D5 shoe cheek depth (CR-C4-30): face margin vs the lowest |z| of the cheeks, 36 x 30 mesh
+    for z0 in (0.196, 0.186, 0.181, 0.176, 0.171, 0.166):
+        r_z = static_d3(**{**kw, "shoe_z0": z0, "_mesh": SHOE_MESH})
+        res.setdefault("shoe_sweep", {})[f"{z0:.3f} m"] = {key: r_z[key] for key in (
+            "ms_face", "ms_face_intact_ult", "ms_face_failsafe_lim", "face_ult_pa", "ms_min", "ms_strip_paper", "dfoot_L4_m", "governing")}
+        print(f"shoe cheeks to |z| {z0:.3f}: face {r_z['face_ult_pa'] / 1e6:5.1f} MPa ult, MS {r_z['ms_face']:+.2f} "
+              f"({r_z['governing'].split('face: ')[1].split(';')[0]})")
     rpms = np.linspace(0, 10000, 41)
     curves = {}
     for label, side, lay, colour, dash in (("1 layer (rejected), lower", "lower", 1, "#6B7280", "8 5"),

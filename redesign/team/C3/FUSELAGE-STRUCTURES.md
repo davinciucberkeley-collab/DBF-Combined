@@ -19,12 +19,12 @@ longer nose.
 
 | Question | Answer | Claim | Status |
 |---|---|---|---|
-| Does the pod-to-wing bond hold? | **Yes.** x 0 … 0.065 m × 0.140 m on bare XPS. Worst design case L2 pair-first landing, narrow (MC-C): interaction 0.87 | `CL-C3-BOND-R-DESIGN` | +13 % `UNVERIFIED` |
+| Does the pod-to-wing bond hold? | **Yes.** x 0 … 0.065 m × 0.140 m on bare XPS. Worst design case L2 pair-first landing, narrow (MC-C): interaction 0.886 | `CL-C3-BOND-R-DESIGN` | +11 % `UNVERIFIED` |
 | Does it hold the pod group in a 12.75 g crash? | **Yes.** 0.954 kg × 12.75 g = 119 N, worst direction +z (peel): interaction 0.72 | `CL-C3-BOND-R-CRASH` | +28 % `UNVERIFIED` |
 | Aft stop 3.0 mm, 27 mm tall, on the tray rear piece at x 0.056 (pack +x) | Passes: 14.0 vs 15 MPa across the layers (gussets ignored), needs 2.90 mm; 86 N design vs 417 N piece bond (D2) | `CL-C3-AFT-STOP-D2`, `-BOND`, `-T-REQ` | +7 % / +80 % `UNVERIFIED` |
 | Forward stop 3.0 × 25 × 54 mm (pack −x) | Passes: 12.9 MPa; root holds 99 N vs 85 N crash | `CL-C3-FWD-STOP-REC`, `-FUSE` | +14 % / +16 % |
 | Does the D-47 nose (stack 8.8 mm) keep the crush path? | **Yes.** Block A falls to 1.0 mm and ≤ 4 % of the nose-in energy; block B carries the path. 1 mm of XPS is not buildable; D2-R5 made it a 1 mm epoxy bond line (CR-C3-08, closed) | `CL-C3-NOSE-BLOCK-A`, `-NOSE-STACK`, `CL-C3-BLOCK-A-SHARE` | +59 % `UNVERIFIED` |
-| Full-section forward stop (CR-C5-13)? | **No.** Worth 0.56 mm of block B at D-47 (3.9 mm at R4), costs 6.3 g and would take the pod to 137.3 vs 131 g | `CL-C3-STOP-SECTION-PENALTY`, `CL-C3-POD-MASS-FULL-STOP` | +44 % |
+| Full-section forward stop (CR-C5-13)? | **No.** Worth 0.56 mm of block B at D-47 (3.9 mm at R4), costs 6.3 g and would take the pod to 137.2 vs 130.9 g | `CL-C3-STOP-SECTION-PENALTY`, `CL-C3-POD-MASS-FULL-STOP` | +44 % |
 | Guides 1.5 mm (pack ±y) | Pass: 6.5 MPa | `CL-C3-GUIDE-D2` | +57 % |
 | Straps (pack +z) | Pass: leg 31 N vs 100 N; overlap ≥ 50 mm (31 mm needed) | `CL-C3-STRAP-LEG`, `-OVERLAP-REQ` | +69 % / +38 % |
 | Tray-to-floor flat-wise (C6 50 kPa) | Passes: 19.3 kPa | `CL-C3-TRAY-FLAT` | +61 % |
@@ -32,7 +32,7 @@ longer nose.
 | Overhang ahead of the LE (pack at −0.024, most forward with block B) | Passes: 7.7 MPa crash vs 10 MPa; 4.4 MPa design. With block B left out (−0.051) the crash case fails (11.9 MPa): block B is a no-fly item | `CL-C3-OVERHANG-CRASH`, `-DESIGN` | +23 % / +56 % |
 | Carry handle on the spar (G1) | Passes: 110 N design vs 2 ties 444 N; grip 9.9 MPa along the raster | `CL-C3-HANDLE-TIES`, `CL-C3-GRIP` | +75 % / +60 % |
 | Hatch at VD suction (185 mm hatch after D-47) | Passes: 12 × 40 mm tab 2.11 vs 2.5 N/cm² at C1's q 453 Pa | `CL-C3-HATCH-TAB` | +16 % |
-| Mass | D2-R5 131.0 g already holds the C3 sizes (Δ 0 g) vs 131 g | `CL-C3-POD-MASS-REC` | 0 % |
+| Mass | D2-R5 130.9 g already holds the C3 sizes (Δ 0 g) vs 131 g | `CL-C3-POD-MASS-REC` | 0 % |
 
 ## 2. Load path
 
@@ -109,7 +109,7 @@ Plus `T-D2-STRAP-PULL`, `T-D2-HANDLE-PULL`, `T-D2-WEIGH`, C6's `T-C6-BOARD-CORNE
 |---|---|---|
 | 1 | Block B (`POD-008`) is now structural for the overhang: left out, the pack can sit at −0.051 and the overhang crash check fails (−19 %). Pre-flight card no-fly item (CR-C3-13) | H3, D2 |
 | 2 | Aft stop margin +7 % rests on 15 MPa across layers; `T-C3-STOP-PUSH` decides | C3, H1 |
-| 3 | Bond design margin +13 % (C1's new L2 pair-first case governs) rests on the 100 kPa XPS tension estimate; `T-C3-BOND-COUPON` | C6, H1 |
+| 3 | Bond design margin +11 % (C1's new L2 pair-first case governs) rests on the 100 kPa XPS tension estimate; `T-C3-BOND-COUPON` | C6, H1 |
 | 4 | C6 drift (CR-C3-11); C5's `CALC-C5-CRASH` fails in the build on its own inputs (CR-C3-12) | C6, C5 |
 
 ## 8. Calculation index

@@ -167,11 +167,11 @@
     "y_fin": "m"
    },
    "outputs": {
-    "cg_height_corner_m": 0.318,
+    "cg_height_corner_m": 0.3171,
     "cg_height_target_m": 0.31579999999999997,
-    "narrow_corner_deg": 30.591365808644905,
+    "narrow_corner_deg": 30.66255330143164,
     "narrow_target_deg": 34.61771919264407,
-    "wide_corner_deg": 45.17961000574708,
+    "wide_corner_deg": 45.26080146449479,
     "footprint_m": [
      0.64,
      0.436
@@ -180,8 +180,8 @@
    "input_values": {
     "c": 0.32,
     "x_range": [
-     0.05,
-     0.0549
+     0.0509,
+     0.0548
     ],
     "x_target": 0.0522,
     "z_range": [
@@ -265,48 +265,38 @@
     "c": "m"
    },
    "outputs": {
-    "fwd_inside_m": 0.00047091634882622663,
-    "aft_inside_m": 5.437100749561968e-05,
-    "cg_pack_centred_m": 0.05480455674554822,
-    "centred_fwd_margin_m": 0.004804556745548215,
-    "centred_aft_margin_m": 9.54432544517797e-05,
-    "sm_at_aft_limit": 0.00016990939842381064
+    "fwd_inside_m": 5.039540521856872e-05,
+    "aft_inside_m": 9.773584115943534e-05,
+    "cg_pack_centred_m": 0.05248163305722502,
+    "centred_fwd_margin_m": 0.0015816330572250223,
+    "centred_aft_margin_m": 0.0023183669427749784,
+    "sm_at_aft_limit": 0.000305424503623232
    },
    "input_values": {
     "x_range": [
-     0.05,
-     0.0549
+     0.0509,
+     0.0548
     ],
-    "x_fwd": 0.049529083651173776,
-    "x_aft": 0.05495437100749562,
-    "cg_centred": 0.00014981426194739939,
-    "x_np": 0.07095437100749562,
+    "x_fwd": 0.05084960459478143,
+    "x_aft": 0.05489773584115944,
+    "cg_centred": 0.0024161027839344137,
+    "x_np": 0.07089773584115944,
     "c": 0.32,
     "sm_min": 0.05
    }
   },
   {
-   "id": "ASM-A1-CG-GROWTH-DX",
-   "type": "assumption",
-   "title": "Growth by maturity moves the CG 1.4 mm aft (A3 roll-up on the D-47 bay)",
-   "text": "Predicted (growth pro rata by maturity) minus basic CG x of A3's roll-up with the 550 g pack; scaled by mass for the other packs",
-   "basis": "team/A3/claims.json CALC-A3-CG outputs cg_pred_m[0] 0.05265 - cg_m[0] 0.05125 (A3 run of 2026-11-09 20:35); A3 publishes the predicted CG x as a claim (CR-A1-53), then this node is retired",
-   "value": 0.0014,
-   "unit": "m",
-   "status": "UNVERIFIED"
-  },
-  {
    "id": "CALC-A1-PACK-CASES",
    "type": "calculation",
-   "title": "CG per weighed pack at its D-59 flight station in the D-47 bay",
+   "title": "CG per weighed pack at its D-60 flight station in the D-47 bay",
    "script": "redesign/team/A1/frame_claims.py",
    "function": "pack_cases",
-   "equation": "x_cg = CL-A3-CG-X * c ; x_p,A3 = x_req - (x_t - x_cg) M / m_p ; M_e x_e = M x_cg - m_p x_p,A3 ; x_fwd = x_pod_le + nose + L/2 ; x_aft = x_nom + aft_travel ; x_p(m) = x_aft - k step, k >= 0 the whole step nearest (x_t (M_e + m) - M_e x_e) / m, x_p >= x_fwd ; x_cg(m) = (M_e x_e + m x_p) / (M_e + m) ; x_pred = x_cg + dx_growth M / (M_e + m) ; fwd margin = min x_cg - x_range[0] ; aft margin = x_range[1] - max x_pred ; ballast(nose) = (M_e + m) excess / (x_pred - x_pod_le)",
+   "equation": "x_cg = CL-A3-CG-X * c ; dx = CL-A3-CG-X-PRED - x_cg ; M_e x_e = M x_cg - m_p x_nom (A3 rolls the carried pack at the datum) ; x_fwd = x_pod_le + nose + L/2 ; x_aft = x_nom + aft_travel ; g(m) = dx M / (M_e + m) ; x_p(m) = x_aft - k step, k >= 0 the whole step that puts the mid of basic and predicted CG, x_cg(m) + g(m)/2, nearest x_t, x_p >= x_fwd ; x_cg(m) = (M_e x_e + m x_p) / (M_e + m) ; x_pred = x_cg + g(m) ; fwd margin = min x_cg - x_range[0] ; aft margin = x_range[1] - max x_pred ; ballast(nose) = (M_e + m) excess / (x_pred - x_pod_le)",
    "inputs": {
     "M_kg": "CL-A3-MASS-BASIC",
     "cg_frac": "CL-A3-CG-X",
+    "x_pred_a3": "CL-A3-CG-X-PRED",
     "c": "P:wing.chord_m",
-    "x_req": "CL-A3-PACK-X-REQ",
     "x_t": "P:cg.x_target_m",
     "mp_kg": "P:battery.mass_kg",
     "x_rng": "P:cg.x_range_m",
@@ -316,13 +306,12 @@
     "x_nom": "P:pod.pack_x_nominal_m",
     "aft_travel": "P:pod.pack_aft_travel_m",
     "step": "P:pod.pack_spacer_step_m",
-    "pack_rng": "ASM-A3-PACK-RANGE",
-    "dx_growth": "ASM-A1-CG-GROWTH-DX"
+    "pack_rng": "ASM-A3-PACK-RANGE"
    },
    "units": {
     "M_kg": "kg",
     "c": "m",
-    "x_req": "m",
+    "x_pred_a3": "m",
     "x_t": "m",
     "mp_kg": "kg",
     "x_rng": "m",
@@ -332,16 +321,14 @@
     "x_nom": "m",
     "aft_travel": "m",
     "step": "m",
-    "pack_rng": "g",
-    "dx_growth": "m"
+    "pack_rng": "g"
    },
    "assumes": [
-    "ASM-A3-NOSE-STACK",
-    "ASM-A1-CG-GROWTH-DX"
+    "ASM-A3-NOSE-STACK"
    ],
    "outputs": {
-    "pack_x_a3_m": -0.022000000000000033,
-    "empty_x_m": 0.07420760421177383,
+    "growth_dx_m": 0.0013821579163804318,
+    "empty_x_m": 0.07524631580135696,
     "pack_x_fwd_limit_m": -0.025400000000000006,
     "pack_x_aft_limit_m": -0.009999999999999998,
     "fwd_room_nominal_m": 0.003400000000000007,
@@ -350,41 +337,41 @@
      "503": {
       "spacer_m": 0.014,
       "station_m": -0.024,
-      "cg_basic_m": 0.05233130889959612,
-      "cg_pred_m": 0.05376044869978035,
+      "cg_basic_m": 0.05329939858086187,
+      "cg_pred_m": 0.054710115738816664,
       "nose_ballast_g": 0.0
      },
      "550": {
-      "spacer_m": 0.008,
-      "station_m": -0.018,
-      "cg_basic_m": 0.05220655335172749,
-      "cg_pred_m": 0.05360655335172749,
+      "spacer_m": 0.014,
+      "station_m": -0.024,
+      "cg_basic_m": 0.051734512107924645,
+      "cg_pred_m": 0.05311667002430508,
       "nose_ballast_g": 0.0
      },
      "680": {
       "spacer_m": 0.0,
       "station_m": -0.009999999999999998,
-      "cg_basic_m": 0.05069249552376103,
-      "cg_pred_m": 0.05201775465282455,
+      "cg_basic_m": 0.051601748231781444,
+      "cg_pred_m": 0.05291061561817376,
       "nose_ballast_g": 0.0
      }
     },
-    "fwd_margin_min_m": 0.0006924955237610289,
-    "aft_margin_pred_min_m": 0.0011395513002196503,
-    "aft_margin_basic_min_m": 0.0025686911004038776,
+    "fwd_margin_min_m": 0.0007017482317814433,
+    "aft_margin_pred_min_m": 8.988426118333726e-05,
+    "aft_margin_basic_min_m": 0.0015006014191381312,
     "nose_ballast_max_g": 0.0,
-    "ballast_g_per_mm": 12.651372118551041
+    "ballast_g_per_mm": 12.742151481888033
    },
    "input_values": {
-    "M_kg": 2.30508,
-    "cg_frac": 0.160162936318913,
+    "M_kg": 2.32162,
+    "cg_frac": 0.16315099747159315,
+    "x_pred_a3": 0.05359047710729024,
     "c": 0.32,
-    "x_req": -0.01802746545454547,
     "x_t": 0.0522,
     "mp_kg": 0.55,
     "x_rng": [
-     0.05,
-     0.0549
+     0.0509,
+     0.0548
     ],
     "pod_le": -0.13,
     "pack": [
@@ -399,8 +386,7 @@
     "pack_rng": [
      503.0,
      680.0
-    ],
-    "dx_growth": 0.0014
+    ]
    }
   },
   {
@@ -638,7 +624,7 @@
    ],
    "how": "Stand the aircraft on a tilting board with the pack at the forward limit (C5 T-C5-TIPOVER / H1 GT-10): record the angle at which it tips toward the pod.",
    "note": "D-30: frame-level corner bound with D5's pad contact z (CL-D5-CONTACT-Z); C5's CL-C5-TIPOVER-WORST (32.4 deg) is the claim of record.",
-   "value": 30.591365808644905
+   "value": 30.66255330143164
   },
   {
    "id": "CL-A1-TIPOVER-TARGET",
@@ -820,8 +806,8 @@
     "R-CG-RANGE"
    ],
    "how": "Re-run after any B3 publish; the built aircraft is balanced at both marks (T-A3-CG-BALANCE, H1 GT-07).",
-   "note": "D-24 (closes D-17): params carry B3's range rounded inward; recomputes when B3 re-runs for the 7 deg cant and 0.21 m fins.",
-   "value": 0.00047091634882622663
+   "note": "D-60 (CR-B3-22): params carry B3's R4 range rounded inward to 0.1 mm, [0.0509, 0.0548]; B3 moved the forward limit 1.3 mm aft (D6 elevon effectiveness and half the free play out of the trim budget) and the aft limit 0.06 mm forward. Was [0.050, 0.0549] (D-47).",
+   "value": 5.039540521856872e-05
   },
   {
    "id": "CL-A1-CG-RANGE-AFT",
@@ -839,7 +825,7 @@
     "R-STATIC-MARGIN"
    ],
    "how": "As CL-A1-CG-RANGE-FWD; static margin at the aft mark from the twin's glide tests (T-B3-TWIN-NP).",
-   "value": 5.437100749561968e-05
+   "value": 9.773584115943534e-05
   },
   {
    "id": "CL-A1-CG-CENTRED",
@@ -857,12 +843,12 @@
    ],
    "how": "A3 roll-up at the R4 allocations (CL-A3-CG-X-RANGE); balance test with the pack at the nominal station.",
    "note": "D-24 set the pack at x -0.001; D-47 moves the bay 21 mm forward (pod.pack_x_nominal_m -0.022) after the delivered parts lists put the CG at 0.0577 m. B3's CL-B3-CG-CENTRED-AFT is still its R3 value (A3-R3 CG 0.0548): B3 re-runs on A3's next roll-up.",
-   "value": 0.004804556745548215
+   "value": 0.0015816330572250223
   },
   {
    "id": "CL-A1-PACK-STATION",
    "type": "claim",
-   "title": "Lightest pack at its D-59 station: forward travel left to the crush stack",
+   "title": "Lightest pack at its D-60 station: forward travel left to the crush stack",
    "calc": "CALC-A1-PACK-CASES",
    "output": "travel_left_fwd_m",
    "unit": "m",
@@ -887,7 +873,7 @@
   {
    "id": "CL-A1-PACK-CG-FWD",
    "type": "claim",
-   "title": "Every pack (503 / 550 / 680 g) at its D-59 station: basic CG margin to the forward limit",
+   "title": "Every pack (503 / 550 / 680 g) at its D-60 station: basic CG margin to the forward limit",
    "calc": "CALC-A1-PACK-CASES",
    "output": "fwd_margin_min_m",
    "unit": "m",
@@ -903,13 +889,13 @@
     "POD-008"
    ],
    "how": "T-A3-CG-BALANCE / H1 GT-07 with each weighed pack at its flight-card station.",
-   "note": "Worst case is the 680 g pack with no spacer (nominal + pod.pack_aft_travel_m 12 mm, D-59); growth moves the CG aft, so basic is the forward-limit case. With the R4 8 mm travel it was -0.4 mm (A3: 9.5 mm needed).",
-   "value": 0.0006924955237610289
+   "note": "Worst case is the 680 g pack with no spacer (nominal + pod.pack_aft_travel_m 12 mm, D-59/D-60); growth moves the CG aft, so basic is the forward-limit case. With the R4 8 mm travel it was -0.4 mm (A3: 9.5 mm needed).",
+   "value": 0.0007017482317814433
   },
   {
    "id": "CL-A1-PACK-CG-AFT",
    "type": "claim",
-   "title": "Every pack at its D-59 station: predicted CG (growth by maturity) margin to the aft limit",
+   "title": "Every pack at its D-60 station: predicted CG (growth by maturity) margin to the aft limit",
    "calc": "CALC-A1-PACK-CASES",
    "output": "aft_margin_pred_min_m",
    "unit": "m",
@@ -926,16 +912,13 @@
     "POD-008"
    ],
    "how": "T-A3-CG-BALANCE on the built aircraft; never fly aft of the aft mark (B3).",
-   "assumes": [
-    "ASM-A1-CG-GROWTH-DX"
-   ],
-   "note": "Worst case is the 503 g listing one step behind the crush stack.",
-   "value": 0.0011395513002196503
+   "note": "D-60: worst case is the 503 g listing at the crush stack (-0.024), whatever the target; growth is A3's CL-A3-CG-X-PRED scaled by mass.",
+   "value": 8.988426118333726e-05
   },
   {
    "id": "CL-A1-NOSE-BALLAST",
    "type": "claim",
-   "title": "Nose ballast the predicted CG needs with the worst pack (D-59 cap 10 g)",
+   "title": "Nose ballast the predicted CG needs with the worst pack (D-59 cap 10 g, D-60 rule)",
    "calc": "CALC-A1-PACK-CASES",
    "output": "nose_ballast_max_g",
    "unit": "g",
@@ -947,9 +930,6 @@
     "R-CG-RANGE"
    ],
    "how": "Balance the built aircraft; add lead tape behind the nose block until the CG is 0.5 mm ahead of the aft mark; weigh it.",
-   "assumes": [
-    "ASM-A1-CG-GROWTH-DX"
-   ],
    "note": "About 13 g per mm of CG at the pod nose, from the A1 reserve; beyond 10 g A1 re-opens the station.",
    "value": 0.0
   },

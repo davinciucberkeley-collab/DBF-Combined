@@ -22,9 +22,13 @@ Proves (exit 1 on any ERROR; --strict: on any WARN too):
   floating  no modelled group of parts is cut off from the rest (unless it attaches to a part not modelled yet);
             same rule as merge_check: "structural": false types (tie, label) do not hold a part, and a part
             flagged "carried": true located only by them (label, harness bundle) is exempt
-  keepout   no body's bounding box enters a registered keep-out (prop disc + clearance, hover ground plane)
-            unless the keep-out exempts it (ERROR; coarse: a diagonal body's box can over-report). A prop keep-out
-            registered with the motor's rotate= tuple is the canted cylinder, tested exactly against each box
+  keepout   no body enters a registered keep-out (prop disc + clearance, hover ground plane) unless the keep-out
+            exempts it (ERROR, with the depth in mm). Per body: the axis-aligned box is the pre-filter, then the
+            convex hull of the body's vertices is tested against the (canted) cylinder (CR-E1-45), so a diagonal
+            brace or a full-chord core box no longer over-reports. Exact for convex bodies; a concave body's hull is
+            a superset (a hit there is conservative). A prop zone (k9.prop_keepout) is the swept blade volume plus
+            the clearance on every face; its corners are square, so the final test is the hull's distance to the
+            blade volume against the clearance (the requirement itself). Cleared boxes are listed as a note
   envelope  (K09-L roots) every flight part lies inside the aircraft envelope from params.json (WARN: unit slips)
   datums    (K09-L roots) the datum sheet built and DATUMS.md is not stale against params.json (WARN)
   graph     everything merge_check.py checks (schema, dangling edges, joint stacks, wires, mass budget...)
@@ -149,14 +153,41 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
         return out
     flying = {pid: c for pid, c in comps.items() if (g.parts.get(pid) or {}).get('flight', True) and c.shapes}
     fly_boxes = {pid: boxes(c) for pid, c in flying.items()}
+    # CR-E1-45: a body whose box enters is then tested by the convex hull of its vertices (fusionkit.Keepout.
+    # hull_hits): a diagonal brace or a wing core whose box spans the whole chord no longer reports its empty box
+    # corners. Real hits report the depth (uniform inset of the zone's faces the hull still enters); the
+    # box-only cases are kept in ctx.keepout_box_only so the report can show what the hull cleared.
+    ctx.keepout_box_only = []
     for ko in ctx.keepouts:
         for pid in sorted(flying):
             if pid in ko.exempt:
                 continue
-            hit = [sh.name or sh.kind for sh, b in fly_boxes[pid] if ko.hits(b)]
+            c = flying[pid]
+            hit, cleared = {}, []
+            for sh, b in fly_boxes[pid]:
+                if not ko.hits(b):
+                    continue
+                name = sh.name or sh.kind
+                pts = [c.to_world(p) for p in sh.hull_points()]
+                d = ko.core_distance(pts) if ko.hull_hits(pts) else None
+                if ko.clearance and d is not None and d >= ko.clearance - 1e-6:
+                    cleared.append(name)                 # in the zone's square corner, >= clearance from the blades
+                elif ko.clearance and d is not None:
+                    hit[name] = min(hit.get(name, 9.0), d)
+                elif ko.hull_hits(pts):
+                    hit[name] = max(hit.get(name, 0.0), ko.hull_depth(pts))
+                else:
+                    cleared.append(name)
             if hit:
-                add('ERROR', 'keepout', pid, 'body box (%s) enters %s (registered by %s)' % (
-                    ', '.join(sorted(set(hit))[:3]), ko.name, ko.sub))
+                if ko.clearance:
+                    worst = min(hit.values())
+                    how = '%.1f mm from the swept blade volume, clearance %.0f mm' % (worst * 1000, ko.clearance * 1000)
+                else:
+                    how = 'by %.1f mm' % (max(hit.values()) * 1000)
+                add('ERROR', 'keepout', pid, 'body (%s) enters %s: %s (convex hull; registered by %s)' % (
+                    ', '.join(sorted(hit)[:3]), ko.name, how, ko.sub))
+            if cleared:
+                ctx.keepout_box_only.append((pid, ko.name, sorted(set(cleared))))
 
     # transport: ground-item bodies vs flight parts (cradles never press fins or tubes; everything fits the box)
     ground = {pid: c for pid, c in comps.items() if not (g.parts.get(pid) or {}).get('flight', True) and c.shapes}
@@ -248,6 +279,11 @@ def main(argv=None):
     M, cg = ctx.rollup()
     print('TOTAL %.0f g, CG %s m (declared mass; CG declared or CAD centroid); %d datums, %d keep-outs' % (
         M, ', '.join('%.3f' % v for v in cg) if cg else '-', len(ctx.datums), len(ctx.keepouts)))
+    box_only = getattr(ctx, 'keepout_box_only', [])
+    if box_only:
+        print('note: %d body boxes enter a keep-out but their convex hulls do not (box artefacts, not issues): %s' % (
+            len(box_only), '; '.join('%s/%s (%s)' % (p, k, ', '.join(n[:2])) for p, k, n in box_only[:8])
+            + ('; ...' if len(box_only) > 8 else '')))
     for sev, code, item, msg in sorted(issues, key=lambda i: (i[0] != 'ERROR', i[1])):
         print('  %-5s %-16s %-16s %s' % (sev, code, item, msg))
     nerr = sum(1 for i in issues if i[0] == 'ERROR')
