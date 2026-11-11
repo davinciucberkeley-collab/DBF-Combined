@@ -45,7 +45,7 @@ LEVELS = ("coarse", "medium", "fine", "xfine")
 # 0.1475 -> 0.1445 (D-70 13 mm collar; TUBE bracket only). cad_check() below
 # re-reads the CAD and stops the script if any of these moved, so the assumption cannot silently go stale.
 FIN_CAD = {"x_le_board": 0.0565, "x_tube_front": 0.034, "z_le_top": 0.1595, "z_collar_bottom": 0.1445,
-           "x_sq": 0.2746, "h": 0.21, "z_step": 0.2005, "te": 0.32, "area_half_board": 0.04550}
+           "x_sq": 0.2614, "h": 0.21, "z_step": 0.2010, "te": 0.32, "area_half_board": 0.04550}
 kit.assumption("ASM-B3-V-FIN-CAD", "As-designed half-fin outline (fins.py R4)",
                "x_le_board, x_tube_front, z_le_top, z_collar_bottom, x_sq, h, z_step, te (m); half-fin board area (m2)",
                basis="subsystems/fins/fusion/fins.py geometry() and half_fin_loop() evaluated on 2026-11-10 "

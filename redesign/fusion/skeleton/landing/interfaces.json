@@ -8,7 +8,7 @@
    "name": "Foot UR (crush cartridge, 48 mm, splayed pad)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 12.0,
+   "mass_g": 15.0,
    "material": "PETG shoe + piston, XPS cartridge, neoprene pad",
    "cg_xyz_m": [
     0.338,
@@ -23,7 +23,7 @@
    "name": "Foot UL (crush cartridge, 48 mm, splayed pad)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 12.0,
+   "mass_g": 15.0,
    "material": "PETG shoe + piston, XPS cartridge, neoprene pad",
    "cg_xyz_m": [
     0.338,
@@ -38,7 +38,7 @@
    "name": "Foot LR (crush cartridge, 48 mm, splayed pad)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 12.0,
+   "mass_g": 15.0,
    "material": "PETG shoe + piston, XPS cartridge, neoprene pad",
    "cg_xyz_m": [
     0.338,
@@ -53,7 +53,7 @@
    "name": "Foot LL (crush cartridge, 48 mm, splayed pad)",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 12.0,
+   "mass_g": 15.0,
    "material": "PETG shoe + piston, XPS cartridge, neoprene pad",
    "cg_xyz_m": [
     0.338,

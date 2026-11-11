@@ -48,7 +48,7 @@ c = lambda b: [round((b[0][i] + b[1][i]) / 2, 4) for i in range(3)]
 
 def frame_cg():
     """Volume-weighted centroid of the frame boxes (the deck window is small and near the deck centroid)."""
-    boxes = [G['deck'], G['cradle_floor'], G['front_wall'], G['clip']] + G['side_walls'] + G['legs']
+    boxes = [G['deck'], G['cradle_floor'], G['front_wall']] + G['side_walls'] + G['legs']
     vol = lambda b: (b[1][0] - b[0][0]) * (b[1][1] - b[0][1]) * (b[1][2] - b[0][2])
     vt = sum(vol(b) for b in boxes)
     return [round(sum(vol(b) * (b[0][i] + b[1][i]) / 2 for b in boxes) / vt, 4) for i in range(3)]
@@ -76,20 +76,19 @@ PARTS = [
     ('PWR-002', 'Main disconnect AS150U aircraft half + two 10 AWG main jumpers', 'buy', 'solder, bond into PWR-006',
      'electronics (bought)', AS_G, 'bus', c(G['as_air']), 5.0, 'team/I1/BOM.csv#F01 (Amass AS150U pair)',
      'AS150U half %.1f g EST + 10 AWG jumpers %.1f g (W-MAIN-1 0.030 m + W-MAIN-2 0.050 m, + and -); the wires are harness edges E-HRN-11/12, their mass is booked here (CR-F1-18)' % (L['as150u_mass_g'], jumper_mass_g())),
-    ('PWR-003', 'Power module: CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack', 'buy', 'separate from the stack, foam-tape on PWR-006',
+    ('PWR-003', 'Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack', 'buy', 'separate from the stack, set the servo-BEC jumper to 6 V, foam-tape on PWR-006',
      'electronics (bought)', L['board_mass_g'], 'bus', c(G['board']), 0.0, 'team/I1/BOM.csv#A01 (part of the CoreWing V2 stack, F3)',
-     '90 A cont / 215 A peak sense, 64 A/V (CL-F3-SENSE-*); envelope allowance 42 x 32 x 9 mm UNVERIFIED; mass ~28 g EST moved from AVN-001 (F3 CR-F3-13, CR-F1-19)'),
+     '90 A cont / 215 A peak sense, 64 A/V (CL-F3-SENSE-*; CoreWing manual V2.1); servo BEC 8 A cont / 14 A peak on the 6 V jumper feeds the elevon servos through the FC Vx rail (D-74, CL-F1-SERVO-BEC-RATING; Vx >= 5.8 V at BOARD-CHECK.md step 7); outline 52 x 32 mm (manual), M2 holes 30.5 x 26.5; drawn 52 mm pads-aft in keep-out KO-PWR-BOARD 56 x 34 x 24 mm (deck re-drawn to it, D-74), fits split (PDB alone) and whole stack (SPEC.md); height and link pitch measured at BOARD-CHECK.md; mass ~28 g EST (listing 11.4 g) moved from AVN-001 (F3 CR-F3-13, CR-F1-19)'),
     ('PWR-004', 'Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)', 'make', 'shear FR4, file isolation slot, solder bars',
      'FR4 + copper (made)', L['bus_mass_g'], 'bus', c(G['bus']), 3.0, 'FR4 1 oz single-sided sheet + 8 AWG offcut (team/I1/BOM.csv#F02, F08 replaced)',
-     '4 ESC pairs, the fuse feed and the main input solder to the bars; 36 x 16 mm between D2 boss rows'),
-    ('PWR-005', 'UBEC 6.0 V, 8 A class, servo rail', 'buy', 'set 6.0 V, foam-tape', 'electronics (bought)', L['ubec_mass_g'], 'bus',
-     c(G['ubec']), 18.0, 'team/I1/BOM.csv#F05', 'required 5.2 A (CL-F1-SERVO-BEC-REQ); output to the FC servo rail only, never paralleled with the FC BEC'),
-    ('PWR-006', 'Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)', 'make', 'FDM PETG, deck flat on the bed',
+     '4 ESC pigtails (XT30U female at the pod side exits, D-74) and the main input solder to the bars on the bench; 36 x 16 mm between D2 boss rows'),
+    ('PWR-006', 'Power frame: deck on 4 spacers (56 x 34 mm board seat = KO-PWR-BOARD), wire window, AS150U cradle, legs (printed PETG)', 'make', 'FDM PETG, deck flat on the bed',
      'PETG (printed)', L['frame_mass_g'], None, frame_cg(), 1.5, 'subsystems/power/fusion/power.py (export STL)',
-     'PETG 100 % (2 mm plates), 4 perimeters; screws, spacers, washers, tie and tape inside the mass'),
-    ('PWR-007', 'UBEC feed fuse 5 A mini blade in an inline holder', 'buy', 'solder pigtails, snap into the clip', 'electronics (bought)',
-     L['fuse_mass_g'], 'bus', c(G['fuse']), 6.0, 'team/I1/BOM.csv#F06', 'bus -> fuse -> UBEC (CR-F1-06); spare fuses in the field kit'),
+     'PETG 100 % (2 mm plates), 4 perimeters; screws, spacers, washers, tie and tape inside the mass; D-74: deck 42 -> 56 mm, fuse clip deleted'),
 ]
+# D-74 (params/CHANGE-LOG.md): the UBEC PWR-005 and its 5 A fuse PWR-007 are deleted; the power board's servo BEC
+# (6 V jumper) feeds the servos through the FC Vx rail. Fallback only if BOARD-CHECK.md step 7 fails (BOM gate X12):
+# then F1 names a 4S-input UBEC and D2 gives it its own zone; the ids PWR-005 / PWR-007 stay retired.
 CAPS = [('PWR-008-' + s, 'ESC capacitor 680 uF 25 V low-ESR, %s' % s, cap_cg(s)) for s in ST]
 
 HARDWARE = [
@@ -98,7 +97,7 @@ HARDWARE = [
     ('PWR-103', 'M3 nylon washer 0.5 mm', 6, 'buy', '-', 'nylon PA66', 0, 0.02, 'any', 'mass inside PWR-006'),
     ('PWR-104', 'Silicone wire 10 AWG red + black, 0.3 m each', 1, 'buy', '-', 'copper + silicone', 0, 4.0, 'team/I1/BOM.csv#F02 (replaces 8 AWG)', 'main jumpers; mass inside PWR-002'),
     ('PWR-105', 'FR4 sheet 1.6 mm, 1 oz copper one side, 100 x 70 mm', 1, 'buy', '-', 'FR4', 0, 3.0, 'any', 'bus board; 3 boards per sheet'),
-    ('PWR-106', 'Foam tape 3M VHB-class 1.1 mm, 25 mm wide', 1, 'buy', '-', 'acrylic foam', 0, 0.0, 'shared shop stock', 'power board, bus board, UBEC, caps; mass inside each part'),
+    ('PWR-106', 'Foam tape 3M VHB-class 1.1 mm, 25 mm wide', 1, 'buy', '-', 'acrylic foam', 0, 0.0, 'shared shop stock', 'power board, bus board, caps; mass inside each part'),
     ('PWR-201', 'Second flight pack (ground: charge / rotate; flight false)', 1, 'buy', '-', 'LiPo', 0, 41.49, 'team/I1/BOM.csv#P01', 'not on the aircraft; 550 g in the LiPo bag, not in the flying roll-up'),
     ('PWR-202', 'AS150U-to-XT60 charge lead (built from F01 + H03)', 1, 'make', 'solder', 'copper + PA', 0, 0.0, 'team/I1/BOM.csv#H03', 'ground item; 6.5 A charge'),
 ]
@@ -127,8 +126,6 @@ def main():
     cts = [
         {'id': 'CT-CONN-PARK', 'kind': 'mechanical', 'method': 'bonded',
          'spec': 'connector half seated in a printed cradle: sanded housing bonded with 30 min epoxy, front wall takes the plug-in push, one cable tie over it as secondary retention'},
-        {'id': 'CT-SNAP-CLIP', 'kind': 'mechanical', 'method': 'press_fit',
-         'spec': 'bought part snapped into a printed clip (fuse holder), removable by hand'},
     ]
     edges = [
         {'id': 'E-PWR-01', 'part_a': 'PWR-002', 'part_b': 'PWR-006', 'via': 'CT-CONN-PARK', 'owner': 'power',
@@ -139,7 +136,7 @@ def main():
                   'load_case': 'field unplug / plug', 'sized_by': 'F1 (CALC-PWR-PARK)'},
          'retention': tape('1 nylon tie 2.5 mm through two floor slots over the housing', 'secondary', 'housing does not move when the pack half is pulled: pre-flight card')},
         {'id': 'E-PWR-02', 'part_a': 'PWR-003', 'part_b': 'PWR-006', 'via': 'CT-TAPE-FOAM', 'owner': 'power',
-         'notes': 'power board on 3M foam tape on the deck, aft edge at the wire window; one tie round board and deck through two deck slots. Replaces the R2 tape-to-tray (CR-F1-16); the frame screws sit under the board, so tape the board after E-PWR-03',
+         'notes': 'power board on 3M foam tape on the deck, battery/output pads at the aft edge over the wire window; one tie round board and deck through two deck slots. Inside KO-PWR-BOARD (power SPEC.md); whole-stack fallback (case U): stack on 4 gel cubes + strap instead of tape. Replaces the R2 tape-to-tray (CR-F1-16); the frame screws sit under the board, so tape the board after E-PWR-03',
          'retention': tape('foam tape 1.1 mm, full underside + 1 tie', '28 g x 12.75 g crash = 3.5 N', 'board flat, tie tight: weekly')},
         {'id': 'E-PWR-03', 'part_a': 'PWR-006', 'part_b': 'POD-002', 'via': 'CT-M3-SHCS-INSERT', 'owner': 'power',
          'notes': 'frame deck on four 10 mm nylon spacers over D2\'s four PDB-plate bosses (25 mm pattern, inserts at z %.4f); nylon keeps the stack insulating next to the bus bars and non-magnetic. Supersedes the C6 M3x10 A2 stack drawn for a bought PCB (CR-F1-20)' % G['zboss'],
@@ -150,23 +147,17 @@ def main():
                          'torque': '0.20 N m max (nylon), snug, no threadlocker; paint-pen witness',
                          'tool': 'PH1 screwdriver', 'access': 'from above (+z) through the hatch, before the power board is taped on (the board covers the heads)',
                          'install_order': 3, 'removal_order': 3}},
-        {'id': 'E-PWR-04', 'part_a': 'PWR-005', 'part_b': 'POD-002', 'via': 'CT-TAPE-FOAM', 'owner': 'power',
-         'notes': 'UBEC on foam tape + 1 tie in the right channel UBEC zone, label up, >= 0.10 m from the GPS; on a 1 mm tray plate (CR-F1-17)',
-         'retention': tape('foam tape 1.1 mm + 1 tie', '13 g x 12.75 g crash = 1.6 N', 'pre-flight: UBEC does not move')},
         {'id': 'E-PWR-05', 'part_a': 'PWR-004', 'part_b': 'POD-002', 'via': 'CT-TAPE-FOAM', 'owner': 'power',
-         'notes': 'bus board on foam tape on the PDB plate between D2\'s boss rows, under the deck; the ESC leads are tied to the tray tie bar within 80 mm (F2), so lead pulls do not reach the tape',
+         'notes': 'bus board on foam tape on the PDB plate between D2\'s boss rows, under the deck; every bar joint (4 ESC pigtails, W-MAIN-2) is soldered on the bench before the board goes in (D-74, BUILD.md step 3); the pigtails are tied to the tray within 80 mm (F2), so plug and lead pulls do not reach the tape',
          'retention': tape('foam tape 1.1 mm, full underside', '7.3 g x 12.75 g = 0.9 N; lead pulls taken by F2 ties', 'with the deck off (bench): board flat, no lifted corner')},
-        {'id': 'E-PWR-07', 'part_a': 'PWR-007', 'part_b': 'PWR-006', 'via': 'CT-SNAP-CLIP', 'owner': 'power',
-         'notes': 'fuse holder snapped into the clip under the cradle floor, outboard half of the lead tunnel; fuse change on the bench (frame screws out)',
-         'retention': tape('printed clip, 0.5 mm interference', '3.5 g x 12.75 g = 0.4 N', 'holder seated: weekly')},
     ]
     for i, st in enumerate(ST):
         edges.append({'id': 'E-PWR-%d' % (11 + i), 'part_a': 'PWR-008-' + st, 'part_b': 'FIN-001-' + st, 'via': 'CT-TAPE-FOAM', 'owner': 'power',
                       'notes': 'cap laid along x on the half-fin outboard face %.0f mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)' % (L['cap_gap_x_m'] * 1000),
                       'retention': tape('foam tape 1.1 mm + 1 packing-tape strip over the can', '2.2 g x 12.75 g = 0.3 N; prop-wash drag < 0.1 N', 'pre-flight: cap tight on the fin')})
     doc = {'schema': 'dbf-interfaces/1', 'subsystem': 'power',
-           '_note': 'GENERATED by subsystems/power/make_power.py (F1, PWR-R1) - edit the script, not this file. Electrical edges (pack plug, main jumpers, ESC leads, fuse feed, UBEC rail, power-board link, cap leads) are harness edges (F2, D-20); F2 declared them in its 2026-11-09 harness re-run and power acknowledges E-HRN-10...16, -21...23, -33...37 (F1-R4).',
-           'parts': parts, 'connection_types': cts, 'edges': edges, 'acknowledges': ['E-POD-05', 'E-POD-12'] + ['E-HRN-%02d' % i for i in list(range(10, 17)) + [21, 22, 23] + list(range(33, 38))]}
+           '_note': 'GENERATED by subsystems/power/make_power.py (F1, PWR-R1 + D-74) - edit the script, not this file. Electrical edges (pack plug, main jumpers, ESC leads with their XT30U, power-board link, cap leads) are harness edges (F2, D-20); power acknowledges E-HRN-10...16, -23, -34...37. D-74 deleted the UBEC PWR-005, its fuse PWR-007, their edges E-PWR-04 / -07 and the harness edges E-HRN-21 / -22 / -33.',
+           'parts': parts, 'connection_types': cts, 'edges': edges, 'acknowledges': ['E-POD-05', 'E-POD-12'] + ['E-HRN-%02d' % i for i in list(range(10, 17)) + [23] + list(range(34, 38))]}
     with open(os.path.join(HERE, 'interfaces.json'), 'w', encoding='utf-8') as f:
         json.dump(doc, f, indent=1, ensure_ascii=False)
         f.write('\n')

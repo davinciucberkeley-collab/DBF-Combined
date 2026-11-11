@@ -55,10 +55,9 @@ PORTS = {
     "board_in": ((-0.0105, -0.040, 0.0478), "CR-F1-18: power-board input pads, aft edge x -0.010, z 0.0486"),
     "board_out": ((-0.0105, -0.052, 0.0478), "CR-F1-18: power-board output pads, aft edge"),
     "bars_end": ((-0.0105, -0.046, 0.0245), "CR-F1-18: aft end of the bus bars, z 0.024"),
-    "bars_out": ((-0.005, -0.0464, 0.024), "CR-F1-18: bars (+ y -0.0499, - y -0.0429), ESC pairs and fuse feed"),
-    "fuse_in": ((0.0045, -0.0592, 0.032), "CR-F1-18: fuse holder x 0.004-0.030 under the cradle (PWR-007)"),
-    "fuse_out": ((0.0295, -0.0592, 0.032), "CR-F1-18: fuse holder aft end"),
-    "board_fwd": ((-0.0515, -0.040, 0.044), "CR-F1-18: power-board GH port at the forward end x -0.052, z 0.044"),
+    "bars_out": ((-0.005, -0.0464, 0.024), "CR-F1-18: bars (+ y -0.0499, - y -0.0429), ESC pigtails (D-74)"),
+    "pdb_link": ((-0.058, -0.034, 0.0492), "D-74 / power SPEC.md: PDB board-to-board contacts, top face, forward-inboard "
+                 "corner of the 52 mm board (x -0.062 ... -0.010, top z 0.0486); pin map at BOARD-CHECK.md step 4"),
     # F3 avionics ports (CR-F3-16, ASM-F3-PORTS +/- 10 mm)
     "fc_aft": ((0.014, 0.046, 0.030), "CR-F3-16: FC aft edge (outputs, GPS/I2C, rail)"),
     "fc_fore": ((-0.034, 0.046, 0.030), "CR-F3-16: FC fore edge (SERIAL6, power-board port)"),
@@ -67,6 +66,11 @@ PORTS = {
     "aspd": ((-0.0595, -0.046, 0.026), "CR-F3-16: airspeed JST-GH (-0.060), 0.5 mm inside the sensor body"),
 }
 PORT_LIST = [[k, list(v[0])] for k, v in PORTS.items()]
+XT30 = {}                     # station -> (XT30U centre [x, y, z], path length bars -> centre m); filled by build()
+# Amass XT30U mated pair (manual, manufacturer's drawing: length 20.1 +/- 0.5, height across the two contacts
+# 10.2 +/- 0.3 mm; housing thickness 5.2 mm from the Amass listing, UNVERIFIED): [along the wire, across the pins, thick]
+XT30_SIZE_M = (0.0201, 0.0102, 0.0052)
+XT30_G = 2.0                  # g per mated pair with adhesive heat-shrink (resellers 1.7 g bare), EST
 OTHER_FORMED = ("W-PACK", "W-MAIN-1", "W-MAIN-2")
 BEND_K = [[8, 5.0], [10, 3.0], [16, 4.0], [20, 4.0], [22, 3.0], [26, 3.0], [28, 3.0]]
 
@@ -119,7 +123,8 @@ def lengths(wires, od):
     out["rx"] = cut["W-RX"]
     out["servo_max"] = max(sum(cut.get("W-SRV-%s%s" % (s, e), 0.0) for e in ("-P", "", "-S")) for s in "LR")
     out["cap_lead_max"] = max(cut["W-CAP-" + s] for s in STATIONS)
-    out["ubec_feed"] = cut["W-FUSE-IN"] + cut["W-UBEC-IN"]
+    out["pmod"] = cut["W-PMOD"]
+    out["servo_own_max"] = max(cut.get("W-SRV-%s-S" % s, 0.0) for s in "LR")
     return out
 
 
@@ -297,11 +302,14 @@ def calc_phase_ext(reach, leads):
 @kit.calc("CALC-F2-MASS", title="Harness mass and CG (wire g/m x routed length + fittings at their stations)",
           equation="m = sum(gpm n L_supplied) + sum(fittings); CG = sum(m_i r_i) / m",
           inputs={"wires": "P:harness.wire_table", "od": "P:harness.wire_od_mm",
-                  "fittings": "P:harness.fittings_table", "pod_box": "P:harness.pod_box"},
+                  "fittings": "P:harness.fittings_table", "pod_box": "P:harness.pod_box",
+                  "plugs": "P:harness.xt30u_table"},
           units={"od": "AWG,mm"}, output="mass_g")
-def calc_mass(wires, od, fittings, pod_box):
+def calc_mass(wires, od, fittings, pod_box, plugs):
     m, cg, parts = mass_cg(wires, od, fittings, pod_box)
-    return {"mass_g": m, "cg_x": cg[0], "cg_y": cg[1], "cg_z": cg[2],
+    mp = sum(q[1] for q in plugs)                                     # XT30U parts HRN-113-* (D-74), own nodes
+    cgt = [(m * cg[i] + sum(q[1] * q[2 + i] for q in plugs)) / (m + mp) for i in range(3)]
+    return {"mass_g": m + mp, "cg_x": cgt[0], "cg_y": cgt[1], "cg_z": cgt[2], "plugs_g": mp,
             "pod_g": parts["HRN-001"]["mass_g"], "side_g": parts["HRN-002-R"]["mass_g"]}
 
 
@@ -327,13 +335,19 @@ def calc_fill(passes, od):
     return {"fill_max": worst}
 
 
-@kit.calc("CALC-F2-SERVO-V", title="Servo terminal voltage with both servos stalled",
-          equation="V = V_ubec - I_stall (2 L R'_26AWG + n_contacts R_c)",
-          inputs={"L": "CL-F2-SERVO-LEN", "I": "ASM-F1-SERVO-STALL", "elec": "ASM-F2-SERVO-CIRCUIT"},
-          units={"L": "m", "I": "A"}, output="v_servo")
-def calc_servo_v(L, I, elec):
-    v_ubec, r_per_m, n_contacts, r_contact = elec
-    return {"v_servo": v_ubec - I * (2 * L * r_per_m + n_contacts * r_contact)}
+@kit.calc("CALC-F2-SERVO-V", title="Servo terminal voltage with both servos stalled (power-board servo BEC, D-74)",
+          equation="V = V_bec - I_stall (2 (L - L_own) R'_22AWG + 2 L_own R'_26AWG + n_contacts R_c) - 2 I_stall "
+                   "(L_link R'_28AWG + 2 R_c) (1/n_Vx + 1/n_GND)  (harness servo leads: + / - 22 AWG; servo's own lead "
+                   "26 AWG; case S: both servos' current through the board link's Vx and GND conductors)",
+          inputs={"L": "CL-F2-SERVO-LEN", "L_own": "CL-F2-SERVO-OWN-LEN", "I": "ASM-F1-SERVO-STALL",
+                  "elec": "ASM-F2-SERVO-CIRCUIT", "L_link": "CL-F2-PMOD-LEN", "n": "ASM-F1-PMOD-CONDUCTORS"},
+          units={"L": "m", "L_own": "m", "I": "A", "L_link": "m"}, output="v_servo")
+def calc_servo_v(L, L_own, I, elec, L_link, n):
+    v_bec, r22, n_contacts, r_contact, r28, r26 = elec
+    _n5, nvx, ngnd = n
+    link = 2 * I * (L_link * r28 + 2 * r_contact) * (1.0 / nvx + 1.0 / ngnd)
+    lead = I * (2 * (L - L_own) * r22 + 2 * L_own * r26 + n_contacts * r_contact)
+    return {"v_servo": v_bec - lead - link, "v_link_drop": link, "v_lead_drop": lead}
 
 
 @kit.calc("CALC-F2-CAP-RIPPLE", title="ESC bus-cap leg current (E-HRN-34..37): AC ripple RMS, no DC",
@@ -368,7 +382,7 @@ kit.source("SRC-F2-MIL-HDBK-522", "NASA-STD-8739.4 / IPC/WHMA-A-620 practice: wi
 kit.assumption("ASM-F2-WIRE-GPM", "Wire mass per conductor metre",
                "[AWG, g/m] silicone hook-up wire; 16 AWG = F1 CL-F1-ESC-MASS / 4.0 m, 20 AWG = F1 POWER.md",
                basis="maker tables (BNTECHGO-type silicone) +/-10 %; weigh 1 m of each reel (T-F2-WEIGH)",
-               value=[[16, 16.15], [20, 6.6], [26, 1.8], [28, 1.1]], unit="AWG,g/m", status="UNVERIFIED",
+               value=[[16, 16.15], [20, 6.6], [22, 4.0], [26, 1.8], [28, 1.1]], unit="AWG,g/m", status="UNVERIFIED",
                cites=["CL-F1-ESC-MASS"])
 kit.assumption("ASM-F2-FACTORY-LEADS", "Factory phase-lead lengths",
                "[motor lead beyond the stator, ESC phase lead] in m; X3108S lead length is not published (E1), the "
@@ -376,10 +390,13 @@ kit.assumption("ASM-F2-FACTORY-LEADS", "Factory phase-lead lengths",
                basis="E1 PROPULSION.md open item; measured at T-E1-MOTOR-RM on the first motor", value=[0.06, 0.0],
                unit="m", status="UNVERIFIED")
 kit.assumption("ASM-F2-SERVO-CIRCUIT", "Servo supply circuit",
-               "[UBEC set point V, 26 AWG loop resistance Ohm/m, contacts in series, Ohm per contact]",
-               basis="UBEC 6.0 V (F1); 26 AWG 0.1339 Ohm/m at 20 degC; 2 JR junctions x 2 contacts (+ and -), "
-                     "10 mOhm each (typical crimp contact)", value=[6.0, 0.1339, 4, 0.010], unit="V,Ohm/m,-,Ohm",
-               status="UNVERIFIED")
+               "[servo-BEC set point V, 22 AWG Ohm/m (harness servo + / -), contacts in series per servo lead, Ohm "
+               "per contact, 28 AWG Ohm/m (board link), 26 AWG Ohm/m (servo's own lead)]",
+               basis="D-74: CoreWing power-board servo BEC on the 6 V jumper (F1 CL-F1-SERVO-BEC-RATING), reaching the "
+                     "FC Vx header through the board link (W-PMOD, case S); 22 AWG 0.0530, 28 AWG 0.2128 and 26 AWG "
+                     "0.1339 Ohm/m at 20 degC; 2 JR junctions x 2 contacts (+ and -), 10 mOhm each (typical crimp / "
+                     "header contact)",
+               value=[6.0, 0.0530, 4, 0.010, 0.2128, 0.1339], unit="V,Ohm/m,-,Ohm,Ohm/m,Ohm/m", status="UNVERIFIED")
 kit.assumption("ASM-F2-DSHOT-MAX", "Longest DShot300 lead without termination",
                "0.7 m from FC pad to ESC, signal twisted with its ground",
                basis="common practice on wings and large quads; bidirectional DShot error rate checked on the bench "
@@ -391,14 +408,15 @@ kit.assumption("ASM-F2-FC-PORTS", "FC and avionics connector points (F3 ASM-F3-P
                basis="team/F3/CHANGE-REQUESTS.md#CR-F3-16 (F3's placement, +/- 10 mm); CoreWing F405 Wing V2 pin-out "
                      "still unpublished: lengths move by about +/- 0.02 m", value=PORT_LIST, unit="m",
                status="UNVERIFIED")
-kit.assumption("ASM-F2-PWR-STACK", "Power stack connector points (F1 PWR-R1)",
+kit.assumption("ASM-F2-PWR-STACK", "Power stack connector points (F1 PWR-R1 + D-74)",
                "AS150U mating face (0.031, -0.046, 0.046), cups x 0.002; power-board input and output pads at the board "
                "aft edge x -0.010, z 0.0486; 10 AWG output jumper down the deck window to the aft end of the bus bars "
-               "(-0.0105, z 0.024); ESC pairs and the fuse feed leave the bars aft through the tunnel under the cradle "
-               "(z 0.0198-0.0366); 5 A fuse holder x 0.004-0.030 under the cradle; power-board GH port at the board's "
-               "forward end x -0.052, z 0.044",
-               basis="team/F1/CHANGE-REQUESTS.md#CR-F1-18, subsystems/power/SPEC.md (PWR-R1), fusion/power.py layout",
-               status="UNVERIFIED")
+               "(-0.0105, z 0.024); the four ESC pigtails leave the bars aft through the tunnel under the cradle "
+               "(z 0.0198-0.0366) to an XT30U just inside each pod side exit; no fuse, no UBEC (D-74); board-to-board "
+               "link contacts on the PDB top face at its forward-inboard corner (-0.058, -0.034), board 52 mm long "
+               "(x -0.062 ... -0.010) on the 56 mm deck (KO-PWR-BOARD)",
+               basis="team/F1/CHANGE-REQUESTS.md#CR-F1-18, subsystems/power/SPEC.md (PWR-R1, D-74 keep-out), "
+                     "fusion/power.py layout", status="UNVERIFIED")
 kit.assumption("ASM-F2-SERVO-POCKET", "Elevon servo station and lead path (lower pocket)",
                "servo in D6's lower-skin pocket (x 0.172-0.208, |y| 0.253-0.288); harness lead in the upper branch groove "
                "at |y| 0.285 to a JR in-line in an 18 x 10 x 5 mm recess (x 0.150-0.168, CR-F2-14), servo's own lead "
@@ -454,7 +472,21 @@ kit.claim("CL-F2-SERVO-LEN", "Longest servo lead FC pad to servo plug", calc="CA
           unit="m", parts=["MEC-001-L", "MEC-001-R"], how="Measure the made lead")
 kit.claim("CL-F2-SERVO-V", "Servo terminal voltage, both servos stalled", calc="CALC-F2-SERVO-V", output="v_servo",
           unit="V", limit=(">=", "P:harness.rules.servo_v_min"), parts=["MEC-001-L", "MEC-001-R"],
-          how="T-F1-SERVO-STALL: measure at the servo plug with the servo stalled")
+          how="T-F1-SERVO-STALL: measure at the servo plug with the servo stalled",
+          note="D-74 case S: includes the board link's Vx / GND drop (CL-F2-SERVO-LINK-DROP, 4 Vx + 3 GND "
+               "conductors); case U has no link cable. The servo + / - are 22 AWG from the FC pad to the wing recess "
+               "(the 26 AWG leads gave 5.61 V)")
+kit.claim("CL-F2-SERVO-LINK-DROP", "Board-link (W-PMOD) Vx + GND drop, both servos stalled", calc="CALC-F2-SERVO-V",
+          output="v_link_drop", unit="V", parts=["PWR-003", "AVN-001"],
+          how="BOARD-CHECK.md step 7 / T-F1-SERVO-STALL: Vx at the PDB contacts minus Vx at the FC header")
+kit.claim("CL-F2-SERVO-LEAD-DROP", "Servo lead drop (harness 22 AWG + / -, servo's own 26 AWG lead, 4 JR contacts)",
+          calc="CALC-F2-SERVO-V", output="v_lead_drop", unit="V", parts=["MEC-001-L", "MEC-001-R"],
+          how="T-F1-SERVO-STALL: Vx at the FC header minus the voltage at the servo case, servo stalled")
+kit.claim("CL-F2-SERVO-OWN-LEN", "Servo's own lead (MEC-001, shortened, 26 AWG) cut length", calc="CALC-F2-LENGTHS",
+          output="servo_own_max", unit="m", parts=["MEC-001-L", "MEC-001-R"], how="Measure the re-terminated lead")
+kit.claim("CL-F2-PMOD-LEN", "Power-board link ribbon PDB -> FC (case S), cut length", calc="CALC-F2-LENGTHS",
+          output="pmod", unit="m", parts=["PWR-003", "AVN-001"],
+          how="T-F2-FIT: lay the ribbon over the deck front edge and through the under-pack channel, measure")
 kit.claim("CL-F2-MASS", "Harness mass (basic, wires + fittings, routed)", calc="CALC-F2-MASS", output="mass_g",
           unit="g", limit=("<=", "P:mass.allocation_g.harness"), parts=["HRN-001", "HRN-002-R", "HRN-002-L"],
           how="T-F2-WEIGH: weigh each made-up lead before installation", verifies=["R-HARNESS-INSTALL"])
@@ -573,7 +605,6 @@ def geometry():
     g["fc_x"], (g["fc_l"], g["fc_w"], _h) = pv(D, "fc_centre_x_m"), pv(D, "fc_board_m")
     g["pdb_x"] = pv(D, "pdb_plate_x_m")
     g["park_x"] = pv(D, "park_x_m")
-    g["ubec_x"] = pv(D, "ubec_zone_x_m")
     g["avn_x"] = pv(D, "avn_plate_x_m")
     g["leg_y"], (g["leg_side"], _b) = pv(D, "leg_y_m"), pv(D, "leg_m")
     g["x_leg"] = g["x_spar"]                                           # handle on the spar (POD-007 at x 0.08)
@@ -591,15 +622,19 @@ def geometry():
     pwr = {p["id"]: p for p in load_json(RED / "subsystems/power/interfaces.json")["parts"]}
     mec = {p["id"]: p for p in load_json(RED / "subsystems/mechanisms/interfaces.json")["parts"]}
     g["gps"] = list(avn["AVN-002"]["cg_xyz_m"])                        # GPS/compass module centre (F3)
-    g["ubec"] = list(pwr["PWR-005"]["cg_xyz_m"])
+    # D-74 deleted the UBEC PWR-005. The right-channel routes keep the lane heights they were cleared on
+    # (ROUTE-CLEARANCE.md), referenced to the former 41 x 23 x 10 mm UBEC envelope on D2's plate (x 0.044-0.085):
+    # its centre and top are now only a lane datum in a free zone.
+    g["rlane"] = [0.044 + 0.0205, g["y_ch"], g["pod_z0"] + g["wall"] + pv(D, "plate_t_m") + 0.005]
     g["cap"] = list(pwr["PWR-008-UR"]["cg_xyz_m"])                     # cap body centre, UR (others mirror)
     g["servo"] = list(mec["MEC-001-R"]["cg_xyz_m"])
     # clearance references for the routes (ROUTE-CLEARANCE.md): what the wires must clear by >= 1 mm
     g["foot_top"] = 0.0228 + pv(D, "foot_plate_t_m")                   # POD-007 foot plate / bridge top z (D2 CAD)
     g["flange_x0"] = pv(D, "bracket_m")["flange_x0"]                   # POD-007 wall-bracket flange, x from 0.066
-    g["ubec_top"] = g["ubec"][2] + 0.005                               # PWR-005 envelope 41 x 23 x 10 mm (F1)
+    g["rlane_top"] = g["rlane"][2] + 0.005                             # former PWR-005 top (lane datum, D-74)
     g["leg_in"] = g["leg_y"] - g["leg_side"] / 2                       # POD-007 handle leg, inboard face |y|
-    g["cradle_leg_x1"] = PORTS["pack_mate"][0][0] + 0.029              # PWR-006 cradle legs x 0.056-0.060 (F1)
+    g["cradle_leg_x1"] = PORTS["pack_mate"][0][0] + 0.029              # PWR-006 cradle aft end x 0.060 (F1); legs
+    #                                                                    x 0.046-0.050 since D-74 (leg_setback_m)
     g["boss_z"] = lambda surf, x: abs(surf(x)) + pv(F, "fin_detail.boss.height_m")   # block boss top |z| (D3)
     g["ear_y"] = 0.3422                                                # FIN-003 pinch ear outboard face |y| (D3 CAD)
     g["ear_x"] = 0.046                                                 # FIN-003 pinch ear pair centre x (D3 CAD)
@@ -633,7 +668,6 @@ def build(g):
     z_under = g["tray_top"] - 0.0015
     pdb_out = g["pdb_x"][1] - 0.004
     x_tun = PORTS["pack_mate"][0][0] + 0.003                            # aft end of the tunnel under the cradle
-    ub_in, ub_out = g["ubec"][0] + 0.019, g["ubec"][0] - 0.019          # UBEC 41 mm (F1 PWR-005 x 0.044-0.085)
     x_rec = (0.150, 0.168)                                              # JR in-line recess, servo branch (CR-F2-14)
     x_lh = (g["lead_hole_x"][0] + g["lead_hole_x"][1]) / 2              # D1 servo lead hole
     yo = g["y_out"] + 0.0035                                            # leads on the outboard board face (legs)
@@ -643,7 +677,8 @@ def build(g):
     # skin); the 28 AWG pair (1.8 mm bundle) 1.2 mm deep in the 2.5 x 2.4 signal groove; the 26 AWG servo ribbon
     # (3 x 1.1 mm) 1.0 mm deep in the 4.0 x 1.6 mm servo groove. Points marked "s" (5th element) carry the
     # conductors at groove spacing (draw_strands()).
-    d_pwr, d_sig, d_srv = 0.00155, 0.0012, 0.0009    # 16 AWG: 0.05 mm under the skin and off both groove floors
+    d_pwr, d_sig, d_srv = 0.00155, 0.0012, 0.00085   # 16 AWG: 0.05 mm under the skin and off both groove floors;
+    #                                                   servo 22 AWG (1.3 mm): 0.2 mm under the skin, 0.1 off the floor
     y_g0 = 0.086                                                        # groove start |y| (wing grooves.y_m)
 
     def gz(surf, x, depth):
@@ -671,11 +706,19 @@ def build(g):
     x_ex_p = {1: g["flange_x0"] - 0.004, -1: g["flange_x0"] - 0.004}   # pair ahead of the flange (x >= 0.066)
     x_ex_s = g["side_exit"][0] + 0.0015                                 # signals at the window's forward edge
     # power pairs in layers (2.9 mm): bottom the right pairs (LR, UR), above them the left pairs (LL, UL), so the left
-    # pairs turn outboard over the right ones and the fused UBEC feed crosses above all four under the cradle floor;
-    # on each side the lower-station pair (to the P1 straw) runs under the upper-station pair (to the upper grooves)
+    # pairs turn outboard over the right ones; on each side the lower-station pair (to the P1 straw) runs under the
+    # upper-station pair (to the upper grooves). D-74: no UBEC feed above them any more.
     lay = {"LR": 0, "UR": 1, "LL": 2, "UL": 3}
     z_lay = lambda st: g["tray_top"] + 0.0015 + 0.0030 * lay[st]
-    z_ub = g["ubec_top"] + 0.0016                                       # power pair over the UBEC (1.3 + 0.3 mm)
+    # XT30U stations (D-74, mated pairs drawn as HRN-113-* at XT30_SIZE_M): two stacked flat on the right pairs' last
+    # pod run before the exit (axis along the run, 0.4 mm over the POD-007 foot plate, between the handle leg and the
+    # right signal leads), two stacked flat in the outboard half of the tunnel under the AS150U cradle (left pairs,
+    # axis x); the stacks are 5.8 mm pitch
+    th = XT30_SIZE_M[2]
+    XT30_Z_R = (g["foot_top"] + 0.0004 + th / 2, g["foot_top"] + 0.0004 + 1.5 * th + 0.0006)
+    XT30_Z_L = (z_lay("UL") + 0.0022 - th - 0.0006, z_lay("UL") + 0.0022)   # UL 0.5 mm under the cradle floor
+    XT30_X_L = 0.0259
+    z_ub = g["rlane_top"] + 0.0016                                      # right lane height (former UBEC top + 1.6)
     x_cr = g["pod_x1"] - g["wall"] - 0.0052                             # power crossing, aft of the strut ribs
     z_cr = g["foot_top"] + 0.0062                                       # ... 3.6 mm over the foot bridge
 
@@ -706,18 +749,24 @@ def build(g):
         sy = 1 if st[1] == "R" else -1
         sz = 1 if st[0] == "U" else -1
         zl, k = z_lay(st), lay[st] % 2
-        pod = [[bars[0], bars[1], bars[2], "P"], [bars[0] + 0.006, bars[1], zl, "P"],   # off the bar end into its
-               [x_tun, bars[1] + 0.002, zl, "P"]]                                     # layer (stacked pairs)
-        if sy > 0:          # cross aft of the strut ribs, over the POD-007 foot bridge, inboard of the right leg, over
-            #                 the UBEC (D2 R6 / F1 R1 layout; the old floor-level crossing ran through both)
-            pod += [[g["cradle_leg_x1"] - 0.004, -0.0428, zl, "P"],
+        pod = [[bars[0], bars[1], bars[2], "P"], [bars[0] + 0.006, bars[1], zl, "P"]]   # off the bar end into its
+        #                                                                                  layer (stacked pairs)
+        if sy > 0:          # tunnel inboard half (y -0.043, beside the left XT30U), then cross aft of the strut ribs,
+            #                 over the POD-007 foot bridge, through the XT30U pair stacked in the crossing (D-74), in
+            #                 the right lane to the exit (D2 R6 / F1 R1 layout)
+            zx = XT30_Z_R[k]
+            pod += [[0.010, -0.043, zl, "P"], [x_tun, -0.043, zl, "P"],
+                    [g["cradle_leg_x1"] - 0.004, -0.0410, zl, "P"],
                     [g["flange_x0"] + 0.002, -0.040, z_cr - 0.0025 + 0.0033 * k, "P"],
-                    [x_cr, -g["bay_hw"] - 0.0025, z_ub + 0.0027 * k, "P"],
-                    [x_cr, g["bay_hw"] + 0.0005, z_ub + 0.0027 * k, "P"],
-                    [x_cr - 0.013, g["leg_in"] - 0.005, z_ub + 0.0027 * k, "P"],
-                    [x_ex_p[1], g["y_wall_in"] - 0.0042, z_ub + 0.0027 * k, "P"]]
-        else:               # out under the cradle floor (above the right pairs), between the cradle legs and the flange
-            pod += [[g["cradle_leg_x1"] + 0.0065, -0.050, zl, "P"]]
+                    [x_cr, -g["bay_hw"] - 0.0025, zx, "P"],
+                    [x_cr, g["bay_hw"] + 0.0005, zx, "P"],
+                    [x_cr - 0.013, g["leg_in"] - 0.005, zx, "P"],
+                    [x_ex_p[1], g["y_wall_in"] - 0.0042, zx, "P"]]
+        else:               # tunnel outboard half: through the XT30U pair stacked under the cradle floor (D-74, x
+            #                 0.016-0.036), then aft of the (set-back) cradle legs out to the side exit
+            zx = XT30_Z_L[k]
+            pod += [[XT30_X_L - 0.0110, -0.0520, zx, "P"], [XT30_X_L + 0.0110, -0.0520, zx, "P"],
+                    [0.0560, -0.0525, zl, "P"], [0.0625, -0.0600, zl, "P"]]
         r = pod + [[x_ex_p[sy], sy * (g["pod_hw"] + 0.004), z_sexit - 0.002 + 0.003 * k, "F"]]
         surf = zU if sz > 0 else zL
         if sz > 0:          # over the skin and over the P1 mouth (the lower pair dives there), then down into the
@@ -753,12 +802,12 @@ def build(g):
         #                                                                  outboard, so no two runs cross in the pod
         pig = [port("fc_aft", dy=0.0015 * (ports[st] - 3.5)) + ["P"], [x_jr, yp, zw + 0.004, "E"]]
         wires.append(["W-SIG-%s-P" % st, eid, 28, 2, 1, 0.015, 0.060, 1.1, 0.0, pig])
-        # rise off the JR row before the UBEC (top + 2.7 mm), cross over the power pair, exit above it
+        # rise off the JR row (lane datum top + 2.9 mm), cross over the power pair, exit above it
         hi = 0.004 if sz > 0 else 0.002                                 # upper-station lead 2 mm above the lower one
         he = 0.0028 if sz > 0 else -0.002                               # ... and at the exit window (z 0.027-0.039)
-        pod = [[x_jr + 0.005, yp, zw + 0.0015, "P"], [g["ubec"][0] - 0.0225, yp, g["ubec_top"] + 0.0029 + hi, "P"]]
-        if sy > 0:          # over the UBEC, forward of the power pairs, to the window's forward edge
-            pod += [[x_ex_s, g["y_wall_in"] - 0.007, g["ubec_top"] + 0.0012 + hi, "P"]]
+        pod = [[x_jr + 0.005, yp, zw + 0.0015, "P"], [g["rlane"][0] - 0.0225, yp, g["rlane_top"] + 0.0029 + hi, "P"]]
+        if sy > 0:          # forward of the power pairs, to the window's forward edge
+            pod += [[x_ex_s, g["y_wall_in"] - 0.007, g["rlane_top"] + 0.0012 + hi, "P"]]
         else:               # crossing aft of the ribs, then over the left power pairs aft of the cradle
             pod += [[x_cross - 0.004, g["bay_hw"] - 0.0045, zw + 0.016 + hi, "P"],
                     [x_cross - 0.004, -g["bay_hw"] + 0.006, zw + 0.016 + hi, "P"],
@@ -812,14 +861,14 @@ def build(g):
              [cap_x0 + 0.0005, sy * g["cap"][1], sz * g["cap"][2], "E"]]
         wires.append(["W-CAP-" + st, eid, 22, 2, 0, 0.0, 0.004, 0.0, 0.0, r])
 
-    # ---- elevon servos: FC pad -> pigtail -> JR -> 26 AWG 3-core via the D2 aft exits and a groove aft of the spar
+    # ---- elevon servos: FC pad -> pigtail -> JR -> 22 AWG + / - and 28 AWG signal (D-74 follow-up) via the D2 aft exits and a groove aft of the spar
     ax0, ax1 = (g["aft_exit"][0] + g["aft_exit"][1]) / 2, (g["aft_exit"][2] + g["aft_exit"][3]) / 2
     for side, eid, out_n in (("L", "E-HRN-28", 5), ("R", "E-HRN-29", 6)):
         sy = 1 if side == "R" else -1
         yp = {"L": 0.0295, "R": 0.040}[side]                             # JR row: L inboard, R between left and right
         #                                                                  ESC leads (no run crosses another)
         pig = [port("fc_aft", dy=0.0015 * (out_n - 3.5), dz=0.001) + ["P"], [x_jr, yp, zw + 0.006, "E"]]
-        wires.append(["W-SRV-%s-P" % side, eid, 26, 3, 0, 0.0, 0.040, 1.8, 0.0, pig])
+        wires.append(["W-SRV-%s-P" % side, eid, 22, 3, 0, 0.0, 0.040, SRV_GPM, 0.0, pig])
         pod = [[x_jr + 0.005, yp, zw + 0.006, "P"],
                [g["aft_stop_x"] + 0.0025, yp, zw + 0.0212 + 0.0025 * (sy > 0), "P"]]
         if sy < 0:
@@ -831,11 +880,13 @@ def build(g):
                 [g["pod_x1"] + 0.004, sy * ax0, ax1, "F"],
                 [x_srv, sy * 0.088, zU(x_srv) + 0.0009, "F", "s"],                # over the skin into the groove
                 [x_srv, sy * 0.098, zU(x_srv) - d_srv, "G"],
-                [x_srv - 0.0003, sy * 0.2853, zU(x_srv) - d_srv, "G"]]           # D1 branch groove at |y| 0.285
-        pod += [[xb, sy * 0.285, zU(xb) - d_srv, "G"] for xb in (0.118, 0.128, 0.138)]   # floor follows the skin
-        pod += [[x_rec[0] - 0.002, sy * 0.285, zU(x_rec[0] - 0.002) - d_srv, "G"],
+                [x_srv - 0.0003, sy * 0.2855, zU(x_srv) - d_srv, "G"]]           # D1 branch groove at |y| 0.285
+        #                                       22 AWG bundle 3.6 mm in the 4.0 mm groove: 0.1 mm outboard of centre so
+        #                                       the corner fillet (3.9 mm bend) clears the inboard wall
+        pod += [[xb, sy * 0.2851, zU(xb) - d_srv, "G"] for xb in (0.118, 0.128, 0.138)]   # floor follows the skin
+        pod += [[x_rec[0] - 0.002, sy * 0.2851, zU(x_rec[0] - 0.002) - d_srv, "G"],
                 [x_rec[0] + 0.002, sy * 0.285, zU(x_rec[0]) - 0.003, "E"]]       # JR female in the recess
-        wires.append(["W-SRV-" + side, eid, 26, 3, 0, 0.0, 0.040, 1.8, 0.0, pod])
+        wires.append(["W-SRV-" + side, eid, 22, 3, 0, 0.0, 0.040, SRV_GPM, 0.0, pod])
         # servo's own lead (mass in MEC-001), shortened to 40 mm and re-terminated: JR male in the recess -> branch
         # groove -> D1 lead hole (4 mm, straw) -> pocket ceiling -> case front (CR-D1-06, CR-D6-05)
         srv = [[x_rec[1] - 0.002, sy * 0.285, zU(x_rec[1]) - 0.003, "G"],
@@ -844,23 +895,27 @@ def build(g):
                [g["servo"][0] - 0.0105, sy * (g["servo"][1] + 0.012), g["servo"][2], "E"]]
         wires.append(["W-SRV-%s-S" % side, eid, 26, 3, 0, 0.0, 0.010, 0.0, 0.040, srv])
 
-    # ---- UBEC feed (CR-F1-18): + bar -> 5 A fuse holder (E-HRN-21, the - conductor runs beside the holder), fuse
-    # -> UBEC input at its aft end (E-HRN-33) across the crossing; UBEC output -> FC servo rail (E-HRN-22). 20 AWG.
-    r = [port("bars_out", dy=-0.0035) + ["P"], [0.0, -0.056, 0.027, "P"], port("fuse_in") + ["E"]]
-    wires.append(["W-FUSE-IN", "E-HRN-21", 20, 2, 1, 0.020, 0.015, 6.6, 0.0, r])
-    # over the foot plate, crossing above the power pair, onto the UBEC input pads (aft-inboard corner)
-    z_fu = g["tray_top"] + 0.0137                                       # over the four power pairs, under the cradle
-    z_fx = g["foot_top"] + 0.0104                                       # between the right pairs and the signals
-    r = [port("fuse_out") + ["P"], [x_tun + 0.012, -0.0545, z_fu, "P"],
-         [x_tun + 0.0205, -0.030, z_fu, "P"],                            # inboard of cradle leg 1
-         [g["flange_x0"] + 0.002, -0.024, z_fx, "P"],
-         [x_cr + 0.003, -0.024, z_fx + 0.0023, "P"],
-         [x_cr + 0.003, g["leg_in"] - 0.004, z_fx + 0.0023, "P"],
-         [ub_in, g["ubec"][1] - 0.0064, g["ubec"][2], "E"]]
-    wires.append(["W-UBEC-IN", "E-HRN-33", 20, 2, 1, 0.020, 0.030, 6.6, 0.0, r])
-    r = [[ub_out, g["ubec"][1] + 0.004, g["ubec"][2], "P"], [x_jr, 0.056, 0.031, "P"],
-         port("fc_aft", dy=0.010, dz=0.001) + ["E"]]
-    wires.append(["W-UBEC-OUT", "E-HRN-22", 20, 2, 1, 0.020, 0.030, 6.6, 0.0, r])
+    # ---- D-74: no UBEC feed, fuse or UBEC rail (E-HRN-21 / -33 / -22 deleted). The servo rail is the FC's Vx header,
+    # fed by the power board's servo BEC (6 V jumper) through the board link W-PMOD below.
+    # XT30U per ESC pair (D-74, WB-03), drawn as parts HRN-113-<st>: centre on the pair's route, path length from the
+    # bars to it (the pigtail F1 solders on the bench)
+    xt30 = {}
+    for st in STATIONS:
+        r = pwr_rows[st]
+        if st[1] == "R":    # on the last pod run (x 0.072 -> 0.062, toward the exit), between the leg and the signals
+            i_ex = next(i for i, p in enumerate(r) if p[3] == "F") - 1
+            a2, b2 = r[i_ex - 1], r[i_ex]
+            c = [(a2[0] + b2[0]) / 2, (a2[1] + b2[1]) / 2, XT30_Z_R[lay[st] % 2]]
+            ax = _unit([b2[0] - a2[0], b2[1] - a2[1], 0.0])[:2]
+        else:
+            c = [XT30_X_L, -0.0520, XT30_Z_L[lay[st] % 2]]
+            ax = [1.0, 0.0]
+        k = min(range(len(r) - 1), key=lambda i: _seg_dist(c, r[i][:3], r[i + 1][:3]))
+        a, b = r[k][:3], r[k + 1][:3]
+        ab = [b[j] - a[j] for j in range(3)]
+        t = max(0.0, min(1.0, sum((c[j] - a[j]) * ab[j] for j in range(3)) / sum(v * v for v in ab)))
+        xt30[st] = (c, sum(seg_len(r[:k + 1])) + t * math.dist(a, b), [round(v, 4) for v in ax])
+    XT30.update(xt30)
 
     # ---- pack lead (E-HRN-10, pack-owned) and 10 AWG main jumpers (E-HRN-11/12, mass in PWR-002), CR-F1-18
     pk_face = load_json(RED / "subsystems/pod/params.json")["pack_aft_face_m"]["value"][0]   # D2 nominal 0.069
@@ -882,10 +937,14 @@ def build(g):
     xl = {"PMOD": x_under + 0.0035, "RX": x_under, "ASPD": x_under - 0.0033}
     zc = {"ASPD": 0.0290, "RX": 0.0315, "PMOD": 0.0345}
     y_c, y_out = -0.028, -g["bay_hw"] + 0.002
-    r = [port("board_fwd") + ["P"], [-0.0555, y_c, zc["PMOD"], "P"], [-0.024, y_c, zc["PMOD"], "P"],
+    # D-74 case S: W-PMOD is a 10-way 28 AWG ribbon (ASM-F1-PMOD-CONDUCTORS) from the PDB's board-to-board contacts
+    # (top face, forward-inboard corner) forward over the deck front edge (KO-PWR-BOARD x -0.066), down in front of
+    # it inboard of the airspeed board (AVN-004, y <= -0.0358), into the corridor under the deck, then as before
+    r = [port("pdb_link") + ["F"], [-0.0685, -0.033, 0.0502, "F"], [-0.0685, -0.033, 0.0350, "P"],
+         [-0.0555, y_c, zc["PMOD"], "P"], [-0.024, y_c, zc["PMOD"], "P"],
          [xl["PMOD"], y_out, z_under, "L"], [xl["PMOD"], yb, z_under, "P"], [xl["PMOD"], 0.0465, z_fc, "P"],
          [-0.030, 0.0465, z_fc, "P"], port("fc_fore", dy=0.006) + ["E"]]
-    wires.append(["W-PMOD", "E-HRN-23", 28, 6, 1, 0.030, 0.020, 1.1, 0.0, r])
+    wires.append(["W-PMOD", "E-HRN-23", 28, 10, 0, 0.0, 0.020, 1.1, 0.0, r])
     r = [port("fc_fore", dy=-0.004, dz=-0.0055) + ["P"], [xl["RX"], 0.042, z_fc + 0.0005, "P"],
          [xl["RX"], yb, z_under, "L"], [xl["RX"], y_out, z_under, "P"], [-0.0285, y_c, zc["RX"], "P"],
          [-0.040, y_c, zc["RX"], "P"], [-0.044, -0.040, 0.026, "P"], port("rx") + ["E"]]
@@ -930,27 +989,27 @@ def build(g):
                      ["Servo lead-hole straw 4 mm x 15 mm", 1, 0.03, x_lh, sy * 0.285, 0.013],
                      ["Exit chafe sleeve PET braid 6 mm x 40 mm", 2, 0.08, x_sexit, sy * g["pod_hw"], z_sexit]]
     fittings += [["JR in-line pairs on the tray (6 outputs)", 6, 0.50, x_jr, 0.042, zw + 0.005],
-                 ["JR on the UBEC output at the FC rail", 1, 0.50, fc_x1, yc + 0.010, zw + 0.004],
-                 ["JST-GH housings + pre-crimped contacts (8 ends)", 8, 0.15, g["fc_x"], 0.02, zw + 0.004],
+                 ["JST-GH housings + pre-crimped contacts (6 ends)", 6, 0.15, g["fc_x"], 0.02, zw + 0.004],
+                 ["Board-link pin-header ends (2, W-PMOD case S)", 2, 0.30, PORTS["pdb_link"][0][0],
+                  PORTS["pdb_link"][0][1], PORTS["pdb_link"][0][2]],
                  ["I2C Y-splice, 4 conductors", 4, 0.08, fc_x1 - 0.006, 0.040, zw + 0.010],
-                 ["Bus-bar solder joints (9: 4 pairs + fuse feed)", 9, 0.05, bars[0], bars[1], bars[2]],
-                 ["Fuse-holder pigtail splices + heat-shrink (2)", 2, 0.10, PORTS["fuse_in"][0][0],
-                  PORTS["fuse_in"][0][1], PORTS["fuse_in"][0][2]],
+                 ["Bus-bar solder joints (8: 4 pigtails, bench)", 8, 0.05, bars[0], bars[1], bars[2]],
                  ["Ties in the pod (10)", 10, 0.12, 0.03, 0.0, zw + 0.005],
                  ["Crossing chafe sleeve PET braid 6 mm x 60 mm", 2, 0.12, x_cross, 0.0, zw + 0.008],
                  ["GPS-cable ties on mast and grip", 3, 0.12, g["x_leg"], 0.02, g["grip_z"]]]
+
 
     # ---- passes: [name, opening area mm2, [[awg, conductors], ...]]
     passes = [
         ["Pod side exit (16 x 12 mm), one side", 16 * 12, [[16, 4], [28, 4]]],
         ["Pod aft exit (D2, 11 x 16 mm), one side", 11 * 16, [[26, 3]]],
         ["Crossing behind the aft stop (6.7 x 26 mm)", (g["pod_x1"] - g["wall"] - g["x_leg"] - g["leg_side"] / 2) * 1000 * 26,
-         [[16, 4], [28, 4], [26, 3], [20, 2]]],
+         [[16, 4], [28, 4], [26, 3]]],
         ["P1 straw liner, ID 7 mm", math.pi / 4 * 49, [[16, 2], [28, 2]]],
         ["Fin-hole grommet, ID 7 mm", math.pi / 4 * 49, [[16, 2], [28, 2]]],
-        ["Under-pack channel 10 x 3 mm", 30, [[28, 14]]],
+        ["Under-pack channel 10 x 3 mm (board-link ribbon 10 + RX 4 + airspeed 4)", 30, [[28, 18]]],
         ["Handle leg bore 4.2 mm square (GPS cable)", 4.2 * 4.2, [[28, 6]]],
-        ["Tunnel under the AS150U cradle, 10 x 20 mm (EST: half beside the fuse holder)", 200, [[16, 8], [20, 2]]],
+        ["Tunnel under the AS150U cradle, 10 x 20 mm", 200, [[16, 8]]],
         ["Servo lead-hole straw, ID 3.4 mm (D1 4 mm hole)", math.pi / 4 * 3.4 ** 2, [[26, 3]]],
     ]
 
@@ -990,7 +1049,12 @@ def build(g):
                "p1_y_upper_m": y_p1, "p1_y_lower_m": y_p1b, "fin_hole_x_m": x_hole, "fin_hole_dz_m": hole_dz,
                "side_exit_x_m": [x_sexit - 0.008, x_sexit + 0.008], "side_exit_z_m": [z_sexit - 0.006, z_sexit + 0.006],
                "cross_x_m": x_cross, "under_pack_x_m": x_under, "jr_row_x_m": x_jr,
-               "ubec_lead_x_m": [ub_out, ub_in], "jr_recess_x_m": list(x_rec), "servo_lead_hole_x_m": x_lh}
+               "jr_recess_x_m": list(x_rec), "servo_lead_hole_x_m": x_lh}
+    for st in STATIONS:
+        grooves["xt30u_%s_xyz_m" % st] = xt30[st][0]
+        grooves["xt30u_%s_pigtail_path_m" % st] = xt30[st][1]
+    passes.append(["Tunnel under the cradle at the left XT30U pair (y -0.0582 ... -0.0345, z 0.0206 ... 0.0366: two "
+                   "5.2 mm plugs stacked + the right pairs)", 23.7 * 16.0 - 2 * 10.2 * 5.2, [[16, 4]]])
     return wires, fittings, passes, {"side_R": side_legs, "pod": pod_legs}, pod_box, grooves
 
 
@@ -1000,22 +1064,19 @@ EDGE_INFO = {
     "E-HRN-10": ("PWR-001", "PWR-002", "CT-AS150U"),
     "E-HRN-11": ("PWR-002", "PWR-003", "CT-SOLDER-DC"),
     "E-HRN-12": ("PWR-003", "PWR-004", "CT-SOLDER-DC"),
-    "E-HRN-13": ("PWR-004", "PRP-002-UR", "CT-SOLDER-DC"),
-    "E-HRN-14": ("PWR-004", "PRP-002-UL", "CT-SOLDER-DC"),
-    "E-HRN-15": ("PWR-004", "PRP-002-LR", "CT-SOLDER-DC"),
-    "E-HRN-16": ("PWR-004", "PRP-002-LL", "CT-SOLDER-DC"),
+    "E-HRN-13": ("PWR-004", "PRP-002-UR", "CT-XT30U"),
+    "E-HRN-14": ("PWR-004", "PRP-002-UL", "CT-XT30U"),
+    "E-HRN-15": ("PWR-004", "PRP-002-LR", "CT-XT30U"),
+    "E-HRN-16": ("PWR-004", "PRP-002-LL", "CT-XT30U"),
     "E-HRN-17": ("PRP-002-UR", "PRP-001-UR", "CT-SOLDER-PHASE"),
     "E-HRN-18": ("PRP-002-UL", "PRP-001-UL", "CT-SOLDER-PHASE"),
     "E-HRN-19": ("PRP-002-LR", "PRP-001-LR", "CT-SOLDER-PHASE"),
     "E-HRN-20": ("PRP-002-LL", "PRP-001-LL", "CT-SOLDER-PHASE"),
-    "E-HRN-21": ("PWR-004", "PWR-007", "CT-SOLDER-DC"),
-    "E-HRN-33": ("PWR-007", "PWR-005", "CT-SOLDER-DC"),
     "E-HRN-34": ("PRP-002-UR", "PWR-008-UR", "CT-SOLDER-DC"),
     "E-HRN-35": ("PRP-002-UL", "PWR-008-UL", "CT-SOLDER-DC"),
     "E-HRN-36": ("PRP-002-LR", "PWR-008-LR", "CT-SOLDER-DC"),
     "E-HRN-37": ("PRP-002-LL", "PWR-008-LL", "CT-SOLDER-DC"),
-    "E-HRN-22": ("PWR-005", "AVN-001", "CT-SERVO-JR"),
-    "E-HRN-23": ("PWR-003", "AVN-001", "CT-JST-GH-6"),
+    "E-HRN-23": ("PWR-003", "AVN-001", "CT-PIN-HEADER-LINK"),
     "E-HRN-24": ("AVN-001", "PRP-002-UR", "CT-SERVO-JR"),
     "E-HRN-25": ("AVN-001", "PRP-002-UL", "CT-SERVO-JR"),
     "E-HRN-26": ("AVN-001", "PRP-002-LR", "CT-SERVO-JR"),
@@ -1026,6 +1087,17 @@ EDGE_INFO = {
     "E-HRN-31": ("AVN-001", "AVN-003", "CT-JST-GH-4"),
     "E-HRN-32": ("AVN-001", "AVN-004", "CT-JST-GH-4"),
 }
+XT30_EDGES = ("E-HRN-38", "E-HRN-39", "E-HRN-40", "E-HRN-41")      # HRN-113-<st> tied to the pod bundle (D-74)
+SRV_GPM = round((2 * 4.0 + 1.1) / 3, 3)    # servo lead g/m per conductor: + / - 22 AWG, signal 28 AWG (D-74 follow-up)
+SRV_DIA_MM = (0.9, 1.3, 1.3)               # drawn conductors across the 4.0 mm servo groove: signal 28, + 22, GND 22
+HRN_CTS = [
+    {"id": "CT-XT30U", "kind": "electrical", "method": "connector",
+     "spec": "Amass XT30U 2-pin keyed (20 A) in line in an ESC power pair just inside the pod side exit: female on the "
+             "bus-bar pigtail (soldered on the bench), male on the ESC lead; both ends of the pair soldered (D-74, WB-03)"},
+    {"id": "CT-PIN-HEADER-LINK", "kind": "electrical", "method": "connector",
+     "spec": "28 AWG ribbon with a male pin header at each end, plugged into the CoreWing PDB and FC board-to-board "
+             "sockets (pitch measured at power BOARD-CHECK.md step 4; 1.27 mm -> bought IDC ribbon); case S only"},
+]
 FC_PORT = {"E-HRN-24": "SERVO4 (out 4, motor UR)", "E-HRN-25": "SERVO2 (out 2, motor UL)",
            "E-HRN-26": "SERVO1 (out 1, motor LR)", "E-HRN-27": "SERVO3 (out 3, motor LL)",
            "E-HRN-28": "SERVO5 (out 5, elevon L)", "E-HRN-29": "SERVO6 (out 6, elevon R)"}
@@ -1041,19 +1113,13 @@ WTEXT = {
     "W-MAIN-2": ("Vbat main + / - (10 AWG jumper, F1 PWR-002)", "power board output pads (aft edge)",
                  "bus bars, aft end (solder)", "down through the deck window, two bends >= 2 x OD (F1 CL-PWR-BEND)",
                  "heat-shrink; jumpers formed before soldering", "soldered"),
-    "W-FUSE-IN": ("UBEC feed + (to the fuse) and - (beside it)", "bus bars (solder, + bar y -0.0499)",
-                  "5 A fuse-holder input pigtail (solder splice)", "under the cradle, beside the tunnel",
-                  "adhesive heat-shrink over the splice; holder snapped in the frame clip (E-PWR-07)",
-                  "fuse holder = service point"),
-    "W-UBEC-IN": ("UBEC feed + (fused) / -", "5 A fuse-holder output pigtail (solder splice)",
-                  "UBEC input leads at its aft end (solder)",
-                  "tunnel exit, left channel floor, crossing (stacked 8 mm above the power pairs), right channel",
-                  "adhesive heat-shrink splices; tie at the crossing sleeve", "fuse holder = service point"),
-    "W-UBEC-OUT": ("Servo rail 6 V + / -", "UBEC output (factory lead)", "JR female on the FC servo-rail header",
-                   "right channel floor", "tie to the tray tie bar", "JR at the FC"),
-    "W-PMOD": ("Power-board link: Vbat sense, current sense, 5 V, GND (6-pin)", "JST-GH 6 on the power board",
-               "JST-GH 6 on the FC power port", "under-pack channel (taped), tray", "tie within 20 mm of each plug",
-               "GH both ends"),
+    "W-PMOD": ("Power-board link, case S (D-74): BATT_VOLT, BATT_CURR, FC-BEC 5 V x1, servo-BEC Vx 6 V x4, GND x3 "
+               "(10 of the board-to-board contacts, flat 28 AWG ribbon folded in two)",
+               "male pin header (pitch per power BOARD-CHECK.md step 4) in the PDB board-to-board socket",
+               "male pin header in the FC board-to-board socket",
+               "over the deck front edge, down inboard of the airspeed board, corridor under the deck (y -0.028), "
+               "under-pack channel (taped), under the FC", "tie within 20 mm of each header; header held by the "
+               "board's own socket + a dab of hot glue", "pin headers both ends (case U: no cable, boards stacked)"),
     "W-GPS": ("GPS UART (SERIAL5 TX/RX) + I2C SDA/SCL + 5 V + GND", "JST-GH 6 (pre-crimped contacts, housing "
               "fitted after threading the leg)", "JST-GH 6 at the GPS", "right side wall at z 0.06 m (taped), "
               "right handle-leg bore, grip (2 ties), mast (1 tie)", "30 mm service loop at the mast base; ties",
@@ -1073,11 +1139,16 @@ def wire_text(w):
         return WTEXT[wid]
     if wid.startswith("W-PWR-"):
         st = wid[-2:]
-        return ("ESC %s power + / -" % st, "bus PDB pad (solder)", "ESC %s power pads (solder) + 680 uF cap" % st,
-                "pod floor (tied every <= 80 mm), side exit (sleeve), + and - in two grooves 5 mm apart under tape, "
-                "boss-tail tie, fin-hole grommet, tape strips every <= 50 mm on the outboard face",
-                "adhesive heat-shrink over each pad joint; lead taped 20 mm from the ESC; never under the ESC strap",
-                "none: ESC swap = re-solder at the ESC pads (bench)")
+        return ("ESC %s power + / -" % st, "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female",
+                "XT30U male -> ESC %s power pads (solder) + 680 uF cap" % st,
+                "pod floor (tied every <= 80 mm), XT30U body (HRN-113) tied in its station, side exit "
+                "(sleeve), + and - in two grooves 5 mm apart under tape, boss-tail tie, fin-hole grommet, tape strips "
+                "every <= 50 mm on the outboard face",
+                "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the "
+                "ESC strap", "XT30U (HRN-113-" + st + ") at (%.3f, %.3f, %.3f), %.3f m of route from the bars "
+                "(bench: ESC, lead or half-fin swap, WB-03): the pod pigtail is cut to that length + 10 mm loop, the wing "
+                "lead gets the rest; ESC end soldered" % (tuple(XT30[st][0]) + (XT30[st][1],)) if st in XT30 else
+                "XT30U just inside the pod side exit")
     if wid.startswith("W-PH-"):
         st = wid[-2:]
         return ("Motor %s phases A/B/C" % st, "ESC %s phase pads (solder)" % st,
@@ -1097,7 +1168,7 @@ def wire_text(w):
                 "board-face tape strips", "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
                 "JR in-line on the tray")
     if wid.startswith("W-SRV-") and wid.endswith("-P"):
-        return ("Elevon %s PWM 50 Hz + servo rail" % wid[6], "FC output pad + rail (solder)",
+        return ("Elevon %s PWM 50 Hz + servo rail (+ / - 22 AWG, signal 28 AWG)" % wid[6], "FC output pad + rail (solder)",
                 "JR male on the tray tie bar", "tray", "tie bar; pigtail <= 100 mm", "JR in-line")
     if wid.startswith("W-SRV-") and wid.endswith("-S"):
         return ("Elevon %s servo's own lead (MEC-001, shortened to 40 mm)" % wid[6],
@@ -1105,7 +1176,8 @@ def wire_text(w):
                 "branch groove 8 mm, D1 lead hole (4 mm square, straw), pocket ceiling to the case front",
                 "straw in the hole; lead pinched by the pocket cover at the case front", "JR in the recess")
     if wid.startswith("W-SRV-"):
-        return ("Elevon %s PWM 50 Hz + 6 V + GND" % wid[6], "JR female on the tray tie bar",
+        return ("Elevon %s PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat)"
+                % wid[6], "JR female on the tray tie bar",
                 "JR female in the 18 x 10 x 5 mm recess at the branch end (x 0.150-0.168)",
                 "pod floor, crossing (L only), D2 aft exit, servo groove aft of the spar, upper branch groove at "
                 "|y| 0.285 (D1)", "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
@@ -1155,10 +1227,19 @@ def draw_strands(row, od_table):
     _wid, _eid, awg, n, _tw, _lay, _loop, _gpm, _f, pts = row
     od = dict((int(a), b) for a, b in od_table)
     d = od.get(int(awg), 1.0) / 1000.0
-    if not any(p[3] == "G" for p in pts) or (int(awg), int(n)) not in ((16, 2), (26, 3)):
+    if not any(p[3] == "G" for p in pts) or (int(awg), int(n)) not in ((16, 2), (26, 3), (22, 3)):
         return [[round(min(0.006, d * BUNDLE_K.get(int(n), 3.0)), 5), [list(p[:3]) for p in pts]]]
+    dias = None
     if int(awg) == 16:
         free, groove = [-(d / 2 + 0.00005), d / 2 + 0.00005], [-0.0025, 0.0025]
+    elif int(awg) == 22:                    # servo lead: 28 AWG signal + 22 AWG + / -, packed 0.05 mm apart, centred
+        dias = [v / 1000.0 for v in SRV_DIA_MM]
+        w = sum(dias) + 0.0001
+        o, acc = [], -w / 2
+        for dd in dias:
+            o.append(acc + dd / 2)
+            acc += dd + 0.00005
+        free = groove = o
     else:
         free = groove = [-(d + 0.00005), 0.0, d + 0.00005]
     P = [list(p[:3]) for p in pts]
@@ -1190,7 +1271,7 @@ def draw_strands(row, od_table):
         for i, p in enumerate(pts):
             o = (groove if (p[3] == "G" or (len(p) > 4 and p[4] == "s")) else free)[j]
             line.append([round(P[i][k] + lat[i][k] * o, 5) for k in range(3)])
-        out.append([round(d, 5), line])
+        out.append([round(dias[j] if dias else d, 5), line])
     return out
 
 
@@ -1212,7 +1293,8 @@ def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
         "rx_max_m": {"value": 0.15, "unit": "m", "source": "team/F5/CHANGE-REQUESTS.md#CR-F5-04"},
         "phase_ext_max_m": {"value": 0.10, "unit": "m", "source": "team/E1/CHANGE-REQUESTS.md#CR-E1-18"},
         "servo_v_min": {"value": 5.7, "unit": "V", "source": "F2 choice",
-                        "note": "<= 5 % below the 6.0 V UBEC: stall torque falls about in proportion to voltage"},
+                        "note": "<= 5 % below the 6.0 V servo-BEC set point (power board, 6 V jumper, D-74): stall "
+                                "torque falls about in proportion to voltage"},
         "free_span_max_m": {"value": 0.05, "unit": "m", "source": "F2 choice",
                             "note": "free air in the slipstream; supports elsewhere <= requirements.wire_support_max_m"},
         "fill_max": {"value": 0.40, "unit": "-", "source": "F2 choice", "note": "bundle passes without force"},
@@ -1244,9 +1326,18 @@ def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
               "fittings_table": {"value": [[f[0], f[1], f[2], round(f[3], 4), round(f[4], 4), round(f[5], 4)]
                                            for f in fittings], "unit": "-", "source": "ASM-F2-WIRE-GPM",
                                  "note": "[name, qty, g each EST, x, y, z]"},
+              "xt30u_table": {"value": [["XT30U " + st, XT30_G] + [round(v, 4) for v in XT30[st][0]] for st in STATIONS],
+                              "unit": "-", "source": "team/F2/harness.py (D-74)",
+                              "note": "[name, g, x, y, z]: the four XT30U mated pairs, parts HRN-113-<st> (own nodes, "
+                                      "not in the bundle masses)"},
               "passes": {"value": [[p[0], round(p[1], 1), p[2]] for p in passes], "unit": "-",
                          "source": "team/F2/harness.py", "note": "[name, opening mm2, [[AWG, conductors]]]"},
-              "cad": {"bundle_legs": {"value": {k: [[[round(c, 4) for c in a], [round(c, 4) for c in b], round(d, 4)]
+              "cad": {"xt30u": {"value": {"HRN-113-" + st: {"centre": [round(v, 4) for v in XT30[st][0]],
+                                                            "axis": XT30[st][2], "size_m": list(XT30_SIZE_M)}
+                                          for st in STATIONS}, "unit": "m", "source": "team/F2/harness.py (D-74)",
+                                "note": "XT30U mated-pair bodies: size [along the wire (axis), across the pins, "
+                                        "thickness (z)]; Amass manual drawing 20.1 x 10.2 mm, 5.2 mm listing"},
+                      "bundle_legs": {"value": {k: [[[round(c, 4) for c in a], [round(c, 4) for c in b], round(d, 4)]
                                                     for a, b, d in v] for k, v in bod["legs"].items()},
                                       "unit": "m", "source": "team/F2/harness.py",
                                       "note": "[start, end, diameter] axis-aligned legs for k09kit.bundle; side_R is "
@@ -1329,10 +1420,27 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
                           "make_or_buy": "make", "carried": True, "mass_proxy": True,
                           "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. "
                                    + cg_note % ([round(v, 4) for v in parts[pid]["cg"]], bgap[pid] * 1000)})
+    for st, eid in zip(STATIONS, XT30_EDGES):                       # D-74: the four XT30U, drawn (HRN-113-*)
+        c, plen, ax = XT30[st]
+        hrn_parts.append({"id": "HRN-113-" + st, "name": "Amass XT30U mated pair, ESC %s power plug" % st,
+                          "subsystem": "harness", "status": "MODELLED", "mass_g": XT30_G, "material": "PA + brass",
+                          "cg_xyz_m": [round(v, 4) for v in c], "make_or_buy": "buy", "carried": True,
+                          "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (%.3f m of route from the bars), XT30U-M on "
+                                   "the ESC lead; body %.1f x %.1f x %.1f mm (Amass manual drawing 20.1 x 10.2; "
+                                   "thickness 5.2 from the listing, UNVERIFIED), axis (x, y) %s; tied in its station "
+                                   "(%s); team/I1/BOM.csv#H06" % (plen, *(v * 1000 for v in XT30_SIZE_M), ax,
+                                                                  "right channel, just inside the exit" if st[1] == "R"
+                                                                  else "tunnel under the AS150U cradle")})
     by_edge = {}
     for w in wires:
         by_edge.setdefault(w[1], []).append(w)
     edges, pending = [], []
+    for st, eid in zip(STATIONS, XT30_EDGES):
+        edges.append({"id": eid, "part_a": "HRN-113-" + st, "part_b": "HRN-001", "via": "CT-TIE", "owner": "harness",
+                      "notes": "XT30U %s body tied to its pair run (crossing / tunnel lane), mated halves taped" % st,
+                      "retention": {"item": "cable tie 2.5 x 100 mm round the plug body and the lane", "count": 1,
+                                    "load_n": "< 1 (2 g x 12.75 g crash = 0.25 N); unplug force taken by hand on both "
+                                              "housings", "inspection": "pre-flight: plug seated to the shoulder"}})
     mech = [
         ("E-HRN-01", "HRN-001", "POD-002", "CT-TIE", "pod runs tied to the tray tie bar and taped to the floor and "
          "side walls; JR row on the tie bar (CR-F2 to D2)"),
@@ -1354,8 +1462,9 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
                            "inspection": "pre-flight: no lead moves in the slipstream"}}
         (edges if b in declared or b.startswith("HRN") else pending).append(e)
     cur = {"E-HRN-10": {"cont": 30.3, "peak": 120.0}, "E-HRN-11": {"cont": 30.3, "peak": 120.0},
-           "E-HRN-12": {"cont": 30.3, "peak": 120.0}, "E-HRN-21": {"cont": 1.2, "peak": 5.0},
-           "E-HRN-33": {"cont": 1.2, "peak": 5.0}, "E-HRN-22": {"cont": 2.6, "peak": 2.6}}
+           "E-HRN-12": {"cont": 30.3, "peak": 120.0},
+           "E-HRN-23": {"cont": 3.7, "peak": 6.5, "kind": "servo Vx (2.8 A both stalled, 5.6 A design) + FC 5 V "
+                        "0.87 A, on parallel 28 AWG conductors (F1 CL-F1-PMOD-*)"}}
     for st, eid in zip(STATIONS, ("E-HRN-13", "E-HRN-14", "E-HRN-15", "E-HRN-16")):
         cur[eid] = {"cont": 8.4, "peak": 24.8}
     for st, eid in zip(STATIONS, ("E-HRN-17", "E-HRN-18", "E-HRN-19", "E-HRN-20")):
@@ -1375,7 +1484,7 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
               "route_id": route_id(main),
               "support_points": [s.strip() for s in supp.split(",")], "bend_radius_mm": round(
                   dict((a, b) for a, b in BEND_K)[main[2]] * dict(od)[main[2]], 1),
-              "strain_relief": sr, "disconnect": eid in ("E-HRN-10",),
+              "strain_relief": sr, "disconnect": eid in ("E-HRN-10", "E-HRN-13", "E-HRN-14", "E-HRN-15", "E-HRN-16"),
               "slack_mm": round(sum(w[6] for w in ws) * 1000), "length_m": round(cut_total, 3),
               "wires": [w[0] for w in ws]}
         e = {"id": eid, "part_a": pa, "part_b": pb, "via": via, "owner": "harness",
@@ -1397,15 +1506,15 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
             e["signal"] = {"fc_port": "I2C1 (Y-branch of the GPS port)", "protocol": "I2C 400 kHz",
                            "i2c_addr": "0x28 (MS4525DO)"}
         if eid == "E-HRN-23":
-            e["signal"] = {"fc_port": "power-board port", "protocol": "analog Vbat / current sense",
-                           "i2c_addr": "-"}
+            e["signal"] = {"fc_port": "board-to-board link (PDB contacts)", "protocol": "analog Vbat / current sense "
+                           "+ FC-BEC 5 V + servo-BEC Vx 6 V (D-74)", "i2c_addr": "-"}
         if eid == "E-HRN-10":
             e["field_joint"] = True
         (edges if pa in declared and pb in declared else pending).append(e)
     iface = {"schema": "dbf-interfaces/1", "subsystem": "harness",
              "_note": GEN_NOTE + ". Edges whose other part is not declared yet are in edges-pending.json and move "
                                  "here on the next run.",
-             "parts": hrn_parts, "edges": edges, "acknowledges": []}
+             "parts": hrn_parts, "connection_types": HRN_CTS, "edges": edges, "acknowledges": []}
     out[SUB / "interfaces.json"] = json.dumps(iface, indent=1) + "\n"
     out[SUB / "edges-pending.json"] = json.dumps(
         {"_note": GEN_NOTE + ". Harness edges whose other part is not declared by its owner yet (A4 plan ids).",
@@ -1431,15 +1540,11 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
         ("HRN-101", "Silicone wire 16 AWG 252/0.08, red 3 m + black 3 m + yellow 1.5 m", 1, 14.00,
          "Amazon: BNTECHGO 16 AWG silicone wire, 10 ft per colour (red, black, yellow)",
          "ESC leads 4 x 2 conductors (2.32 m each colour) + phase extensions; replaces F1's 16 AWG line"),
-        ("HRN-102", "Silicone wire 20 AWG, red + black 1 m each", 1, 4.00,
-         "Amazon: BNTECHGO 20 AWG silicone wire, red/black 10 ft", "fuse feed, UBEC feed and rail"),
-        ("HRN-103", "Servo extension wire 26 AWG 3-core (brown/red/orange), 2 m", 1, 5.00,
-         "Amazon: generic 26 AWG JR/Futaba servo extension cable, 5 m reel", "elevon leads + pigtails"),
         ("HRN-104", "Silicone wire 28 AWG, 3 colours x 3 m", 1, 7.00,
          "Amazon: BNTECHGO 28 AWG silicone wire, 6-colour kit", "DShot pairs and pigtails"),
         ("HRN-105", "JR/Futaba connector kit (male + female housings, crimp contacts), 10 sets", 1, 7.00,
          "Amazon: generic JR servo connector kit 2.54 mm (needs an open-barrel crimper, e.g. Engineer PA-09)",
-         "10 used: 6 tray in-line pairs, 2 wing-recess pairs (servo leads re-terminated), UBEC rail, spare"),
+         "8 used: 6 tray in-line pairs, 2 wing-recess pairs (servo leads re-terminated); 2 spare"),
         ("HRN-106", "JST-GH 1.25 mm housings GHR-04V-S (x4), GHR-06V-S (x4) + pre-crimped 28 AWG leads 150 mm (x20)",
          1, 12.00, "DigiKey: JST GHR-04V-S, GHR-06V-S; pre-crimped GH leads (JST SSHL-002T-P0.2 contacts)",
          "no crimp tool needed: insert contacts; FC-side plugs usually come with the CoreWing kit (F3)"),
@@ -1452,6 +1557,17 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
          "4 + 2 spare"),
         ("HRN-111", "Straw liner 7 mm PP, 40 mm (P1 pass-through)", 2, 0.0, "drinking straw", ""),
         ("HRN-112", "Straw liner 4 mm PP, 15 mm (servo lead hole, CR-D1-06)", 2, 0.0, "coffee stirrer straw", ""),
+        ("HRN-102", "Silicone wire 22 AWG, red + black 1.5 m each", 1, 4.00,
+         "Amazon: BNTECHGO 22 AWG silicone wire, red/black 10 ft",
+         "elevon servo + / - (FC pad -> wing recess, D-74 follow-up: 26 AWG gave 5.61 V at double stall); the signal "
+         "core is 28 AWG from HRN-104"),
+        ("HRN-113", "Amass XT30U male + female pairs, 10-pair pack", 1, 9.99,
+         "team/I1/BOM.csv#H06 (Amass XT30U, genuine, 2-pin, 20 A)",
+         "D-74 / WB-03: 4 fitted as parts HRN-113-UR/UL/LR/LL (2.0 g each, drawn 20.1 x 10.2 x 5.2 mm): right pair "
+         "stacked just inside the right exit, left pair stacked in the tunnel under the cradle; rest spares"),
+        ("HRN-114", "Male pin-header strip 1 x 40 (pitch per power BOARD-CHECK.md step 4) + 10-way 28 AWG ribbon 0.3 m",
+         1, 3.00, "any (DigiKey / Amazon); 1.27 mm pitch -> bought IDC ribbon instead",
+         "W-PMOD board link, case S (D-74); not needed in case U; I1 to add to the BOM"),
     ]
     for pid, name, q, cost, vend, note in bought:
         rows.append([pid, name, q, "buy" if cost else "make", "-", "-", 0, cost, vend,
@@ -1466,9 +1582,10 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
            "HRN-E02": ("ESC signal 28 AWG pairs + pigtails", [w[0] for w in wires if w[0].startswith("W-SIG")], "CALC"),
            "HRN-E03": ("Motor phase extensions 3 x 16 AWG (EST: factory lead lengths unpublished)",
                        [w[0] for w in wires if w[0].startswith("W-PH")], "EST"),
-           "HRN-E04": ("Servo leads 26 AWG + fuse/UBEC feed and rail 20 AWG",
-                       [w[0] for w in wires if w[0].startswith(("W-SRV", "W-UBEC", "W-FUSE"))], "CALC"),
-           "HRN-E05": ("Sensor and power-board cables JST-GH 28 AWG", ["W-GPS", "W-ASPD", "W-RX", "W-PMOD"], "CALC")}
+           "HRN-E04": ("Servo leads (+ / - 22 AWG, signal 28 AWG)", [w[0] for w in wires if w[0].startswith("W-SRV")],
+                       "CALC"),
+           "HRN-E05": ("Sensor cables JST-GH 28 AWG + power-board link ribbon", ["W-GPS", "W-ASPD", "W-RX", "W-PMOD"],
+                       "CALC")}
     est_rows = [["item_id", "subsystem", "discipline", "name", "qty", "sym", "mass_g", "x_m", "y_m", "z_m", "lx_m",
                  "ly_m", "lz_m", "maturity", "growth_pct", "part_ids", "with_parts", "basis"]]
     by = {w[0]: w for w in wires}
@@ -1493,6 +1610,11 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
         fm += f[1] * f[2]
         for i in range(3):
             fmom[i] += f[1] * f[2] * f[3 + i]
+    pm = [XT30[s] for s in STATIONS]
+    est_rows.append(["HRN-E08", "harness", "electrical", "XT30U mated pairs x4 (HRN-113-*, D-74)", 4, "-",
+                     round(XT30_G * 4, 2), *(round(sum(q[0][i] for q in pm) / 4, 4) for i in range(3)),
+                     *(round(v, 4) for v in XT30_SIZE_M), "EST", "", "HRN-113-UR;HRN-113-UL;HRN-113-LR;HRN-113-LL",
+                     "", "team/F2/harness.py XT30_SIZE_M, XT30_G"])
     est_rows.append(["HRN-E06", "harness", "electrical", "Fittings: JR, GH, splices, grommets, ties, tape, sleeves",
                      1, "-", round(fm, 2), *(round(fmom[i] / fm, 4) for i in range(3)), 0.2, 0.7, 0.4, "EST", "",
                      "HRN-001;HRN-002", "", "team/F2/harness.py fittings_table (%d lines)" % len(fittings)])

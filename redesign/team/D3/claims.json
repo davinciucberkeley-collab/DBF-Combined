@@ -230,8 +230,8 @@
     "h_ratio_c6": 0.7676036956090295,
     "embed": 0.0395,
     "embed_ratio": 0.6984403881343175,
-    "tongue": 0.011264566052210368,
-    "tongue_fit": 0.0037354339477896313
+    "tongue": 0.0112992396028137,
+    "tongue_fit": 0.0037007603971862986
    },
    "input_values": {
     "h": 0.015,
@@ -249,7 +249,7 @@
     "xt": 0.045,
     "od": 0.022,
     "te": 0.32,
-    "sq": 0.0454
+    "sq": 0.0586
    }
   },
   {
@@ -304,16 +304,16 @@
     "n": "P:fins.layers"
    },
    "outputs": {
-    "ratio": 0.7773972602739733,
-    "mismatch": 0.012999999999999956,
+    "ratio": 1.0000000000000002,
+    "mismatch": 0.0,
     "width": 0.0096
    },
    "input_values": {
-    "sq": 0.0454,
-    "zs": 0.2005,
+    "sq": 0.0586,
+    "zs": 0.201,
     "te": 0.32,
-    "x_d5": 0.26160000000000005,
-    "z_d5": 0.2004,
+    "x_d5": 0.2614,
+    "z_d5": 0.201,
     "tb": 0.0048,
     "n": 2
    }
@@ -780,7 +780,7 @@
    ],
    "how": "Dry fit: the tongue drops into the board notch between the strips with the ring top at |z| 0.1595",
    "note": "D-48 condition for 16 -> 12 mm (C4 CR-C4-25); fins.py raises if it does not fit",
-   "value": 0.0037354339477896313
+   "value": 0.0037007603971862986
   },
   {
    "id": "CL-D3-TAIL-EMBED",
@@ -849,7 +849,7 @@
    ],
    "how": "Dry-fit the D5 shoe on the cut half-fin",
    "note": "R4 (D-54): D5's step adopted (45.4 mm, |z| 0.2005), over D3's CR-D3-19",
-   "value": 0.7773972602739733
+   "value": 1.0000000000000002
   },
   {
    "id": "CL-D3-TIP-STEP-MISMATCH",
@@ -872,7 +872,7 @@
     "FIN-001-LL"
    ],
    "how": "Template check before cutting (D5 CL-D5-FIN-STEP-*)",
-   "value": 0.012999999999999956
+   "value": 0.0
   },
   {
    "id": "CL-D3-TIP-W",
@@ -1146,7 +1146,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
-   "value": 437.1,
+   "value": 435.6,
    "note": "from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g (not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet (D-63: 437 g). R5 (CR-A1-63): cheeks +5 mm and the 7.5 mm face_ahead (mounts 47.8 g), pins 2.5 mm, collar 15 mm (C6-R5 needs 13.007 mm), block edges R 3 mm -0.4 g: 440.3 g; lever taken: fillet mix 0.55 -> 0.45 g/cm3 -5.6 g (T-D3-WEIGH cup <= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken"
   },
   {
@@ -1176,7 +1176,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH (half-fin before its root fillets)",
-   "value": 19.22,
+   "value": 19.32,
    "note": "R3 FIN-001 22.32 g = laminate 19.32 + 3.0 g root-joint estimate. R4 laminate is the same within 0.1 g (D-54 stepped tip removes a little board); FIN-001 grew because the C6 15 mm fillets are now CAD bodies (CL-D3-FILLET-MASS). A one-layer tip zone is not offered: the square tip already needs the extended D5 cheeks to pass (CL-C4-D3-MS-FACE -0.54 as drawn)"
   }
  ]

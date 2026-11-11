@@ -91,9 +91,9 @@ box(280, 150, 130, 112, "PWR", "PWR-002", "Disconnect",
 pair(410, 206, 540, 206, f"{W['main_awg']} AWG ≤ 50 mm", 475, 190)
 out.append(f'<text x="475" y="236" font-family="{MONO}" font-size="11" fill="{FG2}" text-anchor="middle">+{r('main_rise_c')} °C</text>')
 box(540, 150, 150, 112, "PWR", "PWR-003", "Power board",
-    ["CoreWing PDB", "90 A / 215 A pk", "FC BEC 5 V"])
+    ["CoreWing PDB", "90 A / 215 A pk", "servo BEC 6 V 8 A"])
 pair(690, 206, 760, 206, f"{W['main_awg']} AWG", 725, 190)
-box(760, 150, 110, 112, "PWR", "PWR-004", "Bus board", ["2 × 8 AWG bars", "4 ESC + fuse"])
+box(760, 150, 110, 112, "PWR", "PWR-004", "Bus board", ["2 × 8 AWG bars", "4 ESC pigtails"])
 
 # --- ESC leads (four)
 esc = [("PRP-002-UR", "ESC upper R"), ("PRP-002-UL", "ESC upper L"),
@@ -105,26 +105,21 @@ for k, (pid, name) in enumerate(esc):
     box(1010, y, 150, 92, "PRP", pid, name, ["45 A (55 A 10 s)", "+680 µF at pads"])
     sig(f"1190,{y + 70} 1160,{y + 70}")
 out.append(f'<text x="955" y="28" font-family="{MONO}" font-size="11" fill="{FG2}" text-anchor="middle">'
-           f'{W["esc_awg"]} AWG · {min(LEN):.2f}–{max(LEN):.2f} m · +{r("esc_rise_c")} °C</text>')
+           f'{W["esc_awg"]} AWG · {min(LEN):.2f}–{max(LEN):.2f} m · +{r("esc_rise_c")} °C · XT30U at the pod exit</text>')
 out.append(f'<text x="1085" y="478" font-family="{MONO}" font-size="11" fill="{FG3}" text-anchor="middle">'
-           f'to motor: 3 × 3.5 mm bullet</text>')
+           f'to motor: soldered phases</text>')
 
-# --- UBEC branch
-pair(815, 262, 815, 364)
-fuse(815, 380, "5 A")
-pair(815, 396, 815, 430)
-box(740, 430, 150, 100, "PWR", "PWR-005", "UBEC 6 V 8 A",
-    [f"req ≥ {CL['CL-F1-SERVO-BEC-REQ']['value']:.1f} A", f"{W['feed_awg']} AWG feed"])
-pair(740, 500, 610, 500, f"{W['bus_awg']} AWG", 675, 488)
+# --- servo rail (D-74: power-board servo BEC on the 6 V jumper, through the FC Vx header; no UBEC, no fuse)
 box(460, 450, 150, 92, "MEC", "MEC servos", "2 × elevon servo",
-    [f"stall {CL['CL-F1-SERVO-STALL-BUS']['value']:.1f} A both", "6 V"])
+    [f"stall {CL['CL-F1-SERVO-STALL-BUS']['value']:.1f} A both",
+     f"need {CL['CL-F1-SERVO-BEC-REQ']['value']:.1f} vs {CL['CL-F1-SERVO-BEC-RATING']['value']:.0f} A"])
 
 # --- avionics
 box(240, 330, 170, 92, "AVN", "AVN-001", "Flight controller",
     ["BATT_MONITOR 4", "Q_M_BAT_CURR_MAX 100"])
-sig("615,262 615,300 325,300 325,330", "GH-6 · V, I, 5 V · no Vx", 470, 294, data=True)
+sig("615,262 615,300 325,300 325,330", "board link · V, I, 5 V, Vx 6 V", 470, 294, data=True)
 sig("410,400 430,400 430,560 1190,560 1190,110", "DShot ×4", 1120, 552)
-sig("325,422 325,496 460,496", "PWM ×2", 392, 488)
+sig("325,422 325,496 460,496", "PWM ×2 + Vx", 392, 488)
 
 # --- frame
 body = "\n".join(out)

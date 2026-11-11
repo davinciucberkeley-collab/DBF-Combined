@@ -1274,18 +1274,18 @@
    "note": "Pod shell nose. CHANGE-LOG D-62 (B3 CR-B3-25): the nose shell extends another 10 mm (-0.130 -> -0.140) and the whole pack bay (forward stop -0.1212 -> -0.1312, crush block >= 24.3 mm, spreader 1.5 mm, 2 mm spacer steps, aft stop 0.060 -> 0.050) moves 10 mm forward with it; pack nominal centroid pod.pack_x_nominal_m -0.032 m; the tray, hatch, handle, spar saddle POD-007 (x 0.080) and the aft end 0.095 do not move. Cost: +2 g shell (pod 146 g, D-63), envelope x 0.508 m, D7's nose pad 3/4 -> 1/2 in (CR-A1-66), pitot tip -0.220. D-47 (A3 CR-A3-22) did the same 21 mm move from -0.115 at the R4 CG 0.0577 m; D-25 added the crush block at -0.115; D-08 moved the pod to -0.105. Moving the whole pod is impossible (POD-007 sits on the spar); nose ballast would cost about 41 g; the pod group cannot be lowered to recover the CG height"
   },
   "pack_x_nominal_m": {
-   "value": -0.032,
+   "value": -0.036,
    "unit": "m",
-   "source": "params/CHANGE-LOG.md#D-62",
+   "source": "params/CHANGE-LOG.md#D-77",
    "status": "PROPOSED",
-   "note": "D-62: bay datum and nominal pack centroid, 10 mm forward of the D-47 datum (-0.022). D2 draws the pack here; pod.py checks its aft face against this key. Flight station per weighed pack (D-59 rule, D-60 band rule): the whole spacer step, counted forward from the no-spacer station x_nom + pod.pack_aft_travel_m = -0.020, that centres the basic-to-predicted CG band on cg.x_target_m, never ahead of the crush stack (-0.0354 for the 140 mm pack, -0.0379 for the 135 mm Ovonic EC5 pack, D-64). The stations themselves are read from A3's live roll-up (CL-A3-CG-X-STATIONS, team/A3/rollup/rollup.json cg.station_cases), never from a note (CR-A3-27): H3 writes the flight card from A3's re-run on the balance-test day. A1's frame estimate (CALC-A1-PACK-CASES) must agree with A3's rule on every pack. Was -0.022 (D-47), -0.001 (D-24)"
+   "note": "D-77 (BR-00): datum 4 mm forward, -0.032 -> -0.036 (16 mm spacer stack), the most forward 2 mm step that keeps C5's crush block B (26.2 vs 25.8 mm at 550 g, CL-C5-PACK-X-FWD-MAX-551 -0.0364). D-62: bay datum and nominal pack centroid, 10 mm forward of the D-47 datum (-0.022). D2 draws the pack here; pod.py checks its aft face against this key. Flight station per weighed pack (D-59 rule, D-60 band rule): the whole spacer step, counted forward from the no-spacer station x_nom + pod.pack_aft_travel_m = -0.020, that centres the basic-to-predicted CG band on cg.x_target_m, never ahead of the crush stack (-0.0354 for the 140 mm pack, -0.0379 for the 135 mm Ovonic EC5 pack, D-64). The stations themselves are read from A3's live roll-up (CL-A3-CG-X-STATIONS, team/A3/rollup/rollup.json cg.station_cases), never from a note (CR-A3-27): H3 writes the flight card from A3's re-run on the balance-test day. A1's frame estimate (CALC-A1-PACK-CASES) must agree with A3's rule on every pack. Was -0.022 (D-47), -0.001 (D-24)"
   },
   "pack_aft_travel_m": {
-   "value": 0.012,
+   "value": 0.016,
    "unit": "m",
    "source": "params/CHANGE-LOG.md#D-59",
    "status": "PROPOSED",
-   "note": "D-59: pack travel aft of pod.pack_x_nominal_m to the aft stop (no spacer); 12 mm (was 8 at D-47). D-62: the bay moved 10 mm forward, so the aft stop face = x_nom + L/2 + this = 0.050 (D2); the spar saddle POD-007 stays at 0.080"
+   "note": "D-77: 12 -> 16 mm so the aft stop stays at 0.0475 with the datum at -0.036. D-59: pack travel aft of pod.pack_x_nominal_m to the aft stop (no spacer); 12 mm (was 8 at D-47). D-62: the bay moved 10 mm forward, so the aft stop face = x_nom + L/2 + this = 0.050 (D2); the spar saddle POD-007 stays at 0.080"
   },
   "pack_spacer_step_m": {
    "value": 0.002,
@@ -1383,11 +1383,11 @@
     "note": "D-63 (C3 CR-C3-19, D-62): D2-R5 130.9 g + C3's FEA fixes (aft-stop strut to the handle bridge 3.7, forward-stop floor flange 1.5, handle-foot wall brackets 8.7 g EST, CR-C3-14/-15/-16) + 2 g for the D-62 nose extension = 145.8; was 131 (D-48), 122 (D-38), 105 (D-07). D2's lighter levers (0.8 mm floor, lead window) are void: the tray already fails in bending without the strut"
    },
    "landing": {
-    "value": 48,
+    "value": 60,
     "unit": "g",
-    "source": "CL-D5-MASS-TOTAL",
+    "source": "params/CHANGE-LOG.md#D-78",
     "status": "PROPOSED",
-    "note": "D-63 (C5 CR-C5-18): D5-R4 42.50 g EST (CR-D5-26) + 5 g EST for the shoe sleeve fix (wall 1.6 -> 2.0 mm, rim 2.4 -> 3.0, 1.0 mm inside fillet, engagement 25 mm; D5 reports the real figure). C4's cheek extension to |z| 0.171 (+16 g, CR-C4-30) is held by test (CR-C4-36) and not allocated; was 43 (D-30), 40 (D-11)"
+    "note": "D-78 (BR-00): 48 -> 60 g, taken from power (648 -> 636) which D-74 lightened by 16.5 g; D5-R7 (D-76) 59.1 g EST with F-400 cartridges on the 59 N side-load shoe (R6 F-250 shoe 69.9 g). 48 g is not reachable inside the telescoping-shoe concept at the D-65 side load; the side-load fuse (SW-03 / BR-09) is the next lever. D-63 (C5 CR-C5-18): D5-R4 42.50 g EST (CR-D5-26) + 5 g EST for the shoe sleeve fix (wall 1.6 -> 2.0 mm, rim 2.4 -> 3.0, 1.0 mm inside fillet, engagement 25 mm; D5 reports the real figure). C4's cheek extension to |z| 0.171 (+16 g, CR-C4-30) is held by test (CR-C4-36) and not allocated; was 43 (D-30), 40 (D-11)"
    },
    "propulsion": {
     "value": 462,
@@ -1397,11 +1397,11 @@
     "note": "D-48: E1's 475.6 g (CR-E1-14: 4 x (motor 81.0 with factory leads + ESC 11.0 EST + prop 17 + adapter, nut, washer 6.7 + 4 screws 3.2)) less 4 x 3.4 g: F2 removes the ESC factory power leads and solders its own 16 AWG leads to the pads (CR-F2-07), so PRP-002 is carried at the stripped 7.6 g (A3 CR-A3-21, E1 re-runs). Was 476 (D-38), 440 (D-07). Levers: Tekko32 ESCs -21 g (+$60, not affordable at R4), aluminium nuts -4 g"
    },
    "power": {
-    "value": 648,
+    "value": 630,
     "unit": "g",
     "source": "CL-PWR-MASS",
     "status": "PROPOSED",
-    "note": "D-48 (F1 CR-F1-19, A3 CR-A3-21, F3 CR-F3-13): pack 550 (UNVERIFIED, listings 503-680) + non-pack 88.2 g (AS150U pair, 10 AWG main path, PDB plate and power frame PWR-006, bus board, UBEC, fuse, four ESC caps, and the CoreWing power board PWR-003 28 g EST moved in from avionics); F1 638.2 g (CL-PWR-MASS); was 620 (D-38). Pack growth to 680 g comes out of the A1 reserve"
+    "note": "D-79: 636 -> 630 g, 6 g to harness (F1 CL-PWR-MASS 622.4 g after D-74 as modelled: UBEC and fuse out, 56 mm deck in). D-78: 648 -> 636 g, 12 g to landing; D-74 removes the UBEC and fuse (-16.5 g), power basic ~623.5 g. D-48 (F1 CR-F1-19, A3 CR-A3-21, F3 CR-F3-13): pack 550 (UNVERIFIED, listings 503-680) + non-pack 88.2 g (AS150U pair, 10 AWG main path, PDB plate and power frame PWR-006, bus board, UBEC, fuse, four ESC caps, and the CoreWing power board PWR-003 28 g EST moved in from avionics); F1 638.2 g (CL-PWR-MASS); was 620 (D-38). Pack growth to 680 g comes out of the A1 reserve"
    },
    "avionics": {
     "value": 45,
@@ -1411,11 +1411,11 @@
     "note": "D-48 (F3 CR-F3-13 over F1's 52): FC alone 12 g, M100-5883 GPS, RP3 RX, MS4525DO + pitot boom, gel cubes, microSD = 36.5 g CAD + 8.5 g growth; the power board (28 g) is PWR-003 in power; 7 g returned to the reserve. Was 80 (D-38), 75 (D-07). Telemetry over ELRS, no separate radio"
    },
    "harness": {
-    "value": 123,
+    "value": 129,
     "unit": "g",
     "source": "CL-F2-MASS",
     "status": "PROPOSED",
-    "note": "D-48 (F2 CR-F2-01, A3 CR-A3-21): F2 routed 122.6 g (ESC leads 75.0 at the routed 0.512-0.650 m, phase extensions 11.7 EST, signals/servo/GH 19.0, fittings 16.9 EST; soldered phases, 28 AWG DShot, 26 AWG servo leads, ahead-of-spar grooves). 12 g return to the reserve if the factory phase leads reach (T-E1-MOTOR-RM, reach 0.121 m). Harness CG x 0.067 m. Was 105"
+    "note": "D-79: 123 -> 129 g, 6 g from power: D-74 as built in F2-R4 (four XT30U 8.0 g drawn as HRN-113-*, board-link ribbon, UBEC wires out) and 22 AWG servo + / - for CL-F2-SERVO-V >= 5.7 V; CL-F2-MASS 127.7 g. D-48 (F2 CR-F2-01, A3 CR-A3-21): F2 routed 122.6 g (ESC leads 75.0 at the routed 0.512-0.650 m, phase extensions 11.7 EST, signals/servo/GH 19.0, fittings 16.9 EST; soldered phases, 28 AWG DShot, 26 AWG servo leads, ahead-of-spar grooves). 12 g return to the reserve if the factory phase leads reach (T-E1-MOTOR-RM, reach 0.121 m). Harness CG x 0.067 m. Was 105"
    },
    "mechanisms": {
     "value": 72,

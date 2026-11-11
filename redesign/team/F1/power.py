@@ -1,4 +1,4 @@
-"""F1 power distribution: main disconnect, wire gauges with derating, voltage drop, sensing, UBEC, protection.
+"""F1 power distribution: main disconnect, wire gauges with derating, voltage drop, sensing, servo supply, protection.
 
 Run:  python -I redesign/team/F1/power.py      -> claims.json, data/derating.csv, data/gauge_sweep.csv
 Then: python -I redesign/team/F1/draw_schematic.py ; python -I redesign/proofs/build_graph.py
@@ -12,6 +12,10 @@ Wire model (CALC-F1-WIRES), per metre of conductor, Python standard library only
             theta_mid = theta_inf - (theta_inf - theta_end) / cosh(m L / 2),  m = sqrt(h pi OD / (k_Cu A))
 The mission current profile (CL-F1-PROFILE) is built from E2's pessimistic phase claims (CR-E2-19) with short
 punches inserted after each transition (limited 100 A normal case, 120 A unlimited / 51.6 A single-ESC fault case).
+R5 (2026-11-11, D-74): UBEC PWR-005 and its fuse PWR-007 deleted; the power board's servo BEC (6 V jumper, 8 A cont)
+carries the 5.6 A servo design case through the FC Vx rail (CL-F1-SERVO-BEC-RATING); feed and servo-bus wire runs
+gone; the board-to-board link W-PMOD carries Vx on several 28 AWG conductors (CALC-F1-PMOD); one XT30U per ESC
+branch adds its contact resistance (ASM-F1-R-XT30U); the 5 % drop is a guideline (WB-11), measured at T-F1-DROP.
 R4 (2026-11-10): F2 harness re-run (ESC leads 0.475-0.620 m), power-board link check (CALC-F1-PMOD).
 R3 (2026-11-09): routed ESC lengths from F2 (CR-F2-02), 10 AWG main jumpers from subsystems/power (PWR-R1), limits
 from P:electrical.* (D-56), servo stall 1.4 A (CR-D6-06), mass from CL-PWR-MASS-NONPACK (D-48).
@@ -45,6 +49,17 @@ kit.source("SRC-F1-EMAX-ES3054", "EMAX ES3054 / ES3054HV listings", "web",
                  "setting); no stall-current figure for the standard version",
            note="the class D6 is choosing from (>= 3.04 kgf cm, B2 CR-B2-05); stall current to be measured",
            status="UNVERIFIED")
+kit.source("SRC-F1-COREWING-V2", "CoreWing F405 Wing V2 User Manual V2.1 (Coolwing Technology) + ArduPilot "
+           "CoreWingF405WingV2 hardware page", "datasheet",
+           url="https://ardupilot.org/copter/docs/common-corewing-f405-wing-v2.html",
+           where="PDB parameter table p. 7 and power logic p. 4-5: servo BEC 5 / 6 / 7.2 V by jumper, 8 A continuous / "
+                 "14 A peak; FC BEC 5.2 V 4 A; current sense 90 A cont / 215 A peak, 64 A/V (ArduPilot)",
+           note="summarised in subsystems/power/SPEC.md; ratings checked on the bench at BOARD-CHECK.md step 7",
+           status="UNVERIFIED")
+kit.source("SRC-F1-XT30U", "Amass XT30U connector manual / listing", "datasheet",
+           url="https://www.amass.com.cn/",
+           where="XT30U: 20 A continuous (16 AWG, dT < 85 K), contact resistance <= 1.2 mOhm per contact",
+           note="per harness SPEC.md (D-74); open the maker sheet before ordering (I1 H06)", status="UNVERIFIED")
 kit.source("SRC-F1-IEC60028", "IEC 60028 international standard of resistance for copper", "standard",
            url="https://webstore.iec.ch/publication/1",
            where="annealed copper 1.7241e-8 Ohm m at 20 degC, alpha 0.00393 /K")
@@ -62,15 +77,10 @@ kit.assumption("ASM-F1-PUNCH", "Short-time current cases",
                      "(yaw/roll saturation) lasts about one control correction; F4 to confirm from SITL",
                value=[5.0, 5.0, 2.0], unit="s", status="PROPOSED")
 kit.assumption("ASM-F1-GAUGES", "Chosen gauges",
-               "AWG for [ESC power lead, ESC alternative checked, UBEC feed, UBEC servo bus]; the main jumper gauge "
-               "is P:power.jumper_awg (10 AWG, PWR-R1)",
-               basis="F1 choice; the alternative (18 AWG) is computed to answer CR-A3-06", value=[16, 18, 20, 20],
+               "AWG for [ESC power lead, ESC alternative checked]; the main jumper gauge is P:power.jumper_awg "
+               "(10 AWG, PWR-R1). D-74: no UBEC feed or servo bus wire (the servo rail is the FC Vx header)",
+               basis="F1 choice; the alternative (18 AWG) is computed to answer CR-A3-06", value=[16, 18],
                unit="AWG", status="PROPOSED")
-kit.assumption("ASM-F1-LENGTHS", "Conductor lengths, one way, not routed by F2",
-               "[UBEC feed incl. fuse pigtails, UBEC to servo bus] per conductor; main jumpers come from "
-               "P:power.jumper_len_m and ESC leads from F2's CL-F2-ESC-LEN-*",
-               basis="pod layout subsystems/power/SPEC.md: fuse under the cradle, UBEC in the right channel",
-               value=[0.15, 0.35], unit="m", status="PROPOSED")
 kit.assumption("ASM-F1-BUNDLE", "Short bundled ESC-lead sections (F2 routing, CR-F2-02)",
                "[name, length m, cooling factor] for sections where more than one pair shares a passage",
                basis="F2: LR/LL pairs together through the P1 straw (~0.05 m) and two twisted pairs stacked 8 mm in the "
@@ -109,6 +119,17 @@ kit.assumption("ASM-F1-SENSOR-TOL", "Current-sensor tolerance 5 %",
                "BATT_AMP_PERVLT calibrated within +/-5 % at 24-30 A (R-AVIONICS-POWER)",
                basis="requirement value; the 100 A limiter acts on the sensed current", value=0.05, unit="-",
                status="PROPOSED")
+kit.assumption("ASM-F1-R-XT30U", "XT30U in each ESC branch (D-74, WB-03)",
+               "one mated XT30U pair per ESC branch at the pod side exit: 2 contacts x 1.2 mOhm in the branch loop",
+               basis="Amass maximum contact resistance (harness SPEC.md); T-F1-DROP measures the branch with the plugs in",
+               value=0.0024, unit="ohm", status="UNVERIFIED", cites=["SRC-F1-XT30U"])
+kit.assumption("ASM-F1-PMOD-CONDUCTORS", "Board-to-board link (W-PMOD, case S): 28 AWG conductors per role",
+               "[FC-BEC 5 V, SERVO-BEC Vx, GND] conductors in parallel; BATT_VOLT and BATT_CURR one each (10 wired). "
+               "Vx gets 4 (all four SERVO-BEC contacts) so the servo terminal voltage holds 5.7 V (F2 CL-F2-SERVO-V)",
+               basis="CoreWing manual PDB pin figure (power SPEC.md: FC-BEC x several, SERVO-BEC x 4, GND x several); "
+                     "10 of them so the folded ribbon fits D2's 10 mm under-pack channel beside the RX and airspeed "
+                     "leads (F2 CL-F2-FILL); pin map measured at BOARD-CHECK.md step 4",
+               value=[1, 4, 3], unit="-", status="PROPOSED")
 kit.assumption("ASM-F1-ESC-CAP", "Bus capacitance per ESC 1 000 uF",
                "LANRC 45 A input capacitor plus the added low-ESR 680 uF at each ESC (0.5 m leads)",
                basis="leads beyond ~0.15 m need added capacitance at the ESC; value = ripple practice, checked by "
@@ -230,7 +251,7 @@ def _segments(profile, kind, punch_t, i_punch, scale):
                    "split s, applied to every branch); R_ext = R_common + 1/sum(1/R_branch_i); "
                    "drop = I R_common + I_esc R_branch,max",
           inputs={"i_cont": "CL-F1-I-CONT", "profile": "CL-F1-PROFILE", "punch": "ASM-F1-PUNCH",
-                  "gauges": "ASM-F1-GAUGES", "lengths": "ASM-F1-LENGTHS", "od": "ASM-F1-WIRE-OD",
+                  "gauges": "ASM-F1-GAUGES", "od": "ASM-F1-WIRE-OD",
                   "g_main": "P:power.jumper_awg", "l_main": "P:power.jumper_len_m", "k_cu": "P:power.k_cu_w_mk",
                   "l_ur": "CL-F2-ESC-LEN-UR", "l_ul": "CL-F2-ESC-LEN-UL", "l_lr": "CL-F2-ESC-LEN-LR",
                   "l_ll": "CL-F2-ESC-LEN-LL", "bundle": "ASM-F1-BUNDLE",
@@ -238,20 +259,18 @@ def _segments(profile, kind, punch_t, i_punch, scale):
                   "split": "P:requirements.hover_split_max", "ilim": "P:performance.full_throttle_current_a",
                   "ipeak": "P:electrical.peak_current_a", "i_esc_lim": "P:propulsion.current_max_per_motor_a",
                   "i_esc_asym": "CL-E1-IMAX-168-55", "r_contact": "ASM-F1-R-CONTACT", "r_board": "ASM-F1-R-BOARD",
-                  "v": "P:battery.v_nom", "i_servo_bus": "CL-F1-SERVO-STALL-BUS", "ubec_eta_in": "ASM-F1-UBEC-IN"},
+                  "v": "P:battery.v_nom", "r_xt30": "ASM-F1-R-XT30U"},
           units={"ilim": "A", "ipeak": "A", "i_esc_lim": "A", "v": "V", "l_main": "m", "k_cu": "W/m/K",
                  "l_ur": "m", "l_ul": "m", "l_lr": "m", "l_ll": "m"})
-def wires(i_cont, profile, punch, gauges, lengths, od, g_main, l_main, k_cu, l_ur, l_ul, l_lr, l_ll, bundle, cool,
-          amb, n, split, ilim, ipeak, i_esc_lim, i_esc_asym, r_contact, r_board, v, i_servo_bus, ubec_eta_in):
+def wires(i_cont, profile, punch, gauges, od, g_main, l_main, k_cu, l_ur, l_ul, l_lr, l_ll, bundle, cool,
+          amb, n, split, ilim, ipeak, i_esc_lim, i_esc_asym, r_contact, r_board, v, r_xt30):
     ta = max(amb)
     share = 2 * split / (1 + split) / n
     t_lim, t_mom, t_asym = punch
-    g_esc, g_esc_alt, g_feed, g_bus = gauges
-    l_feed, l_bus = lengths
+    g_esc, g_esc_alt = gauges
     l_esc = [l_ur, l_ul, l_lr, l_ll]
     f_pod, f_chan, f_pair, eps = cool
-    cools = {"main": (f_pod, f_pair, eps), "esc": (f_chan, 1.0, eps), "esc18": (f_chan, 1.0, eps),
-             "feed": (f_pod, f_pair, eps), "bus": (f_chan, 1.0, eps)}
+    cools = {"main": (f_pod, f_pair, eps), "esc": (f_chan, 1.0, eps), "esc18": (f_chan, 1.0, eps)}
     out = {}
     runs = {"main": (int(g_main), sum(l_main), 1.0, ilim, ipeak, t_mom),
             "esc": (g_esc, max(l_esc), share, i_esc_lim, i_esc_asym, t_asym),
@@ -276,10 +295,10 @@ def wires(i_cont, profile, punch, gauges, lengths, od, g_main, l_main, k_cu, l_u
     # The long-wire value (main_rise_long_c) is kept as the bound if a jumper were ever made long.
     wm = wire_props(int(g_main), od)
     out["main_rise_c"] = fin_mid_rise(i_cont, wm, ta, cools["main"], max(l_main), 0.0, k_cu)
-    # ESC branches: loop resistance per routed length, parallel equivalent
+    # ESC branches: loop resistance per routed length + the XT30U at the side exit (D-74), parallel equivalent
     we = wire_props(g_esc, od)
     t_esc = ta + out["esc_rise_c"]
-    r_br = [2 * L * we["r20"] * (1 + ALPHA * (t_esc - 20)) for L in l_esc]
+    r_br = [2 * L * we["r20"] * (1 + ALPHA * (t_esc - 20)) + r_xt30 for L in l_esc]
     out["esc_r_loop_max_mohm"] = max(r_br) * 1e3
     out["esc_r_loop_min_mohm"] = min(r_br) * 1e3
     out["esc_len_total_m"] = sum(l_esc)
@@ -291,15 +310,6 @@ def wires(i_cont, profile, punch, gauges, lengths, od, g_main, l_main, k_cu, l_u
         out[f"bundle{k}_peak_fault_c"] = profile_peak(_segments(profile, True, t_asym, i_esc_asym, share), we, ta, cb)
     out["bundle_rise_max_c"] = max(out[f"bundle{k}_rise_c"] for k in range(len(bundle)))
     out["bundle_peak_max_c"] = max(out[f"bundle{k}_peak_fault_c"] for k in range(len(bundle)))
-    # UBEC feed and servo bus: steady at their worst continuous current (servo stall)
-    i_feed = i_servo_bus * 6.0 / (ubec_eta_in * v)
-    for key, g, length, i in (("feed", g_feed, l_feed, i_feed), ("bus", g_bus, l_bus, i_servo_bus)):
-        w = wire_props(g, od)
-        cool = cools[key]
-        out[f"{key}_awg"], out[f"{key}_i_cont_a"], out[f"{key}_len_m"] = g, i, length
-        out[f"{key}_rise_c"] = steady_rise(i, w, ta, cool)
-        out[f"{key}_mass_g"] = 2 * length * w["mass_gpm"]
-        out[f"{key}_r_loop_mohm"] = 2 * length * w["r20"] * (1 + ALPHA * (ta + out[f"{key}_rise_c"] - 20)) * 1e3
     # resistance pack terminals -> ESC pads, as one equivalent common resistance (four branches in parallel)
     r_common = 2 * r_contact + r_board + out["main_r_loop_mohm"] * 1e-3
     out["r_common_mohm"] = r_common * 1e3
@@ -308,12 +318,10 @@ def wires(i_cont, profile, punch, gauges, lengths, od, g_main, l_main, k_cu, l_u
     out["drop_peak_pct"] = 100 * (ilim * r_common + i_esc_lim * max(r_br)) / v
     out["main_loss_w_cont"] = i_cont ** 2 * r_common
     r_per_m = 2 * we["r20"] * (1 + ALPHA * (t_esc - 20))                   # loop Ohm per metre of route
-    out["esc_len_allow_m"] = (0.05 * v - ilim * r_common) / (i_esc_lim * r_per_m)
+    out["esc_len_allow_m"] = (0.05 * v - ilim * r_common - i_esc_lim * r_xt30) / (i_esc_lim * r_per_m)
+    out["xt30_drop_pct"] = 100 * i_esc_lim * r_xt30 / v
     return out
 
-
-kit.assumption("ASM-F1-UBEC-IN", "UBEC efficiency 0.85", "switching UBEC, 4S in, 6 V out",
-               basis="typical buck converter at 1-5 A", value=0.85, unit="-", status="PROPOSED")
 
 kit.assumption("ASM-F1-PACKLEAD", "Pack's own leads: gauge and length after re-termination",
                "[assumed maker gauge AWG, alternative gauge AWG, length one way m]",
@@ -342,7 +350,7 @@ def packlead(i_cont, lead, profile, punch, od, cool, amb, ipeak):
     return out
 
 
-@kit.calc("CALC-F1-SERVO-BEC", title="Servo supply requirement",
+@kit.calc("CALC-F1-SERVO-BEC", title="Servo supply requirement (power-board servo BEC, D-74)",
           equation="I_req = k_bec x n_servo x I_stall", inputs={"k": "P:requirements.ubec_factor",
                                                                 "i_stall": "ASM-F1-SERVO-STALL"},
           units={"i_stall": "A"})
@@ -360,25 +368,29 @@ def precharge(n, c, cells):
 
 
 @kit.calc("CALC-F1-MASS", title="Power mass excluding the pack, against the allocation left after the pack",
-          equation="m = CL-PWR-MASS-NONPACK (PWR-R1 parts: AS150U half + 10 AWG jumpers, power board, bus board, UBEC, "
-                   "frame, fuse, 4 caps); budget = allocation - pack",
+          equation="m = CL-PWR-MASS-NONPACK (PWR-R1 + D-74 parts: AS150U half + 10 AWG jumpers, power board, bus board, "
+                   "frame, 4 caps; no UBEC, no fuse); budget = allocation - pack",
           inputs={"nonpack": "CL-PWR-MASS-NONPACK", "alloc": "P:mass.allocation_g.power", "pack": "P:battery.mass_kg"},
           units={"nonpack": "g", "alloc": "g", "pack": "kg"})
 def power_mass(nonpack, alloc, pack):
     return {"mass_g": nonpack, "budget_g": alloc - pack * 1000}
 
 
-@kit.calc("CALC-F1-PMOD", title="Power-board link (JST-GH 6, 28 AWG): 5 V conductor heating",
-          equation="same steady wire model as CALC-F1-WIRES, 28 AWG, pod still air, f_pair for the 6-way cable; "
-                   "I_5V = CL-F3-5V-REQ (2 x the FC 5 V load); stall case = CL-F1-SERVO-STALL-BUS",
+@kit.calc("CALC-F1-PMOD", title="Power-board link (W-PMOD, 28 AWG ribbon, case S): conductor heating per role",
+          equation="same steady wire model as CALC-F1-WIRES, 28 AWG, pod still air, f_pair for the ribbon; per "
+                   "conductor: 5 V I_5V / n_5V, Vx I_stall / n_Vx, GND (I_5V + I_stall) / n_GND; I_5V = CL-F3-5V-REQ "
+                   "(2 x the FC 5 V load), I_stall = CL-F1-SERVO-STALL-BUS (both servos stalled, D-74)",
           inputs={"i_5v": "CL-F3-5V-REQ", "i_stall": "CL-F1-SERVO-STALL-BUS", "od": "ASM-F1-WIRE-OD",
-                  "cool": "ASM-F1-COOLING", "amb": "P:env.ambient_design_c"},
+                  "cool": "ASM-F1-COOLING", "amb": "P:env.ambient_design_c", "n": "ASM-F1-PMOD-CONDUCTORS"},
           units={"i_5v": "A", "i_stall": "A", "amb": "degC"})
-def pmod(i_5v, i_stall, od, cool, amb):
+def pmod(i_5v, i_stall, od, cool, amb, n):
     ta = max(amb)
     w = wire_props(28, od)
     c = (cool[0], cool[2], cool[3])
-    return {"rise_5v_c": steady_rise(i_5v, w, ta, c), "rise_stall_c": steady_rise(i_stall, w, ta, c)}
+    n5, nvx, ngnd = n
+    return {"rise_5v_c": steady_rise(i_5v / n5, w, ta, c), "rise_stall_c": steady_rise(i_stall / nvx, w, ta, c),
+            "rise_gnd_c": steady_rise((i_5v + i_stall) / ngnd, w, ta, c), "i_vx_a": i_stall / nvx,
+            "i_gnd_a": (i_5v + i_stall) / ngnd}
 
 
 # ---------------------------------------------------------------- claims: currents and disconnect
@@ -469,9 +481,10 @@ kit.claim("CL-F1-ESC-MASS", "ESC power leads, 4 pairs at F2's routed lengths", c
           note="Harness mass is F2's (HRN-101/102, CL-F2-MASS); F2 reads the per-metre value CL-F1-W16-GPM "
                "instead of dividing this by 4.0 m (CR-F1-23).")
 kit.claim("CL-F1-ESC-LEN-ALLOW", "Longest 16 AWG ESC lead that keeps the 100 A drop <= 5 %", calc=W,
-          output="esc_len_allow_m", unit="m", limit=(">=", "CL-F2-ESC-LEN-MAX"), parts=ESC_IDS,
+          output="esc_len_allow_m", unit="m", parts=ESC_IDS,
           how="F2 cut list: every ESC lead <= this length (CR-F1-25); T-F1-DROP on the longest branch.",
-          note="R3: LR routed at 0.650 m is 7 mm over; trim its service loop or use 14 AWG on LR only.")
+          note="R5: with one XT30U per branch (D-74) the 5 % guideline length is below F2's longest lead; WB-11 makes "
+               "5 % a guideline, so this claim carries no limit. Measure the built branch (T-F1-DROP).")
 kit.claim("CL-F1-W16-GPM", "16 AWG silicone wire mass per metre of one conductor", calc=W, output="esc_gpm",
           unit="g/m", parts=ESC_IDS, how="Weigh 1 m of the delivered reel.")
 kit.claim("CL-F1-PACKLEAD-RISE", "Pack's own leads (10 AWG assumed), steady rise at the continuous current",
@@ -487,59 +500,69 @@ kit.claim("CL-F1-PACKLEAD12-RISE", "Pack's own leads if 12 AWG, steady rise (not
           calc="CALC-F1-PACKLEAD", output="lead_alt_rise_c", unit="degC", parts=["PWR-001"],
           how="Only if the delivered pack has 12 AWG leads: same heat run; above 20 degC the pack is returned.",
           note="above P:electrical.pack_lead_rise_max_c 20 degC: a 12 AWG pack is not accepted.")
-kit.claim("CL-F1-FEED-RISE", "UBEC feed 20 AWG, steady rise at servo stall", calc=W, output="feed_rise_c",
-          unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"), parts=["PWR-005"],
-          how="Bench: both servos stalled 60 s, touch-probe the feed.")
-kit.claim("CL-F1-BUS-RISE", "Servo bus 20 AWG, steady rise at both servos stalled", calc=W, output="bus_rise_c",
-          unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"), parts=["PWR-005"],
-          how="Same bench run.")
 kit.claim("CL-F1-R-EXT", "Resistance pack terminals to ESC pads (equivalent, hot)", calc=W, output="r_ext_mohm",
           unit="mOhm", parts=PARTS_MAIN + ESC_IDS,
-          how="T-F1-DROP: 20 A load step, read pack-terminal and ESC-pad voltages with one meter.",
-          note="R4: F2 routed ESC lengths 0.475-0.620 m and 10 AWG jumpers; P:electrical.r_ext_mohm follows (CR-F1-24).")
+          how="T-F1-DROP: 20 A load step, read pack-terminal and ESC-pad voltages with one meter, XT30U plugs in.",
+          note="R5: + one XT30U per branch (2.4 mOhm, D-74), +0.6 mOhm on the equivalent; P:electrical.r_ext_mohm "
+               "(A1) follows (CR-F1-24).")
 kit.claim("CL-F1-DROP-CONT", "Voltage drop pack to the farthest ESC at the continuous current", calc=W,
           output="drop_cont_pct", unit="%", limit=("<=", 2.0), parts=PARTS_MAIN + ESC_IDS, how="T-F1-DROP at 30 A.")
-kit.claim("CL-F1-DROP-PEAK", "Voltage drop pack to the farthest ESC at the 100 A limiter", calc=W,
-          output="drop_peak_pct", unit="%", limit=("<=", 5.0), parts=PARTS_MAIN + ESC_IDS,
-          how="T-F1-DROP scaled; stand log at full throttle.")
+kit.claim("CL-F1-DROP-PEAK", "Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11)",
+          calc=W, output="drop_peak_pct", unit="%", parts=PARTS_MAIN + ESC_IDS,
+          how="T-F1-DROP scaled with the XT30U plugs in; stand log at full throttle. Go to 14 AWG on the right-hand "
+              "leads only if the measured drop costs real thrust (WB-11).",
+          note="D-74 accepts the XT30U (CL-F1-XT30U-DROP) over F1's 5 % guideline: WB-11 makes 5 % a guideline, not a "
+               "hardware limit, so this claim carries no limit; the number is the one to measure.")
+kit.claim("CL-F1-XT30U-DROP", "Drop across one ESC branch's XT30U at the per-motor limit", calc=W,
+          output="xt30_drop_pct", unit="%", parts=ESC_IDS + ["HRN-001"], assumes=["ASM-F1-R-XT30U"],
+          how="T-F1-DROP: meter across a mated XT30U at 20 A, scale to the per-motor limit.")
 
 # ---------------------------------------------------------------- claims: avionics supply, sensing, mass
 kit.claim("CL-F1-SERVO-BEC-REQ", "Servo supply rating required", calc="CALC-F1-SERVO-BEC", output="i_req_a",
-          unit="A", verifies=["R-AVIONICS-POWER"], parts=["PWR-005"],
+          unit="A", verifies=["R-AVIONICS-POWER"], parts=["PWR-003"],
           how="T-F1-SERVO-STALL: measure each servo's stall current at 6 V; re-run with the measured value.",
-          note="5.6 A with D6's 1.4 A stall (CR-D6-06) > the 4.5 A carried for the CoreWing servo BEC "
-               "(CL-F3-SERVO-BEC): the UBEC stays. The drop rule (<= 1.1 A per servo) is not met.")
-kit.claim("CL-F1-SERVO-STALL-BUS", "Servo bus current, both servos stalled", calc="CALC-F1-SERVO-BEC",
-          output="i_bus_stall_a", unit="A", verifies=["R-AVIONICS-POWER"], parts=["PWR-005"],
-          how="T-F1-SERVO-STALL, both servos blocked together, meter in the UBEC output.")
-kit.claim("CL-F1-UBEC-RATING", "UBEC continuous rating (6 V, >= 6 A class)", value=8.0, unit="A",
-          limit=(">=", "CL-F1-SERVO-BEC-REQ"), verifies=["R-AVIONICS-POWER"], parts=["PWR-005"],
-          how="Datasheet of the bought UBEC; bench both servos stalled: rail >= 4.8 V (5.8 V at the 6 V setting).",
-          note="candidate Hobbywing UBEC 8A class; datasheet not yet opened (UNVERIFIED)")
+          note="5.6 A with D6's 1.4 A stall (CR-D6-06) = 2 x 2 x 1.4 A; carried by the CoreWing power board's servo "
+               "BEC, 8 A cont / 14 A peak on the 6 V jumper (CL-F1-SERVO-BEC-RATING, margin 43 %). The 4.5 A once "
+               "carried was the SpeedyBee column of CoreWing's comparison table (D-74): UBEC and fuse deleted.")
+kit.claim("CL-F1-SERVO-STALL-BUS", "Servo rail current, both servos stalled", calc="CALC-F1-SERVO-BEC",
+          output="i_bus_stall_a", unit="A", verifies=["R-AVIONICS-POWER"], parts=["PWR-003", "AVN-001"],
+          how="T-F1-SERVO-STALL, both servos blocked together, meter in the Vx line at the FC header.")
+kit.claim("CL-F1-SERVO-BEC-RATING", "Power-board servo BEC continuous rating (6 V jumper)", value=8.0, unit="A",
+          limit=(">=", "CL-F1-SERVO-BEC-REQ"), verifies=["R-AVIONICS-POWER"], parts=["PWR-003"],
+          cites=["SRC-F1-COREWING-V2"],
+          how="BOARD-CHECK.md step 7: two 2.2 Ohm loads (~5.4 A) on S5/S6, Vx >= 5.8 V at the header, no cut-out, "
+              "board <= 70 degC after 60 s; repeated with the real servos stalled (T-F1-SERVO-STALL).",
+          note="D-74 replaces CL-F1-UBEC-RATING. Never on the 7.2 V jumper (SH-0255MG+ is a 4.8-6.0 V servo). "
+               "Fallback if step 7 fails: a named 4S-input 6 V UBEC (BOM gate X12)")
 kit.claim("CL-F1-SENSOR-PEAK", "Current sensor peak range vs 120 A", value=215.0, unit="A",
           limit=(">=", "P:electrical.peak_current_a"), verifies=["R-AVIONICS-POWER"], parts=["PWR-003"],
-          cites=["SRC-F1-SPEEDYBEE-WING"],
-          how="Candidate FC power board (F3 decides); any replacement needs >= 120 A peak and >= 38 A continuous.")
+          cites=["SRC-F1-COREWING-V2"],
+          how="CoreWing V2 power board (manual V2.1 p. 7); any replacement needs >= 120 A peak and >= 38 A continuous.")
 kit.claim("CL-F1-SENSOR-CONT", "Current sensor continuous rating", value=90.0, unit="A",
           limit=(">=", "CL-F1-DISC-REQ-CONT"), verifies=["R-AVIONICS-POWER"], parts=["PWR-003"],
-          cites=["SRC-F1-SPEEDYBEE-WING"], how="As CL-F1-SENSOR-PEAK; T-F1-SENSOR-CAL.")
+          cites=["SRC-F1-COREWING-V2"], how="As CL-F1-SENSOR-PEAK; T-F1-SENSOR-CAL.")
 kit.claim("CL-F1-POWER-MASS", "Power subsystem mass excluding the pack", calc="CALC-F1-MASS", output="mass_g",
-          unit="g", limit=("<=", "CL-F1-POWER-BUDGET"), parts=PARTS_MAIN + ["PWR-005"],
+          unit="g", limit=("<=", "CL-F1-POWER-BUDGET"), parts=PARTS_MAIN,
           how="Weigh each item on arrival (T-PWR-ARRIVAL); A3 replaces the EST rows.",
-          note="D-48: power 648 g incl. the CoreWing power board (28 g EST; one retailer lists the PDB board alone at "
-               "11.4 g, kept at 28 until weighed).")
+          note="D-74: UBEC 13 g and fuse 3.5 g deleted, deck 56 mm (+0.7 g). Power board 28 g EST (one retailer "
+               "lists the PDB alone at 11.4 g, kept at 28 until weighed).")
 kit.claim("CL-F1-POWER-BUDGET", "Power allocation left after the pack", calc="CALC-F1-MASS", output="budget_g",
           unit="g", how="P:mass.allocation_g.power minus P:battery.mass_kg; follows A1's allocation.")
 
-kit.claim("CL-F1-PMOD-RISE", "Power-board link 28 AWG 5 V conductor, steady rise at 2 x FC 5 V load",
+kit.claim("CL-F1-PMOD-RISE", "Power-board link 28 AWG FC-BEC 5 V conductors, steady rise at 2 x FC 5 V load",
           calc="CALC-F1-PMOD", output="rise_5v_c", unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"),
-          verifies=["R-AVIONICS-POWER"], parts=["PWR-003"],
-          how="T-F1-SERVO-STALL: meter in the 5 V line of the GH link while the FC, GPS, RX and airspeed run.")
-kit.claim("CL-F1-PMOD-SERVO-RISE", "Power-board link if servo stall current ran through it (not accepted)",
-          calc="CALC-F1-PMOD", output="rise_stall_c", unit="degC", parts=["PWR-003", "PWR-005"],
-          how="Continuity check on the built stack: FC servo-rail + to the power-board Vx pad open (no path).",
-          note="above P:electrical.wire_temp_rise_max_c: the servo rail is fed by the UBEC only and the CoreWing "
-               "Vx must not reach the FC servo rail through the link (CR-F1-29). Also above the ~1 A per JST-GH pin.")
+          verifies=["R-AVIONICS-POWER"], parts=["PWR-003", "AVN-001"], assumes=["ASM-F1-PMOD-CONDUCTORS"],
+          how="T-F1-SERVO-STALL: meter in the 5 V lines of the link while the FC, GPS, RX and airspeed run.")
+kit.claim("CL-F1-PMOD-SERVO-RISE", "Power-board link Vx conductors, steady rise with both servos stalled",
+          calc="CALC-F1-PMOD", output="rise_stall_c", unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"),
+          verifies=["R-AVIONICS-POWER"], parts=["PWR-003", "AVN-001"], assumes=["ASM-F1-PMOD-CONDUCTORS"],
+          how="T-F1-SERVO-STALL: both servos stalled 60 s, touch-probe the ribbon; Vx >= 5.8 V at the servo header.",
+          note="D-74: the servo BEC on the power board reaches the FC Vx rail through the board-to-board link (case S: "
+               "SERVO-BEC conductors in parallel; case U: the stacked pin header, no cable). Supersedes CR-F1-29.")
+kit.claim("CL-F1-PMOD-GND-RISE", "Power-board link GND conductors, steady rise at 5 V load + servo stall",
+          calc="CALC-F1-PMOD", output="rise_gnd_c", unit="degC", limit=("<=", "P:electrical.wire_temp_rise_max_c"),
+          verifies=["R-AVIONICS-POWER"], parts=["PWR-003", "AVN-001"], assumes=["ASM-F1-PMOD-CONDUCTORS"],
+          how="Same bench run as CL-F1-PMOD-SERVO-RISE.")
 
 # ---------------------------------------------------------------- tests
 kit.test("T-F1-WIRE-HEAT", "Wire heat runs", verifies=["CL-F1-MAIN-RISE", "CL-F1-MAIN-PEAK", "CL-F1-ESC-RISE",
@@ -552,16 +575,20 @@ kit.test("T-F1-WIRE-HEAT", "Wire heat runs", verifies=["CL-F1-MAIN-RISE", "CL-F1
                    "rise <= 10 degC steady (jumpers: above their joints), <= 30 degC peak, pack leads <= 20 degC.")
 kit.test("T-F1-CONN-HEAT", "AS150U heat run", verifies=["CL-F1-AS150U-CONT"],
          procedure="38 A for 10 min through a mated pair; IR thermometer on the housing; rise <= 30 degC.")
-kit.test("T-F1-DROP", "Path resistance", verifies=["CL-F1-R-EXT", "CL-F1-DROP-CONT", "CL-F1-DROP-PEAK"],
+kit.test("T-F1-DROP", "Path resistance", verifies=["CL-F1-R-EXT", "CL-F1-DROP-CONT", "CL-F1-DROP-PEAK",
+                                                   "CL-F1-XT30U-DROP"],
          procedure="20 A load step from the pack; meter across pack terminals and across one ESC's pads; "
                    "R = dV/dI. Pass: drop <= 2 % at 30 A.")
 kit.test("T-F1-SENSOR-CAL", "Current sensor calibration", verifies=["CL-F1-ILIM-WORST", "CL-F1-SENSOR-CONT"],
          procedure="Clamp meter on the main lead at 5, 15, 25, 30 A (motors on the restrained frame); set "
                    "BATT_AMP_PERVLT so BAT.Curr is within 5 %; record the value for F4.")
 kit.test("T-F1-SERVO-STALL", "Servo stall current and rail voltage", verifies=["CL-F1-SERVO-BEC-REQ", "CL-F1-PMOD-RISE",
-                                                                               "CL-F1-UBEC-RATING"],
-         procedure="Each servo blocked at full deflection 2 s on the UBEC at 6 V, meter in series; both together: "
-                   "rail >= 5.8 V at the servo and FC 5 V rail >= 4.8 V.")
+                                                                               "CL-F1-SERVO-BEC-RATING",
+                                                                               "CL-F1-PMOD-SERVO-RISE",
+                                                                               "CL-F1-PMOD-GND-RISE"],
+         procedure="Each servo blocked at full deflection 2 s on the power-board servo BEC (6 V jumper), meter in "
+                   "series; both together: Vx >= 5.8 V at the servo and FC 5 V rail >= 4.8 V (as BOARD-CHECK.md "
+                   "step 7, with the real servos).")
 kit.test("T-F1-PRECHARGE", "Anti-spark behaviour", verifies=["CL-F1-PRECHARGE-T95", "CL-F1-INRUSH"],
          procedure="Scope on the bus while plugging the AS150U slowly; bus >= 95 % before the main pins close; "
                    "no spark marks after 20 plug cycles.")
@@ -577,7 +604,7 @@ def write_tables(out):
     v = kit.value("P:battery.v_nom")
     rows = [("run", "awg", "len_m", "i_cont_a", "rise_cont_c", "peak_normal_c", "peak_fault_c", "r_loop_mohm",
              "drop_cont_pct", "mass_g")]
-    for k in ("main", "esc", "esc18", "feed", "bus"):
+    for k in ("main", "esc", "esc18"):
         rl = out.get(f"{k}_r_loop_mohm", float("nan"))
         rows.append((k, out[f"{k}_awg"], round(out[f"{k}_len_m"], 3), round(out[f"{k}_i_cont_a"], 2),
                      round(out[f"{k}_rise_c"], 1), round(out.get(f"{k}_peak_normal_c", float("nan")), 1),

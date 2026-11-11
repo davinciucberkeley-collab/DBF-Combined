@@ -2,5 +2,5 @@ part_id,x_m,y_m,z_m,maturity,reason,if_x_m
 PRP-002,,,,EST,ESC 7.6 g stripped (D-48): 6.6 g bare board + 1.0 g signal lead and shrink EST per E1 parts.csv notes; only the bare board is a datasheet number,
 HRN-001,,,,CALC,F2 harness.py breakdown (team/F2/mass_estimate.csv): wires CALC from routed lengths; fittings and phase extensions EST; lump carried at CALC 10 %,
 HRN-002,,,,CALC,as HRN-001 (per-side lump),
-PWR-001,=P:pod.pack_x_nominal_m,,,,"pack centroid at the D-62 datum (D2-R6 draws the tray there, x -0.0321); F1 power/interfaces.json still has the D-47 node -0.022; retires itself when F1 moves the node (CR-A3-32)",-0.022
+PWR-001,=P:pod.pack_x_nominal_m,,,,"pack centroid at the D-77 datum -0.036 (D2-R7 draws the pack there with a 16 mm stack); F1 power/interfaces.json still has the D-47 node -0.022; retires itself when F1 moves the node (CR-A3-32)",-0.022
 AVN-005,=-0.1433+P:pod.pack_x_nominal_m+0.022,,,,pitot boom with the nose (tip -0.220): D-62; provisional until F3/D2 move it; retires itself when the owner moves the part,-0.1433

@@ -106,7 +106,7 @@
    "text": "Aft face for the datum centroid pod.pack_x_nominal_m -0.032 (12 mm stack, CAD) and with no spacer on the aft stop (centroid -0.020, D-62)",
    "basis": "CHANGE-LOG D-62, team/A1/CHANGE-REQUESTS.md#CR-A1-62",
    "value": [
-    0.0355,
+    0.0315,
     0.0475
    ],
    "unit": "m",
@@ -123,7 +123,7 @@
    "basis": "CHANGE-LOG D-62, D-64; team/A1 CALC-A1-PACK-CASES; subsystems/pod/params.json pack_x_per_pack_m",
    "value": [
     -0.036,
-    -0.028,
+    -0.03,
     -0.034
    ],
    "unit": "m",
@@ -318,14 +318,14 @@
    "basis": "team/D2/pod_data.py from subsystems/pod/fusion/pod.py; foam board areal mass and PETG fill are estimates; weigh (T-D2-WEIGH)",
    "value": [
     24.7,
-    43.3,
+    41.2,
     9.2,
     9.1,
     5.5,
     5.8,
     38.6,
-    1.8,
-    2.5,
+    2.4,
+    2.2,
     5.3,
     0.14,
     0.05
@@ -369,18 +369,18 @@
    "id": "ASM-D2-GEOM-CAD",
    "type": "assumption",
    "title": "Pod CAD geometry read-outs",
-   "text": "Values the CAD layout computes from the wing section and pod params: [pad-to-wing clearance over the overhang, antenna A element to pack, antenna B element to pack, GPS to the nearest power item (PDB / AS150U park / UBEC) (m); wire-channel height under the pack, crossing gap leg-to-aft-wall, crossing height (m); tray front-piece solid area + stop-T flange under the floor (forward stop), tray rear-piece net area (m2); R6: strut rib free length, rib underside to wing skin (m), wall-bracket flange area per side (m2), stop-T flange area under the floor (m2), PDB pad length x and width y (m), antenna B tube end x (m), pod bodies inside F1's left-channel volume (-)]. Item 0 is the most aft pack face (no spacer) ahead of the recess end",
+   "text": "Values the CAD layout computes from the wing section and pod params: [pad-to-wing clearance over the overhang, antenna A element to pack, antenna B element to pack, GPS to the nearest power item (PDB / AS150U park; UBEC deleted, D-74) (m); wire-channel height under the pack, crossing gap leg-to-aft-wall, crossing height (m); tray front-piece solid area + stop-T flange under the floor (forward stop), tray rear-piece net area (m2); R6: strut rib free length, rib underside to wing skin (m), wall-bracket flange area per side (m2), stop-T flange area under the floor (m2), PDB pad length x and width y (m), antenna B tube end x (m); D-74: pod bodies in KO-PWR-BOARD / -PADS / -FWD / -SIDE-IN (-), pod bodies in KO-PWR-SIDE-OUT (-), room from the board's outboard edge to the side-wall inner face (m), pod bodies in the two XT30U zones (-), smallest XT30U-body clearance through a side exit (m)]. Item 0 is the most aft pack face (no spacer) ahead of the recess end",
    "basis": "subsystems/pod/fusion/pod.py#layout() via team/D2/pod_data.py (S5010 section, pod params)",
    "value": [
     0.0175,
     0.036004,
-    0.0405,
-    0.1522725,
+    0.0365,
+    0.1530672,
     0.0035,
     0.0067,
     0.0544491,
     0.002136,
-    0.0040743,
+    0.0038939,
     0.025,
     0.0034754,
     0.0012322,
@@ -388,7 +388,11 @@
     0.084,
     0.0367,
     -0.144,
-    0
+    0,
+    1,
+    0.0018,
+    0,
+    0.0058
    ],
    "unit": "m",
    "status": "PROPOSED",
@@ -467,12 +471,12 @@
     "bay_w": 0.052,
     "bay_h": 0.056900000000000006,
     "pack_x_fwd": -0.0637,
-    "pack_x_nom": -0.03200000000000001,
+    "pack_x_nom": -0.036000000000000004,
     "pack_x_hvy": -0.020000000000000004,
     "aft_reach": -0.020000000000000004,
-    "spacer_nom": 0.012000000000000004,
+    "spacer_nom": 0.016,
     "spacer_hvy": 0.0,
-    "block_nom": 0.030200000000000005,
+    "block_nom": 0.0262,
     "nose_in": -0.13520000000000001,
     "nose_block": 0.001,
     "x_fs": -0.1312,
@@ -496,7 +500,7 @@
     ],
     "x_as": 0.0475,
     "aft": [
-     0.0355,
+     0.0315,
      0.0475
     ],
     "t_sp": 0.0015,
@@ -564,10 +568,10 @@
     "x_min": "CL-D2-PACK-X-FWD-MIN"
    },
    "outputs": {
-    "room": 0.004421463881005304
+    "room": 0.0004214638810053073
    },
    "input_values": {
-    "x_nom": -0.03200000000000001,
+    "x_nom": -0.036000000000000004,
     "x_min": -0.03642146388100531
    }
   },
@@ -859,8 +863,8 @@
    "outputs": {
     "overhang_clr": 0.0175,
     "ant_a": 0.036004,
-    "ant_b": 0.0405,
-    "gps": 0.1522725,
+    "ant_b": 0.0365,
+    "gps": 0.1530672,
     "ch_h": 0.0035,
     "cross_gap": 0.0067,
     "cross_h": 0.0544491
@@ -869,13 +873,13 @@
     "g": [
      0.0175,
      0.036004,
-     0.0405,
-     0.1522725,
+     0.0365,
+     0.1530672,
      0.0035,
      0.0067,
      0.0544491,
      0.002136,
-     0.0040743,
+     0.0038939,
      0.025,
      0.0034754,
      0.0012322,
@@ -883,7 +887,11 @@
      0.084,
      0.0367,
      -0.144,
-     0
+     0,
+     1,
+     0.0018,
+     0,
+     0.0058
     ]
    }
   },
@@ -900,19 +908,19 @@
    },
    "outputs": {
     "front_n": 213.6,
-    "rear_n": 407.43
+    "rear_n": 389.39
    },
    "input_values": {
     "g": [
      0.0175,
      0.036004,
-     0.0405,
-     0.1522725,
+     0.0365,
+     0.1530672,
      0.0035,
      0.0067,
      0.0544491,
      0.002136,
-     0.0040743,
+     0.0038939,
      0.025,
      0.0034754,
      0.0012322,
@@ -920,7 +928,11 @@
      0.084,
      0.0367,
      -0.144,
-     0
+     0,
+     1,
+     0.0018,
+     0,
+     0.0058
     ],
     "tau": 100000.0
    }
@@ -949,11 +961,11 @@
     "block_light": 0.0262,
     "block_min_light": 0.0255910558563111,
     "dx_light": -6.938893903907228e-18,
-    "spacer_heavy": 0.008,
-    "x_heavy": -0.028000000000000004,
-    "block_heavy": 0.03420000000000001,
+    "spacer_heavy": 0.01,
+    "x_heavy": -0.030000000000000006,
+    "block_heavy": 0.032200000000000006,
     "block_min_heavy": 0.027653338745830678,
-    "dx_heavy": -3.469446951953614e-18,
+    "dx_heavy": -6.938893903907228e-18,
     "spacer_mid": 0.014,
     "x_mid": -0.034,
     "block_mid": 0.028200000000000003,
@@ -977,7 +989,7 @@
     ],
     "st": [
      -0.036,
-     -0.028,
+     -0.03,
      -0.034
     ],
     "sp": [
@@ -1039,7 +1051,7 @@
    "title": "r6 geom",
    "script": "redesign/team/D2/pod_claims.py",
    "function": "r6_geom",
-   "equation": "read-outs of pod.py#layout() for the D-69 fixes: strut rib free length = bridge front - pad back; rib to skin = rib underside - max wing surface under it; bracket flange area per side; stop-T flange area under the floor; antenna B tube end x; pod bodies in the left-channel volume (CR-F1-26)",
+   "equation": "read-outs of pod.py#layout() for the D-69 fixes: strut rib free length = bridge front - pad back; rib to skin = rib underside - max wing surface under it; bracket flange area per side; stop-T flange area under the floor; antenna B tube end x; D-74: pod bodies in the power-board keep-outs, outboard side room, pod bodies in the XT30U zones, XT30U exit clearance",
    "inputs": {
     "g": "ASM-D2-GEOM-CAD"
    },
@@ -1049,19 +1061,23 @@
     "bracket": 0.0012322,
     "flange": 0.000486,
     "ant_b_x": -0.144,
-    "left_hits": 0
+    "ko_hits": 0,
+    "ko_side_out_hits": 1,
+    "side_out_room": 0.0018,
+    "xt30u_hits": 0,
+    "xt30u_exit_clr": 0.0058
    },
    "input_values": {
     "g": [
      0.0175,
      0.036004,
-     0.0405,
-     0.1522725,
+     0.0365,
+     0.1530672,
      0.0035,
      0.0067,
      0.0544491,
      0.002136,
-     0.0040743,
+     0.0038939,
      0.025,
      0.0034754,
      0.0012322,
@@ -1069,7 +1085,11 @@
      0.084,
      0.0367,
      -0.144,
-     0
+     0,
+     1,
+     0.0018,
+     0,
+     0.0058
     ]
    }
   },
@@ -1093,13 +1113,13 @@
     "g": [
      0.0175,
      0.036004,
-     0.0405,
-     0.1522725,
+     0.0365,
+     0.1530672,
      0.0035,
      0.0067,
      0.0544491,
      0.002136,
-     0.0040743,
+     0.0038939,
      0.025,
      0.0034754,
      0.0012322,
@@ -1107,7 +1127,11 @@
      0.084,
      0.0367,
      -0.144,
-     0
+     0,
+     1,
+     0.0018,
+     0,
+     0.0058
     ],
     "s": 50000.0,
     "m": 1.94
@@ -1149,13 +1173,13 @@
     "g": "P:env.g_ms2"
    },
    "outputs": {
-    "mass_g": 879.0,
-    "force_n": 109.87499999999999
+    "mass_g": 861.0,
+    "force_n": 107.625
    },
    "input_values": {
     "pod": 146,
     "avn": 45,
-    "pwr": 648,
+    "pwr": 630,
     "pack_nom": 0.55,
     "pack_rng": [
      546.0,
@@ -1271,19 +1295,19 @@
     "parts": "ASM-D2-PART-MASSES"
    },
    "outputs": {
-    "mass_g": 145.99
+    "mass_g": 144.19
    },
    "input_values": {
     "parts": [
      24.7,
-     43.3,
+     41.2,
      9.2,
      9.1,
      5.5,
      5.8,
      38.6,
-     1.8,
-     2.5,
+     2.4,
+     2.2,
      5.3,
      0.14,
      0.05
@@ -1397,7 +1421,7 @@
    ],
    "how": "Pack strapped with its block, spreader and spacer; measure the centre mark from the wing LE.",
    "note": "D-62 / CR-A1-62: pod.pack_x_nominal_m -0.032 m (was -0.022, D-47)",
-   "value": -0.03200000000000001
+   "value": -0.036000000000000004
   },
   {
    "id": "CL-D2-PACK-X-NOSPACER",
@@ -1435,7 +1459,7 @@
    ],
    "how": "As CL-D2-PACK-X-NOM with the blue 8 mm spacer.",
    "note": "A1 D-62 frame estimate -0.028 (was the 680 g -0.010 station, retired at D-64)",
-   "value": -0.028000000000000004
+   "value": -0.030000000000000006
   },
   {
    "id": "CL-D2-PACK-X-LIGHT",
@@ -1614,7 +1638,7 @@
     "POD-008"
    ],
    "how": "Blue 8 mm spacer; calipers.",
-   "value": 0.008
+   "value": 0.01
   },
   {
    "id": "CL-D2-BLOCK-MIN-LIGHT",
@@ -1681,7 +1705,7 @@
     "POD-009"
    ],
    "how": "Cut length for the 590 g pack; rule.",
-   "value": 0.03420000000000001
+   "value": 0.032200000000000006
   },
   {
    "id": "CL-D2-PACK-FWD-ROOM",
@@ -1698,7 +1722,7 @@
    ],
    "how": "Block cut to CL-C5-BLOCK-L: pack slides this far forward of nominal.",
    "note": "room ahead of the -0.032 datum with C5's 25.7 mm block (D-62 quotes the -0.0379 limit with 24.3 mm)",
-   "value": 0.004421463881005304
+   "value": 0.0004214638810053073
   },
   {
    "id": "CL-D2-AFT-REACH",
@@ -1732,7 +1756,7 @@
     "POD-008"
    ],
    "how": "Spacer thickness fitted behind the nominal pack.",
-   "value": 0.012000000000000004
+   "value": 0.016
   },
   {
    "id": "CL-D2-BLOCK-B-NOM",
@@ -1752,7 +1776,7 @@
     "POD-009"
    ],
    "how": "Cut length of the block for a 550 g pack; rule.",
-   "value": 0.030200000000000005
+   "value": 0.0262
   },
   {
    "id": "CL-D2-BLOCK-SECTION",
@@ -1974,12 +1998,12 @@
     "POD-001"
    ],
    "how": "Rule from the nose skin to the pack fore face.",
-   "value": 0.0405
+   "value": 0.0365
   },
   {
    "id": "CL-D2-GPS-CLR",
    "type": "claim",
-   "title": "GPS to the nearest power item (PDB, AS150U park, UBEC zone)",
+   "title": "GPS to the nearest power item (PDB, AS150U park)",
    "calc": "CALC-D2-CAD",
    "output": "gps",
    "unit": "m",
@@ -1994,8 +2018,8 @@
     "POD-005",
     "POD-002"
    ],
-   "how": "Rule from the GPS puck centre to the PDB, the parked AS150U and the UBEC as installed.",
-   "value": 0.1522725
+   "how": "Rule from the GPS puck centre to the PDB, and the parked AS150U as installed (D-74: no UBEC).",
+   "value": 0.1530672
   },
   {
    "id": "CL-D2-MAST-BOLT-PAST",
@@ -2111,7 +2135,7 @@
    ],
    "how": "Covered by T-C3-STOP-PUSH (tray pieces bonded to board offcuts, CR-C3-20).",
    "note": "RETIRED as the aft-stop check (D-69, CR-C3-18): it does not see the root moment; the strut (CL-D2-STRUT-*) and C3's CL-C3-FEA-AFT-PROP-PEEL cover the stop. Kept as a read-out until C3 drops CL-C3-AFT-STOP-BOND",
-   "value": 407.43
+   "value": 389.39
   },
   {
    "id": "CL-D2-STRUT-RIB-L",
@@ -2226,11 +2250,11 @@
    "value": -0.144
   },
   {
-   "id": "CL-D2-LEFT-CH-CLEAR",
+   "id": "CL-D2-KO-PWR-HITS",
    "type": "claim",
-   "title": "Pod bodies inside F1's left-channel volume ahead of the deck (x -0.063 ... -0.053, z 0.031 ... 0.070)",
+   "title": "Pod bodies inside the D-74 power-board keep-outs KO-PWR-BOARD, -PADS, -FWD, -SIDE-IN",
    "calc": "CALC-D2-R6-GEOM",
-   "output": "left_hits",
+   "output": "ko_hits",
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -2238,11 +2262,64 @@
    },
    "parts": [
     "POD-002",
-    "POD-003"
+    "POD-003",
+    "POD-004"
    ],
-   "how": "Look down the left channel with the hatch off: nothing of the pod above the plate in that span.",
-   "note": "F1 CR-F1-26: held until F3 measures the CoreWing PDB",
+   "how": "Look down the left channel with the hatch off: nothing of the pod in x -0.076 ... 0.000 above the deck plane, and the forward strap ahead of x -0.066.",
+   "note": "D-74 (power SPEC.md); replaces CL-D2-LEFT-CH-CLEAR (CR-F1-26). KO-PWR-PADS is checked from the boss tops z 0.0266 up: the PDB plate, ribs and bosses under the deck window are F1's frame mounts (E-PWR-03)",
    "value": 0
+  },
+  {
+   "id": "CL-D2-KO-PWR-SIDE-OUT",
+   "type": "claim",
+   "title": "Room from the power board's outboard long edge to the side-wall inner face (case U needs 6 mm)",
+   "calc": "CALC-D2-R6-GEOM",
+   "output": "side_out_room",
+   "unit": "m",
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Calipers from the board edge to the wall on the first build.",
+   "note": "D-74 case U (whole stack) only: the 37.7 mm left channel leaves 1.8 mm outboard of a 34 mm board footprint on the channel centreline, so GH plugs on the outboard long edge need a vertical entry or the board turned so its plugged edge faces inboard (CR-D2-28 to F1). Case S (split, baseline) has nothing there",
+   "value": 0.0018
+  },
+  {
+   "id": "CL-D2-XT30U-HITS",
+   "type": "claim",
+   "title": "Pod bodies inside the two XT30U zones just inside the side exits",
+   "calc": "CALC-D2-R6-GEOM",
+   "output": "xt30u_hits",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "parts": [
+    "POD-001",
+    "POD-002",
+    "POD-007"
+   ],
+   "how": "Dry-fit two mated XT30U per side inside each side exit before bonding the brackets.",
+   "note": "D-74 / WB-03: four mated XT30U, two per side; right side in the freed UBEC zone",
+   "value": 0
+  },
+  {
+   "id": "CL-D2-XT30U-EXIT",
+   "type": "claim",
+   "title": "Smallest clearance of one XT30U body through a 16 x 12 mm side exit",
+   "calc": "CALC-D2-R6-GEOM",
+   "output": "xt30u_exit_clr",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.002
+   },
+   "parts": [
+    "POD-001"
+   ],
+   "how": "Push a mated XT30U through the exit with its leads.",
+   "note": "XT30U body 10.2 x 5.2 mm UNVERIFIED (xt30u_mated_m)",
+   "value": 0.0058
   },
   {
    "id": "CL-D2-RECESS-X0",
@@ -2321,7 +2398,7 @@
     "POD-007"
    ],
    "how": "Recompute from weighed masses.",
-   "value": 109.87499999999999
+   "value": 107.625
   },
   {
    "id": "CL-D2-HANDLE-F-ULT",
@@ -2417,7 +2494,7 @@
    ],
    "how": "T-D2-WEIGH: weigh every pod part before bonding; update interfaces.json.",
    "note": "D-63 allocation 146 g (was 131, D-48): C3's fixes + the D-62 nose",
-   "value": 145.99
+   "value": 144.19
   },
   {
    "id": "T-D2-WEIGH",
@@ -2445,7 +2522,9 @@
     "CL-D2-PACK-X-STACK",
     "CL-D2-STACK-PLAY",
     "CL-D2-STRUT-SKIN-CLR",
-    "CL-D2-LEFT-CH-CLEAR"
+    "CL-D2-KO-PWR-HITS",
+    "CL-D2-XT30U-HITS",
+    "CL-D2-XT30U-EXIT"
    ],
    "state": "planned",
    "procedure": "Both packs weighed and labelled with their spacer stack (A3's station on the day): in through the hatch, strapped at their station, block cut for the pack and spreader fitted (no play), leads over the aft stop to the AS150U park, hatch closes; centre mark measured from the wing LE; once on the crush stack with a 24.3 mm block to record CL-D2-PACK-X-STACK and the play"

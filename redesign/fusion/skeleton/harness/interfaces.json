@@ -8,7 +8,7 @@
    "name": "Wing-fin harness bundle R (lumped mass, k09kit.bundle body)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 61.5,
+   "mass_g": 64.5,
    "material": "copper + silicone",
    "cg_xyz_m": [
     0.0706,
@@ -23,7 +23,7 @@
    "name": "Wing-fin harness bundle L (lumped mass, k09kit.bundle body)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 61.5,
+   "mass_g": 64.5,
    "material": "copper + silicone",
    "cg_xyz_m": [
     0.0706,

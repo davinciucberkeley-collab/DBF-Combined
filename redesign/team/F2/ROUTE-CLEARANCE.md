@@ -4,7 +4,29 @@ Every strand the CAD draws (subsystems/harness/params.json `cad.wire_strands`: t
 
     blender -b --factory-startup -P redesign/team/F2/route_clearance.py -- [--json OUT] [--params P]
 
-## Result
+## D-74 re-run (2026-11-11, F2-R4, with the XT30U drawn)
+
+| | before D-74 | after D-74 |
+|---|---:|---:|
+| wire rows / strand samples / bodies | 36 / 20 037 / 938 | 33 / 19 548 / 935 |
+| penetrations, wire into a solid (now incl. the four XT30U bodies `HRN-113-*`) | 0 | **0** |
+| penetrations, wire into wire | 0 | **0** |
+| tight (no overlap, < 1 mm) | 266 | 264 |
+
+What changed: `W-FUSE-IN`, `W-UBEC-IN`, `W-UBEC-OUT` and the bodies of `PWR-005` / `PWR-007` (and the fuse clip on
+`PWR-006`) are gone. The four Amass XT30U are parts with bodies at the manufacturer's mated size (20.1 × 10.2 mm,
+5.2 mm thick per listing): the tool now checks them (only the `HRN-001/-002` mass proxies are skipped; each
+`W-PWR-<st>` is exempt inside its own plug, `OWN_LEAD`). Right plugs stacked flat on the last run to the right exit
+(0.4 mm over the foot plate, 1.3 mm from the handle leg; nearest wires the right signal leads, 0.3–0.6 mm). Left
+plugs stacked flat in the outboard half of the tunnel under the cradle; the right pairs moved to the inboard half
+(y −0.043) and the left pairs turn to their exit aft of the cradle legs, which F1 moved 10 mm forward. The crossing
+behind the aft stop has no room (strut-rib heels to the aft wall is exactly 10.2 mm). The power deck is 56 mm
+(`KO-PWR-BOARD`), so `W-PMOD` runs over the deck front edge, down at x −0.0685 inboard of the airspeed board. The
+servo leads are now 22 AWG + / − with a 28 AWG signal (3.6 mm flat in the 4.0 mm groove, 0.85 mm deep, branch line
+0.1 mm outboard so the 3.9 mm bend clears the inboard wall at the corner). Not checked by this tool: plug bodies
+against structure (bounding-box check in F2's run: no overlap).
+
+## Result (F2-R3, before D-74)
 
 | | before (HEAD routes) | after |
 |---|---:|---:|

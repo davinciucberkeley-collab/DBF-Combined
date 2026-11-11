@@ -1,8 +1,9 @@
 item_id,subsystem,discipline,name,qty,sym,mass_g,x_m,y_m,z_m,lx_m,ly_m,lz_m,maturity,growth_pct,part_ids,with_parts,basis
-HRN-E01,harness,electrical,"ESC power leads 16 AWG, right pair (routed)",1,-,39.16,0.0691,0.1456,0.015,0.128,0.376,0.222,CALC,,HRN-001;HRN-002,,team/F2/harness.py W-PWR-UR W-PWR-LR
-HRN-E07,harness,electrical,"ESC power leads 16 AWG, left pair (routed)",1,-,31.78,0.0663,-0.1937,0.0116,0.128,0.285,0.222,CALC,,HRN-001;HRN-002,,team/F2/harness.py W-PWR-UL W-PWR-LL
+HRN-E01,harness,electrical,"ESC power leads 16 AWG, right pair (routed)",1,-,39.18,0.0691,0.1457,0.0147,0.128,0.376,0.222,CALC,,HRN-001;HRN-002,,team/F2/harness.py W-PWR-UR W-PWR-LR
+HRN-E07,harness,electrical,"ESC power leads 16 AWG, left pair (routed)",1,-,31.09,0.0661,-0.1975,0.0112,0.128,0.283,0.222,CALC,,HRN-001;HRN-002,,team/F2/harness.py W-PWR-UL W-PWR-LL
 HRN-E02,harness,electrical,ESC signal 28 AWG pairs + pigtails,1,-,5.13,0.0621,0.0079,0.0154,0.104,0.659,0.218,CALC,,HRN-001;HRN-002,,team/F2/harness.py W-SIG-UR-P W-SIG-UR W-SIG-UL-P W-SIG-UL W-SIG-LR-P W-SIG-LR W-SIG-LL-P W-SIG-LL
 HRN-E03,harness,electrical,Motor phase extensions 3 x 16 AWG (EST: factory lead lengths unpublished),1,-,12.16,0.0564,0.0,0.0,0.054,0.682,0.38,EST,,HRN-001;HRN-002,,team/F2/harness.py W-PH-UR W-PH-UL W-PH-LR W-PH-LL
-HRN-E04,harness,electrical,Servo leads 26 AWG + fuse/UBEC feed and rail 20 AWG,1,-,9.29,0.0747,0.0053,0.0305,0.184,0.571,0.053,CALC,,HRN-001;HRN-002,,team/F2/harness.py W-SRV-L-P W-SRV-L W-SRV-L-S W-SRV-R-P W-SRV-R W-SRV-R-S W-FUSE-IN W-UBEC-IN W-UBEC-OUT
-HRN-E05,harness,electrical,Sensor and power-board cables JST-GH 28 AWG,1,-,4.57,0.0135,0.0122,0.0587,0.151,0.104,0.164,CALC,,HRN-001;HRN-002,,team/F2/harness.py W-GPS W-ASPD W-RX W-PMOD
-HRN-E06,harness,electrical,"Fittings: JR, GH, splices, grommets, ties, tape, sleeves",1,-,17.71,0.0622,0.0093,0.0159,0.2,0.7,0.4,EST,,HRN-001;HRN-002,,team/F2/harness.py fittings_table (45 lines)
+HRN-E04,harness,electrical,"Servo leads (+ / - 22 AWG, signal 28 AWG)",1,-,9.26,0.0896,0.0102,0.0289,0.165,0.571,0.053,CALC,,HRN-001;HRN-002,,team/F2/harness.py W-SRV-L-P W-SRV-L W-SRV-L-S W-SRV-R-P W-SRV-R W-SRV-R-S
+HRN-E05,harness,electrical,Sensor cables JST-GH 28 AWG + power-board link ribbon,1,-,5.6,0.0033,0.0086,0.0538,0.16,0.104,0.164,CALC,,HRN-001;HRN-002,,team/F2/harness.py W-GPS W-ASPD W-RX W-PMOD
+HRN-E08,harness,electrical,"XT30U mated pairs x4 (HRN-113-*, D-74)",4,-,8.0,0.0464,-0.0009,0.0312,0.0201,0.0102,0.0052,EST,,HRN-113-UR;HRN-113-UL;HRN-113-LR;HRN-113-LL,,"team/F2/harness.py XT30_SIZE_M, XT30_G"
+HRN-E06,harness,electrical,"Fittings: JR, GH, splices, grommets, ties, tape, sleeves",1,-,17.26,0.0614,0.0072,0.0163,0.2,0.7,0.4,EST,,HRN-001;HRN-002,,team/F2/harness.py fittings_table (44 lines)

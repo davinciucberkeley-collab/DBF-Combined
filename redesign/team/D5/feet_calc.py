@@ -17,6 +17,9 @@ by D5's own FEA of the drawn shoe (sim/fea_shoe_d5.py, C5's SU2 mesher adapted; 
 beam (FEA/beam 2.78, CR-C5-18). Fittings (flange, bond) to C1's upper-foot bound CL-C1-FOOT-LEVEL-UPPER-ULT (CR-C1-34).
 Sleeve walls 1.x mm with R 1 inside fillets, 25 mm engagement, short snap windows, cartridge 20.9 x 11.0 mm in three
 pre-crushed segments; level sink 1.2 m/s, n_design 6.6 (D-65).
+R7 (D-76, BR-00/BR-01): cartridges in FOAMULAR 400 (276 kPa) at 14.5 x 9.8 mm (same mean plateau 37.5 N), 5/32 in bore for
+type L; the sleeve shrinks to 19.1 x 14.4 mm (rim 3.4 mm, flange 1.8 mm, tine rails 2.0 mm): landing 69.9 -> 58.9 g. The
+fin step stays where this stack puts it (x 0.2614, D-75): D3 copies CL-D5-FIN-STEP-X/-Z into its tip params.
 """
 import json
 import math
@@ -54,12 +57,24 @@ kit.source("SRC-D5-SNAP", "Bayer/Covestro snap-fit design guide: cantilever stra
            url="https://www.covestro.com/en/products/brands/makrolon", status="UNVERIFIED",
            note="same formula as C6's CALC-C6-SNAP")
 
-kit.assumption("ASM-D5-XPS-PLATEAU", "XPS crush plateau 172 kPa",
+kit.source("SRC-D5-OC-F400", "Owens Corning FOAMULAR 400 XPS product data sheet (compressive strength 40 psi, ASTM D1621)",
+           "datasheet", url="https://www.owenscorning.com/en-us/insulation/products/foamular-400",
+           note="40 psi = 276 kPa at yield or 10 % deformation, through the board thickness; D-76 cartridge foam. Not yet "
+                "compared with the sheet for the board the team buys", status="UNVERIFIED")
+kit.assumption("ASM-D5-XPS-PLATEAU", "XPS crush plateau 172 kPa (F-250)",
                "Crush plateau stress of F-250 XPS loaded through the board thickness equals its 10 % compressive "
                "strength and stays flat to the densification strain",
                basis="FOAMULAR 250 datasheet 25 psi; closed-cell XPS plateau is flat within ~10 % from 5 to 50 % "
-                     "strain. The coupon test T-D5-COUPON replaces it; the cartridge section is the tuning knob",
+                     "strain. Used by C5 and C3 for the F-250 pod crush block; the D-76 foot cartridges use "
+                     "ASM-D5-CART-PLATEAU (F-400)",
                value=172000.0, unit="Pa", status="UNVERIFIED", cites=["SRC-D5-OC-F250", "SRC-XPS-F250"])
+kit.assumption("ASM-D5-CART-PLATEAU", "Cartridge crush plateau 276 kPa (FOAMULAR 400, D-76)",
+               "Crush plateau stress of F-400 XPS loaded through the board thickness equals its 10 % compressive "
+               "strength and stays flat to the densification strain",
+               basis="FOAMULAR 400 datasheet 40 psi (D-76; R4-R6 cartridges used F-250 at 172 kPa); closed-cell XPS "
+                     "plateau is flat within ~10 % from 5 to 50 % strain. T-D5-COUPON replaces it; the cartridge section "
+                     "is the tuning knob",
+               value=275800.0, unit="Pa", status="UNVERIFIED", cites=["SRC-D5-OC-F400"])
 kit.assumption("ASM-D5-YIELD-STRAIN", "Strain to reach the plateau 5 %",
                "Elastic ramp of the XPS column ends at 5 % strain; half of that ramp is lost against a flat-force model",
                basis="XPS modulus ~8-10 MPa vs 172 kPa plateau gives ~2 %; 5 % covers the knee", value=0.05, unit="-",
@@ -157,7 +172,7 @@ def geom(**kw):
 
 # ---------------------------------------------------------------- crush energy, biased cartridges
 CRUSH_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "v": P + "requirements.landing_sink_ms",
-            "lam": "ASM-C1-LAND-LIFT", "sigma": "ASM-D5-XPS-PLATEAU", "k_pk": "ASM-C5-PRECRUSH-PEAK",
+            "lam": "ASM-C1-LAND-LIFT", "sigma": "ASM-D5-CART-PLATEAU", "k_pk": "ASM-C5-PRECRUSH-PEAK",
             "eps_y": "ASM-D5-YIELD-STRAIN", "eps_d": "ASM-D5-DENSIFY", "fy": LP + "cartridge.section_y_m",
             "fz": LP + "cartridge.section_z_m", "d": LP + "cartridge.bore_lower_d_m", "L": "CL-D5-CART-LEN",
             "s_max": "CL-D5-STROKE-AVAIL", "v_norm": "ASM-D5-NORMAL-SINK", "mark": LP + "piston.replace_mark_m",
@@ -220,7 +235,7 @@ def tipover(c, foot, x_cg, z_cg, x_rng, z_rng, z_eff, y_fin):
 # ---------------------------------------------------------------- mass (volumes from the CAD bodies)
 MASS_IN = dict(GEOM_IN)
 MASS_IN.update({"rho_petg": LP + "materials.petg_density_kgm3", "rho_tpu": LP + "materials.tpu_density_kgm3",
-                "rho_neo": LP + "materials.neoprene_density_kgm3", "rho_xps": P + "wing.core.density_kgm3",
+                "rho_neo": LP + "materials.neoprene_density_kgm3", "rho_xps": LP + "cartridge.density_kgm3",
                 "glue_g": LP + "materials.glue_g_per_foot", "tape": LP + "cap.tape_g",
                 "alloc": P + "mass.allocation_g.landing"})
 MASS_UNITS = dict(GEOM_UNITS)
@@ -425,7 +440,7 @@ kit.claim("CL-D5-F-MEAN-ERR", "Mean plateau vs C5-R3's 37.5 N", calc=C, output="
           limit=("<=", 0.01), parts=CARTS, how="Mean of the type-U and type-L coupon plateaus.")
 kit.claim("CL-D5-F-PLATEAU-UPPER", "Crush plateau, type U (UR, UL; orange, solid)", calc=C, output="F_upper_N",
           unit="N", parts=["GER-003-UR", "GER-003-UL"], how="T-D5-COUPON, type U; pass 38.2-40.2 N (C5-R3 39.4 N -3/+2 %).")
-kit.claim("CL-D5-F-PLATEAU-LOWER", "Crush plateau, type L (LR, LL; blue, 5.56 mm bore)", calc=C, output="F_lower_N",
+kit.claim("CL-D5-F-PLATEAU-LOWER", "Crush plateau, type L (LR, LL; blue, 3.97 mm bore)", calc=C, output="F_lower_N",
           unit="N", parts=["GER-008-LR", "GER-008-LL"], how="T-D5-COUPON, type L; pass 34.6-36.3 N (C5-R3 35.6 N -3/+2 %).")
 kit.claim("CL-D5-BIAS-UPPER", "Upper-foot plateau / mean plateau", calc=C, output="bias_upper", unit="-",
           parts=CARTS, how="Ratio of the coupon plateaus.")
@@ -503,7 +518,7 @@ def kit_stock(a, t, rho_neo, od, wall, L, rho_br):
 
 kit.claim("CL-D5-KIT-SHEET-MASS", "Ground mass of the whole 12 x 12 in neoprene sheet (not flying)", calc="CALC-D5-KIT",
           output="sheet_g", unit="g", parts=["GER-006"], how="Weigh the sheet as bought.")
-kit.claim("CL-D5-KIT-TUBE-MASS", "Ground mass of the 12 in 7/32 in brass bore-cutter tube (not flying)",
+kit.claim("CL-D5-KIT-TUBE-MASS", "Ground mass of the 12 in 5/32 in brass bore-cutter tube (not flying, D-76)",
           calc="CALC-D5-KIT", output="tube_g", unit="g", parts=["GER-013"], how="Weigh the tube as bought.")
 
 kit.claim("CL-D5-FLANGE-SF", "Flange overhang bending, SF at ultimate", calc="CALC-D5-FLANGE", output="sf",

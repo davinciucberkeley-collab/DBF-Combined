@@ -1,5 +1,28 @@
 # How to resume the redesign
 
+## Paused 2026-11-11: fixing the buildability blockers (start here)
+The buildability review (`review/BUILDABILITY-REVIEW.md`) found 6 Blockers. Work in progress on fixing them:
+
+| Blocker | State |
+|---|---|
+| BR-00 CG aft of range | **Fixed in design.** D-75 to D-78: fin tip and foot on one datum, lighter feet (69.9 to 59.1 g), landing allocation 48 to 60 g from power, pack datum to x -0.036. Predicted CG 50.2 mm in 46.6-51.4 (basic 48.6). Gate margin 139 g. The 590 g pack misses its 100 g margin by 0.7 g. |
+| SW-02 fin tip vs foot shoe | **Fixed.** Mismatch 0, CAD shoe clears the fin by 0.2 mm min. |
+| WB-01 power board | **Resolved from documents** (D-74): board splits, servo BEC 8 A vs 5.6 A need, UBEC and its fuse dropped, XT30U pod-wing disconnects added (D-79 moves 6 g power to harness). Bench check on arrival: `subsystems/power/BOARD-CHECK.md`. Pod case U side clearance is only 1.8 mm. |
+| MF-01 no shop files | **Fixed.** `python -B redesign/manufacturing/make_shop_files.py` makes STLs, DXFs, hot-wire templates, jigs (see `manufacturing/SHOP-PACK.md`). Re-run after any CAD change. |
+| MM-01 motor-mount clamp slit bridged | **Not started.** `subsystems/fins/fusion/fins.py` build_motor_mount: cut the slit through the cheek; add a clocking key to the station collar (MM-02, MF-06/07). Also fix horn blades MEC-004/006 (bore breaks out of the blade edge), POD-007 floating body, HRN-110 grommet has no body. |
+| MF-02 Jacobs access | **Team decision needed:** Maker Pass $125 per student per semester is not in the budget; Jacobs lists no hot-wire cutter. |
+
+Next steps in order:
+1. Fix MM-01 / MM-02 and the horn, POD-007, HRN-110 CAD defects (above).
+2. Re-run drifted proof scripts: `A1/frame_claims`, `B2/sim/sim_claims`, `B3/sc_analysis`, `C2/c2_claims`, `C5/landing_calc`,
+   `D3/fins_calcs`, `D5/feet_calc`, `D7/transport_calc`, `F1/power`, then `proofs/build_graph.py` (several minutes, run in the
+   background) until 0 drift / 0 errors; copy `proofs/out/graph.js` to `site/proofs/data/`; update PROOFS.md, STATUS.md, README key numbers.
+   Slow owner re-runs still due: C5 shoe FEA (`run_d5r6.sh` on R7) and C3 pod FEA.
+3. Regenerate visuals: GLB and viewer data (`blender/export_glb.py`), renders and thumbnails (`showcase/tools/render_showcase.py`),
+   drawing (`showcase/drawing/`), animation, shop files; `python -I site/make_index.py`.
+4. Update `review/BUILDABILITY-REVIEW.md` blocker status and `BUILD-GUIDE.md` "pending fix" notes.
+5. Publish the explorer artifact and push `redesign/v1`.
+
 State on 2026-11-10: branch `redesign/v1` (PR #1 into `main`). The engineering-team design program ran through
 **Frame → Analysis → Detail analysis → Design (Fusion CAD) → Integration → Simulation (+ fixes)** and stopped at
 **Build and program** because of usage limits. See `STATUS.md` for what each phase produced and what is open.

@@ -1,38 +1,40 @@
 {
- "_note": "Landing subsystem (GER) local numbers, owner D5, revision D5-R6 (CR-A1-65, CR-C5-18, CR-C1-34, CR-C4-36; D-63, D-65; R4: CR-A1-34, D-30, C5-R3 cartridges). Read by fusion/landing.py (ctx.local) and team/D5/feet_calc.py (P:landing.*). Shared numbers (fin TE x, half-fin height 0.21, board, foot height 0.048, CG, loads) come from params/params.json and are not repeated here. Frame: params.json#frame (x aft, y right, z up, metres). Each foot is a telescoping crush unit in the fin plane: a bonded PETG shoe seated on a step cut in the half-fin TE tip (CL-D5-FIN-STEP-*) (the shoe wraps the board and both edge-strip ends, CR-C4-09), a PETG piston (one tine, two snap fingers, stop flange) with a neoprene pad, and an XPS crush cartridge from the piston floor to the shoe back wall. Stack along +x (down in hover): back wall, cartridge, piston floor/flange, pad; the flange stops on the sleeve-end rim after stroke_max_m. Upper feet (UR, UL) take solid type-U cartridges, lower feet (LR, LL) bored type-L cartridges; every cartridge segment is pre-crushed 1 mm on a press (C5-R3: plateau upper 39.4 N, lower 35.6 N, bias x1.05 / x0.95, CR-C5-10 revised).",
+ "_note": "Landing subsystem (GER) local numbers, owner D5, revision D5-R7 (D-76: F-400 cartridges, narrower sleeve; CR-A1-65, CR-C5-18, CR-C1-34, CR-C4-36; D-63, D-65; R4: CR-A1-34, D-30, C5-R3 cartridges). Read by fusion/landing.py (ctx.local) and team/D5/feet_calc.py (P:landing.*). Shared numbers (fin TE x, half-fin height 0.21, board, foot height 0.048, CG, loads) come from params/params.json and are not repeated here. Frame: params.json#frame (x aft, y right, z up, metres). Each foot is a telescoping crush unit in the fin plane: a bonded PETG shoe seated on a step cut in the half-fin TE tip (CL-D5-FIN-STEP-*) (the shoe wraps the board and both edge-strip ends, CR-C4-09), a PETG piston (one tine, two snap fingers, stop flange) with a neoprene pad, and an XPS crush cartridge from the piston floor to the shoe back wall. Stack along +x (down in hover): back wall, cartridge, piston floor/flange, pad; the flange stops on the sleeve-end rim after stroke_max_m. Upper feet (UR, UL) take solid type-U cartridges, lower feet (LR, LL) bored type-L cartridges; every cartridge segment is pre-crushed 1 mm on a press (C5-R3: plateau upper 39.4 N, lower 35.6 N, bias x1.05 / x0.95, CR-C5-10 revised).",
  "landing": {
   "cartridge": {
    "section_y_m": {
-    "value": 0.0209,
+    "value": 0.0145,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
+    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH (D-76)",
     "status": "PROPOSED",
-    "note": "R6: 20.9 x 11.0 mm (was 17.3 x 13.3; C5's CR-C5-10 had 20.8 x 11): same 229.9 mm2 so type U still gives 39.5 N at 172 kPa; flatter so the R6 sleeve (thicker walls) still sits on a fin step <= 10 mm deep; the tuning knob after T-D5-COUPON (y only, so the step depth does not move)"
+    "note": "R7 (D-76): 14.5 x 9.8 mm in FOAMULAR 400 (276 kPa): 142.1 mm2 gives type U 39.2 N, mean 37.5 N (C5-R3 target) as R6's 20.9 x 11.0 mm in F-250 did; the narrower section shrinks the sleeve and tine (-11 g on four feet). Tuning knob after T-D5-COUPON (y only). Was 0.0209 (R6, F-250), 0.0173 (R4)"
    },
    "section_z_m": {
-    "value": 0.011,
+    "value": 0.0098,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
+    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH (D-76)",
     "status": "PROPOSED",
-    "note": "R6: 11.0 mm (was 13.3): with the R6 sleeve walls the step stays <= 10 mm (CL-D5-FIN-STEP-DEPTH)"
+    "note": "R7 (D-76): 9.8 mm (was 11.0): with the 3.4 mm rim the fin step stays 9.0 mm deep (<= 10, CL-D5-FIN-STEP-DEPTH)"
    },
    "bore_lower_d_m": {
-    "value": 0.00556,
+    "value": 0.003969,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
+    "source": "team/D5/feet_calc.py#CALC-D5-CRUSH (D-76)",
     "status": "PROPOSED",
-    "note": "R4: 7/32 in (5.56 mm) axial bore cut by a sharpened K&S 7/32 in brass tube (was 1/4 in): type L 205.8 mm2 -> 35.4 N (C5-R3 35.6 N), bias x1.056 vs C5's x1.05; same outside, so one piston and one shoe for all four feet"
+    "note": "R7 (D-76): 5/32 in (3.97 mm) bore cut by a sharpened K&S 5/32 in brass tube: type L 129.7 mm2 -> 35.8 N, bias x1.045 vs C5's x1.05 (3/16 in gives x1.066, outside the 1 % band). Was 7/32 in (R4-R6, F-250 section)"
    },
    "segments": {
     "value": 3,
     "unit": "-",
     "source": "D5 choice",
-    "note": "R6: three ~34 mm pieces (cut 35 mm) across a 2 in F-250 board (crush axis = through-thickness); two would be 52 mm, over the 2 in board, now that the 25 mm engagement makes the cartridge 102 mm"
+    "note": "R6/R7: three ~34 mm pieces (cut 35 mm) across a 2 in board (crush axis = through-thickness)"
    },
    "material": {
-    "value": "XPS foam F-250 (wing-core offcut)",
+    "value": "XPS foam FOAMULAR 400 (40 psi, 2 in board; D-75)",
     "unit": "-",
-    "source": "SRC-XPS-F250"
+    "source": "SRC-D5-OC-F400",
+    "status": "UNVERIFIED",
+    "note": "R7 (D-76): was F-250 wing-core offcut. Buy one 2 in F-400 board (I1); T-D5-COUPON confirms the plateau before any shoe is printed. Fallback if F-400 cannot be had: R6 F-250 section 20.9 x 11.0 with the R6 shoe (+11 g, CG +1.1 mm)"
    },
    "clear_m": {
     "value": 0.0001,
@@ -62,6 +64,13 @@
     "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-10",
     "status": "PROPOSED",
     "note": "R6: each of the three segments is cut 1 mm long and pressed 1 mm on the drill press before assembly (CR-C5-10): removes the first-yield peak of every segment in the series stack; the pressed length is the CAD length"
+   },
+   "density_kgm3": {
+    "value": 32.0,
+    "unit": "kg/m3",
+    "source": "SRC-D5-OC-F400",
+    "status": "UNVERIFIED",
+    "note": "R7 (D-76): F-400 ~2.0 pcf (estimate; the wing core F-250 is lighter); 0.5 g per cartridge, weighed at the coupon"
    }
   },
   "wall_t_m": {
@@ -101,10 +110,10 @@
     "note": "snap-finger window height in the two y walls of the sleeve"
    },
    "rim_t_m": {
-    "value": 0.0028,
+    "value": 0.0034,
     "unit": "m",
-    "source": "team/D5/sim/fea_shoe_d5.py (CR-C5-18)",
-    "note": "R6: rim thickness all round the last rim_len of the sleeve (side-load lip and end-of-stroke stop); its roof side is level with the pad edge (lip_m = rim_t_m)"
+    "source": "team/D5/sim/fea_shoe_d5.py (D-76)",
+    "note": "R7 (D-76): 3.4 mm (R6 2.8) round the last rim_len of the narrower sleeve; D5 FEA 37.5 MPa (+y) at 59.25 N ult, RF 1.07 (R6 1.03). Roof side level with the pad edge (lip_m = rim_t_m)"
    },
    "rim_len_m": {
     "value": 0.006,
@@ -119,17 +128,17 @@
     "note": "two collar cheeks forward of the step front over both edge-strip ends (the strips end at the square-tip front, D3)"
    },
    "lip_m": {
-    "value": 0.0028,
+    "value": 0.0034,
     "unit": "m",
     "source": "D5 (= shoe.rim_t_m)",
-    "note": "R6: sleeve roof this far below the pad edge so the rim top is level with it (CL-D5-RIM-TOP-MARGIN >= 0): no envelope growth"
+    "note": "R7: = shoe.rim_t_m; sleeve roof this far below the pad edge so the rim top is level with it (CL-D5-RIM-TOP-MARGIN >= 0)"
    },
    "wall_t_m": {
     "value": 0.0012,
     "unit": "m",
     "source": "team/D5/sim/fea_shoe_d5.py (CR-C5-18, CR-A1-65)",
     "status": "PROPOSED",
-    "note": "R6: sleeve floor, roof and y walls (three 0.4 mm perimeters); the tine and legs stay at wall_t_m 0.8. D5 FEA sweep (sim/out/sweep1, sweep2): 0.8/3.2 and 1.0/3.0 fail near the TE (56 / 50 MPa), 1.2/2.8 gives 34.1 MPa at 59.0 N ult (RF 1.17), 1.4/2.6 34.8 MPa and heavier"
+    "note": "R6: sleeve floor, roof and y walls (three 0.4 mm perimeters); the tine and legs stay at wall_t_m 0.8. D5 FEA sweep (sim/out/sweep1, sweep2): 0.8/3.2 and 1.0/3.0 fail near the TE (56 / 50 MPa), 1.2/2.8 gives 34.1 MPa at 59.0 N ult (RF 1.17), 1.4/2.6 34.8 MPa and heavier; R7 (D-76): 1.2 kept on the 19.1 x 14.4 mm sleeve (FEA sweep sim/runs/log_k11_*, log_k12_*: ws 0.8 / 1.0 fail +y at 60 / 52 MPa on the narrow sleeve)"
    },
    "inside_fillet_r_m": {
     "value": 0.001,
@@ -155,10 +164,10 @@
   },
   "piston": {
    "flange_t_m": {
-    "value": 0.0016,
+    "value": 0.0018,
     "unit": "m",
     "source": "team/D5/feet_calc.py#CALC-D5-FLANGE",
-    "note": "floor and stop flange; the R3 overhang beyond the tine is only 2 mm"
+    "note": "R7 (D-76): 1.6 -> 1.8 mm: the flange is narrower (19.1 mm) with the narrower sleeve; SF 1.23 at C1's 80 N bound"
    },
    "engage_m": {
     "value": 0.025,
@@ -196,10 +205,10 @@
     "note": "two 0.8 mm slots in each tine y wall make the finger"
    },
    "window_rail_m": {
-    "value": 0.0015,
+    "value": 0.002,
     "unit": "m",
     "source": "D5 choice",
-    "note": "rail left each side of the inspection window in the tine z walls (colour check, lighter tine)"
+    "note": "R7 (D-76): 1.5 -> 2.0 mm rail each side of the inspection window keeps tine SF >= 1.1 on the narrower tine"
    },
    "replace_mark_m": {
     "value": 0.003,
@@ -333,16 +342,16 @@
     "note": "12 x 12 in sheet (GER-006)"
    },
    "tube_od_m": {
-    "value": 0.005556,
+    "value": 0.003969,
     "unit": "m",
-    "source": "K&S catalogue 7/32 in round brass tube",
+    "source": "K&S catalogue 5/32 in round brass tube",
     "status": "UNVERIFIED",
-    "note": "bore cutter OD (GER-013) = type-L bore 5.56 mm"
+    "note": "bore cutter OD (GER-013) = type-L bore 3.97 mm (D-76)"
    },
    "tube_wall_m": {
     "value": 0.000356,
     "unit": "m",
-    "source": "K&S catalogue 7/32 in round brass tube",
+    "source": "K&S catalogue 5/32 in round brass tube",
     "status": "UNVERIFIED",
     "note": "0.014 in wall"
    },

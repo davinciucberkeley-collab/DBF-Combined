@@ -66,7 +66,7 @@ line("P01", "power", "LiPo Ovonic 4S 6500 mAh 120C hard case, EC5, 2-pack (2 fli
 # --- avionics (F3)
 line("A01", "avionics", "Flight controller CoreWing F405 Wing APP V2", "ReadyMadeRC", "CoreWing F405 Wing APP V2", "EARLY", 1, 0, 67.26,
      seen="2026-10-13", lead=5, url="https://www.readymaderc.com/products/details/87195-corewing-f405-wing-app-v2-fixed-wing-flight-controller-unsoldered-pins", part="AVN-001",
-     note="CR-F3-06 / CR-A1-39: order V2 now (the Mini lacks bdshot). ReadyMadeRC product 87195 'unsoldered pins'; the old URL returns 404 and search shows no price, so the price is carried from 2026-10-13: re-read before ordering. Fallback SpeedyBee F405 Wing APP $47.99 (-$19.27, RaceDayQuads, stock unverified)")
+     note="WB-01 / BR-05 / D-74: place this cart FIRST in the early order and run subsystems/power/BOARD-CHECK.md the day it arrives, before D2 freezes the pod CAD; check the PDB ('PDB Board PLUS') and the 470 uF cap are in the box (the RMRC 'included' list names neither; the CoreWing manual lists both). CR-F3-06 / CR-A1-39: order V2 now (the Mini lacks bdshot). ReadyMadeRC product 87195 'unsoldered pins'; the old URL returns 404 and search shows no price, so the price is carried from 2026-10-13: re-read before ordering. Fallback SpeedyBee F405 Wing APP $47.99 (-$19.27, RaceDayQuads, stock unverified)")
 line("A02", "avionics", "GPS + compass HGLRC M100-5883", "RaceDayQuads", "M100-5883", "EARLY", 1, 0, 20.49,
      seen="2026-10-13", lead=5, url="https://www.racedayquads.com/products/hglrc-m100-5883-gps-module-10th-gen", part="AVN-002")
 line("A03", "avionics", "Receiver RadioMaster RP3 V2 ELRS", "RadioMaster", "RP3 V2 ELRS 2.4 GHz, FCC variant", "EARLY", 1, 0, 19.99,
@@ -114,14 +114,17 @@ line("H02", "hardware", "Mechanisms hardware (D6 parts.csv): Du-Bro 2-56 rod + s
 line("H03", "hardware", "Charger-side XT60 pair for the AS150U charge adapter + 0.3 m 10 AWG stub", "Amazon", "XT60 pair, 10 AWG silicone", "DEC", 1, 0, 5.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="HRN-002",
      note="was $15 for the whole AS150U re-termination; F01 now buys the five AS150U pairs, so only the charger-side XT60 and a short 10 AWG stub remain")
+line("H06", "hardware", "Amass XT30U male + female pairs, 10-pair pack (4 fitted: one per ESC pair at the pod side exits, WB-03; rest spares)", "Amazon", "Amass XT30U (genuine Amass, 2-pin, 20 A)", "EARLY", 1, 0, 9.99,
+     status="EST", seen="2026-11-11", lead=4, url="https://www.amazon.com/", part="HRN-113",
+     note="D-74 / WB-03: pod-wing power disconnect, harness SPEC.md 'Pod-wing power disconnect'. Price EST (10-pair packs list about $8-12); buy genuine Amass (1.2 mOhm contact resistance, 20 A on 16 AWG per the Amass manual), not unbranded")
 # --- power (F1, CR-F1-12), itemised from team/F1/POWER.md 'Bought items'
 line("F01", "power", "Amass AS150U connector pair (male + female) x 5: aircraft, 2 packs, charge lead, spare", "Amazon", "Amass AS150U", "EARLY", 5, 0, 5.00,
      status="EST", seen="2026-11-09", lead=5, url="https://www.amazon.com/", part="PWR-003", note="F1 price EST $25 for 5; open the Amass sheet. Confirm the SKU is the anti-spark AS150U, not AS150")
 line("F02", "power", "Silicone wire 10 AWG red + black 0.3 m each (PWR-104) + 8 AWG 0.1 m each (bus bars)", "Amazon", "10 AWG + 8 AWG silicone", "EARLY", 1, 0, 8.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-004", note="main pigtail; vendors sell 1 m minimum")
 line("F03", "power", "Silicone wire 16 AWG red + black + yellow, 3 m each (HRN-101)", "Amazon", "BNTECHGO 16 AWG 252/0.08 silicone, 10 ft per colour", "EARLY", 1, 0, 14.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-004", note="ESC leads, F2 cuts")
-line("F04", "power", "Silicone wire 20 AWG red + black, 1 m each", "Amazon", "20 AWG silicone", "EARLY", 1, 0, 4.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-005", note="UBEC feed, servo bus")
-line("F05", "power", "UBEC 6 V, 8 A class (Hobbywing type)", "Amazon", "UBEC 6 V 8 A", "EARLY", 1, 0, 18.00, status="EST", seen="2026-11-09", lead=5, url="https://www.readymaderc.com/", part="PWR-005", note="F1: datasheet UNVERIFIED; 13 g in A3's roll-up")
-line("F06", "power", "Mini blade fuse 5 A x 3 + inline holder", "Amazon", "ATM mini fuse + holder", "EARLY", 1, 0, 6.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-003", note="UBEC feed protection")
+line("F04", "power", "Silicone wire 20 AWG red + black, 1 m each", "Amazon", "20 AWG silicone", "EARLY", 1, 0, 4.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-005", note="was UBEC feed + servo bus; D-74 deletes the UBEC, so this line is held behind gate X12 with F05 / F06")
+line("F05", "power", "UBEC 6 V, 8 A class (Hobbywing type)", "Amazon", "UBEC 6 V 8 A", "EARLY", 1, 0, 18.00, status="EST", seen="2026-11-09", lead=5, url="https://www.readymaderc.com/", part="PWR-005", note="F1: datasheet UNVERIFIED; 13 g in A3's roll-up. D-74: gate X12, bought only if power/BOARD-CHECK.md step 7 fails; then buy a 4S-input part (the linked UBEC-8A is listed 2-3S)")
+line("F06", "power", "Mini blade fuse 5 A x 3 + inline holder", "Amazon", "ATM mini fuse + holder", "EARLY", 1, 0, 6.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-003", note="UBEC feed protection; gate X12 with F05 (D-74)")
 line("F07", "power", "Capacitor 680 uF 25 V low-ESR x 5", "Amazon", "680 uF 25 V", "EARLY", 1, 0, 5.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-003", note="one per ESC + 1 spare")
 line("F08", "power", "FR4 1.6 mm 1 oz copper sheet 100 x 70 mm (bus board PWR-004 / PWR-105; 3 boards per sheet)", "Amazon", "FR4 single-sided copper clad", "EARLY", 1, 0, 3.00, status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="PWR-105", note="F1 replaced the bare PDB with a cut FR4 bus board; was $6")
 line("F09", "power", "Adhesive-lined 3:1 heat-shrink assortment 2.4-9.5 mm (HRN-107; also F1 joints)", "Amazon", "Wirefy 3:1 assortment", "EARLY", 1, 0, 9.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-003", note="joints")
@@ -275,7 +278,9 @@ for _l in L:
 # X08 = airspeed sensor (DECISION 5.1 lever; needed for the fixed-wing tune, which can start on the synthetic airspeed).
 GATE_OF = {"T01": "X07", "T02": "X07", "T03": "X07", "T04": "X07", "T05": "X07", "T06": "X07", "T07": "X07", "T08": "X07", "T09": "X07", "A04": "X08",
            # D-57 lever 1 (D-72): borrow the soldering kit; lever 2: borrow the hot-wire gear. Bought only if Jacobs Hall refuses.
-           "G07": "X10", "G08": "X10", "G09": "X10", "G10": "X10", "G11": "X11", "H05": "X11"}
+           "G07": "X10", "G08": "X10", "G09": "X10", "G10": "X10", "G11": "X11", "H05": "X11",
+           # D-74: the power board's own servo BEC (8 A cont) replaces the UBEC; bought only if BOARD-CHECK.md step 7 fails
+           "F04": "X12", "F05": "X12", "F06": "X12"}
 for _l in L:
     _l["gate"] = GATE_OF.get(_l["id"], "")
 
@@ -299,6 +304,8 @@ GATED = [
          why="D-57 lever 1 applied (D-72, CR-A1-67): borrowed from Jacobs Hall, H1 gets the written yes"),
     dict(id="X11", item="Hot-wire gear if Jacobs Hall will not lend it (G11 30 V 10 A supply + Ni80 wire, H05 bow and template stock)", net=None, gate="as X10 (hot-wire foam cutting is a stated Jacobs capability; the written yes covers it)",
          why="D-57 lever 2 applied because lever 1 alone leaves the pessimistic reserve under $309 after the designers' lines"),
+    dict(id="X12", item="UBEC fallback (lines F04 20 AWG, F05 UBEC, F06 fuse + holder), D-74", net=None, gate="only if subsystems/power/BOARD-CHECK.md step 7 fails (servo-BEC Vx < 5.8 V at ~5.4 A); then a 4S-input 6 V UBEC (5-day lead), before the January build",
+         why="the CoreWing V2 servo BEC is 8 A cont / 14 A peak (manual V2.1, ArduPilot); the 4.5 A behind the UBEC was the SpeedyBee figure"),
     dict(id="X09", item="K-type thermocouple logger / 2-channel meter (E3 GT-04)", net=15.00, gate="only if Jacobs Hall cannot lend one", why="H1 borrow list"),
 ]
 
@@ -350,6 +357,7 @@ def bridge(tax_rate):
         "D-57 lever 1: G07 25.99 + G08 20.00 + G09 25.00 + G10 15.00 borrowed (gate X10)": -(25.99 + 20.00 + 25.00 + 15.00),
         "D-57 lever 2: G11 41.73 + H05 15.00 borrowed (gate X11)": -(41.73 + 15.00),
         "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0,
+        "D-74: F04 4 + F05 18 + F06 6 gated X12 (UBEC fallback); H06 XT30U 10-pair 9.99 (WB-03)": -(4.00 + 18.00 + 6.00) + 9.99,
     }
     return round(r2 + sum(deltas.values()) * (1 + tax_rate), 2), deltas
 

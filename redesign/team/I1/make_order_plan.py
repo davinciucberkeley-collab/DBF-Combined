@@ -20,7 +20,7 @@ FLAGS = {
     "Ampow / OVONIC (same SKU)": "**LONG LEAD (~14 d, ships from Germany); USD price not found**: baseline EUR 98.69 x 1.16, pessimistic EUR 113.30 x 1.16. Ask the seller for 10 AWG leads before paying",
     "APC": "props `CHK` $3.83; rings `EST`",
     "Amazon": "**LANRC ASIN B0D2HS4Y4J unconfirmed** (503, no US 4-pack page): open it first; fallback Tekko32 +$60; many `EST` lines, re-read each",
-    "ReadyMadeRC": "FC page URL changed (product 87195); price carried from 2026-10-13; F3 gate (stable tailsitter build) before ordering",
+    "ReadyMadeRC": "**Place this cart first with the pack cart (WB-01 / D-74):** the board check (`subsystems/power/BOARD-CHECK.md`, 30 min on arrival) gates the pod CAD freeze. Page URL changed (product 87195); price carried from 2026-10-13",
     "RaceDayQuads": "",
     "RadioMaster": "select the **FCC** variant for both RP3 V2 and Pocket Crush (CR-F5-06); not LBT",
     "GetFPV": "18650 cells: RadioMaster says batteries ship only with a radio order",
@@ -103,7 +103,7 @@ The committed order holds the $309 reserve only by holding blocks behind gates: 
 ## Early order, ~20 Nov (electronics, packs, test hardware, power parts)
 
 Purpose: the $40 foam-board twin, the thrust stand, charging and first power bench on real hardware (`CONFIGURATION.md` de-risking). Place it as
-five or six carts. **Place the pack cart (`P01`) first: ~14 days from Germany.** Re-read every listing first (`T-I1-LISTINGS`).
+five or six carts. **Place the pack cart (`P01`) first: ~14 days from Germany. Place the ReadyMadeRC FC cart (`A01`) the same day:** its board check closes the WB-01 blocker before the pod CAD freeze. Re-read every listing first (`T-I1-LISTINGS`).
 
 {e_tab}
 
@@ -118,7 +118,7 @@ At order, in the cart:
 | Pack lead gauge | **>= 10 AWG** confirmed by the seller (the page does not print it); 12 AWG: stop, tell E2 and F1 | CR-F1-14: 12 AWG rises 28.4 K at 30.3 A against 20 K |
 | Pack mass on arrival | accept <= 592.6 g each (`CL-A1-PACK-ACCEPT`) | weigh both, log in E2 `pack_log.csv` |
 | RP3 V2 and Pocket Crush | FCC variant | CR-F5-06 |
-| FC | CoreWing F405 Wing APP V2 (not the Mini: no bdshot) | CR-F3-06 |
+| FC | CoreWing F405 Wing APP V2 (not the Mini: no bdshot); on arrival check the PDB board and the 470 uF cap are in the box, then run `subsystems/power/BOARD-CHECK.md` the same day | CR-F3-06, WB-01, D-74 |
 | ESC | LANRC 4-pack: title, 45 A, 4 pieces, price | CR-I1-04 |
 
 ## Mid-December order, 15 Dec (airframe, mechanisms, fin and fastener kits)
@@ -172,7 +172,7 @@ Bought for the rig: G06 ($17.97, 20 kgf cell kit, already in the baseline), G12 
 | Jacobs Hall loan | levers 1 and 2 rest on a written yes | H1 before 20 Nov; a refusal costs $157.34 and breaks the reserve gate |
 | LANRC ESC `B02` | listing unconfirmed | open the page before 20 Nov; Tekko32 fallback +$60 |
 | Small Parts adapters | out of stock; now gated X05 | E1's fallback: adapter in each motor box + Loctite 243 |
-| FC `A01` | firmware support unconfirmed; page moved | F3 gate before ordering |
+| FC `A01` | power-board facts (split, link, outline) are from the manual only; page moved | order in the first cart; `BOARD-CHECK.md` on arrival before the pod CAD freeze (WB-01) |
 | Shipping | $120 baseline assumes few carts; this plan has about 14 vendors | free-shipping thresholds on Amazon, Aloft, RadioMaster; re-quote in cart |
 | Tax | Measure V (+0.5 %) leading on 2026-11-09; effective date unknown | +$7 kept in the pessimistic adders |
 """

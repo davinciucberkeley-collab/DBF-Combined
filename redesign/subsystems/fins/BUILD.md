@@ -20,8 +20,8 @@ wing is skinned**, and the half-fin roots are bonded **to bare foam**.
 2. **Laminate the boards.** Spray-glue pairs of boards face to face (3M 77 class, both faces, 1 min open time),
    roll flat and weight under a flat board for 1 h. Then knife-cut the four half-fin outlines through both layers
    from the DXF: LE notch for the collar tongue (40 × 11.3 mm at the top corner, plus the 4.1 mm step under the
-   15 mm ring), the **stepped tip** (D5, D-54: the top edge reaches 210 mm at x 0.2746, then a straight cut down to
-   a flat step at 200.5 mm to the TE; 45.4 × 9.5 mm removed), and the link slot in the two lower halves. Cut the Ø 8 mm ESC-lead hole in every
+   15 mm ring), the **stepped tip** (D5-R7, D-75: the top edge reaches 210 mm at x 0.2614, then a straight cut down to
+   a flat step at 201.0 mm to the TE; 58.6 × 9.0 mm removed. The R5 tip, 45.4 × 9.5 mm from x 0.2746, is retired: do not cut it), and the link slot in the two lower halves. Cut the Ø 8 mm ESC-lead hole in every
    half-fin at x 0.086 m, centre 22 mm from the root edge (twist a sharpened 8 mm brass tube through both layers;
    a twist drill tears the paper). **Check:** 9.6 ± 0.3 mm, no delamination at the edges, step edge flat and
    square (D5 shoe dry-fit), hole edge ≥ 17 mm from the root edge (clear of the 15 mm tape lap).
@@ -64,7 +64,7 @@ wing is skinned**, and the half-fin roots are bonded **to bare foam**.
     harness BUILD). **Check:** vertical, lower link slot on the hinge line (x 0.2376–0.2616 m), gauge passes, nothing
     within 2 mm of an elevon end. Weigh one half-fin before and after (T-D3-WEIGH, expect +6.3 g). Cure 1 h.
 12. **Edge strips.** Scuff. Bond one strip on each face along the sloped top edge, from the LE to the square tip
-    step front (x 0.2746; the strip end faces meet the step); the forward 40 mm stays free over the notch. Tape until cured. **Check:** no twist.
+    step front (x 0.2614, D-75; the strip end faces meet the step); the forward 40 mm stays free over the notch. Tape until cured. **Check:** no twist.
 13. **Station collars.** Before buttering, dry-fit: each strip must reach the tube surface inside the tail. Butter
     the tongue, **both tail slots over the full 40 mm** and the ring bore. Drop each collar down the tube end (tail
     aft, ear inboard): the tongue goes between the strips into the notch, the walls outside the strips, until the ring
@@ -82,8 +82,8 @@ wing is skinned**, and the half-fin roots are bonded **to bare foam**.
     | Pull check | 20 N on each strip end with the spring scale, no movement, no crack at the slot mouth | re-make the joint |
 
     Record each tail (station, pass/fail, initials) on the build sheet; C4's face margin assumes a bonded tongue.
-14. **Pins.** Drill Ø 2.5 mm through strip–laminate–strip at the 12 marked points (every 15 mm, x 0.103 to 0.264,
-    5 mm below the edge; none past x 0.2656, the D5 shoe cheeks start at 0.2666) with a drill guide square to the
+14. **Pins.** Drill Ø 2.5 mm through strip–laminate–strip at the 11 marked points (every 15 mm, x 0.103 to 0.249,
+    5 mm below the edge; none past x 0.2523, the D5-R7 shoe cheeks start at 0.2536, D-75) with a drill guide square to the
     face. Inject epoxy into each hole before the Ø 2.5 mm pin goes in, sand flush (D-70).
 15. **Braces.** Measure each brace between the ear-slot bottom and the anchor-slot bottom (≈ 145 mm upper,
     157 mm lower). Cut the 10 × 2 strip, scuff the ends, epoxy into both slots (10 mm each). **Check:** the tube is

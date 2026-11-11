@@ -1,5 +1,10 @@
 # D2 — Pod designer, summary (revision D2-R5a)
 
+> **R7 (2026-11-11, D-74 / D-77):** pack datum −0.032 → −0.036 (16 mm stack, block 26.2 vs C5's 25.8 mm); stations
+> 546 / 550 / 590 g at −0.036 / −0.034 / −0.030. UBEC plate removed, `KO-PWR-*` reserved and checked (0 pod bodies),
+> forward strap to x −0.079, XT30U zones inside both side exits (0 bodies). Case-U outboard side clearance is 1.8 mm,
+> not 6 (CR-D2-31). Pod 144.2 g. See `subsystems/pod/SPEC.md`.
+
 Status: `MODELLED` (2026-11-10, params A1-R4a). R5 was the D-47 re-lay (CR-A1-43, CR-A3-22) at the D-48 allocation
 of 131 g, plus the CR-A5-27 CG fix. R5a adds D-59 (CR-A1-54), which A1 decided after R5. The pod has no errors in
 `fusion/check.py` or `merge_check.py` and no issues in the strict self-check. All 50 D2 claims pass.

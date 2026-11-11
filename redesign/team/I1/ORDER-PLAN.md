@@ -8,21 +8,21 @@ Revision I1-R3, 2026-11-10. Status `PROPOSED`. Lines, prices and part numbers: [
 
 | Order | Goods | Tax 10.25 % | Shipping `EST` | Total |
 |---|---|---|---|---|
-| Early, ~20 Nov | $897.41 | $91.98 | $75 | **$1,064.39** |
+| Early, ~20 Nov | $879.40 | $90.14 | $75 | **$1,044.54** |
 | December, 15 Dec | $349.96 | $35.87 | $45 | **$430.83** |
 | Store pick-up (XPS, jig, ammo can) | $79.96 | $8.20 | 0 | **$88.16** |
 | FAA registration (DroneZone, not taxed) | | | | **$5.00** |
-| Whole BOM, baseline (excl. gated lines) | $1,327.33 | $136.05 | $120 | **$1,588.38** (`CL-I1-SPEND-BASE`) |
-| Whole BOM, pessimistic (excl. gated lines) | $1,352.92 | $138.67 | $150 | **$1,673.59** (`CL-I1-SPEND-PESS`; + $5 FAA + $27 adders) |
+| Whole BOM, baseline (excl. gated lines) | $1,309.32 | $134.21 | $120 | **$1,568.53** (`CL-I1-SPEND-BASE`) |
+| Whole BOM, pessimistic (excl. gated lines) | $1,334.91 | $136.83 | $150 | **$1,653.74** (`CL-I1-SPEND-PESS`; + $5 FAA + $27 adders) |
 
 ## Reserve gate (hard: $2 000, reserve >= $309 on pessimistic numbers)
 
 | Case | Spend | Reserve | Limit | Status |
 |---|---|---|---|---|
-| Committed order, baseline | $1,588.38 | $411.62 | >= $150 planned | `CHECKED` against inputs; prices `UNVERIFIED` |
-| Committed order, pessimistic (Ovonic at EUR 113.30 x 1.16, tubes overseas, shipping +$30, tax measure +$7, jig/box +$20) | $1,673.59 | **$326.41** (margin $17.41) | >= $309 | `UNVERIFIED` |
-| **Everything bought**, baseline (gated X07 box/field kit and X08 airspeed sensor included) | $1,961.59 | $38.41 | >= $150 | **FAILS by $111.59** |
-| **Everything bought**, pessimistic | $2,046.80 | **$-46.80** | >= $309 | **FAILS by $355.80** (`CL-I1-RESERVE-PESS-ALLIN`) |
+| Committed order, baseline | $1,568.53 | $431.47 | >= $150 planned | `CHECKED` against inputs; prices `UNVERIFIED` |
+| Committed order, pessimistic (Ovonic at EUR 113.30 x 1.16, tubes overseas, shipping +$30, tax measure +$7, jig/box +$20) | $1,653.74 | **$346.26** (margin $37.26) | >= $309 | `UNVERIFIED` |
+| **Everything bought**, baseline (gated X07 box/field kit and X08 airspeed sensor included) | $1,972.60 | $27.40 | >= $150 | **FAILS by $122.60** |
+| **Everything bought**, pessimistic | $2,057.82 | **$-57.82** | >= $309 | **FAILS by $366.82** (`CL-I1-RESERVE-PESS-ALLIN`) |
 
 **What changed in R3 (CR-A1-67, D-72).** Pack re-priced for the Ovonic 120C EC5 pair (+$31.51 baseline, +$11.55 pessimistic, pre-tax); Savox SH-0255MG+ replaces the placeholder
 servo (+$44.00); the $6 T-antennas, FC isolation set, F2 harness lines, D6 mechanisms hardware, 2.5 mm CF rod, PA66 socket-head set, 7/32 in brass tube and two strain gauges are
@@ -34,15 +34,15 @@ The committed order holds the $309 reserve only by holding blocks behind gates: 
 ## Early order, ~20 Nov (electronics, packs, test hardware, power parts)
 
 Purpose: the $40 foam-board twin, the thrust stand, charging and first power bench on real hardware (`CONFIGURATION.md` de-risking). Place it as
-five or six carts. **Place the pack cart (`P01`) first: ~14 days from Germany.** Re-read every listing first (`T-I1-LISTINGS`).
+five or six carts. **Place the pack cart (`P01`) first: ~14 days from Germany. Place the ReadyMadeRC FC cart (`A01`) the same day:** its board check closes the WB-01 blocker before the pod CAD freeze. Re-read every listing first (`T-I1-LISTINGS`).
 
 | Vendor | Lines | Pre-tax | Tax | With tax | Lead (days) `EST` | Flag |
 |---|---|---|---|---|---|---|
-| Amazon | `B02`, `A05`, `A06`, `W02`, `W06`, `W07`, `F01` x5, `F02`, `F03`, `F04`, `F05`, `F06`, `F07`, `F08`, `F09`, `G01`, `G04`, `G05`, `G06`, `G12` | $316.82 | $32.47 | $349.29 | 5 | **LANRC ASIN B0D2HS4Y4J unconfirmed** (503, no US 4-pack page): open it first; fallback Tekko32 +$60; many `EST` lines, re-read each |
+| Amazon | `B02`, `A05`, `A06`, `W02`, `W06`, `W07`, `H06`, `F01` x5, `F02`, `F03`, `F07`, `F08`, `F09`, `G01`, `G04`, `G05`, `G06`, `G12` | $298.81 | $30.63 | $329.44 | 5 | **LANRC ASIN B0D2HS4Y4J unconfirmed** (503, no US 4-pack page): open it first; fallback Tekko32 +$60; many `EST` lines, re-read each |
 | SunnySky USA | `B01` x5 | $124.95 | $12.81 | $137.76 | 5 | page 429 on 2026-11-09, price by search snippet; measure bolt pattern, hole depth and leads on arrival |
 | Ampow / OVONIC (same SKU) | `P01` | $114.48 | $11.73 | $126.21 | 14 **LONG** | **LONG LEAD (~14 d, ships from Germany); USD price not found**: baseline EUR 98.69 x 1.16, pessimistic EUR 113.30 x 1.16. Ask the seller for 10 AWG leads before paying |
 | RadioMaster | `A03`, `R01` | $84.98 | $8.71 | $93.69 | 5 | select the **FCC** variant for both RP3 V2 and Pocket Crush (CR-F5-06); not LBT |
-| ReadyMadeRC | `A01` | $67.26 | $6.89 | $74.15 | 5 | FC page URL changed (product 87195); price carried from 2026-10-13; F3 gate (stable tailsitter build) before ordering |
+| ReadyMadeRC | `A01` | $67.26 | $6.89 | $74.15 | 5 | **Place this cart first with the pack cart (WB-01 / D-74):** the board check (`subsystems/power/BOARD-CHECK.md`, 30 min on arrival) gates the pod CAD freeze. Page URL changed (product 87195); price carried from 2026-10-13 |
 | APC | `B03` x8, `B04` x4, `B05` x12 | $51.96 | $5.33 | $57.29 | 5 | props `CHK` $3.83; rings `EST` |
 | Amazon / DigiKey | `H01` | $41.00 | $4.20 | $45.20 | 4 | JST-GH from DigiKey: separate shipping, use pigtails if the cart allows |
 | GetFPV | `R02` | $24.49 | $2.51 | $27.00 | 5 | 18650 cells: RadioMaster says batteries ship only with a radio order |
@@ -51,7 +51,7 @@ five or six carts. **Place the pack cart (`P01`) first: ~14 days from Germany.**
 | Pyrodrone | `G02` x2 | $19.98 | $2.05 | $22.03 | 5 |  |
 | Bolt Depot | `B07` x20, `C01` | $7.00 | $0.72 | $7.72 | 5 | minimum order may exceed the line price |
 
-**Early total $1,064.39** (goods $897.41 + tax $91.98 + shipping $75 `EST`). Before the first charge (late Nov, store): `G03` ammo can,
+**Early total $1,044.54** (goods $879.40 + tax $90.14 + shipping $75 `EST`). Before the first charge (late Nov, store): `G03` ammo can,
 Harbor Freight 63750, $19.99 + $2.05 tax. The pack cart (`P01`) is released by D-64 after the two checks below; **no USD price is confirmed**, read the cart total before paying (pessimistic case $131.43).
 
 At order, in the cart:
@@ -62,7 +62,7 @@ At order, in the cart:
 | Pack lead gauge | **>= 10 AWG** confirmed by the seller (the page does not print it); 12 AWG: stop, tell E2 and F1 | CR-F1-14: 12 AWG rises 28.4 K at 30.3 A against 20 K |
 | Pack mass on arrival | accept <= 592.6 g each (`CL-A1-PACK-ACCEPT`) | weigh both, log in E2 `pack_log.csv` |
 | RP3 V2 and Pocket Crush | FCC variant | CR-F5-06 |
-| FC | CoreWing F405 Wing APP V2 (not the Mini: no bdshot) | CR-F3-06 |
+| FC | CoreWing F405 Wing APP V2 (not the Mini: no bdshot); on arrival check the PDB board and the 470 uF cap are in the box, then run `subsystems/power/BOARD-CHECK.md` the same day | CR-F3-06, WB-01, D-74 |
 | ESC | LANRC 4-pack: title, 45 A, 4 pieces, price | CR-I1-04 |
 
 ## Mid-December order, 15 Dec (airframe, mechanisms, fin and fastener kits)
@@ -98,9 +98,10 @@ Place the Aloft carbon cart first (tubes, strips, 20x18 tube), then the rest. Se
 | X08 | RMRC MS4525DO airspeed sensor + pitot (line A04) | $66.14 | as X01; DECISION 5.1 lever, last in the order (CR-I1-03) |
 | X10 | Soldering kit if Jacobs Hall will not lend it (G07 Pinecil, G08 PD supply, G09 multimeter, G10 solder/flux/wick) | $94.80 | Jacobs Hall refuses in writing (T-I1-BORROW, before 20 Nov); then the line is BOUGHT and the reserve falls by its value |
 | X11 | Hot-wire gear if Jacobs Hall will not lend it (G11 30 V 10 A supply + Ni80 wire, H05 bow and template stock) | $62.54 | as X10 (hot-wire foam cutting is a stated Jacobs capability; the written yes covers it) |
+| X12 | UBEC fallback (lines F04 20 AWG, F05 UBEC, F06 fuse + holder), D-74 | $30.87 | only if subsystems/power/BOARD-CHECK.md step 7 fails (servo-BEC Vx < 5.8 V at ~5.4 A); then a 4S-input 6 V UBEC (5-day lead), before the January build |
 | X09 | K-type thermocouple logger / 2-channel meter (E3 GT-04) | $16.54 | only if Jacobs Hall cannot lend one |
 
-With the baseline reserve of $411.62, X07 + X08 ($184.99) leave $226.63: both fit on baseline, not on pessimistic numbers.
+With the baseline reserve of $431.47, X07 + X08 ($184.99) leave $246.48: both fit on baseline, not on pessimistic numbers.
 The gate test is the realised reserve (2 000 minus actual spend after the December receipts), not the pessimistic forecast.
 
 ## Borrow list (not bought, not in the spend): Jacobs Hall (D-39, D-57 levers 1 and 2, D-72)
@@ -135,6 +136,6 @@ Bought for the rig: G06 ($17.97, 20 kgf cell kit, already in the baseline), G12 
 | Jacobs Hall loan | levers 1 and 2 rest on a written yes | H1 before 20 Nov; a refusal costs $157.34 and breaks the reserve gate |
 | LANRC ESC `B02` | listing unconfirmed | open the page before 20 Nov; Tekko32 fallback +$60 |
 | Small Parts adapters | out of stock; now gated X05 | E1's fallback: adapter in each motor box + Loctite 243 |
-| FC `A01` | firmware support unconfirmed; page moved | F3 gate before ordering |
+| FC `A01` | power-board facts (split, link, outline) are from the manual only; page moved | order in the first cart; `BOARD-CHECK.md` on arrival before the pod CAD freeze (WB-01) |
 | Shipping | $120 baseline assumes few carts; this plan has about 14 vendors | free-shipping thresholds on Amazon, Aloft, RadioMaster; re-quote in cart |
 | Tax | Measure V (+0.5 %) leading on 2026-11-09; effective date unknown | +$7 kept in the pessimistic adders |

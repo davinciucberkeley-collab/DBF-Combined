@@ -389,45 +389,45 @@
     "ASM-A1-PACK-CASES-G"
    ],
    "outputs": {
-    "growth_dx_m": 0.0015784038498198594,
-    "empty_x_m": 0.07189921500265868,
+    "growth_dx_m": 0.0015769693932428733,
+    "empty_x_m": 0.06905663030694885,
     "pack_x_fwd_limit_m": -0.03790000000000002,
-    "pack_x_aft_limit_m": -0.02,
-    "fwd_room_nominal_m": 0.005900000000000016,
-    "travel_left_fwd_m": 0.007900000000000018,
+    "pack_x_aft_limit_m": -0.019999999999999997,
+    "fwd_room_nominal_m": 0.0019000000000000197,
+    "travel_left_fwd_m": 0.01790000000000002,
     "cases": {
      "546": {
-      "spacer_m": 0.01,
-      "station_m": -0.03,
-      "cg_basic_m": 0.04842577957227419,
-      "cg_pred_m": 0.050006847158809056,
+      "spacer_m": 0.0,
+      "station_m": -0.019999999999999997,
+      "cg_basic_m": 0.04827772668806168,
+      "cg_pred_m": 0.04985739162876726,
       "nose_ballast_g": 0.0
      },
      "550": {
-      "spacer_m": 0.01,
-      "station_m": -0.03,
-      "cg_basic_m": 0.0482936500983485,
-      "cg_pred_m": 0.04987205394816836,
+      "spacer_m": 0.0,
+      "station_m": -0.019999999999999997,
+      "cg_basic_m": 0.04816121726369497,
+      "cg_pred_m": 0.04973818665693784,
       "nose_ballast_g": 0.0
      },
      "590": {
-      "spacer_m": 0.004,
-      "station_m": -0.024,
-      "cg_basic_m": 0.048462754689939984,
-      "cg_pred_m": 0.05001500664991066,
+      "spacer_m": 0.0,
+      "station_m": -0.019999999999999997,
+      "cg_basic_m": 0.047017625445134666,
+      "cg_pred_m": 0.04856813684116696,
       "nose_ballast_g": 0.0
      }
     },
-    "fwd_margin_min_m": 0.0016936500983485009,
-    "aft_margin_pred_min_m": 0.0013849933500893405,
-    "aft_margin_basic_min_m": 0.0029372453100600174,
+    "fwd_margin_min_m": 0.0004176254451346631,
+    "aft_margin_pred_min_m": 0.0015426083712327399,
+    "aft_margin_basic_min_m": 0.003122273311938324,
     "nose_ballast_max_g": 0.0,
-    "ballast_g_per_mm": 12.561957671957673
+    "ballast_g_per_mm": 12.402698412698413
    },
    "input_values": {
-    "M_kg": 2.37421,
-    "cg_frac": 0.15952155664410478,
-    "x_pred_a3": 0.05262530197593339,
+    "M_kg": 2.34411,
+    "cg_frac": 0.1518498625277824,
+    "x_pred_a3": 0.050168925402133246,
     "c": 0.32,
     "x_t": 0.049,
     "mp_kg": 0.55,
@@ -442,8 +442,8 @@
      0.049
     ],
     "nose": 0.0346,
-    "x_nom": -0.032,
-    "aft_travel": 0.012,
+    "x_nom": -0.036,
+    "aft_travel": 0.016,
     "step": 0.002,
     "pack_rng": [
      546.0,
@@ -479,12 +479,12 @@
     "ASM-A1-PACK-CASES-G"
    ],
    "outputs": {
-    "accept_g": 535.7275000000003,
-    "margin_to_sku_max_g": -20.272499999999695
+    "accept_g": 567.8795000000007,
+    "margin_to_sku_max_g": 11.87950000000069
    },
    "input_values": {
     "m_pack_kg": 0.55,
-    "gate_margin_kg": 0.10712750000000026,
+    "gate_margin_kg": 0.13927950000000067,
     "overrun_kg": 0.1,
     "added_g": 21.4,
     "sku_g": [
@@ -540,11 +540,11 @@
     "wing": 405,
     "fins": 438,
     "pod": 146,
-    "landing": 48,
+    "landing": 60,
     "propulsion": 462,
-    "power": 648,
+    "power": 630,
     "avionics": 45,
-    "harness": 123,
+    "harness": 129,
     "mechanisms": 72,
     "reserve": 213,
     "growth_kg": 0.113,
@@ -991,7 +991,7 @@
     "ASM-A3-NOSE-STACK"
    ],
    "note": "D-62 bay: most forward centroid = pod.x_le_m (-0.140) + 34.6 mm + L/2 = -0.0379 m for the 135 mm Ovonic EC5 pack (D-64); the no-spacer station is -0.020 (aft stop 0.050). A1-R4a (D-59) had -0.0254 / -0.010 in the D-47 bay.",
-   "value": 0.007900000000000018
+   "value": 0.01790000000000002
   },
   {
    "id": "CL-A1-PACK-CG-FWD",
@@ -1013,7 +1013,7 @@
    ],
    "how": "T-A3-CG-BALANCE / H1 GT-07 with each weighed pack at its flight-card station.",
    "note": "Worst case is the heaviest pack at the no-spacer station (nominal + pod.pack_aft_travel_m 12 mm, D-59/D-60); growth moves the CG aft, so basic is the forward-limit case. D-62 estimate on A3-R6a with ASM-A1-A3-PACK-X and ASM-A1-STACK-DX; A3 re-runs on D2's R6 bay.",
-   "value": 0.0016936500983485009
+   "value": 0.0004176254451346631
   },
   {
    "id": "CL-A1-PACK-CG-AFT",
@@ -1036,7 +1036,7 @@
    ],
    "how": "T-A3-CG-BALANCE on the built aircraft; never fly aft of the aft mark (B3).",
    "note": "D-62: worst case is the lightest pack (546 g) at or near the crush stack; growth is A3's CL-A3-CG-X-PRED scaled by mass. The 503 g listing is no longer a flight case (D-64).",
-   "value": 0.0013849933500893405
+   "value": 0.0015426083712327399
   },
   {
    "id": "CL-A1-NOSE-BALLAST",
@@ -1076,7 +1076,7 @@
    ],
    "how": "Weigh each pack on arrival (T-E2-WEIGH, 1 g scale); a pack above this line is returned or the first build must come in under its allocations.",
    "note": "D-64: replaces the D-58/D-59 lines (601 -> 631 g on the old bounding listings). The Ovonic 120C EC5 lists 551 +/- 5 g, so the limit here is its maximum 556 g; E2's PACK_ACCEPT_KG and the T-E2-WEIGH pass line follow this claim. A3 publishes the same figure from its roll-up (CL-A3-GATE-MARGIN) once D2, D3 and D5 deliver the R5 parts.",
-   "value": 535.7275000000003
+   "value": 567.8795000000007
   },
   {
    "id": "T-A1-WEIGH",

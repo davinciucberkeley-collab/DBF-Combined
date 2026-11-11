@@ -41,7 +41,7 @@ def parts_table(ge, cr, n_seg):
          'tine %.1f x %.1f mm (1 mm corner chamfers), %.0f mm engaged at rest, two 6.5 mm snap fingers with ramped '
          'hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides %.0f mm '
          'into the shoe when the cartridge crushes' % (mm(po[0]), mm(po[1]), mm(ge['engage_m']), mm(ge['stroke_m']))),
-        ('GER-003', 'Crush cartridge type U (solid)', 'XPS foam F-250 (cut)', 'make', 'cartridge_upper_g', ('UR', 'UL'),
+        ('GER-003', 'Crush cartridge type U (solid)', 'XPS foam FOAMULAR 400 (cut, D-76)', 'make', 'cartridge_upper_g', ('UR', 'UL'),
          '%d segments %.1f mm long, %.1f x %.1f mm, each pre-crushed 1 mm (cut %.1f mm), crush axis = board thickness, '
          'orange stripe; plateau %.1f N; bonded on the piston floor; consumable'
          % (n_seg, seg, mm(ge['cart_y_m']), mm(ge['cart_z_m']), seg + 1.0, cr['F_upper_N'])),
@@ -51,8 +51,8 @@ def parts_table(ge, cr, n_seg):
         ('GER-007', 'Wingtip TE corner cap', 'TPU (printed)', 'make', 'cap_g', ('R', 'L'),
          'TPU 95A U-cap over the fixed wingtip TE corner (y 0.5615-0.575) + tip wall, held by 2 wraps of 12 mm filament '
          'tape (CR-C5-04); includes 0.10 g tape'),
-        ('GER-008', 'Crush cartridge type L (bored)', 'XPS foam F-250 (cut)', 'make', 'cartridge_lower_g', ('LR', 'LL'),
-         'type U with a 5.56 mm axial bore (sharpened 7/32 in brass tube), pre-crushed, blue stripe; plateau %.1f N; '
+        ('GER-008', 'Crush cartridge type L (bored)', 'XPS foam FOAMULAR 400 (cut, D-76)', 'make', 'cartridge_lower_g', ('LR', 'LL'),
+         'type U with a 3.97 mm axial bore (sharpened 5/32 in brass tube), pre-crushed, blue stripe; plateau %.1f N; '
          'bonded on the piston floor; consumable' % cr['F_lower_N']),
     ]
 
@@ -80,17 +80,17 @@ def ground_lines(m):
         ('GER-009', 'Spare insert, lower (blue piston + type-L cartridge + pad, pre-glued)', 4, 'make',
          'as GER-002/008/004', 'PETG / XPS / neoprene', round(m['insert_lower_g'], 2), 0.35, 'field kit',
          'ground spare, not flying'),
-        ('GER-010', 'Spare cartridge pair type U, loose (orange stripe)', 16, 'make', 'as GER-003', 'XPS F-250',
+        ('GER-010', 'Spare cartridge pair type U, loose (orange stripe)', 16, 'make', 'as GER-003', 'XPS F-400',
          round(m['cartridge_upper_g'], 2), 0.0, 'field kit', 'ground spare, not flying (C5 CR-C5-06: 16 per type)'),
-        ('GER-011', 'Spare cartridge pair type L, loose (blue stripe)', 16, 'make', 'as GER-008', 'XPS F-250',
+        ('GER-011', 'Spare cartridge pair type L, loose (blue stripe)', 16, 'make', 'as GER-008', 'XPS F-400',
          round(m['cartridge_lower_g'], 2), 0.0, 'field kit', 'ground spare, not flying (C5 CR-C5-06: 16 per type)'),
         ('GER-012', 'Spare shoe', 2, 'make', 'as GER-001', 'PETG (printed)', round(m['shoe_g'] - 0.35, 2), 0.10,
          'field kit', 'ground spare, not flying'),
         ('GER-006', 'Neoprene sheet 1/16 in 40A adhesive back 12 x 12 in', 1, 'buy', 'bought', 'neoprene 40A',
          round(m['sheet_g'], 1), 12.0, 'SRC-D5-NEOPRENE (UNVERIFIED price)',
          'stock for GER-004 and spares; not flying (whole-sheet mass; flying pads are counted in GER-004)'),
-        ('GER-013', 'Brass tube 7/32 in OD (K&S), sharpened, cartridge bore cutter', 1, 'buy', 'bought', 'brass',
-         round(m['tube_g'], 1), 3.0, 'hobby shop, K&S 7/32 in round tube (UNVERIFIED price)', 'shop tool, not flying'),
+        ('GER-013', 'Brass tube 5/32 in OD (K&S), sharpened, cartridge bore cutter', 1, 'buy', 'bought', 'brass',
+         round(m['tube_g'], 1), 3.0, 'hobby shop, K&S 5/32 in round tube (UNVERIFIED price)', 'shop tool, not flying'),
     ]
 
 
@@ -263,11 +263,11 @@ def main():
                        'CR-C5-18), %.1f mm walls = %d perimeters, 100 %% solid, R 1 inside fillets from the model; '
                        'supports only under the leg ends at the TE' % (mm(ge['ws_m']), round(mm(ge['ws_m']) / 0.4)),
             'GER-002': 'FDM print, PETG, 0.2 mm layers, flange on the bed, 2 perimeters, slots and hook ramps from the model',
-            'GER-003': 'cut from 2 in F-250: %.1f x %.1f mm sticks across the thickness, %.1f mm long (%d per foot), each '
+            'GER-003': 'cut from 2 in F-400 (D-76): %.1f x %.1f mm sticks across the thickness, %.1f mm long (%d per foot), each '
                        'pressed 1 mm to %.1f mm' % (mm(ge['cart_y_m']), mm(ge['cart_z_m']), seg + 1.0, n_seg, seg),
             'GER-004': 'scissors/knife from sheet, %.1f x %.1f mm, 1 mm corner round' % (mm(ge['pad_y_m']), mm(ge['pad_z_m'])),
             'GER-007': 'FDM print, TPU 95A, 2 perimeters, open side up',
-            'GER-008': 'as GER-003, then a 5.56 mm axial bore with a sharpened 7/32 in K&S brass tube (before pressing)'}
+            'GER-008': 'as GER-003, then a 3.97 mm axial bore with a sharpened 5/32 in K&S brass tube (before pressing)'}
     with open(os.path.join(SUB, 'parts.csv'), 'w', encoding='utf-8', newline='') as f:
         w = csv.writer(f, lineterminator='\n')
         w.writerow(['part_id', 'name', 'qty', 'make_or_buy', 'process', 'material', 'mass_g', 'unit_cost_usd',

@@ -313,15 +313,15 @@
     "SRC-C4-SU2"
    ],
    "outputs": {
-    "conjugate_gradient_ilu1_linres_log10": 0.3975762664,
+    "conjugate_gradient_ilu1_linres_log10": 0.9509459314,
     "conjugate_gradient_ilu1_iters": 1500,
-    "conjugate_gradient_ilu1_wall_s": 386.7,
-    "conjugate_gradient_ilu1_rel_diff": 0.9999662017573674,
+    "conjugate_gradient_ilu1_wall_s": 343.1,
+    "conjugate_gradient_ilu1_rel_diff": 0.9985689306438894,
     "restarted_fgmres_ilu2_linres_log10": 0.0,
     "restarted_fgmres_ilu2_iters": 1,
-    "restarted_fgmres_ilu2_wall_s": 23.7,
+    "restarted_fgmres_ilu2_wall_s": 16.7,
     "restarted_fgmres_ilu2_rel_diff": 1.0,
-    "best_rel_diff": 0.9999662017573674,
+    "best_rel_diff": 0.9985689306438894,
     "converged": false
    },
    "input_values": {
@@ -440,7 +440,7 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 48,
+    "landing_g": 60,
     "cant": 7.0,
     "t_board": 0.0048,
     "areal": 0.2,
@@ -465,14 +465,14 @@
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0454,
-    "z_step": 0.2005,
+    "tip_sq": 0.0586,
+    "z_step": 0.201,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1535
     ],
-    "shoe_x0": 0.2666,
+    "shoe_x0": 0.2536,
     "shoe_z0": 0.196,
     "tail_len": 0.04,
     "tongue_depth": 0.001,
@@ -485,7 +485,7 @@
     "e_shoe": 50000000000.0,
     "E": 100000000000.0,
     "G": 5000000000.0,
-    "f_corner": 36.68777122202526,
+    "f_corner": 37.47040211886732,
     "mu_hi": 0.7,
     "side_c5": 39.5,
     "foot_h": 0.048,
@@ -690,51 +690,51 @@
    ],
    "outputs": {
     "hs_drawn_lim_pa": [
-     5620467.50790944,
-     6047470.190087538,
-     6328301.15590485
+     5822277.949932581,
+     8248489.983605824,
+     9034059.584666107
     ],
     "peak_drawn_lim_pa": [
-     7712131.2599905655,
-     10359897.431303808,
-     12447217.673326744
+     7888483.153852913,
+     9068292.77999321,
+     12418652.403555738
     ],
     "far_drawn_lim_pa": [
-     7712131.2599905655,
-     7737566.352087009,
-     7945094.601624187
+     7514799.299643734,
+     8105506.703713909,
+     9242230.253874235
     ],
-    "hs_drawn_ext_lim_pa": 6867844.8742479,
-    "hs_drawn_gci": 0.10657357027004188,
-    "hs_drawn_order": 0.6045431088952301,
-    "face_drawn_ult_pa": 10301767.31137185,
-    "ms_drawn": -0.029292771060625333,
-    "ms_far_drawn": -0.16090783043617585,
+    "hs_drawn_ext_lim_pa": 9410204.676273398,
+    "hs_drawn_gci": 0.05204541326107399,
+    "hs_drawn_order": 1.6268946289229742,
+    "face_drawn_ult_pa": 14115307.014410097,
+    "ms_drawn": -0.29154923872423355,
+    "ms_far_drawn": -0.27867338471987557,
     "hs_proposed_lim_pa": [
-     3114540.7290347028,
-     3721683.156001061,
-     3974791.812817105
+     3692081.1217334494,
+     3267050.8827341516,
+     3395952.2919678143
     ],
     "peak_proposed_lim_pa": [
-     7789202.695098465,
-     11858920.132712234,
-     15873518.544347044
+     7327922.401787568,
+     9498024.167524705,
+     12729484.906457163
     ],
     "far_proposed_lim_pa": [
-     7298397.743533026,
-     7184118.035229058,
-     7176237.109184716
+     7327922.401787568,
+     7215317.331219425,
+     7220584.136220446
     ],
-    "hs_proposed_ext_lim_pa": 4155746.2797540356,
-    "hs_proposed_gci": 0.056906900870073544,
-    "hs_proposed_order": 1.2622781405801204,
-    "face_proposed_ult_pa": 6233619.419631054,
-    "ms_proposed": 0.6042044479821429,
-    "ms_far_proposed": -0.07100802757281532,
-    "hs_drawn_global4_lim_pa": 6557768.145345379,
-    "global_check_rel": 0.08438205385357245,
-    "hs_drawn_lower_L2_lim_pa": 6012253.294564595,
-    "hs_proposed_lower_L2_lim_pa": 3726165.466614181,
+    "hs_proposed_ext_lim_pa": 3395952.2919678143,
+    "hs_proposed_gci": 0.03795736752207721,
+    "hs_proposed_order": -1.0,
+    "face_proposed_ult_pa": 5093928.437951721,
+    "ms_proposed": 0.9631214144070348,
+    "ms_far_proposed": -0.07671366458776863,
+    "hs_drawn_global4_lim_pa": 7193283.387430102,
+    "global_check_rel": -0.12792724465605032,
+    "hs_drawn_lower_L2_lim_pa": 7204239.760871392,
+    "hs_proposed_lower_L2_lim_pa": 3424022.5107688024,
     "levels": {
      "1": [
       0.008,
@@ -749,29 +749,29 @@
       0.0005
      ]
     },
-    "m_side_leg_nm": 0.9598499999999995,
-    "strip_drawn_lim_pa": 148664198.82192636,
+    "m_side_leg_nm": 0.9400999999999995,
+    "strip_drawn_lim_pa": 137648548.60057917,
     "strip_tau_drawn_lim_pa": [
-     50182549.16061758,
-     21555297.85558062,
-     24252720.511104543
+     21304986.984045926,
+     23210119.005867578,
+     19727712.590829104
     ],
-    "ms_strip_drawn": 0.793751749108651,
-    "foot_defl_drawn_m": 0.006412440269796762,
-    "strip_proposed_lim_pa": 138647141.83168995,
+    "ms_strip_drawn": 0.9373009695907875,
+    "foot_defl_drawn_m": 0.007040786796777747,
+    "strip_proposed_lim_pa": 138186720.4170505,
     "strip_tau_proposed_lim_pa": [
-     9414014.996058846,
-     7947339.187788452,
-     15461463.64441933
+     10142803.280820213,
+     7402074.75852599,
+     15267655.79498874
     ],
-    "ms_strip_proposed": 0.9233477383211073,
-    "foot_defl_proposed_m": 0.007073550175826579,
-    "board_share_3d": 0.30860045780727413,
-    "plate_hs_drawn_lim_pa": 22593100.609364636,
-    "plate_peak_drawn_lim_pa": 20651347.474039353,
-    "plate_hs_proposed_lim_pa": 6716121.903692618,
-    "plate_peak_proposed_lim_pa": 6610619.974373759,
-    "board_share_shell": 1.0152007389507707
+    "ms_strip_proposed": 0.9297561000207608,
+    "foot_defl_proposed_m": 0.006450202258748612,
+    "board_share_3d": 0.5572450742773538,
+    "plate_hs_drawn_lim_pa": 20872152.18599213,
+    "plate_peak_drawn_lim_pa": 17741039.773467284,
+    "plate_hs_proposed_lim_pa": 7833699.212679322,
+    "plate_peak_proposed_lim_pa": 7825461.50344226,
+    "board_share_shell": 1.2359884184599323
    },
    "input_values": {
     "tube_x": 0.045,
@@ -889,7 +889,7 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 48,
+    "landing_g": 60,
     "cant": 7.0,
     "t_board": 0.0048,
     "areal": 0.2,
@@ -914,14 +914,14 @@
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0454,
-    "z_step": 0.2005,
+    "tip_sq": 0.0586,
+    "z_step": 0.201,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1535
     ],
-    "shoe_x0": 0.2666,
+    "shoe_x0": 0.2536,
     "shoe_z0": 0.196,
     "tail_len": 0.04,
     "tongue_depth": 0.001,
@@ -934,7 +934,7 @@
     "e_shoe": 50000000000.0,
     "E": 100000000000.0,
     "G": 5000000000.0,
-    "f_corner": 36.68777122202526,
+    "f_corner": 37.47040211886732,
     "mu_hi": 0.7,
     "side_c5": 39.5,
     "foot_h": 0.048,
@@ -1129,104 +1129,104 @@
    ],
    "outputs": {
     "f_up_L1": [
-     77.95,
-     248.74,
-     296.48,
-     404.87,
-     453.16,
-     549.9
+     74.96,
+     248.97,
+     297.33,
+     395.31,
+     454.79,
+     547.08
     ],
-    "ndof_up_L1": 33525,
+    "ndof_up_L1": 33777,
     "f_up_L2": [
-     72.63,
-     244.91,
-     292.45,
-     372.53,
-     431.08,
-     535.02
+     69.83,
+     245.0,
+     292.86,
+     367.78,
+     428.53,
+     531.37
     ],
-    "ndof_up_L2": 61869,
+    "ndof_up_L2": 61905,
     "f_up_L3": [
-     70.31,
-     242.69,
-     290.31,
-     357.18,
-     409.87,
-     523.99
+     66.93,
+     242.3,
+     290.35,
+     352.84,
+     414.47,
+     523.79
     ],
-    "ndof_up_L3": 106929,
+    "ndof_up_L3": 109581,
     "f1_up": [
-     248.7375681937224,
-     244.90958641893747,
-     242.68648668075753
+     248.97186176980915,
+     244.9995732103071,
+     242.30228804939466
     ],
-    "f1_up_ext": 239.60702517943093,
-    "f1_up_gci": 0.01586131526854165,
-    "f1_up_order": 1.568022571076779,
+    "f1_up_ext": 236.5961485619814,
+    "f1_up_gci": 0.029437090407551242,
+    "f1_up_order": 1.1169247502214996,
     "kinds_up": [
      "lateral-torsion",
      "fore-aft",
      "lateral-torsion"
     ],
-    "sep_up": 0.20894641579478979,
-    "plate_f1_up_a3": 249.88610005261998,
-    "plate_f1_up_r4": 253.09540547631138,
-    "plate_sep_up_a3": 0.2608098814687292,
-    "ratio_up": 0.9588649593914006,
-    "k_ratio_up_x": 1.055502244130296,
-    "k_ratio_up_y": 1.0658072165758758,
-    "k_ratio_up_tz": 1.0560594225736695,
+    "sep_up": 0.1937549225890287,
+    "plate_f1_up_a3": 249.20332185760623,
+    "plate_f1_up_r4": 252.38317439057752,
+    "plate_sep_up_a3": 0.25736489795446627,
+    "ratio_up": 0.9494100913196153,
+    "k_ratio_up_x": 1.0514256889709759,
+    "k_ratio_up_y": 1.06519116884654,
+    "k_ratio_up_tz": 1.0557160921807822,
     "f_lo_L1": [
-     75.58,
-     243.07,
-     292.55,
-     396.29,
-     449.23,
-     535.49
+     71.85,
+     242.32,
+     292.12,
+     388.45,
+     442.77,
+     529.55
     ],
-    "ndof_lo_L1": 35127,
+    "ndof_lo_L1": 34647,
     "f_lo_L2": [
-     70.37,
-     238.51,
-     287.59,
-     366.22,
-     422.07,
-     521.51
+     69.3,
+     238.97,
+     288.23,
+     370.0,
+     416.78,
+     517.27
     ],
-    "ndof_lo_L2": 64179,
+    "ndof_lo_L2": 64443,
     "f_lo_L3": [
-     68.1,
-     236.27,
-     285.43,
-     350.46,
-     405.1,
-     513.44
+     64.73,
+     235.48,
+     284.93,
+     346.12,
+     400.59,
+     509.78
     ],
-    "ndof_lo_L3": 112791,
+    "ndof_lo_L3": 114891,
     "f1_lo": [
-     243.06726548053436,
-     238.50520524836486,
-     236.26904036855964
+     242.32089264696583,
+     238.96830476943228,
+     235.4802728574109
     ],
-    "f1_lo_ext": 234.11914425883515,
-    "f1_lo_gci": 0.01137419499805628,
-    "f1_lo_order": 2.0573178553820397,
+    "f1_lo_ext": 217.04527948006773,
+    "f1_lo_gci": 0.09785848063643325,
+    "f1_lo_order": 0.5,
     "kinds_lo": [
      "lateral-torsion",
      "fore-aft",
      "lateral-torsion"
     ],
-    "sep_lo": 0.18125710257747252,
-    "plate_f1_lo_a3": 244.54754182780394,
-    "plate_f1_lo_r4": 247.7785035070963,
-    "plate_sep_lo_a3": 0.23387398162785433,
-    "ratio_lo": 0.9573563590497595,
-    "k_ratio_lo_x": 1.0437474949124035,
-    "k_ratio_lo_y": 1.0704913243314123,
-    "k_ratio_lo_tz": 1.0546079208088583,
-    "f1_min": 234.11914425883515,
-    "sep_min": 0.18125710257747252,
-    "plate_sep_min_a3": 0.23387398162785433
+    "sep_lo": 0.0951102643844004,
+    "plate_f1_lo_a3": 243.63197956163805,
+    "plate_f1_lo_r4": 246.83714673636487,
+    "plate_sep_lo_a3": 0.2292544771734697,
+    "ratio_lo": 0.8908735210812341,
+    "k_ratio_lo_x": 1.0433215711936366,
+    "k_ratio_lo_y": 1.0705469170174569,
+    "k_ratio_lo_tz": 1.0544766263201044,
+    "f1_min": 217.04527948006773,
+    "sep_min": 0.0951102643844004,
+    "plate_sep_min_a3": 0.2292544771734697
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1344,7 +1344,7 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 48,
+    "landing_g": 60,
     "cant": 7.0,
     "t_board": 0.0048,
     "areal": 0.2,
@@ -1369,14 +1369,14 @@
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
-    "tip_sq": 0.0454,
-    "z_step": 0.2005,
+    "tip_sq": 0.0586,
+    "z_step": 0.201,
     "ear_xyz": [
      0.045,
      0.3023,
      0.1535
     ],
-    "shoe_x0": 0.2666,
+    "shoe_x0": 0.2536,
     "shoe_z0": 0.196,
     "e_tail": 1000000000.0,
     "e_link": 3000000000.0,
@@ -1439,7 +1439,7 @@
     "FIN-001-UR"
    ],
    "how": "Re-run sim_fin.py; SU2 needs a direct solver (PaStiX build) or a stronger preconditioner to converge here.",
-   "value": 0.9999662017573674
+   "value": 0.9985689306438894
   },
   {
    "id": "CL-C4-SIM-FACE-DRAWN",
@@ -1459,7 +1459,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF on the test article (CR-C4-33) decides; strain gauge 5 mm below the leg edge.",
-   "value": 10301767.31137185
+   "value": 14115307.014410097
   },
   {
    "id": "CL-C4-SIM-MS-FACE-DRAWN",
@@ -1476,7 +1476,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF (CR-C4-33).",
-   "value": -0.029292771060625333
+   "value": -0.29154923872423355
   },
   {
    "id": "CL-C4-SIM-MS-FACE-PROP",
@@ -1493,7 +1493,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF with the extended cheeks (CR-C4-33).",
-   "value": 0.6042044479821429
+   "value": 0.9631214144070348
   },
   {
    "id": "CL-C4-SIM-F1-UP",
@@ -1507,7 +1507,7 @@
     "FIN-002-R"
    ],
    "how": "T-C4-TAP-D3 on the finished wing.",
-   "value": 239.60702517943093
+   "value": 236.5961485619814
   },
   {
    "id": "CL-C4-SIM-F1-LO",
@@ -1521,7 +1521,7 @@
     "FIN-002-R"
    ],
    "how": "T-C4-TAP-D3 on the finished wing.",
-   "value": 234.11914425883515
+   "value": 217.04527948006773
   },
   {
    "id": "CL-C4-SIM-SEP",
@@ -1543,7 +1543,7 @@
     "FIN-002-R"
    ],
    "how": "T-C4-TAP-D3: tap each motor bell, FFT; first station peak at least 20 % from 90/98/181/197/155 Hz.",
-   "value": 0.18125710257747252
+   "value": 0.0951102643844004
   },
   {
    "id": "CL-C4-SIM-SEP-PLATE-A3",
@@ -1560,7 +1560,7 @@
     "FIN-001-LR"
    ],
    "how": "Re-run sim_fin.py; T-C4-TAP-D3.",
-   "value": 0.23387398162785433
+   "value": 0.2292544771734697
   },
   {
    "id": "CL-C4-SIM-MS-FACE-FAR",
@@ -1577,7 +1577,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF (CR-C4-33); largest face element at least one laminate thickness from the shoe edge.",
-   "value": -0.16090783043617585
+   "value": -0.27867338471987557
   },
   {
    "id": "CL-C4-SIM-MS-STRIP",
@@ -1594,7 +1594,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF; strain gauge on a strip 10 mm forward of the collar cheek.",
-   "value": 0.793751749108651
+   "value": 0.9373009695907875
   },
   {
    "id": "CL-C4-SIM-FOOT-DEFL",
@@ -1607,7 +1607,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF dial gauge at the pad (R4 shell 9.3 mm).",
-   "value": 0.006412440269796762
+   "value": 0.007040786796777747
   },
   {
    "id": "CL-C4-SIM-BOARD-SHARE",
@@ -1620,7 +1620,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF: gauges 5 mm below the leg edge and on both strips; R4 shell carries all of it in the board.",
-   "value": 0.30860045780727413
+   "value": 0.5572450742773538
   },
   {
    "id": "CL-C4-SIM-FACE-GCI",
@@ -1630,7 +1630,7 @@
    "output": "hs_drawn_gci",
    "unit": "-",
    "how": "Re-run sim_fin.py (three tip meshes, Roache Fs 1.25).",
-   "value": 0.10657357027004188
+   "value": 0.05204541326107399
   },
   {
    "id": "CL-C4-SIM-F1-GCI-UP",
@@ -1644,7 +1644,7 @@
     "value": 0.05
    },
    "how": "Re-run sim_fin.py (three meshes, Roache Fs 1.25).",
-   "value": 0.01586131526854165
+   "value": 0.029437090407551242
   },
   {
    "id": "CL-C4-SIM-F1-GCI-LO",
@@ -1658,7 +1658,7 @@
     "value": 0.05
    },
    "how": "Re-run sim_fin.py (three meshes, Roache Fs 1.25).",
-   "value": 0.01137419499805628
+   "value": 0.09785848063643325
   }
  ]
 }

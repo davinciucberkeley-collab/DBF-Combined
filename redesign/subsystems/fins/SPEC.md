@@ -1,6 +1,6 @@
 # Fins and motor tubes (FIN): SPEC
 
-Owner D3 · structures C4 · aero B3/B4 · joints C6 · design R5 (CR-A1-63; D-61, D-63, D-68, D-70; CR-E3-13, CR-F2-16,
+Owner D3 · structures C4 · aero B3/B4 · joints C6 · design R5 + D-75 stepped tip from the D5-R7 shoe (2026-11-11: step x 0.2614, |z| 0.2010, 11 pins to x 0.249) (CR-A1-63; D-61, D-63, D-68, D-70; CR-E3-13, CR-F2-16,
 C6-R5 CR-C6-36) on R4 (D-26, D-27, D-42, D-48, D-51, D-52, D-54) · `MODELLED` · 2026-11-10. Re-check:
 `python -I redesign/subsystems/fins/make_fins.py` → `python -I redesign/team/D3/fins_calcs.py` →
 `python -I redesign/fusion/check.py` → `python -I redesign/interfaces/merge_check.py`.
@@ -39,7 +39,7 @@ around the tube.
 | Collar 15 mm ÷ C4 required / ÷ C6 required (live C1 12.67 N·m) / tongue fit | 1.45 / **0.77** / 3.7 mm | — | `CL-D3-COLLAR-H`, `-H-C6`, `CL-D3-TONGUE-FIT` | `FAIL` → CR-D3-36 |
 | Tail embedment ÷ C6 required | 1.27 | — | `CL-D3-TAIL-EMBED` | `UNVERIFIED` |
 | Root fillet RF typical / at C6 allowable, D-65 side load 59.0 N ult | 1.62 / **0.81** (needs L_eff 0.182 m) | — | `CL-D3-ROOT-FILLET-RF`, `-ALLOW`, `-ROOT-LEFF-REQ` | `FAIL` → CR-D3-35 |
-| Half-fin tip: step front x / step \|z\| / D5 mismatch | 0.2746 / 0.2005 / 0 | m | `CL-D3-TIP-SQUARE`, `-STEP-MISMATCH` | `CHECKED` |
+| Half-fin tip: step front x / step \|z\| / D5 mismatch (D-75: D5-R7 stack is the one source) | 0.2614 / 0.2010 / 0 | m | `CL-D3-TIP-SQUARE`, `-STEP-MISMATCH` | `CHECKED` |
 | ESC pad 46 × 31 mm: outer edge ÷ wash radius | 0.89 | — | `CL-D3-ESC-WASH` | `UNVERIFIED` |
 | Thermal: motor base / ESC design vs limit | 66.3 / 83, **56.1** / 85 | °C | `CL-E3-MOUNT-ASA`, `CL-E3-ESC-PEAK` (E3) | `UNVERIFIED` |
 | Subsystem mass / allocation (fillet mix 0.45 g/cm³ lever taken) | 435.9 / 437 (root fillets 25.0) | g | `CL-D3-MASS`, `-FILLET-MASS` | `MODELLED` |

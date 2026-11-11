@@ -11,7 +11,7 @@
    "mass_g": 550.0,
    "material": "LiPo",
    "cg_xyz_m": [
-    -0.032,
+    -0.036,
     0.0,
     0.0425
    ],
@@ -23,7 +23,7 @@
    "name": "Disconnect, main leads, UBEC (lump)",
    "subsystem": "power",
    "status": "MODELLED",
-   "mass_g": 98.0,
+   "mass_g": 80.0,
    "material": "copper + PVC",
    "cg_xyz_m": [
     -0.125,

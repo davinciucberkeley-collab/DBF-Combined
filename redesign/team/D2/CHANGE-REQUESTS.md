@@ -4,6 +4,12 @@ Revision D2-R6 (2026-11-10), params A1-R5 (D-62, D-64, D-69). The numbers come f
 `team/D2/pod_data.py`, `team/D2/pod_station_options.py` and `subsystems/pod/params.json`. Every request has
 status `PROPOSED`.
 
+## Open (R7, 2026-11-11: D-74, D-77)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-D2-31 | F1, F2 (cc A3, F3) | (a) **F1**: move `PWR-001`'s node to the D-77 datum −0.036 (read `pod.pack_x_nominal_m`, CR-A3-32): `check.py` and `merge_check.py` still put the pack at −0.022 and report CG 0.052 m; A3's override already uses the datum. (b) **F1, case U only**: `KO-PWR-SIDE` cannot be 6 mm on the outboard edge; the 37.7 mm channel leaves 1.8 mm to the side wall (`CL-D2-KO-PWR-SIDE-OUT`). Use vertical-entry GH plugs there, or turn the stack so its plugged long edge faces inboard (inboard 6 mm is clear: the forward strap moved to x −0.079). (c) **F1/F2**: route the two ESC pairs per side to the XT30U zones (`xt30u_zone_m`: right x 0.044–0.074, left 0.062–0.074 on the foot plate, z 0.0258–0.0378); the AS150U cradle must end by 0.060. (d) **F1/F2**: stop reading `ubec_zone_x_m` (status `RETIRED`); D2 deletes it after. | D-74 / D-77. Pod: 0 bodies in `KO-PWR-BOARD/-PADS/-FWD/-SIDE-IN` (`CL-D2-KO-PWR-HITS`), 0 in the XT30U zones, one XT30U body passes a side exit with 5.8 mm to spare (size `UNVERIFIED`). |
+
 ## Open
 
 | Id | To | What | Why | Numbers |

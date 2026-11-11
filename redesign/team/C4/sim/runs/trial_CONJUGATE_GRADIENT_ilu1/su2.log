@@ -99,38 +99,38 @@ Volume output fields: COORDINATES, SOLUTION
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Three dimensional problem.
-24014 grid points.
-20025 volume elements.
+25706 grid points.
+21487 volume elements.
 13 surface markers.
 42 boundary elements in index 0 (Marker = ROOT_PIN).
 28 boundary elements in index 1 (Marker = LE_BOSS).
 50 boundary elements in index 2 (Marker = BAR_BOT).
 36 boundary elements in index 3 (Marker = BAR_TOP).
-22 boundary elements in index 4 (Marker = SHOE_P0).
-64 boundary elements in index 5 (Marker = SHOE_P1).
-64 boundary elements in index 6 (Marker = SHOE_P2).
-22 boundary elements in index 7 (Marker = SHOE_P3).
-22 boundary elements in index 8 (Marker = SHOE_M0).
-64 boundary elements in index 9 (Marker = SHOE_M1).
-64 boundary elements in index 10 (Marker = SHOE_M2).
-22 boundary elements in index 11 (Marker = SHOE_M3).
+31 boundary elements in index 4 (Marker = SHOE_P0).
+67 boundary elements in index 5 (Marker = SHOE_P1).
+68 boundary elements in index 6 (Marker = SHOE_P2).
+29 boundary elements in index 7 (Marker = SHOE_P3).
+31 boundary elements in index 8 (Marker = SHOE_M0).
+67 boundary elements in index 9 (Marker = SHOE_M1).
+68 boundary elements in index 10 (Marker = SHOE_M2).
+29 boundary elements in index 11 (Marker = SHOE_M3).
 1 boundary elements in index 12 (Marker = BRACE_END).
-20025 hexahedra.
+21487 hexahedra.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
 Recomputing point connectivity.
 Setting element connectivity.
 Checking the numerical grid orientation.
 All volume elements are correctly oriented.
-There has been a re-orientation of 500 QUADRILATERAL surface elements.
+There has been a re-orientation of 546 QUADRILATERAL surface elements.
 Identifying edges and vertices.
 Setting the control volume structure.
-Volume of the computational grid: 0.000473006.
+Volume of the computational grid: 0.000475226.
 Searching for the closest normal neighbors to the surfaces.
 Storing a mapping from global to local point index.
 Semi-span length = 0.0058 m.
-Surface area = 0.0012674 m^2.
-Area projection in the x-plane = 2.87e-07 m^2, y-plane = 0.000397311 m^2, z-plane = 0.00013456 m^2.
+Surface area = 0.0014468 m^2.
+Area projection in the x-plane = 2.87e-07 m^2, y-plane = 0.000487013 m^2, z-plane = 0.00013456 m^2.
 Max. coordinate in the x-direction = 0.32 m, y-direction = 0.0058 m, z-direction = 0.21 m.
 Min. coordinate in the x-direction = 0.0392 m, y-direction = -0.078 m, z-direction = 0.0003 m.
 Computing wall distances.
@@ -152,14 +152,14 @@ Simulation Run using the Single-zone Driver
 +--------------------------------------+
 |  Inner_Iter|  LinSolIter|   LinSolRes|
 +--------------------------------------+
-|           0|        1500|    0.334086|
+|           0|        1500|    0.950946|
 
 ----------------------------- Solver Exit -------------------------------
 All convergence criteria satisfied.
 +-----------------------------------------------------------------------+
 |      Convergence Field     |     Value    |   Criterion  |  Converged |
 +-----------------------------------------------------------------------+
-|                  rms[DispX]|      -1.10974|         < -14|          No|
+|                  rms[DispX]|     -0.418615|         < -14|          No|
 +-----------------------------------------------------------------------+
 -------------------------------------------------------------------------
 +-----------------------------------------------------------------------+

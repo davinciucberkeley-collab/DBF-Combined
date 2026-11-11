@@ -66,7 +66,7 @@
    "title": "Power subsystem flying mass",
    "script": "redesign/subsystems/power/power_claims.py",
    "function": "mass",
-   "equation": "m = pack + (AS150U half + 2 x (l1 + l2) x m'_10AWG) + board + bus + UBEC + frame + fuse + 4 x cap",
+   "equation": "m = pack + (AS150U half + 2 x (l1 + l2) x m'_10AWG) + board + bus + frame + 4 x cap (D-74: no UBEC, no fuse)",
    "inputs": {
     "pack": "P:battery.mass_kg",
     "as_g": "P:power.as150u_mass_g",
@@ -74,9 +74,7 @@
     "wire": "P:power.wire_10awg",
     "board": "P:power.board_mass_g",
     "bus": "P:power.bus_mass_g",
-    "ubec": "P:power.ubec_mass_g",
     "frame": "P:power.frame_mass_g",
-    "fuse": "P:power.fuse_mass_g",
     "cap": "P:power.cap_mass_g"
    },
    "units": {
@@ -85,8 +83,8 @@
     "board": "g"
    },
    "outputs": {
-    "total_g": 638.2,
-    "non_pack_g": 88.2,
+    "total_g": 622.4,
+    "non_pack_g": 72.39999999999999,
     "jumpers_g": 9.6
    },
    "input_values": {
@@ -103,9 +101,7 @@
     ],
     "board": 28.0,
     "bus": 7.3,
-    "ubec": 13.0,
-    "frame": 9.0,
-    "fuse": 3.5,
+    "frame": 9.7,
     "cap": 2.2
    }
   },
@@ -244,7 +240,6 @@
     "plate_x": "P:pdb_plate_x_m",
     "pattern": "P:pdb_pattern_m",
     "park": "P:park_x_m",
-    "ubec_x": "P:ubec_zone_x_m",
     "stop": "P:aft_stop_m",
     "bus_m": "P:power.bus_board_m",
     "bar_m": "P:power.bar_m",
@@ -257,9 +252,8 @@
     "as_m": "P:power.as150u_half_m",
     "wall_h": "P:power.cradle_wall_h_m",
     "leg": "P:power.leg_m",
-    "fuse_m": "P:power.fuse_m",
-    "fuse_x0": "P:power.fuse_x0_m",
-    "ubec_m": "P:power.ubec_m",
+    "ko": "P:power.ko_board_m",
+    "leg_sb": "P:power.leg_setback_m",
     "gps": "P:power.gps_xyz_m"
    },
    "outputs": {
@@ -290,7 +284,7 @@
     ],
     "guide_t": 0.0015,
     "aft": [
-     0.0355,
+     0.0315,
      0.0475
     ],
     "pad_t": 0.0025,
@@ -302,10 +296,6 @@
     "park": [
      0.0,
      0.06
-    ],
-    "ubec_x": [
-     0.044,
-     0.072
     ],
     "stop": [
      0.003,
@@ -324,7 +314,7 @@
     "spacer": 0.01,
     "deck_t": 0.002,
     "board": [
-     0.042,
+     0.052,
      0.032,
      0.009
     ],
@@ -341,22 +331,148 @@
      0.004,
      0.004
     ],
-    "fuse_m": [
-     0.026,
-     0.011,
-     0.009
-    ],
-    "fuse_x0": 0.004,
-    "ubec_m": [
-     0.041,
-     0.023,
-     0.01
-    ],
+    "ko": {
+     "x_m": [
+      -0.066,
+      -0.01
+     ],
+     "w_m": 0.034,
+     "z_top_m": 0.0626
+    },
+    "leg_sb": 0.01,
     "gps": [
      0.076,
      0.0,
      0.178
     ]
+   }
+  },
+  {
+   "id": "CALC-PWR-KO",
+   "type": "calculation",
+   "title": "Power board and deck inside the keep-out KO-PWR-BOARD (D-74)",
+   "script": "redesign/subsystems/power/power_claims.py",
+   "function": "ko_fit",
+   "equation": "fit = min(board and deck seat faces to the keep-out faces in x and y); top = deck top + whole-stack height",
+   "inputs": {
+    "zb": "P:pod.z_base_m",
+    "tb": "P:fins.board_t_m",
+    "size": "P:pod.size_m",
+    "pack": "P:battery.size_m",
+    "tray_t": "P:tray_floor_t_m",
+    "plate_t": "P:plate_t_m",
+    "boss_h": "P:boss_h_m",
+    "bay": "P:bay_min_m",
+    "guide_t": "P:guide_t_m",
+    "aft": "P:pack_aft_face_m",
+    "pad_t": "P:pad_t_m",
+    "plate_x": "P:pdb_plate_x_m",
+    "pattern": "P:pdb_pattern_m",
+    "park": "P:park_x_m",
+    "stop": "P:aft_stop_m",
+    "bus_m": "P:power.bus_board_m",
+    "bar_m": "P:power.bar_m",
+    "spacer": "P:power.spacer_h_m",
+    "deck_t": "P:power.deck_t_m",
+    "board": "P:power.board_env_m",
+    "margin": "P:power.deck_margin_m",
+    "wall": "P:power.wall_t_m",
+    "win": "P:power.window_x_m",
+    "as_m": "P:power.as150u_half_m",
+    "wall_h": "P:power.cradle_wall_h_m",
+    "leg": "P:power.leg_m",
+    "ko": "P:power.ko_board_m",
+    "leg_sb": "P:power.leg_setback_m",
+    "stack_u": "P:power.stack_u_h_m"
+   },
+   "outputs": {
+    "fit_mm": 0.0,
+    "seat_err_mm": 0.0,
+    "deck_len_mm": 56.0,
+    "top_s_m": 0.048600000000000004,
+    "top_u_m": 0.0626,
+    "ko_top_m": 0.0626
+   },
+   "input_values": {
+    "zb": 0.015,
+    "tb": 0.0048,
+    "size": [
+     0.235,
+     0.14,
+     0.07
+    ],
+    "pack": [
+     0.135,
+     0.046,
+     0.049
+    ],
+    "tray_t": 0.001,
+    "plate_t": 0.0008,
+    "boss_h": 0.006,
+    "bay": [
+     0.16,
+     0.052,
+     0.053
+    ],
+    "guide_t": 0.0015,
+    "aft": [
+     0.0315,
+     0.0475
+    ],
+    "pad_t": 0.0025,
+    "plate_x": [
+     -0.038,
+     -0.004
+    ],
+    "pattern": 0.025,
+    "park": [
+     0.0,
+     0.06
+    ],
+    "stop": [
+     0.003,
+     0.027
+    ],
+    "bus_m": [
+     0.036,
+     0.016,
+     0.0016
+    ],
+    "bar_m": [
+     0.025,
+     0.00326,
+     0.007
+    ],
+    "spacer": 0.01,
+    "deck_t": 0.002,
+    "board": [
+     0.052,
+     0.032,
+     0.009
+    ],
+    "margin": 0.001,
+    "wall": 0.002,
+    "win": 0.01,
+    "as_m": [
+     0.029,
+     0.022,
+     0.014
+    ],
+    "wall_h": 0.01,
+    "leg": [
+     0.004,
+     0.004
+    ],
+    "ko": {
+     "x_m": [
+      -0.066,
+      -0.01
+     ],
+     "w_m": 0.034,
+     "z_top_m": 0.0626
+    },
+    "leg_sb": 0.01,
+    "stack_u": 0.024
    }
   },
   {
@@ -375,12 +491,11 @@
     "PWR-002",
     "PWR-003",
     "PWR-004",
-    "PWR-006",
-    "PWR-007",
-    "PWR-005"
+    "PWR-006"
    ],
-   "how": "Weigh pack, frame stack and UBEC on a 1 g scale at T-PWR-ARRIVAL; fails today by the power board moved from avionics (CR-F1-19 transfers 28 g)",
-   "value": 638.2
+   "how": "Weigh pack and frame stack on a 1 g scale at T-PWR-ARRIVAL; the 28 g power board moved from avionics (CR-F1-19) is what the 620 g allocation does not yet carry",
+   "note": "D-74: UBEC (13 g) and fuse (3.5 g) deleted, deck 56 mm (+0.7 g frame)",
+   "value": 622.4
   },
   {
    "id": "CL-PWR-MASS-NONPACK",
@@ -393,12 +508,10 @@
     "PWR-002",
     "PWR-003",
     "PWR-004",
-    "PWR-006",
-    "PWR-007",
-    "PWR-005"
+    "PWR-006"
    ],
-   "how": "Weigh the built frame stack (board, bus, AS150U, fuse) and the UBEC",
-   "value": 88.2
+   "how": "Weigh the built frame stack (board, bus, AS150U, frame) and the four caps",
+   "value": 72.39999999999999
   },
   {
    "id": "CL-PWR-JUMPER-R",
@@ -512,11 +625,9 @@
     "PWR-002",
     "PWR-003",
     "PWR-004",
-    "PWR-006",
-    "PWR-007",
-    "PWR-005"
+    "PWR-006"
    ],
-   "how": "Tape measure GPS centre to UBEC and AS150U on the built pod; COMPASSMOT at T-F3-COMPASSMOT",
+   "how": "Tape measure GPS centre to the AS150U and the power board on the built pod; COMPASSMOT at T-F3-COMPASSMOT",
    "value": 0.13783969856322234
   },
   {
@@ -556,6 +667,92 @@
    "value": 1.850000000000001
   },
   {
+   "id": "CL-PWR-KO-FIT",
+   "type": "claim",
+   "title": "Power board inside the KO-PWR-BOARD footprint (smallest face gap)",
+   "calc": "CALC-PWR-KO",
+   "output": "fit_mm",
+   "unit": "mm",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "parts": [
+    "PWR-003",
+    "PWR-006"
+   ],
+   "how": "BOARD-CHECK.md step 3: measured PDB outline <= 53 x 33 mm; dry fit on the printed deck (T-PWR-FIT)",
+   "note": "D-74: the deck is drawn to the keep-out footprint (56 x 34 mm, x -0.066 ... -0.010); the 52 mm board sits pads-aft at the window, 4 mm left forward for case U plugs",
+   "value": 0.0
+  },
+  {
+   "id": "CL-PWR-KO-SEAT",
+   "type": "claim",
+   "title": "Deck board seat vs the KO-PWR-BOARD footprint (largest edge offset)",
+   "calc": "CALC-PWR-KO",
+   "output": "seat_err_mm",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "value": 0.5
+   },
+   "parts": [
+    "PWR-006"
+   ],
+   "how": "Calipers on the printed deck: 56 x 34 mm seat",
+   "note": "deck re-drawn 42 -> 56 mm (D-74)",
+   "value": 0.0
+  },
+  {
+   "id": "CL-PWR-KO-TOP-S",
+   "type": "claim",
+   "title": "Split case (S): power board top z vs keep-out top",
+   "calc": "CALC-PWR-KO",
+   "output": "top_s_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-PWR-KO-TOP"
+   },
+   "parts": [
+    "PWR-003"
+   ],
+   "how": "BOARD-CHECK.md step 3: PDB height <= 9 mm; T-PWR-FIT",
+   "value": 0.048600000000000004
+  },
+  {
+   "id": "CL-PWR-KO-TOP-U",
+   "type": "claim",
+   "title": "Whole-stack case (U): stack top z vs keep-out top",
+   "calc": "CALC-PWR-KO",
+   "output": "top_u_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-PWR-KO-TOP"
+   },
+   "parts": [
+    "PWR-003",
+    "AVN-001"
+   ],
+   "how": "BOARD-CHECK.md step 3: stack <= 17.5 mm; only if case U is chosen",
+   "value": 0.0626
+  },
+  {
+   "id": "CL-PWR-KO-TOP",
+   "type": "claim",
+   "title": "KO-PWR-BOARD top z (reserved by D2 in the pod CAD)",
+   "calc": "CALC-PWR-KO",
+   "output": "ko_top_m",
+   "unit": "m",
+   "parts": [
+    "PWR-003",
+    "POD-001"
+   ],
+   "how": "D2 pod CAD: nothing structural inside the keep-out",
+   "value": 0.0626
+  },
+  {
    "id": "T-PWR-ARRIVAL",
    "type": "test",
    "title": "Measure and weigh the bought power parts",
@@ -564,7 +761,7 @@
     "CL-PWR-MASS-NONPACK"
    ],
    "state": "planned",
-   "procedure": "Calipers on the AS150U halves, the separated CoreWing power board (<= 42 x 32 x 9 mm) and the UBEC; 1 g scale on every part; unplug force of a mated AS150U pair with a luggage scale; epoxy coupon on a sanded spare housing"
+   "procedure": "Calipers on the AS150U halves and the separated CoreWing power board (BOARD-CHECK.md: <= 53 x 33 x 9 mm); 1 g scale on every part; unplug force of a mated AS150U pair with a luggage scale; epoxy coupon on a sanded spare housing"
   },
   {
    "id": "T-PWR-FIT",
@@ -574,7 +771,10 @@
     "CL-PWR-BEND",
     "CL-PWR-ENGAGE",
     "CL-PWR-DECK-CLR",
-    "CL-PWR-CHANNEL-FIT"
+    "CL-PWR-CHANNEL-FIT",
+    "CL-PWR-KO-FIT",
+    "CL-PWR-KO-SEAT",
+    "CL-PWR-KO-TOP-S"
    ],
    "state": "planned",
    "procedure": "Bus board taped, frame screwed (4 x M3x18 nylon), jumpers formed on the frame, AS150U seated, hatch closed"

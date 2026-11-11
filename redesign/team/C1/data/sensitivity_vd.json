@@ -21,99 +21,99 @@
  ],
  "outputs": {
   "spar_Mb_ult": {
-   "at_derived": 20.749983061453975,
-   "at_requirement": 20.749983061453975,
+   "at_derived": 20.737381308160774,
+   "at_requirement": 20.737381308160774,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "spar_Mx_ult": {
-   "at_derived": 12.003490592162136,
-   "at_requirement": 12.003490592162136,
+   "at_derived": 12.00349067613653,
+   "at_requirement": 12.00349067613653,
    "case": [
     "G2-HANG-MOTOR",
     "G2-HANG-MOTOR"
    ]
   },
   "wing_T_ult": {
-   "at_derived": 8.38077723433387,
-   "at_requirement": 8.38077723433387,
+   "at_derived": 8.485182084590061,
+   "at_requirement": 8.485182084590061,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "wing_Vz_ult": {
-   "at_derived": 32.76424902358843,
-   "at_requirement": 33.379475195474434,
+   "at_derived": 32.86543918259423,
+   "at_requirement": 33.48066535448024,
    "case": [
     "F7-ROLLPULL-VA",
     "F7-ROLLPULL-VA"
    ]
   },
   "finjoint_M_ult": {
-   "at_derived": 22.55192179752377,
-   "at_requirement": 22.55192179752377,
+   "at_derived": 22.563638568172145,
+   "at_requirement": 22.563638568172145,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "finhalf_Mb_ult": {
-   "at_derived": 16.42114249025692,
-   "at_requirement": 16.42114249025692,
+   "at_derived": 16.299973486212195,
+   "at_requirement": 16.299973486212195,
    "case": [
     "L5-CORNER-SIDE-Z",
     "L5-CORNER-SIDE-Z"
    ]
   },
   "finhalf_T_ult": {
-   "at_derived": 19.107927600075637,
-   "at_requirement": 19.107927600075637,
+   "at_derived": 19.077706061714334,
+   "at_requirement": 19.077706061714334,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "mount_F_ult": {
-   "at_derived": 31.62762941890951,
-   "at_requirement": 31.62762941890951,
+   "at_derived": 31.627629418909514,
+   "at_requirement": 31.627629418909514,
    "case": [
     "G3-BENCH",
     "G3-BENCH"
    ]
   },
   "pod_F_ult": {
-   "at_derived": 113.62259725459757,
-   "at_requirement": 113.62259725459757,
+   "at_derived": 111.44289721274473,
+   "at_requirement": 111.44289721274473,
    "case": [
     "L1-LEVEL",
     "L1-LEVEL"
    ]
   },
   "foot_F_ult": {
-   "at_derived": 79.96403057858278,
-   "at_requirement": 79.96403057858278,
+   "at_derived": 80.54413353026222,
+   "at_requirement": 80.54413353026222,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "proof_P_side_lim_N": {
-   "at_derived": 24.599445390639797,
-   "at_requirement": 26.086213252251092,
+   "at_derived": 24.469997610639794,
+   "at_requirement": 25.951316034586185,
    "case": [
-    24.599445390639797,
-    26.086213252251092
+    24.469997610639794,
+    25.951316034586185
    ]
   },
   "proof_Mx_root_lim_Nm": {
-   "at_derived": 1.7766214111917784,
-   "at_requirement": 1.873410351174098,
+   "at_derived": 1.7083924283487804,
+   "at_requirement": 1.801464306899864,
    "case": [
-    1.7766214111917784,
-    1.873410351174098
+    1.7083924283487804,
+    1.801464306899864
    ]
   }
  }

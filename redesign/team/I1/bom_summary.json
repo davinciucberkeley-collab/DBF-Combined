@@ -1,19 +1,19 @@
 {
  "money": {
-  "spend_pess_allin": 2046.8,
-  "spend_base_allin": 1961.59,
-  "goods_base": 1327.33,
-  "goods_pess": 1352.92,
-  "tax_base": 136.05,
-  "tax_pess": 138.67,
-  "spend_base": 1588.38,
-  "spend_pess": 1673.59,
-  "early_goods_tax": 989.39
+  "spend_pess_allin": 2057.82,
+  "spend_base_allin": 1972.6,
+  "goods_base": 1309.32,
+  "goods_pess": 1334.91,
+  "tax_base": 134.21,
+  "tax_pess": 136.83,
+  "spend_base": 1568.53,
+  "spend_pess": 1653.74,
+  "early_goods_tax": 969.54
  },
- "reserve_pess": 326.41,
- "reserve_base": 411.62,
+ "reserve_pess": 346.26,
+ "reserve_base": 431.47,
  "bridge": {
-  "value": 1673.59,
+  "value": 1653.74,
   "deltas": {
    "P01 Ovonic 120C EC5 pair, pessimistic EUR 113.30 x 1.16 = 131.43 replaces 130C XT60 list 119.88 (D-64)": 11.550000000000011,
    "M01 Savox SH-0255MG+ 2 x 41.99 replaces ES3005HV 2 x 19.99 (CR-D6-02)": 44.00000000000001,
@@ -26,12 +26,13 @@
    "G13 two strain gauges (CR-C4-38)": 9.0,
    "D-57 lever 1: G07 25.99 + G08 20.00 + G09 25.00 + G10 15.00 borrowed (gate X10)": -85.99,
    "D-57 lever 2: G11 41.73 + H05 15.00 borrowed (gate X11)": -56.73,
-   "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0
+   "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0,
+   "D-74: F04 4 + F05 18 + F06 6 gated X12 (UBEC fallback); H06 XT30U 10-pair 9.99 (WB-03)": -18.009999999999998
   }
  },
  "vendors": {
   "SunnySky USA": 124.95,
-  "Amazon": 413.82,
+  "Amazon": 395.81,
   "APC": 51.96,
   "Bolt Depot": 7.0,
   "Ampow / OVONIC (same SKU)": 114.48,
@@ -49,12 +50,12 @@
   "Harbor Freight": 19.99
  },
  "by_order": {
-  "EARLY": 897.41,
+  "EARLY": 879.4,
   "DEC": 349.96,
   "LOCAL": 79.96
  },
- "reserve_pess_allin": -46.8,
- "reserve_base_allin": 38.41,
+ "reserve_pess_allin": -57.82,
+ "reserve_base_allin": 27.4,
  "gated": {
   "X01": 33.08,
   "X02": 46.29,
@@ -66,6 +67,7 @@
   "X08": 66.14,
   "X10": 94.8,
   "X11": 62.54,
+  "X12": 30.87,
   "X09": 16.54
  }
 }

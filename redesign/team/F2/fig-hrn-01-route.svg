@@ -18,7 +18,7 @@
 <polyline points="94.3,220.8 84.4,240.0" fill="none" stroke="#4C8DE0" stroke-width="2"/>
 <polyline points="" fill="none" stroke="#5DB24D" stroke-width="2"/>
 <polyline points="99.7,220.8 88.0,240.0" fill="none" stroke="#5DB24D" stroke-width="2"/>
-<polyline points="88.0,246.0 88.0,264.0 74.8,309.4 110.2,309.4 110.2,322.8 145.6,333.8 157.6,333.8 382.4,333.5 382.0,345.6 382.0,357.6 382.0,369.6 382.0,381.6 382.0,386.4" fill="none" stroke="#5DB24D" stroke-width="2"/>
+<polyline points="88.0,246.0 88.0,264.0 74.8,309.4 110.2,309.4 110.2,322.8 145.6,333.8 157.6,333.8 382.6,333.5 382.1,345.6 382.1,357.6 382.1,369.6 382.1,381.6 382.0,386.4" fill="none" stroke="#5DB24D" stroke-width="2"/>
 <polyline points="382.0,403.2 382.0,414.0 382.0,414.0 375.9,419.3" fill="none" stroke="#5DB24D" stroke-width="2"/>
 <polyline points="92.8,220.8 88.0,232.8 109.6,290.4 109.6,300.0 97.6,300.0 97.6,300.0 47.2,300.0 40.0,307.4 40.0,307.4 40.0,313.8 40.0,313.8 40.0,301.2" fill="none" stroke="#8E6FD8" stroke-width="2"/>
 <polyline points="92.8,220.8 88.0,232.8 109.6,290.4 109.6,300.0 97.6,300.0 97.6,300.0 47.2,300.0 40.0,307.4 40.0,307.4 40.0,313.8 40.0,313.8 40.0,301.2" fill="none" stroke="#8E6FD8" stroke-width="2"/>
@@ -38,22 +38,22 @@
 <rect x="817.5" y="175.0" width="57.5" height="35.0" fill="#E0613A" fill-opacity="0.35" stroke="#121619" stroke-width="1.25"/>
 <rect x="734.2" y="78.8" width="32.5" height="47.5" fill="#121619" fill-opacity="0.25" stroke="#121619" stroke-width="1.25"/>
 <circle cx="827.5" cy="284.1" r="6.2" fill="none" stroke="#121619" stroke-width="1.25"/>
-<rect x="762.5" y="134.1" width="77.5" height="20.0" fill="none" stroke="#121619" stroke-width="0.75"/>
+<rect x="762.5" y="134.0" width="77.5" height="20.0" fill="none" stroke="#121619" stroke-width="0.75"/>
 <rect x="817.5" y="470.0" width="57.5" height="35.0" fill="#E0613A" fill-opacity="0.35" stroke="#121619" stroke-width="1.25"/>
 <rect x="734.2" y="553.8" width="32.5" height="47.5" fill="#121619" fill-opacity="0.25" stroke="#121619" stroke-width="1.25"/>
 <circle cx="827.5" cy="378.4" r="6.2" fill="none" stroke="#121619" stroke-width="1.25"/>
-<rect x="762.5" y="525.9" width="77.5" height="20.0" fill="none" stroke="#121619" stroke-width="0.75"/>
+<rect x="762.5" y="526.0" width="77.5" height="20.0" fill="none" stroke="#121619" stroke-width="0.75"/>
 <rect x="762.5" y="125.0" width="27.5" height="430.0" fill="#121619" fill-opacity="0.15" stroke="#121619" stroke-width="1"/>
 <polyline points="808.8,296.8 827.5,284.1 835.0,279.1 870.0,230.0 871.2,210.0 873.1,201.3" fill="none" stroke="#E0613A" stroke-width="2"/>
 <polyline points="808.8,365.9 827.5,378.4 835.0,383.4 870.0,450.0 871.2,470.0 873.1,478.8" fill="none" stroke="#E0613A" stroke-width="2"/>
-<polyline points="816.2,192.5 801.9,145.3 785.0,109.4 749.2,102.5" fill="none" stroke="#E0613A" stroke-width="2"/>
-<polyline points="816.2,487.5 801.9,534.7 785.0,570.6 749.2,577.5" fill="none" stroke="#E0613A" stroke-width="2"/>
+<polyline points="816.2,192.5 801.9,145.2 785.0,109.4 749.2,102.5" fill="none" stroke="#E0613A" stroke-width="2"/>
+<polyline points="816.2,487.5 801.9,534.8 785.0,570.6 749.2,577.5" fill="none" stroke="#E0613A" stroke-width="2"/>
 <polyline points="827.2,281.3 835.5,278.6 847.8,261.4 858.8,220.0 867.5,203.8" fill="none" stroke="#4C8DE0" stroke-width="2"/>
 <polyline points="827.2,381.2 835.4,383.8 847.6,407.2 858.8,460.0 867.5,476.2" fill="none" stroke="#4C8DE0" stroke-width="2"/>
 <text x="899.0" y="196.5" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">ESC UR</text>
 <text x="899.0" y="491.5" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">ESC LR</text>
 <text x="734.2" y="74.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">motor UR</text>
-<text x="857.2" y="143.1" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">collar tie</text>
+<text x="857.2" y="143.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">collar tie</text>
 <text x="835.5" y="287.8" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">hole + grommet</text>
 <text x="1020.0" y="344.0" font-family="IBM Plex Mono, monospace" font-size="12" fill="#121619" text-anchor="start">wing</text>
 <text x="720" y="40" font-family="IBM Plex Sans, system-ui" font-size="12" font-weight="500" fill="#121619">FIN UR/LR · outboard face, nose left</text>

@@ -89,31 +89,31 @@ Volume output fields: COORDINATES, SOLUTION, STRESS
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Three dimensional problem.
-181516 grid points.
-147446 volume elements.
+173442 grid points.
+143222 volume elements.
 4 surface markers.
-7162 boundary elements in index 0 (Marker = clamp).
-280 boundary elements in index 1 (Marker = load_rim).
-280 boundary elements in index 2 (Marker = load_open).
-59894 boundary elements in index 3 (Marker = free).
-147446 hexahedra.
+7852 boundary elements in index 0 (Marker = clamp).
+200 boundary elements in index 1 (Marker = load_rim).
+200 boundary elements in index 2 (Marker = load_open).
+51688 boundary elements in index 3 (Marker = free).
+143222 hexahedra.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
 Recomputing point connectivity.
 Setting element connectivity.
 Checking the numerical grid orientation.
 All volume elements are correctly oriented.
-There has been a re-orientation of 67616 QUADRILATERAL surface elements.
+There has been a re-orientation of 59940 QUADRILATERAL surface elements.
 Identifying edges and vertices.
 Setting the control volume structure.
-Volume of the computational grid: 8514.49.
+Volume of the computational grid: 7274.3.
 Searching for the closest normal neighbors to the surfaces.
 Storing a mapping from global to local point index.
-Semi-span length = 15.55 m.
-Surface area = 12785.2 m^2.
-Area projection in the x-plane = 671.598 m^2, y-plane = 2704.8 m^2, z-plane = 3187.92 m^2.
-Max. coordinate in the x-direction = 326.8 m, y-direction = 15.55 m, z-direction = 219 m.
-Min. coordinate in the x-direction = 261.8 m, y-direction = -15.55 m, z-direction = 193.6 m.
+Semi-span length = 12.95 m.
+Surface area = 10649.3 m^2.
+Area projection in the x-plane = 556.772 m^2, y-plane = 2567.2 m^2, z-plane = 2369.52 m^2.
+Max. coordinate in the x-direction = 326.6 m, y-direction = 12.95 m, z-direction = 219 m.
+Min. coordinate in the x-direction = 261.6 m, y-direction = -12.95 m, z-direction = 194.2 m.
 Computing wall distances.
 
 -------------------- Solver Preprocessing ( Zone 0 ) --------------------
@@ -135,14 +135,14 @@ Simulation Run using the Single-zone Driver
 +--------------------------------------+
 |  Inner_Iter|  LinSolIter|   LinSolRes|
 +--------------------------------------+
-|           0|        7075|   -9.000092|
+|           0|        5383|   -9.007983|
 
 ----------------------------- Solver Exit -------------------------------
 All convergence criteria satisfied.
 +-----------------------------------------------------------------------+
 |      Convergence Field     |     Value    |   Criterion  |  Converged |
 +-----------------------------------------------------------------------+
-|                  rms[DispX]|      -11.2298|         < -14|          No|
+|                  rms[DispX]|      -11.1479|         < -14|          No|
 +-----------------------------------------------------------------------+
 -------------------------------------------------------------------------
 +-----------------------------------------------------------------------+

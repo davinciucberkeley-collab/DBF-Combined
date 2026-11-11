@@ -55,14 +55,14 @@ PARTS = [
      'bracket flanges bonded inside), nose wall at x -0.140 (D-62; pitot, vent and antenna holes), aft wall (vent + servo-lead exits), '
      'aft deck; the forward stop sits on a 1 mm epoxy line on the nose wall; 6 mm microballoon fillets floor-to-wall at the straps '
      '(CR-C6-17); light tape on the top (CR-E3-03)'),
-    ('POD-002', 'Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics, ribbed PDB and UBEC plates, JR tie bar (printed PETG)',
+    ('POD-002', 'Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics and ribbed PDB plates, JR tie bar (printed PETG)',
      'PETG (printed)', 'make', 'FDM PETG, 7 prints epoxied full-area to the floor', 'subsystems/pod/fusion/pod.py', ['glue_tray', 'inserts_m3'],
      'R6 (D-62, D-69): forward-stop T (face x -0.1312; upright past the floor edge to a 12 x 54 x 1.2 mm flange bonded under the floor, '
-     'CR-C3-15), aft stop face x 0.0475 with 2 root ribs on the rear piece (backed by the POD-007 strut); 4 strap slots 37 x 1.8 mm at '
-     'x -0.062 / 0.006; 10 mm wire channel across the bay at x -0.0245 (CR-F2-03); FC on 4 gel cubes between end stops with strap '
+     'CR-C3-15), aft stop face x 0.0475 with 2 root ribs on the rear piece (backed by the POD-007 strut); 4 strap slots 26 x 1.8 mm at '
+     'x -0.079 / 0.006 (D-74); 10 mm wire channel across the bay at x -0.0245 (CR-F2-03); FC on 4 gel cubes between end stops with strap '
      'slots (CR-F3-12, CR-C6-19); airspeed between tie posts 21 mm apart, foam tape + 1 tie; PDB plate x -0.038-0.050 with 4 bosses '
-     '7.2 mm for M3 heat-set inserts (F1 power frame, 25 mm pattern, CR-C6-27) and a 1.6 x 4 mm rib along each boss row; UBEC plate '
-     'x 0.044-0.072 (CR-F1-17); JR tie bar x 0.021-0.040 right channel'),
+     '7.2 mm for M3 heat-set inserts (F1 power frame, 25 mm pattern, CR-C6-27) and a 1.6 x 4 mm rib along each boss row; no UBEC plate '
+     '(D-74: the zone x 0.044-0.074 holds the right XT30U pair); JR tie bar x 0.021-0.040 right channel'),
     ('POD-003', 'Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)', 'foam board + PETG', 'make',
      'knife-cut foam board, FDM tongue and tube', 'subsystems/pod/fusion/pod.py', ['velcro_tab'],
      'tool-free, no magnets: tongue under the nose lip, hook-and-loop tab on the aft deck; receiver antenna A up the tube'),
@@ -101,7 +101,7 @@ EDGES = [
               'z = pod base, full pod width) and leaves the tape skin off under the pod (CR-C2-07); skin then taped over the shell foot (CR-D2-04)',
      'bond': 'AREA_POD_WING'},
     {'id': 'E-POD-02', 'part_a': 'POD-002', 'part_b': 'POD-001', 'via': 'CT-EPOXY', 'owner': 'pod',
-     'notes': 'tray front and rear pieces, FC, avionics, PDB and UBEC plates and the JR bar epoxied full-area to the foam-board floor '
+     'notes': 'tray front and rear pieces, FC, avionics and PDB plates and the JR bar epoxied full-area to the foam-board floor '
               '(paper face scuffed); forward-stop T (D-69, CR-C3-15): upright bonded to the floor front edge and, through the 1 mm '
               'microballoon line, to the nose wall; flange bonded under the floor (9 x 54 mm), tray front piece bonded over the floor '
               'behind it, so the -x root moment clamps the floor; 6 mm microballoon fillets floor-to-side-wall over +/-30 mm of each '
@@ -184,7 +184,7 @@ CTYPES = [
      'spec': 'M3 PA66 (nylon) screw through a clearance hole, PA66 nut, finger tight + 1/4 turn (non-magnetic, near a compass; the screw is a fuse)'},
 ]
 
-ACKS = ['E-PWR-03', 'E-PWR-04', 'E-PWR-05', 'E-AVN-01', 'E-AVN-02', 'E-AVN-03', 'E-AVN-04', 'E-AVN-05', 'E-AVN-07',
+ACKS = ['E-PWR-03', 'E-PWR-05', 'E-AVN-01', 'E-AVN-02', 'E-AVN-03', 'E-AVN-04', 'E-AVN-05', 'E-AVN-07',
         'E-AVN-10', 'E-HRN-01', 'E-WNG-17']   # R4: E-PWR-01/-02 now land on F1's power frame PWR-006 (CR-F1-16), not on POD-002
 
 
@@ -269,10 +269,9 @@ def areas(G, L):
     ax0, ax1 = lv(L, 'avn_plate_x_m')
     p0, p1 = lv(L, 'pdb_plate_x_m')
     jb = lv(L, 'jr_bar_m')
-    u0, u1 = lv(L, 'ubec_zone_x_m')
     p1 = lv(L, 'pdb_plate_x1_m')                        # R6: PDB plate runs aft to here (CR-C6-27)
     tray = sum(pod_mod_net_area(lp) for _n, lp in G['tray_loops']) + \
-        (lv(L, 'fc_plate_len_m') + (ax1 - ax0) + (p1 - p0) + (u1 - u0)) * chw + jb[2] * (chw - 0.001)
+        (lv(L, 'fc_plate_len_m') + (ax1 - ax0) + (p1 - p0)) * chw + jb[2] * (chw - 0.001)    # D-74: no UBEC plate
     so = lv(L, 'socket_m')
     fl = lv(L, 'flange_m')[0]
     sock = 4 * so[0] * tb + fl * fl - so[0] * so[0]

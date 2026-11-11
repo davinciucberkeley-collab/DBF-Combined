@@ -7,11 +7,11 @@
   "wing": 405,
   "fins": 438,
   "pod": 146,
-  "landing": 48,
+  "landing": 60,
   "propulsion": 462,
-  "power": 648,
+  "power": 630,
   "avionics": 45,
-  "harness": 123,
+  "harness": 129,
   "mechanisms": 72
  },
  "cg_x_m": [

@@ -89,31 +89,31 @@ Volume output fields: COORDINATES, SOLUTION, STRESS
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Three dimensional problem.
-181516 grid points.
-147446 volume elements.
+173442 grid points.
+143222 volume elements.
 4 surface markers.
-7162 boundary elements in index 0 (Marker = clamp).
+7852 boundary elements in index 0 (Marker = clamp).
 160 boundary elements in index 1 (Marker = load_rim).
 160 boundary elements in index 2 (Marker = load_open).
-60134 boundary elements in index 3 (Marker = free).
-147446 hexahedra.
+51768 boundary elements in index 3 (Marker = free).
+143222 hexahedra.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
 Recomputing point connectivity.
 Setting element connectivity.
 Checking the numerical grid orientation.
 All volume elements are correctly oriented.
-There has been a re-orientation of 67616 QUADRILATERAL surface elements.
+There has been a re-orientation of 59940 QUADRILATERAL surface elements.
 Identifying edges and vertices.
 Setting the control volume structure.
-Volume of the computational grid: 8514.49.
+Volume of the computational grid: 7274.3.
 Searching for the closest normal neighbors to the surfaces.
 Storing a mapping from global to local point index.
-Semi-span length = 15.55 m.
-Surface area = 12784.2 m^2.
-Area projection in the x-plane = 671.598 m^2, y-plane = 2704.8 m^2, z-plane = 3187.92 m^2.
-Max. coordinate in the x-direction = 326.8 m, y-direction = 15.55 m, z-direction = 219 m.
-Min. coordinate in the x-direction = 261.8 m, y-direction = -15.55 m, z-direction = 193.6 m.
+Semi-span length = 12.95 m.
+Surface area = 10648.8 m^2.
+Area projection in the x-plane = 556.772 m^2, y-plane = 2567.2 m^2, z-plane = 2369.52 m^2.
+Max. coordinate in the x-direction = 326.6 m, y-direction = 12.95 m, z-direction = 219 m.
+Min. coordinate in the x-direction = 261.6 m, y-direction = -12.95 m, z-direction = 194.2 m.
 Computing wall distances.
 
 -------------------- Solver Preprocessing ( Zone 0 ) --------------------
@@ -135,14 +135,14 @@ Simulation Run using the Single-zone Driver
 +--------------------------------------+
 |  Inner_Iter|  LinSolIter|   LinSolRes|
 +--------------------------------------+
-|           0|        7150|   -9.000938|
+|           0|        5602|   -9.006966|
 
 ----------------------------- Solver Exit -------------------------------
 All convergence criteria satisfied.
 +-----------------------------------------------------------------------+
 |      Convergence Field     |     Value    |   Criterion  |  Converged |
 +-----------------------------------------------------------------------+
-|                  rms[DispX]|      -11.1033|         < -14|          No|
+|                  rms[DispX]|      -11.0966|         < -14|          No|
 +-----------------------------------------------------------------------+
 -------------------------------------------------------------------------
 +-----------------------------------------------------------------------+

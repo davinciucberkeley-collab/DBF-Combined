@@ -1,5 +1,13 @@
 # D5 change requests
 
+## Round R7 (2026-11-11, revision D5-R7, D-75 / D-76 / D-78; BR-00, BR-01 / SW-02)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-D5-32 | I1 (cc H1, A1) | Add one **2 in FOAMULAR 400** XPS board (or an insulation-supplier offcut ≥ 0.3 × 0.3 m) and one **5/32 in K&S brass tube** (12 in); drop the 7/32 in tube. Buy early: `T-D5-COUPON` on F-400 gates the shoe print. | D-76: 40 psi foam lets the cartridge shrink to 14.5 × 9.8 mm and the feet to 59.1 g (−10.8 g). Fallback is the R6 F-250 set (+11 g, CG +1.1 mm). Price not known (EST, I1 quotes). |
+| CR-D5-33 | C5, C4, C6, H1 (cc C1) | Re-run on D5-R7. **C5**: `CALC-C5-FEA-SHOE-D5R6` on the 19.1 × 14.4 mm sleeve, rim 3.4 (D5's FEA: +y 37.6, +z 31.0 MPa at 59.25 N, RF 1.06); the 3-D sim inputs move only by A3's mass (plateaus 39.2 / 35.8 N). **C4**: fin-station model on the D-75 tip (step x 0.2614, \|z\| 0.2010, shoe on the fin 58.6 mm, cheeks from 0.2536), CR-C6-38. **C6**: strip pins, 11 per half to x 0.249 (was 12 to 0.264); shoe bond 1 657 mm², RF 1.44. **H1**: `T-D5-COUPON` on F-400 (same pass bands), `T-D5-SIDE` 60 N on two R7 shoes. | `CL-D5-FIN-STEP-*`, `CL-D5-SIDE-RIM-SF`, `CL-D5-BOND-*`, `CL-D5-F-PLATEAU-*`. CR-D5-31 (R6 step at 0.2616) was never logged; D-75 supersedes it. |
+| CR-D5-11 | D3 | **Re-opened and closed by D-75**: `tip_square_m` 0.0586, `tip_step_z_m` 0.2010, `tip_clear_x_m` 0.2536 applied 2026-11-11, `make_fins.py` re-run, `CL-D3-TIP-STEP-MISMATCH` 0. | — |
+
 ## Round R5 (2026-11-09, revision D5-R5, answers CR-A4-39, CR-A5-25, CR-A1-46)
 
 | Id | To | What | Why / numbers |

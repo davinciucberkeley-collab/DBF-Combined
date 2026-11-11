@@ -1,4 +1,5 @@
-"""Power subsystem claims (F1, PWR-R1): mass vs allocation, main jumpers, frame joint, park bond, GPS clearance.
+"""Power subsystem claims (F1, PWR-R1 + D-74): mass vs allocation, main jumpers, frame joint, park bond, GPS clearance,
+power board inside its keep-out KO-PWR-BOARD. D-74 deleted the UBEC PWR-005 and its fuse PWR-007.
 
 Run:  python -I redesign/subsystems/power/power_claims.py   -> claims.json beside this file
 Geometry claims call fusion/power.py#layout() with the named inputs only, so build_graph.py re-runs them exactly.
@@ -16,7 +17,7 @@ import power as pw  # noqa: E402
 
 kit = pk.Kit(__file__, params=["../../params/params.json", "params.json", "../pod/params.json"])
 
-PARTS_LEFT = ["PWR-002", "PWR-003", "PWR-004", "PWR-006", "PWR-007"]
+PARTS_LEFT = ["PWR-002", "PWR-003", "PWR-004", "PWR-006"]
 
 kit.assumption("ASM-PWR-BEND", "Bend radius of fixed short jumpers",
                "Fine-strand silicone jumpers that are soldered at both ends, tied, and never flexed in service may be "
@@ -48,36 +49,35 @@ def _layout(zb, tb, size, pack, pod_in, L_in):
 LAYOUT_IN = {"zb": "P:pod.z_base_m", "tb": "P:fins.board_t_m", "size": "P:pod.size_m", "pack": "P:battery.size_m",
              "tray_t": "P:tray_floor_t_m", "plate_t": "P:plate_t_m", "boss_h": "P:boss_h_m", "bay": "P:bay_min_m",
              "guide_t": "P:guide_t_m", "aft": "P:pack_aft_face_m", "pad_t": "P:pad_t_m", "plate_x": "P:pdb_plate_x_m",
-             "pattern": "P:pdb_pattern_m", "park": "P:park_x_m", "ubec_x": "P:ubec_zone_x_m", "stop": "P:aft_stop_m",
+             "pattern": "P:pdb_pattern_m", "park": "P:park_x_m", "stop": "P:aft_stop_m",
              "bus_m": "P:power.bus_board_m", "bar_m": "P:power.bar_m", "spacer": "P:power.spacer_h_m",
              "deck_t": "P:power.deck_t_m", "board": "P:power.board_env_m", "margin": "P:power.deck_margin_m",
              "wall": "P:power.wall_t_m", "win": "P:power.window_x_m", "as_m": "P:power.as150u_half_m",
-             "wall_h": "P:power.cradle_wall_h_m", "leg": "P:power.leg_m", "fuse_m": "P:power.fuse_m",
-             "fuse_x0": "P:power.fuse_x0_m", "ubec_m": "P:power.ubec_m"}
+             "wall_h": "P:power.cradle_wall_h_m", "leg": "P:power.leg_m", "ko": "P:power.ko_board_m",
+             "leg_sb": "P:power.leg_setback_m"}
 
 
 def _geo(a):
     pod_in = {"tray_floor_t_m": a["tray_t"], "plate_t_m": a["plate_t"], "boss_h_m": a["boss_h"], "bay_min_m": a["bay"],
               "guide_t_m": a["guide_t"], "pack_aft_face_m": a["aft"], "pad_t_m": a["pad_t"],
               "pdb_plate_x_m": a["plate_x"], "pdb_pattern_m": a["pattern"], "park_x_m": a["park"],
-              "ubec_zone_x_m": a["ubec_x"], "aft_stop_m": a["stop"]}
+              "aft_stop_m": a["stop"]}
     L_in = {"bus_board_m": a["bus_m"], "bar_m": a["bar_m"], "spacer_h_m": a["spacer"], "deck_t_m": a["deck_t"],
             "board_env_m": a["board"], "deck_margin_m": a["margin"], "wall_t_m": a["wall"], "window_x_m": a["win"],
-            "as150u_half_m": a["as_m"], "cradle_wall_h_m": a["wall_h"], "leg_m": a["leg"], "fuse_m": a["fuse_m"],
-            "fuse_x0_m": a["fuse_x0"], "ubec_m": a["ubec_m"]}
+            "as150u_half_m": a["as_m"], "cradle_wall_h_m": a["wall_h"], "leg_m": a["leg"], "ko_board_m": a["ko"],
+            "leg_setback_m": a["leg_sb"]}
     return _layout(a["zb"], a["tb"], a["size"], a["pack"], pod_in, L_in)
 
 
 @kit.calc("CALC-PWR-MASS", title="Power subsystem flying mass",
-          equation="m = pack + (AS150U half + 2 x (l1 + l2) x m'_10AWG) + board + bus + UBEC + frame + fuse + 4 x cap",
+          equation="m = pack + (AS150U half + 2 x (l1 + l2) x m'_10AWG) + board + bus + frame + 4 x cap (D-74: no UBEC, no fuse)",
           inputs={"pack": "P:battery.mass_kg", "as_g": "P:power.as150u_mass_g", "jl": "P:power.jumper_len_m",
                   "wire": "P:power.wire_10awg", "board": "P:power.board_mass_g", "bus": "P:power.bus_mass_g",
-                  "ubec": "P:power.ubec_mass_g", "frame": "P:power.frame_mass_g", "fuse": "P:power.fuse_mass_g",
-                  "cap": "P:power.cap_mass_g"},
+                  "frame": "P:power.frame_mass_g", "cap": "P:power.cap_mass_g"},
           units={"pack": "kg", "as_g": "g", "board": "g"})
-def mass(pack, as_g, jl, wire, board, bus, ubec, frame, fuse, cap):
+def mass(pack, as_g, jl, wire, board, bus, frame, cap):
     jumpers = 2 * sum(jl) * wire[2]
-    rest = as_g + jumpers + board + bus + ubec + frame + fuse + 4 * cap
+    rest = as_g + jumpers + board + bus + frame + 4 * cap
     return {"total_g": pack * 1000 + rest, "non_pack_g": rest, "jumpers_g": jumpers}
 
 
@@ -119,7 +119,7 @@ def park(a, tau, f):
           inputs=dict(LAYOUT_IN, gps="P:power.gps_xyz_m"))
 def geo(gps, **a):
     G = _geo(a)
-    boxes = [G["board"], G["bus"], G["as_air"], G["fuse"], G["ubec"]]
+    boxes = [G["board"], G["bus"], G["as_air"]]
     d = min(math.dist(gps, (b[i][0], b[j][1], b[k][2])) for b in boxes for i in (0, 1) for j in (0, 1) for k in (0, 1))
     bar_top = max(b[1][2] for b in G["bars"])
     out = G["deck"][0][1] + G["yi"]                              # deck outboard edge to the side wall (>= 0)
@@ -127,13 +127,28 @@ def geo(gps, **a):
     return {"gps_m": d, "deck_clr_mm": (G["dz0"] - bar_top) * 1000, "channel_fit_mm": min(out, inn) * 1000}
 
 
+@kit.calc("CALC-PWR-KO", title="Power board and deck inside the keep-out KO-PWR-BOARD (D-74)",
+          equation="fit = min(board and deck seat faces to the keep-out faces in x and y); top = deck top + whole-stack height",
+          inputs=dict(LAYOUT_IN, stack_u="P:power.stack_u_h_m"))
+def ko_fit(stack_u, **a):
+    G = _geo(a)
+    (k0, k1) = G["ko"]
+    b0, b1 = G["board"]
+    d0, d1 = G["deck"]
+    fit = min(b0[0] - k0[0], k1[0] - b1[0], b0[1] - k0[1], k1[1] - b1[1])           # board inside the footprint
+    seat = max(abs(d0[0] - k0[0]), abs(d0[1] - k0[1]), abs(d1[1] - k1[1]))           # deck seat = footprint
+    return {"fit_mm": fit * 1000, "seat_err_mm": seat * 1000, "deck_len_mm": (k1[0] - d0[0]) * 1000,
+            "top_s_m": b1[2], "top_u_m": G["dz1"] + stack_u, "ko_top_m": k1[2]}
+
+
 C = "subsystems/power/SPEC.md"
 kit.claim("CL-PWR-MASS", "Power subsystem flying mass", calc="CALC-PWR-MASS", output="total_g", unit="g",
-          limit=("<=", "P:mass.allocation_g.power"), parts=["PWR-001"] + PARTS_LEFT + ["PWR-005"],
-          how="Weigh pack, frame stack and UBEC on a 1 g scale at T-PWR-ARRIVAL; fails today by the power board "
-              "moved from avionics (CR-F1-19 transfers 28 g)")
+          limit=("<=", "P:mass.allocation_g.power"), parts=["PWR-001"] + PARTS_LEFT,
+          how="Weigh pack and frame stack on a 1 g scale at T-PWR-ARRIVAL; the 28 g power board moved from avionics "
+              "(CR-F1-19) is what the 620 g allocation does not yet carry",
+          note="D-74: UBEC (13 g) and fuse (3.5 g) deleted, deck 56 mm (+0.7 g frame)")
 kit.claim("CL-PWR-MASS-NONPACK", "Power mass without the pack", calc="CALC-PWR-MASS", output="non_pack_g", unit="g",
-          parts=PARTS_LEFT + ["PWR-005"], how="Weigh the built frame stack (board, bus, AS150U, fuse) and the UBEC")
+          parts=PARTS_LEFT, how="Weigh the built frame stack (board, bus, AS150U, frame) and the four caps")
 kit.claim("CL-PWR-JUMPER-R", "Main jumpers loop resistance, hot", calc="CALC-PWR-JUMPER", output="loop_mohm", unit="mOhm",
           limit=("<=", "ASM-PWR-R-BUDGET"), parts=["PWR-002"],
           how="4-wire milliohm reading AS150U cup to bus bar at T-F1-DROP")
@@ -150,20 +165,37 @@ kit.claim("CL-PWR-PARK-RF", "AS150U park bond reserve on the unplug force", calc
           limit=(">=", "ASM-PWR-PARK-RF"), parts=["PWR-002", "PWR-006"], assumes=["ASM-PWR-BOND-PA"],
           how="Pull the bonded aircraft half with 150 N (3 x 50 N) on a luggage scale (T-PWR-PARK-PULL)")
 kit.claim("CL-PWR-GPS-CLR", "GPS to the nearest power item", calc="CALC-PWR-GEO", output="gps_m", unit="m",
-          limit=(">=", "P:requirements.gps_mast_clearance_m"), parts=PARTS_LEFT + ["PWR-005"],
-          how="Tape measure GPS centre to UBEC and AS150U on the built pod; COMPASSMOT at T-F3-COMPASSMOT")
+          limit=(">=", "P:requirements.gps_mast_clearance_m"), parts=PARTS_LEFT,
+          how="Tape measure GPS centre to the AS150U and the power board on the built pod; COMPASSMOT at T-F3-COMPASSMOT")
 kit.claim("CL-PWR-DECK-CLR", "Deck underside above the bus bars", calc="CALC-PWR-GEO", output="deck_clr_mm", unit="mm",
           limit=(">=", "ASM-PWR-JOINT-H"), parts=["PWR-004", "PWR-006"],
           how="Dry-fit the deck over the soldered bus board (T-PWR-FIT): no contact")
 kit.claim("CL-PWR-CHANNEL-FIT", "Frame deck inside the left channel", calc="CALC-PWR-GEO", output="channel_fit_mm",
           unit="mm", limit=(">=", 0.0), parts=["PWR-006", "POD-001"], how="Drop the printed frame into the pod (T-PWR-FIT)")
+kit.claim("CL-PWR-KO-FIT", "Power board inside the KO-PWR-BOARD footprint (smallest face gap)", calc="CALC-PWR-KO",
+          output="fit_mm", unit="mm", limit=(">=", 0.0), parts=["PWR-003", "PWR-006"],
+          how="BOARD-CHECK.md step 3: measured PDB outline <= 53 x 33 mm; dry fit on the printed deck (T-PWR-FIT)",
+          note="D-74: the deck is drawn to the keep-out footprint (56 x 34 mm, x -0.066 ... -0.010); the 52 mm board "
+               "sits pads-aft at the window, 4 mm left forward for case U plugs")
+kit.claim("CL-PWR-KO-SEAT", "Deck board seat vs the KO-PWR-BOARD footprint (largest edge offset)", calc="CALC-PWR-KO",
+          output="seat_err_mm", unit="mm", limit=("<=", 0.5), parts=["PWR-006"],
+          how="Calipers on the printed deck: 56 x 34 mm seat", note="deck re-drawn 42 -> 56 mm (D-74)")
+kit.claim("CL-PWR-KO-TOP-S", "Split case (S): power board top z vs keep-out top", calc="CALC-PWR-KO", output="top_s_m",
+          unit="m", limit=("<=", "CL-PWR-KO-TOP"), parts=["PWR-003"],
+          how="BOARD-CHECK.md step 3: PDB height <= 9 mm; T-PWR-FIT")
+kit.claim("CL-PWR-KO-TOP-U", "Whole-stack case (U): stack top z vs keep-out top", calc="CALC-PWR-KO", output="top_u_m",
+          unit="m", limit=("<=", "CL-PWR-KO-TOP"), parts=["PWR-003", "AVN-001"],
+          how="BOARD-CHECK.md step 3: stack <= 17.5 mm; only if case U is chosen")
+kit.claim("CL-PWR-KO-TOP", "KO-PWR-BOARD top z (reserved by D2 in the pod CAD)", calc="CALC-PWR-KO", output="ko_top_m",
+          unit="m", parts=["PWR-003", "POD-001"], how="D2 pod CAD: nothing structural inside the keep-out")
 
 kit.test("T-PWR-ARRIVAL", "Measure and weigh the bought power parts", verifies=["CL-PWR-MASS", "CL-PWR-MASS-NONPACK"],
-         procedure="Calipers on the AS150U halves, the separated CoreWing power board (<= 42 x 32 x 9 mm) and the UBEC; "
-                   "1 g scale on every part; unplug force of a mated AS150U pair with a luggage scale; epoxy coupon on a "
-                   "sanded spare housing")
+         procedure="Calipers on the AS150U halves and the separated CoreWing power board (BOARD-CHECK.md: <= 53 x 33 x "
+                   "9 mm); 1 g scale on every part; unplug force of a mated AS150U pair with a luggage scale; epoxy "
+                   "coupon on a sanded spare housing")
 kit.test("T-PWR-FIT", "Dry fit of the power stack in the pod", verifies=["CL-PWR-BEND", "CL-PWR-ENGAGE", "CL-PWR-DECK-CLR",
-                                                                        "CL-PWR-CHANNEL-FIT"],
+                                                                        "CL-PWR-CHANNEL-FIT", "CL-PWR-KO-FIT",
+                                                                        "CL-PWR-KO-SEAT", "CL-PWR-KO-TOP-S"],
          procedure="Bus board taped, frame screwed (4 x M3x18 nylon), jumpers formed on the frame, AS150U seated, hatch closed")
 kit.test("T-PWR-PARK-PULL", "Park bond pull", verifies=["CL-PWR-PARK-RF"],
          procedure="After 24 h cure: 150 N along +x on the aircraft half through a mated pack half, 10 s; no movement")

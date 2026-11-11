@@ -20,18 +20,18 @@
   },
   {
    "id": "POD-002",
-   "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics, ribbed PDB and UBEC plates, JR tie bar (printed PETG)",
+   "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics and ribbed PDB plates, JR tie bar (printed PETG)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 43.3,
+   "mass_g": 41.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.0321,
-    -0.0025,
-    0.0246
+    -0.0351,
+    -0.0039,
+    0.0248
    ],
    "make_or_buy": "make",
-   "notes": "R6 (D-62, D-69): forward-stop T (face x -0.1312; upright past the floor edge to a 12 x 54 x 1.2 mm flange bonded under the floor, CR-C3-15), aft stop face x 0.0475 with 2 root ribs on the rear piece (backed by the POD-007 strut); 4 strap slots 37 x 1.8 mm at x -0.062 / 0.006; 10 mm wire channel across the bay at x -0.0245 (CR-F2-03); FC on 4 gel cubes between end stops with strap slots (CR-F3-12, CR-C6-19); airspeed between tie posts 21 mm apart, foam tape + 1 tie; PDB plate x -0.038-0.050 with 4 bosses 7.2 mm for M3 heat-set inserts (F1 power frame, 25 mm pattern, CR-C6-27) and a 1.6 x 4 mm rib along each boss row; UBEC plate x 0.044-0.072 (CR-F1-17); JR tie bar x 0.021-0.040 right channel; mass EST from CAD (team/D2/pod_data.py): PETG plate 40.4 g, glue_tray 1.5 g, inserts_m3 1.4 g"
+   "notes": "R6 (D-62, D-69): forward-stop T (face x -0.1312; upright past the floor edge to a 12 x 54 x 1.2 mm flange bonded under the floor, CR-C3-15), aft stop face x 0.0475 with 2 root ribs on the rear piece (backed by the POD-007 strut); 4 strap slots 26 x 1.8 mm at x -0.079 / 0.006 (D-74); 10 mm wire channel across the bay at x -0.0245 (CR-F2-03); FC on 4 gel cubes between end stops with strap slots (CR-F3-12, CR-C6-19); airspeed between tie posts 21 mm apart, foam tape + 1 tie; PDB plate x -0.038-0.050 with 4 bosses 7.2 mm for M3 heat-set inserts (F1 power frame, 25 mm pattern, CR-C6-27) and a 1.6 x 4 mm rib along each boss row; no UBEC plate (D-74: the zone x 0.044-0.074 holds the right XT30U pair); JR tie bar x 0.021-0.040 right channel; mass EST from CAD (team/D2/pod_data.py): PETG plate 38.3 g, glue_tray 1.5 g, inserts_m3 1.4 g"
   },
   {
    "id": "POD-003",
@@ -56,7 +56,7 @@
    "mass_g": 9.1,
    "material": "nylon hook-and-loop + EVA",
    "cg_xyz_m": [
-    -0.028,
+    -0.0365,
     0.0,
     0.0432
    ],
@@ -113,30 +113,30 @@
    "name": "Trim spacer set: PETG U-spacers 2 / 4 / 6 / 8 / 8 mm, colour-coded (white / yellow / green / blue)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 2.4,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0415,
+    0.0395,
     0.0,
     0.0268
    ],
    "make_or_buy": "make",
-   "notes": "behind the pack, on the aft stop (x 0.0475); set 2 / 4 / 6 / 8 mm (white / yellow / green / blue), every 2 mm stack 0-20 mm; A1 frame-estimate stations (D-62): 546 g 16 mm (-0.036), 550 g 14 mm (-0.034), 590 g 8 mm (-0.028), final from A3 (CR-A3-27); the stack is written on the pack label. CAD and mass: blue 8 + yellow 4 mm (pack at the -0.032 datum); the rest are field kit (ground); mass EST from CAD (team/D2/pod_data.py): PETG block 1.8 g"
+   "notes": "behind the pack, on the aft stop (x 0.0475); set 2 / 4 / 6 / 8 mm (white / yellow / green / blue), every 2 mm stack 0-20 mm; A1 frame-estimate stations (D-62): 546 g 16 mm (-0.036), 550 g 14 mm (-0.034), 590 g 8 mm (-0.028), final from A3 (CR-A3-27); the stack is written on the pack label. CAD and mass: blue 8 + yellow 4 mm (pack at the -0.032 datum); the rest are field kit (ground); mass EST from CAD (team/D2/pod_data.py): PETG block 2.4 g"
   },
   {
    "id": "POD-009",
    "name": "Crush block (XPS F-250, hot-wired, cut per pack, vent groove)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 2.5,
+   "mass_g": 2.2,
    "material": "XPS",
    "cg_xyz_m": [
-    -0.1161,
+    -0.1181,
     0.0,
     0.0481
    ],
    "make_or_buy": "make",
-   "notes": "ahead of the pack on the forward stop (CR-C5-02; C5 minimum 25.7 mm for the 550 g class): length = pack fore face - 1.5 mm - (-0.1312): 546 g 26.2 mm, 550 g 28.2 mm, 590 g 34.2 mm (30.2 mm in the CAD at the datum); labelled per pack; replace after any nose-in landing; mass EST from CAD (team/D2/pod_data.py): XPS 2.5 g"
+   "notes": "ahead of the pack on the forward stop (CR-C5-02; C5 minimum 25.7 mm for the 550 g class): length = pack fore face - 1.5 mm - (-0.1312): 546 g 26.2 mm, 550 g 28.2 mm, 590 g 34.2 mm (30.2 mm in the CAD at the datum); labelled per pack; replace after any nose-in landing; mass EST from CAD (team/D2/pod_data.py): XPS 2.2 g"
   },
   {
    "id": "POD-010",
@@ -146,7 +146,7 @@
    "mass_g": 5.3,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    -0.1003,
+    -0.1043,
     0.0,
     0.0481
    ],
@@ -248,10 +248,10 @@
    "part_b": "POD-001",
    "via": "CT-EPOXY",
    "owner": "pod",
-   "notes": "tray front and rear pieces, FC, avionics, PDB and UBEC plates and the JR bar epoxied full-area to the foam-board floor (paper face scuffed); forward-stop T (D-69, CR-C3-15): upright bonded to the floor front edge and, through the 1 mm microballoon line, to the nose wall; flange bonded under the floor (9 x 54 mm), tray front piece bonded over the floor behind it, so the -x root moment clamps the floor; 6 mm microballoon fillets floor-to-side-wall over +/-30 mm of each strap (CR-C6-17) and over x -0.131 ... -0.010 (CR-C3-01)",
+   "notes": "tray front and rear pieces, FC, avionics and PDB plates and the JR bar epoxied full-area to the foam-board floor (paper face scuffed); forward-stop T (D-69, CR-C3-15): upright bonded to the floor front edge and, through the 1 mm microballoon line, to the nose wall; flange bonded under the floor (9 x 54 mm), tray front piece bonded over the floor behind it, so the -x root moment clamps the floor; 6 mm microballoon fillets floor-to-side-wall over +/-30 mm of each strap (CR-C6-17) and over x -0.131 ... -0.010 (CR-C3-01)",
    "bond": {
     "adhesive": "30 min epoxy; 6 mm microballoon fillets at the floor-to-wall corners by the straps; 1 mm microballoon epoxy line between the forward stop / tray front and the nose wall",
-    "area_mm2": 18189,
+    "area_mm2": 16360,
     "prep": "PETG underside sanded 120 grit; board face scuffed 220 grit",
     "cure": "24 h",
     "load_n": "pack straps 85 N ultimate (CL-C1-PACK-CRASH-LOAD) into the floor; forward stop 85 N on the front piece (CL-D2-FWD-STOP-BOND: tray front piece + stop-T flange); peel at the stop roots is C3 (CL-C3-FEA-FWD-BED-PEEL, CL-C3-FEA-AFT-PROP-PEEL)",
@@ -518,7 +518,6 @@
  ],
  "acknowledges": [
   "E-PWR-03",
-  "E-PWR-04",
   "E-PWR-05",
   "E-AVN-01",
   "E-AVN-02",

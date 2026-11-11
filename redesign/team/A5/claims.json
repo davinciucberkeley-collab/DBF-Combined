@@ -1047,28 +1047,28 @@
    ],
    "outputs": {
     "mass_g": 2387.0,
-    "cg_x_m": 0.043175497149785094,
-    "cg_z_m": 0.016868896149817052,
-    "cg_x_frac_chord": 0.1349234285930784,
+    "cg_x_m": 0.045073087592640886,
+    "cg_z_m": 0.016665215918301078,
+    "cg_x_frac_chord": 0.14085339872700275,
     "cg_x_fwd_limit_m": 0.0466,
     "cg_x_aft_limit_m": 0.0514,
     "cg_z_up_limit_m": 0.025,
-    "cg_x_range_use": 2.4268761875895457,
-    "pack_x_m": -0.03200000000000001,
-    "pack_x_for_target_m": -0.006721657630067306,
-    "pack_shift_m": 0.0252783423699327,
-    "hover_upper_pair_share": 0.5443918319732027,
-    "hover_split_ratio": 1.1948684641254796
+    "cg_x_range_use": 1.636213503066299,
+    "pack_x_m": -0.036000000000000004,
+    "pack_x_for_target_m": -0.01895720015206144,
+    "pack_shift_m": 0.017042799847938564,
+    "hover_upper_pair_share": 0.5438558313639502,
+    "hover_split_ratio": 1.19228934349895
    },
    "input_values": {
     "a_wing": 405,
     "a_fins": 438,
     "a_pod": 146,
-    "a_land": 48,
+    "a_land": 60,
     "a_prop": 462,
-    "a_pwr": 648,
+    "a_pwr": 630,
     "a_avn": 45,
-    "a_hrn": 123,
+    "a_hrn": 129,
     "a_mec": 72,
     "m_pack_kg": 0.55,
     "spar_kgm": 0.102,
@@ -1380,7 +1380,7 @@
     "proud": 0.008,
     "blk_wall": 0.006,
     "pack_aft": [
-     0.0355,
+     0.0315,
      0.0475
     ]
    }
@@ -1514,7 +1514,7 @@
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 0.043175497149785094
+   "value": 0.045073087592640886
   },
   {
    "id": "CL-A5-LAYOUT-CG-X-RANGE-USE",
@@ -1528,7 +1528,7 @@
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 2.4268761875895457
+   "value": 1.636213503066299
   },
   {
    "id": "CL-A5-PACK-X-FOR-CG",
@@ -1545,7 +1545,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": -0.006721657630067306
+   "value": -0.01895720015206144
   },
   {
    "id": "CL-A5-PACK-SHIFT",
@@ -1558,7 +1558,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.0252783423699327
+   "value": 0.017042799847938564
   },
   {
    "id": "CL-A5-CG-Z-UP-LIMIT",
@@ -1585,7 +1585,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.016868896149817052
+   "value": 0.016665215918301078
   },
   {
    "id": "CL-A5-HOVER-SPLIT",
@@ -1602,7 +1602,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 1.1948684641254796
+   "value": 1.19228934349895
   },
   {
    "id": "ASM-A5-ASSY-ROLLUP",

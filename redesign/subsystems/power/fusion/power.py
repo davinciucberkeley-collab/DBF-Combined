@@ -1,19 +1,20 @@
-"""K09-L power (PWR, F1, revision PWR-R1): flight pack, main disconnect, power board, bus, UBEC, fuse, ESC caps.
+"""K09-L power (PWR, F1, revision PWR-R1 + D-74): flight pack, main disconnect, power board, bus, ESC caps.
 
 Envelopes of the bought parts plus the made parts as the shop cuts or prints them. Everything sits in the pod's
-left channel except the UBEC (right channel, behind the FC) and the four ESC capacitors (on the half-fins).
+left channel except the four ESC capacitors (on the half-fins). D-74: no UBEC and no fuse; the power board's servo
+BEC (6 V jumper) feeds the servos through the FC's Vx rail, and the deck is drawn to the keep-out KO-PWR-BOARD.
 
   PWR-001 flight pack      LiPo envelope at the D-24 station on the EVA pads + its own 10 AWG leads over the aft
                            stop + the AS150U pack half (re-terminated, D-32) seated in the park
   PWR-002 AS150U aircraft  aircraft half (cups facing -x) in the frame's cradle + the two 10 AWG main jumpers
-  PWR-003 power board      CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack, foam-taped on
-                           the frame deck; envelope is the allowance the deck takes (UNVERIFIED, CR-F1-21)
+  PWR-003 power board      CoreWing F405 Wing V2 power board (V/I sense, servo BEC on the 6 V jumper), separated
+                           from the FC stack (case S), foam-taped on the frame deck, pads aft at the deck window;
+                           52 x 32 mm (manual), height UNVERIFIED (BOARD-CHECK.md)
   PWR-004 bus board        FR4 strip with two tinned 8 AWG bus bars, foam-taped on D2's PDB plate between the boss
-                           rows, under the deck: 4 ESC pairs + the fuse feed leave from its bars
-  PWR-005 UBEC             8 A class, 6.0 V, foam-taped in the right channel UBEC zone
-  PWR-006 power frame      printed PETG: deck on 4 nylon spacers over D2's four M3 inserts (one screw stack per
-                           corner), wire window, AS150U cradle (housing bonded + 1 tie), two legs, fuse clip, lead tunnel
-  PWR-007 fuse             5 A mini blade in an inline holder, clipped under the cradle (bus -> fuse -> UBEC)
+                           rows, under the deck: 4 ESC pigtails (XT30U at the side exits) leave from its bars
+  PWR-006 power frame      printed PETG: deck (56 x 34 mm board seat = KO-PWR-BOARD footprint) on 4 nylon spacers
+                           over D2's four M3 inserts (one screw stack per corner), wire window, AS150U cradle
+                           (housing bonded + 1 tie), two legs, lead tunnel
   PWR-008 ESC capacitor    680 uF 25 V low-ESR, foam-taped on each half-fin beside the ESC power end (x4, quad)
 
 Stack in the left channel, bottom up (z, m): pod floor 0.0198 | PDB plate 0.0208 | bus board 0.0224, bars to 0.0257 |
@@ -21,8 +22,8 @@ bosses to 0.0268 | 10 mm nylon spacers | deck 0.0368-0.0388 | power board to 0.0
 floor (deck plane) so its contacts line up with the power board pads: the main jumpers run level, the output pair
 drops 24.8 mm through the window to the bars (2 x 2 x OD, ASM-PWR-BEND).
 
-Registers (one per edge this module owns): E-PWR-03 rigid at the frame screw pattern centre; E-PWR-01, -02, -04,
--05, -07 and E-PWR-11..14 contacts. No wires: every wire is a harness edge (F2). Positions come from params.json,
+Registers (one per edge this module owns): E-PWR-03 rigid at the frame screw pattern centre; E-PWR-01, -02, -05
+and E-PWR-11..14 contacts. No wires: every wire is a harness edge (F2). Positions come from params.json,
 subsystems/pod/params.json (read-only) and subsystems/power/params.json; no literal duplicates a shared number.
 
 UNVERIFIED-IN-FUSION: nothing beyond boxes and one notched prism; the rigid joint on a component placed at the
@@ -37,7 +38,7 @@ ST = ('UR', 'UL', 'LR', 'LL')
 
 
 def _pod_params(ctx):
-    """subsystems/pod/params.json (D2), read-only: the plate, bosses, channels and zones the power parts sit on."""
+    """subsystems/pod/params.json (D2), read-only: the plate, bosses, channels and park the power parts sit on."""
     path = os.path.join(os.path.dirname(ctx.dir), 'pod', 'params.json')
     with open(path, encoding='utf-8') as f:
         d = json.load(f)
@@ -79,7 +80,8 @@ def layout(get, L, pod):
                   (pcx + bar_len / 2, -cy + s * bar_p / 2 + bar_d / 2, zplate + bt + bar_d)) for s in (-1, 1)]
     g['zbar'] = zbar
 
-    # ---- frame: deck on spacers, window, cradle, legs
+    # ---- frame: deck on spacers, window, cradle, legs. D-74: the deck's board seat is the keep-out KO-PWR-BOARD
+    # footprint (x from its forward end to the window, 34 mm wide); the board sits pads-aft at the window.
     park0, park1 = pod['park_x_m']
     dz0 = zboss + L['spacer_h_m']
     dz1 = dz0 + L['deck_t_m']
@@ -87,13 +89,15 @@ def layout(get, L, pod):
     m = L['deck_margin_m']
     wt = L['wall_t_m']
     win = L['window_x_m']
+    ko = L['ko_board_m']
     x_deck1 = park0                                    # deck ends where the park starts (cradle front wall)
-    x_board1 = x_deck1 - win                           # power board aft edge
+    x_board1 = x_deck1 - win                           # power board aft edge (pads over the window)
     x_board0 = x_board1 - blen
-    x_deck0 = x_board0 - m
+    x_deck0 = min(ko['x_m'][0], x_board0 - m)          # deck forward end = keep-out forward end
     g['deck'] = ((x_deck0, -cy - bwid / 2 - m, dz0), (x_deck1, -cy + bwid / 2 + m, dz1))
     g['window'] = (x_board1, x_deck1)
     g['board'] = ((x_board0, -cy - bwid / 2, dz1 + 0.001), (x_board1, -cy + bwid / 2, dz1 + 0.001 + bh))
+    g['ko'] = ((ko['x_m'][0], -cy - ko['w_m'] / 2, dz1), (ko['x_m'][1], -cy + ko['w_m'] / 2, ko['z_top_m']))
     hl, hw, hh = L['as150u_half_m']
     cw = hw / 2 + wt                                    # cradle half width
     g['cradle_floor'] = ((x_deck1, -cy - cw, dz0), (park1, -cy + cw, dz1))
@@ -102,30 +106,20 @@ def layout(get, L, pod):
                         (park1, -cy + s * cw + (0 if s > 0 else wt), dz1 + L['cradle_wall_h_m'])) for s in (-1, 1)]
     xa = x_deck1 + wt + hl                              # aircraft half mating end
     lx, ly = L['leg_m']
-    g['legs'] = [((park1 - lx, -cy + s * cw - (ly if s > 0 else 0), zf), (park1, -cy + s * cw + (0 if s > 0 else ly), dz0))
+    lb = L.get('leg_setback_m', 0.0)                    # D-74: legs forward of the aft end (left XT30U turn)
+    g['legs'] = [((park1 - lb - lx, -cy + s * cw - (ly if s > 0 else 0), zf), (park1 - lb, -cy + s * cw + (0 if s > 0 else ly), dz0))
                  for s in (-1, 1)]
     g['dz0'], g['dz1'] = dz0, dz1
     # AS150U halves: aircraft half in the cradle, pack half behind it (inside the pack's mass)
     g['as_air'] = ((x_deck1 + wt, -cy - hw / 2, dz1), (xa, -cy + hw / 2, dz1 + hh))
     g['as_pack'] = ((xa, -cy - hw / 2, dz1), (park1, -cy + hw / 2, dz1 + hh))
     g['pin_z'] = dz1 + hh / 2
-    # fuse holder clipped under the cradle floor, outboard half of the lead tunnel; clip hooks on the floor
-    fl, fw, fh = L['fuse_m']
-    fx0 = x_deck1 + L['fuse_x0_m']
-    g['fuse'] = ((fx0, -yi + 0.0005, dz0 - fh), (fx0 + fl, -yi + 0.0005 + fw, dz0))
-    g['clip'] = ((fx0 + 0.004, -yi + 0.0005 + fw, dz0 - fh), (fx0 + fl - 0.004, -yi + 0.0005 + fw + wt, dz0))
     # pack's own leads: aft face over the stop, turn left, forward into the pack half
     zl = zp + pod['aft_stop_m'][1]                     # top of the aft stop: the leads lie on it
     lead_t = 0.006
     xturn = a_nom + 0.005
     g['lead_a'] = ((a_nom - 0.001, -0.020, zl), (xturn, -0.008, zl + lead_t))
     g['lead_b'] = ((park1, -cy - 0.005, g['pin_z'] - 0.003), (xturn, -0.008, zl + lead_t))
-
-    # ---- UBEC, right channel zone (on D2's UBEC plate, CR-F1-17)
-    u0, _u1 = pod['ubec_zone_x_m']
-    ul, uw, uh = L['ubec_m']
-    ux0 = u0
-    g['ubec'] = ((ux0, cy - uw / 2, zplate), (ux0 + ul, cy + uw / 2, zplate + uh))
     return g
 
 
@@ -156,7 +150,6 @@ def build(ctx):
         fr.box(*b, name='petg cradle side wall %d' % i)
     for i, b in enumerate(G['legs']):
         fr.box(*b, name='petg cradle leg %d' % i)
-    fr.box(*G['clip'], name='petg fuse clip')
 
     # PWR-003 power board on the deck; PWR-002 AS150U aircraft half in the cradle
     ctx.part('PWR-003').box(*G['board'], name='power board envelope')
@@ -167,10 +160,6 @@ def build(ctx):
     bus.box(*G['bus'], name='FR4 bus carrier')
     for i, b in enumerate(G['bars']):
         bus.box(*b, name='bus bar %s' % ('+' if i == 0 else '-'))
-
-    # PWR-007 fuse, PWR-005 UBEC
-    ctx.part('PWR-007').box(*G['fuse'], name='inline mini-blade holder, 5 A')
-    ctx.part('PWR-005').box(*G['ubec'], name='UBEC envelope')
 
     # PWR-008 ESC capacitors on the half-fins beside the ESC power end (UR built, quad mirrors)
     cl, cd = L['cap_m']
@@ -189,9 +178,7 @@ def build(ctx):
     ctx.rigid('E-PWR-03', 'PWR-006', 'POD-002', at=G['screw_c'])
     ctx.contact('E-PWR-01', 'AS150U aircraft half seated in the cradle: sanded housing epoxied in, front wall takes the push, 1 tie over')
     ctx.contact('E-PWR-02', 'power board on 3M foam tape + 1 tie on the deck')
-    ctx.contact('E-PWR-04', 'UBEC on foam tape + 1 tie, right channel')
     ctx.contact('E-PWR-05', 'bus board on foam tape on the PDB plate, under the deck')
-    ctx.contact('E-PWR-07', 'fuse holder snapped into the clip under the cradle')
     for i, s in enumerate(ST):
         ctx.contact('E-PWR-%d' % (11 + i), 'ESC cap %s foam-taped on the half-fin face' % s)
 

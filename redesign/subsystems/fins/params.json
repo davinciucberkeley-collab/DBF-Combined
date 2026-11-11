@@ -75,32 +75,32 @@
     "note": "R4: skin-tape laps only (15 mm up both faces x 0.26 m, ~50 g/m2 packing tape). The fillets are now CAD bodies (root_fillet) with their own density; was 3.0 g for fillets + laps, which under-counted the fillet volume about four times"
    },
    "top_edge": {
-    "value": "straight line from the station-collar top at the LE to the half height at the step front (x 0.2746), then a vertical cut down to the flat step at |z| 0.2005 to the TE",
+    "value": "straight line from the station-collar top at the LE to the half height at the step front (x 0.2614), then a vertical cut down to the flat step at |z| 0.2010 to the TE",
     "unit": "-",
     "source": "C4 ASM-C4-EDGE-DZ",
     "status": "PROPOSED",
     "note": "the edge strips run along the sloped part and end at the square tip; the LE-top corner is notched for the collar tongue (station_collar.tail_m)"
    },
    "tip_square_m": {
-    "value": 0.0454,
+    "value": 0.0586,
     "unit": "m",
-    "source": "team/D5/claims.json#CL-D5-FIN-STEP-X (CR-D5-11, D-54)",
+    "source": "team/D5/claims.json#CL-D5-FIN-STEP-X (D-75; was CR-D5-11, D-54)",
     "status": "PROPOSED",
-    "note": "R4: square tip x 0.2746-0.320 (D5): the sloped top edge reaches the half height at x 0.2746, the tip is cut down to the flat step (tip_step_z_m) from there to the TE; strips end at x 0.2746, their end faces meet the step front; pins stop before the shoe cheeks (tip_clear_x_m)"
+    "note": "D-75 (BR-01 / SW-02): square tip x 0.2614-0.320 (58.6 mm) = te - CL-D5-FIN-STEP-X, D5's stack being the one source (38 mm stroke + 25 mm engagement + cartridge set the back wall, D-65); the sloped top edge reaches the half height at x 0.2614, the tip is cut down to the flat step (tip_step_z_m) from there to the TE; strips end at x 0.2614, their end faces meet the step front; pins stop before the shoe cheeks (tip_clear_x_m). CL-D3-TIP-STEP-MISMATCH (<= 0.5 mm) guards the copy. Was 0.0454 (D-54, R5 shoe)"
    },
    "tip_step_z_m": {
-    "value": 0.2005,
+    "value": 0.201,
     "unit": "m",
-    "source": "team/D5/claims.json#CL-D5-FIN-STEP-Z (CR-D5-11, D-54)",
+    "source": "team/D5/claims.json#CL-D5-FIN-STEP-Z (D-75)",
     "status": "PROPOSED",
-    "note": "|z| of the flat step edge, 9.5 mm below the 0.21 m half height; the D5 shoe sits on it"
+    "note": "|z| of the flat step edge, 9.0 mm below the 0.21 m half height (D5-R7 shoe 14.4 mm tall, rim 3.4); the D5 shoe sits on it. Was 0.2005 (D-54)"
    },
    "tip_clear_x_m": {
-    "value": 0.2666,
+    "value": 0.2536,
     "unit": "m",
-    "source": "team/D5/CHANGE-REQUESTS.md#CR-D5-11",
+    "source": "team/D5/claims.json#CL-D5-FIN-STEP-X - landing shoe.collar_len_m (D-75)",
     "status": "PROPOSED",
-    "note": "nothing of D3 but the laminate and the strip ends on x >= 0.2666, |z| >= 0.196 (shoe cheeks): the last pin ends before it"
+    "note": "nothing of D3 but the laminate and the strip ends on x >= 0.2536, |z| >= 0.198 (D5-R7 shoe cheeks, 8 mm ahead of the step front): the last pin ends before it. Was 0.2666 (D-54)"
    },
    "root_fillet": {
     "leg_m": {

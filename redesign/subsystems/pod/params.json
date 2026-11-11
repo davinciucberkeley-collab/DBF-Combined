@@ -20,20 +20,20 @@
  },
  "pack_aft_face_m": {
   "value": [
-   0.0355,
+   0.0315,
    0.0475
   ],
   "unit": "m",
   "source": "params/CHANGE-LOG.md#D-62, #D-64",
   "status": "PROPOSED",
-  "note": "pack aft face: [0] CAD pack (F1 PWR-001) at the datum pod.pack_x_nominal_m -0.032 (12 mm stack, blue 8 + yellow 4); [1] the most aft face, no spacer, on the aft stop (centroid -0.020). Pack 0.135 long (D-64 Ovonic EC5). Read by F1 power.py, F2 harness.py and A5 cad_claims.py; pod.py checks item 0 against pod.pack_x_nominal_m"
+  "note": "pack aft face: [0] CAD pack (F1 PWR-001) at the datum pod.pack_x_nominal_m -0.036 (16 mm stack, blue 8 + green 6 + white 2; D-77, was -0.032 / 12 mm); [1] the most aft face, no spacer, on the aft stop (centroid -0.020). Pack 0.135 long (D-64 Ovonic EC5). Read by F1 power.py, F2 harness.py and A5 cad_claims.py; pod.py checks item 0 against pod.pack_x_nominal_m"
  },
  "aft_stop_x_m": {
   "value": 0.0475,
   "unit": "m",
   "source": "params/CHANGE-LOG.md#D-62 (CR-A1-62), params.json pod.pack_aft_travel_m",
   "status": "PROPOSED",
-  "note": "aft stop face = pod.pack_x_nominal_m + L_pack/2 + pod.pack_aft_travel_m = -0.032 + 0.0675 + 0.012 = 0.0475 (R6). CR-A1-62 and D-62 quote 0.050, which is the same sum with the retired 0.140 pack: with the 0.135 Ovonic pack a stop at 0.050 would put the no-spacer station at -0.0175 and the datum on a 14.5 mm stack, off the 2 mm grid (CR-D2-24 to A1). Back face 0.0505; C3's strut (strut_m) bears on it"
+  "note": "aft stop face = pod.pack_x_nominal_m + L_pack/2 + pod.pack_aft_travel_m = -0.036 + 0.0675 + 0.016 = 0.0475 (D-77: the datum moved 4 mm forward, the stop did not). CR-A1-62 and D-62 quote 0.050, which is the same sum with the retired 0.140 pack: with the 0.135 Ovonic pack a stop at 0.050 would put the no-spacer station at -0.0175 and the datum on a 14.5 mm stack, off the 2 mm grid (CR-D2-24 to A1). Back face 0.0505; C3's strut (strut_m) bears on it"
  },
  "aft_stop_m": {
   "value": [
@@ -132,12 +132,13 @@
  "spacer_flown_m": {
   "value": [
    0.008,
-   0.004
+   0.006,
+   0.002
   ],
   "unit": "m",
-  "source": "team/A1/CHANGE-REQUESTS.md#CR-A1-54",
+  "source": "params/CHANGE-LOG.md#D-77",
   "status": "PROPOSED",
-  "note": "spacers in the CAD: the pack at the datum -0.032 with a 12 mm stack (blue 8 + yellow 4); the rest live in the field kit"
+  "note": "spacers in the CAD: the 550 g pack at the D-77 datum -0.036 with a 16 mm stack (blue 8 + green 6 + white 2); the rest live in the field kit. Was 12 mm (blue + yellow) at -0.032"
  },
  "spacer_h_m": {
   "value": 0.012,
@@ -194,23 +195,23 @@
  },
  "strap_x_m": {
   "value": [
-   -0.062,
+   -0.079,
    0.006
   ],
   "unit": "m",
-  "source": "D2 choice",
+  "source": "params/CHANGE-LOG.md#D-74, #D-77",
   "status": "PROPOSED",
-  "note": "strap slot centres: quarter points (+/-33.75 mm) of the 135 mm pack at the middle of the D-62 station range (centroid -0.028). The 37 mm slots keep a 20 mm strap on the quarter points for centroids -0.0365 ... -0.0195, the whole range"
+  "note": "strap slot centres. D-74 / D-77: the forward strap moves -0.062 -> -0.079 so its bay-side leg stays ahead of KO-PWR-BOARD / KO-PWR-SIDE (x >= -0.066): with the 26 mm slot the 20 mm strap spans at most -0.092 ... -0.066. Fore strap 16-25 mm behind the pack fore face for every D-77 station (-0.0365 ... -0.028); aft strap unchanged"
  },
  "strap_slot_m": {
   "value": [
-   0.037,
+   0.026,
    0.0018
   ],
   "unit": "m",
   "source": "D2 choice",
   "status": "PROPOSED",
-  "note": "x length (strap 20 mm + 17 mm so the strap follows the pack over the station range) x y width"
+  "note": "x length (20 mm strap + 6 mm) x y width. D-74: 37 -> 26 mm so the forward strap cannot slide aft into KO-PWR-SIDE"
  },
  "plate_t_m": {
   "value": 0.0008,
@@ -323,8 +324,8 @@
   ],
   "unit": "m",
   "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-03 (g)",
-  "status": "PROPOSED",
-  "note": "right channel behind the JR tie bar: UBEC on foam tape + 1 tie on a 0.8 mm plate (CR-F1-17), >= 0.10 m from the GPS (CR-F2-03 g)"
+  "status": "RETIRED",
+  "note": "RETIRED by D-74 (UBEC PWR-005 and fuse PWR-007 deleted): the pod no longer builds the UBEC plate; the right-channel zone 0.044-0.074 now holds the right XT30U pair (xt30u_zone_m). Key kept only until F1 power.py / F2 harness.py stop reading it; then delete"
  },
  "hatch_aft_x_m": {
   "value": 0.066,
@@ -668,12 +669,12 @@
   "value": {
    "546": -0.036,
    "550": -0.034,
-   "590": -0.028
+   "590": -0.03
   },
   "unit": "m",
-  "source": "params/CHANGE-LOG.md#D-62, #D-64 (CALC-A1-PACK-CASES)",
+  "source": "team/A3/rollup/rollup.json#cg.station_cases (D-77 re-run)",
   "status": "PROPOSED",
-  "note": "A1's D-62 frame-estimate station per weighed pack (g -> m) for the D-64 cases: 546 g -0.036 (16 mm: white + green + blue), 550 g -0.034 (14 mm: green + blue), 590 g acceptance line -0.028 (8 mm: blue). The flight card takes the stations from A3's roll-up re-run on the balance-test day (CR-A3-27); this table is A1's estimate, not the live roll-up"
+  "note": "A3's live stations after D-75...D-78 (2026-11-11): 546 g -0.036 (16 mm: blue + green + white), 550 g -0.034 (14 mm: blue + green), 590 g -0.030 (10 mm: blue + white); basic CG 48.8-49.2 mm, predicted 50.3-50.7 mm. Was -0.028 for 590 g (A1 D-62 estimate). H3 writes the flight card from A3's re-run on the balance-test day (CR-A3-27)"
  },
  "spacer_colour": {
   "value": {
@@ -755,7 +756,7 @@
   "unit": "m",
   "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-27",
   "status": "PROPOSED",
-  "note": "R6: aft end of the PDB plate. The plate keeps its boss pattern centre from pdb_plate_x_m (F1 reads that) but runs on aft under the frame and the cradle to 0.046 (10 mm ahead of F1's frame legs), 84 mm long, and is stiffened by two ribs (pdb_rib_m) along the boss rows: the AS150U unplug moment (1.94 N m) spreads over 84 x 36.7 mm of floor bond flat-wise (CALC-D2-PDB-PAD)"
+  "note": "R6: aft end of the PDB plate. The plate keeps its boss pattern centre from pdb_plate_x_m (F1 reads that) but runs on aft under the frame and the cradle to 0.046 (D-74 follow-up: F1's cradle legs now stand on the floor right behind it, x 0.046-0.050, leg_setback_m 10 mm), 84 mm long, and is stiffened by two ribs (pdb_rib_m) along the boss rows: the AS150U unplug moment (1.94 N m) spreads over 84 x 36.7 mm of floor bond flat-wise (CALC-D2-PDB-PAD)"
  },
  "pdb_rib_m": {
   "value": [
@@ -766,18 +767,6 @@
   "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-27",
   "status": "PROPOSED",
   "note": "PDB-plate ribs: width x height above the plate, one along each boss row (broken at the bosses), plate front to plate end, outboard / inboard of F1's bus board (>= 3.7 mm clear); below the boss tops so the nylon spacers sit on the bosses only"
- },
- "left_ch_clear_m": {
-  "value": [
-   -0.063,
-   -0.053,
-   0.031,
-   0.07
-  ],
-  "unit": "m",
-  "source": "team/F1/CHANGE-REQUESTS.md#CR-F1-26",
-  "status": "PROPOSED",
-  "note": "volume D2 keeps free of pod bodies in the left channel ahead of F1's frame deck until F3 measures the CoreWing PDB: x from, x to, z from, z to (the antenna A tube starts at z 0.0762, above it)"
  },
  "ant_b_tip_min_x_m": {
   "value": -0.15,
@@ -792,5 +781,88 @@
   "source": "subsystems/wing/interfaces.json#E-WNG-17 (D1, D-69 CR-C3-17)",
   "status": "PROPOSED",
   "note": "45 deg bevel on the floor board's aft lower edge (x 0.065), bonded on the face of D1's recess-step fillet WNG-007; capped at the board thickness (4.8 mm), so the end face is one 45 deg slope and the floor end stays bonded across the step (C3)"
+ },
+ "ko_pwr_m": {
+  "value": {
+   "KO-PWR-BOARD": [
+    -0.066,
+    -0.01,
+    -0.0634,
+    -0.0294,
+    0.0386,
+    0.0626
+   ],
+   "KO-PWR-PADS": [
+    -0.01,
+    0.0,
+    -0.0634,
+    -0.0294,
+    0.0266,
+    0.0626
+   ],
+   "KO-PWR-FWD": [
+    -0.076,
+    -0.066,
+    -0.0634,
+    -0.0294,
+    0.05,
+    0.0626
+   ],
+   "KO-PWR-SIDE-IN": [
+    -0.066,
+    -0.01,
+    -0.0294,
+    -0.0234,
+    0.05,
+    0.0626
+   ],
+   "KO-PWR-SIDE-OUT": [
+    -0.066,
+    -0.01,
+    -0.0694,
+    -0.0634,
+    0.05,
+    0.0626
+   ]
+  },
+  "unit": "m",
+  "source": "subsystems/power/SPEC.md (D-74, KO-PWR-*)",
+  "status": "PROPOSED",
+  "note": "D-74 power-board keep-outs, x0 x1 y0 y1 z0 z1, left channel (board centreline y -0.04635 +/- 0.017). Pod bodies must stay out (CL-D2-KO-PWR-HITS), except: KO-PWR-PADS starts at the boss tops z 0.0266 because the PDB plate, its ribs and the four bosses under the deck window are F1's own frame mounts (E-PWR-03) and the bars sit on the plate; KO-PWR-SIDE-OUT (case U only) runs into the foam-board side wall (inner face -0.0652): the channel leaves 1.8 mm outboard of the board, not 6 (CL-D2-KO-PWR-SIDE-OUT, CR-D2-28 to F1). Replaces left_ch_clear_m (CR-F1-26)"
+ },
+ "xt30u_zone_m": {
+  "value": {
+   "R": [
+    0.044,
+    0.074,
+    0.0275,
+    0.063,
+    0.0258,
+    0.0378
+   ],
+   "L": [
+    0.062,
+    0.074,
+    -0.063,
+    -0.0275,
+    0.0258,
+    0.0378
+   ]
+  },
+  "unit": "m",
+  "source": "params/CHANGE-LOG.md#D-74 (WB-03)",
+  "status": "PROPOSED",
+  "note": "D-74: room just inside each side exit for that side's two mated Amass XT30U (one per ESC, harness SPEC), x0 x1 y0 y1 z0 z1, level with the exit (z 0.027-0.039): right in the freed UBEC zone, left aft of the AS150U park (to 0.060), on the handle-foot plate (top z 0.0258) and inboard of the wall-bracket flange (|y| >= 0.064). Each mated pair ~32 x 10.2 x 5.2 mm (UNVERIFIED, measure) lies across the channel; two stacked = 10.4 mm of the 12 mm zone height. CL-D2-XT30U-HITS counts pod bodies in it (0)"
+ },
+ "xt30u_mated_m": {
+  "value": [
+   0.032,
+   0.0102,
+   0.0052
+  ],
+  "unit": "m",
+  "source": "Amass XT30U drawing (UNVERIFIED, measure at receipt)",
+  "status": "UNVERIFIED",
+  "note": "mated male + female body length x width x height; the side exit (16 x 12 mm) passes one body (10.2 x 5.2) with the leads (CL-D2-XT30U-EXIT)"
  }
 }

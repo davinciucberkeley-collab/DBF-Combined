@@ -26,7 +26,7 @@ the FC is vibration-isolated; nothing needs a tool in the field except plugging 
 | GPS tilt toward the nose · to nearest power item | 45 · 0.154 | ° · m | `CL-F3-GPS-TILT-CAD`, `CL-F3-GPS-CLEAR` | `MODELLED` |
 | Compass interference hover / 100 A (limit 0.3) | 0.075 / 0.247 | — | `CL-F3-COMPASS-RATIO`, `-LIM` | `UNVERIFIED` |
 | I²C bus: baro 0x76, compass 0x0D/0x2C, airspeed 0x28 | 3 of 3 unique | — | `CL-F3-I2C-CLASH` | `PROPOSED` |
-| 5 V load ×2 vs FC BEC | 0.87 vs 2.4 | A | `CL-F3-5V-REQ` | `UNVERIFIED` |
+| 5 V load ×2 vs FC BEC | 0.87 vs 4 cont / 5 peak (5.2 V) | A | `CL-F3-5V-REQ`; CoreWing manual V2.1 p. 7, ArduPilot page (the 2.4 A was a reseller figure) | `UNVERIFIED` |
 
 ## Parts
 
@@ -40,8 +40,25 @@ the FC is vibration-isolated; nothing needs a tool in the field except plugging 
 | `AVN-006` | 4 gel cubes, foam tape, 3 ties, 10 mm FC strap | 2.4 | under the FC | — |
 | `AVN-007` | microSD 16–32 GB | 0.4 | FC fore-edge slot | slot + tape |
 
-The CoreWing power board (`PWR-003`, ~28 g EST) is split from the FC and hard-mounted on the PDB plate: the 8 AWG
-main leads would otherwise short the FC's isolation. Its mass and station belong to power (CR-F3-13).
+The CoreWing power board (`PWR-003`, ~28 g EST, listing 11.4 g) is split from the FC and hard-mounted on the power
+deck: the 10 AWG main leads would otherwise short the FC's isolation. Its mass and station belong to power
+(CR-F3-13). The manual settles that it can be split (three PCBs joined by a board-to-board pin header and socket,
+not a cable) and that the PDB and FC share a **52 × 32 mm** outline with M2 holes on 30.5 × 26.5 mm (power
+`SPEC.md` § "what the documents settle"). Two cases, both inside power's keep-out `KO-PWR-BOARD`:
+
+| Case | FC where | Link | Vibration isolation |
+|---|---|---|---|
+| **S, split (baseline)** | right channel, on 4 gel cubes, as drawn (`fc_board_m` 52 × 32 already) | 0.175 m 28 AWG ribbon on the board's own header, 14 of ~20 contacts (power `SPEC.md`), servo current shared over 4 SERVO-BEC conductors | gel cubes, unchanged |
+| **U, whole stack (fallback)** | on top of the PDB on the power deck, the stack on 4 gel cubes + strap; the right-channel FC bay is left empty | none | the gel carries the 10 AWG jumpers' stiffness: `T-F3-VIBE` must be re-run |
+
+`BOARD-CHECK.md` (power) chooses between them on arrival: S if the link pitch can be cabled (2.54 / 2.0 mm), else U.
+
+**Output pad map (FC top, 3 × 12 field on one short edge, rows signal / Vx / G from the board inside out; order as
+seen from above: S11 S10 S9 S8 S7 S6 S5 S4 S3 S2 S1 SBUS; the SBUS column carries 4V5, not Vx).** Timer groups
+(ArduPilot): S1–S2 TIM4, S3–S4 TIM3, S5–S7 TIM8, S8–S10 TIM2, S11–S12 TIM1; bidirectional DShot on S1–S4 only; S12
+is the LED pad. Use: **S1–S4 motors** (DShot + bdshot, `SERVO1..4_FUNCTION` 33–36), **S5 / S6 elevons** (PWM;
+S7 shares their group, so it stays PWM or unused), S7–S11 spare. The Vx row is fed from the power board's servo BEC
+(6 V jumper, 8 A cont) through the board-to-board link; there is no UBEC (D-74).
 
 ## Interfaces
 
@@ -60,7 +77,7 @@ main leads would otherwise short the FC's isolation. Its mass and station belong
 
 | Issue | Owner |
 |---|---|
-| CoreWing stack split (FC top board cabled to the power board) not confirmed; FC mass 12 g EST | F3 on arrival (`T-F3-ARRIVAL`) |
+| CoreWing split confirmed possible from the manual; link pitch / pin order, PDB height and FC mass (12 g EST, listing 8.9 g + 4.2 g wireless) measured at `BOARD-CHECK.md` (power) on arrival, which also picks case S or U | F3 + F1 on arrival |
 | D2: tie-post gap +1 mm, avionics plate +4 mm aft, strap slots in the FC end stops, key flat in the socket bore, ack `E-AVN-07/-10` | D2 (CR-F3-12) |
 | Stock RP3 antennas (65 mm) do not reach the hatch tube top or the nose tube | F5 (CR-F3-15) |
 | Gel modulus is a class value; the 50 g sag test sets the cube size | F3 |

@@ -31,18 +31,16 @@ _PP = json.loads((REDESIGN / "params" / "params.json").read_text(encoding="utf-8
 SRC_POD = ["SRC-K09-CARD"]
 
 
-def _left_ch_hits(ctx, box):
-    """pod bodies whose bounding box enters the left-channel volume F1 asked D2 to keep free (CR-F1-26)."""
-    x0, x1, z0, z1 = box
+def _box_hits(ctx, box):
+    """pod bodies whose bounding box enters the box x0 x1 y0 y1 z0 z1 (D-74 keep-outs and XT30U zones)."""
+    x0, x1, y0, y1, z0, z1 = box
     n = 0
     for c in ctx.components.values():
         for sh in c.shapes:
             pts = [c.to_world(q) for q in sh.points()]
             lo = [min(q[i] for q in pts) for i in range(3)]
             hi = [max(q[i] for q in pts) for i in range(3)]
-            ylo, yhi = -0.0652, -0.0275                 # left channel (wall inner face to guide outer face)
-            if min(hi[0], x1) - max(lo[0], x0) > 1e-4 and min(hi[1], yhi) - max(lo[1], ylo) > 1e-4 and \
-                    min(hi[2], z1) - max(lo[2], z0) > 1e-4:
+            if min(hi[0], x1) - max(lo[0], x0) > 1e-4 and min(hi[1], y1) - max(lo[1], y0) > 1e-4 and                     min(hi[2], z1) - max(lo[2], z0) > 1e-4:
                 n += 1
     return n
 
@@ -54,7 +52,11 @@ def _cad_readouts():
                                   G["ch_h"], G["cross_gap"], G["cross_h"], G["tray_front_area"] + G["fs_flange_bond"],
                                   G["tray_rear_area"], G["strut_rib_l"], G["strut_clear_skin"], G["bracket_area"],
                                   G["fs_flange_bond"], G["pdb_pad"][0], G["pdb_pad"][1], G["ant_b_tip_x"],
-                                  _left_ch_hits(ctx, G["left_ch_clear"]))]
+                                  sum(_box_hits(ctx, b) for k, b in G["ko_pwr"].items() if k != "KO-PWR-SIDE-OUT"),
+                                  _box_hits(ctx, G["ko_pwr"]["KO-PWR-SIDE-OUT"]),
+                                  G["ko_pwr"]["KO-PWR-BOARD"][2] + G["yi"],     # board outboard edge to the wall inner face
+                                  sum(_box_hits(ctx, b) for b in G["xt30u_zone"].values()),
+                                  min(G["xt30u_exit_clr"]))]
 
 
 _GEO = _cad_readouts()
@@ -127,11 +129,13 @@ kit.assumption("ASM-D2-SOCKET", "Pitot socket length inside / collar outside", "
                basis="subsystems/pod/params.json socket_m", value=[_lv("socket_m")[2], _lv("socket_m")[3]], unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-GEOM-CAD", "Pod CAD geometry read-outs", "Values the CAD layout computes from the wing section and pod params: "
                "[pad-to-wing clearance over the overhang, antenna A element to pack, antenna B element to pack, GPS to the nearest "
-               "power item (PDB / AS150U park / UBEC) (m); wire-channel height under the pack, crossing gap leg-to-aft-wall, crossing "
+               "power item (PDB / AS150U park; UBEC deleted, D-74) (m); wire-channel height under the pack, crossing gap leg-to-aft-wall, crossing "
                "height (m); tray front-piece solid area + stop-T flange under the floor (forward stop), tray rear-piece net area (m2); "
                "R6: strut rib free length, rib underside to wing skin (m), wall-bracket flange area per side (m2), stop-T flange "
-               "area under the floor (m2), PDB pad length x and width y (m), antenna B tube end x (m), pod bodies inside F1's "
-               "left-channel volume (-)]. Item 0 is the most aft pack face (no spacer) ahead of the recess end",
+               "area under the floor (m2), PDB pad length x and width y (m), antenna B tube end x (m); D-74: pod bodies in "
+               "KO-PWR-BOARD / -PADS / -FWD / -SIDE-IN (-), pod bodies in KO-PWR-SIDE-OUT (-), room from the board's outboard edge "
+               "to the side-wall inner face (m), pod bodies in the two XT30U zones (-), smallest XT30U-body clearance through a "
+               "side exit (m)]. Item 0 is the most aft pack face (no spacer) ahead of the recess end",
                basis="subsystems/pod/fusion/pod.py#layout() via team/D2/pod_data.py (S5010 section, pod params)", value=_GEO, unit="m", cites=SRC_POD)
 kit.assumption("ASM-D2-MAST-BOLT", "GPS mast screw: length, grip", "PA66 M3x16 screw length and clamped grip (counterbored boss, no washer)",
                basis="C6 CR-C6-18 (PA66 screw + nut, grip <= 11.0 mm); subsystems/pod/params.json socket_boss_m", value=[0.016, 0.010],
@@ -243,9 +247,11 @@ def stack(x_fs, LA, LB, t_sp, pack, x_as, sp):
 
 @kit.calc("CALC-D2-R6-GEOM", equation="read-outs of pod.py#layout() for the D-69 fixes: strut rib free length = bridge front - pad back; "
           "rib to skin = rib underside - max wing surface under it; bracket flange area per side; stop-T flange area under the floor; "
-          "antenna B tube end x; pod bodies in the left-channel volume (CR-F1-26)", inputs={"g": "ASM-D2-GEOM-CAD"})
+          "antenna B tube end x; D-74: pod bodies in the power-board keep-outs, outboard side room, pod bodies in the XT30U "
+          "zones, XT30U exit clearance", inputs={"g": "ASM-D2-GEOM-CAD"})
 def r6_geom(g):
-    return {"rib_l": g[9], "rib_skin": g[10], "bracket": g[11], "flange": g[12], "ant_b_x": g[15], "left_hits": g[16]}
+    return {"rib_l": g[9], "rib_skin": g[10], "bracket": g[11], "flange": g[12], "ant_b_x": g[15], "ko_hits": g[16],
+            "ko_side_out_hits": g[17], "side_out_room": g[18], "xt30u_hits": g[19], "xt30u_exit_clr": g[20]}
 
 
 @kit.calc("CALC-D2-PDB-PAD", equation="flat-wise moment capacity of the ribbed PDB plate (rigid pad) = sigma x b x L^2 / 6 ; "
@@ -406,9 +412,9 @@ kit.claim("CL-D2-ANT-A-CLR", "Antenna A (hatch tube) element base to the pack", 
           limit=(">=", "CL-F5-ANT-CLEAR"), verifies=["R-RC-LINK"], parts=["POD-003"], how="Rule from the tube top to the pack top edge.")
 kit.claim("CL-D2-ANT-B-CLR", "Antenna B (nose tube) element base to the pack fore face", calc="CALC-D2-CAD", output="ant_b", unit="m",
           limit=(">=", "CL-F5-ANT-CLEAR"), verifies=["R-RC-LINK"], parts=["POD-001"], how="Rule from the nose skin to the pack fore face.")
-kit.claim("CL-D2-GPS-CLR", "GPS to the nearest power item (PDB, AS150U park, UBEC zone)", calc="CALC-D2-CAD", output="gps", unit="m",
+kit.claim("CL-D2-GPS-CLR", "GPS to the nearest power item (PDB, AS150U park)", calc="CALC-D2-CAD", output="gps", unit="m",
           limit=(">=", P + "requirements.gps_mast_clearance_m"), verifies=["R-COMPASS"], parts=["POD-005", "POD-002"],
-          how="Rule from the GPS puck centre to the PDB, the parked AS150U and the UBEC as installed.")
+          how="Rule from the GPS puck centre to the PDB, and the parked AS150U as installed (D-74: no UBEC).")
 kit.claim("CL-D2-MAST-BOLT-PAST", "GPS mast screw length past the grip", calc="CALC-D2-MAST-BOLT", output="past", unit="m",
           limit=(">=", 0.004), verifies=["R-JOINT-STACK"], parts=["POD-005", "POD-007"],
           how="Assembled: PA66 nut fully on with >= 2 pitches showing; grip measured with calipers (<= 11.0 mm).",
@@ -450,10 +456,25 @@ kit.claim("CL-D2-PDB-PAD-M", "PDB plate flat-wise moment capacity (ribbed plate 
 kit.claim("CL-D2-ANT-B-TIP-X", "Antenna B tube end x (ahead of the nose)", calc="CALC-D2-R6-GEOM", output="ant_b_x", unit="m",
           limit=(">=", -0.150), verifies=["R-TRANSPORT"], parts=["POD-001"], how="Rule from the wing LE to the tube end.",
           note="D7 CR-D7-23 at D-62: x >= -0.150 (10 mm ahead of the nose)")
-kit.claim("CL-D2-LEFT-CH-CLEAR", "Pod bodies inside F1's left-channel volume ahead of the deck (x -0.063 ... -0.053, z 0.031 ... 0.070)",
-          calc="CALC-D2-R6-GEOM", output="left_hits", unit="-", limit=("<=", 0), parts=["POD-002", "POD-003"],
-          how="Look down the left channel with the hatch off: nothing of the pod above the plate in that span.",
-          note="F1 CR-F1-26: held until F3 measures the CoreWing PDB")
+kit.claim("CL-D2-KO-PWR-HITS", "Pod bodies inside the D-74 power-board keep-outs KO-PWR-BOARD, -PADS, -FWD, -SIDE-IN",
+          calc="CALC-D2-R6-GEOM", output="ko_hits", unit="-", limit=("<=", 0), parts=["POD-002", "POD-003", "POD-004"],
+          how="Look down the left channel with the hatch off: nothing of the pod in x -0.076 ... 0.000 above the deck plane, "
+              "and the forward strap ahead of x -0.066.",
+          note="D-74 (power SPEC.md); replaces CL-D2-LEFT-CH-CLEAR (CR-F1-26). KO-PWR-PADS is checked from the boss tops "
+               "z 0.0266 up: the PDB plate, ribs and bosses under the deck window are F1's frame mounts (E-PWR-03)")
+kit.claim("CL-D2-KO-PWR-SIDE-OUT", "Room from the power board's outboard long edge to the side-wall inner face (case U needs 6 mm)",
+          calc="CALC-D2-R6-GEOM", output="side_out_room", unit="m", parts=["POD-001"],
+          how="Calipers from the board edge to the wall on the first build.",
+          note="D-74 case U (whole stack) only: the 37.7 mm left channel leaves 1.8 mm outboard of a 34 mm board footprint "
+               "on the channel centreline, so GH plugs on the outboard long edge need a vertical entry or the board turned "
+               "so its plugged edge faces inboard (CR-D2-28 to F1). Case S (split, baseline) has nothing there")
+kit.claim("CL-D2-XT30U-HITS", "Pod bodies inside the two XT30U zones just inside the side exits", calc="CALC-D2-R6-GEOM",
+          output="xt30u_hits", unit="-", limit=("<=", 0), parts=["POD-001", "POD-002", "POD-007"],
+          how="Dry-fit two mated XT30U per side inside each side exit before bonding the brackets.",
+          note="D-74 / WB-03: four mated XT30U, two per side; right side in the freed UBEC zone")
+kit.claim("CL-D2-XT30U-EXIT", "Smallest clearance of one XT30U body through a 16 x 12 mm side exit", calc="CALC-D2-R6-GEOM",
+          output="xt30u_exit_clr", unit="m", limit=(">=", 0.002), parts=["POD-001"],
+          how="Push a mated XT30U through the exit with its leads.", note="XT30U body 10.2 x 5.2 mm UNVERIFIED (xt30u_mated_m)")
 kit.claim("CL-D2-RECESS-X0", "Pod recess start (upper surface at the pod base)", calc="CALC-D2-RECESS", output="x0", unit="m",
           parts=["POD-001"], how="Template on the hot-wired core; the recess floor meets the skin here.")
 kit.claim("CL-D2-RECESS-DEPTH", "Pod recess depth at its aft end (D1 cuts)", calc="CALC-D2-RECESS", output="depth", unit="m",
@@ -487,7 +508,8 @@ kit.test("T-D2-WEIGH", "Weigh every pod part before assembly", verifies=["CL-D2-
          procedure="0.1 g scale; each printed part, board piece and XPS block; record in subsystems/pod/parts.csv")
 kit.test("T-D2-FIT", "Real pack fit", verifies=["CL-D2-BAY-L", "CL-D2-BAY-W", "CL-D2-BAY-H", "CL-D2-PACK-TRAVEL", "CL-D2-AFT-REACH",
                                                  "CL-D2-OVERHANG-CLR", "CL-D2-PACK-X-NOM", "CL-D2-PACK-X-LIGHT", "CL-D2-PACK-X-STACK",
-                                                 "CL-D2-STACK-PLAY", "CL-D2-STRUT-SKIN-CLR", "CL-D2-LEFT-CH-CLEAR"],
+                                                 "CL-D2-STACK-PLAY", "CL-D2-STRUT-SKIN-CLR", "CL-D2-KO-PWR-HITS",
+                                                 "CL-D2-XT30U-HITS", "CL-D2-XT30U-EXIT"],
          procedure="Both packs weighed and labelled with their spacer stack (A3's station on the day): in through the hatch, "
                    "strapped at their station, block cut for the pack and spreader fitted (no play), leads over the aft stop "
                    "to the AS150U park, hatch closes; centre mark measured from the wing LE; once on the crush stack with a 24.3 mm "

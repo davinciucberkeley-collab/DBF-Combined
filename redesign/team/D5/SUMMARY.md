@@ -1,5 +1,10 @@
 # D5 Landing feet: summary (revision D5-R5a, 2026-11-10)
 
+> **R7 (2026-11-11, D-75 / D-76 / D-78):** cartridges in FOAMULAR 400 at 14.5 × 9.8 mm (same 37.5 N mean plateau);
+> shoe 19.1 × 14.4 mm, rim 3.4 mm; landing **69.9 → 59.1 g** vs a 60 g allocation (48 → 60 from power). Fin step at
+> x 0.2614 / |z| 0.2010 is the one source; D3 copies it (mismatch 0) and the CAD shoe no longer overlaps the fin.
+> Shoe FEA RF 1.06, tine 1.15, flange 1.07, bond 1.44. See `subsystems/landing/SPEC.md` and CR-D5-32/-33.
+
 Subsystem `subsystems/landing/` (prefix GER), params A1-R3. Four telescoping crush feet on the half-fin TE tips plus
 two TPU wingtip corner caps. R5 closes CR-A4-39, CR-A5-25 and CR-A1-46: the caps are built on `WNG-001` now that D1
 declares it, and the ground kit has CAD. Feet geometry and loads are unchanged from R4. R5a (2026-11-10) re-ran

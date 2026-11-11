@@ -131,30 +131,30 @@
   {
    "id": "ASM-C6-MOTOR-M-ULT",
    "type": "assumption",
-   "title": "Motor-to-mount moment 0.986 N m (ult)",
+   "title": "Motor-to-mount moment 0.985 N m (ult)",
    "text": "Ultimate moment at the motor base (no cant side force; C1 does not model the cant)",
    "basis": "team/C1/data/envelope.json#joints.J-MOTOR.M_res_Nm.ultimate (H5-SIDE-RIGHT/MC-P/J-MOTOR-UR; read live)",
-   "value": 0.9857,
+   "value": 0.9854,
    "unit": "N m",
    "status": "UNVERIFIED"
   },
   {
    "id": "ASM-C6-FIN-MZ-ULT",
    "type": "assumption",
-   "title": "Fin group torsion about the tube 17.28 N m (ult)",
+   "title": "Fin group torsion about the tube 17.25 N m (ult)",
    "text": "Ultimate Mz of the fin group at the wing",
    "basis": "team/C1/data/envelope.json#joints.J-FIN.Mz_Nm.ultimate (L4-CORNER-SIDE-Y/MC-P/J-FIN-R; read live)",
-   "value": 17.2784,
+   "value": 17.2455,
    "unit": "N m",
    "status": "UNVERIFIED"
   },
   {
    "id": "ASM-C6-FIN-MY-ULT",
    "type": "assumption",
-   "title": "Fin group torsion about the spar 8.56 N m (ult)",
+   "title": "Fin group torsion about the spar 8.66 N m (ult)",
    "text": "Ultimate My of the fin group at the wing",
    "basis": "team/C1/data/envelope.json#joints.J-FIN.My_Nm.ultimate (L4-CORNER-SIDE-Y/MC-C/J-FIN-R; read live)",
-   "value": 8.5583,
+   "value": 8.6602,
    "unit": "N m",
    "status": "UNVERIFIED"
   },
@@ -297,11 +297,11 @@
     "rf_head_e1": 0.5284473002603391,
     "side_lim_n": 2.5714431458486118,
     "M_side_ult_nm": 0.14387224401022983,
-    "tension_n": 90.43319673742174,
-    "rf_sep": 3.6859620732106464,
+    "tension_n": 90.41163423742174,
+    "rf_sep": 3.6868411476558105,
     "engage_m": 0.0035000000000000005,
     "strip_n": 2638.9378290154264,
-    "rf_strip": 29.181074253935112
+    "rf_strip": 29.188033722358703
    },
    "input_values": {
     "T": 0.2,
@@ -311,8 +311,8 @@
     "dh": 0.0055,
     "dhole": 0.0034,
     "s_allow": 30000000.0,
-    "F_ult": 32.15718851890951,
-    "M_ult": 0.9857,
+    "F_ult": 32.157188518909514,
+    "M_ult": 0.9854,
     "ff": 1.15,
     "pat": [
      0.016,
@@ -580,26 +580,26 @@
     "tau": "ASM-C4-BOND-SHEAR"
    },
    "outputs": {
-    "T_tb_design_nm": 24.837699999999998,
-    "T_bs_design_nm": 12.302556249999999,
+    "T_tb_design_nm": 24.790406249999997,
+    "T_bs_design_nm": 12.449037499999998,
     "L_bore_m": 0.043,
     "area_bore_mm2": 2971.9466502959435,
-    "rf_tube_block": 2.6324026100045805,
+    "rf_tube_block": 2.637424560418842,
     "area_spar_mm2": 2488.141381643116,
-    "rf_block_spar": 4.449409479119313,
+    "rf_block_spar": 4.397055627485141,
     "area_collar_mm2": 1036.7255756846316,
-    "T_collar_lim_nm": 12.738618400050425,
+    "T_collar_lim_nm": 12.718470707809557,
     "collar_c1_governs": 1.0,
-    "T_collar_design_nm": 27.467645925108727,
-    "F_brace_design_n": 204.14134309721393,
-    "tau_collar_mpa": 2.605511166036228,
-    "rf_collar": 0.7676036956090295,
-    "rf_collar_alt": 0.8187772753162982,
-    "rf_collar_min": 0.6652565361944923,
-    "L_collar_req_m": 0.019541333745271706,
-    "rf_collar_cond12": 0.6294350303994042,
-    "rf_collar_prop": 1.12581875355991,
-    "tau_req_12_mpa": 3.2568889575452844
+    "T_collar_design_nm": 27.42420246371435,
+    "F_brace_design_n": 204.10567466950363,
+    "tau_collar_mpa": 2.6016672616294265,
+    "rf_collar": 0.7687378126699408,
+    "rf_collar_alt": 0.8199870001812702,
+    "rf_collar_min": 0.666239437647282,
+    "L_collar_req_m": 0.0195125044622207,
+    "rf_collar_cond12": 0.6303650063893514,
+    "rf_collar_prop": 1.1274821252492466,
+    "tau_req_12_mpa": 3.252084077036783
    },
    "input_values": {
     "od": 0.022,
@@ -607,11 +607,11 @@
     "boss": 0.008,
     "Ls": 0.036,
     "Lc": 0.015,
-    "Tz": 17.2784,
-    "Ty": 8.5583,
-    "Tc1": 12.738618400050425,
-    "Tc4": 11.23455834689645,
-    "Fb": 163.31307447777115,
+    "Tz": 17.2455,
+    "Ty": 8.6602,
+    "Tc1": 12.718470707809557,
+    "Tc4": 11.108061040297741,
+    "Fb": 163.2845397356029,
     "h12": 0.016,
     "h13": 0.013,
     "hc": 0.012,
@@ -661,28 +661,28 @@
     "s_brg": "ASM-C6-CF-BEARING"
    },
    "outputs": {
-    "F_design_n": 2262.183039300627,
+    "F_design_n": 2235.259361003303,
     "embed_m": 0.0395,
-    "rf_anchor": 0.6984403881343175,
-    "L_req_m": 0.056554575982515676,
-    "tail_net_mpa": 23.81245304526976,
-    "rf_tail_net": 0.6299225019565838,
-    "q_design_npm": 9254.940309672356,
-    "tau_face_mpa": 0.9254940309672356,
-    "rf_face": 0.10805039973676525,
-    "pin_load_n": 138.82410464508533,
-    "rf_pin_shear": 1.7679705314086573,
-    "rf_pin_bend": 0.8339483638720085,
-    "rf_pin": 0.8339483638720085,
-    "pin_load_prop_n": 138.82410464508536,
-    "rf_pin_prop": 0.8339483638720084,
-    "rf_pin_prop_shear": 1.767970531408657,
-    "rf_pin_alt": 0.7116359371707804,
-    "pin_load_alt_n": 83.2944627870512,
-    "pitch_max_d_m": 0.012509225458080128,
-    "pitch_max_dalt_m": 0.006404723434537024,
-    "rf_pin_bearing": 1.8008399956127539,
-    "rf_strip_net_pin": 1.3261526356980713,
+    "rf_anchor": 0.7068530961395066,
+    "L_req_m": 0.05588148402508258,
+    "tail_net_mpa": 23.529045905297927,
+    "rf_tail_net": 0.6375099126574664,
+    "q_design_npm": 8749.88331143631,
+    "tau_face_mpa": 0.874988331143631,
+    "rf_face": 0.1142872384015654,
+    "pin_load_n": 131.24824967154464,
+    "rf_pin_shear": 1.8700205654240787,
+    "rf_pin_bend": 0.8820851723698487,
+    "rf_pin": 0.8820851723698487,
+    "pin_load_prop_n": 131.24824967154464,
+    "rf_pin_prop": 0.8820851723698487,
+    "rf_pin_prop_shear": 1.8700205654240787,
+    "rf_pin_alt": 0.7527126804222709,
+    "pin_load_alt_n": 78.74894980292679,
+    "pitch_max_d_m": 0.01323127758554773,
+    "pitch_max_dalt_m": 0.006774414123800437,
+    "rf_pin_bearing": 1.9047873066927568,
+    "rf_strip_net_pin": 1.3421261319104556,
     "pin_len_m": 0.0116,
     "pins_per_strip_pair": 15,
     "pins_per_strip_pair_prop": 15,
@@ -690,9 +690,9 @@
    },
    "input_values": {
     "s_cf": 400000000.0,
-    "F": 2262.183039300627,
-    "q_lim": 4292.146230572687,
-    "Pp": 138.82410464508533,
+    "F": 2235.259361003303,
+    "q_lim": 4057.9168980574186,
+    "Pp": 131.24824967154464,
     "w": 0.01,
     "t": 0.001,
     "sf": 1.5,
@@ -738,13 +738,13 @@
     "peel": "ASM-C6-PEEL"
    },
    "outputs": {
-    "F_design_n": 204.14134309721393,
-    "rf_end": 2.3513120503543457,
+    "F_design_n": 204.10567466950363,
+    "rf_end": 2.351722953206646,
     "anchor_area_mm2": 276.46015351590177,
-    "rf_anchor": 1.3542585216765668
+    "rf_anchor": 1.3544951847299567
    },
    "input_values": {
-    "F": 163.31307447777115,
+    "F": 163.2845397356029,
     "pf": 1.25,
     "w": 0.01,
     "t": 0.002,
@@ -811,25 +811,25 @@
     "A_net": "ASM-C6-TAIL-NET-A"
    },
    "outputs": {
-    "k": 0.9945038697187719,
-    "F_strip_n": 2249.7497865966466,
-    "rf_anchor": 0.7023003222016865,
-    "rf_tail_net": 0.6334037716059514,
-    "rf_pin": 0.8385571834002359,
-    "pitch_max_m": 0.012578357751003539,
-    "L_req_m": 0.056243744664916155,
-    "A_net_req_m2": 0.0001499833191064431,
-    "frame_n": 2812.187233245808
+    "k": 0.9929825945883006,
+    "F_strip_n": 2219.573639866847,
+    "rf_anchor": 0.7118484251303259,
+    "rf_tail_net": 0.6420151935510849,
+    "rf_pin": 0.888318865987343,
+    "pitch_max_m": 0.013324782989810144,
+    "L_req_m": 0.05548934099667117,
+    "A_net_req_m2": 0.00014797157599112315,
+    "frame_n": 2774.4670498335586
    },
    "input_values": {
-    "T1": 12.688377622840772,
-    "T4": 12.758500001039534,
-    "F": 2262.183039300627,
-    "ra": 0.6984403881343175,
-    "rt": 0.6299225019565838,
-    "rp": 0.8339483638720085,
-    "pmax": 0.012509225458080128,
-    "Lreq": 0.056554575982515676,
+    "T1": 12.668968435564704,
+    "T4": 12.758500002527608,
+    "F": 2235.259361003303,
+    "ra": 0.7068530961395066,
+    "rt": 0.6375099126574664,
+    "rp": 0.8820851723698487,
+    "pmax": 0.01323127758554773,
+    "Lreq": 0.05588148402508258,
     "A_net": 9.5e-05
    }
   },
@@ -853,9 +853,9 @@
     "nl": "P:fins.layers"
    },
    "outputs": {
-    "rf_foot": 1.4421092675148783,
-    "foot_area_mm2": 1657.6799999999994,
-    "foot_design_n": 114.94829395671275,
+    "rf_foot": 1.4412045128950395,
+    "foot_area_mm2": 1656.64,
+    "foot_design_n": 114.94829395671276,
     "rf_root": 0.8045958609604178,
     "rf_root_prop": 0.8045958609604178,
     "leg_req_m": 0.017146647457180617,
@@ -863,8 +863,8 @@
    },
    "input_values": {
     "kd": 0.5,
-    "sf_d5": 1.4421092675148783,
-    "A_d5": 0.0016576799999999995,
+    "sf_d5": 1.4412045128950395,
+    "A_d5": 0.00165664,
     "tau_b": 200000.0,
     "rf_d3": 1.6091917219208356,
     "s_xps": 250000.0,
@@ -908,8 +908,8 @@
     "c3_over_c6_xps_s": 1.0,
     "c3_over_c6_board_flat": 1.0,
     "c3_over_c6_paper_s": 2.0,
-    "rf_pod_design": 1.1408671903234415,
-    "rf_pod_crash": 1.276760859938842,
+    "rf_pod_design": 1.1405188413087433,
+    "rf_pod_crash": 1.27612984905065,
     "rf_tray": 2.983050847457627,
     "rf_floor": 1.0413559322033896,
     "rf_floor_prop": 2.343050847457627,
@@ -924,8 +924,8 @@
     "c3_sa": 100000.0,
     "c3_ta": 100000.0,
     "c3_fb": 50000.0,
-    "Rd": 0.8765262148668638,
-    "Rc": 0.7832320298790338,
+    "Rd": 0.8767939325338123,
+    "Rc": 0.783619316438628,
     "tray": 16761.363636363636,
     "glue": 96028.64583333334,
     "hatch": 2.225202896,
@@ -1040,7 +1040,7 @@
     "FIN-003-LL"
    ],
    "how": "Witness line across each screw head and plate; tap test after T-H1 thrust-stand runs",
-   "value": 3.6859620732106464
+   "value": 3.6868411476558105
   },
   {
    "id": "CL-C6-MOTOR-STRIP-RF",
@@ -1063,7 +1063,7 @@
     "PRP-001-LL"
    ],
    "how": "Probe the motor hole depth on arrival (E1 T-E1-MOTOR-RM); engagement >= 3.0 mm",
-   "value": 29.181074253935112
+   "value": 29.188033722358703
   },
   {
    "id": "CL-C6-CANT-ENGAGE",
@@ -1429,7 +1429,7 @@
     "FIN-004-L"
    ],
    "how": "T-C6-LAP-PETG (allowable) and C4 T-C4-BLOCK-PROOF",
-   "value": 2.6324026100045805
+   "value": 2.637424560418842
   },
   {
    "id": "CL-C6-BLOCK-SPAR-RF",
@@ -1452,7 +1452,7 @@
     "WNG-002"
    ],
    "how": "T-C6-LAP-PETG and T-C4-BLOCK-PROOF",
-   "value": 4.449409479119313
+   "value": 4.397055627485141
   },
   {
    "id": "CL-C6-COLLAR-RF",
@@ -1478,7 +1478,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF (1.5 x L4) with the collar witness-marked",
-   "value": 0.7676036956090295
+   "value": 0.7687378126699408
   },
   {
    "id": "CL-C6-COLLAR-RF-13MM",
@@ -1504,7 +1504,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "value": 0.6652565361944923
+   "value": 0.666239437647282
   },
   {
    "id": "CL-C6-COLLAR-RF-16MM",
@@ -1530,7 +1530,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "value": 0.8187772753162982
+   "value": 0.8199870001812702
   },
   {
    "id": "CL-C6-COLLAR-RF-15MM",
@@ -1556,7 +1556,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "value": 0.7676036956090295
+   "value": 0.7687378126699408
   },
   {
    "id": "CL-C6-COLLAR-RF-PROP",
@@ -1582,7 +1582,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "value": 1.12581875355991
+   "value": 1.1274821252492466
   },
   {
    "id": "CL-C6-COLLAR-RF-12MM-COND",
@@ -1608,7 +1608,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG mean; print 12 mm collars only if this claim passes on the measured allowable",
-   "value": 0.6294350303994042
+   "value": 0.6303650063893514
   },
   {
    "id": "CL-C6-COLLAR-L-REQ",
@@ -1632,7 +1632,7 @@
     "FIN-008-LL"
    ],
    "how": "D3 keeps fin_detail.station_collar.height_m >= this; T-C4-FIN-PROOF",
-   "value": 0.019541333745271706
+   "value": 0.0195125044622207
   },
   {
    "id": "CL-C6-STRIP-ANCHOR-F",
@@ -1660,7 +1660,7 @@
     "FIN-008-LL"
    ],
    "how": "H1 sizes the lever frame to >= this (CR-H1-12); C4 FE CL-C4-D3-STRIP-END-F is the source",
-   "value": 2262.183039300627
+   "value": 2235.259361003303
   },
   {
    "id": "CL-C6-STRIP-ANCHOR-RF",
@@ -1692,7 +1692,7 @@
     "FIN-008-LL"
    ],
    "how": "T-C6-STRIP-ANCHOR: pull one strip out of a printed tail coupon",
-   "value": 0.6984403881343175
+   "value": 0.7068530961395066
   },
   {
    "id": "CL-C6-STRIP-EMBED-REQ",
@@ -1716,7 +1716,7 @@
     "FIN-008-LL"
    ],
    "how": "T-C6-STRIP-ANCHOR on the 40 mm two-face tail",
-   "value": 0.056554575982515676
+   "value": 0.05588148402508258
   },
   {
    "id": "CL-C6-STRIP-TAIL-NET-RF",
@@ -1739,8 +1739,8 @@
     "FIN-008-LR",
     "FIN-008-LL"
    ],
-   "how": "T-C6-STRIP-ANCHOR: the tail must not break before 2262 N",
-   "value": 0.6299225019565838
+   "how": "T-C6-STRIP-ANCHOR: the tail must not break before 2235 N",
+   "value": 0.6375099126574664
   },
   {
    "id": "CL-C6-STRIP-FACE-RF",
@@ -1767,7 +1767,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C6-BOARD-LAP (allowable); C4 FE CL-C4-D3-STRIP-Q (= C4 MS -0.77)",
-   "value": 0.10805039973676525
+   "value": 0.1142872384015654
   },
   {
    "id": "CL-C6-STRIP-PIN-RF",
@@ -1798,7 +1798,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF with pins fitted; no strip lift at the tip",
-   "value": 0.8339483638720085
+   "value": 0.8820851723698487
   },
   {
    "id": "CL-C6-STRIP-PIN-RF-PROP",
@@ -1829,7 +1829,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF with 2.5 mm pins fitted",
-   "value": 0.8339483638720084
+   "value": 0.8820851723698487
   },
   {
    "id": "CL-C6-STRIP-PIN-RF-ALT",
@@ -1860,7 +1860,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF with pins fitted at 9 mm",
-   "value": 0.7116359371707804
+   "value": 0.7527126804222709
   },
   {
    "id": "CL-C6-STRIP-PIN-PITCH-MAX",
@@ -1891,7 +1891,7 @@
     "FIN-001-LL"
    ],
    "how": "D3 keeps fin_detail.edge_strip.pin_pitch_m <= this",
-   "value": 0.012509225458080128
+   "value": 0.01323127758554773
   },
   {
    "id": "CL-C6-STRIP-PIN-PITCH-MAX-ALT",
@@ -1922,7 +1922,7 @@
     "FIN-001-LL"
    ],
    "how": "Only if 2.5 mm rod cannot be bought: 2 mm pins at <= this pitch",
-   "value": 0.006404723434537024
+   "value": 0.006774414123800437
   },
   {
    "id": "CL-C6-STRIP-PIN-BRG-RF",
@@ -1949,7 +1949,7 @@
     "FIN-011-LLI"
    ],
    "how": "T-C4-FIN-PROOF: no strip split at a pin hole",
-   "value": 1.8008399956127539
+   "value": 1.9047873066927568
   },
   {
    "id": "CL-C6-STRIP-NET-PIN-RF",
@@ -1976,7 +1976,7 @@
     "FIN-011-LLI"
    ],
    "how": "T-C4-FIN-PROOF",
-   "value": 1.3261526356980713
+   "value": 1.3421261319104556
   },
   {
    "id": "CL-C6-BRACE-END-RF",
@@ -2008,7 +2008,7 @@
     "FIN-010-LL"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF (G2)",
-   "value": 2.3513120503543457
+   "value": 2.351722953206646
   },
   {
    "id": "CL-C6-ANCHOR-PULL-RF",
@@ -2033,7 +2033,7 @@
     "WNG-002"
    ],
    "how": "T-C4-FIN-PROOF (G2 in tension on the brace)",
-   "value": 1.3542585216765668
+   "value": 1.3544951847299567
   },
   {
    "id": "CL-C6-FOOT-SHOE-RF",
@@ -2060,7 +2060,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C6-BOARD-LAP; T-C1-FOOT-DROP",
-   "value": 1.4421092675148783
+   "value": 1.4412045128950395
   },
   {
    "id": "CL-C6-FIN-ROOT-RF",
@@ -2130,7 +2130,7 @@
     "WNG-001"
    ],
    "how": "T-C6-XPS-PULL (tension and shear); C3 pod proof",
-   "value": 1.1408671903234415
+   "value": 1.1405188413087433
   },
   {
    "id": "CL-C6-POD-CRASH-RF",
@@ -2151,7 +2151,7 @@
     "WNG-001"
    ],
    "how": "T-C6-XPS-PULL",
-   "value": 1.276760859938842
+   "value": 1.27612984905065
   },
   {
    "id": "CL-C6-POD-TRAY-RF",
@@ -2294,7 +2294,7 @@
     "FIN-008-LL"
    ],
    "how": "C4 re-runs fin_structures_d3.py / sim_fin.py on the D-65 side load; then k = 1 and the -EST claims retire",
-   "value": 0.9945038697187719
+   "value": 0.9929825945883006
   },
   {
    "id": "CL-C6-STRIP-ANCHOR-RF-EST",
@@ -2326,7 +2326,7 @@
     "FIN-008-LL"
    ],
    "how": "C4 re-run; T-C6-STRIP-ANCHOR",
-   "value": 0.7023003222016865
+   "value": 0.7118484251303259
   },
   {
    "id": "CL-C6-STRIP-TAIL-NET-RF-EST",
@@ -2350,7 +2350,7 @@
     "FIN-008-LL"
    ],
    "how": "C4 re-run; T-C6-STRIP-ANCHOR",
-   "value": 0.6334037716059514
+   "value": 0.6420151935510849
   },
   {
    "id": "CL-C6-STRIP-PIN-RF-EST",
@@ -2381,7 +2381,7 @@
     "FIN-001-LL"
    ],
    "how": "C4 re-run; T-C4-FIN-PROOF",
-   "value": 0.8385571834002359
+   "value": 0.888318865987343
   },
   {
    "id": "CL-C6-STRIP-PIN-PITCH-MAX-EST",
@@ -2412,7 +2412,7 @@
     "FIN-001-LL"
    ],
    "how": "C4 re-run; D3 holds the pin drilling until then",
-   "value": 0.012578357751003539
+   "value": 0.013324782989810144
   },
   {
    "id": "CL-C6-STRIP-ANCHOR-F-EST",
@@ -2440,7 +2440,7 @@
     "FIN-008-LL"
    ],
    "how": "H1 builds the T-C6-STRIP-ANCHOR frame to 1.25 x this until C4 re-runs",
-   "value": 2249.7497865966466
+   "value": 2219.573639866847
   },
   {
    "id": "CL-C6-POCKET-WALL-AREA-RATIO",
@@ -2646,7 +2646,7 @@
     "CL-C6-STRIP-TAIL-NET-RF"
    ],
    "state": "planned",
-   "procedure": "Print the 40 mm two-face station collar (ring + tail) alone; bond a 10 x 1 strip pair in it as built (board offcut as the tongue spacer); pull ONE strip along its axis on H1's lever frame with the ring held on a 22 mm mandrel; pass >= CL-C6-STRIP-ANCHOR-F (2262 N) with neither the bond nor the tail failing. Record the failure mode"
+   "procedure": "Print the 40 mm two-face station collar (ring + tail) alone; bond a 10 x 1 strip pair in it as built (board offcut as the tongue spacer); pull ONE strip along its axis on H1's lever frame with the ring held on a 22 mm mandrel; pass >= CL-C6-STRIP-ANCHOR-F (2235 N) with neither the bond nor the tail failing. Record the failure mode"
   },
   {
    "id": "T-C6-PROPNUT",

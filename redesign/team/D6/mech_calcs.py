@@ -484,7 +484,7 @@ kit.claim("CL-D6-TWIST-FOAM-ONLY", "Outboard panel twist with bare foam (no tube
 kit.claim("CL-D6-ROD-STRESS", "Bridge rod bending stress, VD full", calc="CALC-D6-BRIDGE", output="rod_sigma_vd_Pa",
           unit="Pa", limit=("<=", 1.0e9), parts=["MEC-005-L", "MEC-005-R"], how="No set in the rod after T-B2-HINGE")
 kit.claim("CL-D6-SERVO-SUPPLY", "Servo supply rating required (2 servos stalled x 2)", calc="CALC-D6-SUPPLY",
-          output="i_req_a", unit="A", limit=("<=", "CL-F1-UBEC-RATING"), parts=SERVOS,
+          output="i_req_a", unit="A", limit=("<=", "CL-F1-SERVO-BEC-RATING"), parts=SERVOS,
           how="T-F1-SERVO-STALL")
 kit.claim("CL-D6-MASS", "Mechanisms mass", calc="CALC-D6-MASS", output="mass_g", unit="g",
           limit=("<=", "P:mass.allocation_g.mechanisms"), parts=SERVOS, how="T-D6-WEIGH: weigh every part on arrival")

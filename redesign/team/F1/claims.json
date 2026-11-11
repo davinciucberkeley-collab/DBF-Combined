@@ -37,6 +37,26 @@
    "status": "UNVERIFIED"
   },
   {
+   "id": "SRC-F1-COREWING-V2",
+   "type": "source",
+   "title": "CoreWing F405 Wing V2 User Manual V2.1 (Coolwing Technology) + ArduPilot CoreWingF405WingV2 hardware page",
+   "kind": "datasheet",
+   "url": "https://ardupilot.org/copter/docs/common-corewing-f405-wing-v2.html",
+   "where": "PDB parameter table p. 7 and power logic p. 4-5: servo BEC 5 / 6 / 7.2 V by jumper, 8 A continuous / 14 A peak; FC BEC 5.2 V 4 A; current sense 90 A cont / 215 A peak, 64 A/V (ArduPilot)",
+   "note": "summarised in subsystems/power/SPEC.md; ratings checked on the bench at BOARD-CHECK.md step 7",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F1-XT30U",
+   "type": "source",
+   "title": "Amass XT30U connector manual / listing",
+   "kind": "datasheet",
+   "url": "https://www.amass.com.cn/",
+   "where": "XT30U: 20 A continuous (16 AWG, dT < 85 K), contact resistance <= 1.2 mOhm per contact",
+   "note": "per harness SPEC.md (D-74); open the maker sheet before ordering (I1 H06)",
+   "status": "UNVERIFIED"
+  },
+  {
    "id": "SRC-F1-IEC60028",
    "type": "source",
    "title": "IEC 60028 international standard of resistance for copper",
@@ -82,28 +102,13 @@
    "id": "ASM-F1-GAUGES",
    "type": "assumption",
    "title": "Chosen gauges",
-   "text": "AWG for [ESC power lead, ESC alternative checked, UBEC feed, UBEC servo bus]; the main jumper gauge is P:power.jumper_awg (10 AWG, PWR-R1)",
+   "text": "AWG for [ESC power lead, ESC alternative checked]; the main jumper gauge is P:power.jumper_awg (10 AWG, PWR-R1). D-74: no UBEC feed or servo bus wire (the servo rail is the FC Vx header)",
    "basis": "F1 choice; the alternative (18 AWG) is computed to answer CR-A3-06",
    "value": [
     16,
-    18,
-    20,
-    20
+    18
    ],
    "unit": "AWG",
-   "status": "PROPOSED"
-  },
-  {
-   "id": "ASM-F1-LENGTHS",
-   "type": "assumption",
-   "title": "Conductor lengths, one way, not routed by F2",
-   "text": "[UBEC feed incl. fuse pigtails, UBEC to servo bus] per conductor; main jumpers come from P:power.jumper_len_m and ESC leads from F2's CL-F2-ESC-LEN-*",
-   "basis": "pod layout subsystems/power/SPEC.md: fuse under the cradle, UBEC in the right channel",
-   "value": [
-    0.15,
-    0.35
-   ],
-   "unit": "m",
    "status": "PROPOSED"
   },
   {
@@ -238,6 +243,33 @@
    "text": "BATT_AMP_PERVLT calibrated within +/-5 % at 24-30 A (R-AVIONICS-POWER)",
    "basis": "requirement value; the 100 A limiter acts on the sensed current",
    "value": 0.05,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F1-R-XT30U",
+   "type": "assumption",
+   "title": "XT30U in each ESC branch (D-74, WB-03)",
+   "text": "one mated XT30U pair per ESC branch at the pod side exit: 2 contacts x 1.2 mOhm in the branch loop",
+   "basis": "Amass maximum contact resistance (harness SPEC.md); T-F1-DROP measures the branch with the plugs in",
+   "value": 0.0024,
+   "unit": "ohm",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-F1-XT30U"
+   ]
+  },
+  {
+   "id": "ASM-F1-PMOD-CONDUCTORS",
+   "type": "assumption",
+   "title": "Board-to-board link (W-PMOD, case S): 28 AWG conductors per role",
+   "text": "[FC-BEC 5 V, SERVO-BEC Vx, GND] conductors in parallel; BATT_VOLT and BATT_CURR one each (10 wired). Vx gets 4 (all four SERVO-BEC contacts) so the servo terminal voltage holds 5.7 V (F2 CL-F2-SERVO-V)",
+   "basis": "CoreWing manual PDB pin figure (power SPEC.md: FC-BEC x several, SERVO-BEC x 4, GND x several); 10 of them so the folded ribbon fits D2's 10 mm under-pack channel beside the RX and airspeed leads (F2 CL-F2-FILL); pin map measured at BOARD-CHECK.md step 4",
+   "value": [
+    1,
+    4,
+    3
+   ],
    "unit": "-",
    "status": "PROPOSED"
   },
@@ -435,7 +467,6 @@
     "profile": "CL-F1-PROFILE",
     "punch": "ASM-F1-PUNCH",
     "gauges": "ASM-F1-GAUGES",
-    "lengths": "ASM-F1-LENGTHS",
     "od": "ASM-F1-WIRE-OD",
     "g_main": "P:power.jumper_awg",
     "l_main": "P:power.jumper_len_m",
@@ -456,8 +487,7 @@
     "r_contact": "ASM-F1-R-CONTACT",
     "r_board": "ASM-F1-R-BOARD",
     "v": "P:battery.v_nom",
-    "i_servo_bus": "CL-F1-SERVO-STALL-BUS",
-    "ubec_eta_in": "ASM-F1-UBEC-IN"
+    "r_xt30": "ASM-F1-R-XT30U"
    },
    "units": {
     "ilim": "A",
@@ -484,30 +514,30 @@
     "main_od_mm": 4.8,
     "main_gpm": 61.227271243472906,
     "esc_awg": 16,
-    "esc_len_m": 0.6188101480021374,
+    "esc_len_m": 0.6191354695493952,
     "esc_i_cont_a": 8.409098623331118,
     "esc_rise_long_c": 9.165983839554954,
     "esc_rise_c": 9.165983839554954,
     "esc_peak_normal_c": 13.819181810415593,
     "esc_peak_fault_c": 17.561400356261778,
-    "esc_r_loop_mohm": 17.883397124429464,
-    "esc_mass_g": 70.97980270156714,
+    "esc_r_loop_mohm": 17.892798803509116,
+    "esc_mass_g": 70.30928156984018,
     "esc_od_mm": 2.6000000000000005,
     "esc_gpm": 16.15937672414052,
     "esc18_awg": 18,
-    "esc18_len_m": 0.6188101480021374,
+    "esc18_len_m": 0.6191354695493952,
     "esc18_i_cont_a": 8.409098623331118,
     "esc18_rise_long_c": 16.401796147986758,
     "esc18_rise_c": 16.401796147986758,
     "esc18_peak_normal_c": 31.015162931177414,
     "esc18_peak_fault_c": 41.79518025106877,
-    "esc18_r_loop_mohm": 29.187693623266938,
-    "esc18_mass_g": 43.64222795887662,
+    "esc18_r_loop_mohm": 29.203038209455553,
+    "esc18_mass_g": 43.22995524229684,
     "esc18_od_mm": 2.0,
     "esc18_gpm": 9.935660227648604,
-    "esc_r_loop_max_mohm": 17.883397124429464,
-    "esc_r_loop_min_mohm": 13.8839531962631,
-    "esc_len_total_m": 2.1962419687737795,
+    "esc_r_loop_max_mohm": 20.292798803509115,
+    "esc_r_loop_min_mohm": 15.97882803305176,
+    "esc_len_total_m": 2.1754948464319486,
     "bundle0_rise_c": 9.523708897783688,
     "bundle0_rise_long_c": 21.486683906061074,
     "bundle0_peak_fault_c": 25.093892491898302,
@@ -516,24 +546,13 @@
     "bundle1_peak_fault_c": 18.83589668809065,
     "bundle_rise_max_c": 9.523708897783688,
     "bundle_peak_max_c": 25.093892491898302,
-    "feed_awg": 20,
-    "feed_i_cont_a": 1.3354531001589822,
-    "feed_len_m": 0.15,
-    "feed_rise_c": 0.7987706690225025,
-    "feed_mass_g": 1.9760210517122445,
-    "feed_r_loop_mohm": 10.624883754671728,
-    "bus_awg": 20,
-    "bus_i_cont_a": 2.8,
-    "bus_len_m": 0.35,
-    "bus_rise_c": 3.566572834591881,
-    "bus_mass_g": 4.61071578732857,
-    "bus_r_loop_mohm": 25.050084358720753,
     "r_common_mohm": 2.7902395822486405,
-    "r_ext_mohm": 6.712254766522776,
-    "drop_cont_pct": 1.5868343886958598,
-    "drop_peak_pct": 4.881974371018344,
+    "r_ext_mohm": 7.272778218731092,
+    "drop_cont_pct": 1.723732336956673,
+    "drop_peak_pct": 5.285711949674933,
     "main_loss_w_cont": 2.557086319973969,
-    "esc_len_allow_m": 0.6431822936361362
+    "esc_len_allow_m": 0.560136307190062,
+    "xt30_drop_pct": 0.4021621621621621
    },
    "input_values": {
     "i_cont": 30.272755043992028,
@@ -581,13 +600,7 @@
     ],
     "gauges": [
      16,
-     18,
-     20,
-     20
-    ],
-    "lengths": [
-     0.15,
-     0.35
+     18
     ],
     "od": [
      [
@@ -633,10 +646,10 @@
      0.05
     ],
     "k_cu": 400.0,
-    "l_ur": 0.5935763114142478,
-    "l_ul": 0.4804194120644969,
-    "l_lr": 0.6188101480021374,
-    "l_ll": 0.5034360972928973,
+    "l_ur": 0.5938993025631426,
+    "l_ul": 0.46986132032766137,
+    "l_lr": 0.6191354695493952,
+    "l_ll": 0.4925987539917493,
     "bundle": [
      [
       "P1 straw, LR + LL pairs",
@@ -668,19 +681,8 @@
     "r_contact": 0.0008,
     "r_board": 0.0006,
     "v": 14.8,
-    "i_servo_bus": 2.8,
-    "ubec_eta_in": 0.85
+    "r_xt30": 0.0024
    }
-  },
-  {
-   "id": "ASM-F1-UBEC-IN",
-   "type": "assumption",
-   "title": "UBEC efficiency 0.85",
-   "text": "switching UBEC, 4S in, 6 V out",
-   "basis": "typical buck converter at 1-5 A",
-   "value": 0.85,
-   "unit": "-",
-   "status": "PROPOSED"
   },
   {
    "id": "ASM-F1-PACKLEAD",
@@ -833,7 +835,7 @@
   {
    "id": "CALC-F1-SERVO-BEC",
    "type": "calculation",
-   "title": "Servo supply requirement",
+   "title": "Servo supply requirement (power-board servo BEC, D-74)",
    "script": "redesign/team/F1/power.py",
    "function": "servo_bec",
    "equation": "I_req = k_bec x n_servo x I_stall",
@@ -884,7 +886,7 @@
    "title": "Power mass excluding the pack, against the allocation left after the pack",
    "script": "redesign/team/F1/power.py",
    "function": "power_mass",
-   "equation": "m = CL-PWR-MASS-NONPACK (PWR-R1 parts: AS150U half + 10 AWG jumpers, power board, bus board, UBEC, frame, fuse, 4 caps); budget = allocation - pack",
+   "equation": "m = CL-PWR-MASS-NONPACK (PWR-R1 + D-74 parts: AS150U half + 10 AWG jumpers, power board, bus board, frame, 4 caps; no UBEC, no fuse); budget = allocation - pack",
    "inputs": {
     "nonpack": "CL-PWR-MASS-NONPACK",
     "alloc": "P:mass.allocation_g.power",
@@ -896,28 +898,29 @@
     "pack": "kg"
    },
    "outputs": {
-    "mass_g": 88.2,
-    "budget_g": 98.0
+    "mass_g": 72.39999999999999,
+    "budget_g": 80.0
    },
    "input_values": {
-    "nonpack": 88.2,
-    "alloc": 648,
+    "nonpack": 72.39999999999999,
+    "alloc": 630,
     "pack": 0.55
    }
   },
   {
    "id": "CALC-F1-PMOD",
    "type": "calculation",
-   "title": "Power-board link (JST-GH 6, 28 AWG): 5 V conductor heating",
+   "title": "Power-board link (W-PMOD, 28 AWG ribbon, case S): conductor heating per role",
    "script": "redesign/team/F1/power.py",
    "function": "pmod",
-   "equation": "same steady wire model as CALC-F1-WIRES, 28 AWG, pod still air, f_pair for the 6-way cable; I_5V = CL-F3-5V-REQ (2 x the FC 5 V load); stall case = CL-F1-SERVO-STALL-BUS",
+   "equation": "same steady wire model as CALC-F1-WIRES, 28 AWG, pod still air, f_pair for the ribbon; per conductor: 5 V I_5V / n_5V, Vx I_stall / n_Vx, GND (I_5V + I_stall) / n_GND; I_5V = CL-F3-5V-REQ (2 x the FC 5 V load), I_stall = CL-F1-SERVO-STALL-BUS (both servos stalled, D-74)",
    "inputs": {
     "i_5v": "CL-F3-5V-REQ",
     "i_stall": "CL-F1-SERVO-STALL-BUS",
     "od": "ASM-F1-WIRE-OD",
     "cool": "ASM-F1-COOLING",
-    "amb": "P:env.ambient_design_c"
+    "amb": "P:env.ambient_design_c",
+    "n": "ASM-F1-PMOD-CONDUCTORS"
    },
    "units": {
     "i_5v": "A",
@@ -926,7 +929,10 @@
    },
    "outputs": {
     "rise_5v_c": 2.694592888827316,
-    "rise_stall_c": 24.723849871846625
+    "rise_stall_c": 1.8078361436349013,
+    "rise_gnd_c": 5.1374090841570705,
+    "i_vx_a": 0.7,
+    "i_gnd_a": 1.222
    },
    "input_values": {
     "i_5v": 0.866,
@@ -978,6 +984,11 @@
     "amb": [
      10,
      30
+    ],
+    "n": [
+     1,
+     4,
+     3
     ]
    }
   },
@@ -1401,7 +1412,7 @@
    ],
    "how": "Weigh the four cut pairs before soldering.",
    "note": "Harness mass is F2's (HRN-101/102, CL-F2-MASS); F2 reads the per-metre value CL-F1-W16-GPM instead of dividing this by 4.0 m (CR-F1-23).",
-   "value": 70.97980270156714
+   "value": 70.30928156984018
   },
   {
    "id": "CL-F1-ESC-LEN-ALLOW",
@@ -1410,10 +1421,6 @@
    "calc": "CALC-F1-WIRES",
    "output": "esc_len_allow_m",
    "unit": "m",
-   "limit": {
-    "op": ">=",
-    "ref": "CL-F2-ESC-LEN-MAX"
-   },
    "parts": [
     "PRP-002-UR",
     "PRP-002-UL",
@@ -1421,8 +1428,8 @@
     "PRP-002-LL"
    ],
    "how": "F2 cut list: every ESC lead <= this length (CR-F1-25); T-F1-DROP on the longest branch.",
-   "note": "R3: LR routed at 0.650 m is 7 mm over; trim its service loop or use 14 AWG on LR only.",
-   "value": 0.6431822936361362
+   "note": "R5: with one XT30U per branch (D-74) the 5 % guideline length is below F2's longest lead; WB-11 makes 5 % a guideline, so this claim carries no limit. Measure the built branch (T-F1-DROP).",
+   "value": 0.560136307190062
   },
   {
    "id": "CL-F1-W16-GPM",
@@ -1496,40 +1503,6 @@
    "value": 28.45784867501736
   },
   {
-   "id": "CL-F1-FEED-RISE",
-   "type": "claim",
-   "title": "UBEC feed 20 AWG, steady rise at servo stall",
-   "calc": "CALC-F1-WIRES",
-   "output": "feed_rise_c",
-   "unit": "degC",
-   "limit": {
-    "op": "<=",
-    "ref": "P:electrical.wire_temp_rise_max_c"
-   },
-   "parts": [
-    "PWR-005"
-   ],
-   "how": "Bench: both servos stalled 60 s, touch-probe the feed.",
-   "value": 0.7987706690225025
-  },
-  {
-   "id": "CL-F1-BUS-RISE",
-   "type": "claim",
-   "title": "Servo bus 20 AWG, steady rise at both servos stalled",
-   "calc": "CALC-F1-WIRES",
-   "output": "bus_rise_c",
-   "unit": "degC",
-   "limit": {
-    "op": "<=",
-    "ref": "P:electrical.wire_temp_rise_max_c"
-   },
-   "parts": [
-    "PWR-005"
-   ],
-   "how": "Same bench run.",
-   "value": 3.566572834591881
-  },
-  {
    "id": "CL-F1-R-EXT",
    "type": "claim",
    "title": "Resistance pack terminals to ESC pads (equivalent, hot)",
@@ -1546,9 +1519,9 @@
     "PRP-002-LR",
     "PRP-002-LL"
    ],
-   "how": "T-F1-DROP: 20 A load step, read pack-terminal and ESC-pad voltages with one meter.",
-   "note": "R4: F2 routed ESC lengths 0.475-0.620 m and 10 AWG jumpers; P:electrical.r_ext_mohm follows (CR-F1-24).",
-   "value": 6.712254766522776
+   "how": "T-F1-DROP: 20 A load step, read pack-terminal and ESC-pad voltages with one meter, XT30U plugs in.",
+   "note": "R5: + one XT30U per branch (2.4 mOhm, D-74), +0.6 mOhm on the equivalent; P:electrical.r_ext_mohm (A1) follows (CR-F1-24).",
+   "value": 7.272778218731092
   },
   {
    "id": "CL-F1-DROP-CONT",
@@ -1572,19 +1545,15 @@
     "PRP-002-LL"
    ],
    "how": "T-F1-DROP at 30 A.",
-   "value": 1.5868343886958598
+   "value": 1.723732336956673
   },
   {
    "id": "CL-F1-DROP-PEAK",
    "type": "claim",
-   "title": "Voltage drop pack to the farthest ESC at the 100 A limiter",
+   "title": "Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11)",
    "calc": "CALC-F1-WIRES",
    "output": "drop_peak_pct",
    "unit": "%",
-   "limit": {
-    "op": "<=",
-    "value": 5.0
-   },
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -1595,8 +1564,29 @@
     "PRP-002-LR",
     "PRP-002-LL"
    ],
-   "how": "T-F1-DROP scaled; stand log at full throttle.",
-   "value": 4.881974371018344
+   "how": "T-F1-DROP scaled with the XT30U plugs in; stand log at full throttle. Go to 14 AWG on the right-hand leads only if the measured drop costs real thrust (WB-11).",
+   "note": "D-74 accepts the XT30U (CL-F1-XT30U-DROP) over F1's 5 % guideline: WB-11 makes 5 % a guideline, not a hardware limit, so this claim carries no limit; the number is the one to measure.",
+   "value": 5.285711949674933
+  },
+  {
+   "id": "CL-F1-XT30U-DROP",
+   "type": "claim",
+   "title": "Drop across one ESC branch's XT30U at the per-motor limit",
+   "calc": "CALC-F1-WIRES",
+   "output": "xt30_drop_pct",
+   "unit": "%",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL",
+    "HRN-001"
+   ],
+   "how": "T-F1-DROP: meter across a mated XT30U at 20 A, scale to the per-motor limit.",
+   "assumes": [
+    "ASM-F1-R-XT30U"
+   ],
+   "value": 0.4021621621621621
   },
   {
    "id": "CL-F1-SERVO-BEC-REQ",
@@ -1609,16 +1599,16 @@
     "R-AVIONICS-POWER"
    ],
    "parts": [
-    "PWR-005"
+    "PWR-003"
    ],
    "how": "T-F1-SERVO-STALL: measure each servo's stall current at 6 V; re-run with the measured value.",
-   "note": "5.6 A with D6's 1.4 A stall (CR-D6-06) > the 4.5 A carried for the CoreWing servo BEC (CL-F3-SERVO-BEC): the UBEC stays. The drop rule (<= 1.1 A per servo) is not met.",
+   "note": "5.6 A with D6's 1.4 A stall (CR-D6-06) = 2 x 2 x 1.4 A; carried by the CoreWing power board's servo BEC, 8 A cont / 14 A peak on the 6 V jumper (CL-F1-SERVO-BEC-RATING, margin 43 %). The 4.5 A once carried was the SpeedyBee column of CoreWing's comparison table (D-74): UBEC and fuse deleted.",
    "value": 5.6
   },
   {
    "id": "CL-F1-SERVO-STALL-BUS",
    "type": "claim",
-   "title": "Servo bus current, both servos stalled",
+   "title": "Servo rail current, both servos stalled",
    "calc": "CALC-F1-SERVO-BEC",
    "output": "i_bus_stall_a",
    "unit": "A",
@@ -1626,15 +1616,16 @@
     "R-AVIONICS-POWER"
    ],
    "parts": [
-    "PWR-005"
+    "PWR-003",
+    "AVN-001"
    ],
-   "how": "T-F1-SERVO-STALL, both servos blocked together, meter in the UBEC output.",
+   "how": "T-F1-SERVO-STALL, both servos blocked together, meter in the Vx line at the FC header.",
    "value": 2.8
   },
   {
-   "id": "CL-F1-UBEC-RATING",
+   "id": "CL-F1-SERVO-BEC-RATING",
    "type": "claim",
-   "title": "UBEC continuous rating (6 V, >= 6 A class)",
+   "title": "Power-board servo BEC continuous rating (6 V jumper)",
    "unit": "A",
    "limit": {
     "op": ">=",
@@ -1644,11 +1635,14 @@
     "R-AVIONICS-POWER"
    ],
    "parts": [
-    "PWR-005"
+    "PWR-003"
    ],
-   "how": "Datasheet of the bought UBEC; bench both servos stalled: rail >= 4.8 V (5.8 V at the 6 V setting).",
+   "how": "BOARD-CHECK.md step 7: two 2.2 Ohm loads (~5.4 A) on S5/S6, Vx >= 5.8 V at the header, no cut-out, board <= 70 degC after 60 s; repeated with the real servos stalled (T-F1-SERVO-STALL).",
+   "cites": [
+    "SRC-F1-COREWING-V2"
+   ],
    "value": 8.0,
-   "note": "candidate Hobbywing UBEC 8A class; datasheet not yet opened (UNVERIFIED)"
+   "note": "D-74 replaces CL-F1-UBEC-RATING. Never on the 7.2 V jumper (SH-0255MG+ is a 4.8-6.0 V servo). Fallback if step 7 fails: a named 4S-input 6 V UBEC (BOM gate X12)"
   },
   {
    "id": "CL-F1-SENSOR-PEAK",
@@ -1665,9 +1659,9 @@
    "parts": [
     "PWR-003"
    ],
-   "how": "Candidate FC power board (F3 decides); any replacement needs >= 120 A peak and >= 38 A continuous.",
+   "how": "CoreWing V2 power board (manual V2.1 p. 7); any replacement needs >= 120 A peak and >= 38 A continuous.",
    "cites": [
-    "SRC-F1-SPEEDYBEE-WING"
+    "SRC-F1-COREWING-V2"
    ],
    "value": 215.0
   },
@@ -1688,7 +1682,7 @@
    ],
    "how": "As CL-F1-SENSOR-PEAK; T-F1-SENSOR-CAL.",
    "cites": [
-    "SRC-F1-SPEEDYBEE-WING"
+    "SRC-F1-COREWING-V2"
    ],
    "value": 90.0
   },
@@ -1707,12 +1701,11 @@
     "PWR-001",
     "PWR-002",
     "PWR-003",
-    "PWR-004",
-    "PWR-005"
+    "PWR-004"
    ],
    "how": "Weigh each item on arrival (T-PWR-ARRIVAL); A3 replaces the EST rows.",
-   "note": "D-48: power 648 g incl. the CoreWing power board (28 g EST; one retailer lists the PDB board alone at 11.4 g, kept at 28 until weighed).",
-   "value": 88.2
+   "note": "D-74: UBEC 13 g and fuse 3.5 g deleted, deck 56 mm (+0.7 g). Power board 28 g EST (one retailer lists the PDB alone at 11.4 g, kept at 28 until weighed).",
+   "value": 72.39999999999999
   },
   {
    "id": "CL-F1-POWER-BUDGET",
@@ -1722,12 +1715,12 @@
    "output": "budget_g",
    "unit": "g",
    "how": "P:mass.allocation_g.power minus P:battery.mass_kg; follows A1's allocation.",
-   "value": 98.0
+   "value": 80.0
   },
   {
    "id": "CL-F1-PMOD-RISE",
    "type": "claim",
-   "title": "Power-board link 28 AWG 5 V conductor, steady rise at 2 x FC 5 V load",
+   "title": "Power-board link 28 AWG FC-BEC 5 V conductors, steady rise at 2 x FC 5 V load",
    "calc": "CALC-F1-PMOD",
    "output": "rise_5v_c",
    "unit": "degC",
@@ -1739,25 +1732,63 @@
     "R-AVIONICS-POWER"
    ],
    "parts": [
-    "PWR-003"
+    "PWR-003",
+    "AVN-001"
    ],
-   "how": "T-F1-SERVO-STALL: meter in the 5 V line of the GH link while the FC, GPS, RX and airspeed run.",
+   "how": "T-F1-SERVO-STALL: meter in the 5 V lines of the link while the FC, GPS, RX and airspeed run.",
+   "assumes": [
+    "ASM-F1-PMOD-CONDUCTORS"
+   ],
    "value": 2.694592888827316
   },
   {
    "id": "CL-F1-PMOD-SERVO-RISE",
    "type": "claim",
-   "title": "Power-board link if servo stall current ran through it (not accepted)",
+   "title": "Power-board link Vx conductors, steady rise with both servos stalled",
    "calc": "CALC-F1-PMOD",
    "output": "rise_stall_c",
    "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
    "parts": [
     "PWR-003",
-    "PWR-005"
+    "AVN-001"
    ],
-   "how": "Continuity check on the built stack: FC servo-rail + to the power-board Vx pad open (no path).",
-   "note": "above P:electrical.wire_temp_rise_max_c: the servo rail is fed by the UBEC only and the CoreWing Vx must not reach the FC servo rail through the link (CR-F1-29). Also above the ~1 A per JST-GH pin.",
-   "value": 24.723849871846625
+   "how": "T-F1-SERVO-STALL: both servos stalled 60 s, touch-probe the ribbon; Vx >= 5.8 V at the servo header.",
+   "assumes": [
+    "ASM-F1-PMOD-CONDUCTORS"
+   ],
+   "note": "D-74: the servo BEC on the power board reaches the FC Vx rail through the board-to-board link (case S: SERVO-BEC conductors in parallel; case U: the stacked pin header, no cable). Supersedes CR-F1-29.",
+   "value": 1.8078361436349013
+  },
+  {
+   "id": "CL-F1-PMOD-GND-RISE",
+   "type": "claim",
+   "title": "Power-board link GND conductors, steady rise at 5 V load + servo stall",
+   "calc": "CALC-F1-PMOD",
+   "output": "rise_gnd_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003",
+    "AVN-001"
+   ],
+   "how": "Same bench run as CL-F1-PMOD-SERVO-RISE.",
+   "assumes": [
+    "ASM-F1-PMOD-CONDUCTORS"
+   ],
+   "value": 5.1374090841570705
   },
   {
    "id": "T-F1-WIRE-HEAT",
@@ -1793,7 +1824,8 @@
    "verifies": [
     "CL-F1-R-EXT",
     "CL-F1-DROP-CONT",
-    "CL-F1-DROP-PEAK"
+    "CL-F1-DROP-PEAK",
+    "CL-F1-XT30U-DROP"
    ],
    "state": "planned",
    "procedure": "20 A load step from the pack; meter across pack terminals and across one ESC's pads; R = dV/dI. Pass: drop <= 2 % at 30 A."
@@ -1816,10 +1848,12 @@
    "verifies": [
     "CL-F1-SERVO-BEC-REQ",
     "CL-F1-PMOD-RISE",
-    "CL-F1-UBEC-RATING"
+    "CL-F1-SERVO-BEC-RATING",
+    "CL-F1-PMOD-SERVO-RISE",
+    "CL-F1-PMOD-GND-RISE"
    ],
    "state": "planned",
-   "procedure": "Each servo blocked at full deflection 2 s on the UBEC at 6 V, meter in series; both together: rail >= 5.8 V at the servo and FC 5 V rail >= 4.8 V."
+   "procedure": "Each servo blocked at full deflection 2 s on the power-board servo BEC (6 V jumper), meter in series; both together: Vx >= 5.8 V at the servo and FC 5 V rail >= 4.8 V (as BOARD-CHECK.md step 7, with the real servos)."
   },
   {
    "id": "T-F1-PRECHARGE",

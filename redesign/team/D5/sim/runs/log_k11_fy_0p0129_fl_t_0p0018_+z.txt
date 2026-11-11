@@ -1,0 +1,1 @@
+h400_pz_v_fl_t1.8_fy12.9 gov 29.81 MPa (k 0.5032 MPa/N) {"rim": {"vm_max_MPa": 29.81252, "at_mm": [326.2, -7.474, 214.383]}, "aft box": {"vm_max_MPa": 28.18188, "at_mm": [317.615, 6.3, 200.466]}, "window and open-end zone": {"vm_max_MPa": 6.335534, "at_mm": [304.895, 6.3, 200.466]}, "whole shoe": {"vm_max_MPa": 47.87604, "at_mm": [320.0, 6.196, 200.387]}} 199 s

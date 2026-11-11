@@ -20,7 +20,8 @@ Not counted (declared passages; each one has a hole in the CAD or is a stated co
     M  GPS cable in the grip groove / mast (POD-005, POD-007)
     F/L  the tape skin (WNG-003) where a lead goes under it at a groove or straw mouth
     E  the first / last 12 mm of a strand (landing on its pad, pin or connector; for wire-vs-wire both strands)
-    own lead  W-PACK inside PWR-001 (the pack part models its own 10 AWG lead)
+    own lead  W-PACK inside PWR-001 (the pack part models its own 10 AWG lead); each W-PWR-<st> inside its own XT30U
+              HRN-113-<st> (D-74: the pair is soldered into it). Other wires against the XT30U bodies are checked
 The groove walls and floors (WNG-001) are NOT exempt: a conductor in its groove must clear them.
 Exit code 0 always (a report); prints the tables and writes JSON when --json is given.
 """
@@ -46,6 +47,7 @@ CLEAR = float(argv[argv.index('--clear-mm') + 1]) / 1000 if '--clear-mm' in argv
 STEP = 0.0005
 END_ZONE = 0.012
 OWN_LEAD = {'W-PACK': 'PWR-001'}               # pack lead: PWR-001 models it (bodies "pack leads 10 AWG ...")
+OWN_LEAD.update({'W-PWR-' + s: 'HRN-113-' + s for s in ('UR', 'UL', 'LR', 'LL')})   # each ESC pair through its XT30U
 
 # (segment code, part pattern, body pattern): declared passages (see the docstring)
 PASSAGES = [('L', 'WNG-001', '*'), ('L', 'FIN-001-*', '*'), ('T', 'FIN-001-*', '*'),
@@ -67,7 +69,7 @@ STRANDS = lv(H.get('cad', {}).get('wire_strands', {}))
 
 trees = {}                                       # (part id, body index) -> (tree, lo, hi, body name)
 for pid, comp in ctx.components.items():
-    if not comp.flight or getattr(comp, 'proxy', False) or pid.startswith('HRN') or pid not in be.objects:
+    if not comp.flight or getattr(comp, 'proxy', False) or pid.startswith(('HRN-001', 'HRN-002')) or pid not in be.objects:
         continue
     M = be.objects[pid].matrix_world
     for k, shape in enumerate(comp.shapes):          # one tree per body: a closed shell each, so ray parity holds

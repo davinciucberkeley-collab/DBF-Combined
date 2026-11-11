@@ -641,7 +641,7 @@ DYN_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "v": P + "
           "err": P + "requirements.landing_attitude_err_deg", "b": P + "wing.span_m", "foot": P + "cg.foot_height_m",
           "s_prop": "ASM-C5-STROKE-PROP", "foot_prop": "ASM-C5-FOOT-PROP", "s_hand": "CL-C5-DROP-STROKE",
           "mu_pad": "ASM-D5-PAD-MU", "mu_c1": "ASM-C1-FRICTION", "F_corner": "CL-C1-FOOT-CORNER",
-          "F_prop": "ASM-C5-F-PLATEAU-PROP", "pk_prop": "ASM-C5-PRECRUSH-PEAK", "sigma": "ASM-D5-XPS-PLATEAU",
+          "F_prop": "ASM-C5-F-PLATEAU-PROP", "pk_prop": "ASM-C5-PRECRUSH-PEAK", "sigma": "ASM-D5-CART-PLATEAU",
           "sec_y": P + "landing.cartridge.section_y_m", "sf_ult": P + "requirements.safety_factor_ult",
           "F_up": "CL-D5-F-PLATEAU-UPPER", "F_lo": "CL-D5-F-PLATEAU-LOWER"}
 

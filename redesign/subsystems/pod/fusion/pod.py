@@ -20,7 +20,7 @@ Arrangement (SPEC.md): the pack bay runs down the middle. From the nose aft: foa
 1 mm epoxy line -> 3 mm printed forward-stop T (aft face x -0.1312) -> removable XPS crush block cut per pack
 (POD-009) -> 1.5 mm spreader (POD-010) -> pack (datum centroid x -0.032) -> printed U-spacers (POD-008) -> 3 mm aft
 stop at x 0.0475 on the tray rear piece -> strut pad and ribs (POD-007) -> foot bridge. The pack sits wholly on the tray.
-FC on gel pads in the right channel, UBEC behind it; airspeed sensor, receiver, PDB, fuse and the AS150U park in the
+FC on gel pads in the right channel, the right XT30U pair behind it (D-74: UBEC deleted); airspeed sensor, receiver, PDB and the AS150U park in the
 left channel; pitot socket with its flange at the left of the nose; ram-air vent over the pack; two antenna exits.
 
 UNVERIFIED-IN-FUSION: Y-normal prisms whose loops follow the S5010 upper surface (side walls with the exit holes, LE
@@ -217,8 +217,7 @@ def layout(get, L, coords):
     gc = g['gps_c']
     dist = lambda p: math.sqrt(sum((p[i] - gc[i]) ** 2 for i in range(3)))
     g['gps_clr'] = {'PDB': min(dist(p) for p in zone(*lv('pdb_plate_x_m'), -1)),
-                    'AS150U park': min(dist(p) for p in zone(*lv('park_x_m'), -1)),
-                    'UBEC': min(dist(p) for p in zone(*lv('ubec_zone_x_m'), 1))}
+                    'AS150U park': min(dist(p) for p in zone(*lv('park_x_m'), -1))}     # D-74: no UBEC
     g['ci'] = ci
     # R4: wire channel across the bay (tray split), crossing behind the aft stop, park pocket, forward-stop tray bond
     chx, chw, chh = lv('floor_channel_m')
@@ -263,8 +262,11 @@ def layout(get, L, coords):
     # R6 (CR-C6-27): PDB plate to pdb_plate_x1_m with a rib along each boss row; flat-wise pad for the unplug moment
     p0, _p1 = lv('pdb_plate_x_m')
     g['pdb_pad'] = (lv('pdb_plate_x1_m') - p0, g['ch_y'][1] - g['ch_y'][0] - 0.001)   # length x, width y
-    # R6 (CR-F1-26): left-channel volume kept free ahead of F1's deck, for the claims (pod bodies checked in pod_selfcheck)
-    g['left_ch_clear'] = lv('left_ch_clear_m')
+    # D-74: power-board keep-outs KO-PWR-* and the XT30U zones inside the side exits, kept free of pod bodies (claims)
+    g['ko_pwr'] = lv('ko_pwr_m')
+    g['xt30u_zone'] = lv('xt30u_zone_m')
+    xm = lv('xt30u_mated_m')
+    g['xt30u_exit_clr'] = ((se[1] - se[0]) - xm[1], (se[3] - se[2]) - xm[2])   # one body through the 16 x 12 exit
     return g
 
 
@@ -359,8 +361,7 @@ def build(ctx):
     jslots = [_rect(jy0 + (jy1 - jy0) * k / 4 - jb[4] / 2, zf + 0.0005, jy0 + (jy1 - jy0) * k / 4 + jb[4] / 2,
                     zf + 0.0005 + jb[5]) for k in (1, 2, 3)]
     tr.prism('X', jx, [_rect(jy0, zf, jy1, zf + jb[3])] + jslots, jb[2], name='petg JR tie bar')
-    u0, u1 = lv('ubec_zone_x_m')                        # R4 (CR-F1-17): UBEC on foam tape on a plate, not on the paper
-    tr.prism('Z', zf, [_rect(u0, ci + 0.0005, u1, co - 0.0005)], tp, name='petg UBEC plate')
+    # D-74: the UBEC plate (R4, CR-F1-17) is gone with the UBEC; its zone holds the right XT30U pair
     st_t, st_h, st_w = lv('fc_stop_m')
     ssw, ssh = lv('fc_strap_slot_m')                    # R4 (CR-F3-12 c, CR-C6-19): strap slot at each stop root
     stop_sec = [_rect(cy - st_w / 2, zf + tp, cy + st_w / 2, zf + tp + st_h),

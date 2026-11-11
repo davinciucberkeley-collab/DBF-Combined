@@ -2329,7 +2329,7 @@
    "unit": "A",
    "limit": {
     "op": "<=",
-    "ref": "CL-F1-UBEC-RATING"
+    "ref": "CL-F1-SERVO-BEC-RATING"
    },
    "parts": [
     "MEC-001-L",
