@@ -448,7 +448,7 @@ kit.claim("CL-D2-PDB-PAD-M", "PDB plate flat-wise moment capacity (ribbed plate 
           how="T-C6-INSERT on a bonded plate: record the plate-peel load; field rule thumb on the cradle while unplugging.",
           note="C6 CR-C6-27 option: plate 84 x 36.7 mm with a 1.2 x 3 mm rib along each boss row, 0.05 MPa flat-wise")
 kit.claim("CL-D2-ANT-B-TIP-X", "Antenna B tube end x (ahead of the nose)", calc="CALC-D2-R6-GEOM", output="ant_b_x", unit="m",
-          limit=(">=", -0.150), verifies=["R-TRANSPORT-FIT"], parts=["POD-001"], how="Rule from the wing LE to the tube end.",
+          limit=(">=", -0.150), verifies=["R-TRANSPORT"], parts=["POD-001"], how="Rule from the wing LE to the tube end.",
           note="D7 CR-D7-23 at D-62: x >= -0.150 (10 mm ahead of the nose)")
 kit.claim("CL-D2-LEFT-CH-CLEAR", "Pod bodies inside F1's left-channel volume ahead of the deck (x -0.063 ... -0.053, z 0.031 ... 0.070)",
           calc="CALC-D2-R6-GEOM", output="left_hits", unit="-", limit=("<=", 0), parts=["POD-002", "POD-003"],

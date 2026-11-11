@@ -4,7 +4,7 @@ conditions, same SU2 driver su2fea.py, imported read-only from team/C5/sim), cha
 
   * sleeve walls shoe.wall_t_m (ws) are separate from the 0.8 mm tine and legs (C5 used one w for all three);
   * the snap windows are short (hook + replace mark + 1 mm, landing.stack x_win), not the 41 mm stroke-long slots;
-  * the legs are meshed at their drawn 0.8 mm (C5 meshed them at the sleeve wall), with the drawn R 1.0 leg-to-floor
+  * the legs are meshed at their drawn 0.8 mm (C5 meshed them at the sleeve wall), with the drawn R 1.0 leg-to-floor (6 chords)
     fillet on their outboard side (the sharp corner carried the h 0.32 peak next to the TE clamp end);
   * the rim's roof side is level with the pad edge (lip = rim_t) and the inside fillet is the drawn shoe.inside_fillet_r_m.
 
@@ -38,6 +38,7 @@ import landing  # noqa: E402
 
 E_PETG, NU_PETG = 2000.0, 0.38          # MPa, - (stress does not depend on E in this linear model)
 R_OUT = 0.4                             # mm printed outside corner radius (one extrusion width); CAD corners are sharp
+LEG_FILLET_SEGS = 6                     # straight chords approximating the R6 leg-to-floor fillet arc
 PATCH = 2.0                             # mm axial length of each tine bearing patch (C5)
 EPS_Y = 0.05                            # ASM-D5-YIELD-STRAIN: piston pushed s0 = eps_y L_cart in (C5 lever)
 OUT = HERE / "out"
@@ -109,16 +110,24 @@ def section(g, h):
         tools.append(occ.addRectangle(ly, g["z0"] - g["leg_depth"], 0, g["w_leg"], g["leg_depth"]))
     tools.append(occ.addRectangle(-g["bond_hy"], g["z0"], 0, 2 * g["bond_hy"], g["z_hh"] - g["z0"]))
     lf = g.get("r_leg", 0.0)                             # R6 leg-to-floor fillet (outboard corner of each leg)
+    n_tools = len(tools)
     if lf > 0:
         for sg in (1, -1):
             lo = g["leg_in"] + g["w_leg"]
-            yq = lo if sg > 0 else -lo - lf
-            sq = occ.addRectangle(yq, g["z0"] - lf, 0, lf, lf)
-            dk = occ.addDisk(sg * (lo + lf), g["z0"] - lf, 0, lf, lf)
-            cut, _ = occ.cut([(2, sq)], [(2, dk)])
-            tools += [t for _, t in cut]
-    occ.fragment([(2, R_o)], [(2, S_out), (2, S_in)] + [(2, t) for t in tools])
+            # the arc as LEG_FILLET_SEGS straight chords (an exact arc meshed at 2h, then subdivided, puts the
+            # subdivision midpoints back on the arc and tangles the quads in this 0.4 mm-thick, cusp-ended sliver)
+            yc, zc_ = sg * (lo + lf), g["z0"] - lf
+            pts = [(sg * lo, g["z0"])] + [(yc - sg * lf * math.cos(a), zc_ + lf * math.sin(a))
+                                          for a in np.linspace(0.0, math.pi / 2, LEG_FILLET_SEGS + 1)]
+            pt = [occ.addPoint(y_, z_, 0) for y_, z_ in pts]
+            ln = [occ.addLine(pt[i], pt[(i + 1) % len(pt)]) for i in range(len(pt))]
+            tools.append(occ.addPlaneSurface([occ.addCurveLoop(ln)]))
+    _, frag_map = occ.fragment([(2, R_o)], [(2, S_out), (2, S_in)] + [(2, t) for t in tools])
     occ.synchronize()
+    # the fillet pieces end in zero-angle cusps where a quad centroid can fall on the wrong side of the arc, so the
+    # fillet quads are labelled by the gmsh surface they belong to, not by a centroid test (a centroid test left
+    # 8 cusp quads labelled 'rim': inverted slivers that stopped SU2 converging)
+    fillet_surfs = {s for m in frag_map[3 + n_tools:] for _, s in m}
     gmsh.option.setNumber("Mesh.MeshSizeMin", 2 * h)
     gmsh.option.setNumber("Mesh.MeshSizeMax", 2 * h)
     gmsh.option.setNumber("Mesh.SubdivisionAlgorithm", 1)
@@ -130,13 +139,14 @@ def section(g, h):
     tags, xyz, _ = gmsh.model.mesh.getNodes()
     xy = np.asarray(xyz).reshape(-1, 3)[:, :2]
     idx = {int(t): i for i, t in enumerate(tags)}
-    quads, tris = [], []
+    quads, tris, q_fil = [], [], []
     for _, sid in gmsh.model.getEntities(2):
         et, _, en = gmsh.model.mesh.getElements(2, sid)
         for t, c in zip(et, en):
             c = [idx[int(v)] for v in c]
             if t == 3:
                 quads += [c[i:i + 4] for i in range(0, len(c), 4)]
+                q_fil += [sid in fillet_surfs] * (len(c) // 4)
             elif t == 2:
                 tris += [c[i:i + 3] for i in range(0, len(c), 3)]
     gmsh.finalize()
@@ -155,7 +165,7 @@ def section(g, h):
     leg = (y > g["leg_in"]) & (y < g["leg_in"] + g["w_leg"]) & (z < g["z0"])
     lf, lo = g.get("r_leg", 0.0), g["leg_in"] + g["w_leg"]
     if lf > 0:
-        leg |= (y > lo) & (y < lo + lf) & (z < g["z0"]) & (z > g["z0"] - lf) &                ((y - lo - lf) ** 2 + (z - g["z0"] + lf) ** 2 > lf * lf)
+        leg |= np.array(q_fil, bool)
     lab = np.empty(len(quads), dtype=object)
     lab[:] = "void"
     lab[in_rim & ~in_out] = "rim"
@@ -254,6 +264,9 @@ def run_case(g, h, case, R, R_open, x_open_patch, tag):
     t0 = time.time()
     r = su2fea.run(RUNS / tag, nodes, hexes, mk, E_PETG, NU_PETG, ["clamp"],
                    [("load_rim", R / A_rim, d_rim), ("load_open", R_open / A_open, d_open)], ["free"])
+    if not r["linsol_log_res"] < -6:                     # converged runs reach ~ -9; never store an unconverged field
+        raise RuntimeError("SU2 linear solver did not converge in %s (log10 residual %s after %s iterations)"
+                           % (RUNS / tag, r["linsol_log_res"], r["linsol_iter"]))
     xyz, vm, u = r["xyz"], r["Von_Mises_Stress"], r["Displacement"]
     x = xyz[:, 0]
     zones = {"rim": x > g["x_rim0"] + 1.0,

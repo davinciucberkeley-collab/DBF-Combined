@@ -2556,14 +2556,14 @@
     "v_hover_max_ms": 5.822113872002822,
     "tw_needed_8ms": 1.2346840304455746,
     "thrust_frac_8ms": 0.6170643810310318,
-    "v_ground_tip_ms": 9.048812653155574,
+    "v_ground_tip_ms": 9.050708685162379,
     "groundspeed_upwind_ms": 11.0,
-    "m_min_kg": 2.386
+    "m_min_kg": 2.387
    },
    "input_values": {
     "m": 2.6,
     "m_sized": 2.6,
-    "growth": 214,
+    "growth": 213,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
@@ -3385,7 +3385,7 @@
     "R-TIPOVER"
    ],
    "how": "Tilt-board tip angle (C5) and a fan test at the lightest flying mass; never leave it standing disarmed in gusts.",
-   "value": 9.048812653155574
+   "value": 9.050708685162379
   },
   {
    "id": "CL-B1-VCLIMB-P",

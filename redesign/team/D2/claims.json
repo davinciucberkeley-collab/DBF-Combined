@@ -326,7 +326,9 @@
     38.6,
     1.8,
     2.5,
-    5.3
+    5.3,
+    0.14,
+    0.05
    ],
    "unit": "g",
    "status": "UNVERIFIED",
@@ -1269,7 +1271,7 @@
     "parts": "ASM-D2-PART-MASSES"
    },
    "outputs": {
-    "mass_g": 145.79999999999998
+    "mass_g": 145.99
    },
    "input_values": {
     "parts": [
@@ -1282,7 +1284,9 @@
      38.6,
      1.8,
      2.5,
-     5.3
+     5.3,
+     0.14,
+     0.05
     ]
    }
   },
@@ -2212,7 +2216,7 @@
     "value": -0.15
    },
    "verifies": [
-    "R-TRANSPORT-FIT"
+    "R-TRANSPORT"
    ],
    "parts": [
     "POD-001"
@@ -2407,11 +2411,13 @@
     "POD-007",
     "POD-008",
     "POD-009",
-    "POD-010"
+    "POD-010",
+    "POD-011",
+    "POD-012"
    ],
    "how": "T-D2-WEIGH: weigh every pod part before bonding; update interfaces.json.",
    "note": "D-63 allocation 146 g (was 131, D-48): C3's fixes + the D-62 nose",
-   "value": 145.79999999999998
+   "value": 145.99
   },
   {
    "id": "T-D2-WEIGH",

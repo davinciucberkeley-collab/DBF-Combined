@@ -571,7 +571,7 @@
    },
    "outputs": {
     "u95_g": 5.231953108862248,
-    "u_frac": 0.037845240432723276,
+    "u_frac": 0.048838562543345405,
     "accept_max_kg": 2.594768046891138
    },
    "input_values": {
@@ -580,7 +580,7 @@
      "cal_frac": 0.001
     },
     "m": 2.6,
-    "margin": 0.13824599999999965
+    "margin": 0.10712750000000026
    }
   },
   {
@@ -605,7 +605,7 @@
     "value": 0.1
    },
    "how": "Re-run after A3 updates CL-A3-GATE-MARGIN.",
-   "value": 0.037845240432723276
+   "value": 0.048838562543345405
   },
   {
    "id": "CL-H1-WEIGH-ACCEPT",
@@ -740,44 +740,44 @@
     "g": "m/s2"
    },
    "outputs": {
-    "wing_p_n": 24.599445390639794,
+    "wing_p_n": 24.599445390639797,
     "wing_p_kg": 2.5084453295100566,
-    "wing_y_m": 0.2739036561711191,
+    "wing_y_m": 0.2738173557054668,
     "sum_err": 0.0,
-    "hanger_n": 49.19889078127959,
-    "pad1_kg": 0.9187178982518731,
-    "pad2_kg": 0.5237231013698543,
+    "hanger_n": 49.198890781279594,
+    "pad1_kg": 0.9203831290211043,
+    "pad2_kg": 0.5220578706006234,
     "pad3_kg": 0.45269626793263035,
     "pad4_kg": 0.6133080619556988,
-    "relief_kg": 2.0314800000000006,
-    "s2_pad3_kg": 0.49919981364078103,
-    "s2_pad4_kg": 1.6421002170041095,
+    "relief_kg": 2.033680000000001,
+    "s2_pad3_kg": 0.49926376269342465,
+    "s2_pad4_kg": 1.6425383431447944,
     "wing_defl_max_m": 0.028749999999999998,
     "mount_f_n": 21.085086279273007,
     "mount_f_kg": 2.150080433101315,
-    "fin_f_n": 57.300936333535745,
-    "fin_f_kg": 5.843069379812245,
+    "fin_f_n": 57.61804382546287,
+    "fin_f_kg": 5.87540534488973,
     "pack_pull_n": 73.75,
     "pack_pull_kg": 7.5204070707122215
    },
    "input_values": {
-    "p1": 9.00954487689173,
-    "p2": 5.135969152048681,
+    "p1": 9.025875212214812,
+    "p2": 5.119638816725603,
     "p3": 4.439433855921529,
     "p4": 6.014497505777853,
     "y1": 0.12,
     "y2": 0.25,
     "y3": 0.355,
     "y4": 0.465,
-    "p_side": 24.599445390639794,
-    "r": 19.922013342000007,
-    "s2p3": 4.895477852440365,
-    "s2p4": 16.10350209308335,
+    "p_side": 24.599445390639797,
+    "r": 19.943587972000007,
+    "s2p3": 4.896104978417473,
+    "s2p4": 16.107798642800898,
     "sf": 1.5,
     "k_def": 0.05,
     "b": 1.15,
     "f_mount_ult": 31.62762941890951,
-    "m_fin_ult": 16.330766855057686,
+    "m_fin_ult": 16.42114249025692,
     "z_st": 0.19,
     "f_pack": 73.75,
     "g": 9.80665
@@ -794,7 +794,7 @@
     "WNG-001"
    ],
    "how": "Card GT-08 step 1: four padded sandbags per side at CL-C1-PROOF-Y1..Y4, masses CL-H1-WP-M1..M4.",
-   "value": 24.599445390639794
+   "value": 24.599445390639797
   },
   {
    "id": "CL-H1-WP-SUM-ERR",
@@ -822,7 +822,7 @@
     "value": 0.575
    },
    "how": "Moment centroid of C1's pads; equals CL-C1-PROOF-PIVOT-Y.",
-   "value": 0.2739036561711191
+   "value": 0.2738173557054668
   },
   {
    "id": "CL-H1-WP-HANGER",
@@ -832,7 +832,7 @@
    "output": "hanger_n",
    "unit": "N",
    "how": "Card GT-08 option B: bucket of sand at the hanger, tree mass counted in it.",
-   "value": 49.19889078127959
+   "value": 49.198890781279594
   },
   {
    "id": "CL-H1-WP-M1",
@@ -842,7 +842,7 @@
    "output": "pad1_kg",
    "unit": "kg",
    "how": "Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.",
-   "value": 0.9187178982518731
+   "value": 0.9203831290211043
   },
   {
    "id": "CL-H1-WP-M2",
@@ -852,7 +852,7 @@
    "output": "pad2_kg",
    "unit": "kg",
    "how": "Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.",
-   "value": 0.5237231013698543
+   "value": 0.5220578706006234
   },
   {
    "id": "CL-H1-WP-M3",
@@ -882,7 +882,7 @@
    "output": "relief_kg",
    "unit": "kg",
    "how": "Card GT-08 step 1: ball-bearing pulley; spring-scale check of the sling tension within 3 % before loading.",
-   "value": 2.0314800000000006
+   "value": 2.033680000000001
   },
   {
    "id": "CL-H1-WP-S2-M3",
@@ -892,7 +892,7 @@
    "output": "s2_pad3_kg",
    "unit": "kg",
    "how": "Card GT-08 step 2, each side in turn (CR-C1-27).",
-   "value": 0.49919981364078103
+   "value": 0.49926376269342465
   },
   {
    "id": "CL-H1-WP-S2-M4",
@@ -902,7 +902,7 @@
    "output": "s2_pad4_kg",
    "unit": "kg",
    "how": "Card GT-08 step 2, each side in turn (CR-C1-27).",
-   "value": 1.6421002170041095
+   "value": 1.6425383431447944
   },
   {
    "id": "CL-H1-WING-DEFL-MAX",
@@ -932,7 +932,7 @@
    "output": "fin_f_n",
    "unit": "N",
    "how": "Card GT-09: hang at the motor station, side-load in y, wing held at the spar.",
-   "value": 57.300936333535745
+   "value": 57.61804382546287
   },
   {
    "id": "CL-H1-PACK-PULL-F",
@@ -1660,8 +1660,8 @@
    "outputs": {
     "cap_n": 2941.995,
     "cap9_n": 1765.197,
-    "need_n": 2813.9304064112775,
-    "need9_n": 2813.9304064112775,
+    "need_n": 2827.728799125784,
+    "need9_n": 2827.728799125784,
     "sigma_mpa": 3.5186884962690783,
     "wood_brg_mpa": 10.322789473684209,
     "plate_brg_mpa": 65.37766666666666,
@@ -1680,8 +1680,8 @@
      "n_m6": 4,
      "m6_m": 0.006
     },
-    "f_strip": 2251.144325129022,
-    "f_est": 2238.8847709899196,
+    "f_strip": 2262.183039300627,
+    "f_est": 2249.7497865966466,
     "f_ins": 300.0,
     "k": 1.25,
     "g": 9.80665
@@ -1709,7 +1709,7 @@
     "ref": "CL-H1-LEVER-CAP"
    },
    "how": "Re-run when C6/C4 change the anchor force.",
-   "value": 2813.9304064112775
+   "value": 2827.728799125784
   },
   {
    "id": "CL-H1-LEVER-CAP9",
@@ -1733,7 +1733,7 @@
     "ref": "CL-H1-LEVER-CAP9"
    },
    "how": "CR-C6-33 frame line (>= 1 560 N at C4 R4); the anchor runs on the 15:1 hole regardless.",
-   "value": 2813.9304064112775
+   "value": 2827.728799125784
   },
   {
    "id": "CL-H1-LEVER-SIGMA",
@@ -1807,14 +1807,14 @@
     "g": "m/s2"
    },
    "outputs": {
-    "cell_req_kgf": 5.044469824047968,
-    "ratio_u": 0.004897220732326119,
+    "cell_req_kgf": 5.040304283317952,
+    "ratio_u": 0.004901745922517484,
     "mu_angle_deg": 34.99202019855866,
     "mu_accept_deg": 35.29202019855866
    },
    "input_values": {
-    "f_pk": 39.57548,
-    "f_l": 35.39940863779142,
+    "f_pk": 39.54279999999999,
+    "f_l": 35.36672863779142,
     "k": 1.25,
     "u_t": 0.122583125,
     "mu": 0.7,
@@ -1844,7 +1844,7 @@
     "ref": "CL-H1-THRUST-CAP"
    },
    "how": "Card GT-15 D5 block: the 20 kgf cell under the drill-press table carries the crush.",
-   "value": 5.044469824047968
+   "value": 5.040304283317952
   },
   {
    "id": "CL-H1-D5-RATIO-U",
@@ -1858,7 +1858,7 @@
     "value": 0.01
    },
    "how": "Against D5's bias tolerance 0.01 (CL-D5-BIAS-ERR); from T-H1-STAND-CAL.",
-   "value": 0.004897220732326119
+   "value": 0.004901745922517484
   },
   {
    "id": "CL-H1-MU-ANGLE-ACCEPT",
@@ -2032,12 +2032,12 @@
     "p_dens_wm2": 19.2218014405584,
     "p_dens_bare_wm2": 1760.9523809523807,
     "shunt_ue": 1743.8963627304436,
-    "d_split_mm": 8.35925328791862,
-    "d3_mm": 3.7049674301000857,
-    "dsh_mm": 18.86038591429415,
-    "travel_req_mm": 23.575482392867684,
+    "d_split_mm": 11.024677155658011,
+    "d3_mm": 6.412440269796762,
+    "dsh_mm": 18.954329595703168,
+    "travel_req_mm": 23.692911994628965,
     "travel_mm": 25.0,
-    "d_shell_ult_mm": 28.290578871441223,
+    "d_shell_ult_mm": 28.431494393554754,
     "reinf": 0.6312500000000001
    },
    "input_values": {
@@ -2065,8 +2065,8 @@
      "et_face_npm": 800000.0
     },
     "dial": 25.0,
-    "d3": 0.0037049674301000857,
-    "dsh": 0.018860385914294148,
+    "d3": 0.006412440269796762,
+    "dsh": 0.01895432959570317,
     "sf": 1.5
    }
   },
@@ -2156,7 +2156,7 @@
    "output": "d_split_mm",
    "unit": "mm",
    "how": "Card GT-09 FP step 3: geometric mean of the two predictions (model errors are multiplicative); below it, the 3-D load path (strips clamped in the cheeks) is the one built.",
-   "value": 8.35925328791862
+   "value": 11.024677155658011
   },
   {
    "id": "CL-H1-FP-TRAVEL-REQ",
@@ -2170,7 +2170,7 @@
     "ref": "ASM-H1-DIAL"
    },
    "how": "Borrowed 25 mm indicator, removed before the 1.5 x step; above 1.0 x a steel rule on a fixed bar (0.5 mm) reads the pad.",
-   "value": 23.575482392867684
+   "value": 23.692911994628965
   },
   {
    "id": "CL-H1-FP-DEFL-SHELL-ULT",
@@ -2180,7 +2180,7 @@
    "output": "d_shell_ult_mm",
    "unit": "mm",
    "how": "Informational: sizes the rule and the frame clearance.",
-   "value": 28.290578871441223
+   "value": 28.431494393554754
   },
   {
    "id": "ASM-H1-ESC-DUMMY",
@@ -2381,15 +2381,15 @@
     "g": "m/s2"
    },
    "outputs": {
-    "side_n": 58.956034509631145,
-    "side_kg": 6.011842424235712,
-    "rim_sf_at_side": 0.623087321994155,
+    "side_n": 59.25,
+    "side_kg": 6.0418185618942255,
+    "rim_sf_at_side": 0.6092136347424756,
     "pod_n": 199.55783048655493,
     "pod_kg": 20.349235517384116
    },
    "input_values": {
-    "f_side": 58.956034509631145,
-    "sf_rim": 1.0495645045143158,
+    "f_side": 59.25,
+    "sf_rim": 1.0313116530997621,
     "f_pod": 199.55783048655493,
     "g": 9.80665
    }
@@ -2406,7 +2406,7 @@
     "GER-002-UR"
    ],
    "how": "Card GT-09: jugs over a pulley, along y then z, insert pushed 4 mm in; 3 s hold.",
-   "value": 58.956034509631145
+   "value": 59.25
   },
   {
    "id": "CL-H1-D5-SIDE-RIM-SF",
@@ -2416,7 +2416,7 @@
    "output": "rim_sf_at_side",
    "unit": "-",
    "how": "Informational: D5's CL-D5-SIDE-RIM-SF is still on 35 N; at 59 N the drawn rim is expected to crack unless D5's CR-A1-65 shoe is the one tested (CR-H1-22).",
-   "value": 0.623087321994155
+   "value": 0.6092136347424756
   },
   {
    "id": "CL-H1-POD-BRACKET-F",

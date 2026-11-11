@@ -1564,9 +1564,9 @@
    "v_hover_max_ms": 5.822113872002822,
    "tw_needed_8ms": 1.2346840304455746,
    "thrust_frac_8ms": 0.6170643810310318,
-   "v_ground_tip_ms": 9.048812653155574,
+   "v_ground_tip_ms": 9.050708685162379,
    "groundspeed_upwind_ms": 11.0,
-   "m_min_kg": 2.386
+   "m_min_kg": 2.387
   },
   "CALC-B1-CLIMB": {
    "p_vclimb_2p5_w": 448.03677465108206,

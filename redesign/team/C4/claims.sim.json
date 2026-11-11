@@ -213,7 +213,7 @@
     "G": "ASM-C4-G-TUBE",
     "f_corner": "CL-C1-FOOT-CORNER",
     "mu_hi": "ASM-C1-FRICTION",
-    "side_c5": "CL-C5-FOOT-SIDE-LOAD",
+    "side_c5": "CL-C5-SIM3D-SIDE-LOAD",
     "foot_h": "P:cg.foot_height_m",
     "z_pad": "P:landing.pad_contact_z_m",
     "sf": "P:requirements.safety_factor_ult",
@@ -313,15 +313,15 @@
     "SRC-C4-SU2"
    ],
    "outputs": {
-    "conjugate_gradient_ilu1_linres_log10": 0.5002373677,
+    "conjugate_gradient_ilu1_linres_log10": 0.3975762664,
     "conjugate_gradient_ilu1_iters": 1500,
-    "conjugate_gradient_ilu1_wall_s": 434.1,
-    "conjugate_gradient_ilu1_rel_diff": 0.9999388042993131,
+    "conjugate_gradient_ilu1_wall_s": 386.7,
+    "conjugate_gradient_ilu1_rel_diff": 0.9999662017573674,
     "restarted_fgmres_ilu2_linres_log10": 0.0,
     "restarted_fgmres_ilu2_iters": 1,
-    "restarted_fgmres_ilu2_wall_s": 33.8,
+    "restarted_fgmres_ilu2_wall_s": 23.7,
     "restarted_fgmres_ilu2_rel_diff": 1.0,
-    "best_rel_diff": 0.9999388042993131,
+    "best_rel_diff": 0.9999662017573674,
     "converged": false
    },
    "input_values": {
@@ -332,14 +332,14 @@
     "mu": 0.102,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.029349999999999998,
-    "x_prop": -0.007671971456221314,
+    "x_face": 0.024349999999999997,
+    "x_prop": -0.012671971456221315,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
     "grip": 0.012,
     "sc_gap": 0.0005,
-    "sc_h": 0.012,
+    "sc_h": 0.015,
     "sc_wall": 0.0016,
     "ear_len": 0.01,
     "bond_gap": 0.00015,
@@ -427,10 +427,10 @@
     "ip": 7.5e-05,
     "i_bell": 1.5e-05,
     "mount": [
-     0.01128,
-     -0.0046,
-     0.0018,
-     -0.0097
+     0.01194,
+     -0.0085,
+     0.0014,
+     -0.0086
     ],
     "cb_mass": [
      0.0057,
@@ -440,7 +440,7 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 43,
+    "landing_g": 48,
     "cant": 7.0,
     "t_board": 0.0048,
     "areal": 0.2,
@@ -461,7 +461,7 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 3000.0,
+    "k_rock": 1500.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
@@ -485,9 +485,9 @@
     "e_shoe": 50000000000.0,
     "E": 100000000000.0,
     "G": 5000000000.0,
-    "f_corner": 32.58048689141251,
+    "f_corner": 36.68777122202526,
     "mu_hi": 0.7,
-    "side_c5": 22.80634082398876,
+    "side_c5": 39.5,
     "foot_h": 0.048,
     "z_pad": 0.218,
     "sf": 1.5,
@@ -581,7 +581,7 @@
     "G": "ASM-C4-G-TUBE",
     "f_corner": "CL-C1-FOOT-CORNER",
     "mu_hi": "ASM-C1-FRICTION",
-    "side_c5": "CL-C5-FOOT-SIDE-LOAD",
+    "side_c5": "CL-C5-SIM3D-SIDE-LOAD",
     "foot_h": "P:cg.foot_height_m",
     "z_pad": "P:landing.pad_contact_z_m",
     "sf": "P:requirements.safety_factor_ult",
@@ -690,51 +690,51 @@
    ],
    "outputs": {
     "hs_drawn_lim_pa": [
-     3405117.5060338527,
-     3620224.6523926603,
-     4312749.183103915
+     5620467.50790944,
+     6047470.190087538,
+     6328301.15590485
     ],
     "peak_drawn_lim_pa": [
-     4602129.876147574,
-     6026989.729013376,
-     7241574.7265243735
+     7712131.2599905655,
+     10359897.431303808,
+     12447217.673326744
     ],
     "far_drawn_lim_pa": [
-     4602129.876147574,
-     4616515.865734667,
-     4683660.763113388
+     7712131.2599905655,
+     7737566.352087009,
+     7945094.601624187
     ],
-    "hs_drawn_ext_lim_pa": 5984651.29742309,
-    "hs_drawn_gci": 0.4845813086201477,
-    "hs_drawn_order": 0.5,
-    "face_drawn_ult_pa": 8976976.946134634,
-    "ms_drawn": 0.1139607531582072,
-    "ms_far_drawn": 0.42338802997233027,
+    "hs_drawn_ext_lim_pa": 6867844.8742479,
+    "hs_drawn_gci": 0.10657357027004188,
+    "hs_drawn_order": 0.6045431088952301,
+    "face_drawn_ult_pa": 10301767.31137185,
+    "ms_drawn": -0.029292771060625333,
+    "ms_far_drawn": -0.16090783043617585,
     "hs_proposed_lim_pa": [
-     1872142.5430869025,
-     2220464.1642181515,
-     2366734.2428807756
+     3114540.7290347028,
+     3721683.156001061,
+     3974791.812817105
     ],
     "peak_proposed_lim_pa": [
-     4644060.890926927,
-     7028465.478317466,
-     9397035.752772808
+     7789202.695098465,
+     11858920.132712234,
+     15873518.544347044
     ],
     "far_proposed_lim_pa": [
-     4353687.997990806,
-     4286957.119794615,
-     4281720.864889709
+     7298397.743533026,
+     7184118.035229058,
+     7176237.109184716
     ],
-    "hs_proposed_ext_lim_pa": 2472622.7486084295,
-    "hs_proposed_gci": 0.05592543081578034,
-    "hs_proposed_order": 1.2517853484284938,
-    "face_proposed_ult_pa": 3708934.1229126444,
-    "ms_proposed": 1.6961924015374397,
-    "ms_far_proposed": 0.5570063712778694,
-    "hs_drawn_global4_lim_pa": 3908749.7463195114,
-    "global_check_rel": 0.07969811866127174,
-    "hs_drawn_lower_L2_lim_pa": 3588271.152328778,
-    "hs_proposed_lower_L2_lim_pa": 2221804.6789043965,
+    "hs_proposed_ext_lim_pa": 4155746.2797540356,
+    "hs_proposed_gci": 0.056906900870073544,
+    "hs_proposed_order": 1.2622781405801204,
+    "face_proposed_ult_pa": 6233619.419631054,
+    "ms_proposed": 0.6042044479821429,
+    "ms_far_proposed": -0.07100802757281532,
+    "hs_drawn_global4_lim_pa": 6557768.145345379,
+    "global_check_rel": 0.08438205385357245,
+    "hs_drawn_lower_L2_lim_pa": 6012253.294564595,
+    "hs_proposed_lower_L2_lim_pa": 3726165.466614181,
     "levels": {
      "1": [
       0.008,
@@ -749,29 +749,29 @@
       0.0005
      ]
     },
-    "m_side_leg_nm": 0.5541940820229265,
-    "strip_drawn_lim_pa": 87787743.76969999,
+    "m_side_leg_nm": 0.9598499999999995,
+    "strip_drawn_lim_pa": 148664198.82192636,
     "strip_tau_drawn_lim_pa": [
-     29022867.812116947,
-     12448388.147144891,
-     14075214.507464567
+     50182549.16061758,
+     21555297.85558062,
+     24252720.511104543
     ],
-    "ms_strip_drawn": 2.037629801333462,
-    "foot_defl_drawn_m": 0.0037049674301000857,
-    "strip_proposed_lim_pa": 81912583.41857918,
+    "ms_strip_drawn": 0.793751749108651,
+    "foot_defl_drawn_m": 0.006412440269796762,
+    "strip_proposed_lim_pa": 138647141.83168995,
     "strip_tau_proposed_lim_pa": [
-     5449575.83079464,
-     4649177.255544592,
-     9016890.984782325
+     9414014.996058846,
+     7947339.187788452,
+     15461463.64441933
     ],
-    "ms_strip_proposed": 2.2555030684843724,
-    "foot_defl_proposed_m": 0.004086383821264179,
-    "board_share_3d": 0.46575381952054073,
-    "plate_hs_drawn_lim_pa": 13576260.85179095,
-    "plate_peak_drawn_lim_pa": 12425313.91276939,
-    "plate_hs_proposed_lim_pa": 3987731.4777646605,
-    "plate_peak_proposed_lim_pa": 3960592.924236163,
-    "board_share_shell": 1.0565687175878578
+    "ms_strip_proposed": 0.9233477383211073,
+    "foot_defl_proposed_m": 0.007073550175826579,
+    "board_share_3d": 0.30860045780727413,
+    "plate_hs_drawn_lim_pa": 22593100.609364636,
+    "plate_peak_drawn_lim_pa": 20651347.474039353,
+    "plate_hs_proposed_lim_pa": 6716121.903692618,
+    "plate_peak_proposed_lim_pa": 6610619.974373759,
+    "board_share_shell": 1.0152007389507707
    },
    "input_values": {
     "tube_x": 0.045,
@@ -781,14 +781,14 @@
     "mu": 0.102,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.029349999999999998,
-    "x_prop": -0.007671971456221314,
+    "x_face": 0.024349999999999997,
+    "x_prop": -0.012671971456221315,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
     "grip": 0.012,
     "sc_gap": 0.0005,
-    "sc_h": 0.012,
+    "sc_h": 0.015,
     "sc_wall": 0.0016,
     "ear_len": 0.01,
     "bond_gap": 0.00015,
@@ -876,10 +876,10 @@
     "ip": 7.5e-05,
     "i_bell": 1.5e-05,
     "mount": [
-     0.01128,
-     -0.0046,
-     0.0018,
-     -0.0097
+     0.01194,
+     -0.0085,
+     0.0014,
+     -0.0086
     ],
     "cb_mass": [
      0.0057,
@@ -889,7 +889,7 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 43,
+    "landing_g": 48,
     "cant": 7.0,
     "t_board": 0.0048,
     "areal": 0.2,
@@ -910,7 +910,7 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 3000.0,
+    "k_rock": 1500.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
@@ -934,9 +934,9 @@
     "e_shoe": 50000000000.0,
     "E": 100000000000.0,
     "G": 5000000000.0,
-    "f_corner": 32.58048689141251,
+    "f_corner": 36.68777122202526,
     "mu_hi": 0.7,
-    "side_c5": 22.80634082398876,
+    "side_c5": 39.5,
     "foot_h": 0.048,
     "z_pad": 0.218,
     "sf": 1.5,
@@ -1129,104 +1129,104 @@
    ],
    "outputs": {
     "f_up_L1": [
-     81.25,
-     272.56,
-     341.41,
-     406.44,
-     471.05,
-     634.39
+     77.95,
+     248.74,
+     296.48,
+     404.87,
+     453.16,
+     549.9
     ],
     "ndof_up_L1": 33525,
     "f_up_L2": [
-     75.66,
-     268.45,
-     335.14,
-     374.21,
-     444.49,
-     616.9
+     72.63,
+     244.91,
+     292.45,
+     372.53,
+     431.08,
+     535.02
     ],
     "ndof_up_L2": 61869,
     "f_up_L3": [
-     73.23,
-     266.0,
-     330.86,
-     359.36,
-     421.09,
-     597.69
+     70.31,
+     242.69,
+     290.31,
+     357.18,
+     409.87,
+     523.99
     ],
     "ndof_up_L3": 106929,
     "f1_up": [
-     272.5571193845584,
-     268.44597528460304,
-     266.00064013484825
+     248.7375681937224,
+     244.90958641893747,
+     242.68648668075753
     ],
-    "f1_up_ext": 262.41099439911955,
-    "f1_up_gci": 0.016868595381523084,
-    "f1_up_order": 1.4990154618314335,
+    "f1_up_ext": 239.60702517943093,
+    "f1_up_gci": 0.01586131526854165,
+    "f1_up_order": 1.568022571076779,
     "kinds_up": [
      "lateral-torsion",
-     "lateral-torsion",
-     "fore-aft"
+     "fore-aft",
+     "lateral-torsion"
     ],
-    "sep_up": 0.3240047152473715,
-    "plate_f1_up_a3": 271.8758392749996,
-    "plate_f1_up_r4": 275.39061560656876,
-    "plate_sep_up_a3": 0.37175995230763736,
-    "ratio_up": 0.9651868849357135,
-    "k_ratio_up_x": 1.0555022470324291,
-    "k_ratio_up_y": 1.0658072180243252,
-    "k_ratio_up_tz": 1.0560594229031128,
+    "sep_up": 0.20894641579478979,
+    "plate_f1_up_a3": 249.88610005261998,
+    "plate_f1_up_r4": 253.09540547631138,
+    "plate_sep_up_a3": 0.2608098814687292,
+    "ratio_up": 0.9588649593914006,
+    "k_ratio_up_x": 1.055502244130296,
+    "k_ratio_up_y": 1.0658072165758758,
+    "k_ratio_up_tz": 1.0560594225736695,
     "f_lo_L1": [
-     78.8,
-     264.92,
-     334.76,
-     398.04,
-     467.13,
-     623.28
+     75.58,
+     243.07,
+     292.55,
+     396.29,
+     449.23,
+     535.49
     ],
     "ndof_lo_L1": 35127,
     "f_lo_L2": [
-     73.32,
-     260.23,
-     326.66,
-     368.15,
-     434.96,
-     606.85
+     70.37,
+     238.51,
+     287.59,
+     366.22,
+     422.07,
+     521.51
     ],
-    "ndof_lo_L2": 64131,
+    "ndof_lo_L2": 64179,
     "f_lo_L3": [
-     70.93,
-     257.88,
-     322.43,
-     352.91,
-     416.4,
-     591.72
+     68.1,
+     236.27,
+     285.43,
+     350.46,
+     405.1,
+     513.44
     ],
     "ndof_lo_L3": 112791,
     "f1_lo": [
-     264.9181458276723,
-     260.22740249366404,
-     257.8816779506251
+     243.06726548053436,
+     238.50520524836486,
+     236.26904036855964
     ],
-    "f1_lo_ext": 255.53524744311474,
-    "f1_lo_gci": 0.011373580929427212,
-    "f1_lo_order": 1.9995659074266,
+    "f1_lo_ext": 234.11914425883515,
+    "f1_lo_gci": 0.01137419499805628,
+    "f1_lo_order": 2.0573178553820397,
     "kinds_lo": [
      "lateral-torsion",
-     "lateral-torsion",
+     "fore-aft",
      "lateral-torsion"
     ],
-    "sep_lo": 0.28931287083192014,
-    "plate_f1_lo_a3": 264.56348444002606,
-    "plate_f1_lo_r4": 268.18231096835433,
-    "plate_sep_lo_a3": 0.3348651861289711,
-    "ratio_lo": 0.9658749694198334,
-    "k_ratio_lo_x": 1.0437474949252659,
-    "k_ratio_lo_y": 1.0704913242079108,
-    "k_ratio_lo_tz": 1.0546079213190664,
-    "f1_min": 255.53524744311474,
-    "sep_min": 0.28931287083192014,
-    "plate_sep_min_a3": 0.3348651861289711
+    "sep_lo": 0.18125710257747252,
+    "plate_f1_lo_a3": 244.54754182780394,
+    "plate_f1_lo_r4": 247.7785035070963,
+    "plate_sep_lo_a3": 0.23387398162785433,
+    "ratio_lo": 0.9573563590497595,
+    "k_ratio_lo_x": 1.0437474949124035,
+    "k_ratio_lo_y": 1.0704913243314123,
+    "k_ratio_lo_tz": 1.0546079208088583,
+    "f1_min": 234.11914425883515,
+    "sep_min": 0.18125710257747252,
+    "plate_sep_min_a3": 0.23387398162785433
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1236,14 +1236,14 @@
     "mu": 0.102,
     "tube_len": 0.344,
     "z_st": 0.19,
-    "x_face": 0.029349999999999998,
-    "x_prop": -0.007671971456221314,
+    "x_face": 0.024349999999999997,
+    "x_prop": -0.012671971456221315,
     "x_te": 0.32,
     "hh": 0.21,
     "le_gap": 0.0005,
     "grip": 0.012,
     "sc_gap": 0.0005,
-    "sc_h": 0.012,
+    "sc_h": 0.015,
     "sc_wall": 0.0016,
     "ear_len": 0.01,
     "bond_gap": 0.00015,
@@ -1331,10 +1331,10 @@
     "ip": 7.5e-05,
     "i_bell": 1.5e-05,
     "mount": [
-     0.01128,
-     -0.0046,
-     0.0018,
-     -0.0097
+     0.01194,
+     -0.0085,
+     0.0014,
+     -0.0086
     ],
     "cb_mass": [
      0.0057,
@@ -1344,7 +1344,7 @@
     "esc_x0": 0.078,
     "esc_len": 0.046,
     "esc_z": 0.118,
-    "landing_g": 43,
+    "landing_g": 48,
     "cant": 7.0,
     "t_board": 0.0048,
     "areal": 0.2,
@@ -1365,7 +1365,7 @@
     "chord": 0.32,
     "el_frac": 0.22,
     "slot_hw": 0.012,
-    "k_rock": 3000.0,
+    "k_rock": 1500.0,
     "k_twist": 30000.0,
     "k_root": 10000.0,
     "k_anchor": 30000000.0,
@@ -1439,7 +1439,7 @@
     "FIN-001-UR"
    ],
    "how": "Re-run sim_fin.py; SU2 needs a direct solver (PaStiX build) or a stronger preconditioner to converge here.",
-   "value": 0.9999388042993131
+   "value": 0.9999662017573674
   },
   {
    "id": "CL-C4-SIM-FACE-DRAWN",
@@ -1459,7 +1459,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF on the test article (CR-C4-33) decides; strain gauge 5 mm below the leg edge.",
-   "value": 8976976.946134634
+   "value": 10301767.31137185
   },
   {
    "id": "CL-C4-SIM-MS-FACE-DRAWN",
@@ -1476,7 +1476,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF (CR-C4-33).",
-   "value": 0.1139607531582072
+   "value": -0.029292771060625333
   },
   {
    "id": "CL-C4-SIM-MS-FACE-PROP",
@@ -1493,7 +1493,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF with the extended cheeks (CR-C4-33).",
-   "value": 1.6961924015374397
+   "value": 0.6042044479821429
   },
   {
    "id": "CL-C4-SIM-F1-UP",
@@ -1507,7 +1507,7 @@
     "FIN-002-R"
    ],
    "how": "T-C4-TAP-D3 on the finished wing.",
-   "value": 262.41099439911955
+   "value": 239.60702517943093
   },
   {
    "id": "CL-C4-SIM-F1-LO",
@@ -1521,7 +1521,7 @@
     "FIN-002-R"
    ],
    "how": "T-C4-TAP-D3 on the finished wing.",
-   "value": 255.53524744311474
+   "value": 234.11914425883515
   },
   {
    "id": "CL-C4-SIM-SEP",
@@ -1543,7 +1543,7 @@
     "FIN-002-R"
    ],
    "how": "T-C4-TAP-D3: tap each motor bell, FFT; first station peak at least 20 % from 90/98/181/197/155 Hz.",
-   "value": 0.28931287083192014
+   "value": 0.18125710257747252
   },
   {
    "id": "CL-C4-SIM-SEP-PLATE-A3",
@@ -1560,7 +1560,7 @@
     "FIN-001-LR"
    ],
    "how": "Re-run sim_fin.py; T-C4-TAP-D3.",
-   "value": 0.3348651861289711
+   "value": 0.23387398162785433
   },
   {
    "id": "CL-C4-SIM-MS-FACE-FAR",
@@ -1577,7 +1577,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF (CR-C4-33); largest face element at least one laminate thickness from the shoe edge.",
-   "value": 0.42338802997233027
+   "value": -0.16090783043617585
   },
   {
    "id": "CL-C4-SIM-MS-STRIP",
@@ -1594,7 +1594,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF; strain gauge on a strip 10 mm forward of the collar cheek.",
-   "value": 2.037629801333462
+   "value": 0.793751749108651
   },
   {
    "id": "CL-C4-SIM-FOOT-DEFL",
@@ -1607,7 +1607,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF dial gauge at the pad (R4 shell 9.3 mm).",
-   "value": 0.0037049674301000857
+   "value": 0.006412440269796762
   },
   {
    "id": "CL-C4-SIM-BOARD-SHARE",
@@ -1620,7 +1620,7 @@
     "FIN-001-UR"
    ],
    "how": "T-C4-FIN-PROOF: gauges 5 mm below the leg edge and on both strips; R4 shell carries all of it in the board.",
-   "value": 0.46575381952054073
+   "value": 0.30860045780727413
   },
   {
    "id": "CL-C4-SIM-FACE-GCI",
@@ -1630,7 +1630,7 @@
    "output": "hs_drawn_gci",
    "unit": "-",
    "how": "Re-run sim_fin.py (three tip meshes, Roache Fs 1.25).",
-   "value": 0.4845813086201477
+   "value": 0.10657357027004188
   },
   {
    "id": "CL-C4-SIM-F1-GCI-UP",
@@ -1644,7 +1644,7 @@
     "value": 0.05
    },
    "how": "Re-run sim_fin.py (three meshes, Roache Fs 1.25).",
-   "value": 0.016868595381523084
+   "value": 0.01586131526854165
   },
   {
    "id": "CL-C4-SIM-F1-GCI-LO",
@@ -1658,7 +1658,7 @@
     "value": 0.05
    },
    "how": "Re-run sim_fin.py (three meshes, Roache Fs 1.25).",
-   "value": 0.011373580929427212
+   "value": 0.01137419499805628
   }
  ]
 }

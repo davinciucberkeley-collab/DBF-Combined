@@ -548,12 +548,12 @@
     "ASM-F4-QT-ARM"
    ],
    "outputs": {
-    "f_rll_hz": 1.0238522441405247,
-    "p_ceiling_rll": 0.3516132352693166,
-    "f_pit_hz": 2.368874009935713,
-    "p_ceiling_pit": 0.16885659529476424,
-    "f_yaw_hz": 1.006535942373843,
-    "p_ceiling_yaw": 0.9537662388249235
+    "f_rll_hz": 0.999196672470817,
+    "p_ceiling_rll": 0.3602894304179284,
+    "f_pit_hz": 2.2375964541954585,
+    "p_ceiling_pit": 0.17876324359113374,
+    "f_yaw_hz": 0.9857255960177073,
+    "p_ceiling_yaw": 0.9739018687131208
    },
    "input_values": {
     "T": 21.1,
@@ -561,9 +561,9 @@
     "z": 0.19,
     "cant": 7.0,
     "qt": 0.02,
-    "izz": 0.1700906305464818,
-    "iyy": 0.04598255046995049,
-    "ixx": 0.17443678388019415,
+    "izz": 0.17418310645502177,
+    "iyy": 0.048360238901840956,
+    "ixx": 0.17811944151276718,
     "p": [
      0.08,
      0.08,
@@ -625,11 +625,11 @@
     "ASM-F4-SAG"
    ],
    "outputs": {
-    "a_up": 0.6713810096252644,
+    "a_up": 0.6710855500639828,
     "a_up_at_limit": 0.6755223233592841
    },
    "input_values": {
-    "s": 1.2161388172708838,
+    "s": 1.21376974114023,
     "smax": 1.25,
     "a_h": 0.49,
     "d": 0.3,
@@ -1332,7 +1332,7 @@
     "AVN-001"
    ],
    "how": "Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.",
-   "value": 1.0238522441405247
+   "value": 0.999196672470817
   },
   {
    "id": "CL-F4-XOVER-PIT",
@@ -1352,7 +1352,7 @@
     "AVN-001"
    ],
    "how": "As roll; after QAUTOTUNE reject any Q_A_RAT_PIT_P above p_ceiling_pit.",
-   "value": 2.368874009935713
+   "value": 2.2375964541954585
   },
   {
    "id": "CL-F4-XOVER-YAW",
@@ -1369,7 +1369,7 @@
     "AVN-001"
    ],
    "how": "As roll.",
-   "value": 1.006535942373843
+   "value": 0.9857255960177073
   },
   {
    "id": "CL-F4-FILT-SEP",
@@ -1450,7 +1450,7 @@
     "PRP-002-LL"
    ],
    "how": "Tethered-hover log on a pack near BATT_LOW: mean RCOU of the upper pair (UR, UL) / lower pair gives the split; peak upper-pair RCOU during pitch inputs stays below 0.84 (CR-A3-04, R-HOVER-SPLIT).",
-   "value": 0.6713810096252644
+   "value": 0.6710855500639828
   },
   {
    "id": "CL-F4-SPLIT-OUT-LIMIT",

@@ -892,13 +892,13 @@
     "b": "m"
    },
    "outputs": {
-    "gap_pod_m": 0.15460000000000002,
+    "gap_pod_m": 0.15460000000000004,
     "gap_fin_inboard_m": 0.015199999999999991,
     "gap_fin_outboard_m": 0.015199999999999991,
     "gap_tip_m": 0.014999999999999902,
     "gap_min_m": 0.014999999999999902,
     "gap_pod_spanwise_m": 0.0,
-    "pod_end_to_hinge_m": 0.15460000000000002,
+    "pod_end_to_hinge_m": 0.15460000000000004,
     "fin_thickness_m": 0.0096
    },
    "input_values": {
@@ -911,11 +911,11 @@
      0.56
     ],
     "pod": [
-     0.225,
+     0.235,
      0.14,
      0.07
     ],
-    "pod_x": -0.13,
+    "pod_x": -0.14,
     "c": 0.32,
     "f": 0.22,
     "y_fin": 0.32,
@@ -1046,30 +1046,30 @@
     "ASM-A5-SECTION"
    ],
    "outputs": {
-    "mass_g": 2355.0,
-    "cg_x_m": 0.046590904953270576,
-    "cg_z_m": 0.0168816321243692,
-    "cg_x_frac_chord": 0.14559657797897055,
-    "cg_x_fwd_limit_m": 0.0509,
-    "cg_x_aft_limit_m": 0.0548,
-    "cg_z_up_limit_m": 0.03,
-    "cg_x_range_use": 3.2097923316561148,
-    "pack_x_m": -0.022000000000000006,
-    "pack_x_for_target_m": 0.0020171251546323606,
-    "pack_shift_m": 0.024017125154632366,
-    "hover_upper_pair_share": 0.5444253476957084,
-    "hover_split_ratio": 1.1950299362398915
+    "mass_g": 2387.0,
+    "cg_x_m": 0.043175497149785094,
+    "cg_z_m": 0.016868896149817052,
+    "cg_x_frac_chord": 0.1349234285930784,
+    "cg_x_fwd_limit_m": 0.0466,
+    "cg_x_aft_limit_m": 0.0514,
+    "cg_z_up_limit_m": 0.025,
+    "cg_x_range_use": 2.4268761875895457,
+    "pack_x_m": -0.03200000000000001,
+    "pack_x_for_target_m": -0.006721657630067306,
+    "pack_shift_m": 0.0252783423699327,
+    "hover_upper_pair_share": 0.5443918319732027,
+    "hover_split_ratio": 1.1948684641254796
    },
    "input_values": {
     "a_wing": 405,
-    "a_fins": 418,
-    "a_pod": 131,
-    "a_land": 43,
+    "a_fins": 438,
+    "a_pod": 146,
+    "a_land": 48,
     "a_prop": 462,
     "a_pwr": 648,
     "a_avn": 45,
     "a_hrn": 123,
-    "a_mec": 80,
+    "a_mec": 72,
     "m_pack_kg": 0.55,
     "spar_kgm": 0.102,
     "spar_l": 1.0,
@@ -1343,45 +1343,45 @@
     "can_l": 0.0265,
     "can_d": 0.038,
     "x_mount": 0.045,
-    "x_prop": -0.0077,
+    "x_prop": -0.0127,
     "z_m": 0.19,
     "foot": 0.048,
-    "pod_x": -0.13,
+    "pod_x": -0.14,
     "pod_size": [
-     0.225,
+     0.235,
      0.14,
      0.07
     ],
     "pod_z": 0.015,
     "pack_size": [
-     0.14,
-     0.048,
-     0.05
+     0.135,
+     0.046,
+     0.049
     ],
-    "x_target": 0.0522,
+    "x_target": 0.049,
     "x_range": [
-     0.0509,
-     0.0548
+     0.0466,
+     0.0514
     ],
     "z_range": [
-     -0.02,
-     0.03
+     0.01,
+     0.025
     ],
     "tube_l": 0.344,
     "bond_gap": 0.00015,
     "col_wall": 0.002,
-    "face_ahead": 0.0025,
+    "face_ahead": 0.0075,
     "grip": 0.012,
     "plate_hz": 0.015,
     "sc_gap": 0.0005,
-    "sc_h": 0.012,
+    "sc_h": 0.015,
     "ear_h": 0.012,
     "tail": 0.04,
     "proud": 0.008,
     "blk_wall": 0.006,
     "pack_aft": [
-     0.048,
-     0.06
+     0.0355,
+     0.0475
     ]
    }
   },
@@ -1490,7 +1490,7 @@
    "output": "cg_x_aft_limit_m",
    "unit": "m",
    "how": "B3 re-derives the range at R1 geometry (CHANGE-LOG D-17, CR-A1-10).",
-   "value": 0.0548
+   "value": 0.0514
   },
   {
    "id": "CL-A5-CG-X-FWD-LIMIT",
@@ -1500,7 +1500,7 @@
    "output": "cg_x_fwd_limit_m",
    "unit": "m",
    "how": "B3: elevon trim at CLmax (CL-B3-CG-FWD, D-60).",
-   "value": 0.0509
+   "value": 0.0466
   },
   {
    "id": "CL-A5-LAYOUT-CG-X",
@@ -1514,7 +1514,7 @@
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 0.046590904953270576
+   "value": 0.043175497149785094
   },
   {
    "id": "CL-A5-LAYOUT-CG-X-RANGE-USE",
@@ -1528,7 +1528,7 @@
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 3.2097923316561148
+   "value": 2.4268761875895457
   },
   {
    "id": "CL-A5-PACK-X-FOR-CG",
@@ -1545,7 +1545,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.0020171251546323606
+   "value": -0.006721657630067306
   },
   {
    "id": "CL-A5-PACK-SHIFT",
@@ -1558,7 +1558,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.024017125154632366
+   "value": 0.0252783423699327
   },
   {
    "id": "CL-A5-CG-Z-UP-LIMIT",
@@ -1568,7 +1568,7 @@
    "output": "cg_z_up_limit_m",
    "unit": "m",
    "how": "B3 / A1 set the range.",
-   "value": 0.03
+   "value": 0.025
   },
   {
    "id": "CL-A5-LAYOUT-CG-Z",
@@ -1585,7 +1585,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.0168816321243692
+   "value": 0.016868896149817052
   },
   {
    "id": "CL-A5-HOVER-SPLIT",
@@ -1602,7 +1602,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 1.1950299362398915
+   "value": 1.1948684641254796
   },
   {
    "id": "ASM-A5-ASSY-ROLLUP",
@@ -1611,31 +1611,31 @@
    "text": "Declared part masses and CGs (interfaces.json) of the ten modules check.py builds from redesign/subsystems, summed by merge_check.rollup; per subsystem [mass g, CG x m, share of the CG shift from the R3 skeleton mm]",
    "basis": "python -I redesign/team/A5/integration_check.py (snapshot team/A5/integration.json, tables in INTEGRATION.md); declared masses are the designers' CAD/datasheet numbers, not weighed",
    "value": {
-    "date": "2026-11-10",
-    "mass_g": 2320.0,
+    "date": "2026-11-11",
+    "mass_g": 2344.2,
     "cg_m": [
-     0.05213,
-     -0.00114,
-     0.01845
+     0.05052,
+     -0.00121,
+     0.01849
     ],
-    "errors": 4,
-    "warnings": 3,
+    "errors": 0,
+    "warnings": 6,
     "skeleton_cg_x_m": 0.0466,
     "by_subsystem": {
      "wing": [
-      387.3,
-      0.1140104828298477,
-      -0.79
+      391.7,
+      0.11371843247383205,
+      -0.71
      ],
      "fins": [
-      434.8,
-      0.10290019781028616,
-      0.38
+      437.1,
+      0.10053937133967787,
+      -0.01
      ],
      "pod": [
-      130.9,
-      -0.006988846447669976,
-      0.6
+      146.0,
+      -0.007268511541886424,
+      0.23
      ],
      "landing": [
       42.5,
@@ -1644,28 +1644,28 @@
      ],
      "propulsion": [
       462.0,
-      0.01661818181818181,
-      0.82
+      0.012257056277056281,
+      -0.05
      ],
      "mechanisms": [
-      70.7,
-      0.21660489530277302,
-      -1.01
+      71.4,
+      0.21635359843181168,
+      -0.95
      ],
      "power": [
-      638.2,
-      -0.01663898464431213,
-      5.69
+      639.8,
+      -0.016729865582994684,
+      5.57
      ],
      "avionics": [
       36.5,
       -0.021922478070175448,
-      0.51
+      0.5
      ],
      "harness": [
       117.2,
       0.06650699658703071,
-      -0.27
+      -0.26
      ],
      "transport": [
       0,
@@ -1703,41 +1703,41 @@
     "ASM-A5-ASSY-ROLLUP"
    ],
    "outputs": {
-    "mass_kg": 2.32,
-    "cg_x_m": 0.05213,
-    "cg_y_m": -0.00114,
-    "cg_z_m": 0.01845,
-    "cg_x_range_use": 0.36923076923076836,
-    "cg_x_shift_m": 0.00553,
-    "check_errors": 4
+    "mass_kg": 2.3442,
+    "cg_x_m": 0.05052,
+    "cg_y_m": -0.00121,
+    "cg_z_m": 0.01849,
+    "cg_x_range_use": 0.6333333333333337,
+    "cg_x_shift_m": 0.00392,
+    "check_errors": 0
    },
    "input_values": {
     "snap": {
-     "date": "2026-11-10",
-     "mass_g": 2320.0,
+     "date": "2026-11-11",
+     "mass_g": 2344.2,
      "cg_m": [
-      0.05213,
-      -0.00114,
-      0.01845
+      0.05052,
+      -0.00121,
+      0.01849
      ],
-     "errors": 4,
-     "warnings": 3,
+     "errors": 0,
+     "warnings": 6,
      "skeleton_cg_x_m": 0.0466,
      "by_subsystem": {
       "wing": [
-       387.3,
-       0.1140104828298477,
-       -0.79
+       391.7,
+       0.11371843247383205,
+       -0.71
       ],
       "fins": [
-       434.8,
-       0.10290019781028616,
-       0.38
+       437.1,
+       0.10053937133967787,
+       -0.01
       ],
       "pod": [
-       130.9,
-       -0.006988846447669976,
-       0.6
+       146.0,
+       -0.007268511541886424,
+       0.23
       ],
       "landing": [
        42.5,
@@ -1746,28 +1746,28 @@
       ],
       "propulsion": [
        462.0,
-       0.01661818181818181,
-       0.82
+       0.012257056277056281,
+       -0.05
       ],
       "mechanisms": [
-       70.7,
-       0.21660489530277302,
-       -1.01
+       71.4,
+       0.21635359843181168,
+       -0.95
       ],
       "power": [
-       638.2,
-       -0.01663898464431213,
-       5.69
+       639.8,
+       -0.016729865582994684,
+       5.57
       ],
       "avionics": [
        36.5,
        -0.021922478070175448,
-       0.51
+       0.5
       ],
       "harness": [
        117.2,
        0.06650699658703071,
-       -0.27
+       -0.26
       ],
       "transport": [
        0,
@@ -1777,12 +1777,12 @@
      }
     },
     "x_range": [
-     0.0509,
-     0.0548
+     0.0466,
+     0.0514
     ],
     "z_range": [
-     -0.02,
-     0.03
+     0.01,
+     0.025
     ],
     "gate_kg": 2.6
    }
@@ -1805,7 +1805,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 2.32
+   "value": 2.3442
   },
   {
    "id": "CL-A5-ASSY-CG-X",
@@ -1825,7 +1825,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 0.05213
+   "value": 0.05052
   },
   {
    "id": "CL-A5-ASSY-CG-X-FWD",
@@ -1845,7 +1845,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 0.05213
+   "value": 0.05052
   },
   {
    "id": "CL-A5-ASSY-CG-X-RANGE-USE",
@@ -1865,7 +1865,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 0.36923076923076836
+   "value": 0.6333333333333337
   },
   {
    "id": "CL-A5-ASSY-CG-SHIFT",
@@ -1879,7 +1879,7 @@
     "ASM-A5-ASSY-ROLLUP",
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.00553
+   "value": 0.00392
   },
   {
    "id": "CL-A5-ASSY-CG-Z",
@@ -1896,7 +1896,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 0.01845
+   "value": 0.01849
   },
   {
    "id": "CL-A5-ASSY-CHECK-ERRORS",
@@ -1913,7 +1913,7 @@
    "assumes": [
     "ASM-A5-ASSY-ROLLUP"
    ],
-   "value": 4
+   "value": 0
   },
   {
    "id": "T-A5-CORE-COVER",

@@ -22,7 +22,7 @@
    "outputs": {
     "post_clear_m": 0.0,
     "rx_overhang_m": 0.0,
-    "tube_path_m": 0.0336,
+    "tube_path_m": 0.0436,
     "gps_tilt_deg": 45.0,
     "ant_offset_m": 0.0005
    },
@@ -31,12 +31,12 @@
      0.02,
      0.02,
      0.0,
-     0.0336,
+     0.0436,
      45.0,
      0.0005
     ],
     "tmax": [
-     -0.21,
+     -0.22,
      -0.046,
      0.045
     ]
@@ -75,14 +75,14 @@
    },
    "outputs": {
     "mass_g": 36.48,
-    "cg_x_m": -0.0219,
+    "cg_x_m": -0.0233,
     "cg_y_m": 0.0011,
     "cg_z_m": 0.062
    },
    "input_values": {
     "r": [
      36.48,
-     -0.0219,
+     -0.0233,
      0.0011,
      0.062
     ]
@@ -96,7 +96,7 @@
    "basis": "team/F3/avn_data.py: seller masses on the envelopes, volumes x densities for printed, gel and silicone parts",
    "value": [
     36.48,
-    -0.0219,
+    -0.0233,
     0.0011,
     0.062
    ],
@@ -113,7 +113,7 @@
     0.02,
     0.02,
     0.0,
-    0.0336,
+    0.0436,
     45.0,
     0.0005
    ],
@@ -210,7 +210,7 @@
     "AVN-007"
    ],
    "how": "From the weighed parts at their CAD stations; A3 roll-up.",
-   "value": -0.0219
+   "value": -0.0233
   },
   {
    "id": "CL-F3-AVN-CG-Y",
@@ -285,7 +285,7 @@
     "AVN-005"
    ],
    "how": "Cut 40 mm lines, fit, no kink with the boom in and out.",
-   "value": 0.0336
+   "value": 0.0436
   },
   {
    "id": "CL-F3-GPS-TILT-CAD",

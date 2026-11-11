@@ -372,11 +372,11 @@
     "side_run_N": 39.44324343580951,
     "side_mu05_N": 29.1094933684377,
     "side_mu05_ult_N": 43.66424005265655,
-    "side_vs_hand": 1.5360133697345584,
-    "stroke_vs_planar": 1.6372675321194232,
+    "side_vs_hand": 1.535865732523898,
+    "stroke_vs_planar": 1.6156712913223978,
     "strike_tilt_deg": 7.5,
     "v_broadside_ms": 4.0,
-    "v_broadside_vs_hand": 0.9080417512765249,
+    "v_broadside_vs_hand": 0.8999051126192015,
     "v_spanwise_ms": 8.0,
     "drift_tips": 0.0,
     "v_sink_drift_ms": 1.1,
@@ -400,9 +400,9 @@
     "tips": 0.0,
     "v_dr": 1.1,
     "h_t": 0.05,
-    "side_hand": 25.678971428891778,
-    "s_hand": 0.02137985220675992,
-    "vb_hand": 4.405083790890453,
+    "side_hand": 25.681439855417683,
+    "s_hand": 0.021665630903789368,
+    "vb_hand": 4.444913073510469,
     "k_ult": 1.5
    }
   },
@@ -430,8 +430,15 @@
     "x_cg_h": "CL-C5-CG-H-R1"
    },
    "outputs": {
-    "stale_count": 0.0,
-    "stale_inputs": []
+    "stale_count": 6.0,
+    "stale_inputs": [
+     "m_a3",
+     "m_pred",
+     "F_up",
+     "F_lo",
+     "z_cg",
+     "L_cart"
+    ]
    },
    "input_values": {
     "snap": [
@@ -450,16 +457,16 @@
      0.319
     ],
     "m_gate": 2.6,
-    "m_a3": 2.34546,
-    "m_pred": 2.4617540000000004,
-    "F_up": 39.57548,
-    "F_lo": 35.39940863779142,
+    "m_a3": 2.37421,
+    "m_pred": 2.4928725,
+    "F_up": 39.54279999999999,
+    "F_lo": 35.36672863779142,
     "s_av": 0.038,
     "lam": 0.667,
     "mu": 0.7,
-    "z_cg": 0.01855926418162595,
+    "z_cg": 0.01833523579971032,
     "v_td": 0.3,
-    "L_cart": 0.08899999999999997,
+    "L_cart": 0.10199999999999998,
     "v_sink": 1.2,
     "x_cg_h": 0.319
    }
@@ -487,21 +494,21 @@
     "allow": "Pa"
    },
    "outputs": {
-    "sigma_hand_MPa": 119.30596675494814,
-    "sf_hand": 0.335272418370819,
+    "sigma_hand_MPa": 119.31743520546034,
+    "sf_hand": 0.3352401929451587,
     "sigma_design_MPa": 183.51925426102753,
     "sf_design": 0.21796078106935982,
-    "sf_d5_beam": 1.0495645045143158,
+    "sf_d5_beam": 1.0313116530997621,
     "side_capacity_N": 8.609450852239712
    },
    "input_values": {
     "k": 0.9577398345845318,
     "lever": 3.234042553191489,
     "side_d": 39.5,
-    "side_hand": 25.678971428891778,
+    "side_hand": 25.681439855417683,
     "k_ult": 1.5,
     "allow": 40000000.0,
-    "sf_d5": 1.0495645045143158
+    "sf_d5": 1.0313116530997621
    }
   },
   {
@@ -1156,7 +1163,7 @@
     "value": 0.0
    },
    "how": "Re-run sim/landing_sim3d.py, sim/sink_sweep.py, sim/side_check.py, then this script, whenever this is > 0.",
-   "value": 0.0
+   "value": 6.0
   },
   {
    "id": "CL-C5-FEA-SHOE-SF",
@@ -1328,7 +1335,7 @@
    ],
    "how": "None: superseded.",
    "note": "C5-S1 record (0.38 at D5's 34.4 N ult basis); the live CL-C5-FOOT-SIDE-LOAD moves with the sink speed, so this re-computes; superseded by D-65",
-   "value": 0.335272418370819
+   "value": 0.3352401929451587
   },
   {
    "id": "CL-C5-FEA-SIDE-CAPACITY",

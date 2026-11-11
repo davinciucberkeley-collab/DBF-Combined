@@ -149,11 +149,11 @@
     "SRC-C2-ROARK"
    ],
    "outputs": {
-    "sigma_pa": 62321449.870687455,
+    "sigma_pa": 62619411.517067045,
     "I_m4": 3.645032876327555e-09
    },
    "input_values": {
-    "Mb": 20.651248516277764,
+    "Mb": 20.749983061453975,
     "D": 0.022,
     "d": 0.02
    }
@@ -172,11 +172,11 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 13638710.229996685
+    "value": 13639033.169991981
    },
    "input_values": {
-    "T": 8.380711592942315,
-    "V": 32.75686351004644,
+    "T": 8.38077723433387,
+    "V": 32.76424902358843,
     "D": 0.022,
     "d": 0.02
    }
@@ -220,10 +220,10 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 59709669.4535664
+    "value": 59709486.768225476
    },
    "input_values": {
-    "Mx": 12.003551127987016,
+    "Mx": 12.003490592162136,
     "Fb": 143.422702,
     "y_fin": 0.32,
     "D": 0.022,
@@ -786,7 +786,7 @@
     "WNG-002"
    ],
    "how": "T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step",
-   "value": 62321449.870687455
+   "value": 62619411.517067045
   },
   {
    "id": "CL-C2-SPAR-SIGMA-ENV",
@@ -826,7 +826,7 @@
     "WNG-002"
    ],
    "how": "T-C2-TWIST loads the wing in torsion to CL-C1-WING-TORSION-ULT / 1.5 (limit)",
-   "value": 13638710.229996685
+   "value": 13639033.169991981
   },
   {
    "id": "CL-C2-SPAR-BUCKLE",
@@ -868,7 +868,7 @@
     "FIN-004-R"
    ],
    "how": "T-C4-BLOCK-PROOF on a spar stub with the brace fitted",
-   "value": 59709669.4535664
+   "value": 59709486.768225476
   },
   {
    "id": "CL-C2-TIP-DEFL-FRAC",

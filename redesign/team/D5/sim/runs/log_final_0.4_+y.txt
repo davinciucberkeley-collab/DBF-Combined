@@ -1,12 +1,1 @@
-Traceback (most recent call last):
-  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\D5\sim\fea_shoe_d5.py", line 311, in <module>
-    one(float(sys.argv[i + 1]), sys.argv[i + 2])
-    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\D5\sim\fea_shoe_d5.py", line 297, in one
-    r = run_case(g, h, case, R, R_open, x_open_patch, tag)
-  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\D5\sim\fea_shoe_d5.py", line 255, in run_case
-    r = su2fea.run(RUNS / tag, nodes, hexes, mk, E_PETG, NU_PETG, ["clamp"],
-                   [("load_rim", R / A_rim, d_rim), ("load_open", R_open / A_open, d_open)], ["free"])
-  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\C5\sim\su2fea.py", line 111, in run
-    raise RuntimeError("SU2 failed in %s (see su2.log)" % case_dir)
-RuntimeError: SU2 failed in C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\D5\sim\runs\h400_py (see su2.log)
+h400_py gov 30.49 MPa (k 0.5146 MPa/N) {"rim": {"vm_max_MPa": 30.48795, "at_mm": [326.4, 10.933, 201.876]}, "aft box": {"vm_max_MPa": 11.51559, "at_mm": [305.478, -11.474, 214.383]}, "window and open-end zone": {"vm_max_MPa": 27.41235, "at_mm": [300.929, -12.75, 208.775]}, "whole shoe": {"vm_max_MPa": 30.48795, "at_mm": [326.4, 10.933, 201.876]}} 113 s

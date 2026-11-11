@@ -1936,25 +1936,25 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "face_ult_pa": 5587916.216356551,
-    "ms_face": 0.7895758656381981,
-    "face_L4_pa": 5587916.216356551,
-    "face_L1_pa": 1426393.988943689,
+    "face_ult_pa": 5588453.362605287,
+    "ms_face": 0.789403856693919,
+    "face_L4_pa": 5588453.362605287,
+    "face_L1_pa": 1426393.988943067,
     "face_G2_pa": 564657.5851035174,
-    "tube_ult_pa": 60784356.04848493,
-    "ms_tube": 5.580640579311856,
-    "edge_ult_pa": 75076082.45755467,
-    "ms_edge": 4.327928508072404,
-    "strut_comp_design_n": 161.4878731939982,
+    "tube_ult_pa": 60790199.02844226,
+    "ms_tube": 5.580008066972271,
+    "edge_ult_pa": 75083299.24972428,
+    "ms_edge": 4.327416402809029,
+    "strut_comp_design_n": 161.50339643838439,
     "strut_tens_design_n": 6.323900791340096,
     "strut_pcr_n": 199.12675358196822,
-    "ms_strut_buckling": 0.2330755842127772,
+    "ms_strut_buckling": 0.2329570645155914,
     "strut_len_m": 0.19064954759977798,
-    "dfoot_L4_m": 0.008611025351050688,
+    "dfoot_L4_m": 0.008611853097732486,
     "mroot_G2_nm": 2.281078781348766,
-    "mroot_L4_nm": 13.42793794928044,
+    "mroot_L4_nm": 13.429228728313179,
     "strut_G2_n": 61.86257571460439,
-    "strut_L4_n": 93.6161583733323
+    "strut_L4_n": 93.62515735558516
    },
    "input_values": {
     "tube_x": 0.045,
@@ -1998,8 +1998,8 @@
     "E": 100000000000.0,
     "G": 5000000000.0,
     "layers": 2,
-    "f_level": 42.0705285,
-    "f_corner": 36.68424489841683,
+    "f_level": 42.070528499999995,
+    "f_corner": 36.68777122202526,
     "mu_g": 0.7,
     "n_h": 2.0,
     "m_gate": 2.6,
@@ -2143,25 +2143,25 @@
     "SRC-C4-ALLEN"
    ],
    "outputs": {
-    "face_ult_pa": 6521557.334061627,
-    "ms_face": 0.533376076872117,
-    "face_L4_pa": 6080136.999447122,
+    "face_ult_pa": 6522184.227750396,
+    "ms_face": 0.5332286931504167,
+    "face_L4_pa": 6080721.461008378,
     "face_L1_pa": 2376402.031765756,
     "face_G2_pa": 459921.18917567184,
-    "tube_ult_pa": 67838415.09012166,
-    "ms_tube": 4.896364168717826,
-    "edge_ult_pa": 153681464.33114034,
-    "ms_edge": 1.6027862354181663,
-    "strut_comp_design_n": 189.14463826496984,
+    "tube_ult_pa": 67844936.15128455,
+    "ms_tube": 4.895797427063045,
+    "edge_ult_pa": 153696237.17272985,
+    "ms_edge": 1.6025360630687682,
+    "strut_comp_design_n": 189.1628200539811,
     "strut_tens_design_n": 4.738350107084737,
     "strut_pcr_n": 199.12675358196822,
-    "ms_strut_buckling": 0.05277503718088261,
+    "ms_strut_buckling": 0.052673847456618184,
     "strut_len_m": 0.19064954759977798,
-    "dfoot_L4_m": 0.014626494108215085,
+    "dfoot_L4_m": 0.014627900100118324,
     "mroot_G2_nm": 2.4938681299641443,
-    "mroot_L4_nm": 14.986257774633257,
+    "mroot_L4_nm": 14.987698349319759,
     "strut_G2_n": 60.14662861977095,
-    "strut_L4_n": 109.64906566085209
+    "strut_L4_n": 109.65960582839486
    },
    "input_values": {
     "tube_x": 0.045,
@@ -2205,8 +2205,8 @@
     "E": 100000000000.0,
     "G": 5000000000.0,
     "layers": 1,
-    "f_level": 42.0705285,
-    "f_corner": 36.68424489841683,
+    "f_level": 42.070528499999995,
+    "f_corner": 36.68777122202526,
     "mu_g": 0.7,
     "n_h": 2.0,
     "m_gate": 2.6,
@@ -2280,32 +2280,32 @@
     "SRC-C4-ROARK"
    ],
    "outputs": {
-    "M_design_nm": 32.28198970095251,
-    "F_design_n": 128.14788597085305,
-    "s_tube_bore_pa": 12292800.294733016,
-    "tau_shear_out_pa": 9489121.01732878,
-    "s_spar_bore_pa": 6955150.887369031,
-    "s_web_pa": 7380427.457922384,
-    "tau_web_pa": 5857482.10946221,
+    "M_design_nm": 32.418387583940415,
+    "F_design_n": 128.07096625465255,
+    "s_tube_bore_pa": 12343698.814847121,
+    "tau_shear_out_pa": 9529214.457360499,
+    "s_spar_bore_pa": 6983757.024719769,
+    "s_web_pa": 7411611.244613721,
+    "tau_web_pa": 5882231.1465188265,
     "tau_bond_torsion_pa": 407307.0394941735,
-    "tau_bond_axial_pa": 68671.2777745381,
-    "ms_tube_bore": 0.6269685930364637,
-    "ms_shear_out": 0.0538383883753053,
-    "ms_spar_bore": 1.8755666589953055,
-    "ms_web_bend": 1.0324026061523748,
-    "ms_web_torsion": 0.7072181891679947,
+    "tau_bond_axial_pa": 68630.0584039841,
+    "ms_tube_bore": 0.6202598831999859,
+    "ms_shear_out": 0.04940444406473188,
+    "ms_spar_bore": 1.863788062672831,
+    "ms_web_bend": 1.023851427839126,
+    "ms_web_torsion": 0.7000351993848657,
     "ms_bond_torsion": 3.910300598987339,
-    "ms_bond_axial": 28.124257838428615,
-    "ms_min": 0.0538383883753053,
+    "ms_bond_axial": 28.14174993451406,
+    "ms_min": 0.04940444406473188,
     "block_len_m": 0.06899999999999999,
     "mass_kg": 0.030119067982376978,
-    "spar_couple_n": 1345.0829042063547,
-    "tube_couple_n": 1793.4438722751393
+    "spar_couple_n": 1350.7661493308508,
+    "tube_couple_n": 1801.0215324411342
    },
    "input_values": {
-    "m_des_c1": 32.28198970095251,
+    "m_des_c1": 32.418387583940415,
     "m_task": 10.7,
-    "f_ult": 89.14635545798473,
+    "f_ult": 89.09284609019309,
     "my_lim": 5.17,
     "sf": 1.5,
     "fit": 1.15,
@@ -2758,7 +2758,7 @@
    ],
    "how": "Foam-board coupon bend test (T-C4-BOARD-COUPON) for the face allowable; proof-load one fin quarter to 1.5 x L4 at the foot (T-C4-FIN-PROOF).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.7895758656381981
+   "value": 0.789403856693919
   },
   {
    "id": "CL-C4-MS-FACE-1L",
@@ -2779,7 +2779,7 @@
    ],
    "how": "Foam-board coupon bend test (T-C4-BOARD-COUPON) for the face allowable; proof-load one fin quarter to 1.5 x L4 at the foot (T-C4-FIN-PROOF).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.533376076872117
+   "value": 0.5332286931504167
   },
   {
    "id": "CL-C4-MS-EDGE",
@@ -2800,7 +2800,7 @@
    ],
    "how": "T-C4-FIN-PROOF.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 1.6027862354181663
+   "value": 1.6025360630687682
   },
   {
    "id": "CL-C4-MS-TUBE",
@@ -2819,7 +2819,7 @@
    ],
    "how": "T-C4-FIN-PROOF (G2 load at the tube end).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 4.896364168717826
+   "value": 4.895797427063045
   },
   {
    "id": "CL-C4-MS-STRUT",
@@ -2838,7 +2838,7 @@
    ],
    "how": "Proof-load G2 at the tube end with the brace fitted; no visible bow.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.2330755842127772
+   "value": 0.2329570645155914
   },
   {
    "id": "CL-C4-STRUT-LEN",
@@ -2866,7 +2866,7 @@
    ],
    "how": "T-C4-FIN-PROOF: dial gauge at the foot.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.014626494108215085
+   "value": 0.014627900100118324
   },
   {
    "id": "CL-C4-BLOCK-M-DESIGN",
@@ -2881,7 +2881,7 @@
    ],
    "how": "C1 G2 / the A1 action value, x 1.5 x 1.15 x 1.25.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 32.28198970095251
+   "value": 32.418387583940415
   },
   {
    "id": "CL-C4-BLOCK-MS",
@@ -2900,7 +2900,7 @@
    ],
    "how": "Proof test: hang 2 x 1.5 x 51 N (G2 ultimate, printed factor) from one upper tube end of a block bonded in a core offcut (T-C4-BLOCK-PROOF); C6 bond coupons for ASM-C4-BOND-SHEAR.",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 0.0538383883753053
+   "value": 0.04940444406473188
   },
   {
    "id": "CL-C4-BLOCK-MASS",
@@ -2930,7 +2930,7 @@
    ],
    "how": "C2 checks spar wall crushing with the internal plug (CR-C4-02).",
    "note": "R1 concept model, superseded by CL-C4-D3-* (fin_structures_d3.py).",
-   "value": 1345.0829042063547
+   "value": 1350.7661493308508
   },
   {
    "id": "CL-C4-FINS-DELTA",

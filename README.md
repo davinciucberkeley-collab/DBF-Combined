@@ -22,6 +22,9 @@ complete on paper, nothing bought, built or flown yet.*
   document. Close the console window to stop it.
 - **On GitHub, no install:** read [redesign/SHOWCASE.md](redesign/SHOWCASE.md) for the renders, the flight animation,
   STL models that rotate in the browser, the morphological chart, the decision and the simulation figures.
+- **Building it:** [redesign/BUILD-GUIDE.md](redesign/BUILD-GUIDE.md) is the short, ordered build guide. Read
+  [redesign/review/BUILDABILITY-REVIEW.md](redesign/review/BUILDABILITY-REVIEW.md) first: 6 blockers and 30 major
+  build problems found by a buildability review, to fix before more CFD/FEA or any cutting.
 
 ## Key numbers
 
@@ -30,7 +33,7 @@ Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simu
 | Item | Value | State | Source |
 |---|---|---|---|
 | Span × chord | 1.15 × 0.32 m, one piece | proposed | [`redesign/params/params.json`](redesign/params/params.json) `wing` |
-| Take-off mass, basic / predicted | 2,345 g / 2,462 g against a 2,600 g gate | modelled | [`redesign/MASS-CG.md`](redesign/MASS-CG.md) (A3-R7) |
+| Take-off mass, basic / predicted | 2,374 g / 2,493 g against a 2,600 g gate (margin 107 g vs 100 g overrun); landing 70 g vs 48 g allocated; predicted CG 1.2 mm aft of range | modelled | [`redesign/MASS-CG.md`](redesign/MASS-CG.md) (A3-R7) |
 | Propulsion | 4 × SunnySky X3108S, APC 11×5.5MR props, 4 × 45 A ESCs, 4S 6500 mAh pack | proposed | [`redesign/README.md`](redesign/README.md) |
 | Hover T/W, fresh pack / worst pack | 2.49 / 2.12 | unverified (thrust stand owed) | [`redesign/README.md`](redesign/README.md) key numbers |
 | Cruise speed / power | 16 m/s / 240 W (E1 disputes: 246 W) | unverified | [`redesign/STATUS.md`](redesign/STATUS.md) issue 5 |
@@ -43,7 +46,7 @@ Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simu
 | Build and finish | build start 2027-01-19 (proposed), first hover by build week 4, complete by 2027-04-30 | planned | [`redesign/params/params.json`](redesign/params/params.json) `schedule` |
 | Transport | one-piece box 1.25 × 0.55 × 0.54 m; field set-up about 5 min, one person | proposed | [`redesign/README.md`](redesign/README.md) |
 | Requirements | 59 total: 0 verified, 1 checked, 1 proposed, 57 unverified; 11 show a fail (most are stale claims) | | [`redesign/STATUS.md`](redesign/STATUS.md) |
-| Proof graph | 4,204 nodes, 13,696 links; 158 stored values drift from a fresh re-run | | [`redesign/PROOFS.md`](redesign/PROOFS.md) |
+| Proof graph | 4,211 nodes, 13,734 links; clean build (0 drift, 0 errors); 86 claims fail on margin | | [`redesign/PROOFS.md`](redesign/PROOFS.md) |
 
 ## Where things are
 
