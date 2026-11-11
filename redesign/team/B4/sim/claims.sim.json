@@ -97,51 +97,51 @@
    ],
    "outputs": {
     "t_cap_n": 20.4671022259005,
-    "upper_t_n__pred": 6.9993209536309235,
-    "upper_rpm__pred": 5491.001271123214,
-    "upper_shaft_w__pred": 70.30758322901124,
-    "lower_t_n__pred": 5.756785279189712,
-    "lower_rpm__pred": 4983.099009299151,
-    "lower_shaft_w__pred": 52.79247560002706,
-    "even_t_n__pred": 6.378053116410317,
-    "even_rpm__pred": 5243.3855846174465,
-    "even_shaft_w__pred": 61.362889739928946,
-    "hover_shaft_total_w__pred": 246.2001176580766,
-    "headroom_upper__pred": 2.924155409001943,
-    "tw_cap__pred": 3.4015283290185168,
-    "upper_throttle_frac__pred": 0.3419790880202618,
-    "upper_t_n__heavy": 7.372852227377921,
-    "upper_rpm__heavy": 5634.531973534655,
-    "upper_shaft_w__heavy": 75.8624845307945,
-    "lower_t_n__heavy": 6.064006415678417,
-    "lower_rpm__heavy": 5113.557790074352,
-    "lower_shaft_w__heavy": 56.98693087076966,
-    "even_t_n__heavy": 6.71842932152817,
-    "even_rpm__heavy": 5380.4894564799415,
-    "even_shaft_w__heavy": 66.21703090606984,
-    "hover_shaft_total_w__heavy": 265.6988308031283,
-    "headroom_upper__heavy": 2.7760087405385874,
-    "tw_cap__heavy": 3.229196486437067,
-    "upper_throttle_frac__heavy": 0.360229413328859,
-    "upper_t_n__gate": 7.470625474939941,
-    "upper_rpm__gate": 5671.488668369393,
-    "upper_shaft_w__gate": 77.33776977626711,
-    "lower_t_n__gate": 6.14442272977409,
-    "lower_rpm__gate": 5147.120506453404,
-    "lower_shaft_w__gate": 58.09790049044002,
+    "upper_t_n__pred": 7.074189308044405,
+    "upper_rpm__pred": 5520.075409292338,
+    "upper_shaft_w__pred": 71.41053845863607,
+    "lower_t_n__pred": 5.816925837396977,
+    "lower_rpm__pred": 5008.999866192329,
+    "lower_shaft_w__pred": 53.61539248013841,
+    "even_t_n__pred": 6.44555757272069,
+    "even_rpm__pred": 5270.865988986894,
+    "even_shaft_w__pred": 62.316483643325846,
+    "hover_shaft_total_w__pred": 250.05186187754896,
+    "headroom_upper__pred": 2.8932081592199355,
+    "tw_cap__pred": 3.365904053246545,
+    "upper_throttle_frac__pred": 0.34563707309245917,
+    "upper_t_n__heavy": 7.447762219897405,
+    "upper_rpm__heavy": 5662.8688223583285,
+    "upper_shaft_w__heavy": 76.9920090130053,
+    "lower_t_n__heavy": 6.124105335779677,
+    "lower_rpm__heavy": 5138.661917392645,
+    "lower_shaft_w__heavy": 57.81658467583815,
+    "even_t_n__heavy": 6.78593377783854,
+    "even_rpm__heavy": 5407.258542917776,
+    "even_shaft_w__heavy": 67.19317256125801,
+    "hover_shaft_total_w__heavy": 269.6171873776869,
+    "headroom_upper__heavy": 2.7480874954923626,
+    "tw_cap__heavy": 3.197073397666559,
+    "upper_throttle_frac__heavy": 0.36388943279290836,
+    "upper_t_n__gate": 7.471458237060018,
+    "upper_rpm__gate": 5671.802381362237,
+    "upper_shaft_w__gate": 77.35037259956881,
+    "lower_t_n__gate": 6.143589967654012,
+    "lower_rpm__gate": 5146.774087643327,
+    "lower_shaft_w__gate": 58.086361715395356,
     "even_t_n__gate": 6.807524102357015,
     "even_rpm__gate": 5415.791721033196,
     "even_shaft_w__gate": 67.50630512462847,
-    "hover_shaft_total_w__gate": 270.87134053341424,
-    "headroom_upper__gate": 2.7396771922989545,
+    "hover_shaft_total_w__gate": 270.8734686299283,
+    "headroom_upper__gate": 2.7393718303047363,
     "tw_cap__gate": 3.1869337564214986,
-    "upper_throttle_frac__gate": 0.3650065061719431
+    "upper_throttle_frac__gate": 0.3650471940089845
    },
    "input_values": {
-    "m_pred": 2.4359720000000005,
+    "m_pred": 2.4617540000000004,
     "m_gate": 2.6,
-    "mg680": 0.03402799999999928,
-    "s": 1.2158384609085338,
+    "mg680": 0.008245999999999754,
+    "s": 1.2161388172708838,
     "kdl": 1.06,
     "cant": 7.0,
     "rpm_cap": 9350,
@@ -445,13 +445,13 @@
     "ratio_cfd_hand__cru": 0.392378259235802,
     "cd_upper__cru": 0.5976208700983001,
     "cd_nose_eff__cru": 0.2115779248846409,
-    "dD_station_n": -0.08493210263446041,
-    "k_new": 1.0246081616451446,
-    "dD_station_n_upper": -0.08297008110827639,
-    "k_new_upper": 1.0249159624390618,
+    "dD_station_n": -0.08658170334232655,
+    "k_new": 1.0252296840838124,
+    "dD_station_n_upper": -0.08458157429262611,
+    "k_new_upper": 1.0255434631638167,
     "backed_frac": 0.9178770029096934,
-    "k_old": 1.0379322604234007,
-    "k_margin_to_param": 0.03423113586546789,
+    "k_old": 1.0388125712600302,
+    "k_margin_to_param": 0.03359831940216784,
     "cruise_backed_h_m": 0.13971071372071794,
     "cruise_tubeboard_n_4st": 1.1059854523999886,
     "cruise_tubeboard_hand_n_4st": 2.818671591423062,
@@ -467,8 +467,8 @@
     "val_gci": 0.01907352649512843
    },
    "input_values": {
-    "k": 1.0379322604234007,
-    "D_tube": 0.11606216082490066,
+    "k": 1.0388125712600302,
+    "D_tube": 0.11831638763331066,
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
@@ -508,7 +508,7 @@
     "PRP-003-LL"
    ],
    "how": "Tethered hover log: ESC rpm of the upper pair vs CL-B4-SIM-RPM-UPPER; thrust from T-B4-STAND rpm map.",
-   "value": 6.9993209536309235
+   "value": 7.074189308044405
   },
   {
    "id": "CL-B4-SIM-RPM-UPPER",
@@ -524,7 +524,7 @@
     "PRP-003-LL"
    ],
    "how": "Bluejay rpm telemetry in a tethered hover.",
-   "value": 5491.001271123214
+   "value": 5520.075409292338
   },
   {
    "id": "CL-B4-SIM-RPM-LOWER",
@@ -540,7 +540,7 @@
     "PRP-003-LL"
    ],
    "how": "As CL-B4-SIM-RPM-UPPER.",
-   "value": 4983.099009299151
+   "value": 5008.999866192329
   },
   {
    "id": "CL-B4-SIM-SHAFT-HOVER",
@@ -556,7 +556,7 @@
     "PRP-003-LL"
    ],
    "how": "T-B4-STAND torque x rpm at the two thrusts.",
-   "value": 246.2001176580766
+   "value": 250.05186187754896
   },
   {
    "id": "CL-B4-SIM-HEADROOM",
@@ -576,7 +576,7 @@
     "PRP-003-LL"
    ],
    "how": "T-B4-STAND thrust at 9 350 rpm divided by the upper-prop hover thrust at the weighed mass.",
-   "value": 2.7760087405385874
+   "value": 2.7480874954923626
   },
   {
    "id": "CL-B4-SIM-HEADROOM-PRED",
@@ -596,7 +596,7 @@
     "PRP-003-LL"
    ],
    "how": "As CL-B4-SIM-HEADROOM.",
-   "value": 2.924155409001943
+   "value": 2.8932081592199355
   },
   {
    "id": "CL-B4-SIM-TW-CAP",
@@ -619,7 +619,7 @@
     "PRP-003-LL"
    ],
    "how": "T-B4-STAND thrust at 9 350 rpm x 4 cos 7 deg / weighed mass.",
-   "value": 3.4015283290185168
+   "value": 3.365904053246545
   },
   {
    "id": "CL-B4-SIM-BEMT-STATIC",
@@ -857,7 +857,7 @@
     "FIN-001-LL"
    ],
    "how": "T-B4-INSTALLED: installed / isolated thrust at equal rpm.",
-   "value": 1.0249159624390618
+   "value": 1.0255434631638167
   },
   {
    "id": "CL-B4-SIM-CRUISE-TUBEFIN",

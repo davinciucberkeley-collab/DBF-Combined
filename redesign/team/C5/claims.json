@@ -3900,8 +3900,8 @@
     "valid_sym_free_m": 0.01638735975999378,
     "valid_hand_free_m": 0.017722733411941298,
     "dt_check_spread_m": 1.6697393641629255e-06,
-    "side_load_N": 25.679276425529167,
-    "side_load_c1_N": 25.679276425529167
+    "side_load_N": 25.678971428891778,
+    "side_load_c1_N": 25.678971428891778
    },
    "input_values": {
     "m": 2.6,
@@ -3929,7 +3929,7 @@
     "s_hand": 0.017722733411941298,
     "mu_pad": 0.7,
     "mu_c1": 0.7,
-    "F_corner": 36.68468060789881,
+    "F_corner": 36.68424489841683,
     "F_prop": 37.5,
     "pk_prop": 1.0,
     "sigma": 172000.0,
@@ -4362,7 +4362,7 @@
    ],
    "how": "T-D5-PAD-MU gives mu; C4's T-C4-FIN-PROOF at 1.5 x this load.",
    "note": "the landing mat and neoprene pad (mu 0.7) raise C1's L4/L5 side load (mu 0.5) by 40 %; C4's fin face stress scales with it (CR-C5-09)",
-   "value": 25.679276425529167
+   "value": 25.678971428891778
   },
   {
    "id": "CL-C5-FOOT-SIDE-C1",
@@ -4372,7 +4372,7 @@
    "output": "side_load_c1_N",
    "unit": "N",
    "how": "C1 LOADS.md case L4.",
-   "value": 25.679276425529167
+   "value": 25.678971428891778
   },
   {
    "id": "CL-C5-CART-BIAS-UPPER",

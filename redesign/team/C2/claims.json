@@ -149,11 +149,11 @@
     "SRC-C2-ROARK"
    ],
    "outputs": {
-    "sigma_pa": 62321509.928198874,
+    "sigma_pa": 62321449.870687455,
     "I_m4": 3.645032876327555e-09
    },
    "input_values": {
-    "Mb": 20.651268417332638,
+    "Mb": 20.651248516277764,
     "D": 0.022,
     "d": 0.02
    }
@@ -172,11 +172,11 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 13638952.041822812
+    "value": 13638710.229996685
    },
    "input_values": {
-    "T": 8.380872552303543,
-    "V": 32.75682853782345,
+    "T": 8.380711592942315,
+    "V": 32.75686351004644,
     "D": 0.022,
     "d": 0.02
    }
@@ -786,7 +786,7 @@
     "WNG-002"
    ],
    "how": "T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step",
-   "value": 62321509.928198874
+   "value": 62321449.870687455
   },
   {
    "id": "CL-C2-SPAR-SIGMA-ENV",
@@ -826,7 +826,7 @@
     "WNG-002"
    ],
    "how": "T-C2-TWIST loads the wing in torsion to CL-C1-WING-TORSION-ULT / 1.5 (limit)",
-   "value": 13638952.041822812
+   "value": 13638710.229996685
   },
   {
    "id": "CL-C2-SPAR-BUCKLE",

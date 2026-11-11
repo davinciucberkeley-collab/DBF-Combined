@@ -370,10 +370,10 @@
     "i_lim": "A"
    },
    "outputs": {
-    "b_hover_ut": 3.5880263838922417,
-    "ratio_hover": 0.0747505496644217,
+    "b_hover_ut": 3.5881042600847155,
+    "ratio_hover": 0.07475217208509824,
     "ratio_limit": 0.24692887045288484,
-    "heading_err_hover_deg": 8.68099054049907,
+    "heading_err_hover_deg": 8.681176086367989,
     "r_min_power_m": 0.1543016526159069,
     "r_pack_m": 0.1651455115950779
    },
@@ -413,7 +413,7 @@
      48.0,
      23.5
     ],
-    "i_hover": 30.272098004305434,
+    "i_hover": 30.272755043992028,
     "i_lim": 100.0
    }
   },
@@ -510,13 +510,13 @@
    "outputs": {
     "q_pa": 156.8,
     "dv_per_count_ms": 0.05357142857142857,
-    "err_rss_ms": 0.4523751013685354,
-    "err_linear_ms": 0.7793071674415605
+    "err_rss_ms": 0.45292245462411795,
+    "err_linear_ms": 0.7801923274849102
    },
    "input_values": {
     "v": 16.0,
     "rho": 1.225,
-    "wash": 0.01746626429162814,
+    "wash": 0.0175215867943375,
     "e": [
      1.05,
      3.0,
@@ -665,16 +665,16 @@
    },
    "outputs": {
     "ins_pos_m": [
-     0.062,
+     0.059,
      0.046,
-     -0.035
+     -0.017
     ],
     "gps_pos_m": [
-     -0.028,
+     -0.031,
      0.0,
-     -0.169
+     -0.151
     ],
-    "imu_r_m": 0.08476437931112336
+    "imu_r_m": 0.07672027111526653
    },
    "input_values": {
     "lay": {
@@ -703,8 +703,8 @@
       0.016
      ]
     },
-    "xcg": 0.0522,
-    "zcg": 0.0
+    "xcg": 0.049,
+    "zcg": 0.0185
    }
   },
   {
@@ -788,7 +788,7 @@
     "AVN-002"
    ],
    "how": "T-F3-COMPASSMOT: COMPASS_MOT calibration to hover current; interference <= 30 %.",
-   "value": 0.0747505496644217
+   "value": 0.07475217208509824
   },
   {
    "id": "CL-F3-COMPASS-RATIO-LIM",
@@ -818,7 +818,7 @@
     "AVN-002"
    ],
    "how": "Compassmot log (MAG field vs current).",
-   "value": 3.5880263838922417
+   "value": 3.5881042600847155
   },
   {
    "id": "CL-F3-COMPASS-HDG",
@@ -831,7 +831,7 @@
     "AVN-002"
    ],
    "how": "Hover log heading vs GPS course at take-off; compassmot removes most of it.",
-   "value": 8.68099054049907
+   "value": 8.681176086367989
   },
   {
    "id": "CL-F3-GPS-CLEAR",
@@ -967,7 +967,7 @@
    ],
    "how": "T-F3-ARSPD-CAL: ARSPD_AUTOCAL then calm-air box pattern; airspeed vs GPS ground speed both ways.",
    "note": "also meets B1's proposed 0.5 m/s (CR-B1-13) by 11 %; the linear sum (CL-F3-ASPD-ERR-LIN) does not",
-   "value": 0.4523751013685354
+   "value": 0.45292245462411795
   },
   {
    "id": "CL-F3-ASPD-ERR-LIN",
@@ -980,7 +980,7 @@
     "AVN-004"
    ],
    "how": "As CL-F3-ASPD-ERR.",
-   "value": 0.7793071674415605
+   "value": 0.7801923274849102
   },
   {
    "id": "CL-F3-ASPD-RES",
@@ -1187,9 +1187,9 @@
    ],
    "how": "Measure the as-built FC centre from the CG mark.",
    "value": [
-    0.062,
+    0.059,
     0.046,
-    -0.035
+    -0.017
    ]
   },
   {
@@ -1204,9 +1204,9 @@
    ],
    "how": "Measure the as-built mast top from the CG mark.",
    "value": [
-    -0.028,
+    -0.031,
     0.0,
-    -0.169
+    -0.151
    ]
   },
   {

@@ -133,6 +133,7 @@ models, each with a convergence check and a comparison to hand calculations. Rep
 | Area | Start here |
 |---|---|
 | Front door, key numbers, directory map | [README.md](README.md) |
+| Proof chains (every number traced to its source) | [PROOFS.md](PROOFS.md) |
 | What is done, what fails, what needs tests | [STATUS.md](STATUS.md) |
 | What the team does next, what to order | [HANDOFF.md](HANDOFF.md) |
 | How to continue the work | [RESUME.md](RESUME.md) |

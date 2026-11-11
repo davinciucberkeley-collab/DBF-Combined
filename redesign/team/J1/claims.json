@@ -383,14 +383,14 @@
     "SRC-J1-HEPPERLE-PLANK"
    ],
    "outputs": {
-    "arm_m": 0.1385,
-    "arm_chord": 0.43281250000000004,
-    "fin_area_ahead_frac": 0.0
+    "arm_m": 0.1335,
+    "arm_chord": 0.4171875,
+    "fin_area_ahead_frac": 0.014545454545454558
    },
    "input_values": {
     "x_le": 0.045,
     "x_te": 0.32,
-    "x_cg": 0.044,
+    "x_cg": 0.049,
     "c": 0.32
    }
   },
@@ -415,12 +415,12 @@
     "SRC-J1-RIBNER"
    ],
    "outputs": {
-    "arm_m": 0.048999999999999995,
-    "arm_chord": 0.15312499999999998
+    "arm_m": 0.061700000000000005,
+    "arm_chord": 0.1928125
    },
    "input_values": {
-    "x_prop": -0.005,
-    "x_cg": 0.044,
+    "x_prop": -0.0127,
+    "x_cg": 0.049,
     "c": 0.32
    }
   },
@@ -458,15 +458,15 @@
    "outputs": {
     "I_m4": 3.645032876327555e-09,
     "EI_Nm2": 364.5032876327555,
-    "k_Npm": 159427.01019073717,
-    "m_eff_kg": 0.1206512,
-    "f1_hz": 182.95119880173007
+    "k_Npm": 118076.86674206528,
+    "m_eff_kg": 0.1211408,
+    "f1_hz": 157.1293533122149
    },
    "input_values": {
     "od": 0.022,
     "id": 0.02,
     "E": 100000000000.0,
-    "L": 0.19,
+    "L": 0.21,
     "m_motor": 0.081,
     "m_prop": 0.017,
     "m_mount": 0.018,
@@ -491,18 +491,18 @@
     "rpm_max": "rpm"
    },
    "outputs": {
-    "f1P_hover_hz": 89.92858175332185,
-    "f2P_hover_hz": 179.8571635066437,
-    "f1P_cruise_hz": 99.99900156772914,
-    "f2P_cruise_hz": 199.99800313545828,
+    "f1P_hover_hz": 90.26319535055327,
+    "f2P_hover_hz": 180.52639070110655,
+    "f1P_cruise_hz": 99.09745463032274,
+    "f2P_cruise_hz": 198.1949092606455,
     "f1P_max_hz": 155.83333333333334,
     "f2P_max_hz": 311.6666666666667,
-    "band_lo_hz": 71.94286540265747,
+    "band_lo_hz": 72.21055628044262,
     "band_hi_hz": 374.0
    },
    "input_values": {
-    "rpm_h": 5395.714905199311,
-    "rpm_c": 5999.940094063748,
+    "rpm_h": 5415.791721033196,
+    "rpm_c": 5945.8472778193645,
     "rpm_max": 9350
    }
   },
@@ -532,15 +532,15 @@
     "f": "Hz"
    },
    "outputs": {
-    "sep_min": 0.01720273596426458,
-    "nearest": "2P_hover"
+    "sep_min": 0.00831670574683363,
+    "nearest": "1P_max"
    },
    "input_values": {
-    "f1": 182.95119880173007,
-    "a": 89.92858175332185,
-    "b": 179.8571635066437,
-    "c": 99.99900156772914,
-    "d": 199.99800313545828,
+    "f1": 157.1293533122149,
+    "a": 90.26319535055327,
+    "b": 180.52639070110655,
+    "c": 99.09745463032274,
+    "d": 198.1949092606455,
     "e": 155.83333333333334,
     "f": 311.6666666666667
    }
@@ -603,12 +603,12 @@
    },
    "outputs": {
     "i_req_a": 33.75,
-    "i_req_pess_a": 37.35901585947585
+    "i_req_pess_a": 37.677857432312685
    },
    "input_values": {
     "k": 1.25,
     "i_hover": 27.0,
-    "i_hover_pess": 29.887212687580682
+    "i_hover_pess": 30.142285945850148
    }
   },
   {
@@ -631,7 +631,7 @@
     "SRC-J1-BOXKITE-LEARN"
    ],
    "note": "Geometry screen only, not Cn_beta. With the tubes through the wing at x 0.045 (D-04) the fin centroid is 0.14 m (43 % chord) aft of the CG and no fin area is ahead of it; at R0 it was 0.04 m with 40 % ahead. This is the geometric reason B3's option O4b turned Cn_beta from -0.105 to +0.044 /rad. The FW yaw actuator question (CR-J1-05, F4) stands: Plane has no FW yaw stabilisation by default.",
-   "value": 0.1385
+   "value": 0.1335
   },
   {
    "id": "CL-J1-FIN-AREA-AHEAD",
@@ -642,7 +642,7 @@
    "unit": "-",
    "how": "Geometry from params.json; re-run after B3 moves the CG range (D-17).",
    "note": "Zero at R1: the fin LE (tube axis 0.045) is 1 mm aft of the CG target 0.044; at the aft CG limit 0.049 about 1.5 % of the fin area is ahead of the CG, still negligible.",
-   "value": 0.0
+   "value": 0.014545454545454558
   },
   {
    "id": "CL-J1-PROP-ARM",
@@ -656,7 +656,7 @@
     "SRC-J1-RIBNER"
    ],
    "note": "0.05 m (15 % chord) ahead of the CG at R1 (was 0.21 m, 70 % chord, at R0): the destabilising prop normal-force moment is 4x smaller than it was. B3's R1 neutral point should move aft (D-17).",
-   "value": 0.048999999999999995
+   "value": 0.061700000000000005
   },
   {
    "id": "CL-J1-TUBE-F1",
@@ -670,7 +670,7 @@
     "ASM-J1-E-TUBE"
    ],
    "note": "Tube alone, cantilevered 0.19 m from the chord plane, motor + 11x5.5MR + mount at the tip. The bonded half-fin should raise this a lot; it must be measured. E 50-140 GPa puts f1 at 130-215 Hz.",
-   "value": 182.95119880173007
+   "value": 157.1293533122149
   },
   {
    "id": "CL-J1-MOTOR-1P-HOVER",
@@ -681,7 +681,7 @@
    "unit": "Hz",
    "how": "ESC telemetry or bidirectional DShot RPM in the hover log; harmonic notch centre (INS_HNTCH_FREQ).",
    "note": "From B4's CL-B4-HOVER-RPM (11x5.5MR at the gate).",
-   "value": 89.92858175332185
+   "value": 90.26319535055327
   },
   {
    "id": "CL-J1-MOTOR-2P-HOVER",
@@ -691,7 +691,7 @@
    "output": "f2P_hover_hz",
    "unit": "Hz",
    "how": "FFT of the hover IMU log (ArduPilot notch review tool) shows the 2P peak.",
-   "value": 179.8571635066437
+   "value": 180.52639070110655
   },
   {
    "id": "CL-J1-MOTOR-1P-CRUISE",
@@ -701,7 +701,7 @@
    "output": "f1P_cruise_hz",
    "unit": "Hz",
    "how": "RPM telemetry in the cruise log (B4 CL-B4-CRUISE-RPM, 15 m/s).",
-   "value": 99.99900156772914
+   "value": 99.09745463032274
   },
   {
    "id": "CL-J1-MOTOR-2P-CRUISE",
@@ -711,7 +711,7 @@
    "output": "f2P_cruise_hz",
    "unit": "Hz",
    "how": "FFT of the cruise IMU log.",
-   "value": 199.99800313545828
+   "value": 198.1949092606455
   },
   {
    "id": "CL-J1-MOTOR-1P-MAX",
@@ -754,7 +754,7 @@
     "SRC-J1-AP-NOTCH"
    ],
    "note": "FAILS on the bare tube: f1 ~183 Hz sits 2 % from the hover 2P (180 Hz) and 9 % from the cruise 2P (200 Hz). The forcing sweeps 90-156 Hz (1P) and 180-312 Hz (2P) between hover and the capped maximum, so no bare-tube mode in 72-374 Hz clears 20 % at every steady point: the fin bond must put the first mode above ~375 Hz, or the tap test must show it damped (R-VIBRATION allows either). C4 owns the fix.",
-   "value": 0.01720273596426458
+   "value": 0.00831670574683363
   },
   {
    "id": "CL-J1-CL-CRUISE",
@@ -807,7 +807,7 @@
     "R-DISCONNECT"
    ],
    "how": "1.25 x the hover current logged in 5 m/s wind at the gate mass (H2).",
-   "value": 37.35901585947585
+   "value": 37.677857432312685
   },
   {
    "id": "CL-J1-XT60-CONT",

@@ -7,52 +7,52 @@
  "CALC-C3-BOND": {
   "area_m2": 0.0091,
   "length_m": 0.065,
-  "sigma_design_pa": 77908.34364433643,
-  "tau_design_pa": 8932.206387362638,
-  "R_design": 0.8684055003169907,
+  "sigma_design_pa": 79075.50919273034,
+  "tau_design_pa": 8634.00412087912,
+  "R_design": 0.8770951331360947,
   "case": "L2-PAIR-NARROW/MC-C",
-  "group_mass_kg": 0.92595,
-  "group_cg_x": -0.020518321983330177,
-  "crash_F_n": 115.74375,
-  "sigma_crash_pa": 74966.3232127615,
+  "group_mass_kg": 0.8405499999999999,
+  "group_cg_x": -0.02996762499529253,
+  "crash_F_n": 105.06874999999998,
+  "sigma_crash_pa": 78123.14521106481,
   "tau_crash_pa": 0.0,
-  "R_crash": 0.7496632321276151,
+  "R_crash": 0.7812314521106482,
   "crash_dir": "+z"
  },
  "CALC-C3-STOPS": {
-  "F_aft_n": 85.51730625,
-  "F_fwd_n": 85.0,
-  "F_fwd_flight_n": 1.69265625,
-  "sigma_aft_d2_pa": 16585174.545454549,
-  "t_req_m": 0.0031545371653021823,
-  "sigma_aft_rec_pa": 16585174.545454549,
-  "sigma_fwd_rec_pa": 12878787.878787879,
+  "F_aft_n": 91.552434375,
+  "F_fwd_n": 73.75,
+  "F_fwd_flight_n": 3.26758125,
+  "sigma_aft_d2_pa": 17755623.636363637,
+  "t_req_m": 0.0032639507014993628,
+  "sigma_aft_rec_pa": 17755623.636363637,
+  "sigma_fwd_rec_pa": 11174242.424242424,
   "fwd_fuse_n": 98.99999999999999,
-  "nose_m_req_nmm_per_mm": 45.220000000000006,
+  "nose_m_req_nmm_per_mm": 40.41198979591837,
   "nose_m_cap_nmm_per_mm": 4.699999999999999
  },
  "CALC-C3-GUIDES": {
-  "F_n": 85.0,
-  "sigma_d2_pa": 6476190.476190476,
-  "sigma_rec_pa": 6476190.476190476,
-  "strap_leg_n": 13.89423076923077
+  "F_n": 73.75,
+  "sigma_d2_pa": 4370370.37037037,
+  "sigma_rec_pa": 5827160.49382716,
+  "strap_leg_n": 13.118990384615387
  },
  "CALC-C3-STRAPS": {
-  "F_n": 85.0,
-  "per_strap_n": 42.5,
-  "leg_t_n": 31.25,
-  "overlap_req_m": 0.03125,
-  "tray_flat_pa": 19318.181818181816,
-  "glue_line_pa": 110677.08333333334,
-  "glue_fillet_pa": 49189.81481481481
+  "F_n": 73.75,
+  "per_strap_n": 36.875,
+  "leg_t_n": 28.4375,
+  "overlap_req_m": 0.0284375,
+  "tray_flat_pa": 16761.363636363636,
+  "glue_line_pa": 96028.64583333334,
+  "glue_fillet_pa": 42679.398148148146
  },
  "CALC-C3-OVERHANG": {
-  "M_unit_nm_per_g": 0.2696483451807725,
+  "M_unit_nm_per_g": 0.3003690039517104,
   "I_m4": 1.8449535333333343e-08,
   "c_m": 0.04345,
   "n_design": 7.331249999999999,
-  "sigma_design_pa": 4655647.9991485635,
-  "sigma_crash_pa": 8094526.422250712
+  "sigma_design_pa": 5186059.46317427,
+  "sigma_crash_pa": 9016724.494571893
  },
  "CALC-C3-HANDLE": {
   "F_design_n": 109.95706312499999,
@@ -60,28 +60,28 @@
   "sigma_grip_pa": 9896135.681249999
  },
  "CALC-C3-HATCH": {
-  "F_design_n": 20.2675857216,
-  "tab_n_per_cm2": 2.111206846
+  "F_design_n": 21.3619478016,
+  "tab_n_per_cm2": 2.225202896
  },
  "CALC-C3-MASS": {
   "dm_g": 0.0,
-  "mass_g": 130.9,
+  "mass_g": 145.79999999999998,
   "full_section_dm_g": 6.320028000000001,
-  "mass_full_section_g": 137.220028
+  "mass_full_section_g": 152.120028
  },
  "CALC-C3-NOSE-PATH": {
-  "L_A_m": 0.0010000000000000009,
+  "L_A_m": 0.01100000000000001,
   "L_A_r4_m": 0.001,
-  "stack_m": 0.0088,
-  "blockA_share_full": 0.04118793000000003,
-  "blockA_share_c3": 0.018670377733598423,
-  "gap_penalty_c3_m": 0.0005606326889279444,
+  "stack_m": 0.018800000000000008,
+  "blockA_share_full": 0.4306192000000003,
+  "blockA_share_c3": 0.18920000000000015,
+  "gap_penalty_c3_m": 0.006166959578207388,
   "gap_penalty_c3_r4_m": 0.0005606326889279438,
   "F_blockB_n": 508.91360000000003
  },
  "CALC-C3-FEA": {
   "k_bond_design": 1.6174653623114343,
-  "R_design_corrected": 1.4046158172034637,
+  "R_design_corrected": 1.418670997299569,
   "R_crash_fea": 11.037391099082349,
   "R_bonded_crash_fea": 40.62510013742308,
   "overhang_crash_pa": 6950738.934236977,
@@ -120,11 +120,11 @@
   "fwd_bedded_tray_path_share": 1.1611746742091387
  },
  "CALC-C3-STRUT": {
-  "sigma_bearing_pa": 678708.7797619046,
-  "P_cr_n": 8565.406676659692,
-  "F_n": 85.51730625,
+  "sigma_bearing_pa": 726606.6220238094,
+  "P_cr_n": 2390.629702563617,
+  "F_n": 91.552434375,
   "tie_cap_n": 444.0,
-  "L_m": 0.014,
-  "mass_g": 3.6626800000000013
+  "L_m": 0.0265,
+  "mass_g": 5.662930000000001
  }
 }

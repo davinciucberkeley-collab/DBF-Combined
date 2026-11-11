@@ -445,8 +445,8 @@
     "SRC-F4-AP-SRC"
    ],
    "outputs": {
-    "v_dive": 17.705555651129096,
-    "cd0": 0.04824380486987966,
+    "v_dive": 17.696752994819956,
+    "cd0": 0.04827745166573386,
     "scaler_va": 0.7804878048780488,
     "scaler_vd": 0.6015037593984962
    },
@@ -457,7 +457,7 @@
     "b": 1.15,
     "c": 0.32,
     "e": 0.8,
-    "ld": 6.325010564744458,
+    "ld": 6.3219657774236495,
     "vc": 16.0,
     "th": -10,
     "sc": 16,
@@ -548,12 +548,12 @@
     "ASM-F4-QT-ARM"
    ],
    "outputs": {
-    "f_rll_hz": 1.025355993460226,
-    "p_ceiling_rll": 0.35109757225402566,
-    "f_pit_hz": 2.3647111437479293,
-    "p_ceiling_pit": 0.18268616069331203,
-    "f_yaw_hz": 1.0081858571191291,
-    "p_ceiling_yaw": 0.9522053827884283
+    "f_rll_hz": 1.0238522441405247,
+    "p_ceiling_rll": 0.3516132352693166,
+    "f_pit_hz": 2.368874009935713,
+    "p_ceiling_pit": 0.16885659529476424,
+    "f_yaw_hz": 1.006535942373843,
+    "p_ceiling_yaw": 0.9537662388249235
    },
    "input_values": {
     "T": 21.1,
@@ -561,9 +561,9 @@
     "z": 0.19,
     "cant": 7.0,
     "qt": 0.02,
-    "izz": 0.16984747573915068,
-    "iyy": 0.04605366136239337,
-    "ixx": 0.17415131486690463,
+    "izz": 0.1700906305464818,
+    "iyy": 0.04598255046995049,
+    "ixx": 0.17443678388019415,
     "p": [
      0.08,
      0.08,
@@ -574,7 +574,7 @@
      0.002
     ],
     "fr": 4.5,
-    "fp": 5.4,
+    "fp": 5.0,
     "fy": 2.4
    }
   },
@@ -625,11 +625,11 @@
     "ASM-F4-SAG"
    ],
    "outputs": {
-    "a_up": 0.6715465033311601,
+    "a_up": 0.6713810096252644,
     "a_up_at_limit": 0.6755223233592841
    },
    "input_values": {
-    "s": 1.2174684648587217,
+    "s": 1.2161388172708838,
     "smax": 1.25,
     "a_h": 0.49,
     "d": 0.3,
@@ -721,15 +721,15 @@
     "ASM-F4-DT-MIX"
    ],
    "outputs": {
-    "gain_req_pct": 30.20735513714946,
-    "a_cruise": 0.19483431654214345,
-    "a_low_side": 0.1193159286992698,
+    "gain_req_pct": 30.20008352530284,
+    "a_cruise": 0.19488122897942556,
+    "a_low_side": 0.11938102016616846,
     "dT_N": 0.78125
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
-    "ld": 6.325010564744458,
+    "ld": 6.3219657774236495,
     "n": 4,
     "a_h": 0.49,
     "y": 0.32,
@@ -1241,7 +1241,7 @@
     "AVN-001"
    ],
    "how": "FBWA full-down stick at >= 80 m, throttle idle, 20 s: logged airspeed <= 20.5 m/s (T-F4-DIVE).",
-   "value": 17.705555651129096
+   "value": 17.696752994819956
   },
   {
    "id": "CL-F4-SCALER-VD",
@@ -1332,7 +1332,7 @@
     "AVN-001"
    ],
    "how": "Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.",
-   "value": 1.025355993460226
+   "value": 1.0238522441405247
   },
   {
    "id": "CL-F4-XOVER-PIT",
@@ -1352,7 +1352,7 @@
     "AVN-001"
    ],
    "how": "As roll; after QAUTOTUNE reject any Q_A_RAT_PIT_P above p_ceiling_pit.",
-   "value": 2.3647111437479293
+   "value": 2.368874009935713
   },
   {
    "id": "CL-F4-XOVER-YAW",
@@ -1369,7 +1369,7 @@
     "AVN-001"
    ],
    "how": "As roll.",
-   "value": 1.0081858571191291
+   "value": 1.006535942373843
   },
   {
    "id": "CL-F4-FILT-SEP",
@@ -1450,7 +1450,7 @@
     "PRP-002-LL"
    ],
    "how": "Tethered-hover log on a pack near BATT_LOW: mean RCOU of the upper pair (UR, UL) / lower pair gives the split; peak upper-pair RCOU during pitch inputs stays below 0.84 (CR-A3-04, R-HOVER-SPLIT).",
-   "value": 0.6715465033311601
+   "value": 0.6713810096252644
   },
   {
    "id": "CL-F4-SPLIT-OUT-LIMIT",
@@ -1626,7 +1626,7 @@
     "PRP-002-LL"
    ],
    "how": "FBWA yaw doublet on the twin, then on K09-L at 16 m/s (T-B3-YAW-DOUBLET): yaw rate damps in < 2 cycles.",
-   "value": 30.20735513714946
+   "value": 30.20008352530284
   },
   {
    "id": "CL-F4-YAW-LOW-SIDE",
@@ -1646,7 +1646,7 @@
     "PRP-002-LL"
    ],
    "how": "Flight log RCOU at full rudder in cruise: no motor below 5 % output.",
-   "value": 0.1193159286992698
+   "value": 0.11938102016616846
   },
   {
    "id": "CL-F4-DESCENT",

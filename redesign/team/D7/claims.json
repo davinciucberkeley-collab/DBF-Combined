@@ -79,12 +79,12 @@
     "n_T": 10.09090909090909,
     "s_bottom_m": 0.072,
     "travel_req_m": 0.08199999999999999,
-    "t_req_m": 0.09531238277759696
+    "t_req_m": 0.08951445146402713
    },
    "input_values": {
     "h": 0.3,
     "eta": 0.5,
-    "n_allow": 12.445617653423175,
+    "n_allow": 13.186960575270808,
     "t": 0.12,
     "eu": 0.55,
     "eb": 0.6,
@@ -141,13 +141,13 @@
     "travel_m": 0.08400000000000003,
     "clear_bottoming_m": 0.012000000000000038,
     "aft_gap_m": 0.012,
-    "nose_gap_m": 0.012950000000000041,
-    "nose_gap_ext_m": 0.012950000000000041,
-    "x_clear_m": 0.012,
+    "nose_gap_m": 0.002950000000000029,
+    "nose_gap_ext_m": 0.002950000000000029,
+    "x_clear_m": 0.002950000000000029,
     "tip_to_pad_m": 0.015000000000000041,
     "travel_a1_m": 0.08400000000000003,
-    "h_allow_a1_m": 0.38819719874526964,
-    "antenna_gap_m": 0.002950000000000041
+    "h_allow_a1_m": 0.41334107951126847,
+    "antenna_gap_m": -0.007049999999999971
    },
    "input_values": {
     "ext": [
@@ -162,7 +162,7 @@
     ],
     "env": [
      1.152,
-     0.498,
+     0.508,
      0.438
     ],
     "shell": 0.004,
@@ -179,7 +179,7 @@
     "eb": 0.6,
     "eu": 0.55,
     "eta": 0.5,
-    "n_allow": 12.445617653423175,
+    "n_allow": 13.186960575270808,
     "ant": 0.01
    }
   },
@@ -448,7 +448,7 @@
     "travel": 0.08400000000000003,
     "env": [
      1.152,
-     0.498,
+     0.508,
      0.438
     ],
     "tray": [
@@ -577,24 +577,24 @@
     "SRC-D7-PE-FOAM"
    ],
    "outputs": {
-    "h_end_m": 0.09303376035588172,
-    "h_nose_m": 0.0591052159169582,
+    "h_end_m": 0.0999271225015475,
+    "h_nose_m": 0.06309568939958064,
     "n_aft": 7.46133814374094,
     "h_aft_m": 0.24645352574963755,
-    "h_lid_m": 0.05722808826711588,
+    "h_lid_m": 0.06093480287635404,
     "p_pillar_kpa": 17.012968562878786,
     "p_allow_kpa": 80.0
    },
    "input_values": {
-    "nX": 12.282312749598319,
-    "nY": 12.276819437076572,
-    "nL": 12.445617653423175,
+    "nX": 13.044035199156408,
+    "nY": 13.11237848503606,
+    "nL": 13.186960575270808,
     "eta": 0.5,
     "eu": 0.55,
     "t_end": 0.03,
     "t_nose": 0.01905,
-    "f_up": 39.5625,
-    "f_lo": 35.4375,
+    "f_up": 39.375,
+    "f_lo": 35.625,
     "s_foot": 0.04,
     "aft_gap": 0.012,
     "gate": 2.6,
@@ -714,7 +714,7 @@
     "tb": 0.012,
     "env": [
      1.152,
-     0.498,
+     0.508,
      0.438
     ],
     "travel": 0.08400000000000003,
@@ -871,7 +871,7 @@
     "TRN-005"
    ],
    "how": "Place the aircraft on the cradles; a 10 mm foam feeler passes between nose and nose pad and between the foot pads and the aft wall.",
-   "value": 0.012
+   "value": 0.002950000000000029
   },
   {
    "id": "CL-D7-NOSE-GAP",
@@ -889,7 +889,7 @@
     "TRN-005"
    ],
    "how": "Ruler in the built box.",
-   "value": 0.012950000000000041
+   "value": 0.002950000000000029
   },
   {
    "id": "CL-D7-ANTENNA-PAD-GAP",
@@ -907,7 +907,7 @@
     "TRN-005"
    ],
    "how": "Aircraft in the box against the LE lips: a 2 mm feeler passes between the antenna tip and the nose pad.",
-   "value": 0.002950000000000041
+   "value": -0.007049999999999971
   },
   {
    "id": "CL-D7-TIP-PAD-GAP",
@@ -955,7 +955,7 @@
    "assumes": [
     "ASM-D7-REBOUND"
    ],
-   "value": 0.38819719874526964
+   "value": 0.41334107951126847
   },
   {
    "id": "CL-D7-CRADLE-PAD-AREA",
@@ -1193,7 +1193,7 @@
    "assumes": [
     "ASM-D7-FLAT-DROP"
    ],
-   "value": 0.09303376035588172
+   "value": 0.0999271225015475
   },
   {
    "id": "CL-D7-NOSE-DROP-ALLOW",
@@ -1207,7 +1207,7 @@
     "TRN-005"
    ],
    "how": "T-D7-BOX-DROP front-wall drop with the dummy.",
-   "value": 0.0591052159169582
+   "value": 0.06309568939958064
   },
   {
    "id": "CL-D7-AFT-N",
@@ -1255,7 +1255,7 @@
     "TRN-004-R"
    ],
    "how": "Label-and-test case: THIS SIDE UP. T-D7-BOX-DROP lid-down drop at this height with the dummy.",
-   "value": 0.05722808826711588
+   "value": 0.06093480287635404
   },
   {
    "id": "CL-D7-PILLAR-P-ALLOW",

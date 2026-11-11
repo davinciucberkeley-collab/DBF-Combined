@@ -2,8 +2,8 @@
  "strip_convergence_F1_root": [
   {
    "dy_m": 0.01,
-   "Mx_Nm": 2.82502984641603,
-   "Mbend_Nm": 2.8636196760326307
+   "Mx_Nm": 2.8250298108870546,
+   "Mbend_Nm": 2.863619608622884
   },
   {
    "dy_m": 0.005,
@@ -21,29 +21,29 @@
   "model_Nm": 0.8311688037405686,
   "diff_frac": 0.017778640151226672
  },
- "equilibrium_residual_max": 5.684341886080801e-13,
+ "equilibrium_residual_max": 3.979039320256561e-13,
  "hand_check_B2_root_lift_moment_1g": {
   "model_Nm": 3.09228466191307,
   "B2_Nm": 3.0919926150749997,
   "diff_frac": 9.445263117589502e-05
  },
  "cant_side_force_in_J_MOTOR_H2": {
-  "J_MOTOR_UR_Fside_N": 2.6712726942943696,
+  "J_MOTOR_UR_Fside_N": 2.6712746829574363,
   "T_lim_sin_cant_N": 2.5714431458486118,
-  "J_MOTOR_UR_Fx_N": -18.223651623707823
+  "J_MOTOR_UR_Fx_N": -18.22366349267734
  },
  "a3_centre_group_vs_c1": {
   "note": "C1 lumped groups, MC-P (allocations x gate/sum), centre/pack after trim and spread, vs A3 CL-A3-GROUPS (A3 as built). dx = C1 - A3 (m). The wing/fins/stations/landing offsets are what the centre-group trim compensates.",
   "groups": {
    "wing": {
     "m_c1_kg": 0.44573315272604136,
-    "m_a3_kg": 0.3873,
+    "m_a3_kg": 0.3917,
     "x_c1_m": 0.12069925925925926,
-    "x_a3_m": 0.114,
-    "dx_m": 0.006699259259259252,
+    "x_a3_m": 0.1137,
+    "dx_m": 0.006999259259259261,
     "z_c1_m": 0.0,
     "z_a3_m": 0.0054,
-    "moment_dx_kgm": 0.002986081950558751
+    "moment_dx_kgm": 0.0031198018963765673
    },
    "fins": {
     "m_c1_kg": 0.4809515746698273,
@@ -98,27 +98,27 @@
    "pack": {
     "m_c1_kg": 0.6053166271588216,
     "m_a3_kg": 0.55,
-    "x_c1_m": -0.024833921334922536,
+    "x_c1_m": -0.02479947556615019,
     "x_a3_m": -0.032,
-    "dx_m": 0.007166078665077465,
-    "z_c1_m": 0.05228879618593564,
+    "dx_m": 0.00720052443384981,
+    "z_c1_m": 0.05246102502979738,
     "z_a3_m": 0.0483,
-    "moment_dx_kgm": 0.004337746567499481
+    "moment_dx_kgm": 0.004358597164072651
    },
    "centre": {
     "m_c1_kg": 0.3180663731798171,
-    "m_a3_kg": 0.30338,
-    "x_c1_m": 0.008266078665077465,
-    "x_a3_m": 0.0011,
-    "dx_m": 0.007166078665077465,
-    "z_c1_m": 0.04928879618593564,
-    "z_a3_m": 0.0453,
-    "moment_dx_kgm": 0.0022792886509224544
+    "m_a3_kg": 0.30238,
+    "x_c1_m": 0.008200524433849795,
+    "x_a3_m": 0.001,
+    "dx_m": 0.007200524433849795,
+    "z_c1_m": 0.04896102502979738,
+    "z_a3_m": 0.0448,
+    "moment_dx_kgm": 0.0022902446916672602
    }
   },
   "k_own_centre_m": {
-   "centre": 0.06571162004069249,
-   "prorata": 0.06571162004069249
+   "centre": 0.0637787531014761,
+   "prorata": 0.0637787531014761
   },
   "spread_d_m": {
    "centre": 0.1175,
