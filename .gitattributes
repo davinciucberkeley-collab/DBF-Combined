@@ -24,3 +24,6 @@ cad/drawings/DBF-DRW-001.PDF !filter !diff !merge -text
 # Exception: build/test animations under redesign/ are embedded in web pages (manual, viewer). GitHub Pages serves
 # LFS files as pointer text, so keep them as ordinary blobs. Keep each clip short and small (target < 3 MB).
 redesign/**/*.[mM][pP]4    !filter !diff !merge -text
+
+# Exception: showcase STLs are viewed in GitHub's 3-D viewer and on Pages; keep them as ordinary blobs (each < 6 MB).
+redesign/showcase/stl/*.[sS][tT][lL] !filter !diff !merge -text

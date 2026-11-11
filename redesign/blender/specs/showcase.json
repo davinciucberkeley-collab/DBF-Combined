@@ -1,0 +1,679 @@
+{
+ "_note": "Showcase renders of the K09-L for the repo README (redesign/showcase/). Driver: redesign/showcase/tools/render_showcase.py (reuses render_kit.Stage). Extra keys over render_figures.py: size [w,h], annotate (false = raw render), rotate_y_deg (whole aircraft about the origin), sub_explode {subsystem: [dx,dy,dz]} (dy is mirrored by the part's side), sub_labels {subsystem: label}.",
+ "scene": "studio",
+ "flight": [
+  "WNG-*",
+  "FIN-*",
+  "POD-*",
+  "GER-001-*",
+  "GER-002-*",
+  "GER-003-*",
+  "GER-004-*",
+  "GER-007-*",
+  "GER-008-*",
+  "PRP-*",
+  "MEC-*",
+  "PWR-*",
+  "AVN-*",
+  "HRN-*",
+  "E-*"
+ ],
+ "figures": [
+  {
+   "id": "hero-iso",
+   "size": [
+    2000,
+    1250
+   ],
+   "annotate": false,
+   "context": [
+    "@flight"
+   ],
+   "camera": {
+    "preset": "iso",
+    "az": 32,
+    "el": 24,
+    "lens": 50,
+    "frame": [
+     0.05,
+     0.95,
+     0.08,
+     0.92
+    ]
+   }
+  },
+  {
+   "id": "hover-pose",
+   "context": [
+    "@flight"
+   ],
+   "rotate_y_deg": 90,
+   "camera": {
+    "preset": "iso",
+    "az": 36,
+    "el": 18,
+    "lens": 50,
+    "frame": [
+     0.16,
+     0.84,
+     0.05,
+     0.95
+    ]
+   },
+   "caption": {
+    "title": "Hover / ground pose: standing nose-up on the four fin-tip feet",
+    "sub": "Tailsitter attitude for take-off and landing; props clear the ground on the fin tips"
+   }
+  },
+  {
+   "id": "front",
+   "context": [
+    "@flight"
+   ],
+   "camera": "front",
+   "caption": {
+    "title": "Front view (orthographic)",
+    "sub": "1.15 m flying wing, two fins with a motor above and below the wing"
+   }
+  },
+  {
+   "id": "side",
+   "context": [
+    "@flight"
+   ],
+   "camera": "side",
+   "caption": {
+    "title": "Left side view (orthographic)",
+    "sub": "Pod on top of the wing; fin-tip feet aft"
+   }
+  },
+  {
+   "id": "top",
+   "context": [
+    "@flight"
+   ],
+   "camera": "top",
+   "caption": {
+    "title": "Top view (orthographic)",
+    "sub": "Nose to the top of the image"
+   }
+  },
+  {
+   "id": "exploded",
+   "context": [
+    "@flight"
+   ],
+   "hide": [
+    "E-*"
+   ],
+   "sub_explode": {
+    "wing": [
+     0,
+     0,
+     0
+    ],
+    "pod": [
+     0,
+     0,
+     0.2
+    ],
+    "avionics": [
+     -0.05,
+     0,
+     0.5
+    ],
+    "power": [
+     0.06,
+     0,
+     0.36
+    ],
+    "harness": [
+     0,
+     0,
+     -0.3
+    ],
+    "fins": [
+     0,
+     0.16,
+     0
+    ],
+    "propulsion": [
+     -0.18,
+     0.16,
+     0
+    ],
+    "landing": [
+     0.16,
+     0.16,
+     0
+    ],
+    "mechanisms": [
+     0.3,
+     0,
+     -0.14
+    ]
+   },
+   "sub_labels": {
+    "wing": "Wing",
+    "pod": "Pod",
+    "avionics": "Avionics",
+    "power": "Power",
+    "harness": "Harness",
+    "fins": "Fins + motor tubes",
+    "propulsion": "Propulsion",
+    "landing": "Landing feet",
+    "mechanisms": "Mechanisms"
+   },
+   "camera": {
+    "preset": "iso",
+    "az": 34,
+    "el": 28,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Exploded view by subsystem",
+    "sub": "Illustrative separation; wiring hidden"
+   },
+   "sub_override": {
+    "PWR-008-*": "fins",
+    "PRP-002-*": "fins"
+   }
+  },
+  {
+   "id": "cutaway-xray",
+   "context": [
+    "@flight"
+   ],
+   "xray": [
+    "WNG-001",
+    "WNG-003",
+    "POD-001",
+    "POD-003",
+    "FIN-001-*"
+   ],
+   "callouts": [
+    {
+     "item": "AVN-001",
+     "text": "Flight controller F405 Wing"
+    },
+    {
+     "item": "PWR-001",
+     "text": "4S 6500 mAh flight pack"
+    },
+    {
+     "item": "POD-002",
+     "text": "Printed tray"
+    },
+    {
+     "item": "HRN-001",
+     "text": "Pod harness bundle"
+    },
+    {
+     "item": "HRN-002-R",
+     "text": "Wing-fin harness, right"
+    },
+    {
+     "item": "PWR-005",
+     "text": "6 V UBEC (servo rail)"
+    }
+   ],
+   "camera": {
+    "preset": "iso",
+    "az": 40,
+    "el": 36,
+    "lens": 50
+   },
+   "caption": {
+    "title": "X-ray: pod internals and wiring harness",
+    "sub": "Wing skin, pod shell, hatch and fin boards ghosted"
+   }
+  },
+  {
+   "id": "detail-wing",
+   "context": [
+    "WNG-*",
+    "MEC-009-*",
+    "MEC-010-*"
+   ],
+   "xray": [
+    "WNG-001",
+    "WNG-003"
+   ],
+   "callouts": [
+    {
+     "item": "WNG-002",
+     "text": "CF spar 22 x 20 mm"
+    },
+    {
+     "item": "WNG-001",
+     "text": "XPS core (ghosted)"
+    },
+    {
+     "item": "WNG-011-L",
+     "text": "Elevon, inboard panel"
+    },
+    {
+     "item": "WNG-012-L",
+     "text": "Elevon, outboard panel"
+    },
+    {
+     "item": "WNG-004-L",
+     "text": "Spar plug at fin block"
+    },
+    {
+     "item": "MEC-009-LO",
+     "text": "Elevon torque tube"
+    }
+   ],
+   "camera": {
+    "preset": "iso",
+    "az": 205,
+    "el": 50,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Wing: one-piece XPS core, CF spar, four elevon panels",
+    "sub": "Core ghosted to show the spar, spar plugs and elevon torque tubes"
+   }
+  },
+  {
+   "id": "detail-fin",
+   "context": [
+    "FIN-*-*R*",
+    "PRP-*-UR",
+    "PRP-*-LR",
+    "GER-00?-UR",
+    "GER-00?-LR",
+    "WNG-001",
+    "WNG-003",
+    "WNG-002"
+   ],
+   "ghost": [
+    "WNG-001",
+    "WNG-003"
+   ],
+   "callouts": [
+    {
+     "item": "FIN-002-R",
+     "text": "CF motor tube 22 x 20"
+    },
+    {
+     "item": "FIN-003-UR",
+     "text": "Canted motor mount"
+    },
+    {
+     "item": "FIN-004-R",
+     "text": "Through-core block"
+    },
+    {
+     "item": "FIN-009-UR",
+     "text": "CF brace"
+    },
+    {
+     "item": "FIN-001-LR",
+     "text": "Half-fin, foam board"
+    },
+    {
+     "item": "FIN-008-LR",
+     "text": "Station collar"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "FIN-001-UR",
+     "FIN-001-LR",
+     "FIN-002-R",
+     "FIN-003-UR",
+     "FIN-003-LR",
+     "FIN-009-UR",
+     "FIN-009-LR"
+    ],
+    "az": -42,
+    "el": 16,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Right fin, motor tube and mounts",
+    "sub": "CF tube through a printed core block in the wing; canted motor mounts top and bottom"
+   }
+  },
+  {
+   "id": "detail-pod",
+   "context": [
+    "POD-*",
+    "AVN-*",
+    "PWR-00?",
+    "HRN-001"
+   ],
+   "hide": [
+    "POD-003"
+   ],
+   "xray": [
+    "POD-001"
+   ],
+   "callouts": [
+    {
+     "item": "POD-002",
+     "text": "Printed tray"
+    },
+    {
+     "item": "PWR-001",
+     "text": "4S 6500 mAh pack"
+    },
+    {
+     "item": "AVN-001",
+     "text": "Flight controller"
+    },
+    {
+     "item": "POD-004",
+     "text": "Pack straps"
+    },
+    {
+     "item": "AVN-002",
+     "text": "GPS + compass"
+    },
+    {
+     "item": "AVN-005",
+     "text": "Pitot boom"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "POD-*"
+    ],
+    "az": 40,
+    "el": 40,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Pod: tray, flight pack and flight controller",
+    "sub": "Hatch removed, shell ghosted"
+   }
+  },
+  {
+   "id": "detail-foot",
+   "context": [
+    "GER-00?-LR",
+    "FIN-001-LR",
+    "FIN-011-LR?",
+    "FIN-012-LR"
+   ],
+   "xray": [
+    "GER-001-LR"
+   ],
+   "ghost": [
+    "FIN-001-LR",
+    "FIN-011-LR?",
+    "FIN-012-LR"
+   ],
+   "callouts": [
+    {
+     "item": "GER-001-LR",
+     "text": "Foot shoe (ghosted)"
+    },
+    {
+     "item": "GER-002-LR",
+     "text": "Foot piston"
+    },
+    {
+     "item": "GER-008-LR",
+     "text": "Crush cartridge, XPS"
+    },
+    {
+     "item": "GER-004-LR",
+     "text": "Neoprene pad"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "GER-001-LR",
+     "GER-002-LR",
+     "GER-004-LR",
+     "GER-008-LR"
+    ],
+    "az": 230,
+    "el": 22,
+    "lens": 60
+   },
+   "caption": {
+    "title": "Landing foot (lower right fin tip)",
+    "sub": "Printed shoe and piston over a crushable XPS cartridge, neoprene pad"
+   }
+  },
+  {
+   "id": "detail-propulsion",
+   "context": [
+    "PRP-*-UR",
+    "FIN-003-UR",
+    "FIN-007-UR",
+    "FIN-008-UR",
+    "PWR-008-UR",
+    "FIN-002-R",
+    "FIN-001-UR",
+    "E-HRN-1?"
+   ],
+   "ghost": [
+    "FIN-001-UR"
+   ],
+   "callouts": [
+    {
+     "item": "PRP-001-UR",
+     "text": "SunnySky X3108S motor"
+    },
+    {
+     "item": "PRP-003-UR",
+     "text": "APC 11x5.5 prop"
+    },
+    {
+     "item": "PRP-004-UR",
+     "text": "Prop adapter + nut"
+    },
+    {
+     "item": "PRP-002-UR",
+     "text": "45 A ESC"
+    },
+    {
+     "item": "FIN-003-UR",
+     "text": "Canted motor mount"
+    },
+    {
+     "item": "PWR-008-UR",
+     "text": "680 uF capacitor"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "PRP-*-UR",
+     "FIN-003-UR",
+     "PWR-008-UR",
+     "FIN-008-UR"
+    ],
+    "az": -40,
+    "el": 24,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Propulsion station (upper right)",
+    "sub": "SunnySky X3108S on a canted ASA mount, APC 11x5.5 prop, 45 A ESC and capacitor on the fin"
+   },
+   "hide": [
+    "E-*"
+   ]
+  },
+  {
+   "id": "detail-mechanisms",
+   "context": [
+    "MEC-*-R",
+    "MEC-*-R?",
+    "WNG-001",
+    "WNG-003",
+    "WNG-011-R",
+    "WNG-012-R"
+   ],
+   "ghost": [
+    "WNG-001",
+    "WNG-003",
+    "WNG-011-R",
+    "WNG-012-R"
+   ],
+   "hide": [
+    "MEC-007-R",
+    "MEC-010-R"
+   ],
+   "callouts": [
+    {
+     "item": "MEC-001-R",
+     "text": "Elevon servo"
+    },
+    {
+     "item": "MEC-002-R",
+     "text": "Servo arm"
+    },
+    {
+     "item": "MEC-003-R",
+     "text": "2-56 pushrod + clevis"
+    },
+    {
+     "item": "MEC-004-R",
+     "text": "Inboard control horn"
+    },
+    {
+     "item": "MEC-005-R",
+     "text": "CF inter-panel rod"
+    },
+    {
+     "item": "MEC-006-R",
+     "text": "Outboard link horn"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "MEC-001-R",
+     "MEC-002-R",
+     "MEC-003-R",
+     "MEC-004-R",
+     "MEC-005-R",
+     "MEC-006-R"
+    ],
+    "az": 300,
+    "el": -30,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Elevon linkage (right, from below)",
+    "sub": "Servo in a printed frame, arm, 2-56 pushrod to the inboard horn, CF link rod to the outboard panel"
+   },
+   "floor": false
+  },
+  {
+   "id": "detail-harness",
+   "context": [
+    "E-*",
+    "HRN-*",
+    "PWR-*",
+    "AVN-001",
+    "PRP-002-*",
+    "PRP-001-*"
+   ],
+   "ghost": [
+    "WNG-001",
+    "WNG-003",
+    "POD-001",
+    "FIN-001-*",
+    "FIN-002-*"
+   ],
+   "callouts": [
+    {
+     "item": "HRN-001",
+     "text": "Pod harness bundle"
+    },
+    {
+     "item": "HRN-002-R",
+     "text": "Wing-fin bundle, right"
+    },
+    {
+     "item": "HRN-002-L",
+     "text": "Wing-fin bundle, left"
+    },
+    {
+     "item": "PWR-001",
+     "text": "Flight pack"
+    },
+    {
+     "item": "PRP-002-UR",
+     "text": "ESC on fin face"
+    },
+    {
+     "item": "PWR-008-LL",
+     "text": "ESC capacitor"
+    }
+   ],
+   "camera": {
+    "preset": "iso",
+    "az": 30,
+    "el": 40,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Wiring harness routing",
+    "sub": "Pod bundle to the wing-fin bundles in the wing grooves, then up and down each fin to the ESCs"
+   }
+  },
+  {
+   "id": "transport-box",
+   "context": [
+    "@flight",
+    "TRN-*"
+   ],
+   "hide": [
+    "E-*",
+    "TRN-005",
+    "TRN-006-*"
+   ],
+   "ghost": [
+    "TRN-001"
+   ],
+   "callouts": [
+    {
+     "item": "TRN-001",
+     "text": "Coroplast box (ghosted)"
+    },
+    {
+     "item": "TRN-002-L",
+     "text": "Foam spar cradle"
+    },
+    {
+     "item": "TRN-003",
+     "text": "Prop tray"
+    },
+    {
+     "item": "TRN-004-L",
+     "text": "Lid hold-down pillar"
+    },
+    {
+     "item": "TRN-008",
+     "text": "Field pouch"
+    },
+    {
+     "item": "TRN-007-L",
+     "text": "End handle"
+    }
+   ],
+   "camera": {
+    "preset": "iso",
+    "az": 30,
+    "el": 34,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Transport box with the aircraft in its cradle",
+    "sub": "Coroplast box (ghosted), foam spar cradles, hold-down pillars and prop tray; lid and straps removed"
+   }
+  }
+ ]
+}

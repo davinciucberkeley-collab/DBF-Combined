@@ -1,5 +1,8 @@
 # DBF-Combined: Lift + Cruise VTOL "C0" (UC Berkeley capstone)
 
+> **New: the K09-L redesign.** See everything in one place: **[redesign/SHOWCASE.md](redesign/SHOWCASE.md)**: CAD renders, rotatable 3-D models, the morphological chart, the engineering team, simulations and status.
+
+
 A hybrid VTOL with four vertical lift rotors for takeoff and landing, and a pusher prop and fixed wing for cruise. The
 lift rotors stop in cruise. A four-person UC Berkeley capstone team builds and flight-tests it on a **fixed $2,000
 budget** (hardware, spares, test gear, tax and shipping) by **2027-04-30**.
