@@ -1,22 +1,25 @@
-# Wing aero verification — B2-R3 (as-designed K09-L)
+# Wing aero verification — B2-R4 (as-designed K09-L, CG height)
 
-Status: `MODELLED`, analysis complete, nothing flown. Revision B2-R3 (2026-11-10) on params **A1-R4** (half-fins
-0.21 m, fin chord 0.275 m at x 0.045–0.320 m, pod 0.225 × 0.14 × 0.07 m, CG range 0.0509–0.0548 m) and the
-**A3-R5 roll-up** (basic 2.322 kg, predicted 2.436 kg, predicted CG 0.0536 m). Claims: `sim/claims.sim.json`
-(28 claims). Earlier analysis: [`WING-AERO.md`](WING-AERO.md) (R2).
+Status: `MODELLED`, analysis complete, nothing flown. Revision **B2-R4** (2026-11-10) re-runs the stall on the
+**D-62 CG range [0.0466, 0.0514] m with the CG 18.5 mm above the chord plane** and answers CR-B1-23 (§2a). The rest
+of the report is B2-R3 (params A1-R4: half-fins 0.21 m, fin chord 0.275 m, pod 0.235 × 0.14 × 0.07 m; A3-R5 roll-up)
+and is unchanged in substance. Claims: `sim/claims.sim.json` (42). Earlier analysis: [`WING-AERO.md`](WING-AERO.md).
 
-**Verdict.** On the settled geometry every wing requirement passes on the design model, but two pass by less than
-the model's own uncertainty:
+**Verdict.** Every wing requirement passes at the D-62 CG range and the A3 CG height, but the stall and transition
+margins at the forward mark are smaller than the model's own uncertainty, and the forward mark fails by 0.1 % if the
+CG sits at the bottom of the allowed height range (CR-B2-20):
 
 | Requirement | Design value | Limit | Margin | Status |
 |---|---|---|---|---|
-| `R-STALL`, 2.6 kg, forward CG 0.0509 m | 11.99 m/s | ≤ 12.0 m/s | +0.1 % | `UNVERIFIED` — margin < uncertainty |
-| `R-STALL`, 2.6 kg, aft CG 0.0548 m | 11.91 m/s | ≤ 12.0 m/s | +0.7 % | `UNVERIFIED` |
-| Stall at the A3 predicted mass and CG (2.436 kg) | 11.59 m/s | ≤ 12.0 m/s | +3.5 % | `UNVERIFIED` |
-| `R-TRANSITION`, 1.3 Vs at the forward CG vs `transition_min_ms` | 15.58 m/s | ≤ 15.6 m/s | +0.1 % | `UNVERIFIED` |
+| `R-STALL`, 2.6 kg, forward CG 0.0466 m, z 0.0185 m | 11.99 m/s | ≤ 12.0 m/s | +0.05 % | `UNVERIFIED`, margin < uncertainty |
+| Same, z 0.010 m (bottom of `cg.z_range_m`) | 12.01 m/s | ≤ 12.0 m/s | −0.1 % | **FAIL** → CR-B2-20 |
+| Same, CG on the chord plane (the old z 0 basis, information) | 12.04 m/s | — | — | not a flight case |
+| `R-STALL`, 2.6 kg, CG target 0.0490 / aft limit 0.0514 m | 11.97 / 11.90 m/s | ≤ 12.0 m/s | +0.3 / +0.8 % | `UNVERIFIED` |
+| Stall at the A3 predicted mass and CG (2.436 kg, 0.0536 m) | 11.63 m/s | ≤ 12.0 m/s | +3.2 % | `UNVERIFIED` |
+| `R-TRANSITION`, 1.3 Vs at the forward CG vs `transition_min_ms` | 15.59 m/s | ≤ 15.6 m/s | +0.05 % | `UNVERIFIED` |
 | `R-SERVO-TORQUE`, ±25° at VD 27.2 m/s through the D6 linkage | 3.49 kgf·cm | ≤ 3.9 kgf·cm (SH-0255MG+, 6 V) | +11 % | `UNVERIFIED` (T-B2-HINGE) |
 | Servo, F4 envelope (25° to VA 20.5 m/s, 8.3° at VD) | 1.98 kgf·cm | ≤ 3.9 kgf·cm | +49 % | `UNVERIFIED` |
-| Stall if the LE boundary layer is turbulent (sensitivity) | 12.84 m/s | ≤ 12.0 m/s | −7 % | **risk**, not a design value |
+| Stall if the LE boundary layer is turbulent (sensitivity) | 12.85 m/s | ≤ 12.0 m/s | −7 % | **risk**, not a design value |
 
 The 2-D RANS campaign (SU2, 3 grids) **confirms the hinge-moment basis** (viscous ≤ 0.88 × XFOIL inviscid, every
 grid and the Richardson value) but **cannot settle clmax**: steady SA on the post-stall section is not
@@ -36,11 +39,66 @@ stay `UNVERIFIED` until the slow-flight stall test (CR-B2-16).
 
 **No 3-D CFD.** The span loading, NP and trim are attached-flow quantities: AVL converges to 0.1 % on Xnp and
 its lift slope is within 8 % of Helmbold. The pod and props enter through B3's whole-aircraft NP
-(`ASM-B2R3-SM-EQUIV`). A 3-D RANS case would add nothing to the open item, the separated-flow clmax, which 2-D
+(R3: `ASM-B2R3-SM-EQUIV`; R4: `ASM-B2R4-PROPS-NP`, a 2.91 mm reference shift with the real CG height). A 3-D RANS case would add nothing to the open item, the separated-flow clmax, which 2-D
 steady RANS already shows to be grid-dependent. **No FEA:** the wing structure belongs to C2. B2 supplies the loads
 in §6.
 
-## 2. Stall on the settled geometry
+## 2a. B2-R4: stall with the CG height; B1 / B2 / B3 reconciliation
+
+**Method change.** R3 read the trimmed CLmax from a static-margin table built with the AVL moment reference on the
+chord plane, then mapped each CG to it through B3's NP. With the CG 18.5 mm above the chord plane, the lift vector's
+forward tilt at high α adds a nose-up moment that grows with CL, so one static margin no longer describes the stall
+trim. `sim/stall_zcg.py` now puts the real CG into AVL as the moment reference (Xref = x + 2.91 mm props / pod term
+from B3, Zref = z) and runs the critical section directly on a 5 × 4 grid (x 0.0446–0.0536 m, z 0–0.025 m), 16 trim
+points per case from CL 0.40 to 0.96. Everything else is unchanged (S5010 envelope, η 0.606, `cm_t` +0.0102, 12 × 1
+lattice). `CALC-B2R4-STALL-Z` interpolates the grid at the params CG points.
+
+FIG B2-R4-01 — Stall at 2.6 kg vs CG x for four CG heights (`sim/fig/B2-R4-01-stall-xz.svg`).
+
+| CG point | x (m) | z (m) | Trimmed CLmax | Elevon at CLmax | Vs at 2.6 kg | Claim |
+|---|---|---|---|---|---|---|
+| Forward limit, A3 height | 0.0466 | 0.0185 | 0.786 | −12.2° | **11.99 m/s** | `CL-B2R3-VS-GATE-FWD` |
+| Forward limit, bottom of the z range | 0.0466 | 0.010 | 0.784 | −13.1° | 12.01 m/s | `CL-B2R4-VS-GATE-FWD-ZLO` (FAIL) |
+| Forward limit, chord plane | 0.0466 | 0 | 0.780 | −14.2° | 12.04 m/s | `CL-B2R4-VS-GATE-FWD-Z0` |
+| Target | 0.0490 | 0.0185 | 0.790 | −10.9° | 11.97 m/s | `CL-B2R4-VS-GATE-TARGET` |
+| Aft limit | 0.0514 | 0.0185 | 0.799 | −9.7° | 11.90 m/s | `CL-B2R3-VS-GATE-AFT` |
+| A3 predicted (2.436 kg) | 0.0536 | 0.0185 | 0.821 | −8.7° | 11.63 m/s at 2.436 kg | `CL-B2R3-VS-PRED` |
+
+- **A1's 12.05 m/s is confirmed for z 0 (12.04) and does not apply:** with the CG height the forward mark stalls at
+  11.99 m/s. A raised CG lowers the effective NP at the stall by 7.4 mm (AVL, trimmed α ≈ 16°), so less up-elevon
+  is needed and less of the inboard elevon strip is decambered.
+- **B3's 11.94 m/s vs B2's 11.99:** B3 uses the CAD fin outline and the as-built elevon gaps; CLmax 0.794 vs 0.786
+  (+1 %). Both pass; D-71 carries the lower (B2) value.
+- **Corner of the CG box.** The forward mark meets `R-STALL` only for z ≥ 0.0162 m (`CL-B2R4-Z-MIN-AT-XFWD`); at
+  z 0.010 the mark must sit at 0.0478 m (`CL-B2R4-X-FWD-AT-ZLO`). CR-B2-20 asks A1 to raise `cg.z_range_m[0]` to
+  0.0165 m, which costs nothing as designed.
+- First stall is at y 0.071 m (inboard end of the inboard elevon) at every grid point. The tips stall last.
+- Elevon at the forward-mark stall −12.2°, inside B3's 12.5° forward-limit criterion.
+
+**CR-B1-23, CLmax 0.862 (B1) vs 0.787 (B2).** One change per step, all in B2's AVL model at B1's CG point
+(x 0.0536, z 0.018) unless stated (FIG B2-R4-02, `sim/fig/B2-R4-02-clmax-waterfall.svg`):
+
+| Step | Trimmed CLmax | Change | What changes | Claim |
+|---|---|---|---|---|
+| B1 run (`vlm_xfoil.py`) | 0.862 | — | — | `CL-B1V-CLMAX-SIM` |
+| W0: B2 model, B1 set-up (no props/pod, Cm 0 trim, B1's stall-Re clmax table) | 0.854 | −0.008 (−1.0 %) | lattice / strip layout, XFOIL panels: the codes agree | `CL-B2R4-B1-REPRO` |
+| W1: B2's raw stall-Re XFOIL table | 0.853 | −0.002 | polar noise at −10° | — |
+| W2: B2 envelope (lower of stall and cruise Re, non-increasing to up-elevon) | 0.831 | −0.022 | conservative clmax at −8° elevon | `CL-B2R4-RECON-ENVELOPE` |
+| W3: trim the XFOIL viscous section cm (`cm_t` +0.0102) | 0.793 | −0.037 | 1.9° more up-elevon | `CL-B2R4-RECON-CMT` |
+| W4: props / pod NP shift (2.91 mm) | **0.820** | +0.026 | less up-elevon | `CL-B2R4-CLMAX-B1POINT` |
+| Forward limit 0.0466 m, z 0.0185 | 0.786 | −0.033 | 7 mm further forward | `CL-B2R3-CLMAX-FWD` |
+
+The 0.075 gap is set-up, not solver. Two of B1's choices (no viscous cm trim, raw XFOIL clmax at up-elevon) are
+non-conservative; one (no props/pod NP term) is conservative. B2 keeps all three of its choices: the viscous cm is
+the physical section moment, and the envelope is the stated policy for XFOIL's ±0.07 scatter on up-elevon clmax.
+B1 had compared its value at the A3 CG with B2's at the forward CG; at the same point B2 gives 0.820, 5 % below B1.
+
+**NP 0.0708 (B1) vs 0.0738 (B2).** Same model, different moment-reference height: B1 ran Zref 0.018, B2's 0.0738
+is Zref 0 at α 0. With z 0.0185 at B1's cruise CL 0.414 the B2 model gives 0.07090 m, 0.08 mm from B1
+(`CL-B2R4-NP-VS-B1`); the CG height alone moves it 3.6 mm (`CL-B2R4-NP-Z-SHIFT`). At 1.3 Vs the B2 value agrees
+with B3's `CL-B3-V-XNP-ENV` to 0.23 mm (CR-B2-22). No NP change for anyone.
+
+## 2. Stall on the settled geometry (B2-R3, superseded by §2a for the stall numbers)
 
 FIG B2-R3-01 — Trimmed CLmax and stall speed vs static margin (`sim/fig/B2-R3-01-stall-vs-sm.svg`).
 
@@ -171,7 +229,8 @@ python -I redesign/team/B2/xfoil_wing.py && python -I redesign/team/B2/avl_wing.
 python -I redesign/team/B2/sim/cfd2d_section.py                                        # SU2, ~25 min on 14 cores
 python -I redesign/team/B2/sim/xfoil_tripped.py                                        # ~5 min
 python -I redesign/team/B2/sim/verify_wing.py            # AVL SM sweep, lattices, panels (~15 min); --params rewrites sim/params.json only
-python -I redesign/team/B2/sim/sim_claims.py && python redesign/team/B2/sim/plots_sim.py
+python -I redesign/team/B2/sim/stall_zcg.py            # B2-R4: (x, z) stall grid + CR-B1-23 waterfall (~1 min); --params rewrites sim/params.zcg.json only
+python -I redesign/team/B2/sim/sim_claims.py && python redesign/team/B2/sim/plots_sim.py && python redesign/team/B2/sim/plots_zcg.py
 python -I redesign/proofs/build_graph.py                 # no B2 error; other roles' drifts are theirs
 ```
 
@@ -179,7 +238,8 @@ python -I redesign/proofs/build_graph.py                 # no B2 error; other ro
 
 | Issue | Owner | Closes with |
 |---|---|---|
-| `R-STALL` / `R-TRANSITION` margins (+0.1 %) are below the clmax uncertainty (−13 % tripped) | A1, A2, F4, H2 | `T-B2-STALL` on the twin and the first build, before `ARSPD_FBW_MIN` is frozen (CR-B2-16) |
+| Forward mark fails `R-STALL` by 0.1 % at the bottom of the CG height range (z 0.010) | A1 (B3, H1) | raise `cg.z_range_m[0]` to 0.0165 m or a z-dependent forward mark (CR-B2-20) |
+| `R-STALL` / `R-TRANSITION` margins (+0.05 %) are below the clmax uncertainty (−13 % tripped) | A1, A2, F4, H2 | `T-B2-STALL` on the twin and the first build, before `ARSPD_FBW_MIN` is frozen (CR-B2-16) |
 | Tape seam 15 mm aft of the LE may trip the boundary layer | D1 | LE wrap rule (CR-B2-17) |
 | SU2 clmax not grid-converged; cd noisy | B2 | not needed if `T-B2-STALL` passes; otherwise URANS + transition model |
-| Pod and props only through B3's NP (`ASM-B2R3-SM-EQUIV`) | B3 | flight trim log |
+| Pod and props only through B3's NP (R3: `ASM-B2R3-SM-EQUIV`; R4: `ASM-B2R4-PROPS-NP`, a 2.91 mm reference shift with the real CG height) | B3 | flight trim log |

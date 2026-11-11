@@ -154,11 +154,14 @@ kit.claim("CL-B2-CLMAX-FWD", "Trimmed CLmax at the forward CG limit", calc="CALC
           output="CLmax_fwd", unit="-", parts=WING,
           how="T-B2-STALL flown at the forward CG ballast as well as the aft")
 kit.claim("CL-B2-STALL-GATE-FWD", "Stall speed at the gate, forward CG (B2)", calc="CALC-B2-STALL-FWD",
-          output="Vs_fwd_ms", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), verifies=["R-STALL"],
-          parts=WING, how="T-B2-STALL at the forward CG limit, 2.6 kg")
+          output="Vs_fwd_ms", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"),
+          parts=WING, how="T-B2-STALL at the forward CG limit, 2.6 kg",
+          note="R2 basis (CG on the chord plane, SM from the range width): superseded for R-STALL by "
+               "CL-B2R3-VS-GATE-FWD (B2-R4, real CG height, team/B2/sim/stall_zcg.py)")
 kit.claim("CL-B2-TRANSITION-GATE-FWD", "1.3 Vs against cruise, forward CG (B2)", calc="CALC-B2-STALL-FWD",
-          output="Vtr_fwd_ms", unit="m/s", limit=("<=", "P:performance.cruise_ms"), verifies=["R-TRANSITION"],
-          parts=WING, how="Transition logs at the forward CG: airspeed >= 1.3 Vs before the wing carries the weight")
+          output="Vtr_fwd_ms", unit="m/s", limit=("<=", "P:performance.cruise_ms"),
+          parts=WING, how="Transition logs at the forward CG: airspeed >= 1.3 Vs before the wing carries the weight",
+          note="R2 basis: superseded for R-TRANSITION by CL-B2R3-VTR-GATE-FWD (B2-R4, real CG height)")
 kit.claim("CL-B2-RE-STALL-DEV", "Stall Re vs the XFOIL stall polars", calc="CALC-B2-STALL", output="Re_dev",
           unit="-", limit=("<=", "ASM-B2-RE-TOL"),
           how="|Re at Vs / Re of the stall polars - 1|; re-run xfoil_wing.py (Re follow the chord) if it fails")

@@ -1,4 +1,5 @@
-"""D5 landing designer: crushable fin-tip feet (GER) for the K09-L quad tailsitter, revision D5-R5 (CR-A4-39 ground kit; R4: CR-A1-34, D-30; C5-R3 cartridges).
+"""D5 landing designer: crushable fin-tip feet (GER) for the K09-L quad tailsitter, revision D5-R6 (CR-A1-65, CR-C5-18,
+CR-C1-34, CR-C4-36; D-63, D-65; R5: CR-A4-39 ground kit; R4: CR-A1-34, D-30; C5-R3 cartridges).
 
 Run:  python -I redesign/team/D5/feet_calc.py
 Writes claims.json beside this file. Every number is a pure function of params.json (P:...), the landing subsystem
@@ -11,7 +12,13 @@ x0.923 lower), shoe for the 9.6 mm board plus the edge-strip ends, >= 6 mm snap 
 at z +/-0.218, mass against 43 g, FIN-001-<st> ids, CG-jig patch at |y| 0.45 left free.
 R4 (CR-C5-10 revised at C5-R3): every cartridge segment pre-crushed 1 mm (peak = plateau, ASM-C5-PRECRUSH-PEAK), plateau
 upper 39.4 N / lower 35.6 N (mean 37.5 N, bias x1.05): type U 17.3 x 13.3 mm solid, type L the same with a 7/32 in bore.
+R6 (D-65): design side load = C5's 3-D sim 39.3 N limit / 59.0 N ult (CL-C5-SIM3D-SIDE-*); the shoe sleeve end is checked
+by D5's own FEA of the drawn shoe (sim/fea_shoe_d5.py, C5's SU2 mesher adapted; ASM-D5-FEA-SHOE-K), not by the R5
+beam (FEA/beam 2.78, CR-C5-18). Fittings (flange, bond) to C1's upper-foot bound CL-C1-FOOT-LEVEL-UPPER-ULT (CR-C1-34).
+Sleeve walls 1.x mm with R 1 inside fillets, 25 mm engagement, short snap windows, cartridge 20.9 x 11.0 mm in three
+pre-crushed segments; level sink 1.2 m/s, n_design 6.6 (D-65).
 """
+import json
 import math
 import sys
 from pathlib import Path
@@ -86,6 +93,25 @@ kit.assumption("ASM-D5-FIT-FACTOR", "Printed/bonded fitting factor 1.4375 on ult
                "(86.8 N / 60.4 N)", value=1.4375, unit="-", status="PROPOSED")
 kit.assumption("ASM-D5-ULT-FACTOR", "Ultimate = 1.5 x limit", "Ultimate load factor on limit loads",
                basis="C1 LOADS.md convention", value=1.5, unit="-", status="PROPOSED")
+FEA_OUT = HERE / "sim" / "out"
+
+
+def _fea(case):
+    """The FEA record of the drawn shoe for one case (the run with no variant); None if not run."""
+    hs = sorted(FEA_OUT.glob("fea_d5_h*_%s.json" % {"+y": "py", "+z": "pz"}[case]))
+    return json.loads(hs[0].read_text("utf-8")) if hs else None
+
+
+FEA = {c: _fea(c) for c in ("+y", "+z")}
+kit.assumption("ASM-D5-FEA-SHOE-K", "Shoe sleeve-end peak stress per newton of side load (D5 FEA)",
+               "Peak von Mises stress in the printed shoe (rim, aft box, window and open-end zones; the bonded "
+               "clamp edges at the fin TE and step front excluded as singular) per newton of side load at the pad, "
+               "worst of the +y and +z cases, linear elastic PETG, R 1.0 inside fillets",
+               basis="sim/out/fea_d5_h400_p{y,z}.json (sim/fea_shoe_d5.py: C5's SU2 hex-sweep mesher and lever BCs, "
+                     "h 0.4 mm; C5 found h 0.4 within 1.2 %% / 3 %% of the extrapolated rim value; cross-check on C5's "
+                     "wall 2.0 / rim 3.0 / R 1 / 25 mm variant: sim/out/fea_d5_xcheck_c5_v4_h400_py.json). +y %.4f, +z "
+                     "%.4f MPa/N" % (FEA["+y"]["k_MPa_per_N_side"], FEA["+z"]["k_MPa_per_N_side"]),
+               value=max(FEA[c]["k_MPa_per_N_side"] for c in FEA) * 1e6, unit="Pa/N", status="UNVERIFIED")
 kit.assumption("ASM-D5-REPLACE-MIN", "Insert swap 3 min",
                "Press the two snap fingers through the windows, pull the insert out, push a pre-glued spare in until "
                "both click", basis="no tools, no cure; estimate until timed (T-D5-REPLACE)", value=3.0, unit="min",
@@ -125,6 +151,7 @@ def geom(**kw):
             "tine_len_m": s["x_flange"][0] - s["x_open"], "window_len_m": s["x_win"][1] - s["x_win"][0],
             "lever_m": s["x_g"] - s["x_slv_end"], "te_clear_crushed_m": s["te_clear_crushed"],
             "stroke_m": kw["stroke"], "rim_clear_of_te_m": s["x_rim"][0] - kw["te"],
+            "rim_top_margin_m": s["rim_top_margin"], "engage_m": kw["engage"],
             "pad_y_m": s["slv_out"][0], "pad_z_m": kw["z_outer"] - s["z_slv"][0]}
 
 
@@ -135,7 +162,8 @@ CRUSH_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "v": P +
             "fz": LP + "cartridge.section_z_m", "d": LP + "cartridge.bore_lower_d_m", "L": "CL-D5-CART-LEN",
             "s_max": "CL-D5-STROKE-AVAIL", "v_norm": "ASM-D5-NORMAL-SINK", "mark": LP + "piston.replace_mark_m",
             "eps_e": "ASM-D5-XPS-ELASTIC-STRAIN", "guard": "ASM-C5-DROP-GUARD", "s_pair": "CL-C5-DROP-PAIR-PITCH", "bias_t": "CL-C5-CART-BIAS-UPPER",
-            "k_ult": "ASM-D5-ULT-FACTOR", "pre": LP + "cartridge.precrush_m", "F_t": "ASM-C5-F-PLATEAU-PROP"}
+            "k_ult": "ASM-D5-ULT-FACTOR", "pre": LP + "cartridge.precrush_m", "F_t": "ASM-C5-F-PLATEAU-PROP",
+            "nseg": LP + "cartridge.segments"}
 
 
 @kit.calc("CALC-D5-CRUSH", title="Constant-force crush, biased cartridges (type U upper, type L lower)",
@@ -145,10 +173,11 @@ CRUSH_IN = {"m": P + "requirements.mtow_gate_kg", "g": P + "env.g_ms2", "v": P +
           equation="A_U = fy fz ; A_L = A_U - pi d^2/4 ; F_U,L = sigma A ; F_mean = (F_U + F_L)/2 ; bias = F_U / F_mean ; "
                    "level: 4 F_mean (s - eps_y L/2) = m v^2/2 + (1 - lam) m g s ; n = 4 k F_mean / (m g) ; usable = "
                    "s_max - guard >= C5 pair-first stroke ; normal set = (m v_n^2/2 - 4 F_mean eps_e L/2) / (4 F_mean) ; "
-                   "no-set sink = sqrt(2 E_el / m) ; strain = (pre + s_max) / (L + pre) (pre-crush counted) ; mark margin = "
+                   "no-set sink = sqrt(2 E_el / m) ; strain = (pre + s_max) / (L + pre) (pre-crush counted) ; cut = (L + pre) / "
+                   "n_seg ; mark margin = "
                    "s_max - guard - mark - s_pair ; landings = mark / set ; mean error = F_mean / F_C5 - 1")
 def crush(m, g, v, lam, sigma, k_pk, eps_y, eps_e, eps_d, fy, fz, d, L, s_max, v_norm, mark, guard, s_pair, bias_t, k_ult,
-          pre, F_t):
+          pre, F_t, nseg):
     W = m * g
     A_U = fy * fz
     A_L = A_U - math.pi * d * d / 4
@@ -166,7 +195,7 @@ def crush(m, g, v, lam, sigma, k_pk, eps_y, eps_e, eps_d, fy, fz, d, L, s_max, v
             "bias_upper": bias, "bias_err": abs(bias - bias_t), "ratio_UL": F_U / F_L, "KE_J": KE,
             "stroke_used_m": s, "eta": eta, "n_land": 4 * F_pk / W, "usable_m": s_max - guard,
             "strain_full": (pre + s_max) / (L + pre), "strain_margin": eps_d - (pre + s_max) / (L + pre),
-            "set_normal_m": set_norm, "E_elastic_J": E_el, "v_no_set_ms": math.sqrt(2 * E_el / m), "mean_err": abs(F_p / F_t - 1), "cut_seg_len_m": L / 2 + pre / 2,
+            "set_normal_m": set_norm, "E_elastic_J": E_el, "v_no_set_ms": math.sqrt(2 * E_el / m), "mean_err": abs(F_p / F_t - 1), "cut_seg_len_m": (L + pre) / nseg,
             "mark_margin_m": s_max - guard - mark - s_pair, "landings_per_cartridge": mark / set_norm
             if set_norm > 0 else 999.0}
 
@@ -223,70 +252,91 @@ def mass(**kw):
 
 # ---------------------------------------------------------------- strength of the printed parts and the bond
 @kit.calc("CALC-D5-FLANGE", title="Flange overhang bending at the ultimate upper-foot load on its edge",
-          inputs={"F": "CL-D5-F-ULT-UPPER", "F_c1": "CL-C1-FOOT-F-ULT", "a": "CL-D5-FLANGE-OVERHANG",
+          inputs={"F": "CL-D5-F-ULT-UPPER", "F_c1": "CL-C1-FOOT-F-ULT", "F_c1u": "CL-C1-FOOT-LEVEL-UPPER-ULT",
+                  "a": "CL-D5-FLANGE-OVERHANG",
                   "b": "CL-D5-SLEEVE-OUT", "t": LP + "piston.flange_t_m", "allow": "ASM-D5-PETG-SIGMA"},
-          units={"F": "N", "F_c1": "N", "a": "m", "b": "m", "t": "m", "allow": "Pa"},
-          equation="F = max(D5 upper ult, C1 ult) ; M = F a ; sigma = 6 M / (b t^2) ; SF = allow / sigma")
-def flange(F, F_c1, a, b, t, allow):
-    Fu = max(F, F_c1)
+          units={"F": "N", "F_c1": "N", "F_c1u": "N", "a": "m", "b": "m", "t": "m", "allow": "Pa"},
+          equation="F = max(D5 upper ult, C1 foot-to-fin ult, C1 L1 upper-foot ult (CR-C1-34)) ; M = F a ; "
+                   "sigma = 6 M / (b t^2) ; SF = allow / sigma")
+def flange(F, F_c1, F_c1u, a, b, t, allow):
+    Fu = max(F, F_c1, F_c1u)
     sig = 6 * Fu * a / (b[0] * t * t)
     return {"F_N": Fu, "sigma_Pa": sig, "sf": allow / sig}
 
 
 BOND_IN = dict(GEOM_IN)
-BOND_IN.update({"F": "CL-D5-F-ULT-UPPER", "F_c1": "CL-C1-FOOT-F-ULT", "ff": "ASM-D5-FIT-FACTOR",
-                "tau": "ASM-D5-BOND-TAU", "kd": "ASM-C6-FOAM-KD"})
+BOND_IN.update({"F": "CL-D5-F-ULT-UPPER", "F_c1": "CL-C1-FOOT-F-ULT", "F_c1u": "CL-C1-FOOT-LEVEL-UPPER-ULT",
+                "ff": "ASM-D5-FIT-FACTOR", "tau": "ASM-D5-BOND-TAU", "kd": "ASM-C6-FOAM-KD"})
 BOND_UNITS = dict(GEOM_UNITS)
-BOND_UNITS.update({"F": "N", "F_c1": "N", "tau": "Pa"})
+BOND_UNITS.update({"F": "N", "F_c1": "N", "F_c1u": "N", "tau": "Pa"})
 
 
 @kit.calc("CALC-D5-BOND", title="Shoe-to-half-fin bond at the printed/bonded design load", inputs=BOND_IN,
           units=BOND_UNITS,
           equation="A = floor on the step edge (L t_fin) + legs 2 L d + back wall on the step front t_fin h_step + "
-                   "collar cheeks on the strip ends 2 l (w_strip + 2 mm) ; design = max(F, F_c1) ff ; "
+                   "collar cheeks on the strip ends 2 l (w_strip + 2 mm) ; design = max(F, F_c1, F_c1u) ff ; "
                    "allow = tau kd (C6) ; RF = allow A / design")
-def bond(F, F_c1, ff, tau, kd, **kw):
+def bond(F, F_c1, F_c1u, ff, tau, kd, **kw):
     s = landing.stack(_n(kw))
     L = kw["te"] - s["x_bw"][0]
     A = (L * s["t_fin"] + 2 * L * kw["leg_depth"] + s["t_fin"] * s["notch_depth"]
          + 2 * kw["collar_len"] * (kw["strip_w"] + 0.002))
-    design = max(F, F_c1) * ff
+    design = max(F, F_c1, F_c1u) * ff
     return {"area_m2": A, "design_N": design, "tau_Pa": design / A, "allow_Pa": tau * kd, "sf": tau * kd * A / design}
 
 
 SIDE_IN = dict(GEOM_IN)
-SIDE_IN.update({"F_lim": "CL-C5-FOOT-SIDE-LOAD", "k_ult": "ASM-D5-ULT-FACTOR", "eps_y": "ASM-D5-YIELD-STRAIN",
-                "allow": "ASM-D5-PETG-SIGMA"})
+SIDE_IN.update({"F_lim": "CL-C5-SIM3D-SIDE-LOAD", "k_ult": "ASM-D5-ULT-FACTOR", "eps_y": "ASM-D5-YIELD-STRAIN",
+                "allow": "ASM-D5-PETG-SIGMA", "k_fea": "ASM-D5-FEA-SHOE-K"})
 SIDE_UNITS = dict(GEOM_UNITS)
-SIDE_UNITS.update({"F_lim": "N", "allow": "Pa"})
+SIDE_UNITS.update({"F_lim": "N", "allow": "Pa", "k_fea": "Pa/N"})
 
 
-@kit.calc("CALC-D5-SIDE", title="Side load at the pad: tine-in-sleeve bearing at the rim and tine bending",
+def _fea_matches(s, kw):
+    """The FEA records must be of the drawn shoe: same sleeve, rim, fillet, engagement and stations (mm)."""
+    want = {"hy_o": max(s["slv_out"]) / 2, "hz_o": s["slv_out"][1] / 2, "w": kw["ws"], "rim_t": kw["rim_t"],
+            "x_end": s["x_slv_end"], "x_win0": s["x_win"][0], "x_win1": s["x_win"][1], "engage": kw["engage"],
+            "r_in": kw["r_in"], "L_cart": s["L_cart"], "w_leg": kw["w"]}
+    want["hy_o"] = s["slv_out"][0] / 2
+    for c, rec in FEA.items():
+        g = rec["geometry_mm"]
+        for k, v in want.items():
+            assert abs(g[k] - v * 1000.0) < 1e-6, ("FEA record %s is stale: %s %.4f vs drawn %.4f mm; re-run "
+                                                   "sim/fea_shoe_d5.py" % (c, k, g[k], v * 1000.0))
+
+
+@kit.calc("CALC-D5-SIDE", title="Side load at the pad: shoe sleeve end by FEA, tine bending by beam",
           inputs=SIDE_IN, units=SIDE_UNITS,
-          equation="F = 1.5 F_side (C5, mu 0.7 on the mat) ; s0 = eps_y L_cart (plateau reached) ; lip reaction R = "
-                   "F (a + e) / (e + s0) ; rim as a fixed-ended beam over the wider sleeve span b: M = R b / 12, "
-                   "S = l_rim (w + t_rim)^2 / 6 + (b/2) w^2 / 6 ; tine at the rim: M = F a, windowed section S_min")
-def side(F_lim, k_ult, eps_y, allow, **kw):
+          equation="F = 1.5 F_side (C5 3-D sim, mu 0.7, D-65) ; sleeve end: sigma = k_FEA F (D5 FEA of the drawn shoe, "
+                   "lever R = F (a + e) / (e + s0), s0 = eps_y L_cart) ; RF = allow / sigma ; R5 beam kept for "
+                   "information: M = R b / 12 over the rim ; tine at the rim: M = F a on the windowed, chamfered section")
+def side(F_lim, k_ult, eps_y, allow, k_fea, **kw):
     s = landing.stack(_n(kw))
+    _fea_matches(s, kw)
     F = k_ult * F_lim
     a = s["x_g"] - s["x_slv_end"]
     e = kw["engage"]
     s0 = eps_y * s["L_cart"]
     R = F * (a + e) / (e + s0)
+    sig_fea = k_fea * F
     b = max(s["slv_out"])
-    w, tr = kw["w"], kw["rim_t"]
-    S_rim = kw["rim_len"] * (w + tr) ** 2 / 6 + (b / 2) * w * w / 6
-    sig_rim = R * b / 12 / S_rim
+    ws, tr = kw["ws"], kw["rim_t"]
+    S_rim = kw["rim_len"] * (ws + tr) ** 2 / 6 + (b / 2) * ws * ws / 6
+    sig_beam = R * b / 12 / S_rim
+    w = kw["w"]
     py, pz = s["pist_out"]
     r = w + kw["rail"]                                            # each z-wall keeps a rail r wide at both y edges
+    tc = kw["tc"]
+    dA = tc * tc / 2                                              # chamfer area lost at each outside corner
     # bending about y (load along z): webs = y walls (full height), flanges = z-wall rails
-    I_y = 2 * (w * pz ** 3 / 12) + 4 * (r * w) * ((pz - w) / 2) ** 2
+    I_y = 2 * (w * pz ** 3 / 12) + 4 * (r * w) * ((pz - w) / 2) ** 2 - 4 * dA * (pz / 2 - tc / 3) ** 2
     # bending about z (load along y): webs = rails of the z walls, flanges = y walls
-    I_z = 2 * (pz * w ** 3 / 12 + pz * w * ((py - w) / 2) ** 2) + 4 * (w * r ** 3 / 12)
+    I_z = 2 * (pz * w ** 3 / 12 + pz * w * ((py - w) / 2) ** 2) + 4 * (w * r ** 3 / 12) - 4 * dA * (py / 2 - tc / 3) ** 2
     S_t = min(I_y / (pz / 2), I_z / (py / 2))
     sig_t = F * a / S_t
-    return {"F_N": F, "R_lip_N": R, "sigma_rim_Pa": sig_rim, "sf_rim": allow / sig_rim, "sigma_tine_Pa": sig_t,
-            "sf_tine": allow / sig_t}
+    return {"F_N": F, "R_lip_N": R, "R_open_N": R - F, "sigma_fea_Pa": sig_fea, "sf_shoe": allow / sig_fea,
+            "sigma_rim_beam_Pa": sig_beam, "fea_over_beam": sig_fea / sig_beam,
+            "sigma_tine_Pa": sig_t, "sf_tine": allow / sig_t}
 
 
 @kit.calc("CALC-D5-SNAP", title="Snap finger strain at full release deflection",
@@ -325,7 +375,7 @@ def G(id, title, out, unit="m", **k):
 
 
 G("CL-D5-CART-LEN", "Crush cartridge length", "cart_len_m", parts=CARTS,
-  how="Measure the cut cartridge pair: 2 x 44.5 mm incl. 0.5 mm preload.")
+  how="Measure the three pressed segments end to end (3 x 34 mm incl. 0.5 mm preload).")
 G("CL-D5-SLEEVE-OUT", "Sleeve outside y x z", "sleeve_out_m", parts=SHOES, how="Calipers on the printed shoe.")
 G("CL-D5-PISTON-OUT", "Tine outside y x z", "piston_out_m", parts=PISTONS,
   how="Calipers on the printed piston; it slides in the sleeve by hand without play.")
@@ -334,7 +384,8 @@ G("CL-D5-SKIRT-LEN", "Tine length (open end to flange)", "tine_len_m", parts=PIS
 G("CL-D5-LEG-LEN", "Shoe length on the half-fin (step front to TE)", "shoe_len_on_fin_m", parts=SHOES,
   how="Calipers on the printed shoe; D3 keeps this length of the tip clear (CR-D5-11).")
 G("CL-D5-WINDOW-LEN", "Snap window length", "window_len_m", parts=SHOES,
-  how="Calipers; the hook runs the full stroke without touching the window front edge.")
+  how="Calipers: hook length + 1 mm; the hook sits at the aft edge at rest and cams under the front edge once the "
+      "cartridge has set > 1 mm (R6 short window, clear of the tine open-end bearing).")
 G("CL-D5-FLANGE-Z", "Flange and pad height (z)", "pad_z_m", parts=PISTONS + PADS, how="Calipers.")
 G("CL-D5-FLANGE-OVERHANG", "Flange overhang outboard of the tine", "flange_overhang_m", parts=PISTONS,
   how="Calipers on the printed piston.")
@@ -360,6 +411,10 @@ G("CL-D5-TE-CLEAR-CRUSHED", "Wing TE above the ground with a fully crushed foot"
 G("CL-D5-RIM-AFT-OF-TE", "Rim starts aft of the fin TE", "rim_clear_of_te_m", limit=(">=", 0.0), parts=SHOES,
   how="Shoe drawing: the thickened rim never overlaps the fin.")
 G("CL-D5-LEVER", "Pad to rim lever arm at rest", "lever_m", parts=PISTONS, how="Calipers on the assembled foot.")
+G("CL-D5-RIM-TOP-MARGIN", "Rim top below the pad outboard edge (no envelope growth)", "rim_top_margin_m",
+  limit=(">=", 0.0), parts=SHOES, how="Straight edge across the pad edge and the rim on the built foot.")
+G("CL-D5-ENGAGE", "Tine engagement in the sleeve at rest", "engage_m", limit=(">=", 0.025), parts=PISTONS + SHOES,
+  note="C5 CR-C5-18 recommended 25 mm", how="Calipers: tine open end to rim end, insert seated.")
 
 C = "CALC-D5-CRUSH"
 kit.claim("CL-D5-F-PLATEAU", "Crush plateau per foot, mean of the upper and lower types", calc=C,
@@ -376,18 +431,20 @@ kit.claim("CL-D5-BIAS-UPPER", "Upper-foot plateau / mean plateau", calc=C, outpu
           parts=CARTS, how="Ratio of the coupon plateaus.")
 kit.claim("CL-D5-BIAS-ERR", "Bias error against C5-R3's x1.05 target", calc=C, output="bias_err", unit="-",
           limit=("<=", 0.01), parts=CARTS, how="Ratio of the coupon plateaus; change the bore tube (3/16 or 1/4 in) if off by > 1 %.")
-kit.claim("CL-D5-F-PEAK", "Mean peak foot force (limit) in the 1.5 m/s landing", calc=C, output="F_peak_N",
+kit.claim("CL-D5-F-PEAK", "Mean peak foot force (limit) in the level hard landing", calc=C, output="F_peak_N",
           unit="N", limit=("<=", "CL-C1-FOOT-MAX"), parts=FEET, how="T-D5-COUPON peak; drop test T-C1-FOOT-DROP.")
 kit.claim("CL-D5-F-PEAK-UPPER", "Peak force on an upper foot (limit)", calc=C, output="F_peak_upper_N", unit="N",
-          limit=("<=", "CL-C1-FOOT-MAX"), parts=FEET,
-          note="C1 R3 bound; C1 to carry the per-type split (CR-D5-14)",
+          limit=("<=", "CL-C1-FOOT-LEVEL-UPPER"), parts=FEET,
+          note="C1's L1 upper-foot bound (CR-C1-34): fittings are sized to C1's bound, not to this plateau",
           how="T-D5-COUPON type U peak.")
 kit.claim("CL-D5-F-ULT-UPPER", "Ultimate force on an upper foot (1.5 x peak)", calc=C, output="F_ult_upper_N",
-          unit="N", parts=FEET, how="Proof load a printed piston + shoe on a fin offcut to 88 N (T-D5-PROOF).")
-kit.claim("CL-D5-N-LAND", "Landing load factor, level 1.5 m/s, four feet", calc=C, output="n_land", unit="-",
+          unit="N", parts=FEET, how="Proof load a printed piston + shoe on a fin offcut to 96 N (T-D5-PROOF).")
+kit.claim("CL-D5-N-LAND", "Landing load factor, level hard landing (requirements.landing_sink_ms), four feet", calc=C,
+          output="n_land", unit="-",
           limit=("<=", P + "requirements.landing_n_design"), parts=FEET,
           how="T-C5-AIRCRAFT-DROP level, accelerometer at the CG.")
-kit.claim("CL-D5-STROKE-USED", "Stroke used, level 1.5 m/s landing (hand energy balance)", calc=C,
+kit.claim("CL-D5-STROKE-USED", "Stroke used, level hard landing at requirements.landing_sink_ms (hand energy balance)",
+          calc=C,
           output="stroke_used_m", unit="m", limit=("<=", "CL-D5-STROKE-USABLE"), parts=FEET,
           how="Flange gap before and after the level drop.")
 kit.claim("CL-D5-STROKE-USABLE", "Usable stroke (gap less C5's 3 mm guard) vs C5's pair-first landing", calc=C,
@@ -397,9 +454,9 @@ kit.claim("CL-D5-ETA", "Crush efficiency (energy / peak force x stroke)", calc=C
           limit=(">=", 0.8), how="Integrate the T-D5-COUPON force-stroke record.")
 kit.claim("CL-D5-STRAIN-MARGIN", "Cartridge strain margin to densification at the full 38 mm", calc=C,
           output="strain_margin", unit="-", limit=(">=", 0.0), parts=CARTS,
-          how="T-D5-COUPON: force still flat at 44 % strain (incl. the 1 mm pre-crush per segment).")
+          how="T-D5-COUPON: force still flat at 39 % strain (incl. the 1 mm pre-crush per segment).")
 kit.claim("CL-D5-CUT-SEG-LEN", "Cartridge segment cut length before the 1 mm pre-crush", calc=C, output="cut_seg_len_m",
-          unit="m", limit=("<=", 0.0508), note="<= the 2 in board thickness (crush axis = through-thickness)",
+          unit="m", limit=("<=", 0.0508), note="<= the 2 in board thickness (crush axis = through-thickness); R6: 3 segments",
           parts=CARTS, how="Calipers on the cut stick before pressing.")
 kit.claim("CL-D5-SET-NORMAL", "Permanent crush per normal 0.5 m/s landing", calc=C, output="set_normal_m", unit="m",
           how="Measure the flange gap after each of the first 10 hover landings (H2).")
@@ -450,15 +507,17 @@ kit.claim("CL-D5-KIT-TUBE-MASS", "Ground mass of the 12 in 7/32 in brass bore-cu
           calc="CALC-D5-KIT", output="tube_g", unit="g", parts=["GER-013"], how="Weigh the tube as bought.")
 
 kit.claim("CL-D5-FLANGE-SF", "Flange overhang bending, SF at ultimate", calc="CALC-D5-FLANGE", output="sf",
-          unit="-", limit=(">=", 1.0), parts=PISTONS, how="Load a printed flange edge to 61 N; no crack (T-D5-PROOF).")
+          unit="-", limit=(">=", 1.0), parts=PISTONS, how="Load a printed flange edge to 67 N (C1 upper-foot ult 66.6 N); no crack (T-D5-PROOF).")
 kit.claim("CL-D5-BOND-AREA", "Shoe bond area on the half-fin", calc="CALC-D5-BOND", output="area_m2", unit="m2",
           parts=SHOES, how="Shoe drawing; C6 copies it into the E-GER-01..04 bond block.")
 kit.claim("CL-D5-BOND-SF", "Shoe-to-fin bond RF at the printed/bonded design load (C6 allowable)",
           calc="CALC-D5-BOND", output="sf", unit="-", limit=(">=", 1.0), parts=SHOES,
-          how="Pull test of a shoe bonded on a stepped two-layer offcut to 88 N along x (T-D5-PROOF, C6 coupon).")
-kit.claim("CL-D5-SIDE-RIM-SF", "Rim bending under the tine lip reaction (side load at the pad)", calc="CALC-D5-SIDE",
-          output="sf_rim", unit="-", limit=(">=", 1.0), parts=SHOES,
-          how="T-D5-SIDE: 35 N (>= 34.2 N ult, C5 side 22.8 N x 1.5) sideways at the pad of a foot crushed 4 mm, both axes; no crack at the rim.")
+          how="Pull test of a shoe bonded on a stepped two-layer offcut to 96 N along x (T-D5-PROOF, C6 coupon).")
+kit.claim("CL-D5-SIDE-RIM-SF", "Shoe sleeve end RF at C5's 59.0 N ultimate side load (D5 FEA of the drawn shoe)",
+          calc="CALC-D5-SIDE", output="sf_shoe", unit="-", limit=(">=", 1.0), parts=SHOES, verifies=["R-LANDING-IMPACT"],
+          note="CR-C5-18 / CR-A1-65: replaces the R5 beam (FEA/beam 2.78); worst of +y and +z",
+          how="T-D5-SIDE: 60 N (>= 59.0 N ult) sideways at the pad of a foot crushed 5 mm, along +y then +z on a "
+              "second shoe; no crack at the rim, window or roof; then C5's T-C5-SHOE-SIDE-FAIL to failure.")
 kit.claim("CL-D5-SIDE-TINE-SF", "Tine bending at the rim under the side load", calc="CALC-D5-SIDE",
           output="sf_tine", unit="-", limit=(">=", 1.0), parts=PISTONS, how="T-D5-SIDE.")
 kit.claim("CL-D5-SNAP-STRAIN", "Snap finger strain at release", calc="CALC-D5-SNAP", output="strain", unit="-",
@@ -492,10 +551,13 @@ kit.test("T-D5-REPLACE", "Timed foot-insert swap", verifies=["CL-D5-REPLACE-TIME
          procedure="One student, field kit only, swap a crushed insert for a spare on the built aircraft; pass <= 10 min.")
 kit.test("T-D5-PROOF", "Shoe bond and flange proof load", verifies=["CL-D5-BOND-SF", "CL-D5-FLANGE-SF"],
          procedure="Shoe bonded (24 h) on a stepped two-layer foam-board offcut with strip ends; load the pad along x "
-                   "to 88 N through a 10 mm steel block at the pad edge; hold 3 s. Pass: no bond crack, no flange crack.")
+                   "to 96 N (C1 upper-foot ult 66.6 N x 1.4375) through a 10 mm steel block at the pad edge; hold 3 s. "
+                   "Pass: no bond crack, no flange crack.")
 kit.test("T-D5-SIDE", "Side load at the pad", verifies=["CL-D5-SIDE-RIM-SF", "CL-D5-SIDE-TINE-SF"],
-         procedure="Same specimen, insert pushed 4 mm in; 35 N at the pad sideways along y, then along z; pass: no crack "
-                   "at the rim or tine, insert still slides.")
+         procedure="Two R6 shoes bonded on stepped offcuts (as T-D5-PROOF), printed as flown (layers stacked along the "
+                   "sleeve axis), insert pushed 5 mm in; 60 N (>= C5's 59.0 N ult, D-65) at the pad sideways along +y on "
+                   "one, +z on the other, held 3 s; pass: no crack at the rim, window or roof, insert still slides. "
+                   "Then C5's T-C5-SHOE-SIDE-FAIL on the same specimens.")
 
 
 def _cad_crosscheck():

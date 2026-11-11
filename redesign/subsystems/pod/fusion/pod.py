@@ -1,15 +1,14 @@
-"""K09-L centre pod (D2, revision D2-R5 on params A1-R4): shell with the 15 mm longer nose (D-47), tray with the forward
-and aft stops and guides, hatch with antenna tube, pack straps and pads, crush block, spreader and aft spacers (three
-parts), GPS mast with the 45 deg pad, pitot socket with flange, carry handle on the spar.
-R5 (D-47, CR-A1-43, CR-A3-22, CR-A5-27): pod nose x -0.130, length 0.225; XPS nose block A deleted, the forward stop
-and the tray front sit on a 1 mm epoxy line against the nose wall (nose skin to stop face 8.8 mm); whole pack bay 21 mm
-forward (forward stop -0.1212, aft stop on the tray rear piece, at 0.060 since D-59 (was 0.056 at D-47), handle bridge no longer a
-stop); pack nominal centroid = params pod.pack_x_nominal_m (-0.022), per-pack stations and spacer stacks in
-pack_x_per_pack_m; straps to -0.054 / 0.016; the wire channel to -0.0245 (the forward strap now sits over -0.0655);
-crush block POD-009 and spreader POD-010 split from the spacer set POD-008 so each declared CG is its body centroid.
-R4 (CR-F2-03, CR-F3-12, CR-F1-17, CR-C6-17/18/19, CR-A4-23): side-wall harness exits, the wire channel (tray split,
-guides notched), JR tie bar, UBEC plate, FC strap slots, tie posts 21 mm apart, keyed pitot bore, GPS cable path, PA66
-mast screw, the forward stop derived from the nose. The AS150U park cradle is F1's (PWR-006, CR-F1-16).
+"""K09-L centre pod (D2, revision D2-R6 on params A1-R5): shell, tray with the forward-stop T, aft stop and guides, hatch
+with antenna tube, pack straps and pads, crush block, spreader and aft spacers, GPS mast with the 45 deg pad, pitot socket
+with flange, carry handle on the spar with the aft-stop strut and the two wall brackets.
+R6 (D-62, D-64, D-69; CR-A1-62, CR-A3-25, CR-C3-14..18, CR-C6-27, CR-E3-15, CR-F1-26, CR-D7-23): nose x -0.140 (pod 0.235
+long); the whole bay 10 mm forward (forward stop face -0.1312, datum pod.pack_x_nominal_m -0.032, aft stop face
+x_nom + L/2 + pod.pack_aft_travel_m = 0.0475 for the 0.135 m Ovonic pack); straps to -0.062 / 0.006; spacer set 2/4/6/8.
+C3's fixes: the forward stop is a printed T whose upright passes the floor's front edge to a 12 mm flange bonded under
+the floor; the aft stop is backed by a strut (pad + three ribs) printed with POD-007 that ends on the foot bridge; each
+handle foot is tied to its side wall by a bracket (web + flange >= 1 000 mm2). PDB bosses 7.2 mm; the PDB plate runs aft
+to 0.050 with a rib along each boss row (unplug-moment path, C6).
+R5 (D-47) and R4 history: team/D2/SUMMARY.md and git.
 
 Frame and datums: redesign/fusion/DATUMS.md (x aft, y right, z up, cruise attitude, metres).
 Shared numbers from params.json (pod LE, L x W x H, base, board thickness, pack size, spar, pitot tip); pod-only
@@ -17,15 +16,15 @@ numbers from subsystems/pod/params.json. `layout()` is a pure function of those 
 team/D2/pod_data.py (masses, CGs, interfaces.json) and team/D2/pod_claims.py (proof chain) import it, so the CAD,
 the mass roll-up and the claims cannot disagree.
 
-Arrangement (SPEC.md): the pack bay runs down the middle. From the nose aft: foam-board nose wall (x_le -0.130) ->
-1 mm epoxy line -> 3 mm printed forward stop on the tray (aft face x -0.1212) -> removable XPS crush block cut per pack
-(POD-009) -> 1.5 mm spreader (POD-010) -> pack (nominal centroid x -0.022) -> printed U-spacers (POD-008) -> 3 mm aft
-stop at x 0.060 on the tray rear piece (D-59). The pack sits wholly on the tray (aft face <= 0.060, recess end 0.065).
+Arrangement (SPEC.md): the pack bay runs down the middle. From the nose aft: foam-board nose wall (x_le -0.140) ->
+1 mm epoxy line -> 3 mm printed forward-stop T (aft face x -0.1312) -> removable XPS crush block cut per pack
+(POD-009) -> 1.5 mm spreader (POD-010) -> pack (datum centroid x -0.032) -> printed U-spacers (POD-008) -> 3 mm aft
+stop at x 0.0475 on the tray rear piece -> strut pad and ribs (POD-007) -> foot bridge. The pack sits wholly on the tray.
 FC on gel pads in the right channel, UBEC behind it; airspeed sensor, receiver, PDB, fuse and the AS150U park in the
 left channel; pitot socket with its flange at the left of the nose; ram-air vent over the pack; two antenna exits.
 
 UNVERIFIED-IN-FUSION: Y-normal prisms whose loops follow the S5010 upper surface (side walls with the exit holes, LE
-filler, saddle tongues); prisms with many hole loops (tray, deck, nose wall, JR bar, FC end stops); the 45 deg
+filler, saddle tongues); the L-section forward-stop T and the stepped bracket flanges (Y-normal prisms); prisms with many hole loops (tray, deck, nose wall, JR bar, FC end stops); the 45 deg
 GPS pad (Y-normal prism with a rotated rectangle); the keyhole loops of the right-leg windows. None of it uses booleans.
 Not modelled as bodies (STANDARDS section 3): fasteners, ties, glue, hook-and-loop, tape, label, the 1 mm strap
 groove cut in the foam floor, the mast cross-screw counterbore; heat-set inserts are the boss bores.
@@ -128,8 +127,11 @@ def layout(get, L, coords):
     fs_t, fs_h, fs_w = lv('fwd_stop_m')
     g['nose_block'] = lv('nose_block_l_m')              # fixed XPS block A
     g['x_fs0'] = g['xn'] + g['nose_block']              # forward stop fore face = nose block aft face = tray front
-    g['x_fs'] = g['x_fs0'] + fs_t                       # forward stop aft face (-0.1002 at x_le -0.115)
-    # aft end: pack | spacers | aft stop (R5: on the tray rear piece, 9 mm ahead of the recess end)
+    g['x_fs'] = g['x_fs0'] + fs_t                       # forward stop aft face (-0.1312 at x_le -0.140, D-62)
+    fl_l, fl_t = lv('fwd_stop_flange_m')                # R6 (D-69, CR-C3-15): flange of the stop T under the floor
+    g['fs_flange'] = (g['x_fs0'], g['x_fs0'] + fl_l, zb - fl_t, zb)
+    g['fs_flange_bond'] = (g['x_fs0'] + fl_l - g['x_fs']) * fs_w   # flange area under the floor (aft of the stop)
+    # aft end: pack | spacers | aft stop (on the tray rear piece) | strut pad + ribs (POD-007, D-69) | foot bridge
     g['x_as'] = lv('aft_stop_x_m')
     as_t, as_top = lv('aft_stop_m')
     g['as_t'] = as_t
@@ -142,6 +144,10 @@ def layout(get, L, coords):
     g['pack_aft_nom'], g['pack_aft_hvy'] = a_nom, a_hvy
     g['pack_c_nom'] = a_nom - pk[0] / 2
     g['pack_c_hvy'] = a_hvy - pk[0] / 2
+    trav = get('pod.pack_aft_travel_m', 'm')            # D-62: the no-spacer station is x_nom + travel
+    if abs((g['x_as'] - pk[0] / 2) - (x_nom_shared + trav)) > 0.0005:
+        raise ValueError('aft_stop_x_m %.4f does not put the no-spacer centroid at pod.pack_x_nominal_m + pack_aft_travel_m %.4f'
+                         % (g['x_as'], x_nom_shared + trav))
     g['pack_fore_nom'] = a_nom - pk[0]
     g['pack_fwd_c'] = g['x_fs'] + pk[0] / 2             # centroid with the pack against the forward stop (no block)
     g['travel'] = g['x_as'] - g['x_fs'] - pk[0]         # stop-to-stop room beyond the pack length
@@ -222,7 +228,7 @@ def layout(get, L, coords):
     lg = lv('leg_m')[0]
     g['cross_gap'] = (g['x1'] - tb) - (xs + lg / 2)     # handle-leg aft face to aft-wall inner face
     g['cross_h'] = g['zh'] - g['zfoot']                 # bridge top to deck underside
-    g['tray_front_area'] = min(g['tray_front_solid'], g['ch_x'][0] - g['x_fs0']) * (g['bw'] + 2 * g['tg'])
+    g['tray_front_area'] = (min(g['x_fs0'] + g['tray_front_solid'], g['ch_x'][0]) - g['x_fs']) * (g['bw'] + 2 * g['tg'])
     # tray floor pieces (R5): strap slots in whichever piece they fall, lightening windows only between the solid zones
     sl, sw = lv('strap_slot_m')
     g['strap_yo'] = g['bw'] / 2 - 0.0002
@@ -230,11 +236,35 @@ def layout(get, L, coords):
     g['strap_slots'] = [(xc - sl / 2, xc + sl / 2) for xc in g['strap_x']]
     slots = [_rect(a, s * ys0 - sw / 2, b, s * ys0 + sw / 2) for a, b in g['strap_slots'] for s in (1, -1)]
     c0, c1 = g['ch_x']
-    pieces = (('petg bay floor front', (g['x_fs0'], c0), (g['x_fs0'] + g['tray_front_solid'], c0)),
+    pieces = (('petg bay floor front', (g['x_fs'], c0), (g['x_fs0'] + g['tray_front_solid'], c0)),
               ('petg bay floor rear', (c1, g['x_rec1']), (c1, g['x_as'])))
     g['tray_loops'] = [(nm, _tray_loops(g, lv('window_border_m'), a, b, wa, wz, slots)) for nm, (a, b), (wa, wz) in pieces]
     g['tray_rear_area'] = _net_area(g['tray_loops'][1][1])  # net bond area of the piece that carries the aft stop
     g['nose_ant_in'] = lv('nose_ant_tube_in_m')
+    g['ant_b_tip_x'] = x0 - 0.004                       # tube end ahead of the nose skin (D7 CR-D7-23: >= -0.150)
+    # R6 (D-69, CR-C3-14): aft-stop strut printed with POD-007: pad on the stop back face, three ribs to the foot bridge
+    S = lv('strut_m')
+    g['strut'] = S
+    g['strut_x'] = (g['x_as'] + g['as_t'], g['x_as'] + g['as_t'] + S['pad'][0], lv('bridge_x0_m'))  # pad front, pad back, bridge front
+    g['strut_rib_l'] = g['strut_x'][2] - g['strut_x'][1]  # free rib length, pad to bridge
+    g['strut_rib_y'] = [k * S['rib_pitch_y'] for k in range(-(S['n_ribs'] // 2), S['n_ribs'] // 2 + 1)][:S['n_ribs']]
+    g['strut_clear_skin'] = S['rib_z'][0] - max(_surf(coords, c, x) for x in
+                                                 [g['strut_x'][1] + i * g['strut_rib_l'] / 10 for i in range(11)])
+    # R6 (D-69, CR-C3-16): wall brackets, one per side, printed with POD-007 (web on the foot's outboard edge + wall flange)
+    B = lv('bracket_m')
+    se = lv('side_exit_m')
+    fx1 = g['x1'] - tb                                  # aft-wall inner face
+    z_lo, z_hi = g['z_aft'], g['zh'] - 0.0005
+    z_ex = se[3] + B['exit_clear_z']                    # flange passes over the side exit
+    x_lo = se[1] + B['exit_clear_z']                   # flange goes down to the foot aft of the exit (same 2 mm margin)
+    g['bracket_flange'] = [(x_lo, z_lo), (fx1, z_lo), (fx1, z_hi), (B['flange_x0'], z_hi), (B['flange_x0'], z_ex), (x_lo, z_ex)]
+    g['bracket_area'] = _net_area([g['bracket_flange']])  # epoxied to the wall, per side (C3 >= 1 000 mm2)
+    g['bracket_web_y'] = (lv('foot_y_m')[1], g['yi'] - B['flange_t'])
+    # R6 (CR-C6-27): PDB plate to pdb_plate_x1_m with a rib along each boss row; flat-wise pad for the unplug moment
+    p0, _p1 = lv('pdb_plate_x_m')
+    g['pdb_pad'] = (lv('pdb_plate_x1_m') - p0, g['ch_y'][1] - g['ch_y'][0] - 0.001)   # length x, width y
+    # R6 (CR-F1-26): left-channel volume kept free ahead of F1's deck, for the claims (pod bodies checked in pod_selfcheck)
+    g['left_ch_clear'] = lv('left_ch_clear_m')
     return g
 
 
@@ -257,7 +287,12 @@ def build(ctx):
 
     # ---------------------------------------------------------------- POD-001 shell (foam board, XPS LE filler and nose block, printed lip and antenna tube)
     sh = ctx.part('POD-001')
-    sh.box((xn, -yi, zb), (xr1, yi, zf), name='fb floor')
+    fs_w = lv('fwd_stop_m')[2]                          # R6 (CR-C3-15): the floor's front edge stops at the stop T (3 x 54 mm slot)
+    bv = min(lv('floor_bevel_m'), tb)                   # R6 (E-WNG-17): aft lower edge bevelled 45 deg onto D1's fillet
+    floor = [(xn, -yi), (xn, -fs_w / 2), (x_fs, -fs_w / 2), (x_fs, fs_w / 2), (xn, fs_w / 2), (xn, yi), (xr1 - bv, yi), (xr1 - bv, -yi)]
+    sh.prism('Z', zb, [floor], tb, name='fb floor')
+    sh.prism('Y', -yi, [[(xr1 - bv, zb), (xr1 - bv, zf), (xr1, zf), (xr1, zf - (tb - bv))][:3 if bv >= tb else 4]], 2 * yi,
+             name='fb floor bevel')
     side = [(x0, zb), (xr1, zb)] + [(x, z) for x, z in G['aft_surf']] + [(x1, zh), (x0, zh)]
     se = lv('side_exit_m')                              # R4 (CR-F2-03 a): power + DShot exits, both sides
     side_exit = _rect(se[0], se[2], se[1], se[3])
@@ -267,7 +302,7 @@ def build(ctx):
     nose = [_rect(-yi, zb, yi, ztop), _rect(py - sq, pz - sq, py + sq, pz + sq),
             _rect(-vw / 2, zh - vh, vw / 2, zh), _circle(ny, nz, nod / 2 + 0.0002, 10)]
     sh.prism('X', x0, nose, tb, name='fb nose wall')
-    # R5 (D-47): no XPS nose block A; the forward stop and tray front sit on a 1 mm epoxy line against the nose wall.
+    # No XPS nose block A (D-47); the forward-stop T sits on a 1 mm epoxy line against the nose wall.
     # Antenna B tube: 4 mm out of the nose, through the wall, nose_ant_tube_in_m behind it, bonded in the wall hole
     sh.prism('X', x0 - 0.004, [_circle(ny, nz, nod / 2), _circle(ny, nz, nbore / 2, 8)], (xn + G['nose_ant_in']) - (x0 - 0.004),
              name='petg nose antenna tube')
@@ -296,13 +331,15 @@ def build(ctx):
     for name, loops in G['tray_loops']:
         tr.prism('Z', zf, loops, lv('tray_floor_t_m'), name=name)
     fs_t, fs_h, fs_w = lv('fwd_stop_m')
-    tr.prism('X', x_fs0, [_rect(-fs_w / 2, zt, fs_w / 2, zt + fs_h)], fs_t, name='petg forward stop')
+    fa0, fa1, fz0, fz1 = G['fs_flange']                 # R6 (D-69, CR-C3-15): stop T, upright past the floor edge + flange under it
+    tee = [(fa0, fz0), (fa1, fz0), (fa1, fz1), (x_fs, fz1), (x_fs, zt + fs_h), (fa0, zt + fs_h)]
+    tr.prism('Y', -fs_w / 2, [tee], fs_w, name='petg forward stop T')
     gn = G['ch_notch']
     guide = [(x_fs, zt), (c0, zt), (c0, zt + gn), (c1, zt + gn), (c1, zt), (x_as, zt), (x_as, zt + hg), (x_fs, zt + hg)]
     for s in (1, -1):                                   # guides span the channel, notched 3 mm at the base; end at the aft stop
         tr.prism('Y', bw / 2 if s > 0 else -(bw / 2 + tg), guide, tg, name='petg guide')
-    # R5 (D-47): aft stop on the tray rear piece (it was on the handle bridge at x 0.077), full bay + guide width, and
-    # two gussets behind it to the tray end
+    # aft stop on the tray rear piece (D-47), full bay + guide width, two root ribs at the edges; backed by the
+    # POD-007 strut (D-69)
     a_w = bw / 2 + tg
     as_t = G['as_t']
     tr.prism('X', x_as, [_rect(-a_w, zt, a_w, G['z_as_top'])], as_t, name='petg aft stop')
@@ -336,10 +373,17 @@ def build(ctx):
     pw, pd, ph = lv('tie_post_m')
     for dx in lv('tie_post_x_m'):                       # R4 (CR-F3-12 a): inner faces 21 mm apart
         tr.box((ax0 + dx - pw / 2, -cy - pd / 2, zf + tp), (ax0 + dx + pw / 2, -cy + pd / 2, zf + tp + ph), name='petg tie post')
-    p0, p1 = lv('pdb_plate_x_m')
-    tr.prism('Z', zf, [_rect(p0, -co + 0.0005, p1, -ci - 0.0005)], tp, name='petg PDB plate')
+    p0, p1 = lv('pdb_plate_x_m')                        # boss pattern centre (F1 reads it)
+    pe = lv('pdb_plate_x1_m')                           # R6 (CR-C6-27): plate runs aft under the frame and cradle
+    tr.prism('Z', zf, [_rect(p0, -co + 0.0005, pe, -ci - 0.0005)], tp, name='petg PDB plate')
     bd, bh, pp = lv('boss_d_m'), lv('boss_h_m'), lv('pdb_pattern_m')
     pcx = (p0 + p1) / 2
+    rw, rh = lv('pdb_rib_m')                            # a rib along each boss row, broken at the bosses
+    bxs = [pcx - pp / 2, pcx + pp / 2]
+    segs = [(p0 + 0.0005, bxs[0] - bd / 2), (bxs[0] + bd / 2, bxs[1] - bd / 2), (bxs[1] + bd / 2, pe - 0.0005)]
+    for dy in (-pp / 2, pp / 2):
+        for a, b in segs:
+            tr.box((a, -cy + dy - rw / 2, zf + tp), (b, -cy + dy + rw / 2, zf + tp + rh), name='petg PDB rib')
     for dx in (-pp / 2, pp / 2):
         for dy in (-pp / 2, pp / 2):
             tr.prism('Z', zf + tp, [_circle(pcx + dx, -cy + dy, bd / 2), _circle(pcx + dx, -cy + dy, 0.002, 8)], bh,
@@ -367,7 +411,7 @@ def build(ctx):
 
     # ---------------------------------------------------------------- R5 (CR-A5-27): the trim kit is three single-material parts, so
     # each declared CG is both the mass centroid and the body centroid. POD-009 crush block, POD-010 spreader, POD-008 aft
-    # spacers (CAD pack at the -0.022 datum: blue 8 + yellow 4 mm, CR-A1-54)
+    # spacers (CAD pack at the -0.032 datum: blue 8 + yellow 4 mm, D-62)
     gw, gd = lv('block_groove_m')
     sec = _notched(-bw / 2 + 0.0003, bw / 2 - 0.0003, zt, zh - 0.0005, gw, gd)
     ctx.part('POD-009').prism('X', x_fs, [sec], G['block_nom'], name='xps crush block')
@@ -425,8 +469,25 @@ def build(ctx):
         for z0_, z1_, op in ((G['zfoot'], w0, None), (w0, w1, 1), (w1, t0, None), (t0, G['z_grip0'], -1)):
             loops = sq_leg if op is None else [_keyhole(xs, ly, lg / 2, rb, op)]
             hd.prism('Z', z0_, loops, z1_ - z0_, name='petg leg')
-    # R5: the aft stop moved to the tray (x 0.060 since D-59); the bridge stays as the tie between the two feet, on the slot fill
+    # foot bridge: the tie between the two feet on the slot fill; since D-69 the end of the aft-stop strut
     hd.box((lv('bridge_x0_m'), -fy0, G['z_aft']), (xf1, fy0, G['zfoot']), name='petg foot bridge')
+    # R6 (D-69, CR-C3-14): strut = pad on the aft stop back face + three ribs to the bridge; each rib's heel stands on
+    # the bridge top for heel_t so the rib load enters the bridge, not a bond line
+    S = G['strut']
+    xp0, xp1, xb0 = G['strut_x']
+    rz0, rz1 = S['rib_z']
+    pw = S['pad'][1]
+    hd.box((xp0, -pw / 2, rz0), (xp1, pw / 2, rz1), name='petg strut pad')
+    rib = [(xp1, rz0), (xb0, rz0), (xb0, G['zfoot']), (xb0 + S['heel_t'], G['zfoot']), (xb0 + S['heel_t'], rz1), (xp1, rz1)]
+    for yr in G['strut_rib_y']:
+        hd.prism('Y', yr - S['rib_t'] / 2, [rib], S['rib_t'], name='petg strut rib')
+    # R6 (D-69, CR-C3-16): wall bracket per side: web on the foot's outboard edge + flange on the side-wall inner face
+    B = lv('bracket_m')
+    wy0, wy1 = G['bracket_web_y']
+    for s in (1, -1):
+        y0_, y1_ = (wy0, wy1) if s > 0 else (-wy1, -wy0)
+        hd.box((G['bracket_flange'][0][0], y0_, G['z_aft']), (xf1, y1_, G['z_aft'] + B['web_t']), name='petg bracket web')
+        hd.prism('Y', yi - B['flange_t'] if s > 0 else -yi, [G['bracket_flange']], B['flange_t'], name='petg bracket flange')
     gx, gz = lv('grip_m')
     sb = lv('socket_boss_m')
     gb = lv('grip_bore_m')                              # R4: GPS cable groove under the grip, right leg -> mast socket
@@ -468,3 +529,5 @@ def build(ctx):
     ctx.contact('E-POD-11', 'crush block against the forward stop, between the guides')
     ctx.contact('E-POD-12', 'pack on the EVA pads on the tray: insulating thermal contact (E3); heat leaves by the pod air and vents')
     ctx.contact('E-POD-13', 'spreader trapped between the crush block and the pack fore face')
+    ctx.contact('E-POD-14', 'strut pad epoxy-bedded on the aft stop back face (D-69)')
+    ctx.contact('E-POD-15', 'wall-bracket flanges epoxied to the side-wall inner faces (D-69)')

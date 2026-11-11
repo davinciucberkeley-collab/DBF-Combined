@@ -41,28 +41,38 @@ def load_module():
 PARTS = [
     ('WNG-001', 'Wing core, one piece (XPS), with all cuts', 'XPS foam F-250', 'make',
      'hot-wire (templates from wing.py), slot and pockets by hot tool / knife', 'FOAMULAR NGX F-250 2 in sheet (SRC-XPS-F250), 6 cores per sheet',
-     'S5010, 1.150 x 0.320 m; spar bore 22.4 mm (slot from below, cap re-bonded); pod recess x 0.0226-0.065 floor z 0.015, '
-     '|y| <= 0.07; pod saddle windows |y| 0.029-0.053 with tie channels at 0.036; anchor pockets |y| 0.2335-0.2505 top and '
-     'bottom; block pockets |y| 0.302-0.338 x 0.028-0.097 full depth; ESC grooves both surfaces |y| 0.086-0.296; servo '
-     'groove and branch; servo pockets x 0.148-0.192 |y| 0.252-0.288; elevon cut-outs', {}),
+     'S5010, 1.150 x 0.320 m, hot-wired LE sanded smooth; spar bore 22.4 mm (slot from below, cap re-bonded); pod recess '
+     'x 0.0226-0.065 floor z 0.015, |y| <= 0.07; pod saddle windows |y| 0.029-0.053 with tie channels at 0.036; anchor '
+     'pockets |y| 0.2335-0.2505 top and bottom; block pockets |y| 0.302-0.338 x 0.028-0.097 full depth, corners R 3.15, '
+     '3 x 3 mm lip chamfers inboard and outboard both surfaces; ESC grooves both surfaces |y| 0.086-0.296; servo groove and '
+     'branch with the JR recess x 0.150-0.168 |y| 0.280-0.290 5 mm deep; servo pockets (open below) x 0.1722-0.2075 '
+     '|y| 0.2527-0.2879; elevon cut-outs with R 3 mm corners at the fin-root tabs', {}),
     ('WNG-002', 'Spar CF 22x20x1000', 'CF tube 22x20 (bought)', 'buy', 'cut square, scuff 120 grit, IPA',
      'SRC-CF-TUBE 22 x 20 x 1000 mm $28.32', 'unspliced, |y| <= 0.50, axis x 0.080 z +0.0066 (D-03); stock length used as is', {}),
     ('WNG-003', 'Tape skin (packing tape, both surfaces, doublers, tip edge layer)', 'packing tape (BOPP), 48 mm', 'make',
      'hand-laid spanwise strips, 10 % overlap', 'Scotch Heavy Duty packing tape 48 mm (cost.csv)',
-     '1 layer each side, 15 mm round the LE; none under the pod (x 0-0.095, |y| <= 0.07) or the half-fin roots; 60 mm '
-     'doublers over the block pockets (wrapped round the LE) and the servo pockets; 2nd layer folded round each tip', {}),
+     '1 layer each side; one 100 mm LE strip laid last (edges x 0.045 upper / 0.047 lower, aft of x/c 0.10); none under the '
+     'pod (x 0-0.095, |y| <= 0.07) or the half-fin roots; 60 mm doublers over the block pockets (wrapped round the LE, '
+     'continuous over the lip beads) and the servo pockets; 24 mm strip folded round each fin-root tab edge; 2nd layer '
+     'folded round each tip', {}),
     ('WNG-004', 'Spar plug under the through-core block (PETG)', 'PETG (printed)', 'make', 'FDM PETG 4 perimeters 50 % gyroid',
      'subsystems/wing/fusion/wing.py', 'D 19.8 x 36 mm inside the spar at |y| 0.320, bonded with thickened epoxy (C2 CR-C2-01)', {}),
     ('WNG-005', 'Spar plug at the brace anchors (PETG)', 'PETG (printed)', 'make', 'FDM PETG 30 % fill',
      'subsystems/wing/fusion/wing.py', 'D 19.8 x 20 mm inside the spar at |y| 0.242; upper and lower anchors share it; pushed in first', {}),
+    ('WNG-006', 'Block-pocket lip beads (microballoon epoxy)', 'epoxy + glass microballoons 1:1 by volume', 'make',
+     'chamfer the pocket lip 3 x 3 mm 45 deg, fill wet with the block bond, sand flush', 'subsystems/wing/fusion/wing.py',
+     'inboard and outboard pocket lips, upper and lower, x 0.0279-0.0972 (D-68, CR-C2-11); 60 mm tape doubler over them', {}),
+    ('WNG-007', 'Recess-step fillet (microballoon epoxy)', 'epoxy + glass microballoons 1:1 by volume', 'make',
+     'spatula fillet, cure 24 h, sand to a flat 45 deg face before the pod goes in', 'subsystems/wing/fusion/wing.py',
+     'floor-to-step corner at x 0.065, legs 5 mm floor x 5 mm step, |y| <= 0.070 (D-69, CR-C3-17); pod floor bevelled onto it', {}),
     ('WNG-011', 'Elevon inboard', 'XPS foam F-250 + packing-tape skin', 'make', 'cut from the core after the hot-wire pass; tape both faces',
-     'subsystems/wing/fusion/wing.py', 'y 0.071-0.299, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) and 2.5 mm horn-blade slot at y 0.285', {}),
+     'subsystems/wing/fusion/wing.py', 'y 0.071-0.299, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) |y| 0.1335-0.296 and 2.5 mm horn-blade slot at y 0.285; outboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange (14 mm) and backplate (12 mm)', {}),
     ('WNG-012', 'Elevon outboard', 'XPS foam F-250 + packing-tape skin', 'make', 'cut from the core after the hot-wire pass; tape both faces',
-     'subsystems/wing/fusion/wing.py', 'y 0.341-0.559, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove and 2.5 mm link-horn slot at y 0.355', {}),
+     'subsystems/wing/fusion/wing.py', 'y 0.341-0.559, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove |y| 0.344-0.556 and 2.5 mm link-horn slot at y 0.355; inboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange and backplate', {}),
     ('WNG-020', 'FAA registration label', 'vinyl label (printed)', 'make', 'print, laminate, apply',
      'registration number from H3 (FAADroneZone)', 'right wing upper surface x 0.115-0.215, y 0.375-0.405; visible without tools', {'carried': True}),
 ]
-INSTANCES = {'WNG-004': ('R', 'L'), 'WNG-005': ('R', 'L'), 'WNG-011': ('R', 'L'), 'WNG-012': ('R', 'L')}
+INSTANCES = {'WNG-006': ('R', 'L'), 'WNG-004': ('R', 'L'), 'WNG-005': ('R', 'L'), 'WNG-011': ('R', 'L'), 'WNG-012': ('R', 'L')}
 
 ACK_ALL = ['E-POD-01', 'E-POD-09', 'E-TRN-06', 'E-TRN-07', 'E-TRN-08', 'E-TRN-09',
            'E-FIN-49', 'E-FIN-50', 'E-FIN-51', 'E-FIN-52', 'E-FIN-53', 'E-FIN-54', 'E-FIN-55', 'E-FIN-56',
@@ -71,6 +81,7 @@ ACK_ALL = ['E-POD-01', 'E-POD-09', 'E-TRN-06', 'E-TRN-07', 'E-TRN-08', 'E-TRN-09
            'E-MEC-17', 'E-MEC-18']
 ACK_OWNER = {'E-POD': 'pod (D2)', 'E-TRN': 'transport (D7)', 'E-FIN': 'fins (D3)', 'E-GER': 'landing (D5)',
              'E-HRN': 'harness (F2)', 'E-MEC': 'mechanisms (D6)'}
+PATCH_PANEL = {'WNG-011': 0, 'WNG-012': 1}           # horn station index per panel (mechanisms mec.horn flange / backplate)
 
 
 def ids():
@@ -100,14 +111,7 @@ def build_wing():
 
 # ----------------------------------------------------------------------------- geometry helpers
 def arc_len(mod, g, x0, x1, side, n=200):
-    s, xp, zp = 0.0, None, None
-    for i in range(n + 1):
-        x = x0 + (x1 - x0) * (1 - math.cos(math.pi * i / n)) / 2
-        z = mod.surf(g, x, side)
-        if xp is not None:
-            s += math.hypot(x - xp, z - zp)
-        xp, zp = x, z
-    return s
+    return mod.arc(g, x0, x1, side, n)
 
 
 def perimeter(loop):
@@ -129,6 +133,10 @@ def shape_mass(mod, g, P, L, s):
         return V * rho * 1000 + tape * span * ar * 1000, cg
     if nm.startswith('xps '):
         return V * rho * 1000, cg
+    if nm.startswith('bead ') or nm.startswith('fillet '):
+        return V * k9.lval(L, 'block_pocket.bead_density_gcc', 'g/cm3') * 1e6, cg
+    if nm == 'tape tab edge':
+        return perimeter(s.loops[0]) * k9.lval(L, 'skin.tab_edge_tape_w_m', 'm') * ar * 1000, cg
     if nm == 'tape tip edge':
         w = k9.lval(L, 'skin.tip_tape_w_m', 'm')
         n = k9.lval(L, 'skin.tip_extra_layers', '-')
@@ -162,14 +170,24 @@ def masses(ctx, P, g, mod):
             gm, cg = shape_mass(mod, g, P, L, s)
             M += gm
             mom = [mom[i] + gm * cg[i] for i in range(3)]
-            k = 'XPS' if (s.name or '').startswith('xps') else ('tape doubler' if 'doubler' in (s.name or '') else
-                                                                 ('tape tip' if 'tip' in (s.name or '') else 'tape'))
+            nm = s.name or ''
+            k = ('XPS' if nm.startswith('xps') else 'microballoon epoxy' if nm.startswith(('bead', 'fillet')) else
+                 'tape doubler' if 'doubler' in nm else 'tape LE strip' if 'LE strip' in nm else
+                 'tape tab edge' if 'tab edge' in nm else 'tape tip' if 'tip' in nm else 'tape')
             br[k] = br.get(k, 0.0) + gm
         if iid == 'WNG-001':
             fill = lv('slot.fill_g', 'g')
             M += fill
             mom = [mom[0] + fill * g['xs'], mom[1], mom[2] + fill * g['zs']]
             br['slot fill (C2)'] = fill
+        if base(iid) in PATCH_PANEL:                    # bare-foam patches under D6's horn flange and backplate
+            Mh = k9.local('mechanisms')
+            fl = k9.lval(Mh, 'mec.horn.flange_mm', 'mm', [8.0, 38.0, 14.0, 1.2])
+            bp = k9.lval(Mh, 'mec.horn.backplate_mm', 'mm', [14.0, 38.0, 12.0, 1.0])
+            cut = ((fl[1] - fl[0]) * fl[2] + (bp[1] - bp[0]) * bp[2]) * 1e-6 * k9.val(P, 'wing.skin.areal_mass_kgm2', 'kg/m2') * 1000
+            mom = [m * (M - cut) / M for m in mom]      # patches near the panel CG: CG kept
+            M -= cut
+            br['tape patches cut'] = -cut
         out[iid] = (M, tuple(m / M for m in mom), br)
     return out
 
@@ -227,6 +245,16 @@ def readouts(ctx, P, g, mod):
             frac = (math.pi + 2 * tt) / (2 * math.pi)
         bond += 2 * math.pi * g['rb'] * frac * (y1 - y0) * 2          # both sides (the y0 = 0 body spans +/-y1)
     r['spar_bond_mm2'] = bond * 1e6
+    # D-68 / D-69 / CR-B2-17 / CR-F2-14 geometry
+    r['bead_len'] = g['blk_x'][1] - g['blk_x'][0]
+    r['bead_leg'] = g['bead_leg']
+    r['blk_corner_r'] = g['blk_rp']
+    r['cutout_corner_r'] = g['ecr']
+    r['le_edge'] = (g['le_edge']['upper'], g['le_edge']['lower'])
+    r['le_seam_min_x'] = min(g['le_edge'].values())
+    r['rf_legs'] = g['rf_legs']
+    r['jr_wall'] = g['sp_x'][0] - g['jr_x'][1]
+    r['jr_foam_under'] = min(mod.surf(g, x, 'upper') - g['jr_d'] - mod.surf(g, x, 'lower') for x in g['jr_x'])
     return r
 
 
@@ -263,12 +291,17 @@ def edges(g, r, M):
                   'cure': cure, 'load_n': 'air load into the spar 186 N/m: slot shear 8.1 kPa vs 100 kPa, MS +11 (CL-C2-SPAR-BOND-TAU)',
                   'load_case': 'C1 flight envelope (F1 pull-up at VD)', 'sized_by': 'C2'}},
         {'id': 'E-WNG-02', 'part_a': 'WNG-003', 'part_b': 'WNG-001', 'via': 'CT-TAPE-SKIN', 'owner': 'wing',
-         'notes': 'spanwise strips LE to TE, 10 % overlap, 15 mm round the LE; tape laps 15 mm up both faces of each half-fin root '
-                  '(L-angle, E-FIN-53...56); no tape under the pod; 60 mm doublers over the block and servo pockets; second layer '
-                  'folded round each tip (damage fuse)',
+         'notes': 'spanwise strips TE to LE, 10 %% overlap, the forward strip of each face stopping under the LE strip (x %.4f upper / '
+                  '%.4f lower); one 100 mm LE strip laid last, edges at x %.4f upper / %.4f lower, aft of x/c 0.10 (CR-B2-17: no seam, '
+                  'overlap or doubler edge ahead of 32 mm except the block-pocket doublers); tape laps 15 mm up both faces of each '
+                  'half-fin root (L-angle, E-FIN-53...56); no tape under the pod; 60 mm doublers over the block pockets (continuous '
+                  'over the lip beads) and the servo pockets; a 24 mm strip folded round each fin-root tab side face and its R 3 mm '
+                  'corner (CR-C2-13); second layer folded round each tip (damage fuse)' % (
+                      g['skin_lap']['upper'], g['skin_lap']['lower'], g['le_edge']['upper'], g['le_edge']['lower']),
          'retention': {'item': 'packing tape 48 mm, pressure-sensitive acrylic', 'count': 'continuous',
                        'load_n': 'chordwise bending aft of the spar 13.0 MPa vs 60 MPa (CL-C2-CHORD-TAPE); torsion cell',
-                       'inspection': 'pre-flight: no lifted edge at the LE, pockets, tips or fin roots; re-tape any lift'}},
+                       'inspection': 'pre-flight: no lifted edge at the LE strip, pockets, tab edges, tips or fin roots; no seam, '
+                                     'wrinkle or dent within 32 mm of the LE; re-tape any lift'}},
         {'id': 'E-WNG-03', 'part_a': 'WNG-020', 'part_b': 'WNG-003', 'via': 'CT-LABEL', 'owner': 'wing',
          'notes': 'FAA registration number on the right wing upper skin, x 0.115-0.215, y 0.375-0.405; readable without tools '
                   '(14 CFR 48.205); laminated label, one clear tape strip over the edges',
@@ -301,6 +334,43 @@ def edges(g, r, M):
                   'bond': {'adhesive': bond_cf, 'area_mm2': round(math.pi * g['plug_r'] * 2 * ln * 1e6),
                            'prep': 'plug 120 grit; spar bore scuffed with a 120-grit flap on a rod, IPA', 'cure': cure,
                            'load_n': load, 'load_case': case, 'sized_by': 'C2'}})
+    # D-68 lip beads and D-69 recess-step fillet
+    bl, lb = r['bead_len'], g['bead_leg']
+    E += [{'id': eid, 'part_a': iid, 'part_b': 'WNG-001', 'via': 'CT-EPOXY', 'owner': 'wing',
+           'notes': 'lip bead in the 3 x 3 mm 45 deg chamfer along the inboard and outboard block-pocket lips, upper and lower '
+                    'surface, x %.4f-%.4f (4 beads per side); laid wet in the same pour as the block bond, sanded flush; the 60 mm '
+                    'doubler covers it' % g['blk_x'],
+           'bond': {'adhesive': bond_foam, 'area_mm2': round(4 * bl * lb * math.sqrt(2) * 1e6),
+                    'prep': 'chamfer cut with a 45 deg hot tool or sanding block guided on the pocket wall; foam dust off',
+                    'cure': cure, 'load_n': 'block corner load into the foam: as drawn (square corners, no bead) 203 / 199 kPa vs 150 / '
+                                            '120 kPa ultimate at the inboard-front-lower corner (CL-C2-FEA-FOAM-CORNER-S1/-S3); C2 '
+                                            're-runs the FEA on the R 3 mm pocket with these beads',
+                    'load_case': 'L4 corner + side landing, ultimate', 'sized_by': 'C2'}}
+          for eid, iid in (('E-WNG-12', 'WNG-006-R'), ('E-WNG-13', 'WNG-006-L'))]
+    E += [{'id': eid, 'part_a': iid, 'part_b': blk, 'via': 'CT-EPOXY', 'owner': 'wing',
+           'notes': 'the lip bead wets the block side face over its top and bottom 3 mm (inboard and outboard face), continuous '
+                    'with the block-to-core bond E-FIN-51/52',
+           'bond': {'adhesive': bond_foam, 'area_mm2': round(4 * bl * lb * 1e6),
+                    'prep': 'block side faces 120 grit + IPA (as E-FIN-51/52)', 'cure': cure,
+                    'load_n': 'spreads the block corner load into the lip (see E-WNG-12); C2 FEA re-run',
+                    'load_case': 'L4 corner + side landing, ultimate', 'sized_by': 'C2'}}
+          for eid, iid, blk in (('E-WNG-14', 'WNG-006-R', 'FIN-004-R'), ('E-WNG-15', 'WNG-006-L', 'FIN-004-L'))]
+    lf, lw = g['rf_legs']
+    w = 2 * g['y_pod']
+    E += [{'id': 'E-WNG-16', 'part_a': 'WNG-007', 'part_b': 'WNG-001', 'via': 'CT-EPOXY', 'owner': 'wing',
+           'notes': 'microballoon-epoxy fillet in the re-entrant floor-to-step corner of the pod recess (x %.3f, z %.3f), legs %.1f mm '
+                    'floor x %.1f mm step, |y| <= %.3f; laid with a 45 deg spatula, cured 24 h, sanded to a flat 45 deg face before '
+                    'the pod goes in (D-69, CR-C3-17)' % (g['x_rec1'], g['z_rec'], lf * 1000, lw * 1000, g['y_pod']),
+           'bond': {'adhesive': bond_foam, 'area_mm2': round((lf + lw) * w * 1e6), 'prep': 'recess sanded, foam dust off',
+                    'cure': cure, 'load_n': 'pod crash peel at the step corner, -z / -x 12.75 g: R 4.5 / 2.2 as drawn (singular in linear '
+                                            'FEA, CL-C3-FEA-BOND-R-CRASH); the fillet and T-C3-POD-PROOF decide',
+                    'load_case': 'C3 crash 12.75 g, -z / -x', 'sized_by': 'C3'}},
+          {'id': 'E-WNG-17', 'part_a': 'WNG-007', 'part_b': 'POD-001', 'via': 'CT-EPOXY', 'owner': 'wing',
+           'notes': 'pod floor board (POD-001 fb floor) aft lower edge bevelled %.1f x %.1f mm 45 deg and bonded on the fillet face in '
+                    'the pod bond (E-POD-01); keeps the floor end bonded across the step as C3 asks' % (lf * 1000, lw * 1000),
+           'bond': {'adhesive': bond_foam, 'area_mm2': round(math.hypot(lf, lw) * w * 1e6),
+                    'prep': 'fillet face sanded 120 grit; board bevel cut with a 45 deg sanding block', 'cure': cure,
+                    'load_n': 'as E-WNG-16', 'load_case': 'C3 crash 12.75 g, -z / -x', 'sized_by': 'C3'}}]
     return E
 
 
@@ -319,7 +389,7 @@ def interfaces(M, g, r):
             p.update(extra)
             parts.append(p)
     return {'schema': 'dbf-interfaces/1', 'subsystem': 'wing',
-            '_note': 'GENERATED by redesign/team/D1/wing_data.py from subsystems/wing/fusion/wing.py (D1, revision D1-R1, params A1-R3). '
+            '_note': 'GENERATED by redesign/team/D1/wing_data.py from subsystems/wing/fusion/wing.py (D1, revision D1-R2, params A1-R5). '
                      'Masses and CGs are the CAD estimate (EST, T-D1-WEIGH). Edit the script or the module, not this file.',
             'parts': parts, 'edges': edges(g, r, M), 'acknowledges': ack, 'acknowledges_pending': pend}
 
@@ -328,8 +398,8 @@ def parts_csv(M):
     L = k9.local('wing')
     cost = k9.lval(L, 'cost_usd', 'USD')
     unit_cost = {'WNG-001': cost['xps_sheet'] / cost['cores_per_sheet'] + cost['epoxy'], 'WNG-002': cost['spar'],
-                 'WNG-003': cost['tape_roll'] * cost['rolls'], 'WNG-004': cost['petg_plugs'] / 4, 'WNG-005': cost['petg_plugs'] / 4,
-                 'WNG-011': 0.0, 'WNG-012': 0.0, 'WNG-020': cost['label']}
+                 'WNG-003': cost['tape_roll'] * cost['rolls'] + cost['le_tape_roll'], 'WNG-004': cost['petg_plugs'] / 4, 'WNG-005': cost['petg_plugs'] / 4,
+                 'WNG-006': 0.0, 'WNG-007': 0.0, 'WNG-011': 0.0, 'WNG-012': 0.0, 'WNG-020': cost['label']}
     buf = io.StringIO()
     w = csv.writer(buf, lineterminator='\n')
     w.writerow(['part_id', 'name', 'qty', 'make_or_buy', 'process', 'material', 'mass_g', 'unit_cost_usd', 'vendor_or_file', 'notes'])

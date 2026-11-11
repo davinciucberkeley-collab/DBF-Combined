@@ -60,9 +60,9 @@ line("B07", "propulsion", "Motor screw M3x8 SHCS ISO 4762 A2 (16 fitted + 4 spar
      status="CARRY", seen="2026-11-01", lead=5, url="https://www.boltdepot.com/", part="PRP-005",
      note="per-piece price from the old design's F01; check Bolt Depot minimum order; the hardware kit may already hold M3x8")
 # --- power
-line("P01", "power", "LiPo Ovonic 4S 6500 mAh 130C, 2-pack (2 flight packs, no packs 3-4, no 4S 4000)", "OVONIC US", "2x 4S 6500 130C XT60 (listing title says 'XT60 to TRA plug')", "EARLY", 1, 0, 82.97, pess=119.88,
-     status="CHK", seen="2026-11-09", lead=7, long=True, url="https://us.ovonicshop.com/products/2-x-ovonic-4s-6500mah-14-8v-130c-lipo-battery-with-xt60-to-tra-plug-for-1-8-1-10-scale-rc-car-truck-boat", part="PWR-001",
-     note="vendor page fetched 2026-11-09: $82.97 sale (list $119.88), in stock, XT60 plug with a TRA adapter, 12 AWG leads, 680 g per pack. Earlier search snippet showed $79.25 after a $5 checkout discount. 12 AWG FAILS F1's >= 10 AWG pack-lead rule (CL-F1-PACKLEAD12-RISE 28.4 K vs 20 K) and 680 g puts the aircraft 4 g over the gate (CL-A3-GATE-MARGIN-680): DO NOT ORDER this SKU until E2 and F1 decide (CR-I1-13). Pessimistic = list")
+line("P01", "power", "LiPo Ovonic 4S 6500 mAh 120C hard case, EC5, 2-pack (2 flight packs, no packs 3-4, no 4S 4000)", "Ampow / OVONIC (same SKU)", "2-Pack Ovonic 14.8V 120C 4S 6500mAh Hardcase LiPo, EC5 plug, 1/8 scale RC car", "EARLY", 1, 0, 114.48, pess=131.43,
+     status="EST", seen="2026-11-10", lead=14, long=True, url="https://www.ampow.com/products/2-pack-ovonic-4s-6500mah-120c-lipo-hardcase-ec5-1-8-rc-car", part="PWR-001",
+     note="D-64 / CR-E2-24. NO USD price found: ampow page 429, us.ovonicshop.com has no EC5 hard-case listing. Baseline = EUR 98.69 (E2, EU page) x 1.16 = $114.48; pessimistic = EUR 113.30 (ampow el-gb page, in stock, 2026-11-10 search) x 1.16 = $131.43. Ampow ships from Germany: lead about 14 days (long). Two checks BEFORE paying: (a) 10 AWG discharge leads confirmed by the seller (12 AWG: stop, tell E2 and F1), (b) EC5 / 4S / 6500 / hard case / 2 packs in the cart. Listed 551 +/- 5 g, 135 x 46 x 49 mm. The 130C XT60 SKU (680 g, 12 AWG) is NOT bought. Fallback if unavailable: Tattu 4S 6750 25C XT90 605 g (A1 must accept the mass)")
 # --- avionics (F3)
 line("A01", "avionics", "Flight controller CoreWing F405 Wing APP V2", "ReadyMadeRC", "CoreWing F405 Wing APP V2", "EARLY", 1, 0, 67.26,
      seen="2026-10-13", lead=5, url="https://www.readymaderc.com/products/details/87195-corewing-f405-wing-app-v2-fixed-wing-flight-controller-unsoldered-pins", part="AVN-001",
@@ -77,10 +77,16 @@ line("A04", "avionics", "Airspeed sensor RMRC digital (MS4525DO) + pitot tube", 
      note="CR-F3-06: MS4525DO replaces the MS5525 line (same $59.99). Needed for the fixed-wing tune (January), not for the twin. Lever if the reserve needs help (+$66.14 incl. tax, DECISION 5.1)")
 line("A05", "avionics", "microSD card 16-32 GB (FC log)", "Amazon", "SanDisk class, 16-32 GB", "EARLY", 1, 0, 6.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="AVN-006", note="CR-F3-06: team stock first; nothing is owned, so carried. Gel pads from shop consumables")
+line("A06", "avionics", "2 x 150 mm U.FL / IPEX1 2.4 GHz T-antenna (dipole) for the RP3 V2 (D-72)", "Amazon", "2.4 GHz 150 mm U.FL T antenna, pair", "EARLY", 1, 0, 6.00,
+     status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="AVN-003",
+     note="CR-F5-11 / CR-F3-15: stock 65 mm leads do not reach the carbon-free zone. F5 estimate $6, no listing fetched. U.FL plug-in, no iron needed. Check IPEX1 vs IPEX4 on the RP3 V2")
+line("A07", "avionics", "FC isolation set: alpha-gel 5 mm sheet (4 cubes), 1 mm foam tape, 10 mm hook-and-loop", "Amazon", "alpha-gel sheet + VHB-class tape", "DEC", 1, 0, 10.00,
+     status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="AVN-006",
+     note="F3 AVN-006 prices $3 and CR-F3-06 says shop consumables, but nothing is owned and gel sheets sell for about $10: carried at $10 (+$7 over F3). Drop if Jacobs stock is confirmed")
 # --- mechanisms (D6)
-line("M01", "mechanisms", "Elevon servo EMAX ES3005HV 8 kgf-cm (2 fitted, 0 spare)", "EMAX USA", "ES3005HV", "DEC", 2, 0, 19.99,
-     seen="2026-11-01", lead=7, url="https://shop.emax-usa.com/products/es3005hv-high-voltage-servo", part="MEC-001",
-     note="PLACEHOLDER pending D6: B2 needs >= 3.04 kgf-cm and the 12 g EMAX ES08MA II (~2 kgf-cm) is too weak. Mass and 6-8.4 V supply UNVERIFIED")
+line("M01", "mechanisms", "Elevon servo Savox SH-0255MG+ 12 mm micro, 3.9 kgf-cm at 6 V (2 fitted; the spare is gated X02)", "Savox USA / hobby dealer", "SH-0255MG+", "DEC", 2, 0, 41.99,
+     status="EST", seen="2026-11-10", lead=7, url="https://www.savoxusa.com/", part="MEC-001",
+     note="CR-D6-02 / CR-A1-52: replaces the ES3005HV placeholder (42 g, does not fit the 12 mm pocket). $41.99 from D6 (SRC-D6-SH0255-PRICE, UNVERIFIED); no dealer page re-read. Buy from a US dealer with stock; no other 12 mm servo with >= 3.5 kgf-cm is known")
 # --- airframe
 line("W01", "airframe", "XPS FOAMULAR NGX F-250 2 in x 4 x 8 ft (about 6 wing cores)", "Home Depot El Cerrito", "F-250 2 in", "LOCAL", 1, 0, 59.97,
      seen="2026-10-01", lead=0, url="https://www.homedepot.com/", part="WNG-001", note="pick-up; check the sheet is flat and unbroken")
@@ -99,48 +105,56 @@ line("W06", "airframe", "Packing tape Scotch Heavy Duty, 6 rolls", "Amazon", "AS
 line("W07", "airframe", "Foam-safe glue (UHU Por / Gorilla clear)", "Amazon", "ESTIMATE vendor", "EARLY", 1, 0, 12.99,
      status="EST", seen="2026-11-01", lead=4, url="https://www.amazon.com/", part="WNG-004")
 # --- hardware
-line("H01", "hardware", "Harness and mechanism consumables, early share: 3.5 mm bullets, servo leads, JST-GH pigtails (twin and stand)", "Amazon", "assorted", "EARLY", 1, 0, 12.00,
-     status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="HRN-001",
-     note="residual of the old $124.01 lump after the F1, C6 and D3 items moved to their own lines (F01-F09, C01-C05, D01-D06). F2 has no parts.csv yet (CR-I1-01); D6 has none either")
-line("H02", "hardware", "Harness and mechanism consumables, balance: horns, pushrods, clevises, hinge tape, ties, Kapton", "Amazon", "assorted", "DEC", 1, 0, 24.00,
-     status="EST", seen="2026-11-09", lead=5, url="https://www.amazon.com/", part="HRN-001", note="see H01; D6 owes the horn and pushrod list")
+line("H01", "hardware", "Harness parts (F2 parts.csv HRN-103..106, 108, 109): 26 AWG servo extension 2 m $5, 28 AWG 3 colours $7, JR/Futaba connector kit $7, JST-GH housings + pigtails $12, cable ties $4, PET braid sleeve $6", "Amazon / DigiKey", "assorted, see F2 parts.csv", "EARLY", 1, 0, 41.00,
+     status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="HRN-103",
+     note="F2 prices all EST UNVERIFIED; one line = six purchases. 16 AWG, 20 AWG and heat-shrink are F03, F04, F09. JST-GH from DigiKey adds shipping: use pre-crimped pigtails from Amazon if the cart allows")
+line("H02", "hardware", "Mechanisms hardware (D6 parts.csv): Du-Bro 2-56 rod + steel clevises $8, 1/8 in (3.18 mm) pultruded CF rod 1 m $5, CF tube 5 x 4 x 1000 mm $8, M2 self-tapping screws $3", "Amazon / hobby shop", "Du-Bro 2-56, CF rod 1/8 in, CF tube 5x4, M2 x 6", "DEC", 1, 0, 24.00,
+     status="EST", seen="2026-11-10", lead=5, url="https://www.amazon.com/", part="MEC-005",
+     note="CR-D6-02, CR-D6-16: the 1/8 in CF rod replaces the 3/32 in music wire ($5, was $3). Hinge tape is the wing tape (W06)")
 line("H03", "hardware", "Charger-side XT60 pair for the AS150U charge adapter + 0.3 m 10 AWG stub", "Amazon", "XT60 pair, 10 AWG silicone", "DEC", 1, 0, 5.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="HRN-002",
      note="was $15 for the whole AS150U re-termination; F01 now buys the five AS150U pairs, so only the charger-side XT60 and a short 10 AWG stub remain")
 # --- power (F1, CR-F1-12), itemised from team/F1/POWER.md 'Bought items'
 line("F01", "power", "Amass AS150U connector pair (male + female) x 5: aircraft, 2 packs, charge lead, spare", "Amazon", "Amass AS150U", "EARLY", 5, 0, 5.00,
      status="EST", seen="2026-11-09", lead=5, url="https://www.amazon.com/", part="PWR-003", note="F1 price EST $25 for 5; open the Amass sheet. Confirm the SKU is the anti-spark AS150U, not AS150")
-line("F02", "power", "Silicone wire 8 AWG red + black, 0.5 m each", "Amazon", "8 AWG silicone", "EARLY", 1, 0, 8.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-004", note="main pigtail; vendors sell 1 m minimum")
-line("F03", "power", "Silicone wire 16 AWG red + black, 2.5 m each", "Amazon", "16 AWG silicone", "EARLY", 1, 0, 8.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-004", note="ESC leads, F2 cuts")
+line("F02", "power", "Silicone wire 10 AWG red + black 0.3 m each (PWR-104) + 8 AWG 0.1 m each (bus bars)", "Amazon", "10 AWG + 8 AWG silicone", "EARLY", 1, 0, 8.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-004", note="main pigtail; vendors sell 1 m minimum")
+line("F03", "power", "Silicone wire 16 AWG red + black + yellow, 3 m each (HRN-101)", "Amazon", "BNTECHGO 16 AWG 252/0.08 silicone, 10 ft per colour", "EARLY", 1, 0, 14.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-004", note="ESC leads, F2 cuts")
 line("F04", "power", "Silicone wire 20 AWG red + black, 1 m each", "Amazon", "20 AWG silicone", "EARLY", 1, 0, 4.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-005", note="UBEC feed, servo bus")
 line("F05", "power", "UBEC 6 V, 8 A class (Hobbywing type)", "Amazon", "UBEC 6 V 8 A", "EARLY", 1, 0, 18.00, status="EST", seen="2026-11-09", lead=5, url="https://www.readymaderc.com/", part="PWR-005", note="F1: datasheet UNVERIFIED; 13 g in A3's roll-up")
 line("F06", "power", "Mini blade fuse 5 A x 3 + inline holder", "Amazon", "ATM mini fuse + holder", "EARLY", 1, 0, 6.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-003", note="UBEC feed protection")
 line("F07", "power", "Capacitor 680 uF 25 V low-ESR x 5", "Amazon", "680 uF 25 V", "EARLY", 1, 0, 5.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-003", note="one per ESC + 1 spare")
-line("F08", "power", "Bare 4-way PDB, 2 oz copper", "Amazon", "bare PDB 2 oz", "EARLY", 1, 0, 6.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-003", note="bus")
-line("F09", "power", "Heat-shrink assortment incl. 10 mm", "Amazon", "assortment", "EARLY", 1, 0, 6.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-003", note="joints")
+line("F08", "power", "FR4 1.6 mm 1 oz copper sheet 100 x 70 mm (bus board PWR-004 / PWR-105; 3 boards per sheet)", "Amazon", "FR4 single-sided copper clad", "EARLY", 1, 0, 3.00, status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="PWR-105", note="F1 replaced the bare PDB with a cut FR4 bus board; was $6")
+line("F09", "power", "Adhesive-lined 3:1 heat-shrink assortment 2.4-9.5 mm (HRN-107; also F1 joints)", "Amazon", "Wirefy 3:1 assortment", "EARLY", 1, 0, 9.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="PWR-003", note="joints")
 # --- fasteners and bonding (C6 kit, CR-C6-11; D3's fasteners are inside it)
-line("C01", "hardware", "M3 fasteners: SHCS A2-70 x10 (M3x10) + x8 (M3x16), nyloc x10, washer x15 (covers D3's M3x16 x6, nyloc x6, washer x12)", "Bolt Depot", "ISO 4762 / 10511 / 7089 A2", "EARLY", 1, 0, 5.00,
+line("C01", "hardware", "M3 steel A2 kit: SHCS M3x16 x6 (D3 pinch bolts), nyloc x8, washer x12 (C6 kit R4; M3x8 x20 is B07)", "Bolt Depot", "ISO 4762 / 10511 / 7089 A2", "EARLY", 1, 0, 5.00,
      status="EST", seen="2026-11-09", lead=5, url="https://www.boltdepot.com/", part="HRN-003", note="C6 kit table; piece prices about $3 plus minimum-order rounding. M3x8 x20 is B07. M3 only")
+line("C06", "hardware", "M3 nylon PA66 set: socket-head M3x18 x11, M3x16 x3 + hex nut x3, 0.5 mm washer x6, 10 mm spacer OD 6 / ID 3.2 x6 (power frame, GPS mast, T-C6-NYLON-TORQUE)", "Amazon", "PA66 M3 socket-head assortment + spacers", "DEC", 1, 0, 7.00,
+     status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="PWR-101",
+     note="CR-C6-30 / CR-C6-26: PA66 SOCKET heads (not pan) so the 2.5 mm hex key torques them at 0.08 N m; PWR-101..103 are inside this line. C6 kit total EST $26, here $28")
 line("C02", "hardware", "M3 x 5.7 brass heat-set inserts x12 + M3 nylon washers / FC grommets x8", "Amazon", "Ruthex-class RX-M3x5.7", "DEC", 1, 0, 9.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="HRN-003", note="pod FC plate (4), PDB (4), spares (4)")
-line("C03", "hardware", "Pultruded CF rod 2 mm x 1 m (strip through-pins; D3 FIN-012 uses the same rod)", "Amazon", "CF rod 2 mm", "DEC", 1, 0, 3.00,
-     status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="HRN-003", note="CR-C6-11; D3 FIN-012 not double counted")
+line("C03", "hardware", "Pultruded CF rod 2.5 mm x 1 m x 2 (one + spare): strip through-pins at 15 mm, 48 pins (D3 FIN-012 uses the same rod)", "Amazon", "CF rod 2.5 mm x 1000 mm", "DEC", 2, 0, 3.50,
+     status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="FIN-012",
+     note="CR-C6-31 / CR-C6-35 / D-70: 2 mm to 2.5 mm; if 2.5 mm cannot be bought, 2 mm at 9 mm pitch. Not double counted with D3")
 line("C04", "hardware", "Loctite 243 (10 ml) + paint pen (torque witness)", "Amazon", "Loctite 243", "DEC", 1, 0, 9.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="HRN-003", note="motor screws, tip threads only")
 line("C05", "hardware", "Laminating epoxy 30 min (small kit) + colloidal silica + glass microballoons", "Amazon", "30 min epoxy kit", "DEC", 1, 0, 14.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="HRN-003", note="C6 and D3 (FIN-105) both list shop stock; nothing is owned, so one kit is carried. Drop if Jacobs Hall confirms stock in writing")
 # --- fin materials (D3, CR-D3-09; the tube is W04)
-line("D01", "airframe", "Pultruded CF strip 10 x 3 x 1000 mm x 1 (4 braces)", "Aloft Hobbies", "CF strip 10x3", "DEC", 1, 0, 10.00,
+line("D01", "airframe", "Pultruded CF strip 10 x 2 x 1000 mm x 1 (4 braces, FIN-009)", "Aloft Hobbies", "CF strip 10x2", "DEC", 1, 0, 10.00,
      status="EST", seen="2026-11-09", lead=5, url="https://alofthobbies.com/", part="FIN-009", note="D3 est. about $10 per length")
 line("D02", "airframe", "Pultruded CF strip 10 x 1 x 1000 mm x 3 (8 edge strips)", "Aloft Hobbies", "CF strip 10x1", "DEC", 3, 0, 6.00,
      status="EST", seen="2026-11-09", lead=5, url="https://alofthobbies.com/", part="FIN-011", note="D3 est. about $6 per length, 3 m asked in CR-D3-09")
 line("D03", "airframe", "CF tube 20 x 18 x 1000 mm x 1 (D3 plugs 2 x 53 mm; C2's spar plugs if the same size)", "Aloft Hobbies", "20 x 18 x 1000 CF tube", "DEC", 1, 0, 20.00,
      status="EST", seen="2026-11-09", lead=5, url="https://alofthobbies.com/", part="FIN-006", note="D3 priced a $1 share; stock is sold by the metre. Ask C2 whether its six 36 mm plugs use this tube")
+line("D07", "landing", "Brass tube 7/32 in OD K&S x 1 (cartridge bore cutter GER-013, shop tool, not flying)", "Amazon / hobby shop", "K&S 7/32 in round brass tube", "DEC", 1, 0, 3.00,
+     status="EST", seen="2026-11-10", lead=5, url="https://www.ksmetals.com/", part="GER-013",
+     note="CR-D5-27: 7/32 in replaces 1/4 in. D5 price UNVERIFIED, no listing fetched")
 line("D04", "airframe", "10 mm hook-and-loop straps x 10 (ESC retention x4, spares)", "Amazon", "ONE-WRAP class", "DEC", 1, 0, 8.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="FIN-104", note="D3 FIN-104, 4 needed")
 line("D05", "landing", "Neoprene sheet 1/16 in 40A adhesive back 12 x 12 in", "Amazon", "neoprene 40A 1/16 in", "DEC", 1, 0, 12.00,
      status="EST", seen="2026-11-09", lead=5, url="https://www.mcmaster.com/", part="GER-006", note="CR-D5-10: D5 names McMaster-Carr (separate cart and shipping); an Amazon sheet is carried. Price UNVERIFIED; 4 pads + 12 spares per sheet")
-line("D06", "pod", "Pack straps 20 x 300 mm hook-and-loop rubber-backed x2 + 0.5 mm silicone sheet", "Amazon", "battery strap", "DEC", 1, 0, 6.00,
+line("D06", "pod", "Pack straps 20 x 300 mm hook-and-loop rubber-backed x2 + 2 EVA shims (POD-004)", "Amazon", "battery strap", "DEC", 1, 0, 7.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="POD-004", note="D2 POD-004")
 line("W08", "airframe", "ASA filament 1 kg (motor mounts FIN-003, ESC pads FIN-007; D-42)", "West3D", "ASA 1 kg", "DEC", 1, 0, 24.99,
      status="EST", seen="2026-11-09", lead=5, url="https://west3d.com/", part="FIN-003", note="NOT in CR-A1-39: D-42 prints mounts and pads in ASA and Jacobs Hall stocks PLA only, so a spool is bought. 4 x 12.66 + 4 x 1.86 g = 58 g; a 0.5 kg spool if offered")
@@ -150,8 +164,11 @@ line("T01", "transport", "Coroplast 4 mm 48 x 96 in x 2 (box base, lid)", "Home 
 line("T02", "transport", "LSE double-sided tape, 1 roll (3M 300LSE class)", "Home Depot El Cerrito", "3M 300LSE class", "LOCAL", 1, 0, 12.00, status="EST", seen="2026-11-09", lead=0, url="https://www.homedepot.com/", part="TRN-101", note="D7")
 line("T03", "transport", "Cam-buckle straps x2 + strap handles x3", "Home Depot El Cerrito", "25 mm tie-down, luggage handle", "LOCAL", 1, 0, 24.00, status="EST", seen="2026-11-09", lead=0, url="https://www.homedepot.com/", part="TRN-006", note="D7 TRN-006-A/B 2 x 6 + TRN-007 3 x 4")
 line("T04", "transport", "Field pouch + 10 mm prop spanner (D-40) + M3x16 / nyloc / fender washers x6", "Home Depot El Cerrito", "pouch, 10 mm spanner", "LOCAL", 1, 0, 13.80, status="EST", seen="2026-11-09", lead=0, url="https://www.homedepot.com/", part="TRN-008", note="D7 TRN-008 8 + TRN-106 4 + TRN-102 1.80")
-line("T05", "transport", "Ground mat 0.6 x 0.6 m EVA tile", "Home Depot El Cerrito", "EVA tile", "LOCAL", 1, 0, 10.00, status="EST", seen="2026-11-09", lead=0, url="https://www.homedepot.com/", part="TRN-104", note="D7 TRN-104. C5 wants a RUBBER landing mat (CR-C5-06): D7 and C5 reconcile; one mat carried")
+line("T05", "transport", "Landing mat 0.8 x 0.8 m: 3 mm birch ply (Jacobs stock) + 1.5 mm rubber sheet, cloth-tape hinge (TRN-104, CR-D7-17)", "Home Depot El Cerrito", "rubber sheet 1.5 mm + cloth tape", "LOCAL", 1, 0, 25.00, status="EST", seen="2026-11-09", lead=0, url="https://www.homedepot.com/", part="TRN-104", note="CR-D7-17 settles CR-I1-18: one rubber-on-ply mat (mu 0.7, C5). D7 estimate $25; ply is free if Jacobs stock is confirmed")
 line("T06", "transport", "PE foam plank 2 in + 1 in (cradle columns, lid pillars)", "Home Depot El Cerrito", "PE foam 1.7 pcf", "LOCAL", 1, 0, 18.00, status="EST", seen="2026-11-09", lead=0, url="https://www.homedepot.com/", part="TRN-002", note="D7 TRN-002-L/R 12, TRN-004-L/R 6; XPS offcuts for the tray")
+line("T07", "transport", "Field tote about 0.45 x 0.35 x 0.25 m (TX, landing-spares box, flight card, anemometer) (TRN-107)", "Home Depot El Cerrito", "tote", "LOCAL", 1, 0, 8.00, status="EST", seen="2026-11-10", lead=0, url="https://www.homedepot.com/", part="TRN-107", note="CR-D7-17")
+line("T08", "transport", "Landing-spares box 1 L food container (TRN-108)", "Home Depot El Cerrito", "1 L box", "LOCAL", 1, 0, 3.00, status="EST", seen="2026-11-10", lead=0, url="https://www.homedepot.com/", part="TRN-108", note="CR-D7-17")
+line("T09", "transport", "Labels for lid and end walls (TRN-109)", "Home Depot El Cerrito", "label sheet", "LOCAL", 1, 0, 2.00, status="EST", seen="2026-11-10", lead=0, url="https://www.homedepot.com/", part="TRN-109", note="CR-D7-17")
 line("H05", "hardware", "Hot-wire bow/jig + airfoil template stock", "Home Depot El Cerrito", "-", "LOCAL", 1, 0, 15.00,
      status="EST", seen="2026-11-09", lead=0, url="", part="WNG-005", note="K01 REVIEW section 2")
 # --- avionics ground-side / radio
@@ -181,10 +198,16 @@ line("G12", "groundtest", "Ground-test additions: 1 kgf bar cell + HX711 (torque
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="GND-012",
      note="CR-A1-39 / D-39: the only NEW ground-test purchase, <= $20. With G06 (20 kgf cell kit, $17.97) the bought rig is $34.97; everything else on H1's list is borrowed (ORDER-PLAN borrow table)")
 
+line("G13", "groundtest", "2 foil strain gauges 350 ohm (pack of 5-10) + cyanoacrylate gauge kit, for T-C4-FIN-PROOF (paper face + strip)", "Amazon", "350 ohm foil gauge 3 x 5 mm, pack", "DEC", 1, 0, 9.00,
+     status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="GND-012",
+     note="CR-C4-38 / D-70: two gauges on the fin proof article; read on the HX711 from G12 as a half bridge with two 350 ohm resistors (H1 confirms the amp). Pushes the NEW ground-test purchase to $26.00, above the D-39 $20 line: A1 decision")
+
 # Lines that stay in this BOM (vendor, part number, price) but are bought only when their gate passes: NOT in the spend
 # totals, reported in the `all-in` figures. X07 = D7 box and field kit (store pick-up, zero lead time, needed from March);
 # X08 = airspeed sensor (DECISION 5.1 lever; needed for the fixed-wing tune, which can start on the synthetic airspeed).
-GATE_OF = {"T01": "X07", "T02": "X07", "T03": "X07", "T04": "X07", "T05": "X07", "T06": "X07", "A04": "X08"}
+GATE_OF = {"T01": "X07", "T02": "X07", "T03": "X07", "T04": "X07", "T05": "X07", "T06": "X07", "T07": "X07", "T08": "X07", "T09": "X07", "A04": "X08",
+           # D-57 lever 1 (D-72): borrow the soldering kit; lever 2: borrow the hot-wire gear. Bought only if Jacobs Hall refuses.
+           "G07": "X10", "G08": "X10", "G09": "X10", "G10": "X10", "G11": "X11", "H05": "X11"}
 for _l in L:
     _l["gate"] = GATE_OF.get(_l["id"], "")
 
@@ -192,7 +215,7 @@ for _l in L:
 GATED = [
     dict(id="X01", item="2nd LANRC ESC 4-pack (4 spare ESCs)", net=30.00, gate="realised reserve after all December receipts >= $309 + this line incl. tax",
          why="was in the carried BOM (CR-E1-12 '4 + 4'); deferred to hold the pessimistic reserve >= $309 (CR-I1-02)"),
-    dict(id="X02", item="Spare elevon servo (3rd ES3005HV)", net=19.99, gate="as X01", why="spare, 2 fitted"),
+    dict(id="X02", item="Spare elevon servo (3rd Savox SH-0255MG+)", net=41.99, gate="as X01; D6 and CR-A1-52 ask for 3, the reserve pays for 2", why="spare, 2 fitted; single-source 12 mm servo, buy it first if the reserve allows"),
     dict(id="X03", item="Optional APC 11x5.5E x2 + 11x5.5EP x2 (CR-B4-11, rings included)", net=16.68, gate="as X01; only if the stand shows the MR/MRP pair short",
          why="alternate for the stand A/B"),
     dict(id="X04", item="Flight packs 3-4, one more Ovonic 2-pack", net=82.97, gate="D-12: reserve after the December order >= $309 + $91.47 (at sale price); and only a SKU that passes CR-I1-13",
@@ -204,6 +227,10 @@ GATED = [
          why="deferred in R2 to hold the pessimistic reserve >= $309 (CR-I1-14); replaces the old $60 plywood estimate H04"),
     dict(id="X08", item="RMRC MS4525DO airspeed sensor + pitot (line A04)", net=None, gate="as X01; DECISION 5.1 lever, last in the order (CR-I1-03)",
          why="needed for gain scheduling in fixed-wing flight; the first fixed-wing tune can run on the synthetic airspeed estimate (F4 confirms)"),
+    dict(id="X10", item="Soldering kit if Jacobs Hall will not lend it (G07 Pinecil, G08 PD supply, G09 multimeter, G10 solder/flux/wick)", net=None, gate="Jacobs Hall refuses in writing (T-I1-BORROW, before 20 Nov); then the line is BOUGHT and the reserve falls by its value",
+         why="D-57 lever 1 applied (D-72, CR-A1-67): borrowed from Jacobs Hall, H1 gets the written yes"),
+    dict(id="X11", item="Hot-wire gear if Jacobs Hall will not lend it (G11 30 V 10 A supply + Ni80 wire, H05 bow and template stock)", net=None, gate="as X10 (hot-wire foam cutting is a stated Jacobs capability; the written yes covers it)",
+         why="D-57 lever 2 applied because lever 1 alone leaves the pessimistic reserve under $309 after the designers' lines"),
     dict(id="X09", item="K-type thermocouple logger / 2-channel meter (E3 GT-04)", net=15.00, gate="only if Jacobs Hall cannot lend one", why="H1 borrow list"),
 ]
 
@@ -238,26 +265,25 @@ def money(tax_rate):
 
 
 def bridge(tax_rate):
-    """Pessimistic spend = I1-R1 pessimistic spend ($1 680.35, itself bridged to the tie-break $1 678.58 in R1) + this
-    revision's pre-tax deltas x (1 + tax). The delta numbers are typed here from the designers' requests, not read from L,
-    so money() and bridge() agree only if every line change was recorded."""
-    r1 = 1680.35
+    """Pessimistic spend = I1-R2 published pessimistic spend ($1 687.01, params D-57) + this revision's pre-tax deltas x (1 + tax).
+    The delta numbers are typed here from the designers' requests, not read from L, so money() and bridge() agree only if every
+    line change was recorded."""
+    r2 = 1687.01
     deltas = {
-        "old $124.01 wiring/hardware lump (H01 55.00 + H02 69.01) removed": -124.01,
-        "old H03 AS150U re-termination $15.00 and old H04 plywood box $60.00 removed": -75.00,
-        "new H01 12.00 + H02 24.00 residual harness and mechanism consumables + H03 5.00 charger XT60 stub": 12.00 + 24.00 + 5.00,
-        "F01-F09 power items (CR-F1-12): 25 + 8 + 8 + 4 + 18 + 6 + 5 + 6 + 6": 86.00,
-        "C01-C05 fastener, insert, rod, Loctite, epoxy kit (CR-C6-11)": 5.00 + 9.00 + 3.00 + 9.00 + 14.00,
-        "D01-D04 CF strips, CF tube 20x18, straps (CR-D3-09)": 10.00 + 3 * 6.00 + 20.00 + 8.00,
-        "D05 neoprene (CR-D5-10) and D06 pack straps (D2)": 12.00 + 6.00,
-        "W08 ASA spool (D-42, not in CR-A1-39)": 24.99,
-        "A05 microSD (CR-F3-06)": 6.00,
-        "G12 ground-test additions (CR-A1-39, <= $20)": 17.00,
-        "B06 Small Parts adapter set to gated X05 (D-39)": -23.95,
-        "A04 airspeed sensor held behind gate X08": -59.99,
-        "T01-T06 D7 box and field kit held behind gate X07 (0 in the spend)": 0.0,
+        "P01 Ovonic 120C EC5 pair, pessimistic EUR 113.30 x 1.16 = 131.43 replaces 130C XT60 list 119.88 (D-64)": 131.43 - 119.88,
+        "M01 Savox SH-0255MG+ 2 x 41.99 replaces ES3005HV 2 x 19.99 (CR-D6-02)": 2 * 41.99 - 2 * 19.99,
+        "A06 two U.FL T-antennas (D-72)": 6.00,
+        "A07 FC isolation set 10.00 (F3 AVN-006)": 10.00,
+        "F03 16 AWG 8 to 14 (HRN-101), F08 PDB 6 to FR4 3, F09 heat-shrink 6 to 9": 6.00 - 3.00 + 3.00,
+        "H01 + H02 residual 36 replaced by itemised harness 41 and mechanisms hardware 24": 41.00 + 24.00 - 36.00,
+        "C06 PA66 socket-head set 7.00; C03 CF rod 2.5 mm x 2 at 3.50 replaces 2 mm x 1 at 3.00": 7.00 + (7.00 - 3.00),
+        "D07 brass tube 7/32 in 3.00 (CR-D5-27); D06 straps 6 to 7": 3.00 + 1.00,
+        "G13 two strain gauges (CR-C4-38)": 9.00,
+        "D-57 lever 1: G07 25.99 + G08 20.00 + G09 25.00 + G10 15.00 borrowed (gate X10)": -(25.99 + 20.00 + 25.00 + 15.00),
+        "D-57 lever 2: G11 41.73 + H05 15.00 borrowed (gate X11)": -(41.73 + 15.00),
+        "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0,
     }
-    return round(r1 + sum(deltas.values()) * (1 + tax_rate), 2), deltas
+    return round(r2 + sum(deltas.values()) * (1 + tax_rate), 2), deltas
 
 
 def reserve_calc(budget, spend):
@@ -305,9 +331,9 @@ def spend(tax):
     return money(tax)
 
 
-@kit.calc("CALC-I1-BRIDGE", title="Bottom-up minus R1-bridge (pessimistic spend)", inputs={"tax": P + "requirements.tax_rate", "sp": "CL-I1-SPEND-PESS"},
+@kit.calc("CALC-I1-BRIDGE", title="Bottom-up minus R2-bridge (pessimistic spend)", inputs={"tax": P + "requirements.tax_rate", "sp": "CL-I1-SPEND-PESS"},
           units={"tax": "-", "sp": "USD"}, cites=["SRC-TIEBREAK"],
-          equation="delta = spend_pess(bottom-up) - [1680.35 (R1) + sum(R2 line deltas) x (1 + tax)]", output="delta_usd")
+          equation="delta = spend_pess(bottom-up) - [1687.01 (R2) + sum(R3 line deltas) x (1 + tax)]", output="delta_usd")
 def spend_bridge(tax, sp):
     return round(sp - bridge(tax)[0], 2)
 
@@ -331,7 +357,9 @@ def allin(tax, budget):
 @kit.calc("CALC-I1-GROUNDTEST", title="New bought ground-test purchase (line G12)", inputs={"tax": P + "requirements.tax_rate"},
           units={"tax": "-"}, cites=["SRC-I1-CARRIED"], equation="sum of BOM lines with group 'groundtest', pre-tax", output="bought_usd")
 def groundtest(tax):
-    return {"bought_usd": round(sum((l["fit"] + l["spare"]) * l["unit"] for l in L if l["group"] == "groundtest"), 2)}
+    g12 = sum((l["fit"] + l["spare"]) * l["unit"] for l in L if l["id"] == "G12")
+    allg = sum((l["fit"] + l["spare"]) * l["unit"] for l in L if l["group"] == "groundtest")
+    return {"bought_usd": round(g12, 2), "bought_with_gauges_usd": round(allg, 2)}
 
 
 kit.claim("CL-I1-SPEND-BASE", "BOM spend at order, baseline", calc="CALC-I1-SPEND", output="spend_base", unit="USD",
@@ -340,7 +368,7 @@ kit.claim("CL-I1-SPEND-BASE", "BOM spend at order, baseline", calc="CALC-I1-SPEN
 kit.claim("CL-I1-SPEND-PESS", "BOM spend at order, pessimistic", calc="CALC-I1-SPEND", output="spend_pess", unit="USD",
           limit=("<=", P + "requirements.budget_usd"), verifies=["R-BUDGET"],
           how="Same lines at list price plus the DECISION section 9 adders; CL-I1-BRIDGE-DELTA must be 0.")
-kit.claim("CL-I1-BRIDGE-DELTA", "Bottom-up minus R1 bridge (USD)", calc="CALC-I1-BRIDGE", output="delta_usd", unit="USD",
+kit.claim("CL-I1-BRIDGE-DELTA", "Bottom-up minus R2 bridge (USD)", calc="CALC-I1-BRIDGE", output="delta_usd", unit="USD",
           limit=("<=", 0.02),
           how="Non-zero means a BOM line changed without the bridge table in build_bom.py bridge() being updated.")
 kit.claim("CL-I1-RESERVE-PESS", "Pessimistic reserve at order", calc="CALC-I1-RESERVE", output="reserve_pess", unit="USD",
@@ -354,16 +382,17 @@ kit.claim("CL-I1-RESERVE-PESS-ALLIN", "Pessimistic reserve if the gated lines X0
           how="2 000 minus the all-in pessimistic spend. Information, not a gate: the committed order holds >= 309 by deferring X07 and X08 until their gate passes. Below 309 means every gated line cannot be bought on pessimistic numbers.")
 kit.claim("CL-I1-GROUNDTEST-BOUGHT", "New bought ground-test purchase, pre-tax (USD)", calc="CALC-I1-GROUNDTEST", output="bought_usd", unit="USD",
           limit=("<=", 20.0),
-          how="D-39: ground-test equipment is borrowed from Jacobs Hall first; at most $20 is bought (G12). The 20 kgf cell kit G06 ($17.97) was already in the baseline.")
+          how="D-39: at most $20 is bought new for ground test (G12 only); gauges G13 are CL-I1-GROUNDTEST-WITH-GAUGES. The 20 kgf cell kit G06 ($17.97) was already in the baseline.")
 
+kit.claim("CL-I1-GROUNDTEST-WITH-GAUGES", "New ground-test purchases incl. the two fin-proof strain gauges G13, pre-tax (USD)", calc="CALC-I1-GROUNDTEST", output="bought_with_gauges_usd", unit="USD",
+          how="G12 $17.00 (D-39 line, limit 20) + G13 $9.00 (CR-C4-38): $26.00 is $6 above the D-39 line. Information for A1, who owns the decision; the gauges are in the pessimistic spend.")
 kit.test("T-I1-CONNECTOR-LEADS", "Confirm the pack connector and lead gauge before ordering", verifies=["CL-I1-SPEND-PESS"], state="planned",
-         procedure="Before the pack order: read the listing photos or ask the vendor for lead gauge (needs >= 10 AWG, F1 CL-F1-PACKLEAD-RISE) and connector (XT60). The 2026-11-09 listing says 12 AWG, 680 g: do not order it. On arrival: measure the lead conductor with calipers, weigh both packs.")
+         procedure="Before the pack order: ask the seller for the discharge-lead gauge (needs >= 10 AWG, F1 CL-F1-PACKLEAD-RISE) and confirm EC5 / 4S / 6500 / hard case / 2 packs in the cart (D-64). 12 AWG: stop, tell E2 and F1. Do not order the 130C XT60 SKU (680 g, 12 AWG). On arrival: measure the lead conductor with calipers, weigh both packs (accept <= 592.6 g each, CL-A1-PACK-ACCEPT).")
 kit.test("T-I1-LISTINGS", "Re-read the six listings before each order", verifies=["CL-I1-SPEND-PESS", "CL-I1-RESERVE-PESS"], state="planned",
          procedure="On 20 Nov and 15 Dec open: LANRC ASIN B0D2HS4Y4J, SunnySky X3108S, Ovonic 2-pack (connector, lead gauge, mass, price), Aloft tube, "
                    "APC 11x5.5MR/11x4.5MR; log price and stock in team/I1/listing_log.csv; re-run build_bom.py.")
 kit.test("T-I1-BORROW", "Jacobs Hall confirms the H1 rig loan in writing", verifies=["CL-I1-GROUNDTEST-BOUGHT"], state="planned",
-         procedure="Before 20 Nov ask Jacobs Hall staff, by email, to lend the items in ORDER-PLAN.md 'Borrow list' for 25 Nov - 8 Dec (stand campaign) "
-                   "and the build-end weigh-in; file the reply in team/I1/borrow_confirmation.txt. A refusal moves the item to a BOM line (price in the table).")
+         procedure="Before 20 Nov ask Jacobs Hall staff, by email, to lend (a) the soldering kit (G07-G10, gate X10, lever 1), (b) the hot-wire supply and wire (G11, H05, gate X11, lever 2) for the whole build January-February, and (c) the items in ORDER-PLAN.md 'Borrow list'; file the reply in team/I1/borrow_confirmation.txt. A refusal makes the gated line a BOM line and the pessimistic reserve falls by its value (X10 $94.80, X11 $62.54).")
 kit.test("T-I1-ARRIVAL", "Weigh and inspect on arrival", verifies=["CL-I1-RESERVE-PESS"], state="planned",
          procedure="Weigh each pack, motor, ESC and the Aloft tube; check the pack connector is XT60; give masses to A3 and E2 (pack_log.csv).")
 

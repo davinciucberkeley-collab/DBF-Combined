@@ -227,16 +227,6 @@
    "status": "UNVERIFIED"
   },
   {
-   "id": "ASM-F4-CG-Z",
-   "type": "assumption",
-   "title": "CG height for the sensor offsets",
-   "text": "+0.0185 m above the chord plane, take-off basic case",
-   "basis": "team/A3/claims.json CALC-A3-CG outputs.cg_m[2] = 0.01850 m (2026-11-10 roll-up; MASS-CG.md table rounds it to +0.019 basic, +0.018 predicted). A3 publishes no CG-z claim, only CL-A3-CG-Z-RANGE (CR-F4-19)",
-   "value": 0.0185,
-   "unit": "m",
-   "status": "UNVERIFIED"
-  },
-  {
    "id": "ASM-F4-THETA-DN",
    "type": "assumption",
    "title": "Servo angle for 25 deg TE down",
@@ -388,7 +378,7 @@
    "title": "Airspeed limits against stall, transition gate, VA and Vmax",
    "script": "redesign/team/F4/fsw_check.py",
    "function": "airspeed_limits",
-   "equation": "f_min = AIRSPEED_MIN / Vs ; f_cr = AIRSPEED_CRUISE / (1.3 Vs)",
+   "equation": "f_min = AIRSPEED_MIN / Vs ; f_cr = AIRSPEED_CRUISE / (1.3 Vs) ; Vs_keep = AIRSPEED_MIN / 1.3 (largest measured stall that keeps AIRSPEED_MIN, D-71)",
    "inputs": {
     "vs": "CL-A1-STALL-GATE",
     "vmin": "P:fsw.airspeed_min_ms",
@@ -403,13 +393,14 @@
     "vmax": "m/s"
    },
    "outputs": {
-    "min_factor": 1.3436502522802332,
-    "cruise_over_trans": 1.0335771171386408,
+    "min_factor": 1.3445399441437125,
+    "cruise_over_trans": 1.0342614954951634,
     "vmax": 18.0,
-    "vmin": 16.0
+    "vmin": 16.0,
+    "vs_keep": 12.307692307692307
    },
    "input_values": {
-    "vs": 11.907860674939258,
+    "vs": 11.899981156892892,
     "vmin": 16,
     "vcr": 16.0,
     "f": 1.3,
@@ -454,10 +445,10 @@
     "SRC-F4-AP-SRC"
    ],
    "outputs": {
-    "v_dive": 17.75252236774182,
-    "cd0": 0.048064648619879656,
+    "v_dive": 17.705555651129096,
+    "cd0": 0.04824380486987966,
     "scaler_va": 0.7804878048780488,
-    "scaler_vd": 0.599250936329588
+    "scaler_vd": 0.6015037593984962
    },
    "input_values": {
     "m": 2.6,
@@ -466,12 +457,12 @@
     "b": 1.15,
     "c": 0.32,
     "e": 0.8,
-    "ld": 6.341272397169269,
+    "ld": 6.325010564744458,
     "vc": 16.0,
     "th": -10,
     "sc": 16,
     "vmax": 18,
-    "vd": 26.7,
+    "vd": 26.6,
     "va": 20.5
    }
   },
@@ -506,16 +497,16 @@
     "SRC-F4-AP-SRC"
    ],
    "outputs": {
-    "v_lvl": 21.28197482377272,
+    "v_lvl": 21.273687450398977,
     "a_fw_thr": 0.7039829466683679,
     "a_pass": 0.7,
     "a_lin": 0.7039829466683679,
     "vh_req": 21.759999999999998,
-    "ratio": 0.9780319312395553,
+    "ratio": 0.9776510776837767,
     "rpm_fw": 7748.694104449502
    },
    "input_values": {
-    "vmax": 25.680000000001513,
+    "vmax": 25.67000000000151,
     "a_cap": 0.8494644984849183,
     "thr": 70,
     "smax": 0.84,
@@ -557,12 +548,12 @@
     "ASM-F4-QT-ARM"
    ],
    "outputs": {
-    "f_rll_hz": 1.0372704749995239,
-    "p_ceiling_rll": 0.3470647325618376,
-    "f_pit_hz": 2.4782692384560154,
-    "p_ceiling_pit": 0.14526266735420698,
-    "f_yaw_hz": 1.0136967872133522,
-    "p_ceiling_yaw": 0.9470287487435327
+    "f_rll_hz": 1.025355993460226,
+    "p_ceiling_rll": 0.35109757225402566,
+    "f_pit_hz": 2.3647111437479293,
+    "p_ceiling_pit": 0.18268616069331203,
+    "f_yaw_hz": 1.0081858571191291,
+    "p_ceiling_yaw": 0.9522053827884283
    },
    "input_values": {
     "T": 21.1,
@@ -570,9 +561,9 @@
     "z": 0.19,
     "cant": 7.0,
     "qt": 0.02,
-    "izz": 0.16794615232325408,
-    "iyy": 0.04420463610965501,
-    "ixx": 0.17320454682526285,
+    "izz": 0.16984747573915068,
+    "iyy": 0.04605366136239337,
+    "ixx": 0.17415131486690463,
     "p": [
      0.08,
      0.08,
@@ -583,7 +574,7 @@
      0.002
     ],
     "fr": 4.5,
-    "fp": 4.5,
+    "fp": 5.4,
     "fy": 2.4
    }
   },
@@ -634,11 +625,11 @@
     "ASM-F4-SAG"
    ],
    "outputs": {
-    "a_up": 0.671343592816169,
+    "a_up": 0.6715465033311601,
     "a_up_at_limit": 0.6755223233592841
    },
    "input_values": {
-    "s": 1.2158384609085338,
+    "s": 1.2174684648587217,
     "smax": 1.25,
     "a_h": 0.49,
     "d": 0.3,
@@ -730,15 +721,15 @@
     "ASM-F4-DT-MIX"
    ],
    "outputs": {
-    "gain_req_pct": 30.24616231437549,
-    "a_cruise": 0.19458433541153997,
-    "a_low_side": 0.11896892962560124,
+    "gain_req_pct": 30.20735513714946,
+    "a_cruise": 0.19483431654214345,
+    "a_low_side": 0.1193159286992698,
     "dT_N": 0.78125
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
-    "ld": 6.341272397169269,
+    "ld": 6.325010564744458,
     "n": 4,
     "a_h": 0.49,
     "y": 0.32,
@@ -752,7 +743,7 @@
    "title": "Fastest commanded vertical descent",
    "script": "redesign/team/F4/fsw_check.py",
    "function": "descent",
-   "equation": "v = max(Q_WP_SPD_DN, Q_PILOT_SPD_DN, Q_LAND_FINAL_SPD)",
+   "equation": "v = max(Q_WP_SPD_DN, Q_PILOT_SPD_DN, Q_LAND_FINAL_SPD) ; v_td = max(Q_PILOT_SPD_DN, Q_LAND_FINAL_SPD) (Q_WP_SPD_DN ends at Q_LAND_FINAL_ALT 6 m, so it never reaches the ground)",
    "inputs": {
     "wp": "P:fsw.wp_spd_dn_ms",
     "pil": "P:fsw.pilot_spd_dn_ms",
@@ -764,12 +755,43 @@
     "fin": "m/s"
    },
    "outputs": {
-    "value": 1.2
+    "value": 1.2,
+    "touchdown": 1.0
    },
    "input_values": {
     "wp": 1.2,
-    "pil": 1.2,
+    "pil": 1.0,
     "fin": 0.3
+   }
+  },
+  {
+   "id": "CALC-F4-FLTMODES",
+   "type": "calculation",
+   "title": "Flight modes a pilot can select or boot into that pass raw stick to a surface or motor",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "fltmodes",
+   "equation": "n = count(m in FLTMODE1-6 + INITIAL_MODE, m in {0 MANUAL, 2 STABILIZE, 3 TRAINING, 4 ACRO, 23 QACRO})",
+   "inputs": {
+    "modes": "P:fsw.fltmodes",
+    "init": "P:fsw.initial_mode"
+   },
+   "cites": [
+    "SRC-F4-AP-SRC"
+   ],
+   "outputs": {
+    "value": 0,
+    "raw": []
+   },
+   "input_values": {
+    "modes": [
+     17,
+     18,
+     19,
+     5,
+     7,
+     11
+    ],
+    "init": 17
    }
   },
   {
@@ -920,7 +942,7 @@
    "inputs": {
     "pts": "ASM-F4-AVN-POINTS",
     "xcg": "P:cg.x_target_m",
-    "zcg": "ASM-F4-CG-Z",
+    "zcg": "P:cg.z_target_m",
     "ins": "P:fsw.ins_pos_m",
     "gps": "P:fsw.gps_pos_m"
    },
@@ -929,21 +951,20 @@
     "zcg": "m"
    },
    "assumes": [
-    "ASM-F4-AVN-POINTS",
-    "ASM-F4-CG-Z"
+    "ASM-F4-AVN-POINTS"
    ],
    "outputs": {
     "ins_derived_m": [
-     0.062200000000000005,
+     0.059000000000000004,
      0.046,
      -0.0205
     ],
     "gps_derived_m": [
-     -0.022799999999999994,
+     -0.025999999999999995,
      0.0,
      -0.1595
     ],
-    "err_m": 0.00020000000000000573
+    "err_m": 6.938893903907228e-18
    },
    "input_values": {
     "pts": {
@@ -958,16 +979,16 @@
       0.178
      ]
     },
-    "xcg": 0.0522,
+    "xcg": 0.049,
     "zcg": 0.0185,
     "ins": [
-     0.062,
+     0.059,
      0.046,
      -0.0205
     ],
     "gps": [
-     -0.023,
-     0,
+     -0.026,
+     0.0,
      -0.1595
     ]
    }
@@ -1044,7 +1065,7 @@
    },
    "outputs": {
     "d_pitch_deg": 12.5,
-    "ratio": 0.8763342936014912,
+    "ratio": 0.8702391656036802,
     "gain_over_trim_limit": 1.0
    },
    "input_values": {
@@ -1053,7 +1074,7 @@
      -25,
      25
     ],
-    "ds": -10.95417867001864,
+    "ds": -10.877989570046003,
     "half": 0.5
    }
   },
@@ -1162,7 +1183,28 @@
     "AVN-001"
    ],
    "how": "Slow-flight stall test T-B2-STALL; re-run when A1/B3 re-issue the stall.",
-   "value": 1.3436502522802332
+   "value": 1.3445399441437125
+  },
+  {
+   "id": "CL-F4-ARSPD-MIN-D71",
+   "type": "claim",
+   "title": "AIRSPEED_MIN against 1.3 x the stall at the gate mass and the forward CG (D-71)",
+   "calc": "CALC-F4-ARSPD",
+   "output": "vmin",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-B2R3-VTR-GATE-FWD"
+   },
+   "verifies": [
+    "R-STALL",
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-B2-STALL (three slow-flight stalls at 2.6 kg, forward CG, airspeed logged): set AIRSPEED_MIN = ceil(1.3 x measured trimmed stall); 16 holds while the measured stall is <= 12.31 m/s (vs_keep).",
+   "value": 16.0
   },
   {
    "id": "CL-F4-ARSPD-MIN-FLOOR",
@@ -1199,7 +1241,7 @@
     "AVN-001"
    ],
    "how": "FBWA full-down stick at >= 80 m, throttle idle, 20 s: logged airspeed <= 20.5 m/s (T-F4-DIVE).",
-   "value": 17.75252236774182
+   "value": 17.705555651129096
   },
   {
    "id": "CL-F4-SCALER-VD",
@@ -1216,7 +1258,7 @@
     "AVN-001"
    ],
    "how": "Information: the speed scaler alone does not hold <= 1/3 at VD; the schedule rests on CL-F4-VDIVE-VA and CL-F4-VLEVEL-VH (CR-F4-12).",
-   "value": 0.599250936329588
+   "value": 0.6015037593984962
   },
   {
    "id": "CL-F4-VLEVEL-VH",
@@ -1233,7 +1275,7 @@
     "AVN-001"
    ],
    "how": "FBWB full-throttle level leg, fresh pack, >= 60 m (H2): logged airspeed <= 21.8 m/s and ESC rpm <= 7 950 (CR-B1-17 b, CR-C1-20); TECS caps demand at AIRSPEED_MAX 18 in normal flight.",
-   "value": 0.9780319312395553
+   "value": 0.9776510776837767
   },
   {
    "id": "CL-F4-VLEVEL",
@@ -1250,7 +1292,7 @@
     "AVN-001"
    ],
    "how": "As CL-F4-VLEVEL-VH; the same log shows AIRSPEED_MAX 18 m/s is reachable.",
-   "value": 21.28197482377272
+   "value": 21.273687450398977
   },
   {
    "id": "CL-F4-FW-RPM-CAP",
@@ -1290,7 +1332,7 @@
     "AVN-001"
    ],
    "how": "Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.",
-   "value": 1.0372704749995239
+   "value": 1.025355993460226
   },
   {
    "id": "CL-F4-XOVER-PIT",
@@ -1310,7 +1352,7 @@
     "AVN-001"
    ],
    "how": "As roll; after QAUTOTUNE reject any Q_A_RAT_PIT_P above p_ceiling_pit.",
-   "value": 2.4782692384560154
+   "value": 2.3647111437479293
   },
   {
    "id": "CL-F4-XOVER-YAW",
@@ -1327,7 +1369,7 @@
     "AVN-001"
    ],
    "how": "As roll.",
-   "value": 1.0136967872133522
+   "value": 1.0081858571191291
   },
   {
    "id": "CL-F4-FILT-SEP",
@@ -1408,7 +1450,7 @@
     "PRP-002-LL"
    ],
    "how": "Tethered-hover log on a pack near BATT_LOW: mean RCOU of the upper pair (UR, UL) / lower pair gives the split; peak upper-pair RCOU during pitch inputs stays below 0.84 (CR-A3-04, R-HOVER-SPLIT).",
-   "value": 0.671343592816169
+   "value": 0.6715465033311601
   },
   {
    "id": "CL-F4-SPLIT-OUT-LIMIT",
@@ -1470,7 +1512,7 @@
     "AVN-001"
    ],
    "how": "SITL S4 and flight logs: airspeed reaches 16 m/s after every pitch-over before the first turn.",
-   "value": 1.0335771171386408
+   "value": 1.0342614954951634
   },
   {
    "id": "CL-F4-ARSPD-MAX-VA",
@@ -1584,7 +1626,7 @@
     "PRP-002-LL"
    ],
    "how": "FBWA yaw doublet on the twin, then on K09-L at 16 m/s (T-B3-YAW-DOUBLET): yaw rate damps in < 2 cycles.",
-   "value": 30.24616231437549
+   "value": 30.20735513714946
   },
   {
    "id": "CL-F4-YAW-LOW-SIDE",
@@ -1604,7 +1646,7 @@
     "PRP-002-LL"
    ],
    "how": "Flight log RCOU at full rudder in cruise: no motor below 5 % output.",
-   "value": 0.11896892962560124
+   "value": 0.1193159286992698
   },
   {
    "id": "CL-F4-DESCENT",
@@ -1628,6 +1670,47 @@
    ],
    "how": "QLAND and QHOVER full-down logs: CTUN/QTUN DCRt >= -1.2 m/s.",
    "value": 1.2
+  },
+  {
+   "id": "CL-F4-TOUCHDOWN-SINK",
+   "type": "claim",
+   "title": "Fastest commanded descent that can reach the ground (QHOVER/QLOITER full down stick, QLAND final) against the hard-landing sink",
+   "calc": "CALC-F4-DESCENT",
+   "output": "touchdown",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.landing_sink_ms"
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "QHOVER full-down-stick log from 10 m to touchdown on the twin: CTUN/QTUN CRt at contact >= -1.2 m/s (peak overshoot read from the log). QSTABILIZE has no climb-rate loop: the flight card bars landing in it (CR-F4-21).",
+   "value": 1.0
+  },
+  {
+   "id": "CL-F4-NO-RAW-MODES",
+   "type": "claim",
+   "title": "Raw-stick modes among FLTMODE1-6 and INITIAL_MODE (R-SPIRAL, D-66)",
+   "calc": "CALC-F4-FLTMODES",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "verifies": [
+    "R-SPIRAL",
+    "R-FSW-PARAMS"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Lint of K09L.param by fsw_check.py (17 / 18 / 19 / 5 / 7 / 11, boot 17) and a parameter diff of the board after loading; H3's card forbids MANUAL / ACRO / STABILIZE from the GCS.",
+   "value": 0
   },
   {
    "id": "CL-F4-BODY-RATE",
@@ -1820,7 +1903,7 @@
     "AVN-002"
    ],
    "how": "Measure the as-built IMU and GPS centres from the CG mark (T-A3-CG-BALANCE) and reset the six lines.",
-   "value": 0.00020000000000000573
+   "value": 6.938893903907228e-18
   },
   {
    "id": "CL-F4-ELEVON-PWM-ERR",
@@ -1871,7 +1954,7 @@
     "AVN-001"
    ],
    "how": "T-B2-STALL slow flight in FBWA: elevon output not at the pitch end at the stall break.",
-   "value": 0.8763342936014912
+   "value": 0.8702391656036802
   },
   {
    "id": "T-F4-SITL-NAMES",

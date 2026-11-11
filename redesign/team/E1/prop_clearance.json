@@ -22,9 +22,17 @@
      "e1_m": 0.0212,
      "sym_m": 0.0173
     },
+    "FIN-003-UR / canted plate": {
+     "e1_m": 0.0241,
+     "sym_m": 0.0201
+    },
     "FIN-004-R / bore boss": {
      "e1_m": 0.0254,
      "sym_m": 0.023
+    },
+    "FIN-003-UR / cheek": {
+     "e1_m": 0.0261,
+     "sym_m": 0.0221
     },
     "FIN-006-R / tube plug": {
      "e1_m": 0.0261,
@@ -34,21 +42,13 @@
      "e1_m": 0.0283,
      "sym_m": 0.0244
     },
-    "FIN-003-UR / canted plate": {
-     "e1_m": 0.029,
-     "sym_m": 0.025
-    },
     "FIN-008-UR / collar ring": {
-     "e1_m": 0.0297,
-     "sym_m": 0.0257
+     "e1_m": 0.0296,
+     "sym_m": 0.0256
     },
     "FIN-003-UR / collar": {
      "e1_m": 0.0307,
      "sym_m": 0.0267
-    },
-    "FIN-003-UR / cheek": {
-     "e1_m": 0.0311,
-     "sym_m": 0.0271
     },
     "FIN-004-R / tube socket": {
      "e1_m": 0.0318,

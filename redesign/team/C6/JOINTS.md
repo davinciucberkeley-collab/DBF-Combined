@@ -1,45 +1,54 @@
 # Joints and fasteners — K09-L
 
-Owner C6. Revision **C6-R4**, 2026-11-10, at params A1-R4a (D-48 … D-59), C1 envelope R4 (VD 27.2 m/s), C4 fin FE as
-published in `team/C4/claims.d3.json` (re-run 2026-11-10 04:28: strip 1 248 N, pin 72.7 N, collar 6.26 N·m, read
-directly), fins D3-R4 (`subsystems/fins/params.json`: collar 12 mm, zoned 15 mm root fillet), landing D5 (1 350 mm²
-shoe), power F1 (`PWR-006` frame), pod C3/D2. Re-run in 1 s: `python -I redesign/team/C6/joints.py`,
-`python -I redesign/team/C6/make_stacks.py`, then `python -I redesign/proofs/build_graph.py`. Every joint stack is
-`PROPOSED`; every claim is `UNVERIFIED` until the C6 coupons run with the first prints. Machine-readable blocks for the
-edge owners: [`joint_stacks.json`](joint_stacks.json) (82 edges + 3 withdrawn, `interfaces/SCHEMA.md` field names).
+Owner C6. Revision **C6-R5b**, 2026-11-10, at params A1-R5 (D-63 … D-72). Inputs read live: C1 claims and
+`team/C1/data/envelope.json` (D-65 re-run of 14:29: half-fin section torsion **12.67 N·m** limit, J-FIN Mz 17.18 N·m
+ult); C4's frozen R4 fin set `team/C4/claims.d3.json` (11:51: strip 1 243 N, pin 72.4 N, collar 6.24 N·m, solved at
+C1's earlier 7.37 N·m); fins D3-R5b (`subsystems/fins/params.json`: pins Ø 2.5 at 15 mm, collar 15 mm, block edges
+R 3 mm, root fillet fail-safe only); D5 R5 shoe bond (1 350 mm², 85.7 N, RF 1.57); F1 power frame. Re-run in a few
+seconds: `python -I redesign/team/C6/joints.py`, `python -I redesign/team/C6/make_stacks.py`, then
+`python -I redesign/proofs/build_graph.py`. Joint stacks `PROPOSED`; claims `UNVERIFIED` until the C6 coupons run.
+Blocks for the edge owners: [`joint_stacks.json`](joint_stacks.json) (82 edges + 3 withdrawn).
 
 Check method: reserve factor RF = allowable / applied at the **design load** = C1 ultimate (1.5 × limit) × fitting
 factor 1.15, × 1.25 more for anything printed or bonded (`ASM-C1-FITTING-FACTOR`, `ASM-C1-PRINTED-FACTOR`).
 RF ≥ 1.0 passes; the proof chain shows the margin RF − 1.
 
-## What changed since C6-R3
+## What changed since C6-R4
 
-The R3 claims had drifted on 22 stored values: C4 re-ran its fin FE after R3 was issued, D3 deleted
-`ASM-D3-FILLET-LEG` (it now draws the 15 mm fillet), and C3 and D5 moved. `joints.py` now reads the drawn fillet leg
-from `fin_detail.fin.root_fillet.leg_m` and every C4 load from `claims.d3.json`, so it re-runs clean.
+The R5 action items were run as asked (C4's frozen set, 13 mm collar, 2.5 mm pins, D5's bond, the R 3 mm pocket,
+fillet RF kept on the joint side). Two things moved underneath them. First, the four C1 envelope values `joints.py`
+held as hand copies had drifted (J-FIN Mz 9.04 → 17.18 N·m ult), so they are now read live from `envelope.json`.
+Second, C1 re-ran for D-65 (n 6.6, 39.3 / 59.0 N foot side load) twice during this session, and the half-fin torsion
+went 7.39 → 8.13 → **12.67 N·m** limit. At 8.13 N·m the 13 mm collar read RF 0.9995, so C6 asked for 15 mm (CR-C6-36)
+and D3 drew it within the hour. At 12.67 N·m, 15 mm is not enough either.
 
-| Item | R3 (C4 numbers in the CR-C4-23 text) | R4 (C4 claims as published now) | Consequence |
+| Item | C6-R4 | C6-R5b (now) | Consequence |
 |---|---|---|---|
-| Collar torsion | max(C1 7.40, C4 4.61) N·m + 164 N brace | **max(C1 7.39, C4 6.26) N·m** + 163 N brace: C1 still governs (C1 read 7.42 an hour earlier) | 12 mm RF **1.00** (0.9998 … 1.003 between C1 runs), needs 11.96 mm → **13 mm, RF 1.09** (CR-C6-32) |
-| Strip end force per face | 908 N | **1 248 N** (`CL-C4-D3-STRIP-END-F`) | tail RF 1.74 → **1.27**; net section 1.57 → **1.14**; H1 lever frame too small (CR-C6-33) |
-| Pin force at 15 mm | 64 N | **72.7 N** (92 N in the 20:44 run) | 2 mm pins **RF 0.82**; 12 mm pitch (CR-C6-25) gives only 1.02 → **Ø 2.5 mm at the drawn 15 mm, RF 1.59** (CR-C6-31) |
-| Strip anchor claim for H1 | 908 N | **`CL-C6-STRIP-ANCHOR-F` 1 248 N**, pass line in `T-C6-STRIP-ANCHOR` now written from the claim | CR-H1-12 answered; CR-C6-33 |
-| Root fillet | 12 mm drawn (RF 0.87), 15 mm proposed (1.24) | **D3 draws 15 mm, zoned (CR-D3-25): RF 1.14** | CR-C6-24 closed; zoning accepted |
-| Foot shoe `E-GER-01…04` | 1 350 mm², 87.4 N, RF 1.54 | 1 350 mm², **85.7 N, RF 1.57** (= `CL-D5-BOND-SF`) | — |
-| Pod bond (C3) | 1.15 / 1.29 crash | **1.13 / 1.38** | — |
-| Pin edges `E-FIN-69…80` | no C6 block (D3 carried the R1 text "77 N, RF 1.41") | C6 blocks issued | D3 copies |
-| Power frame, mast bolt, servo areas, deviations, withdrawn stacks | issued in R3 | unchanged; re-checked | — |
+| Collar torsion, max(C1, C4) | max(7.39, 6.26) N·m + 163 N brace | **max(12.67, 6.24) N·m** + 163 N brace (C1 governs) | needs **19.45 mm**; drawn 15 mm RF **0.77**; 16 mm 0.82 → **22 mm, RF 1.13** (CR-C6-37). The D-70 12 mm option is void (0.63 even at 4.1 MPa) |
+| Pins | Ø 2 drawn 0.82; Ø 2.5 proposed 1.59 | **Ø 2.5 at 15 mm drawn: 1.60** on C4's 72.4 N | D-70 closed for C4's R4 load; on D-65 loads, estimate **0.93** (CR-C6-38) |
+| Strip tail anchor / net section | 1.27 / 1.14 at 1 248 N | 1.27 / 1.15 at 1 243 N (C4 frozen) | estimate on D-65 loads **0.74 / 0.67** at ≈ 2 130 N: hold collar and tail prints for C4 (CR-C6-38) |
+| Tube in block / block on spar | 5.03 / 5.66 | **2.65 / 4.64** (envelope read live) | still pass |
+| Root fillet | 1.14 (15 mm, zoned) | **0.81** on D-65's 59 N side load; fail-safe only (D-68) | kept as a C6 claim; D3's CR-D3-35 (zone to 0.185 m) supported |
+| Block pocket (D-68) | — | new `CALC-C6-BLOCK-POCKET`: wall area × 0.976; square-corner void 1.24 mm; pocket corner R 3.0–4.2 mm; beads 1.1 g | `E-FIN-51/52` rewritten; CR-C6-40 to D1 |
+| Foot shoe `E-GER-01…04` | 1.57 | **1.57**, 85.7 N on 1 350 mm² (D5 R5) | — |
+| Power frame `E-PWR-03` | 0.08 N·m | unchanged, **open with F1** (CR-C6-26) | — |
+| Avionics crash load | 10.0 N (hand copy) | 5.62 N (envelope) | insert RF set by the unplug case; still 1.74 |
+
+The `-EST` claims (`CALC-C6-FIN-SCALE`) scale C4's frozen strip and pin forces by k = C1 torsion now / the torsion C4
+solved at (12.62 / 7.37 = **1.71**). The D-65 side load drives both the torsion and the strip couple, so linear scaling
+is the right first estimate. They are bounding estimates for planning and retire when C4 re-runs.
 
 ## Verdict
 
 | Question | Answer | Claim | Status |
 |---|---|---|---|
-| How many fastener sizes? | **One bought thread, M3**: steel 8 and 16 mm, PA66 16 and 18 mm, one nyloc, one washer, one heat-set insert. M2 and 2-56 only as supplied mechanism hardware, M3x4 + M6 nut with the prop adapter (D-58) | kit table | `PROPOSED` |
-| Fastened joints pass? | Yes. Motor screws 0.20 N·m on the canted plate: head RF 1.32, 3.5 mm engagement, separation RF 3.73. Power frame at 0.08 N·m: engagement RF 1.22, install 1.35, tension 1.46, friction 1.24, insert 1.74 | `CL-C6-MOTOR-*`, `CL-C6-CANT-ENGAGE`, `CL-C6-PWR-*` | `UNVERIFIED` |
-| Station collar? | **No margin at 12 mm**: RF 1.003 on C1's 7.39 N·m + 204 N brace shear, and 0.9998 on C1's previous 7.42; it flips with each C1 run. 13 mm gives RF 1.09 for ≈ +0.6 g `EST` (all four) | `CL-C6-COLLAR-RF`, `-L-REQ`, `-RF-13MM`, `-RF-16MM` | `UNVERIFIED` (zero margin) → CR-C6-32 |
-| Fin bonds? | Strip tail 1.27, tail net section 1.14 (one strip), brace ends 2.35, anchor 1.35, block bonds 5.0–5.7. **Pins as drawn (Ø 2 at 15 mm) 0.82**; Ø 2.5 at 15 mm 1.59 (bearing 3.4, strip net 2.4); fallback Ø 2 at 9 mm 1.36 | `CL-C6-STRIP-*`, `-BRACE-*`, `-TUBE-BLOCK-RF` | `FAIL` → CR-C6-31 |
-| Foam bonds? | Foot shoe 1.57. Fin root 1.14 as drawn. Servo frame and horn ≥ 719 mm² each (D6 horn 1 385) | `CL-C6-FOOT-SHOE-RF`, `-FIN-ROOT-RF`, `-LINK-BOND-AREA-MIN` | `UNVERIFIED` |
-| Pod joints? | Pod bond 1.13 / 1.38 crash, tray 2.59, hatch tab 1.18. Floor-to-wall glue line 0.90 bare, 2.03 with the 6 mm fillet C3 flies | `CL-C6-POD-*` | `UNVERIFIED` |
+| How many fastener sizes? | **One bought thread, M3**: steel 8 and 16 mm, PA66 16 and 18 mm, one nyloc, one washer, one heat-set insert, plus Ø 2.5 CF rod for pins. M2 and 2-56 only as supplied mechanism hardware; M3x4 + M6 nut with the prop adapter (D-58) | kit table | `PROPOSED` |
+| Fastened joints pass? | Yes. Motor screws 0.20 N·m: head 1.32, separation 3.69, 3.5 mm engagement. Power frame at 0.08 N·m: engagement 1.22, install 1.35, tension 1.46, friction 1.24, insert 1.74 | `CL-C6-MOTOR-*`, `-CANT-ENGAGE`, `-PWR-*` | `UNVERIFIED` |
+| Station collar? | **Fails as drawn.** 15 mm RF 0.77 on C1's 12.67 N·m; needs 19.45 mm; **22 mm gives 1.13** for ≈ +4.4 g `EST` (four) | `CL-C6-COLLAR-RF`, `-L-REQ`, `-RF-PROP` | `FAIL` → CR-C6-37 |
+| Fin strips and pins? | On C4's frozen R4 loads: tail 1.27, net section 1.15, pins 1.60, bearing 3.45, strip net 2.41. **On C1's D-65 loads (estimate ×1.71): tail 0.74, net 0.67, pins 0.93** | `CL-C6-STRIP-*`, `-*-EST` | `FAIL` (estimate) → CR-C6-38 |
+| Block bonds and pocket? | Tube in block 2.65, block on spar 4.64; pocket corners R 3.0–4.2 mm, no square corners | `CL-C6-TUBE-BLOCK-RF`, `-BLOCK-SPAR-RF`, `-POCKET-*` | `UNVERIFIED` |
+| Foam bonds? | Foot shoe 1.57. Root fillet 0.81 (fail-safe path, D-68). Servo frame and horn ≥ 719 mm² | `CL-C6-FOOT-SHOE-RF`, `-FIN-ROOT-RF`, `-LINK-BOND-AREA-MIN` | root `FAIL` → D3 CR-D3-35 |
+| Pod joints? | Pod bond 1.15 / 1.33 crash, tray 2.59, hatch 1.18, floor glue line 2.03 with the fillet C3 flies | `CL-C6-POD-*` | `UNVERIFIED` |
 
 ## Rules: which fastening goes where
 
@@ -76,7 +85,7 @@ Torque without a torque screwdriver: hook a luggage scale on the long arm of the
 | M3 washer A2 | ISO 7089 | 12 | pinch bolts (8) | — |
 | M3 × 5.7 brass heat-set insert | Ruthex RX-M3x5.7 class | 12 | power frame (4), `T-C6-INSERT` (3), spares | iron + insert tip |
 | M3 nylon washer 0.5 mm + 10 mm nylon spacer (OD 6 / ID 3.2) | — | 6 + 6 | power frame | — |
-| Pultruded CF rod **Ø 2.5 mm** × 1 m | — | 1 + 1 spare | strip through-pins at 15 mm (CR-C6-31): 12 per half-fin × 4 = 48 × 11.6 mm ≈ 0.56 m | 2.5 mm drill |
+| Pultruded CF rod **Ø 2.5 mm** × 1 m | — | 1 + 1 spare | strip through-pins at 15 mm (D-70): 15 per half-fin × 4 = 60 × 11.6 mm ≈ 0.70 m (76 pins ≈ 0.88 m at 12 mm, if CR-C6-38 needs it: still one rod) | 2.5 mm drill |
 | Supplied, not bought | M3x4 × 4 + M6 nut + washer per adapter (`PRP-004`); servo cover M2 × 6 and 2-56 clevises (D6); gel cubes (F3) | — | prop adapter, mechanisms, FC | 2.5 mm hex, 10 mm spanner, Phillips #1 |
 | Ground (D7 buys) | handle stacks `E-TRN-13…15`: M3x16 + fender washer + nyloc on a ply strip | — | transport box | 2.5 mm hex, 5.5 mm spanner |
 
@@ -88,7 +97,7 @@ Ids are the declared edges in `subsystems/*/interfaces.json`. Order = install / 
 
 | Interface | Parts | Fastener × n | Hole / insert | Engagement (min), mm | Washer / nut | Torque · locking | Design load · check | Status |
 |---|---|---|---|---|---|---|---|---|
-| `E-FIN-61…64` | `PRP-001-<st>` → `FIN-003-<st>` | M3x8 SHCS × 4 | Ø 3.4 drilled square to the canted 4.5 mm plate on the measured pattern | 3.5 (3.0); ≤ probed depth − 0.5 | none, head flat | **0.20 N·m** + 243 on tip | 89 N per screw incl. 7° side moment 0.14 N·m ult; head RF 1.32, no-gap RF 3.73, strip RF 29 | `PROPOSED` |
+| `E-FIN-61…64` | `PRP-001-<st>` → `FIN-003-<st>` | M3x8 SHCS × 4 | Ø 3.4 drilled square to the canted 4.5 mm plate on the measured pattern | 3.5 (3.0); ≤ probed depth − 0.5 | none, head flat | **0.20 N·m** + 243 on tip | 90 N per screw incl. 7° side moment 0.14 N·m ult; head RF 1.32, no-gap RF 3.69, strip RF 29 | `PROPOSED` |
 | `E-FIN-05…08` | `FIN-003-<st>` → `FIN-002-<R/L>` | M3x16 SHCS × 1 | Ø 3.4 through both ears (grip 10.5) | 5.5 past grip (5.0) | 2 washers + nyloc | set by `T-D3-SLIP` (85–100 N at the can), ≈ 0.14 N·m, ≤ 0.4 | prop nut 3.23 N·m: bearing RF 3.26, hoop 5.94; 7° side: slip RF 16.8 / 48 | `PROPOSED` |
 | `E-PWR-03` | `PWR-006` frame → `POD-002` | **M3x18 PA66 × 4** | deck and spacer Ø 3.4; brass insert, bore 4.0 × 6.5 | **5.5 (4.5)**, ≤ 5.7; tip 1.0 clear | 0.5 nylon washer + 2.0 deck + 10 nylon spacer | **0.08 N·m** (1.6 N at 50 mm), no 243, witness | 50 N unplug at 18 mm: 39 N tension per screw, RF 1.46; shear 108 N, friction RF 1.24 (0.62 after creep, then spacer bending RF 7.2); insert RF 1.74; install RF 1.35 | `PROPOSED` (CR-C6-26) |
 | `E-POD-06` | `POD-005` → `POD-007` | M3x16 PA66 × 1 | Ø 3.4 across the boss | 6.0 past grip (4.0); grip 10.0 (≤ 11.0) | PA66 nut | finger + ¼ turn (≤ 0.08 N·m) | mast is the fuse; non-magnetic | `PROPOSED` (D2 adopted CR-C6-18) |
@@ -109,21 +118,22 @@ face 220 grit without tearing; foam dust-off only. Cure 24 h ≥ 18 °C; parts w
 
 | Interface | Parts | Area, mm² | Design load | Allowable | RF | Claim | Status |
 |---|---|---|---|---|---|---|---|
-| `E-FIN-01/02` | tube in block bore (43 mm) | 2 972 | 13.0 N·m torsion (J-FIN Mz 9.04 ult) | 2.0 MPa | 5.03 | `CL-C6-TUBE-BLOCK-RF` | `UNVERIFIED` |
-| `E-FIN-49/50` | block on spar (36 mm) | 2 488 | 9.7 N·m torsion | 2.0 MPa | 5.66 | `CL-C6-BLOCK-SPAR-RF` | `UNVERIFIED` |
-| `E-FIN-13…16` | station collar on tube, **12 mm** drawn | 829 | 15.9 N·m (C1 7.39 limit) + 204 N brace shear → 1.99 MPa | 2.0 MPa | **1.003** (0.9998 at C1 7.42); 13 mm **1.09**; 16 mm 1.34 | `CL-C6-COLLAR-RF`, `-RF-13MM`, `-L-REQ` 11.96 mm | `UNVERIFIED` (zero margin) → CR-C6-32 |
-| `E-FIN-29…36` | strip end in the two-face tail, 39.5 mm | 790 per strip | **1 248 N** per strip | 2.0 MPa; tail net 15 MPa on 95 mm² | 1.27 (needs 31.2 mm); net 1.14 | `CL-C6-STRIP-ANCHOR-F`, `-ANCHOR-RF`, `-EMBED-REQ`, `-TAIL-NET-RF` | `UNVERIFIED` |
-| `E-FIN-21…28` | strip on board paper (locating bond; the pins carry the shear) | 2 239 | C4 FE 4.85 N/mm design | paper 0.10 MPa | paper alone 0.21 | `CL-C6-STRIP-FACE-RF` | info |
-| `E-FIN-69…72` | CF through-pins strip-board-board-strip, 11.6 mm, bonded in | 12 per half-fin | 72.7 N per pin at 15 mm | 50 MPa shear; 400 MPa bending (reaction at board mid-plane, bound) | Ø 2 drawn **0.82**; **Ø 2.5: 1.59**; Ø 2 at 9 mm 1.36; Ø 2 max pitch 12.2 mm | `CL-C6-STRIP-PIN-RF`, `-PIN-RF-PROP`, `-PIN-RF-ALT`, `-PIN-PITCH-MAX` | `FAIL` → CR-C6-31 |
-| `E-FIN-73…80` | pin bearing in each 10 × 1 mm strip | — | 72.7 N per pin; 1 248 N strip force at the hole | 100 MPa CF bearing (`ASM-C6-CF-BEARING`); 400 MPa | bearing 3.44; net section 2.40 (Ø 2.5 hole) | `CL-C6-STRIP-PIN-BRG-RF`, `-NET-PIN-RF` | `UNVERIFIED` |
+| `E-FIN-01/02` | tube in block bore (43 mm) | 2 972 | 24.7 N·m torsion (J-FIN Mz 17.18 ult) | 2.0 MPa | 2.65 | `CL-C6-TUBE-BLOCK-RF` | `UNVERIFIED` |
+| `E-FIN-49/50` | block on spar (36 mm) | 2 488 | 11.8 N·m torsion | 2.0 MPa | 4.64 | `CL-C6-BLOCK-SPAR-RF` | `UNVERIFIED` |
+| `E-FIN-51/52` | block in its core pocket, edges R 3 mm, ≥ 3 mm beads both surfaces (D-68) | 6 500 (× 0.976 with the radius) | secondary: the bores carry the block | 0.125 MPa | not credited | `CL-C6-POCKET-WALL-AREA-RATIO`, `-SQUARE-GAP` 1.24 mm, `-R-MAX` 4.2 mm, `-BEAD-MASS` 1.1 g | `PROPOSED` (CR-C6-40) |
+| `E-FIN-13…16` | station collar on tube, **15 mm** drawn | 1 037 | 27.3 N·m (C1 12.67 limit) + 204 N brace shear → 2.59 MPa | 2.0 MPa | **0.77**; 16 mm 0.82; **22 mm 1.13** | `CL-C6-COLLAR-RF`, `-RF-15MM`, `-RF-PROP`, `-L-REQ` 19.45 mm | `FAIL` → CR-C6-37 |
+| `E-FIN-29…36` | strip end in the two-face tail, 39.5 mm | 790 per strip | **1 243 N** per strip (C4 R4); ≈ 2 130 N on D-65 (est.) | 2.0 MPa; tail net 15 MPa on 95 mm² | 1.27 / net 1.15; est. **0.74 / 0.67** (needs 53 mm and ≈ 140 mm²) | `CL-C6-STRIP-ANCHOR-*`, `-TAIL-NET-RF(-EST)`, `-EMBED-REQ` | `UNVERIFIED`; est. `FAIL` → CR-C6-38 |
+| `E-FIN-21…28` | strip on board paper (locating bond; the pins carry the shear) | 2 239 | C4 FE 4.83 N/mm design | paper 0.10 MPa | paper alone 0.21 | `CL-C6-STRIP-FACE-RF` | info |
+| `E-FIN-69…72` | CF through-pins strip-board-board-strip, Ø 2.5 × 11.6 mm, bonded in | 15 per half-fin | 72.4 N per pin at 15 mm (C4 R4) | 50 MPa shear; 400 MPa bending (reaction at board mid-plane, bound) | **1.60** drawn; max pitch 24.0 mm; fallback Ø 2 at 9 mm 1.36; est. on D-65 **0.93** (max pitch 14.0 mm) | `CL-C6-STRIP-PIN-RF`, `-PITCH-MAX`, `-RF-ALT`, `-RF-EST` | `UNVERIFIED`; est. `FAIL` → CR-C6-38 |
+| `E-FIN-73…80` | pin bearing in each 10 × 1 mm strip | — | 72.4 N per pin; 1 243 N at the hole | 100 MPa CF bearing; 400 MPa | bearing 3.45; net section 2.41 | `CL-C6-STRIP-PIN-BRG-RF`, `-NET-PIN-RF` | `UNVERIFIED` |
 | `E-FIN-37…44` | brace ends in ear and anchor slots (10 mm) | 240 | 204 N | 2.0 MPa | 2.35 | `CL-C6-BRACE-END-RF` | `UNVERIFIED` |
 | `E-FIN-57…60` | anchor saddle on spar, 90° contact | 276 | 204 N pull-off | 1.0 MPa | 1.35 | `CL-C6-ANCHOR-PULL-RF` | `UNVERIFIED` |
-| `E-FIN-53…56` | half-fin root fillets on XPS, zoned as D3 R4 draws them (15 mm effective root, 13 mm aft of hinge, 6 mm bead) | 5 318 upper / 5 078 lower | D3 L4 case μ 0.7 | 0.125 MPa | **1.14** (= 0.5 × `CL-D3-ROOT-FILLET-RF` 2.28) | `CL-C6-FIN-ROOT-RF` | `UNVERIFIED` |
+| `E-FIN-53…56` | half-fin root fillets on XPS, zoned (15 mm over 0.15 m, 13 mm aft of hinge, 4 mm sealing bead ahead); **fail-safe path only (D-68)** | 5 318 upper / 5 078 lower | D3: 50 % of the D-65 side load, 59.0 N ult | 0.125 MPa | **0.81** (= 0.5 × `CL-D3-ROOT-FILLET-RF` 1.62) | `CL-C6-FIN-ROOT-RF` | `FAIL` → D3 CR-D3-35 |
 | `E-FIN-45…48` | ESC pad on board | 1 288 | 1.4 N (crash) | 0.10 MPa | > 90 | — | `PROPOSED` |
 | `E-GER-01…04` | foot shoe on fin tip step | **1 350** | **85.7 N** | 0.10 MPa | **1.57** | `CL-C6-FOOT-SHOE-RF` (= `CL-D5-BOND-SF`) | `UNVERIFIED` |
-| `E-POD-01` | pod shell on core | 10 014 | C3 envelope / 12.75 g crash | 0.125 / 0.10 MPa | 1.13 / 1.38 | `CL-C6-POD-WING-RF`, `-POD-CRASH-RF` | `UNVERIFIED` |
+| `E-POD-01` | pod shell on core | 10 014 | C3 envelope / 12.75 g crash | 0.125 / 0.10 MPa | 1.15 / 1.33 | `CL-C6-POD-WING-RF`, `-POD-CRASH-RF` | `UNVERIFIED` |
 | `E-POD-02` | tray on floor, flat-wise under a strap | 13 505 | 19.3 kPa | 0.05 MPa | 2.59 | `CL-C6-POD-TRAY-RF` | `UNVERIFIED` |
-| inside `POD-001` | floor-to-side-wall line under the front strap | 4.8 mm edge | 111 kPa | 0.10 MPa | 0.90 bare → **2.03 with the 6 mm fillet** | `CL-C6-POD-FLOOR-RF(-PROP)` | `UNVERIFIED` (C3 flies the fillet) |
+| inside `POD-001` | floor-to-side-wall line under the front strap | 4.8 mm edge | 111 kPa | 0.10 MPa | **2.03 with the 6 mm fillet** (0.90 bare, record only) | `CL-C6-POD-FLOOR-RF-PROP` | `UNVERIFIED` (C3 flies the fillet) |
 | `E-POD-03` | hatch latch tab, hook-and-loop | tab per C3 | 2.11 N/cm² at VD 27.2 | 2.5 N/cm² | 1.18 | `CL-C6-POD-HATCH-RF` | `UNVERIFIED` |
 | `E-POD-07` | pitot socket with a ≥ 30 × 30 mm flange | ≥ 900 | 0.8 N·m handling | 0.10 MPa | — | CR-C6-09 | `PROPOSED` |
 | `E-MEC-01/02`, `11/12` | servo frame in core; horn in elevon | ≥ **719** each (D6 horn 1 385) | 89.9 N pushrod design at VD 27.2 (D-50; was 1 002 mm² at 32.1) | 0.125 MPa | — | `CL-C6-LINK-BOND-AREA-MIN` | `PROPOSED` (D6) |
@@ -154,15 +164,16 @@ face 220 grit without tearing; foam dust-off only. Cure 24 h ≥ 18 °C; parts w
 | When | What | Pass |
 |---|---|---|
 | Every flight | 4 mount witness lines; prop nuts; feet hooks; hinge tape ends; clevis keepers; fin roots | lines unbroken, nuts tight, nothing lifting |
-| After a hard landing or tip-over | + coin-tap block region, collars, strip tails and pin rows (no pin end proud, no strip split at a hole); flex each fin tip 5 mm and listen; rock each motor by hand | no dull spot, no creak, no play |
+| After a hard landing or tip-over | + coin-tap block region, collars, strip tails and pin rows (no pin end proud, no strip split at a hole); look along each fin root for a crack line in the fillet (fail-safe path, D-68: a crack is a repair if collar and strips are sound); flex each fin tip 5 mm and listen; rock each motor by hand | no dull spot, no creak, no play |
 | Every 10 flights | motor-screw and frame witness marks (PA66 creeps: re-snug the frame to 0.08 N·m); mast bolt; anchor bonds; pod spar ties; FC strap | marks unbroken, frame does not rock |
+| Fin build (D-70, D-68) | strip tails: strips down to the tube surface, epoxy fills both slots over the full tail, tongue with 3 perimeters under each strip; tap/pull check before the fin closes. Block pocket: dry-fit, 0.5 mm feeler at every corner | no void, no strip movement at 20 N by hand, feeler does not enter |
 | Every bond batch | witness cup cured beside the part; batch and time on the build log | cup hard, not tacky |
 
 ## Tests — with the first prints (H1)
 
 | Test | Coupon | Pass line | Replaces | Claims |
 |---|---|---|---|---|
-| `T-C6-LAP-PETG` | 5 PETG–CF and 5 ASA–CF single laps, 25 × 12.5 mm | mean × 0.5 ≥ 2.0 MPa (13 mm collar); **below 1.85 MPa the collar goes to 16 mm**; ≥ 2.05 MPa lets 12 mm stand | `ASM-C4-BOND-SHEAR` | tube, spar, collar, brace, strip tail |
+| `T-C6-LAP-PETG` | 5 PETG–CF and 5 ASA–CF single laps, 25 × 12.5 mm | mean × 0.5 ≥ 2.0 MPa (22 mm collar at RF 1.13). Collar height needed = 19.45 mm × (2.0 MPa / allowable) × (C1 torsion / 12.67 N·m) | `ASM-C4-BOND-SHEAR` | tube, spar, collar, brace, strip tail |
 | `T-C6-BOARD-LAP` | 5 PETG tabs on board in shear + 5 flat-wise | mean × 0.5 ≥ 0.10 / 0.05 MPa | `ASM-D5-BOND-TAU`, `ASM-C6-BOARD-FLAT-TYP` | foot shoe, strip face, tray |
 | `T-C6-XPS-PULL` | 5 pucks pulled + 5 pushed on F-250 | mean × 0.5 ≥ 0.125 / 0.10 MPa | `ASM-D3-XPS-TENSILE`, `ASM-C6-XPS-SHEAR-TYP` | fin root, pod bond, servo frames |
 | `T-C6-BOARD-CORNER` | 2 board U-sections (bare, filleted) under a strap pull | ≥ 43 N per strap | — | pod floor glue line |
@@ -170,7 +181,7 @@ face 220 grit without tearing; foam dust-off only. Cure 24 h ≥ 18 °C; parts w
 | `T-C6-NYLON-TORQUE` (new) | 5 PA66 M3x18 into inserts through the 12.5 mm stack | mean failure torque ≥ 0.16 N·m (3.2 N at 50 mm); 48 h at 0.08 N·m keeps ≥ 0.04 N·m breakaway | `ASM-C6-PA66-SIGMA` | power frame |
 | `T-C6-HEAD-CREEP` | ASA plate on an Al block, 4 × M3x8 at 0.20 N·m, 2 h at 70 °C | breakaway ≥ 0.15 N·m | `ASM-C6-HEAD-BEARING` | motor head |
 | `T-C6-CANT-SEAT` | first printed mount A with the motor | ≥ 6 turns to seat, 0.05 mm feeler does not enter | — | engagement on the canted plate |
-| `T-C6-STRIP-ANCHOR` | collar as drawn + 40 mm tail with a strip pair; pull **one** strip on H1's lever frame | **≥ `CL-C6-STRIP-ANCHOR-F`, 1 248 N today** (the procedure text is written from the claim on every run) | — | strip tail, tail net section |
+| `T-C6-STRIP-ANCHOR` | collar as drawn + 40 mm tail with a strip pair; pull **one** strip on H1's lever frame | **≥ `CL-C6-STRIP-ANCHOR-F`, 1 243 N today** (written from the claim on every run); frame sized to 1.25 × `-ANCHOR-F-EST` ≈ 2 660 N until C4 re-runs | — | strip tail, tail net section |
 | `T-C6-PROPNUT` | finished mount, 10 × 1.5 N·m | witness line unmoved | — | mount rock, hoop |
 
 Each coupon set takes under an hour from shop stock. All ten run before the fin build starts.
@@ -179,24 +190,24 @@ Each coupon set takes under an hour from shop stock. All ten run before the fin 
 
 | # | Finding | Number | Action |
 |---|---|---|---|
-| 1 | C4 re-ran its fin FE after C6-R3 was issued, so the CR-C4-23 text (908 N, 64 N, 4.61 N·m) no longer matches C4's published claims. Two runs 8 h apart gave the strip end 1 198 → 1 248 N and the pin force 92 → 73 N. C6 sizes for the whole spread, not for one value | strip +37 %, pin +14…44 % on R3 | CR-C6-34 (publish one R4 set; update the CR text and `BOOM-STRUCTURES.md`) |
-| 2 | Collar: C1's section torsion still governs, and 12 mm sits exactly on RF 1.00. It read 0.9998 at C1 7.42 N·m and 1.003 at 7.39 N·m, an hour apart | RF 1.00 → 1.09 at 13 mm | CR-C6-32 |
-| 3 | 2 mm pins bend past 400 MPa at every C4 pin force. A 12 mm pitch (CR-C6-25) gives only 1.02 at 73 N and fails at 92 N | Ø 2.5 at 15 mm: 1.59 (1.25 at 92 N) for ≈ +1.5 g `EST` | CR-C6-31 supersedes CR-C6-25 |
-| 4 | The strip-anchor design force is now 1 248 N. H1's 6:1 lever frame (1 177 N) is below it and below H1's 1.25 × proof (1 560 N) | needs ≥ 1 560 N | CR-C6-33 |
-| 5 | Tail net section with one strip loaded is now 1.14. With both strips of a pair loaded together it is 0.57 | RF 1.14 / 0.57 (bound) | CR-C6-29 re-sent with the new force (CR-C6-34) |
-| 6 | D3 draws the 15 mm fillet with zoning, and at the C6 XPS allowable the root is 1.14 | was 0.87 | CR-C6-24 closed; zoning accepted (CR-D3-25) |
+| 1 | C1's D-65 re-run raised the half-fin torsion 7.39 → 12.67 N·m limit (×1.71) during this session; the foot side load went 22.8 → 39.3 N limit. The collar is sized directly on C1 (CR-C4-23 max rule) | 15 mm RF 0.77; needs 19.45 mm | CR-C6-37: 22 mm (RF 1.13) |
+| 2 | C4's frozen R4 set was solved at the old side load (`CL-C4-D3-SIDE-LOAD` 22.8 N, section torsion 7.37 N·m), so its strip, pin and collar numbers are stale by ≈ ×1.71 | est. anchor 0.74, tail net 0.67, pins 0.93 | CR-C6-38: C4 re-runs on D-65; D3 holds collar, tail and pin prints |
+| 3 | `joints.py` held four C1 envelope numbers as hand copies; J-FIN Mz had moved 9.04 → 17.18 N·m ult | tube-in-block RF 5.03 → 2.65 | fixed: read live from `envelope.json` |
+| 4 | D-70's 12 mm collar condition (4.1 MPa coupon mean) no longer releases 12 mm | RF 0.63 at a 2.05 MPa allowable | withdrawn; `CL-C6-COLLAR-RF-12MM-COND` kept as the record |
+| 5 | D-68 block pocket: a square-cut pocket round an R 3 block leaves a 1.24 mm void on each corner diagonal, where C2's foam peak sits | void 1.24 mm vs 0.5 mm bond line | CR-C6-40: corners R 3.0–4.2 mm or packed; feeler dry-fit |
+| 6 | Root fillet fails at the C6 allowable on the D-65 side load. It is fail-safe only (D-68), but it is bonded and will see load | 0.81 | D3's CR-D3-35 (0.185 m zone, +5 g) supported; C4's fillet-intact share would refine the 0.5 share |
 | 7 | F1's 0.20 N·m on a PA66 M3 yields the shank (install RF 0.54); 0.08 N·m gives 1.35 | — | CR-C6-26 (open with F1) |
-| 8 | D2's PDB-plate bosses are Ø 7.0 mm, which leaves a 1.5 mm wall around the 4.0 mm bore | rule ≥ 1.6 mm | CR-C6-27 (open with D2) |
+| 8 | D2's PDB-plate bosses Ø 7.0 mm leave a 1.5 mm wall | rule ≥ 1.6 mm | CR-C6-27 (open with D2) |
 
 ## Open issues
 
-1. Every allowable is `UNVERIFIED` until the coupons run. The thin RFs are the collar (1.09 at 13 mm), the tail net
-   section (1.14), the fin root (1.14), the pod bond (1.13) and the hatch tab (1.18). The Ø 2 mm pins fail as
-   drawn and the 12 mm collar has no margin; the fixes are with D3 (CR-C6-31, -32).
-2. C4's fin loads moved twice after R3 without a note. C6 reads them live, so `joints.py` must be re-run whenever
-   `team/C4/claims.d3.json` changes. The figures here come from the run of 2026-11-10 at about 04:30.
-3. The tail net-section check uses D3's 95 mm² estimate and one strip's force (CR-C6-29, CR-C6-34).
-4. Mass: CR-C6-31 (+1.5 g) and CR-C6-32 (+0.6 g) land on a fins line that is 18.4 g over (`MASS-CG.md`, CR-A3-26).
-   Both are `EST`; D3 reports the CAD delta.
-5. Motor bolt pattern, hole depth and bell thread depth are measured on arrival (E1); F1 measures the power-frame
-   stack.
+1. The fin station joints are not closed: collar (CR-C6-37), strip tail, tail net section and pins on D-65 loads
+   (CR-C6-38). The `-EST` claims are linear scalings of C4's R4 set, not C4 results.
+2. C1 moved three times today. `joints.py` reads C1 and C4 live; re-run it after any change to `team/C1/claims.json`,
+   `team/C1/data/envelope.json` or `team/C4/claims.d3.json`. Figures here: C1 14:29, C4 11:51.
+3. Every allowable is `UNVERIFIED` until the coupons run; the collar height scales directly with the lap-shear result.
+4. Mass: 22 mm collars ≈ +4.4 g `EST` over the drawn 15 mm; any tail or pin change from CR-C6-38 adds more. Fins sit
+   at their 437 g allocation (D-63) with 0 g free reserve: A1 decides (CR-C6-37 cc A1).
+5. The tail net section uses D3's 95 mm² estimate and one strip's force; the coincident pair force is still
+   unpublished (CR-C6-29 / -34b).
+6. Motor pattern, hole and bell-thread depths are measured on arrival (E1); F1 measures the power-frame stack.

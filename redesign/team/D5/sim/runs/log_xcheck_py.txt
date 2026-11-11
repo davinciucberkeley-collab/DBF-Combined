@@ -1,0 +1,1 @@
+xcheck_c5_v4_h400_py gov 16.37 MPa (k 0.4765 MPa/N) {"rim": {"vm_max_MPa": 16.3688, "at_mm": [326.4, 10.333, 197.976]}, "aft box": {"vm_max_MPa": 5.620847, "at_mm": [305.478, -12.95, 204.6]}, "window and open-end zone": {"vm_max_MPa": 13.11425, "at_mm": [304.3, -12.95, 203.85]}, "whole shoe": {"vm_max_MPa": 16.3688, "at_mm": [326.4, 10.333, 197.976]}} 1452 s

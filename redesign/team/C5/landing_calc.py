@@ -137,8 +137,8 @@ kit.assumption("ASM-C5-PRE-D47", "Pre-D-47 bay, for the before / after compariso
 
 STANCE_IN = {"items": P + "a3.rollup.items", "c": P + "wing.chord_m", "foot": P + "cg.foot_height_m",
              "z_fin": P + "fins.half_height_m", "y_fin": P + "fins.y_m", "z_pad": "CL-D5-CONTACT-Z",
-             "m_feet": "CL-D5-MASS-TOTAL", "pack_rng": "ASM-A3-PACK-RANGE",
-             "x_t": "CL-B3-CG-TARGET", "x_fwd": "CL-B3-CG-FWD", "x_aft": "CL-B3-CG-AFT",
+             "m_feet": "CL-D5-MASS-TOTAL", "pack_rng": "ASM-A1-PACK-CASES-G",
+             "x_t": P + "cg.x_target_m", "x_rng": P + "cg.x_range_m",
              "z_rng": P + "cg.z_range_m", "lam": "ASM-C1-LAND-LIFT",
              "err": P + "requirements.landing_attitude_err_deg", "pre": "ASM-C5-PRE-D47",
              "st47": P + "pack_x_per_pack_m"}
@@ -163,22 +163,24 @@ def _trim(items, feet, x_goal, pid, scale=1.0):
 
 @kit.calc("CALC-C5-STANCE", title="CG cases and static tip-over on the fin-tip feet", inputs=STANCE_IN,
           units={"c": "m", "foot": "m", "z_fin": "m", "y_fin": "m", "z_pad": "m", "m_feet": "g", "pack_rng": "g",
-                 "x_t": "m", "x_fwd": "m", "x_aft": "m", "z_rng": "m", "err": "deg", "pre": "m", "st47": "m"},
+                 "x_t": "m", "x_rng": "m", "z_rng": "m", "err": "deg", "pre": "m", "st47": "m"},
           equation="CG from A3 items (feet replaced by D5's mass at x = c + foot/2) ; flying cases: pack slid until "
-                   "x_cg = B3 target / forward / aft limit, pack 503 / 550 / 680 g, and each pack at its D-59 "
-                   "flight station (P:pack_x_per_pack_m) ; h = c + foot - x_cg ; narrow(+z) = atan((z_pad - z_cg) / h), "
+                   "x_cg = D-62 target / forward / aft limit (P:cg.*), pack 546 / 550 / 590 g (D-64), and each pack at "
+                   "its D-62 flight station (P:pack_x_per_pack_m, D2-R6 / D-64) ; h = c + foot - x_cg ; narrow(+z) = atan((z_pad - z_cg) / h), "
                    "narrow(-z) = atan((z_pad + z_cg) / h) ; wide = atan(y_fin / h) ; residual thrust T = lam W along "
                    "the body: tip at acos(lam z/R) - atan(h/z), R = hypot(z, h) ; lam_max(err) = R cos(err + "
                    "atan(h/z)) / z ; corner bound: x = forward limit, z = top of the z range ; D-47 rise = h(550 g "
                    "station) - h(pre-D-47 bay, ASM-C5-PRE-D47) ; +5 mm allowance: worst station case with h + 5 mm")
-def stance(items, c, foot, z_fin, y_fin, z_pad, m_feet, pack_rng, x_t, x_fwd, x_aft, z_rng, lam, err, pre, st47):
+def stance(items, c, foot, z_fin, y_fin, z_pad, m_feet, pack_rng, x_t, x_rng, z_rng, lam, err, pre, st47):
+    x_fwd, x_aft = x_rng
     ground = c + foot
     feet = [(m_feet / 4.0, c + foot / 2.0, s * z_pad) for s in (1, -1) for _ in (0, 1)]
     pid = _pack_id(items)
     pack = [r for r in items if r[0] == pid][0]
     hi, lo = max(pack_rng) / pack[3], min(pack_rng) / pack[3]
-    trims = {"B3 target, 550 g": (x_t, 1.0), "B3 target, 680 g": (x_t, hi), "B3 target, 503 g": (x_t, lo),
-             "B3 fwd limit, 680 g": (x_fwd, hi), "B3 fwd limit, 503 g": (x_fwd, lo),
+    ml, mh = round(min(pack_rng)), round(max(pack_rng))
+    trims = {"B3 target, 550 g": (x_t, 1.0), "B3 target, %d g" % mh: (x_t, hi), "B3 target, %d g" % ml: (x_t, lo),
+             "B3 fwd limit, %d g" % mh: (x_fwd, hi), "B3 fwd limit, %d g" % ml: (x_fwd, lo),
              "B3 aft limit, 550 g": (x_aft, 1.0)}
     cases = {"A3 items as listed": _cg(items) + (pack[4],),
              "pre-D-47 bay (pack -0.001), D5 feet":
@@ -188,7 +190,7 @@ def stance(items, c, foot, z_fin, y_fin, z_pad, m_feet, pack_rng, x_t, x_fwd, x_
         cases[k] = _trim(items, feet, xg, pid, sc)
     for key in sorted(st47, key=float):
         mp, xs = float(key), st47[key]
-        cases["D-59 station, %d g" % round(mp)] = _cg(items, drop=("landing",), add=feet, scale={pid: mp / pack[3]},
+        cases["D-62 station, %d g" % round(mp)] = _cg(items, drop=("landing",), add=feet, scale={pid: mp / pack[3]},
                                                       shift={pid: xs - pack[4]}) + (xs,)
     m0, x0, z0 = _cg(items, drop=("landing", pid), add=feet)
     cases["no pack (parked)"] = (m0, x0, z0, None)
@@ -199,9 +201,9 @@ def stance(items, c, foot, z_fin, y_fin, z_pad, m_feet, pack_rng, x_t, x_fwd, x_
         table[k] = {"m_kg": m, "x_m": x, "z_m": z, "h_m": h, "x_pack_m": xp, "a1_narrow_deg": min(a1p, a1n),
                     "d5_narrow_pos_deg": d5p, "d5_narrow_neg_deg": d5n,
                     "wide_deg": math.degrees(math.atan(y_fin / h))}
-    flying = [k for k in table if k.startswith(("B3 ", "D-59 "))]
+    flying = [k for k in table if k.startswith(("B3 ", "D-62 "))]
     worst = min(flying, key=lambda k: table[k]["d5_narrow_pos_deg"])
-    st_cases = [k for k in table if k.startswith("D-59 ")]
+    st_cases = [k for k in table if k.startswith("D-62 ")]
     worst47 = min(st_cases, key=lambda k: table[k]["d5_narrow_pos_deg"])
     corner_h = ground - x_fwd
     corner = math.degrees(math.atan((z_pad - max(z_rng)) / corner_h))
@@ -215,12 +217,12 @@ def stance(items, c, foot, z_fin, y_fin, z_pad, m_feet, pack_rng, x_t, x_fwd, x_
     lam_max = R * math.cos(math.radians(err) + psi) / z_arm
     before = table["pre-D-47 bay (pack -0.001), D5 feet"]
     a3l = before
-    post = table["D-59 station, 550 g"]
+    post = table[sorted(st_cases, key=lambda k: table[k]["m_kg"])[1]]       # the nominal (middle) pack
     return {"cases": table, "a1_feet_r1_narrow_deg": table[worst]["a1_narrow_deg"],
             "a1_feet_r1_nozcg_deg": math.degrees(math.atan(z_fin / table[worst]["h_m"])),
             "d5_a3_layout_deg": a3l["d5_narrow_pos_deg"], "x_pack_target_m": r1["x_pack_m"],
-            "x_pack_light_m": table["B3 target, 503 g"]["x_pack_m"],
-            "x_pack_heavy_m": table["B3 target, 680 g"]["x_pack_m"],
+            "x_pack_light_m": table["B3 target, %d g" % ml]["x_pack_m"],
+            "x_pack_heavy_m": table["B3 target, %d g" % mh]["x_pack_m"],
             "d5_r1_narrow_deg": r1["d5_narrow_pos_deg"], "d5_r1_nozcg_deg": math.degrees(math.atan(z_pad / r1["h_m"])),
             "d5_worst_narrow_deg": table[worst]["d5_narrow_pos_deg"], "worst_case": worst,
             "d5_d47_worst_deg": table[worst47]["d5_narrow_pos_deg"], "d47_worst_case": worst47,
@@ -256,35 +258,36 @@ kit.claim("CL-C5-TIPOVER-R1", "Tip-over, D5 splayed pads, B3 target CG, pod side
           note="pack (550 g) slid until the CG sits on CL-B3-CG-TARGET (CR-B3-11)",
           how="T-C5-TILT-BOARD: built aircraft, pack in at its trimmed station, tipping toward the pod side about "
               "the upper pad edges.")
-kit.claim("CL-C5-TIPOVER-WORST", "Tip-over, worst flying CG (B3 range, pack 503-680 g)", calc="CALC-C5-STANCE",
+kit.claim("CL-C5-TIPOVER-WORST", "Tip-over, worst flying CG (D-62 range, pack 546-590 g)", calc="CALC-C5-STANCE",
           output="d5_worst_narrow_deg", unit="deg", limit=(">=", P + "requirements.tipover_min_deg"),
           verifies=["R-TIPOVER"], parts=PADS,
           how="T-C5-TILT-BOARD repeated with the pack slid to the B3 forward-limit mark (and with the heaviest pack).")
-kit.claim("CL-C5-TIPOVER-D47", "Tip-over, pack at its D-59 flight station, worst of 503 / 550 / 680 g", calc="CALC-C5-STANCE",
+kit.claim("CL-C5-TIPOVER-D47", "Tip-over, pack at its D-62 flight station, worst of 546 / 551 / 590 g", calc="CALC-C5-STANCE",
           output="d5_d47_worst_deg", unit="deg", limit=(">=", P + "requirements.tipover_min_deg"),
           verifies=["R-TIPOVER"], parts=PADS,
-          note="C5-R5: stations from D-59 (CR-A1-54, P:pack_x_per_pack_m: 503 g -0.024, 550 g -0.018, 680 g -0.010) "
-               "on A3-R6's items; the id keeps D47 because others cite it. D-47 / CR-A3-22 raised the CG in the "
+          note="C5-R6: D-64 packs at their D-62 stations (P:pack_x_per_pack_m, D2-R6: 546 g -0.036, 550 g -0.034, 590 g -0.028) "
+               "on A3-R6a's items; the id keeps D47 because others cite it. D-47 / CR-A3-22 raised the CG in the "
                "stance about 5 mm (CL-C5-D47-CG-RISE); the stations are the flight-card marks, not a trim to the B3 target",
           how="T-C5-TILT-BOARD with each weighed pack at its marked station.")
-kit.claim("CL-C5-D47-CG-RISE", "CG rise in the stance, pre-D-47 bay to the D-59 550 g station", calc="CALC-C5-STANCE",
+kit.claim("CL-C5-D47-CG-RISE", "CG rise in the stance, pre-D-47 bay to the D-62 551 g station", calc="CALC-C5-STANCE",
           output="d47_cg_rise_m", unit="m",
           note="pre-D-47 bay (pack -0.001) to the 550 g flight station with the bay edits: 5.0 mm at the D-47 station "
                "-0.022, 4.1 mm at the D-59 station -0.018 (C5-R5); CR-A3-22 quoted 5 mm",
           how="T-A3-CG-BALANCE before / after; h = chord + foot - x_cg.")
-kit.claim("CL-C5-D47-TIP-CHANGE", "Tip-over change, pre-D-47 bay to the D-59 550 g station (pod side)",
+kit.claim("CL-C5-D47-TIP-CHANGE", "Tip-over change, pre-D-47 bay to the D-62 551 g station (pod side)",
           calc="CALC-C5-STANCE", output="d47_tip_change_deg", unit="deg", how="Geometry; T-C5-TILT-BOARD.")
-kit.claim("CL-C5-TIPOVER-STATION-PLUS5", "Tip-over, worst D-59 station with the CG a further 5 mm higher in the stance",
+kit.claim("CL-C5-TIPOVER-STATION-PLUS5", "Tip-over, worst D-62 station with the CG a further 5 mm higher in the stance",
           calc="CALC-C5-STANCE", output="d5_d47_plus5_deg", unit="deg",
           limit=(">=", P + "requirements.tipover_min_deg"), parts=PADS,
           note="allowance check for CR-A3-22 / CR-A1-46: a second 5 mm rise on top of the D-47 one (roll-up "
                "uncertainty, a heavier nose). The CG cannot move ahead of CL-B3-CG-FWD in flight, so "
                "CL-C5-TIPOVER-B3-CORNER stays the bound",
           how="T-C5-TILT-BOARD with the worst pack at its mark and ballast taped to the pod nose.")
-kit.claim("CL-C5-TIPOVER-B3-CORNER", "Tip-over at the B3 forward limit with the z_cg range top", calc="CALC-C5-STANCE",
+kit.claim("CL-C5-TIPOVER-B3-CORNER", "Tip-over at the D-62 forward limit (0.0466) with the z_cg range top (0.025)", calc="CALC-C5-STANCE",
           output="d5_corner_deg", unit="deg", limit=(">=", P + "requirements.tipover_min_deg"), parts=PADS,
-          note="x = CL-B3-CG-FWD and z = top of cg.z_range_m together; the roll-up is at z +0.017 m, so this "
-               "corner is a bound, not a flying case",
+          note="C5-R6: x = forward end of P:cg.x_range_m (D-62, 0.0466) and z = top of P:cg.z_range_m (0.025) "
+               "together; A3-R6a rolls up z +0.0185 m, so this corner is a bound, not a flying case. Same geometry as "
+               "CL-A1-TIPOVER (30.98 deg)",
           how="Tilting board with the pack at the forward-limit mark and z ballast on the pod lid.")
 kit.claim("CL-C5-PAD-Z-FOR-33", "Pad pivot z needed for 33 deg at R1 CG", calc="CALC-C5-STANCE",
           output="z_pad_for_33_m", unit="m",
@@ -388,9 +391,9 @@ kit.claim("CL-C5-PACK-X-B3", "Pack centroid station that puts the CG on the B3 t
                "-0.015 m for the target (CL-A3-PACK-X-REQ). Sets the room ahead of the pack for the crush block "
                "(CALC-C5-CRASH)",
           how="T-A3-CG-BALANCE: mark the pack station that balances on the target line.")
-kit.claim("CL-C5-PACK-X-B3-LIGHT", "Pack station on the B3 target, 503 g pack", calc="CALC-C5-STANCE",
+kit.claim("CL-C5-PACK-X-B3-LIGHT", "Pack station on the D-62 target, 546 g pack", calc="CALC-C5-STANCE",
           output="x_pack_light_m", unit="m", how="As CL-C5-PACK-X-B3 with the weighed pack.")
-kit.claim("CL-C5-PACK-X-B3-HEAVY", "Pack station on the B3 target, 680 g pack", calc="CALC-C5-STANCE",
+kit.claim("CL-C5-PACK-X-B3-HEAVY", "Pack station on the D-62 target, 590 g pack", calc="CALC-C5-STANCE",
           output="x_pack_heavy_m", unit="m", how="As CL-C5-PACK-X-B3 with the weighed pack.")
 kit.claim("CL-C5-MASS-EMPTY", "Mass with the pack out", calc="CALC-C5-STANCE", output="m_empty_kg", unit="kg",
           how="Weigh without the pack.")
@@ -842,32 +845,35 @@ kit.test("T-C5-AIRCRAFT-DROP", "Aircraft drop (= T-C1-FOOT-DROP), proposed foot"
 kit.assumption("ASM-C5-SPREADER-T", "Spreader plate 1.5 mm", "Printed PETG plate between the pack fore face and the "
                "crush block, so the block's whole section works", basis="D2 tray practice (1.5 mm stop wall)",
                value=0.0015, unit="m", status="PROPOSED")
-CRASH_IN = {"pack_rng": "ASM-A3-PACK-RANGE", "m_nom": P + "battery.mass_kg", "v": "ASM-C1-CRASH-V",
+CRASH_IN = {"v": "ASM-C1-CRASH-V",
             "g": P + "env.g_ms2", "n_pack": "ASM-C5-PACK-G-MAX", "sigma": "ASM-D5-XPS-PLATEAU",
             "eps_d": "ASM-D5-DENSIFY", "eps_y": "ASM-D5-YIELD-STRAIN", "pack": P + "battery.size_m",
             "bay_w": "CL-D2-BAY-W", "bay_h": "CL-D2-BAY-H", "blk_a": P + "nose_block_l_m",
-            "stop": P + "fwd_stop_m", "st47": P + "pack_x_per_pack_m",
+            "stop": P + "fwd_stop_m", "st": P + "pack_x_per_pack_m",
             "x_pack": "CL-C5-PACK-X-B3", "x_light": "CL-C5-PACK-X-B3-LIGHT", "x_heavy": "CL-C5-PACK-X-B3-HEAVY",
             "t_sp": "ASM-C5-SPREADER-T", "box": P + "requirements.box_external_m",
             "bwall": "ASM-A1-WALL", "env": P + "transport.envelope_props_off_m",
-            "x_le": P + "pod.x_le_m", "t_nose": P + "fins.board_t_m"}
+            "x_le": P + "pod.x_le_m", "t_nose": P + "fins.board_t_m", "blk_min": "ASM-A3-NOSE-STACK"}
+PACKS = ("546", "551", "590")      # D-64: listing - 5 g, listing, acceptance line; stations from the D2 table in order
 
 
-@kit.calc("CALC-C5-CRASH", title="Crush block ahead of the pack (5 m/s nose-in), R5a bay (D-47 nose -0.130 m, D-59 stations)",
+@kit.calc("CALC-C5-CRASH", title="Crush block ahead of the pack (5 m/s nose-in), D-62 bay (nose -0.140 m), D-64 packs",
           inputs=CRASH_IN,
-          units={"pack_rng": "g", "m_nom": "kg", "v": "m/s", "g": "m/s2", "sigma": "Pa", "pack": "m", "bay_w": "m",
-                 "bay_h": "m", "blk_a": "m", "stop": "m", "st47": "m", "x_pack": "m", "x_light": "m", "x_heavy": "m",
-                 "t_sp": "m", "box": "m", "bwall": "m", "env": "m", "x_le": "m", "t_nose": "m"},
-          equation="per weighed pack mass m (503 / 550 / 680 g) at its D-59 station x_p (flight-card mark) and at "
-                   "the C5 trim to the B3 target: F = min(n_pack m g, sigma A_bay) ; KE = m v^2 / 2 ; eff = eps_d - "
+          units={"v": "m/s", "g": "m/s2", "sigma": "Pa", "pack": "m", "bay_w": "m",
+                 "bay_h": "m", "blk_a": "m", "stop": "m", "st": "m", "x_pack": "m", "x_light": "m", "x_heavy": "m",
+                 "t_sp": "m", "box": "m", "bwall": "m", "env": "m", "x_le": "m", "t_nose": "m", "blk_min": "m"},
+          equation="per weighed pack mass m (546 / 551 / 590 g, D-64) at its D-62 station x_p (flight-card mark) and "
+                   "at the C5 trim to the D-62 target: F = min(n_pack m g, sigma A_bay) ; KE = m v^2 / 2 ; eff = eps_d - "
                    "eps_y / 2 ; nose wall inside face x_n = x_le + t_nose ; block A L_A = nose_block_l_m ; forward stop "
                    "(t_stop, h_stop, w = fwd_stop_m) aft face x_s = x_n + L_A + t_stop ; block B fills x_s .. pack fore face "
                    "behind a t_sp spreader ; capacities add: gap_B needed = t_sp + max(0, KE - F_A eff L_A) / (F eff), "
                    "F_A = min(F, sigma A_stop) ; full-section stop A_stop = A_bay ; D2's stop as drawn A_stop = h_stop w ; "
-                   "margin = (x_p - L_pack/2 - x_s) - gap_B needed ; extension = max(0, -worst margin) ; box x slack "
-                   "= box_x - 2 wall - (envelope_x + extension) (envelope holds the R5 nose)")
-def crash(pack_rng, m_nom, v, g, n_pack, sigma, eps_d, eps_y, pack, bay_w, bay_h, blk_a, stop, st47, x_pack, x_light,
-          x_heavy, t_sp, box, bwall, env, x_le, t_nose):
+                   "margin = (x_p - L_pack/2 - x_s) - gap_B needed ; most forward station x_fwd_max = x_p - margin ; "
+                   "block A (1 mm epoxy bond since D-47) gets no crush credit ; crush-stack station (A3/A1 nose stack blk_min from the pod LE) x_stack = x_le + blk_min + L_pack/2, stack margin = "
+                   "x_stack - x_fwd_max ; extension = max(0, -worst margin) ; box x slack = box_x - 2 wall - "
+                   "(envelope_x + extension)")
+def crash(v, g, n_pack, sigma, eps_d, eps_y, pack, bay_w, bay_h, blk_a, stop, st, x_pack, x_light,
+          x_heavy, t_sp, box, bwall, env, x_le, t_nose, blk_min):
     A_bay = bay_w * bay_h
     face = pack[1] * pack[2]
     eff = eps_d - eps_y / 2
@@ -875,107 +881,121 @@ def crash(pack_rng, m_nom, v, g, n_pack, sigma, eps_d, eps_y, pack, bay_w, bay_h
     t_stop, h_stop, w_stop = stop
     L_A = blk_a
     stop_aft = x_n + L_A + t_stop
-    st = [st47[k] for k in sorted(st47, key=float)]
+    x_stack = x_le + blk_min + pack[0] / 2                  # A3/A1 nose stack is counted from the pod LE
+    trim = {PACKS[0]: x_light, PACKS[1]: x_pack, PACKS[2]: x_heavy}
+    keys = sorted(st, key=float)
+    if len(keys) != 3 or abs(float(keys[0]) - 546) > 1 or abs(float(keys[2]) - 590) > 1:
+        raise ValueError("pack_x_per_pack_m is not the D-64 546 / 550 / 590 g table: %r" % st)
+    st = dict(zip(PACKS, (st[k] for k in keys)))           # the 551 g listing flies at the 550 g station
     rows = {}
-    for tag, mp, xs, xt in (("503 g", min(pack_rng) / 1000.0, st[0], x_light), ("550 g", m_nom, st[1], x_pack),
-                            ("680 g", max(pack_rng) / 1000.0, st[2], x_heavy)):
+    for tag in PACKS:
+        mp, xs, xt = float(tag) / 1000.0, st[tag], trim[tag]
         F = min(n_pack * mp * g, sigma * A_bay)
         KE = 0.5 * mp * v * v
         A = F / sigma
         sp = t_sp if A > face else 0.0
 
         def gap_need(A_stop):
+            # since D-47 'block A' is a 1 mm epoxy bond line, not XPS: it absorbs nothing (C5-R6; R5 credited it)
             F_A = min(F, sigma * A_stop)
-            return sp + max(0.0, KE - F_A * eff * L_A) / (F * eff)
+            return sp + max(0.0, KE - F_A * eff * 0.0 * L_A) / (F * eff)
         g_full, g_c3 = gap_need(A_bay), gap_need(h_stop * w_stop)
         gap = (xs - pack[0] / 2) - stop_aft
         gap_t = (xt - pack[0] / 2) - stop_aft
-        rows[tag] = {"x_pack_m": xs, "x_pack_trim_m": xt, "F_N": F, "n": F / (mp * g), "stroke_m": KE / F,
+        x_fwd_max = xs - (gap - g_full)
+        rows[tag] = {"m_kg": mp, "x_pack_m": xs, "x_pack_trim_m": xt, "F_N": F, "n": F / (mp * g), "stroke_m": KE / F,
                      "L_m": KE / F / eff, "spreader": A > face, "gap_avail_m": gap, "gap_avail_trim_m": gap_t,
                      "gap_need_full_m": g_full, "gap_need_c3_m": g_c3,
                      "room_avail_m": (xs - pack[0] / 2) - x_n, "room_needed_m": L_A + t_stop + g_full,
                      "margin_full_m": gap - g_full, "margin_c3_m": gap - g_c3, "margin_trim_m": gap_t - g_full,
-                     "x_fwd_max_m": xs - (gap - g_full), "block_fill_m": gap - t_sp}
-    nom = rows["550 g"]
+                     "x_fwd_max_m": x_fwd_max, "block_fill_m": gap - t_sp, "stack_margin_m": x_stack - x_fwd_max}
+    nom = rows[PACKS[1]]
     worst = min(rows.values(), key=lambda r: r["margin_full_m"])
     worst_c3 = min(rows.values(), key=lambda r: r["margin_c3_m"])
     worst_t = min(rows.values(), key=lambda r: r["margin_trim_m"])
     ext = max(0.0, -worst["margin_full_m"])
-    return {"A_bay_m2": A_bay, "A_pack_face_m2": face, "packs": rows, "x_nose_inner_m": x_n, "x_stop_aft_m": stop_aft,
-            "L_A_m": L_A, "room_needed_nom_m": nom["room_needed_m"], "room_avail_m": nom["room_avail_m"],
-            "room_margin_worst_m": worst["margin_full_m"], "room_margin_c3_stop_m": worst_c3["margin_c3_m"],
-            "room_margin_trim_worst_m": worst_t["margin_trim_m"],
-            "margin_503_m": rows["503 g"]["margin_full_m"], "margin_550_m": nom["margin_full_m"],
-            "margin_680_m": rows["680 g"]["margin_full_m"],
-            "block_L_503_m": rows["503 g"]["L_m"], "block_L_680_m": rows["680 g"]["L_m"],
-            "gap_B_nom_m": nom["gap_avail_m"], "block_L_nom_m": nom["L_m"], "n_pack_nom": nom["n"],
-            "n_pack_max": max(r["n"] for r in rows.values()),
-            "room_ideal_m": 0.5 * v * v / (n_pack * g) / eff,
-            "nose_ext_m": ext, "box_x_slack_m": (box[1] - 2 * bwall) - (env[1] + ext),
-            "x_fwd_max_503_m": rows["503 g"]["x_fwd_max_m"], "x_fwd_max_550_m": nom["x_fwd_max_m"],
-            "x_fwd_max_680_m": rows["680 g"]["x_fwd_max_m"],
-            "block_fill_503_m": rows["503 g"]["block_fill_m"], "block_fill_550_m": nom["block_fill_m"],
-            "block_fill_680_m": rows["680 g"]["block_fill_m"]}
+    out = {"A_bay_m2": A_bay, "A_pack_face_m2": face, "packs": rows, "x_nose_inner_m": x_n, "x_stop_aft_m": stop_aft,
+           "x_stack_m": x_stack, "stack_margin_worst_m": min(r["stack_margin_m"] for r in rows.values()),
+           "L_A_m": L_A, "room_needed_nom_m": nom["room_needed_m"], "room_avail_m": nom["room_avail_m"],
+           "room_margin_worst_m": worst["margin_full_m"], "room_margin_c3_stop_m": worst_c3["margin_c3_m"],
+           "room_margin_trim_worst_m": worst_t["margin_trim_m"],
+           "gap_B_nom_m": nom["gap_avail_m"], "block_L_nom_m": nom["L_m"], "n_pack_nom": nom["n"],
+           "n_pack_max": max(r["n"] for r in rows.values()),
+           "room_ideal_m": 0.5 * v * v / (n_pack * g) / eff,
+           "nose_ext_m": ext, "box_x_slack_m": (box[1] - 2 * bwall) - (env[1] + ext)}
+    for tag in PACKS:
+        out["margin_%s_m" % tag] = rows[tag]["margin_full_m"]
+        out["block_L_%s_m" % tag] = rows[tag]["L_m"]
+        out["x_fwd_max_%s_m" % tag] = rows[tag]["x_fwd_max_m"]
+        out["block_fill_%s_m" % tag] = rows[tag]["block_fill_m"]
+    return out
 
 
-kit.claim("CL-C5-PACK-ROOM-AVAIL", "Room ahead of the 550 g pack at its D-59 station (R5 nose -0.130)",
+kit.claim("CL-C5-PACK-ROOM-AVAIL", "Room ahead of the 551 g pack at its D-62 station (nose -0.140)",
           calc="CALC-C5-CRASH", output="room_avail_m", unit="m", parts=["POD-001", "POD-008"],
-          note="nose wall inside face (x_le + 4.8 mm foam board) to the pack fore face at -0.018 - 0.070 (D-59); holds "
-               "block A (1 mm at R5), the 3 mm forward stop and block B behind it",
+          note="nose wall inside face (x_le + 4.8 mm foam board) to the pack fore face at -0.034 - 0.0675 (D-62, "
+               "135 mm pack); holds the 1 mm bond line, the 3 mm forward stop and block B behind it",
           how="Built pod, pack at its marked station: rule from the nose wall inside face to the pack fore face.")
-kit.claim("CL-C5-PACK-NOSE-ROOM", "Room the crush blocks need, weighed 550 g pack", calc="CALC-C5-CRASH",
+kit.claim("CL-C5-PACK-NOSE-ROOM", "Room the crush blocks need, weighed 551 g pack", calc="CALC-C5-CRASH",
           output="room_needed_nom_m", unit="m", limit=("<=", "CL-C5-PACK-ROOM-AVAIL"), verifies=["R-PACK-RETENTION"],
           parts=["POD-008"],
-          note="XPS F-250 over the full bay section; block A ahead of the stop is only 1 mm at R5, so block B "
+          note="XPS F-250 over the full bay section; block A ahead of the stop is only a 1 mm bond line, so block B "
                "(behind a 1.5 mm spreader) does the work; the n_pack limit or the section sets the force",
           how="Crush a block coupon (T-D5-COUPON method) to get the force; weigh the pack (E2).")
-kit.claim("CL-C5-PACK-ROOM-MARGIN-WORST", "Block B gap margin, worst pack at its D-59 station", calc="CALC-C5-CRASH",
+kit.claim("CL-C5-PACK-ROOM-MARGIN-WORST", "Block B gap margin, worst D-64 pack at its D-62 station", calc="CALC-C5-CRASH",
           output="room_margin_worst_m", unit="m", limit=(">=", 0.0), verifies=["R-PACK-RETENTION"],
           parts=["POD-008"],
-          note="D-59 flight-card marks: 503 g at -0.024, 550 g at -0.018, 680 g at -0.010",
+          note="D-62 flight-card marks (A1 frame estimate): 546 g at -0.036, 551 g at -0.034, 590 g at -0.028",
           how="As CL-C5-PACK-NOSE-ROOM with the weighed pack at its marked station.")
-kit.claim("CL-C5-PACK-ROOM-MARGIN-503", "Block B gap margin, 503 g pack at its D-59 station -0.024", calc="CALC-C5-CRASH",
-          output="margin_503_m", unit="m", limit=(">=", 0.0), parts=["POD-008"], how="As above.")
-kit.claim("CL-C5-PACK-ROOM-MARGIN-550", "Block B gap margin, 550 g pack at its D-59 station -0.018", calc="CALC-C5-CRASH",
-          output="margin_550_m", unit="m", limit=(">=", 0.0), parts=["POD-008"], how="As above.")
-kit.claim("CL-C5-PACK-ROOM-MARGIN-680", "Block B gap margin, 680 g pack at its D-59 station -0.010", calc="CALC-C5-CRASH",
-          output="margin_680_m", unit="m", limit=(">=", 0.0), parts=["POD-008"], how="As above.")
-kit.claim("CL-C5-PACK-ROOM-MARGIN-TRIM", "Block B gap margin, worst pack trimmed to the B3 target", calc="CALC-C5-CRASH",
+for _m, _x in (("546", "-0.036"), ("551", "-0.034"), ("590", "-0.028")):
+    kit.claim("CL-C5-PACK-ROOM-MARGIN-%s" % _m, "Block B gap margin, %s g pack at its D-62 station %s" % (_m, _x),
+              calc="CALC-C5-CRASH", output="margin_%s_m" % _m, unit="m", limit=(">=", 0.0), parts=["POD-008"],
+              how="As above.")
+kit.claim("CL-C5-PACK-ROOM-MARGIN-TRIM", "Block B gap margin, worst pack trimmed to the D-62 target", calc="CALC-C5-CRASH",
           output="room_margin_trim_worst_m", unit="m", parts=["POD-008"],
-          note="cross-check: the pack slid until the CG is on CL-B3-CG-TARGET instead of its D-59 mark",
+          note="cross-check: the pack slid until the CG is on P:cg.x_target_m in A3-R6a's items (D-61 stack shift "
+               "not in the items), instead of its D-62 mark",
           how="As above with the pack at its balanced station.")
 kit.claim("CL-C5-PACK-ROOM-C3-STOP", "Block B gap margin, worst pack, D2-R5 forward stop as drawn (25 mm tall)",
           calc="CALC-C5-CRASH", output="room_margin_c3_stop_m", unit="m", parts=["POD-002"],
           note="D2-R5 stop 3 x 25 x 54 mm (P:fwd_stop_m); block A is 1 mm, so the stop section hardly matters "
                "(CR-C5-13 withdrawn by C5; C3/D2 close it)",
           how="Geometry of the printed stop (D2 CAD).")
-kit.claim("CL-C5-NOSE-EXT", "Further pod nose extension needed beyond R5 (-0.130 m)", calc="CALC-C5-CRASH",
+kit.claim("CL-C5-PACK-STACK-MARGIN", "Crush-stack station minus the most forward station that keeps block B, worst pack",
+          calc="CALC-C5-CRASH", output="stack_margin_worst_m", unit="m", limit=(">=", 0.0),
+          verifies=["R-PACK-RETENTION"], parts=["POD-008"],
+          note="the D-62 bay's most forward pack centroid sits on the 34.6 mm nose stack (ASM-A3-NOSE-STACK: bond line, "
+               "stop, 24.3 mm block, spreader), about -0.0379 for the 135 mm pack. Negative means a block cut to the "
+               "24.3 mm minimum is too short for that pack: its flight-card station must stay aft of "
+               "CL-C5-PACK-X-FWD-MAX-<m> (rule S9)",
+          how="H3 flight card; rule the pack fore face to the forward stop on the built pod.")
+kit.claim("CL-C5-NOSE-EXT", "Further pod nose extension needed beyond D-62 (-0.140 m)", calc="CALC-C5-CRASH",
           output="nose_ext_m", unit="m",
-          note="zero when every pack at its D-59 mark keeps block B", how="D2 geometry.")
+          note="zero when every pack at its D-62 mark keeps block B", how="D2 geometry.")
 kit.claim("CL-C5-PACK-CRASH-G", "Largest pack deceleration in its block, 5 m/s nose-in", calc="CALC-C5-CRASH",
           output="n_pack_max", unit="-", limit=("<=", "ASM-C5-PACK-G-MAX"),
           how="Block coupon crush force x section; pack mass weighed (E2).")
-kit.claim("CL-C5-BLOCK-L", "Crush block B length (F-250, weighed 550 g pack)", calc="CALC-C5-CRASH",
-          output="block_L_nom_m", unit="m", parts=["POD-008"], how="Cut length; rule.")
-kit.claim("CL-C5-BLOCK-L-503", "Crush block B length, 503 g pack", calc="CALC-C5-CRASH",
-          output="block_L_503_m", unit="m", parts=["POD-008"], how="Cut length; rule.")
-kit.claim("CL-C5-BLOCK-L-680", "Crush block B length, 680 g pack", calc="CALC-C5-CRASH",
-          output="block_L_680_m", unit="m", parts=["POD-008"], how="Cut length; rule.")
-for _m in ("503", "550", "680"):
+kit.claim("CL-C5-BLOCK-L", "Crush block B length (F-250, weighed 551 g pack)", calc="CALC-C5-CRASH",
+          output="block_L_nom_m", unit="m", parts=["POD-008"],
+          note="D2 reads this in pod_claims.py; D-64 nominal pack 551 g", how="Cut length; rule.")
+for _m in PACKS:
+    if _m != "551":
+        kit.claim("CL-C5-BLOCK-L-%s" % _m, "Crush block B length, %s g pack" % _m, calc="CALC-C5-CRASH",
+                  output="block_L_%s_m" % _m, unit="m", parts=["POD-008"], how="Cut length; rule.")
     kit.claim("CL-C5-PACK-X-FWD-MAX-%s" % _m, "Most forward pack centroid station that keeps block B, %s g pack" % _m,
               calc="CALC-C5-CRASH", output="x_fwd_max_%s_m" % _m, unit="m", parts=["POD-008"],
-              note="flight-card rule S9 (CR-C5-06, CR-C5-14d): the pack never sits forward of this station; the D-59 "
+              note="flight-card rule S9 (CR-C5-06, CR-C5-14d): the pack never sits forward of this station; the D-62 "
                    "mark is aft of it by the PACK-ROOM-MARGIN. Includes any fore-aft play of the pack in the bay",
               how="H3 flight card; rule the pack fore face to the forward stop on the built pod.")
     kit.claim("CL-C5-BLOCK-FILL-%s" % _m, "Block B cut length that fills the stop-to-spreader gap, %s g pack at its "
-              "D-59 station" % _m, calc="CALC-C5-CRASH", output="block_fill_%s_m" % _m, unit="m", parts=["POD-008"],
-              limit=(">=", "CL-C5-BLOCK-L" + ("" if _m == "550" else "-" + _m)),
+              "D-62 station" % _m, calc="CALC-C5-CRASH", output="block_fill_%s_m" % _m, unit="m", parts=["POD-008"],
+              limit=(">=", "CL-C5-BLOCK-L" + ("" if _m == "551" else "-" + _m)),
               note="CR-C5-14c: cut block B to this so the pack has no forward play; it must be at least the block "
                    "length the pack needs",
               how="Cut length; rule; pack seated with no fore-aft play.")
 kit.claim("CL-C5-BOX-X-SLACK-NOSE", "Box length slack with the R5 nose", calc="CALC-C5-CRASH",
           output="box_x_slack_m", unit="m", limit=(">=", 0.0), verifies=["R-TRANSPORT"],
-          note="the R5 envelope (0.498 m) holds the 15 mm nose extension and the 48 mm feet",
+          note="the D-62 envelope (0.508 m) holds the 10 mm nose extension and the 48 mm feet",
           how="D7: close the box on the built aircraft.")
 
 

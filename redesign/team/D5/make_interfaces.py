@@ -1,4 +1,4 @@
-"""Write redesign/subsystems/landing/{interfaces.json, parts.csv} from one place (D5, revision D5-R5).
+"""Write redesign/subsystems/landing/{interfaces.json, parts.csv} from one place (D5, revision D5-R6).
 
     python -I redesign/team/D5/feet_calc.py        # first: masses (CALC-D5-MASS), bond area, loads into claims.json
     python -I redesign/team/D5/make_interfaces.py  # then: parts, edges, CGs from the CAD centroids (stub build)
@@ -26,31 +26,42 @@ import landing                                      # noqa: E402
 ST = ('UR', 'UL', 'LR', 'LL')
 NAME = {'UR': 'upper right', 'UL': 'upper left', 'LR': 'lower right', 'LL': 'lower left', 'R': 'right', 'L': 'left'}
 
-# base id, name, material, make/buy, mass output (CALC-D5-MASS), instances, notes
-PARTS = [
-    ('GER-001', 'Foot shoe', 'PETG (printed)', 'make', 'shoe_g', ST,
-     'sleeve 21.1 x 17.1 mm on the half-fin TE step, back wall on the step front and strip end faces, legs 7 mm down both '
-     'faces, collar cheeks over the edge-strip ends, rim at the sleeve end; permanent; includes 0.35 g epoxy'),
-    ('GER-002', 'Foot piston', 'PETG (printed)', 'make', 'piston_g', ST,
-     'tine 19.1 x 15.1 mm, two 6.5 mm snap fingers, stop flange, inspection windows, replace-mark groove; ORANGE on '
-     'UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes'),
-    ('GER-003', 'Crush cartridge type U (solid)', 'XPS foam F-250 (cut)', 'make', 'cartridge_upper_g', ('UR', 'UL'),
-     'two 44.5 mm segments 17.3 x 13.3 mm, each pre-crushed 1 mm (cut 45.5 mm), crush axis = board thickness, orange '
-     'stripe; plateau 39.6 N; bonded on the piston floor; consumable'),
-    ('GER-004', 'Foot pad', 'neoprene 40A 1/16 in, adhesive back (bought sheet, cut)', 'make', 'pad_g', ST,
-     'ground contact 21.1 x 18.3 mm, mu >= 0.7 (CR-C1-02); outboard edge at z +/-0.219 (contact 0.218)'),
-    ('GER-007', 'Wingtip TE corner cap', 'TPU (printed)', 'make', 'cap_g', ('R', 'L'),
-     'TPU 95A U-cap over the fixed wingtip TE corner (y 0.5615-0.575) + tip wall, held by 2 wraps of 12 mm filament '
-     'tape (CR-C5-04); includes 0.10 g tape'),
-    ('GER-008', 'Crush cartridge type L (bored)', 'XPS foam F-250 (cut)', 'make', 'cartridge_lower_g', ('LR', 'LL'),
-     'type U with a 5.56 mm axial bore (sharpened 7/32 in brass tube), pre-crushed, blue stripe; plateau 35.4 N; '
-     'bonded on the piston floor; consumable'),
-]
+# base id, name, material, make/buy, mass output (CALC-D5-MASS), instances, notes (sizes from CALC-D5-GEOM / -CRUSH)
+def parts_table(ge, cr, n_seg):
+    mm = lambda v: v * 1000.0
+    so, po = ge['sleeve_out_m'], ge['piston_out_m']
+    seg = mm(ge['cart_len_m']) / n_seg
+    return [
+        ('GER-001', 'Foot shoe', 'PETG (printed)', 'make', 'shoe_g', ST,
+         'sleeve %.1f x %.1f mm, %.1f mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; '
+         'back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the '
+         'edge-strip ends, %.1f mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy'
+         % (mm(so[0]), mm(so[1]), mm(ge['ws_m']), mm(ge['rim_t_m']))),
+        ('GER-002', 'Foot piston', 'PETG (printed)', 'make', 'piston_g', ST,
+         'tine %.1f x %.1f mm (1 mm corner chamfers), %.0f mm engaged at rest, two 6.5 mm snap fingers with ramped '
+         'hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides %.0f mm '
+         'into the shoe when the cartridge crushes' % (mm(po[0]), mm(po[1]), mm(ge['engage_m']), mm(ge['stroke_m']))),
+        ('GER-003', 'Crush cartridge type U (solid)', 'XPS foam F-250 (cut)', 'make', 'cartridge_upper_g', ('UR', 'UL'),
+         '%d segments %.1f mm long, %.1f x %.1f mm, each pre-crushed 1 mm (cut %.1f mm), crush axis = board thickness, '
+         'orange stripe; plateau %.1f N; bonded on the piston floor; consumable'
+         % (n_seg, seg, mm(ge['cart_y_m']), mm(ge['cart_z_m']), seg + 1.0, cr['F_upper_N'])),
+        ('GER-004', 'Foot pad', 'neoprene 40A 1/16 in, adhesive back (bought sheet, cut)', 'make', 'pad_g', ST,
+         'ground contact %.1f x %.1f mm, mu >= 0.7 (CR-C1-02); outboard edge at z +/-0.219 (contact 0.218)'
+         % (mm(ge['pad_y_m']), mm(ge['pad_z_m']))),
+        ('GER-007', 'Wingtip TE corner cap', 'TPU (printed)', 'make', 'cap_g', ('R', 'L'),
+         'TPU 95A U-cap over the fixed wingtip TE corner (y 0.5615-0.575) + tip wall, held by 2 wraps of 12 mm filament '
+         'tape (CR-C5-04); includes 0.10 g tape'),
+        ('GER-008', 'Crush cartridge type L (bored)', 'XPS foam F-250 (cut)', 'make', 'cartridge_lower_g', ('LR', 'LL'),
+         'type U with a 5.56 mm axial bore (sharpened 7/32 in brass tube), pre-crushed, blue stripe; plateau %.1f N; '
+         'bonded on the piston floor; consumable' % cr['F_lower_N']),
+    ]
+
 
 CT = [
     {"id": "CT-GER-CRUSH-SLIDE", "kind": "kinematic", "method": "slid",
-     "spec": "printed tine in printed sleeve, 0.2 mm/side; two 6.5 mm snap fingers with 0.6 mm hooks in 41.5 mm "
-             "windows retain it through the 38 mm crush stroke; flange stops on the sleeve-end rim"},
+     "spec": "printed tine in printed sleeve, 0.2 mm/side, 25 mm engaged at rest; two 6.5 mm snap fingers with 0.6 mm "
+             "hooks (45 deg ramp forward) in 6 mm windows retain it; a hard landing cams the hooks under the window "
+             "front edge and they ride inside the wall; flange stops on the sleeve-end rim after 38 mm"},
     {"id": "CT-GER-END-BEAR", "kind": "mechanical", "method": "slid",
      "spec": "crush cartridge slides in the sleeve and bears on the back wall in compression (0.5 mm preload, not bonded)"},
     {"id": "CT-GER-PSA", "kind": "mechanical", "method": "bonded",
@@ -87,7 +98,11 @@ def claims():
     with open(os.path.join(HERE, 'claims.json'), encoding='utf-8') as f:
         nodes = {n['id']: n for n in json.load(f)['nodes']}
     out = lambda c: nodes[c]['outputs']
-    return out('CALC-D5-MASS'), out('CALC-D5-BOND'), out('CALC-D5-CRUSH'), out('CALC-D5-SIDE'), out('CALC-D5-GEOM')
+    ge = dict(out('CALC-D5-GEOM'))
+    iv = nodes['CALC-D5-GEOM']['input_values']
+    ge.update(ws_m=iv['ws'], rim_t_m=iv['rim_t'], cart_y_m=iv['fy'], cart_z_m=iv['fz'])
+    n_seg = int(nodes['CALC-D5-CRUSH']['input_values']['nseg'])
+    return out('CALC-D5-MASS'), out('CALC-D5-BOND'), out('CALC-D5-CRUSH'), out('CALC-D5-SIDE'), ge, n_seg
 
 
 def kit_stock_masses(m):
@@ -122,7 +137,8 @@ def cap_host_declared():
 
 
 def main():
-    m, bd, cr, sd, ge = claims()
+    m, bd, cr, sd, ge, n_seg = claims()
+    PARTS = parts_table(ge, cr, n_seg)
     m = kit_stock_masses(m)
     host = cap_host_declared()
     stub = {}
@@ -166,14 +182,16 @@ def main():
         edges.append({
             "id": "E-GER-%02d" % (5 + i), "part_a": "GER-002-" + st, "part_b": "GER-001-" + st,
             "via": "CT-GER-CRUSH-SLIDE", "owner": "landing",
-            "notes": "field joint, no tools: press both snap fingers through the side windows (thumb and finger), pull "
-                     "the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min "
-                     "(CL-D5-REPLACE-TIME). Crush stroke %d mm toward -x; side load at the pad %.1f N ult, lip "
-                     "reaction %.0f N (CL-D5-SIDE-RIM-SF %.2f)" % (stroke, sd['F_N'], sd['R_lip_N'], sd['sf_rim']),
-            "retention": {"item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm hooks (CR-C6-12)", "count": 2,
+            "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit "
+                     "(the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME "
+                     "COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are "
+                     "inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke "
+                     "%d mm toward -x; side load at the pad %.1f N ult (C5 3-D sim, D-65), lip reaction %.0f N, shoe RF "
+                     "%.2f by D5 FEA (CL-D5-SIDE-RIM-SF)" % (stroke, sd['F_N'], sd['R_lip_N'], sd['sf_shoe']),
+            "retention": {"item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)", "count": 2,
                           "load_n": "< 1 N in service (crush load is compression on the back wall); pull-out by hand",
-                          "inspection": "pre-flight: both hooks visible in their windows; replace-mark groove outside "
-                                        "the rim; colour matches the station (orange up, blue down)"}})
+                          "inspection": "pre-flight: both hooks visible in their windows (hook at the window front "
+                                        "edge = replace mark reached); colour matches the station (orange up, blue down)"}})
         edges.append({
             "id": "E-GER-%02d" % (9 + i), "part_a": cart[st], "part_b": "GER-002-" + st, "via": "CT-CA",
             "owner": "landing",
@@ -189,7 +207,7 @@ def main():
             "bond": {"adhesive": "neoprene sheet adhesive backing (PSA)",
                      "area_mm2": round(ge['pad_y_m'] * ge['pad_z_m'] * 1e6), "prep": "IPA wipe",
                      "cure": "press 30 s; 1 h before flight",
-                     "load_n": "side friction %.1f N limit (C5 mat, mu 0.7) in shear" % (sd['F_N'] / 1.5),
+                     "load_n": "side friction %.1f N limit (C5 3-D sim, mu 0.7) in shear" % (sd['F_N'] / 1.5),
                      "load_case": "L4/L5 (C1), CR-C5-09", "sized_by": "D5"}})
         edges.append({
             "id": "E-GER-%02d" % (17 + i), "part_a": cart[st], "part_b": "GER-001-" + st, "via": "CT-GER-END-BEAR",
@@ -221,7 +239,7 @@ def main():
                                "a layout convention for the TRN-108 spares box, CR-A4-39); %s" % (qty, note)})
     doc = {"schema": "dbf-interfaces/1", "subsystem": "landing",
            "_note": "GENERATED by redesign/team/D5/make_interfaces.py (masses, bond area and loads: team/D5/claims.json; "
-                    "CGs: CAD centroids). D5, revision D5-R5. E-GER-01..04 point at the R3 half-fin ids FIN-001-UR/UL/"
+                    "CGs: CAD centroids). D5, revision D5-R6. E-GER-01..04 point at the R3 half-fin ids FIN-001-UR/UL/"
                     "LR/LL (D-26). Corner caps GER-007-R/L and E-GER-21/22: MODELLED / edges once a subsystem declares "
                     "WNG-001 (wing does: CR-A4-39, CR-A5-25, CR-A1-46), else PROPOSED / edges_pending. Ground "
                     "spares GER-005..013: flight:false, one CAD unit each in the field-kit row (landing.kit).",
@@ -239,10 +257,15 @@ def main():
               'GER-004': 'from GER-006 sheet',
               'GER-007': 'subsystems/landing/fusion/landing.py (export GER-007-R, mirror for L)',
               'GER-008': 'wing-core offcut, knife cut + brass-tube bore (BUILD.md step 4)'}
-    proc = {'GER-001': 'FDM print, PETG, 0.2 mm layers, 2 perimeters (4 at the rim), back wall on the bed, no supports',
-            'GER-002': 'FDM print, PETG, 0.2 mm layers, flange on the bed, 2 perimeters, slots cut in the slicer model',
-            'GER-003': 'cut from 2 in F-250: 17.3 x 13.3 mm sticks across the thickness, 45.5 mm long (2 per foot), each pressed 1 mm to 44.5 mm',
-            'GER-004': 'scissors/knife from sheet, 21.1 x 18.3 mm, 1 mm corner round',
+    mm = lambda v: v * 1000.0
+    seg = mm(ge['cart_len_m']) / n_seg
+    proc = {'GER-001': 'FDM print, PETG, 0.2 mm layers, standing on the rim end (layers stacked along the sleeve axis, '
+                       'CR-C5-18), %.1f mm walls = %d perimeters, 100 %% solid, R 1 inside fillets from the model; '
+                       'supports only under the leg ends at the TE' % (mm(ge['ws_m']), round(mm(ge['ws_m']) / 0.4)),
+            'GER-002': 'FDM print, PETG, 0.2 mm layers, flange on the bed, 2 perimeters, slots and hook ramps from the model',
+            'GER-003': 'cut from 2 in F-250: %.1f x %.1f mm sticks across the thickness, %.1f mm long (%d per foot), each '
+                       'pressed 1 mm to %.1f mm' % (mm(ge['cart_y_m']), mm(ge['cart_z_m']), seg + 1.0, n_seg, seg),
+            'GER-004': 'scissors/knife from sheet, %.1f x %.1f mm, 1 mm corner round' % (mm(ge['pad_y_m']), mm(ge['pad_z_m'])),
             'GER-007': 'FDM print, TPU 95A, 2 perimeters, open side up',
             'GER-008': 'as GER-003, then a 5.56 mm axial bore with a sharpened 7/32 in K&S brass tube (before pressing)'}
     with open(os.path.join(SUB, 'parts.csv'), 'w', encoding='utf-8', newline='') as f:

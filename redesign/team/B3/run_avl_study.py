@@ -40,7 +40,9 @@ geo = {"b": b, "c": c, "ef": pv("wing.elevon.chord_frac"), "yin": pv("wing.elevo
        "yout": pv("wing.elevon.outboard_y_m"), "fy": pv("fins.y_m"), "fh": pv("fins.half_height_m"),
        "fle": pv("fins.le_x_m"), "fte": pv("fins.te_x_m")}
 m, g0, rho = pv("requirements.mtow_gate_kg"), pv("env.g_ms2"), pv("env.rho_kgm3")
-lim = RES["CALC-B3-CG-LIMITS"]
+VER = json.loads((HERE / "results" / "verify.json").read_text())
+lim = {"x_fwd": VER["CALC-B3-V-CG"]["x_fwd_gate"], "x_aft": VER["CALC-B3-V-NP-CL"]["x_aft_env"],
+       "x_target": pv("cg.x_target_m")}
 npr = RES["CALC-B3-NP"]
 xnp, xnp_a, xt = npr["xnp"], CLM["CL-B3-XNP-AERO"], lim["x_target"]
 eta, dcm = B2V["CL-B2-ELEVON-ETA"], B2V["CL-B2-DCM-VISC"]
@@ -65,15 +67,18 @@ def main():
     (HERE / "avl" / "k09l.mass").write_text(AV.avl_mass(m, xt, zcg, I["Ixx"] * k, I["Iyy"] * k, I["Izz"] * k,
                                                         I["Ixz"] * k, rho, g0))
     # ---- where the A3 R3 layout sits for each pack mass and the pack trim travel (D-24 station x -0.001)
-    chk = RES["CALC-B3-CG-CHECK"]
-    xc = chk["x_centred"]
-    lay = {"x_pack_nominal": xc, "x_pack_fwd_stop": chk["cg_slide_fwd"], "x_pack_aft_stop": chk["cg_slide_aft"],
-           "pack_x_for_target": chk["pack_x_target"], "dxcg_dx_pack": A3["cg"]["dxcg_dx"]["pack"],
-           "pack_light_503g_at_A3_station": A3["cg"]["cg_x_pack_light_heavy_m"][0],
-           "pack_heavy_680g_at_A3_station": A3["cg"]["cg_x_pack_light_heavy_m"][1],
-           "slide_cg_range": A3["cg"]["cg_x_trim_range_m"], "x_fwd": lim["x_fwd"], "x_aft": lim["x_aft"]}
-    out["layout_r3"] = lay
-    print("R3 layout:", json.dumps(lay))
+    chk = RES.get("CALC-B3-CG-CHECK")
+    if chk is None:   # retired at R5 (D-62): pack cases are A1's CALC-A1-PACK-CASES
+        chk = {}
+    if chk:
+        xc = chk["x_centred"]
+        lay = {"x_pack_nominal": xc, "x_pack_fwd_stop": chk["cg_slide_fwd"], "x_pack_aft_stop": chk["cg_slide_aft"],
+               "pack_x_for_target": chk["pack_x_target"], "dxcg_dx_pack": A3["cg"]["dxcg_dx"]["pack"],
+               "pack_light_503g_at_A3_station": A3["cg"]["cg_x_pack_light_heavy_m"][0],
+               "pack_heavy_680g_at_A3_station": A3["cg"]["cg_x_pack_light_heavy_m"][1],
+               "slide_cg_range": A3["cg"]["cg_x_trim_range_m"], "x_fwd": lim["x_fwd"], "x_aft": lim["x_aft"]}
+        out["layout_r3"] = lay
+        print("R3 layout:", json.dumps(lay))
     # ---- sensitivities of NP / aft limit / trimmed stall (CG held at the target)
     long = RES["CALC-B3-AVL-LONG"]
     sens = []

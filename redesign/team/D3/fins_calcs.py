@@ -1,4 +1,4 @@
-"""D3 fins and motor tubes, design R4 (CR-A1-47): the checks that belong to the fins CAD (subsystems/fins). Emits claims.json.
+"""D3 fins and motor tubes, design R5 (CR-A1-63): the checks that belong to the fins CAD (subsystems/fins). Emits claims.json.
 
     python -I redesign/subsystems/fins/make_fins.py     (CAD -> interfaces.json, masses)
     python -I redesign/team/D3/fins_calcs.py            then   python -I redesign/proofs/build_graph.py
@@ -27,10 +27,11 @@ kit.assumption("ASM-D3-SKIN-Z-SPAR", "Skin height over the spar 22.6 mm", "Upper
                "S5010 at x/c 0.25 (k09kit.surface_z, subsystems/wing/s5010.dat)", 0.0226, "m", status="PROPOSED")
 kit.assumption("ASM-D3-XPS-TENSILE", "XPS tensile 0.25 MPa", "Through-thickness tensile strength of F-250 under a fillet",
                "not on the TDS; typical XPS 0.2-0.4 MPa; coupon T-D3-ROOT", 0.25e6, "Pa", status="UNVERIFIED")
-kit.assumption("ASM-D3-FILLET-DENSITY", "Root fillet mix 0.55 g/cm3", "Cured density of the non-sag microballoon-epoxy "
-               "root fillet (~2 : 1 glass microballoons : laminating epoxy by volume)", "typical 0.45-0.70 g/cm3 for "
-               "thickened epoxy fairing/fillet mixes; weigh a cured 20 cm3 sample (T-D3-WEIGH)", 0.55, "g/cm3",
-               status="UNVERIFIED")
+kit.assumption("ASM-D3-FILLET-DENSITY", "Root fillet mix 0.45 g/cm3", "Cured density of the light non-sag root "
+               "fillet mix (phenolic or low-density glass microballoons ~3 : 1 by volume to laminating epoxy, <= 3 % "
+               "silica); R5 mass lever, was 0.55 (~2 : 1 glass)", "typical 0.40-0.70 g/cm3 for thickened epoxy "
+               "fairing/fillet mixes; acceptance: cured 20 cm3 cup <= 9.0 g (T-D3-WEIGH) before any fillet is laid",
+               0.45, "g/cm3", status="UNVERIFIED")
 kit.assumption("ASM-D3-ROOT-SHARE", "Root carries 50 % of the foot side load", "Share of the L4 side load at the foot "
                "reacted by the root fillets; the rest goes up the pinned CF edge strips to the station collar and brace",
                "C4 static FE: edge strips carry the L4 side load to the tube; 0.5 is conservative",
@@ -158,19 +159,20 @@ def esc_wash(zm, zp, h, D, wash, hub):
 
 
 @kit.calc("CALC-D3-ROOT",
-          inputs={"F": "CL-C1-FOOT-F-ULT", "mu": "ASM-C1-FRICTION", "pf": "ASM-C1-PRINTED-FACTOR",
+          inputs={"S": "CL-C1-FOOT-SIDE-DESIGN-ULT", "pf": "ASM-C1-PRINTED-FACTOR",
                   "hh": "P:fins.half_height_m", "tb": "P:fins.board_t_m", "n": "P:fins.layers",
                   "share": "ASM-D3-ROOT-SHARE", "leg": "P:fin_detail.fin.root_fillet.leg_m",
                   "leg_aft": "P:fin_detail.fin.root_fillet.leg_aft_m", "Leff": "P:fin_detail.fin.root_fillet.eff_len_m",
                   "te": "P:fins.te_x_m", "c": "P:wing.chord_m", "ef": "P:wing.elevon.chord_frac",
                   "slot": "P:fin_detail.link_slot.half_width_m", "sx": "ASM-D3-XPS-TENSILE", "kd": "ASM-C6-FOAM-KD"},
-          equation="M = share mu F_foot pf h. R4 fillet zones (fins.py): full leg over the last L_eff of BONDED root "
+          equation="R5 (D-65): M = share S_side,ult pf h with the design foot side load (C1 max of friction and C5's 3-D "
+                   "sim, ultimate; was mu F_foot). R4 fillet zones (fins.py): full leg over the last L_eff of BONDED root "
                    "from the TE, leg_aft aft of the hinge x_h = c (1 - ef), the lower root skips the link slot x_h +/- "
                    "slot (CR-D6-04). M_cap = sigma_xps sum(leg_i (t_fin + leg_i) L_i); governing = the root whose "
                    "full zone carries the least; rf_allow = rf kd (C6 allowable, CR-C6-24)",
           title="Half-fin root fillet joint, foot side load")
-def root(F, mu, pf, hh, tb, n, share, leg, leg_aft, Leff, te, c, ef, slot, sx, kd):
-    M = share * mu * F * pf * hh
+def root(S, pf, hh, tb, n, share, leg, leg_aft, Leff, te, c, ef, slot, sx, kd):
+    M = share * S * pf * hh
     t, xh = tb * n, c * (1 - ef)
     aft = te - xh                                                # aft-of-hinge root length (upper)
 
@@ -181,7 +183,9 @@ def root(F, mu, pf, hh, tb, n, share, leg, leg_aft, Leff, te, c, ef, slot, sx, k
     cl = cap(la, Leff - la)                                      # full zone continues ahead of the slot
     capm = min(cu, cl)
     rf = sx * capm / M
-    return {"M": M, "rf_fillet": rf, "rf_allow": rf * kd, "rf_upper": sx * cu / M, "rf_lower": sx * cl / M}
+    need = M / (sx * kd) - capm                                  # capacity short at the C6 allowable (m3)
+    return {"M": M, "rf_fillet": rf, "rf_allow": rf * kd, "rf_upper": sx * cu / M, "rf_lower": sx * cl / M,
+            "leff_for_allow": Leff + max(0.0, need) / (leg * (t + leg))}
 
 
 @kit.calc("CALC-D3-BRACE",
@@ -244,7 +248,7 @@ SC = ["FIN-008-UR", "FIN-008-UL", "FIN-008-LR", "FIN-008-LL"]
 HF = ["FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"]
 kit.claim("CL-D3-SLIP-FUSE", "Fin-joint design moment / root moment when the mount slips", calc="CALC-D3-MOUNT-SLIP",
           output="fuse_ratio", unit="-", limit=(">=", 1.0), verifies=["R-CRASH-REPAIR"], parts=MT + ["FIN-004-R"],
-          how="T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 85 and 100 N")
+          how="T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 70 and 80 N (R5 lever 33.9 mm)")
 kit.claim("CL-D3-SLIP-HOLD", "Slip torque / mount design moment (holds in flight)", calc="CALC-D3-MOUNT-SLIP",
           output="hold_ratio", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=MT,
           how="T-D3-SLIP; witness line checked before every flight")
@@ -253,34 +257,41 @@ kit.claim("CL-D3-SLIP-F", "Side force at the motor can that turns the collar", c
 kit.claim("CL-D3-PROP-GAP", "Prop plane to collar front / B4 minimum 0.14 D", calc="CALC-D3-PROP-GAP", output="ratio",
           unit="-", limit=(">=", 1.0), verifies=["R-PROP-CLEAR"], parts=MT,
           how="Measure motor face to prop hub face on the built station; Fusion interference check",
-          note="R4 (D-51): face_ahead 2.5 mm, E1 stack 37.3 mm (37.0 along x). The canted plate corners sit up to 2.5 mm "
-               "ahead of the face at the axis, inside the motor-base shadow. With the D-52 sense the wing-side blade tip "
-               "swings aft: check.py's tilted KO-PROP cylinder (blade half 10 + 25 mm) reaches the tube, block, plug, "
-               "brace and wing skin; it clears at face_ahead >= ~0.019 m (CR-D3-26)")
+          note="R5 (D-61): face_ahead 7.5 mm, E1 stack 37.3 mm (37.0 along x). The canted plate corners sit up to 2.5 mm "
+               "ahead of the face at the axis, inside the motor-base shadow. The tube clearance with the blade's swept "
+               "volume is E1's CL-E1-TIP-GAP-AT-75 (26.1 mm) and B4's CL-B4-GAP-TUBE-FIX5")
 kit.claim("CL-D3-PROP-TIP-GAP", "Blade tip (disc mid-plane) to the tube front over the tube, canted disc, D-52 sense",
           calc="CALC-D3-PROP-GAP", output="tip_gap", unit="m", limit=(">=", "P:requirements.prop_clearance_min_m"),
           verifies=["R-PROP-CLEAR"], parts=MT + ["FIN-002-R", "FIN-002-L"],
           how="Ruler from the blade tip, turned over the tube, to the tube face (B4 CL-B4-GAP-TUBE)",
-          note="mid-plane only; the blade's aft half-thickness at the tip (E1: up to 6 mm at the root, ~2 mm at the tip "
-               "EST) comes off this. check.py's KO-PROP cylinder carries 10 mm + 25 mm both sides and fails (CR-D3-26)")
-kit.claim("CL-D3-X-PROP", "Prop plane x with the D3 mount", calc="CALC-D3-PROP-GAP", output="x_prop", unit="m",
-          parts=MT, how="D-51: params propulsion.stations.x_prop_plane_m carries this value (-0.0077)")
-kit.claim("CL-D3-X-FACE", "Motor face x at the axis (D3 mount)", calc="CALC-D3-PROP-GAP", output="x_face", unit="m",
-          parts=MT, how="D-55: propulsion.stations.x_plate_face_m (DP-MOTOR-FACE) should carry this value; it still "
-                        "reads 0.0309 from face_ahead 1 mm (CR-D3-26)")
+          note="mid-plane only; E1's swept-volume envelope (+10 / -6 mm) comes off this: 26.1 mm at face_ahead 7.5 mm "
+               "(CL-E1-TIP-GAP-AT-75, D-61). check.py's hull test is the CAD check")
+kit.claim("CL-D3-X-PROP", "Prop plane x (hub on the motor axis) with the D3 mount, face_ahead 7.5 mm", calc="CALC-D3-PROP-GAP",
+          output="x_prop", unit="m", parts=MT,
+          how="Measure collar front to prop hub face on the built station (44.5 mm along x); Fusion CAD",
+          note="D-61: A1 copies this exact value into propulsion.stations.x_prop_plane_m (carried -0.0127); "
+               "-0.01267 = x_face 0.02435 - 37.3 mm cos 7 deg")
+kit.claim("CL-D3-X-FACE", "Motor plate face x at the motor axis (DP-MOTOR-FACE), D3 mount, face_ahead 7.5 mm",
+          calc="CALC-D3-PROP-GAP", output="x_face", unit="m", parts=MT,
+          how="Calliper from the tube front face (x 0.034) to the plate face on the printed mount: 9.65 mm",
+          note="D-61: A1 copies this exact value into propulsion.stations.x_plate_face_m (carried 0.0244); "
+               "= tube axis 0.045 - (11.15 + 2.0) mm collar radius - 7.5 mm")
 kit.claim("CL-D3-SCREW-ENGAGE", "Motor-screw engagement, every hole, 7 deg canted plate", calc="CALC-D3-SCREW-ENGAGE",
           output="engage", unit="m", limit=(">=", 0.003), verifies=["R-JOINT-STACK"], parts=MT,
           how="Probe the motor screw-hole depth on arrival (T-E1-MOTOR-RM); count turns on assembly",
           note="limit = requirements.thread_engagement_min 1.0 x d, d = 3 mm; the R2 flat plate + pads gives 2.5 mm at 7 deg")
-kit.claim("CL-D3-COLLAR-H", "Station collar height (12 mm) / C4 required bond height", calc="CALC-D3-COLLAR",
+kit.claim("CL-D3-COLLAR-H", "Station collar height (15 mm, CR-C6-36) / C4 required bond height", calc="CALC-D3-COLLAR",
           output="h_ratio", unit="-", limit=(">=", 1.0), verifies=["R-FIN-TUBE-JOINT"], parts=SC,
           how="C6 coupon T-C6-COLLAR; measure the printed collar",
           note="R4 (D-48): read against C4-R3 CL-C4-D3-COLLAR-H-REQ (envelope torsion 4.6 N m + brace shear). C6's own "
                "requirement on max(C1, C4) torsion + brace shear is CL-D3-COLLAR-H-C6 (CR-D3-25)")
 kit.claim("CL-D3-COLLAR-H-C6", "Station collar height / C6 required bond height (max of C1, C4 torsion + brace shear)",
           calc="CALC-D3-COLLAR", output="h_ratio_c6", unit="-", limit=(">=", 1.0), verifies=["R-FIN-TUBE-JOINT"],
-          parts=SC, how="C6 coupon T-C6-COLLAR; measure the printed collar")
-kit.claim("CL-D3-TONGUE-FIT", "Strip-tail tongue fit under the 12 mm collar ring (margin)", calc="CALC-D3-COLLAR",
+          parts=SC, how="C6 coupon T-C6-COLLAR; measure the printed collar",
+          note="R5: drawn 15 mm (C6-R5 CL-C6-COLLAR-RF-15MM 1.15 on a 13.007 mm requirement). C6's live run now reads "
+               "C1's CL-C1-FINHALF-T-LIM 12.67 N m (R4 7.40, wing-plane value) and needs 19.4 mm: CR-D3-36 asks C1/C6 "
+               "which torsion governs before D3 redraws (20 mm fits: ring |z| 0.1395-0.1595, +3 g)")
+kit.claim("CL-D3-TONGUE-FIT", "Strip-tail tongue fit under the 15 mm collar ring (margin)", calc="CALC-D3-COLLAR",
           output="tongue_fit", unit="m", limit=(">=", 0.0005), verifies=["R-FIN-TUBE-JOINT"], parts=SC + HF,
           how="Dry fit: the tongue drops into the board notch between the strips with the ring top at |z| 0.1595",
           note="D-48 condition for 16 -> 12 mm (C4 CR-C4-25); fins.py raises if it does not fit")
@@ -313,7 +324,15 @@ kit.claim("CL-D3-ROOT-FILLET-RF", "Half-fin root fillet joint reserve factor, fo
 kit.claim("CL-D3-ROOT-FILLET-RF-ALLOW", "Half-fin root fillet reserve factor at the C6 XPS allowable (0.5 x typical)",
           calc="CALC-D3-ROOT", output="rf_allow", unit="-", limit=(">=", 1.0),
           verifies=["R-LANDING-IMPACT", "R-STRUCT-MARGIN"], parts=HF + ["WNG-001"],
-          how="T-C6-XPS-PULL (allowable) and T-D3-ROOT (joint)", note="CR-C6-24 asked >= 1.0 at 0.125 MPa")
+          how="T-C6-XPS-PULL (allowable) and T-D3-ROOT (joint)",
+          note="CR-C6-24 asked >= 1.0 at 0.125 MPa. R5: FAILS on the D-65 side load (58.96 N ult, n 6.6) where R4 read "
+               "1.14 on mu F_foot at n 6.0. ASM-D3-ROOT-SHARE 0.5 agrees with C4's 3-D board share 0.47 "
+               "(CL-C4-SIM-BOARD-SHARE). Fix offered in CR-D3-35: 15 mm zone forward to L_eff 0.185 m (CL-D3-ROOT-LEFF-REQ, "
+               "+5 g) or C4's fillet-intact share / T-C6-XPS-PULL. The fillet is credited fail-safe only in the wing (D-68)")
+kit.claim("CL-D3-ROOT-LEFF-REQ", "Root fillet full-leg length from the TE needed for RF 1.0 at the C6 allowable",
+          calc="CALC-D3-ROOT", output="leff_for_allow", unit="m", limit=("<=", "P:fin_detail.fin.root_fillet.eff_len_m"),
+          verifies=["R-LANDING-IMPACT"], parts=HF + ["WNG-001"], how="T-D3-ROOT on the chosen length",
+          note="information for CR-D3-35: the drawn 0.150 m is short at the D-65 side load")
 kit.claim("CL-D3-BRACE-PCR", "Brace (10 x 2) Euler load / C4 design brace force", calc="CALC-D3-BRACE",
           output="pcr_ratio", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=["FIN-009-LR"],
           how="C4 CL-C4-D3-MS-BRACE; T-C4-TAP-D3")
@@ -364,18 +383,21 @@ def _fillet_mass():
     return round(tot, 1)
 
 
-kit.claim("CL-D3-MASS", "Fins subsystem flying mass, design R4", value=_mass(), unit="g",
+kit.claim("CL-D3-MASS", "Fins subsystem flying mass, design R5", value=_mass(), unit="g",
           limit=("<=", "P:mass.allocation_g.fins"), verifies=["R-MASS-ALLOC"], parts=HF,
           how="T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
           note="from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g "
                "(not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root "
                "fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g "
                "where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did "
-               "not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet, asked of A1 in CR-D3-33 "
-               "with the levers that may return it")
+               "not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet (D-63: 437 g). R5 "
+               "(CR-A1-63): cheeks +5 mm and the 7.5 mm face_ahead (mounts 47.8 g), pins 2.5 mm, collar 15 mm (C6-R5 needs 13.007 mm), block "
+               "edges R 3 mm -0.4 g: 440.3 g; lever taken: fillet mix 0.55 -> 0.45 g/cm3 -5.6 g (T-D3-WEIGH cup "
+               "<= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken")
 kit.claim("CL-D3-FILLET-MASS", "Root fillets, four half-fins (CAD volume x fillet density)", value=_fillet_mass(),
           unit="g", parts=HF, how="T-D3-WEIGH (half-fin before / after fillets)",
-          note="ASM-D3-FILLET-DENSITY 0.55 g/cm3; was carried inside fin.root_joint_g 3.0 g per half-fin with the laps")
+          note="ASM-D3-FILLET-DENSITY 0.45 g/cm3 (R5 lever; 30.6 g at 0.55); was carried inside fin.root_joint_g 3.0 g "
+               "per half-fin with the laps")
 
 def _laminate_mass():
     """Mean half-fin laminate mass without fillets and tape laps (answers CR-A3-26: what grew FIN-001)."""

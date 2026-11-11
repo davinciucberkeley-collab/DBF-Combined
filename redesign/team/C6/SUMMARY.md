@@ -1,59 +1,63 @@
 # C6 Joints and fasteners — summary
 
-Revision C6-R4, 2026-11-10 (params A1-R4a; C1 R4; C4 fin claims `team/C4/claims.d3.json` as published at 04:28;
-D3-R4). Joint stacks `PROPOSED`; claims `UNVERIFIED` (allowables wait for coupons). Re-run with
-`python -I redesign/team/C6/joints.py`, then `make_stacks.py`, then `python -I redesign/proofs/build_graph.py`. R4
-clears the 22 drifts: C4 re-ran its FE after R3, `ASM-D3-FILLET-LEG` was retired, and C3 and D5 moved.
+Revision C6-R5b, 2026-11-10 (params A1-R5; C1 claims and `data/envelope.json` of 14:35 read live; C4's frozen R4 set
+`team/C4/claims.d3.json` of 11:51; fins D3-R5b; D5 R5). Joint stacks `PROPOSED`; claims `UNVERIFIED` until the
+coupons run. Re-run with `python -I redesign/team/C6/joints.py`, then `make_stacks.py`, then
+`python -I redesign/proofs/build_graph.py`. The R5 items are done: D-70 pins pass and D-68 pocket rules are issued.
+The fin station is not closed. C1's D-65 re-run took the half-fin torsion from 7.39 to **12.67 N·m** during this
+session, so the collar fails as drawn, and C4's frozen set is stale by ×1.71.
 
 ## Key numbers
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Bought thread / screw lengths | M3 only / steel 8, 16; PA66 16, 18 | mm | `JOINTS.md` kit | `PROPOSED` |
-| Collar torsion, max(C1, C4) + brace shear | max(7.39, 6.26) + 163 N | N·m | `CALC-C6-TUBE-BONDS` | `UNVERIFIED` |
-| Collar bond RF at 12 mm (drawn) / 13 mm / 16 mm | **1.00** (0.9998 … 1.003) / 1.09 / 1.34 | — | `CL-C6-COLLAR-RF`, `-RF-13MM`, `-RF-16MM` | `UNVERIFIED`, zero margin → CR-C6-32 |
-| Strip-anchor design force per strip (for H1) | **1 248** | N | `CL-C6-STRIP-ANCHOR-F` | `UNVERIFIED` |
-| Strip tail anchor / tail net section | 1.27 / 1.14 | — | `CL-C6-STRIP-ANCHOR-RF`, `-TAIL-NET-RF` | `UNVERIFIED` |
-| Pins: Ø 2 at 15 mm (drawn) / Ø 2.5 at 15 mm / Ø 2 at 9 mm | **0.82** / 1.59 / 1.36 | — | `CL-C6-STRIP-PIN-RF`, `-RF-PROP`, `-RF-ALT` | `FAIL` → CR-C6-31 |
-| Pin force at 15 mm (C4 FE) | 72.7 | N | `CL-C4-D3-STRIP-PIN-F` | `UNVERIFIED` |
-| Power frame `E-PWR-03`: 4 × M3x18 PA66, engagement / torque | 5.5 / 0.08 | mm / N·m | `CL-C6-PWR-ENGAGE-RF` 1.22, `-INSTALL-RF` 1.35 | `UNVERIFIED` |
-| Power frame tension / friction / insert pull-out | 1.46 / 1.24 / 1.74 | — | `CL-C6-PWR-*`, `CL-C6-INSERT-PULL-RF` | `UNVERIFIED` |
-| Foot shoe bond (D5 block), area / design / RF | 1 350 / 85.7 / 1.57 | mm² / N / — | `CL-C6-FOOT-SHOE-RF` | `UNVERIFIED` |
-| Fin root fillet (15 mm zoned, as drawn) | 1.14 | — | `CL-C6-FIN-ROOT-RF` | `UNVERIFIED` |
-| Mast cross-bolt `E-POD-06`, M3x16 PA66 past grip | 6.0 | mm | `joint_stacks.json` | `PROPOSED` |
-| Min bond area, servo frame or horn into XPS (VD 27.2) | 719 | mm² | `CL-C6-LINK-BOND-AREA-MIN` | `UNVERIFIED` |
-| Motor screws 0.20 N·m: head / separation | 1.32 / 3.73 | — | `CL-C6-MOTOR-HEAD-RF`, `-SEP-RF` | `UNVERIFIED` |
-| Pod bond design / crash; hatch tab | 1.13 / 1.38; 1.18 | — | `CL-C6-POD-*` | `UNVERIFIED` |
+| Bought thread / screw lengths | M3 only / steel 8, 16; PA66 16, 18 (+ Ø 2.5 CF rod pins) | mm | `JOINTS.md` kit | `PROPOSED` |
+| Collar torsion, max(C1, C4) + brace shear | max(**12.67**, 6.24) + 163 | N·m, N | `CALC-C6-TUBE-BONDS` | `UNVERIFIED` |
+| Collar height needed / drawn 15 mm RF / 22 mm RF | **19.45** / **0.77** / 1.13 | mm / — / — | `CL-C6-COLLAR-L-REQ`, `-RF`, `-RF-PROP` | `FAIL` → CR-C6-37 |
+| Pins Ø 2.5 at 15 mm (drawn, D-70), C4 R4 load 72.4 N | 1.60 (bearing 3.45, strip net 2.41) | — | `CL-C6-STRIP-PIN-RF` | `UNVERIFIED` |
+| Strip tail anchor / tail net, C4 R4 1 243 N | 1.27 / 1.15 | — | `CL-C6-STRIP-ANCHOR-RF`, `-TAIL-NET-RF` | `UNVERIFIED` |
+| Load scale k = C1 now / C4's solved torsion | 1.71 | — | `CL-C6-FIN-LOAD-SCALE` | `UNVERIFIED` |
+| D-65 estimate: strip force / anchor / tail net / pins | 2 131 N / **0.74** / **0.67** / **0.93** | N / — | `CL-C6-*-EST` | `FAIL` (est.) → CR-C6-38 |
+| Tube in block / block on spar | 2.65 / 4.64 | — | `CL-C6-TUBE-BLOCK-RF`, `-BLOCK-SPAR-RF` | `UNVERIFIED` |
+| Block pocket (D-68): square-corner void / max pocket R / beads | 1.24 / 4.2 / 1.1 g | mm / mm / g | `CL-C6-POCKET-*` | `PROPOSED` → CR-C6-40 |
+| Root fillet, fail-safe only (D-68), D-65 side load | 0.81 | — | `CL-C6-FIN-ROOT-RF` | `FAIL` → D3 CR-D3-35 |
+| Foot shoe bond (D5 R5), area / design / RF | 1 350 / 85.7 / 1.57 | mm² / N / — | `CL-C6-FOOT-SHOE-RF` | `UNVERIFIED` |
+| Power frame `E-PWR-03`, 4 × M3x18 PA66, engagement / torque | 5.5 / 0.08 (install 1.35, tension 1.46, insert 1.74) | mm / N·m | `CL-C6-PWR-*` | `UNVERIFIED`, open with F1 |
+| Motor screws 0.20 N·m: head / separation | 1.32 / 3.69 | — | `CL-C6-MOTOR-HEAD-RF`, `-SEP-RF` | `UNVERIFIED` |
+| Pod bond design / crash; floor line with fillet; hatch | 1.15 / 1.33; 2.03; 1.18 | — | `CL-C6-POD-*` | `UNVERIFIED` |
+| Min bond area, servo frame or horn into XPS | 719 | mm² | `CL-C6-LINK-BOND-AREA-MIN` | `UNVERIFIED` |
 
 ## Produced
 
 | File | What |
 |---|---|
-| `JOINTS.md` | rules, D-58 deviations, kit, fastened stacks and bonded joints keyed by interface id, inspection, tests, findings |
-| `joints.py` → `claims.json` | 12 calculations, 49 claims, 10 planned tests |
-| `make_stacks.py` → `joint_stacks.json` | 82 edge blocks (now with pins `E-FIN-69…80`) + 3 withdrawn (`E-MEC-03/04`, `E-PWR-05`) |
-| `params.json` | C6 values (`P:joints.*`): new pin Ø 2.5, alternate pitch 9 mm, collar 13 mm |
-| `CHANGE-REQUESTS.md` | CR-C6-31 … 35 and answers to every R4 action item |
+| `JOINTS.md` | what changed since R4, verdict, rules, kit, joint-stack and bond tables by interface id, inspection, tests, findings |
+| `joints.py` → `claims.json` | 14 calculations, 63 claims, 10 planned tests; C1 envelope now read live; new `CALC-C6-BLOCK-POCKET`, `CALC-C6-FIN-SCALE` |
+| `make_stacks.py` → `joint_stacks.json` | 82 edge blocks + 3 withdrawn; `E-FIN-13…16`, `29…36`, `51/52`, `53…56`, `69…80` rewritten |
+| `params.json` | `P:joints.*`: collar 22 mm proposal, D-70 12 mm condition, Ø 2 fallback pin, bond-line and bead rules |
+| `CHANGE-REQUESTS.md` | CR-C6-36 … 41 and answers to every R5 action item |
 
 ## What others must act on
 
 | Who | Action | CR |
 |---|---|---|
-| D3 | pins Ø 2.5 mm at the drawn 15 mm (≈ +1.5 g); collar 12 → 13 mm (≈ +0.6 g) | 31, 32 |
-| C4 | freeze one R4 set of `CL-C4-D3-*` and fix the CR-C4-23 text; publish the coincident strip-pair force | 34 (29) |
-| H1 | strip-anchor lever frame ≥ 1 560 N (9:1); pass line read from the claim | 33 |
-| I1 | CF rod Ø 2.5 × 1 m × 2 replaces Ø 2 | 35 |
+| D3 (cc A1) | collar 15 → **22 mm** (≈ +4.4 g `EST`); hold collar, tail and pin prints for C4 | 37, 38 |
+| C4 | re-run the fin FE on the D-65 loads; publish one new frozen set + coincident pair force + fillet-intact share | 38 |
+| H1 | strip-anchor frame ≥ 2 660 N | 39 |
+| D1 | pocket corners R 3.0–4.2 mm or packed; feeler dry-fit; beads both surfaces | 40 |
+| C1 | publish the governing case with the torsion claim; announce moves > 5 % | 41 |
 | F1, D2 | 0.08 N·m on the PA66 frame screws; boss Ø 7.2 and the unplug-moment path | 26, 27 (open) |
 
 ## Open issues
 
-1. The Ø 2 pins fail as drawn (0.82), and the 12 mm collar sits on RF 1.00, flipping either side with each C1 run.
-   Both fixes are with D3 and cost ≈ 2 g `EST` on a fins line that is already 18.4 g over.
-2. C4's loads moved twice after R3 (strip 908 → 1 198 → 1 248 N; pin 64 → 92 → 73 N). Re-run `joints.py` whenever
-   `claims.d3.json` changes. The tail net section is 0.57 if both strips of a pair load together (CR-C6-34).
-3. Every allowable is a guess until `T-C6-*` runs (ten tests, about 1 h each, from shop stock).
+1. The collar, strip tail, tail net section and pins are not closed on the D-65 loads. The `-EST` claims are
+   linear scalings of C4's R4 set; they retire when C4 re-runs.
+2. C1 moved three times today. Re-run `joints.py` whenever `team/C1/claims.json`, `team/C1/data/envelope.json` or
+   `team/C4/claims.d3.json` changes.
+3. Mass: the 22 mm collar and any CR-C6-38 changes land on a fins line with 0 g free reserve. A1 has to decide.
+4. Every allowable is a guess until `T-C6-*` runs (ten tests, about 1 h each, from shop stock).
 
 ## How to verify
 
-Run the ten C6 coupons (`claims.json`), then `T-C4-FIN-PROOF` with Ø 2.5 pins and witness marks on every collar,
-then re-run `joints.py` with the coupon allowables.
+Run `T-C6-LAP-PETG` before any collar prints (the height scales with it), then the other nine C6 coupons, then
+`T-C4-FIN-PROOF` with witness marks on every collar. After C4 re-runs, re-run `joints.py` and drop the `-EST` claims.

@@ -8,7 +8,10 @@ Checks every body of every wing component built by subsystems/wing/fusion/wing.p
   3. the core bodies tile the span with no gap and no overlap (|y| 0 ... 0.575) and are exact mirrors left/right;
   4. every core segment keeps >= 2 mm of foam round the spar bore where the bore is closed (ASM-A5-MIN-COVER);
   5. the elevon panels sit in the core cut-outs with the declared end gap and never overlap a core body;
-  6. the cut list matches the mating parts: block pocket vs fins block, anchor pocket vs fins anchor, recess vs pod.
+  6. the cut list matches the mating parts: block pocket (R corners) vs fins block, lip beads, anchor pocket vs fins
+     anchor, recess vs pod;
+  7. D6's servo frame, torque tubes and horn blades sit in the pocket, grooves and slots;
+  8. D-68 / D-69 / CR-F2-14 rules: LE strip edges aft of x/c 0.10, recess-step fillet legs, JR recess wall.
 These are geometric facts of the sketches Fusion will receive, not proof that Fusion builds them (UNVERIFIED-IN-FUSION).
 """
 import math
@@ -85,7 +88,12 @@ def mating(g):
         if pid in C:
             lo, hi = C[pid].bbox()
             ok = ok and gx0 - tol <= lo[0] and hi[0] <= gx1 + tol and hi[2] <= gzc + tol
-    check(ok, '7  torque tubes MEC-009-RI/RO inside the panel groove x %.4f-%.4f under z %.4f' % (gx0, gx1, gzc))
+    for pid in ('MEC-009-RI', 'MEC-009-RO'):
+        if pid in C:
+            lo, hi = C[pid].bbox()
+            ok = ok and any(a - tol <= lo[1] and hi[1] <= b + tol for a, b in g['tube_groove_y'])
+    check(ok, '7  torque tubes MEC-009-RI/RO inside the panel groove x %.4f-%.4f under z %.4f, |y| %s' % (
+        gx0, gx1, gzc, ' / '.join('%.3f-%.3f' % r for r in g['tube_groove_y'])))
     ok = True
     for pid, (ya, yb) in (('MEC-004-R', g['horn_y'][0]), ('MEC-006-R', g['horn_y'][1])):
         if pid in C:
@@ -125,29 +133,43 @@ def main():
     neg = sorted((round(-s.offset, 7), round(-s.depth, 7), len(s.loops[0])) for s in core if s.offset < 0 and s.offset + s.depth <= 1e-9)
     check(pos == neg, '3  left half is the exact mirror of the right half (%d bodies each)' % len(pos))
 
-    worst = 1.0
+    worst, foam_bead = 1.0, 1.0
     for y0, y1, act in mod.segments(g):
         if 'spar' in act and not ({'block', 'anchor', 'window'} & act):
-            for loop, holes in mod.segment_loops(g, act):
+            plain = mod.segment_loops(g, act)                                   # skin line (a lip bead is cover too)
+            for (loop, holes), (ploop, _ph) in zip(mod.segment_loops(g, act, y0, y1), plain):
                 for h in holes:
                     for p in h:
-                        worst = min(worst, min(math.hypot(p[0] - a[0], p[1] - a[1]) for a in loop))
-    check(worst >= 0.002, '4  foam round the closed spar bore >= 2 mm: min %.2f mm' % (worst * 1000))
+                        worst = min(worst, min(math.hypot(p[0] - a[0], p[1] - a[1]) for a in ploop))
+                        if 'bead' in act:
+                            foam_bead = min(foam_bead, min(math.hypot(p[0] - a[0], p[1] - a[1]) for a in loop))
+    check(worst >= 0.002, '4  cover round the closed spar bore >= 2 mm: min %.2f mm' % (worst * 1000))
+    check(foam_bead >= 0.001, '4  foam left between the bore and a lip bead >= 1 mm (bead is epoxy, cover counted to the skin): min %.2f mm' % (foam_bead * 1000))
 
-    xs_core = [(min(min(p[0] for p in s.loops[0]), 9), s) for s in core]
-    ok5 = True
+    # 5. panels against the core: over a panel's y range a core body may reach aft of the hinge only in the R corner
+    #    fill at the fin-root tab, and then the panel front there is at least the end gap further aft
+    ok5, worst5 = True, 1.0
     for pid in ('WNG-011-R', 'WNG-012-R', 'WNG-011-L', 'WNG-012-L'):
         es = ctx.components[pid].shapes
         ey = [min(min(e.offset, e.offset + e.depth) for e in es), max(max(e.offset, e.offset + e.depth) for e in es)]
         for s in core:
             cy = sorted((s.offset, s.offset + s.depth))
-            if cy[0] < ey[1] - 1e-9 and ey[0] < cy[1] - 1e-9 and max(p[0] for p in s.loops[0]) > g['xh'] + 1e-6:
-                ok5 = False
+            cx = max(p[0] for p in s.loops[0])
+            if cx <= g['xh'] + 1e-6:
+                continue
+            for e in es:
+                py = sorted((e.offset, e.offset + e.depth))
+                if cy[0] < py[1] - 1e-9 and py[0] < cy[1] - 1e-9:
+                    sep = min(p[0] for p in e.loops[0]) - cx
+                    worst5 = min(worst5, sep)
+                    if sep < g['e_gap'] - 1e-6:
+                        ok5 = False
         a, b = [sp for sp in g['spans']][0 if '011' in pid else 1]
         lo, hi = (a, b) if pid.endswith('R') else (-b, -a)
         if abs(ey[0] - (lo + g['e_gap'])) > 1e-6 or abs(ey[1] - (hi - g['e_gap'])) > 1e-6:
             ok5 = False
-    check(ok5, '5  elevons in the core cut-outs, end gap %.1f mm, no core body aft of the hinge over a panel' % (g['e_gap'] * 1000))
+    check(ok5, '5  elevons in the core cut-outs, end gap %.1f mm; at the R %.0f mm tab corners the panel front stays >= %.2f mm aft of the core fill' % (
+        g['e_gap'] * 1000, g['ecr'] * 1000, worst5 * 1000))
 
     F = wd.k9.local('fins')
     bw = wd.k9.lval(F, 'fin_detail.block.width_m', 'm', 0.036)
@@ -160,6 +182,43 @@ def main():
               (g['x_slot'][1] - g['x_slot'][0]) * 1000, (g['anc_y'][1] - g['anc_y'][0]) * 1000, ax * 1000))
     check(abs(g['x_rec1'] - 0.065) < 0.0005 and abs(g['z_rec'] - wd.k9.val(P, 'pod.z_base_m', 'm')) < 1e-9,
           '6  pod recess x %.4f-%.4f, floor z %.3f matches CR-D2-04 (x 0.0226-0.065, z 0.015)' % (g['x_rec0'], g['x_rec1'], g['z_rec']))
+    # 6. D-68 pocket corners against D3's rounded block (radius edge_r, same centre, bond gap)
+    r_b = wd.k9.lval(F, 'fin_detail.block.edge_r_m', 'm', 0.003)
+    gap_f = g['blk_rp'] - r_b
+    bx0, bx1 = g['blk_x'][0] + gap_f, g['blk_x'][1] - gap_f
+    by0, by1 = g['blk_y'][0] + gap_f, g['blk_y'][1] - gap_f
+    ok6, min_gap = True, 1.0
+    for y0, y1, act in mod.segments(g):
+        if 'block' not in act:
+            continue
+        xa, xb = mod.pocket_x(g, y0, y1)
+        for i in range(11):
+            y = y0 + (y1 - y0) * i / 10
+            d = min(y - by0, by1 - y)
+            if d < 0:
+                continue
+            dx = r_b - math.sqrt(max(r_b ** 2 - (r_b - d) ** 2, 0.0)) if d < r_b else 0.0
+            min_gap = min(min_gap, (bx0 + dx) - xa, xb - (bx1 - dx))
+    ok6 = min_gap >= -1e-9
+    check(ok6, '6  stepped R %.2f mm pocket corners contain the R %.0f mm block everywhere (min clearance %.2f mm)' % (
+        g['blk_rp'] * 1000, r_b * 1000, min_gap * 1000))
+    beads = [s for s in ctx.components['WNG-006-R'].shapes]
+    cover = sum(abs(s.depth) for s in beads if 'upper' in s.name), sum(abs(s.depth) for s in beads if 'lower' in s.name)
+    deep = max(mod.bead_depth(g, y0, y1) for y0, y1, act in mod.segments(g) if 'bead' in act)
+    check(all(abs(c - 2 * g['bead_leg']) < 1e-7 for c in cover) and deep >= g['bead_leg'] - 1e-9,
+          '6  lip beads cover %.1f mm of span per surface per side (2 x %.0f mm, inboard + outboard), %.1f mm deep at the pocket wall' % (
+              cover[0] * 1000, g['bead_leg'] * 1000, deep * 1000))
+    # 8. LE seams (CR-B2-17), recess fillet (CR-C3-17), JR recess (CR-F2-14)
+    le = min(g['le_edge'].values()), min(g['skin_lap'].values())
+    check(le[0] >= g['le_clean_x'] and le[1] >= g['le_clean_x'] - 1e-9 or le[0] >= g['le_clean_x'],
+          '8  LE strip edges x %.4f upper / %.4f lower, aft of x/c 0.10 (%.3f); strip seams under it from x %.4f' % (
+              g['le_edge']['upper'], g['le_edge']['lower'], g['le_clean_x'], le[1]))
+    check(g['rf_legs'][0] >= 0.005 - 1e-9 and g['rf_legs'][1] >= g['rf_legs'][0] - 0.0005,
+          '8  recess-step fillet legs %.1f mm on the floor x %.1f mm up the step (full step height)' % (g['rf_legs'][0] * 1000, g['rf_legs'][1] * 1000))
+    wall = g['sp_x'][0] - g['jr_x'][1]
+    check(wall >= 0.003 and g['jr_y'][0] < g['sgroove_y'][1] < g['jr_y'][1],
+          '8  JR recess x %.3f-%.3f y %.3f-%.3f %.0f mm deep on the servo branch; %.1f mm foam to the servo pocket' % (
+              g['jr_x'] + g['jr_y'] + (g['jr_d'] * 1000, wall * 1000)))
     mating(g)
     print('wing_selfcheck: %s' % ('PASS' if not FAILS else 'FAIL (%d)' % len(FAILS)))
     return 1 if FAILS else 0

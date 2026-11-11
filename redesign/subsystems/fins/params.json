@@ -132,11 +132,11 @@
      "note": "bonded root length from the TE forward that carries the full fillet (the foot side load enters at the TE tip); the lower roots skip the D6 slot, so their full fillet starts further forward"
     },
     "gcc": {
-     "value": 0.55,
+     "value": 0.45,
      "unit": "g/cm3",
      "source": "ASM-D3-FILLET-DENSITY",
      "status": "UNVERIFIED",
-     "note": "non-sag fillet mix, ~2 : 1 glass microballoons : laminating epoxy by volume; weigh a cured 20 cm3 sample (T-D3-WEIGH)"
+     "note": "R5 lever (CR-A1-63, D-63 \"D3 returns what its levers give\"): 0.55 -> 0.45 g/cm3, a light non-sag mix (phenolic or low-density glass microballoons, about 3 : 1 by volume to laminating epoxy, <= 3 % colloidal silica). Acceptance: a cured 20 cm3 cup weighs <= 9.0 g (T-D3-WEIGH) before any fillet is laid; if it reads higher, use the lightest mix that stays non-sag and report the mass (fallback lever: block fill, C4). Strength is not set by the filler: the root joint fails in the paper face (0.10 MPa) or the XPS (0.125 MPa allowable), and the fillet is credited fail-safe only (D-68). Was 0.55 (~2 : 1 glass)"
     },
     "stop_over_link_slot": {
      "value": true,
@@ -467,7 +467,7 @@
     "note": "mounts and ESC pads (D-42)"
    }
   },
-  "_note": "Design R4 (D3, CR-A1-47): R3 two-layer braced fin (D-26) with: cant sense reversed (D-52), motor face 2.5 mm ahead of the collar and E1 stack 37.3 mm (D-51), ESC pad 31 mm high (CR-E1-30), D5 tip step (D-54), 12 mm station collar (D-48, C4 CR-C4-25) and 15 mm root fillets modelled as CAD bodies (CR-C6-24), stopped over the D6 link slot (CR-D6-04). R3: two 4.8 mm boards laminated, CF 10 x 2 brace from the station collar to the spar, CF 10 x 1 edge strips pinned with 2 mm CF pins every 15 mm and anchored 40 mm in a two-face collar tail (C6), internal tube plug at the block, a strap eye on each block boss, ASA mounts (7 deg canted plate) and ESC pads (D-42).",
+  "_note": "Design R5 (D3, CR-A1-63): R4 plus face_ahead 7.5 mm and cheeks 17 mm (D-61), block vertical edges R 3 mm (D-68), pins 2.5 mm (D-70), collar 15 mm (D-70 13 mm; C6-R5 CR-C6-36), collar phase tie lug at x 0.060 open along x (CR-F2-16), fillet mix 0.45 g/cm3 (mass lever). R4 (CR-A1-47): R3 two-layer braced fin (D-26) with: cant sense reversed (D-52), motor face 2.5 mm ahead of the collar and E1 stack 37.3 mm (D-51), ESC pad 31 mm high (CR-E1-30), D5 tip step (D-54), 12 mm station collar (D-48, C4 CR-C4-25) and 15 mm root fillets modelled as CAD bodies (CR-C6-24), stopped over the D6 link slot (CR-D6-04). R3: two 4.8 mm boards laminated, CF 10 x 2 brace from the station collar to the spar, CF 10 x 1 edge strips pinned with 2 mm CF pins every 15 mm and anchored 40 mm in a two-face collar tail (C6), internal tube plug at the block, a strap eye on each block boss, ASA mounts (7 deg canted plate) and ESC pads (D-42).",
   "layers": {
    "value": 2,
    "unit": "-",
@@ -505,11 +505,11 @@
   },
   "station_collar": {
    "height_m": {
-    "value": 0.013,
+    "value": 0.015,
     "unit": "m",
-    "source": "params/CHANGE-LOG.md#D-70 (team/C6/CHANGE-REQUESTS.md#CR-C6-32)",
+    "source": "team/C6/claims.json#CL-C6-COLLAR-RF-15MM (CR-C6-36, C6-R5); D-70 set 13 mm",
     "status": "PROPOSED",
-    "note": "R5: 12 -> 13 mm (CL-C6-COLLAR-RF-13MM 1.09 on C1 7.4 N m). 12 mm only if T-C6-LAP-PETG mean >= 4.1 MPa before the collars print. Top stays 0.5 mm below the mount collar (|z| 0.1595); the ring grows 1 mm downward to 0.1465; ear (12 mm, mid 0.1535) and brace end unchanged; tongue fit 1.74 mm"
+    "note": "R5b: 13 -> 15 mm. C6-R5 (C1 envelope read live after D-65) needs 13.007 mm (CL-C6-COLLAR-L-REQ): the D-70 13 mm reads RF 0.9995 (CL-C6-COLLAR-RF-13MM); 15 mm gives 1.15 (CL-C6-COLLAR-RF-15MM), so the RF no longer sits on the next torsion re-run. Top stays 0.5 mm below the mount collar (|z| 0.1595); the ring grows 2 mm downward to 0.1445; ear (12 mm, mid 0.1535) and brace end unchanged. +1.2 g for four. Was 13 (D-70), 12 (D-48), 16 (R3)"
    },
    "gap_m": {
     "value": 0.0005,

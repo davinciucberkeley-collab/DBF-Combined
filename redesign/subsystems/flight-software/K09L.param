@@ -1,4 +1,4 @@
-# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R4c, 2026-11-10)
+# K09-L quad tailsitter - ArduPilot Plane parameter file (owner F4, revision F4-R5, 2026-11-10)
 # Status: PROPOSED. Not loaded on hardware, not run in SITL (SITL not installed): UNVERIFIED.
 # Firmware: ArduPlane 4.7.x stable, target CoreWingF405WingV2 (D-33; bdshot on outputs 1-4, no Lua on this board).
 # Parameter names checked 2026-11-09 against ArduPilot master source and the Plane parameter index
@@ -26,7 +26,8 @@ Q_FRAME_TYPE,1
 Q_TAILSIT_MOTMX,15
 # 262400 = bit 18 ARMVTOL (arm only in a Q mode, J1 failure mode 8) + bit 8 Mtrs_Only_Qassist (assist uses motors, elevons stay plane-controlled). Bit 5 off: RC loss in a Q mode -> QLAND
 Q_OPTIONS,262400
-# start in QSTABILIZE, never MANUAL (default MANUAL would pass raw sticks to a hovering tailsitter)
+# start in QSTABILIZE, never MANUAL (default MANUAL would pass raw sticks to a hovering tailsitter); R-SPIRAL (D-66) also
+#   bars it: CL-F4-NO-RAW-MODES counts INITIAL_MODE with FLTMODE1-6
 INITIAL_MODE,17
 
 # ---------------------------------------------------------------- 2 Outputs (F3 CR-F3-02: outputs 1-4 bdshot on TIM4/TIM3, elevons 5-6 on TIM8 PWM, 7 unused)
@@ -133,11 +134,14 @@ Q_A_RAT_YAW_I,0.04
 Q_WP_SPD_DN,1.2
 # LEGACY name of the line above (cm/s)
 Q_WP_SPEED_DN,120
-# pilot descent in QHOVER/QLOITER 1.2 m/s (default 0 = uses the 2.5 m/s climb limit, above VRS onset)
-Q_PILOT_SPD_DN,1.2
+# pilot descent at full down stick in QHOVER/QLOITER 1.0 m/s (R5, was 1.2; default 0 = the 2.5 m/s climb limit, above
+#   VRS onset). D-65: a touchdown at this rate is the design hard landing, 1.2 m/s at <= 10 deg any direction
+#   (P:requirements.landing_sink_ms); 1.0 leaves 0.2 m/s for velocity-loop overshoot, no rangefinder and ground effect
+#   (CL-F4-TOUCHDOWN-SINK). QSTABILIZE has no climb-rate loop (throttle is direct): never land in it (CR-F4-21)
+Q_PILOT_SPD_DN,1.0
 # LEGACY name of the line above (cm/s)
-Q_PILOT_SPEED_DN,120
-# final landing descent 0.3 m/s (was 0.5, the default; CR-D5-21): below 0.32 m/s the pre-crushed foot cartridges take a touchdown
+Q_PILOT_SPEED_DN,100
+# final landing descent 0.3 m/s (was 0.5, the default; CR-D5-21, D-65): below 0.32 m/s the pre-crushed foot cartridges take a touchdown
 #   elastically (CL-D5-V-NO-SET), at 0.5 they set 1.28 mm per landing (2.3 landings to the 3 mm mark). Costs ~8 s from
 #   Q_LAND_FINAL_ALT. VRS onset 1.88 m/s is far away. The velocity controller holds thrust to contact (CL-F4-LAND-SPD)
 Q_LAND_FINAL_SPD,0.3
@@ -180,6 +184,8 @@ Q_TRANS_FAIL_ACT,1
 # cruise target 16 m/s (P:performance.cruise_ms)
 AIRSPEED_CRUISE,16
 # TECS floor 16 m/s: D-36 asks 15.6 (1.3 Vs at the forward CG, CL-B3-VT-TRIM); the parameter is an integer (AP_Int16), so the next integer up. Pre-4.5 name ARSPD_FBW_MIN
+#   D-71: 16 >= 1.3 x B2's forward-CG stall 11.99 = 15.59 (CL-F4-ARSPD-MIN-D71). NOT FROZEN: after T-B2-STALL set it to
+#   ceil(1.3 x measured trimmed stall); 16 holds for a measured stall <= 12.31 m/s, above that 17 and AIRSPEED_CRUISE >= 17
 AIRSPEED_MIN,16
 # TECS ceiling 18 m/s (CR-B1-12) <= 22 asked for ARSPD_FBW_MAX (CR-C1-08; that is this parameter's pre-4.5 name) and < VA 20.5
 AIRSPEED_MAX,18
@@ -298,6 +304,9 @@ WP_LOITER_RAD,60
 # EKF failsafe threshold (default 0.8, stated); in Q modes it lands (QLAND), GPS loss lands without position hold
 FS_EKF_THRESH,0.8
 # flight-mode channel 6 (CR-F5-01: ELRS sends ch 5 as a 2-position bit)
+# R-SPIRAL (D-66, A2-R3): every mode below holds the bank with the autopilot's roll loop (spiral t2 3.3-3.5 s is then
+#   harmless). Never MANUAL 0, STABILIZE 2, TRAINING 3, ACRO 4 or QACRO 23 here or in INITIAL_MODE (CL-F4-NO-RAW-MODES);
+#   no RCn_OPTION selects one (fsw_check.py lint). The GCS can still command any mode: the flight card forbids it
 FLTMODE_CH,6
 # QSTABILIZE
 FLTMODE1,17
@@ -338,20 +347,21 @@ AHRS_ORIENTATION,0
 # GPS on SERIAL5: 5 = GPS
 SERIAL5_PROTOCOL,5
 # IMU position from the CG in the FRD body frame (m): F3's IMU (-0.010, 0.046, 0.039) aircraft frame (CR-F3-20: board
-#   4 mm higher) from CG x 0.0522 (P:cg.x_target_m), z +0.0185 (A3 CALC-A3-CG cg_m, 2026-11-10). CALC-F4-SENSOR-POS. Re-measure as built
-INS_POS1_X,0.062
+#   4 mm higher) from the D-62 CG x 0.0490 (P:cg.x_target_m), z +0.0185 (P:cg.z_target_m; A3's CL-A3-CG-Z 0.0186).
+#   CALC-F4-SENSOR-POS. F3 re-runs CALC-F3-OFFSETS on the R6 bay (CR-F4-19); re-measure as built
+INS_POS1_X,0.059
 INS_POS1_Y,0.046
 INS_POS1_Z,-0.0205
 # second IMU slot, same chip position (F3)
-INS_POS2_X,0.062
+INS_POS2_X,0.059
 INS_POS2_Y,0.046
 INS_POS2_Z,-0.0205
-# GPS antenna position from the CG (m): F3's GPS centre (0.075, 0, 0.178) (CR-F3-20) from the same CG (4.6+ name). CALC-F4-SENSOR-POS
-GPS1_POS_X,-0.023
+# GPS antenna position from the CG (m): F3's GPS centre (0.075, 0, 0.178) (CR-F3-20) from the same D-62 CG (4.6+ name). CALC-F4-SENSOR-POS
+GPS1_POS_X,-0.026
 GPS1_POS_Y,0
 GPS1_POS_Z,-0.1595
 # LEGACY names of the three lines above (before 4.6)
-GPS_POS1_X,-0.023
+GPS_POS1_X,-0.026
 GPS_POS1_Y,0
 GPS_POS1_Z,-0.1595
 # compass orientation auto-detected and stored (F3 expects 36 on the 45-deg mast pad)

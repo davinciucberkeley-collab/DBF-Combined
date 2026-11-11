@@ -71,10 +71,39 @@ passthrough("CALC-C2-FEA-DEFL", "Tip flap deflection / semi-span from the 3-D FE
 passthrough("CALC-C2-FEA-FOAM-S1", "Foam max principal stress (99.5th percentile), ultimate", F + "foam_s1_p995_ult_pa", assumes=["ASM-C2-TUBE-ET"])
 passthrough("CALC-C2-FEA-FOAM-TAU", "Foam max shear stress (99.5th percentile), ultimate", F + "foam_tau_p995_ult_pa", assumes=["ASM-C2-TUBE-ET"])
 passthrough("CALC-C2-FEA-PETG", "PETG block / anchor von Mises peak, ultimate", F + "petg_vm_peak_ult_pa", assumes=["ASM-C2-TUBE-ET"])
-passthrough("CALC-C2-FEA-CORNER-S1", "Foam tension peak at the through-core block pocket corner, ultimate (converged, "
-            "GCI < 0.1 %)", F + "foam_s1_peak_ult_pa", assumes=["ASM-C2-TUBE-ET"])
-passthrough("CALC-C2-FEA-CORNER-S3", "Foam compression peak at the through-core block pocket corner, ultimate",
-            F + "foam_s3_peak_ult_pa", assumes=["ASM-C2-TUBE-ET"])
+# C2-R3: the corner claims are on the D-68 geometry (R 3 mm block / pocket edges + 3 mm microballoon fillet beads),
+# from the global-local submodel (wing_fea_d68.py); the R2 as-drawn values stay in out/fea_report.json for the record.
+kit.source("SRC-C2-TAYLOR-TCD", "D. Taylor, The Theory of Critical Distances: a new perspective in fracture mechanics, "
+           "Elsevier 2007", "book", where="ch. 2-3: stress averaged over a material length L (line / volume method) "
+                                          "predicts failure at notches; L of the order of a few cells in foams")
+kit.assumption("ASM-C2-FOAM-AVG-R", "Foam peak stresses read as the average over a 1 mm sphere",
+               "Element stresses at a bonded corner are averaged over a sphere of radius 1 mm round the peak element "
+               "before comparing with the coupon allowable", value=0.001, unit="m", status="UNVERIFIED",
+               cites=["SRC-C2-TAYLOR-TCD"],
+               basis="XPS cells are 0.1-0.3 mm; a continuum stress below a few cells is not what the coupon allowable "
+                     "measures. 1 mm is below every TCD length estimated for PS foams (several mm), so the average is "
+                     "conservative; the element peak is reported beside it")
+kit.assumption("ASM-C2-BEAD", "Microballoon fillet bead: E 1.5 GPa, tension allowable 10 MPa",
+               "30-min epoxy thickened 1:1 by volume with glass microballoons (the slot bond mix, sizing.json)",
+               value=10e6, unit="Pa", status="UNVERIFIED",
+               basis="thickened epoxies of density 0.6-0.8 g/cm3: E 1-3 GPa, tensile strength 15-25 MPa; 10 MPa "
+                     "allows for voids in a hand-laid bead; T-C2-XPS-COUPON adds a beaded pocket coupon")
+passthrough("CALC-C2-FEA-CORNER-S1", "Foam tension peak at the R 3 mm block-pocket corners with fillet beads, ultimate "
+            "(D-68, submodel finest level)", F + "d68_corner_s1_ult_pa", assumes=["ASM-C2-TUBE-ET", "ASM-C2-FOAM-AVG-R"])
+passthrough("CALC-C2-FEA-CORNER-S3", "Foam compression peak at the same corners, ultimate (D-68)",
+            F + "d68_corner_s3_ult_pa", assumes=["ASM-C2-TUBE-ET", "ASM-C2-FOAM-AVG-R"])
+passthrough("CALC-C2-FEA-CORNER-TAU", "Foam shear peak at the same corners, ultimate (D-68)",
+            F + "d68_corner_tau_ult_pa", assumes=["ASM-C2-TUBE-ET", "ASM-C2-FOAM-AVG-R"])
+passthrough("CALC-C2-FEA-BEAD", "Microballoon bead max principal stress, ultimate (D-68)", F + "d68_bead_s1_ult_pa",
+            assumes=["ASM-C2-BEAD"])
+passthrough("CALC-C2-FEA-CUTOUT", "Foam shear peak at the R 3 mm elevon cut-out corners, primary load path, ultimate",
+            F + "d68_cutout_tau_ult_pa", assumes=["ASM-C2-FOAM-AVG-R"])
+passthrough("CALC-C2-FEA-CUTOUT-SENS", "Foam shear peak at the R 3 mm elevon cut-out corners if the fin root fillet "
+            "carries the station loads (sensitivity), ultimate", F + "d68_cutout_tau_dist_ult_pa", assumes=["ASM-C2-FOAM-AVG-R"])
+passthrough("CALC-C2-FEA-SUB-GCI", "Submodel discretisation uncertainty, pocket-corner foam peaks (3 local levels)",
+            F + "d68_corner_gci", eq="max GCI (Celik 2008) of the corner tension, compression and shear peaks")
+passthrough("CALC-C2-FEA-SUB-CUT", "Submodel cut-plane check: corner peaks with the cut planes 10 mm closer",
+            F + "d68_cut_sens", eq="max |peak(0.28/0.36) / peak(0.27/0.37) - 1|")
 passthrough("CALC-C2-FEA-FILLET-SENS", "Foam shear (99.5th percentile), ultimate, if the fin root fillet carries the "
             "station loads into the core along the chord (sensitivity)", F + "sens_foam_tau_p995_ult_pa")
 passthrough("CALC-C2-FEA-W-RATIO", "FEA / beam model tip deflection, G2 (both tape 0 %)", F + "fea_beam_w_ratio_G2")
@@ -99,31 +128,51 @@ kit.claim("CL-C2-FEA-SU2-AGREE", "SU2 ELASTICITY vs in-house PCG on the same mes
           how="python -I redesign/team/C2/fea/wing_fea.py --levels 1; compare out/su2_*_L1.json with blk_L1*.json")
 kit.claim("CL-C2-FEA-SPAR-SIGMA-ULT", "Spar stress from the 3-D FEA (foam shares the load), ultimate", calc="CALC-C2-FEA-SPAR",
           unit="Pa", limit=("<=", I + "spar_sigma_allow_pa"), verifies=SM, parts=["WNG-002"],
-          how="T-C2-WING-PROOF; the hand calc CL-C2-SPAR-SIGMA-ULT (spar alone) bounds it from above")
+          how="T-C1-WING-PROOF; the hand calc CL-C2-SPAR-SIGMA-ULT (spar alone) bounds it from above")
 kit.claim("CL-C2-FEA-TIP-DEFL-FRAC", "Tip deflection / semi-span from the 3-D FEA, worst case, E 70 GPa, no tape",
           calc="CALC-C2-FEA-DEFL", unit="-", limit=("<=", P + "requirements.spar_deflection_max"), verifies=SM, parts=WING,
-          how="T-C2-WING-PROOF: ruler at the tip under the G2 load")
+          how="T-C1-WING-PROOF: ruler at the tip under the G2 load")
 kit.claim("CL-C2-FEA-FOAM-S1", "Core foam tension (99.5th percentile element), ultimate, station loads on the hard points",
           calc="CALC-C2-FEA-FOAM-S1", unit="Pa", limit=("<=", I + "xps_tens_allow_pa"), verifies=SM, parts=["WNG-001"],
-          how="T-C2-XPS-COUPON (allowable) and T-C2-WING-PROOF (no crack at the elevon cut-out corners)")
+          how="T-C2-XPS-COUPON (allowable) and T-C1-WING-PROOF (no crack at the elevon cut-out corners)")
 kit.claim("CL-C2-FEA-FOAM-TAU", "Core foam shear (99.5th percentile element), ultimate, station loads on the hard points",
           calc="CALC-C2-FEA-FOAM-TAU", unit="Pa", limit=("<=", I + "xps_shear_allow_pa"), verifies=SM, parts=["WNG-001"],
-          how="T-C2-XPS-COUPON and T-C2-WING-PROOF")
+          how="T-C2-XPS-COUPON and T-C1-WING-PROOF")
 kit.claim("CL-C2-FEA-PETG", "PETG block and anchor von Mises peak, ultimate", calc="CALC-C2-FEA-PETG", unit="Pa",
           limit=("<=", I + "petg_bearing_allow_pa"), verifies=SM, parts=["FIN-004-L", "FIN-004-R", "WNG-004-L", "WNG-004-R", "WNG-005-L", "WNG-005-R"],
           how="T-C4-BLOCK-PROOF (C4)")
-kit.claim("CL-C2-FEA-FOAM-CORNER-S1", "Core foam tension peak at the block pocket inboard corners, ultimate (L4)",
-          calc="CALC-C2-FEA-CORNER-S1", unit="Pa", limit=("<=", I + "xps_tens_allow_pa"), verifies=SM,
-          parts=["WNG-001", "FIN-004-L", "FIN-004-R"],
-          how="Fix by CR-C2-11 (radiused pocket edges / epoxy fillet bead, tape doubler); re-run fea/ with the "
-              "radius; T-C2-WING-PROOF + light inspection of the pocket corners")
-kit.claim("CL-C2-FEA-FOAM-CORNER-S3", "Core foam compression peak at the block pocket inboard corners, ultimate (L4)",
+PROOF = ("T-C1-WING-PROOF (GT-08) steps 1-2 and T-C1-STATION-PROOF; inspect the four block-pocket corners and beads "
+         "with a light after each step (no crack, no bead debond)")
+kit.claim("CL-C2-FEA-FOAM-CORNER-S1", "Core foam tension peak at the R 3 mm block-pocket corners with fillet beads, "
+          "ultimate (D-68)", calc="CALC-C2-FEA-CORNER-S1", unit="Pa", limit=("<=", I + "xps_tens_allow_pa"), verifies=SM,
+          parts=["WNG-001", "FIN-004-L", "FIN-004-R"], how=PROOF + "; D1 builds the pocket to D-68")
+kit.claim("CL-C2-FEA-FOAM-CORNER-S3", "Core foam compression peak at the same corners, ultimate (D-68)",
           calc="CALC-C2-FEA-CORNER-S3", unit="Pa", limit=("<=", I + "xps_comp_allow_pa"), verifies=SM,
-          parts=["WNG-001", "FIN-004-L", "FIN-004-R"], how="As CL-C2-FEA-FOAM-CORNER-S1")
+          parts=["WNG-001", "FIN-004-L", "FIN-004-R"], how=PROOF)
+kit.claim("CL-C2-FEA-FOAM-CORNER-TAU", "Core foam shear peak at the same corners, ultimate (D-68)",
+          calc="CALC-C2-FEA-CORNER-TAU", unit="Pa", limit=("<=", I + "xps_shear_allow_pa"), verifies=SM,
+          parts=["WNG-001", "FIN-004-L", "FIN-004-R"], how=PROOF)
+kit.claim("CL-C2-FEA-BEAD", "Microballoon fillet bead along the pocket edges, max principal stress, ultimate",
+          calc="CALC-C2-FEA-BEAD", unit="Pa", limit=("<=", "ASM-C2-BEAD"), verifies=SM, parts=["WNG-001"],
+          how="T-C2-XPS-COUPON beaded-pocket coupon; " + PROOF)
+kit.claim("CL-C2-FEA-CUTOUT-TAU", "Foam shear peak at the R 3 mm elevon cut-out corners (fin-root tab), primary path, "
+          "ultimate", calc="CALC-C2-FEA-CUTOUT", unit="Pa", limit=("<=", I + "xps_shear_allow_pa"), verifies=SM,
+          parts=["WNG-001"], how=PROOF.replace("block-pocket corners and beads", "elevon cut-out corners"))
+kit.claim("CL-C2-FEA-CUTOUT-SENS", "Foam shear peak at the R 3 mm elevon cut-out corners if the fin root fillet carries "
+          "the station loads (sensitivity)", calc="CALC-C2-FEA-CUTOUT-SENS", unit="Pa",
+          limit=("<=", I + "xps_shear_allow_pa"), parts=["WNG-001", "FIN-001-UR", "FIN-001-LR"],
+          how="Bounds the fillet-intact case at the corners only; the tab as a whole is CL-C2-FEA-FOAM-FILLET-SENS (C4 "
+              "fillet share, CR-C2-12)")
+kit.claim("CL-C2-FEA-SUB-GCI", "D-68 submodel: GCI of the pocket-corner foam peaks (3 local levels)",
+          calc="CALC-C2-FEA-SUB-GCI", unit="-", limit=("<=", "ASM-C2-FEA-GCI-TOL"), cites=["SRC-C2-CELIK-GCI"],
+          how="python -I redesign/team/C2/fea/wing_fea_d68.py; fea_report.py; out/fea_report.json#d68")
+kit.claim("CL-C2-FEA-SUB-CUT", "D-68 submodel: corner peaks change with the cut planes 10 mm closer",
+          calc="CALC-C2-FEA-SUB-CUT", unit="-", limit=("<=", "ASM-C2-FEA-GCI-TOL"),
+          how="out/fea_report.json#d68.cut_check")
 kit.claim("CL-C2-FEA-FOAM-FILLET-SENS", "Core foam shear if the fin root fillet carries the station loads (sensitivity)",
           calc="CALC-C2-FEA-FILLET-SENS", unit="Pa", limit=("<=", I + "xps_shear_allow_pa"), parts=["WNG-001", "FIN-001-UR", "FIN-001-UL", "FIN-001-LR", "FIN-001-LL"],
           how="Shows the fin-root tab aft of the hinge cannot take the fin loads (expected FAIL); C4 keeps the fillet "
-              "fail-safe (CR-C2-12); T-C2-WING-PROOF inspects the tab")
+              "fail-safe (CR-C2-12); T-C1-WING-PROOF inspects the tab")
 kit.claim("CL-C2-FEA-W-RATIO", "3-D FEA / beam model, tip deflection (G2, no tape)", calc="CALC-C2-FEA-W-RATIO", unit="-",
           how="Shows the beam model (all deflection, mode and aeroelastic claims) is within a few % of the 3-D model")
 kit.claim("CL-C2-FEA-TW-RATIO", "3-D FEA / beam model, tip twist (L4, no tape)", calc="CALC-C2-FEA-TW-RATIO", unit="-",

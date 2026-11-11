@@ -1,10 +1,33 @@
 # C6 change requests
 
-Revision C6-R4, 2026-11-10 (params A1-R4a; C4 fin claims `team/C4/claims.d3.json` as of 04:28). Numbers from
-`team/C6/claims.json` (`python -I redesign/team/C6/joints.py`); report `JOINTS.md`; copy-ready blocks in
-`joint_stacks.json` (82 edges).
+Revision C6-R5b, 2026-11-10 (params A1-R5; C1 claims and `data/envelope.json` of 14:35 read live; C4's frozen R4 set
+`team/C4/claims.d3.json` of 11:51; D3-R5b fins params). Numbers from `team/C6/claims.json`
+(`python -I redesign/team/C6/joints.py`); report `JOINTS.md`; copy-ready blocks in `joint_stacks.json` (82 edges).
 
-## New in C6-R4
+## New in C6-R5
+
+| Id | To | What | Why | Numbers |
+|---|---|---|---|---|
+| CR-C6-36 | D3 (cc C4, A3) | Station collar 13 → 15 mm. **Adopted by D3-R5b; superseded by CR-C6-37** | C1's first D-65 run raised the section torsion to 8.13 N·m: 13 mm read RF 0.9995 | 15 mm RF 1.15 at 8.13 N·m |
+| CR-C6-37 | D3 (cc C4, A1, A3) | `fin_detail.station_collar.height_m` **15 → 22 mm** (ring grows down to \|z\| 0.1375; top, ear and brace end unchanged). Do not print collars until this is settled. If `T-C6-LAP-PETG` runs first, the height needed is 19.45 mm × (2.0 MPa / measured allowable) × (C1 torsion / 12.67 N·m), plus 10 % | C1's second D-65 run (14:29, confirmed 14:35) gives the half-fin section torsion **12.67 N·m** limit, ×1.71 on R4. The collar is sized on max(C1, C4) (CR-C4-23); C1 governs. A1: ≈ +4.4 g `EST` on a fins line with 0 g free | needs **19.45 mm** (`CL-C6-COLLAR-L-REQ`); 15 mm RF **0.77**, 16 mm 0.82, **22 mm 1.13** (`CL-C6-COLLAR-RF-PROP`); 12 mm option of D-70 void (0.63) |
+| CR-C6-38 | C4 (cc D3, H1, A1) | Re-run `fin_structures_d3.py` / `sim_fin.py` on the D-65 loads (side load 39.3 N limit / 59.0 N ult, C1 claims of 14:35) and publish one new frozen `CL-C4-D3-*` set: strip end force, pin force, collar torsion, and the **coincident** pair force (CR-C6-29 / -34b) and the fillet-intact share (CR-C2-12). D3: **hold the collar, tail and pin drilling** until it lands | The frozen R4 set was solved at `CL-C4-D3-SIDE-LOAD` 22.8 N and 7.37 N·m section torsion; C1 is now 12.62 N·m at the wing plane. Scaled by k = 1.71, the strip joints fail | estimates (`CALC-C6-FIN-SCALE`): strip force ≈ **2 130 N**; anchor RF **0.74** (needs 53 mm of tail); tail net **0.67** (needs ≈ 140 mm²); Ø 2.5 pins at 15 mm **0.93** (max pitch 14.0 mm, so 12 mm would give ≈ 1.17) |
+| CR-C6-39 | H1 | `T-C6-STRIP-ANCHOR` frame: build it to **≥ 2 660 N** (1.25 × `CL-C6-STRIP-ANCHOR-F-EST`), e.g. 15:1 with 20 kg (2 940 N); the pass line still comes from `CL-C6-STRIP-ANCHOR-F` once C4 re-runs | The 9:1 frame of CR-C6-33 (1 766 N) covers the R4 force but not the D-65 estimate | `CL-C6-STRIP-ANCHOR-F` 1 243 N (C4 R4); `-F-EST` 2 131 N |
+| CR-C6-40 | D1 (cc D3, C2) | Block pockets (D-68): cut the four vertical pocket corners **R 3.0–4.2 mm** to the R 3 block, or pack the corners with the microballoon mix before the block goes in; dry-fit with a 0.5 mm feeler at every corner; beads ≥ 3 mm leg along the inboard and outboard pocket edges, both surfaces; doubler continuous over the beads | A square-cut pocket round an R 3 block leaves a 1.24 mm void on each corner diagonal, where C2's foam peak sits; a pocket radius under R 3 makes the block ride on its corners | `CL-C6-POCKET-SQUARE-GAP` 1.24 mm vs 0.5 mm bond line; `-R-MAX` 4.2 mm; beads 277 mm per block, **1.1 g** for two at 0.45 g/cm³ (`-BEAD-MASS`); wall area × 0.976 (no C6 RF credits it) |
+| CR-C6-41 | C1 (cc A1) | Publish the governing case of `CL-C1-FINHALF-T-LIM` (case id and foot side load used) beside the claim, and announce re-runs that move it by more than 5 % | It moved 7.39 → 8.13 → 12.67 N·m in one afternoon; C6, C4 and D3 size the collar, strips, pins and tail on it | — |
+
+## Answers to the R5 action items
+
+| Item | Answer |
+|---|---|
+| Re-run on C4's frozen R4 set | Done: strip 1 243 N, pin 72.4 N, collar 6.24 N·m. **The set predates D-65** (side load 22.8 N); C1's torsion now governs and is 1.71 × what C4 solved at → CR-C6-38 |
+| 13 mm collar (D-70) | 13 mm reads **0.67** on C1's 12.67 N·m (0.9995 on the 8.13 of the first D-65 run). 15 mm (drawn, CR-C6-36) 0.77 → **22 mm, CR-C6-37** |
+| 2.5 mm pins (D-70) | Drawn; **RF 1.60** on C4's R4 pin force (bearing 3.45, strip net 2.41); `CL-C6-STRIP-PIN-RF` now reads the drawn pin. Estimate on D-65 loads 0.93 → CR-C6-38 |
+| D5's R5 bond | `E-GER-01…04`: 1 350 mm², **85.7 N, RF 1.57** (`CL-C6-FOOT-SHOE-RF` = `CL-D5-BOND-SF`) — unchanged and passing |
+| R 3 mm block pocket | New `CALC-C6-BLOCK-POCKET`; `E-FIN-51/52` rewritten; CR-C6-40 to D1 |
+| Fillet RF on the joint side (D-68) | `CL-C6-FIN-ROOT-RF` kept, re-titled fail-safe path, verifies `R-STRUCT-MARGIN` only (no longer `R-FIN-TUBE-JOINT`). Reads **0.81** on D-65's 59 N side load; D3's CR-D3-35 (0.185 m zone) supported |
+| `E-PWR-03` at 0.08 N·m | Unchanged and open with F1 (CR-C6-26) |
+
+## Issued in C6-R4
 
 | Id | To | What | Why | Numbers |
 |---|---|---|---|---|
@@ -63,8 +86,13 @@ Revision C6-R4, 2026-11-10 (params A1-R4a; C4 fin claims `team/C4/claims.d3.json
 | CR-C6-22 | I1 | kit R2 | Superseded by CR-C6-30 |
 | CR-C6-24 | D3 | root fillet leg 15 mm | **Closed**: D3-R4 draws 15 mm, zoned (CR-D3-25 accepted); RF 1.14 |
 | CR-C6-25 | D3 | pins at 12 mm pitch | **Superseded** by CR-C6-31 (Ø 2.5 at 15 mm) |
-| CR-C6-26 | F1 | PA66 frame screws 0.08 N·m | Open |
+| CR-C6-26 | F1 | PA66 frame screws 0.08 N·m | Open (R5 action item: stays open with F1) |
 | CR-C6-27 | D2 | PDB-plate bosses Ø 7.2 mm; unplug-moment path | Open |
 | CR-C6-28 | H1 | strip-anchor pass line from the claim; nylon-torque and insert tests | Pass line done; frame size → CR-C6-33 |
-| CR-C6-29 | C4 | coincident strip force on the pair | Open; re-sent as CR-C6-34 (b) |
+| CR-C6-29 | C4 | coincident strip force on the pair | Open; re-sent in CR-C6-38 |
 | CR-C6-30 | I1 | kit R3 | Superseded for the CF rod by CR-C6-35; rest stands |
+| CR-C6-31 | D3 | pins Ø 2.5 at 15 mm | **Adopted** (D-70, D3-R5); RF 1.60 on C4 R4; D-65 → CR-C6-38 |
+| CR-C6-32 | D3 | collar 13 mm | **Adopted** (D-70), then superseded by CR-C6-36 / -37 |
+| CR-C6-33 | H1 | anchor frame ≥ 1 560 N | Adopted (D-70); raised by CR-C6-39 |
+| CR-C6-34 | C4 | freeze one R4 set; coincident force | (a) done (11:51 set); (b) open, in CR-C6-38 |
+| CR-C6-35 | I1 | Ø 2.5 rod × 2 | Forwarded; one rod covers 60 pins (0.70 m) |

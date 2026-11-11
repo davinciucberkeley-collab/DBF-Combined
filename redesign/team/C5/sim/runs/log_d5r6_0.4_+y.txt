@@ -1,0 +1,1 @@
+h400_py_v_engage25_fy20.9_fz11_lip2.8_rim_t2.8_ws1.2_rin1 {"rim": {"vm_max_MPa": 18.30802, "at_mm": [326.4, 10.933, 201.876]}, "aft box": {"vm_max_MPa": 8.891315, "at_mm": [319.608, -6.2, 200.6]}, "window strips": {"vm_max_MPa": 0.05161621, "at_mm": [261.8, 6.2, 197.8]}, "whole shoe": {"vm_max_MPa": 18.30802, "at_mm": [326.4, 10.933, 201.876]}} 647 s

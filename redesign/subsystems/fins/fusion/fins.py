@@ -1,11 +1,12 @@
-"""K09-L fins subsystem (FIN), owner D3, design R4 (CR-A1-47; CHANGE-LOG D-26, D-27, D-28, D-42, D-48, D-51, D-52,
-D-54). Two fins at y = +/-0.32 m. Each fin = one continuous CF motor tube through the wing core at x 0.045 (0.344 m,
+"""K09-L fins subsystem (FIN), owner D3, design R5 (CR-A1-63; CHANGE-LOG D-26, D-27, D-28, D-42, D-48, D-51, D-52,
+D-54, D-61, D-68, D-70). Two fins at y = +/-0.32 m. Each fin = one continuous CF motor tube through the wing core at x 0.045 (0.344 m,
 ends at z +/-0.172), an upper and a lower two-layer foam-board half-fin behind it (0.21 m high, D5's stepped 45.4 mm
 tip for the foot shoe), a printed PETG through-core block that joins tube, spar and core (with a strap eye on each bore
-boss), and per motor station an ASA slip-clamp motor mount with a 7 deg canted plate (sense per D-52), a 12 mm PETG
-station collar with a 40 mm two-face tail, a pultruded CF brace from the collar to the spar, two CF edge strips along
-the half-fin top edge pinned with 2 mm CF pins every 15 mm, an ASA ESC pad, and microballoon-epoxy root fillets
-(CR-C6-24) modelled as bodies of the half-fin.
+boss; four vertical plan-form edges rounded R 3 mm, D-68), and per motor station an ASA slip-clamp motor mount with
+a 7 deg canted plate (sense per D-52) whose face sits 7.5 mm ahead of the mount collar (D-61, cheeks 17 mm), a 15 mm
+PETG station collar with a 40 mm two-face tail (C6 CR-C6-36), a pultruded CF brace from the collar to the spar, two CF edge
+strips along the half-fin top edge pinned with 2.5 mm CF pins every 15 mm (D-70), an ASA ESC pad, and microballoon-
+epoxy root fillets (CR-C6-24; credited fail-safe only, D-68) modelled as bodies of the half-fin.
 
     build(ctx)            Fusion / stub module (fusionkit), cruise attitude, aircraft frame (DATUMS.md)
     geometry(P, LP, co)   every derived dimension, shared with make_fins.py and team/D3/fins_calcs.py
@@ -39,7 +40,8 @@ UNVERIFIED-IN-FUSION: lofts of the canted plate and braces; the block socket is 
 (sand flush); the brace slots in the ear and anchor are where the brace body overlaps them (cut with the brace body as
 the tool in Fusion); the pin holes are where the pins overlap strips and board (drilled after cure); C-shaped loops
 (slit collar, keyhole bosses) untested in Fusion. Harness provisions (CR-F2-05): an 8 mm lead hole in every
-half-fin and 3 x 1.5 mm tie lugs on the boss tails (inboard) and collar tails (outboard).
+half-fin and 3 x 1.5 mm tie lugs on the boss tails (inboard, slot open along z) and on the collar tails (outboard, at
+x 0.060 with the slot open along x for the phase bundle that rises along z, CR-F2-16).
 """
 import json
 import math
@@ -238,6 +240,7 @@ def geometry(P, LP, coords):
     G['blk_x0'] = G['xt'] - G['r_b'] - G['blk_wall']
     G['blk_x1'] = G['xs'] + G['r_bs'] + G['blk_wall']
     G['blk_split'] = l('block.x_split_m', 'm')
+    G['blk_r'] = l('block.edge_r_m', 'm')                            # D-68 vertical edges
     G['blk_z0'], G['blk_z1'] = G['zl'](G['xt']), G['zu'](G['xt'])
     G['bore_web'] = (G['xs'] - G['r_bs']) - (G['xt'] + G['r_b'])
     ov = l('plug.overhang_m', 'm')
@@ -394,6 +397,18 @@ def tie_lug(part, G, xc, y_face, out, z0, name):
     return part.prism('Z', z0, [outer, slot], t['h_m'], name=name)
 
 
+def tie_lug_x(part, G, xc, y_face, out, z_top, name):
+    """Cable-tie bridge whose slot is open along x (the tie passes along x round a bundle running along z, CR-F2-16):
+    a prism along x, h_m long, with the 3 x 1.5 mm slot in its (y, z) section; posts above and below the slot."""
+    t = G['tl']
+    ya, yb = y_face - out * t['embed_m'], y_face + out * G['tl_depth']
+    ys0, ys1 = y_face + out * t['skin_m'], y_face + out * (t['skin_m'] + t['slot_y_m'])
+    zc = z_top - G['tl_len'] / 2
+    outer = rect(min(ya, yb), zc - G['tl_len'] / 2, max(ya, yb), zc + G['tl_len'] / 2)
+    slot = rect(min(ys0, ys1), zc - t['slot_x_m'] / 2, max(ys0, ys1), zc + t['slot_x_m'] / 2)
+    return part.prism('X', xc - t['h_m'] / 2, [outer, slot], t['h_m'], name=name)
+
+
 def build_edge_strip(part, G, outboard):
     """Straight CF strip on one face of the upper-right half-fin along the sloped top edge, from the board LE (inside
     the collar tail) to the step front (x_sq, D-54)."""
@@ -402,14 +417,14 @@ def build_edge_strip(part, G, outboard):
 
 
 def build_pins(part, G):
-    """Pin set of the upper-right half-fin: 2 mm CF rods through strip-board-strip (drilled after cure)."""
+    """Pin set of the upper-right half-fin: 2.5 mm CF rods (D-70) through strip-board-strip (drilled after cure)."""
     y0 = G['yf'] - G['pin_len'] / 2
     for x, z in G['pins']:
         part.cylinder('Y', (x, y0, z), G['pin_len'], G['pin_r'], name='CF pin')
 
 
 def build_station_collar(part, G):
-    """Ring on the tube, brace ear inboard (top 12 mm), and the two-face tail: tongue (board thickness) in the
+    """Ring on the tube (15 mm, CR-C6-36), brace ear inboard (top 12 mm), and the two-face tail: tongue (board thickness) in the
     board notch, two outer walls, strip slots between, cap over the top edge; slots open downward."""
     xt, yf = G['xt'], G['yf']
     part.prism('Z', G['z_sc0'], [circle(xt, yf, G['sc_r_out'], 36), circle(xt, yf, G['r_b'], 36)], G['sc_h'],
@@ -428,10 +443,11 @@ def build_station_collar(part, G):
     xc = G['xt'] + G['col_r'] + G['sc_clear'] * 2.5                 # cap starts aft of the mount collar (0.5 mm)
     cap = [(xc, top(xc)), (x1, top(x1)), (x1, top(x1) + G['sc_cap']), (xc, top(xc) + G['sc_cap'])]
     part.prism('Y', yf - yw - G['sc_wall'], [cap], 2 * (yw + G['sc_wall']), name='tail cap')
-    # phase-lead tie lug on the outboard wall (E-HRN-06...09, CR-F2-05); top below the tail edge at the lug's front
+    # phase-lead tie lug on the outboard wall (E-HRN-06...09; R5 CR-F2-16: x 0.060, slot open along x); top
+    # collar_drop below the tail top edge at the lug front
     xl = G['tl']['collar_x_m']
-    zt = top(xl - G['tl_len'] / 2) - G['tl']['collar_drop_m']
-    tie_lug(part, G, xl, yf + yw + G['sc_wall'], 1, zt - G['tl']['h_m'], 'phase tie lug')
+    zt = top(xl - G['tl']['h_m'] / 2) - G['tl']['collar_drop_m']
+    tie_lug_x(part, G, xl, yf + yw + G['sc_wall'], 1, zt, 'phase tie lug')
 
 
 def build_brace(part, G, upper):
@@ -451,12 +467,28 @@ def build_anchor(part, G, upper):
 
 
 def build_block(part, G):
-    w = G['blk_w']
+    """Through-core block. R5 (D-68, CR-C2-11): the four vertical plan-form edges are rounded R edge_r (front corners of
+    the tube socket, aft corners of the spar saddle) so the core pocket corners can be cut R 3 mm to match. The
+    saddle's aft strip x1 - r .. x1 is a narrower airfoil slab plus two quarter-round Z-prisms between the highest
+    lower and lowest upper surface over that 3 mm (S5010 near max thickness: < 0.05 mm from the true contour; sand
+    flush)."""
+    w, r = G['blk_w'], G['blk_r']
     xt, yf = G['xt'], G['yf']
-    sock = rect(G['blk_x0'], yf - w / 2, G['blk_split'], yf + w / 2)
+    x0, x1, xp = G['blk_x0'], G['blk_x1'], G['blk_split']
+    sock = ([(xp, yf - w / 2), (xp, yf + w / 2)] + arc(x0 + r, yf + w / 2 - r, r, math.pi / 2, math.pi, 6)
+            + arc(x0 + r, yf - w / 2 + r, r, math.pi, 1.5 * math.pi, 6))
     part.prism('Z', G['blk_z0'], [sock, circle(xt, yf, G['r_b'], 32)], G['blk_z1'] - G['blk_z0'], name='tube socket')
-    sad = k9.section_loop(G['coords'], G['c'], (0.0, 0.0), G['blk_split'] / G['c'], G['blk_x1'] / G['c'], n=12)
+    xa = x1 - r
+    sad = k9.section_loop(G['coords'], G['c'], (0.0, 0.0), xp / G['c'], xa / G['c'], n=12)
     part.prism('Y', yf - w / 2, [sad, circle(G['xs'], G['zs'], G['r_bs'], 32)], w, name='spar saddle')
+    aft = k9.section_loop(G['coords'], G['c'], (0.0, 0.0), xa / G['c'], x1 / G['c'], n=4)
+    part.prism('Y', yf - w / 2 + r, [aft], w - 2 * r, name='spar saddle aft')
+    xq = [xa + r * i / 6 for i in range(7)]
+    zq0, zq1 = max(G['zl'](x) for x in xq), min(G['zu'](x) for x in xq)
+    for sy in (1, -1):
+        yc = yf + sy * (w / 2 - r)
+        q = [(xa, yc)] + arc(xa, yc, r, 0.0, sy * math.pi / 2, 6)
+        part.prism('Z', zq0, [q], zq1 - zq0, name='saddle edge round')
     loop = keyhole_c(xt, yf, G['r_b'], G['boss_r_out'], G['boss_slot_hw'], G['boss_slot_wall'], G['boss_x_end'])
     for z0, z1 in (G['boss_u'], G['boss_l']):
         part.prism('Z', z0, [loop], z1 - z0, name='bore boss')
@@ -538,7 +570,7 @@ PETG = 'PETG (printed)'
 ASA = 'ASA (printed)'
 CF = 'CF tube 22x20 (bought)'
 CFS = 'CF strip, pultruded (bought)'
-CFR = 'CF rod 2 mm, pultruded (bought)'
+CFR = 'CF rod 2.5 mm, pultruded (bought)'
 
 
 def part_specs(G=None):
@@ -573,7 +605,8 @@ def part_specs(G=None):
             S.append(('FIN-011-%s%s' % (st, f), 'Edge strip %s %s face, CF 10 x 1' % (SNAME[st], fn), CFS, 'buy', 'strip'))
     n = len(G['pins']) if G else 0
     for st in STATIONS:
-        S.append(('FIN-012-' + st, 'Edge-strip pin set %s, %d x CF rod 2 mm' % (st, n), CFR, 'buy', 'pins'))
+        S.append(('FIN-012-' + st, 'Edge-strip pin set %s, %d x CF rod %.1f mm' % (st, n, 2000 * G['pin_r'] if G else 2.5),
+                  CFR, 'buy', 'pins'))
     return S
 
 
@@ -678,8 +711,10 @@ def edge_specs(G):
             blocks={'bond': bond(math.pi * 2 * G['r_s'] * G['blk_w'] * 1e6, 'see C6', 'L4 corner', 'C4, C6')})
     for s in ('R', 'L'):                                                                     # 51-52
         add('FIN-004-' + s, 'WNG-001', 'CT-EPOXY',
-            'block bonded into the core cut-out x %.3f-%.3f, y %.3f +/- %.3f, full depth (D1 cuts it); tape skin over'
-            % (G['blk_x0'], G['blk_x1'], G['yf'], G['blk_w'] / 2), needs=['WNG-001'],
+            'block bonded into the core cut-out x %.3f-%.3f, y %.3f +/- %.3f, full depth, vertical corners R %.0f mm to '
+            'the block (D1 cuts it, D-68); microballoon fillet bead >= 3 mm along the inboard and outboard pocket edges '
+            'on both surfaces; 60 mm tape doubler continuous over the edges'
+            % (G['blk_x0'], G['blk_x1'], G['yf'], G['blk_w'] / 2, G['blk_r'] * 1000), needs=['WNG-001'],
             blocks={'bond': bond(6500, 'secondary: spar carries the block', '-', 'C4', adhesive=EPOXY_FOAM,
                                  prep='foam dusted off')})
     for st in STATIONS:                                                                      # 53-56
@@ -730,16 +765,19 @@ def edge_specs(G):
     np_ = len(G['pins'])
     for st in STATIONS:                                                                      # 69-72
         add('FIN-012-' + st, 'FIN-001-' + st, 'CT-EPOXY',
-            '%d pins 2 mm drilled through strip-laminate-strip every %.0f mm along the strip after the strips cure, '
-            'bonded flush (CR-C6-02)' % (np_, G['pin_pitch'] * 1000),
-            blocks={'bond': bond(np_ * G['A_pin'], '77 N per pin design; RF 1.41 (CL-C6-STRIP-PIN-RF)', 'L4', 'C6')})
+            '%d pins %.1f mm drilled (%.1f mm drill) through strip-laminate-strip every %.0f mm along the strip after the '
+            'strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)'
+            % (np_, 2000 * G['pin_r'], 2000 * G['pin_r'], G['pin_pitch'] * 1000),
+            blocks={'bond': bond(np_ * G['A_pin'], '72.7 N per pin design (C4 R4 frozen set); RF 1.59 at 2.5 mm '
+                                 '(CL-C6-STRIP-PIN-RF-PROP, D-70)', 'L4', 'C6')})
     for st in STATIONS:                                                                      # 73-80
         for f in ('O', 'I'):
             add('FIN-012-' + st, 'FIN-011-%s%s' % (st, f), 'CT-EPOXY',
                 'pins through the %s strip: carry the strip shear flow into the laminate (CR-C6-02)'
                 % ('outboard' if f == 'O' else 'inboard'),
                 blocks={'bond': bond(np_ * math.pi * 2 * G['pin_r'] * G['es_t'] * 1e6,
-                                     '77 N per pin design; RF 1.41 (CL-C6-STRIP-PIN-RF)', 'L4', 'C6')})
+                                     '72.7 N per pin design; bearing on the strip RF 3.44, net section 2.40 '
+                                     '(CL-C6-STRIP-NET-PIN-RF, D-70)', 'L4', 'C6')})
     # R4 thermal edges (CR-A4-22a / CR-A4-40, E3 CR-E3-11): make_fins.py fills t_design_c and heat_w from E3's claims
     for st in STATIONS:                                                                      # 81-84
         add('PRP-001-' + st, 'FIN-003-' + st, 'CT-THERMAL-CONTACT',
@@ -758,9 +796,9 @@ def edge_specs(G):
             % (G['pad_x0'], G['pad_x0'] + G['pad_len'], G['pad_z'], (G['zm'] - G['pad_z'] - G['pad_hh']) * 1000,
                (G['zm'] - G['pad_z'] + G['pad_hh']) * 1000), needs=['PRP-002-' + st],
             blocks={'thermal': {'heat_w': 'E3', 't_max_c': 85, 't_ambient_c': 30,
-                                'path': 'ESC FET face -> hover slipstream (exposed ~1 360 mm2, h ~50 W/m2 K, half '
-                                        'velocity behind the tube) + radiation; pad side adiabatic; the ASA pad sees at '
-                                        'most the ESC case temperature (ASA HDT 93 - 10 K)',
+                                'path': 'ESC FET face -> hover slipstream (exposed ~1 360 mm2, h 64.6 W/m2 K design '
+                                        '(SU2 RANS, SA; CL-E3-CFD-FEQ f 1.13), CR-E3-13) + radiation; pad side '
+                                        'adiabatic; the ASA pad sees at most the ESC case temperature (ASA HDT 93 - 10 K)',
                                 'sized_by': 'E3, D3', 'claim': 'CL-E3-ESC-PEAK', 'heat_key': 'hover_loss_esc_des_w'}})
     return E
 

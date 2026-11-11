@@ -122,7 +122,7 @@ def wing_coeffs(alpha, cla, a0, clmax, cd0, k_ind, cn90):
 
 def transition_point(V, m, g, rho, S, c, x_cg, x_np, cm_ac, cla, a0, clmax, cd0, k_ind, cn90,
                      n, D, x_prop, cn_alpha_disk, tmax_motor_N, z_m, z_cg, download, cmd_eff=0.0, d_pitch=0.0,
-                     f_post=0.25):
+                     f_post=0.25, m_hub=0.0):
     """Level, unaccelerated flight at speed V with the body pitched alpha (= theta). Unknowns alpha, T:
     T cos(a) = D, T sin(a) + L = W. Pitch moment from the wing (CP from x_np in attached flow, moving to
     0.5 c at 90 deg post-stall) and the props' normal force; the motors' differential thrust must cancel it.
@@ -178,7 +178,7 @@ def transition_point(V, m, g, rho, S, c, x_cg, x_np, cm_ac, cla, a0, clmax, cd0,
         M_elev = abs(cmd_eff) * d_pitch * f * q * S * c
     if V < 0.05:
         M_elev = 0.0
-    M_mot = max(0.0, abs(M_aero) - M_elev)
+    M_mot = max(0.0, abs(M_aero) + m_hub - M_elev)   # m_hub >= 0: prop hub (H-force) moment, no sign credit
     Tm = T / 4 if T > 0 else 0.0
     dT = min(Tm, tmax_motor_N - Tm)
     M_avail = 2 * dT * (2 * z_m)              # upper vs lower pair, arm about the CG ~ 2 z_m total per pair

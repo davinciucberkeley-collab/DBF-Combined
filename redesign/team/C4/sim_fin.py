@@ -104,7 +104,7 @@ SHOE = {"tail_len": P + "fin_detail.station_collar.tail_m", "tongue_depth": P + 
 SHOE_U = {"tail_len": "m", "tongue_depth": "m", "leg_depth": "m", "glue": "m", "collar_len": "m", "z0_prop": "m"}
 MATS = {"e_tail": "ASM-C4-SIM-TAIL-E", "e_link": "ASM-C4-SIM-LINK-E", "e_shoe": "ASM-C4-SIM-SHOE-E", "E": "ASM-J1-E-TUBE", "G": "ASM-C4-G-TUBE"}
 MATS_U = {"e_tail": "Pa", "e_link": "Pa", "e_shoe": "Pa", "E": "Pa", "G": "Pa"}
-LOADS = {"f_corner": "CL-C1-FOOT-CORNER", "mu_hi": "ASM-C1-FRICTION", "side_c5": "CL-C5-FOOT-SIDE-LOAD",
+LOADS = {"f_corner": "CL-C1-FOOT-CORNER", "mu_hi": "ASM-C1-FRICTION", "side_c5": "CL-C5-SIM3D-SIDE-LOAD",
          "foot_h": P + "cg.foot_height_m", "z_pad": P + "landing.pad_contact_z_m", "sf": P + "requirements.safety_factor_ult",
          "s_face": "ASM-C4-FACE-SIGMA", "hs_t": "ASM-C4-SIM-HOTSPOT-T", "s_cf": "ASM-C4-CF-SIGMA"}
 LOADS_U = {"f_corner": "N", "mu_hi": "-", "side_c5": "N", "foot_h": "m", "z_pad": "m", "sf": "-", "s_face": "Pa",

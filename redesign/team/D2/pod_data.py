@@ -51,15 +51,18 @@ PARTS = [
     # id, name, material, make_or_buy, process, vendor_or_file, bought extras (keys of bought_g), notes
     ('POD-001', 'Pod shell (foam-board box, XPS LE filler, printed nose lip and antenna tube B)', 'foam board + PETG', 'make',
      'knife/laser-cut foam board, hot-wire XPS, FDM lip and tube', 'subsystems/pod/fusion/pod.py', ['glue_shell', 'tape_light', 'fillet_corners'],
-     'floor, 2 side walls (16 x 12 mm power/DShot exits, CR-F2-03), nose wall at x -0.130 (pitot, vent and antenna holes), aft wall '
-     '(vent + servo-lead exits), aft deck; R5 (D-47): nose 15 mm forward, XPS nose block A deleted (the forward stop sits on a 1 mm '
-     'epoxy line on the nose wall); 6 mm microballoon fillets floor-to-wall at the straps (CR-C6-17); light tape on the top (CR-E3-03)'),
-    ('POD-002', 'Tray: bay floor (2 pieces) + 3 mm forward and aft stops + 1.5 mm guides, FC, avionics, PDB and UBEC plates, JR tie bar (printed PETG)',
+     'floor (front edge notched 4 x 54 mm for the forward-stop T, D-69), 2 side walls (16 x 12 mm power/DShot exits, CR-F2-03; '
+     'bracket flanges bonded inside), nose wall at x -0.140 (D-62; pitot, vent and antenna holes), aft wall (vent + servo-lead exits), '
+     'aft deck; the forward stop sits on a 1 mm epoxy line on the nose wall; 6 mm microballoon fillets floor-to-wall at the straps '
+     '(CR-C6-17); light tape on the top (CR-E3-03)'),
+    ('POD-002', 'Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics, ribbed PDB and UBEC plates, JR tie bar (printed PETG)',
      'PETG (printed)', 'make', 'FDM PETG, 7 prints epoxied full-area to the floor', 'subsystems/pod/fusion/pod.py', ['glue_tray', 'inserts_m3'],
-     'R5 (D-47) / R5a (D-59): forward stop face x -0.1212, aft stop face x 0.060 with 2 root ribs on the rear piece; 4 strap slots 37 x 1.8 mm at '
-     'x -0.054 / 0.016; 10 mm wire channel across the bay at x -0.0245 (moved from -0.0655, CR-F2-03); FC on 4 gel cubes between end stops '
-     'with strap slots (CR-F3-12, CR-C6-19); airspeed between tie posts 21 mm apart, foam tape + 1 tie; 4 M3 heat-set inserts for '
-     'F1 power frame (25 mm pattern); UBEC plate x 0.044-0.072 (CR-F1-17); JR tie bar x 0.021-0.040 right channel'),
+     'R6 (D-62, D-69): forward-stop T (face x -0.1312; upright past the floor edge to a 12 x 54 x 1.2 mm flange bonded under the floor, '
+     'CR-C3-15), aft stop face x 0.0475 with 2 root ribs on the rear piece (backed by the POD-007 strut); 4 strap slots 37 x 1.8 mm at '
+     'x -0.062 / 0.006; 10 mm wire channel across the bay at x -0.0245 (CR-F2-03); FC on 4 gel cubes between end stops with strap '
+     'slots (CR-F3-12, CR-C6-19); airspeed between tie posts 21 mm apart, foam tape + 1 tie; PDB plate x -0.038-0.050 with 4 bosses '
+     '7.2 mm for M3 heat-set inserts (F1 power frame, 25 mm pattern, CR-C6-27) and a 1.6 x 4 mm rib along each boss row; UBEC plate '
+     'x 0.044-0.072 (CR-F1-17); JR tie bar x 0.021-0.040 right channel'),
     ('POD-003', 'Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)', 'foam board + PETG', 'make',
      'knife-cut foam board, FDM tongue and tube', 'subsystems/pod/fusion/pod.py', ['velcro_tab'],
      'tool-free, no magnets: tongue under the nose lip, hook-and-loop tab on the aft deck; receiver antenna A up the tube'),
@@ -71,20 +74,23 @@ PARTS = [
      'mast bore; PA66 M3 screw + nut (no steel within 50 mm, CR-C6-18)'),
     ('POD-006', 'Pitot boom socket with 32 mm flange (printed PETG, pod nose, left channel)', 'PETG (printed)', 'make', 'FDM PETG',
      'subsystems/pod/fusion/pod.py', ['glue_socket'], 'bore 6.2 mm for the 6 mm keyed boom (F3 accepted); flange bonded to the nose wall inside face (CR-C6-09)'),
-    ('POD-007', "Carry handle on the spar with the foot bridge (printed PETG) + 'LIFT HERE - do not lift by the motors' label", 'PETG (printed)',
+    ('POD-007', "Carry handle on the spar with the foot bridge, aft-stop strut and wall brackets (printed PETG) + 'LIFT HERE - do not lift by the motors' label", 'PETG (printed)',
      'make', 'FDM PETG, printed lying flat, 40 % infill feet and grip', 'subsystems/pod/fusion/pod.py', ['tie_each', 'tie_each', 'label', 'glue_handle'],
      'feet saddle the spar top in the open slot, one 7.6 mm nylon tie each round foot + spar; bridge between the feet (x 0.077-0.090) '
-     'on the slot fill; R5: the aft stop moved to the tray (D-47); legs through the aft deck; GPS cable in the right leg (window at '
-     'z 0.055-0.065) and a groove under the grip (CR-F2-03)'),
+     'on the slot fill; R6 (D-69): aft-stop strut (40 x 14 x 1.5 mm pad on the stop back face, three 3 x 14 mm ribs 25 mm long to the '
+     'bridge, CR-C3-14) and one wall bracket per side (2 mm web from the foot to a 1.2 mm flange epoxied to the side wall over '
+     '1 232 mm2, CR-C3-16); legs through the aft deck; GPS cable in the right leg (window at z 0.055-0.065) and a groove under the '
+     'grip (CR-F2-03)'),
     ('POD-008', 'Trim spacer set: PETG U-spacers 2 / 4 / 6 / 8 / 8 mm, colour-coded (white / yellow / green / blue)', 'PETG (printed)', 'make',
      'FDM PETG, one colour per thickness', 'subsystems/pod/fusion/pod.py', [],
-     'behind the pack, on the aft stop (x 0.060); per weighed pack (D-59): 680 g none (-0.010), 550 g blue 8 mm (-0.018), 503 g '
-     'blue + green 14 mm (-0.024); the stack is written on the pack label. CAD and mass: blue 8 + yellow 4 mm (pack at the -0.022 datum, CR-A1-54); '
-     'the rest are field kit (ground)'),
+     'behind the pack, on the aft stop (x 0.0475); set 2 / 4 / 6 / 8 mm (white / yellow / green / blue), every 2 mm stack 0-20 mm; '
+     'A1 frame-estimate stations (D-62): 546 g 16 mm (-0.036), 550 g 14 mm (-0.034), 590 g 8 mm (-0.028), final from A3 (CR-A3-27); '
+     'the stack is written on the pack label. CAD and mass: blue 8 + yellow 4 mm (pack at the -0.032 datum); the rest are field kit (ground)'),
     ('POD-009', 'Crush block (XPS F-250, hot-wired, cut per pack, vent groove)', 'XPS', 'make', 'hot-wire XPS F-250',
      'subsystems/pod/fusion/pod.py', [],
-     'ahead of the pack on the forward stop (CR-C5-02, D-47 >= 24.3 mm): length = pack fore face - 1.5 mm - (-0.1212): 680 g 39.7 mm, '
-     '550 g 31.7 mm (27.7 mm in the CAD at the datum), 503 g 25.7 mm; labelled per pack; replace after any nose-in landing'),
+     'ahead of the pack on the forward stop (CR-C5-02; C5 minimum 25.7 mm for the 550 g class): length = pack fore face - 1.5 mm - '
+     '(-0.1312): 546 g 26.2 mm, 550 g 28.2 mm, 590 g 34.2 mm (30.2 mm in the CAD at the datum); labelled per pack; replace after any '
+     'nose-in landing'),
     ('POD-010', 'Spreader (1.5 mm PETG plate, full block section)', 'PETG (printed)', 'make', 'FDM PETG, solid',
      'subsystems/pod/fusion/pod.py', [], 'between the crush block and the pack fore face; spreads the pack face load over the block section (C5)'),
 ]
@@ -95,9 +101,11 @@ EDGES = [
               'z = pod base, full pod width) and leaves the tape skin off under the pod (CR-C2-07); skin then taped over the shell foot (CR-D2-04)',
      'bond': 'AREA_POD_WING'},
     {'id': 'E-POD-02', 'part_a': 'POD-002', 'part_b': 'POD-001', 'via': 'CT-EPOXY', 'owner': 'pod',
-     'notes': 'tray front piece (with the forward stop) and rear piece, FC, avionics, PDB and UBEC plates and the JR bar epoxied '
-              'full-area to the foam-board floor (paper face scuffed); 6 mm microballoon fillets floor-to-side-wall over +/-30 mm of '
-              'each strap (CR-C6-17) and over x -0.100 ... 0 (CR-C3-01)', 'bond': 'AREA_TRAY'},
+     'notes': 'tray front and rear pieces, FC, avionics, PDB and UBEC plates and the JR bar epoxied full-area to the foam-board floor '
+              '(paper face scuffed); forward-stop T (D-69, CR-C3-15): upright bonded to the floor front edge and, through the 1 mm '
+              'microballoon line, to the nose wall; flange bonded under the floor (9 x 54 mm), tray front piece bonded over the floor '
+              'behind it, so the -x root moment clamps the floor; 6 mm microballoon fillets floor-to-side-wall over +/-30 mm of each '
+              'strap (CR-C6-17) and over x -0.131 ... -0.010 (CR-C3-01)', 'bond': 'AREA_TRAY'},
     {'id': 'E-POD-03', 'part_a': 'POD-003', 'part_b': 'POD-001', 'via': 'CT-HATCH-HL', 'owner': 'pod',
      'notes': 'opened every flight, tool-free, no magnets; the hatch carries no pack load',
      'retention': {'item': 'tongue under the nose lip + 12 x 40 mm hook-and-loop tab (CR-C3-01)', 'count': 1, 'load_n': 'hatch weight only (< 10 g)',
@@ -107,8 +115,9 @@ EDGES = [
      'retention': {'item': 'strap in 2 slots 37 x 1.8 mm', 'count': 2, 'load_n': 'see E-POD-05', 'inspection': 'no fraying at the slot edges: pre-flight card'}},
     {'id': 'E-POD-05', 'part_a': 'PWR-001', 'part_b': 'POD-002', 'via': 'CT-STRAP-VELCRO', 'owner': 'pod',
      'notes': 'field joint. z/y: 2 straps + guides + EVA pads; fore-aft: crush block POD-009 + spreader POD-010 ahead (on the forward '
-              'stop, x -0.1212), U-spacers POD-008 + aft stop (x 0.060, on the tray) behind. D-59 stations: 550 g at -0.018 (8 mm), 680 g at -0.010 '
-              '(no spacer), 503 g at -0.024 (14 mm); CAD pack at the datum pod.pack_x_nominal_m -0.022 (aft face 0.048, 12 mm); block cut per pack. Leads exit aft over the stop',
+              'stop, x -0.1312), U-spacers POD-008 + aft stop (x 0.0475, on the tray, strut-backed) behind. D-62 frame-estimate stations: '
+              '546 g -0.036 (16 mm), 550 g -0.034 (14 mm), 590 g -0.028 (8 mm), final from A3 (CR-A3-27); CAD pack at the datum '
+              'pod.pack_x_nominal_m -0.032 (aft face 0.0355, 12 mm); block cut per pack to fill the gap (no fore-aft play). Leads exit aft over the stop',
      'retention': 'RET_PACK', 'field_joint': True},
     {'id': 'E-POD-06', 'part_a': 'POD-005', 'part_b': 'POD-007', 'via': 'CT-M3-PA66-NUT', 'owner': 'pod',
      'notes': 'mast plugs 8 mm into the grip socket; cross-screwed with PA66 hardware (C6 CR-C6-18; F3: no steel within 50 mm of the '
@@ -124,20 +133,30 @@ EDGES = [
               'nose block is cut round the flange; boom bending (1 kg on the tip in handling, 0.8 N m) goes into the nose wall', 'bond': 'AREA_SOCKET'},
     {'id': 'E-POD-08', 'part_a': 'POD-007', 'part_b': 'POD-001', 'via': 'CT-EPOXY', 'owner': 'pod',
      'notes': 'handle legs pass through 7.8 mm slots in the aft deck at y +/-0.048, bonded: locates the deck', 'bond': 'AREA_LEGS'},
+    {'id': 'E-POD-14', 'part_a': 'POD-007', 'part_b': 'POD-002', 'via': 'CT-EPOXY', 'owner': 'pod',
+     'notes': 'D-69 (CR-C3-14): the strut pad (40 x 14 x 1.5 mm, z 0.026-0.040) on the aft stop back face (x 0.0505), epoxy-bedded when '
+              'the handle goes in so it bears without a gap; +x pack load: stop -> pad (bearing) -> 3 ribs -> foot bridge -> feet -> '
+              'spar saddle + ties + wall brackets (E-POD-09, E-POD-15)', 'bond': 'AREA_STRUT'},
+    {'id': 'E-POD-15', 'part_a': 'POD-007', 'part_b': 'POD-001', 'via': 'CT-EPOXY', 'owner': 'pod',
+     'notes': 'D-69 (CR-C3-16): one wall bracket per side, flange epoxied to the side-wall inner face (foam-board paper face '
+              'scuffed); ties the handle feet to the shell so the pod shear goes into the spar, not the recess step. Do not count '
+              'the wall-edge bonds aft of the recess (E-POD-01) as structure. T-C3-POD-PROOF adds 200 N on the brackets (+x, -z)',
+     'bond': 'AREA_BRACKET'},
     {'id': 'E-POD-09', 'part_a': 'POD-007', 'part_b': 'WNG-002', 'via': 'CT-SPAR-TIE', 'owner': 'pod',
      'notes': 'carry point on the spar (D-23): feet saddle the spar top in the open slot (y 0.029 ... 0.053), bonded (scuffed CF, 30 min '
-              'epoxy), one 7.6 mm nylon tie per foot at y +/-0.036 laid under the spar before D1 bonds it (CR-D2-04); the stop bridge '
-              'between the feet sits on the slot fill (|y| < 0.029). R5: no longer the aft-stop load path (the stop is on the tray, D-47)',
+              'epoxy), one 7.6 mm nylon tie per foot at y +/-0.036 laid under the spar before D1 bonds it (CR-D2-04); the foot bridge '
+              'between the feet sits on the slot fill (|y| < 0.029). D-69: the strut from the aft stop ends on the bridge and the '
+              'wall brackets tie the feet to the shell, so the spar takes the pack +x load and the pod shear',
      'retention': 'RET_SPAR', 'bond': 'AREA_SADDLE'},
     {'id': 'E-POD-10', 'part_a': 'POD-008', 'part_b': 'POD-002', 'via': 'CT-SLIDE-STOP', 'owner': 'pod',
-     'notes': 'U-spacers stand between the pack aft face and the aft stop (x 0.060, D-59; on the tray rear piece since D-47), held by the pack; '
-              'the pack leads pass over them; +x load: stop (2 root ribs) -> tray rear bond -> floor -> pod-wing bond',
-     'retention': {'item': 'trapped between the pack and the aft stop', 'count': 1, 'load_n': 'pack +x: 40 N hover landing limit, 85 N crash ultimate',
+     'notes': 'U-spacers stand between the pack aft face and the aft stop (x 0.0475, D-62; on the tray rear piece), held by the pack; '
+              'the pack leads pass over them; +x load: stop -> strut pad -> ribs -> foot bridge (E-POD-14, D-69)',
+     'retention': {'item': 'trapped between the pack and the aft stop', 'count': 1, 'load_n': 'pack +x: 38 N hover landing limit (6.6 g x 590 g), 85 N crash ultimate',
                    'inspection': 'spacer set for this pack fitted (label on the pack): pre-flight card'}},
     {'id': 'E-POD-11', 'part_a': 'POD-009', 'part_b': 'POD-002', 'via': 'CT-SLIDE-STOP', 'owner': 'pod',
      'notes': 'crush block against the 3 mm forward stop, between the guides; cut per pack (length = pack fore face - 1.5 mm - '
-              '(-0.1212)); D-47: block A is gone, the stop is backed by the nose wall through a 1 mm epoxy line, so in a nose-in crash '
-              'the block crushes against a fixed stop (C3, C5 re-check; was: stop breaks at ~100 N into block A, CR-C3-06)',
+              '(-0.1312), >= C5 minimum 25.7 mm); the stop T is backed by the nose wall through a 1 mm epoxy line and clamps the floor '
+              'with its flange (D-69), so in a nose-in crash the block crushes against a fixed stop',
      'retention': {'item': 'trapped between the forward stop and the pack', 'count': 1,
                    'load_n': 'pack -x: 85 N ultimate; crash: crush, <= 100 g on the pack (C5)',
                    'inspection': 'block intact, not crushed, labelled for this pack: pre-flight card'}},
@@ -149,9 +168,9 @@ EDGES = [
      'notes': 'insulating contact (E3 CR-E3-11): pack on 2.5 mm EVA pads on the 1 mm PETG tray over 4.8 mm foam board; the pack '
               'heat leaves by the pod air through the two vents (CR-E3-03), not by this contact',
      'thermal': {'heat_w': 'about 0 through this contact (insulating; pack loss goes to the pod air: E3 3-node model)',
-                 't_max_c': 50, 't_ambient_c': 30,
+                 't_max_c': 50, 't_ambient_c': 44,
                  'path': 'pack -> pod air -> nose inlet / aft exit vents and the foam-board shell; the pads, tray and floor insulate',
-                 'sized_by': 'E3', 't_design_c': 47.1, 'claim': 'CL-E3-PACK-END'}},
+                 'sized_by': 'E3', 't_design_c': 44.8, 'claim': 'CL-E3-PACK-END'}},
 ]
 
 CTYPES = [
@@ -166,7 +185,7 @@ CTYPES = [
 ]
 
 ACKS = ['E-PWR-03', 'E-PWR-04', 'E-PWR-05', 'E-AVN-01', 'E-AVN-02', 'E-AVN-03', 'E-AVN-04', 'E-AVN-05', 'E-AVN-07',
-        'E-AVN-10', 'E-HRN-01']   # R4: E-PWR-01/-02 now land on F1's power frame PWR-006 (CR-F1-16), not on POD-002
+        'E-AVN-10', 'E-HRN-01', 'E-WNG-17']   # R4: E-PWR-01/-02 now land on F1's power frame PWR-006 (CR-F1-16), not on POD-002
 
 
 def build_pod():
@@ -251,6 +270,7 @@ def areas(G, L):
     p0, p1 = lv(L, 'pdb_plate_x_m')
     jb = lv(L, 'jr_bar_m')
     u0, u1 = lv(L, 'ubec_zone_x_m')
+    p1 = lv(L, 'pdb_plate_x1_m')                        # R6: PDB plate runs aft to here (CR-C6-27)
     tray = sum(pod_mod_net_area(lp) for _n, lp in G['tray_loops']) + \
         (lv(L, 'fc_plate_len_m') + (ax1 - ax0) + (p1 - p0) + (u1 - u0)) * chw + jb[2] * (chw - 0.001)
     so = lv(L, 'socket_m')
@@ -259,7 +279,11 @@ def areas(G, L):
     lg = lv(L, 'leg_m')[0]
     legs = 2 * 4 * lg * tb
     mm2 = lambda a: round(a * 1e6)
+    tray += G['fs_flange_bond']
+    strut = G['strut']['pad'][1] * (G['strut']['rib_z'][1] - G['strut']['rib_z'][0])
+    bracket = 2 * G['bracket_area']
     return {'AREA_POD_WING': mm2(floor + filler + walls + aftw), 'AREA_TRAY': mm2(tray), 'AREA_SOCKET': mm2(sock),
+            'AREA_STRUT': mm2(strut), 'AREA_BRACKET': mm2(bracket), 'bracket_each': mm2(G['bracket_area']),
             'AREA_LEGS': mm2(legs), 'AREA_SADDLE': mm2(saddle), 'bridge': mm2(bridge),
             'tray_front': mm2(G['tray_front_area']), 'tray_rear': mm2(G['tray_rear_area']),
             'parts': {'floor': mm2(floor), 'filler': mm2(filler), 'walls': mm2(walls), 'aft wall': mm2(aftw)}}
@@ -269,13 +293,20 @@ BOND = {
     'AREA_POD_WING': ('30 min epoxy thickened with microballoons (foam-safe; no CA on XPS)', 'tape skin off under the pod; '
                       'foam and board faces scuffed, dust off', '24 h at >= 18 degC before load',
                       'CL-C1-POD-F-ULT 121.7 N + 3.0 N m (L1 landing, ultimate); crash: pod group 12.75 g (CL-D2-POD-CRASH-F)',
-                      'L1 landing; C1 crash any axis', 'C3 (CR-D2-05)'),
+                      'L1 landing; C1 crash any axis; D1 lays a 5 mm microballoon fillet in the recess-step corner '
+                      '(x 0.065, z 0.015-0.020) before the pod goes in (D-69, CR-C3-17)', 'C3 (CR-D2-05)'),
     'AREA_TRAY': ('30 min epoxy; 6 mm microballoon fillets at the floor-to-wall corners by the straps; 1 mm microballoon epoxy line '
                   'between the forward stop / tray front and the nose wall', 'PETG underside sanded 120 grit; board face scuffed 220 grit', '24 h',
                   'pack straps 85 N ultimate (CL-C1-PACK-CRASH-LOAD) into the floor; forward stop 85 N on the front piece '
-                  '(CL-D2-FWD-STOP-BOND); aft stop 85 N on the rear piece (CL-D2-AFT-STOP-BOND)', 'C1 crash', 'C3, C6'),
+                  '(CL-D2-FWD-STOP-BOND: tray front piece + stop-T flange); peel at the stop roots is C3 (CL-C3-FEA-FWD-BED-PEEL, '
+                  'CL-C3-FEA-AFT-PROP-PEEL)', 'C1 crash', 'C3, C6'),
     'AREA_SOCKET': ('30 min epoxy', 'PETG sanded; hole edges sealed; flange face to the paper face, clamped', '24 h', '1 kg on the boom tip in handling, about 0.8 N m', 'handling', 'C6 (CR-C6-09), C3'),
     'AREA_LEGS': ('30 min epoxy', 'PETG sanded', '24 h', 'shell crash load bearing on the legs', 'C1 crash', 'C3'),
+    'AREA_STRUT': ('30 min epoxy thickened with microballoons (bedding, fills the build gap)', 'PETG faces sanded 120 grit', '24 h',
+                   'pack +x 85 N ultimate in bearing (0.15 MPa over the pad); the bond only locates', 'C1 crash +x', 'C3 (CR-C3-14)'),
+    'AREA_BRACKET': ('30 min epoxy', 'PETG flange sanded 120 grit; foam-board paper face scuffed 220 grit', '24 h',
+                     'pod shear into the spar: C3 feet force 200 N crash over both brackets (CL-C3-FEA-SADDLE-TIES); '
+                     'area >= 1 000 mm2 per side (CL-C3-FEA-SADDLE-BOND-AREA 1 996 mm2 total)', 'C1 crash, L1 landing', 'C3 (CR-C3-16)'),
     'AREA_SADDLE': ('30 min epoxy', 'spar top scuffed 120 grit and wiped with IPA; PETG sanded', '24 h',
                     'lift by the handle 2 g at 2.6 kg (51 N limit, 77 N ultimate); R5: no pack load (the aft stop is on the tray)',
                     'G1 handling', 'C3 (CR-D2-05), C2 (spar bearing)'),
@@ -354,7 +385,8 @@ def main(argv):
               'x_rec0', 'x_rec1', 'xn', 'x_fs0', 'x_fs', 'nose_block', 'x_as', 'pack_fwd_c', 'pack_c_nom', 'pack_c_hvy', 'travel',
               'spacer_nom', 'spacer_hvy', 'block_nom', 'bay', 'zp', 'overhang_surf', 'overhang_clr', 'pack_z_c', 'z_aft', 'zfoot',
               'z_as_top', 'z_grip0', 'z_grip1', 'z_mast1', 'gps_c', 'pitot_tip', 'boom_len', 'socket_x', 'ch_y', 'strap_x', 'pod_c',
-              'ant_a', 'ant_a_pack_clr', 'ant_b_pack_clr', 'ant_b_boom_clr', 'gps_clr'):
+              'ant_a', 'ant_a_pack_clr', 'ant_b_pack_clr', 'ant_b_boom_clr', 'gps_clr', 'ant_b_tip_x', 'strut_x', 'strut_rib_l',
+              'strut_clear_skin', 'bracket_area', 'pdb_pad', 'fs_flange', 'fs_flange_bond'):
         print('  %-18s %s' % (k, G[k]))
     return 0
 

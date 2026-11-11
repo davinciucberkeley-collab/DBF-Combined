@@ -1,23 +1,33 @@
-"""K09-L landing (GER, D5, revision D5-R5): four crushable feet on the half-fin TE tips + two wingtip corner caps.
+"""K09-L landing (GER, D5, revision D5-R6): four crushable feet on the half-fin TE tips + two wingtip corner caps.
+
+R6 (CR-A1-65 / CR-C5-18, D-63, D-65): the shoe sleeve is sized for C5's 59.0 N ultimate side load. Sleeve walls get
+their own thickness (shoe.wall_t_m) separate from the 0.8 mm tine and legs (wall_t_m), R 1.0 mm inside fillets in the
+four sleeve corners (shoe.inside_fillet_r_m; the tine corners are chamfered to clear them), a thicker rim, 25 mm tine
+engagement, and SHORT snap windows (hook length + 1 mm, not the whole stroke): any crush beyond 1 mm cams the
+ramped hooks under the window front edge and they ride inside the solid wall. The cartridge is flatter (20.9 x 11.0 mm,
+same area) so the thicker sleeve still sits on a fin step <= 10 mm deep, and three segments keep each cut <= 2 in.
 
 Each foot is a telescoping crush unit in the fin plane, built for the UR station and mirrored to UL, LR, LL:
 
-  GER-001 shoe        PETG, bonded on a 9.5 mm step cut in the half-fin square tip: sleeve (floor on the step edge,
-                      roof, two windowed y walls), back wall on the step front and the edge-strip end faces, two legs
-                      down both fin faces, two collar cheeks forward of the step over both edge-strip ends
-                      (CR-C4-09), and a rim round the sleeve end (side-load lip and end-of-stroke stop)
-  GER-002 piston      PETG tine (4 walls, inspection windows in the z walls, one 6.5 mm snap finger in each y wall,
-                      CR-C6-12) + floor/stop flange; orange on the upper feet, blue on the lower (colour-marked)
-  GER-003 cartridge   type U, solid XPS F-250 17.3 x 13.3 mm, two pre-crushed segments (upper feet UR, UL): 39.6 N
-  GER-008 cartridge   type L, the same with a 5.56 mm (7/32 in) axial bore (lower feet LR, LL): 35.4 N (C5-R3 x0.95/x1.05)
+  GER-001 shoe        PETG, bonded on a step cut in the half-fin square tip: sleeve (floor on the step edge, roof, two
+                      y walls with short snap windows, all shoe.wall_t_m thick, R 1.0 inside fillets, R 1.0 leg-to-floor
+                      fillets), back wall on
+                      the step front and the edge-strip end faces, two 0.8 mm legs (7 mm) down both fin faces, two 8 mm
+                      collar cheeks forward of the step over both edge-strip ends (CR-C4-09, kept for T-C4-FIN-PROOF),
+                      and a rim round the sleeve end (side-load lip and end-of-stroke stop)
+  GER-002 piston      PETG tine (4 x 0.8 mm walls, 1 mm corner chamfers, inspection windows in the z walls, one 6.5 mm
+                      snap finger with a ramped hook in each y wall, CR-C6-12) + floor/stop flange; orange on the upper
+                      feet, blue on the lower (colour-marked)
+  GER-003 cartridge   type U, solid XPS F-250 20.9 x 11.0 mm, three pre-crushed segments (upper feet UR, UL)
+  GER-008 cartridge   type L, the same with a 5.56 mm (7/32 in) axial bore (lower feet LR, LL)
   GER-004 pad         1/16 in neoprene with adhesive back on the flange; the only part that reaches DP-GROUND
   GER-007 corner cap  TPU cap on the fixed wingtip TE corner (y 0.5615-0.575 + tip wall), CR-C5-04
 
 Stack along +x (hover: downward): back wall | cartridge | piston floor + flange | pad | ground (DP-GROUND). The
-sleeve roof sits 1.2 mm inside the pad edge (landing.pad.z_outer_m 0.219), so the sleeve floor is at z 0.2007 and
-the half-fin square tip (D3: flat, nothing on it, strips end at its front) must be 45.4 mm long and cut down to a
-step at |z| 0.2005 (CR-D5-11 to D3); the strip ends meet the step front, where the back wall and the collar cheeks
-wrap them. stack()/bodies() are the single source of every station and body: build() realises them,
+sleeve roof sits landing.shoe.lip_m (= the rim thickness) inside the pad edge (landing.pad.z_outer_m 0.219), so the
+rim top is level with the pad edge; the sleeve floor and the fin step |z| follow from the section, and the half-fin
+square tip (D3: flat, nothing on it, strips end at its front) runs from the step front to the TE (CL-D5-FIN-STEP-Z,
+-X, -DEPTH, CR-D5-31 to D3); the strip ends meet the step front, where the back wall and the collar cheeks wrap them. stack()/bodies() are the single source of every station and body: build() realises them,
 team/D5/feet_calc.py computes the claims (stack, volumes, masses) from them.
 
 Registers: E-GER-05..08 piston-shoe slider along X (crush stroke 0 .. -38 mm), E-GER-09..20 contacts
@@ -30,7 +40,8 @@ some subsystem declares WNG-001 (CAP_HOST); until then the caps are PROPOSED and
 row at y = landing.kit.y_m (kit_bodies), built for the lines interfaces.json declares.
 
 UNVERIFIED-IN-FUSION: slider direction on the mirrored LR/LL components; prisms with notch/window loops (tine y
-walls, sleeve y walls, bored cartridge); the cap loop follows the section only at its two end stations.
+walls, sleeve y walls, bored cartridge); X prisms of the fillet and chamfer sections; the ramped hook Z prisms; the
+cap loop follows the section only at its two end stations.
 """
 import math
 
@@ -53,7 +64,9 @@ LOCAL = {'w': 'wall_t_m', 'cs': 'slide_clear_m', 'cf': 'cartridge.clear_m', 'fy'
          'strip_w': 'edge_strip.w_m', 'strip_t': 'edge_strip.t_m', 'hook_len': 'piston.hook_len_m',
          'hook_p': 'piston.hook_protrusion_m', 'finger_len': 'piston.finger_len_m', 'finger_w': 'piston.finger_w_m',
          'slot_w': 'piston.slot_w_m', 'rail': 'piston.window_rail_m', 'cap_span': 'cap.span_m',
-         'cap_chord': 'cap.chord_m', 'cap_w': 'cap.wall_t_m'}
+         'cap_chord': 'cap.chord_m', 'cap_w': 'cap.wall_t_m',
+         'ws': 'shoe.wall_t_m', 'r_in': 'shoe.inside_fillet_r_m', 'tc': 'piston.corner_chamfer_m',
+         'mark': 'piston.replace_mark_m'}
 
 
 def _lv(L, key):
@@ -87,12 +100,13 @@ def stack(n):
     s['pist_in'] = (n['fy'] + 2 * cf, n['fz'] + 2 * cf)
     s['pist_out'] = (s['pist_in'][0] + 2 * w, s['pist_in'][1] + 2 * w)
     s['slv_in'] = (s['pist_out'][0] + 2 * cs, s['pist_out'][1] + 2 * cs)
-    s['slv_out'] = (s['slv_in'][0] + 2 * w, s['slv_in'][1] + 2 * w)
-    # z: sleeve roof 1 mm inside the pad edge; floor on the fin step
+    ws = n['ws']                                                          # sleeve walls (R6), tine and legs keep w
+    s['slv_out'] = (s['slv_in'][0] + 2 * ws, s['slv_in'][1] + 2 * ws)
+    # z: sleeve roof lip below the pad edge (rim top level with it); floor on the fin step
     s['z_slv'] = (n['z_outer'] - n['lip'] - s['slv_out'][1], n['z_outer'] - n['lip'])
     s['z_step'] = s['z_slv'][0] - n['glue']                               # fin step edge (D3 cuts it)
     s['notch_depth'] = n['hh'] - s['z_step']
-    s['z_bore'] = (s['z_slv'][0] + w + cs, s['z_slv'][0] + w + cs + s['pist_out'][1])   # tine outer z
+    s['z_bore'] = (s['z_slv'][0] + ws + cs, s['z_slv'][0] + ws + cs + s['pist_out'][1])   # tine outer z
     s['zc'] = sum(s['z_bore']) / 2
     s['z_flange'] = (s['z_slv'][0], n['z_outer'])
     # x: ground -> pad -> flange -> stroke -> sleeve end -> engagement -> tine open end -> stroke -> back wall
@@ -110,7 +124,9 @@ def stack(n):
     s['leg_gap'] = s['t_fin'] / 2 + n['glue']
     s['collar_gap'] = s['t_fin'] / 2 + n['strip_t'] + n['glue']
     s['x_hook'] = (s['x_open'] + 0.0005, s['x_open'] + 0.0005 + n['hook_len'])
-    s['x_win'] = (s['x_hook'][0] - n['stroke'] - 0.001, s['x_hook'][1])   # hook runs the full stroke
+    s['x_win'] = (s['x_hook'][0] - 0.001, s['x_hook'][1])               # R6: short window = hook + 1 mm (clear of the
+                                                                          # tine open-end bearing patch, D5 FEA)
+    s['rim_top_margin'] = n['z_outer'] - (s['z_slv'][1] + n['rim_t'])     # rim top not above the pad edge
     s['z_win'] = (s['zc'] - n['win_z'] / 2, s['zc'] + n['win_z'] / 2)
     s['x_twin'] = (s['x_slv_end'] + 0.003, s['x_flange'][0] - 0.003)    # tine inspection window (exposed at rest)
     s['te_clear_crushed'] = n['foot'] - n['stroke']
@@ -128,13 +144,17 @@ def bodies(n, coords=None):
     xb0, xb1, xe = s['x_bw'][0], s['x_bw'][1], s['x_slv_end']
     B = {}
 
-    # --- GER-001 shoe
+    # --- GER-001 shoe (R6: sleeve walls ws, R r_in inside fillets, short snap windows, rim rt all round)
+    ws, R = n['ws'], n['r_in']
     win = _rect(s['x_win'][0], s['x_win'][1], s['z_win'][0], s['z_win'][1])
     shoe = [('box', (xb0, yf - hy_o, z0), (xb1, yf + hy_o, z1), 'back wall'),
-            ('box', (xb1, yf - hy_o, z0), (xe, yf + hy_o, z0 + w), 'sleeve floor'),
-            ('box', (xb1, yf - hy_o, z1 - w), (xe, yf + hy_o, z1), 'sleeve roof'),
-            ('prism', 'Y', yf - hy_o, [_rect(xb1, xe, z0 + w, z1 - w), win], w, 'sleeve wall inboard'),
-            ('prism', 'Y', yf + hy_i, [_rect(xb1, xe, z0 + w, z1 - w), win], w, 'sleeve wall outboard')]
+            ('box', (xb1, yf - hy_o, z0), (xe, yf + hy_o, z0 + ws), 'sleeve floor'),
+            ('box', (xb1, yf - hy_o, z1 - ws), (xe, yf + hy_o, z1), 'sleeve roof'),
+            ('prism', 'Y', yf - hy_o, [_rect(xb1, xe, z0 + ws, z1 - ws), win], ws, 'sleeve wall inboard'),
+            ('prism', 'Y', yf + hy_i, [_rect(xb1, xe, z0 + ws, z1 - ws), win], ws, 'sleeve wall outboard')]
+    for (cy, dy) in ((yf - hy_i, 1), (yf + hy_i, -1)):          # four inside fillets along the whole sleeve
+        for (cz, dz) in ((z0 + ws, 1), (z1 - ws, -1)):
+            shoe.append(('prism', 'X', xb1, [_fillet(cy, cz, dy, dz, R)], xe - xb1, 'inside fillet R%.1f' % (R * 1e3)))
     rt, (r0, r1) = n['rim_t'], s['x_rim']
     shoe += [('box', (r0, yf - hy_o - rt, z0 - rt), (r1, yf + hy_o + rt, z0), 'rim floor side'),
              ('box', (r0, yf - hy_o - rt, z1), (r1, yf + hy_o + rt, z1 + rt), 'rim roof side'),
@@ -143,6 +163,9 @@ def bodies(n, coords=None):
     for sgn, nm in ((-1, 'leg inboard'), (1, 'leg outboard')):
         ya = yf + sgn * s['leg_gap']
         shoe.append(('box', (xb0, min(ya, ya + sgn * w), z0 - n['leg_depth']), (n['te'], max(ya, ya + sgn * w), z0), nm))
+        # R6: R r_in fillet in the outboard corner between the leg and the floor underside (D5 FEA: the sharp corner
+        # carried the peak next to the TE clamp end)
+        shoe.append(('prism', 'X', xb0, [_fillet(ya + sgn * w, z0, sgn, -1, R)], n['te'] - xb0, nm + ' fillet'))
     c0, c1 = s['x_collar']                      # two cheeks over the edge-strip ends, forward of the step front
     zc_top = n['hh']
     zc_bot = n['hh'] - n['strip_w'] - 0.002
@@ -151,23 +174,34 @@ def bodies(n, coords=None):
         shoe.append(('box', (c0, min(ya, ya + sgn * w), zc_bot), (c1, max(ya, ya + sgn * w), zc_top), nm))
     B['GER-001'] = shoe
 
-    # --- GER-002 piston: tine z walls with inspection windows, y walls with two slots each (finger), hooks, flange
+    # --- GER-002 piston: tine z walls with inspection windows, y walls with two slots each (finger), chamfered
+    # corners (clear of the sleeve fillets), ramped hooks, flange
     py_o, (pz0, pz1) = s['pist_out'][0] / 2, s['z_bore']
     xo, xf = s['x_open'], s['x_flange'][0]
+    tc = n['tc']
+    assert tc >= w, 'tine corner chamfer must cut through the corner square'
     yw = py_o - w - n['rail']
     twin = _rect(s['x_twin'][0], s['x_twin'][1], yf - yw, yf + yw)
-    pist = [('prism', 'Z', pz0, [_rect(xo, xf, yf - py_o, yf + py_o), twin], w, 'tine floor'),
-            ('prism', 'Z', pz1 - w, [_rect(xo, xf, yf - py_o, yf + py_o), twin], w, 'tine roof')]
+    pist = [('prism', 'Z', pz0, [_rect(xo, xf, yf - py_o + tc, yf + py_o - tc), twin], w, 'tine floor'),
+            ('prism', 'Z', pz1 - w, [_rect(xo, xf, yf - py_o + tc, yf + py_o - tc), twin], w, 'tine roof')]
     zc, b2, sw, Lf = s['zc'], n['finger_w'] / 2, n['slot_w'], n['finger_len']
-    za, zb = pz0 + w, pz1 - w
+    za, zb = pz0 + tc, pz1 - tc
     wall = [(xo, za), (xf, za), (xf, zb), (xo, zb),
             (xo, zc + b2 + sw), (xo + Lf, zc + b2 + sw), (xo + Lf, zc + b2), (xo, zc + b2),
             (xo, zc - b2), (xo + Lf, zc - b2), (xo + Lf, zc - b2 - sw), (xo, zc - b2 - sw)]
     pist += [('prism', 'Y', yf - py_o, [wall], w, 'tine wall inboard + finger'),
              ('prism', 'Y', yf + py_o - w, [wall], w, 'tine wall outboard + finger')]
+    for (Y, dy) in ((yf - py_o, 1), (yf + py_o, -1)):           # chamfered corner pieces (tc x 45 deg outside)
+        for (Z, dz) in ((pz0, 1), (pz1, -1)):
+            loop = [(Y + dy * tc, Z), (Y + dy * tc, Z + dz * w), (Y + dy * w, Z + dz * w), (Y + dy * w, Z + dz * tc),
+                    (Y, Z + dz * tc)]
+            pist.append(('prism', 'X', xo, [loop], xf - xo, 'tine corner (chamfer %.1f)' % (tc * 1e3)))
     zh0, zh1 = zc - b2 + 0.0005, zc + b2 - 0.0005
-    pist += [('box', (s['x_hook'][0], yf - py_o - n['hook_p'], zh0), (s['x_hook'][1], yf - py_o, zh1), 'hook inboard'),
-             ('box', (s['x_hook'][0], yf + py_o, zh0), (s['x_hook'][1], yf + py_o + n['hook_p'], zh1), 'hook outboard')]
+    hp, (xh0, xh1) = n['hook_p'], s['x_hook']                    # 45 deg ramp on the forward face, square aft face
+    pist += [('prism', 'Z', zh0, [[(xh0, yf - py_o), (xh1, yf - py_o), (xh1, yf - py_o - hp), (xh0 + hp, yf - py_o - hp)]],
+              zh1 - zh0, 'hook inboard (ramped)'),
+             ('prism', 'Z', zh0, [[(xh0, yf + py_o), (xh1, yf + py_o), (xh1, yf + py_o + hp), (xh0 + hp, yf + py_o + hp)]],
+              zh1 - zh0, 'hook outboard (ramped)')]
     zf0, zf1 = s['z_flange']
     pist.append(('box', (xf, yf - hy_o, zf0), (s['x_flange'][1], yf + hy_o, zf1), 'floor and stop flange'))
     B['GER-002'] = pist
@@ -199,6 +233,14 @@ def bodies(n, coords=None):
                         ('prism', 'Y', tip, [full], cw, 'cap tip wall')]
     B['_stack'] = s
     return B
+
+
+def _fillet(cy, cz, dy, dz, R, k=8):
+    """Inside-corner fillet section in the (y, z) plane: square corner at (cy, cz), walls running +dy and +dz."""
+    oy, oz = cy + dy * R, cz + dz * R
+    arc = [(oy - dy * R * math.sin(t), oz - dz * R * math.cos(t))
+           for t in (0.5 * math.pi * i / k for i in range(k + 1))]
+    return [(cy, cz)] + arc
 
 
 def _mirror_z(spec):

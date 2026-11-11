@@ -1,4 +1,4 @@
-"""Write subsystems/fins/interfaces.json and parts.csv from the CAD module (one source). Owner: D3. Design R4 (CR-A1-47).
+"""Write subsystems/fins/interfaces.json and parts.csv from the CAD module (one source). Owner: D3. Design R5 (CR-A1-63).
 
     python -I redesign/subsystems/fins/make_fins.py
 
@@ -9,7 +9,7 @@ interfaces.json; until then it waits, complete, under "edges_pending" (merge_che
 params change or when wing / propulsion declare their parts, then check.py and merge_check.py.
 
 Joint data blocks (A4: bond / clamp / retention): the C6 block for the same edge id in team/C6/joint_stacks.json is
-used where C6 sized the joint; where D3 changed the geometry since (e.g. the 12 mm collar, the R4 root fillets) the D3
+used where C6 sized the joint; where D3 changed the geometry since (e.g. the 15 mm collar, the R4 root fillets) the D3
 area replaces C6's and load_n says so; edges C6 has not sized carry the D3 block. A C6 joint_stack adds its 'load'
 line to the D3 stack. Thermal blocks (E-FIN-81...88) take t_design_c and heat_w from team/E3 (claims, results).
 
@@ -153,7 +153,7 @@ def merge_blocks(e, c6):
         for g in e['geo']:
             if g in mine and abs(mine[g] - theirs.get(g, 0)) > 0.05 * max(1, mine[g]):
                 blk[g] = mine[g]
-                blk['load_n'] = '%s [D3 R4 geometry: %s %s, C6 used %s; C6 re-checks]' % (
+                blk['load_n'] = '%s [D3 R5 geometry: %s %s, C6 used %s; C6 re-checks]' % (
                     theirs.get('load_n', ''), g, mine[g], theirs.get(g))
         out[key] = blk
     return out
@@ -203,17 +203,17 @@ NOTES = {
     'tube': 'two per 1 000 mm stock length; scuff the bond zones (block, collars) with 120 grit',
     'mount': 'ASA (D-42), 0.2 mm layers, 5 perimeters, enclosed printer; collar axis vertical on the bed; slit + ears '
              'outboard; A = UR/LL, B = UL/LR (mirror); drill the motor holes 3.4 mm through the pilots to the measured '
-             'pattern',
+             'pattern; plate face 7.5 mm ahead of the collar front, cheeks 17 mm (D-61)',
     'block': 'PETG, 3 perimeters, 15 % gyroid, spar bore horizontal on the bed; sand the socket top/bottom flush; '
-             'strap eyes print with it',
+             'strap eyes print with it; four vertical plan-form edges R 3 mm (D-68) to match the R 3 mm pocket corners',
     'plug': 'CF 20 x 18 offcut, 53 mm, sanded to slide in the 20 mm bore, laminating epoxy',
-    'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed); 12 mm ring, 40 mm '
-              'two-face tail, brace ear inboard',
+    'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed); 15 mm ring (CR-C6-36), 40 mm '
+              'two-face tail, brace ear inboard; phase tie lug at x 0.060, slot open along x (CR-F2-16)',
     'brace': 'pultruded CF strip 10 x 2 mm, cut to length on the jig, ends scuffed',
     'anchor': 'PETG, 80 %, brace slot vertical on the bed; foot sits on the spar through a core pocket',
     'strip': 'pultruded CF strip 10 x 1 mm, cut to the template, one per laminate face, ends at the step front x 0.2746',
     'pad': 'ASA 1.2 mm, 100 % (D-42); two strap slots, matching slots knifed through the laminate',
-    'pins': 'pultruded CF rod 2 mm cut to 12 mm; drilled through strip-laminate-strip after cure, bonded, sanded flush',
+    'pins': 'pultruded CF rod 2.5 mm cut to 12 mm (D-70); 2.5 mm drill through strip-laminate-strip after cure, epoxy injected before the pin, sanded flush',
 }
 
 
@@ -234,7 +234,7 @@ def write_parts_csv(specs, M, P):
               'FIN-009': 'pultruded CF strip 10 x 2 x 1000 mm, ~$10 per length, 4 braces per length UNVERIFIED (I1, CR-D3-09)',
               'FIN-010': 'fusion/fins.py, PETG',
               'FIN-011': 'pultruded CF strip 10 x 1 x 1000 mm, ~$6 per length, 4 strips per length UNVERIFIED (I1, CR-D3-09)',
-              'FIN-012': 'pultruded CF rod 2 x 1000 mm, ~$3, one rod makes all four pin sets UNVERIFIED (I1)'}
+              'FIN-012': 'pultruded CF rod 2.5 x 1000 mm, ~$4, one rod makes all four pin sets UNVERIFIED (I1)'}
     process = {'board': 'laminate + knife cut', 'tube': 'cut (fine-tooth saw, tape-wrapped)', 'mount': '3D print + drill',
                'block': '3D print', 'plug': 'cut + sand', 'pad': '3D print', 'collar': '3D print',
                'brace': 'cut', 'anchor': '3D print', 'strip': 'cut', 'pins': 'cut + drill + bond'}
@@ -243,9 +243,9 @@ def write_parts_csv(specs, M, P):
              'mount': 'Motor mount ASA, 7 deg canted plate, slip clamp (prints A and B)',
              'block': 'Through-core block (tube socket + spar saddle + strap eyes)',
              'plug': 'Tube plug CF 20x18 x 53 mm', 'pad': 'ESC pad, ASA',
-             'collar': 'Station collar, 12 mm + 40 mm two-face tail', 'brace': 'Brace, CF strip 10 x 2 (C4 CR-C4-16)',
+             'collar': 'Station collar, 15 mm + 40 mm two-face tail', 'brace': 'Brace, CF strip 10 x 2 (C4 CR-C4-16)',
              'anchor': 'Brace anchor on the spar', 'strip': 'Edge strip, CF 10 x 1',
-             'pins': 'Edge-strip pin set, CF rod 2 mm'}
+             'pins': 'Edge-strip pin set, CF rod 2.5 mm'}
     rows = []
     for base, items in groups.items():
         pid, name, mat, mob, rule = items[0]
@@ -311,7 +311,7 @@ def main():
     acks += ['E-HRN-03', 'E-HRN-05'] + ['E-HRN-%02d' % i for i in range(6, 10)]   # lead ties: boss / collar lugs (CR-F2-05)
     acks += ['E-PWR-%02d' % i for i in range(11, 15)]       # ESC caps foam-taped on the half-fin faces (CR-F1-22)
     doc = {'schema': 'dbf-interfaces/1', 'subsystem': 'fins',
-           '_note': 'GENERATED by subsystems/fins/make_fins.py from fusion/fins.py and params.json (design R4); do not '
+           '_note': 'GENERATED by subsystems/fins/make_fins.py from fusion/fins.py and params.json (design R5); do not '
                     'edit by hand. edges_pending = complete edges to parts other subsystems have not declared yet.',
            'parts': parts, 'edges': edges, 'edges_pending': pending, 'acknowledges': acks}
     with open(os.path.join(HERE, 'interfaces.json'), 'w', encoding='utf-8', newline='\n') as f:

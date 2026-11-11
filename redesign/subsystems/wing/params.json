@@ -1,5 +1,5 @@
 {
-  "_note": "Wing-local dimensions (D1, revision D1-R1 on params A1-R3, 2026-11-09). Shared numbers (span, chord, section, spar, elevon spans, hinge, pod station, fin and block positions) come from redesign/params/params.json, subsystems/fins/params.json (block, anchor, bond gap), subsystems/pod/params.json (saddle feet, tie) and subsystems/harness/params.json (grooves); this file holds only what the wing designer chooses. Read by subsystems/wing/fusion/wing.py, team/D1/wing_data.py and team/D1/wing_claims.py. Metres unless stated.",
+  "_note": "Wing-local dimensions (D1, revision D1-R2 on params A1-R5, 2026-11-10). Shared numbers (span, chord, section, spar, elevon spans, hinge, pod station, fin and block positions) come from redesign/params/params.json, subsystems/fins/params.json (block, anchor, bond gap), subsystems/pod/params.json (saddle feet, tie) and subsystems/harness/params.json (grooves); this file holds only what the wing designer chooses. Read by subsystems/wing/fusion/wing.py, team/D1/wing_data.py and team/D1/wing_claims.py. Metres unless stated.",
   "slot": {
     "bond_gap_m": {"value": 0.0002, "unit": "m", "source": "team/C2/sizing.json#spar.slot", "status": "PROPOSED",
       "note": "radial bond line: slot / bore 22.4 mm on the 22 mm spar, epoxy + glass microballoons 1:1 by volume"},
@@ -8,7 +8,9 @@
   },
   "recess": {
     "slot_wall_m": {"value": 0.004, "unit": "m", "source": "team/D2/CHANGE-REQUESTS.md#CR-D2-04", "status": "PROPOSED",
-      "note": "foam left between the pod recess aft end and the spar (recess ends at x_spar - r_spar - 0.004 = 0.065); floor z = params pod.z_base_m, y = +/- pod width / 2; recess front = where the upper skin reaches the floor"}
+      "note": "foam left between the pod recess aft end and the spar (recess ends at x_spar - r_spar - 0.004 = 0.065); floor z = params pod.z_base_m, y = +/- pod width / 2; recess front = where the upper skin reaches the floor"},
+    "step_fillet_legs_m": {"value": [0.005, 0.005], "unit": "m", "source": "params/CHANGE-LOG.md#D-69 (team/C3/CHANGE-REQUESTS.md#CR-C3-17)", "status": "PROPOSED",
+      "note": "microballoon-epoxy fillet in the re-entrant floor-to-step corner at the recess aft end (x 0.065): 5 mm along the floor, up the step to its full height (4.8 mm, the pod floor board thickness; the leg is capped there), full recess width |y| <= 0.070. Laid with a 45 deg spatula, cured 24 h, sanded to a flat 45 deg face before the pod goes in; the pod floor's aft lower edge is bevelled to sit on it (CR-D1-12 to D2)"}
   },
   "saddle_window": {
     "tie_channel_m": {"value": [0.008, 0.002], "unit": "m", "source": "D1 choice (CR-D2-04 ties at y +/-0.036)", "status": "PROPOSED",
@@ -17,6 +19,14 @@
   "anchor_pocket": {
     "gap_m": {"value": 0.0005, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
       "note": "per side along y round D3's 16 mm anchor (fins anchor.len_y_m); along x the pocket is the full 22.4 mm slot width so the 20 mm saddle sits on the spar with thickened epoxy filling 1.2 mm each side (E-FIN-57...60)"}
+  },
+  "block_pocket": {
+    "bead_leg_m": {"value": 0.003, "unit": "m", "source": "params/CHANGE-LOG.md#D-68 (team/C2/CHANGE-REQUESTS.md#CR-C2-11)", "status": "PROPOSED",
+      "note": "lip bead along the inboard and outboard block-pocket edges, upper and lower surface, x over the full pocket length (0.0279-0.0972): the foam lip is chamfered 3 x 3 mm at 45 deg and filled flush with microballoon epoxy (CAD: three 1 mm steps that circumscribe the triangle, so the bead is never under 3 mm). Pocket corners follow D3's block (fins fin_detail.block.edge_r_m) + the 0.15 mm bond gap = R 3.15 mm"},
+    "corner_steps": {"value": 3, "unit": "-", "source": "D1 choice", "status": "PROPOSED",
+      "note": "CAD only: spanwise steps that draw each R 3 mm corner zone and each 3 mm bead zone as Y-normal prisms (pocket steps taken at the inner end so the pocket always contains the block; elevon cut-out steps on the safe side for the panel). The shop cuts the true radius from the printed template"},
+    "bead_density_gcc": {"value": 0.65, "unit": "g/cm3", "source": "D1 estimate (laminating epoxy 1.15 + glass microballoons 1:1 by volume)", "status": "UNVERIFIED",
+      "note": "same mix as the core glue (foam-safe, sandable); acceptance: a cured 20 cm3 cup weighs <= 13 g (T-D1-WEIGH)"}
   },
   "servo_pocket": {
     "x_m": {"value": [0.1722, 0.2075], "unit": "m", "source": "subsystems/mechanisms (D6-R1) MEC-008 frame x 0.1724-0.2073 + 0.2 mm bond line", "status": "PROPOSED",
@@ -36,9 +46,19 @@
     "servo_y_m": {"value": [0.065, 0.285], "unit": "m", "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-04", "status": "PROPOSED",
       "note": "servo-lead groove on the upper surface aft of the spar slot (x from harness.groove.x_servo_m), then a branch along x at y 0.285 to the lead hole (servo_pocket.lead_hole_x_m) down into the lower pocket"}
   },
+  "jr_recess": {
+    "width_y_m": {"value": 0.010, "unit": "m", "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-14 (18 x 10 x 5 mm)", "status": "PROPOSED",
+      "note": "JR in-line servo-lead joint recess in the upper surface, centred on the servo branch (y 0.285), x from subsystems/harness/params.json#harness.groove.jr_recess_x_m (0.150-0.168), both sides; cut before skinning; the skin tape over it is the flap that is lifted to unplug a servo"},
+    "depth_m": {"value": 0.005, "unit": "m", "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-14", "status": "PROPOSED",
+      "note": "floor follows the upper skin 5 mm down; > 20 mm foam left under it; 4.3 mm foam wall to the servo pocket (x 0.1722)"}
+  },
   "elevon": {
     "end_gap_m": {"value": 0.001, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
       "note": "each panel end to the core cut-out (hot-wire kerf ~1 mm); fin-face and tip gaps are the params elevon spans (>= 15 mm)"},
+    "cutout_corner_r_m": {"value": 0.003, "unit": "m", "source": "params/CHANGE-LOG.md#D-68 (team/C2/CHANGE-REQUESTS.md#CR-C2-13)", "status": "PROPOSED",
+      "note": "plan-form radius of the two re-entrant cut-out corners at each fin-root tab (hinge line meets the tab face at |y| 0.30 and 0.34): foam left in the corner; the panel's front corner is relieved concentric (offset by the 1 mm end gap in y and x). Tab tape carried round the cut-out edge (skin.tab_edge_tape_w_m)"},
+    "tube_groove_y_m": {"value": [[0.1335, 0.296], [0.344, 0.556]], "unit": "m", "source": "team/D6/CHANGE-REQUESTS.md#CR-D6-14 (D6-R2)", "status": "PROPOSED",
+      "note": "|y| range of the torque-tube groove in the inboard and outboard panel = D6's tube (MEC-009, |y| 0.1345-0.295 / 0.345-0.555) + 1 mm each end for the fill (CR-D6-14 quotes 0.135-0.295 / 0.345-0.555; the built inboard tube starts at 0.1345). Inboard tube shortened to 70 % of the horn-to-root length, mechanisms mec.tube.cover_frac); the panel is ungrooved elsewhere. Bare-foam patches for the horn flanges come from mechanisms mec.horn.flange_mm / backplate_mm (14 / 12 mm wide)"},
     "bevel_deg": {"value": 30.0, "unit": "deg", "source": "D1 choice", "status": "PROPOSED",
       "note": "lower-edge bevel of the panel front face, measured from the vertical through the upper-skin hinge line: clears the core at +25 deg down with 1.07 mm; D6 uses it as the TE-down mechanical stop at about 28-30 deg"},
     "tube_groove_gap_m": {"value": 0.0002, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
@@ -55,7 +75,17 @@
       "note": "60 mm band (servo_pocket.doubler_w_m) wrapped round the LE from upper x 0.12 to lower x 0.12 over each through-core block pocket; slit round the tube and the half-fin roots"},
     "tip_extra_layers": {"value": 1, "unit": "-", "source": "team/C2/sizing.json#tip.edge", "status": "PROPOSED",
       "note": "one 48 mm strip folded round the tip edge over the normal skin = 2 layers at the tip (damage fuse, CR-C2-01)"},
-    "tip_tape_w_m": {"value": 0.048, "unit": "m", "source": "D1 choice", "status": "PROPOSED", "note": "standard packing-tape roll width"}
+    "tip_tape_w_m": {"value": 0.048, "unit": "m", "source": "D1 choice", "status": "PROPOSED", "note": "standard packing-tape roll width"},
+    "le_strip_w_m": {"value": 0.100, "unit": "m", "source": "team/B2/CHANGE-REQUESTS.md#CR-B2-17 (D1 sizing)", "status": "PROPOSED",
+      "note": "one continuous 100 mm (4 in) BOPP strip wrapped round the LE, laid LAST over the spanwise strips. The arc from the LE to x/c 0.10 is 38.3 mm upper + 33.4 mm lower = 71.6 mm, so a 72 mm roll leaves no placing margin; 100 mm leaves >= 9 mm each side"},
+    "le_strip_upper_arc_m": {"value": 0.052, "unit": "m", "source": "D1 choice", "status": "PROPOSED",
+      "note": "arc of the LE strip on the upper surface (rest on the lower: 48 mm); edges at x 0.0451 upper / 0.0466 lower, both aft of x/c 0.10 (0.032) by >= 13 mm; mark the strip's upper edge line on the core before taping"},
+    "overlap_m": {"value": 0.0048, "unit": "m", "source": "D1 choice (10 % of 48 mm)", "status": "PROPOSED",
+      "note": "the forward spanwise strip of each face runs this far under the LE strip"},
+    "le_clean_xc": {"value": 0.10, "unit": "-", "source": "team/B2/CHANGE-REQUESTS.md#CR-B2-17", "status": "PROPOSED",
+      "note": "no tape seam, overlap edge or doubler edge between x/c 0.10 lower and x/c 0.10 upper (block-pocket doublers exempt); hot-wired LE sanded smooth (no wire steps). Junctions not covered by the rule, sent to B2 (CR-D1-13): the pod footprint |y| <= 0.070 and the folded tip layer |y| >= 0.551"},
+    "tab_edge_tape_w_m": {"value": 0.024, "unit": "m", "source": "team/C2/CHANGE-REQUESTS.md#CR-C2-13 (D1 sizing)", "status": "PROPOSED",
+      "note": "48 mm tape slit in half: one strip folded over each fin-root tab side face (y 0.30 and 0.34) from the hinge round the R 3 mm corner to the TE, 12 mm onto each face over the tab skin"}
   },
   "label": {
     "x_m": {"value": [0.115, 0.215], "unit": "m", "source": "D1 choice", "status": "PROPOSED",
@@ -72,8 +102,8 @@
     "anchor_mass_g": {"value": 4.0, "unit": "g", "source": "team/C2/sizing.json#plugs.anchor_plugs.mass_g_each", "status": "UNVERIFIED", "note": "PETG + bond"}
   },
   "cost_usd": {
-    "value": {"xps_sheet": 59.97, "cores_per_sheet": 6, "tape_roll": 3.33, "rolls": 2, "spar": 28.32, "petg_plugs": 1.0, "epoxy": 6.0, "label": 1.0},
+    "value": {"xps_sheet": 59.97, "cores_per_sheet": 6, "tape_roll": 3.33, "rolls": 2, "spar": 28.32, "petg_plugs": 1.0, "epoxy": 6.0, "label": 1.0, "le_tape_roll": 9.0},
     "unit": "USD", "source": "SRC-XPS-F250, SRC-CF-TUBE (fins parts.csv), D1 estimate", "status": "UNVERIFIED",
-    "note": "per wing; I1 owns the BOM prices"
+    "note": "per wing; I1 owns the BOM prices. le_tape_roll: 100 mm (4 in) clear BOPP carton tape, one roll does several wings (D1 estimate)"
   }
 }

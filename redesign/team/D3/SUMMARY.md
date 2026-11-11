@@ -1,51 +1,50 @@
 # D3 Fins and motor tubes: summary
 
-Revision D3-R4b, 2026-11-10 (params D-48 … D-55; C6-R4; C4 claims as published). Answers the A3 mass action
-(CR-A3-26, merge_check WARN mass). Subsystem files: `redesign/subsystems/fins/` (SPEC, parts.csv, interfaces.json,
-params.json, fusion/fins.py, BUILD.md). Re-run: `python -I redesign/subsystems/fins/make_fins.py` →
-`python -I redesign/team/D3/fins_calcs.py` → `python -I redesign/fusion/check.py` →
-`python -I redesign/interfaces/merge_check.py`.
+Revision D3-R5, 2026-11-10 (params A1-R5: D-61, D-63, D-65, D-68, D-70; C6-R5; E3 R3; F2 CR-F2-16). Answers
+CR-A1-63. Subsystem files: `redesign/subsystems/fins/` (SPEC, parts.csv, interfaces.json, params.json, fusion/fins.py,
+BUILD.md). Re-run: `python -I redesign/subsystems/fins/make_fins.py` → `python -I redesign/team/D3/fins_calcs.py` →
+`python -I redesign/fusion/check.py` → `python -I redesign/interfaces/merge_check.py`.
 
-## Mass action (CR-A3-26)
+## Action items (CR-A1-63 and the D-61…D-70 forwards)
 
-| Parameter | Value | Unit | Source | Status |
-|---|---|---|---|---|
-| Fins mass / allocation | 434.8 / 418 (was 436.4) | g | `CL-D3-MASS` | `FAIL` → CR-D3-33 |
-| Root fillets, four half-fins (C6 15 mm, zoned) | 30.6 (was 32.2) | g | `CL-D3-FILLET-MASS` | `UNVERIFIED` |
-| Half-fin laminate without fillets and laps (R3: 19.32) | 19.21 | g | `CL-D3-LAMINATE-MASS` | `UNVERIFIED` |
-| Forward sealing bead 6 → 4 mm (no strength credit) | −1.6 | g | `fin_detail.fin.root_fillet.leg_fwd_m` | `PROPOSED` |
-| Root fillet RF, D3 / at C6 allowable (unchanged) | 2.28 / 1.14 | — | `CL-D3-ROOT-FILLET-RF`, `-ALLOW` | `UNVERIFIED` |
-| Block fill, shell estimate from CAD (drawn 0.55) | 0.51–0.56 | — | 19 400 mm² × 1.2–1.35 mm + 15 % gyroid | `MODELLED` |
-| Asked allocation (covers CR-C6-31 +1.5 g, CR-C6-32 +0.6 g) | 437 | g | CR-D3-33 | `PROPOSED` |
+| Item | Done in R5 | Value | Unit | Source | Status |
+|---|---|---|---|---|---|
+| Mount at D-61 (blocker) | `face_ahead_m` 0.0075, cheeks 12 → 17 mm (still reach the slit collar to the tube axis) | 7.5 / 17 | mm | `fin_detail.mount.*` | `MODELLED` |
+| Prop plane x, A1 copies (carried −0.0127) | hub on the axis = face − 37.3 cos 7° | **−0.01267** | m | `CL-D3-X-PROP` | `CHECKED` |
+| Plate face x, DP-MOTOR-FACE (carried 0.0244) | 0.045 − 13.15 − 7.5 mm | **0.02435** | m | `CL-D3-X-FACE` | `CHECKED` |
+| Prop keep-out | `check.py` fins 0 errors, 0 keep-out errors (hull); E1 swept volume to tube 26.1 mm | 26.1 ≥ 25 | mm | `CL-E1-TIP-GAP-AT-75` | `MODELLED` |
+| Block vertical edges (D-68) | four plan-form edges R 3 mm in the CAD (socket front, saddle aft) | 3 | mm | `fin_detail.block.edge_r_m` | `MODELLED` |
+| Pins (D-70) | Ø 2.5 mm CF at 15 mm, epoxy injected | 1.59 | RF | `CL-C6-STRIP-PIN-RF-PROP` | `UNVERIFIED` |
+| Station collar (D-70 13 mm) | **15 mm** drawn (C6-R5 CR-C6-36: 13 mm reads RF 0.9995) | 15 | mm | `CL-C6-COLLAR-RF-15MM` 1.15 | `FAIL` on C6's live re-run → CR-D3-36 |
+| Strip-tail bond | BUILD step 13 inspection table: reach, full-length fill, tongue perimeters, tap, 20 N pull, recorded | — | — | CR-C4-37 | `PROPOSED` |
+| E3 thermal blocks `E-FIN-85…88` | 61.6 → 56.1 °C, h 64.6 W/m² K text | 56.1 / 85 | °C | `CL-E3-ESC-PEAK` | `UNVERIFIED` |
+| F2 phase tie lug | collar tail x 0.084 → 0.060, slot open along x | 0.060 | m | CR-F2-16 | `MODELLED` |
+| `E-FIN-81…88` with E1 | declared; E1 acknowledges all 8, no one-sided warning | — | — | `merge_check.py` | `CHECKED` |
 
-**What grew.** The laminate did not: the D-54 stepped tip leaves it 0.1 g lighter than at R3. All the growth is C6's
-15 mm root fillet, which D-48 booked at +3 g. Drawn as bodies, the fillets weigh 30.6 g. The fillet can't shrink:
-the RF at the C6 allowable is 1.14 and scales with the leg. The face leg can't shorten either, because the paper
-(0.10 MPa) is weaker than the XPS (0.125 MPa). A one-layer tip is out because the square tip already fails as drawn
-(`CL-C4-D3-MS-FACE` −0.54). The block fill was re-derived from the CAD shell and 0.55 holds. Lowering it would mean
-printing the block differently, so C4 has to re-check it first.
+## Mass against 437 g (D-63) and levers
 
-**Decision asked of A1 (CR-D3-33).** Raise fins from 418 to 437 g. That is +19 g from the reserve; A3 says 31 g is free, so
-12 g would remain. D3 gives back to the reserve whatever these levers deliver:
-
-| Lever | Saves | Gate | Owner |
+| Line | Value | Unit | Status |
 |---|---|---|---|
-| Microlight fillet filler ≤ 0.45 g/cm³ | −5.6 g `EST` | T-D3-WEIGH cup | D3 (C6 adhesive spec) |
-| Block 2 perimeters + 10 % gyroid (fill 0.45) | −13.8 g `EST` | `CL-C4-D3-BLOCK-MS` ≥ 0 | C4 |
-| Mount cheeks 12 → 8 mm | −4 g `EST` | rocking stiffness ≥ 926 N·m/rad | C4 |
+| R5 before levers (mounts +3.8, pins +1.5, collar 15 mm +1.8, block R 3 −0.4) | 441.5 | g | `MODELLED` |
+| **Taken:** fillet mix 0.55 → 0.45 g/cm³ (gate: T-D3-WEIGH cup ≤ 9.0 g / 20 cm³; strength set by paper/XPS, fillet fail-safe only) | −5.6 | g | `PROPOSED` |
+| Not taken: block fill 0.55 → 0.45 (needs C4 `CL-C4-D3-BLOCK-MS` on the R 3 mm block, CR-D3-37) | (−13.8) | g | `PROPOSED` |
+| Not taken: mount cheeks (withdrawn; 17 mm is set by the reach to the collar) | — | g | — |
+| **Fins** `CL-D3-MASS` | **435.9 / 437** | g | `MODELLED` |
 
 ## Checks
 
 | Check | Result | Status |
 |---|---|---|
-| `fins_calcs.py` | all claims written; `CL-D3-MASS` fails its limit (434.8 > 418) | `MODELLED` |
-| `check.py` | fins module ok (42 parts, 435 g); 8 KO-PROP errors (tube 9.5 mm, boss 5.8, plug 8.4 mm into the convex hull) pre-date this change (CR-D3-26, A1 decision); WARN mass | `FAIL` (not from this change) |
-| `merge_check.py` | PASS, 0 errors; WARN fins 435 > 418 g until A1 rules on CR-D3-33 | `CHECKED` |
+| `make_fins.py` | 42 parts, 88 edges, 0 pending, 435.9 g | `MODELLED` |
+| `fins_calcs.py` | 29 claims; 3 fail on new upstream loads: `CL-D3-COLLAR-H-C6` 0.77, `CL-D3-ROOT-FILLET-RF-ALLOW` 0.81, `CL-D3-ROOT-LEFF-REQ` 0.182 > 0.150 m | `FAIL` → CR-D3-35/36 |
+| `check.py` | fins ok, 0 errors, 0 warnings; 0 keep-out errors. Run FAIL from pod/avionics (D2 bay re-lay) and missing POD/AVN parts | fins `CHECKED` |
+| `merge_check.py` | PASS, 0 errors, 1 warning (propulsion 462 / 462 g); no fins warnings | `CHECKED` |
 
-## Open
+## Open (with D3's proposed fix)
 
-1. A1: CR-D3-33 (allocation) and CR-D3-26 (prop keep-out). The keep-out errors are not part of this mass action.
-2. D3 next run: adopt CR-C6-31 (pins Ø 2.5) and CR-C6-32 (collar 13 mm). Both are structural fixes, and their
-   +2.1 g is inside the 437 g asked for.
-3. C6: the skin bond area is now 4 934 / 4 790 mm² (bead only, no change to the RF basis). `make_fins.py` writes
-   this into `E-FIN-53…56`.
+1. **Root fillet** (CR-D3-35): on the D-65 59.0 N side load the root is 19 % short at the C6 allowable. Fix: 15 mm
+   zone forward to L_eff 0.185 m (+5 g) once C4 gives the fillet share and C2 accepts the tab shear.
+2. **Collar** (CR-D3-36): C6's live run reads C1 12.67 N·m (R4 7.40) and needs 19.4 mm. 20 mm fits (+3 g). D3 redraws
+   once C1/C6 confirm the value.
+3. Both fixes together take fins to about 444 g, 7 g over 437. A1 decides the allocation, or C4 clears the block-fill
+   lever (−13.8 g).

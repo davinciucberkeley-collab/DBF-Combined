@@ -415,6 +415,20 @@ def assemble_M(ys, sec_fn, config="MC-P", full=True, wing_scale=None):
     return Mg, station_idx, scale
 
 
+def station_inertia(config="MC-P", y_st=None):
+    """Fin station (half-fins, tube, motors + props + mounts, ESCs, feet; C1 mass model) inertia about the spar axis
+    (x = xs, z = zs, along y): sum m ((x - xs)^2 + (z - zs)^2) + own Iyy. The elevon mechanism (wing) is excluded."""
+    y_st = pv("fins.y_m") if y_st is None else y_st
+    I_, m_ = 0.0, 0.0
+    for it in read_mass_items(config):
+        if abs(it["y"] - y_st) > 1e-6 or it["group"] in ("wing", "mech"):
+            continue
+        J = item_inertia(it)
+        I_ += it["m"] * ((it["x"] - xs) ** 2 + (it["z"] - zs) ** 2) + (J[1, 1] if J is not None else 0.0)
+        m_ += it["m"]
+    return {"Iyy_kgm2": I_, "mass_kg": m_}
+
+
 def station_ke_fraction(phi, Mg, ys, station_idx):
     tot = phi @ Mg @ phi
     ke = 0.0
@@ -1014,6 +1028,16 @@ def main():
     # MC-C mass configuration at the low corner (lighter: frequencies up)
     mods_c, _ = modal(48, sec_lo, config="MC-C")
     res["modes_MC_C"] = mods_c
+    # ---- C2-R3 (CR-B3-21): high stiffness corners of the two control-path modes, station inertia about the spar
+    anti = [(m["f_hz"], key) for key, ms in corners.items() for m in ms[:3]
+            if m["type"] == "torsion" and m["sym"] == "antisym"]
+    sym1 = []
+    for key, ms in corners.items():
+        s_ = [m for m in ms if m["sym"] == "sym" and m["station_ke"] >= 0.10]
+        if s_:
+            sym1.append((s_[0]["f_hz"], key, s_[0]["type"]))
+    res["torsion_corners"] = {"anti_hi": max(anti), "anti_lo": min(anti), "sym1_hi": max(sym1), "sym1_lo": min(sym1)}
+    res["station_inertia"] = {cfg: station_inertia(cfg) for cfg in ("MC-P", "MC-C")}
 
     # ---- aeroelastic statics and flutter (low corner, pessimistic shear centre for divergence)
     ae_conv = []
@@ -1127,6 +1151,18 @@ def write_params(res):
                                               f'{res["mode_sep_worst_all"]["f_hz"]:.1f} Hz, {res["mode_sep_worst_all"]["corner"]})'),
                       "f_torsion_anti_hz": P(res["modes"]["E70-G3-tape0.5"][0]["f_hz"], "Hz", "first wing mode, low corner: antisymmetric torsion (fin stations rocking)"),
                       "f_torsion_sym_hz": P(res["modes"]["E70-G3-tape0.5"][1]["f_hz"], "Hz", "second wing mode, low corner: symmetric torsion"),
+                      "f_torsion_anti_hi_hz": P(res["torsion_corners"]["anti_hi"][0], "Hz",
+                                                "antisymmetric torsion mode, highest of the 12 stiffness corners ("
+                                                + res["torsion_corners"]["anti_hi"][1] + "), beam model"),
+                      "f_sym1_hi_hz": P(res["torsion_corners"]["sym1_hi"][0], "Hz",
+                                        "lowest symmetric station mode, highest of the 12 stiffness corners ("
+                                        + res["torsion_corners"]["sym1_hi"][1] + ", " + res["torsion_corners"]["sym1_hi"][2]
+                                        + "), beam model"),
+                      "station_Iyy_spar_kgm2": P(res["station_inertia"]["MC-P"]["Iyy_kgm2"], "kg m2",
+                                                 "one fin station (fins, tube, 2 motors + props + mounts, ESCs, feet) about "
+                                                 "the spar axis, C1 mass model MC-P"),
+                      "station_Iyy_spar_mcc_kgm2": P(res["station_inertia"]["MC-C"]["Iyy_kgm2"], "kg m2",
+                                                     "same, MC-C (light) configuration"),
                       "V_rev_ms": P(ae["V_rev_ms"], "m/s", "roll reversal, strip theory, low corner"),
                       "V_rev_bound_ms": P(ae["V_rev_bound_ms"], "m/s", "roll reversal, spar-only GJ bound"),
                       "eff_vd": P(ae["eff_vd"], "-", "elevon roll effectiveness at VD (rigid = 1)"),
@@ -1180,12 +1216,14 @@ def write_sizing(res):
                             "spar at |y| 0.242, servo pockets aft of x 0.12 m only",
                  "keep_out": "no cut deeper than 50 % of the local thickness between x 0.06 and 0.10 m except the "
                              "spar slot and block pockets",
-                 "pocket_corners": "C2-R2 3-D FEA (CR-C2-11): block pocket vertical edges R 3 mm (block edges rounded "
-                                   "or chamfered 3 mm to match, D3) plus a thickened-epoxy fillet bead >= 3 mm along the "
-                                   "inboard and outboard pocket edges on both surfaces; foam peak at the sharp corner "
-                                   "203 kPa tension / 199 kPa compression ult vs 150 / 120 kPa",
+                 "pocket_corners": "D-68 (CR-C2-11), checked by the C2-R3 submodel FEA (fea/wing_fea_d68.py, claims "
+                                   "CL-C2-FEA-FOAM-CORNER-*): pocket vertical edges R 3 mm to D3's rounded block, a "
+                                   "microballoon-epoxy fillet bead with >= 3 mm legs (3 mm into the foam beyond the "
+                                   "pocket face, 3 mm deep) along the inboard and outboard pocket edges on both "
+                                   "surfaces over the full pocket chord; 60 mm tape doubler continuous over the edges",
                  "elevon_cutout_corners": "R >= 3 mm where the elevon cut-outs meet the fin-root tab (|y| 0.30, 0.34) "
-                                          "at the hinge line; tape carried round the cut-out edge (CR-C2-13)"},
+                                          "at the hinge line; tape carried round the cut-out edge (CR-C2-13, D-68; "
+                                          "CL-C2-FEA-CUTOUT-TAU)"},
         "tip": {"unspanned_m": round(L_half - y_spar_end, 3), "edge": "wingtip edge tape 2 layers (damage fuse; "
                 "L6 tip strike breaks the tip outboard of the spar, repair = re-cut and glue)"},
         "transport_cradle": {"y_m": [-Y_CRADLE, Y_CRADLE], "pad_area_min_m2": round(res["cradle"]["area_req_m2"], 5),

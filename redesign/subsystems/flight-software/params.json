@@ -1,5 +1,5 @@
 {
- "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R4c. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
+ "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R5. The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
  "fsw": {
   "firmware": {
    "value": "ArduPlane 4.7.x stable, target CoreWingF405WingV2",
@@ -18,7 +18,7 @@
    "unit": "m/s",
    "source": "D-36 (15.6 m/s, CL-B3-VT-TRIM) rounded up: AP_Int16",
    "ap": "AIRSPEED_MIN",
-   "note": "integer parameter (AP_Int16); pre-4.5 name ARSPD_FBW_MIN"
+   "note": "integer parameter (AP_Int16); pre-4.5 name ARSPD_FBW_MIN. D-71: >= 1.3 x CL-B2R3-VS-GATE-FWD (15.59); after T-B2-STALL set ceil(1.3 x measured trimmed stall): 16 holds up to 12.31 m/s"
   },
   "airspeed_max_ms": {
    "value": 18,
@@ -64,10 +64,11 @@
    "ap": "Q_WP_SPD_DN"
   },
   "pilot_spd_dn_ms": {
-   "value": 1.2,
+   "value": 1.0,
    "unit": "m/s",
-   "source": "team/B4/CHANGE-REQUESTS.md#CR-B4-06",
-   "ap": "Q_PILOT_SPD_DN"
+   "source": "params/CHANGE-LOG.md D-65 (<= P:requirements.landing_sink_ms 1.2); team/B4/CHANGE-REQUESTS.md#CR-B4-06",
+   "ap": "Q_PILOT_SPD_DN",
+   "note": "R5: 1.2 -> 1.0 m/s; full down stick in QHOVER/QLOITER is the design hard landing (CL-F4-TOUCHDOWN-SINK)"
   },
   "land_final_spd_ms": {
    "value": 0.3,
@@ -322,6 +323,26 @@
    "source": "team/F5/CHANGE-REQUESTS.md#CR-F5-01",
    "ap": "FLTMODE_CH"
   },
+  "fltmodes": {
+   "value": [
+    17,
+    18,
+    19,
+    5,
+    7,
+    11
+   ],
+   "unit": "-",
+   "source": "team/A2/REQUIREMENTS.md R-SPIRAL (D-66): roll-stabilised modes only",
+   "ap": "FLTMODE1,FLTMODE2,FLTMODE3,FLTMODE4,FLTMODE5,FLTMODE6",
+   "note": "QSTABILIZE, QHOVER, QLOITER, FBWA, CRUISE, RTL"
+  },
+  "initial_mode": {
+   "value": 17,
+   "unit": "-",
+   "source": "J1 / R-SPIRAL: QSTABILIZE at boot",
+   "ap": "INITIAL_MODE"
+  },
   "estop_ch_option": {
    "value": 31,
    "unit": "-",
@@ -380,24 +401,24 @@
   },
   "ins_pos_m": {
    "value": [
-    0.062,
+    0.059,
     0.046,
     -0.0205
    ],
    "unit": "m",
-   "source": "CALC-F4-SENSOR-POS (CR-F3-20 IMU point, CG x 0.0522, z 0.0185)",
+   "source": "CALC-F4-SENSOR-POS (CR-F3-20 IMU point, D-62 CG x 0.0490, z 0.0185)",
    "ap": "INS_POS1_X,INS_POS1_Y,INS_POS1_Z",
    "status": "UNVERIFIED",
    "note": "FRD from the CG; INS_POS2 the same"
   },
   "gps_pos_m": {
    "value": [
-    -0.023,
-    0,
+    -0.026,
+    0.0,
     -0.1595
    ],
    "unit": "m",
-   "source": "CALC-F4-SENSOR-POS (CR-F3-20 GPS centre (0.075, 0, 0.178), CG x 0.0522, z 0.0185)",
+   "source": "CALC-F4-SENSOR-POS (CR-F3-20 GPS centre, D-62 CG x 0.0490, z 0.0185)",
    "ap": "GPS1_POS_X,GPS1_POS_Y,GPS1_POS_Z",
    "status": "UNVERIFIED",
    "note": "FRD from the CG; re-measure as built"

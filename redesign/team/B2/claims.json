@@ -239,10 +239,10 @@
     "ASM-B2-CLMAX-KD"
    ],
    "outputs": {
-    "SM_fwd": 0.06218750000000001,
-    "CLmax_fwd": 0.7876187499999999,
-    "Vs_fwd_ms": 11.984282357352916,
-    "Vtr_fwd_ms": 15.579567064558791
+    "SM_fwd": 0.065,
+    "CLmax_fwd": 0.7861,
+    "Vs_fwd_ms": 11.99585362445588,
+    "Vtr_fwd_ms": 15.594609711792643
    },
    "input_values": {
     "tab": [
@@ -289,8 +289,8 @@
     ],
     "sm_min": 0.05,
     "xr": [
-     0.0509,
-     0.0548
+     0.0466,
+     0.0514
     ],
     "kd": 1.0,
     "m": 2.6,
@@ -510,7 +510,7 @@
    "output": "SM_fwd",
    "unit": "-",
    "how": "B3's CG range width over the chord, added to the SM floor; B3 re-derives the range (D-17)",
-   "value": 0.06218750000000001
+   "value": 0.065
   },
   {
    "id": "CL-B2-CLMAX-FWD",
@@ -525,7 +525,7 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL flown at the forward CG ballast as well as the aft",
-   "value": 0.7876187499999999
+   "value": 0.7861
   },
   {
    "id": "CL-B2-STALL-GATE-FWD",
@@ -538,16 +538,14 @@
     "op": "<=",
     "ref": "P:requirements.stall_max_ms"
    },
-   "verifies": [
-    "R-STALL"
-   ],
    "parts": [
     "WNG-001",
     "WNG-002",
     "WNG-003"
    ],
    "how": "T-B2-STALL at the forward CG limit, 2.6 kg",
-   "value": 11.984282357352916
+   "note": "R2 basis (CG on the chord plane, SM from the range width): superseded for R-STALL by CL-B2R3-VS-GATE-FWD (B2-R4, real CG height, team/B2/sim/stall_zcg.py)",
+   "value": 11.99585362445588
   },
   {
    "id": "CL-B2-TRANSITION-GATE-FWD",
@@ -560,16 +558,14 @@
     "op": "<=",
     "ref": "P:performance.cruise_ms"
    },
-   "verifies": [
-    "R-TRANSITION"
-   ],
    "parts": [
     "WNG-001",
     "WNG-002",
     "WNG-003"
    ],
    "how": "Transition logs at the forward CG: airspeed >= 1.3 Vs before the wing carries the weight",
-   "value": 15.579567064558791
+   "note": "R2 basis: superseded for R-TRANSITION by CL-B2R3-VTR-GATE-FWD (B2-R4, real CG height)",
+   "value": 15.594609711792643
   },
   {
    "id": "CL-B2-RE-STALL-DEV",

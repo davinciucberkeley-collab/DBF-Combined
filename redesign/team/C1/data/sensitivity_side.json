@@ -1,0 +1,132 @@
+{
+ "note": "Envelope outputs at the design side load (C5 3-D sim, mu 0.7, 39.3 N), at C5's mu <= 0.5 pad option (29.1 N, CR-C5-16) and with friction x corner load only (C1-R4 basis). Information only.",
+ "F_side_N": {
+  "c5_mu07": 39.30402300642076,
+  "c5_mu05_29N": 29.1,
+  "friction_only": 25.679276425529167
+ },
+ "outputs": {
+  "finjoint_M_ult": {
+   "c5_mu07": 22.45710446782381,
+   "c5_mu05_29N": 17.6538109050261,
+   "friction_only": 16.113580062413263
+  },
+  "finjoint_M_design": {
+   "c5_mu07": 32.28208767249673,
+   "c5_mu05_29N": 25.377353175975013,
+   "friction_only": 23.163271339719063
+  },
+  "finhalf_Mb_ult": {
+   "c5_mu07": 16.33075071977547,
+   "c5_mu05_29N": 13.057955931240093,
+   "friction_only": 12.390708508911924
+  },
+  "finhalf_T_lim": {
+   "c5_mu07": 12.675920421985783,
+   "c5_mu05_29N": 9.412776707887069,
+   "friction_only": 8.318959228943477
+  },
+  "finhalf_T_wingplane_lim": {
+   "c5_mu07": 12.626065819496707,
+   "c5_mu05_29N": 9.383331301272824,
+   "friction_only": 8.296260211246965
+  },
+  "wing_T_ult": {
+   "c5_mu07": 8.380872552303543,
+   "c5_mu05_29N": 8.37054313052746,
+   "friction_only": 8.367080369167763
+  },
+  "foot_F_ult": {
+   "c5_mu07": 79.74660375510211,
+   "c5_mu05_29N": 69.34880848560908,
+   "friction_only": 66.27497681904245
+  },
+  "spar_Mb_ult": {
+   "c5_mu07": 20.651268417332638,
+   "c5_mu05_29N": 19.53984788928774,
+   "friction_only": 19.53984788928774
+  },
+  "pod_F_ult": {
+   "c5_mu07": 113.72987192000366,
+   "c5_mu05_29N": 113.72987192000366,
+   "friction_only": 113.72987192000366
+  },
+  "pack_F_lim": {
+   "c5_mu07": 42.487425591316594,
+   "c5_mu05_29N": 42.487425591316594,
+   "friction_only": 42.487425591316594
+  },
+  "n_T_allow_aft": {
+   "c5_mu07": 10.758827330106257,
+   "c5_mu05_29N": 10.727922164848842,
+   "friction_only": 10.179736947413147
+  },
+  "n_T_allow_nose": {
+   "c5_mu07": 4.979498659993398,
+   "c5_mu05_29N": 4.979498659993398,
+   "friction_only": 4.979498659993398
+  }
+ },
+ "cases": {
+  "finjoint_M_ult": {
+   "c5_mu07": "L4-CORNER-SIDE-Y",
+   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "friction_only": "L4-CORNER-SIDE-Y"
+  },
+  "finjoint_M_design": {
+   "c5_mu07": "L4-CORNER-SIDE-Y",
+   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "friction_only": "L4-CORNER-SIDE-Y"
+  },
+  "finhalf_Mb_ult": {
+   "c5_mu07": "L5-CORNER-SIDE-Z",
+   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "friction_only": "L4-CORNER-SIDE-Y"
+  },
+  "finhalf_T_lim": {
+   "c5_mu07": "L4-CORNER-SIDE-Y",
+   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "friction_only": "L4-CORNER-SIDE-Y"
+  },
+  "finhalf_T_wingplane_lim": {
+   "c5_mu07": "L4-CORNER-SIDE-Y",
+   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "friction_only": "L4-CORNER-SIDE-Y"
+  },
+  "wing_T_ult": {
+   "c5_mu07": "L4-CORNER-SIDE-Y",
+   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "friction_only": "L4-CORNER-SIDE-Y"
+  },
+  "foot_F_ult": {
+   "c5_mu07": "L4-CORNER-SIDE-Y",
+   "c5_mu05_29N": "L4-CORNER-SIDE-Y",
+   "friction_only": "L5-CORNER-SIDE-Z"
+  },
+  "spar_Mb_ult": {
+   "c5_mu07": "L4-CORNER-SIDE-Y",
+   "c5_mu05_29N": "L1-LEVEL",
+   "friction_only": "L1-LEVEL"
+  },
+  "pod_F_ult": {
+   "c5_mu07": "L1-LEVEL",
+   "c5_mu05_29N": "L1-LEVEL",
+   "friction_only": "L1-LEVEL"
+  },
+  "pack_F_lim": {
+   "c5_mu07": "L1-LEVEL",
+   "c5_mu05_29N": "L1-LEVEL",
+   "friction_only": "L1-LEVEL"
+  },
+  "n_T_allow_aft": {
+   "c5_mu07": 10.758827330106257,
+   "c5_mu05_29N": 10.727922164848842,
+   "friction_only": 10.179736947413147
+  },
+  "n_T_allow_nose": {
+   "c5_mu07": 4.979498659993398,
+   "c5_mu05_29N": 4.979498659993398,
+   "friction_only": 4.979498659993398
+  }
+ }
+}

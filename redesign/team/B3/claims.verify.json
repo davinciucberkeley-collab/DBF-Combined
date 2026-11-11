@@ -15,23 +15,13 @@
     "x_le_board": 0.0565,
     "x_tube_front": 0.034,
     "z_le_top": 0.1595,
-    "z_collar_bottom": 0.1475,
+    "z_collar_bottom": 0.1445,
     "x_sq": 0.2746,
     "h": 0.21,
     "z_step": 0.2005,
     "te": 0.32,
     "area_half_board": 0.0455
    },
-   "unit": "m",
-   "status": "PROPOSED"
-  },
-  {
-   "id": "ASM-B3-V-ZCG",
-   "type": "assumption",
-   "title": "A3-R6a CG height",
-   "text": "z of the take-off CG, 550 g pack at -0.022",
-   "basis": "team/A3/rollup/rollup.json cg.cg_m[2] (A3-R6a, 2026-11-10); A3 publishes only the range-use claim CL-A3-CG-Z-RANGE (CR-B3-24 asks for a CL-A3-CG-Z in m)",
-   "value": 0.0185,
    "unit": "m",
    "status": "PROPOSED"
   },
@@ -65,7 +55,7 @@
     "fin": "ASM-B3-V-FIN-CAD",
     "gap": "ASM-B3-V-ELEVON-GAP",
     "cgf": "CL-A3-CG-X",
-    "zref": "ASM-B3-V-ZCG",
+    "zref": "P:cg.z_target_m",
     "S": "CL-A1-WING-AREA",
     "m": "P:requirements.mtow_gate_kg",
     "g": "P:env.g_ms2",
@@ -100,70 +90,70 @@
     },
     "rows": {
      "coarse": {
-      "Xnp": 0.070211,
-      "CLa": 3.387264,
-      "Cmd01": -0.009072,
+      "Xnp": 0.070176,
+      "CLa": 3.387324,
+      "Cmd01": -0.009354,
       "Cld02": -0.004553,
-      "Cnb": 0.072781,
-      "Clb": 0.025992,
-      "Cnr": -0.049915,
-      "Clp": -0.311779,
-      "Alpha": 7.32182
+      "Cnb": 0.07649,
+      "Clb": 0.026466,
+      "Cnr": -0.051776,
+      "Clp": -0.311845,
+      "Alpha": 7.31917
      },
      "medium": {
-      "Xnp": 0.070289,
-      "CLa": 3.400132,
-      "Cmd01": -0.009513,
+      "Xnp": 0.070254,
+      "CLa": 3.400191,
+      "Cmd01": -0.009812,
       "Cld02": -0.004821,
-      "Cnb": 0.073222,
-      "Clb": 0.024084,
-      "Cnr": -0.049948,
-      "Clp": -0.311001,
-      "Alpha": 7.29785
+      "Cnb": 0.076938,
+      "Clb": 0.024557,
+      "Cnr": -0.051816,
+      "Clp": -0.311065,
+      "Alpha": 7.29521
      },
      "fine": {
-      "Xnp": 0.070338,
-      "CLa": 3.401462,
-      "Cmd01": -0.009686,
+      "Xnp": 0.070303,
+      "CLa": 3.401521,
+      "Cmd01": -0.009992,
       "Cld02": -0.004933,
-      "Cnb": 0.073144,
-      "Clb": 0.023568,
-      "Cnr": -0.049903,
-      "Clp": -0.310018,
-      "Alpha": 7.29715
+      "Cnb": 0.076864,
+      "Clb": 0.024042,
+      "Cnr": -0.051772,
+      "Clp": -0.310081,
+      "Alpha": 7.29451
      },
      "xfine": {
-      "Xnp": 0.070344,
-      "CLa": 3.4025,
-      "Cmd01": -0.009681,
+      "Xnp": 0.070309,
+      "CLa": 3.402558,
+      "Cmd01": -0.009988,
       "Cld02": -0.00495,
-      "Cnb": 0.073208,
-      "Clb": 0.023416,
-      "Cnr": -0.049919,
-      "Clp": -0.310016,
-      "Alpha": 7.29836
+      "Cnb": 0.076927,
+      "Clb": 0.02389,
+      "Cnr": -0.051789,
+      "Clp": -0.310079,
+      "Alpha": 7.29572
      }
     },
     "r21": 1.4208135059574212,
     "r32": 1.667437201458948,
-    "CL": 0.4704785181373811,
+    "CL": 0.4703217455621303,
     "gci_Xnp": {
-     "p": 0.20672086017077287,
-     "f_ext": 0.0709886672984953,
-     "gci_pct": 1.1563225043634453,
-     "xfine_minus_ext_rel": -0.009081270617246312
+     "p": 0.2067208601697127,
+     "f_ext": 0.07095366729849896,
+     "gci_pct": 1.1568981737958755,
+     "xfine_minus_ext_rel": -0.009085750223267195
     },
     "gci_CLa": {
-     "p": 4.1717930269394445,
-     "f_ext": 3.401861560616174,
-     "gci_pct": 0.014683414667488313,
-     "xfine_minus_ext_rel": 0.00018767353475431978
+     "p": 4.171629240654788,
+     "f_ext": 3.401920590508207,
+     "gci_pct": 0.014684258461396937,
+     "xfine_minus_ext_rel": 0.00018736753984546065
     },
     "gci_Cmd01": {
-     "p": 1.2774748666801765,
-     "f_ext": -0.009991516433079006,
-     "gci_pct": 3.942758015163702,
-     "xfine_minus_ext_rel": -0.03107800854442631
+     "p": 1.2733451466067331,
+     "f_ext": -0.010311157907582254,
+     "gci_pct": 3.992667979161546,
+     "xfine_minus_ext_rel": -0.03134060310962952
     },
     "gci_Cld02": {
      "p": 1.135308791978188,
@@ -173,16 +163,16 @@
     },
     "gci_Cnb": {
      "p": null,
-     "f_ext": 0.073144,
-     "gci_pct": 0.1332986984578276,
+     "f_ext": 0.076864,
+     "gci_pct": 0.12034242298085679,
      "note": "oscillatory or flat: GCI from the fine-medium change with Fs 1.25",
-     "xfine_minus_ext_rel": 0.0008749863283385461
+     "xfine_minus_ext_rel": 0.0008196294754370527
     },
-    "xnp_xfine": 0.070344,
-    "xnp_ext": 0.0709886672984953,
-    "dxnp_fine_xfine_c": 1.875000000001875e-05,
-    "cnb_gci_pct": 0.1332986984578276,
-    "cnb_spread_abs": 0.00044099999999999695
+    "xnp_xfine": 0.070309,
+    "xnp_ext": 0.07095366729849896,
+    "dxnp_fine_xfine_c": 1.8749999999975384e-05,
+    "cnb_gci_pct": 0.12034242298085679,
+    "cnb_spread_abs": 0.00044800000000000395
    },
    "input_values": {
     "b": 1.15,
@@ -204,7 +194,7 @@
      "x_le_board": 0.0565,
      "x_tube_front": 0.034,
      "z_le_top": 0.1595,
-     "z_collar_bottom": 0.1475,
+     "z_collar_bottom": 0.1445,
      "x_sq": 0.2746,
      "h": 0.21,
      "z_step": 0.2005,
@@ -212,13 +202,13 @@
      "area_half_board": 0.0455
     },
     "gap": 0.001,
-    "cgf": 0.16315099747159315,
+    "cgf": 0.15170598746402741,
     "zref": 0.0185,
     "S": 0.368,
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
-    "vt": 15.506013461600652
+    "vt": 15.508597559767704
    }
   },
   {
@@ -233,7 +223,7 @@
     "value": 0.005
    },
    "how": "Re-run verify_asdesigned.py with avl/cache deleted; four-lattice table in results/verify.json.",
-   "value": 1.875000000001875e-05
+   "value": 1.8749999999975384e-05
   },
   {
    "id": "CL-B3-V-CNB-GCI",
@@ -247,7 +237,7 @@
     "value": 2.0
    },
    "how": "As CL-B3-V-XNP-LATTICE.",
-   "value": 0.1332986984578276
+   "value": 0.12034242298085679
   },
   {
    "id": "CALC-B3-V-HAND",
@@ -269,7 +259,7 @@
     "fh": "P:fins.half_height_m",
     "fle": "P:fins.le_x_m",
     "fte": "P:fins.te_x_m",
-    "zref": "ASM-B3-V-ZCG"
+    "zref": "P:cg.z_target_m"
    },
    "units": {
     "b": "m",
@@ -295,10 +285,10 @@
     "fin_xac": 0.12823342845426355,
     "fin_ARv": 1.777600922385429,
     "fin_CLa": 2.388685170390784,
-    "fin_dCnb_hand": 0.08516567969561682,
+    "fin_dCnb_hand": 0.08926841708167069,
     "fin_area_half_r4": 0.05775,
-    "fin_dCnb_avl": 0.074679,
-    "fin_hand_vs_avl": 0.14042340812834708,
+    "fin_dCnb_avl": 0.07844,
+    "fin_hand_vs_avl": 0.13804713260671453,
     "clda_strip_per_deg": 0.007359635567717091,
     "clda_avl_per_deg": 0.005051,
     "clda_strip_vs_avl": 0.45706505003308084
@@ -310,14 +300,14 @@
      "x_le_board": 0.0565,
      "x_tube_front": 0.034,
      "z_le_top": 0.1595,
-     "z_collar_bottom": 0.1475,
+     "z_collar_bottom": 0.1445,
      "x_sq": 0.2746,
      "h": 0.21,
      "z_step": 0.2005,
      "te": 0.32,
      "area_half_board": 0.0455
     },
-    "cgf": 0.16315099747159315,
+    "cgf": 0.15170598746402741,
     "ef": 0.22,
     "yin": [
      0.07,
@@ -357,7 +347,7 @@
    "output": "fin_hand_vs_avl",
    "unit": "-",
    "how": "As CL-B3-V-VLM-XNP.",
-   "value": 0.14042340812834708
+   "value": 0.13804713260671453
   },
   {
    "id": "CALC-B3-V-CG",
@@ -395,7 +385,7 @@
     "travel": "P:wing.elevon.deflection_deg",
     "tfrac": "P:requirements.elevon_trim_travel_max",
     "kslop": "ASM-B3-SLOP-TRIM-FRAC",
-    "zcg": "ASM-B3-V-ZCG",
+    "zcg": "P:cg.z_target_m",
     "m_pred": "CL-A3-MASS-PREDICTED",
     "cgf": "CL-A3-CG-X",
     "x_a3_pred": "CL-A3-CG-X-PRED",
@@ -444,30 +434,30 @@
     "SRC-B3-AVL"
    ],
    "outputs": {
-    "x_a3": 0.052208319190909805,
+    "x_a3": 0.04854591598848877,
     "xnp_aero": 0.071946,
-    "xnp": 0.06903681916710612,
+    "xnp": 0.0688727860280747,
     "CLa": 3.459492,
     "Cmd": -0.009767,
     "Cld": -0.005011,
-    "x_fwd_gate": 0.04659559217387958,
-    "x_aft_gate": 0.05303681916710612,
-    "width_gate": 0.006441226993226537,
+    "x_fwd_gate": 0.046431313636078955,
+    "x_aft_gate": 0.0528727860280747,
+    "width_gate": 0.006441472391995745,
     "binding_gate": "trim",
-    "x_target_gate": 0.04981620567049285,
+    "x_target_gate": 0.04965204983207683,
     "table_gate": [
      [
       0.05,
-      0.05304,
-      0.8235,
-      -8.84,
+      0.05287,
+      0.8236,
+      -8.83,
       15.71,
       11.72,
       0.071
      ],
      [
       0.06,
-      0.04984,
+      0.04967,
       0.7988,
       -10.37,
       15.67,
@@ -476,7 +466,7 @@
      ],
      [
       0.07,
-      0.04664,
+      0.04647,
       0.7941,
       -12.06,
       16.02,
@@ -485,65 +475,65 @@
      ],
      [
       0.08,
-      0.04344,
+      0.04327,
       0.7895,
-      -13.75,
-      16.38,
+      -13.74,
+      16.37,
       11.97,
       0.071
      ]
     ],
-    "sm_fwd_gate": 0.07012883435383294,
-    "x_fwd_pred": 0.04659559217387958,
-    "x_aft_pred": 0.05303681916710612,
-    "width_pred": 0.006441226993226537,
+    "sm_fwd_gate": 0.07012960122498671,
+    "x_fwd_pred": 0.046431313636078955,
+    "x_aft_pred": 0.0528727860280747,
+    "width_pred": 0.006441472391995745,
     "binding_pred": "trim",
-    "x_target_pred": 0.04981620567049285,
+    "x_target_pred": 0.04965204983207683,
     "table_pred": [
      [
       0.05,
-      0.05304,
-      0.8235,
-      -8.84,
+      0.05287,
+      0.8236,
+      -8.83,
       15.71,
-      11.344,
+      11.401,
       0.071
      ],
      [
       0.06,
-      0.04984,
+      0.04967,
       0.7988,
       -10.37,
       15.67,
-      11.519,
+      11.577,
       0.071
      ],
      [
       0.07,
-      0.04664,
+      0.04647,
       0.7941,
       -12.06,
       16.02,
-      11.553,
+      11.611,
       0.071
      ],
      [
       0.08,
-      0.04344,
+      0.04327,
       0.7895,
-      -13.75,
-      16.38,
-      11.586,
+      -13.74,
+      16.37,
+      11.645,
       0.071
      ]
     ],
-    "sm_fwd_pred": 0.07012883435383294,
-    "a3_fwd_margin": 0.005612727017030222,
-    "a3_aft_margin": 0.0008284999761963147,
-    "a3pred_fwd_margin": 0.006994884933410654,
-    "a3pred_aft_margin": -0.0005536579401841171,
-    "sm_a3": 0.05258906242561348,
-    "sm_a3_pred": 0.048269818936924634
+    "sm_fwd_pred": 0.07012960122498671,
+    "a3_fwd_margin": 0.0021146023524098168,
+    "a3_aft_margin": 0.004326870039585928,
+    "a3pred_fwd_margin": 0.003644412832067234,
+    "a3pred_aft_margin": 0.002797059559928511,
+    "sm_a3": 0.06352146887370602,
+    "sm_a3_pred": 0.058740811124776596
    },
    "input_values": {
     "b": 1.15,
@@ -561,8 +551,8 @@
     "fh": 0.21,
     "fle": 0.045,
     "fte": 0.32,
-    "zref": 0.0,
-    "dcm": -0.01025,
+    "zref": 0.0185,
+    "dcm": -0.01024,
     "eta": 0.606,
     "tab": [
      [
@@ -603,7 +593,7 @@
      "x_le_board": 0.0565,
      "x_tube_front": 0.034,
      "z_le_top": 0.1595,
-     "z_collar_bottom": 0.1475,
+     "z_collar_bottom": 0.1445,
      "x_sq": 0.2746,
      "h": 0.21,
      "z_step": 0.2005,
@@ -619,17 +609,17 @@
     "tfrac": 0.5,
     "kslop": 0.5,
     "zcg": 0.0185,
-    "m_pred": 2.4359720000000005,
-    "cgf": 0.16315099747159315,
-    "x_a3_pred": 0.05359047710729024,
+    "m_pred": 2.4605690000000005,
+    "cgf": 0.15170598746402741,
+    "x_a3_pred": 0.05007572646814619,
     "CLa": 3.464493,
     "n": 4,
     "D": 0.2794,
-    "x_prop": -0.0077,
+    "x_prop": -0.0127,
     "cna": 0.11,
     "up": 1.15,
     "pod": [
-     0.225,
+     0.235,
      0.14,
      0.07
     ],
@@ -654,7 +644,7 @@
    "output": "xnp",
    "unit": "m",
    "how": "T-B3-TWIN-NP (FBWA glides at two pack positions).",
-   "value": 0.06903681916710612
+   "value": 0.0688727860280747
   },
   {
    "id": "CL-B3-V-CG-FWD",
@@ -664,7 +654,7 @@
    "output": "x_fwd_gate",
    "unit": "m",
    "how": "T-B3-CG-BALANCE + twin slow flight at the forward mark.",
-   "value": 0.04659559217387958
+   "value": 0.046431313636078955
   },
   {
    "id": "CL-B3-V-CG-AFT",
@@ -674,7 +664,7 @@
    "output": "x_aft_gate",
    "unit": "m",
    "how": "T-B3-CG-BALANCE.",
-   "value": 0.05303681916710612
+   "value": 0.0528727860280747
   },
   {
    "id": "CL-B3-V-CG-WIDTH",
@@ -688,7 +678,7 @@
     "value": 0.004
    },
    "how": "Follows from the two limits.",
-   "value": 0.006441226993226537
+   "value": 0.006441472391995745
   },
   {
    "id": "CL-B3-V-CG-A3-FWD",
@@ -705,7 +695,7 @@
     "R-CG-RANGE"
    ],
    "how": "H1 balance of the built aircraft (T-B3-CG-BALANCE).",
-   "value": 0.005612727017030222
+   "value": 0.0021146023524098168
   },
   {
    "id": "CL-B3-V-CG-A3-AFT",
@@ -723,7 +713,7 @@
     "R-STATIC-MARGIN"
    ],
    "how": "H1 balance of the built aircraft (T-B3-CG-BALANCE).",
-   "value": 0.0008284999761963147
+   "value": 0.004326870039585928
   },
   {
    "id": "CL-B3-V-CG-A3PRED-AFT",
@@ -737,7 +727,7 @@
     "value": 0.0
    },
    "how": "H1 balance of the built aircraft; growth lands aft (A3 CL-A3-CG-X-PRED).",
-   "value": -0.0005536579401841171
+   "value": 0.002797059559928511
   },
   {
    "id": "CL-B3-V-SM-A3",
@@ -754,7 +744,7 @@
     "R-STATIC-MARGIN"
    ],
    "how": "T-B3-TWIN-NP.",
-   "value": 0.05258906242561348
+   "value": 0.06352146887370602
   },
   {
    "id": "CALC-B3-V-LATDIR",
@@ -793,8 +783,8 @@
     "rho": "P:env.rho_kgm3",
     "fin": "ASM-B3-V-FIN-CAD",
     "gap": "ASM-B3-V-ELEVON-GAP",
-    "x_aft": "CL-B3-V-CG-AFT",
-    "zcg": "ASM-B3-V-ZCG",
+    "x_aft": "CL-B3-V-CG-AFT-ENV",
+    "zcg": "P:cg.z_target_m",
     "vt": "CL-B3-VT-TRIM",
     "cgf": "CL-A3-CG-X",
     "vc": "P:performance.cruise_ms"
@@ -839,19 +829,19 @@
     "SRC-B3-MUNK"
    ],
    "outputs": {
-    "Cnb_board": 0.06152271577762037,
-    "Cnb_avl_board": 0.072301,
-    "Cnb_cruise_board": 0.06270179810921797,
-    "Clb_board": 0.02346,
-    "Cnr_board": -0.049485,
-    "Cnb_props": -0.0038717004256635084,
-    "Cnb_tubes": -0.000654220847755822,
-    "Cnb_pod": -0.0062523629489603045,
-    "Cnb_tube": 0.047912901563075594,
-    "Cnb_avl_tube": 0.058375,
-    "Cnb_cruise_tube": 0.04904738892018435,
-    "Clb_tube": 0.022027,
-    "Cnr_tube": -0.047964
+    "Cnb_board": 0.06291585664488561,
+    "Cnb_avl_board": 0.074091,
+    "Cnb_cruise_board": 0.06624808079736644,
+    "Clb_board": 0.023687,
+    "Cnr_board": -0.050371,
+    "Cnb_props": -0.004078297559778315,
+    "Cnb_tubes": -0.0005666000486442012,
+    "Cnb_pod": -0.006530245746691872,
+    "Cnb_tube": 0.0493528382759183,
+    "Cnb_avl_tube": 0.060281,
+    "Cnb_cruise_tube": 0.05259458477383608,
+    "Clb_tube": 0.022269,
+    "Cnr_tube": -0.048825
    },
    "input_values": {
     "b": 1.15,
@@ -869,10 +859,10 @@
     "fh": 0.21,
     "fle": 0.045,
     "fte": 0.32,
-    "zref": 0.0,
+    "zref": 0.0185,
     "n": 4,
     "D": 0.2794,
-    "x_prop": -0.0077,
+    "x_prop": -0.0127,
     "x_tube": 0.045,
     "tube_od": 0.022,
     "tube_l": 0.344,
@@ -883,7 +873,7 @@
     "cd": 1.1,
     "S": 0.368,
     "pod": [
-     0.225,
+     0.235,
      0.14,
      0.07
     ],
@@ -895,7 +885,7 @@
      "x_le_board": 0.0565,
      "x_tube_front": 0.034,
      "z_le_top": 0.1595,
-     "z_collar_bottom": 0.1475,
+     "z_collar_bottom": 0.1445,
      "x_sq": 0.2746,
      "h": 0.21,
      "z_step": 0.2005,
@@ -903,10 +893,10 @@
      "area_half_board": 0.0455
     },
     "gap": 0.001,
-    "x_aft": 0.05303681916710612,
+    "x_aft": 0.0512777860280747,
     "zcg": 0.0185,
-    "vt": 15.506013461600652,
-    "cgf": 0.16315099747159315,
+    "vt": 15.508597559767704,
+    "cgf": 0.15170598746402741,
     "vc": 16.0
    }
   },
@@ -928,7 +918,7 @@
    "assumes": [
     "ASM-B3-PROP-CNA"
    ],
-   "value": 0.06152271577762037
+   "value": 0.06291585664488561
   },
   {
    "id": "CL-B3-V-CNB-TUBE",
@@ -942,7 +932,7 @@
     "ref": "P:requirements.cnbeta_min"
    },
    "how": "As CL-B3-V-CNB; the bracket's upper end.",
-   "value": 0.047912901563075594
+   "value": 0.0493528382759183
   },
   {
    "id": "CL-B3-V-CNB-CRUISE",
@@ -956,7 +946,7 @@
     "ref": "P:requirements.cnbeta_min"
    },
    "how": "As CL-B3-V-CNB at 16 m/s.",
-   "value": 0.06270179810921797
+   "value": 0.06624808079736644
   },
   {
    "id": "CALC-B3-V-STALL",
@@ -992,13 +982,14 @@
     "vmax": "P:requirements.stall_max_ms",
     "fin": "ASM-B3-V-FIN-CAD",
     "gap": "ASM-B3-V-ELEVON-GAP",
-    "zcg": "ASM-B3-V-ZCG",
+    "zcg": "P:cg.z_target_m",
     "cgf": "CL-A3-CG-X",
     "xnp_v": "CL-B3-V-XNP",
     "xnp_av": "CL-B3-V-XNP-AERO",
     "x_fwd_v": "CL-B3-V-CG-FWD",
     "k": "P:requirements.transition_factor",
-    "m_pred": "CL-A3-MASS-PREDICTED"
+    "m_pred": "CL-A3-MASS-PREDICTED",
+    "x_t": "P:cg.x_target_m"
    },
    "units": {
     "b": "m",
@@ -1024,7 +1015,8 @@
     "xnp_v": "m",
     "xnp_av": "m",
     "x_fwd_v": "m",
-    "m_pred": "kg"
+    "m_pred": "kg",
+    "x_t": "m"
    },
    "assumes": [
     "ASM-B3-CLMAX-FLAP"
@@ -1033,15 +1025,20 @@
     "SRC-B3-AVL"
    ],
    "outputs": {
-    "clmax_a3": 0.8165985931274022,
-    "delta_a3": -9.240287648534192,
-    "vs_a3": 11.769709459835774,
-    "vs_a3_pred": 11.392399715185544,
+    "clmax_a3": 0.7971826854411758,
+    "delta_a3": -10.96962239034432,
+    "vs_a3": 11.91217670817861,
+    "vs_a3_pred": 11.588366642288822,
     "clmax_fwd": 0.793984375,
-    "delta_fwd": -12.089953440866518,
+    "delta_fwd": -12.087705016109574,
     "vs_fwd": 11.936144779966483,
-    "vs_fwd_pred": 11.553499502748217,
-    "vt_fwd": 15.516988213956429
+    "vs_fwd_pred": 11.611683187231938,
+    "clmax_target": 0.7978289047206414,
+    "delta_target": -10.73121321350737,
+    "vs_target": 11.907351464569219,
+    "vs_target_pred": 11.583672563829962,
+    "vt_fwd": 15.516988213956429,
+    "vt_target": 15.479556903939985
    },
    "input_values": {
     "b": 1.15,
@@ -1059,10 +1056,10 @@
     "fh": 0.21,
     "fle": 0.045,
     "fte": 0.32,
-    "zref": 0.0,
-    "xnp_a": 0.073848,
-    "xnp": 0.07089773584115944,
-    "dcm": -0.01025,
+    "zref": 0.0185,
+    "xnp_a": 0.071946,
+    "xnp": 0.0688771168324081,
+    "dcm": -0.01024,
     "eta": 0.606,
     "tab": [
      [
@@ -1103,7 +1100,7 @@
      "x_le_board": 0.0565,
      "x_tube_front": 0.034,
      "z_le_top": 0.1595,
-     "z_collar_bottom": 0.1475,
+     "z_collar_bottom": 0.1445,
      "x_sq": 0.2746,
      "h": 0.21,
      "z_step": 0.2005,
@@ -1112,12 +1109,13 @@
     },
     "gap": 0.001,
     "zcg": 0.0185,
-    "cgf": 0.16315099747159315,
-    "xnp_v": 0.06903681916710612,
+    "cgf": 0.15170598746402741,
+    "xnp_v": 0.0688727860280747,
     "xnp_av": 0.071946,
-    "x_fwd_v": 0.04659559217387958,
+    "x_fwd_v": 0.046431313636078955,
     "k": 1.3,
-    "m_pred": 2.4359720000000005
+    "m_pred": 2.4605690000000005,
+    "x_t": 0.049
    }
   },
   {
@@ -1135,7 +1133,7 @@
     "R-STALL"
    ],
    "how": "Slow-flight stall at the gate mass (H2).",
-   "value": 11.769709459835774
+   "value": 11.91217670817861
   },
   {
    "id": "CL-B3-V-VT",
@@ -1153,6 +1151,370 @@
    ],
    "how": "F4 ARSPD_FBW_MIN >= this; first-transition log (H2).",
    "value": 15.516988213956429
+  },
+  {
+   "id": "CL-B3-V-CLMAX-FWD",
+   "type": "claim",
+   "title": "Trimmed CLmax at the forward limit of record, as designed (CG height included)",
+   "calc": "CALC-B3-V-STALL",
+   "output": "clmax_fwd",
+   "unit": "-",
+   "how": "T-B2-STALL at the gate mass with the CG on the forward mark (D-71).",
+   "assumes": [
+    "ASM-B3-CLMAX-FLAP"
+   ],
+   "value": 0.793984375
+  },
+  {
+   "id": "CL-B3-V-CLMAX-TARGET",
+   "type": "claim",
+   "title": "Trimmed CLmax at the D-62 CG target, as designed",
+   "calc": "CALC-B3-V-STALL",
+   "output": "clmax_target",
+   "unit": "-",
+   "how": "As CL-B3-V-CLMAX-FWD on the target mark.",
+   "assumes": [
+    "ASM-B3-CLMAX-FLAP"
+   ],
+   "value": 0.7978289047206414
+  },
+  {
+   "id": "CL-B3-V-VS-TARGET",
+   "type": "claim",
+   "title": "Trimmed stall speed at the gate, D-62 CG target, as designed",
+   "calc": "CALC-B3-V-STALL",
+   "output": "vs_target",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.stall_max_ms"
+   },
+   "verifies": [
+    "R-STALL"
+   ],
+   "how": "T-B2-STALL on the target mark.",
+   "value": 11.907351464569219
+  },
+  {
+   "id": "CL-B3-V-VS-FWD",
+   "type": "claim",
+   "title": "Trimmed stall speed at the gate, forward limit of record, as designed",
+   "calc": "CALC-B3-V-STALL",
+   "output": "vs_fwd",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.stall_max_ms"
+   },
+   "verifies": [
+    "R-STALL"
+   ],
+   "how": "T-B2-STALL on the forward mark (D-71 gate).",
+   "value": 11.936144779966483
+  },
+  {
+   "id": "ASM-B3-V-B1-CLMAX-TABLE",
+   "type": "assumption",
+   "title": "B1 XFOIL section clmax vs elevon at the stall Re (2.6e5), free transition",
+   "text": "[delta deg, clmax] per elevon deflection",
+   "basis": "team/B1/sim/vlm_xfoil_results.json clmax_trimmed.clmax_2d_stall_by_flap (B1 vlm_xfoil.py, 2026-11-10), Ncrit 9",
+   "value": [
+    [
+     -15.0,
+     1.1267
+    ],
+    [
+     -10.0,
+     1.0704
+    ],
+    [
+     -5.0,
+     1.1332
+    ],
+    [
+     0.0,
+     1.2572
+    ],
+    [
+     5.0,
+     1.3755
+    ]
+   ],
+   "unit": "deg,-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-B3-V-CLMAX-RECON",
+   "type": "calculation",
+   "title": "Trimmed CLmax: B1's basis reproduced, then B3's terms added one at a time",
+   "script": "redesign/team/B3/verify_asdesigned.py",
+   "function": "clmax_recon",
+   "equation": "critical section (sc_analysis.critical_section) at B1's CG (A3 predicted x, z = CG height): s0 B1 basis = params fins, B1 XFOIL clmax table, dcm 0, moment ref at the CG (props and pod absent) ; s1 = s0 with B2's clmax envelope ; s2 = s1 + B2 viscous dcm ; s3 = s2 with the ref shifted by Xnp_aero - Xnp (props + pod) ; s4 = s3 with the CAD fins and the as-designed NP",
+   "inputs": {
+    "b": "P:wing.span_m",
+    "c": "P:wing.chord_m",
+    "ef": "P:wing.elevon.chord_frac",
+    "yin": "P:wing.elevon.inboard_y_m",
+    "yout": "P:wing.elevon.outboard_y_m",
+    "fy": "P:fins.y_m",
+    "fh": "P:fins.half_height_m",
+    "fle": "P:fins.le_x_m",
+    "fte": "P:fins.te_x_m",
+    "zref": "P:cg.z_target_m",
+    "xnp_a": "CL-B3-XNP-AERO",
+    "xnp": "CL-B3-XNP",
+    "dcm": "CL-B2-DCM-VISC",
+    "eta": "CL-B2-ELEVON-ETA",
+    "tab": "ASM-B3-CLMAX-FLAP",
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "S": "CL-A1-WING-AREA",
+    "lo": "CL-D6-EFF-LOSS-OUT",
+    "li": "CL-D6-EFF-LOSS-IN",
+    "va": "ASM-F4-VA-SCHED",
+    "slop": "CL-D6-SLOP",
+    "vmax": "P:requirements.stall_max_ms",
+    "fin": "ASM-B3-V-FIN-CAD",
+    "gap": "ASM-B3-V-ELEVON-GAP",
+    "zcg": "P:cg.z_target_m",
+    "x_b1": "CL-A3-CG-X-PRED",
+    "xnp_v": "CL-B3-V-XNP",
+    "xnp_av": "CL-B3-V-XNP-AERO",
+    "tab_b1": "ASM-B3-V-B1-CLMAX-TABLE",
+    "cl_b1": "CL-B1V-CLMAX-SIM",
+    "cl_b2": "CL-B2R3-CLMAX-FWD"
+   },
+   "units": {
+    "b": "m",
+    "c": "m",
+    "yin": "m",
+    "yout": "m",
+    "fy": "m",
+    "fh": "m",
+    "fle": "m",
+    "fte": "m",
+    "zref": "m",
+    "xnp_a": "m",
+    "xnp": "m",
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "S": "m2",
+    "va": "m/s",
+    "slop": "deg",
+    "vmax": "m/s",
+    "gap": "m",
+    "zcg": "m",
+    "x_b1": "m",
+    "xnp_v": "m",
+    "xnp_av": "m"
+   },
+   "assumes": [
+    "ASM-B3-CLMAX-FLAP"
+   ],
+   "cites": [
+    "SRC-B3-AVL"
+   ],
+   "outputs": {
+    "rows": {
+     "s0_b1_basis": {
+      "CLmax": 0.8387067854593847,
+      "delta": -9.779073132242454,
+      "alpha": 16.27910695029917,
+      "y_first": 0.0714
+     },
+     "s1_b2_table": {
+      "CLmax": 0.8084332700963252,
+      "delta": -9.41339631282052,
+      "alpha": 15.63597638992633,
+      "y_first": 0.0714
+     },
+     "s2_dcm": {
+      "CLmax": 0.7933697347893917,
+      "delta": -11.451907347893918,
+      "alpha": 15.910189173166927,
+      "y_first": 0.0714
+     },
+     "s3_props_pod": {
+      "CLmax": 0.7993054171554246,
+      "delta": -9.895280422504467,
+      "alpha": 15.600280644901307,
+      "y_first": 0.0714
+     },
+     "s4_cad_fins": {
+      "CLmax": 0.8008766888840539,
+      "delta": -9.898698626446203,
+      "alpha": 15.651939611395074,
+      "y_first": 0.0714
+     }
+    },
+    "s0_b1_basis": 0.8387067854593847,
+    "s1_b2_table": 0.8084332700963252,
+    "s2_dcm": 0.7933697347893917,
+    "s3_props_pod": 0.7993054171554246,
+    "s4_cad_fins": 0.8008766888840539,
+    "b1_reproduced_rel": -0.02730213875893628,
+    "d_table": -0.030273515363059555,
+    "d_dcm": -0.015063535306933495,
+    "d_props_pod": 0.005935682366032924,
+    "d_cad_fins": 0.0015712717286293643,
+    "b3_vs_b2_fwd_rel": 0.01833222364536846
+   },
+   "input_values": {
+    "b": 1.15,
+    "c": 0.32,
+    "ef": 0.22,
+    "yin": [
+     0.07,
+     0.3
+    ],
+    "yout": [
+     0.34,
+     0.56
+    ],
+    "fy": 0.32,
+    "fh": 0.21,
+    "fle": 0.045,
+    "fte": 0.32,
+    "zref": 0.0185,
+    "xnp_a": 0.071946,
+    "xnp": 0.0688771168324081,
+    "dcm": -0.01024,
+    "eta": 0.606,
+    "tab": [
+     [
+      -15.0,
+      1.0276
+     ],
+     [
+      -10.0,
+      1.0276
+     ],
+     [
+      -5.0,
+      1.1199
+     ],
+     [
+      0.0,
+      1.2423
+     ],
+     [
+      5.0,
+      1.3601
+     ],
+     [
+      10.0,
+      1.4677
+     ]
+    ],
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "S": 0.368,
+    "lo": 0.0789572250948345,
+    "li": 0.07148608475229434,
+    "va": 20.5,
+    "slop": 0.8364539884044696,
+    "vmax": 12.0,
+    "fin": {
+     "x_le_board": 0.0565,
+     "x_tube_front": 0.034,
+     "z_le_top": 0.1595,
+     "z_collar_bottom": 0.1445,
+     "x_sq": 0.2746,
+     "h": 0.21,
+     "z_step": 0.2005,
+     "te": 0.32,
+     "area_half_board": 0.0455
+    },
+    "gap": 0.001,
+    "zcg": 0.0185,
+    "x_b1": 0.05007572646814619,
+    "xnp_v": 0.0688727860280747,
+    "xnp_av": 0.071946,
+    "tab_b1": [
+     [
+      -15.0,
+      1.1267
+     ],
+     [
+      -10.0,
+      1.0704
+     ],
+     [
+      -5.0,
+      1.1332
+     ],
+     [
+      0.0,
+      1.2572
+     ],
+     [
+      5.0,
+      1.3755
+     ]
+    ],
+    "cl_b1": 0.862248,
+    "cl_b2": 0.7864591439688716
+   }
+  },
+  {
+   "id": "CL-B3-V-CLMAX-B1-REPRO",
+   "type": "claim",
+   "title": "B3 critical-section code on B1's basis vs B1's 0.862 (relative)",
+   "calc": "CALC-B3-V-CLMAX-RECON",
+   "output": "b1_reproduced_rel",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.03
+   },
+   "how": "Re-run verify_asdesigned.py; both codes are AVL + strip clmax.",
+   "value": -0.02730213875893628
+  },
+  {
+   "id": "CL-B3-V-CLMAX-RECON-B3",
+   "type": "claim",
+   "title": "Trimmed CLmax at B1's CG on B3's full basis (B2 envelope, dcm, props + pod, CAD fins)",
+   "calc": "CALC-B3-V-CLMAX-RECON",
+   "output": "s4_cad_fins",
+   "unit": "-",
+   "how": "T-B2-STALL (D-71).",
+   "assumes": [
+    "ASM-B3-CLMAX-FLAP"
+   ],
+   "value": 0.8008766888840539
+  },
+  {
+   "id": "CL-B3-V-CLMAX-D-TABLE",
+   "type": "claim",
+   "title": "CLmax step: B1 XFOIL clmax table -> B2 conservative envelope",
+   "calc": "CALC-B3-V-CLMAX-RECON",
+   "output": "d_table",
+   "unit": "-",
+   "how": "XFOIL panel and Re study (B2).",
+   "value": -0.030273515363059555
+  },
+  {
+   "id": "CL-B3-V-CLMAX-D-DCM",
+   "type": "claim",
+   "title": "CLmax step: B2 viscous Cm shift added to AVL",
+   "calc": "CALC-B3-V-CLMAX-RECON",
+   "output": "d_dcm",
+   "unit": "-",
+   "how": "Trimmed elevon at known CG and speed (twin).",
+   "value": -0.015063535306933495
+  },
+  {
+   "id": "CL-B3-V-CLMAX-D-PROPS",
+   "type": "claim",
+   "title": "CLmax step: props and pod in the moment reference (whole-aircraft SM)",
+   "calc": "CALC-B3-V-CLMAX-RECON",
+   "output": "d_props_pod",
+   "unit": "-",
+   "how": "T-B3-TWIN-NP powered vs gliding.",
+   "value": 0.005935682366032924
   },
   {
    "id": "CALC-B3-V-NP-CL",
@@ -1173,12 +1535,14 @@
     "fte": "P:fins.te_x_m",
     "fin": "ASM-B3-V-FIN-CAD",
     "gap": "ASM-B3-V-ELEVON-GAP",
-    "zcg": "ASM-B3-V-ZCG",
+    "zcg": "P:cg.z_target_m",
     "xnp_av": "CL-B3-V-XNP-AERO",
     "xnp_v": "CL-B3-V-XNP",
     "cgf": "CL-A3-CG-X",
     "x_a3_pred": "CL-A3-CG-X-PRED",
     "x_fwd": "CL-B3-V-CG-FWD",
+    "x_t": "P:cg.x_target_m",
+    "xr": "P:cg.x_range_m",
     "sm_min": "P:requirements.static_margin_min",
     "m": "P:requirements.mtow_gate_kg",
     "g": "P:env.g_ms2",
@@ -1203,6 +1567,8 @@
     "xnp_v": "m",
     "x_a3_pred": "m",
     "x_fwd": "m",
+    "x_t": "m",
+    "xr": "m",
     "m": "kg",
     "g": "m/s2",
     "rho": "kg/m3",
@@ -1215,7 +1581,7 @@
     "SRC-B3-AVL"
    ],
    "outputs": {
-    "dprop_pod": -0.002909180832893876,
+    "dprop_pod": -0.0030732139719252954,
     "rows": {
      "vmax": {
       "V": 18.0,
@@ -1230,9 +1596,9 @@
       "e_z0": 1.045,
       "dxnp_avl": -0.002476000000000006,
       "dxnp_hand": -0.002472081540088026,
-      "xnp": 0.06843781916710612,
-      "x_aft": 0.05243781916710612,
-      "sm_a3": 0.05071718742561348
+      "xnp": 0.0682737860280747,
+      "x_aft": 0.0522737860280747,
+      "sm_a3": 0.06164959387370602
      },
      "vc": {
       "V": 16.0,
@@ -1247,9 +1613,9 @@
       "e_z0": 1.0444,
       "dxnp_avl": -0.0032000000000000084,
       "dxnp_hand": -0.0031881181847782806,
-      "xnp": 0.06767781916710612,
-      "x_aft": 0.05167781916710612,
-      "sm_a3": 0.048342187425613484
+      "xnp": 0.0675137860280747,
+      "x_aft": 0.0515137860280747,
+      "sm_a3": 0.05927459387370603
      },
      "vt": {
       "V": 15.516988213956429,
@@ -1264,9 +1630,9 @@
       "e_z0": 1.0443,
       "dxnp_avl": -0.0034210000000000074,
       "dxnp_hand": -0.0034062512076631904,
-      "xnp": 0.06744181916710612,
-      "x_aft": 0.05144181916710612,
-      "sm_a3": 0.04760468742561349
+      "xnp": 0.0672777860280747,
+      "x_aft": 0.0512777860280747,
+      "sm_a3": 0.05853709387370603
      },
      "vs": {
       "V": 11.936144779966483,
@@ -1281,26 +1647,35 @@
       "e_z0": 1.0433,
       "dxnp_avl": -0.006153999999999993,
       "dxnp_hand": -0.006052418304263156,
-      "xnp": 0.06437081916710613,
-      "x_aft": 0.04837081916710613,
-      "sm_a3": 0.03800781242561352
+      "xnp": 0.06420678602807471,
+      "x_aft": 0.04820678602807471,
+      "sm_a3": 0.04894021887370606
      }
     },
-    "x_aft_env": 0.05144181916710612,
-    "xnp_env": 0.06744181916710612,
+    "x_aft_env": 0.0512777860280747,
+    "xnp_env": 0.0672777860280747,
     "cl_env": 0.4698132396449703,
-    "xnp_cruise": 0.06767781916710612,
-    "width_env": 0.004846226993226538,
-    "x_target_env": 0.04901870567049285,
-    "a3_aft_margin_env": -0.0007665000238036845,
-    "a3pred_aft_margin_env": -0.0021486579401841163,
-    "sm_a3_env": 0.04760468742561349,
-    "sm_a3pred_env": 0.043285443936924635,
-    "sm_a3_stall": 0.03800781242561352,
+    "xnp_cruise": 0.0675137860280747,
+    "xnp_aero_cruise_z": 0.070587,
+    "xnp_aero_cruise_z0": 0.073787,
+    "width_env": 0.004846472391995746,
+    "x_target_env": 0.04885454983207683,
+    "a3_aft_margin_env": 0.002731870039585929,
+    "a3pred_aft_margin_env": 0.0012020595599285117,
+    "sm_a3_env": 0.05853709387370603,
+    "sm_a3pred_env": 0.053756436124776596,
+    "sm_a3_stall": 0.04894021887370606,
     "dxnp_dz_vt": -0.18491891891891932,
     "hand_vs_avl_vt": -0.0043112517792508465,
-    "a3_shift_req": 0.0007665000238036845,
-    "a3pred_shift_req": 0.0021486579401841163
+    "sm_target_env": 0.05711808133773343,
+    "sm_target_cruise": 0.057855581337733435,
+    "target_fwd_margin": 0.0025686863639210467,
+    "target_aft_margin": 0.002277786028074699,
+    "range_fwd_inside": 0.0001686863639210473,
+    "range_aft_inside": -0.00012221397192530015,
+    "sm_range_aft_env": 0.04961808133773344,
+    "a3_shift_req": 0.0,
+    "a3pred_shift_req": 0.0
    },
    "input_values": {
     "b": 1.15,
@@ -1322,7 +1697,7 @@
      "x_le_board": 0.0565,
      "x_tube_front": 0.034,
      "z_le_top": 0.1595,
-     "z_collar_bottom": 0.1475,
+     "z_collar_bottom": 0.1445,
      "x_sq": 0.2746,
      "h": 0.21,
      "z_step": 0.2005,
@@ -1332,10 +1707,15 @@
     "gap": 0.001,
     "zcg": 0.0185,
     "xnp_av": 0.071946,
-    "xnp_v": 0.06903681916710612,
-    "cgf": 0.16315099747159315,
-    "x_a3_pred": 0.05359047710729024,
-    "x_fwd": 0.04659559217387958,
+    "xnp_v": 0.0688727860280747,
+    "cgf": 0.15170598746402741,
+    "x_a3_pred": 0.05007572646814619,
+    "x_fwd": 0.046431313636078955,
+    "x_t": 0.049,
+    "xr": [
+     0.0466,
+     0.0514
+    ],
     "sm_min": 0.05,
     "m": 2.6,
     "g": 9.80665,
@@ -1364,7 +1744,7 @@
    "output": "xnp_env",
    "unit": "m",
    "how": "T-B3-TWIN-NP flown at 15.6 m/s with the A3 CG height.",
-   "value": 0.06744181916710612
+   "value": 0.0672777860280747
   },
   {
    "id": "CL-B3-V-XNP-CRUISE",
@@ -1374,7 +1754,7 @@
    "output": "xnp_cruise",
    "unit": "m",
    "how": "As CL-B3-V-XNP-ENV at 16 m/s.",
-   "value": 0.06767781916710612
+   "value": 0.0675137860280747
   },
   {
    "id": "CL-B3-V-CG-AFT-ENV",
@@ -1384,7 +1764,7 @@
    "output": "x_aft_env",
    "unit": "m",
    "how": "T-B3-CG-BALANCE + T-B3-TWIN-NP.",
-   "value": 0.05144181916710612
+   "value": 0.0512777860280747
   },
   {
    "id": "CL-B3-V-CG-WIDTH-ENV",
@@ -1398,7 +1778,7 @@
     "value": 0.004
    },
    "how": "Follows from the limits.",
-   "value": 0.004846226993226538
+   "value": 0.004846472391995746
   },
   {
    "id": "CL-B3-V-CG-A3-AFT-ENV",
@@ -1416,7 +1796,7 @@
     "R-STATIC-MARGIN"
    ],
    "how": "H1 balance of the built aircraft (T-B3-CG-BALANCE).",
-   "value": -0.0007665000238036845
+   "value": 0.002731870039585929
   },
   {
    "id": "CL-B3-V-CG-A3PRED-AFT-ENV",
@@ -1430,7 +1810,7 @@
     "value": 0.0
    },
    "how": "As CL-B3-V-CG-A3-AFT-ENV.",
-   "value": -0.0021486579401841163
+   "value": 0.0012020595599285117
   },
   {
    "id": "CL-B3-V-SM-A3-ENV",
@@ -1447,7 +1827,7 @@
     "R-STATIC-MARGIN"
    ],
    "how": "T-B3-TWIN-NP.",
-   "value": 0.04760468742561349
+   "value": 0.05853709387370603
   },
   {
    "id": "CL-B3-V-DXNP-DZ",
@@ -1481,7 +1861,7 @@
    "output": "a3_shift_req",
    "unit": "m",
    "how": "A3 roll-up after the fix.",
-   "value": 0.0007665000238036845
+   "value": 0.0
   },
   {
    "id": "CL-B3-V-CG-SHIFT-REQ-PRED",
@@ -1491,7 +1871,192 @@
    "output": "a3pred_shift_req",
    "unit": "m",
    "how": "A3 roll-up after the fix.",
-   "value": 0.0021486579401841163
+   "value": 0.0
+  },
+  {
+   "id": "CL-B3-V-XNP-AERO-CRUISE-Z",
+   "type": "claim",
+   "title": "Props-off NP (wing + CAD fins) at cruise CL, moments about the CG height",
+   "calc": "CALC-B3-V-NP-CL",
+   "output": "xnp_aero_cruise_z",
+   "unit": "m",
+   "how": "Compare B1 CL-B1V / vlm_xfoil cruise Xnp (AVL, zref 0.018): same quantity (CR-B1-23).",
+   "value": 0.070587
+  },
+  {
+   "id": "CL-B3-V-XNP-AERO-CRUISE-Z0",
+   "type": "claim",
+   "title": "Props-off NP (wing + CAD fins) at cruise CL, moments about the chord plane",
+   "calc": "CALC-B3-V-NP-CL",
+   "output": "xnp_aero_cruise_z0",
+   "unit": "m",
+   "how": "Compare B2's props-off NP (zref 0): same quantity (CR-B1-23).",
+   "value": 0.073787
+  },
+  {
+   "id": "CL-B3-V-CG-TARGET",
+   "type": "claim",
+   "title": "CG design target, mid-range of the V1 limits of record (CG height included)",
+   "calc": "CALC-B3-V-NP-CL",
+   "output": "x_target_env",
+   "unit": "m",
+   "how": "A3 roll-up and H1 balance (T-B3-CG-BALANCE) with the pack at its marked station.",
+   "value": 0.04885454983207683
+  },
+  {
+   "id": "CL-B3-V-SM-TARGET-ENV",
+   "type": "claim",
+   "title": "Static margin at the params CG target, worst wingborne speed (1.3 Vs)",
+   "calc": "CALC-B3-V-NP-CL",
+   "output": "sm_target_env",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.static_margin_min"
+   },
+   "verifies": [
+    "R-STATIC-MARGIN"
+   ],
+   "how": "T-B3-TWIN-NP at 15.6 m/s with the CG on the target mark.",
+   "value": 0.05711808133773343
+  },
+  {
+   "id": "CL-B3-V-SM-TARGET-CRUISE",
+   "type": "claim",
+   "title": "Static margin at the params CG target, cruise 16 m/s",
+   "calc": "CALC-B3-V-NP-CL",
+   "output": "sm_target_cruise",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.static_margin_min"
+   },
+   "how": "As CL-B3-V-SM-TARGET-ENV at 16 m/s.",
+   "value": 0.057855581337733435
+  },
+  {
+   "id": "CL-B3-V-TARGET-FWD",
+   "type": "claim",
+   "title": "Params CG target aft of the forward limit of record",
+   "calc": "CALC-B3-V-NP-CL",
+   "output": "target_fwd_margin",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-CG-RANGE"
+   ],
+   "how": "T-B3-CG-BALANCE.",
+   "value": 0.0025686863639210467
+  },
+  {
+   "id": "CL-B3-V-TARGET-AFT",
+   "type": "claim",
+   "title": "Params CG target ahead of the envelope aft limit of record",
+   "calc": "CALC-B3-V-NP-CL",
+   "output": "target_aft_margin",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-CG-RANGE",
+    "R-STATIC-MARGIN"
+   ],
+   "how": "T-B3-CG-BALANCE.",
+   "value": 0.002277786028074699
+  },
+  {
+   "id": "CL-B3-V-RANGE-FWD-IN",
+   "type": "claim",
+   "title": "Params cg.x_range_m forward end aft of the forward limit of record",
+   "calc": "CALC-B3-V-NP-CL",
+   "output": "range_fwd_inside",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "Follows from the limits; A1 CALC-A1-CG-RANGE checks the same from its side.",
+   "value": 0.0001686863639210473
+  },
+  {
+   "id": "CL-B3-V-RANGE-AFT-IN",
+   "type": "claim",
+   "title": "Params cg.x_range_m aft end ahead of the envelope aft limit of record",
+   "calc": "CALC-B3-V-NP-CL",
+   "output": "range_aft_inside",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "Follows from the limits; H1 draws the aft mark at the params value.",
+   "value": -0.00012221397192530015
+  },
+  {
+   "id": "CALC-B3-ALIAS-R4",
+   "type": "calculation",
+   "title": "Retired R4 CG ids forwarded to the V1 ids of record (no computation)",
+   "script": "redesign/team/B3/verify_asdesigned.py",
+   "function": "alias_r4",
+   "equation": "identity",
+   "inputs": {
+    "fwd": "CL-B3-V-CG-FWD",
+    "aft": "CL-B3-V-CG-AFT-ENV",
+    "tgt": "CL-B3-V-CG-TARGET"
+   },
+   "units": {
+    "fwd": "m",
+    "aft": "m",
+    "tgt": "m"
+   },
+   "outputs": {
+    "fwd": 0.046431313636078955,
+    "aft": 0.0512777860280747,
+    "tgt": 0.04885454983207683
+   },
+   "input_values": {
+    "fwd": 0.046431313636078955,
+    "aft": 0.0512777860280747,
+    "tgt": 0.04885454983207683
+   }
+  },
+  {
+   "id": "CL-B3-CG-FWD",
+   "type": "claim",
+   "title": "RETIRED alias of CL-B3-V-CG-FWD (forward CG limit of record)",
+   "calc": "CALC-B3-ALIAS-R4",
+   "output": "fwd",
+   "unit": "m",
+   "how": "As CL-B3-V-CG-FWD.",
+   "note": "cite CL-B3-V-CG-FWD; z = 0 value retired (D-62)",
+   "value": 0.046431313636078955
+  },
+  {
+   "id": "CL-B3-CG-AFT",
+   "type": "claim",
+   "title": "RETIRED alias of CL-B3-V-CG-AFT-ENV (aft CG limit of record)",
+   "calc": "CALC-B3-ALIAS-R4",
+   "output": "aft",
+   "unit": "m",
+   "how": "As CL-B3-V-CG-AFT-ENV.",
+   "note": "cite CL-B3-V-CG-AFT-ENV; z = 0 value retired (D-62)",
+   "value": 0.0512777860280747
+  },
+  {
+   "id": "CL-B3-CG-TARGET",
+   "type": "claim",
+   "title": "RETIRED alias of CL-B3-V-CG-TARGET",
+   "calc": "CALC-B3-ALIAS-R4",
+   "output": "tgt",
+   "unit": "m",
+   "how": "As CL-B3-V-CG-TARGET.",
+   "note": "cite CL-B3-V-CG-TARGET or P:cg.x_target_m (D-62)",
+   "value": 0.04885454983207683
   },
   {
    "id": "CALC-B3-V-MODES",
@@ -1530,7 +2095,7 @@
     "rho": "P:env.rho_kgm3",
     "fin": "ASM-B3-V-FIN-CAD",
     "gap": "ASM-B3-V-ELEVON-GAP",
-    "zcg": "ASM-B3-V-ZCG",
+    "zcg": "P:cg.z_target_m",
     "xnp_c": "CL-B3-V-XNP-CRUISE",
     "cgf": "CL-A3-CG-X",
     "m_basic": "CL-A3-MASS-BASIC",
@@ -1578,49 +2143,49 @@
    ],
    "outputs": {
     "CL": 0.44187572787267076,
-    "Cnb": 0.06270179810921797,
+    "Cnb": 0.06624808079736644,
     "eig_lon": [
      [
-      -0.0306,
-      -0.7622
+      -0.0331,
+      -0.7747
      ],
      [
-      -0.0306,
-      0.7622
+      -0.0331,
+      0.7747
      ],
      [
-      -4.2866,
-      -7.8145
+      -4.3227,
+      -8.5199
      ],
      [
-      -4.2866,
-      7.8145
+      -4.3227,
+      8.5199
      ]
     ],
     "eig_lat": [
      [
-      0.1975,
-      0.0
-     ],
-     [
-      -3.6951,
+      0.197,
       -0.0
      ],
      [
-      -1.3442,
-      -4.6463
+      -3.7142,
+      0.0
      ],
      [
-      -1.3442,
-      4.6463
+      -1.3522,
+      -4.7724
+     ],
+     [
+      -1.3522,
+      4.7724
      ]
     ],
-    "sp_wn": 8.912958859734543,
-    "sp_zeta": 0.4809359085826611,
-    "dr_wn": 4.836838498148004,
-    "dr_zeta": 0.2779071289764035,
-    "lat_max_real": 0.19752911854468408,
-    "lat_t2_s": 3.5090886126905128
+    "sp_wn": 9.553769801456257,
+    "sp_zeta": 0.45246315386400765,
+    "dr_wn": 4.960240317041775,
+    "dr_zeta": 0.272598776519294,
+    "lat_max_real": 0.19702225853432354,
+    "lat_t2_s": 3.5181161038167224
    },
    "input_values": {
     "b": 1.15,
@@ -1638,10 +2203,10 @@
     "fh": 0.21,
     "fle": 0.045,
     "fte": 0.32,
-    "zref": 0.0,
+    "zref": 0.0185,
     "n": 4,
     "D": 0.2794,
-    "x_prop": -0.0077,
+    "x_prop": -0.0127,
     "x_tube": 0.045,
     "tube_od": 0.022,
     "tube_l": 0.344,
@@ -1652,7 +2217,7 @@
     "cd": 1.1,
     "S": 0.368,
     "pod": [
-     0.225,
+     0.235,
      0.14,
      0.07
     ],
@@ -1664,7 +2229,7 @@
      "x_le_board": 0.0565,
      "x_tube_front": 0.034,
      "z_le_top": 0.1595,
-     "z_collar_bottom": 0.1475,
+     "z_collar_bottom": 0.1445,
      "x_sq": 0.2746,
      "h": 0.21,
      "z_step": 0.2005,
@@ -1673,12 +2238,12 @@
     },
     "gap": 0.001,
     "zcg": 0.0185,
-    "xnp_c": 0.06767781916710612,
-    "cgf": 0.16315099747159315,
-    "m_basic": 2.32162,
-    "Ixx": 0.17320454682526285,
-    "Iyy": 0.04420463610965501,
-    "Izz": 0.16794615232325408,
+    "xnp_c": 0.0675137860280747,
+    "cgf": 0.15170598746402741,
+    "m_basic": 2.34206,
+    "Ixx": 0.17415131486690463,
+    "Iyy": 0.04605366136239337,
+    "Izz": 0.16984747573915068,
     "V": 16.0,
     "cd0": 0.02,
     "e": 0.8
@@ -1696,7 +2261,7 @@
     "ref": "ASM-B3-ZETA-SP-MIN"
    },
    "how": "As CL-B3-SP-ZETA.",
-   "value": 0.4809359085826611
+   "value": 0.45246315386400765
   },
   {
    "id": "CL-B3-V-DR-ZETA",
@@ -1713,7 +2278,7 @@
     "R-DIRECTIONAL"
    ],
    "how": "As CL-B3-DR-ZETA.",
-   "value": 0.2779071289764035
+   "value": 0.272598776519294
   },
   {
    "id": "CL-B3-V-LAT-T2",
@@ -1727,7 +2292,7 @@
     "value": 4.0
    },
    "how": "As CL-B3-LAT-T2.",
-   "value": 3.5090886126905128
+   "value": 3.5181161038167224
   }
  ]
 }

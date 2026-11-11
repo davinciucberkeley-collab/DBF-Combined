@@ -1,20 +1,20 @@
 {
- "_note": "Landing subsystem (GER) local numbers, owner D5, revision D5-R4 (CR-A1-34, D-30; C5-R3 cartridges CR-C5-10 revised). Read by fusion/landing.py (ctx.local) and team/D5/feet_calc.py (P:landing.*). Shared numbers (fin TE x, half-fin height 0.21, board, foot height 0.048, CG, loads) come from params/params.json and are not repeated here. Frame: params.json#frame (x aft, y right, z up, metres). Each foot is a telescoping crush unit in the fin plane: a bonded PETG shoe seated on a 9.3 mm step cut in the half-fin TE tip (the shoe wraps the board and both edge-strip ends, CR-C4-09), a PETG piston (one tine, two snap fingers, stop flange) with a neoprene pad, and an XPS crush cartridge from the piston floor to the shoe back wall. Stack along +x (down in hover): back wall, cartridge, piston floor/flange, pad; the flange stops on the sleeve-end rim after stroke_max_m. Upper feet (UR, UL) take solid type-U cartridges, lower feet (LR, LL) bored type-L cartridges; every cartridge segment is pre-crushed 1 mm on a press (C5-R3: plateau upper 39.4 N, lower 35.6 N, bias x1.05 / x0.95, CR-C5-10 revised).",
+ "_note": "Landing subsystem (GER) local numbers, owner D5, revision D5-R6 (CR-A1-65, CR-C5-18, CR-C1-34, CR-C4-36; D-63, D-65; R4: CR-A1-34, D-30, C5-R3 cartridges). Read by fusion/landing.py (ctx.local) and team/D5/feet_calc.py (P:landing.*). Shared numbers (fin TE x, half-fin height 0.21, board, foot height 0.048, CG, loads) come from params/params.json and are not repeated here. Frame: params.json#frame (x aft, y right, z up, metres). Each foot is a telescoping crush unit in the fin plane: a bonded PETG shoe seated on a step cut in the half-fin TE tip (CL-D5-FIN-STEP-*) (the shoe wraps the board and both edge-strip ends, CR-C4-09), a PETG piston (one tine, two snap fingers, stop flange) with a neoprene pad, and an XPS crush cartridge from the piston floor to the shoe back wall. Stack along +x (down in hover): back wall, cartridge, piston floor/flange, pad; the flange stops on the sleeve-end rim after stroke_max_m. Upper feet (UR, UL) take solid type-U cartridges, lower feet (LR, LL) bored type-L cartridges; every cartridge segment is pre-crushed 1 mm on a press (C5-R3: plateau upper 39.4 N, lower 35.6 N, bias x1.05 / x0.95, CR-C5-10 revised).",
  "landing": {
   "cartridge": {
    "section_y_m": {
-    "value": 0.0173,
+    "value": 0.0209,
     "unit": "m",
     "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
     "status": "PROPOSED",
-    "note": "R4: 17.3 x 13.3 mm (was 16 x 13.3) so the solid type U gives C5-R3's 39.4 N upper plateau at 172 kPa; the z depth stays 13.3 mm so the fin step stays 9.5 mm (CR-D5-11)"
+    "note": "R6: 20.9 x 11.0 mm (was 17.3 x 13.3; C5's CR-C5-10 had 20.8 x 11): same 229.9 mm2 so type U still gives 39.5 N at 172 kPa; flatter so the R6 sleeve (thicker walls) still sits on a fin step <= 10 mm deep; the tuning knob after T-D5-COUPON (y only, so the step depth does not move)"
    },
    "section_z_m": {
-    "value": 0.0133,
+    "value": 0.011,
     "unit": "m",
     "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
     "status": "PROPOSED",
-    "note": "type U area 230.1 mm2 -> 39.6 N at 172 kPa (C5-R3 39.4 N); the tuning knob after T-D5-COUPON (y only, so the step depth does not move)"
+    "note": "R6: 11.0 mm (was 13.3): with the R6 sleeve walls the step stays <= 10 mm (CL-D5-FIN-STEP-DEPTH)"
    },
    "bore_lower_d_m": {
     "value": 0.00556,
@@ -24,10 +24,10 @@
     "note": "R4: 7/32 in (5.56 mm) axial bore cut by a sharpened K&S 7/32 in brass tube (was 1/4 in): type L 205.8 mm2 -> 35.4 N (C5-R3 35.6 N), bias x1.056 vs C5's x1.05; same outside, so one piston and one shoe for all four feet"
    },
    "segments": {
-    "value": 2,
+    "value": 3,
     "unit": "-",
     "source": "D5 choice",
-    "note": "two 44.5 mm pieces cut across a 2 in F-250 board so the crush axis is the through-thickness axis of the board (the datasheet direction)"
+    "note": "R6: three ~34 mm pieces (cut 35 mm) across a 2 in F-250 board (crush axis = through-thickness); two would be 52 mm, over the 2 in board, now that the 25 mm engagement makes the cartridge 102 mm"
    },
    "material": {
     "value": "XPS foam F-250 (wing-core offcut)",
@@ -57,11 +57,11 @@
     "source": "D5 choice (CR-A1-34)"
    },
    "precrush_m": {
-    "value": 0.002,
+    "value": 0.003,
     "unit": "m",
     "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-10",
     "status": "PROPOSED",
-    "note": "each of the two segments is cut 1 mm long and pressed 1 mm on the drill press before assembly: removes the ~1.10 first-yield peak of BOTH segments (in series an un-pressed second segment would peak mid-stroke when the first densifies); the pressed length is the CAD length"
+    "note": "R6: each of the three segments is cut 1 mm long and pressed 1 mm on the drill press before assembly (CR-C5-10): removes the first-yield peak of every segment in the series stack; the pressed length is the CAD length"
    }
   },
   "wall_t_m": {
@@ -101,10 +101,10 @@
     "note": "snap-finger window height in the two y walls of the sleeve"
    },
    "rim_t_m": {
-    "value": 0.0012,
+    "value": 0.0028,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-SIDE",
-    "note": "extra wall (three more perimeters) round the sleeve end: bearing lip for the side load at the pad, and the end-of-stroke stop"
+    "source": "team/D5/sim/fea_shoe_d5.py (CR-C5-18)",
+    "note": "R6: rim thickness all round the last rim_len of the sleeve (side-load lip and end-of-stroke stop); its roof side is level with the pad edge (lip_m = rim_t_m)"
    },
    "rim_len_m": {
     "value": 0.006,
@@ -119,10 +119,23 @@
     "note": "two collar cheeks forward of the step front over both edge-strip ends (the strips end at the square-tip front, D3)"
    },
    "lip_m": {
+    "value": 0.0028,
+    "unit": "m",
+    "source": "D5 (= shoe.rim_t_m)",
+    "note": "R6: sleeve roof this far below the pad edge so the rim top is level with it (CL-D5-RIM-TOP-MARGIN >= 0): no envelope growth"
+   },
+   "wall_t_m": {
     "value": 0.0012,
     "unit": "m",
-    "source": "D5 choice",
-    "note": "the flange and pad reach this far beyond the sleeve roof (sleeve roof at z_outer - lip), so the rim stays inside the pad edge"
+    "source": "team/D5/sim/fea_shoe_d5.py (CR-C5-18, CR-A1-65)",
+    "status": "PROPOSED",
+    "note": "R6: sleeve floor, roof and y walls (three 0.4 mm perimeters); the tine and legs stay at wall_t_m 0.8. D5 FEA sweep (sim/out/sweep1, sweep2): 0.8/3.2 and 1.0/3.0 fail near the TE (56 / 50 MPa), 1.2/2.8 gives 34.1 MPa at 59.0 N ult (RF 1.17), 1.4/2.6 34.8 MPa and heavier"
+   },
+   "inside_fillet_r_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-18",
+    "note": "R 1.0 mm in the four inside corners of the sleeve, full length (modelled); the FEA peak sits in this corner"
    }
   },
   "edge_strip": {
@@ -148,16 +161,16 @@
     "note": "floor and stop flange; the R3 overhang beyond the tine is only 2 mm"
    },
    "engage_m": {
-    "value": 0.012,
+    "value": 0.025,
     "unit": "m",
-    "source": "team/D5/feet_calc.py#CALC-D5-SIDE",
-    "note": "tine engagement in the sleeve before any crush; grows to engage + stroke"
+    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-18",
+    "note": "R6: 12 -> 25 mm (C5 variant): tine engagement in the sleeve before any crush; lowers the lip reaction R = F (a + e) / (e + s0) from 3.2 F to 2.2 F"
    },
    "hook_protrusion_m": {
     "value": 0.0006,
     "unit": "m",
     "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-12",
-    "note": "hook through the 0.8 mm sleeve wall"
+    "note": "hook 0.6 mm beyond the tine wall: 0.4 mm catch on the window aft edge; R6: 45 deg ramp on its forward face so any set > 1 mm cams it under the 3 mm window's front edge and it rides inside the wall (finger held at 1.7 % strain until the insert is pulled)"
    },
    "hook_len_m": {
     "value": 0.002,
@@ -192,7 +205,13 @@
     "value": 0.003,
     "unit": "m",
     "source": "team/D5/feet_calc.py#CALC-D5-CRUSH",
-    "note": "R4: 6 -> 3 mm. Groove on the tine 3 mm aft of the rim: once it is inside the sleeve, less than C5's pair-first stroke (31.5 mm) plus the 3 mm guard is left; replace the insert (CL-D5-MARK-MARGIN)"
+    "note": "R4: 6 -> 3 mm. Groove on the tine 3 mm aft of the rim: once it is inside the sleeve, less than C5's pair-first stroke plus the 3 mm guard is left; replace the insert (CL-D5-MARK-MARGIN)"
+   },
+   "corner_chamfer_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "D5 choice (R6)",
+    "note": "45 deg chamfer on the four outside corners of the tine so it clears the R 1.0 sleeve fillets with the 0.2 mm slide clearance (needs >= 0.47 mm; 1.0 keeps the chamfer ends off the fillet arcs)"
    }
   },
   "pad": {

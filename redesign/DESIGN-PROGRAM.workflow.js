@@ -108,7 +108,8 @@ const run = (id, extra, phase, schema) => {
   return agent(PRE(id, title) + task + (extra ? `\n\n${extra}` : ''), opts).then(r => r ? { id, ...r } : null)
 }
 const active = new Set(Object.keys(ROLES))
-const runAll = (ids, phase, extra) => parallel(ids.filter(i => active.has(i)).map(i => () => run(i, extra, phase)))
+const guard = (res, label) => { const n = res.length, bad = res.filter(r => !r).length; if (n >= 2 && bad / n > 0.5) throw new Error(`${label}: ${bad}/${n} agents failed (likely usage limit) - stopping so a resume continues here`); return res }
+const runAll = (ids, phase, extra) => parallel(ids.filter(i => active.has(i)).map(i => () => run(i, extra, phase))).then(r => guard(r, phase))
 
 // ================= Frame =================
 phase('Frame')
@@ -134,7 +135,7 @@ const fixRound = async (issues, phaseName) => {
     return agent(PRE(role, 'team member') + extra, { label: `${role} fix`, phase: phaseName, schema: RES })
   })
   log(`${phaseName}: ${jobs.length} roles have action items`)
-  return parallel(jobs)
+  return parallel(jobs).then(r => guard(r, phaseName + ' fixes'))
 }
 
 phase('Analysis')
@@ -158,6 +159,7 @@ const designs = await parallel([
   ...SUBS.map(s => () => design(s, null, 'Design')),
   ...['D6', 'D7', 'F2', 'F4'].filter(i => active.has(i)).map(i => () => run(i, null, 'Design')),
 ])
+guard(designs, 'Design')
 
 // ================= Integrate =================
 phase('Integrate')

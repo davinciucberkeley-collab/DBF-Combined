@@ -1,5 +1,14 @@
 # F4 change requests
 
+R5 (2026-11-10): adds CR-F4-21 … 23. CR-F4-19 is re-issued on the D-62 CG. Answers CR-A2-31 and the A1-R5 F4 row (D-65, D-66, D-71), see the last table.
+
+| Id | To | What | Why (numbers) | Status |
+|---|---|---|---|---|
+| CR-F4-21 | **H3** (cc H2, C5) | Flight card: (a) **no landing in QSTABILIZE** except to recover; land in QLAND, or in QHOVER/QLOITER with QLAND for the last 6 m (CR-F4-18). (b) Full down stick in QHOVER/QLOITER is now 1.0 m/s (`Q_PILOT_SPD_DN`). (c) Never select MANUAL / STABILIZE / ACRO / TRAINING / QACRO from the GCS (R-SPIRAL, CR-A2-31c) | QSTABILIZE has no climb-rate loop, so the sink is whatever the pilot flies. D-65 designs the feet for 1.2 m/s at ≤ 10° (`CL-F4-TOUCHDOWN-SINK` 1.0 ≤ 1.2, +17 %). The mode switch cannot reach a raw-stick mode (`CL-F4-NO-RAW-MODES` 0), but the GCS can | new |
+| CR-F4-22 | **B2** (cc H2, A1) | `T-B2-STALL`: publish the measured trimmed stall (2.6 kg, forward CG 0.0466, three runs, mean and spread) as a claim, e.g. `CL-B2-VS-MEASURED`. F4 then re-points `CL-F4-ARSPD-MIN-D71` at it and sets `AIRSPEED_MIN` = ceil(1.3 × Vs) | D-71. `AIRSPEED_MIN` 16 ≥ 15.59 (+3 %) holds up to a measured 12.31 m/s. Above that, MIN and `AIRSPEED_CRUISE` both go to 17 (A1: cruise and mission time). TUNING-PLAN step 6d runs before any transition | new |
+| CR-F4-23 | **A2** | `R-LANDING-IMPACT` and the `R-SPIRAL` evidence: cite **`CL-F4-TOUCHDOWN-SINK`** (max of `Q_PILOT_SPD_DN` and `Q_LAND_FINAL_SPD`, limit `P:requirements.landing_sink_ms`, verifies `R-LANDING-IMPACT`) and **`CL-F4-NO-RAW-MODES`** (verifies `R-SPIRAL`, `R-FSW-PARAMS`). `CL-F4-DESCENT` keeps the VRS limit (`CL-B4-DESCENT` 1.88) | `Q_WP_SPD_DN` 1.2 stops at `Q_LAND_FINAL_ALT` 6 m and never reaches the ground, so the touchdown claim leaves it out. One claim cannot carry two limits | new |
+| CR-F4-19 (re-issued R5) | **F3** (cc A3) | Re-run `CALC-F3-OFFSETS` on **CG (0.0490, 0, 0.0185)** (`P:cg.x_target_m`, `P:cg.z_target_m`; A3's `CL-A3-CG-Z` 0.0186) and on the R4 points. Say whether D-62's 10 mm bay move or pod nose change moved the GPS mast. F4 has set `INS_POS1/2` (0.059, 0.046, −0.0205) and `GPS1_POS` (−0.026, 0, −0.1595) m FRD from IMU (−0.010, 0.046, 0.039) and GPS (0.075, 0, 0.178) | F3 still publishes (0.062, 0.046, −0.035) / (−0.028, 0, −0.169), from CG (0.0522, 0, 0), which is 14–18 mm off in z. F4's `CL-F4-SENSOR-POS-ERR` = 0 on its own points. F4 follows F3's numbers once they are published | open |
+
 R4c (2026-11-10): closes CR-F4-12 and CR-F4-15 (accepted, D-50). CR-F4-19 now cites A3's CG z of **0.0185 m** (`CALC-A3-CG` `cg_m[2]`), and F4 sets `INS_POS1/2` Z to −0.0205 and `GPS1_POS_Z` to −0.1595 m. The re-run on A3's 2026-11-10 roll-up (split 1.2158, Iyy 0.0442 kg·m²) clears the 7 F4 drifts in the graph.
 R4b (2026-11-09) adds CR-F4-18 … 20, closes CR-F4-11 (D-52, D3 publishes −1) and CR-F4-17 (graph builds), and answers
 CR-D5-21, CR-D6-09, CR-F3-20, CR-A2-14, CR-A3-23 (second table at the end). R4 added CR-F4-15 … 17. R3 added CR-F4-11 … 14;
@@ -54,3 +63,14 @@ CR-F4-01 … 10 stand as filed in R1 (status column).
 | CR-B3-19 | B3 | ceilings 4.5 / 4.5 / 2.4 Hz written into `K09L.param` as holding "until T-C2-TAP-TEST" |
 | CR-B4-16a | B4 | spin map unchanged with the corrected cant (D-52); `CL-F4-CANT-SENSE-D3` +1 |
 | D-50 / CR-F4-15 | A1 | `THR_MAX` 70 kept (accepted); envelope-held schedule (CR-F4-12) kept |
+
+## Requests to F4 answered in R5
+
+| Request | From | Done in R5 |
+|---|---|---|
+| A1-R5 F4 row (D-65) | A1 | `Q_PILOT_SPD_DN` 1.2 → **1.0** m/s (LEGACY 100 cm/s); `Q_LAND_FINAL_SPD` 0.3 m/s and `Q_LAND_SPEED` 30 cm/s (= 0.3 m/s) kept; `CL-F4-TOUCHDOWN-SINK` 1.0 ≤ 1.2 (+17 %) |
+| A1-R5 F4 row (D-66) / CR-A2-31a | A1, A2 | `FLTMODE1-6` 17 / 18 / 19 / 5 / 7 / 11 and `INITIAL_MODE` 17 are all roll-stabilised; new `CL-F4-NO-RAW-MODES` 0 verifies `R-SPIRAL`; the lint also fails on `RCn_OPTION` 51 / 52 |
+| A1-R5 F4 row (D-71) | A1 | `AIRSPEED_MIN` (old `ARSPD_FBW_MIN`) 16 kept and **not frozen**; `CL-F4-ARSPD-MIN-D71` 16 ≥ 15.59; rule and step 6d in TUNING-PLAN; CR-F4-22 to B2 |
+| A1-R5 F4 row (D-62 CG) | A1 | `INS_POS` X 0.062 → 0.059, `GPS1_POS` X −0.023 → −0.026 m; offsets read `P:cg.*` (`ASM-F4-CG-Z` retired); CR-F4-19 re-issued |
+| CR-A2-31b | A2 | added as the new `CL-F4-TOUCHDOWN-SINK`, not on `CL-F4-DESCENT` (CR-F4-23) |
+| re-run on the R5 keys | A1 | `fsw_check.py`: 43 claims, none negative |

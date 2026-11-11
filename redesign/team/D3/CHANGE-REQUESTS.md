@@ -4,7 +4,19 @@ Raised by D3 (fins and motor-tube designer). Numbers come from `subsystems/fins/
 `team/D3/claims.json`. R4 requests (2026-11-09/10, answering CR-A1-47 and CR-A4-40) first, then R3 and R2 with A1's
 disposition.
 
-## R4 (open)
+## R5 (open; answers CR-A1-63 and the D-61 / D-63 / D-68 / D-70 forwards, 2026-11-10)
+
+| Id | To | What | Why | Numbers |
+|---|---|---|---|---|
+| CR-D3-34 | A1 (E1, A3, A5, B4) | **Copy the D-61 values:** `propulsion.stations.x_prop_plane_m` −0.0127 → **−0.01267** (`CL-D3-X-PROP`) and `x_plate_face_m` 0.0244 → **0.02435** (`CL-D3-X-FACE`, DP-MOTOR-FACE). Note fix: `fins.stations.collar_end_xyz_m` ring is now \|z\| **0.1445–0.1595 (15 mm)**; the value (ear mid 0.1535) is unchanged. **Mass levers (D-63):** taken: fillet mix 0.55 → 0.45 g/cm³, −5.6 g (gate: T-D3-WEIGH cup ≤ 9.0 g / 20 cm³); not taken: block fill (needs C4's `CL-C4-D3-BLOCK-MS` at 0.45 on the R 3 mm block), cheeks (withdrawn, the 17 mm length is set by the reach to the collar). Fins **435.9 / 437 g** | D-61 asks D3 for the exact values; D-63 asks for the lever report | x_face = 0.045 − 0.01315 − 0.0075; x_prop = x_face − 0.0373 cos 7°. Mass: R4 434.8 → mounts +3.8 (cheeks +5 mm), pins +1.5, block R 3 −0.4, collar 15 mm +1.8, half-fins −5.5 (fillet −5.6, laminate +0.1) = 435.9 g after rounding |
+| CR-D3-35 | C4, C6 (cc A1, C2, D1) | **Root fillet fails at the C6 allowable on the D-65 side load.** `CL-D3-ROOT-FILLET-RF-ALLOW` 1.14 → **0.81** with `CL-C1-FOOT-SIDE-DESIGN-ULT` 58.96 N (D-65 directs this load to D3) and share 0.5 (C4's 3-D board share 0.47, `CL-C4-SIM-BOARD-SHARE`). C4: give the root-moment share the fillet carries in the frozen 3-D set with the shoe as drawn (the same number C2 asked for in CR-C2-12); RF ≥ 1 needs share ≤ 0.40. C6: re-run `CL-C6-FIN-ROOT-RF` on 58.96 N. If both confirm, D3 runs the 15 mm zone forward to **L_eff 0.185 m** (`CL-D3-ROOT-LEFF-REQ` 0.182; +5 g, fins ≈ 441 g → A1 needs +4 g) and C2 re-checks the tab shear (D-68's 222 kPa case) | n 6.6 and the C5 3-D side load raised the root moment 19 %; the legs cannot grow (elevon end gap 2.2 mm aft, paper face governs) | M_ult = 0.5 × 58.96 × 1.25 × 0.21 = 7.74 N·m; capacity 0.125 MPa × 50.0 cm³ = 6.26 N·m |
+| CR-D3-36 | C1, C6 (cc A1) | **Which torsion sizes the station collar?** C6-R5 read 7.40 N·m and asked 15 mm (CR-C6-36, RF 1.15); D3 draws 15 mm. C6's re-run at 14:30 reads `CL-C1-FINHALF-T-LIM` **12.67 N·m** (+71 %) and needs **19.4 mm** (`CL-C6-COLLAR-L-REQ`). C1: confirm the value and whether it is the section total at the wing plane (R4 `-WINGPLANE` 7.40) or a new case; C6: confirm the collar requirement on it. If it stands, D3 draws 20 mm (ring \|z\| 0.1395–0.1595, 6 mm above the ESC pad, +3 g → ≈ 439 g, A1 +2 g) | Sizing to a value that moved 71 % mid-run would be churn; the 20 mm collar fits geometrically | `CL-D3-COLLAR-H-C6` 0.77 at 15 mm |
+| CR-D3-37 | C4 (cc H1) | Re-run `fin_structures_d3.py` / `sim_fin.py` on R5: mount plate 7.5 mm ahead, cheeks 17 mm (rocking ≥ 1 100 N·m/rad), mount 11.9 g each at the `FIN-003-*` `cg_xyz_m`; block with R 3 mm vertical edges for `CL-C4-D3-BLOCK-MS` and the fill-0.45 lever; collar 15 mm (ring \|z\| 0.1445–0.1595); pins 2.5 mm | Geometry and masses moved under your FE | `subsystems/fins/interfaces.json` |
+| CR-D3-38 | E1, F2, E3, D1 | Information, done in D3-R5: E1 hub at −0.01267 (re-run `make_propulsion.py`; `E-FIN-81…88` declared and acknowledged); F2 phase lug at x 0.060 open along x (closes CR-F2-16); E3 `E-FIN-85…88` 56.1 °C, h 64.6 (closes CR-E3-13); D1 block corners R 3 mm (cut the pocket to match, D-68) | — | `check.py` fins 0 errors, 0 keep-out errors |
+
+Closed by A1: CR-D3-33 (D-63, 437 g), CR-D3-26 (D-61, face_ahead 7.5 mm), CR-D3-28 (E1 acknowledged `E-FIN-81…88`).
+
+## R4
 
 | Id | To | What | Why | Numbers |
 |---|---|---|---|---|

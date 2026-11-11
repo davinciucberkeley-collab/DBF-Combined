@@ -3,6 +3,12 @@
 > **R3 (2026-11-10):** the as-designed numbers (A1-R4 geometry, A3-R5 masses, CG range 0.0509–0.0548 m) are in
 > [`SIMULATION-REPORT.md`](SIMULATION-REPORT.md) and supersede the stall, forward-CG and servo rows below. Stall at
 > the forward CG is now 11.99 m/s (+0.1 %), and the servo requirement is 3.49 kgf·cm through D6's linkage at VD.
+>
+> **R4 (2026-11-10):** since D-62 the CG sits 18.5 mm above the chord plane, so the static-margin table of §3 (moment
+> reference on the chord plane) no longer gives the stall. `sim/stall_zcg.py` runs the critical section at the real
+> (x, z) of the CG: forward mark 0.0466 m, z 0.0185: CLmax 0.786, **Vs 11.99 m/s**; z 0.010: 12.01 m/s (FAIL,
+> CR-B2-20). B1 / B2 CLmax and NP reconciled (CR-B2-21). See `SIMULATION-REPORT.md` §2a. The method of §3 is
+> unchanged; only the moment reference moves.
 
 Status: `PROPOSED` (analysis complete, nothing flown). Revision B2-R2 (2026-11-09), re-run at params A1-R2: chord
 0.32 m, half-fins 0.275 m chord at x 0.045–0.32 m, CG target 0.044 m, cruise 16 m/s (CR-A1-14). Covers section,

@@ -1,19 +1,58 @@
 # Propulsion — K09-L quad tailsitter
 
-Owner: E1 (propulsion engineer), revision 6, 2026-11-10. Model and claims: `team/E1/propulsion.py` →
+Owner: E1 (propulsion engineer), revision 8, 2026-11-10. Model and claims: `team/E1/propulsion.py` →
 `team/E1/claims.json` (64 claims, `CL-E1-…`), `subsystems/propulsion/parts.csv` and
 `subsystems/propulsion/interfaces.json`; CAD clearance probe `team/E1/prop_clearance.py` → `prop_clearance.json`.
 Figures: `team/E1/plots.py`. Every number is at the 2.6 kg gate and reads `params.json` as of this revision:
-cruise 16 m/s, chord 0.32 m, CLmax 0.80, **7° motor cant, sense −1** (D-27, D-52), harness 6.5 mΩ (D-32), and
-B1's rev 3 polar (CD0 0.0513, k 0.0943, trim 1.02).
+cruise 16 m/s, chord 0.32 m, CLmax 0.80, **7° motor cant, sense −1** (D-27, D-52), mount `face_ahead` 7.5 mm (D-61),
+harness 6.7 mΩ (D-67, `CL-F1-R-EXT`), and B1's as-designed polar (`CL-B1V-CD0` 0.0579, `CL-B1V-K` 0.0957, trim 1.02).
 
 **Verdict.** Keep the SunnySky X3108S KV900, the LANRC 45 A ESC and the APC 11×5.5MR/MRP. Full throttle stays
 current-limited (`Q_M_BAT_CURR_MAX` 100 A). The worst-state hover T/W is **2.12** (limit 1.6). Propulsion is
-**462.0 g** against the 462 g allocation (D-48), zero margin. The three rev 5 failures are closed (D3 now carries
-D-51: prop gap 1.01, ESC slot 1.05). **One claim fails, new in rev 6:** with D-52's cant sense the wing-side blade tip
-passes **21.1 mm** from the CF motor tube (`CL-E1-TIP-GAP-TUBE`, limit 25 mm, `R-PROP-CLEAR`). E1 proposes
-`face_ahead_m` 0.0025 → **0.0075** (26.1 mm) for A1's CR-D3-26 decision. Every number is `UNVERIFIED` until
-`T-E1-MOTOR-RM` and `T-E1-STAND` run.
+**462.0 g** against the 462 g allocation (D-48), zero margin. The prop-to-tube failure is closed by D-61: on D3's
+7.5 mm mount the blade passes **26.1 mm** from the CF tube and `check.py` reports 0 keep-out ERRORs. **One claim
+fails, new in rev 8:** on B1's as-designed polar the cruise propulsion power is **246.0 W** against the 240 W carried
+(`CL-E1-CRUISE-P-55`); CR-E1-51 asks A1 for 252 W or 15 m/s. Every number is `UNVERIFIED` until `T-E1-MOTOR-RM` and
+`T-E1-STAND` run.
+
+## Revision 8 (2026-11-10): D3's 7.5 mm mount (D-61), simulation-round keys (D-67)
+
+| Item | Result | Claim | Status |
+|---|---|---|---|
+| Hub on D3's mount (`face_ahead` 7.5 mm) | x −0.01267 m; datum −0.0127; D3 `CL-D3-X-PROP` −0.012672 (5 µm apart) | `CL-E1-CAD-HUB-X` | `MODELLED` |
+| Blade swept volume (+10 / −6 mm) to CF motor tube | **26.1 mm** analytic, 26.2 mm probe (limit 25); was 21.1 | `CL-E1-TIP-GAP-TUBE` | `MODELLED` |
+| Least `face_ahead` for 25 mm (bisection now from 0; rev 8 fix) | 6.5 mm (1 mm under the carried 7.5) | `CL-E1-FACE-AHEAD-FOR-CLR` | `MODELLED` |
+| Next nearest at 7.5 mm (probe) | canted plate 29.0, bore boss 29.3, tube plug 30.4, cheek 31.1, wing skin 35.6 mm | `prop_clearance.json` | `CHECKED` |
+| Prop plane to collar / 0.14 D | 44.5 mm / 39.1 = 1.14 | `CL-E1-CAD-PROP-GAP` | `MODELLED` |
+| `check.py` keep-out ERRORs | **0** (rev 7: 4) | — | `CHECKED` |
+| Worst-state sag on `r_ext` 6.7 mΩ | 0.8508 (0.851 at 6.5; limiter holds 100 A in both states); T/W worst 2.12 | `CL-E1-SAG-FACTOR`, `CL-E1-TW-WORST` | `UNVERIFIED` |
+| Cruise drag, 16 m/s, gate (B1 as-designed polar) | 4.51 N (= B1 `drag_gate_n`), L/D eff **5.66** (was 6.22) | `CL-E1-CRUISE-DRAG`, `-LD-EFF` | `UNVERIFIED` |
+| Cruise propulsion power (kP 1 → 1.24) | 200–**246.0 W** (limit 240; +6 W avionics = 252); η_tot 0.293, J 0.57, 5 994 rpm, 16.6 A | `CL-E1-CRUISE-P-55` | **`FAIL`** (+2.5 %) |
+| Transition corridor margin / motor out T/W | 2.12 / 1.07 (unchanged to 0.01) | `CL-E1-CORRIDOR-55`, `-MOTOROUT-TW` | `UNVERIFIED` |
+
+**Cruise power.** E1 and B1 use the same drag; they differ in the propulsive efficiency. E1 takes APC PER3
+data with the kP 1.24 power correction calibrated on the hover point, which gives η_tot 0.293. B1's chain gives
+232.9 W propulsion (`p_check` 1.055). D-13 carries the conservative model, so E1 asks A1 (CR-E1-51) to carry
+252 W, or to fly 15 m/s. The speed sweep at 2.6 kg on the 11×5.5MR:
+
+| V (m/s) | 13 | 14 | 15 | 16 | 17 |
+|---|---|---|---|---|---|
+| Drag (N) | 3.92 | 4.05 | 4.25 | 4.51 | 4.82 |
+| L/D eff | 6.51 | 6.30 | 6.00 | 5.66 | 5.29 |
+| Propulsion power (W) | 163 | 186 | 214 | 246 | 283 |
+| η_tot | 0.312 | 0.304 | 0.298 | 0.293 | 0.289 |
+
+15 m/s is 1.25 × Vs (11.99 m/s at the gate, `CL-B1V-VS-GATE`). The stall margin belongs to B1 and B3.
+Indicative endurance after 2 min of hover is 63.5 Wh / 252 W ≈ 15.1 min of cruise; E2 owns the budget.
+
+**CAD centroids for A3** (`subsystems/propulsion/interfaces.json`, UR; mirror y for L, z for lower): motor
+0.0106 / 0.3210 / 0.1885, prop −0.0127 / 0.3223 / 0.1861, adapter −0.0096 / 0.3221 / 0.1864, ESC 0.101 / 0.329 /
+0.118 (unchanged). Each motor, prop and adapter moves −5.0 mm in x; the aircraft CG moves −0.83 mm at 2.6 kg.
+
+**Thermal (E3, D-67).** ESC / motor peak in the mission design case at 30 °C: **56.1 / 64.8 °C** (limits 85 / 80,
+`CL-E3-ESC-PEAK`, `CL-E3-MOTOR-PEAK`), on E3's SU2 pad heat transfer. E1's loss inputs are unchanged
+(hover 23.1 W motor + 2.4 W ESC per station). `E-FIN-81…88` (thermal contact, motor and ESC to the fin) are
+acknowledged in `subsystems/propulsion/interfaces.json` (36 acknowledged, 0 pending).
 
 ## Revision 7 (2026-11-10): prop keep-out on the real envelope; mount chain not exempted
 
@@ -122,14 +161,14 @@ a CW motor needs a left-hand post for the nut to tighten itself.
 | Pack current with the limiter | 100 A | ≤ 100 A (`full_throttle_current_a`) | `CL-E1-IPACK-LIM` | `UNVERIFIED` (bench) |
 | Unlimited burst per motor at 16.8 V | 51.6 A | ≤ 55 A (`esc_burst_a`, 10 s) | `CL-E1-IMAX-168-55` | `UNVERIFIED` |
 | Unlimited pack peak, low pack (wiring case) | 108 A | ≤ 120 A (`electrical.peak_current_a`) | `CL-E1-IPACK-PEAK` | `UNVERIFIED` |
-| Cruise drag 16 m/s (B1 polar, W/D 6.22) | 4.10 N, 1.03 N per prop | — | `CL-E1-CRUISE-DRAG` | `UNVERIFIED` |
-| Cruise J, η_prop, rpm | 0.58, 0.36, 5 944 | — | `CL-E1-CRUISE-ETA-55` | `UNVERIFIED` |
-| Cruise propulsion power (kP 1 → 1.24) | 191–234 W, 15.8 A | ≤ 240 W (`performance.cruise_power_w`, D-49) | `CL-E1-CRUISE-P-55` | `UNVERIFIED` (+2 %) |
-| Transition corridor margin, worst point | 2.13 at 1.6 m/s | ≥ 1.3 | `CL-E1-CORRIDOR-55` | `UNVERIFIED` |
+| Cruise drag 16 m/s (B1 as-designed polar, W/D 5.66) | 4.51 N, 1.13 N per prop | — | `CL-E1-CRUISE-DRAG` | `UNVERIFIED` |
+| Cruise J, η_prop, rpm | 0.57, 0.37, 5 994 | — | `CL-E1-CRUISE-ETA-55` | `UNVERIFIED` |
+| Cruise propulsion power (kP 1 → 1.24) | 200–246 W, 16.6 A | ≤ 240 W (`performance.cruise_power_w`, D-49) | `CL-E1-CRUISE-P-55` | **`FAIL`** +2.5 % → CR-E1-51 |
+| Transition corridor margin, worst point | 2.12 at 1.6 m/s | ≥ 1.3 | `CL-E1-CORRIDOR-55` | `UNVERIFIED` |
 | Winding rise in hover (R_th 1.0 K/W `EST`) | 23 K | ≤ 50 K | `CL-E1-HOVER-DT` | `UNVERIFIED` |
 
 **Mission (indicative; B1 and E2 own it).** 77 Wh usable. Hover takes 13.5 Wh (2 min at 405 W), which leaves
-**16 min of cruise** at 234 W + 6 W avionics against the 5 min requirement.
+**15.1 min of cruise** at 246 W + 6 W avionics against the 5 min requirement (16 min at rev 7's 234 W).
 
 ## Worst-state hover T/W and the sag factor (D-35)
 
@@ -216,8 +255,9 @@ electrical nodes warn `unpowered` until harness declares `E-HRN-13…16`.
 
 | Issue | Owner | Status |
 |---|---|---|
-| Prop tip 21.1 mm from the motor tube after D-52 (`R-PROP-CLEAR` 25 mm); `check.py` 4 keep-out ERRORs | A1 (D3, C4) | `FAIL` until CR-D3-26 / CR-E1-44 / CR-E1-48 |
-| `check.py` box test cannot certify the canted disc near a round tube | A5 | open, CR-E1-45 |
+| Cruise power 246 W > 240 W on B1's as-designed polar | A1 (E2, B1) | `FAIL` until CR-E1-51 (252 W or 15 m/s) |
+| Prop tip to motor tube | — | closed by D-61: 26.1 mm, 0 keep-out ERRORs |
+| `check.py` box test near a round tube | A5 | closed (hull + distance test, rev 7) |
 | Adapter-screw thread (D-58 condition), base Ø, pattern, hole depth, lead reach | E1 at `T-E1-MOTOR-RM` | `UNVERIFIED` (motors ordered mid-December) |
 | Bolt pattern, hole depth (≥ 4.0 mm), lead length unpublished | E1 / D3 | `UNVERIFIED` |
 | Nut margin 0.1 mm: if the boxed adapter's post is shorter, use a flanged nut | E1 | `UNVERIFIED` |

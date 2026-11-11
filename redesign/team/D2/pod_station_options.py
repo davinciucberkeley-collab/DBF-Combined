@@ -1,4 +1,4 @@
-"""D2 pack station table (D2-R5, D-47): for each weighed pack mass, the spacer stack (2 mm steps, colour-coded), the
+"""D2 pack station table (D2-R6, D-62 / D-64): for each weighed pack mass, the spacer stack (2 mm steps, colour-coded), the
 centroid it gives, the crush block B cut length and the block minimum scaled from C5's 550 g length. H3 copies the
 rows onto the pack labels and the flight card. The R4 what-if for CR-D2-16 (nose extension) is closed by D-47.
 
@@ -19,14 +19,16 @@ import pod_data as pdm                              # noqa: E402
 COLOUR = {2: 'white', 4: 'yellow', 6: 'green', 8: 'blue'}
 
 
-def stack(mm, sizes=(8, 8, 6, 4, 2)):
-    """Fewest spacers from the set that make mm (greedy works for 2/4/6/8/8)."""
-    out, left = [], mm
-    for s in sizes:
-        if s <= left:
-            out.append(s)
-            left -= s
-    return out if left == 0 else None
+def stack(mm, sizes):
+    """Fewest spacers from the set (pod params spacer_set_m, mm) that make mm exactly; None if no subset does."""
+    import itertools
+    if mm == 0:
+        return []
+    for n in range(1, len(sizes) + 1):
+        for c in itertools.combinations(sorted(sizes, reverse=True), n):
+            if sum(c) == mm:
+                return list(c)
+    return None
 
 
 def block_l_c5():
@@ -55,7 +57,7 @@ def main(argv):
         x = G['x_as'] - sp / 1000 - lp / 2
         blk = (x - lp / 2 - G['sp_t']) - G['x_fs']
         bmin = lb * float(m) / m_nom
-        st = stack(sp)
+        st = stack(sp, [round(t * 1000) for t in L['spacer_set_m']['value']])
         print('| %s | %.4f | %d | %s | %.4f | %.1f | %.1f | %s |' % (
             m, xt, sp, ' + '.join('%d %s' % (s, COLOUR[s]) for s in st) if st else 'none', x, blk * 1e3, bmin * 1e3,
             'yes' if blk >= bmin - 1e-6 else 'NO: block short'))

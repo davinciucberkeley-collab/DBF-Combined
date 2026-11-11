@@ -29,10 +29,10 @@
   {
    "id": "ASM-D3-FILLET-DENSITY",
    "type": "assumption",
-   "title": "Root fillet mix 0.55 g/cm3",
-   "text": "Cured density of the non-sag microballoon-epoxy root fillet (~2 : 1 glass microballoons : laminating epoxy by volume)",
-   "basis": "typical 0.45-0.70 g/cm3 for thickened epoxy fairing/fillet mixes; weigh a cured 20 cm3 sample (T-D3-WEIGH)",
-   "value": 0.55,
+   "title": "Root fillet mix 0.45 g/cm3",
+   "text": "Cured density of the light non-sag root fillet mix (phenolic or low-density glass microballoons ~3 : 1 by volume to laminating epoxy, <= 3 % silica); R5 mass lever, was 0.55 (~2 : 1 glass)",
+   "basis": "typical 0.40-0.70 g/cm3 for thickened epoxy fairing/fillet mixes; acceptance: cured 20 cm3 cup <= 9.0 g (T-D3-WEIGH) before any fillet is laid",
+   "value": 0.45,
    "unit": "g/cm3",
    "status": "UNVERIFIED"
   },
@@ -100,11 +100,11 @@
     "mu": "P:fin_detail.mount.mu_petg_cf"
    },
    "outputs": {
-    "F_side": 86.50519031141867,
-    "F_hub": 47.214353163361665,
-    "M_root": 16.43598615916955,
-    "fuse_ratio": 1.253938285561232,
-    "hold_ratio": 1.7885942390252538,
+    "F_side": 73.74631268436578,
+    "F_hub": 43.14063848144952,
+    "M_root": 14.011799410029498,
+    "fuse_ratio": 2.287685634209966,
+    "hold_ratio": 1.7639990020050245,
     "F_axial": 227.27272727272728,
     "clamp_n": 241.1438531695384
    },
@@ -114,14 +114,14 @@
     "od": 0.022,
     "gap": 0.00015,
     "wall": 0.002,
-    "ahead": 0.0025,
+    "ahead": 0.0075,
     "can": 0.0265,
     "stack": 0.0373,
     "zm": 0.19,
-    "M_mount": 0.972344871092953,
+    "M_mount": 0.9859021648004624,
     "ff": 1.15,
     "pf": 1.25,
-    "M_joint": 20.6097123059372,
+    "M_joint": 32.05459221975616,
     "mu": 0.3
    }
   },
@@ -146,15 +146,15 @@
     "zm": "P:propulsion.stations.z_m"
    },
    "outputs": {
-    "gap": 0.039521971456221314,
-    "ratio": 1.0103786546738245,
-    "x_prop": -0.007671971456221314,
-    "x_face": 0.029349999999999998,
-    "tube_gap": 0.04167197145622131,
-    "tip_gap": 0.026922880319583176
+    "gap": 0.04452197145622131,
+    "ratio": 1.1382035856483617,
+    "x_prop": -0.012671971456221315,
+    "x_face": 0.024349999999999997,
+    "tube_gap": 0.04667197145622132,
+    "tip_gap": 0.03192288031958317
    },
    "input_values": {
-    "ahead": 0.0025,
+    "ahead": 0.0075,
     "stack": 0.0373,
     "D": 0.2794,
     "xt": 0.045,
@@ -226,20 +226,20 @@
     "sq": "P:fin_detail.fin.tip_square_m"
    },
    "outputs": {
-    "h_ratio": 1.1628308733766868,
-    "h_ratio_c6": 1.0034040687700894,
+    "h_ratio": 1.4535385917208585,
+    "h_ratio_c6": 0.7713261204381764,
     "embed": 0.0395,
-    "embed_ratio": 1.2656442426073347,
+    "embed_ratio": 1.2708397328337055,
     "tongue": 0.011264566052210368,
-    "tongue_fit": 0.0007354339477896321
+    "tongue_fit": 0.0037354339477896313
    },
    "input_values": {
-    "h": 0.012,
+    "h": 0.015,
     "h_req": 0.0103196434449266,
-    "h_req_c6": 0.011959289755231766,
+    "h_req_c6": 0.019447027142655005,
     "tail": 0.04,
     "gap": 0.0005,
-    "embed_req": 0.03120940203435576,
+    "embed_req": 0.031081810695297748,
     "w": 0.01,
     "td": 0.001,
     "L": 0.344,
@@ -352,10 +352,9 @@
    "title": "Half-fin root fillet joint, foot side load",
    "script": "redesign/team/D3/fins_calcs.py",
    "function": "root",
-   "equation": "M = share mu F_foot pf h. R4 fillet zones (fins.py): full leg over the last L_eff of BONDED root from the TE, leg_aft aft of the hinge x_h = c (1 - ef), the lower root skips the link slot x_h +/- slot (CR-D6-04). M_cap = sigma_xps sum(leg_i (t_fin + leg_i) L_i); governing = the root whose full zone carries the least; rf_allow = rf kd (C6 allowable, CR-C6-24)",
+   "equation": "R5 (D-65): M = share S_side,ult pf h with the design foot side load (C1 max of friction and C5's 3-D sim, ultimate; was mu F_foot). R4 fillet zones (fins.py): full leg over the last L_eff of BONDED root from the TE, leg_aft aft of the hinge x_h = c (1 - ef), the lower root skips the link slot x_h +/- slot (CR-D6-04). M_cap = sigma_xps sum(leg_i (t_fin + leg_i) L_i); governing = the root whose full zone carries the least; rf_allow = rf kd (C6 allowable, CR-C6-24)",
    "inputs": {
-    "F": "CL-C1-FOOT-F-ULT",
-    "mu": "ASM-C1-FRICTION",
+    "S": "CL-C1-FOOT-SIDE-DESIGN-ULT",
     "pf": "ASM-C1-PRINTED-FACTOR",
     "hh": "P:fins.half_height_m",
     "tb": "P:fins.board_t_m",
@@ -372,15 +371,15 @@
     "kd": "ASM-C6-FOAM-KD"
    },
    "outputs": {
-    "M": 5.4787272766729895,
-    "rf_fillet": 2.2841034729509726,
-    "rf_allow": 1.1420517364754863,
-    "rf_upper": 2.2841034729509726,
-    "rf_lower": 2.325280919574488
+    "M": 7.737979529389088,
+    "rf_fillet": 1.6172154439633124,
+    "rf_allow": 0.8086077219816562,
+    "rf_upper": 1.6172154439633124,
+    "rf_lower": 1.6463703414586037,
+    "leff_for_allow": 0.18210817407889626
    },
    "input_values": {
-    "F": 59.63240573249513,
-    "mu": 0.7,
+    "S": 58.956034509631145,
     "pf": 1.25,
     "hh": 0.21,
     "tb": 0.0048,
@@ -557,8 +556,8 @@
     "FIN-003-LL",
     "FIN-004-R"
    ],
-   "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 85 and 100 N",
-   "value": 1.253938285561232
+   "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 70 and 80 N (R5 lever 33.9 mm)",
+   "value": 2.287685634209966
   },
   {
    "id": "CL-D3-SLIP-HOLD",
@@ -581,7 +580,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP; witness line checked before every flight",
-   "value": 1.7885942390252538
+   "value": 1.7639990020050245
   },
   {
    "id": "CL-D3-SLIP-F",
@@ -597,7 +596,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP",
-   "value": 86.50519031141867
+   "value": 73.74631268436578
   },
   {
    "id": "CL-D3-PROP-GAP",
@@ -620,8 +619,8 @@
     "FIN-003-LL"
    ],
    "how": "Measure motor face to prop hub face on the built station; Fusion interference check",
-   "note": "R4 (D-51): face_ahead 2.5 mm, E1 stack 37.3 mm (37.0 along x). The canted plate corners sit up to 2.5 mm ahead of the face at the axis, inside the motor-base shadow. With the D-52 sense the wing-side blade tip swings aft: check.py's tilted KO-PROP cylinder (blade half 10 + 25 mm) reaches the tube, block, plug, brace and wing skin; it clears at face_ahead >= ~0.019 m (CR-D3-26)",
-   "value": 1.0103786546738245
+   "note": "R5 (D-61): face_ahead 7.5 mm, E1 stack 37.3 mm (37.0 along x). The canted plate corners sit up to 2.5 mm ahead of the face at the axis, inside the motor-base shadow. The tube clearance with the blade's swept volume is E1's CL-E1-TIP-GAP-AT-75 (26.1 mm) and B4's CL-B4-GAP-TUBE-FIX5",
+   "value": 1.1382035856483617
   },
   {
    "id": "CL-D3-PROP-TIP-GAP",
@@ -646,13 +645,13 @@
     "FIN-002-L"
    ],
    "how": "Ruler from the blade tip, turned over the tube, to the tube face (B4 CL-B4-GAP-TUBE)",
-   "note": "mid-plane only; the blade's aft half-thickness at the tip (E1: up to 6 mm at the root, ~2 mm at the tip EST) comes off this. check.py's KO-PROP cylinder carries 10 mm + 25 mm both sides and fails (CR-D3-26)",
-   "value": 0.026922880319583176
+   "note": "mid-plane only; E1's swept-volume envelope (+10 / -6 mm) comes off this: 26.1 mm at face_ahead 7.5 mm (CL-E1-TIP-GAP-AT-75, D-61). check.py's hull test is the CAD check",
+   "value": 0.03192288031958317
   },
   {
    "id": "CL-D3-X-PROP",
    "type": "claim",
-   "title": "Prop plane x with the D3 mount",
+   "title": "Prop plane x (hub on the motor axis) with the D3 mount, face_ahead 7.5 mm",
    "calc": "CALC-D3-PROP-GAP",
    "output": "x_prop",
    "unit": "m",
@@ -662,13 +661,14 @@
     "FIN-003-LR",
     "FIN-003-LL"
    ],
-   "how": "D-51: params propulsion.stations.x_prop_plane_m carries this value (-0.0077)",
-   "value": -0.007671971456221314
+   "how": "Measure collar front to prop hub face on the built station (44.5 mm along x); Fusion CAD",
+   "note": "D-61: A1 copies this exact value into propulsion.stations.x_prop_plane_m (carried -0.0127); -0.01267 = x_face 0.02435 - 37.3 mm cos 7 deg",
+   "value": -0.012671971456221315
   },
   {
    "id": "CL-D3-X-FACE",
    "type": "claim",
-   "title": "Motor face x at the axis (D3 mount)",
+   "title": "Motor plate face x at the motor axis (DP-MOTOR-FACE), D3 mount, face_ahead 7.5 mm",
    "calc": "CALC-D3-PROP-GAP",
    "output": "x_face",
    "unit": "m",
@@ -678,8 +678,9 @@
     "FIN-003-LR",
     "FIN-003-LL"
    ],
-   "how": "D-55: propulsion.stations.x_plate_face_m (DP-MOTOR-FACE) should carry this value; it still reads 0.0309 from face_ahead 1 mm (CR-D3-26)",
-   "value": 0.029349999999999998
+   "how": "Calliper from the tube front face (x 0.034) to the plate face on the printed mount: 9.65 mm",
+   "note": "D-61: A1 copies this exact value into propulsion.stations.x_plate_face_m (carried 0.0244); = tube axis 0.045 - (11.15 + 2.0) mm collar radius - 7.5 mm",
+   "value": 0.024349999999999997
   },
   {
    "id": "CL-D3-SCREW-ENGAGE",
@@ -708,7 +709,7 @@
   {
    "id": "CL-D3-COLLAR-H",
    "type": "claim",
-   "title": "Station collar height (12 mm) / C4 required bond height",
+   "title": "Station collar height (15 mm, CR-C6-36) / C4 required bond height",
    "calc": "CALC-D3-COLLAR",
    "output": "h_ratio",
    "unit": "-",
@@ -727,7 +728,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R4 (D-48): read against C4-R3 CL-C4-D3-COLLAR-H-REQ (envelope torsion 4.6 N m + brace shear). C6's own requirement on max(C1, C4) torsion + brace shear is CL-D3-COLLAR-H-C6 (CR-D3-25)",
-   "value": 1.1628308733766868
+   "value": 1.4535385917208585
   },
   {
    "id": "CL-D3-COLLAR-H-C6",
@@ -750,12 +751,13 @@
     "FIN-008-LL"
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
-   "value": 1.0034040687700894
+   "note": "R5: drawn 15 mm (C6-R5 CL-C6-COLLAR-RF-15MM 1.15 on a 13.007 mm requirement). C6's live run now reads C1's CL-C1-FINHALF-T-LIM 12.67 N m (R4 7.40, wing-plane value) and needs 19.4 mm: CR-D3-36 asks C1/C6 which torsion governs before D3 redraws (20 mm fits: ring |z| 0.1395-0.1595, +3 g)",
+   "value": 0.7713261204381764
   },
   {
    "id": "CL-D3-TONGUE-FIT",
    "type": "claim",
-   "title": "Strip-tail tongue fit under the 12 mm collar ring (margin)",
+   "title": "Strip-tail tongue fit under the 15 mm collar ring (margin)",
    "calc": "CALC-D3-COLLAR",
    "output": "tongue_fit",
    "unit": "m",
@@ -778,7 +780,7 @@
    ],
    "how": "Dry fit: the tongue drops into the board notch between the strips with the ring top at |z| 0.1595",
    "note": "D-48 condition for 16 -> 12 mm (C4 CR-C4-25); fins.py raises if it does not fit",
-   "value": 0.0007354339477896321
+   "value": 0.0037354339477896313
   },
   {
    "id": "CL-D3-TAIL-EMBED",
@@ -802,7 +804,7 @@
     "FIN-011-URO"
    ],
    "how": "Measure on the dry fit; C6 strip-anchor coupon",
-   "value": 1.2656442426073347
+   "value": 1.2708397328337055
   },
   {
    "id": "CL-D3-STRAP-EYE-RF",
@@ -947,7 +949,7 @@
    ],
    "how": "T-D3-ROOT: side pull at the fin TE tip on a core offcut to 1.25 x 28 N, then to failure",
    "note": "R4: 15 mm cove fillets on the last 0.15 m of bonded root, 13 mm aft of the hinge (elevon end gap), none over the D6 slot on the lower roots. C6 multiplies this by its 0.5 foam knock-down (CL-C6-FIN-ROOT-RF), same as CL-D3-ROOT-FILLET-RF-ALLOW",
-   "value": 2.2841034729509726
+   "value": 1.6172154439633124
   },
   {
    "id": "CL-D3-ROOT-FILLET-RF-ALLOW",
@@ -972,8 +974,33 @@
     "WNG-001"
    ],
    "how": "T-C6-XPS-PULL (allowable) and T-D3-ROOT (joint)",
-   "note": "CR-C6-24 asked >= 1.0 at 0.125 MPa",
-   "value": 1.1420517364754863
+   "note": "CR-C6-24 asked >= 1.0 at 0.125 MPa. R5: FAILS on the D-65 side load (58.96 N ult, n 6.6) where R4 read 1.14 on mu F_foot at n 6.0. ASM-D3-ROOT-SHARE 0.5 agrees with C4's 3-D board share 0.47 (CL-C4-SIM-BOARD-SHARE). Fix offered in CR-D3-35: 15 mm zone forward to L_eff 0.185 m (CL-D3-ROOT-LEFF-REQ, +5 g) or C4's fillet-intact share / T-C6-XPS-PULL. The fillet is credited fail-safe only in the wing (D-68)",
+   "value": 0.8086077219816562
+  },
+  {
+   "id": "CL-D3-ROOT-LEFF-REQ",
+   "type": "claim",
+   "title": "Root fillet full-leg length from the TE needed for RF 1.0 at the C6 allowable",
+   "calc": "CALC-D3-ROOT",
+   "output": "leff_for_allow",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "ref": "P:fin_detail.fin.root_fillet.eff_len_m"
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL",
+    "WNG-001"
+   ],
+   "how": "T-D3-ROOT on the chosen length",
+   "note": "information for CR-D3-35: the drawn 0.150 m is short at the D-65 side load",
+   "value": 0.18210817407889626
   },
   {
    "id": "CL-D3-BRACE-PCR",
@@ -1103,7 +1130,7 @@
   {
    "id": "CL-D3-MASS",
    "type": "claim",
-   "title": "Fins subsystem flying mass, design R4",
+   "title": "Fins subsystem flying mass, design R5",
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -1119,8 +1146,8 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
-   "value": 434.8,
-   "note": "from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g (not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet, asked of A1 in CR-D3-33 with the levers that may return it"
+   "value": 435.9,
+   "note": "from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g (not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet (D-63: 437 g). R5 (CR-A1-63): cheeks +5 mm and the 7.5 mm face_ahead (mounts 47.8 g), pins 2.5 mm, collar 15 mm (C6-R5 needs 13.007 mm), block edges R 3 mm -0.4 g: 440.3 g; lever taken: fillet mix 0.55 -> 0.45 g/cm3 -5.6 g (T-D3-WEIGH cup <= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken"
   },
   {
    "id": "CL-D3-FILLET-MASS",
@@ -1134,8 +1161,8 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH (half-fin before / after fillets)",
-   "value": 30.6,
-   "note": "ASM-D3-FILLET-DENSITY 0.55 g/cm3; was carried inside fin.root_joint_g 3.0 g per half-fin with the laps"
+   "value": 25.0,
+   "note": "ASM-D3-FILLET-DENSITY 0.45 g/cm3 (R5 lever; 30.6 g at 0.55); was carried inside fin.root_joint_g 3.0 g per half-fin with the laps"
   },
   {
    "id": "CL-D3-LAMINATE-MASS",
@@ -1149,7 +1176,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH (half-fin before its root fillets)",
-   "value": 19.21,
+   "value": 19.22,
    "note": "R3 FIN-001 22.32 g = laminate 19.32 + 3.0 g root-joint estimate. R4 laminate is the same within 0.1 g (D-54 stepped tip removes a little board); FIN-001 grew because the C6 15 mm fillets are now CAD bodies (CL-D3-FILLET-MASS). A one-layer tip zone is not offered: the square tip already needs the extended D5 cheeks to pass (CL-C4-D3-MS-FACE -0.54 as drawn)"
   }
  ]

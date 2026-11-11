@@ -19,7 +19,7 @@ VTK_TRI, VTK_QUAD, VTK_WEDGE, VTK_HEX = 5, 9, 13, 12
 
 
 # ------------------------------------------------------------------------------------------------ 2-D section
-def section_mesh(outline, cuts, circles, n_theta, n_rad, h_near, h_far, dist=(0.002, 0.04), extra_lines=()):
+def section_mesh(outline, cuts, circles, n_theta, n_rad, h_near, h_far, dist=(0.002, 0.04), extra_lines=(), boxes=()):
     """Mesh a closed outline (polyline, x-z) partitioned by straight cut lines, with concentric circles round one
     centre structured as quads (n_theta around, n_rad layers between consecutive circles; the innermost disk is
     triangulated). Returns nodes (N, 2), list of (vtk_type, conn ndarray) 2-D elements, and the set of node ids
@@ -67,7 +67,20 @@ def section_mesh(outline, cuts, circles, n_theta, n_rad, h_near, h_far, dist=(0.
     gmsh.model.mesh.field.setNumber(f2, "SizeMax", h_far)
     gmsh.model.mesh.field.setNumber(f2, "DistMin", dist[0])
     gmsh.model.mesh.field.setNumber(f2, "DistMax", dist[1])
-    gmsh.model.mesh.field.setAsBackgroundMesh(f2)
+    # optional local refinement boxes (C2-R3 submodel): (xmin, xmax, zmin, zmax, h_in, transition)
+    fl = [f2]
+    for (bx0, bx1, bz0, bz1, hin, thk) in boxes:
+        fb = gmsh.model.mesh.field.add("Box")
+        for k_, v_ in (("VIn", hin), ("VOut", h_far), ("XMin", bx0), ("XMax", bx1), ("YMin", bz0), ("YMax", bz1),
+                       ("ZMin", -1.0), ("ZMax", 1.0), ("Thickness", thk)):
+            gmsh.model.mesh.field.setNumber(fb, k_, v_)
+        fl.append(fb)
+    if len(fl) > 1:
+        fm = gmsh.model.mesh.field.add("Min")
+        gmsh.model.mesh.field.setNumbers(fm, "FieldsList", fl)
+        gmsh.model.mesh.field.setAsBackgroundMesh(fm)
+    else:
+        gmsh.model.mesh.field.setAsBackgroundMesh(f2)
     gmsh.option.setNumber("Mesh.MeshSizeExtendFromBoundary", 0)
     gmsh.option.setNumber("Mesh.MeshSizeFromPoints", 0)
     gmsh.option.setNumber("Mesh.MeshSizeFromCurvature", 0)

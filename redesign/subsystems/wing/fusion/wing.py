@@ -1,6 +1,15 @@
-"""K09-L wing (D1, revision D1-R1 on params A1-R3): one-piece hot-wired XPS core with every cut the build needs, CF spar
+"""K09-L wing (D1, revision D1-R2 on params A1-R5): one-piece hot-wired XPS core with every cut the build needs, CF spar
 in a bonded bore, four PETG spar plugs, four elevon panels on upper-surface tape hinges, the packing-tape skin with its
-doublers and tip edge layer, and the FAA label.
+seam-free LE strip, doublers, tab-edge and tip layers, the block-pocket lip beads, the pod recess-step fillet and the
+FAA label.
+
+R2 (D-68, D-69): block-pocket corners R 3.15 mm round D3's R 3 mm block; 3 x 3 mm microballoon lip beads along the
+inboard and outboard pocket edges, both surfaces (WNG-006); elevon cut-out corners R 3 mm at the fin-root tabs with
+the panel corners relieved and the tab tape folded round; one 100 mm LE strip with both edges aft of x/c 0.10; F2's
+18 x 10 x 5 mm JR recess on the servo branch; D6-R2 torque-tube groove lengths; the 5 mm recess-step fillet (WNG-007).
+Plan-form radii and the 45 deg bead chamfer are drawn as n spanwise steps (block_pocket.corner_steps) of Y-normal
+prisms, always on the safe side (pocket contains the block, bead circumscribes the triangle, panel clear of the fill);
+the shop cuts the true radius from the template.
 
 Frame and datums: redesign/fusion/DATUMS.md (x aft from the LE, y right, z up, cruise attitude, metres). Section:
 subsystems/wing/s5010.dat through k09kit.section(). Every number comes from params/params.json (ctx.value / ctx.D),
@@ -73,6 +82,11 @@ def layout(ctx):
     xt, rt = v('fins.tube.x_m', 'm'), v('fins.tube.od_m', 'm') / 2
     g['blk_x'] = (xt - rt - wall - gap_f, g['xs'] + g['rs'] + wall + gap_f)
     g['blk_y'] = (g['y_fin'] - bw / 2 - gap_f, g['y_fin'] + bw / 2 + gap_f)
+    # D-68 (CR-C2-11): pocket corners follow D3's R 3 mm block edges (pocket radius = block radius + bond gap, same
+    # centre); microballoon fillet beads along the inboard and outboard pocket lips, both surfaces
+    g['blk_rp'] = k9.lval(F, 'fin_detail.block.edge_r_m', 'm', 0.003) + gap_f
+    g['bead_leg'] = lv('block_pocket.bead_leg_m', 'm')
+    g['n_step'] = int(lv('block_pocket.corner_steps', '-'))
     # brace-anchor pockets (fins anchor), upper and lower, slot width along x
     ya = k9.lval(F, 'fin_detail.brace.anchor_y_m', 'm', 0.242)
     aw = k9.lval(F, 'fin_detail.anchor.len_y_m', 'm', 0.016) / 2 + lv('anchor_pocket.gap_m', 'm')
@@ -87,6 +101,11 @@ def layout(ctx):
     g['groove_y'] = tuple(lv('grooves.y_m', 'm'))
     g['sgroove'] = (k9.lval(H, 'harness.groove.x_servo_m', 'm', 0.1082),) + mm(gs['servo'])
     g['sgroove_y'] = tuple(lv('grooves.servo_y_m', 'm'))
+    # F2's JR in-line recess on the servo branch (CR-F2-14): x from harness params, width along y and depth local
+    g['jr_x'] = tuple(k9.lval(H, 'harness.groove.jr_recess_x_m', 'm', [0.150, 0.168]))
+    jw = lv('jr_recess.width_y_m', 'm')
+    g['jr_y'] = (g['sgroove_y'][1] - jw / 2, g['sgroove_y'][1] + jw / 2)
+    g['jr_d'] = lv('jr_recess.depth_m', 'm')
     # servo pocket
     g['sp_x'], g['sp_y'] = tuple(lv('servo_pocket.x_m', 'm')), tuple(lv('servo_pocket.y_m', 'm'))
     g['sp_zc'] = lv('servo_pocket.ceiling_z_m', 'm')
@@ -95,7 +114,9 @@ def layout(ctx):
     # elevons
     g['spans'] = [s for s in k9.elevon_spans(P) if s[0] > 0]                # right: inboard, outboard
     g['e_gap'] = lv('elevon.end_gap_m', 'm')
-    th = surf(g, g['xh'], 'upper') - surf(g, g['xh'], 'lower')
+    g['tab_y'] = (g['spans'][0][1], g['spans'][1][0])                      # fin-root tab faces (CR-C2-13)
+    g['ecr'] = lv('elevon.cutout_corner_r_m', 'm')
+    th =surf(g, g['xh'], 'upper') - surf(g, g['xh'], 'lower')
     g['t_hinge'] = th
     g['bevel'] = th * math.tan(math.radians(lv('elevon.bevel_deg', 'deg')))
     g['defl'] = tuple(v('wing.elevon.deflection_deg', 'deg'))
@@ -107,6 +128,7 @@ def layout(ctx):
     gt = lv('elevon.tube_groove_gap_m', 'm')
     g['tube_groove'] = (xt - od / 2 - gt, xt + od / 2 + gt, zt + od / 2 + gt)      # x0, x1, ceiling (open below)
     g['tube_xz'] = (xt, zt, od / 2)
+    g['tube_groove_y'] = [tuple(r) for r in lv('elevon.tube_groove_y_m', 'm')]      # D6-R2 (CR-D6-14)
     bx = k9.lval(M, 'mec.horn.blade_x_mm', 'mm', [6.0, 40.0])
     hs = lv('elevon.horn_slot_m', 'm')
     g['horn_x'] = (min(g['xh'] + bx[0] / 1000.0, g['tube_groove'][0]), g['xh'] + bx[1] / 1000.0)
@@ -119,7 +141,50 @@ def layout(ctx):
     g['lab_x'], g['lab_y'], g['lab_t'] = tuple(lv('label.x_m', 'm')), tuple(lv('label.y_m', 'm')), lv('label.t_m', 'm')
     g['plug_r'] = lv('plugs.od_m', 'm') / 2
     g['plug_blk'], g['plug_anc'] = lv('plugs.block_len_m', 'm'), lv('plugs.anchor_len_m', 'm')
+    # seam-free LE (CR-B2-17): one wide strip laid last, centred so both edges sit aft of x/c 0.10
+    le_w, le_up, lap = lv('skin.le_strip_w_m', 'm'), lv('skin.le_strip_upper_arc_m', 'm'), lv('skin.overlap_m', 'm')
+    g['le_edge'] = {'upper': x_at_arc(g, le_up, 'upper'), 'lower': x_at_arc(g, le_w - le_up, 'lower')}
+    g['skin_lap'] = {'upper': x_at_arc(g, le_up - lap, 'upper'), 'lower': x_at_arc(g, le_w - le_up - lap, 'lower')}
+    g['le_clean_x'] = lv('skin.le_clean_xc', '-') * c
+    g['tab_tape_w'] = lv('skin.tab_edge_tape_w_m', 'm')
+    # recess-step fillet (D-69, CR-C3-17): legs along the floor and up the step (capped by the step height)
+    lf, lw = lv('recess.step_fillet_legs_m', 'm')
+    g['rf_legs'] = (lf, min(lw, surf(g, g['x_rec1'], 'upper') - g['z_rec']))
     return g
+
+
+def arc(g, x0, x1, side, n=200):
+    """Surface arc length (m) from x0 to x1 on one side (cosine-spaced polyline)."""
+    s, xp, zp = 0.0, None, None
+    for i in range(n + 1):
+        x = x0 + (x1 - x0) * (1 - math.cos(math.pi * i / n)) / 2
+        z = surf(g, x, side)
+        if xp is not None:
+            s += math.hypot(x - xp, z - zp)
+        xp, zp = x, z
+    return s
+
+
+def x_at_arc(g, s, side):
+    """Station x (m) where the surface arc from the LE reaches s (one cumulative table over the front 40 % of the
+    chord, 400 cosine-spaced points, linear between them)."""
+    n, xe = 400, 0.4 * g['c']
+    acc, xp, zp = 0.0, None, None
+    for i in range(n + 1):
+        x = xe * (1 - math.cos(math.pi * i / n)) / 2
+        z = surf(g, x, side)
+        if xp is not None:
+            d = math.hypot(x - xp, z - zp)
+            if acc + d >= s:
+                return xp + (x - xp) * (s - acc) / d
+            acc += d
+        xp, zp = x, z
+    raise ValueError('arc %.4f m is past 40 %% of the chord' % s)
+
+
+def corner_ext(r, u):
+    """x extent aft of the hinge of the R r foam fill at distance u from the tab face (0 at u >= r)."""
+    return 0.0 if u >= r else r - math.sqrt(max(r * r - (r - u) ** 2, 0.0))
 
 
 def surf(g, x, side):
@@ -176,8 +241,9 @@ def outline(g, x0, x1, ucuts=(), lcuts=()):
             enter = interior and abs(x - (b if descending else a)) < 1e-9
             leave = interior and abs(x - (a if descending else b)) < 1e-9
             if isinstance(f, list):
-                if enter:
-                    out.append((x, surf(g, x, side)))
+                if abs(x - (b if descending else a)) < 1e-9:              # first end: (skin), then the floor polyline
+                    if interior:
+                        out.append((x, surf(g, x, side)))
                     out.extend(f)
                 elif leave:
                     out.append((x, surf(g, x, side)))
@@ -219,9 +285,40 @@ def features(g):
          ('anchor', g['anc_y'][0], g['anc_y'][1]), ('block', g['blk_y'][0], g['blk_y'][1]),
          ('groove', g['groove_y'][0], g['groove_y'][1]), ('sgroove', g['sgroove_y'][0], g['sgroove_y'][1]),
          ('sbranch', g['sgroove_y'][1] - g['sgroove'][1] / 2, g['sgroove_y'][1] + g['sgroove'][1] / 2),
-         ('pocket', g['sp_y'][0], g['sp_y'][1]), ('spar', 0.0, g['spar_half'])]
+         ('pocket', g['sp_y'][0], g['sp_y'][1]), ('spar', 0.0, g['spar_half']), ('jr', g['jr_y'][0], g['jr_y'][1])]
     f += [('elevon', a, b) for a, b in g['spans']]
+    # stepped zones (n spanwise steps each): pocket corners R, lip beads, elevon cut-out corners R
+    (b0, b1), rp, lb, (t0, t1), r = g['blk_y'], g['blk_rp'], g['bead_leg'], g['tab_y'], g['ecr']
+    for kind, a, b in (('bstep', b0, b0 + rp), ('bstep', b1 - rp, b1), ('bead', b0 - lb, b0), ('bead', b1, b1 + lb),
+                       ('ecorner', t0 - r, t0), ('ecorner', t1, t1 + r)):
+        n = g['n_step']
+        f += [(kind, a + (b - a) * i / n, a + (b - a) * (i + 1) / n) for i in range(n)]
     return f
+
+
+def bead_depth(g, y0, y1):
+    """Depth of the stepped lip bead in span step y0..y1 (circumscribes the 45 deg triangle: never under the leg)."""
+    dist = max(g['blk_y'][0] - y1, y0 - g['blk_y'][1])                 # from the pocket wall to the step's near end
+    return g['bead_leg'] - max(dist, 0.0)
+
+
+def pocket_x(g, y0, y1):
+    """Block-pocket x range in span step y0..y1: narrowed in the R corner zones, evaluated at the step's inner end so
+    the pocket always contains D3's rounded block."""
+    xa, xb = g['blk_x']
+    rp = g['blk_rp']
+    d = min(y1 - g['blk_y'][0], g['blk_y'][1] - y0)
+    if d < rp - 1e-9:
+        dx = rp - math.sqrt(max(rp * rp - (rp - d) ** 2, 0.0))
+        xa, xb = xa + dx, xb - dx
+    return xa, xb
+
+
+def core_corner_x(g, y0, y1):
+    """Core aft end in span step y0..y1 of an elevon cut-out: hinge line plus the R fill at the tab, taken at the
+    step's far end from the tab (less foam than the true radius)."""
+    u = max(g['tab_y'][0] - y0, y1 - g['tab_y'][1])
+    return g['xh'] + corner_ext(g['ecr'], u)
 
 
 def segments(g):
@@ -237,11 +334,20 @@ def segments(g):
     return out
 
 
-def segment_loops(g, act):
-    """Loops for one segment: [(outer, [holes])...] (two entries when a full-depth cut splits the section)."""
+def segment_loops(g, act, y0=None, y1=None):
+    """Loops for one segment y0..y1: [(outer, [holes])...] (two entries when a full-depth cut splits the section).
+    y0, y1 (right-hand, >= 0) set the stepped zones; without them the plain cut is drawn."""
     xf, xa = g['x_slot']
+    stepped = y0 is not None
     x_end = g['xh'] if 'elevon' in act else g['c']
+    if 'elevon' in act and 'ecorner' in act and stepped:
+        x_end = core_corner_x(g, y0, y1)
     up, lo, holes_at = [], [], []
+    if 'bead' in act and stepped:
+        d = bead_depth(g, y0, y1)
+        bx0, bx1 = g['blk_x']
+        up.append((bx0, bx1, lambda x, d=d: surf(g, x, 'upper') - d))
+        lo.append((bx0, bx1, lambda x, d=d: surf(g, x, 'lower') + d))
     if 'recess' in act:
         up.append((g['x_rec0'], g['x_rec1'], g['z_rec']))
     if 'groove' in act:
@@ -252,16 +358,27 @@ def segment_loops(g, act):
         xc, w, d = g['sgroove']
         up.append((xc - w / 2, xc + w / 2, surf(g, xc, 'upper') - d))
     split = []
+    j0, j1 = g['jr_x']
     if 'sbranch' in act:
         xc, w, d = g['sgroove']
         up = [u for u in up if abs(u[0] - (xc - w / 2)) > 1e-9]                # the branch replaces the groove here
-        up.append((xc - w / 2, g['lead_x'][0], lambda x, d=d: surf(g, x, 'upper') - d))
+        xb0, xb1 = xc - w / 2, g['lead_x'][0]
+        if 'jr' in act:                                                        # branch floor dropping into the JR recess
+            fl = [(x, surf(g, x, 'upper') - d) for x in reversed(_xs(j1, xb1))]
+            fl += [(j1, surf(g, j1, 'upper') - g['jr_d'])]
+            fl += [(x, surf(g, x, 'upper') - g['jr_d']) for x in reversed(_xs(j0, j1))][1:]
+            fl += [(x, surf(g, x, 'upper') - d) for x in reversed(_xs(xb0, j0))]
+            up.append((xb0, xb1, fl))
+        else:
+            up.append((xb0, xb1, lambda x, d=d: surf(g, x, 'upper') - d))
         split.append(g['lead_x'])                                              # lead hole down into the pocket
+    elif 'jr' in act:
+        up.append((j0, j1, lambda x: surf(g, x, 'upper') - g['jr_d']))
     if 'pocket' in act:
         lo.append((g['sp_x'][0], g['sp_x'][1], g['sp_zc']))
     spar = 'spar' in act
     if 'block' in act:
-        split.append(g['blk_x'])
+        split.append(pocket_x(g, y0, y1) if stepped else g['blk_x'])
     elif 'anchor' in act and spar:
         split.append((xf, xa))
     elif 'window' in act and spar:
@@ -292,8 +409,12 @@ def skin_plan(g):
     # centre strip |y| <= pod half width (built once, spans both sides)
     plan += [('skin centre upper', 'upper', ux1, xh, -yp, yp, 1), ('skin centre lower', 'lower', 0.0, xh, -yp, yp, 1),
              ('skin centre aft upper', 'upper', xh, c, -yp, yp, 1), ('skin centre aft lower', 'lower', xh, c, -yp, yp, 1)]
-    # outer panels (right; mirrored)
-    plan += [('skin upper', 'upper', 0.0, xh, yp, g['half'], 1), ('skin lower', 'lower', 0.0, xh, yp, g['half'], 1)]
+    # outer panels (right; mirrored): the spanwise strips stop under the LE strip (10 % overlap), the LE strip is laid
+    # last over both faces in one piece so no edge lies ahead of x/c 0.10 (CR-B2-17)
+    plan += [('skin upper', 'upper', g['skin_lap']['upper'], xh, yp, g['half'], 1),
+             ('skin lower', 'lower', g['skin_lap']['lower'], xh, yp, g['half'], 1),
+             ('LE strip upper', 'upper', 0.0, g['le_edge']['upper'], yp, g['half'], 1),
+             ('LE strip lower', 'lower', 0.0, g['le_edge']['lower'], yp, g['half'], 1)]
     (i0, i1), (o0, o1) = g['spans']
     gaps = [(a, b) for a, b in ((yp, i0), (i1, o0), (o1, g['half'])) if b - a > 1e-9]
     for a, b in gaps:
@@ -307,13 +428,17 @@ def skin_plan(g):
     return plan
 
 
-def elevon_section(g):
-    """Panel section: upper skin TE -> hinge, 30 deg lower bevel, D6's torque-tube groove open below, lower skin -> TE."""
+def elevon_section(g, groove=True):
+    """Panel section: upper skin TE -> hinge, 30 deg lower bevel, D6's torque-tube groove open below (where the tube
+    runs), lower skin -> TE."""
     xh, c, b = g['xh'], g['c'], g['bevel']
     gx0, gx1, gzc = g['tube_groove']
     zu0, zl1 = surf(g, xh, 'upper'), surf(g, xh + b, 'lower')
     zbev = lambda x: zu0 + (x - xh) / b * (zl1 - zu0)
     up = [(x, surf(g, x, 'upper')) for x in reversed(_xs(xh, c))]
+    if not groove:
+        lo = [(xh + b, zl1)] + [(x, surf(g, x, 'lower')) for x in _xs(xh + b, c)][1:]
+        return _dedupe(up + lo)
     if gx0 < xh + b:
         mid = [(gx0, zbev(gx0)), (gx0, gzc), (gx1, gzc), (gx1, surf(g, gx1, 'lower'))]
         lo = [(x, surf(g, x, 'lower')) for x in _xs(gx1, c)][1:]
@@ -340,18 +465,45 @@ def clip_x(loop, lo, hi):
     return _dedupe(clip(pts, lambda p: p[0] <= hi + 1e-12, hi))
 
 
+def panel_start_x(g, ya, yb):
+    """Panel front in span step ya..yb near the fin-root tab: the core's R fill plus the end gap in x, taken at the
+    step's near end to the tab (more relief than the true radius, so the panel never meets the fill)."""
+    gap, r, n = g['e_gap'], g['ecr'], g['n_step']
+    u_near = (ya - g['tab_y'][1]) if ya >= g['tab_y'][1] - 1e-9 else (g['tab_y'][0] - yb)   # outboard / inboard panel
+    w = u_near - gap                                                       # past the end gap
+    if w >= r - 1e-9:
+        return g['xh']
+    k = int(max(w, 0.0) / (r / n) + 1e-6)                                   # panel step k faces core steps k, k+1
+    return g['xh'] + corner_ext(r, k * r / n) + gap
+
+
 def elevon_pieces(g, y0, y1):
-    """[(y_from, y_to, loop)] for one right-hand panel between y0 and y1 (gaps applied by the caller): full sections,
-    and at a horn-blade slot the section minus the blade x range."""
-    sec = elevon_section(g)
-    slots = [(a, b) for a, b in g['horn_y'] if y0 < a and b < y1]
-    out, y = [], y0
-    for a, b in slots:
-        out.append((y, a, sec))
-        out.append((a, b, clip_x(sec, g['xh'], g['horn_x'][0])))
-        out.append((a, b, clip_x(sec, g['horn_x'][1], g['c'])))
-        y = b
-    out.append((y, y1, sec))
+    """[(y_from, y_to, loop)] for one right-hand panel between y0 and y1 (gaps applied by the caller): the section
+    with D6's torque-tube groove where the tube runs (D6-R2 y ranges), without it elsewhere; at a horn-blade slot the
+    section minus the blade x range; at the fin-root tab end the front corner relieved round the core's R fill
+    (CR-C2-13), stepped like the core."""
+    r, n, gap = g['ecr'], g['n_step'], g['e_gap']
+    t0, t1 = g['tab_y']
+    br = {y0, y1}
+    br |= {v for a, b in g['horn_y'] for v in (a, b)}
+    br |= {v for a, b in g['tube_groove_y'] for v in (a, b)}
+    br |= {t0 - gap - r * i / n for i in range(n + 1)} | {t1 + gap + r * i / n for i in range(n + 1)}
+    ys = sorted(round(v, 7) for v in br if y0 - 1e-9 <= v <= y1 + 1e-9)
+    out = []
+    for a, b in zip(ys, ys[1:]):
+        if b - a < 1e-7:
+            continue
+        ym = (a + b) / 2
+        grooved = any(p <= ym <= q for p, q in g['tube_groove_y'])
+        sec = elevon_section(g, grooved)
+        xs = panel_start_x(g, a, b)
+        if xs > g['xh'] + 1e-9:
+            sec = clip_x(sec, xs, g['c'])
+        if any(p < ym < q for p, q in g['horn_y']):
+            out.append((a, b, clip_x(sec, max(xs, g['xh']), g['horn_x'][0])))
+            out.append((a, b, clip_x(sec, g['horn_x'][1], g['c'])))
+        else:
+            out.append((a, b, sec))
     return out
 
 
@@ -364,7 +516,7 @@ def build(ctx):
     core = ctx.part('WNG-001')
     right = []
     for y0, y1, act in segments(g):
-        for i, (loop, holes) in enumerate(segment_loops(g, act)):
+        for i, (loop, holes) in enumerate(segment_loops(g, act, y0, y1)):
             nm = 'xps core y%.3f-%.3f%s' % (y0, y1, '' if i == 0 else ' aft')
             if y0 == 0.0:                                     # centre segment spans y -y1 .. +y1 as one body
                 right.append(core.prism('Y', -y1, [loop] + holes, 2 * y1, name=nm))
@@ -372,6 +524,30 @@ def build(ctx):
                 right.append(core.prism('Y', y0, [loop] + holes, y1 - y0, name=nm))
     for s in [s for s in right if s.offset >= 0.0]:
         core._add(s.mirrored(1))
+
+    # WNG-006 block-pocket lip beads (D-68): microballoon epoxy in the stepped 45 deg chamfer along the inboard and
+    # outboard pocket lips, upper and lower surface, sanded flush; the 60 mm tape doubler runs over them
+    bead = ctx.part('WNG-006-R')
+    for y0, y1, act in segments(g):
+        if 'bead' in act:
+            d = bead_depth(g, y0, y1)
+            for side in ('upper', 'lower'):
+                bead.prism('Y', y0, [skin_strip(g, g['blk_x'][0], g['blk_x'][1], side, -d, d)], y1 - y0,
+                           name='bead pocket lip %s' % side)
+    k9.pair(ctx, 'WNG-006-R', 'WNG-006-L')
+    for e in ('E-WNG-12', 'E-WNG-13'):
+        ctx.contact(e, 'lip bead bonded in the chamfer of the core pocket lip (laid wet, sanded flush)')
+    for e in ('E-WNG-14', 'E-WNG-15'):
+        ctx.contact(e, 'lip bead wets the through-core block side face (laid in the block bond)')
+
+    # WNG-007 recess-step fillet (D-69, CR-C3-17): microballoon epoxy in the floor-to-step corner at x_rec1, full
+    # recess width, laid and cured before the pod goes in; the pod floor's aft lower edge is bevelled onto it (D2)
+    lf, lw = g['rf_legs']
+    x1, zf = g['x_rec1'], g['z_rec']
+    ctx.part('WNG-007').prism('Y', -g['y_pod'], [[(x1 - lf, zf), (x1, zf), (x1, zf + lw)]], 2 * g['y_pod'],
+                              name='fillet recess step')
+    ctx.contact('E-WNG-16', 'recess-step fillet bonded in the core corner (laid before the pod)')
+    ctx.contact('E-WNG-17', 'pod floor aft edge bevelled and bonded on the fillet face')
 
     # WNG-002 spar and the four plugs inside it (C2)
     k9.spar_y(ctx.part('WNG-002'), g['xs'], g['zs'], g['spar_half'], 2 * g['rs'], 2 * g['ri'])
@@ -386,13 +562,21 @@ def build(ctx):
     # WNG-003 tape skin (thin bodies; mass from arc length in wing_data.py)
     skin = ctx.part('WNG-003')
     t = g['t_skin']
+    layer = {'doubler block': 2, 'doubler servo': 1, 'LE strip': 1}          # layers under each piece
     for name, side, x0, x1, y0, y1, _n in skin_plan(g):
-        off = t if name.startswith('doubler') else 0.0
+        off = t * next((v for k, v in layer.items() if name.startswith(k)), 0)
         s = skin.prism('Y', y0, [skin_strip(g, x0, x1, side, off, t)], y1 - y0, name='tape ' + name)
         if y0 > 0:
             skin._add(s.mirrored(1))
     tip = skin.prism('Y', g['half'], [outline(g, 0.0, g['c'])], 2 * t, name='tape tip edge')
     skin._add(tip.mirrored(1))
+    # tab tape carried round the elevon cut-out edges (CR-C2-13): a strip folded over each tab side face, round the
+    # R fill at the hinge (flat face drawn from the end of the radius to the TE)
+    t0, t1 = g['tab_y']
+    face = outline(g, g['xh'] + g['ecr'], g['c'])
+    for ya in (t0 - t, t1):
+        s = skin.prism('Y', ya, [face], t, name='tape tab edge')
+        skin._add(s.mirrored(1))
     ctx.contact('E-WNG-02', 'tape skin on the core (spanwise strips, 10 % overlap, 15 mm round the LE)')
 
     # WNG-020 FAA label on the upper skin, right wing

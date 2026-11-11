@@ -293,16 +293,6 @@
    ]
   },
   {
-   "id": "ASM-B3-PACK-FWD-MOST",
-   "type": "assumption",
-   "title": "Most forward pack centroid the nose stack allows (D-47 bay)",
-   "text": "Pack centroid x with the pack fore face on the crush block / spreader stack",
-   "basis": "MASS-CG.md A3-R5 (D-47 bay: stop -0.1212, crush block 24.3 mm, spreader 1.5 mm): centroid >= -0.0254 m, i.e. 3.4 mm forward of the -0.022 nominal (CHANGE-LOG D-47)",
-   "value": -0.0254,
-   "unit": "m",
-   "status": "PROPOSED"
-  },
-  {
    "id": "SRC-B3-MIL9490",
    "type": "source",
    "title": "MIL-F-9490D Flight control systems, general specification (1975)",
@@ -758,350 +748,17 @@
    "value": 0.0688771168324081
   },
   {
-   "id": "CALC-B3-CG-LIMITS",
-   "type": "calculation",
-   "title": "CG limits from stability, elevon trim and the trimmed stall",
-   "script": "redesign/team/B3/sc_analysis.py",
-   "function": "cg_limits",
-   "equation": "aft: x = Xnp - SMmin c ; for SM 3..14 %: AVL trim (Cm + dcm = 0, elevon gain eta) at CL 0.4..1.2, critical section -> CLmax_t(SM), delta(SM), Vs(SM) ; commanded delta = delta_AVL / e_D6(Vs_max), e_D6 = 1 - loss_VA (V/VA)^2 ; forward = smaller SM of {|delta| + k slop = tfrac travel, Vs = Vs_max} ; target = mid-range",
-   "inputs": {
-    "b": "P:wing.span_m",
-    "c": "P:wing.chord_m",
-    "ef": "P:wing.elevon.chord_frac",
-    "yin": "P:wing.elevon.inboard_y_m",
-    "yout": "P:wing.elevon.outboard_y_m",
-    "fy": "P:fins.y_m",
-    "fh": "P:fins.half_height_m",
-    "fle": "P:fins.le_x_m",
-    "fte": "P:fins.te_x_m",
-    "zref": "P:cg.z_target_m",
-    "xnp_a": "CL-B3-XNP-AERO",
-    "xnp": "CL-B3-XNP",
-    "dcm": "CL-B2-DCM-VISC",
-    "eta": "CL-B2-ELEVON-ETA",
-    "tab": "ASM-B3-CLMAX-FLAP",
-    "m": "P:requirements.mtow_gate_kg",
-    "g": "P:env.g_ms2",
-    "rho": "P:env.rho_kgm3",
-    "S": "CL-A1-WING-AREA",
-    "lo": "CL-D6-EFF-LOSS-OUT",
-    "li": "CL-D6-EFF-LOSS-IN",
-    "va": "ASM-F4-VA-SCHED",
-    "slop": "CL-D6-SLOP",
-    "vmax": "P:requirements.stall_max_ms",
-    "sm_min": "P:requirements.static_margin_min",
-    "travel": "P:wing.elevon.deflection_deg",
-    "tfrac": "P:requirements.elevon_trim_travel_max",
-    "kslop": "ASM-B3-SLOP-TRIM-FRAC"
-   },
-   "units": {
-    "b": "m",
-    "c": "m",
-    "yin": "m",
-    "yout": "m",
-    "fy": "m",
-    "fh": "m",
-    "fle": "m",
-    "fte": "m",
-    "zref": "m",
-    "xnp_a": "m",
-    "xnp": "m",
-    "m": "kg",
-    "g": "m/s2",
-    "rho": "kg/m3",
-    "S": "m2",
-    "va": "m/s",
-    "slop": "deg",
-    "vmax": "m/s",
-    "travel": "deg"
-   },
-   "assumes": [
-    "ASM-B3-CLMAX-FLAP"
-   ],
-   "cites": [
-    "SRC-B3-AVL"
-   ],
-   "outputs": {
-    "x_aft": 0.0528771168324081,
-    "x_fwd": 0.04675288798441226,
-    "sm_fwd": 0.06913821514998701,
-    "x_target": 0.04981500240841018,
-    "sm_target": 0.059569107574993514,
-    "width": 0.006124228847995843,
-    "x_aft_frac": 0.16524099010127533,
-    "x_fwd_frac": 0.14610277495128832,
-    "range_closed": 0,
-    "sm_fwd_trim": 0.06913821514998701,
-    "sm_fwd_stall": 0.09058823529411783,
-    "x_fwd_trim": 0.04675288798441226,
-    "x_fwd_stall": 0.0398888815382904,
-    "trim_budget_deg": 12.081773005797766,
-    "binding": "trim",
-    "eff_stall": 0.97294505552967,
-    "x_fwd_no_d6": 0.04531459286587709,
-    "x_fwd_full_slop": 0.04753098471781177,
-    "columns": [
-     "SM",
-     "x_cg m",
-     "CLmax_trim",
-     "elevon deg",
-     "alpha deg",
-     "Vs m/s",
-     "y first stall m"
-    ],
-    "table": [
-     [
-      0.03,
-      0.05928,
-      0.881,
-      -5.54,
-      15.85,
-      11.332,
-      0.07
-     ],
-     [
-      0.04,
-      0.05608,
-      0.8507,
-      -7.3,
-      15.76,
-      11.532,
-      0.07
-     ],
-     [
-      0.05,
-      0.05288,
-      0.8225,
-      -8.94,
-      15.68,
-      11.727,
-      0.07
-     ],
-     [
-      0.06,
-      0.04968,
-      0.7993,
-      -10.51,
-      15.66,
-      11.896,
-      0.07
-     ],
-     [
-      0.07,
-      0.04648,
-      0.7947,
-      -12.23,
-      16.02,
-      11.931,
-      0.07
-     ],
-     [
-      0.08,
-      0.04328,
-      0.7902,
-      -13.93,
-      16.38,
-      11.965,
-      0.07
-     ],
-     [
-      0.09,
-      0.04008,
-      0.7858,
-      -15.63,
-      16.73,
-      11.998,
-      0.07
-     ],
-     [
-      0.1,
-      0.03688,
-      0.7814,
-      -17.32,
-      17.08,
-      12.032,
-      0.07
-     ],
-     [
-      0.11,
-      0.03368,
-      0.7772,
-      -18.99,
-      17.43,
-      12.065,
-      0.07
-     ],
-     [
-      0.12,
-      0.03048,
-      0.7729,
-      -20.66,
-      17.78,
-      12.098,
-      0.07
-     ],
-     [
-      0.13,
-      0.02728,
-      0.7688,
-      -22.33,
-      18.12,
-      12.13,
-      0.07
-     ],
-     [
-      0.14,
-      0.02408,
-      0.7646,
-      -23.98,
-      18.47,
-      12.163,
-      0.07
-     ]
-    ]
-   },
-   "input_values": {
-    "b": 1.15,
-    "c": 0.32,
-    "ef": 0.22,
-    "yin": [
-     0.07,
-     0.3
-    ],
-    "yout": [
-     0.34,
-     0.56
-    ],
-    "fy": 0.32,
-    "fh": 0.21,
-    "fle": 0.045,
-    "fte": 0.32,
-    "zref": 0.0185,
-    "xnp_a": 0.071946,
-    "xnp": 0.0688771168324081,
-    "dcm": -0.01024,
-    "eta": 0.606,
-    "tab": [
-     [
-      -15.0,
-      1.0276
-     ],
-     [
-      -10.0,
-      1.0276
-     ],
-     [
-      -5.0,
-      1.1199
-     ],
-     [
-      0.0,
-      1.2423
-     ],
-     [
-      5.0,
-      1.3601
-     ],
-     [
-      10.0,
-      1.4677
-     ]
-    ],
-    "m": 2.6,
-    "g": 9.80665,
-    "rho": 1.225,
-    "S": 0.368,
-    "lo": 0.0789572250948345,
-    "li": 0.07148608475229434,
-    "va": 20.5,
-    "slop": 0.8364539884044696,
-    "vmax": 12.0,
-    "sm_min": 0.05,
-    "travel": [
-     -25,
-     25
-    ],
-    "tfrac": 0.5,
-    "kslop": 0.5
-   }
-  },
-  {
-   "id": "CL-B3-CG-AFT",
-   "type": "claim",
-   "title": "Aft CG limit",
-   "calc": "CALC-B3-CG-LIMITS",
-   "output": "x_aft",
-   "unit": "m",
-   "how": "T-B3-CG-BALANCE: balance on the two fin-root marks; never fly with the balance point aft of this line.",
-   "value": 0.0528771168324081
-  },
-  {
-   "id": "CL-B3-CG-FWD",
-   "type": "claim",
-   "title": "Forward CG limit",
-   "calc": "CALC-B3-CG-LIMITS",
-   "output": "x_fwd",
-   "unit": "m",
-   "how": "T-B3-CG-BALANCE; twin slow flight at the forward mark: stall at <= 12 m/s (scaled) with <= 12.5 deg up.",
-   "value": 0.04675288798441226
-  },
-  {
-   "id": "CL-B3-CG-TARGET",
-   "type": "claim",
-   "title": "CG design target",
-   "calc": "CALC-B3-CG-LIMITS",
-   "output": "x_target",
-   "unit": "m",
-   "how": "A3 roll-up and H1 balance with the pack at its nominal station.",
-   "value": 0.04981500240841018
-  },
-  {
-   "id": "CL-B3-CG-WIDTH",
-   "type": "claim",
-   "title": "CG range width",
-   "calc": "CALC-B3-CG-LIMITS",
-   "output": "width",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.004
-   },
-   "how": "Follows from the two limits; >= 4 mm so the pack slide and build scatter fit.",
-   "note": "4 mm = +/-2 mm H1 balance repeatability; ESTIMATE",
-   "value": 0.006124228847995843
-  },
-  {
-   "id": "CL-B3-SM-TARGET",
-   "type": "claim",
-   "title": "Static margin at the CG target",
-   "calc": "CALC-B3-CG-LIMITS",
-   "output": "sm_target",
-   "unit": "-",
-   "limit": {
-    "op": ">=",
-    "ref": "P:requirements.static_margin_min"
-   },
-   "verifies": [
-    "R-STATIC-MARGIN"
-   ],
-   "how": "T-B3-TWIN-NP: elevon-trim-vs-CL slope at two CG positions (FBWA glides).",
-   "assumes": [
-    "ASM-B3-PROP-CNA"
-   ],
-   "value": 0.059569107574993514
-  },
-  {
    "id": "CALC-B3-PROP-AFT",
    "type": "calculation",
    "title": "Ribner prop normal force at the aft CG limit (CR-J1-11)",
    "script": "redesign/team/B3/sc_analysis.py",
    "function": "prop_aft",
-   "equation": "arm = x_aft - x_prop ; dCma_p = n cna A/S up arm/c ; dCnb_p = -n cna A/S arm/b (per rad, about the aft CG) ; N_p = n cna A q per rad at 1.3 Vs ; Tc = (W/(L/D))/n / (rho V^2 D^2) (light loading check) ; SM at the aft limit without the props = SM_min + (Xnp_props - Xnp)/c",
+   "equation": "arm = x_aft - x_prop ; dCma_p = n cna A/S up arm/c ; dCnb_p = -n cna A/S arm/b (per rad, about the aft CG) ; N_p = n cna A q per rad at 1.3 Vs ; Tc = (W/(L/D))/n / (rho V^2 D^2) (light loading check) ; SM at the aft limit without the props = SM_min + (Xnp_props - Xnp)/c ; B4 cross-check: cna_B4 = (dH/di) / (q(V_h) A), Xnp shift with cna_B4",
    "inputs": {
     "n": "P:propulsion.n_motors",
     "D": "P:propulsion.prop_diameter_m",
     "x_prop": "P:propulsion.stations.x_prop_plane_m",
-    "x_aft": "CL-B3-CG-AFT",
+    "x_aft": "CL-B3-V-CG-AFT-ENV",
     "xnp": "CL-B3-XNP",
     "xnp_a": "CL-B3-XNP-AERO",
     "CLa": "CL-B3-CLA",
@@ -1114,7 +771,9 @@
     "rho": "P:env.rho_kgm3",
     "m": "P:requirements.mtow_gate_kg",
     "g": "P:env.g_ms2",
-    "ld": "P:performance.ld_cruise"
+    "ld": "P:performance.ld_cruise",
+    "dhdi": "CL-B4-SIM-DH-DI",
+    "v_h": "P:performance.transition_min_ms"
    },
    "units": {
     "D": "m",
@@ -1128,7 +787,9 @@
     "vt": "m/s",
     "rho": "kg/m3",
     "m": "kg",
-    "g": "m/s2"
+    "g": "m/s2",
+    "dhdi": "N/rad",
+    "v_h": "m/s"
    },
    "assumes": [
     "ASM-B3-PROP-CNA",
@@ -1139,21 +800,25 @@
     "SRC-B3-PERKINS"
    ],
    "outputs": {
-    "arm_m": 0.0655771168324081,
-    "dCma_props": 0.017276180119483068,
-    "dCnb_props": -0.004180247741576244,
+    "cna_b4": 0.06925212795099707,
+    "cna_ratio_b4": 0.6295647995545188,
+    "dxnp_props_b4_m": -0.0012771732744113872,
+    "xnp_shift_if_b4_m": 0.0007336353177519708,
+    "arm_m": 0.06414181916710612,
+    "dCma_props": 0.01689805338582075,
+    "dCnb_props": -0.004088753938346043,
     "dCYb_props": -0.07330735376943147,
-    "N_props_per_deg_N": 0.06934225099062398,
-    "Tc": 0.04471305427991772,
+    "N_props_per_deg_N": 0.06936236217065275,
+    "Tc": 0.04470009001145688,
     "dxnp_props_m": -0.002010808592163358,
-    "sm_aft_if_props_ignored": 0.05628377685051051,
-    "sm_aft": 0.05
+    "sm_aft_if_props_ignored": 0.060769082054579204,
+    "sm_aft": 0.0544853052040687
    },
    "input_values": {
     "n": 4,
     "D": 0.2794,
     "x_prop": -0.0127,
-    "x_aft": 0.0528771168324081,
+    "x_aft": 0.05144181916710612,
     "xnp": 0.0688771168324081,
     "xnp_a": 0.071946,
     "CLa": 3.464493,
@@ -1162,11 +827,13 @@
     "b": 1.15,
     "cna": 0.11,
     "up": 1.15,
-    "vt": 15.506349086682881,
+    "vt": 15.508597559767704,
     "rho": 1.225,
     "m": 2.6,
     "g": 9.80665,
-    "ld": 6.2
+    "ld": 6.2,
+    "dhdi": 0.6328941733639913,
+    "v_h": 15.6
    }
   },
   {
@@ -1176,9 +843,9 @@
    "calc": "CALC-B3-PROP-AFT",
    "output": "arm_m",
    "unit": "m",
-   "how": "Follows from CL-B3-CG-AFT and the prop plane (D3 CAD).",
+   "how": "Follows from CL-B3-V-CG-AFT-ENV and the prop plane (D3 CAD).",
    "note": "J1 CL-J1-PROP-ARM 0.049 m at R1",
-   "value": 0.0655771168324081
+   "value": 0.06414181916710612
   },
   {
    "id": "CL-B3-PROP-CNB-AFT",
@@ -1191,7 +858,27 @@
    "assumes": [
     "ASM-B3-PROP-CNA"
    ],
-   "value": -0.004180247741576244
+   "value": -0.004088753938346043
+  },
+  {
+   "id": "CL-B3-PROP-CNA-B4-RATIO",
+   "type": "claim",
+   "title": "Prop normal-force slope: B4 BEMT (dH/di at 15.6 m/s) / B3 Ribner assumption",
+   "calc": "CALC-B3-PROP-AFT",
+   "output": "cna_ratio_b4",
+   "unit": "-",
+   "how": "Car-top rig side force vs incidence (B4); < 1 means the Ribner NP term is conservative.",
+   "value": 0.6295647995545188
+  },
+  {
+   "id": "CL-B3-PROP-XNP-B4-SHIFT",
+   "type": "claim",
+   "title": "Whole-aircraft NP shift if B4's BEMT slope replaced the Ribner assumption",
+   "calc": "CALC-B3-PROP-AFT",
+   "output": "xnp_shift_if_b4_m",
+   "unit": "m",
+   "how": "T-B3-TWIN-NP powered vs gliding; positive = NP aft (credit not taken in the CG limits).",
+   "value": 0.0007336353177519708
   },
   {
    "id": "CL-B3-PROP-DXNP",
@@ -1205,237 +892,6 @@
     "ASM-B3-PROP-CNA"
    ],
    "value": -0.002010808592163358
-  },
-  {
-   "id": "CALC-B3-CG-CHECK",
-   "type": "calculation",
-   "title": "A3 CG and the D-59 pack stations against the B3 range",
-   "script": "redesign/team/B3/sc_analysis.py",
-   "function": "cg_check",
-   "equation": "x_now = cg_frac c ; A3 pack station x_p = x_req - (x_t,A3 - x_now) m/m_pack ; dry moment S0 = m x_now - m_pack x_p, M0 = m - m_pack ; CG(m_i, x_i) = (S0 + m_i x_i)/(M0 + m_i) ; D-59 rule: stations x_nom + aft - k step >= x_most, the one with CG nearest the B3 target ; pack window: heaviest pack inside at the aft-most station, lightest inside at the crush stack",
-   "inputs": {
-    "cg_frac": "CL-A3-CG-X",
-    "c": "P:wing.chord_m",
-    "x_fwd": "CL-B3-CG-FWD",
-    "x_aft": "CL-B3-CG-AFT",
-    "x_t": "CL-B3-CG-TARGET",
-    "x_t_a3": "P:cg.x_target_m",
-    "x_nom": "P:pod.pack_x_nominal_m",
-    "x_req": "CL-A3-PACK-X-REQ",
-    "m_pack": "P:battery.mass_kg",
-    "m_basic": "CL-A3-MASS-BASIC",
-    "aft": "P:pod.pack_aft_travel_m",
-    "step": "P:pod.pack_spacer_step_m",
-    "x_most": "ASM-B3-PACK-FWD-MOST",
-    "mrange": "ASM-A3-PACK-RANGE"
-   },
-   "units": {
-    "c": "m",
-    "x_fwd": "m",
-    "x_aft": "m",
-    "x_t": "m",
-    "x_t_a3": "m",
-    "x_nom": "m",
-    "x_req": "m",
-    "m_pack": "kg",
-    "aft": "m",
-    "step": "m",
-    "x_most": "m",
-    "mrange": "g"
-   },
-   "outputs": {
-    "x_now": 0.052208319190909805,
-    "pack_x_a3": -0.008492392727272731,
-    "margin_fwd": 0.005455431206497545,
-    "margin_aft": 0.0006687976414982977,
-    "to_target": -0.002393316782499627,
-    "x_centred": 0.04663928377598402,
-    "centred_margin_fwd": -0.0001136042084282432,
-    "centred_margin_aft": 0.006237833056424086,
-    "pack_x_target": -0.018594887470157778,
-    "pack_offset_target": 0.013405112529842222,
-    "pack_slide_left": -0.0014051125298422222,
-    "travel_m": [
-     0.006600000000000002,
-     0.012
-    ],
-    "cg_slide_fwd": 0.04820284714983504,
-    "cg_slide_aft": 0.049482126273894964,
-    "pack_cases_columns": [
-     "pack g",
-     "station x m",
-     "CG x m",
-     "fwd margin m",
-     "aft margin m"
-    ],
-    "pack_cases": [
-     [
-      503.0,
-      -0.024,
-      0.05003,
-      0.00328,
-      0.00284
-     ],
-     [
-      550.0,
-      -0.02,
-      0.04948,
-      0.00273,
-      0.00339
-     ],
-     [
-      680.0,
-      -0.02,
-      0.0458,
-      -0.00096,
-      0.00708
-     ]
-    ],
-    "packs_margin_fwd": -0.00096,
-    "packs_margin_aft": 0.00284,
-    "pack_max_g": 644.9210496946355,
-    "pack_min_g": 411.36589568456867
-   },
-   "input_values": {
-    "cg_frac": 0.16315099747159315,
-    "c": 0.32,
-    "x_fwd": 0.04675288798441226,
-    "x_aft": 0.0528771168324081,
-    "x_t": 0.04981500240841018,
-    "x_t_a3": 0.049,
-    "x_nom": -0.032,
-    "x_req": -0.022035116363636396,
-    "m_pack": 0.55,
-    "m_basic": 2.32162,
-    "aft": 0.012,
-    "step": 0.002,
-    "x_most": -0.0254,
-    "mrange": [
-     503.0,
-     680.0
-    ]
-   }
-  },
-  {
-   "id": "CL-B3-CG-NOW-FWD",
-   "type": "claim",
-   "title": "A3 CG as published (A3's pack station) behind the forward limit",
-   "calc": "CALC-B3-CG-CHECK",
-   "output": "margin_fwd",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.0
-   },
-   "how": "Re-run after A3 updates the roll-up; T-B3-CG-BALANCE on the built aircraft.",
-   "value": 0.005455431206497545
-  },
-  {
-   "id": "CL-B3-CG-NOW-AFT",
-   "type": "claim",
-   "title": "A3 CG as published (A3's pack station) ahead of the aft limit",
-   "calc": "CALC-B3-CG-CHECK",
-   "output": "margin_aft",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.0
-   },
-   "how": "As CL-B3-CG-NOW-FWD.",
-   "note": "A3-R5 rolls up with the pack at the old D-24 station (-0.001); D-47 moves it to -0.022, which CL-B3-CG-CENTRED-* check. Clears when A3 re-runs at pod.pack_x_nominal_m",
-   "value": 0.0006687976414982977
-  },
-  {
-   "id": "CL-B3-CG-CENTRED-AFT",
-   "type": "claim",
-   "title": "CG with the 550 g pack at its D-47 nominal station (x -0.022), ahead of the aft limit",
-   "calc": "CALC-B3-CG-CHECK",
-   "output": "centred_margin_aft",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.0
-   },
-   "how": "A3 roll-up with the pack at pod.pack_x_nominal_m; T-B3-CG-BALANCE.",
-   "note": "id kept for A1's CALC-A1-CG-RANGE; 'centred' means the nominal station (D-24 -0.001, D-47 -0.022)",
-   "value": 0.006237833056424086
-  },
-  {
-   "id": "CL-B3-CG-CENTRED-FWD",
-   "type": "claim",
-   "title": "CG with the 550 g pack at its D-47 nominal station, behind the forward limit",
-   "calc": "CALC-B3-CG-CHECK",
-   "output": "centred_margin_fwd",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.0
-   },
-   "how": "As CL-B3-CG-CENTRED-AFT.",
-   "value": -0.0001136042084282432
-  },
-  {
-   "id": "CL-B3-CG-PACKS-FWD",
-   "type": "claim",
-   "title": "Smallest forward-limit margin over the 503 / 550 / 680 g packs at their D-59 stations",
-   "calc": "CALC-B3-CG-CHECK",
-   "output": "packs_margin_fwd",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.0
-   },
-   "how": "Weigh the pack (E2), set the station from the flight card (H3), balance (T-B3-CG-BALANCE).",
-   "value": -0.00096
-  },
-  {
-   "id": "CL-B3-CG-PACKS-AFT",
-   "type": "claim",
-   "title": "Smallest aft-limit margin over the 503 / 550 / 680 g packs at their D-59 stations",
-   "calc": "CALC-B3-CG-CHECK",
-   "output": "packs_margin_aft",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.0
-   },
-   "how": "As CL-B3-CG-PACKS-FWD.",
-   "value": 0.00284
-  },
-  {
-   "id": "CL-B3-PACK-SLIDE-LEFT",
-   "type": "claim",
-   "title": "Pack trim travel left with the 550 g pack at the B3 target station",
-   "calc": "CALC-B3-CG-CHECK",
-   "output": "pack_slide_left",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.0
-   },
-   "how": "D2 marks the pack station on the tray; H1 balance confirms the CG on target.",
-   "note": "travel from the -0.022 datum: aft to the stop (pod.pack_aft_travel_m, D-59), forward to the crush stack (ASM-B3-PACK-FWD-MOST)",
-   "value": -0.0014051125298422222
-  },
-  {
-   "id": "CL-B3-PACK-MASS-MAX",
-   "type": "claim",
-   "title": "Heaviest pack that stays behind the forward limit at the aft-most station",
-   "calc": "CALC-B3-CG-CHECK",
-   "output": "pack_max_g",
-   "unit": "g",
-   "how": "E2 weighs the pack; above this mass the pack cannot be trimmed with the bay (ballast or a new station).",
-   "value": 644.9210496946355
-  },
-  {
-   "id": "CL-B3-PACK-MASS-MIN",
-   "type": "claim",
-   "title": "Lightest pack that stays ahead of the aft limit on the crush stack",
-   "calc": "CALC-B3-CG-CHECK",
-   "output": "pack_min_g",
-   "unit": "g",
-   "how": "E2 weighs the pack; below this mass nose ballast (A1 cap 10 g, D-59) is needed.",
-   "value": 411.36589568456867
   },
   {
    "id": "CALC-B3-STALL-TRIM",
@@ -1469,9 +925,9 @@
     "va": "ASM-F4-VA-SCHED",
     "slop": "CL-D6-SLOP",
     "vmax": "P:requirements.stall_max_ms",
-    "x_t": "CL-B3-CG-TARGET",
-    "x_aft": "CL-B3-CG-AFT",
-    "x_fwd": "CL-B3-CG-FWD",
+    "x_t": "P:cg.x_target_m",
+    "x_aft": "CL-B3-V-CG-AFT-ENV",
+    "x_fwd": "CL-B3-V-CG-FWD",
     "k": "P:requirements.transition_factor"
    },
    "units": {
@@ -1504,23 +960,23 @@
     "SRC-B3-AVL"
    ],
    "outputs": {
-    "clmax_target": 0.7995066749032688,
-    "delta_target": -10.442033929180239,
-    "alpha_target": 15.647801324775388,
-    "vs_target": 11.89485107416153,
+    "clmax_target": 0.7983839734647505,
+    "delta_target": -10.877989570046003,
+    "alpha_target": 15.739623415318743,
+    "vs_target": 11.90321150934563,
     "y_first_target": 0.0704,
-    "clmax_aft": 0.8224908424129477,
-    "delta_aft": -8.941135521460904,
-    "alpha_aft": 15.677088994763334,
-    "vs_aft": 11.727475121258529,
+    "clmax_aft": 0.8108529975869886,
+    "delta_aft": -9.649212411569588,
+    "alpha_aft": 15.649040091156913,
+    "vs_aft": 11.811335142484523,
     "y_first_aft": 0.0704,
-    "clmax_fwd": 0.7950742767787334,
-    "delta_fwd": -12.082774050732084,
-    "alpha_fwd": 15.989396544175138,
-    "vs_fwd": 11.927960835909909,
+    "clmax_fwd": 0.7948437500000001,
+    "delta_fwd": -12.168285523512758,
+    "alpha_fwd": 16.00718578125,
+    "vs_fwd": 11.929690430590542,
     "y_first_fwd": 0.0704,
-    "vt_target": 15.463306396409989,
-    "vt_fwd": 15.506349086682881
+    "vt_target": 15.474174962149318,
+    "vt_fwd": 15.508597559767704
    },
    "input_values": {
     "b": 1.15,
@@ -1578,9 +1034,9 @@
     "va": 20.5,
     "slop": 0.8364539884044696,
     "vmax": 12.0,
-    "x_t": 0.04981500240841018,
-    "x_aft": 0.0528771168324081,
-    "x_fwd": 0.04675288798441226,
+    "x_t": 0.049,
+    "x_aft": 0.05144181916710612,
+    "x_fwd": 0.04659559217387958,
     "k": 1.3
    }
   },
@@ -1595,7 +1051,7 @@
    "assumes": [
     "ASM-B3-CLMAX-FLAP"
    ],
-   "value": 0.7995066749032688
+   "value": 0.7983839734647505
   },
   {
    "id": "CL-B3-VS-TRIM",
@@ -1612,7 +1068,7 @@
     "R-STALL"
    ],
    "how": "Twin, then aircraft at 2.6 kg: FBWA slow-flight to the stall break with airspeed logging, CG on target.",
-   "value": 11.89485107416153
+   "value": 11.90321150934563
   },
   {
    "id": "CL-B3-VS-TRIM-FWD",
@@ -1629,7 +1085,7 @@
     "R-STALL"
    ],
    "how": "As CL-B3-VS-TRIM with the CG on the forward mark.",
-   "value": 11.927960835909909
+   "value": 11.929690430590542
   },
   {
    "id": "CL-B3-VT-TRIM",
@@ -1646,7 +1102,7 @@
     "R-TRANSITION"
    ],
    "how": "F4 sets ARSPD_FBW_MIN >= this (rounded up); flight log of the first transition (H2).",
-   "value": 15.506349086682881
+   "value": 15.508597559767704
   },
   {
    "id": "CALC-B3-TRIM-SWEEP",
@@ -1680,9 +1136,9 @@
     "va": "ASM-F4-VA-SCHED",
     "slop": "CL-D6-SLOP",
     "vmax": "P:requirements.stall_max_ms",
-    "x_t": "CL-B3-CG-TARGET",
-    "x_aft": "CL-B3-CG-AFT",
-    "x_fwd": "CL-B3-CG-FWD",
+    "x_t": "P:cg.x_target_m",
+    "x_aft": "CL-B3-V-CG-AFT-ENV",
+    "x_fwd": "CL-B3-V-CG-FWD",
     "vs": "CL-B3-VS-TRIM",
     "vc": "P:performance.cruise_ms"
    },
@@ -1724,176 +1180,176 @@
     "table": {
      "fwd": [
       [
-       11.89,
-       0.8002,
-       16.1,
-       -12.15
+       11.9,
+       0.7988,
+       16.09,
+       -12.22
       ],
       [
        13.0,
        0.6694,
-       13.35,
-       -10.44
+       13.36,
+       -10.52
       ],
       [
        14.0,
        0.5771,
-       11.43,
-       -9.22
+       11.45,
+       -9.29
       ],
       [
        15.0,
        0.5028,
-       9.9,
-       -8.23
+       9.92,
+       -8.28
       ],
       [
        16.0,
        0.4419,
-       8.66,
-       -7.4
+       8.67,
+       -7.45
       ],
       [
        18.0,
        0.3491,
-       6.76,
-       -6.12
+       6.77,
+       -6.16
       ],
       [
        20.0,
        0.2828,
        5.42,
-       -5.2
+       -5.23
       ],
       [
        22.0,
        0.2337,
        4.42,
-       -4.51
+       -4.53
       ],
       [
        25.0,
        0.181,
-       3.34,
-       -3.76
+       3.35,
+       -3.79
       ]
      ],
      "target": [
       [
-       11.89,
-       0.8002,
-       15.66,
-       -10.44
+       11.9,
+       0.7988,
+       15.75,
+       -10.88
       ],
       [
        13.0,
        0.6694,
-       12.99,
-       -9.03
+       13.08,
+       -9.41
       ],
       [
        14.0,
        0.5771,
-       11.13,
-       -8.01
+       11.21,
+       -8.33
       ],
       [
        15.0,
        0.5028,
-       9.64,
-       -7.17
+       9.71,
+       -7.45
       ],
       [
        16.0,
        0.4419,
-       8.42,
-       -6.47
+       8.49,
+       -6.72
       ],
       [
        18.0,
        0.3491,
-       6.58,
-       -5.38
+       6.63,
+       -5.58
       ],
       [
        20.0,
        0.2828,
-       5.27,
-       -4.59
+       5.31,
+       -4.75
       ],
       [
        22.0,
        0.2337,
-       4.29,
-       -3.99
+       4.33,
+       -4.13
       ],
       [
        25.0,
        0.181,
-       3.25,
-       -3.35
+       3.28,
+       -3.46
       ]
      ],
      "aft": [
       [
-       11.89,
-       0.8002,
-       15.23,
-       -8.75
+       11.9,
+       0.7988,
+       15.4,
+       -9.53
       ],
       [
        13.0,
        0.6694,
-       12.63,
-       -7.62
+       12.8,
+       -8.28
       ],
       [
        14.0,
        0.5771,
-       10.82,
-       -6.8
+       10.96,
+       -7.37
       ],
       [
        15.0,
        0.5028,
-       9.37,
-       -6.11
+       9.5,
+       -6.61
       ],
       [
        16.0,
        0.4419,
-       8.19,
-       -5.54
+       8.3,
+       -5.97
       ],
       [
        18.0,
        0.3491,
-       6.4,
-       -4.63
+       6.48,
+       -4.98
       ],
       [
        20.0,
        0.2828,
-       5.12,
-       -3.97
+       5.19,
+       -4.26
       ],
       [
        22.0,
        0.2337,
-       4.17,
-       -3.48
+       4.23,
+       -3.72
       ],
       [
        25.0,
        0.181,
-       3.16,
-       -2.94
+       3.2,
+       -3.14
       ]
      ]
     },
-    "delta_cruise": -6.47,
-    "alpha_cruise": 8.42,
-    "delta_worst": -12.15
+    "delta_cruise": -6.72,
+    "alpha_cruise": 8.49,
+    "delta_worst": -12.22
    },
    "input_values": {
     "b": 1.15,
@@ -1951,10 +1407,10 @@
     "va": 20.5,
     "slop": 0.8364539884044696,
     "vmax": 12.0,
-    "x_t": 0.04981500240841018,
-    "x_aft": 0.0528771168324081,
-    "x_fwd": 0.04675288798441226,
-    "vs": 11.89485107416153,
+    "x_t": 0.049,
+    "x_aft": 0.05144181916710612,
+    "x_fwd": 0.04659559217387958,
+    "vs": 11.90321150934563,
     "vc": 16.0
    }
   },
@@ -1966,7 +1422,7 @@
    "output": "delta_cruise",
    "unit": "deg",
    "how": "FBWA level flight at 16 m/s: servo output vs neutral (FC log).",
-   "value": -6.47
+   "value": -6.72
   },
   {
    "id": "CL-B3-ALPHA-CRUISE",
@@ -1976,7 +1432,7 @@
    "output": "alpha_cruise",
    "unit": "deg",
    "how": "FC pitch angle in level flight at 16 m/s (no wind).",
-   "value": 8.42
+   "value": 8.49
   },
   {
    "id": "CALC-B3-ROLL",
@@ -2015,12 +1471,12 @@
     "slop": "deg"
    },
    "outputs": {
-    "da_deg": 13.721512082415291,
-    "pb2v": 0.1299807986383999,
-    "p_degs": 154.06110118217723,
-    "tau_s": 0.3478493163743628,
-    "t60_s": 0.6900000000000005,
-    "eff": 0.9734171113137082
+    "da_deg": 13.285556441549527,
+    "pb2v": 0.12584625592446996,
+    "p_degs": 149.26543044917528,
+    "tau_s": 0.34760499813628915,
+    "t60_s": 0.7040000000000005,
+    "eff": 0.9733797299929904
    },
    "input_values": {
     "Cld": -0.005051,
@@ -2030,8 +1486,8 @@
      -25,
      25
     ],
-    "d_stall": -10.442033929180239,
-    "vs": 11.89485107416153,
+    "d_stall": -10.877989570046003,
+    "vs": 11.90321150934563,
     "b": 1.15,
     "S": 0.368,
     "rho": 1.225,
@@ -2052,7 +1508,7 @@
    "output": "delta_target",
    "unit": "deg",
    "how": "Twin slow flight: elevon output at the stall break (FC log).",
-   "value": -10.442033929180239
+   "value": -10.877989570046003
   },
   {
    "id": "CL-B3-ROLL-PB2V",
@@ -2066,7 +1522,7 @@
     "ref": "ASM-B3-PB2V-MIN"
    },
    "how": "Twin at 1.1 Vs: full-stick roll, FC roll rate; pb/2V = p b / 2V.",
-   "value": 0.1299807986383999
+   "value": 0.12584625592446996
   },
   {
    "id": "CL-B3-ROLL-T60",
@@ -2081,7 +1537,7 @@
    },
    "how": "Twin roll test, FC log.",
    "note": "MIL-F-8785C class I, cat. C, Level 1: 1.3 s",
-   "value": 0.6900000000000005
+   "value": 0.7040000000000005
   },
   {
    "id": "CALC-B3-CRUISE-AUTH",
@@ -2115,8 +1571,8 @@
     "va": "ASM-F4-VA-SCHED",
     "slop": "CL-D6-SLOP",
     "vmax": "P:requirements.stall_max_ms",
-    "x_aft": "CL-B3-CG-AFT",
-    "x_fwd": "CL-B3-CG-FWD",
+    "x_aft": "CL-B3-V-CG-AFT-ENV",
+    "x_fwd": "CL-B3-V-CG-FWD",
     "vt": "CL-B3-VT-TRIM",
     "travel": "P:wing.elevon.deflection_deg",
     "Cld": "CL-B3-CLDA",
@@ -2152,16 +1608,16 @@
     "SRC-B3-AVL"
    ],
    "outputs": {
-    "CL": 0.470458151940079,
-    "eff": 0.9548244687540076,
-    "delta_aft": -5.807276815220103,
-    "delta_fwd": -7.7909293733406715,
-    "trim_use": 0.32836625470171626,
-    "da_deg": 16.37261663825486,
-    "p_degs": 235.0629758165911,
-    "M_roll_Nm": 2.982376655513418,
-    "motorout_ratio": 14.080758337465848,
-    "motorout_delta_deg": 1.1627652606387593
+    "CL": 0.4703217455621303,
+    "eff": 0.9548113665943747,
+    "delta_aft": -6.270463684732672,
+    "delta_fwd": -7.8400302529914425,
+    "trim_use": 0.3303302898877471,
+    "da_deg": 16.32351575860409,
+    "p_degs": 234.38879689847846,
+    "M_roll_Nm": 2.974254181431384,
+    "motorout_ratio": 13.269069730321737,
+    "motorout_delta_deg": 1.2301929291472862
    },
    "input_values": {
     "b": 1.15,
@@ -2219,16 +1675,16 @@
     "va": 20.5,
     "slop": 0.8364539884044696,
     "vmax": 12.0,
-    "x_aft": 0.0528771168324081,
-    "x_fwd": 0.04675288798441226,
-    "vt": 15.506349086682881,
+    "x_aft": 0.05144181916710612,
+    "x_fwd": 0.04659559217387958,
+    "vt": 15.508597559767704,
     "travel": [
      -25,
      25
     ],
     "Cld": -0.005051,
     "Clp": -0.314537,
-    "M_out": 0.21180511617602013,
+    "M_out": 0.2241494122707626,
     "kslop": 0.5
    }
   },
@@ -2247,7 +1703,7 @@
     "R-CRUISE-AUTHORITY"
    ],
    "how": "Twin/aircraft FBWA at 1.3 Vs, CG on each mark: servo output (FC log).",
-   "value": 0.32836625470171626
+   "value": 0.3303302898877471
   },
   {
    "id": "CL-B3-ROLL-RATE-VT",
@@ -2264,7 +1720,7 @@
     "R-CRUISE-AUTHORITY"
    ],
    "how": "Twin at 1.3 Vs: full-stick roll in MANUAL, FC roll rate (H2).",
-   "value": 235.0629758165911
+   "value": 234.38879689847846
   },
   {
    "id": "CL-B3-MOTOROUT-ROLL-RATIO",
@@ -2279,7 +1735,7 @@
    },
    "how": "SITL motor-failure test (F4), then twin: cut one diagonal pair in FBWA at altitude, roll held.",
    "note": "CR-E1-04: E1's 0.22 N m (diagonal pair left running, unbalanced prop torque)",
-   "value": 14.080758337465848
+   "value": 13.269069730321737
   },
   {
    "id": "CALC-B3-ELEVON-AREA",
@@ -2387,8 +1843,8 @@
     "m": "P:requirements.mtow_gate_kg",
     "g": "P:env.g_ms2",
     "rho": "P:env.rho_kgm3",
-    "x_aft": "CL-B3-CG-AFT",
-    "x_t": "CL-B3-CG-TARGET",
+    "x_aft": "CL-B3-V-CG-AFT-ENV",
+    "x_t": "P:cg.x_target_m",
     "vt": "CL-B3-VT-TRIM",
     "vc": "P:performance.cruise_ms"
    },
@@ -2431,25 +1887,25 @@
     "SRC-B3-MUNK"
    ],
    "outputs": {
-    "Cnb_avl": 0.045975,
-    "Cnb_props": -0.004180247741576244,
-    "Cnb_tubes": -0.0006462657695507935,
+    "Cnb_avl": 0.047516,
+    "Cnb_props": -0.004088753938346043,
+    "Cnb_tubes": -0.0005747708524817199,
     "Cnb_pod": -0.006530245746691872,
-    "Cnb": 0.034618240742181096,
-    "Clb": 0.024468,
-    "CYb": -1.3128123537694316,
-    "Cnr": -0.045694,
-    "Clr": 0.089704,
-    "Cnp": -0.025339,
-    "CYp": 0.087818,
-    "CYr": 0.454076,
-    "Clp": -0.309805,
-    "Cma": -0.186097,
-    "Cmq": -0.988594,
-    "CLa": 3.406712,
-    "alpha": 7.28511,
-    "Cnb_cruise_target": 0.038482966599641025,
-    "Cnb_avl_cruise_target": 0.049492
+    "Cnb": 0.03632222946248037,
+    "Clb": 0.024663,
+    "CYb": -1.3128193537694315,
+    "Cnr": -0.046373,
+    "Clr": 0.089543,
+    "Cnp": -0.025456,
+    "CYp": 0.088197,
+    "CYr": 0.45716,
+    "Clp": -0.309831,
+    "Cma": -0.20129,
+    "Cmq": -1.009553,
+    "CLa": 3.406763,
+    "alpha": 7.28282,
+    "Cnb_cruise_target": 0.039453516182071824,
+    "Cnb_avl_cruise_target": 0.05037
    },
    "input_values": {
     "b": 1.15,
@@ -2489,9 +1945,9 @@
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
-    "x_aft": 0.0528771168324081,
-    "x_t": 0.04981500240841018,
-    "vt": 15.506349086682881,
+    "x_aft": 0.05144181916710612,
+    "x_t": 0.049,
+    "vt": 15.508597559767704,
     "vc": 16.0
    }
   },
@@ -2513,7 +1969,7 @@
    "assumes": [
     "ASM-B3-PROP-CNA"
    ],
-   "value": 0.034618240742181096
+   "value": 0.03632222946248037
   },
   {
    "id": "CL-B3-CNB-CRUISE",
@@ -2527,7 +1983,7 @@
     "ref": "P:requirements.cnbeta_min"
    },
    "how": "As CL-B3-CNB at 16 m/s.",
-   "value": 0.038482966599641025
+   "value": 0.039453516182071824
   },
   {
    "id": "CALC-B3-MODES",
@@ -2565,7 +2021,7 @@
     "g": "P:env.g_ms2",
     "rho": "P:env.rho_kgm3",
     "xnp": "CL-B3-XNP",
-    "x_t": "CL-B3-CG-TARGET",
+    "x_t": "P:cg.x_target_m",
     "m_basic": "CL-A3-MASS-BASIC",
     "Ixx": "CL-A3-IXX",
     "Iyy": "CL-A3-IYY",
@@ -2607,49 +2063,49 @@
    ],
    "outputs": {
     "CL": 0.44187572787267076,
-    "Cnb": 0.038482966599641025,
+    "Cnb": 0.039453516182071824,
     "eig_lon": [
      [
-      -0.0336,
-      -0.7764
+      -0.0342,
+      -0.7787
      ],
      [
-      -0.0336,
-      0.7764
+      -0.0342,
+      0.7787
      ],
      [
-      -4.3537,
-      -8.6883
+      -4.376,
+      -8.8739
      ],
      [
-      -4.3537,
-      8.6883
+      -4.376,
+      8.8739
      ]
     ],
     "eig_lat": [
      [
-      0.2182,
+      0.2174,
       0.0
      ],
      [
-      -3.5536,
-      -0.0
+      -3.5598,
+      0.0
      ],
      [
-      -1.4495,
-      -3.5845
+      -1.4486,
+      -3.6329
      ],
      [
-      -1.4495,
-      3.5845
+      -1.4486,
+      3.6329
      ]
     ],
-    "sp_wn": 9.71811392212482,
-    "sp_zeta": 0.4480006251680644,
-    "dr_wn": 3.866491432616228,
-    "dr_zeta": 0.3748993272307091,
-    "lat_max_real": 0.21820383869964569,
-    "lat_t2_s": 3.1766039712713394
+    "sp_wn": 9.894198207016347,
+    "sp_zeta": 0.4422760595177329,
+    "dr_wn": 3.9110906493884663,
+    "dr_zeta": 0.3703908451503665,
+    "lat_max_real": 0.2174155706817119,
+    "lat_t2_s": 3.188121156118511
    },
    "input_values": {
     "b": 1.15,
@@ -2690,7 +2146,7 @@
     "g": 9.80665,
     "rho": 1.225,
     "xnp": 0.0688771168324081,
-    "x_t": 0.04981500240841018,
+    "x_t": 0.049,
     "m_basic": 2.32162,
     "Ixx": 0.17320454682526285,
     "Iyy": 0.04420463610965501,
@@ -2712,7 +2168,7 @@
     "ref": "ASM-B3-ZETA-SP-MIN"
    },
    "how": "Twin: elevon doublet in MANUAL, pitch-rate overshoot.",
-   "value": 0.4480006251680644
+   "value": 0.4422760595177329
   },
   {
    "id": "CL-B3-DR-ZETA",
@@ -2729,7 +2185,7 @@
     "R-DIRECTIONAL"
    ],
    "how": "T-B3-YAW-DOUBLET: yaw pulse in FBWA, yaw-rate oscillation decays (FC log).",
-   "value": 0.3748993272307091
+   "value": 0.3703908451503665
   },
   {
    "id": "CL-B3-LAT-T2",
@@ -2744,7 +2200,7 @@
    },
    "how": "Twin, hands-off in MANUAL at altitude: bank-angle drift after a roll pulse (FC log).",
    "note": "MIL-F-8785C spiral limit (>= 4 s to double, Level 3); 999 = no divergent lateral mode",
-   "value": 3.1766039712713394
+   "value": 3.188121156118511
   },
   {
    "id": "CALC-B3-HOVER",
@@ -2775,7 +2231,7 @@
     "S": "CL-A1-WING-AREA",
     "c": "P:wing.chord_m",
     "b": "P:wing.span_m",
-    "x_t": "CL-B3-CG-TARGET",
+    "x_t": "P:cg.x_target_m",
     "cn90": "ASM-B3-CN90",
     "xcp": "ASM-B3-XCP-HOVER",
     "fc": "P:fins.chord_m",
@@ -2818,15 +2274,15 @@
     "trim_use_pitch": 0.32469042714728685,
     "M_pitch_Nm": 1.5405462618,
     "acc_pitch_rads2": 31.11893411298111,
-    "ratio_pitch": 2.4188996241992418,
+    "ratio_pitch": 2.398147950310559,
     "M_roll_Nm": 2.5946042304000003,
     "acc_roll_rads2": 13.794909375721923,
-    "ratio_roll": 4.606912602050463,
+    "ratio_roll": 4.57878792140622,
     "M_yaw_Nm": 0.6112110680654212,
     "acc_yaw_rads2": 3.151009480834328,
     "ratio_yaw": 3.1439685612202273,
-    "dist_pitch_Nm": 0.6368789537143305,
-    "dist_roll_Nm": 0.5631980579022019,
+    "dist_pitch_Nm": 0.64239,
+    "dist_roll_Nm": 0.5666574375000001,
     "dist_yaw_Nm": 0.19440749999999998,
     "kq_iso_m": 0.016825469314959318,
     "kq_eff_m": 0.030028025538851824,
@@ -2868,7 +2324,7 @@
     "S": 0.368,
     "c": 0.32,
     "b": 1.15,
-    "x_t": 0.04981500240841018,
+    "x_t": 0.049,
     "cn90": 1.2,
     "xcp": 0.45,
     "fc": 0.275,
@@ -2896,7 +2352,7 @@
     "R-WIND"
    ],
    "how": "T-B3-HOVER-WIND: twin, then aircraft, hover in 5 m/s; no motor output above 85 % or below 10 % (RCOU).",
-   "value": 2.4188996241992418
+   "value": 2.398147950310559
   },
   {
    "id": "CL-B3-HOVER-PITCH-ACCEL",
@@ -2931,7 +2387,7 @@
     "R-WIND"
    ],
    "how": "T-B3-HOVER-WIND: twin, then aircraft, hover in 5 m/s; no motor output above 85 % or below 10 % (RCOU).",
-   "value": 4.606912602050463
+   "value": 4.57878792140622
   },
   {
    "id": "CL-B3-HOVER-ROLL-ACCEL",
@@ -3451,7 +2907,7 @@
    "title": "Quasi-steady transition pitch balance",
    "script": "redesign/team/B3/sc_analysis.py",
    "function": "transition",
-   "equation": "level flight at V: T cos a = D, T sin a + L = W ; wing CP from Xnp (attached) to 0.5 c at 90 deg ; props' normal force at x_prop ; elevon (dp - slop) deg at Cmd eta e_D6(V) ; use = |M_aero - M_elevon| / (2 dT 2z), dT = min(T/4, Tmax sag - T/4)",
+   "equation": "level flight at V: T cos a = D, T sin a + L = W ; wing CP from Xnp (attached) to 0.5 c at 90 deg ; props' normal force at x_prop ; elevon (dp - slop) deg at Cmd eta e_D6(V) ; hub term (R5, B4 BEMT): M_hub = n H min(1, V/V_h) |x_cg - x_prop| added to |M_aero| at every point, H = CL-B4-SIM-H-MAX (hover rpm) or CL-B4-SIM-H-HOVERT (hover thrust held, bounding) ; use = (|M_aero| + M_hub - M_elevon) / (2 dT 2z), dT = min(T/4, Tmax sag - T/4)",
    "inputs": {
     "m": "P:requirements.mtow_gate_kg",
     "g": "P:env.g_ms2",
@@ -3459,8 +2915,8 @@
     "S": "CL-A1-WING-AREA",
     "c": "P:wing.chord_m",
     "b": "P:wing.span_m",
-    "x_t": "CL-B3-CG-TARGET",
-    "x_fwd": "CL-B3-CG-FWD",
+    "x_t": "P:cg.x_target_m",
+    "x_fwd": "CL-B3-V-CG-FWD",
     "xnp": "CL-B3-XNP",
     "cm_np_thin": "CL-B3-CM-NP-THIN",
     "dcm": "CL-B2-DCM-VISC",
@@ -3488,7 +2944,10 @@
     "lo": "CL-D6-EFF-LOSS-OUT",
     "li": "CL-D6-EFF-LOSS-IN",
     "va": "ASM-F4-VA-SCHED",
-    "slop": "CL-D6-SLOP"
+    "slop": "CL-D6-SLOP",
+    "h_max": "CL-B4-SIM-H-MAX",
+    "h_hov": "CL-B4-SIM-H-HOVERT",
+    "v_h": "P:performance.transition_min_ms"
    },
    "units": {
     "m": "kg",
@@ -3509,7 +2968,10 @@
     "xref": "m",
     "dp": "deg",
     "va": "m/s",
-    "slop": "deg"
+    "slop": "deg",
+    "h_max": "N",
+    "h_hov": "N",
+    "v_h": "m/s"
    },
    "assumes": [
     "ASM-B3-CN90",
@@ -3519,11 +2981,12 @@
     "ASM-B3-ELEVON-POST"
    ],
    "outputs": {
-    "target": [
+    "target_nohub": [
      [
       0.0,
       90.0,
       1.06,
+      0.0,
       0.0,
       0.0,
       5.135,
@@ -3533,7 +2996,8 @@
       2.0,
       87.5,
       0.999,
-      -0.116,
+      -0.117,
+      0.0,
       0.007,
       4.84,
       0.023
@@ -3542,8 +3006,9 @@
       4.0,
       80.2,
       0.986,
-      -0.424,
-      0.034,
+      -0.427,
+      0.0,
+      0.035,
       4.776,
       0.082
      ],
@@ -3551,44 +3016,49 @@
       6.0,
       68.8,
       0.935,
-      -0.788,
-      0.102,
+      -0.796,
+      0.0,
+      0.103,
       4.527,
-      0.152
+      0.153
      ],
      [
       8.0,
       55.4,
       0.829,
-      -1.028,
-      0.232,
+      -1.041,
+      0.0,
+      0.234,
       4.018,
-      0.198
+      0.201
      ],
      [
       10.0,
       42.8,
       0.693,
-      -1.077,
-      0.435,
+      -1.093,
+      0.0,
+      0.438,
       3.357,
-      0.191
+      0.195
      ],
      [
       11.0,
       37.5,
       0.625,
-      -1.051,
-      0.563,
+      -1.068,
+      0.0,
+      0.566,
       3.029,
-      0.161
+      0.166
      ],
      [
       12.0,
       12.2,
       0.111,
-      -0.48,
-      0.877,
+      -0.501,
+      0.0,
+      0.883,
       0.537,
       0.0
      ],
@@ -3596,8 +3066,9 @@
       13.0,
       10.3,
       0.103,
-      -0.489,
-      1.025,
+      -0.509,
+      0.0,
+      1.032,
       0.499,
       0.0
      ],
@@ -3605,8 +3076,9 @@
       14.0,
       8.9,
       0.098,
-      -0.497,
-      1.182,
+      -0.518,
+      0.0,
+      1.19,
       0.474,
       0.0
      ],
@@ -3614,8 +3086,9 @@
       15.0,
       7.7,
       0.095,
-      -0.506,
-      1.349,
+      -0.526,
+      0.0,
+      1.359,
       0.46,
       0.0
      ],
@@ -3623,8 +3096,503 @@
       16.0,
       6.7,
       0.094,
-      -0.514,
-      1.526,
+      -0.535,
+      0.0,
+      1.537,
+      0.454,
+      0.0
+     ]
+    ],
+    "fwd_nohub": [
+     [
+      0.0,
+      90.0,
+      1.06,
+      0.0,
+      0.0,
+      0.0,
+      5.135,
+      0.0
+     ],
+     [
+      2.0,
+      87.5,
+      0.999,
+      -0.12,
+      0.0,
+      0.007,
+      4.84,
+      0.023
+     ],
+     [
+      4.0,
+      80.2,
+      0.986,
+      -0.438,
+      0.0,
+      0.035,
+      4.776,
+      0.084
+     ],
+     [
+      6.0,
+      68.8,
+      0.935,
+      -0.818,
+      0.0,
+      0.105,
+      4.527,
+      0.158
+     ],
+     [
+      8.0,
+      55.4,
+      0.829,
+      -1.076,
+      0.0,
+      0.238,
+      4.018,
+      0.209
+     ],
+     [
+      10.0,
+      42.8,
+      0.693,
+      -1.139,
+      0.0,
+      0.447,
+      3.357,
+      0.206
+     ],
+     [
+      11.0,
+      37.5,
+      0.625,
+      -1.118,
+      0.0,
+      0.578,
+      3.029,
+      0.178
+     ],
+     [
+      12.0,
+      12.2,
+      0.111,
+      -0.562,
+      0.0,
+      0.901,
+      0.537,
+      0.0
+     ],
+     [
+      13.0,
+      10.3,
+      0.103,
+      -0.571,
+      0.0,
+      1.053,
+      0.499,
+      0.0
+     ],
+     [
+      14.0,
+      8.9,
+      0.098,
+      -0.579,
+      0.0,
+      1.214,
+      0.474,
+      0.0
+     ],
+     [
+      15.0,
+      7.7,
+      0.095,
+      -0.588,
+      0.0,
+      1.386,
+      0.46,
+      0.0
+     ],
+     [
+      16.0,
+      6.7,
+      0.094,
+      -0.597,
+      0.0,
+      1.567,
+      0.454,
+      0.0
+     ]
+    ],
+    "use_max_nohub": 0.209,
+    "v_at_use_max_nohub": 8.0,
+    "m_hub_max_nohub": 0.0,
+    "target_hmax": [
+     [
+      0.0,
+      90.0,
+      1.06,
+      0.0,
+      0.0,
+      0.0,
+      5.135,
+      0.0
+     ],
+     [
+      2.0,
+      87.5,
+      0.999,
+      -0.117,
+      0.014,
+      0.007,
+      4.84,
+      0.026
+     ],
+     [
+      4.0,
+      80.2,
+      0.986,
+      -0.427,
+      0.027,
+      0.035,
+      4.776,
+      0.088
+     ],
+     [
+      6.0,
+      68.8,
+      0.935,
+      -0.796,
+      0.041,
+      0.103,
+      4.527,
+      0.162
+     ],
+     [
+      8.0,
+      55.4,
+      0.829,
+      -1.041,
+      0.054,
+      0.234,
+      4.018,
+      0.214
+     ],
+     [
+      10.0,
+      42.8,
+      0.693,
+      -1.093,
+      0.068,
+      0.438,
+      3.357,
+      0.215
+     ],
+     [
+      11.0,
+      37.5,
+      0.625,
+      -1.068,
+      0.075,
+      0.566,
+      3.029,
+      0.19
+     ],
+     [
+      12.0,
+      12.2,
+      0.111,
+      -0.501,
+      0.082,
+      0.883,
+      0.537,
+      0.0
+     ],
+     [
+      13.0,
+      10.3,
+      0.103,
+      -0.509,
+      0.088,
+      1.032,
+      0.499,
+      0.0
+     ],
+     [
+      14.0,
+      8.9,
+      0.098,
+      -0.518,
+      0.095,
+      1.19,
+      0.474,
+      0.0
+     ],
+     [
+      15.0,
+      7.7,
+      0.095,
+      -0.526,
+      0.102,
+      1.359,
+      0.46,
+      0.0
+     ],
+     [
+      16.0,
+      6.7,
+      0.094,
+      -0.535,
+      0.106,
+      1.537,
+      0.454,
+      0.0
+     ]
+    ],
+    "fwd_hmax": [
+     [
+      0.0,
+      90.0,
+      1.06,
+      0.0,
+      0.0,
+      0.0,
+      5.135,
+      0.0
+     ],
+     [
+      2.0,
+      87.5,
+      0.999,
+      -0.12,
+      0.013,
+      0.007,
+      4.84,
+      0.026
+     ],
+     [
+      4.0,
+      80.2,
+      0.986,
+      -0.438,
+      0.026,
+      0.035,
+      4.776,
+      0.09
+     ],
+     [
+      6.0,
+      68.8,
+      0.935,
+      -0.818,
+      0.039,
+      0.105,
+      4.527,
+      0.166
+     ],
+     [
+      8.0,
+      55.4,
+      0.829,
+      -1.076,
+      0.052,
+      0.238,
+      4.018,
+      0.222
+     ],
+     [
+      10.0,
+      42.8,
+      0.693,
+      -1.139,
+      0.065,
+      0.447,
+      3.357,
+      0.226
+     ],
+     [
+      11.0,
+      37.5,
+      0.625,
+      -1.118,
+      0.072,
+      0.578,
+      3.029,
+      0.202
+     ],
+     [
+      12.0,
+      12.2,
+      0.111,
+      -0.562,
+      0.078,
+      0.901,
+      0.537,
+      0.0
+     ],
+     [
+      13.0,
+      10.3,
+      0.103,
+      -0.571,
+      0.085,
+      1.053,
+      0.499,
+      0.0
+     ],
+     [
+      14.0,
+      8.9,
+      0.098,
+      -0.579,
+      0.091,
+      1.214,
+      0.474,
+      0.0
+     ],
+     [
+      15.0,
+      7.7,
+      0.095,
+      -0.588,
+      0.098,
+      1.386,
+      0.46,
+      0.0
+     ],
+     [
+      16.0,
+      6.7,
+      0.094,
+      -0.597,
+      0.102,
+      1.567,
+      0.454,
+      0.0
+     ]
+    ],
+    "use_max_hmax": 0.226,
+    "v_at_use_max_hmax": 10.0,
+    "m_hub_max_hmax": 0.106,
+    "target": [
+     [
+      0.0,
+      90.0,
+      1.06,
+      0.0,
+      0.0,
+      0.0,
+      5.135,
+      0.0
+     ],
+     [
+      2.0,
+      87.5,
+      0.999,
+      -0.117,
+      0.028,
+      0.007,
+      4.84,
+      0.029
+     ],
+     [
+      4.0,
+      80.2,
+      0.986,
+      -0.427,
+      0.056,
+      0.035,
+      4.776,
+      0.094
+     ],
+     [
+      6.0,
+      68.8,
+      0.935,
+      -0.796,
+      0.084,
+      0.103,
+      4.527,
+      0.172
+     ],
+     [
+      8.0,
+      55.4,
+      0.829,
+      -1.041,
+      0.112,
+      0.234,
+      4.018,
+      0.229
+     ],
+     [
+      10.0,
+      42.8,
+      0.693,
+      -1.093,
+      0.14,
+      0.438,
+      3.357,
+      0.237
+     ],
+     [
+      11.0,
+      37.5,
+      0.625,
+      -1.068,
+      0.154,
+      0.566,
+      3.029,
+      0.216
+     ],
+     [
+      12.0,
+      12.2,
+      0.111,
+      -0.501,
+      0.168,
+      0.883,
+      0.537,
+      0.0
+     ],
+     [
+      13.0,
+      10.3,
+      0.103,
+      -0.509,
+      0.182,
+      1.032,
+      0.499,
+      0.0
+     ],
+     [
+      14.0,
+      8.9,
+      0.098,
+      -0.518,
+      0.196,
+      1.19,
+      0.474,
+      0.0
+     ],
+     [
+      15.0,
+      7.7,
+      0.095,
+      -0.526,
+      0.21,
+      1.359,
+      0.46,
+      0.0
+     ],
+     [
+      16.0,
+      6.7,
+      0.094,
+      -0.535,
+      0.218,
+      1.537,
       0.454,
       0.0
      ]
@@ -3636,6 +3604,7 @@
       1.06,
       0.0,
       0.0,
+      0.0,
       5.135,
       0.0
      ],
@@ -3643,62 +3612,69 @@
       2.0,
       87.5,
       0.999,
-      -0.119,
+      -0.12,
+      0.027,
       0.007,
       4.84,
-      0.023
+      0.029
      ],
      [
       4.0,
       80.2,
       0.986,
-      -0.437,
+      -0.438,
+      0.054,
       0.035,
       4.776,
-      0.084
+      0.095
      ],
      [
       6.0,
       68.8,
       0.935,
-      -0.817,
+      -0.818,
+      0.081,
       0.105,
       4.527,
-      0.157
+      0.175
      ],
      [
       8.0,
       55.4,
       0.829,
-      -1.074,
+      -1.076,
+      0.107,
       0.238,
       4.018,
-      0.208
+      0.235
      ],
      [
       10.0,
       42.8,
       0.693,
-      -1.136,
-      0.446,
+      -1.139,
+      0.134,
+      0.447,
       3.357,
-      0.206
+      0.246
      ],
      [
       11.0,
       37.5,
       0.625,
-      -1.115,
-      0.577,
+      -1.118,
+      0.148,
+      0.578,
       3.029,
-      0.177
+      0.227
      ],
      [
       12.0,
       12.2,
       0.111,
-      -0.558,
-      0.9,
+      -0.562,
+      0.161,
+      0.901,
       0.537,
       0.0
      ],
@@ -3706,8 +3682,9 @@
       13.0,
       10.3,
       0.103,
-      -0.567,
-      1.051,
+      -0.571,
+      0.175,
+      1.053,
       0.499,
       0.0
      ],
@@ -3715,8 +3692,9 @@
       14.0,
       8.9,
       0.098,
-      -0.575,
-      1.213,
+      -0.579,
+      0.188,
+      1.214,
       0.474,
       0.0
      ],
@@ -3724,8 +3702,9 @@
       15.0,
       7.7,
       0.095,
-      -0.584,
-      1.384,
+      -0.588,
+      0.201,
+      1.386,
       0.46,
       0.0
      ],
@@ -3733,23 +3712,29 @@
       16.0,
       6.7,
       0.094,
-      -0.593,
-      1.565,
+      -0.597,
+      0.209,
+      1.567,
       0.454,
       0.0
      ]
     ],
+    "use_max_hhov": 0.246,
+    "v_at_use_max_hhov": 10.0,
+    "m_hub_max_hhov": 0.218,
     "columns": [
      "V m/s",
      "alpha deg",
      "T/W",
      "M_aero N m",
+     "M_hub N m",
      "M_elevon N m",
      "M_motor avail N m",
      "use"
     ],
-    "use_max": 0.208,
-    "v_at_use_max": 8.0,
+    "use_max": 0.246,
+    "v_at_use_max": 10.0,
+    "hub_use_delta": 0.037000000000000005,
     "tw_max": 1.06
    },
    "input_values": {
@@ -3759,14 +3744,14 @@
     "S": 0.368,
     "c": 0.32,
     "b": 1.15,
-    "x_t": 0.04981500240841018,
-    "x_fwd": 0.04675288798441226,
+    "x_t": 0.049,
+    "x_fwd": 0.04659559217387958,
     "xnp": 0.0688771168324081,
     "cm_np_thin": 0.006759469312499995,
     "dcm": -0.01024,
     "CLa": 3.464493,
     "a0": -0.5203310886501402,
-    "clmax": 0.7995066749032688,
+    "clmax": 0.7983839734647505,
     "cd0": 0.02,
     "e": 0.8,
     "cn90": 1.2,
@@ -3788,13 +3773,16 @@
     "lo": 0.0789572250948345,
     "li": 0.07148608475229434,
     "va": 20.5,
-    "slop": 0.8364539884044696
+    "slop": 0.8364539884044696,
+    "h_max": 0.4296225230675917,
+    "h_hov": 0.8832108773510373,
+    "v_h": 15.6
    }
   },
   {
    "id": "CL-B3-TRANS-PITCH-USE",
    "type": "claim",
-   "title": "Transition: pitch differential used, worst",
+   "title": "Transition: pitch differential used, worst, with B4's prop H-force at hover thrust",
    "calc": "CALC-B3-TRANSITION",
    "output": "use_max",
    "unit": "-",
@@ -3809,16 +3797,55 @@
    "assumes": [
     "ASM-B3-CN90"
    ],
-   "value": 0.208
+   "note": "R5: includes the hub term n H |x_cg - x_prop| with H = CL-B4-SIM-H-HOVERT (0.88 N per prop) on top of the Ribner normal force (bound). R4 basis: CL-B3-TRANS-PITCH-USE-NOHUB",
+   "value": 0.246
+  },
+  {
+   "id": "CL-B3-TRANS-PITCH-USE-NOHUB",
+   "type": "claim",
+   "title": "Transition: pitch differential used, worst, Ribner normal force only (R4 basis)",
+   "calc": "CALC-B3-TRANSITION",
+   "output": "use_max_nohub",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-B3-TRANS-USE-MAX"
+   },
+   "how": "As CL-B3-TRANS-PITCH-USE.",
+   "value": 0.209
+  },
+  {
+   "id": "CL-B3-TRANS-PITCH-USE-HMAX",
+   "type": "claim",
+   "title": "Transition: pitch differential used, worst, hub term at B4's hover-rpm H-force",
+   "calc": "CALC-B3-TRANSITION",
+   "output": "use_max_hmax",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-B3-TRANS-USE-MAX"
+   },
+   "how": "As CL-B3-TRANS-PITCH-USE.",
+   "value": 0.226
+  },
+  {
+   "id": "CL-B3-TRANS-HUB-MOMENT",
+   "type": "claim",
+   "title": "Largest prop hub (H-force) pitch moment in the pitch-over, hover thrust held",
+   "calc": "CALC-B3-TRANSITION",
+   "output": "m_hub_max_hhov",
+   "unit": "N*m",
+   "how": "Car-top rig side-force cell (CL-B4-SIM-H-MAX how) or a fit of the pitch residual in the transition log.",
+   "value": 0.218
   },
   {
    "id": "T-B3-CG-BALANCE",
    "type": "test",
    "title": "CG balance at the limits",
    "verifies": [
-    "CL-B3-CG-AFT",
-    "CL-B3-CG-FWD",
-    "CL-B3-CG-TARGET"
+    "CL-B3-V-CG-FWD",
+    "CL-B3-V-CG-AFT-ENV",
+    "CL-B3-V-CG-TARGET"
    ],
    "state": "planned",
    "procedure": "H1: balance the ready-to-fly aircraft on two fingertips (or a knife-edge jig) at the fin roots; the balance line must lie between the two marks drawn at the B3 limits."
@@ -3829,7 +3856,8 @@
    "title": "Twin neutral point from glides",
    "verifies": [
     "CL-B3-XNP",
-    "CL-B3-SM-TARGET"
+    "CL-B3-V-XNP-ENV",
+    "CL-B3-V-SM-TARGET-ENV"
    ],
    "state": "planned",
    "procedure": "Twin, FBWA glides at 3 speeds for 2 pack positions; plot elevon trim vs CL; Xnp where the slope is 0."

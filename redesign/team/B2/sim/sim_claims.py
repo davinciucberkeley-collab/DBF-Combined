@@ -1,10 +1,10 @@
 """B2 verification-round claims (B2-R3) for the proof chain: wing aero on the settled geometry and A3 roll-up.
 
-Run from the repo root after verify_wing.py (and cfd2d_section.py, then verify_wing.py --params):
+Run from the repo root after verify_wing.py, stall_zcg.py (B2-R4) and cfd2d_section.py (then verify_wing.py --params):
     python -I redesign/team/B2/sim/sim_claims.py      -> team/B2/sim/claims.sim.json
 then python -I redesign/proofs/build_graph.py.
 Reads P:b2sim.* (sim/params.json), P:b2.* (team/B2/params.json), params.json, mechanisms params, and claims of
-B3 (CL-B3-XNP), A3 (CL-A3-MASS-PREDICTED, CL-A3-CG-X, CL-A3-CG-X-PRED) and D6 (CL-D6-TORQUE-FACTOR).
+B3 (CL-B3-V-XNP, -XNP-AERO), B1 (CL-B1V-CLMAX-SIM, P:b1sim.avl.xnp_m), A3 (CL-A3-MASS-PREDICTED, CL-A3-CG-X, CL-A3-CG-X-PRED) and D6 (CL-D6-TORQUE-FACTOR).
 """
 import math
 import sys
@@ -13,8 +13,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "proofs"))
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../../params/params.json", "../params.json", "params.json",
-                               "../../../subsystems/mechanisms/params.json"], out="claims.sim.json")
+kit = pk.Kit(__file__, params=["../../../params/params.json", "../params.json", "params.json", "params.zcg.json",
+                               "../../../subsystems/mechanisms/params.json", "../../B1/params.json"],
+             out="claims.sim.json")
 G_KGF = 9.80665
 WING = ["WNG-001", "WNG-002", "WNG-003"]
 
@@ -25,12 +26,13 @@ kit.source("SRC-B2-SU2", "SU2 8.5 2-D RANS runs, team/B2/sim/cfd2d_section.py", 
            note="fully turbulent: no laminar separation bubble, so clmax and hinge moments bracket XFOIL rather than "
                 "replace it; not compared with test data at this Re")
 
-kit.assumption("ASM-B2R3-SM-EQUIV", "Trimmed CLmax follows the static margin",
-               "The pod and propellers change the trimmed CLmax only through the NP shift; trimmed CLmax is read "
-               "from the props-off wing + fin model at the same static margin as the real aircraft (B3 NP)",
-               basis="R2 sweep: CLmax depends on SM, not on CG station (WING-AERO.md section 3); the pod carries no "
-                     "elevon and sits on the wing root strip that never stalls first (first stall y 0.071 m is the "
-                     "inboard elevon end, outside the pod's 0.07 m half-width)", status="UNVERIFIED")
+kit.assumption("ASM-B2R4-PROPS-NP", "Props and pod enter the stall trim as a CL-independent NP shift",
+               "The AVL model (wing + fins, props off, no pod) is run with its moment reference at x_cg + dprop, "
+               "dprop = CL-B3-V-XNP-AERO - CL-B3-V-XNP (B3's Ribner prop and pod terms, 2.9 mm), and at the real CG "
+               "height z_cg; the trimmed CLmax is then read directly at the CG point (no static-margin mapping)",
+               basis="B3 treats the same terms as CL-independent and uses the same shift in its stall calc "
+                     "(verify_asdesigned.py stall_v); the pod carries no elevon and the first-stall strip (y 0.071 m) "
+                     "is the inboard elevon end, outside the pod's 0.07 m half-width", status="UNVERIFIED")
 kit.assumption("ASM-B2R3-VA", "Full elevon travel up to VA 20.5 m/s",
                "Elevon hinge moments: 25 deg at VA 20.5 m/s and <= 1/3 travel (8.33 deg) at VD",
                basis="params requirements.vd_ms note (D-50, F4 CR-F4-12): full travel to VA 20.5 m/s, <= 1/3 at VD "
@@ -45,35 +47,38 @@ kit.assumption("ASM-B2R3-CONV-RULE", "Discretisation acceptance rule",
                      "exceed the 1 % used in R2; a conservative value is the professional fallback")
 
 
-def interp(tab, x):
-    xs, ys = [r[0] for r in tab], [r[1] for r in tab]
-    if x <= xs[0]:
-        i = 0
-    elif x >= xs[-1]:
-        i = len(xs) - 2
-    else:
-        i = max(j for j in range(len(xs) - 1) if xs[j] <= x)
-    return ys[i] + (ys[i + 1] - ys[i]) * (x - xs[i]) / (xs[i + 1] - xs[i])
+def bilin(xg, zg, tab, x, z):
+    """Bilinear interpolation in tab[x index][z index]; linear extrapolation by the end cells."""
+    def cell(gr, v):
+        i = 0 if v <= gr[0] else (len(gr) - 2 if v >= gr[-1] else max(j for j in range(len(gr) - 1) if gr[j] <= v))
+        return i, (v - gr[i]) / (gr[i + 1] - gr[i])
+    i, fx = cell(xg, x)
+    j, fz = cell(zg, z)
+    return ((1 - fx) * (1 - fz) * tab[i][j] + fx * (1 - fz) * tab[i + 1][j] + (1 - fx) * fz * tab[i][j + 1]
+            + fx * fz * tab[i + 1][j + 1])
 
 
-@kit.calc("CALC-B2R3-STALL", title="Stall speed at the as-designed CG points and masses",
-          equation="SM = (Xnp_B3 - x_cg)/c; CLmax = kd * interp(SM, CLmax(SM)); "
-                   "Vs = sqrt(2 m g / (rho b c CLmax)); Re correction: CLmax *= 1 + s (Re_s - Re_x)/1e5",
-          inputs={"tab": "P:b2sim.avl.clmax_vs_sm", "xnp": "CL-B3-XNP", "xr": "P:cg.x_range_m",
+@kit.calc("CALC-B2R4-STALL-Z", title="Stall speed at the CG points with the CG height (D-62)",
+          equation="CLmax = kd * bilinear(x_cg, z_cg; AVL critical-section grid run with Xref = x + dprop, "
+                   "Zref = z); Vs = sqrt(2 m g / (rho b c CLmax)); Re correction CLmax *= 1 + s (Re_s - Re_x)/1e5; "
+                   "Vtr = k Vs; SM_fwd = (Xnp_B3 - x_fwd)/c (B3 whole-aircraft NP, alpha 4 deg, CG height)",
+          inputs={"xg": "P:b2sim.zcg.x_grid_m", "zg": "P:b2sim.zcg.z_grid_m", "tab": "P:b2sim.zcg.clmax_grid",
+                  "etab": "P:b2sim.zcg.elevon_grid", "xr": "P:cg.x_range_m", "xt": "P:cg.x_target_m",
+                  "zt": "P:cg.z_target_m", "zr": "P:cg.z_range_m", "xnp": "CL-B3-V-XNP",
                   "xbf": "CL-A3-CG-X", "xp": "CL-A3-CG-X-PRED", "kd": "ASM-B2-CLMAX-KD",
                   "mg": "P:requirements.mtow_gate_kg", "mp": "CL-A3-MASS-PREDICTED", "g": "P:env.g_ms2",
                   "rho": "P:env.rho_kgm3", "b": "P:wing.span_m", "c": "P:wing.chord_m",
                   "k": "P:requirements.transition_factor", "s": "P:b2sim.xfoil.clmax_re_slope_per_1e5",
-                  "rex": "P:b2.xfoil.re_stall"},
-          units={"xnp": "m", "xr": "m", "xp": "m", "mg": "kg", "mp": "kg", "g": "m/s2", "rho": "kg/m3", "b": "m",
-                 "c": "m"},
-          assumes=["ASM-B2R3-SM-EQUIV", "ASM-B2-CLMAX-KD"])
-def stall(tab, xnp, xr, xbf, xp, kd, mg, mp, g, rho, b, c, k, s, rex):
+                  "rex": "P:b2.xfoil.re_stall", "vmax": "P:requirements.stall_max_ms"},
+          units={"vmax": "m/s", "xg": "m", "zg": "m", "xr": "m", "xt": "m", "zt": "m", "zr": "m", "xnp": "m", "xp": "m",
+                 "mg": "kg", "mp": "kg", "g": "m/s2", "rho": "kg/m3", "b": "m", "c": "m"},
+          assumes=["ASM-B2R4-PROPS-NP", "ASM-B2-CLMAX-KD"])
+def stall(xg, zg, tab, etab, xr, xt, zt, zr, xnp, xbf, xp, kd, mg, mp, g, rho, b, c, k, s, rex, vmax):
     out = {}
-    pts = {"fwd": xr[0], "aft": xr[1], "basic": xbf * c, "pred": xp}
-    for tag, x in pts.items():
-        sm = (xnp - x) / c
-        cl = kd * interp(tab, sm)
+    pts = {"fwd": (xr[0], zt), "aft": (xr[1], zt), "target": (xt, zt), "basic": (xbf * c, zt), "pred": (xp, zt),
+           "fwd_zlo": (xr[0], zr[0]), "fwd_z0": (xr[0], 0.0)}
+    for tag, (x, z) in pts.items():
+        cl = kd * bilin(xg, zg, tab, x, z)
         for mtag, m in (("gate", mg), ("predm", mp)):
             vs = math.sqrt(2 * m * g / (rho * b * c * cl))
             re_s = vs * c / 1.48e-5
@@ -81,9 +86,42 @@ def stall(tab, xnp, xr, xbf, xp, kd, mg, mp, g, rho, b, c, k, s, rex):
             vs = math.sqrt(2 * m * g / (rho * b * c * clc))
             out[f"Vs_{tag}_{mtag}"] = vs
             out[f"Vtr_{tag}_{mtag}"] = k * vs
-        out[f"SM_{tag}"] = sm
         out[f"CLmax_{tag}"] = cl
+        out[f"elev_{tag}"] = bilin(xg, zg, etab, x, z)
+    out["SM_fwd"] = (xnp - xr[0]) / c
+    out["Vs_fwd_z_gain"] = out["Vs_fwd_z0_gate"] - out["Vs_fwd_gate"]
+
+    def vs_at(x, z):
+        cl = kd * bilin(xg, zg, tab, x, z)
+        vs = math.sqrt(2 * mg * g / (rho * b * c * cl))
+        return math.sqrt(2 * mg * g / (rho * b * c * cl * (1 + s * (vs * c / 1.48e-5 - rex) / 1e5)))
+
+    def solve(f, lo, hi):            # f decreasing in its argument; bisection for f = vmax
+        for _ in range(60):
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if f(mid) > vmax else (lo, mid)
+        return 0.5 * (lo + hi)
+    out["x_fwd_stall_at_zlo"] = solve(lambda x: vs_at(x, zr[0]), xg[0], xg[-1])
+    out["z_min_stall_at_xfwd"] = solve(lambda z: vs_at(xr[0], z), zg[0], zg[-1])
+    out["dx_fwd_needed_at_zlo"] = out["x_fwd_stall_at_zlo"] - xr[0]
     return out
+
+
+@kit.calc("CALC-B2R4-RECON", title="CR-B1-23: B1 vs B2 trimmed CLmax and NP, one modelling change per step",
+          equation="W0 = B1 set-up in the B2 AVL model (x 0.0536, z 0.018, no props/pod, cm_t 0, B1 stall-Re clmax "
+                   "table) -> W1 B2 raw stall-Re table -> W2 B2 envelope -> W3 + viscous cm trim -> W4 + props/pod "
+                   "shift; repro = W0 / CLmax_B1 - 1; NP: props-off effective Xnp at CL 0.414 with z 0.0185 minus "
+                   "B1's Xnp (Zref 0.018); dprop_drift = |dprop used - (CL-B3-V-XNP-AERO - CL-B3-V-XNP)|",
+          inputs={"w": "P:b2sim.zcg.recon_clmax", "we": "P:b2sim.zcg.recon_elevon", "b1": "CL-B1V-CLMAX-SIM",
+                  "np_z": "P:b2sim.zcg.xnp_aero_z0185_cruise", "np_0": "P:b2sim.zcg.xnp_aero_z0_cruise",
+                  "np_b1": "P:b1sim.avl.xnp_m", "np_a0": "P:b2sim.avl.xnp_props_off_m",
+                  "dprop": "P:b2sim.zcg.dprop_m", "xa": "CL-B3-V-XNP-AERO", "xw": "CL-B3-V-XNP"},
+          units={"np_z": "m", "np_0": "m", "np_b1": "m", "np_a0": "m", "dprop": "m", "xa": "m", "xw": "m"})
+def recon(w, we, b1, np_z, np_0, np_b1, np_a0, dprop, xa, xw):
+    return {"repro": w["W0"] / b1 - 1, "d_table": w["W1"] - w["W0"], "d_envelope": w["W2"] - w["W1"],
+            "d_cmt": w["W3"] - w["W2"], "d_props": w["W4"] - w["W3"], "W4": w["W4"], "elev_W0": we["W0"],
+            "np_vs_b1": np_z - np_b1, "np_z_shift": np_z - np_0, "np_trim_vs_a0": np_0 - np_a0,
+            "dprop_drift": abs(dprop - (xa - xw))}
 
 
 @kit.calc("CALC-B2R3-STALL-TURB", title="Stall at the forward CG if the boundary layer were turbulent from the LE",
@@ -157,21 +195,60 @@ def cla_hand(avl, h):
 
 
 # ---------------------------------------------------------------- claims
-how_stall = "T-B2-STALL at the gate mass and the marked forward CG; CLmax = 2 m g / (rho S Vs^2)"
-kit.claim("CL-B2R3-SM-FWD", "Static margin at the forward CG limit, B3 NP", calc="CALC-B2R3-STALL",
-          output="SM_fwd", unit="-", how="(CL-B3-XNP - cg.x_range_m[0]) / c; CG balance test T-A3-CG-BALANCE")
-kit.claim("CL-B2R3-CLMAX-FWD", "Trimmed CLmax at the forward CG limit", calc="CALC-B2R3-STALL", output="CLmax_fwd",
-          unit="-", parts=WING, how=how_stall)
-kit.claim("CL-B2R3-VS-GATE-FWD", "Stall at 2.6 kg, forward CG limit (as designed)", calc="CALC-B2R3-STALL",
+how_stall = ("T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; "
+             "CLmax = 2 m g / (rho S Vs^2)")
+ST = "CALC-B2R4-STALL-Z"
+RC = "CALC-B2R4-RECON"
+kit.claim("CL-B2R3-SM-FWD", "Static margin at the forward CG limit, B3 whole-aircraft NP (CG height)", calc=ST,
+          output="SM_fwd", unit="-", how="(CL-B3-V-XNP - cg.x_range_m[0]) / c; CG balance test T-A3-CG-BALANCE",
+          note="information only: since B2-R4 the stall is read directly at (x, z), not through a static margin")
+kit.claim("CL-B2R3-CLMAX-FWD", "Trimmed CLmax at the forward CG limit and the CG height", calc=ST,
+          output="CLmax_fwd", unit="-", parts=WING, how=how_stall)
+kit.claim("CL-B2R4-ELEV-FWD", "Elevon at the trimmed CLmax, forward CG limit, CG height", calc=ST,
+          output="elev_fwd", unit="deg", how="T-B2-STALL: log the servo output at the break",
+          note="B3's forward-limit criterion is 12.5 deg of up-elevon at the trimmed stall")
+kit.claim("CL-B2R3-VS-GATE-FWD", "Stall at 2.6 kg, forward CG limit, CG height (as designed)", calc=ST,
           output="Vs_fwd_gate", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), verifies=["R-STALL"],
           parts=WING, how=how_stall)
-kit.claim("CL-B2R3-VS-GATE-AFT", "Stall at 2.6 kg, aft CG limit (as designed)", calc="CALC-B2R3-STALL",
+kit.claim("CL-B2R4-VS-GATE-FWD-ZLO", "Stall at 2.6 kg, forward CG limit, bottom of the CG height range", calc=ST,
+          output="Vs_fwd_zlo_gate", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), parts=WING,
+          how=how_stall, note="corner of the CG box: a lower CG needs more up-elevon at the stall")
+kit.claim("CL-B2R4-VS-GATE-FWD-Z0", "Stall at 2.6 kg, forward CG limit, CG on the chord plane (old basis)", calc=ST,
+          output="Vs_fwd_z0_gate", unit="m/s", parts=WING, how=how_stall,
+          note="information: the z = 0 model A1 quoted (~12.05); not a flight case since D-62")
+kit.claim("CL-B2R3-VS-GATE-AFT", "Stall at 2.6 kg, aft CG limit, CG height (as designed)", calc=ST,
           output="Vs_aft_gate", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), verifies=["R-STALL"],
           parts=WING, how=how_stall)
-kit.claim("CL-B2R3-VS-PRED", "Stall at the A3 predicted mass and CG", calc="CALC-B2R3-STALL",
+kit.claim("CL-B2R4-X-FWD-AT-ZLO", "Forward CG x that just meets R-STALL at the bottom of the CG height range", calc=ST,
+          output="x_fwd_stall_at_zlo", unit="m", how="T-B2-STALL; A1 sets the forward mark at max(this, B3 limit) "
+                                                     "or raises cg.z_range_m[0] to CL-B2R4-Z-MIN-AT-XFWD")
+kit.claim("CL-B2R4-Z-MIN-AT-XFWD", "Lowest CG height that meets R-STALL at the forward CG limit", calc=ST,
+          output="z_min_stall_at_xfwd", unit="m", how="CG height from the balance rig (T-A3-CG-BALANCE)")
+kit.claim("CL-B2R4-VS-GATE-TARGET", "Stall at 2.6 kg, CG target, CG height", calc=ST, output="Vs_target_gate",
+          unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), parts=WING, how=how_stall)
+kit.claim("CL-B2R3-VS-PRED", "Stall at the A3 predicted mass and CG", calc=ST,
           output="Vs_pred_predm", unit="m/s", limit=("<=", "P:requirements.stall_max_ms"), parts=WING,
           how="T-B2-STALL at the as-built mass; the expected flight value")
-kit.claim("CL-B2R3-VTR-GATE-FWD", "1.3 Vs at 2.6 kg, forward CG, vs transition speed", calc="CALC-B2R3-STALL",
+kit.claim("CL-B2R4-B1-REPRO", "B2 AVL model run in B1's set-up / B1 trimmed CLmax - 1", calc=RC,
+          output="repro", unit="-",
+          how="Re-run stall_zcg.py; |value| <= 0.02 means the two codes agree and the gap is set-up, not solver")
+kit.claim("CL-B2R4-RECON-ENVELOPE", "CLmax change from B2's conservative clmax envelope (vs raw stall-Re XFOIL)",
+          calc=RC, output="d_envelope", unit="-", how="T-B2-STALL; XFOIL up-elevon clmax scatters +/- 0.07")
+kit.claim("CL-B2R4-RECON-CMT", "CLmax change from trimming the viscous section cm (cm_t)", calc=RC,
+          output="d_cmt", unit="-", how="T-B2-STALL: elevon at the break against CL-B2R4-ELEV-FWD")
+kit.claim("CL-B2R4-RECON-PROPS", "CLmax change from the props / pod NP shift", calc=RC,
+          output="d_props", unit="-", how="T-B3-TWIN-NP")
+kit.claim("CL-B2R4-CLMAX-B1POINT", "Trimmed CLmax at B1's CG point (0.0536, z 0.018), B2 method", calc=RC,
+          output="W4", unit="-", how="T-B2-STALL", note="replaces B1's 0.862 at the same point (CR-B1-23)")
+kit.claim("CL-B2R4-NP-VS-B1", "Props-off effective NP with the CG height at CL 0.414, B2 minus B1", calc=RC,
+          output="np_vs_b1", unit="m", how="Re-run stall_zcg.py; |value| < 0.5 mm closes the NP part of CR-B1-23",
+          note="B1's 0.0708 had Zref 0.018; B2's 0.0738 is Zref 0 at alpha 0: same model, different reference height")
+kit.claim("CL-B2R4-NP-Z-SHIFT", "Props-off NP shift from the CG height 0.0185 m at CL 0.414", calc=RC,
+          output="np_z_shift", unit="m", how="T-B3-TWIN-NP")
+kit.claim("CL-B2R4-DPROP-DRIFT", "Props/pod NP term used in the AVL runs vs B3's current claims", calc=RC,
+          output="dprop_drift", unit="m", limit=("<=", 0.0002),
+          how="If it fails, re-run stall_zcg.py (B3 changed CL-B3-V-XNP or -XNP-AERO)")
+kit.claim("CL-B2R3-VTR-GATE-FWD", "1.3 Vs at 2.6 kg, forward CG, CG height, vs transition speed", calc=ST,
           output="Vtr_fwd_gate", unit="m/s", limit=("<=", "P:performance.transition_min_ms"),
           verifies=["R-TRANSITION"], parts=WING,
           how="F4 AIRSPEED_MIN 15.6 must be >= this; transition logs show airspeed >= 1.3 Vs")

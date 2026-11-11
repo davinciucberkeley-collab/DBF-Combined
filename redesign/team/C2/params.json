@@ -266,77 +266,77 @@
   },
   "fe": {
    "w_tip_env_m": {
-    "value": 0.002519,
+    "value": 0.002564,
     "unit": "m",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max flap tip deflection, envelope cases, limit, low corner: G2-HANG-MOTOR/MC-P/R"
    },
    "w_tip_flight_m": {
-    "value": 0.001001,
+    "value": 0.000842,
     "unit": "m",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "flight cases only: F1-PULLUP-VD/MC-C/R"
    },
    "w_max_env_m": {
-    "value": 0.002519,
+    "value": 0.002564,
     "unit": "m",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max |w| anywhere: G2-HANG-MOTOR/MC-P/R"
    },
    "u_max_env_m": {
-    "value": 0.001429,
+    "value": 0.001437,
     "unit": "m",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max in-plane |u|: L1-LEVEL/MC-C/R"
    },
    "twist_env_rad": {
-    "value": 0.050323,
+    "value": 0.056217,
     "unit": "rad",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max twist: L4-CORNER-SIDE-Y/MC-C/R"
    },
    "twist_flight_rad": {
-    "value": 0.032047,
+    "value": 0.03305,
     "unit": "rad",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max twist, flight: F7-ROLLPULL-VA/MC-C/L"
    },
    "spar_sigma_ult_max_pa": {
-    "value": 59277846.683703,
+    "value": 62321605.238544,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
-    "note": "spar alone, envelope Mbend ultimate, y 0.000 m"
+    "note": "spar alone, envelope Mbend ultimate, y 0.320 m"
    },
    "tape_sigma_root_ult_pa": {
-    "value": 7254151.454467,
+    "value": 7209377.407435,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "tape at full stiffness, root, Mx and Mz ult combined"
    },
    "foam_sigma_root_ult_pa": {
-    "value": 36270.757272,
+    "value": 36046.887037,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "foam fibre stress, root, ult"
    },
    "tip_foam_sigma_ult_pa": {
-    "value": 3697.421484,
+    "value": 3809.969718,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "foam outboard of the spar end, ult"
    },
    "tip_tape_sigma_ult_pa": {
-    "value": 739484.296824,
+    "value": 761993.943613,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
@@ -357,7 +357,7 @@
     "note": "same, bare foam (no tape)"
    },
    "spar_bond_tau_ult_pa": {
-    "value": 6167.543417,
+    "value": 11113.64499,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
@@ -385,53 +385,81 @@
     "note": "spar wall ring bending under the brace anchor saddle, design, no plug"
    },
    "cradle_area_req_m2": {
-    "value": 0.001165,
+    "value": 0.001171,
     "unit": "m2",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "foam pad area per cradle, X3 drop x 1.5"
    },
    "pod_tau_pa": {
-    "value": 5359.604932,
+    "value": 4969.200331,
     "unit": "Pa",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "pod bond shear on the wing foam, design"
    },
    "mode_sep_worst": {
-    "value": 0.071656,
+    "value": 0.085156,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
-    "note": "worst separation of a station-participating wing mode (83.8 Hz flap antisym, corner E100-G5-tape0.5)"
+    "note": "worst separation of a station-participating wing mode (215.1 Hz in-plane sym, corner E100-G5-tape0.5)"
    },
    "mode_worst_f_hz": {
-    "value": 83.795265,
+    "value": 215.072428,
     "unit": "Hz",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "frequency of that mode"
    },
    "mode_sep_worst_all": {
-    "value": 0.006807,
+    "value": 0.002078,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
-    "note": "same over all 12 stiffness corners (98.4 Hz, E100-G3-tape0.0)"
+    "note": "same over all 12 stiffness corners (98.9 Hz, E100-G3-tape0.0)"
    },
    "f_torsion_anti_hz": {
-    "value": 11.884864,
+    "value": 11.860282,
     "unit": "Hz",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "first wing mode, low corner: antisymmetric torsion (fin stations rocking)"
    },
    "f_torsion_sym_hz": {
-    "value": 24.08554,
+    "value": 22.791431,
     "unit": "Hz",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "second wing mode, low corner: symmetric torsion"
+   },
+   "f_torsion_anti_hi_hz": {
+    "value": 15.046639,
+    "unit": "Hz",
+    "source": "team/C2/wing_struct.py",
+    "status": "CHECKED",
+    "note": "antisymmetric torsion mode, highest of the 12 stiffness corners (E100-G5-tape1.0), beam model"
+   },
+   "f_sym1_hi_hz": {
+    "value": 28.43144,
+    "unit": "Hz",
+    "source": "team/C2/wing_struct.py",
+    "status": "CHECKED",
+    "note": "lowest symmetric station mode, highest of the 12 stiffness corners (E100-G5-tape1.0, torsion), beam model"
+   },
+   "station_Iyy_spar_kgm2": {
+    "value": 0.01596,
+    "unit": "kg m2",
+    "source": "team/C2/wing_struct.py",
+    "status": "CHECKED",
+    "note": "one fin station (fins, tube, 2 motors + props + mounts, ESCs, feet) about the spar axis, C1 mass model MC-P"
+   },
+   "station_Iyy_spar_mcc_kgm2": {
+    "value": 0.014501,
+    "unit": "kg m2",
+    "source": "team/C2/wing_struct.py",
+    "status": "CHECKED",
+    "note": "same, MC-C (light) configuration"
    },
    "V_rev_ms": {
     "value": 57.314038,
@@ -469,21 +497,21 @@
     "note": "flutter screen (modal p-k, 6 modes): no crossing up to this speed"
    },
    "mesh_conv_freq": {
-    "value": 0.00025,
+    "value": 0.000178,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "max change of the first 4 frequencies, 48 -> 96 elements per half"
    },
    "mesh_conv_static": {
-    "value": 0.000517,
+    "value": 0.000414,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
     "note": "F1 tip deflection change, 48 -> 96 elements per half"
    },
    "fe_vs_integration": {
-    "value": 0.002239,
+    "value": 0.00277,
     "unit": "-",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",
@@ -511,7 +539,7 @@
     "note": "anchor plug bearing, design"
    },
    "twist_flight_deg": {
-    "value": 1.836171,
+    "value": 1.893609,
     "unit": "deg",
     "source": "team/C2/wing_struct.py",
     "status": "CHECKED",

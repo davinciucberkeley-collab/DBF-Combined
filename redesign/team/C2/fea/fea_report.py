@@ -24,10 +24,12 @@ import wing_struct as ws   # noqa: E402
 SF = ws.SF
 M = ws.M
 GOV = {  # quantity: (run key, field, station rule, unit scale, label)
-    "w_tip_G2": ("G2-HANG-MOTOR/MC-P/B", "w", "tip", 1e3, "flap w at the tip, G2, mm"),
-    "u_tip_L1": ("L1-LEVEL/MC-C/B", "u", "tip", 1e3, "in-plane u at the tip, L1, mm"),
-    "twist_tip_L4": ("L4-CORNER-SIDE-Y/MC-C/T", "twist", "tip", 180 / math.pi, "twist at the tip, L4, deg"),
-    "spar_sigma_L1": ("L1-LEVEL/MC-C/B", "spar", "max", 1e-6, "spar outer-fibre stress, L1, limit, MPa"),
+    # C2-R3: every run is set O (orthotropic tube, the physical model) on the C1-R5 loads; R2's isotropic B / T
+    # bracket runs (C1-R4 loads) are archived in out/R2/ with the SU2 cross-check
+    "w_tip_G2": ("G2-HANG-MOTOR/MC-P/O", "w", "tip", 1e3, "flap w at the tip, G2, mm"),
+    "u_tip_L1": ("L1-LEVEL/MC-C/O", "u", "tip", 1e3, "in-plane u at the tip, L1, mm"),
+    "twist_tip_L4": ("L4-CORNER-SIDE-Y/MC-C/O", "twist", "tip", 180 / math.pi, "twist at the tip, L4, deg"),
+    "spar_sigma_L1": ("L1-LEVEL/MC-C/O", "spar", "max", 1e-6, "spar outer-fibre stress, L1, limit, MPa"),
     "w_tip_G2_O": ("G2-HANG-MOTOR/MC-P/O", "w", "tip", 1e3, "flap w at the tip, G2, orthotropic tube, mm"),
     "twist_tip_L4_O": ("L4-CORNER-SIDE-Y/MC-C/O", "twist", "tip", 180 / math.pi, "twist at the tip, L4, orthotropic tube, deg"),
     "foam_s1_L4_O": ("L4-CORNER-SIDE-Y/MC-C/O", "foam:s1_p995_pa", "", 1e-3, "foam tension, 99.5th pct, L4, orthotropic, kPa"),
@@ -228,12 +230,130 @@ def svg_section(path, level=1, ys=(0.20, 0.32, 0.45)):
     path.write_text("\n".join(out), encoding="utf-8")
 
 
+# ------------------------------------------------------------------------------------------------ D-68 submodel
+D68_MEASURE = "avg"      # foam peaks: "avg" = volume average over AVG_R round the peak element; "" = element peak
+
+
+def d68_summary(name="d68_submodel.json"):
+    f = OUT / name
+    if not f.exists():
+        return None
+    r = json.loads(f.read_text())
+    loc = r["local"]
+    hl = {int(k): v for k, v in r["inputs"]["local_h_m"].items()}
+
+    def peak(tag, zone, mat, field, intro="block", cases=None):
+        """Worst value (largest |.|) of field over the runs of one local model; returns (value, run key, location)."""
+        best = (0.0, None, None)
+        for key, run in loc.get(tag, {}).get("runs", {}).items():
+            if not key.startswith(intro + "/") or (cases and key.split("/")[1] not in cases):
+                continue
+            d = run["peaks"].get(f"{zone}/{mat}", {})
+            v = d.get(field)
+            if v is not None and abs(v) > abs(best[0]):
+                best = (v, key, d.get(field.replace("_avg", "").replace("_pa", "_at")))
+        return best
+
+    sfx = "_avg_pa" if D68_MEASURE == "avg" else "_pa"
+    out = {"measure": D68_MEASURE or "element", "levels": {}, "params": {}}
+    for geom in ("d68", "asdrawn"):
+        for lev in (1, 2, 3):
+            tag = f"{geom}/L{lev}"
+            if tag not in loc:
+                continue
+            row = {"h_mm": hl[lev] * 1e3, "stats": loc[tag]["stats"]}
+            for fld in ("s1", "s3", "tau"):
+                for m_ in ("", "_avg"):
+                    v, k, at = peak(tag, "pocket", "foam", f"{fld}{m_}_pa")
+                    row[f"pocket_foam_{fld}{m_}_lim_pa"] = v
+                    row[f"pocket_foam_{fld}{m_}_case"] = k
+                    row[f"pocket_foam_{fld}_at"] = at
+            row["bead_s1_lim_pa"] = peak(tag, "pocket", "bead", "s1_pa")[0]
+            row["bead_vm_lim_pa"] = peak(tag, "pocket", "bead", "vm_pa")[0]
+            row["petg_vm_lim_pa"] = peak(tag, "pocket", "petg", "vm_pa")[0]
+            for fld in ("s1", "tau"):
+                v, k, at = peak(tag, "cutout", "foam", f"{fld}{sfx}", intro="distributed")
+                row[f"cutout_foam_{fld}_dist_lim_pa"], row[f"cutout_foam_{fld}_dist_case"] = v, k
+                row[f"cutout_foam_{fld}_dist_at"] = at
+                v, k, _ = peak(tag, "cutout", "foam", f"{fld}{sfx}")
+                row[f"cutout_foam_{fld}_lim_pa"] = v
+            eq = [abs(x) for run in loc[tag]["runs"].values() for x in run["equilibrium_residual_N"]]
+            row["equilibrium_max_N"] = max(eq) if eq else float("nan")
+            out["levels"][tag] = row
+    # convergence of the governing local peaks (d68, 3 levels)
+    conv = {}
+    if all(f"d68/L{l}" in out["levels"] for l in (1, 2, 3)):
+        hs = [hl[1], hl[2], hl[3]]
+        for fld in ("s1", "s3", "tau"):
+            for m_ in ("", "_avg"):
+                fv = [abs(out["levels"][f"d68/L{l}"][f"pocket_foam_{fld}{m_}_lim_pa"]) for l in (1, 2, 3)]
+                conv[f"pocket_foam_{fld}{m_}"] = {"f": fv, **gci(hs, fv)}
+        for fld in ("s1", "tau"):
+            fv = [abs(out["levels"][f"d68/L{l}"][f"cutout_foam_{fld}_dist_lim_pa"]) for l in (1, 2, 3)]
+            conv[f"cutout_foam_{fld}_dist"] = {"f": fv, **gci(hs, fv)}
+    out["convergence"] = conv
+    # cut-plane check at level 2
+    cut = {}
+    if "d68/L2/near" in loc and "d68/L2" in loc:
+        for fld in ("s1", "s3", "tau"):
+            a = abs(peak("d68/L2", "pocket", "foam", f"{fld}{sfx}")[0])
+            b_ = abs(peak("d68/L2/near", "pocket", "foam", f"{fld}{sfx}")[0])
+            cut[fld] = {"far": a, "near": b_, "rel": b_ / a - 1 if a else float("nan")}
+    out["cut_check"] = cut
+    # params for the claims (finest d68 level; ultimate = SF x limit)
+    fin = out["levels"].get("d68/L3") or out["levels"].get("d68/L2") or out["levels"].get("d68/L1")
+    if fin:
+        P_ = out["params"]
+        lv = "d68 submodel, finest level"
+        P_["d68_corner_s1_ult_pa"] = (SF * abs(fin[f"pocket_foam_s1{'_avg' if D68_MEASURE else ''}_lim_pa"]), "Pa",
+                                      f"foam tension peak at the R 3 mm block-pocket corners + beads, ultimate, {lv}, {out['measure']}")
+        P_["d68_corner_s3_ult_pa"] = (SF * abs(fin[f"pocket_foam_s3{'_avg' if D68_MEASURE else ''}_lim_pa"]), "Pa",
+                                      f"foam compression peak, same, ultimate, {out['measure']}")
+        P_["d68_corner_tau_ult_pa"] = (SF * abs(fin[f"pocket_foam_tau{'_avg' if D68_MEASURE else ''}_lim_pa"]), "Pa",
+                                       f"foam shear peak, same, ultimate, {out['measure']}")
+        P_["d68_bead_s1_ult_pa"] = (SF * abs(fin["bead_s1_lim_pa"]), "Pa", "microballoon bead max principal, ultimate")
+        P_["d68_petg_vm_ult_pa"] = (SF * abs(fin["petg_vm_lim_pa"]), "Pa", "PETG block von Mises peak (rounded block), ultimate")
+        P_["d68_cutout_tau_dist_ult_pa"] = (SF * abs(fin["cutout_foam_tau_dist_lim_pa"]), "Pa",
+                                            "foam shear peak at the R 3 mm elevon cut-out corners, fillet-carries-load "
+                                            f"sensitivity, ultimate, {out['measure']}")
+        P_["d68_cutout_s1_dist_ult_pa"] = (SF * abs(fin["cutout_foam_s1_dist_lim_pa"]), "Pa",
+                                           f"foam tension peak at the same corners, sensitivity, ultimate, {out['measure']}")
+        P_["d68_cutout_tau_ult_pa"] = (SF * abs(fin["cutout_foam_tau_lim_pa"]), "Pa",
+                                       f"foam shear peak at the cut-out corners, primary path, ultimate, {out['measure']}")
+        if conv:
+            key = "" if not D68_MEASURE else "_avg"
+            P_["d68_corner_gci"] = (max(conv[f"pocket_foam_{f}{key}"]["gci_fine"] for f in ("s1", "s3", "tau")), "-",
+                                    "largest GCI of the three pocket-corner foam peaks, d68 submodel, 3 local levels")
+        if cut:
+            P_["d68_cut_sens"] = (max(abs(v["rel"]) for v in cut.values()), "-",
+                                  "submodel cut planes 0.27/0.37 -> 0.28/0.36 m: largest relative change of the corner peaks")
+        ad = out["levels"].get("asdrawn/L3") or out["levels"].get("asdrawn/L2")
+        if ad:
+            P_["asdrawn_corner_s1_ult_pa"] = (SF * abs(ad[f"pocket_foam_s1{'_avg' if D68_MEASURE else ''}_lim_pa"]), "Pa",
+                                              f"as-drawn (sharp, no bead) pocket corner foam tension, same submodel, {out['measure']}")
+            P_["asdrawn_corner_s3_ult_pa"] = (SF * abs(ad[f"pocket_foam_s3{'_avg' if D68_MEASURE else ''}_lim_pa"]), "Pa",
+                                              f"as-drawn pocket corner foam compression, same submodel, {out['measure']}")
+    for k, v in out["levels"].items():
+        print(f"d68 {k}: pocket foam s1 {v['pocket_foam_s1_lim_pa'] / 1e3:.1f} (avg {v['pocket_foam_s1_avg_lim_pa'] / 1e3:.1f}) "
+              f"s3 {v['pocket_foam_s3_lim_pa'] / 1e3:.1f} (avg {v['pocket_foam_s3_avg_lim_pa'] / 1e3:.1f}) tau "
+              f"{v['pocket_foam_tau_lim_pa'] / 1e3:.1f} (avg {v['pocket_foam_tau_avg_lim_pa'] / 1e3:.1f}) kPa limit at "
+              f"{v['pocket_foam_s1_at']}; bead s1 {v['bead_s1_lim_pa'] / 1e6:.2f} MPa; cutout dist tau "
+              f"{v['cutout_foam_tau_dist_lim_pa'] / 1e3:.1f} s1 {v['cutout_foam_s1_dist_lim_pa'] / 1e3:.1f} kPa; eq {v['equilibrium_max_N']:.1e}")
+    for k, v in conv.items():
+        print(f"d68 conv {k}: {[round(x / 1e3, 2) for x in v['f']]} kPa, p {v['p']:.2f}, GCI {100 * v['gci_fine']:.2f} %")
+    print("d68 cut check", cut)
+    return out
+
+
 # ------------------------------------------------------------------------------------------------ main
 def main():
     levels, stats, beam, valid, files = load_runs(["blk_*.json"])          # as designed: station loads on the hard points
-    dlev, dstats, _, dvalid, dfiles = load_runs(["dist_L1.json", "direct_*.json"])   # sensitivity: fin-root path
+    dlev, dstats, _, dvalid, dfiles = load_runs(["dist_L*O.json"])          # sensitivity: fin-root path
     su2, su2_valid = load_su2("su2_dist_L1.json")
     su2b, _ = load_su2("su2_blk_L1.json")
+    # SU2 vs PCG is a solver check on one mesh and one load set: it stays on the R2 runs (C1-R4 loads) in out/R2/
+    r2lev = load_runs(["R2/blk_L1*.json"])[0]
+    r2dlev = load_runs(["R2/dist_L1.json", "R2/direct_*.json"])[0]
     valid.update(dvalid)
     valid["su2"] = su2_valid
     if beam is None:
@@ -286,7 +406,7 @@ def main():
                 continue
             p = run["post"]
             for field, mset in (("w", "B"), ("u", "B"), ("twist", "T")):
-                if ms != mset:
+                if ms not in (mset, "O"):
                     continue
                 b0 = beam[case]["tape0"][mset]
                 b5 = beam[case]["tape50"][mset]
@@ -297,7 +417,7 @@ def main():
     res["beam_compare"] = cmp_
     # ---- SU2 vs PCG on the same level-1 mesh
     s2 = {}
-    for tag, src, ref in (("distributed", su2, dlev), ("block", su2b, levels)):
+    for tag, src, ref in (("distributed", su2, r2dlev), ("block", su2b, r2lev)):
       for lev, runs in src.items():
         for key, v in runs.items():
             if lev in ref and key in ref[lev]:
@@ -354,7 +474,7 @@ def main():
                          "spar_sigma_max_mpa": spar_max(run["post"])[0] / 1e6}
     res["sensitivity_distributed"] = sens
     # ---- tip deflection / semi-span from the FEA (finest, extrapolated where available)
-    wt = max((abs(t["w_tip_mm"]) for k, t in table.items() if k.endswith("/B")), default=float("nan"))
+    wt = max((abs(t["w_tip_mm"]) for k, t in table.items() if k.endswith("/B") or k.endswith("/O")), default=float("nan"))
     if "w_tip_G2" in conv:
         wt = max(wt, abs(conv["w_tip_G2"]["f_ext"]))
     res["tip_defl_frac"] = wt / 1e3 / ws.L_half
@@ -390,18 +510,25 @@ def main():
             k = max(sens, key=lambda kk: sens[kk][nm])
             c["sens_" + nm] = pv_(sens[k][nm], "Pa", f"sensitivity, station loads through the fin root fillet along the "
                                                       f"chord: foam {unit_note} 99.5th percentile, ultimate, {k} level {sens[k]['level']}")
+    # ---- C2-R3: D-68 geometry (R 3 mm pocket edges, fillet beads, R 3 mm cut-out corners), global-local submodel
+    d68 = d68_summary()
+    if d68:
+        res["d68"] = d68
+        (OUT / "fea_report.json").write_text(json.dumps(res, indent=1, default=float))
+        for k, (v, unit, note) in d68["params"].items():
+            c[k] = pv_(v, unit, note)
     (HERE / "params.json").write_text(json.dumps(pr, indent=1), encoding="utf-8")
     # ---- figures
     FIG.mkdir(exist_ok=True)
     if beam:
         panels = []
-        for lab, key, field, scale in (("flap w, G2 hang by a motor, mm", "G2-HANG-MOTOR/MC-P/B", "w", 1e3),
-                                       ("in-plane u, L1 level landing, mm", "L1-LEVEL/MC-C/B", "u", 1e3),
-                                       ("twist, L4 corner + side, deg", "L4-CORNER-SIDE-Y/MC-C/T", "twist", 180 / math.pi)):
+        for lab, key, field, scale in (("flap w, G2 hang by a motor, mm", "G2-HANG-MOTOR/MC-P/O", "w", 1e3),
+                                       ("in-plane u, L1 level landing, mm", "L1-LEVEL/MC-C/O", "u", 1e3),
+                                       ("twist, L4 corner + side, deg", "L4-CORNER-SIDE-Y/MC-C/O", "twist", 180 / math.pi)):
             fea = {lev: (levels[lev][key]["post"]["y"], [v * scale for v in levels[lev][key]["post"][field]])
                    for lev in sorted(levels) if key in levels[lev]}
             case = "/".join(key.split("/")[:2])
-            bm = beam[case]["tape0"][key.split("/")[2]]
+            bm = beam[case]["tape0"]["T" if field == "twist" else "B"]
             panels.append((lab, fea, (bm["y"], [v * scale for v in bm[field]])))
         svg_spanwise(FIG / "C2-03-fea-vs-beam.svg", panels)
     if conv:

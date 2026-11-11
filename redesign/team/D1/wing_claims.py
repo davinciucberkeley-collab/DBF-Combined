@@ -1,4 +1,4 @@
-"""D1 wing designer (revision D1-R1, params A1-R3): claims other roles build on (wing mass and CG for A3, elevon area
+"""D1 wing designer (revision D1-R2, params A1-R5; D-68 / D-69 action items): claims other roles build on (wing mass and CG for A3, elevon area
 as built for B3, spar cover and bond area for C2, cut sizes for D2 / D3 / D6 / F2, hinge clearance for D6).
 
 Run:  python -I redesign/team/D1/wing_data.py     (CAD masses -> subsystems/wing/interfaces.json, parts.csv)
@@ -110,6 +110,15 @@ kit.assumption("ASM-D1-RECESS", "Pod recess cut", "Recess front x (upper skin = 
                basis="subsystems/wing/fusion/wing.py#layout() (CR-D2-04)", value=[round(_R["recess_x"][0], 5), round(_R["recess_x"][1], 5),
                                                                                  round(_R["recess_depth_max"], 5), round(_R["recess_foam_under"], 5)],
                unit="m", cites=SRC)
+kit.assumption("ASM-D1-D68-GEOM", "Wing structure-fix geometry (D-68, D-69, CR-B2-17, CR-F2-14)",
+               "[block-pocket corner radius, lip-bead leg, lip-bead length along x, elevon cut-out corner radius at the fin-root "
+               "tab, foremost LE-strip edge x, recess-step fillet floor leg, step leg, foam wall JR recess to servo pocket, foam "
+               "under the JR recess floor] (m)",
+               basis="subsystems/wing/fusion/wing.py#layout() via team/D1/wing_data.py#readouts (fins block.edge_r_m + bond gap, "
+                     "wing params block_pocket, elevon.cutout_corner_r_m, skin.le_strip_*, recess.step_fillet_legs_m, jr_recess)",
+               value=[round(_R["blk_corner_r"], 6), round(_R["bead_leg"], 6), round(_R["bead_len"], 6), round(_R["cutout_corner_r"], 6),
+                      round(_R["le_seam_min_x"], 6), round(_R["rf_legs"][0], 6), round(_R["rf_legs"][1], 6),
+                      round(_R["jr_wall"], 6), round(_R["jr_foam_under"], 6)], unit="m", cites=SRC)
 
 
 kit.assumption("ASM-D1-PROP-GAP", "Wing surface outside the upper prop keep-outs (CAD)",
@@ -163,6 +172,13 @@ def recess(r):
     return {"x0": r[0], "x1": r[1], "depth": r[2], "under": r[3]}
 
 
+@kit.calc("CALC-D1-D68", equation="read-outs of the D-68 / D-69 cuts, beads, fillet, LE strip and JR recess",
+          inputs={"g": "ASM-D1-D68-GEOM"})
+def d68(g):
+    return {"pocket_r": g[0], "bead_leg": g[1], "bead_len": g[2], "cutout_r": g[3], "le_seam_x": g[4],
+            "fillet_floor": g[5], "fillet_step": g[6], "jr_wall": g[7], "jr_under": g[8]}
+
+
 # ---------------------------------------------------------------- claims
 CORE = ["WNG-001"]
 ALL = [i for i, _m, _c in _PARTS]
@@ -204,13 +220,34 @@ kit.claim("CL-D1-PROP-SURF-GAP", "Wing surface outside the upper prop keep-outs 
           how="On the first assembled wing: rule from each upper prop tip, turned by hand, to the upper skin near the LE "
               "at |y| 0.30-0.34; must exceed requirements.prop_clearance_min_m plus this gap.")
 
+kit.claim("CL-D1-POCKET-CORNER-R", "Block-pocket plan-form corner radius (D3 block R 3 mm + 0.15 mm bond gap)", calc="CALC-D1-D68",
+          output="pocket_r", unit="m", limit=(">=", 0.003), parts=CORE + ["FIN-004-L", "FIN-004-R"],
+          how="Radius gauge on the cut pocket corners; the block drops in with no corner contact.")
+kit.claim("CL-D1-POCKET-BEAD-LEG", "Lip bead along the inboard and outboard block-pocket edges, both surfaces (leg)", calc="CALC-D1-D68",
+          output="bead_leg", unit="m", limit=(">=", 0.003), parts=CORE + ["WNG-006-L", "WNG-006-R"],
+          how="Depth gauge on the chamfer before filling (3 mm on the wall, 3 mm on the surface); bead sanded flush, doubler over it.")
+kit.claim("CL-D1-CUTOUT-CORNER-R", "Elevon cut-out corner radius at the fin-root tab (y +/-0.30, +/-0.34)", calc="CALC-D1-D68",
+          output="cutout_r", unit="m", limit=(">=", 0.003), parts=CORE + ["WNG-003", "WNG-011-L", "WNG-011-R", "WNG-012-L", "WNG-012-R"],
+          how="Radius gauge on the four corners after step 9; tab tape folded round the edge; T-D1-THROW shows no panel contact.")
+kit.claim("CL-D1-LE-SEAM-X", "Foremost tape edge on the LE (LE strip edges; nothing ahead of it but the strip)", calc="CALC-D1-D68",
+          output="le_seam_x", unit="m", limit=(">=", 0.032), parts=["WNG-003", "WNG-001"],
+          how="Rule from the LE on the taped wing at five stations each side: both strip edges aft of 32 mm (x/c 0.10).")
+kit.claim("CL-D1-RECESS-FILLET", "Recess-step fillet floor leg (x 0.065, |y| <= 0.070)", calc="CALC-D1-D68", output="fillet_floor",
+          unit="m", limit=(">=", 0.005), parts=CORE + ["WNG-007", "POD-001"],
+          how="Steel rule on the sanded fillet before the pod goes in: 5 mm along the floor, flush with the step top.")
+kit.claim("CL-D1-JR-RECESS-WALL", "Foam between F2's JR recess and the servo pocket", calc="CALC-D1-D68", output="jr_wall", unit="m",
+          limit=(">=", 0.003), parts=CORE, how="Calipers between the recess aft wall (x 0.168) and the pocket front (x 0.1722).")
+
 kit.test("T-D1-WEIGH", "Weigh every wing part", verifies=["CL-D1-WING-MASS", "CL-D1-WING-CG-X"],
-         procedure="1 g scale: core after cutting and pocketing, spar, 4 plugs, tape roll before / after skinning, each elevon, finished wing; "
+         procedure="1 g scale: core after cutting and pocketing, spar, 4 plugs, a cured 20 cm3 cup of the bead mix (<= 13 g), tape roll before / after skinning, each elevon, finished wing; "
                    "knife-edge balance of the bare wing for CG x")
 kit.test("T-D1-FIT", "First-core fit checks", verifies=["CL-D1-SPAR-COVER", "CL-D1-GROOVE-WALL", "CL-D1-GROOVE-DEPTH-FRAC",
-                                                       "CL-D1-POCKET-ROOF", "CL-D1-TUBE-GROOVE-COVER", "CL-D1-RECESS-X1", "CL-D1-RECESS-UNDER", "CL-D1-ELEVON-FRAC"],
+                                                       "CL-D1-POCKET-ROOF", "CL-D1-TUBE-GROOVE-COVER", "CL-D1-RECESS-X1", "CL-D1-RECESS-UNDER", "CL-D1-ELEVON-FRAC",
+                                                       "CL-D1-POCKET-CORNER-R", "CL-D1-POCKET-BEAD-LEG", "CL-D1-CUTOUT-CORNER-R",
+                                                       "CL-D1-LE-SEAM-X", "CL-D1-RECESS-FILLET", "CL-D1-JR-RECESS-WALL"],
          procedure="Spar slides in the slot with 0.1-0.3 mm per side; both blocks drop into their pockets; anchor saddles seat on the spar; "
-                   "pod shell sits flat in the recess; grooves and pocket gauged against BUILD.md step checks")
+                   "pod shell sits flat in the recess; grooves and pocket gauged against BUILD.md step checks; pocket and cut-out "
+                   "corner radii by gauge, lip-bead chamfer depth, recess-step fillet legs, LE strip edges by rule")
 kit.test("T-D1-THROW", "Elevon throw and clearance", verifies=["CL-D1-HINGE-CLEAR-DOWN", "CL-D1-HINGE-CLEAR-UP"],
          procedure="Hinge taped, each panel moved by hand to +/-25 deg on a protractor; no contact with the core; feeler 0.5 mm")
 

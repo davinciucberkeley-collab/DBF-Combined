@@ -1,51 +1,59 @@
 # H1 ground test: summary
 
-Status `PROPOSED`, revision H1-R1, 2026-11-09. Plan and 14 test cards: `team/H1/GROUND-TEST-PLAN.md`. Rig sizing and
-pass lines: `team/H1/ground_tests.py` → `claims.json` (32 claims, 3 planned rig tests). `build_graph.py`: no error or
-warning on any H1 node; the build still fails on other roles' drift (A1, A5, J1). Nothing is `VERIFIED`: no hardware yet.
+Status `PROPOSED`, revision H1-R3, 2026-11-10.
 
-**One stand campaign, 25 Nov – 8 Dec, on the early-order hardware.** It runs eleven owner tests (E1, B4, C1, A1, E2, J1)
-before the mid-December order: motor Rm/I0/Kv, the 11×5.5MR vs 11×4.5MR A/B with torque and rpm, peak thrust and
-torque on a fresh 16.8 V pack, the installed run with tube, half-fin and wing strip, and pack weigh/capacity/IR at 25
-and 10 °C. The weigh-in, CG, proof loads, tip-over, controls, restrained run and range check follow on the built aircraft.
+Plan and 18 cards: `team/H1/GROUND-TEST-PLAN.md`. Rig sizing and pass lines: `team/H1/ground_tests.py` →
+`claims.json` (96 claims, every limit met). Requests: `CHANGE-REQUESTS.md`. Jacobs loan request, drafted but **not
+sent**: `JACOBS-LOAN-REQUEST.md`. Nothing is `VERIFIED` because no hardware has been tested. R3 read C4's 15:01
+re-publish, so the mount-stiffness and fin-proof lines follow it.
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
-| Thrust cell range needed / rated | 2.69 / 20 | kgf | `CL-H1-THRUST-CELL-REQ` | `UNVERIFIED` (+87 %) |
-| Torque cell range needed / rated (0.100 m arm) | 0.54 / 1.0 | kgf | `CL-H1-TORQUE-CELL-REQ` | `UNVERIFIED` (+46 %) |
-| Noise / hover value, thrust · torque | 0.15 · 0.43 (need ≤ 0.5 · 2) | % | `CL-H1-THRUST-RES`, `-TORQUE-RES` | `UNVERIFIED` |
-| Bench supply for 14.8 V sweeps | ≥ 44.6 | A | `CL-H1-SUPPLY-REQ` | `UNVERIFIED` |
-| Unlimited 16.8 V step current vs ESC 10 s rating | 51.6 / 55 | A | `CL-H1-STEP-I` | `UNVERIFIED` (+6 %; step ≤ 2 s) |
-| Stand pass line, fresh pack, limiter (T/W 2.0 incl. download) | ≥ 1.378 (predicted 1.62) | kgf | `CL-H1-T-PASS-FRESH` → `R-HOVER-TW` | `UNVERIFIED` (+15 %) |
-| Stand pass line, 3.6 V/cell at 10 °C (T/W 1.6) | ≥ 1.102 (predicted 1.166) | kgf | `CL-H1-T-PASS-SAG` → `R-HOVER-TW` | `UNVERIFIED` (+5 %) |
-| Peak thrust / torque pass, fresh 16.8 V | ≤ 21.1 / ≤ 0.42 | N / N·m | `CL-C1-T-LIMIT`, `CL-C1-MOTOR-TORQUE` | `PROPOSED` (replaces 17.8 N, CR-H1-01) |
-| Weigh U95 / acceptance line | 5.2 / ≤ 2.595 | g / kg | `CL-H1-WEIGH-U95`, `-ACCEPT` | `UNVERIFIED` (5 % of A3's 108 g margin) |
-| CG jig U95 / acceptance window x | 0.6 / 0.0406–0.0484 | mm / m | `CL-H1-CG-U95`, `-ACCEPT-FWD`, `-AFT` | `UNVERIFIED` |
-| Wing proof, per side at y 0.328 m / tip deflection | 28.5 / ≤ 28.8 | N / mm | `CL-H1-WING-PROOF-P`, `-DEFL-MAX` | `UNVERIFIED` (C1 confirms, CR-H1-03) |
-| Mount / fin-station proof | 19.6 / 46.0 | N | `CL-H1-MOUNT-PROOF-F`, `-FIN-PROOF-F` | `UNVERIFIED` |
-| Pack retention pull (dummy) | 85 | N | `CL-H1-PACK-PULL-F` | `UNVERIFIED` |
-| Restraint, four-motor run, total / per strap | 117.7 / 29.4 | N | `CL-H1-RESTRAINT-F`, `-PER-TIE` | `UNVERIFIED` |
-| Pack capacity / IR at 10 °C acceptance | ≥ 5.98 / ≤ 7.5 | Ah / mΩ/cell | `CL-H1-PACK-CAP-MIN`, `-IR10-MAX` | `UNVERIFIED` |
-| Rig cost | ≈ 160–180 `EST` | $ | `GROUND-TEST-PLAN.md` | `PROPOSED` (CR-H1-02) |
+| Fin proof: pad deflection at 1.0 × L4 splitting 3-D (3.70) and shell (18.86) | ≤ 8.36 (geometric mean) | mm | `CL-H1-FP-DEFL-SPLIT` | `MODELLED` |
+| Fin proof gauges: face at 1.5 × / strip at 1.0 × / 2σ resolution | 1 612 / 800 / 0.9 | µε | `CL-H1-FP-EPS-FACE-ULT`, `-EPS-STRIP-LIM`, `CL-H1-SG-RES-FRAC` | `UNVERIFIED` |
+| Gauge self-heating at 0.45 V vs 4.3 V bare (limit 78) | 19 / 1 761 | W/m² | `CL-H1-SG-PDENS`, `-PDENS-BARE` | `UNVERIFIED` |
+| Dial travel to 1.0 × / available | 23.6 / 25 | mm | `CL-H1-FP-TRAVEL-REQ` | `UNVERIFIED` (+6 %) |
+| Mount stiffness pass = max(1 100, C4 need) / C4 estimate | 1 966 / 1 500 | N·m/rad | `CL-H1-MSTIFF-K-PASS`, `-NOM-RATIO` 0.76 | `PROPOSED`, expected `FAIL` (CR-H1-24) |
+| GT-17 spot at 1.5 kg, wall 5.0 m / U95 | ≤ 4.02 / 6.9 % | mm / – | `CL-H1-MSTIFF-SPOT-ACCEPT`, `-U` | `UNVERIFIED` |
+| Lever 15:1 vs need (1.25 × 2 131 N) / 9:1 vs CR-C6-33 | 2 942 vs 2 664 / 1 765 vs 1 554 | N | `CL-H1-LEVER-CAP`, `-NEED`, `-CAP9`, `-NEED9` | `MODELLED` |
+| Pivot bearing: bare wood / steel plates / M6 in wood | 10.3 (> 4.3) / 65 / 3.4 | MPa | `CL-H1-LEVER-WOOD-BRG`, `-PLATE-BRG`, `-M6-BRG` | `MODELLED` |
+| Tube GJ at G 3 GPa / U95 / ring δ at 20 N (E_hoop 8 GPa) | 21.9 N·m² / 1.9 % / 0.26 mm | – | `CL-H1-TORS-GJ-LO`, `-U`, `CL-H1-RING-DEFL` | `UNVERIFIED` |
+| ESC film f acceptance (1.131 + U95 3.2 % on h) / hold | ≥ 1.205 / ≥ 617 s | – / s | `CL-H1-ESCCFD-F-ACCEPT`, `-RUN` | `UNVERIFIED` |
+| Wing proof step 1 per side: pads 1–4 / relief per tube | 0.919 / 0.524 / 0.453 / 0.613 / 2.031 | kg | `CL-H1-WP-M1..M4`, `-RELIEF-M` | `UNVERIFIED` |
+| Wing proof step 2 (V-block y 0.32): pads 3 / 4 | 0.499 / 1.642 | kg | `CL-H1-WP-S2-M3`, `-M4` | `UNVERIFIED` |
+| CG balance marks / jig acceptance window | 0.0466, 0.0514 / 0.0472–0.0508 | m | `P:cg.x_range_m`, `CL-H1-CG-ACCEPT-FWD`, `-AFT` | `UNVERIFIED` |
+| `T-D5-SIDE` load / D5 rim SF scaled to it | 58.96 / 0.62 | N / – | `CL-H1-D5-SIDE-F`, `-RIM-SF` | `UNVERIFIED` (CR-H1-22) |
+| `T-C3-POD-PROOF` bracket pull, +x and −z | 199.6 | N | `CL-H1-POD-BRACKET-F` | `UNVERIFIED` (CR-H1-23) |
+| Station proof: mount / station / pack pull | 21.1 / 57.3 / 73.8 | N | `CL-H1-MOUNT-PROOF-F`, `-FIN-PROOF-F`, `-PACK-PULL-F` | `UNVERIFIED` |
+| Stand: peak pass / limited fresh / cold pack | ≤ 20.98 N / ≥ 1.391 / ≥ 1.115 kgf | – | `CL-H1-T-PEAK-ACCEPT`, `-FRESH-ACCEPT`, `-SAG-ACCEPT` | `UNVERIFIED` |
+| Ground-test purchases `G12` + `G13` | 26.00 (D-39 line 20) | $ | `CL-I1-GROUNDTEST-BOUGHT` | `PROPOSED` (A1, CR-H1-25) |
 
 ## Action items this revision
 
 | Item | Result |
 |---|---|
-| One stand campaign (CR-B1-06, CR-C1-07, CR-E1-11, CR-B4-09, CR-E2-09) | GT-01…GT-05: torque cell, rpm, A/B, fresh-pack peak, installed run, pack 25/10 °C; `T-A1-WEIGH` in GT-06 |
-| Use A2's evidence file names (CR-A2-10) | `team/H1/claims.json` exists; logs `team/H1/logs/<test id>_<date>.csv`; packs in `team/E2/pack_log.csv` (CR-H1-07) |
+| `T-C4-FIN-PROOF` as drawn, gauges, dial (CR-C4-36/-38) | GT-09: two half bridges with dummies, shunt 1 744 µε, dial to 1.0 ×, then a rule; 1.0 × comparison step |
+| `T-C4-MOUNT-STIFF` ≥ 1 100 (CR-C4-41) | floor kept; card follows C4's live 1 966; wall 5.0 m, photo read-out |
+| `T-C6-STRIP-ANCHOR` frame ≥ 1 560 N (CR-C6-33; -39 asks 2 660) | 15:1 / 9:1 lever with steel pivot plates; both met |
+| `T-C3-STOP-PUSH` bonded, `T-C3-POD-PROOF` + 200 N (CR-C3-20) | GT-15 and GT-09 (b) |
+| `T-C4-TUBE-BEND` with GJ (CR-C2-15) | GT-16 steps 4 (two lasers) and 5 (ring crush, E_hoop) |
+| `T-E3-ESC-PAD-CFD` (CR-E3-17) | GT-04 step 2b; 5 min hold too short (CR-H1-21) |
+| GT-08 pad table and step 2 (CR-C1-30) | from C1's claims; text mismatch to C1 (CR-H1-20) |
+| GT-07 marks 0.0466 / 0.0514 m | drawn at the limits; jig window guard-banded inside |
+| `T-D5-SIDE` at 59 N ultimate | GT-09 at 58.96 N on the CR-A1-65 shoe |
+| Jacobs written yes before 20 Nov (D-72) | request drafted, **not sent**: a team member sends it by 13 Nov (CR-H1-26) |
 
 ## Open issues
 
 | Issue | Who |
 |---|---|
-| 17.8 N limit thrust is below C1's 21.1 N prediction; the stand decides | A1, C1 (CR-H1-01) |
-| Pack-current limiter and output cap must be reproduced on one station | F4 (CR-H1-04) |
-| Wing proof load points are an equivalent point; C1's whiffletree replaces them | C1 (CR-H1-03) |
-| The bare tube fails mode separation (`CL-J1-TUBE-MODE-SEP`); GT-09 tap test measures the bonded fin | C4 |
-| ESC temperature limit is a placeholder | E3 (CR-H1-06) |
+| Jacobs' written yes ($157.34 of I1's levers) not in hand; due 20 Nov | team (CR-H1-26) |
+| C4's mount estimate (1 500) is below its own need (1 966); GT-17 expected to fail | C4 (CR-H1-24) |
+| D5's drawn rim expected to crack at 59 N | D5 (CR-H1-22) |
+| 200 N crash pull on a flight pod | C3 (CR-H1-23) |
+| C4 test texts still R4; gauge predictions not claims (`ASM-H1-FP-PRED`) | C4 (CR-H1-24, -10) |
+| Face gauge on paper over foam needs a coupon factor (stack 0.63 × face) | H1, C4 (GT-15) |
 
 ## How to verify
 
-`python -I redesign/team/H1/ground_tests.py` then `python -I redesign/proofs/build_graph.py` (no H1 line in the
-output). Each card's pass table names its claim; the owner records the run with the H1 log as evidence.
+`python -I redesign/team/H1/ground_tests.py` (96 claims, no `FAILS`), then `python -I redesign/proofs/build_graph.py`.

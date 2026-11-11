@@ -3,6 +3,8 @@
 Run:  python -I redesign/team/C5/sim/fea_shoe.py --one 0.4 +y     (one level x case; 3 levels x 2 cases, run in
       parallel: 7-60 min each on the 20-core machine, see sim/run_fea.sh)
       python -I redesign/team/C5/sim/fea_shoe.py --collect        (merge, strip verification, convergence)
+      C5-R6: with C5_FEA_VARIANT set, --one and --collect run / merge that geometry (out/fea_shoe<suffix>.json);
+      the D-65 stack is C5_FEA_VARIANT="w=0.002,rim_t=0.003,r_in=0.001,engage=0.025" (sim/run_d65.sh)
 Writes sim/out/fea_shoe.json (every level, every case, verification strip) and the run logs in sim/runs/.
 landing_sim_claims.py reads the JSON summary into the proof chain.
 
@@ -70,14 +72,17 @@ def geometry():
     import landing                                         # D5's CAD module: stack() is pure
     n, side_out, geo_out = d5_inputs()
     n = dict(n)
+    n.setdefault("ws", n["w"])                            # D5-R6 stack(): separate sleeve wall ws (R5: ws = w)
     n.update(VARIANT)
+    if "w" in VARIANT and "ws" not in VARIANT:            # R5-style variant: one wall for sleeve, tine and legs
+        n["ws"] = n["w"]
     s = landing.stack(n)
     mm = 1000.0
     g = {
         "x_bw0": s["x_bw"][0] * mm, "x_bw1": s["x_bw"][1] * mm, "x_end": s["x_slv_end"] * mm,
         "x_rim0": s["x_rim"][0] * mm, "x_te": n["te"] * mm, "x_win0": s["x_win"][0] * mm, "x_win1": s["x_win"][1] * mm,
         "x_open": s["x_open"] * mm, "x_g": s["x_g"] * mm, "L_cart": s["L_cart"] * mm,
-        "hy_o": s["slv_out"][0] / 2 * mm, "hz_o": s["slv_out"][1] / 2 * mm, "w": n["w"] * mm, "rim_t": n["rim_t"] * mm,
+        "hy_o": s["slv_out"][0] / 2 * mm, "hz_o": s["slv_out"][1] / 2 * mm, "w": n["ws"] * mm, "rim_t": n["rim_t"] * mm,
         "z0": s["z_slv"][0] * mm, "z1": s["z_slv"][1] * mm, "zw0": s["z_win"][0] * mm, "zw1": s["z_win"][1] * mm,
         "leg_in": s["leg_gap"] * mm, "leg_depth": n["leg_depth"] * mm, "engage": n["engage"] * mm,
         "bond_hy": (s["collar_gap"]) * mm, "z_hh": n["hh"] * mm,
@@ -342,7 +347,7 @@ def collect():
     res = {"levels": [], "strip": strip_check()}
     for h in LEVELS:
         for case in CASES:
-            tag = "h%03d_%s" % (round(h * 1000), {"+y": "py", "+z": "pz", "-z": "mz"}[case])
+            tag = "h%03d_%s%s" % (round(h * 1000), {"+y": "py", "+z": "pz", "-z": "mz"}[case], SUFFIX)
             res["levels"].append(json.loads((HERE / "out" / ("fea_%s.json" % tag)).read_text()))
     res["inputs"] = res["levels"][0].pop("inputs")
     for r in res["levels"][1:]:
@@ -357,7 +362,9 @@ def collect():
         f = [r["u_end_max_mm"] for r in rows]
         conv["%s|end deflection" % case] = dict(values=f, **richardson(*f, hs[0] / hs[1], hs[1] / hs[2]))
     res["convergence"] = conv
-    (HERE / "out" / "fea_shoe.json").write_text(json.dumps(res, indent=1))
+    res["variant"] = res["levels"][0].get("variant", {})
+    res["r_in_mm"] = R_IN
+    (HERE / "out" / ("fea_shoe%s.json" % SUFFIX)).write_text(json.dumps(res, indent=1))
     print(json.dumps(conv, indent=1))
 
 

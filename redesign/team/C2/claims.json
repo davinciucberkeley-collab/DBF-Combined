@@ -3,7 +3,8 @@
  "generated_by": "redesign/team/C2/c2_claims.py",
  "params": [
   "../../params/params.json",
-  "params.json"
+  "params.json",
+  "fea/params.json"
  ],
  "nodes": [
   {
@@ -148,11 +149,11 @@
     "SRC-C2-ROARK"
    ],
    "outputs": {
-    "sigma_pa": 59277952.87905242,
+    "sigma_pa": 62321509.928198874,
     "I_m4": 3.645032876327555e-09
    },
    "input_values": {
-    "Mb": 19.642735189594703,
+    "Mb": 20.651268417332638,
     "D": 0.022,
     "d": 0.02
    }
@@ -171,11 +172,11 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 12267384.287505623
+    "value": 13638952.041822812
    },
    "input_values": {
-    "T": 7.480864215536013,
-    "V": 32.31009818148411,
+    "T": 8.380872552303543,
+    "V": 32.75682853782345,
     "D": 0.022,
     "d": 0.02
    }
@@ -219,10 +220,10 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 59771082.9350503
+    "value": 59709669.4535664
    },
    "input_values": {
-    "Mx": 12.023901506083249,
+    "Mx": 12.003551127987016,
     "Fb": 143.422702,
     "y_fin": 0.32,
     "D": 0.022,
@@ -237,14 +238,14 @@
    "function": "ae_req",
    "equation": "V_req = 1.2 VD",
    "inputs": {
-    "VD": "CL-C1-VD",
+    "VD": "CL-C1-VD-ENV",
     "k": "ASM-C2-AE-FACTOR"
    },
    "outputs": {
-    "value": 32.04
+    "value": 32.64
    },
    "input_values": {
-    "VD": 26.7,
+    "VD": 27.2,
     "k": 1.2
    }
   },
@@ -260,10 +261,10 @@
     "b": "P:wing.span_m"
    },
    "outputs": {
-    "value": 0.004380869565217392
+    "value": 0.004459130434782609
    },
    "input_values": {
-    "w": 0.002519,
+    "w": 0.002564,
     "b": 1.15
    }
   },
@@ -295,10 +296,10 @@
     "v": "P:c2.fe.spar_sigma_ult_max_pa"
    },
    "outputs": {
-    "value": 59277846.683703
+    "value": 62321605.238544
    },
    "input_values": {
-    "v": 59277846.683703
+    "v": 62321605.238544
    }
   },
   {
@@ -312,10 +313,10 @@
     "v": "P:c2.fe.twist_flight_deg"
    },
    "outputs": {
-    "value": 1.836171
+    "value": 1.893609
    },
    "input_values": {
-    "v": 1.836171
+    "v": 1.893609
    }
   },
   {
@@ -397,10 +398,10 @@
     "v": "P:c2.fe.mode_sep_worst"
    },
    "outputs": {
-    "value": 0.071656
+    "value": 0.085156
    },
    "input_values": {
-    "v": 0.071656
+    "v": 0.085156
    }
   },
   {
@@ -414,10 +415,10 @@
     "v": "P:c2.fe.f_torsion_anti_hz"
    },
    "outputs": {
-    "value": 11.884864
+    "value": 11.860282
    },
    "input_values": {
-    "v": 11.884864
+    "v": 11.860282
    }
   },
   {
@@ -431,10 +432,10 @@
     "v": "P:c2.fe.f_torsion_sym_hz"
    },
    "outputs": {
-    "value": 24.08554
+    "value": 22.791431
    },
    "input_values": {
-    "v": 24.08554
+    "v": 22.791431
    }
   },
   {
@@ -499,10 +500,10 @@
     "v": "P:c2.fe.spar_bond_tau_ult_pa"
    },
    "outputs": {
-    "value": 6167.543417
+    "value": 11113.64499
    },
    "input_values": {
-    "v": 6167.543417
+    "v": 11113.64499
    }
   },
   {
@@ -550,10 +551,10 @@
     "v": "P:c2.fe.tip_foam_sigma_ult_pa"
    },
    "outputs": {
-    "value": 3697.421484
+    "value": 3809.969718
    },
    "input_values": {
-    "v": 3697.421484
+    "v": 3809.969718
    }
   },
   {
@@ -567,10 +568,10 @@
     "v": "P:c2.fe.tape_sigma_root_ult_pa"
    },
    "outputs": {
-    "value": 7254151.454467
+    "value": 7209377.407435
    },
    "input_values": {
-    "v": 7254151.454467
+    "v": 7209377.407435
    }
   },
   {
@@ -584,10 +585,10 @@
     "v": "P:c2.fe.pod_tau_pa"
    },
    "outputs": {
-    "value": 5359.604932
+    "value": 4969.200331
    },
    "input_values": {
-    "v": 5359.604932
+    "v": 4969.200331
    }
   },
   {
@@ -601,10 +602,10 @@
     "v": "P:c2.fe.cradle_area_req_m2"
    },
    "outputs": {
-    "value": 0.001165
+    "value": 0.001171
    },
    "input_values": {
-    "v": 0.001165
+    "v": 0.001171
    }
   },
   {
@@ -618,10 +619,10 @@
     "v": "P:c2.fe.mesh_conv_freq"
    },
    "outputs": {
-    "value": 0.00025
+    "value": 0.000178
    },
    "input_values": {
-    "v": 0.00025
+    "v": 0.000178
    }
   },
   {
@@ -635,10 +636,10 @@
     "v": "P:c2.fe.mesh_conv_static"
    },
    "outputs": {
-    "value": 0.000517
+    "value": 0.000414
    },
    "input_values": {
-    "v": 0.000517
+    "v": 0.000414
    }
   },
   {
@@ -652,10 +653,10 @@
     "v": "P:c2.fe.fe_vs_integration"
    },
    "outputs": {
-    "value": 0.002239
+    "value": 0.00277
    },
    "input_values": {
-    "v": 0.002239
+    "v": 0.00277
    }
   },
   {
@@ -676,6 +677,98 @@
    }
   },
   {
+   "id": "SRC-C2-ADAMS-DAMP",
+   "type": "source",
+   "title": "Adams & Bacon / Gibson: damping of CFRP and of foam-cored sandwich beams (R. D. Adams, Damping properties analysis of composites, Engineered Materials Handbook vol. 1, ASM 1987)",
+   "kind": "book",
+   "where": "CFRP tubes, fibre-dominated modes: loss factor 0.002-0.01 (zeta 0.1-0.5 %); polymer-foam cores and bonded joints raise built-up structures to zeta 1-3 %"
+  },
+  {
+   "id": "ASM-C2-WING-ZETA",
+   "type": "assumption",
+   "title": "Wing torsion modes: modal damping ratio 1 % (design lower bound)",
+   "text": "Viscous damping ratio of the first antisymmetric and symmetric wing torsion modes (fin stations rocking on the spar)",
+   "basis": "nominal 2 % for a bonded XPS / CF / tape wing with hinged elevons; 1 % is the low end used for structural-mode gain margins (less damping = taller resonance peak in the rate loop); T-C2-TAP-TEST measures it (half-power bandwidth or log decrement of a fin-tip tap)",
+   "value": 0.01,
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-C2-ADAMS-DAMP"
+   ]
+  },
+  {
+   "id": "CALC-C2-FTORS-HI",
+   "type": "calculation",
+   "title": "Antisymmetric torsion mode, high corner, raised by the 3-D FEA torsion stiffening",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "ftors_hi",
+   "equation": "f_hi = f_beam,hi / sqrt(theta_FEA / theta_beam)",
+   "inputs": {
+    "f": "P:c2.fe.f_torsion_anti_hi_hz",
+    "r": "P:c2fea.fea_beam_twist_ratio_L4"
+   },
+   "outputs": {
+    "value": 16.42863806819269
+   },
+   "input_values": {
+    "f": 15.046639,
+    "r": 0.8388337176668121
+   }
+  },
+  {
+   "id": "CALC-C2-FSYM-HI",
+   "type": "calculation",
+   "title": "Lowest symmetric station mode, high corner, raised by the 3-D FEA torsion stiffening",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "fsym_hi",
+   "equation": "f_hi = f_beam,hi / sqrt(theta_FEA / theta_beam)",
+   "inputs": {
+    "f": "P:c2.fe.f_sym1_hi_hz",
+    "r": "P:c2fea.fea_beam_twist_ratio_L4"
+   },
+   "outputs": {
+    "value": 31.042802151200434
+   },
+   "input_values": {
+    "f": 28.43144,
+    "r": 0.8388337176668121
+   }
+  },
+  {
+   "id": "CALC-C2-ZETA",
+   "type": "calculation",
+   "title": "Wing torsion-mode damping ratio for the control loops",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "zeta",
+   "equation": "zeta = ASM-C2-WING-ZETA",
+   "inputs": {
+    "z": "ASM-C2-WING-ZETA"
+   },
+   "outputs": {
+    "value": 0.01
+   },
+   "input_values": {
+    "z": 0.01
+   }
+  },
+  {
+   "id": "CALC-C2-STATION-IYY",
+   "type": "calculation",
+   "title": "Fin station inertia about the spar axis (C1 mass model MC-P)",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_station_iyy",
+   "equation": "I = sum m ((x - xs)^2 + (z - zs)^2) + own Iyy over the station items (wing_struct.station_inertia)",
+   "inputs": {
+    "v": "P:c2.fe.station_Iyy_spar_kgm2"
+   },
+   "outputs": {
+    "value": 0.01596
+   },
+   "input_values": {
+    "v": 0.01596
+   }
+  },
+  {
    "id": "CL-C2-SPAR-SIGMA-ULT",
    "type": "claim",
    "title": "Spar root bending stress, ultimate, spar alone",
@@ -692,8 +785,8 @@
    "parts": [
     "WNG-002"
    ],
-   "how": "T-C2-WING-PROOF: wing on the two block stations, limit load hung at the tip and pod; no crack, no set",
-   "value": 59277952.87905242
+   "how": "T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step",
+   "value": 62321509.928198874
   },
   {
    "id": "CL-C2-SPAR-SIGMA-ENV",
@@ -713,7 +806,7 @@
     "WNG-002"
    ],
    "how": "Re-run wing_struct.py; equals CL-C2-SPAR-SIGMA-ULT when the root governs",
-   "value": 59277846.683703
+   "value": 62321605.238544
   },
   {
    "id": "CL-C2-SPAR-TAU-ULT",
@@ -732,8 +825,8 @@
    "parts": [
     "WNG-002"
    ],
-   "how": "T-C2-TWIST loads the wing in torsion to 1.5 x 4.6 N m",
-   "value": 12267384.287505623
+   "how": "T-C2-TWIST loads the wing in torsion to CL-C1-WING-TORSION-ULT / 1.5 (limit)",
+   "value": 13638952.041822812
   },
   {
    "id": "CL-C2-SPAR-BUCKLE",
@@ -775,7 +868,7 @@
     "FIN-004-R"
    ],
    "how": "T-C4-BLOCK-PROOF on a spar stub with the brace fitted",
-   "value": 59771082.9350503
+   "value": 59709669.4535664
   },
   {
    "id": "CL-C2-TIP-DEFL-FRAC",
@@ -796,8 +889,8 @@
     "WNG-002",
     "WNG-003"
    ],
-   "how": "T-C2-WING-PROOF: dial gauge or ruler at the tip at limit load",
-   "value": 0.004380869565217392
+   "how": "T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step; ruler at the tip at limit load (step 1) and at the step-2 V-block side",
+   "value": 0.004459130434782609
   },
   {
    "id": "CL-C2-TWIST-FLIGHT",
@@ -812,17 +905,17 @@
     "WNG-003"
    ],
    "how": "T-C2-TWIST: measure GJ, re-run wing_struct.py with it",
-   "value": 1.836171
+   "value": 1.893609
   },
   {
    "id": "CL-C2-V-AE-REQ",
    "type": "claim",
-   "title": "Aeroelastic clearance speed required (1.2 VD)",
+   "title": "Aeroelastic clearance speed required (1.2 x envelope VD)",
    "calc": "CALC-C2-AE-REQ",
    "output": "value",
    "unit": "m/s",
-   "how": "Follows CL-C1-VD",
-   "value": 32.04
+   "how": "Follows CL-C1-VD-ENV (the dive speed the envelope and the structure are cleared to, CR-C1-28)",
+   "value": 32.64
   },
   {
    "id": "CL-C2-V-REVERSAL",
@@ -936,7 +1029,7 @@
     "FIN-002-R"
    ],
    "how": "T-C2-TAP-TEST on the built airframe with motors fitted; hover VIBE < 30 m/s2 with the F4 harmonic notch",
-   "value": 0.071656
+   "value": 0.085156
   },
   {
    "id": "CL-C2-F-TORSION-ANTI",
@@ -951,7 +1044,7 @@
     "WNG-003"
    ],
    "how": "T-C2-TAP-TEST (tap a fin tip, phone accelerometer at the pod)",
-   "value": 11.884864
+   "value": 11.860282
   },
   {
    "id": "CL-C2-F-TORSION-SYM",
@@ -966,7 +1059,67 @@
     "WNG-003"
    ],
    "how": "T-C2-TAP-TEST",
-   "value": 24.08554
+   "value": 22.791431
+  },
+  {
+   "id": "CL-C2-F-TORSION-ANTI-HI",
+   "type": "claim",
+   "title": "Antisymmetric wing torsion mode, upper bound (high stiffness corner x 3-D FEA torsion stiffening)",
+   "calc": "CALC-C2-FTORS-HI",
+   "output": "value",
+   "unit": "Hz",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TAP-TEST (tap a fin tip); the band CL-C2-F-TORSION-ANTI .. -ANTI-HI is what F4's notch / crossover must clear until the tap test",
+   "value": 16.42863806819269
+  },
+  {
+   "id": "CL-C2-F-SYM-HI",
+   "type": "claim",
+   "title": "Lowest symmetric wing mode with the fin stations (hover pitch path), upper bound",
+   "calc": "CALC-C2-FSYM-HI",
+   "output": "value",
+   "unit": "Hz",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TAP-TEST; band CL-C2-F-TORSION-SYM .. -SYM-HI",
+   "value": 31.042802151200434
+  },
+  {
+   "id": "CL-C2-WING-ZETA",
+   "type": "claim",
+   "title": "Wing torsion-mode damping ratio, design lower bound",
+   "calc": "CALC-C2-ZETA",
+   "output": "value",
+   "unit": "-",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TAP-TEST: half-power bandwidth (or log decrement) of the fin-tip tap response",
+   "value": 0.01
+  },
+  {
+   "id": "CL-C2-STATION-IYY",
+   "type": "claim",
+   "title": "Fin station inertia about the spar axis (one side, MC-P)",
+   "calc": "CALC-C2-STATION-IYY",
+   "output": "value",
+   "unit": "kg m2",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-LR",
+    "FIN-002-R"
+   ],
+   "how": "Follows the C1 mass model; check by a bifilar swing of one finished fin station about the spar line",
+   "value": 0.01596
   },
   {
    "id": "CL-C2-RING-NO-PLUG",
@@ -1053,8 +1206,8 @@
     "WNG-001",
     "WNG-002"
    ],
-   "how": "T-C2-XPS-COUPON (foam shear) and T-C2-WING-PROOF",
-   "value": 6167.543417
+   "how": "T-C2-XPS-COUPON (foam shear) and T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step",
+   "value": 11113.64499
   },
   {
    "id": "CL-C2-CHORD-TAPE",
@@ -1110,8 +1263,8 @@
    "parts": [
     "WNG-001"
    ],
-   "how": "T-C2-WING-PROOF",
-   "value": 3697.421484
+   "how": "T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step",
+   "value": 3809.969718
   },
   {
    "id": "CL-C2-ROOT-TAPE",
@@ -1130,8 +1283,8 @@
    "parts": [
     "WNG-003"
    ],
-   "how": "T-C2-WING-PROOF",
-   "value": 7254151.454467
+   "how": "T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step",
+   "value": 7209377.407435
   },
   {
    "id": "CL-C2-POD-FOAM",
@@ -1151,7 +1304,7 @@
     "WNG-001"
    ],
    "how": "Bond on bare sanded foam; C3 proof-pulls the pod",
-   "value": 5359.604932
+   "value": 4969.200331
   },
   {
    "id": "CL-C2-CRADLE-AREA",
@@ -1164,7 +1317,7 @@
     "WNG-001"
    ],
    "how": "D7 pad >= 40 x 40 mm under the spar line",
-   "value": 0.001165
+   "value": 0.001171
   },
   {
    "id": "CL-C2-WING-MASS",
@@ -1200,7 +1353,7 @@
     "ref": "ASM-C2-FE-TOL"
    },
    "how": "Re-run wing_struct.py; out/results.json#modal_conv",
-   "value": 0.00025
+   "value": 0.000178
   },
   {
    "id": "CL-C2-FE-CONV-STATIC",
@@ -1214,7 +1367,7 @@
     "ref": "ASM-C2-FE-TOL"
    },
    "how": "out/results.json#fe_static_conv",
-   "value": 0.000517
+   "value": 0.000414
   },
   {
    "id": "CL-C2-FE-VS-BEAM",
@@ -1228,7 +1381,7 @@
     "ref": "ASM-C2-FE-AGREE"
    },
    "how": "out/results.json#fe_vs_integration",
-   "value": 0.002239
+   "value": 0.00277
   },
   {
    "id": "CL-C2-RING-VALIDATION",
@@ -1248,20 +1401,6 @@
    "value": 0.003689
   },
   {
-   "id": "T-C2-WING-PROOF",
-   "type": "test",
-   "title": "Wing proof load to limit",
-   "verifies": [
-    "CL-C2-SPAR-SIGMA-ULT",
-    "CL-C2-TIP-DEFL-FRAC",
-    "CL-C2-TIP-FOAM",
-    "CL-C2-SPAR-BOND-TAU",
-    "CL-C2-ROOT-TAPE"
-   ],
-   "state": "planned",
-   "procedure": "Wing upside down on two padded V-blocks under the spar at |y| 0.32; sand bags: 2 x 25 N spread over |y| 0.33-0.50 per side (= F1 limit outer moment); measure tip deflection; then the G2 case: hang 51 N from one upper tube end (fins fitted). Pass: no crack, no set > 0.5 mm after unloading"
-  },
-  {
    "id": "T-C2-TAP-TEST",
    "type": "test",
    "title": "Wing modal tap test with motors fitted",
@@ -1269,10 +1408,13 @@
     "CL-C2-WING-MODE-SEP",
     "CL-C2-F-TORSION-ANTI",
     "CL-C2-F-TORSION-SYM",
+    "CL-C2-F-TORSION-ANTI-HI",
+    "CL-C2-F-SYM-HI",
+    "CL-C2-WING-ZETA",
     "CL-C2-V-FLUTTER"
    ],
    "state": "planned",
-   "procedure": "Aircraft hung on bungees (free-free), phone accelerometer app (>= 400 Hz) taped at the pod and at a fin tip; tap a motor can fore-aft and a fin tip sideways; FFT peaks to 400 Hz. Pass: model within 15 %, no peak within 20 % of the hover/cruise 1P/2P, or F4 notch set on it"
+   "procedure": "Aircraft hung on bungees (free-free), phone accelerometer app (>= 400 Hz) taped at the pod and at a fin tip; tap a motor can fore-aft and a fin tip sideways; FFT peaks to 400 Hz. Pass: model within 15 %, no peak within 20 % of the hover/cruise 1P/2P, or F4 notch set on it; damping ratio from the half-power bandwidth of the two torsion peaks (>= CL-C2-WING-ZETA)"
   },
   {
    "id": "T-C2-TWIST",

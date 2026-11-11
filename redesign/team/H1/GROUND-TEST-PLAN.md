@@ -1,17 +1,22 @@
 # Ground test plan — K09-L
 
-Owner H1 (ground test engineer). Status `PROPOSED`, revision H1-R2, 2026-11-09. Inputs re-read on this date:
-`params/params.json` (A1-R3), `README.md`, `MASS-CG.md` (A3-R4), and the `claims.json` test nodes of A1, A3, A5, B2–B4,
-C1–C6, D5, E1–E3, F1, F3–F5, J1. Every pass line below is a claim in `team/H1/claims.json` (from `ground_tests.py`)
-or an owner's claim. Re-run `python -I redesign/team/H1/ground_tests.py` after any parameter change. The tests
-(`T-…` ids) belong to the role that owns the claim they verify. H1 builds the rigs, runs the cards and writes the
-logs, and the owner marks the test `run` with the H1 log as evidence.
+Owner H1 (ground test engineer). Status `PROPOSED`, revision **H1-R3**, 2026-11-10. Inputs re-read on this date:
+`params/params.json` (A1-R5), `README.md`, `MASS-CG.md` (A1-R5 over A3-R6a), and the claim files of A1, A3, B3, C1
+(R4, 14:37 publish), C2, C3 (R3), C4 (`claims.d3.json`, `claims.sim.json`), C6 (R5b), D5, E3 (`sim/claims.json`), I1.
+Every pass line below is a claim in `team/H1/claims.json` (from `ground_tests.py`) or an owner's claim. Re-run
+`python -I redesign/team/H1/ground_tests.py` after any parameter change. The tests (`T-…` ids) belong to the role that
+owns the claim they verify. H1 builds the rigs, runs the cards and writes the logs, and the owner marks the test `run`
+with the H1 log as evidence.
 
-R2 changes (CR-A1-41 and the requests it collects): GT-02d against the 21.1 N parameter with a guard band, GT-02e
-cold pack with a guard band, GT-04 with E3's lines and the 600 s step, GT-08 on C1's four-pad whiffletree, GT-12
-with F3/F5 bench tests, GT-14 = `T-F5-RANGE` at 25 mW, and four new cards: GT-15 coupons, GT-16 tube tests (Aloft,
-by 10 Dec), GT-17 mount stiffness, GT-18 tap tests. Test gear: one new purchase (I1 line G12, $17.00); everything else
-is borrowed. The borrow list is at the end.
+**R3 changes.** GT-09 fin proof on the as-drawn article with two strain-gauge bridges and a 25 mm dial (CR-C4-36,
+CR-C4-38). GT-17 pass level ≥ max(1 100, `CL-C4-D3-MOUNT-K-REQ`), 1 966 N·m/rad at C4's 15:01 re-publish, with the wall moved to 5.0 m (CR-C4-41). GT-15 lever rebuilt 15:1 / 9:1 with steel
+pivot plates, ≥ 2 942 N (CR-C6-33, CR-C6-39). `T-C3-STOP-PUSH` on bonded tray pieces, and `T-C3-POD-PROOF` + 200 N on the
+foot brackets (CR-C3-20). GT-16 adds GJ between two lasers and a ring-crush coupon for the hoop modulus (CR-C2-15).
+GT-04 step 2b, `T-E3-ESC-PAD-CFD`, on a heated dummy, held 10.3 min (CR-E3-17). GT-08 uses C1's R4 pad table, relief
+pull and step 2 (CR-C1-30, CR-C1-27). GT-07 balance marks at 0.0466 / 0.0514 m. `T-D5-SIDE` at 59.0 N ultimate. Test
+gear: bought `G12` $17.00 and `G13` $9.00 (gauges); the rest is borrowed. **Jacobs Hall's written yes for the
+soldering kit and hot-wire gear is due before 20 Nov (D-72).** The request is ready to send:
+`team/H1/JACOBS-LOAN-REQUEST.md`.
 
 ## Campaign order
 
@@ -20,15 +25,15 @@ is borrowed. The borrow list is at the end.
 | GT-01 | Stand build and calibration | `T-H1-STAND-CAL`, `T-H1-RIG-CHECK` (H1) | 23–25 Nov |
 | GT-02 | Stand campaign, one station | `T-E1-MOTOR-RM` `T-E1-STAND` (E1), `T-B4-STAND` (B4), `T-C1-THRUST-FRESH` (C1), `T-A1-THRUST-STATION` (A1), `T-E2-IR` (E2) | 25 Nov – 5 Dec |
 | GT-03 | Installed run, fin swirl | `T-B4-INSTALLED` `T-B4-YAW` (B4) | 1 – 8 Dec |
-| GT-04 | Motor, ESC, wire and connector thermal | `T-E3-MOTOR-TAU` `T-E3-ESC-PAD` (E3), `T-F1-WIRE-HEAT` `T-F1-CONN-HEAT` (F1) | with GT-02, ≤ 8 Dec |
+| GT-04 | Motor, ESC, wire and connector thermal | `T-E3-MOTOR-TAU` `T-E3-ESC-PAD` `T-E3-ESC-PAD-CFD` (E3), `T-F1-WIRE-HEAT` `T-F1-CONN-HEAT` (F1) | with GT-02, ≤ 8 Dec |
 | GT-05 | Packs: weigh, capacity, IR | `T-E2-WEIGH` `T-E2-CAPACITY` `T-E2-IR` (E2) | on arrival |
-| GT-16 | Tube bend and torsion (Aloft `W03`) | `T-C4-TUBE-BEND` (= `T-J1-TUBE-BEND`), `T-C4-TUBE-TORSION` (C4) | tube arrives ~27 Nov; **result to I1 by 10 Dec** |
+| GT-16 | Tube bend, torsion (GJ) and ring crush (Aloft `W03`) | `T-C4-TUBE-BEND` (= `T-J1-TUBE-BEND`), `T-C4-TUBE-TORSION` (C4); E_hoop to C2 | tube arrives ~27 Nov; **result to I1 by 10 Dec** |
 | GT-17 | Mount rocking stiffness | `T-C4-MOUNT-STIFF` (C4), `T-C6-CANT-SEAT` `T-C6-PROPNUT` (C6) | first printed ASA mount (Dec) |
 | GT-15 | Coupons | C2, C3, C4, C6, D5 coupon tests (table in GT-15) | first prints and foam, Dec – 16 Jan |
 | GT-06 | Weigh parts and aircraft | `T-A3-WEIGH-PARTS` (A3), `T-A1-WEIGH` (A1) | as parts arrive; build end |
 | GT-07 | CG balance | `T-B3-CG-BALANCE` (B3), `T-A3-CG-BALANCE` (A3), `T-A5-CG-BALANCE` (A5) | build end |
-| GT-08 | Wing proof and twist | `T-C1-WING-PROOF` (C1), `T-C2-WING-PROOF` `T-C2-TWIST` (C2) | first finished wing |
-| GT-09 | Station, fin, block and pod proofs | `T-C1-STATION-PROOF` (C1), `T-C4-FIN-PROOF` `T-C4-BLOCK-PROOF` (C4), `T-C3-POD-PROOF` (C3), `T-D5-PROOF` `T-D5-SIDE` (D5) | first fin quarter, first pod |
+| GT-08 | Wing proof (steps 1 and 2) and twist | `T-C1-WING-PROOF` (C1), `T-C2-TWIST` (C2); `T-C2-WING-PROOF` withdrawn (CR-C1-27) | first finished wing |
+| GT-09 | Station, fin, block, pod and foot proofs | `T-C1-STATION-PROOF` (C1), `T-C4-FIN-PROOF` `T-C4-BLOCK-PROOF` (C4), `T-C3-POD-PROOF` (C3), `T-D5-PROOF` `T-D5-SIDE` (D5) | fin test article (Dec), first pod |
 | GT-18 | Tap tests | `T-C4-TAP-D3` (C4), `T-C2-TAP-TEST` (C2), `T-C4-PROP-SWING` (C4) | finished wing, props on |
 | GT-10 | Pack retention, foot drops | `T-H1-PACK-PULL` (H1), `T-C5-FOOT-RIG` `T-C5-AIRCRAFT-DROP` (C5), `T-D5-REPLACE` (D5) | build end |
 | GT-11 | Tilt board | `T-C5-TILT-BOARD` (C5) | build end |
@@ -90,8 +95,9 @@ Tests `T-H1-STAND-CAL`, `T-H1-RIG-CHECK`. Figure `FIG H1-01`.
 3. Hang 50, 100, 200, 500 g at the 0.100 m arm mark → `cal_torque`.
 4. 60 s zero load on both cells, 80 SPS; 2σ noise.
 5. Repeat 2–4 at the end of every session.
-6. `T-H1-RIG-CHECK`: optical-lever shim step, caliper on a 1.00 mm gauge block, 200 Hz tone on the FC raw IMU,
-   phone inclinometer on a 30° printed wedge.
+6. `T-H1-RIG-CHECK`: optical-lever shim step (and both torsion lasers), caliper or dial on a 1.00 mm gauge block, 200 Hz
+   tone on the FC raw IMU, phone inclinometer on a 30° printed wedge, each strain-gauge bridge (60 s zero, 10 min drift
+   ≤ 5 µε, shunt step 1 744 µε within 1 %), three thermocouples together in still air within 0.3 K.
 
 | Pass | Limit | Claim |
 |---|---|---|
@@ -156,7 +162,7 @@ result, A1 sets `requirements.thrust_limit_per_motor_n` to the measured peak rou
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Full-throttle thrust, cold 20 % pack | ≥ **1.115 kgf** (predicted 1.231) | `CL-H1-T-SAG-ACCEPT` (1.102 + U95) → `CL-H1-T-PASS-SAG`, `R-HOVER-TW` |
+| Full-throttle thrust, cold 20 % pack | ≥ **1.115 kgf** (predicted 1.379 at sag 0.851) | `CL-H1-T-SAG-ACCEPT` (1.102 + U95) → `CL-H1-T-PASS-SAG`, `R-HOVER-TW` |
 | IR at 10 °C | ≤ 7.5 mΩ/cell | `CL-H1-PACK-IR10-MAX` |
 
 On fail: E2 and E1 replace `propulsion.voltage_sag` (0.76) with the measured ratio; A1 decides prop or limiter.
@@ -184,7 +190,7 @@ On fail: A1 updates `propulsion.download_factor`; E1 and B1 re-run T/W.
 
 Tests `T-E3-MOTOR-TAU`, `T-E3-ESC-PAD` (E3, CR-E3-06), `T-F1-WIRE-HEAT`, `T-F1-CONN-HEAT` (F1). The XT60 run
 `T-J1-XT60-HEAT` is retired: F1's AS150U replaced the XT60. Instruments: 3 K-type bead probes (I1 `G12`) read on a
-borrowed DMM with a K input (else I1 gated `X09`, $15); `G05` IR thermometer on matte-tape spots. Readings every 5 s
+borrowed DMM with a K input (else I1 gated `X09`, $16.54); `G05` IR thermometer on matte-tape spots. Readings every 5 s
 by filming the meter display.
 
 1. Real printed ASA mount on the stand, 11×5.5MR, 14.8 V. Probes: stator (through the base vent), base-to-mount
@@ -206,6 +212,26 @@ by filming the meter display.
 | Wire rise steady / peak | ≤ 10 K / ≤ 30 K | `T-F1-WIRE-HEAT` |
 | AS150U rise, 38 A 10 min | ≤ 30 K | `T-F1-CONN-HEAT` |
 
+**2b `T-E3-ESC-PAD-CFD` (E3, CR-E3-17): film coefficient on a heated dummy.** Figure `FIG H1-11`. Same half-fin
+mock-up, 22 mm tube and ASA pad behind the stand prop; the ESC replaced by a 45 × 20 × 6 mm aluminium dummy
+(`ASM-H1-ESC-DUMMY`): a 10 Ω 5 W resistor in a slot, run at 3.0 W (V and I on two DMMs), painted matte black (ε 0.90),
+on 3 mm XPS in place of the hook-and-loop (same height above the pad), held by the flight strap. Thermocouples:
+TC1 in the block, TC2 on the pad under the XPS, TC3 in the inflow 30 mm ahead of the pad.
+
+1. Stand at **hover thrust** (`CL-B4-HOVER-T`, 690 gf), not a throttle %, so the slipstream matches the CFD inflow
+   (10.9 m/s, `CL-E3-CFD-U`).
+2. Hold **≥ 620 s** (5 τ, `CL-H1-ESCCFD-RUN`; E3's ≈ 5 min is about 2 τ). Log TC1–TC3, V, I every 5 s; fit
+   T = T∞ − (T∞ − T₀) e^(−t/τ) on the last 300 s.
+3. h = (P − G·(T1 − T2) − A·h_r·(T1 − T3)) / (A·(T1 − T3)), with A = 1 360 mm², G = k_XPS·L·w / t, h_r = 4εσT³;
+   f_meas = (h / h_lam)², h_lam = 60.7 W/m²·K (laminar flat plate at 10.9 m/s over 45 mm). The XPS path carries
+   about 9 % of the 3 W; TC2 measures it, so the ±10 % on k_XPS costs only 0.9 % on h.
+
+| Pass | Limit | Claim |
+|---|---|---|
+| f_meas, design hover | ≥ **1.205** (1.131 + U95 3.2 % on h); h ≥ 64.6 W/m²·K before the guard band | `CL-H1-ESCCFD-F-ACCEPT` → `CL-E3-CFD-FEQ` |
+| Dummy rise at 3.0 W | 28.2 K at the pass line; 22.7 K expected at the SST film | `CL-H1-ESCCFD-DT-PASS`, `-DT-EXP` |
+| Steady before reading | dT/dt < 0.1 K/min | `CL-H1-ESCCFD-RUN` |
+
 On fail: E3 re-runs the heat balance with the measured R_th and wake factor; the field-ambient ceiling moves.
 
 ## GT-05 Packs: weigh, capacity, IR
@@ -218,7 +244,7 @@ Tests `T-E2-WEIGH`, `T-E2-CAPACITY`, `T-E2-IR`. One row per pack in `team/E2/pac
 
 | Pass | Limit | Source |
 |---|---|---|
-| Mass incl. leads | ≤ 680 g | `CL-E2-PACK-MASS`; A3 re-runs |
+| Mass incl. leads | ≤ `CL-E2-PACK-ACCEPT-KG` (0.593 kg today; 551 g expected) | `CL-E2-PACK-MASS`; A3 re-runs |
 | Fits the pod bay | ≤ 160 × 52 × 53 mm | `README.md` |
 | Capacity at 1C | ≥ 5.98 Ah | `CL-H1-PACK-CAP-MIN` |
 | IR at 25 °C / spread on arrival | ≤ 5 mΩ/cell / ≤ 0.02 V | `T-E2-IR`, H3 |
@@ -229,7 +255,7 @@ Tests `T-A3-WEIGH-PARTS`, `T-A1-WEIGH`. Scale calibration `T-H1-SCALE-CAL` (2.00
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Scale U95 | ≤ 5.2 g; ≤ 10 % of A3's 107 g margin | `CL-H1-WEIGH-U95`, `-U-FRAC` (4.9 %) |
+| Scale U95 | ≤ 5.2 g; ≤ 10 % of A3's 139 g margin | `CL-H1-WEIGH-U95`, `-U-FRAC` (3.8 %) |
 | Ready-to-fly mass (mean of 3) | ≤ 2.595 kg | `CL-H1-WEIGH-ACCEPT` → `R-MASS-GATE` |
 | Each subsystem | ≤ its allocation | `R-MASS-ALLOC` (A3) |
 
@@ -239,62 +265,133 @@ Tests `T-B3-CG-BALANCE`, `T-A3-CG-BALANCE`, `T-A5-CG-BALANCE`. Figure `FIG H1-03
 |y| 0.45 m (patch kept free, CR-H1-08), front x = 0.010 m, rear x = 0.230 m; wing ≥ 0.25 m up.
 x = 0.010 + 0.220 · W2 / (W1 + W2). With one scale only: front pins on a fixed knife edge, W from GT-06.
 
+**Balance marks (B3's `T-B3-CG-BALANCE`).** Draw two lines across both fin roots, square to the chord, with a steel
+rule from the leading edge at **x = 0.0466 m** (forward limit) and **x = 0.0514 m** (aft limit) (`P:cg.x_range_m`,
+D-62, B3 V1). They are the never-fly-outside lines for the field fingertip check. The jig reading is the acceptance:
+it must sit inside the guard-banded window below, which is 0.6 mm inside each mark. Pack station from A3's live
+`CALC-A3-CG` on the day (CR-A3-27). Predicted 0.0490 (target) / 0.0503 with the 551 g pack.
+
 | Pass | Limit | Claim |
 |---|---|---|
 | Jig U95 in x | ≤ 0.6 mm (25 % of the half-range) | `CL-H1-CG-U95`, `-U-FRAC` |
-| x, guard-banded | **0.0506 ≤ x ≤ 0.0544 m** | `CL-H1-CG-ACCEPT-FWD`, `-AFT` → `R-CG-RANGE` (`P:cg.x_range_m` 0.050–0.055) |
-| y / z | ≤ 0.005 m / −0.02 … +0.03 m | `P:requirements.cg_lateral_max_m`, `P:cg.z_range_m` |
+| x, guard-banded (jig) | **0.0472 ≤ x ≤ 0.0508 m** | `CL-H1-CG-ACCEPT-FWD`, `-AFT` → `R-CG-RANGE` (`P:cg.x_range_m` 0.0466–0.0514) |
+| Fingertip balance at the marks (field) | between the 0.0466 and 0.0514 lines | `T-B3-CG-BALANCE` |
+| y / z | ≤ 0.005 m / 0.010 … 0.025 m | `P:requirements.cg_lateral_max_m`, `P:cg.z_range_m` |
 
-On fail: slide the pack; outside the slide range → A3/A1.
+On fail: slide the pack (2 mm spacer steps, 12 mm aft travel); outside the slide range → A3/A1. Aft of the aft
+line with a light pack: lead tape behind the nose (about 13 g per mm, `MASS-CG.md`).
 
 ## GT-08 Wing proof and twist
 
-Figure `FIG H1-04`. `T-C1-WING-PROOF` on C1's whiffletree (CR-H1-03 answered; `team/C1/data/whiffletree.json`).
+Figure `FIG H1-04`. `T-C1-WING-PROOF`, the one wing limit proof (CR-C1-27, CR-C1-30), on C1's R4 tree
+(`team/C1/data/whiffletree.json`, case F1-PULLUP-VD/MC-C; step 2 F7-ROLLPULL-VA/MC-C). Every mass below is read live
+from C1's claims; the pads already subtract the aircraft's own weight when inverted.
 
-1. Aircraft inverted, supported under the pod (|y| ≤ 0.07 m), half-fins hanging free.
-2. Four 40 × 40 mm pads per side over the spar line (x 0.08 m); sandbags weighed to ±5 g, applied in 25 % steps:
+1. Aircraft inverted, supported under the pod (|y| ≤ 0.07 m), half-fins hanging free. Dial or ruler stand at each tip.
+2. **Step 1, both sides together.** Four 40 × 40 mm pads per side over the spar line (x 0.08 m). Option A (used):
+   one sandbag stack per pad, made of four bags each weighed to ±5 g, so each 25 % step is one bag per pad. Option B:
+   C1's tree (bars A, B, C and the top bar) with a sand bucket at the hanger; the tree's own mass counts in the load.
+   Relief: a sling on each motor tube at the wing plane, over a ball-bearing pulley, to a counterweight; check the
+   sling tension with the spring scale within 3 % before the first step.
 
-| Pad (per side) | y | Mass at limit | Claim |
-|---|---|---|---|
-| 1 | 0.120 m | 1.012 kg | `CL-H1-WP-M1` |
-| 2 | 0.260 m | 0.814 kg | `CL-H1-WP-M2` |
-| 3 | 0.355 m | 0.478 kg | `CL-H1-WP-M3` |
-| 4 | 0.465 m | 0.652 kg | `CL-H1-WP-M4` (pad 4 only in C1's JSON, CR-H1-09) |
-| Total | centroid 0.273 m | 28.99 N | `CL-H1-WING-PROOF-P` = `CL-C1-PROOF-P-SIDE-LIM` |
+| Item (per side) | y | Limit load | Mass | Claim |
+|---|---|---|---|---|
+| Pad 1 | 0.120 m | 9.01 N | **0.919 kg** | `CL-H1-WP-M1` ← `CL-C1-PROOF-P1-LIM` |
+| Pad 2 | 0.250 m | 5.14 N | **0.524 kg** | `CL-H1-WP-M2` ← `-P2-LIM` |
+| Pad 3 | 0.355 m | 4.44 N | **0.453 kg** | `CL-H1-WP-M3` ← `-P3-LIM` |
+| Pad 4 | 0.465 m | 6.01 N | **0.613 kg** | `CL-H1-WP-M4` ← `-P4-LIM` (now a C1 claim) |
+| Sum, centroid | 0.274 m | 24.60 N (C1's total, error 0.0 %) | 2.508 kg | `CL-H1-WING-PROOF-P`, `-Y`, `CL-H1-WP-SUM-ERR` |
+| Relief, upward at each tube | 0.320 m | 19.92 N | **2.031 kg** | `CL-H1-WP-RELIEF-M` ← `CL-C1-PROOF-R-LIM` |
+| Hanger (option B, both sides) | 0 | 49.2 N | — | `CL-H1-WP-HANGER` |
 
-3. Hold 3 s at 100 %; tip deflection at each step (ruler on a fixed stand); unload; read again after 5 min.
-4. `T-C2-TWIST`: pod clamped, 0.3 m lever on the right block, 1 kg (2.9 N·m), inclinometer at the block and tip.
-5. `T-C2-WING-PROOF` (C2's outer-moment case 2 × 25 N per side over |y| 0.33–0.50, and 51 N at one upper tube end):
-   **held** until C1 and C2 agree one limit case (CR-H1-13); it is 1.7 × C1's per-side total.
+3. Steps 25 / 50 / 75 / 100 %, relief applied in proportion before each pad step. Hold 3 s at 100 %; tip deflection at
+   each step; unload; read again after 5 min.
+4. **Step 2, outboard, one side at a time** (CR-C1-27; C2's set-up, C1's loads). Padded V-block under the spar at
+   y 0.320 m (`CL-C1-PROOF-OUT-SUPPORT-Y`), pod support removed from that side's load path; pads 3 and 4 only:
+
+| Item | y | Limit load | Mass | Claim |
+|---|---|---|---|---|
+| Pad 3 | 0.355 m | 4.90 N | **0.499 kg** | `CL-H1-WP-S2-M3` ← `CL-C1-PROOF-OUT-P3-LIM` |
+| Pad 4 | 0.465 m | 16.10 N | **1.642 kg** | `CL-H1-WP-S2-M4` ← `CL-C1-PROOF-OUT-P4-LIM` |
+
+5. `T-C2-TWIST`: pod clamped, 0.3 m lever on the right block, 1 kg (2.9 N·m), inclinometer at the block and tip.
+   `T-C2-WING-PROOF` is withdrawn (CR-C1-27); its 51 N tube-end hang is `T-C1-STATION-PROOF` (GT-09).
 
 | Pass | Limit | Claim |
 |---|---|---|
-| No crack, wrinkle, bond-line or core crush | visual + tap | `R-STRUCT-MARGIN` |
-| Tip deflection at 100 % | ≤ 28.8 mm | `CL-H1-WING-DEFL-MAX` |
+| No crack, wrinkle, bond-line or core crush, steps 1 and 2 | visual + tap | `R-STRUCT-MARGIN` |
+| Tip deflection at 100 %, step 1 | ≤ 28.8 mm | `CL-H1-WING-DEFL-MAX` |
 | Permanent set after 5 min | ≤ 0.5 mm | C2 |
 | Torsional stiffness | GJ ≥ 25 N·m² | `T-C2-TWIST` |
 
-Ultimate (1.5 ×) only on a sacrificial core.
+C1's claims (14:37 publish) supersede the numbers in CR-C1-30's text (pad 2 7.66 → 5.14 N, relief 19.40 → 19.92 N,
+step 2 4.85 / 15.85 → 4.90 / 16.10 N); the card reads the claims (CR-H1-20). Ultimate (1.5 ×) only on a
+sacrificial core.
 
 ## GT-09 Station, fin, block, pod and foot proofs
 
-Figure `FIG H1-05`. Loads hung by water jugs (weighed) or through the GT-15 lever frame.
+Figure `FIG H1-05` (hangs), `FIG H1-10` (fin test article). Loads hung by weighed water jugs over ball-bearing
+pulleys or through the GT-15 lever frame. Every load in 25 % steps, inspected between steps.
 
 | Test | Load | Pass | Article |
 |---|---|---|---|
-| `T-C1-STATION-PROOF` | 20.9 N (2.13 kg) at each mount in −x and y; 40.7 N (4.15 kg) at the station in y | no slip, crack or set | flight fins (`CL-H1-MOUNT-PROOF-F`, `-FIN-PROOF-F`) |
-| `T-C4-FIN-PROOF` | 1.5 × L4 at the foot (49 N along + 25 N across), then 1.5 × G2 (77 N lateral at the tube end) | no crack or face wrinkle; foot deflection logged | **first fin quarter as a test article** (ultimate level) |
+| `T-C1-STATION-PROOF` | 21.1 N (2.15 kg) at each mount in −x and y; 57.3 N (5.84 kg) at the station in y; G2 step: 42.2 N (4.30 kg) at the UR upper tube end, wing held under the pod (CR-C1-27) | no slip, crack or set | flight fins, limit (`CL-H1-MOUNT-PROOF-F`, `-FIN-PROOF-F`) |
+| `T-C4-FIN-PROOF` | card below: 1.0 × then 1.5 × L4, G2, G3 | card below | **test-article lower quarter, D5 shoe as drawn** |
 | `T-C4-BLOCK-PROOF` | 18 kg at 0.17 m (30 N·m) for 1 min | no creak, no bond-line crack | block on a spar stub in a 0.15 m core offcut |
-| `T-C3-POD-PROOF` | dummy 680 g pack; pull down 64 N, up/aft/side 85 N, 10 s each | no crease at bond edges, nose, wall tops | built pod on the wing |
-| `T-D5-PROOF` / `T-D5-SIDE` | 88 N along x at the pad edge, 3 s / 32 N in y then z with the insert 4 mm in | no bond or flange crack; insert still slides | shoe on a two-layer board offcut |
+| `T-C3-POD-PROOF` (a) | pack-size dummy strapped in; down 64 N, up / aft / side 85 N, 10 s each (C3's 1.5 × design) | no crease at bond edges, nose, wall tops | built pod on the wing |
+| `T-C3-POD-PROOF` (b), CR-C3-20 | **199.6 N (20.35 kg)** on each handle-foot bracket, along +x (aft), then along −z; strap round the bracket, jugs over a pulley; 10 s | no crease at the recess-step corner, no bracket peel, set < 0.5 mm | same pod, brackets bonded 24 h (`CL-H1-POD-BRACKET-F` ← `CL-C3-FEA-SADDLE-TIES`) |
+| `T-D5-PROOF` | 88 N along x at the pad edge, 3 s | no bond or flange crack | shoe on a two-layer board offcut |
+| `T-D5-SIDE` | **59.0 N (6.01 kg)** at the pad along y, then z, insert 4 mm in, 3 s (`CL-H1-D5-SIDE-F` ← `CL-C1-FOOT-SIDE-DESIGN-ULT`, ultimate) | no crack at the rim or tine; insert still slides | same specimen, the CR-A1-65 shoe (wall 2.0, rim 3.0, 1.0 mm fillet) |
 
-On fail: C4/C6/C3/D5 re-size the part named; the flight article is not proof-loaded again until re-built.
+`T-D5-SIDE` was 35 N (D5's old 22.8 N × 1.5 basis). At 59.0 N D5's drawn rim scales to SF 0.62
+(`CL-H1-D5-SIDE-RIM-SF`), so the test is run on the CR-A1-65 shoe only; D5 re-runs `CL-D5-SIDE-*` at 59.0 N first
+(CR-H1-22). `T-C3-POD-PROOF` (b) is C3's crash force on a flight pod: stop at the first audible crack, and the pod is
+re-built if anything creases (CR-H1-23).
+
+### `T-C4-FIN-PROOF`: as-drawn test article, two gauge bridges and a dial (CR-C4-36, CR-C4-38)
+
+Article (C4's procedure, D5 shoe **as drawn**: legs 7 mm, 8 mm collar cheeks bonded over both strip ends, not the
+extended cheeks of CR-C4-30). One lower quarter built with flight processes and never flown; LE fillet left unbonded.
+The result decides CR-C4-30: pass keeps the drawn shoe (≈ 16 g saved); fail fits the extended cheeks to |z| 0.171 m.
+
+| Instrument | Where | Read-out | Claim |
+|---|---|---|---|
+| Gauge F (face) | paper face, 5 mm below the shoe leg edge, x ≈ 0.30 m, grid along the fin span | half bridge with a dummy gauge on an unloaded two-layer offcut beside the article; HX711 (`G06` board), 1.5 kΩ in each excitation lead (bridge 0.45 V) | `ASM-H1-SG`, `CL-H1-SG-PDENS` 19 W/m² (≤ 78) |
+| Gauge S (strip) | CF edge strip, 10 mm forward of the collar cheek, along the strip | same, dummy on a strip offcut; HX711 (`G12` board) | `CL-H1-SG-RES-FRAC` 0.1 % |
+| Dial | shoe pad, along the L4 resultant, magnetic base on the test frame; removed before the 1.5 × step | 25 mm travel, 0.01 mm | `CL-H1-FP-TRAVEL-REQ` 23.6 mm to 1.0 × |
+| Rule | steel rule on a fixed bar at the pad, for the 1.5 × step | 0.5 mm | `CL-H1-FP-DEFL-SHELL-ULT` 28.3 mm if the shell is right |
+| Face-gauge factor | gauge on a `T-C4-BOARD-COUPON` in 4-point bend (GT-15), strain known from beam theory | k_face = ε_beam / ε_gauge; the stack is 0.63 × the face membrane stiffness, so expect k > 1 | `CL-H1-SG-REINF` |
+
+Without the 1.5 kΩ leads the HX711's 4.3 V puts 1 760 W/m² into each grid on foam (`CL-H1-SG-PDENS-BARE`), and the
+reading drifts as the face warms.
+
+1. Gauges bonded 24 h (cyanoacrylate kit `G13`), leads strain-relieved. Warm up 10 min; zero. Shunt each bridge
+   (100 kΩ across the dummy arm): reads 1 744 µε ± 1 % (`CL-H1-SG-SHUNT`).
+2. Load path: one cord along the L4 resultant (49 N along + 34 N across at 1.5 × → 59.6 N at 34.8° from the "along" axis,
+   6.08 kg; at 1.0 × 39.8 N, 4.05 kg), both senses; G2 77 N lateral at the tube end (7.85 kg); G3 35 N on the dummy
+   can toward the wing (3.57 kg). Loads at 1.5 × limit are C4's procedure values.
+3. **L4 to 1.0 × (limit)** in 25 % steps, 30 s hold, gauges and dial at each step. This is the comparison point.
+4. Unload, re-zero check (≤ 10 µε), then **L4 to 1.5 ×** in 25 % steps; then G2 and G3 to 1.5 ×, both senses.
+
+| At 1.0 × L4 | 3-D prediction (C4 S1) | Shell (C4 R4) | Decision |
+|---|---|---|---|
+| Face strain, gauge F × k_face | 850–1 075 µε (3.4–4.3 MPa at 4 GPa) | higher (board carries 1.06 × the moment) | > 1.25 × 1 075 µε → shell path, C4 re-runs |
+| Strip strain, gauge S | 800 µε (88 MPa at 110 GPa) | lower (strips unloaded) | < 0.5 × 800 µε → strips not clamped |
+| Pad deflection | 3.70 mm | 18.86 mm (C4 R5 shell) | ≤ **8.36 mm** (geometric mean) → 3-D path (`CL-H1-FP-DEFL-SPLIT`) |
+
+| Pass at 1.5 × (C4) | Limit | Claim |
+|---|---|---|
+| No crack, face wrinkle, strip lift, pin push-out, shoe or cheek debond | visual + tap after each step | `CL-C4-D3-MS-FACE`, `CL-C4-SIM-MS-FACE-DRAWN` |
+| Face strain at 1.5 × | report vs 1 612 µε (`CL-H1-FP-EPS-FACE-ULT`) | C4 |
+| Gauges back to zero after unload | ≤ 20 µε | no set |
+
+On fail: C4/C6/C3/D5 re-size the part named; a flight article is not proof-loaded again until re-built.
 
 ## GT-10 Pack retention and foot drops
 
 | Test | Pass | Source |
 |---|---|---|
-| `T-H1-PACK-PULL`: 680 g **dummy** strapped as flown; 85 N in ±x, ±y, +z | holds 10 s, slip ≤ 5 mm, hatch closed | `CL-H1-PACK-PULL-F` → `R-PACK-RETENTION` |
+| `T-H1-PACK-PULL`: pack-size **dummy** at the heaviest GT-05 pack mass, strapped as flown; **73.8 N** (7.52 kg) in ±x, ±y, +z | holds 10 s, slip ≤ 5 mm, hatch closed | `CL-H1-PACK-PULL-F` ← `CL-C1-PACK-CRASH-LOAD` → `R-PACK-RETENTION` |
 | `T-C5-FOOT-RIG`: one foot under a 0.65 kg sled (0.68 / 0.62 kg for U / L), 0.115 m, 3 drops | stroke ≤ 29 mm, peak ≤ 6.0 g, no shoe crack | C5 |
 | `T-C5-AIRCRAFT-DROP` (= `T-C1-FOOT-DROP`): sandbag pack, 2.6 kg, FC IMU ≥ 1 kHz; level 0.115 m ×2, then pitch 4°, roll 8° at 0.093 m | CG ≤ 6.0 g, strokes ≤ 35 mm and within 3 mm of the model | `R-LANDING-IMPACT` |
 | `T-D5-REPLACE`: one student, field kit, crushed insert swapped | ≤ 10 min | `CL-D5-REPLACE-TIME` |
@@ -357,23 +454,36 @@ CR-F5-05 replaces the old 10 mW card (the Pocket's lowest setting is 25 mW).
 
 ## GT-15 Coupons
 
-Lever frame: 6:1 (coupon 0.10 m, jugs 0.60 m), water jugs ≤ 20 kg, capacity 1 177 N vs 1 135 N needed
-(`CL-H1-LEVER-CAP`, `-NEED`; `T-H1-LEVER-CAL`: 2.000 kg balances 0.333 kg within 2 %). Fill the jug slowly from a
-hose; weigh it after failure. Compression coupons on the 20 kgf cell under the Jacobs drill press. Record every
-failure load and mode; allowable = owner's rule (mean − 2 s, or 0.5 × mean).
+Lever frame (R3, CR-C6-33 and CR-C6-39; figure `FIG H1-09`, `ASM-H1-LEVER`): 2×4 lever 1.0 m on an M8 pivot, jug
+hook at 0.900 m, two coupon clevis holes at **0.060 m (15:1)** and **0.100 m (9:1)**. Pivot and both clevis holes go
+through a pair of 3 mm steel side plates 40 × 200 mm, each held to the lever by 4 × M6 through-bolts with washers. A
+bare M8 in the wood would bear at 10.3 MPa across the grain, against 4.3 MPa allowed (`CL-H1-LEVER-WOOD-BRG`). Short-
+side counterweight tares the lever. Water jugs ≤ 20 kg, filled slowly from a hose and weighed after failure.
+
+| Item | Value | Claim |
+|---|---|---|
+| Capacity 15:1 / needed (1.25 × `CL-C6-STRIP-ANCHOR-F-EST` 2 131 N) | **2 942 / 2 664 N** | `CL-H1-LEVER-CAP`, `-NEED` (+9 %) |
+| Capacity 9:1 / needed (1.25 × `CL-C6-STRIP-ANCHOR-F` 1 243 N, CR-C6-33) | 1 765 / 1 554 N | `CL-H1-LEVER-CAP9`, `-NEED9` (+12 %) |
+| Lever bending at full jug | 3.5 MPa (≤ 6.0) | `CL-H1-LEVER-SIGMA` |
+| Pivot on the steel plates / M6 bolts on the wood | 65 MPa (≤ 150) / 3.4 MPa (≤ 4.3) | `CL-H1-LEVER-PLATE-BRG`, `-M6-BRG` |
+| Calibration | 3.000 kg at 15:1 balances 0.200 kg, 2.000 kg at 9:1 balances 0.222 kg, within 2 %; 20 kg proof on a steel bar for 60 s | `T-H1-LEVER-CAL` |
+
+Compression and push coupons on the 20 kgf cell under the Jacobs drill press. Record every failure load and mode;
+allowable = owner's rule (mean − 2 s, or 0.5 × mean). A 2.9 kN failure stores energy in the cord: catch strap under
+the jugs, face shields, nobody under the long arm.
 
 | Test (owner) | Specimens | Rig | Pass | Window |
 |---|---|---|---|---|
 | `T-C2-XPS-COUPON` (C2) | 100 mm cube; 300 × 40 × 30 mm strips bare and taped | scale; 3-point bend on jugs | E and strength recorded | foam arrives (Dec) |
 | `T-C3-BOND-COUPON` (C3) | 3 PETG pads on F-250, 3 on board (flat-wise); 3 lap shears | lever | foam or paper failure | Dec |
-| `T-C3-STOP-PUSH` (C3) | 60 mm tray offcut, 3.0 mm stop, 1.5 mm guides | lever, 50 mm block at 12 mm | 90 N stop, 85 N guide; set < 0.5 mm | first tray print |
+| `T-C3-STOP-PUSH` (C3, CR-C3-20) | tray **rear piece with the strut** on a handle-bridge offcut, and the **front piece** with its 1 mm bed and a nose-wall offcut, each **epoxied to a foam-board floor offcut as built** (24 h); flight print settings | 50 × 50 mm block on the 20 kgf cell under the drill press: aft (+x) at 16 mm above the tray to 90 N; forward (−x) at 13 mm to 85 N; guide 85 N over 60 mm. Then one to failure on the 9:1 lever | no crack, no board peel or delamination at the tray edge, set < 0.5 mm; failure mode recorded | first tray print |
 | `T-C4-BOARD-COUPON` (C4) | 3 × 50 × 300 mm per layer count | 4-point bend, span 250 mm | allowable and D recorded | Dec |
 | `T-C6-LAP-PETG` (C6) | 5 PETG-CF + 5 ASA-CF lap shears | lever | ≥ 2.0 MPa | ASA spool (Dec) |
 | `T-C6-BOARD-LAP` (C6) | 5 shear + 5 flat-wise tabs | lever | modes recorded | Dec |
 | `T-C6-XPS-PULL` (C6) | 10 pucks Ø30 mm | lever | allowables recorded | Dec |
 | `T-C6-BOARD-CORNER` (C6) | 2 U-sections | jugs | ≥ 43 N | Dec |
 | `T-C6-INSERT` (C6) | 3 inserts | lever | ≥ 300 N each | first POD-002 print |
-| `T-C6-STRIP-ANCHOR` (C6) | collar tail + strip pair | lever | ≥ 908 N (C6's calc; text says 700 N, CR-H1-12) | first collar |
+| `T-C6-STRIP-ANCHOR` (C6) | 40 mm two-face collar (ring + tail), strip pair bonded as built, ring on a 22 mm steel mandrel; pull ONE strip along its axis | **15:1 hole** | ≥ `CL-C6-STRIP-ANCHOR-F` (1 243 N today; read the claim on the day, not this table) with neither bond nor tail failing; then to failure (the D-65 estimate is 2 131 N) | first collar |
 | `T-C6-HEAD-CREEP` (C6) | ASA plate, 4 × M3 at 0.20 N·m | 70 °C, 2 h: sealed bag in a water bath with a probe (no oven needed) | breakaway ≥ 0.15 N·m | first mount |
 | `T-D5-COUPON` (D5) | 3 type-U + 3 type-L cartridge pairs | drill press over the 20 kgf cell (need 5.1 kgf, `CL-H1-D5-CELL-REQ`), 40 mm at < 10 mm/s, every 2 mm | U 34.5–38.5 N, L 29.5–33.0 N, U/L 1.15–1.19 (U95 0.006, `CL-H1-D5-RATIO-U`), peak ≤ 1.15 × plateau, flat to 40 mm | first cartridges |
 | `T-D5-PAD-MU` (D5) | foot with pad, 0.65 kg | tilt board faced with paver / shingle / mat; 5 runs each | slip angle ≥ **35.3°** (μ 0.70 + U95) | first pads |
@@ -382,41 +492,54 @@ Torque checks (0.20 N·m) without a torque driver: 2.0 N on a spring scale at 0.
 
 ## GT-16 Tube bend and torsion (Aloft `W03`) — result to I1 by 10 Dec
 
-`T-C4-TUBE-BEND` (= `T-J1-TUBE-BEND`), `T-C4-TUBE-TORSION`, CR-C4-21, CR-I1-08. Run on arrival (~27 Nov); weigh first.
+`T-C4-TUBE-BEND` (= `T-J1-TUBE-BEND`), `T-C4-TUBE-TORSION` with GJ (CR-C2-15), CR-C4-21, CR-I1-08. Run on arrival
+(~27 Nov); weigh first. One specimen gives C4 E and G, and C2 the three values its 3-D FEA assumes
+(`ASM-C2-TUBE-ET`: E axial 70 GPa, G 3 GPa, E hoop 8 GPa).
 
 1. Span 0.80 m on two 22 mm dowels; printed saddle at mid-span; 0.5 kg steps to 4.0 kg and back.
 2. Deflection: dial indicator (borrowed) or caliper depth rod against a fixed bar (U95 0.03 mm).
 3. E = F L³ / (48 I δ) from the slope of 8 steps, I = 3.645 × 10⁻⁹ m⁴ (`CALC-H1-BEND`).
-4. Torsion: 0.40 m clamped in printed V-blocks, 0.30 m lever, 0.5–2 kg, laser spot on a wall 3 m away;
-   G = T L / (J θ), J = 7.29 × 10⁻⁹ m⁴.
+4. **Torsion (GJ).** 0.40 m clamped in printed V-blocks, 0.30 m lever clamped at the far end, 0.5–2.0 kg in 0.5 kg
+   steps, both senses (T up to 5.88 N·m). Two laser pointers in printed clamps on the tube **0.30 m apart**; spots on
+   a wall 3.0 m away, read to ±1 mm. Twist over the gauge length Δθ = atan(s₂/L) − atan(s₁/L), so grip slip and
+   lever-clamp rotation drop out. GJ = T L_g / Δθ from the slope; G = GJ / J, J = 7.29 × 10⁻⁹ m⁴.
+5. **Ring crush (E_hoop).** 20 mm ring cut from the offcut; flat plates on the 20 kgf cell under the drill press,
+   4 N steps to 20 N; dial (0.01 mm) on the upper plate. E_hoop = 0.1488 P R³ / (δ I), R = 10.5 mm, I = b t³/12.
 
 | Pass | Limit | Claim |
 |---|---|---|
 | Deflection at 4.0 kg (E ≥ 70 GPa) | ≤ **1.61 mm** (1.64 mm at 70 GPa − U95) | `CL-H1-TUBE-DEFL-ACCEPT` |
 | Peak stress | 23.7 MPa (tube stays usable as the spare) | `CL-H1-TUBE-SIGMA` |
 | E read uncertainty | 1.8 % | `CL-H1-TUBE-E-U` |
-| G | report vs 3–10 GPa | `ASM-C4-G-TUBE-LO`, `-HI` |
+| GJ (both senses agree within 5 %) | report; ≥ **21.9 N·m²** (G 3 GPa) keeps C4's low corner conservative; 36.5 N·m² at G 5 GPa | `CL-H1-TORS-GJ-LO`, `ASM-C4-G-TUBE-LO`, `-HI` |
+| GJ read uncertainty (G 10 GPa, 73 mm spot difference) | 1.9 % | `CL-H1-TORS-U` |
+| Torsion peak shear | 8.9 MPa (≤ 30, tube stays usable) | `CL-H1-TORS-TAU` |
+| Ring δ at 20 N / E_hoop uncertainty | 0.26 mm at 8 GPa / 5.5 % | `CL-H1-RING-DEFL`, `-U` |
 
 Pass → I1 orders `W04` from Aloft. Fail or no result by 10 Dec → overseas tube, order by 15 Dec (I1). C4 replaces
-its E/G assumptions with the measured values either way.
+its E/G assumptions, and C2 its `ASM-C2-TUBE-ET` G and hoop values, with the measured values either way.
 
 ## GT-17 Mount rocking stiffness
 
 `T-C4-MOUNT-STIFF`, with `T-C6-CANT-SEAT` and `T-C6-PROPNUT` on the same first ASA mount. Figure `FIG H1-08`.
 
-C4's readout (two 0.01 mm dial gauges at 0.5 kg) sees 8.7 µm at the pass stiffness, under one division
-(`CL-H1-MSTIFF-DIAL-UM`), so GT-17 uses an optical lever (CR-H1-10).
+Pass level **≥ max(1 100, `CL-C4-D3-MOUNT-K-REQ`) about both rocking axes**: 1 100 is CR-C4-41's floor. C4's
+claim rose from 1 030 to **1 966 N·m/rad** at its 15:01 re-publish, so the card reads the claim on the day. C4's own
+estimate is now 1 500 N·m/rad (`ASM-C4-MOUNT-K-ROCK`, 0.76 of the pass level), so a mount built to the estimate is
+**expected to fail** GT-17 (CR-H1-24). C4's readout (two 0.01 mm dial gauges at 0.5 kg) sees 4.3 µm at the pass
+stiffness, under one division (`CL-H1-MSTIFF-DIAL-UM`), so GT-17 uses an optical lever (CR-H1-10).
 
 1. Motor clamped in the mount on a 60 mm tube stub in a vice. Mirror on the can side, second mirror on the collar;
-   laser spots on mm paper 3.0 m away.
+   laser spots on mm paper **5.0 m** away (a corridor). Tripod phone photo of the paper at each step; the spot
+   centre is read against the 1 mm grid to ±0.3 mm.
 2. 0.5, 1.0, 1.5 kg over a cord at the prop nut, in y and then in z (1.5 kg = 70 % of the mount proof load,
-   `CL-H1-MSTIFF-LOAD-FRAC`). Measure the arm a (nut to collar) with calipers; sizing used a = 0.053 m.
+   `CL-H1-MSTIFF-LOAD-FRAC`). Measure the arm a (nut to collar) with calipers; sizing used a = 0.0577 m.
 3. θ = (spot_can − spot_collar) / (2 L); k = F a / θ from the slope.
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Net spot travel at 1.5 kg, y and z | ≤ **4.69 mm** (5.19 mm at k_req 905 N·m/rad − 0.5 mm read); 1.57 mm expected at 3 000 | `CL-H1-MSTIFF-SPOT-ACCEPT` → `CL-C4-D3-MOUNT-K-REQ` |
-| k uncertainty at the pass line | 9.6 % | `CL-H1-MSTIFF-U` |
+| Net spot travel at 1.5 kg, y and z | ≤ **4.02 mm** (4.32 mm at 1 966 N·m/rad − 0.3 mm read); 5.66 mm expected at C4's 1 500 estimate | `CL-H1-MSTIFF-SPOT-ACCEPT` → `CL-H1-MSTIFF-K-PASS` = `CL-C4-D3-MOUNT-K-REQ` |
+| k uncertainty at the pass line | 6.9 % (≤ 10 %) | `CL-H1-MSTIFF-U` |
 | `T-C6-CANT-SEAT` | ≥ 6 turns from first bite; 0.05 mm feeler does not enter | C6 |
 | `T-C6-PROPNUT`: 1.5 N·m on/off × 10 | witness line and lip cap unmoved | C6 |
 
@@ -428,19 +551,21 @@ modes only (CR-H1-11). 4 s records (0.25 Hz bins), 5 taps per direction, average
 
 Windows (± `P:requirements.vibration_sep_frac` 0.2, `CALC-H1-TAP`):
 
-| Order | Hover 5 416 rpm | Cruise 5 894 rpm | Cap 9 350 rpm |
+| Order | Hover 5 416 rpm | Cruise 5 946 rpm | Cap 9 350 rpm |
 |---|---|---|---|
-| 1P | 90.3 Hz (72.2–108.3) | 98.2 Hz (78.6–117.9) | 155.8 Hz (124.7–187.0) |
-| 2P | 180.5 Hz (144.4–216.6) | 196.5 Hz (157.2–235.8) | 311.7 Hz (249.3–374.0) |
+| 1P | 90.3 Hz (72.2–108.3) | 99.1 Hz (79.3–118.9) | 155.8 Hz (124.7–187.0) |
+| 2P | 180.5 Hz (144.4–216.6) | 198.2 Hz (158.6–237.8) | 311.7 Hz (249.3–374.0) |
 
-1. `T-C4-TAP-D3`: finished wing on foam blocks, props on; tap each bell in y and z; FFT to 450 Hz.
+1. `T-C4-TAP-D3`: finished wing on foam blocks, props on; tap each bell in y and z; FFT to 450 Hz. Then tap the
+   centre of each half-fin board panel (CR-C4-38) with the FC on that quarter's station; record the panel mode.
 2. `T-C2-TAP-TEST`: aircraft on bungees (free-free); phone at the pod and a fin tip for the wing modes, FC IMU for
    the rest; tap a can fore-aft and a fin tip sideways.
 3. `T-C4-PROP-SWING`: bifilar, two 0.5 m threads at the blade tips, 20 swings.
 
 | Pass | Limit | Claim |
 |---|---|---|
-| Fin-station f1, each quarter | outside 1P hover, 2P hover and 2P cruise windows (record of `R-VIBRATION` a); predicted 273–281 Hz | `CL-C4-D3-SEP`, `-F1-UP`, `-F1-LO` |
+| Fin-station f1, each quarter | outside 1P hover, 2P hover and 2P cruise windows (record of `R-VIBRATION` a); predicted 255.5 Hz lower / 262.4 Hz upper (3-D, C4 S1) | `CL-C4-SIM-F1-LO`, `-UP`, `CL-C4-D3-SEP` |
+| Board panel mode (centre tap) | report vs 71–73 Hz predicted, inside the 1P hover window; C4 judges it on station KE < 4 % | `CL-C4-D3-PANEL` (CR-C4-38) |
 | Cap windows (1P/2P at 9 350 rpm) | advisory; a mode inside → F4 harmonic notch | `CL-C4-D3-SEP-BAND` |
 | Wing modes (12–15 Hz antisym., ~22 Hz sym.) | model within 15 %; damped or inside the rpm notch | `CL-C2-F-TORSION-ANTI`, `-SYM` → `R-VIBRATION` (b) |
 
@@ -455,37 +580,54 @@ poster PNG; autoplay-muted-loop with controls.
 | `FIG H1-01` | still | thrust stand with thrust and torque paths | axle, both cells, torque arm | iso 35°, 50 mm | 1 thrust cell, 2 arm 100 mm, 3 FC, 4 watt meter, 5 kill |
 | `FIG H1-02` | still | R3 installed mock-up on the carriage | tube, collars, brace, ESC dummy, half-fin, strip | side, ortho | tube end 0.172 m, 7° mount, 0.21 m half-fin |
 | `FIG H1-03` | still | CG jig, two scales | pin bridges, scales | front-iso 30° | x 0.010 / 0.230, \|y\| 0.45, ≥ 0.25 m |
-| `FIG H1-04` | still | inverted wing on the pod support, 4-pad whiffletree | pads, bars, sandbags | front, low | y 0.12 / 0.26 / 0.355 / 0.465, masses |
-| `FIG H1-05` | still | station and fin proof hangs | jugs, cords | iso | 20.9 N, 40.7 N |
+| `FIG H1-04` | still, two panels | step 1: inverted wing on the pod support, 4 pad stacks per side, relief slings over pulleys; step 2: V-block at y 0.32, pads 3 and 4 | pad stacks, slings, V-block | front, low | y 0.12 / 0.25 / 0.355 / 0.465, relief at 0.32, masses from GT-08 |
+| `FIG H1-05` | still | station, G2, pod-bracket and D5 side hangs | jugs, cords, pulleys | iso | 21.1 N, 57.3 N, 42.2 N, 199.6 N, 59.0 N |
 | `FIG H1-06` | still | tilt board at 30° | board, stop strip | along the hinge | angle arc, catch zone |
 | `FIG H1-07` | still | restrained table | straps, root eyes | iso 45°, high | 29.5 N each, keep-out ±30° |
-| `FIG H1-08` | still | mount-stiffness optical lever | mirrors, cord, weight | plan view | L 3.0 m, a, spot pair |
-| `FIG H1-09` | still | coupon lever frame 6:1 | lever, jug, coupon | side, ortho | 0.10 / 0.60 m, pivot |
+| `FIG H1-08` | still | mount-stiffness optical lever | mirrors, cord, weight | plan view | L 5.0 m, a 0.0577 m, spot pair, phone on tripod |
+| `FIG H1-09` | still | coupon lever frame 15:1 / 9:1, strip-anchor coupon on the mandrel | lever, steel side plates, jug, coupon | side, ortho, plus a plate detail | 0.060 / 0.100 / 0.900 m, pivot M8, 4 × M6, catch strap |
+| `FIG H1-10` | still | fin test article on the frame: L4 cord along the resultant, dial on the pad, gauges F and S with their dummies | cord, dial, gauge grids (enlarged inset) | iso 35°, plus a face-on inset of the shoe | gauge F 5 mm below the leg edge at x 0.30; gauge S 10 mm ahead of the cheek; 34.8° cord |
+| `FIG H1-11` | still | ESC dummy on the half-fin pad behind the stand prop | dummy, XPS, TC1–TC3 | side, ortho, section through the pad | 45 × 20 × 6 mm, 3 mm XPS, TC positions, 30 mm inflow probe |
+| `FIG H1-12` | still | tube torsion (two lasers) and ring crush | lasers, lever, ring, plates | iso | L_g 0.30 m, wall 3.0 m, lever 0.30 m; ring 20 mm |
 | `ANIM H1-A1` | 6 s loop | board 0 → 32°, pads lift at 30° | board, lifting feet | as `FIG H1-06` | live angle |
 | `ANIM H1-A2` | 8 s loop | pitch then roll stick in FBWA, then QHOVER; elevons move | elevon panels | rear-iso 30° | mode, stick icon |
 | `ANIM H1-A3` | 8 s loop | mock-up parts removed one by one | the part being removed | as `FIG H1-02` | config name |
+| `ANIM H1-A4` | 8 s loop | fin test article: L4 cord loads in 25 % steps to 1.0 ×, deflection × 10 exaggerated, dial needle and two strain bars rise; then 1.5 × | the fin quarter (deformed), cord, dial | as `FIG H1-10` | load %, predicted vs split line 8.36 mm |
 
-## Test gear: bought and borrowed (CR-A1-39, D-39)
+## Test gear: bought and borrowed (CR-A1-39, D-39, D-72)
 
-Bought new for ground test: I1 line `G12` only, $17.00 pre-tax (1 kgf bar cell + HX711, 5 K-type probes), checked
-by `CL-I1-GROUNDTEST-BOUGHT` ≤ $20. Already in the baseline BOM: `G04` watt meter, `G05` IR thermometer, `G06` 20 kgf
-cell + HX711 + Nano, `B04` 11×4.5MR props. Everything else is borrowed:
+Bought new for ground test: I1 lines `G12` $17.00 (1 kgf bar cell + HX711, 5 K-type probes) and `G13` $9.00 (foil
+gauges + cyanoacrylate kit, CR-C4-38): $26.00, $6 over the D-39 $20 line (`CL-I1-GROUNDTEST-BOUGHT`; A1's decision).
+Already in the baseline BOM: `G04` watt meter, `G05` IR thermometer, `G06` 20 kgf cell + HX711 + Nano, `B04` 11×4.5MR
+props. Everything else is borrowed.
+
+**Jacobs Hall written yes, due before 20 Nov (D-72, `T-I1-BORROW`).** I1's levers 1 and 2 count on borrowing the
+soldering kit (`G07`–`G10`, $94.80 if bought, gate `X10`) and the hot-wire gear (`G11`, `H05`, $62.54, gate `X11`). A
+refusal costs $157.34 and drops `CL-A1-RESERVE` below $309. H1 asks for both and for the test gear below in one
+message. Draft: `team/H1/JACOBS-LOAN-REQUEST.md`. Status: **not sent** (`UNVERIFIED`). A team member sends it from their
+own Berkeley account to jacobsinstitute@berkeley.edu by **13 Nov**, which leaves a week for a reply, and files the
+written answer in `team/H1/logs/T-I1-BORROW_<date>.pdf`. No reply by 18 Nov: go to the Electronics Lab (studio 110) in
+person and get the staff answer by email the same day.
 
 | Item | Card | Lender | Status | Fallback (cost) |
 |---|---|---|---|---|
+| **Soldering kit (iron, PD supply, multimeter, solder/flux/wick)** | build, GT-09 gauge leads | Jacobs Electronics Lab | `UNVERIFIED`: written yes due 20 Nov | I1 `X10` $94.80 |
+| **Hot-wire foam cutter gear (30 V 10 A supply, Ni80 wire, bow)** | build (Jan) | Jacobs (stated capability) | `UNVERIFIED`: written yes due 20 Nov | I1 `X11` $62.54 |
 | Bench power supply (Rm at 2 A; I0 at 10 V; `T-F3-5V`) | GT-02a, GT-12 | Jacobs Electronics Lab, studio 110 (in-lab use) | `CHECKED` listed (`SRC-H1-JACOBS-EQUIP`) | flight pack + meter ($0) |
-| Multimeters ×2 (4-wire Rm, rails) | GT-02a, GT-12 | Jacobs Electronics Lab | `CHECKED` listed | team `G09` |
+| Multimeters ×2 (4-wire Rm, rails; V and I for the ESC dummy) | GT-02a, GT-04, GT-12 | Jacobs Electronics Lab | `CHECKED` listed | team `G09` |
 | Oscilloscope (`T-F1-PRECHARGE`, `-RIPPLE`) | GT-12, GT-13 | Jacobs Electronics Lab | `CHECKED` listed | run in the lab |
 | Saleae logic analyzer (I²C / DShot debug) | GT-12 | Jacobs Electronics Lab | `CHECKED` listed | — |
-| Drill press (D5 crush) | GT-15 | Jacobs woodshop (Delta variable speed) or metal shop (Clausing) | `CHECKED` listed | hand screw press on the bench ($0) |
-| K-type reader | GT-04 | a Jacobs DMM with a K input | `UNVERIFIED` (ask) | I1 gated `X09` $15 |
-| Dial indicator + magnetic base | GT-16 | Jacobs metal shop hand tools | `UNVERIFIED` (ask) | digital calipers (team or Jacobs) |
+| 350 Ω 0.1 % resistors ×4, 1.5 kΩ ×4, 100 kΩ ×2, 10 Ω 5 W ×1 | GT-09, GT-04 | Jacobs Electronics Lab parts stock | `UNVERIFIED` (ask) | ≈ $5 `EST` (A1) |
+| Drill press (D5 crush, ring crush, stop push) | GT-15, GT-16 | Jacobs woodshop (Delta variable speed) or metal shop (Clausing) | `CHECKED` listed | hand screw press on the bench ($0) |
+| K-type reader (3 channels for the ESC dummy) | GT-04 | a Jacobs DMM with a K input | `UNVERIFIED` (ask) | I1 gated `X09` $16.54 |
+| **Dial indicator 25 mm travel** + magnetic base | GT-09, GT-16 | Jacobs metal shop hand tools | `UNVERIFIED` (ask) | 10 mm dial re-zeroed at 1.0 ×; caliper depth rod for GT-16 |
+| Two 3 mm steel plates 40 × 200 mm, M8 and M6 bolts | GT-15 | Jacobs metal shop scrap | `UNVERIFIED` (ask) | `H01` hardware share |
+| 22 mm steel mandrel (strip-anchor ring) | GT-15 | metal shop scrap / bolt with tape | `UNVERIFIED` | printed sleeve on an M20 bolt |
 | Digital calipers, 0.1 g scale | GT-02a, GT-16 | team members / Jacobs | `UNVERIFIED` (ask) | — |
 | Two 5 kg × 1 g scales | GT-06, GT-07 | team members' kitchen scales | `UNVERIFIED` (ask) | one scale + knife edge ($0) |
 | Plywood, 2×4 lever, 608 bearings, M8 rod | GT-01, GT-15 | Jacobs scrap bin, team spares | `UNVERIFIED` (ask) | `H01` hardware share |
-| Spring/luggage scale 0–50 kg | GT-09, GT-10, GT-13 | team | `UNVERIFIED` | lever frame + jugs ($0) |
-| Laser pointer, small mirrors | GT-16, GT-17 | team | `UNVERIFIED` | $3 left under the $20 line |
-| Fridge (cold pack, bagged), water jugs, sand, bungees, phone apps | GT-02e, GT-15, GT-18 | team | — | — |
+| Spring/luggage scale 0–50 kg, ball-bearing pulleys ×3 | GT-08, GT-09, GT-10, GT-13 | team | `UNVERIFIED` | lever frame + jugs ($0) |
+| Laser pointers ×3, small mirrors | GT-16, GT-17 | team | `UNVERIFIED` | $3 `EST` |
+| Fridge (cold pack, bagged), water jugs 2 × 10 L, sand, bungees, phone apps, matte black paint, 3 mm XPS | GT-02e, GT-04, GT-15, GT-18 | team | — | — |
 
-Ask Jacobs staff (jacobsinstitute@berkeley.edu, 510-664-7564) by 18 Nov, before the stand build week; record the
-answers in this table.
+Record each answer in this table (status → `CHECKED` with the date and the staff name).

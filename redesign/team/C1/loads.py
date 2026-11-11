@@ -151,7 +151,8 @@ MODEL = {
     "a_landing": P + "mass.allocation_g.landing", "a_power": P + "mass.allocation_g.power",
     "a_avionics": P + "mass.allocation_g.avionics", "a_harness": P + "mass.allocation_g.harness",
     "a_mech": P + "mass.allocation_g.mechanisms",
-    "mount_m": "ASM-C1-MOUNT-MASS", "adapter_m": "ASM-C1-ADAPTER-MASS", "pack_x": "CL-A3-PACK-X-REQ",
+    "mount_m": "ASM-C1-MOUNT-MASS", "adapter_m": "ASM-C1-ADAPTER-MASS", "pack_x": P + "pod.pack_x_nominal_m",
+    "z_cg_t": P + "cg.z_target_m", "groups": "CL-A3-GROUPS",
     "x_cg_rng": P + "cg.x_range_m", "cant": P + "propulsion.stations.cant_deg", "fp_u": "CL-D5-F-PLATEAU-UPPER", "fp_m": "CL-D5-F-PLATEAU",
     "iyy_a3": "CL-A3-IYY", "m_a3": "CL-A3-MASS-BASIC",
 }
@@ -163,7 +164,7 @@ MODEL_UNITS = {
     "st_z": "m", "pod_size": "m", "pod_xle": "m", "pod_zb": "m", "batt_m": "kg", "batt_size": "m", "foot_h": "m",
     "a_wing": "g", "a_fins": "g", "a_pod": "g", "a_landing": "g", "a_power": "g", "a_avionics": "g",
     "a_harness": "g", "a_mech": "g", "mount_m": "kg", "adapter_m": "kg", "pack_x": "m", "x_cg_rng": "m",
-    "cant": "deg", "fp_u": "N", "fp_m": "N", "iyy_a3": "kg m2", "m_a3": "kg",
+    "cant": "deg", "fp_u": "N", "fp_m": "N", "iyy_a3": "kg m2", "m_a3": "kg", "z_cg_t": "m", "groups": "kg, m, kg m2",
 }
 MODEL_KEYS = list(MODEL)
 
@@ -269,13 +270,21 @@ def build_items(k, growth="centre", dy_target=0.005):
         put(k["prop_m"] + k["adapter_m"], (k["x_prop"], y, z), "rotor", side=s, st=st, fin=True, transport=False)
         put(k["mount_m"], (k["x_mount"] - 0.005, y, z), "mount", side=s, st=st, fin=True)
         put(k["esc_m"], (k["tube_x"] + 0.04, y, 0.6 * z), "esc", side=s, st=st, fin=True)
-    L, Wd, H = k["pod_size"]
-    pod_c = (k["pod_xle"] + L / 2, 0.0, k["pod_zb"] + H / 2)
-    put(k["a_pod"] / 1000.0, pod_c, "centre")
-    put(k["batt_m"], (k["pack_x"], 0.0, k["pod_zb"] + 0.003 + k["batt_size"][2] / 2), "pack", transport=False)
-    put(k["a_power"] / 1000.0 - k["batt_m"], (k["pod_xle"] + 0.08, 0.0, 0.03), "centre")
-    put(k["a_avionics"] / 1000.0, (k["pod_xle"] + 0.14, 0.0, 0.035), "centre")
-    put(k["a_harness"] / 1000.0, pod_c, "centre")
+    # centre group, pack and harness (C1-R5, CR-C1-33 answered by A3-R7 CL-A3-GROUPS): allocation masses placed at
+    # A3's group centroids; the centre group's own pitch inertia enters as two halves at +/- its A3 radius of gyration
+    # in x (see the Iyy match below). The harness is A3's two side runs (+/- y), not a lump in the pod.
+    G = a3_groups(k)
+    cen_r = G[("centre", "all")]["r"]
+    pod_c = (cen_r[0], 0.0, cen_r[2])
+    put(k["a_pod"] / 1000.0 + k["a_power"] / 1000.0 - k["batt_m"] + k["a_avionics"] / 1000.0, pod_c, "centre")
+    pk_ = G[("pack", "all")]["r"]
+    put(k["batt_m"], (pk_[0], 0.0, pk_[2]), "pack", transport=False)
+    hr = G.get(("harness", "R"))
+    if hr:
+        for s_ in (1, -1):
+            put(k["a_harness"] / 2000.0, (hr["r"][0], s_ * abs(hr["r"][1]), hr["r"][2]), "harness")
+    else:
+        put(k["a_harness"] / 1000.0, pod_c, "centre")
     tot = sum(i["m"] for i in it)
     if growth == "centre":
         put(k["m_gate"] - tot, pod_c, "centre")
@@ -294,6 +303,14 @@ def build_items(k, growth="centre", dy_target=0.005):
     for i in grp:
         i["r"] = (i["r"][0] + dx, i["r"][1], i["r"][2])
     TRIM[growth] = dx
+    # CG height (C1-R5, D-62): the same centre group is moved in z until the model CG sits at P:cg.z_target_m
+    # (B3 V1 / A3-R6a: 18.5 mm above the chord plane). Every S&C number is now computed at this height; the loads
+    # use it for the landing effective masses, the tip-over and the pitch/roll inertia relief.
+    z_now = sum(i["m"] * i["r"][2] for i in it) / m_all
+    dz = (k["z_cg_t"] - z_now) * m_all / sum(i["m"] for i in grp)
+    for i in grp:
+        i["r"] = (i["r"][0], i["r"][1], i["r"][2] + dz)
+    TRIMZ[growth] = dz
     # Pitch-inertia match (C1-R4, A3-R5): the centre group is lumped at a few points, so the model's Iyy falls short
     # of A3's item roll-up. Each centre item is split into two halves at x +/- d (CG unchanged) with d chosen so the
     # model Iyy equals A3's (MC-C: A3 as rolled up, the growth sits at the CG; MC-P: A3 x m_gate / m_A3), bounded by
@@ -305,7 +322,12 @@ def build_items(k, growth="centre", dy_target=0.005):
     target = k["iyy_a3"] * (1.0 if growth == "centre" else k["m_gate"] / k["m_a3"])
     cen = [i for i in it if i["grp"] == "centre"]
     m_c = sum(i["m"] for i in cen)
-    d = min(math.sqrt(max(target - iyy, 0.0) / m_c), k["pod_size"][0] / 2)
+    gc = G[("centre", "all")]
+    k_own = math.sqrt(gc["I"][1] / gc["m"])                  # A3 centre-group radius of gyration about y
+    # the halves at +/- d carry k_own^2 of own inertia; any remaining shortfall to A3's aircraft Iyy is added in
+    # quadrature (bounded by the pod half-length) and reported as the residual spread
+    d = min(math.sqrt(k_own ** 2 + max(target - iyy - m_c * k_own ** 2, 0.0) / m_c), k["pod_size"][0] / 2)
+    KOWN[growth] = k_own
     if d > 0:
         for i in cen:
             i["m"] /= 2
@@ -315,11 +337,22 @@ def build_items(k, growth="centre", dy_target=0.005):
     return it
 
 
+def a3_groups(k):
+    """A3's CL-A3-GROUPS rows -> {(group, station): {m, r, I(Ixx, Iyy, Izz)}}."""
+    out = {}
+    for row in k["groups"]:
+        g_, st, _n, m, x, y, z, ixx, iyy, izz = row[:10]
+        out[(g_, st)] = {"m": m, "r": (x, y, z), "I": (ixx, iyy, izz)}
+    return out
+
+
 def foot_bias(k):
     """Upper (pod-side) foot share relative to the mean: D5's type-U plateau / mean plateau (lower = 2 - bias)."""
     return k["fp_u"] / k["fp_m"]
 
 
+KOWN = {}           # A3 centre-group radius of gyration about y (C1-R5)
+TRIMZ = {}          # centre-group z shift that puts the model CG at P:cg.z_target_m (C1-R5, D-62)
 TRIM = {}           # centre-group x shift applied per mass configuration (reported in mass_model.csv)
 SPREAD = {}         # centre-group half-separation in x for the pitch-inertia match, per mass configuration
 
@@ -717,6 +750,8 @@ def mass_xcheck_calc(ixx, izz, **k):
             out[f"I{ax}{ax}_{mc}"] = I[i][i]
             out[f"r_I{ax}{ax}_{mc}"] = I[i][i] / (ref * s)
         out[f"trim_dx_{mc}_m"] = TRIM[growth]
+        out[f"trim_dz_{mc}_m"] = TRIMZ[growth]
+        out[f"cg_z_{mc}_m"] = cg[2]
         out[f"spread_d_{mc}_m"] = SPREAD[growth]
     out["r_I_min"] = min(v for kk, v in out.items() if kk.startswith("r_I"))
     out["r_I_max"] = max(v for kk, v in out.items() if kk.startswith("r_I"))
@@ -858,6 +893,9 @@ def build_cases(k, X, items, growth, dy=0.005):
     Fl, Fn, Fw, Fc, mu = LD["F_foot_level_N"], LD["F_foot_pair_narrow_N"], LD["F_foot_pair_wide_N"], \
         LD["F_foot_corner_N"], X["mu"]
     bias = foot_bias(k)
+    # foot side load (C1-R5, D-65, CR-C5-16): the larger of friction x corner load and C5's 3-D simulated sustained
+    # side load (CL-C5-SIM3D-SIDE-LOAD 39.3 N limit, 1.2 m/s at 10 deg any direction), applied with the corner load
+    Fs = max(mu * Fc, X["F_side"])
     land("L1-LEVEL", "Level landing on four feet, biased cartridges (upper x bias, lower x (2 - bias))",
          {st: (-Fl * (bias if STATIONS[st][1] > 0 else 2 - bias), 0.0, 0.0) for st in STATIONS},
          info={"F_foot_N": Fl, "F_upper_N": Fl * bias, "F_lower_N": Fl * (2 - bias)})
@@ -865,10 +903,10 @@ def build_cases(k, X, items, growth, dy=0.005):
          gb=(g * math.cos(a), 0.0, g * math.sin(a)), info={"F_foot_N": Fn})
     land("L3-PAIR-WIDE", "Right foot pair first, 10 deg roll error", {"UR": (-Fw, 0.0, 0.0), "LR": (-Fw, 0.0, 0.0)},
          gb=(g * math.cos(a), g * math.sin(a), 0.0), info={"F_foot_N": Fw})
-    land("L4-CORNER-SIDE-Y", "One foot (UR) first + friction across the fin (y)", {"UR": (-Fc, -mu * Fc, 0.0)},
-         gb=(g * math.cos(a), g * math.sin(a), 0.0), info={"F_foot_N": Fc})
-    land("L5-CORNER-SIDE-Z", "One foot (UR) first + friction along the fin (z)", {"UR": (-Fc, 0.0, -mu * Fc)},
-         gb=(g * math.cos(a), 0.0, g * math.sin(a)), info={"F_foot_N": Fc})
+    land("L4-CORNER-SIDE-Y", "One foot (UR) first + design side load across the fin (y)", {"UR": (-Fc, -Fs, 0.0)},
+         gb=(g * math.cos(a), g * math.sin(a), 0.0), info={"F_foot_N": Fc, "F_side_N": Fs})
+    land("L5-CORNER-SIDE-Z", "One foot (UR) first + design side load along the fin (z)", {"UR": (-Fc, 0.0, -Fs)},
+         gb=(g * math.cos(a), 0.0, g * math.sin(a)), info={"F_foot_N": Fc, "F_side_N": Fs})
     # damage-tolerance cases (reported, not in the sizing envelope)
     lds = rotor_loads(k, Rr, {st: lift_t / 4 for st in STATIONS})
     lds.append(load((k["c"], k["b"] / 2, 0.0), (-LD["F_wingtip_N"], 0.0, 0.0), grp="wing", kind="ground"))
@@ -944,6 +982,14 @@ def build_cases(k, X, items, growth, dy=0.005):
                   "title": "Box lands on its aft wall: four feet crush at D5's plateaus (props and pack out)",
                   "gb": (g, 0.0, 0.0), "loads": lds,
                   "info": {"n_T": 2 * (fu + fl) / W_T, "m_transport_kg": W_T / g, "F_upper_N": fu, "F_lower_N": fl}})
+    # nose-wall drop onto the nose pad (C1-R5, CR-D7-24, D-62): the box lands on its front wall and the pod nose
+    # (pod.x_le_m, mid-height of the pod) reaches D7's nose pad, so the whole transport mass is stopped through the
+    # pod shell, the spar saddle and the pod bond, not at the cradles (X1). Props and pack out.
+    pod_nose = (k["pod_xle"], 0.0, k["pod_zb"] + H / 2)
+    cases.append({"id": "X6-DROP-NOSE", "family": "transport",
+                  "title": "Box lands on its front wall: pod nose into the nose pad (props and pack out)",
+                  "gb": (-g, 0.0, 0.0), "loads": [load(pod_nose, (nT * W_T, 0.0, 0.0), grp="centre", kind="pad")],
+                  "info": {"n_T": nT, "m_transport_kg": W_T / g, "F_nose_N": nT * W_T}})
     return cases
 
 
@@ -1197,7 +1243,8 @@ def derived(k, kx):
             "V_gust_pos": kx["V_gust_pos"], "n_gust_neg": kx["n_gust_neg"], "V_gust_neg": kx["V_gust_neg"],
             "v_gust": kx["v_gust"], "cdp": kx["cdp"], "clmax": kx["clmax"], "V_tr": kx["V_tr"],
             "landing": kx["landing"], "lw": kx["lw"], "att": kx["att"], "mu": kx["mu"], "n_h": kx["n_h"],
-            "n_T": kx["n_T"], "y_cr": kx["y_cr"], "p_lid": kx["p_lid"], "el_vd_frac": kx["el_vd_frac"]}
+            "n_T": kx["n_T"], "y_cr": kx["y_cr"], "p_lid": kx["p_lid"], "el_vd_frac": kx["el_vd_frac"],
+            "F_side": kx["F_side"]}
 
 
 ENV_INPUTS = {
@@ -1212,6 +1259,7 @@ ENV_INPUTS = {
     "F_pw": "CL-C1-FOOT-PAIR-WIDE", "F_cor": "CL-C1-FOOT-CORNER", "F_tip": "CL-C1-WINGTIP-FORCE",
     "th_to": "CL-C1-TIPOVER-ANGLE-CONTACT", "F_to": "CL-C1-TIPOVER-FORCE", "lw": "ASM-C1-LAND-LIFT",
     "att": P + "requirements.landing_attitude_err_deg", "mu": "ASM-C1-FRICTION", "n_h": "ASM-C1-HANDLING-N", "n_T": "CL-C1-TRANSPORT-N",
+    "F_side": "CL-C5-SIM3D-SIDE-LOAD",
     "y_cr": "ASM-C1-CRADLE-Y", "h_drop": P + "requirements.box_drop_m", "s_cr": "CL-D7-CRADLE-STROKE",
     "p_lid": "ASM-C1-LID-PRELOAD", "pad": "ASM-C1-CRADLE-PAD", "el_vd": "ASM-C1-ELEVON-VD-FRAC",
     "eta": "ASM-C1-CRUSH-EFF", "sf": P + "requirements.safety_factor_ult",
@@ -1219,7 +1267,7 @@ ENV_INPUTS = {
 }
 ENV_UNITS = {**MODEL_UNITS, "Vc": "m/s", "VD": "m/s", "VA": "m/s", "V_gp": "m/s", "V_gn": "m/s", "v_gust": "m/s",
              "V_tr": "m/s", "att": "deg", "y_cr": "m", "h_drop": "m", "s_cr": "m", "p_lid": "N", "pad": "m",
-             "T_lim": "N", "F_lvl": "N", "F_pn": "N",
+             "T_lim": "N", "F_lvl": "N", "F_pn": "N", "F_side": "N",
              "F_pw": "N", "F_cor": "N", "F_tip": "N", "F_to": "N", "th_to": "deg"}
 
 
@@ -1240,7 +1288,7 @@ def pack_inputs(kw):
                     "F_foot_corner_N": kw["F_cor"], "F_wingtip_N": kw["F_tip"], "tipover_theta_contact_deg": kw["th_to"],
                     "F_tipover_total_N": kw["F_to"]},
         "lw": kw["lw"], "att": kw["att"], "mu": kw["mu"], "n_h": kw["n_h"], "n_T": kw["n_T"], "y_cr": kw["y_cr"],
-        "p_lid": kw["p_lid"], "el_vd_frac": kw["el_vd"],
+        "p_lid": kw["p_lid"], "el_vd_frac": kw["el_vd"], "F_side": kw["F_side"],
     }
     return k, derived(k, kx)
 
@@ -1266,7 +1314,8 @@ def envelope_calc(**kw):
     # aircraft y = span = the box's END walls (wingtips, X2); z = floor (X3) and lid (X4).
     W_T = sum(i["m"] for i in build_items(k, "centre") if i["transport"]) * k["g"]
     n_aft = 2 * (k["fp_u"] + (2 * k["fp_m"] - k["fp_u"])) / W_T
-    xcases = {"x": "X1-DROP-X", "y": "X2-DROP-Y", "z": "X3-DROP-Z", "lid": "X4-DROP-LID", "aft": "X5-DROP-AFT"}
+    xcases = {"x": "X1-DROP-X", "y": "X2-DROP-Y", "z": "X3-DROP-Z", "lid": "X4-DROP-LID", "aft": "X5-DROP-AFT",
+              "nose": "X6-DROP-NOSE"}
     for ax, cid in xcases.items():
         trn = envelope_scalars(res, fam=("transport",), skip_cases=tuple(c for c in xcases.values() if c != cid))
         rmin, rkey = min((env[key][0] / trn[key][0], key) for key in TRANSPORT_KEYS if trn[key][0] > 1e-9)
@@ -1277,6 +1326,15 @@ def envelope_calc(**kw):
         if ax != "aft":                                      # the aft wall's stroke is the feet (D5), not foam
             o[f"stroke_req_{ax}_m"] = kw["h_drop"] / (kw["eta"] * max(n_al - 1, 1e-6))
     o["n_T_aft"] = n_aft
+    # G3 set-down reaction on one lower motor can (CR-C4-29), limit, worst mass configuration
+    g3 = [c for c in res["cases"] if c["case"] == "G3-BENCH"]
+    o["g3_can_F_lim"] = max(c["R_a_N"] for c in g3)
+    o["g3_can_F_ult"] = o["g3_can_F_lim"] * kw["sf"]
+    o["g3_foot_F_lim"] = max(c["R_b_N"] for c in g3)
+    # design foot side load (D-65): max(friction x corner load, C5's simulated side load), limit and ultimate
+    o["foot_side_lim"] = max(kw["mu"] * kw["F_cor"], kw["F_side"])
+    o["foot_side_ult"] = o["foot_side_lim"] * kw["sf"]
+    o["foot_side_friction_N"] = kw["mu"] * kw["F_cor"]
     o["aft_ratio"] = n_aft / o["n_T_allow_aft"]
     n_allow, rkey, s_req = o["n_T_allow_z"], o["n_T_governing_z"], o["stroke_req_z_m"]
     # lid pillar / cradle local loads (the pinch is self-equilibrated; it adds bearing, not wing bending)
@@ -1408,11 +1466,11 @@ kit.claim("CL-C1-N-LAND-STROKE-MIN", "Landing factor, energy bound at the 38 mm 
           how="Drop test T-C1-FOOT-DROP: 0.115 m free drop (1.5 m/s) on the feet with an accelerometer at the CG.",
           note="Uniform energy balance with D5's constant-force cartridge efficiency (CL-D5-ETA). The cartridge "
                "plateau, not the stroke, sets the actual peak (CL-D5-N-LAND, C5's tilted cases); C1 sizes every "
-               "landing load at the requirement n_L 6, which bounds both.")
+               "landing load at the requirement landing_n_design (6.6, D-65), which bounds both.")
 kit.claim("CL-C1-N-LAND-FULL-FOOT", "Landing factor if the whole 48 mm foot crushes (bound)", calc="CALC-C1-LANDING",
           output="n_L_full_foot", unit="-",
           how="Lower bound: the cartridge cannot crush to zero height; the drop test decides.")
-kit.claim("CL-C1-FOOT-STROKE-REQ", "Foot crush stroke required for n_L 6 (cartridge eta)", calc="CALC-C1-LANDING",
+kit.claim("CL-C1-FOOT-STROKE-REQ", "Foot crush stroke required for landing_n_design (cartridge eta)", calc="CALC-C1-LANDING",
           output="stroke_req_m", unit="m", limit=("<=", P + "requirements.foot_crush_stroke_min_m"),
           how="C5/D5 design the foot to this stroke; drop test T-C1-FOOT-DROP confirms n <= 6.",
           note="Level landing only; C5's pair-first tilted landings need more (CL-C5-DROP-PAIR-PITCH 38 mm), which "
@@ -1586,7 +1644,7 @@ for out, cid, title, unit_, how in (
 kit.claim("CL-C1-FOOT-D5-RATIO", "D5's per-type upper foot peak over C1's level-landing upper foot (limit)",
           calc="CALC-C1-FOOT-XCHECK", output="r_lim", unit="-", limit=("<=", 1.0), verifies=["R-LANDING-IMPACT"],
           how="T-C1-FOOT-DROP with a load cell under one upper foot.",
-          note="CR-D5-23: D5's type-U peak (plateau) must sit inside C1's n_L 6 bound; D5 sizes the flange and bond "
+          note="CR-D5-23: D5's type-U peak (plateau) must sit inside C1's n_L 6.6 bound (D-65); D5 sizes the flange and bond "
                "to C1's ultimate (CL-C1-FOOT-F-ULT).")
 kit.claim("CL-C1-FOOT-LEVEL-UPPER-ULT", "Upper foot load, level landing, ultimate (D5 sizes the flange to it)",
           calc="CALC-C1-FOOT-XCHECK", output="F_c1_ult_N", unit="N", how="As CL-C1-FOOT-LEVEL-UPPER x 1.5.")
@@ -1594,14 +1652,49 @@ kit.claim("CL-C1-INERTIA-RATIO-MIN", "Lumped-model inertia over A3's (scaled to 
           calc="CALC-C1-MASS-XCHECK", output="r_I_min", unit="-", limit=(">=", 0.85),
           how="A3 bifilar swing (T-A3-SWING) replaces both.",
           note="The rotor cases' angular accelerations scale with 1/I, so a low model inertia under-states the "
-               "inertia relief that is NOT there (unconservative for the differential-thrust cases). Iyy is matched by "
-               "spreading the centre group in x (bounded by the pod half-length); Ixx and Izz are checked. Band "
+               "inertia relief that is NOT there (unconservative for the differential-thrust cases). C1-R5: centre group, "
+               "pack and harness sit at A3's CL-A3-GROUPS centroids; the centre group is split at +/- its A3 radius of "
+               "gyration plus any Iyy shortfall in quadrature (bounded by the pod half-length); Ixx and Izz are checked. Band "
                "0.85-1.15 accepted for a quasi-static load model.")
 kit.claim("CL-C1-INERTIA-RATIO-MAX", "Lumped-model inertia over A3's (scaled to the gate), largest axis",
           calc="CALC-C1-MASS-XCHECK", output="r_I_max", unit="-", limit=("<=", 1.15),
           how="As above.")
 kit.claim("CL-C1-CG-TRIM-DX", "Largest centre-group shift that puts the lumped model on a CG limit",
           calc="CALC-C1-MASS-XCHECK", output="trim_dx_max_m", unit="m", how="Information (CR-C1-25).")
+# C1-R5 (D-62, D-65): set-down can force, n 6.6 airframe checks (pack stop, pod saddle), design foot side load,
+# nose-pad drop allowance
+kit.claim("CL-C1-G3-CAN-F", "Set-down (G3) reaction on one lower motor can, handling factor 2, limit",
+          calc="CALC-C1-ENVELOPE", output="g3_can_F_lim", unit="N", verifies=["R-LOADS"], parts=[],
+          how="Set the aircraft flat on a bench scale under one lower can (static x 2); C4 cap and brace check.",
+          note="CR-C4-29: replaces ASM-C4-G3-CAN-F 23.2 N. Worst of MC-C / MC-P; ultimate x 1.5.")
+kit.claim("CL-C1-G3-CAN-F-ULT", "Set-down (G3) reaction on one lower motor can, ultimate", calc="CALC-C1-ENVELOPE",
+          output="g3_can_F_ult", unit="N", how="As CL-C1-G3-CAN-F x 1.5.")
+kit.claim("CL-C1-PACK-STOP-LIM", "Pack-to-tray resultant (aft stop and strap), landing at n 6.6, limit",
+          calc="CALC-C1-ENVELOPE", output="pack_F_lim", unit="N", verifies=["R-LOADS"],
+          how="T-C3-STOP-PUSH: push the bonded aft stop with this load x 1.5 (C3).",
+          note="D-65: the pack stop is checked at landing_n_design 6.6 at the gate. Mostly +x (aft stop). Crash "
+               "retention is separate (CL-C1-PACK-CRASH-LOAD, ultimate, emergency).")
+kit.claim("CL-C1-PACK-STOP-ULT", "Pack-to-tray resultant, landing at n 6.6, ultimate", calc="CALC-C1-ENVELOPE",
+          output="pack_F_ult", unit="N", how="As CL-C1-PACK-STOP-LIM x 1.5.")
+kit.claim("CL-C1-POD-F-LIM", "Pod-to-wing force (spar saddle POD-007 + bond + strap), limit", calc="CALC-C1-ENVELOPE",
+          output="pod_F_lim", unit="N", verifies=["R-LOADS"], how="T-C3-POD-PROOF at this load (C3, H1).",
+          note="D-65: at landing_n_design 6.6 (L1 governs).")
+kit.claim("CL-C1-FOOT-SIDE-DESIGN", "Design foot side load at the pad, limit (max of friction and C5's 3-D sim)",
+          calc="CALC-C1-ENVELOPE", output="foot_side_lim", unit="N", verifies=["R-LOADS"],
+          how="T-D5-SIDE pull on the shoe; C5's 6-DOF sim (CL-C5-SIM3D-SIDE-LOAD).",
+          note="D-65 / CR-C5-16: applied with the corner foot load in L4 (y) and L5 (z).")
+kit.claim("CL-C1-FOOT-SIDE-DESIGN-ULT", "Design foot side load at the pad, ultimate", calc="CALC-C1-ENVELOPE",
+          output="foot_side_ult", unit="N", how="As CL-C1-FOOT-SIDE-DESIGN x 1.5.")
+kit.claim("CL-C1-TRANSPORT-N-ALLOW-NOSE", "Box front-wall impact factor with the pod nose on the nose pad",
+          calc="CALC-C1-ENVELOPE", output="n_T_allow_nose", unit="-",
+          how="Label-and-test (D-53): T-D7-BOX-DROP front-wall drop with the dummy; D7's nose-drop height "
+              "h = (n - 1) eta eps_use t_nosepad uses this factor, not CL-C1-TRANSPORT-N-ALLOW-X.",
+          note="Case X6: the transport mass is stopped through the pod nose (J-POD carries everything but the pod "
+               "group). X1 (cradle-reacted) only holds while the cradles stop the aircraft before the nose reaches "
+               "the pad.")
+kit.claim("CL-C1-CG-TRIM-DZ", "Centre-group z shift that puts the lumped model CG at cg.z_target_m (MC-C)",
+          calc="CALC-C1-MASS-XCHECK", output="trim_dz_C_m", unit="m",
+          how="Information (D-62): A3's CL-A3-CG-Z replaces cg.z_target_m when published.")
 kit.claim("CL-C1-TRANSPORT-N-AFT", "Box aft-wall impact factor, four feet crushing at D5's plateaus",
           calc="CALC-C1-ENVELOPE", output="n_T_aft", unit="-", limit=("<=", "CL-C1-TRANSPORT-N-ALLOW-AFT"),
           verifies=["R-LOADS"],
@@ -1831,8 +1924,37 @@ def write_mass_csv(outdir, k):
             m, cg, I = mass_props(items)
             w.writerow([mc, "TOTAL", "", len(items), f"{m:.5f}"] + [f"{x:.4f}" for x in cg])
             w.writerow([mc, "TRIM_centre_group_dx", "", "", "", f"{TRIM[growth]:.4f}", "", ""])
+            w.writerow([mc, "TRIM_centre_group_dz", "", "", "", "", "", f"{TRIMZ[growth]:.4f}"])
             w.writerow([mc, "SPREAD_centre_group_half_dx", "", "", "", f"{SPREAD[growth]:.4f}", "", ""])
             w.writerow([mc, "INERTIA_Ixx_Iyy_Izz_kgm2", "", "", "", f"{I[0][0]:.5f}", f"{I[1][1]:.5f}", f"{I[2][2]:.5f}"])
+
+
+def a3_group_check(k):
+    """Information (CR-C1-33): C1's lumped groups against A3's CL-A3-GROUPS, before the CG trim (MC-C items at the
+    allocations). Shows where the trim offset comes from: group mass and centroid x, z (C1 - A3)."""
+    G = a3_groups(k)
+    m_c1 = {"wing": ("wing",), "fins": ("tube", "board", "finrem", "mount"), "stations": ("rotor", "esc"),
+            "landing": ("foot",), "mechanisms": ("mech",), "harness": ("harness",), "pack": ("pack",),
+            "centre": ("centre",)}
+    saved = dict(TRIM), dict(TRIMZ), dict(SPREAD), dict(KOWN)
+    items = build_items(k, "prorata")                          # pro rata to the gate: centroids as allocated
+    TRIM.update(saved[0]); TRIMZ.update(saved[1]); SPREAD.update(saved[2]); KOWN.update(saved[3])
+    out = {"note": "C1 lumped groups, MC-P (allocations x gate/sum), centre/pack after trim and spread, vs A3 "
+                   "CL-A3-GROUPS (A3 as built). dx = C1 - A3 (m). The wing/fins/stations/landing offsets are what "
+                   "the centre-group trim compensates.", "groups": {}}
+    for g_, grps in m_c1.items():
+        lst = [i for i in items if i["grp"] in grps]
+        a = G.get((g_, "all"))
+        if not lst or not a:
+            continue
+        m = sum(i["m"] for i in lst)
+        x = sum(i["m"] * i["r"][0] for i in lst) / m
+        z = sum(i["m"] * i["r"][2] for i in lst) / m
+        out["groups"][g_] = {"m_c1_kg": m, "m_a3_kg": a["m"], "x_c1_m": x, "x_a3_m": a["r"][0], "dx_m": x - a["r"][0],
+                             "z_c1_m": z, "z_a3_m": a["r"][2], "moment_dx_kgm": m * (x - a["r"][0])}
+    out["k_own_centre_m"] = saved[3]
+    out["spread_d_m"] = saved[2]
+    return out
 
 
 def convergence(k, X):
@@ -2002,7 +2124,8 @@ if __name__ == "__main__":
            "hand_check_F8_root_Mx": {"hand_Nm": hc, "model_Nm": f8[3], "diff_frac": (f8[3] - hc) / hc},
            "equilibrium_residual_max": res["residual"],
            "hand_check_B2_root_lift_moment_1g": b2_root_check(k),
-           "cant_side_force_in_J_MOTOR_H2": cant_check(k, res)}
+           "cant_side_force_in_J_MOTOR_H2": cant_check(k, res),
+           "a3_centre_group_vs_c1": a3_group_check(k)}
     (out / "checks.json").write_text(json.dumps(rep, indent=1), encoding="utf-8")
     print(json.dumps(rep, indent=1))
     # sensitivity (information, D-50): the envelope the claims carry (VD = max(requirement, capped derived)) vs the
@@ -2030,3 +2153,20 @@ if __name__ == "__main__":
     (out / "sensitivity_vd.json").write_text(json.dumps(sens, indent=1), encoding="utf-8")
     for kk, vv in sens["outputs"].items():
         print(f"  {kk:24s} {vv['at_derived']:9.3f} {vv['at_requirement']:9.3f}  {vv['case']}")
+    # sensitivity (information, D-65 / CR-C5-16): the design foot side load at C5's 39.3 N (mu 0.7 mat) against
+    # C5's mu <= 0.5 pad-face option (29.1 N, CR-C5-16) and the friction-only value (mu x corner load)
+    keys2 = ["finjoint_M_ult", "finjoint_M_design", "finhalf_Mb_ult", "finhalf_T_lim", "finhalf_T_wingplane_lim",
+             "wing_T_ult", "foot_F_ult", "spar_Mb_ult", "pod_F_ult", "pack_F_lim", "n_T_allow_aft", "n_T_allow_nose"]
+    o_s = {"c5_mu07": o1}
+    for tag, fs in (("c5_mu05_29N", 29.1), ("friction_only", 0.0)):
+        o_s[tag] = envelope_calc(**dict(kw, F_side=fs))
+    side = {"note": "Envelope outputs at the design side load (C5 3-D sim, mu 0.7, 39.3 N), at C5's mu <= 0.5 pad option "
+                    "(29.1 N, CR-C5-16) and with friction x corner load only (C1-R4 basis). Information only.",
+            "F_side_N": {"c5_mu07": kw["F_side"], "c5_mu05_29N": 29.1,
+                         "friction_only": kw["mu"] * kw["F_cor"]},
+            "outputs": {kk: {t: o_s[t][kk] for t in o_s} for kk in keys2},
+            "cases": {kk: {t: o_s[t].get(kk.replace("_ult", "_case").replace("_lim", "_case").replace("_design", "_case"), "")
+                           for t in o_s} for kk in keys2}}
+    (out / "sensitivity_side.json").write_text(json.dumps(side, indent=1), encoding="utf-8")
+    for kk, vv in side["outputs"].items():
+        print(f"  side {kk:24s} " + "  ".join(f"{t} {v:8.3f}" for t, v in vv.items()))

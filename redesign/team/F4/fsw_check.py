@@ -15,7 +15,9 @@ filter separation from the wing torsion mode; descent speeds against vortex-ring
 body-rate limits; differential-thrust yaw gain; upper-pair hover output at the pitch-trim split; harmonic-notch coverage; battery thresholds; geofence; the 100 A
 limiter setting and its per-motor share; final landing speed against the foot cartridges (CR-D5-21); sensor
 offsets from F3's points and the CG; elevon servo limits from D6's linkage; elevon mixer gain against the trimmed
-stall need. Lints K09L.param and the stand overlay K09L-STAND.param.
+stall need. R5 (D-65, D-66, D-71): touchdown sink in the altitude-holding Q modes against the hard-landing sink, no
+raw-stick flight mode (R-SPIRAL), AIRSPEED_MIN against 1.3 x the forward-CG stall. Lints K09L.param and the stand
+overlay K09L-STAND.param (incl. no RCn_OPTION that selects MANUAL / ACRO).
 """
 import math
 import sys
@@ -107,10 +109,6 @@ kit.assumption("ASM-F4-AVN-POINTS", "IMU and GPS centres in the aircraft frame",
                "GPS centre (0.075, 0, 0.178) m", basis="team/F3/CHANGE-REQUESTS.md CR-F3-20 (F3's CALC-F3-OFFSETS "
                "still holds the R3 layout); re-measure as built", value={"imu": [-0.010, 0.046, 0.039],
                "gps": [0.075, 0.0, 0.178]}, unit="m", status="UNVERIFIED")
-kit.assumption("ASM-F4-CG-Z", "CG height for the sensor offsets", "+0.0185 m above the chord plane, take-off basic case",
-               basis="team/A3/claims.json CALC-A3-CG outputs.cg_m[2] = 0.01850 m (2026-11-10 roll-up; MASS-CG.md "
-               "table rounds it to +0.019 basic, +0.018 predicted). A3 publishes no CG-z claim, only "
-               "CL-A3-CG-Z-RANGE (CR-F4-19)", value=0.0185, unit="m", status="UNVERIFIED")
 kit.assumption("ASM-F4-THETA-DN", "Servo angle for 25 deg TE down", "-42.9 deg (D6 linkage solution)",
                basis="team/D6/claims.json CALC-D6-KIN output theta_dn_deg -42.87 (no claim id published; "
                "CR-D6-09 quotes it)", value=-42.87, unit="deg", status="UNVERIFIED")
@@ -179,12 +177,14 @@ def motor_map(ids, y, z, cant, pub, d3):
 
 
 @kit.calc("CALC-F4-ARSPD", title="Airspeed limits against stall, transition gate, VA and Vmax",
-          equation="f_min = AIRSPEED_MIN / Vs ; f_cr = AIRSPEED_CRUISE / (1.3 Vs)",
+          equation="f_min = AIRSPEED_MIN / Vs ; f_cr = AIRSPEED_CRUISE / (1.3 Vs) ; Vs_keep = AIRSPEED_MIN / 1.3 "
+                   "(largest measured stall that keeps AIRSPEED_MIN, D-71)",
           inputs={"vs": "CL-A1-STALL-GATE", "vmin": "P:fsw.airspeed_min_ms", "vcr": "P:fsw.airspeed_cruise_ms",
                   "f": "P:requirements.transition_factor", "vmax": "P:fsw.airspeed_max_ms"},
           units={"vs": "m/s", "vmin": "m/s", "vcr": "m/s", "vmax": "m/s"})
 def airspeed_limits(vs, vmin, vcr, f, vmax):
-    return {"min_factor": vmin / vs, "cruise_over_trans": vcr / (f * vs), "vmax": float(vmax), "vmin": float(vmin)}
+    return {"min_factor": vmin / vs, "cruise_over_trans": vcr / (f * vs), "vmax": float(vmax), "vmin": float(vmin),
+            "vs_keep": vmin / f}
 
 
 @kit.calc("CALC-F4-DIVE", title="Elevon schedule: steady dive at the pitch floor, speed scaler at VA and VD",
@@ -302,11 +302,23 @@ def yaw_dt(m, g, ld, n, a_h, y, M, k_mix):
 
 
 @kit.calc("CALC-F4-DESCENT", title="Fastest commanded vertical descent",
-          equation="v = max(Q_WP_SPD_DN, Q_PILOT_SPD_DN, Q_LAND_FINAL_SPD)",
+          equation="v = max(Q_WP_SPD_DN, Q_PILOT_SPD_DN, Q_LAND_FINAL_SPD) ; v_td = max(Q_PILOT_SPD_DN, "
+                   "Q_LAND_FINAL_SPD) (Q_WP_SPD_DN ends at Q_LAND_FINAL_ALT 6 m, so it never reaches the ground)",
           inputs={"wp": "P:fsw.wp_spd_dn_ms", "pil": "P:fsw.pilot_spd_dn_ms", "fin": "P:fsw.land_final_spd_ms"},
           units={"wp": "m/s", "pil": "m/s", "fin": "m/s"})
 def descent(wp, pil, fin):
-    return max(wp, pil, fin)
+    return {"value": max(wp, pil, fin), "touchdown": max(pil, fin)}
+
+
+RAW_MODES = {0: "MANUAL", 2: "STABILIZE", 3: "TRAINING", 4: "ACRO", 23: "QACRO"}   # Plane mode numbers (control_mode)
+
+
+@kit.calc("CALC-F4-FLTMODES", title="Flight modes a pilot can select or boot into that pass raw stick to a surface or motor",
+          equation="n = count(m in FLTMODE1-6 + INITIAL_MODE, m in {0 MANUAL, 2 STABILIZE, 3 TRAINING, 4 ACRO, 23 QACRO})",
+          inputs={"modes": "P:fsw.fltmodes", "init": "P:fsw.initial_mode"}, cites=["SRC-F4-AP-SRC"])
+def fltmodes(modes, init):
+    raw = [m for m in list(modes) + [init] if int(m) in RAW_MODES]
+    return {"value": len(raw), "raw": [RAW_MODES[int(m)] for m in raw]}
 
 
 @kit.calc("CALC-F4-RATES", title="Largest commanded body rate", equation="w = max(rate limits) x pi/180",
@@ -347,9 +359,9 @@ def fence(alt, ceil, rad, vlos):
 
 @kit.calc("CALC-F4-SENSOR-POS", title="INS_POS and GPS1_POS from F3's points and the CG (FRD body axes)",
           equation="X_fwd = -(x - x_cg) ; Y = y ; Z_down = -(z - z_cg) ; err = max |set - derived|",
-          inputs={"pts": "ASM-F4-AVN-POINTS", "xcg": "P:cg.x_target_m", "zcg": "ASM-F4-CG-Z",
+          inputs={"pts": "ASM-F4-AVN-POINTS", "xcg": "P:cg.x_target_m", "zcg": "P:cg.z_target_m",
                   "ins": "P:fsw.ins_pos_m", "gps": "P:fsw.gps_pos_m"}, units={"xcg": "m", "zcg": "m"},
-          assumes=["ASM-F4-AVN-POINTS", "ASM-F4-CG-Z"])
+          assumes=["ASM-F4-AVN-POINTS"])
 def sensor_pos(pts, xcg, zcg, ins, gps):
     frd = lambda q: [-(q[0] - xcg), q[1], -(q[2] - zcg)]
     i, g = frd(pts["imu"]), frd(pts["gps"])
@@ -413,6 +425,11 @@ kit.claim("CL-F4-CANT-NET-FORCE", "Net side force of the four canted motors, fra
 kit.claim("CL-F4-ARSPD-MIN-FACTOR", "AIRSPEED_MIN over stall at the gate", calc="CALC-F4-ARSPD",
           output="min_factor", limit=(">=", "ASM-F4-MIN-FACTOR"), parts=FC,
           how="Slow-flight stall test T-B2-STALL; re-run when A1/B3 re-issue the stall.")
+kit.claim("CL-F4-ARSPD-MIN-D71", "AIRSPEED_MIN against 1.3 x the stall at the gate mass and the forward CG (D-71)",
+          calc="CALC-F4-ARSPD", output="vmin", unit="m/s", limit=(">=", "CL-B2R3-VTR-GATE-FWD"),
+          verifies=["R-STALL", "R-TRANSITION"], parts=FC,
+          how="T-B2-STALL (three slow-flight stalls at 2.6 kg, forward CG, airspeed logged): set AIRSPEED_MIN = "
+              "ceil(1.3 x measured trimmed stall); 16 holds while the measured stall is <= 12.31 m/s (vs_keep).")
 kit.claim("CL-F4-ARSPD-MIN-FLOOR", "AIRSPEED_MIN against the D-36 floor 15.6 m/s", calc="CALC-F4-ARSPD", output="vmin",
           unit="m/s", limit=(">=", "P:performance.transition_min_ms"), verifies=["R-TRANSITION"], parts=FC,
           how="Read AIRSPEED_MIN after loading (integer: 16).")
@@ -487,6 +504,16 @@ kit.claim("CL-F4-YAW-LOW-SIDE", "Output of the slow side at full yaw demand in c
 kit.claim("CL-F4-DESCENT", "Fastest commanded vertical descent", calc="CALC-F4-DESCENT", output="value", unit="m/s",
           limit=("<=", "CL-B4-DESCENT"), verifies=["R-FAILSAFES"], parts=MOT,
           how="QLAND and QHOVER full-down logs: CTUN/QTUN DCRt >= -1.2 m/s.")
+kit.claim("CL-F4-TOUCHDOWN-SINK", "Fastest commanded descent that can reach the ground (QHOVER/QLOITER full down stick, "
+          "QLAND final) against the hard-landing sink", calc="CALC-F4-DESCENT", output="touchdown", unit="m/s",
+          limit=("<=", "P:requirements.landing_sink_ms"), verifies=["R-LANDING-IMPACT"], parts=FC,
+          how="QHOVER full-down-stick log from 10 m to touchdown on the twin: CTUN/QTUN CRt at contact >= -1.2 m/s "
+              "(peak overshoot read from the log). QSTABILIZE has no climb-rate loop: the flight card bars landing in "
+              "it (CR-F4-21).")
+kit.claim("CL-F4-NO-RAW-MODES", "Raw-stick modes among FLTMODE1-6 and INITIAL_MODE (R-SPIRAL, D-66)",
+          calc="CALC-F4-FLTMODES", output="value", limit=("<=", 0), verifies=["R-SPIRAL", "R-FSW-PARAMS"], parts=FC,
+          how="Lint of K09L.param by fsw_check.py (17 / 18 / 19 / 5 / 7 / 11, boot 17) and a parameter diff of the board "
+              "after loading; H3's card forbids MANUAL / ACRO / STABILIZE from the GCS.")
 kit.claim("CL-F4-BODY-RATE", "Largest commanded body rate", calc="CALC-F4-RATES", output="value", unit="rad/s",
           limit=("<=", "ASM-C1-PITCH-RATE"), parts=FC, how="Read the six rate limits after loading; log RATE in QAUTOTUNE.")
 kit.claim("CL-F4-NOTCH-LOW", "Hover 1P over the lowest notch frequency", calc="CALC-F4-NOTCH", output="low_ratio",
@@ -627,8 +654,18 @@ def mirror_check(values):
     return errors
 
 
+RC_RAW_MODE_OPTIONS = {51: "MANUAL mode", 52: "ACRO mode"}   # RCn_OPTION aux functions that select a raw-stick mode
+
+
+def rc_option_check(values):
+    """No RC aux switch may select a raw-stick mode (R-SPIRAL); option numbers to confirm in SITL S1."""
+    return [f"{n} = {int(v)} selects {RC_RAW_MODE_OPTIONS[int(v)]} (R-SPIRAL)" for n, v in values.items()
+            if n.startswith("RC") and n.endswith("_OPTION") and n != "RC_OPTIONS" and int(v) in RC_RAW_MODE_OPTIONS]
+
+
 if __name__ == "__main__":
     vals, errs = lint(PARAM_FILE)
+    errs += rc_option_check(vals)
     errs += mirror_check(vals)
     svals, serrs = lint(STAND_FILE)
     errs += [f"{STAND_FILE.name}: {e}" for e in serrs]
@@ -649,6 +686,14 @@ if __name__ == "__main__":
     print(f"dive: V {dv['v_dive']:.2f} m/s, CD0 {dv['cd0']:.4f}, scaler VA {dv['scaler_va']:.3f} VD {dv['scaler_vd']:.3f}")
     sp = kit.nodes["CALC-F4-SPLIT"]["outputs"]
     print(f"hover split: upper-pair output {sp['a_up']:.3f} at A3's split, {sp['a_up_at_limit']:.3f} at 1.25 (cap 0.84)")
+    fm = kit.nodes["CALC-F4-FLTMODES"]["outputs"]
+    ar = kit.nodes["CALC-F4-ARSPD"]["outputs"]
+    de = kit.nodes["CALC-F4-DESCENT"]["outputs"]
+    so = kit.nodes["CALC-F4-SENSOR-POS"]["outputs"]
+    print(f"R5: raw-stick modes {fm['value']} {fm['raw']}; touchdown sink {de['touchdown']} m/s; AIRSPEED_MIN "
+          f"{ar['vmin']:.0f} holds to a measured stall of {ar['vs_keep']:.2f} m/s; sensor offsets INS "
+          f"{[round(v, 4) for v in so['ins_derived_m']]} GPS {[round(v, 4) for v in so['gps_derived_m']]} "
+          f"(err {so['err_m'] * 1000:.2f} mm)")
     yd = kit.nodes["CALC-F4-YAW-DT"]["outputs"]
     print(f"yaw: cruise output {yd['a_cruise']:.3f}, dT {yd['dT_N']:.2f} N/motor, slow side {yd['a_low_side']:.3f}")
     if errs:

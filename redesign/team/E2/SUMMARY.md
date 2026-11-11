@@ -1,63 +1,57 @@
 # E2 battery / energy: summary
 
-Status `PROPOSED`, revision **E2-R4**, 2026-11-10 (params A1-R4a, D-47 … D-59). Full report: `team/E2/ENERGY.md`.
-Calculations: `team/E2/energy_claims.py` → `claims.json` (41 claims, 4 planned tests). No E2 claim fails. Nothing is
+Status `PROPOSED`, revision **E2-R5**, 2026-11-10 (params A1-R5, D-61 … D-73). Full report: `team/E2/ENERGY.md`.
+Calculations: `team/E2/energy_claims.py` → `claims.json` (44 claims, 4 planned tests). No E2 claim fails. Nothing is
 `VERIFIED`: no pack has been bought or weighed.
 
-**Decision (D-58 answered).** Buy **2 × Ovonic 14.8V 120C 4S 6500 mAh hard-case LiPo, EC5** (2-pack, listed
-551 ± 5 g, 135 × 46 × 49 mm), re-terminated to AS150U, one fully charged pack per sortie, **2 sorties per test day**
-(D-12). Re-leading the held 680 g 130C XT60 pack is **not accepted**. I1 releases the pack cart after confirming
-10 AWG leads at order (CR-E2-24).
+**Decision (D-64).** The pack cart `P01` is **released to I1**: 2 × Ovonic 14.8V 120C 4S 6500 mAh hard-case LiPo, EC5
+(one 2-pack, listed 551 ± 5 g, 135 × 46 × 49 mm), re-terminated to AS150U, one pack per sortie, **2 sorties per test
+day** (D-12). I1 pays only after two order-time checks: (1) 10 AWG discharge leads confirmed; (2) EC5 / 4S / 6500 mAh /
+hard case / 2 packs in the cart (release record: ENERGY.md §1a, CR-E2-28).
 
 | Parameter | Value | Unit | Source | Status |
 |---|---|---|---|---|
 | Pack SKU | Ovonic 120C 4S 6500 hard case, EC5 → AS150U, JST-XH | — | `SRC-E2-OVONIC-120C-EC5` | `CHECKED` (listing) |
-| Listed mass, worst / D-58 line | 0.556 / ≤ 0.601 (margin 0.045) | kg | `CL-E2-SKU-MASS-MARGIN` | `UNVERIFIED` |
-| Mass carried / acceptance limit | 0.55 / ≤ 0.601 (was 0.68) | kg | `CL-E2-PACK-MASS` | `UNVERIFIED` (not weighed) |
-| Body in the 160 × 52 × 53 mm bay, tightest | 1 (height, at +3 mm tolerance) | mm | `CL-E2-SKU-BAY-CLEAR` | `UNVERIFIED` |
-| Discharge leads | 10 (inferred from EC5; confirm at order and on arrival) | AWG | `CL-E2-SKU-LEAD-AWG` | `UNVERIFIED` |
-| Pack R warm / cold (cells + 6.5 mΩ harness) | 22.5 / 30.5 | mΩ | `P:electrical.r_ext_mohm`, `ASM-E2-R-CELL` | `UNVERIFIED` |
-| Cruise after 2 min hover to 20 %, base / pess. (B1 227.8 / 300.6 W) | **12.6 / 6.8** (req. ≥ 5) | min | `CL-E2-CRUISE-MIN-BASE`, `-PESS` | `UNVERIFIED` |
-| Same at the params' 240 W (E1, D-49) | 12.0 / 6.4 | min | `CL-E2-CRUISE-MIN-BASE-240`, `-PESS-240` | `UNVERIFIED` |
-| Cruise before `BATT_LOW`, pess. (B1 / 240 W) | 6.4 / 6.1 (req. ≥ 5) | min | `CL-E2-CRUISE-TO-LOW-PESS`, `-240` | `UNVERIFIED` |
-| Phase currents, pess.: climb / hover / fwd / back / descent / cruise | 35.5 / 30.1 / 43.5 / 40.0 / 30.1 / 22.4 | A | `CL-E2-I-*-PESS`, `CL-E2-HOVER-I-GATE`, `CL-E2-CRUISE-I-PESS` | `UNVERIFIED` |
+| Acceptance line `PACK_ACCEPT_KG` = `CL-A1-PACK-ACCEPT` | 0.5926 (was 0.601) | kg | `CL-E2-PACK-ACCEPT-KG` | `MODELLED` (read live) |
+| Listed worst mass / margin to the line | 0.556 / +0.0366 | kg | `CL-E2-SKU-MASS-MARGIN` | `UNVERIFIED` |
+| Mass carried | 0.55 (until weighed) | kg | `CL-E2-PACK-MASS` | `UNVERIFIED` |
+| Body in the 160 × 52 × 53 mm bay, tightest | 1 (height, +3 mm tolerance) | mm | `CL-E2-SKU-BAY-CLEAR` | `UNVERIFIED` |
+| Discharge leads | 10 (inferred from EC5; order check 1) | AWG | `CL-E2-SKU-LEAD-AWG` | `UNVERIFIED` |
+| Pack R warm / cold (cells + 6.7 mΩ harness) | 22.7 / 30.7 | mΩ | `P:electrical.r_ext_mohm`, `ASM-E2-R-CELL` | `UNVERIFIED` |
+| Cruise after 2 min hover, base / pess. (B1 as designed 238.9 / 312.4 W) | **12.0 / 6.3** (req. ≥ 5) | min | `CL-E2-CRUISE-MIN-BASE`, `-PESS` | `UNVERIFIED` |
+| Same at the carried 240 W (A1 carries these) | **12.0 / 6.3** | min | `CL-E2-CRUISE-MIN-BASE-240`, `-PESS-240` | `UNVERIFIED` |
+| Cruise before `BATT_LOW`, pess. (B1 / 240 W) | 6.0 / 5.9 (req. ≥ 5) | min | `CL-E2-CRUISE-TO-LOW-PESS`, `-240` | `UNVERIFIED` |
+| Phase currents, pess.: ground / climb / hover / fwd / back / descent / cruise | 0.4 / 35.5 / 30.1 / 43.5 / 40.1 / 30.1 / 24.0 | A | `CL-E2-I-*-PESS`, `CL-E2-HOVER-I-GATE`, `CL-E2-CRUISE-I-PESS` | `UNVERIFIED` |
 | Peak current (limiter) / C-rate | 100 / 15.4 (limit 25) | A / C | `CL-E2-C-PEAK` | `UNVERIFIED` |
-| Worst-state T/W (one team claim) | 2.12 (≥ 1.6) | — | `CL-E1-TW-WORST` | `UNVERIFIED` |
-| Thrust factor worst / fresh: E1 vs E2 bracket | 0.851 in 0.816–0.873 (+0.022) | — | `CL-E1-SAG-FACTOR` = `voltage_sag`, `CL-E2-SAG-BRACKET` | `UNVERIFIED` |
-| Bus voltage at 100 A, 20 %, 10 °C | 11.87 (0.76 V/cell sag) | V | `CL-E2-V-BUS-WORST` | `UNVERIFIED` |
-| Pack temperature at landing, 30 °C morning | 43 (limit 50) | °C | `CL-E2-PACK-T-END` | `UNVERIFIED` |
-| `BATT_LOW_MAH` / `BATT_CRT_MAH` | 2600 / 1300 (unchanged at 240 W) | mAh | `CL-E2-BATT-LOW-MAH`, `-CRT-MAH` | `UNVERIFIED` |
-| Sorties per day / window used / charge for 2 packs | 2 / 58.4 of 180 min / 2.0 h | — | `CL-E2-SORTIES-PACKS`, `-WINDOW-USED`, `CALC-E2-TESTDAY` | `UNVERIFIED` |
-
-## SKU options (CR-I1-13)
-
-| Option | Mass, g | Leads | Result |
-|---|---|---|---|
-| **Ovonic 120C 4S 6500 hard case, EC5, 2-pack** | 551 ± 5 | 10 AWG inferred | **named**; EUR 98.69 per pair on the EU page, inside I1's $119.88 pessimistic line |
-| Tattu 4S 6750 25C, XT90 | 605 ± 10 | 10 AWG stated | fallback, only if A1 accepts A3-R6's 613 g line |
-| Ovonic 130C 4S 6500, XT60 (held `P01`) | 680 | 12 AWG | rejected; re-leading not accepted (+33 g vs the 100 g overrun) |
+| Thrust factor worst / fresh: E1 in E2's bracket | 0.851 in 0.816–0.873 (+0.022) | — | `CL-E1-SAG-FACTOR`, `CL-E2-SAG-BRACKET` | `UNVERIFIED` |
+| Bus voltage at 100 A, 20 %, 10 °C | 11.85 (0.77 V/cell sag) | V | `CL-E2-V-BUS-WORST` | `UNVERIFIED` |
+| Pack temperature at landing, 30 °C morning (adiabatic) | 43.8 (limit 50) | °C | `CL-E2-PACK-T-END` | `UNVERIFIED` |
+| `BATT_LOW_MAH` / `BATT_CRT_MAH` | 2600 / 1300 (8 mAh before the line steps to 2700) | mAh | `CL-E2-BATT-LOW-MAH`, `-CRT-MAH` | `UNVERIFIED` |
+| Sorties per day / window used / charge for 2 packs | 2 / 57.2 of 180 min / 2.0 h | — | `CL-E2-SORTIES-PACKS`, `-WINDOW-USED`, `CALC-E2-TESTDAY` | `UNVERIFIED` |
 
 ## Action items this revision
 
 | Item | Result |
 |---|---|
-| D-58 / CR-I1-13: name a SKU ≤ 601 g, ≥ 10 AWG | Done (above, CR-E2-24); acceptance 0.601 kg, lead-gauge step added to `T-E2-WEIGH` |
-| Weigh the first pack on arrival | `T-E2-WEIGH` planned; `pack_log.csv` ready; pass ≤ 601 g, 10 AWG |
-| D-49: sag 0.851; re-point `CL-E2-TW-SAG-WORST` at `CL-E1-TW-WORST` | E2 reads E1's re-run 0.851 / 2.12; the E2 id was retired in R3; A1's how-line is the last pointer (CR-E2-23a) |
-| Re-run at 240 W if E1 and B1 reconcile | Not reconciled (B1 227.8 W); sensitivity claims published, all pass |
-| Drifts | No E2 calculation drifts. The E3 drifts that cite E2 clear when E3 re-runs (CR-E2-27) |
+| Release the pack cart with I1 (D-64), two order-time checks | Released on the record in ENERGY.md §1a (CR-E2-28). Check 1 (10 AWG) is still open: the product page does not print the gauge and E2's re-read was rate-limited (HTTP 429) |
+| `PACK_ACCEPT_KG` = `CL-A1-PACK-ACCEPT` | Read live from A1's claim (0.5926 kg today); new claim `CL-E2-PACK-ACCEPT-KG`; `CL-E2-PACK-MASS` and `T-E2-WEIGH` pass at ≤ it |
+| Re-run `CALC-E2-BUDGET-PESS` on 312.4 W and r_ext 6.7 | Done: pessimistic 6.8 → **6.3 min**, `BATT_LOW` after 6.0 min; at 240 W 6.3 / 5.9 min. A1's 6.4 → 6.3 (CR-E2-29) |
+| Retire F1's old profile-assumption text reference (CR-F1-27) | Done: phase-current claims point at `CALC-F1-PROFILE` / `CL-F1-PROFILE`; ground phase is now a claim too |
+| Leftover from an interrupted edit | The script's `ASM-E2-R-EXT` mirror check was removed (the mirror was already retired; the script would not run) |
 
 ## Open issues
 
-- The lead gauge of the named SKU is inferred, not printed. If it arrives 12 AWG, the pair goes back (CR-E2-24a).
-- Bay height clearance is 1 mm at the listing's +3 mm tolerance; 4 mm at nominal. Measure on arrival.
-- B1's pessimistic cruise is 28 % below E2's own K09-based model (CR-E2-21); the first tune-flight current decides.
-- Pack IR and capacity are assumptions until `T-E2-IR` and `T-E2-CAPACITY` run.
+- Lead gauge of the named SKU is inferred, not printed. If the seller says 12 AWG, the cart is not paid (CR-E2-28).
+- Bay height clearance is 1 mm at the listing's +3 mm tolerance; measure on arrival.
+- Pessimistic cruise: E2's own K09-based model gives 405 W against B1's 337 W (+20 %); on it `BATT_LOW` would trigger
+  at 4.9 min, under 5. The first tune flight's logged cruise current decides (`T-E2-MISSION-LOG`).
+- The pessimistic mass scaling uses A3's stored 2.436 kg; A3's R5 re-run (about 2.458 kg) moves it by < 0.05 min.
+- E1 still stores `CL-E1-TW-WORST` / `-SAG-FACTOR` on 6.5 mΩ; it re-runs on 6.7 (D-67).
 
 ## Change requests
 
-New: CR-E2-23 (A1: how-line, cruise minutes, 240 W swap), -24 (I1: pack SKU and order checks), -25 (A1: `battery`
-params), -26 (F1, D2: EC5 re-termination, envelope), -27 (E3: r_ext re-point). Earlier ones: `CHANGE-REQUESTS.md`.
+New: CR-E2-28 (I1: pack cart release record), CR-E2-29 (A1: `cruise_after_hover_pess_min` 6.3, notes), CR-E2-30
+(F1: updated phase currents, ground claim). Earlier ones: `CHANGE-REQUESTS.md`.
 
 ## How to verify
 

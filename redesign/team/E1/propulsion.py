@@ -749,7 +749,11 @@ kit.claim("CL-E1-CRUISE-P-55", "Cruise electrical power, 11x5.5MR", calc="CALC-E
           unit="W", limit=("<=", P + "performance.cruise_power_w"), verifies=["R-MISSION"], parts=MOTORS + ESCS,
           note="propulsion only (no avionics); drag from B1's as-designed polar (CL-B1V-CD0, CL-B1V-K, ASM-B1-TRIM; "
                "rev 8, D-67; was CL-B1-CD0 / CL-B1-K), CR-A1-32. p_check = (this + 6 W) / CL-B1V-CRUISE-P-GATE. "
-               "The params limit is B1's pack power incl. 6 W avionics, so the comparison is 6 W conservative for B1",
+               "The params limit is B1's pack power incl. 6 W avionics, so the comparison is 6 W conservative for B1. "
+               "Rev 8 FAIL: 246.0 W > 240 (E1 + 6 W avionics = 252.0 W, p_check 1.055 against B1's 238.9 W at the "
+               "gate): same drag (4.51 N), E1's eta_tot 0.293 from APC PER3 with kP 1.24 vs B1's chain. Band "
+               "200.2 (kP 1) - 246.0 W. D-13 carries the conservative one: CR-E1-51 asks A1 for cruise_power_w 252 "
+               "(E2 re-runs) or cruise_ms 15 (213.9 + 6 = 220 W, 1.25 Vs at the gate)",
           how="Log pack power in steady 16 m/s FBWA legs, both directions, calm morning; subtract the avionics draw.")
 kit.claim("CL-E1-CRUISE-P-55-LO", "Cruise power lower bound (kP = 1), 11x5.5MR", calc="CALC-E1-SENS",
           output="P_cruise_55_W", unit="W", how="Bounds the band with CL-E1-CRUISE-P-55; flight log decides.")
@@ -784,7 +788,9 @@ kit.claim("CL-E1-TW-WORST", "Hover T/W at the gate, worst pack state (one team c
               "2.6 kg (T-E1-STAND).")
 kit.claim("CL-E1-SAG-FACTOR", "Thrust factor worst / fresh with the limiter (replaces params voltage_sag)",
           calc="CALC-E1-WORST", output="f_sag", unit="-",
-          note="to be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to "
+          note="rev 8 (D-67): on F1's r_ext 6.7 mOhm (CL-F1-R-EXT 6.69) 0.8508, unchanged to three places from "
+               "0.851 at 6.5 (the limiter holds 100 A in both states, so 0.2 mOhm moves V_bus by 20 mV). "
+               "To be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to "
                "that already current-limited thrust, which double-counts. Bounded above by CL-E1-SAG-XCHECK",
           how="Ratio of the two T-E1-STAND full-throttle runs: worst-state pack / fresh pack.")
 kit.claim("CL-E1-SAG-XCHECK", "Sag factor, closed form (limiter, T ~ P^2/3)", calc="CALC-E1-WORST",
@@ -807,8 +813,8 @@ kit.claim("CL-E1-STACK-VS-D3", "E1 stack minus D3's 39 mm (fin_detail.mount.prop
           how="Same caliper measurement; D3 sets prop_stack_m to the measured value.")
 kit.claim("CL-E1-PROP-GAP", "Prop plane to collar front with E1's stack / 0.14 D", calc="CALC-E1-STACK",
           output="gap_ratio_e1", unit="-", limit=(">=", 1.0), parts=MOTORS + PROPS_ID,
-          note="D3's CL-D3-PROP-GAP uses the 39 mm stack; with E1's 37.3 mm and the same 1 mm face_ahead the gap is "
-               "below B4's 0.14 D. Fix: face_ahead_m >= CALC-E1-STACK ahead_needed_m (CR-E1-23)",
+          note="rev 8: 1.15 with face_ahead 0.0075 (D-61). History: with E1's 37.3 mm stack and D3's 1 mm "
+               "face_ahead the gap was below B4's 0.14 D (CR-E1-23)",
           how="Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.")
 kit.claim("CL-E1-AHEAD-NEEDED", "Motor face ahead of the collar needed for 0.14 D", calc="CALC-E1-STACK",
           output="ahead_needed_m", unit="m", parts=MOTORS,
@@ -989,7 +995,8 @@ def tip_gap(st, env, hb, xt, od, lt, yf, ys, zs, bg, cw, ahead, sense, cant, D, 
     fwd, aft = env
     x0 = xt - od / 2 - bg - cw                            # face at face_ahead = 0
     g = lambda a, af=aft, **kw: _tip_gap(xt, od / 2, lt, yf, ys, zs, x0 - a, s, cant, sense, D / 2, fwd, af, **kw)
-    lo, hi = ahead, ahead + 0.030                        # bisection on face_ahead (coarse grid, then the full one)
+    lo, hi = 0.0, ahead + 0.030                          # bisection on face_ahead from 0 (rev 8: from `ahead`, it
+                                                         # returned the carried value once that passed)
     for _ in range(14):
         mid = 0.5 * (lo + hi)
         if g(mid, n_phi=72, dz=0.001) >= clr:
@@ -1009,8 +1016,9 @@ def tip_gap(st, env, hb, xt, od, lt, yf, ys, zs, bg, cw, ahead, sense, cant, D, 
 kit.claim("CL-E1-TIP-GAP-TUBE", "Canted prop disc (-6 / +10 mm envelope) to the CF motor tube, true surface gap",
           calc="CALC-E1-TIP-GAP", output="gap_m", unit="m", limit=(">=", P + "requirements.prop_clearance_min_m"),
           verifies=["R-PROP-CLEAR"], parts=PROPS_ID + ["FIN-002-R", "FIN-002-L"],
-          note="D-52 (cant sense -1) swings the wing-side blade tip aft over the tube: about 21 mm, against 38 mm with "
-               "sense +1 (gap_sense_plus_m). Same finding as D3's CR-D3-26 (20.9 mm). The nearest tube point is at "
+          note="rev 8 (D-61): on D3's 7.5 mm mount 26.1 mm, PASS (+1.1 mm); was 21.1 mm FAIL at 2.5 mm. D-52 (cant "
+               "sense -1) swings the wing-side blade tip aft over the tube (42.8 mm with sense +1, gap_sense_plus_m). "
+               "Same finding as D3's CR-D3-26 (20.9 mm at 2.5 mm). The nearest tube point is at "
                "r 143.8 mm, 4 mm OUTBOARD of the 139.7 mm tip, 26.8 mm aft of the mid-plane: a tip-to-structure gap, "
                "so the mount chain is not exempted from KO-PROP and a hub-radius annulus would not remove it (rev 7). "
                "check.py 21.0 mm (hull), probe 21.2 mm (surface samples); every other flight part >= 25 mm "
@@ -1019,7 +1027,8 @@ kit.claim("CL-E1-TIP-GAP-TUBE", "Canted prop disc (-6 / +10 mm envelope) to the 
               "turned through the wing-side position (T-E1-MOTOR-RM).")
 kit.claim("CL-E1-FACE-AHEAD-FOR-CLR", "Mount face_ahead that gives the 25 mm tube clearance (E1 envelope)",
           calc="CALC-E1-TIP-GAP", output="ahead_needed_m", unit="m", parts=PROPS_ID + ["FIN-003-UR"],
-          note="for A1's CR-D3-26 decision: this is the least; E1 proposes 0.0075 m (CL-E1-TIP-GAP-AT-75, about "
+          note="rev 8: the least face_ahead (bisection from 0), so 1 mm under the carried 0.0075 (D-61). For A1's "
+               "CR-D3-26 decision: E1 proposed 0.0075 m (CL-E1-TIP-GAP-AT-75, about "
                "+1 mm margin). Rev 7: with KO-PROP on E1's envelope and check.py's hull + distance test, check.py "
                "reports 0 keep-out errors at 0.0065 and 0.0075 and 4 (the tube, 24.5 mm) at 0.0060 (in-memory trials, "
                "team/E1/prop_clearance.json)",
@@ -1027,14 +1036,17 @@ kit.claim("CL-E1-FACE-AHEAD-FOR-CLR", "Mount face_ahead that gives the 25 mm tub
 kit.claim("CL-E1-TIP-GAP-AT-75", "Prop disc to motor tube with face_ahead 0.0075 m (E1's proposal for CR-D3-26)",
           calc="CALC-E1-TIP-GAP", output="gap_at_75_m", unit="m",
           limit=(">=", P + "requirements.prop_clearance_min_m"), parts=PROPS_ID + ["FIN-002-R", "FIN-002-L"],
-          note="+5.0 mm of stack: prop plane x -0.0077 -> about -0.0127, hub 5 mm further from the collar "
+          note="rev 8: equals CL-E1-TIP-GAP-TUBE now that D3 carries 0.0075 (D-61). +5.0 mm of stack: prop plane x "
+               "-0.0077 -> -0.01267 (CL-E1-CAD-HUB-X), hub 5 mm further from the collar "
                "(CL-E1-CAD-PROP-GAP rises); mount cheeks +5 mm (D3, C4 rocking stiffness)",
           how="As CL-E1-TIP-GAP-TUBE on the R5 mount.")
 
 kit.claim("CL-E1-CAD-HUB-X", "Modelled prop hub centre x on the 7 deg canted axis", calc="CALC-E1-CAD-STACK",
           output="x_hub_m", unit="m", parts=PROPS_ID,
-          note="subsystems/propulsion/fusion/propulsion.py places the hub here; the datum DP-PROP is -0.0082 (D-28, "
-               "D3's 39 mm stack). KO-PROP-<st> are registered on the modelled hub",
+          note="rev 8 (D-61, face_ahead 0.0075): -0.01267, datum DP-PROP / x_prop_plane_m -0.0127 (+0.03 mm). "
+               "D3's CL-D3-X-PROP (same formula, face - 37.3 cos 7 deg) gives -0.01267 on the R5 mount: agrees to "
+               "5 um (E1 stack 37.295 vs D3 37.3 mm). subsystems/propulsion/fusion/propulsion.py "
+               "places the hub here; KO-PROP-<st> are registered on the modelled hub",
           how="python -I redesign/subsystems/propulsion/make_propulsion.py prints the same x; calipers on the built "
               "station (T-E1-MOTOR-RM).")
 kit.claim("CL-E1-CAD-HUB-VS-DATUM", "Modelled hub minus datum DP-PROP", calc="CALC-E1-CAD-STACK",
@@ -1043,8 +1055,8 @@ kit.claim("CL-E1-CAD-HUB-VS-DATUM", "Modelled hub minus datum DP-PROP", calc="CA
           how="As CL-E1-CAD-HUB-X.")
 kit.claim("CL-E1-CAD-PROP-GAP", "Prop plane to collar front along x, canted stack / 0.14 D", calc="CALC-E1-CAD-STACK",
           output="gap_ratio", unit="-", limit=(">=", 1.0), parts=PROPS_ID + MOTORS,
-          note="same finding as CL-E1-PROP-GAP with the 7 deg cant included; passes since D3 carries face_ahead_m "
-               "0.0025 (D-51). A larger face_ahead (CR-D3-26, CL-E1-FACE-AHEAD-FOR-CLR) only raises it",
+          note="same finding as CL-E1-PROP-GAP with the 7 deg cant included; rev 8: 1.14 on the 7.5 mm mount "
+               "(D-61; was 1.01 at 2.5 mm, D-51)",
           how="Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.")
 kit.claim("CL-E1-KO-TILT", "Blade tip axial (x) excursion of the 7 deg canted disc, incl. the blade half",
           calc="CALC-E1-CAD-STACK", output="dx_tip_m", unit="m", parts=PROPS_ID,
@@ -1068,8 +1080,9 @@ kit.claim("CL-E1-KO-HALF", "Prop keep-out axial half-length on the canted axis (
           calc="CALC-E1-KO-ENV", output="ko_half_m", unit="m", parts=PROPS_ID,
           note="rev 7: KO-PROP-<st> is registered with fwd 0.010 / aft 0.006 (ASM-E1-BLADE-ENV, A5's CR-E1-45 "
                "arguments), radius D/2 + 25 mm, centred 2 mm ahead of the hub; was 35 mm symmetric "
-               "(ASM-E1-BLADE-HALF), which placed 4 mm of non-existent blade aft of the disc. check.py now reports "
-               "the distance to the swept volume: only the CF motor tube is inside, at 21.0 mm (CL-E1-TIP-GAP-TUBE). "
+               "(ASM-E1-BLADE-HALF), which placed 4 mm of non-existent blade aft of the disc. check.py reports "
+               "the distance to the swept volume: rev 8, 0 keep-out errors on the 7.5 mm mount (was the CF motor "
+               "tube at 21.0 mm on 2.5 mm, CL-E1-TIP-GAP-TUBE). "
                "The mount chain is NOT exempted: the tube's nearest point is 4 mm outboard of the tip, not behind the "
                "hub",
           how="python -I redesign/fusion/check.py (hull + distance) and python -I redesign/team/E1/prop_clearance.py "

@@ -1,6 +1,8 @@
 """C5 simulation round: 3-D rigid-body touchdown on the four crushable fin-tip feet (K09-L), as designed.
 
-Run:  python -I redesign/team/C5/sim/landing_sim3d.py        (about 30-60 min, single thread)
+Run:  python -I redesign/team/C5/sim/landing_sim3d.py        (about 30 min, single thread)
+C5-R6 (2026-11-10): sink from requirements.landing_sink_ms (1.2 m/s, D-65); a lightest-mass case (A3 basic with the
+D-64 546 g pack) and a mu 0.5 envelope at the gate mass are added.
 Writes sim/out/sim3d.json; landing_sim_claims.py carries the results into the proof chain.
 
 What it adds over landing_calc.py CALC-C5-DROP-DYN (planar, 2 contacts, frictionless, pitch and roll separately):
@@ -74,6 +76,7 @@ def inputs():
     m_piston += 0.5 * 0.63 / 1000.0                                               # half a cartridge moves with it
     return {
         "m_a3": v("CL-A3-MASS-BASIC"), "m_pred": v("CL-A3-MASS-PREDICTED"), "m_gate": _param(P, "requirements.mtow_gate_kg"),
+        "m_light": v("CL-A3-MASS-BASIC") - (_param(P, "battery.mass_kg") - min(v("ASM-A1-PACK-CASES-G")) / 1000.0),
         "I_a3": [v("CL-A3-IXX"), v("CL-A3-IYY"), v("CL-A3-IZZ")],
         "x_cg": geo["x_ground_m"] - v("CL-C5-CG-H-R1"), "z_cg": v("CL-C5-CG-Z-R1"), "y_cg": _cg_y(),
         "x_g": geo["x_ground_m"], "y_fin": _param(P, "fins.y_m"), "z_pad_out": _param(L, "landing.pad.z_outer_m"),
@@ -305,10 +308,12 @@ def main():
     k_I = lambda m: m / inp["m_a3"]                                                   # noqa: E731
     out = {"inputs": inp, "model": {"K_PAD": K_PAD, "ZETA_PAD": ZETA_PAD, "EPS_V": EPS_V, "K_STOP": K_STOP,
                                     "dt": 4e-5}}
-    masses = {"A3 basic": inp["m_a3"], "A3 predicted": inp["m_pred"], "gate": inp["m_gate"]}
+    masses = {"A3 basic": inp["m_a3"], "A3 predicted": inp["m_pred"], "gate": inp["m_gate"],
+              "lightest": inp["m_light"]}          # C5-R6: A3 basic with the D-64 546 g pack (lightest flying mass)
     e = inp["err"]
 
-    # 1. hard landing envelope: 1.5 m/s, lift lam W, tilt <= err in any direction, three masses in one batch
+    # 1. hard landing envelope: sink requirements.landing_sink_ms (1.2 m/s since D-65), lift lam W, tilt <= err in
+    #    any direction, four masses in one batch
     cs, tags = [], []
     for tag, m in masses.items():
         c = disc_cases(inp, m, k_I(m), inp["lam"], inp["v_sink"])
@@ -330,6 +335,14 @@ def main():
             env[tag]["side_peak_max_N"], env[tag]["tip_min_m"], env[tag]["strike_tilt_min_deg"], time.time() - t0),
             flush=True)
     out["hard_envelope"] = env
+    # 1b. pad friction option (CR-C5-16): the same envelope at the gate mass with a pad face of mu 0.5 on the mat
+    c_mu = [dict(c, mu=0.5) for c in disc_cases(inp, inp["m_gate"], k_I(inp["m_gate"]), inp["lam"], inp["v_sink"])]
+    r_mu = simulate(inp, c_mu)
+    out["hard_envelope_mu05_gate"] = dict(summarise(c_mu, r_mu), rows=[
+        [c["theta"], c["phi"], max(sm), n_, max(sd), tm] for c, sm, n_, sd, tm in
+        zip(c_mu, r_mu["s_max"], r_mu["n_peak"], r_mu["side_1ms"], r_mu["tip_min"])])
+    print("hard gate mu 0.5   stroke %.4f m  side %.1f N" % (out["hard_envelope_mu05_gate"]["stroke_max_m"],
+                                                          out["hard_envelope_mu05_gate"]["side_1ms_max_N"]), flush=True)
     # level references and the beyond-requirement square corners (pitch and roll both at err)
     mg = inp["m_gate"]
     ref_cases = [dict(m=mg, I_scale=k_I(mg), theta=0, phi=0, v_sink=inp["v_sink"], lam=inp["lam"]),

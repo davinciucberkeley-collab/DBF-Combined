@@ -1,5 +1,5 @@
 {
- "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Revision C6-R4 (params A1-R4, D-50, D-58; C4 FE re-run of 2026-11-09 20:44). Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
+ "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Revision C6-R5 (params A1-R5, D-50, D-58, D-68, D-70; C4 frozen R4 set). Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
  "joints": {
   "m3_d_m": {
    "value": 0.003,
@@ -141,7 +141,7 @@
    "unit": "m",
    "source": "subsystems/fins/params.json R3 (16 mm ring); CHANGE-LOG D-48",
    "status": "PROPOSED",
-   "note": "fallback height if T-C6-LAP-PETG comes in below 2.0 MPa design: D3 drew 12 mm at R4 (D-48); the drawn height is fin_detail.station_collar.height_m"
+   "note": "fallback height if T-C6-LAP-PETG comes in below 2.0 MPa design or C1's torsion grows; the drawn height is fin_detail.station_collar.height_m (13 mm, D-70)"
   },
   "root_fillet_leg_m": {
    "value": 0.015,
@@ -155,14 +155,14 @@
    "unit": "m",
    "source": "team/C6/CHANGE-REQUESTS.md CR-C6-31",
    "status": "PROPOSED",
-   "note": "C6-R4: keep D3's drawn 15 mm pitch and go to the 2.5 mm pin (pin_d_prop_m); supersedes the 12 mm of CR-C6-25, which fails at C4's 92 N"
+   "note": "15 mm with 2.5 mm pins, drawn since D3-R5 (D-70)"
   },
   "pin_d_prop_m": {
    "value": 0.0025,
    "unit": "m",
    "source": "team/C6/CHANGE-REQUESTS.md CR-C6-31",
    "status": "PROPOSED",
-   "note": "pultruded CF rod 2.5 mm (stock size); bending capacity x (2.5/2)^3 = 1.95"
+   "note": "pultruded CF rod 2.5 mm (stock size), drawn since D3-R5 (D-70); bending capacity x (2.5/2)^3 = 1.95 vs 2 mm"
   },
   "pin_pitch_alt_m": {
    "value": 0.009,
@@ -176,7 +176,56 @@
    "unit": "m",
    "source": "team/C6/CHANGE-REQUESTS.md CR-C6-32",
    "status": "PROPOSED",
-   "note": "station collar height C6 asks D3 for: 12 mm now gives RF 1.00 (-0.01 %) on C1's 7.42 N m; 13 mm gives RF 1.08 for ~+0.5 g EST total"
+   "note": "13 mm, drawn since D3-R5 (D-70); kept as a named check height so the claim id CL-C6-COLLAR-RF-13MM stays stable"
+  },
+  "collar_cond_h_m": {
+   "value": 0.012,
+   "unit": "m",
+   "source": "params/CHANGE-LOG.md#D-70",
+   "status": "PROPOSED",
+   "note": "12 mm collar allowed only if T-C6-LAP-PETG mean >= 4.1 MPa before the collars print (CL-C6-COLLAR-RF-12MM-COND)"
+  },
+  "collar_cond_tau_pa": {
+   "value": 2050000.0,
+   "unit": "Pa",
+   "source": "params/CHANGE-LOG.md#D-70 (0.5 x 4.1 MPa coupon mean)",
+   "status": "PROPOSED",
+   "note": "bond allowable that would release the 12 mm collar"
+  },
+  "pin_d_alt_m": {
+   "value": 0.002,
+   "unit": "m",
+   "source": "params/CHANGE-LOG.md#D-70 fallback",
+   "status": "PROPOSED",
+   "note": "2 mm CF rod at pin_pitch_alt_m only if 2.5 mm rod cannot be bought"
+  },
+  "bondline_max_m": {
+   "value": 0.0005,
+   "unit": "m",
+   "source": "C6 rule (30 min epoxy / microballoon gap fill)",
+   "status": "PROPOSED",
+   "note": "largest unfilled gap accepted at a bonded fit; beyond it pack with microballoon mix"
+  },
+  "pocket_bead_leg_m": {
+   "value": 0.003,
+   "unit": "m",
+   "source": "params/CHANGE-LOG.md#D-68",
+   "status": "PROPOSED",
+   "note": "microballoon bead leg along the inboard and outboard block-pocket edges, both surfaces"
+  },
+  "pocket_beads_per_block": {
+   "value": 4,
+   "unit": "-",
+   "source": "params/CHANGE-LOG.md#D-68",
+   "status": "PROPOSED",
+   "note": "inboard + outboard pocket edges x upper + lower surface"
+  },
+  "collar_prop_h_m": {
+   "value": 0.022,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-37",
+   "status": "PROPOSED",
+   "note": "C6-R5b ask: 15 -> 22 mm. C1's D-65 re-run raised the half-fin section torsion 8.13 -> 12.67 N m (limit); the collar needs 19.45 mm at the 2.0 MPa allowable (CL-C6-COLLAR-L-REQ); 22 mm gives RF 1.13. Ring grows down to |z| 0.1375; ear and brace end unchanged. ~+4.2 g for four vs 15 mm (EST). Was 15 (CR-C6-36)"
   }
  }
 }

@@ -1,0 +1,1 @@
+h400_py_v_rim_t2.8_ws1.2 gov 30.98 MPa (k 0.5254 MPa/N) {"rim": {"vm_max_MPa": 30.97748, "at_mm": [326.4, 10.933, 201.876]}, "aft box": {"vm_max_MPa": 11.4466, "at_mm": [305.478, -11.474, 214.383]}, "window and open-end zone": {"vm_max_MPa": 27.34767, "at_mm": [300.929, -12.75, 208.775]}, "whole shoe": {"vm_max_MPa": 30.97748, "at_mm": [326.4, 10.933, 201.876]}} 850 s

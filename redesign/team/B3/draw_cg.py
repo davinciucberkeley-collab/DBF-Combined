@@ -1,4 +1,5 @@
-"""B3 (R3): draw the chordwise station diagram (NP, CG limits, A3 CG cases) from results/sc_results.json and params.json.
+"""B3 (R5): draw the chordwise station diagram (NP, CG limits of record, D-62 target, A3 CG) from results/verify.json
+and params.json (V1 limits with the CG height; the R4 z = 0 limits and the D-59 pack cases are retired).
 
 Run: python -I redesign/team/B3/draw_cg.py  ->  team/B3/fig-b3-cg-stations.svg   (design-system/diagram-style.md)
 """
@@ -6,7 +7,7 @@ import json
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-R = json.loads((HERE / "results" / "sc_results.json").read_text())
+V = json.loads((HERE / "results" / "verify.json").read_text())
 PAR = json.loads((HERE.parents[1] / "params" / "params.json").read_text())
 FG, FG2, FG3, LINE, ACC, HI, FAIL = "#121619", "#4B5563", "#6B7280", "#CBD2DB", "#1F5FC7", "#C2540A", "#B42323"
 
@@ -20,9 +21,9 @@ def pv(path):
 
 c = pv("wing.chord_m")
 xt_tube, xp, pod_le, pod_l = pv("fins.tube.x_m"), pv("propulsion.stations.x_prop_plane_m"), pv("pod.x_le_m"), pv("pod.size_m")[0]
-lim = R["CALC-B3-CG-LIMITS"]
-np_ = R["CALC-B3-NP"]
-chk = R["CALC-B3-CG-CHECK"]
+cgv, env = V["CALC-B3-V-CG"], V["CALC-B3-V-NP-CL"]
+lim = {"x_fwd": cgv["x_fwd_gate"], "x_aft": env["x_aft_env"], "x_target": pv("cg.x_target_m")}
+x_a3, xnp_env, xa = cgv["x_a3"], env["xnp_env"], cgv["xnp_aero"]
 W, H, X0, X1 = 1200, 320, 80, 1120
 XMIN, XMAX = -0.12, 0.34
 
@@ -43,16 +44,11 @@ s.append(f'<text x="{X(xt_tube) + 10:.1f}" y="176" font-size="11" fill="{FG3}">m
 s.append(f'<line x1="{X(xp):.1f}" y1="150" x2="{X(xp):.1f}" y2="170" stroke="{FG3}" stroke-width="2"/>')
 s.append(f'<text x="{X(xp):.1f}" y="196" font-size="11" fill="{FG3}" text-anchor="middle">props {xp:+.3f}</text>')
 s.append(f'<rect x="{X(lim["x_fwd"]):.1f}" y="96" width="{X(lim["x_aft"]) - X(lim["x_fwd"]):.1f}" height="70" fill="#E6EEFB" fill-opacity="0.8" stroke="{ACC}" stroke-width="1"/>')
-xa = np_["xnp"] - np_["dx_props"] - np_["dx_pod"]
 lab = [(lim["x_fwd"], f'fwd {lim["x_fwd"]:.4f}', ACC, 72), (lim["x_aft"], f'aft {lim["x_aft"]:.4f}', ACC, 54),
        (lim["x_target"], f'target {lim["x_target"]:.4f}', ACC, 36),
-       (np_["xnp"], f'NP {np_["xnp"]:.4f}', FG, 236), (xa, f'NP wing+fins {xa:.4f}', FG3, 256),
-       (chk["x_centred"], f'A3 CG, 550 g at x -0.022 {chk["x_centred"]:.4f}',
-        FAIL if min(chk["centred_margin_aft"], chk["centred_margin_fwd"]) < 0 else HI, 216),
-       (chk["cg_slide_fwd"], f'550 g on the crush stack {chk["cg_slide_fwd"]:.4f}', FG2, 276)]
-for i, (mg, xs, xg, mf, ma) in enumerate(chk["pack_cases"]):
-    if mg != 550.0:
-        lab.append((xg, f'{mg:.0f} g at {xs:+.3f}: {xg:.4f}', FAIL if min(mf, ma) < 0 else FG2, 18 if mg > 550 else 0))
+       (xnp_env, f'NP at 1.3 Vs, z {pv("cg.z_target_m"):+.4f}: {xnp_env:.4f}', FG, 236),
+       (xa, f'NP wing+fins (alpha 4) {xa:.4f}', FG3, 256),
+       (x_a3, f'A3-R6a CG (D-47 bay) {x_a3:.4f}', FAIL if x_a3 > lim["x_aft"] else HI, 216)]
 for x, t, col, y in lab:
     y0 = 96 if y < 96 else 166
     s.append(f'<line x1="{X(x):.1f}" y1="{y0}" x2="{X(x):.1f}" y2="{y + 4 if y < 96 else y - 14}" stroke="{col}" stroke-width="1.25"/>')

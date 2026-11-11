@@ -11,7 +11,7 @@
    "mass_g": 84.2,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.0156,
+    0.0106,
     0.321,
     0.1885
    ],
@@ -43,12 +43,12 @@
    "mass_g": 17.0,
    "material": "glass-filled nylon",
    "cg_xyz_m": [
-    -0.0077,
+    -0.0127,
     0.3223,
     0.1861
    ],
    "make_or_buy": "buy",
-   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0077; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0127; datum DP-PROP -0.0127, CR-E1-29); removed for transport; blades parked spanwise in CAD"
   },
   {
    "id": "PRP-004-UR",
@@ -58,7 +58,7 @@
    "mass_g": 6.7,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
-    -0.0046,
+    -0.0096,
     0.3221,
     0.1864
    ],
@@ -73,7 +73,7 @@
    "mass_g": 84.2,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.0156,
+    0.0106,
     -0.321,
     0.1885
    ],
@@ -105,12 +105,12 @@
    "mass_g": 17.0,
    "material": "glass-filled nylon",
    "cg_xyz_m": [
-    -0.0077,
+    -0.0127,
     -0.3223,
     0.1861
    ],
    "make_or_buy": "buy",
-   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0077; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0127; datum DP-PROP -0.0127, CR-E1-29); removed for transport; blades parked spanwise in CAD"
   },
   {
    "id": "PRP-004-UL",
@@ -120,7 +120,7 @@
    "mass_g": 6.7,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
-    -0.0046,
+    -0.0096,
     -0.3221,
     0.1864
    ],
@@ -135,7 +135,7 @@
    "mass_g": 84.2,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.0156,
+    0.0106,
     0.321,
     -0.1885
    ],
@@ -167,12 +167,12 @@
    "mass_g": 17.0,
    "material": "glass-filled nylon",
    "cg_xyz_m": [
-    -0.0077,
+    -0.0127,
     0.3223,
     -0.1861
    ],
    "make_or_buy": "buy",
-   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0077; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0127; datum DP-PROP -0.0127, CR-E1-29); removed for transport; blades parked spanwise in CAD"
   },
   {
    "id": "PRP-004-LR",
@@ -182,7 +182,7 @@
    "mass_g": 6.7,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
-    -0.0046,
+    -0.0096,
     0.3221,
     -0.1864
    ],
@@ -197,7 +197,7 @@
    "mass_g": 84.2,
    "material": "motor (bought)",
    "cg_xyz_m": [
-    0.0156,
+    0.0106,
     -0.321,
     -0.1885
    ],
@@ -229,12 +229,12 @@
    "mass_g": 17.0,
    "material": "glass-filled nylon",
    "cg_xyz_m": [
-    -0.0077,
+    -0.0127,
     -0.3223,
     -0.1861
    ],
    "make_or_buy": "buy",
-   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0077; datum DP-PROP -0.0077, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0127; datum DP-PROP -0.0127, CR-E1-29); removed for transport; blades parked spanwise in CAD"
   },
   {
    "id": "PRP-004-LL",
@@ -244,7 +244,7 @@
    "mass_g": 6.7,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
-    -0.0046,
+    -0.0096,
     -0.3221,
     -0.1864
    ],

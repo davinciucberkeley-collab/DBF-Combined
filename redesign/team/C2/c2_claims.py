@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "proofs"))
 import proofkit as pk  # noqa: E402
 
-kit = pk.Kit(__file__, params=["../../params/params.json", "params.json"])
+kit = pk.Kit(__file__, params=["../../params/params.json", "params.json", "fea/params.json"])
 P = "P:"
 I = P + "c2.inputs."
 F = P + "c2.fe."
@@ -97,7 +97,7 @@ def spar_brace(Mx, Fb, y_fin, D, d):
 
 
 @kit.calc("CALC-C2-AE-REQ", title="Required aeroelastic clearance speed", equation="V_req = 1.2 VD",
-          inputs={"VD": "CL-C1-VD", "k": "ASM-C2-AE-FACTOR"})
+          inputs={"VD": "CL-C1-VD-ENV", "k": "ASM-C2-AE-FACTOR"})        # CR-C1-28: the speed the structure is cleared to
 def ae_req(VD, k):
     return k * VD
 
@@ -146,6 +146,43 @@ passthrough("CALC-C2-CONV-S", "Static mesh convergence", F + "mesh_conv_static")
 passthrough("CALC-C2-FE-INT", "FE vs beam integration", F + "fe_vs_integration")
 passthrough("CALC-C2-RING-VAL", "Ring model vs Roark", F + "ring_validation_err")
 
+
+# ---------------------------------------------------------------- control-path mode data for B3 / F4 (CR-B3-21)
+kit.source("SRC-C2-ADAMS-DAMP", "Adams & Bacon / Gibson: damping of CFRP and of foam-cored sandwich beams "
+           "(R. D. Adams, Damping properties analysis of composites, Engineered Materials Handbook vol. 1, ASM 1987)",
+           "book", where="CFRP tubes, fibre-dominated modes: loss factor 0.002-0.01 (zeta 0.1-0.5 %); polymer-foam "
+                         "cores and bonded joints raise built-up structures to zeta 1-3 %")
+kit.assumption("ASM-C2-WING-ZETA", "Wing torsion modes: modal damping ratio 1 % (design lower bound)",
+               "Viscous damping ratio of the first antisymmetric and symmetric wing torsion modes (fin stations "
+               "rocking on the spar)", value=0.01, unit="-", status="UNVERIFIED", cites=["SRC-C2-ADAMS-DAMP"],
+               basis="nominal 2 % for a bonded XPS / CF / tape wing with hinged elevons; 1 % is the low end used for "
+                     "structural-mode gain margins (less damping = taller resonance peak in the rate loop); "
+                     "T-C2-TAP-TEST measures it (half-power bandwidth or log decrement of a fin-tip tap)")
+
+
+@kit.calc("CALC-C2-FTORS-HI", title="Antisymmetric torsion mode, high corner, raised by the 3-D FEA torsion stiffening",
+          equation="f_hi = f_beam,hi / sqrt(theta_FEA / theta_beam)",
+          inputs={"f": F + "f_torsion_anti_hi_hz", "r": P + "c2fea.fea_beam_twist_ratio_L4"})
+def ftors_hi(f, r):
+    return f / r ** 0.5
+
+
+@kit.calc("CALC-C2-FSYM-HI", title="Lowest symmetric station mode, high corner, raised by the 3-D FEA torsion stiffening",
+          equation="f_hi = f_beam,hi / sqrt(theta_FEA / theta_beam)",
+          inputs={"f": F + "f_sym1_hi_hz", "r": P + "c2fea.fea_beam_twist_ratio_L4"})
+def fsym_hi(f, r):
+    return f / r ** 0.5
+
+
+@kit.calc("CALC-C2-ZETA", title="Wing torsion-mode damping ratio for the control loops", equation="zeta = ASM-C2-WING-ZETA",
+          inputs={"z": "ASM-C2-WING-ZETA"})
+def zeta(z):
+    return z
+
+
+passthrough("CALC-C2-STATION-IYY", "Fin station inertia about the spar axis (C1 mass model MC-P)", F + "station_Iyy_spar_kgm2",
+            eq="I = sum m ((x - xs)^2 + (z - zs)^2) + own Iyy over the station items (wing_struct.station_inertia)")
+
 # ---------------------------------------------------------------- claims
 _claim = kit.claim
 
@@ -157,15 +194,18 @@ def claim(*a, **k):
 
 kit.claim = claim
 SM = ["R-STRUCT-MARGIN"]
+PROOF = ("T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under "
+         "the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners "
+         "with a light after each step")
 kit.claim("CL-C2-SPAR-SIGMA-ULT", "Spar root bending stress, ultimate, spar alone", calc="CALC-C2-SPAR-ROOT",
           output="sigma_pa", unit="Pa", limit=("<=", I + "spar_sigma_allow_pa"), verifies=SM, parts=["WNG-002"],
-          how="T-C2-WING-PROOF: wing on the two block stations, limit load hung at the tip and pod; no crack, no set")
+          how=PROOF)
 kit.claim("CL-C2-SPAR-SIGMA-ENV", "Spar bending stress, max along the span, ultimate", calc="CALC-C2-SPAR-ENV",
           unit="Pa", limit=("<=", I + "spar_sigma_allow_pa"), verifies=SM, parts=["WNG-002"],
           how="Re-run wing_struct.py; equals CL-C2-SPAR-SIGMA-ULT when the root governs")
 kit.claim("CL-C2-SPAR-TAU-ULT", "Spar shear stress, all torsion and shear on the spar, ultimate", calc="CALC-C2-SPAR-TAU",
           unit="Pa", limit=("<=", I + "spar_tau_allow_pa"), verifies=SM, parts=["WNG-002"],
-          how="T-C2-TWIST loads the wing in torsion to 1.5 x 4.6 N m")
+          how="T-C2-TWIST loads the wing in torsion to CL-C1-WING-TORSION-ULT / 1.5 (limit)")
 kit.claim("CL-C2-SPAR-BUCKLE", "Spar local buckling stress vs the ultimate bending stress", calc="CALC-C2-SPAR-BUCKLE",
           unit="Pa", limit=(">=", "CL-C2-SPAR-SIGMA-ULT"), verifies=SM, parts=["WNG-002"],
           how="Hand check against Roark; the proof test exceeds ultimate stress nowhere")
@@ -174,11 +214,11 @@ kit.claim("CL-C2-SPAR-SIGMA-BRACE", "Spar between anchor and block with the brac
           parts=["WNG-002", "FIN-004-L", "FIN-004-R"], how="T-C4-BLOCK-PROOF on a spar stub with the brace fitted")
 kit.claim("CL-C2-TIP-DEFL-FRAC", "Wing tip deflection / semi-span at limit, worst case (G2), E 70 GPa",
           calc="CALC-C2-DEFL", unit="-", limit=("<=", P + "requirements.spar_deflection_max"), verifies=SM, parts=WING,
-          how="T-C2-WING-PROOF: dial gauge or ruler at the tip at limit load")
+          how=PROOF + "; ruler at the tip at limit load (step 1) and at the step-2 V-block side")
 kit.claim("CL-C2-TWIST-FLIGHT", "Wing twist at limit, flight cases (F7 rolling pull-up at VD)", calc="CALC-C2-TWIST",
           unit="deg", parts=WING, how="T-C2-TWIST: measure GJ, re-run wing_struct.py with it")
-kit.claim("CL-C2-V-AE-REQ", "Aeroelastic clearance speed required (1.2 VD)", calc="CALC-C2-AE-REQ", unit="m/s",
-          how="Follows CL-C1-VD")
+kit.claim("CL-C2-V-AE-REQ", "Aeroelastic clearance speed required (1.2 x envelope VD)", calc="CALC-C2-AE-REQ", unit="m/s",
+          how="Follows CL-C1-VD-ENV (the dive speed the envelope and the structure are cleared to, CR-C1-28)")
 kit.claim("CL-C2-V-REVERSAL", "Roll reversal speed, spar-only torsion bound", calc="CALC-C2-VREV", unit="m/s",
           limit=(">=", "CL-C2-V-AE-REQ"), verifies=SM, parts=WING, cites=["SRC-C2-THEODORSEN"],
           how="T-C2-TWIST gives GJ; flight: roll response at 20 m/s matches 16 m/s per unit q")
@@ -198,6 +238,17 @@ kit.claim("CL-C2-F-TORSION-ANTI", "First wing mode: antisymmetric torsion with t
           calc="CALC-C2-FTORS", unit="Hz", parts=WING, how="T-C2-TAP-TEST (tap a fin tip, phone accelerometer at the pod)")
 kit.claim("CL-C2-F-TORSION-SYM", "Symmetric wing torsion mode (hover pitch control path), low corner",
           calc="CALC-C2-FTORS-S", unit="Hz", parts=WING, how="T-C2-TAP-TEST")
+kit.claim("CL-C2-F-TORSION-ANTI-HI", "Antisymmetric wing torsion mode, upper bound (high stiffness corner x 3-D FEA "
+          "torsion stiffening)", calc="CALC-C2-FTORS-HI", unit="Hz", parts=WING,
+          how="T-C2-TAP-TEST (tap a fin tip); the band CL-C2-F-TORSION-ANTI .. -ANTI-HI is what F4's notch / crossover "
+              "must clear until the tap test")
+kit.claim("CL-C2-F-SYM-HI", "Lowest symmetric wing mode with the fin stations (hover pitch path), upper bound",
+          calc="CALC-C2-FSYM-HI", unit="Hz", parts=WING, how="T-C2-TAP-TEST; band CL-C2-F-TORSION-SYM .. -SYM-HI")
+kit.claim("CL-C2-WING-ZETA", "Wing torsion-mode damping ratio, design lower bound", calc="CALC-C2-ZETA", unit="-",
+          parts=WING, how="T-C2-TAP-TEST: half-power bandwidth (or log decrement) of the fin-tip tap response")
+kit.claim("CL-C2-STATION-IYY", "Fin station inertia about the spar axis (one side, MC-P)", calc="CALC-C2-STATION-IYY",
+          unit="kg m2", parts=["FIN-001-UR", "FIN-001-LR", "FIN-002-R"],
+          how="Follows the C1 mass model; check by a bifilar swing of one finished fin station about the spar line")
 kit.claim("CL-C2-RING-NO-PLUG", "Spar wall ring stress at the block bore end without a plug, design",
           calc="CALC-C2-RING", unit="Pa", limit=("<=", I + "spar_hoop_allow_pa"), parts=["WNG-002", "FIN-004-L", "FIN-004-R"],
           assumes=["ASM-C2-CONTACT"], cites=["SRC-C2-ROARK"],
@@ -210,16 +261,16 @@ kit.claim("CL-C2-PLUG-BEARING", "Plug bearing stress at the block, plug fitted, 
           how="T-C4-BLOCK-PROOF with the plug fitted: no wall crack (inspect with a light inside the tube)")
 kit.claim("CL-C2-SPAR-BOND-TAU", "Spar slot bond shear from the distributed air load, ultimate", calc="CALC-C2-BOND",
           unit="Pa", limit=("<=", I + "xps_shear_allow_pa"), verifies=SM, parts=["WNG-001", "WNG-002"],
-          how="T-C2-XPS-COUPON (foam shear) and T-C2-WING-PROOF")
+          how="T-C2-XPS-COUPON (foam shear) and " + PROOF)
 kit.claim("CL-C2-CHORD-TAPE", "Tape stress, chordwise bending of the core aft of the spar, CN 1 at VD, ultimate",
           calc="CALC-C2-CHORD-TAPE", unit="Pa", limit=("<=", I + "tape_sigma_allow_pa"), verifies=SM, parts=["WNG-003"],
           how="T-C2-XPS-COUPON: taped foam strip in 3-point bending")
 kit.claim("CL-C2-CHORD-FOAM", "Same, bare foam (tape lost)", calc="CALC-C2-CHORD-FOAM", unit="Pa",
           limit=("<=", I + "xps_tens_allow_pa"), parts=["WNG-001"], how="T-C2-XPS-COUPON: bare foam strip")
 kit.claim("CL-C2-TIP-FOAM", "Foam stress outboard of the spar end, flight and landing, ultimate", calc="CALC-C2-TIP",
-          unit="Pa", limit=("<=", I + "xps_tens_allow_pa"), verifies=SM, parts=["WNG-001"], how="T-C2-WING-PROOF")
+          unit="Pa", limit=("<=", I + "xps_tens_allow_pa"), verifies=SM, parts=["WNG-001"], how=PROOF)
 kit.claim("CL-C2-ROOT-TAPE", "Tape stress at the root (in-plane + flap), ultimate", calc="CALC-C2-ROOT-TAPE", unit="Pa",
-          limit=("<=", I + "tape_sigma_allow_pa"), verifies=SM, parts=["WNG-003"], how="T-C2-WING-PROOF")
+          limit=("<=", I + "tape_sigma_allow_pa"), verifies=SM, parts=["WNG-003"], how=PROOF)
 kit.claim("CL-C2-POD-FOAM", "Pod bond shear in the wing foam, design (x 1.15 x 1.25)", calc="CALC-C2-POD", unit="Pa",
           limit=("<=", I + "xps_shear_allow_pa"), verifies=SM, parts=["WNG-001"],
           how="Bond on bare sanded foam; C3 proof-pulls the pod")
@@ -238,16 +289,15 @@ kit.claim("CL-C2-RING-VALIDATION", "Ring model vs Roark two-point ring", calc="C
           limit=("<=", "ASM-C2-FE-TOL"), cites=["SRC-C2-ROARK"], how="out/results.json#ring_validation")
 
 # ---------------------------------------------------------------- tests (planned)
-kit.test("T-C2-WING-PROOF", "Wing proof load to limit", ["CL-C2-SPAR-SIGMA-ULT", "CL-C2-TIP-DEFL-FRAC", "CL-C2-TIP-FOAM",
-         "CL-C2-SPAR-BOND-TAU", "CL-C2-ROOT-TAPE"],
-         procedure="Wing upside down on two padded V-blocks under the spar at |y| 0.32; sand bags: 2 x 25 N spread "
-                   "over |y| 0.33-0.50 per side (= F1 limit outer moment); measure tip deflection; then the G2 case: "
-                   "hang 51 N from one upper tube end (fins fitted). Pass: no crack, no set > 0.5 mm after unloading")
+# T-C2-WING-PROOF is withdrawn (CR-C1-27): the one wing limit proof is C1's T-C1-WING-PROOF (GT-08) step 1 + step 2
+# with C2's V-block set-up and 0.5 mm set criterion; the G2 tube-end hang is T-C1-STATION-PROOF. CR-C2-16 asks C1 to
+# list the C2 strength / deflection claims under T-C1-WING-PROOF.
 kit.test("T-C2-TAP-TEST", "Wing modal tap test with motors fitted", ["CL-C2-WING-MODE-SEP", "CL-C2-F-TORSION-ANTI",
-         "CL-C2-F-TORSION-SYM", "CL-C2-V-FLUTTER"],
+         "CL-C2-F-TORSION-SYM", "CL-C2-F-TORSION-ANTI-HI", "CL-C2-F-SYM-HI", "CL-C2-WING-ZETA", "CL-C2-V-FLUTTER"],
          procedure="Aircraft hung on bungees (free-free), phone accelerometer app (>= 400 Hz) taped at the pod and "
                    "at a fin tip; tap a motor can fore-aft and a fin tip sideways; FFT peaks to 400 Hz. Pass: model "
-                   "within 15 %, no peak within 20 % of the hover/cruise 1P/2P, or F4 notch set on it")
+                   "within 15 %, no peak within 20 % of the hover/cruise 1P/2P, or F4 notch set on it; damping ratio from the half-power "
+                   "bandwidth of the two torsion peaks (>= CL-C2-WING-ZETA)")
 kit.test("T-C2-TWIST", "Wing torsion stiffness", ["CL-C2-TWIST-FLIGHT", "CL-C2-V-REVERSAL", "CL-C2-V-DIVERGENCE",
          "CL-C2-SPAR-TAU-ULT"],
          procedure="Pod clamped, 0.3 m lever on the right block, 1 kg on the lever (2.9 N m); inclinometer app at "

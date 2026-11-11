@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\D5\sim\fea_shoe_d5.py", line 311, in <module>
+    one(float(sys.argv[i + 1]), sys.argv[i + 2])
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\D5\sim\fea_shoe_d5.py", line 297, in one
+    r = run_case(g, h, case, R, R_open, x_open_patch, tag)
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\D5\sim\fea_shoe_d5.py", line 255, in run_case
+    r = su2fea.run(RUNS / tag, nodes, hexes, mk, E_PETG, NU_PETG, ["clamp"],
+                   [("load_rim", R / A_rim, d_rim), ("load_open", R_open / A_open, d_open)], ["free"])
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\C5\sim\su2fea.py", line 111, in run
+    raise RuntimeError("SU2 failed in %s (see su2.log)" % case_dir)
+RuntimeError: SU2 failed in C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\D5\sim\runs\h400_pz (see su2.log)

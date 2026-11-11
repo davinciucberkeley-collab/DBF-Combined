@@ -48,16 +48,18 @@ def fig_envelope(S):
     limit(axs[0], S["inputs"]["s_av"] * 1000 - S["inputs"]["guard"] * 1000, "usable 35 mm", x=0.33)
     limit(axs[0], S["inputs"]["s_av"] * 1000, "rim stop 38 mm", fail=True, x=0.33)
     axs[0].axhline(S["inputs"]["planar"]["cur_pair_design_m"] * 1000, color=HL, lw=1.0)
-    axs[0].text(2, S["inputs"]["planar"]["cur_pair_design_m"] * 1000, "planar worst 31.5 mm", color=HL,
+    axs[0].text(2, S["inputs"]["planar"]["cur_pair_design_m"] * 1000,
+                "planar worst %.1f mm" % (S["inputs"]["planar"]["cur_pair_design_m"] * 1000), color=HL,
                 fontsize=8, va="bottom")
-    limit(axs[1], S["inputs"]["n_max"], "n limit 6.0")
+    limit(axs[1], S["inputs"]["n_max"], "n limit %.1f" % S["inputs"]["n_max"])
+    axs[0].set_title("%.1f m/s sink, 2/3 W lift, 2.6 kg" % S["inputs"]["v_sink"], loc="left")
     for ax in axs:
         ax.set_xlabel("tilt direction (°)  0 = pod-side pads low, 90 = left fin low")
         ax.set_xticks(range(0, 361, 45))
     axs[0].set_ylabel("largest foot stroke (mm)")
     axs[1].set_ylabel("peak load factor n")
     axs[0].legend(loc="lower left", ncol=3)
-    axs[0].set_ylim(26, 40.5)
+    axs[0].set_ylim(14, 40.5)
     save(fig, "fig-c5-s1-envelope.svg")
 
 
@@ -65,7 +67,7 @@ def fig_wind(S):
     W = S["wind"]
     fig, axs = plt.subplots(1, 2, figsize=(9.6, 3.4), sharey=False)
     for ax, axis in zip(axs, ("broadside", "spanwise")):
-        for key, col, ls in (("%s/lull/0.5" % axis, ACC, "-"), ("%s/lull/1.5" % axis, ACC_L, "-"),
+        for key, col, ls in (("%s/lull/0.5" % axis, ACC, "-"), ("%s/lull/%.1f" % (axis, S["inputs"]["v_sink"]), ACC_L, "-"),
                              ("%s/steady/0.5" % axis, FG3, "--")):
             w = W[key]
             ax.plot(w["V"], [min(m, 90) for m in w["tilt_max"]], color=col, ls=ls, label=key.split("/", 1)[1].replace("/", ", sink ") + " m/s")
@@ -120,7 +122,8 @@ def fig_history(S):
         ax.set_xlim(0, 120)
     axs[0].legend(ncol=4, loc="lower right")
     wc = S["hard_envelope"]["gate"]["worst_case"]
-    axs[0].set_title("worst case: tilt θ %.1f°, φ %.1f°, 1.5 m/s, 2.6 kg" % (wc["theta"], wc["phi"]), loc="left")
+    axs[0].set_title("worst case: tilt θ %.1f°, φ %.1f°, %.1f m/s, 2.6 kg" % (wc["theta"], wc["phi"], wc["v_sink"]),
+                     loc="left")
     save(fig, "fig-c5-s4-history.svg")
 
 
@@ -145,6 +148,29 @@ def fig_fea(F):
     save(fig, "fig-c5-s5-fea-convergence.svg")
 
 
+def fig_fea_d65(F, side_ult):
+    """C5-R6: D-65 shoe, stress scaled to the design ultimate side load."""
+    lv = F["levels"]
+    k = side_ult / F["inputs"]["F_side_ult_N"]
+    w = F["inputs"]["geometry_mm"]["w"]
+    fig, ax = plt.subplots(figsize=(6.4, 3.4))
+    for case, zone, col, mk in (("+y", "rim", ACC, "o"), ("+z", "rim", ACC_L, "o"), ("+y", "window strips", HL, "s"),
+                                ("+z", "window strips", "#E0A070", "s")):
+        rows = [r for r in lv if r["case"] == case]
+        ax.plot([w / r["h_mm"] for r in rows], [k * r["zones"][zone]["vm_max_MPa"] for r in rows], color=col,
+                marker=mk, ms=4, label="%s, %s" % (case, zone))
+        c = F["convergence"]["%s|%s" % (case, zone)]
+        if c.get("f_ext"):
+            ax.plot([w / 0.2667 * 1.15], [k * c["f_ext"]], marker=mk, mfc="none", color=col, ms=6)
+    limit(ax, 40.0, "PETG allowable 40 MPa", fail=True)
+    ax.set_xlabel("elements through the %.1f mm wall (open marker: Richardson)" % w)
+    ax.set_ylabel("von Mises at %.2f N ult side load (MPa)" % side_ult)
+    ax.set_ylim(0, 45)
+    ax.legend(loc="lower right", ncol=2)
+    ax.set_title("D-65 shoe: wall 2.0, rim 3.0, R 1.0, engagement 25 mm", loc="left")
+    save(fig, "fig-c5-r6-fea-d65.svg")
+
+
 if __name__ == "__main__":
     S = json.loads((HERE / "out" / "sim3d.json").read_text())
     fig_envelope(S)
@@ -154,3 +180,8 @@ if __name__ == "__main__":
     fp = HERE / "out" / "fea_shoe.json"
     if fp.exists():
         fig_fea(json.loads(fp.read_text()))
+    fp = HERE / "out" / "fea_shoe_v_engage25_rim_t3_w2_rin1.json"
+    cl = HERE.parent / "claims.sim.json"
+    if fp.exists() and cl.exists():
+        ult = [n for n in json.loads(cl.read_text("utf-8"))["nodes"] if n["id"] == "CL-C5-SIM3D-SIDE-ULT"][0]["value"]
+        fig_fea_d65(json.loads(fp.read_text()), ult)

@@ -1,9 +1,34 @@
 # Change requests from E2 (battery / energy engineer)
 
-Revision E2-R4, 2026-11-10. Numbers are from `team/E2/energy_claims.py` → `team/E2/claims.json`. All are
+Revision E2-R5, 2026-11-10. Numbers are from `team/E2/energy_claims.py` → `team/E2/claims.json`. All are
 `UNVERIFIED` until `T-E2-WEIGH`, `T-E2-CAPACITY` and `T-E2-IR` have run.
 
-## Open (new in R4)
+## Open (new in R5)
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-E2-28 | I1 (cc A1, F1) | **Pack cart `P01` released (D-64).** Order one 2-pack Ovonic 14.8V 120C 4S 6500 mAh hard-case LiPo, EC5 (SKU and URL as CR-E2-24). Before paying, tick and keep the evidence for: (1) **10 AWG** discharge leads stated by the listing, a lead photo, or a written seller answer (12 AWG or no answer → do not pay, tell E2 and F1); (2) cart shows **EC5 / 4S / 6500 mAh / hard case / 2 packs**; (3) total inside the $119.88 pessimistic pack line. Copy the release record (ENERGY.md §1a) into `ORDER-PLAN.md` and lift the `P01` HOLD. No substitute without A1 and E2: the Tattu 4S 6750 (605 ± 10 g) is over the acceptance line. | `CL-E2-PACK-ACCEPT-KG` 0.5926 kg (= `CL-A1-PACK-ACCEPT`); SKU worst 0.556 kg, margin +36.6 g (`CL-E2-SKU-MASS-MARGIN`); `CL-E2-SKU-LEAD-AWG` 10 inferred, not printed (E2's re-read on 2026-11-10 got HTTP 429) |
+| CR-E2-29 | A1 | `params.json#performance`: `cruise_after_hover_pess_min` 6.4 → **6.3** (`CL-E2-CRUISE-MIN-PESS-240` 6.29 on 312.4 W and 6.7 mΩ; B1-basis `CL-E2-CRUISE-MIN-PESS` 6.33); `cruise_after_hover_min` stays **12.0** (11.98); note: cruise to `BATT_LOW` 5.9 min (`CL-E2-CRUISE-TO-LOW-PESS-240`, was 6.1). `cruise_current_a` note: E2 pessimistic cruise current **24.0 A** (`CL-E2-CRUISE-I-PESS`, was 22.4). `battery.mass_kg` note: E2's acceptance is `CL-E2-PACK-ACCEPT-KG`, read from `CL-A1-PACK-ACCEPT`. | D-67 asked E2 to re-run on 312.4 W (expected about 6.2): result 6.3; the D-13 conservative pair is the 240 W one |
+| CR-E2-30 | F1 | `CALC-F1-PROFILE` re-reads the claims (no copy needed): pessimistic cruise **24.0 A** (was 22.4), back-transition 40.1, others within 0.1 A; highest phase 43.5 A unchanged. Cruise duration 380 s (was 407). Ground phase is now `CL-E2-I-GROUND-PESS` 0.41 A / `CL-E2-T-GROUND-PESS` 180 s: `ASM-F1-GROUND` can go. CR-F1-27 done on E2's side. | 312.4 W and r_ext 6.7 |
+
+## Closed in R5
+
+| # | Disposition |
+|---|---|
+| CR-E2-24, -25, -26 | accepted (D-64); CR-E2-24 superseded by CR-E2-28 (release record) |
+| CR-E2-23 | (b), (c) accepted (D-67); A1 carries the 240 W values; (a) remains A1's how-line item |
+| CR-E2-17, CR-E2-27 | closed: `ASM-E2-R-EXT` retired, no role reads it |
+| CR-E2-19 | closed with CR-F1-27 |
+
+## Requests to E2 answered in R5
+
+| From | Request | Answer |
+|---|---|---|
+| D-64 | Release the pack cart with I1; `PACK_ACCEPT_KG` = `CL-A1-PACK-ACCEPT`; `T-E2-WEIGH` pass line | CR-E2-28; `CL-E2-PACK-ACCEPT-KG` 0.5926 kg read live; `T-E2-WEIGH` passes at ≤ it |
+| D-67, CR-B1-20 | Re-run `CALC-E2-BUDGET-PESS` on 312.4 W and r_ext 6.7 | 6.3 min (+27 %), `BATT_LOW` after 6.0 / 5.9 min; CR-E2-29 |
+| CR-F1-27 | Retire the profile-assumption text reference; optionally emit the ground phase | Done (CR-E2-30) |
+
+## Open from R4 (dispositions under Closed in R5)
 
 | # | To | What | Why / numbers |
 |---|---|---|---|

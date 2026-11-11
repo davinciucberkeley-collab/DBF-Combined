@@ -113,15 +113,15 @@
     "SRC-I1-OVONIC"
    ],
    "outputs": {
-    "spend_pess_allin": 1872.0,
-    "spend_base_allin": 1764.78,
-    "goods_base": 1319.54,
-    "goods_pess": 1365.09,
-    "tax_base": 135.25,
-    "tax_pess": 139.92,
-    "spend_base": 1579.79,
-    "spend_pess": 1687.01,
-    "early_goods_tax": 1004.26
+    "spend_pess_allin": 2046.8,
+    "spend_base_allin": 1961.59,
+    "goods_base": 1327.33,
+    "goods_pess": 1352.92,
+    "tax_base": 136.05,
+    "tax_pess": 138.67,
+    "spend_base": 1588.38,
+    "spend_pess": 1673.59,
+    "early_goods_tax": 989.39
    },
    "input_values": {
     "tax": 0.1025
@@ -130,10 +130,10 @@
   {
    "id": "CALC-I1-BRIDGE",
    "type": "calculation",
-   "title": "Bottom-up minus R1-bridge (pessimistic spend)",
+   "title": "Bottom-up minus R2-bridge (pessimistic spend)",
    "script": "redesign/team/I1/build_bom.py",
    "function": "spend_bridge",
-   "equation": "delta = spend_pess(bottom-up) - [1680.35 (R1) + sum(R2 line deltas) x (1 + tax)]",
+   "equation": "delta = spend_pess(bottom-up) - [1687.01 (R2) + sum(R3 line deltas) x (1 + tax)]",
    "inputs": {
     "tax": "P:requirements.tax_rate",
     "sp": "CL-I1-SPEND-PESS"
@@ -150,7 +150,7 @@
    },
    "input_values": {
     "tax": 0.1025,
-    "sp": 1687.01
+    "sp": 1673.59
    }
   },
   {
@@ -171,13 +171,13 @@
     "sb": "USD"
    },
    "outputs": {
-    "reserve_pess": 312.99,
-    "reserve_base": 420.21
+    "reserve_pess": 326.41,
+    "reserve_base": 411.62
    },
    "input_values": {
     "budget": 2000.0,
-    "sp": 1687.01,
-    "sb": 1579.79
+    "sp": 1673.59,
+    "sb": 1588.38
    }
   },
   {
@@ -200,8 +200,8 @@
     "ASM-I1-ADDERS"
    ],
    "outputs": {
-    "reserve_pess_allin": 128.0,
-    "reserve_base_allin": 235.22
+    "reserve_pess_allin": -46.8,
+    "reserve_base_allin": 38.41
    },
    "input_values": {
     "tax": 0.1025,
@@ -225,7 +225,8 @@
     "SRC-I1-CARRIED"
    ],
    "outputs": {
-    "bought_usd": 17.0
+    "bought_usd": 17.0,
+    "bought_with_gauges_usd": 26.0
    },
    "input_values": {
     "tax": 0.1025
@@ -246,7 +247,7 @@
     "R-BUDGET"
    ],
    "how": "Re-run build_bom.py after re-pricing each line on the day of the order; compare with the order confirmations.",
-   "value": 1579.79
+   "value": 1588.38
   },
   {
    "id": "CL-I1-SPEND-PESS",
@@ -263,12 +264,12 @@
     "R-BUDGET"
    ],
    "how": "Same lines at list price plus the DECISION section 9 adders; CL-I1-BRIDGE-DELTA must be 0.",
-   "value": 1687.01
+   "value": 1673.59
   },
   {
    "id": "CL-I1-BRIDGE-DELTA",
    "type": "claim",
-   "title": "Bottom-up minus R1 bridge (USD)",
+   "title": "Bottom-up minus R2 bridge (USD)",
    "calc": "CALC-I1-BRIDGE",
    "output": "delta_usd",
    "unit": "USD",
@@ -295,7 +296,7 @@
     "R-BUDGET"
    ],
    "how": "2 000 minus CL-I1-SPEND-PESS must be >= 309 (one class-S crash incl. tax). On the day: re-price every CARRY line.",
-   "value": 312.99
+   "value": 326.41
   },
   {
    "id": "CL-I1-RESERVE-BASE",
@@ -312,7 +313,7 @@
     "R-RESERVE"
    ],
    "how": "2 000 minus CL-I1-SPEND-BASE must be >= 150 (planned reserve, P2).",
-   "value": 420.21
+   "value": 411.62
   },
   {
    "id": "CL-I1-RESERVE-PESS-ALLIN",
@@ -322,7 +323,7 @@
    "output": "reserve_pess_allin",
    "unit": "USD",
    "how": "2 000 minus the all-in pessimistic spend. Information, not a gate: the committed order holds >= 309 by deferring X07 and X08 until their gate passes. Below 309 means every gated line cannot be bought on pessimistic numbers.",
-   "value": 128.0
+   "value": -46.8
   },
   {
    "id": "CL-I1-GROUNDTEST-BOUGHT",
@@ -335,8 +336,18 @@
     "op": "<=",
     "value": 20.0
    },
-   "how": "D-39: ground-test equipment is borrowed from Jacobs Hall first; at most $20 is bought (G12). The 20 kgf cell kit G06 ($17.97) was already in the baseline.",
+   "how": "D-39: at most $20 is bought new for ground test (G12 only); gauges G13 are CL-I1-GROUNDTEST-WITH-GAUGES. The 20 kgf cell kit G06 ($17.97) was already in the baseline.",
    "value": 17.0
+  },
+  {
+   "id": "CL-I1-GROUNDTEST-WITH-GAUGES",
+   "type": "claim",
+   "title": "New ground-test purchases incl. the two fin-proof strain gauges G13, pre-tax (USD)",
+   "calc": "CALC-I1-GROUNDTEST",
+   "output": "bought_with_gauges_usd",
+   "unit": "USD",
+   "how": "G12 $17.00 (D-39 line, limit 20) + G13 $9.00 (CR-C4-38): $26.00 is $6 above the D-39 line. Information for A1, who owns the decision; the gauges are in the pessimistic spend.",
+   "value": 26.0
   },
   {
    "id": "T-I1-CONNECTOR-LEADS",
@@ -346,7 +357,7 @@
     "CL-I1-SPEND-PESS"
    ],
    "state": "planned",
-   "procedure": "Before the pack order: read the listing photos or ask the vendor for lead gauge (needs >= 10 AWG, F1 CL-F1-PACKLEAD-RISE) and connector (XT60). The 2026-11-09 listing says 12 AWG, 680 g: do not order it. On arrival: measure the lead conductor with calipers, weigh both packs."
+   "procedure": "Before the pack order: ask the seller for the discharge-lead gauge (needs >= 10 AWG, F1 CL-F1-PACKLEAD-RISE) and confirm EC5 / 4S / 6500 / hard case / 2 packs in the cart (D-64). 12 AWG: stop, tell E2 and F1. Do not order the 130C XT60 SKU (680 g, 12 AWG). On arrival: measure the lead conductor with calipers, weigh both packs (accept <= 592.6 g each, CL-A1-PACK-ACCEPT)."
   },
   {
    "id": "T-I1-LISTINGS",
@@ -367,7 +378,7 @@
     "CL-I1-GROUNDTEST-BOUGHT"
    ],
    "state": "planned",
-   "procedure": "Before 20 Nov ask Jacobs Hall staff, by email, to lend the items in ORDER-PLAN.md 'Borrow list' for 25 Nov - 8 Dec (stand campaign) and the build-end weigh-in; file the reply in team/I1/borrow_confirmation.txt. A refusal moves the item to a BOM line (price in the table)."
+   "procedure": "Before 20 Nov ask Jacobs Hall staff, by email, to lend (a) the soldering kit (G07-G10, gate X10, lever 1), (b) the hot-wire supply and wire (G11, H05, gate X11, lever 2) for the whole build January-February, and (c) the items in ORDER-PLAN.md 'Borrow list'; file the reply in team/I1/borrow_confirmation.txt. A refusal makes the gated line a BOM line and the pessimistic reserve falls by its value (X10 $94.80, X11 $62.54)."
   },
   {
    "id": "T-I1-ARRIVAL",

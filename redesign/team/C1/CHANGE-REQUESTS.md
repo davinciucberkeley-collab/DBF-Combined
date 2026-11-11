@@ -1,6 +1,34 @@
 # Change requests from C1 (loads engineer)
 
-Revision **C1-R4** (2026-11-10, D-50 action items). Numbers from `python -I redesign/team/C1/loads.py` at params
+Revision **C1-R5** (2026-11-10, D-65 action items). Numbers from `python -I redesign/team/C1/loads.py` at params
+A1-R5 (landing_n_design **6.6**, CG range [0.0466, 0.0514] m, z 0.0185 m, pod nose -0.140, pack datum -0.032) and
+A3-R7 (`CL-A3-GROUPS`, `CL-A3-IYY` 0.0461 kg m2, basic 2.342 kg), C5's `CL-C5-SIM3D-SIDE-LOAD` 39.3 N. All loads
+limit unless marked ult (= 1.5 x limit). Inputs are live: a later A3/C5/D5 republish moves these by a few %.
+
+## New in R5 (open)
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-C1-35 | C4, C6, D3 (cc A1, C5, D5) | **Fin roots at n 6.6 and the 39.3 N side load.** Re-run `fin_structures_d3.py` / `joints.py` on: fin-joint moment ult **22.46 N m** (design x 1.15 x 1.25 = **32.28**), fin-joint force ult **89.15 N**, half-fin torsion at the wing plane **12.63 / 18.94 N m** lim / ult, half-fin bending ult **16.33 N m**, foot cut force ult **79.75 N** (L4/L5 govern all but the force, L1). Read `CL-C1-G3-CAN-F` (**23.46 N** limit, 35.19 ult) in place of `ASM-C4-G3-CAN-F` (answers CR-C4-29). | Vs R4: torsion **+71 %**, joint moment +57 %, half-fin bending +43 %. Of that, n 6.6 is ~10 %, the side load the rest (`data/sensitivity_side.json`). C1's linear scaling of C4's R4 margins (estimate, C4 to replace): collar bond MS 0.16 -> about **-0.32**, fin face with shoe cheeks 0.01 -> about **-0.29**, through-core block 0.55 -> about **0.0**, brace 0.79 -> about +0.05. With C5's mu <= 0.5 pad face (29.1 N): torsion 9.38 N m, joint design 25.4 N m, block MS about +0.26, collar about -0.08, face about -0.11. |
+| CR-C1-36 | D5, C5 (cc A1) | Decide the pad face: C1 recommends C5's **mu <= 0.5** option for the fin roots' sake (side load 39.3 -> 29.1 N; torsion -26 %, joint moment -21 %). Size the shoe, cartridge and fin-tip fitting to `CL-C1-FOOT-SIDE-DESIGN` **39.30 / 58.96 N** with the normal load **`CL-C1-FOOT-LEVEL-UPPER` 44.41 / 66.62 N** (supersedes CR-C1-34's 40.38 / 60.56; D5's plateau 39.58 N is now 11 % inside, `CL-C1-FOOT-D5-RATIO` 0.891). The upper bound is conservative: at the gate mass and n 6.6 C1's mean foot is 42.1 N, above the plateau a cartridge can reach. | D-65. C1 applies the side load with the corner load (36.7 N) in L4 (y) and L5 (z). |
+| CR-C1-37 | C3 (cc D2, H1) | **Pack stop and pod saddle at n 6.6**: pack-to-tray resultant **42.49 N** limit / **63.73 N** ult (`CL-C1-PACK-STOP-LIM/-ULT`, L1, mostly +x into the aft stop); with the fitting and printed factors 63.73 x 1.15 x 1.25 = **91.6 N**, above the crash retention load **73.75 N** (`CL-C1-PACK-CRASH-LOAD`, now on A3's acceptance pack): the **landing now sizes the aft stop**. Replace `ASM-C3-PACK-LOADS` (R4 L1 Fx 35.4 N, MC-C only) with `data/joints.csv` J-PACK rows **both mass configs** (MC-P L1 Fx 42.46 N). Pod-to-wing (spar saddle POD-007 + bond): **75.82 / 113.73 N** (`CL-C1-POD-F-LIM`, `-ULT`), 3 % below R4 (A3 groups move the harness out of the pod). | D-65 asks C1 and C3 to check the pack stop and spar saddles at 6.6. |
+| CR-C1-38 | D7 (cc A1, A2) | **Nose-drop allowance not confirmed.** With the pod nose on the nose pad (new case X6: the transport mass stops through the pod shell, saddle and bond) the airframe tolerates **n 4.98** (`CL-C1-TRANSPORT-N-ALLOW-NOSE`, J-POD governs), not `-ALLOW-X` 13.04 (X1 holds only while the cradles stop the aircraft in x). D7's formula h = (n - 1) eta eps_use t gives **0.021 m** on the 3/4 in pad, **0.014 m** on the D-62 1/2 in pad, against the **0.059 m** carried. Please (a) read `CL-C1-TRANSPORT-N-ALLOW-NOSE` in `CL-D7-NOSE-DROP-ALLOW`, and (b) either add x-stops at the cradles that hold the spar before the nose gap closes (then X1 applies, n 13.04) or keep the nose drop as label-only ("keep upright", D-53). **Aft wall: confirmed.** C1's allowable is now **n 10.76** (J-FIN force governs); the R4 value 9.22 stays a safe lower bound; demand 7.79 (C1) / 7.46 (D7). `CL-D7-AFT-N` should be limited by `CL-C1-TRANSPORT-N-ALLOW-AFT`, not `-ALLOW-X`. Floor drop unchanged: n 10.09 vs 13.19. | Answers CR-D7-24 and the D-62 forward. |
+| CR-C1-39 | H1 (cc C2) | **GT-08 pad table at R5** (supersedes CR-C1-30's numbers; positions unchanged): pads y **0.120 / 0.250 / 0.355 / 0.465 m**, limit **9.01 / 5.14 / 4.44 / 6.01 N** per side (masses **0.919 / 0.524 / 0.453 / 0.613 kg**; sum 24.60 N, centroid y 0.274 m), relief pull **19.92 N** up at each tube (2.031 kg), hanger 49.2 N. **Step 2** (each side in turn, V-block under the spar at y 0.32 m): pads 3 / 4 at **4.90 / 16.10 N** (0.499 / 1.642 kg), reproduces V 21.8 N and Mx 2.61 N m outboard of the fin, cover >= 0.987. Pad 2 fell (7.90 -> 5.14 N) because the harness now rides at y 0.256 as A3 places it. | `CL-C1-PROOF-*`, `data/whiffletree.json`. CR-C1-27 (one proof, C2) still stands. |
+
+## Answered in R5
+
+| # | State |
+|---|---|
+| CR-C1-33 (A3) | **Done by A3-R7** (`CL-A3-GROUPS`, `CL-A3-CG-Z`): C1 now places the centre group, pack and harness at A3's centroids; the CG trim fell **28.7 -> 7.2 mm**. The remaining offset is C1's fin and foot lumps (fins 27 mm forward of A3's, feet 26 mm aft; `data/checks.json`). Spread still at the pod half-length; Iyy 0.90-1.02 of A3 (band 0.85-1.15). |
+| CR-C4-29 | Done: `CL-C1-G3-CAN-F` 23.46 N limit, `-ULT` 35.19 N. |
+| CR-C5-16, CR-C5-19 | Done: side load 39.3 / 59.0 N in L4/L5 (`CL-C1-FOOT-SIDE-DESIGN(-ULT)`), n 6.6 in every landing case. |
+| CR-D7-24 | Answered by CR-C1-38 (nose allowance lower than D7's; aft wall confirmed). |
+| CR-C1-29, -30, -31, -34 | Superseded by CR-C1-35, -39, -38, -36 (R5 numbers). |
+| CR-B2-18 | Acknowledged: C1 reads B2's AVL table (1 g root lift moment 3.0942 N m reproduced). B2's 10.5 N m at n 3.4 is the aero moment alone; C1's net F1 root moment is 2.83 N m after the fin, station and pod inertia relief. A Schrenk shape (x 1.096 on the aero part) would add about 1 N m there; the spar is sized by L1 (13.8 N m limit), so the AVL shape is kept. |
+
+## R4 (history)
+
+R4 header (history): revision **C1-R4** (2026-11-10, D-50 action items). Numbers from `python -I redesign/team/C1/loads.py` at params
 A1-R4 / A1-R4a, A3-R5 roll-up (basic mass 2.3225 kg), F4's capped level speed `CL-F4-VLEVEL` 21.28 m/s. All loads
 limit unless marked ult (= 1.5 x limit).
 

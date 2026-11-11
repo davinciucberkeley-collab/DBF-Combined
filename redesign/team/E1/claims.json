@@ -766,8 +766,8 @@
     "mount_to_post_tip_m": 0.048049999999999995,
     "hub_half_m": 0.004445,
     "stack_minus_d3_m": -5.0000000000050004e-06,
-    "gap_e1_m": 0.039795,
-    "gap_ratio_e1": 1.017358625626342,
+    "gap_e1_m": 0.044794999999999995,
+    "gap_ratio_e1": 1.1451835566008794,
     "ahead_needed_m": 0.0018210000000000032,
     "nut_engagement_m": 0.00531,
     "nut_margin_m": 0.00011,
@@ -791,7 +791,7 @@
      0.0035
     ],
     "d3_stack": 0.0373,
-    "ahead": 0.0025,
+    "ahead": 0.0075,
     "D": 0.2794,
     "tp": 0.0045,
     "ls": 0.008
@@ -1578,7 +1578,7 @@
     "PRP-002-LL"
    ],
    "how": "Log pack power in steady 16 m/s FBWA legs, both directions, calm morning; subtract the avionics draw.",
-   "note": "propulsion only (no avionics); drag from B1's as-designed polar (CL-B1V-CD0, CL-B1V-K, ASM-B1-TRIM; rev 8, D-67; was CL-B1-CD0 / CL-B1-K), CR-A1-32. p_check = (this + 6 W) / CL-B1V-CRUISE-P-GATE. The params limit is B1's pack power incl. 6 W avionics, so the comparison is 6 W conservative for B1",
+   "note": "propulsion only (no avionics); drag from B1's as-designed polar (CL-B1V-CD0, CL-B1V-K, ASM-B1-TRIM; rev 8, D-67; was CL-B1-CD0 / CL-B1-K), CR-A1-32. p_check = (this + 6 W) / CL-B1V-CRUISE-P-GATE. The params limit is B1's pack power incl. 6 W avionics, so the comparison is 6 W conservative for B1. Rev 8 FAIL: 246.0 W > 240 (E1 + 6 W avionics = 252.0 W, p_check 1.055 against B1's 238.9 W at the gate): same drag (4.51 N), E1's eta_tot 0.293 from APC PER3 with kP 1.24 vs B1's chain. Band 200.2 (kP 1) - 246.0 W. D-13 carries the conservative one: CR-E1-51 asks A1 for cruise_power_w 252 (E2 re-runs) or cruise_ms 15 (213.9 + 6 = 220 W, 1.25 Vs at the gate)",
    "value": 246.01262375589732
   },
   {
@@ -1748,7 +1748,7 @@
    "output": "f_sag",
    "unit": "-",
    "how": "Ratio of the two T-E1-STAND full-throttle runs: worst-state pack / fresh pack.",
-   "note": "to be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to that already current-limited thrust, which double-counts. Bounded above by CL-E1-SAG-XCHECK",
+   "note": "rev 8 (D-67): on F1's r_ext 6.7 mOhm (CL-F1-R-EXT 6.69) 0.8508, unchanged to three places from 0.851 at 6.5 (the limiter holds 100 A in both states, so 0.2 mOhm moves V_bus by 20 mV). To be applied to thrust_max_per_motor_kg (fresh pack, limiter); E2's 0.76 applied (V/14.8)^2 to that already current-limited thrust, which double-counts. Bounded above by CL-E1-SAG-XCHECK",
    "value": 0.850787322466117
   },
   {
@@ -1861,8 +1861,8 @@
     "PRP-003-LL"
    ],
    "how": "Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.",
-   "note": "D3's CL-D3-PROP-GAP uses the 39 mm stack; with E1's 37.3 mm and the same 1 mm face_ahead the gap is below B4's 0.14 D. Fix: face_ahead_m >= CALC-E1-STACK ahead_needed_m (CR-E1-23)",
-   "value": 1.017358625626342
+   "note": "rev 8: 1.15 with face_ahead 0.0075 (D-61). History: with E1's 37.3 mm stack and D3's 1 mm face_ahead the gap was below B4's 0.14 D (CR-E1-23)",
+   "value": 1.1451835566008794
   },
   {
    "id": "CL-E1-AHEAD-NEEDED",
@@ -2199,11 +2199,11 @@
     "ASM-E3-ESC"
    ],
    "outputs": {
-    "x_face_m": 0.029350000000000005,
-    "x_hub_m": -0.007667008725463092,
-    "hub_minus_datum_m": 0.005032991274536908,
-    "gap_m": 0.0395170087254631,
-    "gap_ratio": 1.0102517825305015,
+    "x_face_m": 0.024350000000000004,
+    "x_hub_m": -0.012667008725463093,
+    "hub_minus_datum_m": 3.299127453690667e-05,
+    "gap_m": 0.044517008725463096,
+    "gap_ratio": 1.138076713505039,
     "dx_tip_m": 0.027025147273699104,
     "ko_half_m": 0.035,
     "esc_len_ratio": 1.0222222222222221,
@@ -2222,7 +2222,7 @@
     "od": 0.022,
     "bg": 0.00015,
     "cw": 0.002,
-    "ahead": 0.0025,
+    "ahead": 0.0075,
     "cant": 7.0,
     "D": 0.2794,
     "xp": -0.0127,
@@ -2334,13 +2334,13 @@
     "ASM-E1-BLADE-HALF"
    ],
    "outputs": {
-    "gap_m": 0.02110611502564124,
-    "gap_sym_m": 0.017128410156546217,
-    "gap_sense_plus_m": 0.03782949137852568,
-    "gap_untilted_m": 0.035945,
+    "gap_m": 0.02609632039371878,
+    "gap_sym_m": 0.02211855409020324,
+    "gap_sense_plus_m": 0.04279222213673229,
+    "gap_untilted_m": 0.040944999999999995,
     "ahead_needed_m": 0.0065,
     "gap_at_needed_m": 0.025098267345611144,
-    "stack_add_m": 0.004,
+    "stack_add_m": -0.001,
     "gap_at_75_m": 0.02609632039371878
    },
    "input_values": {
@@ -2365,7 +2365,7 @@
     "zs": 0.19,
     "bg": 0.00015,
     "cw": 0.002,
-    "ahead": 0.0025,
+    "ahead": 0.0075,
     "sense": -1,
     "cant": 7.0,
     "D": 0.2794,
@@ -2395,8 +2395,8 @@
     "FIN-002-L"
    ],
    "how": "Built station: printed 25 mm gauge between the blade trailing face at the tip and the tube, blade turned through the wing-side position (T-E1-MOTOR-RM).",
-   "note": "D-52 (cant sense -1) swings the wing-side blade tip aft over the tube: about 21 mm, against 38 mm with sense +1 (gap_sense_plus_m). Same finding as D3's CR-D3-26 (20.9 mm). The nearest tube point is at r 143.8 mm, 4 mm OUTBOARD of the 139.7 mm tip, 26.8 mm aft of the mid-plane: a tip-to-structure gap, so the mount chain is not exempted from KO-PROP and a hub-radius annulus would not remove it (rev 7). check.py 21.0 mm (hull), probe 21.2 mm (surface samples); every other flight part >= 25 mm (bore boss 25.4, tube plug 26.1, wing >= 33.5 mm)",
-   "value": 0.02110611502564124
+   "note": "rev 8 (D-61): on D3's 7.5 mm mount 26.1 mm, PASS (+1.1 mm); was 21.1 mm FAIL at 2.5 mm. D-52 (cant sense -1) swings the wing-side blade tip aft over the tube (42.8 mm with sense +1, gap_sense_plus_m). Same finding as D3's CR-D3-26 (20.9 mm at 2.5 mm). The nearest tube point is at r 143.8 mm, 4 mm OUTBOARD of the 139.7 mm tip, 26.8 mm aft of the mid-plane: a tip-to-structure gap, so the mount chain is not exempted from KO-PROP and a hub-radius annulus would not remove it (rev 7). check.py 21.0 mm (hull), probe 21.2 mm (surface samples); every other flight part >= 25 mm (bore boss 25.4, tube plug 26.1, wing >= 33.5 mm)",
+   "value": 0.02609632039371878
   },
   {
    "id": "CL-E1-FACE-AHEAD-FOR-CLR",
@@ -2413,7 +2413,7 @@
     "FIN-003-UR"
    ],
    "how": "Recompute after any change to the stack, cant, cant sense or tube station.",
-   "note": "for A1's CR-D3-26 decision: this is the least; E1 proposes 0.0075 m (CL-E1-TIP-GAP-AT-75, about +1 mm margin). Rev 7: with KO-PROP on E1's envelope and check.py's hull + distance test, check.py reports 0 keep-out errors at 0.0065 and 0.0075 and 4 (the tube, 24.5 mm) at 0.0060 (in-memory trials, team/E1/prop_clearance.json)",
+   "note": "rev 8: the least face_ahead (bisection from 0), so 1 mm under the carried 0.0075 (D-61). For A1's CR-D3-26 decision: E1 proposed 0.0075 m (CL-E1-TIP-GAP-AT-75, about +1 mm margin). Rev 7: with KO-PROP on E1's envelope and check.py's hull + distance test, check.py reports 0 keep-out errors at 0.0065 and 0.0075 and 4 (the tube, 24.5 mm) at 0.0060 (in-memory trials, team/E1/prop_clearance.json)",
    "value": 0.0065
   },
   {
@@ -2436,7 +2436,7 @@
     "FIN-002-L"
    ],
    "how": "As CL-E1-TIP-GAP-TUBE on the R5 mount.",
-   "note": "+5.0 mm of stack: prop plane x -0.0077 -> about -0.0127, hub 5 mm further from the collar (CL-E1-CAD-PROP-GAP rises); mount cheeks +5 mm (D3, C4 rocking stiffness)",
+   "note": "rev 8: equals CL-E1-TIP-GAP-TUBE now that D3 carries 0.0075 (D-61). +5.0 mm of stack: prop plane x -0.0077 -> -0.01267 (CL-E1-CAD-HUB-X), hub 5 mm further from the collar (CL-E1-CAD-PROP-GAP rises); mount cheeks +5 mm (D3, C4 rocking stiffness)",
    "value": 0.02609632039371878
   },
   {
@@ -2453,8 +2453,8 @@
     "PRP-003-LL"
    ],
    "how": "python -I redesign/subsystems/propulsion/make_propulsion.py prints the same x; calipers on the built station (T-E1-MOTOR-RM).",
-   "note": "subsystems/propulsion/fusion/propulsion.py places the hub here; the datum DP-PROP is -0.0082 (D-28, D3's 39 mm stack). KO-PROP-<st> are registered on the modelled hub",
-   "value": -0.007667008725463092
+   "note": "rev 8 (D-61, face_ahead 0.0075): -0.01267, datum DP-PROP / x_prop_plane_m -0.0127 (+0.03 mm). D3's CL-D3-X-PROP (same formula, face - 37.3 cos 7 deg) gives -0.01267 on the R5 mount: agrees to 5 um (E1 stack 37.295 vs D3 37.3 mm). subsystems/propulsion/fusion/propulsion.py places the hub here; KO-PROP-<st> are registered on the modelled hub",
+   "value": -0.012667008725463093
   },
   {
    "id": "CL-E1-CAD-HUB-VS-DATUM",
@@ -2471,7 +2471,7 @@
    ],
    "how": "As CL-E1-CAD-HUB-X.",
    "note": "positive = the real prop sits aft of the datum, closer to the mount collar (CR-E1-29)",
-   "value": 0.005032991274536908
+   "value": 3.299127453690667e-05
   },
   {
    "id": "CL-E1-CAD-PROP-GAP",
@@ -2495,8 +2495,8 @@
     "PRP-001-LL"
    ],
    "how": "Calipers on the built station: collar front to hub centre >= 0.14 D = 39.1 mm.",
-   "note": "same finding as CL-E1-PROP-GAP with the 7 deg cant included; passes since D3 carries face_ahead_m 0.0025 (D-51). A larger face_ahead (CR-D3-26, CL-E1-FACE-AHEAD-FOR-CLR) only raises it",
-   "value": 1.0102517825305015
+   "note": "same finding as CL-E1-PROP-GAP with the 7 deg cant included; rev 8: 1.14 on the 7.5 mm mount (D-61; was 1.01 at 2.5 mm, D-51)",
+   "value": 1.138076713505039
   },
   {
    "id": "CL-E1-KO-TILT",
@@ -2561,7 +2561,7 @@
     "PRP-003-LL"
    ],
    "how": "python -I redesign/fusion/check.py (hull + distance) and python -I redesign/team/E1/prop_clearance.py (surface samples).",
-   "note": "rev 7: KO-PROP-<st> is registered with fwd 0.010 / aft 0.006 (ASM-E1-BLADE-ENV, A5's CR-E1-45 arguments), radius D/2 + 25 mm, centred 2 mm ahead of the hub; was 35 mm symmetric (ASM-E1-BLADE-HALF), which placed 4 mm of non-existent blade aft of the disc. check.py now reports the distance to the swept volume: only the CF motor tube is inside, at 21.0 mm (CL-E1-TIP-GAP-TUBE). The mount chain is NOT exempted: the tube's nearest point is 4 mm outboard of the tip, not behind the hub",
+   "note": "rev 7: KO-PROP-<st> is registered with fwd 0.010 / aft 0.006 (ASM-E1-BLADE-ENV, A5's CR-E1-45 arguments), radius D/2 + 25 mm, centred 2 mm ahead of the hub; was 35 mm symmetric (ASM-E1-BLADE-HALF), which placed 4 mm of non-existent blade aft of the disc. check.py reports the distance to the swept volume: rev 8, 0 keep-out errors on the 7.5 mm mount (was the CF motor tube at 21.0 mm on 2.5 mm, CL-E1-TIP-GAP-TUBE). The mount chain is NOT exempted: the tube's nearest point is 4 mm outboard of the tip, not behind the hub",
    "value": 0.033
   },
   {

@@ -98,8 +98,8 @@ def fig_cfd():
 def fig_cg():
     cg = V["CALC-B3-V-CG"]
     env = V["CALC-B3-V-NP-CL"]
-    r4 = R4["CALC-B3-CG-LIMITS"]
-    rows = [("R4 model (CG on chord plane, alpha 4)", r4["x_fwd"], r4["x_aft"], FG3),
+    r4 = {"x_fwd": 0.05085, "x_aft": 0.05490}     # R4 CL-B3-CG-FWD / -AFT at z = 0 (retired at R5, D-62)
+    rows = [("R4 model (CG on chord plane, alpha 4; retired)", r4["x_fwd"], r4["x_aft"], FG3),
             ("As designed, alpha 4 basis", cg["x_fwd_gate"], cg["x_aft_gate"], FG3),
             ("As designed, SM 5 % at 1.3 Vs (governs)", cg["x_fwd_gate"], env["x_aft_env"], ACCENT)]
     fig, ax = plt.subplots(figsize=(7.4, 2.6))
@@ -115,6 +115,9 @@ def fig_cg():
     x3p = PRED * 1000
     ax.axvline(x3, color=FG, lw=1.2)
     ax.axvline(x3p, color=FG, lw=0.8, ls=(0, (2, 2)))
+    xt = PAR["cg"]["x_target_m"]["value"] * 1000
+    ax.axvline(xt, color=ACCENT, lw=1.0, ls=(0, (4, 2)))
+    ax.annotate("D-62 target", (xt, -0.45), xytext=(3, 0), textcoords="offset points", fontsize=7, color=ACCENT)
     ax.annotate("A3 CG", (x3, len(rows) - 0.45), xytext=(-3, 0), textcoords="offset points", fontsize=7,
                 color=FG, ha="right")
     ax.annotate("A3 predicted", (x3p, len(rows) - 0.45), xytext=(3, 0), textcoords="offset points", fontsize=7,

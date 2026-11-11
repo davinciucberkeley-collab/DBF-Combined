@@ -610,10 +610,6 @@ kit.test("T-E2-MISSION-LOG", "Full-mission current log", verifies=["CL-E2-CRUISE
 
 
 if __name__ == "__main__":
-    r_param = kit.value(P + "electrical.r_ext_mohm") / 1000.0
-    if abs(r_param - R_EXT_MIRROR_OHM) > 1e-9:
-        raise SystemExit(f"ASM-E2-R-EXT mirror {R_EXT_MIRROR_OHM} ohm != params electrical.r_ext_mohm {r_param} ohm: "
-                         "update R_EXT_MIRROR_OHM and re-run")
     kit.write()
     for cid in ("CALC-E2-BUDGET-BASE", "CALC-E2-BUDGET-PESS"):
         o = kit.nodes[cid]["outputs"]

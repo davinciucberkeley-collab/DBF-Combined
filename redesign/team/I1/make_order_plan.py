@@ -17,7 +17,7 @@ SHIP = {"EARLY": 75.0, "DEC": 45.0, "LOCAL": 0.0}
 
 FLAGS = {
     "SunnySky USA": "page 429 on 2026-11-09, price by search snippet; measure bolt pattern, hole depth and leads on arrival",
-    "OVONIC US": "**HOLD:** listing is 12 AWG leads, 680 g (CR-I1-13); sale price may end, list $119.88 is the pessimistic case",
+    "Ampow / OVONIC (same SKU)": "**LONG LEAD (~14 d, ships from Germany); USD price not found**: baseline EUR 98.69 x 1.16, pessimistic EUR 113.30 x 1.16. Ask the seller for 10 AWG leads before paying",
     "APC": "props `CHK` $3.83; rings `EST`",
     "Amazon": "**LANRC ASIN B0D2HS4Y4J unconfirmed** (503, no US 4-pack page): open it first; fallback Tekko32 +$60; many `EST` lines, re-read each",
     "ReadyMadeRC": "FC page URL changed (product 87195); price carried from 2026-10-13; F3 gate (stable tailsitter build) before ordering",
@@ -27,7 +27,9 @@ FLAGS = {
     "Aloft Hobbies": "**LONG LEAD if the overseas fallback is needed** (tubes); strips and 20x18 tube `EST`",
     "Pyrodrone": "", "Pine64": "", "Bolt Depot": "minimum order may exceed the line price",
     "West3D": "ASA is not in the Jacobs free stock",
-    "EMAX USA": "placeholder until D6 picks the servo (>= 3.04 kgf cm)",
+    "Savox USA / hobby dealer": "single-source 12 mm servo; US dealer with stock; price from D6, not re-read",
+    "Amazon / DigiKey": "JST-GH from DigiKey: separate shipping, use pigtails if the cart allows",
+    "Amazon / hobby shop": "",
     "Home Depot El Cerrito": "store pick-up; check the XPS sheet is flat",
     "Harbor Freight": "store pick-up",
 }
@@ -67,7 +69,7 @@ def main():
     gated_rows = "\n".join(f"| {g['id']} | {g['item']} | ${B.gated_net(g['id']) * (1 + TAX):,.2f} | {g['gate']} |" for g in B.GATED)
     txt = f"""# Order plan: early order (~20 Nov 2026) and mid-December order (15 Dec 2026)
 
-Revision I1-R2, 2026-11-09. Status `PROPOSED`. Lines, prices and part numbers: [`BOM.csv`](BOM.csv). Money: `python -I redesign/team/I1/build_bom.py`, then
+Revision I1-R3, 2026-11-10. Status `PROPOSED`. Lines, prices and part numbers: [`BOM.csv`](BOM.csv). Money: `python -I redesign/team/I1/build_bom.py`, then
 `python -I redesign/team/I1/make_order_plan.py` regenerates the vendor tables below. Prices are 2026 list prices before 10.25 % tax.
 `CHK` = compared with the vendor page on 2026-11-09, `CARRY` = carried from `cards/K09/cost.csv`, `EST` = estimate, no vendor page.
 
@@ -87,39 +89,41 @@ Revision I1-R2, 2026-11-09. Status `PROPOSED`. Lines, prices and part numbers: [
 | Case | Spend | Reserve | Limit | Status |
 |---|---|---|---|---|
 | Committed order, baseline | ${m['spend_base']:,.2f} | ${res_b:,.2f} | >= $150 planned | `CHECKED` against inputs; prices `UNVERIFIED` |
-| Committed order, pessimistic (Ovonic at list, tubes overseas, shipping +$30, tax measure +$7, jig/box +$20) | ${m['spend_pess']:,.2f} | **${res_p:,.2f}** (margin ${res_p - 309:,.2f}) | >= $309 | `UNVERIFIED` |
-| **Everything bought**, baseline (gated X07 box/field kit and X08 airspeed sensor included) | ${m['spend_base_allin']:,.2f} | ${res_ba:,.2f} | >= $150 | holds |
+| Committed order, pessimistic (Ovonic at EUR 113.30 x 1.16, tubes overseas, shipping +$30, tax measure +$7, jig/box +$20) | ${m['spend_pess']:,.2f} | **${res_p:,.2f}** (margin ${res_p - 309:,.2f}) | >= $309 | `UNVERIFIED` |
+| **Everything bought**, baseline (gated X07 box/field kit and X08 airspeed sensor included) | ${m['spend_base_allin']:,.2f} | ${res_ba:,.2f} | >= $150 | **FAILS by ${150 - res_ba:,.2f}** |
 | **Everything bought**, pessimistic | ${m['spend_pess_allin']:,.2f} | **${res_pa:,.2f}** | >= $309 | **FAILS by ${309 - res_pa:,.2f}** (`CL-I1-RESERVE-PESS-ALLIN`) |
 
-**Why two lines.** Itemising the designers' requests (F1, C6, D3, D5, D7, E3, F3, H1) adds about $190 incl. tax over the R1 BOM, because the old
-$124.01 wiring/hardware lump did not cover them. The committed order holds the $309 reserve only by holding two blocks behind a gate:
-X07 (D7 box and field kit, store pick-up, $118.85, needed before the first drive to the field in March, no lead time) and X08 (airspeed sensor,
-$66.14, DECISION 5.1 lever, last in the lever order). Cheaper levers than X08, each needing a fact I cannot verify from here, are in `SUMMARY.md`.
+**What changed in R3 (CR-A1-67, D-72).** Pack re-priced for the Ovonic 120C EC5 pair (+$31.51 baseline, +$11.55 pessimistic, pre-tax); Savox SH-0255MG+ replaces the placeholder
+servo (+$44.00); the $6 T-antennas, FC isolation set, F2 harness lines, D6 mechanisms hardware, 2.5 mm CF rod, PA66 socket-head set, 7/32 in brass tube and two strain gauges are
+itemised; the D7 mat, tote, spares box and labels sit in the gated X07. Net of the designers' lines: pessimistic spend +$130.55 pre-tax ($143.94 incl. tax) before any lever.
+**Lever 1 alone is not enough.** Borrowing the soldering kit (G07-G10, $94.80 incl. tax) leaves the pessimistic reserve at $263.87, $45.13 under the $309 crash.
+Lever 2 (borrow the hot-wire gear G11 + H05, $62.54) is also applied and gives the reserve above. Both are bought if Jacobs Hall refuses (gates X10, X11): H1's written yes before 20 Nov is a hard dependency.
+The committed order holds the $309 reserve only by holding blocks behind gates: X07 (D7 box and field kit, store pick-up, needed before the first drive to the field in March), X08 (airspeed sensor, DECISION 5.1 lever), X10, X11.
 
 ## Early order, ~20 Nov (electronics, packs, test hardware, power parts)
 
 Purpose: the $40 foam-board twin, the thrust stand, charging and first power bench on real hardware (`CONFIGURATION.md` de-risking). Place it as
-five or six carts. Re-read every listing first (`T-I1-LISTINGS`).
+five or six carts. **Place the pack cart (`P01`) first: ~14 days from Germany.** Re-read every listing first (`T-I1-LISTINGS`).
 
 {e_tab}
 
 **Early total ${early_tot:,.2f}** (goods ${e_g:,.2f} + tax ${e_g * TAX:,.2f} + shipping $75 `EST`). Before the first charge (late Nov, store): `G03` ammo can,
-Harbor Freight 63750, $19.99 + $2.05 tax. **Do not place the pack cart (`P01`) until CR-I1-13 is answered** (12 AWG leads, 680 g on the 2026-11-09 listing).
+Harbor Freight 63750, $19.99 + $2.05 tax. The pack cart (`P01`) is released by D-64 after the two checks below; **no USD price is confirmed**, read the cart total before paying (pessimistic case $131.43).
 
 At order, in the cart:
 
 | Check | Value | Why |
 |---|---|---|
-| Pack connector | XT60 (listing: "XT60 to TRA plug") | CR-I1-06; the AS150U pair `F01` is crimped on afterwards |
-| Pack lead gauge | **>= 10 AWG** (listing says 12 AWG: fails) | CR-F1-14: 12 AWG rises 28.4 K at 30.3 A against 20 K |
-| Pack mass | <= 658 g, expect 550 g (listing says 680 g: fails) | `HANDOFF` L2, `CL-A3-GATE-MARGIN-680` |
+| Pack SKU | Ovonic 4S 6500 mAh **120C hard case, EC5, 2-pack**, listed 551 +/- 5 g, 135 x 46 x 49 mm | D-64, CR-E2-24; NOT the 130C XT60 SKU (680 g) |
+| Pack lead gauge | **>= 10 AWG** confirmed by the seller (the page does not print it); 12 AWG: stop, tell E2 and F1 | CR-F1-14: 12 AWG rises 28.4 K at 30.3 A against 20 K |
+| Pack mass on arrival | accept <= 592.6 g each (`CL-A1-PACK-ACCEPT`) | weigh both, log in E2 `pack_log.csv` |
 | RP3 V2 and Pocket Crush | FCC variant | CR-F5-06 |
 | FC | CoreWing F405 Wing APP V2 (not the Mini: no bdshot) | CR-F3-06 |
 | ESC | LANRC 4-pack: title, 45 A, 4 pieces, price | CR-I1-04 |
 
 ## Mid-December order, 15 Dec (airframe, mechanisms, fin and fastener kits)
 
-Place the Aloft carbon cart first (tubes, strips, 20x18 tube), then the rest.
+Place the Aloft carbon cart first (tubes, strips, 20x18 tube), then the rest. Servos (Savox) have a 7-day lead `EST`: the same day.
 
 {d_tab}
 
@@ -136,9 +140,16 @@ Place the Aloft carbon cart first (tubes, strips, 20x18 tube), then the rest.
 With the baseline reserve of ${res_b:,.2f}, X07 + X08 ($184.99) leave ${res_b - 184.99:,.2f}: both fit on baseline, not on pessimistic numbers.
 The gate test is the realised reserve (2 000 minus actual spend after the December receipts), not the pessimistic forecast.
 
-## Borrow list (not bought, not in the BOM): H1's rig, Jacobs Hall (D-39)
+## Borrow list (not bought, not in the spend): Jacobs Hall (D-39, D-57 levers 1 and 2, D-72)
 
-Needs a yes from Jacobs Hall staff in writing before 20 Nov (`T-I1-BORROW`). Bought for the rig: G06 ($17.97, 20 kgf cell kit, already in the baseline) and G12 ($17.00, new, <= $20).
+Needs a yes from Jacobs Hall staff **in writing before 20 Nov** (`T-I1-BORROW`, H1 obtains it). Two blocks fall in this list because the budget needs them:
+
+| Lever | Lines | Cost if refused (incl. tax) | Needed for |
+|---|---|---|---|
+| 1: soldering kit | `G07` Pinecil, `G08` PD supply, `G09` multimeter, `G10` solder/flux/wick (gate X10) | $94.80 | harness, ESC leads, AS150U re-termination (every build week) |
+| 2: hot-wire gear | `G11` 30 V 10 A supply + Ni80 wire, `H05` bow and template stock (gate X11) | $62.54 | wing core cutting (January) |
+
+Bought for the rig: G06 ($17.97, 20 kgf cell kit, already in the baseline), G12 ($17.00) and G13 ($9.00, fin-proof strain gauges, CR-C4-38).
 
 | Item | From H1's list ($ `EST`) | If not lent |
 |---|---|---|
@@ -156,7 +167,9 @@ Needs a yes from Jacobs Hall staff in writing before 20 Nov (`T-I1-BORROW`). Bou
 |---|---|---|
 | Carbon tubes `W03`, `W04` | overseas lead ~14 days is the critical path for the build start (19 Jan) | US-stock Aloft in the early order; December Aloft cart first; Aloft or overseas by the bend-test result (CR-I1-08, 10 Dec) |
 | Strips and 20x18 tube `D01`-`D03` | same Aloft cart, `EST` prices | order with the tubes; weigh the strips on arrival |
-| Ovonic packs `P01` | 12 AWG leads and 680 g on the listing; sale ends | CR-I1-13: E2 and F1 name a SKU; order first once named |
+| Ovonic packs `P01` | ships from Germany (~14 days); no USD price found; 10 AWG leads unconfirmed | order first on 20 Nov; ask the seller for the lead gauge; fallback Tattu 4S 6750 XT90 (605 g, A1 must accept) |
+| Savox servos `M01` | single-source 12 mm servo, price from D6 | order 15 Dec with a US dealer; the spare (X02, $46.29) first when the reserve allows |
+| Jacobs Hall loan | levers 1 and 2 rest on a written yes | H1 before 20 Nov; a refusal costs $157.34 and breaks the reserve gate |
 | LANRC ESC `B02` | listing unconfirmed | open the page before 20 Nov; Tekko32 fallback +$60 |
 | Small Parts adapters | out of stock; now gated X05 | E1's fallback: adapter in each motor box + Loctite 243 |
 | FC `A01` | firmware support unconfirmed; page moved | F3 gate before ordering |
