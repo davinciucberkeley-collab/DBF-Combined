@@ -36,18 +36,35 @@ OUT_POSTER = os.path.join(HERE, 'poster.png')
 
 FPS = 30
 W, H = 1280, 720
-# (start s, end s, label) - the label shows over [start, end)
+# (start s, end s, label, mechanism line) - the label shows over [start, end)
+#
+# WHAT TILTS IT - nothing tilts mechanically; the whole aircraft rotates on motor thrust (plus elevons once air flows):
+#   pitch : differential thrust between each fin's upper and lower motor (+/-0.19 m from the wing, aircraft z).
+#           Aircraft frame: x aft, z = top surface. Thrust points forward (-x). A motor at z = +0.19 (UL/UR, the
+#           TOP-SURFACE side) gives moment r x F = (0, 0, +0.19) x (-T, 0, 0) = (0, -0.19 T, 0), i.e. about -y. A
+#           rotation about -y swings the nose (-x) toward -z (the belly): NOSE-DOWN. So to pitch over from hover onto
+#           the wing the TOP-SIDE pair (UL, UR) speeds up and the BELLY-SIDE pair (LL, LR) slows; the back-transition
+#           is the reverse. (In hover the top surface faces away from the flight direction: the pair on the side away
+#           from where it will fly pushes harder and tips the nose toward the flight path.)
+#   roll  : left vs right motors.  yaw: motor torque plus the 7 deg motor cant.  elevons: once there is airflow
+#           (prop wash / airspeed); trailing edge down helps nose-down, up helps nose-up.
 PHASES = [
-    (0.0, 1.6, 'Ready: standing on its fin tips'),
-    (1.6, 4.6, 'Vertical take-off as a quadcopter'),
-    (4.6, 8.0, 'Transition: pitches 90\u00b0 onto the wing'),
-    (8.0, 11.2, 'Cruise on the wing \u00b7 ~16 m/s'),
-    (11.2, 13.8, 'Back-transition to hover'),
-    (13.8, 17.0, 'Vertical landing on the fin tips'),
+    (0.0, 1.6, 'Ready: standing on its fin tips',
+     'Nothing tilts mechanically: the whole aircraft is steered by its four motors'),
+    (1.6, 4.6, 'Vertical take-off as a quadcopter',
+     'All four motors at equal thrust: it climbs straight up'),
+    (4.6, 9.6, 'Transition: pitches 90\u00b0 onto the wing',
+     'Top-side motors speed up, belly-side motors slow \u2192 the nose tips over; elevons help once air flows'),
+    (9.6, 12.8, 'Cruise on the wing \u00b7 ~16 m/s',
+     'The same four motors now pull it forward; the wing carries the weight; elevons steer'),
+    (12.8, 16.4, 'Back-transition to hover',
+     'Belly-side motors speed up, top-side motors slow \u2192 the nose pitches back up'),
+    (16.4, 20.0, 'Vertical landing on the fin tips',
+     'Motors throttle down together; the fin-tip feet touch first'),
 ]
 DURATION = PHASES[-1][1]
 NFRAMES = int(round(DURATION * FPS))
-POSTER_FRAME = int(6.3 * FPS)            # mid-transition
+POSTER_FRAME = int(7.1 * FPS)            # mid-transition: thrust difference, pitching-moment arrow, elevons
 
 
 # =====================================================================================================================
@@ -62,20 +79,24 @@ def seg(t, t0, t1):
     return smooth((t - t0) / (t1 - t0))
 
 
+def bump(t, t0, t1):
+    return math.sin(math.pi * seg(t, t0, t1))
+
+
 V_CRUISE = 16.0          # m/s, shown at the true speed against the ground grid
 H_CRUISE = 4.2           # m above the ground
 
 
 def speed(t):
     """Forward speed (m/s, toward -x) at time t."""
-    if t < 4.6:
+    if t < 5.6:
         return 0.0
-    if t < 8.0:
-        return V_CRUISE * seg(t, 4.6, 7.9)
-    if t < 11.2:
+    if t < 9.6:
+        return V_CRUISE * seg(t, 5.6, 9.4)
+    if t < 12.8:
         return V_CRUISE
-    if t < 13.8:
-        return V_CRUISE * (1 - seg(t, 11.2, 13.3))
+    if t < 16.4:
+        return V_CRUISE * (1 - seg(t, 13.0, 15.4))
     return 0.0
 
 
@@ -100,47 +121,64 @@ def xpos(t):
 
 def state(t):
     """(x, z_above_ground_offset, theta_deg, bank_deg, prop_rate 0..1, elevon (pitch_deg, roll_deg))."""
-    # height of the wing centre above its ground-standing height
     if t < 2.4:
         z = 0.0
     elif t < 4.6:
         z = 2.6 * seg(t, 2.4, 4.8)
-    elif t < 8.0:
-        z = 2.6 + (H_CRUISE - 2.6) * seg(t, 4.4, 8.0)
-    elif t < 11.2:
+    elif t < 9.6:
+        z = 2.6 + (H_CRUISE - 2.6) * seg(t, 4.8, 9.6)
+    elif t < 12.8:
         z = H_CRUISE
-    elif t < 13.8:
-        z = H_CRUISE + 0.5 * math.sin(math.pi * seg(t, 11.2, 13.8)) - (H_CRUISE - 2.4) * seg(t, 12.6, 13.8)
+    elif t < 16.4:
+        z = H_CRUISE + 0.5 * bump(t, 12.8, 16.4) - (H_CRUISE - 2.4) * seg(t, 14.8, 16.4)
     else:
-        z = 2.4 * (1 - seg(t, 13.8, 16.0))
-    # attitude: 90 = nose up (hover), 0 = on the wing
+        z = 2.4 * (1 - seg(t, 16.4, 18.8))
+    # attitude: 90 = nose up (hover), 0 = on the wing. The thrust difference builds first (4.6-5.3 s) and the
+    # rotation follows slowly, so the cause reads before the effect.
     theta = 90.0
-    if 4.6 <= t < 11.2:
-        theta = 90.0 - 90.0 * seg(t, 4.7, 7.6)
-    elif t >= 11.2:
-        theta = 90.0 * seg(t, 11.3, 13.4)
-        # a little flare overshoot while it stops, then settles
-        theta += 8.0 * math.sin(math.pi * seg(t, 12.8, 14.4)) * (t < 14.4)
-    if 4.6 <= t < 11.2:
-        theta -= 0.0
-    bank = 0.0
-    if 9.3 <= t < 10.9:
-        bank = 10.0 * math.sin(2 * math.pi * seg(t, 9.3, 10.9))
-    # props: spin up 1.2-2.2 s, spin down after touchdown 16.0-16.8 s
-    rate = seg(t, 1.2, 2.2) * (1 - seg(t, 16.0, 16.8))
-    # elevons: pitch (+ = trailing edge up), roll (differential)
-    pe = 0.0
-    re_ = 0.0
-    pe += 14.0 * math.sin(math.pi * seg(t, 4.8, 7.4))        # pitching over in transition
-    pe += 12.0 * math.sin(math.pi * seg(t, 8.2, 9.2))        # cruise: pitch demo
-    re_ += 16.0 * math.sin(2 * math.pi * seg(t, 9.3, 10.9))  # cruise: roll demo (with the bank)
-    pe -= 16.0 * math.sin(math.pi * seg(t, 11.3, 13.3))      # back-transition: pitch up
+    if 4.6 <= t < 12.8:
+        theta = 90.0 - 90.0 * seg(t, 5.2, 8.9)
+    elif t >= 12.8:
+        theta = 90.0 * seg(t, 13.4, 15.6)
+        theta += 8.0 * bump(t, 15.0, 16.6) * (t < 16.6)          # small flare overshoot, then settles
+    bank = 10.0 * math.sin(2 * math.pi * seg(t, 10.9, 12.5)) if 10.9 <= t < 12.5 else 0.0
+    rate = seg(t, 1.2, 2.2) * (1 - seg(t, 18.9, 19.6))             # props spin up / spin down after touchdown
+    # elevons: pitch (+ = trailing edge UP = nose-up), roll (differential)
+    pe = -14.0 * bump(t, 5.4, 8.9)                                  # transition: TE down helps the nose down
+    pe += 4.0 * seg(t, 8.6, 9.6) * (1 - seg(t, 12.8, 13.4))        # cruise: small reflex trim
+    pe += 7.0 * bump(t, 9.9, 10.7)                                  # cruise: pitch input
+    re_ = 14.0 * math.sin(2 * math.pi * seg(t, 10.9, 12.5))        # cruise: roll input (with the bank)
+    pe += 16.0 * bump(t, 13.1, 15.6)                                # back-transition: TE up helps the nose up
     return xpos(t), z, theta, bank, rate, (pe, re_)
 
 
+def thrust(t):
+    """Commanded thrust per motor pair, 1.0 = hover share: (top-side pair UL/UR, belly-side pair LL/LR).
+    Top-side faster = nose-down (see the note above PHASES)."""
+    _, _, theta, _, rate, _ = state(t)
+    base = 0.45 + 0.55 * min(1.0, max(0.0, theta / 90.0))          # cruise needs ~45 % of hover thrust
+    base += 0.12 * bump(t, 2.3, 4.2) - 0.10 * bump(t, 16.4, 18.4)  # climb / descend
+    base *= rate * (1 - 0.75 * seg(t, 18.6, 18.9))                 # idle on touchdown
+    d = 0.34 * seg(t, 4.6, 5.3) * (1 - seg(t, 7.8, 9.0))            # pitch over: top-side pair faster
+    d -= 0.34 * seg(t, 12.8, 13.4) * (1 - seg(t, 15.0, 16.2))       # pitch back up: belly-side pair faster
+    return max(0.0, base + d), max(0.0, base - d)
+
+
+def overlays(t):
+    """(pitching-moment arc: +1 nose-down / -1 nose-up / 0, its opacity, elevon highlight opacity)."""
+    a_down = seg(t, 4.75, 5.15) * (1 - seg(t, 8.6, 9.0))
+    a_up = seg(t, 12.95, 13.35) * (1 - seg(t, 15.4, 15.8))
+    el = seg(t, 4.8, 5.2) * (1 - seg(t, 16.0, 16.4))
+    if a_down > 0:
+        return 1, a_down, el
+    if a_up > 0:
+        return -1, a_up, el
+    return 0, 0.0, el
+
+
 def phase_at(t):
-    for i, (a, b, _) in enumerate(PHASES):
-        if a <= t < b:
+    for i, ph in enumerate(PHASES):
+        if ph[0] <= t < ph[1]:
             return i
     return len(PHASES) - 1
 
@@ -231,6 +269,76 @@ def blender_render(argv):
     for e, (ob_j, j) in be.joints.items():
         if j.kind == 'revolute' and j.a.startswith('WNG-01'):
             elevons[j.a] = Vector(j.origin)
+    elevon_act = bb._principled('elevon act', bb.srgb('#E0661A'), 0.45)        # emphasis.act (design system)
+    el_anchor_ob = shown['WNG-012-R']                                          # starboard = the camera side
+    el_anchor_loc = sum((Vector(c) for c in el_anchor_ob.bound_box), Vector()) / 8
+
+    # ---- thrust arrows (one per motor, along its own thrust axis incl. the 7 deg cant) and pitching-moment arcs
+    import bmesh
+    acc_mat = bb._principled('thrust arrow', bb.srgb(bb.TOKENS['highlight']), 0.5)
+    pn = acc_mat.node_tree.nodes.get('Principled BSDF')
+    pn.inputs['Emission Color'].default_value = (*bb.srgb(bb.TOKENS['highlight']), 1)
+    pn.inputs['Emission Strength'].default_value = 0.6
+    arc_mat = bb._principled('moment arc', bb.srgb(bb.TOKENS['highlight']), 0.5, alpha=1.0)
+    arc_mat.blend_method = 'BLEND'
+    arc_mat.surface_render_method = 'BLENDED'
+    arc_bsdf = arc_mat.node_tree.nodes.get('Principled BSDF')
+    arc_bsdf.inputs['Emission Color'].default_value = (*bb.srgb(bb.TOKENS['highlight']), 1)
+    arc_bsdf.inputs['Emission Strength'].default_value = 0.6
+
+    def tube_mesh(name, path, radius, head_len=0.0, head_r=0.0, sides=14):
+        """Tube along a polyline (list of Vector) with an optional cone head on the last point."""
+        bm = bmesh.new()
+        rings = []
+        for k, pnt in enumerate(path):
+            tng = (path[min(k + 1, len(path) - 1)] - path[max(k - 1, 0)]).normalized()
+            q = tng.to_track_quat('Z', 'Y').to_matrix()
+            rings.append([bm.verts.new(pnt + q @ Vector((math.cos(2 * math.pi * i / sides) * radius,
+                                                         math.sin(2 * math.pi * i / sides) * radius, 0)))
+                          for i in range(sides)])
+        for r0, r1 in zip(rings, rings[1:]):
+            for i in range(sides):
+                bm.faces.new((r0[i], r0[(i + 1) % sides], r1[(i + 1) % sides], r1[i]))
+        bm.faces.new(list(reversed(rings[0])))
+        if head_len:
+            tng = (path[-1] - path[-2]).normalized()
+            q = tng.to_track_quat('Z', 'Y').to_matrix()
+            base = [bm.verts.new(path[-1] + q @ Vector((math.cos(2 * math.pi * i / sides) * head_r,
+                                                        math.sin(2 * math.pi * i / sides) * head_r, 0)))
+                    for i in range(sides)]
+            tip = bm.verts.new(path[-1] + tng * head_len)
+            for i in range(sides):
+                bm.faces.new((base[i], base[(i + 1) % sides], tip))
+            bm.faces.new(list(reversed(base)))
+        else:
+            bm.faces.new(rings[-1])
+        me = bpy.data.meshes.new(name)
+        bm.to_mesh(me)
+        bm.free()
+        for poly in me.polygons:
+            poly.use_smooth = True
+        ob = bpy.data.objects.new(name, me)
+        sc.collection.objects.link(ob)
+        ob.visible_shadow = False
+        return ob
+
+    HEAD = 0.075
+    arrows = []
+    for p in props:
+        sh = tube_mesh('thrust shaft ' + p['c'], [Vector((0, 0, 0)), Vector((0, 0, 1))], 0.011)
+        hd = tube_mesh('thrust head ' + p['c'], [Vector((0, 0, -0.001)), Vector((0, 0, 0))], 0.001, HEAD, 0.03)
+        sh.data.materials.append(acc_mat)
+        hd.data.materials.append(acc_mat)
+        arrows.append((p, sh, hd))
+    ARC_R, ARC_Y = 0.36, 0.74          # arc radius about the spanwise axis; placed just beyond the starboard tip
+
+    def arc_pts(a0, a1, n=28):         # angle 0 = straight up, 90 = toward the flight direction (-x)
+        return [Vector((-math.sin(math.radians(a0 + (a1 - a0) * k / n)) * ARC_R, 0,
+                        math.cos(math.radians(a0 + (a1 - a0) * k / n)) * ARC_R)) for k in range(n + 1)]
+    arc_down = tube_mesh('moment arc nose-down', arc_pts(18, 78), 0.011, 0.08, 0.032)
+    arc_up = tube_mesh('moment arc nose-up', arc_pts(78, 18), 0.011, 0.08, 0.032)
+    for o in (arc_down, arc_up):
+        o.data.materials.append(arc_mat)
 
     # ---- render settings
     sc.render.engine = 'BLENDER_EEVEE_NEXT'
@@ -419,9 +527,9 @@ def blender_render(argv):
 
     def cam_params(t):
         """azimuth (deg, from the flight direction -x toward +y, the starboard side), elevation, distance."""
-        az = 58 + 10 * seg(t, 4.0, 8.4) - 10 * seg(t, 11.0, 15.0)
-        el = 10 + 6 * seg(t, 1.5, 4.5) + 6 * seg(t, 5.0, 8.4) - 6 * seg(t, 11.0, 14.0) - 2 * seg(t, 13.5, 16.5)
-        dist = 2.7 + 0.45 * seg(t, 4.6, 8.0) - 0.45 * seg(t, 11.2, 14.0)
+        az = 60 + 8 * seg(t, 5.0, 9.4) - 8 * seg(t, 12.8, 17.0)
+        el = 10 + 6 * seg(t, 1.5, 4.5) + 6 * seg(t, 6.0, 9.4) - 6 * seg(t, 12.8, 16.0) - 2 * seg(t, 16.4, 19.5)
+        dist = 3.25 + 0.25 * seg(t, 5.0, 9.0) - 0.25 * seg(t, 12.8, 16.0)
         return az, el, dist
 
     def cam_target(t):
@@ -435,7 +543,10 @@ def blender_render(argv):
             acc += Vector((x, 0, z0 + z)) * wgt
             wsum += wgt
         # lead room ahead of the aircraft when it moves (it travels toward -x = screen right)
-        return acc / wsum + Vector((-0.28 * speed(t) / V_CRUISE, 0, -0.05))
+        # lead room ahead of the aircraft when it moves (it travels toward -x = screen right); in hover the thrust
+        # arrows stand above the props, so aim a little higher
+        th = state(t)[2] / 90.0
+        return acc / wsum + Vector((-0.28 * speed(t) / V_CRUISE, 0, 0.10 * th - 0.03))
 
     def pose(t):
         x, z, theta, bank, rate, (pe, rr) = state(t)
@@ -460,6 +571,35 @@ def blender_render(argv):
             local[pid] = Matrix.Translation(o) @ Matrix.Rotation(math.radians(dlt), 4, hinge_ax) @ Matrix.Translation(-o)
         for i, ob in shown.items():
             ob.matrix_world = A @ local.get(i, Matrix()) @ rest[i]
+        # thrust arrows: length proportional to the commanded thrust (1.0 = hover share -> 0.27 m)
+        top, belly = thrust(t)
+        A3 = A.to_3x3()
+        for p, sh, hd in arrows:
+            T = top if p['c'].startswith('U') else belly
+            ln = 0.27 * T
+            fwd = (A3 @ -p['ax']).normalized()
+            base = A @ (p['hub'] - p['ax'] * 0.04)
+            R = fwd.to_track_quat('Z', 'Y').to_matrix().to_4x4()
+            vis = ln > HEAD + 0.01
+            sh.hide_render = hd.hide_render = not vis
+            if vis:
+                sh.matrix_world = Matrix.Translation(base) @ R @ Matrix.Diagonal((1, 1, ln - HEAD, 1))
+                hd.matrix_world = Matrix.Translation(base + fwd * (ln - HEAD)) @ R
+        # pitching-moment arc: fixed in the world around the spanwise axis while the aircraft turns through it
+        sense, a_op, el_op = overlays(t)
+        cen_arc = Vector((x, ARC_Y, z0 + z))
+        for o, sg in ((arc_down, 1), (arc_up, -1)):
+            o.hide_render = not (sense == sg and a_op > 0.02)
+            o.matrix_world = Matrix.Translation(cen_arc)
+        arc_bsdf.inputs['Alpha'].default_value = a_op
+        # elevon emphasis while they are working (transitions and cruise)
+        for pid in elevons:
+            sl = shown[pid].material_slots[0]
+            if el_op > 0.5:
+                sl.link = 'OBJECT'
+                sl.material = elevon_act
+            else:
+                sl.link = 'DATA'
         disc_bsdf.inputs['Alpha'].default_value = 0.16 * smooth((rate - 0.4) / 0.6)
         for i in ('disc UL', 'disc UR', 'disc LL', 'disc LR'):
             shown[i].hide_render = rate < 0.4
@@ -483,12 +623,24 @@ def blender_render(argv):
         blob_c.default_value = (x - 0.03, 0.0, 0.0)
         blob_op.default_value = 0.5 * math.exp(-hgt / 1.6)
         bpy.context.view_layer.update()
+        # screen anchors for the 2-D labels (pixels, y down)
+        from bpy_extras.object_utils import world_to_camera_view
+
+        def px(pw):
+            v = world_to_camera_view(sc, cam, pw)
+            return [round(v.x * W, 1), round((1 - v.y) * H, 1)]
+        mid = Vector((-math.sin(math.radians(48)) * ARC_R, 0, math.cos(math.radians(48)) * ARC_R))
+        return {'pm': px(cen_arc + mid) + [round(a_op, 3)],
+                'el': px(el_anchor_ob.matrix_world @ el_anchor_loc) + [round(el_op, 3)],
+                'thrust': [round(top, 3), round(belly, 3)]}
 
     frames = [int(f) for f in a.frames.split(',') if f.strip()] if a.frames else list(range(NFRAMES))
     os.makedirs(a.out, exist_ok=True)
     t0 = time.time()
     for f in frames:
-        pose(f / FPS)
+        meta = pose(f / FPS)
+        with open(os.path.join(a.out, 'raw_%04d.json' % f), 'w') as fh:
+            json.dump(meta, fh)
         sc.render.filepath = os.path.join(a.out, 'raw_%04d.png' % f)
         bpy.ops.render.render(write_still=True)
         print('FRAME %d %.1f s' % (f, time.time() - t0), flush=True)
@@ -549,42 +701,83 @@ def _font(names, size):
 
 
 def overlay(src_png, dst_png, f):
+    import json
     from PIL import Image, ImageDraw
     t = f / FPS
     im = Image.open(src_png).convert('RGBA')
-    lay = Image.new('RGBA', im.size, (0, 0, 0, 0))
-    d = ImageDraw.Draw(lay)
-    ink, hi, muted = (18, 22, 25), (194, 84, 10), (107, 114, 128)
+    side = os.path.splitext(src_png)[0] + '.json'
+    meta = json.load(open(side)) if os.path.exists(side) else {}
+    ink, hi, muted, sub_c = (18, 22, 25), (194, 84, 10), (107, 114, 128), (61, 70, 82)
     sans = ['IBMPlexSans-Medium.ttf', 'IBMPlexSans-SemiBold.ttf', 'seguisb.ttf', 'segoeui.ttf', 'arial.ttf']
+    sans_r = ['IBMPlexSans-Regular.ttf', 'segoeui.ttf', 'arial.ttf']
     mono = ['IBMPlexMono-Medium.ttf', 'CascadiaMono.ttf', 'consola.ttf', 'cour.ttf']
-    f_title = _font(sans, 30)
+    f_title = _font(sans, 28)
+    f_sub = _font(sans_r, 18)
     f_mono = _font(mono, 15)
     f_head = _font(['seguisb.ttf', 'segoeui.ttf', 'arial.ttf'], 17)
+    f_call = _font(sans, 16)
+    f_leg = _font(sans_r, 15)
     i = phase_at(t)
-    a0, a1, label = PHASES[i]
-    # label fade: in over 0.25 s at the phase start (except the first), out over 0.2 s before the next phase
+    a0, a1, label, sub = PHASES[i]
     alpha = 1.0
     if i > 0:
         alpha = min(alpha, (t - a0) / 0.25)
     if i < len(PHASES) - 1:
         alpha = min(alpha, (a1 - t) / 0.2)
     alpha = max(0.0, min(1.0, alpha))
-    # top-left title
+    lay = Image.new('RGBA', im.size, (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    # top-left title, top-right legend
     d.text((36, 28), 'K09-L quad tailsitter', font=f_head, fill=ink + (230,))
     d.text((36, 52), 'HOW IT FLIES', font=f_mono, fill=muted + (230,))
-    # lower third panel
-    x0, y1 = 36, H - 40
-    tw = d.textlength(label, font=f_title)
-    pw = max(560, int(tw) + 110)
-    ph = 92
+    leg = 'thrust per motor (arrow length = command)'
+    lw = d.textlength(leg, font=f_leg)
+    lx1 = W - 36
+    lx0 = lx1 - lw - 46
+    d.line((lx0, 41, lx0 + 26, 41), fill=hi + (255,), width=4)
+    d.polygon([(lx0 + 34, 41), (lx0 + 24, 35), (lx0 + 24, 47)], fill=hi + (255,))
+    d.text((lx0 + 44, 31), leg, font=f_leg, fill=sub_c + (255,))
+
+    # anchored callouts (design-system label style: white box, grey stroke, orange anchor dot, ink leader)
+    def callout(key, text, dx, dy):
+        v = meta.get(key)
+        if not v or v[2] <= 0.02:
+            return
+        ax_, ay_, op = v
+        if not (0 <= ax_ <= W and 0 <= ay_ <= H):
+            return
+        A = int(255 * op)
+        tw = d.textlength(text, font=f_call)
+        if ay_ + dy + 30 > H - 175:                    # would sit behind the lower-third panel: go above instead
+            dy = -abs(dy) - 50
+        bx = min(max(ax_ + dx, 20), W - tw - 40)
+        by = min(max(ay_ + dy, 90), H - 170)
+        cx, cy = bx + (tw + 20) / 2, by + 15
+        ex = bx if ax_ < bx else (bx + tw + 20 if ax_ > bx + tw + 20 else cx)
+        ey = by + 15
+        d.line((ax_, ay_, ex, ey), fill=(255, 255, 255, A), width=5)
+        d.line((ax_, ay_, ex, ey), fill=ink + (A,), width=2)
+        d.rounded_rectangle((bx, by, bx + tw + 20, by + 30), radius=5, fill=(255, 255, 255, int(240 * op)),
+                            outline=(203, 210, 219, A))
+        d.text((bx + 10, by + 4), text, font=f_call, fill=ink + (A,))
+        d.ellipse((ax_ - 6, ay_ - 6, ax_ + 6, ay_ + 6), fill=(255, 255, 255, A))
+        d.ellipse((ax_ - 4, ay_ - 4, ax_ + 4, ay_ + 4), fill=hi + (A,))
+    callout('pm', 'pitching moment', 60, -70)
+    callout('el', 'elevons', -150, 60)
+
+    # lower-third panel: phase, title, mechanism line, progress
+    x0, y1 = 36, H - 36
+    tw = max(d.textlength(label, font=f_title), d.textlength(sub, font=f_sub))
+    pw = max(600, int(tw) + 60)
+    ph = 122
     y0 = y1 - ph
-    d.rounded_rectangle((x0, y0, x0 + pw, y1), radius=8, fill=(255, 255, 255, 236), outline=(203, 210, 219, 255))
+    d.rounded_rectangle((x0, y0, x0 + pw, y1), radius=8, fill=(255, 255, 255, 238), outline=(203, 210, 219, 255))
     d.rectangle((x0, y0 + 14, x0 + 4, y1 - 14), fill=hi + (255,))
-    d.text((x0 + 22, y0 + 14), '%d / %d' % (i + 1, len(PHASES)), font=f_mono, fill=hi + (255,))
-    # phase dots after the counter
-    dx = x0 + 22 + int(d.textlength('%d / %d' % (i + 1, len(PHASES)), font=f_mono)) + 14
+    cnt = '%d / %d' % (i + 1, len(PHASES))
+    d.text((x0 + 22, y0 + 12), cnt, font=f_mono, fill=hi + (255,))
+    dx = x0 + 22 + int(d.textlength(cnt, font=f_mono)) + 14
     for k in range(len(PHASES)):
-        cx, cy = dx + k * 16, y0 + 24
+        cx, cy = dx + k * 16, y0 + 22
         if k < i:
             d.ellipse((cx - 4, cy - 4, cx + 4, cy + 4), fill=ink + (200,))
         elif k == i:
@@ -592,16 +785,17 @@ def overlay(src_png, dst_png, f):
         else:
             d.ellipse((cx - 4, cy - 4, cx + 4, cy + 4), outline=muted + (200,), width=1)
     tl = Image.new('RGBA', im.size, (0, 0, 0, 0))
-    ImageDraw.Draw(tl).text((x0 + 22, y0 + 38), label, font=f_title, fill=ink + (int(255 * alpha),))
+    td = ImageDraw.Draw(tl)
+    td.text((x0 + 22, y0 + 34), label, font=f_title, fill=ink + (int(255 * alpha),))
+    td.text((x0 + 22, y0 + 72), sub, font=f_sub, fill=sub_c + (int(255 * alpha),))
     lay = Image.alpha_composite(lay, tl)
     d = ImageDraw.Draw(lay)
-    # progress bar inside the panel bottom
     bx0, bx1, by = x0 + 22, x0 + pw - 22, y1 - 10
     d.rounded_rectangle((bx0, by - 2, bx1, by + 1), radius=2, fill=(220, 225, 232, 255))
-    px = bx0 + (bx1 - bx0) * min(1.0, t / DURATION)
-    d.rounded_rectangle((bx0, by - 2, max(bx0 + 3, px), by + 1), radius=2, fill=hi + (255,))
-    for a, b, _ in PHASES[1:]:
-        tx = bx0 + (bx1 - bx0) * a / DURATION
+    pxx = bx0 + (bx1 - bx0) * min(1.0, t / DURATION)
+    d.rounded_rectangle((bx0, by - 2, max(bx0 + 3, pxx), by + 1), radius=2, fill=hi + (255,))
+    for ph_ in PHASES[1:]:
+        tx = bx0 + (bx1 - bx0) * ph_[0] / DURATION
         d.line((tx, by - 4, tx, by + 3), fill=(255, 255, 255, 255), width=2)
     im = Image.alpha_composite(im, lay).convert('RGB')
     im.save(dst_png, optimize=False, compress_level=1)
@@ -631,7 +825,7 @@ def driver():
     ap.add_argument('--frames', default='', help='comma list of frames: test render only (no encode)')
     ap.add_argument('--work', default=os.path.join(tempfile.gettempdir(), 'k09l_anim'))
     ap.add_argument('--skip-render', action='store_true')
-    ap.add_argument('--kbps', type=int, default=2200)
+    ap.add_argument('--kbps', type=int, default=2000)
     a = ap.parse_args()
     t0 = time.time()
     os.makedirs(a.work, exist_ok=True)
@@ -653,20 +847,23 @@ def driver():
          '--kbps', str(a.kbps)])
     # poster: the clean mid-transition key frame with its label
     Image.open(os.path.join(a.work, 'lab_%04d.png' % POSTER_FRAME)).save(OUT_POSTER, optimize=True)
-    # GIF: 720 px wide, 10 fps (every 3rd frame), one shared 128-colour palette, no dither (dither noise on the
-    # moving floor costs ~60 % more bytes); keeps it under GitHub's 10 MB inline limit
+    # GIF: 720 px wide, one shared 128-colour palette, no dither (dither noise on the moving floor costs ~60 % more
+    # bytes); 10 fps, dropping to 8 fps only if needed to stay under GitHub's 10 MB inline limit
     gw, gh = 720, int(round(720 * H / W))
-    gif_fps = 10
-    picks = [int(round(k * FPS / gif_fps)) for k in range(int(DURATION * gif_fps))]
-    ims = [Image.open(os.path.join(a.work, 'lab_%04d.png' % min(p, NFRAMES - 1))).resize((gw, gh), Image.LANCZOS)
-           for p in picks]
-    strip = Image.new('RGB', (gw, gh * 6))
-    for k in range(6):
-        strip.paste(ims[k * len(ims) // 6], (0, gh * k))
-    pal = strip.quantize(colors=128, method=Image.MEDIANCUT)
-    q = [im.quantize(palette=pal, dither=Image.NONE) for im in ims]
-    q[0].save(OUT_GIF, save_all=True, append_images=q[1:], duration=int(1000 / gif_fps), loop=0, optimize=True,
-              disposal=1)
+    for gif_fps in (10, 8):
+        picks = [int(round(k * FPS / gif_fps)) for k in range(int(DURATION * gif_fps))]
+        ims = [Image.open(os.path.join(a.work, 'lab_%04d.png' % min(p, NFRAMES - 1))).resize((gw, gh), Image.LANCZOS)
+               for p in picks]
+        strip = Image.new('RGB', (gw, gh * 6))
+        for k in range(6):
+            strip.paste(ims[k * len(ims) // 6], (0, gh * k))
+        pal = strip.quantize(colors=128, method=Image.MEDIANCUT)
+        q = [im.quantize(palette=pal, dither=Image.NONE) for im in ims]
+        q[0].save(OUT_GIF, save_all=True, append_images=q[1:], duration=int(1000 / gif_fps), loop=0, optimize=True,
+                  disposal=1)
+        print('gif %d fps: %.2f MB' % (gif_fps, os.path.getsize(OUT_GIF) / 1e6))
+        if os.path.getsize(OUT_GIF) < 9.8e6:
+            break
     for p in (OUT_MP4, OUT_GIF, OUT_POSTER):
         print('%-28s %7.2f MB' % (os.path.basename(p), os.path.getsize(p) / 1e6))
     print('render %.1f min, total %.1f min' % (t_render / 60, (time.time() - t0) / 60))

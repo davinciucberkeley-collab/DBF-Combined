@@ -7,7 +7,7 @@ what is finished and what is not is in [STATUS.md](STATUS.md); next steps for th
 
 > **Interactive version:** [`site/index.html`](site/index.html) is the whole programme as one web app: a rotatable 3-D model of the K09-L (aircraft, inside & wiring, structure, exploded), the clickable morphological chart, team, subsystems, simulations, status and documents. Open it from a local clone, or online once GitHub Pages is enabled for this branch.
 
-**How it flies** (17 s, [MP4 with full quality](showcase/animation/k09l-how-it-flies.mp4)):
+**How it flies**: nothing tilts mechanically; differential thrust between the top-side and belly-side motors rotates the whole aircraft, helped by the elevons (20 s, [MP4 with full quality](showcase/animation/k09l-how-it-flies.mp4)):
 
 ![K09-L flight sequence: vertical take-off, 90° transition, cruise, back-transition, vertical landing](showcase/animation/k09l-how-it-flies.gif)
 
