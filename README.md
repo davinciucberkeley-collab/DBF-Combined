@@ -1,6 +1,6 @@
 # DBF-Combined: Lift + Cruise VTOL "C0" (UC Berkeley capstone)
 
-> **New: the K09-L redesign.** See everything in one place: **[redesign/SHOWCASE.md](redesign/SHOWCASE.md)**: CAD renders, rotatable 3-D models, the morphological chart, the engineering team, simulations and status.
+> **New: the K09-L redesign.** See everything in one place: **[redesign/SHOWCASE.md](redesign/SHOWCASE.md)**: CAD renders, rotatable 3-D models, the morphological chart, the engineering team, simulations and status. On Windows, double-click **`Open K09-L Explorer.bat`** in the repo folder to open the interactive explorer (3-D model and everything else) in your browser.
 
 
 A hybrid VTOL with four vertical lift rotors for takeoff and landing, and a pusher prop and fixed wing for cruise. The
