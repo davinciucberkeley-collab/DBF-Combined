@@ -13,10 +13,10 @@ const esc = s => String(s === undefined || s === null ? '' : s).replace(/[&<>"']
 const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ---------------- state ----------------
-const S = { data: null, idx: null, mode: 'whole', colour: 'subsystem', explode: 0, sel: null, isolated: null, poses: {}, query: '',
+const S = { data: null, idx: null, mode: 'whole', colour: 'realistic', explode: 0, sel: null, isolated: null, poses: {}, query: '',
   attitude: 'cruise', kit: false, ready: false };
 const G = { renderer: null, scene: null, camera: null, controls: null, root: null, parts: new Map(), wires: new Map(), joints: new Map(),
-  box: new THREE.Box3(), size: 1, ground: null, key: null, dirty: true, anims: [], colours: {} };
+  box: new THREE.Box3(), size: 1, ground: null, key: null, dirty: true, anims: [], colours: {}, hover: null };
 
 // ---------------- colours from the design-system tokens ----------------
 const isDark = () => { const t = document.documentElement.getAttribute('data-theme');
@@ -29,6 +29,7 @@ function readColours() {
   c.status = {}; for (const s of M.STATUSES.concat(['UNVERIFIED', 'FAIL'])) c.status[s] = new THREE.Color(v('--st-' + s.toLowerCase()));
   c.accent = new THREE.Color(v('--accent')); c.fg = new THREE.Color(v('--fg')); c.fg3 = new THREE.Color(v('--fg-3'));
   c.bg = new THREE.Color(v('--stage-bottom')); c.ghost = new THREE.Color(isDark() ? '#7D8CA0' : '#9AA9BC');
+  c.outline = new THREE.Color(isDark() ? '#05070A' : '#1A1E24'); c.outlineOpacity = isDark() ? 0.55 : 0.32;
   c.css = { sub: k => v('--sub-' + k.toLowerCase()), status: s => v('--st-' + s.toLowerCase()) };
 }
 
@@ -53,17 +54,19 @@ function initThree() {
   const r = G.renderer;
   r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   r.outputColorSpace = THREE.SRGBColorSpace;
-  r.toneMapping = THREE.NeutralToneMapping;
+  r.toneMapping = THREE.AgXToneMapping; r.toneMappingExposure = 1.25;
   r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFSoftShadowMap;
   G.scene = new THREE.Scene();
+  // image-based lighting: a soft studio room (RoomEnvironment) prefiltered once by PMREM
   const pmrem = new THREE.PMREMGenerator(r);
-  G.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  G.scene.environmentIntensity = 0.85;
-  G.scene.add(new THREE.HemisphereLight(0xffffff, 0x8090a0, 0.35));
-  G.key = new THREE.DirectionalLight(0xffffff, 1.6); G.key.castShadow = true;
-  G.key.shadow.mapSize.set(2048, 2048); G.key.shadow.bias = -0.0004; G.key.shadow.radius = 4;
+  G.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture; pmrem.dispose();
+  G.scene.environmentIntensity = 0.9;
+  G.scene.add(new THREE.HemisphereLight(0xffffff, 0x9aa4b0, 0.25));
+  // one soft key light from above front-left, the only shadow caster (contact shadow on the ground)
+  G.key = new THREE.DirectionalLight(0xfff8f0, 1.5); G.key.castShadow = true;
+  G.key.shadow.mapSize.set(2048, 2048); G.key.shadow.bias = -0.0002; G.key.shadow.normalBias = 0.0015;
   G.scene.add(G.key, G.key.target);
-  G.camera = new THREE.PerspectiveCamera(32, 1, 0.005, 100);
+  G.camera = new THREE.PerspectiveCamera(30, 1, 0.005, 100);
   G.controls = new OrbitControls(G.camera, canvas);
   Object.assign(G.controls, { enableDamping: true, dampingFactor: 0.12, screenSpacePanning: true, zoomToCursor: true });
   G.controls.addEventListener('change', requestRender);
@@ -80,7 +83,7 @@ function resize() {
   requestRender();
 }
 function requestRender() { G.dirty = true; }
-const ease = t => 1 - Math.pow(1 - t, 3);
+const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;   // cubic in-out
 function animate(dur, fn) {
   return new Promise(res => { if (reduceMotion || dur <= 0) { fn(1); requestRender(); res(); return; }
     G.anims.push({ t0: performance.now(), dur, fn, res }); });
@@ -110,6 +113,7 @@ function sizeMarkers() {   // joint markers keep about the same size on screen a
 // ---------------- model ----------------
 function buildModel(gltf) {
   G.root = gltf.scene; G.scene.add(G.root); G.root.updateMatrixWorld(true);
+  { const s = new THREE.Box3().setFromObject(G.root).getSize(new THREE.Vector3()); G.sizeHint = Math.max(s.x, s.y, s.z) || 1; }
   const idx = S.idx;
   G.root.traverse(o => {
     const u = o.userData || {};
@@ -147,6 +151,15 @@ function buildModel(gltf) {
     G.parts.get(j.data.part_a).hinge = { edge: j.id, pivot: j.pos.clone(), axis: new THREE.Vector3(...M.ac2gl(ax)).normalize(),
       limits: Array.isArray(j.data.limits) ? j.data.limits : [-30, 30] };
   }
+  for (const [id, e] of G.parts) { const p = idx.parts.get(id) || { id }; e.meshes.forEach(m => realMaterial(m, lookOf(p))); }
+  for (const [id, w] of G.wires) w.meshes.forEach(m => realMaterial(m, wireLook(id)));
+  // crisp feature lines (Freestyle-like): 28 deg crease threshold, skipped on tiny parts
+  const _s = new THREE.Sphere();
+  for (const e of G.parts.values()) for (const m of e.meshes) {
+    if (!m.geometry.boundingSphere) m.geometry.computeBoundingSphere();
+    _s.copy(m.geometry.boundingSphere).applyMatrix4(m.matrixWorld);
+    if (_s.radius > G.sizeHint * 0.012) edgesOf(m, 'line');
+  }
   frameModel();
 }
 // bounding box, ground plane, key light and camera limits for the current attitude
@@ -159,14 +172,84 @@ function frameModel() {
   if (!G.sized) { G.size = Math.max(size.x, size.y, size.z) || 1; G.sized = true; }
   G.camera.near = G.size / 500; G.camera.far = G.size * 50; G.camera.updateProjectionMatrix();
   G.ground.scale.set(G.size * 8, G.size * 8, 1); G.ground.position.set(c.x, G.box.min.y - G.size * 0.01, c.z);
-  G.key.position.set(c.x - G.size * 0.6, c.y + G.size * 1.6, c.z + G.size * 0.9); G.key.target.position.copy(c);
-  const sc = G.key.shadow.camera; Object.assign(sc, { left: -G.size, right: G.size, top: G.size, bottom: -G.size, near: 0.01, far: G.size * 6 });
+  G.key.position.set(c.x - G.size * 0.5, c.y + G.size * 2.2, c.z + G.size * 0.7); G.key.target.position.copy(c);
+  const sc = G.key.shadow.camera; Object.assign(sc, { left: -G.size * 0.9, right: G.size * 0.9, top: G.size * 0.9, bottom: -G.size * 0.9, near: G.size * 0.5, far: G.size * 5 });
   sc.updateProjectionMatrix();
 }
 function prepMesh(m, ref) {
   const orig = Array.isArray(m.material) ? m.material[0] : m.material;
-  m.material = orig.clone(); m.userData.origColor = orig.color ? orig.color.clone() : new THREE.Color(0x999999);
+  m.material = m.userData.flatMat = orig.clone(); m.userData.origColor = orig.color ? orig.color.clone() : new THREE.Color(0x999999);
+  Object.assign(m.material, { polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });   // outlines sit on top
   m.userData.ref = ref; m.castShadow = true; m.receiveShadow = true;
+}
+
+// ---------------- realistic materials (the Blender look: foam, carbon, printed parts, electronics) ----------------
+// [colour, roughness, metalness, clearcoat]
+const LOOK = {
+  foam:    ['#E4E8ED', 0.62, 0, 0],      // XPS, foam board: off-white satin
+  skin:    ['#E2E6EC', 0.38, 0, 0.45],   // XPS under packing tape: same, with a tape sheen
+  carbon:  ['#1D1F23', 0.34, 0.15, 0.6], // CF tubes, rods, strips
+  printed: ['#B3B8C0', 0.55, 0, 0],      // PETG
+  asa:     ['#3D4148', 0.55, 0, 0],      // ASA mounts and pads
+  tpu:     ['#34373C', 0.75, 0, 0],
+  rubber:  ['#26282B', 0.88, 0, 0],      // neoprene, webbing, hook-and-loop
+  motor:   ['#2E3136', 0.32, 0.75, 0.3], // anodised can and bell
+  prop:    ['#2F3236', 0.62, 0, 0],      // glass-filled nylon
+  alu:     ['#C8CCD2', 0.3, 1, 0],
+  steel:   ['#A7ACB3', 0.34, 1, 0],
+  brass:   ['#C7A35E', 0.32, 1, 0],
+  pcb:     ['#2F6B4A', 0.45, 0.05, 0.35],// ESC, FC, power boards
+  dark:    ['#2A2D31', 0.5, 0.05, 0],    // servos, receivers, capacitors, other bought electronics
+  battery: ['#2B3340', 0.45, 0, 0.5],    // LiPo wrap
+  wire:    ['#B8261E', 0.42, 0, 0.2],    // power wiring and harness bundles
+  signal:  ['#33363B', 0.5, 0, 0.1],
+  epoxy:   ['#D8D3C7', 0.8, 0, 0],
+  label:   ['#F2F3F5', 0.4, 0, 0.2],
+  nylon:   ['#E6E5E0', 0.6, 0, 0],
+  coro:    ['#E6E9ED', 0.66, 0, 0],
+};
+// look key from the part's material / name / id (viewer-data.json); null = keep the GLB colour
+function lookOf(p) {
+  const mat = String(p.material || '').toLowerCase(), name = String(p.name || '').toLowerCase(), id = String(p.id || '');
+  const has = re => re.test(mat);
+  if (/^PRP-001/.test(id) || has(/^motor/)) return 'motor';
+  if (/^PRP-003/.test(id) || /\bprop\b/.test(name) && has(/nylon/)) return 'prop';
+  if (/^HRN-/.test(id) || has(/copper \+ silicone|wire/)) return 'wire';
+  if (has(/lipo/)) return 'battery';
+  if (has(/fr4/)) return 'pcb';
+  if (has(/electronics/)) return /\besc\b|flight controller|power module|power board|ubec|bus/.test(name) ? 'pcb' : 'dark';
+  if (has(/servo/)) return 'dark';
+  if (has(/brass/)) return 'brass';
+  if (has(/alumin/) && !has(/petg/)) return 'alu';
+  if (has(/steel/)) return 'steel';
+  if (has(/\bcf\b|carbon/)) return 'carbon';
+  if (has(/packing-tape skin|tape skin/)) return 'skin';
+  if (has(/packing tape/)) return /skin/.test(name) ? 'skin' : 'label';
+  if (has(/^asa/)) return 'asa';
+  if (has(/tpu/)) return 'tpu';
+  if (has(/neoprene|webbing|hook-and-loop|pouch|strap handle/)) return 'rubber';
+  if (has(/coroplast/)) return 'coro';
+  if (has(/epoxy/)) return 'epoxy';
+  if (has(/vinyl/)) return 'label';
+  if (has(/^nylon/)) return 'nylon';
+  if (has(/foam board/)) return 'foam';
+  if (has(/petg|pla|printed/)) return 'printed';
+  if (has(/xps|foam/)) return 'foam';
+  if (has(/silicone/)) return 'signal';
+  return null;
+}
+function realMaterial(mesh, key) {
+  const L = key && LOOK[key], src = mesh.userData.flatMat;
+  const col = L ? new THREE.Color(L[0]) : mesh.userData.origColor.clone();
+  const m = new THREE.MeshPhysicalMaterial({ color: col, roughness: L ? L[1] : 0.55, metalness: L ? L[2] : 0, clearcoat: L ? L[3] : 0,
+    clearcoatRoughness: 0.3, side: src.side, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
+  m.name = 'real ' + (key || src.name);
+  mesh.userData.realMat = m; mesh.userData.realColor = col.clone();
+}
+// wires: power gauges red, thin signal leads dark (polarity is not modelled: one mesh per +/- pair)
+function wireLook(id) {
+  const e = S.idx.edges.get(id), g = e && e.wire ? +e.wire.gauge_awg : NaN;
+  return !e || isNaN(g) || g <= 18 ? 'wire' : 'signal';
 }
 const _m = new THREE.Matrix4(), _r = new THREE.Matrix4(), _t = new THREE.Matrix4();
 function placePart(e) {
@@ -183,6 +266,7 @@ function placeAll() { for (const e of G.parts.values()) placePart(e); requestRen
 
 // ---------------- look: mode x colour x selection ----------------
 function partColour(p, mesh) {
+  if (S.colour === 'realistic') return mesh.userData.realColor;
   if (S.colour === 'status') return G.colours.status[p.status] || G.colours.status.PROPOSED;
   return G.colours.sub[M.subKey(p.id)];
 }
@@ -190,8 +274,9 @@ function edgesOf(mesh, kind) {
   const key = kind + 'Lines';
   if (!mesh.userData[key]) {
     const geo = mesh.userData.edgeGeo || (mesh.userData.edgeGeo = new THREE.EdgesGeometry(mesh.geometry, 28));
-    const mat = new THREE.LineBasicMaterial({ transparent: true, depthTest: kind !== 'sel', opacity: kind === 'sel' ? 0.95 : 0.28 });
-    const l = new THREE.LineSegments(geo, mat); l.renderOrder = kind === 'sel' ? 30 : 5; l.userData.noPick = true;
+    const mat = new THREE.LineBasicMaterial({ transparent: true, depthTest: kind !== 'sel', depthWrite: false,
+      opacity: kind === 'sel' ? 0.95 : kind === 'line' ? G.colours.outlineOpacity : 0.28 });
+    const l = new THREE.LineSegments(geo, mat); l.renderOrder = kind === 'sel' ? 30 : kind === 'line' ? 2 : 5; l.userData.noPick = true;
     mesh.add(l); mesh.userData[key] = l;
   }
   return mesh.userData[key];
@@ -206,18 +291,20 @@ function roleOf(id) {
 }
 function applyLook() {
   if (!G.root) return;
-  const c = G.colours, selId = S.sel ? S.sel.id : null, anySel = !!S.sel;
+  const c = G.colours, selId = S.sel ? S.sel.id : null, anySel = !!S.sel, real = S.colour === 'realistic';
   for (const [id, e] of G.parts) {
     const p = S.idx.parts.get(id), r = roleOf(id), isSel = selId === id;
     e.node.visible = r !== 'hidden';
     for (const m of e.meshes) {
-      const mat = m.material, ghost = r === 'ghost';
+      const ghost = r === 'ghost', mat = m.material = real ? m.userData.realMat : m.userData.flatMat;
       m.userData.ghost = ghost;
       if (ghost) { mat.color.copy(c.ghost); mat.opacity = 0.18; }
       else { mat.color.copy(partColour(p, m)); mat.opacity = 1; if (anySel && !isSel) mat.color.lerp(c.bg, 0.5); }
-      mat.transparent = ghost; mat.depthWrite = !ghost; m.castShadow = !ghost;
-      if (mat.emissive) mat.emissive.copy(isSel ? c.accent : new THREE.Color(0)).multiplyScalar(isSel ? 0.12 : 0);
-      mat.needsUpdate = true;
+      if (mat.transparent !== ghost) { mat.transparent = ghost; mat.needsUpdate = true; }
+      mat.depthWrite = !ghost; m.castShadow = !ghost;
+      tint(m, id);
+      if (m.userData.lineLines) { const l = m.userData.lineLines; l.visible = !ghost && !isSel; l.material.color.copy(c.outline);
+        l.material.opacity = c.outlineOpacity * (anySel && !isSel ? 0.5 : 1); }
       if (ghost || m.userData.ghostLines) { const l = edgesOf(m, 'ghost'); l.visible = ghost; l.material.color.copy(c.fg3); }
       if (isSel || m.userData.selLines) { const l = edgesOf(m, 'sel'); l.visible = isSel; l.material.color.copy(c.accent); }
     }
@@ -226,7 +313,8 @@ function applyLook() {
   for (const [id, w] of G.wires) {
     const isSel = selId === id;
     w.node.visible = isSel || (wiresOn && !S.isolated);
-    for (const m of w.meshes) { m.material.color.copy(m.userData.origColor); if (anySel && !isSel) m.material.color.lerp(c.bg, 0.5);
+    for (const m of w.meshes) { m.material = real ? m.userData.realMat : m.userData.flatMat;
+      m.material.color.copy(real ? m.userData.realColor : m.userData.origColor); if (anySel && !isSel) m.material.color.lerp(c.bg, 0.5);
       if (m.material.emissive) m.material.emissive.copy(c.accent).multiplyScalar(isSel ? 0.35 : 0); }
   }
   const jointsOn = M.showJoints(S.mode) && S.explode < 0.01 && !S.isolated;
@@ -239,8 +327,23 @@ function applyLook() {
   renderLegend(); requestRender();
 }
 
+// selection / hover glow on one mesh
+const _black = new THREE.Color(0);
+function tint(m, id) {
+  const mat = m.material; if (!mat.emissive) return;
+  const sel = S.sel && S.sel.id === id, hov = G.hover === id && !sel;
+  mat.emissive.copy(sel || hov ? G.colours.accent : _black).multiplyScalar(sel ? 0.16 : hov ? 0.09 : 0);
+}
+function setHover(id) {
+  if (id === G.hover) return;
+  const prev = G.hover; G.hover = id;
+  for (const k of [prev, id]) if (k) { const e = G.parts.get(k) || G.wires.get(k); if (e) e.meshes.forEach(m => tint(m, k)); }
+  G.renderer.domElement.style.cursor = id ? 'pointer' : '';
+  requestRender();
+}
+
 // ---------------- camera ----------------
-const ISO = new THREE.Vector3(-1, 0.75, 1.15).normalize();   // front-left, above
+const ISO = new THREE.Vector3(-0.95, 0.85, 1.25).normalize();   // front-left, above (as hero-iso.png)
 function visibleBox() {
   G.root.updateMatrixWorld(true);
   const b = new THREE.Box3();
@@ -248,12 +351,12 @@ function visibleBox() {
   return b.isEmpty() ? G.box.clone() : b;
 }
 function fit(box, dir, dur) {
-  const sph = box.getBoundingSphere(new THREE.Sphere()), r = Math.max(sph.radius, G.size * 0.04);
+  const sph = box.getBoundingSphere(new THREE.Sphere()), r = Math.max(sph.radius, G.size * 0.12);   // a small part keeps its neighbours in view
   const cam = G.camera, ctl = G.controls;
   dir = (dir || cam.position.clone().sub(ctl.target)).clone().normalize();
   const fromT = ctl.target.clone(), fromP = cam.position.clone(), toT = sph.center.clone();
-  const toP = toT.clone().add(dir.multiplyScalar(r / Math.sin(THREE.MathUtils.degToRad(cam.fov / 2)) * (cam.aspect < 1 ? 1.0 / Math.max(cam.aspect, 0.5) * 0.9 : 0.9)));
-  return animate(dur === undefined ? 600 : dur, k => {
+  const toP = toT.clone().add(dir.multiplyScalar(r / Math.sin(THREE.MathUtils.degToRad(cam.fov / 2)) * (cam.aspect < 1 ? 1.0 / Math.max(cam.aspect, 0.5) * 0.98 : 0.98)));
+  return animate(dur === undefined ? 750 : dur, k => {
     ctl.target.lerpVectors(fromT, toT, k); cam.position.lerpVectors(fromP, toP, k);
     cam.updateProjectionMatrix(); cam.lookAt(ctl.target);
   });
@@ -452,6 +555,7 @@ function summaryHtml() {
 // ---------------- legend, hint, counts ----------------
 function renderLegend() {
   const L = $('#legend'); let items = [];
+  if (S.colour === 'realistic') { L.innerHTML = ''; return; }
   if (S.colour === 'status') {
     const by = {}; for (const p of S.data.parts) if (G.parts.has(p.id) && roleOf(p.id) !== 'hidden') by[p.status] = (by[p.status] || 0) + 1;
     items = M.STATUSES.filter(s => by[s]).map(s => [G.colours.css.status(s), s + ' ' + by[s]]);
@@ -504,6 +608,14 @@ function wire() {
     if (!down || !G.root || Math.hypot(ev.clientX - down.x, ev.clientY - down.y) > 5) { down = null; return; }
     down = null; const hit = pick(ev); select(hit ? hit.ref : null);
   });
+  let hoverQ = null;
+  cv.addEventListener('pointermove', ev => {
+    if (!G.root || ev.buttons || ev.pointerType === 'touch') return;
+    if (!hoverQ) requestAnimationFrame(() => { const ev2 = hoverQ; hoverQ = null; const h = pick(ev2);
+      setHover(h && h.ref && !h.object_ghost && (G.parts.has(h.ref.id) || G.wires.has(h.ref.id)) ? h.ref.id : null); });
+    hoverQ = ev;
+  });
+  cv.addEventListener('pointerleave', () => G.root && setHover(null));
   cv.addEventListener('dblclick', ev => { if (!G.root) return; const hit = pick(ev); if (hit) select(hit.ref, { focus: true }); else fit(visibleBox()); });
   document.addEventListener('keydown', ev => {
     if (ev.target.closest('input, textarea, select') || ev.ctrlKey || ev.metaKey || ev.altKey || !G.root) return;

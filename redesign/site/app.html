@@ -137,7 +137,8 @@
         </div>
         <span class="spacer"></span>
         <div class="ds-seg" id="colours" role="group" aria-label="Colour by">
-          <button data-colour="subsystem" aria-pressed="true">Subsystem</button>
+          <button data-colour="realistic" aria-pressed="true" title="As-built materials: foam, carbon, printed parts, electronics">Realistic</button>
+          <button data-colour="subsystem" aria-pressed="false">Subsystem</button>
           <button data-colour="status" aria-pressed="false">Status</button>
         </div>
         <button class="ds-btn v-small" id="kit" aria-pressed="false" title="Show the transport box and ground kit (not flying mass)">Ground kit</button>
@@ -281,6 +282,18 @@
       <span class="ds-source">team/A1/ga-3view.svg · drawn by team/A1/draw_ga.py from params/params.json</span>
     </figcaption>
   </figure>
+  </section>
+
+  <section class="c" id="how-it-flies">
+    <header>
+      <span class="secno">How it flies · rendered in Blender from the as-designed CAD</span>
+      <h2 class="ds-h1">Take-off, transition, cruise, landing in 17 seconds</h2>
+      <p class="use">It stands on its fin tips, lifts off as a quadcopter, pitches 90° onto the wing for cruise on the same four motors, then pitches back up and lands on its feet.</p>
+    </header>
+    <figure class="fig">
+      <video src="assets/animation/k09l-how-it-flies.mp4" poster="assets/animation/poster.png" controls autoplay muted loop playsinline preload="metadata" style="display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--panel-2)"></video>
+      <figcaption><span class="ds-source">showcase/animation/render_animation.py · EEVEE, 1280×720, 30 fps · phase timing illustrative, not a simulated trajectory</span></figcaption>
+    </figure>
   </section>
 
   <section class="c" id="renders">

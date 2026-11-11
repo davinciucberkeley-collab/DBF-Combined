@@ -56,6 +56,8 @@ section.c { scroll-margin-top: calc(var(--topbar-h) + 16px); }
 .v-tree details[open] > summary::before { transform: rotate(45deg); }
 .v-tree summary:hover { background: var(--panel-2); }
 .v-tree summary small { font: var(--weight-regular) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); margin-left: 4px; }
+/* i.sub: the subsystem-card rule `.sub` in site.css (padding, border, grid) must not reach the swatches */
+i.sub { display: inline-block; padding: 0; border: 0; gap: 0; min-width: 0; flex: none; }
 .v-tree summary .sub, .v-row .sub { width: 10px; height: 10px; border-radius: 2px; background: var(--sub, var(--fg-3)); }
 .v-tree summary .m { font: var(--weight-regular) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); }
 .v-row { width: 100%; display: grid; grid-template-columns: 10px auto 1fr auto; align-items: center; gap: 8px; padding: 5px 8px 5px 28px; border: 0; border-radius: var(--radius-sm); background: none; color: var(--fg-2); font: inherit; text-align: left; cursor: pointer; }
