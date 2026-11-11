@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>K09-L Program Overview</title>
+<meta name="description" content="UC Berkeley MEng capstone VTOL redesign: the K09-L quad tailsitter, its engineering team, subsystems, simulations and status at revision A1-R5.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* ---- tokens (redesign/design-system/tokens.css, inlined) ---- */
+:root {
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
+  --text-xs: 0.75rem; --text-sm: 0.875rem; --text-md: 0.9375rem; --text-lg: 1.125rem; --text-xl: 1.5rem; --text-2xl: 2rem; --text-value: 1.375rem;
+  --leading-tight: 1.15; --leading-snug: 1.3; --leading-body: 1.55;
+  --weight-regular: 400; --weight-medium: 500; --weight-semibold: 600;
+  --tracking-tight: -0.015em; --tracking-caps: 0.04em;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+  --measure: 68ch; --page-max: 1200px; --topbar-h: 52px;
+  --radius-xs: 3px; --radius-sm: 5px; --radius-md: 8px; --radius-lg: 12px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --dur-fast: 120ms; --dur-base: 200ms;
+  --highlight: #C2540A; --highlight-strong: #E0661A; --highlight-wash: #FBE9DC;
+  --sub-wng: #4C8DE0; --sub-fus: #7F8C9E; --sub-bms: #2BA6A0; --sub-tal: #8E6FD8; --sub-ger: #B07A3A; --sub-psh: #D45C8E; --sub-pwr: #E0613A; --sub-hrn: #D9A91E; --sub-avn: #5DB24D;
+  --stage-top: #F3F5F8; --stage-bottom: #DCE1E8; --stage-grid: #B9C0CA;
+  --gutter-l: max(16px, env(safe-area-inset-left, 0px)); --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+}
+:root, :root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #F6F7F9; --panel: #FFFFFF; --panel-2: #EEF1F5; --panel-3: #E2E6EC;
+  --line: #E3E7ED; --line-2: #CBD2DB; --line-3: #9AA4B1;
+  --fg: #121619; --fg-2: #4B5563; --fg-3: #6B7280; --fg-inverse: #FFFFFF;
+  --accent: #1F5FC7; --accent-hover: #174DA6; --accent-wash: #E6EEFB; --accent-line: #A9C3EE; --on-accent: #FFFFFF;
+  --st-unverified: #8A5600; --st-unverified-wash: #FBEFD6; --st-unverified-line: #E6C27A;
+  --st-proposed: #4B5563; --st-proposed-wash: #EEF0F3; --st-proposed-line: #C5CBD3;
+  --st-modelled: #5B3FB5; --st-modelled-wash: #ECE8FA; --st-modelled-line: #BFB2EA;
+  --st-checked: #0E6F74; --st-checked-wash: #DDF3F2; --st-checked-line: #8FD1D0;
+  --st-verified: #1A6E3A; --st-verified-wash: #DDF5E5; --st-verified-line: #8FD4A8;
+  --st-fail: #B42323; --st-fail-wash: #FBE4E4; --st-fail-line: #EBA3A3;
+  --shadow-pop: 0 12px 32px rgba(18,22,25,0.14), 0 2px 6px rgba(18,22,25,0.08);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0F1217; --panel: #161B22; --panel-2: #1D232C; --panel-3: #262D38;
+    --line: #232A34; --line-2: #313A46; --line-3: #4B5563;
+    --fg: #E6EAF0; --fg-2: #A7B0BD; --fg-3: #8891A0; --fg-inverse: #0F1217;
+    --accent: #6EA8FE; --accent-hover: #8FBCFF; --accent-wash: #17273F; --accent-line: #2E4E80; --on-accent: #0F1217;
+    --st-unverified: #F2C063; --st-unverified-wash: #3A2B0C; --st-unverified-line: #6B4F17;
+    --st-proposed: #B4BCC8; --st-proposed-wash: #232A34; --st-proposed-line: #3C4552;
+    --st-modelled: #B9A6FF; --st-modelled-wash: #2A2250; --st-modelled-line: #4D3F8C;
+    --st-checked: #5CD0D4; --st-checked-wash: #0F3537; --st-checked-line: #1E6367;
+    --st-verified: #6ADB94; --st-verified-wash: #10361F; --st-verified-line: #1F6639;
+    --st-fail: #F58A8A; --st-fail-wash: #43191B; --st-fail-line: #7A3336;
+    --highlight: #FF8A3D; --highlight-strong: #FFA266; --highlight-wash: #3A2112;
+    --stage-top: #1B212A; --stage-bottom: #0F1318; --stage-grid: #3A4250;
+    --shadow-pop: 0 12px 32px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.35);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0F1217; --panel: #161B22; --panel-2: #1D232C; --panel-3: #262D38;
+  --line: #232A34; --line-2: #313A46; --line-3: #4B5563;
+  --fg: #E6EAF0; --fg-2: #A7B0BD; --fg-3: #8891A0; --fg-inverse: #0F1217;
+  --accent: #6EA8FE; --accent-hover: #8FBCFF; --accent-wash: #17273F; --accent-line: #2E4E80; --on-accent: #0F1217;
+  --st-unverified: #F2C063; --st-unverified-wash: #3A2B0C; --st-unverified-line: #6B4F17;
+  --st-proposed: #B4BCC8; --st-proposed-wash: #232A34; --st-proposed-line: #3C4552;
+  --st-modelled: #B9A6FF; --st-modelled-wash: #2A2250; --st-modelled-line: #4D3F8C;
+  --st-checked: #5CD0D4; --st-checked-wash: #0F3537; --st-checked-line: #1E6367;
+  --st-verified: #6ADB94; --st-verified-wash: #10361F; --st-verified-line: #1F6639;
+  --st-fail: #F58A8A; --st-fail-wash: #43191B; --st-fail-line: #7A3336;
+  --highlight: #FF8A3D; --highlight-strong: #FFA266; --highlight-wash: #3A2112;
+  --stage-top: #1B212A; --stage-bottom: #0F1318; --stage-grid: #3A4250;
+  --shadow-pop: 0 12px 32px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.35);
+}
+@media print {
+  :root, :root[data-theme="dark"] { color-scheme: light; --bg: #FFFFFF; --panel: #FFFFFF; --panel-2: #F2F3F5; --panel-3: #E6E8EB; --line: #D5D9DE; --line-2: #B9BFC7; --line-3: #8A929C; --fg: #111417; --fg-2: #3D444D; --fg-3: #5C646E; --accent: #1F5FC7; --accent-wash: #FFFFFF; --accent-line: #1F5FC7; --shadow-pop: none; }
+}
+
+/* ---- base ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font: var(--weight-regular) var(--text-md)/var(--leading-body) var(--font-sans); font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; accent-color: var(--accent); overflow-x: hidden; }
+::selection { background: var(--accent-wash); color: var(--fg); }
+:focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-xs); }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--line-3); border: 3px solid var(--bg); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+a { color: inherit; }
+b, strong { font-weight: var(--weight-semibold); }
+code { font-family: var(--font-mono); font-size: 0.9em; }
+img { max-width: 100%; }
+
+/* ---- components (redesign/design-system/components.css, the parts this page uses) ---- */
+.ds-h1 { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin: 0; text-wrap: balance; }
+.ds-h2 { font-size: var(--text-lg); font-weight: var(--weight-semibold); line-height: var(--leading-snug); margin: 0; }
+.ds-h3 { font-size: var(--text-md); font-weight: var(--weight-semibold); line-height: var(--leading-snug); margin: 0; }
+.ds-display { font-size: var(--text-2xl); font-weight: var(--weight-semibold); line-height: var(--leading-tight); letter-spacing: var(--tracking-tight); margin: 0; text-wrap: balance; }
+.ds-body { color: var(--fg-2); max-width: var(--measure); margin: 0; text-wrap: pretty; }
+.ds-meta { font-size: var(--text-xs); color: var(--fg-3); line-height: var(--leading-snug); }
+.ds-label { font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--fg-3); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
+.ds-mono, .ds-num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.ds-unit { color: var(--fg-3); font-size: 0.85em; margin-left: 0.15em; }
+.ds-source { font: var(--weight-regular) var(--text-xs)/1.5 var(--font-mono); color: var(--fg-3); overflow-wrap: anywhere; }
+.ds-source b { font-family: var(--font-sans); font-weight: var(--weight-semibold); color: var(--fg-2); }
+.ds-link { color: var(--fg); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.ds-link:hover { color: var(--accent); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--bg); }
+.ds-topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; height: var(--topbar-h); display: flex; align-items: center; gap: var(--space-4); padding: 0 var(--gutter-r) 0 var(--gutter-l); background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.ds-brand { display: flex; align-items: center; gap: var(--space-2); font-weight: var(--weight-semibold); color: var(--fg); text-decoration: none; white-space: nowrap; }
+.ds-brand .mark { width: 22px; height: 22px; color: var(--accent); flex: none; }
+.ds-brand .ver { font: var(--weight-regular) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); }
+.ds-nav { display: flex; gap: var(--space-1); margin-left: var(--space-3); overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.ds-nav::-webkit-scrollbar { display: none; }
+.ds-nav a { padding: 6px 10px; white-space: nowrap; border-radius: var(--radius-sm); font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--fg-2); text-decoration: none; transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.ds-nav a:hover { background: var(--panel-2); color: var(--fg); }
+.ds-topbar .spacer { flex: 1; }
+.ds-iconbtn { width: 34px; height: 34px; flex: none; display: inline-grid; place-items: center; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: var(--panel); color: var(--fg-2); cursor: pointer; transition: background var(--dur-fast) var(--ease-out); }
+.ds-iconbtn:hover { background: var(--panel-2); color: var(--fg); }
+.ds-iconbtn svg { width: 18px; height: 18px; }
+.ds-btn { display: inline-flex; align-items: center; gap: var(--space-2); height: 34px; padding: 0 14px; border-radius: var(--radius-sm); border: 1px solid var(--line-2); background: var(--panel); color: var(--fg); font: var(--weight-medium) var(--text-sm)/1 var(--font-sans); cursor: pointer; text-decoration: none; white-space: nowrap; transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+.ds-btn:hover { background: var(--panel-2); }
+.ds-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.ds-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.ds-btn svg { width: 16px; height: 16px; }
+.ds-badge { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: var(--radius-xs); font: var(--weight-semibold) var(--text-xs)/1 var(--font-mono); letter-spacing: var(--tracking-caps); white-space: nowrap; color: var(--st-c); background: var(--st-w); box-shadow: inset 0 0 0 1px var(--st-l); }
+.ds-badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--st-c); }
+.ds-badge.dot { padding: 0; height: auto; box-shadow: none; background: none; font-size: 0; }
+.ds-badge.dot::before { width: 9px; height: 9px; }
+[data-status="UNVERIFIED"] { --st-c: var(--st-unverified); --st-w: var(--st-unverified-wash); --st-l: var(--st-unverified-line); }
+[data-status="PROPOSED"]   { --st-c: var(--st-proposed);   --st-w: var(--st-proposed-wash);   --st-l: var(--st-proposed-line); }
+[data-status="MODELLED"]   { --st-c: var(--st-modelled);   --st-w: var(--st-modelled-wash);   --st-l: var(--st-modelled-line); }
+[data-status="CHECKED"]    { --st-c: var(--st-checked);    --st-w: var(--st-checked-wash);    --st-l: var(--st-checked-line); }
+[data-status="VERIFIED"]   { --st-c: var(--st-verified);   --st-w: var(--st-verified-wash);   --st-l: var(--st-verified-line); }
+[data-status="FAIL"]       { --st-c: var(--st-fail);       --st-w: var(--st-fail-wash);       --st-l: var(--st-fail-line); }
+/* programme phase words on the same badge component */
+[data-phase="DONE"]        { --st-c: var(--st-checked);    --st-w: var(--st-checked-wash);    --st-l: var(--st-checked-line); }
+[data-phase="PARTIAL"]     { --st-c: var(--st-unverified); --st-w: var(--st-unverified-wash); --st-l: var(--st-unverified-line); }
+[data-phase="NOT STARTED"] { --st-c: var(--st-proposed);   --st-w: var(--st-proposed-wash);   --st-l: var(--st-proposed-line); }
+.ds-mark { font: var(--weight-semibold) var(--text-xs)/1 var(--font-mono); letter-spacing: var(--tracking-caps); color: var(--st-c, var(--fg-3)); }
+.ds-chip { display: inline-flex; align-items: center; gap: 8px; height: 28px; padding: 0 10px 0 8px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: var(--panel); color: var(--fg); font-size: var(--text-sm); text-decoration: none; transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out); }
+.ds-chip:hover { border-color: var(--accent-line); background: var(--accent-wash); }
+.ds-chip .sub { width: 10px; height: 10px; border-radius: 2px; background: var(--sub, var(--fg-3)); flex: none; }
+.ds-chip .id { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--fg-2); }
+[data-sub="WNG"] { --sub: var(--sub-wng); } [data-sub="FUS"] { --sub: var(--sub-fus); } [data-sub="BMS"] { --sub: var(--sub-bms); }
+[data-sub="TAL"] { --sub: var(--sub-tal); } [data-sub="GER"] { --sub: var(--sub-ger); } [data-sub="PSH"] { --sub: var(--sub-psh); }
+[data-sub="PWR"] { --sub: var(--sub-pwr); } [data-sub="HRN"] { --sub: var(--sub-hrn); } [data-sub="AVN"] { --sub: var(--sub-avn); }
+.ds-panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); }
+.ds-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-4) var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+.ds-card > header { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); }
+.ds-grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.ds-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--panel); overflow: hidden; }
+.ds-metric { padding: var(--space-3) var(--space-4); border-right: 1px solid var(--line); display: grid; gap: 4px; min-width: 0; align-content: start; }
+.ds-metric:last-child { border-right: 0; }
+.ds-metric .k { font-size: var(--text-sm); color: var(--fg-2); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.ds-metric .v { font: var(--weight-medium) var(--text-value)/1.1 var(--font-mono); color: var(--fg); letter-spacing: -0.01em; }
+.ds-metric .v .ds-unit { font-size: 12px; }
+.ds-metric .lim { font-size: var(--text-xs); color: var(--fg-3); font-family: var(--font-mono); }
+.ds-metric .lim b { font-weight: var(--weight-medium); color: var(--st-c, var(--fg-2)); }
+@media (max-width: 720px) { .ds-metric { border-right: 0; border-bottom: 1px solid var(--line); } .ds-metric:last-child { border-bottom: 0; } }
+.ds-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: var(--text-sm); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
+.ds-table th { text-align: left; font: var(--weight-medium) var(--text-xs)/1.3 var(--font-sans); letter-spacing: var(--tracking-caps); text-transform: uppercase; color: var(--fg-3); padding: 10px 12px; border-bottom: 1px solid var(--line-2); background: var(--panel); white-space: nowrap; }
+.ds-table td { padding: 9px 12px; border-bottom: 1px solid var(--line); color: var(--fg-2); vertical-align: top; }
+.ds-table tr:last-child td { border-bottom: 0; }
+.ds-table tbody tr:hover td { background: var(--panel-2); }
+.ds-table td:first-child { color: var(--fg); }
+.ds-table .num, .ds-table th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ds-table td.num { color: var(--fg); }
+.ds-table .src { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--fg-3); }
+.ds-actions { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: act; }
+.ds-actions li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; color: var(--fg); font-size: var(--text-sm); line-height: 1.45; min-width: 0; }
+.ds-actions li::before { counter-increment: act; content: counter(act); width: 22px; height: 22px; border-radius: 50%; background: var(--highlight); color: #fff; font: var(--weight-semibold) 12px/22px var(--font-mono); text-align: center; }
+.ds-actions li b { font-weight: var(--weight-semibold); }
+.ds-callout { display: grid; grid-template-columns: 20px 1fr; gap: 10px; padding: 10px 12px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: var(--panel-2); font-size: var(--text-sm); color: var(--fg-2); max-width: var(--measure); }
+.ds-callout svg { width: 18px; height: 18px; margin-top: 1px; color: var(--fg-2); }
+.ds-callout b { color: var(--fg); font-weight: var(--weight-semibold); }
+.ds-callout.caution { border-color: var(--st-unverified-line); background: var(--st-unverified-wash); }
+.ds-callout.caution svg, .ds-callout.caution b { color: var(--st-unverified); }
+.ds-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: var(--text-xs); color: var(--fg-2); }
+.ds-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.ds-legend i { width: 12px; height: 12px; border-radius: 3px; background: var(--sub, var(--st-c, var(--fg-3))); }
+code.ds-inline { font: var(--weight-regular) 0.85em/1.4 var(--font-mono); padding: 2px 5px; border-radius: var(--radius-xs); background: var(--panel-2); color: var(--fg); overflow-wrap: anywhere; }
+.ds-row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+
+/* ---- page ---- */
+.page { max-width: var(--page-max); margin: 0 auto; padding: var(--space-6) var(--gutter-r) var(--space-8) var(--gutter-l); display: flex; flex-direction: column; gap: var(--space-8); }
+section.c { display: flex; flex-direction: column; gap: var(--space-4); scroll-margin-top: calc(var(--topbar-h) + 16px); min-width: 0; }
+section.c > header { display: flex; flex-direction: column; gap: 6px; }
+section.c > header .use { color: var(--fg-2); margin: 0; max-width: var(--measure); font-size: var(--text-sm); text-wrap: pretty; }
+.secno { font: var(--weight-medium) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); letter-spacing: var(--tracking-caps); }
+.hero { display: grid; gap: var(--space-5); }
+.hero .lede { display: grid; gap: var(--space-3); }
+.scroll { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
+.scroll > table { min-width: 640px; }
+.fig { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; margin: 0; }
+.fig .stage { background: linear-gradient(180deg, var(--stage-top), var(--stage-bottom)); padding: var(--space-4); }
+.fig .stage svg { display: block; width: 100%; height: auto; color: var(--fg); }
+.fig figcaption { padding: var(--space-3) var(--space-4); border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+.fig figcaption .cap { font-size: var(--text-sm); color: var(--fg-2); }
+.fig figcaption .cap b { color: var(--fg); font-family: var(--font-mono); font-weight: var(--weight-medium); margin-right: 8px; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-4); align-items: start; }
+.three { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); align-items: start; }
+
+/* decision */
+.decision { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr); gap: var(--space-4); align-items: start; }
+.facts { margin: 0; display: grid; gap: 10px; }
+.facts div { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: baseline; font-size: var(--text-sm); color: var(--fg-2); }
+.facts dt { font: var(--weight-medium) var(--text-sm)/1.4 var(--font-mono); color: var(--fg); white-space: nowrap; }
+.facts dd { margin: 0; }
+.cond { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: var(--text-sm); color: var(--fg-2); }
+.cond li { padding-left: 14px; position: relative; }
+.cond li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 6px; height: 6px; border-radius: 50%; background: var(--line-3); }
+@media (max-width: 760px) { .decision { grid-template-columns: 1fr; } }
+
+/* org chart */
+.org { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--space-4); }
+.group { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; min-width: 0; }
+.group > header { display: flex; align-items: baseline; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line-2); background: var(--panel-2); }
+.group > header .g { font: var(--weight-semibold) var(--text-md)/1 var(--font-mono); color: var(--accent); }
+.group > header .n { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--fg); }
+.group > header .cnt { margin-left: auto; font: var(--weight-regular) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); white-space: nowrap; }
+.role { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 4px 10px; padding: 9px 14px; border-bottom: 1px solid var(--line); align-items: start; }
+.role:last-child { border-bottom: 0; }
+.role .id { font: var(--weight-medium) var(--text-xs)/1.5 var(--font-mono); color: var(--fg-3); padding-top: 1px; }
+.role .t { font-size: var(--text-sm); color: var(--fg); font-weight: var(--weight-medium); }
+.role .t a { color: inherit; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.role .t a:hover { color: var(--accent); }
+.role .o { font-size: var(--text-xs); color: var(--fg-2); line-height: 1.45; margin-top: 2px; overflow-wrap: anywhere; }
+.role .o .ds-num { color: var(--fg); }
+.role .ds-badge { height: 20px; }
+.role .none { font: var(--weight-regular) var(--text-xs)/20px var(--font-mono); color: var(--fg-3); white-space: nowrap; }
+.role.inactive .t, .role.inactive .o { color: var(--fg-3); }
+@media (max-width: 480px) { .ds-brand .ver { display: none; } .role { grid-template-columns: 34px minmax(0, 1fr); } .role .ds-badge, .role .none { grid-column: 2; justify-self: start; } }
+
+/* subsystem cards */
+.subs { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--space-4); }
+.sub { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4) var(--space-4); display: grid; gap: 8px; min-width: 0; align-content: start; }
+.sub .top { display: flex; align-items: center; gap: 8px; }
+.sub .top i { width: 10px; height: 10px; border-radius: 2px; background: var(--sub, var(--line-3)); flex: none; }
+.sub .top b { font-size: var(--text-md); }
+.sub .top .pfx { font: var(--weight-medium) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); }
+.sub .top .ds-badge { margin-left: auto; height: 20px; }
+.sub .who { font-size: var(--text-xs); color: var(--fg-3); }
+.sub .what { font-size: var(--text-sm); color: var(--fg-2); line-height: 1.45; }
+.sub .mass { display: grid; gap: 4px; }
+.sub .mass .m { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: var(--text-xs); color: var(--fg-3); }
+.sub .mass .m .ds-num { color: var(--fg); font-size: var(--text-sm); font-weight: var(--weight-medium); }
+.sub .bar { height: 6px; border-radius: 2px; background: var(--panel-3); overflow: hidden; }
+.sub .bar i { display: block; height: 100%; width: var(--v); background: var(--line-3); border-radius: 2px; }
+.sub .bar.full i { background: var(--st-unverified); }
+.sub .links { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: var(--text-xs); }
+.sub .links a { color: var(--fg-2); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.sub .links a:hover { color: var(--accent); }
+
+/* simulation cards */
+.sims { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-4); }
+.sim { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.sim figure { margin: 0; background: #FFFFFF; height: 160px; display: grid; place-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); position: relative; }
+.sim figure img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; }
+.sim figure .fid { position: absolute; left: 10px; bottom: 8px; font: var(--weight-regular) 11px/1 var(--font-mono); color: #6B7280; }
+.sim .body { padding: var(--space-3) var(--space-4) var(--space-4); display: grid; gap: 8px; }
+.sim .title { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.sim .title .id { font: var(--weight-medium) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); }
+.sim .title b { font-size: var(--text-md); }
+.sim .title .ds-badge { margin-left: auto; height: 20px; }
+.sim .tool { font: var(--weight-regular) var(--text-xs)/1.4 var(--font-mono); color: var(--fg-3); overflow-wrap: anywhere; }
+.sim .res { font-size: var(--text-sm); color: var(--fg-2); line-height: 1.45; }
+.sim .res b { color: var(--fg); font-family: var(--font-mono); font-weight: var(--weight-medium); }
+.sim dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; font-size: var(--text-xs); }
+.sim dt { color: var(--fg-3); white-space: nowrap; } .sim dd { margin: 0; color: var(--fg-2); font-family: var(--font-mono); overflow-wrap: anywhere; }
+.sim .links { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: var(--text-xs); }
+.sim .links a { color: var(--fg-2); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.sim .links a:hover { color: var(--accent); }
+
+/* status */
+.phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--space-3); }
+.phase { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); display: grid; gap: 6px; align-content: start; min-width: 0; }
+.phase .n { font: var(--weight-medium) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); }
+.phase b { font-size: var(--text-md); }
+.phase span { font-size: var(--text-xs); color: var(--fg-2); line-height: 1.45; }
+.phase .ds-badge { justify-self: start; height: 20px; margin-top: 2px; }
+.phase[data-phase="NOT STARTED"] { background: var(--bg); }
+.phase[data-phase="NOT STARTED"] b { color: var(--fg-2); }
+.progress { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; font-size: var(--text-sm); color: var(--fg-2); }
+.progress .track { grid-column: 1 / -1; height: 8px; border-radius: 2px; background: var(--panel-3); display: flex; overflow: hidden; gap: 2px; }
+.progress .track i { display: block; height: 100%; flex: 1; background: var(--panel-3); }
+.progress .track i.d { background: var(--st-checked); } .progress .track i.p { background: var(--st-unverified); }
+#issues td.id { font-family: var(--font-mono); font-size: var(--text-xs); white-space: nowrap; color: var(--fg); }
+#issues td .ds-badge { height: 20px; }
+#issues td.what { min-width: 320px; }
+#issues td.who { white-space: nowrap; font-family: var(--font-mono); font-size: var(--text-xs); }
+
+/* how to */
+.howto .ds-card { gap: var(--space-3); }
+.howto .ds-card header { flex-direction: column; align-items: flex-start; gap: 2px; }
+.kv { margin: 0; display: grid; gap: 8px; }
+.kv div { display: grid; gap: 2px; font-size: var(--text-sm); }
+.kv dt { color: var(--fg); font-weight: var(--weight-medium); }
+.kv dd { margin: 0; color: var(--fg-2); font-size: var(--text-xs); line-height: 1.5; overflow-wrap: anywhere; }
+.kv dd a { color: var(--fg-2); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.kv dd a:hover { color: var(--accent); }
+.cmd { margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--panel-2); font: var(--weight-regular) var(--text-xs)/1.7 var(--font-mono); color: var(--fg); overflow-x: auto; white-space: pre; }
+.cmd .c { color: var(--fg-3); }
+
+/* sources */
+.srcs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-4); }
+.srcs ul { margin: 0; padding: 0; list-style: none; }
+.srcs li { padding: 5px 0; border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: var(--text-xs); color: var(--fg-3); overflow-wrap: anywhere; }
+.srcs li:last-child { border-bottom: 0; }
+.srcs li b { font-family: var(--font-sans); font-size: var(--text-sm); color: var(--fg); font-weight: var(--weight-medium); display: block; }
+.srcs li a { color: var(--fg-2); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.srcs li a:hover { color: var(--accent); }
+.srcs h3 { margin: 0 0 6px; }
+.footer { font-size: var(--text-xs); color: var(--fg-3); border-top: 1px solid var(--line); padding-top: var(--space-4); font-family: var(--font-mono); line-height: 1.6; overflow-wrap: anywhere; }
+@media (max-width: 760px) { .ds-topbar { gap: var(--space-2); } .ds-topbar > .ds-badge { display: none; } .page { gap: var(--space-7); padding-top: var(--space-5); } .hero .lede .ds-display { font-size: var(--text-xl); } .org { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18M12 4v16"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="7" r="2.2"/><circle cx="7" cy="17" r="2.2"/><circle cx="17" cy="17" r="2.2"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l9 16H3z"/><path d="M12 10v4M12 17v.5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </defs>
+</svg>
+
+<header class="ds-topbar">
+  <a class="ds-brand" href="#top"><svg class="mark"><use href="#i-brand"/></svg>DBF VTOL <span class="ver">K09-L · A1-R5</span></a>
+  <nav class="ds-nav" aria-label="Sections">
+    <a href="#aircraft">Aircraft</a><a href="#decision">Decision</a><a href="#team">Team</a><a href="#subsystems">Subsystems</a><a href="#simulations">Simulations</a><a href="#status">Status</a><a href="#howto">How to use</a><a href="#sources">Sources</a>
+  </nav>
+  <span class="spacer"></span>
+  <span class="ds-badge" data-status="PROPOSED">PROPOSED</span>
+  <button class="ds-iconbtn" id="theme" type="button" aria-label="Switch theme"><svg><use href="#i-moon"/></svg></button>
+</header>
+
+<main class="page" id="top">
+
+<!-- ================= 1. AIRCRAFT ================= -->
+<section class="c hero" id="aircraft">
+  <div class="lede">
+    <span class="secno">1 · Aircraft · revision A1-R5 · 2026-11-10</span>
+    <h1 class="ds-display">K09-L: a 2.6 kg quad tailsitter. One flying wing on four fixed motors, standing on its fin tips, built for $2,000.</h1>
+    <p class="ds-body">A 1.15 × 0.32 m hot-wired XPS wing (S5010 section, one 22 × 20 mm carbon spar) with two foam-board fins at ±0.32 m span. A vertical carbon tube through each fin carries a SunnySky X3108S motor and APC 11 × 5.5MR prop at each end, four motors in an X, each canted 7° for hover yaw. It takes off as a quadcopter, pitches 90° nose-down for 16 m/s cruise on the same four motors, and pitches back up to land on four crushable feet. Two elevon pairs, one 4S 6500 mAh pack in a pod on the upper surface, ArduPilot Plane in tailsitter mode. One piece in one box: five minutes from car to armed, one person, one spanner.</p>
+  </div>
+
+  <figure class="fig">
+    <div class="stage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1131 856" role="img" aria-label="K09-L general arrangement, three views to scale">
+<text x="347.5" y="22.0" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="12" font-weight="600" fill="currentColor" text-anchor="middle">TOP (nose up)</text>
+<rect x="60.0" y="106.3" width="575.0" height="160.0" fill="#4C8DE0" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<rect x="382.5" y="231.2" width="115.0" height="35.2" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="6 4"/>
+<rect x="517.5" y="231.2" width="110.0" height="35.2" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="6 4"/>
+<rect x="197.5" y="231.2" width="115.0" height="35.2" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="6 4"/>
+<rect x="67.5" y="231.2" width="110.0" height="35.2" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="6 4"/>
+<line x1="97.5" y1="146.3" x2="597.5" y2="146.3" stroke="var(--fg-3)" stroke-width="0.75" stroke-dasharray="6 4"/>
+<rect x="312.5" y="36.3" width="70.0" height="117.5" fill="#7F8C9E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<line x1="507.5" y1="128.8" x2="507.5" y2="266.4" stroke="#2BA6A0" stroke-width="3"/>
+<circle cx="507.5" cy="128.8" r="5.5" fill="#2BA6A0" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5"/>
+<rect x="498.0" y="110.1" width="19.0" height="13.2" fill="#D45C8E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<line x1="437.6" y1="100.0" x2="577.4" y2="100.0" stroke="var(--fg-3)" stroke-width="2" stroke-dasharray="6 4"/>
+<line x1="187.5" y1="128.8" x2="187.5" y2="266.4" stroke="#2BA6A0" stroke-width="3"/>
+<circle cx="187.5" cy="128.8" r="5.5" fill="#2BA6A0" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5"/>
+<rect x="178.0" y="110.1" width="19.0" height="13.2" fill="#D45C8E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<line x1="117.7" y1="100.0" x2="257.4" y2="100.0" stroke="var(--fg-3)" stroke-width="2" stroke-dasharray="6 4"/>
+<g transform="translate(347.5,130.8)"><circle r="6" fill="#fff" stroke="currentColor" stroke-width="1"/><path d="M0,0 L6,0 A6,6 0 0 0 0,-6 Z M0,0 L-6,0 A6,6 0 0 0 0,6 Z" fill="currentColor"/></g>
+<g stroke="var(--accent)" stroke-width="1.25" fill="none"><line x1="60.0" y1="292.4" x2="635.0" y2="292.4"/>
+<line x1="60.0" y1="286.4" x2="60.0" y2="298.4"/><line x1="635.0" y1="286.4" x2="635.0" y2="298.4"/>
+</g><text x="347.5" y="310.4" font-family="'IBM Plex Mono', monospace" font-size="12" fill="var(--accent)" text-anchor="middle">span 1150 mm</text>
+<g stroke="var(--accent)" stroke-width="1.25" fill="none"><line x1="665.0" y1="106.3" x2="665.0" y2="266.4"/>
+<line x1="659.0" y1="106.3" x2="671.0" y2="106.3"/><line x1="659.0" y1="266.4" x2="671.0" y2="266.4"/>
+</g><text x="673.0" y="190.3" font-family="'IBM Plex Mono', monospace" font-size="12" fill="var(--accent)" text-anchor="start">chord 320 mm</text>
+<g stroke="var(--accent)" stroke-width="1.25" fill="none"><line x1="187.5" y1="92.8" x2="507.5" y2="92.8"/>
+<line x1="187.5" y1="86.8" x2="187.5" y2="98.8"/><line x1="507.5" y1="86.8" x2="507.5" y2="98.8"/>
+</g><text x="347.5" y="86.8" font-family="'IBM Plex Mono', monospace" font-size="12" fill="var(--accent)" text-anchor="middle">motors ±320 mm</text>
+<g stroke="var(--accent)" stroke-width="1.25" fill="none"><line x1="30.0" y1="106.3" x2="30.0" y2="130.8"/>
+<line x1="24.0" y1="106.3" x2="36.0" y2="106.3"/><line x1="24.0" y1="130.8" x2="36.0" y2="130.8"/>
+</g><text x="24.0" y="134.8" font-family="'IBM Plex Mono', monospace" font-size="12" fill="var(--accent)" text-anchor="end">CG 49 mm</text>
+<g stroke="var(--fg-3)" stroke-width="1" fill="var(--fg-3)"><line x1="40.0" y1="336.35" x2="40.0" y2="362.35"/><circle cx="40.0" cy="362.35" r="2"/></g>
+<text x="40.0" y="356.4" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="var(--fg-3)" text-anchor="start">+x</text>
+<g stroke="var(--fg-3)" stroke-width="1" fill="var(--fg-3)"><line x1="40.0" y1="336.35" x2="66.0" y2="336.35"/><circle cx="66.0" cy="336.35" r="2"/></g>
+<text x="72.0" y="340.4" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="var(--fg-3)" text-anchor="start">+y</text>
+<text x="176.3" y="386.4" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="12" font-weight="600" fill="currentColor" text-anchor="middle">SIDE (nose left)</text>
+<rect x="118.8" y="476.2" width="137.5" height="210.0" fill="#2BA6A0" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<rect x="113.3" y="495.2" width="11.0" height="172.0" fill="#2BA6A0" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<rect x="100.1" y="476.7" width="13.2" height="19.0" fill="#D45C8E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<line x1="90.0" y1="416.4" x2="90.0" y2="556.1" stroke="var(--fg-3)" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="256.4" y="472.2" width="24.0" height="8.0" fill="#B07A3A" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<rect x="100.1" y="666.7" width="13.2" height="19.0" fill="#D45C8E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<line x1="90.0" y1="606.4" x2="90.0" y2="746.1" stroke="var(--fg-3)" stroke-width="2" stroke-dasharray="6 4"/>
+<rect x="256.4" y="682.2" width="24.0" height="8.0" fill="#B07A3A" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<path d="M96.3,581.2 Q115.5,571.5 144.3,573.3 Q216.3,578.1 256.4,580.9 Q216.3,584.0 144.3,587.5 Q112.3,587.5 96.3,581.2 Z" fill="#4C8DE0" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5"/>
+<rect x="26.3" y="538.7" width="117.5" height="35.0" fill="#7F8C9E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<g transform="translate(120.8,572.0)"><circle r="6" fill="#fff" stroke="currentColor" stroke-width="1"/><path d="M0,0 L6,0 A6,6 0 0 0 0,-6 Z M0,0 L-6,0 A6,6 0 0 0 0,6 Z" fill="currentColor"/></g>
+<g stroke="var(--accent)" stroke-width="1.25" fill="none"><line x1="78.8" y1="476.2" x2="78.8" y2="686.2"/>
+<line x1="72.8" y1="476.2" x2="84.8" y2="476.2"/><line x1="72.8" y1="686.2" x2="84.8" y2="686.2"/>
+</g><text x="72.8" y="585.2" font-family="'IBM Plex Mono', monospace" font-size="12" fill="var(--accent)" text-anchor="end">fin 420 mm</text>
+<g stroke="var(--accent)" stroke-width="1.25" fill="none"><line x1="118.8" y1="656.2" x2="256.4" y2="656.2"/>
+<line x1="118.8" y1="650.2" x2="118.8" y2="662.2"/><line x1="256.4" y1="650.2" x2="256.4" y2="662.2"/>
+</g><text x="187.6" y="638.2" font-family="'IBM Plex Mono', monospace" font-size="12" fill="var(--accent)" text-anchor="middle">fin chord 275 mm</text>
+<g stroke="var(--accent)" stroke-width="1.25" fill="none"><line x1="40.0" y1="416.4" x2="40.0" y2="556.1"/>
+<line x1="34.0" y1="416.4" x2="46.0" y2="416.4"/><line x1="34.0" y1="556.1" x2="46.0" y2="556.1"/>
+</g><text x="34.0" y="490.2" font-family="'IBM Plex Mono', monospace" font-size="12" fill="var(--accent)" text-anchor="end">prop 279 mm</text>
+<g stroke="var(--fg-3)" stroke-width="1" fill="var(--fg-3)"><line x1="98.85" y1="606.2" x2="124.85" y2="606.2"/><circle cx="124.85" cy="606.2" r="2"/></g>
+<text x="130.8" y="610.2" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="var(--fg-3)" text-anchor="start">+x</text>
+<g stroke="var(--fg-3)" stroke-width="1" fill="var(--fg-3)"><line x1="98.85" y1="606.2" x2="98.85" y2="580.2"/><circle cx="98.85" cy="580.2" r="2"/></g>
+<text x="98.8" y="574.2" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="var(--fg-3)" text-anchor="start">+z</text>
+<text x="703.9" y="386.4" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="12" font-weight="600" fill="currentColor" text-anchor="middle">FRONT (from the nose)</text>
+<rect x="416.4" y="573.3" width="575.0" height="15.7" fill="#4C8DE0" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<rect x="668.9" y="538.7" width="70.0" height="35.0" fill="#7F8C9E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<rect x="858.4" y="495.2" width="11.0" height="172.0" fill="#2BA6A0" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<circle cx="863.9" cy="486.2" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="863.9" cy="486.2" r="69.8" fill="none" stroke="var(--fg-3)" stroke-width="1" stroke-dasharray="6 4"/>
+<circle cx="863.9" cy="676.2" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="863.9" cy="676.2" r="69.8" fill="none" stroke="var(--fg-3)" stroke-width="1" stroke-dasharray="6 4"/>
+<rect x="538.4" y="495.2" width="11.0" height="172.0" fill="#2BA6A0" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5" />
+<circle cx="543.9" cy="486.2" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="543.9" cy="486.2" r="69.8" fill="none" stroke="var(--fg-3)" stroke-width="1" stroke-dasharray="6 4"/>
+<circle cx="543.9" cy="676.2" r="9.5" fill="#D45C8E" fill-opacity="0.35" stroke="currentColor" stroke-width="1.5"/>
+<circle cx="543.9" cy="676.2" r="69.8" fill="none" stroke="var(--fg-3)" stroke-width="1" stroke-dasharray="6 4"/>
+<g transform="translate(703.9,572.0)"><circle r="6" fill="#fff" stroke="currentColor" stroke-width="1"/><path d="M0,0 L6,0 A6,6 0 0 0 0,-6 Z M0,0 L-6,0 A6,6 0 0 0 0,6 Z" fill="currentColor"/></g>
+<g stroke="var(--accent)" stroke-width="1.25" fill="none"><line x1="1021.4" y1="486.2" x2="1021.4" y2="676.2"/>
+<line x1="1015.4" y1="486.2" x2="1027.3" y2="486.2"/><line x1="1015.4" y1="676.2" x2="1027.3" y2="676.2"/>
+</g><text x="1029.3" y="585.2" font-family="'IBM Plex Mono', monospace" font-size="12" fill="var(--accent)" text-anchor="start">motors ±190 mm</text>
+<g stroke="var(--fg-3)" stroke-width="1" fill="var(--fg-3)"><line x1="396.35" y1="606.2" x2="422.35" y2="606.2"/><circle cx="422.35" cy="606.2" r="2"/></g>
+<text x="428.4" y="610.2" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="var(--fg-3)" text-anchor="start">+y</text>
+<g stroke="var(--fg-3)" stroke-width="1" fill="var(--fg-3)"><line x1="396.35" y1="606.2" x2="396.35" y2="580.2"/><circle cx="396.35" cy="580.2" r="2"/></g>
+<text x="396.4" y="574.2" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="var(--fg-3)" text-anchor="start">+z</text>
+<g stroke="currentColor" stroke-width="1"><line x1="60" y1="816.0500000000001" x2="310.0" y2="816.0500000000001"/><line x1="60" y1="812.0500000000001" x2="60" y2="820.0500000000001"/><line x1="310.0" y1="812.0500000000001" x2="310.0" y2="820.0500000000001"/></g>
+<text x="60.0" y="832.1" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="currentColor" text-anchor="start">0 — 500 mm</text>
+<rect x="350.0" y="808.0500000000001" width="14" height="14" fill="#4C8DE0" fill-opacity="0.35" stroke="currentColor" stroke-width="1"/>
+<text x="370.0" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="var(--fg-2)" text-anchor="start">wing</text>
+<rect x="424.0" y="808.0500000000001" width="14" height="14" fill="#2BA6A0" fill-opacity="0.35" stroke="currentColor" stroke-width="1"/>
+<text x="444.0" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="var(--fg-2)" text-anchor="start">fins + motor tubes</text>
+<rect x="603.0" y="808.0500000000001" width="14" height="14" fill="#7F8C9E" fill-opacity="0.35" stroke="currentColor" stroke-width="1"/>
+<text x="623.0" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="var(--fg-2)" text-anchor="start">pod</text>
+<rect x="669.5" y="808.0500000000001" width="14" height="14" fill="#D45C8E" fill-opacity="0.35" stroke="currentColor" stroke-width="1"/>
+<text x="689.5" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="var(--fg-2)" text-anchor="start">propulsion</text>
+<rect x="788.5" y="808.0500000000001" width="14" height="14" fill="#B07A3A" fill-opacity="0.35" stroke="currentColor" stroke-width="1"/>
+<text x="808.5" y="820.1" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="var(--fg-2)" text-anchor="start">feet</text>
+<text x="60" y="846" font-family="'IBM Plex Sans', system-ui, sans-serif" font-size="11" font-weight="500" fill="var(--fg-3)" text-anchor="start">dashed: prop disc, hidden spar, elevon hinge  ·  frame: x aft from the wing LE, y right, z up (cruise)</text>
+</svg>
+</div>
+    <figcaption>
+      <span class="cap"><b>FIG A1-01</b>General arrangement, three views to scale. Frame: x aft from the wing leading edge, y right, z up in cruise.</span>
+      <span class="ds-source">team/A1/ga-3view.svg · drawn by team/A1/draw_ga.py from params/params.json</span>
+    </figcaption>
+  </figure>
+
+  <div class="ds-metrics">
+    <div class="ds-metric" data-status="MODELLED"><span class="k">Take-off mass, predicted <span class="ds-badge dot" data-status="MODELLED"></span></span><span class="v">2 462<span class="ds-unit">g</span></span><span class="lim">gate 2 600 g · <b>+138 g</b> · A3-R7</span></div>
+    <div class="ds-metric" data-status="UNVERIFIED"><span class="k">Hover T/W, fresh / sagged <span class="ds-badge dot" data-status="UNVERIFIED"></span></span><span class="v">2.49<span class="ds-unit">/ 2.12</span></span><span class="lim">gate ≥ 2.0 / 1.6 · <b>thrust stand</b></span></div>
+    <div class="ds-metric" data-status="UNVERIFIED"><span class="k">Stall at the gate <span class="ds-badge dot" data-status="UNVERIFIED"></span></span><span class="v">11.99<span class="ds-unit">m/s</span></span><span class="lim">limit ≤ 12.0 · <b>+0.1 %</b> · T-B2-STALL</span></div>
+    <div class="ds-metric" data-status="MODELLED"><span class="k">Cruise after 2 min hover <span class="ds-badge dot" data-status="MODELLED"></span></span><span class="v">16.2<span class="ds-unit">min</span></span><span class="lim">need ≥ 5 · <b>11.9 pessimistic</b> · B1</span></div>
+    <div class="ds-metric" data-status="UNVERIFIED"><span class="k">Reserve, pessimistic <span class="ds-badge dot" data-status="UNVERIFIED"></span></span><span class="v">$313</span><span class="lim">one crash $309 · <b>spend $1 687</b> · I1</span></div>
+  </div>
+  <span class="ds-source">Sources: MASS-CG.md (CL-A3-MASS-PREDICTED, CL-A3-GATE-MARGIN) · README.md key numbers (CL-A1-HOVER-TW-GATE, -SAG; CL-B2R3-VS-GATE-FWD) · team/B1/SIMULATION-REPORT.md (CL-B1V-*) · params/params.json#cost (CL-I1-RESERVE-PESS, CL-I1-SPEND-PESS). Nothing is VERIFIED: no part has been bought, weighed or flown.</span>
+</section>
+
+<!-- ================= 2. DECISION ================= -->
+<section class="c" id="decision">
+  <header>
+    <span class="secno">2 · The decision · 2026-11-09</span>
+    <h2 class="ds-h1">Why K09-L, and when to reverse it</h2>
+    <p class="use">Chosen from 43 concepts after a morphological study, a trade matrix and a tie-break against the lean twin-boom quadplane K01. Reversible until the mid-December order.</p>
+  </header>
+  <div class="decision">
+    <div class="ds-card">
+      <header><h3 class="ds-h2">The case</h3><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></header>
+      <dl class="facts">
+        <div><dt>$321 reserve</dt><dd>the only shortlisted concept whose pessimistic reserve covers one $309 crash (lean K01 −$108, K19 −$76 against the same gate)</dd></div>
+        <div><dt>≈ 115 team-h</dt><dd>pessimistic to first hover, week 3–4; a crash repair is ≈ $20 and 2–4 days by re-cutting a foam core</dd></div>
+        <div><dt>4 motors · 2 servos</dt><dd>no tilt mechanism, no field joints, one-piece transport</dd></div>
+        <div><dt>92 % of hours</dt><dd>Mar–Apr mornings (07–10) at the bay-shore station are ≤ 5 m/s: 5–5.7 usable mornings a week</dd></div>
+      </dl>
+      <div class="ds-callout caution"><svg><use href="#i-warn"/></svg><span><b>The price, stated plainly.</b> Highest flight risk of the shortlist: P(full transition round trip by end of April) ≈ 0.55–0.65 vs ≈ 0.65–0.70 for K01. Any motor or ESC failure is a crash in both modes. Mornings only, 5 m/s on the flight card, fin-tip landings are the recurring damage mode.</span></div>
+      <div class="ds-row">
+        <a class="ds-btn primary" href="config-study/web/index.html">Open the configuration study <svg><use href="#i-arrow"/></svg></a>
+        <a class="ds-btn" href="CONFIGURATION.md">CONFIGURATION.md</a>
+      </div>
+    </div>
+    <div class="ds-card">
+      <header><h3 class="ds-h2">Reverse to K01-lean if</h3></header>
+      <ul class="cond">
+        <li>the $40 foam-board twin fails the 1 m hold in 5 m/s wind, or cannot complete a transition before the December order</li>
+        <li>K01-lean's pessimistic reserve is verified ≥ $309 (tool loan in writing, board in stock, independent skeptic)</li>
+        <li>RFS wind measures ≥ 1.4 × the RCMC1 station, or the team wants hover motor-out survivability</li>
+      </ul>
+      <h3 class="ds-h3">Mandatory before the order</h3>
+      <ul class="cond">
+        <li>fly the twin on the real motors, FC and pack; fixed-wing tune first</li>
+        <li>≥ 10 h SITL and a stable ArduPilot Plane tailsitter build confirmed (F3: done, 2026-11-09)</li>
+        <li>handheld anemometer at RFS vs RCMC1; early order ~20 Nov of electronics, packs and carbon tubes</li>
+      </ul>
+      <span class="ds-source">CONFIGURATION.md · config-study/tiebreak/DECISION.md · tiebreak/wind/WIND.md</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. TEAM ================= -->
+<section class="c" id="team">
+  <header>
+    <span class="secno">3 · The engineering team · TEAM.md</span>
+    <h2 class="ds-h1">One role per engineer, ten groups, 31 delivered</h2>
+    <p class="use">Each role does exactly one thing and writes a SUMMARY.md, a claims file the proof chain re-computes, and change requests the chief engineer decides. Status is the word each role gave its own work at A1-R5.</p>
+  </header>
+  <div class="org">
+
+    <div class="group">
+      <header><span class="g">A</span><span class="n">Leadership and systems</span><span class="cnt">5 / 5</span></header>
+      <div class="role"><span class="id">A1</span><div><div class="t"><a href="team/A1/SUMMARY.md">Chief engineer / integrator</a></div><div class="o">Design frame A1-R5: params.json, 73 logged decisions, README, GA 3-view, 24 frame claims with no negative margin</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">A2</span><div><div class="t"><a href="team/A2/SUMMARY.md">Systems engineer</a></div><div class="o"><span class="ds-num">59</span> requirements in 8 groups, verification matrix live from the proof graph, 41 R-nodes</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">A3</span><div><div class="t"><a href="team/A3/SUMMARY.md">Mass-properties engineer</a></div><div class="o">Roll-up A3-R7 from nine parts.csv: <span class="ds-num">2 345 / 2 462 g</span>, CG x 0.0486 m, z +0.0185 m, inertia tensor</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">A4</span><div><div class="t"><a href="team/A4/SUMMARY.md">Configuration / interface manager</a></div><div class="o">Interface plan R5: <span class="ds-num">162</span> parts, 252 planned · 239 declared edges, 100 % of flight parts on a load path</div></div><span class="ds-badge" data-status="CHECKED">CHECKED</span></div>
+      <div class="role"><span class="id">A5</span><div><div class="t"><a href="team/A5/SUMMARY.md">CAD lead</a></div><div class="o">Fusion framework, 52 datums, check.py with hull-vs-prop keep-out test (33 tests OK); backend UNVERIFIED-IN-FUSION</div></div><span class="ds-badge" data-status="CHECKED">CHECKED</span></div>
+    </div>
+
+    <div class="group">
+      <header><span class="g">B</span><span class="n">Aerodynamics</span><span class="cnt">4 / 4</span></header>
+      <div class="role"><span class="id">B1</span><div><div class="t"><a href="team/B1/SUMMARY.md">Aero performance engineer</a></div><div class="o">Whole-aircraft performance; SU2 fin sections: CD0 <span class="ds-num">0.0579</span>, cruise 235 W, 16.2 min after hover</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">B2</span><div><div class="t"><a href="team/B2/SUMMARY.md">Wing aero engineer</a></div><div class="o">S5010 at Re 2–4e5, planform, elevon hinge moments; stall <span class="ds-num">11.99 m/s</span> at the forward CG</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">B3</span><div><div class="t"><a href="team/B3/SUMMARY.md">Stability and control engineer</a></div><div class="o">AVL on the CAD fins: CG range <span class="ds-num">0.0466–0.0514 m</span> with the CG height, Cn_β 0.048–0.062, spiral t2 3.51 s</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">B4</span><div><div class="t"><a href="team/B4/SUMMARY.md">Rotor / propeller aero engineer</a></div><div class="o">APC 11×5.5MR chosen; SU2 tube + fin Cd <span class="ds-num">0.599</span>, download 1.025, BEMT edgewise loads</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+    </div>
+
+    <div class="group">
+      <header><span class="g">C</span><span class="n">Structures</span><span class="cnt">6 / 6</span></header>
+      <div class="role"><span class="id">C1</span><div><div class="t"><a href="team/C1/SUMMARY.md">Loads engineer</a></div><div class="o"><span class="ds-num">112</span> load claims, 8 case families; spar root 13.8 N·m limit, V-n diagram, landing n 6.6</div></div><span class="ds-badge" data-status="CHECKED">CHECKED</span></div>
+      <div class="role"><span class="id">C2</span><div><div class="t"><a href="team/C2/SUMMARY.md">Wing structures engineer</a></div><div class="o">Beam model + 3-D FEA: spar MS <span class="ds-num">+8.1</span>, tip deflection 0.4 % of span; foam corner FAIL → D-68 fillets</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">C3</span><div><div class="t"><a href="team/C3/SUMMARY.md">Pod structures engineer</a></div><div class="o">Pod load path and crash retention; SU2 FEA overturned three hand passes → strut, flange, brackets (D-69)</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">C4</span><div><div class="t"><a href="team/C4/SUMMARY.md">Fin / motor-tube structures engineer</a></div><div class="o">3-D solid FE of the fin quarters: first mode <span class="ds-num">255.5 Hz</span>, 1P/2P separation 0.29, shoe face MS +0.11</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">C5</span><div><div class="t"><a href="team/C5/SUMMARY.md">Landing / impact engineer</a></div><div class="o">6-DOF touchdown + shoe FEA: four fails at 1.5 m/s → <span class="ds-num">1.2 m/s</span> rule, side load 39.3 N (D-65)</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">C6</span><div><div class="t"><a href="team/C6/SUMMARY.md">Joints and fasteners engineer</a></div><div class="o">Every joint stack; M3-only kit, Ø 2.5 mm CF pins, 15 mm station collar; fin station not closed (CR-C6-37)</div></div><span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span></div>
+    </div>
+
+    <div class="group">
+      <header><span class="g">D</span><span class="n">Mechanical design (Fusion CAD)</span><span class="cnt">6 / 7 · D4 inactive</span></header>
+      <div class="role"><span class="id">D1</span><div><div class="t"><a href="team/D1/SUMMARY.md">Wing designer</a></div><div class="o">subsystems/wing: one-piece core, spar bore, 4 elevon panels; <span class="ds-num">391.7 g</span> of 405</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">D2</span><div><div class="t"><a href="team/D2/SUMMARY.md">Pod designer</a></div><div class="o">subsystems/pod: bay, tray, hatch, stops, GPS mast, pitot socket; <span class="ds-num">145.8 g</span> of 146, 50 claims pass</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">D3</span><div><div class="t"><a href="team/D3/SUMMARY.md">Fin and motor-tube designer</a></div><div class="o">subsystems/fins: half-fins, tubes, canted mounts, through-core blocks; <span class="ds-num">435.9 g</span> of 437, 0 keep-out errors</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role inactive"><span class="id">D4</span><div><div class="t">Tail designer</div><div class="o">Inactive for K09-L: no tail, the fins are D3's</div></div><span class="none">inactive</span></div>
+      <div class="role"><span class="id">D5</span><div><div class="t"><a href="team/D5/SUMMARY.md">Landing designer</a></div><div class="o">subsystems/landing: four telescoping crush feet, two wingtip caps, ground kit; <span class="ds-num">47.5 g</span> of 48</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">D6</span><div><div class="t"><a href="team/D6/SUMMARY.md">Mechanisms designer</a></div><div class="o">subsystems/mechanisms: tape hinges, two SH-0255MG+ servos, CF bridge rods; <span class="ds-num">70.7 g</span> of 72</div></div><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <div class="role"><span class="id">D7</span><div><div class="t"><a href="team/D7/CHANGE-REQUESTS.md">Transport and packaging designer</a></div><div class="o">subsystems/transport: 1.25 × 0.55 × 0.54 m box, spar cradles, prop tray, 5-min set-up card; <span class="ds-num">3.57 kg</span></div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+    </div>
+
+    <div class="group">
+      <header><span class="g">E</span><span class="n">Propulsion and energy</span><span class="cnt">3 / 3</span></header>
+      <div class="role"><span class="id">E1</span><div><div class="t"><a href="team/E1/SUMMARY.md">Propulsion engineer</a></div><div class="o">X3108S + LANRC 45 A + 11×5.5MR, 66 claims; subsystems/propulsion stations; blade-to-tube gap <span class="ds-num">26.1 mm</span></div></div><span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span></div>
+      <div class="role"><span class="id">E2</span><div><div class="t"><a href="team/E2/SUMMARY.md">Battery / energy engineer</a></div><div class="o">Ovonic 4S 6500 120C released to I1 (D-64); endurance budget, acceptance line <span class="ds-num">592.6 g</span>, 44 claims</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">E3</span><div><div class="t"><a href="team/E3/THERMAL.md">Thermal engineer</a></div><div class="o">Lumped RC network + ESC pad CFD: every part inside its limit 15–30 °C; field ceiling <span class="ds-num">44 °C</span></div></div><span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span></div>
+    </div>
+
+    <div class="group">
+      <header><span class="g">F</span><span class="n">Electrical and avionics</span><span class="cnt">5 / 5</span></header>
+      <div class="role"><span class="id">F1</span><div><div class="t"><a href="team/F1/SUMMARY.md">Power distribution engineer</a></div><div class="o">AS150U disconnect, 10 AWG mains, 16 AWG ESC leads, path <span class="ds-num">6.69 mΩ</span>; subsystems/power stack</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">F2</span><div><div class="t"><a href="team/F2/SUMMARY.md">Harness engineer</a></div><div class="o"><span class="ds-num">36</span> wires routed through the real geometry, wire list, install rules checked; 122.6 g</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">F3</span><div><div class="t"><a href="team/F3/SUMMARY.md">Avionics hardware engineer</a></div><div class="o">CoreWing F405 Wing V2, M100-5883 GPS, MS4525DO airspeed; I²C map clean, 28 + 9 claims</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">F4</span><div><div class="t"><a href="team/F4/SUMMARY.md">Flight-control software engineer</a></div><div class="o">K09L.param (<span class="ds-num">161</span> lines, every one commented), stand overlay, 12-step tuning plan, 17 SITL cases</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">F5</span><div><div class="t"><a href="team/F5/RC-LINK.md">RC link, telemetry and ground station</a></div><div class="o">One ELRS 2.4 GHz link for control and telemetry, <span class="ds-num">21.6 dB</span> margin at 515 m; subsystems/ground</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+    </div>
+
+    <div class="group">
+      <header><span class="g">G</span><span class="n">Manufacturing</span><span class="cnt">0 / 4</span></header>
+      <div class="role"><span class="id">G1</span><div><div class="t">Manufacturing engineer</div><div class="o">Process plan per part, hot-wire jig and templates, Jacobs Hall capability</div></div><span class="none">not started</span></div>
+      <div class="role"><span class="id">G2</span><div><div class="t">Composites and foam specialist</div><div class="o">Hot-wire XPS cores, tape skinning, CF tube bonding, foam-board fins</div></div><span class="none">not started</span></div>
+      <div class="role"><span class="id">G3</span><div><div class="t">3D-printing specialist</div><div class="o">Printed mounts, saddles, clips, feet, tray: materials, orientation, inserts</div></div><span class="none">not started</span></div>
+      <div class="role"><span class="id">G4</span><div><div class="t">Assembly sequence engineer</div><div class="o">Build order and work packages; the build steps (manual-kit)</div></div><span class="none">not started</span></div>
+    </div>
+
+    <div class="group">
+      <header><span class="g">H</span><span class="n">Test and safety</span><span class="cnt">1 / 3</span></header>
+      <div class="role"><span class="id">H1</span><div><div class="t"><a href="team/H1/SUMMARY.md">Ground test engineer</a></div><div class="o"><span class="ds-num">18</span> test cards, rig sizing with 96 claims, Jacobs loan request drafted (not sent)</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">H2</span><div><div class="t">Flight test engineer</div><div class="o">Twin first; tethered hover → hover → fixed-wing tune → transition at ≥ 50 m → landing practice</div></div><span class="none">not started</span></div>
+      <div class="role"><span class="id">H3</span><div><div class="t">Safety officer</div><div class="o">Risk assessment, FAA / RFS rules, 5 m/s flight card, battery and prop safety, go/no-go</div></div><span class="none">not started</span></div>
+    </div>
+
+    <div class="group">
+      <header><span class="g">I</span><span class="n">Program</span><span class="cnt">1 / 2</span></header>
+      <div class="role"><span class="id">I1</span><div><div class="t"><a href="team/I1/SUMMARY.md">Procurement / BOM engineer</a></div><div class="o">One BOM, order plan: early ~20 Nov <span class="ds-num">$997</span>, 15 Dec $396, local $171; pessimistic reserve $313</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">I2</span><div><div class="t">Schedule planner</div><div class="o">January–April build and test schedule with one crash-repair loop, critical path</div></div><span class="none">not started</span></div>
+    </div>
+
+    <div class="group">
+      <header><span class="g">J</span><span class="n">Support</span><span class="cnt">3 / 6</span></header>
+      <div class="role"><span class="id">J1</span><div><div class="t"><a href="team/J1/SUMMARY.md">Outside research analyst</a></div><div class="o"><span class="ds-num">9</span> comparable tailsitters, 12 failure modes with an owner each, reading list per role</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">J2</span><div><div class="t"><a href="proofs/README.md">Verification / proof-chain engineer</a></div><div class="o">proofs/build_graph.py, CHAIN.md and the 3-D proof viewer; the graph build was not completed at A1-R5</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">J3</span><div><div class="t">Technical illustrator</div><div class="o">Blender renders and animations (blender/ backend exists, no K09-L renders yet)</div></div><span class="none">not started</span></div>
+      <div class="role"><span class="id">J4</span><div><div class="t"><a href="design-system/README.md">Visual designer</a></div><div class="o">Design system v1 (tokens, components, diagram and Blender styles) and this overview page</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
+      <div class="role"><span class="id">J5</span><div><div class="t">Technical writer</div><div class="o">Stale-doc cleanup, READMEs, consistent docs</div></div><span class="none">not started</span></div>
+      <div class="role"><span class="id">J6</span><div><div class="t">Design review board</div><div class="o">One critic per discipline group plus a chair: CDR reports and a go / no-go for the order</div></div><span class="none">not started</span></div>
+    </div>
+
+  </div>
+  <span class="ds-source">TEAM.md · team/&lt;ID&gt;/SUMMARY.md (D7, E3 and F5 link their main report) · roles without a folder have produced nothing yet</span>
+</section>
+
+<!-- ================= 4. SUBSYSTEMS ================= -->
+<section class="c" id="subsystems">
+  <header>
+    <span class="secno">4 · Subsystems · 12 folders · 9 flying</span>
+    <h2 class="ds-h1">Every part has one owner and one allocation</h2>
+    <p class="use">Flying mass from the designers' parts.csv as rolled up by A3-R7, against the D-63 allocation. The bar is the share of the allocation used. Each folder holds SPEC.md, BUILD.md, parts.csv, interfaces.json, params.json and the Fusion module.</p>
+  </header>
+  <div class="subs">
+    <div class="sub" data-sub="WNG"><div class="top"><i></i><b>Wing</b><span class="pfx">WNG</span><span class="ds-badge" data-status="MODELLED">MODELLED</span></div><span class="who">D1 · aero B2 · structures C2</span><span class="what">One-piece XPS core, 22 × 20 mm CF spar in a bore, four PETG plugs, four tape-hinged elevon panels (17.1 % area), tape skin.</span><div class="mass"><div class="m"><span>flying mass</span><span><span class="ds-num">391.7</span> / 405 g</span></div><div class="bar"><i style="--v:96.7%"></i></div></div><div class="links"><a href="subsystems/wing/SPEC.md">SPEC.md</a><a href="subsystems/wing/BUILD.md">BUILD.md</a><a href="team/D1/SUMMARY.md">D1</a></div></div>
+    <div class="sub" data-sub="BMS"><div class="top"><i></i><b>Fins and motor tubes</b><span class="pfx">FIN</span><span class="ds-badge" data-status="MODELLED">MODELLED</span></div><span class="who">D3 · structures C4 · aero B3/B4 · joints C6</span><span class="what">Two vertical 22 mm CF tubes through the core at x 0.045 m, two-layer foam-board half-fins 0.21 m high, canted ASA mounts, through-core blocks, braces.</span><div class="mass"><div class="m"><span>flying mass</span><span><span class="ds-num">435.9</span> / 437 g</span></div><div class="bar full"><i style="--v:99.7%"></i></div></div><div class="links"><a href="subsystems/fins/SPEC.md">SPEC.md</a><a href="subsystems/fins/BUILD.md">BUILD.md</a><a href="team/D3/SUMMARY.md">D3</a></div></div>
+    <div class="sub" data-sub="FUS"><div class="top"><i></i><b>Pod</b><span class="pfx">POD</span><span class="ds-badge" data-status="MODELLED">MODELLED</span></div><span class="who">D2 · structures C3</span><span class="what">0.235 × 0.14 × 0.07 m shell on the upper surface: pack bay with crush block, stops and strut, FC tray, hatch, GPS mast, pitot socket. Nose at x −0.140 m.</span><div class="mass"><div class="m"><span>flying mass</span><span><span class="ds-num">145.8</span> / 146 g</span></div><div class="bar full"><i style="--v:99.9%"></i></div></div><div class="links"><a href="subsystems/pod/SPEC.md">SPEC.md</a><a href="subsystems/pod/BUILD.md">BUILD.md</a><a href="team/D2/SUMMARY.md">D2</a></div></div>
+    <div class="sub" data-sub="GER"><div class="top"><i></i><b>Landing feet</b><span class="pfx">GER</span><span class="ds-badge" data-status="MODELLED">MODELLED</span></div><span class="who">D5 · impact C5</span><span class="what">Four telescoping crush feet on the half-fin TE tips (PETG shoe, colour-coded piston, XPS cartridge) and two TPU wingtip caps. Insert swap at the field, no tools.</span><div class="mass"><div class="m"><span>flying mass</span><span><span class="ds-num">47.5</span> / 48 g</span></div><div class="bar full"><i style="--v:99%"></i></div></div><div class="links"><a href="subsystems/landing/SPEC.md">SPEC.md</a><a href="subsystems/landing/BUILD.md">BUILD.md</a><a href="team/D5/SUMMARY.md">D5</a></div></div>
+    <div class="sub" data-sub="PSH"><div class="top"><i></i><b>Propulsion</b><span class="pfx">PRP</span><span class="ds-badge" data-status="MODELLED">MODELLED</span></div><span class="who">E1 · rotor aero B4</span><span class="what">Four stations UR / UL / LR / LL at y ±0.32, z ±0.19 m: SunnySky X3108S KV900, LANRC 45 A ESC, APC 11×5.5MR / MRP, bolt-on M6 adapters, 7° cant.</span><div class="mass"><div class="m"><span>flying mass</span><span><span class="ds-num">462.0</span> / 462 g</span></div><div class="bar full"><i style="--v:100%"></i></div></div><div class="links"><a href="subsystems/propulsion/SPEC.md">SPEC.md</a><a href="subsystems/propulsion/BUILD.md">BUILD.md</a><a href="team/E1/SUMMARY.md">E1</a></div></div>
+    <div class="sub" data-sub="PWR"><div class="top"><i></i><b>Power</b><span class="pfx">PWR</span><span class="ds-badge" data-status="MODELLED">MODELLED</span></div><span class="who">F1 · pack E2</span><span class="what">One 4S 6500 mAh pack (550 g carried), AS150U disconnect, 10 AWG mains, PDB plate, bus board, UBEC, fuse, ESC caps: one screwed stack in the pod's left channel.</span><div class="mass"><div class="m"><span>flying mass</span><span><span class="ds-num">638.2</span> / 648 g</span></div><div class="bar"><i style="--v:98.5%"></i></div></div><div class="links"><a href="subsystems/power/SPEC.md">SPEC.md</a><a href="subsystems/power/BUILD.md">BUILD.md</a><a href="team/F1/SUMMARY.md">F1</a></div></div>
+    <div class="sub" data-sub="AVN"><div class="top"><i></i><b>Avionics</b><span class="pfx">AVN</span><span class="ds-badge" data-status="MODELLED">MODELLED</span></div><span class="who">F3</span><span class="what">CoreWing F405 Wing V2 on gel cubes, HGLRC M100-5883 GPS + compass on the mast (45° to the nose), ELRS RP3 receiver, MS4525DO airspeed on a pitot boom, microSD.</span><div class="mass"><div class="m"><span>flying mass</span><span><span class="ds-num">36.5</span> / 45 g</span></div><div class="bar"><i style="--v:81%"></i></div></div><div class="links"><a href="subsystems/avionics/SPEC.md">SPEC.md</a><a href="subsystems/avionics/BUILD.md">BUILD.md</a><a href="team/F3/SUMMARY.md">F3</a></div></div>
+    <div class="sub" data-sub="HRN"><div class="top"><i></i><b>Harness</b><span class="pfx">HRN</span><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div><span class="who">F2 · gauges F1</span><span class="what">36 wires on 28 electrical edges routed along the fins and through the wing; ESC leads 16 AWG at 0.475–0.620 m; the pack plug is the only field disconnect.</span><div class="mass"><div class="m"><span>flying mass</span><span><span class="ds-num">122.6</span> / 123 g</span></div><div class="bar full"><i style="--v:99.7%"></i></div></div><div class="links"><a href="subsystems/harness/SPEC.md">SPEC.md</a><a href="subsystems/harness/WIRE-LIST.csv">WIRE-LIST.csv</a><a href="team/F2/SUMMARY.md">F2</a></div></div>
+    <div class="sub" data-sub="TAL"><div class="top"><i></i><b>Mechanisms</b><span class="pfx">MEC</span><span class="ds-badge" data-status="MODELLED">MODELLED</span></div><span class="who">D6 · hinge moments B2</span><span class="what">Two Savox SH-0255MG+ servos, horns, pushrods, 1/8 in pultruded CF bridge rods across the fin root; no tilt mechanism. Servo angle ±45° for ±25° surface.</span><div class="mass"><div class="m"><span>flying mass</span><span><span class="ds-num">70.7</span> / 72 g</span></div><div class="bar"><i style="--v:98.2%"></i></div></div><div class="links"><a href="subsystems/mechanisms/SPEC.md">SPEC.md</a><a href="subsystems/mechanisms/BUILD.md">BUILD.md</a><a href="team/D6/SUMMARY.md">D6</a></div></div>
+    <div class="sub"><div class="top"><i></i><b>Transport</b><span class="pfx">TRN</span><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div><span class="who">D7 · loads C1</span><span class="what">One 1.25 × 0.55 × 0.54 m Coroplast box with spar cradles, prop tray and pitot slot; survives a 0.3 m floor drop; packs travel in the LiPo bag beside it.</span><div class="mass"><div class="m"><span>ground mass (not counted)</span><span><span class="ds-num">3.57</span> kg</span></div><div class="bar"><i style="--v:0%"></i></div></div><div class="links"><a href="subsystems/transport/SPEC.md">SPEC.md</a><a href="subsystems/transport/CHECKLIST.md">CHECKLIST.md</a><a href="subsystems/transport/CAR-FIT.md">CAR-FIT.md</a></div></div>
+    <div class="sub"><div class="top"><i></i><b>Flight software</b><span class="pfx">FSW</span><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div><span class="who">F4</span><span class="what">ArduPlane 4.7.x stable, Q_TAILSIT_ENABLE 1, Quad-X mixing on the fin motors, two elevons; K09L.param, stand overlay, tuning and SITL plans. No parts.</span><div class="mass"><div class="m"><span>no mass</span><span><span class="ds-num">161</span> param lines</span></div><div class="bar"><i style="--v:0%"></i></div></div><div class="links"><a href="subsystems/flight-software/SPEC.md">SPEC.md</a><a href="subsystems/flight-software/TUNING-PLAN.md">TUNING-PLAN.md</a><a href="subsystems/flight-software/SITL-PLAN.md">SITL-PLAN.md</a></div></div>
+    <div class="sub"><div class="top"><i></i><b>Ground</b><span class="pfx">GND</span><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div><span class="who">F5</span><span class="what">RadioMaster Pocket, internal ELRS 2.4 GHz (FCC), 100 mW, 150 Hz, telemetry 1:4; the laptop GCS is USB on the bench only. Travels with the pilot.</span><div class="mass"><div class="m"><span>ground mass (seller figure)</span><span><span class="ds-num">≈ 330</span> g</span></div><div class="bar"><i style="--v:0%"></i></div></div><div class="links"><a href="subsystems/ground/SPEC.md">SPEC.md</a><a href="team/F5/RC-LINK.md">RC-LINK.md</a></div></div>
+  </div>
+  <div class="ds-legend"><span><i style="background:var(--line-3)"></i>share of allocation</span><span><i style="background:var(--st-unverified)"></i>≥ 99 % used</span><span>sum 2 386 g allocated · 214 g A1 reserve · 2 600 g gate</span></div>
+  <span class="ds-source">MASS-CG.md (A3-R7 roll-up, D-63 allocations) · params/mass_budget.json · subsystems/&lt;key&gt;/SPEC.md · colours are the design-system subsystem hues (fins on the booms hue, mechanisms on the tail hue; transport, flight software and ground are neutral)</span>
+</section>
+
+<!-- ================= 5. SIMULATIONS ================= -->
+<section class="c" id="simulations">
+  <header>
+    <span class="secno">5 · Simulations · the round of 2026-11-10</span>
+    <h2 class="ds-h1">Nine roles re-ran on the settled CAD with grid convergence</h2>
+    <p class="use">Each report states the tool, why that fidelity is enough, the convergence study, a hand-calc cross-check and the requirement margins. Four requirements failed as designed and are fixed by decisions D-61 to D-73. Every number stays UNVERIFIED until the stand and flight tests close it.</p>
+  </header>
+  <div class="sims">
+
+    <div class="sim"><figure><img src="team/B1/fig-b1-margins.svg" alt="B1 requirement margins on the as-designed aircraft" loading="lazy"><span class="fid">FIG B1-07</span></figure><div class="body">
+      <div class="title"><span class="id">B1</span><b>Whole-aircraft performance</b><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <span class="tool">SU2 2-D RANS (fin and wing sections) · AVL 3 lattices · XFOIL 3 panel counts</span>
+      <p class="res">Fins carry <b>1.23 ×</b> the hand drag (square board edges, proud tubes): CD0 0.0515 → <b>0.0579</b>. Cruise at 16 m/s takes <b>235 W</b>, leaving <b>16.2 min</b> after the 2 min hover (11.9 pessimistic) against 5 min. Every B1 requirement passes; stall, 1.25 VH ≤ VD and the landing wind are thin.</p>
+      <dl><dt>convergence</dt><dd>fin A on 4 grids, GCI 9.8 → 5.8 %; fin B and S5010 on 3</dd><dt>replaces</dt><dd>commit a391d56 (unconverged: CD0 0.0786, 14.1 min)</dd></dl>
+      <div class="links"><a href="team/B1/SIMULATION-REPORT.md">SIMULATION-REPORT.md</a><a href="team/B1/PERFORMANCE.md">PERFORMANCE.md</a></div>
+    </div></div>
+
+    <div class="sim"><figure><img src="team/B2/sim/fig/B2-R4-01-stall-xz.svg" alt="B2 stall speed across the CG range and height" loading="lazy"><span class="fid">FIG B2-R4-01</span></figure><div class="body">
+      <div class="title"><span class="id">B2</span><b>Wing aero, stall and hinge moments</b><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <span class="tool">XFOIL (Re 2–4e5) · AVL with the CG height in the moment reference · SU2 2-D RANS on the elevon</span>
+      <p class="res">Forward CG 0.0466 m with the CG 18.5 mm above the chord plane stalls at <b>11.99 m/s</b> vs 12.0: R-STALL and R-TRANSITION pass by <b>0.05 %</b>, so T-B2-STALL on the twin is the gate (D-71). At z 0.010 the mark fails by 0.1 % (CR-B2-20). Servo torque 3.49 of 3.9 kgf·cm.</p>
+      <dl><dt>convergence</dt><dd>SU2 3 grids; XFOIL 160 / 240 / 320 panels; hinge moment viscous ≤ 0.88 × inviscid</dd><dt>open</dt><dd>SU2 CLmax not converged; B1 / B2 CLmax differ 9 %</dd></dl>
+      <div class="links"><a href="team/B2/SIMULATION-REPORT.md">SIMULATION-REPORT.md</a><a href="team/B2/WING-AERO.md">WING-AERO.md</a></div>
+    </div></div>
+
+    <div class="sim"><figure><img src="team/B3/fig/B3-V3-cg-range.svg" alt="B3 CG range on the as-designed aircraft" loading="lazy"><span class="fid">FIG B3-V3</span></figure><div class="body">
+      <div class="title"><span class="id">B3</span><b>Stability and control</b><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <span class="tool">AVL 3.52 vortex lattice on the CAD fin outline · SU2 INC_RANS elevon η · Etkin 4 × 4 modes</span>
+      <p class="res">The raised CG moves the effective NP 3.4 mm forward at 1.3 Vs: the aft limit becomes <b>0.0514 m</b>, A3's 0.0522 m was 0.77 mm aft (SM 4.76 %, FAIL) → D-62 range <b>0.0466–0.0514 m</b>, bay 10 mm forward. Spiral t2 <b>3.51 s</b> (< 4 s). CAD fins beat the R4 rectangle: Cn_β 0.048–0.062.</p>
+      <dl><dt>convergence</dt><dd>4 lattices, 692 → 4 676 vortices, GCI (Celik 2008); SU2 42k / 78k / 170k cells</dd><dt>check</dt><dd>own flat-plate VLM; hand NP-height formula within 0.4 %</dd></dl>
+      <div class="links"><a href="team/B3/SIMULATION-REPORT.md">SIMULATION-REPORT.md</a><a href="team/B3/S-AND-C.md">S-AND-C.md</a></div>
+    </div></div>
+
+    <div class="sim"><figure><img src="team/B4/sim/out/fig-b4-sim-05-tubefin-cp.svg" alt="B4 pressure field around the motor tube and fin section" loading="lazy"><span class="fid">FIG B4-SIM-05</span></figure><div class="body">
+      <div class="title"><span class="id">B4</span><b>Rotor aero, tube drag and download</b><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <span class="tool">APC PER3 tables · BEMT 20 × 12 stations (XFOIL NACA 4412 / 3410 polars) · SU2 SA 2-D RANS</span>
+      <p class="res">Tube + board Cd in the slipstream: hand 1.48 → <b>0.599</b>; download factor 1.038 → <b>1.025</b> (limit 1.06). Upper-prop hover 7.00 N at 5 491 rpm, T/W at the current cap <b>3.40</b>. New edgewise H-force 0.43 N per prop in the pitch-over, handed to B3. Blade-to-tube gap 21.1 mm FAIL → D-61 (26.1 mm).</p>
+      <dl><dt>convergence</dt><dd>3 grids, GCI 3.4 %; bare-cylinder validation +0.6 %</dd><dt>check</dt><dd>cruise section Cd 0.995 × B1's build-up</dd></dl>
+      <div class="links"><a href="team/B4/SIMULATION-REPORT.md">SIMULATION-REPORT.md</a><a href="team/B4/PROPS.md">PROPS.md</a></div>
+    </div></div>
+
+    <div class="sim"><figure><img src="team/C2/fig/C2-03-fea-vs-beam.svg" alt="C2 3-D FEA against the beam model" loading="lazy"><span class="fid">FIG C2-03</span></figure><div class="body">
+      <div class="title"><span class="id">C2</span><b>Wing structure, 3-D FEA</b><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <span class="tool">3-D solid FE of the half-wing as drawn (spar, plugs, blocks, pockets, cut-outs) · beam model and hand calcs</span>
+      <p class="res">Tip deflection within <b>5 %</b> of the beam, in-plane within 1 %, wing <b>16 % stiffer in twist</b> than the beam (aeroelastic claims conservative). Spar max 38.3 MPa, MS +8.1. New: foam at the block-pocket corners <b>203 vs 150 kPa</b> at ultimate (MS −0.26) → R 3 mm edges and fillet beads (D-68).</p>
+      <dl><dt>convergence</dt><dd>3 mesh levels; corner peak GCI 0.02 %</dd><dt>still FAIL</dt><dd>R-VIBRATION (tap test + notch planned)</dd></dl>
+      <div class="links"><a href="team/C2/SIMULATION-REPORT.md">SIMULATION-REPORT.md</a><a href="team/C2/WING-STRUCTURES.md">WING-STRUCTURES.md</a></div>
+    </div></div>
+
+    <div class="sim"><figure><img src="team/C3/fea/fig-c3-fea-02-bond-peel.svg" alt="C3 pod-to-wing bond peel from FEA" loading="lazy"><span class="fid">FIG C3-FEA-02</span></figure><div class="body">
+      <div class="title"><span class="id">C3</span><b>Pod structure, FEA</b><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <span class="tool">SU2 8.5 ELASTICITY on gmsh meshes · two-material cantilever bench vs Timoshenko</span>
+      <p class="res">FEA overturns three hand passes: pod-to-wing bond R 0.868 → <b>1.405</b>, aft stop peels the board at <b>408 kPa</b> vs 50, forward-stop bed 391 kPa. Fixes proven in the model: feet bonded to the walls (R <b>0.559</b>), a strut to the spar bridge (1.1 kPa). The forward-stop flange (CR-C3-15) is not modelled yet.</p>
+      <dl><dt>convergence</dt><dd>4 mesh levels, finest 2 mm mean; crash corner singular (R 11.0, fillet CR-C3-17)</dd><dt>decision</dt><dd>D-69: strut, floor flange, wall brackets, +13.9 g</dd></dl>
+      <div class="links"><a href="team/C3/SIMULATION-REPORT.md">SIMULATION-REPORT.md</a><a href="team/C3/FUSELAGE-STRUCTURES.md">FUSELAGE-STRUCTURES.md</a></div>
+    </div></div>
+
+    <div class="sim"><figure><img src="team/C4/fig-c4-s3-modes.svg" alt="C4 fin station modes from 3-D FE" loading="lazy"><span class="fid">FIG C4-S3</span></figure><div class="body">
+      <div class="title"><span class="id">C4</span><b>Fin and motor tube, 3-D FE</b><span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+      <span class="tool">3-D solid FE of the fin quarters (two-board laminate, strips, collar, shoe) · R4 shell/beam model · SU2 bench</span>
+      <p class="res">First station mode <b>262.4 / 255.5 Hz</b> upper / lower: separation from 1P/2P <b>0.29</b> (need 0.20), R-VIBRATION met. The R4 tip FAIL does not reproduce: the drawn shoe gives face MS <b>+0.11</b>, not −0.54, because the two edge strips take the twist as a couple. T-C4-FIN-PROOF on an as-drawn article decides the cheek extension.</p>
+      <dl><dt>convergence</dt><dd>3 meshes, Richardson; GCI 1.7 / 1.1 % on modes, 5.6 % on the cheek case; shoe corner does not converge</dd><dt>open</dt><dd>C6 reads C1's D-65 torsion 12.67 N·m: C4's set is stale by × 1.71</dd></dl>
+      <div class="links"><a href="team/C4/SIMULATION-REPORT.md">SIMULATION-REPORT.md</a><a href="team/C4/BOOM-STRUCTURES.md">BOOM-STRUCTURES.md</a></div>
+    </div></div>
+
+    <div class="sim"><figure><img src="team/C5/sim/fig/fig-c5-s1-envelope.svg" alt="C5 landing envelope: sink speed and tilt" loading="lazy"><span class="fid">FIG C5-S1</span></figure><div class="body">
+      <div class="title"><span class="id">C5</span><b>Landing, 6-DOF touchdown and shoe FEA</b><span class="ds-badge" data-status="FAIL">FAIL</span></div>
+      <span class="tool">6-DOF rigid body, 4 elastic-plastic feet, 16 pad contacts, Coulomb μ 0.7 · SU2 ELASTICITY on the PETG shoe</span>
+      <p class="res">As designed, four landing requirements fail: a diagonal touchdown at 1.5 m/s bottoms a foot from <b>5°</b> of tilt (need 10°), n <b>6.59</b> at 2.32 kg, side load <b>39.3 N</b> (hand 22.9), shoe RF <b>0.22</b>. The envelope that passes: <b>1.2 m/s</b> at ≤ 10° in any direction. Decision D-65: 1.2 m/s rule, shoe wall 2.0 / rim 3.0 mm, n 6.6.</p>
+      <dl><dt>convergence</dt><dd>time-step study; shoe FEA GCI 0.35 %, 2.78 × the beam check</dd><dt>next</dt><dd>D5 draws the shoe fix, C5 re-runs; T-C5-DROP</dd></dl>
+      <div class="links"><a href="team/C5/SIMULATION-REPORT.md">SIMULATION-REPORT.md</a><a href="team/C5/LANDING.md">LANDING.md</a></div>
+    </div></div>
+
+    <div class="sim"><figure><img src="team/E3/figs/fig-e3-05-margins.svg" alt="E3 thermal margins over the mission" loading="lazy"><span class="fid">FIG E3-05</span></figure><div class="body">
+      <div class="title"><span class="id">E3</span><b>Thermal, ESC pad CFD</b><span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span></div>
+      <span class="tool">SU2 8.5 INC_RANS 2-D section behind the 22 mm tube · lumped RC network over the mission</span>
+      <p class="res">Every part stays inside its limit over the full mission from 15 to 30 °C, gate case and as designed. The CFD film coefficient (64.6 W/m²K) runs the ESC <b>6.9 K cooler</b> than the hand estimate: peak 56.1 °C. Field-ambient ceiling <b>44.2 °C</b>. Smallest margin: the pack at landing, +5.2 K on a 30 °C day.</p>
+      <dl><dt>convergence</dt><dd>3 gmsh quad-layer grids</dd><dt>tests</dt><dd>T-E3-MOTOR-TAU, T-E3-ESC-PAD (H1 GT-04), T-E2-IR</dd></dl>
+      <div class="links"><a href="team/E3/SIMULATION-REPORT.md">SIMULATION-REPORT.md</a><a href="team/E3/THERMAL.md">THERMAL.md</a></div>
+    </div></div>
+
+  </div>
+  <span class="ds-source">team/&lt;ID&gt;/SIMULATION-REPORT.md · figures are the roles' own SVGs, referenced in place · README.md "Simulation round" table for the decisions</span>
+</section>
+
+<!-- ================= 6. STATUS ================= -->
+<section class="c" id="status">
+  <header>
+    <span class="secno">6 · Status · programme phases and open issues</span>
+    <h2 class="ds-h1">Six phases done, one partial, three not started</h2>
+    <p class="use">Phases follow DESIGN-PROGRAM.workflow.js. Done means every active role in the phase delivered and the chief engineer dispositioned its change requests; it does not mean verified.</p>
+  </header>
+  <div class="progress"><span>Programme progress</span><span class="ds-num">6 done · 1 partial · 3 not started</span><div class="track"><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="p"></i><i></i><i></i><i></i></div></div>
+  <div class="phases">
+    <div class="phase" data-phase="DONE"><span class="n">01</span><b>Frame</b><span>A1–A5, J1: params.json, README, requirements, interfaces, CAD framework</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
+    <div class="phase" data-phase="DONE"><span class="n">02</span><b>Analysis</b><span>B1–B4, C1, E1, E2: aero, loads, propulsion, energy</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
+    <div class="phase" data-phase="DONE"><span class="n">03</span><b>Detail analysis</b><span>C2–C6, E3, F1, F3, F5: structures, thermal, power, avionics, link</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
+    <div class="phase" data-phase="DONE"><span class="n">04</span><b>CAD design</b><span>D1–D3, D5–D7, E1, F1–F4: twelve subsystem folders, Fusion modules</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
+    <div class="phase" data-phase="DONE"><span class="n">05</span><b>Integration</b><span>merge_check, check.py, mass roll-up; A1-R4 … R4b decisions</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
+    <div class="phase" data-phase="DONE"><span class="n">06</span><b>Simulation</b><span>CFD, VLM, FEA, 6-DOF, thermal with convergence; A1-R5 (D-61 … D-73)</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
+    <div class="phase" data-phase="PARTIAL"><span class="n">07</span><b>Build and program</b><span>H1 test plan and I1 BOM delivered; G1–G4, H2, H3, I2 not started</span><span class="ds-badge" data-phase="PARTIAL">PARTIAL</span></div>
+    <div class="phase" data-phase="NOT STARTED"><span class="n">08</span><b>Media</b><span>Renders, animations, build manual, docs cleanup (J3, J5)</span><span class="ds-badge" data-phase="NOT STARTED">NOT STARTED</span></div>
+    <div class="phase" data-phase="NOT STARTED"><span class="n">09</span><b>Design review</b><span>J6 board per discipline, chair's go / no-go for the order</span><span class="ds-badge" data-phase="NOT STARTED">NOT STARTED</span></div>
+    <div class="phase" data-phase="NOT STARTED"><span class="n">10</span><b>Final hand-off</b><span>A1 final README and HANDOFF.md (A1's draft exists in team/A1/)</span><span class="ds-badge" data-phase="NOT STARTED">NOT STARTED</span></div>
+  </div>
+
+  <h3 class="ds-h2">Top open issues</h3>
+  <div class="scroll">
+    <table class="ds-table" id="issues">
+      <thead><tr><th>#</th><th>Issue</th><th>Owner</th><th>Claim / request</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="id">1</td><td class="what">Fin station collar: C1's D-65 re-run raised the half-fin torsion 7.39 → <b>12.67 N·m</b>; the drawn 15 mm collar reads RF 0.77 and C4's frozen set is stale by × 1.71. The fin station is not closed.</td><td class="who">C6 · C4 · D3</td><td class="src">CL-C6-COLLAR-RF · CR-C6-37 / -38</td><td><span class="ds-badge" data-status="FAIL">FAIL</span></td></tr>
+        <tr><td class="id">2</td><td class="what">Cruise power at the gate <b>246 W vs 240 W</b> carried in params.json after B1's CD0 0.0579; E1 asks A1 to move the key or the L/D.</td><td class="who">E1 · A1</td><td class="src">CL-E1-CRUISE-P-55 · CR-E1-51</td><td><span class="ds-badge" data-status="FAIL">FAIL</span></td></tr>
+        <tr><td class="id">3</td><td class="what">Stall margin at the forward CG is <b>+0.05 %</b>, below the model's own uncertainty; fails by 0.1 % at the bottom of the CG height range. The twin's slow-flight stall test is the gate before ARSPD_FBW_MIN is frozen.</td><td class="who">B2 · A1 · H2</td><td class="src">CL-B2R3-VS-GATE-FWD · CR-B2-20 · D-71</td><td><span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span></td></tr>
+        <tr><td class="id">4</td><td class="what">Spiral doubling time <b>3.51 s</b> against the 4 s limit from the raised CG (Cl_β +0.023). A1's position: 3.3 s with roll-stabilised modes only; A2 decides the limit.</td><td class="who">B3 · A2</td><td class="src">CL-B3-V-LAT-T2 · R-SPIRAL · D-66</td><td><span class="ds-badge" data-status="FAIL">FAIL</span></td></tr>
+        <tr><td class="id">5</td><td class="what">Mass gate with a 590 g pack misses by <b>1.8 g</b>; with the listed 551 g pack the predicted aft CG margin is 0.8 mm. One spacer step forward balances it; the flight card needs one pack-station rule (A1's or A3's).</td><td class="who">A3 · A1 · E2</td><td class="src">CL-A3-GATE-MARGIN-590 · CL-A3-CG-X-STATIONS</td><td><span class="ds-badge" data-status="FAIL">FAIL</span></td></tr>
+        <tr><td class="id">6</td><td class="what">Pod forward stop: the 1 mm epoxy bed peels the nose board at <b>391 kPa vs 50</b>; the anchor-flange fix (CR-C3-15) is built by D2-R6 but not yet modelled.</td><td class="who">C3 · D2</td><td class="src">CL-C3-FEA-FWD-BED-PEEL · CR-C3-15</td><td><span class="ds-badge" data-status="FAIL">FAIL</span></td></tr>
+        <tr><td class="id">7</td><td class="what">Landing: D-65 re-sizes the feet to 1.2 m/s and a stronger shoe (wall 2.0, rim 3.0, 25 mm engagement); D5 has not drawn it and C5 has not re-run on it. The +5 g is a stop-gap in the roll-up.</td><td class="who">D5 · C5</td><td class="src">CR-C5-16 … -19 · D-65</td><td><span class="ds-badge" data-status="FAIL">FAIL</span></td></tr>
+        <tr><td class="id">8</td><td class="what">Proof graph: <b>proofs/build_graph.py did not complete</b> at A1-R5; every script that reads an R5 key drifts until its owner re-runs (B1, B3, B4, C1, C3–C5, D2, D3, D5, D7, E1–E3, F4, H1). merge_check reported the CG error that A3-R7 has since closed.</td><td class="who">each owner · J2</td><td class="src">README.md "Integration state"</td><td><span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span></td></tr>
+        <tr><td class="id">9</td><td class="what">Nobody has run BuildAll in Fusion: the backend is <b>UNVERIFIED-IN-FUSION</b> and the hand-off's first action (L1) is one teammate with a licence running it on the skeleton.</td><td class="who">A5 · team lead</td><td class="src">CR-A5-08 · team/A1/HANDOFF.md L1</td><td><span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span></td></tr>
+        <tr><td class="id">10</td><td class="what">Mount stiffness: H1's pass line is <b>1 966 N·m/rad</b> (max of 1 100 and C4's need) against C4's 1 500 estimate, so GT-17 is expected to fail as drawn.</td><td class="who">H1 · C4 · D3</td><td class="src">CL-H1-MSTIFF-K-PASS · CR-H1-24</td><td><span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="ds-source">README.md "Integration state (A1-R5)" · team/&lt;ID&gt;/SUMMARY.md verdicts · params/CHANGE-LOG.md revision A1-R5 · MASS-CG.md verdict table</span>
+</section>
+
+<!-- ================= 7. HOW TO USE ================= -->
+<section class="c howto" id="howto">
+  <header>
+    <span class="secno">7 · How to use the redesign</span>
+    <h2 class="ds-h1">Build it in Fusion, open the viewers, resume the programme</h2>
+    <p class="use">Everything runs from a checkout of branch redesign/v1 with Python 3 and no installs; the web pages open from disk or from GitHub Pages.</p>
+  </header>
+  <div class="three">
+
+    <div class="ds-card">
+      <header><h3 class="ds-h2">Build in Fusion (about 2 minutes)</h3><span class="ds-meta">fusion/README.md · HANDOFF action L1</span></header>
+      <ol class="ds-actions">
+        <li><span>Get the repo on your machine: <code class="ds-inline">git pull</code>, branch <code class="ds-inline">redesign/v1</code>.</span></li>
+        <li><span>Fusion: <b>UTILITIES</b> tab → <b>ADD-INS</b> panel → <b>Scripts and Add-Ins</b> (Shift+S).</span></li>
+        <li><span>Add the launcher once: <b>+</b> (newer Fusion: <b>+ › Script or add-in from device</b>) and pick the folder <code class="ds-inline">redesign/fusion/BuildAll</code>. No path to edit.</span></li>
+        <li><span>Select <b>BuildAll</b> › <b>Run</b>. It opens a new design, adds <b>00 Datums</b>, builds every subsystem module in <code class="ds-inline">modules.txt</code> order, makes joints and wire routes, and prints a summary in <b>TEXT COMMANDS</b>.</span></li>
+        <li><span>Optional: Preferences › General › Design › default orientation <b>Z up</b> (the frame is z up, metres in code, cm in Fusion).</span></li>
+        <li><span>Report back: did it run, any line marked FAIL or ERROR, a screenshot, and whether the motors still show their 7° cant (as-built joints).</span></li>
+      </ol>
+      <pre class="cmd"><span class="c"># before the run, on any machine:</span>
+python -I redesign/fusion/check.py
+python -I redesign/interfaces/merge_check.py</pre>
+    </div>
+
+    <div class="ds-card">
+      <header><h3 class="ds-h2">Viewers and pages</h3><span class="ds-meta">static, open from disk, no server</span></header>
+      <dl class="kv">
+        <div><dt><a class="ds-link" href="viewer/index.html">Aircraft viewer</a></dt><dd>three.js assembly: Whole · Inside &amp; wiring · Structure · Exploded (keys 1–4); colour by subsystem, material or status; part browser, part panel with interfaces and claims, measure, mass / CG overlay. <code class="ds-inline">?data=aircraft</code> or <code class="ds-inline">?data=examples</code>.</dd></div>
+        <div><dt><a class="ds-link" href="proofs/viewer/index.html">Proof-chain viewer</a></dt><dd>every claim traced to its calculation, parameters and sources in 3-D; text form in <a href="proofs/out/CHAIN.md">proofs/out/CHAIN.md</a>. Rebuild: <code class="ds-inline">python -I redesign/proofs/build_graph.py</code> (<code class="ds-inline">--strict</code> fails on negative margins).</dd></div>
+        <div><dt><a class="ds-link" href="config-study/web/index.html">Configuration study</a></dt><dd>decision, constraints, morph chart, 43 concepts, shortlist, trade matrix, risks, sources.</dd></div>
+        <div><dt><a class="ds-link" href="design-system/components.html">Design system</a></dt><dd>tokens and components in both themes; the look every output follows.</dd></div>
+        <div><dt><a class="ds-link" href="manual-kit/README.md">Build manual kit</a></dt><dd>step generator (web + print) with figures from blender/; no K09-L steps written yet (G4, J3).</dd></div>
+      </dl>
+    </div>
+
+    <div class="ds-card">
+      <header><h3 class="ds-h2">How to resume</h3><span class="ds-meta">DESIGN-PROGRAM.workflow.js · team/A1/HANDOFF.md</span></header>
+      <dl class="kv">
+        <div><dt>1 · Read the frame</dt><dd>README.md (key numbers, integration state), CONFIGURATION.md, params/CHANGE-LOG.md "Revision A1-R5", MASS-CG.md verdict.</dd></div>
+        <div><dt>2 · Re-run the chain</dt><dd>each owner re-runs its script on the R5 keys, then the proof graph; the build must complete with 0 drift before the review board sits.</dd></div>
+        <div><dt>3 · Close the open issues</dt><dd>the table above, in order: fin station (C6 / C4 / D3), cruise power key (A1), pack-station rule (A1 / A3), pod forward stop (C3 / D2), shoe fix (D5 / C5).</dd></div>
+        <div><dt>4 · Run the workflow from phase 07</dt><dd>Build and program (G1–G4, H2, H3, I2), then Media (J3, J5), Review (J6, J4), Final (A1). The workflow guards stop a run when more than half the agents of a phase fail, so a resume continues at that phase.</dd></div>
+        <div><dt>5 · Team-lead actions</dt><dd>L1 BuildAll in Fusion; L2 weigh the first pack (T-E2-WEIGH); L3 weigh the first carbon tube; Jacobs Hall's written yes before 20 Nov; early order ~20 Nov; December order 15 Dec.</dd></div>
+      </dl>
+      <pre class="cmd"><span class="c"># the three checks that gate a release</span>
+python -I redesign/team/A1/frame_claims.py
+python -I redesign/team/A3/mass_rollup.py
+python -I redesign/proofs/build_graph.py --strict</pre>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= 8. SOURCES ================= -->
+<section class="c" id="sources">
+  <header>
+    <span class="secno">8 · Sources and directory map</span>
+    <h2 class="ds-h1">Where every number on this page comes from</h2>
+  </header>
+  <div class="srcs">
+    <div>
+      <h3 class="ds-h3">Top level</h3>
+      <ul>
+        <li><b><a href="README.md">README.md</a></b>front door: aircraft, key numbers, GA, owners, joints, simulation round, integration state</li>
+        <li><b><a href="CONFIGURATION.md">CONFIGURATION.md</a></b>the decision, the price, de-risking, reversal conditions</li>
+        <li><b><a href="TEAM.md">TEAM.md</a> · <a href="BRIEF.md">BRIEF.md</a></b>roles and their single responsibilities · the rules</li>
+        <li><b><a href="MASS-CG.md">MASS-CG.md</a></b>A3-R7 roll-up, D-63 allocations, budget rules, pack stations</li>
+        <li><b><a href="params/params.json">params/params.json</a> · <a href="params/CHANGE-LOG.md">CHANGE-LOG.md</a> · <a href="params/mass_budget.json">mass_budget.json</a></b>single source of numbers · every decision D-01 … D-73 · allocations</li>
+        <li><b><a href="DESIGN-PROGRAM.workflow.js">DESIGN-PROGRAM.workflow.js</a></b>the ten phases and which roles run in each</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="ds-h3">Per role and subsystem</h3>
+      <ul>
+        <li><b>team/&lt;ID&gt;/</b>SUMMARY.md, the discipline report, SIMULATION-REPORT.md, claims.json, CHANGE-REQUESTS.md, scripts, figures</li>
+        <li><b>subsystems/&lt;key&gt;/</b>SPEC.md, BUILD.md, parts.csv, interfaces.json, params.json, fusion/&lt;key&gt;.py</li>
+        <li><b><a href="config-study/README.md">config-study/</a></b>how K09 was chosen: requirements, morph chart, cards, reviews, tie-break, web page</li>
+        <li><b><a href="team/A1/HANDOFF.md">team/A1/HANDOFF.md</a></b>team-lead actions L1–L3 and the pod-station rule</li>
+        <li><b><a href="inputs/">inputs/</a></b>advisor lessons, mentor guidance, simulation tools, prior decisions</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="ds-h3">Tooling</h3>
+      <ul>
+        <li><b><a href="fusion/README.md">fusion/</a></b>fusionkit, k09kit, build_all.py, check.py, DATUMS.md, STANDARDS.md, BuildAll launcher, skeleton</li>
+        <li><b><a href="interfaces/SCHEMA.md">interfaces/</a></b>knowledge-graph schema and merge_check.py</li>
+        <li><b><a href="proofs/README.md">proofs/</a></b>build_graph.py, SCHEMA.md, out/CHAIN.md, viewer/</li>
+        <li><b><a href="viewer/README.md">viewer/</a> · <a href="blender/README.md">blender/</a> · <a href="manual-kit/README.md">manual-kit/</a></b>aircraft viewer · render backend · build-manual generator</li>
+        <li><b><a href="design-system/README.md">design-system/</a></b>tokens.css, components.css, components.html, diagram and Blender styles</li>
+        <li><b><a href="reviews/TOOLING-REVIEW.md">reviews/</a></b>tooling review; CDR reports when the board sits</li>
+      </ul>
+    </div>
+  </div>
+  <p class="footer">K09-L programme overview, UC Berkeley MEng capstone, redesign/v1 at revision A1-R5 (2026-11-10) · status PROPOSED: nothing bought, weighed or flown · every number carries its claim id or file · page follows redesign/design-system v1 · light and dark via prefers-color-scheme or the button in the top bar</p>
+</section>
+
+</main>
+
+<script>
+(function () {
+  var root = document.documentElement, btn = document.getElementById('theme');
+  function isDark() { var t = root.getAttribute('data-theme'); return t ? t === 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches); }
+  function paint() { btn.innerHTML = '<svg><use href="#i-' + (isDark() ? 'sun' : 'moon') + '"/></svg>'; }
+  btn.addEventListener('click', function () { root.setAttribute('data-theme', isDark() ? 'light' : 'dark'); paint(); });
+  paint();
+})();
+</script>
+</body>
+</html>
