@@ -1,7 +1,7 @@
 {
  "schema": "dbf-viewer/1",
  "dataset": "aircraft",
- "generated": "2026-11-11 09:01 UTC",
+ "generated": "2026-11-11 09:05 UTC",
  "sources": {
   "glb": "redesign/blender/out/aircraft/glb",
   "interfaces": "redesign/interfaces/interfaces.json",
@@ -27282,10 +27282,10 @@
   "_note": "Written by redesign/team/A1/frame_claims.py from params/params.json#mass.allocation_g; do not edit by hand. limit_g is the hard as-built gate (P4). Allocations are flying mass per subsystem folder; growth_reserve_g (= limit - allocations) is held by A1 for growth by maturity and the first-build overrun; sized_g = allocations + requirements.growth_allowance_kg + requirements.build_overrun_kg (D-63: 114 + 100 g). A3 refines allocations in MASS-CG.md through a change request to A1.",
   "limit_g": 2600,
   "sized_g": 2600,
-  "growth_reserve_g": 214,
+  "growth_reserve_g": 213,
   "allocations_g": {
    "wing": 405,
-   "fins": 437,
+   "fins": 438,
    "pod": 146,
    "landing": 48,
    "propulsion": 462,

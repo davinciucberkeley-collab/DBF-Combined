@@ -9,7 +9,7 @@ Sources: `wing` ← redesign/subsystems/wing/parts.csv; `fins` ← redesign/subs
 | Subsystem | Alloc g (A1) | Basic g | Predicted g | Basic − alloc g | Status |
 |---|---|---|---|---|---|
 | wing | 405 | 392 | 411 | -13 | `PROPOSED` |
-| fins | 437 | 437 | 459 | +0 | `FAIL` |
+| fins | 438 | 437 | 459 | -1 | `PROPOSED` |
 | pod | 146 | 146 | 153 | +0 | `PROPOSED` |
 | landing | 48 | 48 | 53 | -0 | `PROPOSED` |
 | propulsion | 462 | 462 | 490 | +0 | `PROPOSED` |
@@ -17,7 +17,7 @@ Sources: `wing` ← redesign/subsystems/wing/parts.csv; `fins` ← redesign/subs
 | avionics | 45 | 36 | 39 | -8 | `PROPOSED` |
 | harness | 123 | 117 | 129 | -6 | `PROPOSED` |
 | mechanisms | 72 | 71 | 80 | -1 | `PROPOSED` |
-| **total** | **2 600** | **2 349** | **2 466** | allocated 2 386 + growth 214 | gate margin +134 g |
+| **total** | **2 600** | **2 349** | **2 466** | allocated 2 387 + growth 213 | gate margin +134 g |
 
 | Gate case (predicted, all other items with growth) | Pack g | Predicted g | Gate margin g | Overrun to cover g | Claim | Status |
 |---|---|---|---|---|---|---|
@@ -112,7 +112,7 @@ Groups for C1's loads model (`CL-A3-GROUPS`; inertia about each group's own cent
 
 (own inertias in kg·m²)
 
-Allocations read from `params.json#mass.allocation_g` and checked equal to `params/mass_budget.json` (2 386 g + reserve 214 g = 2 600 g).
+Allocations read from `params.json#mass.allocation_g` and checked equal to `params/mass_budget.json` (2 387 g + reserve 213 g = 2 600 g).
 
 A3 adders kept beside a designer's parts.csv (items the list does not carry yet): GER-R5-SLEEVE (landing, 5.0 g).
 

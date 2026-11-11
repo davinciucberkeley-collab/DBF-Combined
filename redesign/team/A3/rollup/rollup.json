@@ -15,7 +15,7 @@
   "predicted_pack_nominal_kg": 2.4668505,
   "gate_margin_pack_nominal_kg": 0.13314950000000003,
   "pack_accept_g": 584.1494999999999,
-  "allocated_g": 2386.0,
+  "allocated_g": 2387.0,
   "a1_sized_kg": 2.6,
   "by_subsystem_g": [
    [
@@ -26,7 +26,7 @@
    ],
    [
     "fins",
-    437.0,
+    438.0,
     437.1,
     459.0
    ],
@@ -105,9 +105,9 @@
     80.4
    ]
   ],
-  "worst_alloc_ratio": 1.000228832951945,
-  "worst_alloc_subsystem": "fins",
-  "overrun_total_g": 0.10000000000002274
+  "worst_alloc_ratio": 1.0,
+  "worst_alloc_subsystem": "pod",
+  "overrun_total_g": 0.0
  },
  "cg": {
   "mass_g": 2349.19,
@@ -732,7 +732,7 @@
   "budget": {
    "allocations_g": {
     "wing": 405,
-    "fins": 437,
+    "fins": 438,
     "pod": 146,
     "landing": 48,
     "propulsion": 462,
@@ -741,7 +741,7 @@
     "harness": 123,
     "mechanisms": 72
    },
-   "growth_reserve_g": 214,
+   "growth_reserve_g": 213,
    "limit_g": 2600
   },
   "params_used": [

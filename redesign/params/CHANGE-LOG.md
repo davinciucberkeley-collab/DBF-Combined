@@ -506,3 +506,7 @@ E1-35…50, E2-23…27, F1-23…30, F2-12…18, F3-22/23, F4-18…20, F5-11…14
 | CR-E3-13, CR-E3-14, CR-E3-15, CR-E3-17, CR-E3-18, CR-E2-27, CR-E1-41, CR-F3-14 | **E3** | forward (D-67) | re-run `thermal.py` on r_ext 6.7 (`P:electrical.r_ext_mohm`), the 7.6 g ESC, F3's 0.5 W; the owners (D3, E1, D2) copy the R3 values into the thermal blocks and SPEC rows |
 | CR-F2-12…18, CR-F3-22, CR-F3-23, CR-F5-13, CR-F5-14, CR-F1-30 | **F2, F3, F5** | closed or forward | F2-13 done by F1-R4; F2-17 done by F3; F3-22/23 closed; F5-13: F3 moves `E-AVN-09` to `EDGES` (done per CR-F3-23); F5-14 to A4; F1-30 to F3 (acknowledge `E-HRN-22/23`); F2-14 → D1, F2-15 → D6, F2-16 → D3, F2-18 → F1 (above) |
 | CR-C4-02…05, -10, -11, CR-D3-06, CR-D5-05, -17, -22, CR-E2-13, CR-F2-05, -10, CR-F4-05, -08, CR-D1-01, -07, -11 | — | closed | history rows already answered in the owners' own tables (done, superseded or forwarded at R1–R4) |
+
+
+## 2026-11-11 · fins allocation 437 -> 438 g
+Accepted (A1, at the team lead's request). Modelling every joint-stack fastener as a CAD part (team/C6/FASTENERS-CAD.md) put the fins 0.1 g over 437 g. 1 g moved from requirements.growth_allowance_kg (114 -> 113 g); sized total unchanged at 2 600 g, growth reserve 214 -> 213 g (113 g growth + 100 g build overrun).
