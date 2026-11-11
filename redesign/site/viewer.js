@@ -14,9 +14,10 @@ const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: r
 
 // ---------------- state ----------------
 const S = { data: null, idx: null, mode: 'whole', colour: 'realistic', explode: 0, sel: null, isolated: null, poses: {}, query: '',
-  attitude: 'cruise', kit: false, ready: false };
+  attitude: 'cruise', kit: false, fast: false, ready: false };
 const G = { renderer: null, scene: null, camera: null, controls: null, root: null, parts: new Map(), wires: new Map(), joints: new Map(),
-  box: new THREE.Box3(), size: 1, ground: null, key: null, dirty: true, anims: [], colours: {}, hover: null };
+  box: new THREE.Box3(), size: 1, ground: null, key: null, dirty: true, anims: [], colours: {}, hover: null,
+  hwMat: null, hwMarkers: [] };
 
 // ---------------- colours from the design-system tokens ----------------
 const isDark = () => { const t = document.documentElement.getAttribute('data-theme');
@@ -30,6 +31,7 @@ function readColours() {
   c.accent = new THREE.Color(v('--accent')); c.fg = new THREE.Color(v('--fg')); c.fg3 = new THREE.Color(v('--fg-3'));
   c.bg = new THREE.Color(v('--stage-bottom')); c.ghost = new THREE.Color(isDark() ? '#7D8CA0' : '#9AA9BC');
   c.outline = new THREE.Color(isDark() ? '#05070A' : '#1A1E24'); c.outlineOpacity = isDark() ? 0.55 : 0.32;
+  c.hl = new THREE.Color(v('--highlight'));
   c.css = { sub: k => v('--sub-' + k.toLowerCase()), status: s => v('--st-' + s.toLowerCase()) };
 }
 
@@ -97,7 +99,7 @@ function loop(now) {
   if (G.controls.update()) G.dirty = true;
   if (!G.dirty) return;
   G.dirty = false;
-  sizeMarkers();
+  sizeMarkers(); placeHwMarkers();
   G.renderer.render(G.scene, G.camera);
 }
 const _w = new THREE.Vector3();
@@ -108,6 +110,51 @@ function sizeMarkers() {   // joint markers keep about the same size on screen a
     const view = 2 * cam.position.distanceTo(_w) * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
     j.marker.scale.setScalar(Math.min(view * 0.006 / r0, 1.5));
   }
+}
+
+// ---------------- fasteners view (H): hardware in the highlight colour, the rest ghosted, a screen-space ring on each ----------------
+const isHw = id => M.isHardware(S.idx.parts.get(id));
+function hwMaterial() {
+  const hl = G.colours.hl;
+  if (!G.hwMat) G.hwMat = new THREE.MeshStandardMaterial({ roughness: 0.4, metalness: 0, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
+  G.hwMat.color.copy(hl); G.hwMat.emissive.copy(hl); G.hwMat.emissiveIntensity = 0.7;
+  return G.hwMat;
+}
+function hwTexture() {   // ring + dot in the highlight colour with a light halo, so it reads on foam and on carbon
+  const cv = document.createElement('canvas'); cv.width = cv.height = 64;
+  const x = cv.getContext('2d'), hl = '#' + G.colours.hl.getHexString();
+  x.lineWidth = 9; x.strokeStyle = 'rgba(255,255,255,0.9)'; x.beginPath(); x.arc(32, 32, 24, 0, 7); x.stroke();
+  x.lineWidth = 5; x.strokeStyle = hl; x.beginPath(); x.arc(32, 32, 24, 0, 7); x.stroke();
+  x.fillStyle = hl; x.beginPath(); x.arc(32, 32, 8, 0, 7); x.fill();
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+function buildHwMarkers() {
+  if (G.hwMarkers.length || !G.root) return;
+  G.root.updateMatrixWorld(true);
+  const mat = new THREE.SpriteMaterial({ map: hwTexture(), depthTest: false, depthWrite: false, transparent: true, sizeAttenuation: false, toneMapped: false });
+  for (const [id, e] of G.parts) {
+    if (!isHw(id)) continue;
+    const c = new THREE.Box3().setFromObject(e.node).getCenter(new THREE.Vector3());
+    const sp = new THREE.Sprite(mat); sp.renderOrder = 25; sp.visible = false;
+    sp.userData = { ref: { type: 'part', id }, local: e.node.worldToLocal(c), part: e };
+    G.scene.add(sp); G.hwMarkers.push(sp);
+  }
+}
+function placeHwMarkers() {
+  if (!G.hwMarkers.length) return;
+  const selId = S.sel ? S.sel.id : null;
+  for (const sp of G.hwMarkers) {
+    const e = sp.userData.part; sp.visible = S.fast && shown(e.node);
+    if (!sp.visible) continue;
+    sp.position.copy(sp.userData.local); e.node.localToWorld(sp.position);
+    sp.scale.setScalar(sp.userData.ref.id === selId ? 0.034 : 0.022);
+  }
+}
+function setFast(on) {
+  if (!G.root) return;
+  S.fast = on; $('#fast').setAttribute('aria-pressed', String(on));
+  if (on) { buildHwMarkers(); hwMaterial(); }
+  applyLook(); renderTree(true); if (!S.sel) renderPanel(); hint();
 }
 
 // ---------------- model ----------------
@@ -285,6 +332,7 @@ function roleOf(id) {
   const p = S.idx.parts.get(id), selected = S.sel && S.sel.type === 'part' && S.sel.id === id;
   if (p && p.flight === false && !S.kit && !selected) return 'hidden';
   if (S.isolated) return id === S.isolated ? 'solid' : 'hidden';
+  if (S.fast) return M.isHardware(p) || selected ? 'solid' : 'ghost';
   if (p && p.flight === false && !selected && S.mode === 'whole') return 'ghost';   // transport box x-rayed around the aircraft
   const r = M.role(S.mode, p, S.idx);
   return selected && r !== 'solid' ? 'solid' : r;
@@ -295,10 +343,16 @@ function applyLook() {
   for (const [id, e] of G.parts) {
     const p = S.idx.parts.get(id), r = roleOf(id), isSel = selId === id;
     e.node.visible = r !== 'hidden';
+    const hw = S.fast && r === 'solid' && M.isHardware(p);
     for (const m of e.meshes) {
-      const ghost = r === 'ghost', mat = m.material = real ? m.userData.realMat : m.userData.flatMat;
-      m.userData.ghost = ghost;
-      if (ghost) { mat.color.copy(c.ghost); mat.opacity = 0.18; }
+      const ghost = r === 'ghost';
+      m.userData.ghost = ghost; m.renderOrder = hw ? 10 : 0;
+      if (hw) { m.material = hwMaterial(); m.castShadow = true; if (m.userData.lineLines) m.userData.lineLines.visible = false;
+        if (m.userData.ghostLines) m.userData.ghostLines.visible = false;
+        if (isSel || m.userData.selLines) { const l = edgesOf(m, 'sel'); l.visible = isSel; l.material.color.copy(c.accent); }
+        continue; }
+      const mat = m.material = real ? m.userData.realMat : m.userData.flatMat;
+      if (ghost) { mat.color.copy(c.ghost); mat.opacity = S.fast ? 0.15 : 0.18; }
       else { mat.color.copy(partColour(p, m)); mat.opacity = 1; if (anySel && !isSel) mat.color.lerp(c.bg, 0.5); }
       if (mat.transparent !== ghost) { mat.transparent = ghost; mat.needsUpdate = true; }
       mat.depthWrite = !ghost; m.castShadow = !ghost;
@@ -309,7 +363,7 @@ function applyLook() {
       if (isSel || m.userData.selLines) { const l = edgesOf(m, 'sel'); l.visible = isSel; l.material.color.copy(c.accent); }
     }
   }
-  const wiresOn = M.showWires(S.mode) && S.explode < 0.01;
+  const wiresOn = M.showWires(S.mode) && S.explode < 0.01 && !S.fast;
   for (const [id, w] of G.wires) {
     const isSel = selId === id;
     w.node.visible = isSel || (wiresOn && !S.isolated);
@@ -317,7 +371,7 @@ function applyLook() {
       m.material.color.copy(real ? m.userData.realColor : m.userData.origColor); if (anySel && !isSel) m.material.color.lerp(c.bg, 0.5);
       if (m.material.emissive) m.material.emissive.copy(c.accent).multiplyScalar(isSel ? 0.35 : 0); }
   }
-  const jointsOn = M.showJoints(S.mode) && S.explode < 0.01 && !S.isolated;
+  const jointsOn = M.showJoints(S.mode) && S.explode < 0.01 && !S.isolated && !S.fast;
   for (const [id, j] of G.joints) if (j.marker) {
     const ends = [j.data.part_a, j.data.part_b].filter(pid => G.parts.has(pid));   // no marker on a hidden part (ground kit, Structure)
     j.marker.visible = (jointsOn && ends.every(pid => G.parts.get(pid).node.visible)) || selId === id;
@@ -330,7 +384,7 @@ function applyLook() {
 // selection / hover glow on one mesh
 const _black = new THREE.Color(0);
 function tint(m, id) {
-  const mat = m.material; if (!mat.emissive) return;
+  const mat = m.material; if (!mat.emissive || mat === G.hwMat) return;
   const sel = S.sel && S.sel.id === id, hov = G.hover === id && !sel;
   mat.emissive.copy(sel || hov ? G.colours.accent : _black).multiplyScalar(sel ? 0.16 : hov ? 0.09 : 0);
 }
@@ -398,6 +452,8 @@ function pick(ev) {
   for (const e of G.parts.values()) objs.push(...e.meshes);
   for (const w of G.wires.values()) objs.push(...w.meshes);
   for (const j of G.joints.values()) if (j.marker) objs.push(j.marker);
+  for (const sp of G.hwMarkers) if (sp.visible) objs.push(sp);
+  ray.camera = G.camera;
   const hits = ray.intersectObjects(objs.filter(shown), false);
   const h = hits.find(x => x.object.renderOrder >= 20) || hits.find(x => !x.object.userData.ghost) || hits[0];
   return h ? { ref: h.object.userData.ref, point: h.point } : null;
@@ -434,14 +490,15 @@ function select(ref, opts) {
 // ---------------- part browser ----------------
 const subCss = k => k === 'OTHER' ? 'var(--fg-3)' : 'var(--sub-' + k.toLowerCase() + ')';
 function renderTree(keepScroll) {
-  const T = $('#tree'), top = T.scrollTop, groups = M.tree(S.data, S.query), selId = S.sel ? S.sel.id : null;
+  const T = $('#tree'), top = T.scrollTop, selId = S.sel ? S.sel.id : null;
+  const groups = S.fast ? M.tree({ parts: S.data.parts.filter(M.isHardware) }, S.query) : M.tree(S.data, S.query);
   const openState = {}; T.querySelectorAll('details[data-sub]').forEach(d => { openState[d.dataset.sub] = d.open; });
   let h = '';
   for (const g of groups) {
     const ground = g.parts.every(p => p.flight === false);
-    const open = openState[g.subsystem] !== undefined ? openState[g.subsystem] : !!S.query || !ground;
+    const open = openState[g.subsystem] !== undefined ? openState[g.subsystem] : !!S.query || !ground || S.fast;
     h += '<details data-sub="' + esc(g.subsystem) + '"' + (open ? ' open' : '') + '><summary data-sub="' + g.key + '"><i class="sub" style="--sub:' + subCss(g.key) + '"></i>' +
-      '<span>' + esc(g.subsystem) + (ground ? ' <small>ground</small>' : '') + '</span><span class="m">' + (ground ? g.parts.length + ' parts' : M.fmtMass(g.mass_g)) + '</span></summary>';
+      '<span>' + esc(g.subsystem) + (ground ? ' <small>ground</small>' : '') + '</span><span class="m">' + (S.fast ? g.parts.length + ' · ' + M.fmtMass(g.mass_g) : ground ? g.parts.length + ' parts' : M.fmtMass(g.mass_g)) + '</span></summary>';
     for (const p of g.parts) {
       const hidden = G.root && G.parts.has(p.id) && roleOf(p.id) === 'hidden';
       h += '<button class="v-row' + (p.in_model === false ? ' nogeo' : '') + (hidden ? ' dim' : '') + '" data-part="' + esc(p.id) + '"' +
@@ -451,7 +508,8 @@ function renderTree(keepScroll) {
     }
     h += '</details>';
   }
-  const wires = (S.data.edges || []).filter(e => M.edgeKind(e, S.idx) === 'wire' && M.matches({ id: e.id, name: (e.wire || {}).connector, material: e.via }, S.query));
+  if (S.fast) h = '<div class="v-hwhead"><i></i><span>Fasteners and hardware</span><span class="m">' + groups.reduce((n, g) => n + g.parts.length, 0) + ' parts</span></div>' + h;
+  const wires = S.fast ? [] : (S.data.edges || []).filter(e => M.edgeKind(e, S.idx) === 'wire' && M.matches({ id: e.id, name: (e.wire || {}).connector, material: e.via }, S.query));
   if (wires.length) {
     const open = openState['(wiring)'] === true;
     h += '<details data-sub="(wiring)"' + (open ? ' open' : '') + '><summary><i class="sub" style="--sub:' + subCss('HRN') + '"></i><span>wiring</span><span class="m">' + wires.length + '</span></summary>';
@@ -529,7 +587,20 @@ function edgeHtml(id) {
     (f.rows.length ? '<section><h3>' + (e.joint_stack ? 'Joint stack' : e.wire ? 'Wire installation' : 'Motion') + '</h3>' + kv(f.rows.map(([a, b]) => [a, esc(b)])) + '</section>' : '') +
     (e.notes ? '<section class="ds-meta">' + esc(e.notes) + '</section>' : '') + '</article>';
 }
+function hardwareHtml() {
+  const hs = M.hardwareSummary(S.data), inGlb = hs.parts.filter(p => G.parts.has(p.id)).length;
+  let h = '<div class="ds-panel v-summary"><h2>Fasteners &amp; hardware</h2><p>Every screw, nut, washer, insert and spacer in the model, drawn in orange with a ring at its centre; ' +
+    'everything else is ghosted. Click a ring or a row to focus it. <span class="ds-kbd">H</span> returns to the previous view.</p>' +
+    kv([['Hardware parts', M.fmtNum(hs.parts.length) + ' <span class="ds-meta">' + inGlb + ' with geometry</span>'], ['Pieces', M.fmtNum(hs.pieces)],
+      ['Flight hardware', M.fmtMass(hs.mass_g)], ['Ground kit hardware', M.fmtMass(hs.ground_mass_g) + ' <span class="ds-meta">not flying mass</span>']]);
+  h += '<table class="v-subtable v-hwtable"><tr><th>Type</th><th>Material</th><th>Parts</th><th>Pcs</th><th>Mass</th></tr>';
+  for (const r of hs.rows) h += '<tr><td>' + esc(r.type) + (r.ground ? ' <span class="ds-meta">ground</span>' : '') + '</td><td>' + esc(r.material) + '</td><td>' + r.parts + '</td><td>' + r.pieces + '</td><td>' + M.fmtMass(r.mass_g) + '</td></tr>';
+  h += '<tr class="tot"><td>Total</td><td></td><td>' + hs.parts.length + '</td><td>' + hs.pieces + '</td><td>' + M.fmtMass(hs.mass_g + hs.ground_mass_g) + '</td></tr></table>';
+  h += '<p class="ds-source">Classified by part name (screw, bolt, nut, washer, insert, spacer, nyloc, SHCS, pan head); pieces read from "n x" in the name.</p></div>';
+  return h;
+}
 function summaryHtml() {
+  if (S.fast) return hardwareHtml();
   const d = S.data, mc = M.massCG(d), by = {};
   for (const p of d.parts) if (p.flight !== false) by[p.status] = (by[p.status] || 0) + 1;
   const lim = mc.limit_g, over = lim !== null && mc.total_g > lim;
@@ -547,7 +618,7 @@ function summaryHtml() {
     h += '</table>';
   }
   h += '<div class="v-keys"><span class="ds-kbd">1</span>Aircraft<span class="ds-kbd">2</span>Inside &amp; wiring<span class="ds-kbd">3</span>Structure<span class="ds-kbd">4</span>Exploded' +
-    '<span class="ds-kbd">F</span>Focus selected<span class="ds-kbd">Esc</span>Show full aircraft<span class="ds-kbd">/</span>Search</div>' +
+    '<span class="ds-kbd">H</span>Fasteners<span class="ds-kbd">F</span>Focus selected<span class="ds-kbd">Esc</span>Show full aircraft<span class="ds-kbd">/</span>Search</div>' +
     '<p class="ds-source">Declared masses from interfaces.json (A3-R7 roll-up in MASS-CG.md); allocations from params/mass_budget.json; geometry from blender/export_glb.py; ground tools excluded.</p></div>';
   return h;
 }
@@ -555,6 +626,10 @@ function summaryHtml() {
 // ---------------- legend, hint, counts ----------------
 function renderLegend() {
   const L = $('#legend'); let items = [];
+  if (S.fast) {
+    const n = S.data.parts.filter(p => G.parts.has(p.id) && M.isHardware(p) && roleOf(p.id) !== 'hidden').length;
+    L.innerHTML = '<span><i style="--c:var(--highlight)"></i>hardware ' + n + '</span><span><i style="--c:var(--fg-3)"></i>ghost: everything else</span><span>H to exit</span>'; return;
+  }
   if (S.colour === 'realistic') { L.innerHTML = ''; return; }
   if (S.colour === 'status') {
     const by = {}; for (const p of S.data.parts) if (G.parts.has(p.id) && roleOf(p.id) !== 'hidden') by[p.status] = (by[p.status] || 0) + 1;
@@ -568,7 +643,8 @@ function renderLegend() {
   L.innerHTML = items.map(([c, t]) => '<span><i style="--c:' + c + '"></i>' + esc(t) + '</span>').join('');
 }
 function hint() {
-  $('#hint').textContent = S.mode === 'exploded' ? 'Drag the slider · drag to rotate · scroll to zoom' : 'Drag to rotate · right-drag to pan · scroll to zoom · click a part · double-click to focus';
+  $('#hint').textContent = S.fast ? 'Fasteners: click a ring or a row to focus · H to exit · drag to rotate · scroll to zoom'
+    : S.mode === 'exploded' ? 'Drag the slider · drag to rotate · scroll to zoom · H fasteners' : 'Drag to rotate · right-drag to pan · scroll to zoom · click a part · double-click to focus · H fasteners';
 }
 function renderCounts() {
   const d = S.data, mc = M.massCG(d);
@@ -581,6 +657,7 @@ function wire() {
   $('#attitude').addEventListener('click', ev => { const b = ev.target.closest('button[data-att]'); if (b) setAttitude(b.dataset.att); });
   $('#colours').addEventListener('click', ev => { const b = ev.target.closest('button[data-colour]'); if (b) setColour(b.dataset.colour); });
   $('#kit').addEventListener('click', () => G.root && setKit(!S.kit));
+  $('#fast').addEventListener('click', () => setFast(!S.fast));
   $('#fit').addEventListener('click', () => G.root && fit(visibleBox()));
   $('#showall').addEventListener('click', () => G.root && showAll());
   $('#explode-range').addEventListener('input', ev => { setExplode(ev.target.value / 100); applyLook(); });
@@ -623,13 +700,18 @@ function wire() {
     const k = ev.key;
     if (k >= '1' && k <= '4') setMode(M.MODES[+k - 1]);
     else if ((k === 'f' || k === 'F') && S.sel) focusOn(S.sel);
+    else if (k === 'h' || k === 'H') setFast(!S.fast);
     else if (k === 'Home') fit(visibleBox());
     else if (k === '/') { ev.preventDefault(); $('#search').focus(); }
     else if (k === 'Escape') { if (S.isolated) { S.isolated = null; applyLook(); renderPanel(); } else if (S.sel) select(null); else showAll(); }
   });
   if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change', themeChanged);
 }
-function themeChanged() { readColours(); if (G.root) applyLook(); }
+function themeChanged() {
+  readColours();
+  if (G.hwMat) { hwMaterial(); if (G.hwMarkers.length) { const m = G.hwMarkers[0].material; m.map.dispose(); m.map = hwTexture(); m.needsUpdate = true; } }
+  if (G.root) applyLook();
+}
 
 // ---------------- public ----------------
 export const viewer = {
@@ -637,6 +719,7 @@ export const viewer = {
   setQuery(q) { const s = $('#search'); if (!s) return; s.value = q; S.query = q; if (S.data) renderTree(); },
   resize() { if (G.renderer) resize(); },
   state: S,
+  setFasteners: on => setFast(!!on),
 };
 
 export async function start() {

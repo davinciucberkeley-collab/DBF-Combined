@@ -108,6 +108,42 @@ function massCG(data) {
     cg_range: range, in_range: inRange, margin_m: margin, no_mass: noMass, no_cg: noCG, subsystems: subs };
 }
 
+// ---------- hardware (fasteners view) ----------
+// A part is hardware when its name (before any ':' and without parentheses) names a screw, bolt, nut, washer, insert or spacer.
+// So "Power frame: deck on 4 spacers", "Field pouch (... spare prop nuts ...)" and the spare landing inserts are not hardware.
+const HW_RE = /screw|bolt|\bnuts?\b|washer|insert|spacer|nyloc|SHCS|pan head/i;
+function isHardware(p) {
+  if (!p) return false;
+  const head = String(p.name || '').replace(/\([^)]*\)/g, '').split(':')[0];
+  return HW_RE.test(head) && !/^\s*spare\b/i.test(head);
+}
+// type of a hardware part, from its name
+function hardwareType(p) {
+  const n = String(p.name || '').split(':')[0];
+  if (/adapter/i.test(n) && !/screw/i.test(n)) return 'Prop adapter kit';
+  if (/insert/i.test(n)) return 'Heat-set insert';
+  if (/spacer/i.test(n)) return 'Spacer';
+  if (/washer/i.test(n)) return 'Washer';
+  if (/\bnuts?\b|nyloc/i.test(n)) return 'Nut';
+  return 'Screw / bolt';
+}
+// pieces in one part record: "Motor screw set: 4 x M3x8" -> 4, "2 x (M3x16 ...)" -> 2, otherwise 1
+const hardwarePieces = p => { const m = String(p.name || '').match(/:\s*(\d+)\s*x\s/i); return m ? +m[1] : 1; };
+// summary rows [{type, material, parts, pieces, mass_g}] + totals (flight hardware only in the mass; ground hardware counted separately)
+function hardwareSummary(data) {
+  const hw = (data.parts || []).filter(isHardware), rows = new Map();
+  let mass = 0, groundMass = 0, pieces = 0;
+  for (const p of hw) {
+    const t = hardwareType(p), mat = p.material || '—', k = t + '|' + mat, n = hardwarePieces(p);
+    if (!rows.has(k)) rows.set(k, { type: t, material: mat, parts: 0, pieces: 0, mass_g: 0, ground: true });
+    const r = rows.get(k); r.parts++; r.pieces += n; r.mass_g += p.mass_g || 0; if (p.flight !== false) r.ground = false;
+    pieces += n; if (p.flight === false) groundMass += p.mass_g || 0; else mass += p.mass_g || 0;
+  }
+  const order = ['Screw / bolt', 'Nut', 'Washer', 'Heat-set insert', 'Spacer', 'Prop adapter kit'];
+  const out = [...rows.values()].sort((a, b) => order.indexOf(a.type) - order.indexOf(b.type) || a.material.localeCompare(b.material));
+  return { parts: hw, rows: out, pieces, mass_g: mass, ground_mass_g: groundMass };
+}
+
 // ---------- part panel helpers ----------
 const JOINT_FIELDS = [['fastener', 'Fastener'], ['count', 'Count'], ['grade', 'Grade'], ['hole', 'Hole'], ['insert', 'Insert'],
   ['engagement_mm', 'Engagement (mm)'], ['min_engagement_mm', 'Min engagement (mm)'], ['washer_nut', 'Washer / nut'],
@@ -146,5 +182,5 @@ function parseHash(h) {
 }
 
 export const api = { STATUSES, MODES, PREFIXES, subKey, ac2gl, gl2ac, AXIS_AC, fmtNum, fmtMass, fmtLen, index, edgeKind,
-  isStructural, role, showWires, showJoints, matches, tree, massCG, interfacesOf, fill, limitText, parseHash };
+  isStructural, role, showWires, showJoints, matches, tree, isHardware, hardwareType, hardwarePieces, hardwareSummary, massCG, interfacesOf, fill, limitText, parseHash };
 export default api;
