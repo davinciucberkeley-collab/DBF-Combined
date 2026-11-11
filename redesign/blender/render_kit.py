@@ -257,7 +257,8 @@ class Stage:
         self.role = {}
         fs = self.sc.view_layers[0].freestyle_settings
         for i, ob in self.items().items():
-            r = ('ghost' if hit(i, xray) else 'focus' if hit(i, focus) else 'ghost' if hit(i, ghost) else
+            r = ('hide' if ob.get('mass_proxy') else                     # mass-only stand-ins are never drawn
+                 'ghost' if hit(i, xray) else 'focus' if hit(i, focus) else 'ghost' if hit(i, ghost) else
                  'hide' if hit(i, hide) else 'context' if hit(i, context) else 'hide')
             self.role[i] = r
             ob.hide_render = ob.hide_viewport = (r == 'hide')
@@ -303,7 +304,7 @@ class Stage:
         if fit == 'visible':
             return self._visible()
         if fit == 'all':
-            return list(self.be.objects.values())
+            return [ob for ob in self.be.objects.values() if not ob.get('mass_proxy')]
         its = self.items()
         return [its[i] for i in fit if i in its]
 

@@ -57,13 +57,17 @@ function isStructural(p, idx) {
 }
 
 // How a part is drawn in a mode: 'solid' | 'ghost' | 'hidden'. Wires and joint markers: see showWires/showJoints.
+// Harness bundle bodies (HRN-001, HRN-002-x) are lumped-mass proxies placed for the mass/CG roll-up; the real wires
+// are drawn as routed tubes, so the proxies are never drawn (they stay in the part list and the mass totals).
+const isMassProxy = p => !!p.mass_proxy || /^HRN-00[12]/.test(p.id || '');
 function role(mode, p, idx) {
+  if (isMassProxy(p)) return 'hidden';
   if (mode === 'inside') return p.electrical ? 'solid' : 'ghost';
   if (mode === 'structure') return isStructural(p, idx) ? 'solid' : 'hidden';
   return 'solid';
 }
 const showWires = mode => mode === 'whole' || mode === 'inside';
-const showJoints = mode => mode === 'inside' || mode === 'structure';
+const showJoints = mode => false;   // joint markers show only for the selected part (viewer.js applyLook)
 
 // ---------- part browser ----------
 function matches(p, q) {

@@ -93,6 +93,8 @@ def main():
         bpy.context.view_layer.update()
         for sub, text in (f.get('sub_labels') or {}).items():
             obs = [ob for ob in be.objects.values() if ob.get('subsystem') == sub and not ob.hide_render]
+            if not obs:                                 # e.g. harness: mass proxies only, wires hidden when exploded
+                continue
             obs = [o for o in obs if centre(o).y <= 0.02] or obs      # label the near (port) side
             big = max(obs, key=lambda o: (o.dimensions.x * o.dimensions.y * o.dimensions.z) ** (1 / 3))
             lab_parts[big.name] = text

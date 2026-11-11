@@ -54,6 +54,9 @@ section.c { scroll-margin-top: calc(var(--topbar-h) + 16px); }
 .v-tree summary::-webkit-details-marker { display: none; }
 .v-tree summary::before { content: ""; width: 6px; height: 6px; border-right: 1.5px solid var(--fg-3); border-bottom: 1.5px solid var(--fg-3); transform: rotate(-45deg); transition: transform var(--dur-fast) var(--ease-out); justify-self: center; }
 .v-tree details[open] > summary::before { transform: rotate(45deg); }
+.v-tt { display: flex; justify-content: flex-end; padding: 2px 8px 4px; }
+.v-tt button { background: none; border: 0; padding: 0; cursor: pointer; font: var(--weight-regular) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); }
+.v-tt button:hover { color: var(--fg); text-decoration: underline; }
 .v-tree summary:hover { background: var(--panel-2); }
 .v-tree summary small { font: var(--weight-regular) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); margin-left: 4px; }
 /* i.sub: the subsystem-card rule `.sub` in site.css (padding, border, grid) must not reach the swatches */
@@ -170,7 +173,75 @@ i.sub { display: inline-block; padding: 0; border: 0; gap: 0; min-width: 0; flex
 .plot-img img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; }
 .plot figcaption { padding: 8px 12px 10px; font-size: var(--text-xs); color: var(--fg-2); line-height: 1.45; border-top: 1px solid var(--line); }
 .plot figcaption b { color: var(--fg); }
-.sim figure .plot-img { height: 100%; width: 100%; padding: 0; }
+/* simulation cards: fixed-aspect frame, image contained, caption in its own row below */
+.sim figure { display: flex; flex-direction: column; height: auto; padding: 0; background: transparent; border-bottom: 1px solid var(--line); }
+.sim figure .plot-img { display: block; position: relative; aspect-ratio: 4 / 3; width: 100%; height: auto; padding: 0; box-sizing: border-box; background: #FFFFFF; overflow: hidden; cursor: zoom-in; }
+.sim figure .plot-img img { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); max-width: none; max-height: none; object-fit: contain; }
+.sim figure .plot-img::after { content: "Enlarge"; position: absolute; right: 8px; bottom: 8px; padding: 3px 8px; border-radius: 999px; font: var(--weight-medium) 11px/1.2 var(--font-sans); background: rgba(17,24,39,.78); color: #fff; opacity: 0; transition: opacity .15s; pointer-events: none; }
+.sim figure .plot-img:hover::after, .sim figure .plot-img:focus-visible::after { opacity: 1; }
+.sim figure .plot-img:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.sim figure .fid { position: static; display: block; padding: 6px 12px; border-top: 1px solid var(--line); background: var(--panel); color: var(--fg-3); }
+.lightbox img { min-width: min(720px, 90vw); object-fit: contain; }
+/* simulations, plain-language layout: summary strip, glossary, question-led cards, collapsible details */
+.sims { grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: var(--space-5); align-items: start; }
+.sim { scroll-margin-top: calc(var(--topbar-h) + 16px); transition: box-shadow var(--dur-fast) var(--ease-out); }
+.sim:target { box-shadow: 0 0 0 2px var(--accent); }
+.sim figure .plot-img { aspect-ratio: 16 / 10; }
+.sim .body { gap: 10px; padding: var(--space-4); }
+.sim .title { align-items: center; }
+.sim .title .topic { font-size: var(--text-xs); color: var(--fg-3); }
+.sim .q { margin: 0; font-size: var(--text-lg); line-height: var(--leading-snug); font-weight: var(--weight-semibold); color: var(--fg); text-wrap: balance; }
+.sim .ans { margin: 0; font-size: var(--text-md); color: var(--fg); line-height: 1.5; text-wrap: pretty; }
+.sim .ans .verdict { margin-right: 4px; vertical-align: 1px; }
+.sim .howto, .sim .why { margin: 0; font-size: var(--text-sm); color: var(--fg-2); line-height: 1.5; text-wrap: pretty; }
+.sim .howto { padding: 8px 10px; background: var(--panel-2); border-radius: var(--radius-sm); }
+.sim .howto b, .sim .why b { color: var(--fg); font-weight: var(--weight-semibold); }
+.verdict { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: var(--radius-xs); font: var(--weight-semibold) var(--text-xs)/1.4 var(--font-sans); color: var(--st-c); background: var(--st-w); box-shadow: inset 0 0 0 1px var(--st-l); white-space: nowrap; }
+.verdict::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--st-c); flex: none; }
+.verdict[data-v="pass"] { --st-c: var(--st-verified); --st-w: var(--st-verified-wash); --st-l: var(--st-verified-line); }
+.verdict[data-v="thin"] { --st-c: var(--st-unverified); --st-w: var(--st-unverified-wash); --st-l: var(--st-unverified-line); }
+.verdict[data-v="fix"]  { --st-c: var(--st-fail); --st-w: var(--st-fail-wash); --st-l: var(--st-fail-line); white-space: normal; }
+a.term { color: inherit; text-decoration: underline dotted var(--fg-3); text-underline-offset: 3px; cursor: help; }
+a.term:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.sim details.tech { border-top: 1px solid var(--line); padding-top: 8px; }
+.sim details.tech > summary, .sim-gloss > summary { cursor: pointer; font-size: var(--text-sm); font-weight: var(--weight-medium); color: var(--fg-2); list-style: none; display: flex; align-items: center; gap: 8px; }
+.sim details.tech > summary::-webkit-details-marker, .sim-gloss > summary::-webkit-details-marker, .sim-more > summary::-webkit-details-marker { display: none; }
+.sim details.tech > summary::before, .sim-gloss > summary::before, .sim-more > summary::before { content: ""; width: 6px; height: 6px; border-right: 1.5px solid var(--fg-3); border-bottom: 1.5px solid var(--fg-3); transform: rotate(-45deg); transition: transform var(--dur-fast) var(--ease-out); flex: none; }
+.sim details.tech[open] > summary::before, .sim-gloss[open] > summary::before, .sim-more[open] > summary::before { transform: rotate(45deg); }
+.sim details.tech > summary:hover, .sim-gloss > summary:hover { color: var(--fg); }
+.sim .tech-body { display: grid; gap: 8px; padding-top: 8px; }
+.sim .tech-body .st { margin: 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: var(--text-xs); color: var(--fg-3); }
+.sim .tech-body .ds-badge { height: 20px; }
+.sim .tech-body .res { margin: 0; }
+/* summary strip */
+.sim-sum { display: grid; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--panel); overflow: hidden; }
+.sim-sum .sum-head, .sim-sum .sum-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3); align-items: center; padding: 9px var(--space-4); }
+.sim-sum .sum-head { font-size: var(--text-xs); color: var(--fg-3); font-weight: var(--weight-medium); background: var(--panel-2); }
+.sim-sum .sum-row { border-top: 1px solid var(--line); color: var(--fg); text-decoration: none; font-size: var(--text-sm); transition: background var(--dur-fast) var(--ease-out); }
+.sim-sum .sum-row:hover { background: var(--accent-wash); }
+.sim-sum .sq { display: flex; gap: 10px; align-items: baseline; }
+.sim-sum .sq .id { font: var(--weight-medium) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); min-width: 20px; }
+.sim-sum .sn { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--fg-2); }
+.sim-sum .verdict { justify-self: start; }
+@media (max-width: 760px) {
+  .sim-sum .sum-head { display: none; }
+  .sim-sum .sum-row { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 10px var(--space-3); }
+  .sim-sum .sum-row > span:not(.sq) { padding-left: 30px; }
+}
+/* glossary */
+.sim-gloss { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--panel); padding: 10px var(--space-4); }
+.sim-gloss dl { margin: 10px 0 2px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 10px var(--space-5); }
+.sim-gloss dl > div { scroll-margin-top: calc(var(--topbar-h) + 16px); border-radius: var(--radius-xs); }
+.sim-gloss dl > div:target { box-shadow: 0 0 0 2px var(--accent); }
+.sim-gloss dt { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--fg); }
+.sim-gloss dd { margin: 2px 0 0; font-size: var(--text-sm); color: var(--fg-2); line-height: 1.45; }
+.term-pop { position: absolute; z-index: 40; max-width: min(340px, calc(100vw - 32px)); padding: 10px 12px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: var(--panel); color: var(--fg-2); box-shadow: var(--shadow-pop); font-size: var(--text-sm); line-height: 1.45; }
+.term-pop b { display: block; color: var(--fg); margin-bottom: 2px; }
+/* more figures */
+.sim-more > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 6px 0; }
+.sim-more > summary .hint { font-size: var(--text-sm); color: var(--fg-3); }
+.sim-more > summary:hover .ds-h2 { color: var(--accent); }
+.sim-more .plots { margin-top: var(--space-3); }
 
 /* ---- status: tables from STATUS.md / HANDOFF.md ---- */
 #status .ds-table td.first { color: var(--fg); font-weight: var(--weight-medium); white-space: nowrap; }

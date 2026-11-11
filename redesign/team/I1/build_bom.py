@@ -202,6 +202,74 @@ line("G13", "groundtest", "2 foil strain gauges 350 ohm (pack of 5-10) + cyanoac
      status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="GND-012",
      note="CR-C4-38 / D-70: two gauges on the fin proof article; read on the HX711 from G12 as a half bridge with two 350 ohm resistors (H1 confirms the amp). Pushes the NEW ground-test purchase to $26.00, above the D-39 $20 line: A1 decision")
 
+# --- link fixes (see LINKS-CHECK.md): product-page urls; prices and quantities untouched
+LINK_FIXES = {
+    'B05': ('https://gravesrc.com/apclpar06e-apc-adapter-rings-for-electric-propellers', 'Graves RC (US reseller) page for APC LPAR06E; motionrc.com listing seen sold out. Price not seen'),
+    'B07': ('https://aspenfasteners.com/m3-0-5-x-8mm-din-912-iso-4762-metric-hex-socket-head-cap-screws-a2-stainless-steel', 'Bolt Depot has no M3x8 A2 page in search; Aspen Fasteners (US) lists the exact M3-0.5 x 8 mm ISO 4762 A2 screw. Price not seen'),
+    'A04': ('https://www.readymaderc.com/products/details/rmrc-digital-air-speed-sensor-pixhawk-ii-2', 'RMRC kit page (sensor + pitot + tubing); confirm the board is the MS4525DO (sensor-board-only SKU 86845 names it). Price not seen'),
+    'A05': ('https://www.amazon.com/dp/B08GY9NYRM', 'SanDisk Ultra 32 GB A1 microSDHC; representative product; any equivalent; link not opened; matched by search'),
+    'A06': ('https://www.amazon.com/dp/B0BGN7N6PL', 'FrSky 150 mm IPEX1 dipole; sold singly, not a verified T-antenna pair; confirm IPEX1 and order 2; link not opened; matched by search'),
+    'A07': ('https://www.getfpv.com/rtom-anti-vibration-moongel.html', 'NO PRODUCT PAGE FOUND for a 5 mm alpha-gel sheet; RTOM Moongel (drum damping gel) is not a confirmed match; representative product; any equivalent; link not opened; matched by search'),
+    'M01': ('https://www.amainhobbies.com/savox-sh0255mg-digital-metal-gear-micro-servo-sav-sh-0255mg/p183344', 'US dealer AMain page for Savox SH-0255MGP (the SH-0255MG+); savoxusa.com lists it at $41.99 per search snippet; AMain price not seen'),
+    'W01': ('https://www.homedepot.com/p/Owens-Corning-FOAMULAR-NGX-F-250-2-in-x-4-ft-x-8-ft-SSE-R-10-XPS-Rigid-Foam-Board-Insulation-52DDNGX/315197962', 'Home Depot model 52DDNGX (scored square edge); price not seen; link not opened; matched by search'),
+    'W05': ('https://west3d.com/products/ambrosia-petg-filament-of-the-gods-1kg-bambu-ams-friendly-cardboard-spools-premium-3d-printing-filament', 'West3D Ambrosia PETG 1 kg; search snippet shows $20.99, matches; link not opened; matched by search'),
+    'W07': ('https://www.amazon.com/dp/B004GHJ9NW', 'UHU Por 50 ml; representative product; any equivalent; link not opened; matched by search'),
+    'H01': ('https://www.amazon.com/dp/B0CKZCFC54', 'line = six purchases; link is the JST-GH pigtail kit only. Servo extension e.g. https://www.amazon.com/dp/B00Q683IFE; representative product; any equivalent; link not opened; matched by search'),
+    'H02': ('https://www.amazon.com/dp/B0006O4G8M', 'link is the Du-Bro DUB185 2-56 rod + steel Kwik-Link only; CF rod, CF tube 5x4 and M2x6 screws not linked; representative product; any equivalent; link not opened; matched by search'),
+    'H03': ('https://www.amazon.com/dp/B08LLBMT1N', 'Hobbypark XT60 pair with 10 AWG leads; representative product; any equivalent; link not opened; matched by search'),
+    'F01': ('https://www.amazon.com/dp/B0BWH5D7H7', 'Amass AS150U with signal pin, one pair; need 5 pairs (check pack size); confirm AS150U not AS150; link not opened; matched by search'),
+    'F02': ('https://www.amazon.com/dp/B017TGYW3S', 'BNTECHGO 10 AWG red+black 5 ft; 8 AWG bus wire not linked; representative product; any equivalent; link not opened; matched by search'),
+    'F03': ('https://www.amazon.com/dp/B017TFR664', 'BNTECHGO 16 AWG red+black 10 ft; no yellow in this listing, add a yellow 16 AWG; representative product; any equivalent; link not opened; matched by search'),
+    'F04': ('https://www.amazon.com/dp/B01AAX64EC', 'BNTECHGO 20 AWG red+black 10 ft each; representative product; any equivalent; link not opened; matched by search'),
+    'F05': ('https://www.readymaderc.com/products/details/hobbywing-ubec-8a', 'Hobbywing UBEC-8A (5/6 V, 8 A, 2-3S); a retailer snippet marks it discontinued: check stock; alt RMRC 8A/12A UBEC'),
+    'F06': ('https://www.amazon.com/dp/B07L4QFXTB', 'HUIQIAODS 2-pack inline holders with 5 A ATM fuses (listing mixes ATM/ATC wording: check); representative product; any equivalent; link not opened; matched by search'),
+    'F07': ('https://www.amazon.com/pcs-Panasonic-FR-Capacitors-680uf/dp/B072SSXHW', 'Panasonic FR 680 uF 25 V 6-pack (ultra low ESR); representative product; any equivalent; link not opened; matched by search'),
+    'F08': ('https://www.amazon.com/dp/B08LDXGCMJ', 'IIVVERR FR-4 single-sided 100x70x1.6 mm 5-pack; representative product; any equivalent; link not opened; matched by search'),
+    'F09': ('https://www.amazon.com/dp/B089D82FLG', 'Wirefy 3:1 adhesive-lined kit 200 pcs; representative product; any equivalent; link not opened; matched by search'),
+    'C01': ('https://boltdepot.com/Product-Details?product=4792', 'Bolt Depot M3 18-8 nylon-insert nut (kit also needs M3x16 screws and washers, product 4513: not linked); representative product; any equivalent; link not opened; matched by search'),
+    'C06': ('https://www.amazon.com/dp/B0F5J2ZLXY', 'Happinesspark PA66 socket-head M3 assortment; spacers separate (e.g. https://www.amazon.com/dp/B074N5HD42); representative product; any equivalent; link not opened; matched by search'),
+    'C02': ('https://www.amazon.com/dp/B08BCRZZS3', 'Ruthex RX-M3x5.7 inserts, 100 pcs; nylon washers not included; representative product; any equivalent; link not opened; matched by search'),
+    'C03': ('https://alofthobbies.com/products/2-5mm-x-1000mm-rod', 'Aloft 2.5 mm x 1000 mm pultruded CF rod, $2.63 per search snippet (BOM $3.50), not changed; link not opened; matched by search'),
+    'C04': ('https://www.amazon.com/dp/B004VODM24', 'Loctite 243 10 mL (page shown unavailable in snippet); paint pen not linked; representative product; any equivalent; link not opened; matched by search'),
+    'C05': ('https://www.amazon.com/dp/B0CBLK7R2M', 'West System 105 + 206 slow hardener + 406 silica (larger than a small kit; 206 is slow, not 30 min; no microballoons); representative product; any equivalent; link not opened; matched by search'),
+    'D01': ('https://alofthobbies.com/products/2mm-x-10mm-x-1000mm', 'Aloft 2 mm x 10 mm x 1000 mm strip; search snippet shows $5.50 (BOM $10.00): not changed, page not fetched'),
+    'D02': ('https://alofthobbies.com/products/1mm-x-10mm-x-1000mm', 'Aloft 1 mm x 10 mm x 1000 mm strip; price not seen; link not opened; matched by search'),
+    'D03': ('https://alofthobbies.com/products/20-x-18-x-1000mm-mw-carbon-tubing', 'Aloft 20x18x1000 mm MW tube; search snippet shows $19.25 (BOM $20.00): not changed, page not fetched; link not opened; matched by search'),
+    'D07': ('https://www.zoro.com/k-s-precision-metals-k-s-precision-metals-8130-022-od-x-12-l-in-round-brass-tube-691089/i/G304145442', 'K&S 8130 round brass tube 7/32 in OD x 12 in via Zoro (US); price not seen; link not opened; matched by search'),
+    'D04': ('https://www.amazon.com/dp/B01LZK3UAR', 'nearest listing: 0.5 in x 8 in hook-and-loop ties, 10-pack (12.7 mm, not 10 mm); representative product; any equivalent; link not opened; matched by search'),
+    'D05': ('https://www.zoro.com/zoro-select-neoprene-sheet-40a-12x12x116-black-bulk-rs-n40txt-14/i/G4865769', 'Zoro Select neoprene 40A, 12 x 12 in x 1/16 in, textured, acrylic adhesive back (BULK-RS-N40TXT-14); McMaster would not give a part number; representative product; any equivalent; link not opened; matched by search'),
+    'D06': ('https://www.amazon.com/dp/B019QYCXR8', 'Apex RC 20x300 mm rubberized straps 5-pack; EVA shims not linked; representative product; any equivalent; link not opened; matched by search'),
+    'W08': ('https://west3d.com/products/polymaker-polylite-asa-3d-printer-filament-1kg-1-75mm', 'West3D carries Polymaker PolyLite ASA 1 kg (no Ambrosia ASA there); search snippet shows $25.99-28.99 vs BOM $24.99: not changed; link not opened; matched by search'),
+    'T01': ('https://www.homedepot.com/p/Coroplast-48-in-x-96-in-x-0-157-in-White-Corrugated-Plastic-Sheet-CP4896S/205351385', 'Home Depot Coroplast CP4896S 4 mm white; search snippet shows about $37.98 per sheet vs BOM $15: large gap, price not changed; link not opened; matched by search'),
+    'T02': ('https://www.pelicansalessupply.com/products/3m-adhesive-transfer-tape-3-4-wide-60-yd-series-9472le', '3M 9472LE transfer tape (300LSE acrylic), 3/4 in x 60 yd, about $68.34 per snippet vs BOM $12; not Home Depot; other sellers sell by case of 12; link not opened; matched by search'),
+    'T03': ('https://www.homedepot.com/p/Keeper-1-in-x-6-ft-x-400-lbs-Motorcycle-Cam-Buckle-Tie-Down-2-Pack-05715/204752873', 'Keeper 05715 cam-buckle 2-pack (snippet $13.99-15.92); handles not linked; representative product; any equivalent; link not opened; matched by search'),
+    'T04': ('https://www.harborfreight.com/12-in-zipper-utility-pouch-black-70998.html', 'Yukon 12 in zipper pouch (the field pouch); 10 mm spanner is a separate item, e.g. https://www.homedepot.com/p/Husky-10-mm-12-Point-Metric-Full-Polish-Combination-Wrench-HCW10MM/202916162; M3 hardware not linked; representative product; any equivalent; link not opened; matched by search'),
+    'T05': ('https://www.homedepot.com/p/Rubber-Cal-Neoprene-1-16-in-x-36-in-x-12-in-Commercial-Grade-45A-Soft-Rubber-Sheet-Rolls-20-104-0062-36-012/303172042', 'Rubber-Cal neoprene 1/16 in x 12 x 36 in 45A (snippet $15.31, may be stale); thickness near 1.5 mm; representative product; any equivalent; link not opened; matched by search'),
+    'T06': ('https://www.homedepot.com/p/Customizable-Polyethylene-Foam-Sheets-16L-x-12W-x-1-Thick-Padding-for-Cases-Tool-Foam-for-Packaging-Crafts-2-Pack-638PH01222D/336659215', 'NO PRODUCT PAGE FOUND for 2 in PE plank at Home Depot; 1 in PE foam sheets as nearest; representative product; any equivalent; link not opened; matched by search'),
+    'T07': ('https://www.homedepot.com/p/Husky-12-Gal-Professional-Heavy-Duty-Waterproof-Stackable-Plastic-Storage-Container-with-Hinged-Lid-in-Red-248921/313861297', 'Husky 12 gal tote; check size against the 0.45 x 0.35 x 0.25 m target; representative product; any equivalent; link not opened; matched by search'),
+    'T08': ('https://www.homedepot.com/p/OXO-Good-Grips-1-5-Qt-Short-Round-POP-Food-Storage-Container-with-Airtight-Lid-11283800/315329961', 'OXO 1.5 qt (about 1.4 L, snippet $17.99, above BOM $3); representative product; any equivalent; link not opened; matched by search'),
+    'T09': ('https://www.avery.com/products/labels/5163', 'Avery 5163 white 2 x 4 in labels, 1000-pack; price seen $46.99 vs BOM $2.00, price not changed; representative product; any equivalent'),
+    'H05': ('https://www.amazon.com/dp/B0FBL3342W', 'Ni80 20 ga 30 ft wire only (BOM line also needs bow/jig and template stock: NO PRODUCT PAGE FOUND for those); representative product; any equivalent; link not opened; matched by search'),
+    'R02': ('https://www.getfpv.com/lumenier-nav-3000mah-1s-18650-lithium-ion-battery-2pcs.html', 'GetFPV Lumenier NAV 3000 mAh 18650 2-pack; snippet $24.49 matches; one cached page showed Out of Stock; link not opened; matched by search'),
+    'G02': ('https://pyrodrone.com/products/pyrodrone-lipo-safe-pouch', 'Pyrodrone LiPo Safe Pouch; snippet $7.99 vs BOM $9.99: not changed; link not opened; matched by search'),
+    'G06': ('https://www.amazon.com/dp/B07BGS58TL', 'NOYITO 20 kg load cell + HX711 combo; Arduino Nano not included; link not opened; matched by search'),
+    'G07': ('https://pine64.com/product/pinecil-smart-mini-portable-soldering-iron/', 'Pine Store Pinecil V2; snippet community price $25.99 matches'),
+    'G08': ('https://www.anker.com/products/a2663', 'Anker 715 Charger (Nano II 65 W, USB-C PD 5/9/15/20 V), suits Pinecil/TS101; price seen $29.99 vs BOM $20.00, price not changed; representative product; any equivalent'),
+    'G09': ('https://www.amazon.com/dp/B071JL6LLL', 'AstroAI TRMS 6000-count auto-ranging multimeter; representative product; any equivalent; link not opened; matched by search'),
+    'G10': ('https://www.amazon.com/dp/B0H94VTN26', 'KELLYSHUN flux paste + 63/37 solder wire + tip tinner; no wick, add desoldering wick; representative product; any equivalent; link not opened; matched by search'),
+    'G12': ('https://www.amazon.com/dp/B0F52QCK3T', '1 kg load cell + HX711 listing; K-type probes not linked (e.g. https://www.amazon.com/dp/B0FW56V11S); link not opened; matched by search'),
+    'G13': ('https://www.amazon.com/dp/B07WYD7Z4P', 'Eastar BF350-3AA 350 ohm foil gauge; CA adhesive not linked; representative product; any equivalent; link not opened; matched by search'),
+}
+LINK_PRICE_SEEN = ['A04', 'B05', 'B07', 'D01', 'F05', 'G07', 'G08', 'M01', 'T09']  # price seen on the opened product page 2026-11-11 (noted, not applied)
+for _l in L:
+    if _l['id'] in LINK_FIXES:
+        _u, _n = LINK_FIXES[_l['id']]
+        _l['url'] = _u
+        _l['note'] = (_l['note'] + '; ' if _l['note'] else '') + 'link: ' + _n
+        if _l['id'] in LINK_PRICE_SEEN:
+            _l['status'] = 'CHK'
+            _l['seen'] = '2026-11-11'
+
 # Lines that stay in this BOM (vendor, part number, price) but are bought only when their gate passes: NOT in the spend
 # totals, reported in the `all-in` figures. X07 = D7 box and field kit (store pick-up, zero lead time, needed from March);
 # X08 = airspeed sensor (DECISION 5.1 lever; needed for the fixed-wing tune, which can start on the synthetic airspeed).

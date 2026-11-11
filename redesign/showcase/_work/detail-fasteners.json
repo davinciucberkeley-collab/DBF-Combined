@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 16.78,
+ "render_s": 19.58,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -86,24 +86,24 @@
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0543,
+    0.0542,
     0.3392,
     0.1678
    ]
   },
   {
    "item": "FIN-103-UR",
-   "x": 907.2,
-   "y": 770.2,
+   "x": 872.8,
+   "y": 748.4,
    "title": "FIN-103-UR",
    "text": "2 x M3 washer",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0397,
-    0.3395,
-    0.1673
+    0.0402,
+    0.337,
+    0.1686
    ]
   },
   {

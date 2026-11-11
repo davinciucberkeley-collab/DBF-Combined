@@ -128,8 +128,8 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
     # Same rule as merge_check (D-46): only load-bearing edges join groups, and "carried": true items (labels,
     # harness bundles) located by a non-structural type only (tie, label) are exempt, not floating.
     modelled = {k: g.parts[k] for k in comps if k in g.parts and g.parts[k].get('flight', True)}
-    for p in merge_check.carried(g, dict(modelled)):
-        modelled.pop(p)
+    for p in merge_check.carried(g, dict(modelled)) | {k for k in modelled if comps[k].proxy}:
+        modelled.pop(p)                    # carried items and mass proxies (Component.proxy) never float
     groups = merge_check.clusters(g, parts=modelled)
     anchored = set()
     for e in g.edges.values():

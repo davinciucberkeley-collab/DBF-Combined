@@ -65,17 +65,21 @@ for w in ctx.wires:
 # GLB round trip
 path = os.path.join(tempfile.mkdtemp(), 'selftest.glb')
 bpy.ops.object.select_all(action='DESELECT')
-for ob in list(be.objects.values()) + list(be.wires.values()):
+for ob in be.glb_objects(list(be.objects.values()) + list(be.wires.values())):
+    ob.hide_set(False)
     ob.select_set(True)
+proxies = [p for p, c in ctx.components.items() if c.proxy]
+check(all(be.objects[p].hide_render for p in proxies), 'mass proxies never rendered (%d: %s)' % (len(proxies), ', '.join(proxies)))
 bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_extras=True, export_yup=True)
 bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=path)
 names = {o.name: o for o in bpy.data.objects}
+names.update({o['part_id']: o for o in bpy.data.objects if o.get('mass_proxy') and 'part_id' in o})
 missing = [p for p in ctx.components if p not in names]
 check(not missing, 'GLB round trip: all %d part ids present%s' % (len(ctx.components), (' (missing %s)' % missing) if missing else ''))
 noextra = [p for p in ctx.components if p in names and 'mass_g' not in names[p]]
 check(not noextra, 'GLB round trip: extras (mass_g, status, ...) kept%s' % ((' (lost on %s)' % noextra) if noextra else ''))
-p = next(iter(ctx.components))
+p = next(i for i, c in ctx.components.items() if not c.proxy)
 c = ctx.components[p].bbox()
 q = [names[p].matrix_world @ v.co for v in names[p].data.vertices]
 check(abs(max(v.z for v in q) - c[1][2]) < 1e-3, 'GLB round trip: frame preserved (z up after import)')

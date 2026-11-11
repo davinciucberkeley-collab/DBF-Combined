@@ -49,7 +49,10 @@ def clean_private(objs):
             del ob[k]
 
 
-def export(path, objs):
+def export(path, objs, be=None):
+    """Export `objs`; mass proxies (HRN bundles) go out as empties with their extras (be.glb_objects)."""
+    if be is not None:
+        objs = be.glb_objects(objs)
     bpy.ops.object.select_all(action='DESELECT')
     for ob in objs:
         ob.hide_set(False)
@@ -69,17 +72,18 @@ def main():
     d = out_dir(a, 'glb')
     joints = [ob for ob, _ in be.joints.values()]
     files = {'assembly.glb': export(os.path.join(d, 'assembly.glb'),
-                                    list(be.objects.values()) + list(be.wires.values()) + joints)}
+                                    list(be.objects.values()) + list(be.wires.values()) + joints, be)}
     subs = sorted({c.subsystem for c in ctx.components.values()})
     for s in subs:
         objs = [be.objects[p] for p, c in ctx.components.items() if c.subsystem == s]
         objs += [be.wires[w.edge] for w in ctx.wires if w.sub == s and w.edge in be.wires]
-        files[s + '.glb'] = export(os.path.join(d, s + '.glb'), objs)
+        files[s + '.glb'] = export(os.path.join(d, s + '.glb'), objs, be)
     man = {'source': 'examples' if a.examples else (a.root or 'redesign/subsystems'), 'mode': a.mode,
            'frame': 'glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.',
            'files': {k: v for k, v in files.items()},
-           'parts': [{'id': p, 'subsystem': c.subsystem, 'status': c.status, 'mass_g': c.mass_g,
-                      'explode_m': list(be.objects[p]['explode_m'])} for p, c in ctx.components.items()],
+           'parts': [dict({'id': p, 'subsystem': c.subsystem, 'status': c.status, 'mass_g': c.mass_g,
+                           'explode_m': list(be.objects[p]['explode_m'])}, **({'mass_proxy': True} if c.proxy else {}))
+                     for p, c in ctx.components.items()],
            'wires': sorted(be.wires), 'joints': sorted(be.joints),
            'issues': [list(i) for i in ctx.issues]}
     with open(os.path.join(d, 'manifest.json'), 'w', encoding='utf-8') as f:

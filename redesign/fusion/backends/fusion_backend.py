@@ -220,13 +220,16 @@ class FusionBackend(Backend):
                         0, 0, 0, 1])
         occ = self.root.occurrences.addNewComponent(m)
         fc = occ.component
-        fc.name = ('%s %s' % (comp.id, comp.name)).replace('/', '-')
+        fc.name = ('%s %s%s' % (comp.id, comp.name, ' (mass proxy)' if comp.proxy else '')).replace('/', '-')
         try:
             fc.description = '%s | %s | %s g | %s' % (comp.status, comp.material, comp.mass_g, comp.subsystem)
         except Exception:
             pass
         for k in ('id', 'subsystem', 'status', 'mass_g', 'material', 'make_or_buy'):
             fc.attributes.add('dbf', k, str(getattr(comp, k)))
+        if comp.proxy:                       # mass-only stand-in: kept for mass / CG, hidden (wires show the harness)
+            fc.attributes.add('dbf', 'mass_proxy', 'true')
+            occ.isLightBulbOn = False        # UNVERIFIED-IN-FUSION
         comp.native = occ
 
     def body(self, comp, shape):

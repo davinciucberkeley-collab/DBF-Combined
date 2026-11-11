@@ -8,6 +8,10 @@ What it makes (all in the aircraft frame, metres: x aft, y right, z up; Blender 
     one mesh object per part      name = part id (e.g. WNG-001); all bodies of a part joined into one mesh;
                                   custom properties: part_id, name, subsystem, material, mass_g, status, make_or_buy,
                                   interfaces (JSON list of edge ids), explode_m (set by explode())
+    mass proxies                  (fusionkit Component.proxy: HRN-001 / HRN-002-L/R lumped harness mass) keep their
+                                  mesh for bounding boxes (explode, selftest) but are never rendered: custom property
+                                  mass_proxy = True, hide_render / hide_viewport, collection "mass proxies"; the GLB
+                                  carries them as empties with the part's extras (glb_objects())
     one mesh object per wire      name = edge id (e.g. E-FUS-03); a tube along the routed polyline with its corners
                                   rounded to the edge's bend radius; properties from the edge's "wire" block
     one empty per joint           name = "JOINT E-WNG-04"; properties kind, part_a, part_b, axis, limits
@@ -66,6 +70,7 @@ TOKENS = {
 
 # material keyword (lower case, first match wins) -> (sRGB hex, roughness, metallic, coat)
 LOOKS = [
+    (('packing tape', 'bopp'), ('#DCE6F0', 0.12, 0.0, 0.3, 0.22)),   # clear tape skin: the taped-over grooves show
     (('carbon', 'cf '), ('#2A2D31', 0.32, 0.0, 0.5)),
     (('cf tube',), ('#2A2D31', 0.32, 0.0, 0.5)),
     (('foam', 'xps', 'epp', 'eps'), ('#AFBCCB', 0.6, 0.0, 0.0)),
@@ -117,7 +122,7 @@ def material_for(info, mode='material'):
         return _principled('status ' + st, srgb(TOKENS['status'].get(st, '#4B5563')), 0.5)
     text = (info.get('material') or '').lower() + ' ' + (info.get('name') or '').lower()
     look = next((lk for keys, lk in LOOKS if any(k in text for k in keys)), DEFAULT_LOOK)
-    return _principled('look ' + look[0], srgb(look[0]), *look[1:])
+    return _principled('look ' + look[0] + ('' if len(look) < 5 else ' clear'), srgb(look[0]), *look[1:])
 
 
 def wire_material(wire_block, dia):
@@ -287,13 +292,17 @@ class BlenderBackend(fk.Backend):
     def component(self, comp):
         me = bpy.data.meshes.new(comp.id)
         ob = bpy.data.objects.new(comp.id, me)
-        _collection(comp.subsystem or 'parts').objects.link(ob)
+        _collection('mass proxies' if comp.proxy else (comp.subsystem or 'parts')).objects.link(ob)
         ob.matrix_world = _matrix(comp)
         for k, v in (('part_id', comp.id), ('name', comp.name), ('subsystem', comp.subsystem),
                      ('material', comp.material), ('mass_g', comp.mass_g), ('status', comp.status),
                      ('make_or_buy', comp.make_or_buy)):
             if v is not None:
                 ob[k] = v
+        if comp.proxy:                         # mass-only stand-in: in the roll-up, never drawn (wires show it)
+            ob['mass_proxy'] = True
+            ob.hide_render = ob.hide_viewport = True
+            ob.display_type = 'BOUNDS'
         comp.native = ob
         self.objects[comp.id] = ob
         self.bm[comp.id] = bmesh.new()
@@ -320,16 +329,18 @@ class BlenderBackend(fk.Backend):
     def wire(self, w):
         block = self._edge(w.edge).get('wire', {})
         bend = block.get('bend_radius_mm', 5 * w.dia * 1000) / 1000.0
-        pts = fillet_polyline(w.points, bend)
         cu = bpy.data.curves.new(w.edge, 'CURVE')
         cu.dimensions = '3D'
-        cu.bevel_depth = w.dia / 2
+        cu.bevel_depth = 1.0                          # per-point radius below = strand radius (one mesh per edge)
         cu.bevel_resolution = 3
         cu.use_fill_caps = True
-        sp = cu.splines.new('POLY')
-        sp.points.add(len(pts) - 1)
-        for p, q in zip(sp.points, pts):
-            p.co = (q.x, q.y, q.z, 1.0)
+        for line, dia in (w.strands or [(w.points, w.dia)]):
+            pts = fillet_polyline(line, bend)
+            sp = cu.splines.new('POLY')
+            sp.points.add(len(pts) - 1)
+            for p, q in zip(sp.points, pts):
+                p.co = (q.x, q.y, q.z, 1.0)
+                p.radius = dia / 2
         tmp = bpy.data.objects.new(w.edge + ' curve', cu)
         bpy.context.scene.collection.objects.link(tmp)
         bpy.context.view_layer.update()
@@ -375,6 +386,33 @@ class BlenderBackend(fk.Backend):
         return 'blender: %d parts, %d wires, %d joints' % (len(self.objects), len(self.wires), len(self.joints))
 
     # ---- helpers for the scripts
+    def is_proxy(self, pid):
+        ob = self.objects.get(pid)
+        return bool(ob is not None and ob.get('mass_proxy'))
+
+    def glb_objects(self, objs):
+        """Objects to export: every mass-proxy mesh is replaced by an empty (named '<id> (mass proxy)', same
+        transform, same custom properties incl. part_id and mass_proxy), so the GLB lists the part and its mass
+        without drawing it. The empties are made once and kept in the 'mass proxies' collection."""
+        out = []
+        for ob in objs:
+            if not ob.get('mass_proxy') or ob.type != 'MESH':
+                out.append(ob)
+                continue
+            name = ob.name + ' (mass proxy)'
+            em = bpy.data.objects.get(name)
+            if em is None:
+                em = bpy.data.objects.new(name, None)
+                em.empty_display_type = 'PLAIN_AXES'
+                em.empty_display_size = 0.01
+                _collection('mass proxies').objects.link(em)
+            em.matrix_world = ob.matrix_world.copy()
+            for k in list(ob.keys()):
+                if not k.startswith('_'):
+                    em[k] = ob[k]
+            out.append(em)
+        return out
+
     def _edge(self, eid):
         return (self.graph.edges.get(eid) if self.graph else None) or {}
 

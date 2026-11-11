@@ -1,8 +1,8 @@
 // K09-L explorer shell: hash router (#aircraft #decision #team #subsystems #simulations #status #docs), theme toggle,
 // the decision page's morphological chart and concept table (logic from redesign/config-study/web/index.html),
 // the render / plot lightbox, and the 3-D explorer (viewer.js). Everything is relative: works on GitHub Pages and as an artifact.
-import { DIMS, C } from './data/concepts.js?v=20261111c';
-import { start as startViewer, viewer } from './viewer.js?v=20261111c';
+import { DIMS, C } from './data/concepts.js?v=20261111d';
+import { start as startViewer, viewer } from './viewer.js?v=20261111d';
 
 const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'simulations', 'status', 'bom', 'docs'];
 const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', simulations: 'Simulations', status: 'Status', docs: 'Docs' };
@@ -154,6 +154,29 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'ArrowLeft' && lbItems.length > 1) { lbAt = (lbAt - 1 + lbItems.length) % lbItems.length; showLightbox(); }
   else if (e.key === 'ArrowRight' && lbItems.length > 1) { lbAt = (lbAt + 1) % lbItems.length; showLightbox(); }
 });
+
+// ---------------- simulations: glossary popover, summary rows that re-scroll on a repeat click ----------------
+const pop = document.createElement('div'); pop.className = 'term-pop'; pop.setAttribute('role', 'tooltip'); pop.hidden = true; document.body.appendChild(pop);
+let popFor = null;
+function hidePop() { pop.hidden = true; popFor = null; }
+document.addEventListener('click', e => {
+  const t = e.target.closest('a.term');
+  if (t) {
+    e.preventDefault();
+    if (popFor === t) { hidePop(); return; }
+    pop.innerHTML = '<b>' + esc(t.dataset.name || t.textContent) + '</b>' + esc(t.dataset.def || '');
+    pop.hidden = false; popFor = t;
+    const r = t.getBoundingClientRect(), w = pop.offsetWidth;
+    pop.style.left = Math.max(16, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - w - 16)) + 'px';
+    pop.style.top = (window.scrollY + r.bottom + 6) + 'px';
+    return;
+  }
+  if (!pop.hidden && !e.target.closest('.term-pop')) hidePop();
+  const row = e.target.closest('a.sum-row');
+  if (row && location.hash === row.getAttribute('href')) { const el = document.querySelector(row.getAttribute('href')); if (el) el.scrollIntoView({ block: 'start' }); }
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) hidePop(); });
+window.addEventListener('hashchange', hidePop);
 
 // ---------------- start ----------------
 initMorph();

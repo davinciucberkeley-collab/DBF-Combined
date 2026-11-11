@@ -609,6 +609,126 @@
      "subsystem": "fins",
      "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)"
     },
+    "FIN-101-UR": {
+     "bbox_px": [
+      1310.4,
+      394.8,
+      1318.1,
+      421.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt UR: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-102-UR": {
+     "bbox_px": [
+      1310.4,
+      413.8,
+      1318.1,
+      419.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut UR: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-103-UR": {
+     "bbox_px": [
+      1309.3,
+      399.0,
+      1319.1,
+      413.8
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair UR: 2 x M3 ISO 7089 A2"
+    },
+    "FIN-101-UL": {
+     "bbox_px": [
+      364.9,
+      394.8,
+      372.6,
+      421.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt UL: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-101-LR": {
+     "bbox_px": [
+      1310.4,
+      394.8,
+      1318.1,
+      421.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt LR: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-101-LL": {
+     "bbox_px": [
+      364.9,
+      394.8,
+      372.6,
+      421.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt LL: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-102-UL": {
+     "bbox_px": [
+      364.9,
+      413.8,
+      372.6,
+      419.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut UL: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-102-LR": {
+     "bbox_px": [
+      1310.4,
+      413.8,
+      1318.1,
+      419.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut LR: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-102-LL": {
+     "bbox_px": [
+      364.9,
+      413.8,
+      372.6,
+      419.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut LL: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-103-UL": {
+     "bbox_px": [
+      363.9,
+      399.0,
+      373.7,
+      413.8
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair UL: 2 x M3 ISO 7089 A2"
+    },
+    "FIN-103-LR": {
+     "bbox_px": [
+      1309.3,
+      399.0,
+      1319.1,
+      413.8
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair LR: 2 x M3 ISO 7089 A2"
+    },
+    "FIN-103-LL": {
+     "bbox_px": [
+      363.9,
+      399.0,
+      373.7,
+      413.8
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair LL: 2 x M3 ISO 7089 A2"
+    },
     "POD-001": {
      "bbox_px": [
       743.5,
@@ -708,6 +828,26 @@
      ],
      "subsystem": "pod",
      "name": "GPS mast with 45 deg pad (printed PETG, plugs into the handle grip)"
+    },
+    "POD-011": {
+     "bbox_px": [
+      822.6,
+      451.5,
+      847.8,
+      459.2
+     ],
+     "subsystem": "pod",
+     "name": "GPS mast cross-screw: M3x16 cheese head, nylon PA66 (DIN 84)"
+    },
+    "POD-012": {
+     "bbox_px": [
+      828.3,
+      451.5,
+      831.7,
+      459.2
+     ],
+     "subsystem": "pod",
+     "name": "GPS mast nut: M3 hex nut, nylon PA66"
     },
     "GER-001-UR": {
      "bbox_px": [
@@ -899,6 +1039,26 @@
      "subsystem": "propulsion",
      "name": "Motor UR SunnySky X3108S KV900 (CW from the nose)"
     },
+    "PRP-007-UR": {
+     "bbox_px": [
+      1286.2,
+      309.6,
+      1300.7,
+      319.4
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut UR: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)"
+    },
+    "PRP-008-UR": {
+     "bbox_px": [
+      1284.7,
+      316.7,
+      1301.6,
+      320.9
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer UR: M6 6 x 12 x 1.0 (supplied with PRP-004)"
+    },
     "PRP-004-UR": {
      "bbox_px": [
       1279.2,
@@ -919,6 +1079,26 @@
      "subsystem": "propulsion",
      "name": "Prop UR APC 11x5.5MRP (LP11055MRP)"
     },
+    "PRP-005-UR": {
+     "bbox_px": [
+      1273.8,
+      369.9,
+      1304.9,
+      390.6
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set UR: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-UR": {
+     "bbox_px": [
+      1281.8,
+      332.8,
+      1302.0,
+      345.8
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set UR: 4 x M3x4 SHCS (supplied with PRP-004)"
+    },
     "PRP-001-UL": {
      "bbox_px": [
       358.4,
@@ -928,6 +1108,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Motor UL SunnySky X3108S KV900 (CCW from the nose)"
+    },
+    "PRP-007-UL": {
+     "bbox_px": [
+      382.3,
+      309.6,
+      396.8,
+      319.4
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut UL: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)"
+    },
+    "PRP-008-UL": {
+     "bbox_px": [
+      381.4,
+      316.7,
+      398.3,
+      320.9
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer UL: M6 6 x 12 x 1.0 (supplied with PRP-004)"
     },
     "PRP-004-UL": {
      "bbox_px": [
@@ -949,6 +1149,26 @@
      "subsystem": "propulsion",
      "name": "Prop UL APC 11x5.5MR (LP11055MR)"
     },
+    "PRP-005-UL": {
+     "bbox_px": [
+      378.1,
+      369.9,
+      409.2,
+      390.6
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set UL: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-UL": {
+     "bbox_px": [
+      381.0,
+      332.8,
+      401.2,
+      345.8
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set UL: 4 x M3x4 SHCS (supplied with PRP-004)"
+    },
     "PRP-001-LR": {
      "bbox_px": [
       1262.8,
@@ -958,6 +1178,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Motor LR SunnySky X3108S KV900 (CCW from the nose)"
+    },
+    "PRP-007-LR": {
+     "bbox_px": [
+      1286.2,
+      309.6,
+      1300.7,
+      319.4
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut LR: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)"
+    },
+    "PRP-008-LR": {
+     "bbox_px": [
+      1284.7,
+      316.7,
+      1301.6,
+      320.9
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer LR: M6 6 x 12 x 1.0 (supplied with PRP-004)"
     },
     "PRP-004-LR": {
      "bbox_px": [
@@ -979,6 +1219,26 @@
      "subsystem": "propulsion",
      "name": "Prop LR APC 11x5.5MR (LP11055MR)"
     },
+    "PRP-005-LR": {
+     "bbox_px": [
+      1273.8,
+      369.9,
+      1304.9,
+      390.6
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set LR: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-LR": {
+     "bbox_px": [
+      1281.8,
+      332.8,
+      1302.0,
+      345.8
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set LR: 4 x M3x4 SHCS (supplied with PRP-004)"
+    },
     "PRP-001-LL": {
      "bbox_px": [
       358.4,
@@ -988,6 +1248,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Motor LL SunnySky X3108S KV900 (CW from the nose)"
+    },
+    "PRP-007-LL": {
+     "bbox_px": [
+      382.3,
+      309.6,
+      396.8,
+      319.4
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut LL: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)"
+    },
+    "PRP-008-LL": {
+     "bbox_px": [
+      381.4,
+      316.7,
+      398.3,
+      320.9
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer LL: M6 6 x 12 x 1.0 (supplied with PRP-004)"
     },
     "PRP-004-LL": {
      "bbox_px": [
@@ -1008,6 +1288,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Prop LL APC 11x5.5MRP (LP11055MRP)"
+    },
+    "PRP-005-LL": {
+     "bbox_px": [
+      378.1,
+      369.9,
+      409.2,
+      390.6
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set LL: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-LL": {
+     "bbox_px": [
+      381.0,
+      332.8,
+      401.2,
+      345.8
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set LL: 4 x M3x4 SHCS (supplied with PRP-004)"
     },
     "PRP-002-UR": {
      "bbox_px": [
@@ -1269,6 +1569,46 @@
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips left"
     },
+    "MEC-011-R": {
+     "bbox_px": [
+      1198.0,
+      584.8,
+      1203.3,
+      633.4
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo cover screw pair R: 2 x M2 x 6 self-tapping pan head A2"
+    },
+    "MEC-012-R": {
+     "bbox_px": [
+      1236.6,
+      613.7,
+      1244.5,
+      619.1
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo arm screw R: M2 x 4 pan head (supplied with MEC-001)"
+    },
+    "MEC-011-L": {
+     "bbox_px": [
+      479.7,
+      584.8,
+      485.0,
+      633.4
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo cover screw pair L: 2 x M2 x 6 self-tapping pan head A2"
+    },
+    "MEC-012-L": {
+     "bbox_px": [
+      438.5,
+      613.7,
+      446.4,
+      619.1
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo arm screw L: M2 x 4 pan head (supplied with MEC-001)"
+    },
     "PWR-001": {
      "bbox_px": [
       761.2,
@@ -1378,6 +1718,46 @@
      ],
      "subsystem": "power",
      "name": "ESC capacitor 680 uF 25 V low-ESR, LL"
+    },
+    "PWR-107": {
+     "bbox_px": [
+      755.9,
+      293.3,
+      797.3,
+      334.7
+     ],
+     "subsystem": "power",
+     "name": "Power-frame insert set: 4 x M3 x 5.7 brass heat-set insert in POD-002"
+    },
+    "PWR-102": {
+     "bbox_px": [
+      754.9,
+      292.3,
+      798.3,
+      335.7
+     ],
+     "subsystem": "power",
+     "name": "Power-frame spacer set: 4 x nylon spacer M3, 10 mm, OD 6 / ID 3.2"
+    },
+    "PWR-103": {
+     "bbox_px": [
+      754.2,
+      291.6,
+      799.0,
+      336.4
+     ],
+     "subsystem": "power",
+     "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm"
+    },
+    "PWR-101": {
+     "bbox_px": [
+      755.2,
+      292.6,
+      798.0,
+      335.4
+     ],
+     "subsystem": "power",
+     "name": "Power-frame screw set: 4 x M3x18 pan head, nylon PA66"
     },
     "AVN-001": {
      "bbox_px": [
@@ -2041,6 +2421,126 @@
      "subsystem": "fins",
      "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)"
     },
+    "FIN-101-UR": {
+     "bbox_px": [
+      364.9,
+      105.7,
+      372.6,
+      113.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt UR: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-102-UR": {
+     "bbox_px": [
+      364.9,
+      105.2,
+      372.6,
+      114.0
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut UR: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-103-UR": {
+     "bbox_px": [
+      363.9,
+      104.7,
+      373.7,
+      114.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair UR: 2 x M3 ISO 7089 A2"
+    },
+    "FIN-101-UL": {
+     "bbox_px": [
+      1310.4,
+      105.7,
+      1318.1,
+      113.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt UL: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-101-LR": {
+     "bbox_px": [
+      364.9,
+      570.5,
+      372.6,
+      578.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt LR: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-101-LL": {
+     "bbox_px": [
+      1310.4,
+      570.5,
+      1318.1,
+      578.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt LL: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-102-UL": {
+     "bbox_px": [
+      1310.4,
+      105.2,
+      1318.1,
+      114.0
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut UL: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-102-LR": {
+     "bbox_px": [
+      364.9,
+      570.0,
+      372.6,
+      578.8
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut LR: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-102-LL": {
+     "bbox_px": [
+      1310.4,
+      570.0,
+      1318.1,
+      578.8
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut LL: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-103-UL": {
+     "bbox_px": [
+      1309.3,
+      104.7,
+      1319.1,
+      114.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair UL: 2 x M3 ISO 7089 A2"
+    },
+    "FIN-103-LR": {
+     "bbox_px": [
+      363.9,
+      569.5,
+      373.7,
+      579.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair LR: 2 x M3 ISO 7089 A2"
+    },
+    "FIN-103-LL": {
+     "bbox_px": [
+      1309.3,
+      569.5,
+      1319.1,
+      579.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair LL: 2 x M3 ISO 7089 A2"
+    },
     "POD-001": {
      "bbox_px": [
       743.5,
@@ -2140,6 +2640,26 @@
      ],
      "subsystem": "pod",
      "name": "GPS mast with 45 deg pad (printed PETG, plugs into the handle grip)"
+    },
+    "POD-011": {
+     "bbox_px": [
+      835.2,
+      167.3,
+      860.4,
+      175.1
+     ],
+     "subsystem": "pod",
+     "name": "GPS mast cross-screw: M3x16 cheese head, nylon PA66 (DIN 84)"
+    },
+    "POD-012": {
+     "bbox_px": [
+      851.3,
+      166.8,
+      854.7,
+      175.6
+     ],
+     "subsystem": "pod",
+     "name": "GPS mast nut: M3 hex nut, nylon PA66"
     },
     "GER-001-UR": {
      "bbox_px": [
@@ -2331,6 +2851,26 @@
      "subsystem": "propulsion",
      "name": "Motor UR SunnySky X3108S KV900 (CW from the nose)"
     },
+    "PRP-007-UR": {
+     "bbox_px": [
+      382.3,
+      74.2,
+      396.8,
+      91.1
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut UR: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)"
+    },
+    "PRP-008-UR": {
+     "bbox_px": [
+      381.4,
+      73.7,
+      398.3,
+      90.7
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer UR: M6 6 x 12 x 1.0 (supplied with PRP-004)"
+    },
     "PRP-004-UR": {
      "bbox_px": [
       376.7,
@@ -2351,6 +2891,26 @@
      "subsystem": "propulsion",
      "name": "Prop UR APC 11x5.5MRP (LP11055MRP)"
     },
+    "PRP-005-UR": {
+     "bbox_px": [
+      378.1,
+      57.8,
+      409.2,
+      93.6
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set UR: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-UR": {
+     "bbox_px": [
+      381.0,
+      69.8,
+      401.2,
+      90.3
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set UR: 4 x M3x4 SHCS (supplied with PRP-004)"
+    },
     "PRP-001-UL": {
      "bbox_px": [
       1262.8,
@@ -2360,6 +2920,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Motor UL SunnySky X3108S KV900 (CCW from the nose)"
+    },
+    "PRP-007-UL": {
+     "bbox_px": [
+      1286.2,
+      74.2,
+      1300.7,
+      91.1
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut UL: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)"
+    },
+    "PRP-008-UL": {
+     "bbox_px": [
+      1284.7,
+      73.7,
+      1301.6,
+      90.7
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer UL: M6 6 x 12 x 1.0 (supplied with PRP-004)"
     },
     "PRP-004-UL": {
      "bbox_px": [
@@ -2381,6 +2961,26 @@
      "subsystem": "propulsion",
      "name": "Prop UL APC 11x5.5MR (LP11055MR)"
     },
+    "PRP-005-UL": {
+     "bbox_px": [
+      1273.8,
+      57.8,
+      1304.9,
+      93.6
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set UL: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-UL": {
+     "bbox_px": [
+      1281.8,
+      69.8,
+      1302.0,
+      90.3
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set UL: 4 x M3x4 SHCS (supplied with PRP-004)"
+    },
     "PRP-001-LR": {
      "bbox_px": [
       358.4,
@@ -2390,6 +2990,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Motor LR SunnySky X3108S KV900 (CCW from the nose)"
+    },
+    "PRP-007-LR": {
+     "bbox_px": [
+      382.3,
+      592.9,
+      396.8,
+      609.8
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut LR: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)"
+    },
+    "PRP-008-LR": {
+     "bbox_px": [
+      381.4,
+      593.3,
+      398.3,
+      610.3
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer LR: M6 6 x 12 x 1.0 (supplied with PRP-004)"
     },
     "PRP-004-LR": {
      "bbox_px": [
@@ -2411,6 +3031,26 @@
      "subsystem": "propulsion",
      "name": "Prop LR APC 11x5.5MR (LP11055MR)"
     },
+    "PRP-005-LR": {
+     "bbox_px": [
+      378.1,
+      590.4,
+      409.2,
+      626.2
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set LR: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-LR": {
+     "bbox_px": [
+      381.0,
+      593.7,
+      401.2,
+      614.2
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set LR: 4 x M3x4 SHCS (supplied with PRP-004)"
+    },
     "PRP-001-LL": {
      "bbox_px": [
       1262.8,
@@ -2420,6 +3060,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Motor LL SunnySky X3108S KV900 (CW from the nose)"
+    },
+    "PRP-007-LL": {
+     "bbox_px": [
+      1286.2,
+      592.9,
+      1300.7,
+      609.8
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut LL: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)"
+    },
+    "PRP-008-LL": {
+     "bbox_px": [
+      1284.7,
+      593.3,
+      1301.6,
+      610.3
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer LL: M6 6 x 12 x 1.0 (supplied with PRP-004)"
     },
     "PRP-004-LL": {
      "bbox_px": [
@@ -2440,6 +3100,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Prop LL APC 11x5.5MRP (LP11055MRP)"
+    },
+    "PRP-005-LL": {
+     "bbox_px": [
+      1273.8,
+      590.4,
+      1304.9,
+      626.2
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set LL: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-LL": {
+     "bbox_px": [
+      1281.8,
+      593.7,
+      1302.0,
+      614.2
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set LL: 4 x M3x4 SHCS (supplied with PRP-004)"
     },
     "PRP-002-UR": {
      "bbox_px": [
@@ -2701,6 +3381,46 @@
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips left"
     },
+    "MEC-011-R": {
+     "bbox_px": [
+      479.7,
+      343.4,
+      485.0,
+      354.0
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo cover screw pair R: 2 x M2 x 6 self-tapping pan head A2"
+    },
+    "MEC-012-R": {
+     "bbox_px": [
+      438.5,
+      339.6,
+      446.4,
+      344.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo arm screw R: M2 x 4 pan head (supplied with MEC-001)"
+    },
+    "MEC-011-L": {
+     "bbox_px": [
+      1198.0,
+      343.4,
+      1203.3,
+      354.0
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo cover screw pair L: 2 x M2 x 6 self-tapping pan head A2"
+    },
+    "MEC-012-L": {
+     "bbox_px": [
+      1236.6,
+      339.6,
+      1244.5,
+      344.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo arm screw L: M2 x 4 pan head (supplied with MEC-001)"
+    },
     "PWR-001": {
      "bbox_px": [
       809.3,
@@ -2810,6 +3530,46 @@
      ],
      "subsystem": "power",
      "name": "ESC capacitor 680 uF 25 V low-ESR, LL"
+    },
+    "PWR-107": {
+     "bbox_px": [
+      885.7,
+      304.8,
+      927.1,
+      312.7
+     ],
+     "subsystem": "power",
+     "name": "Power-frame insert set: 4 x M3 x 5.7 brass heat-set insert in POD-002"
+    },
+    "PWR-102": {
+     "bbox_px": [
+      884.7,
+      290.8,
+      928.1,
+      304.8
+     ],
+     "subsystem": "power",
+     "name": "Power-frame spacer set: 4 x nylon spacer M3, 10 mm, OD 6 / ID 3.2"
+    },
+    "PWR-103": {
+     "bbox_px": [
+      884.0,
+      287.3,
+      928.8,
+      288.0
+     ],
+     "subsystem": "power",
+     "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm"
+    },
+    "PWR-101": {
+     "bbox_px": [
+      885.0,
+      284.7,
+      927.8,
+      312.5
+     ],
+     "subsystem": "power",
+     "name": "Power-frame screw set: 4 x M3x18 pan head, nylon PA66"
     },
     "AVN-001": {
      "bbox_px": [
@@ -3473,6 +4233,126 @@
      "subsystem": "fins",
      "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)"
     },
+    "FIN-101-UR": {
+     "bbox_px": [
+      394.8,
+      105.7,
+      421.5,
+      113.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt UR: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-102-UR": {
+     "bbox_px": [
+      413.8,
+      105.2,
+      419.3,
+      114.0
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut UR: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-103-UR": {
+     "bbox_px": [
+      399.0,
+      104.7,
+      413.8,
+      114.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair UR: 2 x M3 ISO 7089 A2"
+    },
+    "FIN-101-UL": {
+     "bbox_px": [
+      394.8,
+      105.7,
+      421.5,
+      113.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt UL: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-101-LR": {
+     "bbox_px": [
+      394.8,
+      570.5,
+      421.5,
+      578.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt LR: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-101-LL": {
+     "bbox_px": [
+      394.8,
+      570.5,
+      421.5,
+      578.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch bolt LL: M3x16 SHCS ISO 4762 A2"
+    },
+    "FIN-102-UL": {
+     "bbox_px": [
+      413.8,
+      105.2,
+      419.3,
+      114.0
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut UL: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-102-LR": {
+     "bbox_px": [
+      413.8,
+      570.0,
+      419.3,
+      578.8
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut LR: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-102-LL": {
+     "bbox_px": [
+      413.8,
+      570.0,
+      419.3,
+      578.8
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt nut LL: M3 nyloc ISO 10511 A2"
+    },
+    "FIN-103-UL": {
+     "bbox_px": [
+      399.0,
+      104.7,
+      413.8,
+      114.5
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair UL: 2 x M3 ISO 7089 A2"
+    },
+    "FIN-103-LR": {
+     "bbox_px": [
+      399.0,
+      569.5,
+      413.8,
+      579.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair LR: 2 x M3 ISO 7089 A2"
+    },
+    "FIN-103-LL": {
+     "bbox_px": [
+      399.0,
+      569.5,
+      413.8,
+      579.3
+     ],
+     "subsystem": "fins",
+     "name": "Pinch-bolt washer pair LL: 2 x M3 ISO 7089 A2"
+    },
     "POD-001": {
      "bbox_px": [
       141.8,
@@ -3572,6 +4452,26 @@
      ],
      "subsystem": "pod",
      "name": "GPS mast with 45 deg pad (printed PETG, plugs into the handle grip)"
+    },
+    "POD-011": {
+     "bbox_px": [
+      451.5,
+      167.3,
+      459.2,
+      175.1
+     ],
+     "subsystem": "pod",
+     "name": "GPS mast cross-screw: M3x16 cheese head, nylon PA66 (DIN 84)"
+    },
+    "POD-012": {
+     "bbox_px": [
+      451.5,
+      166.8,
+      459.2,
+      175.6
+     ],
+     "subsystem": "pod",
+     "name": "GPS mast nut: M3 hex nut, nylon PA66"
     },
     "GER-001-UR": {
      "bbox_px": [
@@ -3763,6 +4663,26 @@
      "subsystem": "propulsion",
      "name": "Motor UR SunnySky X3108S KV900 (CW from the nose)"
     },
+    "PRP-007-UR": {
+     "bbox_px": [
+      309.6,
+      74.2,
+      319.4,
+      91.1
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut UR: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)"
+    },
+    "PRP-008-UR": {
+     "bbox_px": [
+      316.7,
+      73.7,
+      320.9,
+      90.7
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer UR: M6 6 x 12 x 1.0 (supplied with PRP-004)"
+    },
     "PRP-004-UR": {
      "bbox_px": [
       308.6,
@@ -3783,6 +4703,26 @@
      "subsystem": "propulsion",
      "name": "Prop UR APC 11x5.5MRP (LP11055MRP)"
     },
+    "PRP-005-UR": {
+     "bbox_px": [
+      369.9,
+      57.8,
+      390.6,
+      93.6
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set UR: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-UR": {
+     "bbox_px": [
+      332.8,
+      69.8,
+      345.8,
+      90.3
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set UR: 4 x M3x4 SHCS (supplied with PRP-004)"
+    },
     "PRP-001-UL": {
      "bbox_px": [
       327.2,
@@ -3792,6 +4732,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Motor UL SunnySky X3108S KV900 (CCW from the nose)"
+    },
+    "PRP-007-UL": {
+     "bbox_px": [
+      309.6,
+      74.2,
+      319.4,
+      91.1
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut UL: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)"
+    },
+    "PRP-008-UL": {
+     "bbox_px": [
+      316.7,
+      73.7,
+      320.9,
+      90.7
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer UL: M6 6 x 12 x 1.0 (supplied with PRP-004)"
     },
     "PRP-004-UL": {
      "bbox_px": [
@@ -3813,6 +4773,26 @@
      "subsystem": "propulsion",
      "name": "Prop UL APC 11x5.5MR (LP11055MR)"
     },
+    "PRP-005-UL": {
+     "bbox_px": [
+      369.9,
+      57.8,
+      390.6,
+      93.6
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set UL: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-UL": {
+     "bbox_px": [
+      332.8,
+      69.8,
+      345.8,
+      90.3
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set UL: 4 x M3x4 SHCS (supplied with PRP-004)"
+    },
     "PRP-001-LR": {
      "bbox_px": [
       327.2,
@@ -3822,6 +4802,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Motor LR SunnySky X3108S KV900 (CCW from the nose)"
+    },
+    "PRP-007-LR": {
+     "bbox_px": [
+      309.6,
+      592.9,
+      319.4,
+      609.8
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut LR: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)"
+    },
+    "PRP-008-LR": {
+     "bbox_px": [
+      316.7,
+      593.3,
+      320.9,
+      610.3
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer LR: M6 6 x 12 x 1.0 (supplied with PRP-004)"
     },
     "PRP-004-LR": {
      "bbox_px": [
@@ -3843,6 +4843,26 @@
      "subsystem": "propulsion",
      "name": "Prop LR APC 11x5.5MR (LP11055MR)"
     },
+    "PRP-005-LR": {
+     "bbox_px": [
+      369.9,
+      590.4,
+      390.6,
+      626.2
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set LR: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-LR": {
+     "bbox_px": [
+      332.8,
+      593.7,
+      345.8,
+      614.2
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set LR: 4 x M3x4 SHCS (supplied with PRP-004)"
+    },
     "PRP-001-LL": {
      "bbox_px": [
       327.2,
@@ -3852,6 +4872,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Motor LL SunnySky X3108S KV900 (CW from the nose)"
+    },
+    "PRP-007-LL": {
+     "bbox_px": [
+      309.6,
+      592.9,
+      319.4,
+      609.8
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop nut LL: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)"
+    },
+    "PRP-008-LL": {
+     "bbox_px": [
+      316.7,
+      593.3,
+      320.9,
+      610.3
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop washer LL: M6 6 x 12 x 1.0 (supplied with PRP-004)"
     },
     "PRP-004-LL": {
      "bbox_px": [
@@ -3872,6 +4912,26 @@
      ],
      "subsystem": "propulsion",
      "name": "Prop LL APC 11x5.5MRP (LP11055MRP)"
+    },
+    "PRP-005-LL": {
+     "bbox_px": [
+      369.9,
+      590.4,
+      390.6,
+      626.2
+     ],
+     "subsystem": "propulsion",
+     "name": "Motor screw set LL: 4 x M3x8 SHCS ISO 4762 A2"
+    },
+    "PRP-006-LL": {
+     "bbox_px": [
+      332.8,
+      593.7,
+      345.8,
+      614.2
+     ],
+     "subsystem": "propulsion",
+     "name": "Prop adapter screw set LL: 4 x M3x4 SHCS (supplied with PRP-004)"
     },
     "PRP-002-UR": {
      "bbox_px": [
@@ -4133,6 +5193,46 @@
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips left"
     },
+    "MEC-011-R": {
+     "bbox_px": [
+      584.8,
+      343.4,
+      633.4,
+      354.0
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo cover screw pair R: 2 x M2 x 6 self-tapping pan head A2"
+    },
+    "MEC-012-R": {
+     "bbox_px": [
+      613.7,
+      339.6,
+      619.1,
+      344.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo arm screw R: M2 x 4 pan head (supplied with MEC-001)"
+    },
+    "MEC-011-L": {
+     "bbox_px": [
+      584.8,
+      343.4,
+      633.4,
+      354.0
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo cover screw pair L: 2 x M2 x 6 self-tapping pan head A2"
+    },
+    "MEC-012-L": {
+     "bbox_px": [
+      613.7,
+      339.6,
+      619.1,
+      344.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Servo arm screw L: M2 x 4 pan head (supplied with MEC-001)"
+    },
     "PWR-001": {
      "bbox_px": [
       204.1,
@@ -4242,6 +5342,46 @@
      ],
      "subsystem": "power",
      "name": "ESC capacitor 680 uF 25 V low-ESR, LL"
+    },
+    "PWR-107": {
+     "bbox_px": [
+      293.3,
+      304.8,
+      334.7,
+      312.7
+     ],
+     "subsystem": "power",
+     "name": "Power-frame insert set: 4 x M3 x 5.7 brass heat-set insert in POD-002"
+    },
+    "PWR-102": {
+     "bbox_px": [
+      292.3,
+      290.8,
+      335.7,
+      304.8
+     ],
+     "subsystem": "power",
+     "name": "Power-frame spacer set: 4 x nylon spacer M3, 10 mm, OD 6 / ID 3.2"
+    },
+    "PWR-103": {
+     "bbox_px": [
+      291.6,
+      287.3,
+      336.4,
+      288.0
+     ],
+     "subsystem": "power",
+     "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm"
+    },
+    "PWR-101": {
+     "bbox_px": [
+      292.6,
+      284.7,
+      335.4,
+      312.5
+     ],
+     "subsystem": "power",
+     "name": "Power-frame screw set: 4 x M3x18 pan head, nylon PA66"
     },
     "AVN-001": {
      "bbox_px": [

@@ -39,14 +39,14 @@ their wire mass, so the declared CG is the CAD centroid (CR-A5-27).
 | Run | Route | Support / protection |
 |---|---|---|
 | Power stack (F1 PWR-R1) | pack lead over the aft stop to the AS150U mating face x 0.031; 10 AWG cups (x 0.002) → board input pads (aft edge x −0.010, z 0.048); board output pads → down the deck window → bus-bar aft end (x −0.0105, z 0.024) | jumpers formed before soldering, two bends ≥ 2 × OD (F1 `CL-PWR-BEND`) |
-| Pod power | ESC pairs and the fuse feed leave the bars aft through the tunnel under the cradle (z 0.020–0.037); fuse holder x 0.004–0.030 under the cradle; right-side pairs and the fused UBEC feed cross behind the aft stop at x 0.087 (stacked 8 mm) to the right channel; UBEC input at its aft end x 0.084 | tied ≤ 0.08 m; PET sleeve on the crossing; fuse holder in the frame clip |
+| Pod power | ESC pairs leave the bars aft through the tunnel under the cradle in four stacked layers (LR, UR, LL, UL, 3 mm pitch); left pairs out between cradle leg 0 and the bracket flange; right pairs cross aft of the strut ribs (x 0.085) over the foot bridge, inboard of the right leg, over the UBEC to the right exit; the fused UBEC feed runs over all four under the cradle floor and crosses above them at x 0.088 to the UBEC input pads. Signals, servo, sensor runs each in their own lane (JR row order: servo L, UL, LL, servo R, LR, UR; three lanes in the under-pack channel). No run touches another or the structure (`team/F2/ROUTE-CLEARANCE.md`) | tied ≤ 0.08 m; PET sleeve on the crossing; fuse holder in the frame clip |
 | Pod signals | FC aft edge (0.014, 0.046, 0.030): 6 output pigtails ≤ 100 mm → JR row x 0.030; UBEC output → FC rail | tray tie bar |
 | Exits | D2 side-wall exits x 0.056–0.072, z 0.027–0.039 (power + DShot); D2 aft exits for the servo leads only | PET sleeve 40 mm, edge taped |
 | Wing, upper | three grooves ahead of the spar slot: DShot x 0.054, + 0.059, − 0.064 (5 mm pitch, 3 mm foam to the slot), y 0.086 → 0.296 | power 3.0 × 3.1 mm, signal 2.5 × 2.4 mm; wire 0.5 mm below the surface; tape tabs, then the skin |
 | Wing, lower | LR/LL pair + DShot through P1 (7 mm straw, 45° slant, y 0.092 → 0.122), same grooves on the lower surface | straw liner, lips sanded R ≥ 12 mm |
-| Fin root | groove end → tie at the boss-tail lug (x 0.071, inboard) → Ø 8 mm hole through the half-fin at x 0.086, **22 mm off the skin** (z +0.0447 / −0.0307, D3) → outboard face | printed ASA grommet 10/7 mm; the tie point resets the free span |
+| Fin root | lead leaves the groove 12 mm before its end, rises out of the skin over the bead lip and the block boss (boss top + 1.5 mm) → tie above the boss-tail lug (x 0.071, inboard) → Ø 8 mm hole through the half-fin at x 0.086, **22 mm off the skin** (z +0.0447 / −0.0307, D3) → outboard face, 1.9 mm off it | printed ASA grommet 10/7 mm; the tie point resets the free span |
 | Fin face | tape strips every ≤ 50 mm; the pair rises **below** the ESC and lands on its aft-end power pads from underneath (x 0.122); the 680 µF cap sits in line aft of the ESC (x 0.127–0.147) and its legs fold forward onto the same pads (11 mm) | never under the ESC strap or over its FET face (E3) |
-| Phase | ESC phase end (x 0.078) → up the outboard face at x 0.066 → tie at the collar-tail front (x 0.060, 1.5 mm under the tail top edge, on the outboard wall face) → free 47 mm → motor lead exit; 3 staggered soldered splices, outer sleeve | ≥ 5 mm off the bell; phase order labelled (F4 rotation). D3's lug sits at x 0.084 today, where the free run would be 62 mm: CR-F2-16 moves it |
+| Phase | ESC phase end (x 0.078) → tie beside the collar-tail lug (x 0.0655, 1.5 mm off the tail wall and lug) → over the pinch bolt and nut → tie at the pinch ear (x 0.052, 2.5 mm over the ear) → motor lead exit; free spans 29 / 29 mm; 3 staggered soldered splices, outer sleeve | ≥ 5 mm off the bell; phase order labelled (F4 rotation); no contact with the collar, mount, bolt or nut (`ROUTE-CLEARANCE.md`) |
 | Servo | aft exit → groove x 0.108 (aft of the slot) → D1 upper branch groove along \|y\| 0.285 → JR in-line in an 18 × 10 × 5 mm recess (x 0.150–0.168, CR-F2-14) → servo's own lead (cut to 40 mm, re-terminated) → D1 lead hole x 0.173–0.177 (4 mm straw) → D6 lower pocket → case front | 4.0 × 1.6 mm groove; recess under a re-openable tape flap |
 | GPS / sensors | GPS cable up the right side wall (z 0.06) → right handle-leg window and bore → grip → mast → connector (0.081, 0, 0.183); RX, airspeed I²C branch and power-board link cross under the pack in D2's floor channel at **x −0.0245**; left-side runs pass inboard of the RX | GPS cable alone, crosses power at 90°, ≥ 25 mm above the UBEC |
 
@@ -70,8 +70,8 @@ the propulsion path, −15.6 g vs 12 × 3.5 mm bullets).
 
 | Id | Part | Qty | Each g |
 |---|---|---|---|
-| `HRN-001` | Pod bundle (lumped, carried) | 1 | 40.7 |
-| `HRN-002-R/L` | Wing-fin bundle (lumped, carried) | 2 | 38.3 / 38.2 |
+| `HRN-001` | Pod bundle (lumped, carried, mass proxy: not drawn) | 1 | 41.4 |
+| `HRN-002-R/L` | Wing-fin bundle (lumped, carried, mass proxy: not drawn) | 2 | 39.5 / 38.9 |
 | `HRN-101…112` | wire 16/20/26/28 AWG, JR and JST-GH kits, heat-shrink, ties, PET sleeve, grommets, straws | — | 0 (in bundles); $68 `EST`, prices `UNVERIFIED` |
 
 ## Interfaces

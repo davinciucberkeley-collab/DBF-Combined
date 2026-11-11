@@ -1,5 +1,5 @@
-"""K09-L harness (F2): three lumped bundle parts with real route bodies, and one routed wire per declared electrical
-edge (centreline polylines from the wire table).
+"""K09-L harness (F2): three lumped bundle parts as mass-only proxies, and one routed wire per declared electrical
+edge (centreline polylines from the wire table) - the wires are what the CAD shows.
 
 Everything comes from subsystems/harness/params.json, written by team/F2/harness.py from params.json, the fins,
 pod and propulsion data: re-run that script after any change, then this module follows.
@@ -7,8 +7,12 @@ pod and propulsion data: re-run that script after any change, then this module f
 Bodies: HRN-001 (pod runs: left channel, crossing behind the aft stop, right channel, under-pack channel, GPS cable
 in the right handle leg) and HRN-002-R (grooves ahead of the spar slot, servo groove aft of it, outboard fin-face
 legs to the ESCs and the phase legs past the collar), mirrored to HRN-002-L. Legs are axis-aligned cylinders
-(k09kit.bundle), each sized by the wire mass it carries so the body centroid is the declared CG (CR-A5-27); the
-wires themselves are drawn as polylines (ctx.wire), 22 AWG cap legs and 10 AWG jumpers included.
+(k09kit.bundle), each sized by the wire mass it carries so the body centroid is the declared CG (CR-A5-27). The
+three parts are MASS PROXIES (ctx.part(..., proxy=True)): their part ids, mass and CG stay in interfaces, parts
+and the roll-up, but no backend shows them (Fusion: hidden "(mass proxy)" component; Blender / GLB: an empty with
+the part's extras), so the harness is not drawn twice. The wires are drawn as tubes (ctx.wire) of the diameter
+team/F2/harness.py writes per edge (cad.wire_draw_dia_m: bundle OD), 22 AWG cap legs and 10 AWG jumpers included;
+team/F2/route_clearance.py checks them against every solid (ROUTE-CLEARANCE.md).
 Registers only edges declared in subsystems/harness/interfaces.json; edges in edges-pending.json wait for their
 other part's owner. UNVERIFIED-IN-FUSION: wire polylines (fusion_backend draws sketch lines / pipes).
 """
@@ -30,11 +34,13 @@ def build(ctx):
     declared = {e['id']: e for e in iface['edges']}
 
     for pid, key in (('HRN-001', 'pod'), ('HRN-002-R', 'side_R')):
-        part = ctx.part(pid)
+        part = ctx.part(pid, proxy=True)
         for a, b, d in legs[key]:                             # one leg per call: each has its own diameter
             k9.bundle(part, [(tuple(a), tuple(b))], d)
     k9.pair(ctx, 'HRN-002-R', 'HRN-002-L')
 
+    dia = _lv(H['cad'].get('wire_draw_dia_m', {}))
+    strands = _lv(H['cad'].get('wire_strands', {}))           # {wire id: [[diameter, polyline], ...]}
     by_edge = {}
     for row in _lv(H['wire_table']):
         by_edge.setdefault(row[1], []).append(row)
@@ -43,8 +49,9 @@ def build(ctx):
             ctx.contact(eid, e.get('notes', ''))
             continue
         rows = by_edge.get(eid, [])
-        pts = []
+        pts, st = [], []
         for r in rows:                                        # pigtail + extension joined into one polyline
             pts += [tuple(p[:3]) for p in r[9]]
+            st += [(line, d) for d, line in strands.get(r[0], [])]
         if len(pts) >= 2:
-            ctx.wire(eid, pts, dia=0.003 if rows[-1][2] >= 26 else 0.006)
+            ctx.wire(eid, pts, dia=dia.get(eid, 0.003 if rows[-1][2] >= 26 else 0.006), strands=st or None)

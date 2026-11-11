@@ -59,7 +59,7 @@
    "mass_g": 4.51,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.0702,
+    -0.0708,
     -0.0463,
     0.0313
    ],
@@ -75,7 +75,7 @@
    "mass_g": 4.84,
    "material": "PETG (printed) + aluminium probe",
    "cg_xyz_m": [
-    -0.1433,
+    -0.1533,
     -0.046,
     0.045
    ],

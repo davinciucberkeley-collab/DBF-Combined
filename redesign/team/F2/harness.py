@@ -594,6 +594,17 @@ def geometry():
     g["ubec"] = list(pwr["PWR-005"]["cg_xyz_m"])
     g["cap"] = list(pwr["PWR-008-UR"]["cg_xyz_m"])                     # cap body centre, UR (others mirror)
     g["servo"] = list(mec["MEC-001-R"]["cg_xyz_m"])
+    # clearance references for the routes (ROUTE-CLEARANCE.md): what the wires must clear by >= 1 mm
+    g["foot_top"] = 0.0228 + pv(D, "foot_plate_t_m")                   # POD-007 foot plate / bridge top z (D2 CAD)
+    g["flange_x0"] = pv(D, "bracket_m")["flange_x0"]                   # POD-007 wall-bracket flange, x from 0.066
+    g["ubec_top"] = g["ubec"][2] + 0.005                               # PWR-005 envelope 41 x 23 x 10 mm (F1)
+    g["leg_in"] = g["leg_y"] - g["leg_side"] / 2                       # POD-007 handle leg, inboard face |y|
+    g["cradle_leg_x1"] = PORTS["pack_mate"][0][0] + 0.029              # PWR-006 cradle legs x 0.056-0.060 (F1)
+    g["boss_z"] = lambda surf, x: abs(surf(x)) + pv(F, "fin_detail.boss.height_m")   # block boss top |z| (D3)
+    g["ear_y"] = 0.3422                                                # FIN-003 pinch ear outboard face |y| (D3 CAD)
+    g["ear_x"] = 0.046                                                 # FIN-003 pinch ear pair centre x (D3 CAD)
+    g["ear_top"] = 0.172                                               # FIN-003 collar / ear top |z| (D3 CAD)
+    g["aft_stop_x"] = pv(D, "aft_stop_x_m")                            # POD-002 aft stop (D2)
     return g
 
 
@@ -625,63 +636,111 @@ def build(g):
     ub_in, ub_out = g["ubec"][0] + 0.019, g["ubec"][0] - 0.019          # UBEC 41 mm (F1 PWR-005 x 0.044-0.085)
     x_rec = (0.150, 0.168)                                              # JR in-line recess, servo branch (CR-F2-14)
     x_lh = (g["lead_hole_x"][0] + g["lead_hole_x"][1]) / 2              # D1 servo lead hole
-    yo = g["y_out"] + 0.0035                                            # leads on the outboard board face
+    yo = g["y_out"] + 0.0035                                            # leads on the outboard board face (legs)
+    yof = g["y_out"] + 0.0045                                           # routed lead centre: 5.2 mm pair, 1.9 mm off
+    # drawn conductors in the D1 grooves (wing params grooves.*, cut in WNG-001): each 16 AWG conductor (2.6 mm) in its
+    # own 3.0 x 3.1 mm groove (+ at x_pos, - at x_neg), centre 1.7 mm deep (0.1 mm off the floor, 0.4 mm under the
+    # skin); the 28 AWG pair (1.8 mm bundle) 1.2 mm deep in the 2.5 x 2.4 signal groove; the 26 AWG servo ribbon
+    # (3 x 1.1 mm) 1.0 mm deep in the 4.0 x 1.6 mm servo groove. Points marked "s" (5th element) carry the
+    # conductors at groove spacing (draw_strands()).
+    d_pwr, d_sig, d_srv = 0.00155, 0.0012, 0.0009    # 16 AWG: 0.05 mm under the skin and off both groove floors
+    y_g0 = 0.086                                                        # groove start |y| (wing grooves.y_m)
 
     def gz(surf, x, depth):
         return surf(x) - depth if surf is zU else surf(x) + depth
 
-    def fin_side(sgn_y, sgn_z, x_groove, depth, end):
-        """From the groove end through the boss tie and the fin hole to `end` on the outboard face."""
+    def fin_side(sgn_y, sgn_z, x_groove, depth, end, r, r_c=None, dx=0.0, hole=(0.0, 0.0)):
+        """From the groove to `end` on the outboard face, clear of the structure by >= 1 mm (ROUTE-CLEARANCE.md):
+        the lead leaves its groove 12 mm before the groove end (bend radius), rises out of the tape skin, passes
+        over the bead lip and the block boss (top |z| = skin + boss height), is tied above the boss-tail lug on the
+        inboard face, crosses the half-fin in the grommeted hole and runs down the outboard face. r = drawn radius."""
         surf = zU if sgn_z > 0 else zL
         zs = surf(x_hole)
-        zt = sgn_z * (abs(surf(g["boss_tail_end"])) + 0.004)
-        return [[x_groove, sgn_y * y_gend, gz(surf, x_groove, depth), "F"],
-                [g["boss_tail_end"] - 0.003, sgn_y * (g["y_in"] - 0.003), zt, "T"],   # D3 boss-tail lug
-                [x_hole, sgn_y * g["yf"], zs + sgn_z * hole_dz, "L"],
-                [x_hole + 0.006, sgn_y * yo, zs + sgn_z * (hole_dz + 0.004), "B"]] + end
+        x_t = g["boss_tail_end"] - 0.003 + dx                            # D3 boss-tail lug (signal lane 4 mm ahead)
+        z_over = sgn_z * (g["boss_z"](surf, g["boss_tail_end"]) + r + 0.0015)
+        r_c = r if r_c is None else r_c                                  # conductor radius (rises out of its groove)
+        return [[x_groove, sgn_y * (y_gend - 0.012), gz(surf, x_groove, depth), "F", "s"],
+                [x_groove, sgn_y * (y_gend - 0.004), surf(x_groove) + sgn_z * (r_c + 0.0008), "F", "s"],
+                [x_groove + 0.005, sgn_y * (y_gend + 0.004), z_over, "F"],
+                [x_t, sgn_y * (g["y_in"] - r - 0.001), z_over, "T"],
+                [x_hole + hole[0], sgn_y * g["yf"], zs + sgn_z * (hole_dz + hole[1]), "L"],
+                [x_hole + 0.006 + dx * 1.25, sgn_y * yof, zs + sgn_z * (hole_dz + 0.004), "B"]] + end
 
-    def side_out(sgn_y, start_pod):
-        """Pod route to the side exit for side sgn_y; start_pod = list of pod points."""
-        return start_pod + [[x_sexit, sgn_y * (g["y_wall_in"] - 0.010), zw + 0.004, "P"],
-                            [x_sexit, sgn_y * (g["pod_hw"] + 0.004), z_sexit, "F"]]
+    # pod side exits (D2 16 x 12 mm window, x 0.056-0.072): the power pair passes forward of the POD-007 wall-
+    # bracket flange (x >= 0.066) and aft of the PWR-006 cradle legs (x <= 0.060); signals above it, at x 0.0635.
+    x_ex_p = {1: g["flange_x0"] - 0.004, -1: g["flange_x0"] - 0.004}   # pair ahead of the flange (x >= 0.066)
+    x_ex_s = g["side_exit"][0] + 0.0015                                 # signals at the window's forward edge
+    # power pairs in layers (2.9 mm): bottom the right pairs (LR, UR), above them the left pairs (LL, UL), so the left
+    # pairs turn outboard over the right ones and the fused UBEC feed crosses above all four under the cradle floor;
+    # on each side the lower-station pair (to the P1 straw) runs under the upper-station pair (to the upper grooves)
+    lay = {"LR": 0, "UR": 1, "LL": 2, "UL": 3}
+    z_lay = lambda st: g["tray_top"] + 0.0015 + 0.0030 * lay[st]
+    z_ub = g["ubec_top"] + 0.0016                                       # power pair over the UBEC (1.3 + 0.3 mm)
+    x_cr = g["pod_x1"] - g["wall"] - 0.0052                             # power crossing, aft of the strut ribs
+    z_cr = g["foot_top"] + 0.0062                                       # ... 3.6 mm over the foot bridge
 
     wires, fittings = [], []
+    pwr_rows = {}
+
+    def beside(row_pts, i, dist, sz):
+        """Point `dist` off pair vertex i along the normal of the pair's plane (sz > 0: the +z side, else -z)."""
+        st = draw_strands(["tmp", "", 16, 2, 0, 0, 0, 0, 0, row_pts], [[16, 2.6]])
+        a, b = st[0][1][i], st[1][1][i]
+        lat = _unit([b[k] - a[k] for k in range(3)])
+        p0, p1 = row_pts[max(i - 1, 0)], row_pts[min(i + 1, len(row_pts) - 1)]
+        t = _unit([p1[k] - p0[k] for k in range(3)])
+        nv = _unit(_cross(t, lat))
+        if nv[2] * sz < 0 or (abs(nv[2]) < 1e-6 and nv[1] < 0):
+            nv = [-c for c in nv]
+        return [row_pts[i][k] + dist * nv[k] for k in range(3)]
 
     # ---- power: bus bars -> ESC, 16 AWG pair (E-HRN-13..16). Start at the aft end of F1's bars, leave aft through
     # the tunnel under the AS150U cradle (CR-F1-18). At the ESC the pair rises along the board face BELOW the ESC and
     # lands on the power pads at its aft end from underneath, because the 680 uF cap (PWR-008) now sits on the face
     # in line aft of the ESC (x 0.127-0.147): an approach from aft would run into it.
-    esc_pwr_end = lambda sy, sz: [[g["esc_x1"] - 0.004, sy * yo, sz * (g["esc_z"] - 0.030), "B"],
-                                  [g["esc_x1"] - 0.003, sy * yo, sz * (g["esc_z"] - 0.014), "B"],
+    esc_pwr_end = lambda sy, sz: [[g["esc_x1"] - 0.004, sy * yof, sz * (g["esc_z"] - 0.030), "B"],
+                                  [g["esc_x1"] - 0.003, sy * yof, sz * (g["esc_z"] - 0.014), "B"],
                                   [g["esc_x1"] - 0.0015, sy * g["esc_y"], sz * (g["esc_z"] - 0.007), "E"]]
     bars = PORTS["bars_out"][0]
     for st, eid in zip(STATIONS, ("E-HRN-13", "E-HRN-14", "E-HRN-15", "E-HRN-16")):
         sy = 1 if st[1] == "R" else -1
         sz = 1 if st[0] == "U" else -1
-        pod = [[bars[0], bars[1], bars[2], "P"], [x_tun, bars[1] + 0.002, bars[2], "P"]]
-        if sy > 0:                                                     # cross behind the aft stop
-            pod += [[x_cross - 0.012, -g["bay_hw"] - 0.006, zw, "P"],
-                    [x_cross, -g["bay_hw"] + 0.012, zw + (0.0 if sz > 0 else 0.008), "P"],
-                    [x_cross, g["bay_hw"] - 0.004, zw + (0.0 if sz > 0 else 0.008), "P"],
-                    [x_cross - 0.008, yc + 0.004, zw + 0.002, "P"]]
-        r = side_out(sy, pod)
+        zl, k = z_lay(st), lay[st] % 2
+        pod = [[bars[0], bars[1], bars[2], "P"], [bars[0] + 0.006, bars[1], zl, "P"],   # off the bar end into its
+               [x_tun, bars[1] + 0.002, zl, "P"]]                                     # layer (stacked pairs)
+        if sy > 0:          # cross aft of the strut ribs, over the POD-007 foot bridge, inboard of the right leg, over
+            #                 the UBEC (D2 R6 / F1 R1 layout; the old floor-level crossing ran through both)
+            pod += [[g["cradle_leg_x1"] - 0.004, -0.0428, zl, "P"],
+                    [g["flange_x0"] + 0.002, -0.040, z_cr - 0.0025 + 0.0033 * k, "P"],
+                    [x_cr, -g["bay_hw"] - 0.0025, z_ub + 0.0027 * k, "P"],
+                    [x_cr, g["bay_hw"] + 0.0005, z_ub + 0.0027 * k, "P"],
+                    [x_cr - 0.013, g["leg_in"] - 0.005, z_ub + 0.0027 * k, "P"],
+                    [x_ex_p[1], g["y_wall_in"] - 0.0042, z_ub + 0.0027 * k, "P"]]
+        else:               # out under the cradle floor (above the right pairs), between the cradle legs and the flange
+            pod += [[g["cradle_leg_x1"] + 0.0065, -0.050, zl, "P"]]
+        r = pod + [[x_ex_p[sy], sy * (g["pod_hw"] + 0.004), z_sexit - 0.002 + 0.003 * k, "F"]]
         surf = zU if sz > 0 else zL
-        if sz > 0:
-            r += [[x_pair, sy * (g["pod_hw"] + 0.016), gz(zU, x_pair, 0.0016), "G"]]
-        else:                                                          # P1 pass-through, 45 deg, straw liner
-            r += [[x_pair, sy * (y_p1 - 0.002), zU(x_pair) - 0.002, "L"],
-                  [x_pair, sy * (y_p1b + 0.002), zL(x_pair) + 0.002, "G"]]
-        r += fin_side(sy, sz, x_pair, 0.0016, esc_pwr_end(sy, sz))
+        if sz > 0:          # over the skin and over the P1 mouth (the lower pair dives there), then down into the
+            #                 + / - grooves 18 mm after their start
+            r += [[x_pair, sy * (y_g0 + 0.018), zU(x_pair) + 0.0016, "F", "s"],
+                  [x_pair, sy * (y_g0 + 0.030), gz(zU, x_pair, d_pwr), "G"]]
+        else:               # P1 pass-through, 45 deg, straw liner, then the lower + / - grooves
+            r += [[x_pair, sy * (y_p1 - 0.006), zU(x_pair) + 0.0016, "L"],
+                  [x_pair, sy * (y_p1 - 0.002), zU(x_pair) - 0.002, "L"],
+                  [x_pair, sy * (y_p1b + 0.002), zL(x_pair) + d_pwr, "G"]]
+        r += fin_side(sy, sz, x_pair, d_pwr, esc_pwr_end(sy, sz), 0.0026, r_c=0.0013)
+        pwr_rows[st] = r
         wires.append(["W-PWR-" + st, eid, 16, 2, 1, 0.025, 0.020, 16.15, 0.0, r])
 
     # ---- phase: ESC -> motor, 3 x 16 AWG (E-HRN-17..20), soldered (CT-SOLDER-PHASE)
     for st, eid in zip(STATIONS, ("E-HRN-17", "E-HRN-18", "E-HRN-19", "E-HRN-20")):
         sy = 1 if st[1] == "R" else -1
         sz = 1 if st[0] == "U" else -1
+        # clear of the collar tail wall and its lug, over the motor-mount pinch bolt / nut / ear and the collar lip
+        # (ROUTE-CLEARANCE.md); ties at the collar lug (E-HRN-06..09) and over the pinch ear (free span <= 50 mm)
         r = [[g["esc_x0"] - 0.001, sy * g["esc_y"], sz * g["esc_z"], "B"],
-             [g["esc_x0"] - 0.012, sy * yo, sz * (g["esc_z"] + 0.006), "B"],
-             [g["tail_x0"], sy * (g["tail_face_y"] + 0.0025), sz * (g["tail_top"](g["tail_x0"]) - 0.0015), "T"],  # collar-tail front tie (CR-F2-16)
-             [g["x_face"] + 0.010, sy * (g["yf"] + g["r_motor"] + 0.003), sz * (g["zm"] - 0.010), "F"],
+             [g["lug_x"] + 0.0055, sy * (g["tail_face_y"] + 0.0076), sz * (g["tail_top"](g["tail_x0"]) - 0.0045), "T"],
+             [g["ear_x"] + 0.006, sy * (g["ear_y"] - 0.002), sz * (g["ear_top"] + 0.0125), "T"],  # tie at the ear
              [g["x_face"] - 0.001, sy * (g["yf"] + g["r_motor"] + 0.002), sz * g["zm"], "E"]]
         wires.append(["W-PH-" + st, eid, 16, 3, 1, 0.030, 0.020, 16.15, 0.06, r])
 
@@ -690,26 +749,55 @@ def build(g):
     for st, eid in zip(STATIONS, ("E-HRN-24", "E-HRN-25", "E-HRN-26", "E-HRN-27")):
         sy = 1 if st[1] == "R" else -1
         sz = 1 if st[0] == "U" else -1
-        yp = 0.034 + 0.003 * ports[st]
+        yp = {"UL": 0.034, "LL": 0.037, "LR": 0.043, "UR": 0.046}[st]   # JR row: servos, left, right leads inboard to
+        #                                                                  outboard, so no two runs cross in the pod
         pig = [port("fc_aft", dy=0.0015 * (ports[st] - 3.5)) + ["P"], [x_jr, yp, zw + 0.004, "E"]]
         wires.append(["W-SIG-%s-P" % st, eid, 28, 2, 1, 0.015, 0.060, 1.1, 0.0, pig])
-        pod = [[x_jr + 0.005, yp, zw + 0.004, "P"]]
-        if sy > 0:
-            pod += [[x_sexit - 0.020, yc, zw + 0.010, "P"]]
-        else:
-            pod += [[x_cross - 0.004, g["bay_hw"] - 0.006, zw + 0.016, "P"],
-                    [x_cross - 0.004, -g["bay_hw"] + 0.006, zw + 0.016, "P"],
-                    [x_sexit - 0.020, -yc, zw + 0.010, "P"]]
-        r = side_out(sy, pod)
-        if sz > 0:
-            r += [[x_sig, sy * (g["pod_hw"] + 0.018), gz(zU, x_sig, 0.0012), "G"]]
-            r += fin_side(sy, sz, x_sig, 0.0012, [])
-        else:
-            r += [[x_pair, sy * (y_p1 - 0.002), zU(x_pair) - 0.002, "L"],
-                  [x_pair, sy * (y_p1b + 0.002), zL(x_pair) + 0.002, "F"],
-                  [x_sig, sy * (y_p1b + 0.016), gz(zL, x_sig, 0.0012), "G"]]
-            r += fin_side(sy, sz, x_sig, 0.0012, [])
-        r += [[g["esc_x1"] - 0.008, sy * yo, sz * (g["esc_z"] - 0.022), "B"],          # below the ESC, ahead of the cap
+        # rise off the JR row before the UBEC (top + 2.7 mm), cross over the power pair, exit above it
+        hi = 0.004 if sz > 0 else 0.002                                 # upper-station lead 2 mm above the lower one
+        he = 0.0028 if sz > 0 else -0.002                               # ... and at the exit window (z 0.027-0.039)
+        pod = [[x_jr + 0.005, yp, zw + 0.0015, "P"], [g["ubec"][0] - 0.0225, yp, g["ubec_top"] + 0.0029 + hi, "P"]]
+        if sy > 0:          # over the UBEC, forward of the power pairs, to the window's forward edge
+            pod += [[x_ex_s, g["y_wall_in"] - 0.007, g["ubec_top"] + 0.0012 + hi, "P"]]
+        else:               # crossing aft of the ribs, then over the left power pairs aft of the cradle
+            pod += [[x_cross - 0.004, g["bay_hw"] - 0.0045, zw + 0.016 + hi, "P"],
+                    [x_cross - 0.004, -g["bay_hw"] + 0.006, zw + 0.016 + hi, "P"],
+                    [g["flange_x0"] + 0.004, -0.056, z_sexit + 0.0015 + he, "P"]]   # aft of the left pairs
+        xe = x_ex_s if sy > 0 else g["side_exit"][1] - 0.0035               # left: aft edge of the window
+        r = pod + [[xe, sy * (g["pod_hw"] + 0.004), z_sexit + he, "F"]]
+        if sz > 0:          # over the skin into the signal groove 6 mm after its start (left: over both pairs first)
+            if sy < 0:
+                r += [[x_pair - 0.002, sy * (g["pod_hw"] + 0.012), z_sexit + he + 0.0005, "F"]]
+            else:           # forward of the lower-station lead that dives into the P1 straw
+                r += [[x_sig - 0.0008, sy * (g["pod_hw"] + 0.010), zU(x_sig) + 0.0091, "F"]]
+            r += [[x_sig, sy * (y_g0 + 0.006), zU(x_sig) + 0.0012, "F"],
+                  [x_sig, sy * (y_g0 + 0.016), gz(zU, x_sig, d_sig), "G"]]
+            r += fin_side(sy, sz, x_sig, d_sig, [], 0.0009, r_c=0.0025, dx=-0.004)
+        else:               # through the P1 straw beside the power pair (2.4 mm off its plane), out under the lower
+            #                 skin, across to the signal groove
+            pw = pwr_rows[st]
+            i0 = next(i for i, p in enumerate(pw) if p[3] == "L")       # straw: above-mouth, upper mouth
+            # beside the lower-station pair (forward of it on the right, aft of it on the left), under the upper one
+            r += [[x_pair - sy * 0.0042, sy * (g["pod_hw"] + 0.013), zU(x_pair) + 0.0072, "F"]]
+            r += [beside(pw, i, 0.0024, 1) + ["L"] for i in (i0, i0 + 1, i0 + 2)]   # on the pair through the straw
+            r += [[x_pair, sy * (y_p1b + 0.004), zL(x_pair) - 0.0016, "L"],   # down between the + / - conductors
+                  [x_sig, sy * (y_p1b + 0.014), zL(x_sig) - 0.0012, "F"],
+                  [x_sig, sy * (y_p1b + 0.024), gz(zL, x_sig, d_sig), "G"]]
+            r += fin_side(sy, sz, x_sig, d_sig, [], 0.0009, r_c=0.0025, dx=-0.004)
+        # fin root: tie point and lead hole beside the power pair (in the notch between its two conductors)
+        pw = pwr_rows[st]
+        it = next(i for i, p in enumerate(pw) if p[3] == "T")
+        jt = next(i for i, p in enumerate(r) if p[3] == "T")
+        r[jt - 1] = beside(pw, it - 1, 0.0032, sz) + ["F"]
+        r[jt] = beside(pw, it, 0.0028, sz) + ["T"]
+        r[jt + 1] = beside(pw, it + 1, 0.0027, sz) + ["L"]
+        # outboard face: stacked on the pair (2.9 mm off its plane) for the first third of the run, then forward of it
+        b1 = beside(pw, it + 2, 0.0036, sz)
+        off = [b1[k] - pw[it + 2][k] for k in range(3)]
+        mid = [pw[it + 2][k] + 0.35 * (pw[it + 3][k] - pw[it + 2][k]) + off[k] for k in range(3)]
+        r[jt + 2] = b1 + ["B"]
+        r.insert(jt + 3, mid + ["B"])
+        r += [[g["esc_x1"] - 0.013, sy * yof, sz * (g["esc_z"] - 0.022), "B"],          # below the ESC, ahead of the cap
               [g["esc_x1"] - 0.006, sy * g["esc_y"], sz * (g["esc_z"] - 0.009), "E"]]
         wires.append(["W-SIG-" + st, eid, 28, 2, 1, 0.015, 0.030, 1.1, 0.0, r])
 
@@ -728,22 +816,25 @@ def build(g):
     ax0, ax1 = (g["aft_exit"][0] + g["aft_exit"][1]) / 2, (g["aft_exit"][2] + g["aft_exit"][3]) / 2
     for side, eid, out_n in (("L", "E-HRN-28", 5), ("R", "E-HRN-29", 6)):
         sy = 1 if side == "R" else -1
-        yp = 0.034 + 0.003 * out_n
+        yp = {"L": 0.0295, "R": 0.040}[side]                             # JR row: L inboard, R between left and right
+        #                                                                  ESC leads (no run crosses another)
         pig = [port("fc_aft", dy=0.0015 * (out_n - 3.5), dz=0.001) + ["P"], [x_jr, yp, zw + 0.006, "E"]]
         wires.append(["W-SRV-%s-P" % side, eid, 26, 3, 0, 0.0, 0.040, 1.8, 0.0, pig])
-        pod = [[x_jr + 0.005, yp, zw + 0.006, "P"]]
+        pod = [[x_jr + 0.005, yp, zw + 0.006, "P"],
+               [g["aft_stop_x"] + 0.0025, yp, zw + 0.0212 + 0.0025 * (sy > 0), "P"]]
         if sy < 0:
-            pod += [[x_cross + 0.001, g["bay_hw"] - 0.006, zw + 0.022, "P"],
-                    [x_cross + 0.001, -g["bay_hw"] + 0.006, zw + 0.022, "P"]]
+            pod += [[x_cross + 0.001, g["bay_hw"] - 0.006, zw + 0.0267, "P"],
+                    [x_cross + 0.001, -g["bay_hw"] + 0.006, zw + 0.0267, "P"]]
         else:
-            pod += [[x_cross + 0.001, g["bay_hw"] - 0.006, zw + 0.022, "P"]]
+            pod += [[x_cross + 0.001, g["bay_hw"] + 0.0015, zw + 0.0294, "P"]]
         pod += [[x_cross + 0.001, sy * ax0, ax1, "L"],
                 [g["pod_x1"] + 0.004, sy * ax0, ax1, "F"],
-                [x_srv - 0.004, sy * (ax0 + 0.004), zU(x_srv) - 0.0005, "G"],
-                [x_srv, sy * (ax0 + 0.020), zU(x_srv) - 0.0016, "G"],
-                [x_srv, sy * 0.270, zU(x_srv) - 0.0016, "G"],
-                [x_srv + 0.015, sy * 0.285, zU(x_srv + 0.015) - 0.0016, "G"],   # D1 upper branch groove at |y| 0.285
-                [x_rec[0], sy * 0.285, zU(x_rec[0]) - 0.003, "E"]]               # JR female in the recess
+                [x_srv, sy * 0.088, zU(x_srv) + 0.0009, "F", "s"],                # over the skin into the groove
+                [x_srv, sy * 0.098, zU(x_srv) - d_srv, "G"],
+                [x_srv - 0.0003, sy * 0.2853, zU(x_srv) - d_srv, "G"]]           # D1 branch groove at |y| 0.285
+        pod += [[xb, sy * 0.285, zU(xb) - d_srv, "G"] for xb in (0.118, 0.128, 0.138)]   # floor follows the skin
+        pod += [[x_rec[0] - 0.002, sy * 0.285, zU(x_rec[0] - 0.002) - d_srv, "G"],
+                [x_rec[0] + 0.002, sy * 0.285, zU(x_rec[0]) - 0.003, "E"]]       # JR female in the recess
         wires.append(["W-SRV-" + side, eid, 26, 3, 0, 0.0, 0.040, 1.8, 0.0, pod])
         # servo's own lead (mass in MEC-001), shortened to 40 mm and re-terminated: JR male in the recess -> branch
         # groove -> D1 lead hole (4 mm, straw) -> pocket ceiling -> case front (CR-D1-06, CR-D6-05)
@@ -757,11 +848,15 @@ def build(g):
     # -> UBEC input at its aft end (E-HRN-33) across the crossing; UBEC output -> FC servo rail (E-HRN-22). 20 AWG.
     r = [port("bars_out", dy=-0.0035) + ["P"], [0.0, -0.056, 0.027, "P"], port("fuse_in") + ["E"]]
     wires.append(["W-FUSE-IN", "E-HRN-21", 20, 2, 1, 0.020, 0.015, 6.6, 0.0, r])
-    r = [port("fuse_out") + ["P"], [x_tun + 0.002, -0.052, zw + 0.004, "P"],
-         [x_cross - 0.014, -g["bay_hw"] - 0.008, zw + 0.004, "P"],
-         [x_cross + 0.001, -g["bay_hw"] + 0.012, zw + 0.004, "P"],
-         [x_cross + 0.001, g["bay_hw"] - 0.004, zw + 0.004, "P"],
-         [ub_in, g["ubec"][1], g["ubec"][2], "E"]]
+    # over the foot plate, crossing above the power pair, onto the UBEC input pads (aft-inboard corner)
+    z_fu = g["tray_top"] + 0.0137                                       # over the four power pairs, under the cradle
+    z_fx = g["foot_top"] + 0.0104                                       # between the right pairs and the signals
+    r = [port("fuse_out") + ["P"], [x_tun + 0.012, -0.0545, z_fu, "P"],
+         [x_tun + 0.0205, -0.030, z_fu, "P"],                            # inboard of cradle leg 1
+         [g["flange_x0"] + 0.002, -0.024, z_fx, "P"],
+         [x_cr + 0.003, -0.024, z_fx + 0.0023, "P"],
+         [x_cr + 0.003, g["leg_in"] - 0.004, z_fx + 0.0023, "P"],
+         [ub_in, g["ubec"][1] - 0.0064, g["ubec"][2], "E"]]
     wires.append(["W-UBEC-IN", "E-HRN-33", 20, 2, 1, 0.020, 0.030, 6.6, 0.0, r])
     r = [[ub_out, g["ubec"][1] + 0.004, g["ubec"][2], "P"], [x_jr, 0.056, 0.031, "P"],
          port("fc_aft", dy=0.010, dz=0.001) + ["E"]]
@@ -769,8 +864,8 @@ def build(g):
 
     # ---- pack lead (E-HRN-10, pack-owned) and 10 AWG main jumpers (E-HRN-11/12, mass in PWR-002), CR-F1-18
     pk_face = load_json(RED / "subsystems/pod/params.json")["pack_aft_face_m"]["value"][0]   # D2 nominal 0.069
-    r = [[pk_face + 0.003, -0.015, 0.060, "F"], [pk_face + 0.015, -0.032, 0.052, "P"],
-         [0.060, -0.046, 0.047, "P"], port("pack_mate") + ["E"]]
+    r = [[pk_face + 0.003, -0.015, 0.060, "F"], [pk_face + 0.031, -0.030, 0.054, "P"],    # aft of the cradle walls
+         [pk_face + 0.030, -0.046, 0.049, "P"], port("pack_mate") + ["E"]]
     wires.append(["W-PACK", "E-HRN-10", 10, 2, 0, 0.0, 0.0, 0.0, 0.0, r])
     r = [port("as150u_cups") + ["P"], [-0.004, -0.040, 0.0505, "P"], port("board_in") + ["E"]]
     wires.append(["W-MAIN-1", "E-HRN-11", 10, 2, 0, 0.0, 0.015, 0.0, 0.0, r])
@@ -781,22 +876,34 @@ def build(g):
     # ---- power board -> FC (E-HRN-23), FC -> RX (E-HRN-31), airspeed I2C branch (E-HRN-32): under-pack channel
     # (D2 R5: x -0.0245, lands on the PDB plate (left) and the FC (right)); left-side runs stay inboard of the RX
     yb = g["bay_hw"] + 0.004
-    r = [port("board_fwd") + ["P"], [-0.057, -0.033, 0.036, "P"], [x_under, -yb, z_under, "L"],
-         [x_under, yb, z_under, "P"], [-0.040, 0.044, 0.029, "P"], port("fc_fore", dy=0.006) + ["E"]]
+    z_fc = g["tray_top"] + 0.0023                                       # under the FC board (gel cubes 5 mm)
+    # under-pack channel (D2, 10 mm wide): three lanes, PMOD aft, RX middle, airspeed forward; left of the bay the
+    # three run forward stacked in the corridor between the pack and the PDB boss / spacer column (y -0.028)
+    xl = {"PMOD": x_under + 0.0035, "RX": x_under, "ASPD": x_under - 0.0033}
+    zc = {"ASPD": 0.0290, "RX": 0.0315, "PMOD": 0.0345}
+    y_c, y_out = -0.028, -g["bay_hw"] + 0.002
+    r = [port("board_fwd") + ["P"], [-0.0555, y_c, zc["PMOD"], "P"], [-0.024, y_c, zc["PMOD"], "P"],
+         [xl["PMOD"], y_out, z_under, "L"], [xl["PMOD"], yb, z_under, "P"], [xl["PMOD"], 0.0465, z_fc, "P"],
+         [-0.030, 0.0465, z_fc, "P"], port("fc_fore", dy=0.006) + ["E"]]
     wires.append(["W-PMOD", "E-HRN-23", 28, 6, 1, 0.030, 0.020, 1.1, 0.0, r])
-    r = [port("fc_fore", dy=-0.004) + ["P"], [x_under, yb, z_under, "L"],
-         [x_under, -yb, z_under, "P"], [-0.037, -0.040, 0.0245, "P"], port("rx") + ["E"]]
+    r = [port("fc_fore", dy=-0.004, dz=-0.0055) + ["P"], [xl["RX"], 0.042, z_fc + 0.0005, "P"],
+         [xl["RX"], yb, z_under, "L"], [xl["RX"], y_out, z_under, "P"], [-0.0285, y_c, zc["RX"], "P"],
+         [-0.040, y_c, zc["RX"], "P"], [-0.044, -0.040, 0.026, "P"], port("rx") + ["E"]]
     wires.append(["W-RX", "E-HRN-31", 28, 4, 1, 0.020, 0.010, 1.1, 0.0, r])   # 10 mm loop (F5: <= 0.15 m)
     # GPS cable from the aft-edge GPS port: up the right side to z 0.06, into the right handle leg, grip, mast
     r = [port("fc_aft", dy=-0.002, dz=0.001) + ["P"], [fc_x1 + 0.008, 0.040, 0.060, "P"],
-         [g["x_leg"] - 0.010, 0.040, 0.062, "P"], [g["x_leg"], g["leg_y"], 0.064, "L"],
-         [g["x_leg"], g["leg_y"], g["grip_z"] - 0.006, "M"], [g["x_leg"], 0.006, g["grip_z"], "L"],
-         [PORTS["gps"][0][0], 0.0, PORTS["gps"][0][2] - 0.012, "M"], port("gps") + ["E"]]
+         [g["x_leg"] - 0.008, g["leg_y"] + 0.010, 0.060, "P"],                          # outboard of the leg
+         [g["x_leg"], g["leg_y"] + 0.010, 0.060, "L"],                                  # D2 window, outboard face
+         [g["x_leg"], g["leg_y"], 0.064, "L"],
+         [g["x_leg"], g["leg_y"], g["grip_z"] - 0.006, "M"], [g["x_leg"], 0.006, g["grip_z"], "M"],
+         [0.0862, 0.0, g["grip_z"] + 0.006, "M"], [0.0862, 0.0, 0.160, "M"],      # aft face of the mast
+         [0.0915, 0.0, 0.165, "M"], [0.0915, 0.0, 0.178, "M"], port("gps") + ["E"]]   # aft of the 45 deg pad
     wires.append(["W-GPS", "E-HRN-30", 28, 6, 1, 0.030, 0.040, 1.1, 0.0, r])
     # I2C Y-branch (SDA, SCL, 5 V, GND) spliced 15 mm from the GPS port, forward along the FC to the channel
-    r = [port("fc_aft", dx=-0.004, dy=-0.006, dz=0.002) + ["P"], [x_under + 0.006, 0.036, zw + 0.008, "P"],
-         [x_under, yb, z_under, "L"], [x_under, -yb, z_under, "P"], [-0.056, -0.032, 0.025, "P"],   # inboard of the RX
-         port("aspd") + ["E"]]
+    r = [port("fc_aft", dy=-0.014, dz=-0.0015) + ["P"], [0.010, 0.029, zc["ASPD"], "P"],   # inboard of the FC,
+         [-0.024, 0.029, zc["ASPD"], "P"], [xl["ASPD"], 0.026, z_under, "L"],             # over the bay guide
+         [xl["ASPD"], y_out, z_under, "P"], [-0.030, y_c, zc["ASPD"], "P"], [-0.040, y_c, zc["ASPD"], "P"],
+         [-0.0565, -0.030, 0.027, "P"], port("aspd") + ["E"]]                    # inboard of / ahead of the RX
     wires.append(["W-ASPD", "E-HRN-32", 28, 4, 1, 0.020, 0.020, 1.1, 0.0, r])
 
     # ---- fittings: [name, qty, g each, x, y, z]
@@ -810,7 +917,7 @@ def build(g):
             ["Phase joints: 3 staggered splices + outer sleeve " + st, 1, 0.40, g["esc_x0"] - 0.03, sy * yo, sz * 0.15],
             ["Fin-hole grommet ASA 10/7 mm " + st, 1, 0.50, x_hole, sy * g["yf"], zs + sz * hole_dz],
             ["Tape strips 20 x 40 mm on the board face (6) " + st, 6, 0.05, ex - 0.01, sy * yo, sz * 0.08],
-            ["Ties: boss tail, collar, ESC end " + st, 3, 0.12, 0.08, sy * yo, sz * 0.10],
+            ["Ties: boss tail, collar, pinch ear, ESC end " + st, 4, 0.12, 0.08, sy * yo, sz * 0.10],
             ["Groove hold-down tape tabs (4) under the skin " + st, 4, 0.03, x_pair, sy * 0.19, sz * 0.02],
         ]
     for sy in (1, -1):
@@ -1016,6 +1123,77 @@ def route_id(w):
     return "R-HRN-" + w[0][2:]
 
 
+BUNDLE_K = {1: 1.0, 2: 2.0, 3: 2.155, 4: 2.414, 5: 2.701, 6: 3.0}   # circumscribed circle of n equal circles
+
+
+def draw_dia(wires, od_table):
+    """{edge id: drawn tube diameter m}: bundle OD of the edge's largest row, capped at 6 mm (10 AWG pairs)."""
+    od = dict((int(a), b) for a, b in od_table)
+    out = {}
+    for w in wires:
+        d = min(0.006, od.get(int(w[2]), 1.0) * BUNDLE_K.get(int(w[3]), 3.0) / 1000.0)
+        out[w[1]] = round(max(out.get(w[1], 0.0), d), 4)
+    return dict(sorted(out.items()))
+
+
+def _unit(v):
+    n = math.sqrt(sum(c * c for c in v))
+    return [c / n for c in v] if n > 1e-12 else None
+
+
+def _cross(a, b):
+    return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
+
+
+def draw_strands(row, od_table):
+    """What the CAD draws for one wire row: [[diameter, polyline], ...].
+    Rows with groove (G) runs whose conductors lie in separate grooves are drawn conductor by conductor: the 16 AWG
+    pairs (+ and - in their own 3.0 mm grooves at 5 mm pitch, side by side 0.1 mm apart elsewhere) and the 26 AWG
+    servo ribbon (3 x 1.1 mm side by side). Every other row is one bundle tube of its circumscribed diameter.
+    Lateral direction per vertex: flat on the surface the run lies on (G, P, M: horizontal; B: in the fin face),
+    carried over (projected) through free and liner runs. Points marked "s" or coded G use the groove spacing."""
+    _wid, _eid, awg, n, _tw, _lay, _loop, _gpm, _f, pts = row
+    od = dict((int(a), b) for a, b in od_table)
+    d = od.get(int(awg), 1.0) / 1000.0
+    if not any(p[3] == "G" for p in pts) or (int(awg), int(n)) not in ((16, 2), (26, 3)):
+        return [[round(min(0.006, d * BUNDLE_K.get(int(n), 3.0)), 5), [list(p[:3]) for p in pts]]]
+    if int(awg) == 16:
+        free, groove = [-(d / 2 + 0.00005), d / 2 + 0.00005], [-0.0025, 0.0025]
+    else:
+        free = groove = [-(d + 0.00005), 0.0, d + 0.00005]
+    P = [list(p[:3]) for p in pts]
+    m = len(P)
+    seg = [_unit([P[i + 1][k] - P[i][k] for k in range(3)]) for i in range(m - 1)]
+    lat = [None] * m
+    for i in range(m):
+        a, b = seg[i - 1] if i > 0 else None, seg[i] if i < m - 1 else None
+        t = _unit([(a[k] if a else 0) + (b[k] if b else 0) for k in range(3)]) or a or b
+        code = pts[i][3] if i < m - 1 else pts[i - 1][3]
+        nref = [0.0, 0.0, 1.0] if code in ("G", "P", "M") else [0.0, 1.0, 0.0] if code == "B" else None
+        v = _unit(_cross(t, nref)) if nref else None
+        if v is None or (nref and abs(sum(t[k] * nref[k] for k in range(3))) > 0.95):
+            prev = next((lat[j] for j in range(i - 1, -1, -1) if lat[j]), None)
+            if prev:
+                dp = sum(prev[k] * t[k] for k in range(3))
+                v = _unit([prev[k] - dp * t[k] for k in range(3)])
+        if v and i > 0 and lat[i - 1] and sum(v[k] * lat[i - 1][k] for k in range(3)) < 0:
+            v = [-c for c in v]
+        lat[i] = v
+    first = next((v for v in lat if v), [1.0, 0.0, 0.0])
+    lat = [v or first for v in lat]
+    for i in range(m - 1, 0, -1):                        # the leading vertices carry the first defined direction
+        if sum(lat[i][k] * lat[i - 1][k] for k in range(3)) < 0:
+            lat[i - 1] = [-c for c in lat[i - 1]]
+    out = []
+    for j in range(len(free)):
+        line = []
+        for i, p in enumerate(pts):
+            o = (groove if (p[3] == "G" or (len(p) > 4 and p[4] == "s")) else free)[j]
+            line.append([round(P[i][k] + lat[i][k] * o, 5) for k in range(3)])
+        out.append([round(d, 5), line])
+    return out
+
+
 def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
     """Write every generated file. Returns {path: text} so --check can compare."""
     out = {}
@@ -1078,7 +1256,19 @@ def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
                                                   BUNDLE_RHO_G_M3 / 1e6, LEG_DIA_M[0] * 1000, LEG_DIA_M[1] * 1000)},
                       "leg_mass_g": {"value": {k: [round(m, 2) for m in v] for k, v in bod["leg_mass_g"].items()},
                                      "unit": "g", "source": "team/F2/harness.py",
-                                     "note": "harness mass assigned to each leg (right side for side_R)"}},
+                                     "note": "harness mass assigned to each leg (right side for side_R)"},
+                      "wire_strands": {"value": {w[0]: draw_strands(w, od_table) for w in wires}, "unit": "m",
+                                       "source": "team/F2/harness.py",
+                                       "note": "what the CAD draws per wire row: [[diameter, polyline], ...]; 16 AWG "
+                                               "pairs and the servo ribbon conductor by conductor (each in its own "
+                                               "groove), every other row one bundle tube (draw_strands)"},
+                      "wire_draw_dia_m": {"value": draw_dia(wires, od_table), "unit": "m",
+                                          "source": "team/F2/harness.py",
+                                          "note": "diameter the CAD draws each routed edge with: the bundle's "
+                                                  "circumscribed diameter (n conductors of OD d: 1 / 2 / 2.155 / "
+                                                  "2.414 / 2.701 / 3 x d for n = 1..6), largest row of the edge, "
+                                                  "capped at 6 mm; route clearance is checked against it "
+                                                  "(team/F2/route_clearance.py, ROUTE-CLEARANCE.md)"}},
               "ports": {"value": {k: [list(v[0]), v[1]] for k, v in PORTS.items()}, "unit": "m",
                         "source": "team/F1/CHANGE-REQUESTS.md#CR-F1-18, team/F3/CHANGE-REQUESTS.md#CR-F3-16",
                         "note": "connector points the wire ends sit on (aircraft frame)"},
@@ -1122,12 +1312,13 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
             pass
     bcg, bgap = res["body_cg"], res["gap"]
     cg_note = ("CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the "
-               "wire-mass CG is %s m, %.1f mm away (CL-F2-CG-BODY)")
+               "wire-mass CG is %s m, %.1f mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG "
+               "only and are not drawn; the routed wires (E-HRN-10..37) show the harness")
     hrn_parts = [
         {"id": "HRN-001", "name": "Pod harness bundle (lumped: pod runs of every lead, GPS cable, JR row, GH plugs)",
          "subsystem": "harness", "status": "MODELLED", "mass_g": round(parts["HRN-001"]["mass_g"], 1),
          "material": "copper + silicone", "cg_xyz_m": [round(v, 4) for v in bcg["HRN-001"]],
-         "make_or_buy": "make", "carried": True,
+         "make_or_buy": "make", "carried": True, "mass_proxy": True,
          "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). " + cg_note % (
              [round(v, 4) for v in parts["HRN-001"]["cg"]], bgap["HRN-001"] * 1000)}]
     for side in ("R", "L"):
@@ -1135,7 +1326,7 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
         hrn_parts.append({"id": pid, "name": "Wing-fin harness bundle %s (grooves, fin-face leads, phase joints)" % side,
                           "subsystem": "harness", "status": "MODELLED", "mass_g": round(parts[pid]["mass_g"], 1),
                           "material": "copper + silicone", "cg_xyz_m": [round(v, 4) for v in bcg[pid]],
-                          "make_or_buy": "make", "carried": True,
+                          "make_or_buy": "make", "carried": True, "mass_proxy": True,
                           "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. "
                                    + cg_note % ([round(v, 4) for v in parts[pid]["cg"]], bgap[pid] * 1000)})
     by_edge = {}

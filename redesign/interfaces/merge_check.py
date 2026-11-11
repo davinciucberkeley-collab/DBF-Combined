@@ -280,7 +280,8 @@ def clusters(g, kinds=STRUCTURAL, parts=None, load_only=True):
 def carried(g, parts=None):
     """Flight parts flagged "carried": true (harness bundles, labels, consumables) that are located by at least one
     non-structural type and held by no load-bearing edge: carried items, exempt from the floating check. A part
-    without the flag held only by ties (a pack on a cable tie) still floats."""
+    without the flag held only by ties (a pack on a cable tie) still floats. A "mass_proxy": true part (lumped
+    harness mass, not drawn: the routed wires are) counts as carried too."""
     parts = parts if parts is not None else g.flight_parts()
     held, located = set(), set()
     for e in g.edges.values():
@@ -288,7 +289,8 @@ def carried(g, parts=None):
             continue
         for s in ('part_a', 'part_b'):
             (held if g.load_bearing(e) else located).add(e.get(s))
-    return {p for p in parts if p in located and p not in held and (g.parts.get(p) or {}).get('carried')}
+    return {p for p in parts if p in located and p not in held
+            and ((g.parts.get(p) or {}).get('carried') or (g.parts.get(p) or {}).get('mass_proxy'))}
 
 
 def _check_floating(g):

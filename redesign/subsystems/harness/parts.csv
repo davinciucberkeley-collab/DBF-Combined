@@ -1,6 +1,6 @@
 part_id,name,qty,make_or_buy,process,material,mass_g,unit_cost_usd,vendor_or_file,notes
-HRN-001,Pod harness bundle (lumped),1,make,"cut, twist, solder, crimp",copper + silicone,40.7,0,subsystems/harness/WIRE-LIST.csv,every lead's pod run + GPS cable + JR row + GH plugs; position from interfaces.json
-HRN-002,"Wing-fin harness bundle (lumped, per side; R and L differ)",2,make,"cut, twist, solder, lay in grooves",copper + silicone,38.26,0,subsystems/harness/WIRE-LIST.csv,per unit = mean of R 38.3 g and L 38.2 g; instance masses in interfaces.json
+HRN-001,Pod harness bundle (lumped),1,make,"cut, twist, solder, crimp",copper + silicone,41.4,0,subsystems/harness/WIRE-LIST.csv,every lead's pod run + GPS cable + JR row + GH plugs; position from interfaces.json
+HRN-002,"Wing-fin harness bundle (lumped, per side; R and L differ)",2,make,"cut, twist, solder, lay in grooves",copper + silicone,39.19,0,subsystems/harness/WIRE-LIST.csv,per unit = mean of R 39.5 g and L 38.9 g; instance masses in interfaces.json
 HRN-101,"Silicone wire 16 AWG 252/0.08, red 3 m + black 3 m + yellow 1.5 m",1,buy,-,-,0,14.0,"Amazon: BNTECHGO 16 AWG silicone wire, 10 ft per colour (red, black, yellow)","mass carried in HRN-001/002. Price EST, UNVERIFIED. ESC leads 4 x 2 conductors (2.32 m each colour) + phase extensions; replaces F1's 16 AWG line"
 HRN-102,"Silicone wire 20 AWG, red + black 1 m each",1,buy,-,-,0,4.0,"Amazon: BNTECHGO 20 AWG silicone wire, red/black 10 ft","mass carried in HRN-001/002. Price EST, UNVERIFIED. fuse feed, UBEC feed and rail"
 HRN-103,"Servo extension wire 26 AWG 3-core (brown/red/orange), 2 m",1,buy,-,-,0,5.0,"Amazon: generic 26 AWG JR/Futaba servo extension cable, 5 m reel","mass carried in HRN-001/002. Price EST, UNVERIFIED. elevon leads + pigtails"

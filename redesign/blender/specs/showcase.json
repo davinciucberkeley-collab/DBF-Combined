@@ -205,12 +205,12 @@
      "text": "Printed tray"
     },
     {
-     "item": "HRN-001",
-     "text": "Pod harness bundle"
+     "item": "E-HRN-13",
+     "text": "ESC power pair, routed"
     },
     {
-     "item": "HRN-002-R",
-     "text": "Wing-fin harness, right"
+     "item": "E-HRN-17",
+     "text": "Phase leads to the motor"
     },
     {
      "item": "PWR-005",
@@ -344,7 +344,9 @@
     "POD-*",
     "AVN-*",
     "PWR-00?",
-    "HRN-001"
+    "E-HRN-1[0-2]",
+    "E-HRN-2[1-3]",
+    "E-HRN-3[0-3]"
    ],
    "hide": [
     "POD-003"
@@ -589,16 +591,16 @@
    ],
    "callouts": [
     {
-     "item": "HRN-001",
-     "text": "Pod harness bundle"
+     "item": "E-HRN-23",
+     "text": "Pod runs: power board, FC, RX"
     },
     {
-     "item": "HRN-002-R",
-     "text": "Wing-fin bundle, right"
+     "item": "E-HRN-13",
+     "text": "ESC power pair, right"
     },
     {
-     "item": "HRN-002-L",
-     "text": "Wing-fin bundle, left"
+     "item": "E-HRN-14",
+     "text": "ESC power pair, left"
     },
     {
      "item": "PWR-001",

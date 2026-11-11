@@ -1,6 +1,6 @@
 # A3 live mass roll-up (generated)
 
-Run `python -I redesign/team/A3/mass_rollup.py`. 186 instances, basic 2349 g, predicted 2466 g, gate 2600 g.
+Run `python -I redesign/team/A3/mass_rollup.py`. 186 instances, basic 2352 g, predicted 2469 g, gate 2600 g.
 
 ### Live roll-up
 
@@ -15,25 +15,25 @@ Sources: `wing` ← redesign/subsystems/wing/parts.csv; `fins` ← redesign/subs
 | propulsion | 462 | 462 | 490 | +0 | `PROPOSED` |
 | power | 648 | 640 | 652 | -8 | `PROPOSED` |
 | avionics | 45 | 36 | 39 | -8 | `PROPOSED` |
-| harness | 123 | 117 | 129 | -6 | `PROPOSED` |
+| harness | 123 | 120 | 132 | -3 | `PROPOSED` |
 | mechanisms | 72 | 71 | 80 | -1 | `PROPOSED` |
-| **total** | **2 600** | **2 349** | **2 466** | allocated 2 387 + growth 213 | gate margin +134 g |
+| **total** | **2 600** | **2 352** | **2 469** | allocated 2 387 + growth 213 | gate margin +131 g |
 
 | Gate case (predicted, all other items with growth) | Pack g | Predicted g | Gate margin g | Overrun to cover g | Claim | Status |
 |---|---|---|---|---|---|---|
-| listing minimum (D-64) | 546 | 2 462 | +138 | 100 | `CL-A3-GATE-MARGIN-546` | `MODELLED` |
-| as carried (`battery.mass_kg`) | 550 | 2 466 | +134 | 100 | `CL-A3-GATE-MARGIN` | `MODELLED` |
-| listed (D-64) | 551 | 2 467 | +133 | 100 | `CALC-A3-MASS` | `MODELLED` |
-| acceptance bound (D-64) | 590 | 2 506 | +94 | 100 | `CL-A3-GATE-MARGIN-590` | `FAIL` |
+| listing minimum (D-64) | 546 | 2 465 | +135 | 100 | `CL-A3-GATE-MARGIN-546` | `MODELLED` |
+| as carried (`battery.mass_kg`) | 550 | 2 469 | +131 | 100 | `CL-A3-GATE-MARGIN` | `MODELLED` |
+| listed (D-64) | 551 | 2 470 | +130 | 100 | `CALC-A3-MASS` | `MODELLED` |
+| acceptance bound (D-64) | 590 | 2 509 | +91 | 100 | `CL-A3-GATE-MARGIN-590` | `FAIL` |
 
-Pack acceptance (heaviest weighed pack that leaves the 100 g overrun under the gate): **584.1 g** (`CL-A3-PACK-ACCEPT`; SKU listing maximum 556 g, margin +28.1 g).
+Pack acceptance (heaviest weighed pack that leaves the 100 g overrun under the gate): **581.3 g** (`CL-A3-PACK-ACCEPT`; SKU listing maximum 556 g, margin +25.3 g).
 
 | Discipline | Basic g | Predicted g | Share |
 |---|---|---|---|
-| structure | 1 022 | 1 076 | 44 % |
+| structure | 1 022 | 1 076 | 43 % |
 | propulsion | 462 | 490 | 20 % |
 | energy | 550 | 550 | 23 % |
-| electrical | 207 | 230 | 9 % |
+| electrical | 210 | 233 | 9 % |
 | avionics | 36 | 39 | 2 % |
 | controls | 71 | 80 | 3 % |
 
@@ -45,7 +45,7 @@ Pack acceptance (heaviest weighed pack that leaves the 100 g overrun under the g
 | Pack slid -5.9 … +12.0 mm (spacers, crush stack) | 0.0473 … 0.0515 | | | — |
 | Pack 546 g: nominal station → slid +0.0 mm (+ aft) | 0.0488 → 0.0488 | | | `CHECKED` |
 | Pack 551 g: nominal station → slid +0.0 mm (+ aft) | 0.0487 → 0.0487 | | | `CHECKED` |
-| Pack 590 g: nominal station → slid +0.0 mm (+ aft) | 0.0473 → 0.0473 | | | `CHECKED` |
+| Pack 590 g: nominal station → slid +0.0 mm (+ aft) | 0.0474 → 0.0474 | | | `CHECKED` |
 | Pack 546 g at its D-59 station x -0.0320 (spacers 12 mm): basic → predicted | 0.0488 → 0.0504 (fwd +2.2 / aft +1.0 mm) | | | `CHECKED` |
 | Pack 551 g at its D-59 station x -0.0300 (spacers 10 mm): basic → predicted | 0.0491 → 0.0506 (fwd +2.5 / aft +0.8 mm) | | | `CHECKED` |
 | Pack 590 g at its D-59 station x -0.0260 (spacers 6 mm): basic → predicted | 0.0488 → 0.0503 (fwd +2.2 / aft +1.1 mm) | | | `CHECKED` |
@@ -63,23 +63,23 @@ Pack acceptance (heaviest weighed pack that leaves the 100 g overrun under the g
 | Hover trim split upper/lower pair (limit 1.25, D-18) | 1.216 | — | `CL-A3-HOVER-SPLIT` → `R-HOVER-SPLIT` |
 | Pack slide needed for 546–590 g beyond the trim travel | 0.0 | mm | `CL-A3-PACK-TRIM` |
 | Most forward pack centroid the nose stack allows | -0.0379 | m | `CALC-A3-CG` |
-| CG x range use: basic / packs at their stations (worst) / predicted | 0.13 / 0.69 / 0.51 | — | `CL-A3-CG-X-RANGE` / `CL-A3-CG-X-STATIONS` / `CL-A3-CG-X-PRED-RANGE` |
+| CG x range use: basic / packs at their stations (worst) / predicted | 0.12 / 0.69 / 0.51 | — | `CL-A3-CG-X-RANGE` / `CL-A3-CG-X-STATIONS` / `CL-A3-CG-X-PRED-RANGE` |
 | CG height z: basic / predicted (A1 copies to `cg.z_target_m`) | 0.0185 / 0.0182 | m | `CL-A3-CG-Z` / `CL-A3-CG-Z-PRED` |
 | CG z range use (worst of basic, predicted) | 0.14 | — | `CL-A3-CG-Z-RANGE` |
-| Lateral CG offset / allowed 5 mm | 0.24 (-1.2 mm) | — | `CL-A3-CG-Y` |
+| Lateral CG offset / allowed 5 mm | 0.25 (-1.2 mm) | — | `CL-A3-CG-Y` |
 | CG height above the feet in the stance | 0.319 | m | `CALC-A3-CG` |
 
 | Inertia about the CG | Ixx (roll, cruise) | Iyy (pitch) | Izz (yaw, cruise) | Ixz | Unit |
 |---|---|---|---|---|---|
-| Basic, take-off | 0.1747 | 0.0460 | 0.1704 | -0.0025 | kg·m² |
+| Basic, take-off | 0.1748 | 0.0460 | 0.1705 | -0.0025 | kg·m² |
 | Radius of gyration | 0.273 | 0.140 | 0.269 | | m |
 
-Groups for C1's loads model (`CL-A3-GROUPS`; inertia about each group's own centroid, aircraft axes; closure to the aircraft inertia 6.0e-16, `CL-A3-GROUPS-CLOSURE`):
+Groups for C1's loads model (`CL-A3-GROUPS`; inertia about each group's own centroid, aircraft axes; closure to the aircraft inertia 1.3e-15, `CL-A3-GROUPS-CLOSURE`):
 
 | Group | Station | Items | Mass g | x m | y m | z m | Ixx own | Iyy own | Izz own | Ixz own |
 |---|---|---|---|---|---|---|---|---|---|---|
 | **pack** | all | 1 | 550.0 | -0.0320 | +0.0000 | +0.0483 | 0.00021 | 0.00095 | 0.00093 | -0.00000 |
-| **centre** | all | 30 | 304.2 | +0.0008 | -0.0101 | +0.0447 | 0.00050 | 0.00123 | 0.00119 | +0.00015 |
+| **centre** | all | 30 | 304.9 | +0.0008 | -0.0102 | +0.0447 | 0.00050 | 0.00123 | 0.00119 | +0.00015 |
 | **wing** | all | 15 | 391.7 | +0.1137 | +0.0005 | +0.0054 | 0.03990 | 0.00272 | 0.04257 | -0.00002 |
 | wing | C | 4 | 352.8 | +0.1094 | +0.0000 | +0.0056 | 0.03604 | 0.00230 | 0.03829 | -0.00001 |
 | wing | L | 5 | 19.2 | +0.1531 | -0.3012 | +0.0042 | 0.00015 | 0.00018 | 0.00033 | -0.00001 |
@@ -106,9 +106,9 @@ Groups for C1's loads model (`CL-A3-GROUPS`; inertia about each group's own cent
 | **mechanisms** | all | 26 | 71.4 | +0.2163 | +0.0000 | -0.0022 | 0.00614 | 0.00008 | 0.00622 | -0.00000 |
 | mechanisms | L | 13 | 35.7 | +0.2163 | -0.2881 | -0.0022 | 0.00011 | 0.00004 | 0.00014 | -0.00000 |
 | mechanisms | R | 13 | 35.7 | +0.2163 | +0.2881 | -0.0022 | 0.00011 | 0.00004 | 0.00014 | -0.00000 |
-| **harness** | all | 2 | 76.5 | +0.0763 | +0.0000 | +0.0057 | 0.00500 | 0.00000 | 0.00500 | -0.00000 |
-| harness | L | 1 | 38.3 | +0.0763 | -0.2556 | +0.0057 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
-| harness | R | 1 | 38.3 | +0.0763 | +0.2556 | +0.0057 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
+| **harness** | all | 2 | 78.4 | +0.0760 | +0.0000 | +0.0056 | 0.00515 | 0.00000 | 0.00515 | -0.00000 |
+| harness | L | 1 | 39.2 | +0.0760 | -0.2564 | +0.0056 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
+| harness | R | 1 | 39.2 | +0.0760 | +0.2564 | +0.0056 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
 
 (own inertias in kg·m²)
 
@@ -116,11 +116,15 @@ Allocations read from `params.json#mass.allocation_g` and checked equal to `para
 
 A3 adders kept beside a designer's parts.csv (items the list does not carry yet): GER-R5-SLEEVE (landing, 5.0 g).
 
-A3 position / maturity overrides (`team/A3/overrides.csv`): AVN-005: pitot boom with the nose (tip -0.220): D-62; provisional until F3/D2 move it; retires itself when the owner moves the part; HRN-001: F2 harness.py breakdown (team/F2/mass_estimate.csv): wires CALC from routed lengths; fittings and phase extensions EST; lump carried at CALC 10 %; HRN-002: as HRN-001 (per-side lump); PWR-001: pack centroid at the D-62 datum (D2-R6 draws the tray there, x -0.0321); F1 power/interfaces.json still has the D-47 node -0.022; retires itself when F1 moves the node (CR-A3-32); PRP-002: ESC 7.6 g stripped (D-48): 6.6 g bare board + 1.0 g signal lead and shrink EST per E1 parts.csv notes; only the bare board is a datasheet number.
+A3 position / maturity overrides (`team/A3/overrides.csv`): HRN-001: F2 harness.py breakdown (team/F2/mass_estimate.csv): wires CALC from routed lengths; fittings and phase extensions EST; lump carried at CALC 10 %; HRN-002: as HRN-001 (per-side lump); PWR-001: pack centroid at the D-62 datum (D2-R6 draws the tray there, x -0.0321); F1 power/interfaces.json still has the D-47 node -0.022; retires itself when F1 moves the node (CR-A3-32); PRP-002: ESC 7.6 g stripped (D-48): 6.6 g bare board + 1.0 g signal lead and shrink EST per E1 parts.csv notes; only the bare board is a datasheet number.
 
 Excluded as ground items (`flight: false` in interfaces.json, or no interface node and notes say not flying): GND-001 (redesign/subsystems/ground/parts.csv, flight false): RC transmitter RadioMaster Pocket (Crush), internal ELRS 2.4 GHz FCC, with 2 x 18650 cells; GER-005 (redesign/subsystems/landing/parts.csv, flight false): Spare insert, upper (orange piston + type-U cartridge + pad, pre-glued); GER-009 (redesign/subsystems/landing/parts.csv, flight false): Spare insert, lower (blue piston + type-L cartridge + pad, pre-glued); GER-010 (redesign/subsystems/landing/parts.csv, flight false): Spare cartridge pair type U, loose (orange stripe); GER-011 (redesign/subsystems/landing/parts.csv, flight false): Spare cartridge pair type L, loose (blue stripe); GER-012 (redesign/subsystems/landing/parts.csv, flight false): Spare shoe; GER-006 (redesign/subsystems/landing/parts.csv, flight false): Neoprene sheet 1/16 in 40A adhesive back 12 x 12 in; GER-013 (redesign/subsystems/landing/parts.csv, flight false): Brass tube 7/32 in OD (K&S), sharpened, cartridge bore cutter; PWR-201 (redesign/subsystems/power/parts.csv): Second flight pack (ground: charge / rotate; flight false).
 
 Zero-mass lines (mass carried inside another part): FIN-104, FIN-105, FIN-106, FIN-107, HRN-101, HRN-102, HRN-103, HRN-104, HRN-105, HRN-106, HRN-107, HRN-108, HRN-109, HRN-110, HRN-111, HRN-112, PWR-104, PWR-105, PWR-106, PWR-202.
+
+Roll-up warnings:
+
+- AVN-005: A3 override retired, the designer moved the part (x -0.1533, override written against -0.1433); drop the row from overrides.csv
 
 
 
@@ -281,13 +285,13 @@ Zero-mass lines (mass carried inside another part): FIN-104, FIN-105, FIN-106, F
 | `AVN-001` | avionics | avionics | 12.0 | -0.010 | +0.046 | +0.030 | DATASHEET | 5 | `redesign/subsystems/avionics/parts.csv` |
 | `AVN-002` | avionics | avionics | 7.7 | +0.075 | +0.000 | +0.177 | DATASHEET | 5 | `redesign/subsystems/avionics/parts.csv` |
 | `AVN-003` | avionics | avionics | 4.6 | -0.047 | -0.046 | +0.024 | DATASHEET | 5 | `redesign/subsystems/avionics/parts.csv` |
-| `AVN-004` | avionics | avionics | 4.5 | -0.070 | -0.046 | +0.031 | DATASHEET | 5 | `redesign/subsystems/avionics/parts.csv` |
+| `AVN-004` | avionics | avionics | 4.5 | -0.071 | -0.046 | +0.031 | DATASHEET | 5 | `redesign/subsystems/avionics/parts.csv` |
 | `AVN-005` | avionics | avionics | 4.8 | -0.153 | -0.046 | +0.045 | EST | 20 | `redesign/subsystems/avionics/parts.csv` |
 | `AVN-006` | avionics | avionics | 2.4 | -0.010 | +0.046 | +0.023 | DATASHEET | 5 | `redesign/subsystems/avionics/parts.csv` |
 | `AVN-007` | avionics | avionics | 0.4 | -0.030 | +0.046 | +0.027 | DATASHEET | 5 | `redesign/subsystems/avionics/parts.csv` |
-| `HRN-001` | harness | electrical | 40.7 | +0.048 | -0.001 | +0.029 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
-| `HRN-002` | harness | electrical | 38.3 | +0.076 | +0.256 | +0.006 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
-| `HRN-002` | harness | electrical | 38.3 | +0.076 | -0.256 | +0.006 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
+| `HRN-001` | harness | electrical | 41.4 | +0.048 | -0.002 | +0.030 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
+| `HRN-002` | harness | electrical | 39.2 | +0.076 | +0.256 | +0.006 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
+| `HRN-002` | harness | electrical | 39.2 | +0.076 | -0.256 | +0.006 | CALC | 10 | `redesign/subsystems/harness/parts.csv` |
 | `MEC-001` | mechanisms | controls | 15.8 | +0.190 | +0.268 | -0.000 | DATASHEET | 5 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-001` | mechanisms | controls | 15.8 | +0.190 | -0.268 | -0.000 | DATASHEET | 5 | `redesign/subsystems/mechanisms/parts.csv` |
 | `MEC-002` | mechanisms | controls | 0.6 | +0.195 | +0.285 | -0.006 | DATASHEET | 5 | `redesign/subsystems/mechanisms/parts.csv` |

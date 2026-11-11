@@ -248,7 +248,7 @@ class Shape:
 class Component:
     """One physical part (one interfaces.json part id). Bodies are added with the builder methods."""
 
-    def __init__(self, ctx, part_id, info, at=(0.0, 0.0, 0.0), rotate=None, rgb=None, cg=None):
+    def __init__(self, ctx, part_id, info, at=(0.0, 0.0, 0.0), rotate=None, rgb=None, cg=None, proxy=False):
         self.ctx, self.id = ctx, part_id
         self.subsystem = ctx.sub
         self.name = info.get('name', part_id)
@@ -256,6 +256,9 @@ class Component:
         self.mass_g = info.get('mass_g')
         self.status = info.get('status')
         self.flight = info.get('flight', True)               # False: ground item (box, cradles), not in the roll-up
+        # mass proxy: a lumped-mass stand-in (harness bundles) whose mass and CG count, but which no backend shows
+        # (Fusion: hidden component named "... (mass proxy)"; Blender / GLB: an empty carrying the part's extras)
+        self.proxy = bool(proxy or info.get('mass_proxy', False))
         self.make_or_buy = info.get('make_or_buy')
         self.cg_declared = cg or info.get('cg_xyz_m')
         self.rgb = rgb
@@ -348,8 +351,12 @@ class Joint:
 
 
 class Wire:
-    def __init__(self, edge, points, dia, sub=None):
+    """Routed edge: `points` = centreline polyline (touch checks, Fusion sketch); `strands` = optional list of
+    (polyline, diameter) the mesh backends draw instead (each conductor of a pair in its own groove, a servo ribbon)."""
+
+    def __init__(self, edge, points, dia, sub=None, strands=None):
         self.edge, self.points, self.dia, self.sub = edge, [tuple(map(float, p)) for p in points], dia, sub
+        self.strands = [([tuple(map(float, p)) for p in pts], float(d)) for pts, d in (strands or [])]
         self.native = None
 
 
@@ -649,15 +656,17 @@ class Context:
         self.issues.append((sev, code, item, msg))
 
     # --- parts
-    def part(self, part_id, at=(0, 0, 0), rotate=None, rgb=None, cg=None):
-        """New component for interfaces.json part `part_id` (name/material/mass/status come from there)."""
+    def part(self, part_id, at=(0, 0, 0), rotate=None, rgb=None, cg=None, proxy=False):
+        """New component for interfaces.json part `part_id` (name/material/mass/status come from there).
+        proxy=True (or "mass_proxy": true in interfaces.json): mass-only stand-in, kept in the roll-up and the checks
+        but not shown by any backend (Component.proxy)."""
         if part_id in self.components:
             raise ValueError('component %s already built by %s' % (part_id, self.components[part_id].subsystem))
         info = self.parts_info.get(part_id)
         if info is None:
             self.issue('ERROR', 'unknown-part', part_id, 'built by %s but not declared in any interfaces.json' % self.sub)
             info = {}
-        c = Component(self, part_id, info, at, rotate, rgb, cg)
+        c = Component(self, part_id, info, at, rotate, rgb, cg, proxy)
         self.components[part_id] = c
         self.backend.component(c)
         return c
@@ -670,7 +679,7 @@ class Context:
         k = MIRROR[plane]
         t = list(src.at)
         t[k] = 2 * at - t[k]
-        c = self.part(new_id, at=t, rgb=rgb or src.rgb)
+        c = self.part(new_id, at=t, rgb=rgb or src.rgb, proxy=src.proxy)
         for s in src.shapes:
             c._add(s.mirrored(k))
         return c
@@ -691,9 +700,10 @@ class Context:
         """Edge held by bond/tape/strap/thermal pad that the geometry already shows touching; no CAD joint."""
         self.contacts[edge] = (note, self.sub)
 
-    def wire(self, edge, points, dia=0.004):
-        """Electrical edge as a routed wire: world polyline from part_a's connector to part_b's connector."""
-        self.wires.append(Wire(edge, points, dia, sub=self.sub))
+    def wire(self, edge, points, dia=0.004, strands=None):
+        """Electrical edge as a routed wire: world polyline from part_a's connector to part_b's connector.
+        strands = [(polyline, diameter), ...]: what mesh backends draw (default: the polyline at `dia`)."""
+        self.wires.append(Wire(edge, points, dia, sub=self.sub, strands=strands))
 
     def finish(self):
         """Realise joints and wires in the backend once every module has built its components."""

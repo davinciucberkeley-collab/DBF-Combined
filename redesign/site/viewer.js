@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import M from './model.js?v=20261111c';
+import M from './model.js?v=20261111d';
 
 const GH = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/';
 const $ = s => document.querySelector(s);
@@ -374,7 +374,7 @@ function applyLook() {
   const jointsOn = M.showJoints(S.mode) && S.explode < 0.01 && !S.isolated && !S.fast;
   for (const [id, j] of G.joints) if (j.marker) {
     const ends = [j.data.part_a, j.data.part_b].filter(pid => G.parts.has(pid));   // no marker on a hidden part (ground kit, Structure)
-    j.marker.visible = (jointsOn && ends.every(pid => G.parts.get(pid).node.visible)) || selId === id;
+    j.marker.visible = (jointsOn && ends.every(pid => G.parts.get(pid).node.visible)) || selId === id || (!!selId && !S.fast && [j.data.part_a, j.data.part_b].includes(selId));
     j.marker.material.color.copy(selId === id ? c.accent : j.kind === 'hinge' ? c.fg : c.fg3);
   }
   G.ground.material.opacity = isDark() ? 0.35 : 0.16;
@@ -492,12 +492,17 @@ const subCss = k => k === 'OTHER' ? 'var(--fg-3)' : 'var(--sub-' + k.toLowerCase
 function renderTree(keepScroll) {
   const T = $('#tree'), top = T.scrollTop, selId = S.sel ? S.sel.id : null;
   const groups = S.fast ? M.tree({ parts: S.data.parts.filter(M.isHardware) }, S.query) : M.tree(S.data, S.query);
-  const openState = {}; T.querySelectorAll('details[data-sub]').forEach(d => { openState[d.dataset.sub] = d.open; });
+  // groups start collapsed; S.ov holds explicit user toggles; search matches and the selected part's group auto-expand
+  const ov = S.ov || (S.ov = {}), selChanged = S.lastSel !== selId; S.lastSel = selId;
+  const selSub = g => selId && g.parts.some(p => p.id === selId);
+  if (selChanged) for (const g of groups) if (selSub(g)) ov[g.subsystem] = true;
+  const isOpen = (sub, auto) => ov[sub] !== undefined ? ov[sub] : auto;
+  const ids = groups.map(g => g.subsystem);
   let h = '';
   for (const g of groups) {
     const ground = g.parts.every(p => p.flight === false);
-    const open = openState[g.subsystem] !== undefined ? openState[g.subsystem] : !!S.query || !ground || S.fast;
-    h += '<details data-sub="' + esc(g.subsystem) + '"' + (open ? ' open' : '') + '><summary data-sub="' + g.key + '"><i class="sub" style="--sub:' + subCss(g.key) + '"></i>' +
+    const open = !!isOpen(g.subsystem, !!S.query || !!selSub(g));
+    h += '<details data-sub="' + esc(g.subsystem) + '"' + (open ? ' open' : '') + '><summary role="button" aria-expanded="' + open + '" data-sub="' + g.key + '"><i class="sub" style="--sub:' + subCss(g.key) + '"></i>' +
       '<span>' + esc(g.subsystem) + (ground ? ' <small>ground</small>' : '') + '</span><span class="m">' + (S.fast ? g.parts.length + ' · ' + M.fmtMass(g.mass_g) : ground ? g.parts.length + ' parts' : M.fmtMass(g.mass_g)) + '</span></summary>';
     for (const p of g.parts) {
       const hidden = G.root && G.parts.has(p.id) && roleOf(p.id) === 'hidden';
@@ -511,16 +516,18 @@ function renderTree(keepScroll) {
   if (S.fast) h = '<div class="v-hwhead"><i></i><span>Fasteners and hardware</span><span class="m">' + groups.reduce((n, g) => n + g.parts.length, 0) + ' parts</span></div>' + h;
   const wires = S.fast ? [] : (S.data.edges || []).filter(e => M.edgeKind(e, S.idx) === 'wire' && M.matches({ id: e.id, name: (e.wire || {}).connector, material: e.via }, S.query));
   if (wires.length) {
-    const open = openState['(wiring)'] === true;
-    h += '<details data-sub="(wiring)"' + (open ? ' open' : '') + '><summary><i class="sub" style="--sub:' + subCss('HRN') + '"></i><span>wiring</span><span class="m">' + wires.length + '</span></summary>';
+    const open = !!isOpen('(wiring)', !!S.query || wires.some(e => e.id === selId));
+    ids.push('(wiring)');
+    h += '<details data-sub="(wiring)"' + (open ? ' open' : '') + '><summary role="button" aria-expanded="' + open + '"><i class="sub" style="--sub:' + subCss('HRN') + '"></i><span>wiring</span><span class="m">' + wires.length + '</span></summary>';
     for (const e of wires) h += '<button class="v-row" data-edge="' + esc(e.id) + '"' + (selId === e.id ? ' aria-current="true"' : '') + '><i></i><span class="id">' + esc(e.id) +
       '</span><span class="nm">' + esc(e.part_a + ' → ' + e.part_b) + '</span><i></i></button>';
     h += '</details>';
   }
+  if (ids.length) h = '<div class="v-tt"><button type="button" data-tt>' + (ids.every(k => isOpen(k, !!S.query)) ? 'Collapse all' : 'Expand all') + '</button></div>' + h;
   T.innerHTML = h || '<div class="v-empty">' + (S.query ? 'No part matches “' + esc(S.query) + '”.' : 'No parts.') + '</div>';
   if (keepScroll) T.scrollTop = top;
   const cur = T.querySelector('[aria-current="true"]');
-  if (cur && !keepScroll) cur.scrollIntoView({ block: 'nearest' });
+  if (cur && (!keepScroll || selChanged)) cur.scrollIntoView({ block: 'nearest' });
 }
 
 // ---------------- part panel ----------------
@@ -662,10 +669,18 @@ function wire() {
   $('#showall').addEventListener('click', () => G.root && showAll());
   $('#explode-range').addEventListener('input', ev => { setExplode(ev.target.value / 100); applyLook(); });
   $('#explode-play').addEventListener('click', async () => { await explodeTo(0, 350); await explodeTo(1, 1100); });
-  $('#search').addEventListener('input', ev => { S.query = ev.target.value.trim(); renderTree(); });
+  $('#search').addEventListener('input', ev => { S.query = ev.target.value.trim(); S.ov = {}; renderTree(); });
   $('#search').addEventListener('keydown', ev => {
     if (ev.key === 'Enter') { const b = $('#tree [data-part]'); if (b) select({ type: 'part', id: b.dataset.part }, { focus: true }); }
-    if (ev.key === 'Escape') { ev.target.value = ''; S.query = ''; renderTree(); ev.target.blur(); }
+    if (ev.key === 'Escape') { ev.target.value = ''; S.query = ''; S.ov = {}; renderTree(); ev.target.blur(); }
+  });
+  $('#tree').addEventListener('click', ev => {
+    const sum = ev.target.closest('summary[aria-expanded]');
+    if (sum && !ev.target.closest('.v-link')) { const d = sum.parentNode, o = !d.open; (S.ov || (S.ov = {}))[d.dataset.sub] = o; sum.setAttribute('aria-expanded', o); return; }
+    if (ev.target.closest('[data-tt]')) {
+      const ds = [...$('#tree').querySelectorAll('details[data-sub]')], all = ds.every(d => d.open);
+      S.ov = S.ov || {}; ds.forEach(d => { S.ov[d.dataset.sub] = !all; }); renderTree(true);
+    }
   });
   $('#explorer').addEventListener('click', ev => {
     const t = ev.target.closest('[data-part],[data-edge],[data-act]');
@@ -716,7 +731,7 @@ function themeChanged() {
 // ---------------- public ----------------
 export const viewer = {
   themeChanged,
-  setQuery(q) { const s = $('#search'); if (!s) return; s.value = q; S.query = q; if (S.data) renderTree(); },
+  setQuery(q) { const s = $('#search'); if (!s) return; s.value = q; S.query = q; S.ov = {}; if (S.data) renderTree(); },
   resize() { if (G.renderer) resize(); },
   state: S,
   setFasteners: on => setFast(!!on),
@@ -726,7 +741,7 @@ export async function start() {
   readColours(); wire(); hint();
   progress(0, 'reading part data');
   let data;
-  try { const r = await fetch('data/viewer-data.json?v=20261111c'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  try { const r = await fetch('data/viewer-data.json?v=20261111d'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
   catch (e) { loadFailed('Part data not found', esc(e.message) + '<br>data/viewer-data.json is built by redesign/viewer/build_data.py --out site/data'); return; }
   S.data = data; S.idx = M.index(data);
   renderCounts(); renderTree(); renderPanel();
@@ -734,7 +749,7 @@ export async function start() {
   const total = (data.glb && data.glb.bytes) || 3443204;
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/k09l.glb?v=20261111c', res,
+    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/k09l.glb?v=20261111d', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/k09l.glb'); return; }
   progress(1, 'building scene');

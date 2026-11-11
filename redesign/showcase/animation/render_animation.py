@@ -210,7 +210,7 @@ def blender_render(argv):
     items.update(be.wires)
     shown = {}
     for i, ob in items.items():
-        vis = any(fnmatch.fnmatchcase(i, p) for p in flight)
+        vis = any(fnmatch.fnmatchcase(i, p) for p in flight) and not ob.get('mass_proxy')
         ob.hide_render = ob.hide_viewport = not vis
         if vis:
             shown[i] = ob

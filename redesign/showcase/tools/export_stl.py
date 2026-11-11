@@ -70,7 +70,7 @@ def main():
     out = os.path.join(SHOW, 'stl')
     os.makedirs(out, exist_ok=True)
     be, ctx, graph, _ = bb.build(False, None)
-    parts = dict(be.objects)
+    parts = {i: ob for i, ob in be.objects.items() if not ob.get('mass_proxy')}   # no lumped-mass proxies
     wires = dict(be.wires)
     flight = [ob for i, ob in parts.items() if not any(fnmatch.fnmatchcase(i, p) for p in NOT_FLIGHT)] + list(wires.values())
     write(os.path.join(out, 'k09l-assembly.stl'), flight, 'flight assembly')

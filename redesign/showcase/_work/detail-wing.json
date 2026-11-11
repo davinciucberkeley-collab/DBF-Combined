@@ -1,0 +1,653 @@
+{
+ "id": "detail-wing",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 64,
+ "render_s": 23.98,
+ "explode": 0.0,
+ "camera": {
+  "preset": "iso",
+  "az_deg": 205,
+  "el_deg": 50,
+  "ortho": false,
+  "lens_mm": 50,
+  "location_m": [
+   1.8586,
+   0.807,
+   2.2003
+  ],
+  "fit": "visible",
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Wing: one-piece XPS core, CF spar, four elevon panels",
+  "sub": "Core ghosted to show the spar, spar plugs and elevon torque tubes"
+ },
+ "subject_px": [
+  347,
+  270,
+  1252,
+  728
+ ],
+ "callouts": [
+  {
+   "item": "WNG-002",
+   "x": 843.2,
+   "y": 445.3,
+   "title": "WNG-002",
+   "text": "CF spar 22 x 20 mm",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.0876,
+    0.0436,
+    0.0145
+   ]
+  },
+  {
+   "item": "WNG-001",
+   "x": 783.4,
+   "y": 474.4,
+   "title": "WNG-001",
+   "text": "XPS core (ghosted)",
+   "detail": null,
+   "role": "ghost",
+   "occluded": false,
+   "world_m": [
+    0.149,
+    -0.0142,
+    -0.0077
+   ]
+  },
+  {
+   "item": "WNG-011-L",
+   "x": 616.0,
+   "y": 502.0,
+   "title": "WNG-011-L",
+   "text": "Elevon, inboard panel",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2898,
+    -0.1866,
+    0.0013
+   ]
+  },
+  {
+   "item": "WNG-012-L",
+   "x": 438.6,
+   "y": 436.7,
+   "title": "WNG-012-L",
+   "text": "Elevon, outboard panel",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2893,
+    -0.4524,
+    0.0014
+   ]
+  },
+  {
+   "item": "WNG-004-L",
+   "x": 601.7,
+   "y": 360.6,
+   "title": "WNG-004-L",
+   "text": "Spar plug at fin block",
+   "detail": null,
+   "role": "context",
+   "occluded": true,
+   "world_m": [
+    0.08,
+    -0.32,
+    0.0066
+   ]
+  },
+  {
+   "item": "MEC-009-LO",
+   "x": 452.8,
+   "y": 421.3,
+   "title": "MEC-009-LO",
+   "text": "Elevon torque tube",
+   "detail": null,
+   "role": "context",
+   "occluded": true,
+   "world_m": [
+    0.2571,
+    -0.45,
+    0.0005
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "WNG-001",
+   "role": "ghost",
+   "name": "Wing core, one piece (XPS), with all cuts",
+   "status": "MODELLED",
+   "mass_g": 201.8,
+   "subsystem": "wing",
+   "bbox_px": [
+    348,
+    270,
+    1252,
+    727
+   ]
+  },
+  {
+   "id": "WNG-006-R",
+   "role": "context",
+   "name": "Block-pocket lip beads (microballoon epoxy) R",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    1021,
+    475,
+    1073,
+    536
+   ]
+  },
+  {
+   "id": "WNG-006-L",
+   "role": "context",
+   "name": "Block-pocket lip beads (microballoon epoxy) L",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    581,
+    326,
+    634,
+    381
+   ]
+  },
+  {
+   "id": "WNG-007",
+   "role": "context",
+   "name": "Recess-step fillet (microballoon epoxy)",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "subsystem": "wing",
+   "bbox_px": [
+    772,
+    404,
+    870,
+    440
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Spar CF 22x20x1000",
+   "status": "MODELLED",
+   "mass_g": 102.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    483,
+    313,
+    1179,
+    568
+   ]
+  },
+  {
+   "id": "WNG-004-R",
+   "role": "context",
+   "name": "Spar plug under the through-core block (PETG) R",
+   "status": "MODELLED",
+   "mass_g": 7.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    1026,
+    502,
+    1058,
+    526
+   ]
+  },
+  {
+   "id": "WNG-004-L",
+   "role": "context",
+   "name": "Spar plug under the through-core block (PETG) L",
+   "status": "MODELLED",
+   "mass_g": 7.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    587,
+    350,
+    617,
+    372
+   ]
+  },
+  {
+   "id": "WNG-005-R",
+   "role": "context",
+   "name": "Spar plug at the brace anchors (PETG) R",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    975,
+    484,
+    996,
+    504
+   ]
+  },
+  {
+   "id": "WNG-005-L",
+   "role": "context",
+   "name": "Spar plug at the brace anchors (PETG) L",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    643,
+    369,
+    663,
+    388
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "ghost",
+   "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
+   "status": "MODELLED",
+   "mass_g": 47.9,
+   "subsystem": "wing",
+   "bbox_px": [
+    347,
+    270,
+    1252,
+    728
+   ]
+  },
+  {
+   "id": "WNG-020",
+   "role": "context",
+   "name": "FAA registration label",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "wing",
+   "bbox_px": [
+    1045,
+    539,
+    1096,
+    610
+   ]
+  },
+  {
+   "id": "WNG-011-R",
+   "role": "context",
+   "name": "Elevon inboard R",
+   "status": "MODELLED",
+   "mass_g": 3.7,
+   "subsystem": "wing",
+   "bbox_px": [
+    787,
+    544,
+    976,
+    649
+   ]
+  },
+  {
+   "id": "WNG-011-L",
+   "role": "context",
+   "name": "Elevon inboard L",
+   "status": "MODELLED",
+   "mass_g": 3.7,
+   "subsystem": "wing",
+   "bbox_px": [
+    528,
+    452,
+    710,
+    549
+   ]
+  },
+  {
+   "id": "WNG-012-R",
+   "role": "context",
+   "name": "Elevon outboard R",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "subsystem": "wing",
+   "bbox_px": [
+    987,
+    616,
+    1177,
+    723
+   ]
+  },
+  {
+   "id": "WNG-012-L",
+   "role": "context",
+   "name": "Elevon outboard L",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "subsystem": "wing",
+   "bbox_px": [
+    358,
+    390,
+    526,
+    481
+   ]
+  },
+  {
+   "id": "MEC-009-RI",
+   "role": "context",
+   "name": "Elevon torque tube CF 5 x 4 mm right, inboard panel",
+   "status": "MODELLED",
+   "mass_g": 2.24,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    853,
+    565,
+    972,
+    612
+   ]
+  },
+  {
+   "id": "MEC-009-RO",
+   "role": "context",
+   "name": "Elevon torque tube CF 5 x 4 mm right, outboard panel",
+   "status": "MODELLED",
+   "mass_g": 2.93,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1008,
+    622,
+    1172,
+    684
+   ]
+  },
+  {
+   "id": "MEC-010-R",
+   "role": "context",
+   "name": "Elevon hinge tape, two strips right",
+   "status": "MODELLED",
+   "mass_g": 0.56,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    805,
+    536,
+    1181,
+    685
+   ]
+  },
+  {
+   "id": "MEC-009-LI",
+   "role": "context",
+   "name": "Elevon torque tube CF 5 x 4 mm left, inboard panel",
+   "status": "MODELLED",
+   "mass_g": 2.24,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    554,
+    457,
+    664,
+    500
+   ]
+  },
+  {
+   "id": "MEC-009-LO",
+   "role": "context",
+   "name": "Elevon torque tube CF 5 x 4 mm left, outboard panel",
+   "status": "MODELLED",
+   "mass_g": 2.93,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    384,
+    395,
+    523,
+    448
+   ]
+  },
+  {
+   "id": "MEC-010-L",
+   "role": "context",
+   "name": "Elevon hinge tape, two strips left",
+   "status": "MODELLED",
+   "mass_g": 0.56,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    380,
+    383,
+    715,
+    514
+   ]
+  }
+ ],
+ "hidden": [
+  "AVN-001",
+  "AVN-002",
+  "AVN-003",
+  "AVN-004",
+  "AVN-005",
+  "AVN-006",
+  "AVN-007",
+  "E-HRN-10",
+  "E-HRN-11",
+  "E-HRN-12",
+  "E-HRN-13",
+  "E-HRN-14",
+  "E-HRN-15",
+  "E-HRN-16",
+  "E-HRN-17",
+  "E-HRN-18",
+  "E-HRN-19",
+  "E-HRN-20",
+  "E-HRN-21",
+  "E-HRN-22",
+  "E-HRN-23",
+  "E-HRN-24",
+  "E-HRN-25",
+  "E-HRN-26",
+  "E-HRN-27",
+  "E-HRN-28",
+  "E-HRN-29",
+  "E-HRN-30",
+  "E-HRN-31",
+  "E-HRN-32",
+  "E-HRN-33",
+  "E-HRN-34",
+  "E-HRN-35",
+  "E-HRN-36",
+  "E-HRN-37",
+  "FIN-001-LL",
+  "FIN-001-LR",
+  "FIN-001-UL",
+  "FIN-001-UR",
+  "FIN-002-L",
+  "FIN-002-R",
+  "FIN-003-LL",
+  "FIN-003-LR",
+  "FIN-003-UL",
+  "FIN-003-UR",
+  "FIN-004-L",
+  "FIN-004-R",
+  "FIN-006-L",
+  "FIN-006-R",
+  "FIN-007-LL",
+  "FIN-007-LR",
+  "FIN-007-UL",
+  "FIN-007-UR",
+  "FIN-008-LL",
+  "FIN-008-LR",
+  "FIN-008-UL",
+  "FIN-008-UR",
+  "FIN-009-LL",
+  "FIN-009-LR",
+  "FIN-009-UL",
+  "FIN-009-UR",
+  "FIN-010-LL",
+  "FIN-010-LR",
+  "FIN-010-UL",
+  "FIN-010-UR",
+  "FIN-011-LLI",
+  "FIN-011-LLO",
+  "FIN-011-LRI",
+  "FIN-011-LRO",
+  "FIN-011-ULI",
+  "FIN-011-ULO",
+  "FIN-011-URI",
+  "FIN-011-URO",
+  "FIN-012-LL",
+  "FIN-012-LR",
+  "FIN-012-UL",
+  "FIN-012-UR",
+  "FIN-101-LL",
+  "FIN-101-LR",
+  "FIN-101-UL",
+  "FIN-101-UR",
+  "FIN-102-LL",
+  "FIN-102-LR",
+  "FIN-102-UL",
+  "FIN-102-UR",
+  "FIN-103-LL",
+  "FIN-103-LR",
+  "FIN-103-UL",
+  "FIN-103-UR",
+  "GER-001-LL",
+  "GER-001-LR",
+  "GER-001-UL",
+  "GER-001-UR",
+  "GER-002-LL",
+  "GER-002-LR",
+  "GER-002-UL",
+  "GER-002-UR",
+  "GER-003-UL",
+  "GER-003-UR",
+  "GER-004-LL",
+  "GER-004-LR",
+  "GER-004-UL",
+  "GER-004-UR",
+  "GER-005",
+  "GER-006",
+  "GER-007-L",
+  "GER-007-R",
+  "GER-008-LL",
+  "GER-008-LR",
+  "GER-009",
+  "GER-010",
+  "GER-011",
+  "GER-012",
+  "GER-013",
+  "HRN-001",
+  "HRN-002-L",
+  "HRN-002-R",
+  "MEC-001-L",
+  "MEC-001-R",
+  "MEC-002-L",
+  "MEC-002-R",
+  "MEC-003-L",
+  "MEC-003-R",
+  "MEC-004-L",
+  "MEC-004-R",
+  "MEC-005-L",
+  "MEC-005-R",
+  "MEC-006-L",
+  "MEC-006-R",
+  "MEC-007-L",
+  "MEC-007-R",
+  "MEC-008-L",
+  "MEC-008-R",
+  "MEC-011-L",
+  "MEC-011-R",
+  "MEC-012-L",
+  "MEC-012-R",
+  "POD-001",
+  "POD-002",
+  "POD-003",
+  "POD-004",
+  "POD-005",
+  "POD-006",
+  "POD-007",
+  "POD-008",
+  "POD-009",
+  "POD-010",
+  "POD-011",
+  "POD-012",
+  "PRP-001-LL",
+  "PRP-001-LR",
+  "PRP-001-UL",
+  "PRP-001-UR",
+  "PRP-002-LL",
+  "PRP-002-LR",
+  "PRP-002-UL",
+  "PRP-002-UR",
+  "PRP-003-LL",
+  "PRP-003-LR",
+  "PRP-003-UL",
+  "PRP-003-UR",
+  "PRP-004-LL",
+  "PRP-004-LR",
+  "PRP-004-UL",
+  "PRP-004-UR",
+  "PRP-005-LL",
+  "PRP-005-LR",
+  "PRP-005-UL",
+  "PRP-005-UR",
+  "PRP-006-LL",
+  "PRP-006-LR",
+  "PRP-006-UL",
+  "PRP-006-UR",
+  "PRP-007-LL",
+  "PRP-007-LR",
+  "PRP-007-UL",
+  "PRP-007-UR",
+  "PRP-008-LL",
+  "PRP-008-LR",
+  "PRP-008-UL",
+  "PRP-008-UR",
+  "PWR-001",
+  "PWR-002",
+  "PWR-003",
+  "PWR-004",
+  "PWR-005",
+  "PWR-006",
+  "PWR-007",
+  "PWR-008-LL",
+  "PWR-008-LR",
+  "PWR-008-UL",
+  "PWR-008-UR",
+  "PWR-101",
+  "PWR-102",
+  "PWR-103",
+  "PWR-107",
+  "TRN-001",
+  "TRN-002-L",
+  "TRN-002-R",
+  "TRN-003",
+  "TRN-004-L",
+  "TRN-004-R",
+  "TRN-005",
+  "TRN-006-L",
+  "TRN-006-R",
+  "TRN-007-C",
+  "TRN-007-L",
+  "TRN-007-R",
+  "TRN-008",
+  "TRN-102-C",
+  "TRN-102-L",
+  "TRN-102-R"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "ghost"
+ ],
+ "files": {
+  "png": "detail-wing.png",
+  "jpg": "detail-wing.jpg"
+ }
+}

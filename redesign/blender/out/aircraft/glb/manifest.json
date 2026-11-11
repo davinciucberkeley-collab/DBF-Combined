@@ -3,17 +3,17 @@
  "mode": "material",
  "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
  "files": {
-  "assembly.glb": 4115556,
+  "assembly.glb": 4598008,
   "avionics.glb": 43236,
   "fins.glb": 654080,
-  "harness.glb": 739412,
+  "harness.glb": 1221372,
   "landing.glb": 215952,
-  "mechanisms.glb": 211128,
+  "mechanisms.glb": 211264,
   "pod.glb": 127208,
   "power.glb": 130436,
   "propulsion.glb": 489088,
   "transport.glb": 175172,
-  "wing.glb": 1319076
+  "wing.glb": 1319400
  },
  "parts": [
   {
@@ -2066,34 +2066,37 @@
    "id": "HRN-001",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 40.7,
+   "mass_g": 41.4,
    "explode_m": [
     0.0,
     0.0,
     0.093
-   ]
+   ],
+   "mass_proxy": true
   },
   {
    "id": "HRN-002-R",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 38.3,
+   "mass_g": 39.5,
    "explode_m": [
     -0.228,
     0.0,
     0.0
-   ]
+   ],
+   "mass_proxy": true
   },
   {
    "id": "HRN-002-L",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 38.2,
+   "mass_g": 38.9,
    "explode_m": [
     -0.228,
     0.0,
     0.0
-   ]
+   ],
+   "mass_proxy": true
   },
   {
    "id": "TRN-001",

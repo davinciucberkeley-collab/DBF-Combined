@@ -1,0 +1,2976 @@
+{
+ "id": "hero-iso",
+ "size": [
+  2000,
+  1250
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 64,
+ "render_s": 41.47,
+ "explode": 0.0,
+ "camera": {
+  "preset": "iso",
+  "az_deg": 32,
+  "el_deg": 24,
+  "ortho": false,
+  "lens_mm": 50,
+  "location_m": [
+   -1.2383,
+   -0.9296,
+   0.7044
+  ],
+  "fit": "visible",
+  "frame": [
+   0.05,
+   0.95,
+   0.08,
+   0.92
+  ]
+ },
+ "caption": null,
+ "subject_px": [
+  128,
+  107,
+  1878,
+  1148
+ ],
+ "callouts": [],
+ "shown": [
+  {
+   "id": "WNG-001",
+   "role": "context",
+   "name": "Wing core, one piece (XPS), with all cuts",
+   "status": "MODELLED",
+   "mass_g": 201.8,
+   "subsystem": "wing",
+   "bbox_px": [
+    128,
+    352,
+    1876,
+    901
+   ]
+  },
+  {
+   "id": "WNG-006-R",
+   "role": "context",
+   "name": "Block-pocket lip beads (microballoon epoxy) R",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    398,
+    464,
+    516,
+    548
+   ]
+  },
+  {
+   "id": "WNG-006-L",
+   "role": "context",
+   "name": "Block-pocket lip beads (microballoon epoxy) L",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    1240,
+    670,
+    1363,
+    779
+   ]
+  },
+  {
+   "id": "WNG-007",
+   "role": "context",
+   "name": "Recess-step fillet (microballoon epoxy)",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "subsystem": "wing",
+   "bbox_px": [
+    749,
+    563,
+    938,
+    620
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Spar CF 22x20x1000",
+   "status": "MODELLED",
+   "mass_g": 102.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    274,
+    436,
+    1621,
+    810
+   ]
+  },
+  {
+   "id": "WNG-004-R",
+   "role": "context",
+   "name": "Spar plug under the through-core block (PETG) R",
+   "status": "MODELLED",
+   "mass_g": 7.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    445,
+    480,
+    504,
+    518
+   ]
+  },
+  {
+   "id": "WNG-004-L",
+   "role": "context",
+   "name": "Spar plug under the through-core block (PETG) L",
+   "status": "MODELLED",
+   "mass_g": 7.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    1279,
+    690,
+    1351,
+    738
+   ]
+  },
+  {
+   "id": "WNG-005-R",
+   "role": "context",
+   "name": "Spar plug at the brace anchors (PETG) R",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    541,
+    504,
+    583,
+    539
+   ]
+  },
+  {
+   "id": "WNG-005-L",
+   "role": "context",
+   "name": "Spar plug at the brace anchors (PETG) L",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "subsystem": "wing",
+   "bbox_px": [
+    1173,
+    663,
+    1219,
+    704
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "context",
+   "name": "Tape skin (packing tape, both surfaces, doublers, tip edge layer)",
+   "status": "MODELLED",
+   "mass_g": 47.9,
+   "subsystem": "wing",
+   "bbox_px": [
+    128,
+    352,
+    1876,
+    902
+   ]
+  },
+  {
+   "id": "WNG-020",
+   "role": "context",
+   "name": "FAA registration label",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "wing",
+   "bbox_px": [
+    416,
+    415,
+    542,
+    448
+   ]
+  },
+  {
+   "id": "WNG-011-R",
+   "role": "context",
+   "name": "Elevon inboard R",
+   "status": "MODELLED",
+   "mass_g": 3.7,
+   "subsystem": "wing",
+   "bbox_px": [
+    656,
+    413,
+    968,
+    504
+   ]
+  },
+  {
+   "id": "WNG-011-L",
+   "role": "context",
+   "name": "Elevon inboard L",
+   "status": "MODELLED",
+   "mass_g": 3.7,
+   "subsystem": "wing",
+   "bbox_px": [
+    1090,
+    510,
+    1449,
+    618
+   ]
+  },
+  {
+   "id": "WNG-012-R",
+   "role": "context",
+   "name": "Elevon outboard R",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "subsystem": "wing",
+   "bbox_px": [
+    390,
+    355,
+    668,
+    433
+   ]
+  },
+  {
+   "id": "WNG-012-L",
+   "role": "context",
+   "name": "Elevon outboard L",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "subsystem": "wing",
+   "bbox_px": [
+    1468,
+    592,
+    1849,
+    714
+   ]
+  },
+  {
+   "id": "FIN-001-UR",
+   "role": "context",
+   "name": "Half-fin upper right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets",
+   "status": "MODELLED",
+   "mass_g": 25.5,
+   "subsystem": "fins",
+   "bbox_px": [
+    429,
+    147,
+    707,
+    491
+   ]
+  },
+  {
+   "id": "FIN-001-LR",
+   "role": "context",
+   "name": "Half-fin lower right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot",
+   "status": "MODELLED",
+   "mass_g": 26.23,
+   "subsystem": "fins",
+   "bbox_px": [
+    448,
+    406,
+    708,
+    721
+   ]
+  },
+  {
+   "id": "FIN-002-R",
+   "role": "context",
+   "name": "Motor tube R, CF 22x20 x 344 mm",
+   "status": "MODELLED",
+   "mass_g": 35.09,
+   "subsystem": "fins",
+   "bbox_px": [
+    402,
+    275,
+    477,
+    758
+   ]
+  },
+  {
+   "id": "FIN-003-UR",
+   "role": "context",
+   "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)",
+   "status": "MODELLED",
+   "mass_g": 10.54,
+   "subsystem": "fins",
+   "bbox_px": [
+    375,
+    226,
+    441,
+    303
+   ]
+  },
+  {
+   "id": "FIN-004-R",
+   "role": "context",
+   "name": "Through-core block R (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
+   "status": "MODELLED",
+   "mass_g": 40.87,
+   "subsystem": "fins",
+   "bbox_px": [
+    403,
+    465,
+    511,
+    554
+   ]
+  },
+  {
+   "id": "FIN-006-R",
+   "role": "context",
+   "name": "Tube plug R, CF 20x18 x 53 mm inside the tube at the block",
+   "status": "MODELLED",
+   "mass_g": 5.45,
+   "subsystem": "fins",
+   "bbox_px": [
+    422,
+    473,
+    458,
+    556
+   ]
+  },
+  {
+   "id": "FIN-007-UR",
+   "role": "context",
+   "name": "ESC pad UR, ASA, on the outboard face of half-fin UR",
+   "status": "MODELLED",
+   "mass_g": 2.04,
+   "subsystem": "fins",
+   "bbox_px": [
+    451,
+    304,
+    502,
+    366
+   ]
+  },
+  {
+   "id": "FIN-008-UR",
+   "role": "context",
+   "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "status": "MODELLED",
+   "mass_g": 10.51,
+   "subsystem": "fins",
+   "bbox_px": [
+    401,
+    262,
+    482,
+    326
+   ]
+  },
+  {
+   "id": "FIN-009-UR",
+   "role": "context",
+   "name": "Brace UR, CF strip 10 x 2",
+   "status": "MODELLED",
+   "mass_g": 4.96,
+   "subsystem": "fins",
+   "bbox_px": [
+    436,
+    306,
+    565,
+    499
+   ]
+  },
+  {
+   "id": "FIN-009-LR",
+   "role": "context",
+   "name": "Brace LR, CF strip 10 x 2",
+   "status": "MODELLED",
+   "mass_g": 5.35,
+   "subsystem": "fins",
+   "bbox_px": [
+    473,
+    542,
+    569,
+    739
+   ]
+  },
+  {
+   "id": "FIN-010-UR",
+   "role": "context",
+   "name": "Brace anchor UR on the spar at |y| 0.242",
+   "status": "MODELLED",
+   "mass_g": 3.24,
+   "subsystem": "fins",
+   "bbox_px": [
+    541,
+    481,
+    580,
+    513
+   ]
+  },
+  {
+   "id": "FIN-010-LR",
+   "role": "context",
+   "name": "Brace anchor LR on the spar at |y| 0.242",
+   "status": "MODELLED",
+   "mass_g": 3.09,
+   "subsystem": "fins",
+   "bbox_px": [
+    545,
+    530,
+    583,
+    561
+   ]
+  },
+  {
+   "id": "FIN-011-URO",
+   "role": "context",
+   "name": "Edge strip upper right outboard face, CF 10 x 1",
+   "status": "MODELLED",
+   "mass_g": 4.07,
+   "subsystem": "fins",
+   "bbox_px": [
+    426,
+    147,
+    633,
+    308
+   ]
+  },
+  {
+   "id": "FIN-011-URI",
+   "role": "context",
+   "name": "Edge strip upper right inboard face, CF 10 x 1",
+   "status": "MODELLED",
+   "mass_g": 4.07,
+   "subsystem": "fins",
+   "bbox_px": [
+    438,
+    149,
+    645,
+    310
+   ]
+  },
+  {
+   "id": "FIN-012-UR",
+   "role": "context",
+   "name": "Edge-strip pin set UR, 12 x CF rod 2.5 mm",
+   "status": "MODELLED",
+   "mass_g": 1.46,
+   "subsystem": "fins",
+   "bbox_px": [
+    472,
+    159,
+    636,
+    271
+   ]
+  },
+  {
+   "id": "FIN-007-LR",
+   "role": "context",
+   "name": "ESC pad LR, ASA, on the outboard face of half-fin LR",
+   "status": "MODELLED",
+   "mass_g": 2.04,
+   "subsystem": "fins",
+   "bbox_px": [
+    478,
+    620,
+    526,
+    683
+   ]
+  },
+  {
+   "id": "FIN-008-LR",
+   "role": "context",
+   "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "status": "MODELLED",
+   "mass_g": 10.51,
+   "subsystem": "fins",
+   "bbox_px": [
+    439,
+    703,
+    517,
+    747
+   ]
+  },
+  {
+   "id": "FIN-012-LR",
+   "role": "context",
+   "name": "Edge-strip pin set LR, 12 x CF rod 2.5 mm",
+   "status": "MODELLED",
+   "mass_g": 1.46,
+   "subsystem": "fins",
+   "bbox_px": [
+    508,
+    675,
+    664,
+    715
+   ]
+  },
+  {
+   "id": "FIN-011-LRO",
+   "role": "context",
+   "name": "Edge strip lower right outboard face, CF 10 x 1",
+   "status": "MODELLED",
+   "mass_g": 4.07,
+   "subsystem": "fins",
+   "bbox_px": [
+    463,
+    668,
+    662,
+    727
+   ]
+  },
+  {
+   "id": "FIN-011-LRI",
+   "role": "context",
+   "name": "Edge strip lower right inboard face, CF 10 x 1",
+   "status": "MODELLED",
+   "mass_g": 4.07,
+   "subsystem": "fins",
+   "bbox_px": [
+    474,
+    671,
+    672,
+    731
+   ]
+  },
+  {
+   "id": "FIN-002-L",
+   "role": "context",
+   "name": "Motor tube L, CF 22x20 x 344 mm",
+   "status": "MODELLED",
+   "mass_g": 35.09,
+   "subsystem": "fins",
+   "bbox_px": [
+    1257,
+    456,
+    1321,
+    1017
+   ]
+  },
+  {
+   "id": "FIN-004-L",
+   "role": "context",
+   "name": "Through-core block L (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
+   "status": "MODELLED",
+   "mass_g": 40.87,
+   "subsystem": "fins",
+   "bbox_px": [
+    1247,
+    672,
+    1356,
+    788
+   ]
+  },
+  {
+   "id": "FIN-006-L",
+   "role": "context",
+   "name": "Tube plug L, CF 20x18 x 53 mm inside the tube at the block",
+   "status": "MODELLED",
+   "mass_g": 5.45,
+   "subsystem": "fins",
+   "bbox_px": [
+    1268,
+    687,
+    1308,
+    786
+   ]
+  },
+  {
+   "id": "FIN-001-UL",
+   "role": "context",
+   "name": "Half-fin upper left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets",
+   "status": "MODELLED",
+   "mass_g": 25.5,
+   "subsystem": "fins",
+   "bbox_px": [
+    1290,
+    284,
+    1510,
+    708
+   ]
+  },
+  {
+   "id": "FIN-007-UL",
+   "role": "context",
+   "name": "ESC pad UL, ASA, on the outboard face of half-fin UL",
+   "status": "MODELLED",
+   "mass_g": 2.04,
+   "subsystem": "fins",
+   "bbox_px": [
+    1329,
+    487,
+    1369,
+    564
+   ]
+  },
+  {
+   "id": "FIN-008-UL",
+   "role": "context",
+   "name": "Station collar UL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "status": "MODELLED",
+   "mass_g": 10.51,
+   "subsystem": "fins",
+   "bbox_px": [
+    1255,
+    437,
+    1354,
+    519
+   ]
+  },
+  {
+   "id": "FIN-009-UL",
+   "role": "context",
+   "name": "Brace UL, CF strip 10 x 2",
+   "status": "MODELLED",
+   "mass_g": 4.96,
+   "subsystem": "fins",
+   "bbox_px": [
+    1193,
+    482,
+    1274,
+    659
+   ]
+  },
+  {
+   "id": "FIN-010-UL",
+   "role": "context",
+   "name": "Brace anchor UL on the spar at |y| 0.242",
+   "status": "MODELLED",
+   "mass_g": 3.24,
+   "subsystem": "fins",
+   "bbox_px": [
+    1176,
+    638,
+    1217,
+    676
+   ]
+  },
+  {
+   "id": "FIN-012-UL",
+   "role": "context",
+   "name": "Edge-strip pin set UL, 12 x CF rod 2.5 mm",
+   "status": "MODELLED",
+   "mass_g": 1.46,
+   "subsystem": "fins",
+   "bbox_px": [
+    1336,
+    302,
+    1476,
+    448
+   ]
+  },
+  {
+   "id": "FIN-011-ULO",
+   "role": "context",
+   "name": "Edge strip upper left outboard face, CF 10 x 1",
+   "status": "MODELLED",
+   "mass_g": 4.07,
+   "subsystem": "fins",
+   "bbox_px": [
+    1316,
+    291,
+    1483,
+    498
+   ]
+  },
+  {
+   "id": "FIN-011-ULI",
+   "role": "context",
+   "name": "Edge strip upper left inboard face, CF 10 x 1",
+   "status": "MODELLED",
+   "mass_g": 4.07,
+   "subsystem": "fins",
+   "bbox_px": [
+    1299,
+    288,
+    1467,
+    494
+   ]
+  },
+  {
+   "id": "FIN-001-LL",
+   "role": "context",
+   "name": "Half-fin lower left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot",
+   "status": "MODELLED",
+   "mass_g": 26.23,
+   "subsystem": "fins",
+   "bbox_px": [
+    1279,
+    581,
+    1504,
+    967
+   ]
+  },
+  {
+   "id": "FIN-007-LL",
+   "role": "context",
+   "name": "ESC pad LL, ASA, on the outboard face of half-fin LL",
+   "status": "MODELLED",
+   "mass_g": 2.04,
+   "subsystem": "fins",
+   "bbox_px": [
+    1310,
+    852,
+    1348,
+    930
+   ]
+  },
+  {
+   "id": "FIN-008-LL",
+   "role": "context",
+   "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "status": "MODELLED",
+   "mass_g": 10.51,
+   "subsystem": "fins",
+   "bbox_px": [
+    1236,
+    945,
+    1325,
+    1001
+   ]
+  },
+  {
+   "id": "FIN-009-LL",
+   "role": "context",
+   "name": "Brace LL, CF strip 10 x 2",
+   "status": "MODELLED",
+   "mass_g": 5.35,
+   "subsystem": "fins",
+   "bbox_px": [
+    1191,
+    706,
+    1254,
+    980
+   ]
+  },
+  {
+   "id": "FIN-010-LL",
+   "role": "context",
+   "name": "Brace anchor LL on the spar at |y| 0.242",
+   "status": "MODELLED",
+   "mass_g": 3.09,
+   "subsystem": "fins",
+   "bbox_px": [
+    1175,
+    691,
+    1215,
+    728
+   ]
+  },
+  {
+   "id": "FIN-012-LL",
+   "role": "context",
+   "name": "Edge-strip pin set LL, 12 x CF rod 2.5 mm",
+   "status": "MODELLED",
+   "mass_g": 1.46,
+   "subsystem": "fins",
+   "bbox_px": [
+    1310,
+    893,
+    1433,
+    959
+   ]
+  },
+  {
+   "id": "FIN-011-LLO",
+   "role": "context",
+   "name": "Edge strip lower left outboard face, CF 10 x 1",
+   "status": "MODELLED",
+   "mass_g": 4.07,
+   "subsystem": "fins",
+   "bbox_px": [
+    1292,
+    888,
+    1439,
+    983
+   ]
+  },
+  {
+   "id": "FIN-011-LLI",
+   "role": "context",
+   "name": "Edge strip lower left inboard face, CF 10 x 1",
+   "status": "MODELLED",
+   "mass_g": 4.07,
+   "subsystem": "fins",
+   "bbox_px": [
+    1276,
+    884,
+    1424,
+    978
+   ]
+  },
+  {
+   "id": "FIN-003-UL",
+   "role": "context",
+   "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)",
+   "status": "MODELLED",
+   "mass_g": 10.54,
+   "subsystem": "fins",
+   "bbox_px": [
+    1260,
+    400,
+    1342,
+    494
+   ]
+  },
+  {
+   "id": "FIN-003-LR",
+   "role": "context",
+   "name": "Motor mount LR, ASA, 7 deg canted plate, slip clamp (print B)",
+   "status": "MODELLED",
+   "mass_g": 10.54,
+   "subsystem": "fins",
+   "bbox_px": [
+    428,
+    726,
+    482,
+    811
+   ]
+  },
+  {
+   "id": "FIN-003-LL",
+   "role": "context",
+   "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)",
+   "status": "MODELLED",
+   "mass_g": 10.54,
+   "subsystem": "fins",
+   "bbox_px": [
+    1233,
+    978,
+    1313,
+    1079
+   ]
+  },
+  {
+   "id": "FIN-101-UR",
+   "role": "context",
+   "name": "Pinch bolt UR: M3x16 SHCS ISO 4762 A2",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "subsystem": "fins",
+   "bbox_px": [
+    388,
+    278,
+    413,
+    292
+   ]
+  },
+  {
+   "id": "FIN-102-UR",
+   "role": "context",
+   "name": "Pinch-bolt nut UR: M3 nyloc ISO 10511 A2",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "subsystem": "fins",
+   "bbox_px": [
+    402,
+    276,
+    413,
+    287
+   ]
+  },
+  {
+   "id": "FIN-103-UR",
+   "role": "context",
+   "name": "Pinch-bolt washer pair UR: 2 x M3 ISO 7089 A2",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "subsystem": "fins",
+   "bbox_px": [
+    390,
+    277,
+    409,
+    292
+   ]
+  },
+  {
+   "id": "FIN-101-UL",
+   "role": "context",
+   "name": "Pinch bolt UL: M3x16 SHCS ISO 4762 A2",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "subsystem": "fins",
+   "bbox_px": [
+    1318,
+    471,
+    1341,
+    489
+   ]
+  },
+  {
+   "id": "FIN-101-LR",
+   "role": "context",
+   "name": "Pinch bolt LR: M3x16 SHCS ISO 4762 A2",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "subsystem": "fins",
+   "bbox_px": [
+    430,
+    730,
+    453,
+    745
+   ]
+  },
+  {
+   "id": "FIN-101-LL",
+   "role": "context",
+   "name": "Pinch bolt LL: M3x16 SHCS ISO 4762 A2",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "subsystem": "fins",
+   "bbox_px": [
+    1292,
+    997,
+    1313,
+    1018
+   ]
+  },
+  {
+   "id": "FIN-102-UL",
+   "role": "context",
+   "name": "Pinch-bolt nut UL: M3 nyloc ISO 10511 A2",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "subsystem": "fins",
+   "bbox_px": [
+    1329,
+    469,
+    1342,
+    482
+   ]
+  },
+  {
+   "id": "FIN-102-LR",
+   "role": "context",
+   "name": "Pinch-bolt nut LR: M3 nyloc ISO 10511 A2",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "subsystem": "fins",
+   "bbox_px": [
+    443,
+    728,
+    453,
+    739
+   ]
+  },
+  {
+   "id": "FIN-102-LL",
+   "role": "context",
+   "name": "Pinch-bolt nut LL: M3 nyloc ISO 10511 A2",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "subsystem": "fins",
+   "bbox_px": [
+    1302,
+    995,
+    1314,
+    1008
+   ]
+  },
+  {
+   "id": "FIN-103-UL",
+   "role": "context",
+   "name": "Pinch-bolt washer pair UL: 2 x M3 ISO 7089 A2",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "subsystem": "fins",
+   "bbox_px": [
+    1320,
+    471,
+    1340,
+    489
+   ]
+  },
+  {
+   "id": "FIN-103-LR",
+   "role": "context",
+   "name": "Pinch-bolt washer pair LR: 2 x M3 ISO 7089 A2",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "subsystem": "fins",
+   "bbox_px": [
+    432,
+    730,
+    450,
+    745
+   ]
+  },
+  {
+   "id": "FIN-103-LL",
+   "role": "context",
+   "name": "Pinch-bolt washer pair LL: 2 x M3 ISO 7089 A2",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "subsystem": "fins",
+   "bbox_px": [
+    1293,
+    998,
+    1312,
+    1017
+   ]
+  },
+  {
+   "id": "POD-001",
+   "role": "context",
+   "name": "Pod shell (foam-board box, XPS LE filler, printed nose lip and antenna tube B)",
+   "status": "MODELLED",
+   "mass_g": 24.7,
+   "subsystem": "pod",
+   "bbox_px": [
+    535,
+    454,
+    964,
+    743
+   ]
+  },
+  {
+   "id": "POD-002",
+   "role": "context",
+   "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics, ribbed PDB and UBEC plates, JR tie bar (printed PETG)",
+   "status": "MODELLED",
+   "mass_g": 43.3,
+   "subsystem": "pod",
+   "bbox_px": [
+    604,
+    539,
+    913,
+    723
+   ]
+  },
+  {
+   "id": "POD-003",
+   "role": "context",
+   "name": "Hatch (foam board, printed tongue, 12 x 40 hook-and-loop tab, antenna tube A)",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "subsystem": "pod",
+   "bbox_px": [
+    547,
+    467,
+    937,
+    629
+   ]
+  },
+  {
+   "id": "POD-004",
+   "role": "context",
+   "name": "Pack straps (2, 20 mm hook-and-loop, rubber-backed) + 2 EVA pads 2.5 mm",
+   "status": "MODELLED",
+   "mass_g": 9.1,
+   "subsystem": "pod",
+   "bbox_px": [
+    664,
+    522,
+    842,
+    679
+   ]
+  },
+  {
+   "id": "POD-009",
+   "role": "context",
+   "name": "Crush block (XPS F-250, hot-wired, cut per pack, vent groove)",
+   "status": "MODELLED",
+   "mass_g": 2.5,
+   "subsystem": "pod",
+   "bbox_px": [
+    606,
+    577,
+    715,
+    709
+   ]
+  },
+  {
+   "id": "POD-010",
+   "role": "context",
+   "name": "Spreader (1.5 mm PETG plate, full block section)",
+   "status": "MODELLED",
+   "mass_g": 5.3,
+   "subsystem": "pod",
+   "bbox_px": [
+    639,
+    576,
+    716,
+    690
+   ]
+  },
+  {
+   "id": "POD-008",
+   "role": "context",
+   "name": "Trim spacer set: PETG U-spacers 2 / 4 / 6 / 8 / 8 mm, colour-coded (white / yellow / green / blue)",
+   "status": "MODELLED",
+   "mass_g": 1.8,
+   "subsystem": "pod",
+   "bbox_px": [
+    783,
+    564,
+    861,
+    605
+   ]
+  },
+  {
+   "id": "POD-006",
+   "role": "context",
+   "name": "Pitot boom socket with 32 mm flange (printed PETG, pod nose, left channel)",
+   "status": "MODELLED",
+   "mass_g": 5.8,
+   "subsystem": "pod",
+   "bbox_px": [
+    681,
+    648,
+    738,
+    714
+   ]
+  },
+  {
+   "id": "POD-007",
+   "role": "context",
+   "name": "Carry handle on the spar with the foot bridge, aft-stop strut and wall brackets (printed PETG) + 'LIFT HERE - do not lift by the motors' label",
+   "status": "MODELLED",
+   "mass_g": 38.6,
+   "subsystem": "pod",
+   "bbox_px": [
+    757,
+    413,
+    953,
+    605
+   ]
+  },
+  {
+   "id": "POD-005",
+   "role": "context",
+   "name": "GPS mast with 45 deg pad (printed PETG, plugs into the handle grip)",
+   "status": "MODELLED",
+   "mass_g": 5.5,
+   "subsystem": "pod",
+   "bbox_px": [
+    823,
+    321,
+    880,
+    434
+   ]
+  },
+  {
+   "id": "POD-011",
+   "role": "context",
+   "name": "GPS mast cross-screw: M3x16 cheese head, nylon PA66 (DIN 84)",
+   "status": "MODELLED",
+   "mass_g": 0.14,
+   "subsystem": "pod",
+   "bbox_px": [
+    845,
+    419,
+    874,
+    431
+   ]
+  },
+  {
+   "id": "POD-012",
+   "role": "context",
+   "name": "GPS mast nut: M3 hex nut, nylon PA66",
+   "status": "MODELLED",
+   "mass_g": 0.05,
+   "subsystem": "pod",
+   "bbox_px": [
+    861,
+    422,
+    869,
+    433
+   ]
+  },
+  {
+   "id": "GER-001-UR",
+   "role": "context",
+   "name": "Foot shoe UR",
+   "status": "MODELLED",
+   "mass_g": 5.68,
+   "subsystem": "landing",
+   "bbox_px": [
+    612,
+    118,
+    701,
+    176
+   ]
+  },
+  {
+   "id": "GER-002-UR",
+   "role": "context",
+   "name": "Foot piston UR",
+   "status": "MODELLED",
+   "mass_g": 3.14,
+   "subsystem": "landing",
+   "bbox_px": [
+    649,
+    108,
+    731,
+    153
+   ]
+  },
+  {
+   "id": "GER-003-UR",
+   "role": "context",
+   "name": "Crush cartridge type U (solid) UR",
+   "status": "MODELLED",
+   "mass_g": 0.66,
+   "subsystem": "landing",
+   "bbox_px": [
+    615,
+    115,
+    727,
+    164
+   ]
+  },
+  {
+   "id": "GER-008-LR",
+   "role": "context",
+   "name": "Crush cartridge type L (bored) LR",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "subsystem": "landing",
+   "bbox_px": [
+    646,
+    630,
+    748,
+    695
+   ]
+  },
+  {
+   "id": "GER-004-UR",
+   "role": "context",
+   "name": "Foot pad UR",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "landing",
+   "bbox_px": [
+    702,
+    107,
+    732,
+    137
+   ]
+  },
+  {
+   "id": "GER-007-R",
+   "role": "context",
+   "name": "Wingtip TE corner cap R",
+   "status": "MODELLED",
+   "mass_g": 0.73,
+   "subsystem": "landing",
+   "bbox_px": [
+    419,
+    350,
+    451,
+    365
+   ]
+  },
+  {
+   "id": "GER-001-UL",
+   "role": "context",
+   "name": "Foot shoe UL",
+   "status": "MODELLED",
+   "mass_g": 5.68,
+   "subsystem": "landing",
+   "bbox_px": [
+    1445,
+    250,
+    1533,
+    323
+   ]
+  },
+  {
+   "id": "GER-001-LR",
+   "role": "context",
+   "name": "Foot shoe LR",
+   "status": "MODELLED",
+   "mass_g": 5.68,
+   "subsystem": "landing",
+   "bbox_px": [
+    642,
+    640,
+    724,
+    699
+   ]
+  },
+  {
+   "id": "GER-001-LL",
+   "role": "context",
+   "name": "Foot shoe LL",
+   "status": "MODELLED",
+   "mass_g": 5.68,
+   "subsystem": "landing",
+   "bbox_px": [
+    1404,
+    846,
+    1484,
+    922
+   ]
+  },
+  {
+   "id": "GER-004-UL",
+   "role": "context",
+   "name": "Foot pad UL",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "landing",
+   "bbox_px": [
+    1512,
+    235,
+    1554,
+    270
+   ]
+  },
+  {
+   "id": "GER-004-LR",
+   "role": "context",
+   "name": "Foot pad LR",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "landing",
+   "bbox_px": [
+    725,
+    626,
+    752,
+    654
+   ]
+  },
+  {
+   "id": "GER-004-LL",
+   "role": "context",
+   "name": "Foot pad LL",
+   "status": "MODELLED",
+   "mass_g": 0.8,
+   "subsystem": "landing",
+   "bbox_px": [
+    1467,
+    826,
+    1504,
+    860
+   ]
+  },
+  {
+   "id": "GER-002-UL",
+   "role": "context",
+   "name": "Foot piston UL",
+   "status": "MODELLED",
+   "mass_g": 3.14,
+   "subsystem": "landing",
+   "bbox_px": [
+    1474,
+    236,
+    1553,
+    293
+   ]
+  },
+  {
+   "id": "GER-002-LR",
+   "role": "context",
+   "name": "Foot piston LR",
+   "status": "MODELLED",
+   "mass_g": 3.14,
+   "subsystem": "landing",
+   "bbox_px": [
+    676,
+    626,
+    751,
+    678
+   ]
+  },
+  {
+   "id": "GER-002-LL",
+   "role": "context",
+   "name": "Foot piston LL",
+   "status": "MODELLED",
+   "mass_g": 3.14,
+   "subsystem": "landing",
+   "bbox_px": [
+    1431,
+    827,
+    1503,
+    893
+   ]
+  },
+  {
+   "id": "GER-003-UL",
+   "role": "context",
+   "name": "Crush cartridge type U (solid) UL",
+   "status": "MODELLED",
+   "mass_g": 0.66,
+   "subsystem": "landing",
+   "bbox_px": [
+    1449,
+    245,
+    1548,
+    309
+   ]
+  },
+  {
+   "id": "GER-008-LL",
+   "role": "context",
+   "name": "Crush cartridge type L (bored) LL",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "subsystem": "landing",
+   "bbox_px": [
+    1408,
+    832,
+    1499,
+    917
+   ]
+  },
+  {
+   "id": "GER-007-L",
+   "role": "context",
+   "name": "Wingtip TE corner cap L",
+   "status": "MODELLED",
+   "mass_g": 0.73,
+   "subsystem": "landing",
+   "bbox_px": [
+    1843,
+    667,
+    1878,
+    690
+   ]
+  },
+  {
+   "id": "PRP-001-UR",
+   "role": "context",
+   "name": "Motor UR SunnySky X3108S KV900 (CW from the nose)",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    343,
+    235,
+    412,
+    303
+   ]
+  },
+  {
+   "id": "PRP-007-UR",
+   "role": "context",
+   "name": "Prop nut UR: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    333,
+    275,
+    352,
+    295
+   ]
+  },
+  {
+   "id": "PRP-008-UR",
+   "role": "context",
+   "name": "Prop washer UR: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    339,
+    274,
+    353,
+    292
+   ]
+  },
+  {
+   "id": "PRP-004-UR",
+   "role": "context",
+   "name": "Prop adapter UR M6x1 LH + nut + washer",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    336,
+    261,
+    374,
+    291
+   ]
+  },
+  {
+   "id": "PRP-003-UR",
+   "role": "context",
+   "name": "Prop UR APC 11x5.5MRP (LP11055MRP)",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    204,
+    239,
+    510,
+    326
+   ]
+  },
+  {
+   "id": "PRP-005-UR",
+   "role": "context",
+   "name": "Motor screw set UR: 4 x M3x8 SHCS ISO 4762 A2",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    380,
+    239,
+    415,
+    279
+   ]
+  },
+  {
+   "id": "PRP-006-UR",
+   "role": "context",
+   "name": "Prop adapter screw set UR: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    350,
+    264,
+    375,
+    289
+   ]
+  },
+  {
+   "id": "PRP-001-UL",
+   "role": "context",
+   "name": "Motor UL SunnySky X3108S KV900 (CCW from the nose)",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1232,
+    413,
+    1325,
+    496
+   ]
+  },
+  {
+   "id": "PRP-007-UL",
+   "role": "context",
+   "name": "Prop nut UL: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1240,
+    466,
+    1261,
+    490
+   ]
+  },
+  {
+   "id": "PRP-008-UL",
+   "role": "context",
+   "name": "Prop washer UL: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1242,
+    465,
+    1264,
+    487
+   ]
+  },
+  {
+   "id": "PRP-004-UL",
+   "role": "context",
+   "name": "Prop adapter UL M6x1 RH + nut + washer",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1243,
+    448,
+    1281,
+    486
+   ]
+  },
+  {
+   "id": "PRP-003-UL",
+   "role": "context",
+   "name": "Prop UL APC 11x5.5MR (LP11055MR)",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1021,
+    423,
+    1513,
+    524
+   ]
+  },
+  {
+   "id": "PRP-005-UL",
+   "role": "context",
+   "name": "Motor screw set UL: 4 x M3x8 SHCS ISO 4762 A2",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1266,
+    417,
+    1309,
+    465
+   ]
+  },
+  {
+   "id": "PRP-006-UL",
+   "role": "context",
+   "name": "Prop adapter screw set UL: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1249,
+    450,
+    1277,
+    480
+   ]
+  },
+  {
+   "id": "PRP-001-LR",
+   "role": "context",
+   "name": "Motor LR SunnySky X3108S KV900 (CCW from the nose)",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    395,
+    760,
+    458,
+    822
+   ]
+  },
+  {
+   "id": "PRP-007-LR",
+   "role": "context",
+   "name": "Prop nut LR: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    386,
+    795,
+    402,
+    812
+   ]
+  },
+  {
+   "id": "PRP-008-LR",
+   "role": "context",
+   "name": "Prop washer LR: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    391,
+    794,
+    404,
+    811
+   ]
+  },
+  {
+   "id": "PRP-004-LR",
+   "role": "context",
+   "name": "Prop adapter LR M6x1 RH + nut + washer",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    388,
+    783,
+    424,
+    811
+   ]
+  },
+  {
+   "id": "PRP-003-LR",
+   "role": "context",
+   "name": "Prop LR APC 11x5.5MR (LP11055MR)",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    266,
+    743,
+    551,
+    861
+   ]
+  },
+  {
+   "id": "PRP-005-LR",
+   "role": "context",
+   "name": "Motor screw set LR: 4 x M3x8 SHCS ISO 4762 A2",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    429,
+    766,
+    461,
+    801
+   ]
+  },
+  {
+   "id": "PRP-006-LR",
+   "role": "context",
+   "name": "Prop adapter screw set LR: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    403,
+    785,
+    423,
+    809
+   ]
+  },
+  {
+   "id": "PRP-001-LL",
+   "role": "context",
+   "name": "Motor LL SunnySky X3108S KV900 (CW from the nose)",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1210,
+    1022,
+    1295,
+    1098
+   ]
+  },
+  {
+   "id": "PRP-007-LL",
+   "role": "context",
+   "name": "Prop nut LL: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1217,
+    1069,
+    1237,
+    1091
+   ]
+  },
+  {
+   "id": "PRP-008-LL",
+   "role": "context",
+   "name": "Prop washer LL: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1219,
+    1068,
+    1239,
+    1088
+   ]
+  },
+  {
+   "id": "PRP-004-LL",
+   "role": "context",
+   "name": "Prop adapter LL M6x1 LH + nut + washer",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1220,
+    1053,
+    1254,
+    1087
+   ]
+  },
+  {
+   "id": "PRP-003-LL",
+   "role": "context",
+   "name": "Prop LL APC 11x5.5MRP (LP11055MRP)",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1019,
+    1007,
+    1464,
+    1148
+   ]
+  },
+  {
+   "id": "PRP-005-LL",
+   "role": "context",
+   "name": "Motor screw set LL: 4 x M3x8 SHCS ISO 4762 A2",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1241,
+    1026,
+    1280,
+    1069
+   ]
+  },
+  {
+   "id": "PRP-006-LL",
+   "role": "context",
+   "name": "Prop adapter screw set LL: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1225,
+    1055,
+    1251,
+    1083
+   ]
+  },
+  {
+   "id": "PRP-002-UR",
+   "role": "context",
+   "name": "ESC UR LANRC 45 A",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    446,
+    311,
+    500,
+    358
+   ]
+  },
+  {
+   "id": "PRP-002-UL",
+   "role": "context",
+   "name": "ESC UL LANRC 45 A",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1332,
+    496,
+    1378,
+    557
+   ]
+  },
+  {
+   "id": "PRP-002-LR",
+   "role": "context",
+   "name": "ESC LR LANRC 45 A",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    473,
+    626,
+    524,
+    675
+   ]
+  },
+  {
+   "id": "PRP-002-LL",
+   "role": "context",
+   "name": "ESC LL LANRC 45 A",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "subsystem": "propulsion",
+   "bbox_px": [
+    1313,
+    861,
+    1356,
+    924
+   ]
+  },
+  {
+   "id": "MEC-001-R",
+   "role": "context",
+   "name": "Elevon servo Savox SH-0255MG+ right",
+   "status": "MODELLED",
+   "mass_g": 15.8,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    612,
+    458,
+    661,
+    491
+   ]
+  },
+  {
+   "id": "MEC-002-R",
+   "role": "context",
+   "name": "Servo arm, single, hole at 15.6 mm right",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    617,
+    462,
+    626,
+    491
+   ]
+  },
+  {
+   "id": "MEC-003-R",
+   "role": "context",
+   "name": "Pushrod 2-56 steel, Z-bend + steel clevis + keeper right",
+   "status": "MODELLED",
+   "mass_g": 1.58,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    622,
+    468,
+    672,
+    489
+   ]
+  },
+  {
+   "id": "MEC-004-R",
+   "role": "context",
+   "name": "Control horn, inboard panel (clevis + rod boss) right",
+   "status": "MODELLED",
+   "mass_g": 3.13,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    655,
+    425,
+    709,
+    476
+   ]
+  },
+  {
+   "id": "MEC-005-R",
+   "role": "context",
+   "name": "Inter-panel rod, 1/8 in pultruded CF right",
+   "status": "MODELLED",
+   "mass_g": 0.85,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    595,
+    439,
+    669,
+    461
+   ]
+  },
+  {
+   "id": "MEC-006-R",
+   "role": "context",
+   "name": "Link horn, outboard panel (rod boss) right",
+   "status": "MODELLED",
+   "mass_g": 2.73,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    590,
+    408,
+    634,
+    449
+   ]
+  },
+  {
+   "id": "MEC-007-R",
+   "role": "context",
+   "name": "Servo cover with arm slot right",
+   "status": "MODELLED",
+   "mass_g": 1.53,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    593,
+    467,
+    676,
+    498
+   ]
+  },
+  {
+   "id": "MEC-008-R",
+   "role": "context",
+   "name": "Servo frame (ear slots, cover bosses) right",
+   "status": "MODELLED",
+   "mass_g": 3.19,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    597,
+    452,
+    668,
+    494
+   ]
+  },
+  {
+   "id": "MEC-009-RI",
+   "role": "context",
+   "name": "Elevon torque tube CF 5 x 4 mm right, inboard panel",
+   "status": "MODELLED",
+   "mass_g": 2.24,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    662,
+    435,
+    846,
+    484
+   ]
+  },
+  {
+   "id": "MEC-009-RO",
+   "role": "context",
+   "name": "Elevon torque tube CF 5 x 4 mm right, outboard panel",
+   "status": "MODELLED",
+   "mass_g": 2.93,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    399,
+    374,
+    613,
+    430
+   ]
+  },
+  {
+   "id": "MEC-010-R",
+   "role": "context",
+   "name": "Elevon hinge tape, two strips right",
+   "status": "MODELLED",
+   "mass_g": 0.56,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    378,
+    368,
+    924,
+    500
+   ]
+  },
+  {
+   "id": "MEC-001-L",
+   "role": "context",
+   "name": "Elevon servo Savox SH-0255MG+ left",
+   "status": "MODELLED",
+   "mass_g": 15.8,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1289,
+    619,
+    1346,
+    659
+   ]
+  },
+  {
+   "id": "MEC-002-L",
+   "role": "context",
+   "name": "Servo arm, single, hole at 15.6 mm left",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1341,
+    635,
+    1350,
+    669
+   ]
+  },
+  {
+   "id": "MEC-003-L",
+   "role": "context",
+   "name": "Pushrod 2-56 steel, Z-bend + steel clevis + keeper left",
+   "status": "MODELLED",
+   "mass_g": 1.58,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1343,
+    637,
+    1384,
+    666
+   ]
+  },
+  {
+   "id": "MEC-004-L",
+   "role": "context",
+   "name": "Control horn, inboard panel (clevis + rod boss) left",
+   "status": "MODELLED",
+   "mass_g": 3.13,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1378,
+    585,
+    1418,
+    647
+   ]
+  },
+  {
+   "id": "MEC-005-L",
+   "role": "context",
+   "name": "Inter-panel rod, 1/8 in pultruded CF left",
+   "status": "MODELLED",
+   "mass_g": 0.85,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1384,
+    625,
+    1485,
+    653
+   ]
+  },
+  {
+   "id": "MEC-006-L",
+   "role": "context",
+   "name": "Link horn, outboard panel (rod boss) left",
+   "status": "MODELLED",
+   "mass_g": 2.73,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1467,
+    609,
+    1521,
+    661
+   ]
+  },
+  {
+   "id": "MEC-007-L",
+   "role": "context",
+   "name": "Servo cover with arm slot left",
+   "status": "MODELLED",
+   "mass_g": 1.53,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1273,
+    629,
+    1364,
+    669
+   ]
+  },
+  {
+   "id": "MEC-008-L",
+   "role": "context",
+   "name": "Servo frame (ear slots, cover bosses) left",
+   "status": "MODELLED",
+   "mass_g": 3.19,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1282,
+    613,
+    1359,
+    665
+   ]
+  },
+  {
+   "id": "MEC-009-LI",
+   "role": "context",
+   "name": "Elevon torque tube CF 5 x 4 mm left, inboard panel",
+   "status": "MODELLED",
+   "mass_g": 2.24,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1178,
+    554,
+    1405,
+    614
+   ]
+  },
+  {
+   "id": "MEC-009-LO",
+   "role": "context",
+   "name": "Elevon torque tube CF 5 x 4 mm left, outboard panel",
+   "status": "MODELLED",
+   "mass_g": 2.93,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1475,
+    623,
+    1812,
+    709
+   ]
+  },
+  {
+   "id": "MEC-010-L",
+   "role": "context",
+   "name": "Elevon hinge tape, two strips left",
+   "status": "MODELLED",
+   "mass_g": 0.56,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1080,
+    529,
+    1823,
+    711
+   ]
+  },
+  {
+   "id": "MEC-011-R",
+   "role": "context",
+   "name": "Servo cover screw pair R: 2 x M2 x 6 self-tapping pan head A2",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    632,
+    471,
+    665,
+    496
+   ]
+  },
+  {
+   "id": "MEC-012-R",
+   "role": "context",
+   "name": "Servo arm screw R: M2 x 4 pan head (supplied with MEC-001)",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    617,
+    464,
+    625,
+    470
+   ]
+  },
+  {
+   "id": "MEC-011-L",
+   "role": "context",
+   "name": "Servo cover screw pair L: 2 x M2 x 6 self-tapping pan head A2",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1286,
+    627,
+    1314,
+    657
+   ]
+  },
+  {
+   "id": "MEC-012-L",
+   "role": "context",
+   "name": "Servo arm screw L: M2 x 4 pan head (supplied with MEC-001)",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "subsystem": "mechanisms",
+   "bbox_px": [
+    1341,
+    639,
+    1351,
+    646
+   ]
+  },
+  {
+   "id": "PWR-001",
+   "role": "context",
+   "name": "Flight pack 4S 6500 mAh (re-terminated AS150U, own 10 AWG leads 0.10 m)",
+   "status": "MODELLED",
+   "mass_g": 550.0,
+   "subsystem": "power",
+   "bbox_px": [
+    645,
+    515,
+    915,
+    684
+   ]
+  },
+  {
+   "id": "PWR-006",
+   "role": "context",
+   "name": "Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)",
+   "status": "MODELLED",
+   "mass_g": 7.36,
+   "subsystem": "power",
+   "bbox_px": [
+    769,
+    557,
+    918,
+    650
+   ]
+  },
+  {
+   "id": "PWR-003",
+   "role": "context",
+   "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack",
+   "status": "MODELLED",
+   "mass_g": 28.0,
+   "subsystem": "power",
+   "bbox_px": [
+    770,
+    594,
+    857,
+    644
+   ]
+  },
+  {
+   "id": "PWR-002",
+   "role": "context",
+   "name": "Main disconnect AS150U aircraft half + two 10 AWG main jumpers",
+   "status": "MODELLED",
+   "mass_g": 18.6,
+   "subsystem": "power",
+   "bbox_px": [
+    831,
+    567,
+    889,
+    612
+   ]
+  },
+  {
+   "id": "PWR-004",
+   "role": "context",
+   "name": "Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)",
+   "status": "MODELLED",
+   "mass_g": 7.3,
+   "subsystem": "power",
+   "bbox_px": [
+    796,
+    633,
+    853,
+    663
+   ]
+  },
+  {
+   "id": "PWR-007",
+   "role": "context",
+   "name": "UBEC feed fuse 5 A mini blade in an inline holder",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "subsystem": "power",
+   "bbox_px": [
+    858,
+    598,
+    898,
+    631
+   ]
+  },
+  {
+   "id": "PWR-005",
+   "role": "context",
+   "name": "UBEC 6.0 V, 8 A class, servo rail",
+   "status": "MODELLED",
+   "mass_g": 13.0,
+   "subsystem": "power",
+   "bbox_px": [
+    749,
+    541,
+    817,
+    584
+   ]
+  },
+  {
+   "id": "PWR-008-UR",
+   "role": "context",
+   "name": "ESC capacitor 680 uF 25 V low-ESR, UR",
+   "status": "MODELLED",
+   "mass_g": 2.2,
+   "subsystem": "power",
+   "bbox_px": [
+    492,
+    308,
+    523,
+    332
+   ]
+  },
+  {
+   "id": "PWR-008-UL",
+   "role": "context",
+   "name": "ESC capacitor 680 uF 25 V low-ESR, UL",
+   "status": "MODELLED",
+   "mass_g": 2.2,
+   "subsystem": "power",
+   "bbox_px": [
+    1368,
+    491,
+    1399,
+    522
+   ]
+  },
+  {
+   "id": "PWR-008-LR",
+   "role": "context",
+   "name": "ESC capacitor 680 uF 25 V low-ESR, LR",
+   "status": "MODELLED",
+   "mass_g": 2.2,
+   "subsystem": "power",
+   "bbox_px": [
+    516,
+    620,
+    546,
+    645
+   ]
+  },
+  {
+   "id": "PWR-008-LL",
+   "role": "context",
+   "name": "ESC capacitor 680 uF 25 V low-ESR, LL",
+   "status": "MODELLED",
+   "mass_g": 2.2,
+   "subsystem": "power",
+   "bbox_px": [
+    1347,
+    852,
+    1377,
+    884
+   ]
+  },
+  {
+   "id": "PWR-107",
+   "role": "context",
+   "name": "Power-frame insert set: 4 x M3 x 5.7 brass heat-set insert in POD-002",
+   "status": "MODELLED",
+   "mass_g": 1.6,
+   "subsystem": "power",
+   "bbox_px": [
+    791,
+    627,
+    858,
+    663
+   ]
+  },
+  {
+   "id": "PWR-102",
+   "role": "context",
+   "name": "Power-frame spacer set: 4 x nylon spacer M3, 10 mm, OD 6 / ID 3.2",
+   "status": "MODELLED",
+   "mass_g": 0.92,
+   "subsystem": "power",
+   "bbox_px": [
+    789,
+    611,
+    859,
+    654
+   ]
+  },
+  {
+   "id": "PWR-103",
+   "role": "context",
+   "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm",
+   "status": "MODELLED",
+   "mass_g": 0.08,
+   "subsystem": "power",
+   "bbox_px": [
+    788,
+    607,
+    859,
+    636
+   ]
+  },
+  {
+   "id": "PWR-101",
+   "role": "context",
+   "name": "Power-frame screw set: 4 x M3x18 pan head, nylon PA66",
+   "status": "MODELLED",
+   "mass_g": 0.64,
+   "subsystem": "power",
+   "bbox_px": [
+    790,
+    605,
+    858,
+    662
+   ]
+  },
+  {
+   "id": "AVN-001",
+   "role": "context",
+   "name": "Flight controller CoreWing F405 Wing APP V2",
+   "status": "MODELLED",
+   "mass_g": 12.0,
+   "subsystem": "avionics",
+   "bbox_px": [
+    663,
+    571,
+    758,
+    622
+   ]
+  },
+  {
+   "id": "AVN-006",
+   "role": "context",
+   "name": "Isolation and retention set: 4 gel cubes, foam tape, ties, FC strap",
+   "status": "MODELLED",
+   "mass_g": 2.4,
+   "subsystem": "avionics",
+   "bbox_px": [
+    673,
+    586,
+    749,
+    626
+   ]
+  },
+  {
+   "id": "AVN-007",
+   "role": "context",
+   "name": "microSD 16-32 GB (logging)",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "subsystem": "avionics",
+   "bbox_px": [
+    676,
+    605,
+    705,
+    618
+   ]
+  },
+  {
+   "id": "AVN-004",
+   "role": "context",
+   "name": "Airspeed sensor MS4525DO (I2C 0x28)",
+   "status": "MODELLED",
+   "mass_g": 4.51,
+   "subsystem": "avionics",
+   "bbox_px": [
+    732,
+    637,
+    803,
+    687
+   ]
+  },
+  {
+   "id": "AVN-005",
+   "role": "context",
+   "name": "Pitot boom (plug-in): pitot-static probe in a printed keyed sleeve",
+   "status": "MODELLED",
+   "mass_g": 4.84,
+   "subsystem": "avionics",
+   "bbox_px": [
+    605,
+    659,
+    742,
+    742
+   ]
+  },
+  {
+   "id": "AVN-003",
+   "role": "context",
+   "name": "RC receiver RadioMaster RP3 V2 (ELRS 2.4 GHz)",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "subsystem": "avionics",
+   "bbox_px": [
+    777,
+    649,
+    821,
+    671
+   ]
+  },
+  {
+   "id": "AVN-002",
+   "role": "context",
+   "name": "GPS + compass HGLRC M100-5883",
+   "status": "MODELLED",
+   "mass_g": 7.73,
+   "subsystem": "avionics",
+   "bbox_px": [
+    824,
+    320,
+    871,
+    362
+   ]
+  },
+  {
+   "id": "E-HRN-10",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    835,
+    539,
+    906,
+    585
+   ]
+  },
+  {
+   "id": "E-HRN-11",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    821,
+    587,
+    842,
+    603
+   ]
+  },
+  {
+   "id": "E-HRN-12",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    831,
+    598,
+    852,
+    641
+   ]
+  },
+  {
+   "id": "E-HRN-13",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    469,
+    335,
+    905,
+    637
+   ]
+  },
+  {
+   "id": "E-HRN-14",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    836,
+    525,
+    1374,
+    694
+   ]
+  },
+  {
+   "id": "E-HRN-15",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    476,
+    533,
+    905,
+    637
+   ]
+  },
+  {
+   "id": "E-HRN-16",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    836,
+    588,
+    1354,
+    870
+   ]
+  },
+  {
+   "id": "E-HRN-17",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    366,
+    250,
+    453,
+    346
+   ]
+  },
+  {
+   "id": "E-HRN-18",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    1315,
+    440,
+    1346,
+    543
+   ]
+  },
+  {
+   "id": "E-HRN-19",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    416,
+    661,
+    480,
+    782
+   ]
+  },
+  {
+   "id": "E-HRN-20",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    1285,
+    908,
+    1322,
+    1064
+   ]
+  },
+  {
+   "id": "E-HRN-21",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    844,
+    620,
+    869,
+    639
+   ]
+  },
+  {
+   "id": "E-HRN-22",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    720,
+    567,
+    762,
+    580
+   ]
+  },
+  {
+   "id": "E-HRN-23",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    678,
+    605,
+    798,
+    645
+   ]
+  },
+  {
+   "id": "E-HRN-24",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    472,
+    340,
+    763,
+    584
+   ]
+  },
+  {
+   "id": "E-HRN-25",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    737,
+    531,
+    1369,
+    697
+   ]
+  },
+  {
+   "id": "E-HRN-26",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    479,
+    539,
+    767,
+    631
+   ]
+  },
+  {
+   "id": "E-HRN-27",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    735,
+    537,
+    1349,
+    868
+   ]
+  },
+  {
+   "id": "E-HRN-28",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    732,
+    522,
+    1335,
+    661
+   ]
+  },
+  {
+   "id": "E-HRN-29",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    538,
+    457,
+    826,
+    582
+   ]
+  },
+  {
+   "id": "E-HRN-30",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    736,
+    327,
+    865,
+    583
+   ]
+  },
+  {
+   "id": "E-HRN-31",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    691,
+    614,
+    804,
+    657
+   ]
+  },
+  {
+   "id": "E-HRN-32",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    718,
+    588,
+    792,
+    666
+   ]
+  },
+  {
+   "id": "E-HRN-33",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    806,
+    532,
+    900,
+    610
+   ]
+  },
+  {
+   "id": "E-HRN-34",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    493,
+    322,
+    500,
+    332
+   ]
+  },
+  {
+   "id": "E-HRN-35",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    1369,
+    510,
+    1379,
+    521
+   ]
+  },
+  {
+   "id": "E-HRN-36",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    517,
+    633,
+    524,
+    640
+   ]
+  },
+  {
+   "id": "E-HRN-37",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "harness",
+   "bbox_px": [
+    1349,
+    869,
+    1357,
+    877
+   ]
+  }
+ ],
+ "hidden": [
+  "GER-005",
+  "GER-006",
+  "GER-009",
+  "GER-010",
+  "GER-011",
+  "GER-012",
+  "GER-013",
+  "HRN-001",
+  "HRN-002-L",
+  "HRN-002-R",
+  "TRN-001",
+  "TRN-002-L",
+  "TRN-002-R",
+  "TRN-003",
+  "TRN-004-L",
+  "TRN-004-R",
+  "TRN-005",
+  "TRN-006-L",
+  "TRN-006-R",
+  "TRN-007-C",
+  "TRN-007-L",
+  "TRN-007-R",
+  "TRN-008",
+  "TRN-102-C",
+  "TRN-102-L",
+  "TRN-102-R"
+ ],
+ "clipped": [],
+ "legend": [
+  "context"
+ ],
+ "files": {
+  "png": "hero-iso.png",
+  "jpg": "hero-iso.jpg"
+ }
+}
