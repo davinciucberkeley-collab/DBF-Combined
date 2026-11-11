@@ -133,6 +133,7 @@ models, each with a convergence check and a comparison to hand calculations. Rep
 | Area | Start here |
 |---|---|
 | Front door, key numbers, directory map | [README.md](README.md) |
+| Bill of materials (priced, with order plan) | [Excel: team/I1/K09L-BOM.xlsx](team/I1/K09L-BOM.xlsx) · [BOM.csv](team/I1/BOM.csv) · [ORDER-PLAN.md](team/I1/ORDER-PLAN.md) |
 | Proof chains (every number traced to its source) | [PROOFS.md](PROOFS.md) |
 | What is done, what fails, what needs tests | [STATUS.md](STATUS.md) |
 | What the team does next, what to order | [HANDOFF.md](HANDOFF.md) |

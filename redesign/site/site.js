@@ -4,7 +4,7 @@
 import { DIMS, C } from './data/concepts.js';
 import { start as startViewer, viewer } from './viewer.js';
 
-const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'simulations', 'status', 'docs'];
+const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'simulations', 'status', 'bom', 'docs'];
 const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', simulations: 'Simulations', status: 'Status', docs: 'Docs' };
 const store = { get(k) { try { return localStorage.getItem('k09l.' + k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem('k09l.' + k, v); } catch (e) { /* storage blocked: fine */ } } };
