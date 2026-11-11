@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
-import M from './model.js';
+import M from './model.js?v=20261111c';
 
 const GH = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/';
 const $ = s => document.querySelector(s);
@@ -151,8 +151,8 @@ function placeHwMarkers() {
   }
 }
 function setFast(on) {
-  if (!G.root) return;
   S.fast = on; $('#fast').setAttribute('aria-pressed', String(on));
+  if (!G.root) { S.fastPending = true; return; }   // clicked while the model loads: apply once it is ready (see start())
   if (on) { buildHwMarkers(); hwMaterial(); }
   applyLook(); renderTree(true); if (!S.sel) renderPanel(); hint();
 }
@@ -726,7 +726,7 @@ export async function start() {
   readColours(); wire(); hint();
   progress(0, 'reading part data');
   let data;
-  try { const r = await fetch('data/viewer-data.json'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  try { const r = await fetch('data/viewer-data.json?v=20261111c'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
   catch (e) { loadFailed('Part data not found', esc(e.message) + '<br>data/viewer-data.json is built by redesign/viewer/build_data.py --out site/data'); return; }
   S.data = data; S.idx = M.index(data);
   renderCounts(); renderTree(); renderPanel();
@@ -734,7 +734,7 @@ export async function start() {
   const total = (data.glb && data.glb.bytes) || 3443204;
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/k09l.glb', res,
+    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/k09l.glb?v=20261111c', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/k09l.glb'); return; }
   progress(1, 'building scene');
@@ -746,4 +746,5 @@ export async function start() {
   renderTree(true);
   $('#loading').classList.add('done');
   S.ready = true; window.__k09lReady = true;
+  if (S.fastPending) { S.fastPending = false; setFast(S.fast); }
 }

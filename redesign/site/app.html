@@ -3,8 +3,8 @@
 <meta name="description" content="K09-L quad tailsitter: 3-D aircraft explorer, configuration decision, team, subsystems, simulations, status and documents. UC Berkeley MEng capstone DBF VTOL redesign.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="site.css">
-<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="site.css?v=20261111c">
+<link rel="stylesheet" href="app.css?v=20261111c">
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
@@ -1527,6 +1527,6 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 .bom-bar i{height:10px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--v),var(--panel-3) var(--v))}.bom-bar b{font-family:var(--font-mono);font-weight:500;text-align:right}
 #bom-table tr.gated td{color:var(--fg-3)}#bom-table .pid{display:block;font-family:var(--font-mono);font-size:11px;color:var(--fg-3)}#bom-table td.id{font-family:var(--font-mono);font-size:var(--text-xs)}
 </style>
-<script type="module" src="site.js"></script>
+<script type="module" src="site.js?v=20261111c"></script>
 <script>(function(){var q=document.getElementById('bom-q'),g=document.getElementById('bom-g'),w=document.getElementById('bom-w'),c=document.getElementById('bom-count');if(!q)return;var rows=[].slice.call(document.querySelectorAll('#bom-table tbody tr'));function f(){var s=q.value.trim().toLowerCase(),n=0;rows.forEach(function(r){var ok=(!g.value||r.dataset.group===g.value)&&(!w.value||r.dataset.wave===w.value)&&(!s||r.textContent.toLowerCase().indexOf(s)>=0);r.hidden=!ok;if(ok)n++;});c.textContent=n+' of '+rows.length;}[q,g,w].forEach(function(e){e.addEventListener('input',f);});f();})();</script>
 
