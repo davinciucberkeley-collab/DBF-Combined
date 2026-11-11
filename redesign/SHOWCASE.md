@@ -5,6 +5,8 @@ place that GitHub displays directly: CAD renders, interactive 3-D models, the mo
 decision, the engineering team, simulations and status. Numbers and sources live in [README.md](README.md);
 what is finished and what is not is in [STATUS.md](STATUS.md); next steps for the team in [HANDOFF.md](HANDOFF.md).
 
+> **Interactive version:** [`site/index.html`](site/index.html) is the whole programme as one web app: a rotatable 3-D model of the K09-L (aircraft, inside & wiring, structure, exploded), the clickable morphological chart, team, subsystems, simulations, status and documents. Open it from a local clone, or online once GitHub Pages is enabled for this branch.
+
 ![K09-L in cruise attitude](showcase/renders/hero-iso.png)
 *K09-L in cruise attitude: a 1.15 m flying wing with two fins, each carrying a motor above and below the wing. It
 stands on its fin tips, takes off as a quadcopter, pitches 90° to fly on the wing, and pitches back to land.
