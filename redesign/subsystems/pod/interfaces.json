@@ -152,6 +152,38 @@
    ],
    "make_or_buy": "make",
    "notes": "between the crush block and the pack fore face; spreads the pack face load over the block section (C5); mass EST from CAD (team/D2/pod_data.py): PETG plate 5.3 g"
+  },
+  {
+   "id": "POD-011",
+   "name": "GPS mast cross-screw: M3x16 cheese head, nylon PA66 (DIN 84)",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 0.14,
+   "material": "nylon PA66",
+   "cg_xyz_m": [
+    0.08,
+    -0.0028,
+    0.122
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-POD-06",
+   "hardware_of": "E-POD-06"
+  },
+  {
+   "id": "POD-012",
+   "name": "GPS mast nut: M3 hex nut, nylon PA66",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 0.05,
+   "material": "nylon PA66",
+   "cg_xyz_m": [
+    0.08,
+    -0.0082,
+    0.122
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-POD-06",
+   "hardware_of": "E-POD-06"
   }
  ],
  "connection_types": [
@@ -184,6 +216,12 @@
    "kind": "mechanical",
    "method": "fastened",
    "spec": "M3 PA66 (nylon) screw through a clearance hole, PA66 nut, finger tight + 1/4 turn (non-magnetic, near a compass; the screw is a fuse)"
+  },
+  {
+   "id": "CT-HW-SEATED",
+   "kind": "mechanical",
+   "method": "clamped",
+   "spec": "fastener hardware seated in a fastened joint (screw in its hole or thread, nut / washer / spacer under it, heat-set insert in its bore); the joint_stack is on the parent edge named in hardware_of"
   }
  ],
  "edges": [
@@ -436,6 +474,46 @@
     "t_design_c": 44.8,
     "claim": "CL-E3-PACK-END"
    }
+  },
+  {
+   "id": "E-POD-101",
+   "part_a": "POD-011",
+   "part_b": "POD-007",
+   "via": "CT-HW-SEATED",
+   "owner": "pod",
+   "notes": "hardware of E-POD-06 (joint stack there); seated on POD-007",
+   "hardware": true,
+   "hardware_of": "E-POD-06"
+  },
+  {
+   "id": "E-POD-102",
+   "part_a": "POD-011",
+   "part_b": "POD-005",
+   "via": "CT-HW-SEATED",
+   "owner": "pod",
+   "notes": "hardware of E-POD-06 (joint stack there); seated on POD-005",
+   "hardware": true,
+   "hardware_of": "E-POD-06"
+  },
+  {
+   "id": "E-POD-103",
+   "part_a": "POD-012",
+   "part_b": "POD-011",
+   "via": "CT-HW-SEATED",
+   "owner": "pod",
+   "notes": "hardware of E-POD-06 (joint stack there); seated on POD-011",
+   "hardware": true,
+   "hardware_of": "E-POD-06"
+  },
+  {
+   "id": "E-POD-104",
+   "part_a": "POD-012",
+   "part_b": "POD-007",
+   "via": "CT-HW-SEATED",
+   "owner": "pod",
+   "notes": "hardware of E-POD-06 (joint stack there); seated on POD-007",
+   "hardware": true,
+   "hardware_of": "E-POD-06"
   }
  ],
  "acknowledges": [
@@ -450,6 +528,8 @@
   "E-AVN-07",
   "E-AVN-10",
   "E-HRN-01",
-  "E-WNG-17"
+  "E-WNG-17",
+  "E-PWR-104",
+  "E-PWR-106"
  ]
 }

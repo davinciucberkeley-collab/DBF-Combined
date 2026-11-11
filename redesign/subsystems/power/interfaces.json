@@ -88,7 +88,7 @@
    "name": "Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)",
    "subsystem": "power",
    "status": "MODELLED",
-   "mass_g": 9.0,
+   "mass_g": 7.36,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.0102,
@@ -96,7 +96,8 @@
     0.0386
    ],
    "make_or_buy": "make",
-   "notes": "PETG 100 % (2 mm plates), 4 perimeters; screws, spacers, washers, tie and tape inside the mass"
+   "notes": "PETG 100 % (2 mm plates), 4 perimeters; screws, spacers, washers, tie and tape inside the mass",
+   "hw_moved_g": 1.64
   },
   {
    "id": "PWR-007",
@@ -177,6 +178,70 @@
    "make_or_buy": "buy",
    "electrical": "sink",
    "notes": "at the ESC power pads, leads <= 20 mm; on the outboard face beside the ESC, never under its strap"
+  },
+  {
+   "id": "PWR-101",
+   "name": "Power-frame screw set: 4 x M3x18 pan head, nylon PA66",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 0.64,
+   "material": "nylon PA66",
+   "cg_xyz_m": [
+    -0.021,
+    -0.0464,
+    0.0323
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PWR-03",
+   "hardware_of": "E-PWR-03"
+  },
+  {
+   "id": "PWR-102",
+   "name": "Power-frame spacer set: 4 x nylon spacer M3, 10 mm, OD 6 / ID 3.2",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 0.92,
+   "material": "nylon PA66",
+   "cg_xyz_m": [
+    -0.021,
+    -0.0463,
+    0.0316
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PWR-03",
+   "hardware_of": "E-PWR-03"
+  },
+  {
+   "id": "PWR-103",
+   "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 0.08,
+   "material": "nylon PA66",
+   "cg_xyz_m": [
+    -0.021,
+    -0.0464,
+    0.0389
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PWR-03",
+   "hardware_of": "E-PWR-03"
+  },
+  {
+   "id": "PWR-107",
+   "name": "Power-frame insert set: 4 x M3 x 5.7 brass heat-set insert in POD-002",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 1.6,
+   "material": "brass (CuZn39Pb3)",
+   "cg_xyz_m": [
+    -0.021,
+    -0.0464,
+    0.0238
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PWR-03",
+   "hardware_of": "E-PWR-03"
   }
  ],
  "connection_types": [
@@ -191,6 +256,12 @@
    "kind": "mechanical",
    "method": "press_fit",
    "spec": "bought part snapped into a printed clip (fuse holder), removable by hand"
+  },
+  {
+   "id": "CT-HW-SEATED",
+   "kind": "mechanical",
+   "method": "clamped",
+   "spec": "fastener hardware seated in a fastened joint (screw in its hole or thread, nut / washer / spacer under it, heat-set insert in its bore); the joint_stack is on the parent edge named in hardware_of"
   }
  ],
  "edges": [
@@ -351,6 +422,66 @@
     "load_n": "2.2 g x 12.75 g = 0.3 N; prop-wash drag < 0.1 N",
     "inspection": "pre-flight: cap tight on the fin"
    }
+  },
+  {
+   "id": "E-PWR-101",
+   "part_a": "PWR-101",
+   "part_b": "PWR-006",
+   "via": "CT-HW-SEATED",
+   "owner": "power",
+   "notes": "hardware of E-PWR-03 (joint stack there); seated on PWR-006",
+   "hardware": true,
+   "hardware_of": "E-PWR-03"
+  },
+  {
+   "id": "E-PWR-102",
+   "part_a": "PWR-101",
+   "part_b": "PWR-107",
+   "via": "CT-HW-SEATED",
+   "owner": "power",
+   "notes": "hardware of E-PWR-03 (joint stack there); seated on PWR-107",
+   "hardware": true,
+   "hardware_of": "E-PWR-03"
+  },
+  {
+   "id": "E-PWR-103",
+   "part_a": "PWR-102",
+   "part_b": "PWR-006",
+   "via": "CT-HW-SEATED",
+   "owner": "power",
+   "notes": "hardware of E-PWR-03 (joint stack there); seated on PWR-006",
+   "hardware": true,
+   "hardware_of": "E-PWR-03"
+  },
+  {
+   "id": "E-PWR-104",
+   "part_a": "PWR-102",
+   "part_b": "POD-002",
+   "via": "CT-HW-SEATED",
+   "owner": "power",
+   "notes": "hardware of E-PWR-03 (joint stack there); seated on POD-002",
+   "hardware": true,
+   "hardware_of": "E-PWR-03"
+  },
+  {
+   "id": "E-PWR-105",
+   "part_a": "PWR-103",
+   "part_b": "PWR-006",
+   "via": "CT-HW-SEATED",
+   "owner": "power",
+   "notes": "hardware of E-PWR-03 (joint stack there); seated on PWR-006",
+   "hardware": true,
+   "hardware_of": "E-PWR-03"
+  },
+  {
+   "id": "E-PWR-106",
+   "part_a": "PWR-107",
+   "part_b": "POD-002",
+   "via": "CT-HW-SEATED",
+   "owner": "power",
+   "notes": "hardware of E-PWR-03 (joint stack there); seated on POD-002",
+   "hardware": true,
+   "hardware_of": "E-PWR-03"
   }
  ],
  "acknowledges": [

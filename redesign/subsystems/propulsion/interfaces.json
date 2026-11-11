@@ -8,7 +8,7 @@
    "name": "Motor UR SunnySky X3108S KV900 (CW from the nose)",
    "subsystem": "propulsion",
    "status": "MODELLED",
-   "mass_g": 84.2,
+   "mass_g": 81.0,
    "material": "motor (bought)",
    "cg_xyz_m": [
     0.0106,
@@ -17,7 +17,8 @@
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
-   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print A (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)"
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print A (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)",
+   "hw_moved_g": 3.2
   },
   {
    "id": "PRP-002-UR",
@@ -55,7 +56,7 @@
    "name": "Prop adapter UR M6x1 LH + nut + washer",
    "subsystem": "propulsion",
    "status": "MODELLED",
-   "mass_g": 6.7,
+   "mass_g": 3.0,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
     -0.0096,
@@ -63,14 +64,15 @@
     0.1864
    ],
    "make_or_buy": "buy",
-   "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21); CG = CAD centroid"
+   "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21); CG = CAD centroid",
+   "hw_moved_g": 3.7
   },
   {
    "id": "PRP-001-UL",
    "name": "Motor UL SunnySky X3108S KV900 (CCW from the nose)",
    "subsystem": "propulsion",
    "status": "MODELLED",
-   "mass_g": 84.2,
+   "mass_g": 81.0,
    "material": "motor (bought)",
    "cg_xyz_m": [
     0.0106,
@@ -79,7 +81,8 @@
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
-   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print B (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)"
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print B (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)",
+   "hw_moved_g": 3.2
   },
   {
    "id": "PRP-002-UL",
@@ -117,7 +120,7 @@
    "name": "Prop adapter UL M6x1 RH + nut + washer",
    "subsystem": "propulsion",
    "status": "MODELLED",
-   "mass_g": 6.7,
+   "mass_g": 3.0,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
     -0.0096,
@@ -125,14 +128,15 @@
     0.1864
    ],
    "make_or_buy": "buy",
-   "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21); CG = CAD centroid"
+   "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21); CG = CAD centroid",
+   "hw_moved_g": 3.7
   },
   {
    "id": "PRP-001-LR",
    "name": "Motor LR SunnySky X3108S KV900 (CCW from the nose)",
    "subsystem": "propulsion",
    "status": "MODELLED",
-   "mass_g": 84.2,
+   "mass_g": 81.0,
    "material": "motor (bought)",
    "cg_xyz_m": [
     0.0106,
@@ -141,7 +145,8 @@
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
-   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print B (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)"
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print B (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)",
+   "hw_moved_g": 3.2
   },
   {
    "id": "PRP-002-LR",
@@ -179,7 +184,7 @@
    "name": "Prop adapter LR M6x1 RH + nut + washer",
    "subsystem": "propulsion",
    "status": "MODELLED",
-   "mass_g": 6.7,
+   "mass_g": 3.0,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
     -0.0096,
@@ -187,14 +192,15 @@
     -0.1864
    ],
    "make_or_buy": "buy",
-   "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21); CG = CAD centroid"
+   "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21); CG = CAD centroid",
+   "hw_moved_g": 3.7
   },
   {
    "id": "PRP-001-LL",
    "name": "Motor LL SunnySky X3108S KV900 (CW from the nose)",
    "subsystem": "propulsion",
    "status": "MODELLED",
-   "mass_g": 84.2,
+   "mass_g": 81.0,
    "material": "motor (bought)",
    "cg_xyz_m": [
     0.0106,
@@ -203,7 +209,8 @@
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
-   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print A (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)"
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print A (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)",
+   "hw_moved_g": 3.2
   },
   {
    "id": "PRP-002-LL",
@@ -241,7 +248,7 @@
    "name": "Prop adapter LL M6x1 LH + nut + washer",
    "subsystem": "propulsion",
    "status": "MODELLED",
-   "mass_g": 6.7,
+   "mass_g": 3.0,
    "material": "6061 aluminium / steel",
    "cg_xyz_m": [
     -0.0096,
@@ -249,7 +256,264 @@
     -0.1864
    ],
    "make_or_buy": "buy",
-   "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21); CG = CAD centroid"
+   "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21); CG = CAD centroid",
+   "hw_moved_g": 3.7
+  },
+  {
+   "id": "PRP-005-UR",
+   "name": "Motor screw set UR: 4 x M3x8 SHCS ISO 4762 A2",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0277,
+    0.3198,
+    0.1904
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-61",
+   "hardware_of": "E-FIN-61"
+  },
+  {
+   "id": "PRP-005-UL",
+   "name": "Motor screw set UL: 4 x M3x8 SHCS ISO 4762 A2",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0277,
+    -0.3198,
+    0.1904
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-62",
+   "hardware_of": "E-FIN-62"
+  },
+  {
+   "id": "PRP-005-LR",
+   "name": "Motor screw set LR: 4 x M3x8 SHCS ISO 4762 A2",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0277,
+    0.3198,
+    -0.1904
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-63",
+   "hardware_of": "E-FIN-63"
+  },
+  {
+   "id": "PRP-005-LL",
+   "name": "Motor screw set LL: 4 x M3x8 SHCS ISO 4762 A2",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0277,
+    -0.3198,
+    -0.1904
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-64",
+   "hardware_of": "E-FIN-64"
+  },
+  {
+   "id": "PRP-006-UR",
+   "name": "Prop adapter screw set UR: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    -0.0038,
+    0.3218,
+    0.187
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-01",
+   "hardware_of": "E-PRP-01"
+  },
+  {
+   "id": "PRP-006-UL",
+   "name": "Prop adapter screw set UL: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    -0.0038,
+    -0.3218,
+    0.187
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-02",
+   "hardware_of": "E-PRP-02"
+  },
+  {
+   "id": "PRP-006-LR",
+   "name": "Prop adapter screw set LR: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    -0.0038,
+    0.3218,
+    -0.187
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-03",
+   "hardware_of": "E-PRP-03"
+  },
+  {
+   "id": "PRP-006-LL",
+   "name": "Prop adapter screw set LL: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    -0.0038,
+    -0.3218,
+    -0.187
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-04",
+   "hardware_of": "E-PRP-04"
+  },
+  {
+   "id": "PRP-007-UR",
+   "name": "Prop nut UR: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0207,
+    0.3228,
+    0.1852
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-05",
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "PRP-007-UL",
+   "name": "Prop nut UL: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0207,
+    -0.3228,
+    0.1852
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-06",
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "PRP-007-LR",
+   "name": "Prop nut LR: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0207,
+    0.3228,
+    -0.1852
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-07",
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "PRP-007-LL",
+   "name": "Prop nut LL: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0207,
+    -0.3228,
+    -0.1852
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-08",
+   "hardware_of": "E-PRP-08"
+  },
+  {
+   "id": "PRP-008-UR",
+   "name": "Prop washer UR: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0176,
+    0.3226,
+    0.1856
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-05",
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "PRP-008-UL",
+   "name": "Prop washer UL: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0176,
+    -0.3226,
+    0.1856
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-06",
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "PRP-008-LR",
+   "name": "Prop washer LR: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0176,
+    0.3226,
+    -0.1856
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-07",
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "PRP-008-LL",
+   "name": "Prop washer LL: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0176,
+    -0.3226,
+    -0.1856
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-08",
+   "hardware_of": "E-PRP-08"
   }
  ],
  "connection_types": [
@@ -264,6 +528,12 @@
    "kind": "mechanical",
    "method": "fastened",
    "spec": "M6x1 nut and washer clamp the prop hub on the adapter post (field joint)"
+  },
+  {
+   "id": "CT-HW-SEATED",
+   "kind": "mechanical",
+   "method": "clamped",
+   "spec": "fastener hardware seated in a fastened joint (screw in its hole or thread, nut / washer / spacer under it, heat-set insert in its bore); the joint_stack is on the parent edge named in hardware_of"
   }
  ],
  "edges": [
@@ -486,6 +756,286 @@
     "install_order": 2,
     "removal_order": 1
    }
+  },
+  {
+   "id": "E-PRP-101",
+   "part_a": "PRP-005-UR",
+   "part_b": "FIN-003-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-61 (joint stack there); seated on FIN-003-UR",
+   "hardware": true,
+   "hardware_of": "E-FIN-61"
+  },
+  {
+   "id": "E-PRP-102",
+   "part_a": "PRP-005-UR",
+   "part_b": "PRP-001-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-61 (joint stack there); seated on PRP-001-UR",
+   "hardware": true,
+   "hardware_of": "E-FIN-61"
+  },
+  {
+   "id": "E-PRP-103",
+   "part_a": "PRP-005-UL",
+   "part_b": "FIN-003-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-62 (joint stack there); seated on FIN-003-UL",
+   "hardware": true,
+   "hardware_of": "E-FIN-62"
+  },
+  {
+   "id": "E-PRP-104",
+   "part_a": "PRP-005-UL",
+   "part_b": "PRP-001-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-62 (joint stack there); seated on PRP-001-UL",
+   "hardware": true,
+   "hardware_of": "E-FIN-62"
+  },
+  {
+   "id": "E-PRP-105",
+   "part_a": "PRP-005-LR",
+   "part_b": "FIN-003-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-63 (joint stack there); seated on FIN-003-LR",
+   "hardware": true,
+   "hardware_of": "E-FIN-63"
+  },
+  {
+   "id": "E-PRP-106",
+   "part_a": "PRP-005-LR",
+   "part_b": "PRP-001-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-63 (joint stack there); seated on PRP-001-LR",
+   "hardware": true,
+   "hardware_of": "E-FIN-63"
+  },
+  {
+   "id": "E-PRP-107",
+   "part_a": "PRP-005-LL",
+   "part_b": "FIN-003-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-64 (joint stack there); seated on FIN-003-LL",
+   "hardware": true,
+   "hardware_of": "E-FIN-64"
+  },
+  {
+   "id": "E-PRP-108",
+   "part_a": "PRP-005-LL",
+   "part_b": "PRP-001-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-64 (joint stack there); seated on PRP-001-LL",
+   "hardware": true,
+   "hardware_of": "E-FIN-64"
+  },
+  {
+   "id": "E-PRP-109",
+   "part_a": "PRP-006-UR",
+   "part_b": "PRP-004-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-01 (joint stack there); seated on PRP-004-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-01"
+  },
+  {
+   "id": "E-PRP-110",
+   "part_a": "PRP-006-UR",
+   "part_b": "PRP-001-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-01 (joint stack there); seated on PRP-001-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-01"
+  },
+  {
+   "id": "E-PRP-111",
+   "part_a": "PRP-006-UL",
+   "part_b": "PRP-004-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-02 (joint stack there); seated on PRP-004-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-02"
+  },
+  {
+   "id": "E-PRP-112",
+   "part_a": "PRP-006-UL",
+   "part_b": "PRP-001-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-02 (joint stack there); seated on PRP-001-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-02"
+  },
+  {
+   "id": "E-PRP-113",
+   "part_a": "PRP-006-LR",
+   "part_b": "PRP-004-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-03 (joint stack there); seated on PRP-004-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-03"
+  },
+  {
+   "id": "E-PRP-114",
+   "part_a": "PRP-006-LR",
+   "part_b": "PRP-001-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-03 (joint stack there); seated on PRP-001-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-03"
+  },
+  {
+   "id": "E-PRP-115",
+   "part_a": "PRP-006-LL",
+   "part_b": "PRP-004-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-04 (joint stack there); seated on PRP-004-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-04"
+  },
+  {
+   "id": "E-PRP-116",
+   "part_a": "PRP-006-LL",
+   "part_b": "PRP-001-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-04 (joint stack there); seated on PRP-001-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-04"
+  },
+  {
+   "id": "E-PRP-117",
+   "part_a": "PRP-007-UR",
+   "part_b": "PRP-004-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-05 (joint stack there); seated on PRP-004-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "E-PRP-118",
+   "part_a": "PRP-007-UL",
+   "part_b": "PRP-004-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-06 (joint stack there); seated on PRP-004-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "E-PRP-119",
+   "part_a": "PRP-007-LR",
+   "part_b": "PRP-004-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-07 (joint stack there); seated on PRP-004-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "E-PRP-120",
+   "part_a": "PRP-007-LL",
+   "part_b": "PRP-004-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-08 (joint stack there); seated on PRP-004-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-08"
+  },
+  {
+   "id": "E-PRP-121",
+   "part_a": "PRP-008-UR",
+   "part_b": "PRP-003-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-05 (joint stack there); seated on PRP-003-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "E-PRP-122",
+   "part_a": "PRP-008-UR",
+   "part_b": "PRP-004-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-05 (joint stack there); seated on PRP-004-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "E-PRP-123",
+   "part_a": "PRP-008-UL",
+   "part_b": "PRP-003-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-06 (joint stack there); seated on PRP-003-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "E-PRP-124",
+   "part_a": "PRP-008-UL",
+   "part_b": "PRP-004-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-06 (joint stack there); seated on PRP-004-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "E-PRP-125",
+   "part_a": "PRP-008-LR",
+   "part_b": "PRP-003-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-07 (joint stack there); seated on PRP-003-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "E-PRP-126",
+   "part_a": "PRP-008-LR",
+   "part_b": "PRP-004-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-07 (joint stack there); seated on PRP-004-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "E-PRP-127",
+   "part_a": "PRP-008-LL",
+   "part_b": "PRP-003-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-08 (joint stack there); seated on PRP-003-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-08"
+  },
+  {
+   "id": "E-PRP-128",
+   "part_a": "PRP-008-LL",
+   "part_b": "PRP-004-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-08 (joint stack there); seated on PRP-004-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-08"
   }
  ],
  "acknowledges": [

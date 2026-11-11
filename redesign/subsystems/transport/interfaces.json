@@ -210,6 +210,57 @@
    "make_or_buy": "buy",
    "flight": false,
    "notes": "carried mass, part of the loaded box"
+  },
+  {
+   "id": "TRN-102-C",
+   "name": "Handle bolt set C: 2 x (M3x16 SHCS + M3 nyloc + M3 x 12 fender washer)",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    -0.1648,
+    -0.0,
+    0.153
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-TRN-13",
+   "hardware_of": "E-TRN-13",
+   "flight": false
+  },
+  {
+   "id": "TRN-102-L",
+   "name": "Handle bolt set L: 2 x (M3x16 SHCS + M3 nyloc + M3 x 12 fender washer)",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.109,
+    -0.6238,
+    0.153
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-TRN-14",
+   "hardware_of": "E-TRN-14",
+   "flight": false
+  },
+  {
+   "id": "TRN-102-R",
+   "name": "Handle bolt set R: 2 x (M3x16 SHCS + M3 nyloc + M3 x 12 fender washer)",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.109,
+    0.6235,
+    0.153
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-TRN-15",
+   "hardware_of": "E-TRN-15",
+   "flight": false
   }
  ],
  "connection_types": [
@@ -254,6 +305,12 @@
    "kind": "mechanical",
    "method": "fastened",
    "spec": "M3 SHCS through handle strap and Coroplast wall, M3 x 12 mm fender washer outside, 3 mm plywood backing strip and nyloc inside"
+  },
+  {
+   "id": "CT-HW-SEATED",
+   "kind": "mechanical",
+   "method": "clamped",
+   "spec": "fastener hardware seated in a fastened joint (screw in its hole or thread, nut / washer / spacer under it, heat-set insert in its bore); the joint_stack is on the parent edge named in hardware_of"
   }
  ],
  "edges": [
@@ -629,6 +686,66 @@
     "load_basis": "boom about 0.01 kg at 10 g, EST",
     "inspection": "tip cover on; slot not crushed"
    }
+  },
+  {
+   "id": "E-TRN-101",
+   "part_a": "TRN-102-C",
+   "part_b": "TRN-007-C",
+   "via": "CT-HW-SEATED",
+   "owner": "transport",
+   "notes": "hardware of E-TRN-13 (joint stack there); seated on TRN-007-C",
+   "hardware": true,
+   "hardware_of": "E-TRN-13"
+  },
+  {
+   "id": "E-TRN-102",
+   "part_a": "TRN-102-C",
+   "part_b": "TRN-001",
+   "via": "CT-HW-SEATED",
+   "owner": "transport",
+   "notes": "hardware of E-TRN-13 (joint stack there); seated on TRN-001",
+   "hardware": true,
+   "hardware_of": "E-TRN-13"
+  },
+  {
+   "id": "E-TRN-103",
+   "part_a": "TRN-102-L",
+   "part_b": "TRN-007-L",
+   "via": "CT-HW-SEATED",
+   "owner": "transport",
+   "notes": "hardware of E-TRN-14 (joint stack there); seated on TRN-007-L",
+   "hardware": true,
+   "hardware_of": "E-TRN-14"
+  },
+  {
+   "id": "E-TRN-104",
+   "part_a": "TRN-102-L",
+   "part_b": "TRN-001",
+   "via": "CT-HW-SEATED",
+   "owner": "transport",
+   "notes": "hardware of E-TRN-14 (joint stack there); seated on TRN-001",
+   "hardware": true,
+   "hardware_of": "E-TRN-14"
+  },
+  {
+   "id": "E-TRN-105",
+   "part_a": "TRN-102-R",
+   "part_b": "TRN-007-R",
+   "via": "CT-HW-SEATED",
+   "owner": "transport",
+   "notes": "hardware of E-TRN-15 (joint stack there); seated on TRN-007-R",
+   "hardware": true,
+   "hardware_of": "E-TRN-15"
+  },
+  {
+   "id": "E-TRN-106",
+   "part_a": "TRN-102-R",
+   "part_b": "TRN-001",
+   "via": "CT-HW-SEATED",
+   "owner": "transport",
+   "notes": "hardware of E-TRN-15 (joint stack there); seated on TRN-001",
+   "hardware": true,
+   "hardware_of": "E-TRN-15"
   }
  ],
  "acknowledges": []

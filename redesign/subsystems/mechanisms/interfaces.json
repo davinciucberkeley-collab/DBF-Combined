@@ -190,7 +190,7 @@
    "name": "Servo cover with arm slot right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.73,
+   "mass_g": 1.53,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1895,
@@ -198,14 +198,15 @@
     -0.0066
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (1.34 cm3 PETG x 0.90 + 2 M2 screws); CG = CAD centroid"
+   "notes": "mass EST (1.34 cm3 PETG x 0.90 + 2 M2 screws); CG = CAD centroid",
+   "hw_moved_g": 0.2
   },
   {
    "id": "MEC-007-L",
    "name": "Servo cover with arm slot left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.73,
+   "mass_g": 1.53,
    "material": "PETG (printed)",
    "cg_xyz_m": [
     0.1895,
@@ -213,7 +214,8 @@
     -0.0066
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (1.34 cm3 PETG x 0.90 + 2 M2 screws); CG = CAD centroid"
+   "notes": "mass EST (1.34 cm3 PETG x 0.90 + 2 M2 screws); CG = CAD centroid",
+   "hw_moved_g": 0.2
   },
   {
    "id": "MEC-008-R",
@@ -336,6 +338,70 @@
    "make_or_buy": "buy",
    "notes": "mass EST (112 cm2 tape); CG = CAD centroid",
    "carried": true
+  },
+  {
+   "id": "MEC-011-R",
+   "name": "Servo cover screw pair R: 2 x M2 x 6 self-tapping pan head A2",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.1898,
+    0.2566,
+    -0.0056
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-MEC-36, E-MEC-04",
+   "hardware_of": "E-MEC-36"
+  },
+  {
+   "id": "MEC-011-L",
+   "name": "Servo cover screw pair L: 2 x M2 x 6 self-tapping pan head A2",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.1898,
+    -0.2566,
+    -0.0056
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-MEC-35, E-MEC-03",
+   "hardware_of": "E-MEC-35"
+  },
+  {
+   "id": "MEC-012-R",
+   "name": "Servo arm screw R: M2 x 4 pan head (supplied with MEC-001)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.195,
+    0.2857,
+    -0.0002
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-MEC-06",
+   "hardware_of": "E-MEC-06"
+  },
+  {
+   "id": "MEC-012-L",
+   "name": "Servo arm screw L: M2 x 4 pan head (supplied with MEC-001)",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.195,
+    -0.2857,
+    -0.0002
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-MEC-05",
+   "hardware_of": "E-MEC-05"
   }
  ],
  "connection_types": [
@@ -344,6 +410,12 @@
    "kind": "mechanical",
    "method": "slid",
    "spec": "servo mounting ears slid into slots in a printed frame, held by a screwed cover (no screws along the span: no tool access in a wing pocket)"
+  },
+  {
+   "id": "CT-HW-SEATED",
+   "kind": "mechanical",
+   "method": "clamped",
+   "spec": "fastener hardware seated in a fastened joint (screw in its hole or thread, nut / washer / spacer under it, heat-set insert in its bore); the joint_stack is on the parent edge named in hardware_of"
   }
  ],
  "edges": [
@@ -393,6 +465,22 @@
     "count": 2,
     "load_n": "servo reaction couple 0.31 N m / 22.8 mm = 14 N per slot at the VD case",
     "inspection": "servo does not rock when the arm is pushed by hand (pre-flight)"
+   },
+   "joint_stack": {
+    "fastener": "M2 x 6 self-tapping pan head (MEC-011: the two cover screws of E-MEC-35/36)",
+    "count": 2,
+    "grade": "A2 stainless",
+    "hole": "servo ears in the 2.7 mm end-wall slots; 2.4 mm clearance in the cover; 1.6 mm pilot 6 mm deep in each 4 x 5 x 6 mm frame end-wall boss",
+    "insert": "none (self-tapping into the printed PETG boss, D-58 b)",
+    "engagement_mm": 5.2,
+    "min_engagement_mm": 4.0,
+    "washer_nut": "none",
+    "torque": "snug, head seated (plastic); no threadlocker",
+    "tool": "Phillips #1",
+    "access": "from below (-z), wing on its back, through the cover",
+    "install_order": 6,
+    "removal_order": 1,
+    "load": "cover holds the servo up into the frame: 15.8 g x 12.75 g crash = 2.0 N on 2 screws; thread shear 0.5 x pi x 2 x 5.2 mm2 x 15 MPa (PETG across layers, C6) = 245 N per screw; the ears in the slots carry the 14 N servo reaction"
    }
   },
   {
@@ -407,6 +495,22 @@
     "count": 2,
     "load_n": "servo reaction couple 0.31 N m / 22.8 mm = 14 N per slot at the VD case",
     "inspection": "servo does not rock when the arm is pushed by hand (pre-flight)"
+   },
+   "joint_stack": {
+    "fastener": "M2 x 6 self-tapping pan head (MEC-011: the two cover screws of E-MEC-35/36)",
+    "count": 2,
+    "grade": "A2 stainless",
+    "hole": "servo ears in the 2.7 mm end-wall slots; 2.4 mm clearance in the cover; 1.6 mm pilot 6 mm deep in each 4 x 5 x 6 mm frame end-wall boss",
+    "insert": "none (self-tapping into the printed PETG boss, D-58 b)",
+    "engagement_mm": 5.2,
+    "min_engagement_mm": 4.0,
+    "washer_nut": "none",
+    "torque": "snug, head seated (plastic); no threadlocker",
+    "tool": "Phillips #1",
+    "access": "from below (-z), wing on its back, through the cover",
+    "install_order": 6,
+    "removal_order": 1,
+    "load": "cover holds the servo up into the frame: 15.8 g x 12.75 g crash = 2.0 N on 2 screws; thread shear 0.5 x pi x 2 x 5.2 mm2 x 15 MPa (PETG across layers, C6) = 245 N per screw; the ears in the slots carry the 14 N servo reaction"
    }
   },
   {
@@ -920,6 +1024,86 @@
     "install_order": 6,
     "removal_order": 1
    }
+  },
+  {
+   "id": "E-MEC-101",
+   "part_a": "MEC-011-R",
+   "part_b": "MEC-007-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "hardware of E-MEC-36 (joint stack there); seated on MEC-007-R",
+   "hardware": true,
+   "hardware_of": "E-MEC-36"
+  },
+  {
+   "id": "E-MEC-102",
+   "part_a": "MEC-011-R",
+   "part_b": "MEC-008-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "hardware of E-MEC-36 (joint stack there); seated on MEC-008-R",
+   "hardware": true,
+   "hardware_of": "E-MEC-36"
+  },
+  {
+   "id": "E-MEC-103",
+   "part_a": "MEC-011-L",
+   "part_b": "MEC-007-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "hardware of E-MEC-35 (joint stack there); seated on MEC-007-L",
+   "hardware": true,
+   "hardware_of": "E-MEC-35"
+  },
+  {
+   "id": "E-MEC-104",
+   "part_a": "MEC-011-L",
+   "part_b": "MEC-008-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "hardware of E-MEC-35 (joint stack there); seated on MEC-008-L",
+   "hardware": true,
+   "hardware_of": "E-MEC-35"
+  },
+  {
+   "id": "E-MEC-105",
+   "part_a": "MEC-012-R",
+   "part_b": "MEC-002-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "hardware of E-MEC-06 (joint stack there); seated on MEC-002-R",
+   "hardware": true,
+   "hardware_of": "E-MEC-06"
+  },
+  {
+   "id": "E-MEC-106",
+   "part_a": "MEC-012-R",
+   "part_b": "MEC-001-R",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "hardware of E-MEC-06 (joint stack there); seated on MEC-001-R",
+   "hardware": true,
+   "hardware_of": "E-MEC-06"
+  },
+  {
+   "id": "E-MEC-107",
+   "part_a": "MEC-012-L",
+   "part_b": "MEC-002-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "hardware of E-MEC-05 (joint stack there); seated on MEC-002-L",
+   "hardware": true,
+   "hardware_of": "E-MEC-05"
+  },
+  {
+   "id": "E-MEC-108",
+   "part_a": "MEC-012-L",
+   "part_b": "MEC-001-L",
+   "via": "CT-HW-SEATED",
+   "owner": "mechanisms",
+   "notes": "hardware of E-MEC-05 (joint stack there); seated on MEC-001-L",
+   "hardware": true,
+   "hardware_of": "E-MEC-05"
   }
  ],
  "edges_pending": [],

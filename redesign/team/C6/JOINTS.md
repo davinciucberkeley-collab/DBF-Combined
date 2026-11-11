@@ -7,7 +7,8 @@ C1's earlier 7.37 N·m); fins D3-R5b (`subsystems/fins/params.json`: pins Ø 2.5
 R 3 mm, root fillet fail-safe only); D5 R5 shoe bond (1 350 mm², 85.7 N, RF 1.57); F1 power frame. Re-run in a few
 seconds: `python -I redesign/team/C6/joints.py`, `python -I redesign/team/C6/make_stacks.py`, then
 `python -I redesign/proofs/build_graph.py`. Joint stacks `PROPOSED`; claims `UNVERIFIED` until the C6 coupons run.
-Blocks for the edge owners: [`joint_stacks.json`](joint_stacks.json) (82 edges + 3 withdrawn).
+Blocks for the edge owners: [`joint_stacks.json`](joint_stacks.json) (84 edges + 1 withdrawn). Every fastener of
+every stack is a modelled part since R5c: [`FASTENERS-CAD.md`](FASTENERS-CAD.md) (`fastener_parts.py`).
 
 Check method: reserve factor RF = allowable / applied at the **design load** = C1 ultimate (1.5 × limit) × fitting
 factor 1.15, × 1.25 more for anything printed or bonded (`ASM-C1-FITTING-FACTOR`, `ASM-C1-PRINTED-FACTOR`).
@@ -103,11 +104,11 @@ Ids are the declared edges in `subsystems/*/interfaces.json`. Order = install / 
 | `E-POD-06` | `POD-005` → `POD-007` | M3x16 PA66 × 1 | Ø 3.4 across the boss | 6.0 past grip (4.0); grip 10.0 (≤ 11.0) | PA66 nut | finger + ¼ turn (≤ 0.08 N·m) | mast is the fuse; non-magnetic | `PROPOSED` (D2 adopted CR-C6-18) |
 | `E-AVN-01` | `AVN-001` → `POD-002` | 4 gel cubes 5 mm, no screws (F3) | — | — | + 10 mm strap over the board, 1–2 mm slack | — | 10 N crash on the strap if the cubes let go | `PROPOSED` |
 | `E-AVN-04` | airspeed board → `POD-002` | foam tape + 1 tie (D-33) | — | — | — | — | 6 g part | `PROPOSED` |
-| `E-MEC-35/36` | `MEC-007-<L/R>` → `MEC-008-<L/R>` | M2 × 6 self-tapping × 2 (D-58 b) | 1.6 pilot, 6 deep | 5.2 (4.0) | — | snug | cover only | `PROPOSED` (D6) |
+| `E-MEC-35/36`, `E-MEC-03/04` | `MEC-007-<L/R>` → `MEC-008-<L/R>`; servo `MEC-001-<L/R>` held in the frame ear slots by the cover | M2 × 6 self-tapping pan head × 2 (`MEC-011-<L/R>`, the same two screws on both edges; D-58 b) | 1.6 pilot, 6 deep in the 4 × 5 × 6 mm end-wall bosses | 5.2 (4.0) | — | snug, from below (−z) | 2.0 N crash on 2 screws; thread shear 245 N each | `PROPOSED` (D6; 03/04 reinstated, FASTENERS-CAD) |
 | `E-PRP-01…04` | `PRP-004-<st>` → `PRP-001-<st>` | M3x4 × 4 (supplied) | bell tapped | 2.5 (**2.0, D-58 a**) | — | 0.5 N·m + 243 | RF 1.70 (`CL-E1-ADAPTER-STRIP`) | `PROPOSED` |
 | `E-PRP-05…08` field | `PRP-003-<st>` → `PRP-004-<st>` | M6 nut ISO 4032 (LH on CW motors) | prop on LPAR06E ring | nut fully on (5.2) | 1.0 mm washer | 1.5 N·m, bell held | `CL-E1-NUT-ENGAGE` | `UNVERIFIED` |
 | `E-TRN-13…15` ground | handle → box | M3x16 × 2 + 12 mm fender washer + nyloc on a 3 mm ply strip | Ø 3.4 | grip ≤ 11.0 → ≥ 5.0 (nyloc + 2 pitches) | — | snug, wall not crushed | 57–59 N per bolt, 27 kPa on Coroplast | **confirmed** (CR-D7-10) |
-| withdrawn | `E-MEC-03/04` (servo in ear slots, D6), `E-PWR-05` (bus board taped, F1) | — | — | — | — | — | no C6 stack | — |
+| withdrawn | `E-PWR-05` (bus board taped, F1) | — | — | — | — | — | no C6 stack | — |
 
 ## Bonded joints
 

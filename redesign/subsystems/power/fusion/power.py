@@ -183,6 +183,8 @@ def build(ctx):
     cap.box((x0, face, zc - cd / 2), (x0 + cl, face + cd, zc + cd / 2), name='680 uF cap')
     k9.quad(ctx, {s: 'PWR-008-' + s for s in ST})
 
+    build_frame_hardware(ctx, G)
+
     # ---- registrations (edges declared in subsystems/power/interfaces.json)
     ctx.rigid('E-PWR-03', 'PWR-006', 'POD-002', at=G['screw_c'])
     ctx.contact('E-PWR-01', 'AS150U aircraft half seated in the cradle: sanded housing epoxied in, front wall takes the push, 1 tie over')
@@ -192,6 +194,29 @@ def build(ctx):
     ctx.contact('E-PWR-07', 'fuse holder snapped into the clip under the cradle')
     for i, s in enumerate(ST):
         ctx.contact('E-PWR-%d' % (11 + i), 'ESC cap %s foam-taped on the half-fin face' % s)
+
+
+def build_frame_hardware(ctx, G):
+    """E-PWR-03 stack at each of the four bosses as components (only when declared, k09kit.hw_part; C6
+    FASTENERS-CAD): PWR-107 brass insert flush in D2's boss, PWR-102 10 mm nylon spacer boss -> deck, PWR-103 0.5 mm
+    nylon washer on the deck, PWR-101 M3x18 PA66 pan head down through deck and spacer into the insert."""
+    ins = k9.hw_part(ctx, 'PWR-107')
+    if ins is None:
+        return
+    sp, wa, sc = k9.hw_part(ctx, 'PWR-102'), k9.hw_part(ctx, 'PWR-103'), k9.hw_part(ctx, 'PWR-101')
+    zb, dz0, dz1 = G['screw_c'][2], G['dz0'], G['dz1']
+    for x, y in G['bosses']:
+        k9.hw_insert(ins, 'Z', (x, y, zb), -1, 'M3')
+        k9.hw_washer(sp, 'Z', (x, y, zb), 1, 'M3', od=0.006, t=dz0 - zb, idia=0.0032, name='nylon spacer 10 mm')
+        k9.hw_washer(wa, 'Z', (x, y, dz1), 1, 'M3', t=0.0005, name='nylon washer 0.5 mm')
+        k9.hw_screw(sc, 'Z', (x, y, dz1 + 0.0005), -1, 'M3', 0.018, 'pan', name='M3x18 PA66 pan head')
+    x, y = G['bosses'][0]
+    k9.hw_join(ctx, 'PWR-107', 'POD-002', (x, y, zb - 0.003))
+    k9.hw_join(ctx, 'PWR-101', 'PWR-107', (x, y, zb - 0.002))
+    k9.hw_join(ctx, 'PWR-101', 'PWR-006', (x, y, (dz0 + dz1) / 2))
+    k9.hw_join(ctx, 'PWR-102', 'PWR-006', (x, y, dz0))
+    k9.hw_join(ctx, 'PWR-102', 'POD-002', (x, y, zb))
+    k9.hw_join(ctx, 'PWR-103', 'PWR-006', (x, y, dz1))
 
 
 def _esc_pad(ctx):

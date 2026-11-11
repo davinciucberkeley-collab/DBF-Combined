@@ -179,6 +179,24 @@ def blocks(e, G, LP, mod):
         out['retention'] = {'item': 'ears in 2.7 mm end-wall slots + screwed cover under the case', 'count': 2,
                             'load_n': 'servo reaction couple 0.31 N m / 22.8 mm = 14 N per slot at the VD case',
                             'inspection': 'servo does not rock when the arm is pushed by hand (pre-flight)'}
+        # C6 (FASTENERS-CAD, FIX 1): the screwed cover is what closes this joint, so the edge carries the stack of
+        # the same two screws as E-MEC-35/36 (MEC-011-<s>; not additional hardware). M2 self-tapping, not an M3
+        # insert: the end-wall bosses are 4 x 5 x 6 mm; an M3 x 5.7 insert needs a 7.2 mm boss and a 6.2 mm bore,
+        # which would lengthen the frame and the wing pocket; the load is the servo held up into the frame, not a
+        # structural joint, and covers come off rarely (D-58 b).
+        out['joint_stack'] = {
+            'fastener': 'M2 x 6 self-tapping pan head (MEC-011: the two cover screws of E-MEC-35/36)', 'count': 2,
+            'grade': 'A2 stainless',
+            'hole': 'servo ears in the 2.7 mm end-wall slots; 2.4 mm clearance in the cover; 1.6 mm pilot 6 mm deep '
+                    'in each 4 x 5 x 6 mm frame end-wall boss',
+            'insert': 'none (self-tapping into the printed PETG boss, D-58 b)', 'engagement_mm': 5.2,
+            'min_engagement_mm': 4.0, 'washer_nut': 'none',
+            'torque': 'snug, head seated (plastic); no threadlocker', 'tool': 'Phillips #1',
+            'access': 'from below (-z), wing on its back, through the cover',
+            'install_order': 6, 'removal_order': 1,
+            'load': 'cover holds the servo up into the frame: 15.8 g x 12.75 g crash = 2.0 N on 2 screws; thread '
+                    'shear 0.5 x pi x 2 x 5.2 mm2 x 15 MPa (PETG across layers, C6) = 245 N per screw; the ears in '
+                    'the slots carry the 14 N servo reaction'}
     elif e['via'] == 'CT-TAPE-SKIN':
         out['retention'] = {'item': 'packing tape, 10 mm overlap all round' if eid in (17, 18)
                             else '25 mm strip, 12 mm each side of the hinge line', 'count': 1,
@@ -293,3 +311,7 @@ def write_parts_csv(mod, M, LP):
 
 if __name__ == '__main__':
     main()
+    if '--check' not in __import__('sys').argv:     # C6 FASTENERS-CAD: re-apply the modelled fastener parts
+        import os as _o, runpy as _r
+        _r.run_path(_o.path.join(_o.path.abspath(__file__).rsplit(_o.sep + 'redesign' + _o.sep, 1)[0], 'redesign', 'team',
+                                 'C6', 'fastener_parts.py'), run_name='c6_hook')['run']()

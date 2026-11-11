@@ -87,6 +87,12 @@ def geometry(P, LP, F=None):
     G['hub_r'], G['hub_t'] = l('prop.hub_d_m', 'm') / 2, l('prop.hub_t_m', 'm')
     G['bore_r'], G['pitch'] = l('prop.bore_d_m', 'm') / 2, l('prop.pitch_m', 'm')
     G['blade'] = list(zip(l('prop.blade_r_frac', '-'), l('prop.blade_chord_m', 'm'), l('prop.blade_t_frac', '-')))
+    # fasteners (C6 FASTENERS-CAD): motor screws through D3's canted plate, adapter screws in the bell top
+    G['plate_t'] = _fv(F, 'mount.plate_t_m', 'm')
+    pat = _fv(F, 'mount.bolt_pattern_m', 'm')
+    G['m_holes'] = [(s * pat[0] / 2, 0.0) for s in (1, -1)] + [(0.0, s * pat[1] / 2) for s in (1, -1)]
+    G['m_screw_len'] = _fv(F, 'mount.motor_screw_len_m', 'm')
+    G['ad_screw_r'] = l('adapter.screw_circle_d_m', 'm') / 2
 
     # axial stations along -x' from the base face
     G['a_bell_top'] = G['body']                                        # adapter base seats here (E-PRP-0n origin)
@@ -140,20 +146,38 @@ def build_motor(part, G, sy):
              name='phase lead exit')
 
 
-def build_adapter(part, G):
-    """Base (pilot bore on the shaft, 4 x M3x4 into the bell top), M6x1 post, washer, ISO 4032 nut."""
+def build_adapter(part, G, nut_part=None, washer_part=None):
+    """Base (pilot bore on the shaft, 4 x M3x4 into the bell top), M6x1 post, washer, ISO 4032 nut. The washer and
+    nut go into their own components (PRP-008 / PRP-007) when those are modelled (C6 FASTENERS-CAD)."""
     a0, a1 = -G['body'], -G['body'] - G['ad_t']
     part.revolve('X', (0, 0, 0), [(a0, G['pilot_r']), (a0, G['ad_r']), (a1, G['ad_r']), (a1, G['pilot_r'])],
                  name='adapter base')
     tip = -G['a_post_tip']
     part.revolve('X', (0, 0, 0), [(a1, 0), (a1, G['post_r']), (tip, G['post_r']), (tip, 0)], name='M6 post')
-    part.revolve('X', (0, 0, 0), [(-G['a_wash'], G['post_r']), (-G['a_wash'], G['wash_r']),
-                                  (-G['a_nut'], G['wash_r']), (-G['a_nut'], G['post_r'])], name='washer')
+    (washer_part or part).revolve('X', (0, 0, 0), [(-G['a_wash'], G['post_r']), (-G['a_wash'], G['wash_r']),
+                                                   (-G['a_nut'], G['wash_r']), (-G['a_nut'], G['post_r'])],
+                                  name='M6 washer 6 x 12 x 1.0')
     r = G['nut_af'] / math.sqrt(3)                                     # hexagon corner radius
     hexa = [(r * math.cos(math.radians(30 + 60 * i)), r * math.sin(math.radians(30 + 60 * i))) for i in range(6)]
     hole = [(G['post_r'] * math.cos(math.radians(60 * i)), G['post_r'] * math.sin(math.radians(60 * i)))
             for i in range(6)]
-    part.prism('X', -G['a_nut'], [hexa, hole], -G['nut_h'], name='M6 nut ISO 4032')
+    (nut_part or part).prism('X', -G['a_nut'], [hexa, hole], -G['nut_h'], name='M6 nut ISO 4032')
+
+
+def build_motor_screws(part, G):
+    """4 x M3x8 SHCS (PRP-005): heads on the back face of D3's canted plate (x' = +plate_t, the plate is canted with
+    the motor so the screw axis is the shaft axis), shanks along -x' into the tapped base: engagement L - t."""
+    for dy, dz in G['m_holes']:
+        k9.hw_screw(part, 'X', (G['plate_t'], dy, dz), -1, 'M3', G['m_screw_len'], 'socket', name='M3x8 SHCS')
+
+
+def build_adapter_screws(part, G):
+    """4 x M3x4 SHCS (PRP-006, supplied with the adapter) in the counterbored base: 2.5 mm into the bell top."""
+    seat = -(G['body'] + 0.0015)                                       # 4 mm screw, 2.5 mm thread in the bell
+    for i in range(4):
+        t = math.radians(45 + 90 * i)
+        k9.hw_screw(part, 'X', (seat, G['ad_screw_r'] * math.cos(t), G['ad_screw_r'] * math.sin(t)), 1, 'M3',
+                    0.004, 'socket', name='M3x4 SHCS')
 
 
 def build_prop(part, G, cw):
@@ -182,6 +206,34 @@ def build_prop(part, G, cw):
         part.loft('Y', secs, smooth=False, name='blade %s' % ('+y' if side > 0 else '-y'))
 
 
+# ----------------------------------------------------------------------------- fasteners (C6 FASTENERS-CAD)
+HW_STACK = lambda s: ('PRP-006-' + s, 'PRP-007-' + s, 'PRP-008-' + s)     # in the station's own prop stack
+
+
+def build_hardware(ctx, G, s, S, rot):
+    """Fastener sets of station s as their own components (only when declared, k09kit.hw_part), each placed like
+    the motor so the screw axes are the canted shaft axis; hardware edges registered rigid (k09kit.hw_join)."""
+    ms = k9.hw_part(ctx, 'PRP-005-' + s, at=S['at'], rotate=rot)
+    if ms:
+        build_motor_screws(ms, G)
+        dy, dz = G['m_holes'][0]
+        k9.hw_join(ctx, ms.id, 'FIN-003-' + s, ms.to_world((G['plate_t'] / 2, dy, dz)))
+        k9.hw_join(ctx, ms.id, 'PRP-001-' + s, ms.to_world((-0.0015, dy, dz)))
+    ad = k9.hw_part(ctx, 'PRP-006-' + s, at=S['at'], rotate=rot)
+    if ad:
+        build_adapter_screws(ad, G)
+        r = G['ad_screw_r'] * math.sqrt(0.5)
+        k9.hw_join(ctx, ad.id, 'PRP-004-' + s, ad.to_world((-(G['body'] + 0.003), r, r)))
+        k9.hw_join(ctx, ad.id, 'PRP-001-' + s, ad.to_world((-(G['body'] - 0.001), r, r)))
+    nut = ctx.components.get('PRP-007-' + s)
+    if nut:
+        k9.hw_join(ctx, nut.id, 'PRP-004-' + s, nut.to_world((-(G['a_nut'] + G['nut_h'] / 2), 0, 0)))
+    wa = ctx.components.get('PRP-008-' + s)
+    if wa:
+        k9.hw_join(ctx, wa.id, 'PRP-003-' + s, wa.to_world((-G['a_wash'], 0, 0)))
+        k9.hw_join(ctx, wa.id, 'PRP-004-' + s, wa.to_world((-(G['a_wash'] + G['wash_t'] / 2), 0, 0)))
+
+
 # ----------------------------------------------------------------------------- module
 def build(ctx):
     P, LP = ctx.params, ctx.local
@@ -190,12 +242,15 @@ def build(ctx):
         S = G['st'][s]
         rot = (S['axis'], S['deg'])
         build_motor(ctx.part('PRP-001-' + s, at=S['at'], rotate=rot), G, S['sy'])
-        build_adapter(ctx.part('PRP-004-' + s, at=S['at'], rotate=rot), G)
+        nut = k9.hw_part(ctx, 'PRP-007-' + s, at=S['at'], rotate=rot)
+        washer = k9.hw_part(ctx, 'PRP-008-' + s, at=S['at'], rotate=rot)
+        build_adapter(ctx.part('PRP-004-' + s, at=S['at'], rotate=rot), G, nut, washer)
         build_prop(ctx.part('PRP-003-' + s, at=S['at'], rotate=rot), G, S['rot'] == 'CW')
         ctx.rigid('E-PRP-%02d' % (i + 1), 'PRP-004-' + s, 'PRP-001-' + s, at=S['bell_top'])
         ctx.rigid('E-PRP-%02d' % (i + 5), 'PRP-003-' + s, 'PRP-004-' + s, at=S['hub'])
+        build_hardware(ctx, G, s, S, rot)
         k9.prop_keepout(ctx, 'KO-PROP-' + s, S['hub'], G['D'], G['clr'],
-                        exempt=('PRP-001-' + s, 'PRP-003-' + s, 'PRP-004-' + s),
+                        exempt=('PRP-001-' + s, 'PRP-003-' + s, 'PRP-004-' + s) + HW_STACK(s),
                         rotate=rot, fwd=BLADE_FWD_M, aft=BLADE_AFT_M)   # canted with the stack (CR-A5-21)
     ctx.part('PRP-002-UR').box(G['esc_lo'], G['esc_hi'], name='ESC 45 x 20 x 6 in heat-shrink')
     k9.quad(ctx, {s: 'PRP-002-' + s for s in STATIONS})

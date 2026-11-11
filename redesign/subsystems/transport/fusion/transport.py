@@ -40,6 +40,30 @@ def frame(ctx):
             'zb': zb, 'zt': zb + Hb, 'zfloor': zb + t + dbl, 'travel': travel, 'env_z': env_z}
 
 
+def build_handle_hardware(ctx, f, zh):
+    """E-TRN-13...15 stacks as components (only when declared, k09kit.hw_part; C6 FASTENERS-CAD): per handle 2 x
+    (12 mm fender washer + M3x16 SHCS from outside through the 3 mm handle tab and the wall, M3 nyloc inside on the
+    3 mm ply strip, strip not modelled)."""
+    t, tab, ply = f['t'], 0.003, 0.003
+    xf, Lh = f['xf'], f['L'] / 2
+    specs = [('TRN-102-C', 'TRN-007-C', 'X', 1, [(xf, sy, zh) for sy in (-0.05, 0.05)], 0)]
+    for pid, h, s in (('TRN-102-L', 'TRN-007-L', -1), ('TRN-102-R', 'TRN-007-R', 1)):
+        specs.append((pid, h, 'Y', -s, [(f['xc'] + dx, s * Lh, zh) for dx in (-0.05, 0.05)], 1))
+    for pid, handle, ax, sense, pts, k in specs:
+        hw = k9.hw_part(ctx, pid)
+        if hw is None:
+            continue
+        for p in pts:
+            q = lambda d: tuple(p[i] + (sense * d if i == k else 0.0) for i in range(3))
+            k9.hw_washer(hw, ax, q(-tab), -1, 'M3', od=0.012, t=0.001, name='M3 x 12 fender washer')
+            k9.hw_screw(hw, ax, q(-tab - 0.001), sense, 'M3', 0.016, 'socket', name='M3x16 SHCS')
+            k9.hw_nut(hw, ax, q(t + ply), sense, 'M3', nyloc=True)
+        p = pts[0]
+        q = lambda d: tuple(p[i] + (sense * d if i == k else 0.0) for i in range(3))
+        k9.hw_join(ctx, pid, handle, q(-tab / 2))
+        k9.hw_join(ctx, pid, 'TRN-001', q(t / 2))
+
+
 def build(ctx):
     v, P = ctx.value, ctx.params
     f = frame(ctx)
@@ -134,6 +158,7 @@ def build(ctx):
         y0, y1 = sorted((s * Lh, s * (Lh + 0.03)))
         h.box((f['xc'] - 0.06, y0, zh - 0.015), (f['xc'] + 0.06, y1, zh + 0.015), name='end handle')
         ctx.rigid(edge, pid, 'TRN-001', at=(f['xc'], s * Lh, zh))
+    build_handle_hardware(ctx, f, zh)
 
     for e, note in (('E-TRN-01', 'cradle L column on the floor: LSE tape + 2 zip ties'),
                     ('E-TRN-02', 'cradle R column on the floor: LSE tape + 2 zip ties'),

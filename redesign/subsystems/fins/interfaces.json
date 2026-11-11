@@ -98,7 +98,7 @@
    "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 11.94,
+   "mass_g": 10.54,
    "material": "ASA (printed)",
    "cg_xyz_m": [
     0.0365,
@@ -106,14 +106,15 @@
     0.1814
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "hw_moved_g": 1.4
   },
   {
    "id": "FIN-003-UL",
    "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 11.94,
+   "mass_g": 10.54,
    "material": "ASA (printed)",
    "cg_xyz_m": [
     0.0365,
@@ -121,14 +122,15 @@
     0.1814
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "hw_moved_g": 1.4
   },
   {
    "id": "FIN-003-LR",
    "name": "Motor mount LR, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 11.94,
+   "mass_g": 10.54,
    "material": "ASA (printed)",
    "cg_xyz_m": [
     0.0365,
@@ -136,14 +138,15 @@
     -0.1814
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "hw_moved_g": 1.4
   },
   {
    "id": "FIN-003-LL",
    "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 11.94,
+   "mass_g": 10.54,
    "material": "ASA (printed)",
    "cg_xyz_m": [
     0.0365,
@@ -151,7 +154,8 @@
     -0.1814
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "hw_moved_g": 1.4
   },
   {
    "id": "FIN-004-R",
@@ -632,6 +636,198 @@
    ],
    "make_or_buy": "buy",
    "notes": "mass EST (0.683 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+  },
+  {
+   "id": "FIN-101-UR",
+   "name": "Pinch bolt UR: M3x16 SHCS ISO 4762 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0443,
+    0.3377,
+    0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-05",
+   "hardware_of": "E-FIN-05"
+  },
+  {
+   "id": "FIN-101-UL",
+   "name": "Pinch bolt UL: M3x16 SHCS ISO 4762 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0443,
+    -0.3377,
+    0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-06",
+   "hardware_of": "E-FIN-06"
+  },
+  {
+   "id": "FIN-101-LR",
+   "name": "Pinch bolt LR: M3x16 SHCS ISO 4762 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0443,
+    0.3377,
+    -0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-07",
+   "hardware_of": "E-FIN-07"
+  },
+  {
+   "id": "FIN-101-LL",
+   "name": "Pinch bolt LL: M3x16 SHCS ISO 4762 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0443,
+    -0.3377,
+    -0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-08",
+   "hardware_of": "E-FIN-08"
+  },
+  {
+   "id": "FIN-102-UR",
+   "name": "Pinch-bolt nut UR: M3 nyloc ISO 10511 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0523,
+    0.3377,
+    0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-05",
+   "hardware_of": "E-FIN-05"
+  },
+  {
+   "id": "FIN-102-UL",
+   "name": "Pinch-bolt nut UL: M3 nyloc ISO 10511 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0523,
+    -0.3377,
+    0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-06",
+   "hardware_of": "E-FIN-06"
+  },
+  {
+   "id": "FIN-102-LR",
+   "name": "Pinch-bolt nut LR: M3 nyloc ISO 10511 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0523,
+    0.3377,
+    -0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-07",
+   "hardware_of": "E-FIN-07"
+  },
+  {
+   "id": "FIN-102-LL",
+   "name": "Pinch-bolt nut LL: M3 nyloc ISO 10511 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0523,
+    -0.3377,
+    -0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-08",
+   "hardware_of": "E-FIN-08"
+  },
+  {
+   "id": "FIN-103-UR",
+   "name": "Pinch-bolt washer pair UR: 2 x M3 ISO 7089 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.045,
+    0.3377,
+    0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-05",
+   "hardware_of": "E-FIN-05"
+  },
+  {
+   "id": "FIN-103-UL",
+   "name": "Pinch-bolt washer pair UL: 2 x M3 ISO 7089 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.045,
+    -0.3377,
+    0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-06",
+   "hardware_of": "E-FIN-06"
+  },
+  {
+   "id": "FIN-103-LR",
+   "name": "Pinch-bolt washer pair LR: 2 x M3 ISO 7089 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.045,
+    0.3377,
+    -0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-07",
+   "hardware_of": "E-FIN-07"
+  },
+  {
+   "id": "FIN-103-LL",
+   "name": "Pinch-bolt washer pair LL: 2 x M3 ISO 7089 A2",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.045,
+    -0.3377,
+    -0.166
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-08",
+   "hardware_of": "E-FIN-08"
   }
  ],
  "edges": [
@@ -2202,6 +2398,166 @@
     "t_design_c": 56.1,
     "claim": "CL-E3-ESC-PEAK"
    }
+  },
+  {
+   "id": "E-FIN-101",
+   "part_a": "FIN-101-UR",
+   "part_b": "FIN-003-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-05 (joint stack there); seated on FIN-003-UR",
+   "hardware": true,
+   "hardware_of": "E-FIN-05"
+  },
+  {
+   "id": "E-FIN-102",
+   "part_a": "FIN-101-UL",
+   "part_b": "FIN-003-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-06 (joint stack there); seated on FIN-003-UL",
+   "hardware": true,
+   "hardware_of": "E-FIN-06"
+  },
+  {
+   "id": "E-FIN-103",
+   "part_a": "FIN-101-LR",
+   "part_b": "FIN-003-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-07 (joint stack there); seated on FIN-003-LR",
+   "hardware": true,
+   "hardware_of": "E-FIN-07"
+  },
+  {
+   "id": "E-FIN-104",
+   "part_a": "FIN-101-LL",
+   "part_b": "FIN-003-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-08 (joint stack there); seated on FIN-003-LL",
+   "hardware": true,
+   "hardware_of": "E-FIN-08"
+  },
+  {
+   "id": "E-FIN-105",
+   "part_a": "FIN-102-UR",
+   "part_b": "FIN-101-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-05 (joint stack there); seated on FIN-101-UR",
+   "hardware": true,
+   "hardware_of": "E-FIN-05"
+  },
+  {
+   "id": "E-FIN-106",
+   "part_a": "FIN-102-UR",
+   "part_b": "FIN-003-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-05 (joint stack there); seated on FIN-003-UR",
+   "hardware": true,
+   "hardware_of": "E-FIN-05"
+  },
+  {
+   "id": "E-FIN-107",
+   "part_a": "FIN-102-UL",
+   "part_b": "FIN-101-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-06 (joint stack there); seated on FIN-101-UL",
+   "hardware": true,
+   "hardware_of": "E-FIN-06"
+  },
+  {
+   "id": "E-FIN-108",
+   "part_a": "FIN-102-UL",
+   "part_b": "FIN-003-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-06 (joint stack there); seated on FIN-003-UL",
+   "hardware": true,
+   "hardware_of": "E-FIN-06"
+  },
+  {
+   "id": "E-FIN-109",
+   "part_a": "FIN-102-LR",
+   "part_b": "FIN-101-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-07 (joint stack there); seated on FIN-101-LR",
+   "hardware": true,
+   "hardware_of": "E-FIN-07"
+  },
+  {
+   "id": "E-FIN-110",
+   "part_a": "FIN-102-LR",
+   "part_b": "FIN-003-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-07 (joint stack there); seated on FIN-003-LR",
+   "hardware": true,
+   "hardware_of": "E-FIN-07"
+  },
+  {
+   "id": "E-FIN-111",
+   "part_a": "FIN-102-LL",
+   "part_b": "FIN-101-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-08 (joint stack there); seated on FIN-101-LL",
+   "hardware": true,
+   "hardware_of": "E-FIN-08"
+  },
+  {
+   "id": "E-FIN-112",
+   "part_a": "FIN-102-LL",
+   "part_b": "FIN-003-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-08 (joint stack there); seated on FIN-003-LL",
+   "hardware": true,
+   "hardware_of": "E-FIN-08"
+  },
+  {
+   "id": "E-FIN-113",
+   "part_a": "FIN-103-UR",
+   "part_b": "FIN-003-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-05 (joint stack there); seated on FIN-003-UR",
+   "hardware": true,
+   "hardware_of": "E-FIN-05"
+  },
+  {
+   "id": "E-FIN-114",
+   "part_a": "FIN-103-UL",
+   "part_b": "FIN-003-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-06 (joint stack there); seated on FIN-003-UL",
+   "hardware": true,
+   "hardware_of": "E-FIN-06"
+  },
+  {
+   "id": "E-FIN-115",
+   "part_a": "FIN-103-LR",
+   "part_b": "FIN-003-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-07 (joint stack there); seated on FIN-003-LR",
+   "hardware": true,
+   "hardware_of": "E-FIN-07"
+  },
+  {
+   "id": "E-FIN-116",
+   "part_a": "FIN-103-LL",
+   "part_b": "FIN-003-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "fins",
+   "notes": "hardware of E-FIN-08 (joint stack there); seated on FIN-003-LL",
+   "hardware": true,
+   "hardware_of": "E-FIN-08"
   }
  ],
  "edges_pending": [],
@@ -2219,6 +2575,18 @@
   "E-PWR-11",
   "E-PWR-12",
   "E-PWR-13",
-  "E-PWR-14"
+  "E-PWR-14",
+  "E-PRP-101",
+  "E-PRP-103",
+  "E-PRP-105",
+  "E-PRP-107"
+ ],
+ "connection_types": [
+  {
+   "id": "CT-HW-SEATED",
+   "kind": "mechanical",
+   "method": "clamped",
+   "spec": "fastener hardware seated in a fastened joint (screw in its hole or thread, nut / washer / spacer under it, heat-set insert in its bore); the joint_stack is on the parent edge named in hardware_of"
+  }
  ]
 }

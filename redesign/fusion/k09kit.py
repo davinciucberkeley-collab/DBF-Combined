@@ -28,6 +28,7 @@ propulsion, landing, pod and mechanisms designers build from the same numbers an
 | `box_frame`, `box_shell` | transport box placed around the aircraft (DX-BOX), six wall bodies (flight: false) |
 | `motor_envelope`, `prop_disc`, `prop_keepout` | motor can + shaft along -x, prop disc, prop strike keep-out |
 | `quad(ctx, ids)`, `pair(ctx, r, l)` | UR -> UL, LR, LL by exact mirrors; R -> L |
+| `hw_part`, `hw_screw`, `hw_nut`, `hw_washer`, `hw_insert`, `hw_join` | fastener sets as parts at their joint (C6 FASTENERS-CAD; nodes from team/C6/fastener_parts.py) |
 | `hover_pose(params)`, `to_hover(p, params)`, `hover_ground(ctx, exempt)` | stand-on-fin-tips attitude; ground keep-out |
 
 Run as a script:  python -I redesign/fusion/k09kit.py --datums-md   rewrites the generated table in DATUMS.md
@@ -562,6 +563,110 @@ def quad(ctx, ids):
 def pair(ctx, right, left):
     """Left part = right part mirrored through DP-SYM."""
     return ctx.mirror(right, left, plane='XZ')
+
+
+# ----------------------------------------------------------------------------- fasteners (C6 kit, FASTENERS-CAD.md)
+# Nominal dimensions (m) of the kit hardware. Screw heads: (dk, k, recess diameter, recess depth) for ISO 4762
+# socket head, ISO 7045-class pan head, DIN 84 cheese head; nuts (AF, m) ISO 4032 / ISO 10511 nyloc; washers
+# (OD, t) ISO 7089; insert (OD, length) Ruthex-class M3 x 5.7. Simple solids: no thread, round recess.
+HW_DIMS = {
+    'M2': {'d': 0.002, 'socket': (0.0038, 0.002, 0.0015, 0.001), 'pan': (0.0038, 0.0016, 0.0012, 0.0008),
+           'cheese': (0.0038, 0.0013, 0.0, 0.0), 'nut': (0.004, 0.0016), 'nyloc': (0.004, 0.0028),
+           'washer': (0.005, 0.0003)},
+    'M3': {'d': 0.003, 'socket': (0.0055, 0.003, 0.0025, 0.0013), 'pan': (0.0056, 0.0018, 0.0017, 0.001),
+           'cheese': (0.0055, 0.002, 0.0, 0.0), 'nut': (0.0055, 0.0024), 'nyloc': (0.0055, 0.004),
+           'washer': (0.007, 0.0005), 'insert': (0.0046, 0.0057)},
+    'M6': {'d': 0.006, 'nut': (0.010, 0.0052), 'washer': (0.012, 0.001)},
+}
+
+
+def _hw_uva(axis, p):
+    import fusionkit as fk
+    iu, iv = fk.UV[axis]
+    return p[iu], p[iv], p[fk.AX[axis]]
+
+
+def _ngon(u, v, r, n, phase=0.0):
+    return [(u + r * math.cos(phase + 2 * math.pi * i / n), v + r * math.sin(phase + 2 * math.pi * i / n))
+            for i in range(n)]
+
+
+def hw_screw(part, axis, seat, sense, size='M3', length=0.008, head='socket', name=None):
+    """Screw along component-local `axis` ('X'|'Y'|'Z'). `seat` = point on the axis at the head's bearing face;
+    the shank runs `length` toward `sense` (+1 / -1 along the axis), the head the other way. head: socket | pan |
+    cheese. Bodies: head (round recess for the key or driver) + plain shank of nominal diameter."""
+    D = HW_DIMS[size]
+    dk, k, rd, rt = D[head]
+    R, rr = dk / 2, rd / 2
+    if head == 'pan':                                           # domed top approximated by a chamfer
+        prof = [(0, 0), (0, R), (-0.55 * k, R), (-k, 0.72 * R), (-k, rr), (-(k - rt), rr), (-(k - rt), 0)]
+    elif rd > 0:
+        prof = [(0, 0), (0, R), (-k, R), (-k, rr), (-(k - rt), rr), (-(k - rt), 0)]
+    else:
+        prof = [(0, 0), (0, R), (-k, R), (-k, 0)]
+    if sense < 0:                                               # mirror in a, reversed to keep the winding
+        prof = [(-a, r) for a, r in reversed(prof)]
+    n = name or '%s x %.0f %s' % (size, length * 1000, head)
+    part.revolve(axis, seat, prof, name=n + ' head')
+    part.cylinder(axis, seat, sense * length, D['d'] / 2, name=n + ' shank')
+
+
+def hw_nut(part, axis, seat, sense, size='M3', nyloc=False, name=None):
+    """Hex nut (ISO 4032, or ISO 10511 nyloc height) with its bearing face at `seat`, thickness toward `sense`."""
+    D = HW_DIMS[size]
+    af, m = D['nyloc' if nyloc else 'nut']
+    u, v, a = _hw_uva(axis, seat)
+    hexa = _ngon(u, v, af / math.sqrt(3), 6, math.pi / 6)
+    hole = _ngon(u, v, D['d'] / 2, 12)
+    part.prism(axis, a, [hexa, hole], sense * m, name=name or '%s %s' % (size, 'nyloc nut' if nyloc else 'hex nut'))
+
+
+def hw_washer(part, axis, seat, sense, size='M3', od=None, t=None, idia=None, name=None):
+    """Flat washer or spacer (ISO 7089 by default) from `seat` toward `sense`; od, t, idia override (spacers)."""
+    D = HW_DIMS[size]
+    w_od, w_t = D['washer']
+    od, t = od or w_od, t or w_t
+    ri = (idia or D['d'] * 1.067) / 2
+    part.tube(axis, seat, sense * t, od / 2, ri, name=name or '%s washer' % size)
+
+
+def hw_insert(part, axis, seat, sense, size='M3', name=None):
+    """Brass heat-set insert, top face flush at `seat`, length into the boss toward `sense`."""
+    D = HW_DIMS[size]
+    od, ln = D['insert']
+    part.tube(axis, seat, sense * ln, od / 2, D['d'] * 0.42,
+              name=name or '%s x %.1f heat-set insert' % (size, ln * 1000))
+
+
+def hw_part(ctx, part_id, at=(0, 0, 0), rotate=None):
+    """Component for a modelled fastener set, only if `part_id` is declared (team/C6/fastener_parts.py writes the
+    hardware nodes into the owner's interfaces.json). A designer's generator whose stub build declares only its own
+    catalogue gets None and skips the hardware, so the generators keep running unchanged."""
+    if part_id not in ctx.parts_info:
+        return None
+    return ctx.part(part_id, at=at, rotate=rotate)
+
+
+_HW_EDGES = {}
+
+
+def hw_join(ctx, hw_id, other_id, at):
+    """Rigid registration of the hardware edge hw_id <-> other_id declared in this module's interfaces.json
+    (edge flagged "hardware": true, written by team/C6/fastener_parts.py). No-op if hw_id is not modelled."""
+    if hw_id not in ctx.components:
+        return
+    path = os.path.join(ctx.dir or '', 'interfaces.json')
+    if path not in _HW_EDGES:
+        try:
+            with open(path, encoding='utf-8') as f:
+                _HW_EDGES[path] = [e for e in json.load(f).get('edges', []) if e.get('hardware')]
+        except OSError:
+            _HW_EDGES[path] = []
+    for e in _HW_EDGES[path]:
+        if {e['part_a'], e['part_b']} == {hw_id, other_id}:
+            ctx.rigid(e['id'], e['part_a'], e['part_b'], at=at)
+            return
+    ctx.issue('ERROR', 'hardware', hw_id, 'no hardware edge %s <-> %s in %s' % (hw_id, other_id, path))
 
 
 # ----------------------------------------------------------------------------- hover attitude

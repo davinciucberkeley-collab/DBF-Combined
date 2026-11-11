@@ -13,7 +13,7 @@ TRN-007-L,End handle L,1,buy,bolt 2 x M3 + backing strip,strap handle (bought),4
 TRN-007-R,End handle R,1,buy,bolt 2 x M3 + backing strip,strap handle (bought),40.0,4.0,as TRN-007-C,flight: false
 TRN-008,"Field pouch (10 mm prop spanner, spare M6 prop nuts, 2.5 mm key, tape, checklist card)",1,buy,-,nylon pouch + contents,150.0,8.0,any zip pouch,"flight: false; carried mass, part of the loaded box"
 TRN-101,"LSE double-sided tape (3M 300LSE class), 1 roll",1,buy,-,acrylic adhesive tape,0,12.0,hardware store,flight: false; mass in TRN-001
-TRN-102,M3 x 16 SHCS + M3 nyloc + M3 x 12 mm fender washer (outside),6,buy,-,A2-70,0,0.3,hardware store,flight: false; handles (C6 CR-C6-08); mass in TRN-001
+TRN-102,Handle bolt set: 2 x (M3x16 SHCS + M3 nyloc + M3 x 12 fender washer),3,buy,-,A2 stainless,4.6,0.60,hardware store (I1 T04),"[C6-HW] per set (one node per joint, CAD set of bodies; C6 FASTENERS-CAD); flight: false; handles (C6 CR-C6-08); 3 mm ply strip inside not modelled"
 TRN-105,"Handle backing strip 140 x 30 x 3 mm, 2 holes 3.4 mm at 100 mm",3,make,laser cut,birch plywood 3 mm,7.6,0.3,laser-cut sheet offcut,flight: false; inside the wall behind each handle; mass in CL-D7-BOX-MASS
 TRN-106,10 mm prop spanner (D-40),1,buy,-,steel,0,4.0,hardware store,flight: false; in TRN-008; mass in TRN-008
 TRN-103,Laminated CHECKLIST.md card,1,make,print + laminate,paper,0,1.0,redesign/subsystems/transport/CHECKLIST.md,flight: false; in TRN-008

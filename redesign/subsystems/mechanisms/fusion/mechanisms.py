@@ -328,6 +328,36 @@ def build(ctx):
     for pid in PARTS_R:
         k9.pair(ctx, pid, mirror_id(pid))
     register(ctx, G)
+    build_hardware(ctx, G)
+
+
+def cover_screw_points(G):
+    """(x, y) of the two M2 x 6 cover screws (right side): centre of the frame's M2 bosses on the end walls."""
+    y = G['fy0'] + G['fw'] + 0.0025
+    return [(G['fx0'] + 0.002, y), (G['fx1'] - 0.002, y)]
+
+
+def build_hardware(ctx, G):
+    """Fasteners as components (only when declared, k09kit.hw_part; C6 FASTENERS-CAD), right side then mirrored:
+    MEC-011 cover screw pair (E-MEC-35/36 and the retention of E-MEC-03/04): M2 x 6 self-tapping pan heads from below
+    (-z) through the cover into the frame bosses; MEC-012 supplied M2 x 4 arm screw into the output shaft (E-MEC-05/06)."""
+    cs = k9.hw_part(ctx, 'MEC-011-R')
+    if cs is None:
+        return
+    zc = G['zl'](G['xs']) - G['ct']                                   # cover lower face
+    for x, y in cover_screw_points(G):
+        k9.hw_screw(cs, 'Z', (x, y, zc), 1, 'M2', 0.006, 'pan', name='M2 x 6 self-tapping pan head')
+    arm = k9.hw_part(ctx, 'MEC-012-R')
+    ya = G['ya'] + G['at'] / 2
+    k9.hw_screw(arm, 'Y', (G['xs'], ya, G['zs']), -1, 'M2', 0.004, 'pan', name='M2 x 4 arm screw (supplied)')
+    k9.pair(ctx, 'MEC-011-R', 'MEC-011-L')
+    k9.pair(ctx, 'MEC-012-R', 'MEC-012-L')
+    x, y = cover_screw_points(G)[0]
+    for sd, s in (('R', 1), ('L', -1)):
+        k9.hw_join(ctx, 'MEC-011-' + sd, 'MEC-007-' + sd, (x, s * y, zc + G['ct'] / 2))
+        k9.hw_join(ctx, 'MEC-011-' + sd, 'MEC-008-' + sd, (x, s * y, G['cz0'] + 0.003))
+        k9.hw_join(ctx, 'MEC-012-' + sd, 'MEC-002-' + sd, (G['xs'], s * G['ya'], G['zs']))
+        k9.hw_join(ctx, 'MEC-012-' + sd, 'MEC-001-' + sd, (G['xs'], s * (G['cy1'] + G['boss'] / 2), G['zs']))
 
 
 def edge_specs(G=None):

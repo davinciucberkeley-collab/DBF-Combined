@@ -392,4 +392,9 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv[1:]))
+    rc = main(sys.argv[1:])
+    if '--check' not in __import__('sys').argv:     # C6 FASTENERS-CAD: re-apply the modelled fastener parts
+        import os as _o, runpy as _r
+        _r.run_path(_o.path.join(_o.path.abspath(__file__).rsplit(_o.sep + 'redesign' + _o.sep, 1)[0], 'redesign', 'team',
+                                 'C6', 'fastener_parts.py'), run_name='c6_hook')['run']()
+    sys.exit(rc)

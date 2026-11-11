@@ -75,6 +75,7 @@ LOOKS = [
     (('motor',), ('#3C4047', 0.3, 0.8, 0.0)),
     (('servo',), ('#33363B', 0.45, 0.0, 0.0)),
     (('alumin', '6061', '7075'), ('#C8CCD2', 0.3, 1.0, 0.0)),
+    (('brass',), ('#C9A44C', 0.3, 1.0, 0.0)),                 # heat-set inserts (C6 FASTENERS-CAD)
     (('steel', 'stainless'), ('#A8ADB4', 0.28, 1.0, 0.0)),
     (('petg', 'pla', 'asa', 'nylon', 'pa6', 'pa12', 'printed', 'tpu'), ('#5F6670', 0.55, 0.0, 0.0)),
 ]

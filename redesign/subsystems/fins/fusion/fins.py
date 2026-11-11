@@ -803,6 +803,43 @@ def edge_specs(G):
     return E
 
 
+# ----------------------------------------------------------------------------- fasteners (C6 FASTENERS-CAD)
+def pinch_stack(G):
+    """Pinch-bolt stack of mount UR along x through both ears (E-FIN-05...08): washer + M3x16 SHCS head on the front
+    ear (-x), washer + nyloc on the aft ear. Returns the points (UR) the module and the hardware edges use."""
+    xf = G['xt'] - G['slit'] / 2 - G['ear_t']                      # front ear outer face
+    xb = G['xt'] + G['slit'] / 2 + G['ear_t']                      # aft ear outer face
+    y, z = G['yf'] + G['col_r'] + G['ear_len'] / 2, G['z_grip_mid']
+    return {'xf': xf, 'xb': xb, 'y': y, 'z': z, 'w': HW_WASHER_T}
+
+
+HW_WASHER_T = 0.0005                                               # ISO 7089 M3
+
+
+def build_pinch_hardware(ctx, G):
+    """FIN-101 bolt, FIN-102 nyloc, FIN-103 washer pair as their own components (only when declared,
+    k09kit.hw_part); built at UR and mirrored to UL / LR / LL like the mount; hardware edges registered rigid."""
+    h = pinch_stack(G)
+    xf, xb, y, z, w = h['xf'], h['xb'], h['y'], h['z'], h['w']
+    bolt = k9.hw_part(ctx, 'FIN-101-UR')
+    if bolt is None:
+        return
+    k9.hw_screw(bolt, 'X', (xf - w, y, z), 1, 'M3', 0.016, 'socket', name='M3x16 SHCS pinch bolt')
+    k9.hw_nut(k9.hw_part(ctx, 'FIN-102-UR'), 'X', (xb + w, y, z), 1, 'M3', nyloc=True)
+    wa = k9.hw_part(ctx, 'FIN-103-UR')
+    k9.hw_washer(wa, 'X', (xf, y, z), -1, 'M3', name='M3 washer under the head')
+    k9.hw_washer(wa, 'X', (xb, y, z), 1, 'M3', name='M3 washer under the nyloc')
+    for k in ('FIN-101', 'FIN-102', 'FIN-103'):
+        k9.quad(ctx, {st: '%s-%s' % (k, st) for st in STATIONS})
+    for st in STATIONS:
+        sy, sz = k9.SIGNS[st]
+        P = lambda x: (x, sy * y, sz * z)
+        k9.hw_join(ctx, 'FIN-101-' + st, 'FIN-003-' + st, P(xf + G['ear_t'] / 2))
+        k9.hw_join(ctx, 'FIN-102-' + st, 'FIN-101-' + st, P(xb + w + 0.002))
+        k9.hw_join(ctx, 'FIN-102-' + st, 'FIN-003-' + st, P(xb + w))
+        k9.hw_join(ctx, 'FIN-103-' + st, 'FIN-003-' + st, P(xf - w / 2))
+
+
 # ----------------------------------------------------------------------------- build
 def _declared_edges(ctx):
     path = os.path.join(ctx.dir or '', 'interfaces.json')
@@ -857,6 +894,7 @@ def build(ctx):
     for a, b in pairs:
         k9.pair(ctx, a, b)
     k9.quad(ctx, {'UR': 'FIN-003-UR', 'UL': 'FIN-003-UL', 'LR': 'FIN-003-LR', 'LL': 'FIN-003-LL'})
+    build_pinch_hardware(ctx, G)
 
     declared = _declared_edges(ctx)
     for e in edge_specs(G):

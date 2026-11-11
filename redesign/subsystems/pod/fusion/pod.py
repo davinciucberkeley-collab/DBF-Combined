@@ -522,6 +522,17 @@ def build(ctx):
     ctx.contact('E-POD-04', 'straps through the tray slots, under the tray in a floor groove')
     ctx.contact('E-POD-05', 'pack strapped on the pads between the guides; crush block ahead, spacers and aft stop behind')
     ctx.rigid('E-POD-06', 'POD-005', 'POD-007', at=(xs, 0.0, G['z_grip1'] + sb[1] / 2))
+    # E-POD-06 hardware as components (C6 FASTENERS-CAD; only when declared): PA66 M3x16 cheese head from +y in the
+    # 4.5 mm counterbore across socket boss and mast, PA66 hex nut on the -y face
+    zc = G['z_grip1'] + sb[1] / 2
+    scr = k9.hw_part(ctx, 'POD-011')
+    if scr:
+        k9.hw_screw(scr, 'Y', (xs, sb[0] / 2 - 0.0045, zc), -1, 'M3', 0.016, 'cheese', name='M3x16 PA66 cheese head')
+        k9.hw_nut(k9.hw_part(ctx, 'POD-012'), 'Y', (xs, -sb[0] / 2, zc), -1, 'M3', name='M3 PA66 hex nut')
+        k9.hw_join(ctx, 'POD-011', 'POD-007', (xs, sb[0] / 2 - 0.006, zc))
+        k9.hw_join(ctx, 'POD-011', 'POD-005', (xs, 0.0, zc))
+        k9.hw_join(ctx, 'POD-012', 'POD-011', (xs, -sb[0] / 2 - 0.0012, zc))
+        k9.hw_join(ctx, 'POD-012', 'POD-007', (xs, -sb[0] / 2, zc))
     ctx.contact('E-POD-07', 'pitot socket through the nose wall, flange bonded to its inside face')
     ctx.contact('E-POD-08', 'handle legs bonded in the aft-deck slots')
     ctx.contact('E-POD-09', 'handle feet and stop bridge bonded on the spar / slot fill, one tie each round foot + spar')

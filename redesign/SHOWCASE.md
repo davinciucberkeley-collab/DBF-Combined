@@ -36,6 +36,7 @@ Rendered in Blender from the same scripts that build the Fusion model.*
 | ![Pod detail](showcase/renders/detail-pod.png) <br> Pod: printed tray, 4S 6500 mAh pack, flight controller, GPS mast, pitot. | ![Landing foot detail](showcase/renders/detail-foot.png) <br> Landing foot: printed shoe and piston, crushable XPS cartridge, pad. |
 | ![Propulsion detail](showcase/renders/detail-propulsion.png) <br> Propulsion station: motor, prop, 45 A ESC on the fin. | ![Mechanisms detail](showcase/renders/detail-mechanisms.png) <br> Elevon linkage: servo, arm, pushrod, horns, inter-panel rod. |
 | ![Harness detail](showcase/renders/detail-harness.png) <br> Harness: pod bundle to the wing and fin bundles and each ESC. | ![Transport box](showcase/renders/transport-box.png) <br> Transport box (ghosted) with the aircraft in its foam cradles. |
+| ![Fasteners detail](showcase/renders/detail-fasteners.png) <br> Fasteners as CAD parts: motor screws, pinch bolt, nyloc, washers, prop nut (one motor station). | |
 
 Regenerate the renders: `blender -b --factory-startup -P redesign/showcase/tools/render_showcase.py`
 (spec `redesign/blender/specs/showcase.json`). The CAD itself is in [`subsystems/*/fusion/`](subsystems); build it in

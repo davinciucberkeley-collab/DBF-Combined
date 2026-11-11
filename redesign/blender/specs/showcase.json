@@ -674,6 +674,71 @@
     "title": "Transport box with the aircraft in its cradle",
     "sub": "Coroplast box (ghosted), foam spar cradles, hold-down pillars and prop tray; lid and straps removed"
    }
+  },
+  {
+   "id": "detail-fasteners",
+   "context": [
+    "FIN-003-UR",
+    "FIN-101-UR",
+    "FIN-102-UR",
+    "FIN-103-UR",
+    "PRP-001-UR",
+    "PRP-004-UR",
+    "PRP-005-UR",
+    "PRP-006-UR",
+    "PRP-007-UR",
+    "PRP-008-UR",
+    "FIN-002-R",
+    "FIN-008-UR"
+   ],
+   "ghost": [
+    "FIN-003-UR",
+    "PRP-001-UR",
+    "PRP-004-UR"
+   ],
+   "callouts": [
+    {
+     "item": "PRP-005-UR",
+     "text": "4 x M3x8 SHCS motor screws"
+    },
+    {
+     "item": "FIN-101-UR",
+     "text": "M3x16 pinch bolt"
+    },
+    {
+     "item": "FIN-102-UR",
+     "text": "M3 nyloc"
+    },
+    {
+     "item": "FIN-103-UR",
+     "text": "2 x M3 washer"
+    },
+    {
+     "item": "PRP-006-UR",
+     "text": "4 x M3x4 adapter screws"
+    },
+    {
+     "item": "PRP-007-UR",
+     "text": "M6 prop nut + washer"
+    }
+   ],
+   "camera": {
+    "preset": "closeup",
+    "fit": [
+     "FIN-003-UR",
+     "PRP-005-UR",
+     "FIN-101-UR",
+     "FIN-102-UR",
+     "PRP-001-UR"
+    ],
+    "az": -150,
+    "el": 22,
+    "lens": 50
+   },
+   "caption": {
+    "title": "Fasteners as parts: motor station UR",
+    "sub": "Each screw, nut and washer of the joint stacks is a CAD part with mass and edges (mount, motor and adapter ghosted)"
+   }
   }
  ]
 }

@@ -108,9 +108,9 @@ line("W07", "airframe", "Foam-safe glue (UHU Por / Gorilla clear)", "Amazon", "E
 line("H01", "hardware", "Harness parts (F2 parts.csv HRN-103..106, 108, 109): 26 AWG servo extension 2 m $5, 28 AWG 3 colours $7, JR/Futaba connector kit $7, JST-GH housings + pigtails $12, cable ties $4, PET braid sleeve $6", "Amazon / DigiKey", "assorted, see F2 parts.csv", "EARLY", 1, 0, 41.00,
      status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="HRN-103",
      note="F2 prices all EST UNVERIFIED; one line = six purchases. 16 AWG, 20 AWG and heat-shrink are F03, F04, F09. JST-GH from DigiKey adds shipping: use pre-crimped pigtails from Amazon if the cart allows")
-line("H02", "hardware", "Mechanisms hardware (D6 parts.csv): Du-Bro 2-56 rod + steel clevises $8, 1/8 in (3.18 mm) pultruded CF rod 1 m $5, CF tube 5 x 4 x 1000 mm $8, M2 self-tapping screws $3", "Amazon / hobby shop", "Du-Bro 2-56, CF rod 1/8 in, CF tube 5x4, M2 x 6", "DEC", 1, 0, 24.00,
+line("H02", "hardware", "Mechanisms hardware (D6 parts.csv): Du-Bro 2-56 rod + steel clevises $8, 1/8 in (3.18 mm) pultruded CF rod 1 m $5, CF tube 5 x 4 x 1000 mm $8, M2 x 6 self-tapping pan-head screws (servo covers MEC-011: 4 fitted + spares, pack of 20) $3", "Amazon / hobby shop", "Du-Bro 2-56, CF rod 1/8 in, CF tube 5x4, M2 x 6 self-tapping pan head A2", "DEC", 1, 0, 24.00,
      status="EST", seen="2026-11-10", lead=5, url="https://www.amazon.com/", part="MEC-005",
-     note="CR-D6-02, CR-D6-16: the 1/8 in CF rod replaces the 3/32 in music wire ($5, was $3). Hinge tape is the wing tape (W06)")
+     note="CR-D6-02, CR-D6-16: the 1/8 in CF rod replaces the 3/32 in music wire ($5, was $3). Hinge tape is the wing tape (W06). M2 x 6: 2 per servo cover (E-MEC-03/04, -35/36, C6 FASTENERS-CAD); buy even if the servo box has screws (length unverified)")
 line("H03", "hardware", "Charger-side XT60 pair for the AS150U charge adapter + 0.3 m 10 AWG stub", "Amazon", "XT60 pair, 10 AWG silicone", "DEC", 1, 0, 5.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="HRN-002",
      note="was $15 for the whole AS150U re-termination; F01 now buys the five AS150U pairs, so only the charger-side XT60 and a short 10 AWG stub remain")

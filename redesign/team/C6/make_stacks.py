@@ -222,9 +222,23 @@ for i in range(3):
         "load": "57-59 N per bolt (CL-D7-HANDLE-BOLT-F); confirmed by C6 (CR-D7-10): the ply strip spreads it to "
                 "27 kPa on the Coroplast; min engagement = nyloc 4.0 + 2 pitches (D-41), not 3.0"}}
 
-WITHDRAWN = {"E-MEC-03": "servo held in MEC-008 ear slots, no screws (D6 CR-D6-11a); the cover screws are E-MEC-35/36",
-             "E-MEC-04": "same as E-MEC-03",
-             "E-PWR-05": "bus board on foam tape (F1), retention block owned by power; no C6 stack (CR-A4-44b)"}
+# E-MEC-03/04 (FIX 1, FASTENERS-CAD.md): reinstated. The servo sits in the frame's ear slots and the screwed cover
+# holds it there, so the edge carries the stack of the cover's two screws (the same MEC-011 pair as E-MEC-35/36).
+for k, s in ((3, "L"), (4, "R")):
+    stacks[f"E-MEC-0{k}"] = {"joint_stack": {
+        "fastener": "M2 x 6 self-tapping pan head (MEC-011: the two cover screws of E-MEC-35/36)", "count": 2,
+        "grade": "A2 stainless",
+        "hole": "servo ears in the 2.7 mm end-wall slots; 2.4 mm clearance in the cover; 1.6 mm pilot 6 mm deep in "
+                "each 4 x 5 x 6 mm frame end-wall boss",
+        "insert": "none (self-tapping into the printed PETG boss, D-58 b)", "engagement_mm": 5.2,
+        "min_engagement_mm": 4.0, "washer_nut": "none", "torque": "snug, head seated (plastic); no threadlocker",
+        "tool": "Phillips #1", "access": "from below (-z), wing on its back, through the cover",
+        "install_order": 6, "removal_order": 1,
+        "load": "cover holds the servo up into the frame: 15.8 g x 12.75 g crash = 2.0 N on 2 screws; thread shear "
+                "0.5 x pi x 2 x 5.2 mm2 x 15 MPa (PETG across layers) = 245 N per screw; the ears carry the 14 N "
+                "servo reaction. Not an M3 insert: the 4 x 5 mm bosses cannot take a 7.2 mm insert boss"}}
+
+WITHDRAWN = {"E-PWR-05": "bus board on foam tape (F1), retention block owned by power; no C6 stack (CR-A4-44b)"}
 
 doc = {"_note": "C6 joint stacks / clamp / bond / retention blocks per edge id (interfaces/SCHEMA.md names). Generated "
                 "by team/C6/make_stacks.py from team/C6/claims.json, revision C6-R5b (params A1-R5). Edge owners copy "
