@@ -164,7 +164,8 @@ def build(prefix, mk, standalone=False):
     lab_y_a, lab_y_b = TOP_Y - 36, front.y0 - 88
     o.append(text(top.x0, lab_y_a, 'TOP · NOSE UP', 'ga-view'))
     o.append(text(iso_x, lab_y_a, 'ISO · NO SCALE', 'ga-view'))
-    o.append(text(front.x0, lab_y_b, 'FRONT · FROM THE NOSE', 'ga-view'))
+    # FRONT label sits below the elevon callout so the elevon leader (dropping from the top view) never crosses it
+    o.append(text(front.x0, front.y0 - 34, 'FRONT · FROM THE NOSE', 'ga-view'))
     o.append(text(side.x0, lab_y_b, 'SIDE · NOSE LEFT', 'ga-view'))
 
     # ---------------------------------------------------------------- construction: prop discs, hidden spar, CG

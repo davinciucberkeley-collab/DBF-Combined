@@ -29,7 +29,7 @@
 <image class="ga-img" x="807.9" y="60.0" width="332.1" height="237.2" href="iso.webp"/>
 <text class="ga-view" x="48.0" y="24.0" text-anchor="start">TOP · NOSE UP</text>
 <text class="ga-view" x="807.9" y="24.0" text-anchor="start">ISO · NO SCALE</text>
-<text class="ga-view" x="48.0" y="408.1" text-anchor="start">FRONT · FROM THE NOSE</text>
+<text class="ga-view" x="48.0" y="462.1" text-anchor="start">FRONT · FROM THE NOSE</text>
 <text class="ga-view" x="807.9" y="408.1" text-anchor="start">SIDE · NOSE LEFT</text>
 <circle class="ga-hid" cx="194.2" cy="524.3" r="72.6"/>
 <circle class="ga-hid" cx="194.2" cy="721.9" r="72.6"/>
