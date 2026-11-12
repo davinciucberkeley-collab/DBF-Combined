@@ -20,17 +20,19 @@ Exit code 0 = PASS. The report is `out/REPORT.md`; `out/report.json` has every p
 | Containment | A body wholly inside a body of another part fails. |
 | Elevon sweep | Each limited revolute joint (the four elevon panels, ±25°) is turned to each limit with everything bonded to it (horns, torque tubes, bridge rod), and checked against what did not move. |
 | Holes and pockets | A part's cuts (`Component.cut`, `Context.seat`, `interfaces/seats.json`) are removed material, without mesh booleans. |
-| Wires | Every routed wire is meshed as the 3-D model draws it (filleted at its bend radius, each strand at its diameter) and checked against every part and every other wire. `--audit-wires` lists each clash by route segment of `team/F2/harness.py`'s wire table. |
+| Wires | Every routed wire is meshed as the 3-D model draws it (filleted at its bend radius, each strand at its diameter) and checked against every part, the tape skin and every other wire; every strand end must be seated in a part. `--audit-wires` lists each clash by route segment of `team/F2/harness.py`'s wire table. |
 
-Wire rules (each one a physical fact, not a tolerance):
+Wire rules (each one a physical fact, not a tolerance; D-86 made them strict):
 
-- The packing-tape skin (`WNG-003`) conforms over wires laid on or in the foam, so wire-vs-tape contact is not
-  penetration. Wire-vs-foam is.
+- The packing-tape skin (`WNG-003`) is a solid like any other. A lead passes it only through a slit drawn in the
+  tape (`cad.skin_slots` from `team/F2/harness.py`, cut in `wing.py`), where it is laid first and the tape is cut
+  round it on the bench.
 - A wire may sit up to 6 mm into its own terminal part: the solder pad or cup and its adhesive heat-shrink tail.
-- A wire may pass through a connector fitted in-line on it (the XT30U pairs, the AS150U pack half), declared in the
-  harness params (`cad.*.wire`).
-- Wires that share a terminal part meet in one bench joint for their first 10 mm (the four ESC pigtails on the bus
-  bar).
+- A wire may pass through a connector fitted in-line on it (the JR pairs `HRN-105-*`, the XT30U pairs, the AS150U
+  pack half), declared in the harness params (`cad.*.wire`).
+- **Every strand end must be seated**: its surface on or in one of its own terminal parts or an in-line connector
+  (axis within its radius + 0.5 mm). A lead that stops in mid-air fails. Report section "Wire ends not seated".
+- No shared joints: every conductor lands on its own pad.
 
 ## What it does not check
 

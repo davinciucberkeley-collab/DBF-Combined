@@ -3,24 +3,24 @@
  "mode": "material",
  "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
  "files": {
-  "assembly.glb": 9288984,
+  "assembly.glb": 9584264,
   "avionics.glb": 44220,
   "fins.glb": 1393248,
-  "harness.glb": 1521224,
+  "harness.glb": 1652364,
   "landing.glb": 213420,
   "mechanisms.glb": 345664,
   "pod.glb": 182472,
   "power.glb": 177340,
   "propulsion.glb": 899108,
   "transport.glb": 175172,
-  "wing.glb": 4326660
+  "wing.glb": 4490936
  },
  "parts": [
   {
    "id": "WNG-001",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 202.0,
+   "mass_g": 201.9,
    "explode_m": [
     0.0,
     0.0,
@@ -2044,7 +2044,7 @@
    "id": "HRN-001",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 40.1,
+   "mass_g": 39.0,
    "explode_m": [
     0.0,
     0.0,
@@ -2056,7 +2056,7 @@
    "id": "HRN-002-R",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 42.8,
+   "mass_g": 43.4,
    "explode_m": [
     -0.228,
     0.0,
@@ -2068,7 +2068,7 @@
    "id": "HRN-002-L",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 42.3,
+   "mass_g": 42.9,
    "explode_m": [
     -0.228,
     0.0,
@@ -2118,6 +2118,94 @@
     0.0,
     0.0,
     0.0131
+   ]
+  },
+  {
+   "id": "HRN-105-1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-3",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-4",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-5",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-6",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.071,
+    0.0903
+   ]
+  },
+  {
+   "id": "HRN-105-SL",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "explode_m": [
+    -0.1415,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-105-SR",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "explode_m": [
+    -0.1415,
+    0.0,
+    0.0
    ]
   },
   {

@@ -29,7 +29,7 @@ Parameter files: `redesign/params/params.json`, `redesign/subsystems/fins/params
 | [R-FIN-TUBE-JOINT](#r-fin-tube-joint) Fin-tube-block joint | **UNVERIFIED** **FAILS** | 32 | -40% |
 | [R-FSW-PARAMS](#r-fsw-params) Tailsitter parameter file | **UNVERIFIED** | 3 | +0% |
 | [R-GUST-LEAN](#r-gust-lean) 8 m/s gust survive-and-land | **UNVERIFIED** | 0 | — |
-| [R-HARNESS-INSTALL](#r-harness-install) Wiring is an installation | **UNVERIFIED** **FAILS** | 6 | -5% |
+| [R-HARNESS-INSTALL](#r-harness-install) Wiring is an installation | **UNVERIFIED** **FAILS** | 6 | -8% |
 | [R-HOVER-AUTHORITY](#r-hover-authority) Hover control authority | **UNVERIFIED** | 9 | +45% |
 | [R-HOVER-SPLIT](#r-hover-split) Hover pitch-trim thrust split | **UNVERIFIED** | 1 | +3% |
 | [R-HOVER-TW](#r-hover-tw) Hover thrust-to-weight | **UNVERIFIED** | 12 | +17% |
@@ -1002,7 +1002,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                               - ⚠ assumption marked UNVERIFIED by its author
                             - `r_ext` ← param `P:electrical.r_ext_mohm` = 6.7 mOhm — **UNVERIFIED**
                               - ⚠ cites CL-F1-R-EXT, which is UNVERIFIED
-                              - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED**
+                              - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED**
                                 - ⚠ uses CL-F1-I-CONT, which is UNVERIFIED
                                 - ⚠ uses CL-F1-PROFILE, which is UNVERIFIED
                                 - ⚠ uses ASM-F1-WIRE-OD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -1494,7 +1494,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                   - `g_main` ← param `P:power.jumper_awg` = 10 AWG (F1 choice (CALC-PWR-JUMPER)) — **PROPOSED**
                                   - `l_main` ← param `P:power.jumper_len_m` = table (2 rows) m (F1 layout (fusion/power.py) incl. 10 mm slack) — **PROPOSED**
                                   - `k_cu` ← param `P:power.k_cu_w_mk` = 400 W/m/K (handbook copper) — **PROPOSED**
-                                  - `l_ur` ← claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.6359 m** — **UNVERIFIED**
+                                  - `l_ur` ← claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.648 m** — **UNVERIFIED**
                                     - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
                                     - how to verify: T-F2-FIT dry fit, tape measure
                                     - parts: PRP-002-UR
@@ -1503,17 +1503,17 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
                                       - `od` ← param `P:harness.wire_od_mm` = table (7 rows) AWG,mm — **UNVERIFIED**
                                         - ⚠ cites ASM-F1-WIRE-OD, which is UNVERIFIED
                                         - `ASM-F1-WIRE-OD` (see above)
-                                  - `l_ul` ← claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5116 m** — **UNVERIFIED**
+                                  - `l_ul` ← claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5373 m** — **UNVERIFIED**
                                     - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
                                     - how to verify: T-F2-FIT dry fit, tape measure
                                     - parts: PRP-002-UL
                                     - `CALC-F2-LENGTHS` (see above)
-                                  - `l_lr` ← claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6755 m** — **UNVERIFIED**
+                                  - `l_lr` ← claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6796 m** — **UNVERIFIED**
                                     - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
                                     - how to verify: T-F2-FIT dry fit, tape measure
                                     - parts: PRP-002-LR
                                     - `CALC-F2-LENGTHS` (see above)
-                                  - `l_ll` ← claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5488 m** — **UNVERIFIED**
+                                  - `l_ll` ← claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5683 m** — **UNVERIFIED**
                                     - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
                                     - how to verify: T-F2-FIT dry fit, tape measure
                                     - parts: PRP-002-LL
@@ -2160,7 +2160,7 @@ Defined in: redesign/params/params.json#cg
     - calc `CALC-A5-LAYOUT-CG` `redesign/team/A5/cad_claims.py::layout_cg()`: `x_cg = sum(m_i x_i) / sum(m_i), z likewise (lump centroids from the k09kit geometry); pack x for x_target = x_pack + M (x_target - x_cg) / m_pack ; range use = |x_cg - mid| / half range ; hover split upper/lower = (z_m + z_cg) / (z_m - z_cg)` — **CHECKED**
       - `a_wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
         - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-        - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+        - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
       - `a_fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
         - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
       - `a_pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -2230,7 +2230,7 @@ Defined in: redesign/params/params.json#cg
           - `P:mass.allocation_g.avionics` (see above)
       - `a_hrn` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
         - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-        - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+        - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
       - `a_mec` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
         - ⚠ cites CL-D6-MASS, which is UNVERIFIED
         - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED**
@@ -3089,7 +3089,7 @@ Defined in: redesign/config-study/tiebreak/DECISION.md#5.1
               - ⚠ assumption marked UNVERIFIED by its author
             - `r_ext` ← param `P:electrical.r_ext_mohm` = 6.7 mOhm — **UNVERIFIED**
               - ⚠ cites CL-F1-R-EXT, which is UNVERIFIED
-              - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED** — chain printed above
+              - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED** — chain printed above
             - `cold` ← assumption `ASM-E2-COLD-R` Cell resistance at 10 degC = 1.5 x the 25 degC value = 1.5 (basis: LiPo IR roughly doubles from 25 to 0 degC; 10 degC is the bottom of params env.ambient_design_c (March-April 07:00 at RFS). Keeping packs in the car cabin removes most of it) — **UNVERIFIED**
               - ⚠ assumption marked UNVERIFIED by its author
             - `ASM-E1-WORST-STATE` (see above)
@@ -3664,10 +3664,10 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P18
     - `g_main` ← param `P:power.jumper_awg` = 10 AWG (F1 choice (CALC-PWR-JUMPER)) — **PROPOSED**
     - `l_main` ← `P:power.jumper_len_m` (see above)
     - `k_cu` ← `P:power.k_cu_w_mk` (see above)
-    - `l_ur` ← claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.6359 m** — **UNVERIFIED** — chain printed above
-    - `l_ul` ← claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5116 m** — **UNVERIFIED** — chain printed above
-    - `l_lr` ← claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6755 m** — **UNVERIFIED** — chain printed above
-    - `l_ll` ← claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5488 m** — **UNVERIFIED** — chain printed above
+    - `l_ur` ← claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.648 m** — **UNVERIFIED** — chain printed above
+    - `l_ul` ← claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5373 m** — **UNVERIFIED** — chain printed above
+    - `l_lr` ← claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6796 m** — **UNVERIFIED** — chain printed above
+    - `l_ll` ← claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5683 m** — **UNVERIFIED** — chain printed above
     - `bundle` ← assumption `ASM-F1-BUNDLE` [name, length m, cooling factor] for sections where more than one pair shares a passage = table (2 rows) -,m,- (basis: F2: LR/LL pairs together through the P1 straw (~0.05 m) and two twisted pairs stacked 8 mm in the pod crossing (~0.09 m). Factor = fraction of free-air convection + radiation kept: straw enclosed in foam 0.3 (four conductors, little radiation out), pod crossing 0.6 (twisted 0.85 x stacked ~0.7). Judgement, conservative; T-F1-WIRE-HEAT checks the straw) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
       - source `SRC-F1-INCROPERA` Incropera & DeWitt, Fundamentals of Heat and Mass Transfer, 6th ed., eq. 9.34, Churchill-Chu correlation, free convection from a long horizontal cylinder — **UNVERIFIED**
@@ -4032,7 +4032,7 @@ Defined in: redesign/team/E1/CHANGE-REQUESTS.md#CR-E1-07
       - ⚠ assumption marked UNVERIFIED by its author
     - `rext` ← param `P:electrical.r_ext_mohm` = 6.7 mOhm — **UNVERIFIED**
       - ⚠ cites CL-F1-R-EXT, which is UNVERIFIED
-      - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED** — chain printed above
+      - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED** — chain printed above
     - `ocv` ← assumption `ASM-E1-OCV` open-circuit pack voltage: full 4.20, mid 3.80, low 3.60 V/cell (4S) = table (3 rows) V (basis: 3.60 V/cell OCV is the 20 % reserve point of a LiPo; the sag case uses it) — **PROPOSED**
     - `tc` ← `ASM-E1-TCOPPER` (see above)
     - `SRC-E1-APC-PER3` (see above)
@@ -4233,7 +4233,7 @@ Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D10
           - ⚠ assumption marked UNVERIFIED by its author
         - `r_ext` ← param `P:electrical.r_ext_mohm` = 6.7 mOhm — **UNVERIFIED**
           - ⚠ cites CL-F1-R-EXT, which is UNVERIFIED
-          - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED** — chain printed above
+          - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED** — chain printed above
         - `cold` ← assumption `ASM-E2-COLD-R` Cell resistance at 10 degC = 1.5 x the 25 degC value = 1.5 (basis: LiPo IR roughly doubles from 25 to 0 degC; 10 degC is the bottom of params env.ambient_design_c (March-April 07:00 at RFS). Keeping packs in the car cabin removes most of it) — **UNVERIFIED**
           - ⚠ assumption marked UNVERIFIED by its author
         - `hmargin` ← assumption `ASM-E2-HOVER-MARGIN` Hover power in 5 m/s wind with station-keeping activity = 1.10 x calm hover power = 1.1 (basis: 16 deg lean at 5 m/s needs T/cos = 1.04 W; P ~ T^1.5 gives +6 %; +4 % for attitude-control activity. Replace with the twin's logged hover current) — **UNVERIFIED**
@@ -4752,7 +4752,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P25
         - `foot_h` ← param `P:cg.foot_height_m` = 0.048 m (team/C5/CHANGE-REQUESTS.md#CR-C5-11) — **PROPOSED**
         - `a_wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
           - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-          - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+          - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
         - `a_fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
           - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
         - `a_pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -4767,7 +4767,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P25
           - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
         - `a_harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
           - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-          - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+          - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
         - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
           - ⚠ cites CL-D6-MASS, which is UNVERIFIED
           - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -6886,7 +6886,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
 **Wiring is an installation** — Every wire in the wire list has a route, supports <= 0.15 m apart, chafe protection at every edge, strain relief at every connector and a service loop across each elevon hinge; the ESC-to-motor leads run along the fin; no connector carries structural load; the pack plug is the only field disconnect — **UNVERIFIED** **FAILS**  
 Defined in: redesign/inputs/ADVISOR-XV24-LESSONS.md#3
 
-- claim **CL-F2-ESC-LEN-MAX** Longest routed ESC power lead (bus pad to ESC pad, incl. loops) = **0.6755 m** — **UNVERIFIED**
+- claim **CL-F2-ESC-LEN-MAX** Longest routed ESC power lead (bus pad to ESC pad, incl. loops) = **0.6796 m** — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - how to verify: Cut list in WIRE-LIST.csv; measure each lead on the dry fit (T-F2-FIT) before skinning
   - parts: PRP-002-UR, PRP-002-LR
@@ -6898,7 +6898,7 @@ Defined in: redesign/inputs/ADVISOR-XV24-LESSONS.md#3
         - ⚠ assumption marked UNVERIFIED by its author
   - test `T-F2-FIT` Dry fit of the whole harness on the wing and pod before skinning (planned) — **PROPOSED**
   - test `T-F2-CONT` Continuity, polarity, isolation and pull test (planned) — **PROPOSED**
-- claim **CL-F2-MAIN-LEN** 10 AWG AS150U-to-bus path per conductor (cups -> board -> bars) = **0.1035 m** (limit <= 0.15 m, margin +31%) — **UNVERIFIED**
+- claim **CL-F2-MAIN-LEN** 10 AWG AS150U-to-bus path per conductor (cups -> board -> bars) = **0.1092 m** (limit <= 0.15 m, margin +27%) — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - how to verify: Measure on the power-frame mock-up (T-F2-FIT, T-PWR-FIT)
   - parts: PWR-002, PWR-003, PWR-004
@@ -6912,8 +6912,8 @@ Defined in: redesign/inputs/ADVISOR-XV24-LESSONS.md#3
   - `CALC-F2-LENGTHS` (see above)
   - param `P:harness.rules.cap_lead_max_m` = 0.02 m (team/F1/CHANGE-REQUESTS.md#CR-F1-18) — **PROPOSED**
   - `T-F2-FIT` (see above)
-- claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS**
-  - ⚠ FAILS: margin -4.8% (135.2 g vs <= 129 g)
+- claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS**
+  - ⚠ FAILS: margin -7.7% (138.9 g vs <= 129 g)
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - ⚠ uses P:harness.fittings_table, which is UNVERIFIED (cites ASM-F2-WIRE-GPM, which is UNVERIFIED)
   - ⚠ uses P:mass.allocation_g.harness, which is UNVERIFIED
@@ -6922,11 +6922,11 @@ Defined in: redesign/inputs/ADVISOR-XV24-LESSONS.md#3
   - calc `CALC-F2-MASS` `redesign/team/F2/harness.py::calc_mass()`: `m = sum(gpm n L_supplied) + sum(fittings); CG = sum(m_i r_i) / m` — **CHECKED**
     - `wires` ← `P:harness.wire_table` (see above)
     - `od` ← `P:harness.wire_od_mm` (see above)
-    - `fittings` ← param `P:harness.fittings_table` = table (40 rows) — **UNVERIFIED**
+    - `fittings` ← param `P:harness.fittings_table` = table (37 rows) — **UNVERIFIED**
       - ⚠ cites ASM-F2-WIRE-GPM, which is UNVERIFIED
       - assumption `ASM-F2-WIRE-GPM` [AWG, g/m] silicone hook-up wire; 16 AWG = F1 CL-F1-ESC-MASS / 4.0 m, 20 AWG = F1 POWER.md = table (5 rows) AWG,g/m (basis: maker tables (BNTECHGO-type silicone) +/-10 %; weigh 1 m of each reel (T-F2-WEIGH)) — **UNVERIFIED**
         - ⚠ assumption marked UNVERIFIED by its author
-        - claim **CL-F1-ESC-MASS** ESC power leads, 4 pairs at F2's routed lengths = **76.65 g** — **UNVERIFIED**
+        - claim **CL-F1-ESC-MASS** ESC power leads, 4 pairs at F2's routed lengths = **78.64 g** — **UNVERIFIED**
           - ⚠ uses CL-F1-I-CONT, which is UNVERIFIED
           - ⚠ uses CL-F1-PROFILE, which is UNVERIFIED
           - ⚠ uses ASM-F1-WIRE-OD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -6954,10 +6954,10 @@ Defined in: redesign/inputs/ADVISOR-XV24-LESSONS.md#3
             - `g_main` ← param `P:power.jumper_awg` = 10 AWG (F1 choice (CALC-PWR-JUMPER)) — **PROPOSED**
             - `l_main` ← param `P:power.jumper_len_m` = table (2 rows) m (F1 layout (fusion/power.py) incl. 10 mm slack) — **PROPOSED**
             - `k_cu` ← param `P:power.k_cu_w_mk` = 400 W/m/K (handbook copper) — **PROPOSED**
-            - `l_ur` ← claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.6359 m** — **UNVERIFIED** — chain printed above
-            - `l_ul` ← claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5116 m** — **UNVERIFIED** — chain printed above
-            - `l_lr` ← claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6755 m** — **UNVERIFIED** — chain printed above
-            - `l_ll` ← claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5488 m** — **UNVERIFIED** — chain printed above
+            - `l_ur` ← claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.648 m** — **UNVERIFIED** — chain printed above
+            - `l_ul` ← claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5373 m** — **UNVERIFIED** — chain printed above
+            - `l_lr` ← claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6796 m** — **UNVERIFIED** — chain printed above
+            - `l_ll` ← claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5683 m** — **UNVERIFIED** — chain printed above
             - `bundle` ← assumption `ASM-F1-BUNDLE` [name, length m, cooling factor] for sections where more than one pair shares a passage = table (2 rows) -,m,- (basis: F2: LR/LL pairs together through the P1 straw (~0.05 m) and two twisted pairs stacked 8 mm in the pod crossing (~0.09 m). Factor = fraction of free-air convection + radiation kept: straw enclosed in foam 0.3 (four conductors, little radiation out), pod crossing 0.6 (twisted 0.85 x stacked ~0.7). Judgement, conservative; T-F1-WIRE-HEAT checks the straw) — **UNVERIFIED**
               - ⚠ assumption marked UNVERIFIED by its author
               - source `SRC-F1-INCROPERA` Incropera & DeWitt, Fundamentals of Heat and Mass Transfer, 6th ed., eq. 9.34, Churchill-Chu correlation, free convection from a long horizontal cylinder — **UNVERIFIED**
@@ -6997,11 +6997,12 @@ Defined in: redesign/inputs/ADVISOR-XV24-LESSONS.md#3
     - `pod_box` ← param `P:harness.pod_box` = table (3 rows) m (params.json#pod) — **PROPOSED**
     - `plugs` ← param `P:harness.xt30u_table` = table (4 rows) (team/F2/harness.py (D-74)) — **PROPOSED**
     - `grommets` ← param `P:harness.grommet_table` = table (4 rows) (team/F2/harness.py (D-83)) — **PROPOSED**
+    - `jrs` ← param `P:harness.jr_table` = table (8 rows) (team/F2/harness.py (D-86)) — **PROPOSED**
   - param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
     - ⚠ cites CL-F2-MASS, which is UNVERIFIED
     - `CL-F2-MASS` (see above)
   - test `T-F2-WEIGH` Weigh 1 m of each reel and every made-up lead (planned) — **PROPOSED**
-- claim **CL-F2-BEND** Worst corner: allowed fillet radius / required radius (k x OD) = **1.073** (limit >= 1, margin +7%) — **UNVERIFIED**
+- claim **CL-F2-BEND** Worst corner: allowed fillet radius / required radius (k x OD) = **1.027** (limit >= 1, margin +3%) — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - ⚠ uses P:harness.rules.bend_k, which is UNVERIFIED (cites SRC-F2-MIL-HDBK-522, which is UNVERIFIED)
   - how to verify: T-F2-FIT: no corner tighter than the rule
@@ -7471,7 +7472,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P5
             - ⚠ assumption marked UNVERIFIED by its author
           - `rext` ← param `P:electrical.r_ext_mohm` = 6.7 mOhm — **UNVERIFIED**
             - ⚠ cites CL-F1-R-EXT, which is UNVERIFIED
-            - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED** — chain printed above
+            - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED** — chain printed above
           - `ocv` ← assumption `ASM-E1-OCV` open-circuit pack voltage: full 4.20, mid 3.80, low 3.60 V/cell (4S) = table (3 rows) V (basis: 3.60 V/cell OCV is the 20 % reserve point of a LiPo; the sag case uses it) — **PROPOSED**
           - `tc` ← assumption `ASM-E1-TCOPPER` R_m(T) = R_25 (1 + 0.00393 (T - 25)); thrust-limit cases use an 80 degC winding, current-limit cases 25 degC = table (2 rows) 1/K,degC (basis: annealed copper coefficient; 80 degC = hot after a hover) — **PROPOSED**
           - `ilim` ← assumption `ASM-E1-ILIM` ArduPilot Q_M_BAT_CURR_MAX = 100 A (with the power module's current sensor calibrated) caps the summed motor current = 100 A (basis: 4 x 25 A = the X3108S's 25 A / 30 s rating; F4 sets it, F1 sizes wiring to it) — **PROPOSED**
@@ -7685,7 +7686,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P5
         - `gate_kg` ← `P:requirements.mtow_gate_kg` (see above)
         - `wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
           - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-          - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+          - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
         - `fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
           - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
         - `pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -7703,7 +7704,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P5
           - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
         - `harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
           - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-          - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+          - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
         - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
           - ⚠ cites CL-D6-MASS, which is UNVERIFIED
           - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -8098,7 +8099,7 @@ Defined in: redesign/params/CHANGE-LOG.md#D-65
     - `foot_h` ← param `P:cg.foot_height_m` = 0.048 m (team/C5/CHANGE-REQUESTS.md#CR-C5-11) — **PROPOSED**
     - `a_wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
       - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `a_fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
       - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `a_pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -8113,7 +8114,7 @@ Defined in: redesign/params/CHANGE-LOG.md#D-65
       - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
     - `a_harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
       - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
       - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -9533,7 +9534,7 @@ Defined in: redesign/TEAM.md#C1
     - `foot_h` ← param `P:cg.foot_height_m` = 0.048 m (team/C5/CHANGE-REQUESTS.md#CR-C5-11) — **PROPOSED**
     - `a_wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
       - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `a_fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
       - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `a_pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -9548,7 +9549,7 @@ Defined in: redesign/TEAM.md#C1
       - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
     - `a_harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
       - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
       - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -12080,7 +12081,7 @@ Defined in: redesign/params/mass_budget.json
       - source `SRC-REQ-PROPOSED` Proposed requirements P1-P25 for K09, redesign/config-study/REQUIREMENTS-PROPOSED.md, checked 2026-11-09 — **CHECKED**
     - `wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
       - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED**
+      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED**
         - ⚠ uses ASM-D1-PART-MASSES, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
         - ⚠ uses P:mass.allocation_g.wing, which is UNVERIFIED
         - how to verify: T-D1-WEIGH: weigh the cut core, the tube, the plugs, the tape used and the finished wing on a 1 g scale.
@@ -12130,7 +12131,7 @@ Defined in: redesign/params/mass_budget.json
       - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
     - `harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
       - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
       - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -12203,7 +12204,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P4
   - calc `CALC-A1-MASS-SIZED` `redesign/team/A1/frame_claims.py::sized_mass()`: `alloc = sum(allocations) ; sized = alloc + growth_allowance + build_overrun ; reserve_cover = growth_reserve - (growth_allowance + build_overrun) ; gate_check = gate - alloc - growth_reserve` — **CHECKED**
     - `wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
       - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
       - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -12221,7 +12222,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P4
       - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
     - `harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
       - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
       - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -13021,7 +13022,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P3
       - ⚠ assumption marked UNVERIFIED by its author
     - `r_ext` ← param `P:electrical.r_ext_mohm` = 6.7 mOhm — **UNVERIFIED**
       - ⚠ cites CL-F1-R-EXT, which is UNVERIFIED
-      - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED** — chain printed above
+      - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED** — chain printed above
     - `cold` ← assumption `ASM-E2-COLD-R` Cell resistance at 10 degC = 1.5 x the 25 degC value = 1.5 (basis: LiPo IR roughly doubles from 25 to 0 degC; 10 degC is the bottom of params env.ambient_design_c (March-April 07:00 at RFS). Keeping packs in the car cabin removes most of it) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
     - `hmargin` ← assumption `ASM-E2-HOVER-MARGIN` Hover power in 5 m/s wind with station-keeping activity = 1.10 x calm hover power = 1.1 (basis: 16 deg lean at 5 m/s needs T/cos = 1.04 W; P ~ T^1.5 gives +6 %; +4 % for attitude-control activity. Replace with the twin's logged hover current) — **UNVERIFIED**
@@ -13184,7 +13185,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P14
       - source `SRC-REQ-PROPOSED` Proposed requirements P1-P25 for K09, redesign/config-study/REQUIREMENTS-PROPOSED.md, checked 2026-11-09 — **CHECKED**
     - `wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
       - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
       - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -13202,7 +13203,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P14
       - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
     - `harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
       - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
       - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -18164,7 +18165,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P19
     - `cold` ← `ASM-E2-COLD-R` (see above)
     - `r_ext` ← assumption `ASM-E3-R-POD` of F1's 6.5 mOhm pack-to-ESC path only the common path (pack leads, AS150U, bus board, fuse) is inside the pod; the four 14.5 mOhm ESC branches (3.6 mOhm equivalent) run in the wing and fins and their heat leaves there = 0.0029 ohm (basis: params electrical.r_ext_mohm note (D-32): 'common path 2.9 + four 14.5 branches in parallel'. R2 put E2's old 3 mOhm all in the pod; reading the new 6.5 mOhm whole would double-count 3.6 mOhm of wing wiring) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
-      - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED** — chain printed above
+      - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED** — chain printed above
     - `fc` ← assumption `ASM-E3-FC` FC node = CoreWing F405 Wing APP V2 top board + wireless board alone, on four 5 mm gel cubes, both faces exchange with the pod air; its dissipation now comes from F3 (CALC-E3-* read ASM-F3-5V-LOADS); the 5 V regulator sits on the separated power board PWR-003 = table (4 rows) W,m,m,J/K (basis: subsystems/avionics/params.json fc_board_m [0.052, 0.032] and fc_mass_g 12 (c ~ 1 000 J/kg K + gel and strap -> 15 J/K); F3-R2 split of the stack (CR-F3-13). Index 0 is the R2 bound (2.0 W total, F3's limit line for CL-F3-FC-DISS)) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
     - `pod` ← assumption `ASM-E3-POD` shell foam board 5 mm, k 0.035 W/m K, the face on the wing adiabatic; pod air 10 J/K; recommended vents: inlet 15 x 30 mm at the pod nose and an equal exit at the rear, internal velocity 0.25 x airspeed in cruise, no vent flow credited in hover = table (5 rows) m,W/m K,J/K,m2,- (basis: foam board k 0.03-0.04; vent sizing as the previous design (docs/research/thermal.md 6.4); 0.25 for inlet and internal losses EST) — **PROPOSED**
@@ -19821,7 +19822,7 @@ Defined in: redesign/params/params.json#requirements.tipover_min_deg
     - `foot_h` ← `P:cg.foot_height_m` (see above)
     - `a_wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
       - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `a_fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
       - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `a_pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -19836,7 +19837,7 @@ Defined in: redesign/params/params.json#requirements.tipover_min_deg
       - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
     - `a_harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
       - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
       - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -20696,7 +20697,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P7
       - ⚠ assumption marked UNVERIFIED by its author
     - `rext` ← param `P:electrical.r_ext_mohm` = 6.7 mOhm — **UNVERIFIED**
       - ⚠ cites CL-F1-R-EXT, which is UNVERIFIED
-      - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED** — chain printed above
+      - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED** — chain printed above
     - `ocv` ← assumption `ASM-E1-OCV` open-circuit pack voltage: full 4.20, mid 3.80, low 3.60 V/cell (4S) = table (3 rows) V (basis: 3.60 V/cell OCV is the 20 % reserve point of a LiPo; the sag case uses it) — **PROPOSED**
     - assumption `ASM-E1-POSTSTALL` CL = a alpha up to CLmax (a = 2 pi AR/(AR+2)); above stall CN = 1.98 sin(alpha) (flat plate); prop wash on the wing ignored (basis: Hoerner flat-plate normal force; ignoring wash lift is conservative for thrust required; B1/B2 refine) — **PROPOSED**
     - assumption `ASM-E1-CAL-TRANSFER` kT, kP fitted on the 11x4.7SF apply to the 11x4.5MR / 11x5.5MR PER3 data (basis: same maker, same code, same diameter; H1's thrust stand (T-E1-STAND) measures the fitted prop directly and supersedes this) — **UNVERIFIED**
@@ -22399,7 +22400,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
       - `foot_h` ← `P:cg.foot_height_m` (see above)
       - `a_wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
         - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-        - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+        - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
       - `a_fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
         - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
       - `a_pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -22414,7 +22415,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
         - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
       - `a_harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
         - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-        - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+        - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
       - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
         - ⚠ cites CL-D6-MASS, which is UNVERIFIED
         - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -22507,7 +22508,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `i` ← claim **CL-F1-I-CONT** Continuous design current, pack path = **30.27 A** — **UNVERIFIED** — chain printed above
     - `k` ← param `P:power.k_cu_w_mk` = 400 W/m/K (handbook copper) — **PROPOSED**
   - assumption `ASM-PWR-R-BUDGET` The aircraft-side wiring between the AS150U cups and the bus may add at most the 0.68 mOhm that the R2 8 AWG 0.15 m loop carried inside CL-F1-R-EXT 6.5 mOhm = 0.68 mOhm (basis: team/F1/POWER.md voltage-drop table) — **PROPOSED**
-    - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED** — chain printed above
+    - claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED** — chain printed above
 - claim **CL-PWR-BEND** Output jumper drop vs 2 bends at 2 x OD = **1.292** (limit >= 1, margin +29%) — **UNVERIFIED**
   - ⚠ uses P:power.wire_10awg, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/power/params.json: OD, resistance per metre at 20 degC, mass per metre (one conductor))
   - ⚠ uses ASM-PWR-BEND, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -22746,7 +22747,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
       - source `SRC-REQ-PROPOSED` Proposed requirements P1-P25 for K09, redesign/config-study/REQUIREMENTS-PROPOSED.md, checked 2026-11-09 — **CHECKED**
     - `wing` ← param `P:mass.allocation_g.wing` = 405 g — **UNVERIFIED**
       - ⚠ cites CL-D1-WING-MASS, which is UNVERIFIED
-      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.9 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
+      - claim **CL-D1-WING-MASS** Wing subsystem mass (CAD estimate) = **391.8 g** (limit <= 405 g, margin +3%) — **UNVERIFIED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `fins` ← param `P:mass.allocation_g.fins` = 438 g — **PROPOSED**
       - claim **CL-D3-MASS** Fins subsystem flying mass, design R5 = **433.3 g** (limit <= 438 g, margin +1%) — **PROPOSED** — chain under [R-MASS-ALLOC](#r-mass-alloc)
     - `pod` ← param `P:mass.allocation_g.pod` = 146 g — **UNVERIFIED**
@@ -22764,7 +22765,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
       - claim **CL-F3-MASS** Avionics mass = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED** — chain printed above
     - `harness` ← param `P:mass.allocation_g.harness` = 129 g — **UNVERIFIED**
       - ⚠ cites CL-F2-MASS, which is UNVERIFIED
-      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **135.2 g** (limit <= 129 g, margin -5%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
+      - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **138.9 g** (limit <= 129 g, margin -8%) — **UNVERIFIED** **FAILS** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 72 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
       - claim **CL-D6-MASS** Mechanisms mass = **71.28 g** (limit <= 72 g, margin +1%) — **UNVERIFIED** — chain printed above
@@ -42212,10 +42213,10 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `g_main` ← param `P:power.jumper_awg` = 10 AWG (F1 choice (CALC-PWR-JUMPER)) — **PROPOSED**
     - `l_main` ← `P:power.jumper_len_m` (see above)
     - `k_cu` ← `P:power.k_cu_w_mk` (see above)
-    - `l_ur` ← claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.6359 m** — **UNVERIFIED** — chain printed above
-    - `l_ul` ← claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5116 m** — **UNVERIFIED** — chain printed above
-    - `l_lr` ← claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6755 m** — **UNVERIFIED** — chain printed above
-    - `l_ll` ← claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5488 m** — **UNVERIFIED** — chain printed above
+    - `l_ur` ← claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.648 m** — **UNVERIFIED** — chain printed above
+    - `l_ul` ← claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5373 m** — **UNVERIFIED** — chain printed above
+    - `l_lr` ← claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6796 m** — **UNVERIFIED** — chain printed above
+    - `l_ll` ← claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5683 m** — **UNVERIFIED** — chain printed above
     - `bundle` ← assumption `ASM-F1-BUNDLE` [name, length m, cooling factor] for sections where more than one pair shares a passage = table (2 rows) -,m,- (basis: F2: LR/LL pairs together through the P1 straw (~0.05 m) and two twisted pairs stacked 8 mm in the pod crossing (~0.09 m). Factor = fraction of free-air convection + radiation kept: straw enclosed in foam 0.3 (four conductors, little radiation out), pod crossing 0.6 (twisted 0.85 x stacked ~0.7). Judgement, conservative; T-F1-WIRE-HEAT checks the straw) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
       - source `SRC-F1-INCROPERA` Incropera & DeWitt, Fundamentals of Heat and Mass Transfer, 6th ed., eq. 9.34, Churchill-Chu correlation, free convection from a long horizontal cylinder — **UNVERIFIED**
@@ -42282,7 +42283,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: Same rig with 18 AWG if A3 asks again.
   - parts: PRP-002-UR, PRP-002-UL, PRP-002-LR, PRP-002-LL
   - `CALC-F1-WIRES` (see above)
-- claim **CL-F1-ESC-MASS** ESC power leads, 4 pairs at F2's routed lengths = **76.65 g** — **UNVERIFIED** — chain printed above
+- claim **CL-F1-ESC-MASS** ESC power leads, 4 pairs at F2's routed lengths = **78.64 g** — **UNVERIFIED** — chain printed above
 - claim **CL-F1-ESC-LEN-ALLOW** Longest 16 AWG ESC lead that keeps the 100 A drop <= 5 % = **0.5601 m** — **UNVERIFIED**
   - ⚠ uses CL-F1-I-CONT, which is UNVERIFIED
   - ⚠ uses CL-F1-PROFILE, which is UNVERIFIED
@@ -42342,8 +42343,8 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `cool` ← `ASM-F1-COOLING` (see above)
     - `amb` ← `P:env.ambient_design_c` (see above)
     - `ipeak` ← `P:electrical.peak_current_a` (see above)
-- claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.628 mOhm** — **UNVERIFIED** — chain printed above
-- claim **CL-F1-DROP-CONT** Voltage drop pack to the farthest ESC at the continuous current = **1.816 %** (limit <= 2 %, margin +9%) — **UNVERIFIED**
+- claim **CL-F1-R-EXT** Resistance pack terminals to ESC pads (equivalent, hot) = **7.75 mOhm** — **UNVERIFIED** — chain printed above
+- claim **CL-F1-DROP-CONT** Voltage drop pack to the farthest ESC at the continuous current = **1.823 %** (limit <= 2 %, margin +9%) — **UNVERIFIED**
   - ⚠ uses CL-F1-I-CONT, which is UNVERIFIED
   - ⚠ uses CL-F1-PROFILE, which is UNVERIFIED
   - ⚠ uses ASM-F1-WIRE-OD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -42364,7 +42365,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - parts: PWR-001, PWR-002, PWR-003, PWR-004, PRP-002-UR, PRP-002-UL, PRP-002-LR, PRP-002-LL
   - `CALC-F1-WIRES` (see above)
   - test `T-F1-DROP` Path resistance (planned) — **PROPOSED**
-- claim **CL-F1-DROP-PEAK** Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11) = **5.559 %** — **UNVERIFIED**
+- claim **CL-F1-DROP-PEAK** Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11) = **5.579 %** — **UNVERIFIED**
   - ⚠ uses CL-F1-I-CONT, which is UNVERIFIED
   - ⚠ uses CL-F1-PROFILE, which is UNVERIFIED
   - ⚠ uses ASM-F1-WIRE-OD, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -42427,7 +42428,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - how to verify: P:mass.allocation_g.power minus P:battery.mass_kg; follows A1's allocation.
     - `CALC-F1-MASS` (see above)
 - claim **CL-F1-POWER-BUDGET** Power allocation left after the pack = **80 g** — **UNVERIFIED** — chain printed above
-- claim **CL-F2-ESC-LEN-MIN** Shortest routed ESC power lead = **0.5116 m** — **UNVERIFIED**
+- claim **CL-F2-ESC-LEN-MIN** Shortest routed ESC power lead = **0.5373 m** — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - how to verify: as CL-F2-ESC-LEN-MAX
   - parts: PRP-002-UL, PRP-002-LL
@@ -42436,16 +42437,16 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `od` ← param `P:harness.wire_od_mm` = table (7 rows) AWG,mm — **UNVERIFIED**
       - ⚠ cites ASM-F1-WIRE-OD, which is UNVERIFIED
       - `ASM-F1-WIRE-OD` (see above)
-- claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.6359 m** — **UNVERIFIED** — chain printed above
-- claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5116 m** — **UNVERIFIED** — chain printed above
-- claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6755 m** — **UNVERIFIED** — chain printed above
-- claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5488 m** — **UNVERIFIED** — chain printed above
+- claim **CL-F2-ESC-LEN-UR** Routed ESC power lead UR = **0.648 m** — **UNVERIFIED** — chain printed above
+- claim **CL-F2-ESC-LEN-UL** Routed ESC power lead UL = **0.5373 m** — **UNVERIFIED** — chain printed above
+- claim **CL-F2-ESC-LEN-LR** Routed ESC power lead LR = **0.6796 m** — **UNVERIFIED** — chain printed above
+- claim **CL-F2-ESC-LEN-LL** Routed ESC power lead LL = **0.5683 m** — **UNVERIFIED** — chain printed above
 - claim **CL-F2-MAIN-1-LEN** 10 AWG jumper AS150U cups -> power-board input pads, per conductor incl. slack = **0.02994 m** — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - how to verify: T-PWR-FIT: cut, form, measure before soldering
   - parts: PWR-002, PWR-003
   - `CALC-F2-LENGTHS` (see above)
-- claim **CL-F2-MAIN-2-LEN** 10 AWG jumper power-board output pads -> bus bars, per conductor incl. slack = **0.07359 m** — **UNVERIFIED**
+- claim **CL-F2-MAIN-2-LEN** 10 AWG jumper power-board output pads -> bus bars, per conductor incl. slack = **0.07921 m** — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - how to verify: T-PWR-FIT: cut, form, measure before soldering
   - parts: PWR-003, PWR-004
@@ -42480,12 +42481,12 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - parts: AVN-003
   - `CALC-F2-LENGTHS` (see above)
   - param `P:harness.rules.rx_max_m` = 0.15 m (team/F5/CHANGE-REQUESTS.md#CR-F5-04) — **PROPOSED**
-- claim **CL-F2-PHASE-REACH** Routed ESC-phase-pad to motor-lead-exit reach incl. loop = **0.1228 m** — **UNVERIFIED**
+- claim **CL-F2-PHASE-REACH** Routed ESC-phase-pad to motor-lead-exit reach incl. loop = **0.1327 m** — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - how to verify: Hold the motor on its mount and the ESC on its pad, measure the reach (T-E1-MOTOR-RM)
   - parts: PRP-001-UR, PRP-002-UR
   - `CALC-F2-LENGTHS` (see above)
-- claim **CL-F2-PHASE-EXT** Phase extension needed per lead = **0.06279 m** (limit <= 0.1 m, margin +37%) — **UNVERIFIED**
+- claim **CL-F2-PHASE-EXT** Phase extension needed per lead = **0.07267 m** (limit <= 0.1 m, margin +27%) — **UNVERIFIED**
   - ⚠ uses CL-F2-PHASE-REACH, which is UNVERIFIED
   - ⚠ uses ASM-F2-FACTORY-LEADS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: T-E1-MOTOR-RM measures the factory leads; cut ext = reach - leads
@@ -42495,7 +42496,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `leads` ← assumption `ASM-F2-FACTORY-LEADS` [motor lead beyond the stator, ESC phase lead] in m; X3108S lead length is not published (E1), the LANRC ESC is taken as bare phase pads (worst case) = table (2 rows) m (basis: E1 PROPULSION.md open item; measured at T-E1-MOTOR-RM on the first motor) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
   - param `P:harness.rules.phase_ext_max_m` = 0.1 m (team/E1/CHANGE-REQUESTS.md#CR-E1-18) — **PROPOSED**
-- claim **CL-F2-DSHOT-LEN** Longest DShot lead FC pad to ESC = **0.6988 m** (limit <= 0.7 m, margin +0%) — **UNVERIFIED**
+- claim **CL-F2-DSHOT-LEN** Longest DShot lead FC pad to ESC = **0.6991 m** (limit <= 0.7 m, margin +0%) — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - ⚠ uses ASM-F2-DSHOT-MAX, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - how to verify: T-F2-DSHOT bench: bdshot error rate < 1 %
@@ -42504,12 +42505,12 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - assumption `ASM-F2-DSHOT-MAX` 0.7 m from FC pad to ESC, signal twisted with its ground = 0.7 m (basis: common practice on wings and large quads; bidirectional DShot error rate checked on the bench (T-F2-DSHOT)) — **UNVERIFIED**
     - ⚠ assumption marked UNVERIFIED by its author
   - test `T-F2-DSHOT` Bidirectional DShot error rate with the full-length leads (planned) — **PROPOSED**
-- claim **CL-F2-SERVO-LEN** Longest servo lead FC pad to servo plug = **0.6004 m** — **UNVERIFIED**
+- claim **CL-F2-SERVO-LEN** Longest servo lead FC pad to servo plug = **0.6032 m** — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - how to verify: Measure the made lead
   - parts: MEC-001-L, MEC-001-R
   - `CALC-F2-LENGTHS` (see above)
-- claim **CL-F2-SERVO-V** Servo terminal voltage, both servos stalled = **5.732 V** (limit >= 5.7 V, margin +1%) — **UNVERIFIED**
+- claim **CL-F2-SERVO-V** Servo terminal voltage, both servos stalled = **5.728 V** (limit >= 5.7 V, margin +0%) — **UNVERIFIED**
   - ⚠ uses CL-F2-SERVO-LEN, which is UNVERIFIED
   - ⚠ uses CL-F2-SERVO-OWN-LEN, which is UNVERIFIED
   - ⚠ uses ASM-F1-SERVO-STALL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -42519,7 +42520,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - parts: MEC-001-L, MEC-001-R
   - calc `CALC-F2-SERVO-V` `redesign/team/F2/harness.py::calc_servo_v()`: `V = V_bec - I_stall (2 (L - L_own) R'_22AWG + 2 L_own R'_26AWG + n_contacts R_c) - 2 I_stall (L_link R'_28AWG + 2 R_c) (1/n_Vx + 1/n_GND)  (harness servo leads: + / - 22 AWG; servo's own lead 26 AWG; case S: both servos' current through the board link's Vx and GND conductors)` — **CHECKED**
     - `L` ← `CL-F2-SERVO-LEN` (see above)
-    - `L_own` ← claim **CL-F2-SERVO-OWN-LEN** Servo's own lead (MEC-001, shortened, 26 AWG) cut length = **0.04375 m** — **UNVERIFIED**
+    - `L_own` ← claim **CL-F2-SERVO-OWN-LEN** Servo's own lead (MEC-001, shortened, 26 AWG) cut length = **0.05793 m** — **UNVERIFIED**
       - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
       - how to verify: Measure the re-terminated lead
       - parts: MEC-001-L, MEC-001-R
@@ -42545,7 +42546,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: BOARD-CHECK.md step 7 / T-F1-SERVO-STALL: Vx at the PDB contacts minus Vx at the FC header
   - parts: PWR-003, AVN-001
   - `CALC-F2-SERVO-V` (see above)
-- claim **CL-F2-SERVO-LEAD-DROP** Servo lead drop (harness 22 AWG + / -, servo's own 26 AWG lead, 4 JR contacts) = **0.155 V** — **UNVERIFIED**
+- claim **CL-F2-SERVO-LEAD-DROP** Servo lead drop (harness 22 AWG + / -, servo's own 26 AWG lead, 4 JR contacts) = **0.1586 V** — **UNVERIFIED**
   - ⚠ uses CL-F2-SERVO-LEN, which is UNVERIFIED
   - ⚠ uses CL-F2-SERVO-OWN-LEN, which is UNVERIFIED
   - ⚠ uses ASM-F1-SERVO-STALL, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
@@ -42554,9 +42555,9 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - how to verify: T-F1-SERVO-STALL: Vx at the FC header minus the voltage at the servo case, servo stalled
   - parts: MEC-001-L, MEC-001-R
   - `CALC-F2-SERVO-V` (see above)
-- claim **CL-F2-SERVO-OWN-LEN** Servo's own lead (MEC-001, shortened, 26 AWG) cut length = **0.04375 m** — **UNVERIFIED** — chain printed above
+- claim **CL-F2-SERVO-OWN-LEN** Servo's own lead (MEC-001, shortened, 26 AWG) cut length = **0.05793 m** — **UNVERIFIED** — chain printed above
 - claim **CL-F2-PMOD-LEN** Power-board link ribbon PDB -> FC (case S), cut length = **0.2316 m** — **UNVERIFIED** — chain printed above
-- claim **CL-F2-CG-X** Harness CG x = **0.06422 m** — **UNVERIFIED**
+- claim **CL-F2-CG-X** Harness CG x = **0.06295 m** — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - ⚠ uses P:harness.fittings_table, which is UNVERIFIED (cites ASM-F2-WIRE-GPM, which is UNVERIFIED)
   - how to verify: from the weighed leads and their stations
@@ -42564,14 +42565,15 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - calc `CALC-F2-MASS` `redesign/team/F2/harness.py::calc_mass()`: `m = sum(gpm n L_supplied) + sum(fittings); CG = sum(m_i r_i) / m` — **CHECKED**
     - `wires` ← `P:harness.wire_table` (see above)
     - `od` ← `P:harness.wire_od_mm` (see above)
-    - `fittings` ← param `P:harness.fittings_table` = table (40 rows) — **UNVERIFIED**
+    - `fittings` ← param `P:harness.fittings_table` = table (37 rows) — **UNVERIFIED**
       - ⚠ cites ASM-F2-WIRE-GPM, which is UNVERIFIED
       - assumption `ASM-F2-WIRE-GPM` [AWG, g/m] silicone hook-up wire; 16 AWG = F1 CL-F1-ESC-MASS / 4.0 m, 20 AWG = F1 POWER.md = table (5 rows) AWG,g/m (basis: maker tables (BNTECHGO-type silicone) +/-10 %; weigh 1 m of each reel (T-F2-WEIGH)) — **UNVERIFIED**
         - ⚠ assumption marked UNVERIFIED by its author
-        - claim **CL-F1-ESC-MASS** ESC power leads, 4 pairs at F2's routed lengths = **76.65 g** — **UNVERIFIED** — chain printed above
+        - claim **CL-F1-ESC-MASS** ESC power leads, 4 pairs at F2's routed lengths = **78.64 g** — **UNVERIFIED** — chain printed above
     - `pod_box` ← param `P:harness.pod_box` = table (3 rows) m (params.json#pod) — **PROPOSED**
     - `plugs` ← param `P:harness.xt30u_table` = table (4 rows) (team/F2/harness.py (D-74)) — **PROPOSED**
     - `grommets` ← param `P:harness.grommet_table` = table (4 rows) (team/F2/harness.py (D-83)) — **PROPOSED**
+    - `jrs` ← param `P:harness.jr_table` = table (8 rows) (team/F2/harness.py (D-86)) — **PROPOSED**
 - claim **CL-F2-GROOVE-MAST** ESC-lead grooves to the GPS mast top, nearest point = **0.1959 m** (limit >= 0.12 m, margin +63%) — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - ⚠ uses P:harness.rules.bend_k, which is UNVERIFIED (cites SRC-F2-MIL-HDBK-522, which is UNVERIFIED)
@@ -42593,7 +42595,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `od` ← `P:harness.wire_od_mm` (see above)
   - param `P:harness.rules.fill_max` = 0.4 (F2 choice) — **PROPOSED**
   - test `T-F2-FIT` Dry fit of the whole harness on the wing and pod before skinning (planned) — **PROPOSED**
-- claim **CL-F2-CG-BODY** Largest gap between a bundle's declared CG (CAD body centroid) and its wire-mass CG = **0.008493 m** (limit <= 0.01 m, margin +15%) — **UNVERIFIED**
+- claim **CL-F2-CG-BODY** Largest gap between a bundle's declared CG (CAD body centroid) and its wire-mass CG = **0.008248 m** (limit <= 0.01 m, margin +18%) — **UNVERIFIED**
   - ⚠ uses P:harness.wire_od_mm, which is UNVERIFIED (cites ASM-F1-WIRE-OD, which is UNVERIFIED)
   - ⚠ uses P:harness.fittings_table, which is UNVERIFIED (cites ASM-F2-WIRE-GPM, which is UNVERIFIED)
   - how to verify: python -I redesign/fusion/check.py: no cg WARN on HRN parts; T-F2-WEIGH stations
@@ -42603,7 +42605,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `od` ← `P:harness.wire_od_mm` (see above)
     - `fittings` ← `P:harness.fittings_table` (see above)
     - `pod_box` ← `P:harness.pod_box` (see above)
-    - `legs` ← param `P:harness.cad.bundle_legs` = {'side_R': [[[0.0618, 0.072, 0.0187], [0.0618, 0.296, 0.0187], 0.0044], [[0.0618, 0.122, -0.0054], [0.0618, 0.296, -0.0054], 0.0041], [[0.0618, 0.107, -0.0054], [0.0618, 0.107, 0.0187], 0.0038], [[0.071, 0.3122, 0.0223], [0.071, 0.3122, 0.0447], 0.0055], [[0.071, 0.3122, -0.0086], [0.071, 0.3122, -0.0307], 0.0059], [[0.105, 0.3283, 0.0447], [0.105, 0.3283, 0.104], 0.0059], [[0.105, 0.3283, -0.0307], [0.105, 0.3283, -0.104], 0.0057], [[0.066, 0.3283, 0.118], [0.066, 0.3283, 0.1603], 0.0063], [[0.066, 0.3283, -0.118], [0.066, 0.3283, -0.1603], 0.0063], [[0.1082, 0.068, 0.0194], [0.1082, 0.285, 0.0194], 0.0021], [[0.1082, 0.285, 0.0163], [0.168, 0.285, 0.0163], 0.0025]], 'pod': [[[-0.005, -0.044, 0.024], [0.0748, -0.044, 0.024], 0.0079], [[0.0868, -0.0335, 0.0273], [0.0868, 0.0335, 0.0273], 0.0064], [[0.016, 0.0423, 0.0293], [0.0868, 0.0423, 0.0293], 0.0075], [[0.064, 0.0464, 0.033], [0.064, 0.07, 0.033], 0.0059], [[0.064, -0.0464, 0.033], [0.064, -0.07, 0.033], 0.0062], [[-0.0245, -0.0315, 0.0219], [-0.0245, 0.0315, 0.0219], 0.0039], [[-0.0245, 0.04, 0.03], [0.016, 0.04, 0.03], 0.0044], [[-0.0245, -0.032, 0.025], [-0.058, -0.032, 0.025], 0.0052], [[0.08, 0.048, 0.064], [0.08, 0.048, 0.114], 0.0044]]} m (team/F2/harness.py) — **PROPOSED**
+    - `legs` ← param `P:harness.cad.bundle_legs` = {'side_R': [[[0.0618, 0.072, 0.0187], [0.0618, 0.296, 0.0187], 0.0044], [[0.0618, 0.122, -0.0054], [0.0618, 0.296, -0.0054], 0.0041], [[0.0618, 0.107, -0.0054], [0.0618, 0.107, 0.0187], 0.0039], [[0.071, 0.3122, 0.0223], [0.071, 0.3122, 0.0447], 0.0055], [[0.071, 0.3122, -0.0086], [0.071, 0.3122, -0.0307], 0.0059], [[0.105, 0.3283, 0.0447], [0.105, 0.3283, 0.104], 0.0059], [[0.105, 0.3283, -0.0307], [0.105, 0.3283, -0.104], 0.0057], [[0.066, 0.3283, 0.118], [0.066, 0.3283, 0.1603], 0.0066], [[0.066, 0.3283, -0.118], [0.066, 0.3283, -0.1603], 0.0066], [[0.1082, 0.068, 0.0194], [0.1082, 0.285, 0.0194], 0.0021], [[0.1082, 0.285, 0.0175], [0.168, 0.285, 0.0175], 0.002]], 'pod': [[[-0.005, -0.044, 0.024], [0.0748, -0.044, 0.024], 0.0081], [[0.0868, -0.0335, 0.0273], [0.0868, 0.0335, 0.0273], 0.0064], [[0.016, 0.0423, 0.0293], [0.0868, 0.0423, 0.0293], 0.0058], [[0.064, 0.0464, 0.033], [0.064, 0.07, 0.033], 0.0069], [[0.064, -0.0464, 0.033], [0.064, -0.07, 0.033], 0.0062], [[-0.0245, -0.0315, 0.0219], [-0.0245, 0.0315, 0.0219], 0.0039], [[-0.0245, 0.04, 0.03], [0.016, 0.04, 0.03], 0.0044], [[-0.0245, -0.032, 0.025], [-0.058, -0.032, 0.025], 0.0066], [[0.08, 0.048, 0.064], [0.08, 0.048, 0.114], 0.0045]]} m (team/F2/harness.py) — **PROPOSED**
   - param `P:harness.rules.cg_body_gap_max_m` = 0.01 m (team/A5/CHANGE-REQUESTS.md#CR-A5-27) — **PROPOSED**
 - claim **CL-F3-AVN-CAD-MASS** Avionics subsystem mass (CAD roll-up) = **36.48 g** (limit <= 45 g, margin +19%) — **UNVERIFIED**
   - ⚠ uses ASM-F3-CAD-MASS, which is UNVERIFIED (assumption marked UNVERIFIED by its author)

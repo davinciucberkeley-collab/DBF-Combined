@@ -121,11 +121,12 @@ def penetration(a, b, pairs):
     return deep, at
 
 
-MEMBRANE = ('WNG-003',)                        # the packing-tape skin conforms over wires laid on or in the foam
-#                                                (taped over after routing); a rigid CAD shell cannot show the bulge,
-#                                                so wire-vs-tape contact is not penetration. Wires may not enter the foam.
-JOINT_MM = 10.0                                # wires sharing a terminal part: one bench joint, the conductors bundled
-#                                                in its heat-shrink sleeve for this length before they fan out
+MEMBRANE = ()                                  # D-86: none. The tape skin is a solid like any other: a lead passes it
+#                                                only through a slit drawn in WNG-003 (F2 cad.skin_slots), which the
+#                                                cut handling treats as removed material (was ('WNG-003',), D-85)
+JOINT_MM = 0.0                                 # D-86: no shared bench joint; every conductor lands on its own pad
+END_SEAT_MM = 0.5                              # D-86: each strand end (its surface: axis within radius + this) must lie
+#                                                in or on one of its own terminal parts or an in-line connector on it
 WIRE_END_MM = 6.0                              # a wire may sit in its terminal part this close to its end: the solder
 #                                                pad or cup plus its adhesive heat-shrink tail (ESC leads leave the
 #                                                heat-shrunk ESC body from inside it)
@@ -164,6 +165,7 @@ def make_wires(wires, col):
             col.objects.link(ob)
             b = Body(w['id'], k, 'wire strand %d (%.1f mm)' % (k, dia * 1000), ob)
             b.cutters, b.wire = [], True
+            b.r = dia * 500.0                         # strand radius, mm
             b.ends = [Vector(line[0]) * 1000.0, Vector(line[-1]) * 1000.0]
             b.terms = {t for t in w['ends'] if t}
             b.inline = set(w.get('inline', []))
@@ -240,6 +242,35 @@ def at_terminal(p, a, b):
         if getattr(o, 'wire', False) and (w.terms & o.terms) and                 any((p - e).length <= JOINT_MM for e in w.ends + o.ends):
             return True                               # wires sharing a terminal part meet in one solder joint
     return False
+
+
+def end_seats(wire_bodies, solids):
+    """D-86: every drawn strand end must be seated: inside, or within END_SEAT_MM of, a body of one of the wire's
+    terminal parts or of a connector fitted in-line on it. A lead that stops in mid-air (an undrawn connector) fails."""
+    byp = {}
+    for b in solids:
+        byp.setdefault(b.pid, []).append(b)
+    bad = []
+    for w in wire_bodies:
+        hosts = set(w.terms) | {i.split(':')[0] for i in w.inline}
+        for e in w.ends:
+            best = 1e9
+            for pid in hosts:
+                for b in byp.get(pid, []):
+                    if not all(b.lo[i] - 5 <= e[i] <= b.hi[i] + 5 for i in range(3)):
+                        continue
+                    if all(b.lo[i] <= e[i] <= b.hi[i] for i in range(3)) and inside(e, b):
+                        best = 0.0
+                        break
+                    r = b.bvh.find_nearest(e, 5.0)
+                    if r[0] is not None:
+                        best = min(best, r[3])
+                if best == 0.0:
+                    break
+            if best > w.r + END_SEAT_MM:             # the conductor's surface on the pad: axis one radius off
+                bad.append({'wire': w.pid, 'strand': w.idx, 'end_mm': [round(c, 1) for c in e],
+                            'gap_mm': None if best > 1e8 else round(best, 2), 'hosts': sorted(hosts)})
+    return bad
 
 
 def make_bodies(comp, matrix, col, tag='', R=None):
@@ -341,6 +372,8 @@ def main():
         rep['poses'].append({'name': pz['name'], 'moved': pz.get('moved'), 'not_swept_against': pz.get('skip_with'),
                              'hits': hits})
         print('collide: %-50s %d overlapping part pairs' % (pz['name'][:50], len(hits)))
+    rep['wire_ends'] = end_seats(wires, [b for b in static if not getattr(b, 'wire', False)])
+    print('collide: %d wire ends not seated' % len(rep['wire_ends']))
     if job.get('audit'):
         solids = [b for b in static if not getattr(b, 'wire', False)]
         rep['wire_audit'] = audit_wires(job.get('wires', []), wires, solids, wires)

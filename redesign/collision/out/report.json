@@ -1,22 +1,23 @@
 {
- "bodies": 990,
+ "bodies": 1007,
  "defects": [],
- "parts": 185,
+ "parts": 193,
  "poses": [
   {
    "hits": [
     {
-     "a": "E-HRN-15",
+     "a": "E-HRN-29",
      "at_mm": [
-      67.12,
-      291.87,
-      -25.73
+      107.89,
+      96.65,
+      22.41
      ],
-     "b": "E-HRN-26",
+     "b": "WNG-003",
      "bodies": [
-      "E-HRN-15 \"wire strand 0 (2.6 mm)\" x E-HRN-26 \"wire strand 1 (1.8 mm)\" 0.02 mm"
+      "E-HRN-29 \"wire strand 2 (1.3 mm)\" x WNG-003 \"tape skin upper\" 0.03 mm",
+      "E-HRN-29 \"wire strand 3 (1.3 mm)\" x WNG-003 \"tape skin upper\" 0.02 mm"
      ],
-     "depth_mm": 0.018
+     "depth_mm": 0.032
     },
     {
      "a": "FIN-001-UR",
@@ -223,7 +224,7 @@
    ]
   }
  ],
- "seconds": 326.5,
+ "seconds": 313.4,
  "skipped": [
   [
    "HRN-001",
@@ -238,5 +239,6 @@
    "mass proxy"
   ]
  ],
- "wire_strands": 45
+ "wire_ends": [],
+ "wire_strands": 46
 }

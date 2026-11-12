@@ -47,8 +47,8 @@
       "note": "servo-lead groove on the upper surface aft of the spar slot (x from harness.groove.x_servo_m), then a branch along x at y 0.285 to the lead hole (servo_pocket.lead_hole_x_m) down into the lower pocket"}
   },
   "jr_recess": {
-    "width_y_m": {"value": 0.010, "unit": "m", "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-14 (18 x 10 x 5 mm)", "status": "PROPOSED",
-      "note": "JR in-line servo-lead joint recess in the upper surface, centred on the servo branch (y 0.285), x from subsystems/harness/params.json#harness.groove.jr_recess_x_m (0.150-0.168), both sides; cut before skinning; the skin tape over it is the flap that is lifted to unplug a servo"},
+    "width_y_m": {"value": 0.0108, "unit": "m", "source": "params/CHANGE-LOG.md#D-86 (JR male shroud 10.30 +/- 0.25 mm, Pololu drawing checked 2026-11-11)", "status": "PROPOSED",
+      "note": "JR in-line servo-lead joint recess in the upper surface, centred on the servo branch (y 0.285), x from subsystems/harness/params.json#harness.groove.jr_recess_x_m (D-86: 0.1375-0.168, 30.5 mm: the mated pair plus room for the lead to drop in and rise out; was 18 x 10 mm, 0.3 mm narrower than the shroud), both sides; cut before skinning; the skin tape over it is the flap that is lifted to unplug a servo"},
     "depth_m": {"value": 0.005, "unit": "m", "source": "team/F2/CHANGE-REQUESTS.md#CR-F2-14", "status": "PROPOSED",
       "note": "floor follows the upper skin 5 mm down; > 20 mm foam left under it; 4.3 mm foam wall to the servo pocket (x 0.1722)"}
   },

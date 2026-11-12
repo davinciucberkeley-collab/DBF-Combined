@@ -474,6 +474,44 @@ def p1_holes(g, d=0.008, n=24):
     return out
 
 
+def p1s_jog(g, n=6):
+    """D-86 (F2 groove.p1s_jog_m): a groove in the lower surface from the P1s lower mouth across to the signal groove,
+    so the lower-station signal lead stays under the tape: the signal-groove section (width x depth) along the segment
+    (x0, y0) -> (x1, y1), right and left, as Z-prisms from 1 mm below the skin line up to the groove floor."""
+    H = k9.local('harness')
+    try:
+        x0, y0, x1, y1 = k9.lval(H, 'harness.groove.p1s_jog_m', 'm')
+        w, d = [v / 1000.0 for v in k9.lval(H, 'harness.groove_size_mm', 'mm')['signal']]
+    except (KeyError, TypeError, ValueError):
+        return []
+    L = math.hypot(x1 - x0, y1 - y0)
+    nx, ny = -(y1 - y0) / L * w / 2, (x1 - x0) / L * w / 2
+    zs = [surf(g, x0 + (x1 - x0) * i / n, 'lower') for i in range(n + 1)]
+    z0, z1 = min(zs) - 0.001, max(zs) + d
+    out = []
+    for s in (1, -1):
+        loop = [(x0 + nx, s * (y0 + ny)), (x1 + nx, s * (y1 + ny)), (x1 - nx, s * (y1 - ny)), (x0 - nx, s * (y0 - ny))]
+        out.append(fk.Shape('prism', 'P1s jog groove', axis='Z', offset=z0, depth=z1 - z0,
+                            loops=[loop if s > 0 else loop[::-1]]))
+    return out
+
+
+def skin_slits(g):
+    """D-86 (F2 cad.skin_slots): the tape opened round a lead where the drawn lead passes the skin, as on the bench
+    (lead laid, tape cut round it): a Z-prism over [x0, x1] x [y0, y1], 4 mm either side of that surface."""
+    H = k9.local('harness')
+    try:
+        slots = H['harness']['cad']['skin_slots']['value']
+    except (KeyError, TypeError):
+        return []
+    out = []
+    for x0, x1, y0, y1, side in slots:
+        zs = [surf(g, min(max(x, 0.0), g['c']), side) for x in (x0, (x0 + x1) / 2, x1)]
+        out.append(fk.Shape('prism', 'tape slit', axis='Z', offset=min(zs) - 0.004, depth=max(zs) - min(zs) + 0.008,
+                            loops=[[(x0, y0), (x1, y0), (x1, y1), (x0, y1)]]))
+    return out
+
+
 def elevon_section(g, groove=True):
     """Panel section: upper skin TE -> hinge, 30 deg lower bevel, D6's torque-tube groove open below (where the tube
     runs), lower skin -> TE."""
@@ -573,6 +611,8 @@ def build(ctx):
         core._add(s.mirrored(1))
     for cutter in p1_holes(g):                                # F2's 45 deg P1 lead hole, both sides (core and skin)
         core.cut(cutter, note='P1 lead pass-through, 8 mm drilled with a guide block (harness BUILD step 4)')
+    for cutter in p1s_jog(g):                                 # D-86: lower-surface jog P1s mouth -> signal groove
+        core.cut(cutter, note='jog groove from the P1s lower mouth to the signal groove (hand-cut with the grooves)')
 
     # WNG-006 block-pocket lip beads (D-68): microballoon epoxy in the stepped 45 deg chamfer along the inboard and
     # outboard pocket lips, upper and lower surface, sanded flush; the 60 mm tape doubler runs over them
@@ -612,6 +652,8 @@ def build(ctx):
     skin = ctx.part('WNG-003')
     for cutter in p1_holes(g):                                # the tape is cut at both P1 mouths
         skin.cut(cutter, note='tape opened over the P1 mouths')
+    for cutter in skin_slits(g):                              # D-86: slit round each lead where it passes the tape
+        skin.cut(cutter, note='tape slit round a lead (F2 cad.skin_slots)', shop=False)
     t = g['t_skin']
     layer = {'doubler block': 2, 'doubler servo': 1, 'LE strip': 1}          # layers under each piece
     for name, side, x0, x1, y0, y1, _n in skin_plan(g):

@@ -8,7 +8,7 @@
    "name": "Wing core, one piece (XPS), with all cuts",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 202.0,
+   "mass_g": 201.9,
    "material": "XPS foam F-250",
    "cg_xyz_m": [
     0.1187,

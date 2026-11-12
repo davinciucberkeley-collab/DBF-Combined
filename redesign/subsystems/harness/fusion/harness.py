@@ -4,7 +4,8 @@ edge (centreline polylines from the wire table) - the wires are what the CAD sho
 Everything comes from subsystems/harness/params.json, written by team/F2/harness.py from params.json, the fins,
 pod and propulsion data: re-run that script after any change, then this module follows.
 
-Bodies: HRN-113-UR/UL/LR/LL, the four XT30U mated pairs (D-74, real bodies); HRN-001 (pod runs: left channel, crossing behind the aft stop, right channel, under-pack channel, GPS cable
+Bodies: HRN-113-UR/UL/LR/LL, the four XT30U mated pairs (D-74, real bodies); HRN-105-1..6 and -SL / -SR, the
+JR mated pairs on the tray and in the servo recesses (D-86); HRN-001 (pod runs: left channel, crossing behind the aft stop, right channel, under-pack channel, GPS cable
 in the right handle leg) and HRN-002-R (grooves ahead of the spar slot, servo groove aft of it, outboard fin-face
 legs to the ESCs and the phase legs past the collar), mirrored to HRN-002-L. Legs are axis-aligned cylinders
 (k09kit.bundle), each sized by the wire mass it carries so the body centroid is the declared CG (CR-A5-27). The
@@ -45,6 +46,21 @@ def build(ctx):
         loop = [(c[0] + su * ln / 2 * ux - sw * wd / 2 * uy, c[1] + su * ln / 2 * uy + sw * wd / 2 * ux)
                 for su, sw in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
         ctx.part(pid).prism('Z', c[2] - th / 2, [loop], th, name='XT30U mated pair')
+
+    # D-86: the JR mated pairs (HRN-105-*): male shroud + the female housing showing behind it, along x. Edge: pins
+    # vertical (tray row, shroud 4.0 mm thick in y); flat: pins across y (servo recess, bottom following the floor)
+    for pid, j in sorted(_lv(H['cad'].get('jr', {})).items()):
+        (x0, xm, x1), yc, (zb0, zb1) = j['x'], j['y'], j['zb']
+        (_l, sw, st), (_lf, fw, ft) = j['shroud_m'], j['female_m']
+        th, wd = (sw, st) if j['orient'] == 'edge' else (st, sw)          # height (z), width (y) of the shroud
+        fth, fwd = (fw, ft) if j['orient'] == 'edge' else (ft, fw)
+        zb = lambda x: zb0 + (zb1 - zb0) * (x - xm) / (x1 - xm)
+        p = ctx.part(pid)
+        p.prism('Y', yc - wd / 2, [[(xm, zb(xm)), (x1, zb(x1)), (x1, zb(x1) + th), (xm, zb(xm) + th)]], wd,
+                name='JR male shroud')
+        zc = lambda x: zb(x) + th / 2
+        p.prism('Y', yc - fwd / 2, [[(x0, zc(x0) - fth / 2), (xm, zc(xm) - fth / 2), (xm, zc(xm) + fth / 2),
+                                     (x0, zc(x0) + fth / 2)]], fwd, name='JR female housing')
 
     # D-83: the four fin-hole grommets (HRN-110-<st>): barrel through the 8 mm hole + lip inboard, flange outboard
     for pid, gm in sorted(_lv(H['cad'].get('grommet', {})).items()):

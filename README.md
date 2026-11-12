@@ -48,7 +48,7 @@ Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simu
 | Transport | one-piece box 1.25 × 0.55 × 0.54 m; field set-up about 5 min, one person | proposed | [`redesign/README.md`](redesign/README.md) |
 | Requirements | 59 total: 0 verified, 1 checked, 1 proposed, 57 unverified; 11 show a fail (most are stale claims) | | [`redesign/STATUS.md`](redesign/STATUS.md) |
 | Proof graph | 4,244 nodes, 13,815 links; clean build (0 drift, 0 errors); 87 claims fail on margin (2026-11-11) | | [`redesign/PROOFS.md`](redesign/PROOFS.md) |
-| Collision (no parts phasing) | 990 bodies in 185 parts plus every routed wire: 0 penetrations > 0.05 mm, static and at both elevon limits | modelled | [`redesign/collision/README.md`](redesign/collision/README.md) |
+| Collision (no parts phasing) | 1,007 bodies in 193 parts plus every routed wire, tape skin included: 0 penetrations > 0.05 mm, static and at both elevon limits; every wire end seated in a part (D-86) | modelled | [`redesign/collision/README.md`](redesign/collision/README.md) |
 
 ## Where things are
 

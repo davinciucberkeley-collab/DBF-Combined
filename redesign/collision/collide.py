@@ -217,12 +217,13 @@ def main():
     with open(rp, 'w', encoding='utf-8') as f:
         json.dump(rep, f, indent=1, sort_keys=True)
     write_md(rep, a, os.path.join(a.out, 'REPORT.md'))
-    errs = [h for pz in rep['poses'] for h in pz['hits'] if h['depth_mm'] > a.tol_mm]
+    errs = [h for pz in rep['poses'] for h in pz['hits'] if h['depth_mm'] > a.tol_mm] + rep.get('wire_ends', [])
     for pz in rep['poses']:
         n = sum(1 for h in pz['hits'] if h['depth_mm'] > a.tol_mm)
         print('  %-48s %4d part pairs penetrate > %g mm' % (pz['name'][:48], n, a.tol_mm))
+    print('  %-48s %4d' % ('wire ends not seated in a part', len(rep.get('wire_ends', []))))
     print('collide: %s (%d bodies in %d parts, %d poses, %.0f s); report %s'
-          % ('PASS' if not errs else 'FAIL, %d overlaps' % len(errs), rep['bodies'], rep['parts'], len(rep['poses']),
+          % ('PASS' if not errs else 'FAIL, %d overlaps / loose ends' % len(errs), rep['bodies'], rep['parts'], len(rep['poses']),
              rep['seconds'], os.path.relpath(os.path.join(a.out, 'REPORT.md'), os.getcwd())))
     sys.exit(1 if errs else 0)
 
@@ -233,9 +234,17 @@ def write_md(rep, a, path):
          'are made from). Depth = how far a point of one part lies inside a different part (deepest sampled point); '
          'touching faces measure ~0 and pass. Error threshold %g mm; listed from %g mm.'
          % (datetime.date.today().isoformat(), a.tol_mm, min(0.01, a.tol_mm / 2)), '',
-         '**%s.** %d bodies in %d parts; %d poses (static + each elevon joint at each limit); %.0f s.'
-         % ('PASS' if not any(h['depth_mm'] > a.tol_mm for pz in rep['poses'] for h in pz['hits']) else 'FAIL',
-            rep['bodies'], rep['parts'], len(rep['poses']), rep['seconds']), '']
+         '**%s.** %d bodies in %d parts; %d poses (static + each elevon joint at each limit); %.0f s. Wire ends not '
+         'seated in a part: %d.'
+         % ('PASS' if not any(h['depth_mm'] > a.tol_mm for pz in rep['poses'] for h in pz['hits'])
+            and not rep.get('wire_ends') else 'FAIL',
+            rep['bodies'], rep['parts'], len(rep['poses']), rep['seconds'], len(rep.get('wire_ends', []))), '']
+    if rep.get('wire_ends'):
+        L += ['## Wire ends not seated', '', '| Wire | Strand | End (x, y, z) mm | Gap mm | Its parts |',
+              '|---|---|---|---|---|'] + ['| %s | %d | %s | %s | %s |' % (
+                  e['wire'], e['strand'], ', '.join('%.1f' % v for v in e['end_mm']),
+                  '-' if e['gap_mm'] is None else '%.2f' % e['gap_mm'], ', '.join(e['hosts']))
+                  for e in rep['wire_ends']] + ['']
     for pz in rep['poses']:
         hits = sorted(pz['hits'], key=lambda h: -h['depth_mm'])
         L += ['## %s' % pz['name'], '']

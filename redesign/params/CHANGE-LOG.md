@@ -570,3 +570,26 @@ Checker rules added with the wire check (`collision/README.md`): the tape skin c
 not penetration; wire-vs-foam is); a wire may sit 6 mm into its terminal part (solder pad, heat-shrink tail) and pass
 through connectors fitted in-line on it (XT30U, AS150U pack half); wires sharing a terminal part meet in one bench
 joint for its first 10 mm.
+
+## 2026-11-11 · every wire seated, nothing through the tape: connectors drawn, strict check (D-86; Dillon Alcouffe)
+
+A close inspection of the D-85 model (`review/inspection-2026-11-11/`, before and after pictures) found seven wiring
+faults the D-85 check let through, because its rules excused them: leads ending in mid-air where the JR connectors
+were counted for mass but not drawn, the four ESC pairs pinched into one point short of the bus bar, wires passing
+through the tape skin, the lower-station signal lead running 26 mm outside the lower skin, and the phase leads
+hanging 89 mm in free air. All seven are fixed in CAD, and the checker no longer excuses any of them.
+
+| Id | Decision | From | Keys changed | Why (numbers) |
+|---|---|---|---|---|
+| **D-86** | **JR connectors drawn; ESC pairs and main jumper landed conductor by conductor; tape slit where leads pass; lower signal lead under the tape; phase leads tied along the tube; strict no-phasing gate** | close inspection of the D-85 model | `team/F2/harness.py` (JR, routes, `skin_slots()`), `subsystems/harness/fusion/harness.py` (JR bodies), `subsystems/wing/fusion/wing.py` (`p1s_jog()`, `skin_slits()`), `subsystems/wing/params.json` (`jr_recess.width_y_m` 0.010 → 0.0108), harness `groove.jr_recess_x_m` (0.150–0.168 → 0.1375–0.168), `collision/collide_blender.py` | (a) **JR pairs as parts** `HRN-105-1…6` (tray, one per FC output) and `HRN-105-SL/-SR` (servo recesses), sized from the Pololu drawings checked 2026-11-11 (male shroud 18.00 × 10.30 × 4.00 mm, female 14.00 × 7.90 × 2.75 mm; female showing 6 mm behind the shroud is an EST). Tray: on edge on D2's tie bar at 4.5 mm pitch in FC-output order, so the pigtails run straight back with parallel 43° S-bends and never cross. Their mass (6 × 0.50 g, 2 × 0.25 g EST) moved from the fittings list to the parts. (b) **Servo recess** 30.5 × 10.8 × 5 mm: the old 18 × 10 mm recess was 0.3 mm narrower than the shroud and too short for the mated pair. (c) **Bus bars**: each ESC pair lands as two conductors, + on the + bar and − on the − bar, at four stations 6 mm apart, each rising over the landings behind it; the first bend off each pad is formed on the bench at 2 × OD (F1's `ASM-PWR-BEND`), every other bend keeps F2's 4 × OD. The 10 AWG main jumper is drawn as its two conductors through the deck window either side of the pairs (F1's own description) onto the bars' forward ends. (d) **Tape slits**: wherever a drawn lead passes the skin, the tape is cut round it (computed from the drawn strands, `cad.skin_slots`): pod exits and groove ends, upper and lower. (e) **P1s jog groove** in the lower surface from the P1s mouth to the signal groove, so the lower-station ESC signal lead stays under the tape. (f) **Phase leads**: forward along the board face, up outboard of the collar tail wall, tied at the collar's phase lug (FIN-008), taped up the outboard cheek face over the pinch nut, into the motor's lead exit. (g) **Checker**: the tape skin is a solid like any other (only a drawn slit lets a lead through); no shared "bench joint" allowance; every strand end must be seated in or on its own part or an in-line connector (radius + 0.5 mm). |
+
+Result: `collision/collide.py` PASS under these rules; F2 route rules unchanged (bend 1.03, free span, DShot 0.699 m
+against 0.70 m, fill) except the two open items below. Harness mass rises from 135.2 g to 138.9 g (+3.7 g: the real
+landing, phase and pigtail routes), against the 129 g allocation.
+
+**Open (team lead / F2 / D1 / F1):**
+- **Harness mass 138.9 g vs the 129 g allocation (`CL-F2-MASS` FAILS, +9.9 g)** and **I2C bus 0.512 m vs 0.500 m
+  (`CL-F2-I2C-LEN` FAILS)**: carried over from D-85; the decision is still the team lead's.
+- **D1**: the longer JR recess (forward end 0.1375, was 0.150) reaches further along the servo branch; check the foam
+  under its floor and the tape flap size. **F1**: confirm the bus landing order and the 2 × OD formed first bend.
+- **DShot 0.699 m against 0.70 m** has 1 mm of margin; any later reroute of the LL signal lead must keep it.

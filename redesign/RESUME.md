@@ -1,18 +1,18 @@
 # How to resume the redesign
 
-## Paused 2026-11-11 (night): wires routed without phasing, build animation (start here)
+## Paused 2026-11-11 (late): every wire seated, connectors drawn, strict no-phasing gate (start here)
 All six buildability blockers are fixed in CAD or design except the team decision on Jacobs access (BR-04 / MF-02).
-Status table: `review/BUILDABILITY-REVIEW.md` "Blocker status". Decisions D-74...D-85 in `params/CHANGE-LOG.md`.
+Status table: `review/BUILDABILITY-REVIEW.md` "Blocker status". Decisions D-74...D-86 in `params/CHANGE-LOG.md`.
 
 | Item | State |
 |---|---|
 | BR-00 CG, SW-02 fin tip, WB-01 power board, MF-01 shop files | Fixed (D-74...D-79), as before. |
 | MM-01 slit, MM-02 clocking key | **Fixed in CAD** (D-80, D-81). Open: C6 sizes the dog's shear (it adds to the D-23 slip fuse) before the 18 Dec freeze. |
 | Horn bore breakout, POD-007 void, HRN-110 grommet | **Fixed** (D-82, D-84 b, D-83). Shop files: 249 checks, 0 FAIL, 0 issues. |
-| No parts phasing (physics-simulator ready) | **Passes with every wire**: `python -I redesign/collision/collide.py` (about 5 min). 990 bodies in 185 parts plus every routed wire at its drawn diameter; 0 penetrations > 0.05 mm, static and at both elevon limits. Holes and pockets in `interfaces/seats.json`; geometry fixes D-84; harness re-route, P1s hole and frame lead notch D-85. |
+| No parts phasing (physics-simulator ready) | **Passes, strict (D-86)**: `python -I redesign/collision/collide.py` (about 5 min). 1,007 bodies in 193 parts plus every routed wire; 0 penetrations > 0.05 mm, static and at both elevon limits; the tape skin is a solid (leads pass only through drawn slits); every wire end seated in its part or an in-line connector. D-86 drew the 8 JR connectors (HRN-105-*), landed each conductor on its own bus bar, slit the tape, moved the lower signal lead under the tape and tied the phase leads. Before / after pictures: `review/inspection-2026-11-11/`. |
 | Build animation | **New**: `showcase/animation/render_build.py` -> `showcase/animation/build/` (whole build, 49 s, plus one clip and end-state still per stage 2-11). Linked from `BUILD-GUIDE.md` and the Explorer. |
-| Proof graph | **Clean** (0 drift, 0 errors), 4,245 nodes; 90 claims fail on margin (87 before D-85). The 3 new: `CL-F2-MASS` 135.2 g vs 129 g allocation, `CL-F2-I2C-LEN` 0.511 m vs 0.5 m, and `R-HARNESS-INSTALL` that rolls them up. CG and mass gate unchanged (the A3 roll-up uses the allocation). |
-| Harness mass and I2C length | **Team-lead decision** (D-85 Open): raise the harness allocation or cut routed length; accept or shorten the I2C run. |
+| Proof graph | **Clean** (0 drift, 0 errors), 4,249 nodes after D-86; 90 claims fail on margin (87 before D-85). The 3 new: `CL-F2-MASS` 135.2 g vs 129 g allocation, `CL-F2-I2C-LEN` 0.511 m vs 0.5 m, and `R-HARNESS-INSTALL` that rolls them up. CG and mass gate unchanged (the A3 roll-up uses the allocation). |
+| Harness mass and I2C length | **Team-lead decision** (D-85, D-86 Open): harness now 138.9 g vs 129 g allocation; I2C 0.512 m vs 0.5 m. Also D1 (longer JR recess) and F1 (bus landing, 2 x OD formed bend) to confirm. |
 | MF-02 Jacobs access | **Team decision needed.** |
 
 Next steps in order:

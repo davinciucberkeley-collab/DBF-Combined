@@ -71,9 +71,6 @@ GROM = {}                     # station -> (hole centre [x, y, z], outboard sign
 BAR_X0, BAR_Y, BAR_TOP = -0.0095, -0.04635, 0.0255   # F1 bus bars (PWR-004): aft-most pad x, centre y between the
 #                                                     + / - bars (y -0.0499 / -0.0429), top z (power CAD)
 P1S_DX = 0.0045              # D-85: P1s signal pass-through, ahead of the signal-groove line (1.25 mm foam wall)
-PIG_LEVEL = {1: 1, 2: 0, 3: 0, 4: 0, 5: 2, 6: 3}   # output -> pigtail level: a colouring of the plan crossings
-#                                                  (LR crosses LL, UL, both servos; the servos cross UR and LR;
-#                                                  the two servo leads run 3.4 mm apart, so they get a level each)
 PIG_PITCH = 0.003            # FC output plugs along the aft edge (servo plug 2.54 mm + housing)
 PWR_EDGE = dict(zip(("UR", "UL", "LR", "LL"), ("E-HRN-13", "E-HRN-14", "E-HRN-15", "E-HRN-16")))   # power pair per station
 # HRN-110 fin-hole grommet (D-83, drawn as parts HRN-110-<st>): printed ASA, "10/7 x 12": flange OD 10, bore 7, overall
@@ -86,6 +83,20 @@ GROM_EDGES = ("E-HRN-42", "E-HRN-43", "E-HRN-44", "E-HRN-45")      # HRN-110-<st
 # 10.2 +/- 0.3 mm; housing thickness 5.2 mm from the Amass listing, UNVERIFIED): [along the wire, across the pins, thick]
 XT30_SIZE_M = (0.0201, 0.0102, 0.0052)
 XT30_G = 2.0                  # g per mated pair with adhesive heat-shrink (resellers 1.7 g bare), EST
+# D-86: JR servo connectors (BOM HRN-105) drawn as parts HRN-105-<n> (tray, FC output n) and HRN-105-S<L|R> (servo
+# recess). Pololu dimension drawings, checked 2026-11-11 (https://www.pololu.com/product/1925/pictures): male shroud
+# 18.00 x 10.30 x 4.00 mm, female housing 14.00 x 7.90 x 2.75 mm, 2.54 mm pitch. Mated, JR_TAIL_M of the female
+# shows behind the shroud: EST (the drawings give no insertion depth). [along the wire, across the pins, thickness]
+JR_SHROUD_M = (0.0180, 0.0103, 0.0040)
+JR_FEMALE_M = (0.0140, 0.0079, 0.00275)
+JR_TAIL_M = 0.006
+JR_G = 0.50                   # g per tray pair, EST (the value the fittings table carried before D-86)
+JR_SRV_G = 0.25               # g per recess female + contacts, EST (the male is on the servo's own lead, MEC-001)
+JR_PITCH = 0.0045             # tray row pitch: pairs on edge (4.0 mm thick), 0.5 mm apart
+JR_RECESS_D = 0.005           # subsystems/wing/params.json#jr_recess.depth_m
+JR = {}                       # part id -> {"x": [front, female/shroud, end], "y", "zb": [at mid, at end], "orient", "wire"}
+JR_EDGES = tuple("E-HRN-%02d" % i for i in range(46, 54))   # HRN-105-1..6, HRN-105-SL, HRN-105-SR (D-86)
+STRAND_FIX = {}               # wire row id -> function(strands) -> strands: conductors that leave the pair (D-86)
 OTHER_FORMED = ("W-PACK", "W-MAIN-1", "W-MAIN-2")
 BEND_K = [[8, 5.0], [10, 3.0], [16, 4.0], [20, 4.0], [22, 3.0], [26, 3.0], [28, 3.0]]
 
@@ -246,9 +257,12 @@ def bends(wires, od, k_table):
         wid, awg, pts = row[0], int(row[2]), row[9]
         if wid in OTHER_FORMED or wid.startswith("W-CAP-"):
             continue
-        r_req = kd.get(awg, 3.0) * odd.get(awg, 1.0) / 1000.0
+        r_req0 = kd.get(awg, 3.0) * odd.get(awg, 1.0) / 1000.0
         segs = seg_len(pts)
         for i in range(1, len(pts) - 1):
+            # D-86: a row that starts with "J" is soldered on its pad: the first bend off the pad is formed on the bench
+            # and never flexed, so it may be 2 x OD (F1 ASM-PWR-BEND, the same rule as the formed main jumpers)
+            r_req = 2.0 * odd.get(awg, 1.0) / 1000.0 if (i == 1 and pts[0][3] == "J") else r_req0
             a, b, c = (pts[i - 1][:3], pts[i][:3], pts[i + 1][:3])
             u = [b[j] - a[j] for j in range(3)]
             v = [c[j] - b[j] for j in range(3)]
@@ -318,11 +332,13 @@ def calc_phase_ext(reach, leads):
           equation="m = sum(gpm n L_supplied) + sum(fittings); CG = sum(m_i r_i) / m",
           inputs={"wires": "P:harness.wire_table", "od": "P:harness.wire_od_mm",
                   "fittings": "P:harness.fittings_table", "pod_box": "P:harness.pod_box",
-                  "plugs": "P:harness.xt30u_table", "grommets": "P:harness.grommet_table"},
+                  "plugs": "P:harness.xt30u_table", "grommets": "P:harness.grommet_table",
+                  "jrs": "P:harness.jr_table"},
           units={"od": "AWG,mm"}, output="mass_g")
-def calc_mass(wires, od, fittings, pod_box, plugs, grommets):
+def calc_mass(wires, od, fittings, pod_box, plugs, grommets, jrs):
     m, cg, parts = mass_cg(wires, od, fittings, pod_box)
-    plugs = list(plugs) + list(grommets)                              # HRN-113-* (D-74) and HRN-110-* (D-83), own nodes
+    plugs = list(plugs) + list(grommets) + list(jrs)                  # HRN-113-* (D-74), HRN-110-* (D-83), HRN-105-*
+    #                                                                   (D-86): own nodes
     mp = sum(q[1] for q in plugs)
     cgt = [(m * cg[i] + sum(q[1] * q[2 + i] for q in plugs)) / (m + mp) for i in range(3)]
     return {"mass_g": m + mp, "cg_x": cgt[0], "cg_y": cgt[1], "cg_z": cgt[2], "plugs_g": mp,
@@ -616,6 +632,9 @@ def geometry():
     g["wall"] = 0.0048
     g["y_wall_in"] = g["pod_hw"] - g["wall"]
     g["tray_top"] = g["pod_z0"] + g["wall"] + pv(D, "tray_floor_t_m")
+    g["tray_floor_t"] = pv(D, "tray_floor_t_m")
+    g["jr_bar"] = pv(D, "jr_bar_m")                                    # D2 JR tie bar: x0, x1, x width, height, ...
+    g["half"] = pv(P, "wing.span_m") / 2
     g["bay_hw"] = pv(D, "bay_min_m")[1] / 2 + pv(D, "guide_t_m")
     g["y_ch"] = (g["bay_hw"] + g["y_wall_in"]) / 2                      # channel centre |y|
     g["fc_x"], (g["fc_l"], g["fc_w"], _h) = pv(D, "fc_centre_x_m"), pv(D, "fc_board_m")
@@ -679,13 +698,21 @@ def build(g):
     x_sexit = (g["side_exit"][0] + g["side_exit"][1]) / 2               # D2 side exits (CR-F2-03 a)
     z_sexit = (g["side_exit"][2] + g["side_exit"][3]) / 2
     x_jr = 0.030                                                        # JR in-line row, right channel
+    # D-86: the six JR pairs drawn (HRN-105-<n>), on edge on the D2 tie bar, pins vertical, one per FC output n at
+    # JR_PITCH from y 0.0385 outboard (output order, so no pigtail crosses another): female (FC pigtail) forward,
+    # x 0.025-0.031, shroud x 0.031-0.049 (its front 2.5 mm on the 4 mm bar)
+    x_jr0 = 0.025
+    x_t1 = x_jr0 + JR_TAIL_M + JR_SHROUD_M[0]                           # shroud aft end
+    z_jr = g["tray_top"] - g["tray_floor_t"] + g["jr_bar"][3] + JR_SHROUD_M[1] / 2 + 0.0001
+    y_jr = lambda n: 0.0385 + JR_PITCH * (n - 1)
     fc_x0, fc_x1 = g["fc_x"] - g["fc_l"] / 2, g["fc_x"] + g["fc_l"] / 2
     x_under = g["x_under"]                                              # under-pack crossing channel (D2)
     z_under = g["tray_top"] + 0.00115                                   # D-85: through the tray gap, under the pack
     #                                                                    (z 0.0233) and over the side plates (0.0206)
     pdb_out = g["pdb_x"][1] - 0.004
     x_tun = PORTS["pack_mate"][0][0] + 0.003                            # aft end of the tunnel under the cradle
-    x_rec = (0.150, 0.168)                                              # JR in-line recess, servo branch (CR-F2-14)
+    x_rec = (0.1375, 0.168)                                             # JR in-line recess, servo branch (CR-F2-14);
+    #                                                                     D-86: 30.5 mm (was 18) for the mated pair
     x_lh = (g["lead_hole_x"][0] + g["lead_hole_x"][1]) / 2              # D1 servo lead hole
     yo = g["y_out"] + 0.0035                                            # leads on the outboard board face (legs)
     yof = g["y_out"] + 0.0045                                           # routed lead centre: 5.2 mm pair, 1.9 mm off
@@ -806,16 +833,26 @@ def build(g):
         sy = 1 if st[1] == "R" else -1
         sz = 1 if st[0] == "U" else -1
         zl, k = z_lay(st), lay[st] % 2
-        pod = [[bars[0], bars[1], bars[2], "P"],                                       # the shared bar-end joint
-               [bars[0] + 0.007, bars[1], zl, "P"]]                                    # off the bar end into its
-        #                                                                                  layer (stacked pairs; the
-        #                                                                                  four pigtails share the
-        #                                                                                  bench solder joint, D-74)
+        # D-86: each pair lands conductor by conductor on F1's bars (+ y -0.0499, - y -0.0429): pair k (= its layer)
+        # lies 3 mm along the bar tops from x_a = -0.0105 - 6 mm k, rises 1.5 mm later to its pass height (2.75 mm a
+        # layer, over the landings aft of it), runs aft over the bar end and drops into its layer
+        xa = -0.0105 - 0.006 * lay[st]
+        zc = BAR_TOP + 0.00135
+        zp = zc + 0.00275 * lay[st]
+        pod = [[xa + 0.0015, BAR_Y, BAR_TOP + 0.0005, "J"],                     # J: soldered on the bar (formed)
+               [xa + 0.0045, BAR_Y, zp, "P"]] + ([[-0.0055, BAR_Y, zp, "P"]] if lay[st] else [])   # past the bar
+        #                                                                  end (x -0.0085), then a long descent
+
+        def land(strands, xa=xa, zc=zc):
+            (da, la), (db, lb) = sorted(strands, key=lambda s: s[1][1][1])      # + (more negative y) first
+            return [[da, [[xa, -0.0494, zc], [xa + 0.003, -0.0494, zc]] + la[1:]],
+                    [db, [[xa, -0.0434, zc], [xa + 0.003, -0.0434, zc]] + lb[1:]]]
+        STRAND_FIX["W-PWR-" + st] = land
         if sy > 0:          # tunnel inboard half (y -0.043, beside the left XT30U), then cross aft of the strut ribs,
             #                 over the POD-007 foot bridge, through the XT30U pair stacked in the crossing (D-74), in
             #                 the right lane to the exit (D2 R6 / F1 R1 layout)
             zx = XT30_Z_R[k]
-            pod += [[0.010, -0.043, zl, "P"], [x_tun, -0.043, zl, "P"],
+            pod += [[0.012, -0.043, zl, "P"], [x_tun, -0.043, zl, "P"],
                     [g["cradle_leg_x1"] - 0.004, -0.0410, zl, "P"],
                     [g["flange_x0"] + 0.002, -0.040, z_cr - 0.0025 + 0.0033 * k, "P"],
                     [x_cr, -g["bay_hw"] - 0.0025, zx, "P"],
@@ -849,38 +886,59 @@ def build(g):
         sz = 1 if st[0] == "U" else -1
         # clear of the collar tail wall and its lug, over the motor-mount pinch bolt / nut / ear and the collar lip
         # (ROUTE-CLEARANCE.md); ties at the collar lug (E-HRN-06..09) and over the pinch ear (free span <= 50 mm)
-        r = [[g["esc_x0"] - 0.001, sy * g["esc_y"], sz * g["esc_z"], "B"],
-             [g["lug_x"] + 0.0055, sy * (g["tail_face_y"] + 0.0076), sz * (g["tail_top"](g["tail_x0"]) - 0.0045), "T"],
-             [g["ear_x"] + 0.006, sy * (g["ear_y"] - 0.002), sz * (g["ear_top"] + 0.0125), "T"],  # tie at the ear
-             [g["x_face"] - 0.001, sy * (g["yf"] + g["r_motor"] + 0.002), sz * g["zm"], "E"]]
+        # D-86: laid on the parts, not across the air: forward off the ESC along the board face, up outboard of the
+        # collar tail wall (y 0.3274), tied at the collar's phase lug (FIN-008, x 0.0575-0.0625, z 0.153-0.158),
+        # aft of the pinch-bolt end (x <= 0.0558), taped up the outboard cheek face (y 0.334) over the ear and nut,
+        # into the motor's phase-lead exit (PRP-001, x 0.0217-0.0262). Positions from the FIN-003 / -008 and PRP-001
+        # CAD bodies (collision/out, 2026-11-11)
+        r = [[g["esc_x0"] + 0.002, sy * g["esc_y"], sz * g["esc_z"], "B"],
+             [0.0645, sy * 0.3300, sz * 0.1215, "B"],
+             [0.0615, sy * 0.3320, sz * 0.1400, "B"],
+             [0.0615, sy * 0.3345, sz * 0.1557, "T"],                       # phase lug tie (lug face y 0.3308)
+             [0.0590, sy * 0.3375, sz * 0.1785, "T"],                       # tape on the cheek face
+             [g["x_face"] - 0.0005, sy * 0.3375, sz * g["zm"], "E"]]
         wires.append(["W-PH-" + st, eid, 16, 3, 1, 0.030, 0.020, 16.15, 0.06, r])
 
-    def pigtail(out_n, y_jr, z_jr):
-        """D-85: output n's servo plug on the FC aft edge (3 mm pitch, outputs 1..6 along +y), out aft past the board
-        edge, up to its height (3 mm levels: leads whose paths cross in plan get different levels, so they pass over
-        one another, never through), across to its JR in-line position and down onto the JR row."""
+    def pigtail(out_n):
+        """D-86: output n's plug on the FC aft edge (3 mm pitch, outputs 1..6 along +y), straight aft past the end
+        stop, a gentle S out to its JR pair (HRN-105-n, in output order: no two pigtails cross) and into the female
+        housing to its contacts."""
         p0 = port("fc_aft", dy=PIG_PITCH * (out_n - 3.5))
-        zk = p0[2] + 0.0015 + 0.003 * PIG_LEVEL[out_n]
-        return [p0 + ["P"], [0.0175, p0[1], p0[2], "P"], [0.0205, p0[1], zk, "P"],
-                [x_jr - 0.0030, y_jr, zk, "P"], [x_jr, y_jr, z_jr, "E"]]
+        y = y_jr(out_n)
+        # all S-bends at the same 43 deg slope, the outer ones starting first, so neighbours stay parallel and >= 3.3 mm
+        # apart (the 2.8 mm servo bundles at 3 mm plug pitch would touch on a common diagonal)
+        xs = x_jr0 - 0.0005 - 1.07 * (y - p0[1])
+        mid = [[xs, p0[1], p0[2], "P"]] if y - p0[1] > 1e-6 else []
+        return [p0 + ["P"]] + mid + [[x_jr0 - 0.0005, y, z_jr, "P"], [x_jr0 + JR_TAIL_M + 0.003, y, z_jr, "E"]]
+
+    def jr_tray(n, eid):
+        JR["HRN-105-%d" % n] = {"x": [x_jr0, x_jr0 + JR_TAIL_M, x_t1], "y": y_jr(n),
+                                "zb": [z_jr - JR_SHROUD_M[1] / 2] * 2, "orient": "edge", "wire": eid}
 
     # ---- ESC signal: FC pad -> 100 mm pigtail -> JR in-line -> 28 AWG twisted pair -> ESC signal lead
     ports = {"UR": 4, "UL": 2, "LR": 1, "LL": 3}
     for st, eid in zip(STATIONS, ("E-HRN-24", "E-HRN-25", "E-HRN-26", "E-HRN-27")):
         sy = 1 if st[1] == "R" else -1
         sz = 1 if st[0] == "U" else -1
-        yp = {"UL": 0.034, "LL": 0.037, "LR": 0.043, "UR": 0.046}[st]   # JR row: servos, left, right leads inboard to
-        #                                                                  outboard, so no two runs cross in the pod
-        pig = pigtail(ports[st], yp, zw + 0.004)
+        n = ports[st]
+        yp = y_jr(n)
+        jr_tray(n, eid)
+        pig = pigtail(n)
         wires.append(["W-SIG-%s-P" % st, eid, 28, 2, 1, 0.015, 0.060, 1.1, 0.0, pig])
-        # rise off the JR row (lane datum top + 2.9 mm), cross over the power pair, exit above it
         hi = 0.004 if sz > 0 else 0.002                                 # upper-station lead 2 mm above the lower one
         he = 0.0028 if sz > 0 else -0.002                               # ... and at the exit window (z 0.027-0.039)
-        pod = [[x_jr + 0.005, yp, zw + 0.0015, "P"], [g["rlane"][0] - 0.0225, yp, g["rlane_top"] + 0.0029 + hi, "P"]]
-        if sy > 0:          # forward of the power pairs, to the window's forward edge
-            pod += [[x_ex_s, g["y_wall_in"] - 0.007, g["rlane_top"] + 0.0012 + hi, "P"]]
-        else:               # crossing aft of the ribs, then over the left power pairs aft of the cradle
-            pod += [[x_cross - 0.004, g["bay_hw"] - 0.0045, zw + 0.016 + hi, "P"],
+        # D-86: from the male contacts out of the shroud's aft end (x 0.049), up to its level 4.5 mm on
+        pod = [[x_t1 - 0.012, yp, z_jr, "P"], [x_t1 + 0.0015, yp, z_jr, "P"]]
+        if sy > 0:          # right: lowest; outboard along the 9 mm gap ahead of the right XT30U pair (x >= 0.058)
+            zr = z_jr + 0.0038 + (0.002 if sz > 0 else 0.0)            # (behind the other risers) to the window
+            if sz > 0:      # UR: up first, then across over the LR lead's run (2 mm above it)
+                pod += [[x_t1 + 0.0045, yp, zr, "P"], [x_ex_s, g["y_wall_in"] - 0.007, zr, "P"]]
+            else:           # LR: across behind the other risers
+                pod += [[x_t1 + 0.0068, yp + 0.003, zr, "P"], [x_t1 + 0.0068, g["y_wall_in"] - 0.0095, zr, "P"],
+                        [x_ex_s, g["y_wall_in"] - 0.007, zr, "P"]]
+        else:               # left: over the right leads and the XT30U pair, inboard aft of the aft stop, then as before
+            pod += [[x_t1 + 0.0045, yp, 0.039 + (0.002 if sz > 0 else 0.0), "P"],
+                    [x_cross - 0.004, g["bay_hw"] - 0.0045, zw + 0.016 + hi, "P"],
                     [x_cross - 0.004, -g["bay_hw"] + 0.006, zw + 0.016 + hi, "P"],
                     [g["flange_x0"] + 0.004, -0.056, z_sexit + 0.0015 + he, "P"]]   # aft of the left pairs
         xe = x_ex_s if sy > 0 else g["side_exit"][1] - 0.0035               # left: aft edge of the window
@@ -903,16 +961,18 @@ def build(g):
             xs1 = x_sig - P1S_DX
             p1s = lambda y: zU(xs1) + (zL(xs1) - zU(xs1)) * (y - y_p1) / (y_p1b - y_p1)
             if sy < 0:      # left: from the window's aft edge up over both pairs and the upper-station lead
-                r += [[g["side_exit"][1] + 0.0015, sy * (g["pod_hw"] + 0.0075), 0.0395, "F"],   # aft, then up
+                r += [[g["side_exit"][1] - 0.0005, sy * (g["pod_hw"] + 0.0075), 0.0395, "F"],   # aft, then up
                       [xs1, sy * (g["pod_hw"] + 0.013), 0.0395, "F"]]
             else:           # right: forward under the upper-station lead
                 r += [[xs1, sy * (g["pod_hw"] + 0.009), zU(xs1) + 0.0068, "F"]]
+            # D-86: no run on the outside of the skin: from the P1s mouth straight into a jog groove (P1S_JOG, cut
+            # in the core under the tape) across to the signal groove
             r += [[xs1, sy * (y_p1 - 0.003), p1s(y_p1 - 0.003), "L"],              # P1s straw, standing 3 mm proud
                   [xs1, sy * (y_p1 + 0.0015), p1s(y_p1 + 0.0015), "L"],
-                  [xs1, sy * (y_p1b - 0.0015), p1s(y_p1b - 0.0015), "L"],
-                  [xs1, sy * (y_p1b + 0.003), zL(xs1) - 0.0011, "F"],          # out of the mouth, on the skin
-                  [x_sig, sy * (y_p1b + 0.010), zL(x_sig) - 0.0010, "F"],
-                  [x_sig, sy * (y_p1b + 0.018), gz(zL, x_sig, d_sig), "G"]]
+                  [xs1, sy * (y_p1b - 0.0040), p1s(y_p1b - 0.0040), "L"],
+                  [xs1, sy * (y_p1b + 0.0005), gz(zL, xs1, d_sig), "G"],
+                  [x_sig, sy * (y_p1b + 0.0070), gz(zL, x_sig, d_sig), "G"],
+                  [x_sig, sy * (y_p1b + 0.0140), gz(zL, x_sig, d_sig), "G"]]
             r += fin_follow(sy, sz, x_sig, d_sig, pwr_rows[st])
         # fin root (D-85): the signal lead keeps its own tie at the boss-tail lug and passes the grommet 2.5 mm off
         # the power pair (fin_side bore points); on the outboard face it runs ahead of (toward the LE of) the pair's arc
@@ -935,12 +995,13 @@ def build(g):
     ax0, ax1 = (g["aft_exit"][0] + g["aft_exit"][1]) / 2, (g["aft_exit"][2] + g["aft_exit"][3]) / 2
     for side, eid, out_n in (("L", "E-HRN-28", 5), ("R", "E-HRN-29", 6)):
         sy = 1 if side == "R" else -1
-        yp = {"L": 0.0295, "R": 0.040}[side]                             # JR row: L inboard, R between left and right
-        #                                                                  ESC leads (no run crosses another)
-        pig = pigtail(out_n, yp, zw + 0.006)
+        yp = y_jr(out_n)
+        jr_tray(out_n, eid)
+        pig = pigtail(out_n)
         wires.append(["W-SRV-%s-P" % side, eid, 22, 3, 0, 0.0, 0.040, SRV_GPM, 0.0, pig])
-        pod = [[x_jr + 0.005, yp, zw + 0.006, "P"],
-               [g["aft_stop_x"] + 0.0025, yp, zw + 0.0212 + 0.0025 * (sy > 0), "P"]]
+        # D-86: conductors stacked across the pins (B: in the vertical plane) out of the shroud, up over everything
+        pod = [[x_t1 - 0.012, yp, z_jr, "B"], [x_t1 + 0.0015, yp, z_jr, "B"],
+               [x_t1 + 0.0055, yp, zw + 0.0212 + 0.0025 * (sy > 0), "P"]]
         if sy < 0:
             pod += [[x_cross + 0.001, g["bay_hw"] - 0.006, zw + 0.0267, "P"],
                     [x_cross + 0.001, -g["bay_hw"] + 0.006, zw + 0.0267, "P"]]
@@ -953,18 +1014,29 @@ def build(g):
                 [x_srv - 0.0003, sy * 0.2855, zU(x_srv) - d_srv, "G"]]           # D1 branch groove at |y| 0.285
         #                                       22 AWG bundle 3.6 mm in the 4.0 mm groove: 0.1 mm outboard of centre so
         #                                       the corner fillet (3.9 mm bend) clears the inboard wall
-        pod += [[xb, sy * 0.2851, zU(xb) - d_srv, "G"] for xb in (0.118, 0.128, 0.138)]   # floor follows the skin
+        pod += [[xb, sy * 0.2851, zU(xb) - d_srv, "G"] for xb in (0.118, 0.128, 0.138)   # floor follows the skin
+                if xb < x_rec[0] - 0.006]
+        # D-86: the mated JR pair lies flat on the recess floor (HRN-105-S<side>): female forward x 0.1415-0.1475,
+        # shroud 0.1475-0.1655 (recess 0.1375-0.168), bottom 0.1 mm over the floor (zU - 5 mm); the lead drops off the groove floor into
+        # the female housing on the pair's mid-plane
+        xr = (x_rec[0] + 0.004, x_rec[0] + 0.004 + JR_TAIL_M, x_rec[0] + 0.004 + JR_TAIL_M + JR_SHROUD_M[0])
+        zb = lambda x: zU(x) - JR_RECESS_D + 0.0001
+        zmid = lambda x: zb(x) + JR_SHROUD_M[2] / 2
+        JR["HRN-105-S" + side] = {"x": list(xr), "y": sy * 0.285, "zb": [zb(xr[1]), zb(xr[2])], "orient": "flat",
+                                  "wire": eid}
         pod += [[x_rec[0] - 0.003, sy * 0.2851, zU(x_rec[0] - 0.003) - d_srv, "G"],
-                [x_rec[0] + 0.0015, sy * 0.2851, zU(x_rec[0] + 0.0015) - d_srv, "G"],     # over the recess front edge
-                [x_rec[0] + 0.0065, sy * 0.285, zU(x_rec[0]) - 0.003, "E"]]       # JR female in the recess
+                [x_rec[0] + 0.001, sy * 0.2851, zU(x_rec[0] + 0.001) - d_srv, "G"],      # past the recess front edge
+                [xr[0] + 0.0004, sy * 0.285, zmid(xr[0] + 0.0004), "G"],
+                [xr[1] + 0.0005, sy * 0.285, zmid(xr[1] + 0.0005), "E"]]          # female contacts
         wires.append(["W-SRV-" + side, eid, 22, 3, 0, 0.0, 0.040, SRV_GPM, 0.0, pod])
         # servo's own lead (mass in MEC-001), shortened to 40 mm and re-terminated: JR male in the recess -> branch
         # groove -> D1 lead hole (4 mm, straw) -> pocket ceiling -> case front (CR-D1-06, CR-D6-05)
         # D-85: rises out of the recess onto the branch-groove floor before the recess end, along the branch to the
         # lead hole, down the hole and through the new notch in the frame rim (MEC-008), then down the 4.8 mm gap
         # ahead of the case to the case front
-        srv = [[x_rec[1] - 0.003, sy * 0.285, zU(x_rec[1]) - 0.003, "G"],
-               [x_rec[1] - 0.0008, sy * 0.285, zU(x_rec[1]) - d_srv, "G"],
+        srv = [[xr[1] + 0.003, sy * 0.285, zmid(xr[1] + 0.003), "G"],                   # male contacts in the shroud
+               [xr[2] - 0.0005, sy * 0.285, zmid(xr[2] - 0.0005), "G"],                   # out of its aft end
+               [x_rec[1] - 0.0003, sy * 0.285, zU(x_rec[1]) - d_srv, "G"],                # up over the recess end
                [g["lead_hole_x"][1] - 0.0006, sy * 0.285, zU(x_lh) - d_srv, "G"],
                [g["lead_hole_x"][1] - 0.0006, sy * 0.285, g["pocket_ceiling_z"] + 0.001, "L"],
                [g["lead_hole_x"][1], sy * 0.285, -0.0004, "F"],
@@ -1006,9 +1078,19 @@ def build(g):
     # D-85: down through the deck window outboard of the ESC pairs' band (y -0.0502 ... -0.0425), forward under the
     # deck at y -0.054 (clear of the PDB-boss screws at y -0.0588) and onto the bars' forward end (x -0.0305), ahead of
     # the four pair landings (x -0.0095 ... -0.0245)
-    r = [port("board_out") + ["P"], [-0.005, -0.0526, 0.044, "P"], [-0.005, -0.0526, 0.030, "P"],
-         [-0.0305, -0.0526, 0.030, "P"], [-0.0305, BAR_Y, BAR_TOP + 0.0005, "E"]]
+    # D-86: drawn as its two 10 AWG conductors (F1: "drops through the window to the bars"): from the board's output
+    # pads aft and down through the deck window at x -0.003 either side of the ESC pairs' band (+ outboard at y
+    # -0.0532, - inboard at -0.0396, clear of the spacer columns), forward under the deck beside the bars at z 0.0295
+    # (over the PDB bosses, z <= 0.0266) and onto the bars' forward ends (x -0.0338 ... -0.0325), ahead of the four
+    # pair landings (x -0.0285 ... -0.0075). Centre line = the + conductor (mass, length)
+    zm2, zbar = 0.0295, BAR_TOP + 0.0024
+    mp = [[-0.0105, -0.0545, 0.0478], [-0.003, -0.0532, 0.044], [-0.003, -0.0532, zm2], [-0.0325, -0.0532, zm2],
+          [-0.0325, -0.04985, zbar], [-0.0338, -0.04985, zbar]]
+    mn = [[-0.0105, -0.0495, 0.0478], [-0.003, -0.0396, 0.044], [-0.003, -0.0396, zm2], [-0.0325, -0.0396, zm2],
+          [-0.0325, -0.04285, zbar], [-0.0338, -0.04285, zbar]]
+    r = [p + ["P"] for p in mp[:-1]] + [[-0.0330, -0.04985, BAR_TOP - 0.0005, "E"]]   # centre line ends on the bar
     wires.append(["W-MAIN-2", "E-HRN-12", 10, 2, 0, 0.0, 0.020, 0.0, 0.0, r])
+    STRAND_FIX["W-MAIN-2"] = lambda s, mp=mp, mn=mn: [[0.0048, mp], [0.0048, mn]]
 
     # ---- power board -> FC (E-HRN-23), FC -> RX (E-HRN-31), airspeed I2C branch (E-HRN-32): under-pack channel
     # (D2 R5: x -0.0245, lands on the PDB plate (left) and the FC (right)); left-side runs stay inboard of the RX
@@ -1081,14 +1163,11 @@ def build(g):
     for sy in (1, -1):
         fittings += [["P1 pass-through straw liner 7 mm", 1, 0.15, x_pair, sy * (y_p1 + 0.015), 0.006],
                      ["Servo groove hold-down tape tabs (3)", 3, 0.03, x_srv, sy * 0.18, zU(x_srv)],
-                     ["Servo-end JR female housing + contacts (in the recess)", 1, 0.25, x_rec[0] + 0.007, sy * 0.285,
-                      zU(x_rec[0] + 0.007) - 0.003],
                      ["Recess tape flap 25 x 30 mm (re-openable)", 1, 0.04, x_rec[0] + 0.009, sy * 0.285,
                       zU(x_rec[0] + 0.009)],
                      ["Servo lead-hole straw 4 mm x 15 mm", 1, 0.03, x_lh, sy * 0.285, 0.013],
                      ["Exit chafe sleeve PET braid 6 mm x 40 mm", 2, 0.08, x_sexit, sy * g["pod_hw"], z_sexit]]
-    fittings += [["JR in-line pairs on the tray (6 outputs)", 6, 0.50, x_jr, 0.042, zw + 0.005],
-                 ["JST-GH housings + pre-crimped contacts (6 ends)", 6, 0.15, g["fc_x"], 0.02, zw + 0.004],
+    fittings += [["JST-GH housings + pre-crimped contacts (6 ends)", 6, 0.15, g["fc_x"], 0.02, zw + 0.004],
                  ["Board-link pin-header ends (2, W-PMOD case S)", 2, 0.30, PORTS["pdb_link"][0][0],
                   PORTS["pdb_link"][0][1], PORTS["pdb_link"][0][2]],
                  ["I2C Y-splice, 4 conductors", 4, 0.08, fc_x1 - 0.006, 0.040, zw + 0.010],
@@ -1148,7 +1227,8 @@ def build(g):
                "p1_y_upper_m": y_p1, "p1_y_lower_m": y_p1b, "fin_hole_x_m": x_hole, "fin_hole_dz_m": hole_dz,
                "side_exit_x_m": [x_sexit - 0.008, x_sexit + 0.008], "side_exit_z_m": [z_sexit - 0.006, z_sexit + 0.006],
                "cross_x_m": x_cross, "under_pack_x_m": x_under, "jr_row_x_m": x_jr,
-               "jr_recess_x_m": list(x_rec), "servo_lead_hole_x_m": x_lh}
+               "jr_recess_x_m": list(x_rec), "servo_lead_hole_x_m": x_lh,
+               "p1s_jog_m": [x_sig - P1S_DX, y_p1b - 0.0015, x_sig, y_p1b + 0.0090]}   # D-86: P1s -> signal groove (x0 y0 x1 y1)
     for st in STATIONS:
         grooves["xt30u_%s_xyz_m" % st] = xt30[st][0]
         grooves["xt30u_%s_pigtail_path_m" % st] = xt30[st][1]
@@ -1326,8 +1406,9 @@ def draw_strands(row, od_table):
     _wid, _eid, awg, n, _tw, _lay, _loop, _gpm, _f, pts = row
     od = dict((int(a), b) for a, b in od_table)
     d = od.get(int(awg), 1.0) / 1000.0
+    fix = STRAND_FIX.get(row[0], lambda s: s)
     if not any(p[3] == "G" for p in pts) or (int(awg), int(n)) not in ((16, 2), (26, 3), (22, 3)):
-        return [[round(min(0.006, d * BUNDLE_K.get(int(n), 3.0)), 5), [list(p[:3]) for p in pts]]]
+        return fix([[round(min(0.006, d * BUNDLE_K.get(int(n), 3.0)), 5), [list(p[:3]) for p in pts]]])
     dias = None
     if int(awg) == 16:
         free, groove = [-(d / 2 + 0.00005), d / 2 + 0.00005], [-0.0025, 0.0025]
@@ -1349,7 +1430,7 @@ def draw_strands(row, od_table):
         a, b = seg[i - 1] if i > 0 else None, seg[i] if i < m - 1 else None
         t = _unit([(a[k] if a else 0) + (b[k] if b else 0) for k in range(3)]) or a or b
         code = pts[i][3] if i < m - 1 else pts[i - 1][3]
-        nref = [0.0, 0.0, 1.0] if code in ("G", "P", "M", "L") else [0.0, 1.0, 0.0] if code == "B" else None
+        nref = [0.0, 0.0, 1.0] if code in ("G", "P", "M", "L", "J") else [0.0, 1.0, 0.0] if code == "B" else None
         #      L (liners: fin grommet, P1 straw): conductors side by side across x, as in the grooves either side
         v = _unit(_cross(t, nref)) if nref else None
         if v is None or (nref and abs(sum(t[k] * nref[k] for k in range(3))) > 0.95):
@@ -1372,7 +1453,72 @@ def draw_strands(row, od_table):
             o = (groove if (p[3] == "G" or (len(p) > 4 and p[4] == "s")) else free)[j]
             line.append([round(P[i][k] + lat[i][k] * o, 5) for k in range(3)])
         out.append([round(dias[j] if dias else d, 5), line])
+    return fix(out)
+
+
+def _fillet(points, radius, steps=6):
+    """blender_backend.fillet_polyline in plain Python: the bend the 3-D model draws at each corner."""
+    P = [list(p) for p in points]
+    if len(P) < 3 or radius <= 0:
+        return P
+    out = [P[0]]
+    for i in range(1, len(P) - 1):
+        a, b, c = P[i - 1], P[i], P[i + 1]
+        d1, d2 = [b[k] - a[k] for k in range(3)], [c[k] - b[k] for k in range(3)]
+        n1, n2 = math.hypot(*d1), math.hypot(*d2)
+        if n1 < 1e-9 or n2 < 1e-9:
+            continue
+        ang = math.acos(max(-1.0, min(1.0, sum(d1[k] * d2[k] for k in range(3)) / n1 / n2)))
+        if ang < 1e-3:
+            out.append(b)
+            continue
+        t = min(radius * math.tan(ang / 2), 0.45 * n1, 0.45 * n2)
+        A = [b[k] - d1[k] / n1 * t for k in range(3)]
+        B = [b[k] + d2[k] / n2 * t for k in range(3)]
+        for q in range(steps + 1):
+            u = q / steps
+            out.append([(1 - u) ** 2 * A[k] + 2 * (1 - u) * u * b[k] + u * u * B[k] for k in range(3)])
+    out.append(P[-1])
     return out
+
+
+def skin_slots(g, wires, od_table):
+    """D-86: where a drawn lead passes the tape skin (WNG-003, 0.1 mm on the core), the tape is slit round it, as it
+    is on the bench: the lead is laid first and the tape is cut where the lead comes out. [x0, x1, y0, y1, side] per
+    crossing, merged, from every drawn strand (filleted as the 3-D model draws it), outboard of the pod side walls."""
+    t, step = 0.0001, 0.0005
+    odd = dict((int(a), b) for a, b in od_table)
+    raw = []
+    for w in wires:
+        bend = dict((int(a), b) for a, b in BEND_K).get(int(w[2]), 3.0) * odd.get(int(w[2]), 1.0) / 1000.0
+        for d, line in draw_strands(w, od_table):
+            pts, r = _fillet(line, bend), d / 2
+            samples = []
+            for a, b in zip(pts, pts[1:]):
+                n = max(1, int(math.dist(a, b) / step))
+                samples += [[a[k] + (b[k] - a[k]) * i / n for k in range(3)] for i in range(n)]
+            samples.append(pts[-1])
+            for side, surf, sgn in (("upper", g["zU"], 1.0), ("lower", g["zL"], -1.0)):
+                run = []
+                for x, y, z in samples + [[None] * 3]:
+                    hit = x is not None and 0.0 <= x <= g["c"] and g["pod_hw"] + 0.0005 <= abs(y) <= g["half"] and \
+                        -r + 0.0004 < sgn * (z - surf(x)) < r + t + 0.0004
+                    if hit:
+                        run.append((x, y))
+                    elif run:
+                        e = r + 0.0015
+                        raw.append([min(p[0] for p in run) - e, max(p[0] for p in run) + e,
+                                    min(p[1] for p in run) - e, max(p[1] for p in run) + e, side])
+                        run = []
+    merged = []
+    for s in sorted(raw):
+        for m in merged:
+            if m[4] == s[4] and s[0] <= m[1] and m[0] <= s[1] and s[2] <= m[3] and m[2] <= s[3]:
+                m[0], m[1], m[2], m[3] = min(m[0], s[0]), max(m[1], s[1]), min(m[2], s[2]), max(m[3], s[3])
+                break
+        else:
+            merged.append(list(s))
+    return [[round(v, 4) for v in m[:4]] + [m[4]] for m in merged]
 
 
 def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
@@ -1435,6 +1581,14 @@ def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
                                 "unit": "-", "source": "team/F2/harness.py (D-83)",
                                 "note": "[name, g, x, y, z]: the four fin-hole grommets, parts HRN-110-<st> (own "
                                         "nodes, not in the bundle masses); 0.50 g each EST"},
+              "jr_table": {"value": [["JR pair " + pid[8:], JR_SRV_G if pid[8:9] == "S" else JR_G,
+                                      round((j["x"][0] + j["x"][2]) / 2, 4), round(j["y"], 4),
+                                      round(j["zb"][0] + (JR_SHROUD_M[1] if j["orient"] == "edge"
+                                                          else JR_SHROUD_M[2]) / 2, 4)]
+                                     for pid, j in sorted(JR.items())],
+                           "unit": "-", "source": "team/F2/harness.py (D-86)",
+                           "note": "[name, g, x, y, z]: the JR pairs drawn as parts HRN-105-<n> (tray, FC output n) "
+                                   "and HRN-105-S<L|R> (servo recess); own nodes, not in the bundle masses; EST"},
               "passes": {"value": [[p[0], round(p[1], 1), p[2]] for p in passes], "unit": "-",
                          "source": "team/F2/harness.py", "note": "[name, opening mm2, [[AWG, conductors]]]"},
               "cad": {"inline_housings": {"value": {"PWR-001:AS150U pack half": {"wire": "E-HRN-10"}},
@@ -1446,6 +1600,19 @@ def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
                                   "unit": "m", "source": "team/F2/harness.py (D-83)",
                                   "note": "fin-hole grommet bodies along y: centre = hole centre on the board mid-plane, "
                                           "out = outboard sign; flange on the outboard face, lip proud inboard"},
+                      "jr": {"value": {pid: {"x": [round(v, 5) for v in j["x"]], "y": round(j["y"], 5),
+                                             "zb": [round(v, 5) for v in j["zb"]], "orient": j["orient"],
+                                             "shroud_m": list(JR_SHROUD_M), "female_m": list(JR_FEMALE_M),
+                                             "wire": j["wire"]} for pid, j in sorted(JR.items())},
+                             "unit": "m", "source": "team/F2/harness.py (D-86)",
+                             "note": "JR mated pairs along x: x = [female front, female / shroud, shroud end]; zb = "
+                                     "bottom z at the shroud front and end; orient edge = pins vertical (tray row), "
+                                     "flat = pins across y (servo recess). Pololu drawings 18.00 x 10.30 x 4.00 / "
+                                     "14.00 x 7.90 x 2.75 mm; female showing behind the shroud EST"},
+                      "skin_slots": {"value": skin_slots(g, wires, od_table), "unit": "m",
+                                     "source": "team/F2/harness.py skin_slots() (D-86)",
+                                     "note": "[x0, x1, y0, y1, side]: the tape skin is slit where a lead passes it "
+                                             "(lead laid first, tape cut round it); cut from WNG-003"},
                       "xt30u": {"value": {"HRN-113-" + st: {"centre": [round(v, 4) for v in XT30[st][0]],
                                                             "axis": XT30[st][2], "size_m": list(XT30_SIZE_M),
                                                             "wire": PWR_EDGE[st]}
@@ -1556,10 +1723,37 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
                                                                          GROM_DIM_M["bore"] * 1000,
                                                                          GROM_DIM_M["length"] * 1000,
                                                                          GROM_DIM_M["barrel_od"] * 1000, st)})
+    jr_ids = sorted(JR)
+    for pid in jr_ids:                                               # D-86: the JR pairs, drawn (HRN-105-*)
+        j, srv = JR[pid], pid[8:9] == "S"
+        hrn_parts.append({"id": pid, "name": ("JR mated pair in the servo recess %s" % pid[-1]) if srv else
+                          ("JR mated pair, FC output %s (%s)" % (pid[8:], j["wire"])), "subsystem": "harness",
+                          "status": "MODELLED", "mass_g": JR_SRV_G if srv else JR_G, "material": "PA + phosphor bronze",
+                          "cg_xyz_m": [round((j["x"][0] + j["x"][2]) / 2, 4), round(j["y"], 4),
+                                       round(j["zb"][0] + (JR_SHROUD_M[2] if srv else JR_SHROUD_M[1]) / 2, 4)],
+                          "make_or_buy": "buy", "carried": True,
+                          "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud %.2f x %.2f x "
+                                   "%.2f mm + female %.2f x %.2f x %.2f mm (Pololu drawings, checked 2026-11-11), "
+                                   "female %.0f mm showing (EST); %s; team/F2/harness.py JR; BOM HRN-105; mass EST" % (
+                                       *(v * 1000 for v in JR_SHROUD_M), *(v * 1000 for v in JR_FEMALE_M),
+                                       JR_TAIL_M * 1000,
+                                       "flat on the recess floor under the re-openable tape flap, female mass only "
+                                       "(the male is on the servo's own lead, MEC-001)" if srv else
+                                       "on edge on the D2 tie bar, tied with its neighbour through a bar slot")})
     by_edge = {}
     for w in wires:
         by_edge.setdefault(w[1], []).append(w)
     edges, pending = [], []
+    for pid, eid in zip(jr_ids, JR_EDGES):
+        srv = pid[8:9] == "S"
+        edges.append({"id": eid, "part_a": pid, "part_b": ("HRN-002-" + pid[-1]) if srv else "HRN-001",
+                      "via": "CT-TIE", "owner": "harness",
+                      "notes": ("JR pair taped in the servo recess, on its lead (D-86)" if srv else
+                                "JR pair tied on the tray tie bar with the pod runs (D-86)"),
+                      "retention": {"item": "tape flap over the recess" if srv else "cable tie 2.5 x 100 mm through "
+                                    "the bar slot, two pairs per tie", "count": 1,
+                                    "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
+                                    "inspection": "pre-flight: housings seated to the shoulder"}})
     for st, eid in zip(STATIONS, GROM_EDGES):
         edges.append({"id": eid, "part_a": "HRN-110-" + st, "part_b": "FIN-001-" + st, "via": "CT-CA",
                       "owner": "harness",
@@ -1747,6 +1941,13 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
                      round(XT30_G * 4, 2), *(round(sum(q[0][i] for q in pm) / 4, 4) for i in range(3)),
                      *(round(v, 4) for v in XT30_SIZE_M), "EST", "", "HRN-113-UR;HRN-113-UL;HRN-113-LR;HRN-113-LL",
                      "", "team/F2/harness.py XT30_SIZE_M, XT30_G"])
+    jm = [JR[k] for k in sorted(JR)]
+    jg = sum(JR_SRV_G if k[8:9] == "S" else JR_G for k in JR)
+    est_rows.append(["HRN-E10", "harness", "electrical", "JR mated pairs x%d (HRN-105-*, D-86)" % len(jm), len(jm), "-",
+                     round(jg, 2), *(round(sum(((j["x"][0] + j["x"][2]) / 2, j["y"], j["zb"][0])[i] for j in jm)
+                                           / len(jm), 4) for i in range(3)),
+                     *(round(v, 4) for v in JR_SHROUD_M), "EST", "", ";".join(sorted(JR)), "",
+                     "team/F2/harness.py JR_SHROUD_M, JR_G, JR_SRV_G"])
     gm = [GROM[s][0] for s in STATIONS]
     est_rows.append(["HRN-E09", "harness", "electrical", "Fin-hole grommets x4 (HRN-110-*, D-83)", 4, "-",
                      round(GROM_G * 4, 2), *(round(sum(q[i] for q in gm) / 4, 4) for i in range(3)),

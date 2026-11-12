@@ -2,7 +2,7 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "aircraft",
- "generated": "2026-11-12 02:19 UTC",
+ "generated": "2026-11-12 03:58 UTC",
  "sources": {
   "glb": "redesign/blender/out/aircraft/glb",
   "interfaces": "redesign/interfaces/interfaces.json",
@@ -24,8 +24,8 @@ window.VIEWER_DATA = {
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 9288984,
-  "sha256": "f865d364f52ffed0ba40956f3ef550f73fb3c2a049dcf2f8521db3ee4afb1c1c"
+  "bytes": 9584264,
+  "sha256": "cd8c302e5eb2ba4b1f27956338b5a852111ddd793efa36260d863ea9f0811636"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -1612,17 +1612,17 @@ window.VIEWER_DATA = {
    "name": "Pod harness bundle (lumped: pod runs of every lead, GPS cable, JR row, GH plugs)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 40.1,
+   "mass_g": 39.0,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0436,
-    -0.0004,
+    0.0403,
+    -0.0051,
     0.0306
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0372, -0.0039, 0.0351] m, 8.5 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0352, -0.0084, 0.0357] m, 7.9 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "vendor": "subsystems/harness/WIRE-LIST.csv",
    "unit_cost_usd": 0.0,
@@ -1636,17 +1636,17 @@ window.VIEWER_DATA = {
    "name": "Wing-fin harness bundle L (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 42.3,
+   "mass_g": 42.9,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0779,
-    -0.2604,
-    0.0051
+    0.0772,
+    -0.2616,
+    0.0049
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0782, -0.261, 0.0055] m, 0.8 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0769, -0.2623, 0.0053] m, 0.8 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1655,17 +1655,161 @@ window.VIEWER_DATA = {
    "name": "Wing-fin harness bundle R (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 42.8,
+   "mass_g": 43.4,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0779,
-    0.2604,
-    0.0051
+    0.0772,
+    0.2616,
+    0.0049
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.078, 0.2594, 0.0057] m, 1.1 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0768, 0.2606, 0.0055] m, 1.3 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-105-1",
+   "name": "JR mated pair, FC output 1 (E-HRN-26)",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "material": "PA + phosphor bronze",
+   "cg_xyz_m": [
+    0.037,
+    0.0385,
+    0.0301
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); on edge on the D2 tie bar, tied with its neighbour through a bar slot; team/F2/harness.py JR; BOM HRN-105; mass EST",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-105-2",
+   "name": "JR mated pair, FC output 2 (E-HRN-25)",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "material": "PA + phosphor bronze",
+   "cg_xyz_m": [
+    0.037,
+    0.043,
+    0.0301
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); on edge on the D2 tie bar, tied with its neighbour through a bar slot; team/F2/harness.py JR; BOM HRN-105; mass EST",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-105-3",
+   "name": "JR mated pair, FC output 3 (E-HRN-27)",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "material": "PA + phosphor bronze",
+   "cg_xyz_m": [
+    0.037,
+    0.0475,
+    0.0301
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); on edge on the D2 tie bar, tied with its neighbour through a bar slot; team/F2/harness.py JR; BOM HRN-105; mass EST",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-105-4",
+   "name": "JR mated pair, FC output 4 (E-HRN-24)",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "material": "PA + phosphor bronze",
+   "cg_xyz_m": [
+    0.037,
+    0.052,
+    0.0301
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); on edge on the D2 tie bar, tied with its neighbour through a bar slot; team/F2/harness.py JR; BOM HRN-105; mass EST",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-105-5",
+   "name": "JR mated pair, FC output 5 (E-HRN-28)",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "material": "PA + phosphor bronze",
+   "cg_xyz_m": [
+    0.037,
+    0.0565,
+    0.0301
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); on edge on the D2 tie bar, tied with its neighbour through a bar slot; team/F2/harness.py JR; BOM HRN-105; mass EST",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-105-6",
+   "name": "JR mated pair, FC output 6 (E-HRN-29)",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "material": "PA + phosphor bronze",
+   "cg_xyz_m": [
+    0.037,
+    0.061,
+    0.0301
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); on edge on the D2 tie bar, tied with its neighbour through a bar slot; team/F2/harness.py JR; BOM HRN-105; mass EST",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-105-SL",
+   "name": "JR mated pair in the servo recess L",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "material": "PA + phosphor bronze",
+   "cg_xyz_m": [
+    0.1535,
+    -0.285,
+    0.0166
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); flat on the recess floor under the re-openable tape flap, female mass only (the male is on the servo's own lead, MEC-001); team/F2/harness.py JR; BOM HRN-105; mass EST",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-105-SR",
+   "name": "JR mated pair in the servo recess R",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "material": "PA + phosphor bronze",
+   "cg_xyz_m": [
+    0.1535,
+    0.285,
+    0.0166
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); flat on the recess floor under the re-openable tape flap, female mass only (the male is on the servo's own lead, MEC-001); team/F2/harness.py JR; BOM HRN-105; mass EST",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1751,7 +1895,7 @@ window.VIEWER_DATA = {
    ],
    "make_or_buy": "buy",
    "carried": true,
-   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.033 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06",
+   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.052 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1769,7 +1913,7 @@ window.VIEWER_DATA = {
    ],
    "make_or_buy": "buy",
    "carried": true,
-   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.183 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [-0.4217, 0.9067]; tied in its station (right channel, just inside the exit); team/I1/BOM.csv#H06",
+   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.187 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [-0.4217, 0.9067]; tied in its station (right channel, just inside the exit); team/I1/BOM.csv#H06",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1787,7 +1931,7 @@ window.VIEWER_DATA = {
    ],
    "make_or_buy": "buy",
    "carried": true,
-   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.035 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06",
+   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.060 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1805,7 +1949,7 @@ window.VIEWER_DATA = {
    ],
    "make_or_buy": "buy",
    "carried": true,
-   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.183 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [-0.4217, 0.9067]; tied in its station (right channel, just inside the exit); team/I1/BOM.csv#H06",
+   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.195 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [-0.4217, 0.9067]; tied in its station (right channel, just inside the exit); team/I1/BOM.csv#H06",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -3743,7 +3887,7 @@ window.VIEWER_DATA = {
    "name": "Wing core, one piece (XPS), with all cuts",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 202.0,
+   "mass_g": 201.9,
    "material": "XPS foam F-250",
    "cg_xyz_m": [
     0.1187,
@@ -6571,7 +6715,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-004",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-2; routed cut length 0.074 m",
+   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-2; routed cut length 0.079 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "power board output pads (aft edge) -> bus bars, aft end (solder)",
@@ -6584,7 +6728,7 @@ window.VIEWER_DATA = {
     "strain_relief": "heat-shrink; jumpers formed before soldering",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.074,
+    "length_m": 0.079,
     "wires": [
      "W-MAIN-2"
     ]
@@ -6601,7 +6745,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UR",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC UR power + / -. Wire list rows W-PWR-UR; routed cut length 0.636 m",
+   "notes": "ESC UR power + / -. Wire list rows W-PWR-UR; routed cut length 0.648 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC UR power pads (solder) + 680 uF cap",
@@ -6619,7 +6763,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.636,
+    "length_m": 0.648,
     "wires": [
      "W-PWR-UR"
     ]
@@ -6636,7 +6780,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UL",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC UL power + / -. Wire list rows W-PWR-UL; routed cut length 0.512 m",
+   "notes": "ESC UL power + / -. Wire list rows W-PWR-UL; routed cut length 0.537 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC UL power pads (solder) + 680 uF cap",
@@ -6654,7 +6798,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.512,
+    "length_m": 0.537,
     "wires": [
      "W-PWR-UL"
     ]
@@ -6671,7 +6815,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LR",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC LR power + / -. Wire list rows W-PWR-LR; routed cut length 0.676 m",
+   "notes": "ESC LR power + / -. Wire list rows W-PWR-LR; routed cut length 0.680 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC LR power pads (solder) + 680 uF cap",
@@ -6689,7 +6833,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.676,
+    "length_m": 0.68,
     "wires": [
      "W-PWR-LR"
     ]
@@ -6706,7 +6850,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LL",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC LL power + / -. Wire list rows W-PWR-LL; routed cut length 0.549 m",
+   "notes": "ESC LL power + / -. Wire list rows W-PWR-LL; routed cut length 0.568 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC LL power pads (solder) + 680 uF cap",
@@ -6724,7 +6868,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.549,
+    "length_m": 0.568,
     "wires": [
      "W-PWR-LL"
     ]
@@ -6741,7 +6885,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.123 m",
+   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.133 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UR phase pads (solder) -> motor UR factory leads (staggered in-line splices)",
@@ -6757,7 +6901,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.123,
+    "length_m": 0.133,
     "wires": [
      "W-PH-UR"
     ]
@@ -6774,7 +6918,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.123 m",
+   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.133 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UL phase pads (solder) -> motor UL factory leads (staggered in-line splices)",
@@ -6790,7 +6934,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.123,
+    "length_m": 0.133,
     "wires": [
      "W-PH-UL"
     ]
@@ -6807,7 +6951,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.123 m",
+   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.133 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LR phase pads (solder) -> motor LR factory leads (staggered in-line splices)",
@@ -6823,7 +6967,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.123,
+    "length_m": 0.133,
     "wires": [
      "W-PH-LR"
     ]
@@ -6840,7 +6984,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.123 m",
+   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.133 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LL phase pads (solder) -> motor LL factory leads (staggered in-line splices)",
@@ -6856,7 +7000,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.123,
+    "length_m": 0.133,
     "wires": [
      "W-PH-LL"
     ]
@@ -6912,7 +7056,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UR",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor UR (twisted, no power). Wire list rows W-SIG-UR-P, W-SIG-UR; routed cut length 0.524 m",
+   "notes": "DShot300 bidirectional + GND, motor UR (twisted, no power). Wire list rows W-SIG-UR-P, W-SIG-UR; routed cut length 0.521 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC UR factory signal lead (solder splice)",
@@ -6929,7 +7073,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.524,
+    "length_m": 0.521,
     "wires": [
      "W-SIG-UR-P",
      "W-SIG-UR"
@@ -6949,7 +7093,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UL",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor UL (twisted, no power). Wire list rows W-SIG-UL-P, W-SIG-UL; routed cut length 0.643 m",
+   "notes": "DShot300 bidirectional + GND, motor UL (twisted, no power). Wire list rows W-SIG-UL-P, W-SIG-UL; routed cut length 0.645 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC UL factory signal lead (solder splice)",
@@ -6966,7 +7110,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.643,
+    "length_m": 0.645,
     "wires": [
      "W-SIG-UL-P",
      "W-SIG-UL"
@@ -6986,7 +7130,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LR",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor LR (twisted, no power). Wire list rows W-SIG-LR-P, W-SIG-LR; routed cut length 0.562 m",
+   "notes": "DShot300 bidirectional + GND, motor LR (twisted, no power). Wire list rows W-SIG-LR-P, W-SIG-LR; routed cut length 0.560 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC LR factory signal lead (solder splice)",
@@ -7003,7 +7147,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.562,
+    "length_m": 0.56,
     "wires": [
      "W-SIG-LR-P",
      "W-SIG-LR"
@@ -7060,7 +7204,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-L",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "Elevon L PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-L-P, W-SRV-L, W-SRV-L-S; routed cut length 0.600 m",
+   "notes": "Elevon L PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-L-P, W-SRV-L, W-SRV-L-S; routed cut length 0.603 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "FC output pad + rail (solder) -> servo case (factory)",
@@ -7076,7 +7220,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.6,
+    "length_m": 0.603,
     "wires": [
      "W-SRV-L-P",
      "W-SRV-L",
@@ -7096,7 +7240,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-R",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "Elevon R PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-R-P, W-SRV-R, W-SRV-R-S; routed cut length 0.553 m",
+   "notes": "Elevon R PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-R-P, W-SRV-R, W-SRV-R-S; routed cut length 0.556 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "FC output pad + rail (solder) -> servo case (factory)",
@@ -7112,7 +7256,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.553,
+    "length_m": 0.556,
     "wires": [
      "W-SRV-R-P",
      "W-SRV-R",
@@ -7463,6 +7607,126 @@ window.VIEWER_DATA = {
     "count": 1,
     "load_n": "< 1 (lead tension is taken by the boss-tail and collar ties)",
     "inspection": "pre-flight: grommet seated, no lead chafe at the bore"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-46",
+   "part_a": "HRN-105-1",
+   "part_b": "HRN-001",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "JR pair tied on the tray tie bar with the pod runs (D-86)",
+   "retention": {
+    "item": "cable tie 2.5 x 100 mm through the bar slot, two pairs per tie",
+    "count": 1,
+    "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
+    "inspection": "pre-flight: housings seated to the shoulder"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-47",
+   "part_a": "HRN-105-2",
+   "part_b": "HRN-001",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "JR pair tied on the tray tie bar with the pod runs (D-86)",
+   "retention": {
+    "item": "cable tie 2.5 x 100 mm through the bar slot, two pairs per tie",
+    "count": 1,
+    "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
+    "inspection": "pre-flight: housings seated to the shoulder"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-48",
+   "part_a": "HRN-105-3",
+   "part_b": "HRN-001",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "JR pair tied on the tray tie bar with the pod runs (D-86)",
+   "retention": {
+    "item": "cable tie 2.5 x 100 mm through the bar slot, two pairs per tie",
+    "count": 1,
+    "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
+    "inspection": "pre-flight: housings seated to the shoulder"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-49",
+   "part_a": "HRN-105-4",
+   "part_b": "HRN-001",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "JR pair tied on the tray tie bar with the pod runs (D-86)",
+   "retention": {
+    "item": "cable tie 2.5 x 100 mm through the bar slot, two pairs per tie",
+    "count": 1,
+    "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
+    "inspection": "pre-flight: housings seated to the shoulder"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-50",
+   "part_a": "HRN-105-5",
+   "part_b": "HRN-001",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "JR pair tied on the tray tie bar with the pod runs (D-86)",
+   "retention": {
+    "item": "cable tie 2.5 x 100 mm through the bar slot, two pairs per tie",
+    "count": 1,
+    "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
+    "inspection": "pre-flight: housings seated to the shoulder"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-51",
+   "part_a": "HRN-105-6",
+   "part_b": "HRN-001",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "JR pair tied on the tray tie bar with the pod runs (D-86)",
+   "retention": {
+    "item": "cable tie 2.5 x 100 mm through the bar slot, two pairs per tie",
+    "count": 1,
+    "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
+    "inspection": "pre-flight: housings seated to the shoulder"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-52",
+   "part_a": "HRN-105-SL",
+   "part_b": "HRN-002-L",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "JR pair taped in the servo recess, on its lead (D-86)",
+   "retention": {
+    "item": "tape flap over the recess",
+    "count": 1,
+    "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
+    "inspection": "pre-flight: housings seated to the shoulder"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-53",
+   "part_a": "HRN-105-SR",
+   "part_b": "HRN-002-R",
+   "via": "CT-TIE",
+   "owner": "harness",
+   "notes": "JR pair taped in the servo recess, on its lead (D-86)",
+   "retention": {
+    "item": "tape flap over the recess",
+    "count": 1,
+    "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
+    "inspection": "pre-flight: housings seated to the shoulder"
    },
    "declared_in": "harness"
   },
@@ -22443,7 +22707,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D6-MASS",
    "title": "Mechanisms mass",
-   "value": 70.14,
+   "value": 71.28,
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -22452,7 +22716,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-D6-WEIGH: weigh every part on arrival",
-   "margin": 0.025833333333333326,
+   "margin": 0.009999999999999985,
    "parts": [
     "MEC-001-L",
     "MEC-001-R"
@@ -25220,7 +25484,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-ESC-MASS",
    "title": "ESC power leads, 4 pairs at F2's routed lengths",
-   "value": 70.30928156984018,
+   "value": 76.6527568604235,
    "unit": "g",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25315,7 +25579,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-R-EXT",
    "title": "Resistance pack terminals to ESC pads (equivalent, hot)",
-   "value": 7.272778218731092,
+   "value": 7.628095014341457,
    "unit": "mOhm",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25335,7 +25599,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-DROP-CONT",
    "title": "Voltage drop pack to the farthest ESC at the continuous current",
-   "value": 1.723732336956673,
+   "value": 1.8162578228981572,
    "unit": "%",
    "limit": {
     "op": "<=",
@@ -25344,7 +25608,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-F1-DROP at 30 A.",
-   "margin": 0.13813383152166347,
+   "margin": 0.09187108855092141,
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -25359,7 +25623,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-DROP-PEAK",
    "title": "Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11)",
-   "value": 5.285711949674933,
+   "value": 5.55858686221102,
    "unit": "%",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25548,7 +25812,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-MAX",
    "title": "Longest routed ESC power lead (bus pad to ESC pad, incl. loops)",
-   "value": 0.6191354695493952,
+   "value": 0.6754837997008728,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25562,7 +25826,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-MIN",
    "title": "Shortest routed ESC power lead",
-   "value": 0.46986132032766137,
+   "value": 0.511561464071361,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25576,7 +25840,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-UR",
    "title": "Routed ESC power lead UR",
-   "value": 0.5938993025631426,
+   "value": 0.6359148918519185,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25589,7 +25853,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-UL",
    "title": "Routed ESC power lead UL",
-   "value": 0.46986132032766137,
+   "value": 0.511561464071361,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25602,7 +25866,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-LR",
    "title": "Routed ESC power lead LR",
-   "value": 0.6191354695493952,
+   "value": 0.6754837997008728,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25615,7 +25879,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-LL",
    "title": "Routed ESC power lead LL",
-   "value": 0.4925987539917493,
+   "value": 0.5488131549736445,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25628,7 +25892,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-MAIN-LEN",
    "title": "10 AWG AS150U-to-bus path per conductor (cups -> board -> bars)",
-   "value": 0.07951778132367027,
+   "value": 0.10353443626842669,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -25637,7 +25901,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure on the power-frame mock-up (T-F2-FIT, T-PWR-FIT)",
-   "margin": 0.4698814578421982,
+   "margin": 0.3097704248771554,
    "parts": [
     "PWR-002",
     "PWR-003",
@@ -25661,7 +25925,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-MAIN-2-LEN",
    "title": "10 AWG jumper power-board output pads -> bus bars, per conductor incl. slack",
-   "value": 0.04957362143134221,
+   "value": 0.07359027637609863,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25721,7 +25985,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-I2C-LEN",
    "title": "I2C bus total (FC to GPS + Y-branch to airspeed)",
-   "value": 0.48722687990456004,
+   "value": 0.5114904019960389,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -25730,7 +25994,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-F3-I2C-SCAN with the routed cables; all three addresses found, no bus errors in 10 min",
-   "margin": 0.02554624019087992,
+   "margin": -0.022980803992077803,
    "parts": [
     "AVN-001",
     "AVN-002",
@@ -25740,7 +26004,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-RX-LEN",
    "title": "RX lead FC to RP3 (JST-GH 4)",
-   "value": 0.1337454884512732,
+   "value": 0.13702795570490772,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -25749,7 +26013,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure the made lead",
-   "margin": 0.10836341032484524,
+   "margin": 0.08648029530061516,
    "parts": [
     "AVN-003"
    ]
@@ -25788,7 +26052,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-DSHOT-LEN",
    "title": "Longest DShot lead FC pad to ESC",
-   "value": 0.6502016830214602,
+   "value": 0.6987977215825902,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -25797,7 +26061,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-F2-DSHOT bench: bdshot error rate < 1 %",
-   "margin": 0.07114045282648537,
+   "margin": 0.0017175405962995987,
    "parts": [
     "AVN-001"
    ]
@@ -25805,7 +26069,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-LEN",
    "title": "Longest servo lead FC pad to servo plug",
-   "value": 0.5712366952140173,
+   "value": 0.6003686061304088,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25819,7 +26083,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-V",
    "title": "Servo terminal voltage, both servos stalled",
-   "value": 5.749456430083819,
+   "value": 5.731841914667262,
    "unit": "V",
    "limit": {
     "op": ">=",
@@ -25828,7 +26092,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-F1-SERVO-STALL: measure at the servo plug with the servo stalled",
-   "margin": 0.008676566681371668,
+   "margin": 0.005586300818817884,
    "parts": [
     "MEC-001-L",
     "MEC-001-R"
@@ -25837,7 +26101,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-LINK-DROP",
    "title": "Board-link (W-PMOD) Vx + GND drop, both servos stalled",
-   "value": 0.10151669845381253,
+   "value": 0.11315414549598177,
    "unit": "V",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25851,7 +26115,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-LEAD-DROP",
    "title": "Servo lead drop (harness 22 AWG + / -, servo's own 26 AWG lead, 4 JR contacts)",
-   "value": 0.14902687146236934,
+   "value": 0.155003939836756,
    "unit": "V",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25865,7 +26129,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-OWN-LEN",
    "title": "Servo's own lead (MEC-001, shortened, 26 AWG) cut length",
-   "value": 0.03644422520134726,
+   "value": 0.04374553543617931,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25879,7 +26143,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-PMOD-LEN",
    "title": "Power-board link ribbon PDB -> FC (case S), cut length",
-   "value": 0.19808778517860756,
+   "value": 0.23156977567126877,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25893,7 +26157,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-MASS",
    "title": "Harness mass (basic, wires + fittings, routed)",
-   "value": 127.68148869057968,
+   "value": 135.21764932178212,
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -25902,7 +26166,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-F2-WEIGH: weigh each made-up lead before installation",
-   "margin": 0.01022101790248307,
+   "margin": -0.04819883195179937,
    "parts": [
     "HRN-001",
     "HRN-002-R",
@@ -25912,7 +26176,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-CG-X",
    "title": "Harness CG x",
-   "value": 0.06301678068161147,
+   "value": 0.06421819984511395,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25944,7 +26208,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-CG-BODY",
    "title": "Largest gap between a bundle's declared CG (CAD body centroid) and its wire-mass CG",
-   "value": 0.008706822334509267,
+   "value": 0.00849282820918457,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -25953,7 +26217,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "python -I redesign/fusion/check.py: no cg WARN on HRN parts; T-F2-WEIGH stations",
-   "margin": 0.12931776654907332,
+   "margin": 0.15071717908154303,
    "parts": [
     "HRN-001",
     "HRN-002-R",
