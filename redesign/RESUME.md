@@ -20,7 +20,10 @@ Next steps in order:
    (`showcase/drawing/`), animation. The GLB, viewer data and shop files are current.
 3. Before any Fusion run or print: `python -I redesign/fusion/check.py`, `python -I redesign/collision/collide.py`,
    `python -B redesign/manufacturing/make_shop_files.py`.
-4. Note: `fusion/tests` has 2 failing tests (skeleton CG range, transport also_contacts); they fail the same way on
+4. Explorer artifact (private, owner Dillon's account): https://claude.ai/artifact/XYkihMreBq6Gn7deTEwSC8 . Republish from
+   `redesign/site/app.html` with the same file list; the 3-D model loads from `data/assembly.glb.js` there (artifacts do
+   not serve .glb), from `assets/k09l.glb` everywhere else.
+5. Note: `fusion/tests` has 2 failing tests (skeleton CG range, transport also_contacts); they fail the same way on
    commit 4784faa, before this round.
 
 State on 2026-11-10: branch `redesign/v1` (PR #1 into `main`). The engineering-team design program ran through

@@ -747,11 +747,30 @@ export async function start() {
   renderCounts(); renderTree(); renderPanel();
   if (!initThree()) { loadFailed('3-D is not available', 'This browser could not start WebGL. The part list and panel still work.'); return; }
   const total = (data.glb && data.glb.bytes) || 3443204;
+  const loadGlbScript = () => new Promise((res, rej) => {
+    progress(0.5, 'loading model (embedded copy)');
+    const s = document.createElement('script');
+    s.src = 'data/assembly.glb.js?v=20261111e';
+    s.onerror = () => rej(new Error('data/assembly.glb.js not found'));
+    s.onload = () => {
+      try {
+        const bin = atob(window.VIEWER_GLB_B64 || ''), buf = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+        window.VIEWER_GLB_B64 = null;
+        new GLTFLoader().parse(buf.buffer, '', res, rej);
+      } catch (err) { rej(err); }
+    };
+    document.head.appendChild(s);
+  });
   let gltf;
   try {
     gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/k09l.glb?v=20261111d', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
-  } catch (e) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/k09l.glb'); return; }
+  } catch (e) {
+    // hosts that do not serve .glb (claude.ai artifacts) and file:// get the same bytes as base64 in a script
+    try { gltf = await loadGlbScript(); }
+    catch (e2) { loadFailed('Model could not be loaded', esc((e && e.message) || e) + '<br>assets/k09l.glb'); return; }
+  }
   progress(1, 'building scene');
   buildModel(gltf);
   try { await G.renderer.compileAsync(G.scene, G.camera); } catch (e) { /* older drivers: compile on first frame */ }
