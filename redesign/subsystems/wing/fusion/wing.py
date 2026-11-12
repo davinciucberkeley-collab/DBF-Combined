@@ -24,9 +24,9 @@ grooves, lead hole, servo pocket open below, elevon cut-out) and the spar bore a
 aft piece. The finished core is what the shop has after the slot cap is re-bonded: foam everywhere except the 22.4 mm
 bore round the spar (C2: the slot is cut from the lower surface and the strip re-bonded as the cap).
 
-Not modelled as geometry (build data in BUILD.md): the 45 deg P1 lead hole (F2, drilled with a guide block), the
-lower-surface slot cut line (closed by the cap), fillets at the half-fin roots (fins), hinge tape (mechanisms).
-The servo lead hole is modelled as a 4 mm square pass (drilled 5 mm round).
+Not modelled as geometry (build data in BUILD.md): the lower-surface slot cut line (closed by the cap), fillets at the half-fin roots (fins), hinge tape (mechanisms).
+The servo lead hole is modelled as a 4 mm square pass (drilled 5 mm round). The 45 deg P1 lead hole (F2, drilled 8 mm
+with a guide block) is a cut through the core and the tape (p1_holes).
 
 Elevon panels: Y-normal prisms of the bevelled section with D6's torque-tube groove; at each horn the panel is split
 round the 2.5 mm blade slot.
@@ -37,6 +37,7 @@ bodies after BuildAll (Modify > Combine, Join); masses are declared, not taken f
 """
 import math
 
+import fusionkit as fk
 import k09kit as k9
 
 N_SURF = 96          # surface samples per full chord (cosine spaced); cut edges are added exactly. 96 (was 48): mid-
@@ -443,6 +444,36 @@ def skin_plan(g):
     return plan
 
 
+def p1_holes(g, d=0.008, n=24):
+    """F2's P1 pass-through (harness params groove.p1_y_*_m, x between the + / - grooves): an 8 mm hole drilled at
+    45 deg outboard from the upper mouth to the lower mouth, as a straight Y-loft of the hole's elliptical sections
+    (a cylinder whose axis lies in the y-z plane), run 6 mm past each surface. Right and left. Cuts only."""
+    H = k9.local('harness')
+    gv = lambda k: k9.lval(H, 'harness.groove.' + k, 'm', None)
+    try:
+        ya, yb = gv('p1_y_upper_m'), gv('p1_y_lower_m')
+        holes = [((gv('x_pos_m') + gv('x_neg_m')) / 2, d, 'P1 lead hole'),
+                 (gv('x_sig_m') - 0.0045, 0.004, 'P1s signal hole')]  # D-85: lower-station ESC signal lead
+    except (KeyError, TypeError):
+        return []
+    out = []
+    for x, dd, nm in holes:
+        za, zb = surf(g, x, 'upper'), surf(g, x, 'lower')
+        dy, dz = yb - ya, zb - za
+        L = math.hypot(dy, dz)
+        rz = (dd / 2) * L / abs(dy)                          # section of the slanted hole by a y-plane
+        ext = 0.006 * abs(dy) / L
+        for s in (1, -1):
+            secs = []
+            for y in (ya - ext, yb + ext):
+                zc = za + dz * (y - ya) / dy
+                loop = [(x + dd / 2 * math.cos(2 * math.pi * i / n), zc + rz * math.sin(2 * math.pi * i / n))
+                        for i in range(n)]
+                secs.append((s * y, loop))
+            out.append(fk.Shape('loft', nm, axis='Y', smooth=False, sections=sorted(secs)))
+    return out
+
+
 def elevon_section(g, groove=True):
     """Panel section: upper skin TE -> hinge, 30 deg lower bevel, D6's torque-tube groove open below (where the tube
     runs), lower skin -> TE."""
@@ -540,6 +571,8 @@ def build(ctx):
                 right.append(core.prism('Y', y0, [loop] + holes, y1 - y0, name=nm))
     for s in [s for s in right if s.offset >= 0.0]:
         core._add(s.mirrored(1))
+    for cutter in p1_holes(g):                                # F2's 45 deg P1 lead hole, both sides (core and skin)
+        core.cut(cutter, note='P1 lead pass-through, 8 mm drilled with a guide block (harness BUILD step 4)')
 
     # WNG-006 block-pocket lip beads (D-68): microballoon epoxy in the stepped 45 deg chamfer along the inboard and
     # outboard pocket lips, upper and lower surface, sanded flush; the 60 mm tape doubler runs over them
@@ -577,6 +610,8 @@ def build(ctx):
 
     # WNG-003 tape skin (thin bodies; mass from arc length in wing_data.py)
     skin = ctx.part('WNG-003')
+    for cutter in p1_holes(g):                                # the tape is cut at both P1 mouths
+        skin.cut(cutter, note='tape opened over the P1 mouths')
     t = g['t_skin']
     layer = {'doubler block': 2, 'doubler servo': 1, 'LE strip': 1}          # layers under each piece
     for name, side, x0, x1, y0, y1, _n in skin_plan(g):

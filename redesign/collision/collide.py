@@ -165,6 +165,7 @@ def main():
     ap.add_argument('--transport', action='store_true', help='also check ground items (box, cradles) in place')
     ap.add_argument('--tol-mm', type=float, default=0.05, help='penetration depth reported as an error (mm)')
     ap.add_argument('--no-sweep', action='store_true')
+    ap.add_argument('--audit-wires', action='store_true', help='per-wire clash list by route segment (report.json)')
     ap.add_argument('--out', default=os.path.join(HERE, 'out'))
     a = ap.parse_args()
     blender = find_blender(a.blender)
@@ -176,9 +177,25 @@ def main():
     if bad:
         sys.exit('collide: CAD modules failed: %s' % ', '.join('%s/%s' % (r[0], r[1]) for r in bad))
     comps, skipped = jobs_for(ctx, a.transport)
+    wires = []
+    inline = {}                                       # wire edge -> parts fitted in-line on it (harness cad.*.wire)
+    hp = os.path.join(REDESIGN, 'subsystems', 'harness', 'params.json')
+    if os.path.exists(hp):
+        with open(hp, encoding='utf-8') as f:
+            cad = json.load(f).get('harness', {}).get('cad', {})
+        for tab in cad.values():
+            for pid, v in (tab.get('value') or {}).items() if isinstance(tab.get('value'), dict) else ():
+                if isinstance(v, dict) and v.get('wire'):
+                    inline.setdefault(v['wire'], []).append(pid)
+    for w in ctx.wires:                               # drawn exactly as the GLB draws them (blender_backend.wire)
+        e = graph.edges.get(w.edge, {})
+        blk = e.get('wire', {}) if isinstance(e.get('wire'), dict) else {}
+        wires.append({'id': w.edge, 'ends': [e.get('part_a'), e.get('part_b')], 'inline': inline.get(w.edge, []),
+                      'bend': blk.get('bend_radius_mm', 5 * w.dia * 1000) / 1000.0,
+                      'strands': [[[list(p) for p in line], d] for line, d in (w.strands or [(w.points, w.dia)])]})
     P = poses(ctx, comps, graph.edges) if not a.no_sweep else [('static', {}, {}, None, None)]
-    job = {'comps': comps, 'poses': [{'name': n, 'over': o, 'R': R, 'moved': m, 'skip_with': k}
-                                     for n, o, R, m, k in P], 'report_mm': min(0.01, a.tol_mm / 2)}
+    job = {'comps': comps, 'wires': wires, 'poses': [{'name': n, 'over': o, 'R': R, 'moved': m, 'skip_with': k}
+                                     for n, o, R, m, k in P], 'report_mm': min(0.01, a.tol_mm / 2), 'audit': a.audit_wires}
     jp = os.path.join(a.out, '_job.json')
     with open(jp, 'w', encoding='utf-8') as f:
         json.dump(job, f)

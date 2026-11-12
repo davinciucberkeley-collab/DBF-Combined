@@ -2,7 +2,7 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "aircraft",
- "generated": "2026-11-12 00:23 UTC",
+ "generated": "2026-11-12 02:19 UTC",
  "sources": {
   "glb": "redesign/blender/out/aircraft/glb",
   "interfaces": "redesign/interfaces/interfaces.json",
@@ -24,8 +24,8 @@ window.VIEWER_DATA = {
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 9102264,
-  "sha256": "a6bd33f57d1ee4ff0a30aa40791e8d89cfe845c3c0ad0a44fca28e812a1c9e04"
+  "bytes": 9288984,
+  "sha256": "f865d364f52ffed0ba40956f3ef550f73fb3c2a049dcf2f8521db3ee4afb1c1c"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -294,15 +294,15 @@ window.VIEWER_DATA = {
    "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0365,
-    -0.3214,
-    -0.1814
+    0.0359,
+    -0.3207,
+    -0.1811
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4,
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
@@ -312,15 +312,15 @@ window.VIEWER_DATA = {
    "name": "Motor mount LR, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0365,
-    0.3214,
-    -0.1814
+    0.0359,
+    0.3207,
+    -0.1811
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4,
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
@@ -330,15 +330,15 @@ window.VIEWER_DATA = {
    "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0365,
-    -0.3214,
-    0.1814
+    0.0359,
+    -0.3207,
+    0.1811
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4,
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
@@ -348,15 +348,15 @@ window.VIEWER_DATA = {
    "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0365,
-    0.3214,
-    0.1814
+    0.0359,
+    0.3207,
+    0.1811
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4,
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
@@ -502,15 +502,15 @@ window.VIEWER_DATA = {
    "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.52,
+   "mass_g": 10.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0641,
+    0.0642,
     -0.3165,
     -0.1568
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.63 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -519,15 +519,15 @@ window.VIEWER_DATA = {
    "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.52,
+   "mass_g": 10.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0641,
+    0.0642,
     0.3165,
     -0.1568
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.63 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -536,15 +536,15 @@ window.VIEWER_DATA = {
    "name": "Station collar UL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.52,
+   "mass_g": 10.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0641,
+    0.0642,
     -0.3165,
     0.1568
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.63 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -553,15 +553,15 @@ window.VIEWER_DATA = {
    "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.52,
+   "mass_g": 10.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0641,
+    0.0642,
     0.3165,
     0.1568
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.63 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -1612,17 +1612,17 @@ window.VIEWER_DATA = {
    "name": "Pod harness bundle (lumped: pod runs of every lead, GPS cable, JR row, GH plugs)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 39.1,
+   "mass_g": 40.1,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0444,
-    -0.0013,
-    0.0303
+    0.0436,
+    -0.0004,
+    0.0306
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0378, -0.0048, 0.0347] m, 8.7 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0372, -0.0039, 0.0351] m, 8.5 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "vendor": "subsystems/harness/WIRE-LIST.csv",
    "unit_cost_usd": 0.0,
@@ -1636,17 +1636,17 @@ window.VIEWER_DATA = {
    "name": "Wing-fin harness bundle L (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 39.0,
+   "mass_g": 42.3,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0766,
-    -0.2548,
-    0.0057
+    0.0779,
+    -0.2604,
+    0.0051
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0768, -0.2555, 0.006] m, 0.8 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0782, -0.261, 0.0055] m, 0.8 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1655,17 +1655,17 @@ window.VIEWER_DATA = {
    "name": "Wing-fin harness bundle R (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 39.6,
+   "mass_g": 42.8,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0766,
-    0.2548,
-    0.0057
+    0.0779,
+    0.2604,
+    0.0051
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0766, 0.2535, 0.0063] m, 1.4 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.078, 0.2594, 0.0057] m, 1.1 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1787,7 +1787,7 @@ window.VIEWER_DATA = {
    ],
    "make_or_buy": "buy",
    "carried": true,
-   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.036 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06",
+   "notes": "D-74 / WB-03: XT30U-F on the bus pigtail (0.035 m of route from the bars), XT30U-M on the ESC lead; body 20.1 x 10.2 x 5.2 mm (Amass manual drawing 20.1 x 10.2; thickness 5.2 from the listing, UNVERIFIED), axis (x, y) [1.0, 0.0]; tied in its station (tunnel under the AS150U cradle); team/I1/BOM.csv#H06",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1918,15 +1918,15 @@ window.VIEWER_DATA = {
    "name": "Control horn, inboard panel (clevis + rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.13,
+   "mass_g": 3.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2653,
-    -0.2858,
-    -0.0061
+    0.265,
+    -0.2857,
+    -0.0059
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.47 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "notes": "mass EST (2.54 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -1935,15 +1935,15 @@ window.VIEWER_DATA = {
    "name": "Control horn, inboard panel (clevis + rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.13,
+   "mass_g": 3.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2653,
-    0.2858,
-    -0.0061
+    0.265,
+    0.2857,
+    -0.0059
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.47 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "notes": "mass EST (2.54 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -1986,15 +1986,15 @@ window.VIEWER_DATA = {
    "name": "Link horn, outboard panel (rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.73,
+   "mass_g": 2.95,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2664,
-    -0.3541,
-    -0.0044
+    0.2661,
+    -0.3542,
+    -0.0047
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.12 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "notes": "mass EST (2.32 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -2003,15 +2003,15 @@ window.VIEWER_DATA = {
    "name": "Link horn, outboard panel (rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.73,
+   "mass_g": 2.95,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2664,
-    0.3541,
-    -0.0044
+    0.2661,
+    0.3542,
+    -0.0047
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.12 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "notes": "mass EST (2.32 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -2158,15 +2158,15 @@ window.VIEWER_DATA = {
    "name": "Elevon hinge tape, two strips left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.56,
+   "mass_g": 0.57,
    "material": "packing tape BOPP",
    "cg_xyz_m": [
     0.2496,
     -0.3146,
-    0.0057
+    0.0058
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (112 cm2 tape); CG = CAD centroid",
+   "notes": "mass EST (113 cm2 tape); CG = CAD centroid",
    "carried": true,
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
@@ -2176,15 +2176,15 @@ window.VIEWER_DATA = {
    "name": "Elevon hinge tape, two strips right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.56,
+   "mass_g": 0.57,
    "material": "packing tape BOPP",
    "cg_xyz_m": [
     0.2496,
     0.3146,
-    0.0057
+    0.0058
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (112 cm2 tape); CG = CAD centroid",
+   "notes": "mass EST (113 cm2 tape); CG = CAD centroid",
    "carried": true,
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
@@ -2398,15 +2398,15 @@ window.VIEWER_DATA = {
    "name": "Carry handle on the spar with the foot bridge, aft-stop strut and wall brackets (printed PETG) + 'LIFT HERE - do not lift by the motors' label",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 38.6,
+   "mass_g": 39.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0773,
-    -0.0006,
-    0.0575
+    0.0774,
+    -0.0025,
+    0.058
    ],
    "make_or_buy": "make",
-   "notes": "feet saddle the spar top in the open slot, one 7.6 mm nylon tie each round foot + spar; bridge between the feet (x 0.077-0.090) on the slot fill; R6 (D-69): aft-stop strut (40 x 14 x 1.5 mm pad on the stop back face, three 3 x 14 mm ribs 25 mm long to the bridge, CR-C3-14) and one wall bracket per side (2 mm web from the foot to a 1.2 mm flange epoxied to the side wall over 1 232 mm2, CR-C3-16); legs through the aft deck; GPS cable in the right leg (window at z 0.055-0.065) and a groove under the grip (CR-F2-03); mass EST from CAD (team/D2/pod_data.py): PETG block 11.3 g, PETG plate 21.8 g, glue_handle 1.0 g, label 0.5 g, tie_each 4.0 g",
+   "notes": "feet saddle the spar top in the open slot, one 7.6 mm nylon tie each round foot + spar; bridge between the feet (x 0.077-0.090) on the slot fill; R6 (D-69): aft-stop strut (40 x 14 x 1.5 mm pad on the stop back face, three 3 x 14 mm ribs 25 mm long to the bridge, CR-C3-14) and one wall bracket per side (2 mm web from the foot to a 1.2 mm flange epoxied to the side wall over 1 232 mm2, CR-C3-16); legs through the aft deck; GPS cable in the right leg (window at z 0.055-0.065) and a groove under the grip (CR-F2-03); mass EST from CAD (team/D2/pod_data.py): PETG block 11.2 g, PETG plate 23.1 g, glue_handle 1.0 g, label 0.5 g, tie_each 4.0 g",
    "in_model": true,
    "vendor": "subsystems/pod/fusion/pod.py",
    "unit_cost_usd": 2.3,
@@ -3743,10 +3743,10 @@ window.VIEWER_DATA = {
    "name": "Wing core, one piece (XPS), with all cuts",
    "subsystem": "wing",
    "status": "MODELLED",
-   "mass_g": 201.8,
+   "mass_g": 202.0,
    "material": "XPS foam F-250",
    "cg_xyz_m": [
-    0.1188,
+    0.1187,
     0.0,
     0.0053
    ],
@@ -3790,9 +3790,9 @@ window.VIEWER_DATA = {
    "mass_g": 47.9,
    "material": "packing tape (BOPP), 48 mm",
    "cg_xyz_m": [
-    0.1332,
+    0.1329,
     0.0,
-    0.0042
+    0.0041
    ],
    "make_or_buy": "make",
    "notes": "1 layer each side; one 100 mm LE strip laid last (edges x 0.045 upper / 0.047 lower, aft of x/c 0.10); none under the pod (x 0-0.095, |y| <= 0.07) or the half-fin roots; 60 mm doublers over the block pockets (wrapped round the LE, continuous over the lip beads) and the servo pockets; 24 mm strip folded round each fin-root tab edge; 2nd layer folded round each tip",
@@ -3916,7 +3916,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0633,
     0.0,
-    0.0167
+    0.0166
    ],
    "make_or_buy": "make",
    "notes": "floor-to-step corner at x 0.065, legs 5 mm floor x 5 mm step, |y| <= 0.070 (D-69, CR-C3-17); pod floor bevelled onto it",
@@ -4004,7 +4004,7 @@ window.VIEWER_DATA = {
    "mass_g": 0.5,
    "material": "vinyl label (printed)",
    "cg_xyz_m": [
-    0.165,
+    0.1651,
     0.39,
     0.0174
    ],
@@ -6512,7 +6512,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-002",
    "via": "CT-AS150U",
    "owner": "harness",
-   "notes": "Pack + / - (pack's own 10 AWG lead). Wire list rows W-PACK; routed cut length 0.080 m",
+   "notes": "Pack + / - (pack's own 10 AWG lead). Wire list rows W-PACK; routed cut length 0.103 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "pack terminal (factory) -> AS150U pack half",
@@ -6524,7 +6524,7 @@ window.VIEWER_DATA = {
     "strain_relief": "AS150U body held in the 60 mm park; lead heat-shrink at the plug",
     "disconnect": true,
     "slack_mm": 0,
-    "length_m": 0.08,
+    "length_m": 0.103,
     "wires": [
      "W-PACK"
     ]
@@ -6571,7 +6571,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-004",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-2; routed cut length 0.050 m",
+   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-2; routed cut length 0.074 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "power board output pads (aft edge) -> bus bars, aft end (solder)",
@@ -6584,7 +6584,7 @@ window.VIEWER_DATA = {
     "strain_relief": "heat-shrink; jumpers formed before soldering",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.05,
+    "length_m": 0.074,
     "wires": [
      "W-MAIN-2"
     ]
@@ -6601,7 +6601,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UR",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC UR power + / -. Wire list rows W-PWR-UR; routed cut length 0.594 m",
+   "notes": "ESC UR power + / -. Wire list rows W-PWR-UR; routed cut length 0.636 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC UR power pads (solder) + 680 uF cap",
@@ -6619,7 +6619,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.594,
+    "length_m": 0.636,
     "wires": [
      "W-PWR-UR"
     ]
@@ -6636,7 +6636,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UL",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC UL power + / -. Wire list rows W-PWR-UL; routed cut length 0.470 m",
+   "notes": "ESC UL power + / -. Wire list rows W-PWR-UL; routed cut length 0.512 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC UL power pads (solder) + 680 uF cap",
@@ -6654,7 +6654,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.47,
+    "length_m": 0.512,
     "wires": [
      "W-PWR-UL"
     ]
@@ -6671,7 +6671,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LR",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC LR power + / -. Wire list rows W-PWR-LR; routed cut length 0.619 m",
+   "notes": "ESC LR power + / -. Wire list rows W-PWR-LR; routed cut length 0.676 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC LR power pads (solder) + 680 uF cap",
@@ -6689,7 +6689,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.619,
+    "length_m": 0.676,
     "wires": [
      "W-PWR-LR"
     ]
@@ -6706,7 +6706,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LL",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC LL power + / -. Wire list rows W-PWR-LL; routed cut length 0.493 m",
+   "notes": "ESC LL power + / -. Wire list rows W-PWR-LL; routed cut length 0.549 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC LL power pads (solder) + 680 uF cap",
@@ -6724,7 +6724,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.493,
+    "length_m": 0.549,
     "wires": [
      "W-PWR-LL"
     ]
@@ -6873,7 +6873,7 @@ window.VIEWER_DATA = {
    "part_b": "AVN-001",
    "via": "CT-PIN-HEADER-LINK",
    "owner": "harness",
-   "notes": "Power-board link, case S (D-74): BATT_VOLT, BATT_CURR, FC-BEC 5 V x1, servo-BEC Vx 6 V x4, GND x3 (10 of the board-to-board contacts, flat 28 AWG ribbon folded in two). Wire list rows W-PMOD; routed cut length 0.198 m",
+   "notes": "Power-board link, case S (D-74): BATT_VOLT, BATT_CURR, FC-BEC 5 V x1, servo-BEC Vx 6 V x4, GND x3 (10 of the board-to-board contacts, flat 28 AWG ribbon folded in two). Wire list rows W-PMOD; routed cut length 0.232 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "male pin header (pitch per power BOARD-CHECK.md step 4) in the PDB board-to-board socket -> male pin header in the FC board-to-board socket",
@@ -6889,7 +6889,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie within 20 mm of each header; header held by the board's own socket + a dab of hot glue",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.198,
+    "length_m": 0.232,
     "wires": [
      "W-PMOD"
     ]
@@ -6912,7 +6912,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UR",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor UR (twisted, no power). Wire list rows W-SIG-UR-P, W-SIG-UR; routed cut length 0.511 m",
+   "notes": "DShot300 bidirectional + GND, motor UR (twisted, no power). Wire list rows W-SIG-UR-P, W-SIG-UR; routed cut length 0.524 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC UR factory signal lead (solder splice)",
@@ -6929,7 +6929,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.511,
+    "length_m": 0.524,
     "wires": [
      "W-SIG-UR-P",
      "W-SIG-UR"
@@ -6949,7 +6949,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UL",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor UL (twisted, no power). Wire list rows W-SIG-UL-P, W-SIG-UL; routed cut length 0.629 m",
+   "notes": "DShot300 bidirectional + GND, motor UL (twisted, no power). Wire list rows W-SIG-UL-P, W-SIG-UL; routed cut length 0.643 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC UL factory signal lead (solder splice)",
@@ -6966,7 +6966,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.629,
+    "length_m": 0.643,
     "wires": [
      "W-SIG-UL-P",
      "W-SIG-UL"
@@ -6986,7 +6986,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LR",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor LR (twisted, no power). Wire list rows W-SIG-LR-P, W-SIG-LR; routed cut length 0.540 m",
+   "notes": "DShot300 bidirectional + GND, motor LR (twisted, no power). Wire list rows W-SIG-LR-P, W-SIG-LR; routed cut length 0.562 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC LR factory signal lead (solder splice)",
@@ -7003,7 +7003,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.54,
+    "length_m": 0.562,
     "wires": [
      "W-SIG-LR-P",
      "W-SIG-LR"
@@ -7023,7 +7023,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LL",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor LL (twisted, no power). Wire list rows W-SIG-LL-P, W-SIG-LL; routed cut length 0.650 m",
+   "notes": "DShot300 bidirectional + GND, motor LL (twisted, no power). Wire list rows W-SIG-LL-P, W-SIG-LL; routed cut length 0.699 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC LL factory signal lead (solder splice)",
@@ -7040,7 +7040,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.65,
+    "length_m": 0.699,
     "wires": [
      "W-SIG-LL-P",
      "W-SIG-LL"
@@ -7060,7 +7060,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-L",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "Elevon L PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-L-P, W-SRV-L, W-SRV-L-S; routed cut length 0.571 m",
+   "notes": "Elevon L PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-L-P, W-SRV-L, W-SRV-L-S; routed cut length 0.600 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "FC output pad + rail (solder) -> servo case (factory)",
@@ -7076,7 +7076,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.571,
+    "length_m": 0.6,
     "wires": [
      "W-SRV-L-P",
      "W-SRV-L",
@@ -7096,7 +7096,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-R",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "Elevon R PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-R-P, W-SRV-R, W-SRV-R-S; routed cut length 0.519 m",
+   "notes": "Elevon R PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-R-P, W-SRV-R, W-SRV-R-S; routed cut length 0.553 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "FC output pad + rail (solder) -> servo case (factory)",
@@ -7112,7 +7112,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.519,
+    "length_m": 0.553,
     "wires": [
      "W-SRV-R-P",
      "W-SRV-R",
@@ -7132,7 +7132,7 @@ window.VIEWER_DATA = {
    "part_b": "AVN-002",
    "via": "CT-JST-GH-6",
    "owner": "harness",
-   "notes": "GPS UART (SERIAL5 TX/RX) + I2C SDA/SCL + 5 V + GND. Wire list rows W-GPS; routed cut length 0.311 m",
+   "notes": "GPS UART (SERIAL5 TX/RX) + I2C SDA/SCL + 5 V + GND. Wire list rows W-GPS; routed cut length 0.335 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "JST-GH 6 (pre-crimped contacts, housing fitted after threading the leg) -> JST-GH 6 at the GPS",
@@ -7147,7 +7147,7 @@ window.VIEWER_DATA = {
     "strain_relief": "30 mm service loop at the mast base; ties",
     "disconnect": false,
     "slack_mm": 40,
-    "length_m": 0.311,
+    "length_m": 0.335,
     "wires": [
      "W-GPS"
     ]
@@ -7165,7 +7165,7 @@ window.VIEWER_DATA = {
    "part_b": "AVN-003",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "CRSF: 5 V, GND, FC TX -> RX RX, FC RX <- RX TX. Wire list rows W-RX; routed cut length 0.134 m",
+   "notes": "CRSF: 5 V, GND, FC TX -> RX RX, FC RX <- RX TX. Wire list rows W-RX; routed cut length 0.137 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "JST-GH 4 at the FC (SERIAL6) -> JST-GH 4 / solder pads at the RP3",
@@ -7178,7 +7178,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the RX",
     "disconnect": false,
     "slack_mm": 10,
-    "length_m": 0.134,
+    "length_m": 0.137,
     "wires": [
      "W-RX"
     ]
@@ -9983,10 +9983,10 @@ window.VIEWER_DATA = {
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
    "owner": "wing",
-   "notes": "microballoon-epoxy fillet in the re-entrant floor-to-step corner of the pod recess (x 0.065, z 0.015), legs 5.0 mm floor x 5.0 mm step, |y| <= 0.070; laid with a 45 deg spatula, cured 24 h, sanded to a flat 45 deg face before the pod goes in (D-69, CR-C3-17)",
+   "notes": "microballoon-epoxy fillet in the re-entrant floor-to-step corner of the pod recess (x 0.065, z 0.015), legs 5.0 mm floor x 4.8 mm step, |y| <= 0.070; laid with a 45 deg spatula, cured 24 h, sanded to a flat 45 deg face before the pod goes in (D-69, CR-C3-17)",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons 1:1 by volume (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 1400,
+    "area_mm2": 1372,
     "prep": "recess sanded, foam dust off",
     "cure": "24 h at >= 18 degC before load or tape",
     "load_n": "pod crash peel at the step corner, -z / -x 12.75 g: R 4.5 / 2.2 as drawn (singular in linear FEA, CL-C3-FEA-BOND-R-CRASH); the fillet and T-C3-POD-PROOF decide",
@@ -10001,10 +10001,10 @@ window.VIEWER_DATA = {
    "part_b": "POD-001",
    "via": "CT-EPOXY",
    "owner": "wing",
-   "notes": "pod floor board (POD-001 fb floor) aft lower edge bevelled 5.0 x 5.0 mm 45 deg and bonded on the fillet face in the pod bond (E-POD-01); keeps the floor end bonded across the step as C3 asks",
+   "notes": "pod floor board (POD-001 fb floor) aft lower edge bevelled 5.0 x 4.8 mm 45 deg and bonded on the fillet face in the pod bond (E-POD-01); keeps the floor end bonded across the step as C3 asks",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons 1:1 by volume (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 990,
+    "area_mm2": 970,
     "prep": "fillet face sanded 120 grit; board bevel cut with a 45 deg sanding block",
     "cure": "24 h at >= 18 degC before load or tape",
     "load_n": "as E-WNG-16",
@@ -27647,22 +27647,6 @@ window.VIEWER_DATA = {
   ]
  },
  "warnings": [
-  "WNG-001 mass: model 202.0 g, interfaces 201.8 g",
-  "FIN-003-UR mass: model 9.99 g, interfaces 10.54 g",
-  "FIN-008-UR mass: model 10.5 g, interfaces 10.52 g",
-  "FIN-008-LR mass: model 10.5 g, interfaces 10.52 g",
-  "FIN-008-UL mass: model 10.5 g, interfaces 10.52 g",
-  "FIN-008-LL mass: model 10.5 g, interfaces 10.52 g",
-  "FIN-003-UL mass: model 9.99 g, interfaces 10.54 g",
-  "FIN-003-LR mass: model 9.99 g, interfaces 10.54 g",
-  "FIN-003-LL mass: model 9.99 g, interfaces 10.54 g",
-  "POD-007 mass: model 39.8 g, interfaces 38.6 g",
-  "MEC-004-R mass: model 3.2 g, interfaces 3.13 g",
-  "MEC-006-R mass: model 2.95 g, interfaces 2.73 g",
-  "MEC-010-R mass: model 0.0 g, interfaces 0.56 g",
-  "MEC-004-L mass: model 3.2 g, interfaces 3.13 g",
-  "MEC-006-L mass: model 2.95 g, interfaces 2.73 g",
-  "MEC-010-L mass: model 0.0 g, interfaces 0.56 g",
   "FIN-001 is in redesign/subsystems/fins/parts.csv row 2 but not in interfaces.json",
   "FIN-002 is in redesign/subsystems/fins/parts.csv row 3 but not in interfaces.json",
   "FIN-003 is in redesign/subsystems/fins/parts.csv row 4 but not in interfaces.json",

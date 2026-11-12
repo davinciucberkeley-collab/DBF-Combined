@@ -10,6 +10,7 @@ inside the other. Cuts (fusionkit Component.cut / Context.seat) are honoured wit
 own cutters are removed material. No mesh boolean is needed, so no boolean failure can hide an overlap.
 """
 import json
+import math
 import os
 import sys
 
@@ -115,9 +116,130 @@ def penetration(a, b, pairs):
         for i in ids:
             for p in tri_samples(src.tris[i]):
                 d = depth_inside(p, dst)
-                if d > deep and not removed(p, src) and not removed(p, dst):
+                if d > deep and not removed(p, src) and not removed(p, dst) and not at_terminal(p, a, b):
                     deep, at = d, p
     return deep, at
+
+
+MEMBRANE = ('WNG-003',)                        # the packing-tape skin conforms over wires laid on or in the foam
+#                                                (taped over after routing); a rigid CAD shell cannot show the bulge,
+#                                                so wire-vs-tape contact is not penetration. Wires may not enter the foam.
+JOINT_MM = 10.0                                # wires sharing a terminal part: one bench joint, the conductors bundled
+#                                                in its heat-shrink sleeve for this length before they fan out
+WIRE_END_MM = 6.0                              # a wire may sit in its terminal part this close to its end: the solder
+#                                                pad or cup plus its adhesive heat-shrink tail (ESC leads leave the
+#                                                heat-shrunk ESC body from inside it)
+
+
+def make_wires(wires, col):
+    """Every routed wire strand as the GLB draws it (blender_backend.wire: filleted polyline at the declared bend
+    radius, round section at the strand diameter), as Bodies whose part id is the wire's edge id."""
+    import blender_backend as bbk
+    out = []
+    for w in wires:
+        ends = []
+        for k, (line, dia) in enumerate(w['strands']):
+            pts = bbk.fillet_polyline([tuple(p) for p in line], w['bend'])
+            cu = bpy.data.curves.new('%s s%d' % (w['id'], k), 'CURVE')
+            cu.dimensions, cu.bevel_depth, cu.bevel_resolution, cu.use_fill_caps = '3D', 1.0, 3, True
+            sp = cu.splines.new('POLY')
+            sp.points.add(len(pts) - 1)
+            for p, q in zip(sp.points, pts):
+                p.co = (q.x, q.y, q.z, 1.0)
+                p.radius = dia / 2
+            tmp = bpy.data.objects.new(cu.name, cu)
+            bpy.context.scene.collection.objects.link(tmp)
+            dg = bpy.context.evaluated_depsgraph_get()
+            me = bpy.data.meshes.new_from_object(tmp.evaluated_get(dg))
+            bpy.data.objects.remove(tmp)
+            bpy.data.curves.remove(cu)
+            bm = bmesh.new()
+            bm.from_mesh(me)
+            bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-7)
+            bm.transform(Matrix.Scale(1000.0, 4))
+            bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+            bm.to_mesh(me)
+            bm.free()
+            ob = bpy.data.objects.new(me.name, me)
+            col.objects.link(ob)
+            b = Body(w['id'], k, 'wire strand %d (%.1f mm)' % (k, dia * 1000), ob)
+            b.cutters, b.wire = [], True
+            b.ends = [Vector(line[0]) * 1000.0, Vector(line[-1]) * 1000.0]
+            b.terms = {t for t in w['ends'] if t}
+            b.inline = set(w.get('inline', []))
+            out.append(b)
+    return out
+
+
+def audit_wires(wires_job, wire_bodies, solids, others_wires):
+    """Per wire strand: walk the drawn centreline (filleted, as the GLB) in 1 mm steps, test 8 points round the
+    circumference against every solid and every other wire, and report each clash as a range of the ROUTE's waypoint
+    segments (team/F2 wire_table indices) with the part, the deepest point and its depth. Terminal joints exempt."""
+    import blender_backend as bbk
+    out = {}
+    allb = solids + others_wires
+    for w in wires_job:
+        for k, (line, dia) in enumerate(w['strands']):
+            body = next(b for b in wire_bodies if b.pid == w['id'] and b.idx == k)
+            P = [Vector(p) * 1000.0 for p in line]
+            F = [Vector(q) * 1000.0 for q in bbk.fillet_polyline([tuple(p) for p in line], w['bend'])]
+            r = dia * 1000.0 / 2
+            cand = [b for b in allb if b.pid != w['id'] and boxes_overlap(body, b)]
+            hits = []
+            for i in range(len(F) - 1):
+                a_, b_ = F[i], F[i + 1]
+                L = (b_ - a_).length
+                if L < 1e-6:
+                    continue
+                t = (b_ - a_) / L
+                u = t.orthogonal().normalized()
+                v = t.cross(u)
+                n = max(1, int(L))
+                for j in range(n + 1):
+                    c = a_ + t * (L * j / n)
+                    for q in range(8):
+                        ang = q * math.pi / 4
+                        p = c + (u * math.cos(ang) + v * math.sin(ang)) * r
+                        for o in cand:
+                            if not all(o.lo[m] <= p[m] <= o.hi[m] for m in range(3)):
+                                continue
+                            d = depth_inside(p, o)
+                            if d > 0.05 and not removed(p, o) and o.pid not in w.get('inline', []) and                                     ('%s:%s' % (o.pid, o.name)) not in w.get('inline', []) and                                     o.pid not in MEMBRANE and not (getattr(o, 'wire', False) and set(w['ends']) & o.terms
+                                        and min((c - e).length for e in [P[0], P[-1]] + o.ends) <= JOINT_MM) and not (
+                                    o.pid in w['ends'] and min((c - P[0]).length, (c - P[-1]).length) <= WIRE_END_MM):
+                                seg = min(range(len(P) - 1), key=lambda s_: _seg_d(c, P[s_], P[s_ + 1]))
+                                hits.append((seg, o.pid, o.name, d, [round(x, 1) for x in c]))
+            # merge consecutive hits per (segment, part)
+            agg = {}
+            for seg, pid, nm, d, c in hits:
+                key = (seg, pid)
+                if key not in agg or d > agg[key][2]:
+                    agg[key] = (nm, c, round(d, 2))
+            out.setdefault(w['id'], []).extend([{'strand': k, 'seg': key[0], 'part': key[1], 'body': v[0], 'at': v[1],
+                                                 'depth': v[2]} for key, v in sorted(agg.items())])
+    return out
+
+
+def _seg_d(p, a, b):
+    ab = b - a
+    L2 = ab.length_squared
+    t = 0.0 if L2 < 1e-12 else max(0.0, min(1.0, (p - a).dot(ab) / L2))
+    return (a + ab * t - p).length
+
+
+def at_terminal(p, a, b):
+    """p is where a wire enters one of its own terminal parts (within WIRE_END_MM of the wire's end), or lies in a
+    connector fitted in-line on that wire (an XT30U pair: its pins carry the circuit through the housing)."""
+    for w, o in ((a, b), (b, a)):
+        if not getattr(w, 'wire', False):
+            continue
+        if o.pid in w.inline or ('%s:%s' % (o.pid, o.name)) in w.inline or o.pid in MEMBRANE:
+            return True
+        if o.pid in w.terms and any((p - e).length <= WIRE_END_MM for e in w.ends):
+            return True
+        if getattr(o, 'wire', False) and (w.terms & o.terms) and                 any((p - e).length <= JOINT_MM for e in w.ends + o.ends):
+            return True                               # wires sharing a terminal part meet in one solder joint
+    return False
 
 
 def make_bodies(comp, matrix, col, tag='', R=None):
@@ -198,8 +320,10 @@ def main():
     static = []
     for c in job['comps']:
         static += make_bodies(c, c['matrix'], col)
-    print('collide: %d bodies in %d parts' % (len(static), len(comps)))
-    rep = {'bodies': len(static), 'parts': len(comps), 'poses': [], 'defects': sorted(set(bm_.DEFECTS))}
+    wires = make_wires(job.get('wires', []), col)
+    static += wires
+    print('collide: %d bodies in %d parts, %d wire strands' % (len(static), len(comps), len(wires)))
+    rep = {'bodies': len(static), 'parts': len(comps), 'wire_strands': len(wires), 'poses': [], 'defects': sorted(set(bm_.DEFECTS))}
     for pz in job['poses']:
         rmm = job['report_mm']
         if not pz['over']:
@@ -217,6 +341,9 @@ def main():
         rep['poses'].append({'name': pz['name'], 'moved': pz.get('moved'), 'not_swept_against': pz.get('skip_with'),
                              'hits': hits})
         print('collide: %-50s %d overlapping part pairs' % (pz['name'][:50], len(hits)))
+    if job.get('audit'):
+        solids = [b for b in static if not getattr(b, 'wire', False)]
+        rep['wire_audit'] = audit_wires(job.get('wires', []), wires, solids, wires)
     with open(argv[1], 'w', encoding='utf-8') as f:
         json.dump(rep, f, indent=1)
 

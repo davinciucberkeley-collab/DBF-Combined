@@ -137,9 +137,7 @@ def build(ctx):
     # PWR-001 flight pack + its leads + AS150U pack half
     pk = ctx.part('PWR-001')
     pk.box(*G['pack'], name='LiPo 4S 6500 envelope')
-    pk.box(*G['lead_a'], name='pack leads 10 AWG over the aft stop')
-    pk.box(*G['lead_b'], name='pack leads 10 AWG over the aft stop to the park end')
-    pk.box(*G['lead_c'], name='pack leads 10 AWG into the park')
+    # the pack's own 10 AWG leads are drawn as the routed wire E-HRN-10 (team/F2, D-85); their mass stays in the pack
     pk.box(*G['as_pack'], name='AS150U pack half')
 
     # PWR-006 power frame (printed PETG)
@@ -152,6 +150,9 @@ def build(ctx):
     fr.prism('Z', dz0, deck, dz1 - dz0, name='petg deck with wire window')
     fr.box(*G['cradle_floor'], name='petg cradle floor')
     fr.box(*G['front_wall'], name='petg cradle front wall (cup slots)')
+    (fx0, fy0, fz0), (fx1, fy1, fz1) = G['front_wall']
+    fr.cut_box((fx0 - 0.0005, -0.044, fz0 + 0.0015), (fx1 + 0.0005, -0.036, fz1 + 0.0005), name='cup slot')   # D-85:
+    #   the AS150U solder cups and the 10 AWG main jumper (E-HRN-11) pass the wall here; the slot was named, not cut
     for i, b in enumerate(G['side_walls']):
         fr.box(*b, name='petg cradle side wall %d' % i)
     for i, b in enumerate(G['legs']):

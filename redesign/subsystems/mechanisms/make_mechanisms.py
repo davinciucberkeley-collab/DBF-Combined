@@ -19,6 +19,7 @@ Mass rules (UNVERIFIED until weighed, T-D6-WEIGH):
   CF tube  CAD volume x 1.55 g/cm3 + groove fill per metre
   tape     strip area x areal mass
 """
+import math
 import csv
 import importlib.util
 import json
@@ -128,8 +129,13 @@ def masses(ctx, mod, LP):
             ln = c.bbox()[1][1] - c.bbox()[0][1]
             m, basis = cm3 * cf + l('tube.fill_g_per_m', 'g/m') * ln, '%.2f cm3 CF + groove fill' % cm3
         elif rule == 'tape':
-            area = sum(abs((b.points()[1][0] - b.points()[0][0]) * (b.points()[2][1] - b.points()[0][1]))
-                       for b in c.shapes)
+            # strip on the skin (a Y-prism of a thin band, D-84 c): developed width along the surface x span
+            area = 0.0
+            for b in c.shapes:
+                half = len(b.loops[0]) // 2
+                inner = b.loops[0][:half]
+                width = sum(math.dist(inner[i], inner[i + 1]) for i in range(len(inner) - 1))
+                area += width * abs(b.depth)
             m, basis = area * l('tape.areal_kgm2', 'kg/m2') * 1000, '%.0f cm2 tape' % (area * 1e4)
         out[pid] = (round(m, 2), [round(v, 4) for v in cg], basis)
     return out

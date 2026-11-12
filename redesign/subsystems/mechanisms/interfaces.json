@@ -312,7 +312,7 @@
    "name": "Elevon hinge tape, two strips right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.0,
+   "mass_g": 0.57,
    "material": "packing tape BOPP",
    "cg_xyz_m": [
     0.2496,
@@ -320,7 +320,7 @@
     0.0058
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0 cm2 tape); CG = CAD centroid",
+   "notes": "mass EST (113 cm2 tape); CG = CAD centroid",
    "carried": true
   },
   {
@@ -328,7 +328,7 @@
    "name": "Elevon hinge tape, two strips left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.0,
+   "mass_g": 0.57,
    "material": "packing tape BOPP",
    "cg_xyz_m": [
     0.2496,
@@ -336,7 +336,7 @@
     0.0058
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0 cm2 tape); CG = CAD centroid",
+   "notes": "mass EST (113 cm2 tape); CG = CAD centroid",
    "carried": true
   },
   {

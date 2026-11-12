@@ -22,7 +22,8 @@ complete on paper, nothing bought, built or flown yet.*
   document. Close the console window to stop it.
 - **On GitHub, no install:** read [redesign/SHOWCASE.md](redesign/SHOWCASE.md) for the renders, the flight animation,
   STL models that rotate in the browser, the morphological chart, the decision and the simulation figures.
-- **Building it:** [redesign/BUILD-GUIDE.md](redesign/BUILD-GUIDE.md) is the short, ordered build guide. Read
+- **Building it:** [redesign/BUILD-GUIDE.md](redesign/BUILD-GUIDE.md) is the short, ordered build guide, with an animated clip per
+  stage ([whole build](redesign/showcase/animation/build/k09l-build.mp4)). Read
   [redesign/review/BUILDABILITY-REVIEW.md](redesign/review/BUILDABILITY-REVIEW.md) first: 6 blockers and 30 major
   build problems found by a buildability review, to fix before more CFD/FEA or any cutting.
 
@@ -47,7 +48,7 @@ Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simu
 | Transport | one-piece box 1.25 × 0.55 × 0.54 m; field set-up about 5 min, one person | proposed | [`redesign/README.md`](redesign/README.md) |
 | Requirements | 59 total: 0 verified, 1 checked, 1 proposed, 57 unverified; 11 show a fail (most are stale claims) | | [`redesign/STATUS.md`](redesign/STATUS.md) |
 | Proof graph | 4,244 nodes, 13,815 links; clean build (0 drift, 0 errors); 87 claims fail on margin (2026-11-11) | | [`redesign/PROOFS.md`](redesign/PROOFS.md) |
-| Collision (no parts phasing) | 948 bodies in 185 parts: 0 penetrations > 0.05 mm, static and at both elevon limits | modelled | [`redesign/collision/README.md`](redesign/collision/README.md) |
+| Collision (no parts phasing) | 990 bodies in 185 parts plus every routed wire: 0 penetrations > 0.05 mm, static and at both elevon limits | modelled | [`redesign/collision/README.md`](redesign/collision/README.md) |
 
 ## Where things are
 
@@ -62,7 +63,7 @@ Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simu
 | [`redesign/fusion/`](redesign/fusion/DATUMS.md) | Fusion framework: `BuildAll` script, backends, `check.py`, skeleton, datums |
 | [`redesign/proofs/`](redesign/PROOFS.md) | Proof chains from requirement to claim to calculation to source; `build_graph.py` rebuilds and flags drift |
 | `redesign/site/` | The K09-L Explorer web app opened by the `.bat` file |
-| [`redesign/showcase/`](redesign/SHOWCASE.md) | Renders, flight animation, STL models, page snapshots |
+| [`redesign/showcase/`](redesign/SHOWCASE.md) | Renders, flight and build animations, STL models, page snapshots |
 | [`redesign/design-system/`](redesign/design-system/README.md) | Visual standard for every output (tokens, components, Blender style) |
 | BOM | [`redesign/team/I1/K09L-BOM.xlsx`](redesign/team/I1/K09L-BOM.xlsx) (Excel with live formulas), [`BOM.csv`](redesign/team/I1/BOM.csv), [`ORDER-PLAN.md`](redesign/team/I1/ORDER-PLAN.md) |
 | Legacy (C0 era) | `analysis/`, `cad/` (SOLIDWORKS), `docs/`, `firmware/`, `review/`, the root `*.html` pages, `inventory/`, `fusion/` (C0 v0.3.1 scripts), `concepts/`, `sim/`, `explorations/tiltwing/`, `tools/`, [`DECISIONS.md`](DECISIONS.md). Imported on 2026-11-08 from DBF-VTOL, DillonVTOL, TiltWing and OpenCAEModel; superseded by K09-L. Source commits and what was left out: [`PROVENANCE.md`](PROVENANCE.md) |

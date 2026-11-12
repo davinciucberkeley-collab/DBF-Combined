@@ -131,6 +131,9 @@ def geometry(P, LP, coords):
     G['fy0'] = G['cy0'] - G['fc'] - G['fw']                            # inboard wall
     G['fy1'] = G['ya'] + G['at'] / 2 + 0.0015                          # open toward the arm; pocket ends here
     G['fz1'] = G['cz1'] + G['fc'] + G['fw']                            # frame top plate upper face
+    Wl = k9.local('wing')                                              # D1's servo lead hole over the frame (D-85)
+    G['lead_hole_x'] = tuple(k9.lval(Wl, 'servo_pocket.lead_hole_x_m', 'm', [0.173, 0.177]))
+    G['lead_y'] = k9.lval(Wl, 'grooves.servo_y_m', 'm', [0.065, 0.285])[1]
     G['ct'], G['lip'] = l('cover.t_m', 'm'), l('cover.lip_m', 'm')
     stop = l('mech_stop_deg', 'deg')
     lk = (G['xh'], G['zh'], G['rh'], xs, G['zs'], G['rs'])
@@ -304,6 +307,11 @@ def build_frame(part, G):
     part.box((x1 - fw, y0, z0), (x1, y1, z1), name='aft end wall (ear slot)')
     for xa, xb in ((x0, x0 + 0.004), (x1 - 0.004, x1)):                 # cover-screw bosses on the end walls
         part.box((xa, y0 + fw, z0), (xb, y0 + fw + 0.005, z0 + 0.006), name='M2 boss')
+    # D-85: lead notch in the rim under D1's servo lead hole (x 0.173-0.177, |y| 0.285): the servo's own lead comes
+    # down the hole and must pass the top plate into the 4.8 mm gap ahead of the case
+    lx0, lx1 = G['lead_hole_x']
+    part.cut_box((x0 + fw, G['lead_y'] - 0.0025, z1 - fw - 0.0005), (lx1 + 0.0004, y1 + 0.0005, z1 + 0.0005),
+                 name='lead notch')
 
 
 def build_cover(part, G):

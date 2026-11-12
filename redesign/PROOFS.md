@@ -25,7 +25,7 @@ everything still UNVERIFIED.
 | part | 0 | 0 | 0 | 149 | 149 |
 
 VERIFIED needs a physical test, and nothing has been built yet, so nothing is VERIFIED. CHECKED means re-run and
-compared to an independent calculation or simulation. 87 claims currently show a negative margin (FAILS flag; 2026-11-11 after D-80…D-84, down from 90 before that re-run), and
+compared to an independent calculation or simulation. 90 claims currently show a negative margin (FAILS flag; 2026-11-11 after D-85: 87 after D-80…D-84, plus `CL-F2-MASS`, `CL-F2-I2C-LEN` and `R-HARNESS-INSTALL` from the routed harness), and
 14 requirements inherit one; see `STATUS.md` for which ones matter.
 
 ## Honest state (2026-11-11, after the harness re-route and the D5-R6 landing parts list)

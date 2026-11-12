@@ -9,6 +9,10 @@ depends on one, it says "pending fix". Do not print or cut those parts until the
 
 ![K09-L in cruise attitude](showcase/renders/hero-iso.png)
 
+**Build animation:** [the whole build, stages 2–11](showcase/animation/build/k09l-build.mp4) (about 49 s). Each
+stage below links its own clip and shows its end state. Parts fly in to where they seat, from the same CAD that
+passes the collision check (`collision/`); rendered by `showcase/animation/render_build.py`.
+
 Finding IDs (BR-xx) are in the [review master table](review/BUILDABILITY-REVIEW.md#master-table-blockers-and-majors-ranked).
 BOM line IDs (B01, W04…) are in [`team/I1/BOM.csv`](team/I1/BOM.csv).
 
@@ -83,6 +87,9 @@ freeze signed off on 18 Dec.
 
 ## Stage 2. Wing core and spar
 
+[![Stage 2 end state](showcase/animation/build/stage-02.png)](showcase/animation/build/stage-02.mp4)
+[Play the stage 2 clip](showcase/animation/build/stage-02.mp4)
+
 Time: about 2 days hands-on plus 2 × 24 h cures (practice cores extra).
 Parts: W01 XPS, W03/W04 spar tube, PETG plugs (W05), C05 epoxy, blocks `FIN-004`.
 Detail: [`subsystems/wing/BUILD.md`](subsystems/wing/BUILD.md) steps 1–8, [`subsystems/fins/BUILD.md`](subsystems/fins/BUILD.md) step 7.
@@ -106,6 +113,9 @@ vertical within ±0.5° in the jig; beads continuous.
 
 ## Stage 3. Elevon panels
 
+[![Stage 3 end state](showcase/animation/build/stage-03.png)](showcase/animation/build/stage-03.mp4)
+[Play the stage 3 clip](showcase/animation/build/stage-03.mp4)
+
 Time: 3–4 h plus a 24 h cure.
 Parts: torque tubes `MEC-009` (H02), hinge tape.
 Detail: [`subsystems/wing/BUILD.md`](subsystems/wing/BUILD.md) step 9, [`subsystems/mechanisms/BUILD.md`](subsystems/mechanisms/BUILD.md) steps 1–4.
@@ -119,6 +129,9 @@ Detail: [`subsystems/wing/BUILD.md`](subsystems/wing/BUILD.md) step 9, [`subsyst
 by gauge.
 
 ## Stage 4. Fins on the motor tubes
+
+[![Stage 4 end state](showcase/animation/build/stage-04.png)](showcase/animation/build/stage-04.mp4)
+[Play the stage 4 clip](showcase/animation/build/stage-04.mp4)
 
 Time: about 2 days hands-on plus 4–5 × 24 h cures.
 Parts: W02 foam board, W04 tubes, D03 plugs, D01 braces, D02 strips, C03 pins, collars `FIN-008`, anchors, ESC pads `FIN-007`.
@@ -144,6 +157,9 @@ no filler in lead holes or elevon gaps.
 ![Fin detail](showcase/renders/detail-fin.png)
 
 ## Stage 5. Pod and power stack
+
+[![Stage 5 end state](showcase/animation/build/stage-05.png)](showcase/animation/build/stage-05.mp4)
+[Play the stage 5 clip](showcase/animation/build/stage-05.mp4)
 
 Time: about 8.5 h for the pod plus 3 × 24 h cures; 3 h for the power stack.
 Parts: pod board and prints `POD-*` (W02, W05), F01 AS150U, F02–F04 wire, F05 UBEC, F06 fuse, F07 caps, F08 FR4, C02 inserts, C06 nylon screws, D06 straps.
@@ -171,6 +187,9 @@ Detail: [`subsystems/pod/BUILD.md`](subsystems/pod/BUILD.md), [`subsystems/power
 
 ## Stage 6. Harness, then skin
 
+[![Stage 6 end state](showcase/animation/build/stage-06.png)](showcase/animation/build/stage-06.mp4)
+[Play the stage 6 clip](showcase/animation/build/stage-06.mp4)
+
 Time: 1–2 days plus skinning 3–4 h for two people.
 Parts: F03 16 AWG, H01 harness parts, F09 heat-shrink, W06 tape, 100 mm tape.
 Detail: [`subsystems/harness/BUILD.md`](subsystems/harness/BUILD.md), [`subsystems/wing/BUILD.md`](subsystems/wing/BUILD.md) step 11.
@@ -190,6 +209,9 @@ Detail: [`subsystems/harness/BUILD.md`](subsystems/harness/BUILD.md), [`subsyste
 ![Harness routing](showcase/renders/detail-harness.png)
 
 ## Stage 7. Servos, linkage and hinges
+
+[![Stage 7 end state](showcase/animation/build/stage-07.png)](showcase/animation/build/stage-07.mp4)
+[Play the stage 7 clip](showcase/animation/build/stage-07.mp4)
 
 Time: per side about half a day plus 2 × 24 h cures.
 Parts: M01 servos, H02 mechanisms hardware, horns and frames `MEC-004…008`.
@@ -211,6 +233,9 @@ test passed (3.5 N at the TE, 10 min).
 ![Mechanisms detail](showcase/renders/detail-mechanisms.png)
 
 ## Stage 8. Motor mounts, motors and props
+
+[![Stage 8 end state](showcase/animation/build/stage-08.png)](showcase/animation/build/stage-08.mp4)
+[Play the stage 8 clip](showcase/animation/build/stage-08.mp4)
 
 Time: about 1 h per station plus 4 × T-E1-STAND runs.
 Parts: B01 motors, B03 props, B05 adapter rings, B07 screws, C01 pinch bolts and nylocs, C04 Loctite, mounts `FIN-003` (W08 ASA).
@@ -238,6 +263,9 @@ holds 60 N.
 
 ## Stage 9. Avionics
 
+[![Stage 9 end state](showcase/animation/build/stage-09.png)](showcase/animation/build/stage-09.mp4)
+[Play the stage 9 clip](showcase/animation/build/stage-09.mp4)
+
 Time: about 1 day including calibration.
 Parts: A01 FC, A02 GPS, A03 RX, A04 airspeed, A05 microSD, A06 antennas, A07 isolation set.
 Detail: [`subsystems/avionics/BUILD.md`](subsystems/avionics/BUILD.md).
@@ -252,6 +280,9 @@ Detail: [`subsystems/avionics/BUILD.md`](subsystems/avionics/BUILD.md).
 ☐ Inspect before moving on: pre-arm checks pass; airspeed rises on a blow at the tip and drops on a suck.
 
 ## Stage 10. Feet and corner caps
+
+[![Stage 10 end state](showcase/animation/build/stage-10.png)](showcase/animation/build/stage-10.mp4)
+[Play the stage 10 clip](showcase/animation/build/stage-10.mp4)
 
 Time: 4 × 55 min shoe prints, 1 h bench, 24 h cure; cartridges most of a day.
 Parts: shoes `GER-001`, pistons `GER-002`, cartridges (W01 offcuts), D05 neoprene, D07 brass cutter, TPU caps `GER-007`.
@@ -268,6 +299,9 @@ Detail: [`subsystems/landing/BUILD.md`](subsystems/landing/BUILD.md).
 ![Landing foot](showcase/renders/detail-foot.png)
 
 ## Stage 11. Checks: weight, CG, controls, thrust stand
+
+[![Stage 11 end state](showcase/animation/build/stage-11.png)](showcase/animation/build/stage-11.mp4)
+[Play the stage 11 clip](showcase/animation/build/stage-11.mp4)
 
 Time: about 2 days (GT-06, 07, 12, 13, 14, 18).
 Parts: G04 watt meter, G06/G12 thrust stand, CG jig.

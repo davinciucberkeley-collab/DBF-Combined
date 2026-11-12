@@ -1,23 +1,25 @@
 # How to resume the redesign
 
-## Paused 2026-11-11 (evening): blockers fixed, collision gate added (start here)
+## Paused 2026-11-11 (night): wires routed without phasing, build animation (start here)
 All six buildability blockers are fixed in CAD or design except the team decision on Jacobs access (BR-04 / MF-02).
-Status table: `review/BUILDABILITY-REVIEW.md` "Blocker status". Decisions D-74...D-84 in `params/CHANGE-LOG.md`.
+Status table: `review/BUILDABILITY-REVIEW.md` "Blocker status". Decisions D-74...D-85 in `params/CHANGE-LOG.md`.
 
 | Item | State |
 |---|---|
 | BR-00 CG, SW-02 fin tip, WB-01 power board, MF-01 shop files | Fixed (D-74...D-79), as before. |
 | MM-01 slit, MM-02 clocking key | **Fixed in CAD** (D-80, D-81). Open: C6 sizes the dog's shear (it adds to the D-23 slip fuse) before the 18 Dec freeze. |
-| Horn bore breakout, POD-007 void, HRN-110 grommet | **Fixed** (D-82, D-84 b, D-83). Shop files: 245 checks, 0 FAIL, 0 issues. |
-| No parts phasing (physics-simulator ready) | **New gate, passes**: `python -I redesign/collision/collide.py` (about 5 min). 0 penetrations > 0.05 mm, static and at both elevon limits. Holes and pockets in `interfaces/seats.json`; geometry fixes D-84. |
-| Proof graph | **Clean** (0 drift, 0 errors), 4,244 nodes; 87 claims fail on margin (90 before; the 590 g pack gate passes again). |
+| Horn bore breakout, POD-007 void, HRN-110 grommet | **Fixed** (D-82, D-84 b, D-83). Shop files: 249 checks, 0 FAIL, 0 issues. |
+| No parts phasing (physics-simulator ready) | **Passes with every wire**: `python -I redesign/collision/collide.py` (about 5 min). 990 bodies in 185 parts plus every routed wire at its drawn diameter; 0 penetrations > 0.05 mm, static and at both elevon limits. Holes and pockets in `interfaces/seats.json`; geometry fixes D-84; harness re-route, P1s hole and frame lead notch D-85. |
+| Build animation | **New**: `showcase/animation/render_build.py` -> `showcase/animation/build/` (whole build, 49 s, plus one clip and end-state still per stage 2-11). Linked from `BUILD-GUIDE.md` and the Explorer. |
+| Proof graph | **Clean** (0 drift, 0 errors), 4,245 nodes; 90 claims fail on margin (87 before D-85). The 3 new: `CL-F2-MASS` 135.2 g vs 129 g allocation, `CL-F2-I2C-LEN` 0.511 m vs 0.5 m, and `R-HARNESS-INSTALL` that rolls them up. CG and mass gate unchanged (the A3 roll-up uses the allocation). |
+| Harness mass and I2C length | **Team-lead decision** (D-85 Open): raise the harness allocation or cut routed length; accept or shorten the I2C run. |
 | MF-02 Jacobs access | **Team decision needed.** |
 
 Next steps in order:
 1. Owners re-check what this round changed: C6 the collar bond (D-81 notch, -0.9 % area) and the dog size; C3 the 4.8 mm
    recess-fillet leg (D-84 d); C4 mount rocking stiffness with the shorter outboard cheek (D-80).
 2. Regenerate the media that were not re-rendered this round: renders (`showcase/tools/render_showcase.py`), drawing
-   (`showcase/drawing/`), animation. The GLB, viewer data and shop files are current.
+   (`showcase/drawing/`), the how-it-flies animation. The GLB, viewer data, shop files and build animation are current.
 3. Before any Fusion run or print: `python -I redesign/fusion/check.py`, `python -I redesign/collision/collide.py`,
    `python -B redesign/manufacturing/make_shop_files.py`.
 4. Explorer artifact (private, owner Dillon's account): https://claude.ai/artifact/XYkihMreBq6Gn7deTEwSC8 . Republish from

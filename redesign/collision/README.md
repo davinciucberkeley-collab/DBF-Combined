@@ -20,12 +20,24 @@ Exit code 0 = PASS. The report is `out/REPORT.md`; `out/report.json` has every p
 | Containment | A body wholly inside a body of another part fails. |
 | Elevon sweep | Each limited revolute joint (the four elevon panels, ±25°) is turned to each limit with everything bonded to it (horns, torque tubes, bridge rod), and checked against what did not move. |
 | Holes and pockets | A part's cuts (`Component.cut`, `Context.seat`, `interfaces/seats.json`) are removed material, without mesh booleans. |
+| Wires | Every routed wire is meshed as the 3-D model draws it (filleted at its bend radius, each strand at its diameter) and checked against every part and every other wire. `--audit-wires` lists each clash by route segment of `team/F2/harness.py`'s wire table. |
+
+Wire rules (each one a physical fact, not a tolerance):
+
+- The packing-tape skin (`WNG-003`) conforms over wires laid on or in the foam, so wire-vs-tape contact is not
+  penetration. Wire-vs-foam is.
+- A wire may sit up to 6 mm into its own terminal part: the solder pad or cup and its adhesive heat-shrink tail.
+- A wire may pass through a connector fitted in-line on it (the XT30U pairs, the AS150U pack half), declared in the
+  harness params (`cad.*.wire`).
+- Wires that share a terminal part meet in one bench joint for their first 10 mm (the four ESC pigtails on the bus
+  bar).
 
 ## What it does not check
 
 - The real Fusion kernel geometry. Everything here is the stub-backend CAD (UNVERIFIED-IN-FUSION).
 - Clearance margins. A 0.05 mm gap passes; the clearance claims (prop keep-outs in `fusion/check.py`, hinge throw)
   stay where they are.
+- Wire flexibility: wires are checked as drawn (rigid tubes); slack, sag and vibration are not modelled.
 - Flexible parts and linkages in the sweep: the hinge tapes (`MEC-010`) bend with the panel and the pushrods
   (`MEC-003`) follow the four-bar. They are held out of the sweep and listed in the report.
 - Spinning props. `fusion/check.py` covers the swept prop discs as keep-outs.

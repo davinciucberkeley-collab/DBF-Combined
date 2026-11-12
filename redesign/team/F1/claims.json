@@ -514,30 +514,30 @@
     "main_od_mm": 4.8,
     "main_gpm": 61.227271243472906,
     "esc_awg": 16,
-    "esc_len_m": 0.6191354695493952,
+    "esc_len_m": 0.6754837997008728,
     "esc_i_cont_a": 8.409098623331118,
     "esc_rise_long_c": 9.165983839554954,
     "esc_rise_c": 9.165983839554954,
     "esc_peak_normal_c": 13.819181810415593,
     "esc_peak_fault_c": 17.561400356261778,
-    "esc_r_loop_mohm": 17.892798803509116,
-    "esc_mass_g": 70.30928156984018,
+    "esc_r_loop_mohm": 19.521245862192217,
+    "esc_mass_g": 76.6527568604235,
     "esc_od_mm": 2.6000000000000005,
     "esc_gpm": 16.15937672414052,
     "esc18_awg": 18,
-    "esc18_len_m": 0.6191354695493952,
+    "esc18_len_m": 0.6754837997008728,
     "esc18_i_cont_a": 8.409098623331118,
     "esc18_rise_long_c": 16.401796147986758,
     "esc18_rise_c": 16.401796147986758,
     "esc18_peak_normal_c": 31.015162931177414,
     "esc18_peak_fault_c": 41.79518025106877,
-    "esc18_r_loop_mohm": 29.203038209455553,
-    "esc18_mass_g": 43.22995524229684,
+    "esc18_r_loop_mohm": 31.86084497289335,
+    "esc18_mass_g": 47.13026750220998,
     "esc18_od_mm": 2.0,
     "esc18_gpm": 9.935660227648604,
-    "esc_r_loop_max_mohm": 20.292798803509115,
-    "esc_r_loop_min_mohm": 15.97882803305176,
-    "esc_len_total_m": 2.1754948464319486,
+    "esc_r_loop_max_mohm": 21.921245862192215,
+    "esc_r_loop_min_mohm": 17.18394762121953,
+    "esc_len_total_m": 2.371773310597797,
     "bundle0_rise_c": 9.523708897783688,
     "bundle0_rise_long_c": 21.486683906061074,
     "bundle0_peak_fault_c": 25.14433874025727,
@@ -547,9 +547,9 @@
     "bundle_rise_max_c": 9.523708897783688,
     "bundle_peak_max_c": 25.14433874025727,
     "r_common_mohm": 2.7902395822486405,
-    "r_ext_mohm": 7.272778218731092,
-    "drop_cont_pct": 1.723732336956673,
-    "drop_peak_pct": 5.285711949674933,
+    "r_ext_mohm": 7.628095014341457,
+    "drop_cont_pct": 1.8162578228981572,
+    "drop_peak_pct": 5.55858686221102,
     "main_loss_w_cont": 2.557086319973969,
     "esc_len_allow_m": 0.560136307190062,
     "xt30_drop_pct": 0.4021621621621621
@@ -646,10 +646,10 @@
      0.05
     ],
     "k_cu": 400.0,
-    "l_ur": 0.5938993025631426,
-    "l_ul": 0.46986132032766137,
-    "l_lr": 0.6191354695493952,
-    "l_ll": 0.4925987539917493,
+    "l_ur": 0.6359148918519185,
+    "l_ul": 0.511561464071361,
+    "l_lr": 0.6754837997008728,
+    "l_ll": 0.5488131549736445,
     "bundle": [
      [
       "P1 straw, LR + LL pairs",
@@ -1412,7 +1412,7 @@
    ],
    "how": "Weigh the four cut pairs before soldering.",
    "note": "Harness mass is F2's (HRN-101/102, CL-F2-MASS); F2 reads the per-metre value CL-F1-W16-GPM instead of dividing this by 4.0 m (CR-F1-23).",
-   "value": 70.30928156984018
+   "value": 76.6527568604235
   },
   {
    "id": "CL-F1-ESC-LEN-ALLOW",
@@ -1521,7 +1521,7 @@
    ],
    "how": "T-F1-DROP: 20 A load step, read pack-terminal and ESC-pad voltages with one meter, XT30U plugs in.",
    "note": "R5: + one XT30U per branch (2.4 mOhm, D-74), +0.6 mOhm on the equivalent; P:electrical.r_ext_mohm (A1) follows (CR-F1-24).",
-   "value": 7.272778218731092
+   "value": 7.628095014341457
   },
   {
    "id": "CL-F1-DROP-CONT",
@@ -1545,7 +1545,7 @@
     "PRP-002-LL"
    ],
    "how": "T-F1-DROP at 30 A.",
-   "value": 1.723732336956673
+   "value": 1.8162578228981572
   },
   {
    "id": "CL-F1-DROP-PEAK",
@@ -1566,7 +1566,7 @@
    ],
    "how": "T-F1-DROP scaled with the XT30U plugs in; stand log at full throttle. Go to 14 AWG on the right-hand leads only if the measured drop costs real thrust (WB-11).",
    "note": "D-74 accepts the XT30U (CL-F1-XT30U-DROP) over F1's 5 % guideline: WB-11 makes 5 % a guideline, not a hardware limit, so this claim carries no limit; the number is the one to measure.",
-   "value": 5.285711949674933
+   "value": 5.55858686221102
   },
   {
    "id": "CL-F1-XT30U-DROP",

@@ -1,10 +1,23 @@
 {
- "bodies": 948,
+ "bodies": 990,
  "defects": [],
  "parts": 185,
  "poses": [
   {
    "hits": [
+    {
+     "a": "E-HRN-15",
+     "at_mm": [
+      67.12,
+      291.87,
+      -25.73
+     ],
+     "b": "E-HRN-26",
+     "bodies": [
+      "E-HRN-15 \"wire strand 0 (2.6 mm)\" x E-HRN-26 \"wire strand 1 (1.8 mm)\" 0.02 mm"
+     ],
+     "depth_mm": 0.018
+    },
     {
      "a": "FIN-001-UR",
      "at_mm": [
@@ -62,6 +75,32 @@
       "WNG-001 \"xps core y0.305-0.335 aft\" x FIN-001-UL \"root fillet\" 0.01 mm"
      ],
      "depth_mm": 0.019
+    },
+    {
+     "a": "E-HRN-29",
+     "at_mm": [
+      177.0,
+      286.0,
+      7.5
+     ],
+     "b": "WNG-001",
+     "bodies": [
+      "E-HRN-29 \"wire strand 4 (1.1 mm)\" x WNG-001 \"xps core y0.285-0.287 aft\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "E-HRN-28",
+     "at_mm": [
+      177.0,
+      -286.0,
+      7.5
+     ],
+     "b": "WNG-001",
+     "bodies": [
+      "E-HRN-28 \"wire strand 6 (1.1 mm)\" x WNG-001 \"xps core y0.285-0.287 aft\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
     },
     {
      "a": "WNG-001",
@@ -184,7 +223,7 @@
    ]
   }
  ],
- "seconds": 310.2,
+ "seconds": 326.5,
  "skipped": [
   [
    "HRN-001",
@@ -198,5 +237,6 @@
    "HRN-002-R",
    "mass proxy"
   ]
- ]
+ ],
+ "wire_strands": 45
 }

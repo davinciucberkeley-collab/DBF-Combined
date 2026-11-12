@@ -11,6 +11,10 @@ what is finished and what is not is in [STATUS.md](STATUS.md); next steps for th
 
 ![K09-L flight sequence: vertical take-off, 90° transition, cruise, back-transition, vertical landing](showcase/animation/k09l-how-it-flies.gif)
 
+**How it is built**: build stages 2-11 in order, each part flying in to where it seats ([MP4, 49 s](showcase/animation/build/k09l-build.mp4); one clip per stage in [`BUILD-GUIDE.md`](BUILD-GUIDE.md)):
+
+![K09-L build sequence, stage 11 end state](showcase/animation/build/stage-11.png)
+
 ![K09-L in cruise attitude](showcase/renders/hero-iso.png)
 *K09-L in cruise attitude: a 1.15 m flying wing with two fins, each carrying a motor above and below the wing. It
 stands on its fin tips, takes off as a quadcopter, pitches 90° to fly on the wing, and pitches back to land.
