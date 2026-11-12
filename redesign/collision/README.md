@@ -33,6 +33,10 @@ Wire rules (each one a physical fact, not a tolerance; D-86 made them strict):
 - **Every strand end must be seated**: its surface on or in one of its own terminal parts or an in-line connector
   (axis within its radius + 0.5 mm). A lead that stops in mid-air fails. Report section "Wire ends not seated".
 - No shared joints: every conductor lands on its own pad.
+- The conductors of one wire (the two of a pair, the three of a servo ribbon, a pigtail and its extension) are
+  checked against each other too (D-87).
+- **No folds**: a drawn bend tighter than the strand's own radius makes the tube pass through itself; it fails
+  (report section "Wire bends tighter than the wire", D-87).
 
 ## What it does not check
 

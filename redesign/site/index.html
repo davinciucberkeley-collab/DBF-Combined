@@ -334,6 +334,49 @@
     </figure>
   </section>
 
+  <section class="c" id="how-its-built">
+    <header>
+      <span class="secno">How it's built · rendered in Blender from the as-designed CAD</span>
+      <h2 class="ds-h1">Build sequence, stage by stage</h2>
+      <p class="use">Each part flies in to where it seats, highlighted, in the order of BUILD-GUIDE.md stages 2 to 11; wires are drawn along their routes before the tape skin goes on. Pick a stage to play only that step, or play the whole build.</p>
+    </header>
+    <figure class="fig">
+      <video id="build-video" src="assets/animation/build/k09l-build.mp4" poster="assets/animation/build/stage-11.png" controls muted playsinline preload="metadata" style="display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--panel-2)"></video>
+      <div class="bstages" role="group" aria-label="Build stages">
+        <button type="button" class="bstage on" data-src="assets/animation/build/k09l-build.mp4" data-poster="assets/animation/build/stage-11.png"><b>All</b> whole build</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-02.mp4" data-poster="assets/animation/build/stage-02.png"><b>2</b> Wing core and spar</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-03.mp4" data-poster="assets/animation/build/stage-03.png"><b>3</b> Elevon panels</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-04.mp4" data-poster="assets/animation/build/stage-04.png"><b>4</b> Fins on the motor tubes</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-05.mp4" data-poster="assets/animation/build/stage-05.png"><b>5</b> Pod and power stack</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-06.mp4" data-poster="assets/animation/build/stage-06.png"><b>6</b> Harness, then skin</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-07.mp4" data-poster="assets/animation/build/stage-07.png"><b>7</b> Servos, linkage and horns</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-08.mp4" data-poster="assets/animation/build/stage-08.png"><b>8</b> Motor mounts, motors and props</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-09.mp4" data-poster="assets/animation/build/stage-09.png"><b>9</b> Avionics</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-10.mp4" data-poster="assets/animation/build/stage-10.png"><b>10</b> Feet and corner caps</button>
+        <button type="button" class="bstage" data-src="assets/animation/build/stage-11.mp4" data-poster="assets/animation/build/stage-11.png"><b>11</b> Pack in, weigh and balance</button>
+      </div>
+      <figcaption><span class="ds-source">showcase/animation/render_build.py · Blender 4.2 Workbench, 1280×720, 30 fps · stage order and captions from BUILD-GUIDE.md; same CAD as the 3-D explorer and the collision check</span></figcaption>
+    </figure>
+    <style>
+      .bstages{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+      .bstage{font:inherit;font-size:12.5px;padding:5px 10px;border-radius:999px;border:1px solid var(--line, #ccc);background:var(--panel-2, transparent);color:inherit;cursor:pointer}
+      .bstage b{margin-right:4px}
+      .bstage.on{border-color:currentColor;font-weight:600}
+    </style>
+    <script>
+      (function () {
+        var v = document.getElementById('build-video');
+        document.querySelectorAll('.bstage').forEach(function (b) {
+          b.addEventListener('click', function () {
+            document.querySelectorAll('.bstage').forEach(function (o) { o.classList.toggle('on', o === b); });
+            v.poster = b.dataset.poster; v.src = b.dataset.src; v.load();
+            var p = v.play(); if (p && p.catch) p.catch(function () {});
+          });
+        });
+      })();
+    </script>
+  </section>
+
   <section class="c" id="renders">
     <header>
       <span class="secno">Renders · showcase/renders · Blender from the same scripts that build the Fusion model</span>
@@ -1033,7 +1076,7 @@
       <header><span class="g">J</span><span class="n">Support</span><span class="cnt">3 / 6</span></header>
       <div class="role"><span class="id">J1</span><div><div class="t"><a href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/J1/SUMMARY.md" target="_blank" rel="noopener">Outside research analyst</a></div><div class="o"><span class="ds-num">9</span> comparable tailsitters, 12 failure modes with an owner each, reading list per role</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
       <div class="role"><span class="id">J2</span><div><div class="t"><a href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/proofs/README.md" target="_blank" rel="noopener">Verification / proof-chain engineer</a></div><div class="o">proofs/build_graph.py, CHAIN.md and the 3-D proof viewer; the graph build was not completed at A1-R5</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
-      <div class="role"><span class="id">J3</span><div><div class="t">Technical illustrator</div><div class="o">Blender renders and animations (blender/ backend exists, no K09-L renders yet)</div></div><span class="none">not started</span></div>
+      <div class="role"><span class="id">J3</span><div><div class="t">Technical illustrator</div><div class="o">Blender renders and animations (the 15 renders, flight and build animations exist in showcase/, regenerated at D-87; no role summary yet)</div></div><span class="none">not started</span></div>
       <div class="role"><span class="id">J4</span><div><div class="t"><a href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/design-system/README.md" target="_blank" rel="noopener">Visual designer</a></div><div class="o">Design system v1 (tokens, components, diagram and Blender styles) and this overview page</div></div><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></div>
       <div class="role"><span class="id">J5</span><div><div class="t">Technical writer</div><div class="o">Stale-doc cleanup, READMEs, consistent docs</div></div><span class="none">not started</span></div>
       <div class="role"><span class="id">J6</span><div><div class="t">Design review board</div><div class="o">One critic per discipline group plus a chair: CDR reports and a go / no-go for the order</div></div><span class="none">not started</span></div>
@@ -1257,10 +1300,10 @@
 <section class="c" id="ov-status">
   <header>
     <span class="secno">Status · programme phases and open issues</span>
-    <h2 class="ds-h1">Six phases done, one partial, three not started</h2>
+    <h2 class="ds-h1">Six phases done, two partial, two not started</h2>
     <p class="use">Phases follow DESIGN-PROGRAM.workflow.js. Done means every active role in the phase delivered and the chief engineer dispositioned its change requests; it does not mean verified.</p>
   </header>
-  <div class="progress"><span>Programme progress</span><span class="ds-num">6 done · 1 partial · 3 not started</span><div class="track"><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="p"></i><i></i><i></i><i></i></div></div>
+  <div class="progress"><span>Programme progress</span><span class="ds-num">6 done · 2 partial · 2 not started</span><div class="track"><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="p"></i><i class="p"></i><i></i><i></i></div></div>
   <div class="phases">
     <div class="phase" data-phase="DONE"><span class="n">01</span><b>Frame</b><span>A1–A5, J1: params.json, README, requirements, interfaces, CAD framework</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
     <div class="phase" data-phase="DONE"><span class="n">02</span><b>Analysis</b><span>B1–B4, C1, E1, E2: aero, loads, propulsion, energy</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
@@ -1269,7 +1312,7 @@
     <div class="phase" data-phase="DONE"><span class="n">05</span><b>Integration</b><span>merge_check, check.py, mass roll-up; A1-R4 … R4b decisions</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
     <div class="phase" data-phase="DONE"><span class="n">06</span><b>Simulation</b><span>CFD, VLM, FEA, 6-DOF, thermal with convergence; A1-R5 (D-61 … D-73)</span><span class="ds-badge" data-phase="DONE">DONE</span></div>
     <div class="phase" data-phase="PARTIAL"><span class="n">07</span><b>Build and program</b><span>H1 test plan and I1 BOM delivered; G1–G4, H2, H3, I2 not started</span><span class="ds-badge" data-phase="PARTIAL">PARTIAL</span></div>
-    <div class="phase" data-phase="NOT STARTED"><span class="n">08</span><b>Media</b><span>Renders, animations, build manual, docs cleanup (J3, J5)</span><span class="ds-badge" data-phase="NOT STARTED">NOT STARTED</span></div>
+    <div class="phase" data-phase="PARTIAL"><span class="n">08</span><b>Media</b><span>Renders, flight and build animations, drawing and STLs regenerated from the CAD (D-87); build manual = BUILD-GUIDE.md; docs cleanup open</span><span class="ds-badge" data-phase="PARTIAL">PARTIAL</span></div>
     <div class="phase" data-phase="NOT STARTED"><span class="n">09</span><b>Design review</b><span>J6 board per discipline, chair's go / no-go for the order</span><span class="ds-badge" data-phase="NOT STARTED">NOT STARTED</span></div>
     <div class="phase" data-phase="NOT STARTED"><span class="n">10</span><b>Final hand-off</b><span>A1 final README and HANDOFF.md (A1's draft exists in team/A1/)</span><span class="ds-badge" data-phase="NOT STARTED">NOT STARTED</span></div>
   </div>

@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 23.98,
+ "render_s": 45.03,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 50,
   "location_m": [
-   1.8586,
-   0.807,
-   2.2003
+   1.8579,
+   0.8068,
+   2.1995
   ],
   "fit": "visible",
   "frame": [
@@ -42,7 +42,7 @@
  "callouts": [
   {
    "item": "WNG-002",
-   "x": 843.2,
+   "x": 843.1,
    "y": 445.3,
    "title": "WNG-002",
    "text": "CF spar 22 x 20 mm",
@@ -57,37 +57,37 @@
   },
   {
    "item": "WNG-001",
-   "x": 783.4,
-   "y": 474.4,
+   "x": 557.6,
+   "y": 392.4,
    "title": "WNG-001",
    "text": "XPS core (ghosted)",
    "detail": null,
    "role": "ghost",
    "occluded": false,
    "world_m": [
-    0.149,
-    -0.0142,
-    -0.0077
+    0.1651,
+    -0.34,
+    0.0173
    ]
   },
   {
    "item": "WNG-011-L",
-   "x": 616.0,
-   "y": 502.0,
+   "x": 667.7,
+   "y": 522.9,
    "title": "WNG-011-L",
    "text": "Elevon, inboard panel",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.2898,
-    -0.1866,
-    0.0013
+    0.2924,
+    -0.1101,
+    0.0012
    ]
   },
   {
    "item": "WNG-012-L",
-   "x": 438.6,
+   "x": 438.4,
    "y": 436.7,
    "title": "WNG-012-L",
    "text": "Elevon, outboard panel",
@@ -102,7 +102,7 @@
   },
   {
    "item": "WNG-004-L",
-   "x": 601.7,
+   "x": 601.6,
    "y": 360.6,
    "title": "WNG-004-L",
    "text": "Spar plug at fin block",
@@ -117,7 +117,7 @@
   },
   {
    "item": "MEC-009-LO",
-   "x": 452.8,
+   "x": 452.6,
    "y": 421.3,
    "title": "MEC-009-LO",
    "text": "Elevon torque tube",
@@ -137,13 +137,13 @@
    "role": "ghost",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.8,
+   "mass_g": 201.9,
    "subsystem": "wing",
    "bbox_px": [
     348,
     270,
     1252,
-    727
+    726
    ]
   },
   {
@@ -155,7 +155,7 @@
    "subsystem": "wing",
    "bbox_px": [
     1021,
-    475,
+    476,
     1073,
     536
    ]
@@ -199,7 +199,7 @@
     483,
     313,
     1179,
-    568
+    569
    ]
   },
   {
@@ -224,7 +224,7 @@
    "mass_g": 7.0,
    "subsystem": "wing",
    "bbox_px": [
-    587,
+    586,
     350,
     617,
     372
@@ -254,7 +254,7 @@
    "bbox_px": [
     643,
     369,
-    663,
+    662,
     388
    ]
   },
@@ -294,7 +294,7 @@
    "mass_g": 3.7,
    "subsystem": "wing",
    "bbox_px": [
-    787,
+    786,
     544,
     976,
     649
@@ -323,7 +323,7 @@
    "subsystem": "wing",
    "bbox_px": [
     987,
-    616,
+    617,
     1177,
     723
    ]
@@ -336,9 +336,9 @@
    "mass_g": 3.5,
    "subsystem": "wing",
    "bbox_px": [
-    358,
+    357,
     390,
-    526,
+    525,
     481
    ]
   },
@@ -375,7 +375,7 @@
    "role": "context",
    "name": "Elevon hinge tape, two strips right",
    "status": "MODELLED",
-   "mass_g": 0.56,
+   "mass_g": 0.57,
    "subsystem": "mechanisms",
    "bbox_px": [
     805,
@@ -408,7 +408,7 @@
    "bbox_px": [
     384,
     395,
-    523,
+    522,
     448
    ]
   },
@@ -417,13 +417,13 @@
    "role": "context",
    "name": "Elevon hinge tape, two strips left",
    "status": "MODELLED",
-   "mass_g": 0.56,
+   "mass_g": 0.57,
    "subsystem": "mechanisms",
    "bbox_px": [
     380,
-    383,
+    382,
     715,
-    514
+    515
    ]
   }
  ],
@@ -446,8 +446,6 @@
   "E-HRN-18",
   "E-HRN-19",
   "E-HRN-20",
-  "E-HRN-21",
-  "E-HRN-22",
   "E-HRN-23",
   "E-HRN-24",
   "E-HRN-25",
@@ -458,7 +456,6 @@
   "E-HRN-30",
   "E-HRN-31",
   "E-HRN-32",
-  "E-HRN-33",
   "E-HRN-34",
   "E-HRN-35",
   "E-HRN-36",
@@ -545,6 +542,22 @@
   "HRN-001",
   "HRN-002-L",
   "HRN-002-R",
+  "HRN-105-1",
+  "HRN-105-2",
+  "HRN-105-3",
+  "HRN-105-4",
+  "HRN-105-5",
+  "HRN-105-6",
+  "HRN-105-SL",
+  "HRN-105-SR",
+  "HRN-110-LL",
+  "HRN-110-LR",
+  "HRN-110-UL",
+  "HRN-110-UR",
+  "HRN-113-LL",
+  "HRN-113-LR",
+  "HRN-113-UL",
+  "HRN-113-UR",
   "MEC-001-L",
   "MEC-001-R",
   "MEC-002-L",
@@ -613,9 +626,7 @@
   "PWR-002",
   "PWR-003",
   "PWR-004",
-  "PWR-005",
   "PWR-006",
-  "PWR-007",
   "PWR-008-LL",
   "PWR-008-LR",
   "PWR-008-UL",

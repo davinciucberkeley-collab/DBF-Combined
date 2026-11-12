@@ -611,6 +611,13 @@ def build(ctx):
         core._add(s.mirrored(1))
     for cutter in p1_holes(g):                                # F2's 45 deg P1 lead hole, both sides (core and skin)
         core.cut(cutter, note='P1 lead pass-through, 8 mm drilled with a guide block (harness BUILD step 4)')
+    xc, w, d = g['sgroove']                                   # D-87: 3 mm relief at the inside corner where the servo
+    xr, yb = xc + w / 2, g['sgroove_y'][1] - w / 2            # groove turns into its branch (the 3.6 mm ribbon turns
+    zr = surf(g, xr, 'upper')                                 # on its 3.9 mm bend there)
+    for s_ in (1, -1):
+        tri = [(xr, s_ * (yb - 0.003)), (xr + 0.003, s_ * yb), (xr, s_ * yb)]
+        core.cut(fk.Shape('prism', 'servo groove corner relief', axis='Z', offset=zr - d, depth=d + 0.002,
+                          loops=[tri if s_ > 0 else tri[::-1]]), note='servo groove corner relief (D-87)')
     for cutter in p1s_jog(g):                                 # D-86: lower-surface jog P1s mouth -> signal groove
         core.cut(cutter, note='jog groove from the P1s lower mouth to the signal groove (hand-cut with the grooves)')
 

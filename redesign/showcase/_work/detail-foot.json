@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 21.38,
+ "render_s": 18.1,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 60,
   "location_m": [
-   0.4939,
-   0.528,
-   -0.0999
+   0.4903,
+   0.5252,
+   -0.1013
   ],
   "fit": [
    "GER-008-LR",
@@ -40,60 +40,60 @@
  },
  "subject_px": [
   350,
-  -1989,
-  2271,
-  749
+  -2043,
+  2283,
+  745
  ],
  "callouts": [
   {
    "item": "GER-001-LR",
-   "x": 986.3,
-   "y": 411.6,
+   "x": 967.5,
+   "y": 412.6,
    "title": "GER-001-LR",
    "text": "Foot shoe (ghosted)",
    "detail": null,
    "role": "ghost",
    "occluded": false,
    "world_m": [
-    0.3014,
-    0.3304,
-    -0.2006
+    0.3012,
+    0.3281,
+    -0.2012
    ]
   },
   {
    "item": "GER-002-LR",
-   "x": 732.2,
-   "y": 540.4,
+   "x": 696.3,
+   "y": 533.4,
    "title": "GER-002-LR",
    "text": "Foot piston",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.3379,
-    0.3313,
-    -0.2057
+    0.3386,
+    0.3282,
+    -0.2054
    ]
   },
   {
    "item": "GER-008-LR",
-   "x": 1028.6,
-   "y": 401.6,
+   "x": 1012.8,
+   "y": 407.4,
    "title": "GER-008-LR",
    "text": "Crush cartridge, XPS",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.291,
-    0.3266,
-    -0.2029
+    0.2918,
+    0.3256,
+    -0.2035
    ]
   },
   {
    "item": "GER-004-LR",
-   "x": 434.8,
-   "y": 616.3,
+   "x": 417.3,
+   "y": 624.0,
    "title": "GER-004-LR",
    "text": "Neoprene pad",
    "detail": null,
@@ -101,8 +101,8 @@
    "occluded": false,
    "world_m": [
     0.368,
-    0.3222,
-    -0.2086
+    0.3219,
+    -0.2089
    ]
   }
  ],
@@ -110,29 +110,29 @@
   {
    "id": "FIN-001-LR",
    "role": "ghost",
-   "name": "Half-fin lower right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot",
+   "name": "Half-fin lower right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot",
    "status": "MODELLED",
-   "mass_g": 26.23,
+   "mass_g": 26.33,
    "subsystem": "fins",
    "bbox_px": [
-    678,
-    -1989,
-    2271,
-    435
+    665,
+    -2043,
+    2283,
+    442
    ]
   },
   {
    "id": "FIN-012-LR",
    "role": "ghost",
-   "name": "Edge-strip pin set LR, 12 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm",
    "status": "MODELLED",
-   "mass_g": 1.46,
+   "mass_g": 1.37,
    "subsystem": "fins",
    "bbox_px": [
-    1108,
+    1190,
     -127,
-    1930,
-    357
+    1937,
+    327
    ]
   },
   {
@@ -140,13 +140,13 @@
    "role": "ghost",
    "name": "Edge strip lower right outboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
-    1115,
-    -242,
-    2093,
-    426
+    1188,
+    -249,
+    2102,
+    403
    ]
   },
   {
@@ -154,13 +154,13 @@
    "role": "ghost",
    "name": "Edge strip lower right inboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
-    1052,
-    -248,
-    2029,
-    403
+    1124,
+    -255,
+    2036,
+    380
    ]
   },
   {
@@ -168,13 +168,13 @@
    "role": "context",
    "name": "Crush cartridge type L (bored) LR",
    "status": "MODELLED",
-   "mass_g": 0.6,
+   "mass_g": 0.47,
    "subsystem": "landing",
    "bbox_px": [
-    391,
-    316,
-    1221,
-    684
+    393,
+    327,
+    1200,
+    673
    ]
   },
   {
@@ -182,13 +182,13 @@
    "role": "ghost",
    "name": "Foot shoe LR",
    "status": "MODELLED",
-   "mass_g": 5.68,
+   "mass_g": 9.93,
    "subsystem": "landing",
    "bbox_px": [
-    658,
-    251,
+    663,
+    255,
     1251,
-    642
+    639
    ]
   },
   {
@@ -196,13 +196,13 @@
    "role": "context",
    "name": "Foot pad LR",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.71,
    "subsystem": "landing",
    "bbox_px": [
     350,
-    493,
-    514,
-    749
+    511,
+    480,
+    745
    ]
   },
   {
@@ -210,13 +210,13 @@
    "role": "context",
    "name": "Foot piston LR",
    "status": "MODELLED",
-   "mass_g": 3.14,
+   "mass_g": 3.28,
    "subsystem": "landing",
    "bbox_px": [
     364,
-    377,
-    989,
-    744
+    389,
+    964,
+    740
    ]
   }
  ],
@@ -239,8 +239,6 @@
   "E-HRN-18",
   "E-HRN-19",
   "E-HRN-20",
-  "E-HRN-21",
-  "E-HRN-22",
   "E-HRN-23",
   "E-HRN-24",
   "E-HRN-25",
@@ -251,7 +249,6 @@
   "E-HRN-30",
   "E-HRN-31",
   "E-HRN-32",
-  "E-HRN-33",
   "E-HRN-34",
   "E-HRN-35",
   "E-HRN-36",
@@ -330,6 +327,22 @@
   "HRN-001",
   "HRN-002-L",
   "HRN-002-R",
+  "HRN-105-1",
+  "HRN-105-2",
+  "HRN-105-3",
+  "HRN-105-4",
+  "HRN-105-5",
+  "HRN-105-6",
+  "HRN-105-SL",
+  "HRN-105-SR",
+  "HRN-110-LL",
+  "HRN-110-LR",
+  "HRN-110-UL",
+  "HRN-110-UR",
+  "HRN-113-LL",
+  "HRN-113-LR",
+  "HRN-113-UL",
+  "HRN-113-UR",
   "MEC-001-L",
   "MEC-001-R",
   "MEC-002-L",
@@ -404,9 +417,7 @@
   "PWR-002",
   "PWR-003",
   "PWR-004",
-  "PWR-005",
   "PWR-006",
-  "PWR-007",
   "PWR-008-LL",
   "PWR-008-LR",
   "PWR-008-UL",

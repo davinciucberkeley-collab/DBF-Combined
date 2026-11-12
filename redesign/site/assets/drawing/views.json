@@ -132,7 +132,7 @@
     "WNG-003": {
      "bbox_px": [
       36.2,
-      343.4,
+      343.0,
       1646.8,
       791.4
      ],
@@ -144,7 +144,7 @@
       1366.5,
       504.4,
       1408.5,
-      644.4
+      644.5
      ],
      "subsystem": "wing",
      "name": "FAA registration label"
@@ -197,7 +197,7 @@
       791.4
      ],
      "subsystem": "fins",
-     "name": "Half-fin upper right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets"
+     "name": "Half-fin upper right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets"
     },
     "FIN-001-LR": {
      "bbox_px": [
@@ -207,7 +207,7 @@
       791.4
      ],
      "subsystem": "fins",
-     "name": "Half-fin lower right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot"
+     "name": "Half-fin lower right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot"
     },
     "FIN-002-R": {
      "bbox_px": [
@@ -222,7 +222,7 @@
     "FIN-003-UR": {
      "bbox_px": [
       1269.2,
-      374.0,
+      371.7,
       1320.5,
       424.8
      ],
@@ -261,7 +261,7 @@
     },
     "FIN-008-UR": {
      "bbox_px": [
-      1257.7,
+      1259.1,
       388.5,
       1307.3,
       477.8
@@ -314,7 +314,7 @@
       1296.2,
       422.5,
       1297.6,
-      727.8
+      709.4
      ],
      "subsystem": "fins",
      "name": "Edge strip upper right outboard face, CF 10 x 1"
@@ -324,7 +324,7 @@
       1281.4,
       422.5,
       1282.8,
-      727.8
+      709.4
      ],
      "subsystem": "fins",
      "name": "Edge strip upper right inboard face, CF 10 x 1"
@@ -332,12 +332,12 @@
     "FIN-012-UR": {
      "bbox_px": [
       1281.4,
-      486.3,
+      486.2,
       1297.6,
-      714.8
+      693.6
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UR, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UR, 11 x CF rod 2.5 mm"
     },
     "FIN-007-LR": {
      "bbox_px": [
@@ -362,19 +362,19 @@
     "FIN-012-LR": {
      "bbox_px": [
       1281.4,
-      486.3,
+      486.2,
       1297.6,
-      714.8
+      693.6
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LR, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm"
     },
     "FIN-011-LRO": {
      "bbox_px": [
       1296.2,
       422.5,
       1297.6,
-      727.8
+      709.4
      ],
      "subsystem": "fins",
      "name": "Edge strip lower right outboard face, CF 10 x 1"
@@ -384,7 +384,7 @@
       1281.4,
       422.5,
       1282.8,
-      727.8
+      709.4
      ],
      "subsystem": "fins",
      "name": "Edge strip lower right inboard face, CF 10 x 1"
@@ -427,7 +427,7 @@
       791.4
      ],
      "subsystem": "fins",
-     "name": "Half-fin upper left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets"
+     "name": "Half-fin upper left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets"
     },
     "FIN-007-UL": {
      "bbox_px": [
@@ -472,19 +472,19 @@
     "FIN-012-UL": {
      "bbox_px": [
       385.4,
-      486.3,
+      486.2,
       401.6,
-      714.8
+      693.6
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UL, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UL, 11 x CF rod 2.5 mm"
     },
     "FIN-011-ULO": {
      "bbox_px": [
       385.4,
       422.5,
       386.8,
-      727.8
+      709.4
      ],
      "subsystem": "fins",
      "name": "Edge strip upper left outboard face, CF 10 x 1"
@@ -494,7 +494,7 @@
       400.2,
       422.5,
       401.6,
-      727.8
+      709.4
      ],
      "subsystem": "fins",
      "name": "Edge strip upper left inboard face, CF 10 x 1"
@@ -507,7 +507,7 @@
       791.4
      ],
      "subsystem": "fins",
-     "name": "Half-fin lower left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot"
+     "name": "Half-fin lower left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot"
     },
     "FIN-007-LL": {
      "bbox_px": [
@@ -522,7 +522,7 @@
     "FIN-008-LL": {
      "bbox_px": [
       375.7,
-      388.5,
+      388.7,
       425.3,
       477.8
      ],
@@ -552,19 +552,19 @@
     "FIN-012-LL": {
      "bbox_px": [
       385.4,
-      486.3,
+      486.2,
       401.6,
-      714.8
+      693.6
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LL, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LL, 11 x CF rod 2.5 mm"
     },
     "FIN-011-LLO": {
      "bbox_px": [
       385.4,
       422.5,
       386.8,
-      727.8
+      709.4
      ],
      "subsystem": "fins",
      "name": "Edge strip lower left outboard face, CF 10 x 1"
@@ -574,7 +574,7 @@
       400.2,
       422.5,
       401.6,
-      727.8
+      709.4
      ],
      "subsystem": "fins",
      "name": "Edge strip lower left inboard face, CF 10 x 1"
@@ -602,7 +602,7 @@
     "FIN-003-LL": {
      "bbox_px": [
       362.5,
-      374.0,
+      375.0,
       413.8,
       424.8
      ],
@@ -744,10 +744,10 @@
       750.9,
       155.5,
       932.1,
-      444.2
+      434.4
      ],
      "subsystem": "pod",
-     "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics, ribbed PDB and UBEC plates, JR tie bar (printed PETG)"
+     "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics and ribbed PDB plates, JR tie bar (printed PETG)"
     },
     "POD-003": {
      "bbox_px": [
@@ -762,7 +762,7 @@
     "POD-004": {
      "bbox_px": [
       805.4,
-      225.1,
+      201.3,
       877.6,
       383.3
      ],
@@ -774,7 +774,7 @@
       805.5,
       159.7,
       877.5,
-      202.0
+      196.4
      ],
      "subsystem": "pod",
      "name": "Crush block (XPS F-250, hot-wired, cut per pack, vent groove)"
@@ -782,9 +782,9 @@
     "POD-010": {
      "bbox_px": [
       805.5,
-      202.0,
+      196.4,
       877.5,
-      204.1
+      198.5
      ],
      "subsystem": "pod",
      "name": "Spreader (1.5 mm PETG plate, full block section)"
@@ -792,7 +792,7 @@
     "POD-008": {
      "bbox_px": [
       806.5,
-      393.1,
+      387.5,
       876.5,
       409.9
      ],
@@ -851,19 +851,19 @@
     },
     "GER-001-UR": {
      "bbox_px": [
-      1267.7,
-      698.7,
-      1311.3,
-      800.9
+      1271.4,
+      698.4,
+      1307.6,
+      800.6
      ],
      "subsystem": "landing",
      "name": "Foot shoe UR"
     },
     "GER-002-UR": {
      "bbox_px": [
-      1271.6,
-      765.9,
-      1307.3,
+      1276.1,
+      765.6,
+      1302.9,
       856.4
      ],
      "subsystem": "landing",
@@ -871,29 +871,29 @@
     },
     "GER-003-UR": {
      "bbox_px": [
-      1274.9,
-      711.3,
-      1304.1,
-      854.1
+      1279.4,
+      711.0,
+      1299.7,
+      853.8
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type U (solid) UR"
     },
     "GER-008-LR": {
      "bbox_px": [
-      1274.9,
-      711.3,
-      1304.1,
-      854.1
+      1279.4,
+      711.0,
+      1299.7,
+      853.8
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type L (bored) LR"
     },
     "GER-004-UR": {
      "bbox_px": [
-      1271.6,
+      1276.1,
       856.4,
-      1307.3,
+      1302.9,
       858.6
      ],
      "subsystem": "landing",
@@ -911,39 +911,39 @@
     },
     "GER-001-UL": {
      "bbox_px": [
-      371.7,
-      698.7,
-      415.3,
-      800.9
+      375.4,
+      698.4,
+      411.6,
+      800.6
      ],
      "subsystem": "landing",
      "name": "Foot shoe UL"
     },
     "GER-001-LR": {
      "bbox_px": [
-      1267.7,
-      698.7,
-      1311.3,
-      800.9
+      1271.4,
+      698.4,
+      1307.6,
+      800.6
      ],
      "subsystem": "landing",
      "name": "Foot shoe LR"
     },
     "GER-001-LL": {
      "bbox_px": [
-      371.7,
-      698.7,
-      415.3,
-      800.9
+      375.4,
+      698.4,
+      411.6,
+      800.6
      ],
      "subsystem": "landing",
      "name": "Foot shoe LL"
     },
     "GER-004-UL": {
      "bbox_px": [
-      375.7,
+      380.1,
       856.4,
-      411.4,
+      406.9,
       858.6
      ],
      "subsystem": "landing",
@@ -951,9 +951,9 @@
     },
     "GER-004-LR": {
      "bbox_px": [
-      1271.6,
+      1276.1,
       856.4,
-      1307.3,
+      1302.9,
       858.6
      ],
      "subsystem": "landing",
@@ -961,9 +961,9 @@
     },
     "GER-004-LL": {
      "bbox_px": [
-      375.7,
+      380.1,
       856.4,
-      411.4,
+      406.9,
       858.6
      ],
      "subsystem": "landing",
@@ -971,9 +971,9 @@
     },
     "GER-002-UL": {
      "bbox_px": [
-      375.7,
-      765.9,
-      411.4,
+      380.1,
+      765.6,
+      406.9,
       856.4
      ],
      "subsystem": "landing",
@@ -981,9 +981,9 @@
     },
     "GER-002-LR": {
      "bbox_px": [
-      1271.6,
-      765.9,
-      1307.3,
+      1276.1,
+      765.6,
+      1302.9,
       856.4
      ],
      "subsystem": "landing",
@@ -991,9 +991,9 @@
     },
     "GER-002-LL": {
      "bbox_px": [
-      375.7,
-      765.9,
-      411.4,
+      380.1,
+      765.6,
+      406.9,
       856.4
      ],
      "subsystem": "landing",
@@ -1001,20 +1001,20 @@
     },
     "GER-003-UL": {
      "bbox_px": [
-      378.9,
-      711.3,
-      408.1,
-      854.1
+      383.3,
+      711.0,
+      403.6,
+      853.8
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type U (solid) UL"
     },
     "GER-008-LL": {
      "bbox_px": [
-      378.9,
-      711.3,
-      408.1,
-      854.1
+      383.3,
+      711.0,
+      403.6,
+      853.8
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type L (bored) LL"
@@ -1612,7 +1612,7 @@
     "PWR-001": {
      "bbox_px": [
       761.2,
-      204.1,
+      198.5,
       873.7,
       427.4
      ],
@@ -1622,22 +1622,22 @@
     "PWR-006": {
      "bbox_px": [
       752.8,
-      269.2,
+      251.0,
       800.4,
       427.4
      ],
      "subsystem": "power",
-     "name": "Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)"
+     "name": "Power frame: deck on 4 spacers (56 x 34 mm board seat = KO-PWR-BOARD), wire window, AS150U cradle, legs (printed PETG)"
     },
     "PWR-003": {
      "bbox_px": [
       754.2,
-      270.6,
+      256.6,
       799.0,
       329.4
      ],
      "subsystem": "power",
-     "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack"
+     "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack"
     },
     "PWR-002": {
      "bbox_px": [
@@ -1658,26 +1658,6 @@
      ],
      "subsystem": "power",
      "name": "Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)"
-    },
-    "PWR-007": {
-     "bbox_px": [
-      750.9,
-      349.0,
-      766.3,
-      385.4
-     ],
-     "subsystem": "power",
-     "name": "UBEC feed fuse 5 A mini blade in an inline holder"
-    },
-    "PWR-005": {
-     "bbox_px": [
-      890.3,
-      405.0,
-      922.5,
-      462.4
-     ],
-     "subsystem": "power",
-     "name": "UBEC 6.0 V, 8 A class, servo rail"
     },
     "PWR-008-UR": {
      "bbox_px": [
@@ -1864,9 +1844,9 @@
     "WNG-006-R": {
      "bbox_px": [
       363.9,
-      310.2,
+      310.1,
       423.1,
-      354.1
+      354.2
      ],
      "subsystem": "wing",
      "name": "Block-pocket lip beads (microballoon epoxy) R"
@@ -1874,9 +1854,9 @@
     "WNG-006-L": {
      "bbox_px": [
       1259.9,
-      310.2,
+      310.1,
       1319.1,
-      354.1
+      354.2
      ],
      "subsystem": "wing",
      "name": "Block-pocket lip beads (microballoon epoxy) L"
@@ -1884,7 +1864,7 @@
     "WNG-007": {
      "bbox_px": [
       743.5,
-      314.0,
+      314.3,
       939.5,
       321.0
      ],
@@ -2009,7 +1989,7 @@
       341.6
      ],
      "subsystem": "fins",
-     "name": "Half-fin upper right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets"
+     "name": "Half-fin upper right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets"
     },
     "FIN-001-LR": {
      "bbox_px": [
@@ -2019,7 +1999,7 @@
       636.0
      ],
      "subsystem": "fins",
-     "name": "Half-fin lower right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot"
+     "name": "Half-fin lower right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot"
     },
     "FIN-002-R": {
      "bbox_px": [
@@ -2036,7 +2016,7 @@
       362.5,
       55.0,
       413.8,
-      118.0
+      122.2
      ],
      "subsystem": "fins",
      "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)"
@@ -2074,8 +2054,8 @@
     "FIN-008-UR": {
      "bbox_px": [
       375.7,
-      104.2,
-      425.3,
+      103.4,
+      423.9,
       139.7
      ],
      "subsystem": "fins",
@@ -2144,12 +2124,12 @@
     "FIN-012-UR": {
      "bbox_px": [
       385.4,
-      56.9,
+      57.8,
       401.6,
-      112.5
+      111.5
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UR, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UR, 11 x CF rod 2.5 mm"
     },
     "FIN-007-LR": {
      "bbox_px": [
@@ -2166,7 +2146,7 @@
       375.7,
       544.3,
       425.3,
-      579.8
+      580.6
      ],
      "subsystem": "fins",
      "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug"
@@ -2174,12 +2154,12 @@
     "FIN-012-LR": {
      "bbox_px": [
       385.4,
-      571.5,
+      572.5,
       401.6,
-      627.1
+      626.2
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LR, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm"
     },
     "FIN-011-LRO": {
      "bbox_px": [
@@ -2239,7 +2219,7 @@
       341.6
      ],
      "subsystem": "fins",
-     "name": "Half-fin upper left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets"
+     "name": "Half-fin upper left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets"
     },
     "FIN-007-UL": {
      "bbox_px": [
@@ -2254,7 +2234,7 @@
     "FIN-008-UL": {
      "bbox_px": [
       1257.7,
-      104.2,
+      103.4,
       1307.3,
       139.7
      ],
@@ -2284,12 +2264,12 @@
     "FIN-012-UL": {
      "bbox_px": [
       1281.4,
-      56.9,
+      57.8,
       1297.6,
-      112.5
+      111.5
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UL, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UL, 11 x CF rod 2.5 mm"
     },
     "FIN-011-ULO": {
      "bbox_px": [
@@ -2319,7 +2299,7 @@
       636.0
      ],
      "subsystem": "fins",
-     "name": "Half-fin lower left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot"
+     "name": "Half-fin lower left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot"
     },
     "FIN-007-LL": {
      "bbox_px": [
@@ -2334,9 +2314,9 @@
     "FIN-008-LL": {
      "bbox_px": [
       1257.7,
-      544.3,
+      548.5,
       1307.3,
-      579.8
+      580.6
      ],
      "subsystem": "fins",
      "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug"
@@ -2364,12 +2344,12 @@
     "FIN-012-LL": {
      "bbox_px": [
       1281.4,
-      571.5,
+      572.5,
       1297.6,
-      627.1
+      626.2
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LL, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LL, 11 x CF rod 2.5 mm"
     },
     "FIN-011-LLO": {
      "bbox_px": [
@@ -2396,7 +2376,7 @@
       1269.2,
       55.0,
       1320.5,
-      118.0
+      122.2
      ],
      "subsystem": "fins",
      "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)"
@@ -2404,7 +2384,7 @@
     "FIN-003-LR": {
      "bbox_px": [
       362.5,
-      566.0,
+      561.8,
       413.8,
       629.0
      ],
@@ -2414,7 +2394,7 @@
     "FIN-003-LL": {
      "bbox_px": [
       1269.2,
-      566.0,
+      561.8,
       1320.5,
       629.0
      ],
@@ -2559,7 +2539,7 @@
       322.7
      ],
      "subsystem": "pod",
-     "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics, ribbed PDB and UBEC plates, JR tie bar (printed PETG)"
+     "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics and ribbed PDB plates, JR tie bar (printed PETG)"
     },
     "POD-003": {
      "bbox_px": [
@@ -2663,50 +2643,50 @@
     },
     "GER-001-UR": {
      "bbox_px": [
-      371.7,
+      375.4,
       35.4,
-      415.3,
-      71.0
+      411.6,
+      70.1
      ],
      "subsystem": "landing",
      "name": "Foot shoe UR"
     },
     "GER-002-UR": {
      "bbox_px": [
-      375.7,
+      380.1,
       35.4,
-      411.4,
-      61.2
+      406.9,
+      60.3
      ],
      "subsystem": "landing",
      "name": "Foot piston UR"
     },
     "GER-003-UR": {
      "bbox_px": [
-      378.9,
-      42.5,
-      408.1,
-      57.9
+      383.3,
+      43.4,
+      403.6,
+      57.1
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type U (solid) UR"
     },
     "GER-008-LR": {
      "bbox_px": [
-      378.9,
-      626.1,
-      408.1,
-      641.5
+      383.3,
+      626.9,
+      403.6,
+      640.6
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type L (bored) LR"
     },
     "GER-004-UR": {
      "bbox_px": [
-      375.7,
+      380.1,
       35.4,
-      411.4,
-      61.2
+      406.9,
+      60.3
      ],
      "subsystem": "landing",
      "name": "Foot pad UR"
@@ -2723,19 +2703,19 @@
     },
     "GER-001-UL": {
      "bbox_px": [
-      1267.7,
+      1271.4,
       35.4,
-      1311.3,
-      71.0
+      1307.6,
+      70.1
      ],
      "subsystem": "landing",
      "name": "Foot shoe UL"
     },
     "GER-001-LR": {
      "bbox_px": [
-      371.7,
-      613.0,
-      415.3,
+      375.4,
+      613.9,
+      411.6,
       648.6
      ],
      "subsystem": "landing",
@@ -2743,9 +2723,9 @@
     },
     "GER-001-LL": {
      "bbox_px": [
-      1267.7,
-      613.0,
-      1311.3,
+      1271.4,
+      613.9,
+      1307.6,
       648.6
      ],
      "subsystem": "landing",
@@ -2753,19 +2733,19 @@
     },
     "GER-004-UL": {
      "bbox_px": [
-      1271.6,
+      1276.1,
       35.4,
-      1307.3,
-      61.2
+      1302.9,
+      60.3
      ],
      "subsystem": "landing",
      "name": "Foot pad UL"
     },
     "GER-004-LR": {
      "bbox_px": [
-      375.7,
-      622.8,
-      411.4,
+      380.1,
+      623.7,
+      406.9,
       648.6
      ],
      "subsystem": "landing",
@@ -2773,9 +2753,9 @@
     },
     "GER-004-LL": {
      "bbox_px": [
-      1271.6,
-      622.8,
-      1307.3,
+      1276.1,
+      623.7,
+      1302.9,
       648.6
      ],
      "subsystem": "landing",
@@ -2783,19 +2763,19 @@
     },
     "GER-002-UL": {
      "bbox_px": [
-      1271.6,
+      1276.1,
       35.4,
-      1307.3,
-      61.2
+      1302.9,
+      60.3
      ],
      "subsystem": "landing",
      "name": "Foot piston UL"
     },
     "GER-002-LR": {
      "bbox_px": [
-      375.7,
-      622.8,
-      411.4,
+      380.1,
+      623.7,
+      406.9,
       648.6
      ],
      "subsystem": "landing",
@@ -2803,9 +2783,9 @@
     },
     "GER-002-LL": {
      "bbox_px": [
-      1271.6,
-      622.8,
-      1307.3,
+      1276.1,
+      623.7,
+      1302.9,
       648.6
      ],
      "subsystem": "landing",
@@ -2813,20 +2793,20 @@
     },
     "GER-003-UL": {
      "bbox_px": [
-      1274.9,
-      42.5,
-      1304.1,
-      57.9
+      1279.4,
+      43.4,
+      1299.7,
+      57.1
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type U (solid) UL"
     },
     "GER-008-LL": {
      "bbox_px": [
-      1274.9,
-      626.1,
-      1304.1,
-      641.5
+      1279.4,
+      626.9,
+      1299.7,
+      640.6
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type L (bored) LL"
@@ -3194,7 +3174,7 @@
     "MEC-004-R": {
      "bbox_px": [
       426.8,
-      335.2,
+      334.2,
       452.3,
       374.7
      ],
@@ -3214,7 +3194,7 @@
     "MEC-006-R": {
      "bbox_px": [
       334.7,
-      335.2,
+      334.2,
       360.2,
       364.2
      ],
@@ -3264,9 +3244,9 @@
     "MEC-010-R": {
      "bbox_px": [
       57.5,
-      334.0,
+      331.5,
       743.5,
-      334.1
+      336.2
      ],
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips right"
@@ -3304,7 +3284,7 @@
     "MEC-004-L": {
      "bbox_px": [
       1230.7,
-      335.2,
+      334.2,
       1256.2,
       374.7
      ],
@@ -3324,7 +3304,7 @@
     "MEC-006-L": {
      "bbox_px": [
       1322.8,
-      335.2,
+      334.2,
       1348.3,
       364.2
      ],
@@ -3374,9 +3354,9 @@
     "MEC-010-L": {
      "bbox_px": [
       939.5,
-      334.0,
+      331.5,
       1625.5,
-      334.1
+      336.2
      ],
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips left"
@@ -3439,7 +3419,7 @@
       314.3
      ],
      "subsystem": "power",
-     "name": "Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)"
+     "name": "Power frame: deck on 4 spacers (56 x 34 mm board seat = KO-PWR-BOARD), wire window, AS150U cradle, legs (printed PETG)"
     },
     "PWR-003": {
      "bbox_px": [
@@ -3449,7 +3429,7 @@
       286.6
      ],
      "subsystem": "power",
-     "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack"
+     "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack"
     },
     "PWR-002": {
      "bbox_px": [
@@ -3470,26 +3450,6 @@
      ],
      "subsystem": "power",
      "name": "Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)"
-    },
-    "PWR-007": {
-     "bbox_px": [
-      916.7,
-      290.8,
-      932.1,
-      303.4
-     ],
-     "subsystem": "power",
-     "name": "UBEC feed fuse 5 A mini blade in an inline holder"
-    },
-    "PWR-005": {
-     "bbox_px": [
-      760.5,
-      299.2,
-      792.7,
-      313.2
-     ],
-     "subsystem": "power",
-     "name": "UBEC 6.0 V, 8 A class, servo rail"
     },
     "PWR-008-UR": {
      "bbox_px": [
@@ -3676,9 +3636,9 @@
     "WNG-006-R": {
      "bbox_px": [
       382.4,
-      310.2,
+      310.1,
       479.4,
-      354.1
+      354.2
      ],
      "subsystem": "wing",
      "name": "Block-pocket lip beads (microballoon epoxy) R"
@@ -3686,9 +3646,9 @@
     "WNG-006-L": {
      "bbox_px": [
       382.4,
-      310.2,
+      310.1,
       479.4,
-      354.1
+      354.2
      ],
      "subsystem": "wing",
      "name": "Block-pocket lip beads (microballoon epoxy) L"
@@ -3696,7 +3656,7 @@
     "WNG-007": {
      "bbox_px": [
       427.4,
-      314.0,
+      314.3,
       434.4,
       321.0
      ],
@@ -3755,7 +3715,7 @@
     },
     "WNG-003": {
      "bbox_px": [
-      343.4,
+      343.0,
       309.7,
       791.4,
       354.6
@@ -3767,7 +3727,7 @@
      "bbox_px": [
       504.4,
       310.5,
-      644.4,
+      644.5,
       326.9
      ],
      "subsystem": "wing",
@@ -3821,7 +3781,7 @@
       341.6
      ],
      "subsystem": "fins",
-     "name": "Half-fin upper right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets"
+     "name": "Half-fin upper right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets"
     },
     "FIN-001-LR": {
      "bbox_px": [
@@ -3831,7 +3791,7 @@
       636.0
      ],
      "subsystem": "fins",
-     "name": "Half-fin lower right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot"
+     "name": "Half-fin lower right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot"
     },
     "FIN-002-R": {
      "bbox_px": [
@@ -3845,10 +3805,10 @@
     },
     "FIN-003-UR": {
      "bbox_px": [
-      374.0,
+      371.7,
       55.0,
       424.8,
-      118.0
+      122.2
      ],
      "subsystem": "fins",
      "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)"
@@ -3886,7 +3846,7 @@
     "FIN-008-UR": {
      "bbox_px": [
       388.5,
-      104.2,
+      103.4,
       477.8,
       139.7
      ],
@@ -3937,7 +3897,7 @@
      "bbox_px": [
       422.5,
       48.0,
-      727.8,
+      709.4,
       133.1
      ],
      "subsystem": "fins",
@@ -3947,7 +3907,7 @@
      "bbox_px": [
       422.5,
       48.0,
-      727.8,
+      709.4,
       133.1
      ],
      "subsystem": "fins",
@@ -3955,13 +3915,13 @@
     },
     "FIN-012-UR": {
      "bbox_px": [
-      486.3,
-      56.9,
-      714.8,
-      112.5
+      486.2,
+      57.8,
+      693.6,
+      111.5
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UR, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UR, 11 x CF rod 2.5 mm"
     },
     "FIN-007-LR": {
      "bbox_px": [
@@ -3978,26 +3938,26 @@
       388.5,
       544.3,
       477.8,
-      579.8
+      580.6
      ],
      "subsystem": "fins",
      "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-012-LR": {
      "bbox_px": [
-      486.3,
-      571.5,
-      714.8,
-      627.1
+      486.2,
+      572.5,
+      693.6,
+      626.2
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LR, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm"
     },
     "FIN-011-LRO": {
      "bbox_px": [
       422.5,
       550.9,
-      727.8,
+      709.4,
       636.0
      ],
      "subsystem": "fins",
@@ -4007,7 +3967,7 @@
      "bbox_px": [
       422.5,
       550.9,
-      727.8,
+      709.4,
       636.0
      ],
      "subsystem": "fins",
@@ -4051,7 +4011,7 @@
       341.6
      ],
      "subsystem": "fins",
-     "name": "Half-fin upper left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets"
+     "name": "Half-fin upper left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets"
     },
     "FIN-007-UL": {
      "bbox_px": [
@@ -4066,7 +4026,7 @@
     "FIN-008-UL": {
      "bbox_px": [
       388.5,
-      104.2,
+      103.4,
       477.8,
       139.7
      ],
@@ -4095,19 +4055,19 @@
     },
     "FIN-012-UL": {
      "bbox_px": [
-      486.3,
-      56.9,
-      714.8,
-      112.5
+      486.2,
+      57.8,
+      693.6,
+      111.5
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UL, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UL, 11 x CF rod 2.5 mm"
     },
     "FIN-011-ULO": {
      "bbox_px": [
       422.5,
       48.0,
-      727.8,
+      709.4,
       133.1
      ],
      "subsystem": "fins",
@@ -4117,7 +4077,7 @@
      "bbox_px": [
       422.5,
       48.0,
-      727.8,
+      709.4,
       133.1
      ],
      "subsystem": "fins",
@@ -4131,7 +4091,7 @@
       636.0
      ],
      "subsystem": "fins",
-     "name": "Half-fin lower left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot"
+     "name": "Half-fin lower left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot"
     },
     "FIN-007-LL": {
      "bbox_px": [
@@ -4145,10 +4105,10 @@
     },
     "FIN-008-LL": {
      "bbox_px": [
-      388.5,
-      544.3,
+      388.7,
+      548.5,
       477.8,
-      579.8
+      580.6
      ],
      "subsystem": "fins",
      "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug"
@@ -4175,19 +4135,19 @@
     },
     "FIN-012-LL": {
      "bbox_px": [
-      486.3,
-      571.5,
-      714.8,
-      627.1
+      486.2,
+      572.5,
+      693.6,
+      626.2
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LL, 12 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LL, 11 x CF rod 2.5 mm"
     },
     "FIN-011-LLO": {
      "bbox_px": [
       422.5,
       550.9,
-      727.8,
+      709.4,
       636.0
      ],
      "subsystem": "fins",
@@ -4197,7 +4157,7 @@
      "bbox_px": [
       422.5,
       550.9,
-      727.8,
+      709.4,
       636.0
      ],
      "subsystem": "fins",
@@ -4208,7 +4168,7 @@
       374.0,
       55.0,
       424.8,
-      118.0
+      122.2
      ],
      "subsystem": "fins",
      "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)"
@@ -4216,7 +4176,7 @@
     "FIN-003-LR": {
      "bbox_px": [
       374.0,
-      566.0,
+      561.8,
       424.8,
       629.0
      ],
@@ -4225,8 +4185,8 @@
     },
     "FIN-003-LL": {
      "bbox_px": [
-      374.0,
-      566.0,
+      375.0,
+      561.8,
       424.8,
       629.0
      ],
@@ -4367,11 +4327,11 @@
      "bbox_px": [
       155.5,
       271.6,
-      444.2,
+      434.4,
       322.7
      ],
      "subsystem": "pod",
-     "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics, ribbed PDB and UBEC plates, JR tie bar (printed PETG)"
+     "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics and ribbed PDB plates, JR tie bar (printed PETG)"
     },
     "POD-003": {
      "bbox_px": [
@@ -4385,7 +4345,7 @@
     },
     "POD-004": {
      "bbox_px": [
-      225.1,
+      201.3,
       238.7,
       383.3,
       316.4
@@ -4397,7 +4357,7 @@
      "bbox_px": [
       159.7,
       230.4,
-      202.0,
+      196.4,
       312.9
      ],
      "subsystem": "pod",
@@ -4405,9 +4365,9 @@
     },
     "POD-010": {
      "bbox_px": [
-      202.0,
+      196.4,
       230.4,
-      204.1,
+      198.5,
       312.9
      ],
      "subsystem": "pod",
@@ -4415,7 +4375,7 @@
     },
     "POD-008": {
      "bbox_px": [
-      393.1,
+      387.5,
       292.6,
       409.9,
       309.4
@@ -4475,40 +4435,40 @@
     },
     "GER-001-UR": {
      "bbox_px": [
-      698.7,
+      698.4,
       35.4,
-      800.9,
-      71.0
+      800.6,
+      70.1
      ],
      "subsystem": "landing",
      "name": "Foot shoe UR"
     },
     "GER-002-UR": {
      "bbox_px": [
-      765.9,
+      765.6,
       35.4,
       856.4,
-      61.2
+      60.3
      ],
      "subsystem": "landing",
      "name": "Foot piston UR"
     },
     "GER-003-UR": {
      "bbox_px": [
-      711.3,
-      42.5,
-      854.1,
-      57.9
+      711.0,
+      43.4,
+      853.8,
+      57.1
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type U (solid) UR"
     },
     "GER-008-LR": {
      "bbox_px": [
-      711.3,
-      626.1,
-      854.1,
-      641.5
+      711.0,
+      626.9,
+      853.8,
+      640.6
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type L (bored) LR"
@@ -4518,7 +4478,7 @@
       856.4,
       35.4,
       858.6,
-      61.2
+      60.3
      ],
      "subsystem": "landing",
      "name": "Foot pad UR"
@@ -4535,19 +4495,19 @@
     },
     "GER-001-UL": {
      "bbox_px": [
-      698.7,
+      698.4,
       35.4,
-      800.9,
-      71.0
+      800.6,
+      70.1
      ],
      "subsystem": "landing",
      "name": "Foot shoe UL"
     },
     "GER-001-LR": {
      "bbox_px": [
-      698.7,
-      613.0,
-      800.9,
+      698.4,
+      613.9,
+      800.6,
       648.6
      ],
      "subsystem": "landing",
@@ -4555,9 +4515,9 @@
     },
     "GER-001-LL": {
      "bbox_px": [
-      698.7,
-      613.0,
-      800.9,
+      698.4,
+      613.9,
+      800.6,
       648.6
      ],
      "subsystem": "landing",
@@ -4568,7 +4528,7 @@
       856.4,
       35.4,
       858.6,
-      61.2
+      60.3
      ],
      "subsystem": "landing",
      "name": "Foot pad UL"
@@ -4576,7 +4536,7 @@
     "GER-004-LR": {
      "bbox_px": [
       856.4,
-      622.8,
+      623.7,
       858.6,
       648.6
      ],
@@ -4586,7 +4546,7 @@
     "GER-004-LL": {
      "bbox_px": [
       856.4,
-      622.8,
+      623.7,
       858.6,
       648.6
      ],
@@ -4595,18 +4555,18 @@
     },
     "GER-002-UL": {
      "bbox_px": [
-      765.9,
+      765.6,
       35.4,
       856.4,
-      61.2
+      60.3
      ],
      "subsystem": "landing",
      "name": "Foot piston UL"
     },
     "GER-002-LR": {
      "bbox_px": [
-      765.9,
-      622.8,
+      765.6,
+      623.7,
       856.4,
       648.6
      ],
@@ -4615,8 +4575,8 @@
     },
     "GER-002-LL": {
      "bbox_px": [
-      765.9,
-      622.8,
+      765.6,
+      623.7,
       856.4,
       648.6
      ],
@@ -4625,20 +4585,20 @@
     },
     "GER-003-UL": {
      "bbox_px": [
-      711.3,
-      42.5,
-      854.1,
-      57.9
+      711.0,
+      43.4,
+      853.8,
+      57.1
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type U (solid) UL"
     },
     "GER-008-LL": {
      "bbox_px": [
-      711.3,
-      626.1,
-      854.1,
-      641.5
+      711.0,
+      626.9,
+      853.8,
+      640.6
      ],
      "subsystem": "landing",
      "name": "Crush cartridge type L (bored) LL"
@@ -5006,7 +4966,7 @@
     "MEC-004-R": {
      "bbox_px": [
       687.2,
-      335.2,
+      334.2,
       748.8,
       374.7
      ],
@@ -5026,7 +4986,7 @@
     "MEC-006-R": {
      "bbox_px": [
       687.2,
-      335.2,
+      334.2,
       748.8,
       364.2
      ],
@@ -5076,9 +5036,9 @@
     "MEC-010-R": {
      "bbox_px": [
       675.3,
-      334.0,
+      331.5,
       710.3,
-      334.1
+      336.2
      ],
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips right"
@@ -5116,7 +5076,7 @@
     "MEC-004-L": {
      "bbox_px": [
       687.2,
-      335.2,
+      334.2,
       748.8,
       374.7
      ],
@@ -5136,7 +5096,7 @@
     "MEC-006-L": {
      "bbox_px": [
       687.2,
-      335.2,
+      334.2,
       748.8,
       364.2
      ],
@@ -5186,9 +5146,9 @@
     "MEC-010-L": {
      "bbox_px": [
       675.3,
-      334.0,
+      331.5,
       710.3,
-      334.1
+      336.2
      ],
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips left"
@@ -5235,7 +5195,7 @@
     },
     "PWR-001": {
      "bbox_px": [
-      204.1,
+      198.5,
       240.8,
       427.4,
       309.4
@@ -5245,23 +5205,23 @@
     },
     "PWR-006": {
      "bbox_px": [
-      269.2,
+      251.0,
       274.0,
       427.4,
       314.3
      ],
      "subsystem": "power",
-     "name": "Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)"
+     "name": "Power frame: deck on 4 spacers (56 x 34 mm board seat = KO-PWR-BOARD), wire window, AS150U cradle, legs (printed PETG)"
     },
     "PWR-003": {
      "bbox_px": [
-      270.6,
+      256.6,
       274.0,
       329.4,
       286.6
      ],
      "subsystem": "power",
-     "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack"
+     "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack"
     },
     "PWR-002": {
      "bbox_px": [
@@ -5282,26 +5242,6 @@
      ],
      "subsystem": "power",
      "name": "Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)"
-    },
-    "PWR-007": {
-     "bbox_px": [
-      349.0,
-      290.8,
-      385.4,
-      303.4
-     ],
-     "subsystem": "power",
-     "name": "UBEC feed fuse 5 A mini blade in an inline holder"
-    },
-    "PWR-005": {
-     "bbox_px": [
-      405.0,
-      299.2,
-      462.4,
-      313.2
-     ],
-     "subsystem": "power",
-     "name": "UBEC 6.0 V, 8 A class, servo rail"
     },
     "PWR-008-UR": {
      "bbox_px": [

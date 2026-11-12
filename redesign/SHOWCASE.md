@@ -114,7 +114,7 @@ programme and support, each role producing its own work in [`team/<role>/`](team
 
 <details><summary><b>Full overview page as one image</b></summary>
 
-![Overview page](showcase/pages/overview-full.png)
+![Overview page](showcase/pages/overview-full.jpg)
 
 </details>
 

@@ -318,7 +318,8 @@ def check(pairs, report_mm):
                     break
         if depth <= report_mm:
             continue
-        key = tuple(sorted((a.pid, b.pid)))
+        key = tuple(sorted((a.pid if a.pid != b.pid else '%s#%d' % (a.pid, a.idx), b.pid if a.pid != b.pid
+                            else '%s#%d' % (b.pid, b.idx))))
         h = hits.setdefault(key, {'a': key[0], 'b': key[1], 'depth_mm': 0.0, 'at_mm': None, 'bodies': []})
         if depth > h['depth_mm']:
             h['depth_mm'], h['at_mm'] = round(depth, 3), [round(v, 2) for v in at]
@@ -335,7 +336,9 @@ def sweep_pairs(bodies):
     for b in order:
         act = [a for a in act if a.hi[0] > b.lo[0] + EPS_BOX]
         for a in act:
-            if a.pid != b.pid:
+            # D-87: strands of one wire (the two conductors of a pair, a pigtail and its extension) are checked
+            # against each other too: they are separate conductors and may touch but not merge
+            if a.pid != b.pid or (getattr(a, 'wire', False) and getattr(b, 'wire', False) and a.idx != b.idx):
                 yield a, b
         act.append(b)
 

@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 25.42,
+ "render_s": 48.59,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 50,
   "location_m": [
-   -2.5635,
-   -1.8976,
-   1.8153
+   -2.5658,
+   -1.8991,
+   1.8163
   ],
   "fit": "visible",
   "frame": [
@@ -34,31 +34,31 @@
   "sub": "Illustrative separation; wiring hidden"
  },
  "subject_px": [
-  350,
+  351,
   161,
-  1250,
-  842
+  1249,
+  841
  ],
  "callouts": [
   {
    "item": "WNG-003",
-   "x": 820.8,
-   "y": 535.6,
+   "x": 631.1,
+   "y": 507.6,
    "title": "",
    "text": "Wing",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1511,
-    -0.1084,
-    0.0192
+    0.0497,
+    0.2135,
+    0.0206
    ]
   },
   {
    "item": "POD-001",
-   "x": 711.3,
-   "y": 458.5,
+   "x": 711.4,
+   "y": 458.3,
    "title": "",
    "text": "Pod",
    "detail": null,
@@ -72,8 +72,8 @@
   },
   {
    "item": "AVN-004",
-   "x": 686.2,
-   "y": 296.2,
+   "x": 686.3,
+   "y": 296.1,
    "title": "",
    "text": "Avionics",
    "detail": null,
@@ -87,23 +87,38 @@
   },
   {
    "item": "PWR-001",
-   "x": 721.2,
-   "y": 331.4,
+   "x": 720.4,
+   "y": 332.1,
    "title": "",
    "text": "Power",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0032,
+    -0.0058,
     -0.023,
-    0.426
+    0.4255
+   ]
+  },
+  {
+   "item": "HRN-105-SL",
+   "x": 907.6,
+   "y": 719.2,
+   "title": "",
+   "text": "Harness",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1509,
+    -0.2867,
+    -0.2817
    ]
   },
   {
    "item": "FIN-001-UL",
-   "x": 1037.4,
-   "y": 543.4,
+   "x": 1037.2,
+   "y": 543.0,
    "title": "",
    "text": "Fins + motor tubes",
    "detail": null,
@@ -112,13 +127,13 @@
    "world_m": [
     0.2056,
     -0.4848,
-    0.0965
+    0.0967
    ]
   },
   {
    "item": "PRP-003-UL",
-   "x": 886.2,
-   "y": 595.7,
+   "x": 886.1,
+   "y": 595.3,
    "title": "",
    "text": "Propulsion",
    "detail": null,
@@ -132,32 +147,32 @@
   },
   {
    "item": "GER-001-UL",
-   "x": 1110.9,
-   "y": 422.4,
+   "x": 1111.6,
+   "y": 422.3,
    "title": "",
    "text": "Landing feet",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.4399,
-    -0.487,
-    0.2162
+    0.4416,
+    -0.4878,
+    0.2156
    ]
   },
   {
-   "item": "MEC-004-L",
-   "x": 1028.0,
-   "y": 552.6,
+   "item": "MEC-010-L",
+   "x": 1074.1,
+   "y": 560.7,
    "title": "",
    "text": "Mechanisms",
    "detail": null,
    "role": "context",
-   "occluded": true,
+   "occluded": false,
    "world_m": [
-    0.5585,
-    -0.287,
-    -0.1471
+    0.5591,
+    -0.3795,
+    -0.1354
    ]
   }
  ],
@@ -167,13 +182,13 @@
    "role": "context",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.8,
+   "mass_g": 201.9,
    "subsystem": "wing",
    "bbox_px": [
-    453,
-    410,
-    1117,
-    670
+    454,
+    411,
+    1116,
+    669
    ]
   },
   {
@@ -187,7 +202,7 @@
     565,
     477,
     610,
-    514
+    513
    ]
   },
   {
@@ -212,10 +227,10 @@
    "mass_g": 1.1,
    "subsystem": "wing",
    "bbox_px": [
-    702,
+    703,
     527,
     773,
-    554
+    553
    ]
   },
   {
@@ -227,7 +242,7 @@
    "subsystem": "wing",
    "bbox_px": [
     511,
-    460,
+    459,
     1008,
     635
    ]
@@ -269,7 +284,7 @@
    "subsystem": "wing",
    "bbox_px": [
     621,
-    497,
+    496,
     637,
     511
    ]
@@ -283,7 +298,7 @@
    "subsystem": "wing",
    "bbox_px": [
     857,
-    575,
+    574,
     874,
     590
    ]
@@ -311,7 +326,7 @@
    "subsystem": "wing",
    "bbox_px": [
     568,
-    449,
+    448,
     617,
     468
    ]
@@ -327,7 +342,7 @@
     663,
     447,
     789,
-    496
+    495
    ]
   },
   {
@@ -341,7 +356,7 @@
     834,
     500,
     970,
-    554
+    553
    ]
   },
   {
@@ -355,7 +370,7 @@
     550,
     412,
     667,
-    457
+    456
    ]
   },
   {
@@ -367,7 +382,7 @@
    "subsystem": "wing",
    "bbox_px": [
     972,
-    543,
+    542,
     1108,
     598
    ]
@@ -375,9 +390,9 @@
   {
    "id": "FIN-001-UR",
    "role": "context",
-   "name": "Half-fin upper right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets",
+   "name": "Half-fin upper right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets",
    "status": "MODELLED",
-   "mass_g": 25.5,
+   "mass_g": 25.6,
    "subsystem": "fins",
    "bbox_px": [
     508,
@@ -389,9 +404,9 @@
   {
    "id": "FIN-001-LR",
    "role": "context",
-   "name": "Half-fin lower right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot",
+   "name": "Half-fin lower right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot",
    "status": "MODELLED",
-   "mass_g": 26.23,
+   "mass_g": 26.33,
    "subsystem": "fins",
    "bbox_px": [
     513,
@@ -409,7 +424,7 @@
    "subsystem": "fins",
    "bbox_px": [
     498,
-    389,
+    388,
     523,
     567
    ]
@@ -419,13 +434,13 @@
    "role": "context",
    "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "subsystem": "fins",
    "bbox_px": [
     489,
-    371,
+    372,
     513,
-    401
+    402
    ]
   },
   {
@@ -437,7 +452,7 @@
    "subsystem": "fins",
    "bbox_px": [
     497,
-    455,
+    454,
     537,
     491
    ]
@@ -475,12 +490,12 @@
    "role": "context",
    "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "status": "MODELLED",
-   "mass_g": 10.51,
+   "mass_g": 10.5,
    "subsystem": "fins",
    "bbox_px": [
     498,
     381,
-    527,
+    528,
     409
    ]
   },
@@ -520,10 +535,10 @@
    "mass_g": 3.24,
    "subsystem": "fins",
    "bbox_px": [
-    549,
+    550,
     464,
     564,
-    478
+    477
    ]
   },
   {
@@ -534,7 +549,7 @@
    "mass_g": 3.09,
    "subsystem": "fins",
    "bbox_px": [
-    550,
+    551,
     482,
     565,
     495
@@ -545,12 +560,12 @@
    "role": "context",
    "name": "Edge strip upper right outboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
     507,
-    326,
-    585,
+    329,
+    581,
     400
    ]
   },
@@ -559,27 +574,27 @@
    "role": "context",
    "name": "Edge strip upper right inboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
-    511,
-    328,
-    590,
-    402
+    512,
+    330,
+    585,
+    401
    ]
   },
   {
    "id": "FIN-012-UR",
    "role": "context",
-   "name": "Edge-strip pin set UR, 12 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set UR, 11 x CF rod 2.5 mm",
    "status": "MODELLED",
-   "mass_g": 1.46,
+   "mass_g": 1.37,
    "subsystem": "fins",
    "bbox_px": [
     524,
-    332,
-    586,
-    385
+    335,
+    581,
+    384
    ]
   },
   {
@@ -592,7 +607,7 @@
    "bbox_px": [
     524,
     512,
-    541,
+    542,
     537
    ]
   },
@@ -601,10 +616,10 @@
    "role": "context",
    "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "status": "MODELLED",
-   "mass_g": 10.51,
+   "mass_g": 10.5,
    "subsystem": "fins",
    "bbox_px": [
-    508,
+    509,
     544,
     538,
     563
@@ -613,14 +628,14 @@
   {
    "id": "FIN-012-LR",
    "role": "context",
-   "name": "Edge-strip pin set LR, 12 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm",
    "status": "MODELLED",
-   "mass_g": 1.46,
+   "mass_g": 1.37,
    "subsystem": "fins",
    "bbox_px": [
     534,
-    529,
-    596,
+    531,
+    591,
     549
    ]
   },
@@ -629,12 +644,12 @@
    "role": "context",
    "name": "Edge strip lower right outboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
-    517,
-    526,
-    595,
+    518,
+    528,
+    591,
     554
    ]
   },
@@ -643,12 +658,12 @@
    "role": "context",
    "name": "Edge strip lower right inboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
     522,
-    527,
-    599,
+    530,
+    595,
     556
    ]
   },
@@ -662,7 +677,7 @@
    "bbox_px": [
     971,
     538,
-    994,
+    993,
     734
    ]
   },
@@ -675,9 +690,9 @@
    "subsystem": "fins",
    "bbox_px": [
     967,
-    609,
+    608,
     1008,
-    654
+    653
    ]
   },
   {
@@ -689,7 +704,7 @@
    "subsystem": "fins",
    "bbox_px": [
     975,
-    617,
+    616,
     989,
     652
    ]
@@ -697,12 +712,12 @@
   {
    "id": "FIN-001-UL",
    "role": "context",
-   "name": "Half-fin upper left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets",
+   "name": "Half-fin upper left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets",
    "status": "MODELLED",
-   "mass_g": 25.5,
+   "mass_g": 25.6,
    "subsystem": "fins",
    "bbox_px": [
-    984,
+    983,
     456,
     1075,
     624
@@ -717,9 +732,9 @@
    "subsystem": "fins",
    "bbox_px": [
     998,
-    544,
+    543,
     1014,
-    574
+    573
    ]
   },
   {
@@ -727,13 +742,13 @@
    "role": "context",
    "name": "Station collar UL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "status": "MODELLED",
-   "mass_g": 10.51,
+   "mass_g": 10.5,
    "subsystem": "fins",
    "bbox_px": [
     970,
     528,
     1007,
-    562
+    561
    ]
   },
   {
@@ -745,7 +760,7 @@
    "subsystem": "fins",
    "bbox_px": [
     949,
-    547,
+    546,
     977,
     602
    ]
@@ -759,7 +774,7 @@
    "subsystem": "fins",
    "bbox_px": [
     943,
-    594,
+    593,
     958,
     609
    ]
@@ -767,15 +782,15 @@
   {
    "id": "FIN-012-UL",
    "role": "context",
-   "name": "Edge-strip pin set UL, 12 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set UL, 11 x CF rod 2.5 mm",
    "status": "MODELLED",
-   "mass_g": 1.46,
+   "mass_g": 1.37,
    "subsystem": "fins",
    "bbox_px": [
     1001,
-    468,
-    1059,
-    532
+    471,
+    1055,
+    531
    ]
   },
   {
@@ -783,13 +798,13 @@
    "role": "context",
    "name": "Edge strip upper left outboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
     992,
-    463,
-    1062,
-    553
+    466,
+    1058,
+    552
    ]
   },
   {
@@ -797,21 +812,21 @@
    "role": "context",
    "name": "Edge strip upper left inboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
     986,
-    462,
-    1057,
+    465,
+    1052,
     551
    ]
   },
   {
    "id": "FIN-001-LL",
    "role": "context",
-   "name": "Half-fin lower left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot",
+   "name": "Half-fin lower left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot",
    "status": "MODELLED",
-   "mass_g": 26.23,
+   "mass_g": 26.33,
    "subsystem": "fins",
    "bbox_px": [
     979,
@@ -831,7 +846,7 @@
     992,
     672,
     1007,
-    702
+    701
    ]
   },
   {
@@ -839,7 +854,7 @@
    "role": "context",
    "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "status": "MODELLED",
-   "mass_g": 10.51,
+   "mass_g": 10.5,
    "subsystem": "fins",
    "bbox_px": [
     963,
@@ -871,7 +886,7 @@
    "subsystem": "fins",
    "bbox_px": [
     942,
-    613,
+    612,
     958,
     627
    ]
@@ -879,14 +894,14 @@
   {
    "id": "FIN-012-LL",
    "role": "context",
-   "name": "Edge-strip pin set LL, 12 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set LL, 11 x CF rod 2.5 mm",
    "status": "MODELLED",
-   "mass_g": 1.46,
+   "mass_g": 1.37,
    "subsystem": "fins",
    "bbox_px": [
-    993,
-    683,
-    1046,
+    992,
+    686,
+    1042,
     712
    ]
   },
@@ -895,13 +910,13 @@
    "role": "context",
    "name": "Edge strip lower left outboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
     984,
-    681,
-    1049,
-    722
+    684,
+    1045,
+    721
    ]
   },
   {
@@ -909,13 +924,13 @@
    "role": "context",
    "name": "Edge strip lower left inboard face, CF 10 x 1",
    "status": "MODELLED",
-   "mass_g": 4.07,
+   "mass_g": 3.87,
    "subsystem": "fins",
    "bbox_px": [
-    979,
-    679,
-    1043,
-    720
+    978,
+    683,
+    1039,
+    719
    ]
   },
   {
@@ -923,12 +938,12 @@
    "role": "context",
    "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "subsystem": "fins",
    "bbox_px": [
     971,
-    520,
-    1001,
+    519,
+    1000,
     554
    ]
   },
@@ -937,12 +952,12 @@
    "role": "context",
    "name": "Motor mount LR, ASA, 7 deg canted plate, slip clamp (print B)",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "subsystem": "fins",
    "bbox_px": [
     504,
-    554,
-    524,
+    553,
+    525,
     587
    ]
   },
@@ -951,13 +966,13 @@
    "role": "context",
    "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "subsystem": "fins",
    "bbox_px": [
     962,
-    720,
+    719,
     992,
-    757
+    755
    ]
   },
   {
@@ -983,9 +998,9 @@
    "subsystem": "fins",
    "bbox_px": [
     498,
-    389,
+    388,
     502,
-    393
+    392
    ]
   },
   {
@@ -1011,8 +1026,8 @@
    "subsystem": "fins",
    "bbox_px": [
     992,
-    545,
-    1001,
+    544,
+    1000,
     552
    ]
   },
@@ -1026,7 +1041,7 @@
    "bbox_px": [
     505,
     555,
-    513,
+    514,
     561
    ]
   },
@@ -1038,10 +1053,10 @@
    "mass_g": 1.1,
    "subsystem": "fins",
    "bbox_px": [
-    984,
-    727,
+    983,
+    726,
     992,
-    735
+    734
    ]
   },
   {
@@ -1055,7 +1070,7 @@
     996,
     544,
     1001,
-    549
+    548
    ]
   },
   {
@@ -1066,10 +1081,10 @@
    "mass_g": 0.36,
    "subsystem": "fins",
    "bbox_px": [
-    509,
-    555,
-    513,
-    559
+    510,
+    554,
+    514,
+    558
    ]
   },
   {
@@ -1083,7 +1098,7 @@
     988,
     726,
     992,
-    731
+    730
    ]
   },
   {
@@ -1094,7 +1109,7 @@
    "mass_g": 0.24,
    "subsystem": "fins",
    "bbox_px": [
-    993,
+    992,
     545,
     1000,
     552
@@ -1108,7 +1123,7 @@
    "mass_g": 0.24,
    "subsystem": "fins",
    "bbox_px": [
-    505,
+    506,
     555,
     512,
     561
@@ -1145,9 +1160,9 @@
   {
    "id": "POD-002",
    "role": "context",
-   "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics, ribbed PDB and UBEC plates, JR tie bar (printed PETG)",
+   "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics and ribbed PDB plates, JR tie bar (printed PETG)",
    "status": "MODELLED",
-   "mass_g": 43.3,
+   "mass_g": 41.2,
    "subsystem": "pod",
    "bbox_px": [
     648,
@@ -1178,10 +1193,10 @@
    "mass_g": 9.1,
    "subsystem": "pod",
    "bbox_px": [
-    669,
+    663,
     408,
     735,
-    469
+    473
    ]
   },
   {
@@ -1189,13 +1204,13 @@
    "role": "context",
    "name": "Crush block (XPS F-250, hot-wired, cut per pack, vent groove)",
    "status": "MODELLED",
-   "mass_g": 2.5,
+   "mass_g": 2.2,
    "subsystem": "pod",
    "bbox_px": [
     649,
-    431,
-    688,
-    481
+    432,
+    687,
+    480
    ]
   },
   {
@@ -1206,10 +1221,10 @@
    "mass_g": 5.3,
    "subsystem": "pod",
    "bbox_px": [
-    661,
-    431,
-    689,
-    473
+    659,
+    432,
+    687,
+    474
    ]
   },
   {
@@ -1217,13 +1232,13 @@
    "role": "context",
    "name": "Trim spacer set: PETG U-spacers 2 / 4 / 6 / 8 / 8 mm, colour-coded (white / yellow / green / blue)",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 2.4,
    "subsystem": "pod",
    "bbox_px": [
-    713,
+    712,
     422,
     743,
-    439
+    440
    ]
   },
   {
@@ -1235,7 +1250,7 @@
    "subsystem": "pod",
    "bbox_px": [
     677,
-    459,
+    458,
     697,
     483
    ]
@@ -1245,7 +1260,7 @@
    "role": "context",
    "name": "Carry handle on the spar with the foot bridge, aft-stop strut and wall brackets (printed PETG) + 'LIFT HERE - do not lift by the motors' label",
    "status": "MODELLED",
-   "mass_g": 38.6,
+   "mass_g": 39.8,
    "subsystem": "pod",
    "bbox_px": [
     704,
@@ -1291,7 +1306,7 @@
    "subsystem": "pod",
    "bbox_px": [
     744,
-    370,
+    369,
     747,
     373
    ]
@@ -1301,13 +1316,13 @@
    "role": "context",
    "name": "Foot shoe UR",
    "status": "MODELLED",
-   "mass_g": 5.68,
+   "mass_g": 9.93,
    "subsystem": "landing",
    "bbox_px": [
     631,
-    283,
-    665,
-    310
+    284,
+    664,
+    309
    ]
   },
   {
@@ -1315,13 +1330,13 @@
    "role": "context",
    "name": "Foot piston UR",
    "status": "MODELLED",
-   "mass_g": 3.14,
+   "mass_g": 3.28,
    "subsystem": "landing",
    "bbox_px": [
-    645,
+    647,
     277,
-    677,
-    299
+    675,
+    298
    ]
   },
   {
@@ -1329,12 +1344,12 @@
    "role": "context",
    "name": "Crush cartridge type U (solid) UR",
    "status": "MODELLED",
-   "mass_g": 0.66,
+   "mass_g": 0.51,
    "subsystem": "landing",
    "bbox_px": [
-    633,
-    280,
-    675,
+    634,
+    281,
+    674,
     305
    ]
   },
@@ -1343,13 +1358,13 @@
    "role": "context",
    "name": "Crush cartridge type L (bored) LR",
    "status": "MODELLED",
-   "mass_g": 0.6,
+   "mass_g": 0.47,
    "subsystem": "landing",
    "bbox_px": [
-    640,
-    476,
-    681,
-    504
+    642,
+    477,
+    679,
+    503
    ]
   },
   {
@@ -1357,13 +1372,13 @@
    "role": "context",
    "name": "Foot pad UR",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.71,
    "subsystem": "landing",
    "bbox_px": [
-    665,
+    667,
     277,
-    677,
-    289
+    676,
+    288
    ]
   },
   {
@@ -1385,13 +1400,13 @@
    "role": "context",
    "name": "Foot shoe UL",
    "status": "MODELLED",
-   "mass_g": 5.68,
+   "mass_g": 9.93,
    "subsystem": "landing",
    "bbox_px": [
-    1094,
+    1095,
     407,
-    1129,
-    439
+    1127,
+    438
    ]
   },
   {
@@ -1399,13 +1414,13 @@
    "role": "context",
    "name": "Foot shoe LR",
    "status": "MODELLED",
-   "mass_g": 5.68,
+   "mass_g": 9.93,
    "subsystem": "landing",
    "bbox_px": [
     639,
     481,
-    671,
-    506
+    670,
+    505
    ]
   },
   {
@@ -1413,13 +1428,13 @@
    "role": "context",
    "name": "Foot shoe LL",
    "status": "MODELLED",
-   "mass_g": 5.68,
+   "mass_g": 9.93,
    "subsystem": "landing",
    "bbox_px": [
-    1079,
-    622,
-    1112,
-    652
+    1080,
+    623,
+    1110,
+    651
    ]
   },
   {
@@ -1427,13 +1442,13 @@
    "role": "context",
    "name": "Foot pad UL",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.71,
    "subsystem": "landing",
    "bbox_px": [
-    1123,
+    1125,
     399,
-    1138,
-    413
+    1136,
+    412
    ]
   },
   {
@@ -1441,12 +1456,12 @@
    "role": "context",
    "name": "Foot pad LR",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.71,
    "subsystem": "landing",
    "bbox_px": [
-    671,
-    474,
-    683,
+    673,
+    475,
+    681,
     486
    ]
   },
@@ -1455,13 +1470,13 @@
    "role": "context",
    "name": "Foot pad LL",
    "status": "MODELLED",
-   "mass_g": 0.8,
+   "mass_g": 0.71,
    "subsystem": "landing",
    "bbox_px": [
-    1107,
-    614,
-    1121,
-    628
+    1108,
+    615,
+    1119,
+    627
    ]
   },
   {
@@ -1469,13 +1484,13 @@
    "role": "context",
    "name": "Foot piston UL",
    "status": "MODELLED",
-   "mass_g": 3.14,
+   "mass_g": 3.28,
    "subsystem": "landing",
    "bbox_px": [
-    1106,
+    1108,
     399,
-    1138,
-    426
+    1136,
+    425
    ]
   },
   {
@@ -1483,13 +1498,13 @@
    "role": "context",
    "name": "Foot piston LR",
    "status": "MODELLED",
-   "mass_g": 3.14,
+   "mass_g": 3.28,
    "subsystem": "landing",
    "bbox_px": [
-    652,
+    654,
     475,
-    682,
-    497
+    681,
+    496
    ]
   },
   {
@@ -1497,13 +1512,13 @@
    "role": "context",
    "name": "Foot piston LL",
    "status": "MODELLED",
-   "mass_g": 3.14,
+   "mass_g": 3.28,
    "subsystem": "landing",
    "bbox_px": [
-    1091,
+    1092,
     615,
-    1121,
-    641
+    1119,
+    640
    ]
   },
   {
@@ -1511,13 +1526,13 @@
    "role": "context",
    "name": "Crush cartridge type U (solid) UL",
    "status": "MODELLED",
-   "mass_g": 0.66,
+   "mass_g": 0.51,
    "subsystem": "landing",
    "bbox_px": [
-    1096,
+    1098,
     403,
-    1136,
-    434
+    1134,
+    433
    ]
   },
   {
@@ -1525,13 +1540,13 @@
    "role": "context",
    "name": "Crush cartridge type L (bored) LL",
    "status": "MODELLED",
-   "mass_g": 0.6,
+   "mass_g": 0.47,
    "subsystem": "landing",
    "bbox_px": [
-    1081,
-    616,
-    1119,
-    651
+    1082,
+    617,
+    1117,
+    650
    ]
   },
   {
@@ -1543,8 +1558,8 @@
    "subsystem": "landing",
    "bbox_px": [
     1236,
-    566,
-    1250,
+    565,
+    1249,
     575
    ]
   },
@@ -1556,7 +1571,7 @@
    "mass_g": 81.0,
    "subsystem": "propulsion",
    "bbox_px": [
-    405,
+    406,
     415,
     432,
     441
@@ -1571,7 +1586,7 @@
    "subsystem": "propulsion",
    "bbox_px": [
     402,
-    433,
+    432,
     409,
     440
    ]
@@ -1586,7 +1601,7 @@
    "bbox_px": [
     404,
     432,
-    409,
+    410,
     439
    ]
   },
@@ -1600,8 +1615,8 @@
    "bbox_px": [
     403,
     426,
-    417,
-    439
+    418,
+    438
    ]
   },
   {
@@ -1612,10 +1627,10 @@
    "mass_g": 17.0,
    "subsystem": "propulsion",
    "bbox_px": [
-    350,
+    351,
     410,
     469,
-    460
+    459
    ]
   },
   {
@@ -1626,7 +1641,7 @@
    "mass_g": 3.2,
    "subsystem": "propulsion",
    "bbox_px": [
-    419,
+    420,
     416,
     433,
     431
@@ -1642,7 +1657,7 @@
    "bbox_px": [
     408,
     427,
-    417,
+    418,
     437
    ]
   },
@@ -1655,7 +1670,7 @@
    "subsystem": "propulsion",
    "bbox_px": [
     898,
-    577,
+    576,
     932,
     607
    ]
@@ -1685,7 +1700,7 @@
     900,
     598,
     908,
-    606
+    605
    ]
   },
   {
@@ -1711,7 +1726,7 @@
    "subsystem": "propulsion",
    "bbox_px": [
     822,
-    574,
+    573,
     994,
     627
    ]
@@ -1741,7 +1756,7 @@
     904,
     591,
     914,
-    603
+    602
    ]
   },
   {
@@ -1752,9 +1767,9 @@
    "mass_g": 81.0,
    "subsystem": "propulsion",
    "bbox_px": [
-    423,
+    424,
     610,
-    448,
+    449,
     635
    ]
   },
@@ -1767,9 +1782,9 @@
    "subsystem": "propulsion",
    "bbox_px": [
     420,
-    625,
+    624,
     426,
-    632
+    631
    ]
   },
   {
@@ -1797,7 +1812,7 @@
     421,
     620,
     435,
-    631
+    630
    ]
   },
   {
@@ -1810,7 +1825,7 @@
    "bbox_px": [
     371,
     600,
-    484,
+    485,
     654
    ]
   },
@@ -1836,9 +1851,9 @@
    "mass_g": 1.2,
    "subsystem": "propulsion",
    "bbox_px": [
-    426,
-    621,
-    434,
+    427,
+    620,
+    435,
     630
    ]
   },
@@ -1851,9 +1866,9 @@
    "subsystem": "propulsion",
    "bbox_px": [
     893,
-    791,
+    790,
     925,
-    820
+    819
    ]
   },
   {
@@ -1865,9 +1880,9 @@
    "subsystem": "propulsion",
    "bbox_px": [
     894,
-    810,
+    809,
     902,
-    818
+    817
    ]
   },
   {
@@ -1881,7 +1896,7 @@
     895,
     809,
     903,
-    817
+    816
    ]
   },
   {
@@ -1893,7 +1908,7 @@
    "subsystem": "propulsion",
    "bbox_px": [
     895,
-    803,
+    802,
     909,
     816
    ]
@@ -1908,8 +1923,8 @@
    "bbox_px": [
     821,
     782,
-    984,
-    842
+    983,
+    841
    ]
   },
   {
@@ -1935,9 +1950,9 @@
    "subsystem": "propulsion",
    "bbox_px": [
     898,
-    804,
+    803,
     908,
-    815
+    814
    ]
   },
   {
@@ -1948,9 +1963,9 @@
    "mass_g": 7.6,
    "subsystem": "propulsion",
    "bbox_px": [
-    513,
-    397,
-    533,
+    514,
+    396,
+    534,
     417
    ]
   },
@@ -1976,8 +1991,8 @@
    "mass_g": 7.6,
    "subsystem": "propulsion",
    "bbox_px": [
-    521,
-    514,
+    522,
+    513,
     541,
     534
    ]
@@ -1991,7 +2006,7 @@
    "subsystem": "propulsion",
    "bbox_px": [
     993,
-    676,
+    675,
     1010,
     700
    ]
@@ -2019,7 +2034,7 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     747,
-    479,
+    478,
     749,
     489
    ]
@@ -2043,7 +2058,7 @@
    "role": "context",
    "name": "Control horn, inboard panel (clevis + rod boss) right",
    "status": "MODELLED",
-   "mass_g": 3.13,
+   "mass_g": 3.2,
    "subsystem": "mechanisms",
    "bbox_px": [
     759,
@@ -2071,7 +2086,7 @@
    "role": "context",
    "name": "Link horn, outboard panel (rod boss) right",
    "status": "MODELLED",
-   "mass_g": 2.73,
+   "mass_g": 2.95,
    "subsystem": "mechanisms",
    "bbox_px": [
     733,
@@ -2089,8 +2104,8 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     738,
-    480,
-    768,
+    479,
+    769,
     494
    ]
   },
@@ -2119,7 +2134,7 @@
     762,
     465,
     833,
-    490
+    489
    ]
   },
   {
@@ -2141,13 +2156,13 @@
    "role": "context",
    "name": "Elevon hinge tape, two strips right",
    "status": "MODELLED",
-   "mass_g": 0.56,
+   "mass_g": 0.57,
    "subsystem": "mechanisms",
    "bbox_px": [
     647,
-    429,
+    430,
     862,
-    499
+    498
    ]
   },
   {
@@ -2161,7 +2176,7 @@
     990,
     554,
     1010,
-    570
+    569
    ]
   },
   {
@@ -2175,7 +2190,7 @@
     1008,
     561,
     1011,
-    573
+    572
    ]
   },
   {
@@ -2187,9 +2202,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     1009,
-    560,
+    559,
     1025,
-    572
+    571
    ]
   },
   {
@@ -2197,7 +2212,7 @@
    "role": "context",
    "name": "Control horn, inboard panel (clevis + rod boss) left",
    "status": "MODELLED",
-   "mass_g": 3.13,
+   "mass_g": 3.2,
    "subsystem": "mechanisms",
    "bbox_px": [
     1023,
@@ -2215,9 +2230,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     1025,
-    556,
+    555,
     1059,
-    568
+    567
    ]
   },
   {
@@ -2225,10 +2240,10 @@
    "role": "context",
    "name": "Link horn, outboard panel (rod boss) left",
    "status": "MODELLED",
-   "mass_g": 2.73,
+   "mass_g": 2.95,
    "subsystem": "mechanisms",
    "bbox_px": [
-    1053,
+    1052,
     551,
     1073,
     570
@@ -2244,8 +2259,8 @@
    "bbox_px": [
     985,
     557,
-    1017,
-    574
+    1016,
+    573
    ]
   },
   {
@@ -2287,7 +2302,7 @@
     1056,
     557,
     1164,
-    593
+    592
    ]
   },
   {
@@ -2295,13 +2310,13 @@
    "role": "context",
    "name": "Elevon hinge tape, two strips left",
    "status": "MODELLED",
-   "mass_g": 0.56,
+   "mass_g": 0.57,
    "subsystem": "mechanisms",
    "bbox_px": [
     919,
     514,
     1167,
-    595
+    593
    ]
   },
   {
@@ -2313,7 +2328,7 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     753,
-    483,
+    482,
     764,
     493
    ]
@@ -2328,8 +2343,8 @@
    "bbox_px": [
     746,
     479,
-    749,
-    482
+    750,
+    481
    ]
   },
   {
@@ -2368,38 +2383,38 @@
    "mass_g": 550.0,
    "subsystem": "power",
    "bbox_px": [
-    683,
+    682,
     301,
     784,
-    364
+    365
    ]
   },
   {
    "id": "PWR-006",
    "role": "context",
-   "name": "Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)",
+   "name": "Power frame: deck on 4 spacers (56 x 34 mm board seat = KO-PWR-BOARD), wire window, AS150U cradle, legs (printed PETG)",
    "status": "MODELLED",
-   "mass_g": 7.36,
+   "mass_g": 8.06,
    "subsystem": "power",
    "bbox_px": [
-    729,
+    724,
     317,
     785,
-    352
+    355
    ]
   },
   {
    "id": "PWR-003",
    "role": "context",
-   "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack",
+   "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack",
    "status": "MODELLED",
    "mass_g": 28.0,
    "subsystem": "power",
    "bbox_px": [
-    729,
+    726,
     331,
     762,
-    350
+    352
    ]
   },
   {
@@ -2421,41 +2436,13 @@
    "role": "context",
    "name": "Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)",
    "status": "MODELLED",
-   "mass_g": 7.3,
+   "mass_g": 8.8,
    "subsystem": "power",
    "bbox_px": [
     739,
-    346,
+    345,
     760,
     357
-   ]
-  },
-  {
-   "id": "PWR-007",
-   "role": "context",
-   "name": "UBEC feed fuse 5 A mini blade in an inline holder",
-   "status": "MODELLED",
-   "mass_g": 3.5,
-   "subsystem": "power",
-   "bbox_px": [
-    762,
-    333,
-    777,
-    345
-   ]
-  },
-  {
-   "id": "PWR-005",
-   "role": "context",
-   "name": "UBEC 6.0 V, 8 A class, servo rail",
-   "status": "MODELLED",
-   "mass_g": 13.0,
-   "subsystem": "power",
-   "bbox_px": [
-    720,
-    310,
-    746,
-    327
    ]
   },
   {
@@ -2466,7 +2453,7 @@
    "mass_g": 2.2,
    "subsystem": "power",
    "bbox_px": [
-    530,
+    531,
     394,
     542,
     404
@@ -2481,7 +2468,7 @@
    "subsystem": "power",
    "bbox_px": [
     1014,
-    544,
+    543,
     1026,
     556
    ]
@@ -2495,7 +2482,7 @@
    "subsystem": "power",
    "bbox_px": [
     538,
-    511,
+    510,
     549,
     521
    ]
@@ -2564,7 +2551,7 @@
    "mass_g": 0.64,
    "subsystem": "power",
    "bbox_px": [
-    736,
+    737,
     335,
     762,
     357
@@ -2593,7 +2580,7 @@
    "subsystem": "avionics",
    "bbox_px": [
     647,
-    268,
+    267,
     677,
     283
    ]
@@ -2622,7 +2609,7 @@
    "bbox_px": [
     670,
     286,
-    697,
+    698,
     305
    ]
   },
@@ -2667,6 +2654,230 @@
     727,
     178
    ]
+  },
+  {
+   "id": "HRN-113-LL",
+   "role": "context",
+   "name": "Amass XT30U mated pair, ESC LL power plug",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    746,
+    701,
+    758,
+    710
+   ]
+  },
+  {
+   "id": "HRN-113-LR",
+   "role": "context",
+   "name": "Amass XT30U mated pair, ESC LR power plug",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    711,
+    673,
+    724,
+    679
+   ]
+  },
+  {
+   "id": "HRN-113-UL",
+   "role": "context",
+   "name": "Amass XT30U mated pair, ESC UL power plug",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    746,
+    698,
+    758,
+    708
+   ]
+  },
+  {
+   "id": "HRN-113-UR",
+   "role": "context",
+   "name": "Amass XT30U mated pair, ESC UR power plug",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    711,
+    670,
+    724,
+    677
+   ]
+  },
+  {
+   "id": "HRN-105-1",
+   "role": "context",
+   "name": "JR mated pair, FC output 1 (E-HRN-26)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    708,
+    679,
+    718,
+    691
+   ]
+  },
+  {
+   "id": "HRN-105-2",
+   "role": "context",
+   "name": "JR mated pair, FC output 2 (E-HRN-25)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    706,
+    679,
+    716,
+    690
+   ]
+  },
+  {
+   "id": "HRN-105-3",
+   "role": "context",
+   "name": "JR mated pair, FC output 3 (E-HRN-27)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    704,
+    678,
+    714,
+    689
+   ]
+  },
+  {
+   "id": "HRN-105-4",
+   "role": "context",
+   "name": "JR mated pair, FC output 4 (E-HRN-24)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    702,
+    677,
+    712,
+    688
+   ]
+  },
+  {
+   "id": "HRN-105-5",
+   "role": "context",
+   "name": "JR mated pair, FC output 5 (E-HRN-28)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    700,
+    676,
+    709,
+    687
+   ]
+  },
+  {
+   "id": "HRN-105-6",
+   "role": "context",
+   "name": "JR mated pair, FC output 6 (E-HRN-29)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    697,
+    675,
+    707,
+    687
+   ]
+  },
+  {
+   "id": "HRN-105-SL",
+   "role": "context",
+   "name": "JR mated pair in the servo recess L",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "subsystem": "harness",
+   "bbox_px": [
+    902,
+    715,
+    914,
+    723
+   ]
+  },
+  {
+   "id": "HRN-105-SR",
+   "role": "context",
+   "name": "JR mated pair in the servo recess R",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "subsystem": "harness",
+   "bbox_px": [
+    635,
+    618,
+    647,
+    626
+   ]
+  },
+  {
+   "id": "HRN-110-LL",
+   "role": "context",
+   "name": "Fin-hole grommet LL (printed ASA)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    899,
+    764,
+    908,
+    772
+   ]
+  },
+  {
+   "id": "HRN-110-LR",
+   "role": "context",
+   "name": "Fin-hole grommet LR (printed ASA)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    600,
+    651,
+    608,
+    657
+   ]
+  },
+  {
+   "id": "HRN-110-UL",
+   "role": "context",
+   "name": "Fin-hole grommet UL (printed ASA)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    900,
+    727,
+    909,
+    734
+   ]
+  },
+  {
+   "id": "HRN-110-UR",
+   "role": "context",
+   "name": "Fin-hole grommet UR (printed ASA)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    598,
+    615,
+    606,
+    622
+   ]
   }
  ],
  "hidden": [
@@ -2681,8 +2892,6 @@
   "E-HRN-18",
   "E-HRN-19",
   "E-HRN-20",
-  "E-HRN-21",
-  "E-HRN-22",
   "E-HRN-23",
   "E-HRN-24",
   "E-HRN-25",
@@ -2693,7 +2902,6 @@
   "E-HRN-30",
   "E-HRN-31",
   "E-HRN-32",
-  "E-HRN-33",
   "E-HRN-34",
   "E-HRN-35",
   "E-HRN-36",

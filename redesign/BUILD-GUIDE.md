@@ -197,10 +197,13 @@ Detail: [`subsystems/harness/BUILD.md`](subsystems/harness/BUILD.md), [`subsyste
 1. Weigh each reel, caliper its OD, cut and label every wire, twist the pairs.
 2. Solder each ESC's 16 AWG pair, cap and DShot pair on the bench. Bed the cap can in silicone
    ([WB-07](review/WIRING-BATTERY.md#findings)). Pull-test.
-   On the bus bars (D-86): each pair lands as two conductors, + on the + bar and − on the − bar, 3 mm along the bar
-   top, at four stations 6 mm apart from the aft end (LR aft-most, then UR, LL, UL). Each pair rises over the ones
-   aft of it. Form the first bend off the pad at 2 × OD on the bench. The 10 AWG main jumper's two conductors drop
-   through the deck window either side of the pairs and land on the bars' forward ends.
+   On the bus bars (D-86, D-87: bars 35 mm): each pair lands as two conductors, + on the + bar and − on the − bar,
+   3.5 mm along the bar top, at four stations 8 mm apart from the aft end (LR aft-most, then UR, LL, UL). Each pair
+   rises over the ones aft of it. Form the bends off the pad at 2 × OD on the bench. The 10 AWG main jumper's two
+   conductors start on the board's output pads, drop through the deck window either side of the pairs and land
+   across the bars' forward ends.
+   At the ESC: the pair and the DShot lead come up the gap between the ESC's aft end and the cap and enter the ESC's
+   aft end face onto its power pads (D-87), under the heat-shrink.
 3. Strap the ESCs on their pads; thread the leads through the fin grommet with a 20–30 mm service loop
    ([WB-08](review/WIRING-BATTERY.md#findings)); lay them in the grooves with tape tabs.
 4. Servo leads to the JR recess before the skin. The mated JR pair lies flat on the floor of the 30.5 × 10.8 × 5 mm

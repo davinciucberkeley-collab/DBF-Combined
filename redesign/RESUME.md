@@ -1,25 +1,27 @@
 # How to resume the redesign
 
-## Paused 2026-11-11 (late): every wire seated, connectors drawn, strict no-phasing gate (start here)
+## Paused 2026-11-11 (late): wires concentric, no folds, leads on real pads; all media regenerated (start here)
 All six buildability blockers are fixed in CAD or design except the team decision on Jacobs access (BR-04 / MF-02).
-Status table: `review/BUILDABILITY-REVIEW.md` "Blocker status". Decisions D-74...D-86 in `params/CHANGE-LOG.md`.
+Status table: `review/BUILDABILITY-REVIEW.md` "Blocker status". Decisions D-74...D-87 in `params/CHANGE-LOG.md`.
 
 | Item | State |
 |---|---|
 | BR-00 CG, SW-02 fin tip, WB-01 power board, MF-01 shop files | Fixed (D-74...D-79), as before. |
 | MM-01 slit, MM-02 clocking key | **Fixed in CAD** (D-80, D-81). Open: C6 sizes the dog's shear (it adds to the D-23 slip fuse) before the 18 Dec freeze. |
 | Horn bore breakout, POD-007 void, HRN-110 grommet | **Fixed** (D-82, D-84 b, D-83). Shop files: 249 checks, 0 FAIL, 0 issues. |
-| No parts phasing (physics-simulator ready) | **Passes, strict (D-86)**: `python -I redesign/collision/collide.py` (about 5 min). 1,007 bodies in 193 parts plus every routed wire; 0 penetrations > 0.05 mm, static and at both elevon limits; the tape skin is a solid (leads pass only through drawn slits); every wire end seated in its part or an in-line connector. D-86 drew the 8 JR connectors (HRN-105-*), landed each conductor on its own bus bar, slit the tape, moved the lower signal lead under the tape and tied the phase leads. Before / after pictures: `review/inspection-2026-11-11/`. |
+| No parts phasing (physics-simulator ready) | **Passes, strict (D-86)**: `python -I redesign/collision/collide.py` (about 5 min). 1,007 bodies in 193 parts plus every routed wire; 0 penetrations > 0.05 mm, static and at both elevon limits; the tape skin is a solid (leads pass only through drawn slits); every wire end seated in its part or an in-line connector; no wire crosses or folds through itself (D-87). D-86 drew the 8 JR connectors (HRN-105-*), landed each conductor on its own bus bar, slit the tape, moved the lower signal lead under the tape and tied the phase leads. Before / after pictures: `review/inspection-2026-11-11/`. |
 | Build animation | **New**: `showcase/animation/render_build.py` -> `showcase/animation/build/` (whole build, 49 s, plus one clip and end-state still per stage 2-11). Linked from `BUILD-GUIDE.md` and the Explorer. |
 | Proof graph | **Clean** (0 drift, 0 errors), 4,249 nodes after D-86; 90 claims fail on margin (87 before D-85). The 3 new: `CL-F2-MASS` 135.2 g vs 129 g allocation, `CL-F2-I2C-LEN` 0.511 m vs 0.5 m, and `R-HARNESS-INSTALL` that rolls them up. CG and mass gate unchanged (the A3 roll-up uses the allocation). |
-| Harness mass and I2C length | **Team-lead decision** (D-85, D-86 Open): harness now 138.9 g vs 129 g allocation; I2C 0.512 m vs 0.5 m. Also D1 (longer JR recess) and F1 (bus landing, 2 x OD formed bend) to confirm. |
+| Harness mass and I2C length | **Team-lead decision** (D-85, D-86 Open): harness now 139.9 g vs 129 g allocation; I2C 0.512 m vs 0.5 m. Also D1 (longer JR recess, servo-groove corner relief) and F1 (35 mm bus bars, landing order, formed bends) to confirm. |
 | MF-02 Jacobs access | **Team decision needed.** |
 
 Next steps in order:
 1. Owners re-check what this round changed: C6 the collar bond (D-81 notch, -0.9 % area) and the dog size; C3 the 4.8 mm
    recess-fillet leg (D-84 d); C4 mount rocking stiffness with the shorter outboard cheek (D-80).
-2. Regenerate the media that were not re-rendered this round: renders (`showcase/tools/render_showcase.py`), drawing
-   (`showcase/drawing/`), the how-it-flies animation. The GLB, viewer data, shop files and build animation are current.
+2. All media are current with D-87 (regenerated 2026-11-11 from the final CAD): the 15 renders and site thumbnails
+   (`showcase/tools/render_showcase.py`), the GA drawing (`showcase/drawing/`), the flight animation and GIF, the build
+   animation, the STLs, the GLB and viewer data, the page snapshots (`showcase/pages/`, headless Chrome from
+   `site/index.html`, which is now rebuilt from `site/app.html`). After any CAD change, re-run all of them.
 3. Before any Fusion run or print: `python -I redesign/fusion/check.py`, `python -I redesign/collision/collide.py`,
    `python -B redesign/manufacturing/make_shop_files.py`.
 4. Explorer artifact (private, owner Dillon's account): https://claude.ai/artifact/XYkihMreBq6Gn7deTEwSC8 . Republish from

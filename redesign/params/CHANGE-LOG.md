@@ -593,3 +593,26 @@ landing, phase and pigtail routes), against the 129 g allocation.
 - **D1**: the longer JR recess (forward end 0.1375, was 0.150) reaches further along the servo branch; check the foam
   under its floor and the tape flap size. **F1**: confirm the bus landing order and the 2 × OD formed first bend.
 - **DShot 0.699 m against 0.70 m** has 1 mm of margin; any later reroute of the LL signal lead must keep it.
+
+## 2026-11-11 · wires that cannot exist: same-wire crossings, folds, butt-ended leads (D-87; Dillon Alcouffe)
+
+The team found more wiring faults in the 3-D model after D-86 (ESC leads stopping at the box edge, a lead hooking
+back over the power pairs at the left pod exit). A sweep of every wire end and every bend found the classes the
+D-86 gate still missed, and the gate now fails all of them.
+
+| Id | Decision | From | Keys changed | Why (numbers) |
+|---|---|---|---|---|
+| **D-87** | **Conductors drawn concentric round every bend; no lead folds or crosses itself; leads land where the real pads are; bus bars 35 mm** | team inspection of the D-86 model | `team/F2/harness.py` (`draw_strands`, routes), `subsystems/power/params.json` (`bar_m` 0.025 → 0.035 m, `bus_mass_g` 7.3 → 8.8 g EST), `subsystems/wing/fusion/wing.py` (servo-groove corner relief), `collision/collide.py`, `collision/collide_blender.py` | (a) **Same-wire crossings**: the two conductors of each ESC pair crossed where they arc out of the fin grommet, and the servo ribbon's conductors crossed at every corner (12 cases, up to 0.64 mm): each conductor was offset and then rounded on its own at the same radius. Now the centre line is rounded first and each conductor offset from it (inner R − o, outer R + o), with the spacing and lay eased in. (b) **ESC leads** enter the ESC's aft END face, where its power pads are under the heat-shrink (up the 3.5 mm gap before the cap), not its bottom face. (c) **Left pod exit**: the signal leads cross over the left power pairs inside the pod and leave at the window's forward edge like the right side; the lower-station lead no longer hooks back over the pairs outside. (d) **Folds**: the pack lead (6 mm bundle), the 10 AWG main jumper and the ESC-pair landings turned tighter than their own radius (the tube passed through itself). Now: the pack lead turns on 4 mm arcs and loops 4 mm aft of the pack half (its end 1 mm inside it); the main jumpers start and end ON the board pads and land on the bars through 3.5 mm arcs; the ESC pairs land at 8 mm stations, which needs **35 mm bars** (was 25; the FR4 carrier is 36 mm). The first two bends of each pad lead-off are bench-formed at 2 × OD (F1 `ASM-PWR-BEND`). (e) **Servo-groove corner relief**: a 3 mm triangle cut at the inside corner where the groove turns into its branch (the 3.6 mm ribbon in the 4.0 mm groove needs it to turn on its 3.9 mm bend). (f) **Checker**: strands of one wire are checked against each other; a bend tighter than the strand's radius fails ("folds"). |
+
+Result: `collision/collide.py` PASS (1007 bodies, 193 parts, 3 poses; 0 overlaps incl. same-wire, 0 loose ends, 0
+folds). F2 rules: bend 1.01, DShot 0.696 m, the two open items below. Harness mass 139.9 g (was 138.9 g).
+
+**Open:** harness mass 139.9 g vs 129 g and I2C 0.512 m vs 0.500 m (team lead, carried over). **F1**: the 35 mm bars
+(+1.5 g EST), the landing order (LR aft-most, then UR, LL, UL, main jumper at the front) and the 3.5 mm main-jumper
+landing arcs (tighter than `ASM-PWR-BEND`'s 2 × OD: check the formed 10 AWG for insulation cracking at T-PWR-FIT).
+**D1**: the servo-groove corner relief.
+
+Media regenerated from this design (team request: nothing shown may lag the CAD): 15 renders and site thumbnails, GA
+drawing, flight animation + GIF, build animation, STLs, GLB + viewer data, page snapshots, inspection pictures
+(`review/inspection-2026-11-11/`, `fixed/` and `round2/`). `site/index.html` rebuilt from `site/app.html` (it lacked
+the build-animation section); the Status section's Media phase now reads PARTIAL.

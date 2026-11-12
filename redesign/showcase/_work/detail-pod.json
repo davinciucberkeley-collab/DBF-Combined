@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 20.9,
+ "render_s": 17.23,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -55,8 +55,8 @@
  "callouts": [
   {
    "item": "POD-002",
-   "x": 594.5,
-   "y": 787.8,
+   "x": 614.6,
+   "y": 788.7,
    "title": "POD-002",
    "text": "Printed tray",
    "detail": null,
@@ -64,52 +64,52 @@
    "occluded": false,
    "world_m": [
     -0.1342,
-    -0.0026,
-    0.0299
+    -0.0115,
+    0.0353
    ]
   },
   {
    "item": "PWR-001",
-   "x": 842.0,
-   "y": 551.9,
+   "x": 819.7,
+   "y": 557.9,
    "title": "PWR-001",
    "text": "4S 6500 mAh pack",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0333,
-    -0.021,
+    -0.0402,
+    -0.0173,
     0.0723
    ]
   },
   {
    "item": "AVN-001",
-   "x": 712.6,
-   "y": 505.3,
+   "x": 706.6,
+   "y": 509.9,
    "title": "AVN-001",
    "text": "Flight controller",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0085,
+    -0.0117,
     0.0576,
     0.0336
    ]
   },
   {
    "item": "POD-004",
-   "x": 782.4,
-   "y": 592.3,
+   "x": 750.4,
+   "y": 620.1,
    "title": "POD-004",
    "text": "Pack straps",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0621,
-    -0.02,
+    -0.0787,
+    -0.0208,
     0.0738
    ]
   },
@@ -162,13 +162,13 @@
   {
    "id": "POD-002",
    "role": "context",
-   "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics, ribbed PDB and UBEC plates, JR tie bar (printed PETG)",
+   "name": "Tray: bay floor (2 pieces) + forward-stop T + 3 mm aft stop + 1.5 mm guides, FC, avionics and ribbed PDB plates, JR tie bar (printed PETG)",
    "status": "MODELLED",
-   "mass_g": 43.3,
+   "mass_g": 41.2,
    "subsystem": "pod",
    "bbox_px": [
     524,
-    417,
+    422,
     1085,
     859
    ]
@@ -181,10 +181,10 @@
    "mass_g": 9.1,
    "subsystem": "pod",
    "bbox_px": [
-    639,
+    604,
     418,
     961,
-    754
+    783
    ]
   },
   {
@@ -192,12 +192,12 @@
    "role": "context",
    "name": "Crush block (XPS F-250, hot-wired, cut per pack, vent groove)",
    "status": "MODELLED",
-   "mass_g": 2.5,
+   "mass_g": 2.2,
    "subsystem": "pod",
    "bbox_px": [
     528,
-    579,
-    719,
+    586,
+    710,
     836
    ]
   },
@@ -209,10 +209,10 @@
    "mass_g": 5.3,
    "subsystem": "pod",
    "bbox_px": [
-    594,
-    577,
-    722,
-    784
+    585,
+    583,
+    713,
+    791
    ]
   },
   {
@@ -220,13 +220,13 @@
    "role": "context",
    "name": "Trim spacer set: PETG U-spacers 2 / 4 / 6 / 8 / 8 mm, colour-coded (white / yellow / green / blue)",
    "status": "MODELLED",
-   "mass_g": 1.8,
+   "mass_g": 2.4,
    "subsystem": "pod",
    "bbox_px": [
-    864,
+    857,
     462,
     998,
-    564
+    570
    ]
   },
   {
@@ -248,7 +248,7 @@
    "role": "context",
    "name": "Carry handle on the spar with the foot bridge, aft-stop strut and wall brackets (printed PETG) + 'LIFT HERE - do not lift by the motors' label",
    "status": "MODELLED",
-   "mass_g": 38.6,
+   "mass_g": 39.8,
    "subsystem": "pod",
    "bbox_px": [
     831,
@@ -307,38 +307,38 @@
    "mass_g": 550.0,
    "subsystem": "power",
    "bbox_px": [
-    604,
-    398,
+    596,
+    404,
     1097,
-    772
+    779
    ]
   },
   {
    "id": "PWR-006",
    "role": "context",
-   "name": "Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)",
+   "name": "Power frame: deck on 4 spacers (56 x 34 mm board seat = KO-PWR-BOARD), wire window, AS150U cradle, legs (printed PETG)",
    "status": "MODELLED",
-   "mass_g": 7.36,
+   "mass_g": 8.06,
    "subsystem": "power",
    "bbox_px": [
-    823,
+    797,
     483,
     1101,
-    722
+    744
    ]
   },
   {
    "id": "PWR-003",
    "role": "context",
-   "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack",
+   "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack",
    "status": "MODELLED",
    "mass_g": 28.0,
    "subsystem": "power",
    "bbox_px": [
-    827,
+    807,
     582,
     984,
-    712
+    729
    ]
   },
   {
@@ -360,41 +360,13 @@
    "role": "context",
    "name": "Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)",
    "status": "MODELLED",
-   "mass_g": 7.3,
+   "mass_g": 8.8,
    "subsystem": "power",
    "bbox_px": [
     870,
-    640,
+    638,
     975,
     722
-   ]
-  },
-  {
-   "id": "PWR-007",
-   "role": "context",
-   "name": "UBEC feed fuse 5 A mini blade in an inline holder",
-   "status": "MODELLED",
-   "mass_g": 3.5,
-   "subsystem": "power",
-   "bbox_px": [
-    986,
-    578,
-    1060,
-    652
-   ]
-  },
-  {
-   "id": "PWR-005",
-   "role": "context",
-   "name": "UBEC 6.0 V, 8 A class, servo rail",
-   "status": "MODELLED",
-   "mass_g": 13.0,
-   "subsystem": "power",
-   "bbox_px": [
-    808,
-    386,
-    929,
-    487
    ]
   },
   {
@@ -503,9 +475,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    957,
-    452,
-    1081,
+    942,
+    445,
+    1099,
     553
    ]
   },
@@ -517,10 +489,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    922,
+    915,
     573,
     961,
-    603
+    605
    ]
   },
   {
@@ -531,38 +503,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    936,
-    604,
-    976,
-    664
-   ]
-  },
-  {
-   "id": "E-HRN-21",
-   "role": "context",
-   "name": "",
-   "status": null,
-   "mass_g": null,
-   "subsystem": "harness",
-   "bbox_px": [
-    959,
-    630,
-    1004,
-    659
-   ]
-  },
-  {
-   "id": "E-HRN-22",
-   "role": "context",
-   "name": "",
-   "status": null,
-   "mass_g": null,
-   "subsystem": "harness",
-   "bbox_px": [
-    754,
-    452,
-    829,
-    486
+    872,
+    594,
+    981,
+    706
    ]
   },
   {
@@ -573,10 +517,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    674,
+    646,
     553,
-    879,
-    684
+    887,
+    710
    ]
   },
   {
@@ -587,10 +531,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    780,
-    90,
-    1039,
-    498
+    800,
+    71,
+    1041,
+    509
    ]
   },
   {
@@ -603,7 +547,7 @@
    "bbox_px": [
     696,
     568,
-    883,
+    884,
     709
    ]
   },
@@ -615,24 +559,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    742,
+    735,
     513,
-    866,
-    735
-   ]
-  },
-  {
-   "id": "E-HRN-33",
-   "role": "context",
-   "name": "",
-   "status": null,
-   "mass_g": null,
-   "subsystem": "harness",
-   "bbox_px": [
-    910,
-    384,
-    1066,
-    600
+    874,
+    734
    ]
   }
  ],
@@ -737,6 +667,22 @@
   "HRN-001",
   "HRN-002-L",
   "HRN-002-R",
+  "HRN-105-1",
+  "HRN-105-2",
+  "HRN-105-3",
+  "HRN-105-4",
+  "HRN-105-5",
+  "HRN-105-6",
+  "HRN-105-SL",
+  "HRN-105-SR",
+  "HRN-110-LL",
+  "HRN-110-LR",
+  "HRN-110-UL",
+  "HRN-110-UR",
+  "HRN-113-LL",
+  "HRN-113-LR",
+  "HRN-113-UL",
+  "HRN-113-UR",
   "MEC-001-L",
   "MEC-001-R",
   "MEC-002-L",

@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 21.37,
+ "render_s": 29.54,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 70,
   "location_m": [
-   0.0147,
-   0.6912,
-   -0.2628
+   0.0144,
+   0.6917,
+   -0.2618
   ],
   "fit": [
    "MEC-001-R",
@@ -41,16 +41,16 @@
   "sub": "Servo in a printed frame, arm, 2-56 pushrod to the inboard horn, CF link rod to the outboard panel"
  },
  "subject_px": [
-  -1032,
-  -2162,
-  2670,
-  1519
+  -1031,
+  -2145,
+  2671,
+  1522
  ],
  "callouts": [
   {
    "item": "MEC-001-R",
    "x": 1163.0,
-   "y": 507.0,
+   "y": 513.5,
    "title": "MEC-001-R",
    "text": "Elevon servo",
    "detail": null,
@@ -58,14 +58,14 @@
    "occluded": false,
    "world_m": [
     0.186,
-    0.2742,
+    0.2743,
     -0.0062
    ]
   },
   {
    "item": "MEC-002-R",
    "x": 1086.8,
-   "y": 504.6,
+   "y": 511.3,
    "title": "MEC-002-R",
    "text": "Servo arm",
    "detail": null,
@@ -80,7 +80,7 @@
   {
    "item": "MEC-003-R",
    "x": 856.0,
-   "y": 621.0,
+   "y": 627.5,
    "title": "MEC-003-R",
    "text": "2-56 pushrod + clevis",
    "detail": null,
@@ -95,7 +95,7 @@
   {
    "item": "MEC-004-R",
    "x": 718.8,
-   "y": 598.2,
+   "y": 604.8,
    "title": "MEC-004-R",
    "text": "Inboard control horn",
    "detail": null,
@@ -104,13 +104,13 @@
    "world_m": [
     0.2648,
     0.2862,
-    -0.0077
+    -0.0078
    ]
   },
   {
    "item": "MEC-005-R",
    "x": 688.8,
-   "y": 506.9,
+   "y": 513.6,
    "title": "MEC-005-R",
    "text": "CF inter-panel rod",
    "detail": null,
@@ -125,7 +125,7 @@
   {
    "item": "MEC-006-R",
    "x": 484.0,
-   "y": 403.9,
+   "y": 412.5,
    "title": "MEC-006-R",
    "text": "Outboard link horn",
    "detail": null,
@@ -134,7 +134,7 @@
    "world_m": [
     0.2654,
     0.3562,
-    -0.0055
+    -0.0058
    ]
   }
  ],
@@ -144,13 +144,13 @@
    "role": "ghost",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.8,
+   "mass_g": 201.9,
    "subsystem": "wing",
    "bbox_px": [
-    -1027,
-    -2159,
+    -1017,
+    -2135,
     2669,
-    1519
+    1522
    ]
   },
   {
@@ -161,10 +161,10 @@
    "mass_g": 47.9,
    "subsystem": "wing",
    "bbox_px": [
-    -1032,
-    -2162,
-    2670,
-    1519
+    -1031,
+    -2145,
+    2671,
+    1522
    ]
   },
   {
@@ -176,9 +176,9 @@
    "subsystem": "wing",
    "bbox_px": [
     419,
-    484,
+    490,
     1273,
-    1002
+    1007
    ]
   },
   {
@@ -190,9 +190,9 @@
    "subsystem": "wing",
    "bbox_px": [
     -901,
-    -581,
+    -571,
     613,
-    504
+    510
    ]
   },
   {
@@ -204,9 +204,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     1052,
-    418,
+    425,
     1253,
-    579
+    585
    ]
   },
   {
@@ -218,9 +218,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     1064,
-    437,
+    444,
     1103,
-    559
+    566
    ]
   },
   {
@@ -232,9 +232,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     799,
-    538,
+    545,
     1091,
-    657
+    664
    ]
   },
   {
@@ -242,13 +242,13 @@
    "role": "context",
    "name": "Control horn, inboard panel (clevis + rod boss) right",
    "status": "MODELLED",
-   "mass_g": 3.13,
+   "mass_g": 3.2,
    "subsystem": "mechanisms",
    "bbox_px": [
     591,
-    521,
+    516,
     822,
-    670
+    676
    ]
   },
   {
@@ -260,9 +260,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     568,
-    406,
+    413,
     802,
-    601
+    608
    ]
   },
   {
@@ -270,13 +270,13 @@
    "role": "context",
    "name": "Link horn, outboard panel (rod boss) right",
    "status": "MODELLED",
-   "mass_g": 2.73,
+   "mass_g": 2.95,
    "subsystem": "mechanisms",
    "bbox_px": [
     349,
-    331,
+    325,
     629,
-    463
+    474
    ]
   },
   {
@@ -288,9 +288,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     1009,
-    378,
+    385,
     1289,
-    591
+    597
    ]
   },
   {
@@ -302,9 +302,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     719,
-    511,
+    517,
     1136,
-    862
+    867
    ]
   },
   {
@@ -316,9 +316,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     -519,
-    -514,
+    -504,
     582,
-    404
+    411
    ]
   },
   {
@@ -330,9 +330,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     1092,
-    505,
+    512,
     1282,
-    595
+    601
    ]
   },
   {
@@ -344,9 +344,9 @@
    "subsystem": "mechanisms",
    "bbox_px": [
     1068,
-    445,
+    452,
     1097,
-    474
+    480
    ]
   }
  ],
@@ -369,8 +369,6 @@
   "E-HRN-18",
   "E-HRN-19",
   "E-HRN-20",
-  "E-HRN-21",
-  "E-HRN-22",
   "E-HRN-23",
   "E-HRN-24",
   "E-HRN-25",
@@ -381,7 +379,6 @@
   "E-HRN-30",
   "E-HRN-31",
   "E-HRN-32",
-  "E-HRN-33",
   "E-HRN-34",
   "E-HRN-35",
   "E-HRN-36",
@@ -468,6 +465,22 @@
   "HRN-001",
   "HRN-002-L",
   "HRN-002-R",
+  "HRN-105-1",
+  "HRN-105-2",
+  "HRN-105-3",
+  "HRN-105-4",
+  "HRN-105-5",
+  "HRN-105-6",
+  "HRN-105-SL",
+  "HRN-105-SR",
+  "HRN-110-LL",
+  "HRN-110-LR",
+  "HRN-110-UL",
+  "HRN-110-UR",
+  "HRN-113-LL",
+  "HRN-113-LR",
+  "HRN-113-UL",
+  "HRN-113-UR",
   "MEC-001-L",
   "MEC-002-L",
   "MEC-003-L",
@@ -531,9 +544,7 @@
   "PWR-002",
   "PWR-003",
   "PWR-004",
-  "PWR-005",
   "PWR-006",
-  "PWR-007",
   "PWR-008-LL",
   "PWR-008-LR",
   "PWR-008-UL",

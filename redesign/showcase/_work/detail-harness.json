@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 25.48,
+ "render_s": 41.2,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 50,
   "location_m": [
-   -1.7261,
-   -1.1168,
-   1.8179
+   -1.7255,
+   -1.1163,
+   1.8175
   ],
   "fit": "visible",
   "frame": [
@@ -42,68 +42,68 @@
  "callouts": [
   {
    "item": "E-HRN-23",
-   "x": 715.3,
-   "y": 569.5,
+   "x": 708.6,
+   "y": 568.2,
    "title": "E-HRN-23",
    "text": "Pod runs: power board, FC, RX",
    "detail": "bend >= 2.7 mm",
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0545,
-    -0.0344,
-    0.0402
+    -0.0663,
+    -0.0323,
+    0.0509
    ]
   },
   {
    "item": "E-HRN-13",
-   "x": 633.4,
-   "y": 476.2,
+   "x": 599.2,
+   "y": 463.5,
    "title": "E-HRN-13",
    "text": "ESC power pair, right",
    "detail": "bend >= 10.4 mm",
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0633,
-    0.1615,
-    0.0209
+    0.0632,
+    0.2139,
+    0.0208
    ]
   },
   {
    "item": "E-HRN-14",
-   "x": 879.7,
-   "y": 568.7,
+   "x": 884.9,
+   "y": 571.3,
    "title": "E-HRN-14",
    "text": "ESC power pair, left",
    "detail": "bend >= 10.4 mm",
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0641,
-    -0.1948,
-    0.0214
+    0.0636,
+    -0.2021,
+    0.0212
    ]
   },
   {
    "item": "PWR-001",
-   "x": 705.6,
-   "y": 543.5,
+   "x": 700.0,
+   "y": 545.5,
    "title": "PWR-001",
    "text": "Flight pack",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0508,
-    -0.0193,
+    -0.0571,
+    -0.0153,
     0.0723
    ]
   },
   {
    "item": "PRP-002-UR",
    "x": 537.2,
-   "y": 359.9,
+   "y": 360.0,
    "title": "PRP-002-UR",
    "text": "ESC on fin face",
    "detail": null,
@@ -117,16 +117,16 @@
   },
   {
    "item": "PWR-008-LL",
-   "x": 1001.0,
-   "y": 653.2,
+   "x": 1001.7,
+   "y": 654.0,
    "title": "PWR-008-LL",
    "text": "ESC capacitor",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1346,
-    -0.3325,
+    0.1338,
+    -0.3336,
     -0.113
    ]
   }
@@ -137,13 +137,13 @@
    "role": "ghost",
    "name": "Wing core, one piece (XPS), with all cuts",
    "status": "MODELLED",
-   "mass_g": 201.8,
+   "mass_g": 201.9,
    "subsystem": "wing",
    "bbox_px": [
     348,
-    297,
+    298,
     1250,
-    727
+    728
    ]
   },
   {
@@ -163,9 +163,9 @@
   {
    "id": "FIN-001-UR",
    "role": "ghost",
-   "name": "Half-fin upper right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets",
+   "name": "Half-fin upper right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets",
    "status": "MODELLED",
-   "mass_g": 25.5,
+   "mass_g": 25.6,
    "subsystem": "fins",
    "bbox_px": [
     518,
@@ -177,9 +177,9 @@
   {
    "id": "FIN-001-LR",
    "role": "ghost",
-   "name": "Half-fin lower right, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot",
+   "name": "Half-fin lower right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot",
    "status": "MODELLED",
-   "mass_g": 26.23,
+   "mass_g": 26.33,
    "subsystem": "fins",
    "bbox_px": [
     527,
@@ -219,28 +219,28 @@
   {
    "id": "FIN-001-UL",
    "role": "ghost",
-   "name": "Half-fin upper left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets",
+   "name": "Half-fin upper left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets",
    "status": "MODELLED",
-   "mass_g": 25.5,
+   "mass_g": 25.6,
    "subsystem": "fins",
    "bbox_px": [
     966,
     370,
-    1077,
+    1078,
     609
    ]
   },
   {
    "id": "FIN-001-LL",
    "role": "ghost",
-   "name": "Half-fin lower left, two-layer foam board, stepped 45.4 mm tip, 8 mm lead hole, root fillets, link slot",
+   "name": "Half-fin lower left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot",
    "status": "MODELLED",
-   "mass_g": 26.23,
+   "mass_g": 26.33,
    "subsystem": "fins",
    "bbox_px": [
     959,
     495,
-    1073,
+    1074,
     709
    ]
   },
@@ -269,7 +269,7 @@
     477,
     337,
     513,
-    372
+    373
    ]
   },
   {
@@ -323,9 +323,9 @@
    "subsystem": "propulsion",
    "bbox_px": [
     524,
-    344,
+    345,
     549,
-    376
+    377
    ]
   },
   {
@@ -338,8 +338,8 @@
    "bbox_px": [
     986,
     509,
-    1008,
-    545
+    1009,
+    546
    ]
   },
   {
@@ -378,38 +378,38 @@
    "mass_g": 550.0,
    "subsystem": "power",
    "bbox_px": [
-    654,
-    492,
+    652,
+    494,
     780,
-    599
+    601
    ]
   },
   {
    "id": "PWR-006",
    "role": "context",
-   "name": "Power frame: deck on 4 spacers, wire window, AS150U cradle, legs, fuse clip (printed PETG)",
+   "name": "Power frame: deck on 4 spacers (56 x 34 mm board seat = KO-PWR-BOARD), wire window, AS150U cradle, legs (printed PETG)",
    "status": "MODELLED",
-   "mass_g": 7.36,
+   "mass_g": 8.06,
    "subsystem": "power",
    "bbox_px": [
-    712,
-    510,
+    707,
+    511,
     782,
-    579
+    586
    ]
   },
   {
    "id": "PWR-003",
    "role": "context",
-   "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense), separated from the FC stack",
+   "name": "Power module: CoreWing F405 Wing V2 power board (V/I sense, servo BEC), separated from the FC stack",
    "status": "MODELLED",
    "mass_g": 28.0,
    "subsystem": "power",
    "bbox_px": [
-    713,
+    709,
     542,
-    754,
-    576
+    755,
+    582
    ]
   },
   {
@@ -431,41 +431,13 @@
    "role": "context",
    "name": "Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)",
    "status": "MODELLED",
-   "mass_g": 7.3,
+   "mass_g": 8.8,
    "subsystem": "power",
    "bbox_px": [
     725,
-    557,
+    556,
     752,
     580
-   ]
-  },
-  {
-   "id": "PWR-007",
-   "role": "context",
-   "name": "UBEC feed fuse 5 A mini blade in an inline holder",
-   "status": "MODELLED",
-   "mass_g": 3.5,
-   "subsystem": "power",
-   "bbox_px": [
-    754,
-    537,
-    773,
-    558
-   ]
-  },
-  {
-   "id": "PWR-005",
-   "role": "context",
-   "name": "UBEC 6.0 V, 8 A class, servo rail",
-   "status": "MODELLED",
-   "mass_g": 13.0,
-   "subsystem": "power",
-   "bbox_px": [
-    694,
-    487,
-    727,
-    517
    ]
   },
   {
@@ -476,7 +448,7 @@
    "mass_g": 2.2,
    "subsystem": "power",
    "bbox_px": [
-    544,
+    545,
     338,
     560,
     354
@@ -490,7 +462,7 @@
    "mass_g": 2.2,
    "subsystem": "power",
    "bbox_px": [
-    1003,
+    1004,
     501,
     1019,
     520
@@ -518,7 +490,7 @@
    "mass_g": 2.2,
    "subsystem": "power",
    "bbox_px": [
-    992,
+    993,
     645,
     1007,
     663
@@ -532,10 +504,10 @@
    "mass_g": 1.6,
    "subsystem": "power",
    "bbox_px": [
-    722,
+    723,
     555,
     755,
-    579
+    580
    ]
   },
   {
@@ -562,7 +534,7 @@
    "bbox_px": [
     721,
     546,
-    755,
+    756,
     569
    ]
   },
@@ -595,6 +567,230 @@
    ]
   },
   {
+   "id": "HRN-113-LL",
+   "role": "context",
+   "name": "Amass XT30U mated pair, ESC LL power plug",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    755,
+    537,
+    770,
+    552
+   ]
+  },
+  {
+   "id": "HRN-113-LR",
+   "role": "context",
+   "name": "Amass XT30U mated pair, ESC LR power plug",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    701,
+    493,
+    718,
+    503
+   ]
+  },
+  {
+   "id": "HRN-113-UL",
+   "role": "context",
+   "name": "Amass XT30U mated pair, ESC UL power plug",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    755,
+    533,
+    770,
+    548
+   ]
+  },
+  {
+   "id": "HRN-113-UR",
+   "role": "context",
+   "name": "Amass XT30U mated pair, ESC UR power plug",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "subsystem": "harness",
+   "bbox_px": [
+    700,
+    490,
+    717,
+    499
+   ]
+  },
+  {
+   "id": "HRN-105-1",
+   "role": "context",
+   "name": "JR mated pair, FC output 1 (E-HRN-26)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    698,
+    505,
+    711,
+    522
+   ]
+  },
+  {
+   "id": "HRN-105-2",
+   "role": "context",
+   "name": "JR mated pair, FC output 2 (E-HRN-25)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    695,
+    503,
+    708,
+    521
+   ]
+  },
+  {
+   "id": "HRN-105-3",
+   "role": "context",
+   "name": "JR mated pair, FC output 3 (E-HRN-27)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    692,
+    502,
+    705,
+    520
+   ]
+  },
+  {
+   "id": "HRN-105-4",
+   "role": "context",
+   "name": "JR mated pair, FC output 4 (E-HRN-24)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    689,
+    501,
+    702,
+    518
+   ]
+  },
+  {
+   "id": "HRN-105-5",
+   "role": "context",
+   "name": "JR mated pair, FC output 5 (E-HRN-28)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    686,
+    500,
+    699,
+    517
+   ]
+  },
+  {
+   "id": "HRN-105-6",
+   "role": "context",
+   "name": "JR mated pair, FC output 6 (E-HRN-29)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    683,
+    499,
+    696,
+    516
+   ]
+  },
+  {
+   "id": "HRN-105-SL",
+   "role": "context",
+   "name": "JR mated pair in the servo recess L",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "subsystem": "harness",
+   "bbox_px": [
+    972,
+    547,
+    987,
+    561
+   ]
+  },
+  {
+   "id": "HRN-105-SR",
+   "role": "context",
+   "name": "JR mated pair in the servo recess R",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "subsystem": "harness",
+   "bbox_px": [
+    585,
+    406,
+    601,
+    418
+   ]
+  },
+  {
+   "id": "HRN-110-LL",
+   "role": "context",
+   "name": "Fin-hole grommet LL (printed ASA)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    972,
+    620,
+    985,
+    630
+   ]
+  },
+  {
+   "id": "HRN-110-LR",
+   "role": "context",
+   "name": "Fin-hole grommet LR (printed ASA)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    539,
+    454,
+    550,
+    463
+   ]
+  },
+  {
+   "id": "HRN-110-UL",
+   "role": "context",
+   "name": "Fin-hole grommet UL (printed ASA)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    976,
+    574,
+    988,
+    584
+   ]
+  },
+  {
+   "id": "HRN-110-UR",
+   "role": "context",
+   "name": "Fin-hole grommet UR (printed ASA)",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "subsystem": "harness",
+   "bbox_px": [
+    534,
+    409,
+    546,
+    418
+   ]
+  },
+  {
    "id": "E-HRN-10",
    "role": "context",
    "name": "",
@@ -602,10 +798,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    740,
-    502,
-    775,
-    531
+    736,
+    501,
+    780,
+    530
    ]
   },
   {
@@ -616,10 +812,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    736,
+    734,
     538,
     746,
-    547
+    548
    ]
   },
   {
@@ -630,10 +826,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    741,
-    546,
-    751,
-    563
+    726,
+    544,
+    753,
+    576
    ]
   },
   {
@@ -644,10 +840,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    536,
+    523,
     355,
     773,
-    560
+    564
    ]
   },
   {
@@ -658,10 +854,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    743,
+    731,
     520,
-    1006,
-    598
+    1009,
+    597
    ]
   },
   {
@@ -672,10 +868,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    541,
-    455,
+    528,
+    452,
     773,
-    561
+    560
    ]
   },
   {
@@ -686,9 +882,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    744,
-    524,
-    996,
+    735,
+    528,
+    1003,
     659
    ]
   },
@@ -700,10 +896,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    487,
-    334,
-    528,
-    372
+    489,
+    336,
+    529,
+    374
    ]
   },
   {
@@ -714,10 +910,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    978,
+    975,
     509,
     993,
-    541
+    544
    ]
   },
   {
@@ -728,10 +924,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    512,
-    510,
-    542,
-    572
+    514,
+    508,
+    543,
+    573
    ]
   },
   {
@@ -742,38 +938,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    962,
-    682,
-    980,
-    756
-   ]
-  },
-  {
-   "id": "E-HRN-21",
-   "role": "context",
-   "name": "",
-   "status": null,
-   "mass_g": null,
-   "subsystem": "harness",
-   "bbox_px": [
-    747,
-    552,
-    759,
-    561
-   ]
-  },
-  {
-   "id": "E-HRN-22",
-   "role": "context",
-   "name": "",
-   "status": null,
-   "mass_g": null,
-   "subsystem": "harness",
-   "bbox_px": [
-    681,
-    508,
-    701,
-    520
+    960,
+    680,
+    981,
+    755
    ]
   },
   {
@@ -784,10 +952,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    664,
+    656,
     542,
-    725,
-    572
+    728,
+    580
    ]
   },
   {
@@ -798,9 +966,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    539,
-    359,
-    702,
+    534,
+    355,
+    703,
     522
    ]
   },
@@ -812,9 +980,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    691,
-    488,
-    1004,
+    692,
+    489,
+    1009,
     600
    ]
   },
@@ -826,10 +994,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    543,
-    457,
-    704,
-    524
+    539,
+    458,
+    711,
+    525
    ]
   },
   {
@@ -840,10 +1008,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    689,
+    690,
     490,
-    994,
-    659
+    999,
+    661
    ]
   },
   {
@@ -854,7 +1022,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    688,
+    686,
     482,
     988,
     573
@@ -868,9 +1036,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    572,
-    404,
-    732,
+    573,
+    403,
+    730,
     521
    ]
   },
@@ -882,10 +1050,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    690,
-    404,
+    696,
+    400,
     753,
-    522
+    525
    ]
   },
   {
@@ -897,8 +1065,8 @@
    "subsystem": "harness",
    "bbox_px": [
     671,
-    544,
-    729,
+    545,
+    730,
     577
    ]
   },
@@ -910,24 +1078,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    684,
+    682,
     526,
-    722,
+    725,
     585
-   ]
-  },
-  {
-   "id": "E-HRN-33",
-   "role": "context",
-   "name": "",
-   "status": null,
-   "mass_g": null,
-   "subsystem": "harness",
-   "bbox_px": [
-    722,
-    485,
-    773,
-    543
    ]
   },
   {
@@ -941,7 +1095,7 @@
     546,
     349,
     549,
-    354
+    353
    ]
   },
   {
@@ -952,10 +1106,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    1004,
+    1005,
     514,
     1009,
-    520
+    519
    ]
   },
   {
@@ -969,7 +1123,7 @@
     558,
     489,
     562,
-    491
+    492
    ]
   },
   {
@@ -980,8 +1134,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    993,
-    657,
+    994,
+    658,
     997,
     661
    ]

@@ -213,19 +213,47 @@ def main():
     with open(rp, encoding='utf-8') as f:
         rep = json.load(f)
     rep['skipped'] = skipped
+    rep['kinks'] = kinks(wires)
     rep['seconds'] = round(time.time() - t0, 1)
     with open(rp, 'w', encoding='utf-8') as f:
         json.dump(rep, f, indent=1, sort_keys=True)
     write_md(rep, a, os.path.join(a.out, 'REPORT.md'))
-    errs = [h for pz in rep['poses'] for h in pz['hits'] if h['depth_mm'] > a.tol_mm] + rep.get('wire_ends', [])
+    errs = [h for pz in rep['poses'] for h in pz['hits'] if h['depth_mm'] > a.tol_mm] + rep.get('wire_ends', [])         + rep.get('kinks', [])
     for pz in rep['poses']:
         n = sum(1 for h in pz['hits'] if h['depth_mm'] > a.tol_mm)
         print('  %-48s %4d part pairs penetrate > %g mm' % (pz['name'][:48], n, a.tol_mm))
     print('  %-48s %4d' % ('wire ends not seated in a part', len(rep.get('wire_ends', []))))
+    print('  %-48s %4d' % ('wire bends tighter than the wire (folds)', len(rep.get('kinks', []))))
     print('collide: %s (%d bodies in %d parts, %d poses, %.0f s); report %s'
           % ('PASS' if not errs else 'FAIL, %d overlaps / loose ends' % len(errs), rep['bodies'], rep['parts'], len(rep['poses']),
              rep['seconds'], os.path.relpath(os.path.join(a.out, 'REPORT.md'), os.getcwd())))
     sys.exit(1 if errs else 0)
+
+
+def kinks(wires):
+    """D-87: a drawn bend tighter than the strand's own radius makes the tube fold through itself (a wire phasing
+    through itself). Same rounding as blender_backend.fillet_polyline: radius = the declared bend radius, never
+    more than 45 % of either segment; the effective radius t / tan(theta/2) must be >= the strand radius."""
+    bad = []
+    for w in wires:
+        R = w['bend']
+        for k, (line, d) in enumerate(w['strands']):
+            r = d / 2
+            for i in range(1, len(line) - 1):
+                a, b, c = line[i - 1], line[i], line[i + 1]
+                d1, d2 = [b[j] - a[j] for j in range(3)], [c[j] - b[j] for j in range(3)]
+                n1, n2 = math.hypot(*d1), math.hypot(*d2)
+                if n1 < 1e-9 or n2 < 1e-9:
+                    continue
+                ang = math.acos(max(-1.0, min(1.0, sum(d1[j] * d2[j] for j in range(3)) / n1 / n2)))
+                if ang < 1e-3:
+                    continue
+                t = min(R * math.tan(ang / 2), 0.45 * n1, 0.45 * n2)
+                reff = t / math.tan(ang / 2)
+                if reff < r:
+                    bad.append({'wire': w['id'], 'strand': k, 'at_mm': [round(v * 1000, 1) for v in b],
+                                'bend_mm': round(reff * 1000, 2), 'radius_mm': round(r * 1000, 2)})
+    return bad
 
 
 def write_md(rep, a, path):
@@ -237,8 +265,13 @@ def write_md(rep, a, path):
          '**%s.** %d bodies in %d parts; %d poses (static + each elevon joint at each limit); %.0f s. Wire ends not '
          'seated in a part: %d.'
          % ('PASS' if not any(h['depth_mm'] > a.tol_mm for pz in rep['poses'] for h in pz['hits'])
-            and not rep.get('wire_ends') else 'FAIL',
+            and not rep.get('wire_ends') and not rep.get('kinks') else 'FAIL',
             rep['bodies'], rep['parts'], len(rep['poses']), rep['seconds'], len(rep.get('wire_ends', []))), '']
+    if rep.get('kinks'):
+        L += ['## Wire bends tighter than the wire', '', '| Wire | Strand | At (x, y, z) mm | Bend radius mm | Wire '
+              'radius mm |', '|---|---|---|---|---|'] + ['| %s | %d | %s | %.2f | %.2f |' % (
+                  k['wire'], k['strand'], ', '.join('%.1f' % v for v in k['at_mm']), k['bend_mm'], k['radius_mm'])
+                  for k in rep['kinks']] + ['']
     if rep.get('wire_ends'):
         L += ['## Wire ends not seated', '', '| Wire | Strand | End (x, y, z) mm | Gap mm | Its parts |',
               '|---|---|---|---|---|'] + ['| %s | %d | %s | %s | %s |' % (

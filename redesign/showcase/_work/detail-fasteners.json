@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 19.58,
+ "render_s": 16.06,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -19,7 +19,7 @@
   "location_m": [
    0.2144,
    0.4316,
-   0.2677
+   0.2676
   ],
   "fit": [
    "FIN-003-UR",
@@ -40,7 +40,7 @@
   "sub": "Each screw, nut and washer of the joint stacks is a CAD part with mass and edges (mount, motor and adapter ghosted)"
  },
  "subject_px": [
-  70,
+  69,
   69,
   1167,
   3553
@@ -48,32 +48,32 @@
  "callouts": [
   {
    "item": "PRP-005-UR",
-   "x": 828.5,
-   "y": 389.9,
+   "x": 740.9,
+   "y": 248.0,
    "title": "PRP-005-UR",
    "text": "4 x M3x8 SHCS motor screws",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0323,
-    0.3288,
-    0.1916
+    0.0295,
+    0.3199,
+    0.2001
    ]
   },
   {
    "item": "FIN-101-UR",
-   "x": 854.2,
-   "y": 802.8,
+   "x": 774.2,
+   "y": 868.2,
    "title": "FIN-101-UR",
    "text": "M3x16 pinch bolt",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0458,
-    0.3386,
-    0.1672
+    0.0557,
+    0.338,
+    0.1666
    ]
   },
   {
@@ -86,15 +86,15 @@
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0542,
+    0.0543,
     0.3392,
     0.1678
    ]
   },
   {
    "item": "FIN-103-UR",
-   "x": 872.8,
-   "y": 748.4,
+   "x": 861.4,
+   "y": 753.8,
    "title": "FIN-103-UR",
    "text": "2 x M3 washer",
    "detail": null,
@@ -102,13 +102,13 @@
    "occluded": false,
    "world_m": [
     0.0402,
-    0.337,
-    0.1686
+    0.3361,
+    0.1679
    ]
   },
   {
    "item": "PRP-006-UR",
-   "x": 1007.9,
+   "x": 1008.0,
    "y": 266.4,
    "title": "PRP-006-UR",
    "text": "4 x M3x4 adapter screws",
@@ -123,7 +123,7 @@
   },
   {
    "item": "PRP-007-UR",
-   "x": 1124.7,
+   "x": 1124.8,
    "y": 259.5,
    "title": "PRP-007-UR",
    "text": "M6 prop nut + washer",
@@ -157,12 +157,12 @@
    "role": "ghost",
    "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "subsystem": "fins",
    "bbox_px": [
     433,
-    132,
-    958,
+    145,
+    955,
     931
    ]
   },
@@ -171,13 +171,13 @@
    "role": "context",
    "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "status": "MODELLED",
-   "mass_g": 10.51,
+   "mass_g": 10.5,
    "subsystem": "fins",
    "bbox_px": [
-    70,
-    723,
+    69,
+    786,
     811,
-    1246
+    1238
    ]
   },
   {
@@ -219,7 +219,7 @@
     767,
     735,
     927,
-    888
+    887
    ]
   },
   {
@@ -326,8 +326,6 @@
   "E-HRN-18",
   "E-HRN-19",
   "E-HRN-20",
-  "E-HRN-21",
-  "E-HRN-22",
   "E-HRN-23",
   "E-HRN-24",
   "E-HRN-25",
@@ -338,7 +336,6 @@
   "E-HRN-30",
   "E-HRN-31",
   "E-HRN-32",
-  "E-HRN-33",
   "E-HRN-34",
   "E-HRN-35",
   "E-HRN-36",
@@ -419,6 +416,22 @@
   "HRN-001",
   "HRN-002-L",
   "HRN-002-R",
+  "HRN-105-1",
+  "HRN-105-2",
+  "HRN-105-3",
+  "HRN-105-4",
+  "HRN-105-5",
+  "HRN-105-6",
+  "HRN-105-SL",
+  "HRN-105-SR",
+  "HRN-110-LL",
+  "HRN-110-LR",
+  "HRN-110-UL",
+  "HRN-110-UR",
+  "HRN-113-LL",
+  "HRN-113-LR",
+  "HRN-113-UL",
+  "HRN-113-UR",
   "MEC-001-L",
   "MEC-001-R",
   "MEC-002-L",
@@ -487,9 +500,7 @@
   "PWR-002",
   "PWR-003",
   "PWR-004",
-  "PWR-005",
   "PWR-006",
-  "PWR-007",
   "PWR-008-LL",
   "PWR-008-LR",
   "PWR-008-UL",

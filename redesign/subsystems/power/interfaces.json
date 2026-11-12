@@ -56,7 +56,7 @@
    "name": "Bus board: FR4 strip with two tinned 8 AWG bus bars (+ / -)",
    "subsystem": "power",
    "status": "MODELLED",
-   "mass_g": 7.3,
+   "mass_g": 8.8,
    "material": "FR4 + copper (made)",
    "cg_xyz_m": [
     -0.021,

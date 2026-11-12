@@ -83,8 +83,8 @@
     "board": "g"
    },
    "outputs": {
-    "total_g": 622.4,
-    "non_pack_g": 72.39999999999999,
+    "total_g": 623.9,
+    "non_pack_g": 73.9,
     "jumpers_g": 9.6
    },
    "input_values": {
@@ -100,7 +100,7 @@
      60.0
     ],
     "board": 28.0,
-    "bus": 7.3,
+    "bus": 8.8,
     "frame": 9.7,
     "cap": 2.2
    }
@@ -307,7 +307,7 @@
      0.0016
     ],
     "bar_m": [
-     0.025,
+     0.035,
      0.00326,
      0.007
     ],
@@ -439,7 +439,7 @@
      0.0016
     ],
     "bar_m": [
-     0.025,
+     0.035,
      0.00326,
      0.007
     ],
@@ -495,7 +495,7 @@
    ],
    "how": "Weigh pack and frame stack on a 1 g scale at T-PWR-ARRIVAL; the 28 g power board moved from avionics (CR-F1-19) is what the 620 g allocation does not yet carry",
    "note": "D-74: UBEC (13 g) and fuse (3.5 g) deleted, deck 56 mm (+0.7 g frame)",
-   "value": 622.4
+   "value": 623.9
   },
   {
    "id": "CL-PWR-MASS-NONPACK",
@@ -511,7 +511,7 @@
     "PWR-006"
    ],
    "how": "Weigh the built frame stack (board, bus, AS150U, frame) and the four caps",
-   "value": 72.39999999999999
+   "value": 73.9
   },
   {
    "id": "CL-PWR-JUMPER-R",
