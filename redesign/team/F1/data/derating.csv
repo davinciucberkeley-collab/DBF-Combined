@@ -1,8 +1,8 @@
 run,awg,len_m,i_cont_a,rise_cont_c,peak_normal_c,peak_fault_c,r_loop_mohm,drop_cont_pct,mass_g
-main,10,0.08,30.27,0.5,18.0,20.4,0.59,0.121,9.8
+main,10,0.08,30.27,0.5,18.0,20.5,0.59,0.121,9.8
 esc,16,0.619,8.41,9.2,13.8,17.6,17.89,1.017,70.3
 esc18,18,0.619,8.41,16.4,31.0,41.8,29.2,1.659,43.2
 "bundle: P1 straw, LR + LL pairs",16,0.05,8.41,9.5,nan,25.1,nan,nan,nan
 "bundle: pod crossing, 2 twisted pairs stacked",16,0.09,8.41,9.5,nan,18.8,nan,nan,nan
-packlead,10,0.1,30.27,16.4,nan,20.4,0.74,0.151,nan
+packlead,10,0.1,30.27,16.4,nan,20.5,0.74,0.151,nan
 packlead12,12,0.1,30.27,28.5,nan,43.7,1.22,0.25,nan

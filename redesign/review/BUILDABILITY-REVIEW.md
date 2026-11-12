@@ -22,6 +22,23 @@ changes stability and therefore every downstream CFD, FEA and S&C input, so it c
 other items in "Fix before any more CFD/FEA", buy and measure the long-lead parts now, and plan first tethered
 hover for build week 5.
 
+## Blocker status (2026-11-11)
+
+The findings below are kept as written. This table is the status of the six blockers since the review.
+
+| Blocker | Status | Where |
+|---|---|---|
+| BR-00 CG aft of range | Fixed in design: predicted CG 50.2 mm in 46.6–51.4 mm. Modelled only; weigh the first feet and packs. | `params/CHANGE-LOG.md` D-75…D-78, `MASS-CG.md` |
+| BR-01 fin tip vs foot shoe | Fixed in CAD: one datum, no overlap. | D-75 |
+| BR-02 motor-mount slit bridged (MM-01) | Fixed in CAD: outboard cheek stops 1 mm ahead of the slit. Clocking key added for MM-02 (dog shear size still open, C6). | D-80, D-81 |
+| BR-03 no shop files (MF-01) | Fixed: `manufacturing/make_shop_files.py`. The CAD defects it reported are fixed too: horn bore breakout (D-82), POD-007 sealed void, HRN-110 grommet now modelled (D-83). | `manufacturing/README.md` |
+| BR-04 Maker Pass fees | Open: team decision. | `HANDOFF.md` |
+| BR-05 power board facts | Resolved from documents; bench check on arrival. | D-74, `subsystems/power/BOARD-CHECK.md` |
+
+New since the review: `collision/collide.py` checks that no two parts overlap (static pose and both elevon
+limits). It found 117 overlapping part pairs in the CAD. Seats (`interfaces/seats.json`) and the D-84 geometry fixes
+brought that to 0.
+
 ## Top-tier problem: mass and CG now fail (BR-00)
 
 Source: `PROOFS.md:48-60`, `STATUS.md` issue 6, `team/A3/rollup/ROLLUP.md:38-66` (re-run after

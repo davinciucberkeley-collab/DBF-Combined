@@ -447,10 +447,11 @@ def build(ctx):
     ty0, ty1 = lv('tongue_y_m')
     xt1 = min(G['x_slot_a'], xf1)
     arc = []
+    ra = rs + lv('saddle_gap_m')                         # bond line over the spar (collision check)
     for i in range(25):
         x = G['x_slot_f'] + (xt1 - G['x_slot_f']) * i / 24
         d = x - xs
-        zc = zs + math.sqrt(max(rs * rs - d * d, 0.0))
+        zc = zs + math.sqrt(max(ra * ra - d * d, 0.0)) + ra * (1 - math.cos(math.pi / 48))   # chords outside the arc
         arc.append((x, max(zc, G['z_cheek'])))
     tongue = [(G['x_slot_f'], G['z_aft'])] + arc + [(xt1, G['z_aft'])]
     for s in (1, -1):
@@ -460,7 +461,9 @@ def build(ctx):
         hd.prism('Y', tlo, tongue, thi - tlo, name='petgb saddle tongue')
         sq_leg = [_rect(xs - lg / 2, s * ly - lg / 2, xs + lg / 2, s * ly + lg / 2), _circle(xs, s * ly, lv('leg_m')[1] / 2, 8)]
         if s < 0:                                       # left leg: carries nothing (CR-F2-03 e)
-            hd.prism('Z', G['zfoot'], sq_leg, G['z_grip0'] - G['zfoot'], name='petg leg')
+            # solid: a bore here was sealed by the foot plate and the grip, a closed void that meshed as a second
+            # shell (shop export: "POD-007 forms 2 separate pieces"); printed at the slicer's leg infill instead
+            hd.prism('Z', G['zfoot'], sq_leg[:1], G['z_grip0'] - G['zfoot'], name='petg leg')
             continue
         # right leg: the GPS cable enters a window on the outboard face at z ~0.06 and leaves at the top, inboard,
         # into the groove under the grip

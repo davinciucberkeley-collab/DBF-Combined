@@ -393,6 +393,13 @@
   "status": "PROPOSED",
   "note": "antenna B: printed tube out of the nose below the pitot boom: y, z, OD, bore; through the nose wall and the nose block"
  },
+ "saddle_gap_m": {
+  "value": 0.0002,
+  "unit": "m",
+  "source": "collision/REPORT.md (2026-11-11); G3 practice (bond line, as station_collar.strip_slot_clear_m)",
+  "status": "PROPOSED",
+  "note": "handle saddle-tongue arc radius = spar radius + this gap (epoxy line). The arc was drawn on the spar surface and its chords cut 0.2 mm into the spar"
+ },
  "foot_y_m": {
   "value": [
    0.029,

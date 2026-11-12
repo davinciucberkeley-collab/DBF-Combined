@@ -67,6 +67,13 @@ PORTS = {
 }
 PORT_LIST = [[k, list(v[0])] for k, v in PORTS.items()]
 XT30 = {}                     # station -> (XT30U centre [x, y, z], path length bars -> centre m); filled by build()
+GROM = {}                     # station -> (hole centre [x, y, z], outboard sign); filled by build() (D-83)
+# HRN-110 fin-hole grommet (D-83, drawn as parts HRN-110-<st>): printed ASA, "10/7 x 12": flange OD 10, bore 7, overall
+# 12 mm; barrel 7.9 mm in the 8 mm D3 hole (CR-D3-23), flange on the outboard face, 1.2 mm lip proud of the inboard
+# face; CA'd in (BUILD step 4). Sizes are the G3 print proposal, UNVERIFIED until the first print.
+GROM_DIM_M = {"flange_od": 0.010, "barrel_od": 0.0079, "bore": 0.007, "length": 0.012, "flange_t": 0.0012}
+GROM_G = 0.50                 # g each, EST (the value the fittings table carried before D-83)
+GROM_EDGES = ("E-HRN-42", "E-HRN-43", "E-HRN-44", "E-HRN-45")      # HRN-110-<st> bonded in FIN-001-<st> (D-83)
 # Amass XT30U mated pair (manual, manufacturer's drawing: length 20.1 +/- 0.5, height across the two contacts
 # 10.2 +/- 0.3 mm; housing thickness 5.2 mm from the Amass listing, UNVERIFIED): [along the wire, across the pins, thick]
 XT30_SIZE_M = (0.0201, 0.0102, 0.0052)
@@ -303,11 +310,12 @@ def calc_phase_ext(reach, leads):
           equation="m = sum(gpm n L_supplied) + sum(fittings); CG = sum(m_i r_i) / m",
           inputs={"wires": "P:harness.wire_table", "od": "P:harness.wire_od_mm",
                   "fittings": "P:harness.fittings_table", "pod_box": "P:harness.pod_box",
-                  "plugs": "P:harness.xt30u_table"},
+                  "plugs": "P:harness.xt30u_table", "grommets": "P:harness.grommet_table"},
           units={"od": "AWG,mm"}, output="mass_g")
-def calc_mass(wires, od, fittings, pod_box, plugs):
+def calc_mass(wires, od, fittings, pod_box, plugs, grommets):
     m, cg, parts = mass_cg(wires, od, fittings, pod_box)
-    mp = sum(q[1] for q in plugs)                                     # XT30U parts HRN-113-* (D-74), own nodes
+    plugs = list(plugs) + list(grommets)                              # HRN-113-* (D-74) and HRN-110-* (D-83), own nodes
+    mp = sum(q[1] for q in plugs)
     cgt = [(m * cg[i] + sum(q[1] * q[2 + i] for q in plugs)) / (m + mp) for i in range(3)]
     return {"mass_g": m + mp, "cg_x": cgt[0], "cg_y": cgt[1], "cg_z": cgt[2], "plugs_g": mp,
             "pod_g": parts["HRN-001"]["mass_g"], "side_g": parts["HRN-002-R"]["mass_g"]}
@@ -971,10 +979,10 @@ def build(g):
         sz = 1 if st[0] == "U" else -1
         ex, ez = g["esc_x1"], sz * g["esc_z"]
         zs = (zU if sz > 0 else zL)(x_hole)
+        GROM[st] = ([x_hole, sy * g["yf"], zs + sz * hole_dz], sy)       # D-83: grommet drawn as HRN-110-<st>
         fittings += [
             ["ESC pad joints: solder at 2 power pads + 2 signal splices, heat-shrink " + st, 1, 0.40, ex, sy * g["esc_y"], ez],
             ["Phase joints: 3 staggered splices + outer sleeve " + st, 1, 0.40, g["esc_x0"] - 0.03, sy * yo, sz * 0.15],
-            ["Fin-hole grommet ASA 10/7 mm " + st, 1, 0.50, x_hole, sy * g["yf"], zs + sz * hole_dz],
             ["Tape strips 20 x 40 mm on the board face (6) " + st, 6, 0.05, ex - 0.01, sy * yo, sz * 0.08],
             ["Ties: boss tail, collar, pinch ear, ESC end " + st, 4, 0.12, 0.08, sy * yo, sz * 0.10],
             ["Groove hold-down tape tabs (4) under the skin " + st, 4, 0.03, x_pair, sy * 0.19, sz * 0.02],
@@ -1330,9 +1338,20 @@ def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
                               "unit": "-", "source": "team/F2/harness.py (D-74)",
                               "note": "[name, g, x, y, z]: the four XT30U mated pairs, parts HRN-113-<st> (own nodes, "
                                       "not in the bundle masses)"},
+              "grommet_table": {"value": [["Fin-hole grommet " + st, GROM_G] + [round(v, 4) for v in GROM[st][0]]
+                                          for st in STATIONS],
+                                "unit": "-", "source": "team/F2/harness.py (D-83)",
+                                "note": "[name, g, x, y, z]: the four fin-hole grommets, parts HRN-110-<st> (own "
+                                        "nodes, not in the bundle masses); 0.50 g each EST"},
               "passes": {"value": [[p[0], round(p[1], 1), p[2]] for p in passes], "unit": "-",
                          "source": "team/F2/harness.py", "note": "[name, opening mm2, [[AWG, conductors]]]"},
-              "cad": {"xt30u": {"value": {"HRN-113-" + st: {"centre": [round(v, 4) for v in XT30[st][0]],
+              "cad": {"grommet": {"value": {"HRN-110-" + st: {"centre": [round(v, 4) for v in GROM[st][0]],
+                                                              "out": GROM[st][1], "board_t": round(g["t_fin"], 5),
+                                                              **GROM_DIM_M} for st in STATIONS},
+                                  "unit": "m", "source": "team/F2/harness.py (D-83)",
+                                  "note": "fin-hole grommet bodies along y: centre = hole centre on the board mid-plane, "
+                                          "out = outboard sign; flange on the outboard face, lip proud inboard"},
+                      "xt30u": {"value": {"HRN-113-" + st: {"centre": [round(v, 4) for v in XT30[st][0]],
                                                             "axis": XT30[st][2], "size_m": list(XT30_SIZE_M)}
                                           for st in STATIONS}, "unit": "m", "source": "team/F2/harness.py (D-74)",
                                 "note": "XT30U mated-pair bodies: size [along the wire (axis), across the pins, "
@@ -1431,10 +1450,27 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
                                    "(%s); team/I1/BOM.csv#H06" % (plen, *(v * 1000 for v in XT30_SIZE_M), ax,
                                                                   "right channel, just inside the exit" if st[1] == "R"
                                                                   else "tunnel under the AS150U cradle")})
+    for st in STATIONS:                                              # D-83: the four fin-hole grommets, drawn
+        hrn_parts.append({"id": "HRN-110-" + st, "name": "Fin-hole grommet %s (printed ASA)" % st,
+                          "subsystem": "harness", "status": "MODELLED", "mass_g": GROM_G, "material": "ASA (printed)",
+                          "cg_xyz_m": [round(v, 4) for v in GROM[st][0]], "make_or_buy": "make",
+                          "notes": "D-83 (BR-03 / MF-01: no CAD body before): flange OD %.0f, bore %.0f, overall %.0f "
+                                   "mm; barrel %.1f mm in the 8 mm hole of FIN-001-%s, flange on the outboard face; "
+                                   "CA'd in (BUILD step 4); mass EST" % (GROM_DIM_M["flange_od"] * 1000,
+                                                                         GROM_DIM_M["bore"] * 1000,
+                                                                         GROM_DIM_M["length"] * 1000,
+                                                                         GROM_DIM_M["barrel_od"] * 1000, st)})
     by_edge = {}
     for w in wires:
         by_edge.setdefault(w[1], []).append(w)
     edges, pending = [], []
+    for st, eid in zip(STATIONS, GROM_EDGES):
+        edges.append({"id": eid, "part_a": "HRN-110-" + st, "part_b": "FIN-001-" + st, "via": "CT-CA",
+                      "owner": "harness",
+                      "notes": "grommet %s CA'd in the 8 mm ESC-lead hole, flange on the outboard face (D-83)" % st,
+                      "retention": {"item": "CA bead under the flange", "count": 1,
+                                    "load_n": "< 1 (lead tension is taken by the boss-tail and collar ties)",
+                                    "inspection": "pre-flight: grommet seated, no lead chafe at the bore"}})
     for st, eid in zip(STATIONS, XT30_EDGES):
         edges.append({"id": eid, "part_a": "HRN-113-" + st, "part_b": "HRN-001", "via": "CT-TIE", "owner": "harness",
                       "notes": "XT30U %s body tied to its pair run (crossing / tunnel lane), mated halves taped" % st,
@@ -1554,7 +1590,7 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
         ("HRN-109", "PET expandable braided sleeve 6 mm, 2 m", 1, 6.00, "Amazon: Alex Tech 1/4 in PET braided sleeve",
          "exit and crossing chafe sleeves"),
         ("HRN-110", "Fin-hole grommet ASA 10/7 x 12 mm (printed, G3)", 6, 0.0, "subsystems/harness/BUILD.md",
-         "4 + 2 spare"),
+         "4 + 2 spare; D-83: 4 fitted drawn as parts HRN-110-UR/UL/LR/LL (0.5 g each EST)"),
         ("HRN-111", "Straw liner 7 mm PP, 40 mm (P1 pass-through)", 2, 0.0, "drinking straw", ""),
         ("HRN-112", "Straw liner 4 mm PP, 15 mm (servo lead hole, CR-D1-06)", 2, 0.0, "coffee stirrer straw", ""),
         ("HRN-102", "Silicone wire 22 AWG, red + black 1.5 m each", 1, 4.00,
@@ -1615,7 +1651,12 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
                      round(XT30_G * 4, 2), *(round(sum(q[0][i] for q in pm) / 4, 4) for i in range(3)),
                      *(round(v, 4) for v in XT30_SIZE_M), "EST", "", "HRN-113-UR;HRN-113-UL;HRN-113-LR;HRN-113-LL",
                      "", "team/F2/harness.py XT30_SIZE_M, XT30_G"])
-    est_rows.append(["HRN-E06", "harness", "electrical", "Fittings: JR, GH, splices, grommets, ties, tape, sleeves",
+    gm = [GROM[s][0] for s in STATIONS]
+    est_rows.append(["HRN-E09", "harness", "electrical", "Fin-hole grommets x4 (HRN-110-*, D-83)", 4, "-",
+                     round(GROM_G * 4, 2), *(round(sum(q[i] for q in gm) / 4, 4) for i in range(3)),
+                     GROM_DIM_M["flange_od"], GROM_DIM_M["length"], GROM_DIM_M["flange_od"], "EST", "",
+                     "HRN-110-UR;HRN-110-UL;HRN-110-LR;HRN-110-LL", "", "team/F2/harness.py GROM_DIM_M, GROM_G"])
+    est_rows.append(["HRN-E06", "harness", "electrical", "Fittings: JR, GH, splices, ties, tape, sleeves",
                      1, "-", round(fm, 2), *(round(fmom[i] / fm, 4) for i in range(3)), 0.2, 0.7, 0.4, "EST", "",
                      "HRN-001;HRN-002", "", "team/F2/harness.py fittings_table (%d lines)" % len(fittings)])
     buf = io.StringIO()

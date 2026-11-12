@@ -33,7 +33,7 @@ Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simu
 | Item | Value | State | Source |
 |---|---|---|---|
 | Span × chord | 1.15 × 0.32 m, one piece | proposed | [`redesign/params/params.json`](redesign/params/params.json) `wing` |
-| Take-off mass, basic / predicted | 2,374 g / 2,493 g against a 2,600 g gate (margin 107 g vs 100 g overrun); landing 70 g vs 48 g allocated; predicted CG 1.2 mm aft of range | modelled | [`redesign/MASS-CG.md`](redesign/MASS-CG.md) (A3-R7) |
+| Take-off mass, basic / predicted | 2,341 g / 2,457 g against a 2,600 g gate (margin 143 g; 103 g with a 590 g pack, gate 100 g); landing 59.1 g vs 60 g allocated; predicted CG 50.1 mm in the 46.6–51.4 mm range | modelled | [`redesign/MASS-CG.md`](redesign/MASS-CG.md) (D-75…D-78), `CL-A3-*` in the proof graph |
 | Propulsion | 4 × SunnySky X3108S, APC 11×5.5MR props, 4 × 45 A ESCs, 4S 6500 mAh pack | proposed | [`redesign/README.md`](redesign/README.md) |
 | Hover T/W, fresh pack / worst pack | 2.49 / 2.12 | unverified (thrust stand owed) | [`redesign/README.md`](redesign/README.md) key numbers |
 | Cruise speed / power | 16 m/s / 240 W (E1 disputes: 246 W) | unverified | [`redesign/STATUS.md`](redesign/STATUS.md) issue 5 |
@@ -46,7 +46,8 @@ Frame revision A1-R5 (2026-11-10). "Modelled" means computed by analysis or simu
 | Build and finish | build start 2027-01-19 (proposed), first hover by build week 4, complete by 2027-04-30 | planned | [`redesign/params/params.json`](redesign/params/params.json) `schedule` |
 | Transport | one-piece box 1.25 × 0.55 × 0.54 m; field set-up about 5 min, one person | proposed | [`redesign/README.md`](redesign/README.md) |
 | Requirements | 59 total: 0 verified, 1 checked, 1 proposed, 57 unverified; 11 show a fail (most are stale claims) | | [`redesign/STATUS.md`](redesign/STATUS.md) |
-| Proof graph | 4,211 nodes, 13,734 links; clean build (0 drift, 0 errors); 86 claims fail on margin | | [`redesign/PROOFS.md`](redesign/PROOFS.md) |
+| Proof graph | 4,244 nodes, 13,815 links; clean build (0 drift, 0 errors); 87 claims fail on margin (2026-11-11) | | [`redesign/PROOFS.md`](redesign/PROOFS.md) |
+| Collision (no parts phasing) | 948 bodies in 185 parts: 0 penetrations > 0.05 mm, static and at both elevon limits | modelled | [`redesign/collision/README.md`](redesign/collision/README.md) |
 
 ## Where things are
 

@@ -12,7 +12,7 @@
    "text": "Declared mass of every wing instance node in subsystems/wing/interfaces.json: WNG-001, WNG-002, WNG-003, WNG-004-R, WNG-004-L, WNG-005-R, WNG-005-L, WNG-006-R, WNG-006-L, WNG-007, WNG-011-R, WNG-011-L, WNG-012-R, WNG-012-L, WNG-020",
    "basis": "team/D1/wing_data.py: XPS volume x 30 kg/m3, tape arc length x 0.065 kg/m2, spar 0.102 kg/m, C2 plug and slot-fill masses",
    "value": [
-    201.8,
+    202.0,
     102.0,
     47.9,
     7.0,
@@ -44,9 +44,9 @@
    "text": "CG x of every wing instance node, same order as ASM-D1-PART-MASSES",
    "basis": "subsystems/wing/interfaces.json cg_xyz_m (CAD volume centroids, tape by area)",
    "value": [
-    0.1188,
+    0.1187,
     0.08,
-    0.1332,
+    0.1329,
     0.08,
     0.08,
     0.08,
@@ -58,7 +58,7 @@
     0.2769,
     0.2776,
     0.2776,
-    0.165
+    0.1651
    ],
    "unit": "m",
    "status": "PROPOSED",
@@ -176,7 +176,7 @@
     0.003,
     0.045527,
     0.005,
-    0.005,
+    0.0048,
     0.0042,
     0.019293
    ],
@@ -193,7 +193,7 @@
    "title": "Wing surface outside the upper prop keep-outs (CAD)",
    "text": "Lower bound of the gap from the core and tape surfaces to KO-PROP-UR/UL (keep-out radius already includes requirements.prop_clearance_min_m)",
    "basis": "team/D1/wing_claims.py#_prop_gap: all modules stub-built, wing section polygons sampled densely against the canted keep-out cylinders registered by subsystems/propulsion/fusion/propulsion.py",
-   "value": 0.00656,
+   "value": 0.00653,
    "unit": "m",
    "status": "PROPOSED",
    "cites": [
@@ -212,10 +212,10 @@
     "g": "ASM-D1-PROP-GAP"
    },
    "outputs": {
-    "gap": 0.00656
+    "gap": 0.00653
    },
    "input_values": {
-    "g": 0.00656
+    "g": 0.00653
    }
   },
   {
@@ -230,12 +230,12 @@
     "x": "ASM-D1-PART-CGX"
    },
    "outputs": {
-    "mass_g": 391.7,
-    "cg_x": 0.11371843247383202
+    "mass_g": 391.9,
+    "cg_x": 0.11363294207706048
    },
    "input_values": {
     "m": [
-     201.8,
+     202.0,
      102.0,
      47.9,
      7.0,
@@ -252,9 +252,9 @@
      0.5
     ],
     "x": [
-     0.1188,
+     0.1187,
      0.08,
-     0.1332,
+     0.1329,
      0.08,
      0.08,
      0.08,
@@ -266,7 +266,7 @@
      0.2769,
      0.2776,
      0.2776,
-     0.165
+     0.1651
     ]
    }
   },
@@ -410,7 +410,7 @@
     "cutout_r": 0.003,
     "le_seam_x": 0.045527,
     "fillet_floor": 0.005,
-    "fillet_step": 0.005,
+    "fillet_step": 0.0048,
     "jr_wall": 0.0042,
     "jr_under": 0.019293
    },
@@ -422,7 +422,7 @@
      0.003,
      0.045527,
      0.005,
-     0.005,
+     0.0048,
      0.0042,
      0.019293
     ]
@@ -460,7 +460,7 @@
     "WNG-020"
    ],
    "how": "T-D1-WEIGH: weigh the cut core, the tube, the plugs, the tape used and the finished wing on a 1 g scale.",
-   "value": 391.7
+   "value": 391.9
   },
   {
    "id": "CL-D1-WING-CG-X",
@@ -487,7 +487,7 @@
     "WNG-020"
    ],
    "how": "Balance the finished bare wing (no pod, fins) on two knife edges along the span; read x from the LE.",
-   "value": 0.11371843247383202
+   "value": 0.11363294207706048
   },
   {
    "id": "CL-D1-ELEVON-FRAC",
@@ -720,7 +720,7 @@
     "PRP-001-UL"
    ],
    "how": "On the first assembled wing: rule from each upper prop tip, turned by hand, to the upper skin near the LE at |y| 0.30-0.34; must exceed requirements.prop_clearance_min_m plus this gap.",
-   "value": 0.00656
+   "value": 0.00653
   },
   {
    "id": "CL-D1-POCKET-CORNER-R",

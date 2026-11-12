@@ -2658,26 +2658,26 @@
     "brace_up_L1_n": 6.2108584626659935,
     "tcollar_up_L1_nm": 0.025338365518048633,
     "qface_up_L1_npm": 127.56364746510577,
-    "t_sec_L4_tube_nm": 10.515116065995278,
-    "t_sec_L4_fin_nm": 2.249124131283679,
-    "t_sec_L4_brace_nm": 0.005740194751349444,
-    "t_sec_L4_case": "L4+ lo",
-    "face_up_L4+_mpa": 30.165111640970306,
-    "brace_up_L4+_n": -12.441358584067578,
-    "tcollar_up_L4+_nm": 10.44169976395861,
-    "qface_up_L4+_npm": 3602.803459143091,
-    "face_up_L4-_mpa": 30.013569447836318,
-    "brace_up_L4-_n": 23.023207981492728,
-    "tcollar_up_L4-_nm": 10.398529118565364,
-    "qface_up_L4-_npm": 3596.5295476758165,
-    "face_up_L5+_mpa": 8.872357153399816,
-    "brace_up_L5+_n": 7.416563538557361,
-    "tcollar_up_L5+_nm": 0.03025726619736968,
-    "qface_up_L5+_npm": 403.65125815800917,
-    "face_up_L5-_mpa": 4.823451435722504,
-    "brace_up_L5-_n": 3.1652858628159466,
-    "tcollar_up_L5-_nm": 0.012913379147713844,
-    "qface_up_L5-_npm": 195.85752529911866,
+    "t_sec_L4_tube_nm": 10.628009034350372,
+    "t_sec_L4_fin_nm": 2.0755566230355758,
+    "t_sec_L4_brace_nm": 0.05493434400543025,
+    "t_sec_L4_case": "L4+ up_cr",
+    "face_up_L4+_mpa": 30.163436483704,
+    "brace_up_L4+_n": -12.447719975009104,
+    "tcollar_up_L4+_nm": 10.441673811501005,
+    "qface_up_L4+_npm": 3602.6786823223365,
+    "face_up_L4-_mpa": 30.011897531406497,
+    "brace_up_L4-_n": 23.01684657744404,
+    "tcollar_up_L4-_nm": 10.398555071065744,
+    "qface_up_L4-_npm": 3596.404569564819,
+    "face_up_L5+_mpa": 8.86967254764824,
+    "brace_up_L5+_n": 7.410202140058629,
+    "tcollar_up_L5+_nm": 0.0302313136751019,
+    "qface_up_L5+_npm": 403.5262805699415,
+    "face_up_L5-_mpa": 4.82547134610446,
+    "brace_up_L5-_n": 3.158924464191227,
+    "tcollar_up_L5-_nm": 0.01288742662532974,
+    "qface_up_L5-_npm": 195.98230219720298,
     "face_up_G2+_mpa": 1.0331779101857892,
     "brace_up_G2+_n": 87.40997565584996,
     "tcollar_up_G2+_nm": 0.34635805078535675,
@@ -2740,22 +2740,22 @@
     "brace_up_cr_L1_n": 7.277638541304782,
     "tcollar_up_cr_L1_nm": 0.028892225147720663,
     "qface_up_cr_L1_npm": 166.68750213044945,
-    "face_up_cr_L4+_mpa": 30.347463814268345,
-    "brace_up_cr_L4+_n": -12.832789031792036,
-    "tcollar_up_cr_L4+_nm": 10.628038626974472,
-    "qface_up_cr_L4+_npm": 3705.6632936751184,
-    "face_up_cr_L4-_mpa": 30.1526269873921,
-    "brace_up_cr_L4-_n": 25.23218205783972,
-    "tcollar_up_cr_L4-_nm": 10.578813036128139,
-    "qface_up_cr_L4-_npm": 3667.1158815483604,
-    "face_up_cr_L5+_mpa": 9.026963285840866,
-    "brace_up_cr_L5+_n": 8.614672424506802,
-    "tcollar_up_cr_L5+_nm": 0.03420024968883795,
-    "qface_up_cr_L5+_npm": 412.87522307091024,
-    "face_up_cr_L5-_mpa": 4.746805781887994,
-    "brace_up_cr_L5-_n": 3.7847205903506156,
-    "tcollar_up_cr_L5-_nm": 0.015025340815953053,
-    "qface_up_cr_L5-_npm": 190.78492588384773,
+    "face_up_cr_L4+_mpa": 30.345635422056947,
+    "brace_up_cr_L4+_n": -12.840243082435242,
+    "tcollar_up_cr_L4+_nm": 10.628009034183151,
+    "qface_up_cr_L4+_npm": 3705.49280571297,
+    "face_up_cr_L4-_mpa": 30.150801917249613,
+    "brace_up_cr_L4-_n": 25.224728003772086,
+    "tcollar_up_cr_L4-_nm": 10.578842629247617,
+    "qface_up_cr_L4-_npm": 3666.9475875790517,
+    "face_up_cr_L5+_mpa": 9.02415523984442,
+    "brace_up_cr_L5+_n": 8.607218388916078,
+    "tcollar_up_cr_L5+_nm": 0.03417065716782297,
+    "qface_up_cr_L5+_npm": 412.7416163300724,
+    "face_up_cr_L5-_mpa": 4.7489776145741525,
+    "brace_up_cr_L5-_n": 3.7772665547534476,
+    "tcollar_up_cr_L5-_nm": 0.014995748294281519,
+    "qface_up_cr_L5-_npm": 190.91822255929802,
     "face_up_cr_G2+_mpa": 2.055932637562617,
     "brace_up_cr_G2+_n": 86.84025867921872,
     "tcollar_up_cr_G2+_nm": 0.34498921892590495,
@@ -2816,22 +2816,22 @@
     "brace_up_rf_L1_n": 24.276080251216836,
     "tcollar_up_rf_L1_nm": 0.10127007404838051,
     "qface_up_rf_L1_npm": 496.3140753975347,
-    "face_up_rf_L4+_mpa": 36.85652336654514,
-    "brace_up_rf_L4+_n": -10.876880977443651,
-    "tcollar_up_rf_L4+_nm": 11.108061040297741,
-    "qface_up_rf_L4+_npm": 4057.9168980574186,
-    "face_up_rf_L4-_mpa": 35.91485391183666,
-    "brace_up_rf_L4-_n": 52.23764081026172,
-    "tcollar_up_rf_L4-_nm": 10.935520532798193,
-    "qface_up_rf_L4-_npm": 3971.0842624452107,
-    "face_up_rf_L5+_mpa": 22.688842314044923,
-    "brace_up_rf_L5+_n": 50.248188540424124,
-    "tcollar_up_rf_L5+_nm": 0.20961529709641002,
-    "qface_up_rf_L5+_npm": 1410.392411796448,
-    "face_up_rf_L5-_mpa": 10.046930832277463,
-    "brace_up_rf_L5-_n": -8.887428702897058,
-    "tcollar_up_rf_L5-_nm": 0.037074789402218866,
-    "qface_up_rf_L5-_npm": 564.7893711457552,
+    "face_up_rf_L4+_mpa": 36.851504139978424,
+    "brace_up_rf_L4+_n": -10.901745458201958,
+    "tcollar_up_rf_L4+_nm": 11.107957316042274,
+    "qface_up_rf_L4+_npm": 4057.4086836666884,
+    "face_up_rf_L4-_mpa": 35.90997968690266,
+    "brace_up_rf_L4-_n": 52.212776324071434,
+    "tcollar_up_rf_L4-_nm": 10.935624257369085,
+    "qface_up_rf_L4-_npm": 3970.5759189754913,
+    "face_up_rf_L5+_mpa": 22.681181030469833,
+    "brace_up_rf_L5+_n": 50.2233240472663,
+    "tcollar_up_rf_L5+_nm": 0.20951157240842067,
+    "qface_up_rf_L5+_npm": 1409.8840679485795,
+    "face_up_rf_L5-_mpa": 10.054400741886557,
+    "brace_up_rf_L5-_n": -8.912293192699815,
+    "tcollar_up_rf_L5-_nm": 0.0371785140841584,
+    "qface_up_rf_L5-_npm": 565.2977149941513,
     "face_up_rf_G2+_mpa": 1.9446819953601784,
     "brace_up_rf_G2+_n": 81.76020147087483,
     "tcollar_up_rf_G2+_nm": 0.33054514717189765,
@@ -2893,22 +2893,22 @@
     "brace_lo_L1_n": 5.797886402592704,
     "tcollar_lo_L1_nm": 0.021926915904130984,
     "qface_lo_L1_npm": 130.7336345387361,
-    "face_lo_L4+_mpa": 30.71124285376162,
-    "brace_lo_L4+_n": 1.4562372795784557,
-    "tcollar_lo_L4+_nm": 10.348534046223534,
-    "qface_lo_L4+_npm": 3572.4851478846863,
-    "face_lo_L4-_mpa": 30.680329056326553,
-    "brace_lo_L4-_n": 8.422004373746377,
-    "tcollar_lo_L4-_nm": 10.3111757127609,
-    "qface_lo_L4-_npm": 3571.360262150819,
-    "face_lo_L5+_mpa": 9.13212004622993,
-    "brace_lo_L5+_n": 6.969689815273883,
-    "tcollar_lo_L5+_nm": 0.02635853688529899,
-    "qface_lo_L5+_npm": 399.4907813369722,
-    "face_lo_L5-_mpa": 4.919945781182176,
-    "brace_lo_L5-_n": 2.908551836421995,
-    "tcollar_lo_L5-_nm": 0.010999796668389572,
-    "qface_lo_L5-_npm": 188.22687323772078,
+    "face_lo_L4+_mpa": 30.709418799979215,
+    "brace_lo_L4+_n": 1.450298875552514,
+    "tcollar_lo_L4+_nm": 10.34851158833257,
+    "qface_lo_L4+_npm": 3572.3582734920874,
+    "face_lo_L4-_mpa": 30.678507569109062,
+    "brace_lo_L4-_n": 8.416065933490652,
+    "tcollar_lo_L4-_nm": 10.311198171664131,
+    "qface_lo_L4-_npm": 3571.233204568953,
+    "face_lo_L5+_mpa": 9.129347867590578,
+    "brace_lo_L5+_n": 6.963751398269265,
+    "tcollar_lo_L5+_nm": 0.026336078478286007,
+    "qface_lo_L5+_npm": 399.36372370290195,
+    "face_lo_L5-_mpa": 4.92207989931489,
+    "brace_lo_L5-_n": 2.9026134195030706,
+    "tcollar_lo_L5-_nm": 0.01097733827836378,
+    "qface_lo_L5-_npm": 188.35374767090025,
     "face_lo_G2+_mpa": 1.069768380203756,
     "brace_lo_G2+_n": 94.6577041945524,
     "tcollar_lo_G2+_nm": 0.3435104017510957,
@@ -2965,30 +2965,30 @@
     "brace_lo_H2s---_n": -3.0771976685104097,
     "tcollar_lo_H2s---_nm": 0.423931517803533,
     "qface_lo_H2s---_npm": 388.78355173626846,
-    "face_lo_G3_mpa": 0.44672969407911656,
-    "brace_lo_G3_n": 0.6043044250897516,
-    "tcollar_lo_G3_nm": 0.002285407369756326,
-    "qface_lo_G3_npm": 36.51394000406171,
+    "face_lo_G3_mpa": 0.4467296940731855,
+    "brace_lo_G3_n": 0.6043044251027638,
+    "tcollar_lo_G3_nm": 0.0022854073713321557,
+    "qface_lo_G3_npm": 36.51394000414533,
     "face_lo_cr_L1_mpa": 3.69033053964846,
     "brace_lo_cr_L1_n": 7.088407069329643,
     "tcollar_lo_cr_L1_nm": 0.025808370040713513,
     "qface_lo_cr_L1_npm": 174.26635861848325,
-    "face_lo_cr_L4+_mpa": 30.932116261822134,
-    "brace_lo_cr_L4+_n": 0.9645636893448147,
-    "tcollar_lo_cr_L4+_nm": 10.522177138903515,
-    "qface_lo_cr_L4+_npm": 3697.23656027536,
-    "face_lo_cr_L4-_mpa": 30.87656899078221,
-    "brace_lo_cr_L4-_n": 11.1124231813414,
-    "tcollar_lo_cr_L4-_nm": 10.478205715948349,
-    "qface_lo_cr_L4-_npm": 3685.9321537026813,
-    "face_lo_cr_L5+_mpa": 9.363704509645189,
-    "brace_lo_cr_L5+_n": 8.44051566071598,
-    "tcollar_lo_cr_L5+_nm": 0.03073129821410059,
-    "qface_lo_cr_L5+_npm": 412.8814651217003,
-    "face_lo_cr_L5-_mpa": 4.814992263391175,
-    "brace_lo_cr_L5-_n": 3.6364712084684276,
-    "tcollar_lo_cr_L5-_nm": 0.013240124850992296,
-    "qface_lo_cr_L5-_npm": 181.28291448428348,
+    "face_lo_cr_L4+_mpa": 30.93007183962997,
+    "brace_lo_cr_L4+_n": 0.9573034771548602,
+    "tcollar_lo_cr_L4+_nm": 10.522150704941339,
+    "qface_lo_cr_L4+_npm": 3697.05807031613,
+    "face_lo_cr_L4-_mpa": 30.8745268794047,
+    "brace_lo_cr_L4-_n": 11.105162953690746,
+    "tcollar_lo_cr_L4-_nm": 10.47823214973053,
+    "qface_lo_cr_L4-_npm": 3685.7557680526747,
+    "face_lo_cr_L5+_mpa": 9.360750496137697,
+    "brace_lo_cr_L5+_n": 8.433255443223164,
+    "tcollar_lo_cr_L5+_nm": 0.03070486429484376,
+    "qface_lo_cr_L5+_npm": 412.7421363495421,
+    "face_lo_cr_L5-_mpa": 4.8173456161947374,
+    "brace_lo_cr_L5-_n": 3.6292109909781307,
+    "tcollar_lo_cr_L5-_nm": 0.01321369093176239,
+    "qface_lo_cr_L5-_npm": 181.42190889457783,
     "face_lo_cr_G2+_mpa": 2.5050751678043843,
     "brace_lo_cr_G2+_n": 93.96116530468599,
     "tcollar_lo_cr_G2+_nm": 0.3398812884136273,
@@ -3045,30 +3045,30 @@
     "brace_lo_cr_H2s---_n": -2.2678164084210106,
     "tcollar_lo_cr_H2s---_nm": 0.44549843358623065,
     "qface_lo_cr_H2s---_npm": 449.5068720072037,
-    "face_lo_cr_G3_mpa": 0.5925321069489807,
-    "brace_lo_cr_G3_n": 0.7801065495056858,
-    "tcollar_lo_cr_G3_nm": 0.00284031070794509,
-    "qface_lo_cr_G3_npm": 39.06997421576963,
+    "face_lo_cr_G3_mpa": 0.5925321069490932,
+    "brace_lo_cr_G3_n": 0.7801065495051441,
+    "tcollar_lo_cr_G3_nm": 0.002840310707951578,
+    "qface_lo_cr_G3_npm": 39.06997421575982,
     "face_lo_rf_L1_mpa": 8.184890606816042,
     "brace_lo_rf_L1_n": 25.109583102206738,
     "tcollar_lo_rf_L1_nm": 0.09717870429074194,
     "qface_lo_rf_L1_npm": 534.138463439377,
-    "face_lo_rf_L4+_mpa": 37.26224514151056,
-    "brace_lo_rf_L4+_n": 3.6903595076970688,
-    "tcollar_lo_rf_L4+_nm": 11.066203197127692,
-    "qface_lo_rf_L4+_npm": 4057.2744263085874,
-    "face_lo_rf_L4-_mpa": 36.64597678509613,
-    "brace_lo_rf_L4-_n": 39.09049415344979,
-    "tcollar_lo_rf_L4-_nm": 10.900633424582708,
-    "qface_lo_rf_L4-_npm": 4004.3490209245147,
-    "face_lo_rf_L5+_mpa": 23.421108561155034,
-    "brace_lo_rf_L5+_n": 50.76810948988381,
-    "tcollar_lo_rf_L5+_nm": 0.19648192004366827,
-    "qface_lo_rf_L5+_npm": 1431.8272882531257,
-    "face_lo_rf_L5-_mpa": 9.639138487760352,
-    "brace_lo_rf_L5-_n": -7.987255843584189,
-    "tcollar_lo_rf_L5-_nm": 0.030912148991879107,
-    "qface_lo_rf_L5-_npm": 521.7803417121225,
+    "face_lo_rf_L4+_mpa": 37.256985760269295,
+    "brace_lo_rf_L4+_n": 3.664641296734321,
+    "tcollar_lo_rf_L4+_nm": 11.06610366217069,
+    "qface_lo_rf_L4+_npm": 4056.727416022602,
+    "face_lo_rf_L4-_mpa": 36.640860957279756,
+    "brace_lo_rf_L4-_n": 39.064775949957,
+    "tcollar_lo_rf_L4-_nm": 10.900732959855503,
+    "qface_lo_rf_L4-_npm": 4003.801934847147,
+    "face_lo_rf_L5+_mpa": 23.412767505422522,
+    "brace_lo_rf_L5+_n": 50.74239129427016,
+    "tcollar_lo_rf_L5+_nm": 0.19638238594774426,
+    "qface_lo_rf_L5+_npm": 1431.280203201105,
+    "face_lo_rf_L5-_mpa": 9.647296479898413,
+    "brace_lo_rf_L5-_n": -8.012974038696674,
+    "tcollar_lo_rf_L5-_nm": 0.031011683129734458,
+    "qface_lo_rf_L5-_npm": 522.3274267436146,
     "face_lo_rf_G2+_mpa": 2.1165549954199956,
     "brace_lo_rf_G2+_n": 88.3633866649914,
     "tcollar_lo_rf_G2+_nm": 0.32858659047222627,
@@ -3125,80 +3125,80 @@
     "brace_lo_rf_H2s---_n": 6.857965411874133,
     "tcollar_lo_rf_H2s---_nm": 0.44417295656878863,
     "qface_lo_rf_H2s---_npm": 287.66540782313564,
-    "face_lo_rf_G3_mpa": 0.7400193787514066,
-    "brace_lo_rf_G3_n": 2.5852318180945706,
-    "tcollar_lo_rf_G3_nm": 0.01000532256504541,
-    "qface_lo_rf_G3_npm": 47.01830968898911,
-    "face_ult_pa": 37262245.14151056,
-    "face_ult_intact_pa": 37262245.14151056,
-    "face_lim_cracked_pa": 20621410.841214757,
-    "ms_face_intact_ult": -0.7316318444574912,
-    "ms_face_failsafe_lim": -0.5150671272203351,
-    "ms_face_envelope_ult": -0.7316318444574912,
-    "edge_ult_pa": 155421030.99363118,
-    "tube_ult_pa": 51577562.58091235,
-    "root_m_lim_nm": 11.394055229591967,
+    "face_lo_rf_G3_mpa": 0.7400193787518436,
+    "brace_lo_rf_G3_n": 2.585231818075683,
+    "tcollar_lo_rf_G3_nm": 0.010005322567752217,
+    "qface_lo_rf_G3_npm": 47.01830968915129,
+    "face_ult_pa": 37256985.76026929,
+    "face_ult_intact_pa": 37256985.76026929,
+    "face_lim_cracked_pa": 20620047.893086646,
+    "ms_face_intact_ult": -0.7315939602751234,
+    "ms_face_failsafe_lim": -0.5150350740284781,
+    "ms_face_envelope_ult": -0.7315939602751234,
+    "edge_ult_pa": 155418258.71260768,
+    "tube_ult_pa": 51563058.09383842,
+    "root_m_lim_nm": 11.390851027638103,
     "brace_comp_design_n": 163.2845397356029,
     "brace_tens_design_n": 163.2845397356029,
     "brace_pcr_n": 293.0269164647382,
     "brace_len_m": 0.15716173993691976,
-    "collar_t_lim_nm": 11.108061040297741,
-    "collar_t_lim_intact_nm": 11.108061040297741,
-    "collar_t_design_nm": 23.951756618142007,
+    "collar_t_lim_nm": 11.107957316042274,
+    "collar_t_lim_intact_nm": 11.107957316042274,
+    "collar_t_design_nm": 23.951532962716154,
     "collar_f_lim_n": 94.6577041945524,
-    "tau_collar_pa": 2297173.0903116553,
-    "collar_h_req_m": 0.017228798177337416,
-    "tube_t_root_lim_nm": 12.509852761179637,
+    "tau_collar_pa": 2297153.4782639565,
+    "collar_h_req_m": 0.017228651086979675,
+    "tube_t_root_lim_nm": 12.509753038311942,
     "side_load_n": 39.5,
-    "strip_q_lim_npm": 4057.9168980574186,
-    "strip_q_lim_intact_npm": 4057.9168980574186,
-    "strip_tau_design_pa": 874988.3311436309,
-    "ms_strip_paper": -0.8857127615984346,
-    "strip_end_face_design_n": 2235.259361003303,
-    "strip_pin_design_n": 131.24824967154464,
+    "strip_q_lim_npm": 4057.4086836666884,
+    "strip_q_lim_intact_npm": 4057.4086836666884,
+    "strip_tau_design_pa": 874878.7474156297,
+    "ms_strip_paper": -0.8856984464471248,
+    "strip_end_face_design_n": 2235.218327889846,
+    "strip_pin_design_n": 131.23181211234444,
     "tau_anchor_pa": 738282.4326535852,
     "s_ear_pa": 2551320.933368795,
     "tau_brace_end_pa": 850440.3111229317,
-    "dfoot_L4_m": 0.019013505772257237,
-    "ms_face": -0.7316318444574912,
-    "ms_edge": 1.5736542695846043,
-    "ms_tube": 6.755310254774052,
+    "dfoot_L4_m": 0.019013482557909894,
+    "ms_face": -0.7315939602751234,
+    "ms_edge": 1.5737001772723604,
+    "ms_tube": 6.75749179329219,
     "ms_brace_buckling": 0.7945784514518002,
     "ms_brace_end_bond": 1.3517229532066466,
-    "ms_collar_bond": -0.12936469244088966,
+    "ms_collar_bond": -0.12935725935409692,
     "ms_anchor_bond": 0.3544951847299571,
     "ms_ear_root": 4.879307383016616,
-    "ms_min": -0.7316318444574912,
-    "eq_resid": 1.2472515034667175e-07,
-    "t_sec_L4_lim_nm": 12.758500002527608,
-    "t_sec_vs_c1": 0.007066997397481067,
-    "brace_g3_lim_n": 2.5852318180945706,
-    "tube_g3_ult_pa": 2201041.341150054,
+    "ms_min": -0.7315939602751234,
+    "eq_resid": 1.2722495626449337e-07,
+    "t_sec_L4_lim_nm": 12.758500001391377,
+    "t_sec_vs_c1": 0.007082218639187232,
+    "brace_g3_lim_n": 2.585231818075683,
+    "tube_g3_ult_pa": 2201041.3411531774,
     "face_swirl_ult_pa": 4674774.515416096,
     "brace_swirl_lim_n": 23.171051095041154,
     "collar_t_swirl_lim_nm": 0.5958801373145253,
-    "collar_bond_per_h_npm": 34457.59635467483,
+    "collar_bond_per_h_npm": 34457.302173959346,
     "strip_end_case": "L4- up_rf",
-    "strip_end_gov_design_n": -2235.259361003303,
-    "strip_coinc_design_n": 2160.689651718998,
-    "strip_coinc_ratio": -0.9666393481735227,
-    "strip_pair_design_n": 166.30180375745292,
+    "strip_end_gov_design_n": -2235.218327889846,
+    "strip_coinc_design_n": 2160.7300637414487,
+    "strip_coinc_ratio": -0.9666751729712605,
+    "strip_pair_design_n": 166.22035861587182,
     "strip_both_tension_design_n": 45.40046781362989,
-    "face_ult_rootfree_pa": 37262245.14151056,
-    "ms_face_rootfree_ult": -0.7316318444574912,
+    "face_ult_rootfree_pa": 37256985.76026929,
+    "ms_face_rootfree_ult": -0.7315939602751234,
     "fillet_share_table": {
      "L4+ up": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -17.88344700546965,
-        -2.9166730313803355,
-        10.77407248320047
+        -17.864285163188004,
+        -2.916705083281998,
+        10.76221353777267
        ],
        "M": [
-        0.016802054475543126,
-        -0.23911331701207839,
-        0.21532921569027422
+        0.016802179084142093,
+        -0.23882514633960616,
+        0.21533077299950854
        ],
        "ref": [
         0.15355789473684212,
@@ -3213,14 +3213,14 @@
       },
       "aft": {
        "F": [
-        -4.705029382380585,
-        7.647604509570731,
-        18.768746183628394
+        -4.699932378112986,
+        7.647597511958413,
+        18.74770208847497
        ],
        "M": [
-        0.014873974750377144,
-        -0.11498457321524155,
-        0.2217286275862831
+        0.014873966548446384,
+        -0.11485866986891079,
+        0.22172851065546217
        ],
        "ref": [
         0.2849736842105263,
@@ -3233,21 +3233,21 @@
        ],
        "n": 7
       },
-      "mx_fillet": 0.06395873925818375,
+      "mx_fillet": 0.06395942236493546,
       "mx_section": -8.610999999999922
      },
      "L4- up": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -13.991258059008745,
-        2.969977782884948,
-        8.95265247090946
+        -13.972096216505946,
+        2.969945734379921,
+        8.940793525796424
        ],
        "M": [
-        -0.01700933332118294,
-        -0.24024338480066051,
-        -0.21791988722912964
+        -0.01700920869949796,
+        -0.23995521408787213,
+        -0.21791832970127822
        ],
        "ref": [
         0.15355789473684212,
@@ -3262,14 +3262,14 @@
       },
       "aft": {
        "F": [
-        -3.773566448721204,
-        -7.635963372672968,
-        16.23698916654095
+        -3.7684694442363043,
+        -7.635970373922005,
+        16.21594507063242
        ],
        "M": [
-        -0.014860333433957741,
-        -0.09444895731208194,
-        -0.2215341278598102
+        -0.014860341638767368,
+        -0.09432305396013119,
+        -0.22153424483914588
        ],
        "ref": [
         0.2849736842105263,
@@ -3282,7 +3282,7 @@
        ],
        "n": 7
       },
-      "mx_fillet": -0.06509485047308189,
+      "mx_fillet": -0.06509416740598528,
       "mx_section": 8.610999999999922
      },
      "G2+ up": {
@@ -3387,14 +3387,14 @@
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -16.137427341465887,
-        -4.035701953365451,
-        11.873624447478623
+        -16.118452398632215,
+        -4.035734568718711,
+        11.859591936301541
        ],
        "M": [
-        0.004149118802942559,
-        -0.3594996350936447,
-        0.1834648484861651
+        0.004149148241196107,
+        -0.35906986372357474,
+        0.18346622510336924
        ],
        "ref": [
         0.14816578947368422,
@@ -3409,14 +3409,14 @@
       },
       "aft": {
        "F": [
-        -5.777011451272874,
-        9.17919635074796,
-        18.092756256018134
+        -5.7701932006308,
+        9.179189625264414,
+        18.07129070656064
        ],
        "M": [
-        0.004141617691743061,
-        -0.014097032498374046,
-        0.07426841489507066
+        0.004141614723647268,
+        -0.014080792664632344,
+        0.07426836220397408
        ],
        "ref": [
         0.29656000000000005,
@@ -3429,21 +3429,21 @@
        ],
        "n": 5
       },
-      "mx_fillet": 0.02205507536743334,
+      "mx_fillet": 0.0220553519363615,
       "mx_section": -8.611000000000054
      },
      "L4- lo": {
       "x_hinge": 0.24960000000000002,
       "fore": {
        "F": [
-        -15.426384447943214,
-        4.089958224252832,
-        11.468713761910703
+        -15.40740950641607,
+        4.089925608392717,
+        11.454681251787967
        ],
        "M": [
-        -0.004198089608234236,
-        -0.3554023134326676,
-        -0.18575479594771646
+        -0.004198060166299244,
+        -0.35497254202134665,
+        -0.18575341922811617
        ],
        "ref": [
         0.14816578947368422,
@@ -3458,14 +3458,14 @@
       },
       "aft": {
        "F": [
-        -5.564787450210817,
-        -9.168023847617803,
-        17.614048540691126
+        -5.557969199676559,
+        -9.168030561363418,
+        17.59258299118887
        ],
        "M": [
-        -0.004136660471358431,
-        -0.0129170718433518,
-        -0.07418042398282076
+        -0.004136663428294397,
+        -0.012900832010742685,
+        -0.07418047648914956
        ],
        "ref": [
         0.29656000000000005,
@@ -3478,7 +3478,7 @@
        ],
        "n": 5
       },
-      "mx_fillet": -0.022515106545304808,
+      "mx_fillet": -0.022514829977973255,
       "mx_section": 8.611000000000054
      },
      "G2+ lo": {
@@ -3581,15 +3581,15 @@
      }
     },
     "fillet_l4_case": "L4- up",
-    "fillet_l4_mx_share": 0.007559499532351931,
-    "fillet_l4_mx_nm": 0.06509485047308189,
+    "fillet_l4_mx_share": 0.007559420207407487,
+    "fillet_l4_mx_nm": 0.06509416740598528,
     "fillet_l4_mx_section_nm": 8.610999999999922,
-    "fillet_l4_fore_fx_n": 13.991258059008745,
-    "fillet_l4_fore_fy_n": 2.969977782884948,
-    "fillet_l4_fore_fz_n": 8.95265247090946,
-    "fillet_l4_fore_mx_nm": 0.01700933332118294,
-    "fillet_l4_fore_my_nm": 0.24024338480066051,
-    "fillet_l4_fore_mz_nm": 0.21791988722912964,
+    "fillet_l4_fore_fx_n": 13.972096216505946,
+    "fillet_l4_fore_fy_n": 2.969945734379921,
+    "fillet_l4_fore_fz_n": 8.940793525796424,
+    "fillet_l4_fore_mx_nm": 0.01700920869949796,
+    "fillet_l4_fore_my_nm": 0.23995521408787213,
+    "fillet_l4_fore_mz_nm": 0.21791832970127822,
     "fillet_l4_fore_ref": [
      0.15355789473684212,
      0.0,
@@ -3599,12 +3599,12 @@
      0.06728421052631578,
      0.23983157894736842
     ],
-    "fillet_l4_aft_fx_n": 3.773566448721204,
-    "fillet_l4_aft_fy_n": 7.635963372672968,
-    "fillet_l4_aft_fz_n": 16.23698916654095,
-    "fillet_l4_aft_mx_nm": 0.014860333433957741,
-    "fillet_l4_aft_my_nm": 0.09444895731208194,
-    "fillet_l4_aft_mz_nm": 0.2215341278598102,
+    "fillet_l4_aft_fx_n": 3.7684694442363043,
+    "fillet_l4_aft_fy_n": 7.635970373922005,
+    "fillet_l4_aft_fz_n": 16.21594507063242,
+    "fillet_l4_aft_mx_nm": 0.014860341638767368,
+    "fillet_l4_aft_my_nm": 0.09432305396013119,
+    "fillet_l4_aft_mz_nm": 0.22153424483914588,
     "fillet_l4_aft_ref": [
      0.2849736842105263,
      0.0,
@@ -3614,8 +3614,8 @@
      0.25061578947368424,
      0.32
     ],
-    "fillet_l4_aft_fy_max_n": 9.17919635074796,
-    "fillet_l4_aft_fz_max_n": 18.768746183628394,
+    "fillet_l4_aft_fy_max_n": 9.179189625264414,
+    "fillet_l4_aft_fz_max_n": 18.74770208847497,
     "fillet_g2_case": "G2+ up",
     "fillet_g2_mx_share": 0.00012880195622245154,
     "fillet_g2_mx_nm": 0.001129730685647676,
@@ -3652,7 +3652,7 @@
     ],
     "fillet_g2_aft_fy_max_n": 0.11451452290024644,
     "fillet_g2_aft_fz_max_n": 6.50515196184412,
-    "ms_collar_bond_16mm": -0.0713223386036157,
+    "ms_collar_bond_16mm": -0.07131440997770333,
     "governing": "edge: L4- up_rf; face: L4+ lo_rf; mroot: L4- up_rf; q_face: L4+ up_rf; strip_end: L4- up_rf; t_collar: L4+ up_rf; t_root: L4+ lo_rf; tube: L4- up_rf"
    },
    "input_values": {
@@ -3808,7 +3808,7 @@
     "E": 100000000000.0,
     "G": 5000000000.0,
     "f_level": 43.98538578322658,
-    "f_corner": 37.47040211886732,
+    "f_corner": 37.42535060533027,
     "mu_hi": 0.7,
     "foot_h": 0.048,
     "z_pad": 0.218,
@@ -3816,8 +3816,8 @@
     "sw_m": 0.07946660528247541,
     "sw_bad": 1.43,
     "sw_exp": 1.0,
-    "g3": 23.45829557927301,
-    "t_c1": 12.668968435564704,
+    "g3": 23.458295579273006,
+    "t_c1": 12.668776953118298,
     "side_c5": 39.5,
     "n_h": 2.0,
     "m_gate": 2.6,
@@ -4413,17 +4413,17 @@
     "ASM-C4-FACE-SIGMA"
    ],
    "outputs": {
-    "ms_face_prop": -0.7376958539136815,
-    "face_ult_prop_pa": 38123682.561652,
-    "ms_face_intact_prop": -0.7376958539136815,
-    "ms_face_failsafe_prop": -0.3895334041455977,
-    "ms_face_envelope_prop": -0.7376958539136815,
-    "ms_face_drawn_fine": -0.7546136250012033,
-    "face_ult_drawn_fine_pa": 40752058.87062408,
-    "ms_min_prop": -0.7376958539136815,
-    "ms_strip_paper_prop": -0.8753730892231808,
-    "collar_t_lim_prop_nm": 11.101051538049319,
-    "dfoot_L4_prop_m": 0.017542334535569696,
+    "ms_face_prop": -0.7376696318379597,
+    "face_ult_prop_pa": 38119871.786338694,
+    "ms_face_intact_prop": -0.7376696318379597,
+    "ms_face_failsafe_prop": -0.3894789066128618,
+    "ms_face_envelope_prop": -0.7376696318379597,
+    "ms_face_drawn_fine": -0.7545756403306062,
+    "face_ult_drawn_fine_pa": 40745751.61760958,
+    "ms_min_prop": -0.7376696318379597,
+    "ms_strip_paper_prop": -0.8753667983538008,
+    "collar_t_lim_prop_nm": 11.100974757467299,
+    "dfoot_L4_prop_m": 0.01754232450141927,
     "governing_prop": "edge: L4- up_rf; face: L4+ lo_rf; mroot: L4- up_rf; q_face: L4+ up_cr; strip_end: L4- up_rf; t_collar: L4+ up_rf; t_root: L4+ lo_rf; tube: L4- up_rf",
     "cheek_extension_m": 0.024999999999999994
    },
@@ -4580,7 +4580,7 @@
     "E": 100000000000.0,
     "G": 5000000000.0,
     "f_level": 43.98538578322658,
-    "f_corner": 37.47040211886732,
+    "f_corner": 37.42535060533027,
     "mu_hi": 0.7,
     "foot_h": 0.048,
     "z_pad": 0.218,
@@ -4588,8 +4588,8 @@
     "sw_m": 0.07946660528247541,
     "sw_bad": 1.43,
     "sw_exp": 1.0,
-    "g3": 23.45829557927301,
-    "t_c1": 12.668968435564704,
+    "g3": 23.458295579273006,
+    "t_c1": 12.668776953118298,
     "side_c5": 39.5,
     "n_h": 2.0,
     "m_gate": 2.6,
@@ -4680,12 +4680,12 @@
     "twist_design_nm": 0.25824214993025363,
     "rock_design_nm": 1.9886754642850784,
     "shear_design_n": 45.24638645111175,
-    "c1_force_ratio": 1.0007073113445901,
-    "slip_use": 0.6702326166926938,
-    "ms_slip_hold": 0.4920193006042657,
-    "rock_g3_lim_nm": 0.7952362201373551,
-    "rock_g3_design_nm": 1.7147280996711718,
-    "g3_design_n": 50.581949842807425,
+    "c1_force_ratio": 1.0007073113445903,
+    "slip_use": 0.6702322316018898,
+    "ms_slip_hold": 0.49202015786371245,
+    "rock_g3_lim_nm": 0.7952362201373548,
+    "rock_g3_design_nm": 1.7147280996711713,
+    "g3_design_n": 50.58194984280742,
     "rock_env_design_nm": 1.9886754642850784,
     "cap_bearing_g3_pa": 766701.6522580121,
     "ms_cap_bearing_g3": 38.12864921008979
@@ -4701,12 +4701,12 @@
     "tube_len": 0.344,
     "od": 0.022,
     "slip": 2.5,
-    "m_c1": 0.9854041574109653,
-    "f_c1": 31.627629418909514,
+    "m_c1": 0.9854034873595503,
+    "f_c1": 31.62762941890951,
     "sf": 1.5,
     "fit": 1.15,
     "prt": 1.25,
-    "g3": 23.45829557927301,
+    "g3": 23.458295579273006,
     "x_face": 0.024349999999999997,
     "l_motor": 0.0265,
     "idd": 0.02,
@@ -4771,25 +4771,25 @@
     "rounds_clear_planes": 1.0,
     "lig_diag_over_min": 2.086380754780532,
     "h_core_m": 0.027710000000000002,
-    "M_design_nm": 32.43523044174746,
-    "F_design_n": 127.02326818824258,
-    "s_tube_bore_pa": 11728895.90312201,
-    "tau_shear_out_pa": 9051845.971378302,
-    "s_spar_bore_pa": 6985978.546059959,
-    "ms_tube_bore": 0.7051903406079663,
-    "ms_shear_out": 0.10474703520361883,
-    "ms_spar_bore": 1.8628773862009433,
-    "ms_web_bend": 1.1305835678926934,
-    "ms_web_torsion": 0.7896901970298627,
+    "M_design_nm": 32.42516168607536,
+    "F_design_n": 127.02180482476082,
+    "s_tube_bore_pa": 11725317.224263852,
+    "tau_shear_out_pa": 9049036.038344808,
+    "s_spar_bore_pa": 6983857.852488202,
+    "ms_tube_bore": 0.7057107809938723,
+    "ms_shear_out": 0.10509008447148771,
+    "ms_spar_bore": 1.8637467174212916,
+    "ms_web_bend": 1.1312451629092979,
+    "ms_web_torsion": 0.79024593684381,
     "ms_bond_torsion": 3.910300598987339,
-    "ms_min": 0.10474703520361883,
-    "spar_couple_n": 1351.4679350728109,
-    "tube_couple_n": 1755.7865630682493
+    "ms_min": 0.10509008447148771,
+    "spar_couple_n": 1351.0484035864736,
+    "tube_couple_n": 1755.2415203577423
    },
    "input_values": {
-    "m_des_c1": 32.43523044174746,
+    "m_des_c1": 32.42516168607536,
     "m_task": 10.7,
-    "f_ult": 88.36401265269049,
+    "f_ult": 88.3629946607032,
     "my_lim": 5.17,
     "sf": 1.5,
     "fit": 1.15,
@@ -5029,7 +5029,7 @@
     "area_lo_m2": 0.0471472815115478,
     "added_g": 0.0,
     "brace_delta_g": 0.0,
-    "total_g": 435.6
+    "total_g": 433.3
    },
    "input_values": {
     "tube_x": 0.045,
@@ -5181,7 +5181,7 @@
     ],
     "shoe_x0": 0.2536,
     "shoe_z0": 0.196,
-    "m_d3": 435.6,
+    "m_d3": 433.3,
     "basis": [
      2,
      0.21,
@@ -5518,7 +5518,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-BOARD-COUPON for the face allowable; T-C4-FIN-PROOF at 1.5 x L4.",
-   "value": -0.7316318444574912
+   "value": -0.7315939602751234
   },
   {
    "id": "CL-C4-D3-MS-EDGE",
@@ -5541,7 +5541,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF.",
-   "value": 1.5736542695846043
+   "value": 1.5737001772723604
   },
   {
    "id": "CL-C4-D3-MS-TUBE",
@@ -5562,7 +5562,7 @@
     "FIN-002-L"
    ],
    "how": "T-C4-FIN-PROOF (G2 at the tube end).",
-   "value": 6.755310254774052
+   "value": 6.75749179329219
   },
   {
    "id": "CL-C4-D3-MS-BRACE",
@@ -5661,7 +5661,7 @@
     "FIN-008-LL"
    ],
    "how": "T-C4-FIN-PROOF at 1.5 x L4; witness line across collar and tube does not move.",
-   "value": -0.12936469244088966
+   "value": -0.12935725935409692
   },
   {
    "id": "CL-C4-D3-MS-ANCHOR",
@@ -5725,7 +5725,7 @@
    ],
    "how": "T-C4-FIN-PROOF with the LE fillet left unbonded on one quarter; witness line across collar and tube.",
    "note": "Published for C6 (CR-C6-03, CR-C1-21): C6 reads this claim instead of ASM-C6-C4-COLLAR-T (9.3 N m, not a C4 output) and sizes the collar to the larger of it and C1's section torque, plus CL-C4-D3-BRACE-F as shear.",
-   "value": 11.108061040297741
+   "value": 11.107957316042274
   },
   {
    "id": "CL-C4-D3-COLLAR-T-INTACT",
@@ -5741,7 +5741,7 @@
     "FIN-008-LL"
    ],
    "how": "As CL-C4-D3-COLLAR-T.",
-   "value": 11.108061040297741
+   "value": 11.107957316042274
   },
   {
    "id": "CL-C4-D3-COLLAR-H-REQ",
@@ -5764,7 +5764,7 @@
     "FIN-008-LL"
    ],
    "how": "C6 lap-shear coupon on scuffed CF; T-C4-FIN-PROOF.",
-   "value": 0.017228798177337416
+   "value": 0.017228651086979675
   },
   {
    "id": "CL-C4-D3-TUBE-T-ROOT",
@@ -5778,7 +5778,7 @@
     "FIN-002-L"
    ],
    "how": "T-C4-FIN-PROOF.",
-   "value": 12.509852761179637
+   "value": 12.509753038311942
   },
   {
    "id": "CL-C4-D3-SIDE-LOAD",
@@ -5810,7 +5810,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF: no strip lift; T-C6-BOARD-LAP.",
-   "value": 4057.9168980574186
+   "value": 4057.4086836666884
   },
   {
    "id": "CL-C4-D3-MS-STRIP-PAPER",
@@ -5833,7 +5833,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C6-BOARD-LAP for the allowable; T-C4-FIN-PROOF at 1.5 x L4.",
-   "value": -0.8857127615984346
+   "value": -0.8856984464471248
   },
   {
    "id": "CL-C4-D3-STRIP-END-F",
@@ -5854,7 +5854,7 @@
    ],
    "how": "T-C6-STRIP-ANCHOR.",
    "note": "Replaces the 1 348 N C6 derived from the strip allowable (CR-C6-01).",
-   "value": 2235.259361003303
+   "value": 2235.218327889846
   },
   {
    "id": "CL-C4-D3-STRIP-END-F-COINC",
@@ -5875,7 +5875,7 @@
    ],
    "how": "T-C6-STRIP-ANCHOR loads both slots.",
    "note": "The two strips of a pair are the two faces of the top edge; per face F = N/2 +/- M/d. The pair sum in the tongue is CL-C4-D3-STRIP-PAIR-F.",
-   "value": 2160.689651718998
+   "value": 2160.7300637414487
   },
   {
    "id": "CL-C4-D3-STRIP-PAIR-F",
@@ -5895,7 +5895,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C6-STRIP-ANCHOR with both strips pulled together.",
-   "value": 166.30180375745292
+   "value": 166.22035861587182
   },
   {
    "id": "CL-C4-D3-STRIP-PIN-F",
@@ -5912,7 +5912,7 @@
    ],
    "how": "T-C4-FIN-PROOF with pins fitted; C6 pin coupon.",
    "note": "C6 sized the pins to 77 N (CL-C6-STRIP-PIN-RF 1.41); the FE load is lower.",
-   "value": 131.24824967154464
+   "value": 131.23181211234444
   },
   {
    "id": "CL-C4-D3-BRACE-10X2-SEP",
@@ -6066,7 +6066,7 @@
     "FIN-003-LL"
    ],
    "how": "T-C4-FIN-PROOF G3 step on the test article.",
-   "value": 1.7147280996711718
+   "value": 1.7147280996711713
   },
   {
    "id": "CL-C4-D3-MS-CAP-G3",
@@ -6112,7 +6112,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP: set 2.5 N m; witness line checked before every flight.",
-   "value": 0.4920193006042657
+   "value": 0.49202015786371245
   },
   {
    "id": "CL-C4-D3-FOOT-DEFL",
@@ -6128,7 +6128,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF: dial gauge at the foot.",
-   "value": 0.019013505772257237
+   "value": 0.019013482557909894
   },
   {
    "id": "CL-C4-D3-BLOCK-LIG",
@@ -6168,7 +6168,7 @@
     "FIN-004-L"
    ],
    "how": "T-C4-BLOCK-PROOF (30 N m for 1 min on a block in a core offcut).",
-   "value": 0.10474703520361883
+   "value": 0.10509008447148771
   },
   {
    "id": "CL-C4-D3-SPAR-COUPLE",
@@ -6182,7 +6182,7 @@
     "FIN-004-L"
    ],
    "how": "C2 spar crushing check (CR-C4-02).",
-   "value": 1351.4679350728109
+   "value": 1351.0484035864736
   },
   {
    "id": "CL-C4-D3-MS-FACE-ROOT-FREE",
@@ -6202,7 +6202,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF on the test article built without the root fillet.",
-   "value": -0.7316318444574912
+   "value": -0.7315939602751234
   },
   {
    "id": "CL-C4-D3-FILLET-L4-SHARE",
@@ -6218,7 +6218,7 @@
     "FIN-001-LL"
    ],
    "how": "Strain gauge on the skin beside the fillet in T-C1-WING-PROOF; C2 re-runs its FEA on this split.",
-   "value": 0.007559499532351931
+   "value": 0.007559420207407487
   },
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-FX",
@@ -6234,7 +6234,7 @@
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 3.773566448721204
+   "value": 3.7684694442363043
   },
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-FY",
@@ -6250,7 +6250,7 @@
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 7.635963372672968
+   "value": 7.635970373922005
   },
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-FZ",
@@ -6266,7 +6266,7 @@
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 16.23698916654095
+   "value": 16.21594507063242
   },
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-MX",
@@ -6282,7 +6282,7 @@
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 0.014860333433957741
+   "value": 0.014860341638767368
   },
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-FX",
@@ -6298,7 +6298,7 @@
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 13.991258059008745
+   "value": 13.972096216505946
   },
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-FY",
@@ -6314,7 +6314,7 @@
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 2.969977782884948
+   "value": 2.969945734379921
   },
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-FZ",
@@ -6330,7 +6330,7 @@
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 8.95265247090946
+   "value": 8.940793525796424
   },
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-MX",
@@ -6346,7 +6346,7 @@
     "FIN-001-LL"
    ],
    "how": "C2 FEA input; T-C1-WING-PROOF.",
-   "value": 0.01700933332118294
+   "value": 0.01700920869949796
   },
   {
    "id": "CL-C4-D3-FILLET-G2-SHARE",
@@ -6511,7 +6511,7 @@
    ],
    "how": "T-D3-WEIGH; A3 roll-up.",
    "note": "Allocation 408 g since D-26/D-38 (CR-C4-15 closed). Falls back to CL-D3-MASS alone once D3 re-runs make_fins.py at R3 and ASM-C4-D3-MASS-BASIS is set to (2, 0.21).",
-   "value": 435.6
+   "value": 433.3
   },
   {
    "id": "CL-C4-D3-LAYER-ADD",
@@ -6550,7 +6550,7 @@
    ],
    "how": "T-C4-FIN-PROOF L4 step: load cell on the foot.",
    "note": "Section total (tube root + fin root + brace anchor). The collar torque CL-C4-D3-COLLAR-T is an internal path quantity and is smaller; C6 sizes the collar to the larger of the two (CR-C1-21).",
-   "value": 12.758500002527608
+   "value": 12.758500001391377
   },
   {
    "id": "CL-C4-D3-SEC-T-VS-C1",
@@ -6571,7 +6571,7 @@
    ],
    "how": "Re-run fin_structures_d3.py after any C1 or D5 foot-geometry change.",
    "note": "CR-C1-21 equilibrium check: same foot load and ground point as C1 within 5 %.",
-   "value": 0.007066997397481067
+   "value": 0.007082218639187232
   },
   {
    "id": "CL-C4-D3-EQ-RESID",
@@ -6591,7 +6591,7 @@
     "FIN-001-LL"
    ],
    "how": "Re-run fin_structures_d3.py.",
-   "value": 1.2472515034667175e-07
+   "value": 1.2722495626449337e-07
   },
   {
    "id": "CL-C4-D3-SWIRL-F",
@@ -6621,7 +6621,7 @@
     "FIN-009-LL"
    ],
    "how": "T-C4-FIN-PROOF G3 step.",
-   "value": 2.5852318180945706
+   "value": 2.585231818075683
   },
   {
    "id": "CL-C4-D3-MS-COLLAR-16",
@@ -6642,7 +6642,7 @@
    ],
    "how": "As CL-C4-D3-MS-COLLAR.",
    "note": "Torsion from the 12 mm model; the 16 mm band changes it by < 3 % (results_d3.json collar_16mm).",
-   "value": -0.0713223386036157
+   "value": -0.07131440997770333
   },
   {
    "id": "CL-C4-D3-F-WHIRL-CRUISE",
@@ -6720,7 +6720,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF with the extended shoe; T-C4-BOARD-COUPON for the face allowable.",
-   "value": -0.7376958539136815
+   "value": -0.7376696318379597
   },
   {
    "id": "CL-C4-D3-MS-FACE-SHOE-INTACT",
@@ -6740,7 +6740,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF (bonded quarter) at 1.5 x L4.",
-   "value": -0.7376958539136815
+   "value": -0.7376696318379597
   },
   {
    "id": "CL-C4-D3-MS-FACE-SHOE-FS",
@@ -6761,7 +6761,7 @@
    ],
    "how": "T-C4-FIN-PROOF: the test-article quarter is built with the LE fillet unbonded.",
    "note": "Peak at the end of the bonded LE band (x 0.060, z 0.033 / 0.149): a corner that does not converge with mesh (24 x 20: 7.9, 36 x 30: 9.9 MPa limit); the test decides.",
-   "value": -0.3895334041455977
+   "value": -0.3894789066128618
   },
   {
    "id": "CL-C4-D3-MS-FACE-DRAWN-FINE",
@@ -6781,7 +6781,7 @@
     "FIN-001-LL"
    ],
    "how": "Mesh check of CL-C4-D3-MS-FACE (24 x 20); both fail.",
-   "value": -0.7546136250012033
+   "value": -0.7545756403306062
   },
   {
    "id": "CL-C4-D3-SHOE-EXT",

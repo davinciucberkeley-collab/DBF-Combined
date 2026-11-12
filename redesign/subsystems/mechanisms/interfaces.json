@@ -100,30 +100,30 @@
    "name": "Control horn, inboard panel (clevis + rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.13,
+   "mass_g": 3.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2653,
-    0.2858,
-    -0.0061
+    0.265,
+    0.2857,
+    -0.0059
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.47 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.54 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-004-L",
    "name": "Control horn, inboard panel (clevis + rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.13,
+   "mass_g": 3.2,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2653,
-    -0.2858,
-    -0.0061
+    0.265,
+    -0.2857,
+    -0.0059
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.47 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.54 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-005-R",
@@ -160,30 +160,30 @@
    "name": "Link horn, outboard panel (rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.73,
+   "mass_g": 2.95,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2664,
-    0.3541,
-    -0.0044
+    0.2661,
+    0.3542,
+    -0.0047
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.12 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.32 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-006-L",
    "name": "Link horn, outboard panel (rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.73,
+   "mass_g": 2.95,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2664,
-    -0.3541,
-    -0.0044
+    0.2661,
+    -0.3542,
+    -0.0047
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.12 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.32 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-007-R",
@@ -312,15 +312,15 @@
    "name": "Elevon hinge tape, two strips right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.56,
+   "mass_g": 0.0,
    "material": "packing tape BOPP",
    "cg_xyz_m": [
     0.2496,
     0.3146,
-    0.0057
+    0.0058
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (112 cm2 tape); CG = CAD centroid",
+   "notes": "mass EST (0 cm2 tape); CG = CAD centroid",
    "carried": true
   },
   {
@@ -328,15 +328,15 @@
    "name": "Elevon hinge tape, two strips left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 0.56,
+   "mass_g": 0.0,
    "material": "packing tape BOPP",
    "cg_xyz_m": [
     0.2496,
     -0.3146,
-    0.0057
+    0.0058
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (112 cm2 tape); CG = CAD centroid",
+   "notes": "mass EST (0 cm2 tape); CG = CAD centroid",
    "carried": true
   },
   {

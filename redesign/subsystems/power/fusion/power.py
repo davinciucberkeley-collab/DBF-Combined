@@ -119,7 +119,12 @@ def layout(get, L, pod):
     lead_t = 0.006
     xturn = a_nom + 0.005
     g['lead_a'] = ((a_nom - 0.001, -0.020, zl), (xturn, -0.008, zl + lead_t))
-    g['lead_b'] = ((park1, -cy - 0.005, g['pin_z'] - 0.003), (xturn, -0.008, zl + lead_t))
+    # collision fix (collision/REPORT.md): the R6 box ran from the pack straight to the park and passed 6 mm through
+    # the aft stop and the cradle side wall. The leads run aft over the stop (on its top face) to just behind the
+    # park, then left and down into the pack half's wire end at park1 (the AS150U wire exits opposite its mating face).
+    xb = park1 + lead_t                                  # aft of the park end, clear of the strut ribs (z <= 0.040)
+    g['lead_b'] = ((xturn, -0.020, zl), (xb, -0.008, zl + lead_t))
+    g['lead_c'] = ((park1, -cy - 0.005, g['pin_z'] - 0.003), (xb, -0.008, zl + lead_t))
     return g
 
 
@@ -133,7 +138,8 @@ def build(ctx):
     pk = ctx.part('PWR-001')
     pk.box(*G['pack'], name='LiPo 4S 6500 envelope')
     pk.box(*G['lead_a'], name='pack leads 10 AWG over the aft stop')
-    pk.box(*G['lead_b'], name='pack leads 10 AWG into the park')
+    pk.box(*G['lead_b'], name='pack leads 10 AWG over the aft stop to the park end')
+    pk.box(*G['lead_c'], name='pack leads 10 AWG into the park')
     pk.box(*G['as_pack'], name='AS150U pack half')
 
     # PWR-006 power frame (printed PETG)

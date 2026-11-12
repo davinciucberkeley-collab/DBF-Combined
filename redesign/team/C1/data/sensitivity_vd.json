@@ -21,8 +21,8 @@
  ],
  "outputs": {
   "spar_Mb_ult": {
-   "at_derived": 20.737381308160774,
-   "at_requirement": 20.737381308160774,
+   "at_derived": 20.73603359645625,
+   "at_requirement": 20.73603359645625,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
@@ -37,64 +37,64 @@
    ]
   },
   "wing_T_ult": {
-   "at_derived": 8.485182084590061,
-   "at_requirement": 8.485182084590061,
+   "at_derived": 8.468330980264957,
+   "at_requirement": 8.468330980264957,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "wing_Vz_ult": {
-   "at_derived": 32.86543918259423,
-   "at_requirement": 33.48066535448024,
+   "at_derived": 32.86116287572189,
+   "at_requirement": 33.47638904760791,
    "case": [
     "F7-ROLLPULL-VA",
     "F7-ROLLPULL-VA"
    ]
   },
   "finjoint_M_ult": {
-   "at_derived": 22.563638568172145,
-   "at_requirement": 22.563638568172145,
+   "at_derived": 22.556634216400255,
+   "at_requirement": 22.556634216400255,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "finhalf_Mb_ult": {
-   "at_derived": 16.299973486212195,
-   "at_requirement": 16.299973486212195,
+   "at_derived": 16.30124187907837,
+   "at_requirement": 16.30124187907837,
    "case": [
     "L5-CORNER-SIDE-Z",
     "L5-CORNER-SIDE-Z"
    ]
   },
   "finhalf_T_ult": {
-   "at_derived": 19.077706061714334,
-   "at_requirement": 19.077706061714334,
+   "at_derived": 19.077481830560387,
+   "at_requirement": 19.077481830560387,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
    ]
   },
   "mount_F_ult": {
-   "at_derived": 31.627629418909514,
-   "at_requirement": 31.627629418909514,
+   "at_derived": 31.62762941890951,
+   "at_requirement": 31.62762941890951,
    "case": [
     "G3-BENCH",
     "G3-BENCH"
    ]
   },
   "pod_F_ult": {
-   "at_derived": 111.44289721274473,
-   "at_requirement": 111.44289721274473,
+   "at_derived": 111.43989335825273,
+   "at_requirement": 111.43989335825273,
    "case": [
     "L1-LEVEL",
     "L1-LEVEL"
    ]
   },
   "foot_F_ult": {
-   "at_derived": 80.54413353026222,
-   "at_requirement": 80.54413353026222,
+   "at_derived": 80.49774991325651,
+   "at_requirement": 80.49774991325651,
    "case": [
     "L4-CORNER-SIDE-Y",
     "L4-CORNER-SIDE-Y"
@@ -109,11 +109,11 @@
    ]
   },
   "proof_Mx_root_lim_Nm": {
-   "at_derived": 1.7083924283487804,
-   "at_requirement": 1.801464306899864,
+   "at_derived": 1.7114032660317795,
+   "at_requirement": 1.8046391726565776,
    "case": [
-    1.7083924283487804,
-    1.801464306899864
+    1.7114032660317795,
+    1.8046391726565776
    ]
   }
  }

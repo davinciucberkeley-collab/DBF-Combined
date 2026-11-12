@@ -144,17 +144,17 @@
    "title": "Fin group torsion about the tube 17.25 N m (ult)",
    "text": "Ultimate Mz of the fin group at the wing",
    "basis": "team/C1/data/envelope.json#joints.J-FIN.Mz_Nm.ultimate (L4-CORNER-SIDE-Y/MC-P/J-FIN-R; read live)",
-   "value": 17.2455,
+   "value": 17.245,
    "unit": "N m",
    "status": "UNVERIFIED"
   },
   {
    "id": "ASM-C6-FIN-MY-ULT",
    "type": "assumption",
-   "title": "Fin group torsion about the spar 8.66 N m (ult)",
+   "title": "Fin group torsion about the spar 8.64 N m (ult)",
    "text": "Ultimate My of the fin group at the wing",
    "basis": "team/C1/data/envelope.json#joints.J-FIN.My_Nm.ultimate (L4-CORNER-SIDE-Y/MC-C/J-FIN-R; read live)",
-   "value": 8.6602,
+   "value": 8.6435,
    "unit": "N m",
    "status": "UNVERIFIED"
   },
@@ -311,7 +311,7 @@
     "dh": 0.0055,
     "dhole": 0.0034,
     "s_allow": 30000000.0,
-    "F_ult": 32.157188518909514,
+    "F_ult": 32.15718851890951,
     "M_ult": 0.9854,
     "ff": 1.15,
     "pat": [
@@ -580,26 +580,26 @@
     "tau": "ASM-C4-BOND-SHEAR"
    },
    "outputs": {
-    "T_tb_design_nm": 24.790406249999997,
-    "T_bs_design_nm": 12.449037499999998,
+    "T_tb_design_nm": 24.7896875,
+    "T_bs_design_nm": 12.425031249999998,
     "L_bore_m": 0.043,
     "area_bore_mm2": 2971.9466502959435,
-    "rf_tube_block": 2.637424560418842,
+    "rf_tube_block": 2.637501029672551,
     "area_spar_mm2": 2488.141381643116,
-    "rf_block_spar": 4.397055627485141,
+    "rf_block_spar": 4.405551124561442,
     "area_collar_mm2": 1036.7255756846316,
-    "T_collar_lim_nm": 12.718470707809557,
+    "T_collar_lim_nm": 12.718321220373593,
     "collar_c1_governs": 1.0,
-    "T_collar_design_nm": 27.42420246371435,
+    "T_collar_design_nm": 27.423880131430558,
     "F_brace_design_n": 204.10567466950363,
-    "tau_collar_mpa": 2.6016672616294265,
-    "rf_collar": 0.7687378126699408,
-    "rf_collar_alt": 0.8199870001812702,
-    "rf_collar_min": 0.666239437647282,
-    "L_collar_req_m": 0.0195125044622207,
-    "rf_collar_cond12": 0.6303650063893514,
-    "rf_collar_prop": 1.1274821252492466,
-    "tau_req_12_mpa": 3.252084077036783
+    "tau_collar_mpa": 2.601638996738912,
+    "rf_collar": 0.7687461644397816,
+    "rf_collar_alt": 0.8199959087357671,
+    "rf_collar_min": 0.6662466758478107,
+    "L_collar_req_m": 0.01951229247554184,
+    "rf_collar_cond12": 0.630371854840621,
+    "rf_collar_prop": 1.1274943745116797,
+    "tau_req_12_mpa": 3.2520487459236396
    },
    "input_values": {
     "od": 0.022,
@@ -607,10 +607,10 @@
     "boss": 0.008,
     "Ls": 0.036,
     "Lc": 0.015,
-    "Tz": 17.2455,
-    "Ty": 8.6602,
-    "Tc1": 12.718470707809557,
-    "Tc4": 11.108061040297741,
+    "Tz": 17.245,
+    "Ty": 8.6435,
+    "Tc1": 12.718321220373593,
+    "Tc4": 11.107957316042274,
     "Fb": 163.2845397356029,
     "h12": 0.016,
     "h13": 0.013,
@@ -661,28 +661,28 @@
     "s_brg": "ASM-C6-CF-BEARING"
    },
    "outputs": {
-    "F_design_n": 2235.259361003303,
+    "F_design_n": 2235.218327889846,
     "embed_m": 0.0395,
-    "rf_anchor": 0.7068530961395066,
-    "L_req_m": 0.05588148402508258,
-    "tail_net_mpa": 23.529045905297927,
-    "rf_tail_net": 0.6375099126574664,
-    "q_design_npm": 8749.88331143631,
-    "tau_face_mpa": 0.874988331143631,
-    "rf_face": 0.1142872384015654,
-    "pin_load_n": 131.24824967154464,
-    "rf_pin_shear": 1.8700205654240787,
-    "rf_pin_bend": 0.8820851723698487,
-    "rf_pin": 0.8820851723698487,
-    "pin_load_prop_n": 131.24824967154464,
-    "rf_pin_prop": 0.8820851723698487,
-    "rf_pin_prop_shear": 1.8700205654240787,
-    "rf_pin_alt": 0.7527126804222709,
-    "pin_load_alt_n": 78.74894980292679,
-    "pitch_max_d_m": 0.01323127758554773,
-    "pitch_max_dalt_m": 0.006774414123800437,
-    "rf_pin_bearing": 1.9047873066927568,
-    "rf_strip_net_pin": 1.3421261319104556,
+    "rf_anchor": 0.7068660722246297,
+    "L_req_m": 0.05588045819724615,
+    "tail_net_mpa": 23.528613977787852,
+    "rf_tail_net": 0.6375216157722136,
+    "q_design_npm": 8748.787474156296,
+    "tau_face_mpa": 0.8748787474156295,
+    "rf_face": 0.11430155355287525,
+    "pin_load_n": 131.23181211234444,
+    "rf_pin_shear": 1.8702547965396519,
+    "rf_pin_bend": 0.8821956587451192,
+    "rf_pin": 0.8821956587451192,
+    "pin_load_prop_n": 131.23181211234444,
+    "rf_pin_prop": 0.8821956587451192,
+    "rf_pin_prop_shear": 1.8702547965396519,
+    "rf_pin_alt": 0.7528069621291682,
+    "pin_load_alt_n": 78.73908726740666,
+    "pitch_max_d_m": 0.013232934881176788,
+    "pitch_max_dalt_m": 0.006775262659162514,
+    "rf_pin_bearing": 1.9050258925479207,
+    "rf_strip_net_pin": 1.3421507700467654,
     "pin_len_m": 0.0116,
     "pins_per_strip_pair": 15,
     "pins_per_strip_pair_prop": 15,
@@ -690,9 +690,9 @@
    },
    "input_values": {
     "s_cf": 400000000.0,
-    "F": 2235.259361003303,
-    "q_lim": 4057.9168980574186,
-    "Pp": 131.24824967154464,
+    "F": 2235.218327889846,
+    "q_lim": 4057.4086836666884,
+    "Pp": 131.23181211234444,
     "w": 0.01,
     "t": 0.001,
     "sf": 1.5,
@@ -811,25 +811,25 @@
     "A_net": "ASM-C6-TAIL-NET-A"
    },
    "outputs": {
-    "k": 0.9929825945883006,
-    "F_strip_n": 2219.573639866847,
-    "rf_anchor": 0.7118484251303259,
-    "rf_tail_net": 0.6420151935510849,
-    "rf_pin": 0.888318865987343,
-    "pitch_max_m": 0.013324782989810144,
-    "L_req_m": 0.05548934099667117,
-    "A_net_req_m2": 0.00014797157599112315,
-    "frame_n": 2774.4670498335586
+    "k": 0.9929675864511271,
+    "F_strip_n": 2219.4993482361047,
+    "rf_anchor": 0.711872252296748,
+    "rf_tail_net": 0.6420366832423202,
+    "rf_pin": 0.8884435612828938,
+    "pitch_max_m": 0.013326653419243408,
+    "L_req_m": 0.05548748370590261,
+    "A_net_req_m2": 0.0001479666232157403,
+    "frame_n": 2774.3741852951307
    },
    "input_values": {
-    "T1": 12.668968435564704,
-    "T4": 12.758500002527608,
-    "F": 2235.259361003303,
-    "ra": 0.7068530961395066,
-    "rt": 0.6375099126574664,
-    "rp": 0.8820851723698487,
-    "pmax": 0.01323127758554773,
-    "Lreq": 0.05588148402508258,
+    "T1": 12.668776953118298,
+    "T4": 12.758500001391377,
+    "F": 2235.218327889846,
+    "ra": 0.7068660722246297,
+    "rt": 0.6375216157722136,
+    "rp": 0.8821956587451192,
+    "pmax": 0.013232934881176788,
+    "Lreq": 0.05588045819724615,
     "A_net": 9.5e-05
    }
   },
@@ -853,9 +853,9 @@
     "nl": "P:fins.layers"
    },
    "outputs": {
-    "rf_foot": 1.4412045128950395,
+    "rf_foot": 1.431648982279836,
     "foot_area_mm2": 1656.64,
-    "foot_design_n": 114.94829395671276,
+    "foot_design_n": 115.71551550030624,
     "rf_root": 0.8045958609604178,
     "rf_root_prop": 0.8045958609604178,
     "leg_req_m": 0.017146647457180617,
@@ -863,7 +863,7 @@
    },
    "input_values": {
     "kd": 0.5,
-    "sf_d5": 1.4412045128950395,
+    "sf_d5": 1.431648982279836,
     "A_d5": 0.00165664,
     "tau_b": 200000.0,
     "rf_d3": 1.6091917219208356,
@@ -908,8 +908,8 @@
     "c3_over_c6_xps_s": 1.0,
     "c3_over_c6_board_flat": 1.0,
     "c3_over_c6_paper_s": 2.0,
-    "rf_pod_design": 1.1405188413087433,
-    "rf_pod_crash": 1.27612984905065,
+    "rf_pod_design": 1.1397541357279164,
+    "rf_pod_crash": 1.2651371070215078,
     "rf_tray": 2.983050847457627,
     "rf_floor": 1.0413559322033896,
     "rf_floor_prop": 2.343050847457627,
@@ -924,8 +924,8 @@
     "c3_sa": 100000.0,
     "c3_ta": 100000.0,
     "c3_fb": 50000.0,
-    "Rd": 0.8767939325338123,
-    "Rc": 0.783619316438628,
+    "Rd": 0.8773822078402367,
+    "Rc": 0.7904281634377827,
     "tray": 16761.363636363636,
     "glue": 96028.64583333334,
     "hatch": 2.225202896,
@@ -1429,7 +1429,7 @@
     "FIN-004-L"
    ],
    "how": "T-C6-LAP-PETG (allowable) and C4 T-C4-BLOCK-PROOF",
-   "value": 2.637424560418842
+   "value": 2.637501029672551
   },
   {
    "id": "CL-C6-BLOCK-SPAR-RF",
@@ -1452,7 +1452,7 @@
     "WNG-002"
    ],
    "how": "T-C6-LAP-PETG and T-C4-BLOCK-PROOF",
-   "value": 4.397055627485141
+   "value": 4.405551124561442
   },
   {
    "id": "CL-C6-COLLAR-RF",
@@ -1478,7 +1478,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF (1.5 x L4) with the collar witness-marked",
-   "value": 0.7687378126699408
+   "value": 0.7687461644397816
   },
   {
    "id": "CL-C6-COLLAR-RF-13MM",
@@ -1504,7 +1504,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "value": 0.666239437647282
+   "value": 0.6662466758478107
   },
   {
    "id": "CL-C6-COLLAR-RF-16MM",
@@ -1530,7 +1530,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "value": 0.8199870001812702
+   "value": 0.8199959087357671
   },
   {
    "id": "CL-C6-COLLAR-RF-15MM",
@@ -1556,7 +1556,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "value": 0.7687378126699408
+   "value": 0.7687461644397816
   },
   {
    "id": "CL-C6-COLLAR-RF-PROP",
@@ -1582,7 +1582,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "value": 1.1274821252492466
+   "value": 1.1274943745116797
   },
   {
    "id": "CL-C6-COLLAR-RF-12MM-COND",
@@ -1608,7 +1608,7 @@
     "FIN-002-L"
    ],
    "how": "T-C6-LAP-PETG mean; print 12 mm collars only if this claim passes on the measured allowable",
-   "value": 0.6303650063893514
+   "value": 0.630371854840621
   },
   {
    "id": "CL-C6-COLLAR-L-REQ",
@@ -1632,7 +1632,7 @@
     "FIN-008-LL"
    ],
    "how": "D3 keeps fin_detail.station_collar.height_m >= this; T-C4-FIN-PROOF",
-   "value": 0.0195125044622207
+   "value": 0.01951229247554184
   },
   {
    "id": "CL-C6-STRIP-ANCHOR-F",
@@ -1660,7 +1660,7 @@
     "FIN-008-LL"
    ],
    "how": "H1 sizes the lever frame to >= this (CR-H1-12); C4 FE CL-C4-D3-STRIP-END-F is the source",
-   "value": 2235.259361003303
+   "value": 2235.218327889846
   },
   {
    "id": "CL-C6-STRIP-ANCHOR-RF",
@@ -1692,7 +1692,7 @@
     "FIN-008-LL"
    ],
    "how": "T-C6-STRIP-ANCHOR: pull one strip out of a printed tail coupon",
-   "value": 0.7068530961395066
+   "value": 0.7068660722246297
   },
   {
    "id": "CL-C6-STRIP-EMBED-REQ",
@@ -1716,7 +1716,7 @@
     "FIN-008-LL"
    ],
    "how": "T-C6-STRIP-ANCHOR on the 40 mm two-face tail",
-   "value": 0.05588148402508258
+   "value": 0.05588045819724615
   },
   {
    "id": "CL-C6-STRIP-TAIL-NET-RF",
@@ -1740,7 +1740,7 @@
     "FIN-008-LL"
    ],
    "how": "T-C6-STRIP-ANCHOR: the tail must not break before 2235 N",
-   "value": 0.6375099126574664
+   "value": 0.6375216157722136
   },
   {
    "id": "CL-C6-STRIP-FACE-RF",
@@ -1767,7 +1767,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C6-BOARD-LAP (allowable); C4 FE CL-C4-D3-STRIP-Q (= C4 MS -0.77)",
-   "value": 0.1142872384015654
+   "value": 0.11430155355287525
   },
   {
    "id": "CL-C6-STRIP-PIN-RF",
@@ -1798,7 +1798,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF with pins fitted; no strip lift at the tip",
-   "value": 0.8820851723698487
+   "value": 0.8821956587451192
   },
   {
    "id": "CL-C6-STRIP-PIN-RF-PROP",
@@ -1829,7 +1829,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF with 2.5 mm pins fitted",
-   "value": 0.8820851723698487
+   "value": 0.8821956587451192
   },
   {
    "id": "CL-C6-STRIP-PIN-RF-ALT",
@@ -1860,7 +1860,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C4-FIN-PROOF with pins fitted at 9 mm",
-   "value": 0.7527126804222709
+   "value": 0.7528069621291682
   },
   {
    "id": "CL-C6-STRIP-PIN-PITCH-MAX",
@@ -1891,7 +1891,7 @@
     "FIN-001-LL"
    ],
    "how": "D3 keeps fin_detail.edge_strip.pin_pitch_m <= this",
-   "value": 0.01323127758554773
+   "value": 0.013232934881176788
   },
   {
    "id": "CL-C6-STRIP-PIN-PITCH-MAX-ALT",
@@ -1922,7 +1922,7 @@
     "FIN-001-LL"
    ],
    "how": "Only if 2.5 mm rod cannot be bought: 2 mm pins at <= this pitch",
-   "value": 0.006774414123800437
+   "value": 0.006775262659162514
   },
   {
    "id": "CL-C6-STRIP-PIN-BRG-RF",
@@ -1949,7 +1949,7 @@
     "FIN-011-LLI"
    ],
    "how": "T-C4-FIN-PROOF: no strip split at a pin hole",
-   "value": 1.9047873066927568
+   "value": 1.9050258925479207
   },
   {
    "id": "CL-C6-STRIP-NET-PIN-RF",
@@ -1976,7 +1976,7 @@
     "FIN-011-LLI"
    ],
    "how": "T-C4-FIN-PROOF",
-   "value": 1.3421261319104556
+   "value": 1.3421507700467654
   },
   {
    "id": "CL-C6-BRACE-END-RF",
@@ -2060,7 +2060,7 @@
     "FIN-001-LL"
    ],
    "how": "T-C6-BOARD-LAP; T-C1-FOOT-DROP",
-   "value": 1.4412045128950395
+   "value": 1.431648982279836
   },
   {
    "id": "CL-C6-FIN-ROOT-RF",
@@ -2130,7 +2130,7 @@
     "WNG-001"
    ],
    "how": "T-C6-XPS-PULL (tension and shear); C3 pod proof",
-   "value": 1.1405188413087433
+   "value": 1.1397541357279164
   },
   {
    "id": "CL-C6-POD-CRASH-RF",
@@ -2151,7 +2151,7 @@
     "WNG-001"
    ],
    "how": "T-C6-XPS-PULL",
-   "value": 1.27612984905065
+   "value": 1.2651371070215078
   },
   {
    "id": "CL-C6-POD-TRAY-RF",
@@ -2294,7 +2294,7 @@
     "FIN-008-LL"
    ],
    "how": "C4 re-runs fin_structures_d3.py / sim_fin.py on the D-65 side load; then k = 1 and the -EST claims retire",
-   "value": 0.9929825945883006
+   "value": 0.9929675864511271
   },
   {
    "id": "CL-C6-STRIP-ANCHOR-RF-EST",
@@ -2326,7 +2326,7 @@
     "FIN-008-LL"
    ],
    "how": "C4 re-run; T-C6-STRIP-ANCHOR",
-   "value": 0.7118484251303259
+   "value": 0.711872252296748
   },
   {
    "id": "CL-C6-STRIP-TAIL-NET-RF-EST",
@@ -2350,7 +2350,7 @@
     "FIN-008-LL"
    ],
    "how": "C4 re-run; T-C6-STRIP-ANCHOR",
-   "value": 0.6420151935510849
+   "value": 0.6420366832423202
   },
   {
    "id": "CL-C6-STRIP-PIN-RF-EST",
@@ -2381,7 +2381,7 @@
     "FIN-001-LL"
    ],
    "how": "C4 re-run; T-C4-FIN-PROOF",
-   "value": 0.888318865987343
+   "value": 0.8884435612828938
   },
   {
    "id": "CL-C6-STRIP-PIN-PITCH-MAX-EST",
@@ -2412,7 +2412,7 @@
     "FIN-001-LL"
    ],
    "how": "C4 re-run; D3 holds the pin drilling until then",
-   "value": 0.013324782989810144
+   "value": 0.013326653419243408
   },
   {
    "id": "CL-C6-STRIP-ANCHOR-F-EST",
@@ -2440,7 +2440,7 @@
     "FIN-008-LL"
    ],
    "how": "H1 builds the T-C6-STRIP-ANCHOR frame to 1.25 x this until C4 re-runs",
-   "value": 2219.573639866847
+   "value": 2219.4993482361047
   },
   {
    "id": "CL-C6-POCKET-WALL-AREA-RATIO",

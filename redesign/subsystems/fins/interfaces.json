@@ -98,15 +98,15 @@
    "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0365,
-    0.3214,
-    0.1814
+    0.0359,
+    0.3207,
+    0.1811
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -114,15 +114,15 @@
    "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0365,
-    -0.3214,
-    0.1814
+    0.0359,
+    -0.3207,
+    0.1811
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -130,15 +130,15 @@
    "name": "Motor mount LR, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0365,
-    0.3214,
-    -0.1814
+    0.0359,
+    0.3207,
+    -0.1811
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -146,15 +146,15 @@
    "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.54,
+   "mass_g": 9.99,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0365,
-    -0.3214,
-    -0.1814
+    0.0359,
+    -0.3207,
+    -0.1811
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.95 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -282,60 +282,60 @@
    "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.52,
+   "mass_g": 10.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0641,
+    0.0642,
     0.3165,
     0.1568
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.63 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-008-UL",
    "name": "Station collar UL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.52,
+   "mass_g": 10.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0641,
+    0.0642,
     -0.3165,
     0.1568
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.63 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-008-LR",
    "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.52,
+   "mass_g": 10.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0641,
+    0.0642,
     0.3165,
     -0.1568
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.63 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-008-LL",
    "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.52,
+   "mass_g": 10.5,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0641,
+    0.0642,
     -0.3165,
     -0.1568
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.63 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-009-UR",
@@ -2572,6 +2572,10 @@
   "E-HRN-07",
   "E-HRN-08",
   "E-HRN-09",
+  "E-HRN-42",
+  "E-HRN-43",
+  "E-HRN-44",
+  "E-HRN-45",
   "E-PWR-11",
   "E-PWR-12",
   "E-PWR-13",

@@ -1,7 +1,7 @@
 # Proof chains (claims map)
 
 Every number in the redesign is meant to be traceable: **requirement ← claim ← calculation ← parameters ← sources**.
-The graph has **4,211 nodes and 13,734 links**, built by `python -I redesign/proofs/build_graph.py`, which
+The graph has **4,244 nodes and 13,815 links**, built by `python -I redesign/proofs/build_graph.py`, which
 re-runs every calculation and flags any stored number that no longer matches (drift).
 
 **Explore it:** the **Proofs ↗** link in the K09-L Explorer (double-click `00 - OPEN THE K09-L EXPLORER (double-click me).bat`,
@@ -25,7 +25,7 @@ everything still UNVERIFIED.
 | part | 0 | 0 | 0 | 149 | 149 |
 
 VERIFIED needs a physical test, and nothing has been built yet, so nothing is VERIFIED. CHECKED means re-run and
-compared to an independent calculation or simulation. 86 claims currently show a negative margin (FAILS flag), and
+compared to an independent calculation or simulation. 87 claims currently show a negative margin (FAILS flag; 2026-11-11 after D-80…D-84, down from 90 before that re-run), and
 14 requirements inherit one; see `STATUS.md` for which ones matter.
 
 ## Honest state (2026-11-11, after the harness re-route and the D5-R6 landing parts list)

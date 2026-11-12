@@ -39,7 +39,9 @@ import math
 
 import k09kit as k9
 
-N_SURF = 48          # surface samples per full chord (cosine spaced); cut edges are added exactly
+N_SURF = 96          # surface samples per full chord (cosine spaced); cut edges are added exactly. 96 (was 48): mid-
+#                      chord stations ~5 mm apart, chord sag ~0.025 mm, so the skin and core tessellations never cross
+#                      by more than the collision tolerance (collision/collide.py, 0.05 mm)
 N_ARC = 28           # points on a full circle
 
 
@@ -149,7 +151,9 @@ def layout(ctx):
     g['tab_tape_w'] = lv('skin.tab_edge_tape_w_m', 'm')
     # recess-step fillet (D-69, CR-C3-17): legs along the floor and up the step (capped by the step height)
     lf, lw = lv('recess.step_fillet_legs_m', 'm')
-    g['rf_legs'] = (lf, min(lw, surf(g, g['x_rec1'], 'upper') - g['z_rec']))
+    # also capped at the pod floor board (D2: pod floor = fins.board_t_m foam board), whose bevelled aft edge sits on
+    # the fillet: a 5 mm leg stood 0.2 mm proud of the 4.8 mm floor, into the tray (collision check)
+    g['rf_legs'] = (lf, min(lw, surf(g, g['x_rec1'], 'upper') - g['z_rec'], v('fins.board_t_m', 'm')))
     return g
 
 
@@ -271,9 +275,20 @@ def circle(xc, zc, r, n=N_ARC):
 def skin_strip(g, x0, x1, side, z_off, t):
     """Thin body following the upper or lower skin from x0 to x1, z_off outside the foam, thickness t."""
     s = 1.0 if side == 'upper' else -1.0
-    xs = _xs(x0, x1)
-    inner = [(x, surf(g, x, side) + s * z_off) for x in xs]
-    outer = [(x, surf(g, x, side) + s * (z_off + t)) for x in reversed(xs)]
+    # the core outline's stations inside [x0, x1] are added, so the strip's inner face never chords inside the core
+    # (collision check: the LE strip's 2 mm first chord sat 0.32 mm inside the foam at the nose)
+    xs = _xs(x0, x1, [x for x in _xs(0.0, g['c']) if x0 < x < x1])
+
+    def off(x, d):
+        """Point on the section at x moved d along the outward surface normal (a vertical offset grazed the foam
+        where the nose is near vertical: collision check, LE strip 0.1 mm into the core at x 0.7 mm)."""
+        h = 1e-5
+        za, zb = surf(g, max(x - h, 0.0), side), surf(g, min(x + h, g['c']), side)
+        dz = (zb - za) / (min(x + h, g['c']) - max(x - h, 0.0))
+        n = math.hypot(1.0, dz)
+        return (x - s * dz / n * d, surf(g, x, side) + s * d / n)
+    inner = [off(x, z_off) for x in xs]
+    outer = [off(x, z_off + t) for x in reversed(xs)]
     return _dedupe(inner + outer)
 
 
@@ -500,7 +515,8 @@ def elevon_pieces(g, y0, y1):
         if xs > g['xh'] + 1e-9:
             sec = clip_x(sec, xs, g['c'])
         if any(p < ym < q for p, q in g['horn_y']):
-            out.append((a, b, clip_x(sec, max(xs, g['xh']), g['horn_x'][0])))
+            if g['horn_x'][0] - max(xs, g['xh']) > 1e-4:          # D-82: slot open from the hinge, no front sliver
+                out.append((a, b, clip_x(sec, max(xs, g['xh']), g['horn_x'][0])))
             out.append((a, b, clip_x(sec, g['horn_x'][1], g['c'])))
         else:
             out.append((a, b, sec))

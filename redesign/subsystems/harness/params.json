@@ -2478,14 +2478,6 @@
      0.15
     ],
     [
-     "Fin-hole grommet ASA 10/7 mm UR",
-     1,
-     0.5,
-     0.086,
-     0.32,
-     0.0447
-    ],
-    [
      "Tape strips 20 x 40 mm on the board face (6) UR",
      6,
      0.05,
@@ -2524,14 +2516,6 @@
      0.048,
      -0.3283,
      0.15
-    ],
-    [
-     "Fin-hole grommet ASA 10/7 mm UL",
-     1,
-     0.5,
-     0.086,
-     -0.32,
-     0.0447
     ],
     [
      "Tape strips 20 x 40 mm on the board face (6) UL",
@@ -2574,14 +2558,6 @@
      -0.15
     ],
     [
-     "Fin-hole grommet ASA 10/7 mm LR",
-     1,
-     0.5,
-     0.086,
-     0.32,
-     -0.0307
-    ],
-    [
      "Tape strips 20 x 40 mm on the board face (6) LR",
      6,
      0.05,
@@ -2620,14 +2596,6 @@
      0.048,
      -0.3283,
      -0.15
-    ],
-    [
-     "Fin-hole grommet ASA 10/7 mm LL",
-     1,
-     0.5,
-     0.086,
-     -0.32,
-     -0.0307
     ],
     [
      "Tape strips 20 x 40 mm on the board face (6) LL",
@@ -2853,6 +2821,41 @@
    "source": "team/F2/harness.py (D-74)",
    "note": "[name, g, x, y, z]: the four XT30U mated pairs, parts HRN-113-<st> (own nodes, not in the bundle masses)"
   },
+  "grommet_table": {
+   "value": [
+    [
+     "Fin-hole grommet UR",
+     0.5,
+     0.086,
+     0.32,
+     0.0447
+    ],
+    [
+     "Fin-hole grommet UL",
+     0.5,
+     0.086,
+     -0.32,
+     0.0447
+    ],
+    [
+     "Fin-hole grommet LR",
+     0.5,
+     0.086,
+     0.32,
+     -0.0307
+    ],
+    [
+     "Fin-hole grommet LL",
+     0.5,
+     0.086,
+     -0.32,
+     -0.0307
+    ]
+   ],
+   "unit": "-",
+   "source": "team/F2/harness.py (D-83)",
+   "note": "[name, g, x, y, z]: the four fin-hole grommets, parts HRN-110-<st> (own nodes, not in the bundle masses); 0.50 g each EST"
+  },
   "passes": {
    "value": [
     [
@@ -2981,6 +2984,69 @@
    "note": "[name, opening mm2, [[AWG, conductors]]]"
   },
   "cad": {
+   "grommet": {
+    "value": {
+     "HRN-110-UR": {
+      "centre": [
+       0.086,
+       0.32,
+       0.0447
+      ],
+      "out": 1,
+      "board_t": 0.0096,
+      "flange_od": 0.01,
+      "barrel_od": 0.0079,
+      "bore": 0.007,
+      "length": 0.012,
+      "flange_t": 0.0012
+     },
+     "HRN-110-UL": {
+      "centre": [
+       0.086,
+       -0.32,
+       0.0447
+      ],
+      "out": -1,
+      "board_t": 0.0096,
+      "flange_od": 0.01,
+      "barrel_od": 0.0079,
+      "bore": 0.007,
+      "length": 0.012,
+      "flange_t": 0.0012
+     },
+     "HRN-110-LR": {
+      "centre": [
+       0.086,
+       0.32,
+       -0.0307
+      ],
+      "out": 1,
+      "board_t": 0.0096,
+      "flange_od": 0.01,
+      "barrel_od": 0.0079,
+      "bore": 0.007,
+      "length": 0.012,
+      "flange_t": 0.0012
+     },
+     "HRN-110-LL": {
+      "centre": [
+       0.086,
+       -0.32,
+       -0.0307
+      ],
+      "out": -1,
+      "board_t": 0.0096,
+      "flange_od": 0.01,
+      "barrel_od": 0.0079,
+      "bore": 0.007,
+      "length": 0.012,
+      "flange_t": 0.0012
+     }
+    },
+    "unit": "m",
+    "source": "team/F2/harness.py (D-83)",
+    "note": "fin-hole grommet bodies along y: centre = hole centre on the board mid-plane, out = outboard sign; flange on the outboard face, lip proud inboard"
+   },
    "xt30u": {
     "value": {
      "HRN-113-UR": {
@@ -3105,7 +3171,7 @@
         0.3122,
         0.0447
        ],
-       0.0056
+       0.0047
       ],
       [
        [
@@ -3118,7 +3184,7 @@
         0.3122,
         -0.0307
        ],
-       0.0056
+       0.0047
       ],
       [
        [
@@ -3329,8 +3395,8 @@
       9.93,
       6.94,
       1.05,
-      1.65,
-      1.64,
+      1.15,
+      1.14,
       3.97,
       4.43,
       3.92,

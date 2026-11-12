@@ -296,6 +296,34 @@
     "status": "PROPOSED",
     "note": "R5: cheeks run from the plate back face 17 mm aft (was 12 mm) so they still reach the slit collar to the tube axis after the plate moved 5 mm forward; C4 re-checks rocking stiffness >= 1 100 N m/rad (T-C4-MOUNT-STIFF, D-70). The 12 -> 8 mm mass lever (CR-D3-33 c) is withdrawn: the cheek length is now set by the reach"
    },
+   "cheek_slit_gap_m": {
+    "value": 0.001,
+    "unit": "m",
+    "source": "params/CHANGE-LOG.md#D-80 (review/MOTOR-MOUNTS.md MM-01, BR-02)",
+    "status": "PROPOSED",
+    "note": "D-80: the outboard (slit-side) cheek ends this far ahead of the slit front face (x_t - slit/2 - gap) so it joins only the front half of the collar and the front ear; the inboard cheek keeps the full cheek_len_m. Before D-80 the outboard cheek bridged the slit and both ears for the top 8.4 mm and the clamp could not close. Feeler-check the 1.5 mm slit on the first print"
+   },
+   "key_w_m": {
+    "value": 0.003,
+    "unit": "m",
+    "source": "params/CHANGE-LOG.md#D-81 (review/MOTOR-MOUNTS.md MM-02)",
+    "status": "UNVERIFIED",
+    "note": "D-81: clocking dog under the mount collar, tangential width; sits in the notch at the top of the FIN-008 station-collar ring on the front (-x) side, clear of the tail (+x) and the brace ear (-y). Sets the cant clocking positively; the pinch bolt stays the clamp. Its shear strength changes the D-23 slip fuse: C6 sizes it (shear tab or 1.75 mm filament pin) before the 18 Dec freeze"
+   },
+   "key_d_m": {
+    "value": 0.0025,
+    "unit": "m",
+    "source": "params/CHANGE-LOG.md#D-81",
+    "status": "UNVERIFIED",
+    "note": "depth of dog engagement into the station-collar notch (the dog also spans the 0.5 mm collar gap)"
+   },
+   "key_clear_m": {
+    "value": 0.0002,
+    "unit": "m",
+    "source": "G3 practice (same as station_collar.strip_slot_clear_m)",
+    "status": "PROPOSED",
+    "note": "per side between the dog and the notch walls, and under the dog tip"
+   },
    "head_d_m": {
     "value": 0.0055,
     "unit": "m",

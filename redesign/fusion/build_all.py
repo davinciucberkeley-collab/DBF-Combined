@@ -88,6 +88,27 @@ def load_params():
     return {}
 
 
+SEAT_WILD = {'<st>': ('UR', 'UL', 'LR', 'LL'), '<s>': ('R', 'L')}
+
+
+def load_seats(ctx, root):
+    """interfaces/seats.json (next to the module root): parts machined to receive another part (Context.seat).
+    '<st>' expands to the four stations, '<s>' to R and L, the same in host and guest."""
+    path = os.path.join(os.path.dirname(os.path.abspath(root)), 'interfaces', 'seats.json')
+    if not os.path.exists(path):
+        return
+    with open(path, encoding='utf-8') as f:
+        rows = json.load(f).get('seats', [])
+    for r in rows:
+        keys = [k for k in SEAT_WILD if k in r['host'] + r['guest']] or [None]
+        vals = SEAT_WILD[keys[0]] if keys[0] else (None,)
+        for v in vals:
+            h, g = (r['host'], r['guest']) if v is None else (r['host'].replace(keys[0], v), r['guest'].replace(keys[0], v))
+            if g not in ctx.components:
+                continue
+            ctx.seat(h, g, r.get('why', ''), r.get('bodies'), r.get('shop', False))
+
+
 def build(backend, root, list_file, log=print, datums=None):
     """Run every module against `backend`. Returns (ctx, graph, results); results = [(sub, file, ok, ms, err)].
     datums: True/False registers the K09-L datum sheet first; None = wants_datums(root)."""
@@ -126,6 +147,7 @@ def build(backend, root, list_file, log=print, datums=None):
             msg = '%s: %s %s' % (type(e).__name__, e, ('at ' + where) if where else '')
             ctx.issue('ERROR', 'module', sub, msg)
             results.append((sub, os.path.basename(path), False, (time.time() - t0) * 1000, msg))
+    load_seats(ctx, root)
     ctx.finish()
     summary = backend.end(ctx)
     if summary:

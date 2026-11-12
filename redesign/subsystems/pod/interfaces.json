@@ -98,15 +98,15 @@
    "name": "Carry handle on the spar with the foot bridge, aft-stop strut and wall brackets (printed PETG) + 'LIFT HERE - do not lift by the motors' label",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 38.6,
+   "mass_g": 39.8,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0773,
-    -0.0006,
-    0.0575
+    0.0774,
+    -0.0025,
+    0.058
    ],
    "make_or_buy": "make",
-   "notes": "feet saddle the spar top in the open slot, one 7.6 mm nylon tie each round foot + spar; bridge between the feet (x 0.077-0.090) on the slot fill; R6 (D-69): aft-stop strut (40 x 14 x 1.5 mm pad on the stop back face, three 3 x 14 mm ribs 25 mm long to the bridge, CR-C3-14) and one wall bracket per side (2 mm web from the foot to a 1.2 mm flange epoxied to the side wall over 1 232 mm2, CR-C3-16); legs through the aft deck; GPS cable in the right leg (window at z 0.055-0.065) and a groove under the grip (CR-F2-03); mass EST from CAD (team/D2/pod_data.py): PETG block 11.3 g, PETG plate 21.8 g, glue_handle 1.0 g, label 0.5 g, tie_each 4.0 g"
+   "notes": "feet saddle the spar top in the open slot, one 7.6 mm nylon tie each round foot + spar; bridge between the feet (x 0.077-0.090) on the slot fill; R6 (D-69): aft-stop strut (40 x 14 x 1.5 mm pad on the stop back face, three 3 x 14 mm ribs 25 mm long to the bridge, CR-C3-14) and one wall bracket per side (2 mm web from the foot to a 1.2 mm flange epoxied to the side wall over 1 232 mm2, CR-C3-16); legs through the aft deck; GPS cable in the right leg (window at z 0.055-0.065) and a groove under the grip (CR-F2-03); mass EST from CAD (team/D2/pod_data.py): PETG block 11.2 g, PETG plate 23.1 g, glue_handle 1.0 g, label 0.5 g, tie_each 4.0 g"
   },
   {
    "id": "POD-008",

@@ -46,6 +46,16 @@ def build(ctx):
                 for su, sw in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
         ctx.part(pid).prism('Z', c[2] - th / 2, [loop], th, name='XT30U mated pair')
 
+    # D-83: the four fin-hole grommets (HRN-110-<st>): barrel through the 8 mm hole + lip inboard, flange outboard
+    for pid, gm in sorted(_lv(H['cad'].get('grommet', {})).items()):
+        (x, y, z), s, tb = gm['centre'], gm['out'], gm['board_t']
+        lip = gm['length'] - tb - gm['flange_t']                       # barrel proud of the inboard face
+        p = ctx.part(pid)
+        y_in = y - s * (tb / 2 + lip)                                  # barrel start (inboard end)
+        p.tube('Y', (x, y_in, z), s * (tb + lip), gm['barrel_od'] / 2, gm['bore'] / 2, name='grommet barrel')
+        p.tube('Y', (x, y + s * tb / 2, z), s * gm['flange_t'], gm['flange_od'] / 2, gm['bore'] / 2,
+               name='grommet flange')
+
     dia = _lv(H['cad'].get('wire_draw_dia_m', {}))
     strands = _lv(H['cad'].get('wire_strands', {}))           # {wire id: [[diameter, polyline], ...]}
     by_edge = {}

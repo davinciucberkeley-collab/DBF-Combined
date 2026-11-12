@@ -564,7 +564,7 @@
     "Pcr_N": 362.4571104555307,
     "buckling_sf": 17.910929168519583,
     "A_min_mm2": 349.08212167725816,
-    "A_horn_mm2": 1109.3433828571428,
+    "A_horn_mm2": 1217.9334095238096,
     "rod_len_m": 0.05475498790917957
    },
    "input_values": {
@@ -783,7 +783,7 @@
      1.0
     ],
     "blade": [
-     6.0,
+     0.0,
      40.0
     ],
     "defl": [
@@ -1601,11 +1601,11 @@
     "alloc": "g"
    },
    "outputs": {
-    "mass_g": 70.68,
-    "over_g": -1.3199999999999932
+    "mass_g": 70.14,
+    "over_g": -1.8599999999999994
    },
    "input_values": {
-    "m": 70.68,
+    "m": 70.14,
     "alloc": 72
    }
   },
@@ -1834,7 +1834,7 @@
     "MEC-006-R"
    ],
    "how": "T-C6-XPS-PULL; horn pull-off coupon",
-   "value": 1109.3433828571428
+   "value": 1217.9334095238096
   },
   {
    "id": "CL-D6-BOND-HORN-NEED",
@@ -2354,7 +2354,7 @@
     "MEC-001-R"
    ],
    "how": "T-D6-WEIGH: weigh every part on arrival",
-   "value": 70.68
+   "value": 70.14
   },
   {
    "id": "T-D6-THROW",

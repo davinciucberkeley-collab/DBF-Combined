@@ -7,25 +7,25 @@
  "CALC-C3-BOND": {
   "area_m2": 0.0091,
   "length_m": 0.065,
-  "sigma_design_pa": 79051.36028634827,
-  "tau_design_pa": 8628.032967032965,
-  "R_design": 0.8767939325338123,
+  "sigma_design_pa": 79111.58582523245,
+  "tau_design_pa": 8626.63495879121,
+  "R_design": 0.8773822078402367,
   "case": "L2-PAIR-NARROW/MC-C",
-  "group_mass_kg": 0.84124,
-  "group_cg_x": -0.03013136570989627,
-  "crash_F_n": 105.15499999999999,
-  "sigma_crash_pa": 78361.9316438628,
+  "group_mass_kg": 0.82314,
+  "group_cg_x": -0.03239914776319112,
+  "crash_F_n": 102.8925,
+  "sigma_crash_pa": 79042.81634377826,
   "tau_crash_pa": 0.0,
-  "R_crash": 0.783619316438628,
+  "R_crash": 0.7904281634377827,
   "crash_dir": "+z"
  },
  "CALC-C3-STOPS": {
-  "F_aft_n": 91.51168125,
+  "F_aft_n": 91.223175,
   "F_fwd_n": 73.75,
-  "F_fwd_flight_n": 3.269953125,
-  "sigma_aft_d2_pa": 17747719.999999996,
-  "t_req_m": 0.003263224172501791,
-  "sigma_aft_rec_pa": 17747719.999999996,
+  "F_fwd_flight_n": 3.220359375,
+  "sigma_aft_d2_pa": 17691767.272727273,
+  "t_req_m": 0.0032580761752353743,
+  "sigma_aft_rec_pa": 17691767.272727273,
   "sigma_fwd_rec_pa": 11174242.424242424,
   "fwd_fuse_n": 98.99999999999999,
   "nose_m_req_nmm_per_mm": 40.41198979591837,
@@ -47,12 +47,12 @@
   "glue_fillet_pa": 42679.398148148146
  },
  "CALC-C3-OVERHANG": {
-  "M_unit_nm_per_g": 0.30228184987411044,
+  "M_unit_nm_per_g": 0.3036547808741104,
   "I_m4": 1.8449535333333343e-08,
   "c_m": 0.04345,
   "n_design": 7.331249999999999,
-  "sigma_design_pa": 5219085.949153001,
-  "sigma_crash_pa": 9074145.88111955
+  "sigma_design_pa": 5242790.464969086,
+  "sigma_crash_pa": 9115359.656223478
  },
  "CALC-C3-HANDLE": {
   "F_design_n": 109.95706312499999,
@@ -65,9 +65,9 @@
  },
  "CALC-C3-MASS": {
   "dm_g": 0.0,
-  "mass_g": 144.19,
+  "mass_g": 145.39,
   "full_section_dm_g": 6.320028000000001,
-  "mass_full_section_g": 150.510028
+  "mass_full_section_g": 151.710028
  },
  "CALC-C3-NOSE-PATH": {
   "L_A_m": 0.01100000000000001,
@@ -81,7 +81,7 @@
  },
  "CALC-C3-FEA": {
   "k_bond_design": 1.6174653623114343,
-  "R_design_corrected": 1.41818381575827,
+  "R_design_corrected": 1.4191353306899146,
   "R_crash_fea": 11.037391099082349,
   "R_bonded_crash_fea": 40.62510013742308,
   "overhang_crash_pa": 6950738.934236977,
@@ -120,9 +120,9 @@
   "fwd_bedded_tray_path_share": 1.1611746742091387
  },
  "CALC-C3-STRUT": {
-  "sigma_bearing_pa": 726283.1845238094,
+  "sigma_bearing_pa": 723993.4523809522,
   "P_cr_n": 2390.629702563617,
-  "F_n": 91.51168125,
+  "F_n": 91.223175,
   "tie_cap_n": 444.0,
   "L_m": 0.0265,
   "mass_g": 5.662930000000001

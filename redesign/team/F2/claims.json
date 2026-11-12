@@ -2243,7 +2243,8 @@
     "od": "P:harness.wire_od_mm",
     "fittings": "P:harness.fittings_table",
     "pod_box": "P:harness.pod_box",
-    "plugs": "P:harness.xt30u_table"
+    "plugs": "P:harness.xt30u_table",
+    "grommets": "P:harness.grommet_table"
    },
    "units": {
     "od": "AWG,mm"
@@ -2253,9 +2254,9 @@
     "cg_x": 0.06301678068161147,
     "cg_y": -0.0010314194510893512,
     "cg_z": 0.016467863858806917,
-    "plugs_g": 8.0,
+    "plugs_g": 10.0,
     "pod_g": 39.11013782610792,
-    "side_g": 40.564309730529175
+    "side_g": 39.564309730529175
    },
    "input_values": {
     "wires": [
@@ -4435,14 +4436,6 @@
       0.15
      ],
      [
-      "Fin-hole grommet ASA 10/7 mm UR",
-      1,
-      0.5,
-      0.086,
-      0.32,
-      0.0447
-     ],
-     [
       "Tape strips 20 x 40 mm on the board face (6) UR",
       6,
       0.05,
@@ -4481,14 +4474,6 @@
       0.048,
       -0.3283,
       0.15
-     ],
-     [
-      "Fin-hole grommet ASA 10/7 mm UL",
-      1,
-      0.5,
-      0.086,
-      -0.32,
-      0.0447
      ],
      [
       "Tape strips 20 x 40 mm on the board face (6) UL",
@@ -4531,14 +4516,6 @@
       -0.15
      ],
      [
-      "Fin-hole grommet ASA 10/7 mm LR",
-      1,
-      0.5,
-      0.086,
-      0.32,
-      -0.0307
-     ],
-     [
       "Tape strips 20 x 40 mm on the board face (6) LR",
       6,
       0.05,
@@ -4577,14 +4554,6 @@
       0.048,
       -0.3283,
       -0.15
-     ],
-     [
-      "Fin-hole grommet ASA 10/7 mm LL",
-      1,
-      0.5,
-      0.086,
-      -0.32,
-      -0.0307
      ],
      [
       "Tape strips 20 x 40 mm on the board face (6) LL",
@@ -4807,6 +4776,36 @@
       0.0259,
       -0.052,
       0.0277
+     ]
+    ],
+    "grommets": [
+     [
+      "Fin-hole grommet UR",
+      0.5,
+      0.086,
+      0.32,
+      0.0447
+     ],
+     [
+      "Fin-hole grommet UL",
+      0.5,
+      0.086,
+      -0.32,
+      0.0447
+     ],
+     [
+      "Fin-hole grommet LR",
+      0.5,
+      0.086,
+      0.32,
+      -0.0307
+     ],
+     [
+      "Fin-hole grommet LL",
+      0.5,
+      0.086,
+      -0.32,
+      -0.0307
      ]
     ]
    }
@@ -7297,7 +7296,7 @@
    "outputs": {
     "cg_gap_max": 0.008706822334509267,
     "gap_pod": 0.008706822334509267,
-    "gap_side": 0.0012890172076776652
+    "gap_side": 0.0014506850929220255
    },
    "input_values": {
     "wires": [
@@ -9477,14 +9476,6 @@
       0.15
      ],
      [
-      "Fin-hole grommet ASA 10/7 mm UR",
-      1,
-      0.5,
-      0.086,
-      0.32,
-      0.0447
-     ],
-     [
       "Tape strips 20 x 40 mm on the board face (6) UR",
       6,
       0.05,
@@ -9523,14 +9514,6 @@
       0.048,
       -0.3283,
       0.15
-     ],
-     [
-      "Fin-hole grommet ASA 10/7 mm UL",
-      1,
-      0.5,
-      0.086,
-      -0.32,
-      0.0447
      ],
      [
       "Tape strips 20 x 40 mm on the board face (6) UL",
@@ -9573,14 +9556,6 @@
       -0.15
      ],
      [
-      "Fin-hole grommet ASA 10/7 mm LR",
-      1,
-      0.5,
-      0.086,
-      0.32,
-      -0.0307
-     ],
-     [
       "Tape strips 20 x 40 mm on the board face (6) LR",
       6,
       0.05,
@@ -9619,14 +9594,6 @@
       0.048,
       -0.3283,
       -0.15
-     ],
-     [
-      "Fin-hole grommet ASA 10/7 mm LL",
-      1,
-      0.5,
-      0.086,
-      -0.32,
-      -0.0307
      ],
      [
       "Tape strips 20 x 40 mm on the board face (6) LL",
@@ -9873,7 +9840,7 @@
         0.3122,
         0.0447
        ],
-       0.0056
+       0.0047
       ],
       [
        [
@@ -9886,7 +9853,7 @@
         0.3122,
         -0.0307
        ],
-       0.0056
+       0.0047
       ],
       [
        [

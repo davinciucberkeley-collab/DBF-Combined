@@ -102,6 +102,9 @@ def geometry(P, LP, coords):
     G['pin_r'], G['bore_r'] = l('horn.pin_hole_d_m', 'm') / 2, l('horn.bore_d_m', 'm') / 2
     G['outline'] = [(x / 1000.0, z / 1000.0) for x, z in l('horn.outline_mm', 'mm')]
     G['blade_x'] = [x / 1000.0 for x in l('horn.blade_x_mm', 'mm')]
+    G['blade_gap'] = l('horn.blade_bevel_gap_m', 'm')
+    th = zu(G['xh']) - zl(G['xh'])                                       # same bevel as wing.py elevon_section
+    G['bevel'] = th * math.tan(math.radians(k9.lval(k9.local('wing'), 'elevon.bevel_deg', 'deg')))
     G['flange'] = [x / 1000.0 for x in l('horn.flange_mm', 'mm')]
     G['backplate'] = [x / 1000.0 for x in l('horn.backplate_mm', 'mm')]
     G['Q'] = (G['xh'], G['zh'] - G['rh'])                               # clevis pin (x, z), neutral
@@ -229,11 +232,36 @@ def build_pushrod(part, G):
                     (xc, rect(y - cl_w / 4, zc - cl_h / 4, y + cl_w / 4, zc + cl_h / 4))], name='clevis')
 
 
+def clip_above(loop, zc):
+    """Sutherland-Hodgman clip of a closed (x, z) loop to z >= zc; drops repeated and collinear points."""
+    out = []
+    for i, p in enumerate(loop):
+        q = loop[i - 1]
+        if p[1] >= zc:
+            if q[1] < zc:
+                out.append((q[0] + (p[0] - q[0]) * (zc - q[1]) / (p[1] - q[1]), zc))
+            out.append(p)
+        elif q[1] >= zc:
+            out.append((q[0] + (p[0] - q[0]) * (zc - q[1]) / (p[1] - q[1]), zc))
+    pts = [p for i, p in enumerate(out) if math.dist(p, out[i - 1]) > 1e-7]
+    keep = []
+    for i, p in enumerate(pts):
+        a, c = pts[i - 1], pts[(i + 1) % len(pts)]
+        if abs((p[0] - a[0]) * (c[1] - a[1]) - (p[1] - a[1]) * (c[0] - a[0])) > 1e-12:
+            keep.append(p)
+    return keep
+
+
 def horn_blade_loop(G):
-    xa, xb = G['xh'] + G['blade_x'][0], G['xh'] + G['blade_x'][1]
-    n = 8
-    xs = [xa + (xb - xa) * i / n for i in range(n + 1)]
-    return [(x, G['zu'](x)) for x in xs] + [(x, G['zl'](x)) for x in reversed(xs)]
+    """Blade outline skin to skin from the panel's bevel (D-82, shifted aft by blade_gap) to xh + blade_x[1]."""
+    xh, b, gap = G['xh'], G['bevel'], G['blade_gap']
+    xa = xh + G['blade_x'][0]
+    xb = xh + G['blade_x'][1]
+    xu, xl = max(xa, xh + gap), max(xa, xh + b + gap)                  # front edge on upper and lower skin
+    n = 10
+    up = [(xu + (xb - xu) * i / n, G['zu'](xu + (xb - xu) * i / n)) for i in range(n + 1)]
+    lo = [(xl + (xb - xl) * i / n, G['zl'](xl + (xb - xl) * i / n)) for i in range(n, -1, -1)]
+    return up + lo
 
 
 def band(G, x0, x1, upper, t):
@@ -250,9 +278,7 @@ def build_horn(part, G, y, clevis, boss_dir):
     xh, zh, ht = G['xh'], G['zh'], G['ht']
     arm = [(xh + X, zh + Z) for X, Z in G['outline']]
     if not clevis:                                                   # link horn: cut the arm off below the boss
-        zcut = zh - G['rb'] - G['boss_r'] - 0.0015
-        arm = [(x, max(z, zcut)) for x, z in arm]
-        arm = [p for i, p in enumerate(arm) if i == 0 or p != arm[i - 1]]
+        arm = clip_above(arm, zh - G['rb'] - G['boss_r'] - 0.0015)  # true clip (the old z clamp left a spike)
     holes = [circle(G['B'][0], G['B'][1], G['bore_r'], 16)]
     if clevis:
         holes.append(circle(G['Q'][0], G['Q'][1], G['pin_r'], 12))
@@ -294,10 +320,15 @@ def build_tube(part, G, span):
 
 
 def build_tape(part, G):
+    """Hinge tape on the upper skin: follows the S5010 upper surface over the tape skin (collision fix: the flat
+    strip at the hinge z sat up to 1.7 mm inside the core ahead of the hinge, where the surface rises)."""
     xh, w = G['xh'], G['tape_w']
-    z = G['zh']
+    off, t = k9.lval(k9.local('wing'), 'skin.model_t_m', 'm'), 0.0001
+    n = 100                                       # 0.25 mm stations: chord sag << the skin's, no skin vertex pokes through
+    xs = [xh - w / 2 + w * i / n for i in range(n + 1)]
+    loop = [(x, G['zu'](x) + off) for x in xs] + [(x, G['zu'](x) + off + t) for x in reversed(xs)]
     for y0, y1 in (G['yin'], G['yout']):
-        part.box((xh - w / 2, y0, z), (xh + w / 2, y1, z + 0.0001), name='hinge tape strip')
+        part.prism('Y', y0, [loop], y1 - y0, name='hinge tape strip')
 
 
 # ----------------------------------------------------------------------------- module

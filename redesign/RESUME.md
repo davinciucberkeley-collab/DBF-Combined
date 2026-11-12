@@ -1,27 +1,27 @@
 # How to resume the redesign
 
-## Paused 2026-11-11: fixing the buildability blockers (start here)
-The buildability review (`review/BUILDABILITY-REVIEW.md`) found 6 Blockers. Work in progress on fixing them:
+## Paused 2026-11-11 (evening): blockers fixed, collision gate added (start here)
+All six buildability blockers are fixed in CAD or design except the team decision on Jacobs access (BR-04 / MF-02).
+Status table: `review/BUILDABILITY-REVIEW.md` "Blocker status". Decisions D-74...D-84 in `params/CHANGE-LOG.md`.
 
-| Blocker | State |
+| Item | State |
 |---|---|
-| BR-00 CG aft of range | **Fixed in design.** D-75 to D-78: fin tip and foot on one datum, lighter feet (69.9 to 59.1 g), landing allocation 48 to 60 g from power, pack datum to x -0.036. Predicted CG 50.2 mm in 46.6-51.4 (basic 48.6). Gate margin 139 g. The 590 g pack misses its 100 g margin by 0.7 g. |
-| SW-02 fin tip vs foot shoe | **Fixed.** Mismatch 0, CAD shoe clears the fin by 0.2 mm min. |
-| WB-01 power board | **Resolved from documents** (D-74): board splits, servo BEC 8 A vs 5.6 A need, UBEC and its fuse dropped, XT30U pod-wing disconnects added (D-79 moves 6 g power to harness). Bench check on arrival: `subsystems/power/BOARD-CHECK.md`. Pod case U side clearance is only 1.8 mm. |
-| MF-01 no shop files | **Fixed.** `python -B redesign/manufacturing/make_shop_files.py` makes STLs, DXFs, hot-wire templates, jigs (see `manufacturing/SHOP-PACK.md`). Re-run after any CAD change. |
-| MM-01 motor-mount clamp slit bridged | **Not started.** `subsystems/fins/fusion/fins.py` build_motor_mount: cut the slit through the cheek; add a clocking key to the station collar (MM-02, MF-06/07). Also fix horn blades MEC-004/006 (bore breaks out of the blade edge), POD-007 floating body, HRN-110 grommet has no body. |
-| MF-02 Jacobs access | **Team decision needed:** Maker Pass $125 per student per semester is not in the budget; Jacobs lists no hot-wire cutter. |
+| BR-00 CG, SW-02 fin tip, WB-01 power board, MF-01 shop files | Fixed (D-74...D-79), as before. |
+| MM-01 slit, MM-02 clocking key | **Fixed in CAD** (D-80, D-81). Open: C6 sizes the dog's shear (it adds to the D-23 slip fuse) before the 18 Dec freeze. |
+| Horn bore breakout, POD-007 void, HRN-110 grommet | **Fixed** (D-82, D-84 b, D-83). Shop files: 245 checks, 0 FAIL, 0 issues. |
+| No parts phasing (physics-simulator ready) | **New gate, passes**: `python -I redesign/collision/collide.py` (about 5 min). 0 penetrations > 0.05 mm, static and at both elevon limits. Holes and pockets in `interfaces/seats.json`; geometry fixes D-84. |
+| Proof graph | **Clean** (0 drift, 0 errors), 4,244 nodes; 87 claims fail on margin (90 before; the 590 g pack gate passes again). |
+| MF-02 Jacobs access | **Team decision needed.** |
 
 Next steps in order:
-1. Fix MM-01 / MM-02 and the horn, POD-007, HRN-110 CAD defects (above).
-2. Re-run drifted proof scripts: `A1/frame_claims`, `B2/sim/sim_claims`, `B3/sc_analysis`, `C2/c2_claims`, `C5/landing_calc`,
-   `D3/fins_calcs`, `D5/feet_calc`, `D7/transport_calc`, `F1/power`, then `proofs/build_graph.py` (several minutes, run in the
-   background) until 0 drift / 0 errors; copy `proofs/out/graph.js` to `site/proofs/data/`; update PROOFS.md, STATUS.md, README key numbers.
-   Slow owner re-runs still due: C5 shoe FEA (`run_d5r6.sh` on R7) and C3 pod FEA.
-3. Regenerate visuals: GLB and viewer data (`blender/export_glb.py`), renders and thumbnails (`showcase/tools/render_showcase.py`),
-   drawing (`showcase/drawing/`), animation, shop files; `python -I site/make_index.py`.
-4. Update `review/BUILDABILITY-REVIEW.md` blocker status and `BUILD-GUIDE.md` "pending fix" notes.
-5. Publish the explorer artifact and push `redesign/v1`.
+1. Owners re-check what this round changed: C6 the collar bond (D-81 notch, -0.9 % area) and the dog size; C3 the 4.8 mm
+   recess-fillet leg (D-84 d); C4 mount rocking stiffness with the shorter outboard cheek (D-80).
+2. Regenerate the media that were not re-rendered this round: renders (`showcase/tools/render_showcase.py`), drawing
+   (`showcase/drawing/`), animation. The GLB, viewer data and shop files are current.
+3. Before any Fusion run or print: `python -I redesign/fusion/check.py`, `python -I redesign/collision/collide.py`,
+   `python -B redesign/manufacturing/make_shop_files.py`.
+4. Note: `fusion/tests` has 2 failing tests (skeleton CG range, transport also_contacts); they fail the same way on
+   commit 4784faa, before this round.
 
 State on 2026-11-10: branch `redesign/v1` (PR #1 into `main`). The engineering-team design program ran through
 **Frame → Analysis → Detail analysis → Design (Fusion CAD) → Integration → Simulation (+ fixes)** and stopped at

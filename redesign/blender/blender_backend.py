@@ -282,6 +282,8 @@ class BlenderBackend(fk.Backend):
         self.wires = {}               # edge id -> object
         self.joints = {}              # edge id -> (empty, fusionkit.Joint)
         self.bm = {}                  # part id -> bmesh being filled
+        self.cuts = {}                # part id -> [(Shape, 4x4 or None)] material removal, applied in end()
+        self.shapes_of = {}           # part id -> [Shape] (rebuilt body by body when the part has cuts)
 
     # ---- Backend interface
     def begin(self, title):
@@ -311,6 +313,71 @@ class BlenderBackend(fk.Backend):
         if shape.kind not in BUILDERS:
             raise ValueError('unknown shape kind ' + shape.kind)
         BUILDERS[shape.kind](self.bm[comp.id], shape)
+        self.shapes_of.setdefault(comp.id, []).append(shape)        # kept for per-body cuts in end()
+
+    def cut(self, comp, shape, matrix):
+        """Material removal (fusionkit Component.cut / Context.seat): applied in end() as one EXACT difference."""
+        self.cuts.setdefault(comp.id, []).append((shape, matrix))
+
+    @staticmethod
+    def _world_box(me, M):
+        pts = [M @ v.co for v in me.vertices]
+        return ([min(p[i] for p in pts) for i in range(3)], [max(p[i] for p in pts) for i in range(3)])
+
+    def _apply_cuts(self, pid, ob):
+        """Each body is cut only by the cutters whose boxes touch it (EXACT, no self-intersection pass), then the
+        bodies are joined again: one boolean over the whole multi-shell part mesh took tens of minutes on the core."""
+        cuts = self.cuts.get(pid)
+        if not cuts:
+            return
+        Mo = ob.matrix_world.copy()
+        cutters = []
+        for k, (s, M) in enumerate(cuts):
+            bm = bmesh.new()
+            BUILDERS[s.kind](bm, s)
+            me = bpy.data.meshes.new('%s cut %d' % (pid, k))
+            bm.to_mesh(me)
+            bm.free()
+            co = bpy.data.objects.new(me.name, me)
+            co.matrix_world = Matrix(M) if M is not None else Mo
+            bpy.context.scene.collection.objects.link(co)
+            cutters.append((co, self._world_box(me, co.matrix_world)))
+        out = bmesh.new()
+        for s in self.shapes_of.get(pid, []):
+            bm = bmesh.new()
+            BUILDERS[s.kind](bm, s)
+            me = bpy.data.meshes.new(pid + ' body')
+            bm.to_mesh(me)
+            bm.free()
+            lo, hi = self._world_box(me, Mo)
+            near = [co for co, (a, b) in cutters if all(a[i] < hi[i] and b[i] > lo[i] for i in range(3))]
+            if near:
+                tmp = bpy.data.objects.new(pid + ' tmp', me)
+                tmp.matrix_world = Mo
+                bpy.context.scene.collection.objects.link(tmp)
+                col = bpy.data.collections.new(pid + ' near')
+                bpy.context.scene.collection.children.link(col)
+                for co in near:
+                    col.objects.link(co)
+                mod = tmp.modifiers.new('cuts', 'BOOLEAN')
+                mod.operation, mod.solver, mod.operand_type, mod.collection = 'DIFFERENCE', 'EXACT', 'COLLECTION', col
+                dg = bpy.context.evaluated_depsgraph_get()
+                cut = bpy.data.meshes.new_from_object(tmp.evaluated_get(dg))
+                bpy.data.objects.remove(tmp)
+                bpy.data.meshes.remove(me)
+                for co in near:
+                    col.objects.unlink(co)
+                bpy.data.collections.remove(col)
+                me = cut
+            out.from_mesh(me)
+            bpy.data.meshes.remove(me)
+        bmesh.ops.recalc_face_normals(out, faces=out.faces)
+        out.to_mesh(ob.data)
+        out.free()
+        for co, _b in cutters:
+            m = co.data
+            bpy.data.objects.remove(co)
+            bpy.data.meshes.remove(m)
 
     def joint(self, j, ca, cb):
         ob = bpy.data.objects.new('JOINT ' + j.edge, None)
@@ -375,6 +442,7 @@ class BlenderBackend(fk.Backend):
             bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
             bm.to_mesh(ob.data)
             bm.free()
+            self._apply_cuts(pid, ob)
             me = ob.data
             for poly in me.polygons:
                 poly.use_smooth = True

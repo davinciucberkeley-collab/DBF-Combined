@@ -84,6 +84,7 @@ class FusionBackend(Backend):
         self._sub_colour = {}
         self.wiring = None
         self.datums_occ = None
+        self._cuts = []               # (comp, Shape, 4x4 or None): Component.cut / Context.seat, applied in end()
 
     # ------------------------------------------------------------------ document
     def begin(self, title):
@@ -97,7 +98,49 @@ class FusionBackend(Backend):
         except Exception:
             pass
 
+    def cut(self, comp, shape, matrix):
+        """UNVERIFIED-IN-FUSION. Material removal (Component.cut / Context.seat): queued, done in end() once every body
+        exists: the cutter is built as a body of a temporary component placed by `matrix` (the host's own when
+        None), then a Combine CUT removes it from each host body (assembly-context proxies) and the temporary
+        component is deleted."""
+        self._cuts.append((comp, shape, matrix))
+
+    def _apply_cuts(self):
+        class _Tool:                                         # minimal stand-in the body() builder accepts
+            def __init__(s, host, M):
+                s.id, s.name, s.material, s.rgb, s.subsystem = host.id + ' cutter', 'cutter', None, None, host.subsystem
+                s.shapes, s.proxy, s.status, s.mass_g, s.make_or_buy, s._M = [], False, 'cutter', 0, '-', M
+
+            def matrix(s):
+                return s._M
+        for comp, shape, M in self._cuts:
+            try:
+                tool = _Tool(comp, M if M is not None else comp.matrix())
+                self.component(tool)
+                self.body(tool, shape)
+                occ = tool.native
+                tb = [occ.bRepBodies.item(i) for i in range(occ.bRepBodies.count)]
+                targets = adsk.core.ObjectCollection.create()
+                for i in range(comp.native.bRepBodies.count):
+                    targets.add(comp.native.bRepBodies.item(i))
+                if not tb or not targets.count:
+                    occ.deleteMe()
+                    continue
+                tools = adsk.core.ObjectCollection.create()
+                for b in tb:
+                    tools.add(b)
+                feats = self.root.features.combineFeatures          # cross-occurrence combine lives in the root
+                for i in range(targets.count):
+                    inp = feats.createInput(targets.item(i), tools)
+                    inp.operation = adsk.fusion.FeatureOperations.CutFeatureOperation
+                    inp.isKeepToolBodies = True
+                    feats.add(inp)
+                occ.deleteMe()
+            except Exception as e:
+                self.warnings.append(('cut', comp.id, 'Fusion cut failed (%s); the part is drawn uncut' % e))
+
     def end(self, ctx):
+        self._apply_cuts()
         try:
             self.design.activateRootComponent()
             self.app.activeViewport.fit()

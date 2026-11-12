@@ -103,8 +103,8 @@
     "F_side": 73.74631268436578,
     "F_hub": 43.14063848144952,
     "M_root": 14.011799410029498,
-    "fuse_ratio": 2.3136491349380632,
-    "hold_ratio": 1.7644234371375767,
+    "fuse_ratio": 2.3141325919114837,
+    "hold_ratio": 1.7648916987727703,
     "F_axial": 227.27272727272728,
     "clamp_n": 241.1438531695384
    },
@@ -118,10 +118,10 @@
     "can": 0.0265,
     "stack": 0.0373,
     "zm": 0.19,
-    "M_mount": 0.9856650043166505,
+    "M_mount": 0.9854034873595503,
     "ff": 1.15,
     "pf": 1.25,
-    "M_joint": 32.418387583940415,
+    "M_joint": 32.42516168607536,
     "mu": 0.3
    }
   },
@@ -226,20 +226,20 @@
     "sq": "P:fin_detail.fin.tip_square_m"
    },
    "outputs": {
-    "h_ratio": 0.8616509749630125,
-    "h_ratio_c6": 0.7676036956090295,
+    "h_ratio": 0.870642740645903,
+    "h_ratio_c6": 0.7687461644397816,
     "embed": 0.0395,
-    "embed_ratio": 0.6984403881343175,
+    "embed_ratio": 0.7068660722246297,
     "tongue": 0.0112992396028137,
     "tongue_fit": 0.0037007603971862986
    },
    "input_values": {
     "h": 0.015,
-    "h_req": 0.017408440814035978,
-    "h_req_c6": 0.019541333745271706,
+    "h_req": 0.017228651086979675,
+    "h_req_c6": 0.01951229247554184,
     "tail": 0.04,
     "gap": 0.0005,
-    "embed_req": 0.056554575982515676,
+    "embed_req": 0.05588045819724615,
     "w": 0.01,
     "td": 0.001,
     "L": 0.344,
@@ -427,7 +427,7 @@
    "outputs": {
     "L": 0.14477110381564406,
     "pcr": 345.3324581569849,
-    "pcr_ratio": 2.1145426308411626,
+    "pcr_ratio": 2.1149121571225393,
     "ky": 2632031.764132316,
     "attach_dz": 0.03650000000000003
    },
@@ -449,7 +449,7 @@
     "proud": 0.008,
     "t": 0.002,
     "w": 0.01,
-    "F_d": 163.31307447777115,
+    "F_d": 163.2845397356029,
     "E": 110000000000.0
    }
   },
@@ -557,7 +557,7 @@
     "FIN-004-R"
    ],
    "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 70 and 80 N (R5 lever 33.9 mm)",
-   "value": 2.3136491349380632
+   "value": 2.3141325919114837
   },
   {
    "id": "CL-D3-SLIP-HOLD",
@@ -580,7 +580,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP; witness line checked before every flight",
-   "value": 1.7644234371375767
+   "value": 1.7648916987727703
   },
   {
    "id": "CL-D3-SLIP-F",
@@ -728,7 +728,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R4 (D-48): read against C4-R3 CL-C4-D3-COLLAR-H-REQ (envelope torsion 4.6 N m + brace shear). C6's own requirement on max(C1, C4) torsion + brace shear is CL-D3-COLLAR-H-C6 (CR-D3-25)",
-   "value": 0.8616509749630125
+   "value": 0.870642740645903
   },
   {
    "id": "CL-D3-COLLAR-H-C6",
@@ -752,7 +752,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R5: drawn 15 mm (C6-R5 CL-C6-COLLAR-RF-15MM 1.15 on a 13.007 mm requirement). C6's live run now reads C1's CL-C1-FINHALF-T-LIM 12.67 N m (R4 7.40, wing-plane value) and needs 19.4 mm: CR-D3-36 asks C1/C6 which torsion governs before D3 redraws (20 mm fits: ring |z| 0.1395-0.1595, +3 g)",
-   "value": 0.7676036956090295
+   "value": 0.7687461644397816
   },
   {
    "id": "CL-D3-TONGUE-FIT",
@@ -804,7 +804,7 @@
     "FIN-011-URO"
    ],
    "how": "Measure on the dry fit; C6 strip-anchor coupon",
-   "value": 0.6984403881343175
+   "value": 0.7068660722246297
   },
   {
    "id": "CL-D3-STRAP-EYE-RF",
@@ -1020,7 +1020,7 @@
     "FIN-009-LR"
    ],
    "how": "C4 CL-C4-D3-MS-BRACE; T-C4-TAP-D3",
-   "value": 2.1145426308411626
+   "value": 2.1149121571225393
   },
   {
    "id": "CL-D3-BRACE-KY",
@@ -1146,7 +1146,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
-   "value": 435.6,
+   "value": 433.3,
    "note": "from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g (not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet (D-63: 437 g). R5 (CR-A1-63): cheeks +5 mm and the 7.5 mm face_ahead (mounts 47.8 g), pins 2.5 mm, collar 15 mm (C6-R5 needs 13.007 mm), block edges R 3 mm -0.4 g: 440.3 g; lever taken: fillet mix 0.55 -> 0.45 g/cm3 -5.6 g (T-D3-WEIGH cup <= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken"
   },
   {

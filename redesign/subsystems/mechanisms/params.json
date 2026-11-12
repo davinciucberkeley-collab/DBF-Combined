@@ -232,13 +232,20 @@
    },
    "blade_x_mm": {
     "value": [
-     6.0,
+     0.0,
      40.0
     ],
     "unit": "mm",
-    "source": "D6 choice",
+    "source": "D6 choice; params/CHANGE-LOG.md#D-82 (front 6 -> 0 mm)",
     "status": "PROPOSED",
-    "note": "in-panel blade, skin to skin, aft of the 28 deg bevel"
+    "note": "in-panel blade, skin to skin. D-82: the front edge follows the panel's lower bevel (subsystems/wing/params.json#elevon.bevel_deg) shifted aft by blade_bevel_gap_m, never ahead of xh + blade_x[0]; the wing's horn slot opens from the hinge line. With the old vertical front at 6 mm the 5 mm torque-tube bore (front 5.0 mm aft of the hinge) broke out of the blade edge"
+   },
+   "blade_bevel_gap_m": {
+    "value": 0.0002,
+    "unit": "m",
+    "source": "params/CHANGE-LOG.md#D-82; G3 practice (print clearance)",
+    "status": "PROPOSED",
+    "note": "blade front edge this far aft of the panel bevel line, so the blade never sits ahead of the panel it replaces (same TE-down clearance as the panel); leaves >= 1.2 mm of blade wall ahead of the torque-tube bore"
    },
    "flange_mm": {
     "value": [
@@ -784,7 +791,7 @@
    }
   },
   "mass_total_g": {
-   "value": 70.68,
+   "value": 70.14,
    "unit": "g",
    "source": "subsystems/mechanisms/make_mechanisms.py",
    "status": "UNVERIFIED",

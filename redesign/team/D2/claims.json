@@ -323,7 +323,7 @@
     9.1,
     5.5,
     5.8,
-    38.6,
+    39.8,
     2.4,
     2.2,
     5.3,
@@ -1295,7 +1295,7 @@
     "parts": "ASM-D2-PART-MASSES"
    },
    "outputs": {
-    "mass_g": 144.19
+    "mass_g": 145.39
    },
    "input_values": {
     "parts": [
@@ -1305,7 +1305,7 @@
      9.1,
      5.5,
      5.8,
-     38.6,
+     39.8,
      2.4,
      2.2,
      5.3,
@@ -2494,7 +2494,7 @@
    ],
    "how": "T-D2-WEIGH: weigh every pod part before bonding; update interfaces.json.",
    "note": "D-63 allocation 146 g (was 131, D-48): C3's fixes + the D-62 nose",
-   "value": 144.19
+   "value": 145.39
   },
   {
    "id": "T-D2-WEIGH",

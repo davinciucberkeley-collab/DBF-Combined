@@ -43,13 +43,17 @@ TPU 95A.
 - **Motors:** after any crash, approach from behind the pod and pull the plug before touching props or fins.
 
 **Stop items before stage 1** (from the review):
-- ⚠ **CG is 1.2 mm aft of the allowed range** with the real feet (BR-00). The design fix (lighter feet, pack
-  forward) is pending. Do not print feet or pod parts that set the pack station until A1 decides.
-- ⚠ Fin tip and foot shoe disagree: pending fix [SW-02](review/STRUCTURE-WING.md#findings) (BR-01).
-- ⚠ Motor-mount cheek fills the clamp slit: pending fix [MM-01](review/MOTOR-MOUNTS.md#findings) (BR-02).
+- ✓ CG back in range in the design (BR-00): lighter feet, landing allocation 60 g, pack datum 4 mm forward
+  (D-75…D-78; predicted CG 50.2 mm in 46.6–51.4). Still modelled only: weigh the first feet and pack.
+- ✓ Fin tip and foot shoe on one datum (BR-01, D-75): no overlap in CAD.
+- ✓ Motor-mount slit open (BR-02, D-80); clocking dog and notch added (MM-02, D-81). ⚠ The dog's shear strength
+  is not sized yet (C6, before the 18 Dec freeze): print one mount and one collar as test articles first.
 - ⚠ Through-core block strap eyes stop the block going into its pocket: pending fix
   [SW-01](review/STRUCTURE-WING.md#findings) (BR-17).
-- ⚠ No per-part STLs, DXFs, templates or jigs exist yet: pending [MF-01](review/MANUFACTURING.md#4-findings) (BR-03).
+- ✓ Shop files exist (BR-03): `python -B redesign/manufacturing/make_shop_files.py` (STLs, DXFs, hot-wire
+  templates, jigs). Re-run after any CAD change.
+- ✓ No two parts overlap in CAD (`python -I redesign/collision/collide.py`, static and both elevon limits).
+  Re-run before printing anything that changed.
 
 ---
 
@@ -121,7 +125,7 @@ Parts: W02 foam board, W04 tubes, D03 plugs, D01 braces, D02 strips, C03 pins, c
 Detail: [`subsystems/fins/BUILD.md`](subsystems/fins/BUILD.md) steps 1–17.
 
 1. Laminate the board pairs (3M 77 in the spray booth), measure the laminate, then knife- or laser-cut the four
-   half-fins. ⚠ Tip outline pending fix SW-02 (BR-01): do not cut the tips yet.
+   half-fins. Tip outline per D-75 (one datum with the foot shoe).
 2. Cut the two 344 mm motor tubes, fit the plugs, cure. Slide the tubes through the bosses and blocks, square them
    in the jig, epoxy. Cure 24 h.
 3. Bond the half-fin roots and run the cove fillets. ⚠ Weigh a cup from every fillet batch; the CG has no aft
@@ -212,8 +216,8 @@ Time: about 1 h per station plus 4 × T-E1-STAND runs.
 Parts: B01 motors, B03 props, B05 adapter rings, B07 screws, C01 pinch bolts and nylocs, C04 Loctite, mounts `FIN-003` (W08 ASA).
 Detail: [`subsystems/propulsion/BUILD.md`](subsystems/propulsion/BUILD.md), [`subsystems/fins/BUILD.md`](subsystems/fins/BUILD.md) steps 18–19.
 
-1. ⚠ Mount slit is closed by the cheek in the current CAD: pending fix MM-01 (BR-02). Print only the corrected
-   mount; check the slit with a feeler.
+1. Print the D-80/D-81 mount (slit open, clocking dog) and check the 1.5 mm slit with a feeler. The dog drops
+   into the notch at the front of the station collar; ⚠ its shear size is still C6's to set (D-81).
 2. Incoming check on **every** motor: weight, pattern, all hole depths, E-clip seating, phase resistance.
 3. Drill each plate from a printed guide with no motor on it. Fit a spreader plate under the screw heads if
    [MM-03](review/MOTOR-MOUNTS.md#findings) is adopted; screws with 243 on the tips; torque driver; witness marks.
@@ -230,7 +234,7 @@ holds 60 N.
 
 | | |
 |---|---|
-| ![Propulsion station](showcase/renders/detail-propulsion.png) | ![Mount top view, cheek across the slit](review/img/mm01-mount-top-cheek-across-slit.png) <br> Current CAD: the cheek (left) bridges the slit (MM-01). |
+| ![Propulsion station](showcase/renders/detail-propulsion.png) | ![Mount top view, cheek across the slit](review/img/mm01-mount-top-cheek-across-slit.png) <br> Before D-80: the cheek (left) bridged the slit (MM-01). Fixed in CAD. |
 
 ## Stage 9. Avionics
 
@@ -253,8 +257,8 @@ Time: 4 × 55 min shoe prints, 1 h bench, 24 h cure; cartridges most of a day.
 Parts: shoes `GER-001`, pistons `GER-002`, cartridges (W01 offcuts), D05 neoprene, D07 brass cutter, TPU caps `GER-007`.
 Detail: [`subsystems/landing/BUILD.md`](subsystems/landing/BUILD.md).
 
-1. ⚠ **Pending fix SW-02 / BR-01 and BR-00.** The R6 shoe overlaps the fin board and weighs 69.9 g against a
-   48 g allocation, which is what pushes the CG aft. Do not print or bond shoes until the redrawn foot is released.
+1. Print the D-76 foot (59.1 g `EST`, landing allocation 60 g, D-78) on the D-75 tip. Weigh the first shoe and
+   report it to A3 before printing the other three.
 2. Print pistons in orange (upper) and blue (lower); weigh each.
 3. Cut and pre-crush the cartridge sticks with a fence and crush block.
 4. Dry-fit, then bond the shoes; fit inserts by colour; push on the corner caps.

@@ -138,6 +138,9 @@ def geometry(P, LP, coords):
     G['ear_t'], G['ear_len'], G['ear_h'] = l('mount.ear_t_m', 'm'), l('mount.ear_len_m', 'm'), l('mount.ear_h_m', 'm')
     G['cheek_t'], G['cheek_y_in'], G['cheek_len'] = (l('mount.cheek_t_m', 'm'), l('mount.cheek_y_in_m', 'm'),
                                                      l('mount.cheek_len_m', 'm'))
+    G['cheek_slit_gap'] = l('mount.cheek_slit_gap_m', 'm')
+    G['x_cheek_out_end'] = G['xt'] - G['slit'] / 2 - G['cheek_slit_gap']    # D-80: outboard cheek stops ahead of the slit
+    G['key_w'], G['key_d'], G['key_clear'] = l('mount.key_w_m', 'm'), l('mount.key_d_m', 'm'), l('mount.key_clear_m', 'm')
     G['slip_torque'] = l('mount.slip_torque_nm', 'N m')
     G['slip_lever'] = G['xt'] - (G['x_face'] - v('propulsion.motor_length_m', 'm') / 2)   # tube axis to can middle
     G['slip_force'] = G['slip_torque'] / G['slip_lever']
@@ -157,6 +160,14 @@ def geometry(P, LP, coords):
     G['sc_x0'] = G['xt'] + G['r_b']                                  # tail starts inside the ring wall
     G['sc_x_end'] = G['xt'] + G['r_t'] + l('station_collar.tail_m', 'm')
     G['sc_ear_len'], G['sc_ear_w'] = l('station_collar.ear_len_m', 'm'), l('station_collar.ear_w_m', 'm')
+    # D-81 clocking key: dog under the mount collar (front, -x) into a notch at the top of the station-collar ring
+    G['key_z1'] = G['z_col0']                                        # dog top = mount collar lower face
+    G['key_z0'] = G['z_sc1'] - G['key_d']                            # dog tip, key_d below the ring top
+    G['notch_w'] = G['key_w'] + 2 * G['key_clear']
+    G['notch_z0'] = G['key_z0'] - G['key_clear']                     # notch floor, clear under the dog tip
+    G['key_r1'] = min(G['col_r'], G['sc_r_out'])                     # dog radial extent r_b .. key_r1
+    if G['notch_z0'] <= G['z_sc0'] + 0.002:
+        raise ValueError('D-81 notch floor %.4f leaves < 2 mm of station-collar ring' % G['notch_z0'])
 
     # half-fin: LE on the tube, sloped top edge from the collar top to the step front, D5's flat step to the TE
     G['x_le'] = G['xt'] + G['r_t'] + l('fin.le_gap_m', 'm')
@@ -279,7 +290,7 @@ def geometry(P, LP, coords):
     G['tl_len'] = G['tl']['slot_x_m'] + 2 * G['tl']['post_m']
 
     # bond areas (mm2) for the interfaces.json bond blocks
-    G['A_collar_tube'] = math.pi * G['od'] * G['sc_h'] * 1e6
+    G['A_collar_tube'] = (math.pi * G['od'] * G['sc_h'] - G['notch_w'] * (G['z_sc1'] - G['notch_z0'])) * 1e6   # less the D-81 notch
     G['A_strip_tail'] = 2 * G['strip_tail_len'] * G['es_w'] * 1e6
     G['A_tongue_board'] = ((G['sc_x_end'] - G['x_le']) / G['cos_e'] + G['tongue_d']) * G['t_fin'] * 1e6
     G['A_plug'] = math.pi * G['plug_od'] * (G['plug_z1'] - G['plug_z0']) * 1e6
@@ -331,7 +342,8 @@ def half_fin_loop(G, upper):
     the TE (D-54); TE = wing TE. The lower half has the elevon inter-panel link slot (CR-A4-04) on the hinge line."""
     s = 1 if upper else -1
     surf = G['zu'] if upper else G['zl']
-    xs = [G['x_le'] + (G['te'] - G['x_le']) * i / 24 for i in range(25)]
+    nr = 96                       # root stations (was 24, ~10 mm: the root chords sat 0.07 mm inside the core)
+    xs = [G['x_le'] + (G['te'] - G['x_le']) * i / nr for i in range(nr + 1)]
     a, b = G['x_hinge'] - G['slot_hw'], G['x_hinge'] + G['slot_hw']
     if not upper:
         xs = sorted(set([x for x in xs if not a - 1e-9 < x < b + 1e-9] + [a, b]))
@@ -379,7 +391,7 @@ def build_root_fillets(part, G, upper):
     for x0, x1, leg in G['fillet_zones'](upper):
         if x1 - x0 < 1e-4:
             continue
-        n = max(1, int(math.ceil((x1 - x0) / 0.010)))
+        n = max(1, int(math.ceil((x1 - x0) / 0.004)))       # 4 mm stations (was 10): chord sag < tolerance
         xs = [x0 + (x1 - x0) * i / n for i in range(n + 1)]
         for d in (1, -1):
             yF = G['yf'] + d * G['t_fin'] / 2
@@ -427,8 +439,11 @@ def build_station_collar(part, G):
     """Ring on the tube (15 mm, CR-C6-36), brace ear inboard (top 12 mm), and the two-face tail: tongue (board thickness) in the
     board notch, two outer walls, strip slots between, cap over the top edge; slots open downward."""
     xt, yf = G['xt'], G['yf']
-    part.prism('Z', G['z_sc0'], [circle(xt, yf, G['sc_r_out'], 36), circle(xt, yf, G['r_b'], 36)], G['sc_h'],
-               name='collar ring')
+    part.prism('Z', G['z_sc0'], [circle(xt, yf, G['sc_r_out'], 36), circle(xt, yf, G['r_b'], 36)],
+               G['notch_z0'] - G['z_sc0'], name='collar ring')
+    # D-81: top of the ring carries the clocking notch on the front (-x) side for the mount's dog
+    part.prism('Z', G['notch_z0'], [slit_ring(xt, yf, G['r_b'], G['sc_r_out'], G['notch_w'], math.pi, 36)],
+               G['z_sc1'] - G['notch_z0'], name='collar ring (notched)')
     part.box((xt - G['sc_ear_w'] / 2, yf - G['sc_r_out'] - G['sc_ear_len'], G['z_ear0']),
              (xt + G['sc_ear_w'] / 2, yf - G['sc_r_out'] + 0.0005, G['z_sc1']), name='brace ear')
     x0, x1, top = G['sc_x0'], G['sc_x_end'], G['ztop']
@@ -551,7 +566,15 @@ def build_mount(part, G):
     for sy in (-1, 1):
         ya, yb = sy * cy_in, sy * (cy_in + ct)
         bx = [B(y, z - zm) for y in (ya, yb) for z in (zc0, zc1)]
-        part.box((min(bx) - 0.0005, yf + min(ya, yb), zc0), (max(bx) + cl, yf + max(ya, yb), zc1), name='cheek')
+        x1 = max(bx) + cl
+        if sy > 0:                                   # slit side (+y): D-80, end ahead of the slit, never bridge it
+            x1 = min(x1, G['x_cheek_out_end'])
+            if x1 <= max(bx) + 0.002:
+                raise ValueError('D-80 outboard cheek is < 2 mm long behind the plate: the plate moved aft')
+        part.box((min(bx) - 0.0005, yf + min(ya, yb), zc0), (x1, yf + max(ya, yb), zc1), name='cheek')
+    # D-81 clocking dog under the collar, front (-x), into the station-collar notch
+    kw = G['key_w'] / 2
+    part.box((xt - G['key_r1'], yf - kw, G['key_z0']), (xt - G['r_b'], yf + kw, G['key_z1']), name='clocking dog')
 
 
 def build_esc_pad(part, G):

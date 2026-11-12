@@ -1,27 +1,27 @@
 {
  "CHECKS.md": {
-  "bytes": 23108,
-  "sha256": "da4f1099a7ab76c98e5099895dbeebad034bba3674f13f2886e8bc67e48295d5"
+  "bytes": 23094,
+  "sha256": "63fb471620a0733acf48d477b2703b54e719d5a99bb964b6a4f6c6eaf8848379"
  },
  "CUT-LIST.csv": {
   "bytes": 12775,
   "sha256": "1d4fdcef120871b5baaa2f6638d128f4eb2fa4dfe2a4763f6f998a91fe0a5c06"
  },
  "PRINT-LIST.csv": {
-  "bytes": 17341,
-  "sha256": "155495dc11e4f61a7b26b0bed351bd32fc8e08f14217a7f3b15ea2339ddcaa2e"
+  "bytes": 18441,
+  "sha256": "909a56c9c8a5c4824488ea82146a7edee3bbd0839f2f209ef9fd45adf2c27432"
  },
  "SHOP-PACK.md": {
-  "bytes": 8101,
-  "sha256": "08d3f7aeeb081e9744b4fc0a2061bf1ce109fe02513d36d95f2415b8341f919b"
+  "bytes": 6755,
+  "sha256": "9103a08be7c025abdd03f8e9d18862a227de89a1c11331083873fbcad409e7d5"
  },
  "contact-sheet.png": {
-  "bytes": 840230,
-  "sha256": "d190be20058858bc5962545e5881547cc26b9811b32b7ad17f7d251c12c50234"
+  "bytes": 901508,
+  "sha256": "d2840acf5b3fe4cf4f795709132899f03e2d637c99d3368fcdfdf2eceb8f0e01"
  },
  "dxf-preview.png": {
-  "bytes": 83530,
-  "sha256": "2cdee5bcb3a0f5fc69f6b7d46d2e45d1e4ee9b8ea8b536208e8d500e11592eba"
+  "bytes": 83837,
+  "sha256": "03cdf21e22e8f21b7c9c22c12448616340fba92988de9577005b316cfc8a5244"
  },
  "hotwire/WNG-001_template_root.dxf": {
   "bytes": 28638,
@@ -60,24 +60,24 @@
   "sha256": "1148907e750f0d676abb221bc93ad20dda3bc3446908ea336ed13b27e70cfc5d"
  },
  "laser/foamboard_1to1_letter.pdf": {
-  "bytes": 73833,
-  "sha256": "43de171cf02d5838448a795c1f0042c890b74747f0ddfc925b1375ead59d93f0"
+  "bytes": 75656,
+  "sha256": "793a2a2a01eb4beabb5d0707152414476d203b3a3699e9cbc4a442e1aa4fe09c"
  },
  "laser/foamboard_sheet1of5.dxf": {
-  "bytes": 26560,
-  "sha256": "cd2e3be7843c13b2fbf16f81de6a7d08099f6d701df8ab0a12ea0a34c69c9d6e"
+  "bytes": 42470,
+  "sha256": "a564bf45051fec405f15b05025b95942793fcd72ba6e505a3ce3795ab67c24ca"
  },
  "laser/foamboard_sheet2of5.dxf": {
-  "bytes": 24243,
-  "sha256": "f592a710536ecbf3221f101378a9e71f53fb2b5297950085f0aea99f7dded61f"
+  "bytes": 40153,
+  "sha256": "3f5f5526babbf000369840b018ee9503326ff10d8b7fee6e60ce2aa28ad55c02"
  },
  "laser/foamboard_sheet3of5.dxf": {
-  "bytes": 23158,
-  "sha256": "8777ef5d96c23efedcc1990f0b2fcd07a7cabbe0c73a5f4cc50cb9deaa7d605e"
+  "bytes": 37668,
+  "sha256": "ab59176f29ef6043984276643959e4dc724a895ed0784894ed08cef1afa2b250"
  },
  "laser/foamboard_sheet4of5.dxf": {
-  "bytes": 23158,
-  "sha256": "157347695846f0faaa92c60c2fc24b2c0ad9461ef7ea0c2de1e3c51b595023bf"
+  "bytes": 37668,
+  "sha256": "7827b67038f318ab678bd435bd0588a6d5eeb1693e23111512cec4eeb587c9c4"
  },
  "laser/foamboard_sheet5of5.dxf": {
   "bytes": 3483,
@@ -97,11 +97,11 @@
  },
  "print/FIN-003-A_ASA_x4.stl": {
   "bytes": 45884,
-  "sha256": "5f47d2ebbd3b95f1d268311b8bb3b9ece707c702da013e4022805d94a840c5e4"
+  "sha256": "cc1c45b71342bc4507cc5682a8d6d96272a2344b6b97af8bbe70a4d0fbd3bcc6"
  },
  "print/FIN-003-B_ASA_x4.stl": {
-  "bytes": 45784,
-  "sha256": "98df99d13ab37f7c3a2df2b1e07625732cf53b1f63c9becbf4b1e8c8652145ae"
+  "bytes": 45884,
+  "sha256": "3e04c3816a72a3524e1da89844aceae9c5484fd45dad8144c611f58b035dd017"
  },
  "print/FIN-004-A_PETG_x2.stl": {
   "bytes": 86384,
@@ -116,20 +116,28 @@
   "sha256": "8f6fdbef9780525117e7a3b8602e0cbe4b63944da63cb18f623c771ad945ecf1"
  },
  "print/FIN-008-A_PETG_x4.stl": {
-  "bytes": 23584,
-  "sha256": "7a7f8234d2f5ec0ce3d32e0a367b23d19b362f661fc3014854fae4af51605ad1"
+  "bytes": 65984,
+  "sha256": "f5446d4acc7db8716a6da66d6a2613ebf6c9ebb35fbf4c79f89ddcb1a337f0d7"
  },
  "print/FIN-008-B_PETG_x4.stl": {
-  "bytes": 23584,
-  "sha256": "4b6814b92bdb8baa43cb6d3b4dc343b59252dd10f2dee6b65454af3c54b90ab2"
+  "bytes": 65984,
+  "sha256": "cabb65cbf1cf8bf27a3b67c2565b6ca6289bebabad0f123fe295821e1d93a6ea"
  },
- "print/FIN-010-A_PETG_x2.stl": {
-  "bytes": 684,
-  "sha256": "1bcfbc918c9a77865114d5e0882abc666baf1e0bf0ab09b422f396c4e2f6273e"
+ "print/FIN-010-A_PETG_x1.stl": {
+  "bytes": 1684,
+  "sha256": "ea6ca614725468370938dd54378e410848692fd33540fa0b04b459b8368ec769"
  },
- "print/FIN-010-B_PETG_x2.stl": {
-  "bytes": 684,
-  "sha256": "b29962bb7971a0c1418b255f7e75da3efecf3f7553585dd761d5237672bc281e"
+ "print/FIN-010-B_PETG_x1.stl": {
+  "bytes": 1684,
+  "sha256": "d64baf37d6890e840ff9d927e91038904d1669f39f3e929a562531df255a138a"
+ },
+ "print/FIN-010-C_PETG_x1.stl": {
+  "bytes": 1684,
+  "sha256": "2fc3933c9d009767416f3bcea1a2e2380c9a392cc9f86b32c1674b97023929ab"
+ },
+ "print/FIN-010-D_PETG_x1.stl": {
+  "bytes": 1684,
+  "sha256": "b1dbfad960da5c6ed8b3c47957b3d9827b2f9283bacc50a7568c78a0490afa95"
  },
  "print/GER-001_PETG_x6.stl": {
   "bytes": 26084,
@@ -151,21 +159,29 @@
   "bytes": 2084,
   "sha256": "ceecb5e5be1009a52fe266c128303fb035020830a45dc558326995197a9191bc"
  },
+ "print/HRN-110-A_ASA_x3.stl": {
+  "bytes": 40884,
+  "sha256": "d53461b65f06b4fe37602a4f83aedb0f731dbf6516001aeb7f41dc6897ab2c84"
+ },
+ "print/HRN-110-B_ASA_x3.stl": {
+  "bytes": 28884,
+  "sha256": "b427d88805689f55b6cfa2d52ae5b8aa9f5bc8d70d26e5eece5a35e23c35bbe9"
+ },
  "print/MEC-004-A_PETG_x2.stl": {
-  "bytes": 43184,
-  "sha256": "0708656bb9f15f6ba0e7f44725d4e167d65033b6651743a9351ee680ba95cf4c"
+  "bytes": 44384,
+  "sha256": "e3db96938648edb2d849a502ef769834641c2165d0dffd25a63a492b781646ea"
  },
  "print/MEC-004-B_PETG_x2.stl": {
-  "bytes": 43184,
-  "sha256": "ff23652da16fe70d38b5303e8701dce5bd4a7009129a42e7c3bbe91b82e5d43a"
+  "bytes": 44384,
+  "sha256": "41db0e61ac070f7b81926f0085bfcd0608e7c5d5d71c21242b4ebfacb4724bfd"
  },
  "print/MEC-006-A_PETG_x2.stl": {
-  "bytes": 40384,
-  "sha256": "9b6f046274c6964deb51264c1b08aeb4cd9b7ac91b777798780bbef951ce920b"
+  "bytes": 41384,
+  "sha256": "00237bb0d218bea9acb7669668b71cc1934de05faa20c5fa27b5e9dd04f1dfc5"
  },
  "print/MEC-006-B_PETG_x2.stl": {
-  "bytes": 40384,
-  "sha256": "a6ce66779a0eb83591a12de100b3a69de43472c410d5ba0729ed48f954b92094"
+  "bytes": 41384,
+  "sha256": "0046b0443aed558a82c3085edb177a93cc354ac9b3457b515e138fcfcc1a03f6"
  },
  "print/MEC-007-A_PETG_x1.stl": {
   "bytes": 1684,
@@ -239,13 +255,9 @@
   "bytes": 5484,
   "sha256": "9be6321b8fd59de451a57806f87adaf18a834cadbb11e0f7ee1ec6c4a332316d"
  },
- "print/POD-007-A_PETG_x2.stl": {
+ "print/POD-007_PETG_x2.stl": {
   "bytes": 40984,
-  "sha256": "cc61194043a0837c88b033bd6c436029eef86da8bd46331ad31c5487bff2d75c"
- },
- "print/POD-007-B_PETG_x1.stl": {
-  "bytes": 1484,
-  "sha256": "ce02dcda51fd5ce2ec469a889c17acadfc0dfe63fef86fe14efae2cd8030c4a8"
+  "sha256": "ccfc4bfa577cbc9a18a5d7418f8193fc8738fef7ddde5e6650a6dc76d32b5ad6"
  },
  "print/POD-008-2mm_PETG-white_x1.stl": {
   "bytes": 1484,
@@ -268,8 +280,8 @@
   "sha256": "416875995b4995730ee858adff0a0ccd89529df3db1bc1442dbbaa4672fdac0d"
  },
  "print/PWR-006_PETG_x1.stl": {
-  "bytes": 6684,
-  "sha256": "49e29664c1e8700a46f3530f717907b4ac2981112f38615c72b2b916490909b3"
+  "bytes": 6784,
+  "sha256": "d2cb6114ff4f8dae95efba6cc714947b6f7d938304f691188280d1b9bcb0471e"
  },
  "print/WNG-004_PETG_x2.stl": {
   "bytes": 9684,

@@ -151,6 +151,7 @@ def _job(comp, base, st, suffix, spec, shapes, colour=None, jid=None):
     return {'id': jid or (comp.id + ('.' + suffix if suffix else '')), 'part': comp.id, 'base': base,
             'station': st, 'group': suffix, 'material': spec['material'], 'colour': col, 'orient': orient,
             'matrix': comp.matrix(), 'bodies': [shape_to_json(s) for s in shapes],
+            'cuts': [[shape_to_json(s), M] for s, M in comp.world_cuts(shop_only=True)],
             'cad_volume_mm3': sum(s.volume_centroid()[0] for s in shapes) * 1e9}
 
 

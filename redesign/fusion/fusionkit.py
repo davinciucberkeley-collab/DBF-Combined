@@ -266,6 +266,7 @@ class Component:
         self.rotate = rotate                                  # ('X'|'Y'|'Z'|vector, degrees) about `at`
         self.R = rot_matrix(*rotate) if rotate else [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
         self.shapes = []
+        self.cuts = []                                        # [(Shape, matrix or None, note)]: material removed
         self.native = None                                    # backend handle (Fusion occurrence, Blender object)
 
     def matrix(self):
@@ -318,6 +319,34 @@ class Component:
     def tube(self, axis, start, length, r_out, r_in, name=None):
         a0, a1 = sorted((0.0, float(length)))
         return self.revolve(axis, start, [(a0, r_in), (a1, r_in), (a1, r_out), (a0, r_out)], name)
+
+    # --- material removal (holes, pockets, seats). Kept apart from self.shapes so mass / CG / bbox readers are
+    # unchanged; mesh backends (GLB, shop STLs, collision/collide.py) subtract them, Fusion combines-cut them.
+    def cut(self, shape, matrix=None, note='', shop=True):
+        """Subtract `shape` from every body of this part. matrix None: shape in this part's local frame; else the
+        4x4 local->world matrix the shape is placed by (a seat cut by another part's body). shop=False: the cut is
+        part of the assembly geometry (GLB, Fusion, collision check) but not of the shop file, e.g. a threaded hole
+        that is printed or drilled as a smaller pilot."""
+        self.cuts.append((shape, matrix, note, shop))
+        getattr(self.ctx.backend, 'cut', lambda *a: None)(self, shape, matrix)
+        return shape
+
+    def cut_box(self, lo, hi, name=None):
+        return self.cut(Shape('prism', name, axis='Z', offset=float(lo[2]), depth=float(hi[2] - lo[2]),
+                              loops=[[(lo[0], lo[1]), (hi[0], lo[1]), (hi[0], hi[1]), (lo[0], hi[1])]]))
+
+    def cut_cylinder(self, axis, start, length, r, name=None):
+        a0, a1 = sorted((0.0, float(length)))
+        return self.cut(Shape('revolve', name, axis=axis, center=tuple(map(float, start)),
+                              profile=[(a0, 0.0), (a1, 0.0), (a1, float(r)), (a0, float(r))]))
+
+    def cut_prism(self, axis, offset, loops, depth, name=None):
+        loops = [[tuple(map(float, p)) for p in l] for l in (loops if isinstance(loops[0][0], (list, tuple)) else [loops])]
+        return self.cut(Shape('prism', name, axis=axis, offset=float(offset), loops=loops, depth=float(depth)))
+
+    def world_cuts(self, shop_only=False):
+        """[(shape, 4x4 local->world)] for every cut of this part (shop_only: those the shop file carries)."""
+        return [(s, m if m is not None else self.matrix()) for s, m, _n, shop in self.cuts if shop or not shop_only]
 
     def bbox(self):
         """World axis-aligned bounding box ((lo), (hi)) of all bodies."""
@@ -577,6 +606,20 @@ class Backend:
         return None
 
 
+def filled(s):
+    """The solid envelope of a shape, used as a seat cutter: a prism without its hole loops, a revolve swept from its
+    axis out to its largest radius over its length (a tube becomes its bore-less cylinder); lofts as they are."""
+    if s.kind == 'prism' and len(s.loops) > 1:
+        return Shape('prism', s.name, axis=s.axis, offset=s.offset, loops=[s.loops[0]], depth=s.depth)
+    if s.kind == 'revolve':
+        a = [p[0] for p in s.profile]
+        r = max(p[1] for p in s.profile)
+        if min(p[1] for p in s.profile) > 0 or len(s.profile) == 4:
+            return Shape('revolve', s.name, axis=s.axis, center=s.center,
+                         profile=[(min(a), 0.0), (max(a), 0.0), (max(a), r), (min(a), r)])
+    return s
+
+
 # ----------------------------------------------------------------------------- context
 class Context:
     """Shared by all modules of one build. build_all.py calls begin_module() before each module's build(ctx)."""
@@ -592,6 +635,7 @@ class Context:
         self.joints = []
         self.wires = []
         self.contacts = {}                   # edge id -> note
+        self.seats = []                      # (host, guest, note, body-name filter, declaring module): see seat()
         self.issues = []                     # (severity, code, item, message) found while building
         self.datums = {}                     # name -> Datum (k09kit.build_datums; DATUMS.md)
         self.keepouts = []                   # Keepout volumes registered by modules (prop discs, hover ground)
@@ -682,6 +726,9 @@ class Context:
         c = self.part(new_id, at=t, rgb=rgb or src.rgb, proxy=src.proxy)
         for s in src.shapes:
             c._add(s.mirrored(k))
+        for s, m, note, shop in src.cuts:              # local cuts follow the mirror; seats are re-declared per part
+            if m is None:
+                c.cut(s.mirrored(k), None, note, shop)
         return c
 
     # --- registrations of interfaces.json edges (realised after all modules ran)
@@ -700,13 +747,31 @@ class Context:
         """Edge held by bond/tape/strap/thermal pad that the geometry already shows touching; no CAD joint."""
         self.contacts[edge] = (note, self.sub)
 
+    def seat(self, host, guest, note='', bodies=None, shop=False):
+        """The host part is machined to receive the guest exactly (pocket, bore, slot, screw hole): every body of
+        the guest (or those whose name contains one of `bodies`) is subtracted from the host when the build finishes,
+        so the two touch and do not overlap (collision/collide.py). Both parts may be built in any module order.
+        shop=True when the shop file must carry the cavity at that exact size (a slot or pocket); False (default)
+        for screw holes, which the shop files keep as their printed pilots or drill-on-assembly notes."""
+        self.seats.append((host, guest, note, tuple(bodies) if bodies else None, self.sub, shop))
+
     def wire(self, edge, points, dia=0.004, strands=None):
         """Electrical edge as a routed wire: world polyline from part_a's connector to part_b's connector.
         strands = [(polyline, diameter), ...]: what mesh backends draw (default: the polyline at `dia`)."""
         self.wires.append(Wire(edge, points, dia, sub=self.sub, strands=strands))
 
     def finish(self):
-        """Realise joints and wires in the backend once every module has built its components."""
+        """Realise seats, joints and wires in the backend once every module has built its components."""
+        for host, guest, note, names, sub, shop in self.seats:
+            h, g = self.components.get(host), self.components.get(guest)
+            if h is None or g is None:
+                if h is None and g is not None:
+                    self.issue('WARN', 'seat', guest, 'seat in %s (declared by %s): host not modelled' % (host, sub))
+                continue
+            M = g.matrix()
+            for s in g.shapes:
+                if names is None or any(n in (s.name or '') for n in names):
+                    h.cut(filled(s), M, note or 'seat for %s' % guest, shop)
         for j in self.joints:
             ca, cb = self.components.get(j.a), self.components.get(j.b)
             if ca is None or cb is None:

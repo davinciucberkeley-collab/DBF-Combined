@@ -92,7 +92,7 @@ PRINT = {
                     groups=[('floorF', r'bay floor front'), ('floorR', r'bay floor rear|aft stop|stop gusset'),
                             ('stopT', r'forward stop T'), ('guide', r'^petg guide'),
                             ('FC', r'FC plate|FC end stop'), ('avn', r'avionics plate|tie post'),
-                            ('UBEC', r'UBEC plate'), ('PDB', r'PDB'), ('JR', r'JR tie bar')],
+                            ('PDB', r'PDB'), ('JR', r'JR tie bar')],          # no UBEC plate since D-74
                     src='pod/BUILD.md step 1 (separate prints, bonded full-area to the floor)'),
     'POD-003': dict(material='PETG', include=r'^petg', layer='0.2', orient={},
                     groups=[('tongue', r'hatch tongue'), ('tab', r'latch tab'), ('tube', r'antenna tube')],
@@ -110,6 +110,8 @@ PRINT = {
     'PWR-006': dict(material='PETG', layer='0.2', perimeters='4', infill='100 %', orient={'axes': 'Z'},
                     src='power/BUILD.md step 2 ("deck flat on the bed": deck parallel to the bed; the cradle walls '
                     'and legs leave no free deck face, so the wall tops go down)'),
+    'HRN-110': dict(material='ASA', infill='100 %', orient={'axes': 'Y'}, supports='none', spares=2,
+                    src='harness/parts.csv (x6 incl. 2 spare), D-83: flange on the bed, barrel up'),
     'AVN-005': dict(material='PETG', infill='100 %', include=r'^petg', orient={}, supports='none; use a brim (tall, '
                     '10 mm footprint)',
                     src='avionics/BUILD.md step 7; the aluminium probe and couplers are bought'),
@@ -119,10 +121,7 @@ PRINT = {
 SPARE_COMPONENTS = {'GER-012': 'GER-001', 'GER-005': 'GER-002', 'GER-009': 'GER-002'}
 
 # Printed parts in the BOM with no CAD body (reported, not exported)
-NOT_IN_CAD = {
-    'HRN-110': 'Fin-hole grommet ASA 10/7 x 12 mm (x6 incl. 2 spare): harness/parts.csv lists it, no CAD body exists '
-               '(mass is lumped into HRN-001/002). F2 to model it; until then print a 10/7 x 12 mm tube by hand.',
-}
+NOT_IN_CAD = {}                    # HRN-110 grommets are CAD parts since D-83
 
 # ----------------------------------------------------------------------------- sheet stock (team/I1/BOM.csv)
 SHEETS = {

@@ -131,6 +131,32 @@ class Geometry(unittest.TestCase):
         self.assertAlmostEqual(lo[0], 0.9)
         self.assertAlmostEqual(hi[1], 0.2)
 
+    def test_cuts_and_seats(self):
+        """Component.cut / Context.seat (collision/collide.py): cuts never change bodies, mass or bbox; a seat is
+        resolved at finish() with the guest's placement; a tube seats as its bore-less cylinder; local cuts mirror."""
+        ctx = fk.Context(fk.Backend())
+        ctx.sub = 't'
+        host = ctx.part('H-1')
+        host.box((0, 0, 0), (0.1, 0.1, 0.02))
+        v0, bb0 = host.volume_centroid()[0], host.bbox()
+        host.cut_cylinder('Z', (0.02, 0.02, -0.001), 0.022, 0.003, name='hole')
+        g = ctx.part('G-1', at=(0.05, 0.05, 0.0))
+        g.tube('Z', (0, 0, 0), 0.02, 0.004, 0.002, name='bush')
+        ctx.seat('H-1', 'G-1', 'bush bore', shop=False)
+        ctx.seat('H-1', 'NOT-BUILT', 'ignored')
+        ctx.finish()
+        self.assertEqual(len(host.shapes), 1)
+        self.assertAlmostEqual(host.volume_centroid()[0], v0)
+        self.assertEqual(host.bbox(), bb0)
+        self.assertEqual(len(host.cuts), 2)
+        seat_shape, M = host.world_cuts()[1]
+        self.assertEqual([r for _a, r in seat_shape.profile if r == 0.0], [0.0, 0.0])          # filled: no bore
+        self.assertAlmostEqual(M[0][3], 0.05)                                                   # guest placement
+        self.assertEqual(len(host.world_cuts(shop_only=True)), 1)                               # seat not in shop
+        m = ctx.mirror('H-1', 'H-2', plane='XZ')
+        self.assertEqual(len(m.cuts), 1)                                                        # local cut only
+        self.assertAlmostEqual(m.cuts[0][0].center[1], -0.02)
+
 
 class _Any:
     """Stands in for every adsk object: any attribute, call, arithmetic or comparison works. Lets the Fusion

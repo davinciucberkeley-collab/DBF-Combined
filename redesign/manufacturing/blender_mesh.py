@@ -124,6 +124,23 @@ def non_manifold(me):
     return n
 
 
+def subtract(ob, cuts, tag):
+    """EXACT difference of the world-placed cutter shapes [[shape_json, 4x4], ...] (fusionkit Component.cut) from ob."""
+    if not cuts:
+        return
+    scn = bpy.context.scene
+    col = bpy.data.collections.new(tag + ' cutters')
+    scn.collection.children.link(col)
+    for k, (s, M) in enumerate(cuts):
+        _body('%s cut%d' % (tag, k), s, Matrix(M), col, 0.0)
+    mod = ob.modifiers.new('cuts', 'BOOLEAN')
+    mod.operation, mod.solver, mod.operand_type, mod.collection = 'DIFFERENCE', 'EXACT', 'COLLECTION', col
+    dg = bpy.context.evaluated_depsgraph_get()
+    me = bpy.data.meshes.new_from_object(ob.evaluated_get(dg))
+    ob.modifiers.remove(mod)
+    ob.data = me
+
+
 def union(job, grow=0.0):
     scn = bpy.context.scene
     tag = job['id'] + ('+%g' % grow if grow else '')
@@ -148,6 +165,7 @@ def union(job, grow=0.0):
         me = bpy.data.meshes.new_from_object(base.evaluated_get(dg))
         base.modifiers.remove(mod)
         base.data = me
+    subtract(base, job.get('cuts') or [], tag)
     bm = bmesh.new()
     bm.from_mesh(base.data)
     bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-5)
