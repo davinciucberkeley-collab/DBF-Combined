@@ -7,22 +7,35 @@
   {
    "hits": [
     {
+     "a": "E-HRN-13",
+     "at_mm": [
+      124.47,
+      330.51,
+      99.23
+     ],
+     "b": "E-HRN-24",
+     "bodies": [
+      "E-HRN-13 \"wire strand 0 (2.6 mm)\" x E-HRN-24 \"wire strand 1 (1.8 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.011
+    },
+    {
      "a": "E-HRN-14",
      "at_mm": [
-      125.05,
-      -330.6,
-      99.46
+      124.99,
+      -330.57,
+      99.43
      ],
      "b": "E-HRN-25",
      "bodies": [
       "E-HRN-14 \"wire strand 1 (2.6 mm)\" x E-HRN-25 \"wire strand 1 (1.8 mm)\" 0.02 mm"
      ],
-     "depth_mm": 0.016
+     "depth_mm": 0.018
     },
     {
      "a": "E-HRN-15",
      "at_mm": [
-      124.49,
+      124.47,
       330.51,
       -99.28
      ],
@@ -35,22 +48,22 @@
     {
      "a": "E-HRN-16",
      "at_mm": [
-      124.53,
-      -330.51,
-      -99.52
+      124.61,
+      -330.5,
+      -99.54
      ],
      "b": "E-HRN-27",
      "bodies": [
       "E-HRN-16 \"wire strand 1 (2.6 mm)\" x E-HRN-27 \"wire strand 1 (1.8 mm)\" 0.02 mm"
      ],
-     "depth_mm": 0.022
+     "depth_mm": 0.018
     },
     {
      "a": "E-HRN-28#1",
      "at_mm": [
-      52.81,
-      56.78,
-      35.55
+      52.83,
+      56.77,
+      35.5
      ],
      "b": "E-HRN-28#2",
      "bodies": [
@@ -69,14 +82,14 @@
      "bodies": [
       "E-HRN-28 \"wire strand 2 (1.3 mm)\" x E-HRN-28 \"wire strand 3 (1.3 mm)\" 0.02 mm"
      ],
-     "depth_mm": 0.024
+     "depth_mm": 0.025
     },
     {
      "a": "E-HRN-29#1",
      "at_mm": [
-      52.79,
+      52.81,
       61.27,
-      36.45
+      36.4
      ],
      "b": "E-HRN-29#2",
      "bodies": [
@@ -87,15 +100,28 @@
     {
      "a": "E-HRN-29#2",
      "at_mm": [
-      51.63,
-      60.87,
-      36.64
+      51.61,
+      60.86,
+      36.7
      ],
      "b": "E-HRN-29#3",
      "bodies": [
-      "E-HRN-29 \"wire strand 2 (1.3 mm)\" x E-HRN-29 \"wire strand 3 (1.3 mm)\" 0.04 mm"
+      "E-HRN-29 \"wire strand 2 (1.3 mm)\" x E-HRN-29 \"wire strand 3 (1.3 mm)\" 0.03 mm"
      ],
      "depth_mm": 0.035
+    },
+    {
+     "a": "E-HRN-29",
+     "at_mm": [
+      109.2,
+      96.79,
+      22.33
+     ],
+     "b": "WNG-003",
+     "bodies": [
+      "E-HRN-29 \"wire strand 3 (1.3 mm)\" x WNG-003 \"tape skin upper\" 0.01 mm"
+     ],
+     "depth_mm": 0.012
     },
     {
      "a": "FIN-001-UR",
@@ -302,7 +328,7 @@
    ]
   }
  ],
- "seconds": 312.8,
+ "seconds": 450.6,
  "skipped": [
   [
    "HRN-001",

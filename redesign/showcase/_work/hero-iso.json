@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 58.57,
+ "render_s": 58.87,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -2790,7 +2790,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    447,
+    445,
     333,
     905,
     639
@@ -2819,9 +2819,9 @@
    "subsystem": "harness",
    "bbox_px": [
     455,
-    535,
+    534,
     905,
-    634
+    635
    ]
   },
   {
@@ -2974,7 +2974,7 @@
    "bbox_px": [
     727,
     521,
-    1336,
+    1337,
     660
    ]
   },
@@ -2988,8 +2988,8 @@
    "bbox_px": [
     539,
     454,
-    822,
-    581
+    823,
+    582
    ]
   },
   {

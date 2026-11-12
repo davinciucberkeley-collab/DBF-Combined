@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 57.74,
+ "render_s": 58.18,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -87,17 +87,17 @@
   },
   {
    "item": "E-HRN-13",
-   "x": 587.0,
-   "y": 429.7,
+   "x": 570.3,
+   "y": 421.7,
    "title": "E-HRN-13",
    "text": "ESC power pair, routed",
    "detail": "bend >= 10.4 mm",
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0642,
-    0.2063,
-    0.0214
+    0.0636,
+    0.2345,
+    0.0213
    ]
   },
   {
@@ -2871,8 +2871,8 @@
    "bbox_px": [
     518,
     314,
-    744,
-    537
+    745,
+    538
    ]
   },
   {
@@ -2899,7 +2899,7 @@
    "bbox_px": [
     522,
     416,
-    744,
+    745,
     534
    ]
   },
@@ -3065,7 +3065,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    567,
+    566,
     373,
     705,
     490

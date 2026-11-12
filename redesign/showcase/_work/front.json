@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 36.29,
+ "render_s": 30.28,
  "explode": 0.0,
  "camera": {
   "preset": "front",
@@ -2793,10 +2793,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    373,
+    372,
     362,
     862,
-    476
+    477
    ]
   },
   {
@@ -2807,7 +2807,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    852,
+    851,
     362,
     1228,
     477
@@ -2821,10 +2821,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    373,
-    462,
+    372,
+    461,
     862,
-    637
+    638
    ]
   },
   {
@@ -2835,10 +2835,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    852,
+    851,
     459,
     1228,
-    637
+    638
    ]
   },
   {
@@ -2977,7 +2977,7 @@
    "bbox_px": [
     729,
     438,
-    1150,
+    1151,
     502
    ]
   },
@@ -2989,9 +2989,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    450,
+    449,
     436,
-    762,
+    763,
     502
    ]
   },

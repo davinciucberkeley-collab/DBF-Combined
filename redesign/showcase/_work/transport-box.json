@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 57.19,
+ "render_s": 56.6,
  "explode": 0.0,
  "camera": {
   "preset": "iso",

@@ -1,7 +1,7 @@
 {
  "schema": "dbf-viewer/1",
  "dataset": "aircraft",
- "generated": "2026-11-12 05:57 UTC",
+ "generated": "2026-11-12 06:51 UTC",
  "sources": {
   "glb": "redesign/blender/out/aircraft/glb",
   "interfaces": "redesign/interfaces/interfaces.json",
@@ -23,8 +23,8 @@
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 14452564,
-  "sha256": "6a8d42c08e0e752f47862f407b21c54b8a84d3eec9264d976b0ba82550bc2765"
+  "bytes": 10195024,
+  "sha256": "5d139c971061d403712f8aafdf0dea9dafb4c0e1fce0ef541c63ea32be5a6cb0"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -10641,7 +10641,7 @@
   {
    "id": "CL-PWR-MASS",
    "title": "Power subsystem flying mass",
-   "value": 622.4,
+   "value": 623.9,
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -10650,7 +10650,7 @@
    },
    "status": "UNVERIFIED",
    "how": "Weigh pack and frame stack on a 1 g scale at T-PWR-ARRIVAL; the 28 g power board moved from avionics (CR-F1-19) is what the 620 g allocation does not yet carry",
-   "margin": 0.012063492063492099,
+   "margin": 0.009682539682539718,
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -10662,7 +10662,7 @@
   {
    "id": "CL-PWR-MASS-NONPACK",
    "title": "Power mass without the pack",
-   "value": 72.39999999999999,
+   "value": 73.9,
    "unit": "g",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25483,7 +25483,7 @@
   {
    "id": "CL-F1-ESC-MASS",
    "title": "ESC power leads, 4 pairs at F2's routed lengths",
-   "value": 78.63715792951068,
+   "value": 79.5537348284582,
    "unit": "g",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25578,7 +25578,7 @@
   {
    "id": "CL-F1-R-EXT",
    "title": "Resistance pack terminals to ESC pads (equivalent, hot)",
-   "value": 7.750299549926995,
+   "value": 7.80431662154804,
    "unit": "mOhm",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25598,7 +25598,7 @@
   {
    "id": "CL-F1-DROP-CONT",
    "title": "Voltage drop pack to the farthest ESC at the continuous current",
-   "value": 1.8230263669543907,
+   "value": 1.8303106195912935,
    "unit": "%",
    "limit": {
     "op": "<=",
@@ -25607,7 +25607,7 @@
    },
    "status": "UNVERIFIED",
    "how": "T-F1-DROP at 30 A.",
-   "margin": 0.08848681652280466,
+   "margin": 0.08484469020435326,
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -25622,7 +25622,7 @@
   {
    "id": "CL-F1-DROP-PEAK",
    "title": "Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11)",
-   "value": 5.578548560855969,
+   "value": 5.600031180276554,
    "unit": "%",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25737,7 +25737,7 @@
   {
    "id": "CL-F1-POWER-MASS",
    "title": "Power subsystem mass excluding the pack",
-   "value": 72.39999999999999,
+   "value": 73.9,
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -25746,7 +25746,7 @@
    },
    "status": "UNVERIFIED",
    "how": "Weigh each item on arrival (T-PWR-ARRIVAL); A3 replaces the EST rows.",
-   "margin": 0.09500000000000011,
+   "margin": 0.07624999999999993,
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -25811,7 +25811,7 @@
   {
    "id": "CL-F2-ESC-LEN-MAX",
    "title": "Longest routed ESC power lead (bus pad to ESC pad, incl. loops)",
-   "value": 0.6796058656510768,
+   "value": 0.6840419998503671,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25825,7 +25825,7 @@
   {
    "id": "CL-F2-ESC-LEN-MIN",
    "title": "Shortest routed ESC power lead",
-   "value": 0.537309764446767,
+   "value": 0.5473332019206637,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25839,7 +25839,7 @@
   {
    "id": "CL-F2-ESC-LEN-UR",
    "title": "Routed ESC power lead UR",
-   "value": 0.6479928275843282,
+   "value": 0.6539560325712415,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25852,7 +25852,7 @@
   {
    "id": "CL-F2-ESC-LEN-UL",
    "title": "Routed ESC power lead UL",
-   "value": 0.537309764446767,
+   "value": 0.5473332019206637,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25865,7 +25865,7 @@
   {
    "id": "CL-F2-ESC-LEN-LR",
    "title": "Routed ESC power lead LR",
-   "value": 0.6796058656510768,
+   "value": 0.6840419998503671,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25878,7 +25878,7 @@
   {
    "id": "CL-F2-ESC-LEN-LL",
    "title": "Routed ESC power lead LL",
-   "value": 0.5682657690203492,
+   "value": 0.5762035199534407,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25891,7 +25891,7 @@
   {
    "id": "CL-F2-MAIN-LEN",
    "title": "10 AWG AS150U-to-bus path per conductor (cups -> board -> bars)",
-   "value": 0.10915225015391296,
+   "value": 0.12297860140078325,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -25900,7 +25900,7 @@
    },
    "status": "UNVERIFIED",
    "how": "Measure on the power-frame mock-up (T-F2-FIT, T-PWR-FIT)",
-   "margin": 0.27231833230724695,
+   "margin": 0.18014265732811166,
    "parts": [
     "PWR-002",
     "PWR-003",
@@ -25910,7 +25910,7 @@
   {
    "id": "CL-F2-MAIN-1-LEN",
    "title": "10 AWG jumper AS150U cups -> power-board input pads, per conductor incl. slack",
-   "value": 0.02994415989232806,
+   "value": 0.033407598739589525,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25924,7 +25924,7 @@
   {
    "id": "CL-F2-MAIN-2-LEN",
    "title": "10 AWG jumper power-board output pads -> bus bars, per conductor incl. slack",
-   "value": 0.0792080902615849,
+   "value": 0.08957100266119372,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25938,7 +25938,7 @@
   {
    "id": "CL-F2-CAP-LEAD",
    "title": "Longest ESC-cap lead (cap body to ESC power pad) incl. bend slack",
-   "value": 0.010784349485562263,
+   "value": 0.009023243291566185,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -25947,7 +25947,7 @@
    },
    "status": "UNVERIFIED",
    "how": "T-F2-FIT: measure each cap leg after forming, before soldering",
-   "margin": 0.4607825257218869,
+   "margin": 0.5488378354216907,
    "parts": [
     "PRP-002-UR",
     "PWR-008-UR"
@@ -26051,7 +26051,7 @@
   {
    "id": "CL-F2-DSHOT-LEN",
    "title": "Longest DShot lead FC pad to ESC",
-   "value": 0.69913640426099,
+   "value": 0.6957370839595898,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -26060,7 +26060,7 @@
    },
    "status": "UNVERIFIED",
    "how": "T-F2-DSHOT bench: bdshot error rate < 1 %",
-   "margin": 0.001233708198585656,
+   "margin": 0.00608988005772883,
    "parts": [
     "AVN-001"
    ]
@@ -26068,7 +26068,7 @@
   {
    "id": "CL-F2-SERVO-LEN",
    "title": "Longest servo lead FC pad to servo plug",
-   "value": 0.6032128161342185,
+   "value": 0.6024054165888828,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26082,7 +26082,7 @@
   {
    "id": "CL-F2-SERVO-V",
    "title": "Servo terminal voltage, both servos stalled",
-   "value": 5.728206056621853,
+   "value": 5.728325874714381,
    "unit": "V",
    "limit": {
     "op": ">=",
@@ -26091,7 +26091,7 @@
    },
    "status": "UNVERIFIED",
    "how": "T-F1-SERVO-STALL: measure at the servo plug with the servo stalled",
-   "margin": 0.004948430986289989,
+   "margin": 0.004969451704277305,
    "parts": [
     "MEC-001-L",
     "MEC-001-R"
@@ -26114,7 +26114,7 @@
   {
    "id": "CL-F2-SERVO-LEAD-DROP",
    "title": "Servo lead drop (harness 22 AWG + / -, servo's own 26 AWG lead, 4 JR contacts)",
-   "value": 0.1586397978821647,
+   "value": 0.1585199797896369,
    "unit": "V",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26156,7 +26156,7 @@
   {
    "id": "CL-F2-MASS",
    "title": "Harness mass (basic, wires + fittings, routed)",
-   "value": 138.89761958265478,
+   "value": 139.91479201300098,
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -26165,7 +26165,7 @@
    },
    "status": "UNVERIFIED",
    "how": "T-F2-WEIGH: weigh each made-up lead before installation",
-   "margin": -0.0767257331988743,
+   "margin": -0.08461079079845718,
    "parts": [
     "HRN-001",
     "HRN-002-R",
@@ -26175,7 +26175,7 @@
   {
    "id": "CL-F2-CG-X",
    "title": "Harness CG x",
-   "value": 0.062950104495638,
+   "value": 0.0633049327435283,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26207,7 +26207,7 @@
   {
    "id": "CL-F2-CG-BODY",
    "title": "Largest gap between a bundle's declared CG (CAD body centroid) and its wire-mass CG",
-   "value": 0.008248041277266721,
+   "value": 0.00791924995372822,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -26216,7 +26216,7 @@
    },
    "status": "UNVERIFIED",
    "how": "python -I redesign/fusion/check.py: no cg WARN on HRN parts; T-F2-WEIGH stations",
-   "margin": 0.17519587227332792,
+   "margin": 0.20807500462717807,
    "parts": [
     "HRN-001",
     "HRN-002-R",

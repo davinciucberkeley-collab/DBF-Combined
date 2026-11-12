@@ -264,8 +264,9 @@ def fillet_polyline(points, radius, steps=6):
             continue
         t = min(radius * math.tan(ang / 2), 0.45 * d1.length, 0.45 * d2.length)
         A, B = b - d1.normalized() * t, b + d2.normalized() * t
-        for q in range(steps + 1):                    # quadratic Bezier A-b-B: close to the circular arc
-            u = q / steps
+        n = max(1, min(steps, int(math.ceil(ang / 0.17))))   # ~10 deg a step: gentle corners stay light (D-87)
+        for q in range(n + 1):                        # quadratic Bezier A-b-B: close to the circular arc
+            u = q / n
             out.append((1 - u) ** 2 * A + 2 * (1 - u) * u * b + u * u * B)
     out.append(P[-1])
     return out

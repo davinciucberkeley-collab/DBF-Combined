@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 41.2,
+ "render_s": 40.46,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -57,23 +57,23 @@
   },
   {
    "item": "E-HRN-13",
-   "x": 599.2,
-   "y": 463.5,
+   "x": 598.7,
+   "y": 463.6,
    "title": "E-HRN-13",
    "text": "ESC power pair, right",
    "detail": "bend >= 10.4 mm",
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0632,
-    0.2139,
-    0.0208
+    0.0631,
+    0.2147,
+    0.0204
    ]
   },
   {
    "item": "E-HRN-14",
    "x": 884.9,
-   "y": 571.3,
+   "y": 571.2,
    "title": "E-HRN-14",
    "text": "ESC power pair, left",
    "detail": "bend >= 10.4 mm",
@@ -81,7 +81,7 @@
    "occluded": false,
    "world_m": [
     0.0636,
-    -0.2021,
+    -0.202,
     0.0212
    ]
   },
@@ -840,9 +840,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    523,
+    522,
     355,
-    773,
+    774,
     564
    ]
   },
@@ -868,10 +868,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    528,
-    452,
-    773,
-    560
+    527,
+    451,
+    774,
+    561
    ]
   },
   {
@@ -1022,9 +1022,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    686,
+    685,
     482,
-    988,
+    989,
     573
    ]
   },

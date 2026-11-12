@@ -1510,7 +1510,33 @@ def draw_strands(row, od_table, want_lat=False):
         for j in range(len(free)):
             o = offs[k][j] * (1 - f) + offs[k + 1][j] * f
             out[j][1].append([round(q[c] + lv[c] * o, 5) for c in range(3)])
+    for s_ in out:                                       # drop points a straight run does not need (shape kept
+        s_[1] = _simplify(s_[1], 0.00002)                # within 0.02 mm; the model stays small enough to publish)
     return fix(out)
+
+
+def _simplify(pts, eps):
+    """Douglas-Peucker on a 3-D polyline: keeps every point that deviates more than eps from its chord."""
+    if len(pts) < 3:
+        return pts
+    keep = [False] * len(pts)
+    keep[0] = keep[-1] = True
+    stack = [(0, len(pts) - 1)]
+    while stack:
+        i, j = stack.pop()
+        a, b = pts[i], pts[j]
+        ab = [b[c] - a[c] for c in range(3)]
+        L2 = sum(v * v for v in ab) or 1e-18
+        best, idx = 0.0, None
+        for k in range(i + 1, j):
+            t = max(0.0, min(1.0, sum((pts[k][c] - a[c]) * ab[c] for c in range(3)) / L2))
+            d = math.dist(pts[k], [a[c] + t * ab[c] for c in range(3)])
+            if d > best:
+                best, idx = d, k
+        if idx is not None and best > eps:
+            keep[idx] = True
+            stack += [(i, idx), (idx, j)]
+    return [p for p, k in zip(pts, keep) if k]
 
 
 def _fillet(points, radius, steps=6):
@@ -1532,8 +1558,9 @@ def _fillet(points, radius, steps=6):
         t = min(radius * math.tan(ang / 2), 0.45 * n1, 0.45 * n2)
         A = [b[k] - d1[k] / n1 * t for k in range(3)]
         B = [b[k] + d2[k] / n2 * t for k in range(3)]
-        for q in range(steps + 1):
-            u = q / steps
+        n = max(1, min(steps, int(math.ceil(ang / 0.17))))   # as blender_backend.fillet_polyline (D-87)
+        for q in range(n + 1):
+            u = q / n
             out.append([(1 - u) ** 2 * A[k] + 2 * (1 - u) * u * b[k] + u * u * B[k] for k in range(3)])
     out.append(P[-1])
     return out
