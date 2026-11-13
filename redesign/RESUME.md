@@ -1,5 +1,11 @@
 # How to resume the redesign
 
+## 2026-11-13: build and program planning drafted (read first)
+Maker Pass is paid outside the budget (owner); BOM R4 (`team/I1/ORDER-PLAN.md`): soldering-kit lines deleted (Electronics Lab), hot-wire gear bought (Jacobs lists none), pessimistic reserve $283.72 (short of $309 by $25.28),
+all-in pessimistic +$20.45. New plans, all `PROPOSED`: `team/G1`-`G4` (process, foam, print list, build steps), `team/H2` (flight tests, twin report, pilot log), `team/H3` (flight card, compliance, battery, RFS wind),
+`team/I2` (schedule, `make_schedule.py`), `team/F5/RANGE-TEST.md`; linked from `BUILD-GUIDE.md`, `README.md`, `STATUS.md`. Needs people: FAA registration, TRUST, UC flight requests and PI sponsor, AMA or other $1 M cover,
+a hot-wire workspace, Jacobs trainings and Spring pass, an enclosed printer (list in `STATUS.md` issue 2 and `team/H3/COMPLIANCE.md` section 5).
+
 ## Paused 2026-11-12: exported model checked too (two gates); every lead ends square on a real pad; all media regenerated (start here)
 All six buildability blockers are fixed in CAD or design except the team decision on Jacobs access (BR-04 / MF-02).
 Status table: `review/BUILDABILITY-REVIEW.md` "Blocker status". Decisions D-74...D-89 in `params/CHANGE-LOG.md`.

@@ -13,6 +13,7 @@ Numbers from `team/I1/build_bom.py` (claims `CL-I1-…`). Revision I1-R2, 2026-1
 | CR-I1-19 | F2, D6 | Write `parts.csv` with vendor, part number and price for the harness (bullets, servo leads, JST-GH, ties) and the mechanisms (horns, pushrods, clevises, hinge tape). `H01` + `H02` ($36) are my residual estimate | CR-I1-01 stays open for these two |
 | CR-I1-20 | D3 | `FIN-003`, `FIN-007` are printed in ASA: confirm 1 kg is the smallest practical spool and that 58 g of ASA is the whole need (`W08`, $24.99) | not in CR-A1-39 |
 | CR-I1-21 | H1 | Obtain Jacobs Hall's written yes for the borrow list before 20 Nov; if a line is refused tell me, it becomes a BOM line (prices in `ORDER-PLAN.md`) | `T-I1-BORROW` |
+| CR-I1-23 | A1, H1, A2 | **R4 (2026-11-13): Maker Pass paid outside the budget; the loan levers are closed.** G07 to G09 deleted (Electronics Lab); G10 gated fallback X10; X11 dissolved: G11 and H05 bought in the 20 Nov order (Jacobs lists no hot-wire gear, checked 2026-11-13). Committed pessimistic reserve 346.26 -> **283.72** (short of 309 by 25.28; `CL-I1-RESERVE-PESS` FAILS); all-in pessimistic -57.82 -> **+20.45**. Update `params.json#cost` (A1 owns) and re-run the proof graph | `bom_summary.json`; `ORDER-PLAN.md` R4 |
 | CR-I1-22 | A2 | Add `CL-I1-GROUNDTEST-BOUGHT` (<= $20) and `CL-I1-RESERVE-PESS-ALLIN` to the verification matrix under `R-BUDGET` and `R-RESERVE`; `T-I1-CONNECTOR-LEADS` verifies the pack SKU | CR-I1-12 follow-up |
 
 ## Open from R1 (unchanged)

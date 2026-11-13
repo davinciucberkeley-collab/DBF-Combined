@@ -32,7 +32,7 @@ The findings below are kept as written. This table is the status of the six bloc
 | BR-01 fin tip vs foot shoe | Fixed in CAD: one datum, no overlap. | D-75 |
 | BR-02 motor-mount slit bridged (MM-01) | Fixed in CAD: outboard cheek stops 1 mm ahead of the slit. Clocking key added for MM-02 (dog shear size still open, C6). | D-80, D-81 |
 | BR-03 no shop files (MF-01) | Fixed: `manufacturing/make_shop_files.py`. The CAD defects it reported are fixed too: horn bore breakout (D-82), POD-007 sealed void, HRN-110 grommet now modelled (D-83). | `manufacturing/README.md` |
-| BR-04 Maker Pass fees | Open: team decision. | `HANDOFF.md` |
+| BR-04 Maker Pass fees | **Closed 2026-11-13**: the owner pays the passes outside the $2 000; not a BOM line. Spring 2027 coverage to confirm. | `team/I1/ORDER-PLAN.md` R4 |
 | BR-05 power board facts | Resolved from documents; bench check on arrival. | D-74, `subsystems/power/BOARD-CHECK.md` |
 
 New since the review: `collision/collide.py` checks that no two parts overlap (static pose and both elevon

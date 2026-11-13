@@ -1,5 +1,7 @@
 # I1 Procurement / BOM: K09-L
 
+> **R4, 2026-11-13 (supersedes the numbers below):** committed spend $1,631.07 baseline / $1,716.28 pessimistic, reserve $368.93 / $283.72 (short of $309 by $25.28), all-in pessimistic reserve +$20.45. See `ORDER-PLAN.md` and `bom_summary.json`; the figures in the table below are from I1-R1.
+
 Revision I1-R1, 2026-11-09. Status `PROPOSED`: every price is `UNVERIFIED` until the order-day re-read (`T-I1-LISTINGS`).
 Files: [`BOM.csv`](BOM.csv) (one line per purchase) · [`ORDER-PLAN.md`](ORDER-PLAN.md) · `build_bom.py` → `claims.json`, `bom_summary.json` · [`CHANGE-REQUESTS.md`](CHANGE-REQUESTS.md).
 Re-run: `python -I redesign/team/I1/build_bom.py` then `python -I redesign/proofs/build_graph.py` (my claims re-run without drift; the build still fails on B1/B3 drift that is not mine).

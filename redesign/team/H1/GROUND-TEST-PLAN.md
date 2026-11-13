@@ -601,20 +601,17 @@ gauges + cyanoacrylate kit, CR-C4-38): $26.00, $6 over the D-39 $20 line (`CL-I1
 Already in the baseline BOM: `G04` watt meter, `G05` IR thermometer, `G06` 20 kgf cell + HX711 + Nano, `B04` 11×4.5MR
 props. Everything else is borrowed.
 
-**Jacobs Hall written yes, due before 20 Nov (D-72, `T-I1-BORROW`).** I1's levers 1 and 2 count on borrowing the
-soldering kit (`G07`–`G10`, $94.80 if bought, gate `X10`) and the hot-wire gear (`G11`, `H05`, $62.54, gate `X11`). A
-refusal costs $157.34 and drops `CL-A1-RESERVE` below $309. H1 asks for both and for the test gear below in one
-message. Draft: `team/H1/JACOBS-LOAN-REQUEST.md`. Status: **not sent** (`UNVERIFIED`). A team member sends it from their
-own Berkeley account to jacobsinstitute@berkeley.edu by **13 Nov**, which leaves a week for a reply, and files the
-written answer in `team/H1/logs/T-I1-BORROW_<date>.pdf`. No reply by 18 Nov: go to the Electronics Lab (studio 110) in
-person and get the staff answer by email the same day.
+**Jacobs Maker Pass (rewritten 2026-11-13, `T-I1-BORROW`).** The owner pays the Maker Pass outside the budget. It is drop-in, in-lab access, not equipment loans
+(https://jacobsinstitute.berkeley.edu/making-at-jacobs/, checked 2026-11-13), so nothing below is taken home. The soldering kit lines `G07`–`G09` are deleted from the BOM (the
+Electronics Lab has the stations and meters); `G10` flux and wick is a gated fallback (`X10`). The hot-wire gear (`G11`, `H05`, $62.54) is **bought**: Jacobs lists no hot-wire cutter
+(https://jacobsinstitute.berkeley.edu/our-spaces-at-a-glance/labs-and-equipment/, checked 2026-11-13). Remaining questions for staff: `team/H1/JACOBS-LOAN-REQUEST.md`. No purchase waits on the answers.
 
 | Item | Card | Lender | Status | Fallback (cost) |
 |---|---|---|---|---|
-| **Soldering kit (iron, PD supply, multimeter, solder/flux/wick)** | build, GT-09 gauge leads | Jacobs Electronics Lab | `UNVERIFIED`: written yes due 20 Nov | I1 `X10` $94.80 |
-| **Hot-wire foam cutter gear (30 V 10 A supply, Ni80 wire, bow)** | build (Jan) | Jacobs (stated capability) | `UNVERIFIED`: written yes due 20 Nov | I1 `X11` $62.54 |
+| **Soldering station, solder (in lab)** | build, GT-09 gauge leads | Jacobs Electronics Lab, covered by the pass | `CHECKED` listed 2026-11-13 (solder provided; flux and wick not stated) | I1 `X10` $16.54 (flux, wick) |
+| **Hot-wire foam cutter gear (30 V supply, Ni80 wire, bow)** | practice cores Dec, build Jan | **bought** (`G11`, `H05`, 20 Nov order); not on the Jacobs list | n/a | $62.54 in the committed order |
 | Bench power supply (Rm at 2 A; I0 at 10 V; `T-F3-5V`) | GT-02a, GT-12 | Jacobs Electronics Lab, studio 110 (in-lab use) | `CHECKED` listed (`SRC-H1-JACOBS-EQUIP`) | flight pack + meter ($0) |
-| Multimeters ×2 (4-wire Rm, rails; V and I for the ESC dummy) | GT-02a, GT-04, GT-12 | Jacobs Electronics Lab | `CHECKED` listed | team `G09` |
+| Multimeters ×2 (4-wire Rm, rails; V and I for the ESC dummy) | GT-02a, GT-04, GT-12 | Jacobs Electronics Lab (in-lab) | `CHECKED` listed 2026-11-13 | a team-owned meter ($0 assumed; the old `G09` line is deleted) |
 | Oscilloscope (`T-F1-PRECHARGE`, `-RIPPLE`) | GT-12, GT-13 | Jacobs Electronics Lab | `CHECKED` listed | run in the lab |
 | Saleae logic analyzer (I²C / DShot debug) | GT-12 | Jacobs Electronics Lab | `CHECKED` listed | — |
 | 350 Ω 0.1 % resistors ×4, 1.5 kΩ ×4, 100 kΩ ×2, 10 Ω 5 W ×1 | GT-09, GT-04 | Jacobs Electronics Lab parts stock | `UNVERIFIED` (ask) | ≈ $5 `EST` (A1) |

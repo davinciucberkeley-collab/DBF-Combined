@@ -1,19 +1,19 @@
 {
  "money": {
-  "spend_pess_allin": 2062.77,
-  "spend_base_allin": 1977.55,
-  "goods_base": 1313.81,
-  "goods_pess": 1339.4,
-  "tax_base": 134.67,
-  "tax_pess": 137.29,
-  "spend_base": 1573.48,
-  "spend_pess": 1658.69,
-  "early_goods_tax": 974.49
+  "spend_pess_allin": 1984.5,
+  "spend_base_allin": 1899.29,
+  "goods_base": 1370.54,
+  "goods_pess": 1396.13,
+  "tax_base": 140.48,
+  "tax_pess": 143.1,
+  "spend_base": 1636.02,
+  "spend_pess": 1721.23,
+  "early_goods_tax": 1020.5
  },
- "reserve_pess": 341.31,
- "reserve_base": 426.52,
+ "reserve_pess": 278.77,
+ "reserve_base": 363.98,
  "bridge": {
-  "value": 1658.69,
+  "value": 1721.23,
   "deltas": {
    "P01 Ovonic 120C EC5 pair, pessimistic EUR 113.30 x 1.16 = 131.43 replaces 130C XT60 list 119.88 (D-64)": 11.550000000000011,
    "M01 Savox SH-0255MG+ 2 x 41.99 replaces ES3005HV 2 x 19.99 (CR-D6-02)": 44.00000000000001,
@@ -25,15 +25,15 @@
    "D07 brass tube 7/32 in 3.00 (CR-D5-27); D06 straps 6 to 7": 4.0,
    "G13 two strain gauges (CR-C4-38)": 9.0,
    "H07 board-link ribbon + headers 3.00 (HRN-114), H08 pitot hose-barb couplers 1.49 (AVN-005) (D-89)": 4.49,
-   "D-57 lever 1: G07 25.99 + G08 20.00 + G09 25.00 + G10 15.00 borrowed (gate X10)": -85.99,
-   "D-57 lever 2: G11 41.73 + H05 15.00 borrowed (gate X11)": -56.73,
+   "2026-11-13 Maker Pass: G07 25.99 + G08 20.00 + G09 25.00 deleted (Electronics Lab, covered); G10 15.00 held behind gate X10": -85.99,
+   "2026-11-13: G11 41.73 + H05 15.00 BOUGHT (Jacobs lists no hot-wire gear; old gate X11 dissolved; was borrowed, delta -56.73)": 0.0,
    "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0,
    "D-74: F04 4 + F05 18 + F06 6 gated X12 (UBEC fallback); H06 XT30U 10-pair 9.99 (WB-03)": -18.009999999999998
   }
  },
  "vendors": {
   "SunnySky USA": 124.95,
-  "Amazon": 395.81,
+  "Amazon": 437.54,
   "APC": 51.96,
   "Bolt Depot": 7.0,
   "Ampow / OVONIC (same SKU)": 114.48,
@@ -41,7 +41,7 @@
   "RaceDayQuads": 20.49,
   "RadioMaster": 84.98,
   "Savox USA / hobby dealer": 83.98,
-  "Home Depot El Cerrito": 59.97,
+  "Home Depot El Cerrito": 74.97,
   "Aloft Hobbies": 120.0,
   "West3D": 45.98,
   "Amazon / DigiKey": 41.0,
@@ -53,12 +53,12 @@
   "Harbor Freight": 19.99
  },
  "by_order": {
-  "EARLY": 883.89,
+  "EARLY": 925.62,
   "DEC": 349.96,
-  "LOCAL": 79.96
+  "LOCAL": 94.96
  },
- "reserve_pess_allin": -62.77,
- "reserve_base_allin": 22.45,
+ "reserve_pess_allin": 15.5,
+ "reserve_base_allin": 100.71,
  "gated": {
   "X01": 33.08,
   "X02": 46.29,
@@ -68,8 +68,7 @@
   "X06": 44.09,
   "X07": 149.72,
   "X08": 66.14,
-  "X10": 94.8,
-  "X11": 62.54,
+  "X10": 16.54,
   "X12": 30.87,
   "X09": 16.54
  }

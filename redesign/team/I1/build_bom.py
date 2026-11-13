@@ -196,12 +196,11 @@ line("G04", "ground", "Watt meter 150 A", "Amazon", "ASIN B0F13JWDFV", "EARLY", 
 line("G05", "ground", "IR thermometer", "Amazon", "ASIN B0BN317X6Z", "EARLY", 1, 0, 8.98, seen="2026-11-01", lead=4, url="https://www.amazon.com/dp/B0BN317X6Z", part="GND-006")
 line("G06", "ground", "Thrust stand: 20 kg load cell + HX711 + Nano", "Amazon", "kit (budget-energy-test.md)", "EARLY", 1, 0, 17.97, seen="2026-11-01", lead=4,
      url="https://www.amazon.com/", part="GND-007", note="H1: the stand must take >= 2.5 kgf")
-line("G07", "ground", "Soldering iron Pinecil V2", "Pine64", "Pinecil V2", "EARLY", 1, 0, 25.99, seen="2026-11-01", lead=7, url="https://pine64.com/", part="GND-008")
-line("G08", "ground", "USB-C PD supply for the iron", "Amazon", "ESTIMATE", "EARLY", 1, 0, 20.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="GND-008")
-line("G09", "ground", "Multimeter", "Amazon", "ESTIMATE", "EARLY", 1, 0, 25.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="GND-009")
-line("G10", "ground", "Solder, flux, wick", "Amazon", "ESTIMATE", "EARLY", 1, 0, 15.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="GND-010")
-line("G11", "ground", "Hot-wire: NICE-POWER 30 V 10 A supply + Ni80 24 AWG", "Amazon", "ASIN B0CRSS744F + B0CP9V3DBX", "DEC", 1, 0, 41.73, seen="2026-11-01", lead=4,
-     url="https://www.amazon.com/dp/B0CRSS744F", part="GND-011")
+line("G10", "ground", "Flux + desoldering wick (fallback only: the Electronics Lab stations supply solder; flux and wick are not listed)", "Amazon", "ESTIMATE", "EARLY", 1, 0, 15.00, status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="GND-010",
+     note="2026-11-13: the soldering iron, multimeter and PD supply (old G07-G09) are Electronics Lab equipment covered by the Jacobs Maker Pass (paid outside the budget) and are no longer BOM lines. Bought only if the lab has no flux or wick (gate X10, check on the first visit)")
+line("G11", "ground", "Hot-wire: NICE-POWER 30 V 10 A supply + Ni80 24 AWG", "Amazon", "ASIN B0CRSS744F + B0CP9V3DBX", "EARLY", 1, 0, 41.73, seen="2026-11-01", lead=4,
+     url="https://www.amazon.com/dp/B0CRSS744F", part="GND-011",
+     note="BOUGHT (2026-11-13): the Jacobs labs-and-equipment page lists no hot-wire foam cutter (checked 2026-11-13), so X11 is dissolved. EARLY order so the bow and 2-3 practice cores exist before Jacobs closes 18 Dec. The ASIN B0CRSS744F title reads 0-30 V 0-10 A 150 W (15 V 10 A / 30 V 5 A); price carried from 2026-11-01, not re-read")
 
 line("G12", "groundtest", "Ground-test additions: 1 kgf bar cell + HX711 (torque arm) + 5 K-type thermocouple probes", "Amazon", "1 kg bar load cell + HX711; K-type bead probe x5", "EARLY", 1, 0, 17.00,
      status="EST", seen="2026-11-09", lead=4, url="https://www.amazon.com/", part="GND-012",
@@ -262,14 +261,11 @@ LINK_FIXES = {
     'R02': ('https://www.getfpv.com/lumenier-nav-3000mah-1s-18650-lithium-ion-battery-2pcs.html', 'GetFPV Lumenier NAV 3000 mAh 18650 2-pack; snippet $24.49 matches; one cached page showed Out of Stock; link not opened; matched by search'),
     'G02': ('https://pyrodrone.com/products/pyrodrone-lipo-safe-pouch', 'Pyrodrone LiPo Safe Pouch; snippet $7.99 vs BOM $9.99: not changed; link not opened; matched by search'),
     'G06': ('https://www.amazon.com/dp/B07BGS58TL', 'NOYITO 20 kg load cell + HX711 combo; Arduino Nano not included; link not opened; matched by search'),
-    'G07': ('https://pine64.com/product/pinecil-smart-mini-portable-soldering-iron/', 'Pine Store Pinecil V2; snippet community price $25.99 matches'),
-    'G08': ('https://www.anker.com/products/a2663', 'Anker 715 Charger (Nano II 65 W, USB-C PD 5/9/15/20 V), suits Pinecil/TS101; price seen $29.99 vs BOM $20.00, price not changed; representative product; any equivalent'),
-    'G09': ('https://www.amazon.com/dp/B071JL6LLL', 'AstroAI TRMS 6000-count auto-ranging multimeter; representative product; any equivalent; link not opened; matched by search'),
     'G10': ('https://www.amazon.com/dp/B0H94VTN26', 'KELLYSHUN flux paste + 63/37 solder wire + tip tinner; no wick, add desoldering wick; representative product; any equivalent; link not opened; matched by search'),
     'G12': ('https://www.amazon.com/dp/B0F52QCK3T', '1 kg load cell + HX711 listing; K-type probes not linked (e.g. https://www.amazon.com/dp/B0FW56V11S); link not opened; matched by search'),
     'G13': ('https://www.amazon.com/dp/B07WYD7Z4P', 'Eastar BF350-3AA 350 ohm foil gauge; CA adhesive not linked; representative product; any equivalent; link not opened; matched by search'),
 }
-LINK_PRICE_SEEN = ['A04', 'B05', 'B07', 'D01', 'F05', 'G07', 'G08', 'M01', 'T09']  # price seen on the opened product page 2026-11-11 (noted, not applied)
+LINK_PRICE_SEEN = ['A04', 'B05', 'B07', 'D01', 'F05', 'M01', 'T09']  # price seen on the opened product page 2026-11-11 (noted, not applied)
 for _l in L:
     if _l['id'] in LINK_FIXES:
         _u, _n = LINK_FIXES[_l['id']]
@@ -283,8 +279,10 @@ for _l in L:
 # totals, reported in the `all-in` figures. X07 = D7 box and field kit (store pick-up, zero lead time, needed from March);
 # X08 = airspeed sensor (DECISION 5.1 lever; needed for the fixed-wing tune, which can start on the synthetic airspeed).
 GATE_OF = {"T01": "X07", "T02": "X07", "T03": "X07", "T04": "X07", "T05": "X07", "T06": "X07", "T07": "X07", "T08": "X07", "T09": "X07", "A04": "X08",
-           # D-57 lever 1 (D-72): borrow the soldering kit; lever 2: borrow the hot-wire gear. Bought only if Jacobs Hall refuses.
-           "G07": "X10", "G08": "X10", "G09": "X10", "G10": "X10", "G11": "X11", "H05": "X11",
+           # 2026-11-13: the Jacobs Maker Pass is paid outside the budget (owner). Electronics Lab iron, multimeter and PD supply
+           # (old G07-G09) are covered and no longer BOM lines; only the flux/wick fallback G10 stays gated (X10). Jacobs lists no
+           # hot-wire foam cutter (labs-and-equipment page, checked 2026-11-13), so G11 and H05 are BOUGHT (old gate X11 dissolved).
+           "G10": "X10",
            # D-74: the power board's own servo BEC (8 A cont) replaces the UBEC; bought only if BOARD-CHECK.md step 7 fails
            "F04": "X12", "F05": "X12", "F06": "X12"}
 for _l in L:
@@ -306,13 +304,12 @@ GATED = [
          why="deferred in R2 to hold the pessimistic reserve >= $309 (CR-I1-14); replaces the old $60 plywood estimate H04"),
     dict(id="X08", item="RMRC MS4525DO airspeed sensor + pitot (line A04)", net=None, gate="as X01; DECISION 5.1 lever, last in the order (CR-I1-03)",
          why="needed for gain scheduling in fixed-wing flight; the first fixed-wing tune can run on the synthetic airspeed estimate (F4 confirms)"),
-    dict(id="X10", item="Soldering kit if Jacobs Hall will not lend it (G07 Pinecil, G08 PD supply, G09 multimeter, G10 solder/flux/wick)", net=None, gate="Jacobs Hall refuses in writing (T-I1-BORROW, before 20 Nov); then the line is BOUGHT and the reserve falls by its value",
-         why="D-57 lever 1 applied (D-72, CR-A1-67): borrowed from Jacobs Hall, H1 gets the written yes"),
-    dict(id="X11", item="Hot-wire gear if Jacobs Hall will not lend it (G11 30 V 10 A supply + Ni80 wire, H05 bow and template stock)", net=None, gate="as X10 (hot-wire foam cutting is a stated Jacobs capability; the written yes covers it)",
-         why="D-57 lever 2 applied because lever 1 alone leaves the pessimistic reserve under $309 after the designers' lines"),
+    dict(id="X10", item="Flux + desoldering wick if the Electronics Lab has none (G10)", net=None,
+         gate="first Electronics Lab visit: no flux or wick at the stations (the page says only 'solder provided'); then buy G10",
+         why="2026-11-13: the Maker Pass covers the lab's soldering irons, multimeters and solder, so the old kit (G07 Pinecil, G08 PD supply, G09 multimeter) is deleted; flux and wick are not listed"),
     dict(id="X12", item="UBEC fallback (lines F04 20 AWG, F05 UBEC, F06 fuse + holder), D-74", net=None, gate="only if subsystems/power/BOARD-CHECK.md step 7 fails (servo-BEC Vx < 5.8 V at ~5.4 A); then a 4S-input 6 V UBEC (5-day lead), before the January build",
          why="the CoreWing V2 servo BEC is 8 A cont / 14 A peak (manual V2.1, ArduPilot); the 4.5 A behind the UBEC was the SpeedyBee figure"),
-    dict(id="X09", item="K-type thermocouple logger / 2-channel meter (E3 GT-04)", net=15.00, gate="only if Jacobs Hall cannot lend one", why="H1 borrow list"),
+    dict(id="X09", item="K-type thermocouple logger / 2-channel meter (E3 GT-04)", net=15.00, gate="only if no Electronics Lab multimeter reads the K-type probes in the lab (Jacobs does not lend equipment out; the pass is drop-in access)", why="H1 list; in-lab reading is the first choice"),
 ]
 
 
@@ -361,8 +358,8 @@ def bridge(tax_rate):
         "D07 brass tube 7/32 in 3.00 (CR-D5-27); D06 straps 6 to 7": 3.00 + 1.00,
         "G13 two strain gauges (CR-C4-38)": 9.00,
         "H07 board-link ribbon + headers 3.00 (HRN-114), H08 pitot hose-barb couplers 1.49 (AVN-005) (D-89)": 3.00 + 1.49,
-        "D-57 lever 1: G07 25.99 + G08 20.00 + G09 25.00 + G10 15.00 borrowed (gate X10)": -(25.99 + 20.00 + 25.00 + 15.00),
-        "D-57 lever 2: G11 41.73 + H05 15.00 borrowed (gate X11)": -(41.73 + 15.00),
+        "2026-11-13 Maker Pass: G07 25.99 + G08 20.00 + G09 25.00 deleted (Electronics Lab, covered); G10 15.00 held behind gate X10": -(25.99 + 20.00 + 25.00 + 15.00),
+        "2026-11-13: G11 41.73 + H05 15.00 BOUGHT (Jacobs lists no hot-wire gear; old gate X11 dissolved; was borrowed, delta -56.73)": 0.0,
         "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0,
         "D-74: F04 4 + F05 18 + F06 6 gated X12 (UBEC fallback); H06 XT30U 10-pair 9.99 (WB-03)": -(4.00 + 18.00 + 6.00) + 9.99,
     }
@@ -428,7 +425,7 @@ def reserve(budget, sp, sb):
     return {"reserve_pess": reserve_calc(budget, sp), "reserve_base": reserve_calc(budget, sb)}
 
 
-@kit.calc("CALC-I1-ALLIN", title="All-in spend if every gated BOM line (X07, X08) were also bought",
+@kit.calc("CALC-I1-ALLIN", title="All-in spend if every gated BOM line (X07, X08, X10, X12) were also bought",
           inputs={"tax": P + "requirements.tax_rate", "budget": P + "requirements.budget_usd"},
           units={"tax": "-", "budget": "USD"}, assumes=["ASM-I1-SHIPPING", "ASM-I1-ADDERS"],
           equation="all-in spend = spend + gated lines x (1 + tax); reserve = budget - spend", output="reserve_pess_allin")
@@ -474,8 +471,8 @@ kit.test("T-I1-CONNECTOR-LEADS", "Confirm the pack connector and lead gauge befo
 kit.test("T-I1-LISTINGS", "Re-read the six listings before each order", verifies=["CL-I1-SPEND-PESS", "CL-I1-RESERVE-PESS"], state="planned",
          procedure="On 20 Nov and 15 Dec open: LANRC ASIN B0D2HS4Y4J, SunnySky X3108S, Ovonic 2-pack (connector, lead gauge, mass, price), Aloft tube, "
                    "APC 11x5.5MR/11x4.5MR; log price and stock in team/I1/listing_log.csv; re-run build_bom.py.")
-kit.test("T-I1-BORROW", "Jacobs Hall confirms the H1 rig loan in writing", verifies=["CL-I1-GROUNDTEST-BOUGHT"], state="planned",
-         procedure="Before 20 Nov ask Jacobs Hall staff, by email, to lend (a) the soldering kit (G07-G10, gate X10, lever 1), (b) the hot-wire supply and wire (G11, H05, gate X11, lever 2) for the whole build January-February, and (c) the items in ORDER-PLAN.md 'Borrow list'; file the reply in team/I1/borrow_confirmation.txt. A refusal makes the gated line a BOM line and the pessimistic reserve falls by its value (X10 $94.80, X11 $62.54).")
+kit.test("T-I1-BORROW", "Jacobs staff answer the equipment questions (Maker Pass is drop-in access, no loans)", verifies=["CL-I1-GROUNDTEST-BOUGHT"], state="planned",
+         procedure="First Electronics Lab visit (before 20 Nov, with the safety training done): (a) confirm in the lab that flux and wick are at the soldering stations (else buy G10, gate X10) and that a multimeter reads K-type probes (else X09); (b) ask staff by email whether Jacobs allows hot-wire foam cutting or foam on the ShopBot (a yes would remove G11 and H05, $62.54 incl. tax); (c) confirm the Spring 2027 Maker Pass covers all four builders from 19 Jan. Jacobs does not lend equipment: the pass is in-lab access (jacobsinstitute.berkeley.edu/making-at-jacobs, checked 2026-11-13). File the reply in team/I1/borrow_confirmation.txt.")
 kit.test("T-I1-ARRIVAL", "Weigh and inspect on arrival", verifies=["CL-I1-RESERVE-PESS"], state="planned",
          procedure="Weigh each pack, motor, ESC and the Aloft tube; check the pack connector is XT60; give masses to A3 and E2 (pack_log.csv).")
 
