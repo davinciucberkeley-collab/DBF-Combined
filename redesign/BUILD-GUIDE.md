@@ -201,7 +201,8 @@ Detail: [`subsystems/harness/BUILD.md`](subsystems/harness/BUILD.md), [`subsyste
    3.5 mm along the bar top, at four stations 8 mm apart from the aft end (LR aft-most, then UR, LL, UL). Each pair
    rises over the ones aft of it. Form the bends off the pad at 2 × OD on the bench. The 10 AWG main jumper's two
    conductors start on the board's output pads, drop through the deck window either side of the pairs and land
-   across the bars' forward ends.
+   across the bars' forward ends. The battery jumper's two conductors run side by side from the AS150U cups,
+   through the 10.4 mm cup slot, onto the board's two input pads (D-89).
    At the ESC: the pair and the DShot lead come up the gap between the ESC's aft end and the cap and enter the ESC's
    aft end face square onto its power pads (D-87, D-88), the signal lead to the lowest pad. Slide a 1.5–3.5 mm length of
    adhesive-lined heat-shrink (HRN-107) over each lead before soldering and shrink it over the joint at the face.
@@ -291,7 +292,21 @@ Detail: [`subsystems/avionics/BUILD.md`](subsystems/avionics/BUILD.md).
    tubes.
 2. GPS on the mast pad; check the compass chip ID at the I²C scan ([WB-12](review/WIRING-BATTERY.md#findings)).
 3. Pitot lines on different coupler sizes or colours so T and S cannot swap ([WB-13](review/WIRING-BATTERY.md#findings)).
-4. Connect, tie within 20 mm of each plug, twist the current-sense wire with its ground.
+4. Connect, tie within 20 mm of each plug, twist the current-sense wire with its ground. Every lead ends on a
+   real termination (D-89):
+   - **Outputs 1–6:** solder each conductor into its own hole of the FC's S / Vx / G field (aft edge). Bend it
+     up off the board on a 2 × OD lead-off; the forward holes run higher, over the risers aft of them. Then lead
+     it into its contact of the JR pair on the tray.
+   - **GPS (GH-6) and SERIAL6 to the RX (GH-4):** plug into the FC's aft-edge and fore-edge sockets. The RX lead
+     runs down in front of the fore end stop and aft under the FC, inboard of the gel cubes.
+   - **Airspeed I²C branch:** solder it to the GPS cable's four conductors about 15 mm from the FC plug. Shrink
+     one adhesive sleeve over the splice and both cables. Its other end plugs into the sensor's GH-4 on the
+     aft face.
+   - **RX end:** strip the 4-core cable under a 2 mm breakout sleeve. Lay the four conductors flat onto the
+     RP3's 5 V / GND / TX / RX pads and solder them. Check the pad order against the board first; the order
+     in the CAD is an estimate.
+   - **Power-board link ribbon:** plug into the PDB's top header and into the FC's underside header between
+     the gel cubes. Fit the FC end before the FC goes onto its cubes.
 5. Calibrate accelerometer (cruise attitude), compass, airspeed zero.
 
 ☐ Inspect before moving on: pre-arm checks pass; airspeed rises on a blow at the tip and drops on a suck.

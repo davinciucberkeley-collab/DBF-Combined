@@ -11,6 +11,7 @@ own cutters are removed material. No mesh boolean is needed, so no boolean failu
 """
 import json
 import math
+import re
 import os
 import sys
 
@@ -244,11 +245,23 @@ def at_terminal(p, a, b):
     return False
 
 
-def end_seats(wire_bodies, solids):
+TERMINATION = re.compile(r'pad|joint|plug|socket|header|cup|contact|sleeve|grommet|boot|lead exit|bus bar|shroud|'
+                         r'housing|AS150U|XT30U|cap can|in heat-shrink|splice', re.I)
+#   D-89: the named bodies a conductor may end on: a solder pad / joint, a connector (plug, socket, header, housing,
+#   shroud, cups, XT30U / AS150U body), a heat-shrink sleeve (splice, breakout, pad joint; the ESC's own heat-shrink
+#   over its pads), a lead exit (grommet, boot, the motor's phase-lead exit, the cap's sealed end) or a bus bar. A
+#   part's plain envelope ("FC board envelope", "servo case") is NOT one: a lead ending there connects to a box.
+
+
+def end_seats(wire_bodies, solids, require_term=False):
     """D-86: every drawn strand end must be seated: inside, or within END_SEAT_MM of, a body of one of the wire's
-    terminal parts or of a connector fitted in-line on it. A lead that stops in mid-air (an undrawn connector) fails."""
+    terminal parts or of a connector fitted in-line on it. A lead that stops in mid-air (an undrawn connector) fails.
+    D-89 (require_term, the CAD gate, where bodies keep their names): only a TERMINATION body counts, so a lead that
+    ends inside a bare envelope fails too (the GLB has one united solid per part, so its gate checks seating only)."""
     byp = {}
     for b in solids:
+        if require_term and not TERMINATION.search(b.name or ''):
+            continue
         byp.setdefault(b.pid, []).append(b)
     bad = []
     for w in wire_bodies:
@@ -375,7 +388,7 @@ def main():
         rep['poses'].append({'name': pz['name'], 'moved': pz.get('moved'), 'not_swept_against': pz.get('skip_with'),
                              'hits': hits})
         print('collide: %-50s %d overlapping part pairs' % (pz['name'][:50], len(hits)))
-    rep['wire_ends'] = end_seats(wires, [b for b in static if not getattr(b, 'wire', False)])
+    rep['wire_ends'] = end_seats(wires, [b for b in static if not getattr(b, 'wire', False)], require_term=True)
     print('collide: %d wire ends not seated' % len(rep['wire_ends']))
     if job.get('audit'):
         solids = [b for b in static if not getattr(b, 'wire', False)]

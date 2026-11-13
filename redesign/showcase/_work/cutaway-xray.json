@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 38.12,
+ "render_s": 41.14,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -42,16 +42,16 @@
  "callouts": [
   {
    "item": "AVN-001",
-   "x": 635.5,
-   "y": 490.1,
+   "x": 628.7,
+   "y": 494.0,
    "title": "AVN-001",
    "text": "Flight controller F405 Wing",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0018,
-    0.0614,
+    -0.0125,
+    0.0621,
     0.0336
    ]
   },
@@ -2506,8 +2506,8 @@
    "subsystem": "avionics",
    "bbox_px": [
     615,
-    483,
-    665,
+    486,
+    667,
     519
    ]
   },
@@ -2536,7 +2536,7 @@
     620,
     505,
     636,
-    516
+    515
    ]
   },
   {
@@ -2820,6 +2820,20 @@
    ]
   },
   {
+   "id": "HRN-107-I2C",
+   "role": "context",
+   "name": "Heat-shrink sleeve I2C on E-HRN-32",
+   "status": "MODELLED",
+   "mass_g": 0.0882,
+   "subsystem": "harness",
+   "bbox_px": [
+    663,
+    479,
+    668,
+    489
+   ]
+  },
+  {
    "id": "HRN-107-LL-P1",
    "role": "context",
    "name": "Heat-shrink sleeve LL-P1 on E-HRN-16",
@@ -2943,6 +2957,20 @@
     489,
     743,
     495
+   ]
+  },
+  {
+   "id": "HRN-107-RX",
+   "role": "context",
+   "name": "Heat-shrink sleeve RX on E-HRN-31",
+   "status": "MODELLED",
+   "mass_g": 0.01,
+   "subsystem": "harness",
+   "bbox_px": [
+    672,
+    542,
+    676,
+    546
    ]
   },
   {
@@ -3079,9 +3107,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    690,
-    511,
-    704,
+    689,
+    510,
+    705,
     518
    ]
   },
@@ -3219,8 +3247,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    613,
-    507,
+    637,
+    510,
     683,
     547
    ]
@@ -3247,7 +3275,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    657,
+    650,
     463,
     973,
     595
@@ -3275,7 +3303,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    655,
+    648,
     464,
     964,
     671
@@ -3289,7 +3317,7 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    651,
+    645,
     457,
     965,
     571
@@ -3306,7 +3334,7 @@
     566,
     373,
     705,
-    490
+    491
    ]
   },
   {
@@ -3317,10 +3345,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    660,
-    365,
+    663,
+    363,
     727,
-    495
+    494
    ]
   },
   {
@@ -3331,10 +3359,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    628,
-    512,
+    627,
+    515,
     681,
-    548
+    549
    ]
   },
   {
@@ -3346,9 +3374,9 @@
    "subsystem": "harness",
    "bbox_px": [
     640,
-    493,
+    485,
     679,
-    554
+    552
    ]
   },
   {

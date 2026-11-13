@@ -11,9 +11,9 @@
    "mass_g": 12.0,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.01,
-    0.0464,
-    0.0296
+    0.0043,
+    0.0488,
+    0.0277
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -27,9 +27,9 @@
    "mass_g": 7.73,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.0754,
+    0.0797,
     0.0,
-    0.1775
+    0.1818
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -43,9 +43,9 @@
    "mass_g": 4.6,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.047,
-    -0.0464,
-    0.0236
+    -0.045,
+    -0.0465,
+    0.0254
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -59,9 +59,9 @@
    "mass_g": 4.51,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.0708,
-    -0.0463,
-    0.0313
+    -0.0663,
+    -0.0464,
+    0.0312
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -107,7 +107,7 @@
    "cg_xyz_m": [
     -0.0305,
     0.0464,
-    0.0271
+    0.0277
    ],
    "make_or_buy": "buy",
    "notes": "SDHC class 10; LOG_BITMASK default + batch sampler for T-F3-VIBE; mass 0.4 g (envelope 0.0, bought 0.4)"

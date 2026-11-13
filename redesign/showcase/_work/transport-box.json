@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 39.06,
+ "render_s": 43.47,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -1974,7 +1974,7 @@
    "mass_g": 15.8,
    "subsystem": "mechanisms",
    "bbox_px": [
-    666,
+    665,
     373,
     686,
     390
@@ -2521,8 +2521,8 @@
    "subsystem": "avionics",
    "bbox_px": [
     709,
-    448,
-    744,
+    450,
+    745,
     474
    ]
   },
@@ -2835,6 +2835,20 @@
    ]
   },
   {
+   "id": "HRN-107-I2C",
+   "role": "context",
+   "name": "Heat-shrink sleeve I2C on E-HRN-32",
+   "status": "MODELLED",
+   "mass_g": 0.0882,
+   "subsystem": "harness",
+   "bbox_px": [
+    742,
+    443,
+    746,
+    450
+   ]
+  },
+  {
    "id": "HRN-107-LL-P1",
    "role": "context",
    "name": "Heat-shrink sleeve LL-P1 on E-HRN-16",
@@ -2958,6 +2972,20 @@
     444,
     805,
     449
+   ]
+  },
+  {
+   "id": "HRN-107-RX",
+   "role": "context",
+   "name": "Heat-shrink sleeve RX on E-HRN-31",
+   "status": "MODELLED",
+   "mass_g": 0.01,
+   "subsystem": "harness",
+   "bbox_px": [
+    762,
+    486,
+    764,
+    489
    ]
   },
   {

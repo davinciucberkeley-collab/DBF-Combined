@@ -57,6 +57,21 @@ def pod_geometry(get, sub_dir):
     return pod, L
 
 
+def gh_side(m, n, axis, s, face, yc, z0):
+    """JST-GH side-entry header (SMnB-GHS-TB) on a board edge with its mated plug (GHR-nV-S) overhanging the edge.
+    axis 'x': the edge is the face x = `face`, outward direction s (+1 / -1); yc: centre along the edge; z0: top of
+    the board the header stands on. Returns header box, plug box (lo, hi) and the cable entry (point on the plug's rear
+    face, unit direction OUT of the plug). Sizes: gh_side_m (JST GH catalogue pp. 27, 29)."""
+    bh = m['hdr_b0'] + m['pitch'] * (n - 1)
+    bp = m['plug_b0'] + m['pitch'] * (n - 1)
+    zc = z0 + m['hdr_h'] / 2
+    xh = sorted((face, face - s * m['hdr_d']))
+    xp = sorted((face, face + s * m['plug_over']))
+    hdr = ((xh[0], yc - bh / 2, z0), (xh[1], yc + bh / 2, z0 + m['hdr_h']))
+    plug = ((xp[0], yc - bp / 2, zc - m['plug_t'] / 2), (xp[1], yc + bp / 2, zc + m['plug_t'] / 2))
+    return {'hdr': hdr, 'plug': plug, 'entry': ((face + s * m['plug_over'], yc, zc), (s, 0.0, 0.0)), 'n': n}
+
+
 def layout(get, A, L, G):
     """All avionics geometry (m). get: params getter; A: avionics params; L: pod params; G: pod.layout()."""
     a = lambda k: _lv(A, k)
@@ -84,12 +99,35 @@ def layout(get, A, L, G):
     g['fc_stop_clear'] = (fx + bl / 2 + 0.002) - g['fc_hi'][0]          # D2's stops are 2 mm clear of the board ends
     g['fc_in_channel'] = (cy - bw / 2 >= ci, cy + bw / 2 <= co, st_t)
 
-    # microSD in the FC's fore-edge slot, standing proud by sd_proud_m
+    # D-89: the FC as its PCB + a component envelope set back from the two connector strips (aft: output field and
+    # GPS socket; fore: SERIAL6 socket), so every lead lands on something real (fc_pcb_t_m, fc_strip_m: EST)
+    pcb_t = a('fc_pcb_t_m')
+    s_aft, s_fore = a('fc_strip_m')
+    zt = g['fc_lo'][2] + pcb_t                             # PCB top
+    g['fc_pcb_top'] = zt
+    g['fc_pcb'] = (g['fc_lo'], (g['fc_hi'][0], g['fc_hi'][1], zt))
+    g['fc_comp'] = ((g['fc_lo'][0] + s_fore, g['fc_lo'][1], zt), (g['fc_hi'][0] - s_aft, g['fc_hi'][1], g['fc_hi'][2]))
+    of = a('fc_out_field')
+    g['fc_holes'] = {}                                     # (output n, row 'S' / 'V' / 'G') -> hole centre on the PCB top
+    for n, used in enumerate(of['used'], start=1):
+        yn = of['y_out5'] + of['pitch'] * (n - 5)
+        for k, row in enumerate('SVG'):
+            if row in used:
+                g['fc_holes'][(n, row)] = (g['fc_hi'][0] - of['row_in'] - k * of['pitch'], yn, zt)
+    g['fc_joint'] = (of['joint_d'], of['joint_h'])
+    gh = a('gh_side_m')
+    fp = a('fc_ports')
+    g['gh'] = {'GPS': gh_side(gh, 6, 'x', +1, g['fc_hi'][0], fp['gps_y'], zt),       # aft edge, cable leaves +x
+               'RX': gh_side(gh, 4, 'x', -1, g['fc_lo'][0], fp['rx_y'], zt)}         # fore edge, cable leaves -x
+    lk = a('fc_link_m')
+    g['fc_link'] = ((lk['x'][0], lk['y'][0], g['fc_lo'][2] - lk['h']), (lk['x'][1], lk['y'][1], g['fc_lo'][2]))
+
+    # microSD in the FC's fore-edge slot (on the PCB top), standing proud by sd_proud_m
     sl, sw, sh = a('sd_m')
     pr = a('sd_proud_m')
     x0 = g['fc_lo'][0] - pr
-    g['sd_lo'] = (x0, cy - sw / 2, g['fc_lo'][2] + 0.001)
-    g['sd_hi'] = (x0 + sl, cy + sw / 2, g['fc_lo'][2] + 0.001 + sh)
+    g['sd_lo'] = (x0, cy - sw / 2, zt)
+    g['sd_hi'] = (x0 + sl, cy + sw / 2, zt + sh)
 
     # airspeed board between D2's tie posts (left channel), ports up
     ax0 = p('avn_plate_x_m')[0]
@@ -101,6 +139,9 @@ def layout(get, A, L, G):
     g['post_gap'] = post_in1 - post_in0
     g['aspd_lo'] = (axc - al / 2, -cy - aw / 2, zplate + tape)
     g['aspd_hi'] = (axc + al / 2, -cy + aw / 2, zplate + tape + ah)
+    # D-89: its GH-4 socket on the aft face, the mated plug standing out aft above the tie post (aspd_gh_z, EST)
+    zb = a('aspd_gh_z')
+    g['gh']['ASPD'] = gh_side(gh, 4, 'x', +1, g['aspd_hi'][0], -cy, zb + gh['plug_t'] / 2 - gh['hdr_h'] / 2)
 
     # pitot boom: probe tip at params avionics.pitot_tip_xyz_m, on the pod socket axis
     tip = get('avionics.pitot_tip_xyz_m', 'm')
@@ -138,6 +179,9 @@ def layout(get, A, L, G):
     g['rx_lo'] = (rx0, -cy - rw / 2, zplate + tape)
     g['rx_hi'] = (rx0 + rl, -cy + rw / 2, zplate + tape + rh)
     g['rx_overhang'] = max(0.0, g['rx_hi'][0] - p('avn_plate_x_m')[1])
+    rp = a('rx_pads')                                      # D-89: 5 V, GND, TX, RX solder pads on the RX top (EST)
+    g['rx_pads'] = [((rp['x0'] + i * rp['pitch'] - 0.0006, rp['y'][0], g['rx_hi'][2]),
+                     (rp['x0'] + i * rp['pitch'] + 0.0006, rp['y'][1], g['rx_hi'][2] + rp['t'])) for i in range(4)]
     g['ant_a_xy'] = tuple(p('ant_tube_xy_m'))
 
     # GPS on the 45 deg pad (pad from D2: A -> C line, normal n, thickness gpt)
@@ -156,6 +200,15 @@ def layout(get, A, L, G):
     g['gps_on_pad'] = (gl <= p('gps_plate_m')[0], gw <= p('gps_plate_m')[0])
     g['gps_arrow'] = (-t[0], 0.0, -t[1])                   # forward and down along the pad: points at the nose
     g['gps_tilt_deg'] = math.degrees(math.atan2(-n[0], n[1]))
+    # D-89: GH-6 plug on the module's aft-upper end face (+t end), standing out along +t; cable leaves it along +t
+    gg, ghm = a('gps_gh_m'), a('gh_side_m')
+    v0 = (gg['v'] - 0.5) * gh                              # across the module height (n), from its centre
+    u0, u1 = gl / 2, gl / 2 + ghm['plug_over']             # along t: from the end face out
+    pt_ = ghm['plug_t']
+    g['gps_plug_loop'] = [(c[0] + su * t[0] + sv * n[0], c[1] + su * t[1] + sv * n[1])
+                          for su, sv in ((u0, v0 - pt_ / 2), (u1, v0 - pt_ / 2), (u1, v0 + pt_ / 2), (u0, v0 + pt_ / 2))]
+    g['gps_plug_w'] = ghm['plug_b0'] + ghm['pitch'] * 5    # GHR-06V-S: B = 8.75 mm
+    g['gps_plug_entry'] = ((c[0] + u1 * t[0] + v0 * n[0], 0.0, c[1] + u1 * t[1] + v0 * n[1]), (t[0], 0.0, t[1]))
     # connector ends for F2 (harness): FC GPS port aft edge, FC fore edge, GPS aft edge, RX aft edge, airspeed side
     g['ports'] = {
         'FC aft edge (GPS SERIAL5+I2C, outputs, servo rail)': (g['fc_hi'][0] - 0.002, cy, g['fc_lo'][2] + 0.004),
@@ -178,7 +231,19 @@ def build(ctx):
 
     # ---------------------------------------------------------------- AVN-001 flight controller (envelope, arrow -x)
     fc = ctx.part('AVN-001')
-    fc.box(g['fc_lo'], g['fc_hi'], name='FC board envelope')
+    # D-89: PCB + component envelope; the leads land on solder joints and GH plugs on the PCB strips (no lead may end
+    # in a bare envelope)
+    fc.box(*g['fc_pcb'], name='FC PCB')
+    fc.box(*g['fc_comp'], name='FC component envelope')
+    jd, jh = g['fc_joint']
+    for (n, row), (x, y, z) in sorted(g['fc_holes'].items()):
+        fc.cylinder('Z', (x, y, z), jh, jd / 2, name='output %d %s solder joint' % (n, row))
+    for port, s in sorted(g['gh'].items()):
+        if port == 'ASPD':
+            continue
+        fc.box(*s['hdr'], name='JST-GH %d header (%s)' % (s['n'], port))
+        fc.box(*s['plug'], name='JST-GH %d plug, mated (%s)' % (s['n'], port))
+    fc.box(*g['fc_link'], name='board-link 2 x 5 header + ribbon plug (W-PMOD)')
 
     # ---------------------------------------------------------------- AVN-006 isolation and retention set: four gel cubes (body)
     iso = ctx.part('AVN-006')
@@ -192,6 +257,7 @@ def build(ctx):
     # ---------------------------------------------------------------- AVN-004 airspeed board + its two silicone lines
     asp = ctx.part('AVN-004')
     asp.box(g['aspd_lo'], g['aspd_hi'], name='MS4525DO board envelope')
+    asp.box(*g['gh']['ASPD']['plug'], name='JST-GH 4 plug, mated (I2C)')        # D-89: header inside the envelope
     for tb in g['tubes']:
         (p0, L0), r = tb['riser'], tb['r']
         asp.cylinder('Z', p0, L0, r, name='silicone line riser')
@@ -214,10 +280,13 @@ def build(ctx):
     # ---------------------------------------------------------------- AVN-003 receiver (crosswise, under antenna tube A)
     rx = ctx.part('AVN-003')
     rx.box(g['rx_lo'], g['rx_hi'], name='RP3 V2 envelope')
+    for i, (lo, hi) in enumerate(g['rx_pads']):             # D-89: the four solder pads with their joints
+        rx.box(lo, hi, name='RX %s solder pad + joint' % ('5V', 'GND', 'TX', 'RX')[i])
 
     # ---------------------------------------------------------------- AVN-002 GPS + compass on the 45 deg pad
     gps = ctx.part('AVN-002')
     gps.prism('Y', -g['gps_w'] / 2, [g['gps_loop']], g['gps_w'], name='M100-5883 envelope 45 deg')
+    gps.prism('Y', -g['gps_plug_w'] / 2, [g['gps_plug_loop']], g['gps_plug_w'], name='JST-GH 6 plug, mated (GPS)')
 
     # ---------------------------------------------------------------- joints (edges owned by avionics; none is fastened)
     ctx.contact('E-AVN-01', 'FC on 4 gel cubes on the FC plate between the end stops; 10 mm strap over the board with 1-2 mm slack')

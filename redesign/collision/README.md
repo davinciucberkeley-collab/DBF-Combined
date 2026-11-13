@@ -49,6 +49,12 @@ Wire rules (each one a physical fact, not a tolerance; D-86 made them strict):
   checked against each other too (D-87).
 - **No folds**: a drawn bend tighter than the strand's own radius makes the tube pass through itself; it fails
   (report section "Wire bends tighter than the wire", D-87).
+- **On a termination** (CAD gate, D-89): each strand end must lie within r + 0.5 mm of a NAMED termination body of
+  its parts or an in-line part: a pad or solder joint, a plug / socket / header / housing / shroud, cups (AS150U,
+  XT30U), a heat-shrink sleeve (pad joint, splice, breakout; the ESC's own heat-shrink over its pads), a lead exit
+  (grommet, boot, motor phase-lead exit, cap can) or a bus bar (`collide_blender.TERMINATION`). A lead buried in a
+  plain envelope ("FC board envelope") fails: it would connect to a box. The GLB gate cannot see body names (one
+  united solid per part), so it keeps the seating and square-entry rules.
 - **Square entry, on a face** (GLB gate, D-88): where a strand enters its terminal part or an in-line connector it
   crosses one face within 25° of square, with its whole section on that face (0.1 mm clear of the face's edges), and
   runs at most 6 mm past it. A lead that slides in at a slant or over an edge or corner, as no soldered or crimped

@@ -137,6 +137,10 @@ def build(ctx):
     # PWR-001 flight pack + its leads + AS150U pack half
     pk = ctx.part('PWR-001')
     pk.box(*G['pack'], name='LiPo 4S 6500 envelope')
+    # D-89: where the pack's own lead pair leaves the hard case (aft face): a lead-exit boot 3 x 7.2 x 7.2 mm EST
+    # round the 6 mm pair (W-PACK starts 1.5 mm into it), so the lead does not start on the bare case face
+    ax1 = G['pack'][1][0]
+    pk.box((ax1, -0.0176, 0.0499), (ax1 + 0.003, -0.0104, 0.0571), name='pack lead exit boot (factory)')
     # the pack's own 10 AWG leads are drawn as the routed wire E-HRN-10 (team/F2, D-85); their mass stays in the pack
     pk.box(*G['as_pack'], name='AS150U pack half')
 
@@ -151,7 +155,8 @@ def build(ctx):
     fr.box(*G['cradle_floor'], name='petg cradle floor')
     fr.box(*G['front_wall'], name='petg cradle front wall (cup slots)')
     (fx0, fy0, fz0), (fx1, fy1, fz1) = G['front_wall']
-    fr.cut_box((fx0 - 0.0005, -0.044, fz0 + 0.0015), (fx1 + 0.0005, -0.036, fz1 + 0.0005), name='cup slot')   # D-85:
+    fr.cut_box((fx0 - 0.0005, -0.0452, fz0 + 0.0015), (fx1 + 0.0005, -0.0348, fz1 + 0.0005), name='cup slot')   # D-85:
+    #   D-89: 10.4 mm wide (was 8): the main jumper is drawn as its two 4.8 mm conductors side by side
     #   the AS150U solder cups and the 10 AWG main jumper (E-HRN-11) pass the wall here; the slot was named, not cut
     for i, b in enumerate(G['side_walls']):
         fr.box(*b, name='petg cradle side wall %d' % i)
@@ -159,7 +164,19 @@ def build(ctx):
         fr.box(*b, name='petg cradle leg %d' % i)
 
     # PWR-003 power board on the deck; PWR-002 AS150U aircraft half in the cradle
-    ctx.part('PWR-003').box(*G['board'], name='power board envelope')
+    pb = ctx.part('PWR-003')
+    pb.box(*G['board'], name='power board envelope')
+    # D-89: what the leads land on (no lead may end on a bare envelope). Battery / output pads on the aft short edge
+    # (power SPEC.md 'Battery / output pads', [M] p. 4: 3 + and 3 - pads on one 32 mm edge), drawn as pad + solder
+    # joint 6 x 4.4 x 0.5 mm EST under the four 10 AWG conductors (team/F2/harness.py W-MAIN-1 / W-MAIN-2);
+    # the board-to-board header with the W-PMOD ribbon plug on the top face, forward-inboard corner (SPEC 'How do
+    # the boards connect?'; size and pitch EST until BOARD-CHECK.md step 4)
+    (bx0, by0, bz0), (bx1, by1, bz1) = G['board']
+    for yc, nm in ((-0.0545, 'output pad + joint (+)'), (-0.0495, 'output pad + joint (-)'),
+                   (-0.04272, 'input pad + joint (+)'), (-0.03788, 'input pad + joint (-)')):
+        pb.box((bx1 - 0.0065, yc - 0.0022, bz1), (bx1 - 0.0005, yc + 0.0022, bz1 + 0.0005), name=nm)
+    pb.box((bx0 + 0.0005, -0.036, bz1), (bx0 + 0.0105, -0.032, bz1 + 0.004),
+           name='board-link 2 x 5 header + ribbon plug (W-PMOD)')
     ctx.part('PWR-002').box(*G['as_air'], name='AS150U aircraft half')
 
     # PWR-004 bus board on the PDB plate

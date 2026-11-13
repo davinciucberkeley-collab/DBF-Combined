@@ -56,15 +56,30 @@ PORTS = {
     "board_out": ((-0.0105, -0.052, 0.0478), "CR-F1-18: power-board output pads, aft edge"),
     "bars_end": ((-0.0105, -0.046, 0.0245), "CR-F1-18: aft end of the bus bars, z 0.024"),
     "bars_out": ((-0.005, -0.0464, 0.024), "CR-F1-18: bars (+ y -0.0499, - y -0.0429), ESC pigtails (D-74)"),
-    "pdb_link": ((-0.058, -0.034, 0.0492), "D-74 / power SPEC.md: PDB board-to-board contacts, top face, forward-inboard "
-                 "corner of the 52 mm board (x -0.062 ... -0.010, top z 0.0486); pin map at BOARD-CHECK.md step 4"),
-    # F3 avionics ports (CR-F3-16, ASM-F3-PORTS +/- 10 mm)
-    "fc_aft": ((0.014, 0.046, 0.030), "CR-F3-16: FC aft edge (outputs, GPS/I2C, rail)"),
-    "fc_fore": ((-0.034, 0.046, 0.030), "CR-F3-16: FC fore edge (SERIAL6, power-board port)"),
-    "gps": ((0.081, 0.0, 0.183), "CR-F3-16: GPS connector"),
-    "rx": ((-0.0425, -0.046, 0.025), "CR-F3-16: RX pads"),
-    "aspd": ((-0.0595, -0.046, 0.026), "CR-F3-16: airspeed JST-GH (-0.060), 0.5 mm inside the sensor body"),
+    "pdb_link": ((-0.0612, -0.034, 0.0506), "D-89: rear of the ribbon plug on the PDB board-to-board header (power.py "
+                 "PWR-003 'board-link header', fore face x -0.0615, top-face forward-inboard corner); pin map at "
+                 "BOARD-CHECK.md step 4"),
+    # F3 avionics ports (CR-F3-16, ASM-F3-PORTS +/- 10 mm). D-89: each is a drawn termination on the board part
+    # (subsystems/avionics/fusion/avionics.py): the point is 0.3 mm inside the plug's rear face / on the solder joint
+    "fc_aft": ((0.0188, 0.0358, 0.029325), "D-89: rear of the mated JST-GH 6 plug (GPS + I2C) on the FC aft edge, "
+               "cable leaves +x (avionics.py gh_side, fc_ports.gps_y)"),
+    "fc_fore": ((-0.0388, 0.0355, 0.029325), "D-89: rear of the mated JST-GH 4 plug (SERIAL6) on the FC fore edge, "
+                "cable leaves -x"),
+    "fc_link": ((-0.021, 0.0393, 0.0236), "D-89: inboard face (y 0.039) of the W-PMOD header + ribbon plug under the "
+                "FC (avionics.py fc_link_m)"),
+    "fc_out": ((0.0150, 0.0565, 0.0272), "D-89: FC output field, PCB top z 0.0272; rows S / Vx / G at x 0.0150 / "
+               "0.01246 / 0.00992, output n at y 0.0565 + 0.00254 (n - 5) (avionics params fc_out_field)"),
+    "gps": ((0.08481, 0.0, 0.18690), "D-89: rear of the mated JST-GH 6 plug on the GPS module's aft-upper end face, "
+            "cable leaves along (0.7071, 0, 0.7071)"),
+    "rx": ((-0.0445, -0.0470, 0.0265), "D-89: RX solder pads (x -0.0475 ... -0.0415 at 2 mm, y -0.048 ... -0.045, "
+           "joint top z 0.0261): the four conductors lie on them"),
+    "aspd": ((-0.0552, -0.04636, 0.027875), "D-89: rear of the mated JST-GH 4 plug on the sensor's aft face (x "
+             "-0.0549), cable leaves +x"),
 }
+FC_OUT_ROWS = {"S": 0.0150, "V": 0.01246, "G": 0.00992}      # D-89: hole x per row (avionics.py fc_holes)
+FC_OUT_Y = lambda n: 0.0565 + 0.00254 * (n - 5)              # hole y of output n
+FC_PCB_TOP, FC_JOINT_H = 0.0272, 0.0005                      # PCB top z, solder joint height (avionics params)
+GPS_PLUG_DIR = (0.70711, 0.0, 0.70711)                       # cable direction out of the GPS plug
 PORT_LIST = [[k, list(v[0])] for k, v in PORTS.items()]
 XT30 = {}                     # station -> (XT30U centre [x, y, z], path length bars -> centre m); filled by build()
 GROM = {}                     # station -> (hole centre [x, y, z], outboard sign); filled by build() (D-83)
@@ -103,6 +118,17 @@ JR_EDGES = tuple("E-HRN-%02d" % i for i in range(46, 54))   # HRN-105-1..6, HRN-
 STRAND_FIX = {}               # wire row id -> function(strands) -> strands: conductors that leave the pair (D-86)
 OTHER_FORMED = ("W-PACK", "W-MAIN-1", "W-MAIN-2")
 BEND_K = [[8, 5.0], [10, 3.0], [16, 4.0], [20, 4.0], [22, 3.0], [26, 3.0], [28, 3.0]]
+
+
+def add_sleeve(pid, start, axis_dir, sign, length, r_in, r_out, wire, also=()):
+    """D-89: a heat-shrink sleeve part (HRN-107-*) along X, Y or Z from `start` (sign: +1 / -1), shrunk on `wire`;
+    `also`: other wires that run through it (a Y-splice holds two cables). Mass = pi (r_out^2 - r_in^2) L rho."""
+    k = "XYZ".index(axis_dir)
+    cg = list(start)
+    cg[k] += sign * length / 2
+    SLEEVE[pid] = {"start": list(start), "axis": sign, "dir": axis_dir, "length": length, "r_in": r_in,
+                   "r_out": r_out, "wire": wire, "also": list(also),
+                   "mass_g": math.pi * (r_out ** 2 - r_in ** 2) * length * SLEEVE_RHO * 1e6, "cg": cg}
 
 
 def port(name, dy=0.0, dz=0.0, dx=0.0):
@@ -941,16 +967,38 @@ def build(g):
         wires.append(["W-PH-" + st, eid, 16, 3, 1, 0.030, 0.020, 16.15, 0.06, r])
 
     def pigtail(out_n):
-        """D-86: output n's plug on the FC aft edge (3 mm pitch, outputs 1..6 along +y), straight aft past the end
-        stop, a gentle S out to its JR pair (HRN-105-n, in output order: no two pigtails cross) and into the female
-        housing to its contacts."""
-        p0 = port("fc_aft", dy=PIG_PITCH * (out_n - 3.5))
-        y = y_jr(out_n)
-        # all S-bends at the same 43 deg slope, the outer ones starting first, so neighbours stay parallel and >= 3.3 mm
-        # apart (the 2.8 mm servo bundles at 3 mm plug pitch would touch on a common diagonal)
-        xs = x_jr0 - 0.0005 - 1.07 * (y - p0[1])
-        mid = [[xs, p0[1], p0[2], "P"]] if y - p0[1] > 1e-6 else []
-        return [p0 + ["P"]] + mid + [[x_jr0 - 0.0005, y, z_jr, "P"], [x_jr0 + JR_TAIL_M + 0.003, y, z_jr, "E"]]
+        """D-89: output n's conductors are soldered in the FC's through-hole field (rows S / Vx / G at 2.54 mm EST,
+        avionics.py fc_holes), rise off the PCB on a formed 2 x OD lead-off, run aft stacked (S lowest, the forward
+        holes higher, over the risers aft of them) and fan into the JR female's contacts (HRN-105-n, pins vertical:
+        S bottom, Vx middle, G top). Row = the S conductor's centre line (length, mass); STRAND_FIX draws each
+        conductor (no bundle ends on the board, D-89)."""
+        yc, y = FC_OUT_Y(out_n), y_jr(out_n)
+        x_s, z0 = FC_OUT_ROWS["S"], FC_PCB_TOP + FC_JOINT_H / 2
+        return [[x_s, yc, z0, "J"], [x_s, yc, 0.0325, "P"], [0.0230, y, z_jr - 0.00254, "P"],
+                [x_jr0 + 0.001, y, z_jr - 0.00254, "E"]]
+
+    def pigtail_fix(out_n, rows, dias):
+        """Per-conductor pigtail: each from its hole (on the joint, 0.25 mm in), up, aft, into its JR contact."""
+        yc, y = FC_OUT_Y(out_n), y_jr(out_n)
+        z0 = FC_PCB_TOP + FC_JOINT_H / 2
+        zh, lvl, dprev = {}, 0.0293, None                               # S level: 2 x OD lead-off over the joint
+        for row, d in zip(rows, dias):
+            if dprev is not None:
+                lvl += dprev / 2 + d / 2 + 0.0003                       # stacked, 0.3 mm clear of the one below
+            zh[row], dprev = lvl, d
+        zp = {"S": z_jr - 0.00254, "V": z_jr, "G": z_jr + 0.00254}    # JR contacts, pins vertical
+
+        def fix(_strands):
+            out = []
+            for row, d in zip(rows, dias):
+                x = FC_OUT_ROWS[row]
+                pts = [[x, yc, z0], [x, yc, zh[row]], [0.0170, yc, zh[row]], [0.0230, y, zp[row]],
+                       [x_jr0 + 0.001, y, zp[row]]]
+                # lead-off formed at 2 x OD (ASM-PWR-BEND, as the ESC pads); the run bends at k x OD (BEND_K, 3)
+                c = _fillet_r(pts, [2.0 * d, 3.0 * d, 3.0 * d], steps=12)
+                out.append([d, [[round(v, 5) for v in p] for p in c]])
+            return out
+        return fix
 
     def jr_tray(n, eid):
         JR["HRN-105-%d" % n] = {"x": [x_jr0, x_jr0 + JR_TAIL_M, x_t1], "y": y_jr(n),
@@ -966,6 +1014,7 @@ def build(g):
         jr_tray(n, eid)
         pig = pigtail(n)
         wires.append(["W-SIG-%s-P" % st, eid, 28, 2, 1, 0.015, 0.060, 1.1, 0.0, pig])
+        STRAND_FIX["W-SIG-%s-P" % st] = pigtail_fix(n, "SG", [0.0009, 0.0009])     # D-89: S + G, 28 AWG
         hi = 0.004 if sz > 0 else 0.002                                 # upper-station lead 2 mm above the lower one
         he = 0.0028 if sz > 0 else -0.002                               # ... and at the exit window (z 0.027-0.039)
         # D-86: from the male contacts out of the shroud's aft end (x 0.049), up to its level 4.5 mm on
@@ -1079,6 +1128,7 @@ def build(g):
         jr_tray(out_n, eid)
         pig = pigtail(out_n)
         wires.append(["W-SRV-%s-P" % side, eid, 22, 3, 0, 0.0, 0.040, SRV_GPM, 0.0, pig])
+        STRAND_FIX["W-SRV-%s-P" % side] = pigtail_fix(out_n, "SVG", [v / 1000.0 for v in SRV_DIA_MM])   # D-89
         # D-86: conductors stacked across the pins (B: in the vertical plane) out of the shroud, up over everything
         # D-88: 3 mm straight out of the shroud's aft face before the rise, so every conductor leaves it square
         pod = [[x_t1 - 0.012, yp, z_jr, "B"], [x_t1 + 0.0030, yp, z_jr, "B"],
@@ -1167,9 +1217,13 @@ def build(g):
     wires.append(["W-PACK", "E-HRN-10", 10, 2, 0, 0.0, 0.0, 0.0, 0.0, r])
     # D-88: out of the AS150U aircraft half's cup end square (x 0.002, 0.3 mm in) and 5 mm straight, then up onto the
     # board's input pads (top, z 0.0486) and along them
-    r = [[0.0023, -0.040, 0.046, "P"], [-0.003, -0.040, 0.046, "P"], [-0.009, -0.040, 0.0525, "P"],
-         [-0.0145, -0.040, 0.0503, "E"]]
+    r = [[0.0023, -0.0403, 0.046, "P"], [-0.003, -0.0403, 0.046, "P"], [-0.009, -0.0403, 0.0525, "P"],
+         [-0.0145, -0.0403, 0.0514, "E"]]
     wires.append(["W-MAIN-1", "E-HRN-11", 10, 2, 0, 0.0, 0.015, 0.0, 0.0, r])
+    # D-89: drawn as its two 10 AWG conductors side by side (y -0.04272 / -0.03788, 4.84 mm apart) from the cups
+    # through the widened cup slot onto the board's two input pads (power.py PWR-003 'input pad', joint top z
+    # 0.0491), lying on them (axis 2.3 mm over the joint): not one 6 mm tube on the bare board top
+    STRAND_FIX["W-MAIN-1"] = lambda s, r=r: [[0.0048, [[p[0], y, p[2]] for p in r]] for y in (-0.04272, -0.03788)]
     # D-85: down through the deck window outboard of the ESC pairs' band (y -0.0502 ... -0.0425), forward under the
     # deck at y -0.054 (clear of the PDB-boss screws at y -0.0588) and onto the bars' forward end (x -0.0305), ahead of
     # the four pair landings (x -0.0095 ... -0.0245)
@@ -1183,9 +1237,10 @@ def build(g):
     zm2, zbar = 0.0295, BAR_TOP + 0.0024
     arc = lambda yc, s: [[-0.0350 - 0.0035 * math.sin(math.radians(a)), yc - s * 0.0035 * math.cos(math.radians(a)),
                           zm2 - (zm2 - zbar) * a / 90.0] for a in (0, 30, 60, 90)]
-    mp = [[-0.0145, -0.0545, 0.0510], [-0.0085, -0.0545, 0.0510], [-0.003, -0.0532, 0.044], [-0.003, -0.0532, zm2]]
+    # D-89: the first two points lie on the output pads (joint top z 0.0491)
+    mp = [[-0.0145, -0.0545, 0.0514], [-0.0085, -0.0545, 0.0514], [-0.003, -0.0532, 0.044], [-0.003, -0.0532, zm2]]
     mp += arc(-0.0497, 1)                                               # the arc ends lying on the + bar
-    mn = [[-0.0145, -0.0495, 0.0510], [-0.0085, -0.0495, 0.0510], [-0.0040, -0.0480, 0.0440],   # down first, then in
+    mn = [[-0.0145, -0.0495, 0.0514], [-0.0085, -0.0495, 0.0514], [-0.0040, -0.0480, 0.0440],   # down first, then in
           [-0.0030, -0.0430, 0.0405], [-0.0030, -0.0396, 0.0370], [-0.0030, -0.0396, zm2]]   # under main 1, over
     #                                                                                      the pairs (top 0.0364)
     mn += arc(-0.0431, -1)                                              # ... and on the - bar
@@ -1206,27 +1261,50 @@ def build(g):
     # D-74 case S: W-PMOD is a 10-way 28 AWG ribbon (ASM-F1-PMOD-CONDUCTORS) from the PDB's board-to-board contacts
     # (top face, forward-inboard corner) forward over the deck front edge (KO-PWR-BOARD x -0.066), down in front of
     # it inboard of the airspeed board (AVN-004, y <= -0.0358), into the corridor under the deck, then as before
-    r = [port("pdb_link") + ["F"], [-0.0685, -0.033, 0.0502, "F"], [-0.0685, -0.033, 0.0350, "P"],
+    # D-89: the ribbon plug sits on the PDB's board-to-board header (top face, forward-inboard corner, power.py) and
+    # on the FC's underside header between the gel cubes (avionics.py fc_link_m): it leaves the PDB plug's fore face
+    # square, and enters the FC plug's inboard face square from the under-FC lane (no lead ends on a bare board)
+    r = [port("pdb_link") + ["F"], [-0.0685, -0.0335, 0.0506, "F"], [-0.0685, -0.033, 0.0350, "P"],
          [-0.0555, y_c, zc["PMOD"], "P"], [xl["PMOD"], y_out, zc["PMOD"], "P"],
-         [xl["PMOD"], y_out, z_under, "L"], [xl["PMOD"], yb, z_under, "P"], [xl["PMOD"], 0.0465, z_fc, "P"],
-         [-0.0345, 0.0465, z_fc, "P"], [-0.0350, 0.0586, z_fc, "P"],          # between the gel cubes, ahead of
-         [-0.0415, 0.0586, 0.0245, "P"],                                       # them, out beside the end
-         [-0.0420, 0.052, 0.030, "P"],                                         # stop (y <= 0.0564), up, in
-         port("fc_fore", dy=0.006) + ["E"]]
+         [xl["PMOD"], y_out, z_under, "L"], [xl["PMOD"], yb, z_under, "P"],
+         [xl["PMOD"], 0.0362, 0.0236, "P"], port("fc_link") + ["E"]]
     wires.append(["W-PMOD", "E-HRN-23", 28, 10, 0, 0.0, 0.020, 1.1, 0.0, r])
-    r = [port("fc_fore", dy=-0.004, dz=-0.0055) + ["P"], [xl["RX"], 0.042, z_fc + 0.0005, "P"],
-         [xl["RX"], yb, z_under, "L"], [xl["RX"], y_out, z_under, "P"], [xl["RX"], y_out, zc["RX"], "P"],
-         [-0.040, y_c, zc["RX"], "P"], [-0.0445, -0.0360, 0.0290, "P"],                  # ahead of the - jumper's
-         [-0.0435, -0.0430, 0.0256 + 0.0011, "P"],                                        # bar end, onto the RX
-         [-0.0430, -0.0460, 0.0256 + 0.0011, "E"]]      # D-88: lying on the RX top onto its pads (RX top z 0.0256)
+    # D-89: out of the FC's fore-edge GH-4 plug (SERIAL6) square (-x), down in front of the fore end stop, aft under
+    # the FC inboard of the gel cubes (y <= 0.0333), into the lane; at the RX the 4-core cable ends in a 2 mm breakout
+    # sleeve (HRN-107-RX) and its four conductors fan onto the RP3's four solder pads (avionics.py rx_pads), lying on
+    # them along -y
+    r = [port("fc_fore") + ["P"], [-0.0416, 0.0355, 0.029325, "P"], [-0.0416, 0.0328, 0.0232, "P"],
+         [-0.0275, 0.0328, 0.0224, "P"], [xl["RX"], 0.0298, z_under, "L"],
+         [xl["RX"], y_out, z_under, "P"], [xl["RX"], y_out, zc["RX"], "P"],
+         [-0.040, y_c, zc["RX"], "P"], [-0.0445, -0.0330, 0.0310, "P"],   # over the airspeed lead, then down
+         [-0.0445, -0.0370, 0.0280, "P"], [-0.0445, -0.0400, 0.0280, "P"],
+         [-0.0445, -0.0445, 0.0265, "P"], port("rx") + ["E"]]
     wires.append(["W-RX", "E-HRN-31", 28, 4, 1, 0.020, 0.010, 1.1, 0.0, r])   # 10 mm loop (F5: <= 0.15 m)
+    rx_x = [-0.0475 + 0.002 * i for i in range(4)]                     # pad centres (avionics params rx_pads)
+    add_sleeve("HRN-107-RX", [-0.0445, -0.0380, 0.0280], "Y", -1, 0.0020, 0.0019, 0.0022, "E-HRN-31")
+
+    def rx_fix(strands):
+        """Bundle up to the middle of the breakout sleeve; then the four 28 AWG conductors side by side (0.93 mm
+        pitch) to the sleeve end, fanned and lowered onto the pads (formed 2 x OD), lying on them to the end."""
+        d, line = strands[0]
+        cut = next(i for i, q in enumerate(line) if q[1] <= -0.0389)
+        out = [[d, line[:cut] + [[-0.0445, -0.0389, 0.0280]]]]
+        for i, xp in enumerate(rx_x):
+            xo = -0.0445 + 0.00093 * (i - 1.5)
+            pts = [[xo, -0.03895, 0.0280], [xo, -0.0400, 0.0280], [xp, -0.0445, 0.0265], [xp, -0.0470, 0.0265]]
+            out.append([0.0009, [[round(v, 5) for v in q] for q in _fillet(pts, 0.0018, steps=12)]])
+        return out
+    STRAND_FIX["W-RX"] = rx_fix
     # GPS cable from the aft-edge GPS port: up the right side to z 0.06, into the right handle leg, grip, mast
     # D-85: the cross bolt (POD-011) fills the 6 mm mast bore, so the cable cannot run inside the mast. From the
     # aft-edge GPS plug it rises clear of the output pigtails, crosses to the right leg's window, climbs the leg bore,
     # leaves it inboard under the grip, runs in the grip groove, drops out of the groove before the centre block,
     # passes aft of the grip and the socket boss and climbs the mast's aft face (tied), aft of the 45 deg pad
+    # D-89: out of the FC's aft-edge GH-6 plug square (+x), up at x 0.022 (the I2C splice sleeve on this riser), and
+    # at the top square into the GH-6 plug on the GPS module's aft-upper end face (along -(0.707, 0, 0.707))
     gz0 = g["grip_z"] - 0.004                                                          # grip underside
-    r = [port("fc_aft", dy=-0.011, dz=0.001) + ["P"], [0.0170, 0.035, 0.031, "P"], [0.0185, 0.035, 0.050, "P"],
+    ge = PORTS["gps"][0]
+    r = [port("fc_aft") + ["P"], [0.0220, 0.0358, 0.029325, "P"], [0.0220, 0.0358, 0.050, "P"],
          [g["x_leg"] - 0.008, g["leg_y"] + 0.010, 0.060, "P"],                          # outboard of the leg
          [g["x_leg"], g["leg_y"] + 0.010, 0.060, "L"],                                  # D2 window, outboard face
          [g["x_leg"], g["leg_y"], 0.064, "L"],
@@ -1237,18 +1315,26 @@ def build(g):
          [g["x_leg"], 0.0072, gz0 - 0.0045, "M"],                                       # down out of the groove
          [0.0887, 0.0030, gz0 - 0.0045, "M"], [0.0887, 0.0, gz0 + 0.004, "M"],           # aft of grip and socket boss
          [0.0887, 0.0, 0.160, "M"],                                                     # up the mast's aft face
-         [0.0916, 0.0, 0.163, "M"], [0.0916, 0.0, 0.186, "M"],                           # aft of the 45 deg pad
-         [0.0860, 0.0, 0.1862, "P"], port("gps") + ["E"]]
+         [0.0916, 0.0, 0.163, "M"], [0.0916, 0.0, 0.184, "M"],                           # aft of the 45 deg pad
+         [ge[0] + 0.0043 * GPS_PLUG_DIR[0], 0.0, ge[2] + 0.0043 * GPS_PLUG_DIR[2], "P"],   # 4 mm out from the plug
+         list(ge) + ["E"]]
     wires.append(["W-GPS", "E-HRN-30", 28, 6, 1, 0.030, 0.040, 1.1, 0.0, r])
     # I2C Y-branch (SDA, SCL, 5 V, GND) spliced 15 mm from the GPS port, forward along the FC to the channel
-    # D-88: soldered on the FC's top-face I2C pads (z 0.0336), over the FC's inboard edge (y 0.0304) and down beside it
-    r = [[0.0110, 0.0335, 0.0336 + 0.0011 - 0.0001, "J"], [0.0110, 0.0290, 0.0355, "P"],
+    # D-89: back to the declared Y-splice (E-HRN-32 wire text): the branch is soldered to the four GPS-cable
+    # conductors beside the riser and both are shrunk in one adhesive sleeve (HRN-107-I2C, z 0.036-0.046, ~15 mm
+    # along the cable from the plug); D-88 had it on FC top-face "I2C pads" that no source or CAD body shows. Then
+    # down inboard of the GPS plug, forward beside the FC (y 0.0292) and into the airspeed sensor's GH-4 plug on its
+    # aft face, square (-x)
+    add_sleeve("HRN-107-I2C", [0.0220, 0.03465, 0.0360], "Z", 1, 0.0100, 0.0025, 0.0029, "E-HRN-32",
+               also=["E-HRN-30"])
+    ae = PORTS["aspd"][0]
+    r = [[0.0220, 0.03324, 0.0400, "P"], [0.0220, 0.03324, 0.0345, "P"], [0.0190, 0.0292, 0.0320, "P"],
          [0.010, 0.0292, zc["ASPD"], "P"],                                                    # inboard of the FC,
          [xl["ASPD"], 0.0292, zc["ASPD"], "P"], [xl["ASPD"], 0.0292, z_under, "P"],    # down outboard of the guide
          [xl["ASPD"], y_out, z_under, "L"], [xl["ASPD"], y_out, zc["ASPD"], "P"],      # under it, up outboard
          [-0.040, y_c, zc["ASPD"], "P"],
-         [-0.050, -0.038, 0.0274, "P"], [-0.0555, -0.046, 0.0268, "P"],          # over the RX and its tie post
-         [-0.0583, -0.046, 0.0268, "E"]]              # gap, and square into the sensor's aft face (D-88: 0.3 mm in)
+         [-0.050, -0.038, 0.0274, "P"], [-0.0520, ae[1], ae[2], "P"],             # over the RX, onto the plug axis
+         list(ae) + ["E"]]                                       # 0.3 mm into the plug's rear face, square
     wires.append(["W-ASPD", "E-HRN-32", 28, 4, 1, 0.020, 0.020, 1.1, 0.0, r])
 
     # ---- fittings: [name, qty, g each, x, y, z]
@@ -1272,7 +1358,7 @@ def build(g):
                       zU(x_rec[0] + 0.009)],
                      ["Servo lead-hole straw 4 mm x 15 mm", 1, 0.03, x_lh, sy * 0.285, 0.013],
                      ["Exit chafe sleeve PET braid 6 mm x 40 mm", 2, 0.08, x_sexit, sy * g["pod_hw"], z_sexit]]
-    fittings += [["JST-GH housings + pre-crimped contacts (6 ends)", 6, 0.15, g["fc_x"], 0.02, zw + 0.004],
+    fittings += [["JST-GH housings + pre-crimped contacts (4 ends: GPS x2, RX at the FC, airspeed; D-89)", 4, 0.15, g["fc_x"], 0.02, zw + 0.004],
                  ["Board-link pin-header ends (2, W-PMOD case S)", 2, 0.30, PORTS["pdb_link"][0][0],
                   PORTS["pdb_link"][0][1], PORTS["pdb_link"][0][2]],
                  ["I2C Y-splice, 4 conductors", 4, 0.08, fc_x1 - 0.006, 0.040, zw + 0.010],
@@ -1633,6 +1719,17 @@ def _simplify(pts, eps):
     return [p for p, k in zip(pts, keep) if k]
 
 
+def _fillet_r(points, radii, steps=6):
+    """_fillet with its own radius at each inner corner (radii[i] at points[i + 1])."""
+    P = [list(p) for p in points]
+    out = [P[0]]
+    for i in range(1, len(P) - 1):
+        seg = _fillet([P[i - 1], P[i], P[i + 1]], radii[i - 1], steps)
+        out += seg[1:-1]
+    out.append(P[-1])
+    return out
+
+
 def _fillet(points, radius, steps=6):
     """blender_backend.fillet_polyline in plain Python: the bend the 3-D model draws at each corner."""
     P = [list(p) for p in points]
@@ -1794,11 +1891,13 @@ def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
                                      "14.00 x 7.90 x 2.75 mm; female showing behind the shroud EST"},
                       "sleeves": {"value": {pid: {"start": [round(c, 5) for c in v["start"]], "axis": v["axis"],
                                                   "length": v["length"], "r_in": round(v["r_in"], 5),
-                                                  "r_out": round(v["r_out"], 5), "wire": v["wire"]}
+                                                  "r_out": round(v["r_out"], 5), "wire": v["wire"],
+                                                  **({"dir": v["dir"], "also": v["also"]} if v.get("dir") else {})}
                                             for pid, v in sorted(SLEEVE.items())},
                                   "unit": "m", "source": "team/F2/harness.py (D-88)",
-                                  "note": "heat-shrink sleeves along x: from start (on the part face) for length in "
-                                          "the direction axis (+1 / -1); shrunk on the lead (in-line on wire)"},
+                                  "note": "heat-shrink sleeves along x (or along dir X / Y / Z, D-89): from start for length in "
+                                          "the direction axis (+1 / -1); shrunk on the lead (in-line on wire, and on "
+                                          "the wires in also)"},
                       "skin_slots": {"value": skin_slots(g, wires, od_table), "unit": "m",
                                      "source": "team/F2/harness.py skin_slots() (D-86)",
                                      "note": "[x0, x1, y0, y1, side]: the tape skin is slit where a lead passes it "
@@ -1935,18 +2034,28 @@ def finish_outputs(out, g, wires, fittings, passes, od_table, res):
                           "subsystem": "harness", "status": "MODELLED", "mass_g": round(v["mass_g"], 4),
                           "material": "polyolefin, adhesive-lined 3:1", "cg_xyz_m": [round(c, 4) for c in v["cg"]],
                           "make_or_buy": "buy", "carried": True,
-                          "notes": "D-88: %.1f / %.1f mm x %.1f mm shrunk over the solder joint where the lead leaves "
-                                   "the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py "
-                                   "SLEEVE" % (v["r_out"] * 2000, v["r_in"] * 2000, v["length"] * 1000)})
+                          "notes": ("D-88: %.1f / %.1f mm x %.1f mm shrunk over the solder joint where the lead leaves "
+                                    "the part face" if not v.get("dir") else
+                                    "D-89: %.1f / %.1f mm x %.1f mm shrunk over " + (
+                                        "the I2C Y-splice: the airspeed branch soldered to the GPS cable's four "
+                                        "conductors (E-HRN-32 on E-HRN-30)" if v.get("also") else
+                                        "the RX cable's breakout, where its four conductors leave the jacket for "
+                                        "the RP3 pads")) % (v["r_out"] * 2000, v["r_in"] * 2000, v["length"] * 1000)
+                                   + " (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE"})
     by_edge = {}
     for w in wires:
         by_edge.setdefault(w[1], []).append(w)
     edges, pending = [], []
-    for n, (pid, v) in enumerate(sorted(SLEEVE.items())):
-        side = "HRN-001" if pid.endswith("PACK") else "HRN-002-" + pid[9]
+    d89 = [k for k in sorted(SLEEVE) if SLEEVE[k].get("dir")]          # D-89 sleeves numbered after the D-88 ones
+    for n, (pid, v) in enumerate([(k, SLEEVE[k]) for k in sorted(SLEEVE) if k not in d89] +
+                                 [(k, SLEEVE[k]) for k in d89]):
+        side = "HRN-001" if pid.endswith(("PACK", "RX", "I2C")) else "HRN-002-" + pid[9]
         edges.append({"id": "E-HRN-%d" % (SLEEVE_EDGE0 + n), "part_a": pid, "part_b": side,
                       "via": "CT-HEATSHRINK", "owner": "harness",
-                      "notes": "heat-shrink shrunk over the solder joint of %s at the part face (D-88)" % v["wire"],
+                      "notes": ("heat-shrink shrunk over the solder joint of %s at the part face (D-88)" % v["wire"])
+                      if not v.get("dir") else ("adhesive heat-shrink over the %s of %s (D-89)" % (
+                          "Y-splice onto the GPS cable (E-HRN-30)" if v.get("also") else "cable breakout",
+                          v["wire"])),
                       "retention": {"item": "adhesive-lined heat-shrink, shrunk", "count": 1,
                                     "load_n": "< 0.1 (%.3f g x 12.75 g crash)" % v["mass_g"],
                                     "inspection": "pre-flight: sleeve over the joint, no bare conductor"}})

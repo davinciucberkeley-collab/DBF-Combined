@@ -74,6 +74,10 @@ def build(ctx):
 
     # D-88: heat-shrink sleeves (HRN-107-*) on the soldered ends, tubes along x from the part face, shrunk on the lead
     for pid, v in sorted(_lv(H['cad'].get('sleeves', {})).items()):
+        if v.get('dir'):        # D-89: splice / breakout sleeve, shrunk full of conductors: drawn solid along dir
+            ctx.part(pid).cylinder(v['dir'], tuple(v['start']), v['axis'] * v['length'], v['r_out'],
+                                   name='heat-shrink sleeve (splice / breakout, shrunk on the conductors)')
+            continue
         ctx.part(pid).tube('X', tuple(v['start']), v['axis'] * v['length'], v['r_out'], v['r_in'],
                            name='heat-shrink sleeve')
 

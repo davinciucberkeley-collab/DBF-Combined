@@ -36,6 +36,7 @@ Does NOT prove (UNVERIFIED-IN-FUSION): that Fusion's kernel builds the sketches/
 bodies do not interpenetrate, real masses. Bounding boxes are coarse: touching boxes do not prove a glue line.
 """
 import argparse
+import json
 import os
 import sys
 
@@ -85,6 +86,17 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
 
     # register + touch
     reg = ctx.registrations()
+    inline = {}                            # D-89: wire edge -> parts fitted in-line on it (harness cad tables)
+    hp = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'subsystems', 'harness',
+                      'params.json')
+    if os.path.exists(hp):
+        with open(hp, encoding='utf-8') as f:
+            for tab in json.load(f).get('harness', {}).get('cad', {}).values():
+                v = tab.get('value') if isinstance(tab, dict) else None
+                for pid, x in (v.items() if isinstance(v, dict) else ()):
+                    if isinstance(x, dict) and x.get('wire'):
+                        for w in [x['wire']] + list(x.get('also', [])):
+                            inline.setdefault(w, set()).add(pid)
     for eid, e in sorted(g.edges.items()):
         a, b = comps.get(e.get('part_a')), comps.get(e.get('part_b'))
         kind, method = g.kind(e), g.method(e)
@@ -118,7 +130,10 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
                     add('ERROR', 'touch', eid, 'joint origin is %.1f mm off a part' % (off * 1000))
             if rk == 'wire':
                 p0, p1 = obj.points[0], obj.points[-1]
-                off = min(max(point_gap(p0, ba), point_gap(p1, bb)), max(point_gap(p0, bb), point_gap(p1, ba)))
+                # D-89: an end may sit in a sleeve fitted in-line on this wire (the I2C Y-splice on the GPS cable)
+                ib = [c.bbox() for pid, c in comps.items() if pid in inline.get(eid, ()) and c.bbox()]
+                ga = lambda p, bx: min([point_gap(p, bx)] + [point_gap(p, q) for q in ib])
+                off = min(max(ga(p0, ba), ga(p1, bb)), max(ga(p0, bb), ga(p1, ba)))
                 # D-88: a lead that runs whole inside one part's own connector (the pack's lead into its AS150U
                 # half) reaches the other part through the mated contacts: both ends on one part, the parts touching
                 if off > tol and bbox_gap(ba, bb) <= tol:

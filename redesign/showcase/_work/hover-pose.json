@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 31.94,
+ "render_s": 37.92,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -2430,9 +2430,9 @@
    "subsystem": "avionics",
    "bbox_px": [
     716,
-    294,
+    295,
     748,
-    354
+    357
    ]
   },
   {
@@ -2474,7 +2474,7 @@
     797,
     233,
     825,
-    290
+    291
    ]
   },
   {
@@ -2744,6 +2744,20 @@
    ]
   },
   {
+   "id": "HRN-107-I2C",
+   "role": "context",
+   "name": "Heat-shrink sleeve I2C on E-HRN-32",
+   "status": "MODELLED",
+   "mass_g": 0.0882,
+   "subsystem": "harness",
+   "bbox_px": [
+    744,
+    352,
+    755,
+    360
+   ]
+  },
+  {
    "id": "HRN-107-LL-P1",
    "role": "context",
    "name": "Heat-shrink sleeve LL-P1 on E-HRN-16",
@@ -2867,6 +2881,20 @@
     406,
     825,
     412
+   ]
+  },
+  {
+   "id": "HRN-107-RX",
+   "role": "context",
+   "name": "Heat-shrink sleeve RX on E-HRN-31",
+   "status": "MODELLED",
+   "mass_g": 0.01,
+   "subsystem": "harness",
+   "bbox_px": [
+    802,
+    298,
+    806,
+    303
    ]
   },
   {
@@ -3003,9 +3031,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    813,
+    812,
     326,
-    823,
+    825,
     347
    ]
   },
@@ -3019,7 +3047,7 @@
    "bbox_px": [
     803,
     305,
-    834,
+    835,
     348
    ]
   },
@@ -3143,9 +3171,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    716,
+    733,
     269,
-    814,
+    815,
     326
    ]
   },
@@ -3158,7 +3186,7 @@
    "subsystem": "harness",
    "bbox_px": [
     527,
-    348,
+    343,
     732,
     401
    ]
@@ -3171,8 +3199,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    734,
-    349,
+    728,
+    344,
     1119,
     515
    ]
@@ -3186,8 +3214,8 @@
    "subsystem": "harness",
    "bbox_px": [
     419,
-    350,
-    740,
+    344,
+    741,
     447
    ]
   },
@@ -3199,8 +3227,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    731,
-    349,
+    726,
+    343,
     1039,
     581
    ]
@@ -3213,8 +3241,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    723,
-    348,
+    722,
+    342,
     1028,
     590
    ]
@@ -3228,7 +3256,7 @@
    "subsystem": "harness",
    "bbox_px": [
     531,
-    347,
+    342,
     760,
     479
    ]
@@ -3241,9 +3269,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    741,
-    350,
-    866,
+    739,
+    353,
+    868,
     415
    ]
   },
@@ -3255,8 +3283,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    730,
-    299,
+    737,
+    292,
     810,
     322
    ]
@@ -3270,9 +3298,9 @@
    "subsystem": "harness",
    "bbox_px": [
     741,
-    287,
-    810,
-    348
+    290,
+    811,
+    359
    ]
   },
   {

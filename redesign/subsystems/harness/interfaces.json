@@ -8,17 +8,17 @@
    "name": "Pod harness bundle (lumped: pod runs of every lead, GPS cable, JR row, GH plugs)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 39.2,
+   "mass_g": 38.2,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.04,
-    -0.0052,
+    0.0414,
+    -0.0061,
     0.0306
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0349, -0.0085, 0.0357] m, 7.9 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
+   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0362, -0.0097, 0.0358] m, 8.2 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness"
   },
   {
    "id": "HRN-002-R",
@@ -307,6 +307,22 @@
    "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); flat on the recess floor under the re-openable tape flap, female mass only (the male is on the servo's own lead, MEC-001); team/F2/harness.py JR; BOM HRN-105; mass EST"
   },
   {
+   "id": "HRN-107-I2C",
+   "name": "Heat-shrink sleeve I2C on E-HRN-32",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0882,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.022,
+    0.0347,
+    0.041
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-89: 5.8 / 5.0 mm x 10.0 mm shrunk over the I2C Y-splice: the airspeed branch soldered to the GPS cable's four conductors (E-HRN-32 on E-HRN-30) (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE"
+  },
+  {
    "id": "HRN-107-LL-P1",
    "name": "Heat-shrink sleeve LL-P1 on E-HRN-16",
    "subsystem": "harness",
@@ -449,6 +465,22 @@
    "make_or_buy": "buy",
    "carried": true,
    "notes": "D-88: 6.8 / 6.0 mm x 3.5 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE"
+  },
+  {
+   "id": "HRN-107-RX",
+   "name": "Heat-shrink sleeve RX on E-HRN-31",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.01,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    -0.0445,
+    -0.039,
+    0.028
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-89: 4.4 / 3.8 mm x 2.0 mm shrunk over the RX cable's breakout, where its four conductors leave the jacket for the RP3 pads (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE"
   },
   {
    "id": "HRN-107-UL-P1",
@@ -836,6 +868,34 @@
     "item": "adhesive-lined heat-shrink, shrunk",
     "count": 1,
     "load_n": "< 0.1 (0.005 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   }
+  },
+  {
+   "id": "E-HRN-71",
+   "part_a": "HRN-107-I2C",
+   "part_b": "HRN-001",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "adhesive heat-shrink over the Y-splice onto the GPS cable (E-HRN-30) of E-HRN-32 (D-89)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.088 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   }
+  },
+  {
+   "id": "E-HRN-72",
+   "part_a": "HRN-107-RX",
+   "part_b": "HRN-001",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "adhesive heat-shrink over the cable breakout of E-HRN-31 (D-89)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.010 g x 12.75 g crash)",
     "inspection": "pre-flight: sleeve over the joint, no bare conductor"
    }
   },
@@ -1545,7 +1605,7 @@
    "part_b": "AVN-001",
    "via": "CT-PIN-HEADER-LINK",
    "owner": "harness",
-   "notes": "Power-board link, case S (D-74): BATT_VOLT, BATT_CURR, FC-BEC 5 V x1, servo-BEC Vx 6 V x4, GND x3 (10 of the board-to-board contacts, flat 28 AWG ribbon folded in two). Wire list rows W-PMOD; routed cut length 0.232 m",
+   "notes": "Power-board link, case S (D-74): BATT_VOLT, BATT_CURR, FC-BEC 5 V x1, servo-BEC Vx 6 V x4, GND x3 (10 of the board-to-board contacts, flat 28 AWG ribbon folded in two). Wire list rows W-PMOD; routed cut length 0.173 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "male pin header (pitch per power BOARD-CHECK.md step 4) in the PDB board-to-board socket -> male pin header in the FC board-to-board socket",
@@ -1561,7 +1621,7 @@
     "strain_relief": "tie within 20 mm of each header; header held by the board's own socket + a dab of hot glue",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.232,
+    "length_m": 0.173,
     "wires": [
      "W-PMOD"
     ]
@@ -1583,7 +1643,7 @@
    "part_b": "PRP-002-UR",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor UR (twisted, no power). Wire list rows W-SIG-UR-P, W-SIG-UR; routed cut length 0.535 m",
+   "notes": "DShot300 bidirectional + GND, motor UR (twisted, no power). Wire list rows W-SIG-UR-P, W-SIG-UR; routed cut length 0.531 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC UR factory signal lead (solder splice)",
@@ -1600,7 +1660,7 @@
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.535,
+    "length_m": 0.531,
     "wires": [
      "W-SIG-UR-P",
      "W-SIG-UR"
@@ -1619,7 +1679,7 @@
    "part_b": "PRP-002-UL",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor UL (twisted, no power). Wire list rows W-SIG-UL-P, W-SIG-UL; routed cut length 0.659 m",
+   "notes": "DShot300 bidirectional + GND, motor UL (twisted, no power). Wire list rows W-SIG-UL-P, W-SIG-UL; routed cut length 0.658 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC UL factory signal lead (solder splice)",
@@ -1636,7 +1696,7 @@
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.659,
+    "length_m": 0.658,
     "wires": [
      "W-SIG-UL-P",
      "W-SIG-UL"
@@ -1655,7 +1715,7 @@
    "part_b": "PRP-002-LR",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor LR (twisted, no power). Wire list rows W-SIG-LR-P, W-SIG-LR; routed cut length 0.574 m",
+   "notes": "DShot300 bidirectional + GND, motor LR (twisted, no power). Wire list rows W-SIG-LR-P, W-SIG-LR; routed cut length 0.575 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC LR factory signal lead (solder splice)",
@@ -1672,7 +1732,7 @@
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.574,
+    "length_m": 0.575,
     "wires": [
      "W-SIG-LR-P",
      "W-SIG-LR"
@@ -1691,7 +1751,7 @@
    "part_b": "PRP-002-LL",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor LL (twisted, no power). Wire list rows W-SIG-LL-P, W-SIG-LL; routed cut length 0.692 m",
+   "notes": "DShot300 bidirectional + GND, motor LL (twisted, no power). Wire list rows W-SIG-LL-P, W-SIG-LL; routed cut length 0.689 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC LL factory signal lead (solder splice)",
@@ -1708,7 +1768,7 @@
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.692,
+    "length_m": 0.689,
     "wires": [
      "W-SIG-LL-P",
      "W-SIG-LL"
@@ -1727,7 +1787,7 @@
    "part_b": "MEC-001-L",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "Elevon L PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-L-P, W-SRV-L, W-SRV-L-S; routed cut length 0.607 m",
+   "notes": "Elevon L PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-L-P, W-SRV-L, W-SRV-L-S; routed cut length 0.602 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "FC output pad + rail (solder) -> servo case (factory)",
@@ -1743,7 +1803,7 @@
     "strain_relief": "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.607,
+    "length_m": 0.602,
     "wires": [
      "W-SRV-L-P",
      "W-SRV-L",
@@ -1762,7 +1822,7 @@
    "part_b": "MEC-001-R",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "Elevon R PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-R-P, W-SRV-R, W-SRV-R-S; routed cut length 0.560 m",
+   "notes": "Elevon R PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-R-P, W-SRV-R, W-SRV-R-S; routed cut length 0.554 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "FC output pad + rail (solder) -> servo case (factory)",
@@ -1778,7 +1838,7 @@
     "strain_relief": "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.56,
+    "length_m": 0.554,
     "wires": [
      "W-SRV-R-P",
      "W-SRV-R",
@@ -1797,7 +1857,7 @@
    "part_b": "AVN-002",
    "via": "CT-JST-GH-6",
    "owner": "harness",
-   "notes": "GPS UART (SERIAL5 TX/RX) + I2C SDA/SCL + 5 V + GND. Wire list rows W-GPS; routed cut length 0.335 m",
+   "notes": "GPS UART (SERIAL5 TX/RX) + I2C SDA/SCL + 5 V + GND. Wire list rows W-GPS; routed cut length 0.331 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "JST-GH 6 (pre-crimped contacts, housing fitted after threading the leg) -> JST-GH 6 at the GPS",
@@ -1812,7 +1872,7 @@
     "strain_relief": "30 mm service loop at the mast base; ties",
     "disconnect": false,
     "slack_mm": 40,
-    "length_m": 0.335,
+    "length_m": 0.331,
     "wires": [
      "W-GPS"
     ]
@@ -1829,7 +1889,7 @@
    "part_b": "AVN-003",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "CRSF: 5 V, GND, FC TX -> RX RX, FC RX <- RX TX. Wire list rows W-RX; routed cut length 0.137 m",
+   "notes": "CRSF: 5 V, GND, FC TX -> RX RX, FC RX <- RX TX. Wire list rows W-RX; routed cut length 0.145 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "JST-GH 4 at the FC (SERIAL6) -> JST-GH 4 / solder pads at the RP3",
@@ -1842,7 +1902,7 @@
     "strain_relief": "tie at the RX",
     "disconnect": false,
     "slack_mm": 10,
-    "length_m": 0.137,
+    "length_m": 0.145,
     "wires": [
      "W-RX"
     ]
@@ -1859,7 +1919,7 @@
    "part_b": "AVN-004",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "I2C branch SDA/SCL + 5 V + GND to MS4525DO (0x28). Wire list rows W-ASPD; routed cut length 0.182 m",
+   "notes": "I2C branch SDA/SCL + 5 V + GND to MS4525DO (0x28). Wire list rows W-ASPD; routed cut length 0.191 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "Y-splice on W-GPS, 15 mm from the FC port -> JST-GH 4 at the airspeed sensor",
@@ -1873,7 +1933,7 @@
     "strain_relief": "splice under adhesive heat-shrink, tied to the FC plate",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.182,
+    "length_m": 0.191,
     "wires": [
      "W-ASPD"
     ]

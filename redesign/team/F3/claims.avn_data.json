@@ -75,16 +75,16 @@
    },
    "outputs": {
     "mass_g": 36.48,
-    "cg_x_m": -0.0233,
-    "cg_y_m": 0.0011,
-    "cg_z_m": 0.062
+    "cg_x_m": -0.0169,
+    "cg_y_m": 0.0019,
+    "cg_z_m": 0.0625
    },
    "input_values": {
     "r": [
      36.48,
-     -0.0233,
-     0.0011,
-     0.062
+     -0.0169,
+     0.0019,
+     0.0625
     ]
    }
   },
@@ -96,9 +96,9 @@
    "basis": "team/F3/avn_data.py: seller masses on the envelopes, volumes x densities for printed, gel and silicone parts",
    "value": [
     36.48,
-    -0.0233,
-    0.0011,
-    0.062
+    -0.0169,
+    0.0019,
+    0.0625
    ],
    "unit": "g,m,m,m",
    "status": "UNVERIFIED"
@@ -210,7 +210,7 @@
     "AVN-007"
    ],
    "how": "From the weighed parts at their CAD stations; A3 roll-up.",
-   "value": -0.0233
+   "value": -0.0169
   },
   {
    "id": "CL-F3-AVN-CG-Y",
@@ -229,7 +229,7 @@
     "AVN-007"
    ],
    "how": "As CL-F3-AVN-CG-X.",
-   "value": 0.0011
+   "value": 0.0019
   },
   {
    "id": "CL-F3-ASPD-POST-CLR",

@@ -210,6 +210,13 @@ def rect(x0, y0, x1, y1):
 def build_servo(part, G):
     L, W, H = G['case']
     part.box((G['cx0'], G['cy0'], G['cz0']), (G['cx1'], G['cy1'], G['cz1']), name='servo case')
+    # D-89: the factory lead leaves the case's forward end face through a rubber grommet (2 x 5.6 x 4.4 mm EST, in
+    # line with the drawn lead 3 mm in from the outboard side; the real exit is near the bottom cover, EST), so the
+    # three conductors do not stop on a bare case face
+    yo = G['cy0'] + 0.003 if abs(G['cy0']) > abs(G['cy1']) else G['cy1'] - 0.003
+    zc = (G['cz0'] + G['cz1']) / 2
+    part.box((G['cx0'] - 0.0015, yo - 0.0028, zc - 0.0022), (G['cx0'] + 0.0005, yo + 0.0028, zc + 0.0022),
+             name='servo lead exit grommet')
     part.box((G['ex0'], G['ey0'], G['cz0']), (G['ex1'], G['ey0'] + G['ear_t'], G['cz1']), name='mounting ears')
     part.cylinder('Y', (G['xs'], G['cy1'], G['zs']), G['boss'], 0.0025, name='spline boss')
 

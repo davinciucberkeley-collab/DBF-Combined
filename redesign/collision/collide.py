@@ -190,7 +190,8 @@ def main():
         for tab in cad.values():
             for pid, v in (tab.get('value') or {}).items() if isinstance(tab.get('value'), dict) else ():
                 if isinstance(v, dict) and v.get('wire'):
-                    inline.setdefault(v['wire'], []).append(pid)
+                    for wid in [v['wire']] + list(v.get('also', [])):   # D-89: a Y-splice sleeve holds two wires
+                        inline.setdefault(wid, []).append(pid)
     for w in ctx.wires:                               # drawn exactly as the GLB draws them (blender_backend.wire)
         e = graph.edges.get(w.edge, {})
         blk = e.get('wire', {}) if isinstance(e.get('wire'), dict) else {}
@@ -229,7 +230,7 @@ def main():
     for pz in rep['poses']:
         n = sum(1 for h in pz['hits'] if h['depth_mm'] > a.tol_mm)
         print('  %-48s %4d part pairs penetrate > %g mm' % (pz['name'][:48], n, a.tol_mm))
-    print('  %-48s %4d' % ('wire ends not seated in a part', len(rep.get('wire_ends', []))))
+    print('  %-48s %4d' % ('wire ends not on a termination (pad, plug, ...)', len(rep.get('wire_ends', []))))
     print('  %-48s %4d' % ('wire bends tighter than the wire (folds)', len(rep.get('kinks', []))))
     if a.glb:                                         # D-88: the exported GLB, as shown
         gp = os.path.join(a.out, 'glb_report.json')
@@ -298,7 +299,7 @@ def write_md(rep, a, path):
                   k['wire'], k['strand'], ', '.join('%.1f' % v for v in k['at_mm']), k['bend_mm'], k['radius_mm'])
                   for k in rep['kinks']] + ['']
     if rep.get('wire_ends'):
-        L += ['## Wire ends not seated', '', '| Wire | Strand | End (x, y, z) mm | Gap mm | Its parts |',
+        L += ['## Wire ends not on a termination (D-89: pad, joint, plug, header, cup, sleeve, lead exit, bus bar)', '', '| Wire | Strand | End (x, y, z) mm | Gap mm | Its parts |',
               '|---|---|---|---|---|'] + ['| %s | %d | %s | %s | %s |' % (
                   e['wire'], e['strand'], ', '.join('%.1f' % v for v in e['end_mm']),
                   '-' if e['gap_mm'] is None else '%.2f' % e['gap_mm'], ', '.join(e['hosts']))

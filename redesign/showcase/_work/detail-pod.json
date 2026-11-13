@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 16.41,
+ "render_s": 17.56,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -48,7 +48,7 @@
  },
  "subject_px": [
   408,
-  67,
+  65,
   1193,
   986
  ],
@@ -85,16 +85,16 @@
   },
   {
    "item": "AVN-001",
-   "x": 706.6,
-   "y": 509.9,
+   "x": 702.0,
+   "y": 513.9,
    "title": "AVN-001",
    "text": "Flight controller",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    -0.0117,
-    0.0576,
+    -0.0144,
+    0.0574,
     0.0336
    ]
   },
@@ -116,7 +116,7 @@
   {
    "item": "AVN-002",
    "x": 1007.7,
-   "y": 113.9,
+   "y": 113.8,
    "title": "AVN-002",
    "text": "GPS + compass",
    "detail": null,
@@ -124,7 +124,7 @@
    "occluded": false,
    "world_m": [
     0.0727,
-    -0.0026,
+    -0.0025,
     0.1805
    ]
   },
@@ -378,8 +378,8 @@
    "subsystem": "avionics",
    "bbox_px": [
     650,
-    466,
-    817,
+    478,
+    820,
     596
    ]
   },
@@ -406,9 +406,9 @@
    "subsystem": "avionics",
    "bbox_px": [
     669,
-    546,
+    545,
     722,
-    583
+    582
    ]
   },
   {
@@ -489,9 +489,9 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    915,
-    574,
-    960,
+    911,
+    573,
+    965,
     604
    ]
   },
@@ -504,7 +504,7 @@
    "subsystem": "harness",
    "bbox_px": [
     872,
-    594,
+    593,
     981,
     706
    ]
@@ -517,8 +517,8 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    646,
-    553,
+    727,
+    563,
     887,
     710
    ]
@@ -531,10 +531,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    800,
-    71,
-    1041,
-    509
+    807,
+    65,
+    1040,
+    505
    ]
   },
   {
@@ -545,10 +545,10 @@
    "mass_g": null,
    "subsystem": "harness",
    "bbox_px": [
-    696,
-    568,
-    882,
-    707
+    695,
+    583,
+    887,
+    714
    ]
   },
   {
@@ -560,9 +560,9 @@
    "subsystem": "harness",
    "bbox_px": [
     735,
-    501,
+    475,
     874,
-    731
+    724
    ]
   }
  ],
@@ -675,6 +675,7 @@
   "HRN-105-6",
   "HRN-105-SL",
   "HRN-105-SR",
+  "HRN-107-I2C",
   "HRN-107-LL-P1",
   "HRN-107-LL-P2",
   "HRN-107-LL-PH",
@@ -684,6 +685,7 @@
   "HRN-107-LR-PH",
   "HRN-107-LR-S",
   "HRN-107-PACK",
+  "HRN-107-RX",
   "HRN-107-UL-P1",
   "HRN-107-UL-P2",
   "HRN-107-UL-PH",

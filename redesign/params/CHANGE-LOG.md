@@ -641,3 +641,28 @@ cap 15 mm aft of the ESC. **D1**: the JR recess and the servo-groove corner reli
 
 Media regenerated from this design: renders and site thumbnails, GA drawing, flight animation + GIF, build
 animation, STLs, GLB + viewer data, page snapshots and inspection pictures.
+
+## 2026-11-13 · every lead ends on a drawn termination, checked by name: pads, plugs, joints, sleeves (D-89; Dillon Alcouffe)
+
+The team still found leads in the pod ending on the bare face of a box: the flight controller, receiver,
+airspeed sensor, GPS and power board were drawn as plain envelopes. D-86 to D-88 checked only that a wire end was
+seated *inside* one of its parts, and a wire buried in an envelope met that rule. The CAD gate now accepts an
+end only on a named termination body.
+
+| Id | Decision | From | Keys changed | Why (numbers) |
+|---|---|---|---|---|
+| **D-89** | **A wire end must land on a drawn termination (pad, solder joint, plug, header, cups, sleeve, lead exit, bus bar); the avionics boards, power board, pack and servos get them** | team inspection of the D-88 Explorer (FC area) | `collision/collide_blender.py` (`TERMINATION`, `end_seats(require_term)`), `collision/collide.py` (splice sleeves in-line on two wires), `fusion/check.py` (an end may sit in an in-line sleeve), `subsystems/avionics/params.json` (`fc_pcb_t_m`, `fc_strip_m`, `fc_out_field`, `gh_side_m`, `fc_ports`, `fc_link_m`, `rx_pads`, `aspd_gh_z`, `gps_gh_m`), `subsystems/avionics/fusion/avionics.py`, `subsystems/power/fusion/power.py`, `subsystems/mechanisms/fusion/mechanisms.py`, `subsystems/harness/fusion/harness.py`, `team/F2/harness.py` (`PORTS`, `pigtail_fix`, `add_sleeve`, routes) | (a) **Gate rule**: the CAD gate (bodies keep their names) counts an end only within r + 0.5 mm of a termination body of its parts or an in-line part. Before: 0 flagged by the old rule, but the FC, RX, airspeed, GPS, PDB, pack and servo ends sat in envelopes. After: 0. The GLB gate (one united solid per part) keeps the seating and square-entry checks. (b) **FC** drawn as its 1.6 mm PCB plus a component envelope set back 9 mm (aft) and 4.1 mm (fore), EST. Outputs 1–6: each conductor is soldered in its own hole of the S / Vx / G field (2.54 mm EST; power SPEC.md [M] p. 3, p. 7), rises on a 2 × OD lead-off, runs aft stacked and enters its JR contact (pins vertical): 14 solder joints, no bundle on the board. GPS: JST-GH 6 side-entry header plus mated plug on the aft edge. SERIAL6: GH-4 on the fore edge. Power-board link: 2 × 5 header plus ribbon plug under the FC, between the gel cubes (EST). (c) **JST-GH sizes** from the JST GH catalogue pp. 27 and 29 (https://www.farnell.com/datasheets/5438.pdf, checked 2026-11-12): header B = 1.25 (n − 1) + 4.5 mm, 4.05 deep, 4.25 high; housing B = 1.25 (n − 1) + 2.5, 4.15 thick; side-entry mated length 7.15. (d) **Airspeed I²C**: back to the declared Y-splice (E-HRN-32 wire text): the branch is soldered to the GPS cable's four conductors on its riser, about 15 mm from the FC plug, under one adhesive sleeve `HRN-107-I2C` (Ø5.8 × 10 mm), and plugs into a GH-4 on the sensor's aft face above the tie post. D-88 had landed it on FC top-face "I²C pads" that no source or CAD body showed. (e) **RX**: four 5 V / GND / TX / RX pads on the RP3 top (order and pitch EST; openelab RP3 V2 page says pads, no plug, checked 2026-11-12). The 4-core cable ends in a 2 mm breakout sleeve `HRN-107-RX`; its conductors fan onto the pads and lie on them. (f) **GPS**: the GH-6 plug on the module's aft-upper end face; the cable enters it square along the 45° pad. (g) **Power board**: four pad joints on the aft edge (6 × 4.4 × 0.5 mm EST) under the four 10 AWG conductors. The battery jumper W-MAIN-1 is now drawn as its two conductors (was one 6 mm tube), with the cup slot widened to 10.4 mm. The ribbon plug sits on a top-face header at the forward-inboard corner. (h) **Pack**: lead-exit boot on the case's aft face. **Servos**: lead-exit grommet on each case's forward end face (sizes EST). (i) Sleeve parts can now lie along any axis (`dir`). The two new sleeves are solid (shrunk full of conductors), edges E-HRN-71/72 (`CT-HEATSHRINK`). (j) JST-GH ends in the fittings: 4 (was 6). |
+
+Result: `collision/collide.py --glb` PASS (1077 bodies in 212 parts, 3 poses): CAD gate 0 overlaps, 0 wire ends off
+a termination, 0 folds; GLB gate 0 part pairs > 0.05 mm, 0 unseated wire ends, 0 bad entries; export 0 `CUT NOT
+VERIFIED`. `fusion/check.py` and `interfaces/merge_check.py` PASS. F2 rules: bend 1.006 (W-SRV-L-P lead-off), DShot
+0.689 m against 0.70 m, RX lead 0.145 m against 0.15 m. Harness mass 140.9 g (was 141.8 g).
+
+**Open:** harness mass 140.9 g vs 129 g (`CL-F2-MASS` FAILS) and I²C 0.522 m vs 0.500 m (`CL-F2-I2C-LEN` FAILS, was
+0.517 m: the splice sits on the GPS riser): the team lead's call. **F3, on arrival** (T-F3-ARRIVAL): FC connector
+types and positions, the output-field pitch, the RP3 pad order, the GPS module's connector (the M100 Pro ships SH 1.0,
+UNVERIFIED), and the FC underside board-link header. **F1**, **D1**: as in D-88.
+
+Media regenerated from this design: GLB and viewer data, STLs, renders and thumbnails, GA drawing, flight
+animation, site build guide and proof-chain pages, page snapshots, inspection pictures. The build animation is
+re-rendered with the new assembly sequence (separate entry).

@@ -3,14 +3,14 @@
  "mode": "material",
  "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
  "files": {
-  "assembly.glb": 12929784,
-  "avionics.glb": 61192,
+  "assembly.glb": 13316584,
+  "avionics.glb": 111008,
   "fins.glb": 1791048,
-  "harness.glb": 2531356,
+  "harness.glb": 2862900,
   "landing.glb": 205492,
-  "mechanisms.glb": 433956,
+  "mechanisms.glb": 435780,
   "pod.glb": 174616,
-  "power.glb": 203412,
+  "power.glb": 207708,
   "propulsion.glb": 1195552,
   "transport.glb": 255016,
   "wing.glb": 6066892
@@ -1993,7 +1993,7 @@
    "explode_m": [
     0.0,
     0.0,
-    -0.1418
+    -0.0134
    ]
   },
   {
@@ -2026,7 +2026,7 @@
    "explode_m": [
     0.0,
     0.0,
-    -0.0718
+    -0.0723
    ]
   },
   {
@@ -2044,7 +2044,7 @@
    "id": "HRN-001",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 39.2,
+   "mass_g": 38.2,
    "explode_m": [
     0.0,
     0.0,
@@ -2253,6 +2253,17 @@
    ]
   },
   {
+   "id": "HRN-107-I2C",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0882,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0903
+   ]
+  },
+  {
    "id": "HRN-107-LL-P1",
    "subsystem": "harness",
    "status": "MODELLED",
@@ -2345,6 +2356,17 @@
    "subsystem": "harness",
    "status": "MODELLED",
    "mass_g": 0.0366,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0903
+   ]
+  },
+  {
+   "id": "HRN-107-RX",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.01,
    "explode_m": [
     0.0,
     0.0,

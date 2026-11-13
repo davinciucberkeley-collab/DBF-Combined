@@ -1742,9 +1742,9 @@
     "AVN-001": {
      "bbox_px": [
       884.0,
-      293.0,
+      288.7,
       928.8,
-      365.8
+      370.1
      ],
      "subsystem": "avionics",
      "name": "Flight controller CoreWing F405 Wing APP V2"
@@ -1774,7 +1774,7 @@
       761.9,
       196.1,
       791.3,
-      262.2
+      266.5
      ],
      "subsystem": "avionics",
      "name": "Airspeed sensor MS4525DO (I2C 0x28)"
@@ -1804,7 +1804,7 @@
       826.8,
       434.6,
       856.2,
-      463.3
+      464.5
      ],
      "subsystem": "avionics",
      "name": "GPS + compass HGLRC M100-5883"
@@ -3424,7 +3424,7 @@
     "PWR-003": {
      "bbox_px": [
       884.0,
-      274.0,
+      268.4,
       928.8,
       286.6
      ],
@@ -3536,7 +3536,7 @@
       754.2,
       295.0,
       799.0,
-      306.2
+      311.8
      ],
      "subsystem": "avionics",
      "name": "Flight controller CoreWing F405 Wing APP V2"
@@ -3554,9 +3554,9 @@
     "AVN-007": {
      "bbox_px": [
       768.9,
-      303.4,
+      302.5,
       784.3,
-      304.8
+      303.9
      ],
      "subsystem": "avionics",
      "name": "microSD 16-32 GB (logging)"
@@ -3584,7 +3584,7 @@
     "AVN-003": {
      "bbox_px": [
       891.0,
-      306.2,
+      305.5,
       921.8,
       311.8
      ],
@@ -3594,7 +3594,7 @@
     "AVN-002": {
      "bbox_px": [
       826.8,
-      79.2,
+      78.0,
       856.2,
       107.9
      ],
@@ -5216,7 +5216,7 @@
     "PWR-003": {
      "bbox_px": [
       256.6,
-      274.0,
+      268.4,
       329.4,
       286.6
      ],
@@ -5325,10 +5325,10 @@
     },
     "AVN-001": {
      "bbox_px": [
-      293.0,
+      288.7,
       295.0,
-      365.8,
-      306.2
+      370.1,
+      311.8
      ],
      "subsystem": "avionics",
      "name": "Flight controller CoreWing F405 Wing APP V2"
@@ -5346,9 +5346,9 @@
     "AVN-007": {
      "bbox_px": [
       290.2,
-      303.4,
+      302.5,
       311.2,
-      304.8
+      303.9
      ],
      "subsystem": "avionics",
      "name": "microSD 16-32 GB (logging)"
@@ -5357,7 +5357,7 @@
      "bbox_px": [
       196.1,
       275.9,
-      262.2,
+      266.5,
       311.8
      ],
      "subsystem": "avionics",
@@ -5376,7 +5376,7 @@
     "AVN-003": {
      "bbox_px": [
       268.5,
-      306.2,
+      305.5,
       286.7,
       311.8
      ],
@@ -5386,8 +5386,8 @@
     "AVN-002": {
      "bbox_px": [
       434.6,
-      79.2,
-      463.3,
+      78.0,
+      464.5,
       107.9
      ],
      "subsystem": "avionics",
