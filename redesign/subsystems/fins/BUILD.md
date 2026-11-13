@@ -38,8 +38,8 @@ wing is skinned**, and the half-fin roots are bonded **to bare foam**.
 6. **Drill the motor plates.** Hold the motor on the canted plate face, centred on the shaft opening, and drill
    3.4 mm square to the face through the four pilots (follow the motor's real holes, not the pilots, if they
    differ). No slots (C6). **Check:** each M3×8 bites 3.5 mm (count the turns), no screw bottoms out.
-7. **Blocks on the spar (with D1).** Thread both blocks onto the spar, keyhole slots aft (+x), tube bore vertical,
-   strap eyes outboard. Set them with the spar jig at y = ±0.320 m, bond with 30 min epoxy. D1 bonds the spar and
+7. **Blocks on the spar (with D1).** Thread both blocks onto the spar, keyhole slots aft (+x), tube bore vertical
+   (no strap eyes on the block since D-89c: the four `FIN-013` eyes are bonded on in BUILD-GUIDE stage 6). Set them with the spar jig at y = ±0.320 m, bond with 30 min epoxy. D1 bonds the spar and
    both blocks into the core (pockets x 0.028–0.097 m, 36 mm wide, corners R 3 mm) and lays the ≥ 3 mm microballoon
    bead along the inboard and outboard pocket edges on both surfaces (D-68). **Check:** ±1 mm on y, bore square
    within 1°, no gap at the rounded corners.

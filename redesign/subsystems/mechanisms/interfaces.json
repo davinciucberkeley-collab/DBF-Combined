@@ -100,30 +100,30 @@
    "name": "Control horn, inboard panel (clevis + rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 2.87,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.265,
-    0.2857,
-    -0.0059
+    0.2636,
+    0.2858,
+    -0.007
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.54 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.25 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-004-L",
    "name": "Control horn, inboard panel (clevis + rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 2.87,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.265,
-    -0.2857,
-    -0.0059
+    0.2636,
+    -0.2858,
+    -0.007
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.54 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.25 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-005-R",
@@ -160,30 +160,30 @@
    "name": "Link horn, outboard panel (rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.95,
+   "mass_g": 2.62,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2661,
-    0.3542,
-    -0.0047
+    0.2647,
+    0.3541,
+    -0.0058
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.32 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.03 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-006-L",
    "name": "Link horn, outboard panel (rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.95,
+   "mass_g": 2.62,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2661,
-    -0.3542,
-    -0.0047
+    0.2647,
+    -0.3541,
+    -0.0058
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.32 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+   "notes": "mass EST (2.03 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-007-R",
@@ -338,6 +338,66 @@
    "make_or_buy": "buy",
    "notes": "mass EST (113 cm2 tape); CG = CAD centroid",
    "carried": true
+  },
+  {
+   "id": "MEC-013-RI",
+   "name": "Horn backplate, upper surface (D-89c) right, inboard panel",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2756,
+    0.285,
+    0.0031
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.29 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+  },
+  {
+   "id": "MEC-013-LI",
+   "name": "Horn backplate, upper surface (D-89c) left, inboard panel",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2756,
+    -0.285,
+    0.0031
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.29 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+  },
+  {
+   "id": "MEC-013-RO",
+   "name": "Horn backplate, upper surface (D-89c) right, outboard panel",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2756,
+    0.355,
+    0.0031
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.29 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
+  },
+  {
+   "id": "MEC-013-LO",
+   "name": "Horn backplate, upper surface (D-89c) left, outboard panel",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2756,
+    -0.355,
+    0.0031
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.29 cm3 PETG x 0.90 + epoxy); CG = CAD centroid"
   },
   {
    "id": "MEC-011-R",
@@ -656,7 +716,7 @@
    "part_a": "MEC-004-L",
    "part_b": "WNG-011-L",
    "via": "CT-EPOXY",
-   "notes": "through-panel horn: blade in a 2.5 mm slot, lower flange and upper backplate on bare foam, bore on the tube",
+   "notes": "through-panel horn: blade in a 2.5 mm slot from below, lower flange on bare foam, U-slot on the tube (backplate MEC-013)",
    "owner": "mechanisms",
    "bond": {
     "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
@@ -673,7 +733,7 @@
    "part_a": "MEC-004-R",
    "part_b": "WNG-011-R",
    "via": "CT-EPOXY",
-   "notes": "through-panel horn: blade in a 2.5 mm slot, lower flange and upper backplate on bare foam, bore on the tube",
+   "notes": "through-panel horn: blade in a 2.5 mm slot from below, lower flange on bare foam, U-slot on the tube (backplate MEC-013)",
    "owner": "mechanisms",
    "bond": {
     "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
@@ -1023,6 +1083,74 @@
     "access": "from below (-z), wing on its back",
     "install_order": 6,
     "removal_order": 1
+   }
+  },
+  {
+   "id": "E-MEC-37",
+   "part_a": "MEC-013-LI",
+   "part_b": "MEC-004-L",
+   "via": "CT-EPOXY",
+   "notes": "horn backplate bonded over the blade top and the bare foam after the horn is in from below (D-89c)",
+   "owner": "mechanisms",
+   "bond": {
+    "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
+    "area_mm2": "-",
+    "prep": "tape cut back, foam scuffed, PETG sanded 120 grit, rod/tube scuffed + IPA",
+    "cure": "24 h at >= 20 C before load",
+    "load_n": "-",
+    "load_case": "full travel at VD (R-SERVO-TORQUE)",
+    "sized_by": "D6 (method of C6 CALC-C6-LINKAGE)"
+   }
+  },
+  {
+   "id": "E-MEC-38",
+   "part_a": "MEC-013-RI",
+   "part_b": "MEC-004-R",
+   "via": "CT-EPOXY",
+   "notes": "horn backplate bonded over the blade top and the bare foam after the horn is in from below (D-89c)",
+   "owner": "mechanisms",
+   "bond": {
+    "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
+    "area_mm2": "-",
+    "prep": "tape cut back, foam scuffed, PETG sanded 120 grit, rod/tube scuffed + IPA",
+    "cure": "24 h at >= 20 C before load",
+    "load_n": "-",
+    "load_case": "full travel at VD (R-SERVO-TORQUE)",
+    "sized_by": "D6 (method of C6 CALC-C6-LINKAGE)"
+   }
+  },
+  {
+   "id": "E-MEC-39",
+   "part_a": "MEC-013-LO",
+   "part_b": "MEC-006-L",
+   "via": "CT-EPOXY",
+   "notes": "link-horn backplate bonded over the blade top and the bare foam (D-89c)",
+   "owner": "mechanisms",
+   "bond": {
+    "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
+    "area_mm2": "-",
+    "prep": "tape cut back, foam scuffed, PETG sanded 120 grit, rod/tube scuffed + IPA",
+    "cure": "24 h at >= 20 C before load",
+    "load_n": "-",
+    "load_case": "full travel at VD (R-SERVO-TORQUE)",
+    "sized_by": "D6 (method of C6 CALC-C6-LINKAGE)"
+   }
+  },
+  {
+   "id": "E-MEC-40",
+   "part_a": "MEC-013-RO",
+   "part_b": "MEC-006-R",
+   "via": "CT-EPOXY",
+   "notes": "link-horn backplate bonded over the blade top and the bare foam (D-89c)",
+   "owner": "mechanisms",
+   "bond": {
+    "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
+    "area_mm2": "-",
+    "prep": "tape cut back, foam scuffed, PETG sanded 120 grit, rod/tube scuffed + IPA",
+    "cure": "24 h at >= 20 C before load",
+    "load_n": "-",
+    "load_case": "full travel at VD (R-SERVO-TORQUE)",
+    "sized_by": "D6 (method of C6 CALC-C6-LINKAGE)"
    }
   },
   {

@@ -98,15 +98,15 @@
    "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.85,
+   "mass_g": 10.67,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0366,
+    0.0367,
     0.3207,
-    0.179
+    0.1788
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (11.27 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.08 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -114,15 +114,15 @@
    "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.85,
+   "mass_g": 10.67,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0366,
+    0.0367,
     -0.3207,
-    0.179
+    0.1788
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (11.27 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.08 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -130,15 +130,15 @@
    "name": "Motor mount LR, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.85,
+   "mass_g": 10.67,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0366,
+    0.0367,
     0.3207,
-    -0.179
+    -0.1788
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (11.27 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.08 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -146,46 +146,46 @@
    "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.85,
+   "mass_g": 10.67,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0366,
+    0.0367,
     -0.3207,
-    -0.179
+    -0.1788
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (11.27 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.08 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
    "id": "FIN-004-R",
-   "name": "Through-core block R (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
+   "name": "Through-core block R (tube socket + spar saddle + 2 tie lugs)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.87,
+   "mass_g": 39.97,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0614,
-    0.3204,
+    0.0619,
+    0.32,
     0.0067
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (54.22 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (52.92 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-004-L",
-   "name": "Through-core block L (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
+   "name": "Through-core block L (tube socket + spar saddle + 2 tie lugs)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.87,
+   "mass_g": 39.97,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0614,
-    -0.3204,
+    0.0619,
+    -0.32,
     0.0067
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (54.22 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (52.92 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-006-R",
@@ -636,6 +636,66 @@
    ],
    "make_or_buy": "buy",
    "notes": "mass EST (0.797 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+  },
+  {
+   "id": "FIN-013-UR",
+   "name": "Strap eye UR, PETG, bonded on the upper bore boss after the spar bond (D-89c)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.045,
+    0.3378,
+    0.0262
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.84 cm3 x PETG 1.27 (100 %) + bond); CG = CAD centroid; section subsystems/wing/s5010.dat"
+  },
+  {
+   "id": "FIN-013-UL",
+   "name": "Strap eye UL, PETG, bonded on the upper bore boss after the spar bond (D-89c)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.045,
+    -0.3378,
+    0.0262
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.84 cm3 x PETG 1.27 (100 %) + bond); CG = CAD centroid; section subsystems/wing/s5010.dat"
+  },
+  {
+   "id": "FIN-013-LR",
+   "name": "Strap eye LR, PETG, bonded on the lower bore boss after the spar bond (D-89c)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.045,
+    0.3378,
+    -0.0135
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.84 cm3 x PETG 1.27 (100 %) + bond); CG = CAD centroid; section subsystems/wing/s5010.dat"
+  },
+  {
+   "id": "FIN-013-LL",
+   "name": "Strap eye LL, PETG, bonded on the lower bore boss after the spar bond (D-89c)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.045,
+    -0.3378,
+    -0.0135
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.84 cm3 x PETG 1.27 (100 %) + bond); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-101-UR",
@@ -2397,6 +2457,74 @@
     "sized_by": "E3, D3",
     "t_design_c": 56.0,
     "claim": "CL-E3-ESC-PEAK"
+   }
+  },
+  {
+   "id": "E-FIN-89",
+   "part_a": "FIN-013-UR",
+   "part_b": "FIN-004-R",
+   "via": "CT-EPOXY",
+   "notes": "strap eye saddle foot bonded round the outboard face of the upper bore boss, 30 min epoxy + silica, after the spar and blocks are cured in the core (SW-01); the tie pull bears on the boss through the foot",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 166,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": 29.4,
+    "load_case": "restrained ground run (GT-07, GT-13), per tie",
+    "sized_by": "D3, H1"
+   }
+  },
+  {
+   "id": "E-FIN-90",
+   "part_a": "FIN-013-UL",
+   "part_b": "FIN-004-L",
+   "via": "CT-EPOXY",
+   "notes": "strap eye saddle foot bonded round the outboard face of the upper bore boss, 30 min epoxy + silica, after the spar and blocks are cured in the core (SW-01); the tie pull bears on the boss through the foot",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 166,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": 29.4,
+    "load_case": "restrained ground run (GT-07, GT-13), per tie",
+    "sized_by": "D3, H1"
+   }
+  },
+  {
+   "id": "E-FIN-91",
+   "part_a": "FIN-013-LR",
+   "part_b": "FIN-004-R",
+   "via": "CT-EPOXY",
+   "notes": "strap eye saddle foot bonded round the outboard face of the lower bore boss, 30 min epoxy + silica, after the spar and blocks are cured in the core (SW-01); the tie pull bears on the boss through the foot",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 166,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": 29.4,
+    "load_case": "restrained ground run (GT-07, GT-13), per tie",
+    "sized_by": "D3, H1"
+   }
+  },
+  {
+   "id": "E-FIN-92",
+   "part_a": "FIN-013-LL",
+   "part_b": "FIN-004-L",
+   "via": "CT-EPOXY",
+   "notes": "strap eye saddle foot bonded round the outboard face of the lower bore boss, 30 min epoxy + silica, after the spar and blocks are cured in the core (SW-01); the tie pull bears on the boss through the foot",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 166,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": 29.4,
+    "load_case": "restrained ground run (GT-07, GT-13), per tie",
+    "sized_by": "D3, H1"
    }
   },
   {

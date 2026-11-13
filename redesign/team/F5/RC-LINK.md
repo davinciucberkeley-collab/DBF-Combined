@@ -119,7 +119,7 @@ the two-attitude ground check below measures it.
 | Install stable ArduPilot Plane, load `K09L.param` | Mission Planner over USB | bench | parameter diff saved under `subsystems/flight-software/` |
 | Accel, compass, radio, ESC, airspeed calibration | Mission Planner | bench and field (compass) | calibration screenshots in the test log |
 | Geofence polygon (H3 corners) | Mission Planner plan screen | before flight day 1 | `.fen` file in the repo |
-| Live flight data | Pocket screen: Yaapu B&W script (`RC_OPTIONS` bit 8); fallback EdgeTX telemetry page (1RSS, RQly, Bat, Capa, FM, Alt, GSpd) | every flight | voice: mode, battery, link warnings |
+| Live flight data | Pocket screen: Yaapu B&W script (`RC_OPTIONS` bit 8) showing distance and bearing to home, altitude, climb rate, groundspeed, flight mode, battery mAh used and link quality (LQ); fallback EdgeTX telemetry page (1RSS, RQly, Bat, Capa, FM, Alt, GSpd) plus distance to home (Dist; C-17, G-13, NASA CR-132423 p. 52, 54, `review/NASA-CR-132423-COMPLIANCE.md`) | every flight; fields checked at `T-F5-BENCH` | voice: mode, battery, link warnings |
 | Ground log | EdgeTX SD logging at 10 Hz, switch-on with arm | every flight | `.csv` per flight |
 | Aircraft log | DataFlash on the FC, downloaded over USB | after every flight | `.bin` per flight; RSSI msg (RSSI, RXLQ) |
 | Log review | Mission Planner graphs or plot.ardupilot.org (UAVLogViewer) | after every flight | link plot for `T-F5-FLIGHT-LINK` |

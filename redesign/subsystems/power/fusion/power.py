@@ -166,6 +166,12 @@ def build(ctx):
     # PWR-003 power board on the deck; PWR-002 AS150U aircraft half in the cradle
     pb = ctx.part('PWR-003')
     pb.box(*G['board'], name='power board envelope')
+    # D-89c: the envelope box stands for the components above the 1.6 mm PCB. The mounting holes have a component
+    # keep-out round them (pan-head Ø5.6 + clearance, Ø6.2 EST until the board is measured, T-PWR-ARRIVAL), so the
+    # frame screws can be driven down onto the PCB after the board is in (build-film assembly check)
+    z_pcb = G['dz1'] + 0.001 + 0.0016
+    for x, y in G['bosses']:
+        pb.cut_cylinder('Z', (x, y, z_pcb), G['board'][1][2] - z_pcb + 0.001, 0.0031, name='mounting-hole keep-out')
     # D-89: what the leads land on (no lead may end on a bare envelope). Battery / output pads on the aft short edge
     # (power SPEC.md 'Battery / output pads', [M] p. 4: 3 + and 3 - pads on one 32 mm edge), drawn as pad + solder
     # joint 6 x 4.4 x 0.5 mm EST under the four 10 AWG conductors (team/F2/harness.py W-MAIN-1 / W-MAIN-2);

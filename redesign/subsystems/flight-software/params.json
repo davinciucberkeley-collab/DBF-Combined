@@ -361,6 +361,34 @@
    "source": "ArduPilot default, stated (CALC-F4-VLEVEL input)",
    "ap": "Q_M_THST_EXPO"
   },
+  "q_rtl_mode": {
+   "value": 2,
+   "unit": "-",
+   "source": "review/NASA-CR-132423-COMPLIANCE.md C-01, G-01 (CR-132423 p. 35, 38-39, 172); ArduPilot master value 2 = VTOL approach, read 2026-11-13",
+   "ap": "Q_RTL_MODE",
+   "note": "was 1; circle down to Q_RTL_ALT, back-transition into the wind, QRTL. UNVERIFIED on 4.7.x and on a tailsitter: SITL S1, S18"
+  },
+  "q_rtl_alt_m": {
+   "value": 50,
+   "unit": "m",
+   "source": "review/NASA-CR-132423-COMPLIANCE.md C-02, G-01 (CR-132423 p. 35, 172); P:requirements.transition_alt_min_m",
+   "ap": "Q_RTL_ALT",
+   "note": "was 30; mode 2 transitions at this height"
+  },
+  "q_fw_lnd_apr_rad_m": {
+   "value": 60,
+   "unit": "m",
+   "source": "review/NASA-CR-132423-COMPLIANCE.md C-03, G-01 (CR-132423 p. 165, 174); = RTL_RADIUS",
+   "ap": "Q_FW_LND_APR_RAD",
+   "note": "bank atan(16^2/(9.81 x 60)) = 23.5 deg at 16 m/s, inside Table 29 9-30 deg (EST)"
+  },
+  "q_trans_decel_ms2": {
+   "value": 2.0,
+   "unit": "m/s^2",
+   "source": "ArduPilot default, stated (master, read 2026-11-13); review/NASA-CR-132423-COMPLIANCE.md C-04, G-07 (CR-132423 p. 19 Eq. (1))",
+   "ap": "Q_TRANS_DECEL",
+   "note": "stopping distance 16^2 / (2 x 2.0) = 64 m (EST); SITL S18 logs the real overshoot"
+  },
   "land_final_alt_m": {
    "value": 6,
    "unit": "m",

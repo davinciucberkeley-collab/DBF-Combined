@@ -1,7 +1,7 @@
 {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-13 16:26 UTC",
+  "generated": "2026-11-13 17:46 UTC",
   "dataset": "redesign",
   "ok": true,
   "errors": [],
@@ -30,13 +30,13 @@
     "calculation": 428,
     "claim": 1728,
     "test": 145,
-    "parameter": 1102,
+    "parameter": 1111,
     "part": 147
    },
    "by_status": {
     "CHECKED": 662,
     "UNVERIFIED": 2527,
-    "PROPOSED": 1136
+    "PROPOSED": 1145
    },
    "fails": 53
   },
@@ -3387,7 +3387,7 @@
    "id": "R-MASS-ALLOC",
    "type": "requirement",
    "title": "Subsystem mass allocations",
-   "text": "Each subsystem's flying mass (sum of mass_g over its parts.csv) <= its allocation in params/mass_budget.json; every part has a mass and a status word; the growth reserve (214 g) is released only by A1 through a change request",
+   "text": "Each subsystem's flying mass (sum of mass_g over its parts.csv) <= its allocation in params/mass_budget.json; every part has a mass and a status word; the growth reserve (226 g) is released only by A1 through a change request",
    "ref": "redesign/params/mass_budget.json",
    "note": "P4; owner A3; method A+T; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
@@ -3406,7 +3406,7 @@
    "id": "R-CG-RANGE",
    "type": "requirement",
    "title": "As-built CG range",
-   "text": "As-built CG with the flight pack: x inside params.json#cg.x_range_m (0.0466 to 0.0514 m, D-62: forward limit = elevon trim <= 0.5 of travel at the trimmed CLmax (B3 V1 CL-B3-V-CG-FWD), aft limit = static margin 0.05 at 1.3 Vs with the CG 0.0185 m above the chord plane (CL-B3-V-CG-AFT-ENV); both on the CAD fins at 7 deg cant, rounded inward to 0.1 mm by A1), z inside cg.z_range_m (0.01 to 0.025 m; each 10 mm of height costs 1.85 mm of aft limit and 0.27 s of spiral t2), |y| <= 0.005 m; the flight station of each weighed pack (546 / 550 / 590 g cases, D-64) comes from A3's live roll-up, from the -0.032 m datum with 0.012 m of aft travel in 0.002 m spacer steps; trim ballast counts inside the mass gate",
+   "text": "As-built CG with the flight pack: x inside params.json#cg.x_range_m (0.0466 to 0.0514 m, D-62: forward limit = elevon trim <= 0.5 of travel at the trimmed CLmax (B3 V1 CL-B3-V-CG-FWD), aft limit = static margin 0.05 at 1.3 Vs with the CG 0.0185 m above the chord plane (CL-B3-V-CG-AFT-ENV); both on the CAD fins at 7 deg cant, rounded inward to 0.1 mm by A1), z inside cg.z_range_m (0.0165 to 0.025 m; each 10 mm of height costs 1.85 mm of aft limit and 0.27 s of spiral t2), |y| <= 0.005 m; the flight station of each weighed pack (546 / 550 / 590 g cases, D-64) comes from A3's live roll-up, from the -0.036 m datum with 0.016 m of aft travel in 0.002 m spacer steps; trim ballast counts inside the mass gate",
    "ref": "redesign/params/params.json#cg",
    "note": "P4/P25; owner A3; method A+T; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
@@ -3497,7 +3497,7 @@
    "id": "R-SPIRAL",
    "type": "requirement",
    "title": "Spiral mode",
-   "text": "In cruise at the gate mass the spiral mode's time to double t2 >= 3.3 s at every CG inside cg.x_range_m and cg.z_range_m (0.01 to 0.025 m; B3 sens_zcg.py gives 3.34 s at the top of the z range, 3.51 s at the 0.0185 m target, CL-B3-V-LAT-T2); the 4 s MIL-F-8785C Level 3 floor for a hand-flown aircraft is not required because wing-borne flight is flown only in roll-stabilised modes: every FLTMODE1-6 in K09L.param is a mode whose roll loop holds the bank (QSTABILIZE, QHOVER, QLOITER, QLAND, QRTL, FBWA, CRUISE, RTL, AUTO), never MANUAL, ACRO or STABILIZE (D-50), and no raw-stick fixed-wing mode is flown above 5 m AGL (flight card); the Dutch-roll and short-period dampings stay above B3's floors (R-DIRECTIONAL). A1's position D-66 option (b): the CG height stays, the limit is 3.3 s",
+   "text": "In cruise at the gate mass the spiral mode's time to double t2 >= 3.3 s at every CG inside cg.x_range_m and cg.z_range_m (0.0165 to 0.025 m; B3 sens_zcg.py gives 3.34 s at the top of the z range, 3.51 s at the 0.0185 m target, CL-B3-V-LAT-T2); the 4 s MIL-F-8785C Level 3 floor for a hand-flown aircraft is not required because wing-borne flight is flown only in roll-stabilised modes: every FLTMODE1-6 in K09L.param is a mode whose roll loop holds the bank (QSTABILIZE, QHOVER, QLOITER, QLAND, QRTL, FBWA, CRUISE, RTL, AUTO), never MANUAL, ACRO or STABILIZE (D-50), and no raw-stick fixed-wing mode is flown above 5 m AGL (flight card); the Dutch-roll and short-period dampings stay above B3's floors (R-DIRECTIONAL). A1's position D-66 option (b): the CG height stays, the limit is 3.3 s",
    "ref": "redesign/params/CHANGE-LOG.md#D-66",
    "note": "P25; owner B3; method A+I+D; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
@@ -3935,7 +3935,7 @@
    "id": "R-LANDING-IMPACT",
    "type": "requirement",
    "title": "Fin-tip landing",
-   "text": "The four replaceable constant-force feet absorb a hard landing at 1.2 m/s sink (the pilot's down-stick limit Q_PILOT_SPD_DN, which F4 holds <= this value; the controller's own final descent is Q_LAND_FINAL_SPD 0.3 m/s) with 2/3 W of lift still on, at any touchdown tilt <= 10 deg of combined tilt in any direction (pitch, roll or diagonal: one foot takes the energy first, D-65), with airframe load factor <= 6.6 at the as-designed mass and >= 3 mm of the usable stroke left on the worst foot (foot stroke >= 0.038 m, C5's 3 mm guard), no damage beyond the feet; the foot side load from the pads scrubbing at mu 0.7 while the aircraft rotates onto the other feet (CL-C5-SIM3D-SIDE-LOAD limit, -SIDE-ULT ultimate) is the design side load for the shoe sleeve, the fin tip and the fin root (D5, C4 / D3, C1); shown by C5's 6-DOF touchdown model with four crushing feet (CR-C5-17) validated by T-C5-AIRCRAFT-DROP, while C1's 1.5 m/s level and one-foot cases L1 / L4 stay the structural bounds (R-LOADS); a foot is replaced in <= 10 min in the field (snap-fit piston, no adhesive)",
+   "text": "The four replaceable constant-force feet absorb a hard landing at 1.2 m/s sink (the pilot's down-stick limit Q_PILOT_SPD_DN, which F4 holds <= this value; the controller's own final descent is Q_LAND_FINAL_SPD 0.3 m/s) with 2/3 W of lift still on, at any touchdown tilt <= 10 deg of combined tilt in any direction (pitch, roll or diagonal: one foot takes the energy first, D-65), with airframe load factor <= 6.6 at the as-designed mass and >= 3 mm of the usable stroke left on the worst foot (foot stroke >= 0.038 m, C5's 3 mm guard), no damage beyond the feet; the foot side load from the pads scrubbing at mu 0.7 while the aircraft rotates onto the other feet (CL-C5-SIM3D-SIDE-LOAD limit, -SIDE-ULT ultimate) is the design side load for the shoe sleeve, the fin tip and the fin root (D5, C4 / D3, C1); shown by C5's 6-DOF touchdown model with four crushing feet (CR-C5-17) validated by T-C5-AIRCRAFT-DROP, while C1's 1.5 m/s level and one-foot cases L1 / L4 stay the structural bounds (R-LOADS); a foot is replaced in <= 10 min in the field (snap-fit piston, no adhesive); horizontal groundspeed at contact <= — m/s (C5 derives it from the 30 deg tip-over margin and the foot friction; NASA CR-132423 p. 60 tolerates 2 kt = 1.03 m/s in hover just before touchdown; review/NASA-CR-132423-COMPLIANCE.md C-14, G-05), logged at every touchdown by H2 (M2)",
    "ref": "redesign/params/CHANGE-LOG.md#D-65",
    "note": "P8/P12; owner C5; method A+T; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
@@ -4226,7 +4226,7 @@
    "id": "R-SITE",
    "type": "requirement",
    "title": "Site rules and flight card",
-   "text": "Flights only at RFS yellow sub-fields 1-4, within 06:00-sunset (flight card 07:00-10:00), <= 400 ft AGL, VLOS <= 500 m from the pilot, with a spotter, a request >= 7 business days ahead and a post-flight report within 3 business days; no Remote ID module while every flight is inside the FRIA (a conditional line stays in the BOM)",
+   "text": "Flights only at RFS yellow sub-fields 1-4, within 06:00-sunset (flight card 07:00-10:00), <= 400 ft AGL, VLOS <= 500 m from the pilot, with a spotter, a request >= 7 business days ahead and a post-flight report within 3 business days; each session starts with the field-map sheet (landing zone, approach sector, alternate spot, clearance of one zone width to the pilot box and other pads, obstacle survey of every object > 3 m (EST) inside the fence, pre-flight walk of zone, sector and alternate; NASA CR-132423 p. 42, 58-59, 166-167; review/NASA-CR-132423-COMPLIANCE.md C-15, G-03); no Remote ID module while every flight is inside the FRIA (a conditional line stays in the BOM)",
    "ref": "redesign/config-study/requirements/REQUIREMENTS.md#D5",
    "note": "P20/P3; owner H3; method I+D; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
@@ -4271,7 +4271,7 @@
    "id": "R-TWIN",
    "type": "requirement",
    "title": "Foam-board twin gate",
-   "text": "The foam-board twin on the real motors, FC and pack holds position within 1 m in calm air and in a 5 m/s fan or breeze with logged lean <= 20 deg; flies QLOITER at >= 30 m; completes a transition at >= 1.3 Vs, two laps and a back-transition; hover current within +/-0.15 x 27 A of that value and cruise near 16.2 A; the elevon size that gives clean FBWA authority is recorded. A wind fail triggers the K11 planform test, then the K01 fallback (CONFIGURATION.md)",
+   "text": "The foam-board twin on the real motors, FC and pack holds position with 95 % of logged position samples within 1 m of the hold point over a 2 min run (NASA CR-132423 p. 49: accuracy stated at 95 percent likelihood; review/NASA-CR-132423-COMPLIANCE.md C-15, G-08) in calm air and in a 5 m/s fan or breeze with logged lean <= 20 deg; flies QLOITER at >= 30 m; completes a transition at >= 1.3 Vs, two laps and a back-transition; hover current within +/-0.15 x 27 A of that value and cruise near 16.2 A; the elevon size that gives clean FBWA authority is recorded. A wind fail triggers the K11 planform test, then the K01 fallback (CONFIGURATION.md)",
    "ref": "redesign/config-study/tiebreak/DECISION.md#8",
    "note": "P23; owner H2; method D; see team/A2/REQUIREMENTS.md",
    "defined_in": "redesign/team/A2/claims.json",
@@ -63876,12 +63876,12 @@
     "k_found": 10691.999999999998,
     "free_len_m": 0.009738706275439123,
     "cheek_h_m": 0.039000000000000035,
-    "k_nod_body": 5075.8795472318725,
-    "k_sway_body": 2824.941557417677,
+    "k_nod_body": 4974.361956287235,
+    "k_sway_body": 2782.583589675741,
     "cl_out_m": 0.014366205785435182,
-    "k_nod": 3441.8898214205838,
-    "k_sway": 2234.5495098582146,
-    "k_est": 2234.5495098582146,
+    "k_nod": 3394.909308557021,
+    "k_sway": 2207.963128716542,
+    "k_est": 2207.963128716542,
     "r4_k_found": 3168.0,
     "r4_free_len_m": 0.004738706275439125,
     "r4_cheek_h_m": 0.039000000000000035,
@@ -63891,8 +63891,8 @@
     "r4_k_nod": 2430.0230709688776,
     "r4_k_sway": 1377.9464404380726,
     "r4_k_est": 1377.9464404380726,
-    "change_vs_r4": 0.6216519338355513,
-    "nom_over_est": 0.9845384898809394
+    "change_vs_r4": 0.6023577288059128,
+    "nom_over_est": 0.9963934503194485
    },
    "input_values": {
     "E": 2000000000.0,
@@ -63906,7 +63906,7 @@
     "p_hy": 0.0145,
     "p_hz": 0.015,
     "ct": 0.0025,
-    "ct_in": 0.0025,
+    "ct_in": 0.0024,
     "slit": 0.0015,
     "csg": 0.001,
     "cy": 0.0115,
@@ -68576,7 +68576,7 @@
    ],
    "how": "T-C4-MOUNT-STIFF (pass level >= CL-C4-D3-MOUNT-K-REQ, CR-H1-24 / D-91) in both directions.",
    "note": "D-91 (CR-H1-24): the R5 estimate 1 531 N m/rad was below the 2 229 need, capped by the 12 mm collar foundation (3 168). D-61 asked C4 to re-check the rocking stiffness with the cheeks +5 mm. The longer cheeks lengthen the nodding span (stiffer sway channel, softer nodding); the weaker axis is sway. The FE nominal (ASM-C4-MOUNT-K-ROCK) is set at or below this estimate.",
-   "value": 2234.5495098582146,
+   "value": 2207.963128716542,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -68587,7 +68587,7 @@
     "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.01570432266282482,
+   "margin": 0.003619603962064585,
    "importance": 1
   },
   {
@@ -68604,7 +68604,7 @@
     "FIN-003-LL"
    ],
    "how": "T-C4-MOUNT-STIFF on the R5 print.",
-   "value": 0.6216519338355513,
+   "value": 0.6023577288059128,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -103752,11 +103752,11 @@
     "alloc": "g"
    },
    "outputs": {
-    "mass_g": 71.4,
-    "over_g": -1.5999999999999943
+    "mass_g": 72.6,
+    "over_g": -0.4000000000000057
    },
    "input_values": {
-    "m": 71.4,
+    "m": 72.6,
     "alloc": 73
    },
    "defined_in": "redesign/team/D6/claims.json",
@@ -104980,7 +104980,7 @@
     "MEC-001-R"
    ],
    "how": "T-D6-WEIGH: weigh every part on arrival",
-   "value": 71.4,
+   "value": 72.6,
    "defined_in": "redesign/team/D6/claims.json",
    "reasons": [
     "uses P:mec.mass_total_g, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/mechanisms/params.json: GENERATED: sum of the 22 declared part masses (EST until weighed, T-D6-WEIGH))",
@@ -104988,7 +104988,7 @@
     "uses P:mass.allocation_g.mechanisms, which is UNVERIFIED"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.021917808219178006,
+   "margin": 0.005479452054794599,
    "importance": 1116
   },
   {
@@ -156082,10 +156082,10 @@
    "type": "parameter",
    "title": "fin_detail.mount.cheek_in_t_m",
    "file": "redesign/subsystems/fins/params.json",
-   "value": 0.0025,
+   "value": 0.0024,
    "unit": "m",
    "source": "params/CHANGE-LOG.md#D-91 (team/C4/fin_structures_d3.py CALC-C4-D3-MOUNT-K-EST)",
-   "note": "D-91: inboard cheek thickness as its own key (outboard is cheek_t_m, which carries the phase leads on its outer face, team/F2/harness.py W-PH-*). Kept at 2.5 mm: with the 18 mm grip the estimate is 1.5 x the need (CL-C4-D3-MOUNT-K-EST / -REQ); 5 mm would add 8 g for four mounts for a factor 2.0 the separation does not need",
+   "note": "D-91: inboard cheek thickness as its own key (outboard is cheek_t_m, which carries the phase leads on its outer face, team/F2/harness.py W-PH-*). Kept at 2.5 mm: with the 18 mm grip the estimate is 1.5 x the need (CL-C4-D3-MOUNT-K-EST / -REQ); 5 mm would add 8 g for four mounts for a factor 2.0 the separation does not need. D-89c: 2.5 -> 2.4 mm so the moved inboard cheek (inner face 12.1 mm) still ends at the plate edge (14.5 mm)",
    "status": "PROPOSED",
    "importance": 2
   },
@@ -156295,6 +156295,18 @@
    "unit": "-",
    "source": "CHANGE-LOG D-42 (CR-E3-01)",
    "note": "HDT 93 degC; motor base 66.4 degC steady hover (CL-E3-MOUNT-ASA); PETG fails by 8 K",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:fin_detail.mount.cheek_in_y_in_m",
+   "type": "parameter",
+   "title": "fin_detail.mount.cheek_in_y_in_m",
+   "file": "redesign/subsystems/fins/params.json",
+   "value": 0.0121,
+   "unit": "m",
+   "source": "params/CHANGE-LOG.md#D-89c",
+   "note": "D-89c: inboard cheek inner face from the fin plane (outboard stays cheek_y_in_m 11.5 mm). The 7 deg cant tilts each motor-screw axis 0.062 mm/mm toward the inboard cheek: the inboard screw head (edge 10.75 mm) met an 11.5 mm cheek 6 mm out, before its 8 mm shank left the motor (build-film assembly check). At 12.1 mm the head clears it to ~17 mm out",
    "status": "PROPOSED",
    "importance": 0
   },
@@ -156959,7 +156971,7 @@
    "value": 0.011,
    "unit": "m",
    "source": "D3 choice",
-   "note": "tab beyond the boss ring, outboard side (y), on every bore boss of the block: one eye per fin root (CR-H1-08)",
+   "note": "tab beyond the boss ring, outboard side (y), one eye per fin root (CR-H1-08); separate part FIN-013 bonded after the spar bond since D-89c (SW-01: printed on the block it stopped the block entering its pocket)",
    "status": "PROPOSED",
    "importance": 1
   },
@@ -157022,6 +157034,54 @@
    "note": "restrained ground run, per tie",
    "status": "PROPOSED",
    "importance": 1
+  },
+  {
+   "id": "P:fin_detail.strap_eye.bond_line_m",
+   "type": "parameter",
+   "title": "fin_detail.strap_eye.bond_line_m",
+   "file": "redesign/subsystems/fins/params.json",
+   "value": 6e-05,
+   "unit": "m",
+   "source": "D-89c",
+   "note": "saddle foot inner radius = boss outer radius + this; thickened epoxy fills it",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:fin_detail.strap_eye.foot_t_m",
+   "type": "parameter",
+   "title": "fin_detail.strap_eye.foot_t_m",
+   "file": "redesign/subsystems/fins/params.json",
+   "value": 0.0015,
+   "unit": "m",
+   "source": "D-89c",
+   "note": "saddle foot wall round the boss",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:fin_detail.strap_eye.foot_deg",
+   "type": "parameter",
+   "title": "fin_detail.strap_eye.foot_deg",
+   "file": "redesign/subsystems/fins/params.json",
+   "value": 35.0,
+   "unit": "deg",
+   "source": "D-89c",
+   "note": "half-angle of the saddle foot about +y (outboard), clear of the boss tail slot walls",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:fin_detail.strap_eye.skin_stack_m",
+   "type": "parameter",
+   "title": "fin_detail.strap_eye.skin_stack_m",
+   "file": "redesign/subsystems/fins/params.json",
+   "value": 0.00032,
+   "unit": "m",
+   "source": "subsystems/wing/params.json#skin.model_t_m (0.1 mm) x 3 layers (wing.py skin_plan: block doubler on 2 layers) + 0.02 mm",
+   "note": "D-89c: the eye foot sits on the skin tape, bonded after the skin (BUILD-GUIDE 6.6), so it stands this far off the core surface",
+   "status": "PROPOSED",
+   "importance": 0
   },
   {
    "id": "P:fin_detail.wire_hole.x_m",
@@ -160856,7 +160916,7 @@
    "type": "parameter",
    "title": "mec.mass_total_g",
    "file": "redesign/subsystems/mechanisms/params.json",
-   "value": 71.4,
+   "value": 72.6,
    "unit": "g",
    "source": "subsystems/mechanisms/make_mechanisms.py",
    "note": "GENERATED: sum of the 22 declared part masses (EST until weighed, T-D6-WEIGH)",
@@ -182952,6 +183012,54 @@
    "importance": 326
   },
   {
+   "id": "P:fsw.q_rtl_mode",
+   "type": "parameter",
+   "title": "fsw.q_rtl_mode",
+   "file": "redesign/subsystems/flight-software/params.json",
+   "value": 2,
+   "unit": "-",
+   "source": "review/NASA-CR-132423-COMPLIANCE.md C-01, G-01 (CR-132423 p. 35, 38-39, 172); ArduPilot master value 2 = VTOL approach, read 2026-11-13",
+   "note": "was 1; circle down to Q_RTL_ALT, back-transition into the wind, QRTL. UNVERIFIED on 4.7.x and on a tailsitter: SITL S1, S18",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:fsw.q_rtl_alt_m",
+   "type": "parameter",
+   "title": "fsw.q_rtl_alt_m",
+   "file": "redesign/subsystems/flight-software/params.json",
+   "value": 50,
+   "unit": "m",
+   "source": "review/NASA-CR-132423-COMPLIANCE.md C-02, G-01 (CR-132423 p. 35, 172); P:requirements.transition_alt_min_m",
+   "note": "was 30; mode 2 transitions at this height",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:fsw.q_fw_lnd_apr_rad_m",
+   "type": "parameter",
+   "title": "fsw.q_fw_lnd_apr_rad_m",
+   "file": "redesign/subsystems/flight-software/params.json",
+   "value": 60,
+   "unit": "m",
+   "source": "review/NASA-CR-132423-COMPLIANCE.md C-03, G-01 (CR-132423 p. 165, 174); = RTL_RADIUS",
+   "note": "bank atan(16^2/(9.81 x 60)) = 23.5 deg at 16 m/s, inside Table 29 9-30 deg (EST)",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
+   "id": "P:fsw.q_trans_decel_ms2",
+   "type": "parameter",
+   "title": "fsw.q_trans_decel_ms2",
+   "file": "redesign/subsystems/flight-software/params.json",
+   "value": 2.0,
+   "unit": "m/s^2",
+   "source": "ArduPilot default, stated (master, read 2026-11-13); review/NASA-CR-132423-COMPLIANCE.md C-04, G-07 (CR-132423 p. 19 Eq. (1))",
+   "note": "stopping distance 16^2 / (2 x 2.0) = 64 m (EST); SITL S18 logs the real overshoot",
+   "status": "PROPOSED",
+   "importance": 0
+  },
+  {
    "id": "P:fsw.land_final_alt_m",
    "type": "parameter",
    "title": "fsw.land_final_alt_m",
@@ -183269,14 +183377,14 @@
   {
    "id": "FIN-004-L",
    "type": "part",
-   "title": "Through-core block L (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
+   "title": "Through-core block L (tube socket + spar saddle + 2 tie lugs)",
    "status": "UNVERIFIED",
    "importance": 21
   },
   {
    "id": "FIN-004-R",
    "type": "part",
-   "title": "Through-core block R (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
+   "title": "Through-core block R (tube socket + spar saddle + 2 tie lugs)",
    "status": "UNVERIFIED",
    "importance": 22
   },

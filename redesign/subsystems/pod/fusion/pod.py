@@ -530,6 +530,11 @@ def build(ctx):
     # E-POD-06 hardware as components (C6 FASTENERS-CAD; only when declared): PA66 M3x16 cheese head from +y in the
     # 4.5 mm counterbore across socket boss and mast, PA66 hex nut on the -y face
     zc = G['z_grip1'] + sb[1] / 2
+    # D-89c: the 6 mm counterbore runs from the head seat (y +0.0025) out through the mast wall and the boss +y face,
+    # so the screw goes in straight along its axis (the assembly check found it closed above the head)
+    seat_y = sb[0] / 2 - 0.0045
+    for prt, face in ((hd, sb[0] / 2), (ma, ms[0] / 2)):
+        prt.cut_cylinder('Y', (xs, seat_y, zc), face + 0.001 - seat_y, 0.003, name='cross-screw counterbore')
     scr = k9.hw_part(ctx, 'POD-011')
     if scr:
         k9.hw_screw(scr, 'Y', (xs, sb[0] / 2 - 0.0045, zc), -1, 'M3', 0.016, 'cheese', name='M3x16 PA66 cheese head')

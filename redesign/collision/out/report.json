@@ -1,10 +1,10 @@
 {
- "bodies": 1103,
+ "bodies": 1113,
  "defects": [
   "PWR-004 body \"lap solder joint\": zero-width spike / repeated point in a loop (removed in the export)"
  ],
  "kinks": [],
- "parts": 212,
+ "parts": 219,
  "poses": [
   {
    "hits": [
@@ -157,6 +157,114 @@
      "depth_mm": 0.019
     },
     {
+     "a": "MEC-013-LI",
+     "at_mm": [
+      283.6,
+      -283.5,
+      1.79
+     ],
+     "b": "WNG-011-L",
+     "bodies": [
+      "WNG-011-L \"xps elevon\" x MEC-013-LI \"upper backplate\" 0.02 mm",
+      "WNG-011-L \"xps elevon\" x MEC-013-LI \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "MEC-004-L",
+     "at_mm": [
+      283.6,
+      -285.0,
+      1.79
+     ],
+     "b": "MEC-013-LI",
+     "bodies": [
+      "MEC-004-L \"horn blade\" x MEC-013-LI \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.022
+    },
+    {
+     "a": "MEC-013-LO",
+     "at_mm": [
+      283.6,
+      -352.75,
+      1.79
+     ],
+     "b": "WNG-012-L",
+     "bodies": [
+      "WNG-012-L \"xps elevon\" x MEC-013-LO \"upper backplate\" 0.02 mm",
+      "WNG-012-L \"xps elevon\" x MEC-013-LO \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "MEC-006-L",
+     "at_mm": [
+      283.6,
+      -355.0,
+      1.79
+     ],
+     "b": "MEC-013-LO",
+     "bodies": [
+      "MEC-006-L \"horn blade\" x MEC-013-LO \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.022
+    },
+    {
+     "a": "MEC-013-RI",
+     "at_mm": [
+      283.6,
+      283.5,
+      1.79
+     ],
+     "b": "WNG-011-R",
+     "bodies": [
+      "WNG-011-R \"xps elevon\" x MEC-013-RI \"upper backplate\" 0.02 mm",
+      "WNG-011-R \"xps elevon\" x MEC-013-RI \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "MEC-004-R",
+     "at_mm": [
+      283.6,
+      285.0,
+      1.79
+     ],
+     "b": "MEC-013-RI",
+     "bodies": [
+      "MEC-004-R \"horn blade\" x MEC-013-RI \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.022
+    },
+    {
+     "a": "MEC-013-RO",
+     "at_mm": [
+      283.6,
+      352.75,
+      1.79
+     ],
+     "b": "WNG-012-R",
+     "bodies": [
+      "WNG-012-R \"xps elevon\" x MEC-013-RO \"upper backplate\" 0.02 mm",
+      "WNG-012-R \"xps elevon\" x MEC-013-RO \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "MEC-006-R",
+     "at_mm": [
+      283.6,
+      355.0,
+      1.79
+     ],
+     "b": "MEC-013-RO",
+     "bodies": [
+      "MEC-006-R \"horn blade\" x MEC-013-RO \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.022
+    },
+    {
      "a": "GER-007-L",
      "at_mm": [
       305.74,
@@ -200,6 +308,10 @@
     "MEC-009-LO",
     "MEC-009-RI",
     "MEC-009-RO",
+    "MEC-013-LI",
+    "MEC-013-LO",
+    "MEC-013-RI",
+    "MEC-013-RO",
     "WNG-011-L",
     "WNG-011-R",
     "WNG-012-L",
@@ -226,6 +338,10 @@
     "MEC-009-LO",
     "MEC-009-RI",
     "MEC-009-RO",
+    "MEC-013-LI",
+    "MEC-013-LO",
+    "MEC-013-RI",
+    "MEC-013-RO",
     "WNG-011-L",
     "WNG-011-R",
     "WNG-012-L",
@@ -240,7 +356,7 @@
    ]
   }
  ],
- "seconds": 331.2,
+ "seconds": 341.8,
  "skipped": [
   [
    "HRN-001",

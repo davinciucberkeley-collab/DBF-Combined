@@ -7,7 +7,7 @@ Guidance Requirements for Commercial VTOL Operations*, NASA CR-132423, Aerospace
 `SITL-PLAN.md`, `TUNING-PLAN.md`), `subsystems/avionics/SPEC.md` (F3-R2), `team/F3`, `team/F4`, `team/F5/RC-LINK.md`,
 `team/H1/GROUND-TEST-PLAN.md`, `team/A2/REQUIREMENTS.md`, `params/params.json`, `STATUS.md`. Nothing was flown, run in
 SITL or bench-tested for this review. "CR p. N" is the report's printed page number. Numbers I worked out are marked
-**EST** with the formula shown. Unknowns are "—". No other repo file was edited.
+**EST** with the formula shown. Unknowns are "—". Section 5 changes C-01 … C-17 were applied 2026-11-13 (see its Status column); the review itself edited nothing else.
 
 ## 1. What the report is, and how far it applies
 
@@ -309,29 +309,28 @@ existing "one parameter change per flight" rule (`TUNING-PLAN.md` rules). Rotate
 
 ## 5. Proposed changes, for the integrator
 
-Nothing below has been applied. Other engineers are editing these files; apply in a new F4 / H3 revision and re-run
-`python -I redesign/team/F4/fsw_check.py` (and add `Q_FW_LND_APR_RAD`, `Q_TRANS_DECEL` to `params.json` so the mirror
-check passes).
+**Applied 2026-11-13: 17 of 17 rows (C-01 … C-17).** C-05, C-06 and C-07 are applied as conditions or pending notes, not values (see the Status column). `fsw_check.py` lint passes with `Q_RTL_MODE`, `Q_RTL_ALT`, `Q_FW_LND_APR_RAD` and `Q_TRANS_DECEL` mirrored in `params.json`. Nothing was flown or run in SITL. Original note: apply in a new F4 / H3 revision and re-run
+`python -I redesign/team/F4/fsw_check.py`.
 
-| # | File | Key / location | Old → new | Why | CR page | Gap |
-|---|---|---|---|---|---|---|
-| C-01 | `subsystems/flight-software/K09L.param` (+ `params.json` mirror) | `Q_RTL_MODE` | 1 → **2** (VTOL approach: circle down to `Q_RTL_ALT`, transition into wind, QRTL) | no downwind back-transition; wing-borne spiral instead of a 50 m hover descent | p. 35, 38–39, 172 | G-01 |
-| C-02 | same | `Q_RTL_ALT` | 30 → **50** m | mode 2 transitions at `Q_RTL_ALT`; keeps `transition_alt_min_m` 50 (`R-TEST-ORDER`) | p. 35, 172 | G-01 |
-| C-03 | same | `Q_FW_LND_APR_RAD` (new line) | not set (default —) → **60** m (= `RTL_RADIUS`, bank 23.5° at 16 m/s, EST) | spiral radius inside the Table 29 bank range 9–30° | p. 165, 174 | G-01 |
-| C-04 | same | `Q_TRANS_DECEL` (new line, default stated) | not set → **2.0** m/s² (default, stated) | fix the approach deceleration with the descent angle; 64 m stop (EST) | p. 19 Eq. (1) | G-07 |
-| C-05 | same | `FENCE_TYPE` | 3 → **7** after the polygon is uploaded and corners read back (already planned in l.334) | positive obstacle and boundary avoidance; entry-error check | p. 54, 168 | G-04 |
-| C-06 | same | `Q_P_VELXY_P`, `Q_P_POSXY_P` (new lines after the test) | firmware default → value from SITL S3b / tether step, crossover ≤ 1/6 of attitude (≤ 1.0 rad/s) | inner loops faster than outer | p. 61 | G-09 |
-| C-07 | same | `Q_LAND_FINAL_ALT` | 6 → 6 + measured baro error at touchdown, only if M1 > 1 m (EST) | final rate must start above the ground | p. 59 | G-06 |
-| C-08 | `subsystems/flight-software/SITL-PLAN.md` | new case S18 "RTL VTOL approach" | — → RTL from 200 m in 5 m/s wind from N/E/S/W; pass: back-transition heading within ± 45° of into-wind (EST), overshoot past home logged, ≤ 10 m height loss | verify C-01–C-04 on a tailsitter | p. 35, 38–39 | G-01, G-07 |
-| C-09 | same | new case S3b; S3 pass line | "±1 m" → "95 % of samples within 1 m"; S3b velocity step, crossover ≤ 1.0 rad/s | statistical accuracy; loop hierarchy | p. 49, 61 | G-08, G-09 |
-| C-10 | same | S9 | add polygon and exclusion-zone breach | fence as obstacle avoidance | p. 54 | G-04 |
-| C-11 | `subsystems/flight-software/TUNING-PLAN.md` | step 3 "done when" | + EKF innovation ratios < 1, peak reported against `FS_EKF_THRESH` 0.8 | verify filter models | p. 95 | G-10 |
-| C-12 | same | step 5 | + go-around practice (QLOITER, climb ≥ 10 m, re-try, alternate spot); + horizontal speed at contact logged against the G-05 limit; "within 1 m" → 95 % form | missed approach; touchdown velocity | p. 33, 39, 60 | G-02, G-05, G-08 |
-| C-13 | `subsystems/flight-software/SPEC.md` | Transition logic table, back-transition row | + "pilot-flown back-transition only heading into wind"; RTL row → `Q_RTL_MODE` 2 | no downwind approach | p. 35, 172 | G-01 |
-| C-14 | `team/A2/REQUIREMENTS.md` | `R-LANDING-IMPACT` | + horizontal groundspeed at contact ≤ — m/s (C5 derives) | touchdown velocity tolerance | p. 60 | G-05 |
-| C-15 | `team/A2/REQUIREMENTS.md` | `R-TWIN`, `R-SITE` | "within 1 m" → 95 % form; `R-SITE` + field-map sheet (zone, sector, alternate, obstacle survey, pre-flight walk) | statistical accuracy; clearance surfaces | p. 49, 42, 58–59, 166–167 | G-03, G-08 |
-| C-16 | H3 flight card (to be written) | sections | + go-around, alternate spot, wind go/no-go, traffic call, field walk, back-transition into wind, fatigue limit | procedures | p. 22, 33, 35, 39, 167, 169 | G-02, G-03, G-11, G-12, G-14 |
-| C-17 | `team/F5/RC-LINK.md` | "Live flight data" row | + list of Yaapu fields incl. distance/bearing to home; EdgeTX page + distance to home | pilot position readout | p. 52, 54 | G-13 |
+| # | File | Key / location | Old → new | Why | CR page | Gap | Status |
+|---|---|---|---|---|---|---|---|
+| C-01 | `subsystems/flight-software/K09L.param` (+ `params.json` mirror) | `Q_RTL_MODE` | 1 → **2** (VTOL approach: circle down to `Q_RTL_ALT`, transition into wind, QRTL) | no downwind back-transition; wing-borne spiral instead of a 50 m hover descent | p. 35, 38–39, 172 | G-01 | Applied 2026-11-13 |
+| C-02 | same | `Q_RTL_ALT` | 30 → **50** m | mode 2 transitions at `Q_RTL_ALT`; keeps `transition_alt_min_m` 50 (`R-TEST-ORDER`) | p. 35, 172 | G-01 | Applied 2026-11-13 |
+| C-03 | same | `Q_FW_LND_APR_RAD` (new line) | not set (default —) → **60** m (= `RTL_RADIUS`, bank 23.5° at 16 m/s, EST) | spiral radius inside the Table 29 bank range 9–30° | p. 165, 174 | G-01 | Applied 2026-11-13 |
+| C-04 | same | `Q_TRANS_DECEL` (new line, default stated) | not set → **2.0** m/s² (default, stated) | fix the approach deceleration with the descent angle; 64 m stop (EST) | p. 19 Eq. (1) | G-07 | Applied 2026-11-13 |
+| C-05 | same | `FENCE_TYPE` | 3 → **7** after the polygon is uploaded and corners read back (already planned in l.334) | positive obstacle and boundary avoidance; entry-error check | p. 54, 168 | G-04 | Applied 2026-11-13 as a condition note only: `FENCE_TYPE` stays 3 until the polygon is uploaded and read back |
+| C-06 | same | `Q_P_VELXY_P`, `Q_P_POSXY_P` (new lines after the test) | firmware default → value from SITL S3b / tether step, crossover ≤ 1/6 of attitude (≤ 1.0 rad/s) | inner loops faster than outer | p. 61 | G-09 | Applied 2026-11-13 as a pending note (no value; set after S3b / tether step) |
+| C-07 | same | `Q_LAND_FINAL_ALT` | 6 → 6 + measured baro error at touchdown, only if M1 > 1 m (EST) | final rate must start above the ground | p. 59 | G-06 | Applied 2026-11-13 as a pending note (`Q_LAND_FINAL_ALT` stays 6 until M1) |
+| C-08 | `subsystems/flight-software/SITL-PLAN.md` | new case S18 "RTL VTOL approach" | — → RTL from 200 m in 5 m/s wind from N/E/S/W; pass: back-transition heading within ± 45° of into-wind (EST), overshoot past home logged, ≤ 10 m height loss | verify C-01–C-04 on a tailsitter | p. 35, 38–39 | G-01, G-07 | Applied 2026-11-13 |
+| C-09 | same | new case S3b; S3 pass line | "±1 m" → "95 % of samples within 1 m"; S3b velocity step, crossover ≤ 1.0 rad/s | statistical accuracy; loop hierarchy | p. 49, 61 | G-08, G-09 | Applied 2026-11-13 |
+| C-10 | same | S9 | add polygon and exclusion-zone breach | fence as obstacle avoidance | p. 54 | G-04 | Applied 2026-11-13 |
+| C-11 | `subsystems/flight-software/TUNING-PLAN.md` | step 3 "done when" | + EKF innovation ratios < 1, peak reported against `FS_EKF_THRESH` 0.8 | verify filter models | p. 95 | G-10 | Applied 2026-11-13 |
+| C-12 | same | step 5 | + go-around practice (QLOITER, climb ≥ 10 m, re-try, alternate spot); + horizontal speed at contact logged against the G-05 limit; "within 1 m" → 95 % form | missed approach; touchdown velocity | p. 33, 39, 60 | G-02, G-05, G-08 | Applied 2026-11-13 |
+| C-13 | `subsystems/flight-software/SPEC.md` | Transition logic table, back-transition row | + "pilot-flown back-transition only heading into wind"; RTL row → `Q_RTL_MODE` 2 | no downwind approach | p. 35, 172 | G-01 | Applied 2026-11-13 |
+| C-14 | `team/A2/REQUIREMENTS.md` | `R-LANDING-IMPACT` | + horizontal groundspeed at contact ≤ — m/s (C5 derives) | touchdown velocity tolerance | p. 60 | G-05 | Applied 2026-11-13 |
+| C-15 | `team/A2/REQUIREMENTS.md` | `R-TWIN`, `R-SITE` | "within 1 m" → 95 % form; `R-SITE` + field-map sheet (zone, sector, alternate, obstacle survey, pre-flight walk) | statistical accuracy; clearance surfaces | p. 49, 42, 58–59, 166–167 | G-03, G-08 | Applied 2026-11-13 |
+| C-16 | H3 flight card (to be written) | sections | + go-around, alternate spot, wind go/no-go, traffic call, field walk, back-transition into wind, fatigue limit | procedures | p. 22, 33, 35, 39, 167, 169 | G-02, G-03, G-11, G-12, G-14 | Applied 2026-11-13 to the existing `team/H3/FLIGHT-CARD.md` (step 0, section 4b, signature rows); values marked — stay open |
+| C-17 | `team/F5/RC-LINK.md` | "Live flight data" row | + list of Yaapu fields incl. distance/bearing to home; EdgeTX page + distance to home | pilot position readout | p. 52, 54 | G-13 | Applied 2026-11-13 |
 
 ## 6. What the team must measure
 

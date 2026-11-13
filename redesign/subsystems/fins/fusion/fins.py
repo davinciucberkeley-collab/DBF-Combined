@@ -15,7 +15,7 @@ epoxy root fillets (CR-C6-24; credited fail-safe only, D-68) modelled as bodies 
 Part ids. Instance suffixes: station codes UR/UL/LR/LL (U/L = upper/lower half, R/L = right/left side) for every part
 that exists once per half-fin or motor station; R/L for the per-fin parts; O/I for the outboard/inboard strip face.
 FIN-001-<st> half-fins · FIN-002-R/L motor tubes · FIN-003-<st> motor mounts · FIN-004-R/L through-core blocks ·
-FIN-006-R/L tube plugs · FIN-007-<st> ESC pads · FIN-008-<st> station collars · FIN-009-<st> braces ·
+FIN-006-R/L tube plugs · FIN-013-<st> strap eyes · FIN-007-<st> ESC pads · FIN-008-<st> station collars · FIN-009-<st> braces ·
 FIN-010-<st> brace anchors · FIN-011-<st><O|I> edge strips · FIN-012-<st> edge-strip pin sets. FIN-005 is retired.
 
 Fin-tube junction (P25): the tube IS the fin leading edge. The flat 9.6 mm laminate butts the tube and is held by
@@ -117,6 +117,7 @@ def geometry(P, LP, coords):
     G['pattern'] = l('mount.bolt_pattern_m', 'm')
     G['holes'] = [(s * G['pattern'][0] / 2, 0.0) for s in (1, -1)] + [(0.0, s * G['pattern'][1] / 2) for s in (1, -1)]
     G['pilot'] = l('mount.pilot_m', 'm')
+    G['drill'] = l('mount.screw_hole_d_m', 'm')                     # D-89c: the plate as built, holes drilled 3.4 mm
     G['shaft_open'] = l('mount.shaft_hole_d_m', 'm')
     G['head_d'] = l('mount.head_d_m', 'm')
     G['z_head_low'] = G['zm'] - G['pattern'][1] / 2 - G['head_d'] / 2
@@ -139,6 +140,7 @@ def geometry(P, LP, coords):
     G['cheek_t'], G['cheek_y_in'], G['cheek_len'] = (l('mount.cheek_t_m', 'm'), l('mount.cheek_y_in_m', 'm'),
                                                      l('mount.cheek_len_m', 'm'))
     G['cheek_in_t'] = l('mount.cheek_in_t_m', 'm')                   # D-91: inboard cheek thicker (outboard keeps cheek_t)
+    G['cheek_in_y_in'] = l('mount.cheek_in_y_in_m', 'm')             # D-89c: inboard cheek face clear of the canted screw
     G['cheek_slit_gap'] = l('mount.cheek_slit_gap_m', 'm')
     G['x_cheek_out_end'] = G['xt'] - G['slit'] / 2 - G['cheek_slit_gap']    # D-80: outboard cheek stops ahead of the slit
     G['key_w'], G['key_d'], G['key_clear'] = l('mount.key_w_m', 'm'), l('mount.key_d_m', 'm'), l('mount.key_clear_m', 'm')
@@ -243,7 +245,12 @@ def geometry(P, LP, coords):
     # strap eye on each boss (CR-H1-08)
     G['eye_len'], G['eye_h'], G['eye_t'] = l('strap_eye.len_m', 'm'), l('strap_eye.h_m', 'm'), l('strap_eye.t_m', 'm')
     G['eye_hole_r'], G['eye_hole_y'] = l('strap_eye.hole_d_m', 'm') / 2, l('strap_eye.hole_y_m', 'm')
-    xe = [G['xt'] - G['eye_t'] / 2 + i * G['eye_t'] / 6 for i in range(7)]
+    G['eye_load'] = l('strap_eye.load_n', 'N')
+    G['eye_bond'], G['eye_foot_t'] = l('strap_eye.bond_line_m', 'm'), l('strap_eye.foot_t_m', 'm')
+    G['eye_foot_deg'] = l('strap_eye.foot_deg', 'deg')
+    G['eye_skin'] = l('strap_eye.skin_stack_m', 'm')
+    hx = (G['boss_r_out'] + G['eye_bond'] + G['eye_foot_t']) * math.sin(math.radians(G['eye_foot_deg']))
+    xe = [G['xt'] - hx + i * hx / 6 for i in range(13)]           # D-89c: under the whole saddle foot
     G['eye_zu0'] = max(G['zu'](x) for x in xe)
     G['eye_zl0'] = min(G['zl'](x) for x in xe)
 
@@ -512,13 +519,7 @@ def build_block(part, G):
     loop = keyhole_c(xt, yf, G['r_b'], G['boss_r_out'], G['boss_slot_hw'], G['boss_slot_wall'], G['boss_x_end'])
     for z0, z1 in (G['boss_u'], G['boss_l']):
         part.prism('Z', z0, [loop], z1 - z0, name='bore boss')
-    # strap eyes (CR-H1-08), outboard, hole along x
-    y0, y1 = yf + G['boss_r_out'] - 0.001, yf + G['boss_r_out'] + G['eye_len']
-    yh = yf + G['boss_r_out'] + G['eye_hole_y']
-    for z0 in (G['eye_zu0'], G['eye_zl0'] - G['eye_h']):
-        zc = z0 + G['eye_h'] / 2
-        part.prism('X', xt - G['eye_t'] / 2, [rect(y0, z0, y1, z0 + G['eye_h']), circle(yh, zc, G['eye_hole_r'], 16)],
-                   G['eye_t'], name='strap eye')
+    # strap eyes (CR-H1-08) are separate parts FIN-013 since D-89c (SW-01): see build_strap_eye
     # ESC-lead tie lugs on the inboard face of the boss-tail slot wall, upper and lower boss (E-HRN-03/05, CR-F2-05)
     t, xl = G['tl'], G['tl']['boss_x_m']
     y_in = yf - G['boss_slot_hw'] - G['boss_slot_wall']
@@ -531,7 +532,8 @@ def build_block(part, G):
 def plate_cells(G):
     """Rectangular (dy, dz) cells covering the plate minus the square openings (pilots + shaft opening)."""
     hy, hz = G['plate_hy'], G['plate_hz']
-    opens = [(dy - G['pilot'] / 2, dz - G['pilot'] / 2, dy + G['pilot'] / 2, dz + G['pilot'] / 2) for dy, dz in G['holes']]
+    hd = G['drill'] / 2                              # D-89c: drilled hole (square cell circumscribing the 3.4 mm hole)
+    opens = [(dy - hd, dz - hd, dy + hd, dz + hd) for dy, dz in G['holes']]
     so = G['shaft_open'] / 2
     opens.append((-so, -so, so, so))
     zc = sorted(set([-hz, hz] + [o[1] for o in opens] + [o[3] for o in opens]))
@@ -570,7 +572,8 @@ def build_mount(part, G):
     zc0, zc1 = G['z_cap0'] - G['ear_h'] / 2, zm + G['plate_hz']
     for sy in (-1, 1):
         t_c = ct if sy > 0 else G['cheek_in_t']      # D-91: inboard (-y) cheek 5 mm, outboard (slit side) 2.5 mm
-        ya, yb = sy * cy_in, sy * (cy_in + t_c)
+        c_in = cy_in if sy > 0 else G['cheek_in_y_in']
+        ya, yb = sy * c_in, sy * (c_in + t_c)
         bx = [B(y, z - zm) for y in (ya, yb) for z in (zc0, zc1)]
         x1 = max(bx) + cl
         if sy > 0:                                   # slit side (+y): D-80, end ahead of the slit, never bridge it
@@ -581,6 +584,30 @@ def build_mount(part, G):
     # D-81 clocking dog under the collar, front (-x), into the station-collar notch
     kw = G['key_w'] / 2
     part.box((xt - G['key_r1'], yf - kw, G['key_z0']), (xt - G['r_b'], yf + kw, G['key_z1']), name='clocking dog')
+
+
+def build_strap_eye(part, G, upper):
+    """FIN-013 strap eye (CR-H1-08; separate part since D-89c, SW-01): printed on its own and bonded to the outboard
+    face of the bore boss after the spar and blocks are in the core, so the block drops into its pocket with nothing
+    proud outboard. A saddle foot (inner radius = boss + bond line) wraps the boss over +/- foot_deg; the tab runs
+    outboard with the tie hole along x. Hole, tab and height as the D3 eye (fin_detail.strap_eye)."""
+    xt, yf = G['xt'], G['yf']
+    R, Rf = G['boss_r_out'] + G['eye_bond'], G['boss_r_out'] + G['eye_bond'] + G['eye_foot_t']
+    a = math.radians(G['eye_foot_deg'])
+    ht = G['eye_t'] / 2
+    tb = math.asin(ht / Rf)                               # outer-arc angle where the tab sides meet it
+    n = 12
+    inner = [(xt + R * math.sin(-a + 2 * a * i / n), yf + R * math.cos(-a + 2 * a * i / n)) for i in range(n + 1)]
+    out_hi = [(xt + Rf * math.sin(a - (a - tb) * i / 4), yf + Rf * math.cos(a - (a - tb) * i / 4)) for i in range(5)]
+    out_lo = [(xt + Rf * math.sin(-tb - (a - tb) * i / 4), yf + Rf * math.cos(-tb - (a - tb) * i / 4)) for i in range(5)]
+    y1 = yf + G['boss_r_out'] + G['eye_len']
+    loop = inner + out_hi + [(xt + ht, y1), (xt - ht, y1)] + out_lo
+    sk = G['eye_skin']                                    # foot on the skin tape stack, not the foam
+    z0 = G['eye_zu0'] + sk if upper else G['eye_zl0'] - sk - G['eye_h']
+    part.prism('Z', z0, [loop], G['eye_h'], name='strap eye')
+    yh = yf + G['boss_r_out'] + G['eye_hole_y']
+    part.cut_cylinder('X', (xt - ht - 0.001, yh, z0 + G['eye_h'] / 2), G['eye_t'] + 0.002, G['eye_hole_r'],
+                      name='strap eye tie hole')
 
 
 def build_esc_pad(part, G):
@@ -615,7 +642,7 @@ def part_specs(G=None):
         S.append(('FIN-003-' + st, 'Motor mount %s, ASA, 7 deg canted plate, slip clamp (print %s)'
                   % (st, 'A' if st in ('UR', 'LL') else 'B'), ASA, 'make', 'mount'))
     for s in ('R', 'L'):
-        S.append(('FIN-004-' + s, 'Through-core block %s (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)' % s, PETG, 'make',
+        S.append(('FIN-004-' + s, 'Through-core block %s (tube socket + spar saddle + 2 tie lugs)' % s, PETG, 'make',
                   'block'))
     for s in ('R', 'L'):
         S.append(('FIN-006-' + s, 'Tube plug %s, CF 20x18 x 53 mm inside the tube at the block' % s,
@@ -636,6 +663,9 @@ def part_specs(G=None):
     for st in STATIONS:
         S.append(('FIN-012-' + st, 'Edge-strip pin set %s, %d x CF rod %.1f mm' % (st, n, 2000 * G['pin_r'] if G else 2.5),
                   CFR, 'buy', 'pins'))
+    for st in STATIONS:
+        S.append(('FIN-013-' + st, 'Strap eye %s, PETG, bonded on the %s bore boss after the spar bond (D-89c)'
+                  % (st, 'upper' if st[0] == 'U' else 'lower'), PETG, 'make', 'eye'))
     return S
 
 
@@ -829,6 +859,14 @@ def edge_specs(G):
                                         '(SU2 RANS, SA; CL-E3-CFD-FEQ f 1.13), CR-E3-13) + radiation; pad side '
                                         'adiabatic; the ASA pad sees at most the ESC case temperature (ASA HDT 93 - 10 K)',
                                 'sized_by': 'E3, D3', 'claim': 'CL-E3-ESC-PEAK', 'heat_key': 'hover_loss_esc_des_w'}})
+    for st in STATIONS:                                                                      # 89-92 (D-89c)
+        Rb = G['boss_r_out'] + G['eye_bond']
+        area = Rb * 2 * math.radians(G['eye_foot_deg']) * G['eye_h'] * 1e6
+        add('FIN-013-' + st, 'FIN-004-' + side(st), 'CT-EPOXY',
+            'strap eye saddle foot bonded round the outboard face of the %s bore boss, 30 min epoxy + silica, after '
+            'the spar and blocks are cured in the core (SW-01); the tie pull bears on the boss through the foot'
+            % ('upper' if st[0] == 'U' else 'lower'),
+            blocks={'bond': bond(area, G['eye_load'], 'restrained ground run (GT-07, GT-13), per tie', 'D3, H1')})
     return E
 
 
@@ -899,6 +937,8 @@ def build(ctx):
     k9.tube_z(ctx.part('FIN-002-R'), G['xt'], G['yf'], G['L_tube'] / 2, G['od'], G['id'])
     build_mount(ctx.part('FIN-003-UR'), G)
     build_block(ctx.part('FIN-004-R'), G)
+    build_strap_eye(ctx.part('FIN-013-UR'), G, True)
+    build_strap_eye(ctx.part('FIN-013-LR'), G, False)
     ctx.part('FIN-006-R').tube('Z', (G['xt'], G['yf'], G['plug_z0']), G['plug_z1'] - G['plug_z0'], G['plug_od'] / 2,
                                G['plug_id'] / 2, name='tube plug')
     build_esc_pad(ctx.part('FIN-007-UR'), G)
@@ -918,7 +958,7 @@ def build(ctx):
     pairs = [('FIN-002-R', 'FIN-002-L'), ('FIN-004-R', 'FIN-004-L'), ('FIN-006-R', 'FIN-006-L')]
     for st in ('UR', 'LR'):
         lt = st[0] + 'L'
-        pairs += [('FIN-%03d-%s' % (k, st), 'FIN-%03d-%s' % (k, lt)) for k in (1, 7, 8, 9, 10, 12)]
+        pairs += [('FIN-%03d-%s' % (k, st), 'FIN-%03d-%s' % (k, lt)) for k in (1, 7, 8, 9, 10, 12, 13)]
         pairs += [('FIN-011-%s%s' % (st, f), 'FIN-011-%s%s' % (lt, f)) for f in ('O', 'I')]
     for a, b in pairs:
         k9.pair(ctx, a, b)

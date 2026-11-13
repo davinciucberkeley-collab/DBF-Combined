@@ -1,5 +1,5 @@
 {
- "bodies": 212,
+ "bodies": 219,
  "wire_strands": 63,
  "hits": [
   {
@@ -104,6 +104,110 @@
    ],
    "bodies": [
     "WNG-001 \"WNG-001\" x FIN-001-UR \"FIN-001-UR\" 0.03 mm"
+   ]
+  },
+  {
+   "a": "MEC-004-L",
+   "b": "MEC-013-LI",
+   "depth_mm": 0.022,
+   "at_mm": [
+    283.6,
+    -285.0,
+    1.79
+   ],
+   "bodies": [
+    "MEC-004-L \"MEC-004-L\" x MEC-013-LI \"MEC-013-LI\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "MEC-013-LI",
+   "b": "WNG-011-L",
+   "depth_mm": 0.024,
+   "at_mm": [
+    283.6,
+    -288.0,
+    1.79
+   ],
+   "bodies": [
+    "WNG-011-L \"WNG-011-L\" x MEC-013-LI \"MEC-013-LI\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "MEC-006-L",
+   "b": "MEC-013-LO",
+   "depth_mm": 0.022,
+   "at_mm": [
+    283.6,
+    -355.0,
+    1.79
+   ],
+   "bodies": [
+    "MEC-006-L \"MEC-006-L\" x MEC-013-LO \"MEC-013-LO\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "MEC-013-LO",
+   "b": "WNG-012-L",
+   "depth_mm": 0.024,
+   "at_mm": [
+    283.6,
+    -361.0,
+    1.79
+   ],
+   "bodies": [
+    "WNG-012-L \"WNG-012-L\" x MEC-013-LO \"MEC-013-LO\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "MEC-004-R",
+   "b": "MEC-013-RI",
+   "depth_mm": 0.022,
+   "at_mm": [
+    283.6,
+    285.0,
+    1.79
+   ],
+   "bodies": [
+    "MEC-004-R \"MEC-004-R\" x MEC-013-RI \"MEC-013-RI\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "MEC-013-RI",
+   "b": "WNG-011-R",
+   "depth_mm": 0.024,
+   "at_mm": [
+    283.6,
+    286.5,
+    1.79
+   ],
+   "bodies": [
+    "WNG-011-R \"WNG-011-R\" x MEC-013-RI \"MEC-013-RI\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "MEC-006-R",
+   "b": "MEC-013-RO",
+   "depth_mm": 0.022,
+   "at_mm": [
+    283.6,
+    355.0,
+    1.79
+   ],
+   "bodies": [
+    "MEC-006-R \"MEC-006-R\" x MEC-013-RO \"MEC-013-RO\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "MEC-013-RO",
+   "b": "WNG-012-R",
+   "depth_mm": 0.024,
+   "at_mm": [
+    283.6,
+    357.25,
+    1.79
+   ],
+   "bodies": [
+    "WNG-012-R \"WNG-012-R\" x MEC-013-RO \"MEC-013-RO\" 0.02 mm"
    ]
   },
   {

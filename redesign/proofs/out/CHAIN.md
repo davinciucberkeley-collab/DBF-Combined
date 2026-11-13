@@ -1845,7 +1845,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P9
 
 ## R-CG-RANGE
 
-**As-built CG range** — As-built CG with the flight pack: x inside params.json#cg.x_range_m (0.0466 to 0.0514 m, D-62: forward limit = elevon trim <= 0.5 of travel at the trimmed CLmax (B3 V1 CL-B3-V-CG-FWD), aft limit = static margin 0.05 at 1.3 Vs with the CG 0.0185 m above the chord plane (CL-B3-V-CG-AFT-ENV); both on the CAD fins at 7 deg cant, rounded inward to 0.1 mm by A1), z inside cg.z_range_m (0.01 to 0.025 m; each 10 mm of height costs 1.85 mm of aft limit and 0.27 s of spiral t2), |y| <= 0.005 m; the flight station of each weighed pack (546 / 550 / 590 g cases, D-64) comes from A3's live roll-up, from the -0.032 m datum with 0.012 m of aft travel in 0.002 m spacer steps; trim ballast counts inside the mass gate — **UNVERIFIED**  
+**As-built CG range** — As-built CG with the flight pack: x inside params.json#cg.x_range_m (0.0466 to 0.0514 m, D-62: forward limit = elevon trim <= 0.5 of travel at the trimmed CLmax (B3 V1 CL-B3-V-CG-FWD), aft limit = static margin 0.05 at 1.3 Vs with the CG 0.0185 m above the chord plane (CL-B3-V-CG-AFT-ENV); both on the CAD fins at 7 deg cant, rounded inward to 0.1 mm by A1), z inside cg.z_range_m (0.0165 to 0.025 m; each 10 mm of height costs 1.85 mm of aft limit and 0.27 s of spiral t2), |y| <= 0.005 m; the flight station of each weighed pack (546 / 550 / 590 g cases, D-64) comes from A3's live roll-up, from the -0.036 m datum with 0.016 m of aft travel in 0.002 m spacer steps; trim ballast counts inside the mass gate — **UNVERIFIED**  
 Defined in: redesign/params/params.json#cg
 
 - claim **CL-A1-CG-RANGE-FWD** params cg.x_range_m forward end is inside B3's V1 forward limit (trim at the stall, CG height included) = **0.0001307 m** — **UNVERIFIED**
@@ -2233,14 +2233,14 @@ Defined in: redesign/params/params.json#cg
         - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
       - `a_mec` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
         - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-        - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED**
+        - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED**
           - ⚠ uses P:mec.mass_total_g, which is UNVERIFIED (marked UNVERIFIED in redesign/subsystems/mechanisms/params.json: GENERATED: sum of the 22 declared part masses (EST until weighed, T-D6-WEIGH))
           - ⚠ uses P:mass.allocation_g.mechanisms, which is UNVERIFIED
           - ⚠ uses P:mass.allocation_g.mechanisms, which is UNVERIFIED
           - how to verify: T-D6-WEIGH: weigh every part on arrival
           - parts: MEC-001-L, MEC-001-R
           - calc `CALC-D6-MASS` `redesign/team/D6/mech_calcs.py::mass()`: `sum of the declared part masses` — **CHECKED**
-            - `m` ← param `P:mec.mass_total_g` = 71.4 g (subsystems/mechanisms/make_mechanisms.py) — **UNVERIFIED**
+            - `m` ← param `P:mec.mass_total_g` = 72.6 g (subsystems/mechanisms/make_mechanisms.py) — **UNVERIFIED**
               - ⚠ marked UNVERIFIED in redesign/subsystems/mechanisms/params.json: GENERATED: sum of the 22 declared part masses (EST until weighed, T-D6-WEIGH)
             - `alloc` ← `P:mass.allocation_g.mechanisms` (see above)
           - `P:mass.allocation_g.mechanisms` (see above)
@@ -4755,7 +4755,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P25
           - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
         - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
           - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-          - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+          - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
         - `mount_m` ← assumption `ASM-C1-MOUNT-MASS` One printed ASA motor mount with its collar and screws = 0.018 kg (basis: inside the C4 fins allocation (D3 CAD; replaces J1's mount-mass assumption, CR-J1-10: C1 reads no J1 ids)) — **PROPOSED**
         - `adapter_m` ← `ASM-C1-ADAPTER-MASS` (see above)
         - `pack_x` ← param `P:pod.pack_x_nominal_m` = -0.036 m (params/CHANGE-LOG.md#D-77) — **PROPOSED**
@@ -7537,7 +7537,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P5
           - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
         - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
           - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-          - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+          - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
         - `growth_g` ← param `P:mass.growth_reserve_g` = 226 g (A1 choice) — **PROPOSED**
         - `pack_rng` ← assumption `ASM-A3-PACK-RANGE` Lightest and heaviest flight pack the CG, gate and load cases run with: the Ovonic 120C EC5 listing minimum 546 g (551 - 5) and a 590 g heavy bound kept for the CG stations and load cases (D-64). D-95: 590 g is a conservative structural / CG bounding case only, not the acceptance line: the T-E2-WEIGH pass line is CL-A3-PACK-ACCEPT (one number, A1 copies it). The 503 / 680 g listings of the generic 4S 6500 search are retired as flight cases = table (2 rows) g (basis: params/CHANGE-LOG.md D-64 and D-95 (E2 CR-E2-24/-25, A1 ASM-A1-PACK-CASES-G [546, 590]); weigh each pack on arrival) — **UNVERIFIED**
           - ⚠ assumption marked UNVERIFIED by its author
@@ -7819,7 +7819,7 @@ Defined in: redesign/params/CHANGE-LOG.md#D-41
 
 ## R-LANDING-IMPACT
 
-**Fin-tip landing** — The four replaceable constant-force feet absorb a hard landing at 1.2 m/s sink (the pilot's down-stick limit Q_PILOT_SPD_DN, which F4 holds <= this value; the controller's own final descent is Q_LAND_FINAL_SPD 0.3 m/s) with 2/3 W of lift still on, at any touchdown tilt <= 10 deg of combined tilt in any direction (pitch, roll or diagonal: one foot takes the energy first, D-65), with airframe load factor <= 6.6 at the as-designed mass and >= 3 mm of the usable stroke left on the worst foot (foot stroke >= 0.038 m, C5's 3 mm guard), no damage beyond the feet; the foot side load from the pads scrubbing at mu 0.7 while the aircraft rotates onto the other feet (CL-C5-SIM3D-SIDE-LOAD limit, -SIDE-ULT ultimate) is the design side load for the shoe sleeve, the fin tip and the fin root (D5, C4 / D3, C1); shown by C5's 6-DOF touchdown model with four crushing feet (CR-C5-17) validated by T-C5-AIRCRAFT-DROP, while C1's 1.5 m/s level and one-foot cases L1 / L4 stay the structural bounds (R-LOADS); a foot is replaced in <= 10 min in the field (snap-fit piston, no adhesive) — **UNVERIFIED** **FAILS**  
+**Fin-tip landing** — The four replaceable constant-force feet absorb a hard landing at 1.2 m/s sink (the pilot's down-stick limit Q_PILOT_SPD_DN, which F4 holds <= this value; the controller's own final descent is Q_LAND_FINAL_SPD 0.3 m/s) with 2/3 W of lift still on, at any touchdown tilt <= 10 deg of combined tilt in any direction (pitch, roll or diagonal: one foot takes the energy first, D-65), with airframe load factor <= 6.6 at the as-designed mass and >= 3 mm of the usable stroke left on the worst foot (foot stroke >= 0.038 m, C5's 3 mm guard), no damage beyond the feet; the foot side load from the pads scrubbing at mu 0.7 while the aircraft rotates onto the other feet (CL-C5-SIM3D-SIDE-LOAD limit, -SIDE-ULT ultimate) is the design side load for the shoe sleeve, the fin tip and the fin root (D5, C4 / D3, C1); shown by C5's 6-DOF touchdown model with four crushing feet (CR-C5-17) validated by T-C5-AIRCRAFT-DROP, while C1's 1.5 m/s level and one-foot cases L1 / L4 stay the structural bounds (R-LOADS); a foot is replaced in <= 10 min in the field (snap-fit piston, no adhesive); horizontal groundspeed at contact <= — m/s (C5 derives it from the 30 deg tip-over margin and the foot friction; NASA CR-132423 p. 60 tolerates 2 kt = 1.03 m/s in hover just before touchdown; review/NASA-CR-132423-COMPLIANCE.md C-14, G-05), logged at every touchdown by H2 (M2) — **UNVERIFIED** **FAILS**  
 Defined in: redesign/params/CHANGE-LOG.md#D-65
 
 - claim **CL-C1-N-LAND-STROKE-MIN** Landing factor, energy bound at the 38 mm requirement stroke (cartridge eta) = **2.633** (limit <= 6.6, margin +60%) — **UNVERIFIED**
@@ -7947,7 +7947,7 @@ Defined in: redesign/params/CHANGE-LOG.md#D-65
       - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-      - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+      - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
     - `mount_m` ← assumption `ASM-C1-MOUNT-MASS` One printed ASA motor mount with its collar and screws = 0.018 kg (basis: inside the C4 fins allocation (D3 CAD; replaces J1's mount-mass assumption, CR-J1-10: C1 reads no J1 ids)) — **PROPOSED**
     - `adapter_m` ← assumption `ASM-C1-ADAPTER-MASS` Mass of one prop adapter and nut = 0.005 kg (basis: A3 mass model EST) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
@@ -8866,7 +8866,7 @@ Defined in: redesign/TEAM.md#C1
       - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-      - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+      - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
     - `mount_m` ← assumption `ASM-C1-MOUNT-MASS` One printed ASA motor mount with its collar and screws = 0.018 kg (basis: inside the C4 fins allocation (D3 CAD; replaces J1's mount-mass assumption, CR-J1-10: C1 reads no J1 ids)) — **PROPOSED**
     - `adapter_m` ← assumption `ASM-C1-ADAPTER-MASS` Mass of one prop adapter and nut = 0.005 kg (basis: A3 mass model EST) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
@@ -11726,7 +11726,7 @@ Defined in: redesign/TEAM.md#C1
 
 ## R-MASS-ALLOC
 
-**Subsystem mass allocations** — Each subsystem's flying mass (sum of mass_g over its parts.csv) <= its allocation in params/mass_budget.json; every part has a mass and a status word; the growth reserve (214 g) is released only by A1 through a change request — **UNVERIFIED**  
+**Subsystem mass allocations** — Each subsystem's flying mass (sum of mass_g over its parts.csv) <= its allocation in params/mass_budget.json; every part has a mass and a status word; the growth reserve (226 g) is released only by A1 through a change request — **UNVERIFIED**  
 Defined in: redesign/params/mass_budget.json
 
 - claim **CL-A3-ALLOC-WORST** Worst subsystem basic mass / its A1 allocation = **1** (limit <= 1, margin +0%) — **UNVERIFIED**
@@ -11804,7 +11804,7 @@ Defined in: redesign/params/mass_budget.json
       - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-      - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+      - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
     - `growth_g` ← param `P:mass.growth_reserve_g` = 226 g (A1 choice) — **PROPOSED**
     - `pack_rng` ← assumption `ASM-A3-PACK-RANGE` Lightest and heaviest flight pack the CG, gate and load cases run with: the Ovonic 120C EC5 listing minimum 546 g (551 - 5) and a 590 g heavy bound kept for the CG stations and load cases (D-64). D-95: 590 g is a conservative structural / CG bounding case only, not the acceptance line: the T-E2-WEIGH pass line is CL-A3-PACK-ACCEPT (one number, A1 copies it). The 503 / 680 g listings of the generic 4S 6500 search are retired as flight cases = table (2 rows) g (basis: params/CHANGE-LOG.md D-64 and D-95 (E2 CR-E2-24/-25, A1 ASM-A1-PACK-CASES-G [546, 590]); weigh each pack on arrival) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
@@ -11895,7 +11895,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P4
       - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-      - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+      - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
     - `reserve` ← param `P:mass.growth_reserve_g` = 226 g (A1 choice) — **PROPOSED**
     - `growth_kg` ← param `P:requirements.growth_allowance_kg` = 0.123 kg (redesign/params/CHANGE-LOG.md#D-95) — **PROPOSED**
     - `overrun_kg` ← param `P:requirements.build_overrun_kg` = 0.1 kg — **PROPOSED**
@@ -12860,7 +12860,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P14
       - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-      - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+      - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
     - `growth_g` ← param `P:mass.growth_reserve_g` = 226 g (A1 choice) — **PROPOSED**
     - `pack_rng` ← assumption `ASM-A3-PACK-RANGE` Lightest and heaviest flight pack the CG, gate and load cases run with: the Ovonic 120C EC5 listing minimum 546 g (551 - 5) and a 590 g heavy bound kept for the CG stations and load cases (D-64). D-95: 590 g is a conservative structural / CG bounding case only, not the acceptance line: the T-E2-WEIGH pass line is CL-A3-PACK-ACCEPT (one number, A1 copies it). The 503 / 680 g listings of the generic 4S 6500 search are retired as flight cases = table (2 rows) g (basis: params/CHANGE-LOG.md D-64 and D-95 (E2 CR-E2-24/-25, A1 ASM-A1-PACK-CASES-G [546, 590]); weigh each pack on arrival) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
@@ -14351,13 +14351,13 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P16
 
 ## R-SITE
 
-**Site rules and flight card** — Flights only at RFS yellow sub-fields 1-4, within 06:00-sunset (flight card 07:00-10:00), <= 400 ft AGL, VLOS <= 500 m from the pilot, with a spotter, a request >= 7 business days ahead and a post-flight report within 3 business days; no Remote ID module while every flight is inside the FRIA (a conditional line stays in the BOM) — **UNVERIFIED**  
+**Site rules and flight card** — Flights only at RFS yellow sub-fields 1-4, within 06:00-sunset (flight card 07:00-10:00), <= 400 ft AGL, VLOS <= 500 m from the pilot, with a spotter, a request >= 7 business days ahead and a post-flight report within 3 business days; each session starts with the field-map sheet (landing zone, approach sector, alternate spot, clearance of one zone width to the pilot box and other pads, obstacle survey of every object > 3 m (EST) inside the fence, pre-flight walk of zone, sector and alternate; NASA CR-132423 p. 42, 58-59, 166-167; review/NASA-CR-132423-COMPLIANCE.md C-15, G-03); no Remote ID module while every flight is inside the FRIA (a conditional line stays in the BOM) — **UNVERIFIED**  
 Defined in: redesign/config-study/requirements/REQUIREMENTS.md#D5
 
 
 ## R-SPIRAL
 
-**Spiral mode** — In cruise at the gate mass the spiral mode's time to double t2 >= 3.3 s at every CG inside cg.x_range_m and cg.z_range_m (0.01 to 0.025 m; B3 sens_zcg.py gives 3.34 s at the top of the z range, 3.51 s at the 0.0185 m target, CL-B3-V-LAT-T2); the 4 s MIL-F-8785C Level 3 floor for a hand-flown aircraft is not required because wing-borne flight is flown only in roll-stabilised modes: every FLTMODE1-6 in K09L.param is a mode whose roll loop holds the bank (QSTABILIZE, QHOVER, QLOITER, QLAND, QRTL, FBWA, CRUISE, RTL, AUTO), never MANUAL, ACRO or STABILIZE (D-50), and no raw-stick fixed-wing mode is flown above 5 m AGL (flight card); the Dutch-roll and short-period dampings stay above B3's floors (R-DIRECTIONAL). A1's position D-66 option (b): the CG height stays, the limit is 3.3 s — **UNVERIFIED**  
+**Spiral mode** — In cruise at the gate mass the spiral mode's time to double t2 >= 3.3 s at every CG inside cg.x_range_m and cg.z_range_m (0.0165 to 0.025 m; B3 sens_zcg.py gives 3.34 s at the top of the z range, 3.51 s at the 0.0185 m target, CL-B3-V-LAT-T2); the 4 s MIL-F-8785C Level 3 floor for a hand-flown aircraft is not required because wing-borne flight is flown only in roll-stabilised modes: every FLTMODE1-6 in K09L.param is a mode whose roll loop holds the bank (QSTABILIZE, QHOVER, QLOITER, QLAND, QRTL, FBWA, CRUISE, RTL, AUTO), never MANUAL, ACRO or STABILIZE (D-50), and no raw-stick fixed-wing mode is flown above 5 m AGL (flight card); the Dutch-roll and short-period dampings stay above B3's floors (R-DIRECTIONAL). A1's position D-66 option (b): the CG height stays, the limit is 3.3 s — **UNVERIFIED**  
 Defined in: redesign/params/CHANGE-LOG.md#D-66
 
 - claim **CL-B3-V-LAT-T2** Spiral time to double, cruise, as designed (CG height cg.z_target_m) = **3.51 s** (limit >= 3.3 s, margin +6%) — **UNVERIFIED**
@@ -17430,7 +17430,7 @@ Defined in: redesign/README.md#joints-both-sides-of-every-interface
               - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
             - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
               - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-              - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+              - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
             - `mount_m` ← assumption `ASM-C1-MOUNT-MASS` One printed ASA motor mount with its collar and screws = 0.018 kg (basis: inside the C4 fins allocation (D3 CAD; replaces J1's mount-mass assumption, CR-J1-10: C1 reads no J1 ids)) — **PROPOSED**
             - `adapter_m` ← `ASM-C1-ADAPTER-MASS` (see above)
             - `pack_x` ← param `P:pod.pack_x_nominal_m` = -0.036 m (params/CHANGE-LOG.md#D-77) — **PROPOSED**
@@ -19813,7 +19813,7 @@ Defined in: redesign/params/params.json#requirements.tipover_min_deg
       - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-      - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+      - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
     - `mount_m` ← assumption `ASM-C1-MOUNT-MASS` One printed ASA motor mount with its collar and screws = 0.018 kg (basis: inside the C4 fins allocation (D3 CAD; replaces J1's mount-mass assumption, CR-J1-10: C1 reads no J1 ids)) — **PROPOSED**
     - `adapter_m` ← assumption `ASM-C1-ADAPTER-MASS` Mass of one prop adapter and nut = 0.005 kg (basis: A3 mass model EST) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
@@ -21080,7 +21080,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P9
 
 ## R-TWIN
 
-**Foam-board twin gate** — The foam-board twin on the real motors, FC and pack holds position within 1 m in calm air and in a 5 m/s fan or breeze with logged lean <= 20 deg; flies QLOITER at >= 30 m; completes a transition at >= 1.3 Vs, two laps and a back-transition; hover current within +/-0.15 x 27 A of that value and cruise near 16.2 A; the elevon size that gives clean FBWA authority is recorded. A wind fail triggers the K11 planform test, then the K01 fallback (CONFIGURATION.md) — **UNVERIFIED**  
+**Foam-board twin gate** — The foam-board twin on the real motors, FC and pack holds position with 95 % of logged position samples within 1 m of the hold point over a 2 min run (NASA CR-132423 p. 49: accuracy stated at 95 percent likelihood; review/NASA-CR-132423-COMPLIANCE.md C-15, G-08) in calm air and in a 5 m/s fan or breeze with logged lean <= 20 deg; flies QLOITER at >= 30 m; completes a transition at >= 1.3 Vs, two laps and a back-transition; hover current within +/-0.15 x 27 A of that value and cruise near 16.2 A; the elevon size that gives clean FBWA authority is recorded. A wind fail triggers the K11 planform test, then the K01 fallback (CONFIGURATION.md) — **UNVERIFIED**  
 Defined in: redesign/config-study/tiebreak/DECISION.md#8
 
 
@@ -22399,7 +22399,7 @@ Defined in: redesign/config-study/REQUIREMENTS-PROPOSED.md#P8
         - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
       - `a_mech` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
         - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-        - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+        - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
       - `mount_m` ← assumption `ASM-C1-MOUNT-MASS` One printed ASA motor mount with its collar and screws = 0.018 kg (basis: inside the C4 fins allocation (D3 CAD; replaces J1's mount-mass assumption, CR-J1-10: C1 reads no J1 ids)) — **PROPOSED**
       - `adapter_m` ← assumption `ASM-C1-ADAPTER-MASS` Mass of one prop adapter and nut = 0.005 kg (basis: A3 mass model EST) — **UNVERIFIED**
         - ⚠ assumption marked UNVERIFIED by its author
@@ -22766,7 +22766,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
       - claim **CL-F2-MASS** Harness mass (basic, wires + fittings, routed) = **141.1 g** (limit <= 142 g, margin +1%) — **UNVERIFIED** — chain under [R-HARNESS-INSTALL](#r-harness-install)
     - `mechanisms` ← param `P:mass.allocation_g.mechanisms` = 73 g — **UNVERIFIED**
       - ⚠ cites CL-D6-MASS, which is UNVERIFIED
-      - claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+      - claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
     - `growth_g` ← param `P:mass.growth_reserve_g` = 226 g (A1 choice) — **PROPOSED**
     - `pack_rng` ← assumption `ASM-A3-PACK-RANGE` Lightest and heaviest flight pack the CG, gate and load cases run with: the Ovonic 120C EC5 listing minimum 546 g (551 - 5) and a 590 g heavy bound kept for the CG stations and load cases (D-64). D-95: 590 g is a conservative structural / CG bounding case only, not the acceptance line: the T-E2-WEIGH pass line is CL-A3-PACK-ACCEPT (one number, A1 copies it). The 503 / 680 g listings of the generic 4S 6500 search are retired as flight cases = table (2 rows) g (basis: params/CHANGE-LOG.md D-64 and D-95 (E2 CR-E2-24/-25, A1 ASM-A1-PACK-CASES-G [546, 590]); weigh each pack on arrival) — **UNVERIFIED**
       - ⚠ assumption marked UNVERIFIED by its author
@@ -31047,7 +31047,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - parts: FIN-002-R, FIN-002-L
   - `CALC-C4-D3-MODES-REC` (see above)
   - `P:requirements.vibration_sep_frac` (see above)
-- claim **CL-C4-D3-MOUNT-K-EST** Mount rocking stiffness estimate, D-91 mount (grip 18 mm, 2.5 mm cheeks, D-80 outboard cheek), weaker axis, collar and body in series = **2235 N m/rad** (limit >= 2200 N m/rad, margin +2%) — **UNVERIFIED**
+- claim **CL-C4-D3-MOUNT-K-EST** Mount rocking stiffness estimate, D-91 mount (grip 18 mm, 2.5 mm cheeks, D-80 outboard cheek), weaker axis, collar and body in series = **2208 N m/rad** (limit >= 2200 N m/rad, margin +0%) — **UNVERIFIED**
   - ⚠ uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C4-ASA-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)
@@ -31069,7 +31069,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `p_hy` ← param `P:fin_detail.mount.plate_half_y_m` = 0.0145 m (D3 choice) — **PROPOSED**
     - `p_hz` ← `P:fin_detail.mount.plate_half_z_m` (see above)
     - `ct` ← param `P:fin_detail.mount.cheek_t_m` = 0.0025 m (G3 practice) — **PROPOSED**
-    - `ct_in` ← param `P:fin_detail.mount.cheek_in_t_m` = 0.0025 m (params/CHANGE-LOG.md#D-91 (team/C4/fin_structures_d3.py CALC-C4-D3-MOUNT-K-EST)) — **PROPOSED**
+    - `ct_in` ← param `P:fin_detail.mount.cheek_in_t_m` = 0.0024 m (params/CHANGE-LOG.md#D-91 (team/C4/fin_structures_d3.py CALC-C4-D3-MOUNT-K-EST)) — **PROPOSED**
     - `slit` ← param `P:fin_detail.mount.slit_m` = 0.0015 m (G3 practice) — **PROPOSED**
     - `csg` ← param `P:fin_detail.mount.cheek_slit_gap_m` = 0.001 m (params/CHANGE-LOG.md#D-80 (review/MOTOR-MOUNTS.md MM-01, BR-02)) — **PROPOSED**
     - `cy` ← param `P:fin_detail.mount.cheek_y_in_m` = 0.0115 m (D3 choice) — **PROPOSED**
@@ -31083,7 +31083,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - source `SRC-C4-ROARK` Young & Budynas, Roark's Formulas for Stress and Strain, 7th ed., ch. 9 and 10, torsion of rectangular sections tau = T / (alpha b c^2); thin-ring bearing (ch. 9) motivates the internal plug at every bore — **UNVERIFIED**
       - ⚠ value never compared with the source (no 'checked' date)
   - `ASM-C4-MOUNT-K-ROCK` (see above)
-- claim **CL-C4-D3-MOUNT-K-EST-CHANGE** Change of the mount stiffness estimate, D-91 mount vs R4 (fraction) = **0.6217** — **UNVERIFIED**
+- claim **CL-C4-D3-MOUNT-K-EST-CHANGE** Change of the mount stiffness estimate, D-91 mount vs R4 (fraction) = **0.6024** — **UNVERIFIED**
   - ⚠ uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C4-ASA-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)
@@ -39311,7 +39311,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
       - ⚠ cites SRC-D6-SH0255-STALL, which is UNVERIFIED
       - source `SRC-D6-SH0255-STALL` [SH-0255MG stall current 1.2 A / 1.4 A at 4.8 / 6.0 V](https://www.rcjaz.com/savox-sh0255mg-metal-gear-digital-servo-micro-p-90039418.html), retailer spec list — **UNVERIFIED**
   - claim **CL-F1-SERVO-BEC-RATING** Power-board servo BEC continuous rating (6 V jumper) = **8 A** (limit >= 5.6 A, margin +43%) — **PROPOSED** — chain under [R-AVIONICS-POWER](#r-avionics-power)
-- claim **CL-D6-MASS** Mechanisms mass = **71.4 g** (limit <= 73 g, margin +2%) — **UNVERIFIED** — chain printed above
+- claim **CL-D6-MASS** Mechanisms mass = **72.6 g** (limit <= 73 g, margin +1%) — **UNVERIFIED** — chain printed above
 - claim **CL-D7-S-BOTTOM** Crush column stroke at bottoming = **0.072 m** — **UNVERIFIED** — chain printed above
 - claim **CL-D7-TRAVEL-REQ** Free travel needed under the lower tube ends = **0.082 m** — **UNVERIFIED** — chain printed above
 - claim **CL-D7-TRAVEL** Free travel under the lower tube ends in the 0.54 m box = **0.084 m** — **UNVERIFIED** — chain printed above

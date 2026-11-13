@@ -34,9 +34,10 @@ the first power-up. Times are for one side.
    flat. **Check:** panel swings ±30° with no tape wrinkle at the hinge line; end gaps to the fin ≥ 15 mm.
 5. **Fit the horns.** Cut the tape back 1 mm outside the flange (lower) and backplate (upper) outlines. Sand the
    PETG 120 grit, IPA wipe. Dry-fit both horns and the rod through D3's fin notch (rod passes under the fin root
-   fillet gap). Bond `MEC-004` and `MEC-006` with the rod already in both bosses, panels clamped at neutral on a flat
+   fillet gap). Push each horn up into its panel slot from below: the blade's U-slot (open upward, D-89c) passes over the bonded
+   torque tube and the flange stops on the lower skin. Bond `MEC-004` and `MEC-006` with the rod already in both bosses, panels clamped at neutral on a flat
    board, rod parallel to the hinge line. If the delivered rod is 3.0 mm, fill the 3.3 mm bore with thickened
-   epoxy and centre it. Cure 24 h. **Check:** both panels move together; at ±30° the rod clears the
+   epoxy and centre it. Then bond each backplate `MEC-013` over the blade top on the upper skin (D-89c). Cure 24 h. **Check:** both panels move together; at ±30° the rod clears the
    notch sides, the notch bottom and the fixed-core skin by ≥ 1 mm (feeler gauge).
 6. **Prepare the servo.** Centre it (1500 µs from the servo tester or FC). Fit the single arm pointing straight
    down (toward the lower skin), drill its hole to 1.6 mm at 15.6 mm from the shaft, screw on with Loctite 222.

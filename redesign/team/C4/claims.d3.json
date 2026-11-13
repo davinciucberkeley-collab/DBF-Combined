@@ -1413,12 +1413,12 @@
     "k_found": 10691.999999999998,
     "free_len_m": 0.009738706275439123,
     "cheek_h_m": 0.039000000000000035,
-    "k_nod_body": 5075.8795472318725,
-    "k_sway_body": 2824.941557417677,
+    "k_nod_body": 4974.361956287235,
+    "k_sway_body": 2782.583589675741,
     "cl_out_m": 0.014366205785435182,
-    "k_nod": 3441.8898214205838,
-    "k_sway": 2234.5495098582146,
-    "k_est": 2234.5495098582146,
+    "k_nod": 3394.909308557021,
+    "k_sway": 2207.963128716542,
+    "k_est": 2207.963128716542,
     "r4_k_found": 3168.0,
     "r4_free_len_m": 0.004738706275439125,
     "r4_cheek_h_m": 0.039000000000000035,
@@ -1428,8 +1428,8 @@
     "r4_k_nod": 2430.0230709688776,
     "r4_k_sway": 1377.9464404380726,
     "r4_k_est": 1377.9464404380726,
-    "change_vs_r4": 0.6216519338355513,
-    "nom_over_est": 0.9845384898809394
+    "change_vs_r4": 0.6023577288059128,
+    "nom_over_est": 0.9963934503194485
    },
    "input_values": {
     "E": 2000000000.0,
@@ -1443,7 +1443,7 @@
     "p_hy": 0.0145,
     "p_hz": 0.015,
     "ct": 0.0025,
-    "ct_in": 0.0025,
+    "ct_in": 0.0024,
     "slit": 0.0015,
     "csg": 0.001,
     "cy": 0.0115,
@@ -5533,7 +5533,7 @@
    ],
    "how": "T-C4-MOUNT-STIFF (pass level >= CL-C4-D3-MOUNT-K-REQ, CR-H1-24 / D-91) in both directions.",
    "note": "D-91 (CR-H1-24): the R5 estimate 1 531 N m/rad was below the 2 229 need, capped by the 12 mm collar foundation (3 168). D-61 asked C4 to re-check the rocking stiffness with the cheeks +5 mm. The longer cheeks lengthen the nodding span (stiffer sway channel, softer nodding); the weaker axis is sway. The FE nominal (ASM-C4-MOUNT-K-ROCK) is set at or below this estimate.",
-   "value": 2234.5495098582146
+   "value": 2207.963128716542
   },
   {
    "id": "CL-C4-D3-MOUNT-K-EST-CHANGE",
@@ -5549,7 +5549,7 @@
     "FIN-003-LL"
    ],
    "how": "T-C4-MOUNT-STIFF on the R5 print.",
-   "value": 0.6216519338355513
+   "value": 0.6023577288059128
   },
   {
    "id": "CL-C4-D3-MS-FACE",

@@ -62,8 +62,8 @@ then the hanging yaw test (TUNING-PLAN step 1b).
 | Hover | arm in QSTABILIZE/QHOVER/QLOITER | copter, throttle gain scaling | pilot selects FBWA/CRUISE at ≥ 50 m | lean 30°, descent 1.0 m/s pilot / 1.2 auto, belly into wind |
 | Pitch-over | FBWA selected | copter, nose down 12 °/s | nose 20° above horizon (≈ 5.8 s) | `Q_TRANS_FAIL` 15 s → QRTL; any Q mode aborts |
 | Assisted FW | angle reached | plane + motors-only assist | airspeed > 13 m/s, attitude error < 30° | TECS to 16 m/s |
-| Cruise | — | plane; yaw damping by L/R differential | pilot selects a Q mode; RTL ends at home | 16–18 m/s, bank 45°, pitch +20/−10°, throttle 10–70 % |
-| Back-transition | Q mode or QRTL | plane pitch-up 30 °/s, throttle 55 % | nose at `Q_TAILSIT_ANGLE` | copter hover; landing wingtip into wind, 0.3 m/s below 6 m |
+| Cruise | — | plane; yaw damping by L/R differential | pilot selects a Q mode (heading into wind only, ±45° EST, C-13); RTL (`Q_RTL_MODE` 2, was 1: circle down to `Q_RTL_ALT` 50 m at `Q_FW_LND_APR_RAD` 60 m, `Q_TRANS_DECEL` 2.0, then into-wind back-transition and QRTL) | 16–18 m/s, bank 45°, pitch +20/−10°, throttle 10–70 % |
+| Back-transition | Q mode or QRTL | plane pitch-up 30 °/s, throttle 55 % | nose at `Q_TAILSIT_ANGLE` | copter hover; landing wingtip into wind, 0.3 m/s below 6 m. Pilot-flown back-transition only heading into wind (select QHOVER within ±45° of the wind, EST); RTL back-transitions into wind via `Q_RTL_MODE` 2; no downwind approach (C-13, G-01; CR-132423 p. 35, 38-39, 172; `review/NASA-CR-132423-COMPLIANCE.md`); SITL S18 |
 
 ## Elevon deflection schedule (D-29: full travel to VA 20.5 m/s, ≤ 1/3 at VD 27.2 m/s)
 

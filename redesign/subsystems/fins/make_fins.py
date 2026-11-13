@@ -109,6 +109,9 @@ def masses(ctx, specs, P, LP, G, mod):
         elif rule == 'anchor':
             m = cm3 * petg * l('anchor.fill_factor') + 2 * bond
             basis = '%.2f cm3 x PETG %.2f x fill %.2f + 2 bonds' % (cm3, petg, l('anchor.fill_factor'))
+        elif rule == 'eye':                              # D-89c: printed 100 % (small, loaded tab), one bond
+            m = cm3 * petg + bond
+            basis = '%.2f cm3 x PETG %.2f (100 %%) + bond' % (cm3, petg)
         else:
             m = cm3 * asa * l('esc_pad.fill_factor') + bond
             basis = '%.2f cm3 x ASA %.2f + bond' % (cm3, asa)
@@ -205,7 +208,9 @@ NOTES = {
              'outboard; A = UR/LL, B = UL/LR (mirror); drill the motor holes 3.4 mm through the pilots to the measured '
              'pattern; plate face 7.5 mm ahead of the collar front, cheeks 17 mm (D-61), 18 mm grip (D-91)',
     'block': 'PETG, 3 perimeters, 15 % gyroid, spar bore horizontal on the bed; sand the socket top/bottom flush; '
-             'strap eyes print with it; four vertical plan-form edges R 3 mm (D-68) to match the R 3 mm pocket corners',
+             'four vertical plan-form edges R 3 mm (D-68) to match the R 3 mm pocket corners',
+    'eye': 'PETG, 100 %, saddle foot down on the bed; D-89c (SW-01): bonded round the outboard face of each bore '
+           'boss after the spar and blocks have cured in the core, 30 min epoxy + silica, foot sanded 120 grit',
     'plug': 'CF 20 x 18 offcut, 53 mm, sanded to slide in the 20 mm bore, laminating epoxy',
     'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed); 22 mm ring (D-90), 40 mm '
               'two-face tail, brace ear inboard; phase tie lug at x 0.060, slot open along x (CR-F2-16)',
@@ -223,7 +228,7 @@ def write_parts_csv(specs, M, P):
         base = '-'.join(pid.split('-')[:2])
         groups.setdefault(base, []).append((pid, name, mat, mob, rule))
     cost = {'FIN-001': 0.40, 'FIN-002': 14.16, 'FIN-003': 0.40, 'FIN-004': 0.70, 'FIN-006': 1.06,
-            'FIN-007': 0.05, 'FIN-008': 0.15, 'FIN-009': 2.00, 'FIN-010': 0.10, 'FIN-011': 2.00, 'FIN-012': 0.75}
+            'FIN-007': 0.05, 'FIN-008': 0.15, 'FIN-009': 2.00, 'FIN-010': 0.10, 'FIN-011': 2.00, 'FIN-012': 0.75, 'FIN-013': 0.02}
     vendor = {'FIN-001': 'Dollar Tree / Adams foam board 20 x 30 in, $1.25 (SRC-K09-CARD)',
               'FIN-002': 'SRC-CF-TUBE 22 x 20 x 1000 mm $28.32, two tubes per stock length (I1 fixes the listing)',
               'FIN-003': 'fusion/fins.py (Fusion export STL), ASA ~$25/kg (D-42)',
@@ -233,15 +238,17 @@ def write_parts_csv(specs, M, P):
               'FIN-007': 'fusion/fins.py, ASA (D-42)', 'FIN-008': 'fusion/fins.py, PETG',
               'FIN-009': 'pultruded CF strip 10 x 2 x 1000 mm, ~$10 per length, 4 braces per length UNVERIFIED (I1, CR-D3-09)',
               'FIN-010': 'fusion/fins.py, PETG',
+              'FIN-013': 'fusion/fins.py, PETG (same spool as the blocks)',
               'FIN-011': 'pultruded CF strip 10 x 1 x 1000 mm, ~$6 per length, 4 strips per length UNVERIFIED (I1, CR-D3-09)',
               'FIN-012': 'pultruded CF rod 2.5 x 1000 mm, ~$4, one rod makes all four pin sets UNVERIFIED (I1)'}
     process = {'board': 'laminate + knife cut', 'tube': 'cut (fine-tooth saw, tape-wrapped)', 'mount': '3D print + drill',
                'block': '3D print', 'plug': 'cut + sand', 'pad': '3D print', 'collar': '3D print',
-               'brace': 'cut', 'anchor': '3D print', 'strip': 'cut', 'pins': 'cut + drill + bond'}
+               'brace': 'cut', 'anchor': '3D print', 'eye': '3D print', 'strip': 'cut', 'pins': 'cut + drill + bond'}
     title = {'board': 'Half-fin, two-layer foam board (UR/UL/LR/LL)',
              'tube': 'Motor tube CF 22x20, %.0f mm' % (k9.val(P, 'fins.tube.length_m', 'm') * 1000),
              'mount': 'Motor mount ASA, 7 deg canted plate, slip clamp (prints A and B)',
-             'block': 'Through-core block (tube socket + spar saddle + strap eyes)',
+             'block': 'Through-core block (tube socket + spar saddle)',
+             'eye': 'Strap eye, PETG, bonded on the bore boss (D-89c)',
              'plug': 'Tube plug CF 20x18 x 53 mm', 'pad': 'ESC pad, ASA',
              'collar': 'Station collar, 22 mm + 40 mm two-face tail', 'brace': 'Brace, CF strip 10 x 2 (C4 CR-C4-16)',
              'anchor': 'Brace anchor on the spar', 'strip': 'Edge strip, CF 10 x 1',

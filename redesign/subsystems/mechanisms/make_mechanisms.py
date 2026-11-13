@@ -58,6 +58,8 @@ CATALOG = {
                 'subsystems/mechanisms/fusion/mechanisms.py#build_frame', 'FDM PETG'),
     'MEC-009': ('Elevon torque tube CF 5 x 4 mm', 'CF tube 5x4 roll-wrapped (bought)', 'buy', 'tube',
                 'CF tube 5 x 4 x 1000 mm (SRC-D6-CFTUBE)', 'cut, scuff'),
+    'MEC-013': ('Horn backplate, upper surface (D-89c)', 'PETG (printed)', 'make', 'printed',
+                'subsystems/mechanisms/fusion/mechanisms.py#build_backplate', 'FDM PETG 100 %'),
     'MEC-010': ('Elevon hinge tape, two strips', 'packing tape BOPP', 'buy', 'tape', 'clear packing tape 48 mm, '
                 'slit to 25 mm', 'cut'),
 }
@@ -297,7 +299,7 @@ def main():
 def write_parts_csv(mod, M, LP):
     cost = {'MEC-001': mod.lval(LP, 'servo.unit_cost_usd', 'USD'), 'MEC-002': 0.0, 'MEC-003': 2.50,
             'MEC-004': 0.20, 'MEC-005': 1.50, 'MEC-006': 0.20, 'MEC-007': 0.10, 'MEC-008': 0.20, 'MEC-009': 2.00,
-            'MEC-010': 0.20}
+            'MEC-010': 0.20, 'MEC-013': 0.05}
     note = {'MEC-001': 'UNVERIFIED price (SRC-D6-SH0255-PRICE); 3.9 kgf cm at 6 V, 1.4 A stall; buy 3 (1 spare, I1)',
             'MEC-003': 'per side: 1/3 of a 12 in 2-56 rod + 1 clevis + keeper; EST',
             'MEC-005': 'cut from one 1 m 1/8 in pultruded CF rod (EST $5/rod); D6-R2, was music wire', 'MEC-009': 'cut from one 1 m tube (EST $8): 2 x 0.210 m outboard + 2 x 0.160 m inboard',

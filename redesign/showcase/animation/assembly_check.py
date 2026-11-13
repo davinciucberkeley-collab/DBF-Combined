@@ -551,10 +551,22 @@ def bl_main(argv):
     poses = {p['name']: p for p in job['poses']}
     swaps = []
 
+    made_in = {}                                   # id(solder-joint body) -> the build step it is made at
+
     def place(ids):
         for pid in ids:
             placed.append(pid)
-            obst.extend(bodies.get(pid) or wb.get(pid) or [])
+            bs = bodies.get(pid) or wb.get(pid) or []
+            obst.extend(bs)
+            for b in bs:
+                if 'solder joint' in (b.name or ''):
+                    made_in[id(b)] = act['step']
+
+    def step_obst(step):
+        """Obstacles for a part moved in `step`: a solder joint is made with the iron at the end of the step its part
+        is placed in (after the screws that hold the part; BUILD-GUIDE order), so it is not yet there for the other
+        parts of that same step (D-89c). From the next step on it is an obstacle like any body."""
+        return [o for o in obst if made_in.get(id(o)) != step]
 
     snaps, reordered, moved_once, k = [], set(), set(), 0
     while k < len(acts):
@@ -645,7 +657,7 @@ def bl_main(argv):
                 mates = [b for pid in bench.get(g, []) for b in bodies[pid]]
                 oset = mates
             else:
-                oset = obst
+                oset = step_obst(act['step'])
             exempt = set()
             flex = {pid for pid in placed if ap.override(pid).get('flexible')}
             for pid in ids:

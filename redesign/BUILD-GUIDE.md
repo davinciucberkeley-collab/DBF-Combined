@@ -62,8 +62,8 @@ TPU 95A.
 - ✓ Fin tip and foot shoe on one datum (BR-01, D-75): no overlap in CAD.
 - ✓ Motor-mount slit open (BR-02, D-80); clocking dog and notch added (MM-02, D-81). ⚠ The dog's shear strength
   is not sized yet (C6, before the 18 Dec freeze): print one mount and one collar as test articles first.
-- ⚠ Through-core block strap eyes stop the block going into its pocket: pending fix
-  [SW-01](review/STRUCTURE-WING.md#findings) (BR-17).
+- ✓ Strap eyes no longer stop the block going into its pocket ([SW-01](review/STRUCTURE-WING.md#findings),
+  BR-17, D-89c): they are four separate PETG eyes `FIN-013`, bonded round the bosses in stage 6.
 - ✓ Shop files exist (BR-03): `python -B redesign/manufacturing/make_shop_files.py` (STLs, DXFs, hot-wire
   templates, jigs). Re-run after any CAD change.
 - ✓ No two parts overlap in CAD (`python -I redesign/collision/collide.py`, static and both elevon limits).
@@ -112,7 +112,7 @@ Detail: [`subsystems/wing/BUILD.md`](subsystems/wing/BUILD.md) steps 1–8, [`su
    ([SW-07](review/STRUCTURE-WING.md#findings)).
 3. Push the PETG plugs into the spar to the dowel marks. Cure 24 h.
 4. Bond both blocks to the spar in the clocking jig with silica-thickened epoxy, then cure
-   ([SW-08](review/STRUCTURE-WING.md#findings)). ⚠ Strap eyes: pending fix SW-01.
+   ([SW-08](review/STRUCTURE-WING.md#findings)). The blocks have no strap eyes: those go on in stage 6 (D-89c).
 5. Bond spar and blocks into the core with microballoon epoxy, fill the lip-bead chamfers, sleeve the pod ties.
    Weight it on the relieved bed, LE on a straight edge. Cure 24 h.
 
@@ -180,7 +180,9 @@ Detail: [`subsystems/pod/BUILD.md`](subsystems/pod/BUILD.md), [`subsystems/power
    handle bridge to a "slot fill" that does not exist on top of the wing ([SW-10](review/STRUCTURE-WING.md#findings));
    bond to the spar saddles only.
 3. Build the power stack **on the bench**: bus board, power board with the supplied 470 µF 35 V input cap,
-   AS150U. ⚠ The power and harness BUILD files disagree on when the ESC leads are soldered
+   AS150U. Screw the power board down on its washers **before** soldering the 10 AWG leads to its aft-edge pads:
+   the joints sit over the two aft screw heads (D-89c), so taking the board out later means desoldering them.
+   ⚠ The power and harness BUILD files disagree on when the ESC leads are soldered
    ([WB-02](review/WIRING-BATTERY.md#findings)); solder the bus board before the frame goes on, or use ESC-pair
    plugs at the pod exits if the team adopts [WB-03](review/WIRING-BATTERY.md#findings).
 4. Put the AS150U on a short flying pigtail if [WB-04](review/WIRING-BATTERY.md#findings) is adopted, so the
@@ -228,7 +230,10 @@ Detail: [`subsystems/harness/BUILD.md`](subsystems/harness/BUILD.md), [`subsyste
    groove: nothing proud. Where a lead leaves its groove (pod exits, groove ends by the fins), slit the tape round
    it with a fresh blade: nothing runs on top of the tape (D-86).
    At each fin root, trim the tape square along the edge of the cove fillet: no tape lies on the fillet (D-88).
-6. `T-F2-CONT` with the pack out: every net < 0.1 Ω, > 1 MΩ between nets.
+6. Bond a strap eye `FIN-013` round the outboard face of each of the four bore bosses (D-89c): sand the boss
+   and the saddle foot 120 grit, silica-thickened 30 min epoxy, foot down on the skin, tab outboard, tie hole
+   along x. Tape it while it cures. These are the ground-run tie points (CR-H1-08, 29.4 N per tie).
+7. `T-F2-CONT` with the pack out: every net < 0.1 Ω, > 1 MΩ between nets.
 
 ☐ Inspect before moving on: continuity and isolation logged; no tape wrinkles at the LE; LE-strip edges ≥ 32 mm.
 
@@ -240,12 +245,13 @@ Detail: [`subsystems/harness/BUILD.md`](subsystems/harness/BUILD.md), [`subsyste
 [Play the stage 7 clip](showcase/animation/build/stage-07.mp4)
 
 Time: per side about half a day plus 2 × 24 h cures.
-Parts: M01 servos, H02 mechanisms hardware, horns and frames `MEC-004…008`.
+Parts: M01 servos, H02 mechanisms hardware, horns and frames `MEC-004…008`, horn backplates `MEC-013`.
 Detail: [`subsystems/mechanisms/BUILD.md`](subsystems/mechanisms/BUILD.md) steps 5–12.
 
 1. Hinge: use Blenderm or filament tape, top strip at neutral, lower strip with the panel full TE-up
    ([SC-02](review/SERVOS-CONTROLS.md#findings)). Both panels of a side in one setup.
-2. Bond the inboard horn with the rod in place. ⚠ Slip-fit the outboard horn in a brass sleeve instead of bonding
+2. Push each horn up into its panel slot from below (U-slot over the torque tube), then bond the backplate `MEC-013`
+   on top (D-89c). Bond the inboard horn with the rod in place. ⚠ Slip-fit the outboard horn in a brass sleeve instead of bonding
    both ends ([SC-03](review/SERVOS-CONTROLS.md#findings)).
 3. Bench-prep the servo at 1500 µs; drill the arm to 1.85 mm (not 1.6 mm) for the 2-56 Z-bend
    ([SC-07](review/SERVOS-CONTROLS.md#findings)). Crimp pins but leave the JR housing off, so the lead passes the

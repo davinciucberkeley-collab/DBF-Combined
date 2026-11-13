@@ -14,7 +14,7 @@
    "id": "R-MASS-ALLOC",
    "type": "requirement",
    "title": "Subsystem mass allocations",
-   "text": "Each subsystem's flying mass (sum of mass_g over its parts.csv) <= its allocation in params/mass_budget.json; every part has a mass and a status word; the growth reserve (214 g) is released only by A1 through a change request",
+   "text": "Each subsystem's flying mass (sum of mass_g over its parts.csv) <= its allocation in params/mass_budget.json; every part has a mass and a status word; the growth reserve (226 g) is released only by A1 through a change request",
    "ref": "redesign/params/mass_budget.json",
    "note": "P4; owner A3; method A+T; see team/A2/REQUIREMENTS.md"
   },
@@ -22,7 +22,7 @@
    "id": "R-CG-RANGE",
    "type": "requirement",
    "title": "As-built CG range",
-   "text": "As-built CG with the flight pack: x inside params.json#cg.x_range_m (0.0466 to 0.0514 m, D-62: forward limit = elevon trim <= 0.5 of travel at the trimmed CLmax (B3 V1 CL-B3-V-CG-FWD), aft limit = static margin 0.05 at 1.3 Vs with the CG 0.0185 m above the chord plane (CL-B3-V-CG-AFT-ENV); both on the CAD fins at 7 deg cant, rounded inward to 0.1 mm by A1), z inside cg.z_range_m (0.01 to 0.025 m; each 10 mm of height costs 1.85 mm of aft limit and 0.27 s of spiral t2), |y| <= 0.005 m; the flight station of each weighed pack (546 / 550 / 590 g cases, D-64) comes from A3's live roll-up, from the -0.032 m datum with 0.012 m of aft travel in 0.002 m spacer steps; trim ballast counts inside the mass gate",
+   "text": "As-built CG with the flight pack: x inside params.json#cg.x_range_m (0.0466 to 0.0514 m, D-62: forward limit = elevon trim <= 0.5 of travel at the trimmed CLmax (B3 V1 CL-B3-V-CG-FWD), aft limit = static margin 0.05 at 1.3 Vs with the CG 0.0185 m above the chord plane (CL-B3-V-CG-AFT-ENV); both on the CAD fins at 7 deg cant, rounded inward to 0.1 mm by A1), z inside cg.z_range_m (0.0165 to 0.025 m; each 10 mm of height costs 1.85 mm of aft limit and 0.27 s of spiral t2), |y| <= 0.005 m; the flight station of each weighed pack (546 / 550 / 590 g cases, D-64) comes from A3's live roll-up, from the -0.036 m datum with 0.016 m of aft travel in 0.002 m spacer steps; trim ballast counts inside the mass gate",
    "ref": "redesign/params/params.json#cg",
    "note": "P4/P25; owner A3; method A+T; see team/A2/REQUIREMENTS.md"
   },
@@ -54,7 +54,7 @@
    "id": "R-SPIRAL",
    "type": "requirement",
    "title": "Spiral mode",
-   "text": "In cruise at the gate mass the spiral mode's time to double t2 >= 3.3 s at every CG inside cg.x_range_m and cg.z_range_m (0.01 to 0.025 m; B3 sens_zcg.py gives 3.34 s at the top of the z range, 3.51 s at the 0.0185 m target, CL-B3-V-LAT-T2); the 4 s MIL-F-8785C Level 3 floor for a hand-flown aircraft is not required because wing-borne flight is flown only in roll-stabilised modes: every FLTMODE1-6 in K09L.param is a mode whose roll loop holds the bank (QSTABILIZE, QHOVER, QLOITER, QLAND, QRTL, FBWA, CRUISE, RTL, AUTO), never MANUAL, ACRO or STABILIZE (D-50), and no raw-stick fixed-wing mode is flown above 5 m AGL (flight card); the Dutch-roll and short-period dampings stay above B3's floors (R-DIRECTIONAL). A1's position D-66 option (b): the CG height stays, the limit is 3.3 s",
+   "text": "In cruise at the gate mass the spiral mode's time to double t2 >= 3.3 s at every CG inside cg.x_range_m and cg.z_range_m (0.0165 to 0.025 m; B3 sens_zcg.py gives 3.34 s at the top of the z range, 3.51 s at the 0.0185 m target, CL-B3-V-LAT-T2); the 4 s MIL-F-8785C Level 3 floor for a hand-flown aircraft is not required because wing-borne flight is flown only in roll-stabilised modes: every FLTMODE1-6 in K09L.param is a mode whose roll loop holds the bank (QSTABILIZE, QHOVER, QLOITER, QLAND, QRTL, FBWA, CRUISE, RTL, AUTO), never MANUAL, ACRO or STABILIZE (D-50), and no raw-stick fixed-wing mode is flown above 5 m AGL (flight card); the Dutch-roll and short-period dampings stay above B3's floors (R-DIRECTIONAL). A1's position D-66 option (b): the CG height stays, the limit is 3.3 s",
    "ref": "redesign/params/CHANGE-LOG.md#D-66",
    "note": "P25; owner B3; method A+I+D; see team/A2/REQUIREMENTS.md"
   },
@@ -150,7 +150,7 @@
    "id": "R-LANDING-IMPACT",
    "type": "requirement",
    "title": "Fin-tip landing",
-   "text": "The four replaceable constant-force feet absorb a hard landing at 1.2 m/s sink (the pilot's down-stick limit Q_PILOT_SPD_DN, which F4 holds <= this value; the controller's own final descent is Q_LAND_FINAL_SPD 0.3 m/s) with 2/3 W of lift still on, at any touchdown tilt <= 10 deg of combined tilt in any direction (pitch, roll or diagonal: one foot takes the energy first, D-65), with airframe load factor <= 6.6 at the as-designed mass and >= 3 mm of the usable stroke left on the worst foot (foot stroke >= 0.038 m, C5's 3 mm guard), no damage beyond the feet; the foot side load from the pads scrubbing at mu 0.7 while the aircraft rotates onto the other feet (CL-C5-SIM3D-SIDE-LOAD limit, -SIDE-ULT ultimate) is the design side load for the shoe sleeve, the fin tip and the fin root (D5, C4 / D3, C1); shown by C5's 6-DOF touchdown model with four crushing feet (CR-C5-17) validated by T-C5-AIRCRAFT-DROP, while C1's 1.5 m/s level and one-foot cases L1 / L4 stay the structural bounds (R-LOADS); a foot is replaced in <= 10 min in the field (snap-fit piston, no adhesive)",
+   "text": "The four replaceable constant-force feet absorb a hard landing at 1.2 m/s sink (the pilot's down-stick limit Q_PILOT_SPD_DN, which F4 holds <= this value; the controller's own final descent is Q_LAND_FINAL_SPD 0.3 m/s) with 2/3 W of lift still on, at any touchdown tilt <= 10 deg of combined tilt in any direction (pitch, roll or diagonal: one foot takes the energy first, D-65), with airframe load factor <= 6.6 at the as-designed mass and >= 3 mm of the usable stroke left on the worst foot (foot stroke >= 0.038 m, C5's 3 mm guard), no damage beyond the feet; the foot side load from the pads scrubbing at mu 0.7 while the aircraft rotates onto the other feet (CL-C5-SIM3D-SIDE-LOAD limit, -SIDE-ULT ultimate) is the design side load for the shoe sleeve, the fin tip and the fin root (D5, C4 / D3, C1); shown by C5's 6-DOF touchdown model with four crushing feet (CR-C5-17) validated by T-C5-AIRCRAFT-DROP, while C1's 1.5 m/s level and one-foot cases L1 / L4 stay the structural bounds (R-LOADS); a foot is replaced in <= 10 min in the field (snap-fit piston, no adhesive); horizontal groundspeed at contact <= — m/s (C5 derives it from the 30 deg tip-over margin and the foot friction; NASA CR-132423 p. 60 tolerates 2 kt = 1.03 m/s in hover just before touchdown; review/NASA-CR-132423-COMPLIANCE.md C-14, G-05), logged at every touchdown by H2 (M2)",
    "ref": "redesign/params/CHANGE-LOG.md#D-65",
    "note": "P8/P12; owner C5; method A+T; see team/A2/REQUIREMENTS.md"
   },
@@ -286,7 +286,7 @@
    "id": "R-SITE",
    "type": "requirement",
    "title": "Site rules and flight card",
-   "text": "Flights only at RFS yellow sub-fields 1-4, within 06:00-sunset (flight card 07:00-10:00), <= 400 ft AGL, VLOS <= 500 m from the pilot, with a spotter, a request >= 7 business days ahead and a post-flight report within 3 business days; no Remote ID module while every flight is inside the FRIA (a conditional line stays in the BOM)",
+   "text": "Flights only at RFS yellow sub-fields 1-4, within 06:00-sunset (flight card 07:00-10:00), <= 400 ft AGL, VLOS <= 500 m from the pilot, with a spotter, a request >= 7 business days ahead and a post-flight report within 3 business days; each session starts with the field-map sheet (landing zone, approach sector, alternate spot, clearance of one zone width to the pilot box and other pads, obstacle survey of every object > 3 m (EST) inside the fence, pre-flight walk of zone, sector and alternate; NASA CR-132423 p. 42, 58-59, 166-167; review/NASA-CR-132423-COMPLIANCE.md C-15, G-03); no Remote ID module while every flight is inside the FRIA (a conditional line stays in the BOM)",
    "ref": "redesign/config-study/requirements/REQUIREMENTS.md#D5",
    "note": "P20/P3; owner H3; method I+D; see team/A2/REQUIREMENTS.md"
   },
@@ -310,7 +310,7 @@
    "id": "R-TWIN",
    "type": "requirement",
    "title": "Foam-board twin gate",
-   "text": "The foam-board twin on the real motors, FC and pack holds position within 1 m in calm air and in a 5 m/s fan or breeze with logged lean <= 20 deg; flies QLOITER at >= 30 m; completes a transition at >= 1.3 Vs, two laps and a back-transition; hover current within +/-0.15 x 27 A of that value and cruise near 16.2 A; the elevon size that gives clean FBWA authority is recorded. A wind fail triggers the K11 planform test, then the K01 fallback (CONFIGURATION.md)",
+   "text": "The foam-board twin on the real motors, FC and pack holds position with 95 % of logged position samples within 1 m of the hold point over a 2 min run (NASA CR-132423 p. 49: accuracy stated at 95 percent likelihood; review/NASA-CR-132423-COMPLIANCE.md C-15, G-08) in calm air and in a 5 m/s fan or breeze with logged lean <= 20 deg; flies QLOITER at >= 30 m; completes a transition at >= 1.3 Vs, two laps and a back-transition; hover current within +/-0.15 x 27 A of that value and cruise near 16.2 A; the elevon size that gives clean FBWA authority is recorded. A wind fail triggers the K11 planform test, then the K01 fallback (CONFIGURATION.md)",
    "ref": "redesign/config-study/tiebreak/DECISION.md#8",
    "note": "P23; owner H2; method D; see team/A2/REQUIREMENTS.md"
   },

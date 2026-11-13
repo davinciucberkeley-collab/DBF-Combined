@@ -1,8 +1,9 @@
 # H3 flight card: K09-L (5 m/s card)
 
 Revision H3-R1, 2026-11-13. Status `PROPOSED`; **not signed, nothing flown**. Owner H3 (safety officer). Requirements: `R-SITE`, `R-TIPOVER` (stance rules), `R-WIND`, `R-SPIRAL`, `R-THERMAL`.
-Print sections 1-4 on one laminated page (the box carries `subsystems/transport/CHECKLIST.md` for set-up). Compliance and site rules: [`COMPLIANCE.md`](COMPLIANCE.md). Packs: [`BATTERY-PROCEDURE.md`](BATTERY-PROCEDURE.md).
+Print sections 1-4 and 4b on one laminated page (the box carries `subsystems/transport/CHECKLIST.md` for set-up). Compliance and site rules: [`COMPLIANCE.md`](COMPLIANCE.md). Packs: [`BATTERY-PROCEDURE.md`](BATTERY-PROCEDURE.md).
 Wind method and log: [`WIND-RFS.md`](WIND-RFS.md). Test order and gates: [`../H2/FLIGHT-TEST-PLAN.md`](../H2/FLIGHT-TEST-PLAN.md). Range check: [`../F5/RANGE-TEST.md`](../F5/RANGE-TEST.md).
+Sections 2 step 0, 4b and the fatigue line in 6 were added 2026-11-13 from change C-16 of `../../review/NASA-CR-132423-COMPLIANCE.md` (NASA CR-132423; gaps G-02, G-03, G-11, G-12, G-14); nothing flown.
 
 ## 1. Limits (go / no-go)
 
@@ -32,6 +33,7 @@ CG rule (open, `STATUS.md` issue 7): A3's D-59 rule or A1's mid-band rule decide
 
 ## 2. Set-up and arming sequence (box checklist first)
 
+0. **Field walk** (every session, before the wind check; G-03, CR-132423 p. 167): re-walk the landing zone, approach sector and alternate spot; note new obstructions (vehicles, tents, other pilots' gear, cranes) against the field map (`subsystems/ops/FIELD-MAP.md`, to be written by H3; —). Zone >= 8 m square, flat, mown (EST); clear of pilot box, spectators and other pads by >= 8 m (CR p. 59); no obstacle above a 10 deg surface from the zone edge in the 90 deg sector centred on the wind (EST; CR p. 42, 58). Brief RFS's other users. Fence polygon read back against the map when it was uploaded (G-04; `FENCE_TYPE` 7 only after that).
 1. Wind check (section 1, lines 1-3). Safety lead states go / no-go aloud.
 2. Pack in its bag, ammo can 5 m from the pilot box, sand bucket beside it (`BATTERY-PROCEDURE.md`). Extinguisher or sand at hand. Crew in place; non-participants outside the operations area.
 3. Aircraft stood on the mat, nose-up on its four feet, level within 5 deg (C5 S1), **wingtip into the wind** (S2). Fit props colour to colour (LH nut on the CW motors), 10 mm spanner, 1.5 N m; pitot boom in (`subsystems/transport/CHECKLIST.md`).
@@ -66,6 +68,17 @@ CG rule (open, `STATUS.md` issue 7): A3's D-59 rule or A1's mid-band rule decide
 | After any crash | unplug; pack dented, puffed, hot or smelling: ammo can or sand outdoors, observe >= 30 min, never charge again; report injury or property damage to UCPD at once at 510-642-6760 | `team/E2/ENERGY.md` section 6; UC policy |
 | Post-flight report | to UCPD within 3 business days: date and time of all flights, pilot names, drones flown, accidents or violations | UC policy |
 
+## 4b. Procedures added by the NASA CR-132423 review (C-16)
+
+| Procedure | Rule | Gap, CR page |
+|---|---|---|
+| **Wind go/no-go** | 5 m/s steady, **wingtip-into-wind landing only** (broadside limit 4 m/s, `STATUS.md` R-WIND row; the 5.4 vs 5.0 m/s margin is thin). **Above 8 m/s gust: lay flat or land at once.** First transitions: morning, <= 5 m/s (`TUNING-PLAN.md` step 7). Rescale after `R-WIND-MEASURE` | G-11, p. 22 |
+| **Go-around (any Q-mode landing)** | Triggers: drift > 2 m from the spot (EST), tilt > 10 deg (`R-LANDING-IMPACT`), a spotter call (traffic, person or animal in the zone), a link warning, a gust above the card limit. Action: **QLOITER (switch position 3), climb to >= 10 m** (EST), re-position upwind, re-try once. Second abort, or `BATT_LOW`: land at the alternate spot. In fixed wing the hold is RTL or FBWA loiter at >= 50 m; never hold in hover | G-02, p. 33, 39 |
+| **Alternate spot** | marked on the field map, upwind side, same clearance rules as the main zone (step 0) | G-02, G-03, p. 39 |
+| **Traffic call** | The spotter watches only the sky and the zone. Fixed call "TRAFFIC - [direction]": in a Q mode the pilot goes to QLOITER and descends; in fixed wing descends below the traffic or selects RTL. No ADS-B receiver is proposed (no budget reserve, `STATUS.md` issue 2) | G-12, p. 40, 97, 167 |
+| **Back-transition into wind** | Select QHOVER from cruise **only heading into the wind (within 45 deg, EST)**, at >= 50 m, never toward the pilot box. RTL does this itself with `Q_RTL_MODE` 2 (`K09L.param`) once SITL S18 has shown it; no downwind approach | G-01, p. 35, 172 |
+| **Fatigue limit** | Maximum flights per pilot per session: — flights; minimum rest between flights: — min (H2 sets both). Rotate the spotter role each flight. Keep one parameter change per flight (`TUNING-PLAN.md` rules) | G-14, p. 169 |
+
 ## 5. Spiral and CG-dependent notes for the pilot (`R-SPIRAL`)
 
 The spiral mode meets t2 >= 3.3 s only with roll-stabilised modes (D-66); in cruise fly FBWA/CRUISE, not manual. A CG outside the marks changes this (`R-SPIRAL`, `team/B3/S-AND-C.md`).
@@ -81,3 +94,5 @@ The spiral mode meets t2 >= 3.3 s only with roll-stabilised modes (D-66); in cru
 | Gate flown today | - |
 | Go / no-go (H3) and time | - |
 | Pilot | - |
+| Field walk done, new obstructions noted; fence corners checked against the field map (initials) | - |
+| Flights flown by this pilot today (limit —); spotter this flight | - |

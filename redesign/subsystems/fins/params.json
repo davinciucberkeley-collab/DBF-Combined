@@ -284,11 +284,11 @@
     "note": "outboard (slit-side) cheek; the inboard cheek is cheek_in_t_m (D-91)"
    },
    "cheek_in_t_m": {
-    "value": 0.0025,
+    "value": 0.0024,
     "unit": "m",
     "source": "params/CHANGE-LOG.md#D-91 (team/C4/fin_structures_d3.py CALC-C4-D3-MOUNT-K-EST)",
     "status": "PROPOSED",
-    "note": "D-91: inboard cheek thickness as its own key (outboard is cheek_t_m, which carries the phase leads on its outer face, team/F2/harness.py W-PH-*). Kept at 2.5 mm: with the 18 mm grip the estimate is 1.5 x the need (CL-C4-D3-MOUNT-K-EST / -REQ); 5 mm would add 8 g for four mounts for a factor 2.0 the separation does not need"
+    "note": "D-91: inboard cheek thickness as its own key (outboard is cheek_t_m, which carries the phase leads on its outer face, team/F2/harness.py W-PH-*). Kept at 2.5 mm: with the 18 mm grip the estimate is 1.5 x the need (CL-C4-D3-MOUNT-K-EST / -REQ); 5 mm would add 8 g for four mounts for a factor 2.0 the separation does not need. D-89c: 2.5 -> 2.4 mm so the moved inboard cheek (inner face 12.1 mm) still ends at the plate edge (14.5 mm)"
    },
    "cheek_y_in_m": {
     "value": 0.0115,
@@ -400,6 +400,13 @@
     "source": "CHANGE-LOG D-42 (CR-E3-01)",
     "status": "PROPOSED",
     "note": "HDT 93 degC; motor base 66.4 degC steady hover (CL-E3-MOUNT-ASA); PETG fails by 8 K"
+   },
+   "cheek_in_y_in_m": {
+    "value": 0.0121,
+    "unit": "m",
+    "source": "params/CHANGE-LOG.md#D-89c",
+    "status": "PROPOSED",
+    "note": "D-89c: inboard cheek inner face from the fin plane (outboard stays cheek_y_in_m 11.5 mm). The 7 deg cant tilts each motor-screw axis 0.062 mm/mm toward the inboard cheek: the inboard screw head (edge 10.75 mm) met an 11.5 mm cheek 6 mm out, before its 8 mm shank left the motor (build-film assembly check). At 12.1 mm the head clears it to ~17 mm out"
    }
   },
   "esc_pad": {
@@ -783,7 +790,7 @@
     "unit": "m",
     "source": "D3 choice",
     "status": "PROPOSED",
-    "note": "tab beyond the boss ring, outboard side (y), on every bore boss of the block: one eye per fin root (CR-H1-08)"
+    "note": "tab beyond the boss ring, outboard side (y), one eye per fin root (CR-H1-08); separate part FIN-013 bonded after the spar bond since D-89c (SW-01: printed on the block it stopped the block entering its pocket)"
    },
    "h_m": {
     "value": 0.01,
@@ -819,6 +826,34 @@
     "source": "team/H1/claims.json#CL-H1-RESTRAINT-PER-TIE",
     "status": "PROPOSED",
     "note": "restrained ground run, per tie"
+   },
+   "bond_line_m": {
+    "value": 6e-05,
+    "unit": "m",
+    "source": "D-89c",
+    "status": "PROPOSED",
+    "note": "saddle foot inner radius = boss outer radius + this; thickened epoxy fills it"
+   },
+   "foot_t_m": {
+    "value": 0.0015,
+    "unit": "m",
+    "source": "D-89c",
+    "status": "PROPOSED",
+    "note": "saddle foot wall round the boss"
+   },
+   "foot_deg": {
+    "value": 35.0,
+    "unit": "deg",
+    "source": "D-89c",
+    "status": "PROPOSED",
+    "note": "half-angle of the saddle foot about +y (outboard), clear of the boss tail slot walls"
+   },
+   "skin_stack_m": {
+    "value": 0.00032,
+    "unit": "m",
+    "source": "subsystems/wing/params.json#skin.model_t_m (0.1 mm) x 3 layers (wing.py skin_plan: block doubler on 2 layers) + 0.02 mm",
+    "status": "PROPOSED",
+    "note": "D-89c: the eye foot sits on the skin tape, bonded after the skin (BUILD-GUIDE 6.6), so it stands this far off the core surface"
    }
   },
   "wire_hole": {

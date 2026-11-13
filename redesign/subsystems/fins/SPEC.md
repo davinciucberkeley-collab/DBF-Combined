@@ -60,7 +60,8 @@ around the tube.
 | `FIN-001-<st>` | Half-fin laminate, notch, stepped tip, Ø 8 lead hole, root fillets (lower: link slot) | 4 | 25.9 | 103.5 |
 | `FIN-002-R/L` | Motor tube CF 22 × 20 × 344 | 2 | 35.1 | 70.2 |
 | `FIN-003-<st>` | Motor mount ASA, 7° canted plate 7.5 mm ahead, 17 mm cheeks (A = UR/LL, B = UL/LR) | 4 | 11.9 | 47.8 |
-| `FIN-004-R/L` | Through-core block PETG, R 3 mm vertical edges, bosses, 2 strap eyes, 2 tie lugs | 2 | 40.9 | 81.7 |
+| `FIN-004-R/L` | Through-core block PETG, R 3 mm vertical edges, bosses, 2 tie lugs | 2 | 40.0 | 79.9 |
+| `FIN-013-<st>` | Strap eye PETG 100 %, saddle foot bonded round the bore boss (D-89c, SW-01) | 4 | 1.36 | 5.4 |
 | `FIN-006-R/L` | Tube plug CF 20 × 18 × 53 | 2 | 5.5 | 10.9 |
 | `FIN-007-<st>` | ESC pad ASA 46 × 31 | 4 | 2.0 | 8.2 |
 | `FIN-008-<st>` | Station collar PETG, 15 mm ring, 40 mm tail, ear, phase tie lug (x 0.060, open along x) | 4 | 10.5 | 42.0 |

@@ -300,17 +300,18 @@ def build_horn(part, G, y, clevis, boss_dir):
     part.prism('Y', y - ht / 2, [arm] + holes, ht, name='horn arm')
     part.prism('Y', y - ht / 2, [horn_blade_loop(G), circle(G['xt'], G['zt'], G['tube_r'] + 0.0001, 16)], ht,
                name='horn blade')
-    # D-89b: the bore is a U-slot open to the blade's lower edge: the torque tube is bonded in its panel first (BUILD
-    # step 3.3), so the horn must slide up onto it (step 7.2) and is then epoxied; a closed bore could not go on
-    # (build-film assembly check). Channel = tube diameter + 0.2 mm, from the bore centre down out of the part
-    zb = min(q[1] for q in horn_blade_loop(G)) - 0.002
+    # D-89b/D-89c: the bore is a U-slot open to the blade's UPPER edge. The torque tube is bonded in its panel first
+    # (BUILD step 3.3) and the horn goes in from below (arm and clevis under the panel, step 7.2): relative to the
+    # horn the tube enters from the top, so the channel runs from the bore centre up out of the blade (D-89b had it
+    # open below, which the assembly check showed cannot pass). Channel = tube diameter + 0.2 mm
+    zb = max(q[1] for q in horn_blade_loop(G)) + 0.002
     rr = G['tube_r'] + 0.0001
-    part.cut_box((G['xt'] - rr, y - ht / 2 - 0.0005, zb), (G['xt'] + rr, y + ht / 2 + 0.0005, G['zt']),
-                 name='tube slot (open below)')
+    part.cut_box((G['xt'] - rr, y - ht / 2 - 0.0005, G['zt']), (G['xt'] + rr, y + ht / 2 + 0.0005, zb),
+                 name='tube slot (open above)')
     fx0, fx1, fw, ft = G['flange']
     part.prism('Y', y - fw / 2, [band(G, xh + fx0, xh + fx1, False, ft)], fw, name='lower flange')
-    bx0, bx1, bw, bt = G['backplate']
-    part.prism('Y', y - bw / 2, [band(G, xh + bx0, xh + bx1, True, bt)], bw, name='upper backplate')
+    # the upper backplate is its own part MEC-013 since D-89c (build_backplate): with it printed on, the horn had a
+    # flange below and a plate above the panel and could enter its slot from neither side
     y0 = y + boss_dir * ht / 2
     part.tube('Y', (G['B'][0], y0, G['B'][1]), boss_dir * G['boss_len'], G['boss_r'], G['bore_r'], name='rod boss')
 
@@ -360,7 +361,7 @@ def build_tape(part, G):
 
 # ----------------------------------------------------------------------------- module
 PARTS_R = ['MEC-001-R', 'MEC-002-R', 'MEC-003-R', 'MEC-004-R', 'MEC-005-R', 'MEC-006-R', 'MEC-007-R', 'MEC-008-R',
-           'MEC-009-RI', 'MEC-009-RO', 'MEC-010-R']
+           'MEC-009-RI', 'MEC-009-RO', 'MEC-010-R', 'MEC-013-RI', 'MEC-013-RO']
 
 
 def mirror_id(pid):
@@ -383,10 +384,19 @@ def build(ctx):
     build_tube(ctx.part('MEC-009-RI', rgb=RGB_CF), G, G['tube_in'])
     build_tube(ctx.part('MEC-009-RO', rgb=RGB_CF), G, G['tube_out'])
     build_tape(ctx.part('MEC-010-R', rgb=RGB_TAPE), G)
+    build_backplate(ctx.part('MEC-013-RI', rgb=RGB_PRINT), G, G['ya'])
+    build_backplate(ctx.part('MEC-013-RO', rgb=RGB_PRINT), G, G['yo'])
     for pid in PARTS_R:
         k9.pair(ctx, pid, mirror_id(pid))
     register(ctx, G)
     build_hardware(ctx, G)
+
+
+def build_backplate(part, G, y):
+    """MEC-013 horn backplate (D-89c): the upper backplate band, printed on its own and bonded over the blade top
+    and the bare foam after the horn is in from below (it clamps the blade in its slot with the lower flange)."""
+    bx0, bx1, bw, bt = G['backplate']
+    part.prism('Y', y - bw / 2, [band(G, G['xh'] + bx0, G['xh'] + bx1, True, bt)], bw, name='upper backplate')
 
 
 def cover_screw_points(G):
@@ -439,7 +449,7 @@ def edge_specs(G=None):
     add(10, 9, 'MEC-003-R', 'MEC-004-R', 'CT-CLEVIS', ('revolute', 'Q'), 'steel 2-56 clevis on the horn pin hole, '
         'silicone keeper')
     add(12, 11, 'MEC-004-R', WING['in'] + '!', 'CT-EPOXY', 'contact',
-        'through-panel horn: blade in a 2.5 mm slot, lower flange and upper backplate on bare foam, bore on the tube')
+        'through-panel horn: blade in a 2.5 mm slot from below, lower flange on bare foam, U-slot on the tube (backplate MEC-013)')
     add(18, 17, 'MEC-007-R', WING['skin'] + '!', 'CT-TAPE-SKIN', 'contact', 'cover edges taped to the skin (service: '
         'peel, remove 2 screws)')
     add(20, 19, 'MEC-005-R', 'MEC-004-R', 'CT-EPOXY', 'contact', 'rod bonded over 10 mm in the inboard horn boss')
@@ -450,6 +460,10 @@ def edge_specs(G=None):
     add(28, 27, 'MEC-009-RO', WING['out'] + '!', 'CT-EPOXY', 'contact', 'torque tube in a routed groove, epoxy + '
         'microballoon fill, taped over')
     add(30, 29, 'MEC-004-R', 'MEC-009-RI', 'CT-EPOXY', 'contact', 'horn blade bore bonded on the torque tube')
+    add(38, 37, 'MEC-013-RI', 'MEC-004-R', 'CT-EPOXY', 'contact', 'horn backplate bonded over the blade top and the '
+        'bare foam after the horn is in from below (D-89c)')
+    add(40, 39, 'MEC-013-RO', 'MEC-006-R', 'CT-EPOXY', 'contact', 'link-horn backplate bonded over the blade top and '
+        'the bare foam (D-89c)')
     add(32, 31, 'MEC-006-R', 'MEC-009-RO', 'CT-EPOXY', 'contact', 'link horn blade bore bonded on the torque tube')
     add(34, 33, 'MEC-010-R', WING['core'] + '!', 'CT-TAPE-SKIN', 'contact', 'hinge tape on the core side of the hinge '
         '(the panel side is the wing hinge edge E-WNG-04..07)')

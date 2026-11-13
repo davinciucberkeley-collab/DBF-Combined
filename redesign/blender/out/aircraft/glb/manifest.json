@@ -3,17 +3,17 @@
  "mode": "material",
  "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
  "files": {
-  "assembly.glb": 13432504,
+  "assembly.glb": 13483764,
   "avionics.glb": 156944,
-  "fins.glb": 1791048,
-  "harness.glb": 2864316,
-  "landing.glb": 205492,
-  "mechanisms.glb": 460816,
-  "pod.glb": 174616,
-  "power.glb": 250852,
+  "fins.glb": 1871280,
+  "harness.glb": 2865992,
+  "landing.glb": 208612,
+  "mechanisms.glb": 444700,
+  "pod.glb": 176016,
+  "power.glb": 251548,
   "propulsion.glb": 1195924,
   "transport.glb": 255016,
-  "wing.glb": 6066892
+  "wing.glb": 6047096
  },
  "parts": [
   {
@@ -43,17 +43,6 @@
    "subsystem": "wing",
    "status": "MODELLED",
    "mass_g": 1.0,
-   "explode_m": [
-    0.0,
-    0.0,
-    0.0
-   ]
-  },
-  {
-   "id": "WNG-007",
-   "subsystem": "wing",
-   "status": "MODELLED",
-   "mass_g": 1.1,
    "explode_m": [
     0.0,
     0.0,
@@ -185,7 +174,7 @@
    "id": "FIN-001-UR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 25.6,
+   "mass_g": 23.33,
    "explode_m": [
     0.0,
     0.0,
@@ -196,7 +185,7 @@
    "id": "FIN-001-LR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 26.33,
+   "mass_g": 23.76,
    "explode_m": [
     0.0,
     0.0,
@@ -218,18 +207,40 @@
    "id": "FIN-003-UR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.67,
    "explode_m": [
     0.0,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
    "id": "FIN-004-R",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.87,
+   "mass_g": 39.97,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-013-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-013-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
    "explode_m": [
     0.0,
     0.0,
@@ -262,7 +273,7 @@
    "id": "FIN-008-UR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "explode_m": [
     0.0,
     0.0,
@@ -273,7 +284,7 @@
    "id": "FIN-009-UR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.96,
+   "mass_g": 4.79,
    "explode_m": [
     0.0,
     0.0,
@@ -284,7 +295,7 @@
    "id": "FIN-009-LR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 5.35,
+   "mass_g": 5.18,
    "explode_m": [
     0.0,
     0.0,
@@ -317,7 +328,7 @@
    "id": "FIN-011-URO",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "explode_m": [
     0.0,
     0.0,
@@ -328,7 +339,7 @@
    "id": "FIN-011-URI",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "explode_m": [
     0.0,
     0.0,
@@ -339,7 +350,7 @@
    "id": "FIN-012-UR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "explode_m": [
     0.0,
     0.0,
@@ -361,7 +372,7 @@
    "id": "FIN-008-LR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "explode_m": [
     0.0,
     0.0,
@@ -372,7 +383,7 @@
    "id": "FIN-012-LR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "explode_m": [
     0.0,
     0.0,
@@ -383,7 +394,7 @@
    "id": "FIN-011-LRO",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "explode_m": [
     0.0,
     0.0,
@@ -394,7 +405,7 @@
    "id": "FIN-011-LRI",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "explode_m": [
     0.0,
     0.0,
@@ -416,7 +427,7 @@
    "id": "FIN-004-L",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.87,
+   "mass_g": 39.97,
    "explode_m": [
     0.0,
     0.0,
@@ -438,7 +449,7 @@
    "id": "FIN-001-UL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 25.6,
+   "mass_g": 23.33,
    "explode_m": [
     0.0,
     0.0,
@@ -460,7 +471,7 @@
    "id": "FIN-008-UL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "explode_m": [
     0.0,
     0.0,
@@ -471,7 +482,7 @@
    "id": "FIN-009-UL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.96,
+   "mass_g": 4.79,
    "explode_m": [
     0.0,
     0.0,
@@ -493,7 +504,18 @@
    "id": "FIN-012-UL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-013-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
    "explode_m": [
     0.0,
     0.0,
@@ -504,7 +526,7 @@
    "id": "FIN-011-ULO",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "explode_m": [
     0.0,
     0.0,
@@ -515,7 +537,7 @@
    "id": "FIN-011-ULI",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "explode_m": [
     0.0,
     0.0,
@@ -526,7 +548,7 @@
    "id": "FIN-001-LL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 26.33,
+   "mass_g": 23.76,
    "explode_m": [
     0.0,
     0.0,
@@ -548,7 +570,7 @@
    "id": "FIN-008-LL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "explode_m": [
     0.0,
     0.0,
@@ -559,7 +581,7 @@
    "id": "FIN-009-LL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 5.35,
+   "mass_g": 5.18,
    "explode_m": [
     0.0,
     0.0,
@@ -581,7 +603,18 @@
    "id": "FIN-012-LL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-013-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
    "explode_m": [
     0.0,
     0.0,
@@ -592,7 +625,7 @@
    "id": "FIN-011-LLO",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "explode_m": [
     0.0,
     0.0,
@@ -603,7 +636,7 @@
    "id": "FIN-011-LLI",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "explode_m": [
     0.0,
     0.0,
@@ -614,33 +647,33 @@
    "id": "FIN-003-UL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.67,
    "explode_m": [
     0.0,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
    "id": "FIN-003-LR",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.67,
    "explode_m": [
     0.0,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
    "id": "FIN-003-LL",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.67,
    "explode_m": [
     0.0,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -651,7 +684,7 @@
    "explode_m": [
     0.0,
     0.0673,
-    0.075
+    0.081
    ]
   },
   {
@@ -662,7 +695,7 @@
    "explode_m": [
     0.0,
     0.0673,
-    0.075
+    0.081
    ]
   },
   {
@@ -673,7 +706,7 @@
    "explode_m": [
     0.0,
     0.068,
-    0.075
+    0.081
    ]
   },
   {
@@ -684,7 +717,7 @@
    "explode_m": [
     0.0,
     -0.0673,
-    0.075
+    0.081
    ]
   },
   {
@@ -695,7 +728,7 @@
    "explode_m": [
     0.0,
     0.0673,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -706,7 +739,7 @@
    "explode_m": [
     0.0,
     -0.0673,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -717,7 +750,7 @@
    "explode_m": [
     0.0,
     -0.0673,
-    0.075
+    0.081
    ]
   },
   {
@@ -728,7 +761,7 @@
    "explode_m": [
     0.0,
     0.0673,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -739,7 +772,7 @@
    "explode_m": [
     0.0,
     -0.0673,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -750,7 +783,7 @@
    "explode_m": [
     0.0,
     -0.068,
-    0.075
+    0.081
    ]
   },
   {
@@ -761,7 +794,7 @@
    "explode_m": [
     0.0,
     0.068,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -772,14 +805,14 @@
    "explode_m": [
     0.0,
     -0.068,
-    -0.075
+    -0.081
    ]
   },
   {
    "id": "POD-001",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 24.7,
+   "mass_g": 24.8,
    "explode_m": [
     0.0,
     0.0,
@@ -911,7 +944,7 @@
    "id": "GER-001-UR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "explode_m": [
     0.0,
     0.0,
@@ -922,7 +955,7 @@
    "id": "GER-002-UR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "explode_m": [
     0.0,
     0.0,
@@ -977,7 +1010,7 @@
    "id": "GER-001-UL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "explode_m": [
     0.0,
     0.0,
@@ -988,7 +1021,7 @@
    "id": "GER-001-LR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "explode_m": [
     0.0,
     0.0,
@@ -999,7 +1032,7 @@
    "id": "GER-001-LL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "explode_m": [
     0.0,
     0.0,
@@ -1043,7 +1076,7 @@
    "id": "GER-002-UL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "explode_m": [
     0.0,
     0.0,
@@ -1054,7 +1087,7 @@
    "id": "GER-002-LR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "explode_m": [
     0.0,
     0.0,
@@ -1065,7 +1098,7 @@
    "id": "GER-002-LL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "explode_m": [
     0.0,
     0.0,
@@ -1109,7 +1142,7 @@
    "id": "GER-005",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 4.5,
+   "mass_g": 4.41,
    "explode_m": [
     0.0,
     0.0,
@@ -1120,7 +1153,7 @@
    "id": "GER-009",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 4.46,
+   "mass_g": 4.37,
    "explode_m": [
     0.0,
     0.0,
@@ -1153,7 +1186,7 @@
    "id": "GER-012",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.58,
+   "mass_g": 9.63,
    "explode_m": [
     0.0,
     0.0,
@@ -1190,7 +1223,7 @@
    "explode_m": [
     -0.0671,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1201,7 +1234,7 @@
    "explode_m": [
     -0.2059,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1223,7 +1256,7 @@
    "explode_m": [
     -0.1382,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1245,7 +1278,7 @@
    "explode_m": [
     -0.0719,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1256,7 +1289,7 @@
    "explode_m": [
     -0.1404,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1267,7 +1300,7 @@
    "explode_m": [
     -0.0671,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1278,7 +1311,7 @@
    "explode_m": [
     -0.2059,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1300,7 +1333,7 @@
    "explode_m": [
     -0.1382,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1322,7 +1355,7 @@
    "explode_m": [
     -0.0719,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1333,7 +1366,7 @@
    "explode_m": [
     -0.1404,
     0.0,
-    0.075
+    0.081
    ]
   },
   {
@@ -1344,7 +1377,7 @@
    "explode_m": [
     -0.0671,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1355,7 +1388,7 @@
    "explode_m": [
     -0.2059,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1377,7 +1410,7 @@
    "explode_m": [
     -0.1382,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1399,7 +1432,7 @@
    "explode_m": [
     -0.0719,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1410,7 +1443,7 @@
    "explode_m": [
     -0.1404,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1421,7 +1454,7 @@
    "explode_m": [
     -0.0671,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1432,7 +1465,7 @@
    "explode_m": [
     -0.2059,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1454,7 +1487,7 @@
    "explode_m": [
     -0.1382,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1476,7 +1509,7 @@
    "explode_m": [
     -0.0719,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1487,7 +1520,7 @@
    "explode_m": [
     -0.1404,
     0.0,
-    -0.075
+    -0.081
    ]
   },
   {
@@ -1571,7 +1604,7 @@
    "id": "MEC-004-R",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 2.87,
    "explode_m": [
     0.0,
     0.0,
@@ -1593,7 +1626,7 @@
    "id": "MEC-006-R",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.95,
+   "mass_g": 2.62,
    "explode_m": [
     0.0,
     0.0,
@@ -1656,6 +1689,28 @@
    ]
   },
   {
+   "id": "MEC-013-RI",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-013-RO",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
    "id": "MEC-001-L",
    "subsystem": "mechanisms",
    "status": "MODELLED",
@@ -1692,7 +1747,7 @@
    "id": "MEC-004-L",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 2.87,
    "explode_m": [
     0.0,
     0.0,
@@ -1714,7 +1769,7 @@
    "id": "MEC-006-L",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.95,
+   "mass_g": 2.62,
    "explode_m": [
     0.0,
     0.0,
@@ -1774,6 +1829,28 @@
     0.0,
     0.0,
     -0.0762
+   ]
+  },
+  {
+   "id": "MEC-013-LI",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-013-LO",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
    ]
   },
   {
@@ -1882,7 +1959,7 @@
    "mass_g": 2.2,
    "explode_m": [
     0.0,
-    0.075,
+    0.073,
     0.0
    ]
   },
@@ -1893,7 +1970,7 @@
    "mass_g": 2.2,
    "explode_m": [
     0.0,
-    -0.075,
+    -0.073,
     0.0
    ]
   },
@@ -1904,7 +1981,7 @@
    "mass_g": 2.2,
    "explode_m": [
     0.0,
-    0.075,
+    0.073,
     0.0
    ]
   },
@@ -1915,7 +1992,7 @@
    "mass_g": 2.2,
    "explode_m": [
     0.0,
-    -0.075,
+    -0.073,
     0.0
    ]
   },
@@ -2058,9 +2135,9 @@
    "status": "MODELLED",
    "mass_g": 44.8,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ],
    "mass_proxy": true
   },
@@ -2070,9 +2147,9 @@
    "status": "MODELLED",
    "mass_g": 44.3,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ],
    "mass_proxy": true
   },
@@ -2192,9 +2269,9 @@
    "status": "MODELLED",
    "mass_g": 0.25,
    "explode_m": [
-    -0.1415,
+    0.0865,
     0.0,
-    0.0
+    -0.2231
    ]
   },
   {
@@ -2203,9 +2280,9 @@
    "status": "MODELLED",
    "mass_g": 0.25,
    "explode_m": [
-    -0.1415,
+    0.0865,
     0.0,
-    0.0
+    -0.2231
    ]
   },
   {
@@ -2269,9 +2346,9 @@
    "status": "MODELLED",
    "mass_g": 0.0147,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2280,9 +2357,9 @@
    "status": "MODELLED",
    "mass_g": 0.0147,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2291,9 +2368,9 @@
    "status": "MODELLED",
    "mass_g": 0.0106,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2302,9 +2379,9 @@
    "status": "MODELLED",
    "mass_g": 0.0054,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2313,9 +2390,9 @@
    "status": "MODELLED",
    "mass_g": 0.0147,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2324,9 +2401,9 @@
    "status": "MODELLED",
    "mass_g": 0.0147,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2335,9 +2412,9 @@
    "status": "MODELLED",
    "mass_g": 0.0106,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2346,9 +2423,9 @@
    "status": "MODELLED",
    "mass_g": 0.0054,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2379,9 +2456,9 @@
    "status": "MODELLED",
    "mass_g": 0.0147,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2390,9 +2467,9 @@
    "status": "MODELLED",
    "mass_g": 0.0147,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2401,9 +2478,9 @@
    "status": "MODELLED",
    "mass_g": 0.0106,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2412,9 +2489,9 @@
    "status": "MODELLED",
    "mass_g": 0.0054,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2423,9 +2500,9 @@
    "status": "MODELLED",
    "mass_g": 0.0147,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2434,9 +2511,9 @@
    "status": "MODELLED",
    "mass_g": 0.0147,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2445,9 +2522,9 @@
    "status": "MODELLED",
    "mass_g": 0.0106,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {
@@ -2456,9 +2533,9 @@
    "status": "MODELLED",
    "mass_g": 0.0054,
    "explode_m": [
-    -0.228,
     0.0,
-    0.0
+    0.0,
+    -0.2231
    ]
   },
   {

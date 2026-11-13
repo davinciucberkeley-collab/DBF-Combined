@@ -148,7 +148,12 @@ Q_LAND_FINAL_SPD,0.3
 # LEGACY name of the line above (cm/s)
 Q_LAND_SPEED,30
 # QLAND/RTL switches to the final descent speed below 6 m (default, stated: CR-D5-21 keeps it)
+#   PENDING (C-07, G-06; CR-132423 p. 59): after test M1 (baro height error at touchdown, 10 flights) set this to 6 + the measured error,
+#   only if |error| > 1 m (EST); the final 0.3 m/s must start above the ground. Value: — until M1. Do not change before M1
 Q_LAND_FINAL_ALT,6
+# PENDING (C-06, G-09; CR-132423 p. 61): Q_P_VELXY_P and Q_P_POSXY_P stay at the firmware defaults (no line here) until SITL S3b / the
+#   tethered 1 m/s step in TUNING-PLAN.md measures the QLOITER velocity-loop crossover. Pass: <= 1/6 of the attitude crossover = <= 1.0 rad/s
+#   at the 1.0 Hz roll loop (CL-F4-XOVER-RLL). If it fails, lower both, add the two lines here and mirror them in params.json. Values: —
 # weathervane in hover: 1 = belly (copter nose) into wind (default on Plane, stated; J1 CR-J1-05: wind loads copter pitch, the strongest axis)
 Q_WVANE_ENABLE,1
 # weathervane gain start 1 (J1, ArduPilot weathervaning page)
@@ -266,7 +271,7 @@ BATT_LOW_VOLT,14.0
 BATT_CRT_VOLT,13.6
 # sag-compensated voltage for the failsafe: a transition sag (worst bus 11.87 V at full throttle, CL-E2-V-BUS-WORST) must not trigger it (CR-E2-20)
 BATT_FS_VOLTSRC,1
-# low action 1 = RTL (FW home, then VTOL landing via Q_RTL_MODE 1)
+# low action 1 = RTL (FW home, then VTOL approach and landing via Q_RTL_MODE 2, C-01)
 BATT_FS_LOW_ACT,1
 # critical action 4 = QLAND
 BATT_FS_CRT_ACT,4
@@ -292,15 +297,27 @@ FS_LONG_ACTN,1
 FS_LONG_TIMEOUT,5
 # no GCS failsafe: telemetry rides the RC link, so RC failsafe covers it (CR-F5-01)
 FS_GCS_ENABL,0
-# RTL: fly home fixed-wing, then back-transition and land vertically
-Q_RTL_MODE,1
+# RTL: 2 = VTOL approach (was 1, C-01, review/NASA-CR-132423-COMPLIANCE.md G-01; CR-132423 p. 35, 38-39, 172): fly home fixed-wing at
+#   RTL_ALTITUDE, circle down to Q_RTL_ALT, back-transition INTO THE WIND, then QRTL. Mode 1 back-transitioned on the arrival heading
+#   (no downwind limit; vortex-ring risk, CR p. 35). Values on ArduPilot master: 0 off, 1 on, 2 VTOL approach, 3 QRTL always (read 2026-11-13).
+#   Keep Q_OPTIONS bit 16 DisableApproach off (262400 does). UNVERIFIED on 4.7.x and on a tailsitter: SITL S1 (name), S18 (heading)
+Q_RTL_MODE,2
 # RTL cruise altitude 50 m (>= transition altitude, P:requirements.transition_alt_min_m)
 RTL_ALTITUDE,50
-# QRTL / VTOL approach altitude 30 m
-Q_RTL_ALT,30
+# QRTL / VTOL approach altitude 50 m (was 30, C-02, G-01; CR-132423 p. 35, 172): with Q_RTL_MODE 2 the back-transition happens at this
+#   height, and transition_alt_min_m is 50 (R-TEST-ORDER). At 50 = RTL_ALTITUDE there is no spiral leg; if H3 lowers the back-transition
+#   height the spiral leg returns
+Q_RTL_ALT,50
+# VTOL-approach spiral radius 60 m (new, C-03, G-01; CR-132423 p. 165 Table 29 bank 9-30 deg, p. 174): = RTL_RADIUS; bank
+#   atan(16^2/(9.81 x 60)) = 23.5 deg at 16 m/s, inside 9-30 (EST). Name to confirm on the 4.7.x tag in SITL S1
+Q_FW_LND_APR_RAD,60
 # loiter radius at home 60 m (turn radius at 16 m/s, 45 deg bank = 26 m)
 RTL_RADIUS,60
 WP_LOITER_RAD,60
+# approach deceleration 2.0 m/s^2 (default, stated: new line, C-04, G-07; CR-132423 p. 19 Eq. (1): descent angle and deceleration are set together).
+#   Sets where the Q_RTL_MODE 2 back-transition starts: 16^2 / (2 x 2.0) = 64 m stop from 16 m/s (EST), inside the 250 m fence.
+#   SITL S18 logs the real overshoot past home; lower the value if the tailsitter flare stops short. Range 0.2-5 (master, read 2026-11-13)
+Q_TRANS_DECEL,2.0
 # EKF failsafe threshold (default 0.8, stated); in Q modes it lands (QLAND), GPS loss lands without position hold
 FS_EKF_THRESH,0.8
 # flight-mode channel 6 (CR-F5-01: ELRS sends ch 5 as a 2-position bit)
@@ -331,7 +348,9 @@ RC9_OPTION,31
 
 # ---------------------------------------------------------------- 11 Geofence (RFS)
 FENCE_ENABLE,1
-# 3 = max altitude + home circle; 7 once the sub-field polygon is uploaded (H3 provides the corners)
+# 3 = max altitude + home circle; 7 (adds the polygon) ONLY AFTER the RFS sub-field polygon and the pilot-box exclusion polygon are uploaded and
+#   every corner is read back against the field map (plot over satellite imagery, two people, initialled; C-05, G-04; CR-132423 p. 54, 168).
+#   Until then FENCE_TYPE stays 3. SITL S9 adds a polygon and an exclusion-zone breach (exclusion support on this board: —, S9)
 FENCE_TYPE,3
 # breach action 1 = RTL (in a Q mode: SITL S9 records what the build does)
 FENCE_ACTION,1

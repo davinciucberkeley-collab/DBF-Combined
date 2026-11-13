@@ -73,8 +73,8 @@ STEPS = [
       'bench:pod POD-007']),
     (5, '5.2', 'Lay the recess-step fillet, bond the pod into the recess; GPS mast and its cross-screw',
      ['install:pod', 'POD-005', 'POD-011', 'POD-012']),
-    (5, '5.3', 'XT30U pairs, airspeed sensor and RX on the tray; power frame on spacers, screwed down; boards, AS150U',
-     ['HRN-113-*', 'AVN-004', 'AVN-003', 'PWR-102', 'PWR-006', 'PWR-103', 'PWR-101', 'PWR-004', 'PWR-003', 'PWR-002', 'wire:E-HRN-11',
+    (5, '5.3', 'XT30U pairs, airspeed sensor and RX on the tray; power frame on spacers; power board on its washers, screwed down through it; bus board, AS150U',
+     ['HRN-113-*', 'AVN-004', 'AVN-003', 'PWR-102', 'PWR-006', 'PWR-103', 'PWR-004', 'PWR-003', 'PWR-101', 'PWR-002', 'wire:E-HRN-11',
       'wire:E-HRN-12']),
     (6, '6.2', 'Strap the ESCs on their pads; caps, XT30U pairs and heat-shrink on the soldered leads',
      ['PRP-002-*', 'PWR-008-*', 'HRN-110-*', 'wire:E-HRN-13', 'wire:E-HRN-14', 'wire:E-HRN-15', 'wire:E-HRN-16',
@@ -87,10 +87,12 @@ STEPS = [
       'HRN-107-*-S', 'HRN-105-*']),
     (6, '6.5', 'Skin the wing: lower, upper, then the LE strip; slit the tape round each lead',
      ['WNG-003', 'WNG-020']),
+    (6, '6.6', 'Bond a strap eye round the outboard face of each bore boss (D-89c)',
+     ['FIN-013-*']),
     (7, '7.1', 'Hinge tape: top strip at neutral, lower strip with the panel full TE-up',
      ['MEC-010-*', 'swing:te-up']),
     (7, '7.2', 'Horns on the torque tubes and the inter-panel rod',
-     ['MEC-004-*', 'MEC-005-*', 'MEC-006-*']),
+     ['MEC-004-*', 'MEC-005-*', 'MEC-006-*', 'MEC-013-*']),
     (7, '7.3', 'Bench-prep each servo at 1500 us: arm on the spline, arm screw',
      ['bench:servo-<x> MEC-001-*', 'bench:servo-<x> MEC-002-*', 'bench:servo-<x> MEC-012-*']),
     (7, '7.4', 'Install the servo in its frame, fit the cover and its screws',
@@ -165,6 +167,9 @@ OVERRIDES = [
     ('GER-002-*', dict(cut_by={'GER-001-*': 'ramped snap hooks of the insert deflect as it is pushed into the shoe '
                                             'sleeve (snap fit, BUILD-GUIDE 10.4 "fit inserts by colour")'},
                        why='BUILD-GUIDE 10.4: the insert snaps into the shoe')),
+    ('E-HRN-2[4-9]', dict(flexible=True, why='DShot and servo leads (BUILD-GUIDE 6.4): laid in their grooves with the '
+                                            'pod-end tails loose; soldered to the FC output field only in stage 9 '
+                                            'step 4, so the FC goes in past them (D-89c)')),
     ('POD-004', dict(kind='lay', flexible=True, why='hook-and-loop straps: threaded through the floor groove under the tray '
                                      '(seats.json POD-001/POD-004), flexible')),
     ('FIN-009-*', dict(kind='clip', why='BUILD-GUIDE 4.5: the 10 x 2 CF brace strip ends sit in blind slots cut to '
@@ -181,9 +186,6 @@ OVERRIDES = [
 # finding; it does not count as an unexplained violation. Remove the row when the fix lands: the check then shows
 # whether the fix works.
 KNOWN = [
-    ('FIN-004-*', 'WNG-001', 'SW-01 / BR-17',
-     'BUILD-GUIDE "Stop items before stage 1": through-core block strap eyes stop the block going into its pocket '
-     '(pending fix, review/STRUCTURE-WING.md SW-01)'),
 ]
 
 
