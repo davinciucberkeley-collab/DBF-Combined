@@ -1,21 +1,29 @@
 """render_build.py - the K09-L build sequence as animation, one clip per BUILD-GUIDE stage plus the full film.
 
-    python redesign/showcase/animation/render_build.py [--frames 0,120] [--work DIR] [--skip-render]
+    python -I redesign/showcase/animation/assembly_check.py      # 1. plan + physics-check the motions (~25 min)
+    python redesign/showcase/animation/render_build.py           # 2. render the checked plan (~19 min)
+    python redesign/showcase/animation/render_build.py --preview # quick look: half size, every 3rd frame, to --work
 
-Run with the system Python (needs Pillow). Three steps, the same as render_animation.py:
-  1. render   Blender (headless, Workbench) builds the aircraft from redesign/subsystems/*/fusion/*.py through
-              redesign/blender/blender_backend.py: the same CAD as the GLB and the collision check, so every hole,
-              seat and routed wire is as checked. Per BUILD-GUIDE stage, the parts already built stay in place and the
-              stage's parts fly in to their final position (tinted while they move); the stage's wires are laid one
-              run after another. Raw PNG frames go to --work.
-  2. overlay  Pillow adds the stage title, two instruction lines and the stage progress bar.
-  3. encode   Blender's FFmpeg writes build/k09l-build.mp4 (all stages) and build/stage-NN.mp4 (one per stage),
-              plus build/stage-NN.png (the stage's last frame) for the build guide.
+Run step 2 with the system Python (needs Pillow). It animates build/assembly_plan.json, written by assembly_check.py,
+and refuses to run without it. After any CAD change re-run both commands: the motions are re-derived from the new
+geometry and re-checked, then re-rendered; nothing in this file names a position.
 
-Stage contents (which parts and wires belong where) follow BUILD-GUIDE.md stages 2-11; a part matched by no stage
-appears in the last one. Blender path: --blender or $BLENDER.
+What the film shows, action by action in BUILD-GUIDE.md order (assembly_plan.STEPS, each numbered step):
+  * rigid parts come in along the path the check found and passed (straight along a bore, pin, tube or screw axis,
+    down onto their mounting face, or out-then-across where a straight line is blocked); screws and nuts turn as
+    they run down their last 6 mm; bench sub-assemblies (spar + plugs + blocks, plugged motor tubes, the pod box,
+    motor on its mount, servo with its arm, foot inserts, FC with its card) are put together beside the aircraft
+    and then moved on as one piece;
+  * tape is laid in strips (lower surface, upper surface, then the leading edge, each wiped along the span), wet
+    epoxy beads and fillets appear in place, wires are laid along their route end to end, and the elevon panels
+    swing full TE-up and back while the lower hinge strip goes on.
+  Parts of one part number at several stations (UR/UL/LR/LL, L/R) move together when their swept boxes do not
+  overlap, one after another when they do. The moving part is tinted orange.
+Three steps, as before: render (Blender, Workbench, the CAD from redesign/blender/blender_backend.py: the same bodies
+as the GLB and the collision check), overlay (Pillow: stage title, the BUILD-GUIDE step and the current action, the
+stage progress bar), encode (Blender FFmpeg): build/k09l-build.mp4, build/stage-NN.mp4, build/stage-NN.png (each
+stage's last frame). Blender path: --blender or $BLENDER.
 """
-import fnmatch
 import json
 import math
 import os
@@ -24,83 +32,39 @@ import sys
 import tempfile
 import time
 
+sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__))
 REDESIGN = os.path.dirname(os.path.dirname(HERE))
 BL = os.path.join(REDESIGN, 'blender')
 BLENDER_DEFAULT = r'C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe'
 OUT = os.path.join(HERE, 'build')
+PLAN = os.path.join(OUT, 'assembly_plan.json')
+if HERE not in sys.path:
+    sys.path.insert(0, HERE)
 
 FPS = 30
 W, H = 1280, 720
-T_MOVE, T_FLY, T_WIRE, T_HOLD = 0.8, 1.9, 0.18, 1.3      # s: camera move, part fly-in, per wire run, hold
-T_LATE = 1.2                                             # s: parts that go on after the stage's wires
-LATE = ('WNG-003', 'WNG-020', 'POD-003')                 # tape skin and label over the harness; hatch after avionics
+T_MOVE, T_HOLD = 0.8, 1.0            # s: camera move at the start of a stage, hold at its end
+T_GAP, T_STEP = 0.05, 0.45           # s: between two actions; camera move at a new BUILD-GUIDE step
+DUR = {'built': 0.9, 'clip': 0.8, 'fixture': 0.6, 'slide': 0.7, 'screw': 0.95, 'install': 1.3, 'lay': 0.9, 'fill': 0.5, 'wire': 0.8,
+       'swing': 1.6}
+DUR_SKIN = 2.6                       # s: the wing skin (three strips, each wiped along the span)
+SPIN_TURNS, THREAD_MM = 3.0, 6.0     # as assembly_check.py
+HI_COL = (0.95, 0.42, 0.08, 1.0)
 
-# (stage, title, two instruction lines, part globs, wire edge globs, camera azimuth deg, elevation deg)
+# (stage, title, camera azimuth deg, elevation deg): one clip per stage, the titles the build guide links
 STAGES = [
-    (2, 'Wing core and spar', ['Hot-wire the XPS core; bond the CF spar and its PETG plugs in the 22.4 mm bore.',
-                                'Pocket and bond the two through-core blocks; lay the lip beads.'],
-     ['WNG-001', 'WNG-002', 'WNG-004*', 'WNG-005*', 'FIN-004*', 'WNG-006*', 'WNG-007'], [], -55, 32),
-    (3, 'Elevon panels', ['Cut the four panels; bond the CF torque tubes in their routed grooves.',
-                          'Hinge each panel on the upper skin line with packing tape.'],
-     ['WNG-011*', 'WNG-012*', 'MEC-009*', 'MEC-010*'], [], -130, 35),
-    (4, 'Fins on the motor tubes', ['Laminate the half-fins and bond them to the motor tubes through the blocks.',
-                                    'Edge strips, pins, station collars, braces, anchors and ESC pads.'],
-     ['FIN-002*', 'FIN-006*', 'FIN-001*', 'FIN-011*', 'FIN-012*', 'FIN-008*', 'FIN-009*', 'FIN-010*', 'FIN-007*'],
-     [], -35, 22),
-    (5, 'Pod and power stack', ['Build the pod: floor, tray, guides, stops and the carry handle with its GPS mast.',
-                                'Power frame on spacers: board, bus bars, AS150U aircraft half, main jumpers.'],
-     ['POD-001', 'POD-002', 'POD-004', 'POD-005', 'POD-006', 'POD-007', 'POD-008', 'POD-010', 'POD-011', 'POD-012',
-      'PWR-002', 'PWR-003', 'PWR-004', 'PWR-006', 'PWR-1*'], ['E-HRN-11', 'E-HRN-12'], -60, 48),
-    (6, 'Harness, then skin', ['ESC pairs and signal leads in the grooves, through P1, P1s and the fin grommets.',
-                               'XT30U pairs tied in the pod; then tape-skin the wing over the routed harness.'],
-     ['HRN-*', 'PWR-008*', 'WNG-003', 'WNG-020'],
-     ['E-HRN-13', 'E-HRN-14', 'E-HRN-15', 'E-HRN-16', 'E-HRN-24', 'E-HRN-25', 'E-HRN-26', 'E-HRN-27',
-      'E-HRN-34', 'E-HRN-35', 'E-HRN-36', 'E-HRN-37'], -40, 40),
-    (7, 'Servos, linkage and horns', ['Servos into their frames under the wing; arms, pushrods and clevises.',
-                                      'Horns on the torque tubes, bridge rods, frame covers; servo leads to the JR row.'],
-     ['MEC-001*', 'MEC-002*', 'MEC-003*', 'MEC-004*', 'MEC-005*', 'MEC-006*', 'MEC-007*', 'MEC-008*', 'MEC-011*',
-      'MEC-012*'], ['E-HRN-28', 'E-HRN-29'], 150, -35),
-    (8, 'Motor mounts, motors and props', ['Slit-collar mounts on the tubes, keyed to the station collars; pinch bolts.',
-                                           'Motors, phase leads to the ESCs, adapters and props (check rotation).'],
-     ['FIN-003*', 'FIN-1*', 'PRP-*'], ['E-HRN-17', 'E-HRN-18', 'E-HRN-19', 'E-HRN-20'], -25, 18),
-    (9, 'Avionics', ['FC on gel cubes, receiver, airspeed sensor, GPS on the mast.',
-                     'Power-board ribbon, RX, airspeed and GPS leads to the FC; hatch on.'],
-     ['AVN-*', 'POD-003'], ['E-HRN-23', 'E-HRN-30', 'E-HRN-31', 'E-HRN-32'], -70, 52),
-    (10, 'Feet and corner caps', ['Shoes, pistons and crush cartridges on the four fin tips.',
-                                  'TPU corner caps on the wing tips.'],
-     ['GER-*'], [], -20, 15),
-    (11, 'Pack in, weigh and balance', ['Strap the pack in at its station; mate the AS150U.',
-                                        'Weigh, check the CG on its marks, then the thrust stand and first hover.'],
-     ['PWR-001'], ['E-HRN-10'], -50, 30),
+    (2, 'Wing core and spar', -55, 32),
+    (3, 'Elevon panels', -130, 35),
+    (4, 'Fins on the motor tubes', -35, 22),
+    (5, 'Pod and power stack', -60, 48),
+    (6, 'Harness, then skin', -40, 40),
+    (7, 'Servos, linkage and horns', 150, -35),
+    (8, 'Motor mounts, motors and props', -25, 18),
+    (9, 'Avionics', -70, 52),
+    (10, 'Feet and corner caps', -20, 15),
+    (11, 'Pack in, weigh and balance', -50, 30),
 ]
-
-
-def plan():
-    """Frame timeline per stage: (stage index, f0, f_move_end, f_fly_end, f_wires_end, f1)."""
-    out, f = [], 0
-    for i, st in enumerate(STAGES):
-        n_w = len(st[4])
-        a = f
-        b = a + int(T_MOVE * FPS)
-        c = b + int(T_FLY * FPS)
-        d = c + int(n_w * T_WIRE * FPS) + (int(0.4 * FPS) if n_w else 0)
-        if any(g in LATE for g in st[3]):
-            d += int(T_LATE * FPS)
-        e = d + int(T_HOLD * FPS)
-        out.append((i, a, b, c, d, e))
-        f = e
-    return out, f
-
-
-TIMELINE, NFRAMES = plan()
-
-
-def stage_at(f):
-    for i, a, b, c, d, e in TIMELINE:
-        if a <= f < e:
-            return i
-    return len(STAGES) - 1
 
 
 def smooth(x):
@@ -108,20 +72,183 @@ def smooth(x):
     return x * x * (3 - 2 * x)
 
 
+def load_plan():
+    if not os.path.exists(PLAN):
+        sys.exit('render_build: %s missing: run python -I redesign/showcase/animation/assembly_check.py first'
+                 % os.path.relpath(PLAN, os.getcwd()))
+    with open(PLAN, encoding='utf-8') as f:
+        return json.load(f)
+
+
+# =====================================================================================================================
+# timeline (shared by the Blender render and the Pillow overlay)
+# =====================================================================================================================
+def _base(i):
+    return '-'.join(i.split('-')[:2])
+
+
+def _swept_box(a):
+    if not a.get('box_mm'):
+        return None
+    lo, hi = a['box_mm']
+    B = a.get('bench_mm') if a['type'] == 'bench' else None
+    pts = [p for p in (a.get('path') or [[0, 0, 0]])]
+    lo2 = [min(lo[i] + p[i] for p in pts) + (B[i] if B else 0) for i in range(3)]
+    hi2 = [max(hi[i] + p[i] for p in pts) + (B[i] if B else 0) for i in range(3)]
+    return lo2, hi2
+
+
+def _overlap(a, b):
+    return a and b and all(a[0][i] < b[1][i] and b[0][i] < a[1][i] for i in range(3))
+
+
+def build_ops(plan):
+    """Consecutive actions of one step, type, kind and part number become one op (moved together); split into
+    sequential ops where their swept boxes overlap."""
+    ops = []
+    for a in plan['actions']:
+        key = (a['step'], a['type'], a.get('kind'), 'wire' if a['type'] == 'wire' else
+               (a['id'].split('-')[0] if a['type'] == 'install' else _base(a['id'])))
+        if ops and ops[-1]['key'] == key:
+            ops[-1]['items'].append(a)
+        else:
+            ops.append({'key': key, 'stage': a['stage'], 'step': a['step'], 'caption': a['caption'],
+                        'type': a['type'], 'kind': a.get('kind'), 'items': [a]})
+    out = []
+    for op in ops:
+        subs = []
+        for a in op['items']:
+            box = _swept_box(a)
+            for s in subs:
+                if not any(_overlap(box, b) for b in s['boxes']):
+                    s['items'].append(a)
+                    s['boxes'].append(box)
+                    break
+            else:
+                subs.append({'items': [a], 'boxes': [box]})
+        for s in subs:
+            out.append(dict(op, items=s['items']))
+    return out
+
+
+def op_duration(op):
+    if op['kind'] == 'lay' and any(a['id'] == 'WNG-003' for a in op['items']):
+        return DUR_SKIN
+    n = max(len(a.get('clusters') or []) for a in op['items'])
+    if op['kind'] == 'screw' and n > 1:                # a screw set: driven one screw after another
+        return min(0.55 * n, 2.4)
+    return DUR.get(op['kind'], 0.9)
+
+
+def timeline(plan):
+    """(stages: [(stage index, f0, f_cam_done, f_end)], ops with f0 / f1, total frames)."""
+    ops = build_ops(plan)
+    stages, f = [], 0
+    for si, st in enumerate(STAGES):
+        mine = [o for o in ops if o['stage'] == st[0]]
+        a = f
+        f += int(T_MOVE * FPS)
+        b = f
+        step = None
+        for o in mine:
+            if step is not None and o['step'] != step:
+                f += int(T_STEP * FPS)
+            step = o['step']
+            o['f0'] = f
+            f += int(op_duration(o) * FPS)
+            o['f1'] = f
+            f += int(T_GAP * FPS)
+        f += int(T_HOLD * FPS)
+        stages.append((si, a, b, f))
+    return stages, ops, f
+
+
+def stage_at(stages, f):
+    for si, a, b, e in stages:
+        if a <= f < e:
+            return si
+    return len(stages) - 1
+
+
+# =====================================================================================================================
+# captions
+# =====================================================================================================================
+def _arrive_words(path):
+    if not path or len(path) < 2:
+        return ''
+    a, b = path[-2], path[-1]
+    v = [b[i] - a[i] for i in range(3)]
+    k = max(range(3), key=lambda i: abs(v[i]))
+    return {(0, 1): 'aft', (0, -1): 'forward', (1, 1): 'to the right', (1, -1): 'to the left', (2, 1): 'upward',
+            (2, -1): 'downward'}[(k, 1 if v[k] > 0 else -1)]
+
+
+def op_label(op, names):
+    it = op['items']
+    ids = [a['id'] for a in it]
+    n = len(ids)
+    if op['type'] == 'swing':
+        return 'Elevon panels swung full TE-up about the hinge line and back (lower strip laid TE-up)'
+    if op['type'] == 'wire':
+        return ('%s laid along %s route%s, then soldered / plugged at both ends'
+                % (', '.join(ids) if n <= 4 else '%s ... %s (%d leads)' % (ids[0], ids[-1], n),
+                   'its' if n == 1 else 'their', '' if n == 1 else 's'))
+    a0 = it[0]
+    if op['type'] == 'install':
+        grp = a0['id'].split('-')[0]
+        head = 'Bench sub-assembly "%s"%s (%d parts: %s)' % (grp, ' x%d' % n if n > 1 else '', len(a0['members']),
+                                                            ', '.join(a0['members'][:3]) +
+                                                            (' ...' if len(a0['members']) > 3 else ''))
+    else:
+        nm = names.get(a0['id'], a0['id'])
+        nm = nm.split(':')[0].split(',')[0].split('(')[0].strip()
+        for sfx in (' UR', ' UL', ' LR', ' LL', ' L', ' R', ' left', ' right'):
+            if nm.endswith(sfx):
+                nm = nm[:-len(sfx)]
+        head = '%s%s %s' % (_base(a0['id']) if n > 1 else a0['id'], ' x%d' % n if n > 1 else '', nm[:44])
+    k = op['kind']
+    words = _arrive_words(a0.get('path'))
+    segs = len(a0.get('path') or []) - 1
+    if k == 'fixture':
+        tail = 'held in the %s' % (a0.get('fixture') or 'jig') if a0.get('fixture') else 'cut free in place'
+    elif k == 'lay':
+        tail = 'laid in strips onto what it covers'
+    elif k == 'fill':
+        tail = 'wet epoxy applied in place'
+    elif k == 'built':
+        tail = 'glued up from its flat pieces in place'
+    elif k == 'clip':
+        tail = 'bowed / hooked and sprung into place (flexible, not a rigid slide)'
+    elif k == 'screw':
+        tail = ('driven %s along its axis, turning' % words) if len(a0.get('clusters') or []) < 2 else             ('%d screws driven one by one along their axes, turning' % len(a0['clusters']))
+    elif k == 'install':
+        tail = 'moved on as one piece, %s' % words + (' (out, then across)' if segs >= 2 else '')
+    else:
+        tail = ('slid %s into its seat' % words) + (' (brought in, then across)' if segs >= 2 else '')
+    pre = 'Bench: ' if op['type'] == 'bench' else ''
+    s = '%s%s: %s' % (pre, head, tail)
+    return s if len(s) <= 118 else s[:115] + '...'
+
+
 # =====================================================================================================================
 # render (inside Blender)
 # =====================================================================================================================
 def blender_render(argv):
     import argparse
+    import bmesh
     import bpy
-    from mathutils import Vector
+    from mathutils import Matrix, Vector
     sys.path[:0] = [BL, os.path.join(REDESIGN, 'fusion')]
     import blender_backend as bb
     ap = argparse.ArgumentParser()
     ap.add_argument('--out', required=True)
     ap.add_argument('--frames', default='')
+    ap.add_argument('--every', type=int, default=1)
+    ap.add_argument('--pct', type=int, default=100)
     a = ap.parse_args(argv)
     os.makedirs(a.out, exist_ok=True)
+    plan = load_plan()
+    stages, ops, NF = timeline(plan)
     be, ctx, graph, results = bb.build(False, None, 'material', log=lambda *x: None)
     scn = bpy.context.scene
     scn.render.engine = 'BLENDER_WORKBENCH'
@@ -130,151 +257,354 @@ def blender_render(argv):
     sh.show_cavity, sh.cavity_type = True, 'BOTH'
     sh.show_object_outline, sh.object_outline_color = True, (0.12, 0.14, 0.16)
     sh.background_type, sh.background_color = 'VIEWPORT', (0.93, 0.94, 0.95)
-    scn.render.resolution_x, scn.render.resolution_y, scn.render.resolution_percentage = W, H, 100
+    scn.render.resolution_x, scn.render.resolution_y, scn.render.resolution_percentage = W, H, a.pct
     scn.render.film_transparent = False
     scn.view_settings.view_transform = 'Standard'
     scn.render.image_settings.file_format = 'PNG'
     for o in bpy.data.objects:
         if o.type == 'EMPTY':
             o.hide_render = True
+    for ob in be.wires.values():
+        ob.hide_render = True                         # re-drawn below as curves that can be laid end to end
 
     def base_colour(ob):
         m = ob.data.materials[0] if ob.data and getattr(ob.data, 'materials', None) else None
         return tuple(m.diffuse_color) if m is not None else (0.8, 0.8, 0.82, 1.0)
 
-    # stage of every part and wire
-    items = []                                           # (ob, stage idx, kind, order in stage)
-    last = len(STAGES) - 1
+    def sub_object(ob, faces_idx, tag):
+        """New object from a subset of ob's faces (same transform, material)."""
+        bm = bmesh.new()
+        bm.from_mesh(ob.data)
+        bm.faces.ensure_lookup_table()
+        keep = set(faces_idx)
+        bmesh.ops.delete(bm, geom=[f for f in bm.faces if f.index not in keep], context='FACES')
+        me = bpy.data.meshes.new(ob.name + tag)
+        bm.to_mesh(me)
+        bm.free()
+        for m in ob.data.materials:
+            me.materials.append(m)
+        o = bpy.data.objects.new(ob.name + tag, me)
+        for c in ob.users_collection:
+            c.objects.link(o)
+        o.matrix_world = ob.matrix_world.copy()
+        return o
+
+    def split_loose(ob):
+        """Connected pieces of a mesh (one per screw of a set)."""
+        me = ob.data
+        nb = {i: set() for i in range(len(me.vertices))}
+        for e in me.edges:
+            u, v = e.vertices
+            nb[u].add(v)
+            nb[v].add(u)
+        comp, cid = {}, 0
+        for s in range(len(me.vertices)):
+            if s in comp:
+                continue
+            st = [s]
+            comp[s] = cid
+            while st:
+                x = st.pop()
+                for y in nb[x]:
+                    if y not in comp:
+                        comp[y] = cid
+                        st.append(y)
+            cid += 1
+        if cid <= 1:
+            return [ob]
+        faces = {}
+        for p in me.polygons:
+            faces.setdefault(comp[p.vertices[0]], []).append(p.index)
+        return [sub_object(ob, fl, '.%d' % k) for k, fl in sorted(faces.items())]
+
+    def split_lay(ob):
+        """Tape as strips, in laying order: faces facing down (lower skin), up (upper skin), then the rest (LE strip,
+        edges), each wiped along its longest extent in 8 slices (1 for small tapes)."""
+        me = ob.data
+        Mw = ob.matrix_world
+        R = Mw.to_3x3()
+        cs = [Mw @ p.center for p in me.polygons]
+        lo = [min(c[i] for c in cs) for i in range(3)]
+        hi = [max(c[i] for c in cs) for i in range(3)]
+        ax = max(range(3), key=lambda i: hi[i] - lo[i])
+        nsl = 8 if hi[ax] - lo[ax] > 0.3 else 1
+        groups = {}
+        for p, c in zip(me.polygons, cs):
+            nz = (R @ p.normal).normalized().z
+            g = 0 if nz < -0.3 else (1 if nz > 0.3 else 2)
+            k = min(nsl - 1, int((c[ax] - lo[ax]) / max(hi[ax] - lo[ax], 1e-9) * nsl))
+            groups.setdefault((g, k), []).append(p.index)
+        out = []
+        for (g, k), fl in sorted(groups.items()):
+            o = sub_object(ob, fl, '.strip%d%d' % (g, k))
+            out.append((o, Vector((0, 0, -0.004 if g == 0 else 0.004))))
+        return out
+
+    # ------------------------------------------------------------- objects and their schedules
+    sched = {}                                         # object -> list of events
+    finals, colours, spin_c = {}, {}, {}
+    managed = []
+    names = {}
+
+    def reg(o):
+        if o not in finals:
+            finals[o] = o.matrix_world.copy()
+            colours[o] = base_colour(o)
+            managed.append(o)
+            sched[o] = []
+
+    def mm(p):
+        return Vector(p) / 1000.0
+
+    pieces = {}                                        # part id -> render objects (pieces for screws, strips for tape)
+    act_of = {}
+    for op in ops:
+        for it in op['items']:
+            act_of.setdefault(it['id'], []).append((op, it))
     for pid, ob in be.objects.items():
         c = ctx.components.get(pid)
-        if be.is_proxy(pid) or (c is not None and not c.flight):
+        if be.is_proxy(pid) or (c is not None and not c.flight) or pid not in act_of:
             ob.hide_render = True
             continue
-        si = next((i for i, s in enumerate(STAGES) if any(fnmatch.fnmatch(pid, g) for g in s[3])), last)
-        items.append((ob, si, 'part', pid))
-    for eid, ob in be.wires.items():
-        si = next((i for i, s in enumerate(STAGES) if any(fnmatch.fnmatch(eid, g) for g in s[4])), None)
-        if si is None:
+        kinds = {it.get('kind') for _op, it in act_of[pid]}
+        if 'screw' in kinds:
+            ps = split_loose(ob)
+            if ps != [ob]:
+                ob.hide_render = True
+            pieces[pid] = [(p, Vector()) for p in ps]
+        elif 'lay' in kinds:
             ob.hide_render = True
-            continue
-        items.append((ob, si, 'wire', eid))
+            pieces[pid] = split_lay(ob)
+        else:
+            pieces[pid] = [(ob, Vector())]
+        for p, _d in pieces[pid]:
+            reg(p)
+            if 'screw' in kinds:
+                vs = [p.matrix_world @ v.co for v in p.data.vertices]
+                spin_c[p] = sum(vs, Vector()) / max(len(vs), 1)
 
-    def bbox(obs):
-        pts = [o.matrix_world @ Vector(c) for o in obs for c in o.bound_box]
+    # wires as curves, laid end to end by the bevel end factor
+    wire_obs = {}
+    for w in ctx.wires:
+        if w.edge not in act_of:
+            continue
+        e = graph.edges.get(w.edge, {})
+        block = e.get('wire', {}) if isinstance(e.get('wire'), dict) else {}
+        bend = block.get('bend_radius_mm', 5 * w.dia * 1000) / 1000.0
+        cu = bpy.data.curves.new(w.edge + ' lay', 'CURVE')
+        cu.dimensions, cu.bevel_depth, cu.bevel_resolution, cu.use_fill_caps = '3D', 1.0, 3, True
+        cu.bevel_factor_mapping_end = 'SPLINE'
+        for line, dia in (w.strands or [(w.points, w.dia)]):
+            pts = bb.fillet_polyline(line, bend)
+            sp = cu.splines.new('POLY')
+            sp.points.add(len(pts) - 1)
+            for p, q in zip(sp.points, pts):
+                p.co = (q.x, q.y, q.z, 1.0)
+                p.radius = dia / 2
+        cu.materials.append(bb.wire_material(block, w.dia))
+        o = bpy.data.objects.new(w.edge + ' lay', cu)
+        scn.collection.objects.link(o)
+        wire_obs[w.edge] = o
+        reg(o)
+
+    # events
+    for op in ops:
+        for it in op['items']:
+            k, pid = it.get('kind'), it['id']
+            if op['type'] == 'swing':
+                for m, sw in (it.get('swing') or {}).items():
+                    for p, _d in pieces.get(m, []):
+                        sched[p].append(('swing', op['f0'], op['f1'], Vector(sw['axis']), mm(sw['origin_mm']),
+                                         sw['deg']))
+                continue
+            if op['type'] == 'wire':
+                if pid in wire_obs:
+                    sched[wire_obs[pid]].append(('wire', op['f0'], op['f1']))
+                continue
+            path = [mm(p) for p in (it.get('path') or [[0, 0, 0]])]
+            if op['type'] == 'install':
+                for m in it['members']:
+                    for p, _d in pieces.get(m, []):
+                        sched[p].append(('install', op['f0'], op['f1'], path))
+                continue
+            bench = mm(it['bench_mm']) if op['type'] == 'bench' and it.get('bench_mm') else Vector()
+            ps = pieces.get(pid, [])
+            for j, (p, drop) in enumerate(ps):
+                if k == 'lay':
+                    n = len(ps)
+                    t0 = op['f0'] + (op['f1'] - op['f0']) * 0.85 * j / max(n, 1)
+                    t1 = t0 + max(4, (op['f1'] - op['f0']) * 0.85 / max(n, 1) + 4)
+                    sched[p].append(('place', t0, t1, [drop, Vector()], bench, None, op['f1']))
+                elif k == 'screw' and it.get('clusters') and p in spin_c:
+                    cl = it['clusters']
+                    ax = Vector(it['spin']['axis']) if it.get('spin') else Vector((0, 0, 1))
+
+                    def off_axis(c, q=p):
+                        d = spin_c[q] - mm(c['centre_mm'])
+                        return (d - ax * d.dot(ax)).length
+                    ci = min(range(len(cl)), key=lambda i: off_axis(cl[i]))
+                    n = len(cl)
+                    t0 = op['f0'] + (op['f1'] - op['f0']) * ci / n
+                    t1 = op['f0'] + (op['f1'] - op['f0']) * (ci + 1) / n
+                    sched[p].append(('place', t0, t1, [mm(q) for q in cl[ci]['path']], bench, ax, op['f1']))
+                else:
+                    spin = Vector(it['spin']['axis']) if (k == 'screw' and it.get('spin')) else None
+                    sched[p].append(('place', op['f0'], op['f1'], path, bench, spin, op['f1']))
+
+    def path_at(path, u):
+        """Point at fraction u of the path's length (start -> final), and the length still to go (m)."""
+        if len(path) == 1:
+            return path[0].copy(), 0.0
+        segs = [(path[i], path[i + 1], (path[i + 1] - path[i]).length) for i in range(len(path) - 1)]
+        L = sum(s[2] for s in segs) or 1e-9
+        d = u * L
+        for p0, p1, l in segs:
+            if d <= l or (p0, p1, l) == segs[-1]:
+                return p0.lerp(p1, min(1.0, d / l) if l > 0 else 1.0), L - u * L
+            d -= l
+        return path[-1].copy(), 0.0
+
+    def rot_about(axis, origin, deg):
+        return Matrix.Translation(origin) @ Matrix.Rotation(math.radians(deg), 4, axis) @ Matrix.Translation(-origin)
+
+    # cameras: per stage, framed on what the stage places (final pose and bench pose)
+    def bbox(obs_offs):
+        pts = [off + o.matrix_world @ Vector(c) for o, off in obs_offs for c in o.bound_box]
         if not pts:
             return Vector((0.05, 0, 0)), 0.5
         lo = Vector([min(p[i] for p in pts) for i in range(3)])
         hi = Vector([max(p[i] for p in pts) for i in range(3)])
         return (lo + hi) / 2, max((hi - lo).length, 0.12)
 
-    centre_all, _ = bbox([o for o, si, k, _ in items if k == 'part'])
-    # cameras: per stage target and distance from its new parts, direction from the stage's azimuth / elevation
-    cams = []
-    for i, st in enumerate(STAGES):
-        new = [o for o, si, k, _ in items if si == i]
-        c, size = bbox(new) if new else (centre_all, 0.6)
-        if i == len(STAGES) - 1:
+    allp = [(o, Vector()) for o in managed]
+    centre_all, _ = bbox(allp)
+
+    def frame_cam(objs, az_deg, el_deg, whole=False):
+        c, size = bbox(objs) if objs else (centre_all, 0.6)
+        if whole:
             c, size = centre_all, 1.2
         size = min(max(size, 0.30), 1.35)
-        az, el = math.radians(st[5]), math.radians(st[6])
+        az, el = math.radians(az_deg), math.radians(el_deg)
         d = Vector((math.cos(el) * math.cos(az), math.cos(el) * math.sin(az), math.sin(el)))
-        cams.append((c, c + d * (size * 1.25 + 0.12)))
+        return c, c + d * (size * 1.25 + 0.12)
 
-    # per-item motion
-    finals = {o.name: o.matrix_world.translation.copy() for o, *_ in items}
-    colours = {o.name: base_colour(o) for o, *_ in items}
-    order = {}
-    for o, si, k, key in items:
-        order.setdefault((si, k), []).append(o)
-    for (si, k), obs in order.items():
-        obs.sort(key=lambda o: o.name)
-    for (si, k) in list(order):
-        if k == 'part':
-            order[(si, k)] = [o for o in order[(si, k)] if o.name not in LATE]
+    # one camera per BUILD-GUIDE step: framed on what the step places (final and bench pose), looking from the side
+    # the parts come in from (a sub-assembly pushed up from below is filmed from below)
+    cams = []                                          # (frame the move starts, frame it ends, target, location)
+    steps = []
+    for op in ops:
+        if not steps or steps[-1]['step'] != op['step']:
+            steps.append({'step': op['step'], 'stage': op['stage'], 'ops': []})
+        steps[-1]['ops'].append(op)
+    for si, st in enumerate(STAGES):
+        mine = [x for x in steps if x['stage'] == st[0]]
+        _s, fa, fb, fe = stages[si]
+        for j, x in enumerate(mine):
+            obs, zs = [], []
+            for op in x['ops']:
+                for it in op['items']:
+                    for m in (it.get('members') or [it['id']]):
+                        for p, _d in pieces.get(m, []):
+                            obs.append((p, Vector()))
+                            if op['type'] == 'bench' and it.get('bench_mm'):
+                                obs.append((p, mm(it['bench_mm'])))
+                    if it['id'] in wire_obs:
+                        obs.append((wire_obs[it['id']], Vector()))
+                    if op['kind'] in ('slide', 'screw', 'install') and it.get('path'):
+                        zs.append(it['path'][0][2] + ((it.get('bench_mm') or [0, 0, 0])[2]
+                                                      if op['type'] == 'bench' else 0))
+            el = st[3]
+            zm = sum(zs) / len(zs) if zs else 0.0
+            if zm < -15 and el > 0 or zm > 15 and el < 0:
+                el = -el
+            tgt, loc = frame_cam(obs, st[2], el)
+            f_end = x['ops'][0]['f0']
+            f_beg = fa if j == 0 else f_end - int(T_STEP * FPS)
+            cams.append((f_beg, max(f_end, f_beg + 1), tgt, loc))
+        if not mine:
+            tgt, loc = frame_cam([], st[2], st[3], whole=True)
+            cams.append((fa, fb, tgt, loc))
+    fin_t, fin_l = frame_cam([], STAGES[-1][2], STAGES[-1][3], whole=True)
 
-    OFFS = {}
+    def cam_at(f):
+        k = max([i for i, c in enumerate(cams) if c[0] <= f] or [0])
+        f0, f1, t1, l1 = cams[k]
+        t0_, l0_ = (cams[k - 1][2], cams[k - 1][3]) if k > 0 else (t1, l1)
+        u = smooth((f - f0) / max(f1 - f0, 1)) if k > 0 else 1.0
+        return t0_.lerp(t1, u), l0_.lerp(l1, u)
 
-    def offset(o, si):
-        if o.name in OFFS:
-            return OFFS[o.name]
-        c, size = bbox([o])
-        if size > 0.5:                                    # core, spar, skin: rise from below / settle from above
-            OFFS[o.name] = Vector((0, 0, -0.18)) if STAGES[si][0] <= 3 else Vector((0, 0, 0.12))
-            return OFFS[o.name]
-        v = c - centre_all
-        v.z += 0.15 * (1 if c.z >= 0 else -1)
-        OFFS[o.name] = v.normalized() * 0.22
-        return OFFS[o.name]
-
-    hi_col = (0.95, 0.42, 0.08, 1.0)
-
-    def _place(o, v):
-        m = o.matrix_world.copy()
-        m.translation = v
-        o.matrix_world = m
-    for o, si, k, key in items:
-        if k == 'part':
-            offset(o, si)
-    frames = [int(x) for x in a.frames.split(',')] if a.frames else list(range(NFRAMES))
+    frames = [int(x) for x in a.frames.split(',')] if a.frames else list(range(0, NF, a.every))
     cam = bpy.data.objects.new('cam', bpy.data.cameras.new('cam'))
     scn.collection.objects.link(cam)
     scn.camera = cam
     cam.data.lens, cam.data.clip_start, cam.data.clip_end = 42, 0.005, 20
     t0 = time.time()
     for f in frames:
-        si_now = stage_at(f)
-        _, fa, fb, fc, fd, fe = TIMELINE[si_now]
-        # camera: ease from the previous stage's framing during the move
-        p_c, p_l = cams[max(si_now - 1, 0)]
-        n_c, n_l = cams[si_now]
-        u = smooth((f - fa) / max(fb - fa, 1)) if si_now > 0 else 1.0
-        tgt = p_c.lerp(n_c, u)
-        loc = p_l.lerp(n_l, u)
-        if si_now == len(STAGES) - 1:                     # last stage: slow orbit round the finished aircraft
-            ang = 0.6 * smooth((f - fb) / max(fe - fb, 1))
+        si_now = stage_at(stages, f)
+        _, fa, fb, fe = stages[si_now]
+        tgt, loc = cam_at(f)
+        last_op_end = max([o['f1'] for o in ops if o['stage'] == STAGES[-1][0]] or [fb])
+        if si_now == len(STAGES) - 1 and f >= last_op_end:   # the end: ease out to the whole aircraft and orbit
+            u = smooth((f - last_op_end) / (0.8 * FPS))
+            tgt, loc = tgt.lerp(fin_t, u), loc.lerp(fin_l, u)
+            ang = 0.5 * smooth((f - last_op_end) / max(fe - last_op_end, 1))
             off = loc - tgt
             loc = tgt + Vector((off.x * math.cos(ang) - off.y * math.sin(ang),
                                 off.x * math.sin(ang) + off.y * math.cos(ang), off.z))
         cam.location = loc
         cam.rotation_euler = (tgt - loc).to_track_quat('-Z', 'Y').to_euler()
-        for o, si, k, key in items:
-            if si > si_now:
+        for o in managed:
+            ev = sched[o]
+            base = colours[o]
+            tint = 0.0
+            if o.type == 'CURVE':
+                w = ev[0] if ev else None
+                if w is None or f < w[1]:
+                    o.hide_render = True
+                    continue
+                o.hide_render = False
+                p = smooth((f - w[1]) / max(w[2] - w[1], 1))
+                o.data.bevel_factor_end = max(0.002, p)
+                tint = 1 - smooth((f - w[2]) / (0.8 * FPS))
+                o.color = tuple(base[i] * (1 - 0.75 * tint) + HI_COL[i] * 0.75 * tint for i in range(4))
+                continue
+            pl = next((e for e in ev if e[0] == 'place'), None)
+            if pl is None or f < pl[1]:
                 o.hide_render = True
                 continue
             o.hide_render = False
-            base = colours[o.name]
-            if si < si_now:
-                _place(o, finals[o.name])
-                o.color = base
-                continue
-            if k == 'part' and key in LATE:
-                fl = fd - int(T_LATE * FPS)
-                p = smooth((f - fl) / (T_LATE * FPS))
-                o.hide_render = f < fl
-                _place(o, finals[o.name] + offset(o, si) * (1 - p))
-                tint = 1 - smooth((f - fd) / (0.8 * FPS))
-            elif k == 'part':
-                grp = order[(si, 'part')]
-                j = grp.index(o)
-                stagger = 0.35 * (j / max(len(grp) - 1, 1))
-                p = smooth(((f - fb) / FPS / T_FLY - stagger) / (1 - 0.35))
-                o.hide_render = f < fb + stagger * T_FLY * FPS
-                _place(o, finals[o.name] + offset(o, si) * (1 - p))
-                tint = 1 - smooth((f - fc) / (0.8 * FPS))
+            _k, f0, f1, path, bench, spin, f_end = pl
+            M = Matrix.Identity(4)
+            if f < f1:
+                pr = smooth((f - f0) / max(f1 - f0, 1))
+                off, togo = path_at(path, pr)
+                off = off + bench
+                if spin is not None and o in spin_c:
+                    ang = 360.0 * SPIN_TURNS * min(1.0, togo * 1000.0 / THREAD_MM)
+                    M = rot_about(spin, spin_c[o], ang)
+                tint = 1.0
             else:
-                grp = order[(si, 'wire')]
-                j = grp.index(o)
-                fw = fc + int(j * T_WIRE * FPS)
-                o.hide_render = f < fw
-                _place(o, finals[o.name])
-                tint = 1 - smooth((f - fw) / (0.8 * FPS))
-            o.color = tuple(base[i] * (1 - 0.75 * tint) + hi_col[i] * 0.75 * tint for i in range(4))
+                off = bench.copy()
+                tint = 1 - smooth((f - f_end) / (0.8 * FPS))
+            ins = next((e for e in ev if e[0] == 'install'), None)
+            if ins is not None and f >= ins[1]:
+                if f < ins[2]:
+                    off, _t = path_at(ins[3], smooth((f - ins[1]) / max(ins[2] - ins[1], 1)))
+                    tint = 1.0
+                else:
+                    off = Vector()
+                    tint = max(tint, 1 - smooth((f - ins[2]) / (0.8 * FPS)))
+            for e in ev:
+                if e[0] == 'swing' and e[1] <= f < e[2]:
+                    s = math.sin(math.pi * smooth((f - e[1]) / max(e[2] - e[1], 1)))
+                    M = rot_about(e[3], e[4], e[5] * s) @ M
+                    tint = max(tint, 0.6)
+            o.matrix_world = Matrix.Translation(off) @ M @ finals[o]
+            o.color = tuple(base[i] * (1 - 0.75 * tint) + HI_COL[i] * 0.75 * tint for i in range(4))
         scn.render.filepath = os.path.join(a.out, 'raw_%04d.png' % f)
         bpy.ops.render.render(write_still=True)
-        with open(os.path.join(a.out, 'raw_%04d.json' % f), 'w') as fp:
-            json.dump({'stage': si_now}, fp)
-        if f % 30 == 0:
-            print('FRAME %d / %d  %.0f s' % (f, NFRAMES, time.time() - t0), flush=True)
+        if f % 60 == 0:
+            print('FRAME %d / %d  %.0f s' % (f, NF, time.time() - t0), flush=True)
     print('RENDER_TOTAL %.0f s' % (time.time() - t0))
 
 
@@ -287,6 +617,7 @@ def blender_encode(argv):
     ap.add_argument('--first', type=int, default=0)
     ap.add_argument('--last', type=int, default=10 ** 9)
     ap.add_argument('--kbps', type=int, default=2500)
+    ap.add_argument('--fps', type=int, default=FPS)
     a = ap.parse_args(argv)
     names = sorted(n for n in os.listdir(a.src) if n.startswith('lab_') and n.endswith('.png')
                    and a.first <= int(n[4:8]) <= a.last)
@@ -296,13 +627,13 @@ def blender_encode(argv):
     for n in names[1:]:
         st.elements.append(n)
     sc.frame_start, sc.frame_end = 1, len(names)
-    sc.render.fps = FPS
+    sc.render.fps = a.fps
     sc.render.resolution_x, sc.render.resolution_y, sc.render.resolution_percentage = W, H, 100
     sc.view_settings.view_transform = 'Standard'
     sc.render.image_settings.file_format = 'FFMPEG'
     ff = sc.render.ffmpeg
     ff.format, ff.codec, ff.constant_rate_factor = 'MPEG4', 'H264', 'NONE'
-    ff.video_bitrate, ff.maxrate, ff.buffersize, ff.gopsize = a.kbps, int(a.kbps * 1.5), 2000, FPS
+    ff.video_bitrate, ff.maxrate, ff.buffersize, ff.gopsize = a.kbps, int(a.kbps * 1.5), 2000, a.fps
     ff.ffmpeg_preset, ff.audio_codec = 'GOOD', 'NONE'
     sc.render.filepath = a.out
     sc.render.use_file_extension = False
@@ -325,12 +656,29 @@ def _font(names, size):
     return ImageFont.load_default(size)
 
 
-def overlay(src_png, dst_png, f):
+def current_op(ops, si, f):
+    mine = [o for o in ops if o['stage'] == STAGES[si][0]]
+    cur = None
+    for o in mine:
+        if o['f0'] <= f:
+            cur = o
+    return cur or (mine[0] if mine else None)
+
+
+def overlay(src_png, dst_png, f, stages, ops, names):
     from PIL import Image, ImageDraw
     im = Image.open(src_png).convert('RGBA')
-    i = stage_at(f)
-    num, title, lines = STAGES[i][0], STAGES[i][1], STAGES[i][2]
-    _, fa, fb, fc, fd, fe = TIMELINE[i]
+    if im.size != (W, H):
+        im = im.resize((W, H))
+    # Workbench writes the background as alpha 0; put it on the light grey the scene asks for (0.93-0.95), not the
+    # black an RGB save of a transparent pixel gives
+    bg = Image.new('RGBA', im.size, (237, 240, 242, 255))
+    im = Image.alpha_composite(bg, im)
+    i = stage_at(stages, f)
+    num, title = STAGES[i][0], STAGES[i][1]
+    op = current_op(ops, i, f)
+    lines = [('Step %s  ·  %s' % (op['step'], op['caption'])) if op else '', op_label(op, names) if op else '']
+    _, fa, fb, fe = stages[i]
     alpha = min(1.0, (f - fa) / 9.0 + 0.15) if i > 0 else 1.0
     ink, hi, muted = (18, 22, 25), (194, 84, 10), (107, 114, 128)
     f_head = _font(['seguisb.ttf', 'segoeui.ttf', 'arial.ttf'], 17)
@@ -341,7 +689,6 @@ def overlay(src_png, dst_png, f):
     d = ImageDraw.Draw(lay)
     d.text((36, 26), 'K09-L quad tailsitter', font=f_head, fill=ink + (235,))
     d.text((36, 50), 'BUILD SEQUENCE  ·  BUILD-GUIDE.md', font=f_mono, fill=muted + (235,))
-    # stage progress: one tick per stage, the current one in the highlight colour
     n = len(STAGES)
     x0, y0, step = W - 36 - (n - 1) * 30, 40, 30
     for k in range(n):
@@ -349,7 +696,6 @@ def overlay(src_png, dst_png, f):
         col = hi if k == i else (ink if k < i else (200, 204, 210))
         d.ellipse((x - 6, y0 - 6, x + 6, y0 + 6), fill=col + (255,))
         d.text((x - 7, y0 + 10), str(STAGES[k][0]), font=f_mono, fill=(muted if k != i else hi) + (255,))
-    # lower third
     A = int(255 * alpha)
     d.rounded_rectangle((28, H - 150, W - 28, H - 24), radius=10, fill=(255, 255, 255, int(236 * alpha)),
                         outline=(205, 209, 214, A), width=1)
@@ -357,6 +703,8 @@ def overlay(src_png, dst_png, f):
     d.text((52, H - 140), 'STAGE %d' % num, font=f_mono, fill=hi + (A,))
     d.text((52, H - 118), title, font=f_title, fill=ink + (A,))
     for k, ln in enumerate(lines):
+        while ln and d.textlength(ln, font=f_line) > W - 100:
+            ln = ln[:-4] + '...'
         d.text((52, H - 80 + 24 * k), ln, font=f_line, fill=(55, 62, 72, A))
     Image.alpha_composite(im, lay).convert('RGB').save(dst_png)
 
@@ -383,33 +731,53 @@ def driver():
     ap.add_argument('--frames', default='', help='comma list: test render only')
     ap.add_argument('--work', default=os.path.join(tempfile.gettempdir(), 'k09l_build'))
     ap.add_argument('--skip-render', action='store_true')
+    ap.add_argument('--preview', action='store_true',
+                    help='half-size, every 3rd frame, one film in --work (build-preview.mp4); build/ untouched')
     a = ap.parse_args()
     t0 = time.time()
-    os.makedirs(a.work, exist_ok=True)
+    plan = load_plan()
+    stages, ops, NF = timeline(plan)
+    import assembly_plan
+    names = {k: v.get('name', k) for k, v in assembly_plan.part_info().items()}
+    every = 3 if a.preview else 1
+    work = os.path.join(a.work, 'preview') if a.preview else a.work
+    os.makedirs(work, exist_ok=True)
     os.makedirs(OUT, exist_ok=True)
     me = os.path.abspath(__file__)
+    print('%d actions in %d moves, %d frames (%.1f s of film)' % (len(plan['actions']), len(ops), NF, NF / FPS))
     if not a.skip_render:
-        cmd = [a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', a.work]
+        if not a.frames:                              # no stale frames from a longer earlier film in the encode
+            for n in os.listdir(work):
+                if n.startswith(('raw_', 'lab_')) and n.endswith('.png'):
+                    os.remove(os.path.join(work, n))
+        cmd = [a.blender, '-b', '--factory-startup', '-P', me, '--', 'render', '--out', work,
+               '--every', str(every), '--pct', '50' if a.preview else '100']
         if a.frames:
             cmd += ['--frames', a.frames]
         run(cmd)
-    frames = [int(x) for x in a.frames.split(',')] if a.frames else list(range(NFRAMES))
+    frames = [int(x) for x in a.frames.split(',')] if a.frames else list(range(0, NF, every))
     for f in frames:
-        overlay(os.path.join(a.work, 'raw_%04d.png' % f), os.path.join(a.work, 'lab_%04d.png' % f), f)
+        overlay(os.path.join(work, 'raw_%04d.png' % f), os.path.join(work, 'lab_%04d.png' % f), f, stages, ops,
+                names)
     if a.frames:
-        print('test frames in', a.work)
+        print('test frames in', work)
         return
-    run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', a.work,
-         '--out', os.path.join(OUT, 'k09l-build.mp4')])
-    for i, fa, fb, fc, fd, fe in TIMELINE:
-        num = STAGES[i][0]
-        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', a.work,
+    if a.preview:
+        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', work, '--fps', str(FPS // every),
+             '--out', os.path.join(work, 'build-preview.mp4')])
+        print('preview: %s (%.1f min)' % (os.path.join(work, 'build-preview.mp4'), (time.time() - t0) / 60))
+        return
+    run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', work, '--kbps', '1800',
+         '--out', os.path.join(OUT, 'k09l-build.mp4')])     # 2 min of film: lower rate keeps the repo file ~27 MB
+    for si, fa, fb, fe in stages:
+        num = STAGES[si][0]
+        run([a.blender, '-b', '--factory-startup', '-P', me, '--', 'encode', '--src', work,
              '--out', os.path.join(OUT, 'stage-%02d.mp4' % num), '--first', str(fa), '--last', str(fe - 1)])
-        Image.open(os.path.join(a.work, 'lab_%04d.png' % (fe - 1))).save(os.path.join(OUT, 'stage-%02d.png' % num),
-                                                                         optimize=True)
+        Image.open(os.path.join(work, 'lab_%04d.png' % (fe - 1))).save(os.path.join(OUT, 'stage-%02d.png' % num),
+                                                                        optimize=True)
     for n in sorted(os.listdir(OUT)):
         print('%-22s %6.2f MB' % (n, os.path.getsize(os.path.join(OUT, n)) / 1e6))
-    print('%d frames, %.1f s of film, total %.1f min' % (NFRAMES, NFRAMES / FPS, (time.time() - t0) / 60))
+    print('%d frames, %.1f s of film, total %.1f min' % (NF, NF / FPS, (time.time() - t0) / 60))
 
 
 if __name__ == '__main__':

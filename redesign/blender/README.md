@@ -104,10 +104,44 @@ a failure prints `UNION NOT CLEAN <part>` and keeps the bodies as separate shell
 (`grep -c "CUT NOT VERIFIED\|UNION NOT CLEAN"` on the export log is 0); the GLB gate (`collision/collide.py --glb`)
 then checks the exported meshes against each other.
 
+## Build film (`showcase/animation/`)
+
+The build film shows the aircraft put together the way a person would, in `BUILD-GUIDE.md` order, and every motion in
+it passes a swept-path physics check first. Two commands, run from the repo root:
+
+```
+python -I redesign/showcase/animation/assembly_check.py   # plan + check (~25 min) -> build/assembly_plan.json, ASSEMBLY-CHECK.md
+python redesign/showcase/animation/render_build.py        # render the plan (~19 min) -> build/k09l-build.mp4, stage-NN.mp4/.png
+python redesign/showcase/animation/render_build.py --preview   # half size, every 3rd frame, into --work only
+python -I redesign/showcase/animation/assembly_check.py --steps 7.2,7.4   # debug: check only these steps
+python -I redesign/showcase/animation/assembly_check.py --legacy          # also score the old fly-in film
+```
+
+- **Order**: `assembly_plan.STEPS`, one row per numbered BUILD-GUIDE step (stages 2-11), with its caption and the parts
+  and wires it places. Bench sub-assemblies (spar + plugs + blocks, plugged motor tubes, pod box, motor on its mount,
+  servo + arm, foot inserts, FC + card) are built beside the aircraft and moved on as one piece.
+- **Motions are derived, not drawn**: `assembly_check.py` tries removal directions from the geometry (the mount face
+  normal, the part's own bore / pin / tube / screw / extrusion axes, then the world axes), sweeps the part along each
+  one in 0.05-1 mm steps against everything already placed (the collision gate's own bodies and cutters, so holes,
+  bores and slots are empty), and keeps the first clear one; if a straight path is blocked further out it tries
+  out-then-across. Screws turn over their last 6 mm. Tape, wet epoxy and wires are laid in place (support check only).
+  The few true special cases (fixtures, the spar slot cut from below) are the one `OVERRIDES` table; open design
+  blockers the guide already names (SW-01 strap eyes) are the `KNOWN` table and stay listed in the report.
+- **Support**: each placed item must touch something already placed (or sit on a bond line the interfaces graph
+  declares, gap up to 0.6 mm), or be held by a named fixture.
+- Exit code of the check: 1 when any motion passes through a placed part deeper than 0.05 mm and is not a `KNOWN`
+  blocker. The renderer refuses to run without `build/assembly_plan.json`.
+- Times measured 2026-11-13 on the team laptop: check 25 min (meshing 3 min, the rest is the sweeps), render 19 min for 3556 frames
+  (118 s of film) at 1280 x 720: 2 min to build the scene, 9 min Workbench, 8 min overlay and encode.
+- **When the CAD changes** (new parts, connectors, terminals): re-run both commands. New parts are planned
+  automatically; a part no step names is placed in a catch-all last step and listed in the report, so add it to the
+  right row of `STEPS`.
+
 ## Known limits
 
 - Smooth lofts are refined with a Catmull-Rom spline. Fusion fits its own spline, so the two surfaces differ by about 0.01 mm.
 - Label widths are estimated (no font metrics in the standard library). Very long words can overrun a box. Keep callout text short.
 - `--png` rasterises the SVG with Edge or Chrome in headless mode if one is installed. Without a browser you still get the SVG and the plain PNG.
 - Freestyle prints `Error: strokes set empty` when a line set has nothing to draw. It does no harm.
-- Animations (BRIEF: MP4 clips) are not built yet. They will reuse `Stage`, `pose()` and `explode` with keyframes.
+- The build film (`showcase/animation/render_build.py`, section above) does not use `Stage` yet; it drives Workbench
+  directly from the checked plan.

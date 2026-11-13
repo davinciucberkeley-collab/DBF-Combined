@@ -9,9 +9,14 @@ depends on one, it says "pending fix". Do not print or cut those parts until the
 
 ![K09-L in cruise attitude](showcase/renders/hero-iso.png)
 
-**Build animation:** [the whole build, stages 2–11](showcase/animation/build/k09l-build.mp4) (about 49 s). Each
-stage below links its own clip and shows its end state. Parts fly in to where they seat, from the same CAD that
-passes the collision check (`collision/`); rendered by `showcase/animation/render_build.py`.
+**Build animation:** [the whole build, stages 2–11](showcase/animation/build/k09l-build.mp4) (about 2 min). Each
+stage below links its own clip and shows its end state. The film follows this guide step by step: each part comes in
+the way a person fits it (along its bore, pin or screw axis, down onto its face, bench sub-assemblies moved on as one
+piece, tape laid in strips, wires laid along their route), on a path that is swept against every part already placed
+in the same CAD that passes the collision check (`collision/`). Check report:
+[`ASSEMBLY-CHECK.md`](showcase/animation/build/ASSEMBLY-CHECK.md), including the places where the CAD forces a
+different order than written below and the parts no motion can fit yet. Made by
+`showcase/animation/assembly_check.py` and `render_build.py`.
 
 Finding IDs (BR-xx) are in the [review master table](review/BUILDABILITY-REVIEW.md#master-table-blockers-and-majors-ranked).
 BOM line IDs (B01, W04…) are in [`team/I1/BOM.csv`](team/I1/BOM.csv).
