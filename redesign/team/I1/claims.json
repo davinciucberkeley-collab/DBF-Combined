@@ -113,15 +113,15 @@
     "SRC-I1-OVONIC"
    ],
    "outputs": {
-    "spend_pess_allin": 2057.82,
-    "spend_base_allin": 1972.6,
-    "goods_base": 1309.32,
-    "goods_pess": 1334.91,
-    "tax_base": 134.21,
-    "tax_pess": 136.83,
-    "spend_base": 1568.53,
-    "spend_pess": 1653.74,
-    "early_goods_tax": 969.54
+    "spend_pess_allin": 1979.55,
+    "spend_base_allin": 1894.34,
+    "goods_base": 1366.05,
+    "goods_pess": 1391.64,
+    "tax_base": 140.02,
+    "tax_pess": 142.64,
+    "spend_base": 1631.07,
+    "spend_pess": 1716.28,
+    "early_goods_tax": 1015.55
    },
    "input_values": {
     "tax": 0.1025
@@ -150,7 +150,7 @@
    },
    "input_values": {
     "tax": 0.1025,
-    "sp": 1653.74
+    "sp": 1716.28
    }
   },
   {
@@ -171,19 +171,19 @@
     "sb": "USD"
    },
    "outputs": {
-    "reserve_pess": 346.26,
-    "reserve_base": 431.47
+    "reserve_pess": 283.72,
+    "reserve_base": 368.93
    },
    "input_values": {
     "budget": 2000.0,
-    "sp": 1653.74,
-    "sb": 1568.53
+    "sp": 1716.28,
+    "sb": 1631.07
    }
   },
   {
    "id": "CALC-I1-ALLIN",
    "type": "calculation",
-   "title": "All-in spend if every gated BOM line (X07, X08) were also bought",
+   "title": "All-in spend if every gated BOM line (X07, X08, X10, X12) were also bought",
    "script": "redesign/team/I1/build_bom.py",
    "function": "allin",
    "equation": "all-in spend = spend + gated lines x (1 + tax); reserve = budget - spend",
@@ -200,8 +200,8 @@
     "ASM-I1-ADDERS"
    ],
    "outputs": {
-    "reserve_pess_allin": -57.82,
-    "reserve_base_allin": 27.4
+    "reserve_pess_allin": 20.45,
+    "reserve_base_allin": 105.66
    },
    "input_values": {
     "tax": 0.1025,
@@ -247,7 +247,7 @@
     "R-BUDGET"
    ],
    "how": "Re-run build_bom.py after re-pricing each line on the day of the order; compare with the order confirmations.",
-   "value": 1568.53
+   "value": 1631.07
   },
   {
    "id": "CL-I1-SPEND-PESS",
@@ -264,7 +264,7 @@
     "R-BUDGET"
    ],
    "how": "Same lines at list price plus the DECISION section 9 adders; CL-I1-BRIDGE-DELTA must be 0.",
-   "value": 1653.74
+   "value": 1716.28
   },
   {
    "id": "CL-I1-BRIDGE-DELTA",
@@ -296,7 +296,7 @@
     "R-BUDGET"
    ],
    "how": "2 000 minus CL-I1-SPEND-PESS must be >= 309 (one class-S crash incl. tax). On the day: re-price every CARRY line.",
-   "value": 346.26
+   "value": 283.72
   },
   {
    "id": "CL-I1-RESERVE-BASE",
@@ -313,7 +313,7 @@
     "R-RESERVE"
    ],
    "how": "2 000 minus CL-I1-SPEND-BASE must be >= 150 (planned reserve, P2).",
-   "value": 431.47
+   "value": 368.93
   },
   {
    "id": "CL-I1-RESERVE-PESS-ALLIN",
@@ -323,7 +323,7 @@
    "output": "reserve_pess_allin",
    "unit": "USD",
    "how": "2 000 minus the all-in pessimistic spend. Information, not a gate: the committed order holds >= 309 by deferring X07 and X08 until their gate passes. Below 309 means every gated line cannot be bought on pessimistic numbers.",
-   "value": -57.82
+   "value": 20.45
   },
   {
    "id": "CL-I1-GROUNDTEST-BOUGHT",
@@ -373,12 +373,12 @@
   {
    "id": "T-I1-BORROW",
    "type": "test",
-   "title": "Jacobs Hall confirms the H1 rig loan in writing",
+   "title": "Jacobs staff answer the equipment questions (Maker Pass is drop-in access, no loans)",
    "verifies": [
     "CL-I1-GROUNDTEST-BOUGHT"
    ],
    "state": "planned",
-   "procedure": "Before 20 Nov ask Jacobs Hall staff, by email, to lend (a) the soldering kit (G07-G10, gate X10, lever 1), (b) the hot-wire supply and wire (G11, H05, gate X11, lever 2) for the whole build January-February, and (c) the items in ORDER-PLAN.md 'Borrow list'; file the reply in team/I1/borrow_confirmation.txt. A refusal makes the gated line a BOM line and the pessimistic reserve falls by its value (X10 $94.80, X11 $62.54)."
+   "procedure": "First Electronics Lab visit (before 20 Nov, with the safety training done): (a) confirm in the lab that flux and wick are at the soldering stations (else buy G10, gate X10) and that a multimeter reads K-type probes (else X09); (b) ask staff by email whether Jacobs allows hot-wire foam cutting or foam on the ShopBot (a yes would remove G11 and H05, $62.54 incl. tax); (c) confirm the Spring 2027 Maker Pass covers all four builders from 19 Jan. Jacobs does not lend equipment: the pass is in-lab access (jacobsinstitute.berkeley.edu/making-at-jacobs, checked 2026-11-13). File the reply in team/I1/borrow_confirmation.txt."
   },
   {
    "id": "T-I1-ARRIVAL",

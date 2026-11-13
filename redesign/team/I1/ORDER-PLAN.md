@@ -1,6 +1,6 @@
 # Order plan: early order (~20 Nov 2026) and mid-December order (15 Dec 2026)
 
-Revision I1-R3, 2026-11-10. Status `PROPOSED`. Lines, prices and part numbers: [`BOM.csv`](BOM.csv). Money: `python -I redesign/team/I1/build_bom.py`, then
+Revision I1-R4, 2026-11-13 (Maker Pass paid outside the budget; see "What changed in R4"). Status `PROPOSED`. Lines, prices and part numbers: [`BOM.csv`](BOM.csv). Money: `python -I redesign/team/I1/build_bom.py`, then
 `python -I redesign/team/I1/make_order_plan.py` regenerates the vendor tables below. Prices are 2026 list prices before 10.25 % tax.
 `CHK` = compared with the vendor page on 2026-11-09, `CARRY` = carried from `cards/K09/cost.csv`, `EST` = estimate, no vendor page.
 
@@ -8,28 +8,36 @@ Revision I1-R3, 2026-11-10. Status `PROPOSED`. Lines, prices and part numbers: [
 
 | Order | Goods | Tax 10.25 % | Shipping `EST` | Total |
 |---|---|---|---|---|
-| Early, ~20 Nov | $879.40 | $90.14 | $75 | **$1,044.54** |
+| Early, ~20 Nov | $921.13 | $94.42 | $75 | **$1,090.55** |
 | December, 15 Dec | $349.96 | $35.87 | $45 | **$430.83** |
-| Store pick-up (XPS, jig, ammo can) | $79.96 | $8.20 | 0 | **$88.16** |
+| Store pick-up (XPS, hot-wire bow stock, ammo can) | $94.96 | $9.73 | 0 | **$104.69** |
 | FAA registration (DroneZone, not taxed) | | | | **$5.00** |
-| Whole BOM, baseline (excl. gated lines) | $1,309.32 | $134.21 | $120 | **$1,568.53** (`CL-I1-SPEND-BASE`) |
-| Whole BOM, pessimistic (excl. gated lines) | $1,334.91 | $136.83 | $150 | **$1,653.74** (`CL-I1-SPEND-PESS`; + $5 FAA + $27 adders) |
+| Whole BOM, baseline (excl. gated lines) | $1,366.05 | $140.02 | $120 | **$1,631.07** (`CL-I1-SPEND-BASE`) |
+| Whole BOM, pessimistic (excl. gated lines) | $1,391.64 | $142.64 | $150 | **$1,716.28** (`CL-I1-SPEND-PESS`; + $5 FAA + $27 adders) |
 
 ## Reserve gate (hard: $2 000, reserve >= $309 on pessimistic numbers)
 
 | Case | Spend | Reserve | Limit | Status |
 |---|---|---|---|---|
-| Committed order, baseline | $1,568.53 | $431.47 | >= $150 planned | `CHECKED` against inputs; prices `UNVERIFIED` |
-| Committed order, pessimistic (Ovonic at EUR 113.30 x 1.16, tubes overseas, shipping +$30, tax measure +$7, jig/box +$20) | $1,653.74 | **$346.26** (margin $37.26) | >= $309 | `UNVERIFIED` |
-| **Everything bought**, baseline (gated X07 box/field kit and X08 airspeed sensor included) | $1,972.60 | $27.40 | >= $150 | **FAILS by $122.60** |
-| **Everything bought**, pessimistic | $2,057.82 | **$-57.82** | >= $309 | **FAILS by $366.82** (`CL-I1-RESERVE-PESS-ALLIN`) |
+| Committed order, baseline | $1,631.07 | $368.93 | >= $150 planned | `CHECKED` against inputs; prices `UNVERIFIED` |
+| Committed order, pessimistic (Ovonic at EUR 113.30 x 1.16, tubes overseas, shipping +$30, tax measure +$7, jig/box +$20) | $1,716.28 | **$283.72** (SHORT of $309 by $25.28) | >= $309 | `UNVERIFIED` **FAILS (CL-I1-RESERVE-PESS)** |
+| **Everything bought**, baseline (every gated BOM line: X07 box/field kit, X08 airspeed sensor, X10 flux/wick, X12 UBEC fallback) | $1,894.34 | $105.66 | within $2 000; >= $150 planned | within the $2 000 budget; under the $150 planned reserve by $44.34 |
+| **Everything bought**, pessimistic | $1,979.55 | **$20.45** | within $2 000 | **within the $2 000 budget** (was -$57.82 before R4); no crash reserve left, so the gates still decide what is bought (`CL-I1-RESERVE-PESS-ALLIN`) |
 
 **What changed in R3 (CR-A1-67, D-72).** Pack re-priced for the Ovonic 120C EC5 pair (+$31.51 baseline, +$11.55 pessimistic, pre-tax); Savox SH-0255MG+ replaces the placeholder
 servo (+$44.00); the $6 T-antennas, FC isolation set, F2 harness lines, D6 mechanisms hardware, 2.5 mm CF rod, PA66 socket-head set, 7/32 in brass tube and two strain gauges are
 itemised; the D7 mat, tote, spares box and labels sit in the gated X07. Net of the designers' lines: pessimistic spend +$130.55 pre-tax ($143.94 incl. tax) before any lever.
-**Lever 1 alone is not enough.** Borrowing the soldering kit (G07-G10, $94.80 incl. tax) leaves the pessimistic reserve at $263.87, $45.13 under the $309 crash.
-Lever 2 (borrow the hot-wire gear G11 + H05, $62.54) is also applied and gives the reserve above. Both are bought if Jacobs Hall refuses (gates X10, X11): H1's written yes before 20 Nov is a hard dependency.
-The committed order holds the $309 reserve only by holding blocks behind gates: X07 (D7 box and field kit, store pick-up, needed before the first drive to the field in March), X08 (airspeed sensor, DECISION 5.1 lever), X10, X11.
+
+**What changed in R4 (2026-11-13, owner fact: the Jacobs Hall Maker Pass is paid for the team outside the $2 000).** The pass is not a BOM line. It gives drop-in access to the
+Jacobs Hall makerspaces, not loans: the Jacobs pages say nothing about checkout (`https://jacobsinstitute.berkeley.edu/making-at-jacobs/`, checked 2026-11-13). The Electronics Lab
+(studio 110) lists soldering irons with solder provided, multimeters, power supplies, heat guns and fume extractors (`https://jacobsinstitute.berkeley.edu/our-spaces-at-a-glance/labs-and-equipment/`, checked 2026-11-13).
+- **Old gate X10 (soldering kit, lever 1):** G07 Pinecil, G08 PD supply and G09 multimeter are **deleted** (-$70.99 pre-tax, -$78.27 incl. tax from every all-in case); the soldering is done in the lab. G10 (flux, wick; solder is provided) stays as a $16.54 gated fallback X10, bought only if the lab has none.
+- **Old gate X11 (hot-wire gear, lever 2):** the page lists **no hot-wire foam cutter**, so the claim "hot-wire foam cutting is a stated Jacobs capability" is withdrawn and the BUILD-GUIDE statement (not listed) stands (MF-03). G11 and H05 are **bought** (+$62.54 incl. tax in every case); G11 moves to the 20 Nov order so the bow and two or three practice cores exist before Jacobs closes on 18 Dec.
+- **T-I1-BORROW** is now "ask Jacobs staff" (flux and wick, K-type reading, hot-wire or ShopBot on foam, Spring 2027 pass), not a loan. No purchase waits on a written yes any more.
+- Net: committed pessimistic spend +$62.54, so the pessimistic reserve falls from $346.26 to $283.72; the all-in pessimistic case improves from -$57.82 to $20.45.
+- **Open:** the committed pessimistic case is $25.28 under the $309 crash reserve. The pass cannot close it (Jacobs lists no hot-wire gear). Levers, none applied: a Jacobs yes on foam on the ShopBot would remove G11 + H05 (+$62.54); a confirmed USD Ovonic price replaces the EUR x 1.16 pessimistic guess on P01 (up to $18.69 incl. tax); the $7 tax adder lapses if Measure V takes effect after the last pick-up (a news report gives 1 Apr 2027, CDTFA has not published it: not relied on).
+
+The committed order holds its reserve only by holding blocks behind gates: X07 (D7 box and field kit, store pick-up, needed before the first drive to the field in March), X08 (airspeed sensor, DECISION 5.1 lever), X10 (flux, wick), X12 (UBEC fallback).
 
 ## Early order, ~20 Nov (electronics, packs, test hardware, power parts)
 
@@ -38,7 +46,7 @@ five or six carts. **Place the pack cart (`P01`) first: ~14 days from Germany. P
 
 | Vendor | Lines | Pre-tax | Tax | With tax | Lead (days) `EST` | Flag |
 |---|---|---|---|---|---|---|
-| Amazon | `B02`, `A05`, `A06`, `W02`, `W06`, `W07`, `H06`, `F01` x5, `F02`, `F03`, `F07`, `F08`, `F09`, `G01`, `G04`, `G05`, `G06`, `G12` | $298.81 | $30.63 | $329.44 | 5 | **LANRC ASIN B0D2HS4Y4J unconfirmed** (503, no US 4-pack page): open it first; fallback Tekko32 +$60; many `EST` lines, re-read each |
+| Amazon | `B02`, `A05`, `A06`, `W02`, `W06`, `W07`, `H06`, `F01` x5, `F02`, `F03`, `F07`, `F08`, `F09`, `G01`, `G04`, `G05`, `G06`, `G11`, `G12` | $340.54 | $34.91 | $375.45 | 5 | **LANRC ASIN B0D2HS4Y4J unconfirmed** (503, no US 4-pack page): open it first; fallback Tekko32 +$60; many `EST` lines, re-read each |
 | SunnySky USA | `B01` x5 | $124.95 | $12.81 | $137.76 | 5 | page 429 on 2026-11-09, price by search snippet; measure bolt pattern, hole depth and leads on arrival |
 | Ampow / OVONIC (same SKU) | `P01` | $114.48 | $11.73 | $126.21 | 14 **LONG** | **LONG LEAD (~14 d, ships from Germany); USD price not found**: baseline EUR 98.69 x 1.16, pessimistic EUR 113.30 x 1.16. Ask the seller for 10 AWG leads before paying |
 | RadioMaster | `A03`, `R01` | $84.98 | $8.71 | $93.69 | 5 | select the **FCC** variant for both RP3 V2 and Pocket Crush (CR-F5-06); not LBT |
@@ -51,7 +59,7 @@ five or six carts. **Place the pack cart (`P01`) first: ~14 days from Germany. P
 | Pyrodrone | `G02` x2 | $19.98 | $2.05 | $22.03 | 5 |  |
 | Bolt Depot | `B07` x20, `C01` | $7.00 | $0.72 | $7.72 | 5 | minimum order may exceed the line price |
 
-**Early total $1,044.54** (goods $879.40 + tax $90.14 + shipping $75 `EST`). Before the first charge (late Nov, store): `G03` ammo can,
+**Early total $1,090.55** (goods $921.13 + tax $94.42 + shipping $75 `EST`). Before the first charge (late Nov, store): `G03` ammo can,
 Harbor Freight 63750, $19.99 + $2.05 tax. The pack cart (`P01`) is released by D-64 after the two checks below; **no USD price is confirmed**, read the cart total before paying (pessimistic case $131.43).
 
 At order, in the cart:
@@ -77,14 +85,14 @@ Place the Aloft carbon cart first (tubes, strips, 20x18 tube), then the rest. Se
 | West3D | `W05`, `W08` | $45.98 | $4.71 | $50.69 | 5 | ASA is not in the Jacobs free stock |
 | Amazon / hobby shop | `H02`, `D07` | $27.00 | $2.77 | $29.77 | 5 |  |
 
-**December total $430.83** (goods $349.96 + tax $35.87 + shipping $45 `EST`). Store pick-up in January (`LOCAL`):
+**December total $430.83** (goods $349.96 + tax $35.87 + shipping $45 `EST`). Store pick-up (`LOCAL`): `H05` and the XPS sheet `W01` are collected in late November / early December for the practice cores; `G03` before the first charge.
 
 | Vendor | Lines | Pre-tax | Tax | With tax | Lead (days) `EST` | Flag |
 |---|---|---|---|---|---|---|
-| Home Depot El Cerrito | `W01` | $59.97 | $6.15 | $66.12 | 0 | store pick-up; check the XPS sheet is flat |
+| Home Depot El Cerrito | `W01`, `H05` | $74.97 | $7.68 | $82.65 | 0 | store pick-up; check the XPS sheet is flat |
 | Harbor Freight | `G03` | $19.99 | $2.05 | $22.04 | 0 | store pick-up |
 
-## Gated lines held in the BOM (not in any total above)
+## Gated lines held in the BOM (not in any committed total above)
 
 | Gate | Item | Cost incl. tax | Condition |
 |---|---|---|---|
@@ -96,28 +104,30 @@ Place the Aloft carbon cart first (tubes, strips, 20x18 tube), then the rest. Se
 | X06 | Remote ID module NewBeeDrone BeeID | $44.09 | only if flown outside the RFS FRIA |
 | X07 | D7 box and field kit (lines T01-T06: Coroplast, tape, straps, handles, pouch, spanner, mat, PE foam) | $149.72 | as X01, before the first drive to the field (store pick-up, no lead time); until then a borrowed carton |
 | X08 | RMRC MS4525DO airspeed sensor + pitot (line A04) | $66.14 | as X01; DECISION 5.1 lever, last in the order (CR-I1-03) |
-| X10 | Soldering kit if Jacobs Hall will not lend it (G07 Pinecil, G08 PD supply, G09 multimeter, G10 solder/flux/wick) | $94.80 | Jacobs Hall refuses in writing (T-I1-BORROW, before 20 Nov); then the line is BOUGHT and the reserve falls by its value |
-| X11 | Hot-wire gear if Jacobs Hall will not lend it (G11 30 V 10 A supply + Ni80 wire, H05 bow and template stock) | $62.54 | as X10 (hot-wire foam cutting is a stated Jacobs capability; the written yes covers it) |
+| X10 | Flux + desoldering wick if the Electronics Lab has none (G10) | $16.54 | first Electronics Lab visit: no flux or wick at the stations (the page says only 'solder provided'); then buy G10 |
 | X12 | UBEC fallback (lines F04 20 AWG, F05 UBEC, F06 fuse + holder), D-74 | $30.87 | only if subsystems/power/BOARD-CHECK.md step 7 fails (servo-BEC Vx < 5.8 V at ~5.4 A); then a 4S-input 6 V UBEC (5-day lead), before the January build |
-| X09 | K-type thermocouple logger / 2-channel meter (E3 GT-04) | $16.54 | only if Jacobs Hall cannot lend one |
+| X09 | K-type thermocouple logger / 2-channel meter (E3 GT-04) | $16.54 | only if no Electronics Lab multimeter reads the K-type probes in the lab (Jacobs does not lend equipment out; the pass is drop-in access) |
 
-With the baseline reserve of $431.47, X07 + X08 ($184.99) leave $246.48: both fit on baseline, not on pessimistic numbers.
+With the baseline reserve of $368.93, X07 + X08 ($215.86) leave $153.07: both fit on baseline, not on pessimistic numbers.
 The gate test is the realised reserve (2 000 minus actual spend after the December receipts), not the pessimistic forecast.
 
-## Borrow list (not bought, not in the spend): Jacobs Hall (D-39, D-57 levers 1 and 2, D-72)
+## Not bought: Jacobs Maker Pass equipment and team-owned items (D-39, D-72, R4)
 
-Needs a yes from Jacobs Hall staff **in writing before 20 Nov** (`T-I1-BORROW`, H1 obtains it). Two blocks fall in this list because the budget needs them:
+The Maker Pass (paid outside the budget) is **in-lab use**, with trainings (`https://jacobsinstitute.berkeley.edu/making-at-jacobs/`, checked 2026-11-13). Plan every task that uses these tools for a Jacobs day (fall access ends 18 Dec; spring access dates are not published on the pass page).
 
-| Lever | Lines | Cost if refused (incl. tax) | Needed for |
+| Tool, covered by the pass | Lines it replaces | Used for | Where on the lab list |
 |---|---|---|---|
-| 1: soldering kit | `G07` Pinecil, `G08` PD supply, `G09` multimeter, `G10` solder/flux/wick (gate X10) | $94.80 | harness, ESC leads, AS150U re-termination (every build week) |
-| 2: hot-wire gear | `G11` 30 V 10 A supply + Ni80 wire, `H05` bow and template stock (gate X11) | $62.54 | wing core cutting (January) |
+| Soldering station with solder, fume extractor | old `G07` (Pinecil), `G08` (PD supply), `G10` solder | harness, ESC leads, AS150U re-termination | Electronics Lab, studio 110 |
+| Multimeters, bench power supplies, oscilloscope, heat gun | old `G09`; ground tests | rails, continuity, heat-shrink | Electronics Lab |
+| Laser cutters (3 x 32 x 18 in; 1 x 48 x 25 in), Prusa printers (PLA free), drill presses, band saw, PCB shear, spray booth | none bought | templates, fins, jigs, prints, FR4 bus board, 3M 77 | labs-and-equipment page |
+
+Bought for the hot wire (not on the Jacobs list): `G11` 30 V supply + Ni80 wire and `H05` bow and template stock, $62.54 incl. tax.
 
 Bought for the rig: G06 ($17.97, 20 kgf cell kit, already in the baseline), G12 ($17.00) and G13 ($9.00, fin-proof strain gauges, CR-C4-38).
 
-| Item | From H1's list ($ `EST`) | If not lent |
+| Item | From H1's list ($ `EST`) | If no team member owns one |
 |---|---|---|
-| 2 x 5 kg x 1 g scales | 30 | buy; +$33 incl. tax |
+| 2 x 5 kg x 1 g scales | 30 | team-owned or buy; +$33 incl. tax |
 | Optical tachometer | 20 | use ESC rpm telemetry (F4 bdshot) |
 | K-type thermocouple meter / logger | in the $30 thermal line | gated X09 $16.54 |
 | 10 kg spring scale, sandbags, straps, eye bolts | 20 | luggage scale and shop weights |
@@ -133,7 +143,7 @@ Bought for the rig: G06 ($17.97, 20 kgf cell kit, already in the baseline), G12 
 | Strips and 20x18 tube `D01`-`D03` | same Aloft cart, `EST` prices | order with the tubes; weigh the strips on arrival |
 | Ovonic packs `P01` | ships from Germany (~14 days); no USD price found; 10 AWG leads unconfirmed | order first on 20 Nov; ask the seller for the lead gauge; fallback Tattu 4S 6750 XT90 (605 g, A1 must accept) |
 | Savox servos `M01` | single-source 12 mm servo, price from D6 | order 15 Dec with a US dealer; the spare (X02, $46.29) first when the reserve allows |
-| Jacobs Hall loan | levers 1 and 2 rest on a written yes | H1 before 20 Nov; a refusal costs $157.34 and breaks the reserve gate |
+| Jacobs pass | drop-in only, no loans; spring access dates unpublished; paid outside the budget by the owner | confirm Spring 2027 covers all four from 19 Jan (`T-I1-BORROW`); soldering needs a lab day |
 | LANRC ESC `B02` | listing unconfirmed | open the page before 20 Nov; Tekko32 fallback +$60 |
 | Small Parts adapters | out of stock; now gated X05 | E1's fallback: adapter in each motor box + Loctite 243 |
 | FC `A01` | power-board facts (split, link, outline) are from the manual only; page moved | order in the first cart; `BOARD-CHECK.md` on arrival before the pod CAD freeze (WB-01) |

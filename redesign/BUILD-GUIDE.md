@@ -13,21 +13,26 @@ depends on one, it says "pending fix". Do not print or cut those parts until the
 stage below links its own clip and shows its end state. Parts fly in to where they seat, from the same CAD that
 passes the collision check (`collision/`); rendered by `showcase/animation/render_build.py`.
 
+**Build and program plans (2026-11-13):** [G1 process plan](team/G1/PROCESS-PLAN.md) · [G2 composites and foam](team/G2/COMPOSITES-FOAM-PLAN.md) · [G3 print list](team/G3/PRINT-LIST.md) ·
+[G4 build-step sheets](team/G4/BUILD-STEPS.md) (who, where, tools, hold points for each stage below) · [I2 schedule](team/I2/SCHEDULE.md) · [H2 flight-test plan](team/H2/FLIGHT-TEST-PLAN.md) ·
+[H3 flight card](team/H3/FLIGHT-CARD.md), [compliance](team/H3/COMPLIANCE.md), [battery procedure](team/H3/BATTERY-PROCEDURE.md) · [F5 range test](team/F5/RANGE-TEST.md).
+
 Finding IDs (BR-xx) are in the [review master table](review/BUILDABILITY-REVIEW.md#master-table-blockers-and-majors-ranked).
 BOM line IDs (B01, W04…) are in [`team/I1/BOM.csv`](team/I1/BOM.csv).
 
 ## Before you start
 
-**Access.** Every builder needs a Jacobs Hall Maker Pass ($125 per student per semester; ⚠ not in the budget yet,
-[BR-04](review/BUILDABILITY-REVIEW.md#fix-before-ordering-or-cutting)) and the laser, 3D-printer, woodshop,
-drill-press and electronics trainings. Fall access ends **18 Dec**; spring trainings run only in the first half of
+**Access.** Every builder needs a Jacobs Hall Maker Pass. The owner pays it for the team **outside the $2 000 budget** (2026-11-13), so it is
+not a BOM line ([BR-04](review/BUILDABILITY-REVIEW.md#fix-before-ordering-or-cutting) closed). The pass is drop-in access to the makerspaces, not equipment loans
+(https://jacobsinstitute.berkeley.edu/making-at-jacobs/, checked 2026-11-13). Each builder also needs General Workshop Safety and the laser, 3D-printer, woodshop,
+drill-press and electronics trainings. ⚠ Confirm the Spring 2027 pass covers all four from 19 Jan (`T-I1-BORROW`). Fall access ends **18 Dec**; spring trainings run only in the first half of
 term, so take them all in November and December ([BR-31](review/MANUFACTURING.md#4-findings)).
 
-**Tools Jacobs has:** Universal laser cutters (use the 48 × 25 in bed for 20 × 30 in board), Prusa printers
-(PETG), band saw, drill presses, PCB shear and soldering stations in the Electronics Lab, spray booth (for the
-3M 77 lamination).
-**Tools Jacobs does not list:** a hot-wire foam cutter and an enclosed printer for ASA. Buy the hot-wire gear
-(G11, H05) and find an enclosed printer early ([BR-29, BR-30](review/MANUFACTURING.md#4-findings)).
+**Tools Jacobs has, covered by the pass (labs-and-equipment page, checked 2026-11-13):** Universal laser cutters (use the 48 × 25 in bed for 20 × 30 in board), Prusa printers
+(PLA free; the page does not say PETG), band saw, drill presses, PCB shear, **soldering stations with solder, multimeters, power supplies, heat guns and fume extractors in the Electronics Lab
+(studio 110)**, spray booth (for the 3M 77 lamination). These replace the old soldering-kit lines (G07 to G09), so soldering is a lab day, in-lab only.
+**Tools Jacobs does not list:** a hot-wire foam cutter and an enclosed printer for ASA. The hot-wire gear (G11, H05) **is bought**, in the 20 Nov order, and the team finds an enclosed printer early
+([BR-29, BR-30](review/MANUFACTURING.md#4-findings)). The contradiction in the old order plan ("hot-wire foam cutting is a stated Jacobs capability") is withdrawn.
 **Bring or buy:** 1 m steel rule, calipers, depth gauge, inclinometer, preset torque screwdriver (0.1–1 N·m),
 0.1 g and 1 g scales, Z-bend pliers, pin vise, 2.5 / 3.4 / 8 mm drills, 3 mm and 22 mm ball bits, sharpened
 8 mm brass tube, luggage scale, servo tester, prop balancer.
@@ -381,7 +386,7 @@ From [MANUFACTURING.md §5](review/MANUFACTURING.md#5-realistic-build-plan-week-
 | When | Work | Gate at the end |
 |---|---|---|
 | 11 Nov – 18 Dec (shop open) | All trainings; shop exporter; templates; hot-wire bow; 2 practice cores; jigs and gauges; coupons and fin test article; thrust stand, lever frame, CG jig | Design freeze 18 Dec (CG fix, fin tip, collar, pins, mount material); traveler issued |
-| 19 Dec – 18 Jan (Jacobs closed) | Home printing: blocks, collars, pod prints, feet, pistons. Harness cut and labelled; ESCs and FC flashed; bus board and AS150U leads; SITL hours | All prints and electrical sub-assemblies on the shelf |
+| 19 Dec – 18 Jan (Jacobs closed) | Home printing: blocks, collars, pod prints, feet, pistons. Harness cut and labelled; ESCs and FC flashed; SITL hours. **No soldering: the Electronics Lab is the only iron, so bus board, AS150U and ESC leads are soldered there before 18 Dec or from 19 Jan** ([I2 schedule](team/I2/SCHEDULE.md)) | All prints on the shelf; electrical sub-assemblies cut, labelled and ready to solder |
 | Week 1 (19–25 Jan) | Cut cores 1 and 2; spar plugs; slot, pockets, grooves; fin laminates; pod board parts; mounts drilled | Core 1 accepted by template gauge |
 | Week 2 (26 Jan – 1 Feb) | Spar + blocks in the jig; elevons free; anchors; motor tubes; recess fillet; pod walls; half-fin roots and fillets | Tubes vertical and parallel |
 | Week 3 (2–8 Feb) | Collars, strips, pins, braces, ESC pads; pod into the recess, handle; harness; skin; mechanisms; shoes; power stack | Airframe complete; slip and throws checked |

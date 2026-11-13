@@ -44,8 +44,8 @@ All at the 2.6 kg gate unless stated. Live values: `python -I redesign/team/A1/f
 | Hard landing: sink at ≤ 10° tilt, any direction; n | 1.2; 6.6 | design | m/s; — | `MODELLED` (D-65) | `team/C5/SIMULATION-REPORT.md` |
 | Stance tip-over, worst CG | 31.0 | ≥ 30 | ° | `UNVERIFIED` (tilt board) | `team/A1/SUMMARY.md` |
 | ESC peak / field ambient ceiling | 56.1 / 44 | ≤ 85 / mission | °C | `UNVERIFIED` (SU2 pad h; GT-04) | `team/E3/SIMULATION-REPORT.md` |
-| Spend, pessimistic / reserve (with both Jacobs loans) | 1 674 / 326 | ≤ 2 000 / ≥ 309 (one crash) | USD | `UNVERIFIED` (prices re-read at order; without the loans the reserve falls under $309) | [`team/I1/ORDER-PLAN.md`](team/I1/ORDER-PLAN.md) I1-R3 |
-| Build to first hover | 70–85 | ≤ 90 | h | `PROPOSED` | `params/params.json#requirements` |
+| Spend, pessimistic / reserve (Maker Pass paid outside the budget; hot-wire gear bought) | 1 716 / 284 | ≤ 2 000 / ≥ 309 (one crash) | USD | `FAIL` by $25.28 on the reserve line; all-in pessimistic reserve +$20.45 (was −$57.82); prices re-read at order | [`team/I1/ORDER-PLAN.md`](team/I1/ORDER-PLAN.md) I1-R4 |
+| Build to first hover | 70–85 (older estimate); **111** on the BUILD-GUIDE stage times | ≤ 90 | h | `FAIL` on the guide's times (`CR-I2-02`) | `params/params.json#requirements`; [`team/G4/BUILD-STEPS.md`](team/G4/BUILD-STEPS.md) |
 | Transport box, external / mass | 1.25 × 0.55 × 0.54 / 3.6 | two cars | m / kg | `PROPOSED` (`CAR-FIT.md` waits for the cars) | `subsystems/transport/SPEC.md` |
 
 ## General arrangement
@@ -129,6 +129,7 @@ D-61 … D-73 (CHANGE-LOG "Revision A1-R5").
 | Trace a number to its source | open [`proofs/viewer/index.html`](proofs/viewer/index.html) (3-D claim graph) or read `proofs/out/CHAIN.md`; rebuild with `python -I redesign/proofs/build_graph.py` |
 | Read the build guide with a clip per stage | in the site: `#build` (page "Build guide"); every stage section embeds its `assets/animation/build/stage-NN.mp4`. Generated from [`BUILD-GUIDE.md`](BUILD-GUIDE.md): `python -I redesign/site/make_build_guide.py`, then `python -I redesign/site/make_index.py` |
 | Open a proof chain inside the site | in the site: `#proof` (page "Proofs"), `#proof-overview`, `#proof-<node id>`; the 3-D explorer's claims link there. Markup and CSS are generated from `site/proofs/index.html`: `python -I redesign/site/make_proof_embed.py`, then `make_index.py`; the standalone `site/proofs/index.html` still works |
+| Plan the build, tests and flights | process [`team/G1/PROCESS-PLAN.md`](team/G1/PROCESS-PLAN.md), foam [`team/G2/COMPOSITES-FOAM-PLAN.md`](team/G2/COMPOSITES-FOAM-PLAN.md), prints [`team/G3/PRINT-LIST.md`](team/G3/PRINT-LIST.md), steps [`team/G4/BUILD-STEPS.md`](team/G4/BUILD-STEPS.md), schedule [`team/I2/SCHEDULE.md`](team/I2/SCHEDULE.md), flight tests [`team/H2/FLIGHT-TEST-PLAN.md`](team/H2/FLIGHT-TEST-PLAN.md), flight card and compliance [`team/H3/`](team/H3/FLIGHT-CARD.md), range test [`team/F5/RANGE-TEST.md`](team/F5/RANGE-TEST.md) |
 | Read the requirements and their status | [`team/A2/REQUIREMENTS.md`](team/A2/REQUIREMENTS.md), [`team/A2/VERIFICATION-MATRIX.md`](team/A2/VERIFICATION-MATRIX.md) |
 | See the design system | open `design-system/components.html` |
 
