@@ -177,6 +177,8 @@ def build(ctx):
         pb.box((bx1 - 0.0065, yc - 0.0022, bz1), (bx1 - 0.0005, yc + 0.0022, bz1 + 0.0005), name=nm)
     pb.box((bx0 + 0.0005, -0.036, bz1), (bx0 + 0.0105, -0.032, bz1 + 0.004),
            name='board-link 2 x 5 header + ribbon plug (W-PMOD)')
+    for ax, a0, a1, loop in lap_joints(ctx, 'PWR-003'):          # D-89: solder fillets over the conductor tips
+        pb.prism(ax, a0, [loop], a1 - a0, name='lap solder joint')
     ctx.part('PWR-002').box(*G['as_air'], name='AS150U aircraft half')
 
     # PWR-004 bus board on the PDB plate
@@ -184,6 +186,8 @@ def build(ctx):
     bus.box(*G['bus'], name='FR4 bus carrier')
     for i, b in enumerate(G['bars']):
         bus.box(*b, name='bus bar %s' % ('+' if i == 0 else '-'))
+    for ax, a0, a1, loop in lap_joints(ctx, 'PWR-004'):          # D-89: solder fillets over the conductor tips
+        bus.prism(ax, a0, [loop], a1 - a0, name='lap solder joint')
 
     # PWR-008 ESC capacitors on the half-fins beside the ESC power end (UR built, quad mirrors)
     cl, cd = L['cap_m']
@@ -237,3 +241,16 @@ def _esc_pad(ctx):
         e = json.load(f)['fin_detail']['esc_pad']
     x0, ln, h, zc = (e[k]['value'] for k in ('x0_m', 'len_m', 'h_m', 'z_m'))
     return {'x1': x0 + ln, 'z0': zc - h / 2, 'z1': zc + h / 2}
+
+
+def lap_joints(ctx, part_id):
+    """D-89: the solder fillets at the lap-soldered conductor ends on this part, as the harness router wrote them
+    (subsystems/harness/params.json cad.lap_joints, team/F2/harness.py lap_joints): [(axis, a0, a1, loop)]."""
+    import json as _json
+    import os as _os
+    p = _os.path.join(_os.path.dirname(_os.path.abspath(ctx.dir)), 'harness', 'params.json')
+    if not _os.path.exists(p):
+        return []
+    with open(p, encoding='utf-8') as f:
+        tab = _json.load(f).get('harness', {}).get('cad', {}).get('lap_joints', {}).get('value', [])
+    return [(j['axis'], j['a'][0], j['a'][1], [tuple(q) for q in j['loop']]) for j in tab if j['part'] == part_id]

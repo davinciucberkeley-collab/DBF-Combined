@@ -1,19 +1,19 @@
 {
  "money": {
-  "spend_pess_allin": 2057.82,
-  "spend_base_allin": 1972.6,
-  "goods_base": 1309.32,
-  "goods_pess": 1334.91,
-  "tax_base": 134.21,
-  "tax_pess": 136.83,
-  "spend_base": 1568.53,
-  "spend_pess": 1653.74,
-  "early_goods_tax": 969.54
+  "spend_pess_allin": 2062.77,
+  "spend_base_allin": 1977.55,
+  "goods_base": 1313.81,
+  "goods_pess": 1339.4,
+  "tax_base": 134.67,
+  "tax_pess": 137.29,
+  "spend_base": 1573.48,
+  "spend_pess": 1658.69,
+  "early_goods_tax": 974.49
  },
- "reserve_pess": 346.26,
- "reserve_base": 431.47,
+ "reserve_pess": 341.31,
+ "reserve_base": 426.52,
  "bridge": {
-  "value": 1653.74,
+  "value": 1658.69,
   "deltas": {
    "P01 Ovonic 120C EC5 pair, pessimistic EUR 113.30 x 1.16 = 131.43 replaces 130C XT60 list 119.88 (D-64)": 11.550000000000011,
    "M01 Savox SH-0255MG+ 2 x 41.99 replaces ES3005HV 2 x 19.99 (CR-D6-02)": 44.00000000000001,
@@ -24,6 +24,7 @@
    "C06 PA66 socket-head set 7.00; C03 CF rod 2.5 mm x 2 at 3.50 replaces 2 mm x 1 at 3.00": 11.0,
    "D07 brass tube 7/32 in 3.00 (CR-D5-27); D06 straps 6 to 7": 4.0,
    "G13 two strain gauges (CR-C4-38)": 9.0,
+   "H07 board-link ribbon + headers 3.00 (HRN-114), H08 pitot hose-barb couplers 1.49 (AVN-005) (D-89)": 4.49,
    "D-57 lever 1: G07 25.99 + G08 20.00 + G09 25.00 + G10 15.00 borrowed (gate X10)": -85.99,
    "D-57 lever 2: G11 41.73 + H05 15.00 borrowed (gate X11)": -56.73,
    "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0,
@@ -45,17 +46,19 @@
   "West3D": 45.98,
   "Amazon / DigiKey": 41.0,
   "Amazon / hobby shop": 27.0,
+  "DigiKey / Amazon": 3.0,
+  "Bambu Lab store": 1.49,
   "GetFPV": 24.49,
   "Pyrodrone": 19.98,
   "Harbor Freight": 19.99
  },
  "by_order": {
-  "EARLY": 879.4,
+  "EARLY": 883.89,
   "DEC": 349.96,
   "LOCAL": 79.96
  },
- "reserve_pess_allin": -57.82,
- "reserve_base_allin": 27.4,
+ "reserve_pess_allin": -62.77,
+ "reserve_base_allin": 22.45,
  "gated": {
   "X01": 33.08,
   "X02": 46.29,

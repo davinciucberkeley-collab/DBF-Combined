@@ -1,15 +1,21 @@
-# Lift + Cruise VTOL — student project
+# K09-L quad tailsitter VTOL — student project
 
-Hybrid lift + cruise VTOL: vertical lift rotors for takeoff/landing, a pusher
-prop and fixed wing for cruise, lift rotors stopped in cruise.
+The chosen design (team decision 2026-11-13, see `redesign/CONFIGURATION.md`)
+is **K09-L**: a quad tailsitter. A flat flying wing about 1.15 × 0.30 m with
+two fins, four fixed motors in an X; it takes off standing on its fin tips as
+a quadcopter, pitches 90° to cruise on the same motors with two elevons, and
+pitches back to land. No pusher, no tilt, no separate lift rotors. Mass gate
+2.6 kg. The project began as a hybrid lift + cruise concept (8–15 kg, pusher);
+the configuration study replaced it, and the older root folders still describe
+that concept.
 
 ## Hard constraints
 - $2,000 total physical budget (hardware, spares, batteries, test gear,
-  shipping, tax).
+  shipping, tax). The Jacobs Hall Makers Pass is paid outside this budget.
 - Built and flight-tested by the end of April 2027.
-- Portable: a team of 4 moves it routinely. Target 8–15 kg MTOW, 2–3 m span,
-  hard cap under 25 kg (55 lb). Breaks down to fit in a standard car; two
-  people can carry it assembled.
+- Portable: a team of 4 moves it routinely; hard cap under 25 kg (55 lb).
+  K09-L travels in one piece in a ~1.25 × 0.55 × 0.45 m box that fits a
+  standard car.
 
 ## Where things are
 - README.md is the front door: directory map, status, how to view the pages.

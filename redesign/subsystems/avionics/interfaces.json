@@ -43,9 +43,9 @@
    "mass_g": 4.6,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.045,
-    -0.0465,
-    0.0254
+    -0.0448,
+    -0.0464,
+    0.0259
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -59,9 +59,9 @@
    "mass_g": 4.51,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.0663,
-    -0.0464,
-    0.0312
+    -0.0711,
+    -0.0463,
+    0.0319
    ],
    "make_or_buy": "buy",
    "electrical": "sink",

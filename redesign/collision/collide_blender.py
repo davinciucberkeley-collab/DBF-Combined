@@ -168,6 +168,11 @@ def make_wires(wires, col):
             b.cutters, b.wire = [], True
             b.r = dia * 500.0                         # strand radius, mm
             b.ends = [Vector(line[0]) * 1000.0, Vector(line[-1]) * 1000.0]
+            b.outs = []                               # D-89: unit direction out of the strand at each end
+            for P in (line, line[::-1]):
+                e = Vector(P[0])
+                q = next((Vector(x) for x in P[1:] if (Vector(x) - e).length > 0.0005), Vector(P[-1]))
+                b.outs.append((e - q).normalized())
             b.terms = {t for t in w['ends'] if t}
             b.inline = set(w.get('inline', []))
             out.append(b)
@@ -253,7 +258,7 @@ TERMINATION = re.compile(r'pad|joint|plug|socket|header|cup|contact|sleeve|gromm
 #   part's plain envelope ("FC board envelope", "servo case") is NOT one: a lead ending there connects to a box.
 
 
-def end_seats(wire_bodies, solids, require_term=False):
+def end_seats(wire_bodies, solids, require_term=False, inside_fn=None):
     """D-86: every drawn strand end must be seated: inside, or within END_SEAT_MM of, a body of one of the wire's
     terminal parts or of a connector fitted in-line on it. A lead that stops in mid-air (an undrawn connector) fails.
     D-89 (require_term, the CAD gate, where bodies keep their names): only a TERMINATION body counts, so a lead that
@@ -283,6 +288,26 @@ def end_seats(wire_bodies, solids, require_term=False):
             if best > w.r + END_SEAT_MM:             # the conductor's surface on the pad: axis one radius off
                 bad.append({'wire': w.pid, 'strand': w.idx, 'end_mm': [round(c, 1) for c in e],
                             'gap_mm': None if best > 1e8 else round(best, 2), 'hosts': sorted(hosts)})
+                continue
+            # D-89: no open end. The strand's end face (centre + 8 points at 0.85 r, 0.05 mm behind the tip) must lie
+            # inside a termination body (CAD gate) / its parts' solids (GLB gate): a conductor lying ON a pad with its
+            # cut face in the open fails; it needs its solder fillet, plug, sleeve or housing round the tip
+            n = w.outs[w.ends.index(e)] if hasattr(w, 'outs') else None
+            if n is None:
+                continue
+            u = n.orthogonal().normalized()
+            v = n.cross(u)
+            c0 = e - n * 0.05
+            pts = [c0] + [c0 + (u * math.cos(k * math.pi / 4) + v * math.sin(k * math.pi / 4)) * w.r * 0.85
+                          for k in range(8)]
+            near = [b for pid in hosts for b in byp.get(pid, [])
+                    if all(b.lo[i] - 1 <= e[i] <= b.hi[i] + 1 for i in range(3))]
+            ins = inside_fn or (lambda p_, b_: depth_inside(p_, b_) > 0)   # GLB gate: 3-of-5 ray parity (robust
+            #                                                       at the crease where a fillet is fused to its bar)
+            open_pts = [p for p in pts if not any(ins(p, b) for b in near)]
+            if open_pts:
+                bad.append({'wire': w.pid, 'strand': w.idx, 'end_mm': [round(c, 1) for c in e], 'gap_mm': 0.0,
+                            'hosts': sorted(hosts), 'open_face': '%d of 9 points of the end face uncovered' % len(open_pts)})
     return bad
 
 

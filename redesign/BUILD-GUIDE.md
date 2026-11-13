@@ -29,7 +29,7 @@ term, so take them all in November and December ([BR-31](review/MANUFACTURING.md
 **Tools Jacobs does not list:** a hot-wire foam cutter and an enclosed printer for ASA. Buy the hot-wire gear
 (G11, H05) and find an enclosed printer early ([BR-29, BR-30](review/MANUFACTURING.md#4-findings)).
 **Bring or buy:** 1 m steel rule, calipers, depth gauge, inclinometer, preset torque screwdriver (0.1–1 N·m),
-0.1 g and 1 g scales, Z-bend pliers, pin vise, 2.5 / 3.4 / 8 mm drills, 3 mm and 22 mm ball bits, sharpened
+0.1 g and 1 g scales, Z-bend pliers, pin vise, 1.85 / 2.5 / 3.4 / 8 mm drills (1.85: servo-arm hole for the 2-56 Z-bend), 3 mm and 22 mm ball bits, sharpened
 8 mm brass tube, luggage scale, servo tester, prop balancer.
 
 **Consumables** (⚠ mostly missing from the BOM, [BR-32](review/MANUFACTURING.md#4-findings)): laminating epoxy by

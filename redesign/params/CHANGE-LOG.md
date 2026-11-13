@@ -666,3 +666,21 @@ UNVERIFIED), and the FC underside board-link header. **F1**, **D1**: as in D-88.
 Media regenerated from this design: GLB and viewer data, STLs, renders and thumbnails, GA drawing, flight
 animation, site build guide and proof-chain pages, page snapshots, inspection pictures. The build animation is
 re-rendered with the new assembly sequence (separate entry).
+
+### D-89 follow-up, 2026-11-13: no open conductor ends; pitot lines and pushrods seated; BOM matched
+
+The team found conductors lying on a pad or bus bar with their cut ends in the open. The D-89 rule accepted an end
+within r + 0.5 mm of a termination body, and those ends met it.
+
+| Id | Decision | Keys changed | Why (numbers) |
+|---|---|---|---|
+| **D-89a** | **End faces enclosed; lap solder fillets; pitot lines and pushrods seated; BOM lines for what the CAD now draws** | `collision/collide_blender.py` (`end_seats`: end-face test, `inside_fn`), `collision/collide_glb_blender.py` (3-of-5 ray parity for end faces), `team/F2/harness.py` (`LAP_ENDS`, `lap_joints`, `LAP_WALL` 0.3 mm, `LAP_TOP` 0.18 mm; W-MAIN-1 last 6 mm flat on its pads; W-MAIN-2 lands 1.5 mm onto the bars, tip x −0.0370; pair and jumper conductors 0.2 mm up in their fillets; phase leads 1.4 mm into the motor's lead exit), `subsystems/power/fusion/power.py`, `subsystems/avionics/fusion/avionics.py` (`lap_joints`), `subsystems/avionics/params.json` (`aspd_port_m` [0.006, 0.005, 0.005]), `subsystems/mechanisms/fusion/mechanisms.py`, `team/I1/build_bom.py` (H07, H08), `BUILD-GUIDE.md` (1.85 mm drill) | (a) **Gate**: each strand's end face (its centre and 8 points at 0.85 r, 0.05 mm behind the tip) must lie inside a termination body. The CAD gate uses named bodies; the GLB gate uses the parts' solids with 3-of-5 ray parity. Found: 6 open faces (the output jumper on the bars, the four motor phase leads), 2 folds, then the lap ends. (b) **Lap solder fillets**: 18 D-shaped fillets wrap each lap-soldered conductor tip and sit 0.3 mm into their own pad or bar (8 ESC pair conductors and 2 output-jumper conductors on the bars, 4 on the PDB pads, 4 on the RX pads). They are drawn by the pad's own part, from `cad.lap_joints`; the solder mass is in the harness fittings. Size EST. (c) **Pitot lines**: each line's hollow end is pushed over its Ø2.5 mm port nipple (5 mm, EST) and 5 mm over its probe-root barb, and the run is on the barb's line. Before, it ended flat on the sensor box and 0.35 mm off the barb. Port and barb spacing went from 4 to 5 mm because the two 4.5 mm lines interpenetrated by 0.5 mm. The spacing is UNVERIFIED and must be measured on the bought parts. (d) **Pushrods**: the rod is threaded 3 mm into the clevis shank and ends in its Z-bend leg through the arm hole. The arm hole is 1.85 mm, as BUILD-GUIDE stage 7 step 3 drills it (the CAD had 1.6 mm, under the 1.83 mm rod). (e) **BOM matched to the CAD**: H07 is the board-link ribbon and headers (HRN-114, $3.00 EST from F2 parts.csv; it was in no BOM line). H08 is the pitot hose-barb couplers, 2.5 mm, 5-pack, $1.49 (Bambu Lab store, search snippet, 2026-11-13). Pessimistic spend $1,653.74 → $1,658.69. The 1.85 mm drill is added to the "bring or buy" tools. |
+
+Result: `collision/collide.py --glb` PASS (1103 bodies in 212 parts, 3 poses): CAD gate 0 overlaps, 0 ends off a
+termination, 0 folds; GLB gate 0 overlaps, 0 unseated ends, 0 bad entries. `fusion/check.py`, `merge_check.py` PASS.
+
+**Configuration confirmed (2026-11-13, Dillon Alcouffe):** the team keeps K09-L (quad tailsitter, 2.6 kg gate).
+The root `CLAUDE.md` now describes it, and `DECISIONS.md` D3's 8–15 kg target is superseded. The Jacobs Hall Makers
+Pass is paid outside the $2,000 budget. `review/NASA-CR-132423-COMPLIANCE.md` checks the design against NASA
+CR-132423 (62 requirements: 30 comply on paper, 22 gaps reducing to 14, 10 N/A); its changes are applied with the
+performance stream.

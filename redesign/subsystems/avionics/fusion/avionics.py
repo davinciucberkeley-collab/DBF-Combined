@@ -158,6 +158,7 @@ def layout(get, A, L, G):
     g['probe_r'] = a('probe_od_m') / 2
     bd, bln = a('barb_m')
     dy = a('aspd_port_m')[1]
+    g['port_h'] = a('aspd_port_m')[2] if len(a('aspd_port_m')) > 2 else 0.0
     g['barbs'] = [((sx1, ya + s * dy / 2, za), bd / 2, bln) for s in (-1, 1)]
     g['coupler_x'] = sx1 + bln                             # couplers sit on the barb ends
     g['tip_on_axis'] = (abs(tip[1] - ya), abs(tip[2] - za))
@@ -169,8 +170,10 @@ def layout(get, A, L, G):
     for s in (-1, 1):
         yy = -cy + s * dy / 2
         g['tubes'].append({'riser': ((pxp, yy, g['aspd_hi'][2]), za - g['aspd_hi'][2]),
-                           'run': ((pxp, yy, za), g['coupler_x'] - pxp), 'r': tod / 2})
+                           'run': ((pxp, ya + s * dy / 2, za), g['coupler_x'] - pxp), 'r': tod / 2})
+        #   D-89: the run on its barb's line (probe axis y), so the line's end slides straight over the barb
     g['tube_path'] = (za - g['aspd_hi'][2]) + abs(g['coupler_x'] - pxp)
+    g['tube_id'] = a('tube_m')[1]
 
     # RX crosswise behind the aft tie post, under antenna tube A
     rl, rw, rh = a('rx_m')
@@ -256,13 +259,21 @@ def build(ctx):
 
     # ---------------------------------------------------------------- AVN-004 airspeed board + its two silicone lines
     asp = ctx.part('AVN-004')
-    asp.box(g['aspd_lo'], g['aspd_hi'], name='MS4525DO board envelope')
+    # D-89: the body below the two port nipples; each silicone line is pushed over its nipple (hollow end) and over
+    # its probe-root barb (hollow end, 5 mm), so neither line ends flat against a box or a barb
+    ph, rid = g['port_h'], g['tube_id'] / 2 + 0.00002
+    zb = g['aspd_hi'][2] - ph
+    asp.box(g['aspd_lo'], (g['aspd_hi'][0], g['aspd_hi'][1], zb), name='MS4525DO board envelope')
     asp.box(*g['gh']['ASPD']['plug'], name='JST-GH 4 plug, mated (I2C)')        # D-89: header inside the envelope
     for tb in g['tubes']:
         (p0, L0), r = tb['riser'], tb['r']
-        asp.cylinder('Z', p0, L0, r, name='silicone line riser')
+        x, y, _z = p0
+        asp.cylinder('Z', (x, y, zb), ph, g['tube_id'] / 2, name='port nipple')
+        asp.tube('Z', (x, y, zb + 0.0005), ph - 0.001, r, rid, name='silicone line end on the nipple')
+        asp.cylinder('Z', (x, y, zb + ph - 0.0005), L0 + 0.0005, r, name='silicone line riser')
         p1, L1 = tb['run']
         asp.cylinder('X', p1, L1, r, name='silicone line run')
+        asp.tube('X', (p1[0] + L1, p1[1], p1[2]), -0.005, r, rid, name='silicone line end on the barb')
 
     # ---------------------------------------------------------------- AVN-005 pitot boom: keyed sleeve + shoulder + probe + root barbs
     bm = ctx.part('AVN-005')
@@ -282,6 +293,8 @@ def build(ctx):
     rx.box(g['rx_lo'], g['rx_hi'], name='RP3 V2 envelope')
     for i, (lo, hi) in enumerate(g['rx_pads']):             # D-89: the four solder pads with their joints
         rx.box(lo, hi, name='RX %s solder pad + joint' % ('5V', 'GND', 'TX', 'RX')[i])
+    for ax, a0, a1, loop in lap_joints(ctx, 'AVN-003'):           # D-89: solder fillets over the conductor tips
+        rx.prism(ax, a0, [loop], a1 - a0, name='lap solder joint')
 
     # ---------------------------------------------------------------- AVN-002 GPS + compass on the 45 deg pad
     gps = ctx.part('AVN-002')
@@ -298,3 +311,16 @@ def build(ctx):
     ctx.contact('E-AVN-07', 'gel cubes stuck to the scuffed FC plate')
     ctx.contact('E-AVN-08', 'microSD in the FC card slot')
     ctx.contact('E-AVN-10', 'FC heat path: gel cubes (insulating) and vented pod air; board on its pads above the plate')
+
+
+def lap_joints(ctx, part_id):
+    """D-89: the solder fillets at the lap-soldered conductor ends on this part, as the harness router wrote them
+    (subsystems/harness/params.json cad.lap_joints, team/F2/harness.py lap_joints): [(axis, a0, a1, loop)]."""
+    import json as _json
+    import os as _os
+    p = _os.path.join(_os.path.dirname(_os.path.abspath(ctx.dir)), 'harness', 'params.json')
+    if not _os.path.exists(p):
+        return []
+    with open(p, encoding='utf-8') as f:
+        tab = _json.load(f).get('harness', {}).get('cad', {}).get('lap_joints', {}).get('value', [])
+    return [(j['axis'], j['a'][0], j['a'][1], [tuple(q) for q in j['loop']]) for j in tab if j['part'] == part_id]

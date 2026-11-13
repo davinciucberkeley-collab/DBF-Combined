@@ -27,7 +27,7 @@
     "note": "RMRC digital airspeed (MS4525DO) board, ports up; sits between D2's two tie posts (inner faces 20 mm apart: a locating fit, CR-F3-12 asks +1 mm)"},
   "aspd_mass_g": {"value": 3.5, "unit": "g", "source": "SRC-F3-RMRC-ASPD", "status": "PROPOSED"},
   "aspd_post_dx_m": {"value": [0.008, 0.032], "unit": "m", "source": "subsystems/pod/fusion/pod.py (tie posts at avn_plate_x_m[0] + 8 / + 32 mm; literals there, CR-F3-12)", "status": "PROPOSED"},
-  "aspd_port_m": {"value": [0.006, 0.004], "unit": "m", "source": "F3 choice (measure on arrival)", "status": "UNVERIFIED", "note": "port centres: x from the board front, y spacing (total, static)"},
+  "aspd_port_m": {"value": [0.006, 0.005, 0.005], "unit": "m", "source": "F3 choice (measure on arrival); D-89: spacing 5 mm (was 4: the two 4.5 mm lines interpenetrated 0.5 mm); nipple height EST", "status": "UNVERIFIED", "note": "port centres: x from the board front, y spacing (total, static), port nipple height above the sensor body (inside the 13 mm envelope height); nipple diameter = tube ID"},
   "tube_m": {"value": [0.0045, 0.0025], "unit": "m", "source": "RMRC / Pixhawk-class silicone pitot tubing, OD x ID", "status": "UNVERIFIED"},
   "tube_cut_m": {"value": 0.040, "unit": "m", "source": "F3 choice", "status": "PROPOSED", "note": "each line, sensor port to boom coupler, with a 10 mm service loop; limit 0.060"},
   "silicone_kgm3": {"value": 1150.0, "unit": "kg/m3", "source": "EST (silicone rubber)", "status": "UNVERIFIED"},

@@ -791,7 +791,7 @@
    }
   },
   "mass_total_g": {
-   "value": 71.28,
+   "value": 71.4,
    "unit": "g",
    "source": "subsystems/mechanisms/make_mechanisms.py",
    "status": "UNVERIFIED",

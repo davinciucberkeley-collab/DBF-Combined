@@ -225,7 +225,8 @@ def build_arm(part, G):
     xs, zs, w = G['xs'], G['zs'], G['aw']
     loop = [(xs - w / 2, zs + w / 2), (xs + w / 2, zs + w / 2), (xs + w / 2 * 0.6, zs - G['rs'] - w / 2 * 0.6),
             (xs - w / 2 * 0.6, zs - G['rs'] - w / 2 * 0.6)]
-    hole = circle(xs, zs - G['rs'], 0.0008, 12)
+    hole = circle(xs, zs - G['rs'], 0.000925, 24)         # D-89: 1.85 mm, as BUILD-GUIDE stage 7 step 3 drills it for
+    #                                                        the 1.83 mm rod's Z-bend (CAD had 1.6)
     part.prism('Y', G['ya'] - G['at'] / 2, [loop, hole], G['at'], name='servo arm')
 
 
@@ -237,7 +238,11 @@ def build_pushrod(part, G):
     ux, uz = ux / n, uz / n
     xc, zc = x1 + ux * cl_len, z1 + uz * cl_len                         # clevis end toward the servo
     y = G['ya']
-    part.loft('X', [(x0, circle(y, z0, G['pr_r'], 10)), (xc, circle(y, zc, G['pr_r'], 10))], name='pushrod wire')
+    # D-89: no open rod ends. The rod runs 3 mm into the clevis shank (threaded in), and at the servo arm it ends in
+    # its Z-bend leg through the arm hole, 1 mm proud each side (the wire's own bent end, as built)
+    xe, ze = xc - ux * 0.003, zc - uz * 0.003
+    part.loft('X', [(x0, circle(y, z0, G['pr_r'], 10)), (xe, circle(y, ze, G['pr_r'], 10))], name='pushrod wire')
+    part.cylinder('Y', (x0, y - G['at'] / 2 - 0.001, z0), G['at'] + 0.002, G['pr_r'], name='pushrod Z-bend leg')
     part.loft('X', [(x1 - 0.0015, rect(y - cl_w / 2, z1 - cl_h / 2, y + cl_w / 2, z1 + cl_h / 2)),
                     (xc, rect(y - cl_w / 4, zc - cl_h / 4, y + cl_w / 4, zc + cl_h / 4))], name='clevis')
 

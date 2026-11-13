@@ -904,7 +904,7 @@ def build(g):
         # two conductors lie 3.5 mm on the bar tops, one per bar ("b": 6 mm apart), rise in 3.5 mm to the pair's pass
         # height and run aft over the stations behind it; the rounded centre line keeps every bend >= the conductor
         xa = BAR_X0 - 0.008 * lay[st]
-        zc = BAR_TOP + 0.00135
+        zc = BAR_TOP + 0.0015                                             # D-89: 0.2 mm up in its solder fillet
         zp = zc + 0.00275 * lay[st]
         pod = [[xa, BAR_Y, zc, "J", "b"], [xa + 0.0035, BAR_Y, zc, "P", "b"]]
         pod += [[xa + 0.007, BAR_Y, zp, "P"]] if lay[st] else []               # the aft-most pair does not climb
@@ -963,7 +963,7 @@ def build(g):
              [0.0615, sy * 0.3345, sz * 0.1557, "T"],                       # phase lug tie (lug face y 0.3308)
              [0.0590, sy * 0.3375, sz * 0.1785, "T"],                       # tape on the cheek face
              [0.0330, sy * 0.3375, sz * g["zm"], "T"],
-             [0.0259, sy * 0.3375, sz * g["zm"], "E"]]
+             [0.0245, sy * 0.3375, sz * g["zm"], "E"]]      # D-89: 1.4 mm into the motor's phase-lead exit
         wires.append(["W-PH-" + st, eid, 16, 3, 1, 0.030, 0.020, 16.15, 0.06, r])
 
     def pigtail(out_n):
@@ -1217,8 +1217,8 @@ def build(g):
     wires.append(["W-PACK", "E-HRN-10", 10, 2, 0, 0.0, 0.0, 0.0, 0.0, r])
     # D-88: out of the AS150U aircraft half's cup end square (x 0.002, 0.3 mm in) and 5 mm straight, then up onto the
     # board's input pads (top, z 0.0486) and along them
-    r = [[0.0023, -0.0403, 0.046, "P"], [-0.003, -0.0403, 0.046, "P"], [-0.009, -0.0403, 0.0525, "P"],
-         [-0.0145, -0.0403, 0.0514, "E"]]
+    r = [[0.0023, -0.0403, 0.046, "P"], [-0.003, -0.0403, 0.046, "P"], [-0.0085, -0.0403, 0.0514, "P"],
+         [-0.0145, -0.0403, 0.0514, "E"]]      # D-89: one 44 deg rise onto the pads, the last 6 mm flat on them
     wires.append(["W-MAIN-1", "E-HRN-11", 10, 2, 0, 0.0, 0.015, 0.0, 0.0, r])
     # D-89: drawn as its two 10 AWG conductors side by side (y -0.04272 / -0.03788, 4.84 mm apart) from the cups
     # through the widened cup slot onto the board's two input pads (power.py PWR-003 'input pad', joint top z
@@ -1234,8 +1234,11 @@ def build(g):
     # pair landings (x -0.0285 ... -0.0075). Centre line = the + conductor (mass, length)
     # D-87: from the output pads ON the board top, and onto the bars' forward ends through a 3.5 mm arc in plan
     # (no turn tighter than the conductor; the stations start at x -0.0315)
-    zm2, zbar = 0.0295, BAR_TOP + 0.0024
-    arc = lambda yc, s: [[-0.0350 - 0.0035 * math.sin(math.radians(a)), yc - s * 0.0035 * math.cos(math.radians(a)),
+    zm2, zbar = 0.0295, BAR_TOP + 0.0026                                # D-89: 0.2 mm up in its solder fillet
+    # (D-89: the arc's last 30 deg enters a 1.2 mm solder fillet on the bar end, within 25 deg of square)
+    # D-89: arc 1.5 mm further aft, so the 4.8 mm conductor lands 1.5 mm ON the bar (tip x -0.0370), not on its
+    # front edge, and neither it nor its solder fillet reaches the RX ahead of the bars (x <= -0.0405)
+    arc = lambda yc, s: [[-0.0335 - 0.0035 * math.sin(math.radians(a)), yc - s * 0.0035 * math.cos(math.radians(a)),
                           zm2 - (zm2 - zbar) * a / 90.0] for a in (0, 30, 60, 90)]
     # D-89: the first two points lie on the output pads (joint top z 0.0491)
     mp = [[-0.0145, -0.0545, 0.0514], [-0.0085, -0.0545, 0.0514], [-0.003, -0.0532, 0.044], [-0.003, -0.0532, zm2]]
@@ -1244,7 +1247,7 @@ def build(g):
           [-0.0030, -0.0430, 0.0405], [-0.0030, -0.0396, 0.0370], [-0.0030, -0.0396, zm2]]   # under main 1, over
     #                                                                                      the pairs (top 0.0364)
     mn += arc(-0.0431, -1)                                              # ... and on the - bar
-    r = [[-0.0145, -0.0545, 0.0484, "P"]] + [p + ["P"] for p in mp[1:-1]] + [[-0.0380, -0.04985, BAR_TOP - 0.0005, "E"]]
+    r = [[-0.0145, -0.0545, 0.0484, "P"]] + [p + ["P"] for p in mp[1:-1]] + [[-0.0370, -0.04985, BAR_TOP - 0.0005, "E"]]
     #                                                                     centre line on the pad and on the bar
     wires.append(["W-MAIN-2", "E-HRN-12", 10, 2, 0, 0.0, 0.020, 0.0, 0.0, r])
     STRAND_FIX["W-MAIN-2"] = lambda s, mp=mp, mn=mn: [[0.0048, mp], [0.0048, mn]]
@@ -1695,6 +1698,66 @@ def draw_strands(row, od_table, want_lat=False):
     return fix(out)
 
 
+# D-89 follow-up: lap-soldered ends (a conductor laid on a pad or bus bar) get a solder fillet that wraps the tip, so
+# no drawn conductor shows a bare cut face: [row id, which end, part the joint is drawn on, flat (pad / bar top z)]
+LAP_ENDS = ([["W-PWR-" + st, 0, "PWR-004", "bar"] for st in STATIONS] +
+            [["W-MAIN-2", 0, "PWR-003", "pad"], ["W-MAIN-2", -1, "PWR-004", "bar", 0.0008], ["W-MAIN-1", -1, "PWR-003", "pad"],
+             ["W-RX", -1, "AVN-003", "rx"]])
+LAP_FLAT = {"bar": 0.0255, "pad": 0.0491, "rx": 0.0261}     # bar top (BAR_TOP), PDB pad joint top, RX pad joint top
+LAP_LEN = {10: 0.0040, 16: 0.0018, 28: 0.0020}              # fillet length along the conductor, EST (16 AWG
+#                                                            pairs rise 1.5 mm after the landing: the fillet ends first)
+LAP_WALL = 0.0003                                            # solder at the conductor's sides, EST
+LAP_TOP = 0.00018                                            # ... and over its top: the pairs pass 0.15 mm over the landings aft
+#                                                            (0.03 mm contact, inside the gate's 0.05 mm)
+SOLDER_RHO = 8.4                                             # g/cm3, Sn63Pb37, EST
+
+
+def lap_joints(wires, od_table):
+    """One D-shaped solder fillet per lap-soldered conductor end: along the conductor's (axis-aligned) end direction,
+    from LAP_LEN behind the tip to 0.4 mm past it; section = circle r + LAP_WALL round the conductor, cut flat on the
+    pad / bar top (it bonds there). Drawn by the part's own module (power.py, avionics.py) from cad.lap_joints."""
+    rows = {w[0]: w for w in wires}
+    out = []
+    for wid, which, part, kind, *ln in LAP_ENDS:
+        row = rows[wid]
+        for k, (d, line) in enumerate(draw_strands(row, od_table)):
+            if wid == "W-RX" and k == 0:
+                continue                                    # the jacket ends in the breakout sleeve
+            P = line if which == 0 else line[::-1]
+            tip = P[0]
+            prev = next(q for q in P[1:] if math.dist(q, tip) > 0.0008)
+            t = [tip[c] - prev[c] for c in range(3)]
+            ax = max(range(2), key=lambda c: abs(t[c]))     # horizontal axis the lap lies along
+            sgn = 1 if t[ax] > 0 else -1
+            u = 1 - ax                                      # the other horizontal coordinate
+            L_ = ln[0] if ln else LAP_LEN.get(int(row[2]), 0.003)
+            tilt0 = math.acos(min(1.0, abs(t[ax]) / math.sqrt(sum(c * c for c in t))))
+            r = d / 2 + LAP_WALL + L_ * math.sin(tilt0) + (0.00025 if tilt0 > 0.05 else 0.0)  # slanted tip: room
+            fz = LAP_FLAT[kind] - 0.0003                    # sunk 0.3 mm into its own pad / bar: the conductor's
+            #                                                 whole section enters the fillet's end face
+            uc, vc = tip[u], tip[2]
+            h = max(-r, min(r, fz - vc))                    # flat level relative to the centre
+            a0 = math.asin(h / r)
+            n = 16
+            # arc over the top, from the flat's right end round to its left end (the chord closes the loop)
+            loop = [[uc + r * math.cos(a0 + (math.pi - 2 * a0) * i / n),
+                     vc + r * math.sin(a0 + (math.pi - 2 * a0) * i / n)] for i in range(n + 1)]
+            ztop = vc + d / 2 + LAP_TOP                    # flat top: thin solder over the conductor
+            loop = [[q[0], min(q[1], ztop)] for q in loop]
+            if len(ln) > 1:                                # clipped short of a neighbour (the RX ahead of the bars)
+                loop = [[max(q[0], ln[1]), q[1]] for q in loop]
+            loop = [q for i, q in enumerate(loop) if i == 0 or abs(q[0] - loop[i - 1][0]) + abs(q[1] - loop[i - 1][1]) > 1e-7]
+            a_tip = tip[ax]
+            tilt = math.acos(min(1.0, abs(t[ax]) / math.sqrt(sum(c * c for c in t))))
+            over = 0.0004 + d / 2 * math.sin(tilt) + 0.0002 # past the tip: covers a tip that meets the pad at a slant
+            a_lo, a_hi = sorted((a_tip + sgn * over, a_tip - sgn * (ln[0] if ln else LAP_LEN.get(int(row[2]), 0.003))))
+            area = 0.5 * sum(loop[i][0] * loop[i - 1][1] - loop[i - 1][0] * loop[i][1] for i in range(len(loop)))
+            vol = max(0.0, abs(area) - math.pi * (d / 2) ** 2) * (a_hi - a_lo)
+            out.append({"part": part, "wire": row[1], "row": wid, "axis": "XY"[ax], "a": [round(a_lo, 6), round(a_hi, 6)],
+                        "loop": [[round(q[0], 6), round(q[1], 6)] for q in loop], "mass_g": round(vol * SOLDER_RHO * 1e6, 4)})
+    return out
+
+
 def _simplify(pts, eps):
     """Douglas-Peucker on a 3-D polyline: keeps every point that deviates more than eps from its chord."""
     if len(pts) < 3:
@@ -1919,6 +1982,12 @@ def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
                       "leg_mass_g": {"value": {k: [round(m, 2) for m in v] for k, v in bod["leg_mass_g"].items()},
                                      "unit": "g", "source": "team/F2/harness.py",
                                      "note": "harness mass assigned to each leg (right side for side_R)"},
+                      "lap_joints": {"value": lap_joints(wires, od_table), "unit": "m",
+                                     "source": "team/F2/harness.py lap_joints() (D-89)",
+                                     "note": "solder fillets at the lap-soldered conductor ends, drawn on 'part' by its "
+                                             "own module: prism along axis from a[0] to a[1], section loop (the other "
+                                             "horizontal coordinate, z); size EST; mass_g for reference (the solder is "
+                                             "in the harness fittings)"},
                       "wire_strands": {"value": {w[0]: draw_strands(w, od_table) for w in wires}, "unit": "m",
                                        "source": "team/F2/harness.py",
                                        "note": "what the CAD draws per wire row: [[diameter, polyline], ...]; 16 AWG "

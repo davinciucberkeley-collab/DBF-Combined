@@ -232,7 +232,7 @@ def main():
     print('collide-glb: %d part bodies, %d wire strands' % (len(solids), len(wires)))
     hits = cb.check(cb.sweep_pairs(solids + wires), job['report_mm'])
     rep = {'bodies': len(solids), 'wire_strands': len(wires), 'hits': hits,
-           'wire_ends': cb.end_seats(wires, solids), 'entries': entry_check(wires, solids)}
+           'wire_ends': cb.end_seats(wires, solids, inside_fn=parity_inside), 'entries': entry_check(wires, solids)}
     with open(argv[2], 'w', encoding='utf-8') as f:
         json.dump(rep, f, indent=1)
     print('collide-glb: %d overlapping pairs, %d unseated ends, %d bad entries' % (

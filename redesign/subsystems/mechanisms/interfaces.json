@@ -70,30 +70,30 @@
    "name": "Pushrod 2-56 steel, Z-bend + steel clevis + keeper right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.58,
+   "mass_g": 1.64,
    "material": "steel (bought)",
    "cg_xyz_m": [
-    0.2312,
+    0.2298,
     0.285,
-    -0.0185
+    -0.0184
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (wire 0.78 g + clevis + keeper); CG = CAD centroid"
+   "notes": "mass EST (wire 0.84 g + clevis + keeper); CG = CAD centroid"
   },
   {
    "id": "MEC-003-L",
    "name": "Pushrod 2-56 steel, Z-bend + steel clevis + keeper left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.58,
+   "mass_g": 1.64,
    "material": "steel (bought)",
    "cg_xyz_m": [
-    0.2312,
+    0.2298,
     -0.285,
-    -0.0185
+    -0.0184
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (wire 0.78 g + clevis + keeper); CG = CAD centroid"
+   "notes": "mass EST (wire 0.84 g + clevis + keeper); CG = CAD centroid"
   },
   {
    "id": "MEC-004-R",

@@ -117,6 +117,12 @@ line("H03", "hardware", "Charger-side XT60 pair for the AS150U charge adapter + 
 line("H06", "hardware", "Amass XT30U male + female pairs, 10-pair pack (4 fitted: one per ESC pair at the pod side exits, WB-03; rest spares)", "Amazon", "Amass XT30U (genuine Amass, 2-pin, 20 A)", "EARLY", 1, 0, 9.99,
      status="EST", seen="2026-11-11", lead=4, url="https://www.amazon.com/", part="HRN-113",
      note="D-74 / WB-03: pod-wing power disconnect, harness SPEC.md 'Pod-wing power disconnect'. Price EST (10-pair packs list about $8-12); buy genuine Amass (1.2 mOhm contact resistance, 20 A on 16 AWG per the Amass manual), not unbranded")
+line("H07", "hardware", "Board-link ribbon: male pin-header strip 1 x 40 + 10-way 28 AWG ribbon 0.3 m (HRN-114, W-PMOD, case S)", "DigiKey / Amazon", "any; pitch per power BOARD-CHECK.md step 4", "EARLY", 1, 0, 3.00,
+     status="EST", seen="2026-11-13", lead=4, url="https://www.amazon.com/", part="HRN-114",
+     note="D-89: the CAD now draws this ribbon and its header plugs (PDB top header, FC underside header); price from subsystems/harness/parts.csv HRN-114 (EST), was in the F2 parts list but on no BOM line. Buy after BOARD-CHECK step 4 gives the pitch (1.27 mm pitch: bought IDC ribbon instead)")
+line("H08", "hardware", "Straight hose-barb couplers 2.5 mm, 5-pack (pitot lines onto the probe root barbs, AVN-005: 2 fitted)", "Bambu Lab store", "Plastic Hose Barb Fittings, 2.5 mm straight, 5 pcs (PP)", "EARLY", 1, 0, 1.49,
+     status="CHK", seen="2026-11-13", lead=7, url="https://us.store.bambulab.com/products/plastic-hose-barb-fittings", part="AVN-005",
+     note="D-89: the design's 2 barbed couplers (avionics params coupler_g, AVN-005 notes) were on no BOM line. Price from a search snippet of the store page ('from $1.49', 5 pcs, PP), page not opened; check the 2.5 mm size fits the 2.5 mm ID silicone line; shipping not included")
 # --- power (F1, CR-F1-12), itemised from team/F1/POWER.md 'Bought items'
 line("F01", "power", "Amass AS150U connector pair (male + female) x 5: aircraft, 2 packs, charge lead, spare", "Amazon", "Amass AS150U", "EARLY", 5, 0, 5.00,
      status="EST", seen="2026-11-09", lead=5, url="https://www.amazon.com/", part="PWR-003", note="F1 price EST $25 for 5; open the Amass sheet. Confirm the SKU is the anti-spark AS150U, not AS150")
@@ -354,6 +360,7 @@ def bridge(tax_rate):
         "C06 PA66 socket-head set 7.00; C03 CF rod 2.5 mm x 2 at 3.50 replaces 2 mm x 1 at 3.00": 7.00 + (7.00 - 3.00),
         "D07 brass tube 7/32 in 3.00 (CR-D5-27); D06 straps 6 to 7": 3.00 + 1.00,
         "G13 two strain gauges (CR-C4-38)": 9.00,
+        "H07 board-link ribbon + headers 3.00 (HRN-114), H08 pitot hose-barb couplers 1.49 (AVN-005) (D-89)": 3.00 + 1.49,
         "D-57 lever 1: G07 25.99 + G08 20.00 + G09 25.00 + G10 15.00 borrowed (gate X10)": -(25.99 + 20.00 + 25.00 + 15.00),
         "D-57 lever 2: G11 41.73 + H05 15.00 borrowed (gate X11)": -(41.73 + 15.00),
         "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0,

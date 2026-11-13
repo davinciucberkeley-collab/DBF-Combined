@@ -1,6 +1,8 @@
 {
- "bodies": 1077,
- "defects": [],
+ "bodies": 1103,
+ "defects": [
+  "PWR-004 body \"lap solder joint\": zero-width spike / repeated point in a loop (removed in the export)"
+ ],
  "kinks": [],
  "parts": 212,
  "poses": [
@@ -238,7 +240,7 @@
    ]
   }
  ],
- "seconds": 359.3,
+ "seconds": 374.6,
  "skipped": [
   [
    "HRN-001",

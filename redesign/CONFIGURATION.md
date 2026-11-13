@@ -3,6 +3,8 @@
 Decided 2026-11-09 by the orchestrating agent at the team lead's request ("choose the configuration"), after the
 configuration study (`config-study/README.md`) and a tie-break (`config-study/tiebreak/DECISION.md`). Status:
 **PROPOSED baseline for detailed design**; reversible on the conditions below until the mid-December order.
+**Confirmed 2026-11-13 by Dillon Alcouffe:** keep K09-L and take it to validation; the 8–15 kg lift + cruise
+target in the root `CLAUDE.md` is retired (it now describes K09-L).
 
 ## What it is
 A flat flying wing (~1.15 × 0.30 m, hot-wired XPS core, tape/laminate skin, one carbon spar) with two fins at about

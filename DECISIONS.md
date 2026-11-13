@@ -60,6 +60,9 @@ Where: `analysis/results.json`, `cad/params.txt` (11-02); `Concept-Models.html` 
 `inventory/v031/cad/params.txt` (v0.3.1). Span 2.4 m and NACA 2415 agree everywhere.
 R2 sets an 8–15 kg working target; every version is below it, and the team has not signed that off
 (`docs/DESIGN-BASIS.md` R2). **Decision needed:** accept the 11-02 sizing (follows D1, D2, D4) and sign off R2.
+**Superseded 2026-11-13 (Dillon Alcouffe):** the team keeps the `redesign/` K09-L quad tailsitter (2.6 kg mass gate,
+`redesign/CONFIGURATION.md`); the 8–15 kg lift + cruise target R2 is retired, so this conflict no longer gates the
+design.
 
 ## D4. Payload and ballast (R12)
 

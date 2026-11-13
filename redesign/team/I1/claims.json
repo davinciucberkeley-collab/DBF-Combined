@@ -113,15 +113,15 @@
     "SRC-I1-OVONIC"
    ],
    "outputs": {
-    "spend_pess_allin": 2057.82,
-    "spend_base_allin": 1972.6,
-    "goods_base": 1309.32,
-    "goods_pess": 1334.91,
-    "tax_base": 134.21,
-    "tax_pess": 136.83,
-    "spend_base": 1568.53,
-    "spend_pess": 1653.74,
-    "early_goods_tax": 969.54
+    "spend_pess_allin": 2062.77,
+    "spend_base_allin": 1977.55,
+    "goods_base": 1313.81,
+    "goods_pess": 1339.4,
+    "tax_base": 134.67,
+    "tax_pess": 137.29,
+    "spend_base": 1573.48,
+    "spend_pess": 1658.69,
+    "early_goods_tax": 974.49
    },
    "input_values": {
     "tax": 0.1025
@@ -150,7 +150,7 @@
    },
    "input_values": {
     "tax": 0.1025,
-    "sp": 1653.74
+    "sp": 1658.69
    }
   },
   {
@@ -171,13 +171,13 @@
     "sb": "USD"
    },
    "outputs": {
-    "reserve_pess": 346.26,
-    "reserve_base": 431.47
+    "reserve_pess": 341.31,
+    "reserve_base": 426.52
    },
    "input_values": {
     "budget": 2000.0,
-    "sp": 1653.74,
-    "sb": 1568.53
+    "sp": 1658.69,
+    "sb": 1573.48
    }
   },
   {
@@ -200,8 +200,8 @@
     "ASM-I1-ADDERS"
    ],
    "outputs": {
-    "reserve_pess_allin": -57.82,
-    "reserve_base_allin": 27.4
+    "reserve_pess_allin": -62.77,
+    "reserve_base_allin": 22.45
    },
    "input_values": {
     "tax": 0.1025,
@@ -247,7 +247,7 @@
     "R-BUDGET"
    ],
    "how": "Re-run build_bom.py after re-pricing each line on the day of the order; compare with the order confirmations.",
-   "value": 1568.53
+   "value": 1573.48
   },
   {
    "id": "CL-I1-SPEND-PESS",
@@ -264,7 +264,7 @@
     "R-BUDGET"
    ],
    "how": "Same lines at list price plus the DECISION section 9 adders; CL-I1-BRIDGE-DELTA must be 0.",
-   "value": 1653.74
+   "value": 1658.69
   },
   {
    "id": "CL-I1-BRIDGE-DELTA",
@@ -296,7 +296,7 @@
     "R-BUDGET"
    ],
    "how": "2 000 minus CL-I1-SPEND-PESS must be >= 309 (one class-S crash incl. tax). On the day: re-price every CARRY line.",
-   "value": 346.26
+   "value": 341.31
   },
   {
    "id": "CL-I1-RESERVE-BASE",
@@ -313,7 +313,7 @@
     "R-RESERVE"
    ],
    "how": "2 000 minus CL-I1-SPEND-BASE must be >= 150 (planned reserve, P2).",
-   "value": 431.47
+   "value": 426.52
   },
   {
    "id": "CL-I1-RESERVE-PESS-ALLIN",
@@ -323,7 +323,7 @@
    "output": "reserve_pess_allin",
    "unit": "USD",
    "how": "2 000 minus the all-in pessimistic spend. Information, not a gate: the committed order holds >= 309 by deferring X07 and X08 until their gate passes. Below 309 means every gated line cannot be bought on pessimistic numbers.",
-   "value": -57.82
+   "value": -62.77
   },
   {
    "id": "CL-I1-GROUNDTEST-BOUGHT",

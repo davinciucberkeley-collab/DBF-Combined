@@ -8,21 +8,21 @@ Revision I1-R3, 2026-11-10. Status `PROPOSED`. Lines, prices and part numbers: [
 
 | Order | Goods | Tax 10.25 % | Shipping `EST` | Total |
 |---|---|---|---|---|
-| Early, ~20 Nov | $879.40 | $90.14 | $75 | **$1,044.54** |
+| Early, ~20 Nov | $883.89 | $90.60 | $75 | **$1,049.49** |
 | December, 15 Dec | $349.96 | $35.87 | $45 | **$430.83** |
 | Store pick-up (XPS, jig, ammo can) | $79.96 | $8.20 | 0 | **$88.16** |
 | FAA registration (DroneZone, not taxed) | | | | **$5.00** |
-| Whole BOM, baseline (excl. gated lines) | $1,309.32 | $134.21 | $120 | **$1,568.53** (`CL-I1-SPEND-BASE`) |
-| Whole BOM, pessimistic (excl. gated lines) | $1,334.91 | $136.83 | $150 | **$1,653.74** (`CL-I1-SPEND-PESS`; + $5 FAA + $27 adders) |
+| Whole BOM, baseline (excl. gated lines) | $1,313.81 | $134.67 | $120 | **$1,573.48** (`CL-I1-SPEND-BASE`) |
+| Whole BOM, pessimistic (excl. gated lines) | $1,339.40 | $137.29 | $150 | **$1,658.69** (`CL-I1-SPEND-PESS`; + $5 FAA + $27 adders) |
 
 ## Reserve gate (hard: $2 000, reserve >= $309 on pessimistic numbers)
 
 | Case | Spend | Reserve | Limit | Status |
 |---|---|---|---|---|
-| Committed order, baseline | $1,568.53 | $431.47 | >= $150 planned | `CHECKED` against inputs; prices `UNVERIFIED` |
-| Committed order, pessimistic (Ovonic at EUR 113.30 x 1.16, tubes overseas, shipping +$30, tax measure +$7, jig/box +$20) | $1,653.74 | **$346.26** (margin $37.26) | >= $309 | `UNVERIFIED` |
-| **Everything bought**, baseline (gated X07 box/field kit and X08 airspeed sensor included) | $1,972.60 | $27.40 | >= $150 | **FAILS by $122.60** |
-| **Everything bought**, pessimistic | $2,057.82 | **$-57.82** | >= $309 | **FAILS by $366.82** (`CL-I1-RESERVE-PESS-ALLIN`) |
+| Committed order, baseline | $1,573.48 | $426.52 | >= $150 planned | `CHECKED` against inputs; prices `UNVERIFIED` |
+| Committed order, pessimistic (Ovonic at EUR 113.30 x 1.16, tubes overseas, shipping +$30, tax measure +$7, jig/box +$20) | $1,658.69 | **$341.31** (margin $32.31) | >= $309 | `UNVERIFIED` |
+| **Everything bought**, baseline (gated X07 box/field kit and X08 airspeed sensor included) | $1,977.55 | $22.45 | >= $150 | **FAILS by $127.55** |
+| **Everything bought**, pessimistic | $2,062.77 | **$-62.77** | >= $309 | **FAILS by $371.77** (`CL-I1-RESERVE-PESS-ALLIN`) |
 
 **What changed in R3 (CR-A1-67, D-72).** Pack re-priced for the Ovonic 120C EC5 pair (+$31.51 baseline, +$11.55 pessimistic, pre-tax); Savox SH-0255MG+ replaces the placeholder
 servo (+$44.00); the $6 T-antennas, FC isolation set, F2 harness lines, D6 mechanisms hardware, 2.5 mm CF rod, PA66 socket-head set, 7/32 in brass tube and two strain gauges are
@@ -50,8 +50,10 @@ five or six carts. **Place the pack cart (`P01`) first: ~14 days from Germany. P
 | RaceDayQuads | `A02` | $20.49 | $2.10 | $22.59 | 5 |  |
 | Pyrodrone | `G02` x2 | $19.98 | $2.05 | $22.03 | 5 |  |
 | Bolt Depot | `B07` x20, `C01` | $7.00 | $0.72 | $7.72 | 5 | minimum order may exceed the line price |
+| DigiKey / Amazon | `H07` | $3.00 | $0.31 | $3.31 | 4 |  |
+| Bambu Lab store | `H08` | $1.49 | $0.15 | $1.64 | 7 |  |
 
-**Early total $1,044.54** (goods $879.40 + tax $90.14 + shipping $75 `EST`). Before the first charge (late Nov, store): `G03` ammo can,
+**Early total $1,049.49** (goods $883.89 + tax $90.60 + shipping $75 `EST`). Before the first charge (late Nov, store): `G03` ammo can,
 Harbor Freight 63750, $19.99 + $2.05 tax. The pack cart (`P01`) is released by D-64 after the two checks below; **no USD price is confirmed**, read the cart total before paying (pessimistic case $131.43).
 
 At order, in the cart:
@@ -101,7 +103,7 @@ Place the Aloft carbon cart first (tubes, strips, 20x18 tube), then the rest. Se
 | X12 | UBEC fallback (lines F04 20 AWG, F05 UBEC, F06 fuse + holder), D-74 | $30.87 | only if subsystems/power/BOARD-CHECK.md step 7 fails (servo-BEC Vx < 5.8 V at ~5.4 A); then a 4S-input 6 V UBEC (5-day lead), before the January build |
 | X09 | K-type thermocouple logger / 2-channel meter (E3 GT-04) | $16.54 | only if Jacobs Hall cannot lend one |
 
-With the baseline reserve of $431.47, X07 + X08 ($184.99) leave $246.48: both fit on baseline, not on pessimistic numbers.
+With the baseline reserve of $426.52, X07 + X08 ($184.99) leave $241.53: both fit on baseline, not on pessimistic numbers.
 The gate test is the realised reserve (2 000 minus actual spend after the December receipts), not the pessimistic forecast.
 
 ## Borrow list (not bought, not in the spend): Jacobs Hall (D-39, D-57 levers 1 and 2, D-72)
