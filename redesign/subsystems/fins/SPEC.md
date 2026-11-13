@@ -1,5 +1,14 @@
 # Fins and motor tubes (FIN): SPEC
 
+
+> **2026-11-13 (D-90 ... D-94, Dillon Alcouffe, structures):** station collar 15 -> **22 mm** (C6 RF 1.13 on C1's
+> 12.67 N·m); strip pins 15 -> **12 mm** pitch (RF 1.12); mount grip 12 -> **18 mm** (rocking 2 235 vs need 1 455 N·m/rad),
+> so the collar, ear and fin top-edge LE sit 6 mm lower (ring |z| 0.1315-0.1535, ear mid 0.1475); root fillets 15 -> **10 mm**
+> ahead of the hinge, 13 mm aft (no strength credit; the fin is sized root-free; CG holds the rest); clocking dog sized as a fuse (3.7 N·m with the
+> clamp). Fins 433.3 -> 432.0 g. Open: the strip tail (anchor RF 0.71, tail net 0.64 on 2 233 N design) is decided by
+> `T-C6-LAP-PETG` and `T-C6-STRIP-ANCHOR` before any collar print (contingency: 62 mm solid tail, +29 g). The tables
+> below are R5 text where they disagree with this note; `params.json` and `parts.csv` are current.
+
 Owner D3 · structures C4 · aero B3/B4 · joints C6 · design R5 + D-75 stepped tip from the D5-R7 shoe (2026-11-11: step x 0.2614, |z| 0.2010, 11 pins to x 0.249) (CR-A1-63; D-61, D-63, D-68, D-70; CR-E3-13, CR-F2-16,
 C6-R5 CR-C6-36) on R4 (D-26, D-27, D-42, D-48, D-51, D-52, D-54) · `MODELLED` · 2026-11-10. Re-check:
 `python -I redesign/subsystems/fins/make_fins.py` → `python -I redesign/team/D3/fins_calcs.py` →

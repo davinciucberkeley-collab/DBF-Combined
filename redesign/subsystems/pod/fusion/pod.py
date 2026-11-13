@@ -290,11 +290,12 @@ def build(ctx):
     # ---------------------------------------------------------------- POD-001 shell (foam board, XPS LE filler and nose block, printed lip and antenna tube)
     sh = ctx.part('POD-001')
     fs_w = lv('fwd_stop_m')[2]                          # R6 (CR-C3-15): the floor's front edge stops at the stop T (3 x 54 mm slot)
-    bv = min(lv('floor_bevel_m'), tb)                   # R6 (E-WNG-17): aft lower edge bevelled 45 deg onto D1's fillet
+    bv = min(lv('floor_bevel_m'), tb)                   # R6 bevel onto D1's fillet; 0 since D-103 (square end on the step)
     floor = [(xn, -yi), (xn, -fs_w / 2), (x_fs, -fs_w / 2), (x_fs, fs_w / 2), (xn, fs_w / 2), (xn, yi), (xr1 - bv, yi), (xr1 - bv, -yi)]
     sh.prism('Z', zb, [floor], tb, name='fb floor')
-    sh.prism('Y', -yi, [[(xr1 - bv, zb), (xr1 - bv, zf), (xr1, zf), (xr1, zf - (tb - bv))][:3 if bv >= tb else 4]], 2 * yi,
-             name='fb floor bevel')
+    if bv > 0:                                          # D-103: bevel deleted (floor_bevel_m 0): the floor end is square
+        sh.prism('Y', -yi, [[(xr1 - bv, zb), (xr1 - bv, zf), (xr1, zf), (xr1, zf - (tb - bv))][:3 if bv >= tb else 4]],
+                 2 * yi, name='fb floor bevel')
     side = [(x0, zb), (xr1, zb)] + [(x, z) for x, z in G['aft_surf']] + [(x1, zh), (x0, zh)]
     se = lv('side_exit_m')                              # R4 (CR-F2-03 a): power + DShot exits, both sides
     side_exit = _rect(se[0], se[2], se[1], se[3])

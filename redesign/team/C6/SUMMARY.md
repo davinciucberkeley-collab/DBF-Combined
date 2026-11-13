@@ -1,5 +1,11 @@
 # C6 Joints and fasteners — summary
 
+> **R6 (2026-11-13, D-90, D-94, Dillon Alcouffe):** C4 re-solved on the D-65 loads, so the `-EST` set is moot.
+> Collar 22 mm: `CL-C6-COLLAR-RF` 1.13 (CR-C6-37 adopted); pins at 12 mm: `CL-C6-STRIP-PIN-RF` 1.12; strip tail
+> anchor 0.71 / tail net 0.64 stay open on `T-C6-LAP-PETG` and `T-C6-STRIP-ANCHOR` (contingency 62 mm solid tail,
+> +29 g). Dog (D-81): `CALC-C6-DOG`, fuse 3.71 N·m, downstream RF 9.0, hold RF 2.34, `T-C6-DOG-SHEAR`. Root fillet
+> RF claims are records (D-92).
+
 Revision C6-R5b, 2026-11-10 (params A1-R5; C1 claims and `data/envelope.json` of 14:35 read live; C4's frozen R4 set
 `team/C4/claims.d3.json` of 11:51; fins D3-R5b; D5 R5). Joint stacks `PROPOSED`; claims `UNVERIFIED` until the
 coupons run. Re-run with `python -I redesign/team/C6/joints.py`, then `make_stacks.py`, then

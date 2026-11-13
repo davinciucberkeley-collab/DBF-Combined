@@ -71,22 +71,22 @@ never edited by hand.
 | `DX-MOTOR-UR` | point | 0.045 | 0.320 | 0.190 | — | `propulsion.stations` | motor station: tube centreline at motor height; shaft along -x |
 | `DX-HUB-UR` | point | -0.0127 | 0.320 | 0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
 | `DX-FOOT-UR` | point | 0.368 | 0.320 | 0.218 | — | `landing/params.json#landing.pad` | foot pad contact on DP-GROUND: z = +/-(pad outer edge - edge round), CL-D5-CONTACT-Z, D-30 splay; tip-over pivot |
-| `DX-COLLAR-UR` | point | 0.045 | 0.3023 | 0.1535 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
+| `DX-COLLAR-UR` | point | 0.045 | 0.3023 | 0.1475 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
 | `DX-ANCHOR-UR` | point | 0.080 | 0.242 | 0.0266 | — | `fins/params.json#fin_detail.brace` | brace end in the anchor on the spar line (transport cradles stay inboard of it) |
 | `DX-MOTOR-UL` | point | 0.045 | -0.320 | 0.190 | — | `propulsion.stations` | motor station: tube centreline at motor height; shaft along -x |
 | `DX-HUB-UL` | point | -0.0127 | -0.320 | 0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
 | `DX-FOOT-UL` | point | 0.368 | -0.320 | 0.218 | — | `landing/params.json#landing.pad` | foot pad contact on DP-GROUND: z = +/-(pad outer edge - edge round), CL-D5-CONTACT-Z, D-30 splay; tip-over pivot |
-| `DX-COLLAR-UL` | point | 0.045 | -0.3023 | 0.1535 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
+| `DX-COLLAR-UL` | point | 0.045 | -0.3023 | 0.1475 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
 | `DX-ANCHOR-UL` | point | 0.080 | -0.242 | 0.0266 | — | `fins/params.json#fin_detail.brace` | brace end in the anchor on the spar line (transport cradles stay inboard of it) |
 | `DX-MOTOR-LR` | point | 0.045 | 0.320 | -0.190 | — | `propulsion.stations` | motor station: tube centreline at motor height; shaft along -x |
 | `DX-HUB-LR` | point | -0.0127 | 0.320 | -0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
 | `DX-FOOT-LR` | point | 0.368 | 0.320 | -0.218 | — | `landing/params.json#landing.pad` | foot pad contact on DP-GROUND: z = +/-(pad outer edge - edge round), CL-D5-CONTACT-Z, D-30 splay; tip-over pivot |
-| `DX-COLLAR-LR` | point | 0.045 | 0.3023 | -0.1535 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
+| `DX-COLLAR-LR` | point | 0.045 | 0.3023 | -0.1475 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
 | `DX-ANCHOR-LR` | point | 0.080 | 0.242 | -0.0127 | — | `fins/params.json#fin_detail.brace` | brace end in the anchor on the spar line (transport cradles stay inboard of it) |
 | `DX-MOTOR-LL` | point | 0.045 | -0.320 | -0.190 | — | `propulsion.stations` | motor station: tube centreline at motor height; shaft along -x |
 | `DX-HUB-LL` | point | -0.0127 | -0.320 | -0.190 | — | `propulsion.stations.x_prop_plane_m` | prop hub centre on the prop plane |
 | `DX-FOOT-LL` | point | 0.368 | -0.320 | -0.218 | — | `landing/params.json#landing.pad` | foot pad contact on DP-GROUND: z = +/-(pad outer edge - edge round), CL-D5-CONTACT-Z, D-30 splay; tip-over pivot |
-| `DX-COLLAR-LL` | point | 0.045 | -0.3023 | -0.1535 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
+| `DX-COLLAR-LL` | point | 0.045 | -0.3023 | -0.1475 | — | `fins/params.json#fin_detail.station_collar` | brace end in the station-collar ear (tube axis x, ear just below the mount grip) |
 | `DX-ANCHOR-LL` | point | 0.080 | -0.242 | -0.0127 | — | `fins/params.json#fin_detail.brace` | brace end in the anchor on the spar line (transport cradles stay inboard of it) |
 | `DX-BLOCK-R` | point | 0.0625 | 0.320 | 0.0066 | — | `fins.saddle` | through-core block centre: tube bore on DA-TUBE, spar bore on DA-SPAR |
 | `DX-BLOCK-L` | point | 0.0625 | -0.320 | 0.0066 | — | `fins.saddle` | through-core block centre: tube bore on DA-TUBE, spar bore on DA-SPAR |

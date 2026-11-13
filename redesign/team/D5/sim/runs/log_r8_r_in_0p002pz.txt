@@ -1,0 +1,1 @@
+h400_pz_v_r_in2 gov 21.23 MPa (k 0.3582 MPa/N) {"rim": {"vm_max_MPa": 21.22563, "at_mm": [326.2, 8.198, 213.165]}, "aft box": {"vm_max_MPa": 21.07152, "at_mm": [317.615, 6.593, 200.773]}, "window and open-end zone": {"vm_max_MPa": 5.886541, "at_mm": [301.1, 9.25, 211.4]}, "whole shoe": {"vm_max_MPa": 40.02898, "at_mm": [320.0, 6.717, 201.111]}} 176 s

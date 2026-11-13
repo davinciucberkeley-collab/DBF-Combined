@@ -30,7 +30,7 @@ cheap re-cut. No ribs, no wing joint: the core is the rib, the through-core bloc
 | Block-pocket corners · lip bead (3 × 3 mm, 45°, both surfaces, inboard + outboard) | R 3.15 · 3.0 | mm | `CL-D1-POCKET-CORNER-R`, `-POCKET-BEAD-LEG` (D-68) | `CHECKED` (CAD) |
 | Elevon cut-out corners at the fin-root tab · tab tape folded round | R 3.0 · 24 mm strip | mm | `CL-D1-CUTOUT-CORNER-R` (D-68) | `CHECKED` (CAD) |
 | LE strip 100 mm, edges x (rule ≥ 32 mm, x/c 0.10) | 45.5 upper / 46.6 lower | mm | `CL-D1-LE-SEAM-X` (CR-B2-17) | `CHECKED` (CAD) |
-| Recess-step fillet legs (floor × step), \|y\| ≤ 0.070 | 5.0 × 5.0 | mm | `CL-D1-RECESS-FILLET` (D-69) | `CHECKED` (CAD) |
+| Recess-step corner (floor × step) | square, no fillet (WNG-007 deleted) | — | D-103 (supersedes D-69) | `CHECKED` (CAD) |
 | JR recess 18 × 10 × 5 mm · wall to servo pocket | x 0.150–0.168 · 4.2 | m · mm | `CL-D1-JR-RECESS-WALL` (CR-F2-14) | `CHECKED` |
 | Mass · CG | 391.7 (allocation 405) · (0.114, 0.000, +0.005) | g · m | `CL-D1-WING-MASS`, `-CG-X` | `UNVERIFIED` (`EST`) |
 
@@ -40,7 +40,6 @@ cheap re-cut. No ribs, no wing joint: the core is the rib, the through-core bloc
 |---|---|---|---|---|
 | Spar bore (slot from below, cap re-bonded) | 0.0688–0.0912 | 0–0.500 | Ø 22.4 mm on the axis | `WNG-002` |
 | Pod recess (tape off x 0–0.095) | 0.0226–0.065 | 0–0.070 | floor z 0.015 (≤ 6.9 mm) | `E-POD-01` |
-| Recess-step fillet (`WNG-007`) | 0.060–0.065 | 0–0.070 | 5 × 5 mm, 45° face | `E-WNG-16/17` |
 | Saddle window / tie channel | 0.0688–0.0912 | 0.029–0.053 / 0.032–0.040 | to z 0.0154 / +2 mm round the spar | `E-POD-09` |
 | Brace-anchor pocket, top and bottom | 0.0688–0.0912 | 0.2335–0.2505 | to the spar | `E-FIN-57…60` |
 | Through-core block pocket, corners R 3.15 | 0.0279–0.0972 | 0.3019–0.3382 | full depth | `E-FIN-49…52` |
@@ -61,7 +60,6 @@ cheap re-cut. No ribs, no wing joint: the core is the rib, the through-core bloc
 | `WNG-003` | Tape skin, LE strip, doublers, tab-edge and tip layers | 1 | 47.9 `EST` | `MODELLED` |
 | `WNG-004-L/R` · `WNG-005-L/R` | PETG plugs Ø 19.8 × 36 (block) · × 20 (anchor) | 2 · 2 | 7.0 · 4.0 (C2) | `MODELLED` |
 | `WNG-006-L/R` | Block-pocket lip beads, microballoon epoxy | 2 | 1.0 `EST` | `MODELLED` |
-| `WNG-007` | Recess-step fillet, microballoon epoxy | 1 | 1.1 `EST` | `MODELLED` |
 | `WNG-011-L/R` · `WNG-012-L/R` | Elevon inboard · outboard (foam + tape) | 2 · 2 | 3.7 · 3.5 `EST` | `MODELLED` |
 | `WNG-020` | FAA label, right upper skin | 1 | 0.5 | `MODELLED` |
 
@@ -74,7 +72,6 @@ cheap re-cut. No ribs, no wing joint: the core is the rib, the through-core bloc
 | `E-WNG-04…07` elevon ↔ core | upper tape hinge, ±25°; tape, horns, torque tubes, link by D6 | D6, B2 (0.257 N·m/servo) |
 | `E-WNG-08…11` plugs ↔ spar | thickened epoxy inside the tube | C2 (MS +2.7) |
 | `E-WNG-12/13` lip bead ↔ core · `E-WNG-14/15` lip bead ↔ block `FIN-004-R/L` | microballoon epoxy, 1 176 / 832 mm² per side | C2 (FEA re-run on the revised pocket) |
-| `E-WNG-16` fillet ↔ core · `E-WNG-17` fillet ↔ pod floor `POD-001` | microballoon epoxy, 1 400 / 990 mm² | C3 (`T-C3-POD-PROOF`) |
 | Acknowledged (36) | `E-FIN-49…60`, `E-GER-21/22` (TPU tip corner caps over the tape, fixed core \|y\| 0.560–0.575), `E-HRN-02/04` (ESC and servo grooves, wing params `grooves.*`), `E-MEC-01/02/11/12/17/18/23…28/33/34`, `E-POD-01/09`, `E-TRN-06…09`; none pending | D5 · F2 |
 | Prop keep-out (upper props) | real core and tape surface ≥ 6.6 mm outside `KO-PROP-UR/UL` (`CL-D1-PROP-SURF-GAP`); `check.py` lists the box hits as artefacts | A5, E1 |
 
@@ -86,7 +83,6 @@ patch lower \|y\| 0.45 (H1); half-fin roots and pod footprint bare foam (D3, D2)
 | Issue | Owner |
 |---|---|
 | Acknowledge `E-WNG-14/15` (lip bead on the block faces) | D3 (CR-D1-12) |
-| Bevel the pod floor's aft lower edge 5 × 5 mm onto the fillet; acknowledge `E-WNG-17` | D2 (CR-D1-13) |
 | Re-run the pocket-corner and cut-out FEA on R 3.15 + beads and R 3 + tab tape | C2 (CR-D1-14) |
 | Confirm the LE-rule exemptions: pod footprint \|y\| ≤ 0.070 and tip fold \|y\| ≥ 0.551 | B2 (CR-D1-15) |
 | Cradle saddles press the tape skin `WNG-003` (CR-D1-02) | D7 |

@@ -72,7 +72,7 @@ STEPS = [
      ['bench:pod POD-002', 'bench:pod POD-001', 'bench:pod POD-004', 'bench:pod PWR-107', 'bench:pod POD-006',
       'bench:pod POD-007']),
     (5, '5.2', 'Lay the recess-step fillet, bond the pod into the recess; GPS mast and its cross-screw',
-     ['WNG-007', 'install:pod', 'POD-005', 'POD-011', 'POD-012']),
+     ['install:pod', 'POD-005', 'POD-011', 'POD-012']),
     (5, '5.3', 'XT30U pairs, airspeed sensor and RX on the tray; power frame on spacers, screwed down; boards, AS150U',
      ['HRN-113-*', 'AVN-004', 'AVN-003', 'PWR-102', 'PWR-006', 'PWR-103', 'PWR-101', 'PWR-004', 'PWR-003', 'PWR-002', 'wire:E-HRN-11',
       'wire:E-HRN-12']),

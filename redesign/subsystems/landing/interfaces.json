@@ -8,120 +8,120 @@
    "name": "Foot shoe UR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2986,
+    0.2978,
     0.32,
-    0.2074
+    0.2079
    ],
    "make_or_buy": "make",
-   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, 3.4 mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy (upper right); mass EST from CALC-D5-MASS"
+   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (upper right); mass EST from CALC-D5-MASS"
   },
   {
    "id": "GER-001-UL",
    "name": "Foot shoe UL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2986,
+    0.2978,
     -0.32,
-    0.2074
+    0.2079
    ],
    "make_or_buy": "make",
-   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, 3.4 mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy (upper left); mass EST from CALC-D5-MASS"
+   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (upper left); mass EST from CALC-D5-MASS"
   },
   {
    "id": "GER-001-LR",
    "name": "Foot shoe LR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2986,
+    0.2978,
     0.32,
-    -0.2074
+    -0.2079
    ],
    "make_or_buy": "make",
-   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, 3.4 mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy (lower right); mass EST from CALC-D5-MASS"
+   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (lower right); mass EST from CALC-D5-MASS"
   },
   {
    "id": "GER-001-LL",
    "name": "Foot shoe LL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2986,
+    0.2978,
     -0.32,
-    -0.2074
+    -0.2079
    ],
    "make_or_buy": "make",
-   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, 3.4 mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy (lower left); mass EST from CALC-D5-MASS"
+   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (lower left); mass EST from CALC-D5-MASS"
   },
   {
    "id": "GER-002-UR",
    "name": "Foot piston UR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.3382,
+    0.3386,
     0.32,
     0.2088
    ],
    "make_or_buy": "make",
-   "notes": "tine 16.3 x 11.6 mm (1 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (upper right); mass EST from CALC-D5-MASS"
+   "notes": "tine 16.3 x 11.6 mm (1.4 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (upper right); mass EST from CALC-D5-MASS"
   },
   {
    "id": "GER-002-UL",
    "name": "Foot piston UL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.3382,
+    0.3386,
     -0.32,
     0.2088
    ],
    "make_or_buy": "make",
-   "notes": "tine 16.3 x 11.6 mm (1 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (upper left); mass EST from CALC-D5-MASS"
+   "notes": "tine 16.3 x 11.6 mm (1.4 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (upper left); mass EST from CALC-D5-MASS"
   },
   {
    "id": "GER-002-LR",
    "name": "Foot piston LR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.3382,
+    0.3386,
     0.32,
     -0.2088
    ],
    "make_or_buy": "make",
-   "notes": "tine 16.3 x 11.6 mm (1 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (lower right); mass EST from CALC-D5-MASS"
+   "notes": "tine 16.3 x 11.6 mm (1.4 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (lower right); mass EST from CALC-D5-MASS"
   },
   {
    "id": "GER-002-LL",
    "name": "Foot piston LL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.3382,
+    0.3386,
     -0.32,
     -0.2088
    ],
    "make_or_buy": "make",
-   "notes": "tine 16.3 x 11.6 mm (1 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (lower left); mass EST from CALC-D5-MASS"
+   "notes": "tine 16.3 x 11.6 mm (1.4 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (lower left); mass EST from CALC-D5-MASS"
   },
   {
    "id": "GER-003-UR",
@@ -279,10 +279,10 @@
    "subsystem": "landing",
    "status": "MODELLED",
    "flight": false,
-   "mass_g": 4.5,
+   "mass_g": 4.41,
    "material": "PETG / XPS / neoprene",
    "cg_xyz_m": [
-    0.1536,
+    0.1535,
     0.85,
     0.0984
    ],
@@ -295,10 +295,10 @@
    "subsystem": "landing",
    "status": "MODELLED",
    "flight": false,
-   "mass_g": 4.46,
+   "mass_g": 4.37,
    "material": "PETG / XPS / neoprene",
    "cg_xyz_m": [
-    0.154,
+    0.1539,
     0.85,
     0.0484
    ],
@@ -343,12 +343,12 @@
    "subsystem": "landing",
    "status": "MODELLED",
    "flight": false,
-   "mass_g": 9.58,
+   "mass_g": 9.63,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1585,
+    0.1577,
     0.85,
-    -0.0992
+    -0.0987
    ],
    "make_or_buy": "make",
    "notes": "GROUND ITEM, not flying (CR-A3-18): qty 2 per kit line in parts.csv, one node per line, mass per unit; CAD: one representative unit in the field-kit row at y 0.85 (landing.kit, a layout convention for the TRN-108 spares box, CR-A4-39); ground spare, not flying"
@@ -425,7 +425,7 @@
     "area_mm2": 1657,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "114.9 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.44 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    }
@@ -436,7 +436,7 @@
    "part_b": "GER-001-UR",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.06 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -504,7 +504,7 @@
     "area_mm2": 1657,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "114.9 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.44 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    }
@@ -515,7 +515,7 @@
    "part_b": "GER-001-UL",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.06 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -583,7 +583,7 @@
     "area_mm2": 1657,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "114.9 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.44 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    }
@@ -594,7 +594,7 @@
    "part_b": "GER-001-LR",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.06 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -662,7 +662,7 @@
     "area_mm2": 1657,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "114.9 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.44 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    }
@@ -673,7 +673,7 @@
    "part_b": "GER-001-LL",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.06 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,

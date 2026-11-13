@@ -103,8 +103,8 @@
     "F_side": 73.74631268436578,
     "F_hub": 43.14063848144952,
     "M_root": 14.011799410029498,
-    "fuse_ratio": 2.3147755662565594,
-    "hold_ratio": 1.7648932240536315,
+    "fuse_ratio": 2.313202238814493,
+    "hold_ratio": 1.7648939532563872,
     "F_axial": 227.27272727272728,
     "clamp_n": 241.1438531695384
    },
@@ -118,10 +118,10 @@
     "can": 0.0265,
     "stack": 0.0373,
     "zm": 0.19,
-    "M_mount": 0.9854026357402799,
+    "M_mount": 0.9854022286006237,
     "ff": 1.15,
     "pf": 1.25,
-    "M_joint": 32.43417091362436,
+    "M_joint": 32.41212576509983,
     "mu": 0.3
    }
   },
@@ -226,24 +226,24 @@
     "sq": "P:fin_detail.fin.tip_square_m"
    },
    "outputs": {
-    "h_ratio": 0.8706357074390575,
-    "h_ratio_c6": 0.7687396939164586,
+    "h_ratio": 1.2758742865666401,
+    "h_ratio_c6": 1.1260014225073554,
     "embed": 0.0395,
-    "embed_ratio": 0.7068537942333036,
-    "tongue": 0.0112992396028137,
-    "tongue_fit": 0.0037007603971862986
+    "embed_ratio": 0.7074868672984458,
+    "tongue": 0.011373210206843287,
+    "tongue_fit": 0.010626789793156712
    },
    "input_values": {
-    "h": 0.015,
-    "h_req": 0.017228790264210436,
-    "h_req_c6": 0.01951245671155638,
+    "h": 0.022,
+    "h_req": 0.017243078124257596,
+    "h_req_c6": 0.01953816359397742,
     "tail": 0.04,
     "gap": 0.0005,
-    "embed_req": 0.05588142883613448,
+    "embed_req": 0.05583142504232145,
     "w": 0.01,
     "td": 0.001,
     "L": 0.344,
-    "grip": 0.012,
+    "grip": 0.018,
     "g_sc": 0.0005,
     "hh": 0.21,
     "xt": 0.045,
@@ -372,11 +372,11 @@
    },
    "outputs": {
     "M": 7.7765625,
-    "rf_fillet": 1.6091917219208356,
-    "rf_allow": 0.8045958609604178,
-    "rf_upper": 1.6091917219208356,
-    "rf_lower": 1.638201969057665,
-    "leff_for_allow": 0.1829446612466125
+    "rf_fillet": 1.1287609403254972,
+    "rf_allow": 0.5643804701627486,
+    "rf_upper": 1.1664896925858952,
+    "rf_lower": 1.1287609403254972,
+    "leff_for_allow": 0.28827030612244897
    },
    "input_values": {
     "S": 59.25,
@@ -385,7 +385,7 @@
     "tb": 0.0048,
     "n": 2,
     "share": 0.5,
-    "leg": 0.015,
+    "leg": 0.01,
     "leg_aft": 0.013,
     "Leff": 0.15,
     "te": 0.32,
@@ -425,15 +425,15 @@
     "E": "ASM-D3-CF-E-STRIP"
    },
    "outputs": {
-    "L": 0.14477110381564406,
-    "pcr": 345.3324581569849,
-    "pcr_ratio": 2.1149121571225393,
-    "ky": 2632031.764132316,
-    "attach_dz": 0.03650000000000003
+    "L": 0.13954165148800554,
+    "pcr": 371.70076448128947,
+    "pcr_ratio": 2.2368318035647334,
+    "ky": 2939173.393294017,
+    "attach_dz": 0.04250000000000001
    },
    "input_values": {
     "L_tube": 0.344,
-    "grip": 0.012,
+    "grip": 0.018,
     "g_sc": 0.0005,
     "ear_h": 0.012,
     "zm": 0.19,
@@ -449,7 +449,7 @@
     "proud": 0.008,
     "t": 0.002,
     "w": 0.01,
-    "F_d": 163.2845397356029,
+    "F_d": 166.17287177736273,
     "E": 110000000000.0
    }
   },
@@ -557,7 +557,7 @@
     "FIN-004-R"
    ],
    "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 70 and 80 N (R5 lever 33.9 mm)",
-   "value": 2.3147755662565594
+   "value": 2.313202238814493
   },
   {
    "id": "CL-D3-SLIP-HOLD",
@@ -580,7 +580,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP; witness line checked before every flight",
-   "value": 1.7648932240536315
+   "value": 1.7648939532563872
   },
   {
    "id": "CL-D3-SLIP-F",
@@ -728,7 +728,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R4 (D-48): read against C4-R3 CL-C4-D3-COLLAR-H-REQ (envelope torsion 4.6 N m + brace shear). C6's own requirement on max(C1, C4) torsion + brace shear is CL-D3-COLLAR-H-C6 (CR-D3-25)",
-   "value": 0.8706357074390575
+   "value": 1.2758742865666401
   },
   {
    "id": "CL-D3-COLLAR-H-C6",
@@ -752,7 +752,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R5: drawn 15 mm (C6-R5 CL-C6-COLLAR-RF-15MM 1.15 on a 13.007 mm requirement). C6's live run now reads C1's CL-C1-FINHALF-T-LIM 12.67 N m (R4 7.40, wing-plane value) and needs 19.4 mm: CR-D3-36 asks C1/C6 which torsion governs before D3 redraws (20 mm fits: ring |z| 0.1395-0.1595, +3 g)",
-   "value": 0.7687396939164586
+   "value": 1.1260014225073554
   },
   {
    "id": "CL-D3-TONGUE-FIT",
@@ -780,7 +780,7 @@
    ],
    "how": "Dry fit: the tongue drops into the board notch between the strips with the ring top at |z| 0.1595",
    "note": "D-48 condition for 16 -> 12 mm (C4 CR-C4-25); fins.py raises if it does not fit",
-   "value": 0.0037007603971862986
+   "value": 0.010626789793156712
   },
   {
    "id": "CL-D3-TAIL-EMBED",
@@ -804,7 +804,7 @@
     "FIN-011-URO"
    ],
    "how": "Measure on the dry fit; C6 strip-anchor coupon",
-   "value": 0.7068537942333036
+   "value": 0.7074868672984458
   },
   {
    "id": "CL-D3-STRAP-EYE-RF",
@@ -930,17 +930,10 @@
   {
    "id": "CL-D3-ROOT-FILLET-RF",
    "type": "claim",
-   "title": "Half-fin root fillet joint reserve factor, foot side load, typical XPS strength (governing root)",
+   "title": "Half-fin root fillet joint reserve factor, foot side load, typical XPS strength (governing root; record since D-92: 10 / 13 mm cove, no strength credit)",
    "calc": "CALC-D3-ROOT",
    "output": "rf_fillet",
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0
-   },
-   "verifies": [
-    "R-LANDING-IMPACT"
-   ],
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -949,7 +942,7 @@
    ],
    "how": "T-D3-ROOT: side pull at the fin TE tip on a core offcut to 1.25 x 28 N, then to failure",
    "note": "R4: 15 mm cove fillets on the last 0.15 m of bonded root, 13 mm aft of the hinge (elevon end gap), none over the D6 slot on the lower roots. C6 multiplies this by its 0.5 foam knock-down (CL-C6-FIN-ROOT-RF), same as CL-D3-ROOT-FILLET-RF-ALLOW",
-   "value": 1.6091917219208356
+   "value": 1.1287609403254972
   },
   {
    "id": "CL-D3-ROOT-FILLET-RF-ALLOW",
@@ -958,14 +951,6 @@
    "calc": "CALC-D3-ROOT",
    "output": "rf_allow",
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0
-   },
-   "verifies": [
-    "R-LANDING-IMPACT",
-    "R-STRUCT-MARGIN"
-   ],
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -975,22 +960,15 @@
    ],
    "how": "T-C6-XPS-PULL (allowable) and T-D3-ROOT (joint)",
    "note": "CR-C6-24 asked >= 1.0 at 0.125 MPa. R5: FAILS on the D-65 side load (58.96 N ult, n 6.6) where R4 read 1.14 on mu F_foot at n 6.0. ASM-D3-ROOT-SHARE 0.5 agrees with C4's 3-D board share 0.47 (CL-C4-SIM-BOARD-SHARE). Fix offered in CR-D3-35: 15 mm zone forward to L_eff 0.185 m (CL-D3-ROOT-LEFF-REQ, +5 g) or C4's fillet-intact share / T-C6-XPS-PULL. The fillet is credited fail-safe only in the wing (D-68)",
-   "value": 0.8045958609604178
+   "value": 0.5643804701627486
   },
   {
    "id": "CL-D3-ROOT-LEFF-REQ",
    "type": "claim",
-   "title": "Root fillet full-leg length from the TE needed for RF 1.0 at the C6 allowable",
+   "title": "(record since D-92) Root fillet full-leg length from the TE needed for RF 1.0 at the C6 allowable",
    "calc": "CALC-D3-ROOT",
    "output": "leff_for_allow",
    "unit": "m",
-   "limit": {
-    "op": "<=",
-    "ref": "P:fin_detail.fin.root_fillet.eff_len_m"
-   },
-   "verifies": [
-    "R-LANDING-IMPACT"
-   ],
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -1000,7 +978,7 @@
    ],
    "how": "T-D3-ROOT on the chosen length",
    "note": "information for CR-D3-35: the drawn 0.150 m is short at the D-65 side load",
-   "value": 0.1829446612466125
+   "value": 0.28827030612244897
   },
   {
    "id": "CL-D3-BRACE-PCR",
@@ -1020,7 +998,7 @@
     "FIN-009-LR"
    ],
    "how": "C4 CL-C4-D3-MS-BRACE; T-C4-TAP-D3",
-   "value": 2.1149121571225393
+   "value": 2.2368318035647334
   },
   {
    "id": "CL-D3-BRACE-KY",
@@ -1033,7 +1011,7 @@
     "FIN-009-UR"
    ],
    "how": "Information only since C4 CR-C4-16: the brace stores 2-6 % of the modal strain energy; the mode check is CL-C4-D3-SEP (two layers, brace 10 x 2: 0.39)",
-   "value": 2632031.764132316
+   "value": 2939173.393294017
   },
   {
    "id": "CL-D3-BRACE-L",
@@ -1046,7 +1024,7 @@
     "FIN-009-UR"
    ],
    "how": "Measure on the jig",
-   "value": 0.14477110381564406
+   "value": 0.13954165148800554
   },
   {
    "id": "CL-D3-BRACE-DZ",
@@ -1059,7 +1037,7 @@
     "FIN-008-UR"
    ],
    "how": "C4 modelled this value (CL-C4-D3-*); kept at R3 by the 12 mm ear flush with the collar top",
-   "value": 0.03650000000000003
+   "value": 0.04250000000000001
   },
   {
    "id": "CL-D3-WIRE-HOLE-CLEAR",
@@ -1146,7 +1124,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
-   "value": 433.3,
+   "value": 432.0,
    "note": "from make_fins.py (CAD volumes x densities). R4 against the D-48 418 g: collar 16 -> 12 mm -2.0 g (not -3: the 12 mm ear already spanned the ring top), ESC pads 31 mm +0.8 g, and the 15 mm root fillets now CAD bodies at 0.55 g/cm3 (CL-D3-FILLET-MASS) in place of the 3 g/root estimate: +20 g where D-48 booked +3 g. R4b (CR-A3-26): forward sealing bead 6 -> 4 mm -1.6 g. The laminate itself did not grow (CL-D3-LAMINATE-MASS); the rest of the overrun is the C6 root fillet (D-63: 437 g). R5 (CR-A1-63): cheeks +5 mm and the 7.5 mm face_ahead (mounts 47.8 g), pins 2.5 mm, collar 15 mm (C6-R5 needs 13.007 mm), block edges R 3 mm -0.4 g: 440.3 g; lever taken: fillet mix 0.55 -> 0.45 g/cm3 -5.6 g (T-D3-WEIGH cup <= 9.0 g). Block fill (C4) and cheeks (withdrawn: length set by the reach to the collar) not taken"
   },
   {
@@ -1161,7 +1139,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH (half-fin before / after fillets)",
-   "value": 25.0,
+   "value": 16.4,
    "note": "ASM-D3-FILLET-DENSITY 0.45 g/cm3 (R5 lever; 30.6 g at 0.55); was carried inside fin.root_joint_g 3.0 g per half-fin with the laps"
   },
   {
@@ -1176,7 +1154,7 @@
     "FIN-001-LL"
    ],
    "how": "T-D3-WEIGH (half-fin before its root fillets)",
-   "value": 19.32,
+   "value": 19.05,
    "note": "R3 FIN-001 22.32 g = laminate 19.32 + 3.0 g root-joint estimate. R4 laminate is the same within 0.1 g (D-54 stepped tip removes a little board); FIN-001 grew because the C6 15 mm fillets are now CAD bodies (CL-D3-FILLET-MASS). A one-layer tip zone is not offered: the square tip already needs the extended D5 cheeks to pass (CL-C4-D3-MS-FACE -0.54 as drawn)"
   }
  ]

@@ -68,3 +68,12 @@ received and how H1 resolved them.
 | CR-F5-05 | F5 | GT-14 = `T-F5-RANGE`; `T-F5-FS-BENCH` in GT-12 |
 | CR-I1-08 | I1 | GT-16, result by 10 Dec |
 | CR-B1-06, CR-C1-07, CR-E1-11, CR-B4-09, CR-E2-09, CR-B3-09, CR-A2-10 | — | as R1 (GT-02, GT-03, GT-05, GT-07) |
+
+## Dispositions 2026-11-13 (structures, D-91, D-101, D-102; Dillon Alcouffe)
+
+| Id | Disposition |
+|---|---|
+| CR-H1-22 | **Closed (D-101).** D5-R8 shoe RF 1.27 at 59.25 N ult; `CL-H1-D5-SIDE-RIM-SF` now reads D5's FEA (`CALC-H1-SIDE-POD` re-run); `T-D5-SIDE` 60 N on two R8 shoes |
+| CR-H1-23 | **Closed (D-102).** Flight pod brackets proofed at limit, 76.2 N +x and 51.4 N -z (`CL-H1-POD-BRACKET-F`, `-F-Z`); the 204.7 N crash force only on two test articles (`T-C3-BRACKET-CRASH`, `CL-H1-POD-BRACKET-CRASH-F`) |
+| CR-H1-24 (mount) | **Closed (D-91).** Grip 18 mm: C4 estimate 2 235 vs need 1 455 N·m/rad; GT-17 pass 1 455 (`CL-H1-MSTIFF-K-PASS`), spot travel at 1.5 kg <= 5.54 mm (`-SPOT-ACCEPT`), expected 3.86 mm |
+

@@ -99,107 +99,107 @@ Sources: `wing` ← redesign/subsystems/wing/parts.csv; `fins` ← redesign/subs
 
 | Subsystem | Alloc g (A1) | Basic g | Predicted g | Basic − alloc g | Status |
 |---|---|---|---|---|---|
-| wing | 393 | 392 | 411 | -1 | `PROPOSED` |
-| fins | 434 | 433 | 455 | -1 | `PROPOSED` |
-| pod | 146 | 145 | 153 | -1 | `PROPOSED` |
+| wing | 393 | 391 | 410 | -2 | `PROPOSED` |
+| fins | 434 | 432 | 454 | -2 | `PROPOSED` |
+| pod | 146 | 146 | 153 | -0 | `PROPOSED` |
 | landing | 60 | 59 | 65 | -1 | `PROPOSED` |
 | propulsion | 462 | 462 | 490 | +0 | `PROPOSED` |
 | power | 627 | 626 | 636 | -2 | `PROPOSED` |
-| avionics | 37 | 36 | 39 | -0 | `PROPOSED` |
+| avionics | 37 | 35 | 38 | -2 | `PROPOSED` |
 | harness | 142 | 141 | 159 | -1 | `PROPOSED` |
 | mechanisms | 73 | 72 | 81 | -1 | `PROPOSED` |
-| **total** | **2 600** | **2 367** | **2 490** | allocated 2 374 + growth 226 | gate margin +110 g |
+| **total** | **2 600** | **2 363** | **2 486** | allocated 2 374 + growth 226 | gate margin +114 g |
 
 | Gate case (predicted, all other items with growth) | Pack g | Predicted g | Gate margin g | Overrun to cover g | Claim | Status |
 |---|---|---|---|---|---|---|
-| listing minimum (D-64) | 546 | 2 486 | +114 | 100 | `CL-A3-GATE-MARGIN-546` | `MODELLED` |
-| as carried (`battery.mass_kg`) | 550 | 2 490 | +110 | 100 | `CL-A3-GATE-MARGIN` | `MODELLED` |
-| listed (D-64) | 551 | 2 491 | +109 | 100 | `CALC-A3-MASS` | `MODELLED` |
-| heavy bounding case, above the acceptance line (D-95) | 590 | 2 530 | +70 | 100 | `CL-A3-GATE-MARGIN-590` | rejected at `T-E2-WEIGH` |
+| listing minimum (D-64) | 546 | 2 482 | +118 | 100 | `CL-A3-GATE-MARGIN-546` | `MODELLED` |
+| as carried (`battery.mass_kg`) | 550 | 2 486 | +114 | 100 | `CL-A3-GATE-MARGIN` | `MODELLED` |
+| listed (D-64) | 551 | 2 487 | +113 | 100 | `CALC-A3-MASS` | `MODELLED` |
+| heavy bounding case, above the acceptance line (D-95) | 590 | 2 526 | +74 | 100 | `CL-A3-GATE-MARGIN-590` | rejected at `T-E2-WEIGH` |
 
-Pack acceptance (heaviest weighed pack that leaves the 100 g overrun under the gate): **560.4 g** (`CL-A3-PACK-ACCEPT`; SKU listing maximum 556 g, margin +4.4 g).
+Pack acceptance (heaviest weighed pack that leaves the 100 g overrun under the gate): **564.2 g** (`CL-A3-PACK-ACCEPT`; SKU listing maximum 556 g, margin +8.2 g).
 
 | Discipline | Basic g | Predicted g | Share |
 |---|---|---|---|
-| structure | 1 030 | 1 084 | 44 % |
+| structure | 1 027 | 1 082 | 43 % |
 | propulsion | 462 | 490 | 20 % |
 | energy | 550 | 550 | 23 % |
 | electrical | 217 | 246 | 9 % |
-| avionics | 36 | 39 | 2 % |
+| avionics | 35 | 38 | 1 % |
 | controls | 72 | 81 | 3 % |
 
 | CG case | x m (% chord) | y m | z m | Status |
 |---|---|---|---|---|
 | Allowable (A1/B3) | 0.047–0.051 (15%–16%) | ±0.005 | +0.017…+0.025 | `PROPOSED` |
-| Take-off, basic | 0.049 (15.3%) | -0.0015 | +0.018 | `CHECKED` |
-| Take-off, predicted (growth pro rata) | 0.050 (15.8%) | -0.0017 | +0.018 | `CHECKED` |
-| Pack slid -1.9 … +16.0 mm (spacers, crush stack) | 0.0484 … 0.0526 | | | — |
-| Pack 546 g: nominal station → slid +0.0 mm (+ aft) | 0.0490 → 0.0490 | | | `CHECKED` |
-| Pack 551 g: nominal station → slid +0.0 mm (+ aft) | 0.0488 → 0.0488 | | | `CHECKED` |
-| Pack 590 g: nominal station → slid +0.0 mm (+ aft) | 0.0475 → 0.0475 | | | `CHECKED` |
-| Pack 546 g at its D-98 station x -0.0360 (spacers 16 mm, clamped): basic → predicted | 0.0490 → 0.0506 (fwd +2.4 / aft +0.8 mm) | | | `CHECKED` |
-| Pack 551 g at its D-98 station x -0.0360 (spacers 16 mm, clamped): basic → predicted | 0.0488 → 0.0504 (fwd +2.2 / aft +1.0 mm) | | | `CHECKED` |
-| Pack 590 g at its D-98 station x -0.0320 (spacers 12 mm): basic → predicted | 0.0484 → 0.0500 (fwd +1.8 / aft +1.4 mm) | | | `CHECKED` |
-| No pack (handling) | 0.075 (23.3%) | -0.0020 | +0.009 | — |
+| Take-off, basic | 0.048 (15.1%) | -0.0015 | +0.018 | `CHECKED` |
+| Take-off, predicted (growth pro rata) | 0.050 (15.6%) | -0.0016 | +0.018 | `CHECKED` |
+| Pack slid -1.9 … +16.0 mm (spacers, crush stack) | 0.0479 … 0.0521 | | | — |
+| Pack 546 g: nominal station → slid +0.0 mm (+ aft) | 0.0485 → 0.0485 | | | `CHECKED` |
+| Pack 551 g: nominal station → slid +0.0 mm (+ aft) | 0.0483 → 0.0483 | | | `CHECKED` |
+| Pack 590 g: nominal station → slid +0.0 mm (+ aft) | 0.0470 → 0.0470 | | | `CHECKED` |
+| Pack 546 g at its D-98 station x -0.0360 (spacers 16 mm, clamped): basic → predicted | 0.0485 → 0.0501 (fwd +1.9 / aft +1.3 mm) | | | `CHECKED` |
+| Pack 551 g at its D-98 station x -0.0360 (spacers 16 mm): basic → predicted | 0.0483 → 0.0499 (fwd +1.7 / aft +1.5 mm) | | | `CHECKED` |
+| Pack 590 g at its D-98 station x -0.0300 (spacers 10 mm): basic → predicted | 0.0484 → 0.0500 (fwd +1.8 / aft +1.4 mm) | | | `CHECKED` |
+| No pack (handling) | 0.074 (23.1%) | -0.0020 | +0.009 | — |
 
 | CG result | Value | Unit | Source |
 |---|---|---|---|
-| Pack centroid now / needed for x = 0.049 m | -0.036 / -0.035 | m | `CL-A3-PACK-X-REQ` |
-| Pack shift still needed for the target (+ aft) | +1 | mm | `CALC-A3-CG` |
-| or the whole pod group (807 g: pod, power, avionics) by | +0 | mm | `CALC-A3-CG` |
-| or the four motor stations (propulsion, 462 g) by | +1 | mm | `CALC-A3-CG` |
-| Pack aft face to wing TE at that station | 288 | mm | `CL-A3-PACK-AFT-ROOM` |
+| Pack centroid now / needed for x = 0.049 m | -0.036 / -0.033 | m | `CL-A3-PACK-X-REQ` |
+| Pack shift still needed for the target (+ aft) | +3 | mm | `CALC-A3-CG` |
+| or the whole pod group (806 g: pod, power, avionics) by | +2 | mm | `CALC-A3-CG` |
+| or the four motor stations (propulsion, 462 g) by | +3 | mm | `CALC-A3-CG` |
+| Pack aft face to wing TE at that station | 286 | mm | `CL-A3-PACK-AFT-ROOM` |
 | CG shift per mm moved: pack / pod group / stations | 0.23 / 0.34 / 0.20 | mm/mm | `CALC-A3-CG` |
 | Forward room at the nominal station (nose block, stop, crush block, spreader taken) | 2 | mm | `CL-A3-PACK-FWD-ROOM` |
 | Hover trim split upper/lower pair (limit 1.25, D-18) | 1.214 | — | `CL-A3-HOVER-SPLIT` → `R-HOVER-SPLIT` |
 | Pack slide needed for 546–590 g beyond the trim travel | 0.0 | mm | `CL-A3-PACK-TRIM` |
 | Most forward pack centroid the nose stack allows | -0.0379 | m | `CALC-A3-CG` |
-| CG x range use: basic / packs at their stations (worst) / predicted | 0.05 / 0.66 / 0.60 | — | `CL-A3-CG-X-RANGE` / `CL-A3-CG-X-STATIONS` / `CL-A3-CG-X-PRED-RANGE` |
-| CG height z: basic / predicted (A1 copies to `cg.z_target_m`) | 0.0184 / 0.0180 | m | `CL-A3-CG-Z` / `CL-A3-CG-Z-PRED` |
+| CG x range use: basic / packs at their stations (worst) / predicted | 0.26 / 0.45 / 0.39 | — | `CL-A3-CG-X-RANGE` / `CL-A3-CG-X-STATIONS` / `CL-A3-CG-X-PRED-RANGE` |
+| CG height z: basic / predicted (A1 copies to `cg.z_target_m`) | 0.0183 / 0.0180 | m | `CL-A3-CG-Z` / `CL-A3-CG-Z-PRED` |
 | CG z range use (worst of basic, predicted) | 0.64 | — | `CL-A3-CG-Z-RANGE` |
 | Lateral CG offset / allowed 5 mm | 0.30 (-1.5 mm) | — | `CL-A3-CG-Y` |
-| CG height above the feet in the stance | 0.319 | m | `CALC-A3-CG` |
+| CG height above the feet in the stance | 0.320 | m | `CALC-A3-CG` |
 
 | Inertia about the CG | Ixx (roll, cruise) | Iyy (pitch) | Izz (yaw, cruise) | Ixz | Unit |
 |---|---|---|---|---|---|
-| Basic, take-off | 0.1775 | 0.0474 | 0.1739 | -0.0026 | kg·m² |
-| Radius of gyration | 0.274 | 0.142 | 0.271 | | m |
+| Basic, take-off | 0.1775 | 0.0472 | 0.1734 | -0.0026 | kg·m² |
+| Radius of gyration | 0.274 | 0.141 | 0.271 | | m |
 
-Groups for C1's loads model (`CL-A3-GROUPS`; inertia about each group's own centroid, aircraft axes; closure to the aircraft inertia 3.1e-16, `CL-A3-GROUPS-CLOSURE`):
+Groups for C1's loads model (`CL-A3-GROUPS`; inertia about each group's own centroid, aircraft axes; closure to the aircraft inertia 1.0e-15, `CL-A3-GROUPS-CLOSURE`):
 
 | Group | Station | Items | Mass g | x m | y m | z m | Ixx own | Iyy own | Izz own | Ixz own |
 |---|---|---|---|---|---|---|---|---|---|---|
 | **pack** | all | 1 | 550.0 | -0.0360 | +0.0000 | +0.0478 | 0.00021 | 0.00095 | 0.00093 | -0.00000 |
-| **centre** | all | 29 | 300.6 | -0.0012 | -0.0126 | +0.0460 | 0.00088 | 0.00126 | 0.00157 | +0.00018 |
-| **wing** | all | 15 | 391.8 | +0.1136 | +0.0005 | +0.0054 | 0.03991 | 0.00272 | 0.04258 | -0.00002 |
-| wing | C | 4 | 352.9 | +0.1093 | +0.0000 | +0.0055 | 0.03605 | 0.00229 | 0.03830 | -0.00001 |
+| **centre** | all | 29 | 299.6 | -0.0008 | -0.0125 | +0.0460 | 0.00088 | 0.00125 | 0.00156 | +0.00018 |
+| **wing** | all | 14 | 390.7 | +0.1138 | +0.0005 | +0.0054 | 0.03991 | 0.00272 | 0.04258 | -0.00002 |
+| wing | C | 3 | 351.8 | +0.1094 | +0.0000 | +0.0055 | 0.03605 | 0.00229 | 0.03830 | -0.00001 |
 | wing | L | 5 | 19.2 | +0.1531 | -0.3012 | +0.0042 | 0.00015 | 0.00018 | 0.00033 | -0.00001 |
 | wing | R | 6 | 19.7 | +0.1534 | +0.3034 | +0.0045 | 0.00015 | 0.00018 | 0.00033 | -0.00001 |
-| **fins** | all | 46 | 385.2 | +0.1067 | +0.0000 | +0.0024 | 0.04258 | 0.00665 | 0.04070 | +0.00000 |
+| **fins** | all | 46 | 380.5 | +0.1041 | +0.0000 | +0.0023 | 0.04208 | 0.00651 | 0.04012 | -0.00001 |
 | fins | L | 5 | 87.8 | +0.0552 | -0.3146 | +0.0040 | 0.00039 | 0.00036 | 0.00005 | +0.00000 |
-| fins | LL | 9 | 52.4 | +0.1483 | -0.3152 | -0.1141 | 0.00021 | 0.00057 | 0.00038 | +0.00008 |
-| fins | LR | 9 | 52.4 | +0.1483 | +0.3152 | -0.1141 | 0.00021 | 0.00057 | 0.00038 | +0.00008 |
+| fins | LL | 9 | 51.2 | +0.1449 | -0.3152 | -0.1172 | 0.00018 | 0.00053 | 0.00037 | +0.00006 |
+| fins | LR | 9 | 51.2 | +0.1449 | +0.3152 | -0.1172 | 0.00018 | 0.00053 | 0.00037 | +0.00006 |
 | fins | R | 5 | 87.8 | +0.0552 | +0.3146 | +0.0040 | 0.00039 | 0.00036 | 0.00005 | +0.00000 |
-| fins | UL | 9 | 52.4 | +0.1512 | -0.3152 | +0.1160 | 0.00021 | 0.00058 | 0.00040 | -0.00008 |
-| fins | UR | 9 | 52.4 | +0.1512 | +0.3152 | +0.1160 | 0.00021 | 0.00058 | 0.00040 | -0.00008 |
-| **stations** | all | 44 | 518.9 | +0.0178 | +0.0000 | +0.0000 | 0.07152 | 0.01783 | 0.05480 | -0.00000 |
-| stations | LL | 11 | 129.7 | +0.0178 | -0.3219 | -0.1811 | 0.00018 | 0.00020 | 0.00026 | +0.00008 |
-| stations | LR | 11 | 129.7 | +0.0178 | +0.3219 | -0.1811 | 0.00018 | 0.00020 | 0.00026 | +0.00008 |
-| stations | UL | 11 | 129.7 | +0.0178 | -0.3219 | +0.1811 | 0.00018 | 0.00020 | 0.00026 | -0.00008 |
-| stations | UR | 11 | 129.7 | +0.0178 | +0.3219 | +0.1811 | 0.00018 | 0.00020 | 0.00026 | -0.00008 |
-| **landing** | all | 18 | 59.1 | +0.3115 | +0.0000 | +0.0003 | 0.00887 | 0.00252 | 0.00640 | +0.00000 |
+| fins | UL | 9 | 51.2 | +0.1472 | -0.3152 | +0.1187 | 0.00018 | 0.00054 | 0.00039 | -0.00007 |
+| fins | UR | 9 | 51.2 | +0.1472 | +0.3152 | +0.1187 | 0.00018 | 0.00054 | 0.00039 | -0.00007 |
+| **stations** | all | 44 | 522.4 | +0.0179 | +0.0000 | +0.0000 | 0.07195 | 0.01791 | 0.05516 | -0.00000 |
+| stations | LL | 11 | 130.6 | +0.0179 | -0.3219 | -0.1809 | 0.00018 | 0.00020 | 0.00026 | +0.00008 |
+| stations | LR | 11 | 130.6 | +0.0179 | +0.3219 | -0.1809 | 0.00018 | 0.00020 | 0.00026 | +0.00008 |
+| stations | UL | 11 | 130.6 | +0.0179 | -0.3219 | +0.1809 | 0.00018 | 0.00020 | 0.00026 | -0.00008 |
+| stations | UR | 11 | 130.6 | +0.0179 | +0.3219 | +0.1809 | 0.00018 | 0.00020 | 0.00026 | -0.00008 |
+| **landing** | all | 18 | 58.9 | +0.3108 | +0.0000 | +0.0003 | 0.00885 | 0.00252 | 0.00638 | +0.00000 |
 | landing | L | 1 | 0.7 | +0.3105 | -0.5690 | -0.0002 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
-| landing | LL | 4 | 14.4 | +0.3115 | -0.3200 | -0.2079 | 0.00000 | 0.00001 | 0.00001 | -0.00000 |
-| landing | LR | 4 | 14.4 | +0.3115 | +0.3200 | -0.2079 | 0.00000 | 0.00001 | 0.00001 | -0.00000 |
+| landing | LL | 4 | 14.3 | +0.3108 | -0.3200 | -0.2082 | 0.00000 | 0.00001 | 0.00001 | -0.00000 |
+| landing | LR | 4 | 14.3 | +0.3108 | +0.3200 | -0.2082 | 0.00000 | 0.00001 | 0.00001 | -0.00000 |
 | landing | R | 1 | 0.7 | +0.3105 | +0.5690 | -0.0002 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
-| landing | UL | 4 | 14.4 | +0.3115 | -0.3200 | +0.2079 | 0.00000 | 0.00001 | 0.00001 | +0.00000 |
-| landing | UR | 4 | 14.4 | +0.3115 | +0.3200 | +0.2079 | 0.00000 | 0.00001 | 0.00001 | +0.00000 |
+| landing | UL | 4 | 14.4 | +0.3108 | -0.3200 | +0.2082 | 0.00000 | 0.00001 | 0.00001 | +0.00000 |
+| landing | UR | 4 | 14.4 | +0.3108 | +0.3200 | +0.2082 | 0.00000 | 0.00001 | 0.00001 | +0.00000 |
 | **mechanisms** | all | 26 | 72.1 | +0.2166 | +0.0000 | -0.0022 | 0.00622 | 0.00009 | 0.00630 | -0.00000 |
 | mechanisms | L | 13 | 36.1 | +0.2166 | -0.2885 | -0.0022 | 0.00011 | 0.00004 | 0.00015 | -0.00000 |
 | mechanisms | R | 13 | 36.1 | +0.2166 | +0.2885 | -0.0022 | 0.00011 | 0.00004 | 0.00015 | -0.00000 |
 | **harness** | all | 2 | 89.1 | +0.0782 | +0.0000 | +0.0049 | 0.00620 | 0.00000 | 0.00620 | -0.00000 |
-| harness | L | 1 | 44.6 | +0.0782 | -0.2638 | +0.0049 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
-| harness | R | 1 | 44.6 | +0.0782 | +0.2638 | +0.0049 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
+| harness | L | 1 | 44.5 | +0.0782 | -0.2638 | +0.0049 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
+| harness | R | 1 | 44.5 | +0.0782 | +0.2638 | +0.0049 | 0.00000 | 0.00000 | 0.00000 | -0.00000 |
 
 (own inertias in kg·m²)
 

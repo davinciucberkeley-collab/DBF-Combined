@@ -9,7 +9,7 @@
    "id": "ASM-D1-PART-MASSES",
    "type": "assumption",
    "title": "Wing part masses (CAD estimate)",
-   "text": "Declared mass of every wing instance node in subsystems/wing/interfaces.json: WNG-001, WNG-002, WNG-003, WNG-004-R, WNG-004-L, WNG-005-R, WNG-005-L, WNG-006-R, WNG-006-L, WNG-007, WNG-011-R, WNG-011-L, WNG-012-R, WNG-012-L, WNG-020",
+   "text": "Declared mass of every wing instance node in subsystems/wing/interfaces.json: WNG-001, WNG-002, WNG-003, WNG-004-R, WNG-004-L, WNG-005-R, WNG-005-L, WNG-006-R, WNG-006-L, WNG-011-R, WNG-011-L, WNG-012-R, WNG-012-L, WNG-020",
    "basis": "team/D1/wing_data.py: XPS volume x 30 kg/m3, tape arc length x 0.065 kg/m2, spar 0.102 kg/m, C2 plug and slot-fill masses",
    "value": [
     201.9,
@@ -21,7 +21,6 @@
     4.0,
     1.0,
     1.0,
-    1.1,
     3.7,
     3.7,
     3.5,
@@ -53,7 +52,6 @@
     0.08,
     0.0625,
     0.0625,
-    0.0633,
     0.2769,
     0.2769,
     0.2776,
@@ -230,8 +228,8 @@
     "x": "ASM-D1-PART-CGX"
    },
    "outputs": {
-    "mass_g": 391.8,
-    "cg_x": 0.11363164880040837
+    "mass_g": 390.7,
+    "cg_x": 0.11377335551574098
    },
    "input_values": {
     "m": [
@@ -244,7 +242,6 @@
      4.0,
      1.0,
      1.0,
-     1.1,
      3.7,
      3.7,
      3.5,
@@ -261,7 +258,6 @@
      0.08,
      0.0625,
      0.0625,
-     0.0633,
      0.2769,
      0.2769,
      0.2776,
@@ -452,7 +448,6 @@
     "WNG-005-L",
     "WNG-006-R",
     "WNG-006-L",
-    "WNG-007",
     "WNG-011-R",
     "WNG-011-L",
     "WNG-012-R",
@@ -460,7 +455,7 @@
     "WNG-020"
    ],
    "how": "T-D1-WEIGH: weigh the cut core, the tube, the plugs, the tape used and the finished wing on a 1 g scale.",
-   "value": 391.8
+   "value": 390.7
   },
   {
    "id": "CL-D1-WING-CG-X",
@@ -479,7 +474,6 @@
     "WNG-005-L",
     "WNG-006-R",
     "WNG-006-L",
-    "WNG-007",
     "WNG-011-R",
     "WNG-011-L",
     "WNG-012-R",
@@ -487,7 +481,7 @@
     "WNG-020"
    ],
    "how": "Balance the finished bare wing (no pod, fins) on two knife edges along the span; read x from the LE.",
-   "value": 0.11363164880040837
+   "value": 0.11377335551574098
   },
   {
    "id": "CL-D1-ELEVON-FRAC",
@@ -801,25 +795,6 @@
    "value": 0.045527
   },
   {
-   "id": "CL-D1-RECESS-FILLET",
-   "type": "claim",
-   "title": "Recess-step fillet floor leg (x 0.065, |y| <= 0.070)",
-   "calc": "CALC-D1-D68",
-   "output": "fillet_floor",
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.005
-   },
-   "parts": [
-    "WNG-001",
-    "WNG-007",
-    "POD-001"
-   ],
-   "how": "Steel rule on the sanded fillet before the pod goes in: 5 mm along the floor, flush with the step top.",
-   "value": 0.005
-  },
-  {
    "id": "CL-D1-JR-RECESS-WALL",
    "type": "claim",
    "title": "Foam between F2's JR recess and the servo pocket",
@@ -864,11 +839,10 @@
     "CL-D1-POCKET-BEAD-LEG",
     "CL-D1-CUTOUT-CORNER-R",
     "CL-D1-LE-SEAM-X",
-    "CL-D1-RECESS-FILLET",
     "CL-D1-JR-RECESS-WALL"
    ],
    "state": "planned",
-   "procedure": "Spar slides in the slot with 0.1-0.3 mm per side; both blocks drop into their pockets; anchor saddles seat on the spar; pod shell sits flat in the recess; grooves and pocket gauged against BUILD.md step checks; pocket and cut-out corner radii by gauge, lip-bead chamfer depth, recess-step fillet legs, LE strip edges by rule"
+   "procedure": "Spar slides in the slot with 0.1-0.3 mm per side; both blocks drop into their pockets; anchor saddles seat on the spar; pod shell sits flat in the recess; grooves and pocket gauged against BUILD.md step checks; pocket and cut-out corner radii by gauge, lip-bead chamfer depth, square recess-step corner (no fillet, D-103), LE strip edges by rule"
   },
   {
    "id": "T-D1-THROW",

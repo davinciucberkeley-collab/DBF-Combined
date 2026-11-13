@@ -8,15 +8,15 @@
    "name": "Pod shell (foam-board box, XPS LE filler, printed nose lip and antenna tube B)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 24.7,
+   "mass_g": 24.8,
    "material": "foam board + PETG",
    "cg_xyz_m": [
-    -0.0391,
+    -0.0388,
     -0.001,
-    0.0432
+    0.0431
    ],
    "make_or_buy": "make",
-   "notes": "floor (front edge notched 4 x 54 mm for the forward-stop T, D-69), 2 side walls (16 x 12 mm power/DShot exits, CR-F2-03; bracket flanges bonded inside), nose wall at x -0.140 (D-62; pitot, vent and antenna holes), aft wall (vent + servo-lead exits), aft deck; the forward stop sits on a 1 mm epoxy line on the nose wall; 6 mm microballoon fillets floor-to-wall at the straps (CR-C6-17); light tape on the top (CR-E3-03); mass EST from CAD (team/D2/pod_data.py): PETG plate 2.4 g, XPS 0.5 g, fillet_corners 1.5 g, foam board 14.8 g, glue_shell 4.0 g, tape_light 1.5 g"
+   "notes": "floor (front edge notched 4 x 54 mm for the forward-stop T, D-69), 2 side walls (16 x 12 mm power/DShot exits, CR-F2-03; bracket flanges bonded inside), nose wall at x -0.140 (D-62; pitot, vent and antenna holes), aft wall (vent + servo-lead exits), aft deck; the forward stop sits on a 1 mm epoxy line on the nose wall; 6 mm microballoon fillets floor-to-wall at the straps (CR-C6-17); light tape on the top (CR-E3-03); mass EST from CAD (team/D2/pod_data.py): PETG plate 2.4 g, XPS 0.5 g, fillet_corners 1.5 g, foam board 14.9 g, glue_shell 4.0 g, tape_light 1.5 g"
   },
   {
    "id": "POD-002",
@@ -527,7 +527,6 @@
   "E-AVN-07",
   "E-AVN-10",
   "E-HRN-01",
-  "E-WNG-17",
   "E-PWR-104",
   "E-PWR-106"
  ]

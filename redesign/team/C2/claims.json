@@ -4,7 +4,8 @@
  "params": [
   "../../params/params.json",
   "params.json",
-  "fea/params.json"
+  "fea/params.json",
+  "vib/params.json"
  ],
  "nodes": [
   {
@@ -149,11 +150,11 @@
     "SRC-C2-ROARK"
    ],
    "outputs": {
-    "sigma_pa": 62594451.90812092,
+    "sigma_pa": 62587921.84590675,
     "I_m4": 3.645032876327555e-09
    },
    "input_values": {
-    "Mb": 20.741712280073166,
+    "Mb": 20.739548435395427,
     "D": 0.022,
     "d": 0.02
    }
@@ -172,11 +173,11 @@
     "d": "P:wing.spar.id_m"
    },
    "outputs": {
-    "value": 13821608.334245913
+    "value": 13764119.19807867
    },
    "input_values": {
-    "T": 8.492978398717925,
-    "V": 33.20213202806062,
+    "T": 8.454878501359838,
+    "V": 33.20212880732039,
     "D": 0.022,
     "d": 0.02
    }
@@ -769,6 +770,159 @@
    }
   },
   {
+   "id": "SRC-C2-ISO21940",
+   "type": "source",
+   "title": "ISO 21940-11 balance quality grades (summary page)",
+   "kind": "web",
+   "url": "https://www.fabrico.io/blog/iso-21940-balance-quality-grades/",
+   "checked": "2026-11-13",
+   "where": "permissible specific unbalance e = G x 1000 / omega (um, G in mm/s, omega in rad/s); G 6.3 fans, G 16 drive and propeller shafts with special requirements, G 40 car wheels (the standard itself was not read)"
+  },
+  {
+   "id": "SRC-C2-AP-VIBE",
+   "type": "source",
+   "title": "ArduPilot: Measuring Vibration",
+   "kind": "web",
+   "url": "https://ardupilot.org/copter/docs/common-measuring-vibration.html",
+   "checked": "2026-11-13",
+   "where": "VIBE = per-axis standard deviation of the primary accel (high-passed 5 Hz, squared, low-passed 2 Hz, square root); below 30 m/s/s normally acceptable, above 30 may have problems, above 60 nearly always problems with position or altitude hold"
+  },
+  {
+   "id": "SRC-C2-AP-NOTCH",
+   "type": "source",
+   "title": "ArduPilot: Managing Gyro Noise with the Dynamic Harmonic Notch Filters",
+   "kind": "web",
+   "url": "https://ardupilot.org/copter/docs/common-imu-notch-filtering.html",
+   "checked": "2026-11-13",
+   "where": "harmonic notches act on the gyro signals; INS_HNTCH_MODE 3 = ESC telemetry rpm tracking; INS_HNTCH_HMNCS harmonics of the base frequency"
+  },
+  {
+   "id": "ASM-C2-BALANCE-G",
+   "type": "assumption",
+   "title": "Rotor residual unbalance at ISO balance grade G 16 (prop + motor bell)",
+   "text": "Residual unbalance per rotor U = m_rot G / Omega_hover with m_rot = prop 17 g + bell 40 g and G 16 mm/s: U = 1.61 g mm (P:c2vib.unbalance_kgm). Met by balancing each prop on the BUILD-GUIDE magnetic balancer to <= 0.8 g mm (half of U; the other half is left to the factory-balanced bell): T-C2-PROP-BALANCE",
+   "basis": "EST. G 16 is the grade ISO 21940-11 gives propeller shafts with special requirements (SRC-C2-ISO21940); bell 40 g is the ring behind ASM-C1-BELL-INERTIA",
+   "value": 0.016,
+   "unit": "m/s",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-C2-ISO21940"
+   ]
+  },
+  {
+   "id": "ASM-C2-SPAR-FATIGUE",
+   "type": "assumption",
+   "title": "Spar fatigue stress-amplitude allowable 105 MPa",
+   "text": "Bending-stress amplitude the 22 x 20 CF spar may carry for the rotor-order cycles of the aircraft's life (90 Hz x 100 flight hours = 3.3e7 cycles)",
+   "basis": "EST: 0.3 x ASM-C2-SPAR-SIGMA 350 MPa; unidirectional CFRP keeps a larger fraction of its static strength at 1e7-1e8 cycles, 0.3 also covers the unbranded tube; no coupon planned",
+   "value": 105000000.0,
+   "unit": "Pa",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-C2-VIB-IMU-1P",
+   "type": "calculation",
+   "title": "IMU vibration level (VIBE equivalent), 1P unbalance resonance dwell, sustained band, worst corner",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "vib_imu_1p",
+   "equation": "vib_response.py: modal superposition, zeta 1 %, F = U Omega^2 per rotor, rotors added in magnitude, largest axis at AVN-001 -> peak a; VIBE is the per-axis standard deviation of the high-passed accel (SRC-C2-AP-VIBE), for a sine VIBE = a / sqrt 2",
+   "inputs": {
+    "a": "P:c2vib.imu_acc_1p_ms2"
+   },
+   "units": {
+    "a": "m/s2"
+   },
+   "outputs": {
+    "value": 18.02660904850972,
+    "peak": 25.493475
+   },
+   "input_values": {
+    "a": 25.493475
+   }
+  },
+  {
+   "id": "CALC-C2-VIB-IMU-1P-FULL",
+   "type": "calculation",
+   "title": "IMU acceleration amplitude, 1P, every rpm to full throttle",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_vib_imu_1p_full",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2vib.imu_acc_1p_full_ms2"
+   },
+   "outputs": {
+    "value": 113.644611
+   },
+   "input_values": {
+    "v": 113.644611
+   }
+  },
+  {
+   "id": "CALC-C2-VIB-GYRO-1P",
+   "type": "calculation",
+   "title": "IMU angular-rate amplitude, 1P, sustained band",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_vib_gyro_1p",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2vib.imu_rate_1p_dps"
+   },
+   "outputs": {
+    "value": 40.013192
+   },
+   "input_values": {
+    "v": 40.013192
+   }
+  },
+  {
+   "id": "CALC-C2-VIB-SPAR-1P",
+   "type": "calculation",
+   "title": "Spar bending-stress amplitude, 1P, sustained band, spar alone",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "pt_calc_c2_vib_spar_1p",
+   "equation": "value from wing_struct.py",
+   "inputs": {
+    "v": "P:c2vib.spar_sigma_1p_pa"
+   },
+   "outputs": {
+    "value": 19060310.507135
+   },
+   "input_values": {
+    "v": 19060310.507135
+   }
+  },
+  {
+   "id": "CALC-C2-VIB-2P-ALLOW",
+   "type": "calculation",
+   "title": "2P blade-pass load per rotor that brings the IMU to the VIBE limit",
+   "script": "redesign/team/C2/c2_claims.py",
+   "function": "vib_2p_allow",
+   "equation": "F_2P,allow = sqrt 2 VIBE_max / a_IMU,peak per N (sustained 2P band, resonance dwell, worst corner; VIBE = peak / sqrt 2 for a sine); fraction = F / T_hover; spar stress at that load = sigma per N x F",
+   "inputs": {
+    "a_n": "P:c2vib.imu_acc_2p_per_n",
+    "lim": "P:requirements.fc_vibe_max_ms2",
+    "t_h": "P:c2vib.t_hover_n",
+    "s_n": "P:c2vib.spar_sigma_2p_per_n"
+   },
+   "units": {
+    "a_n": "m/s2/N",
+    "lim": "m/s2",
+    "t_h": "N",
+    "s_n": "Pa/N"
+   },
+   "outputs": {
+    "F_allow_n": 0.5722701175268669,
+    "frac_hover": 0.08977843782488994,
+    "spar_sigma_pa": 13769226.222382205
+   },
+   "input_values": {
+    "a_n": 74.13703,
+    "lim": 30.0,
+    "t_h": 6.374249,
+    "s_n": 24060711.542807
+   }
+  },
+  {
    "id": "CL-C2-SPAR-SIGMA-ULT",
    "type": "claim",
    "title": "Spar root bending stress, ultimate, spar alone",
@@ -786,7 +940,7 @@
     "WNG-002"
    ],
    "how": "T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step",
-   "value": 62594451.90812092
+   "value": 62587921.84590675
   },
   {
    "id": "CL-C2-SPAR-SIGMA-ENV",
@@ -826,7 +980,7 @@
     "WNG-002"
    ],
    "how": "T-C2-TWIST loads the wing in torsion to CL-C1-WING-TORSION-ULT / 1.5 (limit)",
-   "value": 13821608.334245913
+   "value": 13764119.19807867
   },
   {
    "id": "CL-C2-SPAR-BUCKLE",
@@ -1010,13 +1164,31 @@
   {
    "id": "CL-C2-WING-MODE-SEP",
    "type": "claim",
-   "title": "Wing modes with >= 10 % motor/mount energy: separation from hover/cruise 1P, 2P",
+   "title": "Wing modes with >= 10 % motor/mount energy: separation from hover/cruise 1P, 2P (record; R-VIBRATION (b) closes the wing modes by response, CL-C2-VIB-*)",
    "calc": "CALC-C2-MODESEP",
    "output": "value",
    "unit": "-",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003",
+    "FIN-002-L",
+    "FIN-002-R"
+   ],
+   "how": "T-C2-TAP-TEST on the built airframe with motors fitted (frequencies within 15 % of the model)",
+   "note": "C2-R5 (2026-11-13, CR-A2-22): no limit. The 20 % window applies to the fin stations (R-VIBRATION (a), CL-C4-SIM-SEP); five station-participating wing modes lie in the 1P / 2P windows and no spar from 16 to 25 mm clears them (CR-C2-04), so the wing is checked by its forced response at resonance: CL-C2-VIB-IMU-1P, CL-C2-VIB-SPAR-1P, CL-C2-VIB-2P-ALLOW",
+   "value": 0.085156
+  },
+  {
+   "id": "CL-C2-VIB-IMU-1P",
+   "type": "claim",
+   "title": "IMU vibration level (VIBE, RMS) at 1P resonance dwell, sustained rpm band, worst stiffness corner (rotors balanced to G 16, gel isolators not credited)",
+   "calc": "CALC-C2-VIB-IMU-1P",
+   "output": "value",
+   "unit": "m/s2",
    "limit": {
-    "op": ">=",
-    "ref": "P:requirements.vibration_sep_frac"
+    "op": "<=",
+    "ref": "P:requirements.fc_vibe_max_ms2"
    },
    "verifies": [
     "R-VIBRATION"
@@ -1025,11 +1197,138 @@
     "WNG-001",
     "WNG-002",
     "WNG-003",
+    "AVN-001",
     "FIN-002-L",
     "FIN-002-R"
    ],
-   "how": "T-C2-TAP-TEST on the built airframe with motors fitted; hover VIBE < 30 m/s2 with the F4 harmonic notch",
-   "value": 0.085156
+   "how": "T-C2-PROP-BALANCE on every prop, then T-C2-HOVER-VIBE (VIBE < 30 m/s2, Clip 0) and T-C2-TAP-TEST",
+   "assumes": [
+    "ASM-C2-BALANCE-G",
+    "ASM-C2-WING-ZETA"
+   ],
+   "cites": [
+    "SRC-C2-AP-VIBE",
+    "SRC-C2-ISO21940"
+   ],
+   "value": 18.02660904850972
+  },
+  {
+   "id": "CL-C2-VIB-SPAR-1P",
+   "type": "claim",
+   "title": "Spar bending-stress amplitude at 1P resonance dwell, sustained band, spar alone",
+   "calc": "CALC-C2-VIB-SPAR-1P",
+   "output": "value",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C2-SPAR-FATIGUE"
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TAP-TEST (frequencies, damping); inspect the spar at the block and pod after each 10 flight hours",
+   "assumes": [
+    "ASM-C2-BALANCE-G",
+    "ASM-C2-WING-ZETA"
+   ],
+   "value": 19060310.507135
+  },
+  {
+   "id": "CL-C2-VIB-IMU-1P-FULL",
+   "type": "claim",
+   "title": "IMU acceleration amplitude (peak) at 1P resonance dwell, any rpm to full throttle (record: full throttle is a <= 10 s transient, D-42)",
+   "calc": "CALC-C2-VIB-IMU-1P-FULL",
+   "output": "value",
+   "unit": "m/s2",
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-C2-HOVER-VIBE: Clip stays 0 through the full-throttle climb",
+   "value": 113.644611
+  },
+  {
+   "id": "CL-C2-VIB-GYRO-1P",
+   "type": "claim",
+   "title": "IMU angular-rate amplitude at 1P, sustained band (taken out of the rate loop by the rpm-tracking harmonic notch)",
+   "calc": "CALC-C2-VIB-GYRO-1P",
+   "output": "value",
+   "unit": "deg/s",
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-C2-HOVER-VIBE: gyro FFT (INS_LOG_BAT) with the notch on, no peak at 1P / 2P",
+   "cites": [
+    "SRC-C2-AP-NOTCH"
+   ],
+   "value": 40.013192
+  },
+  {
+   "id": "CL-C2-VIB-2P-ALLOW",
+   "type": "claim",
+   "title": "2P blade-pass load per rotor that brings the IMU to 30 m/s2 (sustained band, resonance dwell, worst corner)",
+   "calc": "CALC-C2-VIB-2P-ALLOW",
+   "output": "F_allow_n",
+   "unit": "N",
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003",
+    "AVN-001"
+   ],
+   "how": "T-C2-HOVER-VIBE: VIBE < 30 m/s2 in a 60 s tethered hover and at the cruise-rpm throttle step",
+   "assumes": [
+    "ASM-C2-WING-ZETA"
+   ],
+   "cites": [
+    "SRC-C2-AP-VIBE"
+   ],
+   "note": "The 2P load magnitude is not known (no source found 2026-11-13); this is the allowance, not a prediction. T-C2-HOVER-VIBE measures the outcome",
+   "value": 0.5722701175268669
+  },
+  {
+   "id": "CL-C2-VIB-2P-ALLOW-FRAC",
+   "type": "claim",
+   "title": "Same 2P allowance as a fraction of the hover thrust per rotor",
+   "calc": "CALC-C2-VIB-2P-ALLOW",
+   "output": "frac_hover",
+   "unit": "-",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-HOVER-VIBE",
+   "value": 0.08977843782488994
+  },
+  {
+   "id": "CL-C2-VIB-SPAR-2P",
+   "type": "claim",
+   "title": "Spar bending-stress amplitude at the 2P allowance (the IMU limit governs, not the spar)",
+   "calc": "CALC-C2-VIB-2P-ALLOW",
+   "output": "spar_sigma_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C2-SPAR-FATIGUE"
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ],
+   "how": "T-C2-TAP-TEST; spar inspection every 10 flight hours",
+   "value": 13769226.222382205
   },
   {
    "id": "CL-C2-F-TORSION-ANTI",
@@ -1415,6 +1714,30 @@
    ],
    "state": "planned",
    "procedure": "Aircraft hung on bungees (free-free), phone accelerometer app (>= 400 Hz) taped at the pod and at a fin tip; tap a motor can fore-aft and a fin tip sideways; FFT peaks to 400 Hz. Pass: model within 15 %, no peak within 20 % of the hover/cruise 1P/2P, or F4 notch set on it; damping ratio from the half-power bandwidth of the two torsion peaks (>= CL-C2-WING-ZETA)"
+  },
+  {
+   "id": "T-C2-PROP-BALANCE",
+   "type": "test",
+   "title": "Prop static balance to <= 0.8 g mm",
+   "verifies": [
+    "CL-C2-VIB-IMU-1P",
+    "CL-C2-VIB-SPAR-1P"
+   ],
+   "state": "planned",
+   "procedure": "Each prop (and spare) on the magnetic balancer: balance until it stays put at any angle; then a 10 x 13 mm piece of the 60 g/m2 fairing tape (0.008 g, ASM-C4-TAPE-AREAL) stuck at 100 mm radius on either blade must turn it (proves the set-up resolves 0.8 g mm). Hub balanced too (tape on the light side of the hub). Record per prop"
+  },
+  {
+   "id": "T-C2-HOVER-VIBE",
+   "type": "test",
+   "title": "First tethered hover: IMU vibration with the wing modes driven",
+   "verifies": [
+    "CL-C2-VIB-IMU-1P",
+    "CL-C2-VIB-2P-ALLOW",
+    "CL-C2-VIB-IMU-1P-FULL",
+    "CL-C2-VIB-GYRO-1P"
+   ],
+   "state": "planned",
+   "procedure": "Balanced props (T-C2-PROP-BALANCE), K09L.param notch on, INS_LOG_BAT set. Tethered hover 60 s, then a slow throttle sweep from hover to the cruise-rpm level and one 2 s full-throttle step. Pass: VIBE X/Y/Z < 30 m/s2 (requirements.fc_vibe_max_ms2) throughout, Clip0-2 = 0, no gyro FFT peak above the floor at 1P / 2P with the notch on. If VIBE >= 30: re-balance, then softer gel isolators (AVN-006) before any free flight"
   },
   {
    "id": "T-C2-TWIST",

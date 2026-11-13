@@ -78,7 +78,7 @@ the mast bore.
 
 | Edge | To | How | Sized by |
 |---|---|---|---|
-| `E-POD-01` · `E-WNG-17` | `WNG-001` core · `WNG-007` fillet | shell bonded in the recess to bare foam (10 014 mm²); floor aft lower edge bevelled 45° onto D1's 5 mm recess-step fillet (D-69) | C3, C6 |
+| `E-POD-01` | `WNG-001` core | shell bonded in the recess to bare foam (10 014 mm²); floor aft end square on the recess step (D-103: fillet and bevel deleted) | C3, C6 |
 | `E-POD-09` | `WNG-002` spar | handle saddles and foot bridge bonded (1 445 mm²), one tie per foot; end of the aft-stop strut path since D-69 | C3, C2 |
 | `E-POD-14` | strut ↔ aft stop | pad epoxy-bedded on the stop back face (560 mm²), bearing | C3 |
 | `E-POD-15` | brackets ↔ side walls | flanges epoxied to the walls (2 × 1 232 mm²) | C3 |
@@ -88,7 +88,7 @@ the mast bore.
 | `E-POD-12` | `PWR-001` pack | thermal, insulating; heat leaves by the vents (44.8 °C at landing) | E3 |
 | `E-POD-02` … `-04`, `-07`, `-08` | internal | bonds (stop T and its flange, 1 mm line to the nose wall), hatch tongue and tab, strap slots, socket flange | C3, C6 |
 
-Acknowledged: `E-PWR-03/-04/-05`, `E-AVN-01` … `-05`, `-07`, `-10`, `E-HRN-01`, `E-WNG-17`.
+Acknowledged: `E-PWR-03/-04/-05`, `E-AVN-01` … `-05`, `-07`, `-10`, `E-HRN-01`.
 
 ## Mass budget
 

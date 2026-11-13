@@ -177,165 +177,165 @@
    "outputs": {
     "cases": {
      "A3 items as listed": {
-      "m_kg": 2.3668199999999993,
-      "x_m": 0.04886861654033687,
-      "z_m": 0.01835619058483535,
-      "h_m": 0.31913138345966313,
+      "m_kg": 2.3632999999999997,
+      "x_m": 0.04836555579063175,
+      "z_m": 0.018333537426479918,
+      "h_m": 0.31963444420936826,
       "x_pack_m": -0.036,
-      "a1_narrow_deg": 30.985530857492964,
-      "d5_narrow_pos_deg": 32.02948009831298,
-      "d5_narrow_neg_deg": 36.52451632675799,
-      "wide_deg": 45.07786823245328
+      "a1_narrow_deg": 30.94870156751825,
+      "d5_narrow_pos_deg": 31.9918381308976,
+      "d5_narrow_neg_deg": 36.47873798902186,
+      "wide_deg": 45.03274495594952
      },
      "pre-D-47 bay (pack -0.001), D5 feet": {
-      "m_kg": 2.366801712975158,
-      "x_m": 0.057869790068422425,
-      "z_m": 0.018349411681558906,
-      "h_m": 0.3101302099315776,
+      "m_kg": 2.3632982737671266,
+      "x_m": 0.057396452949492555,
+      "z_m": 0.018326619826519522,
+      "h_m": 0.3106035470505074,
       "x_pack_m": -0.001,
-      "a1_narrow_deg": 31.71474417753131,
-      "d5_narrow_pos_deg": 32.771966435792905,
-      "d5_narrow_neg_deg": 37.310929339600015,
-      "wide_deg": 45.89735592504946
+      "a1_narrow_deg": 31.67872624257438,
+      "d5_narrow_pos_deg": 32.73518337585349,
+      "d5_narrow_neg_deg": 37.26614884892537,
+      "wide_deg": 45.853685740625394
      },
      "B3 target, 550 g": {
-      "m_kg": 2.366801712975158,
-      "x_m": 0.049,
-      "z_m": 0.018349411681558906,
+      "m_kg": 2.3632982737671266,
+      "x_m": 0.048999999999999995,
+      "z_m": 0.018326619826519522,
       "h_m": 0.319,
-      "x_pack_m": -0.0389193351412222,
-      "a1_narrow_deg": 30.996839413633918,
-      "d5_narrow_pos_deg": 32.04096387404684,
-      "d5_narrow_neg_deg": 36.5350149495964,
+      "x_pack_m": -0.036828950475095754,
+      "a1_narrow_deg": 30.999847275608243,
+      "d5_narrow_pos_deg": 32.043905248271834,
+      "d5_narrow_neg_deg": 36.532371987860124,
       "wide_deg": 45.089664683473664
      },
      "B3 target, 590 g": {
-      "m_kg": 2.406801712975158,
-      "x_m": 0.048999999999999995,
-      "z_m": 0.018838867678863072,
+      "m_kg": 2.4032982737671267,
+      "x_m": 0.049,
+      "z_m": 0.018817168677574644,
       "h_m": 0.319,
-      "x_pack_m": -0.032958702250291905,
-      "a1_narrow_deg": 30.932199664964887,
-      "d5_narrow_pos_deg": 31.977752124327626,
-      "d5_narrow_neg_deg": 36.5917290763446,
+      "x_pack_m": -0.03101003857847909,
+      "a1_narrow_deg": 30.935067186038207,
+      "d5_narrow_pos_deg": 31.980556331209904,
+      "d5_narrow_neg_deg": 36.58921653872056,
       "wide_deg": 45.089664683473664
      },
      "B3 target, 546 g": {
-      "m_kg": 2.3628017129751586,
-      "x_m": 0.049,
-      "z_m": 0.01829955461880714,
-      "h_m": 0.319,
-      "x_pack_m": -0.039563432834564455,
-      "a1_narrow_deg": 31.00341884940449,
-      "d5_narrow_pos_deg": 32.047397869155034,
-      "d5_narrow_neg_deg": 36.52923325009682,
-      "wide_deg": 45.089664683473664
+      "m_kg": 2.359298273767127,
+      "x_m": 0.049000000000000016,
+      "z_m": 0.018276650086785987,
+      "h_m": 0.31899999999999995,
+      "x_pack_m": -0.03745773399505973,
+      "a1_narrow_deg": 31.006441163878872,
+      "d5_narrow_pos_deg": 32.050353368774346,
+      "d5_narrow_neg_deg": 36.526576824662264,
+      "wide_deg": 45.08966468347367
      },
      "B3 fwd limit, 590 g": {
-      "m_kg": 2.406801712975158,
-      "x_m": 0.0466,
-      "z_m": 0.018838867678863072,
+      "m_kg": 2.4032982737671267,
+      "x_m": 0.046599999999999996,
+      "z_m": 0.018817168677574644,
       "h_m": 0.3214,
-      "x_pack_m": -0.042749082099682374,
-      "a1_narrow_deg": 30.74318260500683,
-      "d5_narrow_pos_deg": 31.78514940900105,
-      "d5_narrow_neg_deg": 36.38641009486825,
+      "x_pack_m": -0.0407861671497352,
+      "a1_narrow_deg": 30.746039947371475,
+      "d5_narrow_pos_deg": 31.787944340156194,
+      "d5_narrow_neg_deg": 36.38390306491667,
       "wide_deg": 44.87493925174469
      },
      "B3 fwd limit, 546 g": {
-      "m_kg": 2.3628017129751586,
-      "x_m": 0.0466,
-      "z_m": 0.01829955461880714,
-      "h_m": 0.3214,
-      "x_pack_m": -0.04994937443005965,
-      "a1_narrow_deg": 30.814149543813993,
-      "d5_narrow_pos_deg": 31.854565324109025,
-      "d5_narrow_neg_deg": 36.324051731462625,
-      "wide_deg": 44.87493925174469
+      "m_kg": 2.359298273767127,
+      "x_m": 0.04660000000000001,
+      "z_m": 0.018276650086785987,
+      "h_m": 0.32139999999999996,
+      "x_pack_m": -0.04782827585777237,
+      "a1_narrow_deg": 30.817161179515505,
+      "d5_narrow_pos_deg": 31.857511095706275,
+      "d5_narrow_neg_deg": 36.321401170542856,
+      "wide_deg": 44.8749392517447
      },
      "B3 aft limit, 550 g": {
-      "m_kg": 2.366801712975158,
+      "m_kg": 2.3632982737671266,
       "x_m": 0.0514,
-      "z_m": 0.018349411681558906,
+      "z_m": 0.018326619826519522,
       "h_m": 0.3166,
-      "x_pack_m": -0.028591473120966972,
-      "a1_narrow_deg": 31.18818944503455,
-      "d5_narrow_pos_deg": 32.23587121198643,
-      "d5_narrow_neg_deg": 36.74221227273567,
+      "x_pack_m": -0.026516376189566475,
+      "a1_narrow_deg": 31.19120792399978,
+      "d5_narrow_pos_deg": 32.23882224203111,
+      "d5_narrow_neg_deg": 36.73956356067901,
       "wide_deg": 45.30600659457079
      },
      "D-62 station, 546 g": {
-      "m_kg": 2.3628017129751586,
-      "x_m": 0.04982344376042555,
-      "z_m": 0.01829955461880714,
-      "h_m": 0.3181765562395744,
+      "m_kg": 2.359298273767127,
+      "x_m": 0.04933735571722848,
+      "z_m": 0.018276650086785987,
+      "h_m": 0.3186626442827715,
       "x_pack_m": -0.036,
-      "a1_narrow_deg": 31.0688406649464,
-      "d5_narrow_pos_deg": 32.11404044411065,
-      "d5_narrow_neg_deg": 36.60009170885855,
-      "wide_deg": 45.16370915903869
+      "a1_narrow_deg": 31.033215232197787,
+      "d5_narrow_pos_deg": 32.077627550719626,
+      "d5_narrow_neg_deg": 36.55557735642791,
+      "wide_deg": 45.11997684066225
      },
      "D-62 station, 550 g": {
-      "m_kg": 2.366801712975158,
-      "x_m": 0.05014316054143426,
-      "z_m": 0.018349411681558906,
-      "h_m": 0.31785683945856574,
+      "m_kg": 2.3632982737671266,
+      "x_m": 0.04965836918622316,
+      "z_m": 0.018326619826519522,
+      "h_m": 0.3183416308137768,
       "x_pack_m": -0.034,
-      "a1_narrow_deg": 31.087718370928528,
-      "d5_narrow_pos_deg": 32.13353830502276,
-      "d5_narrow_neg_deg": 36.63345525012116,
-      "wide_deg": 45.192509641926094
+      "a1_narrow_deg": 31.052130707340147,
+      "d5_narrow_pos_deg": 32.09716510484905,
+      "d5_narrow_neg_deg": 36.5890084933891,
+      "wide_deg": 45.14885029722852
      },
      "D-62 station, 590 g": {
-      "m_kg": 2.406801712975158,
-      "x_m": 0.04972529212450757,
-      "z_m": 0.018838867678863072,
-      "h_m": 0.31827470787549245,
+      "m_kg": 2.4032982737671267,
+      "x_m": 0.04924796038336455,
+      "z_m": 0.018817168677574644,
+      "h_m": 0.31875203961663545,
       "x_pack_m": -0.03,
-      "a1_narrow_deg": 30.9897342208726,
-      "d5_narrow_pos_deg": 32.036368823990415,
-      "d5_narrow_neg_deg": 36.65417021155073,
-      "wide_deg": 45.15487330954604
+      "a1_narrow_deg": 30.954716291111588,
+      "d5_narrow_pos_deg": 32.000575382251014,
+      "d5_narrow_neg_deg": 36.61054254035674,
+      "wide_deg": 45.11194135995379
      },
      "no pack (parked)": {
-      "m_kg": 1.816801712975159,
-      "x_m": 0.07561580181388423,
-      "z_m": 0.0094338412814092,
-      "h_m": 0.2923841981861158,
+      "m_kg": 1.8132982737671275,
+      "x_m": 0.07503318132721337,
+      "z_m": 0.00938691071747304,
+      "h_m": 0.2929668186727866,
       "x_pack_m": null,
-      "a1_narrow_deg": 34.44886972805644,
-      "d5_narrow_pos_deg": 35.50136851626039,
-      "d5_narrow_neg_deg": 37.87790283275567,
-      "wide_deg": 47.582035316141045
+      "a1_narrow_deg": 34.40193350911605,
+      "d5_narrow_pos_deg": 35.45355429041966,
+      "d5_narrow_neg_deg": 37.81691384318979,
+      "wide_deg": 47.525233214889866
      }
     },
-    "a1_feet_r1_narrow_deg": 30.74318260500683,
+    "a1_feet_r1_narrow_deg": 30.746039947371475,
     "a1_feet_r1_nozcg_deg": 33.16025602862555,
-    "d5_a3_layout_deg": 32.771966435792905,
-    "x_pack_target_m": -0.0389193351412222,
-    "x_pack_light_m": -0.039563432834564455,
-    "x_pack_heavy_m": -0.032958702250291905,
-    "d5_r1_narrow_deg": 32.04096387404684,
+    "d5_a3_layout_deg": 32.73518337585349,
+    "x_pack_target_m": -0.036828950475095754,
+    "x_pack_light_m": -0.03745773399505973,
+    "x_pack_heavy_m": -0.03101003857847909,
+    "d5_r1_narrow_deg": 32.043905248271834,
     "d5_r1_nozcg_deg": 34.34813799339042,
-    "d5_worst_narrow_deg": 31.78514940900105,
+    "d5_worst_narrow_deg": 31.787944340156194,
     "worst_case": "B3 fwd limit, 590 g",
-    "d5_d47_worst_deg": 32.036368823990415,
+    "d5_d47_worst_deg": 32.000575382251014,
     "d47_worst_case": "D-62 station, 590 g",
-    "d47_cg_rise_m": 0.00772662952698816,
-    "d47_tip_change_deg": -0.6384281307701443,
+    "d47_cg_rise_m": 0.007738083763269399,
+    "d47_tip_change_deg": -0.6380182710044409,
     "d5_corner_deg": 30.9847247944542,
-    "d5_d47_plus5_deg": 31.636141503856877,
+    "d5_d47_plus5_deg": 31.601187234413914,
     "wide_r1_deg": 45.089664683473664,
-    "z_pad_for_33_m": 0.2255104339115648,
-    "m_r1_kg": 2.366801712975158,
-    "x_r1_m": 0.049,
-    "z_r1_m": 0.018349411681558906,
+    "z_pad_for_33_m": 0.22548764205652544,
+    "m_r1_kg": 2.3632982737671266,
+    "x_r1_m": 0.048999999999999995,
+    "z_r1_m": 0.018326619826519522,
     "h_r1_m": 0.319,
-    "m_empty_kg": 1.816801712975159,
-    "z_empty_m": 0.0094338412814092,
-    "h_empty_m": 0.2923841981861158,
-    "tip_with_residual_thrust_deg": 11.31734240456052,
-    "lam_max_for_err": 0.707354182039514
+    "m_empty_kg": 1.8132982737671275,
+    "z_empty_m": 0.00938691071747304,
+    "h_empty_m": 0.2929668186727866,
+    "tip_with_residual_thrust_deg": 11.318505712750282,
+    "lam_max_for_err": 0.7073858521678218
    },
    "input_values": {
     "items": [
@@ -475,21 +475,6 @@
       "redesign/subsystems/wing/parts.csv"
      ],
      [
-      "WNG-007",
-      "wing",
-      "structure",
-      1.1,
-      0.0633,
-      0.0,
-      0.0166,
-      0.0,
-      0.0,
-      0.0,
-      "CAD",
-      null,
-      "redesign/subsystems/wing/parts.csv"
-     ],
-     [
       "WNG-011",
       "wing",
       "structure",
@@ -568,10 +553,10 @@
       "FIN-001",
       "fins",
       "structure",
-      25.96,
-      0.2073,
+      23.55,
+      0.208,
       0.32,
-      0.0789,
+      0.0833,
       0.275,
       0.01,
       0.21,
@@ -583,10 +568,10 @@
       "FIN-001",
       "fins",
       "structure",
-      25.96,
-      0.2073,
+      23.55,
+      0.208,
       -0.32,
-      0.0789,
+      0.0833,
       0.275,
       0.01,
       0.21,
@@ -598,10 +583,10 @@
       "FIN-001",
       "fins",
       "structure",
-      25.96,
-      0.2013,
+      23.55,
+      0.2031,
       0.32,
-      -0.0763,
+      -0.0816,
       0.275,
       0.01,
       0.21,
@@ -613,10 +598,10 @@
       "FIN-001",
       "fins",
       "structure",
-      25.96,
-      0.2013,
+      23.55,
+      0.2031,
       -0.32,
-      -0.0763,
+      -0.0816,
       0.275,
       0.01,
       0.21,
@@ -658,10 +643,10 @@
       "FIN-003",
       "fins",
       "structure",
-      9.99,
-      0.0359,
+      10.85,
+      0.0366,
       0.3207,
-      0.1811,
+      0.179,
       0.0,
       0.0,
       0.0,
@@ -673,10 +658,10 @@
       "FIN-003",
       "fins",
       "structure",
-      9.99,
-      0.0359,
+      10.85,
+      0.0366,
       -0.3207,
-      0.1811,
+      0.179,
       0.0,
       0.0,
       0.0,
@@ -688,10 +673,10 @@
       "FIN-003",
       "fins",
       "structure",
-      9.99,
-      0.0359,
+      10.85,
+      0.0366,
       0.3207,
-      -0.1811,
+      -0.179,
       0.0,
       0.0,
       0.0,
@@ -703,10 +688,10 @@
       "FIN-003",
       "fins",
       "structure",
-      9.99,
-      0.0359,
+      10.85,
+      0.0366,
       -0.3207,
-      -0.1811,
+      -0.179,
       0.0,
       0.0,
       0.0,
@@ -838,10 +823,10 @@
       "FIN-008",
       "fins",
       "structure",
-      10.5,
-      0.0642,
-      0.3165,
-      0.1568,
+      11.59,
+      0.0627,
+      0.3168,
+      0.1499,
       0.0,
       0.0,
       0.0,
@@ -853,10 +838,10 @@
       "FIN-008",
       "fins",
       "structure",
-      10.5,
-      0.0642,
-      -0.3165,
-      0.1568,
+      11.59,
+      0.0627,
+      -0.3168,
+      0.1499,
       0.0,
       0.0,
       0.0,
@@ -868,10 +853,10 @@
       "FIN-008",
       "fins",
       "structure",
-      10.5,
-      0.0642,
-      0.3165,
-      -0.1568,
+      11.59,
+      0.0627,
+      0.3168,
+      -0.1499,
       0.0,
       0.0,
       0.0,
@@ -883,10 +868,10 @@
       "FIN-008",
       "fins",
       "structure",
-      10.5,
-      0.0642,
-      -0.3165,
-      -0.1568,
+      11.59,
+      0.0627,
+      -0.3168,
+      -0.1499,
       0.0,
       0.0,
       0.0,
@@ -898,10 +883,10 @@
       "FIN-009",
       "fins",
       "structure",
-      5.15,
+      4.98,
       0.0625,
       0.2721,
-      0.09,
+      0.087,
       0.0,
       0.0,
       0.0,
@@ -913,10 +898,10 @@
       "FIN-009",
       "fins",
       "structure",
-      5.15,
+      4.98,
       0.0625,
       -0.2721,
-      0.09,
+      0.087,
       0.0,
       0.0,
       0.0,
@@ -928,10 +913,10 @@
       "FIN-009",
       "fins",
       "structure",
-      5.15,
+      4.98,
       0.0625,
       0.2721,
-      -0.0831,
+      -0.0801,
       0.0,
       0.0,
       0.0,
@@ -943,10 +928,10 @@
       "FIN-009",
       "fins",
       "structure",
-      5.15,
+      4.98,
       0.0625,
       -0.2721,
-      -0.0831,
+      -0.0801,
       0.0,
       0.0,
       0.0,
@@ -1018,10 +1003,10 @@
       "FIN-011",
       "fins",
       "structure",
-      3.87,
+      3.89,
       0.159,
       0.3253,
-      0.1796,
+      0.1766,
       0.0,
       0.0,
       0.0,
@@ -1033,10 +1018,10 @@
       "FIN-011",
       "fins",
       "structure",
-      3.87,
+      3.89,
       0.159,
       0.3147,
-      0.1796,
+      0.1766,
       0.0,
       0.0,
       0.0,
@@ -1048,10 +1033,10 @@
       "FIN-011",
       "fins",
       "structure",
-      3.87,
+      3.89,
       0.159,
       -0.3253,
-      0.1796,
+      0.1766,
       0.0,
       0.0,
       0.0,
@@ -1063,10 +1048,10 @@
       "FIN-011",
       "fins",
       "structure",
-      3.87,
+      3.89,
       0.159,
       -0.3147,
-      0.1796,
+      0.1766,
       0.0,
       0.0,
       0.0,
@@ -1078,10 +1063,10 @@
       "FIN-011",
       "fins",
       "structure",
-      3.87,
+      3.89,
       0.159,
       0.3253,
-      -0.1796,
+      -0.1766,
       0.0,
       0.0,
       0.0,
@@ -1093,10 +1078,10 @@
       "FIN-011",
       "fins",
       "structure",
-      3.87,
+      3.89,
       0.159,
       0.3147,
-      -0.1796,
+      -0.1766,
       0.0,
       0.0,
       0.0,
@@ -1108,10 +1093,10 @@
       "FIN-011",
       "fins",
       "structure",
-      3.87,
+      3.89,
       0.159,
       -0.3253,
-      -0.1796,
+      -0.1766,
       0.0,
       0.0,
       0.0,
@@ -1123,10 +1108,10 @@
       "FIN-011",
       "fins",
       "structure",
-      3.87,
+      3.89,
       0.159,
       -0.3147,
-      -0.1796,
+      -0.1766,
       0.0,
       0.0,
       0.0,
@@ -1138,10 +1123,10 @@
       "FIN-012",
       "fins",
       "structure",
-      1.37,
-      0.1761,
+      1.64,
+      0.177,
       0.32,
-      0.1838,
+      0.1815,
       0.0,
       0.0,
       0.0,
@@ -1153,10 +1138,10 @@
       "FIN-012",
       "fins",
       "structure",
-      1.37,
-      0.1761,
+      1.64,
+      0.177,
       -0.32,
-      0.1838,
+      0.1815,
       0.0,
       0.0,
       0.0,
@@ -1168,10 +1153,10 @@
       "FIN-012",
       "fins",
       "structure",
-      1.37,
-      0.1761,
+      1.64,
+      0.177,
       0.32,
-      -0.1838,
+      -0.1815,
       0.0,
       0.0,
       0.0,
@@ -1183,10 +1168,10 @@
       "FIN-012",
       "fins",
       "structure",
-      1.37,
-      0.1761,
+      1.64,
+      0.177,
       -0.32,
-      -0.1838,
+      -0.1815,
       0.0,
       0.0,
       0.0,
@@ -1201,7 +1186,7 @@
       1.1,
       0.0443,
       0.3377,
-      0.166,
+      0.163,
       0.0,
       0.0,
       0.0,
@@ -1216,7 +1201,7 @@
       1.1,
       0.0443,
       -0.3377,
-      0.166,
+      0.163,
       0.0,
       0.0,
       0.0,
@@ -1231,7 +1216,7 @@
       1.1,
       0.0443,
       0.3377,
-      -0.166,
+      -0.163,
       0.0,
       0.0,
       0.0,
@@ -1246,7 +1231,7 @@
       1.1,
       0.0443,
       -0.3377,
-      -0.166,
+      -0.163,
       0.0,
       0.0,
       0.0,
@@ -1261,7 +1246,7 @@
       0.36,
       0.0523,
       0.3377,
-      0.166,
+      0.163,
       0.0,
       0.0,
       0.0,
@@ -1276,7 +1261,7 @@
       0.36,
       0.0523,
       -0.3377,
-      0.166,
+      0.163,
       0.0,
       0.0,
       0.0,
@@ -1291,7 +1276,7 @@
       0.36,
       0.0523,
       0.3377,
-      -0.166,
+      -0.163,
       0.0,
       0.0,
       0.0,
@@ -1306,7 +1291,7 @@
       0.36,
       0.0523,
       -0.3377,
-      -0.166,
+      -0.163,
       0.0,
       0.0,
       0.0,
@@ -1321,7 +1306,7 @@
       0.24,
       0.045,
       0.3377,
-      0.166,
+      0.163,
       0.0,
       0.0,
       0.0,
@@ -1336,7 +1321,7 @@
       0.24,
       0.045,
       -0.3377,
-      0.166,
+      0.163,
       0.0,
       0.0,
       0.0,
@@ -1351,7 +1336,7 @@
       0.24,
       0.045,
       0.3377,
-      -0.166,
+      -0.163,
       0.0,
       0.0,
       0.0,
@@ -1366,7 +1351,7 @@
       0.24,
       0.045,
       -0.3377,
-      -0.166,
+      -0.163,
       0.0,
       0.0,
       0.0,
@@ -1378,10 +1363,10 @@
       "POD-001",
       "pod",
       "structure",
-      24.7,
-      -0.0391,
+      24.8,
+      -0.0388,
       -0.001,
-      0.0432,
+      0.0431,
       0.0,
       0.0,
       0.0,
@@ -1558,10 +1543,10 @@
       "GER-001",
       "landing",
       "structure",
-      9.93,
-      0.2986,
+      9.98,
+      0.2978,
       0.32,
-      0.2074,
+      0.2079,
       0.0,
       0.0,
       0.0,
@@ -1573,10 +1558,10 @@
       "GER-001",
       "landing",
       "structure",
-      9.93,
-      0.2986,
+      9.98,
+      0.2978,
       -0.32,
-      0.2074,
+      0.2079,
       0.0,
       0.0,
       0.0,
@@ -1588,10 +1573,10 @@
       "GER-001",
       "landing",
       "structure",
-      9.93,
-      0.2986,
+      9.98,
+      0.2978,
       0.32,
-      -0.2074,
+      -0.2079,
       0.0,
       0.0,
       0.0,
@@ -1603,10 +1588,10 @@
       "GER-001",
       "landing",
       "structure",
-      9.93,
-      0.2986,
+      9.98,
+      0.2978,
       -0.32,
-      -0.2074,
+      -0.2079,
       0.0,
       0.0,
       0.0,
@@ -1618,8 +1603,8 @@
       "GER-002",
       "landing",
       "structure",
-      3.28,
-      0.3382,
+      3.19,
+      0.3386,
       0.32,
       0.2088,
       0.0,
@@ -1633,8 +1618,8 @@
       "GER-002",
       "landing",
       "structure",
-      3.28,
-      0.3382,
+      3.19,
+      0.3386,
       -0.32,
       0.2088,
       0.0,
@@ -1648,8 +1633,8 @@
       "GER-002",
       "landing",
       "structure",
-      3.28,
-      0.3382,
+      3.19,
+      0.3386,
       0.32,
       -0.2088,
       0.0,
@@ -1663,8 +1648,8 @@
       "GER-002",
       "landing",
       "structure",
-      3.28,
-      0.3382,
+      3.19,
+      0.3386,
       -0.32,
       -0.2088,
       0.0,
@@ -2446,7 +2431,7 @@
       0.64,
       -0.021,
       -0.0464,
-      0.0323,
+      0.0344,
       0.0,
       0.0,
       0.0,
@@ -2476,7 +2461,7 @@
       0.08,
       -0.021,
       -0.0464,
-      0.0389,
+      0.0391,
       0.0,
       0.0,
       0.0,
@@ -2548,10 +2533,10 @@
       "AVN-004",
       "avionics",
       "avionics",
-      4.51,
-      -0.0711,
+      4.05,
+      -0.0696,
       -0.0463,
-      0.0319,
+      0.0309,
       0.03,
       0.02,
       0.01,
@@ -2563,8 +2548,8 @@
       "AVN-005",
       "avionics",
       "avionics",
-      4.84,
-      -0.1533,
+      4.24,
+      -0.1596,
       -0.046,
       0.045,
       0.07,
@@ -2623,7 +2608,7 @@
       "HRN-002",
       "harness",
       "electrical",
-      44.56,
+      44.55,
       0.0782,
       0.2638,
       0.0049,
@@ -2638,7 +2623,7 @@
       "HRN-002",
       "harness",
       "electrical",
-      44.56,
+      44.55,
       0.0782,
       -0.2638,
       0.0049,
@@ -3060,7 +3045,7 @@
     "z_fin": 0.21,
     "y_fin": 0.32,
     "z_pad": 0.218,
-    "m_feet": 59.0817129751596,
+    "m_feet": 58.938273767127356,
     "pack_rng": [
      546.0,
      590.0
@@ -3101,7 +3086,7 @@
    },
    "how": "Tilting board, feet at the fin tips without splay (first build before D5's pads): angle toward the pod side.",
    "note": "reference for a first build without D5's splayed pads; do not fly it. The pivot is the 0.21 m fin tip and the CG sits above the chord plane, so the pod-side arm is 0.21 - z_cg",
-   "value": 30.74318260500683
+   "value": 30.746039947371475
   },
   {
    "id": "CL-C5-TIPOVER-A3-LAYOUT",
@@ -3122,7 +3107,7 @@
    ],
    "how": "T-C5-TILT-BOARD with the pack at A3's nominal station.",
    "note": "reference case (A3-R5 before D-47): the CG is aft of B3's range (MASS-CG.md), so it is not a flying case; the trimmed and D-47 station cases are",
-   "value": 32.771966435792905
+   "value": 32.73518337585349
   },
   {
    "id": "CL-C5-TIPOVER-R1",
@@ -3146,7 +3131,7 @@
    ],
    "how": "T-C5-TILT-BOARD: built aircraft, pack in at its trimmed station, tipping toward the pod side about the upper pad edges.",
    "note": "pack (550 g) slid until the CG sits on CL-B3-CG-TARGET (CR-B3-11)",
-   "value": 32.04096387404684
+   "value": 32.043905248271834
   },
   {
    "id": "CL-C5-TIPOVER-WORST",
@@ -3169,7 +3154,7 @@
     "GER-004-LL"
    ],
    "how": "T-C5-TILT-BOARD repeated with the pack slid to the B3 forward-limit mark (and with the heaviest pack).",
-   "value": 31.78514940900105
+   "value": 31.787944340156194
   },
   {
    "id": "CL-C5-TIPOVER-D47",
@@ -3193,7 +3178,7 @@
    ],
    "how": "T-C5-TILT-BOARD with each weighed pack at its marked station.",
    "note": "C5-R6: D-64 packs at their D-62 stations (P:pack_x_per_pack_m, D2-R6: 546 g -0.036, 550 g -0.034, 590 g -0.028) on A3-R6a's items; the id keeps D47 because others cite it. D-47 / CR-A3-22 raised the CG in the stance about 5 mm (CL-C5-D47-CG-RISE); the stations are the flight-card marks, not a trim to the B3 target",
-   "value": 32.036368823990415
+   "value": 32.000575382251014
   },
   {
    "id": "CL-C5-D47-CG-RISE",
@@ -3204,7 +3189,7 @@
    "unit": "m",
    "how": "T-A3-CG-BALANCE before / after; h = chord + foot - x_cg.",
    "note": "pre-D-47 bay (pack -0.001) to the 550 g flight station with the bay edits: 5.0 mm at the D-47 station -0.022, 4.1 mm at the D-59 station -0.018 (C5-R5); CR-A3-22 quoted 5 mm",
-   "value": 0.00772662952698816
+   "value": 0.007738083763269399
   },
   {
    "id": "CL-C5-D47-TIP-CHANGE",
@@ -3214,7 +3199,7 @@
    "output": "d47_tip_change_deg",
    "unit": "deg",
    "how": "Geometry; T-C5-TILT-BOARD.",
-   "value": -0.6384281307701443
+   "value": -0.6380182710044409
   },
   {
    "id": "CL-C5-TIPOVER-STATION-PLUS5",
@@ -3235,7 +3220,7 @@
    ],
    "how": "T-C5-TILT-BOARD with the worst pack at its mark and ballast taped to the pod nose.",
    "note": "allowance check for CR-A3-22 / CR-A1-46: a second 5 mm rise on top of the D-47 one (roll-up uncertainty, a heavier nose). The CG cannot move ahead of CL-B3-CG-FWD in flight, so CL-C5-TIPOVER-B3-CORNER stays the bound",
-   "value": 31.636141503856877
+   "value": 31.601187234413914
   },
   {
    "id": "CL-C5-TIPOVER-B3-CORNER",
@@ -3267,7 +3252,7 @@
    "unit": "m",
    "how": "Geometry; compare with CL-D5-CONTACT-Z.",
    "note": "CR-A1-20's 33 deg target with the z offset needs this pivot (D5 has 0.218 m; each mm costs a mm of box height, 12 mm left). C5 retires the 33 deg target: the landing-heading rule does more (LANDING.md)",
-   "value": 0.2255104339115648
+   "value": 0.22548764205652544
   },
   {
    "id": "CL-C5-TIPOVER-WIDE",
@@ -3302,7 +3287,7 @@
    },
    "how": "T-C5-DRIFT-LOG: time from touchdown to motors at idle in the twin's logs; the lam_max claim bounds it.",
    "note": "thrust along the body axis acts at the pad offset and overturns; the attitude loop is assumed saturated or spooled down",
-   "value": 11.31734240456052
+   "value": 11.318505712750282
   },
   {
    "id": "CL-C5-LAM-MAX",
@@ -3317,7 +3302,7 @@
    },
    "how": "Twin and aircraft logs: thrust (throttle out) within 0.5 s after the land detector fires.",
    "note": "above this fraction an uncorrected 10 deg tilt toward a pad line tips the aircraft",
-   "value": 0.707354182039514
+   "value": 0.7073858521678218
   },
   {
    "id": "CALC-C5-WIND",
@@ -3381,31 +3366,31 @@
    "outputs": {
     "S_m2": 0.368,
     "S_fin_m2": 0.231,
-    "beta_narrow_deg": 32.04096387404684,
+    "beta_narrow_deg": 32.043905248271834,
     "beta_wide_deg": 45.089664683473664,
-    "lean_broadside_5_deg": 17.263013600978155,
-    "lean_spanwise_5_deg": 11.0379491937165,
-    "lean_broadside_8_deg": 38.503606303232296,
-    "lean_spanwise_8_deg": 26.53632596109323,
-    "v_allow_calm_ms": 0.8465938997005517,
-    "v_allow_lull_ms": 0.17170921272905673,
-    "v_allow_spanwise_ms": 1.1201149132636425,
-    "delta_narrow_deg": 8.294079039519428,
-    "delta_wide_deg": 6.955282199722582,
-    "beta_req_broadside_deg": 35.557092640497586,
-    "beta_req_spanwise_deg": 18.294079039519428,
-    "v_land_broadside_ms": 4.43632950115367,
-    "v_land_spanwise_ms": 8.278299913203435,
-    "slope_calm_deg": 13.74688483452741,
-    "v_tip_parked_full_ms": 8.787451968865627,
-    "v_tip_parked_empty_ms": 7.869052018941451,
-    "v_slide_mat_empty_ms": 6.57477935005514,
-    "v_slide_grass_empty_ms": 5.556702741600293,
-    "v_slide_grass_full_ms": 6.342264305833166,
-    "v_park_gust_mat_ms": 5.368284859674239,
-    "v_park_gust_grass_ms": 4.537028789748361,
-    "v_park_mean_mat_ms": 3.8344891854816,
-    "v_lift_flat_empty_ms": 11.477875828289616
+    "lean_broadside_5_deg": 17.287080874892364,
+    "lean_spanwise_5_deg": 11.053909517554361,
+    "lean_broadside_8_deg": 38.54496393851185,
+    "lean_spanwise_8_deg": 26.57026528558928,
+    "v_allow_calm_ms": 0.8465456909562971,
+    "v_allow_lull_ms": 0.17090936066320572,
+    "v_allow_spanwise_ms": 1.1191034391521262,
+    "delta_narrow_deg": 8.295784011344,
+    "delta_wide_deg": 6.956140736432204,
+    "beta_req_broadside_deg": 35.582864886236365,
+    "beta_req_spanwise_deg": 18.295784011344,
+    "v_land_broadside_ms": 4.433252077463366,
+    "v_land_spanwise_ms": 8.272021656643249,
+    "slope_calm_deg": 13.748121236927833,
+    "v_tip_parked_full_ms": 8.781446979175241,
+    "v_tip_parked_empty_ms": 7.862345618182409,
+    "v_slide_mat_empty_ms": 6.5684370357254975,
+    "v_slide_grass_empty_ms": 5.551342507659769,
+    "v_slide_grass_full_ms": 6.3375685245910764,
+    "v_park_gust_mat_ms": 5.363106381708917,
+    "v_park_gust_grass_ms": 4.532652177062951,
+    "v_park_mean_mat_ms": 3.8307902726492267,
+    "v_lift_flat_empty_ms": 11.466803776671792
    },
    "input_values": {
     "g": 9.80665,
@@ -3422,14 +3407,14 @@
     "v_gust": 8.0,
     "err": 10.0,
     "v_td": 0.3,
-    "m": 2.366801712975158,
-    "z_cg": 0.018349411681558906,
+    "m": 2.3632982737671266,
+    "z_cg": 0.018326619826519522,
     "h": 0.319,
-    "m_e": 1.816801712975159,
-    "z_e": 0.0094338412814092,
-    "Iyy": 0.04744408055094355,
-    "Izz": 0.17385061794643641,
-    "m_a3": 2.36682,
+    "m_e": 1.8132982737671275,
+    "z_e": 0.00938691071747304,
+    "Iyy": 0.047204212395492856,
+    "Izz": 0.17342792319527786,
+    "m_a3": 2.3633,
     "mu_pad": 0.7,
     "mu_grass": 0.5,
     "sf": 1.5,
@@ -3445,7 +3430,7 @@
    "output": "m_r1_kg",
    "unit": "kg",
    "how": "T-A1-WEIGH.",
-   "value": 2.366801712975158
+   "value": 2.3632982737671266
   },
   {
    "id": "CL-C5-CG-Z-R1",
@@ -3455,7 +3440,7 @@
    "output": "z_r1_m",
    "unit": "m",
    "how": "T-A3-CG-BALANCE in the z direction (aircraft flat, two scales under the fin tips).",
-   "value": 0.018349411681558906
+   "value": 0.018326619826519522
   },
   {
    "id": "CL-C5-CG-H-R1",
@@ -3476,7 +3461,7 @@
    "unit": "m",
    "how": "T-A3-CG-BALANCE: mark the pack station that balances on the target line.",
    "note": "C5's own trim of A3's item list (550 g pack); A3 carries -0.001 m as nominal, A3-R3's roll-up needs -0.015 m for the target (CL-A3-PACK-X-REQ). Sets the room ahead of the pack for the crush block (CALC-C5-CRASH)",
-   "value": -0.0389193351412222
+   "value": -0.036828950475095754
   },
   {
    "id": "CL-C5-PACK-X-B3-LIGHT",
@@ -3486,7 +3471,7 @@
    "output": "x_pack_light_m",
    "unit": "m",
    "how": "As CL-C5-PACK-X-B3 with the weighed pack.",
-   "value": -0.039563432834564455
+   "value": -0.03745773399505973
   },
   {
    "id": "CL-C5-PACK-X-B3-HEAVY",
@@ -3496,7 +3481,7 @@
    "output": "x_pack_heavy_m",
    "unit": "m",
    "how": "As CL-C5-PACK-X-B3 with the weighed pack.",
-   "value": -0.032958702250291905
+   "value": -0.03101003857847909
   },
   {
    "id": "CL-C5-MASS-EMPTY",
@@ -3506,7 +3491,7 @@
    "output": "m_empty_kg",
    "unit": "kg",
    "how": "Weigh without the pack.",
-   "value": 1.816801712975159
+   "value": 1.8132982737671275
   },
   {
    "id": "CL-C5-CG-Z-EMPTY",
@@ -3516,7 +3501,7 @@
    "output": "z_empty_m",
    "unit": "m",
    "how": "T-A3-CG-BALANCE without the pack.",
-   "value": 0.0094338412814092
+   "value": 0.00938691071747304
   },
   {
    "id": "CL-C5-LEAN-5-BROADSIDE",
@@ -3527,7 +3512,7 @@
    "unit": "deg",
    "how": "H2 logs: pitch in QLOITER at a measured 5 m/s.",
    "note": "at the R1 flying mass (lighter than B1's 2.6 kg gate, so 2-3 deg more lean)",
-   "value": 17.263013600978155
+   "value": 17.287080874892364
   },
   {
    "id": "CL-C5-LEAN-5-SPANWISE",
@@ -3537,7 +3522,7 @@
    "output": "lean_spanwise_5_deg",
    "unit": "deg",
    "how": "H2 logs: roll in QLOITER with a wingtip into a measured 5 m/s.",
-   "value": 11.0379491937165
+   "value": 11.053909517554361
   },
   {
    "id": "CL-C5-TIPOVER-REQ-BROADSIDE",
@@ -3548,7 +3533,7 @@
    "unit": "deg",
    "how": "Compare the tilt-board angle with the logged lean, attitude error and touchdown speed.",
    "note": "no splay that fits the box reaches it (needs a pivot about 0.04 m further out): broadside landings are limited by CL-C5-V-LAND-BROADSIDE instead. Lean + 10 deg error + the angle the 0.3 m/s drift needs, all toward one pad line (lull case)",
-   "value": 35.557092640497586
+   "value": 35.582864886236365
   },
   {
    "id": "CL-C5-TIPOVER-REQ-SPANWISE",
@@ -3565,7 +3550,7 @@
     "R-TIPOVER"
    ],
    "how": "As above; the lean then acts on the wide axis.",
-   "value": 18.294079039519428
+   "value": 18.295784011344
   },
   {
    "id": "CL-C5-V-LAND-BROADSIDE",
@@ -3579,7 +3564,7 @@
     "ref": "P:requirements.wind_limit_ms"
    },
    "how": "Landing practice (H2) with the anemometer; count tip-overs.",
-   "value": 4.43632950115367
+   "value": 4.433252077463366
   },
   {
    "id": "CL-C5-V-LAND-SPANWISE",
@@ -3596,7 +3581,7 @@
     "R-WIND"
    ],
    "how": "Landing practice (H2) with a wingtip into the measured wind.",
-   "value": 8.278299913203435
+   "value": 8.272021656643249
   },
   {
    "id": "CL-C5-DRIFT-ALLOW-CALM",
@@ -3610,7 +3595,7 @@
     "ref": "ASM-C5-TD-DRIFT"
    },
    "how": "T-C5-DRIFT-LOG: touchdown ground speed from the EKF in 20 landings.",
-   "value": 0.8465938997005517
+   "value": 0.8465456909562971
   },
   {
    "id": "CL-C5-DRIFT-ALLOW-LULL",
@@ -3621,7 +3606,7 @@
    "unit": "m/s",
    "how": "As CL-C5-DRIFT-ALLOW-CALM.",
    "note": "below the 0.3 m/s touchdown drift: the case behind the flight-card rule 'land span into wind'",
-   "value": 0.17170921272905673
+   "value": 0.17090936066320572
   },
   {
    "id": "CL-C5-DRIFT-ALLOW-SPANWISE",
@@ -3635,7 +3620,7 @@
     "ref": "ASM-C5-TD-DRIFT"
    },
    "how": "As CL-C5-DRIFT-ALLOW-CALM.",
-   "value": 1.1201149132636425
+   "value": 1.1191034391521262
   },
   {
    "id": "CL-C5-SLOPE-CALM",
@@ -3650,7 +3635,7 @@
    },
    "how": "Phone inclinometer on the landing mat.",
    "note": "flight card: landing spot level within 5 deg",
-   "value": 13.74688483452741
+   "value": 13.748121236927833
   },
   {
    "id": "CL-C5-V-TIP-PARKED-EMPTY",
@@ -3660,7 +3645,7 @@
    "output": "v_tip_parked_empty_ms",
    "unit": "m/s",
    "how": "Fan or measured wind until a pad lifts, pack out.",
-   "value": 7.869052018941451
+   "value": 7.862345618182409
   },
   {
    "id": "CL-C5-V-SLIDE-GRASS-EMPTY",
@@ -3670,7 +3655,7 @@
    "output": "v_slide_grass_empty_ms",
    "unit": "m/s",
    "how": "Spring-scale pull of the parked aircraft on RFS grass.",
-   "value": 5.556702741600293
+   "value": 5.551342507659769
   },
   {
    "id": "CL-C5-V-PARK-GUST",
@@ -3688,7 +3673,7 @@
    ],
    "how": "Handheld anemometer gust reading at the landing mat (H3 flight card).",
    "note": "pack out governs; factor 1.5 on moment and friction. Below the 5 m/s card on grass: lay it flat",
-   "value": 5.368284859674239
+   "value": 5.363106381708917
   },
   {
    "id": "CL-C5-V-PARK-GUST-GRASS",
@@ -3698,7 +3683,7 @@
    "output": "v_park_gust_grass_ms",
    "unit": "m/s",
    "how": "As CL-C5-V-PARK-GUST, on grass.",
-   "value": 4.537028789748361
+   "value": 4.532652177062951
   },
   {
    "id": "CL-C5-V-LIFT-FLAT",
@@ -3712,7 +3697,7 @@
     "ref": "P:requirements.gust_survive_ms"
    },
    "how": "Never observed in the field log; weight it with the pack bag if the card is exceeded.",
-   "value": 11.477875828289616
+   "value": 11.466803776671792
   },
   {
    "id": "T-C5-TILT-BOARD",
@@ -3873,12 +3858,12 @@
     "n_peak": 5.880630200102468,
     "E_cap_J": 5.31537773593462,
     "E_40_J": 3.1973601659999997,
-    "m_eff_one_kg": 0.5932580592682267,
-    "stroke_one_foot_m": 0.013945102630161202,
+    "m_eff_one_kg": 0.5920547551315793,
+    "stroke_one_foot_m": 0.013921989966256883,
     "rig_mass_kg": 0.65,
     "landings_per_cartridge": 2.6143067526390444,
     "wingtip_roll_free_deg": 10.660348294535337,
-    "wingtip_roll_one_foot_deg": 7.60676242398827,
+    "wingtip_roll_one_foot_deg": 7.611864533896094,
     "wingtip_roll_design_deg": 7.166500950787395
    },
    "input_values": {
@@ -3895,12 +3880,12 @@
     "L": 0.10199999999999998,
     "eps_y": 0.05,
     "guard": 0.003,
-    "z_cg": 0.018349411681558906,
+    "z_cg": 0.018326619826519522,
     "z_pad": 0.218,
     "y_fin": 0.32,
-    "Iyy": 0.04744408055094355,
-    "Izz": 0.17385061794643641,
-    "m_a3": 2.36682,
+    "Iyy": 0.047204212395492856,
+    "Izz": 0.17342792319527786,
+    "m_a3": 2.3633,
     "set1": 0.0011475317488935117,
     "mark": 0.003,
     "b": 1.15,
@@ -4088,7 +4073,7 @@
    ],
    "how": "T-C5-AIRCRAFT-DROP corner drop: stroke of the first foot.",
    "note": "first foot only; the feet that land after the rotation stroke more (CALC-C5-DROP-DYN)",
-   "value": 0.013945102630161202
+   "value": 0.013921989966256883
   },
   {
    "id": "CL-C5-WINGTIP-ROLL-CRUSHED",
@@ -4099,7 +4084,7 @@
    "unit": "deg",
    "how": "T-C5-AIRCRAFT-DROP roll and corner drops: witness tape on the wingtip TE corners.",
    "note": "about 10.7 deg with the feet uncrushed; during a hard landing the first foot crushes and the wingtip TE corner touches at about 6 deg: protect the corner (CR-C5-04)",
-   "value": 7.60676242398827
+   "value": 7.611864533896094
   },
   {
    "id": "CL-C5-LANDINGS-PER-CARTRIDGE",
@@ -4238,20 +4223,20 @@
        1.0455154083273897,
        0.9544845916726102
       ],
-      "level_design_m": 0.01592921791819213,
+      "level_design_m": 0.015930788079008218,
       "level_design_pairs_m": [
-       0.01592921791819213,
-       0.01328106714290117
+       0.015930788079008218,
+       0.013280036903123016
       ],
-      "level_free_m": 0.018373048247716572,
+      "level_free_m": 0.01837515124379563,
       "level_free_n": 5.880630200102468,
       "pitch_worst_tilt_deg": 2,
-      "pitch_design_m": 0.02166522217869321,
+      "pitch_design_m": 0.021679970002449256,
       "pitch_n": 5.880630200102468,
       "roll_worst_tilt_deg": -10,
-      "roll_design_m": 0.020199719734791177,
+      "roll_design_m": 0.020207171978025684,
       "roll_n": 2.940315100051234,
-      "roll_wingtip_min_m": -0.00746070065770571,
+      "roll_wingtip_min_m": -0.00745484958888154,
       "te_clear_full_stroke_m": 0.010000000000000002
      },
      "proposed": {
@@ -4261,110 +4246,110 @@
        1.05,
        0.95
       ],
-      "level_design_m": 0.01575689014452769,
+      "level_design_m": 0.015757825144167126,
       "level_design_pairs_m": [
-       0.01575689014452769,
-       0.013413792180547224
+       0.015757825144167126,
+       0.013413234992964373
       ],
-      "level_free_m": 0.01814380599326465,
+      "level_free_m": 0.01814508296204187,
       "level_free_n": 5.88297815179574,
       "pitch_worst_tilt_deg": -3,
-      "pitch_design_m": 0.021595231268863258,
-      "pitch_n": 5.853577508016386,
+      "pitch_design_m": 0.021614590644197018,
+      "pitch_n": 5.850486281198429,
       "roll_worst_tilt_deg": -10,
-      "roll_design_m": 0.020191669770362353,
+      "roll_design_m": 0.020199114832972265,
       "roll_n": 2.94148907589787,
-      "roll_wingtip_min_m": -0.007456907475917429,
+      "roll_wingtip_min_m": -0.007451054043434269,
       "te_clear_full_stroke_m": 0.010000000000000002
      }
     },
     "bias_upper": 1.05,
     "bias_lower": 0.95,
-    "bias_zero_moment_upper": 1.08417161321816,
+    "bias_zero_moment_upper": 1.0840670634244016,
     "bias_scan": [
      [
       1.0,
-      0.02266056216606782
+      0.022673877910164064
      ],
      [
       1.005,
-      0.02254654874240114
+      0.022560055524801004
      ],
      [
       1.01,
-      0.022433736190033027
+      0.022447193606921767
      ],
      [
       1.015,
-      0.022321924224809275
+      0.022335448934489632
      ],
      [
       1.02,
-      0.022211057513645882
+      0.02222476876000884
      ],
      [
       1.025,
-      0.022100755640643843
+      0.02211495068609748
      ],
      [
       1.03,
-      0.021991301996631796
+      0.022005735633049306
      ],
      [
       1.035,
-      0.02188278067703542
+      0.02189727913885514
      ],
      [
       1.04,
-      0.021775150017472544
+      0.021789658567925363
      ],
      [
       1.045,
-      0.0216682296142654
+      0.021682935368536493
      ],
      [
       1.05,
-      0.021595231268863258
+      0.021614590644197018
      ],
      [
       1.055,
-      0.0217037280376573
+      0.021722462429426492
      ],
      [
       1.06,
-      0.021813222195039728
+      0.021831815992675085
      ],
      [
       1.065,
-      0.02192384473034198
+      0.021942791388946836
      ],
      [
       1.07,
-      0.02203632572765213
+      0.022055115727492414
      ],
      [
       1.075,
-      0.022150183379833155
+      0.022168484676064693
      ],
      [
       1.08,
-      0.022265216443352887
+      0.02228377774663215
      ],
      [
       1.085,
-      0.022381983899271263
+      0.02240050123734877
      ],
      [
       1.09,
-      0.022500350209908426
+      0.022518772422205624
      ],
      [
       1.095,
-      0.022620278515904757
+      0.022638647918070576
      ],
      [
       1.1,
-      0.022741782395215238
+      0.022760147158950306
      ]
     ],
     "plateau_upper_N": 39.375,
@@ -4372,31 +4357,31 @@
     "section_z_upper_m": 0.009845965342201994,
     "section_z_lower_m": 0.008908254357230376,
     "ult_upper_N": 59.0625,
-    "pitch_fine_tilt_m": 0.02165261991301143,
-    "cur_level_design_m": 0.01592921791819213,
-    "cur_pair_design_m": 0.02166522217869321,
+    "pitch_fine_tilt_m": 0.021675102099748933,
+    "cur_level_design_m": 0.015930788079008218,
+    "cur_pair_design_m": 0.021679970002449256,
     "cur_usable_m": 0.034999999999999996,
-    "cur_pitch_design_m": 0.02166522217869321,
-    "cur_roll_design_m": 0.020199719734791177,
+    "cur_pitch_design_m": 0.021679970002449256,
+    "cur_roll_design_m": 0.020207171978025684,
     "cur_level_free_n": 5.880630200102468,
     "cur_n_tilted": 5.880630200102468,
     "cur_bias_upper": 1.0455154083273897,
-    "prop_level_design_m": 0.01575689014452769,
-    "prop_pitch_design_m": 0.02165261991301143,
-    "prop_roll_design_m": 0.020191669770362353,
-    "prop_level_free_m": 0.01814380599326465,
+    "prop_level_design_m": 0.015757825144167126,
+    "prop_pitch_design_m": 0.021675102099748933,
+    "prop_roll_design_m": 0.020199114832972265,
+    "prop_level_free_m": 0.01814508296204187,
     "prop_level_free_n": 5.88297815179574,
-    "prop_n_tilted": 5.853577508016386,
+    "prop_n_tilted": 5.850486281198429,
     "prop_usable_m": 0.034999999999999996,
     "prop_worst_tilt_deg": -3,
     "prop_te_clear_full_m": 0.010000000000000002,
-    "prop_wingtip_min_m": -0.007456907475917429,
+    "prop_wingtip_min_m": -0.007451054043434269,
     "test_tilt_drop_h_m": 0.07341508615964679,
     "valid_sym_free_m": 0.016584338603520654,
     "valid_hand_free_m": 0.0181155241679273,
-    "dt_check_spread_m": 1.405398936060731e-06,
-    "side_load_N": 26.22758487241584,
-    "side_load_c1_N": 26.22758487241584
+    "dt_check_spread_m": 1.7351563425527239e-06,
+    "side_load_N": 26.16060170050553,
+    "side_load_c1_N": 26.16060170050553
    },
    "input_values": {
     "m": 2.6,
@@ -4409,13 +4394,13 @@
     "L": 0.10199999999999998,
     "eps_y": 0.05,
     "guard": 0.003,
-    "z_cg": 0.018349411681558906,
+    "z_cg": 0.018326619826519522,
     "h": 0.319,
     "z_pad": 0.218,
     "y_fin": 0.32,
-    "Iyy": 0.04744408055094355,
-    "Izz": 0.17385061794643641,
-    "m_a3": 2.36682,
+    "Iyy": 0.047204212395492856,
+    "Izz": 0.17342792319527786,
+    "m_a3": 2.3633,
     "err": 10.0,
     "b": 1.15,
     "foot": 0.048,
@@ -4424,7 +4409,7 @@
     "s_hand": 0.0181155241679273,
     "mu_pad": 0.7,
     "mu_c1": 0.7,
-    "F_corner": 37.46797838916549,
+    "F_corner": 37.37228814357933,
     "F_prop": 37.5,
     "pk_prop": 1.0,
     "sigma": 275800.0,
@@ -4475,7 +4460,7 @@
    ],
    "how": "T-C5-AIRCRAFT-DROP level drop with lift offload: compare the upper and lower pair flange gaps.",
    "note": "cross-check of D5's delivered cartridges (U 39.6 / L 35.4 N, bias 1.056) against C5's proposal; no verifies (CR-A2-21a): the requirement is carried by the -PROP claims, this shows D5 meets them",
-   "value": 0.01592921791819213
+   "value": 0.015930788079008218
   },
   {
    "id": "CL-C5-DYN-PAIR-CUR",
@@ -4508,7 +4493,7 @@
    ],
    "how": "T-C5-AIRCRAFT-DROP tilted drops; the model is validated, not the full design case (no rotor lift).",
    "note": "cross-check of D5's delivered cartridges; no verifies (CR-A2-21a). The first pair stops only its share; the aircraft rotates onto the second pair, which lands harder",
-   "value": 0.02166522217869321
+   "value": 0.021679970002449256
   },
   {
    "id": "CL-C5-DYN-N-CUR",
@@ -4586,7 +4571,7 @@
     "GER-008-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP tilted drops validate the model (stroke within 3 mm).",
-   "value": 0.02165261991301143
+   "value": 0.021675102099748933
   },
   {
    "id": "CL-C5-DROP-PAIR-ROLL",
@@ -4621,7 +4606,7 @@
     "GER-008-LL"
    ],
    "how": "As CL-C5-DROP-PAIR-PITCH, roll drops.",
-   "value": 0.020191669770362353
+   "value": 0.020199114832972265
   },
   {
    "id": "CL-C5-DYN-LEVEL-PROP",
@@ -4653,7 +4638,7 @@
     "GER-008-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP level drop: both pair gaps equal within 2 mm.",
-   "value": 0.01575689014452769
+   "value": 0.015757825144167126
   },
   {
    "id": "CL-C5-DYN-LEVEL-FREE-PROP",
@@ -4688,7 +4673,7 @@
     "GER-008-LL"
    ],
    "how": "T-C5-AIRCRAFT-DROP level drops (no lift: harder than design).",
-   "value": 0.01814380599326465
+   "value": 0.01814508296204187
   },
   {
    "id": "CL-C5-DYN-N-LEVEL",
@@ -4755,7 +4740,7 @@
     "GER-008-LL"
    ],
    "how": "As CL-C5-DYN-N-LEVEL, tilted drops.",
-   "value": 5.853577508016386
+   "value": 5.850486281198429
   },
   {
    "id": "CL-C5-TE-CLEAR-PROP",
@@ -4798,7 +4783,7 @@
    "unit": "m",
    "how": "T-C5-AIRCRAFT-DROP roll drops: witness tape on the wingtip TE corner.",
    "note": "C5-R4 (A3-R5 I_zz 0.165): +2.4 mm, the corner just clears; it was -2.1 mm at R3. Keep the corner cap: when negative, in a roll-first landing at 6-10 deg the wingtip TE corner reaches the ground before the second fin lands; the 1 g corner cap of CR-C5-04 is the contact point",
-   "value": -0.007456907475917429
+   "value": -0.007451054043434269
   },
   {
    "id": "CL-C5-TEST-TILT-H",
@@ -4857,7 +4842,7 @@
    ],
    "how": "T-D5-PAD-MU gives mu; C4's T-C4-FIN-PROOF at 1.5 x this load.",
    "note": "the landing mat and neoprene pad (mu 0.7) raise C1's L4/L5 side load (mu 0.5) by 40 %; C4's fin face stress scales with it (CR-C5-09)",
-   "value": 26.22758487241584
+   "value": 26.16060170050553
   },
   {
    "id": "CL-C5-FOOT-SIDE-C1",
@@ -4867,7 +4852,7 @@
    "output": "side_load_c1_N",
    "unit": "N",
    "how": "C1 LOADS.md case L4.",
-   "value": 26.22758487241584
+   "value": 26.16060170050553
   },
   {
    "id": "CL-C5-CART-BIAS-UPPER",
@@ -5049,21 +5034,21 @@
      "546": {
       "m_kg": 0.546,
       "x_pack_m": -0.036,
-      "x_pack_trim_m": -0.039563432834564455,
+      "x_pack_trim_m": -0.03745773399505973,
       "F_N": 508.91360000000003,
       "n": 95.04532031592751,
       "stroke_m": 0.013410920832141253,
       "L_m": 0.02554461110884048,
       "spreader": true,
       "gap_avail_m": 0.027700000000000002,
-      "gap_avail_trim_m": 0.024136567165435552,
+      "gap_avail_trim_m": 0.026242266004940284,
       "gap_need_full_m": 0.027044611108840485,
       "gap_need_c3_m": 0.027044611108840485,
       "room_avail_m": 0.031700000000000006,
       "room_needed_m": 0.031044611108840485,
       "margin_full_m": 0.0006553888911595175,
       "margin_c3_m": 0.0006553888911595175,
-      "margin_trim_m": -0.002908043943404933,
+      "margin_trim_m": -0.0008023451039002004,
       "x_fwd_max_m": -0.03665538889115952,
       "block_fill_m": 0.0262,
       "stack_margin_m": -0.0012446111088404987
@@ -5071,21 +5056,21 @@
      "551": {
       "m_kg": 0.551,
       "x_pack_m": -0.034,
-      "x_pack_trim_m": -0.0389193351412222,
+      "x_pack_trim_m": -0.036828950475095754,
       "F_N": 508.91360000000003,
       "n": 94.1828400952748,
       "stroke_m": 0.013533731462472217,
       "L_m": 0.025778536118994697,
       "spreader": true,
       "gap_avail_m": 0.029700000000000004,
-      "gap_avail_trim_m": 0.024780664858777807,
+      "gap_avail_trim_m": 0.026871049524904253,
       "gap_need_full_m": 0.027278536118994702,
       "gap_need_c3_m": 0.027278536118994702,
       "room_avail_m": 0.03370000000000001,
       "room_needed_m": 0.0312785361189947,
       "margin_full_m": 0.002421463881005302,
       "margin_c3_m": 0.002421463881005302,
-      "margin_trim_m": -0.0024978712602168954,
+      "margin_trim_m": -0.000407486594090449,
       "x_fwd_max_m": -0.036421463881005305,
       "block_fill_m": 0.028200000000000003,
       "stack_margin_m": -0.0014785361189947124
@@ -5093,21 +5078,21 @@
      "590": {
       "m_kg": 0.59,
       "x_pack_m": -0.03,
-      "x_pack_trim_m": -0.032958702250291905,
+      "x_pack_trim_m": -0.03101003857847909,
       "F_N": 508.91360000000003,
       "n": 87.9571947330448,
       "stroke_m": 0.01449165437905373,
       "L_m": 0.027603151198197583,
       "spreader": true,
       "gap_avail_m": 0.03370000000000001,
-      "gap_avail_trim_m": 0.030741297749708102,
+      "gap_avail_trim_m": 0.03268996142152092,
       "gap_need_full_m": 0.029103151198197584,
       "gap_need_c3_m": 0.029103151198197584,
       "room_avail_m": 0.03770000000000001,
       "room_needed_m": 0.03310315119819758,
       "margin_full_m": 0.004596848801802424,
       "margin_c3_m": 0.004596848801802424,
-      "margin_trim_m": 0.0016381465515105179,
+      "margin_trim_m": 0.003586810223323335,
       "x_fwd_max_m": -0.03459684880180242,
       "block_fill_m": 0.032200000000000006,
       "stack_margin_m": -0.0033031511981975945
@@ -5122,7 +5107,7 @@
     "room_avail_m": 0.03370000000000001,
     "room_margin_worst_m": 0.0006553888911595175,
     "room_margin_c3_stop_m": 0.0006553888911595175,
-    "room_margin_trim_worst_m": -0.002908043943404933,
+    "room_margin_trim_worst_m": -0.0008023451039002004,
     "gap_B_nom_m": 0.029700000000000004,
     "block_L_nom_m": 0.025778536118994697,
     "n_pack_nom": 94.1828400952748,
@@ -5168,9 +5153,9 @@
      "550": -0.034,
      "590": -0.03
     },
-    "x_pack": -0.0389193351412222,
-    "x_light": -0.039563432834564455,
-    "x_heavy": -0.032958702250291905,
+    "x_pack": -0.036828950475095754,
+    "x_light": -0.03745773399505973,
+    "x_heavy": -0.03101003857847909,
     "t_sp": 0.0015,
     "box": [
      1.25,
@@ -5308,7 +5293,7 @@
    ],
    "how": "As above with the pack at its balanced station.",
    "note": "cross-check: the pack slid until the CG is on P:cg.x_target_m in A3-R6a's items (D-61 stack shift not in the items), instead of its D-62 mark",
-   "value": -0.002908043943404933
+   "value": -0.0008023451039002004
   },
   {
    "id": "CL-C5-PACK-ROOM-C3-STOP",

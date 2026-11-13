@@ -59,10 +59,9 @@ slot in where marked **→**.
    panel at |y| 284–286 mm (inboard) and 354–356 mm (outboard), x 254.4–289.6 mm. **Check:** panels 228 and 218 mm
    long, chord 70.4 mm; tube lies in the groove below the face; blade slides in the slot; corner radii by gauge.
 10. **→ Fins:** half-fin roots, anchors and fillets on bare foam (D3). **→ Harness:** ESC and servo leads into the
-    grooves with tape tabs (F2), JR joint in its recess. **Recess-step fillet (before the pod):** microballoon epoxy in
-    the floor-to-step corner at x 65 mm, |y| ≤ 70 mm, laid with a 45° spatula to 5 mm on the floor × full step;
-    cure 24 h, sand to a flat 45° face (`WNG-007`, D-69). **→ Pod:** shell bonded in the recess (floor's aft lower
-    edge bevelled onto the fillet, `E-WNG-17`) and on the spar saddles (D2).
+    grooves with tape tabs (F2), JR joint in its recess. No recess-step fillet (D-103 deleted it: C3-R4 FEA shows it
+    does not lower the crash peak). **→ Pod:** shell bonded in the recess, the floor's aft end square on the step,
+    and on the spar saddles (D2).
 11. **Skin.** Lower surface first: spanwise strips from the TE forward, 10 % overlap, the forward strip ending at
     x 41.8 mm (it runs 4.8 mm under the LE strip); then upper the same (forward strip ends at x 40.8 mm). **Then the LE strip:**
     one continuous 100 mm strip per half-span (|y| 70–575 mm), laid last, upper edge on the pen line at x 45.5 mm, wrapped

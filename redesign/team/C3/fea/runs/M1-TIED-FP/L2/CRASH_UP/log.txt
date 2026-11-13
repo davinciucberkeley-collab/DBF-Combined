@@ -112,6 +112,8 @@ Restart file name: restart.csv.
 |                                   |                              seg35|
 |                                   |                              seg36|
 |                                   |                              seg37|
+|                                   |                              seg38|
+|                                   |                              seg39|
 +-----------------------------------------------------------------------+
 
 -------------------- Output Preprocessing ( Zone 0 ) --------------------
@@ -125,9 +127,9 @@ Volume output fields: COORDINATES, SOLUTION
 
 ------------------- Geometry Preprocessing ( Zone 0 ) -------------------
 Two dimensional problem.
-65939 grid points.
-130601 volume elements.
-39 surface markers.
+66760 grid points.
+132223 volume elements.
+41 surface markers.
 240 boundary elements in index 0 (Marker = spar).
 5 boundary elements in index 1 (Marker = seg00).
 5 boundary elements in index 2 (Marker = seg01).
@@ -154,20 +156,22 @@ Two dimensional problem.
 5 boundary elements in index 23 (Marker = seg22).
 5 boundary elements in index 24 (Marker = seg23).
 5 boundary elements in index 25 (Marker = seg24).
-6 boundary elements in index 26 (Marker = seg25).
-6 boundary elements in index 27 (Marker = seg26).
-8 boundary elements in index 28 (Marker = seg27).
-10 boundary elements in index 29 (Marker = seg28).
-13 boundary elements in index 30 (Marker = seg29).
-13 boundary elements in index 31 (Marker = seg30).
+5 boundary elements in index 26 (Marker = seg25).
+5 boundary elements in index 27 (Marker = seg26).
+6 boundary elements in index 28 (Marker = seg27).
+6 boundary elements in index 29 (Marker = seg28).
+8 boundary elements in index 30 (Marker = seg29).
+10 boundary elements in index 31 (Marker = seg30).
 13 boundary elements in index 32 (Marker = seg31).
 13 boundary elements in index 33 (Marker = seg32).
 13 boundary elements in index 34 (Marker = seg33).
 13 boundary elements in index 35 (Marker = seg34).
 13 boundary elements in index 36 (Marker = seg35).
 13 boundary elements in index 37 (Marker = seg36).
-28 boundary elements in index 38 (Marker = seg37).
-130601 triangles.
+13 boundary elements in index 38 (Marker = seg37).
+13 boundary elements in index 39 (Marker = seg38).
+28 boundary elements in index 40 (Marker = seg39).
+132223 triangles.
 Setting point connectivity.
 Renumbering points (Reverse Cuthill McKee Ordering).
 Recomputing point connectivity.
@@ -177,13 +181,13 @@ All volume elements are correctly oriented.
 There has been a re-orientation of 240 LINE surface elements.
 Identifying edges and vertices.
 Setting the control volume structure.
-Area of the computational grid: 0.0182965.
+Area of the computational grid: 0.0189485.
 Searching for the closest normal neighbors to the surfaces.
 Storing a mapping from global to local point index.
-Surface area = 0.259181 m.
+Surface area = 0.269181 m.
 Area projection in the x-plane = 0.0219597 m, y-plane = 0.0222493 m.
 Max. coordinate in the x-direction = 0.091 m, y-direction = 0.0198 m.
-Min. coordinate in the x-direction = -0.1252 m, y-direction = -0.0044 m.
+Min. coordinate in the x-direction = -0.1352 m, y-direction = -0.0044 m.
 Computing wall distances.
 
 -------------------- Solver Preprocessing ( Zone 0 ) --------------------
@@ -210,7 +214,7 @@ All convergence criteria satisfied.
 +-----------------------------------------------------------------------+
 |      Convergence Field     |     Value    |   Criterion  |  Converged |
 +-----------------------------------------------------------------------+
-|                  rms[DispX]|      -10.4059|         < -14|          No|
+|                  rms[DispX]|      -10.3895|         < -14|          No|
 +-----------------------------------------------------------------------+
 -------------------------------------------------------------------------
 +-----------------------------------------------------------------------+

@@ -40,7 +40,6 @@
   {"host": "PRP-007-<st>", "guest": "PRP-004-<st>", "bodies": ["post"], "why": "M6 nut thread on the adapter post"},
   {"host": "AVN-001", "guest": "AVN-007", "why": "microSD card in its slot (the FC envelope is a stand-in box)"},
   {"host": "POD-001", "guest": "POD-004", "why": "strap groove in the floor under the tray (E-POD-04)"},
-  {"host": "POD-001", "guest": "WNG-007", "why": "pod floor aft lower edge bevelled onto the recess-step fillet (E-WNG-17)"},
   {"host": "POD-002", "guest": "PWR-107", "why": "heat-set insert bore in the PDB boss (insert melted in)"},
   {"host": "PWR-107", "guest": "PWR-101", "why": "M3 thread of the heat-set insert"},
   {"host": "PWR-003", "guest": "PWR-101", "why": "mounting holes of the power board (envelope box)"},

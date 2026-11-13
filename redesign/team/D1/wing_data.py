@@ -62,9 +62,6 @@ PARTS = [
     ('WNG-006', 'Block-pocket lip beads (microballoon epoxy)', 'epoxy + glass microballoons 1:1 by volume', 'make',
      'chamfer the pocket lip 3 x 3 mm 45 deg, fill wet with the block bond, sand flush', 'subsystems/wing/fusion/wing.py',
      'inboard and outboard pocket lips, upper and lower, x 0.0279-0.0972 (D-68, CR-C2-11); 60 mm tape doubler over them', {}),
-    ('WNG-007', 'Recess-step fillet (microballoon epoxy)', 'epoxy + glass microballoons 1:1 by volume', 'make',
-     'spatula fillet, cure 24 h, sand to a flat 45 deg face before the pod goes in', 'subsystems/wing/fusion/wing.py',
-     'floor-to-step corner at x 0.065, legs 5 mm floor x 5 mm step, |y| <= 0.070 (D-69, CR-C3-17); pod floor bevelled onto it', {}),
     ('WNG-011', 'Elevon inboard', 'XPS foam F-250 + packing-tape skin', 'make', 'cut from the core after the hot-wire pass; tape both faces',
      'subsystems/wing/fusion/wing.py', 'y 0.071-0.299, hinge x 0.2496 on the upper skin, lower edge bevelled 30 deg; D6 torque-tube groove (open below) |y| 0.1335-0.296 and 2.5 mm horn-blade slot at y 0.285; outboard front corner relieved round the R 3 mm tab fill; tape cut back for the horn flange (14 mm) and backplate (12 mm)', {}),
     ('WNG-012', 'Elevon outboard', 'XPS foam F-250 + packing-tape skin', 'make', 'cut from the core after the hot-wire pass; tape both faces',
@@ -355,22 +352,7 @@ def edges(g, r, M):
                     'load_n': 'spreads the block corner load into the lip (see E-WNG-12); C2 FEA re-run',
                     'load_case': 'L4 corner + side landing, ultimate', 'sized_by': 'C2'}}
           for eid, iid, blk in (('E-WNG-14', 'WNG-006-R', 'FIN-004-R'), ('E-WNG-15', 'WNG-006-L', 'FIN-004-L'))]
-    lf, lw = g['rf_legs']
-    w = 2 * g['y_pod']
-    E += [{'id': 'E-WNG-16', 'part_a': 'WNG-007', 'part_b': 'WNG-001', 'via': 'CT-EPOXY', 'owner': 'wing',
-           'notes': 'microballoon-epoxy fillet in the re-entrant floor-to-step corner of the pod recess (x %.3f, z %.3f), legs %.1f mm '
-                    'floor x %.1f mm step, |y| <= %.3f; laid with a 45 deg spatula, cured 24 h, sanded to a flat 45 deg face before '
-                    'the pod goes in (D-69, CR-C3-17)' % (g['x_rec1'], g['z_rec'], lf * 1000, lw * 1000, g['y_pod']),
-           'bond': {'adhesive': bond_foam, 'area_mm2': round((lf + lw) * w * 1e6), 'prep': 'recess sanded, foam dust off',
-                    'cure': cure, 'load_n': 'pod crash peel at the step corner, -z / -x 12.75 g: R 4.5 / 2.2 as drawn (singular in linear '
-                                            'FEA, CL-C3-FEA-BOND-R-CRASH); the fillet and T-C3-POD-PROOF decide',
-                    'load_case': 'C3 crash 12.75 g, -z / -x', 'sized_by': 'C3'}},
-          {'id': 'E-WNG-17', 'part_a': 'WNG-007', 'part_b': 'POD-001', 'via': 'CT-EPOXY', 'owner': 'wing',
-           'notes': 'pod floor board (POD-001 fb floor) aft lower edge bevelled %.1f x %.1f mm 45 deg and bonded on the fillet face in '
-                    'the pod bond (E-POD-01); keeps the floor end bonded across the step as C3 asks' % (lf * 1000, lw * 1000),
-           'bond': {'adhesive': bond_foam, 'area_mm2': round(math.hypot(lf, lw) * w * 1e6),
-                    'prep': 'fillet face sanded 120 grit; board bevel cut with a 45 deg sanding block', 'cure': cure,
-                    'load_n': 'as E-WNG-16', 'load_case': 'C3 crash 12.75 g, -z / -x', 'sized_by': 'C3'}}]
+    # D-103: E-WNG-16 / -17 (recess-step fillet, WNG-007) removed with the fillet
     return E
 
 
@@ -399,7 +381,7 @@ def parts_csv(M):
     cost = k9.lval(L, 'cost_usd', 'USD')
     unit_cost = {'WNG-001': cost['xps_sheet'] / cost['cores_per_sheet'] + cost['epoxy'], 'WNG-002': cost['spar'],
                  'WNG-003': cost['tape_roll'] * cost['rolls'] + cost['le_tape_roll'], 'WNG-004': cost['petg_plugs'] / 4, 'WNG-005': cost['petg_plugs'] / 4,
-                 'WNG-006': 0.0, 'WNG-007': 0.0, 'WNG-011': 0.0, 'WNG-012': 0.0, 'WNG-020': cost['label']}
+                 'WNG-006': 0.0, 'WNG-011': 0.0, 'WNG-012': 0.0, 'WNG-020': cost['label']}
     buf = io.StringIO()
     w = csv.writer(buf, lineterminator='\n')
     w.writerow(['part_id', 'name', 'qty', 'make_or_buy', 'process', 'material', 'mass_g', 'unit_cost_usd', 'vendor_or_file', 'notes'])

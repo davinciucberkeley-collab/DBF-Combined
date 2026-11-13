@@ -372,11 +372,11 @@
     "side_run_N": 39.44324343580951,
     "side_mu05_N": 29.1094933684377,
     "side_mu05_ult_N": 43.66424005265655,
-    "side_vs_hand": 1.5038839308949443,
-    "stroke_vs_planar": 1.6157017717577453,
+    "side_vs_hand": 1.507734565411288,
+    "stroke_vs_planar": 1.6146026888268408,
     "strike_tilt_deg": 7.5,
     "v_broadside_ms": 4.0,
-    "v_broadside_vs_hand": 0.9016462819003407,
+    "v_broadside_vs_hand": 0.9022721762956314,
     "v_spanwise_ms": 8.0,
     "drift_tips": 0.0,
     "v_sink_drift_ms": 1.1,
@@ -400,9 +400,9 @@
     "tips": 0.0,
     "v_dr": 1.1,
     "h_t": 0.05,
-    "side_hand": 26.22758487241584,
-    "s_hand": 0.02166522217869321,
-    "vb_hand": 4.43632950115367,
+    "side_hand": 26.16060170050553,
+    "s_hand": 0.021679970002449256,
+    "vb_hand": 4.433252077463366,
     "k_ult": 1.5
    }
   },
@@ -457,14 +457,14 @@
      0.319
     ],
     "m_gate": 2.6,
-    "m_a3": 2.36682,
-    "m_pred": 2.4896112999999995,
+    "m_a3": 2.3633,
+    "m_pred": 2.4858162999999998,
     "F_up": 39.19118,
     "F_lo": 35.778886797385326,
     "s_av": 0.038,
     "lam": 0.667,
     "mu": 0.7,
-    "z_cg": 0.018349411681558906,
+    "z_cg": 0.018326619826519522,
     "v_td": 0.3,
     "L_cart": 0.10199999999999998,
     "v_sink": 1.2,
@@ -494,21 +494,21 @@
     "allow": "Pa"
    },
    "outputs": {
-    "sigma_hand_MPa": 121.85485612287498,
-    "sf_hand": 0.3282593839318569,
+    "sigma_hand_MPa": 121.54364848345679,
+    "sf_hand": 0.329099878924931,
     "sigma_design_MPa": 183.51925426102753,
     "sf_design": 0.21796078106935982,
-    "sf_d5_beam": 1.064393972656251,
+    "sf_d5_beam": 1.2672926036051309,
     "side_capacity_N": 8.609450852239712
    },
    "input_values": {
     "k": 0.9577398345845318,
     "lever": 3.234042553191489,
     "side_d": 39.5,
-    "side_hand": 26.22758487241584,
+    "side_hand": 26.16060170050553,
     "k_ult": 1.5,
     "allow": 40000000.0,
-    "sf_d5": 1.064393972656251
+    "sf_d5": 1.2672926036051309
    }
   },
   {
@@ -1335,7 +1335,7 @@
    ],
    "how": "None: superseded.",
    "note": "C5-S1 record (0.38 at D5's 34.4 N ult basis); the live CL-C5-FOOT-SIDE-LOAD moves with the sink speed, so this re-computes; superseded by D-65",
-   "value": 0.3282593839318569
+   "value": 0.329099878924931
   },
   {
    "id": "CL-C5-FEA-SIDE-CAPACITY",

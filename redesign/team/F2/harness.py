@@ -949,7 +949,7 @@ def build(g):
         # clear of the collar tail wall and its lug, over the motor-mount pinch bolt / nut / ear and the collar lip
         # (ROUTE-CLEARANCE.md); ties at the collar lug (E-HRN-06..09) and over the pinch ear (free span <= 50 mm)
         # D-86: laid on the parts, not across the air: forward off the ESC along the board face, up outboard of the
-        # collar tail wall (y 0.3274), tied at the collar's phase lug (FIN-008, x 0.0575-0.0625, z 0.153-0.158),
+        # collar tail wall (y 0.3274), tied at the collar's phase lug (FIN-008, x 0.0575-0.0625, z 0.1473-0.1523 since D-91),
         # aft of the pinch-bolt end (x <= 0.0558), taped up the outboard cheek face (y 0.334) over the ear and nut,
         # into the motor's phase-lead exit (PRP-001, x 0.0217-0.0262). Positions from the FIN-003 / -008 and PRP-001
         # CAD bodies (collision/out, 2026-11-11)
@@ -959,8 +959,9 @@ def build(g):
         r = [[0.0788, sy * g["esc_y"], sz * g["esc_z"], "J"],                    # soldered on the ESC's phase pads:
              [0.0730, sy * g["esc_y"], sz * g["esc_z"], "B"],                    # the lead-off is bench-formed
              [0.0645, sy * 0.3300, sz * 0.1215, "B"],
-             [0.0615, sy * 0.3320, sz * 0.1400, "B"],
-             [0.0615, sy * 0.3345, sz * 0.1557, "T"],                       # phase lug tie (lug face y 0.3308)
+             [0.0615, sy * 0.3345, sz * 0.1400, "B"],                       # D-89c: up outboard of the lug face
+             [0.0615, sy * 0.3345, sz * 0.1498, "T"],                       # phase lug tie at the lug's mid
+             #   (D-91 moved the lug 6 mm down: z 0.1473-0.1523, face y 0.3308; the lead's inner surface 0.09 mm off)
              [0.0590, sy * 0.3375, sz * 0.1785, "T"],                       # tape on the cheek face
              [0.0330, sy * 0.3375, sz * g["zm"], "T"],
              [0.0245, sy * 0.3375, sz * g["zm"], "E"]]      # D-89: 1.4 mm into the motor's phase-lead exit

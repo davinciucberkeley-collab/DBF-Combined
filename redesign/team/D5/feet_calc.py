@@ -20,6 +20,10 @@ pre-crushed segments; level sink 1.2 m/s, n_design 6.6 (D-65).
 R7 (D-76, BR-00/BR-01): cartridges in FOAMULAR 400 (276 kPa) at 14.5 x 9.8 mm (same mean plateau 37.5 N), 5/32 in bore for
 type L; the sleeve shrinks to 19.1 x 14.4 mm (rim 3.4 mm, flange 1.8 mm, tine rails 2.0 mm): landing 69.9 -> 58.9 g. The
 fin step stays where this stack puts it (x 0.2614, D-75): D3 copies CL-D5-FIN-STEP-X/-Z into its tip params.
+R8 (2026-11-13, CR-H1-22): side-load margin. Sleeve inside fillets R 1.0 -> 2.0 (tine chamfer 1.0 -> 1.4 to keep
+0.16 mm to the arc, CL-D5-FILLET-CLEAR), rim y sides 3.4 -> 4.8 mm (shoe.rim_side_t_m), rim floor side 3.4 -> 0.4 mm
+(shoe.rim_floor_t_m: not a stop face, and a thick floor rim raised the +y corner peak); the roof side, lip, sleeve
+section and fin step are unchanged. D5 FEA of the drawn shoe at 59.25 N ult on three meshes: CL-D5-SIDE-RIM-SF.
 """
 import json
 import math
@@ -313,6 +317,7 @@ def _fea_matches(s, kw):
             "x_end": s["x_slv_end"], "x_win0": s["x_win"][0], "x_win1": s["x_win"][1], "engage": kw["engage"],
             "r_in": kw["r_in"], "L_cart": s["L_cart"], "w_leg": kw["w"]}
     want["hy_o"] = s["slv_out"][0] / 2
+    want["rim_side"], want["rim_floor"] = kw["rs"], kw["rf"]
     for c, rec in FEA.items():
         g = rec["geometry_mm"]
         for k, v in want.items():
@@ -324,7 +329,9 @@ def _fea_matches(s, kw):
           inputs=SIDE_IN, units=SIDE_UNITS,
           equation="F = 1.5 F_side (C5 3-D sim, mu 0.7, D-65) ; sleeve end: sigma = k_FEA F (D5 FEA of the drawn shoe, "
                    "lever R = F (a + e) / (e + s0), s0 = eps_y L_cart) ; RF = allow / sigma ; R5 beam kept for "
-                   "information: M = R b / 12 over the rim ; tine at the rim: M = F a on the windowed, chamfered section")
+                   "information: M = R b / 12 over the rim ; tine (R8): max(F a on the full chamfered section at the sleeve "
+                   "end, F (a - dxw) on the windowed section, dxw = window front - sleeve end at rest); clearance of "
+                   "the tine chamfer to the sleeve fillet r_in - hypot(r_in - cs - tc, r_in - cs)")
 def side(F_lim, k_ult, eps_y, allow, k_fea, **kw):
     s = landing.stack(_n(kw))
     _fea_matches(s, kw)
@@ -348,10 +355,25 @@ def side(F_lim, k_ult, eps_y, allow, k_fea, **kw):
     # bending about z (load along y): webs = rails of the z walls, flanges = y walls
     I_z = 2 * (pz * w ** 3 / 12 + pz * w * ((py - w) / 2) ** 2) + 4 * (w * r ** 3 / 12) - 4 * dA * (py / 2 - tc / 3) ** 2
     S_t = min(I_y / (pz / 2), I_z / (py / 2))
-    sig_t = F * a / S_t
+    # R8: the inspection window starts dxw aft of the sleeve end at rest; crushing moves window and pad into the sleeve
+    # together, so the windowed section never carries more than F (a - dxw); the unwindowed section at the sleeve end
+    # carries F a (R7 put F a on the windowed section: conservative by a / (a - dxw))
+    dxw = s["x_twin"][0] - s["x_slv_end"]
+    hy_i, hz_i = py - 2 * w, pz - 2 * w
+    I_y_f = (py * pz ** 3 - hy_i * hz_i ** 3) / 12 - 4 * dA * (pz / 2 - tc / 3) ** 2
+    I_z_f = (pz * py ** 3 - hz_i * hy_i ** 3) / 12 - 4 * dA * (py / 2 - tc / 3) ** 2
+    S_f = min(I_y_f / (pz / 2), I_z_f / (py / 2))
+    sig_t_win, sig_t_full = F * (a - dxw) / S_t, F * a / S_f
+    sig_t = max(sig_t_win, sig_t_full)
+    # R8: tine corner chamfer vs the sleeve inside fillet: the chamfer ends (tc along each face from the tine corner,
+    # which sits cs inside the sleeve's square corner) must lie inside the fillet arc of radius r_in
+    cs, ri = kw["cs"], kw["r_in"]
+    fil_clear = ri - math.hypot(ri - cs - tc, ri - cs)
     return {"F_N": F, "R_lip_N": R, "R_open_N": R - F, "sigma_fea_Pa": sig_fea, "sf_shoe": allow / sig_fea,
+            "fillet_clear_m": fil_clear,
             "sigma_rim_beam_Pa": sig_beam, "fea_over_beam": sig_fea / sig_beam,
-            "sigma_tine_Pa": sig_t, "sf_tine": allow / sig_t}
+            "sigma_tine_Pa": sig_t, "sf_tine": allow / sig_t, "sigma_tine_win_Pa": sig_t_win,
+            "sigma_tine_full_Pa": sig_t_full, "win_offset_m": dxw}
 
 
 @kit.calc("CALC-D5-SNAP", title="Snap finger strain at full release deflection",
@@ -533,6 +555,10 @@ kit.claim("CL-D5-SIDE-RIM-SF", "Shoe sleeve end RF at C5's 59.0 N ultimate side 
           note="CR-C5-18 / CR-A1-65: replaces the R5 beam (FEA/beam 2.78); worst of +y and +z",
           how="T-D5-SIDE: 60 N (>= 59.0 N ult) sideways at the pad of a foot crushed 5 mm, along +y then +z on a "
               "second shoe; no crack at the rim, window or roof; then C5's T-C5-SHOE-SIDE-FAIL to failure.")
+kit.claim("CL-D5-FILLET-CLEAR", "Tine corner chamfer clear of the sleeve inside fillet (R8)", calc="CALC-D5-SIDE",
+          output="fillet_clear_m", unit="m", limit=(">=", 0.0001), parts=SHOES + PISTONS,
+          how="Dry fit: the insert slides the full 38 mm stroke by hand with no rub at the corners; 0.1 mm feeler at "
+              "each corner of the first print.")
 kit.claim("CL-D5-SIDE-TINE-SF", "Tine bending at the rim under the side load", calc="CALC-D5-SIDE",
           output="sf_tine", unit="-", limit=(">=", 1.0), parts=PISTONS, how="T-D5-SIDE.")
 kit.claim("CL-D5-SNAP-STRAIN", "Snap finger strain at release", calc="CALC-D5-SNAP", output="strain", unit="-",

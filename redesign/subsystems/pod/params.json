@@ -783,9 +783,9 @@
   "note": "antenna B tube must not reach further forward than this (10 mm ahead of the pod nose, D7's nose pad gap)"
  },
  "floor_bevel_m": {
-  "value": 0.005,
+  "value": 0.0,
   "unit": "m",
-  "source": "subsystems/wing/interfaces.json#E-WNG-17 (D1, D-69 CR-C3-17)",
+  "source": "params/CHANGE-LOG.md#D-103 (C3-R4 FEA: the 45 deg bevel fails in flight, mean R 1.20; square end on the step; was 0.005 from E-WNG-17, D-69 CR-C3-17)",
   "status": "PROPOSED",
   "note": "45 deg bevel on the floor board's aft lower edge (x 0.065), bonded on the face of D1's recess-step fillet WNG-007; capped at the board thickness (4.8 mm), so the end face is one 45 deg slope and the floor end stays bonded across the step (C3)"
  },

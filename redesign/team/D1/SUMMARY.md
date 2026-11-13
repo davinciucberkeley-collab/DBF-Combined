@@ -28,7 +28,7 @@ geometry, and `wing_claims.py` writes `claims.json`.
 | Seam-free LE, 32 mm each side | One 100 mm strip is laid last, with edges at x 45.5 mm (upper) and 46.6 mm (lower). The spanwise strips end underneath it. A 72 mm strip cannot do this: the arc to x/c 0.10 is 71.6 mm | `CL-D1-LE-SEAM-X` 45.5 mm (≥ 32) | `CHECKED` (CAD) |
 | F2's 18 × 10 × 5 mm JR recess | Cut at x 0.150–0.168, \|y\| 0.280–0.290, 5 mm deep, on the servo branch on both sides. 4.2 mm of foam is left to the servo pocket | `CL-D1-JR-RECESS-WALL` 4.2 mm | `CHECKED` |
 | D6-R2 groove and patch sizes | Tube groove at \|y\| 0.1335–0.296 (inboard) and 0.344–0.556 (outboard), 1 mm past D6's built tubes. The panels have no groove elsewhere. Tape is cut back 14 mm (flange) and 12 mm (backplate) | `wing_selfcheck` step 7 | `CHECKED` |
-| 5 mm recess-step fillet, laid before the pod | New part `WNG-007`, 1.1 g: legs 5 × 5 mm, 45° face, \|y\| ≤ 0.070, cured and sanded before the pod goes in. Edges `E-WNG-16/17` | `CL-D1-RECESS-FILLET` 5.0 mm | `CHECKED` (CAD) |
+| ~~5 mm recess-step fillet~~ (deleted by D-103: square corner, crash retention by fail-safe) | Was part `WNG-007`, 1.1 g: legs 5 × 5 mm, 45° face, \|y\| ≤ 0.070, cured and sanded before the pod goes in. Edges `E-WNG-16/17` | `CL-D1-RECESS-FILLET` 5.0 mm | `CHECKED` (CAD) |
 
 Mass: +4.4 g (beads 2.0, fillet 1.1, tab tape 0.9, LE overlap 0.6, less the foam taken out). The margin is 13.3 g
 inside the 405 g allocation, so no change request is needed for mass.

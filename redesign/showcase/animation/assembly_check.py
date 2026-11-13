@@ -76,7 +76,7 @@ MAX_SAMPLES = 2500       # per action: past this the planner stops trying direct
 # The film before this check: every part flew in from a point 220 mm out from the aircraft centre (render_build.py up
 # to 2026-11-12, commit 5f3a032). Kept only to score it (--legacy).
 LEGACY_STAGES = [
-    ['WNG-001', 'WNG-002', 'WNG-004*', 'WNG-005*', 'FIN-004*', 'WNG-006*', 'WNG-007'],
+    ['WNG-001', 'WNG-002', 'WNG-004*', 'WNG-005*', 'FIN-004*', 'WNG-006*'],
     ['WNG-011*', 'WNG-012*', 'MEC-009*', 'MEC-010*'],
     ['FIN-002*', 'FIN-006*', 'FIN-001*', 'FIN-011*', 'FIN-012*', 'FIN-008*', 'FIN-009*', 'FIN-010*', 'FIN-007*'],
     ['POD-001', 'POD-002', 'POD-004', 'POD-005', 'POD-006', 'POD-007', 'POD-008', 'POD-010', 'POD-011', 'POD-012',

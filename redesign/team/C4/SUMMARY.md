@@ -1,5 +1,13 @@
 # C4 — Fin and motor-tube structures (S1 simulation round, 2026-11-10)
 
+> **R6 (2026-11-13, D-90 ... D-93, Dillon Alcouffe):** mount grip 12 -> 18 mm: `CL-C4-D3-MOUNT-K-EST` 2 235 vs
+> `-REQ` 1 455 N·m/rad (nominal tube; the R5 1 531 vs 2 229 closed CR-H1-24), the D-80 short outboard cheek now in
+> the model, FE nominal 2 200. Station 22 mm collar, 6 mm lower; collar mass corrected 5.7 -> 11.6 g. Separation
+> nominal 0.228 (shell); the 70 / 3 GPa corner is a record and `CL-C4-D3-TUBE-E-REQ` 69.7 GPa / `-G-REQ` 4.01 GPa are
+> the tube-test pass lines. Strip force 2 233 N design, pins 103 N at 12 mm. 3-D (`sim_fin.py`) re-run on the D-90
+> geometry: `CL-C4-SIM-SEP` 0.095 -> 0.155 (fails 0.20; lower quarter 229 Hz vs 237.6 needed), face MS drawn
+> -0.29 -> -0.58 (hot spot, not converged), extended cheeks +0.63. The S1 verdict table below is older text.
+
 Motor tubes, half-fins, brace, station collar, strips, mounts and the through-core block of the K09-L quad tailsitter.
 S1 re-ran the fin quarters as 3-D solid FE on the settled geometry (D3-R4 fin, D5-R4 shoe, A3-R6a masses), three
 meshes each, against the R4 shell/beam model. Reports: `SIMULATION-REPORT.md` (S1), `BOOM-STRUCTURES.md` (R4 sizing).

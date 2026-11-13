@@ -1,0 +1,24 @@
+E70-G3-tape0.5: 1P-sus acc 8.40 @ 118.9 Hz, sigma 2.56 MPa; 1P-full acc 81.23 @ 129.8 Hz, sigma 20.92 MPa; 2P-sus acc 56.79 @ 211.2 Hz, sigma 9.86 MPa; 2P-full acc 71.89 @ 129.8 Hz, sigma 20.19 MPa
+E70-G3-tape0.0: 1P-sus acc 25.49 @ 118.9 Hz, sigma 12.60 MPa; 1P-full acc 75.68 @ 127.7 Hz, sigma 18.49 MPa; 2P-sus acc 49.75 @ 194.8 Hz, sigma 10.35 MPa; 2P-full acc 72.26 @ 127.7 Hz, sigma 20.39 MPa
+E70-G3-tape1.0: 1P-sus acc 10.30 @ 118.8 Hz, sigma 3.05 MPa; 1P-full acc 82.58 @ 131.7 Hz, sigma 23.61 MPa; 2P-sus acc 60.27 @ 225.8 Hz, sigma 19.21 MPa; 2P-full acc 71.10 @ 131.7 Hz, sigma 19.21 MPa
+E70-G5-tape0.5: 1P-sus acc 5.56 @ 118.9 Hz, sigma 2.87 MPa; 1P-full acc 90.84 @ 136.0 Hz, sigma 27.45 MPa; 2P-sus acc 59.80 @ 205.3 Hz, sigma 13.47 MPa; 2P-full acc 74.19 @ 136.1 Hz, sigma 24.45 MPa
+E70-G5-tape0.0: 1P-sus acc 20.71 @ 118.9 Hz, sigma 9.93 MPa; 1P-full acc 84.30 @ 133.9 Hz, sigma 19.88 MPa; 2P-sus acc 66.35 @ 188.5 Hz, sigma 14.96 MPa; 2P-full acc 74.92 @ 133.9 Hz, sigma 20.00 MPa
+E70-G5-tape1.0: 1P-sus acc 5.11 @ 118.9 Hz, sigma 3.41 MPa; 1P-full acc 78.51 @ 138.7 Hz, sigma 24.00 MPa; 2P-sus acc 52.35 @ 219.4 Hz, sigma 19.09 MPa; 2P-full acc 62.19 @ 138.7 Hz, sigma 19.09 MPa
+E100-G3-tape0.5: 1P-sus acc 15.32 @ 79.9 Hz, sigma 17.78 MPa; 1P-full acc 100.93 @ 146.3 Hz, sigma 30.60 MPa; 2P-sus acc 70.00 @ 146.3 Hz, sigma 23.84 MPa; 2P-full acc 69.99 @ 146.3 Hz, sigma 23.73 MPa
+E100-G3-tape0.0: 1P-sus acc 14.09 @ 78.9 Hz, sigma 16.29 MPa; 1P-full acc 89.41 @ 143.8 Hz, sigma 23.14 MPa; 2P-sus acc 62.12 @ 144.4 Hz, sigma 16.06 MPa; 2P-full acc 68.02 @ 143.8 Hz, sigma 20.74 MPa
+E100-G3-tape1.0: 1P-sus acc 15.78 @ 80.5 Hz, sigma 18.35 MPa; 1P-full acc 103.27 @ 148.3 Hz, sigma 25.26 MPa; 2P-sus acc 70.06 @ 148.3 Hz, sigma 20.26 MPa; 2P-full acc 70.06 @ 148.3 Hz, sigma 20.26 MPa
+E100-G5-tape0.5: 1P-sus acc 17.16 @ 81.2 Hz, sigma 18.68 MPa; 1P-full acc 113.64 @ 155.2 Hz, sigma 27.32 MPa; 2P-sus acc 73.69 @ 155.2 Hz, sigma 20.26 MPa; 2P-full acc 73.69 @ 155.2 Hz, sigma 20.26 MPa
+E100-G5-tape0.0: 1P-sus acc 16.46 @ 80.5 Hz, sigma 17.90 MPa; 1P-full acc 107.12 @ 153.1 Hz, sigma 26.23 MPa; 2P-sus acc 74.14 @ 153.1 Hz, sigma 18.10 MPa; 2P-full acc 74.14 @ 153.1 Hz, sigma 20.33 MPa
+E100-G5-tape1.0: 1P-sus acc 17.48 @ 81.7 Hz, sigma 19.06 MPa; 1P-full acc 80.88 @ 155.3 Hz, sigma 22.67 MPa; 2P-sus acc 73.51 @ 157.0 Hz, sigma 24.06 MPa; 2P-full acc 73.51 @ 157.0 Hz, sigma 24.08 MPa
+1P-sus_acc {'value': 25.493474543408038, 'corner': 'E70-G3-tape0.0', 'f_hz': 118.91694555638729}
+1P-sus_gyro {'value': 40.01319187479621, 'corner': 'E70-G3-tape0.0', 'f_hz': 118.91694555638729}
+1P-sus_sigma {'value': 19060310.5071355, 'corner': 'E100-G5-tape1.0', 'f_hz': 81.66537310393367}
+1P-full_acc {'value': 113.64461127730117, 'corner': 'E100-G5-tape0.5', 'f_hz': 155.21664954322964}
+1P-full_gyro {'value': 85.67361305326416, 'corner': 'E100-G5-tape0.5', 'f_hz': 155.21664954322964}
+1P-full_sigma {'value': 30604635.984013576, 'corner': 'E100-G3-tape0.5', 'f_hz': 145.85044491060665}
+2P-sus_acc {'value': 74.13702982191377, 'corner': 'E100-G5-tape0.0', 'f_hz': 153.05271479791068}
+2P-sus_gyro {'value': 56.389305870469386, 'corner': 'E100-G5-tape1.0', 'f_hz': 156.9178053437467}
+2P-sus_sigma {'value': 24060711.54280686, 'corner': 'E100-G5-tape1.0', 'f_hz': 157.54263998288977}
+2P-full_acc {'value': 74.92300665665246, 'corner': 'E70-G5-tape0.0', 'f_hz': 133.8514118173325}
+2P-full_gyro {'value': 67.36975766154, 'corner': 'E70-G5-tape0.0', 'f_hz': 120.43835275749878}
+2P-full_sigma {'value': 24450473.201449875, 'corner': 'E70-G5-tape0.5', 'f_hz': 135.38373927683358}

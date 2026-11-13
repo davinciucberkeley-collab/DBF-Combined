@@ -398,7 +398,8 @@ kit.claim("CL-H1-MSTIFF-SPOT-NOM", "Spot travel expected at C4's rocking-stiffne
           output="spot_nom_mm", unit="mm", how="Informational: what the mount as estimated reads on GT-17.")
 kit.claim("CL-H1-MSTIFF-NOM-RATIO", "C4's stiffness estimate / GT-17 pass level", calc="CALC-H1-MOUNT-STIFF",
           output="nom_over_pass", unit="-",
-          how="Informational: below 1 the mount as estimated is expected to fail GT-17 (CR-H1-24 to C4).")
+          how="Informational: below 1 the mount as estimated is expected to fail GT-17; D-91 (18 mm grip) closes "
+              "CR-H1-24 at 2 200 / 1 455 N m/rad.")
 kit.claim("CL-H1-MSTIFF-U", "Mount stiffness relative U95 at the pass line", calc="CALC-H1-MOUNT-STIFF",
           output="u_k_frac", unit="-", limit=("<=", 0.10), how="T-H1-RIG-CHECK: read a 1.00 mm shim step on the wall.")
 kit.claim("CL-H1-MSTIFF-DIAL-UM", "Dial-gauge difference at C4's 0.5 kg load, at the pass stiffness",
@@ -785,25 +786,38 @@ kit.claim("CL-H1-ESCCFD-F-ACCEPT", "T-E3-ESC-PAD-CFD acceptance: f_meas (guard-b
 
 
 # ---------------------------------------------------------------- 11. R3: D5 side load and C3 pod brackets
-@kit.calc("CALC-H1-SIDE-POD", equation="m = F / g ; SF_rim(F) = SF_rim(35 N) x 35 / F (linear)",
-          inputs={"f_side": "CL-C1-FOOT-SIDE-DESIGN-ULT", "sf_rim": "CL-D5-SIDE-RIM-SF",
-                  "f_pod": "CL-C3-FEA-SADDLE-TIES", "g": P + "env.g_ms2"},
+@kit.calc("CALC-H1-SIDE-POD", equation="m = F / g ; SF_rim(F) = SF_D5 x F_D5 / F (linear; D5's FEA is worked at "
+          "C5's 59.25 N ult, CR-H1-22 closed by D-101); flight pod brackets at limit +x / -z (C3 design row / 2.156), "
+          "crash force on test articles only (CR-H1-23, D-102)",
+          inputs={"f_side": "CL-C1-FOOT-SIDE-DESIGN-ULT", "sf_rim": "CL-D5-SIDE-RIM-SF", "f_d5": "CL-C5-SIM3D-SIDE-ULT",
+                  "f_px": "CL-C3-BRACKET-PROOF-LIMIT-X", "f_pz": "CL-C3-BRACKET-PROOF-LIMIT-Z",
+                  "f_crash": "CL-C3-BRACKET-CRASH-F", "g": P + "env.g_ms2"},
           units={"g": "m/s2"})
-def side_pod(f_side, sf_rim, f_pod, g):
-    return {"side_n": f_side, "side_kg": f_side / g, "rim_sf_at_side": sf_rim * 35.0 / f_side,
-            "pod_n": f_pod, "pod_kg": f_pod / g}
+def side_pod(f_side, sf_rim, f_d5, f_px, f_pz, f_crash, g):
+    return {"side_n": f_side, "side_kg": f_side / g, "rim_sf_at_side": sf_rim * f_d5 / f_side,
+            "pod_x_n": f_px, "pod_x_kg": f_px / g, "pod_z_n": f_pz, "pod_z_kg": f_pz / g,
+            "pod_crash_n": f_crash, "pod_crash_kg": f_crash / g}
 
 
 kit.claim("CL-H1-D5-SIDE-F", "T-D5-SIDE load at the pad (ultimate basis, CL-C1-FOOT-SIDE-DESIGN-ULT)",
           calc="CALC-H1-SIDE-POD", output="side_n", unit="N", parts=["GER-001-UR", "GER-002-UR"],
           how="Card GT-09: jugs over a pulley, along y then z, insert pushed 4 mm in; 3 s hold.")
-kit.claim("CL-H1-D5-SIDE-RIM-SF", "D5 rim SF scaled from its 35 N basis to the 59 N test load", calc="CALC-H1-SIDE-POD",
-          output="rim_sf_at_side", unit="-",
-          how="Informational: D5's CL-D5-SIDE-RIM-SF is still on 35 N; at 59 N the drawn rim is expected to crack "
-              "unless D5's CR-A1-65 shoe is the one tested (CR-H1-22).")
-kit.claim("CL-H1-POD-BRACKET-F", "T-C3-POD-PROOF bracket load along +x and -z (CR-C3-20)", calc="CALC-H1-SIDE-POD",
-          output="pod_n", unit="N", parts=["POD-007"],
-          how="Card GT-09: strap round each handle-foot bracket, jugs over a pulley; 25 % steps, 10 s hold.")
+kit.claim("CL-H1-D5-SIDE-RIM-SF", "D5 shoe RF at the T-D5-SIDE load (D5 FEA of the drawn R8 shoe, D-101)",
+          calc="CALC-H1-SIDE-POD", output="rim_sf_at_side", unit="-", limit=(">=", 1.0),
+          parts=["GER-001-UR", "GER-002-UR"],
+          how="T-D5-SIDE 60 N at the pad of two R8 shoes, +y on one and +z on the other, insert pushed 4-5 mm in; "
+              "inspect the inboard snap-window corners and the rim; no crack.")
+kit.claim("CL-H1-POD-BRACKET-F", "T-C3-POD-PROOF bracket limit load on the flight pod, +x (CR-H1-23, D-102)",
+          calc="CALC-H1-SIDE-POD", output="pod_x_n", unit="N", parts=["POD-007"],
+          how="Card GT-09: strap round each handle-foot bracket, jugs over a pulley; 25 % steps to this limit load, "
+              "10 s hold; stop at the first audible crack.")
+kit.claim("CL-H1-POD-BRACKET-F-Z", "T-C3-POD-PROOF bracket limit load on the flight pod, -z (CR-H1-23, D-102)",
+          calc="CALC-H1-SIDE-POD", output="pod_z_n", unit="N", parts=["POD-007"],
+          how="Card GT-09, as CL-H1-POD-BRACKET-F along -z.")
+kit.claim("CL-H1-POD-BRACKET-CRASH-F", "Bracket crash force, test articles only (T-C3-BRACKET-CRASH, D-102)",
+          calc="CALC-H1-SIDE-POD", output="pod_crash_n", unit="N", parts=["POD-007"],
+          how="T-C3-BRACKET-CRASH on two test articles (printed foot + bracket bonded to a wall offcut and a spar "
+              "stub), never the flight pod.")
 
 
 # ---------------------------------------------------------------- tests of the rig itself (the campaign tests are owned by E1, B4, C1, E2, A1, A3, B3)

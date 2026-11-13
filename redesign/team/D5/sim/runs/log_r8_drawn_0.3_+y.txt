@@ -1,0 +1,1 @@
+h300_py gov 29.63 MPa (k 0.5000 MPa/N) {"rim": {"vm_max_MPa": 29.62701, "at_mm": [326.314, 6.611, 202.417]}, "aft box": {"vm_max_MPa": 10.24255, "at_mm": [317.9, 6.868, 202.468]}, "window and open-end zone": {"vm_max_MPa": 28.86164, "at_mm": [297.643, -9.55, 208.7]}, "whole shoe": {"vm_max_MPa": 31.81408, "at_mm": [320.0, 4.722, 201.2]}} 436 s

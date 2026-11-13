@@ -315,23 +315,20 @@ kit.claim("CL-D3-ESC-WASH", "ESC pad outer edge / slipstream radius", calc="CALC
 kit.claim("CL-D3-ESC-HUB", "ESC pad inner edge / hub dead zone", calc="CALC-D3-ESC-WASH", output="r_in_over_hub", unit="-",
           limit=(">=", 1.0), parts=["FIN-007-UR"], how="as CL-D3-ESC-WASH")
 kit.claim("CL-D3-ROOT-FILLET-RF", "Half-fin root fillet joint reserve factor, foot side load, typical XPS strength "
-          "(governing root)", calc="CALC-D3-ROOT", output="rf_fillet", unit="-", limit=(">=", 1.0),
-          verifies=["R-LANDING-IMPACT"], parts=HF,
+          "(governing root; record since D-92: 10 / 13 mm cove, no strength credit)", calc="CALC-D3-ROOT", output="rf_fillet", unit="-", parts=HF,
           how="T-D3-ROOT: side pull at the fin TE tip on a core offcut to 1.25 x 28 N, then to failure",
           note="R4: 15 mm cove fillets on the last 0.15 m of bonded root, 13 mm aft of the hinge (elevon end gap), none "
                "over the D6 slot on the lower roots. C6 multiplies this by its 0.5 foam knock-down (CL-C6-FIN-ROOT-RF), "
                "same as CL-D3-ROOT-FILLET-RF-ALLOW")
 kit.claim("CL-D3-ROOT-FILLET-RF-ALLOW", "Half-fin root fillet reserve factor at the C6 XPS allowable (0.5 x typical)",
-          calc="CALC-D3-ROOT", output="rf_allow", unit="-", limit=(">=", 1.0),
-          verifies=["R-LANDING-IMPACT", "R-STRUCT-MARGIN"], parts=HF + ["WNG-001"],
+          calc="CALC-D3-ROOT", output="rf_allow", unit="-", parts=HF + ["WNG-001"],
           how="T-C6-XPS-PULL (allowable) and T-D3-ROOT (joint)",
           note="CR-C6-24 asked >= 1.0 at 0.125 MPa. R5: FAILS on the D-65 side load (58.96 N ult, n 6.6) where R4 read "
                "1.14 on mu F_foot at n 6.0. ASM-D3-ROOT-SHARE 0.5 agrees with C4's 3-D board share 0.47 "
                "(CL-C4-SIM-BOARD-SHARE). Fix offered in CR-D3-35: 15 mm zone forward to L_eff 0.185 m (CL-D3-ROOT-LEFF-REQ, "
                "+5 g) or C4's fillet-intact share / T-C6-XPS-PULL. The fillet is credited fail-safe only in the wing (D-68)")
-kit.claim("CL-D3-ROOT-LEFF-REQ", "Root fillet full-leg length from the TE needed for RF 1.0 at the C6 allowable",
-          calc="CALC-D3-ROOT", output="leff_for_allow", unit="m", limit=("<=", "P:fin_detail.fin.root_fillet.eff_len_m"),
-          verifies=["R-LANDING-IMPACT"], parts=HF + ["WNG-001"], how="T-D3-ROOT on the chosen length",
+kit.claim("CL-D3-ROOT-LEFF-REQ", "(record since D-92) Root fillet full-leg length from the TE needed for RF 1.0 at the C6 allowable",
+          calc="CALC-D3-ROOT", output="leff_for_allow", unit="m", parts=HF + ["WNG-001"], how="T-D3-ROOT on the chosen length",
           note="information for CR-D3-35: the drawn 0.150 m is short at the D-65 side load")
 kit.claim("CL-D3-BRACE-PCR", "Brace (10 x 2) Euler load / C4 design brace force", calc="CALC-D3-BRACE",
           output="pcr_ratio", unit="-", limit=(">=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=["FIN-009-LR"],

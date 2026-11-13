@@ -1,5 +1,13 @@
 # D5 change requests
 
+## Round R8 (2026-11-13, revision D5-R8; answers CR-H1-22)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-D5-34 | H1 (cc C6, A1) | **Answer to CR-H1-22.** `CALC-H1-SIDE-POD`: drop the ×35 / F scaling; `CL-D5-SIDE-RIM-SF` is already at C5's 59.25 N ult (`CL-C5-SIM3D-SIDE-ULT`), so `rim_sf_at_side` = `CL-D5-SIDE-RIM-SF` × `CL-C5-SIM3D-SIDE-ULT` / `CL-C1-FOOT-SIDE-DESIGN-ULT` (= 1.27 today) with limit ≥ 1.0. `T-D5-SIDE` stays 60 N on two R8 shoes (+y on one, +z on the other), insert pushed 4–5 mm in. Inspect the inboard snap-window corners first (the h 0.2 FEA peak, 31.6 MPa) | R7 rim was RF 1.06 at 59.25 N, not 0.62; R8 1.27 | `CL-D5-SIDE-RIM-SF` 1.27, `CL-D5-SIDE-TINE-SF` 1.23 |
+| CR-D5-35 | A3 (cc A1, G4) | Landing **59.08 → 58.94 g** (−0.14 g): shoe 9.93 → 9.98 g, piston 3.28 → 3.19 g. R7 shoes and pistons do not mix with R8 (1.4 mm chamfer vs R 2.0 fillet): print R8 only | `CL-D5-MASS-TOTAL` |
+| CR-D5-36 | C4, C6 (cc C5) | Nothing moves at the fin: sleeve 19.1 × 14.4 mm, legs, cheeks, collar length, glue gap and the step (x 0.2614, \|z\| 0.2010) are unchanged; bond 1 657 mm², RF 1.43. The rim is aft of the TE. No C4 3-D re-run needed for R8. C5: `CL-C5-FEA-SHOE-SF` is a record of the R6 stack; re-run `fea_shoe.py` on R8 only if you want your own cross-check | `CL-D5-FIN-STEP-*`, `CL-D5-BOND-SF` |
+
 ## Round R7 (2026-11-11, revision D5-R7, D-75 / D-76 / D-78; BR-00, BR-01 / SW-02)
 
 | Id | To | What | Why / numbers |

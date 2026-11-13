@@ -1,7 +1,16 @@
 # Change requests from C3 (pod structures)
 
-Revision **C3-R3**, 2026-11-10 (FEA verification round on D2-R5a and A3-R6a). Numbers from `fea/fea_results.json`
+Revision **C3-R4**, 2026-11-13 (D-69 drawings checked: forward-stop T, recess-step fillet, bracket proof load);
+C3-R3, 2026-11-10 (FEA verification round on D2-R5a and A3-R6a). Numbers from `fea/fea_results.json`
 and `python -I redesign/team/C3/pod_structures.py`. Details: `SIMULATION-REPORT.md`.
+
+## R4 requests (2026-11-13, C3-R4; `SIMULATION-REPORT.md` §8)
+
+| # | To | What | Why | Numbers |
+|---|---|---|---|---|
+| **CR-C3-21** | D1, D2 (cc A3, A5) | **Delete the recess-step fillet `WNG-007`** (wing.py prism, `wing_data.py` part, edges `E-WNG-16/17`, `recess.step_fillet_legs_m`) **and the pod floor's aft bevel** (`floor_bevel_m` → 0, with pod.py skipping the bevel prism at 0): the floor end stays square, bonded on the step face. **Supersedes CR-C3-17** | The crash peak sits at the step **top**, where the bond ends; the fillet fills the bottom corner and leaves it (4.42 → 4.43). The 45° bevel turns the floor's bearing on the step into shear on the floor-to-fillet bond, which then fails in flight | floor-on-fillet mean R 1.20 (design); square end design R 0.60 (`CL-C3-FEA-STEP-R-DESIGN`); WNG-007 1.1 g (`subsystems/wing/parts.csv`) comes off |
+| **CR-C3-22** | H1 (cc D2) | Answer to **CR-H1-23**: (a) **No** — 199.6 N is the 12.75 g crash force (ultimate, no factor). On the flight pod, `T-C3-POD-PROOF` stops at limit: brackets **76.2 N along +x, 51.4 N along −z** (`CL-C3-BRACKET-PROOF-LIMIT-X/-Z`). The crash force (**204.7 N**, `CL-C3-BRACKET-CRASH-F`) goes on two test articles in the new **`T-C3-BRACKET-CRASH`**. (b) `CL-C3-FEA-SADDLE-TIES` now points at `T-C3-BRACKET-CRASH` | proof of a flight part stops at limit (CR-H1-17) | limit = design row / (1.5 × 1.15 × 1.25) from `M1_TIED_FOOTPRINT` |
+| **CR-C3-23** | D2, H3 (cc G1) | BUILD.md step 9 (the 1 mm microballoon bed behind the forward-stop T) is **structural**: make it a hold point ("no void, bed continuous over the 54 × 25 mm face") and keep `T-C3-STOP-PUSH` with the nose-wall offcut and bed | Without the bed the floor's top face peels at the tray / upright notch | with bed 42.8 kPa, without 76.5 kPa vs 50 kPa |
 
 ## R3 requests (new, from the FEA)
 

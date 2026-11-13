@@ -6,7 +6,7 @@ FAA label.
 R2 (D-68, D-69): block-pocket corners R 3.15 mm round D3's R 3 mm block; 3 x 3 mm microballoon lip beads along the
 inboard and outboard pocket edges, both surfaces (WNG-006); elevon cut-out corners R 3 mm at the fin-root tabs with
 the panel corners relieved and the tab tape folded round; one 100 mm LE strip with both edges aft of x/c 0.10; F2's
-18 x 10 x 5 mm JR recess on the servo branch; D6-R2 torque-tube groove lengths; the 5 mm recess-step fillet (WNG-007).
+18 x 10 x 5 mm JR recess on the servo branch; D6-R2 torque-tube groove lengths; no recess-step fillet (D-103 deleted WNG-007).
 Plan-form radii and the 45 deg bead chamfer are drawn as n spanwise steps (block_pocket.corner_steps) of Y-normal
 prisms, always on the safe side (pocket contains the block, bead circumscribes the triangle, panel clear of the fill);
 the shop cuts the true radius from the template.
@@ -676,14 +676,8 @@ def build(ctx):
     for e in ('E-WNG-14', 'E-WNG-15'):
         ctx.contact(e, 'lip bead wets the through-core block side face (laid in the block bond)')
 
-    # WNG-007 recess-step fillet (D-69, CR-C3-17): microballoon epoxy in the floor-to-step corner at x_rec1, full
-    # recess width, laid and cured before the pod goes in; the pod floor's aft lower edge is bevelled onto it (D2)
-    lf, lw = g['rf_legs']
-    x1, zf = g['x_rec1'], g['z_rec']
-    ctx.part('WNG-007').prism('Y', -g['y_pod'], [[(x1 - lf, zf), (x1, zf), (x1, zf + lw)]], 2 * g['y_pod'],
-                              name='fillet recess step')
-    ctx.contact('E-WNG-16', 'recess-step fillet bonded in the core corner (laid before the pod)')
-    ctx.contact('E-WNG-17', 'pod floor aft edge bevelled and bonded on the fillet face')
+    # D-103 (CR-C3-17 superseded): no recess-step fillet (was WNG-007) and no floor bevel; the pod floor end sits square
+    # on the step (C3-R4 FEA: the fillet did not lower the crash peak and the bevel failed in flight)
 
     # WNG-002 spar and the four plugs inside it (C2)
     k9.spar_y(ctx.part('WNG-002'), g['xs'], g['zs'], g['spar_half'], 2 * g['rs'], 2 * g['ri'])

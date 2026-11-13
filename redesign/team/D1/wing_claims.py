@@ -232,9 +232,7 @@ kit.claim("CL-D1-CUTOUT-CORNER-R", "Elevon cut-out corner radius at the fin-root
 kit.claim("CL-D1-LE-SEAM-X", "Foremost tape edge on the LE (LE strip edges; nothing ahead of it but the strip)", calc="CALC-D1-D68",
           output="le_seam_x", unit="m", limit=(">=", 0.032), parts=["WNG-003", "WNG-001"],
           how="Rule from the LE on the taped wing at five stations each side: both strip edges aft of 32 mm (x/c 0.10).")
-kit.claim("CL-D1-RECESS-FILLET", "Recess-step fillet floor leg (x 0.065, |y| <= 0.070)", calc="CALC-D1-D68", output="fillet_floor",
-          unit="m", limit=(">=", 0.005), parts=CORE + ["WNG-007", "POD-001"],
-          how="Steel rule on the sanded fillet before the pod goes in: 5 mm along the floor, flush with the step top.")
+# D-103: CL-D1-RECESS-FILLET retired with the recess-step fillet (WNG-007 deleted)
 kit.claim("CL-D1-JR-RECESS-WALL", "Foam between F2's JR recess and the servo pocket", calc="CALC-D1-D68", output="jr_wall", unit="m",
           limit=(">=", 0.003), parts=CORE, how="Calipers between the recess aft wall (x 0.168) and the pocket front (x 0.1722).")
 
@@ -244,10 +242,10 @@ kit.test("T-D1-WEIGH", "Weigh every wing part", verifies=["CL-D1-WING-MASS", "CL
 kit.test("T-D1-FIT", "First-core fit checks", verifies=["CL-D1-SPAR-COVER", "CL-D1-GROOVE-WALL", "CL-D1-GROOVE-DEPTH-FRAC",
                                                        "CL-D1-POCKET-ROOF", "CL-D1-TUBE-GROOVE-COVER", "CL-D1-RECESS-X1", "CL-D1-RECESS-UNDER", "CL-D1-ELEVON-FRAC",
                                                        "CL-D1-POCKET-CORNER-R", "CL-D1-POCKET-BEAD-LEG", "CL-D1-CUTOUT-CORNER-R",
-                                                       "CL-D1-LE-SEAM-X", "CL-D1-RECESS-FILLET", "CL-D1-JR-RECESS-WALL"],
+                                                       "CL-D1-LE-SEAM-X", "CL-D1-JR-RECESS-WALL"],
          procedure="Spar slides in the slot with 0.1-0.3 mm per side; both blocks drop into their pockets; anchor saddles seat on the spar; "
                    "pod shell sits flat in the recess; grooves and pocket gauged against BUILD.md step checks; pocket and cut-out "
-                   "corner radii by gauge, lip-bead chamfer depth, recess-step fillet legs, LE strip edges by rule")
+                   "corner radii by gauge, lip-bead chamfer depth, square recess-step corner (no fillet, D-103), LE strip edges by rule")
 kit.test("T-D1-THROW", "Elevon throw and clearance", verifies=["CL-D1-HINGE-CLEAR-DOWN", "CL-D1-HINGE-CLEAR-UP"],
          procedure="Hinge taped, each panel moved by hand to +/-25 deg on a protractor; no contact with the core; feeler 0.5 mm")
 

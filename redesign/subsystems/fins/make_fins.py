@@ -203,11 +203,11 @@ NOTES = {
     'tube': 'two per 1 000 mm stock length; scuff the bond zones (block, collars) with 120 grit',
     'mount': 'ASA (D-42), 0.2 mm layers, 5 perimeters, enclosed printer; collar axis vertical on the bed; slit + ears '
              'outboard; A = UR/LL, B = UL/LR (mirror); drill the motor holes 3.4 mm through the pilots to the measured '
-             'pattern; plate face 7.5 mm ahead of the collar front, cheeks 17 mm (D-61)',
+             'pattern; plate face 7.5 mm ahead of the collar front, cheeks 17 mm (D-61), 18 mm grip (D-91)',
     'block': 'PETG, 3 perimeters, 15 % gyroid, spar bore horizontal on the bed; sand the socket top/bottom flush; '
              'strap eyes print with it; four vertical plan-form edges R 3 mm (D-68) to match the R 3 mm pocket corners',
     'plug': 'CF 20 x 18 offcut, 53 mm, sanded to slide in the 20 mm bore, laminating epoxy',
-    'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed); 15 mm ring (CR-C6-36), 40 mm '
+    'collar': 'PETG, 100 %, printed upside down on the tail cap (slots open upward on the bed); 22 mm ring (D-90), 40 mm '
               'two-face tail, brace ear inboard; phase tie lug at x 0.060, slot open along x (CR-F2-16)',
     'brace': 'pultruded CF strip 10 x 2 mm, cut to length on the jig, ends scuffed',
     'anchor': 'PETG, 80 %, brace slot vertical on the bed; foot sits on the spar through a core pocket',
@@ -243,7 +243,7 @@ def write_parts_csv(specs, M, P):
              'mount': 'Motor mount ASA, 7 deg canted plate, slip clamp (prints A and B)',
              'block': 'Through-core block (tube socket + spar saddle + strap eyes)',
              'plug': 'Tube plug CF 20x18 x 53 mm', 'pad': 'ESC pad, ASA',
-             'collar': 'Station collar, 15 mm + 40 mm two-face tail', 'brace': 'Brace, CF strip 10 x 2 (C4 CR-C4-16)',
+             'collar': 'Station collar, 22 mm + 40 mm two-face tail', 'brace': 'Brace, CF strip 10 x 2 (C4 CR-C4-16)',
              'anchor': 'Brace anchor on the spar', 'strip': 'Edge strip, CF 10 x 1',
              'pins': 'Edge-strip pin set, CF rod 2.5 mm'}
     rows = []

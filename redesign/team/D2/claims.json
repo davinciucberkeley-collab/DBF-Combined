@@ -317,7 +317,7 @@
    "text": "Declared masses of POD-001 ... POD-010 (g), body volumes x densities",
    "basis": "team/D2/pod_data.py from subsystems/pod/fusion/pod.py; foam board areal mass and PETG fill are estimates; weigh (T-D2-WEIGH)",
    "value": [
-    24.7,
+    24.8,
     41.2,
     9.2,
     9.1,
@@ -1295,11 +1295,11 @@
     "parts": "ASM-D2-PART-MASSES"
    },
    "outputs": {
-    "mass_g": 145.39
+    "mass_g": 145.49
    },
    "input_values": {
     "parts": [
-     24.7,
+     24.8,
      41.2,
      9.2,
      9.1,
@@ -2494,7 +2494,7 @@
    ],
    "how": "T-D2-WEIGH: weigh every pod part before bonding; update interfaces.json.",
    "note": "D-63 allocation 146 g (was 131, D-48): C3's fixes + the D-62 nose",
-   "value": 145.39
+   "value": 145.49
   },
   {
    "id": "T-D2-WEIGH",

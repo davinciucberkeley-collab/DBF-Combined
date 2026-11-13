@@ -1,0 +1,1 @@
+h300_py_v_r_in2_rs5.4 gov 29.88 MPa (k 0.5044 MPa/N) {"rim": {"vm_max_MPa": 29.88314, "at_mm": [326.314, 6.611, 202.417]}, "aft box": {"vm_max_MPa": 10.09826, "at_mm": [315.5, 7.282, 201.132]}, "window and open-end zone": {"vm_max_MPa": 28.82015, "at_mm": [297.643, -9.55, 208.7]}, "whole shoe": {"vm_max_MPa": 38.65935, "at_mm": [320.0, -4.722, 201.2]}} 758 s

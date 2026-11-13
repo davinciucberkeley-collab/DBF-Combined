@@ -1,10 +1,22 @@
 # Landing feet — build notes for G4
 
-Status: `PROPOSED` (D5-R7, 2026-11-11: F-400 cartridges and a narrower shoe, fin step at x 0.2614, D-75 / D-76; R6: shoe sleeve end sized by FEA for C5's 59.0 N ultimate side load, CR-C5-18 /
+Status: `PROPOSED` (D5-R8, 2026-11-13: R 2.0 sleeve fillets, 4.6 mm y-side rim, 0.4 mm floor rim, 1.4 mm tine
+chamfers, 2.5 mm rails for the 59.25 N side load with margin, CR-H1-22; D5-R7, 2026-11-11: F-400 cartridges and a narrower shoe, fin step at x 0.2614, D-75 / D-76; R6: shoe sleeve end sized by FEA for C5's 59.0 N ultimate side load, CR-C5-18 /
 CR-A1-65; R5: caps on `WNG-001`, field kit modelled; R4: pre-crushed cartridges). Four feet, one per half-fin TE tip
 (`UR UL LR LL`), two wingtip corner caps, plus the field kit (4 + 4 spare inserts, 16 + 16 loose cartridge sets, 2
 spare shoes; the CAD shows one unit of each kit line in a row at y 0.85 m, a layout only: the kit travels in
 `TRN-108`). Dimensions from `subsystems/landing/params.json` via `fusion/landing.py`; numbers in `SPEC.md`.
+
+## What changed in R8 (read this if you printed R7 parts)
+
+| Item | R7 | R8 |
+|---|---|---|
+| Sleeve inside fillets | R 1.0 | **R 2.0** (four corners, full length) |
+| Rim at the sleeve end | 3.4 mm all round | **4.6 mm** y sides, 3.4 mm roof (unchanged, level with the pad edge), **0.4 mm** floor side |
+| Tine corner chamfers / window rails | 1.0 / 2.0 mm | **1.4 / 2.5 mm** (a 1.0 mm chamfer binds on the R 2.0 fillet) |
+| Sleeve section, walls, fin step | 19.1 × 14.4 mm, 1.2 mm, x 0.2614 / \|z\| 0.2010 | unchanged |
+
+R7 shoes and pistons do not mix with R8 parts (chamfer vs fillet). Reprint both.
 
 ## What changed in R7 (read this if you printed R6 parts)
 
@@ -48,11 +60,11 @@ R5 shoes, pistons and cartridges do not fit R6 parts. Scrap them; do not mix.
 1. **Print the shoes** (`GER-001`, 4 + 2): export `GER-001-UR`; one part fits all four tips (symmetric about the fin
    plane; turn it over for the lower feet). **Stand it on the rim end** so the layers stack along the sleeve axis
    (CR-C5-18: the side load bends the walls within the layers). 0.2 mm layers, 1.2 mm walls = 3 perimeters, 100 %
-   solid; keep the modelled R 1.0 inside fillets and leg fillets (the FEA peak sits in those corners). Supports only
-   under the two leg ends at the TE. Check: leg gap 10.0 mm, legs 7 mm deep, cheek gap 12.0 mm, wall 1.2 ± 0.1 mm and rim 3.4 mm at
-   the rim end, sleeve 19.1 × 14.4 mm outside; a piston slides in by hand.
+   solid; keep the modelled R 2.0 inside fillets and R 1.0 leg fillets (the FEA peak sits in those corners). Supports only
+   under the two leg ends at the TE. Check: leg gap 10.0 mm, legs 7 mm deep, cheek gap 12.0 mm, wall 1.2 ± 0.1 mm and rim 4.6 mm
+   (y sides) / 3.4 mm (roof) / 0.4 mm (floor) at the rim end, snap-window corners clean (no stringing or notch), sleeve 19.1 × 14.4 mm outside; a piston slides in by hand.
 2. **Print the pistons** (`GER-002`): 2 + 4 spare in **orange** PETG (upper), 2 + 4 spare in **blue** (lower). Flange
-   on the bed. Check: the 1 mm corner chamfers are there (a sharp tine corner binds on the sleeve fillet); both 6.5 mm
+   on the bed. Check: the 1.4 mm corner chamfers are there (a sharp tine corner binds on the sleeve fillet); both 6.5 mm
    fingers free (clear the 0.8 mm slots with a blade); the hook ramps face forward (away from the flange); the piston
    slides the full 38 mm. Knife the replace groove all round the tine 3 mm aft of the rim position (35 mm from the flange).
 3. **Weigh**: shoe ≤ 9.8 g bare, piston ≤ 3.4 g. Heavier: check the extrusion multiplier before printing more.

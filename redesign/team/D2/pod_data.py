@@ -185,7 +185,7 @@ CTYPES = [
 ]
 
 ACKS = ['E-PWR-03', 'E-PWR-05', 'E-AVN-01', 'E-AVN-02', 'E-AVN-03', 'E-AVN-04', 'E-AVN-05', 'E-AVN-07',
-        'E-AVN-10', 'E-HRN-01', 'E-WNG-17']   # R4: E-PWR-01/-02 now land on F1's power frame PWR-006 (CR-F1-16), not on POD-002
+        'E-AVN-10', 'E-HRN-01']   # D-103: E-WNG-17 deleted with the fillet   # R4: E-PWR-01/-02 now land on F1's power frame PWR-006 (CR-F1-16), not on POD-002
 
 
 def build_pod():

@@ -973,12 +973,12 @@
     "value": [
      0.045,
      0.3023,
-     0.1535
+     0.1475
     ],
     "unit": "m",
     "source": "subsystems/fins/params.json#fin_detail.station_collar",
     "status": "PROPOSED",
-    "note": "brace end on the station collar ear (DX-COLLAR-<st>): on the tube axis x 0.045, |y| 0.3023, |z| 0.1535 (collar ring z 0.1475-0.1595 at the 12 mm collar of D-48, D3-R4; 13 mm after D-63 / CR-C6-32: D3 publishes the ring; the ear mid-height 0.1535 does not move). Was 0.1435-0.1595 (16 mm, R3)"
+    "note": "D-91: ear mid |z| 0.1535 -> 0.1475 (mount grip 12 -> 18 mm moves the station collar 6 mm down; subsystems/fins/params.json fin_detail.mount.grip_m). brace end on the station collar ear (DX-COLLAR-<st>): on the tube axis x 0.045, |y| 0.3023, |z| 0.1535 (collar ring z 0.1475-0.1595 at the 12 mm collar of D-48, D3-R4; 13 mm after D-63 / CR-C6-32: D3 publishes the ring; the ear mid-height 0.1535 does not move). Was 0.1435-0.1595 (16 mm, R3)"
    },
    "brace_anchor_y_m": {
     "value": 0.242,

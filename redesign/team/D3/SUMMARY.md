@@ -1,5 +1,9 @@
 # D3 Fins and motor tubes: summary
 
+> **2026-11-13 (D-90 ... D-92, Dillon Alcouffe):** collar 22 mm, pins 12 mm pitch, mount grip 18 mm, root fillets
+> 10 mm ahead of the hinge, 13 mm aft (fillets 25.0 -> 16.4 g). `CL-D3-MASS` 433.3 -> 432.0 g vs 438 g. CR-D3-35 (longer full fillet)
+> withdrawn by D-92.
+
 Revision D3-R5, 2026-11-10 (params A1-R5: D-61, D-63, D-65, D-68, D-70; C6-R5; E3 R3; F2 CR-F2-16). Answers
 CR-A1-63. Subsystem files: `redesign/subsystems/fins/` (SPEC, parts.csv, interfaces.json, params.json, fusion/fins.py,
 BUILD.md). Re-run: `python -I redesign/subsystems/fins/make_fins.py` → `python -I redesign/team/D3/fins_calcs.py` →

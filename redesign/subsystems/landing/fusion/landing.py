@@ -1,4 +1,8 @@
-"""K09-L landing (GER, D5, revision D5-R6): four crushable feet on the half-fin TE tips + two wingtip corner caps.
+"""K09-L landing (GER, D5, revision D5-R8): four crushable feet on the half-fin TE tips + two wingtip corner caps.
+
+R8 (2026-11-13, CR-H1-22): sleeve inside fillets R 2.0 (shoe.inside_fillet_r_m), rim y sides shoe.rim_side_t_m 4.6 mm,
+rim floor side shoe.rim_floor_t_m 0.4 mm, roof side rim_t (= lip, unchanged); tine chamfers 1.4 mm and rails 2.5 mm.
+The sleeve section and fin step do not move. Values below that say R 1.0 / 1 mm chamfer are the R6 text.
 
 R6 (CR-A1-65 / CR-C5-18, D-63, D-65): the shoe sleeve is sized for C5's 59.0 N ultimate side load. Sleeve walls get
 their own thickness (shoe.wall_t_m) separate from the 0.8 mm tine and legs (wall_t_m), R 1.0 mm inside fillets in the
@@ -60,7 +64,7 @@ LOCAL = {'w': 'wall_t_m', 'cs': 'slide_clear_m', 'cf': 'cartridge.clear_m', 'fy'
          'pad_t': 'pad.t_m', 'fl_t': 'piston.flange_t_m', 'stroke': 'stroke_max_m', 'engage': 'piston.engage_m',
          'bw_t': 'shoe.back_wall_t_m', 'z_outer': 'pad.z_outer_m', 'edge_r': 'pad.edge_r_m', 'lip': 'shoe.lip_m',
          'leg_depth': 'shoe.leg_depth_m', 'glue': 'shoe.glue_gap_m', 'win_z': 'shoe.window_z_m',
-         'rim_t': 'shoe.rim_t_m', 'rim_len': 'shoe.rim_len_m', 'collar_len': 'shoe.collar_len_m',
+         'rim_t': 'shoe.rim_t_m', 'rs': 'shoe.rim_side_t_m', 'rf': 'shoe.rim_floor_t_m', 'rim_len': 'shoe.rim_len_m', 'collar_len': 'shoe.collar_len_m',
          'strip_w': 'edge_strip.w_m', 'strip_t': 'edge_strip.t_m', 'hook_len': 'piston.hook_len_m',
          'hook_p': 'piston.hook_protrusion_m', 'finger_len': 'piston.finger_len_m', 'finger_w': 'piston.finger_w_m',
          'slot_w': 'piston.slot_w_m', 'rail': 'piston.window_rail_m', 'cap_span': 'cap.span_m',
@@ -155,11 +159,11 @@ def bodies(n, coords=None):
     for (cy, dy) in ((yf - hy_i, 1), (yf + hy_i, -1)):          # four inside fillets along the whole sleeve
         for (cz, dz) in ((z0 + ws, 1), (z1 - ws, -1)):
             shoe.append(('prism', 'X', xb1, [_fillet(cy, cz, dy, dz, R)], xe - xb1, 'inside fillet R%.1f' % (R * 1e3)))
-    rt, (r0, r1) = n['rim_t'], s['x_rim']
-    shoe += [('box', (r0, yf - hy_o - rt, z0 - rt), (r1, yf + hy_o + rt, z0), 'rim floor side'),
-             ('box', (r0, yf - hy_o - rt, z1), (r1, yf + hy_o + rt, z1 + rt), 'rim roof side'),
-             ('box', (r0, yf - hy_o - rt, z0), (r1, yf - hy_o, z1), 'rim inboard'),
-             ('box', (r0, yf + hy_o, z0), (r1, yf + hy_o + rt, z1), 'rim outboard')]
+    rt, rs, rf, (r0, r1) = n['rim_t'], n['rs'], n['rf'], s['x_rim']   # R8: roof rt (= lip), y sides rs, floor rf
+    shoe += [('box', (r0, yf - hy_o - rs, z0 - rf), (r1, yf + hy_o + rs, z0), 'rim floor side'),
+             ('box', (r0, yf - hy_o - rs, z1), (r1, yf + hy_o + rs, z1 + rt), 'rim roof side'),
+             ('box', (r0, yf - hy_o - rs, z0), (r1, yf - hy_o, z1), 'rim inboard'),
+             ('box', (r0, yf + hy_o, z0), (r1, yf + hy_o + rs, z1), 'rim outboard')]
     for sgn, nm in ((-1, 'leg inboard'), (1, 'leg outboard')):
         ya = yf + sgn * s['leg_gap']
         shoe.append(('box', (xb0, min(ya, ya + sgn * w), z0 - n['leg_depth']), (n['te'], max(ya, ya + sgn * w), z0), nm))
