@@ -1182,7 +1182,7 @@
   },
   "CALC-B1-STALL": {
    "vs_gate_ms": 11.899981156892892,
-   "vs_sized_ms": 11.899981156892892,
+   "vs_sized_ms": 11.893113801608896,
    "vt_gate_ms": 15.46997550396076,
    "vs_bank30_gate_ms": 12.787361940463827,
    "vs_gate_clmax086_ms": 11.468875288798127,
@@ -1200,13 +1200,13 @@
   },
   "CALC-B1-HOVER": {
    "p_gate_w": 386.9342052710069,
-   "p_sized_w": 386.9342052710069,
+   "p_sized_w": 386.2691641301014,
    "i_gate_a": 26.144203058851815,
-   "i_sized_a": 26.144203058851815,
+   "i_sized_a": 26.09926784662847,
    "p_gate_pess_w": 425.6276257981076,
    "prop_ratio_55_45": 1.0187517824989423,
    "hover_only_gate_min": 11.933811839575815,
-   "hover_only_sized_min": 11.933811839575815,
+   "hover_only_sized_min": 11.954358330412111,
    "throttle_frac_gate_sag": 0.4997751374562969,
    "tw_gate_sag_download": 2.000899854862119
   },
@@ -1564,9 +1564,9 @@
    "v_hover_max_ms": 5.822113872002822,
    "tw_needed_8ms": 1.2346840304455746,
    "thrust_frac_8ms": 0.6170643810310318,
-   "v_ground_tip_ms": 9.050708685162379,
+   "v_ground_tip_ms": 9.020324348682232,
    "groundspeed_upwind_ms": 11.0,
-   "m_min_kg": 2.387
+   "m_min_kg": 2.371
   },
   "CALC-B1-CLIMB": {
    "p_vclimb_2p5_w": 448.03677465108206,

@@ -1173,13 +1173,13 @@
     "g": "P:env.g_ms2"
    },
    "outputs": {
-    "mass_g": 861.0,
-    "force_n": 107.625
+    "mass_g": 850.0,
+    "force_n": 106.24999999999999
    },
    "input_values": {
     "pod": 146,
-    "avn": 45,
-    "pwr": 630,
+    "avn": 37,
+    "pwr": 627,
     "pack_nom": 0.55,
     "pack_rng": [
      546.0,
@@ -2398,7 +2398,7 @@
     "POD-007"
    ],
    "how": "Recompute from weighed masses.",
-   "value": 107.625
+   "value": 106.24999999999999
   },
   {
    "id": "CL-D2-HANDLE-F-ULT",

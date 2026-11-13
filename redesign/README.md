@@ -26,17 +26,17 @@ All at the 2.6 kg gate unless stated. Live values: `python -I redesign/team/A1/f
 
 | Parameter | Value | Limit | Unit | Status | Source |
 |---|---|---|---|---|---|
-| Take-off mass, basic / predicted (550 g pack) | 2 345 / 2 462 | ≤ 2 600 gate | g | `MODELLED` (+138 g after growth; 100 g of it is the first-build overrun) | [`MASS-CG.md`](MASS-CG.md) A3-R7 |
-| Allocations + A1 reserve | 2 386 + 214 | = 2 600 | g | `CHECKED` (0 g free) | `params/mass_budget.json` |
-| Pack acceptance line (heaviest pack the overrun still covers) | 588 (A3) / 593 (A1) | ≥ 556 SKU max | g | `MODELLED`; weigh on arrival | `MASS-CG.md`, `team/A1/SUMMARY.md` |
-| CG x, basic (551 g pack at its station) | 0.0486–0.0491 | 0.0466–0.0514 | m | `MODELLED` (aft margin 0.8 mm predicted, thin) | `MASS-CG.md` |
-| CG height z | +0.0185 | 0.010–0.025 | m | `MODELLED` | `MASS-CG.md` |
+| Take-off mass, basic / predicted (550 g pack) | 2 366 / 2 489 | ≤ 2 600 gate | g | `MODELLED` (+111 g after growth; 100 g of it is the first-build overrun) | [`MASS-CG.md`](MASS-CG.md) A3-R8 |
+| Allocations + A1 reserve | 2 374 + 226 | = 2 600 | g | `CHECKED` (reserve = growth 123 + overrun 100 + 3 g free, D-95) | `params/mass_budget.json` |
+| Pack acceptance line (heaviest pack the overrun still covers) | 560.8 (one number: A1 = A3 = E2); `T-E2-WEIGH` pass ≤ 560 | ≥ 556 SKU max | g | `MODELLED`; weigh on arrival | `MASS-CG.md`, D-95 |
+| CG x, basic (551 g pack at its D-98 station) | 0.0484–0.0490 | 0.0466–0.0514 | m | `MODELLED` (aft margin 0.8 mm predicted for 546 g, set by the bay travel) | `MASS-CG.md` |
+| CG height z | +0.0184 | 0.0165–0.025 (D-96) | m | `MODELLED` | `MASS-CG.md` |
 | Static margin at the aft limit, 1.3 Vs, with the CG height | 5.0 | ≥ 5 | % | `UNVERIFIED` (range derived by B3 V1; B3 re-run owed) | `team/B3/SIMULATION-REPORT.md`, D-62 |
 | Hover T/W, fresh pack with limiter / worst pack | 2.49 / 2.12 | ≥ 2.0 / 1.6 | — | `UNVERIFIED` (thrust stand) | `team/A1/SUMMARY.md`, `team/E1/SUMMARY.md` |
-| Stall, forward CG / target / aft | 11.99 / 11.97 / 11.90 | ≤ 12.0 | m/s | `UNVERIFIED` (+0.05 %, inside model uncertainty; `T-B2-STALL` on the twin is the gate, D-71) | `team/B2/SIMULATION-REPORT.md` |
-| Transition 1.3 Vs at the forward CG | 15.52–15.59 | ≤ 15.6 `ARSPD_FBW_MIN`, 16 cruise | m/s | `UNVERIFIED` (+0.05–0.5 %) | `team/B3/`, `team/B2/` |
-| Cruise speed / power / L/D | 16 / 240 / 6.2 | — | m/s, W, — | `UNVERIFIED` (B1 as designed 235–239 W; E1 246 W, CR-E1-51 open) | `params/params.json#performance` |
-| Cruise after 2 min hover, base / pessimistic | 12.0 / 6.4 | ≥ 5 | min | `UNVERIFIED` (B1 level cruise 16.2 / 11.9) | `team/E2/SUMMARY.md`, `team/B1/SIMULATION-REPORT.md` |
+| Stall, forward CG / target / aft | 11.99 / 11.97 / 11.90 (worst corner 12.01) | ≤ 12.3 (D-96: 16 / 1.3 on the integer `AIRSPEED_MIN`) | m/s | `UNVERIFIED` (+2.4 % worst corner; fallback `AIRSPEED_MIN` 17 holds to 13.07; `T-B2-STALL` on the twin is the gate, D-71) | `team/B2/SIMULATION-REPORT.md`, D-96 |
+| Transition 1.3 Vs at the forward CG | 15.52–15.62 | ≤ 16 `AIRSPEED_MIN` (integer), 16 cruise | m/s | `UNVERIFIED` (+2.4 %) | `team/B3/`, `team/B2/`, D-96 |
+| Cruise speed / power / L/D | 16 / 253 / 5.66 | — | m/s, W, — | `UNVERIFIED` (E1 246.2 + 6 W carried, D-97; B1 as designed 239 W) | `params/params.json#performance` |
+| Cruise after 2 min hover, base / pessimistic, at 253 W | 11.4 / 6.0 | ≥ 5 | min | `UNVERIFIED` (E2 phase model 12.0 / 6.4; B1 level cruise 16.3 / 12.0) | `team/E2/claims.json`, D-97 |
 | Spiral doubling time | 3.51 | ≥ 3.3 (roll-stabilised modes only, D-66) | s | `UNVERIFIED` | `team/B3/SIMULATION-REPORT.md` |
 | Hover yaw authority / 5 m/s disturbance | 1.30 | ≥ 1 | — | `UNVERIFIED` (`T-B4-YAW`) | `team/B3/claims.json` |
 | Blade swept volume to the motor tube | 26.1 | ≥ 25 | mm | `MODELLED` (D-61; 25 mm gauge at build) | `team/E1/SUMMARY.md` |

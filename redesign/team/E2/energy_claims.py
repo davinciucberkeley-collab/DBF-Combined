@@ -409,7 +409,7 @@ def sku_check(sku, lim, accept_g):
             "bay_clear_m": clear, "lead_awg": sku["lead_awg"], "awg_max": lim["awg_max"]}
 
 
-@kit.calc("CALC-E2-BUDGET-240", title="Budget sensitivity at the params cruise power (E1 240 W, D-49 / D-13 rule)",
+@kit.calc("CALC-E2-BUDGET-240", title="Budget sensitivity at the params cruise power (performance.cruise_power_w, 253 W since D-97; was 240 W, D-49 / D-13 rule)",
           assumes=ASSUMES + ["ASM-E2-COLD-R", "ASM-E2-HOVER-MARGIN"],
           equation="as CALC-E2-BUDGET-BASE / -PESS with B1's level cruise power x k, k = P_params / P_B1 "
                    "(base 240 / B1V 238.9 W at the gate; pessimistic B1V 312.4 W x the same k) ; BATT_LOW count as "
@@ -547,14 +547,14 @@ kit.claim("CL-E2-SKU-LEAD-AWG", "Named pack discharge-lead gauge (AWG number)", 
           note="10 AWG inferred from the EC5 plug (the page does not state it); I1 confirms at order, E2 on arrival",
           how="T-E2-WEIGH step 3a: read the print on the lead insulation, or strip 5 mm of the cut-off end at "
               "re-termination and measure the bundle (10 AWG ~2.6 mm, 12 AWG ~2.1 mm).")
-kit.claim("CL-E2-CRUISE-MIN-BASE-240", "Cruise after 2 min hover, base, at the params' 240 W (sensitivity)",
+kit.claim("CL-E2-CRUISE-MIN-BASE-240", "Cruise after 2 min hover, base, at the params' cruise power (253 W, D-97) (sensitivity)",
           calc="CALC-E2-BUDGET-240", output="cruise_min_base", unit="min",
           limit=(">=", P + "requirements.cruise_time_min"),
           how="As CL-E2-CRUISE-MIN-BASE; the first tune flight's logged cruise current decides between B1 and E1.")
-kit.claim("CL-E2-CRUISE-MIN-PESS-240", "Cruise after 2 min hover, pessimistic, at the params' 240 W (sensitivity)",
+kit.claim("CL-E2-CRUISE-MIN-PESS-240", "Cruise after 2 min hover, pessimistic, at the params' cruise power (253 W, D-97) (sensitivity)",
           calc="CALC-E2-BUDGET-240", output="cruise_min_pess", unit="min",
           limit=(">=", P + "requirements.cruise_time_min"), how="As CL-E2-CRUISE-MIN-PESS.")
-kit.claim("CL-E2-CRUISE-TO-LOW-PESS-240", "Cruise before BATT_LOW (2600 mAh), pessimistic, at 240 W (sensitivity)",
+kit.claim("CL-E2-CRUISE-TO-LOW-PESS-240", "Cruise before BATT_LOW (2600 mAh), pessimistic, at the params' 253 W (D-97) (sensitivity)",
           calc="CALC-E2-BUDGET-240", output="cruise_to_low_min", unit="min",
           limit=(">=", P + "requirements.cruise_time_min"),
           how="SITL with the logged currents, as CL-E2-CRUISE-TO-LOW-PESS.")
@@ -627,5 +627,5 @@ if __name__ == "__main__":
     for cid in ("CALC-E2-BUDGET-BASE", "CALC-E2-BUDGET-PESS"):
         print(cid, "E2 cross-check cruise W", round(kit.nodes[cid]["outputs"]["cruise_w_e2_model"], 1))
     print("SKU", kit.nodes["CALC-E2-SKU-CHECK"]["outputs"])
-    print("AT 240 W", {k: round(v, 3) for k, v in kit.nodes["CALC-E2-BUDGET-240"]["outputs"].items()})
+    print("AT PARAMS CRUISE W", {k: round(v, 3) for k, v in kit.nodes["CALC-E2-BUDGET-240"]["outputs"].items()})
     print("PACK LOG", f"{len(WEIGHED)} weighed pack(s)" if WEIGHED else "no pack weighed yet (order ~20 Nov)")

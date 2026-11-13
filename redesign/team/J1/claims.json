@@ -493,8 +493,8 @@
    "outputs": {
     "f1P_hover_hz": 90.26319535055327,
     "f2P_hover_hz": 180.52639070110655,
-    "f1P_cruise_hz": 99.09745463032274,
-    "f2P_cruise_hz": 198.1949092606455,
+    "f1P_cruise_hz": 99.90091444797763,
+    "f2P_cruise_hz": 199.80182889595525,
     "f1P_max_hz": 155.83333333333334,
     "f2P_max_hz": 311.6666666666667,
     "band_lo_hz": 72.21055628044262,
@@ -502,7 +502,7 @@
    },
    "input_values": {
     "rpm_h": 5415.791721033196,
-    "rpm_c": 5945.8472778193645,
+    "rpm_c": 5994.054866878658,
     "rpm_max": 9350
    }
   },
@@ -539,8 +539,8 @@
     "f1": 157.1293533122149,
     "a": 90.26319535055327,
     "b": 180.52639070110655,
-    "c": 99.09745463032274,
-    "d": 198.1949092606455,
+    "c": 99.90091444797763,
+    "d": 199.80182889595525,
     "e": 155.83333333333334,
     "f": 311.6666666666667
    }
@@ -701,7 +701,7 @@
    "output": "f1P_cruise_hz",
    "unit": "Hz",
    "how": "RPM telemetry in the cruise log (B4 CL-B4-CRUISE-RPM, 15 m/s).",
-   "value": 99.09745463032274
+   "value": 99.90091444797763
   },
   {
    "id": "CL-J1-MOTOR-2P-CRUISE",
@@ -711,7 +711,7 @@
    "output": "f2P_cruise_hz",
    "unit": "Hz",
    "how": "FFT of the cruise IMU log.",
-   "value": 198.1949092606455
+   "value": 199.80182889595525
   },
   {
    "id": "CL-J1-MOTOR-1P-MAX",
@@ -737,23 +737,16 @@
   {
    "id": "CL-J1-TUBE-MODE-SEP",
    "type": "claim",
-   "title": "Tube mode separation from forcing",
+   "title": "SUPERSEDED (bare-tube screen): tube mode separation from forcing",
    "calc": "CALC-J1-MODE-SEP",
    "output": "sep_min",
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "ref": "P:requirements.vibration_sep_frac"
-   },
-   "verifies": [
-    "R-VIBRATION"
-   ],
    "how": "C4 re-derives with the half-fin as a bonded shear web (CR-J1-03 / CR-B4-07); H1 tap test; hover VIBE < P:requirements.fc_vibe_max_ms2 and Clip = 0 (SRC-J1-AP-VIBE).",
    "cites": [
     "SRC-J1-AP-VIBE",
     "SRC-J1-AP-NOTCH"
    ],
-   "note": "FAILS on the bare tube: f1 ~183 Hz sits 2 % from the hover 2P (180 Hz) and 9 % from the cruise 2P (200 Hz). The forcing sweeps 90-156 Hz (1P) and 180-312 Hz (2P) between hover and the capped maximum, so no bare-tube mode in 72-374 Hz clears 20 % at every steady point: the fin bond must put the first mode above ~375 Hz, or the tap test must show it damped (R-VIBRATION allows either). C4 owns the fix.",
+   "note": "FAILS on the bare tube: f1 ~183 Hz sits 2 % from the hover 2P (180 Hz) and 9 % from the cruise 2P (200 Hz). The forcing sweeps 90-156 Hz (1P) and 180-312 Hz (2P) between hover and the capped maximum, so no bare-tube mode in 72-374 Hz clears 20 % at every steady point: the fin bond must put the first mode above ~375 Hz, or the tap test must show it damped (R-VIBRATION allows either). C4 owns the fix. D-100 (2026-11-13): no limit and no requirement link: the bare tube is not the design; C4's 3-D station model of the bonded fin (CL-C4-SIM-SEP) and T-C4-TAP-D3 are the claim and test of record for R-VIBRATION.",
    "value": 0.00831670574683363
   },
   {
@@ -812,15 +805,8 @@
   {
    "id": "CL-J1-XT60-CONT",
    "type": "claim",
-   "title": "XT60 continuous rating",
+   "title": "SUPERSEDED (D-32, AS150U fitted): XT60 continuous rating",
    "unit": "A",
-   "limit": {
-    "op": ">=",
-    "ref": "CL-J1-DISCONNECT-REQ"
-   },
-   "verifies": [
-    "R-DISCONNECT"
-   ],
    "how": "Maker sheet (35 A at 12 AWG, 85 K rise); Holybro says 30 A for < 60 degC rise. Bench: 34 A for 10 min, connector < 60 degC.",
    "cites": [
     "SRC-J1-AMASS-XT60",
@@ -832,40 +818,26 @@
   {
    "id": "CL-J1-XT60-CONT-PESS",
    "type": "claim",
-   "title": "XT60 continuous rating vs E2 gate-wind hover",
+   "title": "SUPERSEDED (D-32, AS150U fitted): XT60 continuous rating vs E2 gate-wind hover",
    "unit": "A",
-   "limit": {
-    "op": ">=",
-    "ref": "CL-J1-DISCONNECT-REQ-PESS"
-   },
-   "verifies": [
-    "R-DISCONNECT"
-   ],
    "how": "Same heat run at 37 A for 10 min; rise <= 60 degC.",
    "cites": [
     "SRC-J1-AMASS-XT60"
    ],
    "value": 35.0,
-   "note": "FAILS by 6 %: the XT60 only passes R-DISCONNECT if F1 sizes on 27 A rather than E2's 29.9 A."
+   "note": "Was FAILS by 6 %. D-100: no limit and no requirement link, the XT60 is not fitted (D-32 AS150U; CL-J1-AS150U-CONT and F1's CL-F1-DISC-* verify R-DISCONNECT)."
   },
   {
    "id": "CL-J1-XT60-BURST",
    "type": "claim",
-   "title": "XT60 one-minute rating",
+   "title": "SUPERSEDED (D-32, AS150U fitted): XT60 one-minute rating",
    "unit": "A",
-   "limit": {
-    "op": ">=",
-    "ref": "P:electrical.peak_current_a"
-   },
-   "verifies": [
-    "R-DISCONNECT"
-   ],
    "how": "Compare with the logged full-throttle pack current on the thrust stand (4 stations) or F4's output cap.",
    "cites": [
     "SRC-J1-HOLYBRO-CONN"
    ],
    "value": 60.0,
-   "note": "FAILS the 120 A momentary case (4 x 30 A). F1: AS150U, or a claim that the <= 5 s case at the 100 A limiter is inside a cited XT60 short-time rating (A1's condition, CHANGE-LOG CR-A2-08 row)."
+   "note": "FAILS the 120 A momentary case (4 x 30 A). F1: AS150U, or a claim that the <= 5 s case at the 100 A limiter is inside a cited XT60 short-time rating (A1's condition, CHANGE-LOG CR-A2-08 row). D-100: no limit and no requirement link, the XT60 is not fitted (D-32 AS150U)."
   },
   {
    "id": "CL-J1-AS150U-CONT",

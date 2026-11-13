@@ -236,11 +236,11 @@
    "id": "ASM-F3-BEC",
    "type": "assumption",
    "title": "FC BEC ratings carried",
-   "text": "FC 5 V BEC 2.4 A continuous; servo BEC 4.5 A continuous",
-   "basis": "lower of the maker manual and the ArduPilot page / listings (4 A, 8 A); the lower values are carried until the manual PDF is opened",
+   "text": "FC 5 V BEC 2.4 A continuous; servo BEC 8 A continuous",
+   "basis": "FC BEC: lower of the maker manual and the ArduPilot page (2.4 / 4 A). Servo BEC: 8 A continuous / 14 A peak on the CoreWing V2 power board (ArduPilot board page SRC-F3-AP-COREWING; CoreWing manual V2.1 as read for D-74). The 4.5 A carried before was the SpeedyBee F405 Wing APP column of CoreWing's comparison table (D-74, D-100)",
    "value": [
     2.4,
-    4.5
+    8.0
    ],
    "unit": "A",
    "status": "UNVERIFIED",
@@ -552,7 +552,7 @@
     ],
     "bec": [
      2.4,
-     4.5
+     8.0
     ]
    }
   },
@@ -1091,10 +1091,11 @@
    ],
    "how": "T-F1-SERVO-STALL on the CoreWing Vx rail; F1's UBEC drop rule.",
    "cites": [
+    "SRC-F3-AP-COREWING",
     "SRC-F3-COREWING-MANUAL"
    ],
-   "value": 4.5,
-   "note": "FAILS on the manual value: F1's UBEC stays fitted. Listings give 8 A (would pass)"
+   "value": 8.0,
+   "note": "D-100 (2026-11-13): 4.5 -> 8 A. D-74 read the CoreWing V2 servo BEC as 8 A continuous / 14 A peak at 5 / 6 / 7.2 V (CoreWing manual V2.1 and the ArduPilot board page) and dropped the UBEC on it; the 4.5 A was the SpeedyBee F405 Wing APP column of CoreWing's comparison table. Fallback (BOM gate X12) if BOARD-CHECK.md step 7 reads Vx < 5.8 V at 5.4 A"
   },
   {
    "id": "CL-F3-MASS",

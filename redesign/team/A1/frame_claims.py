@@ -50,11 +50,38 @@ kit.assumption("ASM-A1-PACK-CASES-G", "Pack masses the frame checks (D-64)",
                basis="E2 CR-E2-24: listing 551 +/- 5 g. D-64 retires the 503 / 680 g bounding listings of D-58/D-59 as "
                      "flight cases; A3 updates ASM-A3-PACK-RANGE to the same pair", value=[546.0, 590.0], unit="g",
                status="PROPOSED", cites=["SRC-E2-OVONIC-120C-EC5"])
-kit.assumption("ASM-A1-R5-ADDED-G", "Flying mass added by the R5 decisions, not yet in A3's roll-up",
-               "C3's pod fixes +13.9 g EST (CR-C3-14/-15/-16), D-62 nose shell +2 g, C6 pins 2.5 mm +1.5 g and collar "
-               "13 mm +0.6 g, D3's sealing bead -1.6 g, C5's shoe sleeve fix +5 g EST (CR-C5-18): +21.4 g",
-               basis="D-63; set to 0 once D2, D3 and D5 publish and A3 re-runs", value=21.4, unit="g",
-               status="UNVERIFIED", cites=["SRC-K09-REVIEW"])
+kit.assumption("ASM-A1-R5-ADDED-G", "Flying mass added by the R5 decisions, not yet in A3's roll-up (retired: 0 g)",
+               "C3's pod fixes, the D-62 nose shell, C6's pins and collar, D3's sealing bead and C5's shoe fix are all in "
+               "the delivered parts lists A3 rolls up (D2-R6/R7, D3-R5, D5-R7), so nothing is added on top: 0 g",
+               basis="D-63 set it to 21.4 g until D2, D3 and D5 published; D-95 (2026-11-13) sets it to 0 because they "
+                     "have (A3 roll-up: pod 145.4, fins 433.3, landing 59.1 g). This is what made A1's acceptance line "
+                     "(571.5 g) differ from A3's (592.9 g): one number now, CL-A3-PACK-ACCEPT", value=0.0, unit="g",
+               status="PROPOSED", cites=["SRC-K09-REVIEW"])
+kit.source("SRC-A1-UM10204", "NXP UM10204 I2C-bus specification and user manual, Rev. 7.0 (1 Oct 2021)", "datasheet",
+           url="https://www.nxp.com/docs/en/user-guide/UM10204.pdf", checked="2026-11-13",
+           where="Table 10 (p. 43): Ci <= 10 pF per I/O pin, VOL 0.4 V at IOL 3 mA; Table 11 (p. 44): Fast-mode Cb <= 400 pF, "
+                 "tr <= 300 ns (Standard-mode 1000 ns); section 7.1 (p. 50): rise 0.3-0.7 VDD = 0.8473 R C, so "
+                 "Rp(max) = tr / (0.8473 Cb), Rp(min) = (VDD - VOL) / IOL; section 7.2.4 (p. 52) worked example 1.7 kOhm "
+                 "holds about 200 pF at 300 ns")
+kit.source("SRC-A1-3M-3365", "3M 3365 series 0.050 in flat cable, 28 AWG, technical data TS-0080-B", "datasheet",
+           url="https://store.comet.bg/download-file.php?id=22017", checked="2026-11-13",
+           where="Electrical properties, p. 1: capacitance between adjacent conductors 8.14 pF/ft balanced (26.7 pF/m), "
+                 "14.47 pF/ft unbalanced ground-signal-ground (47.5 pF/m)")
+kit.source("SRC-A1-AP-CABLING", "ArduPilot Plane docs, common cabling guide, I2C section", "web",
+           url="https://ardupilot.org/plane/docs/common-cabling-guide.html", checked="2026-11-13",
+           where="I2C: keep cables short, twist SCL with +5 V and SDA with GND (about 10 turns per 30 cm); pull-ups are "
+                 "essential; no numeric length limit given")
+kit.assumption("ASM-A1-I2C-BUS", "I2C bus electrical model (Fast-mode, 3.3 V)",
+               "Cb = L c_wire + n_pin Ci + n_board c_board. c_wire 95 pF/m EST (2 x the 3M 3365 28 AWG unbalanced "
+               "47.5 pF/m: loose silicone leads in a bundle are not a controlled flat cable); n_pin 4 (FC MCU, SPL06 baro, "
+               "QMC5883L compass on the GPS, MS4525DO) at the UM10204 maximum Ci 10 pF; n_board 3 (FC, GPS, airspeed "
+               "board) at 15 pF EST each for traces and the GH plug. Design budget 200 pF = half the 400 pF Fast-mode "
+               "limit (UM10204's own 1.7 kOhm example holds about 200 pF at 300 ns); VDD 3.3 V",
+               basis="UM10204 Tables 10-11 and section 7; 3M 3365 TS-0080-B; F3 ASM-F3-I2C-MAP (three devices on I2C1). "
+                     "Board pull-up values are not published (FC, GPS, MS4525DO: unknown); T-F3-I2C-SCAN measures them",
+               value={"c_wire_pf_per_m": 95.0, "ci_pf": 10.0, "n_pin": 4, "c_board_pf": 15.0, "n_board": 3,
+                      "cb_budget_pf": 200.0, "cb_spec_pf": 400.0, "tr_ns": 300.0, "vdd": 3.3, "vol": 0.4, "iol_ma": 3.0},
+               unit="mixed", status="UNVERIFIED", cites=["SRC-A1-UM10204", "SRC-A1-3M-3365", "SRC-A1-AP-CABLING"])
 
 
 # ---------------------------------------------------------------- geometry
@@ -230,6 +257,30 @@ def sized_mass(reserve, growth_kg, overrun_kg, gate_kg, **alloc):
             "gate_check_g": 1000.0 * gate_kg - s - reserve}
 
 
+@kit.calc("CALC-A1-GROWTH", title="Growth allowance against A3's growth by maturity",
+          equation="growth_a3 = m_predicted - m_basic ; spare = growth_allowance - growth_a3",
+          inputs={"pred_kg": "CL-A3-MASS-PREDICTED", "basic_kg": "CL-A3-MASS-BASIC",
+                  "allow_kg": P + "requirements.growth_allowance_kg"},
+          units={"pred_kg": "kg", "basic_kg": "kg", "allow_kg": "kg"})
+def growth_cover(pred_kg, basic_kg, allow_kg):
+    g = 1000.0 * (pred_kg - basic_kg)
+    return {"growth_a3_g": g, "spare_g": 1000.0 * allow_kg - g}
+
+
+@kit.calc("CALC-A1-I2C", title="I2C bus capacitance, longest bus the budget allows, pull-up window (D-99)",
+          equation="Cb = L c_wire + n_pin Ci + n_board c_board ; L_max = (Cb_budget - n_pin Ci - n_board c_board) / c_wire ; "
+                   "Rp_max = tr / (0.8473 Cb) ; Rp_min = (VDD - VOL) / IOL",
+          inputs={"L": "CL-F2-I2C-LEN", "bus": "ASM-A1-I2C-BUS"}, units={"L": "m"})
+def i2c_bus(L, bus):
+    fixed = bus["n_pin"] * bus["ci_pf"] + bus["n_board"] * bus["c_board_pf"]
+    cb = L * bus["c_wire_pf_per_m"] + fixed
+    return {"cb_pf": cb, "cb_use_of_spec": cb / bus["cb_spec_pf"],
+            "l_max_budget_m": (bus["cb_budget_pf"] - fixed) / bus["c_wire_pf_per_m"],
+            "l_max_spec_m": (bus["cb_spec_pf"] - fixed) / bus["c_wire_pf_per_m"],
+            "rp_max_kohm": bus["tr_ns"] * 1e-9 / (0.8473 * cb * 1e-12) / 1000.0,
+            "rp_min_kohm": (bus["vdd"] - bus["vol"]) / (bus["iol_ma"] * 1e-3) / 1000.0}
+
+
 @kit.calc("CALC-A1-HOVER-TW", title="Hover T/W at the gate and sized mass",
           equation="T/W = n T_max / m ; sag case x voltage_sag ; DL = m g / (n pi D^2/4)",
           inputs={"n": P + "propulsion.n_motors", "t_max": P + "propulsion.thrust_max_per_motor_kg",
@@ -290,7 +341,30 @@ kit.claim("CL-A1-MASS-SIZED", "Sized take-off mass (allocations + planned growth
           how="A3 roll-up of every parts.csv against MASS-CG.md (CL-A3-MASS-PREDICTED is the maturity-based prediction); weigh the built aircraft with pack (H1).")
 kit.claim("CL-A1-RESERVE-COVERS", "A1 mass reserve covers the planned growth and overrun", calc="CALC-A1-MASS-SIZED",
           output="reserve_cover_g", unit="g", limit=(">=", 0.0), verifies=["R-MASS-GATE"],
-          how="growth_reserve_g in params.json minus (growth allowance + 100 g build overrun; D-63: 114 + 100 = 214 g, 0 g free); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.")
+          how="growth_reserve_g in params.json minus (growth allowance + 100 g build overrun; D-95: 123 + 100 = 223 g of 226 g, 3 g free); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.")
+kit.claim("CL-A1-GROWTH-COVERS", "Growth allowance covers A3's growth by maturity (spare grams)", calc="CALC-A1-GROWTH",
+          output="spare_g", unit="g", limit=(">=", 0.0), verifies=["R-MASS-GATE"],
+          note="D-95: requirements.growth_allowance_kg is set from A3's live growth (CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC) "
+               "rounded up; this claim fails the day A3's growth outgrows it, so the A1 reserve can no longer read "
+               "'covered' while the growth it covers has moved on.",
+          how="Re-run A1 after every A3 roll-up; weigh parts as they arrive (T-A3-WEIGH-PARTS) so EST items become WEIGHED (1 %).")
+kit.claim("CL-A1-I2C-CB", "I2C bus capacitance, routed bus (FC to GPS + Y-branch to the airspeed sensor)", calc="CALC-A1-I2C",
+          output="cb_pf", unit="pF", limit=("<=", 200.0), verifies=["R-HARNESS-INSTALL"], parts=["AVN-001", "AVN-002", "AVN-004"],
+          note="D-99: budget 200 pF, half the UM10204 Fast-mode 400 pF (Table 11); estimate, wire capacitance EST.",
+          how="T-F3-I2C-SCAN on the routed harness: all three addresses found and no I2C errors in 10 min of logging; scope "
+              "SCL rise (0.3-0.7 VDD) <= 300 ns at 400 kHz.")
+kit.claim("CL-A1-I2C-LEN-MAX", "Longest I2C bus (FC to GPS + airspeed branch) inside the 200 pF budget", calc="CALC-A1-I2C",
+          output="l_max_budget_m", unit="m", limit=(">=", 1.0), parts=["AVN-001", "AVN-002", "AVN-004"],
+          note="D-99: the harness rule harness.rules.i2c_max_m (0.5 m, CR-F3-05, no electrical basis) becomes 1.0 m, this "
+               "value rounded down; F2 copies 1.0 m into team/F2/harness.py (owner's edit).",
+          how="As CL-A1-I2C-CB.")
+kit.claim("CL-A1-I2C-RP-MAX", "Largest combined pull-up for a 300 ns rise on the routed bus", calc="CALC-A1-I2C",
+          output="rp_max_kohm", unit="kOhm", limit=(">=", 2.2),
+          note="Limit 2.2 kOhm: below it the common 2.2 kOhm board pull-up would not meet 300 ns on this bus. The fitted "
+               "pull-ups (FC, GPS, MS4525DO) are not published, so unknown until measured. Window: Rp_min = (VDD - VOL) / IOL "
+               "= 0.97 kOhm.",
+          how="T-F3-I2C-SCAN, unpowered: ohmmeter SDA-3V3 and SCL-3V3 with all three devices plugged; combined value between "
+              "0.97 kOhm and this value, else fit or remove a pull-up.")
 kit.claim("CL-A1-ALLOC-GATE", "Allocations plus reserve equal the gate", calc="CALC-A1-MASS-SIZED",
           output="gate_check_g", unit="g", limit=(">=", 0.0), verifies=["R-MASS-GATE"],
           how="2 600 - sum(allocation_g) - growth_reserve_g must be >= 0; A1 re-runs this script after any allocation change.")
@@ -369,7 +443,7 @@ def write_mass_budget(kit, path):
         "_note": "Written by redesign/team/A1/frame_claims.py from params/params.json#mass.allocation_g; do not edit by hand. "
                  "limit_g is the hard as-built gate (P4). Allocations are flying mass per subsystem folder; growth_reserve_g "
                  "(= limit - allocations) is held by A1 for growth by maturity and the first-build overrun; sized_g = "
-                 "allocations + requirements.growth_allowance_kg + requirements.build_overrun_kg (D-63: 114 + 100 g). "
+                 "allocations + requirements.growth_allowance_kg + requirements.build_overrun_kg (D-95: 123 + 100 g). "
                  "A3 refines allocations in MASS-CG.md through a change request to A1.",
         "limit_g": gate_g,
         "sized_g": sum(alloc.values()) + planned_g,

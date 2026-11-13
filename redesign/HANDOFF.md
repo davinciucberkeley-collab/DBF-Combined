@@ -28,9 +28,9 @@ rule): [`team/A1/HANDOFF.md`](team/A1/HANDOFF.md).
 | H5 | **Name the two cars** for `subsystems/transport/CAR-FIT.md` (box 1.25 × 0.55 × 0.54 m) | — | before the box is cut (January) | Dec |
 | H6 | **Name the pilot** and confirm RFS site rules, FAA registration ($5), Remote ID if flown outside the FRIA | — | pilot flies the twin first, then SITL ≥ 10 h | Dec |
 | H7 | **Collar height** (CR-C6-37): 22 mm now, or coupon `T-C6-LAP-PETG` first then size | +4.4 g from a 0 g reserve either way | wait for C4's re-run (CR-C6-38); no collar prints before | before the December Aloft cart |
-| H8 | **Pack station rule for the flight card**: A3's D-59 (basic CG on target) or A1's mid-band (balances growth) | 551 g pack: +2.5 / +0.8 mm vs +2.0 / +1.3 mm | A1's rule; A3 switches on a word | before `T-A3-CG-BALANCE` |
-| H9 | **CG height floor** (CR-B2-20): raise `cg.z_range_m[0]` 0.010 → 0.0165 m, or make the forward mark z-dependent | (a) costs nothing as designed | (a) | A1, next params edit |
-| H10 | **Cruise power** (CR-E1-51): carry 252 W, or keep 240 W and cruise at 15 m/s | endurance 12.0 min moves either way | carry the conservative 252 W (D-13 rule); E2 re-runs | A1, next params edit |
+| H8 | **Decided (D-98, 2026-11-13).** A1's mid-band pack-station rule; the balance test overrides it | — | — | done |
+| H9 | **Decided (D-96).** `cg.z_range_m[0]` 0.010 → 0.0165 m; stall line re-derived to 12.3 m/s on the integer `AIRSPEED_MIN` | — | — | done |
+| H10 | **Decided (D-97).** Carry 253 W at 16 m/s, L/D 5.66; E2 re-ran (11.4 / 6.0 min) | — | — | done |
 | H11 | **Ground-test purchases** $26 (strain gauges G12, G13; CR-H1-25), $6 over the D-39 line | buy / borrow | buy: the fin-proof decision needs them | 20 Nov cart |
 
 ## 3. Before the mid-December order: de-risking checklist
@@ -41,13 +41,13 @@ Mandatory items from `CONFIGURATION.md`, with what the design round added.
 |---|---|---|---|---|
 | D1 | Build and fly the **$40 foam-board twin** (Box Kite guide) on the real motors, FC and pack | holds position within 1 m in 5 m/s; then one transition round trip | H2, G2, F4 | early Dec |
 | D2 | **Fixed-wing tune first**: hand-launch and tune the twin as a plain flying wing before any transition | stable FBWA flight | H2, F4 | with D1 |
-| D3 | **Slow-flight stall on the twin** at the gate mass and the forward CG, airspeed logged, three runs (`T-B2-STALL`, D-71) | ≤ 12.3 m/s; sets `ARSPD_FBW_MIN` = 1.3 × measured | H2, B2, F4 | before `ARSPD_FBW_MIN` is frozen |
+| D3 | **Slow-flight stall on the twin** at the gate mass and the forward CG, airspeed logged, three runs (`T-B2-STALL`, D-71) | ≤ 12.3 m/s (D-96); sets `AIRSPEED_MIN` = ceil(1.3 × measured): 16 up to 12.31 m/s, else 17 with `AIRSPEED_CRUISE` 17 (holds to 13.07 m/s) | H2, B2, F4 | before `ARSPD_FBW_MIN` is frozen |
 | D4 | **≥ 10 h SITL** on a stable ArduPilot Plane tailsitter build for the CoreWing F405 Wing V2 | SITL installed; `K09L.param` loads; transitions and failsafes exercised | F4, F3 | 15 Dec |
 | D5 | **Handheld anemometer at RFS** vs the RCMC1 station, mornings 07–10 | ratio < 1.4 | H3, B1 | Dec |
 | D6 | **Early order (~20 Nov)** of electronics, two packs, one US-stock carbon tube, props (§4) | all received, weighed, logged | I1, E2 | 20 Nov |
 | D7 | **Bend-test the carbon tube** (`T-C4-TUBE-BEND`, with GJ): decides Aloft vs overseas tubes for the December cart | E, G within the `ASM-*` band | C4, H1 | 10 Dec |
 | D8 | **Jacobs Hall written yes** for the loans (H2 above) | in hand | team | 20 Nov |
-| D9 | **Weigh the first pack and the first tube on arrival**; log in `team/E2/pack_log.csv`; confirm 10 AWG leads and 135 mm length | pack ≤ 588 g (A3) / 592.6 g (A1); spar ≤ 112 g | E2, A3 | arrival |
+| D9 | **Weigh the first pack and the first tube on arrival**; log in `team/E2/pack_log.csv`; confirm 10 AWG leads and 135 mm length | pack ≤ **560 g** (`CL-A3-PACK-ACCEPT`, one line since D-95); spar ≤ 112 g | E2, A3 | arrival |
 | D10 | **Confirm the FC build and board variant** (CoreWing F405 Wing APP V2, not Mini; output pads and Vx location) before the FC cart | `T-F3-ARRIVAL` | F3 | before 20 Nov |
 
 Before the first hover of the real aircraft (not before the order): cant sense on every mount with an inclinometer

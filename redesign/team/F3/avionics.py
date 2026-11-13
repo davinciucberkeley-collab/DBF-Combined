@@ -116,10 +116,12 @@ kit.assumption("ASM-F3-5V-LOADS", "5 V rail loads",
                "telemetry 0.08 A; MS4525DO 0.003 A; LEDs and buzzer 0.05 A",
                basis="typical datasheet-class currents for these parts; bench-measured in T-F3-5V",
                value=[0.20, 0.05, 0.05, 0.08, 0.003, 0.05], unit="A", status="UNVERIFIED")
-kit.assumption("ASM-F3-BEC", "FC BEC ratings carried", "FC 5 V BEC 2.4 A continuous; servo BEC 4.5 A continuous",
-               basis="lower of the maker manual and the ArduPilot page / listings (4 A, 8 A); the lower values are "
-                     "carried until the manual PDF is opened",
-               value=[2.4, 4.5], unit="A", status="UNVERIFIED", cites=["SRC-F3-COREWING-MANUAL", "SRC-F3-AP-COREWING"])
+kit.assumption("ASM-F3-BEC", "FC BEC ratings carried", "FC 5 V BEC 2.4 A continuous; servo BEC 8 A continuous",
+               basis="FC BEC: lower of the maker manual and the ArduPilot page (2.4 / 4 A). Servo BEC: 8 A continuous / 14 A "
+                     "peak on the CoreWing V2 power board (ArduPilot board page SRC-F3-AP-COREWING; CoreWing manual V2.1 as "
+                     "read for D-74). The 4.5 A carried before was the SpeedyBee F405 Wing APP column of CoreWing's "
+                     "comparison table (D-74, D-100)",
+               value=[2.4, 8.0], unit="A", status="UNVERIFIED", cites=["SRC-F3-COREWING-MANUAL", "SRC-F3-AP-COREWING"])
 kit.assumption("ASM-F3-MASS", "Avionics part masses (from the CAD roll-up, team/F3/avn_data.py)",
                "[part, g] as declared in subsystems/avionics/interfaces.json: FC top board + wireless board (no power "
                "board, which is PWR-003), GPS, RX with antennas, MS4525DO board + 2 lines, pitot boom (probe, printed "
@@ -332,9 +334,12 @@ kit.claim("CL-F3-SENSE-CONT", "CoreWing power-board current sensing, continuous"
 kit.claim("CL-F3-SENSE-PEAK", "CoreWing power-board current sensing, peak", value=215.0, unit="A",
           limit=(">=", "P:electrical.peak_current_a"), parts=["PWR-003"], cites=["SRC-F3-AP-COREWING"],
           how="Data sheet; the 100 A limiter keeps flight peaks below it.")
-kit.claim("CL-F3-SERVO-BEC", "FC servo BEC continuous rating carried", value=4.5, unit="A",
-          limit=(">=", "CL-F1-SERVO-BEC-REQ"), parts=["AVN-001"], cites=["SRC-F3-COREWING-MANUAL"],
-          note="FAILS on the manual value: F1's UBEC stays fitted. Listings give 8 A (would pass)",
+kit.claim("CL-F3-SERVO-BEC", "FC servo BEC continuous rating carried", value=8.0, unit="A",
+          limit=(">=", "CL-F1-SERVO-BEC-REQ"), parts=["AVN-001"], cites=["SRC-F3-AP-COREWING", "SRC-F3-COREWING-MANUAL"],
+          note="D-100 (2026-11-13): 4.5 -> 8 A. D-74 read the CoreWing V2 servo BEC as 8 A continuous / 14 A peak at 5 / 6 / "
+               "7.2 V (CoreWing manual V2.1 and the ArduPilot board page) and dropped the UBEC on it; the 4.5 A was the "
+               "SpeedyBee F405 Wing APP column of CoreWing's comparison table. Fallback (BOM gate X12) if BOARD-CHECK.md "
+               "step 7 reads Vx < 5.8 V at 5.4 A",
           how="T-F1-SERVO-STALL on the CoreWing Vx rail; F1's UBEC drop rule.")
 kit.claim("CL-F3-MASS", "Avionics mass", calc="CALC-F3-MASS", output="value", unit="g",
           limit=("<=", "P:mass.allocation_g.avionics"),

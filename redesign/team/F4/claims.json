@@ -548,12 +548,12 @@
     "ASM-F4-QT-ARM"
    ],
    "outputs": {
-    "f_rll_hz": 1.0114728127152888,
-    "p_ceiling_rll": 0.3559166351032052,
-    "f_pit_hz": 2.293381595844628,
-    "p_ceiling_pit": 0.1744149341412519,
-    "f_yaw_hz": 0.9983569026529531,
-    "p_ceiling_yaw": 0.9615799694968539
+    "f_rll_hz": 1.0014263846758666,
+    "p_ceiling_rll": 0.35948723291979356,
+    "f_pit_hz": 2.2867422369937263,
+    "p_ceiling_pit": 0.17492133285903766,
+    "f_yaw_hz": 0.989195156735673,
+    "p_ceiling_yaw": 0.9704859485644707
    },
    "input_values": {
     "T": 21.1,
@@ -561,9 +561,9 @@
     "z": 0.19,
     "cant": 7.0,
     "qt": 0.02,
-    "izz": 0.17212019491059707,
-    "iyy": 0.04731467986250484,
-    "ixx": 0.17586585737119634,
+    "izz": 0.17380461573306574,
+    "iyy": 0.04743629424734137,
+    "ixx": 0.17749469500731715,
     "p": [
      0.08,
      0.08,
@@ -625,11 +625,11 @@
     "ASM-F4-SAG"
    ],
    "outputs": {
-    "a_up": 0.6710138896572756,
+    "a_up": 0.6711018302333717,
     "a_up_at_limit": 0.6755223233592841
    },
    "input_values": {
-    "s": 1.2131960681735758,
+    "s": 1.2139001210348332,
     "smax": 1.25,
     "a_h": 0.49,
     "d": 0.3,
@@ -1065,7 +1065,7 @@
    },
    "outputs": {
     "d_pitch_deg": 12.5,
-    "ratio": 0.8702391656036802,
+    "ratio": 0.8714659656919933,
     "gain_over_trim_limit": 1.0
    },
    "input_values": {
@@ -1074,7 +1074,7 @@
      -25,
      25
     ],
-    "ds": -10.877989570046003,
+    "ds": -10.893324571149916,
     "half": 0.5
    }
   },
@@ -1332,7 +1332,7 @@
     "AVN-001"
    ],
    "how": "Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.",
-   "value": 1.0114728127152888
+   "value": 1.0014263846758666
   },
   {
    "id": "CL-F4-XOVER-PIT",
@@ -1352,7 +1352,7 @@
     "AVN-001"
    ],
    "how": "As roll; after QAUTOTUNE reject any Q_A_RAT_PIT_P above p_ceiling_pit.",
-   "value": 2.293381595844628
+   "value": 2.2867422369937263
   },
   {
    "id": "CL-F4-XOVER-YAW",
@@ -1369,7 +1369,7 @@
     "AVN-001"
    ],
    "how": "As roll.",
-   "value": 0.9983569026529531
+   "value": 0.989195156735673
   },
   {
    "id": "CL-F4-FILT-SEP",
@@ -1450,7 +1450,7 @@
     "PRP-002-LL"
    ],
    "how": "Tethered-hover log on a pack near BATT_LOW: mean RCOU of the upper pair (UR, UL) / lower pair gives the split; peak upper-pair RCOU during pitch inputs stays below 0.84 (CR-A3-04, R-HOVER-SPLIT).",
-   "value": 0.6710138896572756
+   "value": 0.6711018302333717
   },
   {
    "id": "CL-F4-SPLIT-OUT-LIMIT",
@@ -1954,7 +1954,7 @@
     "AVN-001"
    ],
    "how": "T-B2-STALL slow flight in FBWA: elevon output not at the pitch end at the stall break.",
-   "value": 0.8702391656036802
+   "value": 0.8714659656919933
   },
   {
    "id": "T-F4-SITL-NAMES",

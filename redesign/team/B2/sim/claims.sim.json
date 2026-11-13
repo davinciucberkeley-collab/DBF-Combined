@@ -110,51 +110,51 @@
    "outputs": {
     "Vs_fwd_gate": 11.994528816586966,
     "Vtr_fwd_gate": 15.592887461563055,
-    "Vs_fwd_predm": 11.674733012782983,
-    "Vtr_fwd_predm": 15.177152916617878,
+    "Vs_fwd_predm": 11.747309936824816,
+    "Vtr_fwd_predm": 15.271502917872262,
     "CLmax_fwd": 0.7864591439688716,
     "elev_fwd": -12.17939439688716,
     "Vs_aft_gate": 11.901882995039996,
     "Vtr_aft_gate": 15.472447893551996,
-    "Vs_aft_predm": 11.584451513345819,
-    "Vtr_aft_predm": 15.059786967349565,
+    "Vs_aft_predm": 11.656491374936095,
+    "Vtr_aft_predm": 15.153438787416924,
     "CLmax_aft": 0.799323644518114,
     "elev_aft": -9.705159533501718,
     "Vs_target_gate": 11.966547897513568,
     "Vtr_target_gate": 15.556512266767639,
-    "Vs_target_predm": 11.64746600132538,
-    "Vtr_target_predm": 15.141705801722996,
+    "Vs_target_predm": 11.719880758494716,
+    "Vtr_target_predm": 15.235844986043132,
     "CLmax_target": 0.7903124999999999,
     "elev_target": -10.920166406249999,
-    "Vs_basic_gate": 11.971922602386377,
-    "Vtr_basic_gate": 15.56349938310229,
-    "Vs_basic_predm": 11.652703564386698,
-    "Vtr_basic_predm": 15.148514633702709,
-    "CLmax_basic": 0.7895701985840857,
-    "elev_basic": -11.162741115894697,
-    "Vs_pred_gate": 11.93614524975594,
-    "Vtr_pred_gate": 15.516988824682723,
-    "Vs_pred_predm": 11.617839211876134,
-    "Vtr_pred_predm": 15.103190975438975,
-    "CLmax_pred": 0.7945306169616975,
-    "elev_pred": -10.351421660428166,
-    "Vs_fwd_zlo_gate": 12.014639093508443,
-    "Vtr_fwd_zlo_gate": 15.619030821560976,
-    "Vs_fwd_zlo_predm": 11.694330282850014,
-    "Vtr_fwd_zlo_predm": 15.202629367705018,
-    "CLmax_fwd_zlo": 0.7837065637065637,
-    "elev_fwd_zlo": -13.076515945945944,
+    "Vs_basic_gate": 11.968097953357427,
+    "Vtr_basic_gate": 15.558527339364655,
+    "Vs_basic_predm": 11.721400246703356,
+    "Vtr_basic_predm": 15.237820320714363,
+    "CLmax_basic": 0.79009831723918,
+    "elev_basic": -10.990158622219045,
+    "Vs_pred_gate": 11.927603259486089,
+    "Vtr_pred_gate": 15.505884237331916,
+    "Vs_pred_predm": 11.681704234382554,
+    "Vtr_pred_predm": 15.186215504697321,
+    "CLmax_pred": 0.7957216497562812,
+    "elev_pred": -10.190830180824335,
+    "Vs_fwd_zlo_gate": 11.999251413517042,
+    "Vtr_fwd_zlo_gate": 15.599026837572156,
+    "Vs_fwd_zlo_predm": 11.751939422385211,
+    "Vtr_fwd_zlo_predm": 15.277521249100776,
+    "CLmax_fwd_zlo": 0.7858114780247991,
+    "elev_fwd_zlo": -12.39048182019511,
     "Vs_fwd_z0_gate": 12.039057457966756,
     "Vtr_fwd_z0_gate": 15.650774695356784,
-    "Vs_fwd_z0_predm": 11.718125841973105,
-    "Vtr_fwd_z0_predm": 15.233563594565037,
+    "Vs_fwd_z0_predm": 11.790960771458739,
+    "Vtr_fwd_z0_predm": 15.32824900289636,
     "CLmax_fwd_z0": 0.780383141762452,
     "elev_fwd_z0": -14.167499501915708,
     "SM_fwd": 0.06960645813086563,
     "Vs_fwd_z_gain": 0.044528641379789846,
-    "x_fwd_stall_at_zlo": 0.04782594479247054,
-    "z_min_stall_at_xfwd": 0.016183197066452208,
-    "dx_fwd_needed_at_zlo": 0.0012259447924705402
+    "x_fwd_stall_at_zlo": 0.0446,
+    "z_min_stall_at_xfwd": 1.0842021724855045e-20,
+    "dx_fwd_needed_at_zlo": -0.0020000000000000018
    },
    "input_values": {
     "xg": [
@@ -241,15 +241,15 @@
     "xt": 0.049,
     "zt": 0.0185,
     "zr": [
-     0.01,
+     0.0165,
      0.025
     ],
     "xnp": 0.068874066601877,
-    "xbf": 0.15168021769221895,
-    "xp": 0.05012344005666805,
+    "xbf": 0.1527081242446396,
+    "xp": 0.05044065599979881,
     "kd": 1.0,
     "mg": 2.6,
-    "mp": 2.4571164999999997,
+    "mp": 2.4891592999999994,
     "g": 9.80665,
     "rho": 1.225,
     "b": 1.15,
@@ -257,7 +257,7 @@
     "k": 1.3,
     "s": 0.034209320186079445,
     "rex": 260000.0,
-    "vmax": 12.0
+    "vmax": 12.3
    }
   },
   {
@@ -664,7 +664,7 @@
    ],
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
    "note": "corner of the CG box: a lower CG needs more up-elevon at the stall",
-   "value": 12.014639093508443
+   "value": 11.999251413517042
   },
   {
    "id": "CL-B2R4-VS-GATE-FWD-Z0",
@@ -712,7 +712,7 @@
    "output": "x_fwd_stall_at_zlo",
    "unit": "m",
    "how": "T-B2-STALL; A1 sets the forward mark at max(this, B3 limit) or raises cg.z_range_m[0] to CL-B2R4-Z-MIN-AT-XFWD",
-   "value": 0.04782594479247054
+   "value": 0.0446
   },
   {
    "id": "CL-B2R4-Z-MIN-AT-XFWD",
@@ -722,7 +722,7 @@
    "output": "z_min_stall_at_xfwd",
    "unit": "m",
    "how": "CG height from the balance rig (T-A3-CG-BALANCE)",
-   "value": 0.016183197066452208
+   "value": 1.0842021724855045e-20
   },
   {
    "id": "CL-B2R4-VS-GATE-TARGET",
@@ -760,7 +760,7 @@
     "WNG-003"
    ],
    "how": "T-B2-STALL at the as-built mass; the expected flight value",
-   "value": 11.617839211876134
+   "value": 11.681704234382554
   },
   {
    "id": "CL-B2R4-B1-REPRO",

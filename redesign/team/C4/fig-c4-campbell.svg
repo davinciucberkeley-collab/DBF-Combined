@@ -26,8 +26,8 @@
 <text x="1154.0" y="202.7" font-size="12" font-family="IBM Plex Mono, monospace" fill="#4B5563" text-anchor="end">2P ± 20 %</text>
 <line x1="669.5" y1="30" x2="669.5" y2="500" stroke="#9AA4B1" stroke-width="0.75" stroke-dasharray="6 4"/>
 <text x="673.5" y="42" font-size="11" fill="#6B7280">hover</text>
-<line x1="726.2" y1="30" x2="726.2" y2="500" stroke="#9AA4B1" stroke-width="0.75" stroke-dasharray="6 4"/>
-<text x="730.2" y="42" font-size="11" fill="#6B7280">cruise</text>
+<line x1="731.4" y1="30" x2="731.4" y2="500" stroke="#9AA4B1" stroke-width="0.75" stroke-dasharray="6 4"/>
+<text x="735.4" y="42" font-size="11" fill="#6B7280">cruise</text>
 <line x1="1087.2" y1="30" x2="1087.2" y2="500" stroke="#9AA4B1" stroke-width="0.75" stroke-dasharray="6 4"/>
 <text x="1091.2" y="42" font-size="11" fill="#6B7280">F4 cap</text>
 <polyline points="90.0,364.7 116.8,364.7 143.5,364.7 170.2,364.7 197.0,364.7 223.8,364.7 250.5,364.7 277.2,364.7 304.0,364.7 330.8,364.8 357.5,364.8 384.2,364.8 411.0,364.8 437.8,364.8 464.5,364.8 491.2,364.8 518.0,364.8 544.8,364.8 571.5,364.8 598.2,364.8 625.0,364.8 651.8,364.8 678.5,364.8 705.2,364.8 732.0,364.8 758.8,364.9 785.5,364.9 812.2,364.9 839.0,364.9 865.8,364.9 892.5,364.9 919.2,364.9 946.0,364.9 972.8,365.0 999.5,365.0 1026.2,365.0 1053.0,365.0 1079.8,365.0 1106.5,365.0 1133.2,365.0 1160.0,365.1" fill="none" stroke="#6B7280" stroke-width="2" stroke-dasharray="8 5"/>
