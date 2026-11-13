@@ -25,8 +25,9 @@ Next steps in order:
 3. Before any Fusion run or print: `python -I redesign/fusion/check.py`, `python -I redesign/collision/collide.py`,
    `python -B redesign/manufacturing/make_shop_files.py`.
 4. Explorer artifact (private, owner Dillon's account): https://claude.ai/artifact/XYkihMreBq6Gn7deTEwSC8 . Republish from
-   `redesign/site/app.html` with the same file list; the 3-D model loads from `data/assembly.glb.js` there (artifacts do
-   not serve .glb), from `assets/k09l.glb` everywhere else.
+   `redesign/site/app.html` with the same file list; the 3-D model loads from `data/assembly.glb.part1.js`, `part2.js` there
+   (artifacts do not serve .glb and take at most 16 MB per file; `viewer/build_data.py` writes the parts), from
+   `assets/k09l.glb` everywhere else. Publish in two calls (model, data, renders, drawing; then the animations).
 5. Note: `fusion/tests` has 2 failing tests (skeleton CG range, transport also_contacts); they fail the same way on
    commit 4784faa, before this round.
 
