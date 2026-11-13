@@ -76,14 +76,68 @@
   {
    "id": "ASM-A1-R5-ADDED-G",
    "type": "assumption",
-   "title": "Flying mass added by the R5 decisions, not yet in A3's roll-up",
-   "text": "C3's pod fixes +13.9 g EST (CR-C3-14/-15/-16), D-62 nose shell +2 g, C6 pins 2.5 mm +1.5 g and collar 13 mm +0.6 g, D3's sealing bead -1.6 g, C5's shoe sleeve fix +5 g EST (CR-C5-18): +21.4 g",
-   "basis": "D-63; set to 0 once D2, D3 and D5 publish and A3 re-runs",
-   "value": 21.4,
+   "title": "Flying mass added by the R5 decisions, not yet in A3's roll-up (retired: 0 g)",
+   "text": "C3's pod fixes, the D-62 nose shell, C6's pins and collar, D3's sealing bead and C5's shoe fix are all in the delivered parts lists A3 rolls up (D2-R6/R7, D3-R5, D5-R7), so nothing is added on top: 0 g",
+   "basis": "D-63 set it to 21.4 g until D2, D3 and D5 published; D-95 (2026-11-13) sets it to 0 because they have (A3 roll-up: pod 145.4, fins 433.3, landing 59.1 g). This is what made A1's acceptance line (571.5 g) differ from A3's (592.9 g): one number now, CL-A3-PACK-ACCEPT",
+   "value": 0.0,
    "unit": "g",
-   "status": "UNVERIFIED",
+   "status": "PROPOSED",
    "cites": [
     "SRC-K09-REVIEW"
+   ]
+  },
+  {
+   "id": "SRC-A1-UM10204",
+   "type": "source",
+   "title": "NXP UM10204 I2C-bus specification and user manual, Rev. 7.0 (1 Oct 2021)",
+   "kind": "datasheet",
+   "url": "https://www.nxp.com/docs/en/user-guide/UM10204.pdf",
+   "checked": "2026-11-13",
+   "where": "Table 10 (p. 43): Ci <= 10 pF per I/O pin, VOL 0.4 V at IOL 3 mA; Table 11 (p. 44): Fast-mode Cb <= 400 pF, tr <= 300 ns (Standard-mode 1000 ns); section 7.1 (p. 50): rise 0.3-0.7 VDD = 0.8473 R C, so Rp(max) = tr / (0.8473 Cb), Rp(min) = (VDD - VOL) / IOL; section 7.2.4 (p. 52) worked example 1.7 kOhm holds about 200 pF at 300 ns"
+  },
+  {
+   "id": "SRC-A1-3M-3365",
+   "type": "source",
+   "title": "3M 3365 series 0.050 in flat cable, 28 AWG, technical data TS-0080-B",
+   "kind": "datasheet",
+   "url": "https://store.comet.bg/download-file.php?id=22017",
+   "checked": "2026-11-13",
+   "where": "Electrical properties, p. 1: capacitance between adjacent conductors 8.14 pF/ft balanced (26.7 pF/m), 14.47 pF/ft unbalanced ground-signal-ground (47.5 pF/m)"
+  },
+  {
+   "id": "SRC-A1-AP-CABLING",
+   "type": "source",
+   "title": "ArduPilot Plane docs, common cabling guide, I2C section",
+   "kind": "web",
+   "url": "https://ardupilot.org/plane/docs/common-cabling-guide.html",
+   "checked": "2026-11-13",
+   "where": "I2C: keep cables short, twist SCL with +5 V and SDA with GND (about 10 turns per 30 cm); pull-ups are essential; no numeric length limit given"
+  },
+  {
+   "id": "ASM-A1-I2C-BUS",
+   "type": "assumption",
+   "title": "I2C bus electrical model (Fast-mode, 3.3 V)",
+   "text": "Cb = L c_wire + n_pin Ci + n_board c_board. c_wire 95 pF/m EST (2 x the 3M 3365 28 AWG unbalanced 47.5 pF/m: loose silicone leads in a bundle are not a controlled flat cable); n_pin 4 (FC MCU, SPL06 baro, QMC5883L compass on the GPS, MS4525DO) at the UM10204 maximum Ci 10 pF; n_board 3 (FC, GPS, airspeed board) at 15 pF EST each for traces and the GH plug. Design budget 200 pF = half the 400 pF Fast-mode limit (UM10204's own 1.7 kOhm example holds about 200 pF at 300 ns); VDD 3.3 V",
+   "basis": "UM10204 Tables 10-11 and section 7; 3M 3365 TS-0080-B; F3 ASM-F3-I2C-MAP (three devices on I2C1). Board pull-up values are not published (FC, GPS, MS4525DO: unknown); T-F3-I2C-SCAN measures them",
+   "value": {
+    "c_wire_pf_per_m": 95.0,
+    "ci_pf": 10.0,
+    "n_pin": 4,
+    "c_board_pf": 15.0,
+    "n_board": 3,
+    "cb_budget_pf": 200.0,
+    "cb_spec_pf": 400.0,
+    "tr_ns": 300.0,
+    "vdd": 3.3,
+    "vol": 0.4,
+    "iol_ma": 3.0
+   },
+   "unit": "mixed",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-A1-UM10204",
+    "SRC-A1-3M-3365",
+    "SRC-A1-AP-CABLING"
    ]
   },
   {
@@ -240,7 +294,7 @@
     ],
     "x_target": 0.049,
     "z_range": [
-     0.01,
+     0.0165,
      0.025
     ],
     "foot": 0.048,
@@ -320,7 +374,7 @@
     "c": "m"
    },
    "outputs": {
-    "fwd_inside_m": 0.00016740579011874368,
+    "fwd_inside_m": 0.00012931055202350383,
     "aft_inside_m": -0.00011993339812299553,
     "width_m": 0.004799999999999999,
     "target_fwd_margin_m": 0.0023999999999999994,
@@ -332,7 +386,7 @@
      0.0466,
      0.0514
     ],
-    "x_fwd": 0.04643259420988126,
+    "x_fwd": 0.0464706894479765,
     "x_aft": 0.051280066601877006,
     "x_t": 0.049,
     "x_np": 0.067280066601877,
@@ -389,45 +443,45 @@
     "ASM-A1-PACK-CASES-G"
    ],
    "outputs": {
-    "growth_dx_m": 0.001585770395157983,
-    "empty_x_m": 0.06902647415242168,
+    "growth_dx_m": 0.0015749734208751892,
+    "empty_x_m": 0.06914998789093031,
     "pack_x_fwd_limit_m": -0.03790000000000002,
     "pack_x_aft_limit_m": -0.019999999999999997,
     "fwd_room_nominal_m": 0.0019000000000000197,
-    "travel_left_fwd_m": 0.01790000000000002,
+    "travel_left_fwd_m": 0.01590000000000002,
     "cases": {
      "546": {
-      "spacer_m": 0.0,
-      "station_m": -0.019999999999999997,
-      "cg_basic_m": 0.04822420475116511,
-      "cg_pred_m": 0.04981268970477142,
+      "spacer_m": 0.002,
+      "station_m": -0.022,
+      "cg_basic_m": 0.04808706587890741,
+      "cg_pred_m": 0.04966470556030329,
       "nose_ballast_g": 0.0
      },
      "550": {
       "spacer_m": 0.0,
       "station_m": -0.019999999999999997,
-      "cg_basic_m": 0.048107616557510814,
-      "cg_pred_m": 0.0496933869526688,
+      "cg_basic_m": 0.048433375161609254,
+      "cg_pred_m": 0.050008348582484444,
       "nose_ballast_g": 0.0
      },
      "590": {
       "spacer_m": 0.0,
       "station_m": -0.019999999999999997,
-      "cg_basic_m": 0.04696328249373081,
-      "cg_pred_m": 0.04852240901009469,
+      "cg_basic_m": 0.04729605080562735,
+      "cg_pred_m": 0.048844849050612774,
       "nose_ballast_g": 0.0
      }
     },
-    "fwd_margin_min_m": 0.00036328249373080573,
-    "aft_margin_pred_min_m": 0.0015873102952285792,
-    "aft_margin_basic_min_m": 0.0031757952488348923,
+    "fwd_margin_min_m": 0.0006960508056273462,
+    "aft_margin_pred_min_m": 0.0013916514175155575,
+    "aft_margin_basic_min_m": 0.0029666248383907468,
     "nose_ballast_max_g": 0.0,
-    "ballast_g_per_mm": 12.384603174603177
+    "ballast_g_per_mm": 12.522857142857143
    },
    "input_values": {
-    "M_kg": 2.3406900000000004,
-    "cg_frac": 0.15168021769221895,
-    "x_pred_a3": 0.05012344005666805,
+    "M_kg": 2.36682,
+    "cg_frac": 0.1527144266885526,
+    "x_pred_a3": 0.05044358996121202,
     "c": 0.32,
     "x_t": 0.049,
     "mp_kg": 0.55,
@@ -479,14 +533,14 @@
     "ASM-A1-PACK-CASES-G"
    ],
    "outputs": {
-    "accept_g": 571.4835000000004,
-    "margin_to_sku_max_g": 15.48350000000039
+    "accept_g": 560.3887000000005,
+    "margin_to_sku_max_g": 4.38870000000054
    },
    "input_values": {
     "m_pack_kg": 0.55,
-    "gate_margin_kg": 0.14288350000000039,
+    "gate_margin_kg": 0.11038870000000056,
     "overrun_kg": 0.1,
-    "added_g": 21.4,
+    "added_g": 0.0,
     "sku_g": [
      546.0,
      590.0
@@ -531,25 +585,91 @@
     "gate_kg": "kg"
    },
    "outputs": {
-    "allocated_g": 2387,
-    "sized_kg": 2.6,
-    "reserve_cover_g": 0.0,
+    "allocated_g": 2374,
+    "sized_kg": 2.597,
+    "reserve_cover_g": 3.0,
     "gate_check_g": 0.0
    },
    "input_values": {
-    "wing": 405,
-    "fins": 438,
+    "wing": 393,
+    "fins": 434,
     "pod": 146,
     "landing": 60,
     "propulsion": 462,
-    "power": 630,
-    "avionics": 45,
-    "harness": 129,
-    "mechanisms": 72,
-    "reserve": 213,
-    "growth_kg": 0.113,
+    "power": 627,
+    "avionics": 37,
+    "harness": 142,
+    "mechanisms": 73,
+    "reserve": 226,
+    "growth_kg": 0.123,
     "overrun_kg": 0.1,
     "gate_kg": 2.6
+   }
+  },
+  {
+   "id": "CALC-A1-GROWTH",
+   "type": "calculation",
+   "title": "Growth allowance against A3's growth by maturity",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "growth_cover",
+   "equation": "growth_a3 = m_predicted - m_basic ; spare = growth_allowance - growth_a3",
+   "inputs": {
+    "pred_kg": "CL-A3-MASS-PREDICTED",
+    "basic_kg": "CL-A3-MASS-BASIC",
+    "allow_kg": "P:requirements.growth_allowance_kg"
+   },
+   "units": {
+    "pred_kg": "kg",
+    "basic_kg": "kg",
+    "allow_kg": "kg"
+   },
+   "outputs": {
+    "growth_a3_g": 122.79129999999938,
+    "spare_g": 0.2087000000006185
+   },
+   "input_values": {
+    "pred_kg": 2.4896112999999995,
+    "basic_kg": 2.36682,
+    "allow_kg": 0.123
+   }
+  },
+  {
+   "id": "CALC-A1-I2C",
+   "type": "calculation",
+   "title": "I2C bus capacitance, longest bus the budget allows, pull-up window (D-99)",
+   "script": "redesign/team/A1/frame_claims.py",
+   "function": "i2c_bus",
+   "equation": "Cb = L c_wire + n_pin Ci + n_board c_board ; L_max = (Cb_budget - n_pin Ci - n_board c_board) / c_wire ; Rp_max = tr / (0.8473 Cb) ; Rp_min = (VDD - VOL) / IOL",
+   "inputs": {
+    "L": "CL-F2-I2C-LEN",
+    "bus": "ASM-A1-I2C-BUS"
+   },
+   "units": {
+    "L": "m"
+   },
+   "outputs": {
+    "cb_pf": 134.6238930691983,
+    "cb_use_of_spec": 0.3365597326729957,
+    "l_max_budget_m": 1.2105263157894737,
+    "l_max_spec_m": 3.3157894736842106,
+    "rp_max_kohm": 2.630037270332602,
+    "rp_min_kohm": 0.9666666666666667
+   },
+   "input_values": {
+    "L": 0.5223567691494556,
+    "bus": {
+     "c_wire_pf_per_m": 95.0,
+     "ci_pf": 10.0,
+     "n_pin": 4,
+     "c_board_pf": 15.0,
+     "n_board": 3,
+     "cb_budget_pf": 200.0,
+     "cb_spec_pf": 400.0,
+     "tr_ns": 300.0,
+     "vdd": 3.3,
+     "vol": 0.4,
+     "iol_ma": 3.0
+    }
    }
   },
   {
@@ -578,14 +698,14 @@
    "outputs": {
     "tw_gate": 2.4923076923076923,
     "tw_gate_sag": 2.120953846153846,
-    "tw_sized": 2.4923076923076923,
+    "tw_sized": 2.4951867539468617,
     "disk_loading_gate_Nm2": 103.9660028967778
    },
    "input_values": {
     "n": 4,
     "t_max": 1.62,
     "m_gate": 2.6,
-    "m_sized": 2.6,
+    "m_sized": 2.597,
     "sag": 0.851,
     "D": 0.2794,
     "g": 9.80665
@@ -773,7 +893,7 @@
     "R-MASS-GATE"
    ],
    "how": "A3 roll-up of every parts.csv against MASS-CG.md (CL-A3-MASS-PREDICTED is the maturity-based prediction); weigh the built aircraft with pack (H1).",
-   "value": 2.6
+   "value": 2.597
   },
   {
    "id": "CL-A1-RESERVE-COVERS",
@@ -789,8 +909,84 @@
    "verifies": [
     "R-MASS-GATE"
    ],
-   "how": "growth_reserve_g in params.json minus (growth allowance + 100 g build overrun; D-63: 114 + 100 = 214 g, 0 g free); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.",
-   "value": 0.0
+   "how": "growth_reserve_g in params.json minus (growth allowance + 100 g build overrun; D-95: 123 + 100 = 223 g of 226 g, 3 g free); A3's maturity growth (CL-A3-GATE-MARGIN) is the stricter check.",
+   "value": 3.0
+  },
+  {
+   "id": "CL-A1-GROWTH-COVERS",
+   "type": "claim",
+   "title": "Growth allowance covers A3's growth by maturity (spare grams)",
+   "calc": "CALC-A1-GROWTH",
+   "output": "spare_g",
+   "unit": "g",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-MASS-GATE"
+   ],
+   "how": "Re-run A1 after every A3 roll-up; weigh parts as they arrive (T-A3-WEIGH-PARTS) so EST items become WEIGHED (1 %).",
+   "note": "D-95: requirements.growth_allowance_kg is set from A3's live growth (CL-A3-MASS-PREDICTED - CL-A3-MASS-BASIC) rounded up; this claim fails the day A3's growth outgrows it, so the A1 reserve can no longer read 'covered' while the growth it covers has moved on.",
+   "value": 0.2087000000006185
+  },
+  {
+   "id": "CL-A1-I2C-CB",
+   "type": "claim",
+   "title": "I2C bus capacitance, routed bus (FC to GPS + Y-branch to the airspeed sensor)",
+   "calc": "CALC-A1-I2C",
+   "output": "cb_pf",
+   "unit": "pF",
+   "limit": {
+    "op": "<=",
+    "value": 200.0
+   },
+   "verifies": [
+    "R-HARNESS-INSTALL"
+   ],
+   "parts": [
+    "AVN-001",
+    "AVN-002",
+    "AVN-004"
+   ],
+   "how": "T-F3-I2C-SCAN on the routed harness: all three addresses found and no I2C errors in 10 min of logging; scope SCL rise (0.3-0.7 VDD) <= 300 ns at 400 kHz.",
+   "note": "D-99: budget 200 pF, half the UM10204 Fast-mode 400 pF (Table 11); estimate, wire capacitance EST.",
+   "value": 134.6238930691983
+  },
+  {
+   "id": "CL-A1-I2C-LEN-MAX",
+   "type": "claim",
+   "title": "Longest I2C bus (FC to GPS + airspeed branch) inside the 200 pF budget",
+   "calc": "CALC-A1-I2C",
+   "output": "l_max_budget_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "AVN-001",
+    "AVN-002",
+    "AVN-004"
+   ],
+   "how": "As CL-A1-I2C-CB.",
+   "note": "D-99: the harness rule harness.rules.i2c_max_m (0.5 m, CR-F3-05, no electrical basis) becomes 1.0 m, this value rounded down; F2 copies 1.0 m into team/F2/harness.py (owner's edit).",
+   "value": 1.2105263157894737
+  },
+  {
+   "id": "CL-A1-I2C-RP-MAX",
+   "type": "claim",
+   "title": "Largest combined pull-up for a 300 ns rise on the routed bus",
+   "calc": "CALC-A1-I2C",
+   "output": "rp_max_kohm",
+   "unit": "kOhm",
+   "limit": {
+    "op": ">=",
+    "value": 2.2
+   },
+   "how": "T-F3-I2C-SCAN, unpowered: ohmmeter SDA-3V3 and SCL-3V3 with all three devices plugged; combined value between 0.97 kOhm and this value, else fit or remove a pull-up.",
+   "note": "Limit 2.2 kOhm: below it the common 2.2 kOhm board pull-up would not meet 300 ns on this bus. The fitted pull-ups (FC, GPS, MS4525DO) are not published, so unknown until measured. Window: Rp_min = (VDD - VOL) / IOL = 0.97 kOhm.",
+   "value": 2.630037270332602
   },
   {
    "id": "CL-A1-ALLOC-GATE",
@@ -912,7 +1108,7 @@
    ],
    "how": "Re-run after any B3 publish; the built aircraft is balanced at both marks (T-A3-CG-BALANCE, H1 GT-07).",
    "note": "D-62 (CR-B3-25): params carry B3's V1 range rounded inward to 0.1 mm, [0.0466, 0.0514]; the take-off CG 18.5 mm above the chord plane moves the effective NP 3.4 mm forward at 1.3 Vs, so the whole range slides 4.3 mm forward at the same width (4.8 mm). Was [0.0509, 0.0548] (D-60, B3 R4 at z = 0), [0.050, 0.0549] (D-47).",
-   "value": 0.00016740579011874368
+   "value": 0.00012931055202350383
   },
   {
    "id": "CL-A1-CG-RANGE-AFT",
@@ -991,7 +1187,7 @@
     "ASM-A3-NOSE-STACK"
    ],
    "note": "D-62 bay: most forward centroid = pod.x_le_m (-0.140) + 34.6 mm + L/2 = -0.0379 m for the 135 mm Ovonic EC5 pack (D-64); the no-spacer station is -0.020 (aft stop 0.050). A1-R4a (D-59) had -0.0254 / -0.010 in the D-47 bay.",
-   "value": 0.01790000000000002
+   "value": 0.01590000000000002
   },
   {
    "id": "CL-A1-PACK-CG-FWD",
@@ -1013,7 +1209,7 @@
    ],
    "how": "T-A3-CG-BALANCE / H1 GT-07 with each weighed pack at its flight-card station.",
    "note": "Worst case is the heaviest pack at the no-spacer station (nominal + pod.pack_aft_travel_m 12 mm, D-59/D-60); growth moves the CG aft, so basic is the forward-limit case. D-62 estimate on A3-R6a with ASM-A1-A3-PACK-X and ASM-A1-STACK-DX; A3 re-runs on D2's R6 bay.",
-   "value": 0.00036328249373080573
+   "value": 0.0006960508056273462
   },
   {
    "id": "CL-A1-PACK-CG-AFT",
@@ -1036,7 +1232,7 @@
    ],
    "how": "T-A3-CG-BALANCE on the built aircraft; never fly aft of the aft mark (B3).",
    "note": "D-62: worst case is the lightest pack (546 g) at or near the crush stack; growth is A3's CL-A3-CG-X-PRED scaled by mass. The 503 g listing is no longer a flight case (D-64).",
-   "value": 0.0015873102952285792
+   "value": 0.0013916514175155575
   },
   {
    "id": "CL-A1-NOSE-BALLAST",
@@ -1076,7 +1272,7 @@
    ],
    "how": "Weigh each pack on arrival (T-E2-WEIGH, 1 g scale); a pack above this line is returned or the first build must come in under its allocations.",
    "note": "D-64: replaces the D-58/D-59 lines (601 -> 631 g on the old bounding listings). The Ovonic 120C EC5 lists 551 +/- 5 g, so the limit here is its maximum 556 g; E2's PACK_ACCEPT_KG and the T-E2-WEIGH pass line follow this claim. A3 publishes the same figure from its roll-up (CL-A3-GATE-MARGIN) once D2, D3 and D5 deliver the R5 parts.",
-   "value": 571.4835000000004
+   "value": 560.3887000000005
   },
   {
    "id": "T-A1-WEIGH",

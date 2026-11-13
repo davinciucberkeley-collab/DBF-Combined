@@ -103,8 +103,8 @@
     "F_side": 73.74631268436578,
     "F_hub": 43.14063848144952,
     "M_root": 14.011799410029498,
-    "fuse_ratio": 2.3141325919114837,
-    "hold_ratio": 1.7648916987727703,
+    "fuse_ratio": 2.3147755662565594,
+    "hold_ratio": 1.7648932240536315,
     "F_axial": 227.27272727272728,
     "clamp_n": 241.1438531695384
    },
@@ -118,10 +118,10 @@
     "can": 0.0265,
     "stack": 0.0373,
     "zm": 0.19,
-    "M_mount": 0.9854034873595503,
+    "M_mount": 0.9854026357402799,
     "ff": 1.15,
     "pf": 1.25,
-    "M_joint": 32.42516168607536,
+    "M_joint": 32.43417091362436,
     "mu": 0.3
    }
   },
@@ -226,20 +226,20 @@
     "sq": "P:fin_detail.fin.tip_square_m"
    },
    "outputs": {
-    "h_ratio": 0.870642740645903,
-    "h_ratio_c6": 0.7687461644397816,
+    "h_ratio": 0.8706357074390575,
+    "h_ratio_c6": 0.7687396939164586,
     "embed": 0.0395,
-    "embed_ratio": 0.7068660722246297,
+    "embed_ratio": 0.7068537942333036,
     "tongue": 0.0112992396028137,
     "tongue_fit": 0.0037007603971862986
    },
    "input_values": {
     "h": 0.015,
-    "h_req": 0.017228651086979675,
-    "h_req_c6": 0.01951229247554184,
+    "h_req": 0.017228790264210436,
+    "h_req_c6": 0.01951245671155638,
     "tail": 0.04,
     "gap": 0.0005,
-    "embed_req": 0.05588045819724615,
+    "embed_req": 0.05588142883613448,
     "w": 0.01,
     "td": 0.001,
     "L": 0.344,
@@ -557,7 +557,7 @@
     "FIN-004-R"
    ],
    "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 70 and 80 N (R5 lever 33.9 mm)",
-   "value": 2.3141325919114837
+   "value": 2.3147755662565594
   },
   {
    "id": "CL-D3-SLIP-HOLD",
@@ -580,7 +580,7 @@
     "FIN-003-LL"
    ],
    "how": "T-D3-SLIP; witness line checked before every flight",
-   "value": 1.7648916987727703
+   "value": 1.7648932240536315
   },
   {
    "id": "CL-D3-SLIP-F",
@@ -728,7 +728,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R4 (D-48): read against C4-R3 CL-C4-D3-COLLAR-H-REQ (envelope torsion 4.6 N m + brace shear). C6's own requirement on max(C1, C4) torsion + brace shear is CL-D3-COLLAR-H-C6 (CR-D3-25)",
-   "value": 0.870642740645903
+   "value": 0.8706357074390575
   },
   {
    "id": "CL-D3-COLLAR-H-C6",
@@ -752,7 +752,7 @@
    ],
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
    "note": "R5: drawn 15 mm (C6-R5 CL-C6-COLLAR-RF-15MM 1.15 on a 13.007 mm requirement). C6's live run now reads C1's CL-C1-FINHALF-T-LIM 12.67 N m (R4 7.40, wing-plane value) and needs 19.4 mm: CR-D3-36 asks C1/C6 which torsion governs before D3 redraws (20 mm fits: ring |z| 0.1395-0.1595, +3 g)",
-   "value": 0.7687461644397816
+   "value": 0.7687396939164586
   },
   {
    "id": "CL-D3-TONGUE-FIT",
@@ -804,7 +804,7 @@
     "FIN-011-URO"
    ],
    "how": "Measure on the dry fit; C6 strip-anchor coupon",
-   "value": 0.7068660722246297
+   "value": 0.7068537942333036
   },
   {
    "id": "CL-D3-STRAP-EYE-RF",

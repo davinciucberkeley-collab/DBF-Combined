@@ -1601,12 +1601,12 @@
     "alloc": "g"
    },
    "outputs": {
-    "mass_g": 71.28,
-    "over_g": -0.7199999999999989
+    "mass_g": 71.4,
+    "over_g": -1.5999999999999943
    },
    "input_values": {
-    "m": 71.28,
-    "alloc": 72
+    "m": 71.4,
+    "alloc": 73
    }
   },
   {
@@ -2354,7 +2354,7 @@
     "MEC-001-R"
    ],
    "how": "T-D6-WEIGH: weigh every part on arrival",
-   "value": 71.28
+   "value": 71.4
   },
   {
    "id": "T-D6-THROW",

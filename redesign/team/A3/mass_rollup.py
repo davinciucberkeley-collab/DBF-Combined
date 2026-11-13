@@ -90,12 +90,12 @@ kit.assumption("ASM-A3-PACK-SLIDE", "Total U-spacer stack behind the pack",
                value=0.028, unit="m", status="PROPOSED")
 kit.assumption("ASM-A3-PACK-RANGE", "Flight-pack mass bounds (D-64)",
                "Lightest and heaviest flight pack the CG, gate and load cases run with: the Ovonic 120C EC5 listing "
-               "minimum 546 g (551 - 5) and the D-64 acceptance line 590 g (T-E2-WEIGH pass line). The 503 / 680 g "
-               "listings of the generic 4S 6500 search are retired as flight cases. CL-A3-PACK-ACCEPT (the heaviest "
-               "pack the first-build overrun still covers on this roll-up) must stay >= the upper bound; "
-               "CL-A3-GATE-MARGIN-590 checks it",
-               basis="params/CHANGE-LOG.md D-64 (E2 CR-E2-24/-25, A1 ASM-A1-PACK-CASES-G [546, 590]); weigh each "
-                     "pack on arrival", value=[546.0, 590.0], unit="g",
+               "minimum 546 g (551 - 5) and a 590 g heavy bound kept for the CG stations and load cases (D-64). "
+               "D-95: 590 g is a conservative structural / CG bounding case only, not the acceptance line: the "
+               "T-E2-WEIGH pass line is CL-A3-PACK-ACCEPT (one number, A1 copies it). The 503 / 680 g listings of the "
+               "generic 4S 6500 search are retired as flight cases",
+               basis="params/CHANGE-LOG.md D-64 and D-95 (E2 CR-E2-24/-25, A1 ASM-A1-PACK-CASES-G [546, 590]); weigh "
+                     "each pack on arrival", value=[546.0, 590.0], unit="g",
                status="UNVERIFIED", cites=["SRC-E2-OVONIC-120C-EC5"])
 kit.assumption("ASM-A3-PACK-NOMINAL", "Flight-pack listed mass (D-64)",
                "Ovonic 4S 6500 mAh 120C hard case EC5: listed 551 g (+/- 5 g); the parts.csv line carries 550 g "
@@ -108,12 +108,14 @@ kit.assumption("ASM-A3-NOSE-STACK", "Length from the pod nose to the most forwar
                "fore face -0.1054, so the 135 mm pack centroid is >= -0.0379",
                basis="params/CHANGE-LOG.md D-62 (forward stop -0.1312, nose -0.140; was -0.1212 / -0.130 at D-47), "
                      "CR-A1-43, crush block >= 24.3 mm C5 CR-C5-02, spreader 1.5 mm", value=0.0346, unit="m")
-kit.assumption("ASM-A3-PACK-STATIONS", "Per-pack flight station rule (D-59)",
+kit.assumption("ASM-A3-PACK-STATIONS", "Per-pack flight station rule (D-98 mid-band; was D-59)",
                "Each weighed pack flies at the whole spacer step (P:pod.pack_spacer_step_m), counted forward from "
-               "the no-spacer station (nominal + P:pod.pack_aft_travel_m), that puts the basic CG nearest "
-               "cg.x_target_m, never ahead of the crush stack (ASM-A3-NOSE-STACK). Basic and predicted CG are both "
-               "checked against the range",
-               basis="params/CHANGE-LOG.md D-59 (A1-R4a), CR-A1-53; same rule as A1's CALC-A1-PACK-CASES",
+               "the no-spacer station (nominal + P:pod.pack_aft_travel_m), that minimises the worse range use of the "
+               "basic and the predicted CG (centres the basic-to-predicted band in cg.x_range_m), never ahead of the "
+               "crush stack (ASM-A3-NOSE-STACK). After T-A3-CG-BALANCE the measured CG replaces both and the step "
+               "nearest cg.x_target_m is flown",
+               basis="params/CHANGE-LOG.md D-98 (H8: A1's mid-band rule; D-59 put the basic CG on target and left "
+                     "the growth on the aft side), CR-A1-53",
                status="PROPOSED")
 
 
@@ -237,19 +239,32 @@ def cg_cases(items, mga, x_rng, z_rng, x_t, z_m, c, te, pack, slide, foot, pack_
             v["x_cg_trimmed_m"] = x_for_pack(mass, v["trim_aft_m"])
             v["trim_ok"] = sl[0] <= v["trim_aft_m"]
 
-    # D-59: each weighed pack flies at the spacer step nearest the target, clamped to the bay travel; basic and
-    # predicted CG (non-pack items with growth, pack 0 %) both checked against the range
+    # D-98: each pack flies at the spacer step that centres its basic-to-predicted CG band (mid-band rule), clamped
+    # to the bay travel; basic and predicted CG (non-pack items with growth, pack 0 %) both checked against the range
     st_cases, st_use = {}, 0.0
     mid, half = (x_rng[0] + x_rng[1]) / 2, (x_rng[1] - x_rng[0]) / 2
     pred_e = [(r["mass_g"] * (1 + _growth(r, mga)), r["x"]) for r in rows if r["discipline"] != "energy"]
     m_pe, s_pe = sum(a for a, _ in pred_e), sum(a * b for a, b in pred_e)
     x_aft = xp + sl[1]
+    n_steps = int(math.floor((sl[1] - sl[0]) / stations + 1e-9))
     for mass in cases:
-        ideal = (x_t * (m - mp + mass) - (m * cg[0] - mp * xp)) / mass - xp      # offset for the target
-        k = round((sl[1] - ideal) / stations)                                     # spacer steps from no spacer
-        d = min(max(sl[1] - k * stations, sl[0]), sl[1])
-        x, xpr = x_for_pack(mass, d), (s_pe + mass * (xp + d)) / (m_pe + mass)
-        u = max(abs(x - mid), abs(xpr - mid)) / half
+        # D-98 (mid-band rule, replaces D-59's basic-on-target): the whole spacer step, inside the bay travel, that
+        # minimises the worse range use of the basic and the predicted CG, i.e. centres the basic-to-predicted band
+        best = None
+        for k in range(n_steps + 1):
+            d_k = sl[1] - k * stations
+            x_k, xpr_k = x_for_pack(mass, d_k), (s_pe + mass * (xp + d_k)) / (m_pe + mass)
+            u_k = max(abs(x_k - mid), abs(xpr_k - mid)) / half
+            if best is None or u_k < best[0] - 1e-12:
+                best = (u_k, d_k, x_k, xpr_k)
+        u, d, x, xpr = best
+
+        def _u_free(dd):                                                          # same use, travel unclamped
+            return max(abs(x_for_pack(mass, dd) - mid), abs((s_pe + mass * (xp + dd)) / (m_pe + mass) - mid)) / half
+        fwd_end, aft_end = d - stations < sl[0] - 1e-9, d + stations > sl[1] + 1e-9   # next step leaves the travel
+        ideal = d - stations if fwd_end else (d + stations if aft_end else d)
+        if not ((fwd_end or aft_end) and _u_free(ideal) < u - 1e-12):
+            ideal = d                                                             # not held back by the travel
         st_use = max(st_use, u)
         st_cases[f"{mass:.0f}"] = {"pack_x_m": xp + d, "offset_m": d, "spacer_m": x_aft - (xp + d),
                                    "x_cg_m": x, "x_cg_pred_m": xpr, "range_use": u,
@@ -393,11 +408,14 @@ kit.claim("CL-A3-GATE-MARGIN", "Gate margin after growth covers the first-build 
           verifies=["R-MASS-GATE"],
           how="2.6 kg minus the predicted mass must stay >= the 0.10 kg first-build overrun; weigh the pack, the first "
               "core and fin (T-A3-WEIGH-PARTS).")
-kit.claim("CL-A3-GATE-MARGIN-590", "Gate margin after growth with the heaviest accepted flight pack (590 g, D-64)",
+kit.claim("CL-A3-GATE-MARGIN-590", "Gate margin after growth with the 590 g heavy bounding pack (structural / CG case, "
+          "D-95; not the acceptance line)",
           calc="CALC-A3-MASS", output="gate_margin_pack_heavy_kg", unit="kg",
-          limit=(">=", P + "requirements.build_overrun_kg"), verifies=["R-MASS-GATE", "R-PACK-MASS"],
-          how="Same roll-up with the pack line at the 590 g acceptance bound; settled by weighing each pack "
-              "(T-E2-WEIGH).", note="Replaces CL-A3-GATE-MARGIN-680 (D-64 retired the 680 g listing).")
+          how="Information: a 590 g pack would leave this margin; it is above the acceptance line CL-A3-PACK-ACCEPT "
+              "and is returned at T-E2-WEIGH.",
+          note="D-95: no limit and no requirement link. The acceptance test of record is CL-A3-PACK-ACCEPT (>= SKU "
+               "maximum 556 g); 590 g stays only as the conservative heavy case for CG stations and load cases. "
+               "Replaces CL-A3-GATE-MARGIN-680 (D-64 retired the 680 g listing).")
 kit.claim("CL-A3-GATE-MARGIN-546", "Gate margin after growth with the lightest flight pack (546 g, D-64)",
           calc="CALC-A3-MASS", output="gate_margin_pack_light_kg", unit="kg",
           limit=(">=", P + "requirements.build_overrun_kg"), verifies=["R-MASS-GATE"],
@@ -425,7 +443,7 @@ kit.claim("CL-A3-CG-X-RANGE", "CG x position in the allowable range, |x - mid| /
           calc="CALC-A3-CG", output="cg_x_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"],
           how="CG balance with pack at its station; B3 confirms the range from AVL.")
 kit.claim("CL-A3-CG-X-STATIONS", "Worst CG x range use (basic and predicted) with each flight pack (546 / 551 / "
-          "590 g, D-64) at its D-59 spacer station",
+          "590 g, D-64) at its D-98 mid-band spacer station",
           calc="CALC-A3-CG", output="cg_x_station_range_use", unit="-", limit=("<=", 1.0), verifies=["R-CG-RANGE"],
           how="Balance with the weighed pack at the station on the flight card (T-A3-CG-BALANCE).")
 kit.claim("CL-A3-CG-X-PRED-RANGE", "Predicted CG x (growth pro rata) range use, 550 g pack at nominal",
@@ -816,10 +834,10 @@ def report(kit, items, log):
              "CL-A3-GATE-MARGIN"),
             ("listed (D-64)", kit.value("ASM-A3-PACK-NOMINAL"), M["predicted_pack_nominal_kg"],
              M["gate_margin_pack_nominal_kg"], "CALC-A3-MASS"),
-            ("acceptance bound (D-64)", kit.value("ASM-A3-PACK-RANGE")[1], M["predicted_pack_heavy_kg"],
+            ("heavy bounding case, above the acceptance line (D-95)", kit.value("ASM-A3-PACK-RANGE")[1], M["predicted_pack_heavy_kg"],
              M["gate_margin_pack_heavy_kg"], "CL-A3-GATE-MARGIN-590")):
         L.append(f"| {lbl} | {pg:.0f} | {fmt_g(pr * 1000)} | {mg * 1000:+.0f} | {ovr:.0f} | `{cl}` | "
-                 f"{'`MODELLED`' if mg * 1000 >= ovr else '`FAIL`'} |")
+                 f"{'`MODELLED`' if mg * 1000 >= ovr else ('rejected at `T-E2-WEIGH`' if cl.endswith('-590') else '`FAIL`')} |")
     L += ["", f"Pack acceptance (heaviest weighed pack that leaves the {ovr:.0f} g overrun under the gate): "
               f"**{M['pack_accept_g']:.1f} g** (`CL-A3-PACK-ACCEPT`; SKU listing maximum 556 g, margin "
               f"{M['pack_accept_g'] - 556:+.1f} g).",
@@ -840,7 +858,7 @@ def report(kit, items, log):
           *[f"| Pack {k} g: nominal station → slid {v['trim_aft_m'] * 1000:+.1f} mm (+ aft) | "
             f"{v['x_cg_nominal_m']:.4f} → {v['x_cg_trimmed_m']:.4f} | | | {ok(v['trim_ok'])} |"
             for k, v in C["pack_cases"].items()],
-          *[f"| Pack {k} g at its D-59 station x {v['pack_x_m']:.4f} (spacers {v['spacer_m'] * 1000:.0f} mm"
+          *[f"| Pack {k} g at its D-98 station x {v['pack_x_m']:.4f} (spacers {v['spacer_m'] * 1000:.0f} mm"
             f"{', clamped' if v['clamped'] else ''}): basic → predicted | {v['x_cg_m']:.4f} → {v['x_cg_pred_m']:.4f} "
             f"(fwd {v['fwd_margin_m'] * 1000:+.1f} / aft {v['aft_margin_m'] * 1000:+.1f} mm) | | | "
             f"{ok(v['range_use'] <= 1)} |" for k, v in C["station_cases"].items()],

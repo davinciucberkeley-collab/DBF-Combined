@@ -1046,30 +1046,30 @@
     "ASM-A5-SECTION"
    ],
    "outputs": {
-    "mass_g": 2387.0,
-    "cg_x_m": 0.045073087592640886,
-    "cg_z_m": 0.016665215918301078,
-    "cg_x_frac_chord": 0.14085339872700275,
+    "mass_g": 2374.0,
+    "cg_x_m": 0.04516774904392407,
+    "cg_z_m": 0.01646058559077993,
+    "cg_x_frac_chord": 0.14114921576226272,
     "cg_x_fwd_limit_m": 0.0466,
     "cg_x_aft_limit_m": 0.0514,
     "cg_z_up_limit_m": 0.025,
-    "cg_x_range_use": 1.636213503066299,
+    "cg_x_range_use": 1.5967712316983043,
     "pack_x_m": -0.036000000000000004,
-    "pack_x_for_target_m": -0.01895720015206144,
-    "pack_shift_m": 0.017042799847938564,
-    "hover_upper_pair_share": 0.5438558313639502,
-    "hover_split_ratio": 1.19228934349895
+    "pack_x_for_target_m": -0.019458611327774083,
+    "pack_shift_m": 0.01654138867222592,
+    "hover_upper_pair_share": 0.5433173305020524,
+    "hover_split_ratio": 1.1897042887555738
    },
    "input_values": {
-    "a_wing": 405,
-    "a_fins": 438,
+    "a_wing": 393,
+    "a_fins": 434,
     "a_pod": 146,
     "a_land": 60,
     "a_prop": 462,
-    "a_pwr": 630,
-    "a_avn": 45,
-    "a_hrn": 129,
-    "a_mec": 72,
+    "a_pwr": 627,
+    "a_avn": 37,
+    "a_hrn": 142,
+    "a_mec": 73,
     "m_pack_kg": 0.55,
     "spar_kgm": 0.102,
     "spar_l": 1.0,
@@ -1364,7 +1364,7 @@
      0.0514
     ],
     "z_range": [
-     0.01,
+     0.0165,
      0.025
     ],
     "tube_l": 0.344,
@@ -1514,7 +1514,7 @@
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 0.045073087592640886
+   "value": 0.04516774904392407
   },
   {
    "id": "CL-A5-LAYOUT-CG-X-RANGE-USE",
@@ -1528,7 +1528,7 @@
     "ASM-A5-MASS-SPLIT",
     "ASM-A5-SECTION"
    ],
-   "value": 1.636213503066299
+   "value": 1.5967712316983043
   },
   {
    "id": "CL-A5-PACK-X-FOR-CG",
@@ -1545,7 +1545,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": -0.01895720015206144
+   "value": -0.019458611327774083
   },
   {
    "id": "CL-A5-PACK-SHIFT",
@@ -1558,7 +1558,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.017042799847938564
+   "value": 0.01654138867222592
   },
   {
    "id": "CL-A5-CG-Z-UP-LIMIT",
@@ -1585,7 +1585,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 0.016665215918301078
+   "value": 0.01646058559077993
   },
   {
    "id": "CL-A5-HOVER-SPLIT",
@@ -1602,7 +1602,7 @@
    "assumes": [
     "ASM-A5-MASS-SPLIT"
    ],
-   "value": 1.19228934349895
+   "value": 1.1897042887555738
   },
   {
    "id": "ASM-A5-ASSY-ROLLUP",
@@ -1781,7 +1781,7 @@
      0.0514
     ],
     "z_range": [
-     0.01,
+     0.0165,
      0.025
     ],
     "gate_kg": 2.6

@@ -266,15 +266,16 @@ kit.claim("CL-J1-MOTOR-1P-MAX", "Motor 1P at the capped full-throttle rpm", calc
           note="Unlimited on a fresh pack B4 gives 10 637 rpm (CL-B4-RPM-MAX-FULL): 1P 177 Hz, 2P 355 Hz for < 5 s.")
 kit.claim("CL-J1-MOTOR-2P-MAX", "Blade-pass 2P at the capped full-throttle rpm", calc="CALC-J1-MOTOR-FREQ", output="f2P_max_hz", unit="Hz",
           how="Same stand run; the top of the forcing band C4 must clear (B4 CR-B4-07: 80-330 Hz).")
-kit.claim("CL-J1-TUBE-MODE-SEP", "Tube mode separation from forcing", calc="CALC-J1-MODE-SEP", output="sep_min", unit="-",
-          limit=(">=", P + "requirements.vibration_sep_frac"), verifies=["R-VIBRATION"],
-          cites=["SRC-J1-AP-VIBE", "SRC-J1-AP-NOTCH"],
+kit.claim("CL-J1-TUBE-MODE-SEP", "SUPERSEDED (bare-tube screen): tube mode separation from forcing", calc="CALC-J1-MODE-SEP",
+          output="sep_min", unit="-", cites=["SRC-J1-AP-VIBE", "SRC-J1-AP-NOTCH"],
           how="C4 re-derives with the half-fin as a bonded shear web (CR-J1-03 / CR-B4-07); H1 tap test; hover VIBE "
               "< P:requirements.fc_vibe_max_ms2 and Clip = 0 (SRC-J1-AP-VIBE).",
           note="FAILS on the bare tube: f1 ~183 Hz sits 2 % from the hover 2P (180 Hz) and 9 % from the cruise 2P (200 Hz). "
                "The forcing sweeps 90-156 Hz (1P) and 180-312 Hz (2P) between hover and the capped maximum, so no bare-tube "
                "mode in 72-374 Hz clears 20 % at every steady point: the fin bond must put the first mode above ~375 Hz, "
-               "or the tap test must show it damped (R-VIBRATION allows either). C4 owns the fix.")
+               "or the tap test must show it damped (R-VIBRATION allows either). C4 owns the fix. D-100 (2026-11-13): no limit "
+               "and no requirement link: the bare tube is not the design; C4's 3-D station model of the bonded fin "
+               "(CL-C4-SIM-SEP) and T-C4-TAP-D3 are the claim and test of record for R-VIBRATION.")
 kit.claim("CL-J1-CL-CRUISE", "Cruise lift coefficient at the gate", calc="CALC-J1-TRIM-SM", output="CL_cruise", unit="-",
           how="B1/B2 from the drag polar; airspeed log in cruise.",
           note="At 2.6 kg, 16 m/s, S 0.368 (was 0.54 at 15 m/s, S 0.345).")
@@ -293,20 +294,22 @@ kit.claim("CL-J1-DISCONNECT-REQ", "Required disconnect continuous rating", calc=
 kit.claim("CL-J1-DISCONNECT-REQ-PESS", "Required disconnect rating, E2 gate-wind hover", calc="CALC-J1-DISCONNECT-REQ",
           output="i_req_pess_a", unit="A", verifies=["R-DISCONNECT"],
           how="1.25 x the hover current logged in 5 m/s wind at the gate mass (H2).")
-kit.claim("CL-J1-XT60-CONT", "XT60 continuous rating", value=35.0, unit="A", limit=(">=", "CL-J1-DISCONNECT-REQ"),
-          verifies=["R-DISCONNECT"], cites=["SRC-J1-AMASS-XT60", "SRC-J1-HOLYBRO-CONN"],
+kit.claim("CL-J1-XT60-CONT", "SUPERSEDED (D-32, AS150U fitted): XT60 continuous rating", value=35.0, unit="A",
+          cites=["SRC-J1-AMASS-XT60", "SRC-J1-HOLYBRO-CONN"],
           how="Maker sheet (35 A at 12 AWG, 85 K rise); Holybro says 30 A for < 60 degC rise. Bench: 34 A for 10 min, connector < 60 degC.",
           note="PROPOSED from the datasheet; +4 % on the Amass figure against 33.75 A, and Holybro's 30 A (< 60 degC) "
                "already fails it. Against E2's 37.4 A (CL-J1-DISCONNECT-REQ-PESS) the XT60 fails on both figures. 12 AWG leads required.")
-kit.claim("CL-J1-XT60-CONT-PESS", "XT60 continuous rating vs E2 gate-wind hover", value=35.0, unit="A",
-          limit=(">=", "CL-J1-DISCONNECT-REQ-PESS"), verifies=["R-DISCONNECT"], cites=["SRC-J1-AMASS-XT60"],
+kit.claim("CL-J1-XT60-CONT-PESS", "SUPERSEDED (D-32, AS150U fitted): XT60 continuous rating vs E2 gate-wind hover",
+          value=35.0, unit="A", cites=["SRC-J1-AMASS-XT60"],
           how="Same heat run at 37 A for 10 min; rise <= 60 degC.",
-          note="FAILS by 6 %: the XT60 only passes R-DISCONNECT if F1 sizes on 27 A rather than E2's 29.9 A.")
-kit.claim("CL-J1-XT60-BURST", "XT60 one-minute rating", value=60.0, unit="A", limit=(">=", P + "electrical.peak_current_a"),
-          verifies=["R-DISCONNECT"], cites=["SRC-J1-HOLYBRO-CONN"],
+          note="Was FAILS by 6 %. D-100: no limit and no requirement link, the XT60 is not fitted (D-32 AS150U; "
+               "CL-J1-AS150U-CONT and F1's CL-F1-DISC-* verify R-DISCONNECT).")
+kit.claim("CL-J1-XT60-BURST", "SUPERSEDED (D-32, AS150U fitted): XT60 one-minute rating", value=60.0, unit="A",
+          cites=["SRC-J1-HOLYBRO-CONN"],
           how="Compare with the logged full-throttle pack current on the thrust stand (4 stations) or F4's output cap.",
           note="FAILS the 120 A momentary case (4 x 30 A). F1: AS150U, or a claim that the <= 5 s case at the 100 A "
-               "limiter is inside a cited XT60 short-time rating (A1's condition, CHANGE-LOG CR-A2-08 row).")
+               "limiter is inside a cited XT60 short-time rating (A1's condition, CHANGE-LOG CR-A2-08 row). D-100: no limit "
+               "and no requirement link, the XT60 is not fitted (D-32 AS150U).")
 kit.claim("CL-J1-AS150U-CONT", "AS150U continuous rating", value=70.0, unit="A", limit=(">=", "CL-J1-DISCONNECT-REQ-PESS"),
           verifies=["R-DISCONNECT"], cites=["SRC-J1-AS150U"],
           how="Open the Amass AS150U sheet before ordering (UNVERIFIED reseller value); bench 37 A for 10 min.")

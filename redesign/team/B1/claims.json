@@ -682,7 +682,7 @@
    ],
    "outputs": {
     "vs_gate_ms": 11.899981156892892,
-    "vs_sized_ms": 11.899981156892892,
+    "vs_sized_ms": 11.893113801608896,
     "vt_gate_ms": 15.46997550396076,
     "vs_bank30_gate_ms": 12.787361940463827,
     "vs_gate_clmax086_ms": 11.468875288798127,
@@ -692,7 +692,7 @@
    },
    "input_values": {
     "m_gate": 2.6,
-    "m_sized": 2.6,
+    "m_sized": 2.597,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
@@ -1073,19 +1073,19 @@
    ],
    "outputs": {
     "p_gate_w": 386.9342052710069,
-    "p_sized_w": 386.9342052710069,
+    "p_sized_w": 386.2691641301014,
     "i_gate_a": 26.144203058851815,
-    "i_sized_a": 26.144203058851815,
+    "i_sized_a": 26.09926784662847,
     "p_gate_pess_w": 425.6276257981076,
     "prop_ratio_55_45": 1.0187517824989423,
     "hover_only_gate_min": 11.933811839575815,
-    "hover_only_sized_min": 11.933811839575815,
+    "hover_only_sized_min": 11.954358330412111,
     "throttle_frac_gate_sag": 0.4997751374562969,
     "tw_gate_sag_download": 2.000899854862119
    },
    "input_values": {
     "m_gate": 2.6,
-    "m_sized": 2.6,
+    "m_sized": 2.597,
     "table": [
      [
       690,
@@ -2556,14 +2556,14 @@
     "v_hover_max_ms": 5.822113872002822,
     "tw_needed_8ms": 1.2346840304455746,
     "thrust_frac_8ms": 0.6170643810310318,
-    "v_ground_tip_ms": 9.050708685162379,
+    "v_ground_tip_ms": 9.020324348682232,
     "groundspeed_upwind_ms": 11.0,
-    "m_min_kg": 2.387
+    "m_min_kg": 2.371
    },
    "input_values": {
     "m": 2.6,
-    "m_sized": 2.6,
-    "growth": 213,
+    "m_sized": 2.597,
+    "growth": 226,
     "g": 9.80665,
     "rho": 1.225,
     "S": 0.368,
@@ -2879,7 +2879,7 @@
     "R-STALL"
    ],
    "how": "As CL-B1-VS-GATE at the weighed mass.",
-   "value": 11.899981156892892
+   "value": 11.893113801608896
   },
   {
    "id": "CL-B1-VT-GATE",
@@ -3385,7 +3385,7 @@
     "R-TIPOVER"
    ],
    "how": "Tilt-board tip angle (C5) and a fan test at the lightest flying mass; never leave it standing disarmed in gusts.",
-   "value": 9.050708685162379
+   "value": 9.020324348682232
   },
   {
    "id": "CL-B1-VCLIMB-P",

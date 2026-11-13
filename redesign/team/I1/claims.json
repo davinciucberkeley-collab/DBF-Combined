@@ -357,7 +357,7 @@
     "CL-I1-SPEND-PESS"
    ],
    "state": "planned",
-   "procedure": "Before the pack order: ask the seller for the discharge-lead gauge (needs >= 10 AWG, F1 CL-F1-PACKLEAD-RISE) and confirm EC5 / 4S / 6500 / hard case / 2 packs in the cart (D-64). 12 AWG: stop, tell E2 and F1. Do not order the 130C XT60 SKU (680 g, 12 AWG). On arrival: measure the lead conductor with calipers, weigh both packs (accept <= 592.6 g each, CL-A1-PACK-ACCEPT)."
+   "procedure": "Before the pack order: ask the seller for the discharge-lead gauge (needs >= 10 AWG, F1 CL-F1-PACKLEAD-RISE) and confirm EC5 / 4S / 6500 / hard case / 2 packs in the cart (D-64). 12 AWG: stop, tell E2 and F1. Do not order the 130C XT60 SKU (680 g, 12 AWG). On arrival: measure the lead conductor with calipers, weigh both packs (accept <= 560 g each, CL-A3-PACK-ACCEPT, one line since D-95)."
   },
   {
    "id": "T-I1-LISTINGS",

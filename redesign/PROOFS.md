@@ -1,7 +1,7 @@
 # Proof chains (claims map)
 
 Every number in the redesign is meant to be traceable: **requirement ← claim ← calculation ← parameters ← sources**.
-The graph has **4,244 nodes and 13,815 links**, built by `python -I redesign/proofs/build_graph.py`, which
+The graph has **4,261 nodes and 13,826 links** (2026-11-13), built by `python -I redesign/proofs/build_graph.py`, which
 re-runs every calculation and flags any stored number that no longer matches (drift).
 
 **Explore it:** the **Proofs ↗** link in the K09-L Explorer (double-click `00 - OPEN THE K09-L EXPLORER (double-click me).bat`,
@@ -16,19 +16,40 @@ everything still UNVERIFIED.
 | Node type | VERIFIED | CHECKED | PROPOSED | UNVERIFIED | Total |
 |---|---|---|---|---|---|
 | requirement | 0 | 1 | 1 | 57 | 59 |
-| claim | 0 | 84 | 37 | 1563 | 1684 |
-| calculation | 0 | 418 | 0 | 0 | 418 |
-| parameter | 0 | 64 | 630 | 366 | 1060 |
-| source | 0 | 73 | 0 | 98 | 171 |
-| assumption | 0 | 0 | 283 | 246 | 529 |
+| claim | 0 | 87 | 37 | 1576 | 1700 |
+| calculation | 0 | 421 | 0 | 0 | 421 |
+| parameter | 0 | 63 | 656 | 366 | 1085 |
+| source | 0 | 76 | 0 | 101 | 177 |
+| assumption | 0 | 0 | 283 | 248 | 531 |
 | test | 0 | 0 | 141 | 0 | 141 |
-| part | 0 | 0 | 0 | 149 | 149 |
+| part | 0 | 0 | 0 | 147 | 147 |
 
 VERIFIED needs a physical test, and nothing has been built yet, so nothing is VERIFIED. CHECKED means re-run and
-compared to an independent calculation or simulation. 90 claims currently show a negative margin (FAILS flag; 2026-11-11 after D-85: 87 after D-80…D-84, plus `CL-F2-MASS`, `CL-F2-I2C-LEN` and `R-HARNESS-INSTALL` from the routed harness), and
-14 requirements inherit one; see `STATUS.md` for which ones matter.
+compared to an independent calculation or simulation. On 2026-11-13 (D-95…D-100) **79 nodes fail on margin: 72 claims and 7 requirements**, down from 90 (79 claims + 11 requirements). Every one is triaged below.
 
-## Honest state (2026-11-11, after the harness re-route and the D5-R6 landing parts list)
+## Triage of every failing claim (2026-11-13, D-95 … D-100)
+
+Before this round the graph had **90 fails: 79 claims and 11 requirements**. Each of the 79 claims is triaged below.
+After the round: **72 claims and 7 requirements fail, and each has a reason in this table.** One is new: `CL-H1-MSTIFF-U` (below). Build: 0 drift, 0 errors. `--strict` still
+exits 1, because a failed validation pass line or an open structures item is a real FAIL. It is listed, not hidden.
+
+| Result | Count | Claims |
+|---|---|---|
+| **Fixed: decision or corrected input** | 8 | `CL-B1V-VS-GATE`, `CL-B2R4-VS-GATE-FWD-ZLO` (D-96: P7 re-derived 12.3 m/s on the integer `AIRSPEED_MIN`; z floor 0.0165 m); `CL-E1-CRUISE-P-55` (D-97: 253 W carried); `CL-F2-MASS` (D-95: harness 142 g); `CL-F3-SERVO-BEC` (D-100: CoreWing 8 A, the value D-74 already relies on); `CL-J1-XT60-CONT-PESS`, `CL-J1-XT60-BURST` (XT60 not fitted, D-32); `CL-J1-TUBE-MODE-SEP` (bare-tube screen superseded by C4's 3-D model) |
+| **Decided, owner's one-line edit pending** | 1 | `CL-F2-I2C-LEN` 0.522 m against the 0.5 m rule. D-99 sets the rule to 1.0 m from the bus capacitance (`CL-A1-I2C-CB` 134.6 pF ≤ 200 pF; `CL-A1-I2C-LEN-MAX` 1.21 m). The key lives in `team/F2/harness.py` and `subsystems/harness/params.json`, which F2 owns; it clears when F2 writes 1.0 m |
+| **Explained: real shortfall, owned by the structures stream (fin station, STATUS #1, H7)** | 27 | C6 `CL-C6-COLLAR-RF`, `-RF-13MM`, `-RF-15MM`, `-RF-16MM`, `-RF-12MM-COND`, `-COLLAR-L-REQ`, `-STRIP-ANCHOR-RF`, `-STRIP-ANCHOR-RF-EST`, `-STRIP-EMBED-REQ`, `-STRIP-TAIL-NET-RF`, `-STRIP-TAIL-NET-RF-EST`, `-STRIP-PIN-RF`, `-STRIP-PIN-RF-PROP`, `-STRIP-PIN-RF-ALT`, `-STRIP-PIN-RF-EST`, `-STRIP-PIN-PITCH-MAX`, `-PITCH-MAX-ALT`, `-PITCH-MAX-EST`, `-FIN-ROOT-RF`, `-FIN-ROOT-RF-PROP`; D3 `CL-D3-COLLAR-H`, `-COLLAR-H-C6`, `-TAIL-EMBED`, `-ROOT-FILLET-RF-ALLOW`, `-ROOT-LEFF-REQ`; C4 `CL-C4-D3-COLLAR-H-REQ`; H1 `CL-H1-LEVER-NEED9` (the rig tracks the anchor force, and the anchor runs on the 15:1 hole). C1's D-65 torsion (×1.71) outgrew the 13–15 mm collar, the 2.5 mm pins and the 40 mm strip tail. C4 re-solves the set (CR-C6-38), and C6 asks for a 22 mm collar (CR-C6-37, +4.4 g). D-95 keeps that mass available: the 3 g free reserve plus 10.8 g of predicted margin. No collar prints or pin drilling before then. Gates: `T-C6-LAP-PETG`, `T-C6-STRIP-ANCHOR`, `T-C4-FIN-PROOF` |
+| **Explained: pod as drawn before the D-69 fixes; C3 has not re-run its FEA on D2-R6** | 13 | `CL-C3-FEA-BOND-R-DESIGN`, `-BOND-R-CRASH` (run with the retired 680 g pack), `-TIED-R-CRASH`, `-AFT-STOP-PEAK`, `-AFT-TRAY-BEND`, `-AFT-PEEL`, `-FWD-PEEL`, `-FWD-BED-PEEL`, `-FWD-TRAY-BEND`, `CL-C3-AFT-STOP-D2`, `-AFT-STOP-REC`, `-BLOCK-A-SHARE`, `-STOP-SECTION-PENALTY`. D-69 drew the strut, flange and brackets (D2-R6), and the recess-corner fillet is CR-C3-17. The numbers are stale until C3 re-runs `pod_fea.py` on D2-R6 with the 590 g bounding pack. Gates: `T-C3-STOP-PUSH`, `T-C3-BOND-COUPON`, `T-C3-POD-PROOF` |
+| **Explained: vibration, validated by test plus the rpm notch (R-VIBRATION allows either)** | 13 | D-97 raised the cruise rpm 5 946 → 5 994 (L/D 6.2 → 5.66). That moved C4's worst station separation 0.180 → 0.170 and its mount-stiffness need 2 229 → 2 944 N·m/rad (estimate 1 531: STATUS #9 gets worse; the D3 cheek lever and `T-C4-MOUNT-STIFF` decide). As a result, H1's GT-17 rig uncertainty at the higher pass line reads 10.4 % against 10 % (`CL-H1-MSTIFF-U`): H1 raises the GT-17 load, which has 13 % room (`CL-H1-MSTIFF-LOAD-FRAC`), or reads with a 1 µm gauge. `CL-C2-WING-MODE-SEP` (D-45: notch plus `T-C2-TAP-TEST`); `CL-C4-SIM-SEP`, `CL-C4-D3-SEP-WORST`, `-SEP-BAND` (band rule, by design intent) and `CL-C4-D3-MOUNT-K-REQ` (STATUS #9, `T-C4-MOUNT-STIFF`); `CL-C4-SIM-F1-GCI-LO` (mesh-convergence index, numerical); `CL-C4-D3-SEP-1L` (rejected one-layer option); R1 concept-model claims superseded by `CL-C4-D3-*`: `CL-C4-MESH-CONV`, `-SEP-2L`, `-SEP-1L`, `-SEP-BAND-REC`, `-SEP-BAND-1LB`. Gates: `T-C4-TAP-D3`; hover VIBE < 30 m/s², Clip 0 |
+| **Explained: rejected option or sensitivity, expected FAIL** | 4 | `CL-C2-RING-NO-PLUG`, `-RING-ANCHOR` (show the plugs are required; the plug claims carry the load); `CL-C2-FEA-FOAM-FILLET-SENS` (fillet carrying the station loads, sensitivity); `CL-C3-FEA-AFT-HEEL-PEEL` (heel option, not adopted) |
+| **Explained: design fixed (D-68), FEA not re-run** | 2 | `CL-C2-FEA-FOAM-CORNER-S1`, `-S3`: pocket corners R 3 mm and beads are drawn; C2 re-runs `fea/` on the revised pocket. Gate: `T-C2-WING-PROOF` |
+| **Explained: validation test is the pass line** | 1 | `CL-C4-SIM-FACE-DRAWN` 14.1 vs 10 MPa (estimated allowable): `T-C4-FIN-PROOF` with a strain gauge decides (CR-C4-33) |
+| **Explained: landing, operating rule or consumable** | 6 | `CL-C5-V-LAND-BROADSIDE`, `CL-C5-SIM3D-V-BROADSIDE` (4.4 / 4.0 m/s against 5: flight-card rule S1, land with a wingtip into wind, CR-C5-05); `CL-C5-SIM3D-STRIKE-TILT` (by design intent; TPU corner caps take the strike); `CL-C5-LANDINGS-PER-CARTRIDGE` (consumable cartridges: replace at the mark, CR-D5-21); `CL-C5-SIM3D-STROKE` (+0.005 mm on 35 mm at the 2.6 kg gate, 0.1 m/s sink steps; 2.4 mm spare at the predicted mass); `CL-C5-SIM3D-V-SINK-10` (1.1 against 1.2 m/s on the same 0.1 m/s grid). Gates: `T-C5-AIRCRAFT-DROP`, landing practice in measured wind |
+| **Explained: protected by the flight software** | 2 | `CL-C1-N-STALL-VD` (a full pull at VD reaches n 5.2 > 3.4: F4 limits pitch rate and elevon in manual modes, CR-C1-08); `CL-B4-RPM-MAX-FULL` (unlimited fresh-pack rpm; the F4 output cap holds 9 350 rpm, `CL-B4-SPIN-MAX`) |
+| **Explained: transport box nose stack short; D7 re-lays it** | 3 | `CL-D7-SIDE-CLEAR`, `-NOSE-GAP` 2.95 mm against 10 mm, `-ANTENNA-PAD-GAP` −7.05 mm against 2 mm. D-62 moved the nose 10 mm forward, and the box still has the 3/4 in nose pad (`check.py` warns POD-006 into TRN-001 by 5 mm). A 1/2 in pad (CR-A1-66) gives +6.35 mm, which is not enough for the antenna. D7 needs **+10 mm of inside box length** or the antenna tube trimmed 8 mm (ground item, no flight mass). A box CAD change, specified for D7 |
+
+Requirements that inherit a fail (7): `R-WIND` (C5 broadside), `R-TRANSPORT` (D7 box), `R-STRUCT-MARGIN` (C2 / C6), `R-FIN-TUBE-JOINT` (fin station), `R-VIBRATION` (C2 / C4 modes), `R-PACK-RETENTION` (C3), `R-LANDING-IMPACT` (C5). Each one clears with the rows above.
+
+## Earlier state (2026-11-11, after the harness re-route and the D5-R6 landing parts list; superseded by the triage above)
 
 **The build is clean: 0 drift, 0 errors** (`OK: every stored number re-computes`; two warnings for transport part ids
 TRN-102 / TRN-105 not in any `interfaces.json`). Every calculation re-runs to its stored outputs, so all 418

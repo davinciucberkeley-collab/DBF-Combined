@@ -124,7 +124,7 @@ At order, in the cart:
 |---|---|---|
 | Pack SKU | Ovonic 4S 6500 mAh **120C hard case, EC5, 2-pack**, listed 551 +/- 5 g, 135 x 46 x 49 mm | D-64, CR-E2-24; NOT the 130C XT60 SKU (680 g) |
 | Pack lead gauge | **>= 10 AWG** confirmed by the seller (the page does not print it); 12 AWG: stop, tell E2 and F1 | CR-F1-14: 12 AWG rises 28.4 K at 30.3 A against 20 K |
-| Pack mass on arrival | accept <= 592.6 g each (`CL-A1-PACK-ACCEPT`) | weigh both, log in E2 `pack_log.csv` |
+| Pack mass on arrival | accept <= 560 g each (`CL-A3-PACK-ACCEPT`, one line since D-95) | weigh both, log in E2 `pack_log.csv` |
 | RP3 V2 and Pocket Crush | FCC variant | CR-F5-06 |
 | FC | CoreWing F405 Wing APP V2 (not the Mini: no bdshot); on arrival check the PDB board and the 470 uF cap are in the box, then run `subsystems/power/BOARD-CHECK.md` the same day | CR-F3-06, WB-01, D-74 |
 | ESC | LANRC 4-pack: title, 45 A, 4 pieces, price | CR-I1-04 |

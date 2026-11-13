@@ -1873,7 +1873,7 @@ def write_outputs(g, wires, fittings, passes, legs, pod_box, grooves, args):
         "groove_pitch_m": {"value": 0.005, "unit": "m", "source": "team/F1/CHANGE-REQUESTS.md#CR-F1-07",
                            "note": "F3 compass model assumes exactly this pitch (ASM-F3-LOOP-AREAS)"},
         "groove_mast_min_m": {"value": 0.12, "unit": "m", "source": "team/F3/CHANGE-REQUESTS.md#CR-F3-05"},
-        "i2c_max_m": {"value": 0.5, "unit": "m", "source": "team/F3/CHANGE-REQUESTS.md#CR-F3-05"},
+        "i2c_max_m": {"value": 1.0, "unit": "m", "source": "CL-A1-I2C-LEN-MAX (D-99: bus capacitance 134.6 pF <= 200 pF; was 0.5 m, CR-F3-05)"},
         "rx_max_m": {"value": 0.15, "unit": "m", "source": "team/F5/CHANGE-REQUESTS.md#CR-F5-04"},
         "phase_ext_max_m": {"value": 0.10, "unit": "m", "source": "team/E1/CHANGE-REQUESTS.md#CR-E1-18"},
         "servo_v_min": {"value": 5.7, "unit": "V", "source": "F2 choice",
