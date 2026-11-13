@@ -11,7 +11,7 @@ what is finished and what is not is in [STATUS.md](STATUS.md); next steps for th
 
 ![K09-L flight sequence: vertical take-off, 90° transition, cruise, back-transition, vertical landing](showcase/animation/k09l-how-it-flies.gif)
 
-**How it is built**: build stages 2-11 in order, each part flying in to where it seats ([MP4, 49 s](showcase/animation/build/k09l-build.mp4); one clip per stage in [`BUILD-GUIDE.md`](BUILD-GUIDE.md)):
+**How it is built**: build stages 2-11 step by step, each part fitted the way a person would on a swept path checked against everything already placed ([MP4, 2 min](showcase/animation/build/k09l-build.mp4); one clip per stage in [`BUILD-GUIDE.md`](BUILD-GUIDE.md); check report [`ASSEMBLY-CHECK.md`](showcase/animation/build/ASSEMBLY-CHECK.md)):
 
 ![K09-L build sequence, stage 11 end state](showcase/animation/build/stage-11.png)
 
