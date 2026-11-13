@@ -139,8 +139,9 @@ def stage_video(n):
     nn = '%02d' % n
     return ('<figure class="md-clip" id="build-clip-%d"><video src="assets/animation/build/stage-%s.mp4" data-poster="assets/animation/build/stage-%s.png" '
             'controls muted playsinline preload="none" aria-label="Stage %d build clip"></video>'
-            '<figcaption><span class="ds-source">Stage %d clip · assets/animation/build/stage-%s.mp4 · same CAD as the collision check</span></figcaption></figure>'
-            % (n, nn, nn, n, n, nn))
+            '<figcaption><b class="ds-mono">FIG BG-%s</b> Stage %d, rendered from the CAD that passes the collision check '
+            '<span class="ds-source">assets/animation/build/stage-%s.mp4</span></figcaption></figure>'
+            % (n, nn, nn, n, nn, n, nn))
 
 
 def render(md):
@@ -223,7 +224,7 @@ def main():
     with open(SRC, encoding='utf-8') as f:
         md = f.read().replace('\r\n', '\n')
     title, toc, body = render(md)
-    nav = '<nav class="md-toc" aria-label="Build guide sections">%s</nav>' % ''.join(
+    nav = '<nav class="md-toc" aria-label="Build guide sections"><p class="md-toc-h">Stages</p>%s</nav>' % ''.join(
         '<a href="#%s"%s>%s</a>' % (hid, ' data-stage="%s"' % n if n else '', esc(re.sub(r'^Stage (\d+)\.\s*', r'\1 · ', t)))
         for hid, t, n in toc)
     block = '%s\n<div class="md-wrap">%s\n<article class="md">\n%s\n</article></div>\n%s' % (BEGIN, nav, body, END)

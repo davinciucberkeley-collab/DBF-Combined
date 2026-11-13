@@ -2,9 +2,9 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="K09-L quad tailsitter: 3-D aircraft explorer, configuration decision, team, subsystems, simulations, status and documents. UC Berkeley MEng capstone DBF VTOL redesign.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="site.css?v=20261111d">
-<link rel="stylesheet" href="app.css?v=20261112b">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&family=Red+Hat+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="site.css?v=20261113a">
+<link rel="stylesheet" href="app.css?v=20261113d">
 <link rel="stylesheet" href="proofs/embed.css?v=20261112a">
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
@@ -102,12 +102,12 @@
 </svg>
 
 <header class="ds-topbar app-bar">
-  <a class="ds-brand" href="#aircraft"><svg class="mark"><use href="#i-brand"/></svg>K09-L <span class="ver">· DBF VTOL</span></a>
+  <a class="ds-brand" href="#aircraft">K09-L <span class="ver">Quad tailsitter · design review</span></a>
   <nav class="ds-nav" id="nav" aria-label="Pages">
     <a href="#aircraft">Aircraft</a><a href="#decision">Decision</a><a href="#team">Team</a><a href="#subsystems">Subsystems</a><a href="#simulations">Simulations</a><a href="#build" title="Step-by-step build manual with a clip for every stage">Build guide</a><a href="#proof" title="Every number traced: requirement, claim, calculation, parameters, sources">Proofs</a><a href="#status">Status</a><a href="#bom">BOM</a><a href="#docs">Docs</a>
   </nav>
   <span class="spacer"></span>
-  <span class="ds-badge bar-badge" data-status="PROPOSED">PROPOSED</span>
+  <span class="bar-status"><span class="k">Design</span> <span class="ds-badge" data-status="PROPOSED">PROPOSED</span></span>
   <button class="ds-iconbtn" id="theme" type="button" aria-label="Switch theme"><svg><use href="#i-moon"/></svg></button>
 </header>
 
@@ -165,13 +165,14 @@
     </section>
     <aside class="v-insp ds-panel" id="inspector" aria-live="polite"></aside>
   </div>
-  <a class="scroll-cue ds-meta" href="#about">Renders and key numbers below ↓</a>
+  <a class="scroll-cue ds-meta" href="#about">Specification, flight modes, build sequence and renders are below the viewer</a>
 
   <div class="page">
   <section class="c hero about" id="about">
     <div class="lede">
-    <span class="secno">About the aircraft · revision A1-R5 · 2026-11-10</span>
-    <h1 class="ds-display">K09-L: a 2.6 kg quad tailsitter. One flying wing on four fixed motors, standing on its fin tips, built for $2,000.</h1>
+    <h1 class="sh-t">Aircraft specification</h1>
+    <p class="sh-meta">revision A1-R5 · 2026-11-10</p>
+    <p class="sh-v">K09-L: a 2.6 kg quad tailsitter. One flying wing on four fixed motors, standing on its fin tips, built for $2,000.</p>
     <p class="ds-body">A 1.15 × 0.32 m hot-wired XPS wing (S5010 section, one 22 × 20 mm carbon spar) with two foam-board fins at ±0.32 m span. A vertical carbon tube through each fin carries a SunnySky X3108S motor and APC 11 × 5.5MR prop at each end, four motors in an X, each canted 7° for hover yaw. It takes off as a quadcopter, pitches 90° nose-down for 16 m/s cruise on the same four motors, and pitches back up to land on four crushable feet. Two elevon pairs, one 4S 6500 mAh pack in a pod on the upper surface, ArduPilot Plane in tailsitter mode. One piece in one box: five minutes from car to armed, one person, one spanner.</p>
   </div>
 
@@ -317,8 +318,9 @@
 
   <section class="c" id="how-it-flies">
     <header>
-      <span class="secno">How it flies · rendered in Blender from the as-designed CAD</span>
-      <h2 class="ds-h1">How it rotates itself: take-off, transition, cruise, landing</h2>
+      <h2 class="sh-t">How it flies</h2>
+      <p class="sh-meta">rendered in Blender from the as-designed CAD</p>
+      <p class="sh-v">How it rotates itself: take-off, transition, cruise, landing</p>
       <p class="use">Nothing tilts mechanically: the whole aircraft rotates. Orange arrows show each motor's thrust. To pitch over, the top-side motors speed up and the belly-side motors slow down, creating a pitching moment; the reverse brings it back to hover. The elevons (orange) help once air flows over them.</p>
     </header>
     <figure class="fig">
@@ -329,8 +331,9 @@
 
   <section class="c" id="how-its-built">
     <header>
-      <span class="secno">How it's built · rendered in Blender from the as-designed CAD</span>
-      <h2 class="ds-h1">Build sequence, stage by stage</h2>
+      <h2 class="sh-t">Build sequence</h2>
+      <p class="sh-meta">rendered in Blender from the as-designed CAD</p>
+      <p class="sh-v">Stages 2 to 11 of the build guide, one clip each</p>
       <p class="use">Each part flies in to where it seats, highlighted, in the order of BUILD-GUIDE.md stages 2 to 11; wires are drawn along their routes before the tape skin goes on. Pick a stage to play only that step, or play the whole build.</p>
     </header>
     <figure class="fig">
@@ -352,10 +355,12 @@
       <figcaption><span class="ds-source">showcase/animation/render_build.py · Blender 4.2 Workbench, 1280×720, 30 fps · stage order and captions from BUILD-GUIDE.md; same CAD as the 3-D explorer and the collision check</span></figcaption>
     </figure>
     <style>
-      .bstages{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-      .bstage{font:inherit;font-size:12.5px;padding:5px 10px;border-radius:999px;border:1px solid var(--line, #ccc);background:var(--panel-2, transparent);color:inherit;cursor:pointer}
-      .bstage b{margin-right:4px}
-      .bstage.on{border-color:currentColor;font-weight:600}
+      .bstages{display:flex;flex-wrap:wrap;gap:0;margin-top:10px;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+      .bstage{font:inherit;font-size:var(--text-sm);padding:7px 12px;border-radius:0;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent;color:var(--fg-2);cursor:pointer;text-align:left}
+      .bstage:hover{background:var(--panel-2);color:var(--fg)}
+      .bstage b{margin-right:6px;font-family:var(--font-mono);font-weight:500;color:var(--fg-3)}
+      .bstage.on{background:var(--accent-wash);color:var(--fg);box-shadow:inset 0 -2px 0 var(--accent)}
+      .bstage.on b{color:var(--accent)}
     </style>
     <script>
       (function () {
@@ -376,8 +381,9 @@
 
   <section class="c" id="renders">
     <header>
-      <span class="secno">Renders · showcase/renders · Blender from the same scripts that build the Fusion model</span>
-      <h2 class="ds-h1">Fifteen renders of the as-designed aircraft</h2>
+      <h2 class="sh-t">Renders</h2>
+      <p class="sh-meta">showcase/renders · Blender from the same scripts that build the Fusion model</p>
+      <p class="sh-v">Fifteen renders of the as-designed aircraft</p>
       <p class="use">Click any image to view it full size. Rendered with the design-system Blender style from the subsystem modules; the 3-D explorer above shows the same geometry.</p>
     </header>
     <div class="gallery" id="gallery"><figure class="shot" id="r-hero-iso"><a href="assets/renders/hero-iso.png" data-lightbox="assets/renders/hero-iso.png" data-caption="K09-L in cruise attitude: a 1.15 m flying wing with two fins, each carrying a motor above and below the wing."><img src="assets/renders/thumb/hero-iso.jpg" alt="K09-L in cruise attitude: a 1.15 m flying wing with two fins, each carrying a motor above and below the wing." loading="lazy" width="480" height="300"></a><figcaption>K09-L in cruise attitude: a 1.15 m flying wing with two fins, each carrying a motor above and below the wing.</figcaption></figure><figure class="shot" id="r-hover-pose"><a href="assets/renders/hover-pose.png" data-lightbox="assets/renders/hover-pose.png" data-caption="Standing nose-up on its four fin-tip feet (take-off and landing pose)."><img src="assets/renders/thumb/hover-pose.jpg" alt="Standing nose-up on its four fin-tip feet (take-off and landing pose)." loading="lazy" width="480" height="300"></a><figcaption>Standing nose-up on its four fin-tip feet (take-off and landing pose).</figcaption></figure><figure class="shot" id="r-exploded"><a href="assets/renders/exploded.png" data-lightbox="assets/renders/exploded.png" data-caption="Exploded view, labelled by subsystem."><img src="assets/renders/thumb/exploded.jpg" alt="Exploded view, labelled by subsystem." loading="lazy" width="480" height="300"></a><figcaption>Exploded view, labelled by subsystem.</figcaption></figure><figure class="shot" id="r-front"><a href="assets/renders/front.png" data-lightbox="assets/renders/front.png" data-caption="Front view (orthographic)."><img src="assets/renders/thumb/front.jpg" alt="Front view (orthographic)." loading="lazy" width="480" height="300"></a><figcaption>Front view (orthographic).</figcaption></figure><figure class="shot" id="r-side"><a href="assets/renders/side.png" data-lightbox="assets/renders/side.png" data-caption="Left side view (orthographic)."><img src="assets/renders/thumb/side.jpg" alt="Left side view (orthographic)." loading="lazy" width="480" height="300"></a><figcaption>Left side view (orthographic).</figcaption></figure><figure class="shot" id="r-top"><a href="assets/renders/top.png" data-lightbox="assets/renders/top.png" data-caption="Top view (orthographic), nose up."><img src="assets/renders/thumb/top.jpg" alt="Top view (orthographic), nose up." loading="lazy" width="480" height="300"></a><figcaption>Top view (orthographic), nose up.</figcaption></figure><figure class="shot" id="r-cutaway-xray"><a href="assets/renders/cutaway-xray.png" data-lightbox="assets/renders/cutaway-xray.png" data-caption="X-ray: pod internals (flight controller, pack, tray, UBEC) and the wiring harness."><img src="assets/renders/thumb/cutaway-xray.jpg" alt="X-ray: pod internals (flight controller, pack, tray, UBEC) and the wiring harness." loading="lazy" width="480" height="300"></a><figcaption>X-ray: pod internals (flight controller, pack, tray, UBEC) and the wiring harness.</figcaption></figure><figure class="shot" id="r-detail-wing"><a href="assets/renders/detail-wing.png" data-lightbox="assets/renders/detail-wing.png" data-caption="Wing: hot-wired XPS core (ghosted), carbon spar, four elevon panels."><img src="assets/renders/thumb/detail-wing.jpg" alt="Wing: hot-wired XPS core (ghosted), carbon spar, four elevon panels." loading="lazy" width="480" height="300"></a><figcaption>Wing: hot-wired XPS core (ghosted), carbon spar, four elevon panels.</figcaption></figure><figure class="shot" id="r-detail-fin"><a href="assets/renders/detail-fin.png" data-lightbox="assets/renders/detail-fin.png" data-caption="Fin: carbon motor tube, through-core block, motor mounts, braces."><img src="assets/renders/thumb/detail-fin.jpg" alt="Fin: carbon motor tube, through-core block, motor mounts, braces." loading="lazy" width="480" height="300"></a><figcaption>Fin: carbon motor tube, through-core block, motor mounts, braces.</figcaption></figure><figure class="shot" id="r-detail-pod"><a href="assets/renders/detail-pod.png" data-lightbox="assets/renders/detail-pod.png" data-caption="Pod: printed tray, 4S 6500 mAh pack, flight controller, GPS mast, pitot."><img src="assets/renders/thumb/detail-pod.jpg" alt="Pod: printed tray, 4S 6500 mAh pack, flight controller, GPS mast, pitot." loading="lazy" width="480" height="300"></a><figcaption>Pod: printed tray, 4S 6500 mAh pack, flight controller, GPS mast, pitot.</figcaption></figure><figure class="shot" id="r-detail-foot"><a href="assets/renders/detail-foot.png" data-lightbox="assets/renders/detail-foot.png" data-caption="Landing foot: printed shoe and piston, crushable XPS cartridge, pad."><img src="assets/renders/thumb/detail-foot.jpg" alt="Landing foot: printed shoe and piston, crushable XPS cartridge, pad." loading="lazy" width="480" height="300"></a><figcaption>Landing foot: printed shoe and piston, crushable XPS cartridge, pad.</figcaption></figure><figure class="shot" id="r-detail-propulsion"><a href="assets/renders/detail-propulsion.png" data-lightbox="assets/renders/detail-propulsion.png" data-caption="Propulsion station: motor, prop, 45 A ESC on the fin."><img src="assets/renders/thumb/detail-propulsion.jpg" alt="Propulsion station: motor, prop, 45 A ESC on the fin." loading="lazy" width="480" height="300"></a><figcaption>Propulsion station: motor, prop, 45 A ESC on the fin.</figcaption></figure><figure class="shot" id="r-detail-mechanisms"><a href="assets/renders/detail-mechanisms.png" data-lightbox="assets/renders/detail-mechanisms.png" data-caption="Elevon linkage: servo, arm, pushrod, horns, inter-panel rod."><img src="assets/renders/thumb/detail-mechanisms.jpg" alt="Elevon linkage: servo, arm, pushrod, horns, inter-panel rod." loading="lazy" width="480" height="300"></a><figcaption>Elevon linkage: servo, arm, pushrod, horns, inter-panel rod.</figcaption></figure><figure class="shot" id="r-detail-harness"><a href="assets/renders/detail-harness.png" data-lightbox="assets/renders/detail-harness.png" data-caption="Harness: pod bundle to the wing and fin bundles and each ESC."><img src="assets/renders/thumb/detail-harness.jpg" alt="Harness: pod bundle to the wing and fin bundles and each ESC." loading="lazy" width="480" height="300"></a><figcaption>Harness: pod bundle to the wing and fin bundles and each ESC.</figcaption></figure><figure class="shot" id="r-transport-box"><a href="assets/renders/transport-box.png" data-lightbox="assets/renders/transport-box.png" data-caption="Transport box (ghosted) with the aircraft in its foam cradles."><img src="assets/renders/thumb/transport-box.jpg" alt="Transport box (ghosted) with the aircraft in its foam cradles." loading="lazy" width="480" height="300"></a><figcaption>Transport box (ghosted) with the aircraft in its foam cradles.</figcaption></figure></div>
@@ -391,8 +397,9 @@
   <div class="page">
 <section class="c hero" id="cs-decision">
   <div class="lede">
-    <span class="secno">Decision · 2026-11-09</span>
-    <h1 class="ds-display">Build K09-L: a quad tailsitter, flat flying wing on four fixed motors, two elevons, airspeed sensor.</h1>
+    <h1 class="sh-t">Decision</h1>
+    <p class="sh-meta">2026-11-09</p>
+    <p class="sh-v">Build K09-L: a quad tailsitter, flat flying wing on four fixed motors, two elevons, airspeed sensor.</p>
     <p class="ds-body">One piece, one plug, five minutes at the field. It is the only shortlisted concept whose reserve covers one $309 crash on pessimistic numbers, and the fastest to build and repair. Runner-up K01 (lean twin-boom quadplane) is the better flying bet by about 0.1 in probability; it lost at the budget gate, not in the air. Reversible until the mid-December order.</p>
   </div>
   <div class="ds-rowlabel">At decision · 2026-11-09 <span>current = as designed, A1-R5 · 2026-11-10 (the tiles under <i>Aircraft</i>)</span></div>
@@ -408,7 +415,7 @@
 </section>
 
 <section class="c" id="case">
-  <header><span class="secno">Why K09-L, and when to reverse it</span><h2 class="ds-h2">Chosen from 43 concepts after a morphological study, a trade matrix and a tie-break against the lean twin-boom quadplane K01. Reversible until the mid-December order.</h2></header>
+  <header><h2 class="sh-t">Why K09-L, and when to reverse it</h2><p class="sh-v">Chosen from 43 concepts after a morphological study, a trade matrix and a tie-break against the lean twin-boom quadplane K01. Reversible until the mid-December order.</p></header>
   <div class="decision">
     <div class="ds-card">
       <header><h3 class="ds-h2">The case</h3><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></header>
@@ -443,7 +450,7 @@
 
 </section>
 <section class="c" id="constraints">
-  <header><span class="secno">The real constraints</span><h2 class="ds-h2">Five things the team lead fixed. Everything else in the study is a proposal.</h2><p class="use">Derived numbers (planning cap $1 850, 1.2 m box, T/W ≥ 1.6, 5 m/s hover) came from a previous agent and are used as working thresholds, not gates.</p></header>
+  <header><h2 class="sh-t">Constraints</h2><p class="sh-v">Five things the team lead fixed. Everything else in the study is a proposal.</p><p class="use">Derived numbers (planning cap $1 850, 1.2 m box, T/W ≥ 1.6, 5 m/s hover) came from a previous agent and are used as working thresholds, not gates.</p></header>
   <div class="constraints">
     <div class="constraint"><span class="n">C1 · hard</span><b>$2 000 total</b><span>Tax, shipping, batteries, charger, radio, tools the team does not own, spares.</span><span class="how">K09-L: $1 679 pess. · $321 left</span></div>
     <div class="constraint"><span class="n">C2 · hard</span><b>VTOL</b><span>Vertical take-off, transition, cruise, transition back, vertical landing. No payload.</span><span class="how">pitch-over tailsitter, 4 motors</span></div>
@@ -455,7 +462,7 @@
 </section>
 
 <section class="c" id="morph">
-  <header><span class="secno">Morphological chart</span><h2 class="ds-h2">11 functions × 67 options (+ 9 added by three audit rounds). Every concept is one path down the chart.</h2><p class="use">K09-L's path is the solid blue line; K01's is dashed grey. Pick any of the 43 concepts to see its path. Rejected options stay visible: that is the completeness audit.</p></header>
+  <header><h2 class="sh-t">Morphological chart</h2><p class="sh-v">11 functions × 67 options (+ 9 added by three audit rounds). Every concept is one path down the chart.</p><p class="use">K09-L's path is the solid blue line; K01's is dashed grey. Pick any of the 43 concepts to see its path. Rejected options stay visible: that is the completeness audit.</p></header>
   <div class="morph-wrap">
     <div class="morph-ctl">
       <div class="ds-row" id="morph-chips" aria-label="Shortlisted concepts"></div>
@@ -474,7 +481,7 @@
 </section>
 
 <section class="c" id="concepts">
-  <header><span class="secno">Every concept considered</span><h2 class="ds-h2">43 concepts: 7 kept, 19 merged into a parent, 17 dropped.</h2><p class="use">Merged concepts live on as options on their parent, never deleted. Reasons are the screener's one line; costs are cost_model.py totals with tax and shipping.</p></header>
+  <header><h2 class="sh-t">All 43 concepts</h2><p class="sh-v">43 concepts: 7 kept, 19 merged into a parent, 17 dropped.</p><p class="use">Merged concepts live on as options on their parent, never deleted. Reasons are the screener's one line; costs are cost_model.py totals with tax and shipping.</p></header>
   <div class="filters">
     <input type="search" id="f-q" placeholder="Search id, name, reason" aria-label="Search concepts">
     <select id="f-fam" aria-label="Family"><option value="">All families</option><option value="K">Conventional (K)</option><option value="B">Buy-and-modify (B)</option><option value="U">Unconventional (U)</option></select>
@@ -491,7 +498,7 @@
 </section>
 
 <section class="c" id="shortlist">
-  <header><span class="secno">The shortlist of seven</span><h2 class="ds-h2">One card each, skeptic-corrected numbers. Every correction went the same way: heavier, more power, less reserve.</h2><p class="use">Card values are struck through where the skeptic changed them. Reserve is what is left of $2 000 after tax and shipping. Hours are team-hours to first hover.</p></header>
+  <header><h2 class="sh-t">Shortlist: seven concepts</h2><p class="sh-v">One card each, skeptic-corrected numbers. Every correction went the same way: heavier, more power, less reserve.</p><p class="use">Card values are struck through where the skeptic changed them. Reserve is what is left of $2 000 after tax and shipping. Hours are team-hours to first hover.</p></header>
   <div class="ds-grid" style="--c:1">
 
     <article class="ds-concept chosen">
@@ -840,7 +847,7 @@
 </section>
 
 <section class="c" id="trade">
-  <header><span class="secno">Trade matrix, gates and tie-break</span><h2 class="ds-h2">Gates first, then the weighted score, then the team lead's rule: pessimistic budget, schedule, probability of a logged round trip.</h2><p class="use">Scores 0–10 from the three judges on corrected numbers; weights are the study's (REQUIREMENTS §5). B08 wins the arithmetic and is set aside; U01 fails G6 and is not ranked. Among concepts the team would build and that transition, K09 stays first in all 12 sensitivity cases.</p></header>
+  <header><h2 class="sh-t">Trade matrix, gates and tie-break</h2><p class="sh-v">Gates first, then the weighted score, then the team lead's rule: pessimistic budget, schedule, probability of a logged round trip.</p><p class="use">Scores 0–10 from the three judges on corrected numbers; weights are the study's (REQUIREMENTS §5). B08 wins the arithmetic and is set aside; U01 fails G6 and is not ranked. Among concepts the team would build and that transition, K09 stays first in all 12 sensitivity cases.</p></header>
 
   <div class="scroll wide">
     <table class="ds-trade">
@@ -909,7 +916,7 @@
 </section>
 
 <section class="c" id="risks">
-  <header><span class="secno">What we accept, what reverses it, what to do before the order</span><h2 class="ds-h2">The price of the concept is stated plainly; every reversal must land before the mid-December order.</h2></header>
+  <header><h2 class="sh-t">Risks, reversal triggers and pre-order actions</h2><p class="sh-v">The price of the concept is stated plainly; every reversal must land before the mid-December order.</p></header>
   <div class="two">
     <div class="ds-stack">
       <h3 class="ds-h3">Accepted operating limits</h3>
@@ -954,7 +961,7 @@
 </section>
 
 <section class="c" id="cs-sources">
-  <header><span class="secno">Sources</span><h2 class="ds-h2">Every number on this page comes from a file in redesign/; external sources as cited there.</h2></header>
+  <header><h2 class="sh-t">Sources</h2><p class="sh-v">Every number on this page comes from a file in redesign/; external sources as cited there.</p></header>
   <div class="srcs">
     <ul>
       <li><b>Decision</b>redesign/CONFIGURATION.md · redesign/config-study/tiebreak/DECISION.md</li>
@@ -988,8 +995,9 @@
   <div class="page">
 <section class="c" id="ov-team">
   <header>
-    <span class="secno">The engineering team · TEAM.md</span>
-    <h2 class="ds-h1">One role per engineer, ten groups, 31 delivered</h2>
+    <h1 class="sh-t">Team and roles</h1>
+    <p class="sh-meta">TEAM.md</p>
+    <p class="sh-v">One role per engineer, ten groups, 31 delivered</p>
     <p class="use">Each role does exactly one thing and writes a SUMMARY.md, a claims file the proof chain re-computes, and change requests the chief engineer decides. Status is the word each role gave its own work at A1-R5.</p>
   </header>
   <div class="org">
@@ -1091,8 +1099,9 @@
   <div class="page">
 <section class="c" id="ov-subsystems">
   <header>
-    <span class="secno">Subsystems · 12 folders · 9 flying</span>
-    <h2 class="ds-h1">Every part has one owner and one allocation</h2>
+    <h1 class="sh-t">Subsystems</h1>
+    <p class="sh-meta">12 folders · 9 flying</p>
+    <p class="sh-v">Every part has one owner and one allocation</p>
     <p class="use">Flying mass from the designers' parts.csv as rolled up by A3-R7, against the D-63 allocation. The bar is the share of the allocation used. Each folder holds SPEC.md, BUILD.md, parts.csv, interfaces.json, params.json and the Fusion module.</p>
   </header>
   <div class="subs">
@@ -1121,8 +1130,9 @@
   <div class="page">
 <section class="c" id="ov-simulations">
   <header>
-    <span class="secno">Simulations · round of 2026-11-10</span>
-    <h2 class="ds-h1">What the computer models say about K09-L</h2>
+    <h1 class="sh-t">Simulations</h1>
+    <p class="sh-meta">round of 2026-11-10</p>
+    <p class="sh-v">What the computer models say about K09-L</p>
     <p class="use">Before anything is built, nine team roles checked the final CAD design with computer models: airflow simulations (<a class="term" href="#gl-cfd" data-name="CFD (computational fluid dynamics)" data-def="An airflow simulation: the air around a part is split into many small cells and the computer solves how it flows.">CFD</a>) for the aerodynamics, stress models (<a class="term" href="#gl-fea" data-name="FEA (finite element analysis)" data-def="A stress model: the part is split into many small pieces and the computer solves how each one stretches and bends under load.">FEA</a>) for the structure, and flight, landing and heat models for the rest. Each card below asks one question a pilot or builder would ask, gives the answer, and shows the chart behind it. Five of the nine checks found a problem in the design as drawn, and each of those has a decided fix (decisions D-61 to D-73). Nothing has flown yet: every number stays unverified until the stand and flight tests.</p>
   </header>
   <div class="sim-sum" role="table" aria-label="Simulation results at a glance">
@@ -1296,8 +1306,9 @@
   <div class="page">
 <section class="c" id="ov-status">
   <header>
-    <span class="secno">Status · programme phases and open issues</span>
-    <h2 class="ds-h1">Six phases done, two partial, two not started</h2>
+    <h1 class="sh-t">Programme status</h1>
+    <p class="sh-meta">programme phases and open issues</p>
+    <p class="sh-v">Six phases done, two partial, two not started</p>
     <p class="use">Phases follow DESIGN-PROGRAM.workflow.js. Done means every active role in the phase delivered and the chief engineer dispositioned its change requests; it does not mean verified.</p>
   </header>
   <div class="progress"><span>Programme progress</span><span class="ds-num">6 done · 2 partial · 2 not started</span><div class="track"><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="d"></i><i class="p"></i><i class="p"></i><i></i><i></i></div></div>
@@ -1354,8 +1365,9 @@
 <section class="view" id="bom" hidden>
   <div class="page">
   <section class="c">
-    <header><span class="secno">Bill of materials · procurement engineer I1 · prices seen 2026-11-01..09</span>
-      <h1 class="ds-display">Everything to buy, priced, against the $2,000 limit</h1>
+    <header><h1 class="sh-t">Bill of materials</h1>
+      <p class="sh-meta">procurement engineer I1 · prices seen 2026-11-01..09</p>
+      <p class="sh-v">Everything to buy, priced, against the $2,000 limit</p>
       <p class="use">73 line items including all ground equipment (nothing is owned). Gated lines are bought only if a test or decision opens their gate and are excluded from the totals. Prices marked EST are estimates: confirm price and stock on order day.</p>
       <div class="ds-row"><a class="ds-btn primary" href="https://github.com/davinciucberkeley-collab/DBF-Combined/raw/redesign/v1/redesign/team/I1/K09L-BOM.xlsx" target="_blank" rel="noopener">Download the Excel BOM</a><a class="ds-btn" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/I1/ORDER-PLAN.md" target="_blank" rel="noopener">Order plan (what to buy when)</a></div>
     </header>
@@ -1378,12 +1390,13 @@
   <div class="page">
     <section class="c" id="build-guide">
       <header>
-        <span class="secno">Build guide · from redesign/BUILD-GUIDE.md · generated, do not edit</span>
-        <h2 class="ds-h1">K09-L build guide, with a clip for every stage</h2>
+        <h1 class="sh-t">Build guide</h1>
+        <p class="sh-meta">source redesign/BUILD-GUIDE.md, rendered by make_build_guide.py</p>
+        <p class="sh-v">Twelve stages and a week-by-week plan; stages 2 to 11 each have a clip</p>
         <p class="use">Read the step, then press play on the clip right under its heading. The clips are rendered from the same CAD that passes the collision check. <a class="ds-link" href="#how-its-built">Whole-build animation</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/BUILD-GUIDE.md" target="_blank" rel="noopener">Markdown source on GitHub</a></p>
       </header>
 <!-- build-guide:begin (generated by redesign/site/make_build_guide.py from redesign/BUILD-GUIDE.md; do not edit) -->
-<div class="md-wrap"><nav class="md-toc" aria-label="Build guide sections"><a href="#build-before-you-start">Before you start</a><a href="#build-stage-1" data-stage="1">1 · Buy, measure, print and cut parts</a><a href="#build-stage-2" data-stage="2">2 · Wing core and spar</a><a href="#build-stage-3" data-stage="3">3 · Elevon panels</a><a href="#build-stage-4" data-stage="4">4 · Fins on the motor tubes</a><a href="#build-stage-5" data-stage="5">5 · Pod and power stack</a><a href="#build-stage-6" data-stage="6">6 · Harness, then skin</a><a href="#build-stage-7" data-stage="7">7 · Servos, linkage and hinges</a><a href="#build-stage-8" data-stage="8">8 · Motor mounts, motors and props</a><a href="#build-stage-9" data-stage="9">9 · Avionics</a><a href="#build-stage-10" data-stage="10">10 · Feet and corner caps</a><a href="#build-stage-11" data-stage="11">11 · Checks: weight, CG, controls, thrust stand</a><a href="#build-stage-12" data-stage="12">12 · First hover</a><a href="#build-week-by-week-plan">Week-by-week plan</a></nav>
+<div class="md-wrap"><nav class="md-toc" aria-label="Build guide sections"><p class="md-toc-h">Stages</p><a href="#build-before-you-start">Before you start</a><a href="#build-stage-1" data-stage="1">1 · Buy, measure, print and cut parts</a><a href="#build-stage-2" data-stage="2">2 · Wing core and spar</a><a href="#build-stage-3" data-stage="3">3 · Elevon panels</a><a href="#build-stage-4" data-stage="4">4 · Fins on the motor tubes</a><a href="#build-stage-5" data-stage="5">5 · Pod and power stack</a><a href="#build-stage-6" data-stage="6">6 · Harness, then skin</a><a href="#build-stage-7" data-stage="7">7 · Servos, linkage and hinges</a><a href="#build-stage-8" data-stage="8">8 · Motor mounts, motors and props</a><a href="#build-stage-9" data-stage="9">9 · Avionics</a><a href="#build-stage-10" data-stage="10">10 · Feet and corner caps</a><a href="#build-stage-11" data-stage="11">11 · Checks: weight, CG, controls, thrust stand</a><a href="#build-stage-12" data-stage="12">12 · First hover</a><a href="#build-week-by-week-plan">Week-by-week plan</a></nav>
 <article class="md">
 <p>A short, ordered guide to building the K09-L quad tailsitter at Jacobs Hall. Each stage points to the detailed <code>subsystems/&lt;x&gt;/BUILD.md</code>, which holds the dimensions, cut tables and checks. This guide gives the order, the time, the parts and the warnings from the <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/BUILDABILITY-REVIEW.md" target="_blank" rel="noopener">buildability review</a>.</p>
 <p>Status: design <code>PROPOSED</code>, frame A1-R5. Nothing has been built yet. <strong>Open Blockers are not solved.</strong> Where a step depends on one, it says &quot;pending fix&quot;. Do not print or cut those parts until the fix lands in CAD.</p>
@@ -1410,7 +1423,7 @@
 </section>
 <section class="md-sec" id="build-stage-2">
 <h2 class="md-h2">Stage 2. Wing core and spar</h2>
-<figure class="md-clip" id="build-clip-2"><video src="assets/animation/build/stage-02.mp4" data-poster="assets/animation/build/stage-02.png" controls muted playsinline preload="none" aria-label="Stage 2 build clip"></video><figcaption><span class="ds-source">Stage 2 clip · assets/animation/build/stage-02.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-2"><video src="assets/animation/build/stage-02.mp4" data-poster="assets/animation/build/stage-02.png" controls muted playsinline preload="none" aria-label="Stage 2 build clip"></video><figcaption><b class="ds-mono">FIG BG-02</b> Stage 2, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-02.mp4</span></figcaption></figure>
 <p class="md-meta">Time: about 2 days hands-on plus 2 × 24 h cures (practice cores extra).<br>Parts: W01 XPS, W03/W04 spar tube, PETG plugs (W05), C05 epoxy, blocks <code>FIN-004</code>.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/wing/BUILD.md" target="_blank" rel="noopener"><code>subsystems/wing/BUILD.md</code></a> steps 1–8, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/fins/BUILD.md" target="_blank" rel="noopener"><code>subsystems/fins/BUILD.md</code></a> step 7.</p>
 <ol><li>Hot-wire <strong>two</strong> cores from the S5010 templates in one 1.15 m pass each; keep both foam beds. Sand the LE until no ridge can be felt. ⚠ Stall margin is +0.05 %; accept a core only by template gauge at three stations and log the real TE thickness (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MANUFACTURING.md#4-findings" target="_blank" rel="noopener">MF-05, SW-16</a>).</li><li>With the core in its lower bed, cut the spar slot from below, the block and anchor pockets, the servo pockets, the pod recess, the grooves and the JR recess. Never lift a slotted core out of its bed (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-07</a>).</li><li>Push the PETG plugs into the spar to the dowel marks. Cure 24 h.</li><li>Bond both blocks to the spar in the clocking jig with silica-thickened epoxy, then cure (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-08</a>). The blocks have no strap eyes: those go on in stage 6 (D-89c).</li><li>Bond spar and blocks into the core with microballoon epoxy, fill the lip-bead chamfers, sleeve the pod ties. Weight it on the relieved bed, LE on a straight edge. Cure 24 h.</li></ol>
 <p>☐ Inspect before moving on: core straight within 1 mm, no twist; blocks at y ±320 ± 1 mm; tube bores parallel and vertical within ±0.5° in the jig; beads continuous.</p>
@@ -1418,14 +1431,14 @@
 </section>
 <section class="md-sec" id="build-stage-3">
 <h2 class="md-h2">Stage 3. Elevon panels</h2>
-<figure class="md-clip" id="build-clip-3"><video src="assets/animation/build/stage-03.mp4" data-poster="assets/animation/build/stage-03.png" controls muted playsinline preload="none" aria-label="Stage 3 build clip"></video><figcaption><span class="ds-source">Stage 3 clip · assets/animation/build/stage-03.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-3"><video src="assets/animation/build/stage-03.mp4" data-poster="assets/animation/build/stage-03.png" controls muted playsinline preload="none" aria-label="Stage 3 build clip"></video><figcaption><b class="ds-mono">FIG BG-03</b> Stage 3, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-03.mp4</span></figcaption></figure>
 <p class="md-meta">Time: 3–4 h plus a 24 h cure.<br>Parts: torque tubes <code>MEC-009</code> (H02), hinge tape.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/wing/BUILD.md" target="_blank" rel="noopener"><code>subsystems/wing/BUILD.md</code></a> step 9, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/mechanisms/BUILD.md" target="_blank" rel="noopener"><code>subsystems/mechanisms/BUILD.md</code></a> steps 1–4.</p>
 <ol><li>Route the torque-tube grooves with a depth stop <strong>while the core is still whole</strong>, then cut the panels free (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-17</a>). Leave R 3 mm at the fin-tab corners.</li><li>Bevel the panel fronts 30° on the lower side; knife the horn-blade slots.</li><li>Bond the torque tubes flush with microballoon epoxy. Cure 24 h. Tape the bevel face.</li></ol>
 <p>☐ Inspect before moving on: panels 228 and 218 mm long, chord 70.4 mm; ≥ 1 mm foam over each tube; corner radii by gauge.</p>
 </section>
 <section class="md-sec" id="build-stage-4">
 <h2 class="md-h2">Stage 4. Fins on the motor tubes</h2>
-<figure class="md-clip" id="build-clip-4"><video src="assets/animation/build/stage-04.mp4" data-poster="assets/animation/build/stage-04.png" controls muted playsinline preload="none" aria-label="Stage 4 build clip"></video><figcaption><span class="ds-source">Stage 4 clip · assets/animation/build/stage-04.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-4"><video src="assets/animation/build/stage-04.mp4" data-poster="assets/animation/build/stage-04.png" controls muted playsinline preload="none" aria-label="Stage 4 build clip"></video><figcaption><b class="ds-mono">FIG BG-04</b> Stage 4, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-04.mp4</span></figcaption></figure>
 <p class="md-meta">Time: about 2 days hands-on plus 4–5 × 24 h cures.<br>Parts: W02 foam board, W04 tubes, D03 plugs, D01 braces, D02 strips, C03 pins, collars <code>FIN-008</code>, anchors, ESC pads <code>FIN-007</code>.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/fins/BUILD.md" target="_blank" rel="noopener"><code>subsystems/fins/BUILD.md</code></a> steps 1–17.</p>
 <ol><li>Laminate the board pairs (3M 77 in the spray booth), measure the laminate, then knife- or laser-cut the four half-fins. Tip outline per D-75 (one datum with the foot shoe).</li><li>Cut the two 344 mm motor tubes, fit the plugs, cure. Slide the tubes through the bosses and blocks, square them in the jig, epoxy. Cure 24 h.</li><li>Bond the half-fin roots and run the cove fillets. ⚠ Weigh a cup from every fillet batch; the CG has no aft margin left (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MANUFACTURING.md#4-findings" target="_blank" rel="noopener">MF-14</a>, BR-00). ⚠ The lower roots have the rod notch under a fillet that already fails: pending C4 check <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-04</a>.</li><li>Edge strips and pins. Fit strips and drill pins on the bench, flat, before the half-fin goes on, if the team adopts <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-04</a>. ⚠ Pin row depends on the tip decision.</li><li>Station collars, braces, ESC pads. ⚠ Collar height (13, 15 or 22 mm) is not frozen: pending H7 / BR-08. Clock the collar notch with an inclinometer if the keyed mount (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MOTOR-MOUNTS.md#findings" target="_blank" rel="noopener">MM-02</a>) is adopted.</li><li>Post-cure the collars in a heat tent (box, lamp, thermocouple), keeping XPS and tape cool (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-14</a>).</li></ol>
 <p>☐ Inspect before moving on: tubes vertical and parallel; each half-fin weighed before and after (+6.3 g expected); no filler in lead holes or elevon gaps.</p>
@@ -1433,7 +1446,7 @@
 </section>
 <section class="md-sec" id="build-stage-5">
 <h2 class="md-h2">Stage 5. Pod and power stack</h2>
-<figure class="md-clip" id="build-clip-5"><video src="assets/animation/build/stage-05.mp4" data-poster="assets/animation/build/stage-05.png" controls muted playsinline preload="none" aria-label="Stage 5 build clip"></video><figcaption><span class="ds-source">Stage 5 clip · assets/animation/build/stage-05.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-5"><video src="assets/animation/build/stage-05.mp4" data-poster="assets/animation/build/stage-05.png" controls muted playsinline preload="none" aria-label="Stage 5 build clip"></video><figcaption><b class="ds-mono">FIG BG-05</b> Stage 5, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-05.mp4</span></figcaption></figure>
 <p class="md-meta">Time: about 8.5 h for the pod plus 3 × 24 h cures; 3 h for the power stack.<br>Parts: pod board and prints <code>POD-*</code> (W02, W05), F01 AS150U, F02–F04 wire, F05 UBEC, F06 fuse, F07 caps, F08 FR4, C02 inserts, C06 nylon screws, D06 straps.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/pod/BUILD.md" target="_blank" rel="noopener"><code>subsystems/pod/BUILD.md</code></a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/power/BUILD.md" target="_blank" rel="noopener"><code>subsystems/power/BUILD.md</code></a>.</p>
 <ol><li>Build the pod box on the bench in parallel with stage 4: stop T, tray, walls, fillets.</li><li>Lay the recess-step fillet on the wing, cure, then bond the pod into the recess. ⚠ Pod BUILD step 11 bonds the handle bridge to a &quot;slot fill&quot; that does not exist on top of the wing (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/STRUCTURE-WING.md#findings" target="_blank" rel="noopener">SW-10</a>); bond to the spar saddles only.</li><li>Build the power stack <strong>on the bench</strong>: bus board, power board with the supplied 470 µF 35 V input cap, AS150U. Screw the power board down on its washers <strong>before</strong> soldering the 10 AWG leads to its aft-edge pads: the joints sit over the two aft screw heads (D-89c), so taking the board out later means desoldering them. ⚠ The power and harness BUILD files disagree on when the ESC leads are soldered (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-02</a>); solder the bus board before the frame goes on, or use ESC-pair plugs at the pod exits if the team adopts <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-03</a>.</li><li>Put the AS150U on a short flying pigtail if <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-04</a> is adopted, so the plug can be pulled fast after a crash.</li><li>Re-terminate both packs to AS150U in the LiPo area. Make one colour-matched spacer and crush-block kit per pack and tether it to that pack (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-06</a>). ⚠ The pack station may move forward up to 6 mm under the CG fix (BR-00).</li></ol>
 <p>☐ Inspect before moving on: polarity; &gt; 1 MΩ between rails; loop resistance logged; stack weighed (88 g).</p>
@@ -1441,7 +1454,7 @@
 </section>
 <section class="md-sec" id="build-stage-6">
 <h2 class="md-h2">Stage 6. Harness, then skin</h2>
-<figure class="md-clip" id="build-clip-6"><video src="assets/animation/build/stage-06.mp4" data-poster="assets/animation/build/stage-06.png" controls muted playsinline preload="none" aria-label="Stage 6 build clip"></video><figcaption><span class="ds-source">Stage 6 clip · assets/animation/build/stage-06.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-6"><video src="assets/animation/build/stage-06.mp4" data-poster="assets/animation/build/stage-06.png" controls muted playsinline preload="none" aria-label="Stage 6 build clip"></video><figcaption><b class="ds-mono">FIG BG-06</b> Stage 6, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-06.mp4</span></figcaption></figure>
 <p class="md-meta">Time: 1–2 days plus skinning 3–4 h for two people.<br>Parts: F03 16 AWG, H01 harness parts, F09 heat-shrink, W06 tape, 100 mm tape.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/harness/BUILD.md" target="_blank" rel="noopener"><code>subsystems/harness/BUILD.md</code></a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/wing/BUILD.md" target="_blank" rel="noopener"><code>subsystems/wing/BUILD.md</code></a> step 11.</p>
 <ol><li>Weigh each reel, caliper its OD, cut and label every wire, twist the pairs.</li><li>Solder each ESC&#x27;s 16 AWG pair, cap and DShot pair on the bench. Bed the cap can in silicone (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-07</a>). Pull-test. On the bus bars (D-86, D-87: bars 35 mm): each pair lands as two conductors, + on the + bar and − on the − bar, 3.5 mm along the bar top, at four stations 8 mm apart from the aft end (LR aft-most, then UR, LL, UL). Each pair rises over the ones aft of it. Form the bends off the pad at 2 × OD on the bench. The 10 AWG main jumper&#x27;s two conductors start on the board&#x27;s output pads, drop through the deck window either side of the pairs and land across the bars&#x27; forward ends. The battery jumper&#x27;s two conductors run side by side from the AS150U cups, through the 10.4 mm cup slot, onto the board&#x27;s two input pads (D-89). At the ESC: the pair and the DShot lead come up the gap between the ESC&#x27;s aft end and the cap and enter the ESC&#x27;s aft end face square onto its power pads (D-87, D-88), the signal lead to the lowest pad. Slide a 1.5–3.5 mm length of adhesive-lined heat-shrink (HRN-107) over each lead before soldering and shrink it over the joint at the face.</li><li>Strap the ESCs on their pads; thread the leads through the fin grommet with a 20–30 mm service loop (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-08</a>); lay them in the grooves with tape tabs.</li><li>Servo leads to the JR recess before the skin. The mated JR pair lies flat on the floor of the 30.5 × 10.8 × 5 mm recess (D-86; the old 18 × 10 mm recess was narrower than the 10.3 mm shroud): female forward, lead dropping in from the groove, servo lead rising out of the aft end into the branch groove. In the pod, the six JR pairs stand on edge on the tie bar in FC-output order (output 1 inboard), two per tie. Lower-station ESC signal leads: out of the P1s lower mouth straight into the jog groove to the signal groove, under the tape (D-86).</li><li>Skin the wing: lower, upper, then the 100 mm LE strip. No seam within 32 mm of the LE. Run a finger along every groove: nothing proud. Where a lead leaves its groove (pod exits, groove ends by the fins), slit the tape round it with a fresh blade: nothing runs on top of the tape (D-86). At each fin root, trim the tape square along the edge of the cove fillet: no tape lies on the fillet (D-88).</li><li>Bond a strap eye <code>FIN-013</code> round the outboard face of each of the four bore bosses (D-89c): sand the boss and the saddle foot 120 grit, silica-thickened 30 min epoxy, foot down on the skin, tab outboard, tie hole along x. Tape it while it cures. These are the ground-run tie points (CR-H1-08, 29.4 N per tie).</li><li><code>T-F2-CONT</code> with the pack out: every net &lt; 0.1 Ω, &gt; 1 MΩ between nets.</li></ol>
 <p>☐ Inspect before moving on: continuity and isolation logged; no tape wrinkles at the LE; LE-strip edges ≥ 32 mm.</p>
@@ -1449,7 +1462,7 @@
 </section>
 <section class="md-sec" id="build-stage-7">
 <h2 class="md-h2">Stage 7. Servos, linkage and hinges</h2>
-<figure class="md-clip" id="build-clip-7"><video src="assets/animation/build/stage-07.mp4" data-poster="assets/animation/build/stage-07.png" controls muted playsinline preload="none" aria-label="Stage 7 build clip"></video><figcaption><span class="ds-source">Stage 7 clip · assets/animation/build/stage-07.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-7"><video src="assets/animation/build/stage-07.mp4" data-poster="assets/animation/build/stage-07.png" controls muted playsinline preload="none" aria-label="Stage 7 build clip"></video><figcaption><b class="ds-mono">FIG BG-07</b> Stage 7, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-07.mp4</span></figcaption></figure>
 <p class="md-meta">Time: per side about half a day plus 2 × 24 h cures.<br>Parts: M01 servos, H02 mechanisms hardware, horns and frames <code>MEC-004…008</code>, horn backplates <code>MEC-013</code>.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/mechanisms/BUILD.md" target="_blank" rel="noopener"><code>subsystems/mechanisms/BUILD.md</code></a> steps 5–12.</p>
 <ol><li>Hinge: use Blenderm or filament tape, top strip at neutral, lower strip with the panel full TE-up (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-02</a>). Both panels of a side in one setup.</li><li>Push each horn up into its panel slot from below (U-slot over the torque tube), then bond the backplate <code>MEC-013</code> on top (D-89c). Bond the inboard horn with the rod in place. ⚠ Slip-fit the outboard horn in a brass sleeve instead of bonding both ends (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-03</a>).</li><li>Bench-prep the servo at 1500 µs; drill the arm to 1.85 mm (not 1.6 mm) for the 2-56 Z-bend (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-07</a>). Crimp pins but leave the JR housing off, so the lead passes the straw (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-01</a>).</li><li>Bond the frame in the pocket, install the servo, fit the cover, paint-pen the screws.</li><li>Pushrod and clevis at neutral; sweep 900–2100 µs on the tester with no binding.</li></ol>
 <p>☐ Inspect before moving on: free play ≤ 1° at the TE; both panels of a side within 1° at 0 and ±25°; warm peel test passed (3.5 N at the TE, 10 min).</p>
@@ -1457,7 +1470,7 @@
 </section>
 <section class="md-sec" id="build-stage-8">
 <h2 class="md-h2">Stage 8. Motor mounts, motors and props</h2>
-<figure class="md-clip" id="build-clip-8"><video src="assets/animation/build/stage-08.mp4" data-poster="assets/animation/build/stage-08.png" controls muted playsinline preload="none" aria-label="Stage 8 build clip"></video><figcaption><span class="ds-source">Stage 8 clip · assets/animation/build/stage-08.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-8"><video src="assets/animation/build/stage-08.mp4" data-poster="assets/animation/build/stage-08.png" controls muted playsinline preload="none" aria-label="Stage 8 build clip"></video><figcaption><b class="ds-mono">FIG BG-08</b> Stage 8, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-08.mp4</span></figcaption></figure>
 <p class="md-meta">Time: about 1 h per station plus 4 × T-E1-STAND runs.<br>Parts: B01 motors, B03 props, B05 adapter rings, B07 screws, C01 pinch bolts and nylocs, C04 Loctite, mounts <code>FIN-003</code> (W08 ASA).<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/propulsion/BUILD.md" target="_blank" rel="noopener"><code>subsystems/propulsion/BUILD.md</code></a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/fins/BUILD.md" target="_blank" rel="noopener"><code>subsystems/fins/BUILD.md</code></a> steps 18–19.</p>
 <ol><li>Print the D-80/D-81 mount (slit open, clocking dog) and check the 1.5 mm slit with a feeler. The dog drops into the notch at the front of the station collar; ⚠ its shear size is still C6&#x27;s to set (D-81).</li><li>Incoming check on <strong>every</strong> motor: weight, pattern, all hole depths, E-clip seating, phase resistance.</li><li>Drill each plate from a printed guide with no motor on it. Fit a spreader plate under the screw heads if <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MOTOR-MOUNTS.md#findings" target="_blank" rel="noopener">MM-03</a> is adopted; screws with 243 on the tips; torque driver; witness marks.</li><li>Mount on the tube, set the slip (<code>T-D3-SLIP</code>), check 7 ± 1° cant with the inclinometer. ⚠ Slip number differs between documents (70–80, 74, 85–100 N); use the one D3 and C6 agree. Recheck the 25 mm blade-to-tube gauge (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MANUFACTURING.md#4-findings" target="_blank" rel="noopener">MF-07</a>).</li><li>Phase splices with sleeves; tie the bundle to fixed structure with a service loop, clear of the pinch bolt (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MOTOR-MOUNTS.md#findings" target="_blank" rel="noopener">MM-12</a>). Route (D-86): forward off the ESC along the board face, up outboard of the collar tail wall, tie at the collar&#x27;s phase lug, tape up the outboard cheek face over the pinch nut, into the motor&#x27;s lead exit. No span hangs free. Spin test for direction at 5 %, props off.</li><li>Balance every prop. Fit by hand (MRP on UR/LL, MR on UL/LR), washer, nyloc, 1.5 N·m. ⚠ Prop-nut thread engagement is 0.11 mm: pending adapter choice <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/MOTOR-MOUNTS.md#findings" target="_blank" rel="noopener">MM-06</a>.</li></ol>
 <p>☐ Inspect before moving on: each motor turns in its stated direction; witness marks on every screw and nut; slip holds 60 N.</p>
@@ -1465,14 +1478,14 @@
 </section>
 <section class="md-sec" id="build-stage-9">
 <h2 class="md-h2">Stage 9. Avionics</h2>
-<figure class="md-clip" id="build-clip-9"><video src="assets/animation/build/stage-09.mp4" data-poster="assets/animation/build/stage-09.png" controls muted playsinline preload="none" aria-label="Stage 9 build clip"></video><figcaption><span class="ds-source">Stage 9 clip · assets/animation/build/stage-09.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-9"><video src="assets/animation/build/stage-09.mp4" data-poster="assets/animation/build/stage-09.png" controls muted playsinline preload="none" aria-label="Stage 9 build clip"></video><figcaption><b class="ds-mono">FIG BG-09</b> Stage 9, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-09.mp4</span></figcaption></figure>
 <p class="md-meta">Time: about 1 day including calibration.<br>Parts: A01 FC, A02 GPS, A03 RX, A04 airspeed, A05 microSD, A06 antennas, A07 isolation set.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/avionics/BUILD.md" target="_blank" rel="noopener"><code>subsystems/avionics/BUILD.md</code></a>.</p>
 <ol><li>FC on four gel cubes with its strap; airspeed sensor between the tie posts; RX crosswise with antennas up the tubes.</li><li>GPS on the mast pad; check the compass chip ID at the I²C scan (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-12</a>).</li><li>Pitot lines on different coupler sizes or colours so T and S cannot swap (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/WIRING-BATTERY.md#findings" target="_blank" rel="noopener">WB-13</a>).</li><li>Connect, tie within 20 mm of each plug, twist the current-sense wire with its ground. Every lead ends on a real termination (D-89):<ul><li><strong>Outputs 1–6:</strong> solder each conductor into its own hole of the FC&#x27;s S / Vx / G field (aft edge). Bend it up off the board on a 2 × OD lead-off; the forward holes run higher, over the risers aft of them. Then lead it into its contact of the JR pair on the tray.</li><li><strong>GPS (GH-6) and SERIAL6 to the RX (GH-4):</strong> plug into the FC&#x27;s aft-edge and fore-edge sockets. The RX lead runs down in front of the fore end stop and aft under the FC, inboard of the gel cubes.</li><li><strong>Airspeed I²C branch:</strong> solder it to the GPS cable&#x27;s four conductors about 15 mm from the FC plug. Shrink one adhesive sleeve over the splice and both cables. Its other end plugs into the sensor&#x27;s GH-4 on the aft face.</li><li><strong>RX end:</strong> strip the 4-core cable under a 2 mm breakout sleeve. Lay the four conductors flat onto the RP3&#x27;s 5 V / GND / TX / RX pads and solder them. Check the pad order against the board first; the order in the CAD is an estimate.</li><li><strong>Power-board link ribbon:</strong> plug into the PDB&#x27;s top header and into the FC&#x27;s underside header between the gel cubes. Fit the FC end before the FC goes onto its cubes.</li></ul></li><li>Calibrate accelerometer (cruise attitude), compass, airspeed zero.</li></ol>
 <p>☐ Inspect before moving on: pre-arm checks pass; airspeed rises on a blow at the tip and drops on a suck.</p>
 </section>
 <section class="md-sec" id="build-stage-10">
 <h2 class="md-h2">Stage 10. Feet and corner caps</h2>
-<figure class="md-clip" id="build-clip-10"><video src="assets/animation/build/stage-10.mp4" data-poster="assets/animation/build/stage-10.png" controls muted playsinline preload="none" aria-label="Stage 10 build clip"></video><figcaption><span class="ds-source">Stage 10 clip · assets/animation/build/stage-10.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-10"><video src="assets/animation/build/stage-10.mp4" data-poster="assets/animation/build/stage-10.png" controls muted playsinline preload="none" aria-label="Stage 10 build clip"></video><figcaption><b class="ds-mono">FIG BG-10</b> Stage 10, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-10.mp4</span></figcaption></figure>
 <p class="md-meta">Time: 4 × 55 min shoe prints, 1 h bench, 24 h cure; cartridges most of a day.<br>Parts: shoes <code>GER-001</code>, pistons <code>GER-002</code>, cartridges (W01 offcuts), D05 neoprene, D07 brass cutter, TPU caps <code>GER-007</code>.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/landing/BUILD.md" target="_blank" rel="noopener"><code>subsystems/landing/BUILD.md</code></a>.</p>
 <ol><li>Print the D-76 foot (59.1 g <code>EST</code>, landing allocation 60 g, D-78) on the D-75 tip. Weigh the first shoe and report it to A3 before printing the other three.</li><li>Print pistons in orange (upper) and blue (lower); weigh each.</li><li>Cut and pre-crush the cartridge sticks with a fence and crush block.</li><li>Dry-fit, then bond the shoes; fit inserts by colour; push on the corner caps.</li></ol>
 <p>☐ Inspect before moving on: four feet and two caps weighed and reported to A3; pads level.</p>
@@ -1480,7 +1493,7 @@
 </section>
 <section class="md-sec" id="build-stage-11">
 <h2 class="md-h2">Stage 11. Checks: weight, CG, controls, thrust stand</h2>
-<figure class="md-clip" id="build-clip-11"><video src="assets/animation/build/stage-11.mp4" data-poster="assets/animation/build/stage-11.png" controls muted playsinline preload="none" aria-label="Stage 11 build clip"></video><figcaption><span class="ds-source">Stage 11 clip · assets/animation/build/stage-11.mp4 · same CAD as the collision check</span></figcaption></figure>
+<figure class="md-clip" id="build-clip-11"><video src="assets/animation/build/stage-11.mp4" data-poster="assets/animation/build/stage-11.png" controls muted playsinline preload="none" aria-label="Stage 11 build clip"></video><figcaption><b class="ds-mono">FIG BG-11</b> Stage 11, rendered from the CAD that passes the collision check <span class="ds-source">assets/animation/build/stage-11.mp4</span></figcaption></figure>
 <p class="md-meta">Time: about 2 days (GT-06, 07, 12, 13, 14, 18).<br>Parts: G04 watt meter, G06/G12 thrust stand, CG jig.<br>Detail: <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/H1/GROUND-TEST-PLAN.md" target="_blank" rel="noopener"><code>team/H1/GROUND-TEST-PLAN.md</code></a>, <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/flight-software/K09L.param" target="_blank" rel="noopener"><code>subsystems/flight-software/K09L.param</code></a>.</p>
 <ol><li>Weigh the complete aircraft with each pack.</li><li><strong>CG on the jig with each pack and its own spacer kit</strong> (<code>T-A3-CG-BALANCE</code>, marks at 46.6 and 51.4 mm). ⚠ <strong>Mass and CG requirements currently FAIL</strong> (BR-00): predicted CG 52.6 mm with a 550 g pack, 1.2 mm aft of the limit; worst pack range use 1.028; gate margin 107 g against the 100 g overrun. If the aircraft balances aft of 51.4 mm, <strong>do not fly it</strong>. Nose ballast costs about 13 g per mm of CG and only 7 g of mass margin remains, so use ballast only to trim. Report the measured CG to A3 and B3.</li><li>Control directions: with props off, check each elevon moves the right way for roll and pitch in FBWA, and what the surfaces do in QHOVER (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-06</a>). Motor order and direction from <code>MOTOR_TEST</code>.</li><li>Thrust stand on each station (<code>T-E1-STAND</code>): thrust and current in band, ten punch-outs, then re-check every witness mark.</li><li>Stand run-up through the full rpm range; film the elevon TEs in slow motion for buzz (<a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/SERVOS-CONTROLS.md#findings" target="_blank" rel="noopener">SC-11</a>); compassmot; current-sense calibration with motors running.</li></ol>
 <p>☐ Inspect before moving on: CG inside the marks with every pack; all four stations in band; no witness mark moved.</p>
@@ -1580,16 +1593,17 @@
   <div class="page">
 <section class="c" id="documents">
   <header>
-    <span class="secno">Documents · branch redesign/v1 on GitHub</span>
-    <h2 class="ds-h1">Every document, on GitHub</h2>
+    <h1 class="sh-t">Documents</h1>
+    <p class="sh-meta">branch redesign/v1 on GitHub</p>
+    <p class="sh-v">The file to start from in each area of the repository</p>
     <p class="use">The repository's Markdown is the record. Links open the file on GitHub (branch redesign/v1, folder redesign/); the numbers on these pages come from the files below.</p>
   </header>
   <div class="scroll fit"><table class="ds-table"><thead><tr><th>Area</th><th>Start here</th></tr></thead><tbody><tr><td class="first">Front door, key numbers, directory map</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/README.md" target="_blank" rel="noopener">README.md</a></td></tr><tr><td class="first">What is done, what fails, what needs tests</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/STATUS.md" target="_blank" rel="noopener">STATUS.md</a></td></tr><tr><td class="first">What the team does next, what to order</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/HANDOFF.md" target="_blank" rel="noopener">HANDOFF.md</a></td></tr><tr><td class="first">How to continue the work</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/RESUME.md" target="_blank" rel="noopener">RESUME.md</a></td></tr><tr><td class="first">Configuration decision and study</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/CONFIGURATION.md" target="_blank" rel="noopener">CONFIGURATION.md</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/config-study/README.md" target="_blank" rel="noopener">config-study/</a></td></tr><tr><td class="first">Requirements and verification</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team/A2" target="_blank" rel="noopener">team/A2/</a></td></tr><tr><td class="first">Parameters and mass/CG</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/params/params.json" target="_blank" rel="noopener">params/params.json</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/MASS-CG.md" target="_blank" rel="noopener">MASS-CG.md</a></td></tr><tr><td class="first">Subsystem specs (one page each)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/wing/SPEC.md" target="_blank" rel="noopener">wing</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/fins/SPEC.md" target="_blank" rel="noopener">fins</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/pod/SPEC.md" target="_blank" rel="noopener">pod</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/landing/SPEC.md" target="_blank" rel="noopener">landing</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/propulsion/SPEC.md" target="_blank" rel="noopener">propulsion</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/power/SPEC.md" target="_blank" rel="noopener">power</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/avionics/SPEC.md" target="_blank" rel="noopener">avionics</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/harness/SPEC.md" target="_blank" rel="noopener">harness</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/mechanisms/SPEC.md" target="_blank" rel="noopener">mechanisms</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/flight-software/SPEC.md" target="_blank" rel="noopener">flight software</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/transport/SPEC.md" target="_blank" rel="noopener">transport</a> · <a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/subsystems/ground/SPEC.md" target="_blank" rel="noopener">ground</a></td></tr><tr><td class="first">Each engineer's work</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/team" target="_blank" rel="noopener">team/</a> (one folder per role, each with SUMMARY.md)</td></tr><tr><td class="first">Interfaces (knowledge graph)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/interfaces" target="_blank" rel="noopener">interfaces/</a></td></tr><tr><td class="first">Design system (visual standard)</td><td><a class="ds-link" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/design-system/README.md" target="_blank" rel="noopener">design-system/README.md</a></td></tr></tbody></table></div>
   <div class="ds-row">
     <a class="ds-btn primary" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/SHOWCASE.md" target="_blank" rel="noopener">SHOWCASE.md <svg><use href="#i-arrow"/></svg></a>
     <a class="ds-btn" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/README.md" target="_blank" rel="noopener">README.md</a>
-    <a class="ds-btn primary" href="#build">Build guide</a>
-    <a class="ds-btn primary" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/BUILDABILITY-REVIEW.md" target="_blank" rel="noopener">Buildability review</a>
+    <a class="ds-btn" href="#build">Build guide</a>
+    <a class="ds-btn" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/review/BUILDABILITY-REVIEW.md" target="_blank" rel="noopener">Buildability review</a>
     <a class="ds-btn" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/STATUS.md" target="_blank" rel="noopener">STATUS.md</a>
     <a class="ds-btn" href="https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/redesign/HANDOFF.md" target="_blank" rel="noopener">HANDOFF.md</a>
     <a class="ds-btn" href="https://github.com/davinciucberkeley-collab/DBF-Combined/tree/redesign/v1/redesign" target="_blank" rel="noopener">Browse redesign/</a>
@@ -1598,8 +1612,8 @@
 </section>
 <section class="c howto" id="ov-howto">
   <header>
-    <span class="secno">How to use the redesign</span>
-    <h2 class="ds-h1">Build it in Fusion, open the viewers, resume the programme</h2>
+    <h2 class="sh-t">Running the files</h2>
+    <p class="sh-v">Build it in Fusion, open the viewers, resume the programme</p>
     <p class="use">Everything runs from a checkout of branch redesign/v1 with Python 3 and no installs; the web pages open from disk or from GitHub Pages.</p>
   </header>
   <div class="three">
@@ -1650,8 +1664,8 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 
 <section class="c" id="ov-sources">
   <header>
-    <span class="secno">Sources and directory map</span>
-    <h2 class="ds-h1">Where every number on this page comes from</h2>
+    <h2 class="sh-t">Sources and directory map</h2>
+    <p class="sh-v">Where every number on this page comes from</p>
   </header>
   <div class="srcs">
     <div>
@@ -1691,7 +1705,7 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 </section>
 
 <section class="c" id="cs-sources-docs">
-  <header><span class="secno">Configuration-study sources</span><h2 class="ds-h2">Every number on this page comes from a file in redesign/; external sources as cited there.</h2></header>
+  <header><h2 class="sh-t">Configuration-study sources</h2><p class="sh-v">Every number on this page comes from a file in redesign/; external sources as cited there.</p></header>
   <div class="srcs">
     <ul>
       <li><b>Decision</b>redesign/CONFIGURATION.md · redesign/config-study/tiebreak/DECISION.md</li>
@@ -1731,9 +1745,9 @@ python -I redesign/proofs/build_graph.py --strict</pre>
 
 <style>
 .bom-bars{display:grid;gap:6px;max-width:760px}.bom-bar{display:grid;grid-template-columns:120px 1fr 90px;gap:10px;align-items:center;font-size:var(--text-sm)}
-.bom-bar i{height:10px;border-radius:2px;background:linear-gradient(90deg,var(--accent) var(--v),var(--panel-3) var(--v))}.bom-bar b{font-family:var(--font-mono);font-weight:500;text-align:right}
+.bom-bar i{height:8px;border-radius:0;background:linear-gradient(90deg,var(--fg-3) var(--v),var(--panel-2) var(--v))}.bom-bar b{font-family:var(--font-sans);font-variant-numeric:tabular-nums lining-nums;font-weight:600;text-align:right}
 #bom-table tr.gated td{color:var(--fg-3)}#bom-table .pid{display:block;font-family:var(--font-mono);font-size:11px;color:var(--fg-3)}#bom-table td.id{font-family:var(--font-mono);font-size:var(--text-xs)}
 </style>
-<script type="module" src="site.js?v=20261112d"></script>
+<script type="module" src="site.js?v=20261113b"></script>
 <script>(function(){var q=document.getElementById('bom-q'),g=document.getElementById('bom-g'),w=document.getElementById('bom-w'),c=document.getElementById('bom-count');if(!q)return;var rows=[].slice.call(document.querySelectorAll('#bom-table tbody tr'));function f(){var s=q.value.trim().toLowerCase(),n=0;rows.forEach(function(r){var ok=(!g.value||r.dataset.group===g.value)&&(!w.value||r.dataset.wave===w.value)&&(!s||r.textContent.toLowerCase().indexOf(s)>=0);r.hidden=!ok;if(ok)n++;});c.textContent=n+' of '+rows.length;}[q,g,w].forEach(function(e){e.addEventListener('input',f);});f();})();</script>
 

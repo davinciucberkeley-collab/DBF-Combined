@@ -2,22 +2,25 @@
    One file, two themes. Load it first; everything else reads these variables.
    Theme: <html data-theme="light|dark">; with no attribute the OS preference applies.
    Fonts (Google Fonts, both SIL Open Font License 1.1, free for any use incl. print):
-     IBM Plex Sans  400 500 600   prose, UI, labels, callout text
-     IBM Plex Mono  400 500       numbers, units, ids, paths, code, equations
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+     Barlow Semi Condensed 500 600   titles, nav, table heads (redesign/site/UI-SURVEY.md, REVIEW-STYLE.md)
+     Source Sans 3  400 600 400i    prose, UI, labels, callout text
+     Red Hat Mono   400 500         numbers, units, ids, paths, code, equations
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&family=Red+Hat+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+   IBM Plex stays in the stacks so pages that still load only Plex keep their look.
    Offline/print fallback is the system stack below; nothing breaks without the web fonts.
    Contrast: every text/wash pair here is >= 4.5:1 on its panel in its theme (checked 2026-11-09). */
 
 :root {
   /* ---------- type ---------- */
-  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
+  --font-sans: "Source Sans 3", "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-head: "Barlow Semi Condensed", "Source Sans 3", "IBM Plex Sans", system-ui, sans-serif; /* titles, nav, table heads */
+  --font-mono: "Red Hat Mono", "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
 
   --text-xs: 0.75rem;    /* 12px  meta, table headers, badges, axis labels */
   --text-sm: 0.875rem;   /* 14px  UI labels, table cells, captions */
-  --text-md: 0.9375rem;  /* 15px  body */
+  --text-md: 1rem;       /* 16px  body (REVIEW-STYLE.md) */
   --text-lg: 1.125rem;   /* 18px  section titles, step titles */
-  --text-xl: 1.5rem;     /* 24px  page titles */
+  --text-xl: 1.625rem;   /* 26px  page titles (condensed face) */
   --text-2xl: 2rem;      /* 32px  one display line per page at most */
   --text-value: 1.375rem;/* 22px  metric tile value (mono) */
 
@@ -49,10 +52,10 @@
   --inspector-w: 320px;
 
   /* ---------- shape ---------- */
-  --radius-xs: 3px;   /* badges, marks */
-  --radius-sm: 5px;   /* chips, inputs, buttons */
-  --radius-md: 8px;   /* cards, panels, tables */
-  --radius-lg: 12px;  /* popovers, dialogs */
+  --radius-xs: 2px;   /* badges, marks */
+  --radius-sm: 3px;   /* chips, inputs, buttons */
+  --radius-md: 4px;   /* panels, figures */
+  --radius-lg: 6px;   /* popovers, dialogs */
   --border-w: 1px;
 
   /* ---------- motion ---------- */
@@ -91,7 +94,7 @@
 :root, :root[data-theme="light"] {
   color-scheme: light;
 
-  --bg: #F6F7F9;          /* page */
+  --bg: #FAFAFB;          /* page: near-white paper */
   --panel: #FFFFFF;       /* cards, tables, panels */
   --panel-2: #EEF1F5;     /* hover, inline code, zebra, inputs */
   --panel-3: #E2E6EC;     /* pressed */

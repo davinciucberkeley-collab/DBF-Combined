@@ -34,6 +34,8 @@ function route() {
   }
   document.querySelectorAll('main > .view').forEach(v => { v.hidden = v.id !== name; });
   document.querySelectorAll('#nav a').forEach(a => { if (a.getAttribute('href') === '#' + name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  { const nav = document.getElementById('nav'), cur = nav && nav.querySelector('a[aria-current="page"]');   // narrow screens: keep the current tab in view
+    if (cur && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = Math.max(0, cur.offsetLeft - nav.offsetLeft - 24); }
   document.body.dataset.route = name;
   document.title = 'K09-L · ' + TITLES[name];
   if (target) target.scrollIntoView({ block: 'start' }); else if (current !== name) window.scrollTo(0, 0);
@@ -227,7 +229,48 @@ document.addEventListener('click', e => {
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !pop.hidden) hidePop(); });
 window.addEventListener('hashchange', hidePop);
 
+// ---------------- section permalinks and the in-page contents list ----------------
+// Every numbered section title (h2.sh-t in a section with an id) gets a "#" permalink; a page with three or more such
+// sections gets an "On this page" list (right column on wide screens, a closed <details> on narrow ones).
+const otpWide = window.matchMedia ? matchMedia('(min-width: 1181px)') : { matches: true, addEventListener() {} };
+const otpLists = [];
+function sectionTitle(sec) { const h = sec.querySelector(':scope > header > .sh-t, :scope > .lede > .sh-t, :scope > header .sh-t'); return h && h.closest('section.c') === sec ? h : null; }
+function buildContents() {
+  document.querySelectorAll('main > .view').forEach(view => {
+    const page = view.querySelector(':scope > .page'); if (!page) return;
+    const secs = Array.from(page.querySelectorAll(':scope > section.c[id], :scope > section.c')).filter(s => s.id && sectionTitle(s));
+    let n = 0; const items = [];
+    secs.forEach(sec => {
+      const h = sectionTitle(sec), num = h.tagName === 'H2' ? (getComputedStyle(view).getPropertyValue('--vn').replace(/"/g, '').trim() + '.' + (++n)) : '';
+      if (h.tagName === 'H2' && !h.querySelector('.sh-anchor')) {
+        const a = document.createElement('a'); a.className = 'sh-anchor'; a.href = '#' + sec.id; a.textContent = '#';
+        a.setAttribute('aria-label', 'Link to this section'); h.appendChild(a);
+      }
+      items.push({ id: sec.id, num, text: h.childNodes[0] ? h.childNodes[0].textContent.trim() : h.textContent.trim() });
+    });
+    if (items.length < 3) return;
+    const body = document.createElement('div'); body.className = 'page-body';
+    while (page.firstChild) body.appendChild(page.firstChild);
+    const d = document.createElement('details'); d.className = 'otp'; d.open = otpWide.matches;
+    d.innerHTML = '<summary>On this page</summary><ol>' + items.map(i => '<li><a href="#' + i.id + '"><span class="n">' + i.num + '</span><span>' + esc(i.text) + '</span></a></li>').join('') + '</ol>';
+    page.classList.add('has-otp'); page.appendChild(body); page.appendChild(d);
+    d.addEventListener('click', e => { if (e.target.closest('a') && !otpWide.matches) d.open = false; });
+    otpLists.push(d);
+    if ('IntersectionObserver' in window) {
+      const links = new Map(Array.from(d.querySelectorAll('a')).map(a => [a.getAttribute('href').slice(1), a]));
+      const io = new IntersectionObserver(es => es.forEach(en => {
+        if (!en.isIntersecting) return;
+        links.forEach(a => a.removeAttribute('aria-current'));
+        const a = links.get(en.target.id); if (a) a.setAttribute('aria-current', 'true');
+      }), { rootMargin: '-10% 0px -80% 0px' });
+      secs.forEach(s => io.observe(s));
+    }
+  });
+  otpWide.addEventListener('change', () => otpLists.forEach(d => { d.open = otpWide.matches; }));
+}
+
 // ---------------- start ----------------
+buildContents();
 initMorph();
 route();
 startViewer();

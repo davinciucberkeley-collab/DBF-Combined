@@ -6,22 +6,25 @@
    One file, two themes. Load it first; everything else reads these variables.
    Theme: <html data-theme="light|dark">; with no attribute the OS preference applies.
    Fonts (Google Fonts, both SIL Open Font License 1.1, free for any use incl. print):
-     IBM Plex Sans  400 500 600   prose, UI, labels, callout text
-     IBM Plex Mono  400 500       numbers, units, ids, paths, code, equations
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+     Barlow Semi Condensed 500 600   titles, nav, table heads (redesign/site/UI-SURVEY.md, REVIEW-STYLE.md)
+     Source Sans 3  400 600 400i    prose, UI, labels, callout text
+     Red Hat Mono   400 500         numbers, units, ids, paths, code, equations
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&family=Red+Hat+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+   IBM Plex stays in the stacks so pages that still load only Plex keep their look.
    Offline/print fallback is the system stack below; nothing breaks without the web fonts.
    Contrast: every text/wash pair here is >= 4.5:1 on its panel in its theme (checked 2026-11-09). */
 
 :root {
   /* ---------- type ---------- */
-  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
+  --font-sans: "Source Sans 3", "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-head: "Barlow Semi Condensed", "Source Sans 3", "IBM Plex Sans", system-ui, sans-serif; /* titles, nav, table heads */
+  --font-mono: "Red Hat Mono", "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
 
   --text-xs: 0.75rem;    /* 12px  meta, table headers, badges, axis labels */
   --text-sm: 0.875rem;   /* 14px  UI labels, table cells, captions */
-  --text-md: 0.9375rem;  /* 15px  body */
+  --text-md: 1rem;       /* 16px  body (REVIEW-STYLE.md) */
   --text-lg: 1.125rem;   /* 18px  section titles, step titles */
-  --text-xl: 1.5rem;     /* 24px  page titles */
+  --text-xl: 1.625rem;   /* 26px  page titles (condensed face) */
   --text-2xl: 2rem;      /* 32px  one display line per page at most */
   --text-value: 1.375rem;/* 22px  metric tile value (mono) */
 
@@ -53,10 +56,10 @@
   --inspector-w: 320px;
 
   /* ---------- shape ---------- */
-  --radius-xs: 3px;   /* badges, marks */
-  --radius-sm: 5px;   /* chips, inputs, buttons */
-  --radius-md: 8px;   /* cards, panels, tables */
-  --radius-lg: 12px;  /* popovers, dialogs */
+  --radius-xs: 2px;   /* badges, marks */
+  --radius-sm: 3px;   /* chips, inputs, buttons */
+  --radius-md: 4px;   /* panels, figures */
+  --radius-lg: 6px;   /* popovers, dialogs */
   --border-w: 1px;
 
   /* ---------- motion ---------- */
@@ -95,7 +98,7 @@
 :root, :root[data-theme="light"] {
   color-scheme: light;
 
-  --bg: #F6F7F9;          /* page */
+  --bg: #FAFAFB;          /* page: near-white paper */
   --panel: #FFFFFF;       /* cards, tables, panels */
   --panel-2: #EEF1F5;     /* hover, inline code, zebra, inputs */
   --panel-3: #E2E6EC;     /* pressed */
@@ -775,9 +778,9 @@ section.c > header .use { color: var(--fg-2); margin: 0; max-width: var(--measur
 /* simulation cards */
 .sims { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-4); }
 .sim { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
-.sim figure { margin: 0; background: #FFFFFF; height: 160px; display: grid; place-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); position: relative; }
+.sim figure { margin: 0; background: var(--plot-paper); height: 160px; display: grid; place-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); position: relative; }
 .sim figure img { max-width: 100%; max-height: 100%; width: auto; height: auto; display: block; }
-.sim figure .fid { position: absolute; left: 10px; bottom: 8px; font: var(--weight-regular) 11px/1 var(--font-mono); color: #6B7280; }
+.sim figure .fid { position: absolute; left: 10px; bottom: 8px; font: var(--weight-regular) 11px/1 var(--font-mono); color: var(--plot-ink); }
 .sim .body { padding: var(--space-3) var(--space-4) var(--space-4); display: grid; gap: 8px; }
 .sim .title { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .sim .title .id { font: var(--weight-medium) var(--text-xs)/1 var(--font-mono); color: var(--fg-3); }
