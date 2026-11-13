@@ -3,17 +3,17 @@
  "mode": "material",
  "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
  "files": {
-  "assembly.glb": 10195024,
-  "avionics.glb": 44220,
-  "fins.glb": 1393248,
-  "harness.glb": 2258948,
-  "landing.glb": 213420,
-  "mechanisms.glb": 345664,
-  "pod.glb": 182472,
-  "power.glb": 177340,
-  "propulsion.glb": 899108,
-  "transport.glb": 175172,
-  "wing.glb": 4495148
+  "assembly.glb": 12929784,
+  "avionics.glb": 61192,
+  "fins.glb": 1791048,
+  "harness.glb": 2531356,
+  "landing.glb": 205492,
+  "mechanisms.glb": 433956,
+  "pod.glb": 174616,
+  "power.glb": 203412,
+  "propulsion.glb": 1195552,
+  "transport.glb": 255016,
+  "wing.glb": 6066892
  },
  "parts": [
   {
@@ -1188,7 +1188,7 @@
    "status": "MODELLED",
    "mass_g": 81.0,
    "explode_m": [
-    -0.0688,
+    -0.0671,
     0.0,
     0.075
    ]
@@ -1199,7 +1199,7 @@
    "status": "MODELLED",
    "mass_g": 1.9,
    "explode_m": [
-    -0.2076,
+    -0.2059,
     0.0,
     0.075
    ]
@@ -1221,7 +1221,7 @@
    "status": "MODELLED",
    "mass_g": 3.0,
    "explode_m": [
-    -0.1399,
+    -0.1382,
     0.0,
     0.075
    ]
@@ -1243,7 +1243,7 @@
    "status": "MODELLED",
    "mass_g": 3.2,
    "explode_m": [
-    -0.0736,
+    -0.0719,
     0.0,
     0.075
    ]
@@ -1254,7 +1254,7 @@
    "status": "MODELLED",
    "mass_g": 1.2,
    "explode_m": [
-    -0.142,
+    -0.1404,
     0.0,
     0.075
    ]
@@ -1419,7 +1419,7 @@
    "status": "MODELLED",
    "mass_g": 81.0,
    "explode_m": [
-    -0.0664,
+    -0.0671,
     0.0,
     -0.075
    ]
@@ -1430,7 +1430,7 @@
    "status": "MODELLED",
    "mass_g": 1.9,
    "explode_m": [
-    -0.2052,
+    -0.2059,
     0.0,
     -0.075
    ]
@@ -1452,7 +1452,7 @@
    "status": "MODELLED",
    "mass_g": 3.0,
    "explode_m": [
-    -0.1375,
+    -0.1382,
     0.0,
     -0.075
    ]
@@ -1474,7 +1474,7 @@
    "status": "MODELLED",
    "mass_g": 3.2,
    "explode_m": [
-    -0.0712,
+    -0.0719,
     0.0,
     -0.075
    ]
@@ -1485,7 +1485,7 @@
    "status": "MODELLED",
    "mass_g": 1.2,
    "explode_m": [
-    -0.1397,
+    -0.1404,
     0.0,
     -0.075
    ]
@@ -2044,7 +2044,7 @@
    "id": "HRN-001",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 39.1,
+   "mass_g": 39.2,
    "explode_m": [
     0.0,
     0.0,
@@ -2056,7 +2056,7 @@
    "id": "HRN-002-R",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 43.9,
+   "mass_g": 44.7,
    "explode_m": [
     -0.228,
     0.0,
@@ -2068,7 +2068,7 @@
    "id": "HRN-002-L",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 43.4,
+   "mass_g": 44.2,
    "explode_m": [
     -0.228,
     0.0,
@@ -2248,6 +2248,193 @@
    "mass_g": 0.5,
    "explode_m": [
     0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-LL-P1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-LL-P2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-LL-PH",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-LL-S",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-LR-P1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-LR-P2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-LR-PH",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-LR-S",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-PACK",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0366,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0903
+   ]
+  },
+  {
+   "id": "HRN-107-UL-P1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-UL-P2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-UL-PH",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-UL-S",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-UR-P1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-UR-P2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-UR-PH",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "explode_m": [
+    -0.228,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-UR-S",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "explode_m": [
+    -0.228,
     0.0,
     0.0
    ]

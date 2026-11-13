@@ -3,7 +3,7 @@
     python -B redesign/manufacturing/make_shop_files.py            (about 1-2 min; needs Blender 4.x for the STLs)
 
 Options: --out DIR (default redesign/manufacturing/out) · --blender PATH (else $BLENDER, `blender` on PATH, or
-C:/Users/dillo/tools/blender/blender-4.2.3-windows-x64/blender.exe) · --no-stl (DXF/PDF/CSV only, no Blender).
+C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe) · --no-stl (DXF/PDF/CSV only, no Blender).
 
 Writes into out/ (wiped and rebuilt each run, so files never go stale):
     print/*.stl                 one STL per printed part geometry, mm, print orientation: <part>_<material>_x<qty>.stl
@@ -49,7 +49,7 @@ import mesh_ops as mo              # noqa: E402
 import shopconfig as cfg           # noqa: E402
 
 REDESIGN = cs.REDESIGN
-DEFAULT_BLENDER = 'C:/Users/dillo/tools/blender/blender-4.2.3-windows-x64/blender.exe'
+DEFAULT_BLENDER = 'C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe'
 GENERATED = ('print', 'jigs', 'laser', 'hotwire', '_work')
 
 

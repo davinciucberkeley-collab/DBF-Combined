@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 56.6,
+ "render_s": 39.06,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -102,16 +102,16 @@
   },
   {
    "item": "TRN-008",
-   "x": 838.4,
-   "y": 538.8,
+   "x": 828.5,
+   "y": 536.0,
    "title": "TRN-008",
    "text": "Field pouch",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.235,
-    -0.0157,
+    0.234,
+    0.0027,
     -0.243
    ]
   },
@@ -140,10 +140,10 @@
    "mass_g": 201.9,
    "subsystem": "wing",
    "bbox_px": [
-    455,
+    457,
     303,
     1187,
-    594
+    591
    ]
   },
   {
@@ -392,7 +392,7 @@
    "mass_g": 9.99,
    "subsystem": "fins",
    "bbox_px": [
-    578,
+    577,
     300,
     603,
     332
@@ -927,7 +927,7 @@
     936,
     608,
     967,
-    646
+    647
    ]
   },
   {
@@ -2408,10 +2408,10 @@
    "mass_g": 2.2,
    "subsystem": "power",
    "bbox_px": [
-    617,
-    317,
-    629,
-    330
+    621,
+    316,
+    632,
+    326
    ]
   },
   {
@@ -2422,10 +2422,10 @@
    "mass_g": 2.2,
    "subsystem": "power",
    "bbox_px": [
-    987,
-    426,
-    1000,
-    440
+    991,
+    424,
+    1002,
+    435
    ]
   },
   {
@@ -2436,10 +2436,10 @@
    "mass_g": 2.2,
    "subsystem": "power",
    "bbox_px": [
-    623,
-    441,
-    635,
-    453
+    628,
+    439,
+    638,
+    449
    ]
   },
   {
@@ -2450,10 +2450,10 @@
    "mass_g": 2.2,
    "subsystem": "power",
    "bbox_px": [
-    980,
-    556,
-    992,
-    569
+    984,
+    554,
+    994,
+    565
    ]
   },
   {
@@ -2832,6 +2832,244 @@
     374,
     617,
     382
+   ]
+  },
+  {
+   "id": "HRN-107-LL-P1",
+   "role": "context",
+   "name": "Heat-shrink sleeve LL-P1 on E-HRN-16",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "subsystem": "harness",
+   "bbox_px": [
+    980,
+    564,
+    983,
+    566
+   ]
+  },
+  {
+   "id": "HRN-107-LL-P2",
+   "role": "context",
+   "name": "Heat-shrink sleeve LL-P2 on E-HRN-16",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "subsystem": "harness",
+   "bbox_px": [
+    980,
+    568,
+    983,
+    570
+   ]
+  },
+  {
+   "id": "HRN-107-LL-PH",
+   "role": "context",
+   "name": "Heat-shrink sleeve LL-PH on E-HRN-20",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "subsystem": "harness",
+   "bbox_px": [
+    966,
+    580,
+    970,
+    584
+   ]
+  },
+  {
+   "id": "HRN-107-LL-S",
+   "role": "context",
+   "name": "Heat-shrink sleeve LL-S on E-HRN-27",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "subsystem": "harness",
+   "bbox_px": [
+    981,
+    561,
+    983,
+    563
+   ]
+  },
+  {
+   "id": "HRN-107-LR-P1",
+   "role": "context",
+   "name": "Heat-shrink sleeve LR-P1 on E-HRN-15",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "subsystem": "harness",
+   "bbox_px": [
+    625,
+    448,
+    627,
+    451
+   ]
+  },
+  {
+   "id": "HRN-107-LR-P2",
+   "role": "context",
+   "name": "Heat-shrink sleeve LR-P2 on E-HRN-15",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "subsystem": "harness",
+   "bbox_px": [
+    625,
+    452,
+    628,
+    455
+   ]
+  },
+  {
+   "id": "HRN-107-LR-PH",
+   "role": "context",
+   "name": "Heat-shrink sleeve LR-PH on E-HRN-19",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "subsystem": "harness",
+   "bbox_px": [
+    608,
+    462,
+    612,
+    466
+   ]
+  },
+  {
+   "id": "HRN-107-LR-S",
+   "role": "context",
+   "name": "Heat-shrink sleeve LR-S on E-HRN-26",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "subsystem": "harness",
+   "bbox_px": [
+    625,
+    446,
+    626,
+    448
+   ]
+  },
+  {
+   "id": "HRN-107-PACK",
+   "role": "context",
+   "name": "Heat-shrink sleeve PACK on E-HRN-10",
+   "status": "MODELLED",
+   "mass_g": 0.0366,
+   "subsystem": "harness",
+   "bbox_px": [
+    800,
+    444,
+    805,
+    449
+   ]
+  },
+  {
+   "id": "HRN-107-UL-P1",
+   "role": "context",
+   "name": "Heat-shrink sleeve UL-P1 on E-HRN-14",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "subsystem": "harness",
+   "bbox_px": [
+    988,
+    436,
+    990,
+    439
+   ]
+  },
+  {
+   "id": "HRN-107-UL-P2",
+   "role": "context",
+   "name": "Heat-shrink sleeve UL-P2 on E-HRN-14",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "subsystem": "harness",
+   "bbox_px": [
+    988,
+    432,
+    991,
+    435
+   ]
+  },
+  {
+   "id": "HRN-107-UL-PH",
+   "role": "context",
+   "name": "Heat-shrink sleeve UL-PH on E-HRN-18",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "subsystem": "harness",
+   "bbox_px": [
+    973,
+    450,
+    977,
+    454
+   ]
+  },
+  {
+   "id": "HRN-107-UL-S",
+   "role": "context",
+   "name": "Heat-shrink sleeve UL-S on E-HRN-25",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "subsystem": "harness",
+   "bbox_px": [
+    988,
+    440,
+    990,
+    442
+   ]
+  },
+  {
+   "id": "HRN-107-UR-P1",
+   "role": "context",
+   "name": "Heat-shrink sleeve UR-P1 on E-HRN-13",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "subsystem": "harness",
+   "bbox_px": [
+    618,
+    326,
+    621,
+    329
+   ]
+  },
+  {
+   "id": "HRN-107-UR-P2",
+   "role": "context",
+   "name": "Heat-shrink sleeve UR-P2 on E-HRN-13",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "subsystem": "harness",
+   "bbox_px": [
+    618,
+    322,
+    621,
+    325
+   ]
+  },
+  {
+   "id": "HRN-107-UR-PH",
+   "role": "context",
+   "name": "Heat-shrink sleeve UR-PH on E-HRN-17",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "subsystem": "harness",
+   "bbox_px": [
+    600,
+    338,
+    605,
+    342
+   ]
+  },
+  {
+   "id": "HRN-107-UR-S",
+   "role": "context",
+   "name": "Heat-shrink sleeve UR-S on E-HRN-24",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "subsystem": "harness",
+   "bbox_px": [
+    619,
+    330,
+    620,
+    332
    ]
   },
   {

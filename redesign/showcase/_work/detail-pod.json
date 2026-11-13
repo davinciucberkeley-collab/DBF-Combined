@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 17.05,
+ "render_s": 16.41,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -478,7 +478,7 @@
     942,
     445,
     1099,
-    553
+    513
    ]
   },
   {
@@ -490,9 +490,9 @@
    "subsystem": "harness",
    "bbox_px": [
     915,
-    573,
-    961,
-    605
+    574,
+    960,
+    604
    ]
   },
   {
@@ -547,8 +547,8 @@
    "bbox_px": [
     696,
     568,
-    884,
-    709
+    882,
+    707
    ]
   },
   {
@@ -560,9 +560,9 @@
    "subsystem": "harness",
    "bbox_px": [
     735,
-    513,
+    501,
     874,
-    734
+    731
    ]
   }
  ],
@@ -675,6 +675,23 @@
   "HRN-105-6",
   "HRN-105-SL",
   "HRN-105-SR",
+  "HRN-107-LL-P1",
+  "HRN-107-LL-P2",
+  "HRN-107-LL-PH",
+  "HRN-107-LL-S",
+  "HRN-107-LR-P1",
+  "HRN-107-LR-P2",
+  "HRN-107-LR-PH",
+  "HRN-107-LR-S",
+  "HRN-107-PACK",
+  "HRN-107-UL-P1",
+  "HRN-107-UL-P2",
+  "HRN-107-UL-PH",
+  "HRN-107-UL-S",
+  "HRN-107-UR-P1",
+  "HRN-107-UR-P2",
+  "HRN-107-UR-PH",
+  "HRN-107-UR-S",
   "HRN-110-LL",
   "HRN-110-LR",
   "HRN-110-UL",

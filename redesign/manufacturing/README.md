@@ -8,7 +8,7 @@ python -B redesign/manufacturing/make_shop_files.py
 ```
 
 It takes about 20 s. Blender 4.x is needed for the STLs. The script looks for it in `--blender PATH`, then `$BLENDER`,
-then `blender` on the PATH, then `C:/Users/dillo/tools/blender/blender-4.2.3-windows-x64/blender.exe`.
+then `blender` on the PATH, then `C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe`.
 `--no-stl` writes the DXF, PDF and CSV files without Blender. The exit code is 1 if any check fails.
 
 Start with **[`out/SHOP-PACK.md`](out/SHOP-PACK.md)**. It says what each file is, the order to make them and the

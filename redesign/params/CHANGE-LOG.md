@@ -616,3 +616,28 @@ Media regenerated from this design (team request: nothing shown may lag the CAD)
 drawing, flight animation + GIF, build animation, STLs, GLB + viewer data, page snapshots, inspection pictures
 (`review/inspection-2026-11-11/`, `fixed/` and `round2/`). `site/index.html` rebuilt from `site/app.html` (it lacked
 the build-animation section); the Status section's Media phase now reads PARTIAL.
+
+## 2026-11-12 · checked as exported: no part or wire phases in the 3-D model, every lead ends at a real termination (D-88; Dillon Alcouffe)
+
+The team still found leads ending on the face of a box and parts showing through each other in the Explorer. The
+D-87 gate checked the CAD bodies with the drawn cutters (slots, recesses, grooves) treated as already cut. The
+Explorer, the renders and the videos show the exported model. Where a cut failed or left a sliver in the export,
+the gate passed but the picture was wrong. A second gate now checks the exported `assembly.glb` itself, with no
+cutters assumed.
+
+| Id | Decision | From | Keys changed | Why (numbers) |
+|---|---|---|---|---|
+| **D-88** | **Second gate on the exported model; every soldered lead enters square onto a real pad, under heat-shrink; cap drawn as its real can; booleans made exact** | team inspection of the D-87 media | `collision/collide.py` (`--glb`, `--job-only`), new `collision/collide_glb_blender.py`, `blender/blender_backend.py` (MANIFOLD union per part, all cuts at once), `team/F2/harness.py` (ESC ends, `SLEEVE`, `CT-HEATSHRINK`, `p1s_jog_m`), `subsystems/harness/fusion/harness.py` (sleeves), `subsystems/power/params.json` (`cap_m` [0.016, 0.010], `cap_gap_x_m` 0.015), `subsystems/power/fusion/power.py` (cap as a cylinder), `fusion/check.py` | (a) **GLB gate** (Blender 4.5.14 LTS): the exported meshes are checked against each other with no cutter allowance. Every wire end must enter its part within 25° of square to the face, with its whole section on that face (0.1 mm ring) and at most 6 mm past it. Before: 34 bad entries; after: 0. (b) **Exact booleans**: each part's bodies are joined with Blender's MANIFOLD solver, and every cut is applied at once and then verified. A failed cut now stops the export, where before it left the cutter's volume behind. (c) **ESC ends**: the + / − pair rises on the fin face in the 2.3 mm gap ahead of the cap and lands square on the ESC's aft-end pads (z 116 / 123.5 mm); the signal lead rises first (x 126.2 mm) to the lowest pad (z 110.5 mm), so no lead crosses another; the phase leads start on the motor-side pads. (d) **Cap**: Panasonic EEU-FR1E681, Ø10 × 16 mm can (DigiKey datasheet, checked 2026-11-12), 15 mm aft of the ESC; legs drawn at Ø0.6 mm into the solder joint. (e) **Heat-shrink sleeves** `HRN-107-*` (17 parts, adhesive-lined 3:1 polyolefin from BOM HRN-107; 0.4 mm wall, 0.15 mm on the phase leads, EST) where each soldered lead leaves its part. They are new connection type `CT-HEATSHRINK` (bonded, non-structural) and carry their own mass and CG. (f) **P1s jog groove** moved onto the lead's own line (the GLB showed the lead 0.2–0.35 mm into the wing foam). (g) `fusion/check.py`: a lead whose two ends are on one part (the pack lead into its own AS150U half) is seated. (h) **Tape trimmed square along the fin root fillets**: the fins and their fillets go on before the skin (BUILD-GUIDE stages 4 and 6), so the tape is cut round each fillet with a blade. The model cut the tape against the fillet's curved feather edge, which left 0.075–0.094 mm tape slivers in the export. The wing module now cuts the tape square along each fillet edge (`wing.py` `fillet_trims`, from the fins module's own fillet zones), and the fillet underside follows the wing section's own stations (`fins.py`). Fillets unchanged: 6.2–6.3 g each. (i) The overlap work (exporter cut check, union, 5-ray parity) found that none of the 57 GLB part pairs first reported was a geometry fault; all were the exporter or the gate. |
+
+Result: `collision/collide.py --glb` PASS (1028 bodies in 210 parts, 3 poses): CAD gate 0 overlaps, 0 loose ends, 0
+folds; GLB gate 0 part pairs > 0.05 mm (was 57), 0 unseated wire ends, 0 bad entries (was 34); export 0 `CUT NOT
+VERIFIED` (was 47), 0 `UNION NOT CLEAN`. `fusion/check.py` and `interfaces/merge_check.py` PASS. F2 rules: bend
+1.01, DShot 0.692 m against 0.70 m. Harness mass 141.8 g (was 139.9 g: the
+sleeves and the real end routes).
+
+**Open:** harness mass 141.8 g vs 129 g (`CL-F2-MASS` FAILS, +12.8 g) and I2C 0.517 m vs 0.500 m (`CL-F2-I2C-LEN`
+FAILS): the team lead's call, as before. **F1**: the 35 mm bars and the bench-formed first bends (carried over); the
+cap 15 mm aft of the ESC. **D1**: the JR recess and the servo-groove corner relief (carried over).
+
+Media regenerated from this design: renders and site thumbnails, GA drawing, flight animation + GIF, build
+animation, STLs, GLB + viewer data, page snapshots and inspection pictures.

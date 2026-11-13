@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 29.8,
+ "render_s": 23.66,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -42,39 +42,39 @@
  },
  "subject_px": [
   -1031,
-  -2145,
-  2671,
+  -2146,
+  2670,
   1522
  ],
  "callouts": [
   {
    "item": "MEC-001-R",
    "x": 1163.0,
-   "y": 513.5,
+   "y": 507.7,
    "title": "MEC-001-R",
    "text": "Elevon servo",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.186,
-    0.2743,
+    0.1852,
+    0.276,
     -0.0062
    ]
   },
   {
    "item": "MEC-002-R",
    "x": 1086.8,
-   "y": 511.3,
+   "y": 507.0,
    "title": "MEC-002-R",
    "text": "Servo arm",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1944,
+    0.1943,
     0.2862,
-    -0.0093
+    -0.0085
    ]
   },
   {
@@ -95,7 +95,7 @@
   {
    "item": "MEC-004-R",
    "x": 718.8,
-   "y": 604.8,
+   "y": 599.1,
    "title": "MEC-004-R",
    "text": "Inboard control horn",
    "detail": null,
@@ -104,7 +104,7 @@
    "world_m": [
     0.2648,
     0.2862,
-    -0.0078
+    -0.0067
    ]
   },
   {
@@ -147,10 +147,10 @@
    "mass_g": 201.9,
    "subsystem": "wing",
    "bbox_px": [
-    -1017,
-    -2135,
-    2669,
-    1522
+    -1031,
+    -2133,
+    2668,
+    1520
    ]
   },
   {
@@ -161,9 +161,9 @@
    "mass_g": 47.9,
    "subsystem": "wing",
    "bbox_px": [
-    -1031,
-    -2145,
-    2671,
+    -1030,
+    -2146,
+    2670,
     1522
    ]
   },
@@ -473,6 +473,23 @@
   "HRN-105-6",
   "HRN-105-SL",
   "HRN-105-SR",
+  "HRN-107-LL-P1",
+  "HRN-107-LL-P2",
+  "HRN-107-LL-PH",
+  "HRN-107-LL-S",
+  "HRN-107-LR-P1",
+  "HRN-107-LR-P2",
+  "HRN-107-LR-PH",
+  "HRN-107-LR-S",
+  "HRN-107-PACK",
+  "HRN-107-UL-P1",
+  "HRN-107-UL-P2",
+  "HRN-107-UL-PH",
+  "HRN-107-UL-S",
+  "HRN-107-UR-P1",
+  "HRN-107-UR-P2",
+  "HRN-107-UR-PH",
+  "HRN-107-UR-S",
   "HRN-110-LL",
   "HRN-110-LR",
   "HRN-110-UL",

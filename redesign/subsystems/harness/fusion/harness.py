@@ -72,6 +72,11 @@ def build(ctx):
         p.tube('Y', (x, y + s * tb / 2, z), s * gm['flange_t'], gm['flange_od'] / 2, gm['bore'] / 2,
                name='grommet flange')
 
+    # D-88: heat-shrink sleeves (HRN-107-*) on the soldered ends, tubes along x from the part face, shrunk on the lead
+    for pid, v in sorted(_lv(H['cad'].get('sleeves', {})).items()):
+        ctx.part(pid).tube('X', tuple(v['start']), v['axis'] * v['length'], v['r_out'], v['r_in'],
+                           name='heat-shrink sleeve')
+
     dia = _lv(H['cad'].get('wire_draw_dia_m', {}))
     strands = _lv(H['cad'].get('wire_strands', {}))           # {wire id: [[diameter, polyline], ...]}
     by_edge = {}

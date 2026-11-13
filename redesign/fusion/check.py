@@ -119,6 +119,10 @@ def run_checks(root, list_file, tol=0.002, budget=None, log=lambda *a: None, dat
             if rk == 'wire':
                 p0, p1 = obj.points[0], obj.points[-1]
                 off = min(max(point_gap(p0, ba), point_gap(p1, bb)), max(point_gap(p0, bb), point_gap(p1, ba)))
+                # D-88: a lead that runs whole inside one part's own connector (the pack's lead into its AS150U
+                # half) reaches the other part through the mated contacts: both ends on one part, the parts touching
+                if off > tol and bbox_gap(ba, bb) <= tol:
+                    off = min(off, max(point_gap(p0, ba), point_gap(p1, ba)), max(point_gap(p0, bb), point_gap(p1, bb)))
                 if off > tol:
                     add('ERROR', 'touch', eid, 'wire end is %.1f mm off its part' % (off * 1000))
     for eid, regs in sorted(reg.items()):

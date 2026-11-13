@@ -1,14 +1,26 @@
 # Collision check: no parts phasing
 
 `collide.py` checks that no two parts of K09-L occupy the same space, so the CAD can go into a rigid-body physics
-simulator as drawn. It meshes every CAD body with the same builders as the GLB and the shop STLs, in Blender 4.2.3
+simulator as drawn. It meshes every CAD body with the same builders as the GLB and the shop STLs, in Blender 4.5.14 LTS
 (path in `inputs/SIM-TOOLS.md`), and measures how deep any point of one part lies inside a different part.
 
 ```
 python -I redesign/collision/collide.py              # static pose + both elevon limits (about 5 min)
 python -I redesign/collision/collide.py --no-sweep   # static pose only
 python -I redesign/collision/collide.py --transport  # also the box, cradles and trays in their transport places
+python -I redesign/collision/collide.py --glb        # + the gate on the EXPORTED model (export the GLB first; ~11 min)
+python -I redesign/collision/collide.py --job-only   # write out/_job.json (parts + drawn wires) and stop
 ```
+
+Two gates, both must pass (D-88). The CAD gate takes each part's holes from its cutters (removed material by
+definition), so it cannot see a boolean that failed in the exported model; a 45° lead hole that came out uncut once
+showed a wire through solid foam in the 3-D explorer while the CAD gate passed. `--glb` runs
+`collide_glb_blender.py` on `blender/out/aircraft/glb/assembly.glb`: every part as the explorer shows it, cuts baked
+in, no cutter honoured, the wires meshed from the same strands, and the wire-entry rule below. Each part is one solid
+there (the exporter unites its bodies, `blender/README.md`), so the inside test is a parity count: a surface point of
+one part is inside another when 3 of 5 skewed rays cross that part an odd number of times (one ray along a bore wall
+counts noise). A sample counts only where its own part has material 0.01 mm behind it, so a zero-thickness wall left
+by the union is not material. The full GLB gate takes about 11 min on an idle machine.
 
 Exit code 0 = PASS. The report is `out/REPORT.md`; `out/report.json` has every pair down to 0.01 mm.
 
@@ -37,6 +49,10 @@ Wire rules (each one a physical fact, not a tolerance; D-86 made them strict):
   checked against each other too (D-87).
 - **No folds**: a drawn bend tighter than the strand's own radius makes the tube pass through itself; it fails
   (report section "Wire bends tighter than the wire", D-87).
+- **Square entry, on a face** (GLB gate, D-88): where a strand enters its terminal part or an in-line connector it
+  crosses one face within 25° of square, with its whole section on that face (0.1 mm clear of the face's edges), and
+  runs at most 6 mm past it. A lead that slides in at a slant or over an edge or corner, as no soldered or crimped
+  lead does, fails. Heat-shrink sleeves (`HRN-107-*`) are drawn on the soldered ends and count as in-line parts.
 
 ## What it does not check
 

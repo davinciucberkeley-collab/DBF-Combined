@@ -213,9 +213,14 @@ def rasterize(svg, png, w, h):
         print('  (no Edge/Chrome found: SVG only)')
         return None
     url = 'file:///' + os.path.abspath(svg).replace('\\', '/')
-    subprocess.run([exe, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--force-device-scale-factor=1',
-                    '--window-size=%d,%d' % (w, h), '--screenshot=%s' % os.path.abspath(png), url],
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=60)
+    cmd = [exe, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--force-device-scale-factor=1',
+           '--window-size=%d,%d' % (w, h), '--screenshot=%s' % os.path.abspath(png), url]
+    for attempt in (1, 2):                # a busy machine (Blender renders alongside) can stall headless Edge
+        try:
+            subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=180)
+            break
+        except subprocess.TimeoutExpired:
+            print('  headless browser timed out (attempt %d of 2)' % attempt)
     if os.path.exists(png):
         print('  rasterised %s' % os.path.basename(png))
         return png

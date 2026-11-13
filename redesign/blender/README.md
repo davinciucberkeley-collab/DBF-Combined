@@ -8,7 +8,7 @@ for the build manual and reviews. It works for any configuration: everything is 
 ## Commands
 
 `B` = `<your blender.exe> -b --factory-startup -P` (Blender 4.2; on the team laptop it is under
-`%USERPROFILE%/tools/blender/blender-4.2.3-windows-x64/`. `manual-kit/build_manual.py` finds it by itself: `--blender`,
+`%USERPROFILE%/tools/blender/blender-4.5.14-windows-x64/`. `manual-kit/build_manual.py` finds it by itself: `--blender`,
 env `DBF_BLENDER`, PATH, then the usual install folders)
 
 | What | Command | Time |
@@ -43,7 +43,7 @@ floor shadows.
 
 | Object | Name | Custom properties (become glTF `extras`) |
 |---|---|---|
-| one mesh per part (all its bodies joined) | part id, e.g. `WNG-001` | `part_id, name, subsystem, material, mass_g, status, make_or_buy, interfaces` (JSON list of edge ids), `explode_m` |
+| one mesh per part: its bodies cut, then united into one solid (D-88) | part id, e.g. `WNG-001` | `part_id, name, subsystem, material, mass_g, status, make_or_buy, interfaces` (JSON list of edge ids), `explode_m` |
 | one tube per wire, corners rounded to the edge's `bend_radius_mm` | edge id, e.g. `E-FUS-03` | `edge, part_a, part_b, via, dia_mm, gauge_awg, connector, bend_radius_mm, support_points, strain_relief, disconnect` |
 | one empty per joint | `JOINT E-WNG-04` | `edge, kind, part_a, part_b, axis, limits` |
 
@@ -93,6 +93,16 @@ by hand. Every part stores its vector as `explode_m`, so the web viewer can anim
 | GLB round trip: every part id comes back with its extras, z up | how the web viewer uses the extras |
 
 Render quality is checked by eye: open `out/examples/figures/*.annotated.png`.
+
+**Cuts and unions (D-88).** Each body is cut by all its cutters at once with Blender's MANIFOLD boolean; only if
+that fails does the exporter fall back to one cutter at a time (MANIFOLD, nudged, grown 3-10 µm, EXACT, FAST). Every
+cut is then verified: no surface of the result more than 0.02 mm inside a cutter, no material 0.045 mm under a
+cutter's surface (both inside tests use the GLB gate's own: odd crossings on 3 of 5 skewed rays), no open edges. A
+failed check prints `CUT NOT VERIFIED <part> ...` with its depth and location. Each part's cut bodies are then united
+into one watertight solid (MANIFOLD), checked for an unchanged box and a volume between the largest body and the sum;
+a failure prints `UNION NOT CLEAN <part>` and keeps the bodies as separate shells. A release export has neither line
+(`grep -c "CUT NOT VERIFIED\|UNION NOT CLEAN"` on the export log is 0); the GLB gate (`collision/collide.py --glb`)
+then checks the exported meshes against each other.
 
 ## Known limits
 

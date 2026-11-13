@@ -391,8 +391,12 @@ def build_root_fillets(part, G, upper):
     for x0, x1, leg in G['fillet_zones'](upper):
         if x1 - x0 < 1e-4:
             continue
-        n = max(1, int(math.ceil((x1 - x0) / 0.004)))       # 4 mm stations (was 10): chord sag < tolerance
-        xs = [x0 + (x1 - x0) * i / n for i in range(n + 1)]
+        # D-88: the wing section's own stations (wing.py _xs: N_SURF 96 cosine-spaced per 0.32 m chord), so the
+        # fillet's underside follows the same facets as the foam (the tape is trimmed at the fillet edge: wing.py
+        # fillet_trims)
+        nw = max(4, int(96 * G['c'] / 0.32 + 0.5))
+        xw = [round(G['c'] * (1 - math.cos(math.pi * i / nw)) / 2, 7) for i in range(nw + 1)]
+        xs = sorted(set([x0, x1] + [x for x in xw if x0 + 1e-6 < x < x1 - 1e-6]))
         for d in (1, -1):
             yF = G['yf'] + d * G['t_fin'] / 2
             part.loft('X', [(x, cove(yF, d, surf(x), s, leg)) for x in xs], smooth=False, name=FILLET)

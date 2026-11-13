@@ -27,7 +27,7 @@ import time
 HERE = os.path.dirname(os.path.abspath(__file__))
 REDESIGN = os.path.dirname(os.path.dirname(HERE))
 BL = os.path.join(REDESIGN, 'blender')
-BLENDER_DEFAULT = r'C:/Users/dillo/tools/blender/blender-4.2.3-windows-x64/blender.exe'
+BLENDER_DEFAULT = r'C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe'
 OUT = os.path.join(HERE, 'build')
 
 FPS = 30

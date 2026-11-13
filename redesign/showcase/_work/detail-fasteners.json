@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 16.12,
+ "render_s": 15.33,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -48,17 +48,17 @@
  "callouts": [
   {
    "item": "PRP-005-UR",
-   "x": 740.9,
-   "y": 248.0,
+   "x": 828.6,
+   "y": 389.8,
    "title": "PRP-005-UR",
    "text": "4 x M3x8 SHCS motor screws",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0295,
-    0.3199,
-    0.2001
+    0.0323,
+    0.3288,
+    0.1916
    ]
   },
   {
@@ -93,8 +93,8 @@
   },
   {
    "item": "FIN-103-UR",
-   "x": 861.4,
-   "y": 753.8,
+   "x": 907.3,
+   "y": 802.9,
    "title": "FIN-103-UR",
    "text": "2 x M3 washer",
    "detail": null,
@@ -102,8 +102,8 @@
    "occluded": false,
    "world_m": [
     0.0402,
-    0.3361,
-    0.1679
+    0.3398,
+    0.165
    ]
   },
   {
@@ -161,8 +161,8 @@
    "subsystem": "fins",
    "bbox_px": [
     433,
-    145,
-    955,
+    132,
+    959,
     931
    ]
   },
@@ -175,7 +175,7 @@
    "subsystem": "fins",
    "bbox_px": [
     69,
-    786,
+    723,
     811,
     1238
    ]
@@ -424,6 +424,23 @@
   "HRN-105-6",
   "HRN-105-SL",
   "HRN-105-SR",
+  "HRN-107-LL-P1",
+  "HRN-107-LL-P2",
+  "HRN-107-LL-PH",
+  "HRN-107-LL-S",
+  "HRN-107-LR-P1",
+  "HRN-107-LR-P2",
+  "HRN-107-LR-PH",
+  "HRN-107-LR-S",
+  "HRN-107-PACK",
+  "HRN-107-UL-P1",
+  "HRN-107-UL-P2",
+  "HRN-107-UL-PH",
+  "HRN-107-UL-S",
+  "HRN-107-UR-P1",
+  "HRN-107-UR-P2",
+  "HRN-107-UR-PH",
+  "HRN-107-UR-S",
   "HRN-110-LL",
   "HRN-110-LR",
   "HRN-110-UL",

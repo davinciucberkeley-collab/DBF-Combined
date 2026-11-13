@@ -40,7 +40,7 @@ for _p in (os.path.join(REDESIGN, 'fusion'), os.path.join(REDESIGN, 'manufacturi
 
 import cad_source as cs           # noqa: E402
 
-DEFAULT_BLENDER = 'C:/Users/dillo/tools/blender/blender-4.2.3-windows-x64/blender.exe'   # inputs/SIM-TOOLS.md
+DEFAULT_BLENDER = 'C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe'   # inputs/SIM-TOOLS.md
 
 
 def find_blender(arg):
@@ -167,8 +167,12 @@ def main():
     ap.add_argument('--no-sweep', action='store_true')
     ap.add_argument('--audit-wires', action='store_true', help='per-wire clash list by route segment (report.json)')
     ap.add_argument('--out', default=os.path.join(HERE, 'out'))
+    ap.add_argument('--job-only', action='store_true', help='write out/_job.json (parts + drawn wires) and stop')
+    ap.add_argument('--glb', nargs='?', const=os.path.join(REDESIGN, 'blender', 'out', 'aircraft', 'glb', 'assembly.glb'),
+                    help='also run the gate on the EXPORTED model (collide_glb_blender.py, about 8 min): every part '
+                         'as the 3-D explorer shows it, cuts baked in, no cutter honoured, plus the wire-entry rule')
     a = ap.parse_args()
-    blender = find_blender(a.blender)
+    blender = None if a.job_only else find_blender(a.blender)
     os.makedirs(a.out, exist_ok=True)
     import build_all
     from backends.stub_backend import StubBackend
@@ -199,6 +203,9 @@ def main():
     jp = os.path.join(a.out, '_job.json')
     with open(jp, 'w', encoding='utf-8') as f:
         json.dump(job, f)
+    if a.job_only:
+        print('collide: job written, %d parts, %d wires: %s' % (len(comps), len(wires), jp))
+        return
     rp = os.path.join(a.out, 'report.json')
     if os.path.exists(rp):
         os.remove(rp)
@@ -224,6 +231,24 @@ def main():
         print('  %-48s %4d part pairs penetrate > %g mm' % (pz['name'][:48], n, a.tol_mm))
     print('  %-48s %4d' % ('wire ends not seated in a part', len(rep.get('wire_ends', []))))
     print('  %-48s %4d' % ('wire bends tighter than the wire (folds)', len(rep.get('kinks', []))))
+    if a.glb:                                         # D-88: the exported GLB, as shown
+        gp = os.path.join(a.out, 'glb_report.json')
+        q = subprocess.run([blender, '-b', '--factory-startup', '--python-exit-code', '1', '-P',
+                            os.path.join(HERE, 'collide_glb_blender.py'), '--', jp, a.glb, gp],
+                           capture_output=True, text=True, env=dict(os.environ, PYTHONDONTWRITEBYTECODE='1'))
+        with open(os.path.join(a.out, 'glb.log'), 'w', encoding='utf-8') as f:
+            f.write(q.stdout + '\n----- stderr\n' + q.stderr)
+        if q.returncode != 0 or not os.path.exists(gp):
+            sys.exit('collide: GLB run failed (exit %s); see %s' % (q.returncode, os.path.join(a.out, 'glb.log')))
+        with open(gp, encoding='utf-8') as f:
+            gr = json.load(f)
+        gerr = [h for h in gr['hits'] if h['depth_mm'] > a.tol_mm] + gr['wire_ends'] + gr['entries']
+        print('  %-48s %4d' % ('GLB: part pairs penetrate > %g mm' % a.tol_mm,
+                               sum(1 for h in gr['hits'] if h['depth_mm'] > a.tol_mm)))
+        print('  %-48s %4d' % ('GLB: wire ends not seated', len(gr['wire_ends'])))
+        print('  %-48s %4d' % ('GLB: wires not entering square / on a face', len(gr['entries'])))
+        errs += gerr
+        rep['glb'] = {'errors': len(gerr), 'report': os.path.relpath(gp, REDESIGN)}
     print('collide: %s (%d bodies in %d parts, %d poses, %.0f s); report %s'
           % ('PASS' if not errs else 'FAIL, %d overlaps / loose ends' % len(errs), rep['bodies'], rep['parts'], len(rep['poses']),
              rep['seconds'], os.path.relpath(os.path.join(a.out, 'REPORT.md'), os.getcwd())))

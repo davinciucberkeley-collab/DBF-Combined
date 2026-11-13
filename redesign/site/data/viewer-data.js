@@ -2,7 +2,7 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "aircraft",
- "generated": "2026-11-12 06:51 UTC",
+ "generated": "2026-11-13 04:23 UTC",
  "sources": {
   "glb": "redesign/blender/out/aircraft/glb",
   "interfaces": "redesign/interfaces/interfaces.json",
@@ -24,8 +24,9 @@ window.VIEWER_DATA = {
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 10195024,
-  "sha256": "5d139c971061d403712f8aafdf0dea9dafb4c0e1fce0ef541c63ea32be5a6cb0"
+  "bytes": 12929784,
+  "js_parts": 2,
+  "sha256": "aad10b06f1032132fd6ec0807be98a5341a48efd1af8b4de5d5dce6f5fc95f82"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -1612,7 +1613,7 @@ window.VIEWER_DATA = {
    "name": "Pod harness bundle (lumped: pod runs of every lead, GPS cable, JR row, GH plugs)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 39.1,
+   "mass_g": 39.2,
    "material": "copper + silicone",
    "cg_xyz_m": [
     0.04,
@@ -1622,7 +1623,7 @@ window.VIEWER_DATA = {
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0349, -0.0086, 0.0357] m, 7.9 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item (ties, tape): mass from team/F2/harness.py (wire table x g/m + fittings). CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0349, -0.0085, 0.0357] m, 7.9 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "vendor": "subsystems/harness/WIRE-LIST.csv",
    "unit_cost_usd": 0.0,
@@ -1636,17 +1637,17 @@ window.VIEWER_DATA = {
    "name": "Wing-fin harness bundle L (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 43.4,
+   "mass_g": 44.2,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0775,
-    -0.2625,
+    0.0782,
+    -0.2636,
     0.0049
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0775, -0.2632, 0.0052] m, 0.8 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0792, -0.2642, 0.0051] m, 1.2 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1655,17 +1656,17 @@ window.VIEWER_DATA = {
    "name": "Wing-fin harness bundle R (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 43.9,
+   "mass_g": 44.7,
    "material": "copper + silicone",
    "cg_xyz_m": [
-    0.0775,
-    0.2625,
+    0.0782,
+    0.2636,
     0.0049
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0774, 0.2613, 0.0055] m, 1.3 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0791, 0.2624, 0.0054] m, 1.5 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1810,6 +1811,312 @@ window.VIEWER_DATA = {
    "make_or_buy": "buy",
    "carried": true,
    "notes": "D-86 (no CAD body before: the leads ended in mid-air): JR male shroud 18.00 x 10.30 x 4.00 mm + female 14.00 x 7.90 x 2.75 mm (Pololu drawings, checked 2026-11-11), female 6 mm showing (EST); flat on the recess floor under the re-openable tape flap, female mass only (the male is on the servo's own lead, MEC-001); team/F2/harness.py JR; BOM HRN-105; mass EST",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-LL-P1",
+   "name": "Heat-shrink sleeve LL-P1 on E-HRN-16",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.125,
+    -0.3285,
+    -0.116
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 3.4 / 2.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-LL-P2",
+   "name": "Heat-shrink sleeve LL-P2 on E-HRN-16",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.125,
+    -0.3285,
+    -0.1235
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 3.4 / 2.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-LL-PH",
+   "name": "Heat-shrink sleeve LL-PH on E-HRN-20",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.077,
+    -0.329,
+    -0.118
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 5.9 / 5.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-LL-S",
+   "name": "Heat-shrink sleeve LL-S on E-HRN-27",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.1242,
+    -0.3285,
+    -0.1105
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 2.6 / 1.8 mm x 1.5 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-LR-P1",
+   "name": "Heat-shrink sleeve LR-P1 on E-HRN-15",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.125,
+    0.3285,
+    -0.116
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 3.4 / 2.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-LR-P2",
+   "name": "Heat-shrink sleeve LR-P2 on E-HRN-15",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.125,
+    0.3285,
+    -0.1235
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 3.4 / 2.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-LR-PH",
+   "name": "Heat-shrink sleeve LR-PH on E-HRN-19",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.077,
+    0.329,
+    -0.118
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 5.9 / 5.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-LR-S",
+   "name": "Heat-shrink sleeve LR-S on E-HRN-26",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.1242,
+    0.3285,
+    -0.1105
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 2.6 / 1.8 mm x 1.5 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-PACK",
+   "name": "Heat-shrink sleeve PACK on E-HRN-10",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0366,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.0617,
+    -0.0464,
+    0.0456
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 6.8 / 6.0 mm x 3.5 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-UL-P1",
+   "name": "Heat-shrink sleeve UL-P1 on E-HRN-14",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.125,
+    -0.3285,
+    0.116
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 3.4 / 2.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-UL-P2",
+   "name": "Heat-shrink sleeve UL-P2 on E-HRN-14",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.125,
+    -0.3285,
+    0.1235
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 3.4 / 2.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-UL-PH",
+   "name": "Heat-shrink sleeve UL-PH on E-HRN-18",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.077,
+    -0.329,
+    0.118
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 5.9 / 5.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-UL-S",
+   "name": "Heat-shrink sleeve UL-S on E-HRN-25",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.1242,
+    -0.3285,
+    0.1105
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 2.6 / 1.8 mm x 1.5 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-UR-P1",
+   "name": "Heat-shrink sleeve UR-P1 on E-HRN-13",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.125,
+    0.3285,
+    0.116
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 3.4 / 2.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-UR-P2",
+   "name": "Heat-shrink sleeve UR-P2 on E-HRN-13",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.125,
+    0.3285,
+    0.1235
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 3.4 / 2.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-UR-PH",
+   "name": "Heat-shrink sleeve UR-PH on E-HRN-17",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.077,
+    0.329,
+    0.118
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 5.9 / 5.6 mm x 3.0 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
+   "in_model": true,
+   "spec": "../subsystems/harness/SPEC.md"
+  },
+  {
+   "id": "HRN-107-UR-S",
+   "name": "Heat-shrink sleeve UR-S on E-HRN-24",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "material": "polyolefin, adhesive-lined 3:1",
+   "cg_xyz_m": [
+    0.1242,
+    0.3285,
+    0.1105
+   ],
+   "make_or_buy": "buy",
+   "carried": true,
+   "notes": "D-88: 2.6 / 1.8 mm x 1.5 mm shrunk over the solder joint where the lead leaves the part face (cut from BOM HRN-107); wall and mass EST; team/F2/harness.py SLEEVE",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -3370,7 +3677,7 @@ window.VIEWER_DATA = {
    "mass_g": 2.2,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.137,
+    0.147,
     -0.3298,
     -0.118
    ],
@@ -3388,7 +3695,7 @@ window.VIEWER_DATA = {
    "mass_g": 2.2,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.137,
+    0.147,
     0.3298,
     -0.118
    ],
@@ -3406,7 +3713,7 @@ window.VIEWER_DATA = {
    "mass_g": 2.2,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.137,
+    0.147,
     -0.3298,
     0.118
    ],
@@ -3424,7 +3731,7 @@ window.VIEWER_DATA = {
    "mass_g": 2.2,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.137,
+    0.147,
     0.3298,
     0.118
    ],
@@ -6656,7 +6963,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-002",
    "via": "CT-AS150U",
    "owner": "harness",
-   "notes": "Pack + / - (pack's own 10 AWG lead). Wire list rows W-PACK; routed cut length 0.113 m",
+   "notes": "Pack + / - (pack's own 10 AWG lead). Wire list rows W-PACK; routed cut length 0.085 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "pack terminal (factory) -> AS150U pack half",
@@ -6668,7 +6975,7 @@ window.VIEWER_DATA = {
     "strain_relief": "AS150U body held in the 60 mm park; lead heat-shrink at the plug",
     "disconnect": true,
     "slack_mm": 0,
-    "length_m": 0.113,
+    "length_m": 0.085,
     "wires": [
      "W-PACK"
     ]
@@ -6686,7 +6993,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-003",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-1; routed cut length 0.033 m",
+   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-1; routed cut length 0.035 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "AS150U aircraft half (solder cup) -> power board input pads (aft edge)",
@@ -6698,7 +7005,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink 15 mm over each cup; formed before soldering",
     "disconnect": false,
     "slack_mm": 15,
-    "length_m": 0.033,
+    "length_m": 0.035,
     "wires": [
      "W-MAIN-1"
     ]
@@ -6745,7 +7052,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UR",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC UR power + / -. Wire list rows W-PWR-UR; routed cut length 0.654 m",
+   "notes": "ESC UR power + / -. Wire list rows W-PWR-UR; routed cut length 0.670 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC UR power pads (solder) + 680 uF cap",
@@ -6763,7 +7070,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.654,
+    "length_m": 0.67,
     "wires": [
      "W-PWR-UR"
     ]
@@ -6780,7 +7087,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UL",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC UL power + / -. Wire list rows W-PWR-UL; routed cut length 0.547 m",
+   "notes": "ESC UL power + / -. Wire list rows W-PWR-UL; routed cut length 0.564 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC UL power pads (solder) + 680 uF cap",
@@ -6798,7 +7105,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.547,
+    "length_m": 0.564,
     "wires": [
      "W-PWR-UL"
     ]
@@ -6815,7 +7122,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LR",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC LR power + / -. Wire list rows W-PWR-LR; routed cut length 0.684 m",
+   "notes": "ESC LR power + / -. Wire list rows W-PWR-LR; routed cut length 0.701 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC LR power pads (solder) + 680 uF cap",
@@ -6833,7 +7140,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.684,
+    "length_m": 0.701,
     "wires": [
      "W-PWR-LR"
     ]
@@ -6850,7 +7157,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LL",
    "via": "CT-XT30U",
    "owner": "harness",
-   "notes": "ESC LL power + / -. Wire list rows W-PWR-LL; routed cut length 0.576 m",
+   "notes": "ESC LL power + / -. Wire list rows W-PWR-LL; routed cut length 0.593 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "bus bar (solder on the bench, D-74) -> pod pigtail -> XT30U female -> XT30U male -> ESC LL power pads (solder) + 680 uF cap",
@@ -6868,7 +7175,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink over each pad and XT30U joint; lead taped 20 mm from the ESC; never under the ESC strap",
     "disconnect": true,
     "slack_mm": 20,
-    "length_m": 0.576,
+    "length_m": 0.593,
     "wires": [
      "W-PWR-LL"
     ]
@@ -6885,7 +7192,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.133 m",
+   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.130 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UR phase pads (solder) -> motor UR factory leads (staggered in-line splices)",
@@ -6901,7 +7208,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.133,
+    "length_m": 0.13,
     "wires": [
      "W-PH-UR"
     ]
@@ -6918,7 +7225,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.133 m",
+   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.130 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UL phase pads (solder) -> motor UL factory leads (staggered in-line splices)",
@@ -6934,7 +7241,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.133,
+    "length_m": 0.13,
     "wires": [
      "W-PH-UL"
     ]
@@ -6951,7 +7258,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.133 m",
+   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.130 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LR phase pads (solder) -> motor LR factory leads (staggered in-line splices)",
@@ -6967,7 +7274,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.133,
+    "length_m": 0.13,
     "wires": [
      "W-PH-LR"
     ]
@@ -6984,7 +7291,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.133 m",
+   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.130 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LL phase pads (solder) -> motor LL factory leads (staggered in-line splices)",
@@ -7000,7 +7307,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.133,
+    "length_m": 0.13,
     "wires": [
      "W-PH-LL"
     ]
@@ -7056,7 +7363,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UR",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor UR (twisted, no power). Wire list rows W-SIG-UR-P, W-SIG-UR; routed cut length 0.539 m",
+   "notes": "DShot300 bidirectional + GND, motor UR (twisted, no power). Wire list rows W-SIG-UR-P, W-SIG-UR; routed cut length 0.535 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC UR factory signal lead (solder splice)",
@@ -7073,7 +7380,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.539,
+    "length_m": 0.535,
     "wires": [
      "W-SIG-UR-P",
      "W-SIG-UR"
@@ -7093,7 +7400,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-UL",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor UL (twisted, no power). Wire list rows W-SIG-UL-P, W-SIG-UL; routed cut length 0.663 m",
+   "notes": "DShot300 bidirectional + GND, motor UL (twisted, no power). Wire list rows W-SIG-UL-P, W-SIG-UL; routed cut length 0.659 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC UL factory signal lead (solder splice)",
@@ -7110,7 +7417,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.663,
+    "length_m": 0.659,
     "wires": [
      "W-SIG-UL-P",
      "W-SIG-UL"
@@ -7130,7 +7437,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LR",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor LR (twisted, no power). Wire list rows W-SIG-LR-P, W-SIG-LR; routed cut length 0.579 m",
+   "notes": "DShot300 bidirectional + GND, motor LR (twisted, no power). Wire list rows W-SIG-LR-P, W-SIG-LR; routed cut length 0.574 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC LR factory signal lead (solder splice)",
@@ -7147,7 +7454,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.579,
+    "length_m": 0.574,
     "wires": [
      "W-SIG-LR-P",
      "W-SIG-LR"
@@ -7167,7 +7474,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-002-LL",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "DShot300 bidirectional + GND, motor LL (twisted, no power). Wire list rows W-SIG-LL-P, W-SIG-LL; routed cut length 0.696 m",
+   "notes": "DShot300 bidirectional + GND, motor LL (twisted, no power). Wire list rows W-SIG-LL-P, W-SIG-LL; routed cut length 0.692 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "FC output pad (solder) -> ESC LL factory signal lead (solder splice)",
@@ -7184,7 +7491,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; splice heat-shrunk and taped 20 mm from the ESC",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.696,
+    "length_m": 0.692,
     "wires": [
      "W-SIG-LL-P",
      "W-SIG-LL"
@@ -7204,7 +7511,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-L",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "Elevon L PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-L-P, W-SRV-L, W-SRV-L-S; routed cut length 0.602 m",
+   "notes": "Elevon L PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-L-P, W-SRV-L, W-SRV-L-S; routed cut length 0.607 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "FC output pad + rail (solder) -> servo case (factory)",
@@ -7220,7 +7527,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.602,
+    "length_m": 0.607,
     "wires": [
      "W-SRV-L-P",
      "W-SRV-L",
@@ -7240,7 +7547,7 @@ window.VIEWER_DATA = {
    "part_b": "MEC-001-R",
    "via": "CT-SERVO-JR",
    "owner": "harness",
-   "notes": "Elevon R PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-R-P, W-SRV-R, W-SRV-R-S; routed cut length 0.555 m",
+   "notes": "Elevon R PWM 50 Hz + 6 V + GND (+ / - 22 AWG red / black, signal 28 AWG, laid flat). Wire list rows W-SRV-R-P, W-SRV-R, W-SRV-R-S; routed cut length 0.560 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "FC output pad + rail (solder) -> servo case (factory)",
@@ -7256,7 +7563,7 @@ window.VIEWER_DATA = {
     "strain_relief": "tie at the JR; JR bodies taped in the recess under a re-openable tape flap",
     "disconnect": false,
     "slack_mm": 90,
-    "length_m": 0.555,
+    "length_m": 0.56,
     "wires": [
      "W-SRV-R-P",
      "W-SRV-R",
@@ -7340,7 +7647,7 @@ window.VIEWER_DATA = {
    "part_b": "AVN-004",
    "via": "CT-JST-GH-4",
    "owner": "harness",
-   "notes": "I2C branch SDA/SCL + 5 V + GND to MS4525DO (0x28). Wire list rows W-ASPD; routed cut length 0.176 m",
+   "notes": "I2C branch SDA/SCL + 5 V + GND to MS4525DO (0x28). Wire list rows W-ASPD; routed cut length 0.182 m",
    "wire": {
     "gauge_awg": 28,
     "connector": "Y-splice on W-GPS, 15 mm from the FC port -> JST-GH 4 at the airspeed sensor",
@@ -7354,7 +7661,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splice under adhesive heat-shrink, tied to the FC plate",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.176,
+    "length_m": 0.182,
     "wires": [
      "W-ASPD"
     ]
@@ -7372,7 +7679,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-008-UR",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "ESC UR bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-UR; routed cut length 0.009 m",
+   "notes": "ESC UR bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-UR; routed cut length 0.019 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "ESC UR power pads (solder, with the power lead) -> cap body (factory legs)",
@@ -7384,8 +7691,8 @@ window.VIEWER_DATA = {
     "bend_radius_mm": 3.9,
     "strain_relief": "legs sleeved (heat-shrink), cap foam-taped to the face (E-PWR-11...14)",
     "disconnect": false,
-    "slack_mm": 4,
-    "length_m": 0.009,
+    "slack_mm": 3,
+    "length_m": 0.019,
     "wires": [
      "W-CAP-UR"
     ]
@@ -7403,7 +7710,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-008-UL",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "ESC UL bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-UL; routed cut length 0.009 m",
+   "notes": "ESC UL bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-UL; routed cut length 0.019 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "ESC UL power pads (solder, with the power lead) -> cap body (factory legs)",
@@ -7415,8 +7722,8 @@ window.VIEWER_DATA = {
     "bend_radius_mm": 3.9,
     "strain_relief": "legs sleeved (heat-shrink), cap foam-taped to the face (E-PWR-11...14)",
     "disconnect": false,
-    "slack_mm": 4,
-    "length_m": 0.009,
+    "slack_mm": 3,
+    "length_m": 0.019,
     "wires": [
      "W-CAP-UL"
     ]
@@ -7434,7 +7741,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-008-LR",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "ESC LR bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-LR; routed cut length 0.009 m",
+   "notes": "ESC LR bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-LR; routed cut length 0.019 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "ESC LR power pads (solder, with the power lead) -> cap body (factory legs)",
@@ -7446,8 +7753,8 @@ window.VIEWER_DATA = {
     "bend_radius_mm": 3.9,
     "strain_relief": "legs sleeved (heat-shrink), cap foam-taped to the face (E-PWR-11...14)",
     "disconnect": false,
-    "slack_mm": 4,
-    "length_m": 0.009,
+    "slack_mm": 3,
+    "length_m": 0.019,
     "wires": [
      "W-CAP-LR"
     ]
@@ -7465,7 +7772,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-008-LL",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "ESC LL bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-LL; routed cut length 0.009 m",
+   "notes": "ESC LL bus decoupling: 680 uF cap + / - (cap's own legs, PWR-008). Wire list rows W-CAP-LL; routed cut length 0.019 m",
    "wire": {
     "gauge_awg": 22,
     "connector": "ESC LL power pads (solder, with the power lead) -> cap body (factory legs)",
@@ -7477,8 +7784,8 @@ window.VIEWER_DATA = {
     "bend_radius_mm": 3.9,
     "strain_relief": "legs sleeved (heat-shrink), cap foam-taped to the face (E-PWR-11...14)",
     "disconnect": false,
-    "slack_mm": 4,
-    "length_m": 0.009,
+    "slack_mm": 3,
+    "length_m": 0.019,
     "wires": [
      "W-CAP-LL"
     ]
@@ -7727,6 +8034,261 @@ window.VIEWER_DATA = {
     "count": 1,
     "load_n": "< 1 (0.5 g x 12.75 g crash = 0.06 N)",
     "inspection": "pre-flight: housings seated to the shoulder"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-54",
+   "part_a": "HRN-107-LL-P1",
+   "part_b": "HRN-002-L",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-16 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.015 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-55",
+   "part_a": "HRN-107-LL-P2",
+   "part_b": "HRN-002-L",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-16 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.015 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-56",
+   "part_a": "HRN-107-LL-PH",
+   "part_b": "HRN-002-L",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-20 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.011 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-57",
+   "part_a": "HRN-107-LL-S",
+   "part_b": "HRN-002-L",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-27 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.005 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-58",
+   "part_a": "HRN-107-LR-P1",
+   "part_b": "HRN-002-R",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-15 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.015 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-59",
+   "part_a": "HRN-107-LR-P2",
+   "part_b": "HRN-002-R",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-15 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.015 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-60",
+   "part_a": "HRN-107-LR-PH",
+   "part_b": "HRN-002-R",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-19 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.011 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-61",
+   "part_a": "HRN-107-LR-S",
+   "part_b": "HRN-002-R",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-26 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.005 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-62",
+   "part_a": "HRN-107-PACK",
+   "part_b": "HRN-001",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-10 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.037 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-63",
+   "part_a": "HRN-107-UL-P1",
+   "part_b": "HRN-002-L",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-14 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.015 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-64",
+   "part_a": "HRN-107-UL-P2",
+   "part_b": "HRN-002-L",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-14 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.015 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-65",
+   "part_a": "HRN-107-UL-PH",
+   "part_b": "HRN-002-L",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-18 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.011 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-66",
+   "part_a": "HRN-107-UL-S",
+   "part_b": "HRN-002-L",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-25 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.005 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-67",
+   "part_a": "HRN-107-UR-P1",
+   "part_b": "HRN-002-R",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-13 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.015 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-68",
+   "part_a": "HRN-107-UR-P2",
+   "part_b": "HRN-002-R",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-13 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.015 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-69",
+   "part_a": "HRN-107-UR-PH",
+   "part_b": "HRN-002-R",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-17 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.011 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
+   },
+   "declared_in": "harness"
+  },
+  {
+   "id": "E-HRN-70",
+   "part_a": "HRN-107-UR-S",
+   "part_b": "HRN-002-R",
+   "via": "CT-HEATSHRINK",
+   "owner": "harness",
+   "notes": "heat-shrink shrunk over the solder joint of E-HRN-24 at the part face (D-88)",
+   "retention": {
+    "item": "adhesive-lined heat-shrink, shrunk",
+    "count": 1,
+    "load_n": "< 0.1 (0.005 g x 12.75 g crash)",
+    "inspection": "pre-flight: sleeve over the joint, no bare conductor"
    },
    "declared_in": "harness"
   },
@@ -9451,7 +10013,7 @@ window.VIEWER_DATA = {
    "part_b": "FIN-001-UR",
    "via": "CT-TAPE-FOAM",
    "owner": "power",
-   "notes": "cap laid along x on the half-fin outboard face 3 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
+   "notes": "cap laid along x on the half-fin outboard face 15 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
    "retention": {
     "item": "foam tape 1.1 mm + 1 packing-tape strip over the can",
     "count": 1,
@@ -9466,7 +10028,7 @@ window.VIEWER_DATA = {
    "part_b": "FIN-001-UL",
    "via": "CT-TAPE-FOAM",
    "owner": "power",
-   "notes": "cap laid along x on the half-fin outboard face 3 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
+   "notes": "cap laid along x on the half-fin outboard face 15 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
    "retention": {
     "item": "foam tape 1.1 mm + 1 packing-tape strip over the can",
     "count": 1,
@@ -9481,7 +10043,7 @@ window.VIEWER_DATA = {
    "part_b": "FIN-001-LR",
    "via": "CT-TAPE-FOAM",
    "owner": "power",
-   "notes": "cap laid along x on the half-fin outboard face 3 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
+   "notes": "cap laid along x on the half-fin outboard face 15 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
    "retention": {
     "item": "foam tape 1.1 mm + 1 packing-tape strip over the can",
     "count": 1,
@@ -9496,7 +10058,7 @@ window.VIEWER_DATA = {
    "part_b": "FIN-001-LL",
    "via": "CT-TAPE-FOAM",
    "owner": "power",
-   "notes": "cap laid along x on the half-fin outboard face 3 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
+   "notes": "cap laid along x on the half-fin outboard face 15 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
    "retention": {
     "item": "foam tape 1.1 mm + 1 packing-tape strip over the can",
     "count": 1,
@@ -10368,6 +10930,13 @@ window.VIEWER_DATA = {
    "kind": "mechanical",
    "method": "strapped",
    "spec": "hatch: printed tongue under a fixed lip at one end, hook-and-loop tab at the other (tool-free, no magnets)"
+  },
+  "CT-HEATSHRINK": {
+   "id": "CT-HEATSHRINK",
+   "kind": "mechanical",
+   "method": "bonded",
+   "structural": false,
+   "spec": "adhesive-lined 3:1 heat-shrink (BOM HRN-107) shrunk over a soldered lead where it leaves the part face; holds on the lead and the joint, carries no load (D-88)"
   },
   "CT-HW-SEATED": {
    "id": "CT-HW-SEATED",

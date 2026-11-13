@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 37.78,
+ "render_s": 28.0,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -44,28 +44,28 @@
  "subject_px": [
   215,
   30,
-  1941,
+  1940,
   995
  ],
  "callouts": [
   {
    "item": "FIN-002-R",
    "x": 949.1,
-   "y": 393.4,
+   "y": 657.3,
    "title": "FIN-002-R",
    "text": "CF motor tube 22 x 20",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.038,
-    0.3284,
-    0.0748
+    0.0367,
+    0.3272,
+    -0.0617
    ]
   },
   {
    "item": "FIN-003-UR",
-   "x": 953.0,
+   "x": 953.5,
    "y": 146.7,
    "title": "FIN-003-UR",
    "text": "Canted motor mount",
@@ -73,24 +73,24 @@
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.032,
+    0.0316,
     0.334,
     0.1981
    ]
   },
   {
    "item": "FIN-004-R",
-   "x": 948.7,
-   "y": 505.1,
+   "x": 938.5,
+   "y": 521.9,
    "title": "FIN-004-R",
    "text": "Through-core block",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0328,
-    0.3328,
-    0.0198
+    0.0345,
+    0.338,
+    0.0118
    ]
   },
   {
@@ -111,7 +111,7 @@
   {
    "item": "FIN-001-LR",
    "x": 755.1,
-   "y": 659.6,
+   "y": 645.5,
    "title": "FIN-001-LR",
    "text": "Half-fin, foam board",
    "detail": null,
@@ -120,7 +120,7 @@
    "world_m": [
     0.1875,
     0.3248,
-    -0.102
+    -0.0939
    ]
   },
   {
@@ -148,10 +148,10 @@
    "mass_g": 201.9,
    "subsystem": "wing",
    "bbox_px": [
-    217,
-    227,
-    1940,
-    672
+    215,
+    226,
+    1932,
+    664
    ]
   },
   {
@@ -178,7 +178,7 @@
    "bbox_px": [
     215,
     226,
-    1941,
+    1940,
     672
    ]
   },
@@ -234,7 +234,7 @@
    "bbox_px": [
     914,
     122,
-    1009,
+    1010,
     228
    ]
   },
@@ -290,7 +290,7 @@
    "bbox_px": [
     871,
     181,
-    989,
+    998,
     254
    ]
   },
@@ -557,7 +557,7 @@
     908,
     841,
     932,
-    860
+    861
    ]
   },
   {
@@ -985,6 +985,23 @@
   "HRN-105-6",
   "HRN-105-SL",
   "HRN-105-SR",
+  "HRN-107-LL-P1",
+  "HRN-107-LL-P2",
+  "HRN-107-LL-PH",
+  "HRN-107-LL-S",
+  "HRN-107-LR-P1",
+  "HRN-107-LR-P2",
+  "HRN-107-LR-PH",
+  "HRN-107-LR-S",
+  "HRN-107-PACK",
+  "HRN-107-UL-P1",
+  "HRN-107-UL-P2",
+  "HRN-107-UL-PH",
+  "HRN-107-UL-S",
+  "HRN-107-UR-P1",
+  "HRN-107-UR-P2",
+  "HRN-107-UR-PH",
+  "HRN-107-UR-S",
   "HRN-110-LL",
   "HRN-110-LR",
   "HRN-110-UL",

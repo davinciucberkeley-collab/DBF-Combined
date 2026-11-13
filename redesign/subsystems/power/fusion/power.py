@@ -176,7 +176,7 @@ def build(ctx):
     x0 = esc['x1'] + L['cap_gap_x_m']
     zc = (esc['z0'] + esc['z1']) / 2
     cap = ctx.part('PWR-008-UR')
-    cap.box((x0, face, zc - cd / 2), (x0 + cl, face + cd, zc + cd / 2), name='680 uF cap')
+    cap.cylinder('X', (x0, face + cd / 2, zc), cl, cd / 2, name='680 uF cap can')   # D-88: the round can, not a box
     k9.quad(ctx, {s: 'PWR-008-' + s for s in ST})
 
     build_frame_hardware(ctx, G)

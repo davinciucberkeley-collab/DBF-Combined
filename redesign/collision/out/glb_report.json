@@ -1,0 +1,138 @@
+{
+ "bodies": 210,
+ "wire_strands": 50,
+ "hits": [
+  {
+   "a": "WNG-001",
+   "b": "WNG-003",
+   "depth_mm": 0.019,
+   "at_mm": [
+    283.68,
+    -302.2,
+    1.79
+   ],
+   "bodies": [
+    "WNG-003 \"WNG-003\" x WNG-001 \"WNG-001\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-28#1",
+   "b": "E-HRN-28#2",
+   "depth_mm": 0.01,
+   "at_mm": [
+    53.97,
+    56.78,
+    35.7
+   ],
+   "bodies": [
+    "E-HRN-28 \"wire strand 1 (0.9 mm)\" x E-HRN-28 \"wire strand 2 (1.3 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-28#2",
+   "b": "E-HRN-28#3",
+   "depth_mm": 0.012,
+   "at_mm": [
+    52.68,
+    56.35,
+    35.45
+   ],
+   "bodies": [
+    "E-HRN-28 \"wire strand 2 (1.3 mm)\" x E-HRN-28 \"wire strand 3 (1.3 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-29#1",
+   "b": "E-HRN-29#2",
+   "depth_mm": 0.02,
+   "at_mm": [
+    53.94,
+    61.27,
+    36.58
+   ],
+   "bodies": [
+    "E-HRN-29 \"wire strand 1 (0.9 mm)\" x E-HRN-29 \"wire strand 2 (1.3 mm)\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-29",
+   "b": "WNG-003",
+   "depth_mm": 0.023,
+   "at_mm": [
+    109.3,
+    96.7,
+    22.31
+   ],
+   "bodies": [
+    "WNG-003 \"WNG-003\" x E-HRN-29 \"wire strand 3 (1.3 mm)\" 0.02 mm"
+   ]
+  },
+  {
+   "a": "E-HRN-29#2",
+   "b": "E-HRN-29#3",
+   "depth_mm": 0.015,
+   "at_mm": [
+    52.76,
+    60.85,
+    36.71
+   ],
+   "bodies": [
+    "E-HRN-29 \"wire strand 2 (1.3 mm)\" x E-HRN-29 \"wire strand 3 (1.3 mm)\" 0.01 mm"
+   ]
+  },
+  {
+   "a": "FIN-001-UL",
+   "b": "WNG-001",
+   "depth_mm": 0.026,
+   "at_mm": [
+    117.22,
+    -325.62,
+    21.98
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x FIN-001-UL \"FIN-001-UL\" 0.03 mm"
+   ]
+  },
+  {
+   "a": "FIN-001-UR",
+   "b": "WNG-001",
+   "depth_mm": 0.026,
+   "at_mm": [
+    117.22,
+    314.38,
+    21.98
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x FIN-001-UR \"FIN-001-UR\" 0.03 mm"
+   ]
+  },
+  {
+   "a": "GER-007-L",
+   "b": "WNG-001",
+   "depth_mm": 0.043,
+   "at_mm": [
+    305.74,
+    -563.75,
+    -1.32
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x GER-007-L \"GER-007-L\" 0.04 mm"
+   ]
+  },
+  {
+   "a": "GER-007-R",
+   "b": "WNG-001",
+   "depth_mm": 0.043,
+   "at_mm": [
+    305.74,
+    561.88,
+    -1.32
+   ],
+   "bodies": [
+    "WNG-001 \"WNG-001\" x GER-007-R \"GER-007-R\" 0.04 mm"
+   ]
+  }
+ ],
+ "wire_ends": [],
+ "entries": []
+}

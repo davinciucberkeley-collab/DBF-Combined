@@ -91,7 +91,7 @@
    "mass_g": 2.2,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.137,
+    0.147,
     0.3298,
     0.118
    ],
@@ -107,7 +107,7 @@
    "mass_g": 2.2,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.137,
+    0.147,
     -0.3298,
     0.118
    ],
@@ -123,7 +123,7 @@
    "mass_g": 2.2,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.137,
+    0.147,
     0.3298,
     -0.118
    ],
@@ -139,7 +139,7 @@
    "mass_g": 2.2,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    0.137,
+    0.147,
     -0.3298,
     -0.118
    ],
@@ -307,7 +307,7 @@
    "part_b": "FIN-001-UR",
    "via": "CT-TAPE-FOAM",
    "owner": "power",
-   "notes": "cap laid along x on the half-fin outboard face 3 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
+   "notes": "cap laid along x on the half-fin outboard face 15 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
    "retention": {
     "item": "foam tape 1.1 mm + 1 packing-tape strip over the can",
     "count": 1,
@@ -321,7 +321,7 @@
    "part_b": "FIN-001-UL",
    "via": "CT-TAPE-FOAM",
    "owner": "power",
-   "notes": "cap laid along x on the half-fin outboard face 3 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
+   "notes": "cap laid along x on the half-fin outboard face 15 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
    "retention": {
     "item": "foam tape 1.1 mm + 1 packing-tape strip over the can",
     "count": 1,
@@ -335,7 +335,7 @@
    "part_b": "FIN-001-LR",
    "via": "CT-TAPE-FOAM",
    "owner": "power",
-   "notes": "cap laid along x on the half-fin outboard face 3 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
+   "notes": "cap laid along x on the half-fin outboard face 15 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
    "retention": {
     "item": "foam tape 1.1 mm + 1 packing-tape strip over the can",
     "count": 1,
@@ -349,7 +349,7 @@
    "part_b": "FIN-001-LL",
    "via": "CT-TAPE-FOAM",
    "owner": "power",
-   "notes": "cap laid along x on the half-fin outboard face 3 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
+   "notes": "cap laid along x on the half-fin outboard face 15 mm aft of the ESC pad, clear of the ESC strap and FET face (E3); leads to the ESC power pads <= 20 mm (harness edge, CR-F1-18)",
    "retention": {
     "item": "foam tape 1.1 mm + 1 packing-tape strip over the can",
     "count": 1,

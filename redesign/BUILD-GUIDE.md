@@ -203,7 +203,8 @@ Detail: [`subsystems/harness/BUILD.md`](subsystems/harness/BUILD.md), [`subsyste
    conductors start on the board's output pads, drop through the deck window either side of the pairs and land
    across the bars' forward ends.
    At the ESC: the pair and the DShot lead come up the gap between the ESC's aft end and the cap and enter the ESC's
-   aft end face onto its power pads (D-87), under the heat-shrink.
+   aft end face square onto its power pads (D-87, D-88), the signal lead to the lowest pad. Slide a 1.5–3.5 mm length of
+   adhesive-lined heat-shrink (HRN-107) over each lead before soldering and shrink it over the joint at the face.
 3. Strap the ESCs on their pads; thread the leads through the fin grommet with a 20–30 mm service loop
    ([WB-08](review/WIRING-BATTERY.md#findings)); lay them in the grooves with tape tabs.
 4. Servo leads to the JR recess before the skin. The mated JR pair lies flat on the floor of the 30.5 × 10.8 × 5 mm
@@ -215,6 +216,7 @@ Detail: [`subsystems/harness/BUILD.md`](subsystems/harness/BUILD.md), [`subsyste
 5. Skin the wing: lower, upper, then the 100 mm LE strip. No seam within 32 mm of the LE. Run a finger along every
    groove: nothing proud. Where a lead leaves its groove (pod exits, groove ends by the fins), slit the tape round
    it with a fresh blade: nothing runs on top of the tape (D-86).
+   At each fin root, trim the tape square along the edge of the cove fillet: no tape lies on the fillet (D-88).
 6. `T-F2-CONT` with the pack out: every net < 0.1 Ω, > 1 MΩ between nets.
 
 ☐ Inspect before moving on: continuity and isolation logged; no tape wrinkles at the LE; LE-strip edges ≥ 32 mm.

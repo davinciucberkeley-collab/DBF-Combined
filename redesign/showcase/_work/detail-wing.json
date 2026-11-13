@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 44.99,
+ "render_s": 30.5,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 50,
   "location_m": [
-   1.8579,
-   0.8068,
-   2.1995
+   1.8583,
+   0.807,
+   2.2001
   ],
   "fit": "visible",
   "frame": [
@@ -43,7 +43,7 @@
   {
    "item": "WNG-002",
    "x": 843.1,
-   "y": 445.3,
+   "y": 445.4,
    "title": "WNG-002",
    "text": "CF spar 22 x 20 mm",
    "detail": null,
@@ -57,53 +57,53 @@
   },
   {
    "item": "WNG-001",
-   "x": 557.6,
-   "y": 392.4,
+   "x": 718.6,
+   "y": 409.3,
    "title": "WNG-001",
    "text": "XPS core (ghosted)",
    "detail": null,
    "role": "ghost",
    "occluded": false,
    "world_m": [
-    0.1651,
-    -0.34,
-    0.0173
+    0.0909,
+    -0.1371,
+    0.0042
    ]
   },
   {
    "item": "WNG-011-L",
-   "x": 667.7,
-   "y": 522.9,
+   "x": 615.9,
+   "y": 502.1,
    "title": "WNG-011-L",
    "text": "Elevon, inboard panel",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.2924,
-    -0.1101,
-    0.0012
+    0.2898,
+    -0.1866,
+    0.0013
    ]
   },
   {
    "item": "WNG-012-L",
-   "x": 438.4,
-   "y": 436.7,
+   "x": 438.5,
+   "y": 440.0,
    "title": "WNG-012-L",
    "text": "Elevon, outboard panel",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.2893,
-    -0.4524,
-    0.0014
+    0.294,
+    -0.4496,
+    0.0011
    ]
   },
   {
    "item": "WNG-004-L",
    "x": 601.6,
-   "y": 360.6,
+   "y": 360.7,
    "title": "WNG-004-L",
    "text": "Spar plug at fin block",
    "detail": null,
@@ -117,8 +117,8 @@
   },
   {
    "item": "MEC-009-LO",
-   "x": 452.6,
-   "y": 421.3,
+   "x": 452.7,
+   "y": 421.4,
    "title": "MEC-009-LO",
    "text": "Elevon torque tube",
    "detail": null,
@@ -142,8 +142,8 @@
    "bbox_px": [
     348,
     270,
-    1252,
-    726
+    1251,
+    728
    ]
   },
   {
@@ -171,7 +171,7 @@
     581,
     326,
     634,
-    381
+    382
    ]
   },
   {
@@ -254,7 +254,7 @@
    "bbox_px": [
     643,
     369,
-    662,
+    663,
     388
    ]
   },
@@ -336,9 +336,9 @@
    "mass_g": 3.5,
    "subsystem": "wing",
    "bbox_px": [
-    357,
+    358,
     390,
-    525,
+    526,
     481
    ]
   },
@@ -550,6 +550,23 @@
   "HRN-105-6",
   "HRN-105-SL",
   "HRN-105-SR",
+  "HRN-107-LL-P1",
+  "HRN-107-LL-P2",
+  "HRN-107-LL-PH",
+  "HRN-107-LL-S",
+  "HRN-107-LR-P1",
+  "HRN-107-LR-P2",
+  "HRN-107-LR-PH",
+  "HRN-107-LR-S",
+  "HRN-107-PACK",
+  "HRN-107-UL-P1",
+  "HRN-107-UL-P2",
+  "HRN-107-UL-PH",
+  "HRN-107-UL-S",
+  "HRN-107-UR-P1",
+  "HRN-107-UR-P2",
+  "HRN-107-UR-PH",
+  "HRN-107-UR-S",
   "HRN-110-LL",
   "HRN-110-LR",
   "HRN-110-UL",

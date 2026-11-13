@@ -741,30 +741,40 @@ export async function start() {
   readColours(); wire(); hint();
   progress(0, 'reading part data');
   let data;
-  try { const r = await fetch('data/viewer-data.json?v=20261111d'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
+  try { const r = await fetch('data/viewer-data.json?v=20261112a'); if (!r.ok) throw new Error('HTTP ' + r.status); data = await r.json(); }
   catch (e) { loadFailed('Part data not found', esc(e.message) + '<br>data/viewer-data.json is built by redesign/viewer/build_data.py --out site/data'); return; }
   S.data = data; S.idx = M.index(data);
   renderCounts(); renderTree(); renderPanel();
   if (!initThree()) { loadFailed('3-D is not available', 'This browser could not start WebGL. The part list and panel still work.'); return; }
   const total = (data.glb && data.glb.bytes) || 3443204;
-  const loadGlbScript = () => new Promise((res, rej) => {
-    progress(0.5, 'loading model (embedded copy)');
+  // the embedded copy comes in parts (data/assembly.glb.part1.js ... partN.js, N = data.glb.js_parts): a host that
+  // caps a file's size (claude.ai artifacts: 16 MB per text file) takes each part; build_data.py writes them
+  const nParts = (data.glb && data.glb.js_parts) || 0;
+  const addScript = src => new Promise((ok, no) => {
     const s = document.createElement('script');
-    s.src = 'data/assembly.glb.js?v=20261111e';
-    s.onerror = () => rej(new Error('data/assembly.glb.js not found'));
-    s.onload = () => {
-      try {
-        const bin = atob(window.VIEWER_GLB_B64 || ''), buf = new Uint8Array(bin.length);
-        for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
-        window.VIEWER_GLB_B64 = null;
-        new GLTFLoader().parse(buf.buffer, '', res, rej);
-      } catch (err) { rej(err); }
-    };
+    s.src = src; s.onload = ok; s.onerror = () => no(new Error(src.split('?')[0] + ' not found'));
     document.head.appendChild(s);
   });
+  const loadGlbScript = async () => {
+    window.VIEWER_GLB_B64_PARTS = []; window.VIEWER_GLB_B64 = null;
+    if (nParts) {
+      for (let i = 1; i <= nParts; i++) {
+        progress(0.5 * i / nParts, 'loading model (embedded copy, part ' + i + ' of ' + nParts + ')');
+        await addScript('data/assembly.glb.part' + i + '.js?v=20261112a');
+      }
+    } else {
+      progress(0.5, 'loading model (embedded copy)');
+      await addScript('data/assembly.glb.js?v=20261112a');
+    }
+    const b64 = nParts ? window.VIEWER_GLB_B64_PARTS.join('') : (window.VIEWER_GLB_B64 || '');
+    window.VIEWER_GLB_B64_PARTS = null; window.VIEWER_GLB_B64 = null;
+    const bin = atob(b64), buf = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+    return new Promise((res, rej) => new GLTFLoader().parse(buf.buffer, '', res, rej));
+  };
   let gltf;
   try {
-    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/k09l.glb?v=20261111d', res,
+    gltf = await new Promise((res, rej) => new GLTFLoader().load('assets/k09l.glb?v=20261112a', res,
       ev => { const got = ev.loaded || 0; progress(Math.min(got / total, 1), kB(got) + ' of ' + kB(total)); }, rej));
   } catch (e) {
     // hosts that do not serve .glb (claude.ai artifacts) and file:// get the same bytes as base64 in a script

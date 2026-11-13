@@ -474,6 +474,46 @@ def p1_holes(g, d=0.008, n=24):
     return out
 
 
+def fillet_trims(ctx, g, inset=0.0005, below=0.0005, above=0.0012):
+    """D-88: the tape trimmed square along the fin root fillets' edges (skin laid after the fins, BUILD-GUIDE stage 6;
+    interfaces/seats.json WNG-003 / FIN-001): per fin face and fillet zone, an X-loft of the (y, z) rectangle from
+    inset inside the board face to the fillet's edge (its leg), below / above the surface, on the wing's own section
+    stations. The fillet itself cuts the tape too, but a cut against its feather edge left 0.075-0.094 mm tape slivers
+    in the exported model (GLB gate); this cut ends the tape on a square edge instead. Zones from the fins module
+    (fins.py geometry()['fillet_zones']), so the trim follows any fillet change. Right and left, upper and lower."""
+    import importlib.util
+    import os
+    try:
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+                            'fins', 'fusion', 'fins.py')
+        spec = importlib.util.spec_from_file_location('fins_for_wing_trim', path)
+        fm = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(fm)
+        G = fm.geometry(ctx.params, k9.local('fins'), g['coords'])
+    except (OSError, KeyError, NameError, ImportError) as e:
+        print('wing: fillet_trims skipped (%s)' % e)
+        return []
+    out = []
+    for upper in (True, False):
+        side, s = ('upper', 1) if upper else ('lower', -1)
+        for x0, x1, leg in G['fillet_zones'](upper):
+            if x1 - x0 < 1e-4:
+                continue
+            xs = _xs(0.0, g['c'])
+            xs = sorted(set([x0, x1] + [x for x in xs if x0 + 1e-6 < x < x1 - 1e-6]))
+            for d in (1, -1):
+                yF = G['yf'] + d * G['t_fin'] / 2
+                ya, yb = sorted((yF - d * inset, yF + d * leg))
+                for m in (1, -1):
+                    secs = []
+                    for x in xs:
+                        z = surf(g, x, side)
+                        za, zb = sorted((z - s * below, z + s * above))
+                        secs.append((x, [(m * ya, za), (m * yb, za), (m * yb, zb), (m * ya, zb)][::m]))
+                    out.append(fk.Shape('loft', 'tape trim at fillet edge', axis='X', smooth=False, sections=secs))
+    return out
+
+
 def p1s_jog(g, n=6):
     """D-86 (F2 groove.p1s_jog_m): a groove in the lower surface from the P1s lower mouth across to the signal groove,
     so the lower-station signal lead stays under the tape: the signal-groove section (width x depth) along the segment
@@ -661,6 +701,8 @@ def build(ctx):
         skin.cut(cutter, note='tape opened over the P1 mouths')
     for cutter in skin_slits(g):                              # D-86: slit round each lead where it passes the tape
         skin.cut(cutter, note='tape slit round a lead (F2 cad.skin_slots)', shop=False)
+    for cutter in fillet_trims(ctx, g):                       # D-88: trimmed square along the fin root fillets
+        skin.cut(cutter, note='tape trimmed along the fin root fillet edge (skin laid after the fins)', shop=False)
     t = g['t_skin']
     layer = {'doubler block': 2, 'doubler servo': 1, 'LE strip': 1}          # layers under each piece
     for name, side, x0, x1, y0, y1, _n in skin_plan(g):

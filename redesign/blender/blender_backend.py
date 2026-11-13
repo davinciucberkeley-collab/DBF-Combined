@@ -33,6 +33,7 @@ import sys
 sys.dont_write_bytecode = True    # do not leave __pycache__ in other agents' folders
 
 import bmesh
+from mathutils.bvhtree import BVHTree
 import bpy
 from mathutils import Matrix, Vector
 from mathutils.geometry import tessellate_polygon
@@ -325,11 +326,28 @@ class BlenderBackend(fk.Backend):
         pts = [M @ v.co for v in me.vertices]
         return ([min(p[i] for p in pts) for i in range(3)], [max(p[i] for p in pts) for i in range(3)])
 
+    CUT_TOL = 2e-5                                    # m: a result surface deeper than this inside a cutter fails
+    CUT_DEEP = 4.5e-5                                 # m: cutter samples this deep must hold no material (the GLB
+                                                      # gate fails penetration > 0.05 mm: collide_glb_blender.py)
+    SAMPLE_M = 1e-3                                   # m: spacing of the verification samples (GLB gate ~1 mm)
+    RAYS = (Vector((1.0, 0.31, 0.17)).normalized(), Vector((-0.23, 1.0, 0.41)).normalized(),
+            Vector((0.37, -0.29, 1.0)).normalized(), Vector((-0.71, -0.43, -0.59)).normalized(),
+            Vector((0.13, -0.83, -0.47)).normalized())  # skewed: never along a modelled face or edge
+    CUT_FAILURES = []                                 # (part, cutter label, (score, samples left)) never verified
+
     def _apply_cuts(self, pid, ob):
-        """Each body is cut only by the cutters whose boxes touch it (EXACT, no self-intersection pass), then the
-        bodies are joined again: one boolean over the whole multi-shell part mesh took tens of minutes on the core."""
-        cuts = self.cuts.get(pid)
-        if not cuts:
+        """D-88: each body is cut by the cutters that reach into it, then the bodies are united into one solid
+        (_unite; one boolean over the whole multi-shell part mesh took tens of minutes on the core). Per body: one
+        MANIFOLD difference with all its cutters at once (Manifold needs watertight inputs: the builders' seam
+        duplicates are welded; a chain of single cuts let one non-manifold EXACT result make every later MANIFOLD
+        cut refuse its input), then, only if that does not verify, one cutter at a time. Every result is verified
+        (_check) the way the GLB gate sees it: no surface sample of the result deeper than CUT_TOL inside a cutter,
+        no material at the cutter's samples CUT_DEEP under its surface. The old check (face centres inside the
+        cutter, nearest-normal sign) passed uncut faces bigger than the cutter and failed clean cuts beside a
+        cutter cap coplanar with the body's face."""
+        cuts = self.cuts.get(pid) or []
+        shapes = self.shapes_of.get(pid, [])
+        if not shapes or (not cuts and len(shapes) == 1):
             return
         Mo = ob.matrix_world.copy()
         cutters = []
@@ -339,46 +357,367 @@ class BlenderBackend(fk.Backend):
             me = bpy.data.meshes.new('%s cut %d' % (pid, k))
             bm.to_mesh(me)
             bm.free()
+            self._weld(me)
             co = bpy.data.objects.new(me.name, me)
             co.matrix_world = Matrix(M) if M is not None else Mo
             bpy.context.scene.collection.objects.link(co)
-            cutters.append((co, self._world_box(me, co.matrix_world)))
-        out = bmesh.new()
-        for s in self.shapes_of.get(pid, []):
+            co['label'] = s.name or 'cut %d' % k
+            cutters.append(self._cutter_data(co))
+        bodies = []
+        for s in shapes:
             bm = bmesh.new()
             BUILDERS[s.kind](bm, s)
             me = bpy.data.meshes.new(pid + ' body')
             bm.to_mesh(me)
             bm.free()
-            lo, hi = self._world_box(me, Mo)
-            near = [co for co, (a, b) in cutters if all(a[i] < hi[i] and b[i] > lo[i] for i in range(3))]
+            self._weld(me)
+            near = self._near(me, Mo, cutters)
             if near:
-                tmp = bpy.data.objects.new(pid + ' tmp', me)
-                tmp.matrix_world = Mo
-                bpy.context.scene.collection.objects.link(tmp)
-                col = bpy.data.collections.new(pid + ' near')
-                bpy.context.scene.collection.children.link(col)
-                for co in near:
-                    col.objects.link(co)
-                mod = tmp.modifiers.new('cuts', 'BOOLEAN')
-                mod.operation, mod.solver, mod.operand_type, mod.collection = 'DIFFERENCE', 'EXACT', 'COLLECTION', col
+                me = self._cut_body(pid, me, Mo, near)
+            bodies.append(me)
+        self._unite(pid, ob, bodies, Mo)
+        for c in cutters:
+            m = c['ob'].data
+            bpy.data.objects.remove(c['ob'])
+            bpy.data.meshes.remove(m)
+
+    UNION_FAILURES = []                               # parts whose bodies stay separate shells in the GLB
+
+    @staticmethod
+    def _volume(me):
+        bm = bmesh.new()
+        bm.from_mesh(me)
+        v = bm.calc_volume(signed=True)
+        bm.free()
+        return v
+
+    @staticmethod
+    def _triangles(me):
+        """Store a boolean result as triangles, split here once, so the mesh checked is the mesh exported. Manifold's
+        result comes back as n-gons (long faces with vertices along their edges, faces round a slit); split again by
+        the glTF writer they gave duplicate triangles that mesh validation dropped: 200+ cracks in the skin and the
+        core, and a ray through a crack counts one crossing too few. Where two triangles share all three vertices
+        (two united bodies touching face to face: a wall of zero thickness) both go: the pair encloses no volume
+        and the shell stays closed."""
+        bm = bmesh.new()
+        bm.from_mesh(me)
+        bmesh.ops.triangulate(bm, faces=bm.faces)
+        seen = {}
+        for f in bm.faces:
+            seen.setdefault(frozenset(v.index for v in f.verts), []).append(f)
+        dup = [f for fs in seen.values() if len(fs) > 1 for f in fs]
+        if dup:
+            bmesh.ops.delete(bm, geom=dup, context='FACES')
+        bm.to_mesh(me)
+        bm.free()
+        me.validate()
+
+    def _unite(self, pid, ob, bodies, Mo):
+        """D-88: the part as ONE solid: its (cut) bodies united with MANIFOLD. A GLB node holding a part's bodies as
+        separate shells that overlap or abut (core segments, stacked tape layers, a motor's bell over its shaft) has
+        no inside / outside a ray can count: crossings of coincident faces are lost or doubled, so the GLB gate read
+        points outside a part as deep inside it. The union is checked: watertight (no edge with an odd face count),
+        its box the bodies' box, its volume between the largest body's and the bodies' sum; otherwise the bodies are
+        joined as before and the part is reported (UNION_FAILURES)."""
+        bodies = [m for m in bodies if len(m.polygons)]
+        for m in bodies:
+            self._triangles(m)
+        res = None
+        if len(bodies) == 1 and self._tris(bodies[0], Mo)[2]:
+            BlenderBackend.UNION_FAILURES.append((pid, 'open'))
+            print('UNION NOT CLEAN: %s (1 body, %d open edges)' % (pid, self._tris(bodies[0], Mo)[2]))
+        if len(bodies) > 1:
+            boxes, vols, closed = [], [], True
+            for m in bodies:
+                _t, _b, open_e, lo, hi = self._tris(m, Mo)
+                closed = closed and open_e == 0
+                boxes.append((lo, hi))
+                vols.append(abs(self._volume(m)))
+            why = None if closed else 'an open body'
+            if why is None:
+                obs = []
+                for m in bodies:
+                    o = bpy.data.objects.new(pid + ' part body', m)
+                    o.matrix_world = Mo
+                    bpy.context.scene.collection.objects.link(o)
+                    obs.append(o)
+                col = bpy.data.collections.new(pid + ' bodies')
+                for o in obs[1:]:
+                    col.objects.link(o)
+                mod = obs[0].modifiers.new('unite', 'BOOLEAN')
+                mod.operation, mod.solver, mod.operand_type, mod.collection = 'UNION', 'MANIFOLD', 'COLLECTION', col
                 dg = bpy.context.evaluated_depsgraph_get()
-                cut = bpy.data.meshes.new_from_object(tmp.evaluated_get(dg))
-                bpy.data.objects.remove(tmp)
-                bpy.data.meshes.remove(me)
-                for co in near:
-                    col.objects.unlink(co)
+                res = bpy.data.meshes.new_from_object(obs[0].evaluated_get(dg))
+                for o in obs:
+                    bpy.data.objects.remove(o)
                 bpy.data.collections.remove(col)
-                me = cut
-            out.from_mesh(me)
-            bpy.data.meshes.remove(me)
-        bmesh.ops.recalc_face_normals(out, faces=out.faces)
+                self._triangles(res)
+                _t, _b, open_e, lo, hi = self._tris(res, Mo) if len(res.polygons) else (0, 0, 1, [0] * 3, [0] * 3)
+                v = self._volume(res)
+                blo = [min(b[0][i] for b in boxes) for i in range(3)]
+                bhi = [max(b[1][i] for b in boxes) for i in range(3)]
+                if open_e:
+                    why = '%d open edges' % open_e
+                elif any(abs(lo[i] - blo[i]) > 1e-6 or abs(hi[i] - bhi[i]) > 1e-6 for i in range(3)):
+                    why = 'box changed'
+                elif not max(vols) * (1 - 1e-6) <= v <= sum(vols) * (1 + 1e-6):     # (signed: outward winding)
+                    why = 'volume %.1f mm3 outside %.1f..%.1f' % (v * 1e9, max(vols) * 1e9, sum(vols) * 1e9)
+                if why:
+                    bpy.data.meshes.remove(res)
+                    res = None
+            if why:
+                BlenderBackend.UNION_FAILURES.append((pid, why))
+                print('UNION NOT CLEAN: %s (%d bodies, %s): bodies kept as separate shells' % (pid, len(bodies), why))
+        out = bmesh.new()
+        for m in ([res] if res is not None else bodies):
+            out.from_mesh(m)
+        if res is None:                               # Manifold's winding is right; a recalc across edges where two
+            bmesh.ops.recalc_face_normals(out, faces=out.faces)    # solids kiss flipped whole regions of the skin
         out.to_mesh(ob.data)
         out.free()
-        for co, _b in cutters:
-            m = co.data
-            bpy.data.objects.remove(co)
+        for m in bodies + ([res] if res is not None else []):
             bpy.data.meshes.remove(m)
+
+    # ---- cut helpers (world metres)
+    @staticmethod
+    def _tris(me, M):
+        bm = bmesh.new()
+        bm.from_mesh(me)
+        bm.transform(M)
+        bmesh.ops.triangulate(bm, faces=bm.faces)
+        bm.normal_update()
+        bm.faces.ensure_lookup_table()
+        tris = [(tuple(v.co.copy() for v in f.verts), f.normal.copy()) for f in bm.faces]
+        bvh = BVHTree.FromBMesh(bm)
+        open_e = sum(1 for e in bm.edges if len(e.link_faces) % 2)    # boundary (1) or odd fans: no inside
+                                                                      # (4 = two solids kissing on an edge: closed)
+        co = [v.co for v in bm.verts]
+        lo = [min(c[i] for c in co) for i in range(3)] if co else [0.0] * 3
+        hi = [max(c[i] for c in co) for i in range(3)] if co else [0.0] * 3
+        bm.free()
+        return tris, bvh, open_e, lo, hi
+
+    @classmethod
+    def _samples(cls, tri, cap=64):
+        """Points spread over a triangle about SAMPLE_M apart (sub-triangle centres: no vertex or edge points)."""
+        a, b, c = tri
+        n = max(1, min(cap, int(math.ceil(max((b - a).length, (c - b).length, (a - c).length) / cls.SAMPLE_M))))
+        u, v = (b - a) / n, (c - a) / n
+        pts = []
+        for i in range(n):
+            for j in range(n - i):
+                pts.append(a + u * (i + 1 / 3) + v * (j + 1 / 3))
+                if i + j < n - 1:
+                    pts.append(a + u * (i + 2 / 3) + v * (j + 2 / 3))
+        return pts
+
+    @classmethod
+    def _inside(cls, p, bvh):
+        """Point inside a closed mesh, the GLB gate's test (collide_glb_blender.depth_inside): outside when the
+        nearest-face normal clearly says so ((p - loc).n >= d / 2: away from any edge, where it reads either sign,
+        e.g. beside a cutter cap coplanar with the body's face); otherwise ray parity, odd on three of five skewed
+        rays (stops once three agree): one ray can be miscounted where it enters a thin wall (0.14 mm tape) within
+        1 um of its edge and the next step skips the exit."""
+        loc, nrm, _i, dist = bvh.find_nearest(p)
+        if loc is None or (p - loc).dot(nrm) >= 0.5 * dist:
+            return False
+        odd = even = 0
+        for d in cls.RAYS:
+            n, q = 0, p.copy()
+            for _ in range(200):
+                hit = bvh.ray_cast(q, d)
+                if hit[0] is None:
+                    break
+                n += 1
+                q = hit[0] + d * 1e-6
+            if n % 2:
+                odd += 1
+            else:
+                even += 1
+            if odd == 3 or even == 3:
+                break
+        return odd >= 3
+
+    @staticmethod
+    def _in_tri(p, t, n):
+        a, b, c = t
+        return ((b - a).cross(p - a).dot(n) >= 0 and (c - b).cross(p - b).dot(n) >= 0
+                and (a - c).cross(p - c).dot(n) >= 0)
+
+    @staticmethod
+    def _box_has(lo, hi, p):
+        return lo[0] <= p[0] <= hi[0] and lo[1] <= p[1] <= hi[1] and lo[2] <= p[2] <= hi[2]
+
+    def _cutter_data(self, co):
+        """Cutter in world coordinates plus its inward samples: points CUT_DEEP under its surface, kept only where they
+        are that deep inside it (a recess offsets out of a concave cutter; a tapering bead is thinner)."""
+        tris, bvh, open_e, lo, hi = self._tris(co.data, co.matrix_world)
+        inner = []
+        for t, n in tris:
+            for p in self._samples(t, cap=24):
+                q = p - n * self.CUT_DEEP
+                if self._inside(q, bvh) and bvh.find_nearest(q)[3] > self.CUT_DEEP * 0.9:
+                    inner.append(q)                   # (a sliver thinner than 2 CUT_DEEP holds no sample)
+        return {'ob': co, 'tris': tris, 'bvh': bvh, 'lo': lo, 'hi': hi, 'inner': inner, 'open': open_e,
+                'name': co.name, 'label': co.get('label', co.name)}
+
+    def _near(self, me, Mo, cutters):
+        """Cutters that reach into this body: boxes overlap and the surfaces cross, or the cutter lies inside it."""
+        _t, bvh, _o, lo, hi = self._tris(me, Mo)
+        out = []
+        for c in cutters:
+            if not all(c['lo'][i] < hi[i] and lo[i] < c['hi'][i] for i in range(3)):
+                continue
+            if bvh.overlap(c['bvh']) or (c['inner'] and self._inside(c['inner'][0], bvh)):
+                out.append(c)
+        return out
+
+    def _check(self, res, Mo, near, body_open=0):
+        """(samples of material left where a cutter is, open edges added): (0, 0) = every cut is clean."""
+        if not len(res.polygons):
+            return 0, 0
+        tris, bvh, open_e, lo, hi = self._tris(res, Mo)
+        bad = 0
+        self._deep = 0.0                              # deepest surface sample left inside a cutter (m)
+        self._at = None                               # first sample left (world m), for the report
+        boxes = [([min(p[i] for p in t) for i in range(3)], [max(p[i] for p in t) for i in range(3)])
+                 for t, _n in tris]
+        for c in near:
+            clo, chi = c['lo'], c['hi']
+            for q in c['inner']:                      # the cutter's inside holds none of the result
+                if self._box_has(lo, hi, q) and self._inside(q, bvh):
+                    bad += 1
+                    self._at = self._at or q
+            pairs = bvh.overlap(c['bvh'])
+            cross = {i for i, _j in pairs}
+            for i, j in pairs:                        # where the result's surface meets the cutter's: the cutter
+                t, n = tris[i]                        # triangle's points dropped onto the result triangle (a thin
+                ct = c['tris'][j][0]                  # tape strip's 200 mm triangle over a 4 mm screw head has no
+                for q in (ct[0], ct[1], ct[2], (ct[0] + ct[1] + ct[2]) / 3):     # grid sample on the head)
+                    p = q - n * (q - t[0]).dot(n)
+                    if not self._box_has(clo, chi, p) or not self._in_tri(p, t, n):
+                        continue
+                    d = c['bvh'].find_nearest(p)[3]
+                    if d > self.CUT_TOL and self._inside(p, c['bvh']):
+                        bad += 1
+                        self._deep = max(self._deep, d)
+                        self._at = self._at or p
+            for k, (t, _n) in enumerate(tris):        # no surface of the result inside the cutter: a triangle
+                tlo, thi = boxes[k]                   # inside it crosses its surface or lies wholly inside
+                if not (tlo[0] < chi[0] and thi[0] > clo[0] and tlo[1] < chi[1] and thi[1] > clo[1]
+                        and tlo[2] < chi[2] and thi[2] > clo[2]):
+                    continue
+                if k not in cross and not self._inside((t[0] + t[1] + t[2]) / 3, c['bvh']):
+                    continue
+                for p in self._samples(t, cap=16):       # coarse: the cutter samples catch small misses
+                    if self._box_has(clo, chi, p):
+                        d = c['bvh'].find_nearest(p)[3]
+                        if d > self.CUT_TOL and self._inside(p, c['bvh']):
+                            bad += 1
+                            self._deep = max(self._deep, d)
+                            self._at = self._at or p
+        return bad, max(0, open_e - body_open)
+
+    @staticmethod
+    def _weld(me):
+        """Merge coincident vertices (builders repeat seam vertices), drop zero-area faces, fix the winding: the shape
+        is unchanged, the mesh becomes watertight where the shape is closed."""
+        bm = bmesh.new()
+        bm.from_mesh(me)
+        bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-8)
+        bmesh.ops.dissolve_degenerate(bm, edges=bm.edges, dist=1e-9)
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+        bm.to_mesh(me)
+        bm.free()
+
+    def _boolean(self, pid, me, Mo, obs, solver, tol=False):
+        """One DIFFERENCE of `obs` (one object, or several through a collection) from `me`; returns a new mesh."""
+        tmp = bpy.data.objects.new(pid + ' tmp', me)
+        tmp.matrix_world = Mo
+        bpy.context.scene.collection.objects.link(tmp)
+        mod = tmp.modifiers.new('cut', 'BOOLEAN')
+        mod.operation, mod.solver = 'DIFFERENCE', solver
+        col = None
+        if len(obs) == 1:
+            mod.object = obs[0]
+        else:
+            col = bpy.data.collections.new(pid + ' cutters')
+            for o in obs:
+                col.objects.link(o)
+            mod.operand_type, mod.collection = 'COLLECTION', col
+        if solver == 'EXACT':
+            mod.use_hole_tolerant = tol
+        dg = bpy.context.evaluated_depsgraph_get()
+        cut = bpy.data.meshes.new_from_object(tmp.evaluated_get(dg))
+        bpy.data.objects.remove(tmp)
+        if col is not None:
+            bpy.data.collections.remove(col)
+        return cut
+
+    def _cut_body(self, pid, me, Mo, near):
+        _t, bbvh, body_open, blo, bhi = self._tris(me, Mo)
+        # the result lies inside the body: only cutter samples inside the body can hold material (checked once)
+        near = [dict(c, inner=[q for q in c['inner'] if self._box_has(blo, bhi, q) and self._inside(q, bbvh)])
+                for c in near]
+        dbg = bool(os.environ.get('CUTDBG')) and os.environ['CUTDBG'] in pid
+        cut = self._boolean(pid, me, Mo, [c['ob'] for c in near], 'MANIFOLD')
+        bad, op = self._check(cut, Mo, near, body_open)
+        if dbg:
+            print('CUTDBG', pid, 'all at once,', len(near), 'cutters: left', bad, 'open', op,
+                  'faces', len(me.polygons), '->', len(cut.polygons))
+        if bad == 0 and op == 0:
+            bpy.data.meshes.remove(me)
+            return cut
+        bpy.data.meshes.remove(cut)
+        for c in near:                                # one cutter at a time, each verified
+            me = self._cut_one(pid, me, Mo, c, body_open, dbg)
+        return me
+
+    def _cut_one(self, pid, me, Mo, c, body_open=0, dbg=False):
+        """D-88: subtract one cutter from one body and verify the result (_check). EXACT booleans fail silently on
+        coincident faces (a 45 deg hole through stacked core segments came out uncut, so a wire showed through solid
+        foam). A failed cut is retried with the cutter nudged or grown by a few microns (a clearance far under any
+        fit), hole-tolerant, then FAST; a cut that never verifies is reported (CUT_FAILURES) and the GLB gate
+        (collision/collide_glb_blender.py) catches what it leaves."""
+        co = c['ob']
+        base = co.matrix_world.copy()
+        ctr = Vector([(c['lo'][i] + c['hi'][i]) / 2 for i in range(3)])
+        size = max(1e-4, min(c['hi'][i] - c['lo'][i] for i in range(3)))
+
+        def grow(um):                                  # scale about the box centre: the thinnest side grows by um
+            f = 1 + 2 * um * 1e-6 / size
+            return Matrix.Translation(ctr) @ Matrix.Scale(f, 4) @ Matrix.Translation(-ctr)
+        tries = [(Matrix(), 'MANIFOLD', False), (Matrix.Translation((2e-6, 1e-6, 3e-6)), 'MANIFOLD', False),
+                 (grow(3), 'MANIFOLD', False), (grow(10), 'MANIFOLD', False),
+                 (Matrix(), 'EXACT', False), (Matrix(), 'EXACT', True), (grow(3), 'EXACT', True),
+                 (Matrix.Translation((3e-6, 2e-6, 1e-6)), 'EXACT', True), (Matrix(), 'FAST', False),
+                 (grow(5), 'FAST', False)]
+        best = None
+        for T, solver, tol in tries:
+            co.matrix_world = T @ base
+            cut = self._boolean(pid, me, Mo, [co], solver, tol)
+            bad, op = self._check(cut, Mo, [c], body_open)
+            score = (bad + op, bad, self._deep if len(cut.polygons) else 0.0,
+                     tuple(round(v * 1000, 2) for v in self._at) if len(cut.polygons) and self._at else None)
+            if dbg:
+                print('CUTDBG', pid, c['label'], solver, tol, 'left', bad, 'open', op,
+                      'faces', len(me.polygons), '->', len(cut.polygons))
+            if best is None or score[:3] < best[0][:3]:
+                if best is not None:
+                    bpy.data.meshes.remove(best[1])
+                best = (score, cut)
+            else:
+                bpy.data.meshes.remove(cut)
+            if score[0] == 0:
+                break
+        co.matrix_world = base
+        if best[0][0] != 0:
+            BlenderBackend.CUT_FAILURES.append((pid, c['label'], best[0]))
+            print('CUT NOT VERIFIED: %s %s (%s): %d samples left inside the cutter (surface up to %.3f mm deep, '
+                  'first at %s mm), %d open edges' % (pid, c['name'], c['label'], best[0][1], best[0][2] * 1000,
+                                                      best[0][3], best[0][0] - best[0][1]))
+        bpy.data.meshes.remove(me)
+        return best[1]
 
     def joint(self, j, ca, cb):
         ob = bpy.data.objects.new('JOINT ' + j.edge, None)
@@ -443,7 +782,8 @@ class BlenderBackend(fk.Backend):
             bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
             bm.to_mesh(ob.data)
             bm.free()
-            self._apply_cuts(pid, ob)
+            if not ob.get('mass_proxy'):              # mass-only stand-ins are never drawn: left as built
+                self._apply_cuts(pid, ob)             # cut every body, then one solid per part (D-88)
             me = ob.data
             for poly in me.polygons:
                 poly.use_smooth = True

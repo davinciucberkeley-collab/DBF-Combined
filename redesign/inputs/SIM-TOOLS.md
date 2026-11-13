@@ -12,7 +12,7 @@ for the proof chain.
 | gmsh (Python API) | `import gmsh` | Meshing for SU2 (CFD and FEA) |
 | NumPy 2.5 / SciPy 1.18 | `import numpy, scipy` | Beam/plate models, sizing, ODE flight dynamics, optimisation |
 | Matplotlib | `import matplotlib` | Plots (follow `redesign/design-system/` styling) |
-| Blender 4.2.3 | `C:/Users/dillo/tools/blender/blender-4.2.3-windows-x64/blender.exe` | Renders, animations, GLB export (via `redesign/blender/`) |
+| Blender 4.5.14 LTS (D-88: its MANIFOLD boolean solver; 4.2 EXACT dropped cuts) | `C:/Users/dillo/tools/blender/blender-4.5.14-windows-x64/blender.exe` | Renders, animations, GLB export (via `redesign/blender/`) |
 | ArduPilot SITL | not installed | Flight-control agents write parameter files and test plans; mark SITL runs `UNVERIFIED` |
 
 Previous usage patterns worth reusing: `analysis/` (XFOIL/AVL drivers, `cfd3d/` SU2 cases, validation scripts),

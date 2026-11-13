@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 17.5,
+ "render_s": 16.0,
  "explode": 0.0,
  "camera": {
   "preset": "closeup",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 70,
   "location_m": [
-   -0.5529,
-   0.7909,
-   0.5029
+   -0.5531,
+   0.7912,
+   0.5031
   ],
   "fit": [
    "FIN-003-UR",
@@ -49,12 +49,12 @@
   170,
   130,
   1251,
-  1511
+  1510
  ],
  "callouts": [
   {
    "item": "PRP-001-UR",
-   "x": 780.0,
+   "x": 780.3,
    "y": 442.9,
    "title": "PRP-001-UR",
    "text": "SunnySky X3108S motor",
@@ -69,7 +69,7 @@
   },
   {
    "item": "PRP-003-UR",
-   "x": 946.9,
+   "x": 947.1,
    "y": 471.3,
    "title": "PRP-003-UR",
    "text": "APC 11x5.5 prop",
@@ -84,7 +84,7 @@
   },
   {
    "item": "PRP-004-UR",
-   "x": 810.0,
+   "x": 810.3,
    "y": 471.3,
    "title": "PRP-004-UR",
    "text": "Prop adapter + nut",
@@ -99,8 +99,8 @@
   },
   {
    "item": "PRP-002-UR",
-   "x": 581.1,
-   "y": 620.4,
+   "x": 581.4,
+   "y": 620.3,
    "title": "PRP-002-UR",
    "text": "45 A ESC",
    "detail": null,
@@ -114,7 +114,7 @@
   },
   {
    "item": "FIN-003-UR",
-   "x": 693.2,
+   "x": 694.1,
    "y": 417.8,
    "title": "FIN-003-UR",
    "text": "Canted motor mount",
@@ -122,24 +122,24 @@
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.0346,
+    0.0343,
     0.334,
-    0.1951
+    0.1952
    ]
   },
   {
    "item": "PWR-008-UR",
-   "x": 483.0,
-   "y": 550.0,
+   "x": 471.5,
+   "y": 543.5,
    "title": "PWR-008-UR",
    "text": "680 uF capacitor",
    "detail": null,
    "role": "context",
    "occluded": false,
    "world_m": [
-    0.1338,
-    0.3348,
-    0.1223
+    0.1417,
+    0.3336,
+    0.1212
    ]
   }
  ],
@@ -166,10 +166,10 @@
    "mass_g": 35.09,
    "subsystem": "fins",
    "bbox_px": [
-    670,
+    671,
     457,
     760,
-    1511
+    1510
    ]
   },
   {
@@ -182,7 +182,7 @@
    "bbox_px": [
     635,
     343,
-    807,
+    809,
     542
    ]
   },
@@ -196,7 +196,7 @@
    "bbox_px": [
     526,
     516,
-    628,
+    629,
     669
    ]
   },
@@ -210,7 +210,7 @@
    "bbox_px": [
     576,
     416,
-    781,
+    797,
     587
    ]
   },
@@ -224,7 +224,7 @@
    "bbox_px": [
     687,
     372,
-    880,
+    881,
     544
    ]
   },
@@ -264,7 +264,7 @@
    "mass_g": 3.0,
    "subsystem": "propulsion",
    "bbox_px": [
-    792,
+    793,
     444,
     882,
     524
@@ -322,7 +322,7 @@
    "bbox_px": [
     511,
     535,
-    623,
+    624,
     657
    ]
   },
@@ -334,10 +334,10 @@
    "mass_g": 2.2,
    "subsystem": "power",
    "bbox_px": [
-    457,
-    524,
-    526,
-    587
+    443,
+    520,
+    502,
+    569
    ]
   }
  ],
@@ -459,6 +459,23 @@
   "HRN-105-6",
   "HRN-105-SL",
   "HRN-105-SR",
+  "HRN-107-LL-P1",
+  "HRN-107-LL-P2",
+  "HRN-107-LL-PH",
+  "HRN-107-LL-S",
+  "HRN-107-LR-P1",
+  "HRN-107-LR-P2",
+  "HRN-107-LR-PH",
+  "HRN-107-LR-S",
+  "HRN-107-PACK",
+  "HRN-107-UL-P1",
+  "HRN-107-UL-P2",
+  "HRN-107-UL-PH",
+  "HRN-107-UL-S",
+  "HRN-107-UR-P1",
+  "HRN-107-UR-P2",
+  "HRN-107-UR-PH",
+  "HRN-107-UR-S",
   "HRN-110-LL",
   "HRN-110-LR",
   "HRN-110-UL",

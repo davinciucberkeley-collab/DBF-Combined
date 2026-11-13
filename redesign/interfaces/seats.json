@@ -8,7 +8,7 @@
   {"host": "WNG-003", "guest": "FIN-004-<s>", "why": "tape skin trimmed round the bore bosses that stand proud of the surface"},
   {"host": "WNG-003", "guest": "FIN-002-<s>", "why": "tape skin trimmed round the motor tube"},
   {"host": "WNG-003", "guest": "FIN-006-<s>", "why": "tape skin trimmed round the tube plug"},
-  {"host": "WNG-003", "guest": "FIN-001-<st>", "why": "tape skin trimmed at the fin root and its cove fillets"},
+  {"host": "WNG-003", "guest": "FIN-001-<st>", "why": "tape skin trimmed at the fin root and its cove fillets (D-88: square along the fillet edge, wing.py fillet_trims)"},
   {"host": "WNG-003", "guest": "FIN-010-<st>", "why": "tape skin trimmed round the brace anchors standing proud of the surface (anchor.proud_m)"},
   {"host": "WNG-003", "guest": "MEC-001-<s>", "why": "tape doubler trimmed round the servo case"},
   {"host": "WNG-003", "guest": "MEC-002-<s>", "why": "tape doubler slot for the servo arm"},
