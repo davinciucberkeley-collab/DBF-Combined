@@ -8,60 +8,60 @@
    "name": "Half-fin upper right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 25.6,
+   "mass_g": 23.33,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.2073,
+    0.208,
     0.32,
-    0.0789
+    0.0833
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0457 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 13.9 cm3 x 0.45 g/cm3 = 6.2 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (area 0.0451 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 9.4 cm3 x 0.45 g/cm3 = 4.2 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-001-UL",
    "name": "Half-fin upper left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 25.6,
+   "mass_g": 23.33,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.2073,
+    0.208,
     -0.32,
-    0.0789
+    0.0833
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0457 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 13.9 cm3 x 0.45 g/cm3 = 6.2 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (area 0.0451 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 9.4 cm3 x 0.45 g/cm3 = 4.2 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-001-LR",
    "name": "Half-fin lower right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 26.33,
+   "mass_g": 23.76,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.2013,
+    0.2031,
     0.32,
-    -0.0763
+    -0.0816
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0473 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 14.0 cm3 x 0.45 g/cm3 = 6.3 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (area 0.0467 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 8.9 cm3 x 0.45 g/cm3 = 4.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-001-LL",
    "name": "Half-fin lower left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 26.33,
+   "mass_g": 23.76,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.2013,
+    0.2031,
     -0.32,
-    -0.0763
+    -0.0816
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0473 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 14.0 cm3 x 0.45 g/cm3 = 6.3 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (area 0.0467 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 8.9 cm3 x 0.45 g/cm3 = 4.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-002-R",
@@ -98,15 +98,15 @@
    "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.85,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0359,
+    0.0366,
     0.3207,
-    0.1811
+    0.179
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.27 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -114,15 +114,15 @@
    "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.85,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0359,
+    0.0366,
     -0.3207,
-    0.1811
+    0.179
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.27 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -130,15 +130,15 @@
    "name": "Motor mount LR, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.85,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0359,
+    0.0366,
     0.3207,
-    -0.1811
+    -0.179
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.27 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -146,15 +146,15 @@
    "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.85,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0359,
+    0.0366,
     -0.3207,
-    -0.1811
+    -0.179
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.27 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4
   },
   {
@@ -279,123 +279,123 @@
   },
   {
    "id": "FIN-008-UR",
-   "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "name": "Station collar UR, 22 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0642,
-    0.3165,
-    0.1568
+    0.0627,
+    0.3168,
+    0.1499
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((6.46 cm3 x 1.00 + tongue 4.35 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-008-UL",
-   "name": "Station collar UL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "name": "Station collar UL, 22 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0642,
-    -0.3165,
-    0.1568
+    0.0627,
+    -0.3168,
+    0.1499
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((6.46 cm3 x 1.00 + tongue 4.35 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-008-LR",
-   "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "name": "Station collar LR, 22 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0642,
-    0.3165,
-    -0.1568
+    0.0627,
+    0.3168,
+    -0.1499
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((6.46 cm3 x 1.00 + tongue 4.35 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-008-LL",
-   "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "name": "Station collar LL, 22 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0642,
-    -0.3165,
-    -0.1568
+    0.0627,
+    -0.3168,
+    -0.1499
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST ((6.46 cm3 x 1.00 + tongue 4.35 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-009-UR",
    "name": "Brace UR, CF strip 10 x 2",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.96,
+   "mass_g": 4.79,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.0625,
     0.2721,
-    0.09
+    0.087
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.810 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.702 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-009-UL",
    "name": "Brace UL, CF strip 10 x 2",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.96,
+   "mass_g": 4.79,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.0625,
     -0.2721,
-    0.09
+    0.087
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.810 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.702 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-009-LR",
    "name": "Brace LR, CF strip 10 x 2",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 5.35,
+   "mass_g": 5.18,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.0625,
     0.2721,
-    -0.0831
+    -0.0801
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (3.064 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.954 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-009-LL",
    "name": "Brace LL, CF strip 10 x 2",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 5.35,
+   "mass_g": 5.18,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.0625,
     -0.2721,
-    -0.0831
+    -0.0801
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (3.064 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.954 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-010-UR",
@@ -462,180 +462,180 @@
    "name": "Edge strip upper right outboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     0.3253,
-    0.1796
+    0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-011-URI",
    "name": "Edge strip upper right inboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     0.3147,
-    0.1796
+    0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-011-ULO",
    "name": "Edge strip upper left outboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     -0.3253,
-    0.1796
+    0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-011-ULI",
    "name": "Edge strip upper left inboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     -0.3147,
-    0.1796
+    0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-011-LRO",
    "name": "Edge strip lower right outboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     0.3253,
-    -0.1796
+    -0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-011-LRI",
    "name": "Edge strip lower right inboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     0.3147,
-    -0.1796
+    -0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-011-LLO",
    "name": "Edge strip lower left outboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     -0.3253,
-    -0.1796
+    -0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-011-LLI",
    "name": "Edge strip lower left inboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     -0.3147,
-    -0.1796
+    -0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-012-UR",
-   "name": "Edge-strip pin set UR, 11 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set UR, 14 x CF rod 2.5 mm",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "material": "CF rod 2.5 mm, pultruded (bought)",
    "cg_xyz_m": [
-    0.1761,
+    0.177,
     0.32,
-    0.1838
+    0.1815
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.626 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (0.797 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-012-UL",
-   "name": "Edge-strip pin set UL, 11 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set UL, 14 x CF rod 2.5 mm",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "material": "CF rod 2.5 mm, pultruded (bought)",
    "cg_xyz_m": [
-    0.1761,
+    0.177,
     -0.32,
-    0.1838
+    0.1815
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.626 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (0.797 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-012-LR",
-   "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set LR, 14 x CF rod 2.5 mm",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "material": "CF rod 2.5 mm, pultruded (bought)",
    "cg_xyz_m": [
-    0.1761,
+    0.177,
     0.32,
-    -0.1838
+    -0.1815
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.626 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (0.797 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-012-LL",
-   "name": "Edge-strip pin set LL, 11 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set LL, 14 x CF rod 2.5 mm",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "material": "CF rod 2.5 mm, pultruded (bought)",
    "cg_xyz_m": [
-    0.1761,
+    0.177,
     -0.32,
-    -0.1838
+    -0.1815
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.626 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
+   "notes": "mass EST (0.797 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat"
   },
   {
    "id": "FIN-101-UR",
@@ -647,7 +647,7 @@
    "cg_xyz_m": [
     0.0443,
     0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-05",
@@ -663,7 +663,7 @@
    "cg_xyz_m": [
     0.0443,
     -0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-06",
@@ -679,7 +679,7 @@
    "cg_xyz_m": [
     0.0443,
     0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-07",
@@ -695,7 +695,7 @@
    "cg_xyz_m": [
     0.0443,
     -0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-08",
@@ -711,7 +711,7 @@
    "cg_xyz_m": [
     0.0523,
     0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-05",
@@ -727,7 +727,7 @@
    "cg_xyz_m": [
     0.0523,
     -0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-06",
@@ -743,7 +743,7 @@
    "cg_xyz_m": [
     0.0523,
     0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-07",
@@ -759,7 +759,7 @@
    "cg_xyz_m": [
     0.0523,
     -0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-08",
@@ -775,7 +775,7 @@
    "cg_xyz_m": [
     0.045,
     0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-05",
@@ -791,7 +791,7 @@
    "cg_xyz_m": [
     0.045,
     -0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-06",
@@ -807,7 +807,7 @@
    "cg_xyz_m": [
     0.045,
     0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-07",
@@ -823,7 +823,7 @@
    "cg_xyz_m": [
     0.045,
     -0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-08",
@@ -843,7 +843,7 @@
     "area_mm2": 2972,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "24.8 N m torsion design; RF 2.63 (CL-C6-TUBE-BLOCK-RF)",
+    "load_n": "24.8 N m torsion design; RF 2.64 (CL-C6-TUBE-BLOCK-RF)",
     "load_case": "L4 corner",
     "sized_by": "C6"
    }
@@ -860,7 +860,7 @@
     "area_mm2": 2972,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "24.8 N m torsion design; RF 2.63 (CL-C6-TUBE-BLOCK-RF)",
+    "load_n": "24.8 N m torsion design; RF 2.64 (CL-C6-TUBE-BLOCK-RF)",
     "load_case": "L4 corner",
     "sized_by": "C6"
    }
@@ -904,7 +904,7 @@
    "part_a": "FIN-003-UR",
    "part_b": "FIN-002-R",
    "via": "CT-TUBE-CLAMP",
-   "notes": "ASA slit collar, 12 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
+   "notes": "ASA slit collar, 18 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
    "owner": "fins",
    "joint_stack": {
     "fastener": "M3x16 SHCS ISO 4762 (FIN-101)",
@@ -920,7 +920,7 @@
     "access": "outboard side, bolt along x, prop off",
     "install_order": 4,
     "removal_order": 2,
-    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 3.26 (C6)"
+    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 7.35 (C6)"
    },
    "clamp": {
     "bore_mm": 22.3,
@@ -934,7 +934,7 @@
    "part_a": "FIN-003-UL",
    "part_b": "FIN-002-L",
    "via": "CT-TUBE-CLAMP",
-   "notes": "ASA slit collar, 12 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
+   "notes": "ASA slit collar, 18 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
    "owner": "fins",
    "joint_stack": {
     "fastener": "M3x16 SHCS ISO 4762 (FIN-101)",
@@ -950,7 +950,7 @@
     "access": "outboard side, bolt along x, prop off",
     "install_order": 4,
     "removal_order": 2,
-    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 3.26 (C6)"
+    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 7.35 (C6)"
    },
    "clamp": {
     "bore_mm": 22.3,
@@ -964,7 +964,7 @@
    "part_a": "FIN-003-LR",
    "part_b": "FIN-002-R",
    "via": "CT-TUBE-CLAMP",
-   "notes": "ASA slit collar, 12 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
+   "notes": "ASA slit collar, 18 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
    "owner": "fins",
    "joint_stack": {
     "fastener": "M3x16 SHCS ISO 4762 (FIN-101)",
@@ -980,7 +980,7 @@
     "access": "outboard side, bolt along x, prop off",
     "install_order": 4,
     "removal_order": 2,
-    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 3.26 (C6)"
+    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 7.35 (C6)"
    },
    "clamp": {
     "bore_mm": 22.3,
@@ -994,7 +994,7 @@
    "part_a": "FIN-003-LL",
    "part_b": "FIN-002-L",
    "via": "CT-TUBE-CLAMP",
-   "notes": "ASA slit collar, 12 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
+   "notes": "ASA slit collar, 18 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
    "owner": "fins",
    "joint_stack": {
     "fastener": "M3x16 SHCS ISO 4762 (FIN-101)",
@@ -1010,7 +1010,7 @@
     "access": "outboard side, bolt along x, prop off",
     "install_order": 4,
     "removal_order": 2,
-    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 3.26 (C6)"
+    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 7.35 (C6)"
    },
    "clamp": {
     "bore_mm": 22.3,
@@ -1092,14 +1092,14 @@
    "part_a": "FIN-008-UR",
    "part_b": "FIN-002-R",
    "via": "CT-EPOXY",
-   "notes": "station collar ring 15 mm bonded on the tube directly under the mount, tail aft, ear inboard",
+   "notes": "station collar ring 22 mm bonded on the tube directly under the mount, tail aft, ear inboard",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1037,
+    "area_mm2": 1521,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 mm collar as drawn: 27.5 N m design from max(C1 section, C4 FE) = 12.74 N m limit + 204 N brace shear, 2.61 MPa, RF 0.77 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
+    "load_n": "22 mm collar as drawn: 27.4 N m design from max(C1 section, C4 FE) = 12.72 N m limit + 208 N brace shear, 1.78 MPa, RF 1.13 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
     "load_case": "L4 / G2",
     "sized_by": "C6"
    }
@@ -1109,14 +1109,14 @@
    "part_a": "FIN-008-UL",
    "part_b": "FIN-002-L",
    "via": "CT-EPOXY",
-   "notes": "station collar ring 15 mm bonded on the tube directly under the mount, tail aft, ear inboard",
+   "notes": "station collar ring 22 mm bonded on the tube directly under the mount, tail aft, ear inboard",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1037,
+    "area_mm2": 1521,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 mm collar as drawn: 27.5 N m design from max(C1 section, C4 FE) = 12.74 N m limit + 204 N brace shear, 2.61 MPa, RF 0.77 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
+    "load_n": "22 mm collar as drawn: 27.4 N m design from max(C1 section, C4 FE) = 12.72 N m limit + 208 N brace shear, 1.78 MPa, RF 1.13 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
     "load_case": "L4 / G2",
     "sized_by": "C6"
    }
@@ -1126,14 +1126,14 @@
    "part_a": "FIN-008-LR",
    "part_b": "FIN-002-R",
    "via": "CT-EPOXY",
-   "notes": "station collar ring 15 mm bonded on the tube directly under the mount, tail aft, ear inboard",
+   "notes": "station collar ring 22 mm bonded on the tube directly under the mount, tail aft, ear inboard",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1037,
+    "area_mm2": 1521,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 mm collar as drawn: 27.5 N m design from max(C1 section, C4 FE) = 12.74 N m limit + 204 N brace shear, 2.61 MPa, RF 0.77 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
+    "load_n": "22 mm collar as drawn: 27.4 N m design from max(C1 section, C4 FE) = 12.72 N m limit + 208 N brace shear, 1.78 MPa, RF 1.13 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
     "load_case": "L4 / G2",
     "sized_by": "C6"
    }
@@ -1143,14 +1143,14 @@
    "part_a": "FIN-008-LL",
    "part_b": "FIN-002-L",
    "via": "CT-EPOXY",
-   "notes": "station collar ring 15 mm bonded on the tube directly under the mount, tail aft, ear inboard",
+   "notes": "station collar ring 22 mm bonded on the tube directly under the mount, tail aft, ear inboard",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1037,
+    "area_mm2": 1521,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 mm collar as drawn: 27.5 N m design from max(C1 section, C4 FE) = 12.74 N m limit + 204 N brace shear, 2.61 MPa, RF 0.77 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
+    "load_n": "22 mm collar as drawn: 27.4 N m design from max(C1 section, C4 FE) = 12.72 N m limit + 208 N brace shear, 1.78 MPa, RF 1.13 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
     "load_case": "L4 / G2",
     "sized_by": "C6"
    }
@@ -1164,7 +1164,7 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 499,
+    "area_mm2": 503,
     "prep": "PETG sanded 120 grit; board edge scuffed",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
     "load_n": "secondary: the strips carry the top-edge force into the tail",
@@ -1181,7 +1181,7 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 499,
+    "area_mm2": 503,
     "prep": "PETG sanded 120 grit; board edge scuffed",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
     "load_n": "secondary: the strips carry the top-edge force into the tail",
@@ -1198,7 +1198,7 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 499,
+    "area_mm2": 503,
     "prep": "PETG sanded 120 grit; board edge scuffed",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
     "load_n": "secondary: the strips carry the top-edge force into the tail",
@@ -1215,7 +1215,7 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 499,
+    "area_mm2": 503,
     "prep": "PETG sanded 120 grit; board edge scuffed",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
     "load_n": "secondary: the strips carry the top-edge force into the tail",
@@ -1228,14 +1228,14 @@
    "part_a": "FIN-011-URO",
    "part_b": "FIN-001-UR",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UR after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UR after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1245,14 +1245,14 @@
    "part_a": "FIN-011-URI",
    "part_b": "FIN-001-UR",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UR after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UR after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1262,14 +1262,14 @@
    "part_a": "FIN-011-ULO",
    "part_b": "FIN-001-UL",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UL after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UL after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1279,14 +1279,14 @@
    "part_a": "FIN-011-ULI",
    "part_b": "FIN-001-UL",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UL after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UL after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1296,14 +1296,14 @@
    "part_a": "FIN-011-LRO",
    "part_b": "FIN-001-LR",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LR after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LR after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1313,14 +1313,14 @@
    "part_a": "FIN-011-LRI",
    "part_b": "FIN-001-LR",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LR after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LR after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1330,14 +1330,14 @@
    "part_a": "FIN-011-LLO",
    "part_b": "FIN-001-LL",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LL after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LL after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1347,14 +1347,14 @@
    "part_a": "FIN-011-LLI",
    "part_b": "FIN-001-LL",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LL after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LL after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1371,7 +1371,7 @@
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1388,7 +1388,7 @@
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1405,7 +1405,7 @@
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1422,7 +1422,7 @@
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1439,7 +1439,7 @@
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1456,7 +1456,7 @@
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1473,7 +1473,7 @@
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1490,7 +1490,7 @@
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -1507,7 +1507,7 @@
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35 (CL-C6-BRACE-END-RF)",
+    "load_n": "208 N design; RF 2.31 (CL-C6-BRACE-END-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1524,7 +1524,7 @@
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35 (CL-C6-BRACE-END-RF)",
+    "load_n": "208 N design; RF 2.31 (CL-C6-BRACE-END-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1541,7 +1541,7 @@
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35 (CL-C6-BRACE-END-RF)",
+    "load_n": "208 N design; RF 2.31 (CL-C6-BRACE-END-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1558,7 +1558,7 @@
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35 (CL-C6-BRACE-END-RF)",
+    "load_n": "208 N design; RF 2.31 (CL-C6-BRACE-END-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1575,7 +1575,7 @@
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35",
+    "load_n": "208 N design; RF 2.31",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1592,7 +1592,7 @@
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35",
+    "load_n": "208 N design; RF 2.31",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1609,7 +1609,7 @@
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35",
+    "load_n": "208 N design; RF 2.31",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1626,7 +1626,7 @@
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35",
+    "load_n": "208 N design; RF 2.31",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1711,7 +1711,7 @@
     "area_mm2": 2488,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "12.3 N m torsion design; RF 4.45 (CL-C6-BLOCK-SPAR-RF)",
+    "load_n": "12.4 N m torsion design; RF 4.41 (CL-C6-BLOCK-SPAR-RF)",
     "load_case": "L4 corner",
     "sized_by": "C4, C6"
    }
@@ -1728,7 +1728,7 @@
     "area_mm2": 2488,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "12.3 N m torsion design; RF 4.45 (CL-C6-BLOCK-SPAR-RF)",
+    "load_n": "12.4 N m torsion design; RF 4.41 (CL-C6-BLOCK-SPAR-RF)",
     "load_case": "L4 corner",
     "sized_by": "C4, C6"
    }
@@ -1772,14 +1772,14 @@
    "part_a": "FIN-001-UR",
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 15 mm legs x 0.1700-0.2496, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1700; then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
+   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 10 mm legs x 0.1700-0.2496, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1700; then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 4934,
+    "area_mm2": 4138,
     "prep": "foam dusted off; board edges scuffed; fillet zoned as D3 draws it (CR-D3-25, accepted): 15 mm legs both faces over the effective root, 13 mm aft of the hinge, 4 mm sealing bead ahead (D3-R4b), none over the link slot on the lower roots",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "fail-safe path only (D-68): RF 0.81 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4934, C6 used 5318; C6 re-checks]",
+    "load_n": "fail-safe path only (D-68): RF 0.56 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4138, C6 used 5318; C6 re-checks]",
     "load_case": "L4 side load",
     "sized_by": "D3, C6"
    }
@@ -1789,14 +1789,14 @@
    "part_a": "FIN-001-UL",
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 15 mm legs x 0.1700-0.2496, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1700; then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
+   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 10 mm legs x 0.1700-0.2496, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1700; then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 4934,
+    "area_mm2": 4138,
     "prep": "foam dusted off; board edges scuffed; fillet zoned as D3 draws it (CR-D3-25, accepted): 15 mm legs both faces over the effective root, 13 mm aft of the hinge, 4 mm sealing bead ahead (D3-R4b), none over the link slot on the lower roots",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "fail-safe path only (D-68): RF 0.81 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4934, C6 used 5318; C6 re-checks]",
+    "load_n": "fail-safe path only (D-68): RF 0.56 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4138, C6 used 5318; C6 re-checks]",
     "load_case": "L4 side load",
     "sized_by": "D3, C6"
    }
@@ -1806,14 +1806,14 @@
    "part_a": "FIN-001-LR",
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 15 mm legs x 0.1460-0.2376, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1460; NO fillet over the link slot x 0.2376-0.2616 (both faces, CR-D6-04); then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
+   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 10 mm legs x 0.1460-0.2376, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1460; NO fillet over the link slot x 0.2376-0.2616 (both faces, CR-D6-04); then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 4790,
+    "area_mm2": 3874,
     "prep": "foam dusted off; board edges scuffed; fillet zoned as D3 draws it (CR-D3-25, accepted): 15 mm legs both faces over the effective root, 13 mm aft of the hinge, 4 mm sealing bead ahead (D3-R4b), none over the link slot on the lower roots",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "fail-safe path only (D-68): RF 0.81 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4790, C6 used 5078; C6 re-checks]",
+    "load_n": "fail-safe path only (D-68): RF 0.56 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 3874, C6 used 5078; C6 re-checks]",
     "load_case": "L4 side load",
     "sized_by": "D3, C6"
    }
@@ -1823,14 +1823,14 @@
    "part_a": "FIN-001-LL",
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 15 mm legs x 0.1460-0.2376, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1460; NO fillet over the link slot x 0.2376-0.2616 (both faces, CR-D6-04); then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
+   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 10 mm legs x 0.1460-0.2376, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1460; NO fillet over the link slot x 0.2376-0.2616 (both faces, CR-D6-04); then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 4790,
+    "area_mm2": 3874,
     "prep": "foam dusted off; board edges scuffed; fillet zoned as D3 draws it (CR-D3-25, accepted): 15 mm legs both faces over the effective root, 13 mm aft of the hinge, 4 mm sealing bead ahead (D3-R4b), none over the link slot on the lower roots",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "fail-safe path only (D-68): RF 0.81 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4790, C6 used 5078; C6 re-checks]",
+    "load_n": "fail-safe path only (D-68): RF 0.56 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 3874, C6 used 5078; C6 re-checks]",
     "load_case": "L4 side load",
     "sized_by": "D3, C6"
    }
@@ -1847,7 +1847,7 @@
     "area_mm2": 276,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N pull-off on the 90 deg saddle contact; RF 1.35 (CL-C6-ANCHOR-PULL-RF)",
+    "load_n": "208 N pull-off on the 90 deg saddle contact; RF 1.33 (CL-C6-ANCHOR-PULL-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1864,7 +1864,7 @@
     "area_mm2": 276,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N pull-off on the 90 deg saddle contact; RF 1.35 (CL-C6-ANCHOR-PULL-RF)",
+    "load_n": "208 N pull-off on the 90 deg saddle contact; RF 1.33 (CL-C6-ANCHOR-PULL-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1881,7 +1881,7 @@
     "area_mm2": 276,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N pull-off on the 90 deg saddle contact; RF 1.35 (CL-C6-ANCHOR-PULL-RF)",
+    "load_n": "208 N pull-off on the 90 deg saddle contact; RF 1.33 (CL-C6-ANCHOR-PULL-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -1898,7 +1898,7 @@
     "area_mm2": 276,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N pull-off on the 90 deg saddle contact; RF 1.35 (CL-C6-ANCHOR-PULL-RF)",
+    "load_n": "208 N pull-off on the 90 deg saddle contact; RF 1.33 (CL-C6-ANCHOR-PULL-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    }
@@ -2064,14 +2064,14 @@
    "part_a": "FIN-012-UR",
    "part_b": "FIN-001-UR",
    "via": "CT-EPOXY",
-   "notes": "11 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 15 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
+   "notes": "14 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 12 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 1367,
+    "area_mm2": 1731,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 139 N per pin design (C4 R4), RF 0.83 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 0.84 (estimate, max pitch 12.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.71",
+    "load_n": "19 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 103 N per pin design (C4 R4), RF 1.12 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 1.13 (estimate, max pitch 13.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.77",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2081,14 +2081,14 @@
    "part_a": "FIN-012-UL",
    "part_b": "FIN-001-UL",
    "via": "CT-EPOXY",
-   "notes": "11 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 15 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
+   "notes": "14 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 12 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 1367,
+    "area_mm2": 1731,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 139 N per pin design (C4 R4), RF 0.83 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 0.84 (estimate, max pitch 12.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.71",
+    "load_n": "19 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 103 N per pin design (C4 R4), RF 1.12 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 1.13 (estimate, max pitch 13.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.77",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2098,14 +2098,14 @@
    "part_a": "FIN-012-LR",
    "part_b": "FIN-001-LR",
    "via": "CT-EPOXY",
-   "notes": "11 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 15 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
+   "notes": "14 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 12 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 1367,
+    "area_mm2": 1731,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 139 N per pin design (C4 R4), RF 0.83 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 0.84 (estimate, max pitch 12.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.71",
+    "load_n": "19 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 103 N per pin design (C4 R4), RF 1.12 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 1.13 (estimate, max pitch 13.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.77",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2115,14 +2115,14 @@
    "part_a": "FIN-012-LL",
    "part_b": "FIN-001-LL",
    "via": "CT-EPOXY",
-   "notes": "11 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 15 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
+   "notes": "14 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 12 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 1367,
+    "area_mm2": 1731,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 139 N per pin design (C4 R4), RF 0.83 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 0.84 (estimate, max pitch 12.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.71",
+    "load_n": "19 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 103 N per pin design (C4 R4), RF 1.12 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 1.13 (estimate, max pitch 13.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.77",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2136,10 +2136,10 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2153,10 +2153,10 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2170,10 +2170,10 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2187,10 +2187,10 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2204,10 +2204,10 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2221,10 +2221,10 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2238,10 +2238,10 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    }
@@ -2255,10 +2255,10 @@
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    }

@@ -1,4 +1,21 @@
-# D5 Landing feet: summary (revision D5-R5a, 2026-11-10)
+# D5 Landing feet: summary (revision D5-R8, 2026-11-13; R5a text below)
+
+> **R8 (2026-11-13, CR-H1-22, side-load margin):** the R7 shoe passed the 59.25 N ultimate side load with RF 1.06
+> (`CL-D5-SIDE-RIM-SF`, +y 37.6 MPa at the rim vs `ASM-D5-PETG-SIGMA` 40 MPa); H1's 0.62 (`CL-H1-D5-SIDE-RIM-SF`)
+> was a stale ×35/59 scaling of an RF that was already at 59 N. R8 adds margin without moving the fin step:
+>
+> | Change | R7 → R8 | Why (D5 FEA, `sim/fea_shoe_d5.py`, h 0.4 sweep in `sim/out/*_v_*.json`) |
+> |---|---|---|
+> | Sleeve inside fillets | R 1.0 → **2.0** | +y 37.6 → 35.5, +z 31.0 → 21.2 MPa at rim 3.4 |
+> | Rim y sides (`shoe.rim_side_t_m`, new) | 3.4 → **4.6** mm | +y 35.5 → 28.7 MPa; past ~4.8 the window corner governs |
+> | Rim floor side (`shoe.rim_floor_t_m`, new) | 3.4 → **0.4** mm | not a stop face; a thick floor rim raised the +y peak (floor 1.4 / 0.4 / 0: 30.1 / 29.3 / 30.0 MPa at rs 4.4–4.8) |
+> | Tine chamfer / rails | 1.0 / 2.0 → **1.4 / 2.5** mm | chamfer clears the R 2.0 arc by 0.16 mm (`CL-D5-FILLET-CLEAR`; 1.0 mm would leave 0.03); rails restore the tine |
+> | Tine SF formula | F a on the windowed section | max(F a full section, F (a − 3 mm) windowed): the window starts 3 mm aft of the sleeve end and enters it only as the lever shrinks |
+>
+> Results: shoe RF **1.27** at the finest mesh (h 0.4 / 0.3 / 0.2 mm, +y: 28.7 / 30.1 / 31.6 MPa; the h 0.2 peak is
+> the sharp inboard window corner, still rising; the rim converges at 30.4 MPa, RF 1.32), tine SF **1.23** (R7 1.15 on
+> the old formula), bond RF 1.43 and flange SF 1.07 unchanged, fin step x 0.2614 / |z| 0.2010 unchanged, landing
+> **59.08 → 58.94 g** (−0.14 g). C5's `CL-C5-FEA-SHOE-SF` (1.076) is a record of the R6 stack; it does not drift.
 
 > **R7 (2026-11-11, D-75 / D-76 / D-78):** cartridges in FOAMULAR 400 at 14.5 × 9.8 mm (same 37.5 N mean plateau);
 > shoe 19.1 × 14.4 mm, rim 3.4 mm; landing **69.9 → 59.1 g** vs a 60 g allocation (48 → 60 from power). Fin step at

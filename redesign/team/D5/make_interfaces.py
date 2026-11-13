@@ -33,14 +33,15 @@ def parts_table(ge, cr, n_seg):
     seg = mm(ge['cart_len_m']) / n_seg
     return [
         ('GER-001', 'Foot shoe', 'PETG (printed)', 'make', 'shoe_g', ST,
-         'sleeve %.1f x %.1f mm, %.1f mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; '
+         'sleeve %.1f x %.1f mm, %.1f mm walls with R %.1f inside fillets, short snap windows, on the half-fin TE step; '
          'back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the '
-         'edge-strip ends, %.1f mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy'
-         % (mm(so[0]), mm(so[1]), mm(ge['ws_m']), mm(ge['rim_t_m']))),
+         'edge-strip ends, rim at the sleeve end %.1f mm on the y sides, %.1f mm roof, %.1f mm floor (R8, CR-H1-22); '
+         'permanent; includes 0.35 g epoxy'
+         % (mm(so[0]), mm(so[1]), mm(ge['ws_m']), mm(ge['r_in_m']), mm(ge['rs_m']), mm(ge['rim_t_m']), mm(ge['rf_m']))),
         ('GER-002', 'Foot piston', 'PETG (printed)', 'make', 'piston_g', ST,
-         'tine %.1f x %.1f mm (1 mm corner chamfers), %.0f mm engaged at rest, two 6.5 mm snap fingers with ramped '
+         'tine %.1f x %.1f mm (%.1f mm corner chamfers), %.0f mm engaged at rest, two 6.5 mm snap fingers with ramped '
          'hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides %.0f mm '
-         'into the shoe when the cartridge crushes' % (mm(po[0]), mm(po[1]), mm(ge['engage_m']), mm(ge['stroke_m']))),
+         'into the shoe when the cartridge crushes' % (mm(po[0]), mm(po[1]), mm(ge['tc_m']), mm(ge['engage_m']), mm(ge['stroke_m']))),
         ('GER-003', 'Crush cartridge type U (solid)', 'XPS foam FOAMULAR 400 (cut, D-76)', 'make', 'cartridge_upper_g', ('UR', 'UL'),
          '%d segments %.1f mm long, %.1f x %.1f mm, each pre-crushed 1 mm (cut %.1f mm), crush axis = board thickness, '
          'orange stripe; plateau %.1f N; bonded on the piston floor; consumable'
@@ -100,7 +101,8 @@ def claims():
     out = lambda c: nodes[c]['outputs']
     ge = dict(out('CALC-D5-GEOM'))
     iv = nodes['CALC-D5-GEOM']['input_values']
-    ge.update(ws_m=iv['ws'], rim_t_m=iv['rim_t'], cart_y_m=iv['fy'], cart_z_m=iv['fz'])
+    ge.update(ws_m=iv['ws'], rim_t_m=iv['rim_t'], rs_m=iv['rs'], rf_m=iv['rf'], r_in_m=iv['r_in'], tc_m=iv['tc'],
+              cart_y_m=iv['fy'], cart_z_m=iv['fz'])
     n_seg = int(nodes['CALC-D5-CRUSH']['input_values']['nseg'])
     return out('CALC-D5-MASS'), out('CALC-D5-BOND'), out('CALC-D5-CRUSH'), out('CALC-D5-SIDE'), ge, n_seg
 

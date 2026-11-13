@@ -138,6 +138,7 @@ def geometry(P, LP, coords):
     G['ear_t'], G['ear_len'], G['ear_h'] = l('mount.ear_t_m', 'm'), l('mount.ear_len_m', 'm'), l('mount.ear_h_m', 'm')
     G['cheek_t'], G['cheek_y_in'], G['cheek_len'] = (l('mount.cheek_t_m', 'm'), l('mount.cheek_y_in_m', 'm'),
                                                      l('mount.cheek_len_m', 'm'))
+    G['cheek_in_t'] = l('mount.cheek_in_t_m', 'm')                   # D-91: inboard cheek thicker (outboard keeps cheek_t)
     G['cheek_slit_gap'] = l('mount.cheek_slit_gap_m', 'm')
     G['x_cheek_out_end'] = G['xt'] - G['slit'] / 2 - G['cheek_slit_gap']    # D-80: outboard cheek stops ahead of the slit
     G['key_w'], G['key_d'], G['key_clear'] = l('mount.key_w_m', 'm'), l('mount.key_d_m', 'm'), l('mount.key_clear_m', 'm')
@@ -568,7 +569,8 @@ def build_mount(part, G):
     ct, cy_in, cl = G['cheek_t'], G['cheek_y_in'], G['cheek_len']
     zc0, zc1 = G['z_cap0'] - G['ear_h'] / 2, zm + G['plate_hz']
     for sy in (-1, 1):
-        ya, yb = sy * cy_in, sy * (cy_in + ct)
+        t_c = ct if sy > 0 else G['cheek_in_t']      # D-91: inboard (-y) cheek 5 mm, outboard (slit side) 2.5 mm
+        ya, yb = sy * cy_in, sy * (cy_in + t_c)
         bx = [B(y, z - zm) for y in (ya, yb) for z in (zc0, zc1)]
         x1 = max(bx) + cl
         if sy > 0:                                   # slit side (+y): D-80, end ahead of the slit, never bridge it

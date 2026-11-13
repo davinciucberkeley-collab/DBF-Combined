@@ -1,0 +1,96 @@
+{
+ "_note": "Written by team/C2/vib_response.py. Do not edit by hand: change the inputs in the script, re-run it, then team/C2/c2_claims.py.",
+ "c2vib": {
+  "balance_grade_ms": {
+   "value": 0.016,
+   "unit": "m/s",
+   "source": "team/C2/vib_response.py",
+   "status": "UNVERIFIED",
+   "note": "EST: ISO 21940-11 grade G 16 (SRC-C2-ISO21940)"
+  },
+  "m_rot_kg": {
+   "value": 0.057,
+   "unit": "kg",
+   "source": "team/C2/vib_response.py",
+   "status": "UNVERIFIED",
+   "note": "prop 17 g + motor bell 40 g (EST)"
+  },
+  "unbalance_kgm": {
+   "value": 2e-06,
+   "unit": "kg m",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "residual unbalance per rotor U = m_rot G / Omega_hover"
+  },
+  "zeta": {
+   "value": 0.01,
+   "unit": "-",
+   "source": "team/C2/vib_response.py",
+   "status": "UNVERIFIED",
+   "note": "modal damping (ASM-C2-WING-ZETA)"
+  },
+  "imu_acc_1p_ms2": {
+   "value": 25.493475,
+   "unit": "m/s2",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "IMU acceleration amplitude, largest axis, 1P unbalance, sustained band, worst of 12 stiffness corners (E70-G3-tape0.0, 118.9 Hz, resonance dwell)"
+  },
+  "imu_acc_1p_full_ms2": {
+   "value": 113.644611,
+   "unit": "m/s2",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "same over every rpm to full throttle (transient), worst of 12 stiffness corners (E100-G5-tape0.5, 155.2 Hz, resonance dwell)"
+  },
+  "imu_rate_1p_dps": {
+   "value": 40.013192,
+   "unit": "deg/s",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "IMU angular-rate amplitude, 1P, sustained band (removed by the harmonic notch), worst of 12 stiffness corners (E70-G3-tape0.0, 118.9 Hz, resonance dwell)"
+  },
+  "spar_sigma_1p_pa": {
+   "value": 19060310.507135,
+   "unit": "Pa",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "largest spar bending-stress amplitude on the span, 1P, sustained band, spar alone, worst of 12 stiffness corners (E100-G5-tape1.0, 81.7 Hz, resonance dwell)"
+  },
+  "spar_sigma_1p_full_pa": {
+   "value": 30604635.984014,
+   "unit": "Pa",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "same over every rpm, worst of 12 stiffness corners (E100-G3-tape0.5, 145.9 Hz, resonance dwell)"
+  },
+  "imu_acc_2p_per_n": {
+   "value": 74.13703,
+   "unit": "m/s2/N",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "IMU acceleration amplitude per newton of 2P load on each rotor (thrust axis + sideways), sustained band, worst of 12 stiffness corners (E100-G5-tape0.0, 153.1 Hz, resonance dwell)"
+  },
+  "imu_acc_2p_full_per_n": {
+   "value": 74.923007,
+   "unit": "m/s2/N",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "same over every rpm, worst of 12 stiffness corners (E70-G5-tape0.0, 133.9 Hz, resonance dwell)"
+  },
+  "spar_sigma_2p_per_n": {
+   "value": 24060711.542807,
+   "unit": "Pa/N",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "spar stress amplitude per newton of 2P load, sustained band, worst of 12 stiffness corners (E100-G5-tape1.0, 157.5 Hz, resonance dwell)"
+  },
+  "t_hover_n": {
+   "value": 6.374249,
+   "unit": "N",
+   "source": "team/C2/vib_response.py",
+   "status": "CHECKED",
+   "note": "hover thrust per rotor, C1 MC-P mass x g / 4"
+  }
+ }
+}

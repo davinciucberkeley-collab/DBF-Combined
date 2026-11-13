@@ -1,5 +1,18 @@
 # C3 — Pod structures (summary)
 
+> **C3-R4, 2026-11-13 (D-69 drawings checked by FEA; `SIMULATION-REPORT.md` §8).**
+> | Item | Verdict | Numbers | Claim |
+> |---|---|---|---|
+> | Forward-stop T with flange (D-69, D2-R6) | **Passes with the 1 mm bed (BUILD step 9); fails without it** | board peel 42.8 vs 50 kPa (+14 %), core shear 94.8 vs 100 kPa (+5 %), upright 3.7 / flange 7.1 vs 15 MPa; no bed: peel 76.5 kPa | `CL-C3-FEA-FWD-T-*` |
+> | Recess-step fillet WNG-007 (CR-C3-17) | **Delete it and the floor bevel** (square floor end, as R3) | fillet does not reach the crash peak (step top: 4.42 → 4.43) and the 45° bevel puts the floor joint at mean R 1.20 in flight; square end design R 0.60 | `CL-C3-FEA-STEP-R-DESIGN`, `-FILLET-FF-DESIGN` (record) |
+> | 12.75 g crash retention | **Passes, fail-safe** | −z / −x peel the aft bond end locally, released end holds (0.43 / 0.87); +z 0.95, +x 0.20 intact | `CL-C3-FEA-CRASH-FAILSAFE` 0.95 |
+> | 200 N bracket pull (CR-H1-23) | **Not on the flight pod**: crash load → test article | flight pod limit 76.2 N +x, 51.4 N −z (91.9 N); crash 204.7 N on `T-C3-BRACKET-CRASH` | `CL-C3-BRACKET-*` |
+>
+> Pre-D-69 configurations (stop printed with the tray, pod without brackets) keep their claims as records without
+> limits (`CL-C3-FEA-FWD-PEEL`, `-FWD-BED-PEEL`, `-FWD-TRAY-BEND`, `-BOND-R-DESIGN`, `-BOND-R-CRASH`, `-TIED-R-CRASH`).
+> Still failing and outside this round: the unpropped aft-stop records (`CL-C3-FEA-AFT-*`, `CL-C3-AFT-STOP-*`, superseded
+> by the D-69 strut, `CL-C3-FEA-AFT-PROP-*` passes) and `CL-C3-BLOCK-A-SHARE`, `-STOP-SECTION-PENALTY` (D-62 bay).
+
 Revision **C3-R2.1**, 2026-11-10 (re-run, bond design R 0.886), at params A1-R4 (D-47), D2-R5 pod (the D-47 re-lay), C1's latest loads and C6's allowables. Report:
 `FUSELAGE-STRUCTURES.md`. Script: `pod_structures.py` (< 1 s) → `claims.json` (34 claims, 10 calcs, 3 planned
 tests), `out/results.json`. Proof build 2026-11-10: **no C3 errors** (the `stop_wall_h_m` KeyError is fixed). C6's

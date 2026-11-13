@@ -571,7 +571,7 @@
    },
    "outputs": {
     "u95_g": 5.231953108862248,
-    "u_frac": 0.03661691594104451,
+    "u_frac": 0.039811389635875036,
     "accept_max_kg": 2.594768046891138
    },
    "input_values": {
@@ -580,7 +580,7 @@
      "cal_frac": 0.001
     },
     "m": 2.6,
-    "margin": 0.14288350000000039
+    "margin": 0.1314185000000001
    }
   },
   {
@@ -605,7 +605,7 @@
     "value": 0.1
    },
    "how": "Re-run after A3 updates CL-A3-GATE-MARGIN.",
-   "value": 0.03661691594104451
+   "value": 0.039811389635875036
   },
   {
    "id": "CL-H1-WEIGH-ACCEPT",
@@ -742,42 +742,42 @@
    "outputs": {
     "wing_p_n": 24.469997610639794,
     "wing_p_kg": 2.4952453295100563,
-    "wing_y_m": 0.27409147267794365,
+    "wing_y_m": 0.2730905931369767,
     "sum_err": 0.0,
     "hanger_n": 48.93999522127959,
-    "pad1_kg": 0.9175400520980265,
-    "pad2_kg": 0.5117009475237009,
+    "pad1_kg": 0.8957103064710509,
+    "pad2_kg": 0.5335306931506765,
     "pad3_kg": 0.45269626793263035,
     "pad4_kg": 0.6133080619556988,
     "relief_kg": 2.0600800000000006,
-    "s2_pad3_kg": 0.500102912062887,
-    "s2_pad4_kg": 1.6482875021941743,
+    "s2_pad3_kg": 0.5003409220274763,
+    "s2_pad4_kg": 1.6499181500757734,
     "wing_defl_max_m": 0.028749999999999998,
-    "mount_f_n": 21.085086279273007,
-    "mount_f_kg": 2.150080433101315,
-    "fin_f_n": 57.197339926590764,
-    "fin_f_kg": 5.832505486235439,
+    "mount_f_n": 21.08508627927301,
+    "mount_f_kg": 2.1500804331013152,
+    "fin_f_n": 57.195654677729046,
+    "fin_f_kg": 5.832333638676719,
     "pack_pull_n": 73.75,
     "pack_pull_kg": 7.5204070707122215
    },
    "input_values": {
-    "p1": 8.997994151907111,
-    "p2": 5.018072097033301,
+    "p1": 8.783917476954331,
+    "p2": 5.232148771986081,
     "p3": 4.439433855921529,
     "p4": 6.014497505777853,
     "y1": 0.12,
-    "y2": 0.25,
+    "y2": 0.24,
     "y3": 0.355,
     "y4": 0.465,
     "p_side": 24.469997610639794,
     "r": 20.202483532000006,
-    "s2p3": 4.904334222581511,
-    "s2p4": 16.1641786333925,
+    "s2p3": 4.90666830300075,
+    "s2p4": 16.180169826440583,
     "sf": 1.5,
     "k_def": 0.05,
     "b": 1.15,
-    "f_mount_ult": 31.62762941890951,
-    "m_fin_ult": 16.30124187907837,
+    "f_mount_ult": 31.627629418909514,
+    "m_fin_ult": 16.300761583152777,
     "z_st": 0.19,
     "f_pack": 73.75,
     "g": 9.80665
@@ -822,7 +822,7 @@
     "value": 0.575
    },
    "how": "Moment centroid of C1's pads; equals CL-C1-PROOF-PIVOT-Y.",
-   "value": 0.27409147267794365
+   "value": 0.2730905931369767
   },
   {
    "id": "CL-H1-WP-HANGER",
@@ -842,7 +842,7 @@
    "output": "pad1_kg",
    "unit": "kg",
    "how": "Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.",
-   "value": 0.9175400520980265
+   "value": 0.8957103064710509
   },
   {
    "id": "CL-H1-WP-M2",
@@ -852,7 +852,7 @@
    "output": "pad2_kg",
    "unit": "kg",
    "how": "Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.",
-   "value": 0.5117009475237009
+   "value": 0.5335306931506765
   },
   {
    "id": "CL-H1-WP-M3",
@@ -892,7 +892,7 @@
    "output": "s2_pad3_kg",
    "unit": "kg",
    "how": "Card GT-08 step 2, each side in turn (CR-C1-27).",
-   "value": 0.500102912062887
+   "value": 0.5003409220274763
   },
   {
    "id": "CL-H1-WP-S2-M4",
@@ -902,7 +902,7 @@
    "output": "s2_pad4_kg",
    "unit": "kg",
    "how": "Card GT-08 step 2, each side in turn (CR-C1-27).",
-   "value": 1.6482875021941743
+   "value": 1.6499181500757734
   },
   {
    "id": "CL-H1-WING-DEFL-MAX",
@@ -922,7 +922,7 @@
    "output": "mount_f_n",
    "unit": "N",
    "how": "Card GT-09: hang from each mount in -x and in y.",
-   "value": 21.085086279273007
+   "value": 21.08508627927301
   },
   {
    "id": "CL-H1-FIN-PROOF-F",
@@ -932,7 +932,7 @@
    "output": "fin_f_n",
    "unit": "N",
    "how": "Card GT-09: hang at the motor station, side-load in y, wing held at the spar.",
-   "value": 57.197339926590764
+   "value": 57.195654677729046
   },
   {
    "id": "CL-H1-PACK-PULL-F",
@@ -1107,20 +1107,20 @@
     "g": "m/s2"
    },
    "outputs": {
-    "k_pass": 2228.539449850484,
+    "k_pass": 1454.5411220562562,
     "arm_m": 0.0577,
-    "spot_pass_mm": 3.8086180505215874,
-    "spot_nom_mm": 5.658437050000001,
-    "spot_accept_mm": 3.5086180505215876,
-    "u_k_frac": 0.078768728189721,
-    "dial_diff_um": 3.8086180505215865,
-    "load_frac": 0.6976483190614283,
-    "nom_over_pass": 0.6730865814830593
+    "spot_pass_mm": 5.835280588699457,
+    "spot_nom_mm": 3.8580252613636365,
+    "spot_accept_mm": 5.535280588699457,
+    "u_k_frac": 0.051411409518331785,
+    "dial_diff_um": 5.835280588699458,
+    "load_frac": 0.6976483190614282,
+    "nom_over_pass": 1.5125045051252337
    },
    "input_values": {
     "k_floor": 1100.0,
-    "k_req": 2228.539449850484,
-    "k_nom": 1500.0,
+    "k_req": 1454.5411220562562,
+    "k_nom": 2200.0,
     "xm": 0.045,
     "xp": -0.0127,
     "rig": {
@@ -1134,7 +1134,7 @@
      "dial_res_mm": 0.01,
      "gauge_s_m": 0.03
     },
-    "f_proof": 21.085086279273007,
+    "f_proof": 21.08508627927301,
     "g": 9.80665
    }
   },
@@ -1150,7 +1150,7 @@
     "ref": "CL-C4-D3-MOUNT-K-REQ"
    },
    "how": "CR-C4-41; re-run whenever C4 re-publishes CL-C4-D3-MOUNT-K-REQ.",
-   "value": 2228.539449850484
+   "value": 1454.5411220562562
   },
   {
    "id": "CL-H1-MSTIFF-SPOT-ACCEPT",
@@ -1160,7 +1160,7 @@
    "output": "spot_accept_mm",
    "unit": "mm",
    "how": "Card GT-17: net spot travel at 1.5 kg <= this value in y and in z passes k >= CL-H1-MSTIFF-K-PASS.",
-   "value": 3.5086180505215876
+   "value": 5.535280588699457
   },
   {
    "id": "CL-H1-MSTIFF-SPOT-NOM",
@@ -1170,7 +1170,7 @@
    "output": "spot_nom_mm",
    "unit": "mm",
    "how": "Informational: what the mount as estimated reads on GT-17.",
-   "value": 5.658437050000001
+   "value": 3.8580252613636365
   },
   {
    "id": "CL-H1-MSTIFF-NOM-RATIO",
@@ -1179,8 +1179,8 @@
    "calc": "CALC-H1-MOUNT-STIFF",
    "output": "nom_over_pass",
    "unit": "-",
-   "how": "Informational: below 1 the mount as estimated is expected to fail GT-17 (CR-H1-24 to C4).",
-   "value": 0.6730865814830593
+   "how": "Informational: below 1 the mount as estimated is expected to fail GT-17; D-91 (18 mm grip) closes CR-H1-24 at 2 200 / 1 455 N m/rad.",
+   "value": 1.5125045051252337
   },
   {
    "id": "CL-H1-MSTIFF-U",
@@ -1194,7 +1194,7 @@
     "value": 0.1
    },
    "how": "T-H1-RIG-CHECK: read a 1.00 mm shim step on the wall.",
-   "value": 0.078768728189721
+   "value": 0.051411409518331785
   },
   {
    "id": "CL-H1-MSTIFF-DIAL-UM",
@@ -1204,7 +1204,7 @@
    "output": "dial_diff_um",
    "unit": "um",
    "how": "Informational: below one 10 um division, so C4's dial-gauge readout cannot resolve the pass line (CR-H1-10); GT-17 uses the optical lever.",
-   "value": 3.8086180505215865
+   "value": 5.835280588699458
   },
   {
    "id": "CL-H1-MSTIFF-LOAD-FRAC",
@@ -1218,7 +1218,7 @@
     "value": 0.8
    },
    "how": "Load steps set in ASM-H1-OPTLEVER.",
-   "value": 0.6976483190614283
+   "value": 0.6976483190614282
   },
   {
    "id": "ASM-H1-TAP",
@@ -1302,8 +1302,8 @@
     "n_c": 5945.8472778193645,
     "n_cap": 9350,
     "s": 0.2,
-    "f_up": 252.38317439057752,
-    "f_lo": 246.83714673636487,
+    "f_up": 249.20747724267386,
+    "f_lo": 243.3468317141885,
     "acq": {
      "fs_fc_hz": 1000.0,
      "fs_phone_hz": 400.0,
@@ -1660,8 +1660,8 @@
    "outputs": {
     "cap_n": 2941.995,
     "cap9_n": 1765.197,
-    "need_n": 2794.0229098623076,
-    "need9_n": 2794.0229098623076,
+    "need_n": 2791.615470778952,
+    "need9_n": 2791.615470778952,
     "sigma_mpa": 3.5186884962690783,
     "wood_brg_mpa": 10.322789473684209,
     "plate_brg_mpa": 65.37766666666666,
@@ -1680,8 +1680,8 @@
      "n_m6": 4,
      "m6_m": 0.006
     },
-    "f_strip": 2235.218327889846,
-    "f_est": 2219.4993482361047,
+    "f_strip": 2233.2923766231615,
+    "f_est": 2217.594217522974,
     "f_ins": 300.0,
     "k": 1.25,
     "g": 9.80665
@@ -1709,7 +1709,7 @@
     "ref": "CL-H1-LEVER-CAP"
    },
    "how": "Re-run when C6/C4 change the anchor force.",
-   "value": 2794.0229098623076
+   "value": 2791.615470778952
   },
   {
    "id": "CL-H1-LEVER-CAP9",
@@ -1733,7 +1733,7 @@
     "ref": "CL-H1-LEVER-CAP9"
    },
    "how": "CR-C6-33 frame line (>= 1 560 N at C4 R4); the anchor runs on the 15:1 hole regardless.",
-   "value": 2794.0229098623076
+   "value": 2791.615470778952
   },
   {
    "id": "CL-H1-LEVER-SIGMA",
@@ -2032,12 +2032,12 @@
     "p_dens_wm2": 19.2218014405584,
     "p_dens_bare_wm2": 1760.9523809523807,
     "shunt_ue": 1743.8963627304436,
-    "d_split_mm": 11.570206877312858,
-    "d3_mm": 7.040776815929807,
-    "dsh_mm": 19.013482557909892,
-    "travel_req_mm": 23.766853197387366,
+    "d_split_mm": 11.494700343225649,
+    "d3_mm": 6.981347948419857,
+    "dsh_mm": 18.925877489096855,
+    "travel_req_mm": 23.657346861371067,
     "travel_mm": 25.0,
-    "d_shell_ult_mm": 28.52022383686484,
+    "d_shell_ult_mm": 28.38881623364528,
     "reinf": 0.6312500000000001
    },
    "input_values": {
@@ -2065,8 +2065,8 @@
      "et_face_npm": 800000.0
     },
     "dial": 25.0,
-    "d3": 0.0070407768159298076,
-    "dsh": 0.019013482557909894,
+    "d3": 0.006981347948419857,
+    "dsh": 0.018925877489096854,
     "sf": 1.5
    }
   },
@@ -2156,7 +2156,7 @@
    "output": "d_split_mm",
    "unit": "mm",
    "how": "Card GT-09 FP step 3: geometric mean of the two predictions (model errors are multiplicative); below it, the 3-D load path (strips clamped in the cheeks) is the one built.",
-   "value": 11.570206877312858
+   "value": 11.494700343225649
   },
   {
    "id": "CL-H1-FP-TRAVEL-REQ",
@@ -2170,7 +2170,7 @@
     "ref": "ASM-H1-DIAL"
    },
    "how": "Borrowed 25 mm indicator, removed before the 1.5 x step; above 1.0 x a steel rule on a fixed bar (0.5 mm) reads the pad.",
-   "value": 23.766853197387366
+   "value": 23.657346861371067
   },
   {
    "id": "CL-H1-FP-DEFL-SHELL-ULT",
@@ -2180,7 +2180,7 @@
    "output": "d_shell_ult_mm",
    "unit": "mm",
    "how": "Informational: sizes the rule and the frame clearance.",
-   "value": 28.52022383686484
+   "value": 28.38881623364528
   },
   {
    "id": "ASM-H1-ESC-DUMMY",
@@ -2370,11 +2370,14 @@
    "title": "side pod",
    "script": "redesign/team/H1/ground_tests.py",
    "function": "side_pod",
-   "equation": "m = F / g ; SF_rim(F) = SF_rim(35 N) x 35 / F (linear)",
+   "equation": "m = F / g ; SF_rim(F) = SF_D5 x F_D5 / F (linear; D5's FEA is worked at C5's 59.25 N ult, CR-H1-22 closed by D-95); flight pod brackets at limit +x / -z (C3 design row / 2.156), crash force on test articles only (CR-H1-23, D-96)",
    "inputs": {
     "f_side": "CL-C1-FOOT-SIDE-DESIGN-ULT",
     "sf_rim": "CL-D5-SIDE-RIM-SF",
-    "f_pod": "CL-C3-FEA-SADDLE-TIES",
+    "f_d5": "CL-C5-SIM3D-SIDE-ULT",
+    "f_px": "CL-C3-BRACKET-PROOF-LIMIT-X",
+    "f_pz": "CL-C3-BRACKET-PROOF-LIMIT-Z",
+    "f_crash": "CL-C3-BRACKET-CRASH-F",
     "g": "P:env.g_ms2"
    },
    "units": {
@@ -2383,14 +2386,21 @@
    "outputs": {
     "side_n": 59.25,
     "side_kg": 6.0418185618942255,
-    "rim_sf_at_side": 0.628755933214663,
-    "pod_n": 199.55783048655493,
-    "pod_kg": 20.349235517384116
+    "rim_sf_at_side": 1.2672926036051309,
+    "pod_x_n": 76.21620962710105,
+    "pod_x_kg": 7.7718904648479405,
+    "pod_z_n": 51.37029604285736,
+    "pod_z_kg": 5.238312374037757,
+    "pod_crash_n": 204.69804269769435,
+    "pod_crash_kg": 20.873391290368716
    },
    "input_values": {
     "f_side": 59.25,
-    "sf_rim": 1.064393972656251,
-    "f_pod": 199.55783048655493,
+    "sf_rim": 1.2672926036051309,
+    "f_d5": 59.25,
+    "f_px": 76.21620962710105,
+    "f_pz": 51.37029604285736,
+    "f_crash": 204.69804269769435,
     "g": 9.80665
    }
   },
@@ -2411,25 +2421,59 @@
   {
    "id": "CL-H1-D5-SIDE-RIM-SF",
    "type": "claim",
-   "title": "D5 rim SF scaled from its 35 N basis to the 59 N test load",
+   "title": "D5 shoe RF at the T-D5-SIDE load (D5 FEA of the drawn R8 shoe, D-95)",
    "calc": "CALC-H1-SIDE-POD",
    "output": "rim_sf_at_side",
    "unit": "-",
-   "how": "Informational: D5's CL-D5-SIDE-RIM-SF is still on 35 N; at 59 N the drawn rim is expected to crack unless D5's CR-A1-65 shoe is the one tested (CR-H1-22).",
-   "value": 0.628755933214663
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-002-UR"
+   ],
+   "how": "T-D5-SIDE 60 N at the pad of two R8 shoes, +y on one and +z on the other, insert pushed 4-5 mm in; inspect the inboard snap-window corners and the rim; no crack.",
+   "value": 1.2672926036051309
   },
   {
    "id": "CL-H1-POD-BRACKET-F",
    "type": "claim",
-   "title": "T-C3-POD-PROOF bracket load along +x and -z (CR-C3-20)",
+   "title": "T-C3-POD-PROOF bracket limit load on the flight pod, +x (CR-H1-23, D-96)",
    "calc": "CALC-H1-SIDE-POD",
-   "output": "pod_n",
+   "output": "pod_x_n",
    "unit": "N",
    "parts": [
     "POD-007"
    ],
-   "how": "Card GT-09: strap round each handle-foot bracket, jugs over a pulley; 25 % steps, 10 s hold.",
-   "value": 199.55783048655493
+   "how": "Card GT-09: strap round each handle-foot bracket, jugs over a pulley; 25 % steps to this limit load, 10 s hold; stop at the first audible crack.",
+   "value": 76.21620962710105
+  },
+  {
+   "id": "CL-H1-POD-BRACKET-F-Z",
+   "type": "claim",
+   "title": "T-C3-POD-PROOF bracket limit load on the flight pod, -z (CR-H1-23, D-96)",
+   "calc": "CALC-H1-SIDE-POD",
+   "output": "pod_z_n",
+   "unit": "N",
+   "parts": [
+    "POD-007"
+   ],
+   "how": "Card GT-09, as CL-H1-POD-BRACKET-F along -z.",
+   "value": 51.37029604285736
+  },
+  {
+   "id": "CL-H1-POD-BRACKET-CRASH-F",
+   "type": "claim",
+   "title": "Bracket crash force, test articles only (T-C3-BRACKET-CRASH, D-96)",
+   "calc": "CALC-H1-SIDE-POD",
+   "output": "pod_crash_n",
+   "unit": "N",
+   "parts": [
+    "POD-007"
+   ],
+   "how": "T-C3-BRACKET-CRASH on two test articles (printed foot + bracket bonded to a wall offcut and a spar stub), never the flight pod.",
+   "value": 204.69804269769435
   },
   {
    "id": "T-H1-STAND-CAL",

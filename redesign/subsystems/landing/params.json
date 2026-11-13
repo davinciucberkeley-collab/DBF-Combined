@@ -115,6 +115,18 @@
     "source": "team/D5/sim/fea_shoe_d5.py (D-76)",
     "note": "R7 (D-76): 3.4 mm (R6 2.8) round the last rim_len of the narrower sleeve; D5 FEA 37.5 MPa (+y) at 59.25 N ult, RF 1.07 (R6 1.03). Roof side level with the pad edge (lip_m = rim_t_m)"
    },
+   "rim_side_t_m": {
+    "value": 0.0046,
+    "unit": "m",
+    "source": "team/D5/sim/fea_shoe_d5.py (D5-R8, sweep 2026-11-13: sim/out/fea_d5_h400_p{y,z}_v_*.json)",
+    "note": "R8: rim thickness on the two y sides (outside the sleeve, aft of the fin TE, free space). +y side load at 59.25 N ult, R 2.0 fillets, h 0.4: rs 3.4 (floor 3.4) 35.5 MPa; rs 4.4 / 4.8 (floor 0.4) 29.3 / 28.3 MPa; rs 5.4 (floor 1.4) 28.2 MPa. Past ~4.8 the inboard window edge (28.3 MPa) governs. 4.6 is taken to keep the landing mass at or under R7. The roof side stays rim_t_m (= lip_m) so the rim top stays level with the pad edge and the fin step does not move"
+   },
+   "rim_floor_t_m": {
+    "value": 0.0004,
+    "unit": "m",
+    "source": "team/D5/sim/fea_shoe_d5.py (D5-R8)",
+    "note": "R8: rim on the floor side (below the sleeve floor, aft of the TE) cut to one 0.4 mm perimeter: it is not the stroke stop (the flange spans z_slv0..pad edge) and a thick floor rim stiffens the floor and raises the +y corner peak (h 0.4, R 2.0: rs 5.4 with floor 3.4 / 1.4 gives 28.9 / 28.2 MPa; rs 4.4 with floor 1.4 / 0.4 gives 30.1 / 29.3 MPa; rs 4.8 with floor 0.4 / 0 gives 28.3 / 30.0 MPa, so one perimeter is kept)"
+   },
    "rim_len_m": {
     "value": 0.006,
     "unit": "m",
@@ -141,10 +153,10 @@
     "note": "R6: sleeve floor, roof and y walls (three 0.4 mm perimeters); the tine and legs stay at wall_t_m 0.8. D5 FEA sweep (sim/out/sweep1, sweep2): 0.8/3.2 and 1.0/3.0 fail near the TE (56 / 50 MPa), 1.2/2.8 gives 34.1 MPa at 59.0 N ult (RF 1.17), 1.4/2.6 34.8 MPa and heavier; R7 (D-76): 1.2 kept on the 19.1 x 14.4 mm sleeve (FEA sweep sim/runs/log_k11_*, log_k12_*: ws 0.8 / 1.0 fail +y at 60 / 52 MPa on the narrow sleeve)"
    },
    "inside_fillet_r_m": {
-    "value": 0.001,
+    "value": 0.002,
     "unit": "m",
-    "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-18",
-    "note": "R 1.0 mm in the four inside corners of the sleeve, full length (modelled); the FEA peak sits in this corner"
+    "source": "team/D5/sim/fea_shoe_d5.py (D5-R8); was team/C5/CHANGE-REQUESTS.md#CR-C5-18 (R 1.0)",
+    "note": "R8: R 2.0 mm in the four inside corners of the sleeve, full length (modelled); the FEA peak sits in this corner. R 1.0 / 1.5 / 2.0 at rim 3.4 give +y 37.6 / 38.8 / 35.5 MPa and +z 31.0 / 26.1 / 21.2 MPa (h 0.4). Tine chamfer piston.corner_chamfer_m 1.4 keeps 0.16 mm to the arc (CL-D5-FILLET-CLEAR)"
    }
   },
   "edge_strip": {
@@ -205,10 +217,10 @@
     "note": "two 0.8 mm slots in each tine y wall make the finger"
    },
    "window_rail_m": {
-    "value": 0.002,
+    "value": 0.0025,
     "unit": "m",
-    "source": "D5 choice",
-    "note": "R7 (D-76): 1.5 -> 2.0 mm rail each side of the inspection window keeps tine SF >= 1.1 on the narrower tine"
+    "source": "team/D5/feet_calc.py#CALC-D5-SIDE (D5 choice, R8)",
+    "note": "R8: 2.0 -> 2.5 mm rail each side of the inspection window: the 1.4 mm tine chamfer (needed by the R 2.0 sleeve fillets) costs tine section; with R8's CALC-D5-SIDE (windowed section at F (a - 3 mm), full section at F a) the tine SF is CL-D5-SIDE-TINE-SF. Window 10.7 -> 9.7 mm wide, still shows the cartridge stripe. R7 (D-76): 1.5 -> 2.0 mm"
    },
    "replace_mark_m": {
     "value": 0.003,
@@ -217,10 +229,10 @@
     "note": "R4: 6 -> 3 mm. Groove on the tine 3 mm aft of the rim: once it is inside the sleeve, less than C5's pair-first stroke plus the 3 mm guard is left; replace the insert (CL-D5-MARK-MARGIN)"
    },
    "corner_chamfer_m": {
-    "value": 0.001,
+    "value": 0.0014,
     "unit": "m",
-    "source": "D5 choice (R6)",
-    "note": "45 deg chamfer on the four outside corners of the tine so it clears the R 1.0 sleeve fillets with the 0.2 mm slide clearance (needs >= 0.47 mm; 1.0 keeps the chamfer ends off the fillet arcs)"
+    "source": "D5 choice (R8)",
+    "note": "R8: 45 deg chamfer on the four outside corners of the tine so it clears the R 2.0 sleeve fillets with the 0.2 mm slide clearance: the chamfer ends sit sqrt((R-cs-tc)^2+(R-cs)^2) = 1.844 mm from the fillet centre, 0.156 mm inside the 2.0 mm arc (CL-D5-FILLET-CLEAR; R7 was 1.0 mm chamfer on R 1.0, 0.175 mm). With 1.0 mm the gap would be 0.030 mm"
    }
   },
   "pad": {

@@ -78,10 +78,11 @@ def geometry(variant=None, c5_rules=False):
          "x_open": s["x_open"] * mm, "x_g": s["x_g"] * mm, "L_cart": s["L_cart"] * mm,
          "hy_o": s["slv_out"][0] / 2 * mm, "hz_o": s["slv_out"][1] / 2 * mm, "w": n["ws"] * mm,
          "w_leg": (n["ws"] if c5_rules else n["w"]) * mm, "rim_t": n["rim_t"] * mm,
+         "rim_side": n.get("rs", n["rim_t"]) * mm, "rim_floor": n.get("rf", n.get("rs", n["rim_t"])) * mm,
          "z0": s["z_slv"][0] * mm, "z1": s["z_slv"][1] * mm, "zw0": s["z_win"][0] * mm, "zw1": s["z_win"][1] * mm,
          "leg_in": s["leg_gap"] * mm, "leg_depth": n["leg_depth"] * mm, "engage": n["engage"] * mm,
          "bond_hy": s["collar_gap"] * mm, "z_hh": n["hh"] * mm, "r_in": n["r_in"] * mm,
-         "r_out": R_OUT, "r_rim": R_OUT + n["rim_t"] * mm, "r_leg": 0.0 if c5_rules else n["r_in"] * mm}
+         "r_out": R_OUT, "r_rim": R_OUT + min(n["rim_t"], n.get("rs", n["rim_t"]), n.get("rf", n.get("rs", n["rim_t"]))) * mm, "r_leg": 0.0 if c5_rules else n["r_in"] * mm}
     return g, n
 
 
@@ -101,7 +102,9 @@ def section(g, h):
     hy, hz, w, zc, rt, ri = g["hy_o"], g["hz_o"], g["w"], 0.5 * (g["z0"] + g["z1"]), g["rim_t"], g["r_in"]
     S_out = occ.addRectangle(-hy, zc - hz, 0, 2 * hy, 2 * hz, roundedRadius=g["r_out"])
     S_in = occ.addRectangle(-hy + w, zc - hz + w, 0, 2 * (hy - w), 2 * (hz - w), roundedRadius=ri)
-    R_o = occ.addRectangle(-hy - rt, zc - hz - rt, 0, 2 * (hy + rt), 2 * (hz + rt), roundedRadius=g["r_rim"])
+    rs = g.get("rim_side", rt)                            # R8: y sides rs, floor side rf, roof side rt (= lip)
+    rf = g.get("rim_floor", rs)
+    R_o = occ.addRectangle(-hy - rs, zc - hz - rf, 0, 2 * (hy + rs), 2 * hz + rf + rt, roundedRadius=g["r_rim"])
     tools = []
     for sg in (1, -1):
         y0 = sg * (hy - w - 0.3) if sg > 0 else -(hy + 0.3)
@@ -161,7 +164,10 @@ def section(g, h):
         return dy * dy + dz * dz <= r * r + 1e-12
     in_core = inside(y, z, hy - w, hz - w, ri)
     in_out = inside(y, z, hy, hz, g["r_out"])
-    in_rim = inside(y, z, hy + rt, hz + rt, g["r_rim"])
+    zr_c = zc + (rt - rf) / 2                             # rim box centre (asymmetric in z when rf != rt)
+    dyr = np.maximum(np.abs(y) - (hy + rs - g["r_rim"]), 0)
+    dzr = np.maximum(np.abs(z - zr_c) - (hz + (rf + rt) / 2 - g["r_rim"]), 0)
+    in_rim = dyr * dyr + dzr * dzr <= g["r_rim"] ** 2 + 1e-12
     leg = (y > g["leg_in"]) & (y < g["leg_in"] + g["w_leg"]) & (z < g["z0"])
     lf, lo = g.get("r_leg", 0.0), g["leg_in"] + g["w_leg"]
     if lf > 0:

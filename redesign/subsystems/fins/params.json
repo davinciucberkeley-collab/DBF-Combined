@@ -104,18 +104,18 @@
    },
    "root_fillet": {
     "leg_m": {
-     "value": 0.015,
+     "value": 0.01,
      "unit": "m",
-     "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-24 (D-48)",
+     "source": "params/CHANGE-LOG.md#D-92 (team/C4/claims.d3.json#CL-C4-D3-MS-FACE-ROOT-FREE, CL-C4-D3-FILLET-L4-SHARE)",
      "status": "PROPOSED",
-     "note": "cove fillet, both faces, equal legs on the skin and up the laminate, over the effective root length ahead of the hinge"
+     "note": "D-92: 15 -> 10 mm cove, both faces, ahead of the hinge; no strength credit (the fin is sized root-free, CL-C4-D3-MS-FACE-ROOT-FREE; intact share 0.8 %, CL-C4-D3-FILLET-L4-SHARE). 10 mm, not 6, because the fillet mass aft of the CG holds the forward CG limit for the 590 g pack (CL-A1-PACK-CG-FWD +0.13 mm; -0.82 mm at 6 / 6 mm)"
     },
     "leg_aft_m": {
      "value": 0.013,
      "unit": "m",
-     "source": "D3 choice (params.json#wing.elevon inboard_y_m / outboard_y_m)",
+     "source": "params/CHANGE-LOG.md#D-92 (team/A1/claims.json#CL-A1-PACK-CG-FWD)",
      "status": "PROPOSED",
-     "note": "aft of the hinge line the elevon panel ends are 15.2 mm from each laminate face: a 15 mm leg leaves 0.2 mm, 13 mm leaves 2.2 mm for the bead edge"
+     "note": "D-92: kept at 13 mm aft of the hinge (elevon end gap 2.2 mm): the aft fillet is the cheapest mass that holds the forward CG limit after the 15 -> 10 mm cut ahead of the hinge"
     },
     "leg_fwd_m": {
      "value": 0.004,
@@ -172,11 +172,11 @@
     "note": "5 perimeters at 0.4 mm"
    },
    "grip_m": {
-    "value": 0.012,
+    "value": 0.018,
     "unit": "m",
-    "source": "team/D3/fins_calcs.py#CALC-D3-MOUNT-SLIP",
+    "source": "params/CHANGE-LOG.md#D-91 (CR-H1-24; team/C4/fin_structures_d3.py CALC-C4-D3-MOUNT-K-EST)",
     "status": "PROPOSED",
-    "note": "collar length on the tube; the lip cap sits on the tube end and the station collar directly below (brace ear as high as possible, CR-C4-04)"
+    "note": "D-91: 12 -> 18 mm. The slit-collar foundation (E / t_wall) d l^3 / 12 was the stiffness cap (3 168 N m/rad at 12 mm, below the 2 229 N m/rad need in series with any body); 18 mm gives 10 692. The lip cap still sits on the tube end; the mount collar now reaches down to |z| 0.154 and the station collar sits 6 mm lower (top |z| 0.1535). Was 12 mm (CALC-D3-MOUNT-SLIP)"
    },
    "cap_t_m": {
     "value": 0.0025,
@@ -280,7 +280,15 @@
     "value": 0.0025,
     "unit": "m",
     "source": "G3 practice",
-    "status": "PROPOSED"
+    "status": "PROPOSED",
+    "note": "outboard (slit-side) cheek; the inboard cheek is cheek_in_t_m (D-91)"
+   },
+   "cheek_in_t_m": {
+    "value": 0.0025,
+    "unit": "m",
+    "source": "params/CHANGE-LOG.md#D-91 (team/C4/fin_structures_d3.py CALC-C4-D3-MOUNT-K-EST)",
+    "status": "PROPOSED",
+    "note": "D-91: inboard cheek thickness as its own key (outboard is cheek_t_m, which carries the phase leads on its outer face, team/F2/harness.py W-PH-*). Kept at 2.5 mm: with the 18 mm grip the estimate is 1.5 x the need (CL-C4-D3-MOUNT-K-EST / -REQ); 5 mm would add 8 g for four mounts for a factor 2.0 the separation does not need"
    },
    "cheek_y_in_m": {
     "value": 0.0115,
@@ -533,11 +541,11 @@
   },
   "station_collar": {
    "height_m": {
-    "value": 0.015,
+    "value": 0.022,
     "unit": "m",
-    "source": "team/C6/claims.json#CL-C6-COLLAR-RF-15MM (CR-C6-36, C6-R5); D-70 set 13 mm",
+    "source": "params/CHANGE-LOG.md#D-90 (team/C6/CHANGE-REQUESTS.md#CR-C6-37; team/C6/claims.json#CL-C6-COLLAR-L-REQ)",
     "status": "PROPOSED",
-    "note": "R5b: 13 -> 15 mm. C6-R5 (C1 envelope read live after D-65) needs 13.007 mm (CL-C6-COLLAR-L-REQ): the D-70 13 mm reads RF 0.9995 (CL-C6-COLLAR-RF-13MM); 15 mm gives 1.15 (CL-C6-COLLAR-RF-15MM), so the RF no longer sits on the next torsion re-run. Top stays 0.5 mm below the mount collar (|z| 0.1595); the ring grows 2 mm downward to 0.1445; ear (12 mm, mid 0.1535) and brace end unchanged. +1.2 g for four. Was 13 (D-70), 12 (D-48), 16 (R3)"
+    "note": "D-90: 15 -> 22 mm on the D-65 loads (C1 half-fin torsion 12.67 N m governs, CL-C6-COLLAR-L-REQ 19.45 mm): RF 1.13 (CL-C6-COLLAR-RF). Top 0.5 mm below the mount collar, which D-91 moved down 6 mm: ring |z| 0.1315-0.1535, ear mid 0.1475. Was 15 (R5b), 13 (D-70), 12 (D-48), 16 (R3)"
    },
    "gap_m": {
     "value": 0.0005,
@@ -720,11 +728,11 @@
     "note": "R5: pultruded CF rod 2.5 mm at the drawn 15 mm pitch, 2.5 mm drill, epoxy injected before the pin (CL-C6-STRIP-PIN-RF-PROP 1.59 at 72.7 N, 1.25 at 92 N). Fallback only if 2.5 mm rod cannot be bought: 2 mm at 9 mm pitch (CL-C6-STRIP-PIN-RF-ALT)"
    },
    "pin_pitch_m": {
-    "value": 0.015,
+    "value": 0.012,
     "unit": "m",
-    "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-02",
+    "source": "params/CHANGE-LOG.md#D-90 (team/C6/claims.json#CL-C6-STRIP-PIN-PITCH-MAX)",
     "status": "PROPOSED",
-    "note": "along the strip, first pin half a pitch aft of the collar tail"
+    "note": "D-90: 15 -> 12 mm. C4 R5 pin force on the D-65 loads 131 N at 15 mm (CL-C4-D3-STRIP-PIN-F) gives the 2.5 mm pin RF 0.88 and a largest pitch of 13.2 mm (bending bound); 12 mm gives RF 1.10. Along the strip, first pin half a pitch aft of the collar tail"
    },
    "pin_epoxy_g": {
     "value": 0.4,

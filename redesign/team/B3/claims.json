@@ -804,21 +804,21 @@
     "cna_ratio_b4": 0.6295647995545188,
     "dxnp_props_b4_m": -0.0012771732744113872,
     "xnp_shift_if_b4_m": 0.0007336353177519708,
-    "arm_m": 0.06398006660187701,
-    "dCma_props": 0.016855439947068507,
-    "dCnb_props": -0.004078442936152683,
+    "arm_m": 0.0639766724193978,
+    "dCma_props": 0.016854545755455613,
+    "dCnb_props": -0.0040782265722085435,
     "dCYb_props": -0.07330735376943147,
     "N_props_per_deg_N": 0.06938282103276187,
     "Tc": 0.04468690932833968,
     "dxnp_props_m": -0.002010808592163358,
-    "sm_aft_if_props_ignored": 0.061274558820920186,
-    "sm_aft": 0.05499078197040968
+    "sm_aft_if_props_ignored": 0.06128516564116769,
+    "sm_aft": 0.055001388790657184
    },
    "input_values": {
     "n": 4,
     "D": 0.2794,
     "x_prop": -0.0127,
-    "x_aft": 0.051280066601877006,
+    "x_aft": 0.051276672419397804,
     "xnp": 0.0688771168324081,
     "xnp_a": 0.071946,
     "CLa": 3.464493,
@@ -845,7 +845,7 @@
    "unit": "m",
    "how": "Follows from CL-B3-V-CG-AFT-ENV and the prop plane (D3 CAD).",
    "note": "J1 CL-J1-PROP-ARM 0.049 m at R1",
-   "value": 0.06398006660187701
+   "value": 0.0639766724193978
   },
   {
    "id": "CL-B3-PROP-CNB-AFT",
@@ -858,7 +858,7 @@
    "assumes": [
     "ASM-B3-PROP-CNA"
    ],
-   "value": -0.004078442936152683
+   "value": -0.0040782265722085435
   },
   {
    "id": "CL-B3-PROP-CNA-B4-RATIO",
@@ -1035,8 +1035,8 @@
     "slop": 0.8364539884044696,
     "vmax": 12.0,
     "x_t": 0.049,
-    "x_aft": 0.051280066601877006,
-    "x_fwd": 0.04643259420988126,
+    "x_aft": 0.051276672419397804,
+    "x_fwd": 0.04643120002740206,
     "k": 1.3
    }
   },
@@ -1408,8 +1408,8 @@
     "slop": 0.8364539884044696,
     "vmax": 12.0,
     "x_t": 0.049,
-    "x_aft": 0.051280066601877006,
-    "x_fwd": 0.04643259420988126,
+    "x_aft": 0.051276672419397804,
+    "x_fwd": 0.04643120002740206,
     "vs": 11.90321150934563,
     "vc": 16.0
    }
@@ -1474,7 +1474,7 @@
     "da_deg": 13.285556441549527,
     "pb2v": 0.12584625592446996,
     "p_degs": 149.26543044917528,
-    "tau_s": 0.35007048334112234,
+    "tau_s": 0.35072981010507015,
     "t60_s": 0.7060000000000005,
     "eff": 0.9733797299929904
    },
@@ -1491,8 +1491,8 @@
     "b": 1.15,
     "S": 0.368,
     "rho": 1.225,
-    "Ixx": 0.17586585737119634,
-    "m_basic": 2.3406900000000004,
+    "Ixx": 0.1769859745112528,
+    "m_basic": 2.35117,
     "m": 2.6,
     "lo": 0.0789572250948345,
     "li": 0.07148608475229434,
@@ -1675,8 +1675,8 @@
     "va": 20.5,
     "slop": 0.8364539884044696,
     "vmax": 12.0,
-    "x_aft": 0.051280066601877006,
-    "x_fwd": 0.04643259420988126,
+    "x_aft": 0.051276672419397804,
+    "x_fwd": 0.04643120002740206,
     "vt": 15.510884570013346,
     "travel": [
      -25,
@@ -1888,10 +1888,10 @@
    ],
    "outputs": {
     "Cnb_avl": 0.047688,
-    "Cnb_props": -0.004078442936152683,
-    "Cnb_tubes": -0.0005667136483795087,
+    "Cnb_props": -0.0040782265722085435,
+    "Cnb_tubes": -0.0005665445776698334,
     "Cnb_pod": -0.006530245746691872,
-    "Cnb": 0.03651259766877594,
+    "Cnb": 0.03651298310342976,
     "Clb": 0.024684,
     "CYb": -1.3128253537694314,
     "Cnr": -0.046447,
@@ -1945,7 +1945,7 @@
     "m": 2.6,
     "g": 9.80665,
     "rho": 1.225,
-    "x_aft": 0.051280066601877006,
+    "x_aft": 0.051276672419397804,
     "x_t": 0.049,
     "vt": 15.510884570013346,
     "vc": 16.0
@@ -1969,7 +1969,7 @@
    "assumes": [
     "ASM-B3-PROP-CNA"
    ],
-   "value": 0.03651259766877594
+   "value": 0.03651298310342976
   },
   {
    "id": "CL-B3-CNB-CRUISE",
@@ -2066,20 +2066,20 @@
     "Cnb": 0.039453516182071824,
     "eig_lon": [
      [
-      -0.0333,
+      -0.0334,
       -0.7788
      ],
      [
-      -0.0333,
+      -0.0334,
       0.7788
      ],
      [
-      -4.2635,
-      -8.6046
+      -4.2771,
+      -8.6377
      ],
      [
-      -4.2635,
-      8.6046
+      -4.2771,
+      8.6377
      ]
     ],
     "eig_lat": [
@@ -2088,24 +2088,24 @@
       0.0
      ],
      [
-      -3.5317,
+      -3.525,
       0.0
      ],
      [
-      -1.4445,
-      -3.6009
+      -1.4441,
+      -3.6004
      ],
      [
-      -1.4445,
-      3.6009
+      -1.4441,
+      3.6004
      ]
     ],
-    "sp_wn": 9.602901854240633,
-    "sp_zeta": 0.4439774561739634,
-    "dr_wn": 3.8798373003137603,
-    "dr_zeta": 0.37229674061398893,
-    "lat_max_real": 0.2175326770035718,
-    "lat_t2_s": 3.1864048661919613
+    "sp_wn": 9.63860611976488,
+    "sp_zeta": 0.44374412115695505,
+    "dr_wn": 3.8791795719221236,
+    "dr_zeta": 0.3722721908829432,
+    "lat_max_real": 0.21751549401210066,
+    "lat_t2_s": 3.1866565814451113
    },
    "input_values": {
     "b": 1.15,
@@ -2147,10 +2147,10 @@
     "rho": 1.225,
     "xnp": 0.0688771168324081,
     "x_t": 0.049,
-    "m_basic": 2.3406900000000004,
-    "Ixx": 0.17586585737119634,
-    "Iyy": 0.04731467986250484,
-    "Izz": 0.17212019491059707,
+    "m_basic": 2.35117,
+    "Ixx": 0.1769859745112528,
+    "Iyy": 0.04717477525815879,
+    "Izz": 0.17296747447693864,
     "V": 16.0,
     "cd0": 0.02,
     "e": 0.8
@@ -2168,7 +2168,7 @@
     "ref": "ASM-B3-ZETA-SP-MIN"
    },
    "how": "Twin: elevon doublet in MANUAL, pitch-rate overshoot.",
-   "value": 0.4439774561739634
+   "value": 0.44374412115695505
   },
   {
    "id": "CL-B3-DR-ZETA",
@@ -2185,7 +2185,7 @@
     "R-DIRECTIONAL"
    ],
    "how": "T-B3-YAW-DOUBLET: yaw pulse in FBWA, yaw-rate oscillation decays (FC log).",
-   "value": 0.37229674061398893
+   "value": 0.3722721908829432
   },
   {
    "id": "CL-B3-LAT-T2",
@@ -2196,7 +2196,7 @@
    "unit": "s",
    "how": "Twin, hands-off in MANUAL at altitude: bank-angle drift after a roll pulse (FC log).",
    "note": "R5: no limit here. The params fin rectangle (0.0578 m2 per half) is not the build; R-SPIRAL is judged on the CAD fins (CL-B3-V-LAT-T2, -ZTOP). 999 = no divergent lateral mode",
-   "value": 3.1864048661919613
+   "value": 3.1866565814451113
   },
   {
    "id": "CALC-B3-HOVER",
@@ -2264,57 +2264,57 @@
    ],
    "outputs": {
     "T_hover_N": 6.75678185,
-    "T_upper_N": 7.407659259661837,
-    "T_lower_N": 6.105904440338162,
+    "T_upper_N": 7.404321492889421,
+    "T_lower_N": 6.109242207110578,
     "dT_N": 2.027034555,
-    "trim_use_pitch": 0.3210983296048628,
+    "trim_use_pitch": 0.31945170411237556,
     "M_pitch_Nm": 1.5405462618,
-    "acc_pitch_rads2": 29.31226581110693,
+    "acc_pitch_rads2": 29.53082556820182,
     "ratio_pitch": 2.398147950310559,
     "M_roll_Nm": 2.5946042304000003,
-    "acc_roll_rads2": 13.570937312841425,
+    "acc_roll_rads2": 13.564923887563069,
     "ratio_roll": 4.57878792140622,
-    "M_yaw_Nm": 0.6081044327623425,
-    "acc_yaw_rads2": 3.11291446350276,
-    "ratio_yaw": 3.127988543458162,
+    "M_yaw_Nm": 0.595591371256444,
+    "acc_yaw_rads2": 3.043128065816963,
+    "ratio_yaw": 3.0636234263412887,
     "dist_pitch_Nm": 0.64239,
     "dist_roll_Nm": 0.5666574375000001,
     "dist_yaw_Nm": 0.19440749999999998,
     "kq_iso_m": 0.016825469314959318,
-    "kq_eff_m": 0.02964487527441556,
-    "ratio_yaw_nocant": 1.2363964674182932,
-    "acc_yaw_nocant_rads2": 1.2304381530103272,
-    "ratio_yaw_fulldiff": 9.422236581866306,
-    "acc_yaw_fulldiff_rads2": 9.376829910575644,
-    "dT_full_N": 6.105904440338162,
-    "ratio_yaw_low": 2.8606595684506053,
-    "acc_yaw_low_rads2": 2.846873772735275,
-    "yaw_cant_share": 0.6047311394397278,
-    "cant_req_deg": 3.8442053287225293,
-    "cant_req_nominal_deg": 2.8556891765848653,
-    "k_yaw_m": 0.07499926817507342,
-    "k_yaw_low_m": 0.0685895651953453,
-    "k_yaw_need_m": 0.04818588435654067,
-    "M_yaw_need_Nm": 0.3906978106157675,
+    "kq_eff_m": 0.028101603420091086,
+    "ratio_yaw_nocant": 1.17203135030142,
+    "acc_yaw_nocant_rads2": 1.1641905677614695,
+    "ratio_yaw_fulldiff": 9.233398363500973,
+    "acc_yaw_fulldiff_rads2": 9.171627772932448,
+    "dT_full_N": 6.109242207110578,
+    "ratio_yaw_low": 2.8284770098921688,
+    "acc_yaw_low_rads2": 2.8095547573874806,
+    "yaw_cant_share": 0.6174362226688185,
+    "cant_req_deg": 3.9772856599817565,
+    "cant_req_nominal_deg": 3.1075991157900895,
+    "k_yaw_m": 0.07345599632074895,
+    "k_yaw_low_m": 0.06781792926818306,
+    "k_yaw_need_m": 0.048276638203873186,
+    "M_yaw_need_Nm": 0.39143365535393637,
     "yaw_iso_30pct_Nm": 0.13642323082205887
    },
    "input_values": {
     "m": 2.6,
     "g": 9.80665,
     "dl": 1.06,
-    "split": 1.2131960681735758,
+    "split": 1.211986894916606,
     "tmax": 1.62,
     "sag": 0.851,
     "y": 0.32,
     "z": 0.19,
     "Qh": 0.11368602568504906,
-    "swirl": 1.7619048074967316,
+    "swirl": 1.670182441514799,
     "cant": 7.0,
     "dfrac": 0.3,
-    "Ixx": 0.17586585737119634,
-    "Iyy": 0.04731467986250484,
-    "Izz": 0.17212019491059707,
-    "m_basic": 2.3406900000000004,
+    "Ixx": 0.1769859745112528,
+    "Iyy": 0.04717477525815879,
+    "Izz": 0.17296747447693864,
+    "m_basic": 2.35117,
     "rho": 1.225,
     "Vw": 5.0,
     "S": 0.368,
@@ -2329,7 +2329,7 @@
     "asym": 0.1,
     "fac": 1.5,
     "amin": 2.0,
-    "swirl_lo": 1.3809524037483658
+    "swirl_lo": 1.3350912207573995
    }
   },
   {
@@ -2365,7 +2365,7 @@
     "R-HOVER-AUTHORITY"
    ],
    "how": "Hover step inputs (twin, then aircraft): peak angular acceleration from the FC gyro log.",
-   "value": 29.31226581110693
+   "value": 29.53082556820182
   },
   {
    "id": "CL-B3-HOVER-ROLL-RATIO",
@@ -2400,7 +2400,7 @@
     "R-HOVER-AUTHORITY"
    ],
    "how": "Hover step inputs (twin, then aircraft): peak angular acceleration from the FC gyro log.",
-   "value": 13.570937312841425
+   "value": 13.564923887563069
   },
   {
    "id": "CL-B3-HOVER-YAW-RATIO",
@@ -2418,7 +2418,7 @@
     "R-WIND"
    ],
    "how": "T-B3-HOVER-WIND: twin, then aircraft, hover in 5 m/s; no motor output above 85 % or below 10 % (RCOU).",
-   "value": 3.127988543458162
+   "value": 3.0636234263412887
   },
   {
    "id": "CL-B3-HOVER-YAW-ACCEL",
@@ -2435,7 +2435,7 @@
     "R-HOVER-AUTHORITY"
    ],
    "how": "Hover step inputs (twin, then aircraft): peak angular acceleration from the FC gyro log.",
-   "value": 3.11291446350276
+   "value": 3.043128065816963
   },
   {
    "id": "CL-B3-HOVER-CANT-REQ",
@@ -2452,7 +2452,7 @@
     "R-HOVER-AUTHORITY"
    ],
    "how": "Bench yaw torque on a turntable with canted mounts; hover yaw steps (H2).",
-   "value": 3.8442053287225293
+   "value": 3.9772856599817565
   },
   {
    "id": "CL-B3-HOVER-YAW-RATIO-LOW",
@@ -2467,7 +2467,7 @@
    },
    "how": "T-B4-YAW stand test measures the factor; T-B3-HOVER-WIND.",
    "note": "CL-B4-YAW-LOW 1.40 (CR-B4-13); R3 carried B4's R0-R2 0.48 here (ASM-B3-SWIRL-LOW, retired)",
-   "value": 2.8606595684506053
+   "value": 2.8284770098921688
   },
   {
    "id": "CL-B3-HOVER-YAW-ACCEL-LOW",
@@ -2481,7 +2481,7 @@
     "ref": "P:requirements.hover_ctrl_accel_min"
    },
    "how": "As CL-B3-HOVER-YAW-RATIO-LOW.",
-   "value": 2.846873772735275
+   "value": 2.8095547573874806
   },
   {
    "id": "CALC-B3-HOVER-FLEX",
@@ -2567,85 +2567,85 @@
       "pm_rigid_deg": 66.273
      }
     ],
-    "gm_pitch_db": 12.478025865892949,
-    "pm_pitch_deg": 66.10909948184752,
-    "gm_pitch_any_map_db": 12.478025865892949,
+    "gm_pitch_db": 12.47802586589296,
+    "pm_pitch_deg": 66.10909948184751,
+    "gm_pitch_any_map_db": 12.47802586589296,
     "stable_pitch": 1,
-    "gm_pitch_rigid_db": 18.663031896314923,
-    "pm_pitch_rigid_deg": 66.27317489539305,
+    "gm_pitch_rigid_db": 18.663031896314926,
+    "pm_pitch_rigid_deg": 66.27317489539304,
     "xover_max_pitch_hz": 5.0,
-    "gm_pitch_at_5hz_db": 6.024906692138288,
+    "gm_pitch_at_5hz_db": 6.024906692138292,
     "pm_pitch_at_5hz_deg": 53.25448596787729,
     "yaw_cases": [
      {
       "f_mode": 11.86,
       "sigma": 1.0,
-      "gm_db": 22.089,
+      "gm_db": 22.051,
       "f_gm": 7.663,
-      "pm_deg": 69.096,
+      "pm_deg": 69.068,
       "stable": true,
-      "peak_db": -18.636,
+      "peak_db": -18.477,
       "gm_rigid_db": 24.334,
       "pm_rigid_deg": 71.53
      },
      {
       "f_mode": 14.9,
       "sigma": 1.0,
-      "gm_db": 23.174,
-      "f_gm": 7.721,
-      "pm_deg": 70.002,
+      "gm_db": 23.13,
+      "f_gm": 7.709,
+      "pm_deg": 69.975,
       "stable": true,
-      "peak_db": -25.767,
+      "peak_db": -25.628,
       "gm_rigid_db": 24.334,
       "pm_rigid_deg": 71.53
      },
      {
       "f_mode": 11.86,
       "sigma": -1.0,
-      "gm_db": 21.903,
+      "gm_db": 21.775,
       "f_gm": 12.193,
-      "pm_deg": 73.978,
+      "pm_deg": 74.039,
       "stable": true,
-      "peak_db": -18.87,
+      "peak_db": -18.707,
       "gm_rigid_db": 24.334,
       "pm_rigid_deg": 71.53
      },
      {
       "f_mode": 14.9,
       "sigma": -1.0,
-      "gm_db": 25.713,
+      "gm_db": 25.742,
       "f_gm": 7.791,
-      "pm_deg": 73.08,
+      "pm_deg": 73.102,
       "stable": true,
-      "peak_db": -26.105,
+      "peak_db": -25.962,
       "gm_rigid_db": 24.334,
       "pm_rigid_deg": 71.53
      }
     ],
-    "gm_yaw_db": 22.08941282101034,
-    "pm_yaw_deg": 69.09592856384187,
-    "gm_yaw_any_map_db": 21.90284643886936,
+    "gm_yaw_db": 22.05061340344521,
+    "pm_yaw_deg": 69.06765974618376,
+    "gm_yaw_any_map_db": 21.77523201052939,
     "stable_yaw": 1,
-    "gm_yaw_rigid_db": 24.333798304140032,
+    "gm_yaw_rigid_db": 24.33379830414003,
     "pm_yaw_rigid_deg": 71.53032179958882,
     "xover_max_yaw_hz": 2.4,
-    "gm_yaw_at_5hz_db": 4.259163334058293,
-    "pm_yaw_at_5hz_deg": 15.559081191014423,
-    "yaw_band_gm_min_db": 13.216054425160152,
-    "yaw_band_pm_min_deg": 46.040036585003676,
+    "gm_yaw_at_5hz_db": 4.220363916493165,
+    "pm_yaw_at_5hz_deg": 15.484584157838347,
+    "yaw_band_gm_min_db": 13.08843999682017,
+    "yaw_band_pm_min_deg": 45.93135632113451,
     "yaw_band_f_worst_hz": 11.860282,
-    "yaw_flex_static_frac": 0.15781804763423013,
-    "ky_Nm_per_N": 0.2999970727002937
+    "yaw_flex_static_frac": 0.1611337218230989,
+    "ky_Nm_per_N": 0.2938239852829958
    },
    "input_values": {
-    "Iyy": 0.04731467986250484,
-    "Ixx": 0.17586585737119634,
-    "m_basic": 2.3406900000000004,
+    "Iyy": 0.04717477525815879,
+    "Ixx": 0.1769859745112528,
+    "m_basic": 2.35117,
     "m": 2.6,
     "g": 9.80665,
     "dl": 1.06,
     "Qh": 0.11368602568504906,
-    "swirl": 1.7619048074967316,
+    "swirl": 1.670182441514799,
     "y": 0.32,
     "z": 0.19,
     "cant": 7.0,
@@ -2700,7 +2700,7 @@
     "ASM-B3-FLEX-ZETA",
     "ASM-B3-MOTOR-TAU"
    ],
-   "value": 12.478025865892949
+   "value": 12.47802586589296
   },
   {
    "id": "CL-B3-FLEX-GM-YAW",
@@ -2721,7 +2721,7 @@
     "ASM-B3-FLEX-ZETA",
     "ASM-B3-MOTOR-TAU"
    ],
-   "value": 22.08941282101034
+   "value": 22.05061340344521
   },
   {
    "id": "CL-B3-FLEX-PM-PITCH",
@@ -2735,7 +2735,7 @@
     "ref": "ASM-B3-PM-MIN"
    },
    "how": "Tethered hover step responses: overshoot <= 25 % (gyro log).",
-   "value": 66.10909948184752
+   "value": 66.10909948184751
   },
   {
    "id": "CL-B3-FLEX-PM-YAW",
@@ -2749,7 +2749,7 @@
     "ref": "ASM-B3-PM-MIN"
    },
    "how": "As CL-B3-FLEX-PM-PITCH.",
-   "value": 69.09592856384187
+   "value": 69.06765974618376
   },
   {
    "id": "CL-B3-XOVER-MAX-PITCH",
@@ -2790,7 +2790,7 @@
    "unit": "-",
    "how": "Turntable yaw-torque bench test on the built wing vs the rigid prediction.",
    "note": "positive = adds to the rigid moment with F4's motor map; not credited in CL-B3-HOVER-YAW-RATIO",
-   "value": 0.15781804763423013
+   "value": 0.1611337218230989
   },
   {
    "id": "CALC-B3-HOVER-TRIM",
@@ -2803,10 +2803,10 @@
     "split": "CL-A3-HOVER-SPLIT"
    },
    "outputs": {
-    "use": 0.10659803408678792
+    "use": 0.10599344745830297
    },
    "input_values": {
-    "split": 1.2131960681735758
+    "split": 1.211986894916606
    }
   },
   {
@@ -2848,7 +2848,7 @@
     "ref": "CL-B3-SPLIT-LIMIT"
    },
    "how": "Hover log: mean upper vs lower motor output (RCOU), H2.",
-   "value": 0.10659803408678792
+   "value": 0.10599344745830297
   },
   {
    "id": "CALC-B3-WASH",
@@ -3741,7 +3741,7 @@
     "c": 0.32,
     "b": 1.15,
     "x_t": 0.049,
-    "x_fwd": 0.04643259420988126,
+    "x_fwd": 0.04643120002740206,
     "xnp": 0.0688771168324081,
     "cm_np_thin": 0.006759469312499995,
     "dcm": -0.01024,

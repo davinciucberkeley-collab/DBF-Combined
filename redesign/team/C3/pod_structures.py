@@ -141,6 +141,51 @@ def _fea_summary():
                                                                                  "crash_mx"))
             out["F_%s_saddle_crash_n" % tag] = max(math.hypot(*f) for c, f in m["F_saddle_N"].items()
                                                    if c.startswith("CRASH")) if "F_saddle_N" in m else None
+    if "M1_TIED_FOOTPRINT" in r and "F_saddle_limit_N" in r["M1_TIED_FOOTPRINT"]["levels"][-1]:
+        lt = r["M1_TIED_FOOTPRINT"]["levels"][-1]                # C3-R4: bracket loads for H1 (CR-H1-23)
+        out["F_tied_saddle_limit_n"] = math.hypot(*lt["F_saddle_limit_N"])
+        out["F_tied_saddle_limit_x_n"] = abs(lt["F_saddle_limit_N"][0])
+        out["F_tied_saddle_limit_z_n"] = abs(lt["F_saddle_limit_N"][1])
+        out["F_tied_saddle_crash_max_n"] = max(math.hypot(*lt["F_saddle_crash_%s_N" % d]) for d in ("dn", "up", "px", "mx"))
+    if "M1_TIED_STEPGAP" in r:                                     # C3-R4: fail-safe state after the aft-end peel
+        m = r["M1_TIED_STEPGAP"]
+        lt = m["levels"][-1]
+        for d in ("dn", "mx", "up", "px"):
+            out["R_fix_crash_%s_fea" % d] = best(m["convergence"]["crash_%s_R_d0" % d], lt["crash_" + d]["R_peak_d0"])
+    if "M1_TIED_FOOTPRINT" in r:
+        m = r["M1_TIED_FOOTPRINT"]
+        lt = m["levels"][-1]
+        for d in ("dn", "mx", "up", "px"):
+            out["R_tied_crash_%s_fea" % d] = best(m["convergence"]["crash_%s_R_d0" % d], lt["crash_" + d]["R_peak_d0"])
+    for key, tag in (("M1_TIED_FILLET", "fil"), ("M1_TIED_FILLET_SOFT", "fil_soft"), ("M1_TIED_SCARF15", "scarf15")):
+        # C3-R4: the drawn WNG-007 recess-step fillet + bevelled floor end, feet tied, wall-edge bonds not credited
+        if key not in r:
+            continue
+        m = r[key]
+        lt = m["levels"][-1]
+        cv = m["convergence"]
+        out["R_%s_design_fea" % tag] = best(cv["design_R_d0"], lt["design"]["R_peak_d0"])
+        out["R_%s_crash_fea" % tag] = crash_max(m, lt)
+        out["R_%s_crash_5mm_fea" % tag] = max(best(cv[d + "_R_5mm"], lt[d]["R_peak_5mm"])
+                                              for d in ("crash_up", "crash_dn", "crash_px", "crash_mx"))
+        out["R_%s_design_5mm_fea" % tag] = best(cv["design_R_5mm"], lt["design"]["R_peak_5mm"])
+        out["R_%s_ff_fea" % tag] = max(best(cv["ff_%s_R_d0" % d], lt["ff_" + d]["R_peak_d0"])
+                                       for d in ("design", "crash_up", "crash_dn", "crash_px", "crash_mx"))
+        out["R_%s_ff_design_mean" % tag] = lt["ff_design"].get("Rcore_mean", lt["ff_design"].get("R_mean"))
+        out["R_%s_crash_up_fea" % tag] = best(cv["crash_up_R_d0"], lt["crash_up"]["R_peak_d0"])
+        out["R_%s_crash_dn_5mm" % tag] = best(cv["crash_dn_R_5mm"], lt["crash_dn"]["R_peak_5mm"])
+        out["%s_crash_peak_xz" % tag] = max(((lt[d]["R_peak_d0"], [lt[d]["x_R_peak"], lt[d]["z_R_peak"]])
+                                             for d in ("crash_up", "crash_dn", "crash_px", "crash_mx")))[1]
+        if "F_saddle_limit_N" in lt:
+            out["F_%s_saddle_limit_n" % tag] = math.hypot(*lt["F_saddle_limit_N"])
+            out["F_%s_saddle_limit_xz_n" % tag] = lt["F_saddle_limit_N"]
+            out["F_%s_saddle_crash_n" % tag] = max(math.hypot(*lt["F_saddle_crash_%s_N" % d])
+                                                   for d in ("dn", "up", "px", "mx"))
+    for k, v in r.get("M2F", {}).items():
+        # C3-R4: the D2-R6 forward-stop T with its flange (as drawn, and with the C3-R4 fix)
+        lv_ = v["levels"][-1]
+        c = v["convergence"]
+        out[k] = {q: best(c[q], lv_[q]) for q in c}
     for k, v in m2.items():
         lv_ = v["levels"][-1]
         c = v["convergence"]
@@ -495,6 +540,39 @@ def fea(fea, rh, d0, e_xps, e_petg, tp):
     return out
 
 
+@kit.calc("CALC-C3-FEA-R4", title="C3-R4 FEA: forward-stop T as drawn (D-69), recess-step fillet (CR-C3-17), bracket loads",
+          equation="from ASM-C3-FEA (pod_fea.py parts m2f, m1tfl, m1tf, m1tg; each value the finest level or the "
+                   "Richardson extrapolation if larger with p > 0.5). Stop T (M2F, plane strain, pack crash load "
+                   "CALC-C3-STOPS F_fwd on the bay + guides width): board flat-wise peel on both paper-face-to-core "
+                   "planes and core shear (2 mm means), upright / flange section-linearised stress; nose wall face peel "
+                   "behind the 1 mm bed. Fillet (M1, feet tied, wall edges not credited): wing-side bond R = sigma+/"
+                   "100 kPa + |tau|/100 kPa (2 mm mean), floor-bevel-on-fillet R on the board core (foam allowables). "
+                   "Fail-safe: the same with the floor end released (M1_TIED_STEPGAP). Bracket proof (CR-H1-23): "
+                   "F_limit = |F_saddle(design row)| / (sf ff pf) from M1_TIED_FOOTPRINT; crash = max over +-x, +-z",
+          inputs={"fea": "ASM-C3-FEA"})
+def fea_r4(fea):
+    out = {}
+    for v, tag in (("FWD_FLANGE_BED_HELD", "t_bed"), ("FWD_FLANGE_BED_BOX", "t_bed_box"), ("FWD_FLANGE_HELD", "t_nobed"),
+                   ("FWD_FLANGE_BOX", "t_nobed_box")):
+        if v in fea:
+            for q in ("upright_lin_pa", "flange_lin_pa", "peel_peak_d0_pa", "shear_peak_d0_pa", "wall_peel_d0_pa",
+                      "wall_shear_d0_pa", "bed_peel_d0_pa"):
+                if q in fea[v]:
+                    out["%s_%s" % (tag, q)] = fea[v][q]
+    for k in ("R_fil_design_fea", "R_fil_crash_up_fea", "R_fil_crash_fea", "R_fil_crash_dn_5mm", "R_fil_ff_design_mean",
+              "R_fix_crash_dn_fea", "R_fix_crash_mx_fea", "R_tied_crash_up_fea", "R_tied_crash_px_fea",
+              "R_tied_crash_dn_fea", "R_tied_crash_mx_fea", "R_design_inplane_fea", "R_tied_design_fea",
+              "F_tied_saddle_limit_n", "F_tied_saddle_limit_x_n", "F_tied_saddle_limit_z_n", "F_tied_saddle_crash_max_n",
+              "R_scarf15_ff_design_mean", "R_scarf15_crash_up_fea"):
+        if k in fea:
+            out[k] = fea[k]
+    # fail-safe crash: worst of (intact holds) or (released holds) per direction, the -z and -x peel first
+    out["R_crash_failsafe"] = max(min(fea["R_tied_crash_dn_fea"], fea["R_fix_crash_dn_fea"]),
+                                  min(fea["R_tied_crash_mx_fea"], fea["R_fix_crash_mx_fea"]),
+                                  fea["R_tied_crash_up_fea"], fea["R_tied_crash_px_fea"])
+    return out
+
+
 @kit.calc("CALC-C3-STRUT", title="Aft-stop strut to the handle foot bridge (CR-C3-14 fix)",
           equation="rib bearing sigma = F / (n t h); Euler per rib (pinned, conservative) pi^2 E (h t^3 / 12) / L^2, "
                    "x n; bridge: F vs the 2 spar ties (+x along the spar); mass = rho (n t h L + w_p h t_p)",
@@ -510,13 +588,15 @@ def strut(F, st, E, cap):
 SHELL, TRAY, STRAP, HANDLE, HATCH = "POD-001", "POD-002", "POD-004", "POD-007", "POD-003"
 _FEA_HOW = "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then "
 kit.claim("CL-C3-FEA-BOND-R-DESIGN", "Pod-to-wing bond interaction, design, hand calc x FEA concentration factor",
-          calc="CALC-C3-FEA", output="R_design_corrected", limit=("<=", 1.0), verifies=["R-STRUCT-MARGIN"],
-          parts=[SHELL, "WNG-001"], how=_FEA_HOW + "T-C3-BOND-COUPON and T-C3-POD-PROOF.",
-          note="footprint variant (wall-edge bonds aft of the recess end left out, as the hand calc)")
+          calc="CALC-C3-FEA", output="R_design_corrected", parts=[SHELL, "WNG-001"],
+          how=_FEA_HOW + "record only.",
+          note="SUPERSEDED (C3-R4): pod without the D-69 wall brackets (not built); the built pod is "
+               "CL-C3-FEA-TIED-R-DESIGN / CL-C3-FEA-STEP-R-DESIGN. Kept without a limit as the record of why the "
+               "brackets exist")
 kit.claim("CL-C3-FEA-BOND-R-CRASH", "Pod-to-wing bond interaction, 12.75 g crash in the x-z plane (FEA)",
-          calc="CALC-C3-FEA", output="R_crash_fea", limit=("<=", 1.0), verifies=["R-PACK-RETENTION"],
-          parts=[SHELL, "WNG-001"], how=_FEA_HOW + "T-C3-POD-PROOF crash-direction pulls.",
-          note="+-x, +-z at the A3 group CG with the 680 g pack at the most forward station; +-y stays the hand calc")
+          calc="CALC-C3-FEA", output="R_crash_fea", parts=[SHELL, "WNG-001"], how=_FEA_HOW + "record only.",
+          note="SUPERSEDED (C3-R4): pod without the D-69 brackets (not built); retention of the built pod is "
+               "CL-C3-FEA-CRASH-FAILSAFE. +-x, +-z at the A3 group CG, 680 g pack most forward")
 kit.claim("CL-C3-FEA-BOND-R-DESIGN-5MM", "Pod-to-wing bond interaction, design, FEA peak averaged over 5 mm (reference)",
           calc="CALC-C3-FEA", output="R_design_5mm", parts=[SHELL, "WNG-001"], how=_FEA_HOW + "T-C3-POD-PROOF.",
           note="no limit: shows the failure is not an artefact of the 2 mm averaging length (converged, GCI < 1 %)")
@@ -526,14 +606,17 @@ kit.claim("CL-C3-FEA-TIED-R-DESIGN", "Bond interaction, design, with the handle 
           note="fix study, 3 mesh levels; feet smeared as PETG over 48 of the 140 mm model depth; wall edges aft of the "
                "recess not bonded")
 kit.claim("CL-C3-FEA-TIED-R-CRASH", "Bond interaction, 12.75 g crash, with the feet bonded to the walls (CR-C3-16)",
-          calc="CALC-C3-FEA", output="R_tied_crash", limit=("<=", 1.0), verifies=["R-PACK-RETENTION"],
-          parts=[SHELL, HANDLE, "WNG-001"], how=_FEA_HOW + "T-C3-POD-PROOF down and forward pulls.",
-          note="+z 0.95, +x 0.23 pass; -z and -x peel at the re-entrant recess-step corner (singular, does not "
-               "converge) governs; CR-C3-17 fills that corner, T-C3-POD-PROOF decides")
+          calc="CALC-C3-FEA", output="R_tied_crash", parts=[SHELL, HANDLE, "WNG-001"],
+          how=_FEA_HOW + "post-crash inspection of the aft bond line.",
+          note="intact-bond peak, no limit since C3-R4: +z 0.95, +x 0.20 hold; -z and -x peel the bond end at the "
+               "TOP of the recess step (x 0.065, z 0.0197; 5 mm mean converges to 3.6, so it is a real local peel, "
+               "not only a singularity). CR-C3-17's fillet sits at the bottom corner and does not reach it (4.43 with "
+               "it). Retention is CL-C3-FEA-CRASH-FAILSAFE")
 kit.claim("CL-C3-FEA-SADDLE-TIES", "Pod force into the handle feet in the crash vs the 2 spar ties (CR-C3-16)",
           calc="CALC-C3-FEA", output="saddle_F_crash_n", unit="N", limit=("<=", "CL-C3-HANDLE-TIE-CAP"),
           verifies=["R-PACK-RETENTION"], parts=[HANDLE, "WNG-002"],
-          how="T-D2-HANDLE-PULL repeated at 200 N along +x and -z on the pod.")
+          how="T-C3-BRACKET-CRASH on a test article to the crash force (CR-H1-23: a crash load does not go on the "
+              "flight pod); the flight pod sees CL-C3-BRACKET-PROOF-LIMIT in T-C3-POD-PROOF.")
 kit.claim("CL-C3-FEA-SADDLE-BOND-AREA", "Bracket bond area needed, handle feet to pod walls (paper face shear)",
           calc="CALC-C3-FEA", output="saddle_bond_area_req_m2", unit="m2", parts=[HANDLE, SHELL],
           how="D2 draws >= this area per aircraft (both brackets together); T-C3-BOND-COUPON paper lap shear.")
@@ -566,14 +649,14 @@ kit.claim("CL-C3-FEA-AFT-HEEL-PEEL", "Board peel with a 2 mm heel under the aft 
           output="aft_heel_fillet_peel_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"), parts=[TRAY],
           how=_FEA_HOW + "not adopted.", note="option studied and rejected: the heel fixes the PETG but not the peel")
 kit.claim("CL-C3-FEA-FWD-PEEL", "Board peel under the forward stop as a cantilever, 85 N crash (FEA)", calc="CALC-C3-FEA",
-          output="fwd_fillet_peel_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"), verifies=["R-PACK-RETENTION"],
-          parts=[TRAY, SHELL], how=_FEA_HOW + "T-C3-STOP-PUSH in -x on the built front with the nose-wall bed.",
-          note="the 1 mm bed to the nose wall is not modelled (2-D); the realistic -x crash is nose-in, ground-backed")
+          output="fwd_fillet_peel_pa", unit="Pa", parts=[TRAY, SHELL], how=_FEA_HOW + "record only.",
+          note="SUPERSEDED (C3-R4): the stop printed with the tray (pre-D-69) is not built; D-69's T is checked by "
+               "CL-C3-FEA-FWD-T-*. Kept without a limit as the record of why D-69 exists")
 kit.claim("CL-C3-FEA-FWD-BED-PEEL", "Board peel under the forward stop with the 1 mm bed to the nose wall, 85 N (FEA)",
-          calc="CALC-C3-FEA", output="fwd_bedded_peel_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"),
-          verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL],
-          how=_FEA_HOW + "T-C3-STOP-PUSH in -x on a built nose (stop, bed, nose wall, floor).",
-          note="as built (D2-R5); plane strain, nose wall free at the top (hatch and side walls left out: conservative)")
+          calc="CALC-C3-FEA", output="fwd_bedded_peel_pa", unit="Pa", parts=[TRAY, SHELL],
+          how=_FEA_HOW + "record only.",
+          note="SUPERSEDED (C3-R4): D2-R5's stop on the tray with the bed is not built; D-69's T with its flange and "
+               "the bed is CL-C3-FEA-FWD-T-PEEL. Kept without a limit as the record")
 kit.claim("CL-C3-STRUT-BEARING", "Aft-stop strut bearing stress, design (CR-C3-14)", calc="CALC-C3-STRUT",
           output="sigma_bearing_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"), verifies=["R-PACK-RETENTION"],
           parts=[TRAY, HANDLE], how="T-C3-STOP-PUSH with the strut fitted.",
@@ -586,8 +669,69 @@ kit.claim("CL-C3-STRUT-BRIDGE", "Stop load into the handle foot bridge vs the 2 
           parts=[HANDLE, "WNG-002"], how="T-D2-HANDLE-PULL repeated along +x (90 N, 10 s), no slip on the spar.",
           note="the feet are also epoxied to the spar saddle; ties alone are the conservative path")
 kit.claim("CL-C3-FEA-FWD-TRAY-BEND", "Tray front piece bending under the forward stop, 85 N crash (FEA)",
-          calc="CALC-C3-FEA", output="fwd_fillet_tray_peak_pa", unit="Pa", limit=("<=", "ASM-C3-PETG-INPLANE"),
-          verifies=["R-PACK-RETENTION"], parts=[TRAY], how=_FEA_HOW + "T-C3-STOP-PUSH in -x.")
+          calc="CALC-C3-FEA", output="fwd_fillet_tray_peak_pa", unit="Pa", parts=[TRAY], how=_FEA_HOW + "record only.",
+          note="SUPERSEDED (C3-R4): since D-69 the tray front piece does not carry the stop (the T is its own body, "
+               "CL-C3-FEA-FWD-T-UPRIGHT / -FLANGE)")
+# ---------------------------------------------------------------- C3-R4 (2026-11-13): D-69 drawings checked by FEA
+_R4 = "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; "
+kit.claim("CL-C3-FEA-FWD-T-PEEL", "Forward-stop T as drawn (D-69) with the 1 mm bed: board flat-wise peel, pack crash "
+          "load (FEA, 2 mm mean)", calc="CALC-C3-FEA-R4", output="t_bed_peel_peak_d0_pa", unit="Pa",
+          limit=("<=", "CL-C3-ALLOW-BOARD-FLAT"), verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL],
+          how=_R4 + "T-C3-STOP-PUSH in -x on a built nose (T, flange, floor, 1 mm bed, nose-wall offcut).",
+          note="floor underside held aft of the flange (C3 M2 rule); the floor-strip-alone bound (BOX) puts 59.6 kPa at "
+               "the tray front piece's window edge, 30 mm aft, which the nose box (walls, bed) does not let happen")
+kit.claim("CL-C3-FEA-FWD-T-CORE-SHEAR", "Forward-stop T with the bed: board core shear under the paper faces (FEA)",
+          calc="CALC-C3-FEA-R4", output="t_bed_shear_peak_d0_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-PAPER-SHEAR"),
+          verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL], how=_R4 + "T-C3-STOP-PUSH (-x, with the bed).",
+          note="held-floor bound: the whole stop force crosses the core within 36 mm; the BOX bound gives 59 kPa")
+kit.claim("CL-C3-FEA-FWD-T-UPRIGHT", "Forward-stop T upright, section-linearised stress, with the bed (FEA)",
+          calc="CALC-C3-FEA-R4", output="t_bed_upright_lin_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"),
+          verifies=["R-PACK-RETENTION"], parts=[TRAY], how=_R4 + "T-C3-STOP-PUSH.")
+kit.claim("CL-C3-FEA-FWD-T-FLANGE", "Forward-stop T flange at the upright, section-linearised stress, with the bed (FEA)",
+          calc="CALC-C3-FEA-R4", output="t_bed_flange_lin_pa", unit="Pa", limit=("<=", "ASM-C4-PETG-TENSILE"),
+          verifies=["R-PACK-RETENTION"], parts=[TRAY], how=_R4 + "T-C3-STOP-PUSH.")
+kit.claim("CL-C3-FEA-FWD-T-WALL-SHEAR", "Nose wall behind the bed: core shear under its inner paper face (FEA)",
+          calc="CALC-C3-FEA-R4", output="t_bed_wall_shear_d0_pa", unit="Pa", limit=("<=", "CL-C3-ALLOW-PAPER-SHEAR"),
+          verifies=["R-PACK-RETENTION"], parts=[SHELL], how=_R4 + "T-C3-STOP-PUSH with the nose-wall offcut.",
+          note="wall foot held (in 3-D it stands on the floor outside the 54 mm notch); face peel there 0.3 kPa")
+kit.claim("CL-C3-FEA-FWD-T-BED", "1 mm microballoon bed between the T and the nose wall: tension across it (FEA)",
+          calc="CALC-C3-FEA-R4", output="t_bed_bed_peel_d0_pa", unit="Pa", limit=("<=", "ASM-C6-PEEL"),
+          verifies=["R-PACK-RETENTION"], parts=[TRAY, SHELL], how="BUILD.md step 9 inspection: no void behind the stop.")
+kit.claim("CL-C3-FEA-FWD-T-PEEL-NOBED", "Forward-stop T without the bed (record: why BUILD.md step 9 is structural)",
+          calc="CALC-C3-FEA-R4", output="t_nobed_peel_peak_d0_pa", unit="Pa", parts=[TRAY, SHELL],
+          how=_R4 + "no test: the bed is a hold point.",
+          note="no limit: fails the 50 kPa board allowable at the tray / upright notch; the bed takes the moment")
+kit.claim("CL-C3-FEA-STEP-R-DESIGN", "Pod-to-wing bond, design, square floor end on the recess step, feet tied (FEA)",
+          calc="CALC-C3-FEA-R4", output="R_tied_design_fea", limit=("<=", 1.0), verifies=["R-STRUCT-MARGIN"],
+          parts=[SHELL, "WNG-001"], how=_R4 + "T-C3-POD-PROOF on the built pod.",
+          note="C3-R4 recommends the square floor end (no WNG-007 fillet, no bevel); the board end's bond is the same "
+               "line, so it carries this R on the C6 foam allowables")
+kit.claim("CL-C3-FEA-CRASH-FAILSAFE", "Pod retention in the 12.75 g crash, per direction: intact bond or, after the "
+          "aft-end peel, the released aft end (FEA)", calc="CALC-C3-FEA-R4", output="R_crash_failsafe", limit=("<=", 1.0),
+          verifies=["R-PACK-RETENTION"], parts=[SHELL, HANDLE, "WNG-001"],
+          how=_R4 + "T-C3-POD-PROOF on a test pod (not the flight pod) to the crash loads; post-crash inspection of "
+              "the aft bond line.",
+          note="-z and -x peel the step-top bond end locally (intact R 4.4 / 1.9, a bond termination that no corner "
+               "fillet reaches); the released aft end then holds (M1_TIED_STEPGAP -z 0.43, -x 0.87); +z and +x hold "
+               "intact (0.95, 0.20)")
+kit.claim("CL-C3-FEA-FILLET-FF-DESIGN", "With the WNG-007 fillet as drawn: floor bevel on the fillet, design, mean R over "
+          "the bevel on the board core (record)", calc="CALC-C3-FEA-R4", output="R_fil_ff_design_mean",
+          parts=[SHELL, "WNG-007"], how=_R4 + "not adopted.",
+          note="no limit: the 45 deg bevel turns the floor end's bearing on the step into shear on the bond (mean "
+               "R 1.2 over the whole face); the fillet does not lower the crash peak at the step top either (4.43 vs "
+               "4.50). C3-R4 asks D1/D2 to delete WNG-007 and the floor bevel (square end, as R3)")
+kit.claim("CL-C3-BRACKET-PROOF-LIMIT", "Handle-bracket force at limit, design row / (1.5 x 1.15 x 1.25): the proof load "
+          "on the flight pod (CR-H1-23)", calc="CALC-C3-FEA-R4", output="F_tied_saddle_limit_n", unit="N",
+          parts=[HANDLE, SHELL], how="T-C3-POD-PROOF (flight pod): pull the brackets to this load along +x and -z "
+                                     "components (CL-C3-BRACKET-PROOF-LIMIT-X/-Z), 10 s, then inspect; stop at limit.")
+kit.claim("CL-C3-BRACKET-PROOF-LIMIT-X", "Handle-bracket limit force, +x component (CR-H1-23)", calc="CALC-C3-FEA-R4",
+          output="F_tied_saddle_limit_x_n", unit="N", parts=[HANDLE, SHELL], how="T-C3-POD-PROOF (flight pod).")
+kit.claim("CL-C3-BRACKET-PROOF-LIMIT-Z", "Handle-bracket limit force, -z component (CR-H1-23)", calc="CALC-C3-FEA-R4",
+          output="F_tied_saddle_limit_z_n", unit="N", parts=[HANDLE, SHELL], how="T-C3-POD-PROOF (flight pod).")
+kit.claim("CL-C3-BRACKET-CRASH-F", "Handle-bracket crash force, worst of +-x, +-z (test article only, CR-H1-23)",
+          calc="CALC-C3-FEA-R4", output="F_tied_saddle_crash_max_n", unit="N", parts=[HANDLE, SHELL],
+          how="T-C3-BRACKET-CRASH on a test article: one printed foot + bracket epoxied to a foam-board wall offcut "
+              "(1 232 mm2 flange) and to a spar stub; pull to this force along +x, then a second article along -z.")
 kit.claim("CL-C3-BOND-R-DESIGN", "Pod-to-wing bond interaction, flight/ground envelope (design)", calc="CALC-C3-BOND",
           output="R_design", limit=("<=", 1.0), verifies=["R-STRUCT-MARGIN"], parts=[SHELL, "WNG-001"],
           how="T-C3-BOND-COUPON (allowables) then T-C3-POD-PROOF (built pod, 1.5 x limit).",
@@ -715,17 +859,28 @@ kit.test("T-C3-BOND-COUPON", "Bond coupons: epoxy on F-250 and on paper-faced bo
                    "(foam / paper / adhesive). Allowable = mean - 2 s, foam or paper failure required.")
 kit.test("T-C3-STOP-PUSH", "Printed stop wall and guide push test",
          verifies=["CL-C3-AFT-STOP-REC", "CL-C3-FWD-STOP-REC", "CL-C3-GUIDE-REC", "CL-C3-FEA-AFT-PROP-PEEL",
-                   "CL-C3-FEA-FWD-BED-PEEL", "CL-C3-STRUT-BEARING"],
+                   "CL-C3-FEA-FWD-T-PEEL", "CL-C3-FEA-FWD-T-CORE-SHEAR", "CL-C3-FEA-FWD-T-UPRIGHT",
+                   "CL-C3-FEA-FWD-T-FLANGE", "CL-C3-FEA-FWD-T-WALL-SHEAR", "CL-C3-STRUT-BEARING"],
          procedure="Print the tray rear piece (with the strut on a handle-bridge offcut) and the tray front piece, same "
                    "settings as flight, and epoxy each to a foam-board floor offcut as built (the FEA shows the board peel "
                    "governs, so a bare tray proves nothing). Push a 50 x 50 mm block at 16 mm above the tray to 90 N "
                    "(aft, +x) and at 13 mm to 85 N (forward, -x, with the 1 mm bed and a nose-wall offcut), 85 N spread "
                    "over 60 mm (guide); no crack, no board delamination, set < 0.5 mm. Then to failure once.")
+kit.test("T-C3-BRACKET-CRASH", "Handle bracket to the crash force on a test article (CR-H1-23)",
+         verifies=["CL-C3-BRACKET-CRASH-F", "CL-C3-FEA-SADDLE-TIES"],
+         procedure="Two test articles, never flown: print one handle foot + wall bracket (flight settings), epoxy the "
+                   "flange to a 60 x 40 mm foam-board wall offcut (scuffed as BUILD.md step 11) and the foot onto a "
+                   "22 mm CF tube stub with one tie. 24 h cure. Pull the foot with a strap and luggage scale to "
+                   "CL-C3-BRACKET-CRASH-F along +x (article 1) and -z (article 2), 10 s; pass = no flange lift, no "
+                   "paper tear, no tie slip. Then to failure once and record the mode.")
 kit.test("T-C3-POD-PROOF", "Built pod on the wing: proof loads with a 680 g dummy pack",
          verifies=["CL-C3-BOND-R-CRASH", "CL-C3-OVERHANG-DESIGN", "CL-C3-OVERHANG-CRASH", "CL-C3-FLOOR-GLUE"],
          procedure="Wing on its spar ends. Dummy pack (680 g, pack size) strapped in. Pull the dummy pack with a luggage "
                    "scale at 1.5 x the design value to the slowest-failing direction: down (overhang) 64 N, up 85 N, aft 85 N, "
-                   "sideways 85 N, 10 s each; inspect the bond edges, nose and wall tops for creases.")
+                   "sideways 85 N, 10 s each; inspect the bond edges, nose and wall tops for creases. C3-R4 "
+                   "(CR-H1-23): this is the flight pod, so every pull stops at limit; the handle brackets get "
+                   "CL-C3-BRACKET-PROOF-LIMIT-X along +x and CL-C3-BRACKET-PROOF-LIMIT-Z along -z (10 s each), "
+                   "never the crash force (that is T-C3-BRACKET-CRASH on a test article).")
 
 if __name__ == "__main__":
     kit.write()

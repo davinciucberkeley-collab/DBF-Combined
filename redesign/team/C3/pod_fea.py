@@ -315,6 +315,13 @@ def richardson(h, q):
 
 # ============================================================================ M1: pod on the wing
 B_REF = gv("pod.size_m")[1]                   # 0.14 m: reference depth (pod width = foam depth under the pod)
+# WNG-007 recess-step fillet legs (D-69, CR-C3-17), capped as subsystems/wing/fusion/wing.py geometry() rf_legs does
+_WL = _load(RED / "subsystems" / "wing" / "params.json")["recess"]["step_fillet_legs_m"]["value"]
+FILLET_LEGS = (_WL[0], min(_WL[1], k9.surface_z(COORDS, gv("wing.chord_m"), GEO["x_rec1"] / gv("wing.chord_m"), "upper")
+                           - GEO["zb"], TB))
+HEEL = (LOC["strut_chord_m"]["value"] if "strut_chord_m" in LOC else [0.040, 0.0015, 0.008])  # width y, chord t, bridge lap
+SCARF_X = None                                 # study override of the fillet / floor-scarf run along x (part m1tfl10)
+E_FILLET_SOFT = 1.0e9                        # sensitivity: light microballoon mix (C3 choice, 1/3 of ASM-C3-EPOXY-E)
 SEG = 0.005                                    # floor-top load segment length
 
 
@@ -353,7 +360,7 @@ SADDLE_X = (0.0688, 0.0912)                    # wing saddle windows (subsystems
 SADDLE_FRAC = 2 * (0.053 - 0.029) / gv("pod.size_m")[1]   # share of the 0.14 m model depth the two printed feet fill
 
 
-def m1_mesh(gmsh, h, bonded=True, tied=False, stepgap=False):
+def m1_mesh(gmsh, h, bonded=True, tied=False, stepgap=False, fillet=False, heel=False):
     """tied (C3-R3 fix candidate, CR-C3-16): the handle feet in the saddle windows are bonded to the pod side walls,
     so the pod reaches the spar through printed PETG (smeared over the model depth) as well as through the XPS."""
     g, G = GEO, m1_geometry(bonded, stepgap)
@@ -374,6 +381,43 @@ def m1_mesh(gmsh, h, bonded=True, tied=False, stepgap=False):
     segs = [o.addRectangle(a, g["zb"], 0, b - a, g["zf"] - g["zb"]) for a, b in zip(G["segx"][:-1], G["segx"][1:])]
     inputs = [(2, wing), (2, filler), (2, walls), (2, nose)] + [(2, s) for s in segs]
     kinds = ["wing", "filler", "walls", "nose"] + ["floor"] * len(segs)
+    if fillet:
+        # C3-R4 (CR-C3-17, D-69, D-84 d): WNG-007 microballoon fillet in the recess-step corner (legs: wing.py
+        # geometry rf_legs, 5 mm along the floor, the step leg capped at the 4.8 mm floor board) and the pod floor's
+        # aft lower edge bevelled 45 deg onto it (pod.py floor_bevel_m, capped at the board). The fillet is sanded to
+        # the floor bevel (subsystems/wing/params.json recess.step_fillet_legs_m note), so the modelled fillet is the
+        # triangle the bevel removes from the floor: (x_rec1 - bv, zb), (x_rec1, zb), (x_rec1, zb + lw); the 0.2 mm
+        # of floor leg beyond the bevel foot lies inside the bond-line tolerance.
+        bv = SCARF_X if SCARF_X else (lv("floor_bevel_run_m") if "floor_bevel_run_m" in LOC else min(lv("floor_bevel_m"), TB))
+        lw = FILLET_LEGS[1]
+        x1 = g["x_rec1"]
+        tri_pts = [(x1 - bv, g["zb"]), (x1, g["zb"]), (x1, g["zb"] + lw)]
+        segs2 = []
+        for s_, (a_, b_) in zip(segs, zip(G["segx"][:-1], G["segx"][1:])):
+            if b_ <= x1 - bv + 1e-9:
+                segs2.append(s_)
+            else:                                   # only the segments the bevel reaches lose its triangle
+                segs2 += [t_ for _, t_ in o.cut([(2, s_)], [(2, poly(tri_pts))])[0]]
+        segs = segs2
+        inputs = [(2, wing), (2, filler), (2, walls), (2, nose)] + [(2, s_) for s_ in segs] + [(2, poly(tri_pts))]
+        kinds = ["wing", "filler", "walls", "nose"] + ["floor"] * len(segs) + ["fillet"]
+    if heel:
+        # C3-R4 fix candidate for the crash peel at the recess-step top (CR-C3-17 as drawn does not reach it): a
+        # PETG lower chord under the aft-stop strut ribs (printed with POD-007), bonded on the tray rear piece from
+        # the aft stop's back face to the floor's aft end, crossing the step 0.3 mm clear of the wing skin and
+        # joining the foot bridge, which is bonded on the slot fill / spar with the feet. Smeared over its width.
+        x_a = lv("aft_stop_x_m") + lv("aft_stop_m")[0]
+        x_b0 = lv("bridge_x0_m")
+        x_b1 = x_b0 + HEEL[2]
+        c_ = gv("wing.chord_m")
+        sf_ = lambda x: k9.surface_z(COORDS, c_, x / c_, "upper")
+        z_g = max(sf_(g["x_rec1"] + (x_b0 - g["x_rec1"]) * i / 20) for i in range(21)) + 0.0003
+        z_top = z_g + HEEL[1]
+        pts = [(x_a, g["zf"]), (g["x_rec1"], g["zf"]), (g["x_rec1"], z_g), (x_b0, z_g)]
+        pts += [(x_b0 + (x_b1 - x_b0) * i / 6, sf_(x_b0 + (x_b1 - x_b0) * i / 6)) for i in range(7)]
+        pts += [(x_b1, z_top), (x_a, z_top)]
+        inputs = [(2, poly(pts))] + inputs
+        kinds = ["heel"] + kinds
     if tied:
         zs_ = gv("wing.spar.z_m")
         top = [(x, k9.surface_z(COORDS, gv("wing.chord_m"), x / gv("wing.chord_m"), "upper") + (0.0 if bonded else 0.0003))
@@ -389,7 +433,7 @@ def m1_mesh(gmsh, h, bonded=True, tied=False, stepgap=False):
     for k, children in zip(kinds, omap):
         for d, t in children:
             kind_of.setdefault(t, k)          # first owner wins (walls overlap nose/floor only by touching)
-    MID = {"wing": 0, "filler": 1, "walls": 2, "floor": 3, "nose": 4, "saddle": 5}
+    MID = {"wing": 0, "filler": 1, "walls": 2, "floor": 3, "nose": 4, "saddle": 5, "fillet": 6, "heel": 7}
     surf_mat = {t: MID[k] for t, k in kind_of.items()}
     # curves
     xs, zs, rs = gv("wing.spar.x_m"), gv("wing.spar.z_m"), gv("wing.spar.od_m") / 2
@@ -410,7 +454,7 @@ def m1_mesh(gmsh, h, bonded=True, tied=False, stepgap=False):
             interface.append(cv)
         if abs(bb[1] - g["zf"]) < 2e-6 and abs(bb[4] - g["zf"]) < 2e-6:
             for j, (a, b) in enumerate(zip(G["segx"][:-1], G["segx"][1:])):
-                if bb[0] >= a - 1e-7 and bb[3] <= b + 1e-7:
+                if bb[0] >= a - 2e-5 and bb[3] <= b + 2e-5 and (bb[0] + bb[3]) / 2 > a and (bb[0] + bb[3]) / 2 < b:
                     segtop.setdefault(j, []).append(cv)
     if not spar or len(segtop) != len(segs):
         raise RuntimeError("M1 curve classification failed (spar %d, segments %d/%d)" % (len(spar), len(segtop), len(segs)))
@@ -438,11 +482,14 @@ def m1_mesh(gmsh, h, bonded=True, tied=False, stepgap=False):
     return xyz, tris, emat, markers, G["segx"]
 
 
-def m1_mats():
+def m1_mats(fillet_soft=False):
     Eb, nb = MAT["E_board"], MAT["nu_board"]
     e_sad = SADDLE_FRAC * MAT["E_petg"] + (1 - SADDLE_FRAC) * MAT["E_xps"]
+    # index 6: the WNG-007 fillet runs the full recess width (|y| <= 0.070 = B_REF / 2), so no depth scaling
     return [(MAT["E_xps"], MAT["nu_xps"]), (MAT["E_xps"], MAT["nu_xps"]),
-            (Eb * 2 * TB / B_REF, nb), (Eb * GEO["W"] / B_REF, nb), (Eb * GEO["W"] / B_REF, nb), (e_sad, 0.35)]
+            (Eb * 2 * TB / B_REF, nb), (Eb * GEO["W"] / B_REF, nb), (Eb * GEO["W"] / B_REF, nb), (e_sad, 0.35),
+            (E_FILLET_SOFT if fillet_soft else MAT["E_epoxy"], MAT["nu_epoxy"]),
+            (MAT["E_petg"] * HEEL[0] / B_REF, MAT["nu_petg"])]          # 7: strut lower chord, smeared over its width
 
 
 def seg_forces_from_items(segx, items):
@@ -481,26 +528,34 @@ def m1_cases(segx):
     return cases, xc, float(mdn.sum())
 
 
-def run_m1(level_factor, bonded=True, h0=0.004, tied=False, stepgap=False):
+def run_m1(level_factor, bonded=True, h0=0.004, tied=False, stepgap=False, fillet=False, fillet_soft=False,
+           heel=False):
     import gmsh
     h = h0 * level_factor
     gmsh.initialize()
     gmsh.option.setNumber("General.Terminal", 0)
     try:
-        xyz, tris, emat, markers, segx = m1_mesh(gmsh, h, bonded, tied, stepgap)
+        xyz, tris, emat, markers, segx = m1_mesh(gmsh, h, bonded, tied, stepgap, fillet, heel)
     finally:
         gmsh.finalize()
-    mats = m1_mats()
+    mats = m1_mats(fillet_soft)
+    if not (fillet or heel):
+        mats = mats[:6]
     cases, xc, m_dn = m1_cases(segx)
     L = np.diff(segx)
     res = {"h_m": h, "n_elem": int(len(tris)), "n_node": int(len(xyz)), "cases": {}}
     for name, F in cases.items():
         loads = {"seg%02d" % j: (F[j][0] / (B_REF * L[j]), F[j][1] / (B_REF * L[j])) for j in range(len(L))}
-        rd = RUNS / (("M1-TIED" if bonded else "M1-TIED-FP-GAP" if stepgap else "M1-TIED-FP") if tied else "M1-BONDED" if bonded else "M1-FOOTPRINT") / ("L%d" % LEVELS.index(level_factor)) / name
+        tag = (("M1-TIED" if bonded else "M1-TIED-FP-GAP" if stepgap else "M1-TIED-FP") if tied else "M1-BONDED" if bonded else "M1-FOOTPRINT")
+        if fillet:
+            tag = ("M1-TIED-FP-FILLET" + ("-SOFT" if fillet_soft else "") + ("-HEEL" if heel else "")
+                   + ("-SCARF%d" % round(SCARF_X * 1000) if SCARF_X else ""))
+        rd = RUNS / tag / ("L%d" % LEVELS.index(level_factor)) / name
         u, dt = run_su2(rd, xyz, tris, emat, mats, markers, ["spar"], loads, "PLANE_STRESS")
         eps, sig, cen, area = tri_strain_stress(xyz, tris, emat, mats, u, "PLANE_STRESS")
-        it = interface_tractions(xyz, tris, emat, sig, {0}, {1, 2, 3, 4})
-        Fint = nodal_interface_force(xyz, tris, emat, sig, area, {0}, {1, 2, 3, 4}) * B_REF
+        pod_side = {1, 2, 3, 4, 6}                 # 6: the WNG-007 fillet (laid on the core, carries the floor end)
+        it = interface_tractions(xyz, tris, emat, sig, {0}, pod_side)
+        Fint = nodal_interface_force(xyz, tris, emat, sig, area, {0}, pod_side) * B_REF
         Ftr = np.array([((it[:, 3] * it[:, 5] + it[:, 4] * it[:, 7]) * it[:, 2]).sum(),
                         ((it[:, 3] * it[:, 6] + it[:, 4] * it[:, 8]) * it[:, 2]).sum()]) * B_REF
         # wall-top / floor-bottom face stress at the LE (x = 0): linear fit of exx over the section (walls + floor)
@@ -509,13 +564,17 @@ def run_m1(level_factor, bonded=True, h0=0.004, tied=False, stepgap=False):
         coef = np.linalg.lstsq(A, eps[col, 0], rcond=None)[0]
         face_top = MAT["E_face"] * (coef[0] + coef[1] * GEO["zh"])
         face_bot = MAT["E_face"] * (coef[0] + coef[1] * GEO["zb"])
+        if fillet:    # floor board's bevelled end on the fillet face (board side, normal out of the board)
+            rec_ff = interface_tractions(xyz, tris, emat, sig, {3}, {6}).tolist()
         rec = {"interface": it.tolist(), "F_interface_N": Fint.tolist(), "F_interface_traction_N": Ftr.tolist(),
                "F_applied_N": [float(sum(f[0] for f in F)), float(sum(f[1] for f in F))],
                "face_top_pa": float(face_top), "face_bot_pa": float(face_bot), "su2_s": dt,
                "u_max_m": float(np.abs(u).max())}
+        if fillet:
+            rec["interface_ff"] = rec_ff
         if tied:      # force the pod puts into the saddle (walls -> printed feet), real N
             rec["F_saddle_N"] = (nodal_interface_force(xyz, tris, emat, sig, area, {5}, {2, 3, 4}) * B_REF).tolist()
-        (rd / "summary.json").write_text(json.dumps({k: v for k, v in rec.items() if k != "interface"}, indent=1))
+        (rd / "summary.json").write_text(json.dumps({k: v for k, v in rec.items() if k not in ("interface", "interface_ff")}, indent=1))
         res["cases"][name] = rec
         print("  M1 %s L%d %-9s %6d el  %5.1f s  F_int %s vs %s" % ("B" if bonded else "F", LEVELS.index(level_factor), name, len(tris), dt,
               np.round(Fint, 3), np.round(rec["F_applied_N"], 3)), flush=True)
@@ -606,6 +665,42 @@ def m1_post(levels):
         for sgn, nm in ((1, "crash_px"), (-1, "crash_mx")):
             base, sn, tau, _, _ = m1_combine(cs, coeffs_for(sgn * Fc, 0.0, sgn * Fc * (zcg - zb), xc))
             row[nm] = bond_metrics(base, sn, tau)
+        if "F_saddle_N" in next(iter(cs.values())):
+            # force the walls put into the handle feet through the brackets (real N): design row and limit (/ K_DESIGN)
+            def sad(coeffs):
+                return [float(sum(c * cs[k]["F_saddle_N"][i] for k, c in coeffs.items())) for i in (0, 1)]
+            row["F_saddle_design_N"] = sad(coeffs_for(Fx, Fz, My, xc))
+            row["F_saddle_limit_N"] = [f / K_DESIGN for f in row["F_saddle_design_N"]]
+            row["F_saddle_crash_dn_N"] = sad({"CRASH_DN": 1.0})
+            row["F_saddle_crash_up_N"] = sad({"CRASH_UP": 1.0})
+            for sgn, nm in ((1, "px"), (-1, "mx")):
+                row["F_saddle_crash_%s_N" % nm] = sad(coeffs_for(sgn * Fc, 0.0, sgn * Fc * (zcg - zb), xc))
+        if "interface_ff" in next(iter(cs.values())):
+            # floor-end-on-fillet bond (board paper face): R = peel / board flat-wise + |tau| / paper shear (C6 nodes)
+            def ff(coeffs):
+                b_ = np.array(cs[next(iter(coeffs))]["interface_ff"])
+                sn_ = sum(c * np.array(cs[k]["interface_ff"])[:, 3] for k, c in coeffs.items())
+                tau_ = sum(c * np.array(cs[k]["interface_ff"])[:, 4] for k, c in coeffs.items())
+                Rf = np.maximum(sn_, 0) / ALLOW["board_flat"] + np.abs(tau_) / ALLOW["paper_s"]
+                s_ = np.cumsum(b_[:, 2]) - b_[:, 2] / 2
+                i_ = int(np.argmax(Rf))
+                # the bevel is a cut through the board: the epoxy wets the polystyrene core (paper only at its two
+                # 0.1 mm edges), so the failure plane is core foam: foam allowables (ASM-D2-XPS-ALLOW tension,
+                # CL-C3-ALLOW-XPS-SHEAR shear), not the paper-to-core flat-wise value that governs intact faces
+                Rc = np.maximum(sn_, 0) / ALLOW["xps_t"] + np.abs(tau_) / ALLOW["xps_s"]
+                return {"R_peak_d0": window_avg(s_, Rf, b_[:, 2], D0), "R_peak_raw": float(Rf.max()),
+                        "Rcore_peak_d0": window_avg(s_, Rc, b_[:, 2], D0),
+                        "Rcore_peak_5mm": window_avg(s_, Rc, b_[:, 2], 0.005),
+                        "Rcore_mean": float((Rc * b_[:, 2]).sum() / b_[:, 2].sum()),
+                        "R_peak_5mm": window_avg(s_, Rf, b_[:, 2], 0.005),
+                        "R_mean": float((Rf * b_[:, 2]).sum() / b_[:, 2].sum()),
+                        "sigma_peak_d0": window_avg(s_, sn_, b_[:, 2], D0),
+                        "xz_R_peak": [float(b_[i_, 0]), float(b_[i_, 1])]}
+            row["ff_design"] = ff(coeffs_for(Fx, Fz, My, xc))
+            row["ff_crash_up"] = ff({"CRASH_UP": 1.0})
+            row["ff_crash_dn"] = ff({"CRASH_DN": 1.0})
+            for sgn, nm in ((1, "crash_px"), (-1, "crash_mx")):
+                row["ff_" + nm] = ff(coeffs_for(sgn * Fc, 0.0, sgn * Fc * (zcg - zb), xc))
         row["equilibrium_err"] = max(abs(c["F_interface_N"][i] - c["F_applied_N"][i]) / max(1.0, max(map(abs, c["F_applied_N"])))
                                      for c in cs.values() for i in (0, 1))
         out["levels"].append(row)
@@ -655,6 +750,221 @@ def m2_variants():
 
 
 M2X = ("FWD_BEDDED",)                           # added in C3-R3: run as part "m2x", merged into M2 by combine()
+
+
+def m2f_variants():
+    """C3-R4 (2026-11-13): the D2-R6 forward-stop T as drawn (D-69, CR-C3-15; subsystems/pod/fusion/pod.py layout()
+    fs_flange, BUILD.md steps 6 and 9). Upright fwd_stop_m[0] thick from the flange foot to fwd_stop_m[1] above the
+    tray, through the floor notch; flange fwd_stop_flange_m (length from the fore face x thickness) under the floor,
+    epoxied to the floor underside and the upright epoxied to the notch edge (floor end face). The tray front piece
+    starts at the upright's aft face; it is NOT credited as bonded to the upright (0.2 mm gap): the pack pushes the
+    upright away from it. The nose wall and its 1 mm bed are NOT credited (the wall stands on the floor only outside
+    the notch, |y| > fwd_stop_m[2]/2, which a y = 0 plane-strain section cannot carry): conservative.
+    BCs (the floor here is part of the nose box, which a 2-D strip cannot carry, so two bounds): HELD = floor
+    underside held aft of the flange (the C3-R3 M2 rule): the whole stop force crosses the core in shear within
+    ~36 mm, which over-states core shear and peel at the hold edge; BOX = the floor strip's aft end section clamped
+    30 mm behind the tray front piece and its underside free: the force stays in the paper faces as membrane and the
+    root moment bends the floor strip alone (no side walls, no nose wall), which over-states the floor curvature next
+    to the stop. Local checks at the T take the worse of the two."""
+    fs_t, fs_h, _ = lv("fwd_stop_m")
+    fl_l, fl_t = lv("fwd_stop_flange_m")
+    base = dict(t=fs_t, h=fs_h, z0=0.002, z1=fs_h, ahead=lv("tray_front_solid_m") - fs_t, behind=0.0, xps=False,
+                r=0.0, flange=(fl_l, fl_t), tray_gap=0.0002, F=None)
+    # C3-R4 fix (if the as-drawn T peels the floor's top face at the tray/upright notch): epoxy the tray front piece's
+    # front edge to the upright and run a thickened-epoxy fillet (leg r) along the upright foot on the pack side
+    fix = dict(base, tray_gap=0.0, r=lv("fwd_stop_fillet_m") if "fwd_stop_fillet_m" in LOC else 0.002)
+    # As built (BUILD.md step 9): the 1 mm microballoon bed fills the gap to the nose wall "so the wall backs the
+    # stop"; the wall's foot is held (in 3-D it stands on the floor outside the 54 mm notch and the side walls hold its
+    # edges). The tray stays un-credited at the upright (0.2 mm gap).
+    return {"FWD_FLANGE_HELD": dict(base, hold="aft_of_flange"),
+            "FWD_FLANGE_BOX": dict(base, hold="box"),
+            "FWD_FLANGE_BED_HELD": dict(base, hold="aft_of_flange", bed=True),
+            "FWD_FLANGE_BED_BOX": dict(base, hold="box", bed=True)}
+    _unused = fix                                # the tray-bond + fillet option (studied 2026-11-13, not adopted)
+
+
+def m2f_mesh(gmsh, v, h):
+    """Local frame as m2_mesh: s toward the load (the nose), upright aft face at s = 0, fore face s = t; z from the
+    tray top. Regions: tray (PETG) s in [-ahead, -gap]; board faces + core s in [s0 - 0.015, 0]; upright (PETG)
+    s in [0, t] from the flange bottom to h; flange (PETG) s in [t - fl_l, t] under the board."""
+    o = gmsh.model.occ
+    gmsh.model.add("m2f")
+    tf, tb = MAT["t_face"], TB
+    tt = lv("tray_floor_t_m")
+    t, hh = v["t"], v["h"]
+    fl_l, fl_t = v["flange"]
+    zf = -tt
+    zc = zf - tb
+    zfl = zc - fl_t
+    s_tray0 = -v["ahead"]
+    b0 = s_tray0 - 0.030
+    layers = [("face", o.addRectangle(b0, zc, 0, -b0, tf)), ("core", o.addRectangle(b0, zc + tf, 0, -b0, tb - 2 * tf)),
+              ("face", o.addRectangle(b0, zf - tf, 0, -b0, tf))]
+    tray = o.addRectangle(s_tray0, zf, 0, -v["tray_gap"] - s_tray0, tt)
+    r = v.get("r", 0.0)
+    cuts = sorted({zfl, zc, zf, 0.0, v["z0"], hh} | ({r} if r > 0 else set()))
+    up = [o.addRectangle(0.0, a, 0, t, b - a) for a, b in zip(cuts[:-1], cuts[1:]) if b - a > 1e-9]
+    flange = o.addRectangle(t - fl_l, zfl, 0, fl_l - t, fl_t)        # aft of the upright (the upright owns s 0..t)
+    petg = [(2, tray)] + [(2, u) for u in up] + [(2, flange)]
+    all_in = [(2, t_) for _, t_ in layers] + petg
+    kinds = [k for k, _ in layers] + ["petg"] * len(petg)
+    sw0 = None
+    if v.get("bed"):                             # BUILD step 9: 1 mm microballoon bed, T fore face -> nose wall
+        bed = lv("nose_block_l_m")
+        sw0 = t + bed
+        hw = GEO["zh"] - GEO["zb"]
+        all_in += [(2, o.addRectangle(t, zc, 0, bed, hh - zc)),
+                   (2, o.addRectangle(sw0, zc, 0, tf, hw)), (2, o.addRectangle(sw0 + tf, zc, 0, tb - 2 * tf, hw)),
+                   (2, o.addRectangle(sw0 + tb - tf, zc, 0, tf, hw))]
+        kinds += ["epoxy", "face", "core", "face"]
+    if r > 0:                                    # concave epoxy fillet in the upright / tray-top corner (pack side)
+        sq = o.addRectangle(-r, 0.0, 0, r, r)
+        fil = o.cut([(2, sq)], [(2, o.addDisk(-r, r, 0, r, r))])[0]
+        all_in += fil
+        kinds += ["epoxy"] * len(fil)
+    _, omap = o.fragment(all_in, [])
+    o.synchronize()
+    MID = {"petg": 0, "face": 1, "core": 2, "epoxy": 3}
+    surf_mat = {}
+    for k, ch in zip(kinds, omap):
+        for _, tg in ch:
+            surf_mat.setdefault(tg, MID[k])
+    s_hold = t - fl_l
+    load, bottom = [], []
+    for _, cv in gmsh.model.getEntities(1):
+        bb = gmsh.model.getBoundingBox(1, cv)
+        if abs(bb[0]) < 2e-6 and abs(bb[3]) < 2e-6 and bb[1] >= v["z0"] - 2e-6 and bb[4] <= v["z1"] + 2e-6 \
+                and bb[4] - bb[1] > 1e-6:
+            load.append(cv)
+        if sw0 is not None and abs(bb[1] - zc) < 2e-6 and abs(bb[4] - zc) < 2e-6 and bb[0] >= sw0 - 1e-7:
+            bottom.append(cv)          # nose-wall foot: in 3-D it stands on the floor outside the notch (and the
+            continue                   # side walls hold its edges); held here
+        if v["hold"] == "box":
+            if abs(bb[0] - b0) < 2e-6 and abs(bb[3] - b0) < 2e-6:          # aft end section of the floor strip
+                bottom.append(cv)
+        elif abs(bb[1] - zc) < 2e-6 and abs(bb[4] - zc) < 2e-6 and bb[3] <= s_hold + 1e-6:
+            bottom.append(cv)
+    if not load or not bottom:
+        raise RuntimeError("M2F curve classification failed: load %s bottom %s" % (load, bottom))
+    f = gmsh.model.mesh.field
+    f.add("Box", 2)                              # upright foot, flange and the board around them
+    f.setNumber(2, "VIn", h / 4)
+    f.setNumber(2, "VOut", h * 4)
+    f.setNumber(2, "XMin", t - fl_l - 0.002)
+    f.setNumber(2, "XMax", t + 0.001)
+    f.setNumber(2, "YMin", zfl - 0.0005)
+    f.setNumber(2, "YMax", 0.6 * t + 0.002)
+    f.setNumber(2, "Thickness", 0.004)
+    f.add("Box", 3)                              # board faces along the tray
+    f.setNumber(3, "VIn", h / 2)
+    f.setNumber(3, "VOut", h * 4)
+    f.setNumber(3, "XMin", s_tray0 - 0.002)
+    f.setNumber(3, "XMax", t + 0.002)
+    f.setNumber(3, "YMin", zc - 0.0005)
+    f.setNumber(3, "YMax", 0.0004)
+    f.add("Min", 4)
+    f.setNumbers(4, "FieldsList", [2, 3])
+    f.setAsBackgroundMesh(4)
+    gmsh.option.setNumber("Mesh.MeshSizeExtendFromBoundary", 0)
+    gmsh.option.setNumber("Mesh.MeshSizeFromPoints", 0)
+    gmsh.option.setNumber("Mesh.MeshSizeFromCurvature", 0)
+    gmsh.option.setNumber("Mesh.MeshSizeMax", h * 4)
+    gmsh.option.setNumber("Mesh.Algorithm", 6)
+    gmsh.model.mesh.generate(2)
+    xyz, tris, emat, idx = mesh_to_arrays(gmsh, surf_mat)
+    mk = {"load": curve_edges(gmsh, idx, load), "bottom": curve_edges(gmsh, idx, bottom)}
+    return xyz, tris, emat, mk, (zf, zc, zfl)
+
+
+def _sec_lin(sig, cen, area, emat, h, axis, at, lo, hi):
+    """Section-linearised bending + membrane stress across a PETG section: cut normal to `axis` (0: section at
+    s = at, stress sxx; 1: section at z = at, stress szz) spanning lo..hi in the other coordinate."""
+    o = 1 - axis
+    band = (emat == 0) & (np.abs(cen[:, axis] - at) < h / 2) & (cen[:, o] > lo - 1e-9) & (cen[:, o] < hi + 1e-9)
+    if band.sum() < 3:
+        return 0.0
+    d = hi - lo
+    y = cen[band, o] - (lo + hi) / 2
+    st = sig[band, 0 if axis == 0 else 1]
+    M = float((st * y * area[band]).sum() / h)
+    N = float((st * area[band]).sum() / h)
+    return abs(6 * M / d ** 2) + abs(N / d)
+
+
+def run_m2f(name, v, level_factor):
+    """Forward-stop T (D2-R6) under the pack crash load: upright and flange section stresses, board flat-wise peel
+    on both paper-face-to-core planes and flange-to-face bond tractions, 2 mm means (ASM-C3-FEA-D0)."""
+    import gmsh
+    h = v["t"] / 4 * level_factor * 2
+    gmsh.initialize()
+    gmsh.option.setNumber("General.Terminal", 0)
+    try:
+        xyz, tris, emat, markers, (zf, zc, zfl) = m2f_mesh(gmsh, v, h)
+    finally:
+        gmsh.finalize()
+    mats = [(MAT["E_petg"], MAT["nu_petg"]), (MAT["E_face"], MAT["nu_board"]), (MAT["E_core"], MAT["nu_core"]),
+            (MAT["E_epoxy"], MAT["nu_epoxy"])]
+    b = lv("bay_min_m")[1] + 2 * lv("guide_t_m")
+    F = m2_force("FWD")
+    p = F / (b * (v["z1"] - v["z0"]))
+    rd = RUNS / "M2F" / name / ("L%d" % LEVELS.index(level_factor))
+    u, dt = run_su2(rd, xyz, tris, emat, mats, markers, ["bottom"], {"load": (p, 0.0)}, "PLANE_STRAIN")
+    eps, sig, cen, area = tri_strain_stress(xyz, tris, emat, mats, u, "PLANE_STRAIN")
+    t = v["t"]
+    fl_l = v["flange"][0]
+    # upright: section-linearised at 0.5 t above the tray top, at the board top and at mid-board; flange at 0.5 t aft
+    # of the upright (its root)
+    s_up = max(_sec_lin(sig, cen, area, emat, h, 1, zz, 0.0, t) for zz in (0.5 * t, zf - 0.5 * h, (zf + zc) / 2))
+    s_fl = _sec_lin(sig, cen, area, emat, h, 0, -0.5 * t, zfl, zc)
+    sxx, szz, sxz = sig[:, 0], sig[:, 1], sig[:, 2]
+    s1 = (sxx + szz) / 2 + np.sqrt(((sxx - szz) / 2) ** 2 + sxz ** 2)
+    petg = emat == 0
+    peak = float(s1[petg].max())
+    zone = (-v["ahead"] - 0.004, t + 0.004)
+    it = interface_tractions(xyz, tris, emat, sig, {2}, {1})            # core side, normal out of the core
+    it = it[(it[:, 0] > zone[0]) & (it[:, 0] < zone[1])]
+    top = it[np.abs(it[:, 1] - (zf - MAT["t_face"])) < 1e-7]
+    bot = it[np.abs(it[:, 1] - (zc + MAT["t_face"])) < 1e-7]
+    peel_top = window_avg(top[:, 0], top[:, 3], top[:, 2], D0)
+    peel_bot = window_avg(bot[:, 0], bot[:, 3], bot[:, 2], D0)
+    sh_bot = window_avg(bot[:, 0], np.abs(bot[:, 4]), bot[:, 2], D0)
+    sh_top = window_avg(top[:, 0], np.abs(top[:, 4]), top[:, 2], D0)
+    fb = interface_tractions(xyz, tris, emat, sig, {0}, {1})            # flange (PETG) side of the flange-to-face bond
+    fb = fb[(np.abs(fb[:, 1] - zc) < 1e-7) & (fb[:, 0] > t - fl_l - 1e-6)]   # flange-to-floor underside line
+    bond_n = window_avg(fb[:, 0], fb[:, 3], fb[:, 2], D0) if len(fb) else 0.0
+    bond_s = window_avg(fb[:, 0], np.abs(fb[:, 4]), fb[:, 2], D0) if len(fb) else 0.0
+    rec = {"h_m": h, "n_elem": int(len(tris)), "F_N": F, "b_m": b, "p_pa": p, "su2_s": dt,
+           "upright_lin_pa": s_up, "flange_lin_pa": s_fl, "peak_s1_pa": peak,
+           "peel_top_d0_pa": peel_top, "peel_bot_d0_pa": peel_bot, "peel_peak_d0_pa": max(peel_top, peel_bot),
+           "shear_bot_d0_pa": sh_bot, "shear_top_d0_pa": sh_top, "shear_peak_d0_pa": max(sh_bot, sh_top),
+           "flange_bond_peel_d0_pa": bond_n, "flange_bond_shear_d0_pa": bond_s,
+           "peel_peak_raw_pa": float(max(top[:, 3].max(), bot[:, 3].max())),
+           "peel_top_at_s_m": float(top[int(np.argmax(top[:, 3])), 0]),
+           "peel_bot_at_s_m": float(bot[int(np.argmax(bot[:, 3])), 0]),
+           "u_tip_m": float(np.abs(u[:, 0]).max())}
+    if v.get("bed"):
+        sw0_ = t + lv("nose_block_l_m")
+        bd = interface_tractions(xyz, tris, emat, sig, {3}, {0})          # bed (epoxy) side of the T fore face
+        bd = bd[np.abs(bd[:, 0] - t) < 1e-7]
+        fx = float((bd[:, 3] * bd[:, 5] * bd[:, 2]).sum())                # force the T pushes into the bed, N/m
+        rec["bed_share"] = fx / (F / b)
+        rec["bed_force_n"] = fx * b
+        rec["bed_z_m"] = float((bd[:, 1] * np.abs(bd[:, 3]) * bd[:, 2]).sum() / max((np.abs(bd[:, 3]) * bd[:, 2]).sum(), 1e-12))
+        rec["wall_foot_moment_nm"] = rec["bed_force_n"] * (rec["bed_z_m"] - zc)
+        rec["bed_peel_d0_pa"] = window_avg(bd[:, 1], bd[:, 3], bd[:, 2], D0)   # tension across the bed (> 0)
+        # nose wall: its inner paper face peeling off the core (vertical face-to-core plane behind the bed)
+        wl = interface_tractions(xyz, tris, emat, sig, {2}, {1})
+        wl = wl[np.abs(wl[:, 0] - (sw0_ + MAT["t_face"])) < 1e-7]
+        rec["wall_peel_d0_pa"] = window_avg(wl[:, 1], wl[:, 3], wl[:, 2], D0)
+        rec["wall_peel_at_z_m"] = float(wl[int(np.argmax(wl[:, 3])), 1])
+        rec["wall_shear_d0_pa"] = window_avg(wl[:, 1], np.abs(wl[:, 4]), wl[:, 2], D0)
+    (rd / "summary.json").write_text(json.dumps(rec, indent=1))
+    print("  M2F %-19s L%d %6d el %5.1f s  upright %.2f  flange %.2f MPa  peel top %.1f (s %.1f mm) bot %.1f (s %.1f"
+          " mm) kPa  core shear top %.1f bot %.1f kPa" % (
+              name, LEVELS.index(level_factor), len(tris), dt, s_up / 1e6, s_fl / 1e6, peel_top / 1e3,
+              rec["peel_top_at_s_m"] * 1e3, peel_bot / 1e3, rec["peel_bot_at_s_m"] * 1e3, sh_top / 1e3, sh_bot / 1e3),
+          flush=True)
+    return rec
 
 
 def m2_mesh(gmsh, v, h):
@@ -935,6 +1245,29 @@ def run_part(name):
                                        for k in ("sigma_lin_pa", "peak_s1_pa", "tray_peak_pa", "peel_peak_d0_pa",
                                                  "peel_peak_raw_pa", "wall_face_peak_pa", "bed_peel_peak_pa",
                                                  "tray_path_share") if k in recs[0]}}
+    elif name == "m2f":
+        out = {}
+        for nm, v in m2f_variants().items():
+            recs = [run_m2f(nm, v, f) for f in LEVELS]
+            hs = [r["h_m"] for r in recs]
+            out[nm] = {"variant": {k: v.get(k) for k in ("t", "h", "z0", "z1", "ahead", "flange", "tray_gap", "hold")},
+                       "levels": recs,
+                       "convergence": {k: conv_table(hs, [r[k] for r in recs])
+                                       for k in ("upright_lin_pa", "flange_lin_pa", "peak_s1_pa", "peel_top_d0_pa",
+                                                 "peel_bot_d0_pa", "peel_peak_d0_pa", "shear_peak_d0_pa",
+                                                 "flange_bond_peel_d0_pa",
+                                                 "flange_bond_shear_d0_pa", "bed_share", "wall_foot_moment_nm",
+                                                 "bed_peel_d0_pa", "wall_peel_d0_pa", "wall_shear_d0_pa")
+                                       if k in recs[0]}}
+    elif name in ("m1tfl", "m1tfl1", "m1tflh", "m1tfl10", "m1tfl15"):
+        soft, heel = name == "m1tfl1", name == "m1tflh"
+        global SCARF_X
+        if name in ("m1tfl10", "m1tfl15"):
+            SCARF_X = 0.010 if name == "m1tfl10" else 0.015
+        print("%s (3 levels):" % PARTS_X[name], flush=True)
+        lv3 = [run_m1(f, False, tied=True, fillet=True, fillet_soft=soft, heel=heel) for f in LEVELS[:3]]
+        out = m1_variant(lv3)
+        out["F_saddle_N"] = {c: lv3[-1]["cases"][c]["F_saddle_N"] for c in lv3[-1]["cases"]}
     else:
         raise SystemExit("unknown part " + name)
     (OUT / "parts").mkdir(parents=True, exist_ok=True)
@@ -946,7 +1279,11 @@ def run_part(name):
 PARTS = {"bench": "benchmark", "m1f": "M1_FOOTPRINT", "m1b": "M1_BONDED", "m2": "M2"}
 # C3-R3 fix studies (3 levels each): handle feet tied to the pod walls (with / without the wall-edge bonds), and the
 # same with the floor end face released from the recess step
-PARTS_X = {"m1t": "M1_TIED", "m1tf": "M1_TIED_FOOTPRINT", "m1tg": "M1_TIED_STEPGAP", "m2x": "M2 (FWD_BEDDED)"}
+PARTS_X = {"m1t": "M1_TIED", "m1tf": "M1_TIED_FOOTPRINT", "m1tg": "M1_TIED_STEPGAP", "m2x": "M2 (FWD_BEDDED)",
+           # C3-R4 (2026-11-13): the drawn D2-R6 / D-69 fixes: recess-step fillet (CR-C3-17) with the feet tied and no
+           # wall-edge credit, its soft-fill sensitivity, and the forward-stop T with its flange (CR-C3-15)
+           "m1tfl": "M1_TIED_FILLET", "m1tfl1": "M1_TIED_FILLET_SOFT", "m1tflh": "M1_TIED_FILLET_CHORD",
+           "m1tfl10": "M1_TIED_SCARF10", "m1tfl15": "M1_TIED_SCARF15", "m2f": "M2F"}
 
 
 def combine():
@@ -964,6 +1301,11 @@ def combine():
             d = _load(pt)
             res[key] = d["result"]
             res["wall_s"][part] = d["wall_s"]
+    pf = OUT / "parts" / "m2f.json"
+    if pf.exists():
+        d = _load(pf)
+        res["M2F"] = d["result"]
+        res["wall_s"]["m2f"] = d["wall_s"]
     px = OUT / "parts" / "m2x.json"
     if px.exists():
         d = _load(px)
@@ -999,6 +1341,14 @@ def m1_variant(lv_):
                      "crash_mx_R_d0": lambda r: r["crash_mx"]["R_peak_d0"],
                      "overhang_crash_top": lambda r: r["overhang_crash_top_pa"]}.items():
         m1["convergence"][key] = conv_table(hs, [get(r) for r in m1["levels"]])
+    for c in ("design", "crash_up", "crash_dn", "crash_px", "crash_mx"):
+        m1["convergence"][c + "_R_5mm"] = conv_table(hs, [r[c]["R_peak_5mm"] for r in m1["levels"]])
+        if "ff_" + c in m1["levels"][0]:
+            m1["convergence"]["ff_%s_R_d0" % c] = conv_table(hs, [r["ff_" + c]["R_peak_d0"] for r in m1["levels"]])
+            m1["convergence"]["ff_%s_R_5mm" % c] = conv_table(hs, [r["ff_" + c]["R_peak_5mm"] for r in m1["levels"]])
+            m1["convergence"]["ff_%s_R_mean" % c] = conv_table(hs, [r["ff_" + c]["R_mean"] for r in m1["levels"]])
+            for q in ("Rcore_peak_d0", "Rcore_peak_5mm", "Rcore_mean"):
+                m1["convergence"]["ff_%s_%s" % (c, q)] = conv_table(hs, [r["ff_" + c][q] for r in m1["levels"]])
     return m1
 
 

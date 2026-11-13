@@ -384,6 +384,70 @@ def fin_scale(T1, T4, F, ra, rt, rp, pmax, Lreq, A_net):
             "pitch_max_m": pmax / k, "L_req_m": k * Lreq, "A_net_req_m2": k * A_net / rt, "frame_n": 1.25 * k * F}
 
 
+# ----------------------------------------------------------------------------- D-81 clocking dog (D-94)
+kit.source("SRC-C6-ASA-TDS", "Push Plastic ASA technical data sheet", "datasheet",
+           url="https://cdn.shopify.com/s/files/1/0260/7421/files/Push_Plastic_ASA_Technical_Data_sheet.pdf",
+           checked="2026-11-13",
+           where="mechanical table: tensile stress at yield 36.5 MPa, at break 30.5 MPa, flexural 62.2 MPa, flexural "
+                 "modulus 1 948 MPa (ASTM D638 / D790, values marked * on the sheet)")
+kit.assumption("ASM-C6-ASA-YIELD", "ASA tensile yield 36.5 MPa (filament datasheet)", "Upper bound of the printed "
+               "ASA strength used to bound the clocking dog's break torque from above (a fuse must not be stronger "
+               "than designed)", "SRC-C6-ASA-TDS tensile stress at yield 36.5 MPa (checked 2026-11-13)",
+               value=36.5e6, unit="Pa", status="UNVERIFIED", cites=["SRC-C6-ASA-TDS"])
+kit.assumption("ASM-C6-ASA-INTERLAYER", "ASA interlayer shear 0.5 x the in-layer von Mises shear", "Lower bound of "
+               "the dog's shear strength: the dog's shear plane is a layer plane (mount printed collar axis vertical)",
+               "C4/C6 practice for printed parts (ASM-C4-PETG-TENSILE takes 50 % of the Z yield); EST until "
+               "T-C6-DOG-SHEAR", value=0.5, unit="-", status="UNVERIFIED")
+
+
+@kit.calc("CALC-C6-DOG", title="Clocking dog under the mount collar (D-81): fuse torque bounds and hold",
+          inputs={"kw": "P:fin_detail.mount.key_w_m", "od": "P:fins.tube.od_m", "gap": "P:fin_detail.bond_gap_m",
+                  "ring": "P:fin_detail.station_collar.ring_wall_m", "cw": "P:fin_detail.mount.collar_wall_m",
+                  "T_slip": "P:fin_detail.mount.slip_torque_nm", "s_y": "ASM-C6-ASA-YIELD",
+                  "k_il": "ASM-C6-ASA-INTERLAYER", "T_tw": "CL-C4-D3-MOUNT-TWIST", "tau": "ASM-C4-BOND-SHEAR",
+                  "Lc": "P:fin_detail.station_collar.height_m", "core": "ASM-C4-CORE-T-TUBE",
+                  "boss": "P:fin_detail.boss.height_m"},
+          equation="dog shear plane at the notch top: A = w_key x (min(r_col, r_ring) - r_b), r_b = od/2 + gap, mean "
+                   "radius r_m = r_b + radial/2; break torque upper bound T_hi = (s_y / sqrt 3) A r_m (in-layer von "
+                   "Mises, yield), lower bound T_lo = k_il T_hi (layer plane); fuse T_fuse = T_slip + T_hi (D-23: the "
+                   "clamp slips at T_slip, then the dog shears); downstream capacities at the C4 bond allowable: station "
+                   "collar on the tube tau 2 pi r^2 L_c, tube in block tau 2 pi r^2 (core + 2 boss); RF_fuse = "
+                   "min(capacity) / T_fuse; hold if the clamp is lost: RF_hold = T_lo / T_twist (C4 design twist)")
+def dog(kw, od, gap, ring, cw, T_slip, s_y, k_il, T_tw, tau, Lc, core, boss):
+    r_b = od / 2 + gap
+    radial = min(ring, cw)
+    A = kw * radial
+    r_m = r_b + radial / 2
+    T_hi = s_y / math.sqrt(3) * A * r_m
+    T_lo = k_il * T_hi
+    T_f = T_slip + T_hi
+    k = 2 * math.pi * (od / 2) ** 2
+    cap_collar, cap_block = tau * k * Lc, tau * k * (core + 2 * boss)
+    return {"area_mm2": A * 1e6, "r_m_m": r_m, "T_dog_hi_nm": T_hi, "T_dog_lo_nm": T_lo, "T_fuse_nm": T_f,
+            "cap_collar_nm": cap_collar, "cap_block_nm": cap_block,
+            "rf_fuse": min(cap_collar, cap_block) / T_f, "rf_hold": T_lo / T_tw, "dog_share": T_hi / T_f}
+
+
+def _rf_dog(cid, title, calc, out, parts, how):
+    kit.claim(cid, title, calc=calc, output=out, unit="-", limit=(">=", 1.0), verifies=R_SM, parts=parts, how=how)
+
+
+kit.claim("CL-C6-DOG-FUSE-T", "Torque to turn the mount on the tube with the clocking dog (slip + dog break, upper "
+          "bound)", calc="CALC-C6-DOG", output="T_fuse_nm", unit="N m", verifies=R_SM, parts=MOUNTS + COLLARS,
+          how="T-C6-DOG-SHEAR: two printed mounts on a tube stub with a bonded station collar, pinch bolt at the "
+              "T-D3-SLIP setting, torque wrench / luggage scale on a 100 mm arm until the mount turns; record the peak")
+_rf_dog("CL-C6-DOG-FUSE-RF", "Weakest downstream torsion capacity (station collar or tube-in-block bond) / mount fuse "
+   "torque with the dog (D-23 holds: the mount gives first)", "CALC-C6-DOG", "rf_fuse", MOUNTS + COLLARS + TUBES,
+   "T-C6-DOG-SHEAR; witness marks on the station collar after T-C4-FIN-PROOF")
+_rf_dog("CL-C6-DOG-HOLD-RF", "Dog alone holds the 7 deg cant twist if the clamp is lost (lower bound)", "CALC-C6-DOG",
+   "rf_hold", MOUNTS + COLLARS, "T-C6-DOG-SHEAR lower result; pinch bolt check every 10 flights")
+kit.test("T-C6-DOG-SHEAR", "Clocking dog shear-out on a tube stub", verifies=["CL-C6-DOG-FUSE-T", "CL-C6-DOG-FUSE-RF",
+         "CL-C6-DOG-HOLD-RF"], procedure="Two D-91 mounts, each on a 60 mm tube stub with a 22 mm PETG station collar "
+         "bonded under it (dog in the notch). Pinch bolt set to the T-D3-SLIP 2.5 N m. Load a 100 mm arm with a luggage "
+         "scale until the mount turns; record the peak torque and whether the dog sheared. Pass: peak <= "
+         "CL-C6-DOG-FUSE-T x 1.1 and the dog piece shears, not the collar bond (no witness-mark movement)")
+
+
 # ----------------------------------------------------------------------------- bonds into foam and foam board
 @kit.calc("CALC-C6-FOAM-BONDS", title="Foot shoe and fin root bonds at the C6 allowables",
           inputs={"kd": "ASM-C6-FOAM-KD", "sf_d5": "CL-D5-BOND-SF", "A_d5": "CL-D5-BOND-AREA",
@@ -446,6 +510,12 @@ def rf(cid, title, calc, out, parts, how, ver=R_SM, unit="-"):
     kit.claim(cid, title, calc=calc, output=out, unit=unit, limit=(">=", 1.0), verifies=ver, parts=parts, how=how)
 
 
+def _rec(cid, title, calc, out, parts, how, ver=R_SM, unit="-"):
+    """D-90: a superseded collar height kept as a record (no limit; the drawn 22 mm is CL-C6-COLLAR-RF)."""
+    kit.claim(cid, title + " (record, D-90 draws 22 mm)", calc=calc, output=out, unit=unit, verifies=ver, parts=parts,
+              how=how)
+
+
 rf("CL-C6-MOTOR-HEAD-RF", "Motor screw head bearing on the printed plate at 0.20 N m", "CALC-C6-MOTOR-SCREW",
    "rf_head", MOUNTS, "T-C6-HEAD-CREEP: 4 screws at 0.20 N m on a printed ASA plate, 2 h at 70 degC, witness lines "
    "unmoved and breakaway torque >= 0.15 N m")
@@ -499,19 +569,19 @@ rf("CL-C6-TUBE-BLOCK-RF", "Tube-in-block bond, fin torsion", "CALC-C6-TUBE-BONDS
    TUBES + BLOCKS, "T-C6-LAP-PETG (allowable) and C4 T-C4-BLOCK-PROOF", ver=R_SM + R_FT)
 rf("CL-C6-BLOCK-SPAR-RF", "Block-on-spar bond, torsion about the spar", "CALC-C6-TUBE-BONDS", "rf_block_spar",
    BLOCKS + ["WNG-002"], "T-C6-LAP-PETG and T-C4-BLOCK-PROOF", ver=R_SM + R_FT)
-rf("CL-C6-COLLAR-RF", "Station collar bond at the drawn height (13 mm since D3-R5, D-70): max(C1, C4) torsion + brace shear",
+rf("CL-C6-COLLAR-RF", "Station collar bond at the drawn height (22 mm since D-90): max(C1, C4) torsion + brace shear",
    "CALC-C6-TUBE-BONDS", "rf_collar", COLLARS + TUBES, "T-C6-LAP-PETG; T-C4-FIN-PROOF (1.5 x L4) with the collar "
    "witness-marked", ver=R_SM + R_FT)
-rf("CL-C6-COLLAR-RF-13MM", "Station collar bond at 13 mm (CR-C6-32, D-70); equals the drawn value since D3-R5", "CALC-C6-TUBE-BONDS",
+_rec("CL-C6-COLLAR-RF-13MM", "Station collar bond at 13 mm (CR-C6-32, D-70); equals the drawn value since D3-R5", "CALC-C6-TUBE-BONDS",
    "rf_collar_min", COLLARS + TUBES, "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked", ver=R_SM + R_FT)
-rf("CL-C6-COLLAR-RF-16MM", "Station collar bond at the 16 mm fallback (R3 ring), same case", "CALC-C6-TUBE-BONDS",
+_rec("CL-C6-COLLAR-RF-16MM", "Station collar bond at the 16 mm fallback (R3 ring), same case", "CALC-C6-TUBE-BONDS",
    "rf_collar_alt", COLLARS + TUBES, "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked", ver=R_SM + R_FT)
-rf("CL-C6-COLLAR-RF-15MM", "Station collar bond at 15 mm (CR-C6-36); equals the drawn value since D3-R5b",
+_rec("CL-C6-COLLAR-RF-15MM", "Station collar bond at the drawn height (was 15 mm, CR-C6-36)",
    "CALC-C6-TUBE-BONDS", "rf_collar", COLLARS + TUBES, "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked", ver=R_SM + R_FT)
 rf("CL-C6-COLLAR-RF-PROP", "Station collar bond at the C6-R5 proposal (joints.collar_prop_h_m, 22 mm, CR-C6-37), "
    "same case", "CALC-C6-TUBE-BONDS", "rf_collar_prop", COLLARS + TUBES,
    "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked", ver=R_SM + R_FT)
-rf("CL-C6-COLLAR-RF-12MM-COND", "Station collar at 12 mm under the D-70 condition (T-C6-LAP-PETG mean >= 4.1 MPa, "
+_rec("CL-C6-COLLAR-RF-12MM-COND", "Station collar at 12 mm under the D-70 condition (T-C6-LAP-PETG mean >= 4.1 MPa, "
    "allowable 2.05 MPa), same case", "CALC-C6-TUBE-BONDS", "rf_collar_cond12", COLLARS + TUBES,
    "T-C6-LAP-PETG mean; print 12 mm collars only if this claim passes on the measured allowable", ver=R_SM + R_FT)
 kit.claim("CL-C6-COLLAR-L-REQ", "Station collar bond height needed for max(C1, C4) torsion + brace shear",
@@ -558,12 +628,14 @@ rf("CL-C6-ANCHOR-PULL-RF", "Brace anchor saddle pull-off from the spar", "CALC-C
    [f"FIN-010-{s}" for s in ST] + ["WNG-002"], "T-C4-FIN-PROOF (G2 in tension on the brace)", ver=R_SM + R_FT)
 rf("CL-C6-FOOT-SHOE-RF", "Foot shoe bond on the fin tip, 1 350 mm2 at the C6 board allowable (CR-D5-24)",
    "CALC-C6-FOAM-BONDS", "rf_foot", [f"GER-001-{s}" for s in ST] + HALVES, "T-C6-BOARD-LAP; T-C1-FOOT-DROP")
-rf("CL-C6-FIN-ROOT-RF", "Half-fin root fillet on XPS at the C6 foam allowable, as drawn by D3 (15 mm, zoned); "
-   "fail-safe path only (D-68), RF kept on the joint side", "CALC-C6-FOAM-BONDS", "rf_root", HALVES + ["WNG-001"],
-   "T-C6-XPS-PULL; D3 T-D3-ROOT side pull", ver=R_SM)
-rf("CL-C6-FIN-ROOT-RF-PROP", "Same root fillet at the C6 leg (15 mm, D-48); equals the drawn value since D3 R4", "CALC-C6-FOAM-BONDS",
-   "rf_root_prop", HALVES + ["WNG-001"], "T-C6-XPS-PULL; D3 T-D3-ROOT side pull on a 15 mm-leg coupon",
-   ver=R_SM + R_FT)
+kit.claim("CL-C6-FIN-ROOT-RF", "Half-fin root fillet on XPS at the C6 foam allowable, as drawn (D-92: 10 / 13 mm "
+          "cove, no strength credit; record)", calc="CALC-C6-FOAM-BONDS", output="rf_root", unit="-", verifies=R_SM,
+          parts=HALVES + ["WNG-001"], how="none: D-92 sizes the fin with the root free (CL-C4-D3-MS-FACE-ROOT-FREE)",
+          note="D-92: the fillet carries 0.8 % of the L4 root moment intact (CL-C4-D3-FILLET-L4-SHARE); the 15 mm fail-safe "
+               "fillet read RF 0.80 and was withdrawn; the root is a sealing cove")
+kit.claim("CL-C6-FIN-ROOT-RF-PROP", "Root fillet at the C6 leg (joints.root_fillet_leg_m), record after D-92",
+          calc="CALC-C6-FOAM-BONDS", output="rf_root_prop", unit="-", verifies=R_SM, parts=HALVES + ["WNG-001"],
+          how="none (record)")
 rf("CL-C6-POD-WING-RF", "Pod shell bond on the core, design envelope (1 / C3 interaction at C6-confirmed allowables)",
    "CALC-C6-POD-ALLOW", "rf_pod_design", ["POD-001", "WNG-001"], "T-C6-XPS-PULL (tension and shear); C3 pod proof")
 rf("CL-C6-POD-CRASH-RF", "Pod shell bond on the core, 12.75 g crash", "CALC-C6-POD-ALLOW", "rf_pod_crash",

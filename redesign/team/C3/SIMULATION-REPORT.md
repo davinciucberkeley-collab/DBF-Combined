@@ -106,3 +106,69 @@ Each run keeps its `case.cfg`, `log.txt` and `summary.json` under `fea/runs/`. R
 - `FIG C3-FEA-05`: bond interaction per variant and load case.
 
 Proof build: no C3 errors. C6's `CALC-C6-POD-ALLOW` drifts on the new hand values (CR-C3-11).
+
+## 8. C3-R4 (2026-11-13): the D-69 drawings checked, CR-H1-23 answered
+
+Load: pack crash load on the forward stop `CALC-C3-STOPS` `F_fwd_n` 73.75 N over the bay + guides (55 mm); pod crash
+12.75 g (`CL-C1-CRASH-N`). Allowables from C6 nodes (board flat-wise 50 kPa, paper / core shear 100 kPa, XPS 100 / 100
+kPa, PETG 15 MPa, epoxy flat-wise `ASM-C6-PEEL` 1.0 MPa). Values: finest level, or the Richardson value when larger
+(`_fea_summary` rule). Parts: `fea/parts/m2f.json`, `m1tfl*.json`, `m1tf.json`; runs under `fea/runs/M2F/`,
+`M1-TIED-FP-FILLET*/`.
+
+### 8.1 Forward-stop T (D-69, D2-R6), new model M2F
+Plane strain at y 0 through the T: upright 3 mm from the flange foot to 25 mm above the tray, flange 12 × 1.2 mm under
+the floor (`pod.py layout()` `fs_flange`), upright epoxied to the floor end (BUILD step 6), tray front piece not
+credited at the upright (0.2 mm gap). Two floor bounds: HELD (underside held aft of the flange, the C3 M2 rule) and BOX
+(floor strip clamped 60 mm aft, underside free). Four levels, h = t/2 … t/16 at the T.
+
+| Quantity (2 mm mean) | No bed, HELD | No bed, BOX | **With the 1 mm bed (BUILD step 9), HELD** | With bed, BOX | Allowable |
+|---|---|---|---|---|---|
+| Board flat-wise peel | **76.5 kPa** (tray / upright notch) | 197 kPa (tray window edge, 30 mm aft) | **42.8 kPa** (+14 %, GCI 1.2 %) | 59.6 kPa at the window edge; 2.8 kPa at the T | 50 kPa |
+| Core shear under the faces | 142 kPa | 99 kPa | **94.8 kPa** (+5 %, GCI 1.3 %) | 59 kPa | 100 kPa |
+| Upright, section-linearised | 13.3 MPa | 13.4 MPa | **3.7 MPa** (+75 %) | 3.2 MPa | 15 MPa |
+| Flange at the upright | 3.0 MPa | 3.2 MPa | **7.1 MPa** (+53 %) | 3.3 MPa | 15 MPa |
+| Nose-wall core shear / face peel | — | — | 70 kPa / 0.3 kPa | 94 kPa / 0.3 kPa | 100 / 50 kPa |
+| Tension across the bed | — | — | 278 kPa | 274 kPa | 1.0 MPa |
+
+Verdict: **the T as drawn passes only with the bed.** The bed carries the root moment into the nose wall; without it
+the floor's top face peels at the tray / upright notch (76.5 kPa, +53 % over). BUILD step 9 is a structural hold
+point, not a filler. The BOX bound's window-edge peel (59.6 kPa) needs the floor strip to bend alone 30 mm aft of the
+T; the nose box (walls, bed, hatch lip) does not let it, so the claims use HELD, as every C3 M2 claim does. A studied
+fix (tray epoxied to the upright + 2 mm fillet, no bed) did not help (peel 84 kPa): not adopted. Claims
+`CL-C3-FEA-FWD-T-*`; the pre-D-69 forward-stop claims are kept as records without limits.
+
+### 8.2 Recess-step fillet (CR-C3-17, WNG-007 as drawn), M1 with the feet tied, wall edges not credited
+The fillet (wing.py `rf_legs` 5 × 4.8 mm, microballoon epoxy 3 GPa) and the floor's 45° bevel on it were added to M1
+(three levels). Results (finest, 2 mm mean unless noted):
+
+| Case | Square end, no fillet (`M1_TIED_FOOTPRINT`, re-run 2026-11-13 on today's A3 / C1 inputs; C3-R3 read 0.56 / 4.50 / 2.17) | **Fillet as drawn** | Fillet, soft 1 GPa | Scarf 15 mm |
+|---|---|---|---|---|
+| Design, wing-side bond R | 0.60 (5 mm 0.53) | 0.58 (5 mm 0.55) | 0.61 | 0.54 |
+| Crash −z, at the step **top** (x 0.065, z 0.0197) | 4.42 (5 mm 3.27) | **4.43** (5 mm 3.28 → 3.56 extrapolated) | 4.42 | 4.65 |
+| Crash −x | 1.91 | 1.86 | 1.87 | 1.94 |
+| Crash +z / +x | 0.94 (0.95 extrapolated) / 0.20 | 1.00 / 0.19 | 0.97 / 0.20 | 1.06 / 0.24 |
+| Floor bevel on the fillet, design, mean over the face (core foam allowables) | — (butt in bearing) | **1.20** | 1.19 | 0.76 (5 mm 1.17) |
+
+Findings: (1) the crash peak is at the **top** of the step, where the bond line ends, not at the bottom corner the
+fillet fills; the fillet does not lower it (4.42 → 4.43) and its 5 mm mean converges to about 3.6, so it is a real
+local peel, not only a singularity. (2) The 45° bevel turns the floor end's bearing on the step into shear on the
+bond: the floor-to-fillet joint fails in flight (mean R 1.20 over the whole face); a 15 mm scarf halves it on average
+but keeps a 1.17 peak and worsens crash +z. (3) A PETG chord from the aft stop to the foot bridge (studied) lowers
+crash −z to 0.95 but raises the design R to 1.27: not adopted.
+
+Decision: **delete WNG-007 and the floor bevel; the floor end stays square on the step (the R3 joint)**: design 0.60
+(`CL-C3-FEA-STEP-R-DESIGN`, +40 %); the square end bears on the step in compression, and the floor-side bond sees the
+same tractions as the wing side, checked on the same foam allowables. Crash retention by fail-safe
+(`CL-C3-FEA-CRASH-FAILSAFE` 0.95): −z and −x peel the aft bond end locally; the released aft end then holds
+(`M1_TIED_STEPGAP` −z 0.43, −x 0.87 with Richardson); +z 0.95 and +x 0.23 hold intact. Post-crash: inspect the aft bond
+line before the next flight.
+
+### 8.3 Handle-bracket proof load (CR-H1-23)
+From `M1_TIED_FOOTPRINT` (re-run 2026-11-13 with the saddle force combined per case): bracket force at the design row
+164.3 / 110.8 N (x / z) → **limit** = design / (1.5 × 1.15 × 1.25) = **76.2 N +x, 51.4 N −z, 91.9 N resultant**
+(`CL-C3-BRACKET-PROOF-LIMIT*`); crash worst **204.7 N** (`CL-C3-BRACKET-CRASH-F`). The 200 N pull is the crash force
+(ultimate, no factor): it does not go on the flight pod. Flight pod: T-C3-POD-PROOF at the limit components. Crash
+force: new `T-C3-BRACKET-CRASH` on two test articles (foot + bracket on a wall offcut and a spar stub).
+
+Re-run: `python -I redesign/team/C3/pod_fea.py --part m2f` (≈ 15 min), `--part m1tf`, `--part m1tfl` (≈ 7 min each;
+studies `m1tfl1`, `m1tflh`, `m1tfl10`, `m1tfl15`), then `--combine` and `pod_structures.py`.

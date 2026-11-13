@@ -43,11 +43,11 @@
 <rect x="959.5" y="120.5" width="11" height="11" fill="#B42323"/>
 <text x="316" y="186" font-size="12" fill="#4B5563" text-anchor="end">fix: feet tied to walls</text>
 <line x1="330" y1="182" x2="1090" y2="182" stroke="#E3E7ED" stroke-width="0.75"/>
-<circle cx="603.2" cy="182.0" r="6" fill="#1F5FC7"/>
-<rect x="681.3" y="176.5" width="11" height="11" fill="#121619"/>
-<polygon points="934.3,175.0 941.3,182.0 934.3,189.0 927.3,182.0" fill="#D9480F"/>
-<circle cx="462.2" cy="182.0" r="6" fill="#6B7280"/>
-<rect x="812.6" y="176.5" width="11" height="11" fill="#B42323"/>
+<circle cx="614.6" cy="182.0" r="6" fill="#1F5FC7"/>
+<rect x="680.6" y="176.5" width="11" height="11" fill="#121619"/>
+<polygon points="931.4,175.0 938.4,182.0 931.4,189.0 924.4,182.0" fill="#D9480F"/>
+<circle cx="442.7" cy="182.0" r="6" fill="#6B7280"/>
+<rect x="792.5" y="176.5" width="11" height="11" fill="#B42323"/>
 <text x="316" y="242" font-size="12" fill="#4B5563" text-anchor="end">fix + floor end released</text>
 <line x1="330" y1="238" x2="1090" y2="238" stroke="#E3E7ED" stroke-width="0.75"/>
 <circle cx="804.9" cy="238.0" r="6" fill="#1F5FC7"/>

@@ -42,9 +42,10 @@ LEVELS = ("coarse", "medium", "fine", "xfine")
 
 # ------------------------------------------------------------------------------------------- as-designed geometry
 # Read from the CAD module on 2026-11-10 (fins.py geometry(), D3 R4; wing/params.json D1-R1). R5: z_collar_bottom
-# 0.1475 -> 0.1445 (D-70 13 mm collar; TUBE bracket only). cad_check() below
+# 0.1475 -> 0.1445 (D-70 13 mm collar; TUBE bracket only). 2026-11-13 (D-90/D-91: 22 mm collar, 18 mm grip):
+# z_le_top 0.1595 -> 0.1535, z_collar_bottom 0.1445 -> 0.1315. cad_check() below
 # re-reads the CAD and stops the script if any of these moved, so the assumption cannot silently go stale.
-FIN_CAD = {"x_le_board": 0.0565, "x_tube_front": 0.034, "z_le_top": 0.1595, "z_collar_bottom": 0.1445,
+FIN_CAD = {"x_le_board": 0.0565, "x_tube_front": 0.034, "z_le_top": 0.1535, "z_collar_bottom": 0.1315,
            "x_sq": 0.2614, "h": 0.21, "z_step": 0.2010, "te": 0.32, "area_half_board": 0.04550}
 kit.assumption("ASM-B3-V-FIN-CAD", "As-designed half-fin outline (fins.py R4)",
                "x_le_board, x_tube_front, z_le_top, z_collar_bottom, x_sq, h, z_step, te (m); half-fin board area (m2)",
