@@ -1,19 +1,19 @@
 {
  "money": {
-  "spend_pess_allin": 1984.5,
-  "spend_base_allin": 1899.29,
-  "goods_base": 1370.54,
-  "goods_pess": 1396.13,
-  "tax_base": 140.48,
-  "tax_pess": 143.1,
-  "spend_base": 1636.02,
-  "spend_pess": 1721.23,
-  "early_goods_tax": 1020.5
+  "spend_pess_allin": 1982.86,
+  "spend_base_allin": 1897.64,
+  "goods_base": 1369.05,
+  "goods_pess": 1394.64,
+  "tax_base": 140.33,
+  "tax_pess": 142.95,
+  "spend_base": 1634.38,
+  "spend_pess": 1719.59,
+  "early_goods_tax": 1018.85
  },
- "reserve_pess": 278.77,
- "reserve_base": 363.98,
+ "reserve_pess": 280.41,
+ "reserve_base": 365.62,
  "bridge": {
-  "value": 1721.23,
+  "value": 1719.59,
   "deltas": {
    "P01 Ovonic 120C EC5 pair, pessimistic EUR 113.30 x 1.16 = 131.43 replaces 130C XT60 list 119.88 (D-64)": 11.550000000000011,
    "M01 Savox SH-0255MG+ 2 x 41.99 replaces ES3005HV 2 x 19.99 (CR-D6-02)": 44.00000000000001,
@@ -24,7 +24,7 @@
    "C06 PA66 socket-head set 7.00; C03 CF rod 2.5 mm x 2 at 3.50 replaces 2 mm x 1 at 3.00": 11.0,
    "D07 brass tube 7/32 in 3.00 (CR-D5-27); D06 straps 6 to 7": 4.0,
    "G13 two strain gauges (CR-C4-38)": 9.0,
-   "H07 board-link ribbon + headers 3.00 (HRN-114), H08 pitot hose-barb couplers 1.49 (AVN-005) (D-89)": 4.49,
+   "H07 board-link ribbon + headers 3.00 (HRN-114) (D-89; the H08 pitot couplers were dropped in D-89b)": 3.0,
    "2026-11-13 Maker Pass: G07 25.99 + G08 20.00 + G09 25.00 deleted (Electronics Lab, covered); G10 15.00 held behind gate X10": -85.99,
    "2026-11-13: G11 41.73 + H05 15.00 BOUGHT (Jacobs lists no hot-wire gear; old gate X11 dissolved; was borrowed, delta -56.73)": 0.0,
    "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0,
@@ -47,18 +47,17 @@
   "Amazon / DigiKey": 41.0,
   "Amazon / hobby shop": 27.0,
   "DigiKey / Amazon": 3.0,
-  "Bambu Lab store": 1.49,
   "GetFPV": 24.49,
   "Pyrodrone": 19.98,
   "Harbor Freight": 19.99
  },
  "by_order": {
-  "EARLY": 925.62,
+  "EARLY": 924.13,
   "DEC": 349.96,
   "LOCAL": 94.96
  },
- "reserve_pess_allin": 15.5,
- "reserve_base_allin": 100.71,
+ "reserve_pess_allin": 17.14,
+ "reserve_base_allin": 102.36,
  "gated": {
   "X01": 33.08,
   "X02": 46.29,

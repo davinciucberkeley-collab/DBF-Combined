@@ -152,6 +152,14 @@ def build_adapter(part, G, nut_part=None, washer_part=None):
     a0, a1 = -G['body'], -G['body'] - G['ad_t']
     part.revolve('X', (0, 0, 0), [(a0, G['pilot_r']), (a0, G['ad_r']), (a1, G['ad_r']), (a1, G['pilot_r'])],
                  name='adapter base')
+    # D-89b: the 4 screw counterbores open to the adapter's front face (they were cut to the head envelope only, so a
+    # screw could not be driven in: build-film assembly check). 6.0 mm for the 5.5 mm M3 SHCS head (ISO 4762, EST
+    # clearance), from the screw seat out through the face; the prop hub covers them once fitted (build step 8.6)
+    seat = -(G['body'] + 0.0015)
+    for i in range(4):
+        t = math.radians(45 + 90 * i)
+        part.cut_cylinder('X', (seat, G['ad_screw_r'] * math.cos(t), G['ad_screw_r'] * math.sin(t)),
+                          (a1 - 0.0005) - seat, 0.003, name='screw counterbore %d' % i)
     tip = -G['a_post_tip']
     part.revolve('X', (0, 0, 0), [(a1, 0), (a1, G['post_r']), (tip, G['post_r']), (tip, 0)], name='M6 post')
     (washer_part or part).revolve('X', (0, 0, 0), [(-G['a_wash'], G['post_r']), (-G['a_wash'], G['wash_r']),

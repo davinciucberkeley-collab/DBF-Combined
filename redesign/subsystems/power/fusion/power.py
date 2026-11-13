@@ -223,8 +223,11 @@ def build_frame_hardware(ctx, G):
     for x, y in G['bosses']:
         k9.hw_insert(ins, 'Z', (x, y, zb), -1, 'M3')
         k9.hw_washer(sp, 'Z', (x, y, zb), 1, 'M3', od=0.006, t=dz0 - zb, idia=0.0032, name='nylon spacer 10 mm')
-        k9.hw_washer(wa, 'Z', (x, y, dz1), 1, 'M3', t=0.0005, name='nylon washer 0.5 mm')
-        k9.hw_screw(sc, 'Z', (x, y, dz1 + 0.0005), -1, 'M3', 0.018, 'pan', name='M3x18 PA66 pan head')
+        # D-89b: the board rests on 1.0 mm washers and each screw goes down through its mounting hole, head on the
+        # PCB top (1.6 mm PCB, EST); before, the board floated 1 mm above the deck on the screw heads (build-film
+        # assembly check). Thread into the brass insert: 18 - (1.0 + 1.6 + 2 deck + 10 spacer) = 3.4 mm >= 1 d (EST)
+        k9.hw_washer(wa, 'Z', (x, y, dz1), 1, 'M3', t=0.001, name='nylon washer 1.0 mm')
+        k9.hw_screw(sc, 'Z', (x, y, dz1 + 0.001 + 0.0016), -1, 'M3', 0.018, 'pan', name='M3x18 PA66 pan head')
     x, y = G['bosses'][0]
     k9.hw_join(ctx, 'PWR-107', 'POD-002', (x, y, zb - 0.003))
     k9.hw_join(ctx, 'PWR-101', 'PWR-107', (x, y, zb - 0.002))

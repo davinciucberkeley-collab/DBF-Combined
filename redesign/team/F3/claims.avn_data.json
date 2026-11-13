@@ -74,17 +74,17 @@
     "r": "ASM-F3-CAD-MASS"
    },
    "outputs": {
-    "mass_g": 36.48,
-    "cg_x_m": -0.0175,
-    "cg_y_m": 0.0019,
-    "cg_z_m": 0.0626
+    "mass_g": 35.42,
+    "cg_x_m": -0.0151,
+    "cg_y_m": 0.0034,
+    "cg_z_m": 0.0632
    },
    "input_values": {
     "r": [
-     36.48,
-     -0.0175,
-     0.0019,
-     0.0626
+     35.42,
+     -0.0151,
+     0.0034,
+     0.0632
     ]
    }
   },
@@ -95,10 +95,10 @@
    "text": "[total g, cg x, cg y, cg z m]",
    "basis": "team/F3/avn_data.py: seller masses on the envelopes, volumes x densities for printed, gel and silicone parts",
    "value": [
-    36.48,
-    -0.0175,
-    0.0019,
-    0.0626
+    35.42,
+    -0.0151,
+    0.0034,
+    0.0632
    ],
    "unit": "g,m,m,m",
    "status": "UNVERIFIED"
@@ -124,8 +124,8 @@
    "id": "ASM-F3-CAD-BOOM",
    "type": "assumption",
    "title": "Pitot boom stowed envelope from the CAD",
-   "text": "[length m tip to coupler ends, width m]",
-   "basis": "layout(): probe tip to the coupler ends on the root barbs; width = max(shoulder OD, barb spread + barb OD)",
+   "text": "[length m tip to barb ends, width m]",
+   "basis": "layout(): probe tip to the root barb ends; width = max(shoulder OD, barb spread + barb OD)",
    "value": [
     0.1148,
     0.01
@@ -191,7 +191,7 @@
    ],
    "how": "Weigh each part on arrival (T-F3-ARRIVAL); A3 replaces the EST values.",
    "note": "F3-R2: power board moved to PWR-003 (CR-F3-13)",
-   "value": 36.48
+   "value": 35.42
   },
   {
    "id": "CL-F3-AVN-CG-X",
@@ -210,7 +210,7 @@
     "AVN-007"
    ],
    "how": "From the weighed parts at their CAD stations; A3 roll-up.",
-   "value": -0.0175
+   "value": -0.0151
   },
   {
    "id": "CL-F3-AVN-CG-Y",
@@ -229,7 +229,7 @@
     "AVN-007"
    ],
    "how": "As CL-F3-AVN-CG-X.",
-   "value": 0.0019
+   "value": 0.0034
   },
   {
    "id": "CL-F3-ASPD-POST-CLR",

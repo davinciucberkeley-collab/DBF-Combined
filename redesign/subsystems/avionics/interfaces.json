@@ -56,31 +56,31 @@
    "name": "Airspeed sensor MS4525DO (I2C 0x28)",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 4.51,
+   "mass_g": 4.05,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.0711,
+    -0.0696,
     -0.0463,
-    0.0319
+    0.0309
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
-   "notes": "RMRC board 20 x 21 x 13 mm, 3.5 g, ports up, between the tray tie posts; I2C1 0x28 (ARSPD_TYPE 1); replaces the MS5525 (0x76 clashes with the baro); mass 4.51 g (envelope 0.0, tube 1.01, bought 3.5)"
+   "notes": "RMRC board 20 x 21 x 13 mm, 3.5 g, ports up, between the tray tie posts; I2C1 0x28 (ARSPD_TYPE 1); replaces the MS5525 (0x76 clashes with the baro); mass 4.05 g (envelope 0.0, tube 0.55, bought 3.5)"
   },
   {
    "id": "AVN-005",
    "name": "Pitot boom (plug-in): pitot-static probe in a printed keyed sleeve",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 4.84,
+   "mass_g": 4.24,
    "material": "PETG (printed) + aluminium probe",
    "cg_xyz_m": [
-    -0.1533,
+    -0.1596,
     -0.046,
     0.045
    ],
    "make_or_buy": "make",
-   "notes": "tip at params avionics.pitot_tip_xyz_m; 6 mm sleeve with a 5.6 mm key flat on +z and a 10 mm shoulder on the socket collar; 2 barbed couplers on the probe root barbs part when the boom is pulled; removed for transport; mass 4.84 g (PETG 1.12, envelope 0.0, probe 3.12, couplers 0.6)"
+   "notes": "tip at params avionics.pitot_tip_xyz_m; 6 mm sleeve with a 5.6 mm key flat on +z and a 10 mm shoulder on the socket collar; the two lines pull off the probe root barbs when the boom is pulled (no couplers, D-89b); removed for transport; mass 4.24 g (PETG 1.12, envelope 0.0, probe 3.12, couplers 0.0)"
   },
   {
    "id": "AVN-006",
@@ -199,12 +199,12 @@
    "part_b": "AVN-004",
    "via": "CT-PITOT-TUBING",
    "owner": "avionics",
-   "notes": "two silicone lines 2.5 mm ID: probe total (centre barb) to sensor port P1, static to P2 (ARSPD_TUBE_ORDR 2, so a swap is harmless); barbed couplers at the probe root part when the boom is pulled; lines labelled T and S, no kinks",
+   "notes": "two silicone lines 1.6 mm ID (EST): probe total (centre barb) to sensor port P1, static to P2 (ARSPD_TUBE_ORDR 2, so a swap is harmless); the lines pull off the probe root barbs when the boom is pulled; lines labelled T and S, no kinks",
    "retention": {
-    "item": "push-on silicone on 2.5 mm barbs",
-    "count": "2 lines, 2 couplers",
+    "item": "push-on silicone on 2.0 mm barbs",
+    "count": "2 lines",
     "load_n": "none (pneumatic)",
-    "inspection": "set-up: couplers pushed on; blow test reads > 0"
+    "inspection": "set-up: lines pushed on the barbs to the shoulder; blow test reads > 0"
    }
   },
   {

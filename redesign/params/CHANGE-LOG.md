@@ -709,3 +709,16 @@ reason in `PROOFS.md`: 8 fixed here, 1 decided with the owner's edit pending (`C
 acceptance text 592.6 → 560 g. **F1**: re-publish `CL-PWR-MASS` with the D-87 bars (A3 rolls 625.5 g). **D7**: box
 nose / antenna gaps (`PROOFS.md`). **Structures (C4, C6, D3)**: the fin station items stay theirs (STATUS #1). The
 collar mass, if taken, comes from the 3 g free reserve and the 10.8 g of predicted margin.
+
+### D-89b, 2026-11-13: assembly blockers the build film found (first four)
+
+The build-film assembly check (`showcase/animation/assembly_check.py`, `build/ASSEMBLY-CHECK.md`) sweeps each part along
+the motion a person would use. It found parts that no motion can fit. Four are fixed here; the motor screws, the
+GPS mast cross-screw and the strap eyes (SW-01) wait for the structures stream's changes to the mount, pod and blocks.
+
+| Id | Decision | Keys changed | Why (numbers) |
+|---|---|---|---|
+| **D-89b** | **Prop-adapter counterbores open to the face; horn bores become U-slots; power board seated on its washers; pitot barbs fit the socket bore** | `subsystems/propulsion/fusion/propulsion.py` (4 counterbores), `subsystems/mechanisms/fusion/mechanisms.py` (horn tube slot), `subsystems/power/fusion/power.py` + `make_power.py` + `team/C6/fastener_parts.py` (PWR-103 1.0 mm washers, screw heads on the board), `subsystems/avionics/params.json` (`tube_m` [0.0032, 0.0016] EST, `barb_m` [0.002, 0.008, 0.0034], `coupler_g` 0), `subsystems/avionics/fusion/avionics.py`, `team/F3/avn_data.py`, `team/I1/build_bom.py` (H08 removed) | (a) **Prop-adapter screws**: the counterbore was cut by the screw itself, which left the adapter closed above the head. It is now Ø6.0 mm (M3 SHCS head 5.5 mm, ISO 4762, EST clearance) out through the adapter face. (b) **Horns**: the tube is bonded in its panel first (step 3.3), so a closed bore could not go on at step 7.2. The bore is now a U-slot open to the blade's lower edge (tube Ø + 0.2 mm): the horn slides up onto the tube and is epoxied. (c) **Power board**: it floated 1 mm above the deck on the screw heads. It now rests on 1.0 mm nylon washers, and each M3×18 goes down through its mounting hole with the head on the 1.6 mm PCB (EST). Thread in the brass insert is 18 − (1.0 + 1.6 + 2 + 10) = 3.4 mm, above 1 d (EST). The board height is unchanged. (d) **Pitot boom**: the boom is pulled forward through its 6 mm socket bore, so the root barbs must pass it. Two Ø2.5 barbs 4 mm apart span 6.5 mm (7.5 mm at D-89a's 5 mm). Now Ø2.0 barbs 3.4 mm apart span 5.4 mm. 1/16 × 1/8 in silicone lines (EST, measure the kit) are pushed straight onto the barbs (stretched) and pull off with the boom, so no couplers are needed: H08 is dropped (−$1.49) and `coupler_g` is 0. All of these sizes are UNVERIFIED until the probe and tubing are measured. |
+
+Result: `collision/collide.py --glb` PASS (1103 bodies in 212 parts, 3 poses), 0 `CUT NOT VERIFIED`; `fusion/check.py`,
+`merge_check.py` PASS. BOM pessimistic reserve $280.40 vs $309 (open; see the review phase).

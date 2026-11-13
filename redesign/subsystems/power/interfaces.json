@@ -157,7 +157,7 @@
    "cg_xyz_m": [
     -0.021,
     -0.0464,
-    0.0323
+    0.0344
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PWR-03",
@@ -181,7 +181,7 @@
   },
   {
    "id": "PWR-103",
-   "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm",
+   "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm",
    "subsystem": "power",
    "status": "MODELLED",
    "mass_g": 0.08,
@@ -189,7 +189,7 @@
    "cg_xyz_m": [
     -0.021,
     -0.0464,
-    0.0389
+    0.0391
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PWR-03",
@@ -279,7 +279,7 @@
     "insert": "M3 x 5.7 brass heat-set in POD-002 (D2)",
     "engagement_mm": 5.5,
     "min_engagement_mm": 4.5,
-    "washer_nut": "M3 nylon washer 0.5 mm under the head; spacer 10 mm under the deck",
+    "washer_nut": "M3 nylon washer 1.0 mm under the board (D-89b), head on the board; spacer 10 mm under the deck",
     "torque": "0.20 N m max (nylon), snug, no threadlocker; paint-pen witness",
     "tool": "PH1 screwdriver",
     "access": "from above (+z) through the hatch, before the power board is taped on (the board covers the heads)",

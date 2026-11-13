@@ -11,7 +11,7 @@ the roll-up and the claims cannot disagree.
 Arrangement (SPEC.md):
   right channel  FC top board, arrow -x, on 4 gel cubes on D2's FC plate between D2's end stops
   left channel   airspeed board between D2's tie posts (ports up), RX crosswise behind the aft post (under antenna
-                 tube A), the two pitot lines from the sensor ports up to the couplers on the probe root barbs
+                 tube A), the two pitot lines from the sensor ports up to the probe root barbs (pushed on)
   nose           pitot boom: bought pitot-static probe bonded in a printed keyed sleeve, shoulder on the socket collar
   mast           GPS on 1 mm foam tape on the 45 deg pad, arrow toward the nose (down-forward along the pad)
 
@@ -156,11 +156,13 @@ def layout(get, A, L, G):
     g['sleeve_od'], g['sleeve_flat'], g['shoulder_od'] = od, flat, sho
     g['probe_x'] = (tip[0], sx1)
     g['probe_r'] = a('probe_od_m') / 2
-    bd, bln = a('barb_m')
+    bd, bln = a('barb_m')[:2]
     dy = a('aspd_port_m')[1]
+    dyb = a('barb_m')[2] if len(a('barb_m')) > 2 else dy  # D-89b: barb spacing (fits the socket bore)
+    g['barb_r'] = bd / 2
     g['port_h'] = a('aspd_port_m')[2] if len(a('aspd_port_m')) > 2 else 0.0
-    g['barbs'] = [((sx1, ya + s * dy / 2, za), bd / 2, bln) for s in (-1, 1)]
-    g['coupler_x'] = sx1 + bln                             # couplers sit on the barb ends
+    g['barbs'] = [((sx1, ya + s * dyb / 2, za), bd / 2, bln) for s in (-1, 1)]
+    g['coupler_x'] = sx1 + bln                             # the barb ends (the lines are pushed on; no couplers)
     g['tip_on_axis'] = (abs(tip[1] - ya), abs(tip[2] - za))
 
     # the two pitot lines: up from the sensor ports to coupler height, then forward to the couplers
@@ -170,7 +172,7 @@ def layout(get, A, L, G):
     for s in (-1, 1):
         yy = -cy + s * dy / 2
         g['tubes'].append({'riser': ((pxp, yy, g['aspd_hi'][2]), za - g['aspd_hi'][2]),
-                           'run': ((pxp, ya + s * dy / 2, za), g['coupler_x'] - pxp), 'r': tod / 2})
+                           'run': ((pxp, ya + s * dyb / 2, za), g['coupler_x'] - pxp), 'r': tod / 2})
         #   D-89: the run on its barb's line (probe axis y), so the line's end slides straight over the barb
     g['tube_path'] = (za - g['aspd_hi'][2]) + abs(g['coupler_x'] - pxp)
     g['tube_id'] = a('tube_m')[1]
@@ -273,7 +275,8 @@ def build(ctx):
         asp.cylinder('Z', (x, y, zb + ph - 0.0005), L0 + 0.0005, r, name='silicone line riser')
         p1, L1 = tb['run']
         asp.cylinder('X', p1, L1, r, name='silicone line run')
-        asp.tube('X', (p1[0] + L1, p1[1], p1[2]), -0.005, r, rid, name='silicone line end on the barb')
+        asp.tube('X', (p1[0] + L1, p1[1], p1[2]), -0.005, r, g['barb_r'] + 0.00002,
+                 name='silicone line end on the barb (stretched)')
 
     # ---------------------------------------------------------------- AVN-005 pitot boom: keyed sleeve + shoulder + probe + root barbs
     bm = ctx.part('AVN-005')
@@ -286,7 +289,7 @@ def build(ctx):
     p0, p1 = g['probe_x']
     bm.cylinder('X', (p0, ya, za), p1 - p0, g['probe_r'], name='pitot-static probe')
     for (start, r, ln) in g['barbs']:
-        bm.cylinder('X', start, ln, r, name='probe root barb + coupler')
+        bm.cylinder('X', start, ln, r, name='probe root barb')
 
     # ---------------------------------------------------------------- AVN-003 receiver (crosswise, under antenna tube A)
     rx = ctx.part('AVN-003')

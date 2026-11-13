@@ -94,7 +94,7 @@ CAPS = [('PWR-008-' + s, 'ESC capacitor 680 uF 25 V low-ESR, %s' % s, cap_cg(s))
 HARDWARE = [
     ('PWR-101', 'M3x18 pan head screw, nylon PA66', 6, 'buy', '-', 'nylon PA66', 0, 0.10, 'any (nylon M3 assortment)', '4 + 2 spare; mass inside PWR-006'),
     ('PWR-102', 'Nylon spacer M3, 10 mm, OD 6 / ID 3.2', 6, 'buy', '-', 'nylon PA66', 0, 0.10, 'any', '4 + 2 spare; mass inside PWR-006'),
-    ('PWR-103', 'M3 nylon washer 0.5 mm', 6, 'buy', '-', 'nylon PA66', 0, 0.02, 'any', 'mass inside PWR-006'),
+    ('PWR-103', 'M3 nylon washer 1.0 mm', 6, 'buy', '-', 'nylon PA66', 0, 0.02, 'any', 'mass inside PWR-006'),
     ('PWR-104', 'Silicone wire 10 AWG red + black, 0.3 m each', 1, 'buy', '-', 'copper + silicone', 0, 4.0, 'team/I1/BOM.csv#F02 (replaces 8 AWG)', 'main jumpers; mass inside PWR-002'),
     ('PWR-105', 'FR4 sheet 1.6 mm, 1 oz copper one side, 100 x 70 mm', 1, 'buy', '-', 'FR4', 0, 3.0, 'any', 'bus board; 3 boards per sheet'),
     ('PWR-106', 'Foam tape 3M VHB-class 1.1 mm, 25 mm wide', 1, 'buy', '-', 'acrylic foam', 0, 0.0, 'shared shop stock', 'power board, bus board, caps; mass inside each part'),
@@ -143,7 +143,7 @@ def main():
          'joint_stack': {'fastener': 'M3x%d pan head, nylon PA66' % s['len_mm'], 'count': 4, 'grade': 'PA66 nylon (insulating, non-magnetic)',
                          'hole': '3.4 mm clearance in the deck (PWR-006) and in the 10 mm nylon spacer (OD 6 / ID 3.2); POD-002 boss bore 4.0 x 6.5 mm with the insert',
                          'insert': 'M3 x 5.7 brass heat-set in POD-002 (D2)', 'engagement_mm': round(eng, 1), 'min_engagement_mm': 4.5,
-                         'washer_nut': 'M3 nylon washer 0.5 mm under the head; spacer 10 mm under the deck',
+                         'washer_nut': 'M3 nylon washer 1.0 mm under the board (D-89b), head on the board; spacer 10 mm under the deck',
                          'torque': '0.20 N m max (nylon), snug, no threadlocker; paint-pen witness',
                          'tool': 'PH1 screwdriver', 'access': 'from above (+z) through the hatch, before the power board is taped on (the board covers the heads)',
                          'install_order': 3, 'removal_order': 3}},

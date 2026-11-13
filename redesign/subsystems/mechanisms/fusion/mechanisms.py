@@ -300,6 +300,13 @@ def build_horn(part, G, y, clevis, boss_dir):
     part.prism('Y', y - ht / 2, [arm] + holes, ht, name='horn arm')
     part.prism('Y', y - ht / 2, [horn_blade_loop(G), circle(G['xt'], G['zt'], G['tube_r'] + 0.0001, 16)], ht,
                name='horn blade')
+    # D-89b: the bore is a U-slot open to the blade's lower edge: the torque tube is bonded in its panel first (BUILD
+    # step 3.3), so the horn must slide up onto it (step 7.2) and is then epoxied; a closed bore could not go on
+    # (build-film assembly check). Channel = tube diameter + 0.2 mm, from the bore centre down out of the part
+    zb = min(q[1] for q in horn_blade_loop(G)) - 0.002
+    rr = G['tube_r'] + 0.0001
+    part.cut_box((G['xt'] - rr, y - ht / 2 - 0.0005, zb), (G['xt'] + rr, y + ht / 2 + 0.0005, G['zt']),
+                 name='tube slot (open below)')
     fx0, fx1, fw, ft = G['flange']
     part.prism('Y', y - fw / 2, [band(G, xh + fx0, xh + fx1, False, ft)], fw, name='lower flange')
     bx0, bx1, bw, bt = G['backplate']

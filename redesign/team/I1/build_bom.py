@@ -120,9 +120,6 @@ line("H06", "hardware", "Amass XT30U male + female pairs, 10-pair pack (4 fitted
 line("H07", "hardware", "Board-link ribbon: male pin-header strip 1 x 40 + 10-way 28 AWG ribbon 0.3 m (HRN-114, W-PMOD, case S)", "DigiKey / Amazon", "any; pitch per power BOARD-CHECK.md step 4", "EARLY", 1, 0, 3.00,
      status="EST", seen="2026-11-13", lead=4, url="https://www.amazon.com/", part="HRN-114",
      note="D-89: the CAD now draws this ribbon and its header plugs (PDB top header, FC underside header); price from subsystems/harness/parts.csv HRN-114 (EST), was in the F2 parts list but on no BOM line. Buy after BOARD-CHECK step 4 gives the pitch (1.27 mm pitch: bought IDC ribbon instead)")
-line("H08", "hardware", "Straight hose-barb couplers 2.5 mm, 5-pack (pitot lines onto the probe root barbs, AVN-005: 2 fitted)", "Bambu Lab store", "Plastic Hose Barb Fittings, 2.5 mm straight, 5 pcs (PP)", "EARLY", 1, 0, 1.49,
-     status="CHK", seen="2026-11-13", lead=7, url="https://us.store.bambulab.com/products/plastic-hose-barb-fittings", part="AVN-005",
-     note="D-89: the design's 2 barbed couplers (avionics params coupler_g, AVN-005 notes) were on no BOM line. Price from a search snippet of the store page ('from $1.49', 5 pcs, PP), page not opened; check the 2.5 mm size fits the 2.5 mm ID silicone line; shipping not included")
 # --- power (F1, CR-F1-12), itemised from team/F1/POWER.md 'Bought items'
 line("F01", "power", "Amass AS150U connector pair (male + female) x 5: aircraft, 2 packs, charge lead, spare", "Amazon", "Amass AS150U", "EARLY", 5, 0, 5.00,
      status="EST", seen="2026-11-09", lead=5, url="https://www.amazon.com/", part="PWR-003", note="F1 price EST $25 for 5; open the Amass sheet. Confirm the SKU is the anti-spark AS150U, not AS150")
@@ -137,7 +134,7 @@ line("F09", "power", "Adhesive-lined 3:1 heat-shrink assortment 2.4-9.5 mm (HRN-
 # --- fasteners and bonding (C6 kit, CR-C6-11; D3's fasteners are inside it)
 line("C01", "hardware", "M3 steel A2 kit: SHCS M3x16 x6 (D3 pinch bolts), nyloc x8, washer x12 (C6 kit R4; M3x8 x20 is B07)", "Bolt Depot", "ISO 4762 / 10511 / 7089 A2", "EARLY", 1, 0, 5.00,
      status="EST", seen="2026-11-09", lead=5, url="https://www.boltdepot.com/", part="HRN-003", note="C6 kit table; piece prices about $3 plus minimum-order rounding. M3x8 x20 is B07. M3 only")
-line("C06", "hardware", "M3 nylon PA66 set: socket-head M3x18 x11, M3x16 x3 + hex nut x3, 0.5 mm washer x6, 10 mm spacer OD 6 / ID 3.2 x6 (power frame, GPS mast, T-C6-NYLON-TORQUE)", "Amazon", "PA66 M3 socket-head assortment + spacers", "DEC", 1, 0, 7.00,
+line("C06", "hardware", "M3 nylon PA66 set: socket-head M3x18 x11, M3x16 x3 + hex nut x3, 1.0 mm washer x6 (D-89b: the power board rests on them), 10 mm spacer OD 6 / ID 3.2 x6 (power frame, GPS mast, T-C6-NYLON-TORQUE)", "Amazon", "PA66 M3 socket-head assortment + spacers", "DEC", 1, 0, 7.00,
      status="EST", seen="2026-11-10", lead=4, url="https://www.amazon.com/", part="PWR-101",
      note="CR-C6-30 / CR-C6-26: PA66 SOCKET heads (not pan) so the 2.5 mm hex key torques them at 0.08 N m; PWR-101..103 are inside this line. C6 kit total EST $26, here $28")
 line("C02", "hardware", "M3 x 5.7 brass heat-set inserts x12 + M3 nylon washers / FC grommets x8", "Amazon", "Ruthex-class RX-M3x5.7", "DEC", 1, 0, 9.00,
@@ -357,7 +354,7 @@ def bridge(tax_rate):
         "C06 PA66 socket-head set 7.00; C03 CF rod 2.5 mm x 2 at 3.50 replaces 2 mm x 1 at 3.00": 7.00 + (7.00 - 3.00),
         "D07 brass tube 7/32 in 3.00 (CR-D5-27); D06 straps 6 to 7": 3.00 + 1.00,
         "G13 two strain gauges (CR-C4-38)": 9.00,
-        "H07 board-link ribbon + headers 3.00 (HRN-114), H08 pitot hose-barb couplers 1.49 (AVN-005) (D-89)": 3.00 + 1.49,
+        "H07 board-link ribbon + headers 3.00 (HRN-114) (D-89; the H08 pitot couplers were dropped in D-89b)": 3.00,
         "2026-11-13 Maker Pass: G07 25.99 + G08 20.00 + G09 25.00 deleted (Electronics Lab, covered); G10 15.00 held behind gate X10": -(25.99 + 20.00 + 25.00 + 15.00),
         "2026-11-13: G11 41.73 + H05 15.00 BOUGHT (Jacobs lists no hot-wire gear; old gate X11 dissolved; was borrowed, delta -56.73)": 0.0,
         "T05 mat 25, T07-T09 tote, box, labels 13: gated X07, nothing in the spend": 0.0,

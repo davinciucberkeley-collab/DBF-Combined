@@ -60,7 +60,7 @@ PARTS = [
     ('AVN-005', 'Pitot boom (plug-in): pitot-static probe in a printed keyed sleeve', 'PETG (printed) + aluminium probe', 'make',
      'FDM PETG sleeve (100 % infill), probe bonded with 5 min epoxy', 'subsystems/avionics/fusion/avionics.py; probe in BOM A04 kit', 0.5,
      None, {}, 'tip at params avionics.pitot_tip_xyz_m; 6 mm sleeve with a 5.6 mm key flat on +z and a 10 mm shoulder on the '
-     'socket collar; 2 barbed couplers on the probe root barbs part when the boom is pulled; removed for transport'),
+     'socket collar; the two lines pull off the probe root barbs when the boom is pulled (no couplers, D-89b); removed for transport'),
     ('AVN-006', 'Isolation and retention set: 4 gel cubes, foam tape, ties, FC strap', 'silicone gel + consumables', 'buy',
      'cut 5 mm cubes from gel sheet; tape and ties from shop stock', 'Kyosho Zeal / alpha-gel 5 mm sheet; 3M VHB-class tape', 3.0,
      None, {}, 'gel cubes under the FC corners (f_n ~ 36 Hz); 1 mm foam tape under GPS, RX, airspeed board; 3 ties; '
@@ -101,10 +101,10 @@ EDGES = [
                    'load_n': 'cruise drag ~0.05 N and hover weight 0.05 N, both +x (seating)',
                    'inspection': 'set-up: boom pushed home, shoulder on the collar, flat up; pre-flight blow test reads > 0'}},
     {'id': 'E-AVN-06', 'part_a': 'AVN-005', 'part_b': 'AVN-004', 'via': 'CT-PITOT-TUBING', 'owner': E,
-     'notes': 'two silicone lines 2.5 mm ID: probe total (centre barb) to sensor port P1, static to P2 (ARSPD_TUBE_ORDR 2, so a swap is '
-              'harmless); barbed couplers at the probe root part when the boom is pulled; lines labelled T and S, no kinks',
-     'retention': {'item': 'push-on silicone on 2.5 mm barbs', 'count': '2 lines, 2 couplers', 'load_n': 'none (pneumatic)',
-                   'inspection': 'set-up: couplers pushed on; blow test reads > 0'}},
+     'notes': 'two silicone lines 1.6 mm ID (EST): probe total (centre barb) to sensor port P1, static to P2 (ARSPD_TUBE_ORDR 2, so a swap is '
+              'harmless); the lines pull off the probe root barbs when the boom is pulled; lines labelled T and S, no kinks',
+     'retention': {'item': 'push-on silicone on 2.0 mm barbs', 'count': '2 lines', 'load_n': 'none (pneumatic)',
+                   'inspection': 'set-up: lines pushed on the barbs to the shoulder; blow test reads > 0'}},
     {'id': 'E-AVN-07', 'part_a': 'AVN-006', 'part_b': 'POD-002', 'via': 'CT-GEL-PAD', 'owner': E,
      'notes': 'gel cubes stuck to the IPA-wiped FC plate; mass holder for tape, ties and the FC strap',
      'retention': {'item': 'gel adhesive face', 'count': '4', 'load_n': 'as E-AVN-01', 'inspection': 'with E-AVN-01'}},
@@ -262,10 +262,11 @@ def _declare(g, M, tot, cg):
                           round(g['gps_tilt_deg'], 2), round(g['rx_lo'][0] - g['ant_a_xy'][0], 4)],
                    unit="m,m,m,m,deg,m", status="PROPOSED")
     tipx = g['tip'][0]
-    dy = lv(A_, 'aspd_port_m')[1]
-    bd = lv(A_, 'barb_m')[0]
-    kit.assumption("ASM-F3-CAD-BOOM", "Pitot boom stowed envelope from the CAD", "[length m tip to coupler ends, width m]",
-                   basis="layout(): probe tip to the coupler ends on the root barbs; width = max(shoulder OD, barb spread + barb OD)",
+    bm_ = lv(A_, 'barb_m')
+    dy = bm_[2] if len(bm_) > 2 else lv(A_, 'aspd_port_m')[1]       # D-89b: barb spacing at the probe root
+    bd = bm_[0]
+    kit.assumption("ASM-F3-CAD-BOOM", "Pitot boom stowed envelope from the CAD", "[length m tip to barb ends, width m]",
+                   basis="layout(): probe tip to the root barb ends; width = max(shoulder OD, barb spread + barb OD)",
                    value=[round(g['coupler_x'] - tipx, 4), round(max(g['shoulder_od'], dy + bd), 4)], unit="m,m",
                    status="PROPOSED")
     kit.assumption("ASM-F3-PORTS", "Avionics connector points for the harness (F2)", "name -> [x, y, z] m in the aircraft frame",

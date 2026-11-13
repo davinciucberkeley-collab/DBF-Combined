@@ -3,15 +3,15 @@
  "mode": "material",
  "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
  "files": {
-  "assembly.glb": 13418168,
-  "avionics.glb": 159308,
+  "assembly.glb": 13432504,
+  "avionics.glb": 156944,
   "fins.glb": 1791048,
   "harness.glb": 2864316,
   "landing.glb": 205492,
-  "mechanisms.glb": 451620,
+  "mechanisms.glb": 460816,
   "pod.glb": 174616,
-  "power.glb": 243724,
-  "propulsion.glb": 1195552,
+  "power.glb": 250852,
+  "propulsion.glb": 1195924,
   "transport.glb": 255016,
   "wing.glb": 6066892
  },
@@ -1927,7 +1927,7 @@
    "explode_m": [
     0.0,
     0.0,
-    -0.0871
+    -0.0892
    ]
   },
   {
@@ -1960,7 +1960,7 @@
    "explode_m": [
     0.0,
     0.0,
-    -0.0216
+    -0.0258
    ]
   },
   {
@@ -2000,7 +2000,7 @@
    "id": "AVN-004",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 4.51,
+   "mass_g": 4.05,
    "explode_m": [
     0.0,
     0.0,
@@ -2011,7 +2011,7 @@
    "id": "AVN-005",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 4.84,
+   "mass_g": 4.24,
    "explode_m": [
     0.0,
     0.0,
