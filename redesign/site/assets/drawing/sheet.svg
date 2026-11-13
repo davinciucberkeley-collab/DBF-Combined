@@ -94,7 +94,7 @@
 <text class="ga-note" x="807.9" y="334.2" text-anchor="start">Hover: nose up on the four feet; props cant 7° for yaw.</text>
 <text class="ga-note" x="807.9" y="349.2" text-anchor="start">Elevon panels at y 70–300 and 340–560 mm each side.</text>
 <text class="ga-note" x="807.9" y="364.2" text-anchor="start">Dashed: prop disc, hidden spar. Blue: dimension, mm.</text>
-<text class="ga-note" x="807.9" y="379.2" text-anchor="start">Geometry: Fusion build, revision A1-R5.</text>
+<text class="ga-note" x="807.9" y="379.2" text-anchor="start">Geometry: Fusion build, revision A1-R6.</text>
 <rect class="ga-tb" x="48.0" y="842.1" width="1104.0" height="46.0"/>
 <path class="ga-bar" d="M62.0,868.1 h260.0 M62.0,864.1 v8 M192.0,864.1 v8 M322.0,864.1 v8" />
 <text class="ga-tbv" x="62.0" y="884.1" text-anchor="start">0</text>
@@ -105,7 +105,7 @@
 <text class="ga-tbv" x="350.0" y="878.1" text-anchor="start">General arrangement · three views, one scale</text>
 <line class="ga-tbl" x1="668.0" y1="842.1" x2="668.0" y2="888.1"/>
 <text class="ga-tbk" x="678.0" y="858.1" text-anchor="start">REV</text>
-<text class="ga-tbv" x="678.0" y="876.1" text-anchor="start">A1-R5</text>
+<text class="ga-tbv" x="678.0" y="876.1" text-anchor="start">A1-R6</text>
 <line class="ga-tbl" x1="758.0" y1="842.1" x2="758.0" y2="888.1"/>
 <text class="ga-tbk" x="768.0" y="858.1" text-anchor="start">SCALE</text>
 <text class="ga-tbv" x="768.0" y="876.1" text-anchor="start">bar · 520 px/m</text>

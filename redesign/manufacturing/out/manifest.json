@@ -1,27 +1,27 @@
 {
  "CHECKS.md": {
-  "bytes": 23486,
-  "sha256": "4a840a2b8975bcc4c92d89623d59fac61ddf82bd508ab138ed18e67ae58eb25d"
+  "bytes": 24226,
+  "sha256": "6a72947b453919a182dee97e98ef89b7a5871a9b2374bb67157fe21289a9f3a4"
  },
  "CUT-LIST.csv": {
   "bytes": 12775,
-  "sha256": "1d4fdcef120871b5baaa2f6638d128f4eb2fa4dfe2a4763f6f998a91fe0a5c06"
+  "sha256": "09d73d59145888cb645042c805a856f13129482e0f291a6f848a340d79b3dce1"
  },
  "PRINT-LIST.csv": {
-  "bytes": 18785,
-  "sha256": "b98662a285b60b12ab10b5e8d95931bf14c18f332cc54b369438fb0b2f8f6e2e"
+  "bytes": 19731,
+  "sha256": "c41385ea3b1d3f851a040aa3514ecd197642a6b2085202cfa98ac382666c7014"
  },
  "SHOP-PACK.md": {
-  "bytes": 6755,
-  "sha256": "231b93db10265b16283f8e308aa91f50cea6427dab6c94a83bae457bfd755d21"
+  "bytes": 6626,
+  "sha256": "65a5031ccfed9592fcb7416d6197be18fd6ab694bd85c39088eca9e1d057d63c"
  },
  "contact-sheet.png": {
-  "bytes": 933287,
-  "sha256": "3870d958ed09ed9e597f7e88339210c34fc9ab03789052fea9a902ad4665c06b"
+  "bytes": 956991,
+  "sha256": "4cd303101a574de756dea111c6d98ab32535563e3bf30102ae9c409f124dd29c"
  },
  "dxf-preview.png": {
-  "bytes": 83837,
-  "sha256": "03cdf21e22e8f21b7c9c22c12448616340fba92988de9577005b316cfc8a5244"
+  "bytes": 86026,
+  "sha256": "eae17f2d505b73184add803a5e04e0bc4e5aa63ae8f50dd17046645b2fb7fcba"
  },
  "hotwire/WNG-001_template_root.dxf": {
   "bytes": 28638,
@@ -60,24 +60,24 @@
   "sha256": "1148907e750f0d676abb221bc93ad20dda3bc3446908ea336ed13b27e70cfc5d"
  },
  "laser/foamboard_1to1_letter.pdf": {
-  "bytes": 75656,
-  "sha256": "793a2a2a01eb4beabb5d0707152414476d203b3a3699e9cbc4a442e1aa4fe09c"
+  "bytes": 75644,
+  "sha256": "e7b590c6a6c9670127e73d029c483116995d5513ebe152769c09ad5320599651"
  },
  "laser/foamboard_sheet1of5.dxf": {
   "bytes": 42470,
-  "sha256": "a564bf45051fec405f15b05025b95942793fcd72ba6e505a3ce3795ab67c24ca"
+  "sha256": "cd0834143a8f00e1cbb43ca03f9d816624dca508579b4c0adaec1cb31ac497fe"
  },
  "laser/foamboard_sheet2of5.dxf": {
   "bytes": 40153,
-  "sha256": "3f5f5526babbf000369840b018ee9503326ff10d8b7fee6e60ce2aa28ad55c02"
+  "sha256": "068370d2c2e154bc1139c7af4ab9ecc1764ef5c91fd7b589f91b04309c2a4414"
  },
  "laser/foamboard_sheet3of5.dxf": {
   "bytes": 37668,
-  "sha256": "ab59176f29ef6043984276643959e4dc724a895ed0784894ed08cef1afa2b250"
+  "sha256": "9ce2ddde2471c94fc6c4896a1c25bd670e1d7ec4da0e9f2d8149a3b67564cb3f"
  },
  "laser/foamboard_sheet4of5.dxf": {
   "bytes": 37668,
-  "sha256": "7827b67038f318ab678bd435bd0588a6d5eeb1693e23111512cec4eeb587c9c4"
+  "sha256": "c4ff422e7adc55c34aeae39b0347c617459936586d4291db83a7ceac3437be0a"
  },
  "laser/foamboard_sheet5of5.dxf": {
   "bytes": 3483,
@@ -96,60 +96,64 @@
   "sha256": "7ddd5f88f18fb158b8ff438e46208ab4c23eab3debb71d822cf849740d092a07"
  },
  "print/FIN-003-A_ASA_x4.stl": {
-  "bytes": 45884,
-  "sha256": "cc1c45b71342bc4507cc5682a8d6d96272a2344b6b97af8bbe70a4d0fbd3bcc6"
+  "bytes": 45784,
+  "sha256": "e796c34287b4a322cae17f79c0685012ded96ee6b6777f5fbb9f7c09dada8a10"
  },
- "print/FIN-003-B_ASA_x4.stl": {
-  "bytes": 45884,
-  "sha256": "3e04c3816a72a3524e1da89844aceae9c5484fd45dad8144c611f58b035dd017"
+ "print/FIN-003-B_ASA_x2.stl": {
+  "bytes": 45484,
+  "sha256": "c794630c83c74ee205d5935bdfbbe37471795778934bfce1d4e7c4eb0c89f290"
  },
- "print/FIN-004-A_PETG_x2.stl": {
-  "bytes": 86384,
-  "sha256": "3a55348f505ef41269fb82ce3e628f33eec152c864251a9021bbd73cba54b316"
+ "print/FIN-003-C_ASA_x2.stl": {
+  "bytes": 45784,
+  "sha256": "999513a00f33336f9100a84f48964d37a6c5e114875ba94ab470049c9e6144fc"
  },
- "print/FIN-004-B_PETG_x1.stl": {
-  "bytes": 86984,
-  "sha256": "448f586183586921206ccc027517e47d6ea9085808b6dcab1867b08f775b9d03"
+ "print/FIN-004_PETG_x3.stl": {
+  "bytes": 73984,
+  "sha256": "8210a4c1730a900d72778527a078555e1184069ff17dc52777ca2e3a0a2536b6"
  },
  "print/FIN-007_ASA_x4.stl": {
   "bytes": 2684,
   "sha256": "8f6fdbef9780525117e7a3b8602e0cbe4b63944da63cb18f623c771ad945ecf1"
  },
  "print/FIN-008-A_PETG_x4.stl": {
-  "bytes": 65984,
-  "sha256": "f5446d4acc7db8716a6da66d6a2613ebf6c9ebb35fbf4c79f89ddcb1a337f0d7"
+  "bytes": 82684,
+  "sha256": "1cf0725392c8deb8230c1b6ee8f0187398b09357688e1d0af2c25d24c71d3b5b"
  },
  "print/FIN-008-B_PETG_x4.stl": {
-  "bytes": 65984,
-  "sha256": "cabb65cbf1cf8bf27a3b67c2565b6ca6289bebabad0f123fe295821e1d93a6ea"
+  "bytes": 82684,
+  "sha256": "c04024f19fb430a13ed17cab03ee4bd3b359102de3d21de3fc2a766fddc93e96"
  },
  "print/FIN-010-A_PETG_x1.stl": {
   "bytes": 1684,
-  "sha256": "ea6ca614725468370938dd54378e410848692fd33540fa0b04b459b8368ec769"
+  "sha256": "8d8f83d63bab878035cd57471941bc6aabe3292ee79a5557c8a8ca8d7d721608"
  },
  "print/FIN-010-B_PETG_x1.stl": {
   "bytes": 1684,
-  "sha256": "d64baf37d6890e840ff9d927e91038904d1669f39f3e929a562531df255a138a"
+  "sha256": "a99cc24e0285b88a6b462c7e5c44400b6b8dc5b89de252c75d45089047a96b2d"
  },
  "print/FIN-010-C_PETG_x1.stl": {
   "bytes": 1684,
-  "sha256": "2fc3933c9d009767416f3bcea1a2e2380c9a392cc9f86b32c1674b97023929ab"
+  "sha256": "7296268a66ee9462e7ea3f8fc029704c39a398fe4cabbb66b909cd7181699033"
  },
  "print/FIN-010-D_PETG_x1.stl": {
   "bytes": 1684,
-  "sha256": "b1dbfad960da5c6ed8b3c47957b3d9827b2f9283bacc50a7568c78a0490afa95"
+  "sha256": "eb5d147055a76e6b0d2025c9a8558561a720e9b3eb6a6cbb97ace51c07d79f86"
+ },
+ "print/FIN-013_PETG_x6.stl": {
+  "bytes": 9884,
+  "sha256": "7b3ae3ef04a9360f503c4b29bfd53e07a79159e704b36d0746e61c6b72ed68a5"
  },
  "print/GER-001_PETG_x6.stl": {
-  "bytes": 26084,
-  "sha256": "3b64e4b3126006326e1dc2683024a38c47d0a913f346905a1d356e84ecb53ab4"
+  "bytes": 27084,
+  "sha256": "36f6779b1f14ce235df0adcf3c3cff10841a1493ba70e3269bc2a7d1c1d2e72c"
  },
  "print/GER-002_PETG-blue_x6.stl": {
   "bytes": 11984,
-  "sha256": "831747a4c5fe2f994e2b1a86937e56d795ecf5f783952bc1bcc15acafa395bc2"
+  "sha256": "5131a250944e0d4eaedfea29f3e4ebc8f8d708b12c217ac222c219cdab3558b6"
  },
  "print/GER-002_PETG-orange_x6.stl": {
   "bytes": 11984,
-  "sha256": "2717e408831711af43aca0516009f9f5f077225d3deb016da4ab28e95aa8738e"
+  "sha256": "c6402d3ec33786482502f0e863a81862507cc998aae91923b76526a2100a8d14"
  },
  "print/GER-007-A_TPU95A_x1.stl": {
   "bytes": 2084,
@@ -168,20 +172,20 @@
   "sha256": "b427d88805689f55b6cfa2d52ae5b8aa9f5bc8d70d26e5eece5a35e23c35bbe9"
  },
  "print/MEC-004-A_PETG_x2.stl": {
-  "bytes": 44384,
-  "sha256": "e3db96938648edb2d849a502ef769834641c2165d0dffd25a63a492b781646ea"
+  "bytes": 41384,
+  "sha256": "e73c90e7ea0b9cc239f3a3f8d81126df26cf498da37930fb3f417a57cdfc3418"
  },
  "print/MEC-004-B_PETG_x2.stl": {
-  "bytes": 44384,
-  "sha256": "41db0e61ac070f7b81926f0085bfcd0608e7c5d5d71c21242b4ebfacb4724bfd"
+  "bytes": 41384,
+  "sha256": "15637742c5f5cd69d4831320d8c17fa5bc6d49be1d8ffe7fb48a4806bf3731ef"
  },
  "print/MEC-006-A_PETG_x2.stl": {
-  "bytes": 41384,
-  "sha256": "00237bb0d218bea9acb7669668b71cc1934de05faa20c5fa27b5e9dd04f1dfc5"
+  "bytes": 38384,
+  "sha256": "444522fd57d0027e571b6b3eb1ddf968f6d182dd0c5684b5c680314492de5f9a"
  },
  "print/MEC-006-B_PETG_x2.stl": {
-  "bytes": 41384,
-  "sha256": "0046b0443aed558a82c3085edb177a93cc354ac9b3457b515e138fcfcc1a03f6"
+  "bytes": 38384,
+  "sha256": "cd37e798a687905b6b44360b29c1e3f19dbb0094e42d47134d8595ff18f1df0b"
  },
  "print/MEC-007-A_PETG_x1.stl": {
   "bytes": 1684,
@@ -198,6 +202,10 @@
  "print/MEC-008-B_PETG_x2.stl": {
   "bytes": 12184,
   "sha256": "49c78ace92bb326b84dc7ce9f36e482fe1979f2751eb8e8aaad91cba6c6493da"
+ },
+ "print/MEC-013_PETG_x6.stl": {
+  "bytes": 2684,
+  "sha256": "6fe37f867f80d9845f222c03b4dbbb9f28dac1d6aa3747844e4182d1d23f5857"
  },
  "print/POD-001-lip_PETG_x1.stl": {
   "bytes": 684,
@@ -252,16 +260,16 @@
   "sha256": "5ae7cdf2b8fbd6b71129983d6ed1bb1c05542f2154f591df6ea2304c0cce356b"
  },
  "print/POD-005_PETG_x1.stl": {
-  "bytes": 5084,
-  "sha256": "cc71aff41f65b9e31aff458cc5e6fa735ffa862398e77d7abb0338cfd2d295a9"
+  "bytes": 10284,
+  "sha256": "5fd9bf4b64f2a1e02a6013f43782742ce9e7f0334c4ef110677e718e4bf81998"
  },
  "print/POD-006_PETG_x1.stl": {
   "bytes": 5484,
   "sha256": "9be6321b8fd59de451a57806f87adaf18a834cadbb11e0f7ee1ec6c4a332316d"
  },
  "print/POD-007_PETG_x2.stl": {
-  "bytes": 40984,
-  "sha256": "ccfc4bfa577cbc9a18a5d7418f8193fc8738fef7ddde5e6650a6dc76d32b5ad6"
+  "bytes": 46184,
+  "sha256": "3c91aa772de4fde00e84437d3298009979c286561824e052f571aeededb9b225"
  },
  "print/POD-008-2mm_PETG-white_x1.stl": {
   "bytes": 1484,

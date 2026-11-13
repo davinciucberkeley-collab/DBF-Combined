@@ -2,7 +2,7 @@
 window.VIEWER_DATA = {
  "schema": "dbf-viewer/1",
  "dataset": "aircraft",
- "generated": "2026-11-13 08:03 UTC",
+ "generated": "2026-11-13 17:49 UTC",
  "sources": {
   "glb": "redesign/blender/out/aircraft/glb",
   "interfaces": "redesign/interfaces/interfaces.json",
@@ -24,9 +24,9 @@ window.VIEWER_DATA = {
  },
  "glb": {
   "file": "assembly.glb",
-  "bytes": 13316584,
+  "bytes": 13483764,
   "js_parts": 2,
-  "sha256": "0176a9642a1b03b6247cc8d7b6fa9768705202b41ac633463354aaf648d54d40"
+  "sha256": "14aa194de109ae331976ca0d84f8de1182910111c932b4a98dcffdcd1c6f205c"
  },
  "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
  "parts": [
@@ -84,9 +84,9 @@ window.VIEWER_DATA = {
    "mass_g": 4.6,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.045,
-    -0.0465,
-    0.0254
+    -0.0448,
+    -0.0464,
+    0.0259
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
@@ -104,16 +104,16 @@ window.VIEWER_DATA = {
    "name": "Airspeed sensor MS4525DO (I2C 0x28)",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 4.51,
+   "mass_g": 4.05,
    "material": "electronics (bought)",
    "cg_xyz_m": [
-    -0.0663,
-    -0.0464,
-    0.0312
+    -0.0696,
+    -0.0463,
+    0.0309
    ],
    "make_or_buy": "buy",
    "electrical": "sink",
-   "notes": "RMRC board 20 x 21 x 13 mm, 3.5 g, ports up, between the tray tie posts; I2C1 0x28 (ARSPD_TYPE 1); replaces the MS5525 (0x76 clashes with the baro); mass 4.51 g (envelope 0.0, tube 1.01, bought 3.5)",
+   "notes": "RMRC board 20 x 21 x 13 mm, 3.5 g, ports up, between the tray tie posts; I2C1 0x28 (ARSPD_TYPE 1); replaces the MS5525 (0x76 clashes with the baro); mass 4.05 g (envelope 0.0, tube 0.55, bought 3.5)",
    "in_model": true,
    "vendor": "ReadyMadeRC digital airspeed sensor (I1 BOM A04)",
    "unit_cost_usd": 59.99,
@@ -127,15 +127,15 @@ window.VIEWER_DATA = {
    "name": "Pitot boom (plug-in): pitot-static probe in a printed keyed sleeve",
    "subsystem": "avionics",
    "status": "MODELLED",
-   "mass_g": 4.84,
+   "mass_g": 4.24,
    "material": "PETG (printed) + aluminium probe",
    "cg_xyz_m": [
-    -0.1533,
+    -0.1596,
     -0.046,
     0.045
    ],
    "make_or_buy": "make",
-   "notes": "tip at params avionics.pitot_tip_xyz_m; 6 mm sleeve with a 5.6 mm key flat on +z and a 10 mm shoulder on the socket collar; 2 barbed couplers on the probe root barbs part when the boom is pulled; removed for transport; mass 4.84 g (PETG 1.12, envelope 0.0, probe 3.12, couplers 0.6)",
+   "notes": "tip at params avionics.pitot_tip_xyz_m; 6 mm sleeve with a 5.6 mm key flat on +z and a 10 mm shoulder on the socket collar; the two lines pull off the probe root barbs when the boom is pulled (no couplers, D-89b); removed for transport; mass 4.24 g (PETG 1.12, envelope 0.0, probe 3.12, couplers 0.0)",
    "in_model": true,
    "vendor": "subsystems/avionics/fusion/avionics.py; probe in BOM A04 kit",
    "unit_cost_usd": 0.5,
@@ -193,15 +193,15 @@ window.VIEWER_DATA = {
    "name": "Half-fin lower left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 26.33,
+   "mass_g": 23.76,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.2013,
+    0.2031,
     -0.32,
-    -0.0763
+    -0.0816
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0473 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 14.0 cm3 x 0.45 g/cm3 = 6.3 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (area 0.0467 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 8.9 cm3 x 0.45 g/cm3 = 4.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -210,15 +210,15 @@ window.VIEWER_DATA = {
    "name": "Half-fin lower right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets, link slot",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 26.33,
+   "mass_g": 23.76,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.2013,
+    0.2031,
     0.32,
-    -0.0763
+    -0.0816
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0473 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 14.0 cm3 x 0.45 g/cm3 = 6.3 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (area 0.0467 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 8.9 cm3 x 0.45 g/cm3 = 4.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -227,15 +227,15 @@ window.VIEWER_DATA = {
    "name": "Half-fin upper left, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 25.6,
+   "mass_g": 23.33,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.2073,
+    0.208,
     -0.32,
-    0.0789
+    0.0833
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0457 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 13.9 cm3 x 0.45 g/cm3 = 6.2 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (area 0.0451 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 9.4 cm3 x 0.45 g/cm3 = 4.2 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -244,15 +244,15 @@ window.VIEWER_DATA = {
    "name": "Half-fin upper right, two-layer foam board, stepped 58.6 mm tip, 8 mm lead hole, root fillets",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 25.6,
+   "mass_g": 23.33,
    "material": "foam board 4.8 mm x 2, paper faced, laminated",
    "cg_xyz_m": [
-    0.2073,
+    0.208,
     0.32,
-    0.0789
+    0.0833
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (area 0.0457 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 13.9 cm3 x 0.45 g/cm3 = 6.2 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (area 0.0451 m2 x (0.20 x 2 + 0.015) kg/m2 + tape laps 0.4 g + root fillets 9.4 cm3 x 0.45 g/cm3 = 4.2 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -295,15 +295,15 @@ window.VIEWER_DATA = {
    "name": "Motor mount LL, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.67,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0359,
+    0.0367,
     -0.3207,
-    -0.1811
+    -0.1788
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.08 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4,
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
@@ -313,15 +313,15 @@ window.VIEWER_DATA = {
    "name": "Motor mount LR, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.67,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0359,
+    0.0367,
     0.3207,
-    -0.1811
+    -0.1788
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.08 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4,
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
@@ -331,15 +331,15 @@ window.VIEWER_DATA = {
    "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.67,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0359,
+    0.0367,
     -0.3207,
-    0.1811
+    0.1788
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.08 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4,
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
@@ -349,50 +349,50 @@ window.VIEWER_DATA = {
    "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 9.99,
+   "mass_g": 10.67,
    "material": "ASA (printed)",
    "cg_xyz_m": [
-    0.0359,
+    0.0367,
     0.3207,
-    0.1811
+    0.1788
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (10.37 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (11.08 cm3 x ASA 1.07 x fill 0.90 + pinch-bolt set 1.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "hw_moved_g": 1.4,
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
   {
    "id": "FIN-004-L",
-   "name": "Through-core block L (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
+   "name": "Through-core block L (tube socket + spar saddle + 2 tie lugs)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.87,
+   "mass_g": 39.97,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0614,
-    -0.3204,
+    0.0619,
+    -0.32,
     0.0067
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (54.22 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (52.92 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
   {
    "id": "FIN-004-R",
-   "name": "Through-core block R (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)",
+   "name": "Through-core block R (tube socket + spar saddle + 2 tie lugs)",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 40.87,
+   "mass_g": 39.97,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0614,
-    0.3204,
+    0.0619,
+    0.32,
     0.0067
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (54.22 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (52.92 cm3 x PETG 1.27 x fill 0.55 + bond 3.0 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -500,69 +500,69 @@ window.VIEWER_DATA = {
   },
   {
    "id": "FIN-008-LL",
-   "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "name": "Station collar LL, 22 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0642,
-    -0.3165,
-    -0.1568
+    0.0627,
+    -0.3168,
+    -0.1499
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST ((6.46 cm3 x 1.00 + tongue 4.35 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
   {
    "id": "FIN-008-LR",
-   "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "name": "Station collar LR, 22 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0642,
-    0.3165,
-    -0.1568
+    0.0627,
+    0.3168,
+    -0.1499
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST ((6.46 cm3 x 1.00 + tongue 4.35 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
   {
    "id": "FIN-008-UL",
-   "name": "Station collar UL, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "name": "Station collar UL, 22 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0642,
-    -0.3165,
-    0.1568
+    0.0627,
+    -0.3168,
+    0.1499
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST ((6.46 cm3 x 1.00 + tongue 4.35 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
   {
    "id": "FIN-008-UR",
-   "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug",
+   "name": "Station collar UR, 22 mm, 40 mm two-face tail + brace ear + tie lug",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 10.5,
+   "mass_g": 11.59,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.0642,
-    0.3165,
-    0.1568
+    0.0627,
+    0.3168,
+    0.1499
    ],
    "make_or_buy": "make",
-   "notes": "mass EST ((5.61 cm3 x 1.00 + tongue 4.32 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST ((6.46 cm3 x 1.00 + tongue 4.35 cm3 x 0.45) x PETG 1.27 + 3 bonds (tube, tongue, strips)); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -571,15 +571,15 @@ window.VIEWER_DATA = {
    "name": "Brace LL, CF strip 10 x 2",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 5.35,
+   "mass_g": 5.18,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.0625,
     -0.2721,
-    -0.0831
+    -0.0801
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (3.064 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.954 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -588,15 +588,15 @@ window.VIEWER_DATA = {
    "name": "Brace LR, CF strip 10 x 2",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 5.35,
+   "mass_g": 5.18,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.0625,
     0.2721,
-    -0.0831
+    -0.0801
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (3.064 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.954 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -605,15 +605,15 @@ window.VIEWER_DATA = {
    "name": "Brace UL, CF strip 10 x 2",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.96,
+   "mass_g": 4.79,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.0625,
     -0.2721,
-    0.09
+    0.087
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.810 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.702 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -622,15 +622,15 @@ window.VIEWER_DATA = {
    "name": "Brace UR, CF strip 10 x 2",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 4.96,
+   "mass_g": 4.79,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.0625,
     0.2721,
-    0.09
+    0.087
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.810 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.702 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -707,15 +707,15 @@ window.VIEWER_DATA = {
    "name": "Edge strip lower left inboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     -0.3147,
-    -0.1796
+    -0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -724,15 +724,15 @@ window.VIEWER_DATA = {
    "name": "Edge strip lower left outboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     -0.3253,
-    -0.1796
+    -0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -741,15 +741,15 @@ window.VIEWER_DATA = {
    "name": "Edge strip lower right inboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     0.3147,
-    -0.1796
+    -0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -758,15 +758,15 @@ window.VIEWER_DATA = {
    "name": "Edge strip lower right outboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     0.3253,
-    -0.1796
+    -0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -775,15 +775,15 @@ window.VIEWER_DATA = {
    "name": "Edge strip upper left inboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     -0.3147,
-    0.1796
+    0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -792,15 +792,15 @@ window.VIEWER_DATA = {
    "name": "Edge strip upper left outboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     -0.3253,
-    0.1796
+    0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -809,15 +809,15 @@ window.VIEWER_DATA = {
    "name": "Edge strip upper right inboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     0.3147,
-    0.1796
+    0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -826,83 +826,151 @@ window.VIEWER_DATA = {
    "name": "Edge strip upper right outboard face, CF 10 x 1",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 3.87,
+   "mass_g": 3.89,
    "material": "CF strip, pultruded (bought)",
    "cg_xyz_m": [
     0.159,
     0.3253,
-    0.1796
+    0.1766
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (2.110 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (2.125 cm3 x 1.55 g/cm3 + epoxy 0.6 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
   {
    "id": "FIN-012-LL",
-   "name": "Edge-strip pin set LL, 11 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set LL, 14 x CF rod 2.5 mm",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "material": "CF rod 2.5 mm, pultruded (bought)",
    "cg_xyz_m": [
-    0.1761,
+    0.177,
     -0.32,
-    -0.1838
+    -0.1815
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.626 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (0.797 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
   {
    "id": "FIN-012-LR",
-   "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set LR, 14 x CF rod 2.5 mm",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "material": "CF rod 2.5 mm, pultruded (bought)",
    "cg_xyz_m": [
-    0.1761,
+    0.177,
     0.32,
-    -0.1838
+    -0.1815
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.626 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (0.797 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
   {
    "id": "FIN-012-UL",
-   "name": "Edge-strip pin set UL, 11 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set UL, 14 x CF rod 2.5 mm",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "material": "CF rod 2.5 mm, pultruded (bought)",
    "cg_xyz_m": [
-    0.1761,
+    0.177,
     -0.32,
-    0.1838
+    0.1815
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.626 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (0.797 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
   {
    "id": "FIN-012-UR",
-   "name": "Edge-strip pin set UR, 11 x CF rod 2.5 mm",
+   "name": "Edge-strip pin set UR, 14 x CF rod 2.5 mm",
    "subsystem": "fins",
    "status": "MODELLED",
-   "mass_g": 1.37,
+   "mass_g": 1.64,
    "material": "CF rod 2.5 mm, pultruded (bought)",
    "cg_xyz_m": [
-    0.1761,
+    0.177,
     0.32,
-    0.1838
+    0.1815
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (0.626 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "notes": "mass EST (0.797 cm3 x 1.55 g/cm3 + epoxy 0.4 g); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "in_model": true,
+   "spec": "../subsystems/fins/SPEC.md"
+  },
+  {
+   "id": "FIN-013-LL",
+   "name": "Strap eye LL, PETG, bonded on the lower bore boss after the spar bond (D-89c)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.045,
+    -0.3378,
+    -0.0135
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.84 cm3 x PETG 1.27 (100 %) + bond); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "in_model": true,
+   "spec": "../subsystems/fins/SPEC.md"
+  },
+  {
+   "id": "FIN-013-LR",
+   "name": "Strap eye LR, PETG, bonded on the lower bore boss after the spar bond (D-89c)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.045,
+    0.3378,
+    -0.0135
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.84 cm3 x PETG 1.27 (100 %) + bond); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "in_model": true,
+   "spec": "../subsystems/fins/SPEC.md"
+  },
+  {
+   "id": "FIN-013-UL",
+   "name": "Strap eye UL, PETG, bonded on the upper bore boss after the spar bond (D-89c)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.045,
+    -0.3378,
+    0.0262
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.84 cm3 x PETG 1.27 (100 %) + bond); CG = CAD centroid; section subsystems/wing/s5010.dat",
+   "in_model": true,
+   "spec": "../subsystems/fins/SPEC.md"
+  },
+  {
+   "id": "FIN-013-UR",
+   "name": "Strap eye UR, PETG, bonded on the upper bore boss after the spar bond (D-89c)",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.045,
+    0.3378,
+    0.0262
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.84 cm3 x PETG 1.27 (100 %) + bond); CG = CAD centroid; section subsystems/wing/s5010.dat",
    "in_model": true,
    "spec": "../subsystems/fins/SPEC.md"
   },
@@ -916,7 +984,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0443,
     -0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-08",
@@ -934,7 +1002,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0443,
     0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-07",
@@ -952,7 +1020,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0443,
     -0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-06",
@@ -970,7 +1038,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0443,
     0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-05",
@@ -988,7 +1056,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0523,
     -0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-08",
@@ -1006,7 +1074,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0523,
     0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-07",
@@ -1024,7 +1092,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0523,
     -0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-06",
@@ -1042,7 +1110,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.0523,
     0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-05",
@@ -1060,7 +1128,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.045,
     -0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-08",
@@ -1078,7 +1146,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.045,
     0.3377,
-    -0.166
+    -0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-07",
@@ -1096,7 +1164,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.045,
     -0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-06",
@@ -1114,7 +1182,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     0.045,
     0.3377,
-    0.166
+    0.163
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-05",
@@ -1127,15 +1195,15 @@ window.VIEWER_DATA = {
    "name": "Foot shoe LL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2986,
+    0.2978,
     -0.32,
-    -0.2074
+    -0.2079
    ],
    "make_or_buy": "make",
-   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, 3.4 mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy (lower left); mass EST from CALC-D5-MASS",
+   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (lower left); mass EST from CALC-D5-MASS",
    "in_model": true,
    "spec": "../subsystems/landing/SPEC.md"
   },
@@ -1144,15 +1212,15 @@ window.VIEWER_DATA = {
    "name": "Foot shoe LR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2986,
+    0.2978,
     0.32,
-    -0.2074
+    -0.2079
    ],
    "make_or_buy": "make",
-   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, 3.4 mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy (lower right); mass EST from CALC-D5-MASS",
+   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (lower right); mass EST from CALC-D5-MASS",
    "in_model": true,
    "spec": "../subsystems/landing/SPEC.md"
   },
@@ -1161,15 +1229,15 @@ window.VIEWER_DATA = {
    "name": "Foot shoe UL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2986,
+    0.2978,
     -0.32,
-    0.2074
+    0.2079
    ],
    "make_or_buy": "make",
-   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, 3.4 mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy (upper left); mass EST from CALC-D5-MASS",
+   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (upper left); mass EST from CALC-D5-MASS",
    "in_model": true,
    "spec": "../subsystems/landing/SPEC.md"
   },
@@ -1178,15 +1246,15 @@ window.VIEWER_DATA = {
    "name": "Foot shoe UR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 9.93,
+   "mass_g": 9.98,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2986,
+    0.2978,
     0.32,
-    0.2074
+    0.2079
    ],
    "make_or_buy": "make",
-   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 1.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, 3.4 mm rim at the sleeve end (R6, CR-C5-18); permanent; includes 0.35 g epoxy (upper right); mass EST from CALC-D5-MASS",
+   "notes": "sleeve 19.1 x 14.4 mm, 1.2 mm walls with R 2.0 inside fillets, short snap windows, on the half-fin TE step; back wall on the step front and strip end faces, legs 7 mm down both faces, 8 mm collar cheeks over the edge-strip ends, rim at the sleeve end 4.6 mm on the y sides, 3.4 mm roof, 0.4 mm floor (R8, CR-H1-22); permanent; includes 0.35 g epoxy (upper right); mass EST from CALC-D5-MASS",
    "in_model": true,
    "spec": "../subsystems/landing/SPEC.md"
   },
@@ -1195,15 +1263,15 @@ window.VIEWER_DATA = {
    "name": "Foot piston LL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.3382,
+    0.3386,
     -0.32,
     -0.2088
    ],
    "make_or_buy": "make",
-   "notes": "tine 16.3 x 11.6 mm (1 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (lower left); mass EST from CALC-D5-MASS",
+   "notes": "tine 16.3 x 11.6 mm (1.4 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (lower left); mass EST from CALC-D5-MASS",
    "in_model": true,
    "spec": "../subsystems/landing/SPEC.md"
   },
@@ -1212,15 +1280,15 @@ window.VIEWER_DATA = {
    "name": "Foot piston LR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.3382,
+    0.3386,
     0.32,
     -0.2088
    ],
    "make_or_buy": "make",
-   "notes": "tine 16.3 x 11.6 mm (1 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (lower right); mass EST from CALC-D5-MASS",
+   "notes": "tine 16.3 x 11.6 mm (1.4 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (lower right); mass EST from CALC-D5-MASS",
    "in_model": true,
    "spec": "../subsystems/landing/SPEC.md"
   },
@@ -1229,15 +1297,15 @@ window.VIEWER_DATA = {
    "name": "Foot piston UL",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.3382,
+    0.3386,
     -0.32,
     0.2088
    ],
    "make_or_buy": "make",
-   "notes": "tine 16.3 x 11.6 mm (1 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (upper left); mass EST from CALC-D5-MASS",
+   "notes": "tine 16.3 x 11.6 mm (1.4 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (upper left); mass EST from CALC-D5-MASS",
    "in_model": true,
    "spec": "../subsystems/landing/SPEC.md"
   },
@@ -1246,15 +1314,15 @@ window.VIEWER_DATA = {
    "name": "Foot piston UR",
    "subsystem": "landing",
    "status": "MODELLED",
-   "mass_g": 3.28,
+   "mass_g": 3.19,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.3382,
+    0.3386,
     0.32,
     0.2088
    ],
    "make_or_buy": "make",
-   "notes": "tine 16.3 x 11.6 mm (1 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (upper right); mass EST from CALC-D5-MASS",
+   "notes": "tine 16.3 x 11.6 mm (1.4 mm corner chamfers), 25 mm engaged at rest, two 6.5 mm snap fingers with ramped hooks, stop flange, inspection windows, replace-mark groove; ORANGE on UR/UL, BLUE on LR/LL; slides 38 mm into the shoe when the cartridge crushes (upper right); mass EST from CALC-D5-MASS",
    "in_model": true,
    "spec": "../subsystems/landing/SPEC.md"
   },
@@ -1366,10 +1434,10 @@ window.VIEWER_DATA = {
    "subsystem": "landing",
    "status": "MODELLED",
    "flight": false,
-   "mass_g": 4.5,
+   "mass_g": 4.41,
    "material": "PETG / XPS / neoprene",
    "cg_xyz_m": [
-    0.1536,
+    0.1535,
     0.85,
     0.0984
    ],
@@ -1480,10 +1548,10 @@ window.VIEWER_DATA = {
    "subsystem": "landing",
    "status": "MODELLED",
    "flight": false,
-   "mass_g": 4.46,
+   "mass_g": 4.37,
    "material": "PETG / XPS / neoprene",
    "cg_xyz_m": [
-    0.154,
+    0.1539,
     0.85,
     0.0484
    ],
@@ -1549,12 +1617,12 @@ window.VIEWER_DATA = {
    "subsystem": "landing",
    "status": "MODELLED",
    "flight": false,
-   "mass_g": 9.58,
+   "mass_g": 9.63,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.1585,
+    0.1577,
     0.85,
-    -0.0992
+    -0.0987
    ],
    "make_or_buy": "make",
    "notes": "GROUND ITEM, not flying (CR-A3-18): qty 2 per kit line in parts.csv, one node per line, mass per unit; CAD: one representative unit in the field-kit row at y 0.85 (landing.kit, a layout convention for the TRN-108 spares box, CR-A4-39); ground spare, not flying",
@@ -1637,17 +1705,17 @@ window.VIEWER_DATA = {
    "name": "Wing-fin harness bundle L (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 44.2,
+   "mass_g": 44.3,
    "material": "copper + silicone",
    "cg_xyz_m": [
     0.0782,
-    -0.2636,
+    -0.2638,
     0.0049
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0792, -0.2642, 0.0051] m, 1.2 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0791, -0.2645, 0.0051] m, 1.2 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -1656,17 +1724,17 @@ window.VIEWER_DATA = {
    "name": "Wing-fin harness bundle R (grooves, fin-face leads, phase joints)",
    "subsystem": "harness",
    "status": "MODELLED",
-   "mass_g": 44.7,
+   "mass_g": 44.8,
    "material": "copper + silicone",
    "cg_xyz_m": [
     0.0782,
-    0.2636,
+    0.2638,
     0.0049
    ],
    "make_or_buy": "make",
    "carried": true,
    "mass_proxy": true,
-   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0791, 0.2624, 0.0054] m, 1.5 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
+   "notes": "carried item; right side longer (pairs cross the pod); mass from team/F2/harness.py. CG = centroid of the CAD bundle bodies (legs sized by the wire mass they carry, CR-A5-27); the wire-mass CG is [0.0789, 0.2627, 0.0053] m, 1.4 mm away (CL-F2-CG-BODY). Mass proxy: the bundle bodies carry mass and CG only and are not drawn; the routed wires (E-HRN-10..37) show the harness",
    "in_model": true,
    "spec": "../subsystems/harness/SPEC.md"
   },
@@ -2371,15 +2439,15 @@ window.VIEWER_DATA = {
    "name": "Pushrod 2-56 steel, Z-bend + steel clevis + keeper left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.58,
+   "mass_g": 1.64,
    "material": "steel (bought)",
    "cg_xyz_m": [
-    0.2312,
+    0.2298,
     -0.285,
-    -0.0185
+    -0.0184
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (wire 0.78 g + clevis + keeper); CG = CAD centroid",
+   "notes": "mass EST (wire 0.84 g + clevis + keeper); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -2388,15 +2456,15 @@ window.VIEWER_DATA = {
    "name": "Pushrod 2-56 steel, Z-bend + steel clevis + keeper right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 1.58,
+   "mass_g": 1.64,
    "material": "steel (bought)",
    "cg_xyz_m": [
-    0.2312,
+    0.2298,
     0.285,
-    -0.0185
+    -0.0184
    ],
    "make_or_buy": "buy",
-   "notes": "mass EST (wire 0.78 g + clevis + keeper); CG = CAD centroid",
+   "notes": "mass EST (wire 0.84 g + clevis + keeper); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -2405,15 +2473,15 @@ window.VIEWER_DATA = {
    "name": "Control horn, inboard panel (clevis + rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 2.87,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.265,
-    -0.2857,
-    -0.0059
+    0.2636,
+    -0.2858,
+    -0.007
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.54 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "notes": "mass EST (2.25 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -2422,15 +2490,15 @@ window.VIEWER_DATA = {
    "name": "Control horn, inboard panel (clevis + rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 3.2,
+   "mass_g": 2.87,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.265,
-    0.2857,
-    -0.0059
+    0.2636,
+    0.2858,
+    -0.007
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.54 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "notes": "mass EST (2.25 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -2473,15 +2541,15 @@ window.VIEWER_DATA = {
    "name": "Link horn, outboard panel (rod boss) left",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.95,
+   "mass_g": 2.62,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2661,
-    -0.3542,
-    -0.0047
+    0.2647,
+    -0.3541,
+    -0.0058
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.32 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "notes": "mass EST (2.03 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -2490,15 +2558,15 @@ window.VIEWER_DATA = {
    "name": "Link horn, outboard panel (rod boss) right",
    "subsystem": "mechanisms",
    "status": "MODELLED",
-   "mass_g": 2.95,
+   "mass_g": 2.62,
    "material": "PETG (printed)",
    "cg_xyz_m": [
-    0.2661,
-    0.3542,
-    -0.0047
+    0.2647,
+    0.3541,
+    -0.0058
    ],
    "make_or_buy": "make",
-   "notes": "mass EST (2.32 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "notes": "mass EST (2.03 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
    "in_model": true,
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
@@ -2749,19 +2817,87 @@ window.VIEWER_DATA = {
    "spec": "../subsystems/mechanisms/SPEC.md"
   },
   {
+   "id": "MEC-013-LI",
+   "name": "Horn backplate, upper surface (D-89c) left, inboard panel",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2756,
+    -0.285,
+    0.0031
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.29 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "in_model": true,
+   "spec": "../subsystems/mechanisms/SPEC.md"
+  },
+  {
+   "id": "MEC-013-LO",
+   "name": "Horn backplate, upper surface (D-89c) left, outboard panel",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2756,
+    -0.355,
+    0.0031
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.29 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "in_model": true,
+   "spec": "../subsystems/mechanisms/SPEC.md"
+  },
+  {
+   "id": "MEC-013-RI",
+   "name": "Horn backplate, upper surface (D-89c) right, inboard panel",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2756,
+    0.285,
+    0.0031
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.29 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "in_model": true,
+   "spec": "../subsystems/mechanisms/SPEC.md"
+  },
+  {
+   "id": "MEC-013-RO",
+   "name": "Horn backplate, upper surface (D-89c) right, outboard panel",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "material": "PETG (printed)",
+   "cg_xyz_m": [
+    0.2756,
+    0.355,
+    0.0031
+   ],
+   "make_or_buy": "make",
+   "notes": "mass EST (0.29 cm3 PETG x 0.90 + epoxy); CG = CAD centroid",
+   "in_model": true,
+   "spec": "../subsystems/mechanisms/SPEC.md"
+  },
+  {
    "id": "POD-001",
    "name": "Pod shell (foam-board box, XPS LE filler, printed nose lip and antenna tube B)",
    "subsystem": "pod",
    "status": "MODELLED",
-   "mass_g": 24.7,
+   "mass_g": 24.8,
    "material": "foam board + PETG",
    "cg_xyz_m": [
-    -0.0391,
+    -0.0388,
     -0.001,
-    0.0432
+    0.0431
    ],
    "make_or_buy": "make",
-   "notes": "floor (front edge notched 4 x 54 mm for the forward-stop T, D-69), 2 side walls (16 x 12 mm power/DShot exits, CR-F2-03; bracket flanges bonded inside), nose wall at x -0.140 (D-62; pitot, vent and antenna holes), aft wall (vent + servo-lead exits), aft deck; the forward stop sits on a 1 mm epoxy line on the nose wall; 6 mm microballoon fillets floor-to-wall at the straps (CR-C6-17); light tape on the top (CR-E3-03); mass EST from CAD (team/D2/pod_data.py): PETG plate 2.4 g, XPS 0.5 g, fillet_corners 1.5 g, foam board 14.8 g, glue_shell 4.0 g, tape_light 1.5 g",
+   "notes": "floor (front edge notched 4 x 54 mm for the forward-stop T, D-69), 2 side walls (16 x 12 mm power/DShot exits, CR-F2-03; bracket flanges bonded inside), nose wall at x -0.140 (D-62; pitot, vent and antenna holes), aft wall (vent + servo-lead exits), aft deck; the forward stop sits on a 1 mm epoxy line on the nose wall; 6 mm microballoon fillets floor-to-wall at the straps (CR-C6-17); light tape on the top (CR-E3-03); mass EST from CAD (team/D2/pod_data.py): PETG plate 2.4 g, XPS 0.5 g, fillet_corners 1.5 g, foam board 14.9 g, glue_shell 4.0 g, tape_light 1.5 g",
    "in_model": true,
    "vendor": "subsystems/pod/fusion/pod.py",
    "unit_cost_usd": 3.5,
@@ -3787,7 +3923,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     -0.021,
     -0.0464,
-    0.0323
+    0.0344
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PWR-03",
@@ -3825,7 +3961,7 @@ window.VIEWER_DATA = {
   },
   {
    "id": "PWR-103",
-   "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm",
+   "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm",
    "subsystem": "power",
    "status": "MODELLED",
    "mass_g": 0.08,
@@ -3833,7 +3969,7 @@ window.VIEWER_DATA = {
    "cg_xyz_m": [
     -0.021,
     -0.0464,
-    0.0389
+    0.0391
    ],
    "make_or_buy": "buy",
    "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PWR-03",
@@ -4394,28 +4530,6 @@ window.VIEWER_DATA = {
    "spec": "../subsystems/wing/SPEC.md"
   },
   {
-   "id": "WNG-007",
-   "name": "Recess-step fillet (microballoon epoxy)",
-   "subsystem": "wing",
-   "status": "MODELLED",
-   "mass_g": 1.1,
-   "material": "epoxy + glass microballoons 1:1 by volume",
-   "cg_xyz_m": [
-    0.0633,
-    0.0,
-    0.0166
-   ],
-   "make_or_buy": "make",
-   "notes": "floor-to-step corner at x 0.065, legs 5 mm floor x 5 mm step, |y| <= 0.070 (D-69, CR-C3-17); pod floor bevelled onto it",
-   "in_model": true,
-   "vendor": "subsystems/wing/fusion/wing.py",
-   "unit_cost_usd": 0.0,
-   "qty": 1.0,
-   "process": "spatula fillet, cure 24 h, sand to a flat 45 deg face before the pod goes in",
-   "csv_ref": "redesign/subsystems/wing/parts.csv row 8",
-   "spec": "../subsystems/wing/SPEC.md"
-  },
-  {
    "id": "WNG-011-L",
    "name": "Elevon inboard L",
    "subsystem": "wing",
@@ -4503,7 +4617,7 @@ window.VIEWER_DATA = {
    "unit_cost_usd": 1.0,
    "qty": 1.0,
    "process": "print, laminate, apply",
-   "csv_ref": "redesign/subsystems/wing/parts.csv row 11",
+   "csv_ref": "redesign/subsystems/wing/parts.csv row 10",
    "spec": "../subsystems/wing/SPEC.md"
   }
  ],
@@ -4590,12 +4704,12 @@ window.VIEWER_DATA = {
    "part_b": "AVN-004",
    "via": "CT-PITOT-TUBING",
    "owner": "avionics",
-   "notes": "two silicone lines 2.5 mm ID: probe total (centre barb) to sensor port P1, static to P2 (ARSPD_TUBE_ORDR 2, so a swap is harmless); barbed couplers at the probe root part when the boom is pulled; lines labelled T and S, no kinks",
+   "notes": "two silicone lines 1.6 mm ID (EST): probe total (centre barb) to sensor port P1, static to P2 (ARSPD_TUBE_ORDR 2, so a swap is harmless); the lines pull off the probe root barbs when the boom is pulled; lines labelled T and S, no kinks",
    "retention": {
-    "item": "push-on silicone on 2.5 mm barbs",
-    "count": "2 lines, 2 couplers",
+    "item": "push-on silicone on 2.0 mm barbs",
+    "count": "2 lines",
     "load_n": "none (pneumatic)",
-    "inspection": "set-up: couplers pushed on; blow test reads > 0"
+    "inspection": "set-up: lines pushed on the barbs to the shoulder; blow test reads > 0"
    },
    "declared_in": "avionics"
   },
@@ -4672,7 +4786,7 @@ window.VIEWER_DATA = {
     "area_mm2": 2972,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "24.8 N m torsion design; RF 2.63 (CL-C6-TUBE-BLOCK-RF)",
+    "load_n": "24.8 N m torsion design; RF 2.64 (CL-C6-TUBE-BLOCK-RF)",
     "load_case": "L4 corner",
     "sized_by": "C6"
    },
@@ -4690,7 +4804,7 @@ window.VIEWER_DATA = {
     "area_mm2": 2972,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "24.8 N m torsion design; RF 2.63 (CL-C6-TUBE-BLOCK-RF)",
+    "load_n": "24.8 N m torsion design; RF 2.64 (CL-C6-TUBE-BLOCK-RF)",
     "load_case": "L4 corner",
     "sized_by": "C6"
    },
@@ -4737,7 +4851,7 @@ window.VIEWER_DATA = {
    "part_a": "FIN-003-UR",
    "part_b": "FIN-002-R",
    "via": "CT-TUBE-CLAMP",
-   "notes": "ASA slit collar, 12 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
+   "notes": "ASA slit collar, 18 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
    "owner": "fins",
    "joint_stack": {
     "fastener": "M3x16 SHCS ISO 4762 (FIN-101)",
@@ -4753,7 +4867,7 @@ window.VIEWER_DATA = {
     "access": "outboard side, bolt along x, prop off",
     "install_order": 4,
     "removal_order": 2,
-    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 3.26 (C6)"
+    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 7.35 (C6)"
    },
    "clamp": {
     "bore_mm": 22.3,
@@ -4768,7 +4882,7 @@ window.VIEWER_DATA = {
    "part_a": "FIN-003-UL",
    "part_b": "FIN-002-L",
    "via": "CT-TUBE-CLAMP",
-   "notes": "ASA slit collar, 12 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
+   "notes": "ASA slit collar, 18 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
    "owner": "fins",
    "joint_stack": {
     "fastener": "M3x16 SHCS ISO 4762 (FIN-101)",
@@ -4784,7 +4898,7 @@ window.VIEWER_DATA = {
     "access": "outboard side, bolt along x, prop off",
     "install_order": 4,
     "removal_order": 2,
-    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 3.26 (C6)"
+    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 7.35 (C6)"
    },
    "clamp": {
     "bore_mm": 22.3,
@@ -4799,7 +4913,7 @@ window.VIEWER_DATA = {
    "part_a": "FIN-003-LR",
    "part_b": "FIN-002-R",
    "via": "CT-TUBE-CLAMP",
-   "notes": "ASA slit collar, 12 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
+   "notes": "ASA slit collar, 18 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
    "owner": "fins",
    "joint_stack": {
     "fastener": "M3x16 SHCS ISO 4762 (FIN-101)",
@@ -4815,7 +4929,7 @@ window.VIEWER_DATA = {
     "access": "outboard side, bolt along x, prop off",
     "install_order": 4,
     "removal_order": 2,
-    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 3.26 (C6)"
+    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 7.35 (C6)"
    },
    "clamp": {
     "bore_mm": 22.3,
@@ -4830,7 +4944,7 @@ window.VIEWER_DATA = {
    "part_a": "FIN-003-LL",
    "part_b": "FIN-002-L",
    "via": "CT-TUBE-CLAMP",
-   "notes": "ASA slit collar, 12 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
+   "notes": "ASA slit collar, 18 mm grip, lip cap on the tube end; friction is the D-23 fuse (turns before the block or tube is overloaded); paint-pen witness line across collar and tube",
    "owner": "fins",
    "joint_stack": {
     "fastener": "M3x16 SHCS ISO 4762 (FIN-101)",
@@ -4846,7 +4960,7 @@ window.VIEWER_DATA = {
     "access": "outboard side, bolt along x, prop off",
     "install_order": 4,
     "removal_order": 2,
-    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 3.26 (C6)"
+    "load": "7 deg side force 2.57 N limit: tube torsion 0.076 N m (slip RF 15.3), along the tube 2.21 N (RF 48); prop-nut 3.23 N m design, bearing RF 7.35 (C6)"
    },
    "clamp": {
     "bore_mm": 22.3,
@@ -5109,14 +5223,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-008-UR",
    "part_b": "FIN-002-R",
    "via": "CT-EPOXY",
-   "notes": "station collar ring 15 mm bonded on the tube directly under the mount, tail aft, ear inboard",
+   "notes": "station collar ring 22 mm bonded on the tube directly under the mount, tail aft, ear inboard",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1037,
+    "area_mm2": 1521,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 mm collar as drawn: 27.5 N m design from max(C1 section, C4 FE) = 12.74 N m limit + 204 N brace shear, 2.61 MPa, RF 0.77 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
+    "load_n": "22 mm collar as drawn: 27.4 N m design from max(C1 section, C4 FE) = 12.72 N m limit + 208 N brace shear, 1.78 MPa, RF 1.13 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
     "load_case": "L4 / G2",
     "sized_by": "C6"
    },
@@ -5127,14 +5241,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-008-UL",
    "part_b": "FIN-002-L",
    "via": "CT-EPOXY",
-   "notes": "station collar ring 15 mm bonded on the tube directly under the mount, tail aft, ear inboard",
+   "notes": "station collar ring 22 mm bonded on the tube directly under the mount, tail aft, ear inboard",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1037,
+    "area_mm2": 1521,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 mm collar as drawn: 27.5 N m design from max(C1 section, C4 FE) = 12.74 N m limit + 204 N brace shear, 2.61 MPa, RF 0.77 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
+    "load_n": "22 mm collar as drawn: 27.4 N m design from max(C1 section, C4 FE) = 12.72 N m limit + 208 N brace shear, 1.78 MPa, RF 1.13 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
     "load_case": "L4 / G2",
     "sized_by": "C6"
    },
@@ -5145,14 +5259,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-008-LR",
    "part_b": "FIN-002-R",
    "via": "CT-EPOXY",
-   "notes": "station collar ring 15 mm bonded on the tube directly under the mount, tail aft, ear inboard",
+   "notes": "station collar ring 22 mm bonded on the tube directly under the mount, tail aft, ear inboard",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1037,
+    "area_mm2": 1521,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 mm collar as drawn: 27.5 N m design from max(C1 section, C4 FE) = 12.74 N m limit + 204 N brace shear, 2.61 MPa, RF 0.77 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
+    "load_n": "22 mm collar as drawn: 27.4 N m design from max(C1 section, C4 FE) = 12.72 N m limit + 208 N brace shear, 1.78 MPa, RF 1.13 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
     "load_case": "L4 / G2",
     "sized_by": "C6"
    },
@@ -5163,14 +5277,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-008-LL",
    "part_b": "FIN-002-L",
    "via": "CT-EPOXY",
-   "notes": "station collar ring 15 mm bonded on the tube directly under the mount, tail aft, ear inboard",
+   "notes": "station collar ring 22 mm bonded on the tube directly under the mount, tail aft, ear inboard",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 1037,
+    "area_mm2": 1521,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 mm collar as drawn: 27.5 N m design from max(C1 section, C4 FE) = 12.74 N m limit + 204 N brace shear, 2.61 MPa, RF 0.77 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
+    "load_n": "22 mm collar as drawn: 27.4 N m design from max(C1 section, C4 FE) = 12.72 N m limit + 208 N brace shear, 1.78 MPa, RF 1.13 (needs 19.54 mm, CL-C6-COLLAR-L-REQ; C6 asks 22 mm, RF 1.13, CL-C6-COLLAR-RF-PROP, CR-C6-37; the 12 mm option of D-70 is void, RF 0.63 even at 4.1 MPa)",
     "load_case": "L4 / G2",
     "sized_by": "C6"
    },
@@ -5185,7 +5299,7 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 499,
+    "area_mm2": 503,
     "prep": "PETG sanded 120 grit; board edge scuffed",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
     "load_n": "secondary: the strips carry the top-edge force into the tail",
@@ -5203,7 +5317,7 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 499,
+    "area_mm2": 503,
     "prep": "PETG sanded 120 grit; board edge scuffed",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
     "load_n": "secondary: the strips carry the top-edge force into the tail",
@@ -5221,7 +5335,7 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 499,
+    "area_mm2": 503,
     "prep": "PETG sanded 120 grit; board edge scuffed",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
     "load_n": "secondary: the strips carry the top-edge force into the tail",
@@ -5239,7 +5353,7 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 499,
+    "area_mm2": 503,
     "prep": "PETG sanded 120 grit; board edge scuffed",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
     "load_n": "secondary: the strips carry the top-edge force into the tail",
@@ -5253,14 +5367,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-011-URO",
    "part_b": "FIN-001-UR",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UR after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UR after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5271,14 +5385,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-011-URI",
    "part_b": "FIN-001-UR",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UR after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UR after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5289,14 +5403,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-011-ULO",
    "part_b": "FIN-001-UL",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UL after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UL after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5307,14 +5421,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-011-ULI",
    "part_b": "FIN-001-UL",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UL after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-UL after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5325,14 +5439,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-011-LRO",
    "part_b": "FIN-001-LR",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LR after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LR after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5343,14 +5457,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-011-LRI",
    "part_b": "FIN-001-LR",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LR after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LR after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5361,14 +5475,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-011-LLO",
    "part_b": "FIN-001-LL",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LL after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LL after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5379,14 +5493,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-011-LLI",
    "part_b": "FIN-001-LL",
    "via": "CT-EPOXY",
-   "notes": "strip bonded along the sloped top edge (211 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LL after cure",
+   "notes": "strip bonded along the sloped top edge (213 mm), 30 min epoxy, paper scuffed 220 grit; pinned with FIN-012-LL after cure",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
-    "area_mm2": 2110,
+    "area_mm2": 2125,
     "prep": "strip 120 grit + IPA; paper scuffed 220 grit; pins bonded flush",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "C4 FE shear flow 9.25 N/mm design: paper face alone RF 0.11, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2110, C6 used 2239; C6 re-checks]",
+    "load_n": "C4 FE shear flow 8.60 N/mm design: paper face alone RF 0.12, so the pins (E-FIN-69...80) carry it all; the bond locates the strip [D3 R5 geometry: area_mm2 2125, C6 used 2239; C6 re-checks]",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5404,7 +5518,7 @@ window.VIEWER_DATA = {
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5422,7 +5536,7 @@ window.VIEWER_DATA = {
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5440,7 +5554,7 @@ window.VIEWER_DATA = {
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5458,7 +5572,7 @@ window.VIEWER_DATA = {
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5476,7 +5590,7 @@ window.VIEWER_DATA = {
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5494,7 +5608,7 @@ window.VIEWER_DATA = {
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5512,7 +5626,7 @@ window.VIEWER_DATA = {
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5530,7 +5644,7 @@ window.VIEWER_DATA = {
     "area_mm2": 790,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "2262 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.70 (needs 56.6 mm); tail net section 23.8 MPa, RF 0.63. On C1's D-65 loads (x0.99, estimate): 2250 N, anchor RF 0.70 (needs 56 mm), tail RF 0.63: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
+    "load_n": "2233 N design per strip (CL-C6-STRIP-ANCHOR-F) over 2 faces x 10 x 39.5 mm: RF 0.71 (needs 55.8 mm); tail net section 23.5 MPa, RF 0.64. On C1's D-65 loads (x0.99, estimate): 2218 N, anchor RF 0.71 (needs 55 mm), tail RF 0.64: HOLD until C4 re-runs (CR-C6-38). Build inspection (D-70): strips to the tube surface, epoxy fills both slots over the full tail, tap/pull check before the fin closes",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -5548,7 +5662,7 @@ window.VIEWER_DATA = {
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35 (CL-C6-BRACE-END-RF)",
+    "load_n": "208 N design; RF 2.31 (CL-C6-BRACE-END-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5566,7 +5680,7 @@ window.VIEWER_DATA = {
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35 (CL-C6-BRACE-END-RF)",
+    "load_n": "208 N design; RF 2.31 (CL-C6-BRACE-END-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5584,7 +5698,7 @@ window.VIEWER_DATA = {
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35 (CL-C6-BRACE-END-RF)",
+    "load_n": "208 N design; RF 2.31 (CL-C6-BRACE-END-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5602,7 +5716,7 @@ window.VIEWER_DATA = {
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35 (CL-C6-BRACE-END-RF)",
+    "load_n": "208 N design; RF 2.31 (CL-C6-BRACE-END-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5620,7 +5734,7 @@ window.VIEWER_DATA = {
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35",
+    "load_n": "208 N design; RF 2.31",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5638,7 +5752,7 @@ window.VIEWER_DATA = {
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35",
+    "load_n": "208 N design; RF 2.31",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5656,7 +5770,7 @@ window.VIEWER_DATA = {
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35",
+    "load_n": "208 N design; RF 2.31",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5674,7 +5788,7 @@ window.VIEWER_DATA = {
     "area_mm2": 260,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N design; RF 2.35",
+    "load_n": "208 N design; RF 2.31",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5764,7 +5878,7 @@ window.VIEWER_DATA = {
     "area_mm2": 2488,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "12.3 N m torsion design; RF 4.45 (CL-C6-BLOCK-SPAR-RF)",
+    "load_n": "12.4 N m torsion design; RF 4.41 (CL-C6-BLOCK-SPAR-RF)",
     "load_case": "L4 corner",
     "sized_by": "C4, C6"
    },
@@ -5782,7 +5896,7 @@ window.VIEWER_DATA = {
     "area_mm2": 2488,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "12.3 N m torsion design; RF 4.45 (CL-C6-BLOCK-SPAR-RF)",
+    "load_n": "12.4 N m torsion design; RF 4.41 (CL-C6-BLOCK-SPAR-RF)",
     "load_case": "L4 corner",
     "sized_by": "C4, C6"
    },
@@ -5829,14 +5943,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-001-UR",
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 15 mm legs x 0.1700-0.2496, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1700; then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
+   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 10 mm legs x 0.1700-0.2496, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1700; then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 4934,
+    "area_mm2": 4138,
     "prep": "foam dusted off; board edges scuffed; fillet zoned as D3 draws it (CR-D3-25, accepted): 15 mm legs both faces over the effective root, 13 mm aft of the hinge, 4 mm sealing bead ahead (D3-R4b), none over the link slot on the lower roots",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "fail-safe path only (D-68): RF 0.81 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4934, C6 used 5318; C6 re-checks]",
+    "load_n": "fail-safe path only (D-68): RF 0.56 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4138, C6 used 5318; C6 re-checks]",
     "load_case": "L4 side load",
     "sized_by": "D3, C6"
    },
@@ -5847,14 +5961,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-001-UL",
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 15 mm legs x 0.1700-0.2496, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1700; then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
+   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 10 mm legs x 0.1700-0.2496, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1700; then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 4934,
+    "area_mm2": 4138,
     "prep": "foam dusted off; board edges scuffed; fillet zoned as D3 draws it (CR-D3-25, accepted): 15 mm legs both faces over the effective root, 13 mm aft of the hinge, 4 mm sealing bead ahead (D3-R4b), none over the link slot on the lower roots",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "fail-safe path only (D-68): RF 0.81 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4934, C6 used 5318; C6 re-checks]",
+    "load_n": "fail-safe path only (D-68): RF 0.56 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4138, C6 used 5318; C6 re-checks]",
     "load_case": "L4 side load",
     "sized_by": "D3, C6"
    },
@@ -5865,14 +5979,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-001-LR",
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 15 mm legs x 0.1460-0.2376, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1460; NO fillet over the link slot x 0.2376-0.2616 (both faces, CR-D6-04); then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
+   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 10 mm legs x 0.1460-0.2376, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1460; NO fillet over the link slot x 0.2376-0.2616 (both faces, CR-D6-04); then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 4790,
+    "area_mm2": 3874,
     "prep": "foam dusted off; board edges scuffed; fillet zoned as D3 draws it (CR-D3-25, accepted): 15 mm legs both faces over the effective root, 13 mm aft of the hinge, 4 mm sealing bead ahead (D3-R4b), none over the link slot on the lower roots",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "fail-safe path only (D-68): RF 0.81 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4790, C6 used 5078; C6 re-checks]",
+    "load_n": "fail-safe path only (D-68): RF 0.56 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 3874, C6 used 5078; C6 re-checks]",
     "load_case": "L4 side load",
     "sized_by": "D3, C6"
    },
@@ -5883,14 +5997,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-001-LL",
    "part_b": "WNG-001",
    "via": "CT-EPOXY",
-   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 15 mm legs x 0.1460-0.2376, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1460; NO fillet over the link slot x 0.2376-0.2616 (both faces, CR-D6-04); then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
+   "notes": "laminate root on bare foam; microballoon-epoxy cove fillets both faces (CR-C6-24): 10 mm legs x 0.1460-0.2376, 13 mm legs aft of the hinge to the TE (elevon end gap), 4 mm sealing bead x 0.0740-0.1460; NO fillet over the link slot x 0.2376-0.2616 (both faces, CR-D6-04); then the skin tape laps 15 mm up both faces; root contour from the S5010 section",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + glass microballoons (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 4790,
+    "area_mm2": 3874,
     "prep": "foam dusted off; board edges scuffed; fillet zoned as D3 draws it (CR-D3-25, accepted): 15 mm legs both faces over the effective root, 13 mm aft of the hinge, 4 mm sealing bead ahead (D3-R4b), none over the link slot on the lower roots",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "fail-safe path only (D-68): RF 0.81 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 4790, C6 used 5078; C6 re-checks]",
+    "load_n": "fail-safe path only (D-68): RF 0.56 at 0.125 MPa on the D-65 side load (CL-C6-FIN-ROOT-RF = 0.5 x CL-D3-ROOT-FILLET-RF; fix with D3, CR-D3-35); inspect for a crack line after any hard landing [D3 R5 geometry: area_mm2 3874, C6 used 5078; C6 re-checks]",
     "load_case": "L4 side load",
     "sized_by": "D3, C6"
    },
@@ -5908,7 +6022,7 @@ window.VIEWER_DATA = {
     "area_mm2": 276,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N pull-off on the 90 deg saddle contact; RF 1.35 (CL-C6-ANCHOR-PULL-RF)",
+    "load_n": "208 N pull-off on the 90 deg saddle contact; RF 1.33 (CL-C6-ANCHOR-PULL-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5926,7 +6040,7 @@ window.VIEWER_DATA = {
     "area_mm2": 276,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N pull-off on the 90 deg saddle contact; RF 1.35 (CL-C6-ANCHOR-PULL-RF)",
+    "load_n": "208 N pull-off on the 90 deg saddle contact; RF 1.33 (CL-C6-ANCHOR-PULL-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5944,7 +6058,7 @@ window.VIEWER_DATA = {
     "area_mm2": 276,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N pull-off on the 90 deg saddle contact; RF 1.35 (CL-C6-ANCHOR-PULL-RF)",
+    "load_n": "208 N pull-off on the 90 deg saddle contact; RF 1.33 (CL-C6-ANCHOR-PULL-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -5962,7 +6076,7 @@ window.VIEWER_DATA = {
     "area_mm2": 276,
     "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves; spar face too",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "204 N pull-off on the 90 deg saddle contact; RF 1.35 (CL-C6-ANCHOR-PULL-RF)",
+    "load_n": "208 N pull-off on the 90 deg saddle contact; RF 1.33 (CL-C6-ANCHOR-PULL-RF)",
     "load_case": "G2",
     "sized_by": "C6"
    },
@@ -6137,14 +6251,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-012-UR",
    "part_b": "FIN-001-UR",
    "via": "CT-EPOXY",
-   "notes": "11 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 15 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
+   "notes": "14 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 12 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 1367,
+    "area_mm2": 1731,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 139 N per pin design (C4 R4), RF 0.83 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 0.84 (estimate, max pitch 12.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.71",
+    "load_n": "19 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 103 N per pin design (C4 R4), RF 1.12 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 1.13 (estimate, max pitch 13.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.77",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6155,14 +6269,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-012-UL",
    "part_b": "FIN-001-UL",
    "via": "CT-EPOXY",
-   "notes": "11 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 15 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
+   "notes": "14 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 12 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 1367,
+    "area_mm2": 1731,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 139 N per pin design (C4 R4), RF 0.83 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 0.84 (estimate, max pitch 12.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.71",
+    "load_n": "19 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 103 N per pin design (C4 R4), RF 1.12 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 1.13 (estimate, max pitch 13.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.77",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6173,14 +6287,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-012-LR",
    "part_b": "FIN-001-LR",
    "via": "CT-EPOXY",
-   "notes": "11 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 15 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
+   "notes": "14 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 12 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 1367,
+    "area_mm2": 1731,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 139 N per pin design (C4 R4), RF 0.83 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 0.84 (estimate, max pitch 12.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.71",
+    "load_n": "19 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 103 N per pin design (C4 R4), RF 1.12 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 1.13 (estimate, max pitch 13.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.77",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6191,14 +6305,14 @@ window.VIEWER_DATA = {
    "part_a": "FIN-012-LL",
    "part_b": "FIN-001-LL",
    "via": "CT-EPOXY",
-   "notes": "11 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 15 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
+   "notes": "14 pins 2.5 mm drilled (2.5 mm drill) through strip-laminate-strip every 12 mm along the strip after the strips cure, epoxy injected before the pin, sanded flush (CR-C6-02, D-70)",
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 1367,
+    "area_mm2": 1731,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "15 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 139 N per pin design (C4 R4), RF 0.83 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 0.84 (estimate, max pitch 12.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.71",
+    "load_n": "19 pins per half-fin, 2.5 mm CF rod x 11.6 mm, 15 mm pitch (D-70, drawn), first half a pitch aft of the tail: 103 N per pin design (C4 R4), RF 1.12 (CL-C6-STRIP-PIN-RF; bending bound); on C1's D-65 loads RF 1.13 (estimate, max pitch 13.6 mm): hold the drilling for C4's re-run. Fallback 2 mm at 9 mm RF 0.77",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6213,10 +6327,10 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6231,10 +6345,10 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6249,10 +6363,10 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6267,10 +6381,10 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6285,10 +6399,10 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6303,10 +6417,10 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6321,10 +6435,10 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6339,10 +6453,10 @@ window.VIEWER_DATA = {
    "owner": "fins",
    "bond": {
     "adhesive": "30 min laminating epoxy + ~5 % colloidal silica, injected into the hole before the pin goes in",
-    "area_mm2": 118,
+    "area_mm2": 149,
     "prep": "drill 2.5 mm square to the board through strip-board-board-strip after the strips cure; CF rod 120 grit + IPA",
     "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
-    "load_n": "139 N per pin bearing on the 1 mm strip: RF 1.80 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.33 (CL-C6-STRIP-NET-PIN-RF)",
+    "load_n": "129 N per pin bearing on the 1 mm strip: RF 1.94 (CL-C6-STRIP-PIN-BRG-RF); strip net section at a hole RF 1.34 (CL-C6-STRIP-NET-PIN-RF)",
     "load_case": "L4",
     "sized_by": "C6"
    },
@@ -6493,6 +6607,78 @@ window.VIEWER_DATA = {
    "declared_in": "fins"
   },
   {
+   "id": "E-FIN-89",
+   "part_a": "FIN-013-UR",
+   "part_b": "FIN-004-R",
+   "via": "CT-EPOXY",
+   "notes": "strap eye saddle foot bonded round the outboard face of the upper bore boss, 30 min epoxy + silica, after the spar and blocks are cured in the core (SW-01); the tie pull bears on the boss through the foot",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 166,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": 29.4,
+    "load_case": "restrained ground run (GT-07, GT-13), per tie",
+    "sized_by": "D3, H1"
+   },
+   "declared_in": "fins"
+  },
+  {
+   "id": "E-FIN-90",
+   "part_a": "FIN-013-UL",
+   "part_b": "FIN-004-L",
+   "via": "CT-EPOXY",
+   "notes": "strap eye saddle foot bonded round the outboard face of the upper bore boss, 30 min epoxy + silica, after the spar and blocks are cured in the core (SW-01); the tie pull bears on the boss through the foot",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 166,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": 29.4,
+    "load_case": "restrained ground run (GT-07, GT-13), per tie",
+    "sized_by": "D3, H1"
+   },
+   "declared_in": "fins"
+  },
+  {
+   "id": "E-FIN-91",
+   "part_a": "FIN-013-LR",
+   "part_b": "FIN-004-R",
+   "via": "CT-EPOXY",
+   "notes": "strap eye saddle foot bonded round the outboard face of the lower bore boss, 30 min epoxy + silica, after the spar and blocks are cured in the core (SW-01); the tie pull bears on the boss through the foot",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 166,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": 29.4,
+    "load_case": "restrained ground run (GT-07, GT-13), per tie",
+    "sized_by": "D3, H1"
+   },
+   "declared_in": "fins"
+  },
+  {
+   "id": "E-FIN-92",
+   "part_a": "FIN-013-LL",
+   "part_b": "FIN-004-L",
+   "via": "CT-EPOXY",
+   "notes": "strap eye saddle foot bonded round the outboard face of the lower bore boss, 30 min epoxy + silica, after the spar and blocks are cured in the core (SW-01); the tie pull bears on the boss through the foot",
+   "owner": "fins",
+   "bond": {
+    "adhesive": "30 min laminating epoxy + ~5 % colloidal silica (non-sag)",
+    "area_mm2": 166,
+    "prep": "PETG/ASA sanded 120 grit, IPA wipe; CF sanded 120 grit to matte, IPA wipe, gloves",
+    "cure": "24 h at >= 18 degC before load; parts within 50 mm of a motor: + 4 h at 50 degC post-cure (CR-C6-04)",
+    "load_n": 29.4,
+    "load_case": "restrained ground run (GT-07, GT-13), per tie",
+    "sized_by": "D3, H1"
+   },
+   "declared_in": "fins"
+  },
+  {
    "id": "E-GER-01",
    "part_a": "GER-001-UR",
    "part_b": "FIN-001-UR",
@@ -6504,7 +6690,7 @@ window.VIEWER_DATA = {
     "area_mm2": 1657,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "114.9 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.44 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    },
@@ -6522,7 +6708,7 @@ window.VIEWER_DATA = {
     "area_mm2": 1657,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "114.9 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.44 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    },
@@ -6540,7 +6726,7 @@ window.VIEWER_DATA = {
     "area_mm2": 1657,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "114.9 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.44 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    },
@@ -6558,7 +6744,7 @@ window.VIEWER_DATA = {
     "area_mm2": 1657,
     "prep": "board paper scuffed 220 grit, not torn; cut foam edge and CF strip ends wiped with IPA; PETG 120 grit",
     "cure": "24 h at >= 18 degC before load",
-    "load_n": "114.9 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.44 at 0.10 MPa (CL-D5-BOND-SF)",
+    "load_n": "115.7 N printed/bonded design (upper foot ult 58.8 N x 1.4375); RF 1.43 at 0.10 MPa (CL-D5-BOND-SF)",
     "load_case": "L1 (landing, C1) with the C5 biased upper foot",
     "sized_by": "D5, C6"
    },
@@ -6570,7 +6756,7 @@ window.VIEWER_DATA = {
    "part_b": "GER-001-UR",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.06 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -6585,7 +6771,7 @@ window.VIEWER_DATA = {
    "part_b": "GER-001-UL",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.06 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -6600,7 +6786,7 @@ window.VIEWER_DATA = {
    "part_b": "GER-001-LR",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.06 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -6615,7 +6801,7 @@ window.VIEWER_DATA = {
    "part_b": "GER-001-LL",
    "via": "CT-GER-CRUSH-SLIDE",
    "owner": "landing",
-   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.06 by D5 FEA (CL-D5-SIDE-RIM-SF)",
+   "notes": "field joint: press both hooks in through the side windows with the 1.5 mm hex key of the field kit (the window is recessed in the R6 wall), pull the insert out, push a pre-glued spare of the SAME COLOUR in until both click; <= 3 min (CL-D5-REPLACE-TIME). After a hard landing the hooks are inside the wall: pull the insert aft until they snap into the windows, then release. Crush stroke 38 mm toward -x; side load at the pad 59.2 N ult (C5 3-D sim, D-65), lip reaction 131 N, shoe RF 1.27 by D5 FEA (CL-D5-SIDE-RIM-SF)",
    "retention": {
     "item": "2 PETG snap fingers 6.5 x 5 x 0.8 mm, 0.6 mm ramped hooks (CR-C6-12)",
     "count": 2,
@@ -7029,7 +7215,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-003",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-1; routed cut length 0.035 m",
+   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-1; routed cut length 0.034 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "AS150U aircraft half (solder cup) -> power board input pads (aft edge)",
@@ -7041,7 +7227,7 @@ window.VIEWER_DATA = {
     "strain_relief": "adhesive heat-shrink 15 mm over each cup; formed before soldering",
     "disconnect": false,
     "slack_mm": 15,
-    "length_m": 0.035,
+    "length_m": 0.034,
     "wires": [
      "W-MAIN-1"
     ]
@@ -7058,7 +7244,7 @@ window.VIEWER_DATA = {
    "part_b": "PWR-004",
    "via": "CT-SOLDER-DC",
    "owner": "harness",
-   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-2; routed cut length 0.090 m",
+   "notes": "Vbat main + / - (10 AWG jumper, F1 PWR-002). Wire list rows W-MAIN-2; routed cut length 0.089 m",
    "wire": {
     "gauge_awg": 10,
     "connector": "power board output pads (aft edge) -> bus bars, aft end (solder)",
@@ -7071,7 +7257,7 @@ window.VIEWER_DATA = {
     "strain_relief": "heat-shrink; jumpers formed before soldering",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.09,
+    "length_m": 0.089,
     "wires": [
      "W-MAIN-2"
     ]
@@ -7228,7 +7414,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.130 m",
+   "notes": "Motor UR phases A/B/C. Wire list rows W-PH-UR; routed cut length 0.131 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UR phase pads (solder) -> motor UR factory leads (staggered in-line splices)",
@@ -7244,7 +7430,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.13,
+    "length_m": 0.131,
     "wires": [
      "W-PH-UR"
     ]
@@ -7261,7 +7447,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-UL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.130 m",
+   "notes": "Motor UL phases A/B/C. Wire list rows W-PH-UL; routed cut length 0.131 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC UL phase pads (solder) -> motor UL factory leads (staggered in-line splices)",
@@ -7277,7 +7463,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.13,
+    "length_m": 0.131,
     "wires": [
      "W-PH-UL"
     ]
@@ -7294,7 +7480,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LR",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.130 m",
+   "notes": "Motor LR phases A/B/C. Wire list rows W-PH-LR; routed cut length 0.131 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LR phase pads (solder) -> motor LR factory leads (staggered in-line splices)",
@@ -7310,7 +7496,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.13,
+    "length_m": 0.131,
     "wires": [
      "W-PH-LR"
     ]
@@ -7327,7 +7513,7 @@ window.VIEWER_DATA = {
    "part_b": "PRP-001-LL",
    "via": "CT-SOLDER-PHASE",
    "owner": "harness",
-   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.130 m",
+   "notes": "Motor LL phases A/B/C. Wire list rows W-PH-LL; routed cut length 0.131 m",
    "wire": {
     "gauge_awg": 16,
     "connector": "ESC LL phase pads (solder) -> motor LL factory leads (staggered in-line splices)",
@@ -7343,7 +7529,7 @@ window.VIEWER_DATA = {
     "strain_relief": "splices staggered 10 mm, each heat-shrunk, outer 30 mm sleeve; collar tie takes the pull",
     "disconnect": false,
     "slack_mm": 20,
-    "length_m": 0.13,
+    "length_m": 0.131,
     "wires": [
      "W-PH-LL"
     ]
@@ -8693,7 +8879,7 @@ window.VIEWER_DATA = {
    "part_a": "MEC-004-L",
    "part_b": "WNG-011-L",
    "via": "CT-EPOXY",
-   "notes": "through-panel horn: blade in a 2.5 mm slot, lower flange and upper backplate on bare foam, bore on the tube",
+   "notes": "through-panel horn: blade in a 2.5 mm slot from below, lower flange on bare foam, U-slot on the tube (backplate MEC-013)",
    "owner": "mechanisms",
    "bond": {
     "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
@@ -8711,7 +8897,7 @@ window.VIEWER_DATA = {
    "part_a": "MEC-004-R",
    "part_b": "WNG-011-R",
    "via": "CT-EPOXY",
-   "notes": "through-panel horn: blade in a 2.5 mm slot, lower flange and upper backplate on bare foam, bore on the tube",
+   "notes": "through-panel horn: blade in a 2.5 mm slot from below, lower flange on bare foam, U-slot on the tube (backplate MEC-013)",
    "owner": "mechanisms",
    "bond": {
     "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
@@ -9081,6 +9267,78 @@ window.VIEWER_DATA = {
     "access": "from below (-z), wing on its back",
     "install_order": 6,
     "removal_order": 1
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-37",
+   "part_a": "MEC-013-LI",
+   "part_b": "MEC-004-L",
+   "via": "CT-EPOXY",
+   "notes": "horn backplate bonded over the blade top and the bare foam after the horn is in from below (D-89c)",
+   "owner": "mechanisms",
+   "bond": {
+    "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
+    "area_mm2": "-",
+    "prep": "tape cut back, foam scuffed, PETG sanded 120 grit, rod/tube scuffed + IPA",
+    "cure": "24 h at >= 20 C before load",
+    "load_n": "-",
+    "load_case": "full travel at VD (R-SERVO-TORQUE)",
+    "sized_by": "D6 (method of C6 CALC-C6-LINKAGE)"
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-38",
+   "part_a": "MEC-013-RI",
+   "part_b": "MEC-004-R",
+   "via": "CT-EPOXY",
+   "notes": "horn backplate bonded over the blade top and the bare foam after the horn is in from below (D-89c)",
+   "owner": "mechanisms",
+   "bond": {
+    "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
+    "area_mm2": "-",
+    "prep": "tape cut back, foam scuffed, PETG sanded 120 grit, rod/tube scuffed + IPA",
+    "cure": "24 h at >= 20 C before load",
+    "load_n": "-",
+    "load_case": "full travel at VD (R-SERVO-TORQUE)",
+    "sized_by": "D6 (method of C6 CALC-C6-LINKAGE)"
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-39",
+   "part_a": "MEC-013-LO",
+   "part_b": "MEC-006-L",
+   "via": "CT-EPOXY",
+   "notes": "link-horn backplate bonded over the blade top and the bare foam (D-89c)",
+   "owner": "mechanisms",
+   "bond": {
+    "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
+    "area_mm2": "-",
+    "prep": "tape cut back, foam scuffed, PETG sanded 120 grit, rod/tube scuffed + IPA",
+    "cure": "24 h at >= 20 C before load",
+    "load_n": "-",
+    "load_case": "full travel at VD (R-SERVO-TORQUE)",
+    "sized_by": "D6 (method of C6 CALC-C6-LINKAGE)"
+   },
+   "declared_in": "mechanisms"
+  },
+  {
+   "id": "E-MEC-40",
+   "part_a": "MEC-013-RO",
+   "part_b": "MEC-006-R",
+   "via": "CT-EPOXY",
+   "notes": "link-horn backplate bonded over the blade top and the bare foam (D-89c)",
+   "owner": "mechanisms",
+   "bond": {
+    "adhesive": "30 min epoxy + microballoons (foam); 30 min epoxy (rod, tube)",
+    "area_mm2": "-",
+    "prep": "tape cut back, foam scuffed, PETG sanded 120 grit, rod/tube scuffed + IPA",
+    "cure": "24 h at >= 20 C before load",
+    "load_n": "-",
+    "load_case": "full travel at VD (R-SERVO-TORQUE)",
+    "sized_by": "D6 (method of C6 CALC-C6-LINKAGE)"
    },
    "declared_in": "mechanisms"
   },
@@ -9983,7 +10241,7 @@ window.VIEWER_DATA = {
     "insert": "M3 x 5.7 brass heat-set in POD-002 (D2)",
     "engagement_mm": 5.5,
     "min_engagement_mm": 4.5,
-    "washer_nut": "M3 nylon washer 0.5 mm under the head; spacer 10 mm under the deck",
+    "washer_nut": "M3 nylon washer 1.0 mm under the board (D-89b), head on the board; spacer 10 mm under the deck",
     "torque": "0.20 N m max (nylon), snug, no threadlocker; paint-pen witness",
     "tool": "PH1 screwdriver",
     "access": "from above (+z) through the hatch, before the power board is taped on (the board covers the heads)",
@@ -10868,42 +11126,6 @@ window.VIEWER_DATA = {
     "sized_by": "C2"
    },
    "declared_in": "wing"
-  },
-  {
-   "id": "E-WNG-16",
-   "part_a": "WNG-007",
-   "part_b": "WNG-001",
-   "via": "CT-EPOXY",
-   "owner": "wing",
-   "notes": "microballoon-epoxy fillet in the re-entrant floor-to-step corner of the pod recess (x 0.065, z 0.015), legs 5.0 mm floor x 4.8 mm step, |y| <= 0.070; laid with a 45 deg spatula, cured 24 h, sanded to a flat 45 deg face before the pod goes in (D-69, CR-C3-17)",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + glass microballoons 1:1 by volume (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 1372,
-    "prep": "recess sanded, foam dust off",
-    "cure": "24 h at >= 18 degC before load or tape",
-    "load_n": "pod crash peel at the step corner, -z / -x 12.75 g: R 4.5 / 2.2 as drawn (singular in linear FEA, CL-C3-FEA-BOND-R-CRASH); the fillet and T-C3-POD-PROOF decide",
-    "load_case": "C3 crash 12.75 g, -z / -x",
-    "sized_by": "C3"
-   },
-   "declared_in": "wing"
-  },
-  {
-   "id": "E-WNG-17",
-   "part_a": "WNG-007",
-   "part_b": "POD-001",
-   "via": "CT-EPOXY",
-   "owner": "wing",
-   "notes": "pod floor board (POD-001 fb floor) aft lower edge bevelled 5.0 x 4.8 mm 45 deg and bonded on the fillet face in the pod bond (E-POD-01); keeps the floor end bonded across the step as C3 asks",
-   "bond": {
-    "adhesive": "30 min laminating epoxy + glass microballoons 1:1 by volume (foam-safe; no CA, no solvent glue on XPS)",
-    "area_mm2": 970,
-    "prep": "fillet face sanded 120 grit; board bevel cut with a 45 deg sanding block",
-    "cure": "24 h at >= 18 degC before load or tape",
-    "load_n": "as E-WNG-16",
-    "load_case": "C3 crash 12.75 g, -z / -x",
-    "sized_by": "C3"
-   },
-   "declared_in": "wing"
   }
  ],
  "connection_types": {
@@ -11282,11 +11504,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "P:mass.allocation_g.power",
-    "resolved": 630
+    "resolved": 627
    },
    "status": "UNVERIFIED",
    "how": "Weigh pack and frame stack on a 1 g scale at T-PWR-ARRIVAL; the 28 g power board moved from avionics (CR-F1-19) is what the 620 g allocation does not yet carry",
-   "margin": 0.009682539682539718,
+   "margin": 0.004944178628389191,
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -11560,6 +11782,44 @@ window.VIEWER_DATA = {
    ]
   },
   {
+   "id": "CL-A1-I2C-CB",
+   "title": "I2C bus capacitance, routed bus (FC to GPS + Y-branch to the airspeed sensor)",
+   "value": 134.6238930691983,
+   "unit": "pF",
+   "limit": {
+    "op": "<=",
+    "value": 200.0,
+    "resolved": 200.0
+   },
+   "status": "UNVERIFIED",
+   "how": "T-F3-I2C-SCAN on the routed harness: all three addresses found and no I2C errors in 10 min of logging; scope SCL rise (0.3-0.7 VDD) <= 300 ns at 400 kHz.",
+   "margin": 0.32688053465400857,
+   "parts": [
+    "AVN-001",
+    "AVN-002",
+    "AVN-004"
+   ]
+  },
+  {
+   "id": "CL-A1-I2C-LEN-MAX",
+   "title": "Longest I2C bus (FC to GPS + airspeed branch) inside the 200 pF budget",
+   "value": 1.2105263157894737,
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "status": "UNVERIFIED",
+   "how": "As CL-A1-I2C-CB.",
+   "margin": 0.21052631578947367,
+   "parts": [
+    "AVN-001",
+    "AVN-002",
+    "AVN-004"
+   ]
+  },
+  {
    "id": "CL-A1-PACK-STATION",
    "title": "Lightest pack at its D-60 station: forward travel left to the crush stack",
    "value": 0.01790000000000002,
@@ -11580,7 +11840,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A1-PACK-CG-FWD",
    "title": "Every pack (546 / 550 / 590 g, D-64) at its D-60 station: basic CG margin to the forward limit",
-   "value": 0.00036328249373080573,
+   "value": 0.00020037781383929615,
    "unit": "m",
    "limit": {
     "op": ">=",
@@ -11598,7 +11858,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A1-PACK-CG-AFT",
    "title": "Every pack at its D-60 station: predicted CG (growth by maturity) margin to the aft limit",
-   "value": 0.0015873102952285792,
+   "value": 0.0017688149553544974,
    "unit": "m",
    "limit": {
     "op": ">=",
@@ -11616,7 +11876,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A1-PACK-ACCEPT",
    "title": "Heaviest flight pack the 100 g first-build overrun still covers (D-64 acceptance line)",
-   "value": 571.4835000000004,
+   "value": 564.1837000000003,
    "unit": "g",
    "limit": {
     "op": ">=",
@@ -11625,7 +11885,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Weigh each pack on arrival (T-E2-WEIGH, 1 g scale); a pack above this line is returned or the first build must come in under its allocations.",
-   "margin": 0.027848021582734514,
+   "margin": 0.01471888489208682,
    "parts": [
     "PWR-001"
    ]
@@ -11695,7 +11955,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-A5-PACK-X-FOR-CG",
    "title": "Pack centre needed for the CG target",
-   "value": -0.01895720015206144,
+   "value": -0.019458611327774083,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -11744,11 +12004,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "P:requirements.stall_max_ms",
-    "resolved": 12.0
+    "resolved": 12.3
    },
    "status": "UNVERIFIED",
    "how": "T-B2-STALL: FBWA slow flight, 1 kt/s deceleration, three runs, airspeed sensor calibrated",
-   "margin": 0.008334903592259005,
+   "margin": 0.032521857163179575,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -11797,11 +12057,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "P:requirements.stall_max_ms",
-    "resolved": 12.0
+    "resolved": 12.3
    },
    "status": "UNVERIFIED",
    "how": "T-B2-STALL at the forward CG limit, 2.6 kg",
-   "margin": 0.0003455312953433894,
+   "margin": 0.02472734760521312,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -11956,11 +12216,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "P:requirements.stall_max_ms",
-    "resolved": 12.0
+    "resolved": 12.3
    },
    "status": "UNVERIFIED",
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
-   "margin": 0.0004559319510861748,
+   "margin": 0.02483505556203535,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -11970,16 +12230,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B2R4-VS-GATE-FWD-ZLO",
    "title": "Stall at 2.6 kg, forward CG limit, bottom of the CG height range",
-   "value": 12.014639093508443,
+   "value": 11.999251413517042,
    "unit": "m/s",
    "limit": {
     "op": "<=",
     "ref": "P:requirements.stall_max_ms",
-    "resolved": 12.0
+    "resolved": 12.3
    },
    "status": "UNVERIFIED",
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
-   "margin": -0.0012199244590368845,
+   "margin": 0.02445110459211046,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -12009,11 +12269,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "P:requirements.stall_max_ms",
-    "resolved": 12.0
+    "resolved": 12.3
    },
    "status": "UNVERIFIED",
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
-   "margin": 0.00817641708000035,
+   "margin": 0.03236723617561015,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -12028,11 +12288,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "P:requirements.stall_max_ms",
-    "resolved": 12.0
+    "resolved": 12.3
    },
    "status": "UNVERIFIED",
    "how": "T-B2-STALL at the gate mass, the marked forward CG and the CG height read on the balance rig; CLmax = 2 m g / (rho S Vs^2)",
-   "margin": 0.002787675207202689,
+   "margin": 0.027109927031417312,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -12042,16 +12302,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B2R3-VS-PRED",
    "title": "Stall at the A3 predicted mass and CG",
-   "value": 11.617839211876134,
+   "value": 11.68720403578944,
    "unit": "m/s",
    "limit": {
     "op": "<=",
     "ref": "P:requirements.stall_max_ms",
-    "resolved": 12.0
+    "resolved": 12.3
    },
    "status": "UNVERIFIED",
    "how": "T-B2-STALL at the as-built mass; the expected flight value",
-   "margin": 0.03184673234365546,
+   "margin": 0.04982081009841955,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -12336,7 +12596,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-CRUISE-ETA",
    "title": "Cruise prop efficiency, 11x5.5MR, cruise speed and thrust (params)",
-   "value": 0.4432599637873514,
+   "value": 0.4626037804105439,
    "unit": "-",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12352,7 +12612,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-CRUISE-RPM",
    "title": "Cruise rpm, 11x5.5MR",
-   "value": 5945.8472778193645,
+   "value": 5994.054866878658,
    "unit": "rpm",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12368,7 +12628,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-CRUISE-SHAFT",
    "title": "Cruise shaft power per motor, 11x5.5MR",
-   "value": 37.11109926458564,
+   "value": 38.9518784370716,
    "unit": "W",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12384,7 +12644,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-CRUISE-W",
    "title": "Cruise pack power, 11x5.5MR, 4 motors (E1 motor constants)",
-   "value": 194.61628319044067,
+   "value": 203.64451224223632,
    "unit": "W",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12416,7 +12676,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-DOWNLOAD",
    "title": "Hover download factor (modelled, mean loading, R3 fin hardware)",
-   "value": 1.0388125712600302,
+   "value": 1.039550590510363,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -12425,7 +12685,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-B4-INSTALLED: thrust stand with the canted mount, tube, collars, brace, ESC dummy and half-fin behind the prop; installed/isolated thrust ratio at equal rpm.",
-   "margin": 0.01998814032072624,
+   "margin": 0.01929189574494059,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -12436,7 +12696,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-DOWNLOAD-HIGH",
    "title": "Hover download factor (peaked loading)",
-   "value": 1.0494385028680417,
+   "value": 1.0503979278934745,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -12445,7 +12705,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-B4-INSTALLED.",
-   "margin": 0.00996367653958331,
+   "margin": 0.009058558591061819,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -12456,7 +12716,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-ITEMS-HOVER",
    "title": "Hover download of collars, ears, brace and ESC pad, one station (mean loading)",
-   "value": 0.04373622781298778,
+   "value": 0.0491898361073714,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12472,7 +12732,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-BRACE-HOVER",
    "title": "Slipstream drag on one brace in hover (mean loading; load case for C4)",
-   "value": 0.009090856519188069,
+   "value": 0.00782655491889911,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12505,7 +12765,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-ITEMS-DRAG",
    "title": "Cruise drag of collars, ears, braces and ESC pads, 4 stations (B4 coefficients)",
-   "value": 0.6531760648912188,
+   "value": 0.7346695711086667,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12553,7 +12813,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-PITOT-CRUISE",
    "title": "Prop-induced airspeed error at the chosen pitot in cruise",
-   "value": 0.003014781145100112,
+   "value": 0.0032946445288719968,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -12562,7 +12822,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "As CL-B4-PITOT.",
-   "margin": 0.8492609427449945,
+   "margin": 0.8352677735564001,
    "parts": [
     "AVN-005",
     "POD-006"
@@ -12571,7 +12831,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SWIRL-FIN",
    "title": "Side force on each half-fin in hover from swirl and the canted wake (same sense on both halves of a fin)",
-   "value": 0.5481100819955578,
+   "value": 0.4871446634755346,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12587,7 +12847,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SWIRL-FIN-M",
    "title": "Swirl bending moment at each half-fin root (wing skin), hover",
-   "value": 0.07946660528247541,
+   "value": 0.06983448452429286,
    "unit": "N*m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12751,7 +13011,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-GAP-COLLAR",
    "title": "Blade-to-collar axial gap, canted disc (minimum)",
-   "value": 0.04085439666748797,
+   "value": 0.039534685577953414,
    "unit": "m",
    "limit": {
     "op": ">=",
@@ -12760,7 +13020,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "As CL-B4-GAP-TUBE at the collars.",
-   "margin": 0.6341758666995186,
+   "margin": 0.5813874231181365,
    "parts": [
     "PRP-003-UR",
     "PRP-003-UL",
@@ -12775,7 +13035,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SIM-T-UPPER",
    "title": "Hover thrust on each upper prop, A3 predicted mass, split 1.216 (incl. download, cant)",
-   "value": 7.0531429787126605,
+   "value": 7.136585253930256,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12791,7 +13051,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SIM-RPM-UPPER",
    "title": "Hover rpm, upper prop, A3 predicted mass",
-   "value": 5511.918181168414,
+   "value": 5544.187017648319,
    "unit": "rpm",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12807,7 +13067,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SIM-RPM-LOWER",
    "title": "Hover rpm, lower prop, A3 predicted mass",
-   "value": 5007.614756752562,
+   "value": 5036.1286313182445,
    "unit": "rpm",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12823,7 +13083,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SIM-SHAFT-HOVER",
    "title": "Hover shaft power, 4 props, A3 predicted mass (PER3 x 1.047)",
-   "value": 249.34316457160708,
+   "value": 253.6220488309137,
    "unit": "W",
    "limit": null,
    "status": "UNVERIFIED",
@@ -12839,7 +13099,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SIM-HEADROOM",
    "title": "Thrust headroom of the upper prop at the rpm cap, heavy pack (680 g)",
-   "value": 2.7560267811636225,
+   "value": 2.7253839263420407,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -12848,7 +13108,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-B4-STAND thrust at 9 350 rpm divided by the upper-prop hover thrust at the weighed mass.",
-   "margin": 0.837351187442415,
+   "margin": 0.8169226175613605,
    "parts": [
     "PRP-003-UR",
     "PRP-003-UL",
@@ -12859,7 +13119,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SIM-HEADROOM-PRED",
    "title": "Thrust headroom of the upper prop at the rpm cap, A3 predicted mass",
-   "value": 2.901841390097008,
+   "value": 2.867912523658128,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -12868,7 +13128,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "As CL-B4-SIM-HEADROOM.",
-   "margin": 0.9345609267313387,
+   "margin": 0.911941682438752,
    "parts": [
     "PRP-003-UR",
     "PRP-003-UL",
@@ -12879,7 +13139,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SIM-TW-CAP",
    "title": "T/W at the rpm cap, A3 predicted mass",
-   "value": 3.372256776060841,
+   "value": 3.333322646044238,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -12888,7 +13148,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-B4-STAND thrust at 9 350 rpm x 4 cos 7 deg / weighed mass.",
-   "margin": 0.6861283880304205,
+   "margin": 0.666661323022119,
    "parts": [
     "PRP-003-UR",
     "PRP-003-UL",
@@ -12979,7 +13239,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SIM-DOWNLOAD",
    "title": "Hover download factor with the CFD tube + board section (upper GCI bound)",
-   "value": 1.0255434631638167,
+   "value": 1.0268513359812599,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -12988,7 +13248,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-B4-INSTALLED: installed / isolated thrust at equal rpm.",
-   "margin": 0.032506166826588044,
+   "margin": 0.03127232454598129,
    "parts": [
     "PRP-003-UR",
     "PRP-003-UL",
@@ -13003,7 +13263,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-B4-SIM-CRUISE-TUBEFIN",
    "title": "Cruise drag of the board-backed tube spans, 4 stations, 16 m/s (CFD)",
-   "value": 1.1059854523999886,
+   "value": 1.0584879302867947,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -13035,7 +13295,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C2-SPAR-SIGMA-ULT",
    "title": "Spar root bending stress, ultimate, spar alone",
-   "value": 62577314.74587699,
+   "value": 62587921.84590675,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -13044,7 +13304,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C1-WING-PROOF (GT-08, the one wing limit proof, CR-C1-27): step 1 four-pad tree, step 2 V-block under the spar at y 0.32 m; no crack, permanent set < 0.5 mm; inspect the block-pocket and elevon cut-out corners with a light after each step",
-   "margin": 0.8212076721546372,
+   "margin": 0.8211773661545522,
    "parts": [
     "WNG-002"
    ]
@@ -13069,7 +13329,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C2-SPAR-TAU-ULT",
    "title": "Spar shear stress, all torsion and shear on the spar, ultimate",
-   "value": 13774081.220306877,
+   "value": 13764119.19807867,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -13078,7 +13338,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C2-TWIST loads the wing in torsion to CL-C1-WING-TORSION-ULT / 1.5 (limit)",
-   "margin": 0.540863959323104,
+   "margin": 0.541196026730711,
    "parts": [
     "WNG-002"
    ]
@@ -13091,11 +13351,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": ">=",
     "ref": "CL-C2-SPAR-SIGMA-ULT",
-    "resolved": 62577314.74587699
+    "resolved": 62587921.84590675
    },
    "status": "UNVERIFIED",
    "how": "Hand check against Roark; the proof test exceeds ultimate stress nowhere",
-   "margin": 30.960463757863174,
+   "margin": 30.955047252152827,
    "parts": [
     "WNG-002"
    ]
@@ -13103,7 +13363,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C2-SPAR-SIGMA-BRACE",
    "title": "Spar between anchor and block with the brace couple, ultimate",
-   "value": 59709487.02164386,
+   "value": 59697465.7249478,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -13112,7 +13372,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-BLOCK-PROOF on a spar stub with the brace fitted",
-   "margin": 0.8294014656524461,
+   "margin": 0.8294358122144349,
    "parts": [
     "WNG-002",
     "FIN-004-L",
@@ -13227,23 +13487,136 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C2-WING-MODE-SEP",
-   "title": "Wing modes with >= 10 % motor/mount energy: separation from hover/cruise 1P, 2P",
+   "title": "Wing modes with >= 10 % motor/mount energy: separation from hover/cruise 1P, 2P (record; R-VIBRATION (b) closes the wing modes by response, CL-C2-VIB-*)",
    "value": 0.085156,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "ref": "P:requirements.vibration_sep_frac",
-    "resolved": 0.2
-   },
-   "status": "UNVERIFIED",
-   "how": "T-C2-TAP-TEST on the built airframe with motors fitted; hover VIBE < 30 m/s2 with the F4 harmonic notch",
-   "margin": -0.5742200000000001,
+   "limit": null,
+   "status": "CHECKED",
+   "how": "T-C2-TAP-TEST on the built airframe with motors fitted (frequencies within 15 % of the model)",
+   "margin": null,
    "parts": [
     "WNG-001",
     "WNG-002",
     "WNG-003",
     "FIN-002-L",
     "FIN-002-R"
+   ]
+  },
+  {
+   "id": "CL-C2-VIB-IMU-1P",
+   "title": "IMU vibration level (VIBE, RMS) at 1P resonance dwell, sustained rpm band, worst stiffness corner (rotors balanced to G 16, gel isolators not credited)",
+   "value": 18.02660904850972,
+   "unit": "m/s2",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.fc_vibe_max_ms2",
+    "resolved": 30.0
+   },
+   "status": "UNVERIFIED",
+   "how": "T-C2-PROP-BALANCE on every prop, then T-C2-HOVER-VIBE (VIBE < 30 m/s2, Clip 0) and T-C2-TAP-TEST",
+   "margin": 0.39911303171634266,
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003",
+    "AVN-001",
+    "FIN-002-L",
+    "FIN-002-R"
+   ]
+  },
+  {
+   "id": "CL-C2-VIB-SPAR-1P",
+   "title": "Spar bending-stress amplitude at 1P resonance dwell, sustained band, spar alone",
+   "value": 19060310.507135,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C2-SPAR-FATIGUE",
+    "resolved": 105000000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "T-C2-TAP-TEST (frequencies, damping); inspect the spar at the block and pod after each 10 flight hours",
+   "margin": 0.8184732332653809,
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ]
+  },
+  {
+   "id": "CL-C2-VIB-IMU-1P-FULL",
+   "title": "IMU acceleration amplitude (peak) at 1P resonance dwell, any rpm to full throttle (record: full throttle is a <= 10 s transient, D-42)",
+   "value": 113.644611,
+   "unit": "m/s2",
+   "limit": null,
+   "status": "CHECKED",
+   "how": "T-C2-HOVER-VIBE: Clip stays 0 through the full-throttle climb",
+   "margin": null,
+   "parts": [
+    "AVN-001"
+   ]
+  },
+  {
+   "id": "CL-C2-VIB-GYRO-1P",
+   "title": "IMU angular-rate amplitude at 1P, sustained band (taken out of the rate loop by the rpm-tracking harmonic notch)",
+   "value": 40.013192,
+   "unit": "deg/s",
+   "limit": null,
+   "status": "CHECKED",
+   "how": "T-C2-HOVER-VIBE: gyro FFT (INS_LOG_BAT) with the notch on, no peak at 1P / 2P",
+   "margin": null,
+   "parts": [
+    "AVN-001"
+   ]
+  },
+  {
+   "id": "CL-C2-VIB-2P-ALLOW",
+   "title": "2P blade-pass load per rotor that brings the IMU to 30 m/s2 (sustained band, resonance dwell, worst corner)",
+   "value": 0.5722701175268669,
+   "unit": "N",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "T-C2-HOVER-VIBE: VIBE < 30 m/s2 in a 60 s tethered hover and at the cruise-rpm throttle step",
+   "margin": null,
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003",
+    "AVN-001"
+   ]
+  },
+  {
+   "id": "CL-C2-VIB-2P-ALLOW-FRAC",
+   "title": "Same 2P allowance as a fraction of the hover thrust per rotor",
+   "value": 0.08977843782488994,
+   "unit": "-",
+   "limit": null,
+   "status": "CHECKED",
+   "how": "T-C2-HOVER-VIBE",
+   "margin": null,
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
+   ]
+  },
+  {
+   "id": "CL-C2-VIB-SPAR-2P",
+   "title": "Spar bending-stress amplitude at the 2P allowance (the IMU limit governs, not the spar)",
+   "value": 13769226.222382205,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C2-SPAR-FATIGUE",
+    "resolved": 105000000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "T-C2-TAP-TEST; spar inspection every 10 flight hours",
+   "margin": 0.8688645121677886,
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003"
    ]
   },
   {
@@ -13515,11 +13888,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "P:mass.allocation_g.wing",
-    "resolved": 405
+    "resolved": 393
    },
    "status": "UNVERIFIED",
    "how": "Weigh the core, the tube and the finished wing (A3 M-items)",
-   "margin": 0.038437037037037054,
+   "margin": 0.009076335877862614,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -13680,16 +14053,12 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-FEA-BOND-R-DESIGN",
    "title": "Pod-to-wing bond interaction, design, hand calc x FEA concentration factor",
-   "value": 1.4191353306899146,
+   "value": 1.4090611534529784,
    "unit": "-",
-   "limit": {
-    "op": "<=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
-   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-BOND-COUPON and T-C3-POD-PROOF.",
-   "margin": -0.4191353306899146,
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then record only.",
+   "margin": null,
    "parts": [
     "POD-001",
     "WNG-001"
@@ -13700,14 +14069,10 @@ window.VIEWER_DATA = {
    "title": "Pod-to-wing bond interaction, 12.75 g crash in the x-z plane (FEA)",
    "value": 11.037391099082349,
    "unit": "-",
-   "limit": {
-    "op": "<=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
-   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-POD-PROOF crash-direction pulls.",
-   "margin": -10.037391099082349,
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then record only.",
+   "margin": null,
    "parts": [
     "POD-001",
     "WNG-001"
@@ -13730,7 +14095,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-FEA-TIED-R-DESIGN",
    "title": "Bond interaction, design, with the handle feet bonded to the pod walls (CR-C3-16)",
-   "value": 0.558861165879075,
+   "value": 0.6005815317788339,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -13739,7 +14104,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-POD-PROOF on the pod built with the brackets.",
-   "margin": 0.441138834120925,
+   "margin": 0.3994184682211661,
    "parts": [
     "POD-001",
     "POD-007",
@@ -13749,16 +14114,12 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-FEA-TIED-R-CRASH",
    "title": "Bond interaction, 12.75 g crash, with the feet bonded to the walls (CR-C3-16)",
-   "value": 4.500188848577868,
+   "value": 4.417268185173726,
    "unit": "-",
-   "limit": {
-    "op": "<=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
-   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-POD-PROOF down and forward pulls.",
-   "margin": -3.500188848577868,
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then post-crash inspection of the aft bond line.",
+   "margin": null,
    "parts": [
     "POD-001",
     "POD-007",
@@ -13768,7 +14129,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-FEA-SADDLE-TIES",
    "title": "Pod force into the handle feet in the crash vs the 2 spar ties (CR-C3-16)",
-   "value": 199.55783048655493,
+   "value": 204.69804269769435,
    "unit": "N",
    "limit": {
     "op": "<=",
@@ -13776,8 +14137,8 @@ window.VIEWER_DATA = {
     "resolved": 444.0
    },
    "status": "UNVERIFIED",
-   "how": "T-D2-HANDLE-PULL repeated at 200 N along +x and -z on the pod.",
-   "margin": 0.5505454268320835,
+   "how": "T-C3-BRACKET-CRASH on a test article to the crash force (CR-H1-23: a crash load does not go on the flight pod); the flight pod sees CL-C3-BRACKET-PROOF-LIMIT in T-C3-POD-PROOF.",
+   "margin": 0.5389683723024902,
    "parts": [
     "POD-007",
     "WNG-002"
@@ -13786,7 +14147,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-FEA-SADDLE-BOND-AREA",
    "title": "Bracket bond area needed, handle feet to pod walls (paper face shear)",
-   "value": 0.0019955783048655495,
+   "value": 0.0020469804269769433,
    "unit": "m2",
    "limit": null,
    "status": "UNVERIFIED",
@@ -13937,14 +14298,10 @@ window.VIEWER_DATA = {
    "title": "Board peel under the forward stop as a cantilever, 85 N crash (FEA)",
    "value": 402040.39101380977,
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "CL-C3-ALLOW-BOARD-FLAT",
-    "resolved": 50000.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
-   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-STOP-PUSH in -x on the built front with the nose-wall bed.",
-   "margin": -7.0408078202761955,
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then record only.",
+   "margin": null,
    "parts": [
     "POD-002",
     "POD-001"
@@ -13955,14 +14312,10 @@ window.VIEWER_DATA = {
    "title": "Board peel under the forward stop with the 1 mm bed to the nose wall, 85 N (FEA)",
    "value": 390796.95101224503,
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "CL-C3-ALLOW-BOARD-FLAT",
-    "resolved": 50000.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
-   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-STOP-PUSH in -x on a built nose (stop, bed, nose wall, floor).",
-   "margin": -6.8159390202449,
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then record only.",
+   "margin": null,
    "parts": [
     "POD-002",
     "POD-001"
@@ -13971,7 +14324,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-STRUT-BEARING",
    "title": "Aft-stop strut bearing stress, design (CR-C3-14)",
-   "value": 723993.4523809522,
+   "value": 727826.7857142856,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -13980,7 +14333,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C3-STOP-PUSH with the strut fitted.",
-   "margin": 0.9517337698412699,
+   "margin": 0.9514782142857143,
    "parts": [
     "POD-002",
     "POD-007"
@@ -13994,11 +14347,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": ">=",
     "ref": "CL-C3-AFT-STOP-BOND",
-    "resolved": 91.223175
+    "resolved": 91.706175
    },
    "status": "UNVERIFIED",
    "how": "T-C3-STOP-PUSH with the strut fitted.",
-   "margin": 25.206385631322487,
+   "margin": 25.068361291522812,
    "parts": [
     "POD-007"
    ]
@@ -14006,7 +14359,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-STRUT-BRIDGE",
    "title": "Stop load into the handle foot bridge vs the 2 spar ties (CR-C3-14)",
-   "value": 91.223175,
+   "value": 91.706175,
    "unit": "N",
    "limit": {
     "op": "<=",
@@ -14015,7 +14368,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-D2-HANDLE-PULL repeated along +x (90 N, 10 s), no slip on the spar.",
-   "margin": 0.7945423986486487,
+   "margin": 0.7934545608108108,
    "parts": [
     "POD-007",
     "WNG-002"
@@ -14026,22 +14379,243 @@ window.VIEWER_DATA = {
    "title": "Tray front piece bending under the forward stop, 85 N crash (FEA)",
    "value": 74410027.8234163,
    "unit": "Pa",
-   "limit": {
-    "op": "<=",
-    "ref": "ASM-C3-PETG-INPLANE",
-    "resolved": 25000000.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
-   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then T-C3-STOP-PUSH in -x.",
-   "margin": -1.9764011129366517,
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py (SU2 + gmsh, 4 levels); then record only.",
+   "margin": null,
    "parts": [
     "POD-002"
    ]
   },
   {
+   "id": "CL-C3-FEA-FWD-T-PEEL",
+   "title": "Forward-stop T as drawn (D-69) with the 1 mm bed: board flat-wise peel, pack crash load (FEA, 2 mm mean)",
+   "value": 42782.65170907565,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C3-ALLOW-BOARD-FLAT",
+    "resolved": 50000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; T-C3-STOP-PUSH in -x on a built nose (T, flange, floor, 1 mm bed, nose-wall offcut).",
+   "margin": 0.14434696581848694,
+   "parts": [
+    "POD-002",
+    "POD-001"
+   ]
+  },
+  {
+   "id": "CL-C3-FEA-FWD-T-CORE-SHEAR",
+   "title": "Forward-stop T with the bed: board core shear under the paper faces (FEA)",
+   "value": 94845.100739084,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C3-ALLOW-PAPER-SHEAR",
+    "resolved": 100000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; T-C3-STOP-PUSH (-x, with the bed).",
+   "margin": 0.05154899260916005,
+   "parts": [
+    "POD-002",
+    "POD-001"
+   ]
+  },
+  {
+   "id": "CL-C3-FEA-FWD-T-UPRIGHT",
+   "title": "Forward-stop T upright, section-linearised stress, with the bed (FEA)",
+   "value": 3725575.5946782865,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-PETG-TENSILE",
+    "resolved": 15000000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; T-C3-STOP-PUSH.",
+   "margin": 0.7516282936881142,
+   "parts": [
+    "POD-002"
+   ]
+  },
+  {
+   "id": "CL-C3-FEA-FWD-T-FLANGE",
+   "title": "Forward-stop T flange at the upright, section-linearised stress, with the bed (FEA)",
+   "value": 7064711.619890289,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-PETG-TENSILE",
+    "resolved": 15000000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; T-C3-STOP-PUSH.",
+   "margin": 0.5290192253406474,
+   "parts": [
+    "POD-002"
+   ]
+  },
+  {
+   "id": "CL-C3-FEA-FWD-T-WALL-SHEAR",
+   "title": "Nose wall behind the bed: core shear under its inner paper face (FEA)",
+   "value": 70227.26828445961,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-C3-ALLOW-PAPER-SHEAR",
+    "resolved": 100000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; T-C3-STOP-PUSH with the nose-wall offcut.",
+   "margin": 0.29772731715540385,
+   "parts": [
+    "POD-001"
+   ]
+  },
+  {
+   "id": "CL-C3-FEA-FWD-T-BED",
+   "title": "1 mm microballoon bed between the T and the nose wall: tension across it (FEA)",
+   "value": 278365.6492612999,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C6-PEEL",
+    "resolved": 1000000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "BUILD.md step 9 inspection: no void behind the stop.",
+   "margin": 0.7216343507387,
+   "parts": [
+    "POD-002",
+    "POD-001"
+   ]
+  },
+  {
+   "id": "CL-C3-FEA-FWD-T-PEEL-NOBED",
+   "title": "Forward-stop T without the bed (record: why BUILD.md step 9 is structural)",
+   "value": 76487.93748800257,
+   "unit": "Pa",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; no test: the bed is a hold point.",
+   "margin": null,
+   "parts": [
+    "POD-002",
+    "POD-001"
+   ]
+  },
+  {
+   "id": "CL-C3-FEA-STEP-R-DESIGN",
+   "title": "Pod-to-wing bond, design, square floor end on the recess step, feet tied (FEA)",
+   "value": 0.6005815317788339,
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; T-C3-POD-PROOF on the built pod.",
+   "margin": 0.3994184682211661,
+   "parts": [
+    "POD-001",
+    "WNG-001"
+   ]
+  },
+  {
+   "id": "CL-C3-FEA-CRASH-FAILSAFE",
+   "title": "Pod retention in the 12.75 g crash, per direction: intact bond or, after the aft-end peel, the released aft end (FEA)",
+   "value": 0.9511937961264694,
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; T-C3-POD-PROOF on a test pod (not the flight pod) to the crash loads; post-crash inspection of the aft bond line.",
+   "margin": 0.04880620387353063,
+   "parts": [
+    "POD-001",
+    "POD-007",
+    "WNG-001"
+   ]
+  },
+  {
+   "id": "CL-C3-FEA-FILLET-FF-DESIGN",
+   "title": "With the WNG-007 fillet as drawn: floor bevel on the fillet, design, mean R over the bevel on the board core (record)",
+   "value": 1.1977202520268448,
+   "unit": "-",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "Re-run python -I redesign/team/C3/pod_fea.py --part m2f / m1tf / m1tfl / m1tg, then --combine; not adopted.",
+   "margin": null,
+   "parts": [
+    "POD-001"
+   ]
+  },
+  {
+   "id": "CL-C3-BRACKET-PROOF-LIMIT",
+   "title": "Handle-bracket force at limit, design row / (1.5 x 1.15 x 1.25): the proof load on the flight pod (CR-H1-23)",
+   "value": 91.91201186707328,
+   "unit": "N",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "T-C3-POD-PROOF (flight pod): pull the brackets to this load along +x and -z components (CL-C3-BRACKET-PROOF-LIMIT-X/-Z), 10 s, then inspect; stop at limit.",
+   "margin": null,
+   "parts": [
+    "POD-007",
+    "POD-001"
+   ]
+  },
+  {
+   "id": "CL-C3-BRACKET-PROOF-LIMIT-X",
+   "title": "Handle-bracket limit force, +x component (CR-H1-23)",
+   "value": 76.21620962710105,
+   "unit": "N",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "T-C3-POD-PROOF (flight pod).",
+   "margin": null,
+   "parts": [
+    "POD-007",
+    "POD-001"
+   ]
+  },
+  {
+   "id": "CL-C3-BRACKET-PROOF-LIMIT-Z",
+   "title": "Handle-bracket limit force, -z component (CR-H1-23)",
+   "value": 51.37029604285736,
+   "unit": "N",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "T-C3-POD-PROOF (flight pod).",
+   "margin": null,
+   "parts": [
+    "POD-007",
+    "POD-001"
+   ]
+  },
+  {
+   "id": "CL-C3-BRACKET-CRASH-F",
+   "title": "Handle-bracket crash force, worst of +-x, +-z (test article only, CR-H1-23)",
+   "value": 204.69804269769435,
+   "unit": "N",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "T-C3-BRACKET-CRASH on a test article: one printed foot + bracket epoxied to a foam-board wall offcut (1 232 mm2 flange) and to a spar stub; pull to this force along +x, then a second article along -z.",
+   "margin": null,
+   "parts": [
+    "POD-007",
+    "POD-001"
+   ]
+  },
+  {
    "id": "CL-C3-BOND-R-DESIGN",
    "title": "Pod-to-wing bond interaction, flight/ground envelope (design)",
-   "value": 0.8773822078402367,
+   "value": 0.8711538350591715,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -14050,7 +14624,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C3-BOND-COUPON (allowables) then T-C3-POD-PROOF (built pod, 1.5 x limit).",
-   "margin": 0.12261779215976332,
+   "margin": 0.12884616494082846,
    "parts": [
     "POD-001",
     "WNG-001"
@@ -14059,7 +14633,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-BOND-SIGMA-DESIGN",
    "title": "Pod-to-wing bond peak tension (design)",
-   "value": 79111.58582523245,
+   "value": 78481.82959108199,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -14068,7 +14642,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "As CL-C3-BOND-R-DESIGN.",
-   "margin": 0.20888414174767544,
+   "margin": 0.21518170408918014,
    "parts": [
     "POD-001",
     "WNG-001"
@@ -14077,7 +14651,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-BOND-R-CRASH",
    "title": "Pod-to-wing bond interaction, 12.75 g crash any axis",
-   "value": 0.7904281634377827,
+   "value": 0.7877565484758214,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -14086,7 +14660,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C3-POD-PROOF: crash-direction pulls on the built pod with a 680 g dummy pack.",
-   "margin": 0.20957183656221734,
+   "margin": 0.21224345152417856,
    "parts": [
     "POD-001",
     "WNG-001"
@@ -14095,7 +14669,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-POD-GROUP-MASS",
    "title": "Pod group mass, heaviest pack (crash case)",
-   "value": 0.82314,
+   "value": 0.8365900000000001,
    "unit": "kg",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14108,7 +14682,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-AFT-STOP-D2",
    "title": "Aft stop as modelled by D2 (ASM-D2-STOP-T): root bending stress, design",
-   "value": 17691767.272727273,
+   "value": 17785440.0,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -14117,7 +14691,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C3-STOP-PUSH on a printed tray: 89 N on a 680 g-pack-size block at 13 mm height.",
-   "margin": -0.17945115151515156,
+   "margin": -0.185696,
    "parts": [
     "POD-002"
    ]
@@ -14125,7 +14699,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-AFT-STOP-BOND",
    "title": "Aft stop design load vs D2's tray rear piece bond (stop on the tray since D-47)",
-   "value": 91.223175,
+   "value": 91.706175,
    "unit": "N",
    "limit": {
     "op": "<=",
@@ -14134,7 +14708,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C3-STOP-PUSH on the built tray rear piece: 90 N at 13 mm height, no peel at the piece ends.",
-   "margin": 0.7657279976373302,
+   "margin": 0.7644875959834613,
    "parts": [
     "POD-002",
     "POD-001"
@@ -14143,7 +14717,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-AFT-STOP-T-REQ",
    "title": "Aft stop thickness required",
-   "value": 0.0032580761752353743,
+   "value": 0.0032666900679433914,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14156,7 +14730,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-AFT-STOP-REC",
    "title": "Aft stop 3.0 mm (C3): root bending stress, design",
-   "value": 17691767.272727273,
+   "value": 17785440.0,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -14165,7 +14739,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C3-STOP-PUSH.",
-   "margin": -0.17945115151515156,
+   "margin": -0.185696,
    "parts": [
     "POD-002"
    ]
@@ -14319,7 +14893,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-OVERHANG-DESIGN",
    "title": "Overhang root (x = 0) wall-top face stress, flight design",
-   "value": 5242790.464969086,
+   "value": 5208106.356062931,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -14328,7 +14902,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C3-POD-PROOF: wing held at the spar, 7.3 x pack weight down on the pack.",
-   "margin": 0.47572095350309135,
+   "margin": 0.4791893643937069,
    "parts": [
     "POD-001"
    ]
@@ -14336,7 +14910,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-OVERHANG-CRASH",
    "title": "Overhang root (x = 0) wall-top face stress, 12.75 g crash",
-   "value": 9115359.656223478,
+   "value": 9055056.249259625,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -14345,7 +14919,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C3-POD-PROOF to 12.75 x pack weight.",
-   "margin": 0.08846403437765223,
+   "margin": 0.09449437507403753,
    "parts": [
     "POD-001"
    ]
@@ -14418,7 +14992,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-POD-MASS-REC",
    "title": "Pod mass with the C3 sizing (D2 model + any C3 delta)",
-   "value": 145.39,
+   "value": 145.49,
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -14427,7 +15001,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-D2-WEIGH.",
-   "margin": 0.004178082191780915,
+   "margin": 0.0034931506849314444,
    "parts": [
     "POD-002"
    ]
@@ -14528,7 +15102,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C3-POD-MASS-FULL-STOP",
    "title": "Pod mass with the full-section forward stop (CR-C5-13 option)",
-   "value": 151.710028,
+   "value": 151.81002800000002,
    "unit": "g",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14541,7 +15115,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-SEP-1L",
    "title": "Mode separation with one board layer (rejected option), R3 geometry, nominal",
-   "value": 0.010786563471246069,
+   "value": 0.009125862572885168,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14550,7 +15124,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "margin": -0.9460671826437697,
+   "margin": -0.9543706871355742,
    "parts": [
     "FIN-002-R",
     "FIN-002-L",
@@ -14571,7 +15145,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-F1-1L",
    "title": "First station mode with one board layer (rejected option), lower quarter",
-   "value": 200.3327512290633,
+   "value": 197.97846486363966,
    "unit": "Hz",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14589,7 +15163,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-F1-UP",
    "title": "First station mode, recommended (two layers), upper quarter",
-   "value": 252.38317439057752,
+   "value": 249.20747724267386,
    "unit": "Hz",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14609,7 +15183,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-F1-LO",
    "title": "First station mode, recommended (two layers), lower quarter",
-   "value": 246.83714673636487,
+   "value": 243.3468317141885,
    "unit": "Hz",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14629,7 +15203,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-PANEL",
    "title": "First fin-panel mode (TE tip with the foot), recommended, upper quarter",
-   "value": 71.36467752211293,
+   "value": 72.43250923553337,
    "unit": "Hz",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14645,7 +15219,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-SEP",
    "title": "Mode separation from the 1P/2P operating points, recommended design (nominal)",
-   "value": 0.2454262708218713,
+   "value": 0.21794096209654246,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14654,7 +15228,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "margin": 0.22713135410935642,
+   "margin": 0.08970481048271223,
    "parts": [
     "FIN-002-R",
     "FIN-002-L",
@@ -14674,17 +15248,49 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C4-D3-SEP-WORST",
-   "title": "Mode separation, recommended design, worst tube E/G corner",
-   "value": 0.17973655688737922,
+   "title": "Mode separation, recommended design, worst tube E/G corner (record: 70 GPa / 3 GPa assumed corner; D-93 replaces it by the measured tube, CL-C4-D3-TUBE-E-REQ)",
+   "value": 0.12800607378684004,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "ref": "P:requirements.vibration_sep_frac",
-    "resolved": 0.2
-   },
+   "limit": null,
    "status": "UNVERIFIED",
    "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the bought tube (I1, H1), then T-C4-TAP-D3.",
-   "margin": -0.10131721556310397,
+   "margin": null,
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ]
+  },
+  {
+   "id": "CL-C4-D3-TUBE-E-REQ",
+   "title": "Least tube axial modulus for 20 % station-mode separation at the nominal shear modulus, drawn D-90/D-91 station (D-93)",
+   "value": 78631845509.55621,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-J1-E-TUBE",
+    "resolved": 100000000000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "T-C4-TUBE-BEND: measured E >= this value; then re-run CALC-C4-D3-WORST with the measured E and G (sep_op >= 0.20) before the first hover, and T-C4-TAP-D3.",
+   "margin": 0.21368154490443786,
+   "parts": [
+    "FIN-002-R",
+    "FIN-002-L"
+   ]
+  },
+  {
+   "id": "CL-C4-D3-TUBE-G-REQ",
+   "title": "Least tube shear modulus for 20 % station-mode separation at the nominal axial modulus (D-93)",
+   "value": 4312333453.765495,
+   "unit": "Pa",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C4-G-TUBE",
+    "resolved": 5000000000.0
+   },
+   "status": "UNVERIFIED",
+   "how": "T-C4-TUBE-TORSION: measured G >= this value (two lasers 0.30 m apart, CR-H1-24).",
+   "margin": 0.13753330924690094,
    "parts": [
     "FIN-002-R",
     "FIN-002-L"
@@ -14693,7 +15299,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-SEP-WHIRL",
    "title": "Whirl separation incl. prop gyroscopics, recommended design",
-   "value": 0.23779857701038098,
+   "value": 0.21205736789493446,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14702,7 +15308,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Tap test of one finished quarter, upper and lower (T-C4-TAP): FFT of the FC raw IMU; then hover VIBE < 30 m/s2, Clip 0.",
-   "margin": 0.18899288505190487,
+   "margin": 0.06028683947467223,
    "parts": [
     "FIN-002-R",
     "FIN-002-L"
@@ -14711,7 +15317,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-SEP-BAND",
    "title": "Separation from the whole 80-330 Hz band (B4 rule), recommended design",
-   "value": -0.25200864625343977,
+   "value": -0.26258535844185305,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14720,7 +15326,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Needs every station mode >= 396 Hz; R-VIBRATION (operating points) is the criterion of record (CR-C4-06).",
-   "margin": -2.2600432312671987,
+   "margin": -2.3129267922092653,
    "parts": [
     "FIN-002-R",
     "FIN-002-L"
@@ -14728,17 +15334,17 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C4-D3-MOUNT-K-REQ",
-   "title": "Mount rocking stiffness needed for 20 % separation (worst of nominal / low E,G)",
-   "value": 2228.539449850484,
+   "title": "Mount rocking stiffness needed for 20 % separation, nominal tube E,G (D-93: the low E/G corner is closed on the measured tube, CL-C4-D3-TUBE-E-REQ)",
+   "value": 1641.8574642609717,
    "unit": "N m/rad",
    "limit": {
     "op": "<=",
     "ref": "ASM-C4-MOUNT-K-ROCK",
-    "resolved": 1500.0
+    "resolved": 2200.0
    },
    "status": "UNVERIFIED",
    "how": "T-C4-MOUNT-STIFF: side load at the prop nut on a mount clamped on a tube stub; rotation from two dial gauges; k = F a / theta.",
-   "margin": -0.48569296656698924,
+   "margin": 0.2537011526086492,
    "parts": [
     "FIN-003-UR",
     "FIN-003-UL",
@@ -14748,17 +15354,17 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C4-D3-MOUNT-K-EST",
-   "title": "Mount rocking stiffness estimate, R5 mount (cheeks 17 mm, 7.5 mm face_ahead), weaker axis, collar and body in series",
-   "value": 1531.0514448517654,
+   "title": "Mount rocking stiffness estimate, D-91 mount (grip 18 mm, 2.5 mm cheeks, D-80 outboard cheek), weaker axis, collar and body in series",
+   "value": 2207.963128716542,
    "unit": "N m/rad",
    "limit": {
     "op": ">=",
     "ref": "ASM-C4-MOUNT-K-ROCK",
-    "resolved": 1500.0
+    "resolved": 2200.0
    },
    "status": "UNVERIFIED",
-   "how": "T-C4-MOUNT-STIFF (pass level >= 1 100 N m/rad, D-70) in both directions.",
-   "margin": 0.020700963234510254,
+   "how": "T-C4-MOUNT-STIFF (pass level >= CL-C4-D3-MOUNT-K-REQ, CR-H1-24 / D-91) in both directions.",
+   "margin": 0.003619603962064585,
    "parts": [
     "FIN-003-UR",
     "FIN-003-UL",
@@ -14768,8 +15374,8 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C4-D3-MOUNT-K-EST-CHANGE",
-   "title": "Change of the mount stiffness estimate, R5 cheeks vs R4 (fraction)",
-   "value": 0.11111099816406367,
+   "title": "Change of the mount stiffness estimate, D-91 mount vs R4 (fraction)",
+   "value": 0.6023577288059128,
    "unit": "-",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14785,7 +15391,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-FACE",
    "title": "Fin face margin as drawn (D5 cheeks to |z| 0.196): min(intact at ultimate, LE fillet cracked at limit), both quarters",
-   "value": -0.7315939602751234,
+   "value": -0.739732363971403,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14805,7 +15411,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-EDGE",
    "title": "Edge-strip margin, recommended design",
-   "value": 1.5737001772723604,
+   "value": 1.576384525575632,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14825,7 +15431,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-TUBE",
    "title": "Motor tube bending margin at the bore end",
-   "value": 6.75749179329219,
+   "value": 6.686221714419981,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14843,7 +15449,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-BRACE",
    "title": "Brace buckling margin (strip as drawn, fin_detail.brace.t_m; design load incl. fitting factor)",
-   "value": 0.7945784514518002,
+   "value": 0.889960775959308,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14863,7 +15469,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-BRACE-F",
    "title": "Brace design force (compression, incl. 1.5 x 1.15)",
-   "value": 163.2845397356029,
+   "value": 166.17287177736273,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14883,7 +15489,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-BRACE-END",
    "title": "Brace-end bond margin (10 mm engagement in the ear and anchor slots)",
-   "value": 1.3517229532066466,
+   "value": 1.3108465051652987,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14911,7 +15517,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-COLLAR",
    "title": "Station-collar bond margin on the tube (torsion + brace shear)",
-   "value": -0.12935725935409692,
+   "value": 0.27587428656664015,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14931,7 +15537,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-ANCHOR",
    "title": "Anchor bond margin on the spar (brace tension, peel knock-down)",
-   "value": 0.3544951847299571,
+   "value": 0.33095204077017404,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14951,7 +15557,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-EAR",
    "title": "Station-collar ear root margin (brace force, interlayer bending)",
-   "value": 4.879307383016616,
+   "value": 9.75432412019235,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -14971,7 +15577,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-COLLAR-T",
    "title": "Station-collar torsion into the tube, limit (envelope: LE fillet intact or cracked, both quarters, every case)",
-   "value": 11.107957316042274,
+   "value": 11.09971253440716,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -14987,7 +15593,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-COLLAR-T-INTACT",
    "title": "Station-collar torsion, limit, LE fillet intact",
-   "value": 11.107957316042274,
+   "value": 11.09971253440716,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15003,16 +15609,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-COLLAR-H-REQ",
    "title": "Station-collar height needed for MS 0 on the envelope torsion + brace shear",
-   "value": 0.017228651086979675,
+   "value": 0.017243078124257596,
    "unit": "m",
    "limit": {
     "op": "<=",
     "ref": "P:fin_detail.station_collar.height_m",
-    "resolved": 0.015
+    "resolved": 0.022
    },
    "status": "UNVERIFIED",
    "how": "C6 lap-shear coupon on scuffed CF; T-C4-FIN-PROOF.",
-   "margin": -0.14857673913197836,
+   "margin": 0.2162237216246547,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -15023,7 +15629,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-TUBE-T-ROOT",
    "title": "Tube torsion at the bore end, limit (for C1's J-FINHALF comparison)",
-   "value": 12.509753038311942,
+   "value": 12.503835793329436,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15053,7 +15659,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-STRIP-Q",
    "title": "Edge-strip-to-paper shear flow per face, limit, FE (CR-C6-02a)",
-   "value": 4057.4086836666884,
+   "value": 3989.5257206041492,
    "unit": "N/m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15069,7 +15675,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-STRIP-PAPER",
    "title": "Edge strip bonded to the paper face only (no pins): margin on the paper-to-foam shear",
-   "value": -0.8856984464471248,
+   "value": -0.8837535716220928,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15089,7 +15695,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-STRIP-END-F",
    "title": "Edge-strip force per face at the collar end, design (for C6's tail anchorage)",
-   "value": 2235.218327889846,
+   "value": 2233.257001692858,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15109,7 +15715,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-STRIP-END-F-COINC",
    "title": "Coincident force on the other strip of the pair at the collar end, design, in the case that gives CL-C4-D3-STRIP-END-F (+ = same sense; CR-C6-29, CR-C6-34b)",
-   "value": 2160.7300637414487,
+   "value": 2152.7219961770406,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15129,7 +15735,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-STRIP-PAIR-F",
    "title": "Sum of the two strips of a pair at the collar end (tail tongue net section), design, worst case",
-   "value": 166.22035861587182,
+   "value": 176.86742692589127,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15149,7 +15755,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-STRIP-PIN-F",
    "title": "Through-pin shear per pin if the pins carry the whole strip shear flow, design (CR-C6-02b)",
-   "value": 131.23181211234444,
+   "value": 103.22897802063237,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15165,7 +15771,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-BRACE-10X2-SEP",
    "title": "Mode separation with a 10 x 2 brace",
-   "value": 0.2454262708218713,
+   "value": 0.21794096209654246,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15174,7 +15780,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-TAP-D3 on a 10 x 2 quarter.",
-   "margin": 0.22713135410935642,
+   "margin": 0.08970481048271223,
    "parts": [
     "FIN-009-UR",
     "FIN-009-UL",
@@ -15185,7 +15791,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-BRACE-10X2-MS",
    "title": "Brace buckling margin with a 10 x 2 strip (G2 design)",
-   "value": 0.7945784514518002,
+   "value": 0.889960775959308,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15205,7 +15811,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-BRACE-10X3-SEP",
    "title": "Mode separation with a 10 x 3 brace",
-   "value": 0.2552828841873982,
+   "value": 0.23003970673670593,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15214,7 +15820,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-TAP-D3.",
-   "margin": 0.2764144209369909,
+   "margin": 0.1501985336835296,
    "parts": [
     "FIN-009-UR",
     "FIN-009-UL",
@@ -15225,7 +15831,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-BRACE-SAVE",
    "title": "Mass saved by 10 x 2 braces instead of 10 x 3 (four braces)",
-   "value": 9.360835143450227,
+   "value": 9.032771459408142,
    "unit": "g",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15305,7 +15911,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MOUNT-G3-ROCK",
    "title": "Mount rocking moment from the G3 set-down on a lower can, design (CR-C1-24)",
-   "value": 1.7147280996711713,
+   "value": 1.7147280996711718,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15339,7 +15945,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-MOUNT-SLIP",
    "title": "Slip clamp holds in flight with the cant (C1 moment + cant twist + pull-off)",
-   "value": 0.49202015786371245,
+   "value": 0.49202176831440436,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15359,7 +15965,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FOOT-DEFL",
    "title": "Foot deflection under L4 (limit), recommended design",
-   "value": 0.019013482557909894,
+   "value": 0.018925858071998487,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15393,7 +15999,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-BLOCK-MS",
    "title": "Through-core block minimum margin, D3 geometry with the R 3 mm vertical edges (D-68)",
-   "value": 0.10509008447148771,
+   "value": 0.1055345436568067,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15411,7 +16017,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-SPAR-COUPLE",
    "title": "Bearing couple on the spar at each block (design), D3 geometry",
-   "value": 1351.0484035864736,
+   "value": 1350.505240212493,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15425,7 +16031,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-FACE-ROOT-FREE",
    "title": "Fin face margin with the root fillet absent (primary path only), D5 shoe as drawn, ultimate (CR-C2-12)",
-   "value": -0.7315939602751234,
+   "value": -0.739732363971403,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15445,7 +16051,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-L4-SHARE",
    "title": "Root fillet intact: share of the applied root moment about the chord axis it carries into the wing skin, L4 corner + side, worst quarter and sense (CR-C2-12)",
-   "value": 0.007559420207407487,
+   "value": 0.007106466488425624,
    "unit": "-",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15461,7 +16067,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-FX",
    "title": "Root fillet intact, L4, aft of the elevon hinge (fin-root tab): chordwise force into the wing, limit (CR-C2-12)",
-   "value": 3.7684694442363043,
+   "value": 3.5727327578153094,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15477,7 +16083,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-FY",
    "title": "Root fillet intact, L4, aft of the elevon hinge (fin-root tab): out-of-plane (spanwise) force into the wing, limit (CR-C2-12)",
-   "value": 7.635970373922005,
+   "value": 7.809995439308542,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15493,7 +16099,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-FZ",
    "title": "Root fillet intact, L4, aft of the elevon hinge (fin-root tab): force normal to the skin into the wing, limit (CR-C2-12)",
-   "value": 16.21594507063242,
+   "value": 16.034319324402613,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15509,7 +16115,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-L4-AFT-MX",
    "title": "Root fillet intact, L4, aft of the elevon hinge (fin-root tab): moment about the chordwise axis at the segment centroid into the wing, limit (CR-C2-12)",
-   "value": 0.014860341638767368,
+   "value": 0.014883717306406596,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15525,7 +16131,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-FX",
    "title": "Root fillet intact, L4, ahead of the elevon hinge: chordwise force into the wing, limit (CR-C2-12)",
-   "value": 13.972096216505946,
+   "value": 13.382981884081776,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15541,7 +16147,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-FY",
    "title": "Root fillet intact, L4, ahead of the elevon hinge: out-of-plane (spanwise) force into the wing, limit (CR-C2-12)",
-   "value": 2.969945734379921,
+   "value": 2.7654705157090658,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15557,7 +16163,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-FZ",
    "title": "Root fillet intact, L4, ahead of the elevon hinge: force normal to the skin into the wing, limit (CR-C2-12)",
-   "value": 8.940793525796424,
+   "value": 8.949777254564019,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15573,7 +16179,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-L4-FORE-MX",
    "title": "Root fillet intact, L4, ahead of the elevon hinge: moment about the chordwise axis at the segment centroid into the wing, limit (CR-C2-12)",
-   "value": 0.01700920869949796,
+   "value": 0.017001920474179345,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15589,7 +16195,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-G2-SHARE",
    "title": "Root fillet intact: share of the applied root moment about the chord axis it carries into the wing skin, G2 tube-end lateral, worst quarter and sense (CR-C2-12)",
-   "value": 0.00012880195622245154,
+   "value": 0.00011890312197136176,
    "unit": "-",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15605,7 +16211,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-G2-AFT-FX",
    "title": "Root fillet intact, G2, aft of the elevon hinge (fin-root tab): chordwise force into the wing, limit (CR-C2-12)",
-   "value": 2.295788735035228,
+   "value": 2.325552853880224,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15621,7 +16227,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-G2-AFT-FY",
    "title": "Root fillet intact, G2, aft of the elevon hinge (fin-root tab): out-of-plane (spanwise) force into the wing, limit (CR-C2-12)",
-   "value": 0.07497383340849012,
+   "value": 0.07260347268193523,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15637,7 +16243,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-G2-AFT-FZ",
    "title": "Root fillet intact, G2, aft of the elevon hinge (fin-root tab): force normal to the skin into the wing, limit (CR-C2-12)",
-   "value": 6.240054252217517,
+   "value": 6.188476123400305,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15653,7 +16259,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-G2-AFT-MX",
    "title": "Root fillet intact, G2, aft of the elevon hinge (fin-root tab): moment about the chordwise axis at the segment centroid into the wing, limit (CR-C2-12)",
-   "value": 0.00020112106492339214,
+   "value": 0.00019904634200890804,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15669,7 +16275,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-G2-FORE-FX",
    "title": "Root fillet intact, G2, ahead of the elevon hinge: chordwise force into the wing, limit (CR-C2-12)",
-   "value": 9.593128415213185,
+   "value": 10.02106325474674,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15685,7 +16291,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-G2-FORE-FY",
    "title": "Root fillet intact, G2, ahead of the elevon hinge: out-of-plane (spanwise) force into the wing, limit (CR-C2-12)",
-   "value": 0.03754674527169626,
+   "value": 0.03289956336089972,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15701,7 +16307,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-G2-FORE-FZ",
    "title": "Root fillet intact, G2, ahead of the elevon hinge: force normal to the skin into the wing, limit (CR-C2-12)",
-   "value": 4.489277451123377,
+   "value": 4.4383539423835625,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15717,7 +16323,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FILLET-G2-FORE-MX",
    "title": "Root fillet intact, G2, ahead of the elevon hinge: moment about the chordwise axis at the segment centroid into the wing, limit (CR-C2-12)",
-   "value": 0.000458379996688494,
+   "value": 0.00044791663277082415,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15733,16 +16339,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-FINS-MASS",
    "title": "Fins subsystem mass, recommended design (D3 CAD + second board layer)",
-   "value": 433.3,
+   "value": 432.0,
    "unit": "g",
    "limit": {
     "op": "<=",
     "ref": "P:mass.allocation_g.fins",
-    "resolved": 438
+    "resolved": 434
    },
    "status": "UNVERIFIED",
    "how": "T-D3-WEIGH; A3 roll-up.",
-   "margin": 0.01073059360730591,
+   "margin": 0.004608294930875576,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -15769,7 +16375,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-SEC-T-L4",
    "title": "Half-fin torsion about the tube axis at the wing plane, L4, limit (FE reactions)",
-   "value": 12.758500001391377,
+   "value": 12.758500005360755,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15791,7 +16397,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-SEC-T-VS-C1",
    "title": "FE wing-plane torsion vs C1's CL-C1-FINHALF-T-WINGPLANE-LIM, |ratio - 1|",
-   "value": 0.007082218639187232,
+   "value": 0.007100037938080561,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -15800,7 +16406,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Re-run fin_structures_d3.py after any C1 or D5 foot-geometry change.",
-   "margin": 0.8583556272162554,
+   "margin": 0.8579992412383888,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -15811,7 +16417,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-EQ-RESID",
    "title": "FE equilibrium: wing-plane reaction torque vs applied torque, worst case",
-   "value": 1.2722495626449337e-07,
+   "value": 1.811163996556786e-07,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -15820,7 +16426,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Re-run fin_structures_d3.py.",
-   "margin": 0.9998727750437355,
+   "margin": 0.9998188836003443,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -15847,7 +16453,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-BRACE-G3",
    "title": "Brace force under the G3 set-down, lower quarter, limit",
-   "value": 2.585231818075683,
+   "value": 2.6488568419268614,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15861,7 +16467,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-COLLAR-16",
    "title": "Station-collar bond margin if the collar stays 16 mm (R3) instead of 12 mm",
-   "value": -0.07131440997770333,
+   "value": -0.07209142795153434,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15881,7 +16487,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-F-WHIRL-CRUISE",
    "title": "Lowest station whirl frequency at cruise rpm (both cant senses)",
-   "value": 245.32537665352856,
+   "value": 242.17127883222557,
    "unit": "Hz",
    "limit": null,
    "status": "UNVERIFIED",
@@ -15915,7 +16521,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-BRACE-ROUND-MS",
    "title": "Brace buckling margin if the 10 x 2 edges are sanded round (G2 design)",
-   "value": 0.6470815541378723,
+   "value": 0.7346243791171949,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15935,7 +16541,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-FACE-SHOE",
    "title": "Fin face margin with the D5 shoe cheeks to |z| 0.171 m (CR-C4-30), 36 x 30 mesh",
-   "value": -0.7376696318379597,
+   "value": -0.7454768980383659,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15955,7 +16561,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-FACE-SHOE-INTACT",
    "title": "Fin face margin, cheeks to |z| 0.171 m, LE fillet intact, ultimate",
-   "value": -0.7376696318379597,
+   "value": -0.7454768980383659,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15975,7 +16581,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-FACE-SHOE-FS",
    "title": "Fin face margin, cheeks to |z| 0.171 m, LE fillet cracked (fail-safe), limit",
-   "value": -0.3894789066128618,
+   "value": -0.3878404016453808,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -15995,7 +16601,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-MS-FACE-DRAWN-FINE",
    "title": "Fin face margin with the shoe cheeks as drawn (|z| 0.196), 36 x 30 mesh",
-   "value": -0.7545756403306062,
+   "value": -0.7617727861546735,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16031,7 +16637,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-D3-BRACE-TAPE-MASS",
    "title": "Tape fairing on four braces (CR-B1-18), mass",
-   "value": 1.4285761821595817,
+   "value": 1.3785097128678991,
    "unit": "g",
    "limit": null,
    "status": "UNVERIFIED",
@@ -16197,7 +16803,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SEP-REC",
    "title": "Mode separation, braced design, layers per params.json (nominal E, G)",
-   "value": 0.9313072218313194,
+   "value": 0.9157745537184947,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16206,7 +16812,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "margin": 3.656536109156597,
+   "margin": 3.5788727685924737,
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
@@ -16219,7 +16825,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SEP-REC-WORST",
    "title": "Mode separation, braced design, layers per params.json, worst tube E/G corner",
-   "value": 0.8713463385315134,
+   "value": 0.8562959098519178,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16228,7 +16834,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-TUBE-BEND and T-C4-TUBE-TORSION on the US-stock tube (I1), then T-C4-TAP.",
-   "margin": 3.356731692657567,
+   "margin": 3.2814795492595894,
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
@@ -16237,7 +16843,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SEP-REC-WHIRL",
    "title": "Whirl separation incl. prop gyroscopics, braced design (layers per params.json)",
-   "value": 0.9289014866529641,
+   "value": 0.913349704343488,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16246,7 +16852,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "margin": 3.644507433264821,
+   "margin": 3.56674852171744,
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
@@ -16291,7 +16897,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SEP-1LB",
    "title": "Mode separation, recommended 1-layer fin + brace + edge strips (nominal)",
-   "value": 0.46466133069161697,
+   "value": 0.4528816935162592,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16300,7 +16906,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Tap test of one finished fin quarter on the bench (T-C4-TAP): FFT of the FC IMU raw log; hover VIBE < 30 m/s2, Clip 0.",
-   "margin": 1.3233066534580846,
+   "margin": 1.2644084675812957,
    "parts": [
     "FIN-002-L",
     "FIN-002-R",
@@ -16313,7 +16919,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SEP-1LB-WORST",
    "title": "Mode separation, recommended 1-layer fin + brace + edge strips, worst tube E/G corner",
-   "value": 0.2837508727381062,
+   "value": 0.2734262200777786,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16322,7 +16928,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Passes only if the measured tube E and G are near nominal (T-C4-TUBE-BEND/TORSION).",
-   "margin": 0.4187543636905308,
+   "margin": 0.367131100388893,
    "parts": [
     "FIN-002-L",
     "FIN-002-R"
@@ -16331,7 +16937,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-MS-FACE-2L",
    "title": "Fin face margin, 2L fin with brace + edge strips, worst of L1/L4/L5/G2/H2",
-   "value": 0.7541382580350016,
+   "value": 0.756628843959056,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16351,7 +16957,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-MS-FACE-1L",
    "title": "Fin face margin, 1L fin with brace + edge strips, worst of L1/L4/L5/G2/H2",
-   "value": 0.5030117985679874,
+   "value": 0.5051458264810225,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16371,7 +16977,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-MS-EDGE",
    "title": "Fin edge-strip margin (1-layer fin, L4 governs)",
-   "value": 1.5512452424505048,
+   "value": 1.5548675883131757,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16391,7 +16997,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-MS-TUBE",
    "title": "Motor tube bending margin at the block face",
-   "value": 4.779602961012201,
+   "value": 4.787809040336882,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16409,7 +17015,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-MS-STRUT",
    "title": "Brace buckling margin (design load incl. fitting factor)",
-   "value": 0.2086579277916656,
+   "value": 0.21037402193708954,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16427,7 +17033,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-FOOT-DEFL-L4",
    "title": "Foot deflection under L4 (limit), 1-layer fin",
-   "value": 0.014921982765147343,
+   "value": 0.014900826059141354,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -16443,7 +17049,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-BLOCK-M-DESIGN",
    "title": "Through-core block design moment",
-   "value": 32.42516168607536,
+   "value": 32.41212576509983,
    "unit": "N m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -16457,7 +17063,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-BLOCK-MS",
    "title": "Through-core block minimum margin",
-   "value": 0.049185207752087345,
+   "value": 0.04960718240305817,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16489,7 +17095,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SPAR-COUPLE",
    "title": "Bearing couple force on the spar at each block (design)",
-   "value": 1351.0484035864736,
+   "value": 1350.505240212493,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -16503,7 +17109,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-CODE-DIFF",
    "title": "In-house hex8 vs SU2, fin quarter (best SU2 solver trial)",
-   "value": 0.9985689306438894,
+   "value": 0.9999999999999999,
    "unit": "-",
    "limit": null,
    "status": "UNVERIFIED",
@@ -16516,7 +17122,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-FACE-DRAWN",
    "title": "Face hot-spot stress, D5 shoe as drawn, ult",
-   "value": 14112889.651778717,
+   "value": 23610277.125290226,
    "unit": "Pa",
    "limit": {
     "op": "<=",
@@ -16525,7 +17131,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-FIN-PROOF on the test article (CR-C4-33) decides; strain gauge 5 mm below the leg edge.",
-   "margin": -0.41128896517787167,
+   "margin": -1.3610277125290227,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -16536,7 +17142,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-MS-FACE-DRAWN",
    "title": "Face MS at the D5 shoe as drawn (3-D)",
-   "value": -0.2914278899119961,
+   "value": -0.5764556279058467,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16553,7 +17159,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-MS-FACE-PROP",
    "title": "Face MS with the CR-C4-30 cheeks (3-D)",
-   "value": 0.9632032663003054,
+   "value": 0.6315052152025724,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16570,7 +17176,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-F1-UP",
    "title": "First station mode, upper, 3-D, A3 masses",
-   "value": 236.5961485619814,
+   "value": 236.67272758640036,
    "unit": "Hz",
    "limit": null,
    "status": "UNVERIFIED",
@@ -16584,7 +17190,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-F1-LO",
    "title": "First station mode, lower, 3-D, A3 masses",
-   "value": 217.04527948006773,
+   "value": 228.85957162332238,
    "unit": "Hz",
    "limit": null,
    "status": "UNVERIFIED",
@@ -16598,7 +17204,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-SEP",
    "title": "Station-mode separation from 1P/2P, 3-D",
-   "value": 0.0951102643844004,
+   "value": 0.14543281654593176,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16607,7 +17213,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-TAP-D3: tap each motor bell, FFT; first station peak at least 20 % from 90/98/181/197/155 Hz.",
-   "margin": -0.524448678077998,
+   "margin": -0.27283591727034123,
    "parts": [
     "FIN-001-UR",
     "FIN-001-LR",
@@ -16617,7 +17223,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-SEP-PLATE-A3",
    "title": "Separation, shell model with A3 masses",
-   "value": 0.2292544771734697,
+   "value": 0.20244473274501984,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16626,7 +17232,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Re-run sim_fin.py; T-C4-TAP-D3.",
-   "margin": 0.14627238586734842,
+   "margin": 0.012223663725099143,
    "parts": [
     "FIN-001-LR"
    ]
@@ -16634,7 +17240,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-MS-FACE-FAR",
    "title": "Face MS away from the shoe and clamps, shoe as drawn (3-D)",
-   "value": -0.27866599508586665,
+   "value": -0.3432915275958319,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16651,7 +17257,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-MS-STRIP",
    "title": "Edge-strip MS under L4, shoe as drawn (3-D)",
-   "value": 0.937403177560397,
+   "value": 0.9204564596620979,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -16668,7 +17274,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-FOOT-DEFL",
    "title": "Foot deflection under L4 limit, shoe as drawn (3-D)",
-   "value": 0.0070407768159298076,
+   "value": 0.0069813364855230604,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -16681,7 +17287,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C4-SIM-BOARD-SHARE",
    "title": "Share of the foot side-load moment carried by the bare board below the shoe legs",
-   "value": 0.5571496414668804,
+   "value": 0.9320881661985656,
    "unit": "-",
    "limit": null,
    "status": "UNVERIFIED",
@@ -16694,7 +17300,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-TIPOVER-A3-LAYOUT",
    "title": "Tip-over, D5 pads, pre-D-47 bay (pack at -0.001)",
-   "value": 32.75960413936551,
+   "value": 32.73518337585349,
    "unit": "deg",
    "limit": {
     "op": ">=",
@@ -16703,7 +17309,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-TILT-BOARD with the pack at A3's nominal station.",
-   "margin": 0.09198680464551691,
+   "margin": 0.09117277919511627,
    "parts": [
     "GER-004-UR",
     "GER-004-UL",
@@ -16714,7 +17320,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-TIPOVER-R1",
    "title": "Tip-over, D5 splayed pads, B3 target CG, pod side",
-   "value": 32.047888840737706,
+   "value": 32.043905248271834,
    "unit": "deg",
    "limit": {
     "op": ">=",
@@ -16723,7 +17329,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-TILT-BOARD: built aircraft, pack in at its trimmed station, tipping toward the pod side about the upper pad edges.",
-   "margin": 0.06826296135792352,
+   "margin": 0.06813017494239446,
    "parts": [
     "GER-004-UR",
     "GER-004-UL",
@@ -16734,7 +17340,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-TIPOVER-WORST",
    "title": "Tip-over, worst flying CG (D-62 range, pack 546-590 g)",
-   "value": 31.791252989185136,
+   "value": 31.787944340156194,
    "unit": "deg",
    "limit": {
     "op": ">=",
@@ -16743,7 +17349,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-TILT-BOARD repeated with the pack slid to the B3 forward-limit mark (and with the heaviest pack).",
-   "margin": 0.05970843297283786,
+   "margin": 0.059598144671873146,
    "parts": [
     "GER-004-UR",
     "GER-004-UL",
@@ -16754,7 +17360,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-TIPOVER-D47",
    "title": "Tip-over, pack at its D-62 flight station, worst of 546 / 551 / 590 g",
-   "value": 32.016935135139136,
+   "value": 32.000575382251014,
    "unit": "deg",
    "limit": {
     "op": ">=",
@@ -16763,7 +17369,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-TILT-BOARD with each weighed pack at its marked station.",
-   "margin": 0.06723117117130452,
+   "margin": 0.06668584607503382,
    "parts": [
     "GER-004-UR",
     "GER-004-UL",
@@ -16774,7 +17380,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-TIPOVER-STATION-PLUS5",
    "title": "Tip-over, worst D-62 station with the CG a further 5 mm higher in the stance",
-   "value": 31.617234173510894,
+   "value": 31.601187234413914,
    "unit": "deg",
    "limit": {
     "op": ">=",
@@ -16783,7 +17389,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-TILT-BOARD with the worst pack at its mark and ballast taped to the pod nose.",
-   "margin": 0.05390780578369648,
+   "margin": 0.05337290781379712,
    "parts": [
     "GER-004-UR",
     "GER-004-UL",
@@ -16962,7 +17568,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-DROP-ONE-FOOT",
    "title": "Stroke when one foot lands first (10 deg pitch + roll)",
-   "value": 0.013989593865373287,
+   "value": 0.013921989966256883,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -16971,7 +17577,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-AIRCRAFT-DROP corner drop: stroke of the first foot.",
-   "margin": 0.6318527930164924,
+   "margin": 0.6336318429932399,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -16994,7 +17600,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-DYN-LEVEL-CUR",
    "title": "Level 1.5 m/s landing stroke, D5-R4 foot as delivered (per-type plateaus)",
-   "value": 0.015908191776946967,
+   "value": 0.015930788079008218,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -17003,7 +17609,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-AIRCRAFT-DROP level drop with lift offload: compare the upper and lower pair flange gaps.",
-   "margin": 0.5454802349443724,
+   "margin": 0.5448346263140509,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -17026,7 +17632,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-DYN-PAIR-CUR",
    "title": "Pad pair first, worst tilt (pitch or roll), D5-R4 foot as delivered",
-   "value": 0.021624113376816412,
+   "value": 0.021679970002449256,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -17035,7 +17641,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-AIRCRAFT-DROP tilted drops; the model is validated, not the full design case (no rotor lift).",
-   "margin": 0.38216818923381674,
+   "margin": 0.3805722856443069,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -17090,7 +17696,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-DROP-PAIR-PITCH",
    "title": "Pad pair first in pitch, worst tilt, proposed foot",
-   "value": 0.021607390503540547,
+   "value": 0.021675102099748933,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -17099,7 +17705,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-AIRCRAFT-DROP tilted drops validate the model (stroke within 3 mm).",
-   "margin": 0.3826459856131272,
+   "margin": 0.3807113685786018,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -17122,7 +17728,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-DROP-PAIR-ROLL",
    "title": "One fin's pair first in roll, worst tilt, proposed foot",
-   "value": 0.020183009394083518,
+   "value": 0.020199114832972265,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -17131,7 +17737,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "As CL-C5-DROP-PAIR-PITCH, roll drops.",
-   "margin": 0.42334258874047087,
+   "margin": 0.4228824333436495,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -17154,7 +17760,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-DYN-LEVEL-PROP",
    "title": "Level 1.5 m/s landing stroke, proposed biased cartridges",
-   "value": 0.015737476960002106,
+   "value": 0.015757825144167126,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -17163,7 +17769,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-AIRCRAFT-DROP level drop: both pair gaps equal within 2 mm.",
-   "margin": 0.550357801142797,
+   "margin": 0.5497764244523677,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -17186,7 +17792,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-DYN-LEVEL-FREE-PROP",
    "title": "Level free drop 0.115 m, proposed foot",
-   "value": 0.018117874347959695,
+   "value": 0.01814508296204187,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -17195,7 +17801,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C5-AIRCRAFT-DROP level drops (no lift: harder than design).",
-   "margin": 0.4823464472011515,
+   "margin": 0.4815690582273751,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -17250,7 +17856,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-DYN-N-TILTED",
    "title": "Peak load factor, tilted landings, proposed foot",
-   "value": 5.856932036576567,
+   "value": 5.850486281198429,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -17259,7 +17865,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "As CL-C5-DYN-N-LEVEL, tilted drops.",
-   "margin": 0.11258605506415645,
+   "margin": 0.11356268466690464,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -17314,12 +17920,12 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-FOOT-SIDE-LOAD",
    "title": "Foot side load at the pad, mat friction, one foot first",
-   "value": 26.197745423731188,
+   "value": 26.16060170050553,
    "unit": "N",
    "limit": {
     "op": "<=",
     "ref": "CL-C5-FOOT-SIDE-C1",
-    "resolved": 26.197745423731188
+    "resolved": 26.16060170050553
    },
    "status": "UNVERIFIED",
    "how": "T-D5-PAD-MU gives mu; C4's T-C4-FIN-PROOF at 1.5 x this load.",
@@ -17517,7 +18123,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-PACK-ROOM-MARGIN-TRIM",
    "title": "Block B gap margin, worst pack trimmed to the D-62 target",
-   "value": -0.0014955695844304194,
+   "value": -0.0008023451039002004,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -18291,7 +18897,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C5-FEA-SHOE-SF-HAND",
    "title": "As-drawn D5-R5 shoe reserve factor at D5's hand side-load basis (record)",
-   "value": 0.32863327408475596,
+   "value": 0.329099878924931,
    "unit": "-",
    "limit": null,
    "status": "UNVERIFIED",
@@ -18318,6 +18924,76 @@ window.VIEWER_DATA = {
     "GER-001-UL",
     "GER-001-LR",
     "GER-001-LL"
+   ]
+  },
+  {
+   "id": "CL-C6-DOG-FUSE-T",
+   "title": "Torque to turn the mount on the tube with the clocking dog (slip + dog break, upper bound)",
+   "value": 3.7087636175861682,
+   "unit": "N m",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "T-C6-DOG-SHEAR: two printed mounts on a tube stub with a bonded station collar, pinch bolt at the T-D3-SLIP setting, torque wrench / luggage scale on a 100 mm arm until the mount turns; record the peak",
+   "margin": null,
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL",
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
+   ]
+  },
+  {
+   "id": "CL-C6-DOG-FUSE-RF",
+   "title": "Weakest downstream torsion capacity (station collar or tube-in-block bond) / mount fuse torque with the dog (D-23 holds: the mount gives first)",
+   "value": 9.019630805480125,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "status": "UNVERIFIED",
+   "how": "T-C6-DOG-SHEAR; witness marks on the station collar after T-C4-FIN-PROOF",
+   "margin": 8.019630805480125,
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL",
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL",
+    "FIN-002-R",
+    "FIN-002-L"
+   ]
+  },
+  {
+   "id": "CL-C6-DOG-HOLD-RF",
+   "title": "Dog alone holds the 7 deg cant twist if the clamp is lost (lower bound)",
+   "value": 2.340368560888749,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "status": "UNVERIFIED",
+   "how": "T-C6-DOG-SHEAR lower result; pinch bolt check every 10 flights",
+   "margin": 1.340368560888749,
+   "parts": [
+    "FIN-003-UR",
+    "FIN-003-UL",
+    "FIN-003-LR",
+    "FIN-003-LL",
+    "FIN-008-UR",
+    "FIN-008-UL",
+    "FIN-008-LR",
+    "FIN-008-LL"
    ]
   },
   {
@@ -18495,7 +19171,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-MOUNT-ROCK-RF",
    "title": "Mount collar bearing under 3.2 N m prop-nut torque (CR-C1-11)",
-   "value": 3.264927536231884,
+   "value": 7.346086956521738,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -18504,7 +19180,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-PROPNUT: 1.5 N m on the prop nut with the bell held, 10 cycles; collar witness line and lip cap unmoved",
-   "margin": 2.264927536231884,
+   "margin": 6.346086956521738,
    "parts": [
     "FIN-003-UR",
     "FIN-003-UL",
@@ -18517,7 +19193,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-MOUNT-HOOP-RF",
    "title": "Tube wall hoop stress under the rocking collar",
-   "value": 5.936231884057966,
+   "value": 13.356521739130422,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -18526,7 +19202,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Same as T-C6-PROPNUT; inspect the tube end for crazing",
-   "margin": 4.936231884057966,
+   "margin": 12.356521739130422,
    "parts": [
     "FIN-002-R",
     "FIN-002-L"
@@ -18679,7 +19355,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-TUBE-BLOCK-RF",
    "title": "Tube-in-block bond, fin torsion",
-   "value": 2.637501029672551,
+   "value": 2.637608094077646,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -18688,7 +19364,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-LAP-PETG (allowable) and C4 T-C4-BLOCK-PROOF",
-   "margin": 1.637501029672551,
+   "margin": 1.6376080940776458,
    "parts": [
     "FIN-002-R",
     "FIN-002-L",
@@ -18699,7 +19375,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-BLOCK-SPAR-RF",
    "title": "Block-on-spar bond, torsion about the spar",
-   "value": 4.405551124561442,
+   "value": 4.415922296264359,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -18708,7 +19384,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-LAP-PETG and T-C4-BLOCK-PROOF",
-   "margin": 3.405551124561442,
+   "margin": 3.415922296264359,
    "parts": [
     "FIN-004-R",
     "FIN-004-L",
@@ -18717,8 +19393,8 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C6-COLLAR-RF",
-   "title": "Station collar bond at the drawn height (13 mm since D3-R5, D-70): max(C1, C4) torsion + brace shear",
-   "value": 0.7687461644397816,
+   "title": "Station collar bond at the drawn height (22 mm since D-90): max(C1, C4) torsion + brace shear",
+   "value": 1.1260014225073554,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -18727,7 +19403,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF (1.5 x L4) with the collar witness-marked",
-   "margin": -0.2312538355602184,
+   "margin": 0.12600142250735535,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -18739,17 +19415,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C6-COLLAR-RF-13MM",
-   "title": "Station collar bond at 13 mm (CR-C6-32, D-70); equals the drawn value since D3-R5",
-   "value": 0.6662466758478107,
+   "title": "Station collar bond at 13 mm (CR-C6-32, D-70); equals the drawn value since D3-R5 (record, D-90 draws 22 mm)",
+   "value": 0.6653644769361646,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "margin": -0.3337533241521893,
+   "margin": null,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -18761,17 +19433,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C6-COLLAR-RF-16MM",
-   "title": "Station collar bond at the 16 mm fallback (R3 ring), same case",
-   "value": 0.8199959087357671,
+   "title": "Station collar bond at the 16 mm fallback (R3 ring), same case (record, D-90 draws 22 mm)",
+   "value": 0.8189101254598948,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "margin": -0.1800040912642329,
+   "margin": null,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -18783,17 +19451,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C6-COLLAR-RF-15MM",
-   "title": "Station collar bond at 15 mm (CR-C6-36); equals the drawn value since D3-R5b",
-   "value": 0.7687461644397816,
+   "title": "Station collar bond at the drawn height (was 15 mm, CR-C6-36) (record, D-90 draws 22 mm)",
+   "value": 1.1260014225073554,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "margin": -0.2312538355602184,
+   "margin": null,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -18806,7 +19470,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-COLLAR-RF-PROP",
    "title": "Station collar bond at the C6-R5 proposal (joints.collar_prop_h_m, 22 mm, CR-C6-37), same case",
-   "value": 1.1274943745116797,
+   "value": 1.1260014225073554,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -18815,7 +19479,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF with the collar witness-marked",
-   "margin": 0.12749437451167966,
+   "margin": 0.12600142250735535,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -18827,17 +19491,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C6-COLLAR-RF-12MM-COND",
-   "title": "Station collar at 12 mm under the D-70 condition (T-C6-LAP-PETG mean >= 4.1 MPa, allowable 2.05 MPa), same case",
-   "value": 0.630371854840621,
+   "title": "Station collar at 12 mm under the D-70 condition (T-C6-LAP-PETG mean >= 4.1 MPa, allowable 2.05 MPa), same case (record, D-90 draws 22 mm)",
+   "value": 0.6295371589472942,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
    "how": "T-C6-LAP-PETG mean; print 12 mm collars only if this claim passes on the measured allowable",
-   "margin": -0.36962814515937903,
+   "margin": null,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -18850,16 +19510,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-COLLAR-L-REQ",
    "title": "Station collar bond height needed for max(C1, C4) torsion + brace shear",
-   "value": 0.01951229247554184,
+   "value": 0.01953816359397742,
    "unit": "m",
    "limit": {
     "op": "<=",
     "ref": "P:fin_detail.station_collar.height_m",
-    "resolved": 0.015
+    "resolved": 0.022
    },
    "status": "UNVERIFIED",
    "how": "D3 keeps fin_detail.station_collar.height_m >= this; T-C4-FIN-PROOF",
-   "margin": -0.300819498369456,
+   "margin": 0.11190165481920812,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -18870,7 +19530,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-ANCHOR-F",
    "title": "Edge-strip anchor design force per strip (pass line of T-C6-STRIP-ANCHOR, for H1)",
-   "value": 2235.218327889846,
+   "value": 2233.257001692858,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -18894,7 +19554,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-ANCHOR-RF",
    "title": "Edge-strip end in the 40 mm two-face collar tail (R3)",
-   "value": 0.7068660722246297,
+   "value": 0.7074868672984458,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -18903,7 +19563,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-STRIP-ANCHOR: pull one strip out of a printed tail coupon",
-   "margin": -0.2931339277753703,
+   "margin": -0.2925131327015542,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -18922,7 +19582,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-EMBED-REQ",
    "title": "Edge-strip embedment needed, both faces on PETG",
-   "value": 0.05588045819724615,
+   "value": 0.05583142504232145,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -18931,7 +19591,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-STRIP-ANCHOR on the 40 mm two-face tail",
-   "margin": -0.39701145493115375,
+   "margin": -0.3957856260580362,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -18942,7 +19602,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-TAIL-NET-RF",
    "title": "Collar tail net section in tension, one strip's force (D3 area estimate)",
-   "value": 0.6375216157722136,
+   "value": 0.6380815100634717,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -18950,8 +19610,8 @@ window.VIEWER_DATA = {
     "resolved": 1.0
    },
    "status": "UNVERIFIED",
-   "how": "T-C6-STRIP-ANCHOR: the tail must not break before 2235 N",
-   "margin": -0.36247838422778644,
+   "how": "T-C6-STRIP-ANCHOR: the tail must not break before 2233 N",
+   "margin": -0.3619184899365283,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -18962,7 +19622,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-FACE-RF",
    "title": "Edge-strip shear flow onto the board paper face if unpinned (why the pins exist; no limit: R3 carries the pins)",
-   "value": 0.11430155355287525,
+   "value": 0.11624642837790726,
    "unit": "-",
    "limit": null,
    "status": "UNVERIFIED",
@@ -18986,7 +19646,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-PIN-RF",
    "title": "Through-pins as drawn (2.5 mm at 15 mm pitch since D3-R5, D-70) at C4's FE pin force, weaker of shear and bending (bending bound: reaction at the board mid-plane)",
-   "value": 0.8821956587451192,
+   "value": 1.121508099320968,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -18995,7 +19655,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-FIN-PROOF with pins fitted; no strip lift at the tip",
-   "margin": -0.11780434125488082,
+   "margin": 0.12150809932096807,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19014,7 +19674,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-PIN-RF-PROP",
    "title": "Through-pins 2.5 mm at 15 mm (CR-C6-31); equals the drawn value since D3-R5",
-   "value": 0.8821956587451192,
+   "value": 0.8972064794567746,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19023,7 +19683,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-FIN-PROOF with 2.5 mm pins fitted",
-   "margin": -0.11780434125488082,
+   "margin": -0.10279352054322544,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19042,7 +19702,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-PIN-RF-ALT",
    "title": "Through-pins 2 mm at 9 mm pitch (CR-C6-31 fallback)",
-   "value": 0.7528069621291682,
+   "value": 0.7656161958031144,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19051,7 +19711,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-FIN-PROOF with pins fitted at 9 mm",
-   "margin": -0.2471930378708318,
+   "margin": -0.23438380419688565,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19070,16 +19730,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-PIN-PITCH-MAX",
    "title": "Largest pitch for the drawn 2.5 mm pins at C4's shear flow (bending bound)",
-   "value": 0.013232934881176788,
+   "value": 0.013458097191851617,
    "unit": "m",
    "limit": {
     "op": ">=",
     "ref": "P:fin_detail.edge_strip.pin_pitch_m",
-    "resolved": 0.015
+    "resolved": 0.012
    },
    "status": "UNVERIFIED",
    "how": "D3 keeps fin_detail.edge_strip.pin_pitch_m <= this",
-   "margin": -0.11780434125488078,
+   "margin": 0.12150809932096802,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19098,7 +19758,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-PIN-PITCH-MAX-ALT",
    "title": "Largest pitch for 2 mm fallback pins at C4's shear flow (bending bound)",
-   "value": 0.006775262659162514,
+   "value": 0.006890545762228027,
    "unit": "m",
    "limit": {
     "op": ">=",
@@ -19107,7 +19767,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Only if 2.5 mm rod cannot be bought: 2 mm pins at <= this pitch",
-   "margin": -0.2471930378708317,
+   "margin": -0.23438380419688584,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19126,7 +19786,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-PIN-BRG-RF",
    "title": "Strip bearing on a 2.5 mm pin (CR-C6-31)",
-   "value": 1.9050258925479207,
+   "value": 1.9374404729651205,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19135,7 +19795,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-FIN-PROOF: no strip split at a pin hole",
-   "margin": 0.9050258925479207,
+   "margin": 0.9374404729651205,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19150,7 +19810,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-NET-PIN-RF",
    "title": "Strip net section at a 2.5 mm pin hole under the collar-end force",
-   "value": 1.3421507700467654,
+   "value": 1.3433294948704668,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19159,7 +19819,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-FIN-PROOF",
-   "margin": 0.3421507700467654,
+   "margin": 0.3433294948704668,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19174,7 +19834,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-BRACE-END-RF",
    "title": "Brace ends bonded in the ear and anchor slots",
-   "value": 2.351722953206646,
+   "value": 2.310846505165299,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19183,7 +19843,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-LAP-PETG; T-C4-FIN-PROOF (G2)",
-   "margin": 1.3517229532066461,
+   "margin": 1.310846505165299,
    "parts": [
     "FIN-009-UR",
     "FIN-009-UL",
@@ -19202,7 +19862,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-ANCHOR-PULL-RF",
    "title": "Brace anchor saddle pull-off from the spar",
-   "value": 1.3544951847299567,
+   "value": 1.3309520407701743,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19211,7 +19871,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C4-FIN-PROOF (G2 in tension on the brace)",
-   "margin": 0.35449518472995667,
+   "margin": 0.33095204077017426,
    "parts": [
     "FIN-010-UR",
     "FIN-010-UL",
@@ -19223,7 +19883,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-FOOT-SHOE-RF",
    "title": "Foot shoe bond on the fin tip, 1 350 mm2 at the C6 board allowable (CR-D5-24)",
-   "value": 1.431648982279836,
+   "value": 1.432620286112737,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19232,7 +19892,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-BOARD-LAP; T-C1-FOOT-DROP",
-   "margin": 0.43164898227983595,
+   "margin": 0.43262028611273706,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -19246,17 +19906,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C6-FIN-ROOT-RF",
-   "title": "Half-fin root fillet on XPS at the C6 foam allowable, as drawn by D3 (15 mm, zoned); fail-safe path only (D-68), RF kept on the joint side",
-   "value": 0.8045958609604178,
+   "title": "Half-fin root fillet on XPS at the C6 foam allowable, as drawn (D-92: 10 / 13 mm cove, no strength credit; record)",
+   "value": 0.5643804701627486,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
-   "how": "T-C6-XPS-PULL; D3 T-D3-ROOT side pull",
-   "margin": -0.1954041390395822,
+   "how": "none: D-92 sizes the fin with the root free (CL-C4-D3-MS-FACE-ROOT-FREE)",
+   "margin": null,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -19267,17 +19923,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-C6-FIN-ROOT-RF-PROP",
-   "title": "Same root fillet at the C6 leg (15 mm, D-48); equals the drawn value since D3 R4",
-   "value": 0.8045958609604178,
+   "title": "Root fillet at the C6 leg (joints.root_fillet_leg_m), record after D-92",
+   "value": 1.0625326198472154,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
-   "how": "T-C6-XPS-PULL; D3 T-D3-ROOT side pull on a 15 mm-leg coupon",
-   "margin": -0.1954041390395822,
+   "how": "none (record)",
+   "margin": null,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -19289,7 +19941,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-POD-WING-RF",
    "title": "Pod shell bond on the core, design envelope (1 / C3 interaction at C6-confirmed allowables)",
-   "value": 1.1397541357279164,
+   "value": 1.1479028843764165,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19298,7 +19950,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-XPS-PULL (tension and shear); C3 pod proof",
-   "margin": 0.1397541357279164,
+   "margin": 0.14790288437641652,
    "parts": [
     "POD-001",
     "WNG-001"
@@ -19307,7 +19959,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-POD-CRASH-RF",
    "title": "Pod shell bond on the core, 12.75 g crash",
-   "value": 1.2651371070215078,
+   "value": 1.26942772095622,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19316,7 +19968,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-C6-XPS-PULL",
-   "margin": 0.26513710702150783,
+   "margin": 0.2694277209562199,
    "parts": [
     "POD-001",
     "WNG-001"
@@ -19423,7 +20075,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-FIN-LOAD-SCALE",
    "title": "C1 D-65 half-fin torsion / torsion of C4's frozen R4 fin set (how stale C4's set is)",
-   "value": 0.9929675864511271,
+   "value": 0.9929500172072111,
    "unit": "-",
    "limit": null,
    "status": "UNVERIFIED",
@@ -19447,7 +20099,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-ANCHOR-RF-EST",
    "title": "Edge-strip anchor in the 40 mm tail at C4's force scaled by k (estimate)",
-   "value": 0.711872252296748,
+   "value": 0.7125100508969585,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19456,7 +20108,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C4 re-run; T-C6-STRIP-ANCHOR",
-   "margin": -0.288127747703252,
+   "margin": -0.2874899491030415,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19475,7 +20127,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-TAIL-NET-RF-EST",
    "title": "Collar tail net section at C4's force scaled by k (estimate)",
-   "value": 0.6420366832423202,
+   "value": 0.6426119129925101,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19484,7 +20136,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C4 re-run; T-C6-STRIP-ANCHOR",
-   "margin": -0.3579633167576798,
+   "margin": -0.3573880870074899,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -19495,7 +20147,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-PIN-RF-EST",
    "title": "Drawn 2.5 mm pins at 15 mm at C4's pin force scaled by k (estimate)",
-   "value": 0.8884435612828938,
+   "value": 1.1294708493740115,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -19504,7 +20156,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C4 re-run; T-C4-FIN-PROOF",
-   "margin": -0.11155643871710619,
+   "margin": 0.12947084937401154,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19523,16 +20175,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-PIN-PITCH-MAX-EST",
    "title": "Largest 2.5 mm pin pitch at C4's pin force scaled by k (estimate)",
-   "value": 0.013326653419243408,
+   "value": 0.013553650192488139,
    "unit": "m",
    "limit": {
     "op": ">=",
     "ref": "P:fin_detail.edge_strip.pin_pitch_m",
-    "resolved": 0.015
+    "resolved": 0.012
    },
    "status": "UNVERIFIED",
    "how": "C4 re-run; D3 holds the pin drilling until then",
-   "margin": -0.11155643871710609,
+   "margin": 0.12947084937401154,
    "parts": [
     "FIN-011-URO",
     "FIN-011-URI",
@@ -19551,7 +20203,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-C6-STRIP-ANCHOR-F-EST",
    "title": "Edge-strip anchor design force scaled by k (estimate; H1 frame >= 1.25 x)",
-   "value": 2219.4993482361047,
+   "value": 2217.512578259048,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -19655,16 +20307,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D1-WING-MASS",
    "title": "Wing subsystem mass (CAD estimate)",
-   "value": 391.8,
+   "value": 390.7,
    "unit": "g",
    "limit": {
     "op": "<=",
     "ref": "P:mass.allocation_g.wing",
-    "resolved": 405
+    "resolved": 393
    },
    "status": "UNVERIFIED",
    "how": "T-D1-WEIGH: weigh the cut core, the tube, the plugs, the tape used and the finished wing on a 1 g scale.",
-   "margin": 0.03259259259259256,
+   "margin": 0.005852417302799011,
    "parts": [
     "WNG-001",
     "WNG-002",
@@ -19675,7 +20327,6 @@ window.VIEWER_DATA = {
     "WNG-005-L",
     "WNG-006-R",
     "WNG-006-L",
-    "WNG-007",
     "WNG-011-R",
     "WNG-011-L",
     "WNG-012-R",
@@ -19686,7 +20337,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D1-WING-CG-X",
    "title": "Wing subsystem CG x (CAD estimate)",
-   "value": 0.11363164880040837,
+   "value": 0.11377335551574098,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -19702,7 +20353,6 @@ window.VIEWER_DATA = {
     "WNG-005-L",
     "WNG-006-R",
     "WNG-006-L",
-    "WNG-007",
     "WNG-011-R",
     "WNG-011-L",
     "WNG-012-R",
@@ -20016,25 +20666,6 @@ window.VIEWER_DATA = {
    "parts": [
     "WNG-003",
     "WNG-001"
-   ]
-  },
-  {
-   "id": "CL-D1-RECESS-FILLET",
-   "title": "Recess-step fillet floor leg (x 0.065, |y| <= 0.070)",
-   "value": 0.005,
-   "unit": "m",
-   "limit": {
-    "op": ">=",
-    "value": 0.005,
-    "resolved": 0.005
-   },
-   "status": "CHECKED",
-   "how": "Steel rule on the sanded fillet before the pod goes in: 5 mm along the floor, flush with the step top.",
-   "margin": 0.0,
-   "parts": [
-    "WNG-001",
-    "WNG-007",
-    "POD-001"
    ]
   },
   {
@@ -21014,7 +21645,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D2-POD-CRASH-F",
    "title": "Pod group crash load (pod, heaviest pack, avionics, power), ultimate",
-   "value": 107.625,
+   "value": 106.24999999999999,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -21084,7 +21715,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D2-MASS",
    "title": "Pod subsystem mass (CAD estimate)",
-   "value": 145.39,
+   "value": 145.49,
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -21093,7 +21724,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-D2-WEIGH: weigh every pod part before bonding; update interfaces.json.",
-   "margin": 0.004178082191780915,
+   "margin": 0.0034931506849314444,
    "parts": [
     "POD-001",
     "POD-002",
@@ -21112,7 +21743,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-SLIP-FUSE",
    "title": "Fin-joint design moment / root moment when the mount slips",
-   "value": 2.3141325919114837,
+   "value": 2.313202238814493,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -21121,7 +21752,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-D3-SLIP: luggage scale at the motor can along y; the collar turns between 70 and 80 N (R5 lever 33.9 mm)",
-   "margin": 1.3141325919114837,
+   "margin": 1.313202238814493,
    "parts": [
     "FIN-003-UR",
     "FIN-003-UL",
@@ -21133,7 +21764,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-SLIP-HOLD",
    "title": "Slip torque / mount design moment (holds in flight)",
-   "value": 1.7648916987727703,
+   "value": 1.7648939532563872,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -21142,7 +21773,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-D3-SLIP; witness line checked before every flight",
-   "margin": 0.7648916987727703,
+   "margin": 0.7648939532563872,
    "parts": [
     "FIN-003-UR",
     "FIN-003-UL",
@@ -21263,7 +21894,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-COLLAR-H",
    "title": "Station collar height (15 mm, CR-C6-36) / C4 required bond height",
-   "value": 0.870642740645903,
+   "value": 1.2758742865666401,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -21272,7 +21903,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
-   "margin": -0.12935725935409703,
+   "margin": 0.27587428656664015,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -21283,7 +21914,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-COLLAR-H-C6",
    "title": "Station collar height / C6 required bond height (max of C1, C4 torsion + brace shear)",
-   "value": 0.7687461644397816,
+   "value": 1.1260014225073554,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -21292,7 +21923,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C6 coupon T-C6-COLLAR; measure the printed collar",
-   "margin": -0.2312538355602184,
+   "margin": 0.12600142250735535,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -21303,7 +21934,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-TONGUE-FIT",
    "title": "Strip-tail tongue fit under the 15 mm collar ring (margin)",
-   "value": 0.0037007603971862986,
+   "value": 0.010626789793156712,
    "unit": "m",
    "limit": {
     "op": ">=",
@@ -21312,7 +21943,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Dry fit: the tongue drops into the board notch between the strips with the ring top at |z| 0.1595",
-   "margin": 6.401520794372597,
+   "margin": 20.25357958631342,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -21327,7 +21958,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-TAIL-EMBED",
    "title": "Edge-strip embedment in the collar tail / C6 required",
-   "value": 0.7068660722246297,
+   "value": 0.7074868672984458,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -21336,7 +21967,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure on the dry fit; C6 strip-anchor coupon",
-   "margin": -0.2931339277753703,
+   "margin": -0.2925131327015542,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -21455,17 +22086,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-D3-ROOT-FILLET-RF",
-   "title": "Half-fin root fillet joint reserve factor, foot side load, typical XPS strength (governing root)",
-   "value": 1.6091917219208356,
+   "title": "Half-fin root fillet joint reserve factor, foot side load, typical XPS strength (governing root; record since D-92: 10 / 13 mm cove, no strength credit)",
+   "value": 1.1287609403254972,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
    "how": "T-D3-ROOT: side pull at the fin TE tip on a core offcut to 1.25 x 28 N, then to failure",
-   "margin": 0.6091917219208356,
+   "margin": null,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -21476,16 +22103,12 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-ROOT-FILLET-RF-ALLOW",
    "title": "Half-fin root fillet reserve factor at the C6 XPS allowable (0.5 x typical)",
-   "value": 0.8045958609604178,
+   "value": 0.5643804701627486,
    "unit": "-",
-   "limit": {
-    "op": ">=",
-    "value": 1.0,
-    "resolved": 1.0
-   },
+   "limit": null,
    "status": "UNVERIFIED",
    "how": "T-C6-XPS-PULL (allowable) and T-D3-ROOT (joint)",
-   "margin": -0.1954041390395822,
+   "margin": null,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -21496,17 +22119,13 @@ window.VIEWER_DATA = {
   },
   {
    "id": "CL-D3-ROOT-LEFF-REQ",
-   "title": "Root fillet full-leg length from the TE needed for RF 1.0 at the C6 allowable",
-   "value": 0.1829446612466125,
+   "title": "(record since D-92) Root fillet full-leg length from the TE needed for RF 1.0 at the C6 allowable",
+   "value": 0.28827030612244897,
    "unit": "m",
-   "limit": {
-    "op": "<=",
-    "ref": "P:fin_detail.fin.root_fillet.eff_len_m",
-    "resolved": 0.15
-   },
+   "limit": null,
    "status": "UNVERIFIED",
    "how": "T-D3-ROOT on the chosen length",
-   "margin": -0.21963107497741663,
+   "margin": null,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -21518,7 +22137,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-BRACE-PCR",
    "title": "Brace (10 x 2) Euler load / C4 design brace force",
-   "value": 2.1149121571225393,
+   "value": 2.2368318035647334,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -21527,7 +22146,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "C4 CL-C4-D3-MS-BRACE; T-C4-TAP-D3",
-   "margin": 1.1149121571225393,
+   "margin": 1.2368318035647334,
    "parts": [
     "FIN-009-LR"
    ]
@@ -21535,7 +22154,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-BRACE-KY",
    "title": "Brace lateral axial stiffness at the ear, upper (information)",
-   "value": 2632031.764132316,
+   "value": 2939173.393294017,
    "unit": "N/m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -21548,7 +22167,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-BRACE-L",
    "title": "Brace length (upper), D3 geometry",
-   "value": 0.14477110381564406,
+   "value": 0.13954165148800554,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -21561,7 +22180,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-BRACE-DZ",
    "title": "Brace attach depth below the motor axis, D3 geometry",
-   "value": 0.03650000000000003,
+   "value": 0.04250000000000001,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -21594,16 +22213,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-MASS",
    "title": "Fins subsystem flying mass, design R5",
-   "value": 433.3,
+   "value": 432.0,
    "unit": "g",
    "limit": {
     "op": "<=",
     "ref": "P:mass.allocation_g.fins",
-    "resolved": 438
+    "resolved": 434
    },
    "status": "PROPOSED",
    "how": "T-D3-WEIGH; sum of subsystems/fins/interfaces.json",
-   "margin": 0.01073059360730591,
+   "margin": 0.004608294930875576,
    "parts": [
     "FIN-001-UR",
     "FIN-001-UL",
@@ -21614,7 +22233,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-FILLET-MASS",
    "title": "Root fillets, four half-fins (CAD volume x fillet density)",
-   "value": 25.0,
+   "value": 16.4,
    "unit": "g",
    "limit": null,
    "status": "PROPOSED",
@@ -21630,7 +22249,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D3-LAMINATE-MASS",
    "title": "Half-fin two-board laminate without root fillets and tape laps, mean of four",
-   "value": 19.32,
+   "value": 19.05,
    "unit": "g",
    "limit": null,
    "status": "PROPOSED",
@@ -22185,11 +22804,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": ">=",
     "ref": "CL-C5-DROP-PAIR-PITCH",
-    "resolved": 0.021607390503540547
+    "resolved": 0.021675102099748933
    },
    "status": "UNVERIFIED",
    "how": "T-C5-AIRCRAFT-DROP pitched 4 deg: each pair within 3 mm of the model.",
-   "margin": 0.6198161455111834,
+   "margin": 0.6147559461971535,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -22252,7 +22871,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D5-MARK-MARGIN",
    "title": "Replace mark leaves C5's pair-first stroke",
-   "value": 0.010392609496459447,
+   "value": 0.01032489790025106,
    "unit": "m",
    "limit": {
     "op": ">=",
@@ -22312,7 +22931,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D5-MASS-FOOT",
    "title": "Mass of one complete upper foot (heavier type)",
-   "value": 14.427545146001401,
+   "value": 14.391685343993341,
    "unit": "g",
    "limit": null,
    "status": "UNVERIFIED",
@@ -22358,7 +22977,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D5-MASS-TOTAL",
    "title": "Landing subsystem flying mass (4 feet + 2 caps)",
-   "value": 59.0817129751596,
+   "value": 58.938273767127356,
    "unit": "g",
    "limit": {
     "op": "<=",
@@ -22367,7 +22986,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Weigh the four feet and two caps with glue and tape.",
-   "margin": 0.015304783747340048,
+   "margin": 0.017695437214544068,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -22418,7 +23037,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D5-FLANGE-SF",
    "title": "Flange overhang bending, SF at ultimate",
-   "value": 1.0677317079374182,
+   "value": 1.0684561116936926,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -22427,7 +23046,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Load a printed flange edge to 67 N (C1 upper-foot ult 66.6 N); no crack (T-D5-PROOF).",
-   "margin": 0.06773170793741823,
+   "margin": 0.06845611169369259,
    "parts": [
     "GER-002-UR",
     "GER-002-UL",
@@ -22454,7 +23073,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D5-BOND-SF",
    "title": "Shoe-to-fin bond RF at the printed/bonded design load (C6 allowable)",
-   "value": 1.431648982279836,
+   "value": 1.432620286112737,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -22463,7 +23082,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Pull test of a shoe bonded on a stepped two-layer offcut to 96 N along x (T-D5-PROOF, C6 coupon).",
-   "margin": 0.43164898227983595,
+   "margin": 0.43262028611273706,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -22474,7 +23093,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D5-SIDE-RIM-SF",
    "title": "Shoe sleeve end RF at C5's 59.0 N ultimate side load (D5 FEA of the drawn shoe)",
-   "value": 1.064393972656251,
+   "value": 1.2672926036051309,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -22483,7 +23102,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-D5-SIDE: 60 N (>= 59.0 N ult) sideways at the pad of a foot crushed 5 mm, along +y then +z on a second shoe; no crack at the rim, window or roof; then C5's T-C5-SHOE-SIDE-FAIL to failure.",
-   "margin": 0.06439397265625102,
+   "margin": 0.26729260360513085,
    "parts": [
     "GER-001-UR",
     "GER-001-UL",
@@ -22492,9 +23111,33 @@ window.VIEWER_DATA = {
    ]
   },
   {
+   "id": "CL-D5-FILLET-CLEAR",
+   "title": "Tine corner chamfer clear of the sleeve inside fillet (R8)",
+   "value": 0.00015609110854142272,
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0001,
+    "resolved": 0.0001
+   },
+   "status": "UNVERIFIED",
+   "how": "Dry fit: the insert slides the full 38 mm stroke by hand with no rub at the corners; 0.1 mm feeler at each corner of the first print.",
+   "margin": 0.5609110854142272,
+   "parts": [
+    "GER-001-UR",
+    "GER-001-UL",
+    "GER-001-LR",
+    "GER-001-LL",
+    "GER-002-UR",
+    "GER-002-UL",
+    "GER-002-LR",
+    "GER-002-LL"
+   ]
+  },
+  {
    "id": "CL-D5-SIDE-TINE-SF",
    "title": "Tine bending at the rim under the side load",
-   "value": 1.1516722026547284,
+   "value": 1.2262562577126819,
    "unit": "-",
    "limit": {
     "op": ">=",
@@ -22503,7 +23146,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-D5-SIDE.",
-   "margin": 0.15167220265472836,
+   "margin": 0.22625625771268187,
    "parts": [
     "GER-002-UR",
     "GER-002-UL",
@@ -23342,16 +23985,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D6-MASS",
    "title": "Mechanisms mass",
-   "value": 71.28,
+   "value": 72.6,
    "unit": "g",
    "limit": {
     "op": "<=",
     "ref": "P:mass.allocation_g.mechanisms",
-    "resolved": 72
+    "resolved": 73
    },
    "status": "UNVERIFIED",
    "how": "T-D6-WEIGH: weigh every part on arrival",
-   "margin": 0.009999999999999985,
+   "margin": 0.005479452054794599,
    "parts": [
     "MEC-001-L",
     "MEC-001-R"
@@ -23393,11 +24036,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": ">=",
     "ref": "CL-C1-CRADLE-STROKE-REQ",
-    "resolved": 0.05054472897426863
+    "resolved": 0.0504633402905043
    },
    "status": "UNVERIFIED",
    "how": "T-D7-CUSHION coupon drop, then T-D7-BOX-DROP with an accelerometer on the spar.",
-   "margin": 0.30577413984353075,
+   "margin": 0.30788012882332416,
    "parts": [
     "TRN-002-L",
     "TRN-002-R"
@@ -23411,11 +24054,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "CL-C1-TRANSPORT-N-ALLOW",
-    "resolved": 12.870673998577551
+    "resolved": 12.889819352939309
    },
    "status": "UNVERIFIED",
    "how": "T-D7-BOX-DROP: 0.3 m flat drop of the loaded box, accelerometer on the spar, peak <= n_allow.",
-   "margin": 0.2159766386729768,
+   "margin": 0.21714115499935024,
    "parts": [
     "TRN-002-L",
     "TRN-002-R"
@@ -23544,7 +24187,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D7-A1-BOX-DROP-ALLOW",
    "title": "Drop height A1's box (requirements.box_external_m) allows, column limited by travel",
-   "value": 0.4026136931184222,
+   "value": 0.40326303972052513,
    "unit": "m",
    "limit": {
     "op": ">=",
@@ -23553,7 +24196,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-D7-BOX-DROP at 0.3 m in the 0.54 m box. If a car forces 0.50 m this re-runs to ~0.2 m and the box carries the 'max drop 0.15 m' label (D-31).",
-   "margin": 0.3420456437280741,
+   "margin": 0.34421013240175047,
    "parts": [
     "TRN-001",
     "TRN-005",
@@ -23759,7 +24402,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D7-END-DROP-ALLOW",
    "title": "Drop height on a box end (wingtip into the 30 mm end pad)",
-   "value": 0.09738863982641738,
+   "value": 0.09757806409642258,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -23773,7 +24416,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D7-NOSE-DROP-ALLOW",
    "title": "Drop height on the front wall (pod nose into the 3/4 in nose pad)",
-   "value": 0.061526554791672856,
+   "value": 0.06165978387506104,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -23792,11 +24435,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "CL-C1-TRANSPORT-N-ALLOW-X",
-    "resolved": 12.744510578224357
+    "resolved": 12.769942042483613
    },
    "status": "UNVERIFIED",
    "how": "T-D7-BOX-DROP aft-wall drop with the dummy on real feet; accelerometer on the spar.",
-   "margin": 0.41454494482592374,
+   "margin": 0.41571088428449976,
    "parts": [
     "TRN-001",
     "TRN-005"
@@ -23819,7 +24462,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-D7-LID-DROP-ALLOW",
    "title": "Drop height upside down (pillars compress until the upper feet reach the lid)",
-   "value": 0.05935336999288776,
+   "value": 0.05944909676469655,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -24194,11 +24837,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "P:performance.cruise_power_w",
-    "resolved": 240.0
+    "resolved": 253.0
    },
    "status": "UNVERIFIED",
    "how": "Log pack power in steady 16 m/s FBWA legs, both directions, calm morning; subtract the avionics draw.",
-   "margin": -0.025916426534959312,
+   "margin": 0.026798646765255986,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -24918,7 +25561,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E2-PACK-ACCEPT-KG",
    "title": "Pack acceptance line PACK_ACCEPT_KG (= CL-A1-PACK-ACCEPT, D-64)",
-   "value": 0.5714835000000004,
+   "value": 0.5641837000000003,
    "unit": "kg",
    "limit": {
     "op": ">=",
@@ -24927,7 +25570,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Re-run this script after every A1 / A3 re-run; T-E2-WEIGH passes a pack at or under this value.",
-   "margin": 0.02784802158273438,
+   "margin": 0.014718884892086758,
    "parts": [
     "PWR-001"
    ]
@@ -24935,7 +25578,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E2-SKU-MASS-MARGIN",
    "title": "Named pack (listed mass + tolerance) under the D-64 acceptance line",
-   "value": 0.015483500000000316,
+   "value": 0.008183700000000238,
    "unit": "kg",
    "limit": {
     "op": ">=",
@@ -24986,7 +25629,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-MOTOR-PEAK",
    "title": "Motor (winding/stator) peak, design mission at 30 degC",
-   "value": 64.97174840287671,
+   "value": 64.9813732604981,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -24995,7 +25638,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Thermocouple (K type) on the part, mission flown or run on the stand at the stated power, log every 5 s; T-E3-MOTOR-TAU fits R_th and tau on the stand; T-E3-MISSION reads the can by IR within 30 s of landing.",
-   "margin": 0.1878531449640411,
+   "margin": 0.1877328342437737,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -25099,7 +25742,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-PACK-START-MAX",
    "title": "Highest pack temperature at take-off for <= 50 degC at landing, design, 30 degC",
-   "value": 37.62464368715882,
+   "value": 37.65620783902705,
    "unit": "degC",
    "limit": {
     "op": ">=",
@@ -25108,7 +25751,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "IR thermometer on the pack before it goes in the pod; log it on the flight card.",
-   "margin": 0.25415478957196075,
+   "margin": 0.2552069279675682,
    "parts": [
     "PWR-001"
    ]
@@ -25116,7 +25759,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-PACK-END",
    "title": "Pack at landing, design mission at 30 degC (5 mOhm/cell, vented pod)",
-   "value": 45.45260475300958,
+   "value": 45.436923466496026,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -25125,7 +25768,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-E2-MISSION-LOG: IR thermometer on the pack's largest face within 60 s of landing.",
-   "margin": 0.09094790493980838,
+   "margin": 0.09126153067007949,
    "parts": [
     "PWR-001"
    ]
@@ -25133,7 +25776,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-PACK-RISE-COLD",
    "title": "Pack self-heating over the design mission on a 10 degC morning",
-   "value": 17.531516359134525,
+   "value": 17.516038524141578,
    "unit": "K",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25146,7 +25789,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-FC-PEAK",
    "title": "Flight controller peak, design mission at 30 degC, vented pod",
-   "value": 55.01551442307512,
+   "value": 55.00957513879904,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -25155,7 +25798,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "ArduPilot logs the IMU temperature (IMU.T); fly the mission and read the peak.",
-   "margin": 0.3527586538461751,
+   "margin": 0.3528285277788348,
    "parts": [
     "AVN-001"
    ]
@@ -25226,7 +25869,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-CEIL-MISSION",
    "title": "Field-ambient ceiling, full mission, design case, ASA mounts",
-   "value": 43.991114404052496,
+   "value": 43.98142045363784,
    "unit": "degC",
    "limit": {
     "op": ">=",
@@ -25235,7 +25878,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Replace ASM-E3-RTH-DESIGN, ASM-E3-WAKE and ASM-E3-PACK with the T-E3-* and T-E2-IR results and re-run; the ceiling is then MODELLED on measured inputs.",
-   "margin": 0.4663704801350832,
+   "margin": 0.4660473484545946,
    "parts": [
     "PRP-001-UR",
     "PRP-002-UR",
@@ -25262,7 +25905,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-CEIL-PACK-LIFE",
    "title": "Ambient at which the pack lands at 50 degC (design mission)",
-   "value": 34.56233490258455,
+   "value": 34.57806000486016,
    "unit": "degC",
    "limit": null,
    "status": "UNVERIFIED",
@@ -25310,35 +25953,35 @@ window.VIEWER_DATA = {
    "value": [
     [
      15.0,
-     48.87264550113691,
+     48.881361496453984,
      41.47494201839654,
-     31.29707862254668,
-     40.61473253144502,
-     28.918990853922086
+     31.28119671076693,
+     40.60878362967988,
+     28.911674905950605
     ],
     [
      20.0,
-     54.23901313505017,
+     54.24803208446866,
      46.30610731446193,
-     35.66461321915931,
-     45.31785897372222,
-     33.60902018742888
+     35.64881465858434,
+     45.31191698892899,
+     33.60170837329968
     ],
     [
      25.0,
-     59.60538076896346,
+     59.61470267248338,
      51.13561729797394,
-     40.46929126900227,
-     50.141349870729634,
-     38.49709339251372
+     40.45360949114326,
+     50.13542609613109,
+     38.489787425911636
     ],
     [
      30.0,
-     64.97174840287671,
+     64.9813732604981,
      55.96350044982045,
-     45.45260475300958,
-     55.01551442307512,
-     43.46759514159266
+     45.436923466496026,
+     55.00957513879904,
+     43.46023556532204
     ]
    ],
    "unit": "degC",
@@ -25359,35 +26002,35 @@ window.VIEWER_DATA = {
    "value": [
     [
      15.0,
-     35.191950259606216,
-     33.026553391311936,
-     25.44151549800138,
-     38.2756746696659,
-     25.585098767815836
+     35.16751012013542,
+     33.01041928697215,
+     25.429653967381338,
+     38.27163506050478,
+     25.573561763152565
     ],
     [
      20.0,
-     40.414602558921935,
-     37.925353344184096,
-     29.724550221776823,
-     42.97568128977226,
-     30.23570922441404
+     40.389852464514846,
+     37.90932776575858,
+     29.71248873275566,
+     42.97164212233689,
+     30.224149574690944
     ],
     [
      25.0,
-     45.63725485823766,
-     42.823113171399584,
-     34.57312412980895,
-     47.80745756719301,
-     35.13514051922644
+     45.61219480889422,
+     42.80719651954595,
+     34.561110327735335,
+     47.803398047645054,
+     35.12364918506226
     ],
     [
      30.0,
-     50.85990715755338,
-     47.719845830042175,
-     39.55887907477085,
-     52.67647079831443,
-     40.09626089229499
+     50.834537153273665,
+     47.704038499529915,
+     39.54687131359274,
+     52.67237724249913,
+     40.0848168565904
     ]
    ],
    "unit": "degC",
@@ -25459,7 +26102,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-ASD-MOTOR-PEAK",
    "title": "Motor peak, as-designed mass (A3 predicted), design inputs, 30 degC",
-   "value": 61.96293286765359,
+   "value": 62.56313999378552,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -25468,7 +26111,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Thermocouple (K type) on the part, mission flown or run on the stand at the stated power, log every 5 s; T-E3-MISSION at the weighed mass.",
-   "margin": 0.2254633391543301,
+   "margin": 0.217960750077681,
    "parts": [
     "PRP-001-UR",
     "PRP-001-UL",
@@ -25479,7 +26122,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-ASD-ESC-PEAK",
    "title": "ESC peak, as-designed mass, design inputs, 30 degC",
-   "value": 54.23272274646475,
+   "value": 54.57500334805915,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -25488,7 +26131,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-E3-MISSION, IR on the ESC FET side.",
-   "margin": 0.36196796768864997,
+   "margin": 0.3579411370816571,
    "parts": [
     "PRP-002-UR",
     "PRP-002-UL",
@@ -25499,7 +26142,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-ASD-PACK-END",
    "title": "Pack at landing, as-designed mass, design inputs, 30 degC",
-   "value": 44.0139543478438,
+   "value": 44.278767244079624,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -25508,7 +26151,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-E2-MISSION-LOG: IR on the pack within 60 s of landing.",
-   "margin": 0.119720913043124,
+   "margin": 0.11442465511840752,
    "parts": [
     "PWR-001"
    ]
@@ -25516,7 +26159,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-ASD-FC-PEAK",
    "title": "FC peak, as-designed mass, design inputs, 30 degC",
-   "value": 54.49826979674535,
+   "value": 54.59178319670403,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -25525,7 +26168,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "IMU.T in the mission log.",
-   "margin": 0.3588438847441724,
+   "margin": 0.35774372709759966,
    "parts": [
     "AVN-001"
    ]
@@ -25533,7 +26176,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-CEIL-ASD",
    "title": "Field-ambient ceiling, as-designed mass, design inputs, ASA mounts",
-   "value": 46.04143651202321,
+   "value": 45.775768645107746,
    "unit": "degC",
    "limit": {
     "op": ">=",
@@ -25542,7 +26185,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "As CL-E3-CEIL-MISSION, at the weighed mass.",
-   "margin": 0.5347145504007736,
+   "margin": 0.5258589548369249,
    "parts": [
     "PRP-001-UR",
     "PRP-002-UR",
@@ -25566,7 +26209,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-COLLAR-T",
    "title": "CF tube temperature at the PETG station collar, design, 30 degC",
-   "value": 30.65905697142299,
+   "value": 30.659238355820513,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -25575,7 +26218,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Thermocouple on the tube at the collar during T-E3-MOTOR-TAU (600 s hover power).",
-   "margin": 0.4713955694582243,
+   "margin": 0.47139244214102566,
    "parts": [
     "FIN-008-UR",
     "FIN-008-UL",
@@ -25586,7 +26229,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-E3-PACK-15-WARMED",
    "title": "Pack at landing on a 15 degC morning, pack warmed to 20 degC before take-off, design",
-   "value": 33.745680233222565,
+   "value": 33.72789763077099,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -25595,7 +26238,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-E2-MISSION-LOG on a cool morning.",
-   "margin": 0.32508639533554873,
+   "margin": 0.3254420473845802,
    "parts": [
     "PWR-001"
    ]
@@ -25785,8 +26428,8 @@ window.VIEWER_DATA = {
     ],
     [
      "cruise",
-     379.64533326213274,
-     23.946399027805697
+     380.3419421564585,
+     23.902540402971255
     ],
     [
      "back-transition",
@@ -25987,7 +26630,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-MAIN-PEAK",
    "title": "Main path, peak rise over the mission with 120 A punches (long-wire, conservative)",
-   "value": 20.488405980530636,
+   "value": 20.457993363927052,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -25996,7 +26639,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Log the jumper temperature over a full flight profile on the stand (T-F1-WIRE-HEAT).",
-   "margin": 0.3170531339823121,
+   "margin": 0.31806688786909826,
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -26083,7 +26726,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-BUNDLE-PEAK",
    "title": "Bundled sections, peak rise with 51.6 A bursts (no axial credit, conservative)",
-   "value": 25.14433874025727,
+   "value": 25.10441974322883,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -26092,7 +26735,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Same straw rig, profile replay incl. 2 s at 50 A.",
-   "margin": 0.16185537532475772,
+   "margin": 0.16318600855903895,
    "parts": [
     "PRP-002-UR",
     "PRP-002-UL",
@@ -26119,7 +26762,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-ESC-MASS",
    "title": "ESC power leads, 4 pairs at F2's routed lengths",
-   "value": 79.5537348284582,
+   "value": 81.69368596148429,
    "unit": "g",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26184,7 +26827,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-PACKLEAD-PEAK",
    "title": "Pack's own leads (10 AWG), mission peak with 120 A punches",
-   "value": 20.488405980530636,
+   "value": 20.457993363927052,
    "unit": "degC",
    "limit": {
     "op": "<=",
@@ -26193,7 +26836,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Same rig, profile replay.",
-   "margin": 0.3170531339823121,
+   "margin": 0.31806688786909826,
    "parts": [
     "PWR-001"
    ]
@@ -26214,7 +26857,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-R-EXT",
    "title": "Resistance pack terminals to ESC pads (equivalent, hot)",
-   "value": 7.80431662154804,
+   "value": 7.924661645438626,
    "unit": "mOhm",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26234,7 +26877,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-DROP-CONT",
    "title": "Voltage drop pack to the farthest ESC at the continuous current",
-   "value": 1.8303106195912935,
+   "value": 1.8575501547128186,
    "unit": "%",
    "limit": {
     "op": "<=",
@@ -26243,7 +26886,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-F1-DROP at 30 A.",
-   "margin": 0.08484469020435326,
+   "margin": 0.0712249226435907,
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -26258,7 +26901,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F1-DROP-PEAK",
    "title": "Voltage drop pack to the farthest ESC at the 100 A limiter (5 % guideline, WB-11)",
-   "value": 5.600031180276554,
+   "value": 5.680365649079135,
    "unit": "%",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26378,11 +27021,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "CL-F1-POWER-BUDGET",
-    "resolved": 80.0
+    "resolved": 77.0
    },
    "status": "UNVERIFIED",
    "how": "Weigh each item on arrival (T-PWR-ARRIVAL); A3 replaces the EST rows.",
-   "margin": 0.07624999999999993,
+   "margin": 0.04025974025974018,
    "parts": [
     "PWR-001",
     "PWR-002",
@@ -26447,7 +27090,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-MAX",
    "title": "Longest routed ESC power lead (bus pad to ESC pad, incl. loops)",
-   "value": 0.6840419998503671,
+   "value": 0.7006309677718234,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26461,7 +27104,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-MIN",
    "title": "Shortest routed ESC power lead",
-   "value": 0.5473332019206637,
+   "value": 0.5638832883852334,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26475,7 +27118,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-UR",
    "title": "Routed ESC power lead UR",
-   "value": 0.6539560325712415,
+   "value": 0.6704500845244779,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26488,7 +27131,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-UL",
    "title": "Routed ESC power lead UL",
-   "value": 0.5473332019206637,
+   "value": 0.5638832883852334,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26501,7 +27144,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-LR",
    "title": "Routed ESC power lead LR",
-   "value": 0.6840419998503671,
+   "value": 0.7006309677718234,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26514,7 +27157,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-ESC-LEN-LL",
    "title": "Routed ESC power lead LL",
-   "value": 0.5762035199534407,
+   "value": 0.592784326735877,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26527,7 +27170,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-MAIN-LEN",
    "title": "10 AWG AS150U-to-bus path per conductor (cups -> board -> bars)",
-   "value": 0.12297860140078325,
+   "value": 0.12271722374664987,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -26536,7 +27179,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure on the power-frame mock-up (T-F2-FIT, T-PWR-FIT)",
-   "margin": 0.18014265732811166,
+   "margin": 0.1818851750223342,
    "parts": [
     "PWR-002",
     "PWR-003",
@@ -26546,7 +27189,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-MAIN-1-LEN",
    "title": "10 AWG jumper AS150U cups -> power-board input pads, per conductor incl. slack",
-   "value": 0.033407598739589525,
+   "value": 0.03400778826901726,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26560,7 +27203,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-MAIN-2-LEN",
    "title": "10 AWG jumper power-board output pads -> bus bars, per conductor incl. slack",
-   "value": 0.08957100266119372,
+   "value": 0.08870943547763262,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26574,7 +27217,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-CAP-LEAD",
    "title": "Longest ESC-cap lead (cap body to ESC power pad) incl. bend slack",
-   "value": 0.009023243291566185,
+   "value": 0.01922497311824849,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -26583,7 +27226,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-F2-FIT: measure each cap leg after forming, before soldering",
-   "margin": 0.5488378354216907,
+   "margin": 0.03875134408757551,
    "parts": [
     "PRP-002-UR",
     "PWR-008-UR"
@@ -26620,16 +27263,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-I2C-LEN",
    "title": "I2C bus total (FC to GPS + Y-branch to airspeed)",
-   "value": 0.5114904019960389,
+   "value": 0.5223567691494556,
    "unit": "m",
    "limit": {
     "op": "<=",
     "ref": "P:harness.rules.i2c_max_m",
-    "resolved": 0.5
+    "resolved": 1.0
    },
    "status": "UNVERIFIED",
    "how": "T-F3-I2C-SCAN with the routed cables; all three addresses found, no bus errors in 10 min",
-   "margin": -0.022980803992077803,
+   "margin": 0.4776432308505444,
    "parts": [
     "AVN-001",
     "AVN-002",
@@ -26639,7 +27282,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-RX-LEN",
    "title": "RX lead FC to RP3 (JST-GH 4)",
-   "value": 0.13702795570490772,
+   "value": 0.14544223162078296,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -26648,7 +27291,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure the made lead",
-   "margin": 0.08648029530061516,
+   "margin": 0.030385122528113578,
    "parts": [
     "AVN-003"
    ]
@@ -26656,7 +27299,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-PHASE-REACH",
    "title": "Routed ESC-phase-pad to motor-lead-exit reach incl. loop",
-   "value": 0.13267496798386874,
+   "value": 0.13141016253268345,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26670,7 +27313,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-PHASE-EXT",
    "title": "Phase extension needed per lead",
-   "value": 0.07267496798386874,
+   "value": 0.07141016253268345,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -26679,7 +27322,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-E1-MOTOR-RM measures the factory leads; cut ext = reach - leads",
-   "margin": 0.2732503201613126,
+   "margin": 0.28589837467316553,
    "parts": [
     "PRP-001-UR"
    ]
@@ -26687,7 +27330,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-DSHOT-LEN",
    "title": "Longest DShot lead FC pad to ESC",
-   "value": 0.6957370839595898,
+   "value": 0.688582353931683,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -26696,7 +27339,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-F2-DSHOT bench: bdshot error rate < 1 %",
-   "margin": 0.00608988005772883,
+   "margin": 0.016310922954738526,
    "parts": [
     "AVN-001"
    ]
@@ -26704,7 +27347,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-LEN",
    "title": "Longest servo lead FC pad to servo plug",
-   "value": 0.6024054165888828,
+   "value": 0.6022674187152275,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26718,7 +27361,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-V",
    "title": "Servo terminal voltage, both servos stalled",
-   "value": 5.728325874714381,
+   "value": 5.747821299005243,
    "unit": "V",
    "limit": {
     "op": ">=",
@@ -26727,7 +27370,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-F1-SERVO-STALL: measure at the servo plug with the servo stalled",
-   "margin": 0.004969451704277305,
+   "margin": 0.008389701579867136,
    "parts": [
     "MEC-001-L",
     "MEC-001-R"
@@ -26736,7 +27379,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-LINK-DROP",
    "title": "Board-link (W-PMOD) Vx + GND drop, both servos stalled",
-   "value": 0.11315414549598177,
+   "value": 0.09275686764410224,
    "unit": "V",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26750,7 +27393,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-LEAD-DROP",
    "title": "Servo lead drop (harness 22 AWG + / -, servo's own 26 AWG lead, 4 JR contacts)",
-   "value": 0.1585199797896369,
+   "value": 0.1594218333506556,
    "unit": "V",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26764,7 +27407,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-SERVO-OWN-LEN",
    "title": "Servo's own lead (MEC-001, shortened, 26 AWG) cut length",
-   "value": 0.057933144834216334,
+   "value": 0.062004893224950716,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26778,7 +27421,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-PMOD-LEN",
    "title": "Power-board link ribbon PDB -> FC (case S), cut length",
-   "value": 0.23156977567126877,
+   "value": 0.172884957545944,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26792,16 +27435,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-MASS",
    "title": "Harness mass (basic, wires + fittings, routed)",
-   "value": 139.91479201300098,
+   "value": 141.1205764887846,
    "unit": "g",
    "limit": {
     "op": "<=",
     "ref": "P:mass.allocation_g.harness",
-    "resolved": 129
+    "resolved": 142
    },
    "status": "UNVERIFIED",
    "how": "T-F2-WEIGH: weigh each made-up lead before installation",
-   "margin": -0.08461079079845718,
+   "margin": 0.0061931233184183586,
    "parts": [
     "HRN-001",
     "HRN-002-R",
@@ -26811,7 +27454,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-CG-X",
    "title": "Harness CG x",
-   "value": 0.0633049327435283,
+   "value": 0.06504404161595652,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26826,7 +27469,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-GROOVE-MAST",
    "title": "ESC-lead grooves to the GPS mast top, nearest point",
-   "value": 0.19591898835998517,
+   "value": 0.1997272390035971,
    "unit": "m",
    "limit": {
     "op": ">=",
@@ -26835,7 +27478,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Measure on the built wing; compassmot (H1)",
-   "margin": 0.6326582363332098,
+   "margin": 0.6643936583633092,
    "parts": [
     "AVN-002"
    ]
@@ -26843,7 +27486,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F2-CG-BODY",
    "title": "Largest gap between a bundle's declared CG (CAD body centroid) and its wire-mass CG",
-   "value": 0.00791924995372822,
+   "value": 0.00819961784436306,
    "unit": "m",
    "limit": {
     "op": "<=",
@@ -26852,7 +27495,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "python -I redesign/fusion/check.py: no cg WARN on HRN parts; T-F2-WEIGH stations",
-   "margin": 0.20807500462717807,
+   "margin": 0.18003821556369404,
    "parts": [
     "HRN-001",
     "HRN-002-R",
@@ -26862,16 +27505,16 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F3-AVN-CAD-MASS",
    "title": "Avionics subsystem mass (CAD roll-up)",
-   "value": 36.48,
+   "value": 35.42,
    "unit": "g",
    "limit": {
     "op": "<=",
     "ref": "P:mass.allocation_g.avionics",
-    "resolved": 45
+    "resolved": 37
    },
    "status": "UNVERIFIED",
    "how": "Weigh each part on arrival (T-F3-ARRIVAL); A3 replaces the EST values.",
-   "margin": 0.1893333333333334,
+   "margin": 0.042702702702702655,
    "parts": [
     "AVN-001",
     "AVN-002",
@@ -26885,7 +27528,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F3-AVN-CG-X",
    "title": "Avionics subsystem CG x",
-   "value": -0.0233,
+   "value": -0.0151,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -26904,7 +27547,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F3-AVN-CG-Y",
    "title": "Avionics subsystem CG y",
-   "value": 0.0011,
+   "value": 0.0034,
    "unit": "m",
    "limit": null,
    "status": "UNVERIFIED",
@@ -27357,7 +28000,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F3-SERVO-BEC",
    "title": "FC servo BEC continuous rating carried",
-   "value": 4.5,
+   "value": 8.0,
    "unit": "A",
    "limit": {
     "op": ">=",
@@ -27366,7 +28009,7 @@ window.VIEWER_DATA = {
    },
    "status": "PROPOSED",
    "how": "T-F1-SERVO-STALL on the CoreWing Vx rail; F1's UBEC drop rule.",
-   "margin": -0.19642857142857137,
+   "margin": 0.42857142857142866,
    "parts": [
     "AVN-001"
    ]
@@ -27379,11 +28022,11 @@ window.VIEWER_DATA = {
    "limit": {
     "op": "<=",
     "ref": "P:mass.allocation_g.avionics",
-    "resolved": 45
+    "resolved": 37
    },
    "status": "UNVERIFIED",
    "how": "Weigh each part on arrival; A3 replaces the EST rows.",
-   "margin": 0.1893333333333334,
+   "margin": 0.014054054054054138,
    "parts": [
     "AVN-001",
     "AVN-002",
@@ -27665,7 +28308,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F4-XOVER-RLL",
    "title": "Hover copter-roll rate-loop crossover",
-   "value": 1.0114728127152888,
+   "value": 1.0036555261781543,
    "unit": "Hz",
    "limit": {
     "op": "<=",
@@ -27674,7 +28317,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.",
-   "margin": 0.7752282638410469,
+   "margin": 0.7769654386270768,
    "parts": [
     "AVN-001"
    ]
@@ -27682,7 +28325,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F4-XOVER-PIT",
    "title": "Hover copter-pitch rate-loop crossover (stiffest axis)",
-   "value": 2.293381595844628,
+   "value": 2.299447843449623,
    "unit": "Hz",
    "limit": {
     "op": "<=",
@@ -27691,7 +28334,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "As roll; after QAUTOTUNE reject any Q_A_RAT_PIT_P above p_ceiling_pit.",
-   "margin": 0.5413236808310744,
+   "margin": 0.5401104313100754,
    "parts": [
     "AVN-001"
    ]
@@ -27699,7 +28342,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F4-XOVER-YAW",
    "title": "Hover copter-yaw rate-loop crossover",
-   "value": 0.9983569026529531,
+   "value": 0.9894215361152333,
    "unit": "Hz",
    "limit": {
     "op": "<=",
@@ -27708,7 +28351,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "As roll.",
-   "margin": 0.5840179572279363,
+   "margin": 0.5877410266186528,
    "parts": [
     "AVN-001"
    ]
@@ -27774,7 +28417,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F4-SPLIT-OUT",
    "title": "Upper-pair hover output at the A3 split, 30 % control reserve, sagged pack",
-   "value": 0.6710138896572756,
+   "value": 0.6710637101094139,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -27783,7 +28426,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "Tethered-hover log on a pack near BATT_LOW: mean RCOU of the upper pair (UR, UL) / lower pair gives the split; peak upper-pair RCOU during pitch inputs stays below 0.84 (CR-A3-04, R-HOVER-SPLIT).",
-   "margin": 0.20117394088419568,
+   "margin": 0.20111463082212627,
    "parts": [
     "PRP-002-UR",
     "PRP-002-UL",
@@ -28242,7 +28885,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-F4-MIX-PITCH",
    "title": "Trimmed-CLmax elevon need over pure-pitch travel at MIXING_GAIN 0.5",
-   "value": 0.8702391656036802,
+   "value": 0.8714659656919933,
    "unit": "-",
    "limit": {
     "op": "<=",
@@ -28251,7 +28894,7 @@ window.VIEWER_DATA = {
    },
    "status": "UNVERIFIED",
    "how": "T-B2-STALL slow flight in FBWA: elevon output not at the pitch end at the stall break.",
-   "margin": 0.1297608343963198,
+   "margin": 0.1285340343080067,
    "parts": [
     "AVN-001"
    ]
@@ -28441,7 +29084,7 @@ window.VIEWER_DATA = {
   {
    "id": "CL-H1-WING-PROOF-P",
    "title": "Wing proof load per side (limit, sum of C1's four pads)",
-   "value": 24.469997610639794,
+   "value": 24.395330630291976,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
@@ -28506,13 +29149,57 @@ window.VIEWER_DATA = {
    ]
   },
   {
+   "id": "CL-H1-D5-SIDE-RIM-SF",
+   "title": "D5 shoe RF at the T-D5-SIDE load (D5 FEA of the drawn R8 shoe, D-101)",
+   "value": 1.2672926036051309,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0,
+    "resolved": 1.0
+   },
+   "status": "UNVERIFIED",
+   "how": "T-D5-SIDE 60 N at the pad of two R8 shoes, +y on one and +z on the other, insert pushed 4-5 mm in; inspect the inboard snap-window corners and the rim; no crack.",
+   "margin": 0.26729260360513085,
+   "parts": [
+    "GER-001-UR",
+    "GER-002-UR"
+   ]
+  },
+  {
    "id": "CL-H1-POD-BRACKET-F",
-   "title": "T-C3-POD-PROOF bracket load along +x and -z (CR-C3-20)",
-   "value": 199.55783048655493,
+   "title": "T-C3-POD-PROOF bracket limit load on the flight pod, +x (CR-H1-23, D-102)",
+   "value": 76.21620962710105,
    "unit": "N",
    "limit": null,
    "status": "UNVERIFIED",
-   "how": "Card GT-09: strap round each handle-foot bracket, jugs over a pulley; 25 % steps, 10 s hold.",
+   "how": "Card GT-09: strap round each handle-foot bracket, jugs over a pulley; 25 % steps to this limit load, 10 s hold; stop at the first audible crack.",
+   "margin": null,
+   "parts": [
+    "POD-007"
+   ]
+  },
+  {
+   "id": "CL-H1-POD-BRACKET-F-Z",
+   "title": "T-C3-POD-PROOF bracket limit load on the flight pod, -z (CR-H1-23, D-102)",
+   "value": 51.37029604285736,
+   "unit": "N",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "Card GT-09, as CL-H1-POD-BRACKET-F along -z.",
+   "margin": null,
+   "parts": [
+    "POD-007"
+   ]
+  },
+  {
+   "id": "CL-H1-POD-BRACKET-CRASH-F",
+   "title": "Bracket crash force, test articles only (T-C3-BRACKET-CRASH, D-102)",
+   "value": 204.69804269769435,
+   "unit": "N",
+   "limit": null,
+   "status": "UNVERIFIED",
+   "how": "T-C3-BRACKET-CRASH on two test articles (printed foot + bracket bonded to a wall offcut and a spar stub), never the flight pod.",
    "margin": null,
    "parts": [
     "POD-007"
@@ -28521,27 +29208,27 @@ window.VIEWER_DATA = {
  ],
  "proofs_viewer": "../proofs/viewer/index.html?data=redesign#node={id}",
  "budget": {
-  "_note": "Written by redesign/team/A1/frame_claims.py from params/params.json#mass.allocation_g; do not edit by hand. limit_g is the hard as-built gate (P4). Allocations are flying mass per subsystem folder; growth_reserve_g (= limit - allocations) is held by A1 for growth by maturity and the first-build overrun; sized_g = allocations + requirements.growth_allowance_kg + requirements.build_overrun_kg (D-63: 114 + 100 g). A3 refines allocations in MASS-CG.md through a change request to A1.",
+  "_note": "Written by redesign/team/A1/frame_claims.py from params/params.json#mass.allocation_g; do not edit by hand. limit_g is the hard as-built gate (P4). Allocations are flying mass per subsystem folder; growth_reserve_g (= limit - allocations) is held by A1 for growth by maturity and the first-build overrun; sized_g = allocations + requirements.growth_allowance_kg + requirements.build_overrun_kg (D-95: 123 + 100 g). A3 refines allocations in MASS-CG.md through a change request to A1.",
   "limit_g": 2600,
-  "sized_g": 2600,
-  "growth_reserve_g": 213,
+  "sized_g": 2597,
+  "growth_reserve_g": 226,
   "allocations_g": {
-   "wing": 405,
-   "fins": 438,
+   "wing": 393,
+   "fins": 434,
    "pod": 146,
    "landing": 60,
    "propulsion": 462,
-   "power": 630,
-   "avionics": 45,
-   "harness": 129,
-   "mechanisms": 72
+   "power": 627,
+   "avionics": 37,
+   "harness": 142,
+   "mechanisms": 73
   },
   "cg_x_m": [
    0.0466,
    0.0514
   ],
   "cg_z_m": [
-   0.01,
+   0.0165,
    0.025
   ]
  },
@@ -28557,13 +29244,14 @@ window.VIEWER_DATA = {
   "FIN-010 is in redesign/subsystems/fins/parts.csv row 10 but not in interfaces.json",
   "FIN-011 is in redesign/subsystems/fins/parts.csv row 11 but not in interfaces.json",
   "FIN-012 is in redesign/subsystems/fins/parts.csv row 12 but not in interfaces.json",
-  "FIN-101 is in redesign/subsystems/fins/parts.csv row 13 but not in interfaces.json",
-  "FIN-102 is in redesign/subsystems/fins/parts.csv row 14 but not in interfaces.json",
-  "FIN-103 is in redesign/subsystems/fins/parts.csv row 15 but not in interfaces.json",
-  "FIN-104 is in redesign/subsystems/fins/parts.csv row 16 but not in interfaces.json",
-  "FIN-105 is in redesign/subsystems/fins/parts.csv row 17 but not in interfaces.json",
-  "FIN-106 is in redesign/subsystems/fins/parts.csv row 18 but not in interfaces.json",
-  "FIN-107 is in redesign/subsystems/fins/parts.csv row 19 but not in interfaces.json",
+  "FIN-013 is in redesign/subsystems/fins/parts.csv row 13 but not in interfaces.json",
+  "FIN-101 is in redesign/subsystems/fins/parts.csv row 14 but not in interfaces.json",
+  "FIN-102 is in redesign/subsystems/fins/parts.csv row 15 but not in interfaces.json",
+  "FIN-103 is in redesign/subsystems/fins/parts.csv row 16 but not in interfaces.json",
+  "FIN-104 is in redesign/subsystems/fins/parts.csv row 17 but not in interfaces.json",
+  "FIN-105 is in redesign/subsystems/fins/parts.csv row 18 but not in interfaces.json",
+  "FIN-106 is in redesign/subsystems/fins/parts.csv row 19 but not in interfaces.json",
+  "FIN-107 is in redesign/subsystems/fins/parts.csv row 20 but not in interfaces.json",
   "HRN-002 is in redesign/subsystems/harness/parts.csv row 3 but not in interfaces.json",
   "HRN-101 is in redesign/subsystems/harness/parts.csv row 4 but not in interfaces.json",
   "HRN-104 is in redesign/subsystems/harness/parts.csv row 5 but not in interfaces.json",
@@ -28594,8 +29282,9 @@ window.VIEWER_DATA = {
   "MEC-008 is in redesign/subsystems/mechanisms/parts.csv row 9 but not in interfaces.json",
   "MEC-009 is in redesign/subsystems/mechanisms/parts.csv row 10 but not in interfaces.json",
   "MEC-010 is in redesign/subsystems/mechanisms/parts.csv row 11 but not in interfaces.json",
-  "MEC-011 is in redesign/subsystems/mechanisms/parts.csv row 12 but not in interfaces.json",
-  "MEC-012 is in redesign/subsystems/mechanisms/parts.csv row 13 but not in interfaces.json",
+  "MEC-013 is in redesign/subsystems/mechanisms/parts.csv row 12 but not in interfaces.json",
+  "MEC-011 is in redesign/subsystems/mechanisms/parts.csv row 13 but not in interfaces.json",
+  "MEC-012 is in redesign/subsystems/mechanisms/parts.csv row 14 but not in interfaces.json",
   "PWR-008 is in redesign/subsystems/power/parts.csv row 7 but not in interfaces.json",
   "PWR-104 is in redesign/subsystems/power/parts.csv row 11 but not in interfaces.json",
   "PWR-105 is in redesign/subsystems/power/parts.csv row 12 but not in interfaces.json",
@@ -28622,10 +29311,11 @@ window.VIEWER_DATA = {
   "WNG-004 is in redesign/subsystems/wing/parts.csv row 5 but not in interfaces.json",
   "WNG-005 is in redesign/subsystems/wing/parts.csv row 6 but not in interfaces.json",
   "WNG-006 is in redesign/subsystems/wing/parts.csv row 7 but not in interfaces.json",
-  "WNG-011 is in redesign/subsystems/wing/parts.csv row 9 but not in interfaces.json",
-  "WNG-012 is in redesign/subsystems/wing/parts.csv row 10 but not in interfaces.json",
+  "WNG-011 is in redesign/subsystems/wing/parts.csv row 8 but not in interfaces.json",
+  "WNG-012 is in redesign/subsystems/wing/parts.csv row 9 but not in interfaces.json",
   "claim CL-B2R3-SERVO-TORQUE-REQ names MEC-001, not a part of this aircraft",
   "claim CL-B2R3-SERVO-TORQUE-ENV names MEC-001, not a part of this aircraft",
+  "claim CL-C3-FEA-FILLET-FF-DESIGN names WNG-007, not a part of this aircraft",
   "claim CL-D7-HANDLE-ENGAGE-MIN names TRN-102, not a part of this aircraft",
   "claim CL-D7-HANDLE-ENGAGE names TRN-102, not a part of this aircraft",
   "claim CL-D7-HANDLE-ENGAGE names TRN-105, not a part of this aircraft"

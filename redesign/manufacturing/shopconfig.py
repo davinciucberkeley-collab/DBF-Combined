@@ -67,6 +67,8 @@ PRINT = {
                     hold='ON HOLD: STATUS issue 1 / MF-13 "do not print collars until settled" (freeze 18 Dec)'),
     'FIN-010': dict(material='PETG', infill='80 %', orient={'axes': 'XY'}, src='fins/parts.csv ("brace slot '
                     'vertical on the bed")'),
+    'FIN-013': dict(material='PETG', infill='100 %', orient={'axes': 'XY'}, spares=2,
+                    src='fins/parts.csv ("saddle foot down on the bed"; D-89c strap eye)'),
     'GER-001': dict(material='PETG', layer='0.2', perimeters='3', infill='100 %', orient={'down': (1, 0, 0)},
                     supports='only under the two leg ends at the TE', spares=2,
                     src='landing/parts.csv + BUILD.md step 1 ("rim end on the bed"); spares = GER-012 x2'),
@@ -81,6 +83,8 @@ PRINT = {
                     src='mechanisms/BUILD.md ("horns flat on the y face"); spares: MANUFACTURING.md "Make x2"'),
     'MEC-006': dict(material='PETG', infill='100 %', orient={'axes': 'Y'}, spares=2,
                     src='mechanisms/BUILD.md ("flat on the y face"); spares: MANUFACTURING.md "Make x2"'),
+    'MEC-013': dict(material='PETG', infill='100 %', orient={'axes': 'Z'}, spares=2,
+                    src='mechanisms/parts.csv (D-89c horn backplate, flat face on the bed)'),
     'MEC-007': dict(material='PETG', perimeters='2', orient={}, src='mechanisms/BUILD.md (cover 2 perimeters)'),
     'MEC-008': dict(material='PETG', perimeters='3', orient={}, spares=2,
                     src='mechanisms/BUILD.md (frame 3 perimeters); spares: MANUFACTURING.md "Make x2"'),

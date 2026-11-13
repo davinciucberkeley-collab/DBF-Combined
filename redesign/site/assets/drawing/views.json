@@ -69,16 +69,6 @@
      "subsystem": "wing",
      "name": "Block-pocket lip beads (microballoon epoxy) L"
     },
-    "WNG-007": {
-     "bbox_px": [
-      743.5,
-      427.4,
-      939.5,
-      434.4
-     ],
-     "subsystem": "wing",
-     "name": "Recess-step fillet (microballoon epoxy)"
-    },
     "WNG-002": {
      "bbox_px": [
       141.5,
@@ -191,9 +181,9 @@
     },
     "FIN-001-UR": {
      "bbox_px": [
-      1261.8,
+      1264.6,
       422.5,
-      1317.2,
+      1314.4,
       791.4
      ],
      "subsystem": "fins",
@@ -201,9 +191,9 @@
     },
     "FIN-001-LR": {
      "bbox_px": [
-      1261.8,
+      1264.6,
       422.5,
-      1317.2,
+      1314.4,
       791.4
      ],
      "subsystem": "fins",
@@ -233,11 +223,31 @@
      "bbox_px": [
       1264.3,
       382.4,
-      1323.9,
+      1314.7,
       479.4
      ],
      "subsystem": "fins",
-     "name": "Through-core block R (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)"
+     "name": "Through-core block R (tube socket + spar saddle + 2 tie lugs)"
+    },
+    "FIN-013-UR": {
+     "bbox_px": [
+      1305.1,
+      394.3,
+      1323.9,
+      418.5
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye UR, PETG, bonded on the upper bore boss after the spar bond (D-89c)"
+    },
+    "FIN-013-LR": {
+     "bbox_px": [
+      1305.1,
+      394.3,
+      1323.9,
+      418.5
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye LR, PETG, bonded on the lower bore boss after the spar bond (D-89c)"
     },
     "FIN-006-R": {
      "bbox_px": [
@@ -267,7 +277,7 @@
       477.8
      ],
      "subsystem": "fins",
-     "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar UR, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-009-UR": {
      "bbox_px": [
@@ -332,12 +342,12 @@
     "FIN-012-UR": {
      "bbox_px": [
       1281.4,
-      486.2,
+      484.1,
       1297.6,
-      693.6
+      698.2
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UR, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UR, 14 x CF rod 2.5 mm"
     },
     "FIN-007-LR": {
      "bbox_px": [
@@ -357,17 +367,17 @@
       477.8
      ],
      "subsystem": "fins",
-     "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar LR, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-012-LR": {
      "bbox_px": [
       1281.4,
-      486.2,
+      484.1,
       1297.6,
-      693.6
+      698.2
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LR, 14 x CF rod 2.5 mm"
     },
     "FIN-011-LRO": {
      "bbox_px": [
@@ -401,13 +411,13 @@
     },
     "FIN-004-L": {
      "bbox_px": [
-      359.1,
+      368.3,
       382.4,
       418.7,
       479.4
      ],
      "subsystem": "fins",
-     "name": "Through-core block L (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)"
+     "name": "Through-core block L (tube socket + spar saddle + 2 tie lugs)"
     },
     "FIN-006-L": {
      "bbox_px": [
@@ -421,9 +431,9 @@
     },
     "FIN-001-UL": {
      "bbox_px": [
-      365.8,
+      368.6,
       422.5,
-      421.2,
+      418.4,
       791.4
      ],
      "subsystem": "fins",
@@ -447,7 +457,7 @@
       477.8
      ],
      "subsystem": "fins",
-     "name": "Station collar UL, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar UL, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-009-UL": {
      "bbox_px": [
@@ -472,12 +482,22 @@
     "FIN-012-UL": {
      "bbox_px": [
       385.4,
-      486.2,
+      484.1,
       401.6,
-      693.6
+      698.2
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UL, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UL, 14 x CF rod 2.5 mm"
+    },
+    "FIN-013-UL": {
+     "bbox_px": [
+      359.1,
+      394.3,
+      377.9,
+      418.5
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye UL, PETG, bonded on the upper bore boss after the spar bond (D-89c)"
     },
     "FIN-011-ULO": {
      "bbox_px": [
@@ -501,9 +521,9 @@
     },
     "FIN-001-LL": {
      "bbox_px": [
-      365.8,
+      368.6,
       422.5,
-      421.2,
+      418.4,
       791.4
      ],
      "subsystem": "fins",
@@ -527,7 +547,7 @@
       477.8
      ],
      "subsystem": "fins",
-     "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar LL, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-009-LL": {
      "bbox_px": [
@@ -552,12 +572,22 @@
     "FIN-012-LL": {
      "bbox_px": [
       385.4,
-      486.2,
+      484.1,
       401.6,
-      693.6
+      698.2
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LL, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LL, 14 x CF rod 2.5 mm"
+    },
+    "FIN-013-LL": {
+     "bbox_px": [
+      359.1,
+      394.3,
+      377.9,
+      418.5
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye LL, PETG, bonded on the lower bore boss after the spar bond (D-89c)"
     },
     "FIN-011-LLO": {
      "bbox_px": [
@@ -851,9 +881,9 @@
     },
     "GER-001-UR": {
      "bbox_px": [
-      1271.4,
+      1269.7,
       698.4,
-      1307.6,
+      1309.3,
       800.6
      ],
      "subsystem": "landing",
@@ -911,9 +941,9 @@
     },
     "GER-001-UL": {
      "bbox_px": [
-      375.4,
+      373.7,
       698.4,
-      411.6,
+      413.3,
       800.6
      ],
      "subsystem": "landing",
@@ -921,9 +951,9 @@
     },
     "GER-001-LR": {
      "bbox_px": [
-      1271.4,
+      1269.7,
       698.4,
-      1307.6,
+      1309.3,
       800.6
      ],
      "subsystem": "landing",
@@ -931,9 +961,9 @@
     },
     "GER-001-LL": {
      "bbox_px": [
-      375.4,
+      373.7,
       698.4,
-      411.6,
+      413.3,
       800.6
      ],
      "subsystem": "landing",
@@ -1372,7 +1402,7 @@
     "MEC-003-R": {
      "bbox_px": [
       1237.1,
-      616.4,
+      615.1,
       1243.9,
       690.7
      ],
@@ -1459,6 +1489,26 @@
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips right"
     },
+    "MEC-013-RI": {
+     "bbox_px": [
+      1232.1,
+      712.4,
+      1248.9,
+      746.0
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) right, inboard panel"
+    },
+    "MEC-013-RO": {
+     "bbox_px": [
+      1330.1,
+      712.4,
+      1346.9,
+      746.0
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) right, outboard panel"
+    },
     "MEC-001-L": {
      "bbox_px": [
       444.3,
@@ -1482,7 +1532,7 @@
     "MEC-003-L": {
      "bbox_px": [
       439.1,
-      616.4,
+      615.1,
       445.9,
       690.7
      ],
@@ -1569,6 +1619,26 @@
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips left"
     },
+    "MEC-013-LI": {
+     "bbox_px": [
+      434.1,
+      712.4,
+      450.9,
+      746.0
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) left, inboard panel"
+    },
+    "MEC-013-LO": {
+     "bbox_px": [
+      336.1,
+      712.4,
+      352.9,
+      746.0
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) left, outboard panel"
+    },
     "MEC-011-R": {
      "bbox_px": [
       1198.0,
@@ -1652,7 +1722,7 @@
     "PWR-004": {
      "bbox_px": [
       765.4,
-      288.8,
+      287.1,
       787.8,
       339.2
      ],
@@ -1727,7 +1797,7 @@
       336.4
      ],
      "subsystem": "power",
-     "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm"
+     "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm"
     },
     "PWR-101": {
      "bbox_px": [
@@ -1772,7 +1842,7 @@
     "AVN-004": {
      "bbox_px": [
       761.9,
-      196.1,
+      189.1,
       791.3,
       266.5
      ],
@@ -1860,16 +1930,6 @@
      ],
      "subsystem": "wing",
      "name": "Block-pocket lip beads (microballoon epoxy) L"
-    },
-    "WNG-007": {
-     "bbox_px": [
-      743.5,
-      314.3,
-      939.5,
-      321.0
-     ],
-     "subsystem": "wing",
-     "name": "Recess-step fillet (microballoon epoxy)"
     },
     "WNG-002": {
      "bbox_px": [
@@ -1983,9 +2043,9 @@
     },
     "FIN-001-UR": {
      "bbox_px": [
-      365.8,
+      368.6,
       48.0,
-      421.2,
+      418.4,
       341.6
      ],
      "subsystem": "fins",
@@ -1993,9 +2053,9 @@
     },
     "FIN-001-LR": {
      "bbox_px": [
-      365.8,
+      368.6,
       342.4,
-      421.2,
+      418.4,
       636.0
      ],
      "subsystem": "fins",
@@ -2016,20 +2076,40 @@
       362.5,
       55.0,
       413.8,
-      122.2
+      130.6
      ],
      "subsystem": "fins",
      "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)"
     },
     "FIN-004-R": {
      "bbox_px": [
-      359.1,
+      368.3,
       299.4,
       418.7,
-      367.2
+      365.3
      ],
      "subsystem": "fins",
-     "name": "Through-core block R (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)"
+     "name": "Through-core block R (tube socket + spar saddle + 2 tie lugs)"
+    },
+    "FIN-013-UR": {
+     "bbox_px": [
+      359.1,
+      298.3,
+      377.9,
+      312.3
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye UR, PETG, bonded on the upper bore boss after the spar bond (D-89c)"
+    },
+    "FIN-013-LR": {
+     "bbox_px": [
+      359.1,
+      353.9,
+      377.9,
+      367.9
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye LR, PETG, bonded on the lower bore boss after the spar bond (D-89c)"
     },
     "FIN-006-R": {
      "bbox_px": [
@@ -2054,19 +2134,19 @@
     "FIN-008-UR": {
      "bbox_px": [
       375.7,
-      103.4,
+      110.2,
       425.3,
-      139.7
+      157.9
      ],
      "subsystem": "fins",
-     "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar UR, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-009-UR": {
      "bbox_px": [
       418.4,
-      123.8,
+      132.4,
       502.7,
-      308.0
+      307.9
      ],
      "subsystem": "fins",
      "name": "Brace UR, CF strip 10 x 2"
@@ -2074,9 +2154,9 @@
     "FIN-009-LR": {
      "bbox_px": [
       418.4,
-      356.2,
+      356.3,
       502.7,
-      560.5
+      551.9
      ],
      "subsystem": "fins",
      "name": "Brace LR, CF strip 10 x 2"
@@ -2106,7 +2186,7 @@
       385.4,
       48.0,
       386.8,
-      133.1
+      141.6
      ],
      "subsystem": "fins",
      "name": "Edge strip upper right outboard face, CF 10 x 1"
@@ -2116,7 +2196,7 @@
       400.2,
       48.0,
       401.6,
-      133.1
+      141.6
      ],
      "subsystem": "fins",
      "name": "Edge strip upper right inboard face, CF 10 x 1"
@@ -2124,12 +2204,12 @@
     "FIN-012-UR": {
      "bbox_px": [
       385.4,
-      57.8,
+      57.1,
       401.6,
-      111.5
+      118.6
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UR, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UR, 14 x CF rod 2.5 mm"
     },
     "FIN-007-LR": {
      "bbox_px": [
@@ -2144,27 +2224,27 @@
     "FIN-008-LR": {
      "bbox_px": [
       375.7,
-      544.3,
+      526.1,
       425.3,
-      580.6
+      573.8
      ],
      "subsystem": "fins",
-     "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar LR, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-012-LR": {
      "bbox_px": [
       385.4,
-      572.5,
+      565.4,
       401.6,
-      626.2
+      626.9
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LR, 14 x CF rod 2.5 mm"
     },
     "FIN-011-LRO": {
      "bbox_px": [
       385.4,
-      550.9,
+      542.4,
       386.8,
       636.0
      ],
@@ -2174,7 +2254,7 @@
     "FIN-011-LRI": {
      "bbox_px": [
       400.2,
-      550.9,
+      542.4,
       401.6,
       636.0
      ],
@@ -2195,11 +2275,11 @@
      "bbox_px": [
       1264.3,
       299.4,
-      1323.9,
-      367.2
+      1314.7,
+      365.3
      ],
      "subsystem": "fins",
-     "name": "Through-core block L (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)"
+     "name": "Through-core block L (tube socket + spar saddle + 2 tie lugs)"
     },
     "FIN-006-L": {
      "bbox_px": [
@@ -2213,9 +2293,9 @@
     },
     "FIN-001-UL": {
      "bbox_px": [
-      1261.8,
+      1264.6,
       48.0,
-      1317.2,
+      1314.4,
       341.6
      ],
      "subsystem": "fins",
@@ -2234,19 +2314,19 @@
     "FIN-008-UL": {
      "bbox_px": [
       1257.7,
-      103.4,
+      110.2,
       1307.3,
-      139.7
+      157.9
      ],
      "subsystem": "fins",
-     "name": "Station collar UL, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar UL, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-009-UL": {
      "bbox_px": [
       1180.3,
-      123.8,
+      132.4,
       1264.6,
-      308.0
+      307.9
      ],
      "subsystem": "fins",
      "name": "Brace UL, CF strip 10 x 2"
@@ -2264,19 +2344,29 @@
     "FIN-012-UL": {
      "bbox_px": [
       1281.4,
-      57.8,
+      57.1,
       1297.6,
-      111.5
+      118.6
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UL, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UL, 14 x CF rod 2.5 mm"
+    },
+    "FIN-013-UL": {
+     "bbox_px": [
+      1305.1,
+      298.3,
+      1323.9,
+      312.3
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye UL, PETG, bonded on the upper bore boss after the spar bond (D-89c)"
     },
     "FIN-011-ULO": {
      "bbox_px": [
       1296.2,
       48.0,
       1297.6,
-      133.1
+      141.6
      ],
      "subsystem": "fins",
      "name": "Edge strip upper left outboard face, CF 10 x 1"
@@ -2286,16 +2376,16 @@
       1281.4,
       48.0,
       1282.8,
-      133.1
+      141.6
      ],
      "subsystem": "fins",
      "name": "Edge strip upper left inboard face, CF 10 x 1"
     },
     "FIN-001-LL": {
      "bbox_px": [
-      1261.8,
+      1264.6,
       342.4,
-      1317.2,
+      1314.4,
       636.0
      ],
      "subsystem": "fins",
@@ -2314,19 +2404,19 @@
     "FIN-008-LL": {
      "bbox_px": [
       1257.7,
-      544.3,
+      526.1,
       1307.3,
-      580.6
+      573.8
      ],
      "subsystem": "fins",
-     "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar LL, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-009-LL": {
      "bbox_px": [
       1180.3,
-      356.2,
+      356.3,
       1264.6,
-      560.5
+      551.9
      ],
      "subsystem": "fins",
      "name": "Brace LL, CF strip 10 x 2"
@@ -2344,17 +2434,27 @@
     "FIN-012-LL": {
      "bbox_px": [
       1281.4,
-      572.5,
+      565.4,
       1297.6,
-      626.2
+      626.9
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LL, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LL, 14 x CF rod 2.5 mm"
+    },
+    "FIN-013-LL": {
+     "bbox_px": [
+      1305.1,
+      353.9,
+      1323.9,
+      367.9
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye LL, PETG, bonded on the lower bore boss after the spar bond (D-89c)"
     },
     "FIN-011-LLO": {
      "bbox_px": [
       1296.2,
-      550.9,
+      542.4,
       1297.6,
       636.0
      ],
@@ -2364,7 +2464,7 @@
     "FIN-011-LLI": {
      "bbox_px": [
       1281.4,
-      550.9,
+      542.4,
       1282.8,
       636.0
      ],
@@ -2376,7 +2476,7 @@
       1269.2,
       55.0,
       1320.5,
-      122.2
+      130.6
      ],
      "subsystem": "fins",
      "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)"
@@ -2384,7 +2484,7 @@
     "FIN-003-LR": {
      "bbox_px": [
       362.5,
-      561.8,
+      553.4,
       413.8,
       629.0
      ],
@@ -2394,7 +2494,7 @@
     "FIN-003-LL": {
      "bbox_px": [
       1269.2,
-      561.8,
+      553.4,
       1320.5,
       629.0
      ],
@@ -2404,9 +2504,9 @@
     "FIN-101-UR": {
      "bbox_px": [
       364.9,
-      105.7,
+      110.0,
       372.6,
-      113.5
+      117.7
      ],
      "subsystem": "fins",
      "name": "Pinch bolt UR: M3x16 SHCS ISO 4762 A2"
@@ -2414,9 +2514,9 @@
     "FIN-102-UR": {
      "bbox_px": [
       364.9,
-      105.2,
+      109.4,
       372.6,
-      114.0
+      118.2
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt nut UR: M3 nyloc ISO 10511 A2"
@@ -2424,9 +2524,9 @@
     "FIN-103-UR": {
      "bbox_px": [
       363.9,
-      104.7,
+      108.9,
       373.7,
-      114.5
+      118.7
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt washer pair UR: 2 x M3 ISO 7089 A2"
@@ -2434,9 +2534,9 @@
     "FIN-101-UL": {
      "bbox_px": [
       1310.4,
-      105.7,
+      110.0,
       1318.1,
-      113.5
+      117.7
      ],
      "subsystem": "fins",
      "name": "Pinch bolt UL: M3x16 SHCS ISO 4762 A2"
@@ -2444,9 +2544,9 @@
     "FIN-101-LR": {
      "bbox_px": [
       364.9,
-      570.5,
+      566.3,
       372.6,
-      578.3
+      574.0
      ],
      "subsystem": "fins",
      "name": "Pinch bolt LR: M3x16 SHCS ISO 4762 A2"
@@ -2454,9 +2554,9 @@
     "FIN-101-LL": {
      "bbox_px": [
       1310.4,
-      570.5,
+      566.3,
       1318.1,
-      578.3
+      574.0
      ],
      "subsystem": "fins",
      "name": "Pinch bolt LL: M3x16 SHCS ISO 4762 A2"
@@ -2464,9 +2564,9 @@
     "FIN-102-UL": {
      "bbox_px": [
       1310.4,
-      105.2,
+      109.4,
       1318.1,
-      114.0
+      118.2
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt nut UL: M3 nyloc ISO 10511 A2"
@@ -2474,9 +2574,9 @@
     "FIN-102-LR": {
      "bbox_px": [
       364.9,
-      570.0,
+      565.8,
       372.6,
-      578.8
+      574.6
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt nut LR: M3 nyloc ISO 10511 A2"
@@ -2484,9 +2584,9 @@
     "FIN-102-LL": {
      "bbox_px": [
       1310.4,
-      570.0,
+      565.8,
       1318.1,
-      578.8
+      574.6
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt nut LL: M3 nyloc ISO 10511 A2"
@@ -2494,9 +2594,9 @@
     "FIN-103-UL": {
      "bbox_px": [
       1309.3,
-      104.7,
+      108.9,
       1319.1,
-      114.5
+      118.7
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt washer pair UL: 2 x M3 ISO 7089 A2"
@@ -2504,9 +2604,9 @@
     "FIN-103-LR": {
      "bbox_px": [
       363.9,
-      569.5,
+      565.3,
       373.7,
-      579.3
+      575.1
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt washer pair LR: 2 x M3 ISO 7089 A2"
@@ -2514,9 +2614,9 @@
     "FIN-103-LL": {
      "bbox_px": [
       1309.3,
-      569.5,
+      565.3,
       1319.1,
-      579.3
+      575.1
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt washer pair LL: 2 x M3 ISO 7089 A2"
@@ -2643,9 +2743,9 @@
     },
     "GER-001-UR": {
      "bbox_px": [
-      375.4,
+      373.7,
       35.4,
-      411.6,
+      413.3,
       70.1
      ],
      "subsystem": "landing",
@@ -2703,9 +2803,9 @@
     },
     "GER-001-UL": {
      "bbox_px": [
-      1271.4,
+      1269.7,
       35.4,
-      1307.6,
+      1309.3,
       70.1
      ],
      "subsystem": "landing",
@@ -2713,9 +2813,9 @@
     },
     "GER-001-LR": {
      "bbox_px": [
-      375.4,
+      373.7,
       613.9,
-      411.6,
+      413.3,
       648.6
      ],
      "subsystem": "landing",
@@ -2723,9 +2823,9 @@
     },
     "GER-001-LL": {
      "bbox_px": [
-      1271.4,
+      1269.7,
       613.9,
-      1307.6,
+      1309.3,
       648.6
      ],
      "subsystem": "landing",
@@ -3164,7 +3264,7 @@
     "MEC-003-R": {
      "bbox_px": [
       439.1,
-      362.9,
+      362.8,
       445.9,
       372.6
      ],
@@ -3251,6 +3351,26 @@
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips right"
     },
+    "MEC-013-RI": {
+     "bbox_px": [
+      434.1,
+      335.2,
+      450.9,
+      339.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) right, inboard panel"
+    },
+    "MEC-013-RO": {
+     "bbox_px": [
+      336.1,
+      335.2,
+      352.9,
+      339.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) right, outboard panel"
+    },
     "MEC-001-L": {
      "bbox_px": [
       1197.6,
@@ -3274,7 +3394,7 @@
     "MEC-003-L": {
      "bbox_px": [
       1237.1,
-      362.9,
+      362.8,
       1243.9,
       372.6
      ],
@@ -3361,6 +3481,26 @@
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips left"
     },
+    "MEC-013-LI": {
+     "bbox_px": [
+      1232.1,
+      335.2,
+      1248.9,
+      339.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) left, inboard panel"
+    },
+    "MEC-013-LO": {
+     "bbox_px": [
+      1330.1,
+      335.2,
+      1346.9,
+      339.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) left, outboard panel"
+    },
     "MEC-011-R": {
      "bbox_px": [
       479.7,
@@ -3424,7 +3564,7 @@
     "PWR-003": {
      "bbox_px": [
       884.0,
-      268.4,
+      266.4,
       928.8,
       286.6
      ],
@@ -3444,7 +3584,7 @@
     "PWR-004": {
      "bbox_px": [
       895.2,
-      306.4,
+      299.0,
       917.6,
       313.2
      ],
@@ -3514,19 +3654,19 @@
     "PWR-103": {
      "bbox_px": [
       884.0,
-      287.3,
+      286.6,
       928.8,
       288.0
      ],
      "subsystem": "power",
-     "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm"
+     "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm"
     },
     "PWR-101": {
      "bbox_px": [
       885.0,
-      284.7,
+      281.8,
       927.8,
-      312.5
+      309.5
      ],
      "subsystem": "power",
      "name": "Power-frame screw set: 4 x M3x18 pan head, nylon PA66"
@@ -3564,7 +3704,7 @@
     "AVN-004": {
      "bbox_px": [
       891.7,
-      275.9,
+      276.8,
       921.1,
       311.8
      ],
@@ -3584,7 +3724,7 @@
     "AVN-003": {
      "bbox_px": [
       891.0,
-      305.5,
+      304.0,
       921.8,
       311.8
      ],
@@ -3652,16 +3792,6 @@
      ],
      "subsystem": "wing",
      "name": "Block-pocket lip beads (microballoon epoxy) L"
-    },
-    "WNG-007": {
-     "bbox_px": [
-      427.4,
-      314.3,
-      434.4,
-      321.0
-     ],
-     "subsystem": "wing",
-     "name": "Recess-step fillet (microballoon epoxy)"
     },
     "WNG-002": {
      "bbox_px": [
@@ -3808,7 +3938,7 @@
       374.0,
       55.0,
       424.8,
-      122.2
+      130.6
      ],
      "subsystem": "fins",
      "name": "Motor mount UR, ASA, 7 deg canted plate, slip clamp (print A)"
@@ -3818,10 +3948,30 @@
       382.4,
       299.4,
       479.4,
-      367.2
+      365.3
      ],
      "subsystem": "fins",
-     "name": "Through-core block R (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)"
+     "name": "Through-core block R (tube socket + spar saddle + 2 tie lugs)"
+    },
+    "FIN-013-UR": {
+     "bbox_px": [
+      394.3,
+      298.3,
+      418.5,
+      312.3
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye UR, PETG, bonded on the upper bore boss after the spar bond (D-89c)"
+    },
+    "FIN-013-LR": {
+     "bbox_px": [
+      394.3,
+      353.9,
+      418.5,
+      367.9
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye LR, PETG, bonded on the lower bore boss after the spar bond (D-89c)"
     },
     "FIN-006-R": {
      "bbox_px": [
@@ -3846,19 +3996,19 @@
     "FIN-008-UR": {
      "bbox_px": [
       388.5,
-      103.4,
+      110.2,
       477.8,
-      139.7
+      157.9
      ],
      "subsystem": "fins",
-     "name": "Station collar UR, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar UR, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-009-UR": {
      "bbox_px": [
       399.4,
-      123.8,
+      132.4,
       462.4,
-      308.0
+      307.9
      ],
      "subsystem": "fins",
      "name": "Brace UR, CF strip 10 x 2"
@@ -3866,9 +4016,9 @@
     "FIN-009-LR": {
      "bbox_px": [
       399.4,
-      356.2,
+      356.3,
       462.4,
-      560.5
+      551.9
      ],
      "subsystem": "fins",
      "name": "Brace LR, CF strip 10 x 2"
@@ -3898,7 +4048,7 @@
       422.5,
       48.0,
       709.4,
-      133.1
+      141.6
      ],
      "subsystem": "fins",
      "name": "Edge strip upper right outboard face, CF 10 x 1"
@@ -3908,20 +4058,20 @@
       422.5,
       48.0,
       709.4,
-      133.1
+      141.6
      ],
      "subsystem": "fins",
      "name": "Edge strip upper right inboard face, CF 10 x 1"
     },
     "FIN-012-UR": {
      "bbox_px": [
-      486.2,
-      57.8,
-      693.6,
-      111.5
+      484.1,
+      57.1,
+      698.2,
+      118.6
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UR, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UR, 14 x CF rod 2.5 mm"
     },
     "FIN-007-LR": {
      "bbox_px": [
@@ -3936,27 +4086,27 @@
     "FIN-008-LR": {
      "bbox_px": [
       388.5,
-      544.3,
+      526.1,
       477.8,
-      580.6
+      573.8
      ],
      "subsystem": "fins",
-     "name": "Station collar LR, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar LR, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-012-LR": {
      "bbox_px": [
-      486.2,
-      572.5,
-      693.6,
-      626.2
+      484.1,
+      565.4,
+      698.2,
+      626.9
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LR, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LR, 14 x CF rod 2.5 mm"
     },
     "FIN-011-LRO": {
      "bbox_px": [
       422.5,
-      550.9,
+      542.4,
       709.4,
       636.0
      ],
@@ -3966,7 +4116,7 @@
     "FIN-011-LRI": {
      "bbox_px": [
       422.5,
-      550.9,
+      542.4,
       709.4,
       636.0
      ],
@@ -3988,10 +4138,10 @@
       382.4,
       299.4,
       479.4,
-      367.2
+      365.3
      ],
      "subsystem": "fins",
-     "name": "Through-core block L (tube socket + spar saddle + 2 strap eyes + 2 tie lugs)"
+     "name": "Through-core block L (tube socket + spar saddle + 2 tie lugs)"
     },
     "FIN-006-L": {
      "bbox_px": [
@@ -4026,19 +4176,19 @@
     "FIN-008-UL": {
      "bbox_px": [
       388.5,
-      103.4,
+      110.2,
       477.8,
-      139.7
+      157.9
      ],
      "subsystem": "fins",
-     "name": "Station collar UL, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar UL, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-009-UL": {
      "bbox_px": [
       399.4,
-      123.8,
+      132.4,
       462.4,
-      308.0
+      307.9
      ],
      "subsystem": "fins",
      "name": "Brace UL, CF strip 10 x 2"
@@ -4055,20 +4205,30 @@
     },
     "FIN-012-UL": {
      "bbox_px": [
-      486.2,
-      57.8,
-      693.6,
-      111.5
+      484.1,
+      57.1,
+      698.2,
+      118.6
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set UL, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set UL, 14 x CF rod 2.5 mm"
+    },
+    "FIN-013-UL": {
+     "bbox_px": [
+      394.3,
+      298.3,
+      418.5,
+      312.3
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye UL, PETG, bonded on the upper bore boss after the spar bond (D-89c)"
     },
     "FIN-011-ULO": {
      "bbox_px": [
       422.5,
       48.0,
       709.4,
-      133.1
+      141.6
      ],
      "subsystem": "fins",
      "name": "Edge strip upper left outboard face, CF 10 x 1"
@@ -4078,7 +4238,7 @@
       422.5,
       48.0,
       709.4,
-      133.1
+      141.6
      ],
      "subsystem": "fins",
      "name": "Edge strip upper left inboard face, CF 10 x 1"
@@ -4106,19 +4266,19 @@
     "FIN-008-LL": {
      "bbox_px": [
       388.5,
-      544.3,
+      526.1,
       477.8,
-      580.6
+      573.8
      ],
      "subsystem": "fins",
-     "name": "Station collar LL, 15 mm, 40 mm two-face tail + brace ear + tie lug"
+     "name": "Station collar LL, 22 mm, 40 mm two-face tail + brace ear + tie lug"
     },
     "FIN-009-LL": {
      "bbox_px": [
       399.4,
-      356.2,
+      356.3,
       462.4,
-      560.5
+      551.9
      ],
      "subsystem": "fins",
      "name": "Brace LL, CF strip 10 x 2"
@@ -4135,18 +4295,28 @@
     },
     "FIN-012-LL": {
      "bbox_px": [
-      486.2,
-      572.5,
-      693.6,
-      626.2
+      484.1,
+      565.4,
+      698.2,
+      626.9
      ],
      "subsystem": "fins",
-     "name": "Edge-strip pin set LL, 11 x CF rod 2.5 mm"
+     "name": "Edge-strip pin set LL, 14 x CF rod 2.5 mm"
+    },
+    "FIN-013-LL": {
+     "bbox_px": [
+      394.3,
+      353.9,
+      418.5,
+      367.9
+     ],
+     "subsystem": "fins",
+     "name": "Strap eye LL, PETG, bonded on the lower bore boss after the spar bond (D-89c)"
     },
     "FIN-011-LLO": {
      "bbox_px": [
       422.5,
-      550.9,
+      542.4,
       709.4,
       636.0
      ],
@@ -4156,7 +4326,7 @@
     "FIN-011-LLI": {
      "bbox_px": [
       422.5,
-      550.9,
+      542.4,
       709.4,
       636.0
      ],
@@ -4168,7 +4338,7 @@
       374.0,
       55.0,
       424.8,
-      122.2
+      130.6
      ],
      "subsystem": "fins",
      "name": "Motor mount UL, ASA, 7 deg canted plate, slip clamp (print B)"
@@ -4176,7 +4346,7 @@
     "FIN-003-LR": {
      "bbox_px": [
       374.0,
-      561.8,
+      553.4,
       424.8,
       629.0
      ],
@@ -4186,7 +4356,7 @@
     "FIN-003-LL": {
      "bbox_px": [
       374.0,
-      561.8,
+      553.4,
       424.8,
       629.0
      ],
@@ -4196,9 +4366,9 @@
     "FIN-101-UR": {
      "bbox_px": [
       394.8,
-      105.7,
+      110.0,
       421.5,
-      113.5
+      117.7
      ],
      "subsystem": "fins",
      "name": "Pinch bolt UR: M3x16 SHCS ISO 4762 A2"
@@ -4206,9 +4376,9 @@
     "FIN-102-UR": {
      "bbox_px": [
       413.8,
-      105.2,
+      109.4,
       419.3,
-      114.0
+      118.2
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt nut UR: M3 nyloc ISO 10511 A2"
@@ -4216,9 +4386,9 @@
     "FIN-103-UR": {
      "bbox_px": [
       399.0,
-      104.7,
+      108.9,
       413.8,
-      114.5
+      118.7
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt washer pair UR: 2 x M3 ISO 7089 A2"
@@ -4226,9 +4396,9 @@
     "FIN-101-UL": {
      "bbox_px": [
       394.8,
-      105.7,
+      110.0,
       421.5,
-      113.5
+      117.7
      ],
      "subsystem": "fins",
      "name": "Pinch bolt UL: M3x16 SHCS ISO 4762 A2"
@@ -4236,9 +4406,9 @@
     "FIN-101-LR": {
      "bbox_px": [
       394.8,
-      570.5,
+      566.3,
       421.5,
-      578.3
+      574.0
      ],
      "subsystem": "fins",
      "name": "Pinch bolt LR: M3x16 SHCS ISO 4762 A2"
@@ -4246,9 +4416,9 @@
     "FIN-101-LL": {
      "bbox_px": [
       394.8,
-      570.5,
+      566.3,
       421.5,
-      578.3
+      574.0
      ],
      "subsystem": "fins",
      "name": "Pinch bolt LL: M3x16 SHCS ISO 4762 A2"
@@ -4256,9 +4426,9 @@
     "FIN-102-UL": {
      "bbox_px": [
       413.8,
-      105.2,
+      109.4,
       419.3,
-      114.0
+      118.2
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt nut UL: M3 nyloc ISO 10511 A2"
@@ -4266,9 +4436,9 @@
     "FIN-102-LR": {
      "bbox_px": [
       413.8,
-      570.0,
+      565.8,
       419.3,
-      578.8
+      574.6
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt nut LR: M3 nyloc ISO 10511 A2"
@@ -4276,9 +4446,9 @@
     "FIN-102-LL": {
      "bbox_px": [
       413.8,
-      570.0,
+      565.8,
       419.3,
-      578.8
+      574.6
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt nut LL: M3 nyloc ISO 10511 A2"
@@ -4286,9 +4456,9 @@
     "FIN-103-UL": {
      "bbox_px": [
       399.0,
-      104.7,
+      108.9,
       413.8,
-      114.5
+      118.7
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt washer pair UL: 2 x M3 ISO 7089 A2"
@@ -4296,9 +4466,9 @@
     "FIN-103-LR": {
      "bbox_px": [
       399.0,
-      569.5,
+      565.3,
       413.8,
-      579.3
+      575.1
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt washer pair LR: 2 x M3 ISO 7089 A2"
@@ -4306,9 +4476,9 @@
     "FIN-103-LL": {
      "bbox_px": [
       399.0,
-      569.5,
+      565.3,
       413.8,
-      579.3
+      575.1
      ],
      "subsystem": "fins",
      "name": "Pinch-bolt washer pair LL: 2 x M3 ISO 7089 A2"
@@ -4955,8 +5125,8 @@
     },
     "MEC-003-R": {
      "bbox_px": [
-      616.4,
-      362.9,
+      615.1,
+      362.8,
       690.7,
       372.6
      ],
@@ -5043,6 +5213,26 @@
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips right"
     },
+    "MEC-013-RI": {
+     "bbox_px": [
+      712.4,
+      335.2,
+      746.0,
+      339.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) right, inboard panel"
+    },
+    "MEC-013-RO": {
+     "bbox_px": [
+      712.4,
+      335.2,
+      746.0,
+      339.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) right, outboard panel"
+    },
     "MEC-001-L": {
      "bbox_px": [
       586.4,
@@ -5065,8 +5255,8 @@
     },
     "MEC-003-L": {
      "bbox_px": [
-      616.4,
-      362.9,
+      615.1,
+      362.8,
       690.7,
       372.6
      ],
@@ -5153,6 +5343,26 @@
      "subsystem": "mechanisms",
      "name": "Elevon hinge tape, two strips left"
     },
+    "MEC-013-LI": {
+     "bbox_px": [
+      712.4,
+      335.2,
+      746.0,
+      339.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) left, inboard panel"
+    },
+    "MEC-013-LO": {
+     "bbox_px": [
+      712.4,
+      335.2,
+      746.0,
+      339.9
+     ],
+     "subsystem": "mechanisms",
+     "name": "Horn backplate, upper surface (D-89c) left, outboard panel"
+    },
     "MEC-011-R": {
      "bbox_px": [
       584.8,
@@ -5216,7 +5426,7 @@
     "PWR-003": {
      "bbox_px": [
       256.6,
-      268.4,
+      266.4,
       329.4,
       286.6
      ],
@@ -5235,8 +5445,8 @@
     },
     "PWR-004": {
      "bbox_px": [
-      288.8,
-      306.4,
+      287.1,
+      299.0,
       339.2,
       313.2
      ],
@@ -5306,19 +5516,19 @@
     "PWR-103": {
      "bbox_px": [
       291.6,
-      287.3,
+      286.6,
       336.4,
       288.0
      ],
      "subsystem": "power",
-     "name": "Power-frame washer set: 4 x M3 nylon washer 0.5 mm"
+     "name": "Power-frame washer set: 4 x M3 nylon washer 1.0 mm"
     },
     "PWR-101": {
      "bbox_px": [
       292.6,
-      284.7,
+      281.8,
       335.4,
-      312.5
+      309.5
      ],
      "subsystem": "power",
      "name": "Power-frame screw set: 4 x M3x18 pan head, nylon PA66"
@@ -5355,8 +5565,8 @@
     },
     "AVN-004": {
      "bbox_px": [
-      196.1,
-      275.9,
+      189.1,
+      276.8,
       266.5,
       311.8
      ],
@@ -5376,7 +5586,7 @@
     "AVN-003": {
      "bbox_px": [
       268.5,
-      305.5,
+      304.0,
       286.7,
       311.8
      ],

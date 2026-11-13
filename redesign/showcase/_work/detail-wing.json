@@ -8,7 +8,7 @@
  "engine": "CYCLES",
  "device": "GPU",
  "samples": 64,
- "render_s": 33.12,
+ "render_s": 35.04,
  "explode": 0.0,
  "camera": {
   "preset": "iso",
@@ -17,9 +17,9 @@
   "ortho": false,
   "lens_mm": 50,
   "location_m": [
-   1.8583,
-   0.807,
-   2.2001
+   1.8579,
+   0.8069,
+   2.1997
   ],
   "fit": "visible",
   "frame": [
@@ -57,22 +57,22 @@
   },
   {
    "item": "WNG-001",
-   "x": 718.6,
-   "y": 409.3,
+   "x": 880.1,
+   "y": 506.4,
    "title": "WNG-001",
    "text": "XPS core (ghosted)",
    "detail": null,
    "role": "ghost",
    "occluded": false,
    "world_m": [
-    0.0909,
-    -0.1371,
-    0.0042
+    0.1452,
+    0.1225,
+    -0.0078
    ]
   },
   {
    "item": "WNG-011-L",
-   "x": 615.9,
+   "x": 615.8,
    "y": 502.1,
    "title": "WNG-011-L",
    "text": "Elevon, inboard panel",
@@ -87,7 +87,7 @@
   },
   {
    "item": "WNG-012-L",
-   "x": 438.5,
+   "x": 438.4,
    "y": 440.0,
    "title": "WNG-012-L",
    "text": "Elevon, outboard panel",
@@ -102,8 +102,8 @@
   },
   {
    "item": "WNG-004-L",
-   "x": 601.6,
-   "y": 360.7,
+   "x": 601.5,
+   "y": 360.6,
    "title": "WNG-004-L",
    "text": "Spar plug at fin block",
    "detail": null,
@@ -117,8 +117,8 @@
   },
   {
    "item": "MEC-009-LO",
-   "x": 452.7,
-   "y": 421.4,
+   "x": 452.6,
+   "y": 421.3,
    "title": "MEC-009-LO",
    "text": "Elevon torque tube",
    "detail": null,
@@ -140,10 +140,10 @@
    "mass_g": 201.9,
    "subsystem": "wing",
    "bbox_px": [
-    348,
+    347,
     270,
     1251,
-    728
+    726
    ]
   },
   {
@@ -156,7 +156,7 @@
    "bbox_px": [
     1021,
     476,
-    1073,
+    1072,
     536
    ]
   },
@@ -171,21 +171,7 @@
     581,
     326,
     634,
-    382
-   ]
-  },
-  {
-   "id": "WNG-007",
-   "role": "context",
-   "name": "Recess-step fillet (microballoon epoxy)",
-   "status": "MODELLED",
-   "mass_g": 1.1,
-   "subsystem": "wing",
-   "bbox_px": [
-    772,
-    404,
-    870,
-    440
+    381
    ]
   },
   {
@@ -252,9 +238,9 @@
    "mass_g": 4.0,
    "subsystem": "wing",
    "bbox_px": [
-    643,
+    642,
     369,
-    663,
+    662,
     388
    ]
   },
@@ -336,9 +322,9 @@
    "mass_g": 3.5,
    "subsystem": "wing",
    "bbox_px": [
-    358,
+    357,
     390,
-    526,
+    525,
     481
    ]
   },
@@ -350,7 +336,7 @@
    "mass_g": 2.24,
    "subsystem": "mechanisms",
    "bbox_px": [
-    853,
+    852,
     565,
     972,
     612
@@ -367,7 +353,7 @@
     1008,
     622,
     1172,
-    684
+    685
    ]
   },
   {
@@ -502,6 +488,10 @@
   "FIN-012-LR",
   "FIN-012-UL",
   "FIN-012-UR",
+  "FIN-013-LL",
+  "FIN-013-LR",
+  "FIN-013-UL",
+  "FIN-013-UR",
   "FIN-101-LL",
   "FIN-101-LR",
   "FIN-101-UL",
@@ -597,6 +587,10 @@
   "MEC-011-R",
   "MEC-012-L",
   "MEC-012-R",
+  "MEC-013-LI",
+  "MEC-013-LO",
+  "MEC-013-RI",
+  "MEC-013-RO",
   "POD-001",
   "POD-002",
   "POD-003",
