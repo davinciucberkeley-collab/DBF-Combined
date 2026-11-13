@@ -466,32 +466,34 @@ MK_IN = {"E": "ASM-C4-ASA-E", "od": P + "fins.tube.od_m", "gap": P + "fin_detail
          "p_hz": P + "fin_detail.mount.plate_half_z_m", "ct": P + "fin_detail.mount.cheek_t_m",
          "ct_in": P + "fin_detail.mount.cheek_in_t_m", "slit": P + "fin_detail.mount.slit_m",
          "csg": P + "fin_detail.mount.cheek_slit_gap_m",
-         "cy": P + "fin_detail.mount.cheek_y_in_m", "cl": P + "fin_detail.mount.cheek_len_m",
+         "cy": P + "fin_detail.mount.cheek_y_in_m", "cy_in": P + "fin_detail.mount.cheek_in_y_in_m", "cl": P + "fin_detail.mount.cheek_len_m",
          "x_face": "CL-D3-X-FACE", "tube_x": P + "fins.tube.x_m",
          "z_st": P + "propulsion.stations.z_m", "tube_len": P + "fin_detail.tube_length_m",
          "cant": P + "propulsion.stations.cant_deg", "k_nom": "ASM-C4-MOUNT-K-ROCK"}
 MK_U = {"E": "Pa", "od": "m", "gap": "m", "grip": "m", "wall": "m", "cap_t": "m", "ear_h": "m", "plate_t": "m",
         "ct_in": "m", "slit": "m", "csg": "m",
-        "p_hy": "m", "p_hz": "m", "ct": "m", "cy": "m", "cl": "m", "x_face": "m", "tube_x": "m", "z_st": "m",
+        "p_hy": "m", "p_hz": "m", "ct": "m", "cy": "m", "cy_in": "m", "cl": "m", "x_face": "m", "tube_x": "m", "z_st": "m",
         "tube_len": "m", "cant": "deg", "k_nom": "N m/rad"}
 
 
 def _mount_k(E, od, gap, grip, wall, cap_t, ear_h, plate_t, p_hy, p_hz, ct, cy, cl, x_face, tube_x, z_st, tube_len, cant,
-             ct_in=None, slit=None, csg=None):
+             ct_in=None, slit=None, csg=None, cy_in=None):
     """D-91: inboard cheek ct_in (outboard ct); D-80: the outboard cheek ends csg ahead of the slit front, so its length
     is min(cl, x_tube - slit/2 - csg - x_back). With ct_in / slit / csg None this is the R5 symmetric model."""
     ct_in = ct if ct_in is None else ct_in
+    cy_in = cy if cy_in is None else cy_in                                       # D-89c: inboard cheek face moved out
     r_col = od / 2 + gap + wall                                                  # collar outer radius
     k_f = E / wall * od * grip ** 3 / 12                                         # slit collar on the tube (R1 basis)
     x_back = x_face + plate_t / math.cos(math.radians(cant))                     # plate back face at the axis
     x_meet = tube_x - math.sqrt(max(r_col ** 2 - cy ** 2, 0.0))                  # cheek inner face meets the collar
-    a = max(x_meet - x_back, 1e-4)                                               # free cheek length
+    a = max(x_meet - x_back, 1e-4)                                               # free cheek length (outboard)
+    a_in = max(tube_x - math.sqrt(max(r_col ** 2 - cy_in ** 2, 0.0)) - x_back, 1e-4)   # inboard (D-89c)
     h = (z_st + p_hz) - (tube_len / 2 - ear_h / 2)                               # cheek depth (CAD: cap - ear/2 to plate top)
-    k_nod = E * (ct + ct_in) * h ** 3 / 12 / a                                   # two cheeks, in-plane, about y
+    k_nod = E * h ** 3 / 12 * (ct / a + ct_in / a_in)                            # two cheeks, in-plane, about y
     L_s = z_st - (tube_len / 2 + cap_t)                                          # lip-cap top to the motor axis
     cl_out = cl if slit is None else min(cl, tube_x - slit / 2 - csg - x_back)   # D-80 outboard cheek length
     I_ch = (plate_t * (2 * p_hy) ** 3 / 12 + cl_out * ct * (cy + ct / 2) ** 2
-            + cl * ct_in * (cy + ct_in / 2) ** 2)                                # plate + cheeks as a channel
+            + cl * ct_in * (cy_in + ct_in / 2) ** 2)                                # plate + cheeks as a channel
     k_sw = E * I_ch / L_s                                                        # sway about x
 
     def ser(k2):
@@ -514,7 +516,7 @@ def _mount_k(E, od, gap, grip, wall, cap_t, ear_h, plate_t, p_hy, p_hz, ct, cy, 
 def mount_k_est(**k):
     kw = {n: v for n, v in k.items() if n != "k_nom"}
     r5 = _mount_k(**kw)
-    base = {n: v for n, v in kw.items() if n not in ("ct_in", "slit", "csg")}
+    base = {n: v for n, v in kw.items() if n not in ("ct_in", "slit", "csg", "cy_in")}
     r4 = _mount_k(**{**base, "x_face": kw["x_face"] + 0.005, "cl": kw["cl"] - 0.005, "grip": 0.012})
     out = dict(r5)
     out.update({f"r4_{n}": v for n, v in r4.items()})

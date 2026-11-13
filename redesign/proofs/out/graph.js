@@ -2,7 +2,7 @@
 window.PROOF_GRAPH = {
  "schema": "proofs/1",
  "meta": {
-  "generated": "2026-11-13 17:46 UTC",
+  "generated": "2026-11-13 19:05 UTC",
   "dataset": "redesign",
   "ok": true,
   "errors": [],
@@ -63837,6 +63837,7 @@ window.PROOF_GRAPH = {
     "slit": "P:fin_detail.mount.slit_m",
     "csg": "P:fin_detail.mount.cheek_slit_gap_m",
     "cy": "P:fin_detail.mount.cheek_y_in_m",
+    "cy_in": "P:fin_detail.mount.cheek_in_y_in_m",
     "cl": "P:fin_detail.mount.cheek_len_m",
     "x_face": "CL-D3-X-FACE",
     "tube_x": "P:fins.tube.x_m",
@@ -63861,6 +63862,7 @@ window.PROOF_GRAPH = {
     "p_hz": "m",
     "ct": "m",
     "cy": "m",
+    "cy_in": "m",
     "cl": "m",
     "x_face": "m",
     "tube_x": "m",
@@ -63877,23 +63879,23 @@ window.PROOF_GRAPH = {
     "k_found": 10691.999999999998,
     "free_len_m": 0.009738706275439123,
     "cheek_h_m": 0.039000000000000035,
-    "k_nod_body": 4974.361956287235,
-    "k_sway_body": 2782.583589675741,
+    "k_nod_body": 4701.4500861830165,
+    "k_sway_body": 2864.710041288645,
     "cl_out_m": 0.014366205785435182,
-    "k_nod": 3394.909308557021,
-    "k_sway": 2207.963128716542,
-    "k_est": 2207.963128716542,
+    "k_nod": 3265.5385271030764,
+    "k_sway": 2259.359362866972,
+    "k_est": 2259.359362866972,
     "r4_k_found": 3168.0,
     "r4_free_len_m": 0.004738706275439125,
     "r4_cheek_h_m": 0.039000000000000035,
-    "r4_k_nod_body": 10431.644657152616,
+    "r4_k_nod_body": 10431.644657152618,
     "r4_k_sway_body": 2438.6612903225787,
     "r4_cl_out_m": 0.012,
     "r4_k_nod": 2430.0230709688776,
     "r4_k_sway": 1377.9464404380726,
     "r4_k_est": 1377.9464404380726,
-    "change_vs_r4": 0.6023577288059128,
-    "nom_over_est": 0.9963934503194485
+    "change_vs_r4": 0.6396568811112013,
+    "nom_over_est": 0.9737273477417736
    },
    "input_values": {
     "E": 2000000000.0,
@@ -63911,6 +63913,7 @@ window.PROOF_GRAPH = {
     "slit": 0.0015,
     "csg": 0.001,
     "cy": 0.0115,
+    "cy_in": 0.0121,
     "cl": 0.017,
     "x_face": 0.024349999999999997,
     "tube_x": 0.045,
@@ -68577,7 +68580,7 @@ window.PROOF_GRAPH = {
    ],
    "how": "T-C4-MOUNT-STIFF (pass level >= CL-C4-D3-MOUNT-K-REQ, CR-H1-24 / D-91) in both directions.",
    "note": "D-91 (CR-H1-24): the R5 estimate 1 531 N m/rad was below the 2 229 need, capped by the 12 mm collar foundation (3 168). D-61 asked C4 to re-check the rocking stiffness with the cheeks +5 mm. The longer cheeks lengthen the nodding span (stiffer sway channel, softer nodding); the weaker axis is sway. The FE nominal (ASM-C4-MOUNT-K-ROCK) is set at or below this estimate.",
-   "value": 2207.963128716542,
+   "value": 2259.359362866972,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -68588,7 +68591,7 @@ window.PROOF_GRAPH = {
     "uses ASM-C4-MOUNT-K-ROCK, which is UNVERIFIED (assumption marked UNVERIFIED by its author)"
    ],
    "status": "UNVERIFIED",
-   "margin": 0.003619603962064585,
+   "margin": 0.026981528575896307,
    "importance": 1
   },
   {
@@ -68605,7 +68608,7 @@ window.PROOF_GRAPH = {
     "FIN-003-LL"
    ],
    "how": "T-C4-MOUNT-STIFF on the R5 print.",
-   "value": 0.6023577288059128,
+   "value": 0.6396568811112013,
    "defined_in": "redesign/team/C4/claims.d3.json",
    "reasons": [
     "uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))",
@@ -156309,7 +156312,7 @@ window.PROOF_GRAPH = {
    "source": "params/CHANGE-LOG.md#D-89c",
    "note": "D-89c: inboard cheek inner face from the fin plane (outboard stays cheek_y_in_m 11.5 mm). The 7 deg cant tilts each motor-screw axis 0.062 mm/mm toward the inboard cheek: the inboard screw head (edge 10.75 mm) met an 11.5 mm cheek 6 mm out, before its 8 mm shank left the motor (build-film assembly check). At 12.1 mm the head clears it to ~17 mm out",
    "status": "PROPOSED",
-   "importance": 0
+   "importance": 2
   },
   {
    "id": "P:fin_detail.esc_pad.x0_m",
@@ -207078,6 +207081,11 @@ window.PROOF_GRAPH = {
   },
   {
    "source": "P:fin_detail.mount.cheek_y_in_m",
+   "target": "CALC-C4-D3-MOUNT-K-EST",
+   "type": "uses"
+  },
+  {
+   "source": "P:fin_detail.mount.cheek_in_y_in_m",
    "target": "CALC-C4-D3-MOUNT-K-EST",
    "type": "uses"
   },

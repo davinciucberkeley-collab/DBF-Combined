@@ -31047,7 +31047,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
   - parts: FIN-002-R, FIN-002-L
   - `CALC-C4-D3-MODES-REC` (see above)
   - `P:requirements.vibration_sep_frac` (see above)
-- claim **CL-C4-D3-MOUNT-K-EST** Mount rocking stiffness estimate, D-91 mount (grip 18 mm, 2.5 mm cheeks, D-80 outboard cheek), weaker axis, collar and body in series = **2208 N m/rad** (limit >= 2200 N m/rad, margin +0%) — **UNVERIFIED**
+- claim **CL-C4-D3-MOUNT-K-EST** Mount rocking stiffness estimate, D-91 mount (grip 18 mm, 2.5 mm cheeks, D-80 outboard cheek), weaker axis, collar and body in series = **2259 N m/rad** (limit >= 2200 N m/rad, margin +3%) — **UNVERIFIED**
   - ⚠ uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C4-ASA-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)
@@ -31073,6 +31073,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - `slit` ← param `P:fin_detail.mount.slit_m` = 0.0015 m (G3 practice) — **PROPOSED**
     - `csg` ← param `P:fin_detail.mount.cheek_slit_gap_m` = 0.001 m (params/CHANGE-LOG.md#D-80 (review/MOTOR-MOUNTS.md MM-01, BR-02)) — **PROPOSED**
     - `cy` ← param `P:fin_detail.mount.cheek_y_in_m` = 0.0115 m (D3 choice) — **PROPOSED**
+    - `cy_in` ← param `P:fin_detail.mount.cheek_in_y_in_m` = 0.0121 m (params/CHANGE-LOG.md#D-89c) — **PROPOSED**
     - `cl` ← param `P:fin_detail.mount.cheek_len_m` = 0.017 m (params/CHANGE-LOG.md#D-61 (cheeks +5 mm, CR-A1-63)) — **PROPOSED**
     - `x_face` ← `CL-D3-X-FACE` (see above)
     - `tube_x` ← `P:fins.tube.x_m` (see above)
@@ -31083,7 +31084,7 @@ Defined in: redesign/CONFIGURATION.md#reverse-to-k01
     - source `SRC-C4-ROARK` Young & Budynas, Roark's Formulas for Stress and Strain, 7th ed., ch. 9 and 10, torsion of rectangular sections tau = T / (alpha b c^2); thin-ring bearing (ch. 9) motivates the internal plug at every bore — **UNVERIFIED**
       - ⚠ value never compared with the source (no 'checked' date)
   - `ASM-C4-MOUNT-K-ROCK` (see above)
-- claim **CL-C4-D3-MOUNT-K-EST-CHANGE** Change of the mount stiffness estimate, D-91 mount vs R4 (fraction) = **0.6024** — **UNVERIFIED**
+- claim **CL-C4-D3-MOUNT-K-EST-CHANGE** Change of the mount stiffness estimate, D-91 mount vs R4 (fraction) = **0.6397** — **UNVERIFIED**
   - ⚠ uses SRC-C4-ROARK, which is UNVERIFIED (value never compared with the source (no 'checked' date))
   - ⚠ uses ASM-C4-ASA-E, which is UNVERIFIED (assumption marked UNVERIFIED by its author)
   - ⚠ uses P:fins.tube.od_m, which is UNVERIFIED (cites SRC-CF-TUBE, which is UNVERIFIED)
