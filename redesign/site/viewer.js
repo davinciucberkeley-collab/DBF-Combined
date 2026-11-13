@@ -540,7 +540,8 @@ function claimHtml(c) {
   const unit = c.unit && c.unit !== '-' ? ' ' + esc(c.unit) : '';
   return '<li class="v-claim"><div><span>' + esc(c.title || c.id) + '</span>' +
     '<div class="val">' + esc(c.id) + ' · ' + val + unit + (c.limit ? ' (limit ' + esc(M.limitText(c.limit)) + unit + ')' : '') + '</div>' +
-    (c.how ? '<div class="how">Verify: ' + esc(c.how) + '</div>' : '') + '</div>' + badge(c.status) + '</li>';
+    (c.how ? '<div class="how">Verify: ' + esc(c.how) + '</div>' : '') +
+    '<div class="how"><a class="ds-link" href="#proof-' + esc(encodeURIComponent(c.id)) + '">Open the proof chain</a></div></div>' + badge(c.status) + '</li>';
 }
 function renderPanel() {
   const I = $('#inspector');
@@ -733,6 +734,7 @@ export const viewer = {
   themeChanged,
   setQuery(q) { const s = $('#search'); if (!s) return; s.value = q; S.query = q; S.ov = {}; if (S.data) renderTree(); },
   resize() { if (G.renderer) resize(); },
+  selectPart(id) { if (!S.idx || !S.idx.parts.has(id)) return false; select({ type: 'part', id }, { focus: true }); return true; },
   state: S,
   setFasteners: on => setFast(!!on),
 };

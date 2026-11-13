@@ -3,19 +3,24 @@
 // Views: Requirements (default, plain HTML list) -> one requirement's proof chain as a 2-D layered SVG (only that chain,
 // typically < 100 nodes); Overview = the whole graph on a 2-D canvas (vendored force-graph), 3-D (3d-force-graph) on request.
 // Routing lives in the hash: #chain=<id>~<id>&sel=<id>, #overview, legacy #node=<id>.
+// Embedded in the site (window.PROOF_EMBED = { root, base, repo }): the same code runs inside #proof of
+// site/app.html. Routing then uses plain hashes the artifact host passes through: #proof (requirements), #proof-overview,
+// #proof-<node id> (that node in its requirement's chain). Theme, back and part links belong to the site.
 // Data selection: ?data=examples | ?data=redesign | ?graph=<url of a graph.json>; default = redesign, else the demo.
 (function () {
   'use strict';
   const M = window.ProofModel;
-  const $ = s => document.querySelector(s);
+  const EMBED = window.PROOF_EMBED || null, ROOT = EMBED ? EMBED.root : document;
+  const $ = s => ROOT.querySelector(s), $$ = s => ROOT.querySelectorAll(s);
   const esc = s => String(s === undefined || s === null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const store = {                                    // per-viewer conveniences only; the page works without them
     get(k) { try { return localStorage.getItem('proofs.' + k); } catch (e) { return null; } },
     set(k, v) { try { localStorage.setItem('proofs.' + k, v); } catch (e) { /* private mode or full */ } },
   };
-  const REPO = '../../../';                          // viewer/ -> proofs/ -> redesign/ -> repo root
-  const SOURCES = { redesign: 'data/graph.js', examples: 'data/graph.js' };
-  const LIBS = { '3d': 'vendor/3d-force-graph.min.js', '2d': 'vendor/force-graph.min.js' }, libLoaded = {};
+  const REPO = EMBED ? EMBED.repo : '../../../';                          // viewer/ -> proofs/ -> redesign/ -> repo root
+  const BASE = EMBED ? EMBED.base : '';                // folder of the viewer files, relative to the page that loads them
+  const SOURCES = { redesign: BASE + 'data/graph.js', examples: BASE + 'data/graph.js' };
+  const LIBS = { '3d': BASE + 'vendor/3d-force-graph.min.js', '2d': BASE + 'vendor/force-graph.min.js' }, libLoaded = {};
   const T0 = performance.now();
 
   let model = null, issues = null, pal = {}, route = { view: 'reqs' }, statusOpen = false, rfilter = 'all';
@@ -82,7 +87,15 @@
   const repoLink = (p, label) => /^https?:/.test(p) ? `<a href="${esc(p)}" target="_blank" rel="noopener">${esc(label || p)}</a>` : `<a href="${esc(REPO + p)}" target="_blank" rel="noopener">${esc(label || p)}</a>`;
 
   // ------------------------------------------------------------------ routing
+  const stateByHash = new Map();                       // embedded: hash -> the route it was set for, so Back restores a whole trail
   function parseHash() {
+    if (EMBED) {
+      const h = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
+      if (stateByHash.has(h)) return stateByHash.get(h);
+      const id = h.replace(/^proof-?/, '');
+      if (id === 'overview') return { view: 'overview' };
+      return id && model.byId.has(id) ? { view: 'node', node: id } : { view: 'reqs' };
+    }
     const p = new URLSearchParams(location.hash.slice(1));
     if (p.has('node')) return { view: 'node', node: p.get('node') };
     if (p.has('overview')) return { view: 'overview', sel: p.get('sel') };
@@ -93,6 +106,11 @@
     return { view: 'reqs' };
   }
   function hashOf(r) {
+    if (EMBED) {
+      const h = r.view === 'overview' ? 'proof-overview' : r.view === 'chain' ? 'proof-' + encodeURIComponent(r.sel || r.trail[r.trail.length - 1]) : 'proof';
+      stateByHash.set(decodeURIComponent(h), r);
+      return h;
+    }
     const p = new URLSearchParams();
     if (r.view === 'overview') { p.set('overview', ''); if (r.sel) p.set('sel', r.sel); }
     else if (r.view === 'chain') { p.set('chain', r.trail.join('~')); if (r.sel) p.set('sel', r.sel); if (r.inputs) p.set('inputs', r.inputs); }
@@ -140,8 +158,8 @@
     route = parseHash();
     if (route.view === 'node') { const id = route.node; route = { view: 'reqs' }; if (model.byId.has(id)) { openNode(id); return; } }
     const v = route.view;
-    $('#app').classList.toggle('wide', v === 'chain');
-    document.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === (v === 'overview' ? 'overview' : 'reqs'))));
+    $('.app').classList.toggle('wide', v === 'chain');
+    $$('[data-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.view === (v === 'overview' ? 'overview' : 'reqs'))));
     $('#homePane').hidden = v !== 'reqs';
     $('#chainPane').hidden = v !== 'chain';
     $('#ovMain').hidden = v !== 'overview';
@@ -430,6 +448,7 @@
   function partBtn(id) {
     const href = M.partLink(model, id), p = model.byId.get(id);
     const name = p && p.title && p.title !== id ? ' · ' + esc(p.title) : '';
+    if (href && EMBED) return `<a class="partbtn" href="#part-${esc(encodeURIComponent(id))}" title="Show in the 3-D explorer">${esc(id)}${name} ↗</a>`;
     return href ? `<a class="partbtn" href="${esc(href)}" target="_blank" rel="noopener" title="Open in the aircraft viewer">${esc(id)}${name} ↗</a>` : `<span class="partbtn">${esc(id)}${name}</span>`;
   }
 
@@ -635,14 +654,14 @@
     if (ovMode === '3d') {
       G = common(ForceGraph3D({ controlType: 'orbit' })(el)).nodeRelSize(3).nodeResolution(6).nodeOpacity(0.95).linkOpacity(0.35).showNavInfo(false)
         .linkWidth(l => (linkOn(l) ? 1.2 : 0)).onNodeHover(d => { hoverId = d ? d.id : null; el.style.cursor = d ? 'pointer' : ''; });
-      $('#hint').textContent = 'drag to rotate · right-drag to pan · scroll to zoom · click a dot';
+      $('.hint').textContent = 'drag to rotate · right-drag to pan · scroll to zoom · click a dot';
     } else {
       G = common(ForceGraph()(el)).nodeRelSize(3).linkWidth(l => (linkOn(l) ? 1.5 : 0.6))
         .nodeCanvasObjectMode(d => (wantsLabel(d) ? 'after' : undefined)).nodeCanvasObject(drawLabel)
         .onNodeHover(d => { hoverId = d ? d.id : null; el.style.cursor = d ? 'pointer' : ''; })
         .minZoom(0.05).maxZoom(12)
         .onRenderFramePre(() => { placed = []; });
-      $('#hint').textContent = 'drag to pan · scroll to zoom · click a dot';
+      $('.hint').textContent = 'drag to pan · scroll to zoom · click a dot';
     }
     G.d3Force('charge').strength(-28).distanceMax(400);
     G.d3Force('link').distance(l => (l.type === 'verifies' ? 30 : 18)).strength(0.6);
@@ -675,7 +694,7 @@
       `<button class="chip" data-fails="1" data-status="FAIL" aria-pressed="${ovStatus.failsOnly}" title="Only nodes that fail (negative margin)"><span class="dot"></span>Fails only<span class="n">${fails}</span></button>`;
   }
   function renderLegend() {
-    $('#legend').innerHTML = M.STATUSES.slice().reverse().map(s => `<div data-status="${s}"><i></i>${s}</div>`).join('') +
+    $('.legend').innerHTML = M.STATUSES.slice().reverse().map(s => `<div data-status="${s}"><i></i>${s}</div>`).join('') +
       `<div data-status="FAIL"><i></i>FAIL (negative margin)</div><div style="color:var(--fg-3)">large dots = requirements</div>`;
   }
   let typeTimer = 0;
@@ -697,6 +716,7 @@
 
   // ------------------------------------------------------------------ chrome
   function applyTheme(t) {
+    if (EMBED) { readPalette(); if (G) { G.backgroundColor(pal.bg); refreshOv(); } return; }   // the site owns the theme button
     if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
     $('#theme').textContent = t === 'light' ? '☀' : t === 'dark' ? '☾' : '◐';
     $('#theme').title = 'Theme: ' + t + ' (click to change)';
@@ -705,7 +725,7 @@
   }
 
   function wire() {
-    document.addEventListener('click', e => {
+    ROOT.addEventListener('click', e => {
       const t = e.target;
       const so = t.closest('[data-status-open]'), sc = t.closest('[data-status-close]');
       if (so) { statusOpen = true; renderStatus(); return; }
@@ -729,7 +749,7 @@
         return;
       }
       const rf = t.closest('[data-rfilter]');
-      if (rf) { rfilter = rf.dataset.rfilter; document.querySelectorAll('[data-rfilter]').forEach(b => b.setAttribute('aria-pressed', String(b === rf))); renderReqList(); return; }
+      if (rf) { rfilter = rf.dataset.rfilter; $$('[data-rfilter]').forEach(b => b.setAttribute('aria-pressed', String(b === rf))); renderReqList(); return; }
       const vw = t.closest('[data-view]');
       if (vw) { statusOpen = false; nav({ view: vw.dataset.view === 'overview' ? 'overview' : 'reqs' }); return; }
       const ty = t.closest('[data-type]');
@@ -740,8 +760,8 @@
       if (fl) { ovStatus.failsOnly = !ovStatus.failsOnly; renderChips(); refreshOv(); return; }
       const md = t.closest('[data-mode]');
       if (md) {
-        if (md.dataset.mode === '3d' && !webglOK()) { $('#hint').textContent = 'WebGL is not available here; staying in 2D.'; return; }
-        ovMode = md.dataset.mode; document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b === md)));
+        if (md.dataset.mode === '3d' && !webglOK()) { $('.hint').textContent = 'WebGL is not available here; staying in 2D.'; return; }
+        ovMode = md.dataset.mode; $$('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b === md)));
         ovBuiltFor = ''; showOverview(); return;
       }
       const tr = t.closest('tr[data-open]');
@@ -776,7 +796,7 @@
     $('#chainScroll').addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); zoomBy(e.deltaY < 0 ? 1.1 : 1 / 1.1); }, { passive: false });
 
     const themes = ['auto', 'light', 'dark'];
-    $('#theme').onclick = () => { const t = themes[(themes.indexOf(store.get('theme') || 'auto') + 1) % 3]; store.set('theme', t); applyTheme(t); };
+    if (!EMBED) $('#theme').onclick = () => { const t = themes[(themes.indexOf(store.get('theme') || 'auto') + 1) % 3]; store.set('theme', t); applyTheme(t); };
     const q = $('#q');
     q.addEventListener('input', () => { results = M.search(model, q.value, 12); cursor = 0; renderResults(q.value.trim()); });
     q.addEventListener('keydown', e => {
@@ -787,6 +807,7 @@
     });
     q.addEventListener('blur', () => setTimeout(() => { results = []; renderResults(''); }, 150));
     document.addEventListener('keydown', e => {
+      if (EMBED && (!ROOT.offsetParent || (e.target.closest && e.target !== q && e.target.closest('input, textarea, select')))) return;   // another site page is showing
       if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
       else if (e.key === 'Escape' && document.activeElement !== q) {
         if (statusOpen) { statusOpen = false; renderDetail(); }
@@ -799,8 +820,8 @@
       if (route.view === 'chain' && !chainZoom) applyZoom();
       const r = $('#graph').getBoundingClientRect();
       if (G && r.width) G.width(r.width).height(r.height);
-    }).observe($('main'));
-    window.addEventListener('hashchange', render);
+    }).observe($('main, .pmain'));
+    if (!EMBED) window.addEventListener('hashchange', render);   // embedded: the site router calls ProofEmbed.render
   }
 
   // ------------------------------------------------------------------ start
@@ -808,19 +829,22 @@
     const qs = new URLSearchParams(location.search);          // ?theme=dark / ?mode=3d make shareable links
     if (['auto', 'light', 'dark'].includes(qs.get('theme'))) store.set('theme', qs.get('theme'));
     applyTheme(qs.get('theme') || store.get('theme') || 'auto');
-    if (qs.get('mode') === '3d' && webglOK()) { ovMode = '3d'; document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === '3d'))); }
+    if (qs.get('mode') === '3d' && webglOK()) { ovMode = '3d'; $$('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === '3d'))); }
     const data = await loadData();
     if (data.error) { $('#statusline').innerHTML = `<span class="sdot"></span><span>${data.error}</span>`; return; }
     model = M.build(data.g);
     issues = M.buildIssues(model.meta);
     $('#dataset').textContent = data.name === 'examples' ? 'demo aircraft (examples/)' : data.name;
-    document.title = 'Proof Chain Explorer' + (data.name === 'examples' ? ' · demo' : '');
+    if (!EMBED) document.title = 'Proof Chain Explorer' + (data.name === 'examples' ? ' · demo' : '');
     renderStatusLine(data.note);
     renderHome();
     wire();
     render();
     window.__firstRenderMs = performance.now() - T0;
     document.documentElement.dataset.ready = '1';
+    if (EMBED) api.ready = true;
   }
+  const api = { ready: false, render() { if (model) render(); }, themeChanged() { applyTheme('auto'); } };
+  if (EMBED) window.ProofEmbed = api;
   start();
 })();

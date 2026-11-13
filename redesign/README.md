@@ -127,6 +127,8 @@ D-61 … D-73 (CHANGE-LOG "Revision A1-R5").
 | See why K09-L was chosen | open [`config-study/web/index.html`](config-study/web/index.html) (summary, morph chart, concepts, trade matrix, decision) |
 | Walk the aircraft in 3-D | open [`viewer/index.html`](viewer/index.html): Whole · Inside & wiring · Structure · Exploded; colour by subsystem or status |
 | Trace a number to its source | open [`proofs/viewer/index.html`](proofs/viewer/index.html) (3-D claim graph) or read `proofs/out/CHAIN.md`; rebuild with `python -I redesign/proofs/build_graph.py` |
+| Read the build guide with a clip per stage | in the site: `#build` (page "Build guide"); every stage section embeds its `assets/animation/build/stage-NN.mp4`. Generated from [`BUILD-GUIDE.md`](BUILD-GUIDE.md): `python -I redesign/site/make_build_guide.py`, then `python -I redesign/site/make_index.py` |
+| Open a proof chain inside the site | in the site: `#proof` (page "Proofs"), `#proof-overview`, `#proof-<node id>`; the 3-D explorer's claims link there. Markup and CSS are generated from `site/proofs/index.html`: `python -I redesign/site/make_proof_embed.py`, then `make_index.py`; the standalone `site/proofs/index.html` still works |
 | Read the requirements and their status | [`team/A2/REQUIREMENTS.md`](team/A2/REQUIREMENTS.md), [`team/A2/VERIFICATION-MATRIX.md`](team/A2/VERIFICATION-MATRIX.md) |
 | See the design system | open `design-system/components.html` |
 

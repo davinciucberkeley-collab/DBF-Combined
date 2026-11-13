@@ -2,10 +2,11 @@
 // the decision page's morphological chart and concept table (logic from redesign/config-study/web/index.html),
 // the render / plot lightbox, and the 3-D explorer (viewer.js). Everything is relative: works on GitHub Pages and as an artifact.
 import { DIMS, C } from './data/concepts.js?v=20261111d';
-import { start as startViewer, viewer } from './viewer.js?v=20261112a';
+import { start as startViewer, viewer } from './viewer.js?v=20261112b';
 
-const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'simulations', 'status', 'bom', 'docs'];
-const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', simulations: 'Simulations', status: 'Status', docs: 'Docs' };
+const ROUTES = ['aircraft', 'decision', 'team', 'subsystems', 'simulations', 'build', 'proof', 'status', 'bom', 'docs'];
+const TITLES = { aircraft: 'Aircraft', decision: 'Decision', team: 'Team', subsystems: 'Subsystems', simulations: 'Simulations', build: 'Build guide', proof: 'Proof chain', status: 'Status', bom: 'BOM', docs: 'Docs' };
+const GH_ROOT = 'https://github.com/davinciucberkeley-collab/DBF-Combined/blob/redesign/v1/';
 const store = { get(k) { try { return localStorage.getItem('k09l.' + k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem('k09l.' + k, v); } catch (e) { /* storage blocked: fine */ } } };
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -15,14 +16,18 @@ const root = document.documentElement, themeBtn = document.getElementById('theme
 function isDark() { const t = root.getAttribute('data-theme'); return t ? t === 'dark' : !!(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches); }
 function paintTheme() { themeBtn.innerHTML = '<svg><use href="#i-' + (isDark() ? 'sun' : 'moon') + '"/></svg>'; }
 { const t = store.get('theme'); if (t === 'light' || t === 'dark') root.setAttribute('data-theme', t); }
-themeBtn.addEventListener('click', () => { const next = isDark() ? 'light' : 'dark'; root.setAttribute('data-theme', next); store.set('theme', next); paintTheme(); viewer.themeChanged(); });
+themeBtn.addEventListener('click', () => { const next = isDark() ? 'light' : 'dark'; root.setAttribute('data-theme', next); store.set('theme', next); paintTheme(); viewer.themeChanged(); if (window.ProofEmbed) window.ProofEmbed.themeChanged(); });
 if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintTheme);
 paintTheme();
 
 // ---------------- router ----------------
-let current = null;
+let current = null, lastOutside = '#aircraft', hops = 0, focusPartId = null;
 function route() {
   let name = decodeURIComponent(location.hash.replace(/^#\/?/, '')) || 'aircraft', target = null;
+  // #proof, #proof-overview, #proof-<node id>: the proof chain page; #part-<id>: the 3-D explorer with that part selected
+  if (/^proof(-|$)/.test(name)) { if (current !== null) hops++; name = 'proof'; }
+  else if (/^part-/.test(name)) { focusPartId = name.slice(5); name = 'aircraft'; }
+  else if (current !== null) hops = 0;
   if (!ROUTES.includes(name)) {
     const el = document.getElementById(name), v = el && el.closest('.view');
     if (v) { target = el; name = v.id; } else name = 'aircraft';
@@ -33,10 +38,54 @@ function route() {
   document.title = 'K09-L · ' + TITLES[name];
   if (target) target.scrollIntoView({ block: 'start' }); else if (current !== name) window.scrollTo(0, 0);
   current = name;
-  if (name === 'aircraft') viewer.resize();
+  if (name === 'proof') enterProof(); else lastOutside = name === 'aircraft' ? '#aircraft' : location.hash;
+  if (name === 'build') { watchBuildToc(); const h = hydrateBuild(); if (target) h.then(() => target.scrollIntoView({ block: 'start', behavior: 'instant' })); }
+  if (name === 'aircraft') { viewer.resize(); if (focusPartId) focusPart(focusPartId); focusPartId = null; }
   if (name === 'decision') redrawMorph();
 }
 window.addEventListener('hashchange', route);
+
+// ---------------- proof chain, in the page (proofs/app.js in embedded mode; the 7 MB graph loads on first visit) ----------------
+function loadScript(src) { return new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => no(new Error(src)); document.head.appendChild(s); }); }
+function enterProof() {
+  if (window.ProofEmbed && window.ProofEmbed.ready) { window.ProofEmbed.render(); return; }
+  if (window.PROOF_EMBED) return;                           // loading; app.js renders from the hash when the graph is in
+  const home = document.getElementById('home');
+  if (home) home.innerHTML = '<p class="sub">Loading the proof graph (about 7 MB, once)…</p>';
+  window.PROOF_EMBED = { root: document.getElementById('proofapp'), base: 'proofs/', repo: GH_ROOT };
+  loadScript('proofs/model.js?v=20261112a').then(() => loadScript('proofs/app.js?v=20261112a'))
+    .catch(e => { if (home) home.innerHTML = '<p class="sub">Could not load ' + esc(e.message) + '. The standalone viewer is <a href="proofs/index.html">proofs/index.html</a>.</p>'; });
+}
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-pclose]')) { location.hash = lastOutside; }
+  else if (e.target.closest('[data-pback]')) { if (hops > 0) { hops--; history.back(); } else location.hash = lastOutside; }
+});
+function focusPart(id, tries) {                              // the explorer loads its data after the page; wait for it
+  if (viewer.selectPart && viewer.selectPart(id)) return;
+  if ((tries || 0) < 60) setTimeout(() => focusPart(id, (tries || 0) + 1), 300);
+}
+
+// ---------------- build guide: highlight the section being read in the contents list ----------------
+let buildReady = null;
+function hydrateBuild() {                                    // images and clip posters load when the guide is first opened
+  if (buildReady) return buildReady;
+  const imgs = Array.from(document.querySelectorAll('#build img[data-src]'));
+  document.querySelectorAll('#build video[data-poster]').forEach(v => { v.poster = v.dataset.poster; });
+  buildReady = Promise.race([Promise.all(imgs.map(i => new Promise(r => { i.onload = i.onerror = r; i.src = i.dataset.src; }))), new Promise(r => setTimeout(r, 4000))]);
+  return buildReady;
+}
+let tocWatch = false;
+function watchBuildToc() {
+  if (tocWatch || !('IntersectionObserver' in window)) return;
+  tocWatch = true;
+  const links = new Map(Array.from(document.querySelectorAll('.md-toc a')).map(a => [a.getAttribute('href').slice(1), a]));
+  const io = new IntersectionObserver(es => es.forEach(en => {
+    if (!en.isIntersecting) return;
+    links.forEach(a => a.removeAttribute('aria-current'));
+    const a = links.get(en.target.id); if (a) a.setAttribute('aria-current', 'true');
+  }), { rootMargin: '-15% 0px -75% 0px' });
+  document.querySelectorAll('.md-sec').forEach(sec => io.observe(sec));
+}
 
 // ---------------- decision page: morphological chart and the 43-concept table ----------------
 const FAM = { K: 'Conventional', B: 'Buy-and-modify', U: 'Unconventional' };
