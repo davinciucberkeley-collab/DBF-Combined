@@ -1,0 +1,1 @@
+test_id,date,aircraft,attitude,heading_deg,distance_m,tx_power_mw,packet_rate_hz,rssi1_dbm,rssi2_dbm,best_rssi_dbm,rqly_pct,failsafe,pass,firmware_tx,firmware_rx,params_sha,wind_ms,notes

@@ -107,3 +107,7 @@ tools/opencae-studio/opencae/examples/projects/*_data/results/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# collision check scratch (collision/collide.py regenerates it)
+redesign/collision/out/_job.json
+redesign/collision/out/blender.log

@@ -1,0 +1,1080 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "propulsion",
+ "_note": "Written by subsystems/propulsion/make_propulsion.py from fusion/propulsion.py and parts.csv (team/E1/propulsion.py writes parts.csv). Do not hand-edit. Instance nodes per station (UR UL LR LL). Motor-to-mount (E-FIN-61..64) and ESC-to-pad (E-FIN-65..68) edges are D3's; every electrical edge (ESC power, phase, signal) is harness's (D-20); both acknowledged here.",
+ "parts": [
+  {
+   "id": "PRP-001-UR",
+   "name": "Motor UR SunnySky X3108S KV900 (CW from the nose)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "material": "motor (bought)",
+   "cg_xyz_m": [
+    0.0106,
+    0.321,
+    0.1885
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print A (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)",
+   "hw_moved_g": 3.2
+  },
+  {
+   "id": "PRP-002-UR",
+   "name": "ESC UR LANRC 45 A",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "material": "electronics (bought)",
+   "cg_xyz_m": [
+    0.101,
+    0.329,
+    0.118
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "7.6 g EST, stripped: factory power leads removed, F2 solders 16 AWG to the pads (D-48); 45 x 20 x 6 mm body (ASM-E3-ESC), 7.5 mm proud of the pad at the strap (CL-E1-ESC-PROUD), flat on the outboard face of FIN-007-UR, FET side out, phase end forward (x 0.0785), power end aft; CG = CAD centroid"
+  },
+  {
+   "id": "PRP-003-UR",
+   "name": "Prop UR APC 11x5.5MRP (LP11055MRP)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "material": "glass-filled nylon",
+   "cg_xyz_m": [
+    -0.0127,
+    0.3223,
+    0.1861
+   ],
+   "make_or_buy": "buy",
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0127; datum DP-PROP -0.0127, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+  },
+  {
+   "id": "PRP-004-UR",
+   "name": "Prop adapter UR M6x1 LH + nut + washer",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "6061 aluminium / steel",
+   "cg_xyz_m": [
+    -0.0096,
+    0.3221,
+    0.1864
+   ],
+   "make_or_buy": "buy",
+   "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21); CG = CAD centroid",
+   "hw_moved_g": 3.7
+  },
+  {
+   "id": "PRP-001-UL",
+   "name": "Motor UL SunnySky X3108S KV900 (CCW from the nose)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "material": "motor (bought)",
+   "cg_xyz_m": [
+    0.0106,
+    -0.321,
+    0.1885
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print B (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)",
+   "hw_moved_g": 3.2
+  },
+  {
+   "id": "PRP-002-UL",
+   "name": "ESC UL LANRC 45 A",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "material": "electronics (bought)",
+   "cg_xyz_m": [
+    0.101,
+    -0.329,
+    0.118
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "7.6 g EST, stripped: factory power leads removed, F2 solders 16 AWG to the pads (D-48); 45 x 20 x 6 mm body (ASM-E3-ESC), 7.5 mm proud of the pad at the strap (CL-E1-ESC-PROUD), flat on the outboard face of FIN-007-UL, FET side out, phase end forward (x 0.0785), power end aft; CG = CAD centroid"
+  },
+  {
+   "id": "PRP-003-UL",
+   "name": "Prop UL APC 11x5.5MR (LP11055MR)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "material": "glass-filled nylon",
+   "cg_xyz_m": [
+    -0.0127,
+    -0.3223,
+    0.1861
+   ],
+   "make_or_buy": "buy",
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0127; datum DP-PROP -0.0127, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+  },
+  {
+   "id": "PRP-004-UL",
+   "name": "Prop adapter UL M6x1 RH + nut + washer",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "6061 aluminium / steel",
+   "cg_xyz_m": [
+    -0.0096,
+    -0.3221,
+    0.1864
+   ],
+   "make_or_buy": "buy",
+   "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21); CG = CAD centroid",
+   "hw_moved_g": 3.7
+  },
+  {
+   "id": "PRP-001-LR",
+   "name": "Motor LR SunnySky X3108S KV900 (CCW from the nose)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "material": "motor (bought)",
+   "cg_xyz_m": [
+    0.0106,
+    0.321,
+    -0.1885
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print B (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)",
+   "hw_moved_g": 3.2
+  },
+  {
+   "id": "PRP-002-LR",
+   "name": "ESC LR LANRC 45 A",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "material": "electronics (bought)",
+   "cg_xyz_m": [
+    0.101,
+    0.329,
+    -0.118
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "7.6 g EST, stripped: factory power leads removed, F2 solders 16 AWG to the pads (D-48); 45 x 20 x 6 mm body (ASM-E3-ESC), 7.5 mm proud of the pad at the strap (CL-E1-ESC-PROUD), flat on the outboard face of FIN-007-LR, FET side out, phase end forward (x 0.0785), power end aft; CG = CAD centroid"
+  },
+  {
+   "id": "PRP-003-LR",
+   "name": "Prop LR APC 11x5.5MR (LP11055MR)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "material": "glass-filled nylon",
+   "cg_xyz_m": [
+    -0.0127,
+    0.3223,
+    -0.1861
+   ],
+   "make_or_buy": "buy",
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0127; datum DP-PROP -0.0127, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+  },
+  {
+   "id": "PRP-004-LR",
+   "name": "Prop adapter LR M6x1 RH + nut + washer",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "6061 aluminium / steel",
+   "cg_xyz_m": [
+    -0.0096,
+    0.3221,
+    -0.1864
+   ],
+   "make_or_buy": "buy",
+   "notes": "RH thread: prop drag tightens the nut on a CCW motor (CR-E1-21); CG = CAD centroid",
+   "hw_moved_g": 3.7
+  },
+  {
+   "id": "PRP-001-LL",
+   "name": "Motor LL SunnySky X3108S KV900 (CW from the nose)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "material": "motor (bought)",
+   "cg_xyz_m": [
+    0.0106,
+    -0.321,
+    -0.1885
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "notes": "81.0 g with factory leads + 4 x M3x8 screws 3.2 g (PRP-005); envelope OD 38.0 x 26.5 mm, base on D3 canted plate print A (7 deg tangential, D-27), shaft along the canted axis; CG = CAD centroid; UNVERIFIED (T-E1-MOTOR-RM)",
+   "hw_moved_g": 3.2
+  },
+  {
+   "id": "PRP-002-LL",
+   "name": "ESC LL LANRC 45 A",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "material": "electronics (bought)",
+   "cg_xyz_m": [
+    0.101,
+    -0.329,
+    -0.118
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "notes": "7.6 g EST, stripped: factory power leads removed, F2 solders 16 AWG to the pads (D-48); 45 x 20 x 6 mm body (ASM-E3-ESC), 7.5 mm proud of the pad at the strap (CL-E1-ESC-PROUD), flat on the outboard face of FIN-007-LL, FET side out, phase end forward (x 0.0785), power end aft; CG = CAD centroid"
+  },
+  {
+   "id": "PRP-003-LL",
+   "name": "Prop LL APC 11x5.5MRP (LP11055MRP)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "material": "glass-filled nylon",
+   "cg_xyz_m": [
+    -0.0127,
+    -0.3223,
+    -0.1861
+   ],
+   "make_or_buy": "buy",
+   "notes": "hub centre 37.3 mm from the motor face on the canted axis (x -0.0127; datum DP-PROP -0.0127, CR-E1-29); removed for transport; blades parked spanwise in CAD"
+  },
+  {
+   "id": "PRP-004-LL",
+   "name": "Prop adapter LL M6x1 LH + nut + washer",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "material": "6061 aluminium / steel",
+   "cg_xyz_m": [
+    -0.0096,
+    -0.3221,
+    -0.1864
+   ],
+   "make_or_buy": "buy",
+   "notes": "LH thread: prop drag tightens the nut on a CW motor (CR-E1-21); CG = CAD centroid",
+   "hw_moved_g": 3.7
+  },
+  {
+   "id": "PRP-005-UR",
+   "name": "Motor screw set UR: 4 x M3x8 SHCS ISO 4762 A2",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0277,
+    0.3198,
+    0.1904
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-61",
+   "hardware_of": "E-FIN-61"
+  },
+  {
+   "id": "PRP-005-UL",
+   "name": "Motor screw set UL: 4 x M3x8 SHCS ISO 4762 A2",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0277,
+    -0.3198,
+    0.1904
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-62",
+   "hardware_of": "E-FIN-62"
+  },
+  {
+   "id": "PRP-005-LR",
+   "name": "Motor screw set LR: 4 x M3x8 SHCS ISO 4762 A2",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0277,
+    0.3198,
+    -0.1904
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-63",
+   "hardware_of": "E-FIN-63"
+  },
+  {
+   "id": "PRP-005-LL",
+   "name": "Motor screw set LL: 4 x M3x8 SHCS ISO 4762 A2",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    0.0277,
+    -0.3198,
+    -0.1904
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-FIN-64",
+   "hardware_of": "E-FIN-64"
+  },
+  {
+   "id": "PRP-006-UR",
+   "name": "Prop adapter screw set UR: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    -0.0038,
+    0.3218,
+    0.187
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-01",
+   "hardware_of": "E-PRP-01"
+  },
+  {
+   "id": "PRP-006-UL",
+   "name": "Prop adapter screw set UL: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    -0.0038,
+    -0.3218,
+    0.187
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-02",
+   "hardware_of": "E-PRP-02"
+  },
+  {
+   "id": "PRP-006-LR",
+   "name": "Prop adapter screw set LR: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    -0.0038,
+    0.3218,
+    -0.187
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-03",
+   "hardware_of": "E-PRP-03"
+  },
+  {
+   "id": "PRP-006-LL",
+   "name": "Prop adapter screw set LL: 4 x M3x4 SHCS (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "material": "A2 stainless",
+   "cg_xyz_m": [
+    -0.0038,
+    -0.3218,
+    -0.187
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-04",
+   "hardware_of": "E-PRP-04"
+  },
+  {
+   "id": "PRP-007-UR",
+   "name": "Prop nut UR: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0207,
+    0.3228,
+    0.1852
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-05",
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "PRP-007-UL",
+   "name": "Prop nut UL: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0207,
+    -0.3228,
+    0.1852
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-06",
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "PRP-007-LR",
+   "name": "Prop nut LR: M6x1 hex nut ISO 4032 (RH, supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0207,
+    0.3228,
+    -0.1852
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-07",
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "PRP-007-LL",
+   "name": "Prop nut LL: M6x1 hex nut ISO 4032 (LH, supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0207,
+    -0.3228,
+    -0.1852
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-08",
+   "hardware_of": "E-PRP-08"
+  },
+  {
+   "id": "PRP-008-UR",
+   "name": "Prop washer UR: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0176,
+    0.3226,
+    0.1856
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-05",
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "PRP-008-UL",
+   "name": "Prop washer UL: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0176,
+    -0.3226,
+    0.1856
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-06",
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "PRP-008-LR",
+   "name": "Prop washer LR: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0176,
+    0.3226,
+    -0.1856
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-07",
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "PRP-008-LL",
+   "name": "Prop washer LL: M6 6 x 12 x 1.0 (supplied with PRP-004)",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "material": "steel (zinc plated)",
+   "cg_xyz_m": [
+    -0.0176,
+    -0.3226,
+    -0.1856
+   ],
+   "make_or_buy": "buy",
+   "notes": "fastener set modelled in CAD (C6 FASTENERS-CAD); joint stack on E-PRP-08",
+   "hardware_of": "E-PRP-08"
+  }
+ ],
+ "connection_types": [
+  {
+   "id": "CT-PROP-ADAPTER",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "bolt-on prop adapter, 4 x M3x4 SHCS into the motor bell, pilot on the shaft"
+  },
+  {
+   "id": "CT-PROP-NUT",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "M6x1 nut and washer clamp the prop hub on the adapter post (field joint)"
+  },
+  {
+   "id": "CT-HW-SEATED",
+   "kind": "mechanical",
+   "method": "clamped",
+   "spec": "fastener hardware seated in a fastened joint (screw in its hole or thread, nut / washer / spacer under it, heat-set insert in its bore); the joint_stack is on the parent edge named in hardware_of"
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-PRP-01",
+   "part_a": "PRP-004-UR",
+   "part_b": "PRP-001-UR",
+   "via": "CT-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "adapter pilot bore (4 mm x 8.5 mm) on the shaft stub, base flat on the bell top, four M3x4 on the 12 mm circle (vendor fit list names the X3108S KV900); bench joint, never a field joint",
+   "joint_stack": {
+    "fastener": "M3x4 SHCS (4 supplied with the adapter)",
+    "count": 4,
+    "grade": "12.9 (vendor)",
+    "hole": "counterbored clearance in the adapter base; M3 tapped in the bell top by the maker",
+    "insert": "none (aluminium bell)",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "min_engagement_basis": "deviation D-58 (a) from the 1.0 d rule (D-41), granted on CL-E1-ADAPTER-STRIP (RF 1.70 at 2.0 mm vs the 0.5 N m preload) and conditional on T-E1-MOTOR-RM measuring >= 2.5 mm of bell-top thread (CL-E1-ADAPTER-THREAD-D58); if the bell has >= 3.0 mm of thread and >= 4.0 mm free depth, M3x5 (3.5 mm, no deviation, CL-E1-ADAPTER-M3X5-ENGAGE) replaces it (CR-A4-43); tip >= 0.5 mm short of the windings",
+    "washer_nut": "none",
+    "torque": "0.5 N m + Loctite 243 on the tip threads (C6; vendor value wins if printed)",
+    "tool": "2.0 mm hex key (vendor set)",
+    "access": "from the front (-x), prop and nut off",
+    "install_order": 1,
+    "removal_order": 3
+   },
+   "retention": {
+    "item": "Loctite 243",
+    "count": 4,
+    "load_n": "prop torque 0.33 N m at full throttle on a 6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial; preload 0.5 N m / (0.2 x 3 mm) = 0.83 kN",
+    "inspection": "witness mark on each head; checked at every field set-up"
+   }
+  },
+  {
+   "id": "E-PRP-05",
+   "part_a": "PRP-003-UR",
+   "part_b": "PRP-004-UR",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "field_joint": true,
+   "notes": "11x5.5MRP (LP11055MRP) on a LH post; LPAR06E ring centres the 1/4 in bore on the M6 post; hub rear face on the adapter shoulder; prop off for transport (pouch spanner, D-40)",
+   "joint_stack": {
+    "fastener": "M6x1 hex nut ISO 4032 (LH, steel, from the adapter set) + M6 washer 6 x 12 x 1.0",
+    "count": 1,
+    "grade": "8 (steel)",
+    "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
+    "insert": "none (threaded aluminium post)",
+    "engagement_mm": 5.31,
+    "min_engagement_mm": 5.2,
+    "min_engagement_basis": "full ISO 4032 nut height (nut strength >= the post); post tip at least flush with the nut face (CL-E1-NUT-ENGAGE); a 1.6 mm washer fails this",
+    "washer_nut": "M6 washer 1.0 mm under the nut",
+    "torque": "1.5 N m, bell held by hand (C6 CR-C6-05, T-C6-PROPNUT)",
+    "tool": "10 mm spanner (the one field tool, box pouch)",
+    "access": "from the front (-x)",
+    "install_order": 2,
+    "removal_order": 1
+   }
+  },
+  {
+   "id": "E-PRP-02",
+   "part_a": "PRP-004-UL",
+   "part_b": "PRP-001-UL",
+   "via": "CT-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "adapter pilot bore (4 mm x 8.5 mm) on the shaft stub, base flat on the bell top, four M3x4 on the 12 mm circle (vendor fit list names the X3108S KV900); bench joint, never a field joint",
+   "joint_stack": {
+    "fastener": "M3x4 SHCS (4 supplied with the adapter)",
+    "count": 4,
+    "grade": "12.9 (vendor)",
+    "hole": "counterbored clearance in the adapter base; M3 tapped in the bell top by the maker",
+    "insert": "none (aluminium bell)",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "min_engagement_basis": "deviation D-58 (a) from the 1.0 d rule (D-41), granted on CL-E1-ADAPTER-STRIP (RF 1.70 at 2.0 mm vs the 0.5 N m preload) and conditional on T-E1-MOTOR-RM measuring >= 2.5 mm of bell-top thread (CL-E1-ADAPTER-THREAD-D58); if the bell has >= 3.0 mm of thread and >= 4.0 mm free depth, M3x5 (3.5 mm, no deviation, CL-E1-ADAPTER-M3X5-ENGAGE) replaces it (CR-A4-43); tip >= 0.5 mm short of the windings",
+    "washer_nut": "none",
+    "torque": "0.5 N m + Loctite 243 on the tip threads (C6; vendor value wins if printed)",
+    "tool": "2.0 mm hex key (vendor set)",
+    "access": "from the front (-x), prop and nut off",
+    "install_order": 1,
+    "removal_order": 3
+   },
+   "retention": {
+    "item": "Loctite 243",
+    "count": 4,
+    "load_n": "prop torque 0.33 N m at full throttle on a 6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial; preload 0.5 N m / (0.2 x 3 mm) = 0.83 kN",
+    "inspection": "witness mark on each head; checked at every field set-up"
+   }
+  },
+  {
+   "id": "E-PRP-06",
+   "part_a": "PRP-003-UL",
+   "part_b": "PRP-004-UL",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "field_joint": true,
+   "notes": "11x5.5MR (LP11055MR) on a RH post; LPAR06E ring centres the 1/4 in bore on the M6 post; hub rear face on the adapter shoulder; prop off for transport (pouch spanner, D-40)",
+   "joint_stack": {
+    "fastener": "M6x1 hex nut ISO 4032 (RH, steel, from the adapter set) + M6 washer 6 x 12 x 1.0",
+    "count": 1,
+    "grade": "8 (steel)",
+    "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
+    "insert": "none (threaded aluminium post)",
+    "engagement_mm": 5.31,
+    "min_engagement_mm": 5.2,
+    "min_engagement_basis": "full ISO 4032 nut height (nut strength >= the post); post tip at least flush with the nut face (CL-E1-NUT-ENGAGE); a 1.6 mm washer fails this",
+    "washer_nut": "M6 washer 1.0 mm under the nut",
+    "torque": "1.5 N m, bell held by hand (C6 CR-C6-05, T-C6-PROPNUT)",
+    "tool": "10 mm spanner (the one field tool, box pouch)",
+    "access": "from the front (-x)",
+    "install_order": 2,
+    "removal_order": 1
+   }
+  },
+  {
+   "id": "E-PRP-03",
+   "part_a": "PRP-004-LR",
+   "part_b": "PRP-001-LR",
+   "via": "CT-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "adapter pilot bore (4 mm x 8.5 mm) on the shaft stub, base flat on the bell top, four M3x4 on the 12 mm circle (vendor fit list names the X3108S KV900); bench joint, never a field joint",
+   "joint_stack": {
+    "fastener": "M3x4 SHCS (4 supplied with the adapter)",
+    "count": 4,
+    "grade": "12.9 (vendor)",
+    "hole": "counterbored clearance in the adapter base; M3 tapped in the bell top by the maker",
+    "insert": "none (aluminium bell)",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "min_engagement_basis": "deviation D-58 (a) from the 1.0 d rule (D-41), granted on CL-E1-ADAPTER-STRIP (RF 1.70 at 2.0 mm vs the 0.5 N m preload) and conditional on T-E1-MOTOR-RM measuring >= 2.5 mm of bell-top thread (CL-E1-ADAPTER-THREAD-D58); if the bell has >= 3.0 mm of thread and >= 4.0 mm free depth, M3x5 (3.5 mm, no deviation, CL-E1-ADAPTER-M3X5-ENGAGE) replaces it (CR-A4-43); tip >= 0.5 mm short of the windings",
+    "washer_nut": "none",
+    "torque": "0.5 N m + Loctite 243 on the tip threads (C6; vendor value wins if printed)",
+    "tool": "2.0 mm hex key (vendor set)",
+    "access": "from the front (-x), prop and nut off",
+    "install_order": 1,
+    "removal_order": 3
+   },
+   "retention": {
+    "item": "Loctite 243",
+    "count": 4,
+    "load_n": "prop torque 0.33 N m at full throttle on a 6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial; preload 0.5 N m / (0.2 x 3 mm) = 0.83 kN",
+    "inspection": "witness mark on each head; checked at every field set-up"
+   }
+  },
+  {
+   "id": "E-PRP-07",
+   "part_a": "PRP-003-LR",
+   "part_b": "PRP-004-LR",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "field_joint": true,
+   "notes": "11x5.5MR (LP11055MR) on a RH post; LPAR06E ring centres the 1/4 in bore on the M6 post; hub rear face on the adapter shoulder; prop off for transport (pouch spanner, D-40)",
+   "joint_stack": {
+    "fastener": "M6x1 hex nut ISO 4032 (RH, steel, from the adapter set) + M6 washer 6 x 12 x 1.0",
+    "count": 1,
+    "grade": "8 (steel)",
+    "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
+    "insert": "none (threaded aluminium post)",
+    "engagement_mm": 5.31,
+    "min_engagement_mm": 5.2,
+    "min_engagement_basis": "full ISO 4032 nut height (nut strength >= the post); post tip at least flush with the nut face (CL-E1-NUT-ENGAGE); a 1.6 mm washer fails this",
+    "washer_nut": "M6 washer 1.0 mm under the nut",
+    "torque": "1.5 N m, bell held by hand (C6 CR-C6-05, T-C6-PROPNUT)",
+    "tool": "10 mm spanner (the one field tool, box pouch)",
+    "access": "from the front (-x)",
+    "install_order": 2,
+    "removal_order": 1
+   }
+  },
+  {
+   "id": "E-PRP-04",
+   "part_a": "PRP-004-LL",
+   "part_b": "PRP-001-LL",
+   "via": "CT-PROP-ADAPTER",
+   "owner": "propulsion",
+   "notes": "adapter pilot bore (4 mm x 8.5 mm) on the shaft stub, base flat on the bell top, four M3x4 on the 12 mm circle (vendor fit list names the X3108S KV900); bench joint, never a field joint",
+   "joint_stack": {
+    "fastener": "M3x4 SHCS (4 supplied with the adapter)",
+    "count": 4,
+    "grade": "12.9 (vendor)",
+    "hole": "counterbored clearance in the adapter base; M3 tapped in the bell top by the maker",
+    "insert": "none (aluminium bell)",
+    "engagement_mm": 2.5,
+    "min_engagement_mm": 2.0,
+    "min_engagement_basis": "deviation D-58 (a) from the 1.0 d rule (D-41), granted on CL-E1-ADAPTER-STRIP (RF 1.70 at 2.0 mm vs the 0.5 N m preload) and conditional on T-E1-MOTOR-RM measuring >= 2.5 mm of bell-top thread (CL-E1-ADAPTER-THREAD-D58); if the bell has >= 3.0 mm of thread and >= 4.0 mm free depth, M3x5 (3.5 mm, no deviation, CL-E1-ADAPTER-M3X5-ENGAGE) replaces it (CR-A4-43); tip >= 0.5 mm short of the windings",
+    "washer_nut": "none",
+    "torque": "0.5 N m + Loctite 243 on the tip threads (C6; vendor value wins if printed)",
+    "tool": "2.0 mm hex key (vendor set)",
+    "access": "from the front (-x), prop and nut off",
+    "install_order": 1,
+    "removal_order": 3
+   },
+   "retention": {
+    "item": "Loctite 243",
+    "count": 4,
+    "load_n": "prop torque 0.33 N m at full throttle on a 6 mm radius = 14 N per screw in shear; thrust 16 N / 4 = 4 N axial; preload 0.5 N m / (0.2 x 3 mm) = 0.83 kN",
+    "inspection": "witness mark on each head; checked at every field set-up"
+   }
+  },
+  {
+   "id": "E-PRP-08",
+   "part_a": "PRP-003-LL",
+   "part_b": "PRP-004-LL",
+   "via": "CT-PROP-NUT",
+   "owner": "propulsion",
+   "field_joint": true,
+   "notes": "11x5.5MRP (LP11055MRP) on a LH post; LPAR06E ring centres the 1/4 in bore on the M6 post; hub rear face on the adapter shoulder; prop off for transport (pouch spanner, D-40)",
+   "joint_stack": {
+    "fastener": "M6x1 hex nut ISO 4032 (LH, steel, from the adapter set) + M6 washer 6 x 12 x 1.0",
+    "count": 1,
+    "grade": "8 (steel)",
+    "hole": "6.35 mm prop bore with LPAR06E ring to 6 mm",
+    "insert": "none (threaded aluminium post)",
+    "engagement_mm": 5.31,
+    "min_engagement_mm": 5.2,
+    "min_engagement_basis": "full ISO 4032 nut height (nut strength >= the post); post tip at least flush with the nut face (CL-E1-NUT-ENGAGE); a 1.6 mm washer fails this",
+    "washer_nut": "M6 washer 1.0 mm under the nut",
+    "torque": "1.5 N m, bell held by hand (C6 CR-C6-05, T-C6-PROPNUT)",
+    "tool": "10 mm spanner (the one field tool, box pouch)",
+    "access": "from the front (-x)",
+    "install_order": 2,
+    "removal_order": 1
+   }
+  },
+  {
+   "id": "E-PRP-101",
+   "part_a": "PRP-005-UR",
+   "part_b": "FIN-003-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-61 (joint stack there); seated on FIN-003-UR",
+   "hardware": true,
+   "hardware_of": "E-FIN-61"
+  },
+  {
+   "id": "E-PRP-102",
+   "part_a": "PRP-005-UR",
+   "part_b": "PRP-001-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-61 (joint stack there); seated on PRP-001-UR",
+   "hardware": true,
+   "hardware_of": "E-FIN-61"
+  },
+  {
+   "id": "E-PRP-103",
+   "part_a": "PRP-005-UL",
+   "part_b": "FIN-003-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-62 (joint stack there); seated on FIN-003-UL",
+   "hardware": true,
+   "hardware_of": "E-FIN-62"
+  },
+  {
+   "id": "E-PRP-104",
+   "part_a": "PRP-005-UL",
+   "part_b": "PRP-001-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-62 (joint stack there); seated on PRP-001-UL",
+   "hardware": true,
+   "hardware_of": "E-FIN-62"
+  },
+  {
+   "id": "E-PRP-105",
+   "part_a": "PRP-005-LR",
+   "part_b": "FIN-003-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-63 (joint stack there); seated on FIN-003-LR",
+   "hardware": true,
+   "hardware_of": "E-FIN-63"
+  },
+  {
+   "id": "E-PRP-106",
+   "part_a": "PRP-005-LR",
+   "part_b": "PRP-001-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-63 (joint stack there); seated on PRP-001-LR",
+   "hardware": true,
+   "hardware_of": "E-FIN-63"
+  },
+  {
+   "id": "E-PRP-107",
+   "part_a": "PRP-005-LL",
+   "part_b": "FIN-003-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-64 (joint stack there); seated on FIN-003-LL",
+   "hardware": true,
+   "hardware_of": "E-FIN-64"
+  },
+  {
+   "id": "E-PRP-108",
+   "part_a": "PRP-005-LL",
+   "part_b": "PRP-001-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-FIN-64 (joint stack there); seated on PRP-001-LL",
+   "hardware": true,
+   "hardware_of": "E-FIN-64"
+  },
+  {
+   "id": "E-PRP-109",
+   "part_a": "PRP-006-UR",
+   "part_b": "PRP-004-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-01 (joint stack there); seated on PRP-004-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-01"
+  },
+  {
+   "id": "E-PRP-110",
+   "part_a": "PRP-006-UR",
+   "part_b": "PRP-001-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-01 (joint stack there); seated on PRP-001-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-01"
+  },
+  {
+   "id": "E-PRP-111",
+   "part_a": "PRP-006-UL",
+   "part_b": "PRP-004-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-02 (joint stack there); seated on PRP-004-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-02"
+  },
+  {
+   "id": "E-PRP-112",
+   "part_a": "PRP-006-UL",
+   "part_b": "PRP-001-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-02 (joint stack there); seated on PRP-001-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-02"
+  },
+  {
+   "id": "E-PRP-113",
+   "part_a": "PRP-006-LR",
+   "part_b": "PRP-004-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-03 (joint stack there); seated on PRP-004-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-03"
+  },
+  {
+   "id": "E-PRP-114",
+   "part_a": "PRP-006-LR",
+   "part_b": "PRP-001-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-03 (joint stack there); seated on PRP-001-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-03"
+  },
+  {
+   "id": "E-PRP-115",
+   "part_a": "PRP-006-LL",
+   "part_b": "PRP-004-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-04 (joint stack there); seated on PRP-004-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-04"
+  },
+  {
+   "id": "E-PRP-116",
+   "part_a": "PRP-006-LL",
+   "part_b": "PRP-001-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-04 (joint stack there); seated on PRP-001-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-04"
+  },
+  {
+   "id": "E-PRP-117",
+   "part_a": "PRP-007-UR",
+   "part_b": "PRP-004-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-05 (joint stack there); seated on PRP-004-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "E-PRP-118",
+   "part_a": "PRP-007-UL",
+   "part_b": "PRP-004-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-06 (joint stack there); seated on PRP-004-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "E-PRP-119",
+   "part_a": "PRP-007-LR",
+   "part_b": "PRP-004-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-07 (joint stack there); seated on PRP-004-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "E-PRP-120",
+   "part_a": "PRP-007-LL",
+   "part_b": "PRP-004-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-08 (joint stack there); seated on PRP-004-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-08"
+  },
+  {
+   "id": "E-PRP-121",
+   "part_a": "PRP-008-UR",
+   "part_b": "PRP-003-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-05 (joint stack there); seated on PRP-003-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "E-PRP-122",
+   "part_a": "PRP-008-UR",
+   "part_b": "PRP-004-UR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-05 (joint stack there); seated on PRP-004-UR",
+   "hardware": true,
+   "hardware_of": "E-PRP-05"
+  },
+  {
+   "id": "E-PRP-123",
+   "part_a": "PRP-008-UL",
+   "part_b": "PRP-003-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-06 (joint stack there); seated on PRP-003-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "E-PRP-124",
+   "part_a": "PRP-008-UL",
+   "part_b": "PRP-004-UL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-06 (joint stack there); seated on PRP-004-UL",
+   "hardware": true,
+   "hardware_of": "E-PRP-06"
+  },
+  {
+   "id": "E-PRP-125",
+   "part_a": "PRP-008-LR",
+   "part_b": "PRP-003-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-07 (joint stack there); seated on PRP-003-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "E-PRP-126",
+   "part_a": "PRP-008-LR",
+   "part_b": "PRP-004-LR",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-07 (joint stack there); seated on PRP-004-LR",
+   "hardware": true,
+   "hardware_of": "E-PRP-07"
+  },
+  {
+   "id": "E-PRP-127",
+   "part_a": "PRP-008-LL",
+   "part_b": "PRP-003-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-08 (joint stack there); seated on PRP-003-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-08"
+  },
+  {
+   "id": "E-PRP-128",
+   "part_a": "PRP-008-LL",
+   "part_b": "PRP-004-LL",
+   "via": "CT-HW-SEATED",
+   "owner": "propulsion",
+   "notes": "hardware of E-PRP-08 (joint stack there); seated on PRP-004-LL",
+   "hardware": true,
+   "hardware_of": "E-PRP-08"
+  }
+ ],
+ "acknowledges": [
+  "E-FIN-61",
+  "E-FIN-62",
+  "E-FIN-63",
+  "E-FIN-64",
+  "E-FIN-65",
+  "E-FIN-66",
+  "E-FIN-67",
+  "E-FIN-68",
+  "E-FIN-81",
+  "E-FIN-82",
+  "E-FIN-83",
+  "E-FIN-84",
+  "E-FIN-85",
+  "E-FIN-86",
+  "E-FIN-87",
+  "E-FIN-88",
+  "E-HRN-13",
+  "E-HRN-14",
+  "E-HRN-15",
+  "E-HRN-16",
+  "E-HRN-17",
+  "E-HRN-18",
+  "E-HRN-19",
+  "E-HRN-20",
+  "E-HRN-24",
+  "E-HRN-25",
+  "E-HRN-26",
+  "E-HRN-27",
+  "E-HRN-34",
+  "E-HRN-35",
+  "E-HRN-36",
+  "E-HRN-37",
+  "E-TRN-17",
+  "E-TRN-18",
+  "E-TRN-19",
+  "E-TRN-20"
+ ],
+ "acknowledges_pending": []
+}

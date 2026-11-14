@@ -1,0 +1,514 @@
+{
+  "concept": "K01-LEAN twin-boom quadplane 4+1, one-piece XPS wing, H-tail, 4S (tie-break vs K09)",
+  "mission": "REQUIREMENTS.md section 3 M-A: hover 2 min, cruise >=5 min, 20 % reserve, 0 payload + 0.25 kg growth",
+  "status": "PROPOSED; every number ESTIMATE unless a datasheet is named in sizing.py",
+  "geometry": {
+    "S": 0.324,
+    "AR": 4.444444444444444,
+    "a_w_per_rad": 4.063,
+    "a_t_per_rad": 3.883,
+    "deps_dalpha": 0.582,
+    "x_front_motor_m": -0.275,
+    "x_rear_motor_m": 0.43,
+    "motor_half_spacing_m": 0.352,
+    "lift_centroid_x_m": 0.077,
+    "cg_x_m": 0.077,
+    "cg_pct_mac": 28.7,
+    "neutral_point_pct_mac_base": 43.7,
+    "neutral_point_pct_mac_pess": 37.2,
+    "static_margin_pct_base": 15.0,
+    "static_margin_pct_pess": 8.5,
+    "tail_le_x_m": 0.589,
+    "tail_arm_m": 0.559,
+    "Vh": 0.576,
+    "Vv": 0.0647,
+    "stab_area_m2": 0.09,
+    "fin_area_m2": 0.045,
+    "boom_front_x_m": -0.295,
+    "boom_rear_x_m": 0.705,
+    "boom_rear_needed_x_m": 0.739,
+    "boom_long_enough": true,
+    "tail_overhang_past_tube_m": 0.034,
+    "raymer_fus_dNP_check_pct_mac": 0.96
+  },
+  "structure": {
+    "spar_Z_m3": "3.314e-07",
+    "spar_root_stress_cruise_MPa": 27.6,
+    "spar_root_stress_hover_MPa": 28.8,
+    "spar_allowable_MPa_ESTIMATE": 300.0,
+    "spar_covers_boom_stations": true,
+    "foam_tip_outboard_of_spar_m": 0.1,
+    "foam_stress_at_spar_end_kPa": 10.6,
+    "foam_allowable_kPa_order": 300.0,
+    "boom_cantilever_m": 0.343,
+    "boom_stress_at_max_thrust_x2p5_MPa": 40.1
+  },
+  "baseline": {
+    "label": "baseline",
+    "pack": "Admiral 4S 4000 40C XT60",
+    "mtow_kg": 2.444,
+    "mass_groups_kg": {
+      "wing core XPS one piece (calc from geometry, ailerons cut from the core)": 0.214,
+      "wing skin, packing tape 2 sides": 0.042,
+      "spar CF 22x20x1000 (102 g/m calc)": 0.102,
+      "2 booms CF 22x20x1000 (same SKU as spar)": 0.204,
+      "pod: foam-board box + printed nose, pack tray, pusher mount (ESTIMATE)": 0.1,
+      "printed PETG: 4 motor mounts 18 g, 2 boom-spar saddles 25 g, 4 legs 12 g, 2 tail sockets 10 g (ESTIMATE)": 0.19,
+      "H-tail: foam-board stab + 2 fins + 2 mm CF rod stiffener + hinge tape (calc + ESTIMATE)": 0.039,
+      "servos: 2 x EMAX ES08MA II 12 g (ailerons) + 1 x ES3005HV 43 g (elevator) + linkages": 0.079,
+      "4 lift stations: X3108S 81 g (SunnySky) + LANRC 45A 6.6 g + APC 11x4.5MR ~20 g": 0.43,
+      "pusher station: X3108S 81 g + LANRC 45A 6.6 g + APC 10x6E ~20 g": 0.108,
+      "motor/ESC/servo wiring along 2 booms + pusher, 2 boom connectors (ESTIMATE)": 0.08,
+      "battery 4S pack (see PACKS)": 0.386,
+      "avionics: SpeedyBee F405 Wing, M100 GPS, RP3 RX, MS5525 airspeed + pitot, AS150U, 12 AWG harness (ESTIMATE)": 0.15,
+      "glue, Velcro straps, cable ties, labels (ESTIMATE)": 0.07
+    },
+    "growth_kg": 0.25,
+    "span_m": 1.2,
+    "chord_m": 0.27,
+    "wing_area_m2": 0.324,
+    "AR": 4.44,
+    "wing_loading_kg_m2": 7.54,
+    "stall_mps": 10.48,
+    "transition_min_mps_1p3Vs": 13.62,
+    "cruise_mps": 15.0,
+    "download": 1.06,
+    "thrust_per_motor_hover_g": 648.0,
+    "hover_frac_of_max_thrust": 0.41,
+    "hover_power_W_table": 357.0,
+    "hover_power_W_momentum_FM": 340.0,
+    "hover_current_A": 24.1,
+    "hover_C_rate": 6.0,
+    "TW_table_full_voltage": 2.59,
+    "TW_full_voltage_net_of_download": 2.44,
+    "TW_low_voltage": 2.38,
+    "TW_low_voltage_net_of_download": 2.24,
+    "low_voltage_rule": "3.5 V/cell loaded, thrust ~ V^1.5",
+    "hover_wind_lean_deg": {
+      "5mps": {
+        "nose_into_wind_deg": 2.6,
+        "broadside_deg": 6.4
+      },
+      "8mps": {
+        "nose_into_wind_deg": 6.5,
+        "broadside_deg": 16.1
+      }
+    },
+    "CD0": 0.0684,
+    "CD0_parts": {
+      "wing": 0.0176,
+      "pod": 0.0063,
+      "booms": 0.0038,
+      "tail": 0.0082,
+      "parked_props": 0.0202,
+      "stopped_motors": 0.0057,
+      "legs": 0.0066
+    },
+    "parked_prop_share_of_CD0": 0.3,
+    "CL_cruise": 0.537,
+    "LD_cruise": 5.59,
+    "drag_N": 4.29,
+    "cruise_power_W": 146.0,
+    "cruise_current_A": 9.9,
+    "pusher_static_TW": 0.41,
+    "pusher_thrust_vs_cruise_drag": 2.29,
+    "pack_Wh": 59.2,
+    "usable_Wh": 47.4,
+    "hover_Wh_2min": 11.9,
+    "cruise_min_after_2min_hover": 13.3,
+    "hover_only_endurance_min": 8.0,
+    "peak_transition_current_A": 52.0,
+    "connector_need_A_1p25x": 65.0,
+    "speed_sweep": [
+      {
+        "V": 12.0,
+        "LD": 6.18,
+        "P_W": 107.0
+      },
+      {
+        "V": 13.0,
+        "LD": 6.1,
+        "P_W": 117.1
+      },
+      {
+        "V": 14.0,
+        "LD": 5.89,
+        "P_W": 130.1
+      },
+      {
+        "V": 15.0,
+        "LD": 5.59,
+        "P_W": 146.0
+      },
+      {
+        "V": 16.0,
+        "LD": 5.26,
+        "P_W": 164.9
+      },
+      {
+        "V": 17.0,
+        "LD": 4.91,
+        "P_W": 187.0
+      },
+      {
+        "V": 18.0,
+        "LD": 4.56,
+        "P_W": 212.4
+      },
+      {
+        "V": 19.0,
+        "LD": 4.23,
+        "P_W": 241.3
+      },
+      {
+        "V": 20.0,
+        "LD": 3.91,
+        "P_W": 273.6
+      },
+      {
+        "V": 21.0,
+        "LD": 3.62,
+        "P_W": 309.8
+      },
+      {
+        "V": 22.0,
+        "LD": 3.36,
+        "P_W": 349.8
+      }
+    ]
+  },
+  "pessimistic": {
+    "label": "PESSIMISTIC (own skeptic): +0.19 kg, download 1.10, eta_prop 0.50, eta_motor 0.70, interference 1.35, parked props x1.5, 3.4 V/cell, thrust ~V^2",
+    "pack": "Admiral 4S 4000 40C XT60",
+    "mtow_kg": 2.638,
+    "mass_groups_kg": {
+      "wing core XPS one piece (calc from geometry, ailerons cut from the core)": 0.214,
+      "wing skin, packing tape 2 sides": 0.042,
+      "spar CF 22x20x1000 (102 g/m calc)": 0.102,
+      "2 booms CF 22x20x1000 (same SKU as spar)": 0.204,
+      "pod: foam-board box + printed nose, pack tray, pusher mount (ESTIMATE)": 0.1,
+      "printed PETG: 4 motor mounts 18 g, 2 boom-spar saddles 25 g, 4 legs 12 g, 2 tail sockets 10 g (ESTIMATE)": 0.19,
+      "H-tail: foam-board stab + 2 fins + 2 mm CF rod stiffener + hinge tape (calc + ESTIMATE)": 0.039,
+      "servos: 2 x EMAX ES08MA II 12 g (ailerons) + 1 x ES3005HV 43 g (elevator) + linkages": 0.079,
+      "4 lift stations: X3108S 81 g (SunnySky) + LANRC 45A 6.6 g + APC 11x4.5MR ~20 g": 0.43,
+      "pusher station: X3108S 81 g + LANRC 45A 6.6 g + APC 10x6E ~20 g": 0.108,
+      "motor/ESC/servo wiring along 2 booms + pusher, 2 boom connectors (ESTIMATE)": 0.08,
+      "battery 4S pack (see PACKS)": 0.386,
+      "avionics: SpeedyBee F405 Wing, M100 GPS, RP3 RX, MS5525 airspeed + pitot, AS150U, 12 AWG harness (ESTIMATE)": 0.15,
+      "glue, Velcro straps, cable ties, labels (ESTIMATE)": 0.07,
+      "build overrun (K09 skeptic +0.10)": 0.1,
+      "boom-spar saddle reinforcement + heavier prints (+0.06)": 0.06,
+      "pack weighs 420 g not 386 g (+0.034)": 0.034
+    },
+    "growth_kg": 0.25,
+    "span_m": 1.2,
+    "chord_m": 0.27,
+    "wing_area_m2": 0.324,
+    "AR": 4.44,
+    "wing_loading_kg_m2": 8.14,
+    "stall_mps": 10.89,
+    "transition_min_mps_1p3Vs": 14.16,
+    "cruise_mps": 15.0,
+    "download": 1.1,
+    "thrust_per_motor_hover_g": 726.0,
+    "hover_frac_of_max_thrust": 0.46,
+    "hover_power_W_table": 417.0,
+    "hover_power_W_momentum_FM": 402.0,
+    "hover_current_A": 28.2,
+    "hover_C_rate": 7.0,
+    "TW_table_full_voltage": 2.4,
+    "TW_full_voltage_net_of_download": 2.18,
+    "TW_low_voltage": 2.02,
+    "TW_low_voltage_net_of_download": 1.84,
+    "low_voltage_rule": "3.4 V/cell loaded, thrust ~ V^2.0",
+    "hover_wind_lean_deg": {
+      "5mps": {
+        "nose_into_wind_deg": 2.4,
+        "broadside_deg": 6.0
+      },
+      "8mps": {
+        "nose_into_wind_deg": 6.1,
+        "broadside_deg": 15.0
+      }
+    },
+    "CD0": 0.0922,
+    "CD0_parts": {
+      "wing": 0.0207,
+      "pod": 0.0074,
+      "booms": 0.0044,
+      "tail": 0.0096,
+      "parked_props": 0.0356,
+      "stopped_motors": 0.0067,
+      "legs": 0.0078
+    },
+    "parked_prop_share_of_CD0": 0.39,
+    "CL_cruise": 0.58,
+    "LD_cruise": 4.66,
+    "drag_N": 5.55,
+    "cruise_power_W": 243.0,
+    "cruise_current_A": 16.4,
+    "pusher_static_TW": 0.38,
+    "pusher_thrust_vs_cruise_drag": 1.77,
+    "pack_Wh": 59.2,
+    "usable_Wh": 47.4,
+    "hover_Wh_2min": 13.9,
+    "cruise_min_after_2min_hover": 7.5,
+    "hover_only_endurance_min": 6.8,
+    "peak_transition_current_A": 56.0,
+    "connector_need_A_1p25x": 70.0,
+    "speed_sweep": [
+      {
+        "V": 12.0,
+        "LD": 5.31,
+        "P_W": 172.1
+      },
+      {
+        "V": 13.0,
+        "LD": 5.18,
+        "P_W": 190.7
+      },
+      {
+        "V": 14.0,
+        "LD": 4.95,
+        "P_W": 214.3
+      },
+      {
+        "V": 15.0,
+        "LD": 4.66,
+        "P_W": 242.9
+      },
+      {
+        "V": 16.0,
+        "LD": 4.35,
+        "P_W": 276.7
+      },
+      {
+        "V": 17.0,
+        "LD": 4.04,
+        "P_W": 316.1
+      },
+      {
+        "V": 18.0,
+        "LD": 3.74,
+        "P_W": 361.1
+      },
+      {
+        "V": 19.0,
+        "LD": 3.45,
+        "P_W": 412.1
+      },
+      {
+        "V": 20.0,
+        "LD": 3.19,
+        "P_W": 469.3
+      },
+      {
+        "V": 21.0,
+        "LD": 2.94,
+        "P_W": 533.1
+      },
+      {
+        "V": 22.0,
+        "LD": 2.72,
+        "P_W": 603.6
+      }
+    ]
+  },
+  "variants": [
+    {
+      "label": "baseline",
+      "pack": "Admiral 4S 4000 40C XT60",
+      "mtow_kg": 2.444,
+      "TW_table_full_voltage": 2.59,
+      "TW_low_voltage": 2.38,
+      "TW_low_voltage_net_of_download": 2.24,
+      "hover_current_A": 24.1,
+      "stall_mps": 10.48,
+      "LD_cruise": 5.59,
+      "cruise_power_W": 146.0,
+      "cruise_min_after_2min_hover": 13.3,
+      "hover_only_endurance_min": 8.0,
+      "peak_transition_current_A": 52.0
+    },
+    {
+      "label": "PESSIMISTIC (own skeptic): +0.19 kg, download 1.10, eta_prop 0.50, eta_motor 0.70, interference 1.35, parked props x1.5, 3.4 V/cell, thrust ~V^2",
+      "pack": "Admiral 4S 4000 40C XT60",
+      "mtow_kg": 2.638,
+      "TW_table_full_voltage": 2.4,
+      "TW_low_voltage": 2.02,
+      "TW_low_voltage_net_of_download": 1.84,
+      "hover_current_A": 28.2,
+      "stall_mps": 10.89,
+      "LD_cruise": 4.66,
+      "cruise_power_W": 243.0,
+      "cruise_min_after_2min_hover": 7.5,
+      "hover_only_endurance_min": 6.8,
+      "peak_transition_current_A": 56.0
+    },
+    {
+      "label": "4S 5000 pack (more endurance, less T/W)",
+      "pack": "Admiral 4S 5000 40C XT60",
+      "mtow_kg": 2.558,
+      "TW_table_full_voltage": 2.47,
+      "TW_low_voltage": 2.27,
+      "TW_low_voltage_net_of_download": 2.14,
+      "hover_current_A": 25.2,
+      "stall_mps": 10.72,
+      "LD_cruise": 5.7,
+      "cruise_power_W": 150.0,
+      "cruise_min_after_2min_hover": 17.5,
+      "hover_only_endurance_min": 9.5,
+      "peak_transition_current_A": 53.0
+    },
+    {
+      "label": "4S 5000 pack, pessimistic",
+      "pack": "Admiral 4S 5000 40C XT60",
+      "mtow_kg": 2.752,
+      "TW_table_full_voltage": 2.3,
+      "TW_low_voltage": 1.94,
+      "TW_low_voltage_net_of_download": 1.76,
+      "hover_current_A": 30.4,
+      "stall_mps": 11.12,
+      "LD_cruise": 4.76,
+      "cruise_power_W": 248.0,
+      "cruise_min_after_2min_hover": 10.0,
+      "hover_only_endurance_min": 7.9,
+      "peak_transition_current_A": 58.0
+    },
+    {
+      "label": "sensitivity: +0.30 kg on baseline",
+      "pack": "Admiral 4S 4000 40C XT60",
+      "mtow_kg": 2.744,
+      "TW_table_full_voltage": 2.3,
+      "TW_low_voltage": 2.12,
+      "TW_low_voltage_net_of_download": 2.0,
+      "hover_current_A": 28.3,
+      "stall_mps": 11.11,
+      "LD_cruise": 5.84,
+      "cruise_power_W": 157.0,
+      "cruise_min_after_2min_hover": 11.7,
+      "hover_only_endurance_min": 6.8,
+      "peak_transition_current_A": 56.0
+    },
+    {
+      "label": "as-built if growth allowance is not used",
+      "pack": "Admiral 4S 4000 40C XT60",
+      "mtow_kg": 2.194,
+      "TW_table_full_voltage": 2.88,
+      "TW_low_voltage": 2.65,
+      "TW_low_voltage_net_of_download": 2.5,
+      "hover_current_A": 21.7,
+      "stall_mps": 9.93,
+      "LD_cruise": 5.32,
+      "cruise_power_W": 138.0,
+      "cruise_min_after_2min_hover": 14.6,
+      "hover_only_endurance_min": 8.9,
+      "peak_transition_current_A": 50.0
+    }
+  ],
+  "pusher": {
+    "prop": "APC 10x6E pusher (LP10060EP)",
+    "static_kgf_UNVERIFIED": 1.0,
+    "full_A_ESTIMATE": 28.0,
+    "pitch_speed_mps": 28.8
+  },
+  "packing": {
+    "pieces_m": {
+      "wing + pod + pusher motor (one piece, prop off)": [
+        1.2,
+        0.47,
+        0.112
+      ],
+      "boom L with 2 motors, 2 ESCs, 2 legs (props off)": [
+        1.0,
+        0.06,
+        0.2
+      ],
+      "boom R with 2 motors, 2 ESCs, 2 legs (props off)": [
+        1.0,
+        0.06,
+        0.2
+      ],
+      "H-tail (stab + 2 fins, one piece)": [
+        0.6,
+        0.15,
+        0.16
+      ],
+      "props 4 x 11 in + 1 x 10 in in a tray": [
+        0.3,
+        0.3,
+        0.05
+      ]
+    },
+    "box_internal_m": [
+      1.22,
+      0.49,
+      0.34
+    ],
+    "box_external_m": [
+      1.25,
+      0.52,
+      0.37
+    ],
+    "box_loaded_kg_ESTIMATE": 5.0,
+    "pieces": 4,
+    "longest_piece_m": 1.2,
+    "mechanical_field_joints": 3,
+    "joints": "2 boom clamps (2 thumbscrews each into the spar saddle) + H-tail onto both boom ends (1 pin each)",
+    "plugs": "2 boom power (XT60: 2 x 30 A full-throttle burst per boom) + 2 boom signal (4-pin: 2 DShot + GND, elevator lead runs along the R boom) + pack",
+    "assembly_min_ESTIMATE": 7,
+    "people": "1 (2 easier)",
+    "vs_K01_card": "K01: 5 joints + 6 plugs, 1.2 x 0.5 x 0.4 m box, ~7 kg; K09: 0 joints, 1.25 x 0.55 x 0.45 m, ~6 kg"
+  },
+  "cost": {
+    "goods": 1445.46,
+    "tax": 148.16,
+    "shipping": 120.0,
+    "faa": 5.0,
+    "total": 1718.62,
+    "reserve": 281.38,
+    "crash": {
+      "study_formula_pretax": 280.21,
+      "study_formula_incl_tax": 308.93,
+      "k01_card_quoted": 266.0,
+      "own_bill_pretax": 203.23,
+      "own_bill_incl_tax": 224.06,
+      "note": "own bill assumes the spares already in the BOM are used first (1 motor, 3 ESC, 8 props, 1 tube, 1 servo)"
+    },
+    "reserve_minus_study_crash": -27.55,
+    "reserve_minus_k01_crash": 15.38,
+    "passes_G1_1850": true
+  },
+  "build_hours": {
+    "items_h": {
+      "wing core (one piece) + ailerons": 8,
+      "spar slot, skin, servo bays": 8,
+      "pod (foam board + printed nose/tray/pusher mount)": 8,
+      "boom saddles, motor mounts, legs: design + print iteration": 12,
+      "H-tail + fins + sockets": 5,
+      "wiring: 5 ESCs, 2 boom connectors, 3 servos, airspeed": 14,
+      "ArduPilot QuadPlane setup, params, failsafes, SITL check": 16,
+      "thrust-stand tests (lift + pusher) and bench tests": 10,
+      "integration, CG, tethered first hover": 8,
+      "slack (first-time team)": 11
+    },
+    "base_total_h": 100,
+    "range_h": "90-110",
+    "pessimistic_h": 130,
+    "outer_bound_h": 150,
+    "outer_bound_basis": "K01 skeptic scaled K01's card hours by 1.5x (100-120 -> 150-180); K09 skeptic by 1.2x (70 -> 70-85); 1.5 x 100 = 150 h if this card is as optimistic as K01's was",
+    "after_first_hover": "+25-35 h of flight-test sessions to a clean transition (documented QuadPlane path)"
+  },
+  "gates": {
+    "G1_cost_le_1850": true,
+    "reserve_ge_one_crash_study_formula": false,
+    "reserve_ge_one_crash_K01_quote": true,
+    "mass_in_2p4_2p8_target": true,
+    "TW_low_voltage_ge_1p6": true,
+    "TW_low_voltage_pess_ge_1p6": true,
+    "static_margin_base_ge_8": true,
+    "static_margin_pess_ge_8": true,
+    "cruise_ge_5min_pess": true,
+    "boom_long_enough": true
+  }
+}

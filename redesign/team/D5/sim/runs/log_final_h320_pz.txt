@@ -1,0 +1,1 @@
+h320_pz gov 42.54 MPa (k 0.7215 MPa/N) {"rim": {"vm_max_MPa": 36.66046, "at_mm": [326.229, -11.381, 214.556]}, "aft box": {"vm_max_MPa": 42.5353, "at_mm": [317.802, 5.9, 200.6]}, "window and open-end zone": {"vm_max_MPa": 20.6236, "at_mm": [305.242, 5.9, 200.6]}, "whole shoe": {"vm_max_MPa": 88.09345, "at_mm": [320.0, 5.8, 200.6]}} 1102 s

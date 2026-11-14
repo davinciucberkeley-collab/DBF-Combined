@@ -1,0 +1,10 @@
+{
+	"autodeskProduct":	"Fusion",
+	"type":	"script",
+	"author":	"DBF capstone",
+	"description":	{
+		"":	"Builds the DBF redesign aircraft from redesign/subsystems/*/fusion/*.py (or the example aircraft) via redesign/fusion/build_all.py"
+	},
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true
+}

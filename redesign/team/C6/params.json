@@ -1,0 +1,290 @@
+{
+ "_note": "C6 joints and fasteners: local specification values (hardware dimensions from the ISO standards, torques and rules chosen by C6). Read by team/C6/joints.py as P:joints.*. Revision C6-R5 (params A1-R5, D-50, D-58, D-68, D-70; C4 frozen R4 set). Shared numbers come from params/params.json and the subsystem params; loads come from C1 claims. Frame and units: params.json#frame, SI.",
+ "allowables": {
+  "_note": "D-107 (CDR-18, 2026-11-13): the one table of printed-plastic design values. C6 owns it; C4, C3, D5, D3, D6 and C5 read it as P:allowables.* (add ../C6/params.json to the Kit params). Design value = print_kd x the data-sheet value of printed specimens. Factor rule: printed parts and bonded joints are checked at limit x 1.5 x 1.15 x 1.25 = 2.156 (requirements.safety_factor_ult, ASM-C1-FITTING-FACTOR, ASM-C1-PRINTED-FACTOR). A part may claim ultimate only (1.5) when each flight article is proof-loaded to 1.15 x limit and one article per printed batch is taken past 1.5 x 1.25 x limit (14 CFR 25.625(a): the fitting factor is for fittings whose strength is not proven by limit and ultimate load tests); the claim then names that test. Replaced by 0.5 x the mean of a printed tensile bar pair (in-plane and across layers) when the coupons run.",
+  "print_kd": {
+   "value": 0.5,
+   "unit": "-",
+   "source": "C6 rule (C4 ASM-C4-PETG-TENSILE practice since R1)",
+   "status": "PROPOSED",
+   "note": "knock-down from the data-sheet value of a 100 % infill specimen to the design value of a printed part: voids, seams, moisture, 4 perimeters + partial infill"
+  },
+  "petg_inplane_pa": {
+   "value": 23500000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-PETG-TDS",
+   "status": "UNVERIFIED",
+   "note": "0.5 x 47 MPa. Prusament PETG TDS v1.1 (16-02-2022), 3D printed specimens, tensile yield 47 +/- 2 MPa horizontal, 50 +/- 1 MPa vertical xz (lower taken). Tension and bending with the stress in the layer plane. Was 40 MPa (D5), 25 MPa (C3)"
+  },
+  "petg_interlayer_pa": {
+   "value": 9000000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-PETG-TDS",
+   "status": "UNVERIFIED",
+   "note": "0.5 x 18 MPa. Same sheet: interlayer adhesion 18 +/- 4 MPa. Tension and bending across the layers. Was 15 MPa (C4 / C6 / C3: 0.5 x an assumed Z yield of 30 MPa)"
+  },
+  "petg_bearing_pa": {
+   "value": 20000000.0,
+   "unit": "Pa",
+   "source": "ASM-C4-PETG-BEARING",
+   "status": "UNVERIFIED",
+   "note": "unchanged: 0.43 x 47 MPa, bearing on a bore wall with the layers in the bore plane, creep under bonded preload (the sheet gives no compressive value: -). C2 checks the block von Mises peak against this row"
+  },
+  "petg_shear_pa": {
+   "value": 10000000.0,
+   "unit": "Pa",
+   "source": "ASM-C4-PETG-SHEAR",
+   "status": "UNVERIFIED",
+   "note": "unchanged: shear-out and web torsion in the layer plane; 0.43 x 23.5 MPa, below the von Mises ratio 0.577 (the sheet gives no shear value: -)"
+  },
+  "petg_e_pa": {
+   "value": 1500000000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-PETG-TDS",
+   "status": "UNVERIFIED",
+   "note": "tensile modulus 1.5 +/- 0.1 GPa horizontal, 1.6 +/- 0.1 vertical xz (100 % infill). C3 FEA uses 1.8 GPa, D5 FEA 2.0 GPa (linear models: stress does not depend on it), C4 tail tongue 1.0 GPa at 45 % fill"
+  },
+  "asa_inplane_pa": {
+   "value": 18250000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-ASA-TDS",
+   "status": "UNVERIFIED",
+   "note": "0.5 x 36.5 MPa. Push Plastic ASA TDS v1.0: tensile stress at yield 36.5 MPa, specimens printed flat. Lower of the two sheets read (Prusament ASA TDS v1.1, 20-05-2024: 42 +/- 1 horizontal, 45 +/- 2 vertical xz), because the ASA brand is not fixed in the BOM"
+  },
+  "asa_interlayer_pa": {
+   "value": 5500000.0,
+   "unit": "Pa",
+   "source": "SRC-C6-ASA-TDS-PRUSA",
+   "status": "UNVERIFIED",
+   "note": "0.5 x 11 MPa. Prusament ASA TDS v1.1 (20-05-2024): interlayer adhesion 11 +/- 1 MPa. The Push Plastic sheet gives no interlayer value (-). ASA across layers is weaker than PETG (11 vs 18 MPa): print ASA mounts with the clamp hoop and the dog in the layer plane"
+  }
+ },
+ "joints": {
+  "m3_d_m": {
+   "value": 0.003,
+   "unit": "m",
+   "source": "ISO 261",
+   "status": "PROPOSED",
+   "note": "every bought structural fastener is M3 (one thread, one 2.5 mm hex key)"
+  },
+  "m3_pitch_m": {
+   "value": 0.0005,
+   "unit": "m",
+   "source": "ISO 261 coarse",
+   "status": "PROPOSED"
+  },
+  "washer_t_m": {
+   "value": 0.0005,
+   "unit": "m",
+   "source": "ISO 7089 M3 (7 mm OD, 0.5 mm)",
+   "status": "PROPOSED"
+  },
+  "nyloc_h_m": {
+   "value": 0.004,
+   "unit": "m",
+   "source": "ISO 10511 M3 (m = 4.0 mm)",
+   "status": "PROPOSED"
+  },
+  "nyloc_protrusion_min_threads": {
+   "value": 2,
+   "unit": "-",
+   "source": "C6 rule (nylon ring fully engaged)",
+   "status": "PROPOSED",
+   "note": "bolt end at least 2 pitches past the nyloc nut"
+  },
+  "insert_len_m": {
+   "value": 0.0057,
+   "unit": "m",
+   "source": "Ruthex RX-M3x5.7 / CNC Kitchen M3 standard insert",
+   "status": "PROPOSED",
+   "note": "hole 4.0 mm, blind depth >= engagement + 0.5 mm, boss wall >= 1.6 mm"
+  },
+  "insert_engage_min_d": {
+   "value": 1.5,
+   "unit": "-",
+   "source": "interfaces/SCHEMA.md joint-stack rule",
+   "status": "PROPOSED",
+   "note": "x d into a heat-set insert; 1.0 d into metal; 2.0 d self-tapping into plastic"
+  },
+  "pinch_screw_len_m": {
+   "value": 0.016,
+   "unit": "m",
+   "source": "FIN-101 M3x16 SHCS",
+   "status": "PROPOSED"
+  },
+  "pinch_washers": {
+   "value": 2,
+   "unit": "-",
+   "source": "E-FIN-05..08 joint stack",
+   "status": "PROPOSED"
+  },
+  "torque": {
+   "motor_screw_nm": {
+    "value": 0.2,
+    "unit": "N m",
+    "source": "team/C6/joints.py#CALC-C6-MOTOR-SCREW",
+    "status": "PROPOSED",
+    "note": "M3 into the aluminium motor base, head on a printed plate, no washer; 4 N (0.41 kg) on a luggage scale hooked 50 mm out on the hex key"
+   },
+   "insert_nm": {
+    "value": 0.4,
+    "unit": "N m",
+    "source": "C6 choice",
+    "status": "PROPOSED",
+    "note": "M3 into a brass heat-set insert in PETG; insert torque-out is several times higher"
+   },
+   "printed_max_nm": {
+    "value": 0.4,
+    "unit": "N m",
+    "source": "C6 choice",
+    "status": "PROPOSED",
+    "note": "ceiling for any M3 whose head or nut bears on a printed part"
+   },
+   "nylon_m3_nm": {
+    "value": 0.08,
+    "unit": "N m",
+    "source": "team/C6/joints.py#CALC-C6-PWR-FRAME",
+    "status": "PROPOSED",
+    "note": "PA66 M3 into a brass insert: 1.6 N on a luggage scale 50 mm out on the hex key, or fingertip-snug on a PH1 until the washer stops turning; replaces F1's 0.20 N m (install RF 0.67 at 0.20). No threadlocker on nylon"
+   }
+  },
+  "strip_bonded_faces_now": {
+   "value": 2,
+   "unit": "-",
+   "source": "subsystems/fins/params.json#fin_detail.station_collar.tail_m note (D3 R3, CR-C6-01)",
+   "status": "PROPOSED",
+   "note": "R3: both strip faces bond to PETG in the 40 mm two-face tail (tongue between the strips)"
+  },
+  "fillet_leg_m": {
+   "value": 0.006,
+   "unit": "m",
+   "source": "C6 proposal CR-C6-17",
+   "status": "PROPOSED",
+   "note": "microballoon-epoxy fillet leg in the pod floor-to-side-wall corner under the strap"
+  },
+  "pwr_frame": {
+   "screw_len_m": {
+    "value": 0.018,
+    "unit": "m",
+    "source": "subsystems/power/params.json screw.len_mm (F1, CR-F1-20)",
+    "status": "PROPOSED",
+    "note": "M3x18 PA66"
+   },
+   "stack_m": {
+    "value": 0.0125,
+    "unit": "m",
+    "source": "subsystems/power/params.json screw (washer 0.5 + deck 2.0 + spacer 10.0 mm)",
+    "status": "PROPOSED",
+    "note": "clamped length above the insert face"
+   },
+   "bore_depth_m": {
+    "value": 0.0065,
+    "unit": "m",
+    "source": "subsystems/power/params.json screw.boss_bore_mm (D2 POD-002 boss)",
+    "status": "PROPOSED"
+   },
+   "spacer_m": {
+    "value": [
+     0.006,
+     0.0032,
+     0.01
+    ],
+    "unit": "m",
+    "source": "subsystems/power/interfaces.json E-PWR-03 (nylon spacer OD 6 / ID 3.2 / 10 mm)",
+    "status": "PROPOSED",
+    "note": "OD, ID, length"
+   }
+  },
+  "collar_alt_h_m": {
+   "value": 0.016,
+   "unit": "m",
+   "source": "subsystems/fins/params.json R3 (16 mm ring); CHANGE-LOG D-48",
+   "status": "PROPOSED",
+   "note": "fallback height if T-C6-LAP-PETG comes in below 2.0 MPa design or C1's torsion grows; the drawn height is fin_detail.station_collar.height_m (13 mm, D-70)"
+  },
+  "root_fillet_leg_m": {
+   "value": 0.015,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-24, adopted in D-48",
+   "status": "PROPOSED",
+   "note": "half-fin root microballoon fillet leg, both faces; D3 draws 15 mm over the effective root (zoned, CR-D3-25: 13 mm aft of the hinge, 6 mm bead ahead); C6 accepts the zoning"
+  },
+  "pin_pitch_prop_m": {
+   "value": 0.015,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-31",
+   "status": "PROPOSED",
+   "note": "15 mm with 2.5 mm pins, drawn since D3-R5 (D-70)"
+  },
+  "pin_d_prop_m": {
+   "value": 0.0025,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-31",
+   "status": "PROPOSED",
+   "note": "pultruded CF rod 2.5 mm (stock size), drawn since D3-R5 (D-70); bending capacity x (2.5/2)^3 = 1.95 vs 2 mm"
+  },
+  "pin_pitch_alt_m": {
+   "value": 0.009,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-31",
+   "status": "PROPOSED",
+   "note": "fallback if 2.5 mm rod cannot be bought: 2 mm pins at 9 mm pitch"
+  },
+  "collar_min_h_m": {
+   "value": 0.013,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md CR-C6-32",
+   "status": "PROPOSED",
+   "note": "13 mm, drawn since D3-R5 (D-70); kept as a named check height so the claim id CL-C6-COLLAR-RF-13MM stays stable"
+  },
+  "collar_cond_h_m": {
+   "value": 0.012,
+   "unit": "m",
+   "source": "params/CHANGE-LOG.md#D-70",
+   "status": "PROPOSED",
+   "note": "12 mm collar allowed only if T-C6-LAP-PETG mean >= 4.1 MPa before the collars print (CL-C6-COLLAR-RF-12MM-COND)"
+  },
+  "collar_cond_tau_pa": {
+   "value": 2050000.0,
+   "unit": "Pa",
+   "source": "params/CHANGE-LOG.md#D-70 (0.5 x 4.1 MPa coupon mean)",
+   "status": "PROPOSED",
+   "note": "bond allowable that would release the 12 mm collar"
+  },
+  "pin_d_alt_m": {
+   "value": 0.002,
+   "unit": "m",
+   "source": "params/CHANGE-LOG.md#D-70 fallback",
+   "status": "PROPOSED",
+   "note": "2 mm CF rod at pin_pitch_alt_m only if 2.5 mm rod cannot be bought"
+  },
+  "bondline_max_m": {
+   "value": 0.0005,
+   "unit": "m",
+   "source": "C6 rule (30 min epoxy / microballoon gap fill)",
+   "status": "PROPOSED",
+   "note": "largest unfilled gap accepted at a bonded fit; beyond it pack with microballoon mix"
+  },
+  "pocket_bead_leg_m": {
+   "value": 0.003,
+   "unit": "m",
+   "source": "params/CHANGE-LOG.md#D-68",
+   "status": "PROPOSED",
+   "note": "microballoon bead leg along the inboard and outboard block-pocket edges, both surfaces"
+  },
+  "pocket_beads_per_block": {
+   "value": 4,
+   "unit": "-",
+   "source": "params/CHANGE-LOG.md#D-68",
+   "status": "PROPOSED",
+   "note": "inboard + outboard pocket edges x upper + lower surface"
+  },
+  "collar_prop_h_m": {
+   "value": 0.022,
+   "unit": "m",
+   "source": "team/C6/CHANGE-REQUESTS.md#CR-C6-37",
+   "status": "PROPOSED",
+   "note": "C6-R5b ask: 15 -> 22 mm. C1's D-65 re-run raised the half-fin section torsion 8.13 -> 12.67 N m (limit); the collar needs 19.45 mm at the 2.0 MPa allowable (CL-C6-COLLAR-L-REQ); 22 mm gives RF 1.13. Ring grows down to |z| 0.1375; ear and brace end unchanged. ~+4.2 g for four vs 15 mm (EST). Was 15 (CR-C6-36)"
+  }
+ }
+}

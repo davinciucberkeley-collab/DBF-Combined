@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\C5\sim\fea_shoe.py", line 363, in <module>
+    one(float(sys.argv[i + 1]), sys.argv[i + 2])
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\C5\sim\fea_shoe.py", line 323, in one
+    assert abs(R - side_out["R_lip_N"]) < 1e-6 * R, (R, side_out["R_lip_N"])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (84.59624026316419, 111.089180476298)

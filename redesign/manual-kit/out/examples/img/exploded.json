@@ -1,0 +1,403 @@
+{
+ "id": "exploded",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 16.85,
+ "explode": 1.0,
+ "camera": {
+  "preset": "iso",
+  "az_deg": 38,
+  "el_deg": 24,
+  "ortho": false,
+  "lens_mm": 50,
+  "location_m": [
+   -1.7333,
+   -1.6011,
+   1.0869
+  ],
+  "fit": "visible",
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Every part and its part id",
+  "sub": "Exploded along the interface graph; bonded parts stay together"
+ },
+ "subject_px": [
+  351,
+  292,
+  1249,
+  708
+ ],
+ "callouts": [
+  {
+   "item": "FUS-001",
+   "x": 747.1,
+   "y": 529.9,
+   "title": "FUS-001",
+   "text": "Fuselage box",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1362,
+    -0.06,
+    -0.0308
+   ]
+  },
+  {
+   "item": "FUS-002",
+   "x": 757.3,
+   "y": 621.5,
+   "title": "FUS-002",
+   "text": "Battery block",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1846,
+    -0.035,
+    -0.1815
+   ]
+  },
+  {
+   "item": "FUS-003",
+   "x": 814.4,
+   "y": 573.0,
+   "title": "FUS-003",
+   "text": "ESC 2-in-1 with BEC",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.336,
+    -0.0083,
+    -0.18
+   ]
+  },
+  {
+   "item": "WNG-001",
+   "x": 1004.7,
+   "y": 482.9,
+   "title": "WNG-001",
+   "text": "Wing panel L",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.215,
+    -0.3713,
+    0.0873
+   ]
+  },
+  {
+   "item": "WNG-002",
+   "x": 581.4,
+   "y": 358.4,
+   "title": "WNG-002",
+   "text": "Wing panel R",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2162,
+    0.2801,
+    0.0874
+   ]
+  },
+  {
+   "item": "WNG-003",
+   "x": 724.3,
+   "y": 417.6,
+   "title": "WNG-003",
+   "text": "Spar tube 12x10",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.2073,
+    0.0331,
+    0.0689
+   ]
+  },
+  {
+   "item": "WNG-004",
+   "x": 1103.7,
+   "y": 444.3,
+   "title": "WNG-004",
+   "text": "Aileron L",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.3992,
+    -0.3905,
+    0.079
+   ]
+  },
+  {
+   "item": "WNG-005",
+   "x": 992.3,
+   "y": 535.4,
+   "title": "WNG-005",
+   "text": "Aileron servo L",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.26,
+    -0.3287,
+    -0.0065
+   ]
+  },
+  {
+   "item": "BMS-001",
+   "x": 928.4,
+   "y": 626.0,
+   "title": "BMS-001",
+   "text": "Boom L",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.0919,
+    -0.3567,
+    -0.0482
+   ]
+  },
+  {
+   "item": "BMS-003",
+   "x": 829.9,
+   "y": 616.3,
+   "title": "BMS-003",
+   "text": "Lift motor L",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.0979,
+    -0.3627,
+    0.042
+   ]
+  },
+  {
+   "item": "BMS-002",
+   "x": 503.3,
+   "y": 466.1,
+   "title": "BMS-002",
+   "text": "Boom R",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    0.1266,
+    0.3424,
+    -0.0501
+   ]
+  },
+  {
+   "item": "BMS-004",
+   "x": 375.7,
+   "y": 455.5,
+   "title": "BMS-004",
+   "text": "Lift motor R",
+   "detail": null,
+   "role": "context",
+   "occluded": false,
+   "world_m": [
+    -0.0936,
+    0.3327,
+    0.0406
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "FUS-001",
+   "role": "context",
+   "name": "Fuselage box",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    595,
+    376,
+    965,
+    637
+   ]
+  },
+  {
+   "id": "FUS-002",
+   "role": "context",
+   "name": "Battery block",
+   "status": "MODELLED",
+   "mass_g": 400,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    697,
+    574,
+    814,
+    666
+   ]
+  },
+  {
+   "id": "FUS-003",
+   "role": "context",
+   "name": "ESC 2-in-1 with BEC",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    790,
+    558,
+    837,
+    587
+   ]
+  },
+  {
+   "id": "WNG-001",
+   "role": "context",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    754,
+    396,
+    1238,
+    576
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    375,
+    292,
+    773,
+    430
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "context",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    432,
+    327,
+    1144,
+    548
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "role": "context",
+   "name": "Aileron L",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    969,
+    401,
+    1249,
+    490
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "role": "context",
+   "name": "Aileron servo L",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    978,
+    517,
+    1012,
+    548
+   ]
+  },
+  {
+   "id": "BMS-001",
+   "role": "context",
+   "name": "Boom L",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    801,
+    466,
+    1177,
+    708
+   ]
+  },
+  {
+   "id": "BMS-003",
+   "role": "context",
+   "name": "Lift motor L",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    810,
+    592,
+    852,
+    639
+   ]
+  },
+  {
+   "id": "BMS-002",
+   "role": "context",
+   "name": "Boom R",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    351,
+    351,
+    757,
+    535
+   ]
+  },
+  {
+   "id": "BMS-004",
+   "role": "context",
+   "name": "Lift motor R",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    356,
+    435,
+    394,
+    475
+   ]
+  }
+ ],
+ "hidden": [],
+ "clipped": [],
+ "legend": [
+  "context"
+ ],
+ "files": {
+  "png": "exploded.png",
+  "jpg": "exploded.jpg"
+ }
+}

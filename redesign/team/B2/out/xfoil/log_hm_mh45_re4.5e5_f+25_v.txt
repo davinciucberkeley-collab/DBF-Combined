@@ -1,0 +1,1057 @@
+  CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 110   rms: 0.3858E-02   max: -.7841E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 111   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 112   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 113   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 114   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 115   rms: 0.3856E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 116   rms: 0.3858E-02   max: -.7841E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 117   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 118   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 119   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 120   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 121   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 122   rms: 0.3858E-02   max: -.7841E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 123   rms: 0.3856E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 124   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 125   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 126   rms: 0.3858E-02   max: -.7841E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 127   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 128   rms: 0.3858E-02   max: -.7842E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 129   rms: 0.3856E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 130   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 131   rms: 0.3856E-02   max: -.7837E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 132   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 133   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 134   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 135   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 136   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 137   rms: 0.3856E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 138   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 139   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 140   rms: 0.3856E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 141   rms: 0.3858E-02   max: -.7841E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 142   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 143   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 144   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 145   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 146   rms: 0.3856E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 147   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 148   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 149   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 150   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 151   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 152   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 153   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 154   rms: 0.3856E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 155   rms: 0.3857E-02   max: -.7841E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 156   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 157   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 158   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 159   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 160   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 161   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 162   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 163   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 164   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 165   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 166   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 167   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 168   rms: 0.3858E-02   max: -.7841E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 169   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 170   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 171   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 172   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 173   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 174   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 175   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 176   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 177   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 178   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 179   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 180   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 181   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 182   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 183   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 184   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 185   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 186   rms: 0.3857E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 187   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 188   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 189   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 190   rms: 0.3857E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 191   rms: 0.3858E-02   max: -.7841E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 192   rms: 0.3857E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 193   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 194   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 195   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 196   rms: 0.3857E-02   max: -.7840E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 197   rms: 0.3856E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 198   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 199   rms: 0.3857E-02   max: -.7839E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+ 200   rms: 0.3856E-02   max: -.7838E-01   C at   65  1
+       a =  0.000      CL =  1.1848
+      Cm = -0.1771     CD =  0.02381   =>   CDf =  0.00537    CDp =  0.01844
+ VISCAL:  Convergence failed
+ Type "!" to continue iterating
+
+.OPERv   c>  
+ Flap hinge x,y :  0.7800  0.0160
+                                           2  2
+ Hinge moment/span = 0.010097  x  1/2 rho V  c 
+                                           2   
+ x-Force     /span = 0.072796  x  1/2 rho V  c 
+                                           2   
+ y-Force     /span = 0.122539  x  1/2 rho V  c 
+
+
+.OPERv   c>   Calculating wake trajectory ...
+ Calculating source influence matrix ...
+
+ Solving BL system ...
+
+ Side 1  free  transition at x/c =  0.4809   65
+ Side 2  free  transition at x/c =  0.6792   67
+
+   1   rms: 0.3679E+00   max: 0.3611E+01   C at   65  1   RLX: 0.219
+       a =  2.000      CL =  1.2232
+      Cm = -0.1750     CD =  0.02423   =>   CDf =  0.00522    CDp =  0.01901
+
+ Side 1  free  transition at x/c =  0.4109   60
+ Side 2  free  transition at x/c =  0.6851   66
+
+   2   rms: 0.1106E+01   max: 0.9534E+01   T at   66  2   RLX: 0.074
+       a =  2.000      CL =  1.2266
+      Cm = -0.1730     CD =  0.02462   =>   CDf =  0.00574    CDp =  0.01888
+
+ Side 1  free  transition at x/c =  0.4006   60
+ Side 2  free  transition at x/c =  0.6685   65
+
+   3   rms: 0.3173E+00   max: 0.3000E+01   C at   60  1   RLX: 0.229
+       a =  2.000      CL =  1.2624
+      Cm = -0.1735     CD =  0.02528   =>   CDf =  0.00548    CDp =  0.01980
+
+ Side 1  free  transition at x/c =  0.3621   57
+ Side 2  free  transition at x/c =  0.6830   65
+
+   4   rms: 0.1960E+00   max: 0.1128E+01   C at   57  1   RLX: 0.477
+       a =  2.000      CL =  1.3123
+      Cm = -0.1710     CD =  0.02531   =>   CDf =  0.00567    CDp =  0.01963
+
+ Side 1  free  transition at x/c =  0.2952   53
+ Side 2  free  transition at x/c =  0.6984   66
+
+   5   rms: 0.1276E+00   max: 0.1394E+01   T at    2  1   RLX: 0.650
+       a =  2.000      CL =  1.3433
+      Cm = -0.1687     CD =  0.02608   =>   CDf =  0.00621    CDp =  0.01987
+
+ Side 1  free  transition at x/c =  0.2535   49
+ Side 2  free  transition at x/c =  0.7022   66
+
+   6   rms: 0.4245E-01   max: -.3836E+00   D at   53  1
+       a =  2.000      CL =  1.3600
+      Cm = -0.1675     CD =  0.02646   =>   CDf =  0.00634    CDp =  0.02013
+
+ Side 1  free  transition at x/c =  0.2307   47
+ Side 2  free  transition at x/c =  0.7078   66
+
+   7   rms: 0.1163E+00   max: -.1278E+01   T at   66  2   RLX: 0.391
+       a =  2.000      CL =  1.3636
+      Cm = -0.1685     CD =  0.02658   =>   CDf =  0.00643    CDp =  0.02015
+
+ Side 1  free  transition at x/c =  0.2296   47
+ Side 2  free  transition at x/c =  0.7205   68
+
+   8   rms: 0.9050E-01   max: 0.6578E+00   D at   69  2
+       a =  2.000      CL =  1.3615
+      Cm = -0.1679     CD =  0.02659   =>   CDf =  0.00651    CDp =  0.02009
+
+ Side 1  free  transition at x/c =  0.2312   47
+ Side 2  free  transition at x/c =  0.7155   67
+
+   9   rms: 0.9081E-01   max: 0.7814E+00   T at   67  2
+       a =  2.000      CL =  1.3550
+      Cm = -0.1664     CD =  0.02661   =>   CDf =  0.00646    CDp =  0.02016
+
+ Side 1  free  transition at x/c =  0.2340   47
+ Side 2  free  transition at x/c =  0.6988   66
+
+  10   rms: 0.5794E-01   max: -.3928E+00   D at   66  2
+       a =  2.000      CL =  1.3594
+      Cm = -0.1674     CD =  0.02649   =>   CDf =  0.00634    CDp =  0.02015
+
+ Side 1  free  transition at x/c =  0.2322   47
+ Side 2  free  transition at x/c =  0.7078   66
+
+  11   rms: 0.7996E+01   max: 0.9202E+02   T at   66  2   RLX: 0.007
+       a =  2.000      CL =  1.3548
+      Cm = -0.1665     CD =  0.02662   =>   CDf =  0.00641    CDp =  0.02022
+
+ Side 1  free  transition at x/c =  0.2344   47
+ Side 2  free  transition at x/c =  0.6954   65
+
+  12   rms: 0.1225E+00   max: -.1278E+01   T at   65  2   RLX: 0.391
+       a =  2.000      CL =  1.3606
+      Cm = -0.1681     CD =  0.02698   =>   CDf =  0.00631    CDp =  0.02067
+
+ Side 1  free  transition at x/c =  0.2322   47
+ Side 2  free  transition at x/c =  0.7077   66
+
+  13   rms: 0.5156E-01   max: -.4685E+00   T at   66  2
+       a =  2.000      CL =  1.3632
+      Cm = -0.1683     CD =  0.02651   =>   CDf =  0.00640    CDp =  0.02011
+
+ Side 1  free  transition at x/c =  0.2303   47
+ Side 2  free  transition at x/c =  0.7205   68
+
+  14   rms: 0.8950E-01   max: 0.6628E+00   D at   69  2
+       a =  2.000      CL =  1.3615
+      Cm = -0.1679     CD =  0.02659   =>   CDf =  0.00649    CDp =  0.02010
+
+ Side 1  free  transition at x/c =  0.2311   47
+ Side 2  free  transition at x/c =  0.7156   67
+
+  15   rms: 0.9179E-01   max: 0.7935E+00   T at   67  2
+       a =  2.000      CL =  1.3549
+      Cm = -0.1663     CD =  0.02661   =>   CDf =  0.00646    CDp =  0.02016
+
+ Side 1  free  transition at x/c =  0.2340   47
+ Side 2  free  transition at x/c =  0.6986   66
+
+  16   rms: 0.5872E-01   max: -.3981E+00   D at   66  2
+       a =  2.000      CL =  1.3594
+      Cm = -0.1674     CD =  0.02649   =>   CDf =  0.00634    CDp =  0.02015
+
+ Side 1  free  transition at x/c =  0.2322   47
+ Side 2  free  transition at x/c =  0.7077   66
+
+  17   rms: 0.3534E+00   max: -.4031E+01   T at   66  2   RLX: 0.124
+       a =  2.000      CL =  1.3634
+      Cm = -0.1684     CD =  0.02670   =>   CDf =  0.00641    CDp =  0.02029
+
+ Side 1  free  transition at x/c =  0.2304   47
+ Side 2  free  transition at x/c =  0.7195   68
+
+  18   rms: 0.7792E-01   max: 0.5616E+00   D at   69  2
+       a =  2.000      CL =  1.3614
+      Cm = -0.1679     CD =  0.02659   =>   CDf =  0.00649    CDp =  0.02010
+
+ Side 1  free  transition at x/c =  0.2312   47
+ Side 2  free  transition at x/c =  0.7153   67
+
+  19   rms: 0.8711E-01   max: 0.7258E+00   T at   67  2
+       a =  2.000      CL =  1.3554
+      Cm = -0.1665     CD =  0.02661   =>   CDf =  0.00646    CDp =  0.02016
+
+ Side 1  free  transition at x/c =  0.2338   47
+ Side 2  free  transition at x/c =  0.6996   66
+
+  20   rms: 0.5431E-01   max: -.3705E+00   D at   66  2
+       a =  2.000      CL =  1.3597
+      Cm = -0.1675     CD =  0.02649   =>   CDf =  0.00635    CDp =  0.02014
+
+ Side 1  free  transition at x/c =  0.2321   47
+ Side 2  free  transition at x/c =  0.7085   67
+
+  21   rms: 0.1672E-01   max: -.9290E-01   D at   79  2
+       a =  2.000      CL =  1.3599
+      Cm = -0.1675     CD =  0.02649   =>   CDf =  0.00641    CDp =  0.02008
+
+ Side 1  free  transition at x/c =  0.2320   47
+ Side 2  free  transition at x/c =  0.7094   67
+
+  22   rms: 0.9254E-03   max: -.6950E-02   D at   67  2
+       a =  2.000      CL =  1.3599
+      Cm = -0.1675     CD =  0.02651   =>   CDf =  0.00642    CDp =  0.02009
+
+ Side 1  free  transition at x/c =  0.2320   47
+ Side 2  free  transition at x/c =  0.7094   67
+
+  23   rms: 0.6170E-05   max: -.3713E-04   D at  117  2
+       a =  2.000      CL =  1.3599
+      Cm = -0.1675     CD =  0.02651   =>   CDf =  0.00642    CDp =  0.02009
+
+.OPERv   c>  
+ Flap hinge x,y :  0.7800  0.0160
+                                           2  2
+ Hinge moment/span = 0.010198  x  1/2 rho V  c 
+                                           2   
+ x-Force     /span = 0.071055  x  1/2 rho V  c 
+                                           2   
+ y-Force     /span = 0.120519  x  1/2 rho V  c 
+
+
+.OPERv   c>   Calculating wake trajectory ...
+ Calculating source influence matrix ...
+
+ Solving BL system ...
+
+ Side 1  free  transition at x/c =  0.2320   47
+ Side 2  free  transition at x/c =  0.7094   67
+
+   1   rms: 0.4796E+00   max: 0.7879E+01   C at   47  1   RLX: 0.173
+       a =  4.000      CL =  1.3899
+      Cm = -0.1660     CD =  0.02710   =>   CDf =  0.00621    CDp =  0.02089
+
+ MRCHDU: Convergence failed at  66  side 2    Res =  0.1557E-04
+ Side 1  free  transition at x/c =  0.1917   44
+ Side 2  free  transition at x/c =  0.7122   66
+
+   2   rms: 0.2804E+00   max: -.1373E+01   D at   44  1   RLX: 0.364
+       a =  4.000      CL =  1.4459
+      Cm = -0.1639     CD =  0.02786   =>   CDf =  0.00640    CDp =  0.02146
+
+ Side 1  free  transition at x/c =  0.1414   41
+ Side 2  free  transition at x/c =  0.7199   66
+
+   3   rms: 0.1999E+00   max: -.1459E+01   D at   41  1   RLX: 0.343
+       a =  4.000      CL =  1.4771
+      Cm = -0.1624     CD =  0.02904   =>   CDf =  0.00683    CDp =  0.02221
+
+ Side 1  free  transition at x/c =  0.1171   38
+ Side 2  free  transition at x/c =  0.7241   66
+
+   4   rms: 0.1269E+00   max: -.1004E+01   C at   38  1   RLX: 0.498
+       a =  4.000      CL =  1.5068
+      Cm = -0.1608     CD =  0.02959   =>   CDf =  0.00692    CDp =  0.02267
+
+ Side 1  free  transition at x/c =  0.0961   36
+ Side 2  free  transition at x/c =  0.7317   67
+
+   5   rms: 0.6066E-01   max: -.5434E+00   C at   36  1   RLX: 0.920
+       a =  4.000      CL =  1.5290
+      Cm = -0.1585     CD =  0.03055   =>   CDf =  0.00679    CDp =  0.02376
+
+ Side 1  free  transition at x/c =  0.0814   36
+ Side 2  free  transition at x/c =  0.7353   66
+
+   6   rms: 0.1949E-01   max: -.2997E+00   D at   36  1
+       a =  4.000      CL =  1.5283
+      Cm = -0.1580     CD =  0.03082   =>   CDf =  0.00700    CDp =  0.02382
+
+ Side 1  free  transition at x/c =  0.0810   36
+ Side 2  free  transition at x/c =  0.7365   66
+
+   7   rms: 0.2720E-02   max: 0.3974E-01   C at   36  1
+       a =  4.000      CL =  1.5283
+      Cm = -0.1580     CD =  0.03092   =>   CDf =  0.00701    CDp =  0.02391
+
+ Side 1  free  transition at x/c =  0.0804   36
+ Side 2  free  transition at x/c =  0.7366   66
+
+   8   rms: 0.9956E-04   max: 0.6651E-03   T at   66  2
+       a =  4.000      CL =  1.5282
+      Cm = -0.1580     CD =  0.03093   =>   CDf =  0.00702    CDp =  0.02391
+
+.OPERv   c>  
+ Flap hinge x,y :  0.7800  0.0160
+                                           2  2
+ Hinge moment/span = 0.010533  x  1/2 rho V  c 
+                                           2   
+ x-Force     /span = 0.070215  x  1/2 rho V  c 
+                                           2   
+ y-Force     /span = 0.119384  x  1/2 rho V  c 
+
+
+.OPERv   c>   Calculating wake trajectory ...
+ Calculating source influence matrix ...
+
+ Solving BL system ...
+
+ Side 1  free  transition at x/c =  0.0804   36
+ Side 2  free  transition at x/c =  0.7366   66
+
+   1   rms: 0.4045E+00   max: -.3121E+01   D at   36  1   RLX: 0.160
+       a =  6.000      CL =  1.5538
+      Cm = -0.1566     CD =  0.03198   =>   CDf =  0.00702    CDp =  0.02496
+
+ Side 1  free  transition at x/c =  0.0689   35
+ Side 2  free  transition at x/c =  0.7443   67
+
+   2   rms: 0.3324E+00   max: -.2361E+01   D at   36  1   RLX: 0.212
+       a =  6.000      CL =  1.5795
+      Cm = -0.1540     CD =  0.03288   =>   CDf =  0.00709    CDp =  0.02578
+
+ Side 1  free  transition at x/c =  0.0573   33
+ Side 2  free  transition at x/c =  0.7474   68
+
+   3   rms: 0.2260E+00   max: 0.1502E+01   T at   33  1   RLX: 0.373
+       a =  6.000      CL =  1.6155
+      Cm = -0.1512     CD =  0.03414   =>   CDf =  0.00680    CDp =  0.02734
+
+ Side 1  free  transition at x/c =  0.0454   33
+ Side 2  free  transition at x/c =  0.7507   67
+
+   4   rms: 0.1541E+00   max: -.1408E+01   D at   34  1   RLX: 0.355
+       a =  6.000      CL =  1.6391
+      Cm = -0.1508     CD =  0.03513   =>   CDf =  0.00688    CDp =  0.02825
+
+ Side 1  free  transition at x/c =  0.0401   32
+ Side 2  free  transition at x/c =  0.7543   67
+
+   5   rms: 0.1218E+00   max: -.1127E+01   D at   33  1   RLX: 0.444
+       a =  6.000      CL =  1.6597
+      Cm = -0.1495     CD =  0.03545   =>   CDf =  0.00681    CDp =  0.02864
+
+ Side 1  free  transition at x/c =  0.0342   31
+ Side 2  free  transition at x/c =  0.7580   68
+
+   6   rms: 0.6349E-01   max: -.5419E+00   D at   32  1   RLX: 0.923
+       a =  6.000      CL =  1.6700
+      Cm = -0.1458     CD =  0.03677   =>   CDf =  0.00651    CDp =  0.03026
+
+ Side 1  free  transition at x/c =  0.0277   31
+ Side 2  free  transition at x/c =  0.7602   67
+
+   7   rms: 0.3374E-01   max: -.3279E+00   D at   31  1
+       a =  6.000      CL =  1.6594
+      Cm = -0.1440     CD =  0.03791   =>   CDf =  0.00679    CDp =  0.03112
+
+ Side 1  free  transition at x/c =  0.0274   31
+ Side 2  free  transition at x/c =  0.7601   67
+
+   8   rms: 0.2956E-02   max: -.3577E-01   D at   32  1
+       a =  6.000      CL =  1.6592
+      Cm = -0.1440     CD =  0.03815   =>   CDf =  0.00682    CDp =  0.03133
+
+ Side 1  free  transition at x/c =  0.0271   31
+ Side 2  free  transition at x/c =  0.7600   67
+
+   9   rms: 0.1264E-03   max: -.1184E-02   D at   32  1
+       a =  6.000      CL =  1.6592
+      Cm = -0.1440     CD =  0.03817   =>   CDf =  0.00683    CDp =  0.03134
+
+ Side 1  free  transition at x/c =  0.0271   31
+ Side 2  free  transition at x/c =  0.7600   67
+
+  10   rms: 0.4425E-05   max: -.1543E-04   D at  113  2
+       a =  6.000      CL =  1.6592
+      Cm = -0.1440     CD =  0.03817   =>   CDf =  0.00683    CDp =  0.03134
+
+.OPERv   c>  
+ Flap hinge x,y :  0.7800  0.0160
+                                           2  2
+ Hinge moment/span = 0.011189  x  1/2 rho V  c 
+                                           2   
+ x-Force     /span = 0.070072  x  1/2 rho V  c 
+                                           2   
+ y-Force     /span = 0.118395  x  1/2 rho V  c 
+
+
+.OPERv   c>   Calculating wake trajectory ...
+ Calculating source influence matrix ...
+
+ Solving BL system ...
+
+ Side 1  free  transition at x/c =  0.0271   31
+ Side 2  free  transition at x/c =  0.7600   67
+
+   1   rms: 0.3453E+00   max: -.1695E+01   D at   32  1   RLX: 0.234
+       a =  8.000      CL =  1.6842
+      Cm = -0.1403     CD =  0.04050   =>   CDf =  0.00683    CDp =  0.03367
+
+ Side 1  free  transition at x/c =  0.0216   30
+ Side 2  free  transition at x/c =  0.7650   67
+
+   2   rms: 0.2497E+00   max: 0.1691E+01   T at   30  1   RLX: 0.303
+       a =  8.000      CL =  1.7147
+      Cm = -0.1391     CD =  0.04274   =>   CDf =  0.00662    CDp =  0.03613
+
+ Side 1  free  transition at x/c =  0.0180   29
+ Side 2  free  transition at x/c =  0.7722   68
+
+   3   rms: 0.1785E+00   max: -.1248E+01   D at   30  1   RLX: 0.401
+       a =  8.000      CL =  1.7401
+      Cm = -0.1364     CD =  0.04413   =>   CDf =  0.00608    CDp =  0.03805
+
+ Side 1  free  transition at x/c =  0.0153   29
+ Side 2  free  transition at x/c =  0.7767   68
+
+   4   rms: 0.9737E-01   max: 0.6757E+00   T at   29  1   RLX: 0.797
+       a =  8.000      CL =  1.7526
+      Cm = -0.1297     CD =  0.04730   =>   CDf =  0.00636    CDp =  0.04093
+
+ Side 1  free  transition at x/c =  0.0121   28
+ Side 2  free  transition at x/c =  0.7806   69
+
+   5   rms: 0.4168E-01   max: -.3121E+00   D at   28  1
+       a =  8.000      CL =  1.7285
+      Cm = -0.1251     CD =  0.05058   =>   CDf =  0.00617    CDp =  0.04441
+
+ Side 1  free  transition at x/c =  0.0117   28
+ Side 2  free  transition at x/c =  0.7806   69
+
+   6   rms: 0.3146E-02   max: 0.2753E-01   D at  114  2
+       a =  8.000      CL =  1.7295
+      Cm = -0.1252     CD =  0.05062   =>   CDf =  0.00614    CDp =  0.04448
+
+ Side 1  free  transition at x/c =  0.0116   28
+ Side 2  free  transition at x/c =  0.7805   69
+
+   7   rms: 0.3369E-03   max: -.3105E-02   D at  114  2
+       a =  8.000      CL =  1.7296
+      Cm = -0.1252     CD =  0.05065   =>   CDf =  0.00614    CDp =  0.04450
+
+ Side 1  free  transition at x/c =  0.0116   28
+ Side 2  free  transition at x/c =  0.7806   69
+
+   8   rms: 0.1621E-04   max: -.1179E-03   D at  114  2
+       a =  8.000      CL =  1.7296
+      Cm = -0.1252     CD =  0.05065   =>   CDf =  0.00615    CDp =  0.04450
+
+.OPERv   c>  
+ Flap hinge x,y :  0.7800  0.0160
+                                           2  2
+ Hinge moment/span = 0.012258  x  1/2 rho V  c 
+                                           2   
+ x-Force     /span = 0.072590  x  1/2 rho V  c 
+                                           2   
+ y-Force     /span = 0.121331  x  1/2 rho V  c 
+
+
+.OPERv   c>  
+ XFOIL   c>  

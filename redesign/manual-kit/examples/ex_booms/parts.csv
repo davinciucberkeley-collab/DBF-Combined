@@ -1,0 +1,5 @@
+part_id,name,qty,make_or_buy,process,material,mass_g,unit_cost_usd,vendor_or_file,notes
+BMS-001,Boom L,1,buy,cut to length,CF tube 16x14 (bought),40,12.00,16x14 mm roll-wrapped CF tube (example),EST example values
+BMS-002,Boom R,1,buy,cut to length,CF tube 16x14 (bought),40,12.00,16x14 mm roll-wrapped CF tube (example),EST example values
+BMS-003,Lift motor L,1,buy,bought,motor (bought),110,25.00,any 2810-class outrunner (example),EST example values
+BMS-004,Lift motor R,1,buy,bought,motor (bought),110,25.00,any 2810-class outrunner (example),EST example values

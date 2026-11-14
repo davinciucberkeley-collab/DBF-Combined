@@ -1,0 +1,491 @@
+{
+ "_note": "flight-software (FSW) local numbers, owner F4, revision F4-R6 (2026-11-13, CDR fix round D-120..D-126). The parameter file K09L.param is the source; each key below mirrors one line of it (key ap = ArduPilot name) so proof-chain claims can read it. team/F4/fsw_check.py fails if a value here differs from K09L.param. Motor map: SPEC.md section 'Motor and output map'.",
+ "fsw": {
+  "firmware": {
+   "value": "ArduPlane 4.7.2 stable or later, target CoreWingF405WingV2 (board support entered ArduPilot in 4.7.2; features.txt read 2026-11-13, subsystems/flight-software/SPEC.md, Firmware build check)",
+   "unit": "-",
+   "source": "D-33 (P:avionics.flight_controller)",
+   "status": "PROPOSED"
+  },
+  "airspeed_cruise_ms": {
+   "value": 17.0,
+   "unit": "m/s",
+   "source": "review/CDR-2026-11-13/CDR-SUMMARY.md decision B6 (D-122)",
+   "ap": "AIRSPEED_CRUISE",
+   "note": "was 16.0 = P:performance.cruise_ms. B6: the tripped stall 12.85 m/s is the planning baseline until T-B2-STALL, so AIRSPEED_MIN = CRUISE = 17. performance.cruise_ms stays 16 until S2 / A1 move the power models (D-122)"
+  },
+  "airspeed_min_ms": {
+   "value": 17,
+   "unit": "m/s",
+   "source": "review/CDR-2026-11-13/CDR-SUMMARY.md decision B6 (D-122): ceil(1.3 x CL-B2R3-VS-GATE-FWD-TURB 12.85 = 16.71)",
+   "ap": "AIRSPEED_MIN",
+   "note": "was 16 (D-36, D-71). Integer parameter (AP_Int16). 17 holds for a measured trimmed stall <= 13.07 m/s. After T-B2-STALL set ceil(1.3 x measured): <= 12.31 -> 16; 13.07-13.85 -> second fallback 18 with AIRSPEED_MAX 20 (CL-B2R3-FB2-*, PROPOSED)"
+  },
+  "airspeed_max_ms": {
+   "value": 18,
+   "unit": "m/s",
+   "source": "team/B1/CHANGE-REQUESTS.md#CR-B1-12",
+   "ap": "AIRSPEED_MAX",
+   "note": "pre-4.5 name ARSPD_FBW_MAX (C1 asks <= 22)"
+  },
+  "spin_max": {
+   "value": 0.84,
+   "unit": "-",
+   "source": "CL-B4-SPIN-MAX",
+   "ap": "Q_M_SPIN_MAX"
+  },
+  "thr_max_pct": {
+   "value": 70,
+   "unit": "%",
+   "source": "team/F4/fsw_check.py#CALC-F4-VLEVEL (CR-B1-17 b, CR-C1-20: level speed <= 21.8 m/s)",
+   "ap": "THR_MAX"
+  },
+  "thr_min_pct": {
+   "value": 10,
+   "unit": "%",
+   "source": "F4 choice",
+   "ap": "THR_MIN"
+  },
+  "rudd_dt_gain_pct": {
+   "value": 35,
+   "unit": "%",
+   "source": "team/B3/CHANGE-REQUESTS.md#CR-B3-15",
+   "ap": "RUDD_DT_GAIN"
+  },
+  "bat_curr_max_a": {
+   "value": 100,
+   "unit": "A",
+   "source": "team/A2/CHANGE-REQUESTS.md#CR-A2-14",
+   "ap": "Q_M_BAT_CURR_MAX"
+  },
+  "wp_spd_dn_ms": {
+   "value": 1.2,
+   "unit": "m/s",
+   "source": "team/B4/CHANGE-REQUESTS.md#CR-B4-06",
+   "ap": "Q_WP_SPD_DN"
+  },
+  "pilot_spd_dn_ms": {
+   "value": 1.0,
+   "unit": "m/s",
+   "source": "params/CHANGE-LOG.md D-65 (<= P:requirements.landing_sink_ms 1.2); team/B4/CHANGE-REQUESTS.md#CR-B4-06",
+   "ap": "Q_PILOT_SPD_DN",
+   "note": "R5: 1.2 -> 1.0 m/s; full down stick in QHOVER/QLOITER is the design hard landing (CL-F4-TOUCHDOWN-SINK)"
+  },
+  "land_final_spd_ms": {
+   "value": 0.3,
+   "unit": "m/s",
+   "source": "team/D5/CHANGE-REQUESTS.md#CR-D5-21 (CL-D5-V-NO-SET 0.32 m/s)",
+   "ap": "Q_LAND_FINAL_SPD"
+  },
+  "rat_fw_degs": {
+   "value": 12,
+   "unit": "deg/s",
+   "source": "team/B1/CHANGE-REQUESTS.md#CR-B1-12",
+   "ap": "Q_TAILSIT_RAT_FW"
+  },
+  "rate_max_q_degs": {
+   "value": [
+    120,
+    120,
+    90
+   ],
+   "unit": "deg/s",
+   "source": "F4 choice",
+   "ap": "Q_A_RATE_R_MAX,Q_A_RATE_P_MAX,Q_A_RATE_Y_MAX"
+  },
+  "rate_max_fw_degs": {
+   "value": [
+    150,
+    100,
+    100
+   ],
+   "unit": "deg/s",
+   "source": "F4 choice",
+   "ap": "RLL2SRV_RMAX,PTCH2SRV_RMAX_UP,PTCH2SRV_RMAX_DN"
+  },
+  "notch_freq_hz": {
+   "value": 70,
+   "unit": "Hz",
+   "source": "CL-B4-HOVER-RPM",
+   "ap": "INS_HNTCH_FREQ"
+  },
+  "notch_harmonics": {
+   "value": 3,
+   "unit": "-",
+   "source": "team/J1/CHANGE-REQUESTS.md#CR-J1-12",
+   "note": "count of harmonics in INS_HNTCH_HMNCS 7 (bits 1, 2, 3)"
+  },
+  "gyro_rate_hz": {
+   "value": 1000,
+   "unit": "Hz",
+   "source": "INS_GYRO_RATE 0 = 1 kHz (CR-F3-02)",
+   "status": "PROPOSED"
+  },
+  "batt_low_mah": {
+   "value": 2600,
+   "unit": "mAh",
+   "source": "CL-E2-BATT-LOW-MAH",
+   "ap": "BATT_LOW_MAH"
+  },
+  "batt_crt_mah": {
+   "value": 1300,
+   "unit": "mAh",
+   "source": "CL-E2-BATT-CRT-MAH",
+   "ap": "BATT_CRT_MAH"
+  },
+  "batt_capacity_mah": {
+   "value": 6500,
+   "unit": "mAh",
+   "source": "P:battery.capacity_ah",
+   "ap": "BATT_CAPACITY"
+  },
+  "batt_arm_volt_v": {
+   "value": 16.4,
+   "unit": "V",
+   "source": "team/E2/ENERGY.md",
+   "ap": "BATT_ARM_VOLT"
+  },
+  "fence_alt_max_m": {
+   "value": 110,
+   "unit": "m",
+   "source": "F4 choice",
+   "ap": "FENCE_ALT_MAX"
+  },
+  "fence_radius_m": {
+   "value": 250,
+   "unit": "m",
+   "source": "F4 choice",
+   "ap": "FENCE_RADIUS"
+  },
+  "rtl_altitude_m": {
+   "value": 50,
+   "unit": "m",
+   "source": "P:requirements.transition_alt_min_m",
+   "ap": "RTL_ALTITUDE"
+  },
+  "motor_map": {
+   "value": [
+    {
+     "station": "LR",
+     "ap_motor": 1,
+     "fc_output": 1,
+     "servo_function": 33,
+     "copter_position": "front-right",
+     "rotation_from_nose": "CCW",
+     "rotation_from_behind": "CW",
+     "prop": "APC 11x5.5MR",
+     "harness_edge": "E-HRN-26",
+     "esc": "PRP-002-LR",
+     "adapter_thread": "RH",
+     "cant_print": "A"
+    },
+    {
+     "station": "UL",
+     "ap_motor": 2,
+     "fc_output": 2,
+     "servo_function": 34,
+     "copter_position": "back-left",
+     "rotation_from_nose": "CCW",
+     "rotation_from_behind": "CW",
+     "prop": "APC 11x5.5MR",
+     "harness_edge": "E-HRN-25",
+     "esc": "PRP-002-UL",
+     "adapter_thread": "RH",
+     "cant_print": "A"
+    },
+    {
+     "station": "LL",
+     "ap_motor": 3,
+     "fc_output": 3,
+     "servo_function": 35,
+     "copter_position": "front-left",
+     "rotation_from_nose": "CW",
+     "rotation_from_behind": "CCW",
+     "prop": "APC 11x5.5MRP",
+     "harness_edge": "E-HRN-27",
+     "esc": "PRP-002-LL",
+     "adapter_thread": "LH",
+     "cant_print": "B"
+    },
+    {
+     "station": "UR",
+     "ap_motor": 4,
+     "fc_output": 4,
+     "servo_function": 36,
+     "copter_position": "back-right",
+     "rotation_from_nose": "CW",
+     "rotation_from_behind": "CCW",
+     "prop": "APC 11x5.5MRP",
+     "harness_edge": "E-HRN-24",
+     "esc": "PRP-002-UR",
+     "adapter_thread": "LH",
+     "cant_print": "B"
+    }
+   ],
+   "unit": "-",
+   "source": "team/F4/fsw_check.py#CALC-F4-MOTOR-MAP",
+   "status": "PROPOSED",
+   "note": "hover copter frame: forward = belly (-z), right = +y; ArduPilot Quad X: M1 front-right CCW, M2 back-left CCW, M3 front-left CW, M4 back-right CW (viewed from above in hover = from the nose). UNVERIFIED until the props-off motor test (T-F4-BENCH-MAP). adapter_thread: LH on the CW motors so prop drag tightens the nut (CR-E1-21). cant_print: the mount print each station needs with the prints as D3 defines them today (print A gives UR thrust a side component along +t = x_hat x r_hat); the map needs UR along -t, so UR and LL take print B (CR-F4-11)"
+  },
+  "elevon_outputs": {
+   "value": [
+    {
+     "side": "L",
+     "fc_output": 5,
+     "servo_function": 77,
+     "harness_edge": "E-HRN-28"
+    },
+    {
+     "side": "R",
+     "fc_output": 6,
+     "servo_function": 78,
+     "harness_edge": "E-HRN-29"
+    }
+   ],
+   "unit": "-",
+   "source": "F4 choice",
+   "status": "PROPOSED"
+  },
+  "thst_hover": {
+   "value": 0.49,
+   "unit": "-",
+   "source": "team/E1/CHANGE-REQUESTS.md#CR-E1-08",
+   "ap": "Q_M_THST_HOVER"
+  },
+  "pitch_lim_min_deg": {
+   "value": -10,
+   "unit": "deg",
+   "source": "team/F4/fsw_check.py#CALC-F4-DIVE (elevon schedule, D-29)",
+   "ap": "PTCH_LIM_MIN_DEG"
+  },
+  "tecs_sink_max_ms": {
+   "value": 2.5,
+   "unit": "m/s",
+   "source": "F4 choice: inside the 10 deg pitch floor",
+   "ap": "TECS_SINK_MAX"
+  },
+  "scaling_speed_ms": {
+   "value": 17,
+   "unit": "m/s",
+   "source": "= fsw.airspeed_cruise_ms (D-122; was 16)",
+   "ap": "SCALING_SPEED"
+  },
+  "gyro_filter_hz": {
+   "value": 40,
+   "unit": "Hz",
+   "source": "team/C2/CHANGE-REQUESTS.md#CR-C2-03",
+   "ap": "INS_GYRO_FILTER"
+  },
+  "rate_fltd_hz": {
+   "value": [
+    32,
+    32
+   ],
+   "unit": "Hz",
+   "source": "team/C2/CHANGE-REQUESTS.md#CR-C2-03",
+   "ap": "Q_A_RAT_RLL_FLTD,Q_A_RAT_PIT_FLTD"
+  },
+  "rate_p": {
+   "value": [
+    0.08,
+    0.08,
+    0.4
+   ],
+   "unit": "-",
+   "source": "F4 starting gains (TUNING-PLAN.md)",
+   "ap": "Q_A_RAT_RLL_P,Q_A_RAT_PIT_P,Q_A_RAT_YAW_P",
+   "note": "ArduPilot rate PID: output (-1..1) per rad/s of rate error"
+  },
+  "rate_d": {
+   "value": [
+    0.002,
+    0.002
+   ],
+   "unit": "-",
+   "source": "F4 starting gains",
+   "ap": "Q_A_RAT_RLL_D,Q_A_RAT_PIT_D"
+  },
+  "bat_idx": {
+   "value": 0,
+   "unit": "-",
+   "source": "team/A2/CHANGE-REQUESTS.md#CR-A2-14",
+   "ap": "Q_M_BAT_IDX"
+  },
+  "wvane_land": {
+   "value": 3,
+   "unit": "-",
+   "source": "team/C5/CHANGE-REQUESTS.md#CR-C5-05",
+   "ap": "Q_WVANE_LAND",
+   "note": "3 = side (wingtip) into wind"
+  },
+  "fltmode_ch": {
+   "value": 6,
+   "unit": "-",
+   "source": "team/F5/CHANGE-REQUESTS.md#CR-F5-01",
+   "ap": "FLTMODE_CH"
+  },
+  "fltmodes": {
+   "value": [
+    17,
+    18,
+    19,
+    5,
+    7,
+    11
+   ],
+   "unit": "-",
+   "source": "team/A2/REQUIREMENTS.md R-SPIRAL (D-66): roll-stabilised modes only",
+   "ap": "FLTMODE1,FLTMODE2,FLTMODE3,FLTMODE4,FLTMODE5,FLTMODE6",
+   "note": "QSTABILIZE, QHOVER, QLOITER, FBWA, CRUISE, RTL"
+  },
+  "initial_mode": {
+   "value": 17,
+   "unit": "-",
+   "source": "J1 / R-SPIRAL: QSTABILIZE at boot",
+   "ap": "INITIAL_MODE"
+  },
+  "estop_ch_option": {
+   "value": 31,
+   "unit": "-",
+   "source": "R-ARM-KILL",
+   "ap": "RC9_OPTION"
+  },
+  "spin_min": {
+   "value": 0.15,
+   "unit": "-",
+   "source": "ArduPilot default, stated (CALC-F4-VLEVEL input); stand sets it (TUNING-PLAN step 2)",
+   "ap": "Q_M_SPIN_MIN"
+  },
+  "thst_expo": {
+   "value": 0.65,
+   "unit": "-",
+   "source": "ArduPilot default, stated (CALC-F4-VLEVEL input)",
+   "ap": "Q_M_THST_EXPO"
+  },
+  "q_rtl_mode": {
+   "value": 2,
+   "unit": "-",
+   "source": "review/NASA-CR-132423-COMPLIANCE.md C-01, G-01 (CR-132423 p. 35, 38-39, 172); ArduPilot master value 2 = VTOL approach, read 2026-11-13",
+   "ap": "Q_RTL_MODE",
+   "note": "was 1; circle down to Q_RTL_ALT, back-transition into the wind, QRTL. UNVERIFIED on 4.7.x and on a tailsitter: SITL S1, S18"
+  },
+  "q_rtl_alt_m": {
+   "value": 50,
+   "unit": "m",
+   "source": "review/NASA-CR-132423-COMPLIANCE.md C-02, G-01 (CR-132423 p. 35, 172); P:requirements.transition_alt_min_m",
+   "ap": "Q_RTL_ALT",
+   "note": "was 30; mode 2 transitions at this height"
+  },
+  "q_fw_lnd_apr_rad_m": {
+   "value": 60,
+   "unit": "m",
+   "source": "review/NASA-CR-132423-COMPLIANCE.md C-03, G-01 (CR-132423 p. 165, 174); = RTL_RADIUS",
+   "ap": "Q_FW_LND_APR_RAD",
+   "note": "bank atan(16^2/(9.81 x 60)) = 23.5 deg at 16 m/s, inside Table 29 9-30 deg (EST)"
+  },
+  "q_trans_decel_ms2": {
+   "value": 2.0,
+   "unit": "m/s^2",
+   "source": "ArduPilot default, stated (master, read 2026-11-13); review/NASA-CR-132423-COMPLIANCE.md C-04, G-07 (CR-132423 p. 19 Eq. (1))",
+   "ap": "Q_TRANS_DECEL",
+   "note": "stopping distance 16^2 / (2 x 2.0) = 64 m (EST); SITL S18 logs the real overshoot"
+  },
+  "land_final_alt_m": {
+   "value": 6,
+   "unit": "m",
+   "source": "ArduPilot default, stated (CR-D5-21 keeps it)",
+   "ap": "Q_LAND_FINAL_ALT"
+  },
+  "elevon_pwm_left_us": {
+   "value": [
+    1003,
+    1500,
+    1976,
+    1
+   ],
+   "unit": "us",
+   "source": "CALC-F4-ELEVON-PWM from CL-D6-THROW-NEED / CALC-D6-KIN (CR-D6-09); replace from T-D6-THROW",
+   "ap": "SERVO5_MIN,SERVO5_TRIM,SERVO5_MAX,SERVO5_REVERSED",
+   "status": "PROPOSED",
+   "note": "MIN, TRIM, MAX, REVERSED (last entry 0/1, not us)"
+  },
+  "elevon_pwm_right_us": {
+   "value": [
+    1024,
+    1500,
+    1997,
+    0
+   ],
+   "unit": "us",
+   "source": "CALC-F4-ELEVON-PWM (CR-D6-09); replace from T-D6-THROW",
+   "ap": "SERVO6_MIN,SERVO6_TRIM,SERVO6_MAX,SERVO6_REVERSED",
+   "status": "PROPOSED",
+   "note": "MIN, TRIM, MAX, REVERSED"
+  },
+  "mixing_gain": {
+   "value": 0.65,
+   "unit": "-",
+   "source": "review/CDR-2026-11-13/CDR-SUMMARY.md decision B9, CDR-14 (D-120)",
+   "ap": "MIXING_GAIN",
+   "note": "was 0.5 (firmware default). Pure pitch reaches 0.65 x 25 = 16.25 deg; full pitch leaves 8.75 deg of roll. B3's forward CG limit (CL-B3-V-CG-FWD) now reads this key instead of requirements.elevon_trim_travel_max; that key (0.5) still limits the trim at 1.3 Vs (R-CRUISE-AUTHORITY)"
+  },
+  "yaw_acc_max_degs2": {
+   "value": 135,
+   "unit": "deg/s2",
+   "source": "CDR-16 / CDR-AE-12 (D-123): 84 % of CL-B3-HOVER-YAW-ACCEL-LOW",
+   "ap": "Q_A_ACC_Y_MAX",
+   "note": "new. The 4.6 name Q_A_ACCEL_Y_MAX (cdeg/s/s, 13 500) is Q_A_ACC_Y_MAX in deg/s/s on 4.7 (range 0-720, pdef stable-4.7.1; ReleaseNotes PR 32192). CL-F4-YAW-ACC-SET"
+  },
+  "rc_fs_timeout_s": {
+   "value": 1.0,
+   "unit": "s",
+   "source": "ArduPlane 4.7 default, stated (D-124); RC_Channels_VarInfo.h tag Plane-4.7.2",
+   "ap": "RC_FS_TIMEOUT",
+   "note": "new. Replaces FS_SHORT_TIMEOUT, which 4.7 removed (ReleaseNotes PR 30350). RC loss in a Q mode -> QLAND at this time (events.cpp rc_failsafe_short_on_event); SITL 2026-11-13: 1.15 s"
+  },
+  "fs_long_timeout_s": {
+   "value": 5,
+   "unit": "s",
+   "source": "ArduPlane default, stated",
+   "ap": "FS_LONG_TIMEOUT",
+   "note": "fixed-wing modes: CIRCLE -> RTL after 5 s. Not the Q-mode QLAND timer (D-124)"
+  },
+  "assist_speed_ms": {
+   "value": 14,
+   "unit": "m/s",
+   "source": "CDR-15 / B6 (D-122): 1.09 x CL-B2R3-VS-GATE-FWD-TURB 12.85",
+   "ap": "Q_ASSIST_SPEED",
+   "note": "new mirror; was 13 in K09L.param (1.09 x 11.9)"
+  },
+  "ins_pos_m": {
+   "value": [
+    0.059,
+    0.046,
+    -0.0205
+   ],
+   "unit": "m",
+   "source": "CALC-F4-SENSOR-POS (CR-F3-20 IMU point, D-62 CG x 0.0490, z 0.0185)",
+   "ap": "INS_POS1_X,INS_POS1_Y,INS_POS1_Z",
+   "status": "UNVERIFIED",
+   "note": "FRD from the CG; INS_POS2 the same"
+  },
+  "gps_pos_m": {
+   "value": [
+    -0.026,
+    0.0,
+    -0.1595
+   ],
+   "unit": "m",
+   "source": "CALC-F4-SENSOR-POS (CR-F3-20 GPS centre, D-62 CG x 0.0490, z 0.0185)",
+   "ap": "GPS1_POS_X,GPS1_POS_Y,GPS1_POS_Z",
+   "status": "UNVERIFIED",
+   "note": "FRD from the CG; re-measure as built"
+  },
+  "ins_log_bat_opt": {
+   "value": 5,
+   "unit": "-",
+   "source": "team/H1/CHANGE-REQUESTS.md#CR-H1-18 (>= 1 kHz raw IMU)",
+   "ap": "INS_LOG_BAT_OPT"
+  }
+ }
+}

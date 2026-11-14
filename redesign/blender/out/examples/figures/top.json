@@ -1,0 +1,278 @@
+{
+ "id": "top",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 12.55,
+ "explode": 0.0,
+ "camera": {
+  "preset": "top",
+  "az_deg": 0,
+  "el_deg": 90,
+  "ortho": true,
+  "lens_mm": 50,
+  "location_m": [
+   0.265,
+   0.0,
+   4.3242
+  ],
+  "fit": "visible",
+  "frame": [
+   0.06,
+   0.94,
+   0.06,
+   0.94
+  ]
+ },
+ "caption": {
+  "title": "Top view",
+  "sub": ""
+ },
+ "subject_px": [
+  114,
+  60,
+  1486,
+  940
+ ],
+ "callouts": [],
+ "shown": [
+  {
+   "id": "FUS-001",
+   "role": "context",
+   "name": "Fuselage box",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    731,
+    197,
+    869,
+    883
+   ]
+  },
+  {
+   "id": "FUS-002",
+   "role": "context",
+   "name": "Battery block",
+   "status": "MODELLED",
+   "mass_g": 400,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    760,
+    369,
+    840,
+    540
+   ]
+  },
+  {
+   "id": "FUS-003",
+   "role": "context",
+   "name": "ESC 2-in-1 with BEC",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    777,
+    563,
+    823,
+    620
+   ]
+  },
+  {
+   "id": "WNG-001",
+   "role": "context",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    114,
+    369,
+    731,
+    583
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    869,
+    369,
+    1486,
+    583
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "context",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    171,
+    433,
+    1429,
+    447
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "role": "context",
+   "name": "Aileron L",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    171,
+    583,
+    571,
+    654
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "role": "context",
+   "name": "Aileron servo L",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    423,
+    494,
+    446,
+    540
+   ]
+  },
+  {
+   "id": "BMS-001",
+   "role": "context",
+   "name": "Boom L",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    391,
+    60,
+    409,
+    940
+   ]
+  },
+  {
+   "id": "BMS-003",
+   "role": "context",
+   "name": "Lift motor L",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    375,
+    81,
+    425,
+    131
+   ]
+  },
+  {
+   "id": "BMS-002",
+   "role": "context",
+   "name": "Boom R",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    1191,
+    60,
+    1209,
+    940
+   ]
+  },
+  {
+   "id": "BMS-004",
+   "role": "context",
+   "name": "Lift motor R",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    1175,
+    81,
+    1225,
+    131
+   ]
+  },
+  {
+   "id": "E-FUS-03",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    798,
+    540,
+    802,
+    563
+   ]
+  },
+  {
+   "id": "E-FUS-04",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    398,
+    115,
+    777,
+    593
+   ]
+  },
+  {
+   "id": "E-FUS-05",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    823,
+    115,
+    1202,
+    593
+   ]
+  },
+  {
+   "id": "E-FUS-06",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    434,
+    516,
+    777,
+    609
+   ]
+  }
+ ],
+ "hidden": [],
+ "clipped": [],
+ "legend": [
+  "context"
+ ],
+ "files": {
+  "png": "top.png",
+  "jpg": "top.jpg"
+ }
+}

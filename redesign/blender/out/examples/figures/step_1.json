@@ -1,0 +1,187 @@
+{
+ "id": "step_1",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "workbench",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 16.41,
+ "explode": 0.0,
+ "camera": {
+  "preset": "closeup",
+  "az_deg": 145,
+  "el_deg": 38,
+  "ortho": false,
+  "lens_mm": 70,
+  "location_m": [
+   1.3498,
+   -0.7062,
+   0.956
+  ],
+  "fit": [
+   "FUS-001"
+  ],
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Step 1: Fit the ESC and battery in the fuselage box",
+  "sub": "Check: ESC screws snug, battery cannot slide with the strap closed"
+ },
+ "subject_px": [
+  356,
+  69,
+  1245,
+  931
+ ],
+ "callouts": [
+  {
+   "item": "FUS-002",
+   "x": 671.2,
+   "y": 427.5,
+   "title": "FUS-002",
+   "text": "Battery block",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2519,
+    -0.0189,
+    -0.007
+   ]
+  },
+  {
+   "item": "E-FUS-01",
+   "x": 671.2,
+   "y": 427.5,
+   "title": "E-FUS-01",
+   "text": "hook-and-loop strap + anti-slip pad",
+   "detail": "strap through two floor slots",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2519,
+    -0.0189,
+    -0.007
+   ]
+  },
+  {
+   "item": "E-FUS-02",
+   "x": 804.1,
+   "y": 582.3,
+   "title": "E-FUS-02",
+   "text": "4x M3x10 SHCS into M3x5.7 brass heat-set",
+   "detail": "2.5 mm hex key / snug + threadlocker",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.3549,
+    -0.007,
+    -0.047
+   ]
+  },
+  {
+   "item": "E-FUS-03",
+   "x": 764.6,
+   "y": 519.8,
+   "title": "E-FUS-03",
+   "text": "XT60, 14 AWG",
+   "detail": "bend >= 15 mm",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.3114,
+    -0.0013,
+    -0.0374
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "FUS-001",
+   "role": "ghost",
+   "name": "Fuselage box",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    356,
+    69,
+    1245,
+    931
+   ]
+  },
+  {
+   "id": "FUS-002",
+   "role": "focus",
+   "name": "Battery block",
+   "status": "MODELLED",
+   "mass_g": 400,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    542,
+    303,
+    810,
+    562
+   ]
+  },
+  {
+   "id": "FUS-003",
+   "role": "focus",
+   "name": "ESC 2-in-1 with BEC",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    744,
+    528,
+    865,
+    623
+   ]
+  },
+  {
+   "id": "E-FUS-03",
+   "role": "focus",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    751,
+    496,
+    779,
+    545
+   ]
+  }
+ ],
+ "hidden": [
+  "BMS-001",
+  "BMS-002",
+  "BMS-003",
+  "BMS-004",
+  "E-FUS-04",
+  "E-FUS-05",
+  "E-FUS-06",
+  "WNG-001",
+  "WNG-002",
+  "WNG-003",
+  "WNG-004",
+  "WNG-005"
+ ],
+ "clipped": [],
+ "legend": [
+  "focus",
+  "ghost"
+ ],
+ "files": {
+  "png": "step_1.png",
+  "jpg": "step_1.jpg"
+ }
+}

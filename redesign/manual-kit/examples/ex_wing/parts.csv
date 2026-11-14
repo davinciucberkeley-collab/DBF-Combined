@@ -1,0 +1,6 @@
+part_id,name,qty,make_or_buy,process,material,mass_g,unit_cost_usd,vendor_or_file,notes
+WNG-001,Wing panel L,1,make,hot-wire foam + tape skin,XPS foam + tape skin,220,4.00,hot-wire template (example),EST example values
+WNG-002,Wing panel R,1,make,hot-wire foam + tape skin,XPS foam + tape skin,220,4.00,hot-wire template (example),EST example values
+WNG-003,Spar tube 12x10,1,buy,cut to length,CF tube (bought),60,14.00,12x10 mm pultruded CF tube 1 m (example),EST example values
+WNG-004,Aileron L,1,make,cut from panel,XPS foam + tape skin,30,0.00,cut from WNG-001 core,EST example values
+WNG-005,Aileron servo L,1,buy,bought,servo (bought),20,9.00,any 9 g digital micro servo (example),EST example values

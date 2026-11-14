@@ -1,0 +1,3 @@
+# full-size PNG renders are not used by the manual (it uses the JPEG + SVG); keep the repo small
+out/**/img/*.png
+__pycache__/

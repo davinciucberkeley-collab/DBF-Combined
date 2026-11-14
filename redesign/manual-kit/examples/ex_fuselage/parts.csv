@@ -1,0 +1,4 @@
+part_id,name,qty,make_or_buy,process,material,mass_g,unit_cost_usd,vendor_or_file,notes
+FUS-001,Fuselage box,1,make,laser-cut + glued,3 mm birch ply,180,6.00,laser-cut DXF (example),EST example values
+FUS-002,Battery block,1,buy,bought,LiPo pack (bought),400,45.00,any 4S 3000 mAh LiPo (example),EST example values
+FUS-003,ESC 2-in-1 with BEC,1,buy,bought,PCB assembly (bought),40,30.00,any 2-in-1 30 A ESC with 5 V BEC (example),EST example values

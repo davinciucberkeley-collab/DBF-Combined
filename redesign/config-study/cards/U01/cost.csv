@@ -1,0 +1,39 @@
+group,item,qty,unit_usd,line_usd,vendor,source_date_status
+airframe,"Holybro X500 V2 frame kit (500 mm carbon X, gear, plates)",1,166.99,166.99,Pyrodrone (pyrodrone.com/products/holybro-x500-v2-frame-kit),"web search 2026-11-09, in stock; price UNVERIFIED at checkout"
+propulsion,SunnySky X3108S 900KV motor,4,24.99,99.96,cost_model.py class-S station,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written); thrust table not found UNVERIFIED
+propulsion,LANRC 45A ESC,4,7.50,30.00,cost_model.py class-S station,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+propulsion,APC 11x4.5MR prop (2 CW + 2 CCW),4,3.83,15.32,APC / cost_model.py,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+wing,XPS foam 1 in 4x8 sheet (makes ~8 wing halves),1,30.97,30.97,Home Depot via cost_model.py,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+wing,Carbon tube 12x10x1000 mm (cut to 2 spar stubs + 1 spare tube),2,15.00,30.00,Amazon / Goodwinds class,ESTIMATE
+wing,Carbon tube 14x12x500 mm (joiner sleeve in saddle),1,12.00,12.00,Amazon / Goodwinds class,ESTIMATE
+wing,"PETG filament 4 kg (saddle, masts, motor adapters, spares)",1,39.99,39.99,cost_model.py,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+wing,Clear packing tape 6 rolls (skin),1,19.98,19.98,cost_model.py,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+wing,Foam-safe glue,1,12.99,12.99,cost_model.py,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+wing,Foam-board + tape for the one-day test wing (x3 incidences),1,10.00,10.00,Dollar Tree / Michaels,ESTIMATE
+battery,4S 6500 mAh LiPo (Ovonic 2-pack/2),3,45.42,136.26,Ampow/Amazon via cost_model.py,"research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written); ESTIMATE, was OOS"
+spares,Spare station (motor+ESC+prop),1,36.32,36.32,as above,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+spares,Spare prop sets (2 x 4),8,3.83,30.64,APC,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+hardware,"Wiring, AS150U, screws, inserts, UBEC, epoxy (cost_model floor)",1,124.01,124.01,cost_model.py HARDWARE_MIN,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written); includes horns/pushrods U01 does not need (conservative)
+avionics,FC CoreWing F405 Wing V2,1,67.26,67.26,RMRC,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written); ArduCopter target for this board UNVERIFIED
+avionics,GPS+compass HGLRC M100-5883,1,20.49,20.49,RaceDayQuads,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+avionics,Remote ID NewBeeDrone BeeID v1.1 (conditional: not needed at RFS FRIA),1,39.99,39.99,NewBeeDrone,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+avionics,TX RadioMaster Pocket Crush ELRS,1,64.99,64.99,RadioMaster,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+avionics,RX RadioMaster RP3 V2 ELRS,1,19.99,19.99,RadioMaster,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+ground,Charger HTRC C150,1,56.99,56.99,Amazon,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+ground,LiPo bags,2,9.99,19.98,Pyrodrone,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+ground,Ammo can (Harbor Freight 63750),1,19.99,19.99,Harbor Freight,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+ground,Watt meter 150 A,1,12.99,12.99,Amazon,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+ground,IR thermometer,1,8.98,8.98,Amazon,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+ground,Thrust stand: 20 kg load cell + HX711 + Nano,1,17.97,17.97,Amazon,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+ground,Pinecil V2 soldering iron,1,25.99,25.99,Pine64,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+ground,USB-C PD supply for iron,1,20.00,20.00,Amazon,ESTIMATE
+ground,Multimeter,1,25.00,25.00,Amazon,ESTIMATE
+ground,"Solder, flux, wick",1,15.00,15.00,Amazon,ESTIMATE
+ground,Hot-wire: 30 V 10 A supply + Ni80 wire,1,41.73,41.73,Amazon,research/components-cost/cost_model.py (2026-11-09; its FINDINGS.md not yet written)
+subtotal,Goods pre-tax,,,1272.77,,
+tax,"Sales tax 10.25 % (Berkeley, CDTFA 2026-10-01)",,,130.46,,per cost_model.py
+shipping,"Shipping, all carriers",,,120.00,,ESTIMATE (cost_model.py class S)
+total,TOTAL committed at order,,,1523.23,,
+reserve,"Crash reserve (planned minimum, REQUIREMENTS C1)",,,150.00,,
+reserve,Uncommitted margin beyond the 150 reserve,,,326.77,,
+budget,Budget (hard),,,2000.00,,left for crashes incl. the 150 reserve = 476.77; one bad crash (2 stations + props + FC + GPS + arms/wing) ~ $275 with tax ESTIMATE

@@ -1,0 +1,395 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/proofs/examples/power/analysis.py",
+ "params": [
+  "../params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-EX-INTERP",
+   "type": "assumption",
+   "title": "Linear interpolation",
+   "text": "Current between two rows of the maker's thrust table varies linearly with thrust",
+   "basis": "rows are 250 gf apart; the curve is smooth and convex, so linear interpolation slightly over-estimates current (conservative)",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-EX-MTOW",
+   "type": "calculation",
+   "title": "Mass roll-up",
+   "script": "redesign/proofs/examples/power/analysis.py",
+   "function": "mtow",
+   "equation": "m = sum of item masses (motors, props, ESCs x n)",
+   "inputs": {
+    "fus": "P:mass.fuselage_box_kg",
+    "wing": "P:mass.wing_panels_kg",
+    "spar": "P:mass.spar_kg",
+    "booms": "P:mass.booms_kg",
+    "motor": "P:mass.lift_motor_kg",
+    "prop": "P:mass.prop_kg",
+    "esc": "P:mass.esc_kg",
+    "batt": "P:mass.battery_kg",
+    "avn": "P:mass.avionics_kg",
+    "wires": "P:mass.wiring_kg",
+    "servos": "P:mass.servos_kg",
+    "n": "P:propulsion.n_lift"
+   },
+   "units": {
+    "fus": "kg",
+    "batt": "kg",
+    "motor": "kg"
+   },
+   "outputs": {
+    "m_kg": 5.2
+   },
+   "input_values": {
+    "fus": 0.9,
+    "wing": 0.9,
+    "spar": 0.38,
+    "booms": 0.5,
+    "motor": 0.165,
+    "prop": 0.04,
+    "esc": 0.05,
+    "batt": 0.82,
+    "avn": 0.35,
+    "wires": 0.25,
+    "servos": 0.08,
+    "n": 4
+   }
+  },
+  {
+   "id": "CALC-EX-HOVER-TW",
+   "type": "calculation",
+   "title": "Hover thrust-to-weight",
+   "script": "redesign/proofs/examples/power/analysis.py",
+   "function": "hover_tw",
+   "equation": "T/W = n * T_max / m  (T_max = last table row)",
+   "inputs": {
+    "n": "P:propulsion.n_lift",
+    "table": "P:propulsion.thrust_table",
+    "m_kg": "CL-EX-MTOW"
+   },
+   "units": {
+    "m_kg": "kg"
+   },
+   "outputs": {
+    "tw": 2.4076923076923076
+   },
+   "input_values": {
+    "n": 4,
+    "table": [
+     [
+      1.6,
+      500
+     ],
+     [
+      2.9,
+      750
+     ],
+     [
+      4.4,
+      1000
+     ],
+     [
+      6.1,
+      1250
+     ],
+     [
+      8.1,
+      1500
+     ],
+     [
+      10.3,
+      1750
+     ],
+     [
+      13.1,
+      2000
+     ],
+     [
+      16.4,
+      2300
+     ],
+     [
+      19.9,
+      2600
+     ],
+     [
+      27.7,
+      3130
+     ]
+    ],
+    "m_kg": 5.2
+   }
+  },
+  {
+   "id": "CALC-EX-HOVER-I",
+   "type": "calculation",
+   "title": "Hover pack current",
+   "script": "redesign/proofs/examples/power/analysis.py",
+   "function": "hover_current",
+   "equation": "I_pack = n * I_motor(m * 1000 / n gf)",
+   "inputs": {
+    "n": "P:propulsion.n_lift",
+    "table": "P:propulsion.thrust_table",
+    "m_kg": "CL-EX-MTOW"
+   },
+   "units": {
+    "m_kg": "kg"
+   },
+   "assumes": [
+    "ASM-EX-INTERP"
+   ],
+   "outputs": {
+    "per_motor_gf": 1300.0,
+    "i_motor_a": 6.5,
+    "i_pack_a": 26.0
+   },
+   "input_values": {
+    "n": 4,
+    "table": [
+     [
+      1.6,
+      500
+     ],
+     [
+      2.9,
+      750
+     ],
+     [
+      4.4,
+      1000
+     ],
+     [
+      6.1,
+      1250
+     ],
+     [
+      8.1,
+      1500
+     ],
+     [
+      10.3,
+      1750
+     ],
+     [
+      13.1,
+      2000
+     ],
+     [
+      16.4,
+      2300
+     ],
+     [
+      19.9,
+      2600
+     ],
+     [
+      27.7,
+      3130
+     ]
+    ],
+    "m_kg": 5.2
+   }
+  },
+  {
+   "id": "CALC-EX-DISCONNECT",
+   "type": "calculation",
+   "title": "Main disconnect current",
+   "script": "redesign/proofs/examples/power/analysis.py",
+   "function": "disconnect_required",
+   "equation": "I_req = k * I_pack,hover",
+   "inputs": {
+    "k": "P:requirements.disconnect_factor",
+    "i_pack": "CL-EX-HOVER-I"
+   },
+   "outputs": {
+    "i_req_a": 32.5
+   },
+   "input_values": {
+    "k": 1.25,
+    "i_pack": 26.0
+   }
+  },
+  {
+   "id": "CALC-EX-ESC-CONN",
+   "type": "calculation",
+   "title": "ESC connector current",
+   "script": "redesign/proofs/examples/power/analysis.py",
+   "function": "esc_connector_required",
+   "equation": "I_req = k * I_motor,max (last table row)",
+   "inputs": {
+    "k": "P:requirements.disconnect_factor",
+    "table": "P:propulsion.thrust_table"
+   },
+   "outputs": {
+    "i_req_a": 34.625
+   },
+   "input_values": {
+    "k": 1.25,
+    "table": [
+     [
+      1.6,
+      500
+     ],
+     [
+      2.9,
+      750
+     ],
+     [
+      4.4,
+      1000
+     ],
+     [
+      6.1,
+      1250
+     ],
+     [
+      8.1,
+      1500
+     ],
+     [
+      10.3,
+      1750
+     ],
+     [
+      13.1,
+      2000
+     ],
+     [
+      16.4,
+      2300
+     ],
+     [
+      19.9,
+      2600
+     ],
+     [
+      27.7,
+      3130
+     ]
+    ]
+   }
+  },
+  {
+   "id": "CL-EX-MTOW",
+   "type": "claim",
+   "title": "Take-off mass",
+   "calc": "CALC-EX-MTOW",
+   "output": "m_kg",
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.mtow_max_kg"
+   },
+   "verifies": [
+    "R-EX-MASS"
+   ],
+   "parts": [
+    "FUS-001",
+    "FUS-002"
+   ],
+   "how": "Weigh the assembled aircraft with battery on a 10 kg scale (T-EX-WEIGH).",
+   "value": 5.2
+  },
+  {
+   "id": "CL-EX-HOVER-TW",
+   "type": "claim",
+   "title": "Hover thrust-to-weight",
+   "calc": "CALC-EX-HOVER-TW",
+   "output": "tw",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min"
+   },
+   "verifies": [
+    "R-EX-HOVER"
+   ],
+   "parts": [
+    "BMS-003",
+    "BMS-004"
+   ],
+   "how": "Thrust stand: one motor + 17x5.8 prop at 22.2 V, full throttle, >= 3.13 kgf (T-EX-THRUST).",
+   "value": 2.4076923076923076
+  },
+  {
+   "id": "CL-EX-HOVER-I",
+   "type": "claim",
+   "title": "Hover pack current",
+   "calc": "CALC-EX-HOVER-I",
+   "output": "i_pack_a",
+   "unit": "A",
+   "parts": [
+    "FUS-002",
+    "FUS-003"
+   ],
+   "how": "Log battery current (power module) in a 30 s hover; compare with this value.",
+   "value": 26.0
+  },
+  {
+   "id": "CL-EX-DISCONNECT",
+   "type": "claim",
+   "title": "Main disconnect rating",
+   "calc": "CALC-EX-DISCONNECT",
+   "output": "i_req_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:harness.main_disconnect_a"
+   },
+   "verifies": [
+    "R-EX-DISCONNECT"
+   ],
+   "parts": [
+    "FUS-002"
+   ],
+   "how": "Open the Amass AS150U datasheet and confirm the continuous rating.",
+   "value": 32.5
+  },
+  {
+   "id": "CL-EX-ESC-CONN",
+   "type": "claim",
+   "title": "ESC connector rating",
+   "calc": "CALC-EX-ESC-CONN",
+   "output": "i_req_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:harness.esc_connector_a"
+   },
+   "verifies": [
+    "R-EX-DISCONNECT"
+   ],
+   "parts": [
+    "FUS-003"
+   ],
+   "how": "Compare the connector datasheet rating with 1.25 x the maker's maximum motor current.",
+   "value": 34.625
+  },
+  {
+   "id": "T-EX-WEIGH",
+   "type": "test",
+   "title": "Weigh the assembled aircraft",
+   "verifies": [
+    "CL-EX-MTOW"
+   ],
+   "state": "run",
+   "procedure": "Battery in, props on, kitchen scale (10 kg, 1 g).",
+   "result": "pass",
+   "measured": "5.07 kg",
+   "date": "2026-11-09",
+   "note": "ILLUSTRATIVE: the demo aircraft does not exist; this shows how a run test makes a claim VERIFIED."
+  },
+  {
+   "id": "T-EX-THRUST",
+   "type": "test",
+   "title": "Static thrust, one lift unit",
+   "verifies": [
+    "CL-EX-HOVER-TW"
+   ],
+   "state": "planned",
+   "procedure": "Thrust stand, 22.2 V bench supply, 0-100 % throttle in 10 % steps, log A and gf."
+  }
+ ]
+}

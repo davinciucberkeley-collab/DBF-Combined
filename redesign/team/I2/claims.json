@@ -1,0 +1,257 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/I2/schedule_claims.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-I2-TASKS",
+   "type": "source",
+   "title": "I2 task list (durations, hours, dependencies, not-before dates)",
+   "kind": "web",
+   "url": "https://github.com/davinciucberkeley-collab/DBF-Combined/blob/main/redesign/team/I2/make_schedule.py",
+   "where": "the t(...) rows of redesign/team/I2/make_schedule.py; hours are EST with the source named per row (BUILD-GUIDE.md stage times, H1 and H2 plans)",
+   "note": "planning data, not a measurement: every hour figure is EST until the build logs replace it",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-I2-REQ-TEXT",
+   "type": "assumption",
+   "title": "Limits read from the requirement text",
+   "text": "R-BUILD-HOURS: <= 3 weeks (21 d) from first cut to first hover. R-SCHEDULE: first transition by build week 7; crash-repair loop >= 1.5 weeks calendar (10.5 d); twin flown before the 15 Dec order",
+   "basis": "team/A2/REQUIREMENTS.md rows R-BUILD-HOURS and R-SCHEDULE (read 2026-11-13); these four limits have no key in params.json, so they are carried here as [21, 7, 10.5, 1]",
+   "value": [
+    21.0,
+    7.0,
+    10.5,
+    1.0
+   ],
+   "unit": "d,week,d,d",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-I2-B2-PROPOSED",
+   "type": "assumption",
+   "title": "CDR decision B2 (PROPOSED, not applied)",
+   "text": "re-word R-BUILD-HOURS to '<= 90 team-hours of build (stages 2-10) to first hover and <= 5 weeks from first cut'",
+   "basis": "review/CDR-2026-11-13/CDR-SUMMARY.md section 4, B2: needs the students' sign-off; A2 edits the requirement after it. Until then the limits above stand",
+   "value": [
+    90.0,
+    35.0
+   ],
+   "unit": "h,d",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-I2-SCHEDULE",
+   "type": "calculation",
+   "title": "Schedule figures from the task list (forward and backward pass)",
+   "script": "redesign/team/I2/schedule_claims.py",
+   "function": "schedule",
+   "equation": "earliest start = max(not-before, finish of every dependency) ; slack = latest finish - earliest finish against complete_by ; build week = (date - build_start) // 7 + 1 ; build hours = sum of the build-phase task hours without the transport box (TB1)",
+   "inputs": {
+    "build_start": "P:schedule.build_start",
+    "complete_by": "P:schedule.complete_by",
+    "order": "P:schedule.order_date"
+   },
+   "cites": [
+    "SRC-I2-TASKS"
+   ],
+   "outputs": {
+    "build_h": 100.5,
+    "build_h_stages_2_10": 81.5,
+    "pre_h": 241,
+    "first_cut": "2027-01-10",
+    "first_hover": "2027-02-12",
+    "cut_to_hover_d": 33,
+    "first_hover_week": 4,
+    "first_transition_week": 7,
+    "crash_loop_d": 11,
+    "end_slack_d": 12,
+    "min_slack_d": 12,
+    "twin_before_order_d": 2,
+    "dates_differ": 0
+   },
+   "input_values": {
+    "build_start": "2027-01-19",
+    "complete_by": "2027-04-30",
+    "order": "2026-12-15"
+   }
+  },
+  {
+   "id": "CL-I2-BUILD-HOURS",
+   "type": "claim",
+   "title": "Team-hours of build to first hover (BUILD-GUIDE stage times)",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "build_h",
+   "unit": "h",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.build_hours_max"
+   },
+   "verifies": [
+    "R-BUILD-HOURS"
+   ],
+   "how": "Log hours per task during the build; compare the total at first hover.",
+   "note": "EST: the sum of the build-phase task hours, bench checks (stage 11) and the range check included, transport box excluded (SCHEDULE.md verdict table, CR-I2-02). G4's count is 111 h (CDR decision B2)",
+   "value": 100.5
+  },
+  {
+   "id": "CL-I2-CUT-TO-HOVER-D",
+   "type": "claim",
+   "title": "Calendar days from first cut to first tethered hover",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "cut_to_hover_d",
+   "unit": "d",
+   "limit": {
+    "op": "<=",
+    "value": 21.0
+   },
+   "verifies": [
+    "R-BUILD-HOURS"
+   ],
+   "how": "Dates of the first cut and the first tethered hover in the build log.",
+   "assumes": [
+    "ASM-I2-REQ-TEXT"
+   ],
+   "note": "limit: '<= 3 weeks from first cut' in R-BUILD-HOURS. Set by the serial 24 h cures of the build chain (CDR decision B2); no lever in the task list removes them",
+   "value": 33
+  },
+  {
+   "id": "CL-I2-FIRST-HOVER-WEEK",
+   "type": "claim",
+   "title": "Build week of the first tethered hover",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "first_hover_week",
+   "unit": "week",
+   "limit": {
+    "op": "<=",
+    "ref": "P:schedule.first_hover_week"
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Date of the first tethered hover (gate 3) against the build start.",
+   "note": "build week 1 starts on schedule.build_start; CR-I2-01 asks A1 whether the requirement is week 4 or 5",
+   "value": 4
+  },
+  {
+   "id": "CL-I2-FIRST-TRANSITION-WEEK",
+   "type": "claim",
+   "title": "Build week of the first transition (gate 6)",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "first_transition_week",
+   "unit": "week",
+   "limit": {
+    "op": "<=",
+    "value": 7.0
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Date of the first transition flight against the build start.",
+   "assumes": [
+    "ASM-I2-REQ-TEXT"
+   ],
+   "value": 7
+  },
+  {
+   "id": "CL-I2-CRASH-LOOP-D",
+   "type": "claim",
+   "title": "Crash-repair loop held in the plan",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "crash_loop_d",
+   "unit": "d",
+   "limit": {
+    "op": ">=",
+    "value": 10.5
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Task CR1 in the task list; >= 1.5 weeks calendar.",
+   "assumes": [
+    "ASM-I2-REQ-TEXT"
+   ],
+   "value": 11
+  },
+  {
+   "id": "CL-I2-END-SLACK-D",
+   "type": "claim",
+   "title": "Slack of the last task against complete_by",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "end_slack_d",
+   "unit": "d",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Re-run after every change to the task list; the last task must end on or before schedule.complete_by.",
+   "note": "with one crash-repair loop in the plan; CDR-BT-10 calls 2 d thin",
+   "value": 12
+  },
+  {
+   "id": "CL-I2-TWIN-BEFORE-ORDER-D",
+   "type": "claim",
+   "title": "Days between the last twin flight day and the December order",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "twin_before_order_d",
+   "unit": "d",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-SCHEDULE"
+   ],
+   "how": "Date of the last twin flight (task TW3) against schedule.order_date.",
+   "assumes": [
+    "ASM-I2-REQ-TEXT"
+   ],
+   "value": 2
+  },
+  {
+   "id": "CL-I2-DATES-MATCH",
+   "type": "claim",
+   "title": "Dates in make_schedule.py that differ from params.json#schedule",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "dates_differ",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.0
+   },
+   "how": "BUILD_START and END in make_schedule.py against schedule.build_start and schedule.complete_by.",
+   "value": 0
+  },
+  {
+   "id": "CL-I2-BUILD-HOURS-S2-10",
+   "type": "claim",
+   "title": "Team-hours of build, stages 2-10 only (measure of the PROPOSED decision B2)",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "build_h_stages_2_10",
+   "unit": "h",
+   "how": "As CL-I2-BUILD-HOURS, stages 2-10.",
+   "assumes": [
+    "ASM-I2-B2-PROPOSED"
+   ],
+   "note": "information, no limit: B2 would compare this with 90 h after 13 h EST of bench work moves before first cut (CDR-20, G4). Not applied: needs the students' sign-off",
+   "value": 81.5
+  },
+  {
+   "id": "CL-I2-PRE-HOURS",
+   "type": "claim",
+   "title": "Team-hours before first cut (16 Nov - 18 Jan)",
+   "calc": "CALC-I2-SCHEDULE",
+   "output": "pre_h",
+   "unit": "h",
+   "how": "Log hours per task before the build start.",
+   "note": "information, no limit: R-BUILD-HOURS does not say whether pre-work counts (CR-I2-02)",
+   "value": 241
+  }
+ ]
+}

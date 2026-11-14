@@ -1,0 +1,29 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "ex_booms",
+ "parts": [
+  {"id": "BMS-001", "name": "Boom L", "subsystem": "ex_booms", "status": "MODELLED", "mass_g": 40, "material": "CF tube 16x14 (bought)", "cg_xyz_m": [0.265, -0.35, 0.05], "make_or_buy": "buy"},
+  {"id": "BMS-002", "name": "Boom R", "subsystem": "ex_booms", "status": "MODELLED", "mass_g": 40, "material": "CF tube 16x14 (bought)", "cg_xyz_m": [0.265, 0.35, 0.05], "make_or_buy": "buy"},
+  {"id": "BMS-003", "name": "Lift motor L", "subsystem": "ex_booms", "status": "MODELLED", "mass_g": 110, "material": "motor (bought)", "cg_xyz_m": [-0.08, -0.35, 0.074], "make_or_buy": "buy", "electrical": "sink"},
+  {"id": "BMS-004", "name": "Lift motor R", "subsystem": "ex_booms", "status": "MODELLED", "mass_g": 110, "material": "motor (bought)", "cg_xyz_m": [-0.08, 0.35, 0.074], "make_or_buy": "buy", "electrical": "sink"}
+ ],
+ "edges": [
+  {"id": "E-BMS-01", "part_a": "BMS-001", "part_b": "WNG-001", "via": "CT-M3-SHCS-NYLOC", "owner": "ex_booms", "notes": "printed clamp under the spar line",
+   "joint_stack": {"fastener": "M3x20 SHCS", "count": 2, "grade": "A2-70", "hole": "3.4 mm clearance through clamp halves", "insert": "none",
+    "engagement_mm": 4.0, "min_engagement_mm": 3.0, "washer_nut": "M3 washer + M3 nyloc", "torque": "0.5 N m", "tool": "2.5 mm hex key + 5.5 mm spanner",
+    "access": "from below (-z)", "install_order": 1, "removal_order": 2}},
+  {"id": "E-BMS-02", "part_a": "BMS-002", "part_b": "WNG-002", "via": "CT-M3-SHCS-NYLOC", "owner": "ex_booms", "notes": "mirror of E-BMS-01",
+   "joint_stack": {"fastener": "M3x20 SHCS", "count": 2, "grade": "A2-70", "hole": "3.4 mm clearance through clamp halves", "insert": "none",
+    "engagement_mm": 4.0, "min_engagement_mm": 3.0, "washer_nut": "M3 washer + M3 nyloc", "torque": "0.5 N m", "tool": "2.5 mm hex key + 5.5 mm spanner",
+    "access": "from below (-z)", "install_order": 1, "removal_order": 2}},
+  {"id": "E-BMS-03", "part_a": "BMS-003", "part_b": "BMS-001", "via": "CT-M3-SHCS-MOTOR", "owner": "ex_booms", "notes": "motor on a printed boom saddle (saddle omitted in the example)",
+   "joint_stack": {"fastener": "M3x8 SHCS", "count": 4, "grade": "A2-70", "hole": "3.4 mm clearance in saddle", "insert": "none (motor base tapped)",
+    "engagement_mm": 4.0, "min_engagement_mm": 3.0, "washer_nut": "none", "torque": "snug + threadlocker", "tool": "2.5 mm hex key",
+    "access": "from below (-z)", "install_order": 2, "removal_order": 1}},
+  {"id": "E-BMS-04", "part_a": "BMS-004", "part_b": "BMS-002", "via": "CT-M3-SHCS-MOTOR", "owner": "ex_booms", "notes": "mirror of E-BMS-03",
+   "joint_stack": {"fastener": "M3x8 SHCS", "count": 4, "grade": "A2-70", "hole": "3.4 mm clearance in saddle", "insert": "none (motor base tapped)",
+    "engagement_mm": 4.0, "min_engagement_mm": 3.0, "washer_nut": "none", "torque": "snug + threadlocker", "tool": "2.5 mm hex key",
+    "access": "from below (-z)", "install_order": 2, "removal_order": 1}}
+ ],
+ "acknowledges": ["E-FUS-04", "E-FUS-05"]
+}

@@ -1,0 +1,19 @@
+hard A3 basic      stroke 0.0230 m  n 6.42  side 24.1/26.0 N  tip -0.0096 m  strike from 10.0 deg  (34 s)
+hard A3 predicted  stroke 0.0245 m  n 6.09  side 24.1/26.0 N  tip -0.0103 m  strike from 10.0 deg  (34 s)
+hard gate          stroke 0.0252 m  n 5.95  side 24.1/26.0 N  tip -0.0106 m  strike from 10.0 deg  (34 s)
+hard lightest      stroke 0.0230 m  n 6.43  side 24.1/26.0 N  tip -0.0096 m  strike from 10.0 deg  (34 s)
+hard gate mu 0.70   stroke 0.0351 m  side 38.9 N
+hard gate mu 0.50   stroke 0.0284 m  side 28.8 N
+level gate {'design_stroke_m': 0.01500582765226616, 'free_stroke_m': 0.017255614655295896, 'design_n': 5.880629367905506, 'free_n': 5.880629362002376, 'design_by_foot_m': [0.014704233605309357, 0.01500582765226616, 0.01427079622364063, 0.014347982168853475], 'free_by_foot_m': [0.01707925314792923, 0.017255614655295896, 0.016189359675681574, 0.016289983299311937], 'side_level_1ms_N': 15.973389421619187}
+drift: stroke 0.0280  side 24.3 N  tipped 0  tilt_max 10.2  (187 s)
+wind broadside/lull/0.5       limit 4.5 m/s, tips from a 26.97589480035571 deg touchdown tilt
+wind broadside/lull/1.2       limit 4.5 m/s, tips from a 26.97589480035571 deg touchdown tilt
+wind broadside/steady/0.5     limit 4.5 m/s, tips from a 26.97589480035571 deg touchdown tilt
+wind broadside/steady/1.2     limit 5.0 m/s, tips from a 30.273097949788152 deg touchdown tilt
+wind spanwise/lull/0.5        limit 8.5 m/s, tips from a 41.83452802489185 deg touchdown tilt
+wind spanwise/lull/1.2        limit 8.5 m/s, tips from a 41.83452802489185 deg touchdown tilt
+wind spanwise/steady/0.5      limit 9.0 m/s, tips from a 44.67399914413165 deg touchdown tilt
+wind spanwise/steady/1.2      limit 10.0 m/s, tips from a 50.19983690220859 deg touchdown tilt
+(545 s)
+ladders done (909 s)
+wrote sim3d.json in 928 s

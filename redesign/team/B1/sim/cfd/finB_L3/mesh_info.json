@@ -1,0 +1,11 @@
+{
+ "cells": 72062,
+ "h1_m": 1.2e-05,
+ "s_wall_m": 0.0011,
+ "bl_layers": 21,
+ "R_far_m": 5.5,
+ "rc": 0,
+ "wall_s": 1059.0,
+ "alpha_deg": 0.0,
+ "chord_m": 0.275
+}

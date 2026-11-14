@@ -1,0 +1,51 @@
+group,item,qty,unit_usd,ext_usd,vendor,url,price_source_and_date,notes
+propulsion,SunnySky X3108S KV900 motor (3 + 1 spare),4,24.99,99.96,SunnySky USA,https://sunnyskyusa.com/collections/multirotor-motors/products/sunnysky-x3108s-motors,docs/research/budget-lift.md (seen 2026-11-01),
+propulsion,LANRC 45A BLHeli_S ESC 4-pack (3 + 1 spare),1,30.00,30.00,Amazon (Sparkhobby),https://www.amazon.com/dp/B0D2HS4Y4J,docs/research/bom-savings.md (seen 2026-11-01),ships from CN; low stock
+propulsion,APC 11x4.5MR prop (rear + 1 front + spares),5,3.83,19.15,APC,https://www.apcprop.com/product/11x4-5mr/,docs/research/budget-lift.md (seen 2026-11-01),
+propulsion,APC 11x4.5MRP opposite-rotation prop (1 front + spares),4,3.83,15.32,APC,https://www.apcprop.com/product/11x4-5mr/,docs/research/budget-lift.md (seen 2026-11-01),MRP price ESTIMATE = MR
+tilt,Powerhobby 329TG tilt servo 24 kg-cm 63 g (2 + 1 spare),3,27.95,83.85,WREKD,https://wrekd.com/products/powerhobby-329tg-aluminum-high-torque-speed-titanium-gear-24kg-digital-servo,web search 2026-11-09,
+tilt,Tilt pivots: 6 mm steel shaft + 4x F686ZZ flanged bearings + collars,1,12.00,12.00,Amazon,https://www.amazon.com/s?k=F686ZZ+bearing,ESTIMATE,ESTIMATE
+control,EMAX ES3005HV elevon servo (2 + 1 spare),3,19.99,59.97,EMAX USA / RMRC,https://www.readymaderc.com,docs/research/bom-savings.md (seen 2026-11-01),
+battery,Ovonic 4S 5000 mAh 50C XT60 LiPo 448 g (3 packs),3,48.57,145.71,Ovonic US shop,https://us.ovonicshop.com/products/ovonic-50c-14-8v-5000mah-4s1p-xt60-and-trx-lipo-battery,web search 2026-11-09,Ampow $46.84 but out of stock
+avionics,CoreWing F405 Wing V2 flight controller (unsoldered),1,67.18,67.18,ReadyMadeRC,https://www.readymaderc.com,docs/research/bom-savings.md (seen 2026-11-01),backorder Nov 2026; fallback Kakute H743-Wing $107.42
+avionics,RMRC SAM-M10Q-5883 GPS/compass,1,24.99,24.99,ReadyMadeRC,https://www.readymaderc.com,docs/research/bom-savings.md (seen 2026-11-01),
+avionics,RMRC MS4525DO airspeed sensor + pitot,1,59.99,59.99,ReadyMadeRC,https://www.readymaderc.com,docs/research/bom-savings.md (seen 2026-11-01),kept: tilt schedule and Q_ASSIST_SPEED want airspeed
+avionics,RadioMaster Pocket Crush ELRS transmitter,1,76.99,76.99,ReadyMadeRC,https://www.readymaderc.com,docs/research/bom-savings.md (seen 2026-11-01),
+avionics,RadioMaster RP3 V2 ELRS receiver,1,22.96,22.96,ReadyMadeRC,https://www.readymaderc.com,docs/research/bom-savings.md (seen 2026-11-01),RMRC backorder; ProgressiveRC $21.99 in stock
+avionics,NewBeeDrone BeeID v1.1 Remote ID (conditional: only if flown outside the RFS FRIA),1,39.99,39.99,NewBeeDrone,https://newbeedrone.com,docs/research/bom-savings.md (seen 2026-11-01),conditional; counted to be conservative
+airframe,Owens Corning FOAMULAR NGX F-250 XPS 2 in x 4 x 8 ft,1,59.97,59.97,Home Depot (pickup),https://www.homedepot.com/s/foamular%20150,docs/research/budget-airframe.md (seen 2026-10-13..11-01),
+airframe,Carbon tube 25x22x1000 (spar sockets 2 x 0.35 m),1,40.99,40.99,Amazon,https://www.amazon.com/s?k=carbon+fiber+tube+22mm+1000mm,docs/research/budget-airframe.md (seen 2026-10-13..11-01),overseas lead time
+airframe,Carbon tube 22x20x1000 (joiner 0.40 + boom 0.55; 2nd is spare),2,28.32,56.64,Amazon,https://www.amazon.com/s?k=carbon+fiber+tube+22mm+1000mm,docs/research/budget-airframe.md (seen 2026-10-13..11-01),overseas lead time
+airframe,"SUNLU PETG 4 kg (pod, nacelles, mounts)",1,39.99,39.99,Amazon,https://www.amazon.com/dp/B0D1KC72YP,docs/research/budget-airframe.md (seen 2026-10-13..11-01),
+airframe,"Scotch Heavy Duty packing tape 6 rolls (skin, hinges)",1,19.98,19.98,Amazon,https://www.amazon.com/dp/B000087KUA,docs/research/budget-airframe.md (seen 2026-10-13..11-01),
+airframe,Foam-safe glue 4 oz,1,12.99,12.99,Amazon,https://www.amazon.com/dp/B0FRM9N2CS,docs/research/budget-airframe.md (seen 2026-10-13..11-01),
+airframe,"Foam board 5 mm x 4 sheets (fins, test panels)",1,6.00,6.00,Dollar Tree,https://www.dollartree.com,ESTIMATE,ESTIMATE
+hardware,Wiring + hardware kit (minimum 13 lines),1,124.01,124.01,Amazon,budget-airframe.md s3,docs/research/budget-airframe.md (seen 2026-10-13..11-01),
+hardware,Amass AS150U anti-spark pair + XT60 adapter leads (D9 needs >= 42 A),1,15.00,15.00,Amazon,https://www.amazon.com/s?k=AS150U,ESTIMATE,ESTIMATE
+ground,HTRC C150 charger (AC 150 W),1,56.99,56.99,Pyrodrone,https://pyrodrone.com,docs/research/bom-savings.md (seen 2026-11-01),
+ground,LiPo safety bag,2,9.99,19.98,Pyrodrone,https://pyrodrone.com,research/components-cost/cost_model.py GROUND floor,
+ground,Ammo can (Harbor Freight 63750),1,19.99,19.99,Harbor Freight,https://www.harborfreight.com,research/components-cost/cost_model.py GROUND floor,
+ground,Watt meter 150 A,1,12.99,12.99,Amazon,https://www.amazon.com,research/components-cost/cost_model.py GROUND floor,
+ground,IR thermometer,1,8.98,8.98,Amazon,https://www.amazon.com,research/components-cost/cost_model.py GROUND floor,
+ground,Thrust stand: 20 kg load cell + HX711 + Nano clone,1,17.97,17.97,Amazon,https://www.amazon.com,docs/research/budget-energy-test.md,
+ground,Pinecil V2 soldering iron,1,25.99,25.99,Pine64,https://pine64.com,research/components-cost/cost_model.py GROUND floor,
+ground,USB-C PD supply for iron,1,20.00,20.00,Amazon,https://www.amazon.com,ESTIMATE,ESTIMATE
+ground,Multimeter,1,25.00,25.00,Amazon,https://www.amazon.com,ESTIMATE,ESTIMATE
+ground,Solder flux wick,1,15.00,15.00,Amazon,https://www.amazon.com,ESTIMATE,ESTIMATE
+ground,Hot-wire: NICE-POWER 30 V 10 A supply + Ni80 wire,1,41.73,41.73,Amazon,B0CRSS744F + B0CP9V3DBX,docs/research/bom-savings.md (seen 2026-11-01),
+test,Tilt bench-rig extras (SCREENING s5 test; motors/servos from spares),1,10.00,10.00,Amazon,-,ESTIMATE,ESTIMATE
+subtotal,GOODS,,,1408.25,,,,
+tax,Berkeley sales tax 10.25 % on goods,,,144.35,,,cost_model.py TAX (CDTFA 2026-10-01),
+shipping,SunnySky USA (order $99.96 misses $100 free threshold),1,8.00,8.00,SunnySky USA,-,ESTIMATE,add any $1 item to make it free
+shipping,Amazon ESC seller + CF tube deliveries (1.50 + 13 + 6),1,20.50,20.50,Amazon,-,docs/research/budget-airframe.md (seen 2026-10-13..11-01) / docs/research/bom-savings.md (seen 2026-11-01),
+shipping,APC props,1,10.00,10.00,APC,-,ESTIMATE,ESTIMATE
+shipping,WREKD servos,1,8.00,8.00,WREKD,-,ESTIMATE,ESTIMATE
+shipping,Ovonic packs (LiPo ground only),1,10.00,10.00,Ovonic,-,ESTIMATE,ESTIMATE
+shipping,RMRC consolidated avionics + servos (5 % rule says free; UNVERIFIED),1,15.00,15.00,ReadyMadeRC,https://www.readymaderc.com/pages/shipping-returns,ESTIMATE,conservative
+shipping,NewBeeDrone + Pyrodrone (8.19) + Pine64,1,25.00,25.00,various,-,docs/research/bom-savings.md (seen 2026-11-01),partly ESTIMATE
+subtotal,SHIPPING,,,96.50,,,,
+TOTAL,Total committed spend (goods + tax + shipping),,,1649.10,,,,"vs $2,000.00 hard cap"
+reserve,Crash reserve = 2000 - total (planning floor $150 per REQUIREMENTS C1),,,350.90,,,,
+reference,"One bad crash: 2 motors + 2 ESC + 6 props + tilt servo + FC + GPS + $100 airframe, incl. tax",,,339.66,,,ESTIMATE,bought spares cover ~$90 of it
+option,U05 single coupled tilt servo: saves one 329TG but a fixed-rear tri then has no yaw; needs a rear yaw servo,,,0.00,,,ESTIMATE,net ~0; see CARD
+option,K07 4th rear motor: motor + 2 props + 2nd ESC 4-pack (keeps a spare) + cross-bar/wiring $8,,,77.89,,,ESTIMATE,

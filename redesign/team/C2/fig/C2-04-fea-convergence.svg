@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1150" width="1200" height="1150">
+<text x="20" y="50" fill="#121619" font-family="IBM Plex Sans, sans-serif" font-size="12">flap w at the tip, G2, mm</text>
+<text x="20" y="70" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">ext -2.482, p 2.60, GCI 0.07 %</text>
+<line x1="330" y1="65.2" x2="1100" y2="65.2" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="330" y1="110" x2="1100" y2="110" stroke="#9AA4B1" stroke-width="1"/>
+<polyline points="1030.0,61.7 744.2,68.3 620.8,66.4" fill="none" stroke="#1F5FC7" stroke-width="1.5"/>
+<circle cx="1030.0" cy="61.7" r="4" fill="#1F5FC7"/>
+<text x="1030.0" y="53.7" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.002</text>
+<circle cx="744.2" cy="68.3" r="4" fill="#1F5FC7"/>
+<text x="744.2" y="60.3" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.999</text>
+<circle cx="620.8" cy="66.4" r="4" fill="#1F5FC7"/>
+<text x="620.8" y="58.4" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.999</text>
+<text x="324" y="69.2" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="20" y="170" fill="#121619" font-family="IBM Plex Sans, sans-serif" font-size="12">in-plane u at the tip, L1, mm</text>
+<text x="20" y="190" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">ext -1.834, p 2.26, GCI 0.05 %</text>
+<line x1="330" y1="183.5" x2="1100" y2="183.5" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="330" y1="230" x2="1100" y2="230" stroke="#9AA4B1" stroke-width="1"/>
+<polyline points="1030.0,186.5 744.2,185.5 620.8,184.4" fill="none" stroke="#1F5FC7" stroke-width="1.5"/>
+<circle cx="1030.0" cy="186.5" r="4" fill="#1F5FC7"/>
+<text x="1030.0" y="178.5" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.999</text>
+<circle cx="744.2" cy="185.5" r="4" fill="#1F5FC7"/>
+<text x="744.2" y="177.5" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.999</text>
+<circle cx="620.8" cy="184.4" r="4" fill="#1F5FC7"/>
+<text x="620.8" y="176.4" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="324" y="187.5" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="20" y="290" fill="#121619" font-family="IBM Plex Sans, sans-serif" font-size="12">twist at the tip, L4, deg</text>
+<text x="20" y="310" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">ext -3.067, p 3.53, GCI 0.09 %</text>
+<line x1="330" y1="302.3" x2="1100" y2="302.3" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="330" y1="350" x2="1100" y2="350" stroke="#9AA4B1" stroke-width="1"/>
+<polyline points="1030.0,305.9 744.2,307.7 620.8,303.9" fill="none" stroke="#1F5FC7" stroke-width="1.5"/>
+<circle cx="1030.0" cy="305.9" r="4" fill="#1F5FC7"/>
+<text x="1030.0" y="297.9" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.998</text>
+<circle cx="744.2" cy="307.7" r="4" fill="#1F5FC7"/>
+<text x="744.2" y="299.7" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.997</text>
+<circle cx="620.8" cy="303.9" r="4" fill="#1F5FC7"/>
+<text x="620.8" y="295.9" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.999</text>
+<text x="324" y="306.3" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="20" y="410" fill="#121619" font-family="IBM Plex Sans, sans-serif" font-size="12">spar outer-fibre stress, L1, limit, MPa</text>
+<text x="20" y="430" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">ext 19.218, p 2.86, GCI 0.47 %</text>
+<line x1="330" y1="434.3" x2="1100" y2="434.3" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="330" y1="470" x2="1100" y2="470" stroke="#9AA4B1" stroke-width="1"/>
+<polyline points="1030.0,422.0 744.2,415.7 620.8,427.6" fill="none" stroke="#1F5FC7" stroke-width="1.5"/>
+<circle cx="1030.0" cy="422.0" r="4" fill="#1F5FC7"/>
+<text x="1030.0" y="414.0" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.007</text>
+<circle cx="744.2" cy="415.7" r="4" fill="#1F5FC7"/>
+<text x="744.2" y="407.7" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.010</text>
+<circle cx="620.8" cy="427.6" r="4" fill="#1F5FC7"/>
+<text x="620.8" y="419.6" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.004</text>
+<text x="324" y="438.3" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="20" y="530" fill="#121619" font-family="IBM Plex Sans, sans-serif" font-size="12">flap w at the tip, G2, orthotropic tube, mm</text>
+<text x="20" y="550" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">ext -2.482, p 2.60, GCI 0.07 %</text>
+<line x1="330" y1="545.2" x2="1100" y2="545.2" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="330" y1="590" x2="1100" y2="590" stroke="#9AA4B1" stroke-width="1"/>
+<polyline points="1030.0,541.7 744.2,548.3 620.8,546.4" fill="none" stroke="#1F5FC7" stroke-width="1.5"/>
+<circle cx="1030.0" cy="541.7" r="4" fill="#1F5FC7"/>
+<text x="1030.0" y="533.7" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.002</text>
+<circle cx="744.2" cy="548.3" r="4" fill="#1F5FC7"/>
+<text x="744.2" y="540.3" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.999</text>
+<circle cx="620.8" cy="546.4" r="4" fill="#1F5FC7"/>
+<text x="620.8" y="538.4" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.999</text>
+<text x="324" y="549.2" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="20" y="650" fill="#121619" font-family="IBM Plex Sans, sans-serif" font-size="12">twist at the tip, L4, orthotropic tube, deg</text>
+<text x="20" y="670" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">ext -3.067, p 3.53, GCI 0.09 %</text>
+<line x1="330" y1="662.3" x2="1100" y2="662.3" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="330" y1="710" x2="1100" y2="710" stroke="#9AA4B1" stroke-width="1"/>
+<polyline points="1030.0,665.9 744.2,667.7 620.8,663.9" fill="none" stroke="#1F5FC7" stroke-width="1.5"/>
+<circle cx="1030.0" cy="665.9" r="4" fill="#1F5FC7"/>
+<text x="1030.0" y="657.9" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.998</text>
+<circle cx="744.2" cy="667.7" r="4" fill="#1F5FC7"/>
+<text x="744.2" y="659.7" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.997</text>
+<circle cx="620.8" cy="663.9" r="4" fill="#1F5FC7"/>
+<text x="620.8" y="655.9" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.999</text>
+<text x="324" y="666.3" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="20" y="770" fill="#121619" font-family="IBM Plex Sans, sans-serif" font-size="12">foam tension, 99.5th pct, L4, orthotropic, kPa</text>
+<text x="20" y="790" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">ext 36.386, p 1.80, GCI 7.78 %</text>
+<line x1="330" y1="825.0" x2="1100" y2="825.0" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="330" y1="830" x2="1100" y2="830" stroke="#9AA4B1" stroke-width="1"/>
+<polyline points="1030.0,745.0 744.2,793.9 620.8,808.6" fill="none" stroke="#1F5FC7" stroke-width="1.5"/>
+<circle cx="1030.0" cy="745.0" r="4" fill="#1F5FC7"/>
+<text x="1030.0" y="737.0" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.323</text>
+<circle cx="744.2" cy="793.9" r="4" fill="#1F5FC7"/>
+<text x="744.2" y="785.9" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.126</text>
+<circle cx="620.8" cy="808.6" r="4" fill="#1F5FC7"/>
+<text x="620.8" y="800.6" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.066</text>
+<text x="324" y="829.0" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="20" y="890" fill="#121619" font-family="IBM Plex Sans, sans-serif" font-size="12">foam shear, 99.5th pct, L4, orthotropic, kPa</text>
+<text x="20" y="910" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">ext 26.896, p 3.07, GCI 1.24 %</text>
+<line x1="330" y1="940.5" x2="1100" y2="940.5" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="330" y1="950" x2="1100" y2="950" stroke="#9AA4B1" stroke-width="1"/>
+<polyline points="1030.0,869.5 744.2,926.3 620.8,935.7" fill="none" stroke="#1F5FC7" stroke-width="1.5"/>
+<circle cx="1030.0" cy="869.5" r="4" fill="#1F5FC7"/>
+<text x="1030.0" y="861.5" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.149</text>
+<circle cx="744.2" cy="926.3" r="4" fill="#1F5FC7"/>
+<text x="744.2" y="918.3" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.030</text>
+<circle cx="620.8" cy="935.7" r="4" fill="#1F5FC7"/>
+<text x="620.8" y="927.7" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.010</text>
+<text x="324" y="944.5" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="20" y="1010" fill="#121619" font-family="IBM Plex Sans, sans-serif" font-size="12">foam tension peak (block corner), L4, orthotropic, kPa</text>
+<text x="20" y="1030" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">ext 176.115, p 6.51, GCI 0.03 %</text>
+<line x1="330" y1="995.2" x2="1100" y2="995.2" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="330" y1="1070" x2="1100" y2="1070" stroke="#9AA4B1" stroke-width="1"/>
+<polyline points="1030.0,1054.8 744.2,997.2 620.8,995.4" fill="none" stroke="#1F5FC7" stroke-width="1.5"/>
+<circle cx="1030.0" cy="1054.8" r="4" fill="#1F5FC7"/>
+<text x="1030.0" y="1046.8" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.922</text>
+<circle cx="744.2" cy="997.2" r="4" fill="#1F5FC7"/>
+<text x="744.2" y="989.2" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">0.997</text>
+<circle cx="620.8" cy="995.4" r="4" fill="#1F5FC7"/>
+<text x="620.8" y="987.4" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="324" y="999.2" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">1.000</text>
+<text x="330.0" y="1108" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">0</text>
+<text x="501.1" y="1108" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">1</text>
+<text x="672.3" y="1108" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">2</text>
+<text x="843.4" y="1108" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">3</text>
+<text x="1014.6" y="1108" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">4</text>
+<text x="1100" y="1128" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="11">mean element size h = (V / N)^(1/3), mm; value / extrapolated value</text></svg>

@@ -1,0 +1,288 @@
+{
+  "concept": "K01 small twin-boom quadplane 4+1 (class S, 4S)",
+  "mission": "REQUIREMENTS.md section 3 M-A: hover 2 min, cruise >=5/10 min, 20 % reserve, 0 payload + 0.25 kg growth",
+  "status": "PROPOSED; every number ESTIMATE unless a datasheet is named in sizing.py",
+  "mass_groups_kg": {
+    "wing (2 halves XPS 30 kg/m3 hot-wired, tape skin, 22x20 CF joiner, 2 aileron horns)": 0.45,
+    "pod (XPS/foam-board shell, printed nose + battery tray + motor mount)": 0.25,
+    "booms 2 x CF 25x22x1000 (~172 g/m) + 4 printed motor mounts + 2 wing saddles": 0.46,
+    "inverted-V tail 2 panels (5 mm foam board/Depron) + printed apex + boom-end clamps": 0.07,
+    "4 control servos EMAX ES3005HV 43.2 g (datasheet) + linkages": 0.19,
+    "4 lift stations: X3108S 81 g (SunnySky) + LANRC 45A 6.6 g + APC 11x4.5MR ~20 g + wiring": 0.48,
+    "pusher: X2814 900KV ~108 g (RMRC listing) + 45A ESC + 11x5.5 prop + mount": 0.16,
+    "battery 4S 6500 LiPo (Ovonic 50C ~522 g listed; 560 g used)": 0.56,
+    "avionics: FC, GPS, RX, airspeed, RID, UBEC, AS150U, harness": 0.17,
+    "landing legs 4 x 0.18 m printed PETG + TPU pads under motors (pusher-tip clearance 5 cm)": 0.08,
+    "fasteners, glue, tape, Velcro, cable ties": 0.1
+  },
+  "growth_kg": 0.25,
+  "baseline": {
+    "label": "baseline",
+    "mtow_kg": 3.22,
+    "span_m": 1.6,
+    "chord_m": 0.25,
+    "wing_area_m2": 0.4,
+    "AR": 6.4,
+    "wing_loading_N_m2": 79.0,
+    "wing_loading_kg_m2": 8.05,
+    "stall_mps": 10.83,
+    "transition_min_mps_1p3Vs": 14.07,
+    "cruise_mps": 16.0,
+    "n_lift": 4,
+    "disk_loading_N_m2": 128.8,
+    "thrust_per_motor_hover_g": 829.0,
+    "hover_throttle_frac_of_max_thrust": 0.52,
+    "TW_table": 1.96,
+    "TW_with_sag": 1.83,
+    "hover_power_W_table": 523.0,
+    "hover_power_W_momentum_FM": 490.0,
+    "hover_current_A": 35.4,
+    "hover_current_per_motor_A": 8.8,
+    "CD0": 0.0535,
+    "CD0_parts": {
+      "wing": 0.0176,
+      "pod": 0.0061,
+      "booms": 0.0035,
+      "tail": 0.0054,
+      "parked_props": 0.0164,
+      "stopped_motors": 0.0046
+    },
+    "parked_prop_share_of_CD0": 0.31,
+    "CL_cruise": 0.504,
+    "LD_cruise": 7.16,
+    "drag_N": 4.41,
+    "cruise_power_W": 152.0,
+    "cruise_current_A": 10.3,
+    "pusher_static_TW": 0.43,
+    "pack": "4S 6500 mAh",
+    "pack_Wh": 96.2,
+    "usable_Wh_after_reserve": 77.0,
+    "hover_Wh_2min": 17.4,
+    "cruise_min_after_2min_hover": 22.3,
+    "hover_only_endurance_min": 8.8,
+    "peak_transition_current_A": 65.0,
+    "connector_need_A_1p25x": 82.0,
+    "tail_Vh": 0.38,
+    "tail_Vv": 0.042,
+    "lift_centroid_x_from_LE_m": 0.085,
+    "cg_target_pct_mac": 34.0,
+    "speed_sweep": [
+      {
+        "V": 13.0,
+        "LD": 8.28,
+        "P_W": 108.3
+      },
+      {
+        "V": 14.0,
+        "LD": 8.0,
+        "P_W": 120.2
+      },
+      {
+        "V": 15.0,
+        "LD": 7.61,
+        "P_W": 134.7
+      },
+      {
+        "V": 16.0,
+        "LD": 7.16,
+        "P_W": 152.1
+      },
+      {
+        "V": 17.0,
+        "LD": 6.68,
+        "P_W": 172.4
+      },
+      {
+        "V": 18.0,
+        "LD": 6.21,
+        "P_W": 195.6
+      },
+      {
+        "V": 19.0,
+        "LD": 5.76,
+        "P_W": 222.0
+      },
+      {
+        "V": 20.0,
+        "LD": 5.33,
+        "P_W": 251.7
+      },
+      {
+        "V": 21.0,
+        "LD": 4.94,
+        "P_W": 284.9
+      },
+      {
+        "V": 22.0,
+        "LD": 4.57,
+        "P_W": 321.5
+      }
+    ]
+  },
+  "variants": [
+    {
+      "label": "baseline",
+      "mtow_kg": 3.22,
+      "TW_table": 1.96,
+      "TW_with_sag": 1.83,
+      "stall_mps": 10.83,
+      "LD_cruise": 7.16,
+      "cruise_power_W": 152.0,
+      "hover_current_A": 35.4,
+      "cruise_min_after_2min_hover": 22.3,
+      "hover_only_endurance_min": 8.8
+    },
+    {
+      "label": "K21 hexa 6+1",
+      "mtow_kg": 3.46,
+      "TW_table": 2.74,
+      "TW_with_sag": 2.55,
+      "stall_mps": 11.22,
+      "LD_cruise": 6.49,
+      "cruise_power_W": 179.0,
+      "hover_current_A": 33.0,
+      "cruise_min_after_2min_hover": 19.3,
+      "hover_only_endurance_min": 9.4
+    },
+    {
+      "label": "K04 folding lift props",
+      "mtow_kg": 3.25,
+      "TW_table": 1.94,
+      "TW_with_sag": 1.81,
+      "stall_mps": 10.88,
+      "LD_cruise": 8.13,
+      "cruise_power_W": 136.0,
+      "hover_current_A": 35.9,
+      "cruise_min_after_2min_hover": 24.9,
+      "hover_only_endurance_min": 8.7
+    },
+    {
+      "label": "K05 faired parked props",
+      "mtow_kg": 3.26,
+      "TW_table": 1.94,
+      "TW_with_sag": 1.8,
+      "stall_mps": 10.89,
+      "LD_cruise": 7.74,
+      "cruise_power_W": 143.0,
+      "hover_current_A": 36.1,
+      "cruise_min_after_2min_hover": 23.6,
+      "hover_only_endurance_min": 8.6
+    },
+    {
+      "label": "sensitivity: parked-prop CdA x2",
+      "mtow_kg": 3.22,
+      "TW_table": 1.96,
+      "TW_with_sag": 1.83,
+      "stall_mps": 10.83,
+      "LD_cruise": 5.81,
+      "cruise_power_W": 186.0,
+      "hover_current_A": 35.4,
+      "cruise_min_after_2min_hover": 18.2,
+      "hover_only_endurance_min": 8.8
+    },
+    {
+      "label": "U04 foam-board wing",
+      "mtow_kg": 3.17,
+      "TW_table": 1.99,
+      "TW_with_sag": 1.85,
+      "stall_mps": 10.74,
+      "LD_cruise": 7.1,
+      "cruise_power_W": 151.0,
+      "hover_current_A": 34.5,
+      "cruise_min_after_2min_hover": 22.6,
+      "hover_only_endurance_min": 9.0
+    },
+    {
+      "label": "4S 5000 pack (T/W 2.0 option)",
+      "mtow_kg": 3.09,
+      "TW_table": 2.05,
+      "TW_with_sag": 1.9,
+      "stall_mps": 10.61,
+      "LD_cruise": 7.0,
+      "cruise_power_W": 149.0,
+      "hover_current_A": 33.1,
+      "cruise_min_after_2min_hover": 16.0,
+      "hover_only_endurance_min": 7.3
+    },
+    {
+      "label": "B03 Mini Talon 1.3 m EPO wing",
+      "mtow_kg": 3.17,
+      "TW_table": 1.99,
+      "TW_with_sag": 1.85,
+      "stall_mps": 11.69,
+      "LD_cruise": 6.57,
+      "cruise_power_W": 163.0,
+      "hover_current_A": 34.5,
+      "cruise_min_after_2min_hover": 21.0,
+      "hover_only_endurance_min": 9.0
+    },
+    {
+      "label": "sensitivity: +0.30 kg mass growth",
+      "mtow_kg": 3.52,
+      "TW_table": 1.8,
+      "TW_with_sag": 1.67,
+      "stall_mps": 11.32,
+      "LD_cruise": 7.48,
+      "cruise_power_W": 159.0,
+      "hover_current_A": 42.8,
+      "cruise_min_after_2min_hover": 20.0,
+      "hover_only_endurance_min": 7.3
+    }
+  ],
+  "packing": {
+    "pieces_m": {
+      "wing half L": [
+        0.8,
+        0.25,
+        0.035
+      ],
+      "wing half R": [
+        0.8,
+        0.25,
+        0.035
+      ],
+      "pod with pusher motor (prop off)": [
+        0.67,
+        0.13,
+        0.14
+      ],
+      "boom L with 2 motors + legs (props off)": [
+        1.0,
+        0.06,
+        0.27
+      ],
+      "boom R with 2 motors + legs (props off)": [
+        1.0,
+        0.06,
+        0.27
+      ],
+      "tail (2 panels hinged at apex, folded flat)": [
+        0.4,
+        0.14,
+        0.03
+      ],
+      "props 5 + joiner tube 0.40 m": [
+        0.4,
+        0.3,
+        0.05
+      ]
+    },
+    "box_m": [
+      1.2,
+      0.5,
+      0.4
+    ],
+    "fits_one_box": true,
+    "layout": "booms + pod + stacked wing halves side by side (0.50 m), tail/props/joiner on top",
+    "longest_piece_m": 1.0,
+    "boxes_flight_hardware": 1,
+    "second_box": "charger, packs in ammo can, tools, spares (field case, not flight hardware)"
+  },
+  "gates": {
+    "G6_TW_ge_1p6": true,
+    "TW_ge_2p0_recommended": false,
+    "cruise_threshold_5min": true,
+    "cruise_objective_10min": true,
+    "AS150U_70A_cont_ok": false
+  }
+}

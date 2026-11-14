@@ -1,0 +1,35 @@
+group,item,qty,unit_usd,line_usd,in_total,vendor,url,seen,status
+aircraft,HEEWING T1-S VTOL Ranger PNP w/ F405 (ArduPilot) + GPS,1,393.49,393.49,yes,RaceDayQuads (US),https://www.racedayquads.com/products/heewing-t1-s-vtol-ranger-fpv-airplane-w-f405-stabilizer-gps-pnp,2026-11-09,search-result price; stock UNVERIFIED (NextFPV $360 / DefianceRC $409.99 same day)
+spares,T1 Ranger PNP->VTOL conversion kit (3x FX-1806 motors + 2 tilt servos) as crash spares,1,159.99,159.99,yes,DefianceRC (US),https://www.defiancerc.com/products/heewing-t-1-ranger-pnp-vtol-conversion-kit,2026-11-09,price from MORPH.md section 2 listing; UNVERIFIED stock
+spares,Spare prop sets (3 props x 4 sets),4,3.00,12.00,yes,RaceDayQuads (US),https://www.racedayquads.com,2026-11-09,ESTIMATE
+energy,4S 1500 mAh LiPo XT60 (approx 175 g),4,25.00,100.00,yes,CNHL US warehouse,https://chinahobbyline.com,2026-11-09,ESTIMATE; confirm cell count and connector against the T1 manual before ordering
+avionics,RX RadioMaster RP3 V2 ELRS,1,19.99,19.99,yes,cost_model.py floor,research/components-cost/cost_model.py,2026-11-09,as other concepts
+avionics,TX RadioMaster Pocket ELRS,1,64.99,64.99,yes,cost_model.py floor,research/components-cost/cost_model.py,2026-11-09,as other concepts
+avionics,GPS+compass HGLRC M100-5883 (spare / compass if bundled GPS lacks one),1,20.49,20.49,yes,cost_model.py floor (RDQ),research/components-cost/cost_model.py,2026-11-09,bundled GPS compass UNVERIFIED
+avionics,Airspeed sensor Holybro MS5525 + pitot (transition at 1.3 Vs on measured airspeed),1,59.99,59.99,yes,cost_model.py floor,research/components-cost/cost_model.py,2026-11-09,as other concepts (optional there)
+avionics,Remote ID NewBeeDrone BeeID v1.1 (conditional: only if flown outside RFS FRIA),1,39.99,39.99,yes,cost_model.py floor (NBD),research/components-cost/cost_model.py,2026-11-09,kept in for comparability with other cards
+ground,Charger HTRC C150 (150 W AC),1,56.99,56.99,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,
+ground,LiPo bags x2 (Pyrodrone),2,9.99,19.98,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,
+ground,Ammo can (Harbor Freight 63750),1,19.99,19.99,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,
+ground,Watt meter 150 A,1,12.99,12.99,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,
+ground,IR thermometer,1,8.98,8.98,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,
+ground,Thrust stand: 20 kg load cell + HX711 + Nano,1,17.97,17.97,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,needed for the measured modification and to replace thrust ESTIMATEs
+ground,Pinecil V2 soldering iron,1,25.99,25.99,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,
+ground,USB-C PD supply for iron,1,20.00,20.00,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,ESTIMATE
+ground,Multimeter,1,25.00,25.00,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,ESTIMATE
+ground,Solder flux wick,1,15.00,15.00,yes,cost_model.py GROUND,research/components-cost/cost_model.py,2026-11-09,ESTIMATE
+hardware,Wiring XT60 pigtails velcro straps threadlocker hinge tape,1,40.00,40.00,yes,Amazon / RDQ,https://www.racedayquads.com,2026-11-09,ESTIMATE (scratch concepts carry $124.01)
+transport,Rigid tote + cut foam inserts (fits 0.66 x 0.40 x 0.16 m packed aircraft),1,25.00,25.00,yes,Home Depot / Jacobs scrap foam,https://www.homedepot.com,2026-11-09,ESTIMATE
+modification,Measured modification budget (e.g. printed wing-tip extension / landing skids / payload pod; PETG + CF rod),1,60.00,60.00,yes,Amazon / Jacobs Hall printers,https://www.amazon.com,2026-11-09,ESTIMATE
+subtotal,Goods subtotal,,,1218.82,yes,,,,sum of lines above
+tax,Berkeley sales tax 10.25 % on goods,,,124.93,yes,CDTFA rate per cost_model.py,,2026-11-09,
+shipping,Shipping (3-4 US vendors; LiPo ground),,,45.00,yes,,,2026-11-09,ESTIMATE (scratch S-class uses $120)
+total,TOTAL SPEND,,,1388.75,yes,,,,vs $2000.00 hard cap
+reserve,Planned crash reserve (REQUIREMENTS C1 >= $150),,,150.00,yes,,,,held unspent
+reserve,Unallocated after planned reserve,,,461.25,yes,,,,$2000 - 1388.75 - 150; total reserve = $611.25 (enough for a whole second T1-S + tax = $434)
+alt,ALT variant: ZOHD Altus VTOL PNP/ARF 980 mm (replaces T1-S line),1,299.99,299.99,no,ReadyMadeRC / RMRC (US),https://www.readymaderc.com/products/details/86192-zohd-altus-fpv-vtol-pnp,2026-11-09,in stock on page; needs own FC
+alt,ALT variant: Matek H743-WING V3 (microSD logging),1,99.99,99.99,no,GetFPV / RDQ,https://www.getfpv.com,2026-11-09,ESTIMATE price
+alt,ALT variant: 4S 3000 mAh LiPo x4 (replaces 4S 1500 x4),4,40.00,160.00,no,CNHL US warehouse,https://chinahobbyline.com,2026-11-09,ESTIMATE
+alt,ALT variant: spares = 2x 2204 motor + 2 tilt servos + props (replaces T1 conversion kit),1,80.00,80.00,no,RDQ / GetFPV,https://www.getfpv.com,2026-11-09,ESTIMATE
+alt,ALT variant TOTAL (same floor; computed in CARD.md),,,1373.87,no,,,,goods 1205.32 x 1.1025 + 45 ship
+alt,MAN variant: FIMI Manta PNP+FC (US price not confirmed; UK PNP+FC GBP 238.80 out of stock),1,225.00,225.00,no,Banggood launch price / HobbyRC UK,https://www.hobbyrc.co.uk/fimi-manta-vtol-fpv-plane,2026-11-09,UNVERIFIED US stock

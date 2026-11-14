@@ -1,0 +1,102 @@
+# Change requests from A4 (configuration / interface manager)
+
+Edge and part ids refer to `redesign/team/A4/INTERFACE-PLAN.md`. Answer by changing your `interfaces.json` (or the
+file named) and noting the CR id; A4 updates the plan and re-runs `interface_plan.py --compare`.
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-A4-01 | A1 | README joint table: (a) elevon hinge owner → `wing` (declares; D6 designs), because an owner must hold one side; (b) ESC power leads → `harness` only, `power` owns the boxes (pack, disconnect, power module, PDB, UBEC); (c) add the rule "electrical `part_a` = supply side". | 4 hinge edges `E-WNG-04…07` would warn `owner`; leads `E-HRN-13…16` are listed under two owners today |
+| CR-A4-02 | A1, D5, C5 | Wing TE ground clearance in stance equals the foot height: TE at x = 0.300 m, foot tips at 0.310 m (`P:cg.foot_height_m` = 0.01 m). A crushed foot or 10–20 mm of grass `EST` puts the whole TE on the ground. Set foot height ≥ crush stroke + grass allowance, then re-run `CL-A1-TIPOVER` and `CL-A1-BOX-FIT` (feet lengthen the 0.445 m dimension; that axis has 55 mm slack, height 10 mm). | OI-05; landing damage is the recurring mode (`CONFIGURATION.md`) |
+| CR-A4-03 | D3, D1, C4 | Decide (a) fin through a core slot vs upper/lower half-fins and the fin-tube junction (P25); (b) how the saddle carries the 0.18 m tube-to-spar offset and the core cut-out that exposes the spar at y = ±0.32 m. Tell A4 if parts split (ids `FIN-001-LU/LD…`). | OI-01, OI-02; `E-FIN-01…12` |
+| CR-A4-04 | D6, D3, B3 | The inter-panel link crosses the fin at y = 0.32 m on the hinge line (panels end at 0.30 / 0.34 m). Size a fin slot for ±25° sweep, or drop the inboard panels (CR-A1-06) and retire `WNG-011-*`, `MEC-005-*`, `E-MEC-13…16`. | OI-03 |
+| CR-A4-05 | F2, D1 | Wire channel pod → fin root per side: 2 ESC power, 2 ESC signal, 1 servo lead. Give its x position (clear of the spar slot at x = 0.080 m) and cross-section before D1 freezes the core. | OI-04; `E-HRN-02…05` |
+| CR-A4-06 | E1, E3 | E1: X3108S bolt pattern, max screw length clear of windings, prop-adapter type and thread, motor lead length (decides a phase extension). E3: motor base temperature at hover on a printed mount (PETG HDT ~70 °C `EST`), ESC cooling on a fin pad in the prop wash. | OI-06; `E-FIN-17…20`, `E-FIN-25…32`, `E-PRP-01…08` |
+| CR-A4-07 | B4, F3, D2 | Pitot at the pod nose (`POD-006`, baseline) or wing LE at y ≈ 0.15 m (30 mm from the 0.18 m disc edge). If LE, A4 re-points `E-AVN-05` to `WNG-001` and retires `POD-006`. | OI-07 |
+| CR-A4-08 | F3, F5 | Confirm the MS5525 I2C address against the chosen board's barometer (both 0x76 `UNVERIFIED`); minimum compass distance from power leads, PDB and UBEC; antenna placement clear of the CF spar and tubes; telemetry through ELRS or a separate radio. | OI-08, OI-10; `E-HRN-30…32`, `E-AVN-02/03` |
+| CR-A4-09 | F1 | Choose XT60 or AS150U for `E-HRN-10` (≥ 1.25 × 24 A = 30 A continuous, `R-DISCONNECT`); say whether `PWR-005` UBEC is needed or the FC's servo BEC carries two servos at stall. | OI-09 |
+| CR-A4-10 | C6, C4 | Joint stacks for the 19 fastened edges (`E-FIN-17…20`, `E-PRP-01…08`, `E-PWR-03`, `E-AVN-01`, `E-AVN-04`, `E-MEC-03…06`) and the 8 clamps (`E-FIN-07/08/10/11`, `E-FIN-13…16`, closing screws + slip load). Few sizes: M2, M3. | P24; merge_check fails without them |
+| CR-A4-11 | A5 | `check.py`: (a) transport parts are `flight: false` but their edges to the wing and props are still touch-checked, so D7 must model the box at the aircraft's transport position; confirm that is intended; (b) harness bundle parts `HRN-001`, `HRN-002-L/R` need bodies; (c) thermal edges `E-FIN-29…32` register as `ctx.contact`. | framework behaviour the designers rely on |
+| CR-A4-12 | F4 | Read motor and servo ports from `signal.fc_port` on `E-HRN-24…29` instead of a second table; publish the station → motor number → rotation map back to E1/F2. | one source for the output map |
+| CR-A4-13 | A2 | Give P24 (design method: every part connected and on an interface) an `R-…` id so `CL-A4-PLAN-CONNECTED` and `CL-A4-PLAN-POWERED` verify it; today only `CL-A4-FIELD-DISCONNECTS` verifies a requirement (`R-TRANSPORT`). | traceability |
+| CR-A4-14 | all designers | Declare your parts and edges with the ids, owners and acknowledgements in the register; keep ids, retire unused ones, explain any type change in `notes`. | `--compare` matches by id first, then by part pair |
+
+## Round 1 dispositions (from `params/CHANGE-LOG.md`)
+
+| CR | Result |
+|---|---|
+| CR-A4-01 | accepted as D-20; applied to the plan and `interfaces/SCHEMA.md` in A4-R2 (CR-A1-18) |
+| CR-A4-02 | accepted (D-11 feet 45 mm, D-16 box 0.50 m); OI-05 stays open for the 5 mm left after a full crush |
+| CR-A4-03 | closed by D-04 (half-fins, tube through the core, through-core block); ids split in A4-R2 |
+| CR-A4-07 | accepted (D-15, pitot on the pod nose); OI-07 closed, OI-12 opened for the plug-in boom |
+| CR-A4-04, 05, 06, 08, 09, 11, 12, 14 | forwarded by A1 to the named roles; still open |
+| CR-A4-10 | forwarded; numbers changed in A4-R2, see CR-A4-20 |
+| CR-A4-13 | closed (A2 `R-NO-FLOATING`) |
+
+## Round 2 (plan A4-R2, 2026-11-09)
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-A4-15 | A1 | (a) Assign A4 the four queued shared-tooling changes in `redesign/interfaces/`: add the 19 plan connection types to `connection_types.json`; in `merge_check.py` exempt `harness`-owned electrical edges from the `owner` warning (D-20), skip non-structural types in the floating check, and follow power wires `part_a` → `part_b` without `signal_only` leads. (b) In `params.json#fins.pieces_per_fin` change the note "ids FIN-nnn-LU/LD/RU/RD" to `FIN-001-UR/UL/LR/LL` (station suffixes, CR-A3-09 rule). | (a) the 23 harness wires each raise a `owner` WARN, so `merge_check.py --strict` cannot pass at a gate; `fusion/check.py`, `build_all.py` and the Blender backend import this module, so A4 does not change it unassigned. (b) `LU/LD/RU/RD` breaks the one suffix family rule that `mass_rollup.py` relies on |
+| CR-A4-16 | B4 | Replace the retired ids `FIN-001-L`, `FIN-001-R` in `props.py` / `claims.json` (`CL-B4-DOWNLOAD`, `-DOWNLOAD-HIGH`, `-SWIRL-FIN`, `-SWIRL-FIN-M`, `-TUBE-LOAD`, `-WING-GAP` and others) with the half-fins `FIN-001-UR/UL/LR/LL`. | `build_graph.py` warns "part not in any interfaces.json" today and will keep warning once `fins` declares the half-fins |
+| CR-A4-17 | A3 (copy D6) | `mass_model.csv`: (a) `FIN-E04` (through-core block, 2 × 20 g) already matches `FIN-004-L/R`; no change. (b) `MEC-E02` counts 4 horns; the plan has one horn per side on the inboard panel (`MEC-004-L/R`), the outboard panel being driven by the link `MEC-005`. If D6 adds outboard horns they are `MEC-006-L/R`, not a third suffix. (c) `FIN-E05` (2 × 30 g) becomes one clip set per half-fin (`FIN-005-<station>`, qty 4 × 15 g) so the line maps onto four instance nodes. | ids and quantities must match the instance nodes the designers will declare, or `mass_rollup.py` cannot map them |
+| CR-A4-18 | D3 (copy C4) | Declare the fins exactly as the A4-R2 register: half-fins `FIN-001-<station>`, block `FIN-004-L/R` with `E-FIN-07…12` all bonded (a tube clamp at `E-FIN-07/10` is an allowed deviation, say why in `notes`), lower-half edges `E-FIN-33…38`. Put the link slot (OI-03) in `FIN-001-LR/LL`. | 38 fins edges, the largest single set; `--compare` matches by id |
+| CR-A4-19 | D2, F3 | Pitot boom: socket `POD-006` with keyed total/static ports that part when the boom is pulled (`CT-PLUG-IN`, `E-AVN-05`), sized for the boom's bending load in a nose-first tip-over; carry point and "do not lift by the motors" label `POD-007` (D-23). | OI-12; README field step "plug in the pitot boom" needs a tool-free pneumatic break |
+| CR-A4-20 | C6, C4 | Joint stacks now owed for 19 fastened edges (`E-FIN-17…20`, `E-PRP-01…08`, `E-PWR-03`, `E-AVN-01`, `E-AVN-04`, `E-MEC-03…06`) and 4 clamps (`E-FIN-13…16`, closing screws + slip load above the 3.2 N·m prop-nut case and below tube damage, D-23). The R0 saddle clamps `E-FIN-07/08/10/11` are bonds now: C4 gives the `bond` block for the block joints against C1 case G2 10.7 N·m. Supersedes the numbers in CR-A4-10. | `merge_check.py` fails without the 19 stacks |
+| CR-A4-21 | D7 | Add a pitot-boom slot to the prop tray (`E-TRN-12`, tip protected) and put the spar cradles at y = ±0.20 m (`E-TRN-05/06`). | box contents per README: props off, pitot boom off |
+
+## Round 2 dispositions (from `params/CHANGE-LOG.md`)
+
+| CR | Result |
+|---|---|
+| CR-A4-15 | accepted (D-46, D-26): (a) done by A4 in A4-R3, see `INTERFACE-PLAN.md` "Tooling changes"; (b) `params.json` note now reads `FIN-001-UR/UL/LR/LL` |
+| CR-A4-16 | forwarded to B4 (half-fin ids) |
+| CR-A4-17 | forwarded to A3; R3 retires `FIN-005` entirely (collars `FIN-008`, strips `FIN-011`), see CR-A4-35 |
+| CR-A4-18 | forwarded to D3; superseded: D3 declared its own R3 numbering (`E-FIN-01…80`), adopted as baseline R3 |
+| CR-A4-19 | forwarded to D2; socket `POD-006` declared (`E-POD-07`) |
+| CR-A4-20 | closed: C6 delivered `team/C6/joint_stacks.json`; `--compare` now checks each owner's copy |
+| CR-A4-21 | forwarded to D7 (D-31); the pitot slot is in `TRN-003`, its stowed edge is `E-TRN-21` (CR-D7-09) |
+
+## Round 3 (plan A4-R3, 2026-11-09; from `--compare` on the R3 declarations)
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-A4-22 | D3 | (a) Declare the thermal edges `E-FIN-81…84` (`PRP-001-*` → `FIN-003-*`) and `E-FIN-85…88` (`PRP-002-*` → `FIN-007-*`) via `CT-THERMAL-CONTACT` (now in the library) with E3's `thermal` block. (b) `FIN-012-*` is named "0 x CF rod 2 mm" with 0.86 g each: give the rod count or set the mass to 0. (c) Move `E-FIN-49…60` from `edges_pending` to `edges` as soon as D1 declares `WNG-001/002`; acknowledge `E-HRN-03/05` when F2 publishes. | CR-E3-11; a pin set of zero rods with a mass is a roll-up error (3.4 g); 12 edges pending |
+| CR-A4-23 | D2 | (a) Add `"field_joint": true` to `E-POD-05` (pack strap, a field step). (b) Declare `E-POD-12` `PWR-001` → `POD-002` (`CT-THERMAL-CONTACT`, insulating, 47.1 °C at landing, `CL-E3-PACK-END`). (c) `E-POD-06`: your stack says brass M3 SHCS, min engagement 5.0 mm; C6's says PA66 nylon screw, 4.0 mm. Agree one stack with C6 (both are non-magnetic; nylon creeps under the mast moment). (d) Add `E-AVN-07`, `E-AVN-10` and `E-PWR-01` (now `CT-CONN-PARK`) to `acknowledges` when F3/F1 publish. | `--compare` WARN `edge-flag`, WARN `c6`; acknowledgements |
+| CR-A4-24 | D7 | (a) Rename `TRN-006-A/B` → `TRN-006-L/R` (strap either side of the box centre), or give the two straps two part numbers if they differ: `A/B` is not an instance suffix. `TRN-007-C/L/R` is accepted (side family now `L R C`). (b) Add `retention` blocks to `E-TRN-01…12` and `E-TRN-16` (13 owed). (c) E1 has declared `PRP-003-*`: declare `E-TRN-17…20` now (`"stowed": true`, `CT-TRN-POCKET`); `E-TRN-21` when F3 declares `AVN-005`. | id rule (`CL-A4-PLAN-ID-RULE`); 13 OWED rows; CR-D7-09 |
+| CR-A4-25 | E1 (copy C6) | `E-PRP-01…04`: declared engagement 2.5 mm, minimum 2.0 mm; D-41 and C6 set 1.0 d = 3.0 mm into the metal bell. Measure the bell thread depth (`T-E1-MOTOR-RM`) and either use M3x5 screws or cite the maker's depth and ask A1 for a deviation. Acknowledge `E-FIN-81…88`, `E-TRN-17…20`, `E-HRN-13…20`, `E-HRN-24…27`. | `merge_check.py` passes 2.5 ≥ 2.0 today, so only `--compare` sees it (OI-14) |
+| CR-A4-26 | D1 (copy C2, A3) | Declare `subsystems/wing/interfaces.json`: `WNG-001…003`, `WNG-004-L/R` (spar plug under the block), `WNG-005-L/R` (spar plug at the brace anchors), elevons `WNG-011/012-L/R`, label `WNG-020` with `"carried": true`; edges `E-WNG-01…11`; acknowledge the 32 ids listed for `wing` in the plan (fin roots, block and anchor bonds, foot caps `E-GER-21/22`, pod, cradles, pillars, servos, harness). Confirm the spar-plug count with C2 (C2: 6, A3: 2 + 4, plan: 2 + 2) and whether the anchor plug serves the upper and lower anchor together. | 9 dangling ERRORs in the merged graph point at `WNG-001/002`; every fins, pod and landing group floats until the wing exists (OI-02, OI-13) |
+| CR-A4-27 | F1 | Declare `subsystems/power/interfaces.json`: `PWR-001…005` (`PWR-003` = CoreWing power board, 0 g); `E-PWR-01` as `CT-CONN-PARK` (local type in the plan: the slot, not a tie, takes the unplug force), `E-PWR-02…04`; acknowledge `E-POD-05`, `E-POD-12` and the 11 power wires. | the R2 plan held the main disconnect by a cable tie only; the new load-path rule rejects that |
+| CR-A4-28 | F2 | Declare `subsystems/harness/interfaces.json`: `HRN-001`, `HRN-002-L/R` with `"carried": true`; `E-HRN-01…05` and the 23 wires `E-HRN-10…32` as in the register (AS150U on `E-HRN-10`; 8 AWG on `-11/-12`; 16 AWG ESC leads `-13…16`; inline 5 A fuse in the `wire` block of `-21`; `signal_only` on `-24…27`; F3's `signal` blocks on `-30…32`). | 23 wires, all electrical edges; `merge_check.py` now checks direction |
+| CR-A4-29 | F3 | Declare `subsystems/avionics/interfaces.json`: `AVN-001…007`; `E-AVN-01` `CT-GEL-PAD` with C6's retention block, `E-AVN-04` `CT-TAPE-FOAM`, `E-AVN-07` (isolation set, `CT-GEL-PAD`), `E-AVN-08` (microSD, local `CT-CARD-SLOT`), `E-AVN-09` (radio link from `GND-001`, `signal` block from F5), `E-AVN-10` (FC → plate thermal, 57.0 °C, `CL-E3-FC-PEAK`). | CR-F3-08, CR-F5-10, CR-E3-11 |
+| CR-A4-30 | F5 | Create `subsystems/ground/interfaces.json` with `GND-001` (transmitter, `"flight": false`, no `electrical` role) and acknowledge `E-AVN-09`. | CR-F5-10: `build_graph.py` warns `GND-001` is in no interfaces.json |
+| CR-A4-31 | A1 | (a) Add `ground` (`GND`, F5) to the README subsystem table and `fusion/STANDARDS.md`. (b) Record the widened id rule (side family `L R C`; face letter `I`/`O` for the same part twice at one station, e.g. `FIN-011-URO`) in the README. (c) The merged graph raises `cg` ERROR (x 0.060 m outside 0.050–0.055) while 6 of 11 subsystems are undeclared; read that ERROR only at a gate with every subsystem declared. | (a, b) A4-R3 tooling already accepts them; (c) partial-graph CG is not the aircraft's |
+| CR-A4-32 | A5 | (a) `merge_check.clusters()` now skips `"structural": false` types by default (`load_only=True`), so `check.py`'s CAD floating check no longer counts ties; any skeleton part held only by a tie needs `"carried": true`. `fusion/tests` 27/27 OK after the change. (b) Re-run `check.py --strict` on the R3 skeleton. | D-46 asks A5 to re-test |
+| CR-A4-33 | C6 | (a) `E-POD-06` conflicts with D2 (CR-A4-23c). (b) Your `retention` blocks use `type/crash/prep/inspection`; the schema fields are `item, count, load_n, inspection`: add `item`, `count`, `load_n` (keep the others). (c) `E-PRP-01…04` minimum engagement (CR-A4-25). | one stack per joint; `--compare` reads the schema fields |
+| CR-A4-34 | E3 | Give the `thermal` blocks for the 10 thermal edges (`E-FIN-81…88`, `E-POD-12`, `E-AVN-10`): `heat_w`, `t_max_c`, `t_ambient_c` 30, `path`, `sized_by`, `t_design_c`, claim id; owners copy them. | CR-E3-11 gives temperatures, not the heat flow per path |
+| CR-A4-35 | A3 | `mass_model.csv`: `FIN-E05` clip sets are retired in R3 (use `FIN-008` collars, `FIN-009` braces, `FIN-010` anchors, `FIN-011` strips ×8 with suffix `<station>I/O`, `FIN-012` pin sets); `GER-003-LR/LL` became `GER-008-LR/LL` (bored cartridge, D5); spar plugs per CR-A4-26. | ids must map onto the declared instance nodes |
+
+## Round 4 (plan A4-R4, integration check 2026-11-09; `INTEGRATION-CHECK.md`)
+
+| # | To | What | Why / numbers |
+|---|---|---|---|
+| CR-A4-36 | A1 (copy A3, B3, D2) | Take-off CG x 0.0577 m (18.0 % c) is 2.7 mm aft of the aft limit 0.055 m (`P:cg.x_range_m`; B3 now 0.0550) with every subsystem declared; forward pack room is 3 mm. Decide: pod group (803 g) −16 mm, or stations −27 mm, or ballast; then A1/B3 re-run `frame_claims.py` / `sc_analysis.py` (DRIFT on `CALC-A1-CG-RANGE`, `CALC-B3-CG-CHECK`). | `merge_check.py` and `check.py` `cg` ERROR; this is no longer a partial-graph artefact (CR-A4-31c) |
+| CR-A4-37 | A1 | Mass allocations exceeded: fins +9, pod +6, landing +3, power +18, harness +18, mechanisms +17 g (mechanisms 1.27 ×). Predicted 2 449 g is inside the 2 600 g gate, heaviest-pack margin 21 g. Re-allocate from avionics (−44 g) and wing (−18 g) or direct reductions. | 5 `mass` WARN in merge_check, `--strict` cannot pass |
+| CR-A4-38 | F2 | (a) Re-run `team/F2/harness.py`: all 21 parked wires (`E-HRN-02/04`, `-10…16`, `-21…32`) now have both parts declared. (b) Apply CR-F1-18: `E-HRN-21` bus → `PWR-007` fuse; new `E-HRN-33` `PWR-007` → `PWR-005`; new `E-HRN-34…37` `PRP-002-<st>` → `PWR-008-<st>` (`CT-SOLDER-DC`, ≤ 20 mm); `E-HRN-11/12` 10 AWG (declared 8). | real graph: 16 parts `unconnected`, 8 `unpowered`; after the re-run 5 stay `unconnected` (`PWR-007`, `PWR-008-*`) until (b) |
+| CR-A4-39 | D5 | Re-run `team/D5/make_interfaces.py`: `WNG-001` is declared, so `E-GER-21/22` move to `edges`; set `GER-007-L/R` `MODELLED`; give the spares `GER-005…013` `"flight": false` components or drop them from the CAD part list. | `check.py` ERROR `register` ×2 and `floating` ×2, WARN `missing` ×7, `status` ×2 |
+| CR-A4-40 | D3 | (a) Declare `E-FIN-81…88` (CR-A4-22a, still open; `CT-THERMAL-CONTACT`, E3 `thermal` blocks). (b) Acknowledge `E-PWR-11…14` (caps on the half-fins, CR-F1-22). | 8 OPEN in `--compare`; 4 `one-sided` WARN |
+| CR-A4-41 | D1 | Move `E-GER-21/22`, `E-HRN-02/04` from `acknowledges_pending` to `acknowledges` once D5 and F2 re-run. | 4 `one-sided` WARN after the re-runs |
+| CR-A4-42 | F1, F3, E1, D6 | Acknowledge the harness wires to your parts when F2 re-runs: F1 `E-HRN-10…16`, `-21…23`, `-33…37`; F3 `E-HRN-22…32` and `E-TRN-21`; E1 `E-HRN-13…20`, `-24…27`, `-34…37`; D6 `E-HRN-28/29`. | 47 `one-sided` WARN after the re-run |
+| CR-A4-43 | E1 (copy C6) | `E-PRP-01…04` prop-adapter screws: 2.5 mm engagement < 3.0 mm minimum (D-41, C6). Measure the bell thread (`T-E1-MOTOR-RM`) and use M3x5, or get an A1 deviation. Repeats CR-A4-25. | prop retention; 8 WARN in `--compare` |
+| CR-A4-44 | C6 | `joint_stacks.json`: (a) `E-PWR-03` is now the power frame `PWR-006` on four nylon M3x18 pan-head screws into the PDB-plate inserts, engagement 5.5 mm: issue that stack; (b) withdraw `E-MEC-03/04` (servo held in ear slots, no screws) and `E-PWR-05` (bus board taped). | WARN `c6` ×1, OWED ×2 |
+| CR-A4-45 | F5 | Create `subsystems/ground/interfaces.json` with `GND-001` (`"flight": false`); `E-AVN-09` is parked waiting for it (repeats CR-A4-30). | `CL-F5-LINK-MARGIN` names a part in no interfaces.json |
+| CR-A4-46 | D7 | `check.py`: tape skin `WNG-003` overlaps the fore saddles `TRN-002-L/R` by 8 mm. Model the saddle at contact, or state the foam preload in the `E-TRN-*` retention block. | 2 `transport` WARN |
+| CR-A4-47 | C4, C5 | Claims name retired ids: C4 `FIN-001-LU/LD/RU/RD` → `FIN-001-UR/UL/LR/LL`; C5 `GER-003-LR/LL` → `GER-008-LR/LL`. | `build_graph.py` warns "part not in any interfaces.json" |
+
+## Round 5 dispositions (plan A4-R5, 2026-11-10)
+
+| Request | From | Disposition | Where |
+|---|---|---|---|
+| CR-D2-20 (supersedes CR-D2-17) | D2 | Accepted and re-baselined (pod only): `POD-009` crush block and `POD-010` spreader added; `POD-008` = trim spacer set; `E-POD-10` `POD-008`–`POD-002`; `E-POD-11` `POD-009`–`POD-002`; new `E-POD-13` `POD-010`–`POD-009` `CT-SLIDE-STOP`. CR-D2-17 items (`CT-M3-PA66-NUT`, `E-POD-05` field joint, `E-POD-12` thermal, acknowledgements) unchanged | `baseline-R5.json`, `INTERFACE-PLAN.md` "What changed in A4-R5"; `--compare` 0 deviations |
+
+No new change requests from A4 this round.
+

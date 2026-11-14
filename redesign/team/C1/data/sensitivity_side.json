@@ -1,0 +1,132 @@
+{
+ "note": "Envelope outputs at the design side load (D-105 cap, pad mu 0.40), at the D-65 value (39.5 N, bare neoprene mu 0.7: what a foot without its pad face would see) and with friction x corner load only. Information only.",
+ "F_side_N": {
+  "d105_cap": 24.5,
+  "d65_mu07_39N5": 39.5,
+  "friction_only": 14.948915257431734
+ },
+ "outputs": {
+  "finjoint_M_ult": {
+   "d105_cap": 15.63424783630313,
+   "d65_mu07_39N5": 22.547565749634664,
+   "friction_only": 12.12167945518977
+  },
+  "finjoint_M_design": {
+   "d105_cap": 22.47423126468575,
+   "d65_mu07_39N5": 32.41212576509983,
+   "friction_only": 17.424914216835294
+  },
+  "finhalf_Mb_ult": {
+   "d105_cap": 12.242844430624015,
+   "d65_mu07_39N5": 16.302764780926267,
+   "friction_only": 12.214570148831921
+  },
+  "finhalf_T_lim": {
+   "d105_cap": 7.935810769466995,
+   "d65_mu07_39N5": 12.718146504076598,
+   "friction_only": 4.891204729623662
+  },
+  "finhalf_T_wingplane_lim": {
+   "d105_cap": 7.91638233935248,
+   "d65_mu07_39N5": 12.668552799861164,
+   "friction_only": 4.890490154055939
+  },
+  "wing_T_ult": {
+   "d105_cap": 8.451178161615642,
+   "d65_mu07_39N5": 8.454878501359838,
+   "friction_only": 8.448822011050769
+  },
+  "foot_F_ult": {
+   "d105_cap": 65.92987345032114,
+   "d65_mu07_39N5": 80.44317315360249,
+   "friction_only": 64.54208424744756
+  },
+  "spar_Mb_ult": {
+   "d105_cap": 19.191762739245057,
+   "d65_mu07_39N5": 20.739548435395427,
+   "friction_only": 19.191762739245057
+  },
+  "pod_F_ult": {
+   "d105_cap": 111.64915573791856,
+   "d65_mu07_39N5": 111.64915573791856,
+   "friction_only": 111.64915573791856
+  },
+  "pack_F_lim": {
+   "d105_cap": 42.57237291061053,
+   "d65_mu07_39N5": 42.57237291061053,
+   "friction_only": 42.57237291061053
+  },
+  "n_T_allow_aft": {
+   "d105_cap": 10.181330679301144,
+   "d65_mu07_39N5": 10.786507077666359,
+   "friction_only": 10.157817367972534
+  },
+  "n_T_allow_nose": {
+   "d105_cap": 4.800449368924858,
+   "d65_mu07_39N5": 4.800449368924858,
+   "friction_only": 4.800449368924858
+  }
+ },
+ "cases": {
+  "finjoint_M_ult": {
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "G2-HANG-MOTOR"
+  },
+  "finjoint_M_design": {
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "G2-HANG-MOTOR"
+  },
+  "finhalf_Mb_ult": {
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L5-CORNER-SIDE-Z",
+   "friction_only": "L1-LEVEL"
+  },
+  "finhalf_T_lim": {
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "L4-CORNER-SIDE-Y"
+  },
+  "finhalf_T_wingplane_lim": {
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "L4-CORNER-SIDE-Y"
+  },
+  "wing_T_ult": {
+   "d105_cap": "L4-CORNER-SIDE-Y",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "L4-CORNER-SIDE-Y"
+  },
+  "foot_F_ult": {
+   "d105_cap": "L5-CORNER-SIDE-Z",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "L1-LEVEL"
+  },
+  "spar_Mb_ult": {
+   "d105_cap": "L1-LEVEL",
+   "d65_mu07_39N5": "L4-CORNER-SIDE-Y",
+   "friction_only": "L1-LEVEL"
+  },
+  "pod_F_ult": {
+   "d105_cap": "L1-LEVEL",
+   "d65_mu07_39N5": "L1-LEVEL",
+   "friction_only": "L1-LEVEL"
+  },
+  "pack_F_lim": {
+   "d105_cap": "L1-LEVEL",
+   "d65_mu07_39N5": "L1-LEVEL",
+   "friction_only": "L1-LEVEL"
+  },
+  "n_T_allow_aft": {
+   "d105_cap": 10.181330679301144,
+   "d65_mu07_39N5": 10.786507077666359,
+   "friction_only": 10.157817367972534
+  },
+  "n_T_allow_nose": {
+   "d105_cap": 4.800449368924858,
+   "d65_mu07_39N5": 4.800449368924858,
+   "friction_only": 4.800449368924858
+  }
+ }
+}

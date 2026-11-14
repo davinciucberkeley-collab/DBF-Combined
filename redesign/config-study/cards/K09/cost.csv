@@ -1,0 +1,37 @@
+group,item,qty,unit_usd,ext_usd,vendor_source,date_seen,note
+propulsion,SunnySky X3108S KV900 motor (4 + 1 spare),5,24.99,124.95,SunnySky USA sunnyskyusa.com/products/sunnysky-x3108s-motors (docs/research/budget-lift.md),2026-11-01,
+propulsion,LANRC BLHeli_S 45A ESC 4-pack (4 + 4 spare),2,30.00,60.00,Amazon B0D2HS4Y4J (docs/research/bom-savings.md),2026-11-01,"45 A cont / 55 A 10 s, 2-6S"
+propulsion,"APC 11x4.5MR / MRP props (2 CW + 2 CCW fitted, 8 spare)",12,3.83,45.96,APC apcprop.com/product/11x4-5mr (docs/research/budget-lift.md),2026-11-01,1/4 in bore
+propulsion,APC LPAR06E-type adapter rings,12,0.50,6.00,APC (ESTIMATE price),2026-11-09,ESTIMATE
+battery,"OVONIC 4S 6500 130C XT60 LiPo, 2-pack (4 packs total)",2,79.25,158.50,OVONIC US store us.ovonicshop.com (2-x-ovonic-4s-6500mah-14-8v-130c...),2026-11-09,sale price (was $119.88); 680 g UNVERIFIED; fallback Admiral 4S 4000 2-pack $107 (Motion RC) if 6500 is OOS
+avionics,CoreWing F405 Wing APP V2 (pins),1,67.26,67.26,ReadyMadeRC (docs/research/budget-avionics.md),2026-10-13,ArduPilot target
+avionics,HGLRC M100-5883 GPS + compass,1,20.49,20.49,RaceDayQuads (budget-avionics.md),2026-10-13,
+avionics,NewBeeDrone BeeID v1.1 Remote ID,1,39.99,39.99,newbeedrone.com (bom-savings.md),2026-11-01,conditional: only if flown outside the RFS FRIA (D4); kept for parity with cost_model
+avionics,RadioMaster Pocket Crush ELRS transmitter,1,64.99,64.99,radiomasterrc.com (budget-avionics.md),2026-10-13,
+avionics,RadioMaster RP3 V2 ELRS receiver,1,19.99,19.99,radiomasterrc.com (budget-avionics.md),2026-10-13,
+airframe,FOAMULAR NGX F-250 XPS 2 in x 4 x 8 ft (wing cores: ~6 wings per sheet),1,59.97,59.97,Home Depot El Cerrito (docs/research/budget-airframe.md),2026-10,local pickup
+airframe,Foam board 20x30 in 10-pack (fins + first foam-board prototype),1,35.92,35.92,Amazon B074QZMLQF (budget-airframe.md),2026-10,
+airframe,"CF tube 22x20x1000 matte (spar, 2 motor tubes, 1 spare)",3,28.32,84.96,Amazon (budget-airframe.md),2026-10,overseas lead time ~2 weeks: order mid-Dec
+airframe,PETG filament 1 kg (Ambrosia),2,20.99,41.98,West3D (docs/research/airframe-materials.md),2026-10,or free Prusa PLA at Jacobs
+airframe,Scotch Heavy Duty packing tape 6 rolls,1,19.98,19.98,Amazon B000087KUA (budget-airframe.md),2026-10,
+airframe,Foam-safe glue (UHU Por / Gorilla clear),1,12.99,12.99,cost_model.py AIRFRAME (ESTIMATE vendor),2026-11,
+hardware,"Wiring + hardware kit (AS150U, 12/16 AWG, bullets, screws, inserts, Velcro, epoxy, UBEC)",1,124.01,124.01,cost_model.py HARDWARE_MIN (bom-savings.md),2026-11-01,kept at the shared floor for parity; K09 needs no horns/pushrods/hinge tape (~-$15 ESTIMATE)
+ground,HTRC C150 charger 150 W AC,1,56.99,56.99,Amazon B0H4QLJYHY (budget-energy-test.md),2026-11-01,
+ground,LiPo bag (Pyrodrone),2,9.99,19.98,Pyrodrone (cost_model.py),2026-11-01,
+ground,Ammo can (Harbor Freight 63750),1,19.99,19.99,Harbor Freight (cost_model.py),2026-11-01,
+ground,Watt meter 150 A,1,12.99,12.99,Amazon (budget-energy-test.md),2026-11-01,
+ground,IR thermometer,1,8.98,8.98,Amazon (budget-energy-test.md),2026-11-01,
+ground,Thrust stand: 20 kg load cell + HX711 + Nano,1,17.97,17.97,Amazon (budget-energy-test.md),2026-11-01,
+ground,Pinecil V2 soldering iron,1,25.99,25.99,Pine64 (cost_model.py),2026-11-01,
+ground,USB-C PD supply for iron,1,20.00,20.00,ESTIMATE,2026-11-09,ESTIMATE
+ground,Multimeter,1,25.00,25.00,ESTIMATE,2026-11-09,ESTIMATE
+ground,"Solder, flux, wick",1,15.00,15.00,ESTIMATE,2026-11-09,ESTIMATE
+ground,Hot-wire: NICE-POWER 30 V 10 A supply + Ni80 24 AWG,1,41.73,41.73,Amazon B0CRSS744F + B0CP9V3DBX (bom-savings.md),2026-11-01,
+ground,Foam-lined transport box (corrugated/plywood + packing foam),1,25.00,25.00,ESTIMATE (Home Depot),2026-11-09,ESTIMATE; the one box that carries the aircraft
+subtotal,Goods pre-tax,,,1277.56,,,
+tax,"Sales tax 10.25 % (Berkeley, CDTFA 2026-10-01)",,,130.95,cost_model.py TAX,,
+shipping,"Shipping, all vendors (class S)",,,120.00,cost_model.py SHIPPING['S'],,ESTIMATE; SunnySky/APC/OVONIC/Amazon
+TOTAL,Spend at order time (tax + shipping included),,,1528.51,,,
+reserve,Planned crash reserve (REQUIREMENTS C1),,,150.00,,,one bad crash class S = $280.21 pre-tax / $308.93 incl. tax (cost_model.py formula); K09 airframe rebuild is cheaper (~$20 of foam)
+unallocated,Left after the planned reserve,,,321.49,,,
+budget,Budget (hard),,,2000.00,,,total reserve 471.49

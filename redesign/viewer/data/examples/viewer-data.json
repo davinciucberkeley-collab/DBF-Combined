@@ -1,0 +1,821 @@
+{
+ "schema": "dbf-viewer/1",
+ "dataset": "examples",
+ "generated": "2026-11-09 12:20 UTC",
+ "sources": {
+  "glb": "redesign/blender/out/examples/glb",
+  "interfaces": "redesign/interfaces/example-output/interfaces.json",
+  "proofs": "redesign/proofs/examples/out/graph.json",
+  "budget": "redesign/fusion/examples/mass_budget.json",
+  "csv": [
+   "redesign/viewer/examples/parts.csv"
+  ]
+ },
+ "glb": {
+  "file": "assembly.glb",
+  "bytes": 158216,
+  "sha256": "1581fedb9a3b29990f88b88da4107a29f290a4c729d69616295ae873a8b54267"
+ },
+ "frame": "aircraft frame: metres, x aft, y right, z up. glTF (x, y, z) = aircraft (x, z, -y).",
+ "parts": [
+  {
+   "id": "BMS-001",
+   "name": "Boom L",
+   "subsystem": "ex_booms",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "material": "CF tube 16x14 (bought)",
+   "cg_xyz_m": [
+    0.265,
+    -0.35,
+    0.05
+   ],
+   "make_or_buy": "buy",
+   "in_model": true,
+   "vendor": "demo vendor (example only)",
+   "unit_cost_usd": 10.0,
+   "qty": 1.0,
+   "process": "cut to length",
+   "csv_ref": "redesign/viewer/examples/parts.csv row 10",
+   "spec": null
+  },
+  {
+   "id": "BMS-002",
+   "name": "Boom R",
+   "subsystem": "ex_booms",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "material": "CF tube 16x14 (bought)",
+   "cg_xyz_m": [
+    0.265,
+    0.35,
+    0.05
+   ],
+   "make_or_buy": "buy",
+   "in_model": true,
+   "vendor": "demo vendor (example only)",
+   "unit_cost_usd": 10.0,
+   "qty": 1.0,
+   "process": "cut to length",
+   "csv_ref": "redesign/viewer/examples/parts.csv row 11",
+   "spec": null
+  },
+  {
+   "id": "BMS-003",
+   "name": "Lift motor L",
+   "subsystem": "ex_booms",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "material": "motor (bought)",
+   "cg_xyz_m": [
+    -0.08,
+    -0.35,
+    0.074
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "in_model": true,
+   "vendor": "demo vendor (example only)",
+   "unit_cost_usd": 25.0,
+   "qty": 1.0,
+   "process": null,
+   "csv_ref": "redesign/viewer/examples/parts.csv row 12",
+   "spec": null
+  },
+  {
+   "id": "BMS-004",
+   "name": "Lift motor R",
+   "subsystem": "ex_booms",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "material": "motor (bought)",
+   "cg_xyz_m": [
+    -0.08,
+    0.35,
+    0.074
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "in_model": true,
+   "vendor": "demo vendor (example only)",
+   "unit_cost_usd": 25.0,
+   "qty": 1.0,
+   "process": null,
+   "csv_ref": "redesign/viewer/examples/parts.csv row 13",
+   "spec": null
+  },
+  {
+   "id": "FUS-001",
+   "name": "Fuselage box",
+   "subsystem": "ex_fuselage",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "material": "3 mm birch ply",
+   "cg_xyz_m": [
+    0.3,
+    0.0,
+    0.0
+   ],
+   "make_or_buy": "make",
+   "in_model": true,
+   "vendor": "redesign/fusion/examples/ex_fuselage/fusion/ex_fuselage.py",
+   "unit_cost_usd": 6.0,
+   "qty": 1.0,
+   "process": "laser-cut + CA",
+   "csv_ref": "redesign/viewer/examples/parts.csv row 2",
+   "spec": null
+  },
+  {
+   "id": "FUS-002",
+   "name": "Battery block",
+   "subsystem": "ex_fuselage",
+   "status": "MODELLED",
+   "mass_g": 400,
+   "material": "LiPo pack (bought)",
+   "cg_xyz_m": [
+    0.225,
+    0.0,
+    -0.032
+   ],
+   "make_or_buy": "buy",
+   "electrical": "source",
+   "in_model": true,
+   "vendor": "demo vendor (example only)",
+   "unit_cost_usd": 45.0,
+   "qty": 1.0,
+   "process": null,
+   "csv_ref": "redesign/viewer/examples/parts.csv row 3",
+   "spec": null
+  },
+  {
+   "id": "FUS-003",
+   "name": "ESC 2-in-1 with BEC",
+   "subsystem": "ex_fuselage",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "material": "PCB assembly (bought)",
+   "cg_xyz_m": [
+    0.345,
+    0.0,
+    -0.052
+   ],
+   "make_or_buy": "buy",
+   "electrical": "bus",
+   "in_model": true,
+   "vendor": "demo vendor (example only)",
+   "unit_cost_usd": 30.0,
+   "qty": 1.0,
+   "process": null,
+   "csv_ref": "redesign/viewer/examples/parts.csv row 4",
+   "spec": null
+  },
+  {
+   "id": "WNG-001",
+   "name": "Wing panel L",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "material": "XPS foam + tape skin",
+   "cg_xyz_m": [
+    0.243,
+    -0.33,
+    0.072
+   ],
+   "make_or_buy": "make",
+   "in_model": true,
+   "vendor": "redesign/fusion/examples/ex_wing/fusion/ex_wing.py",
+   "unit_cost_usd": 4.0,
+   "qty": 1.0,
+   "process": "hot-wire foam + tape",
+   "csv_ref": "redesign/viewer/examples/parts.csv row 5",
+   "spec": null
+  },
+  {
+   "id": "WNG-002",
+   "name": "Wing panel R",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "material": "XPS foam + tape skin",
+   "cg_xyz_m": [
+    0.243,
+    0.33,
+    0.072
+   ],
+   "make_or_buy": "make",
+   "in_model": true,
+   "vendor": "redesign/fusion/examples/ex_wing/fusion/ex_wing.py",
+   "unit_cost_usd": 4.0,
+   "qty": 1.0,
+   "process": "hot-wire foam + tape",
+   "csv_ref": "redesign/viewer/examples/parts.csv row 6",
+   "spec": null
+  },
+  {
+   "id": "WNG-003",
+   "name": "Spar tube 12x10",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "material": "CF tube (bought)",
+   "cg_xyz_m": [
+    0.212,
+    0.0,
+    0.066
+   ],
+   "make_or_buy": "buy",
+   "in_model": true,
+   "vendor": "demo vendor (example only)",
+   "unit_cost_usd": 12.0,
+   "qty": 1.0,
+   "process": "cut to length",
+   "csv_ref": "redesign/viewer/examples/parts.csv row 7",
+   "spec": null
+  },
+  {
+   "id": "WNG-004",
+   "name": "Aileron L",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "material": "XPS foam + tape skin",
+   "cg_xyz_m": [
+    0.36,
+    -0.375,
+    0.07
+   ],
+   "make_or_buy": "make",
+   "in_model": true,
+   "vendor": "redesign/fusion/examples/ex_wing/fusion/ex_wing.py",
+   "unit_cost_usd": 1.0,
+   "qty": 1.0,
+   "process": "hot-wire foam + tape",
+   "csv_ref": "redesign/viewer/examples/parts.csv row 8",
+   "spec": null
+  },
+  {
+   "id": "WNG-005",
+   "name": "Aileron servo L",
+   "subsystem": "ex_wing",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "material": "servo (bought)",
+   "cg_xyz_m": [
+    0.28,
+    -0.32,
+    0.071
+   ],
+   "make_or_buy": "buy",
+   "electrical": "sink",
+   "in_model": true,
+   "vendor": "demo vendor (example only)",
+   "unit_cost_usd": 9.0,
+   "qty": 1.0,
+   "process": null,
+   "csv_ref": "redesign/viewer/examples/parts.csv row 9",
+   "spec": null
+  }
+ ],
+ "edges": [
+  {
+   "id": "E-BMS-01",
+   "part_a": "BMS-001",
+   "part_b": "WNG-001",
+   "via": "CT-M3-SHCS-NYLOC",
+   "owner": "ex_booms",
+   "notes": "printed clamp under the spar line",
+   "joint_stack": {
+    "fastener": "M3x20 SHCS",
+    "count": 2,
+    "grade": "A2-70",
+    "hole": "3.4 mm clearance through clamp halves",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "M3 washer + M3 nyloc",
+    "torque": "0.5 N m",
+    "tool": "2.5 mm hex key + 5.5 mm spanner",
+    "access": "from below (-z)",
+    "install_order": 1,
+    "removal_order": 2
+   },
+   "declared_in": "ex_booms"
+  },
+  {
+   "id": "E-BMS-02",
+   "part_a": "BMS-002",
+   "part_b": "WNG-002",
+   "via": "CT-M3-SHCS-NYLOC",
+   "owner": "ex_booms",
+   "notes": "mirror of E-BMS-01",
+   "joint_stack": {
+    "fastener": "M3x20 SHCS",
+    "count": 2,
+    "grade": "A2-70",
+    "hole": "3.4 mm clearance through clamp halves",
+    "insert": "none",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "M3 washer + M3 nyloc",
+    "torque": "0.5 N m",
+    "tool": "2.5 mm hex key + 5.5 mm spanner",
+    "access": "from below (-z)",
+    "install_order": 1,
+    "removal_order": 2
+   },
+   "declared_in": "ex_booms"
+  },
+  {
+   "id": "E-BMS-03",
+   "part_a": "BMS-003",
+   "part_b": "BMS-001",
+   "via": "CT-M3-SHCS-MOTOR",
+   "owner": "ex_booms",
+   "notes": "motor on a printed boom saddle (saddle omitted in the example)",
+   "joint_stack": {
+    "fastener": "M3x8 SHCS",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "3.4 mm clearance in saddle",
+    "insert": "none (motor base tapped)",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.5 mm hex key",
+    "access": "from below (-z)",
+    "install_order": 2,
+    "removal_order": 1
+   },
+   "declared_in": "ex_booms"
+  },
+  {
+   "id": "E-BMS-04",
+   "part_a": "BMS-004",
+   "part_b": "BMS-002",
+   "via": "CT-M3-SHCS-MOTOR",
+   "owner": "ex_booms",
+   "notes": "mirror of E-BMS-03",
+   "joint_stack": {
+    "fastener": "M3x8 SHCS",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "3.4 mm clearance in saddle",
+    "insert": "none (motor base tapped)",
+    "engagement_mm": 4.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "none",
+    "torque": "snug + threadlocker",
+    "tool": "2.5 mm hex key",
+    "access": "from below (-z)",
+    "install_order": 2,
+    "removal_order": 1
+   },
+   "declared_in": "ex_booms"
+  },
+  {
+   "id": "E-FUS-01",
+   "part_a": "FUS-002",
+   "part_b": "FUS-001",
+   "via": "CT-STRAP-VELCRO",
+   "owner": "ex_fuselage",
+   "notes": "strap through two floor slots",
+   "declared_in": "ex_fuselage"
+  },
+  {
+   "id": "E-FUS-02",
+   "part_a": "FUS-003",
+   "part_b": "FUS-001",
+   "via": "CT-M3-SHCS-INSERT",
+   "owner": "ex_fuselage",
+   "notes": "",
+   "joint_stack": {
+    "fastener": "M3x10 SHCS",
+    "count": 4,
+    "grade": "A2-70",
+    "hole": "3.4 mm clearance in ESC tab; insert in floor boss",
+    "insert": "M3x5.7 brass heat-set",
+    "engagement_mm": 5.0,
+    "min_engagement_mm": 4.5,
+    "washer_nut": "M3 nylon washer",
+    "torque": "snug + threadlocker",
+    "tool": "2.5 mm hex key",
+    "access": "from above (+z) through the open top",
+    "install_order": 2,
+    "removal_order": 1
+   },
+   "declared_in": "ex_fuselage"
+  },
+  {
+   "id": "E-FUS-03",
+   "part_a": "FUS-002",
+   "part_b": "FUS-003",
+   "via": "CT-XT60",
+   "owner": "ex_fuselage",
+   "notes": "",
+   "wire": {
+    "gauge_awg": 14,
+    "connector": "XT60",
+    "route_id": "E-FUS-03",
+    "support_points": [
+     "tie to floor at x 0.31"
+    ],
+    "bend_radius_mm": 15,
+    "strain_relief": "heat-shrink over solder cups",
+    "disconnect": true
+   },
+   "declared_in": "ex_fuselage"
+  },
+  {
+   "id": "E-FUS-04",
+   "part_a": "FUS-003",
+   "part_b": "BMS-003",
+   "via": "CT-MR30",
+   "owner": "ex_fuselage",
+   "notes": "MR30 at the wing root so the wing can come off",
+   "wire": {
+    "gauge_awg": 18,
+    "connector": "MR30 at wing root",
+    "route_id": "E-FUS-04",
+    "support_points": [
+     "clip at fuselage side wall",
+     "ties on boom every 100 mm"
+    ],
+    "bend_radius_mm": 10,
+    "strain_relief": "tie at each connector",
+    "disconnect": true
+   },
+   "declared_in": "ex_fuselage"
+  },
+  {
+   "id": "E-FUS-05",
+   "part_a": "FUS-003",
+   "part_b": "BMS-004",
+   "via": "CT-MR30",
+   "owner": "ex_fuselage",
+   "notes": "mirror of E-FUS-04",
+   "wire": {
+    "gauge_awg": 18,
+    "connector": "MR30 at wing root",
+    "route_id": "E-FUS-05",
+    "support_points": [
+     "clip at fuselage side wall",
+     "ties on boom every 100 mm"
+    ],
+    "bend_radius_mm": 10,
+    "strain_relief": "tie at each connector",
+    "disconnect": true
+   },
+   "declared_in": "ex_fuselage"
+  },
+  {
+   "id": "E-FUS-06",
+   "part_a": "FUS-003",
+   "part_b": "WNG-005",
+   "via": "CT-SERVO-JR",
+   "owner": "ex_fuselage",
+   "notes": "BEC 5 V to aileron servo",
+   "wire": {
+    "gauge_awg": 26,
+    "connector": "JR 3-pin at wing root",
+    "route_id": "E-FUS-06",
+    "support_points": [
+     "tape inside wing at mid-span"
+    ],
+    "bend_radius_mm": 5,
+    "strain_relief": "tape at servo exit",
+    "disconnect": true
+   },
+   "declared_in": "ex_fuselage"
+  },
+  {
+   "id": "E-WNG-01",
+   "part_a": "WNG-003",
+   "part_b": "FUS-001",
+   "via": "CT-M4-SHCS-NYLOC",
+   "owner": "ex_wing",
+   "notes": "spar saddle on fuselage top; the one transport joint",
+   "joint_stack": {
+    "fastener": "M4x30 SHCS",
+    "count": 2,
+    "grade": "A2-70",
+    "hole": "4.5 mm clearance through saddle and spar",
+    "insert": "none",
+    "engagement_mm": 6.0,
+    "min_engagement_mm": 4.0,
+    "washer_nut": "M4 washer + M4 nyloc (2 full threads proud)",
+    "torque": "1.0 N m (check tube crush)",
+    "tool": "3 mm hex key + 7 mm spanner",
+    "access": "from above (+z), nut inside fuselage",
+    "install_order": 1,
+    "removal_order": 1
+   },
+   "declared_in": "ex_wing"
+  },
+  {
+   "id": "E-WNG-02",
+   "part_a": "WNG-001",
+   "part_b": "WNG-003",
+   "via": "CT-EPOXY",
+   "owner": "ex_wing",
+   "notes": "spar bonded in panel bore",
+   "declared_in": "ex_wing"
+  },
+  {
+   "id": "E-WNG-03",
+   "part_a": "WNG-002",
+   "part_b": "WNG-003",
+   "via": "CT-EPOXY",
+   "owner": "ex_wing",
+   "notes": "spar bonded in panel bore",
+   "declared_in": "ex_wing"
+  },
+  {
+   "id": "E-WNG-04",
+   "part_a": "WNG-004",
+   "part_b": "WNG-001",
+   "via": "CT-TAPE-HINGE",
+   "owner": "ex_wing",
+   "notes": "",
+   "motion": {
+    "axis": "Y",
+    "range_deg": [
+     -25,
+     25
+    ]
+   },
+   "declared_in": "ex_wing"
+  },
+  {
+   "id": "E-WNG-05",
+   "part_a": "WNG-005",
+   "part_b": "WNG-001",
+   "via": "CT-M2-SCREW-PLASTIC",
+   "owner": "ex_wing",
+   "notes": "servo in foam pocket on a printed frame",
+   "joint_stack": {
+    "fastener": "M2x8 pan self-tapping",
+    "count": 2,
+    "grade": "steel, zinc",
+    "hole": "1.6 mm pilot in printed frame",
+    "insert": "none",
+    "engagement_mm": 5.0,
+    "min_engagement_mm": 3.0,
+    "washer_nut": "servo grommets",
+    "torque": "snug",
+    "tool": "PH0 screwdriver",
+    "access": "from below (-z) through the servo hatch",
+    "install_order": 3,
+    "removal_order": 2
+   },
+   "declared_in": "ex_wing"
+  }
+ ],
+ "connection_types": {
+  "CT-CA": {
+   "id": "CT-CA",
+   "kind": "mechanical",
+   "method": "bonded",
+   "spec": "cyanoacrylate bond (foam-safe CA where foam)"
+  },
+  "CT-EPOXY": {
+   "id": "CT-EPOXY",
+   "kind": "mechanical",
+   "method": "bonded",
+   "spec": "epoxy bond (30 min laminating epoxy), surfaces scuffed"
+  },
+  "CT-JST-GH-6": {
+   "id": "CT-JST-GH-6",
+   "kind": "electrical",
+   "method": "connector",
+   "spec": "JST-GH 6-pin (telemetry / GPS)"
+  },
+  "CT-M2-SCREW-PLASTIC": {
+   "id": "CT-M2-SCREW-PLASTIC",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "M2 self-tapping or machine screw into printed/plastic boss (servo ears)"
+  },
+  "CT-M3-SHCS-INSERT": {
+   "id": "CT-M3-SHCS-INSERT",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "M3 SHCS into M3 brass heat-set insert"
+  },
+  "CT-M3-SHCS-MOTOR": {
+   "id": "CT-M3-SHCS-MOTOR",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "M3 SHCS into motor base tapped hole (manufacturer pattern)"
+  },
+  "CT-M3-SHCS-NYLOC": {
+   "id": "CT-M3-SHCS-NYLOC",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "M3 SHCS through clearance hole, nyloc nut"
+  },
+  "CT-M4-SHCS-NYLOC": {
+   "id": "CT-M4-SHCS-NYLOC",
+   "kind": "mechanical",
+   "method": "fastened",
+   "spec": "M4 SHCS through clearance hole, nyloc nut"
+  },
+  "CT-MR30": {
+   "id": "CT-MR30",
+   "kind": "electrical",
+   "method": "connector",
+   "spec": "MR30 3-pin (motor phases at a removable joint)"
+  },
+  "CT-PIN-HINGE": {
+   "id": "CT-PIN-HINGE",
+   "kind": "kinematic",
+   "method": "hinged",
+   "spec": "pin hinge, printed knuckles + steel pin"
+  },
+  "CT-SERVO-JR": {
+   "id": "CT-SERVO-JR",
+   "kind": "electrical",
+   "method": "connector",
+   "spec": "JR/Futaba 3-pin servo connector"
+  },
+  "CT-SOLDER-PHASE": {
+   "id": "CT-SOLDER-PHASE",
+   "kind": "electrical",
+   "method": "soldered",
+   "spec": "soldered motor phase wires, heat-shrink"
+  },
+  "CT-STRAP-VELCRO": {
+   "id": "CT-STRAP-VELCRO",
+   "kind": "mechanical",
+   "method": "strapped",
+   "spec": "hook-and-loop strap + anti-slip pad"
+  },
+  "CT-TAPE-HINGE": {
+   "id": "CT-TAPE-HINGE",
+   "kind": "kinematic",
+   "method": "hinged",
+   "spec": "tape hinge (top surface), control surface"
+  },
+  "CT-THERMAL-PAD": {
+   "id": "CT-THERMAL-PAD",
+   "kind": "thermal",
+   "method": "conductive",
+   "spec": "thermal pad between heat source and sink"
+  },
+  "CT-TUBE-CLAMP": {
+   "id": "CT-TUBE-CLAMP",
+   "kind": "mechanical",
+   "method": "clamped",
+   "spec": "printed split clamp around round tube, closed by fasteners listed in the joint stack"
+  },
+  "CT-XT60": {
+   "id": "CT-XT60",
+   "kind": "electrical",
+   "method": "connector",
+   "spec": "XT60 (battery main)"
+  },
+  "CT-XT90": {
+   "id": "CT-XT90",
+   "kind": "electrical",
+   "method": "connector",
+   "spec": "XT90 (battery main, high current)"
+  }
+ },
+ "claims": [
+  {
+   "id": "CL-EX-MTOW",
+   "title": "Take-off mass",
+   "value": 5.2,
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.mtow_max_kg",
+    "resolved": 5.5
+   },
+   "status": "VERIFIED",
+   "how": "Weigh the assembled aircraft with battery on a 10 kg scale (T-EX-WEIGH).",
+   "margin": 0.054545454545454515,
+   "parts": [
+    "FUS-001",
+    "FUS-002"
+   ]
+  },
+  {
+   "id": "CL-EX-HOVER-TW",
+   "title": "Hover thrust-to-weight",
+   "value": 2.4076923076923076,
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min",
+    "resolved": 1.6
+   },
+   "status": "CHECKED",
+   "how": "Thrust stand: one motor + 17x5.8 prop at 22.2 V, full throttle, >= 3.13 kgf (T-EX-THRUST).",
+   "margin": 0.5048076923076922,
+   "parts": [
+    "BMS-003",
+    "BMS-004"
+   ]
+  },
+  {
+   "id": "CL-EX-HOVER-I",
+   "title": "Hover pack current",
+   "value": 26.0,
+   "unit": "A",
+   "limit": null,
+   "status": "CHECKED",
+   "how": "Log battery current (power module) in a 30 s hover; compare with this value.",
+   "margin": null,
+   "parts": [
+    "FUS-002",
+    "FUS-003"
+   ]
+  },
+  {
+   "id": "CL-EX-DISCONNECT",
+   "title": "Main disconnect rating",
+   "value": 32.5,
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:harness.main_disconnect_a",
+    "resolved": 70
+   },
+   "status": "UNVERIFIED",
+   "how": "Open the Amass AS150U datasheet and confirm the continuous rating.",
+   "margin": 0.5357142857142857,
+   "parts": [
+    "FUS-002"
+   ]
+  },
+  {
+   "id": "CL-EX-ESC-CONN",
+   "title": "ESC connector rating",
+   "value": 34.625,
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:harness.esc_connector_a",
+    "resolved": 30
+   },
+   "status": "UNVERIFIED",
+   "how": "Compare the connector datasheet rating with 1.25 x the maker's maximum motor current.",
+   "margin": -0.15416666666666667,
+   "parts": [
+    "FUS-003"
+   ]
+  },
+  {
+   "id": "CL-EX-STALL",
+   "title": "Stall speed at MTOW",
+   "value": 12.557176592796806,
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.stall_max_ms",
+    "resolved": 13.0
+   },
+   "status": "UNVERIFIED",
+   "how": "Replace ASM-EX-CLMAX with the aero analysis CLmax; flight: slow-flight stall at MTOW with airspeed logging.",
+   "margin": 0.03406333901563034,
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-004"
+   ]
+  },
+  {
+   "id": "CL-EX-SPAR",
+   "title": "Spar design stress",
+   "value": 122.25156550863848,
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "ref": "P:wing.spar_yield_mpa",
+    "resolved": 240
+   },
+   "status": "CHECKED",
+   "how": "Wingtip load test: support at the root, hang n*m*g/2 spread over each half, check no permanent set.",
+   "margin": 0.4906184770473397,
+   "parts": [
+    "WNG-003"
+   ]
+  }
+ ],
+ "proofs_viewer": "../proofs/viewer/index.html?data=examples#node={id}",
+ "budget": {
+  "_note": "Example mass budget for the generic test aircraft (format proposed for redesign/params/mass_budget.json).",
+  "limit_g": 2000,
+  "allocations_g": {
+   "ex_fuselage": 650,
+   "ex_wing": 600,
+   "ex_booms": 320
+  },
+  "cg_x_m": [
+   0.18,
+   0.24
+  ]
+ },
+ "warnings": []
+}

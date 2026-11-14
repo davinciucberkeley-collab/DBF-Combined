@@ -1,0 +1,33 @@
+{
+ "_note": "Figure spec for the generic example aircraft (redesign/fusion/examples). Not a design. Format: see render_figures.py.",
+ "scene": "studio",
+ "figures": [
+  {"id": "iso", "camera": "iso",
+   "callouts": ["FUS-001", "WNG-001", "WNG-003", "WNG-004", "WNG-002", "BMS-001", "BMS-003"],
+   "caption": {"title": "Example aircraft (generic test geometry)", "sub": "Built in Blender from the same build(ctx) modules as the Fusion assembly"}},
+  {"id": "exploded", "camera": {"preset": "iso", "el": 24}, "explode": {"factor": 1.0},
+   "callouts": "parts",
+   "caption": {"title": "Exploded view: every part and its part id", "sub": "Offsets follow the assembly vectors from the interface graph; bonded parts stay together"}},
+  {"id": "aileron_closeup", "camera": {"preset": "closeup", "fit": ["WNG-004", "WNG-005"], "az": 112, "el": 16, "lens": 45},
+   "focus": ["WNG-004"], "pose": {"E-WNG-04": 20},
+   "callouts": ["E-WNG-04", "WNG-005"],
+   "caption": {"title": "Aileron at +20 deg on its tape hinge", "sub": "Check: full travel -25 to +25 deg without binding"}},
+  {"id": "top", "camera": "top", "caption": {"title": "Top view"}},
+  {"id": "side", "camera": "side", "caption": {"title": "Left side view"}}
+ ],
+ "steps": {
+  "prefix": "step", "scene": "workbench", "camera": {"preset": "iso", "fit": "all"}, "rest": "hide",
+  "list": [
+   {"title": "Fit the ESC and battery in the fuselage box", "check": "ESC screws snug, battery cannot slide with the strap closed",
+    "add": ["FUS-001", "FUS-002", "FUS-003", "E-FUS-03"], "xray": ["FUS-001"],
+    "camera": {"preset": "closeup", "fit": ["FUS-001"], "az": 145, "el": 38},
+    "callouts": ["FUS-002", "E-FUS-01", "E-FUS-02", "E-FUS-03"]},
+   {"title": "Mount the wing on the fuselage", "check": "spar sits flat in the saddle; nyloc nuts 2 threads proud",
+    "add": ["WNG-*", "E-FUS-06"],
+    "callouts": ["WNG-001", "WNG-003", "E-WNG-01", "WNG-005", "WNG-004"]},
+   {"title": "Clamp the booms and fit the lift motors", "check": "motors spin freely; leads plugged in at the wing root",
+    "add": ["BMS-*", "E-FUS-04", "E-FUS-05"],
+    "callouts": ["BMS-001", "E-BMS-01", "BMS-003", "E-BMS-03", "E-FUS-04"]}
+  ]
+ }
+}

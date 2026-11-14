@@ -1,0 +1,403 @@
+{
+ "concept": "B09 Flightory Stallion VTOL, bought files, printed LW-PLA/PETG airframe, tilt-tri",
+ "mission": "REQUIREMENTS.md s3 M-A default",
+ "mass_items_g": [
+  {
+   "group": "printed",
+   "item": "2 VTOL wing halves LW-PLA incl. nacelles, ailerons/flaperons, ESTIMATE",
+   "g": 380
+  },
+  {
+   "group": "printed",
+   "item": "fuselage + hatch LW-PLA, ESTIMATE",
+   "g": 250
+  },
+  {
+   "group": "printed",
+   "item": "V-tail halves LW-PLA, ESTIMATE",
+   "g": 70
+  },
+  {
+   "group": "printed",
+   "item": "PETG hard points: spar roots, tilt mounts, motor mounts, boom clamps, skids, ESTIMATE",
+   "g": 100
+  },
+  {
+   "group": "carbon",
+   "item": "main spar 10x8x800 (calc)",
+   "g": 35.1
+  },
+  {
+   "group": "carbon",
+   "item": "secondary spar 8x6x600 (calc)",
+   "g": 20.5
+  },
+  {
+   "group": "carbon",
+   "item": "2x wing spar 6x4x435 (calc)",
+   "g": 21.2
+  },
+  {
+   "group": "carbon",
+   "item": "tail boom 16x14x430 (calc)",
+   "g": 31.4
+  },
+  {
+   "group": "carbon",
+   "item": "4x V-tail spar 4x2x255 (calc)",
+   "g": 14.9
+  },
+  {
+   "group": "propulsion",
+   "item": "3x Emax ECO II 2807 1700KV (47.9 g + leads) [E1]",
+   "g": 162
+  },
+  {
+   "group": "propulsion",
+   "item": "3x 7x5 two-blade props, ESTIMATE",
+   "g": 27
+  },
+  {
+   "group": "propulsion",
+   "item": "3x LANRC 45A BLHeli_S ESC (6.6 g listing, as K06)",
+   "g": 19.8
+  },
+  {
+   "group": "propulsion",
+   "item": "motor/ESC wiring, XT60s, 14 AWG runs through wing, ESTIMATE",
+   "g": 85
+  },
+  {
+   "group": "tilt",
+   "item": "2x PowerHD 1810MG class tilt servo (~16 g, ESTIMATE)",
+   "g": 32
+  },
+  {
+   "group": "tilt",
+   "item": "2x 3x8x4 flange bearings + M3 pivot hardware [F2], ESTIMATE",
+   "g": 8
+  },
+  {
+   "group": "control",
+   "item": "4x EMAX ES08MA II (12 g) ailerons + ruddervators",
+   "g": 48
+  },
+  {
+   "group": "control",
+   "item": "horns, pushrods, hinges (printed-in), ESTIMATE",
+   "g": 15
+  },
+  {
+   "group": "avionics",
+   "item": "SpeedyBee F405 Wing + cables, ESTIMATE",
+   "g": 32
+  },
+  {
+   "group": "avionics",
+   "item": "GPS/compass M10 class, ESTIMATE",
+   "g": 12
+  },
+  {
+   "group": "avionics",
+   "item": "ELRS RP3 V2 receiver + antenna",
+   "g": 4
+  },
+  {
+   "group": "avionics",
+   "item": "MS5525/4525 airspeed + pitot + tubing, ESTIMATE",
+   "g": 15
+  },
+  {
+   "group": "avionics",
+   "item": "BeeID Remote ID (conditional, carried in mass), ESTIMATE",
+   "g": 7
+  },
+  {
+   "group": "avionics",
+   "item": "AS150U disconnect + pack lead, ESTIMATE",
+   "g": 25
+  },
+  {
+   "group": "hardware",
+   "item": "M3 screws, heat-set inserts, CA/epoxy, ESTIMATE",
+   "g": 40
+  }
+ ],
+ "baseline": {
+  "battery": {
+   "name": "Ovonic 4S 5000 50C XT60",
+   "mAh": 5000,
+   "cells": 4,
+   "g": 448,
+   "usd": 48.57,
+   "Wh": 74.0,
+   "usable_Wh": 59.2,
+   "hover_C": 7.4
+  },
+  "mass_g": {
+   "groups": {
+    "printed": 800,
+    "carbon": 123,
+    "propulsion": 294,
+    "tilt": 40,
+    "control": 63,
+    "avionics": 95,
+    "hardware": 40
+   },
+   "contingency": 145,
+   "battery": 448,
+   "growth": 250.0,
+   "mtow": 2298,
+   "flightory_AUW_band_g": [
+    2000,
+    3000
+   ],
+   "inside_band": true
+  },
+  "wing": {
+   "span_m": 1.34,
+   "area_m2": 0.268,
+   "AR": 6.7,
+   "wing_loading_kg_m2": 8.58,
+   "CLmax": 1.2,
+   "stall_m_s": 10.7,
+   "transition_min_m_s": 13.9,
+   "flightory_optimal_m_s": [
+    16.7,
+    19.4
+   ]
+  },
+  "hover": {
+   "n_lift": 3,
+   "front_motor_g": 726,
+   "rear_motor_g": 847,
+   "TW_total": 2.74,
+   "TW_worst_motor": 2.48,
+   "TW_worst_motor_with_sag": 2.23,
+   "TW_gate": 1.6,
+   "passes": true,
+   "disk_loading_N_m2": 302.7,
+   "FMxeta_at_max": 0.436,
+   "FMxeta_hover": 0.501,
+   "P_hover_W": 551,
+   "I_hover_A": 37.2,
+   "I_worst_motor_hover_A": 14.4,
+   "I_transition_A": 49.0,
+   "I_full_throttle_A": 156.0,
+   "ESC_rating_A": 45.0,
+   "ESC_below_motor_peak": true,
+   "disconnect_rating_needed_A": 61.3,
+   "gust8_side_tilt_deg": 11.8
+  },
+  "cruise": {
+   "CD0": 0.04,
+   "e": 0.8,
+   "best_speed_m_s": 14.0,
+   "LD": 10.13,
+   "P_elec_W": 74.6,
+   "I_A": 5.0,
+   "rpm_needed": 7874,
+   "rpm_available_loaded": 21386,
+   "sweep": [
+    {
+     "v": 14.0,
+     "cl": 0.701,
+     "LD": 10.13,
+     "drag_N": 2.23,
+     "p_elec_W": 74.6,
+     "rpm_needed": 7874,
+     "ok_vs": true
+    },
+    {
+     "v": 14.5,
+     "cl": 0.653,
+     "LD": 10.0,
+     "drag_N": 2.26,
+     "p_elec_W": 78.3,
+     "rpm_needed": 8155,
+     "ok_vs": true
+    },
+    {
+     "v": 15.0,
+     "cl": 0.61,
+     "LD": 9.83,
+     "drag_N": 2.29,
+     "p_elec_W": 82.4,
+     "rpm_needed": 8436,
+     "ok_vs": true
+    },
+    {
+     "v": 15.5,
+     "cl": 0.572,
+     "LD": 9.62,
+     "drag_N": 2.34,
+     "p_elec_W": 87.0,
+     "rpm_needed": 8718,
+     "ok_vs": true
+    },
+    {
+     "v": 16.0,
+     "cl": 0.537,
+     "LD": 9.4,
+     "drag_N": 2.4,
+     "p_elec_W": 91.9,
+     "rpm_needed": 8999,
+     "ok_vs": true
+    },
+    {
+     "v": 16.5,
+     "cl": 0.505,
+     "LD": 9.15,
+     "drag_N": 2.46,
+     "p_elec_W": 97.3,
+     "rpm_needed": 9280,
+     "ok_vs": true
+    },
+    {
+     "v": 17.0,
+     "cl": 0.475,
+     "LD": 8.9,
+     "drag_N": 2.53,
+     "p_elec_W": 103.2,
+     "rpm_needed": 9561,
+     "ok_vs": true
+    },
+    {
+     "v": 17.5,
+     "cl": 0.448,
+     "LD": 8.63,
+     "drag_N": 2.61,
+     "p_elec_W": 109.4,
+     "rpm_needed": 9843,
+     "ok_vs": true
+    },
+    {
+     "v": 18.0,
+     "cl": 0.424,
+     "LD": 8.37,
+     "drag_N": 2.69,
+     "p_elec_W": 116.2,
+     "rpm_needed": 10124,
+     "ok_vs": true
+    },
+    {
+     "v": 18.5,
+     "cl": 0.401,
+     "LD": 8.1,
+     "drag_N": 2.78,
+     "p_elec_W": 123.4,
+     "rpm_needed": 10405,
+     "ok_vs": true
+    },
+    {
+     "v": 19.0,
+     "cl": 0.38,
+     "LD": 7.83,
+     "drag_N": 2.88,
+     "p_elec_W": 131.0,
+     "rpm_needed": 10686,
+     "ok_vs": true
+    },
+    {
+     "v": 19.5,
+     "cl": 0.361,
+     "LD": 7.56,
+     "drag_N": 2.98,
+     "p_elec_W": 139.2,
+     "rpm_needed": 10967,
+     "ok_vs": true
+    },
+    {
+     "v": 20.0,
+     "cl": 0.343,
+     "LD": 7.31,
+     "drag_N": 3.09,
+     "p_elec_W": 147.8,
+     "rpm_needed": 11249,
+     "ok_vs": true
+    }
+   ]
+  },
+  "endurance": {
+   "hover_only_min": 5.2,
+   "cruise_min_after_2min_hover": 18.7,
+   "threshold_min": 5.0,
+   "objective_min": 10.0,
+   "meets_threshold": true,
+   "meets_objective": true,
+   "pack_Wh_needed_for_objective": 57.1,
+   "E_hover_Wh": 18.4,
+   "E_transition_Wh": 5.7
+  },
+  "tilt_servo": {
+   "gyro_moment_Nm": 0.065,
+   "servo_stall_Nm_6V": 0.38,
+   "margin_6V": 5.9,
+   "note": "thrust-line offset and aero moments on the nacelle not modelled; bench-test it"
+  },
+  "geometry": {
+   "front_arm_x_m": 0.21,
+   "rear_arm_x_m": 0.36,
+   "front_arm_y_m": 0.22,
+   "prop_tip_gap_between_front_props_m": 0.262
+  },
+  "packed": {
+   "box_LxWxH_m": [
+    1.09,
+    0.44,
+    0.31
+   ],
+   "longest_piece_m": 0.99,
+   "pieces": "fuselage+boom+V-tail (1), wing halves (2), 10 mm main spar (1), 3 props, battery",
+   "passes_C3a": true
+  },
+  "printing": {
+   "LWPLA_g": 700,
+   "PETG_g": 100,
+   "printer_hours": 100,
+   "calendar_days": 6.2,
+   "wing_half_reprint_h": 24.7
+  }
+ },
+ "battery_trade": {
+  "Ovonic 4S 3300 50C (ESTIMATE mass/price)": {
+   "mtow_g": 2180,
+   "TW_worst_sag": 2.35,
+   "hover_only_min": 3.7,
+   "cruise_min_after_2min_hover": 7.5,
+   "threshold_min": 5.0,
+   "objective_min": 10.0,
+   "meets_threshold": true,
+   "meets_objective": false,
+   "pack_Wh_needed_for_objective": 53.4,
+   "E_hover_Wh": 17.0,
+   "E_transition_Wh": 5.3
+  },
+  "Ovonic 4S 5000 50C XT60": {
+   "mtow_g": 2298,
+   "TW_worst_sag": 2.23,
+   "hover_only_min": 5.2,
+   "cruise_min_after_2min_hover": 18.7,
+   "threshold_min": 5.0,
+   "objective_min": 10.0,
+   "meets_threshold": true,
+   "meets_objective": true,
+   "pack_Wh_needed_for_objective": 57.1,
+   "E_hover_Wh": 18.4,
+   "E_transition_Wh": 5.7
+  },
+  "Ovonic 4S 6500 (cost_model.py pack_S, ESTIMATE mass)": {
+   "mtow_g": 2440,
+   "TW_worst_sag": 2.1,
+   "hover_only_min": 6.1,
+   "cruise_min_after_2min_hover": 25.7,
+   "threshold_min": 5.0,
+   "objective_min": 10.0,
+   "meets_threshold": true,
+   "meets_objective": true,
+   "pack_Wh_needed_for_objective": 62.6,
+   "E_hover_Wh": 20.1,
+   "E_transition_Wh": 6.3
+  }
+ }
+}

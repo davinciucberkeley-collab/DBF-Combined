@@ -1,0 +1,313 @@
+{
+ "id": "aileron_closeup",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "studio",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 17.53,
+ "explode": 0.0,
+ "camera": {
+  "preset": "closeup",
+  "az_deg": 112,
+  "el_deg": 16,
+  "ortho": false,
+  "lens_mm": 45,
+  "location_m": [
+   0.4871,
+   -0.7664,
+   0.1537
+  ],
+  "fit": [
+   "WNG-004",
+   "WNG-005"
+  ],
+  "frame": [
+   0.22,
+   0.78,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Aileron at +20 deg on its tape hinge",
+  "sub": "Check: full travel -25 to +25 deg without binding"
+ },
+ "subject_px": [
+  -907,
+  18,
+  2624,
+  799
+ ],
+ "callouts": [
+  {
+   "item": "E-WNG-04",
+   "x": 837.2,
+   "y": 329.3,
+   "title": "E-WNG-04",
+   "text": "tape hinge",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.3375,
+    -0.375,
+    0.0713
+   ]
+  },
+  {
+   "item": "WNG-005",
+   "x": 699.8,
+   "y": 273.8,
+   "title": "WNG-005",
+   "text": "Aileron servo L",
+   "detail": null,
+   "role": "context",
+   "occluded": true,
+   "world_m": [
+    0.28,
+    -0.32,
+    0.071
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "FUS-001",
+   "role": "context",
+   "name": "Fuselage box",
+   "status": "MODELLED",
+   "mass_g": 180,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    350,
+    134,
+    2001,
+    613
+   ]
+  },
+  {
+   "id": "FUS-002",
+   "role": "context",
+   "name": "Battery block",
+   "status": "MODELLED",
+   "mass_g": 400,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    706,
+    306,
+    1107,
+    490
+   ]
+  },
+  {
+   "id": "FUS-003",
+   "role": "context",
+   "name": "ESC 2-in-1 with BEC",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    1118,
+    438,
+    1266,
+    499
+   ]
+  },
+  {
+   "id": "WNG-001",
+   "role": "context",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    -907,
+    111,
+    1158,
+    754
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    793,
+    30,
+    1378,
+    160
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "context",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    -327,
+    58,
+    1177,
+    540
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "role": "focus",
+   "name": "Aileron L",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    358,
+    196,
+    1248,
+    799
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "role": "context",
+   "name": "Aileron servo L",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    608,
+    224,
+    790,
+    327
+   ]
+  },
+  {
+   "id": "BMS-001",
+   "role": "context",
+   "name": "Boom L",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    -542,
+    249,
+    2624,
+    605
+   ]
+  },
+  {
+   "id": "BMS-003",
+   "role": "context",
+   "name": "Lift motor L",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    -534,
+    114,
+    -346,
+    269
+   ]
+  },
+  {
+   "id": "BMS-002",
+   "role": "context",
+   "name": "Boom R",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    561,
+    87,
+    1984,
+    167
+   ]
+  },
+  {
+   "id": "BMS-004",
+   "role": "context",
+   "name": "Lift motor R",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    587,
+    18,
+    660,
+    92
+   ]
+  },
+  {
+   "id": "E-FUS-03",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    1082,
+    403,
+    1132,
+    454
+   ]
+  },
+  {
+   "id": "E-FUS-04",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    -411,
+    229,
+    1187,
+    490
+   ]
+  },
+  {
+   "id": "E-FUS-05",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    637,
+    89,
+    1251,
+    447
+   ]
+  },
+  {
+   "id": "E-FUS-06",
+   "role": "context",
+   "name": "",
+   "status": null,
+   "mass_g": null,
+   "subsystem": "ex_fuselage",
+   "bbox_px": [
+    698,
+    188,
+    1224,
+    495
+   ]
+  }
+ ],
+ "hidden": [],
+ "clipped": [],
+ "legend": [
+  "context",
+  "focus"
+ ],
+ "files": {
+  "png": "aileron_closeup.png",
+  "jpg": "aileron_closeup.jpg"
+ }
+}

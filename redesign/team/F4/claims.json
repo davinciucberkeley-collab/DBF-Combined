@@ -1,0 +1,2303 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/F4/fsw_check.py",
+ "params": [
+  "../../params/params.json",
+  "../../subsystems/flight-software/params.json",
+  "../../subsystems/fins/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-F4-AP-TAILSITTER",
+   "type": "source",
+   "title": "ArduPilot Plane: Tailsitter planes guide",
+   "kind": "doc",
+   "url": "https://ardupilot.org/plane/docs/guide-tailsitter.html",
+   "checked": "2026-11-09",
+   "note": "Q_TAILSIT_MOTMX, RAT_FW/VT, ANGLE, GSCMSK bits, DSKLD, Q_OPTIONS bits 7/8/18"
+  },
+  {
+   "id": "SRC-F4-AP-SRC",
+   "type": "source",
+   "title": "ArduPilot master source: quadplane.cpp, tailsitter.cpp, Parameters.cpp, AP_MotorsMulticopter.cpp, AC_WPNav.cpp, AP_FixedWing.h",
+   "kind": "code",
+   "url": "https://github.com/ArduPilot/ardupilot",
+   "checked": "2026-11-09",
+   "note": "parameter names, units, ranges; output_motor_mask(): diff = roll_factor * rudder_dt * 0.5; AIRSPEED_MIN/MAX are AP_Int16; Q_M_SPIN_MAX documented range 0.9-1.0"
+  },
+  {
+   "id": "ASM-F4-DT-MIX",
+   "type": "assumption",
+   "title": "Differential-thrust mixing in fixed-wing flight",
+   "text": "Per-motor output = throttle + roll_factor * rudder_dt * 0.5 with Quad-X roll factors normalised to +/-0.5, so full rudder moves each motor by 0.25 x RUDD_DT_GAIN/100",
+   "basis": "SRC-F4-AP-SRC AP_MotorsMulticopter::output_motor_mask and AP_MotorsMatrix::normalise_rpy_factors",
+   "value": 0.25,
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-F4-AP-SRC"
+   ]
+  },
+  {
+   "id": "ASM-F4-FW-PASSTHRU",
+   "type": "assumption",
+   "title": "Fixed-wing motor output bypasses Q_M_SPIN_MAX",
+   "text": "In fixed-wing flight the tailsitter sends throttle to the motors through output_motor_mask(); whether that path applies thrust_to_actuator() (Q_M_SPIN_MIN/MAX, Q_M_THST_EXPO) is not settled from source here. F4 uses the higher of the two outputs (pass-through or linearised) for every speed and rpm cap; the two agree within 0.01 at THR_MAX 70",
+   "basis": "tailsitter.cpp output(), AP_MotorsMulticopter::output_motor_mask(); SITL S4 logs RCOU at FW full throttle and settles which path the build uses",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-F4-AP-SRC"
+   ]
+  },
+  {
+   "id": "ASM-F4-RPM-LIN",
+   "type": "assumption",
+   "title": "Level-flight top speed scales with motor output",
+   "text": "At the top of the level-speed range the 11x5.5 prop runs near its pitch speed, so rpm ~ output x pack voltage and VMAX ~ rpm; B1's VMAX at 9 350 rpm (output 0.849 on 16.8 V) scales by output",
+   "basis": "team/B1/CHANGE-REQUESTS.md CR-B1-17 (7 950 rpm -> 21.8 m/s, 8 000 -> 21.9, 8 590 -> 23.6: ~linear); first full-throttle level log (H2) replaces it",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-FW-RPM-REQ",
+   "type": "assumption",
+   "title": "Fixed-wing rpm that holds level speed at 21.8 m/s",
+   "text": "<= 7 950 rpm (B1 option b); 21.8 m/s = VD 27.2 / 1.25, the VH C1's VD assumes",
+   "basis": "team/B1/CHANGE-REQUESTS.md CR-B1-17; team/C1/CHANGE-REQUESTS.md CR-C1-20 (recommended option)",
+   "value": 7950,
+   "unit": "rpm",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-THRUST-SQ",
+   "type": "assumption",
+   "title": "Thrust varies with output squared",
+   "text": "Static thrust per motor T = k a^2, with k from the hover point (Q_M_THST_HOVER)",
+   "basis": "rpm ~ duty x V and T ~ rpm^2; good to ~10 % between 0.2 and 0.85 output; the stand replaces it",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-YAW-M-REQ",
+   "type": "assumption",
+   "title": "Cruise yaw moment to hold",
+   "text": "1.0 N*m at beta 10 deg (B3's N_req 0.9985 N*m, R0 geometry with Cn_beta -0.105; smaller at R1 where Cn_beta is +0.044)",
+   "basis": "team/B3/claims.json CALC-B3-YAW-ACTIVE, CR-B3-04",
+   "value": 1.0,
+   "unit": "N*m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-ARSPD-CAP",
+   "type": "assumption",
+   "title": "Airspeed ceiling asked by C1",
+   "text": "ARSPD_FBW_MAX (= AIRSPEED_MAX in 4.5+) <= 22 m/s",
+   "basis": "team/C1/CHANGE-REQUESTS.md CR-C1-08; CR-A1-36",
+   "value": 22.0,
+   "unit": "m/s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F4-VA-SCHED",
+   "type": "assumption",
+   "title": "Speed up to which full elevon travel is allowed",
+   "text": "VA 20.5 m/s: full travel to VA, <= 1/3 at VD 27.2 (D-29, FAR 23.441 practice). C1's current CL-C1-VA is 21.96 m/s; the lower is used",
+   "basis": "params/CHANGE-LOG.md D-29; team/C1/CHANGE-REQUESTS.md CR-C1-15",
+   "value": 20.5,
+   "unit": "m/s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F4-TORSION-HI",
+   "type": "assumption",
+   "title": "Top of the antisymmetric wing torsion band",
+   "text": "11.7-14.9 Hz over C2's stiffness corners; 14.9 Hz is the upper corner",
+   "basis": "team/C2/CHANGE-REQUESTS.md CR-C2-03 (CL-C2-F-TORSION-ANTI is the low corner)",
+   "value": 14.9,
+   "unit": "Hz",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-XOVER-MAX",
+   "type": "assumption",
+   "title": "Hover rate-loop crossover ceiling, roll",
+   "text": "<= 4.5 Hz: B3's pitch ceiling (CL-B3-XOVER-MAX-PITCH, 6 dB / 45 deg with the torsion mode in the loop) also used for copter roll, which B3 did not bound; tighter than D-45's 5 Hz",
+   "basis": "team/B3/CHANGE-REQUESTS.md CR-B3-19; params/CHANGE-LOG.md D-45",
+   "value": 4.5,
+   "unit": "Hz",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F4-HOVER-DIFF",
+   "type": "assumption",
+   "title": "Differential thrust reserved for hover control",
+   "text": "30 % of hover thrust per motor on top of the pitch-trim split (R-HOVER-AUTHORITY cap)",
+   "basis": "team/A2/REQUIREMENTS.md R-HOVER-AUTHORITY",
+   "value": 0.3,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F4-SAG",
+   "type": "assumption",
+   "title": "Thrust factor of a sagged pack",
+   "text": "0.76 of fresh-pack thrust at the same output (D-35)",
+   "basis": "params/CHANGE-LOG.md D-35; team/B1/CHANGE-REQUESTS.md CR-B1-12",
+   "value": 0.76,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-FILT-SEP",
+   "type": "assumption",
+   "title": "Filter separation from the torsion mode",
+   "text": "gyro and D-term low-pass >= 2 x the torsion band",
+   "basis": "team/C2/CHANGE-REQUESTS.md CR-C2-03",
+   "value": 2.0,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F4-QT-ARM",
+   "type": "assumption",
+   "title": "Prop torque-to-thrust ratio Q/T",
+   "text": "0.020 m for an APC 11x5.5 near hover (Cq D / Ct with Ct ~0.10, Cp ~0.045)",
+   "basis": "APC static data class values; B4/E1 stand replaces it",
+   "value": 0.02,
+   "unit": "m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-REACT",
+   "type": "assumption",
+   "title": "Pilot cut reaction at a seen touchdown",
+   "text": "0.25 s from contact to switch movement, anticipated event",
+   "basis": "simple visual reaction time 0.2-0.25 s; H2 logs 20 twin touchdowns",
+   "value": 0.25,
+   "unit": "s",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-SPINDOWN",
+   "type": "assumption",
+   "title": "Thrust decay after motor stop",
+   "text": "0.15 s from stop command to thrust below the spin-min level (11-inch prop, active braking off)",
+   "basis": "estimate; ESC log on the stand (GT-02d)",
+   "value": 0.15,
+   "unit": "s",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-TD-REQ",
+   "type": "assumption",
+   "title": "Time from touchdown to spin-min",
+   "text": "<= 0.5 s (C5: above 0.72 W at contact a 10 deg tilt tips over)",
+   "basis": "team/C5/CHANGE-REQUESTS.md CR-C5-05b",
+   "value": 0.5,
+   "unit": "s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F4-MIN-FACTOR",
+   "type": "assumption",
+   "title": "TECS floor above stall",
+   "text": "AIRSPEED_MIN >= 1.2 x trimmed stall speed, wings level; stall prevention (AIRSPEED_STALL) raises it in turns",
+   "basis": "usual ArduPilot practice; B1 CR-B1-12 sets 15 m/s = 1.26 Vs",
+   "value": 1.2,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F4-AVN-POINTS",
+   "type": "assumption",
+   "title": "IMU and GPS centres in the aircraft frame",
+   "text": "IMU (-0.010, 0.046, 0.039) m: F3's FC point with the board 4 mm higher (old IMU z 0.035 + 0.004); GPS centre (0.075, 0, 0.178) m",
+   "basis": "team/F3/CHANGE-REQUESTS.md CR-F3-20 (F3's CALC-F3-OFFSETS still holds the R3 layout); re-measure as built",
+   "value": {
+    "imu": [
+     -0.01,
+     0.046,
+     0.039
+    ],
+    "gps": [
+     0.075,
+     0.0,
+     0.178
+    ]
+   },
+   "unit": "m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F4-THETA-DN",
+   "type": "assumption",
+   "title": "Servo angle for 25 deg TE down",
+   "text": "-42.9 deg (D6 linkage solution)",
+   "basis": "team/D6/claims.json CALC-D6-KIN output theta_dn_deg -42.87 (no claim id published; CR-D6-09 quotes it)",
+   "value": -42.87,
+   "unit": "deg",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F4-AP-PDEF",
+   "type": "source",
+   "title": "ArduPilot Plane parameter definitions, stable-4.7.1 (apm.pdef.xml, tag Plane-4.7.1 dbe79216)",
+   "kind": "doc",
+   "url": "https://autotest.ardupilot.org/Parameters/versioned/Plane/stable-4.7.1/apm.pdef.xml",
+   "checked": "2026-11-13",
+   "note": "5 721 parameter names; name list committed as team/F4/ap_plane_param_names_4.7.1.txt. The stable-4.7.2 folder is not published (HTTP 404 on 2026-11-13); the latest-master list gives the same result for K09L.param"
+  },
+  {
+   "id": "SRC-F4-AP-RELNOTES",
+   "type": "source",
+   "title": "ArduPlane ReleaseNotes.txt at tag Plane-4.7.2",
+   "kind": "doc",
+   "url": "https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/ArduPlane/ReleaseNotes.txt",
+   "checked": "2026-11-13",
+   "note": "4.7.2: CoreWing F405 Wing V2 board added (PR 33717). 4.7.0: FS_SHORT_TIMEOUT removed (PR 30350), RC_FS_TIMEOUT added (PR 31441), ATC_ACC_R/P/Y_MAX renamed and scaled to deg/s/s (PR 32192), QuadPlane attitude and position control converted to SI units (PR 30683)"
+  },
+  {
+   "id": "SRC-F4-AP-EVENTS",
+   "type": "source",
+   "title": "ArduPlane/events.cpp and radio.cpp at tag Plane-4.7.2",
+   "kind": "code",
+   "url": "https://raw.githubusercontent.com/ArduPilot/ardupilot/Plane-4.7.2/ArduPlane/events.cpp",
+   "checked": "2026-11-13",
+   "note": "rc_failsafe_short_on_event(): QSTABILIZE / QLOITER / QHOVER -> QLAND unless Q_OPTIONS bit 5 or 20; radio.cpp control_failsafe(): failsafe set after 10 consecutive checks with no valid frame for RC_FS_TIMEOUT (default 1.0 s, RC_Channels_VarInfo.h)"
+  },
+  {
+   "id": "ASM-F4-FS-COUNT",
+   "type": "assumption",
+   "title": "RC failsafe debounce",
+   "text": "10 consecutive failed checks at the 50 Hz radio task = 0.2 s after RC_FS_TIMEOUT has run out",
+   "basis": "radio.cpp control_failsafe() (throttle_counter == 10), tag Plane-4.7.2; the 50 Hz rate of read_radio is from the scheduler table (not re-read here): SITL measured 1.15 s in total on 2026-11-13 (team/F4/sitl/RESULTS.md S7a)",
+   "value": 0.2,
+   "unit": "s",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-F4-AP-EVENTS"
+   ]
+  },
+  {
+   "id": "ASM-F4-QLAND-MAX",
+   "type": "assumption",
+   "title": "RC loss to QLAND in a Q mode",
+   "text": "<= 3 s after the last valid frame (CDR-EL-11 pass line, REVIEWER EST: 5 s without control in 5 m/s wind is about 25 m of drift)",
+   "basis": "review/CDR-2026-11-13/CDR-electrical.md CDR-EL-11",
+   "value": 3.0,
+   "unit": "s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F4-YAW-ACC-FRAC",
+   "type": "assumption",
+   "title": "Share of the yaw authority the attitude shaper may ask for",
+   "text": "Q_A_ACC_Y_MAX <= 0.85 x the yaw acceleration at 30 % differential (B4 half-fin factor)",
+   "basis": "review/CDR-2026-11-13/CDR-aero.md CDR-AE-12 (85 % of 2.8 rad/s2); T-B4-YAW measures the factor",
+   "value": 0.85,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-F4-MOTOR-MAP",
+   "type": "calculation",
+   "title": "Station -> motor number -> rotation, and cant sense",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "motor_map",
+   "equation": "copter fwd = -z, right = +y; motor n where atan2(right, fwd) = AP angle; cant side force along the tangent that turns the airframe like the prop reaction torque",
+   "inputs": {
+    "ids": "P:propulsion.stations.ids",
+    "y": "P:propulsion.stations.y_m",
+    "z": "P:propulsion.stations.z_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "pub": "P:fsw.motor_map",
+    "d3": "P:fin_detail.mount.cant_sense_UR"
+   },
+   "units": {
+    "y": "m",
+    "z": "m",
+    "cant": "deg"
+   },
+   "cites": [
+    "SRC-F4-AP-SRC"
+   ],
+   "outputs": {
+    "errors": 0,
+    "net_side_force_frac": 0.0,
+    "cant_dir_yz": {
+     "UR": [
+      0.511,
+      -0.86
+     ],
+     "UL": [
+      -0.511,
+      -0.86
+     ],
+     "LR": [
+      0.511,
+      0.86
+     ],
+     "LL": [
+      -0.511,
+      0.86
+     ]
+    },
+    "derived": {
+     "UR": [
+      4,
+      "CW"
+     ],
+     "UL": [
+      2,
+      "CCW"
+     ],
+     "LR": [
+      1,
+      "CCW"
+     ],
+     "LL": [
+      3,
+      "CW"
+     ]
+    },
+    "d3_sense_needed": -1,
+    "d3_sense_agree": 1
+   },
+   "input_values": {
+    "ids": [
+     "UR",
+     "UL",
+     "LR",
+     "LL"
+    ],
+    "y": 0.32,
+    "z": 0.19,
+    "cant": 7.0,
+    "pub": [
+     {
+      "station": "LR",
+      "ap_motor": 1,
+      "fc_output": 1,
+      "servo_function": 33,
+      "copter_position": "front-right",
+      "rotation_from_nose": "CCW",
+      "rotation_from_behind": "CW",
+      "prop": "APC 11x5.5MR",
+      "harness_edge": "E-HRN-26",
+      "esc": "PRP-002-LR",
+      "adapter_thread": "RH",
+      "cant_print": "A"
+     },
+     {
+      "station": "UL",
+      "ap_motor": 2,
+      "fc_output": 2,
+      "servo_function": 34,
+      "copter_position": "back-left",
+      "rotation_from_nose": "CCW",
+      "rotation_from_behind": "CW",
+      "prop": "APC 11x5.5MR",
+      "harness_edge": "E-HRN-25",
+      "esc": "PRP-002-UL",
+      "adapter_thread": "RH",
+      "cant_print": "A"
+     },
+     {
+      "station": "LL",
+      "ap_motor": 3,
+      "fc_output": 3,
+      "servo_function": 35,
+      "copter_position": "front-left",
+      "rotation_from_nose": "CW",
+      "rotation_from_behind": "CCW",
+      "prop": "APC 11x5.5MRP",
+      "harness_edge": "E-HRN-27",
+      "esc": "PRP-002-LL",
+      "adapter_thread": "LH",
+      "cant_print": "B"
+     },
+     {
+      "station": "UR",
+      "ap_motor": 4,
+      "fc_output": 4,
+      "servo_function": 36,
+      "copter_position": "back-right",
+      "rotation_from_nose": "CW",
+      "rotation_from_behind": "CCW",
+      "prop": "APC 11x5.5MRP",
+      "harness_edge": "E-HRN-24",
+      "esc": "PRP-002-UR",
+      "adapter_thread": "LH",
+      "cant_print": "B"
+     }
+    ],
+    "d3": -1
+   }
+  },
+  {
+   "id": "CALC-F4-ARSPD",
+   "type": "calculation",
+   "title": "Airspeed limits against stall, transition gate, VA and Vmax",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "airspeed_limits",
+   "equation": "f_min = AIRSPEED_MIN / Vs ; f_cr = AIRSPEED_CRUISE / (1.3 Vs) ; Vs_keep = AIRSPEED_MIN / 1.3 (largest measured stall that keeps AIRSPEED_MIN, D-71)",
+   "inputs": {
+    "vs": "CL-A1-STALL-GATE",
+    "vmin": "P:fsw.airspeed_min_ms",
+    "vcr": "P:fsw.airspeed_cruise_ms",
+    "f": "P:requirements.transition_factor",
+    "vmax": "P:fsw.airspeed_max_ms"
+   },
+   "units": {
+    "vs": "m/s",
+    "vmin": "m/s",
+    "vcr": "m/s",
+    "vmax": "m/s"
+   },
+   "outputs": {
+    "min_factor": 1.4285736906526945,
+    "cruise_over_trans": 1.0989028389636113,
+    "vmax": 18.0,
+    "vmin": 17.0,
+    "vs_keep": 13.076923076923077
+   },
+   "input_values": {
+    "vs": 11.899981156892892,
+    "vmin": 17,
+    "vcr": 17.0,
+    "f": 1.3,
+    "vmax": 18
+   }
+  },
+  {
+   "id": "CALC-F4-DIVE",
+   "type": "calculation",
+   "title": "Elevon schedule: steady dive at the pitch floor, speed scaler at VA and VD",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "dive",
+   "equation": "CD0 = CL_c/LD - k CL_c^2 ; W sin(theta) = q S CD0 + W^2 k /(q S) -> V_dive ; s(V) = max(min(0.5, SCALING_SPEED/(2 AIRSPEED_MAX)), SCALING_SPEED / V)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "b": "P:wing.span_m",
+    "c": "P:wing.chord_m",
+    "e": "P:wing.oswald_e",
+    "ld": "CL-B1-CRUISE-LD",
+    "vc": "P:performance.cruise_ms",
+    "th": "P:fsw.pitch_lim_min_deg",
+    "sc": "P:fsw.scaling_speed_ms",
+    "vmax": "P:fsw.airspeed_max_ms",
+    "vd": "CL-C1-VD",
+    "va": "ASM-F4-VA-SCHED"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "b": "m",
+    "c": "m",
+    "vc": "m/s",
+    "th": "deg",
+    "sc": "m/s",
+    "vmax": "m/s",
+    "vd": "m/s"
+   },
+   "cites": [
+    "SRC-F4-AP-SRC"
+   ],
+   "outputs": {
+    "v_dive": 17.696752994819956,
+    "cd0": 0.04827745166573386,
+    "scaler_va": 0.8292682926829268,
+    "scaler_vd": 0.6390977443609023
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "b": 1.15,
+    "c": 0.32,
+    "e": 0.8,
+    "ld": 6.3219657774236495,
+    "vc": 16.0,
+    "th": -10,
+    "sc": 17,
+    "vmax": 18,
+    "vd": 26.6,
+    "va": 20.5
+   }
+  },
+  {
+   "id": "CALC-F4-VLEVEL",
+   "type": "calculation",
+   "title": "Highest level speed at THR_MAX against the VH that VD 27.2 m/s assumes",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "vlevel",
+   "equation": "a_pass = THR_MAX/100 ; a_lin = s_min + (s_max - s_min) (sqrt((1-e)^2 + 4 e THR_MAX/100) - (1-e)) / (2 e) ; a = max(a_pass, a_lin) ; V_lvl = VMAX(9 350 rpm) x a / a(9 350 rpm) ; VH_req = VD / 1.25 ; r = V_lvl / VH_req (fresh pack: worst case, voltage scaling 1)",
+   "inputs": {
+    "vmax": "CL-B1-VMAX",
+    "a_cap": "CL-B4-SPIN-MAX",
+    "thr": "P:fsw.thr_max_pct",
+    "smax": "P:fsw.spin_max",
+    "smin": "P:fsw.spin_min",
+    "e": "P:fsw.thst_expo",
+    "vd": "P:requirements.vd_ms",
+    "rpm_cap": "P:propulsion.rpm_max"
+   },
+   "units": {
+    "vmax": "m/s",
+    "thr": "%",
+    "vd": "m/s",
+    "rpm_cap": "rpm"
+   },
+   "assumes": [
+    "ASM-F4-FW-PASSTHRU",
+    "ASM-F4-RPM-LIN"
+   ],
+   "cites": [
+    "SRC-F4-AP-SRC"
+   ],
+   "outputs": {
+    "v_lvl": 21.273687450398977,
+    "a_fw_thr": 0.7039829466683679,
+    "a_pass": 0.7,
+    "a_lin": 0.7039829466683679,
+    "vh_req": 21.759999999999998,
+    "ratio": 0.9776510776837767,
+    "rpm_fw": 7748.694104449502
+   },
+   "input_values": {
+    "vmax": 25.67000000000151,
+    "a_cap": 0.8494644984849183,
+    "thr": 70,
+    "smax": 0.84,
+    "smin": 0.15,
+    "e": 0.65,
+    "vd": 27.2,
+    "rpm_cap": 9350
+   }
+  },
+  {
+   "id": "CALC-F4-XOVER",
+   "type": "calculation",
+   "title": "Hover rate-loop crossover per axis (rigid body, upper-bound thrust)",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "crossover",
+   "equation": "K = 2 T arm / I (mixer factors +/-0.5, four motors) ; |L(jw)| = K sqrt(P^2 + D^2 w^2) / w = 1 -> w = K P / sqrt(1 - K^2 D^2) ; P ceiling = w_max sqrt(1/K^2 - D^2), w_max per axis",
+   "inputs": {
+    "T": "P:requirements.thrust_limit_per_motor_n",
+    "y": "P:propulsion.stations.y_m",
+    "z": "P:propulsion.stations.z_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "qt": "ASM-F4-QT-ARM",
+    "izz": "CL-A3-IZZ",
+    "iyy": "CL-A3-IYY",
+    "ixx": "CL-A3-IXX",
+    "p": "P:fsw.rate_p",
+    "d": "P:fsw.rate_d",
+    "fr": "ASM-F4-XOVER-MAX",
+    "fp": "CL-B3-XOVER-MAX-PITCH",
+    "fy": "CL-B3-XOVER-MAX-YAW"
+   },
+   "units": {
+    "T": "N",
+    "y": "m",
+    "z": "m",
+    "cant": "deg"
+   },
+   "assumes": [
+    "ASM-F4-QT-ARM"
+   ],
+   "outputs": {
+    "f_rll_hz": 0.9725330233739362,
+    "p_ceiling_rll": 0.3701673787395711,
+    "f_pit_hz": 2.201014523268318,
+    "p_ceiling_pit": 0.18173437556697006,
+    "f_yaw_hz": 0.9597250351704285,
+    "p_ceiling_yaw": 1.0002865037583633
+   },
+   "input_values": {
+    "T": 21.1,
+    "y": 0.32,
+    "z": 0.19,
+    "cant": 7.0,
+    "qt": 0.02,
+    "izz": 0.17884531520198343,
+    "iyy": 0.049076275078503935,
+    "ixx": 0.18294499592410293,
+    "p": [
+     0.08,
+     0.08,
+     0.4
+    ],
+    "d": [
+     0.002,
+     0.002
+    ],
+    "fr": 4.5,
+    "fp": 5.0,
+    "fy": 2.4
+   }
+  },
+  {
+   "id": "CALC-F4-FILT",
+   "type": "calculation",
+   "title": "Gyro and D-term low-pass over the top of the torsion band",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "filt",
+   "equation": "r = min(INS_GYRO_FILTER, Q_A_RAT_RLL/PIT_FLTD) / f_torsion_hi",
+   "inputs": {
+    "fg": "P:fsw.gyro_filter_hz",
+    "fd": "P:fsw.rate_fltd_hz",
+    "ft": "ASM-F4-TORSION-HI"
+   },
+   "units": {
+    "fg": "Hz",
+    "fd": "Hz"
+   },
+   "outputs": {
+    "value": 2.1476510067114094
+   },
+   "input_values": {
+    "fg": 40,
+    "fd": [
+     32,
+     32
+    ],
+    "ft": 14.9
+   }
+  },
+  {
+   "id": "CALC-F4-SPLIT",
+   "type": "calculation",
+   "title": "Upper-pair motor output in hover with the pitch-trim split, control reserve and a sagged pack",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "split",
+   "equation": "T_up/T_mean = 2 s /(1 + s) ; a_up = a_h / sqrt(sag) x sqrt(T_up/T_mean x (1 + d))",
+   "inputs": {
+    "s": "CL-A3-HOVER-SPLIT",
+    "smax": "P:requirements.hover_split_max",
+    "a_h": "P:fsw.thst_hover",
+    "d": "ASM-F4-HOVER-DIFF",
+    "sag": "ASM-F4-SAG"
+   },
+   "assumes": [
+    "ASM-F4-THRUST-SQ",
+    "ASM-F4-SAG"
+   ],
+   "outputs": {
+    "a_up": 0.6705582817284894,
+    "a_up_at_limit": 0.6755223233592841
+   },
+   "input_values": {
+    "s": 1.2095570978204906,
+    "smax": 1.25,
+    "a_h": 0.49,
+    "d": 0.3,
+    "sag": 0.76
+   }
+  },
+  {
+   "id": "CALC-F4-TD-CUT",
+   "type": "calculation",
+   "title": "Touchdown to motors below spin-min with the RC9 cut",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "td_cut",
+   "equation": "t = pilot reaction + switch-channel link latency + thrust decay",
+   "inputs": {
+    "r": "ASM-F4-REACT",
+    "l": "CL-F5-SWITCH-LATENCY",
+    "s": "ASM-F4-SPINDOWN"
+   },
+   "assumes": [
+    "ASM-F4-REACT",
+    "ASM-F4-SPINDOWN"
+   ],
+   "outputs": {
+    "value": 0.45925925925925926
+   },
+   "input_values": {
+    "r": 0.25,
+    "l": 0.05925925925925926,
+    "s": 0.15
+   }
+  },
+  {
+   "id": "CALC-F4-ACT-CAP",
+   "type": "calculation",
+   "title": "Highest motor output in Q and FW modes",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "actuator_cap",
+   "equation": "a_Q = Q_M_SPIN_MAX ; a_FW = THR_MAX/100 + 0.25 RUDD_DT_GAIN/100",
+   "inputs": {
+    "spin": "P:fsw.spin_max",
+    "thr": "P:fsw.thr_max_pct",
+    "dt": "P:fsw.rudd_dt_gain_pct",
+    "k": "ASM-F4-DT-MIX"
+   },
+   "units": {
+    "thr": "%",
+    "dt": "%"
+   },
+   "assumes": [
+    "ASM-F4-DT-MIX",
+    "ASM-F4-FW-PASSTHRU"
+   ],
+   "outputs": {
+    "a_q": 0.84,
+    "a_fw": 0.7875
+   },
+   "input_values": {
+    "spin": 0.84,
+    "thr": 70,
+    "dt": 35,
+    "k": 0.25
+   }
+  },
+  {
+   "id": "CALC-F4-YAW-DT",
+   "type": "calculation",
+   "title": "RUDD_DT_GAIN needed for the cruise yaw moment",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "yaw_dt",
+   "equation": "T_c = m g /(L/D)/n ; k = (m g / n)/a_h^2 ; a_c = sqrt(T_c/k) ; dT = M/(n y) ; da = dT/(2 k a_c) ; gain = da / 0.25",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "ld": "CL-B1-CRUISE-LD",
+    "n": "P:propulsion.n_motors",
+    "a_h": "P:fsw.thst_hover",
+    "y": "P:propulsion.stations.y_m",
+    "M": "ASM-F4-YAW-M-REQ",
+    "k_mix": "ASM-F4-DT-MIX"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "y": "m",
+    "M": "N*m"
+   },
+   "assumes": [
+    "ASM-F4-THRUST-SQ",
+    "ASM-F4-DT-MIX"
+   ],
+   "outputs": {
+    "gain_req_pct": 30.20008352530284,
+    "a_cruise": 0.19488122897942556,
+    "a_low_side": 0.11938102016616846,
+    "dT_N": 0.78125
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "ld": 6.3219657774236495,
+    "n": 4,
+    "a_h": 0.49,
+    "y": 0.32,
+    "M": 1.0,
+    "k_mix": 0.25
+   }
+  },
+  {
+   "id": "CALC-F4-DESCENT",
+   "type": "calculation",
+   "title": "Fastest commanded vertical descent",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "descent",
+   "equation": "v = max(Q_WP_SPD_DN, Q_PILOT_SPD_DN, Q_LAND_FINAL_SPD) ; v_td = max(Q_PILOT_SPD_DN, Q_LAND_FINAL_SPD) (Q_WP_SPD_DN ends at Q_LAND_FINAL_ALT 6 m, so it never reaches the ground)",
+   "inputs": {
+    "wp": "P:fsw.wp_spd_dn_ms",
+    "pil": "P:fsw.pilot_spd_dn_ms",
+    "fin": "P:fsw.land_final_spd_ms"
+   },
+   "units": {
+    "wp": "m/s",
+    "pil": "m/s",
+    "fin": "m/s"
+   },
+   "outputs": {
+    "value": 1.2,
+    "touchdown": 1.0
+   },
+   "input_values": {
+    "wp": 1.2,
+    "pil": 1.0,
+    "fin": 0.3
+   }
+  },
+  {
+   "id": "CALC-F4-FLTMODES",
+   "type": "calculation",
+   "title": "Flight modes a pilot can select or boot into that pass raw stick to a surface or motor",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "fltmodes",
+   "equation": "n = count(m in FLTMODE1-6 + INITIAL_MODE, m in {0 MANUAL, 2 STABILIZE, 3 TRAINING, 4 ACRO, 23 QACRO})",
+   "inputs": {
+    "modes": "P:fsw.fltmodes",
+    "init": "P:fsw.initial_mode"
+   },
+   "cites": [
+    "SRC-F4-AP-SRC"
+   ],
+   "outputs": {
+    "value": 0,
+    "raw": []
+   },
+   "input_values": {
+    "modes": [
+     17,
+     18,
+     19,
+     5,
+     7,
+     11
+    ],
+    "init": 17
+   }
+  },
+  {
+   "id": "CALC-F4-RATES",
+   "type": "calculation",
+   "title": "Largest commanded body rate",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "rates",
+   "equation": "w = max(rate limits) x pi/180",
+   "inputs": {
+    "q": "P:fsw.rate_max_q_degs",
+    "fw": "P:fsw.rate_max_fw_degs"
+   },
+   "units": {
+    "q": "deg/s",
+    "fw": "deg/s"
+   },
+   "outputs": {
+    "value": 2.6179938779914944
+   },
+   "input_values": {
+    "q": [
+     120,
+     120,
+     90
+    ],
+    "fw": [
+     150,
+     100,
+     100
+    ]
+   }
+  },
+  {
+   "id": "CALC-F4-NOTCH",
+   "type": "calculation",
+   "title": "Harmonic notch coverage",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "notch",
+   "equation": "r_low = (hover rpm/60)/f_min ; r_top = n_h (rpm_max/60) / (f_gyro/2)",
+   "inputs": {
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_max": "P:propulsion.rpm_max",
+    "f": "P:fsw.notch_freq_hz",
+    "nh": "P:fsw.notch_harmonics",
+    "fg": "P:fsw.gyro_rate_hz"
+   },
+   "units": {
+    "rpm_h": "rpm",
+    "rpm_max": "rpm",
+    "f": "Hz",
+    "fg": "Hz"
+   },
+   "outputs": {
+    "low_ratio": 1.2894742192936182,
+    "top_ratio": 0.935
+   },
+   "input_values": {
+    "rpm_h": 5415.791721033196,
+    "rpm_max": 9350,
+    "f": 70,
+    "nh": 3,
+    "fg": 1000
+   }
+  },
+  {
+   "id": "CALC-F4-BATT",
+   "type": "calculation",
+   "title": "Battery thresholds",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "batt",
+   "equation": "r = BATT_CRT_MAH / (reserve x capacity)",
+   "inputs": {
+    "crt": "P:fsw.batt_crt_mah",
+    "cap": "P:battery.capacity_ah",
+    "res": "P:requirements.energy_reserve_frac"
+   },
+   "units": {
+    "crt": "mAh",
+    "cap": "Ah"
+   },
+   "outputs": {
+    "value": 1.0
+   },
+   "input_values": {
+    "crt": 1300,
+    "cap": 6.5,
+    "res": 0.2
+   }
+  },
+  {
+   "id": "CALC-F4-BATT-LOW",
+   "type": "calculation",
+   "title": "BATT_LOW_MAH as set",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "batt_low",
+   "equation": "BATT_LOW_MAH",
+   "inputs": {
+    "low": "P:fsw.batt_low_mah"
+   },
+   "units": {
+    "low": "mAh"
+   },
+   "outputs": {
+    "value": 2600.0
+   },
+   "input_values": {
+    "low": 2600
+   }
+  },
+  {
+   "id": "CALC-F4-FENCE",
+   "type": "calculation",
+   "title": "Geofence inside the ceiling and VLOS",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "fence",
+   "equation": "r_alt = FENCE_ALT_MAX / (ceiling ft x 0.3048) ; r_rad = FENCE_RADIUS / VLOS",
+   "inputs": {
+    "alt": "P:fsw.fence_alt_max_m",
+    "ceil": "P:mission.ceiling_ft_agl",
+    "rad": "P:fsw.fence_radius_m",
+    "vlos": "P:requirements.vlos_max_m"
+   },
+   "units": {
+    "alt": "m",
+    "ceil": "ft",
+    "rad": "m",
+    "vlos": "m"
+   },
+   "outputs": {
+    "alt_ratio": 0.902230971128609,
+    "rad_ratio": 0.5
+   },
+   "input_values": {
+    "alt": 110,
+    "ceil": 400,
+    "rad": 250,
+    "vlos": 500.0
+   }
+  },
+  {
+   "id": "CALC-F4-SENSOR-POS",
+   "type": "calculation",
+   "title": "INS_POS and GPS1_POS from F3's points and the CG (FRD body axes)",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "sensor_pos",
+   "equation": "X_fwd = -(x - x_cg) ; Y = y ; Z_down = -(z - z_cg) ; err = max |set - derived|",
+   "inputs": {
+    "pts": "ASM-F4-AVN-POINTS",
+    "xcg": "P:cg.x_target_m",
+    "zcg": "P:cg.z_target_m",
+    "ins": "P:fsw.ins_pos_m",
+    "gps": "P:fsw.gps_pos_m"
+   },
+   "units": {
+    "xcg": "m",
+    "zcg": "m"
+   },
+   "assumes": [
+    "ASM-F4-AVN-POINTS"
+   ],
+   "outputs": {
+    "ins_derived_m": [
+     0.059000000000000004,
+     0.046,
+     -0.0205
+    ],
+    "gps_derived_m": [
+     -0.025999999999999995,
+     0.0,
+     -0.1595
+    ],
+    "err_m": 6.938893903907228e-18
+   },
+   "input_values": {
+    "pts": {
+     "imu": [
+      -0.01,
+      0.046,
+      0.039
+     ],
+     "gps": [
+      0.075,
+      0.0,
+      0.178
+     ]
+    },
+    "xcg": 0.049,
+    "zcg": 0.0185,
+    "ins": [
+     0.059,
+     0.046,
+     -0.0205
+    ],
+    "gps": [
+     -0.026,
+     0.0,
+     -0.1595
+    ]
+   }
+  },
+  {
+   "id": "CALC-F4-ELEVON-PWM",
+   "type": "calculation",
+   "title": "SERVO5/6 MIN/MAX for +/-25 deg TE from D6's linkage",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "elevon_pwm",
+   "equation": "k = 500 us / servo throw ; up = theta_up k ; dn = |theta_dn| k ; right (normal): MAX = TRIM + up, MIN = TRIM - dn ; left (reversed): MIN = TRIM - up, MAX = TRIM + dn ; err = max |set - derived| ; span = max |end - TRIM|",
+   "inputs": {
+    "th_up": "CL-D6-THROW-NEED",
+    "th_dn": "ASM-F4-THETA-DN",
+    "throw": "ASM-D6-SERVO-THROW",
+    "left": "P:fsw.elevon_pwm_left_us",
+    "right": "P:fsw.elevon_pwm_right_us"
+   },
+   "units": {
+    "th_up": "deg",
+    "th_dn": "deg",
+    "throw": "deg"
+   },
+   "assumes": [
+    "ASM-F4-THETA-DN",
+    "ASM-D6-SERVO-THROW"
+   ],
+   "outputs": {
+    "err_us": 0.33333333333325754,
+    "span_us": 497,
+    "us_per_deg": 11.11111111111111,
+    "derived_us": {
+     "l_min": 1002.9796257135517,
+     "l_max": 1976.3333333333333,
+     "r_min": 1023.6666666666667,
+     "r_max": 1997.0203742864483
+    },
+    "mirror_ok": 1
+   },
+   "input_values": {
+    "th_up": 44.731833685780344,
+    "th_dn": -42.87,
+    "throw": 45.0,
+    "left": [
+     1003,
+     1500,
+     1976,
+     1
+    ],
+    "right": [
+     1024,
+     1500,
+     1997,
+     0
+    ]
+   }
+  },
+  {
+   "id": "CALC-F4-MIX",
+   "type": "calculation",
+   "title": "Elevon travel for pure pitch with MIXING_GAIN against the trimmed-CLmax need",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "mix",
+   "equation": "d_pitch = MIXING_GAIN x full travel ; r = |delta_stall| / d_pitch",
+   "inputs": {
+    "g": "P:fsw.mixing_gain",
+    "trav": "P:wing.elevon.deflection_deg",
+    "ds": "CL-B3-DELTA-STALL",
+    "half": "P:requirements.elevon_trim_travel_max"
+   },
+   "units": {
+    "trav": "deg",
+    "ds": "deg"
+   },
+   "outputs": {
+    "d_pitch_deg": 16.25,
+    "ratio": 0.6703584351476871,
+    "gain_over_trim_limit": 1.3
+   },
+   "input_values": {
+    "g": 0.65,
+    "trav": [
+     -25,
+     25
+    ],
+    "ds": -10.893324571149916,
+    "half": 0.5
+   }
+  },
+  {
+   "id": "CALC-F4-LAND-SPD",
+   "type": "calculation",
+   "title": "Final landing descent as set",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "land_spd",
+   "equation": "Q_LAND_FINAL_SPD",
+   "inputs": {
+    "v": "P:fsw.land_final_spd_ms"
+   },
+   "units": {
+    "v": "m/s"
+   },
+   "outputs": {
+    "value": 0.3
+   },
+   "input_values": {
+    "v": 0.3
+   }
+  },
+  {
+   "id": "CALC-F4-BAT-CURR",
+   "type": "calculation",
+   "title": "Pack-current limiter as set and its per-motor share",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "bat_curr",
+   "equation": "I_set = Q_M_BAT_CURR_MAX ; I_motor = I_set / n",
+   "inputs": {
+    "i": "P:fsw.bat_curr_max_a",
+    "n": "P:propulsion.n_motors",
+    "idx": "P:fsw.bat_idx"
+   },
+   "units": {
+    "i": "A"
+   },
+   "outputs": {
+    "i_set_a": 100.0,
+    "i_motor_a": 25.0,
+    "idx": 0
+   },
+   "input_values": {
+    "i": 100,
+    "n": 4,
+    "idx": 0
+   }
+  },
+  {
+   "id": "CALC-F4-ARSPD-TRIP",
+   "type": "calculation",
+   "title": "AIRSPEED_MIN against the tripped-boundary-layer stall (planning baseline, B6)",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "arspd_trip",
+   "equation": "V_need = f x Vs_trip ; Vs_keep = AIRSPEED_MIN / f ; second fallback: AIRSPEED_MIN 18 holds to 18 / f",
+   "inputs": {
+    "vs": "CL-B2R3-VS-GATE-FWD-TURB",
+    "f": "P:requirements.transition_factor",
+    "vmin": "P:fsw.airspeed_min_ms",
+    "vcr": "P:fsw.airspeed_cruise_ms",
+    "vas": "P:fsw.assist_speed_ms"
+   },
+   "units": {
+    "vs": "m/s",
+    "vmin": "m/s",
+    "vcr": "m/s",
+    "vas": "m/s"
+   },
+   "outputs": {
+    "v_need": 16.82326785215212,
+    "vmin": 17.0,
+    "vs_keep": 13.076923076923077,
+    "vs_keep_fb2": 13.846153846153845,
+    "cruise_minus_min": 0.0,
+    "assist_over_vs": 1.0818350013770814
+   },
+   "input_values": {
+    "vs": 12.940975270886247,
+    "f": 1.3,
+    "vmin": 17,
+    "vcr": 17.0,
+    "vas": 14
+   }
+  },
+  {
+   "id": "CALC-F4-YAW-ACC",
+   "type": "calculation",
+   "title": "Yaw acceleration limit of the attitude shaper against the airframe's yaw authority",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "yaw_acc",
+   "equation": "a_set = Q_A_ACC_Y_MAX x pi/180 ; r = a_set / a_yaw(30 % differential, half-fin factor)",
+   "inputs": {
+    "a": "P:fsw.yaw_acc_max_degs2",
+    "ay": "CL-B3-HOVER-YAW-ACCEL-LOW"
+   },
+   "units": {
+    "a": "deg/s2",
+    "ay": "rad/s2"
+   },
+   "cites": [
+    "SRC-F4-AP-PDEF",
+    "SRC-F4-AP-RELNOTES"
+   ],
+   "outputs": {
+    "a_set_rads2": 2.356194490192345,
+    "ratio": 0.8459433083860819,
+    "old_unit_cdegs2": 13500.0
+   },
+   "input_values": {
+    "a": 135,
+    "ay": 2.7852865160522033
+   }
+  },
+  {
+   "id": "CALC-F4-RC-FS",
+   "type": "calculation",
+   "title": "RC loss to QLAND in a Q mode (4.7: the short failsafe event selects QLAND)",
+   "script": "redesign/team/F4/fsw_check.py",
+   "function": "rc_fs",
+   "equation": "t = RC_FS_TIMEOUT + debounce",
+   "inputs": {
+    "t": "P:fsw.rc_fs_timeout_s",
+    "d": "ASM-F4-FS-COUNT",
+    "tl": "P:fsw.fs_long_timeout_s"
+   },
+   "units": {
+    "t": "s",
+    "d": "s",
+    "tl": "s"
+   },
+   "assumes": [
+    "ASM-F4-FS-COUNT"
+   ],
+   "cites": [
+    "SRC-F4-AP-EVENTS",
+    "SRC-F4-AP-RELNOTES"
+   ],
+   "outputs": {
+    "t_qland_s": 1.2,
+    "t_fw_rtl_s": 5.0
+   },
+   "input_values": {
+    "t": 1.0,
+    "d": 0.2,
+    "tl": 5
+   }
+  },
+  {
+   "id": "CL-F4-MOTOR-MAP-ERR",
+   "type": "claim",
+   "title": "Motor map errors (derived vs published, pairs, cant sense)",
+   "calc": "CALC-F4-MOTOR-MAP",
+   "output": "errors",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "verifies": [
+    "R-FSW-PARAMS"
+   ],
+   "parts": [
+    "AVN-001",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Props off, Mission Planner motor test A-B-C-D: A spins LR, B UR, C UL, D LL (test order 1,4,2,3), each in the listed sense (T-F4-BENCH-MAP).",
+   "value": 0
+  },
+  {
+   "id": "CL-F4-CANT-NET-FORCE",
+   "type": "claim",
+   "title": "Net side force of the four canted motors, fraction of thrust",
+   "calc": "CALC-F4-MOTOR-MAP",
+   "output": "net_side_force_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.001
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Check the printed mounts against SPEC.md: every prop end leans outboard and toward the wing plane.",
+   "value": 0.0
+  },
+  {
+   "id": "CL-F4-ARSPD-MIN-FACTOR",
+   "type": "claim",
+   "title": "AIRSPEED_MIN over stall at the gate",
+   "calc": "CALC-F4-ARSPD",
+   "output": "min_factor",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-F4-MIN-FACTOR"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Slow-flight stall test T-B2-STALL; re-run when A1/B3 re-issue the stall.",
+   "value": 1.4285736906526945
+  },
+  {
+   "id": "CL-F4-ARSPD-MIN-D71",
+   "type": "claim",
+   "title": "AIRSPEED_MIN against 1.3 x the stall at the gate mass and the forward CG (D-71)",
+   "calc": "CALC-F4-ARSPD",
+   "output": "vmin",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-B2R3-VTR-GATE-FWD"
+   },
+   "verifies": [
+    "R-STALL",
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-B2-STALL (three slow-flight stalls at 2.6 kg, forward CG, airspeed logged): set AIRSPEED_MIN = ceil(1.3 x measured trimmed stall); 16 holds while the measured stall is <= 12.31 m/s (vs_keep).",
+   "value": 17.0
+  },
+  {
+   "id": "CL-F4-ARSPD-MIN-FLOOR",
+   "type": "claim",
+   "title": "AIRSPEED_MIN against the D-36 floor 15.6 m/s",
+   "calc": "CALC-F4-ARSPD",
+   "output": "vmin",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "P:performance.transition_min_ms"
+   },
+   "verifies": [
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Read AIRSPEED_MIN after loading (integer: 16).",
+   "value": 17.0
+  },
+  {
+   "id": "CL-F4-VDIVE-VA",
+   "type": "claim",
+   "title": "Steady dive speed at the pitch floor, idle, against the full-travel speed VA",
+   "calc": "CALC-F4-DIVE",
+   "output": "v_dive",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-VA-SCHED"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "FBWA full-down stick at >= 80 m, throttle idle, 20 s: logged airspeed <= 20.5 m/s (T-F4-DIVE).",
+   "value": 17.696752994819956
+  },
+  {
+   "id": "CL-F4-SCALER-VD",
+   "type": "claim",
+   "title": "Surface demand scaling at VD (fraction of the cruise deflection per unit demand)",
+   "calc": "CALC-F4-DIVE",
+   "output": "scaler_vd",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Information: the speed scaler alone does not hold <= 1/3 at VD; the schedule rests on CL-F4-VDIVE-VA and CL-F4-VLEVEL-VH (CR-F4-12).",
+   "value": 0.6390977443609023
+  },
+  {
+   "id": "CL-F4-VLEVEL-VH",
+   "type": "claim",
+   "title": "Highest level speed at THR_MAX over the VH that VD 27.2 m/s assumes (21.8 m/s)",
+   "calc": "CALC-F4-VLEVEL",
+   "output": "ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "FBWB full-throttle level leg, fresh pack, >= 60 m (H2): logged airspeed <= 21.8 m/s and ESC rpm <= 7 950 (CR-B1-17 b, CR-C1-20); TECS caps demand at AIRSPEED_MAX 18 in normal flight.",
+   "value": 0.9776510776837767
+  },
+  {
+   "id": "CL-F4-VLEVEL",
+   "type": "claim",
+   "title": "Highest level speed at THR_MAX 70 %, fresh pack",
+   "calc": "CALC-F4-VLEVEL",
+   "output": "v_lvl",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "P:fsw.airspeed_max_ms"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "As CL-F4-VLEVEL-VH; the same log shows AIRSPEED_MAX 18 m/s is reachable.",
+   "value": 21.273687450398977
+  },
+  {
+   "id": "CL-F4-FW-RPM-CAP",
+   "type": "claim",
+   "title": "Motor rpm at THR_MAX in fixed-wing flight, fresh pack",
+   "calc": "CALC-F4-VLEVEL",
+   "output": "rpm_fw",
+   "unit": "rpm",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-FW-RPM-REQ"
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "ESC rpm telemetry in the FBWB full-throttle leg (H2) and on the stand at RCOU = a_fw_thr.",
+   "value": 7748.694104449502
+  },
+  {
+   "id": "CL-F4-XOVER-RLL",
+   "type": "claim",
+   "title": "Hover copter-roll rate-loop crossover",
+   "calc": "CALC-F4-XOVER",
+   "output": "f_rll_hz",
+   "unit": "Hz",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-XOVER-MAX"
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Tethered hover: doublets on the rate loop (RATE log), crossover from the log; P stays below p_ceiling.",
+   "value": 0.9725330233739362
+  },
+  {
+   "id": "CL-F4-XOVER-PIT",
+   "type": "claim",
+   "title": "Hover copter-pitch rate-loop crossover (stiffest axis)",
+   "calc": "CALC-F4-XOVER",
+   "output": "f_pit_hz",
+   "unit": "Hz",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-B3-XOVER-MAX-PITCH"
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "As roll; after QAUTOTUNE reject any Q_A_RAT_PIT_P above p_ceiling_pit.",
+   "value": 2.201014523268318
+  },
+  {
+   "id": "CL-F4-XOVER-YAW",
+   "type": "claim",
+   "title": "Hover copter-yaw rate-loop crossover",
+   "calc": "CALC-F4-XOVER",
+   "output": "f_yaw_hz",
+   "unit": "Hz",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-B3-XOVER-MAX-YAW"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "As roll.",
+   "value": 0.9597250351704285
+  },
+  {
+   "id": "CL-F4-FILT-SEP",
+   "type": "claim",
+   "title": "Gyro / D-term low-pass over the top of the torsion band",
+   "calc": "CALC-F4-FILT",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-F4-FILT-SEP"
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Read INS_GYRO_FILTER and Q_A_RAT_*_FLTD after loading; T-C2-TAP-TEST gives the measured mode.",
+   "value": 2.1476510067114094
+  },
+  {
+   "id": "CL-F4-TD-CUT",
+   "type": "claim",
+   "title": "Touchdown to motors below spin-min (RC9 cut)",
+   "calc": "CALC-F4-TD-CUT",
+   "output": "value",
+   "unit": "s",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-TD-REQ"
+   },
+   "parts": [
+    "AVN-001",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Twin: 20 logged touchdowns, contact (IMU spike) to RCOU at minimum <= 0.5 s (H2, CR-F4-14).",
+   "value": 0.45925925925925926
+  },
+  {
+   "id": "CL-F4-CANT-SENSE-D3",
+   "type": "claim",
+   "title": "D3's printed cant sense agrees with the motor map (+1 agree, -1 reversed)",
+   "calc": "CALC-F4-MOTOR-MAP",
+   "output": "d3_sense_agree",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Look along the UR shaft from the nose: the prop end must lean outboard (+y) and toward the wing plane (-z); D3 sets cant_sense_UR = d3_sense_needed (CR-F4-11).",
+   "value": 1
+  },
+  {
+   "id": "CL-F4-SPLIT-OUT",
+   "type": "claim",
+   "title": "Upper-pair hover output at the A3 split, 30 % control reserve, sagged pack",
+   "calc": "CALC-F4-SPLIT",
+   "output": "a_up",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:fsw.spin_max"
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Tethered-hover log on a pack near BATT_LOW: mean RCOU of the upper pair (UR, UL) / lower pair gives the split; peak upper-pair RCOU during pitch inputs stays below 0.84 (CR-A3-04, R-HOVER-SPLIT).",
+   "value": 0.6705582817284894
+  },
+  {
+   "id": "CL-F4-SPLIT-OUT-LIMIT",
+   "type": "claim",
+   "title": "Upper-pair hover output at the 1.25 split limit (D-18), same reserve and pack",
+   "calc": "CALC-F4-SPLIT",
+   "output": "a_up_at_limit",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:fsw.spin_max"
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "As CL-F4-SPLIT-OUT; holds for any CG z A3 can report within R-HOVER-SPLIT.",
+   "value": 0.6755223233592841
+  },
+  {
+   "id": "CL-F4-BAT-CURR-MAX",
+   "type": "claim",
+   "title": "Parameter file sets Q_M_BAT_CURR_MAX = 100 A on the flight pack (Q_M_BAT_IDX 0)",
+   "calc": "CALC-F4-BAT-CURR",
+   "output": "i_set_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:performance.full_throttle_current_a"
+   },
+   "verifies": [
+    "R-ESC-CURRENT",
+    "R-FSW-PARAMS"
+   ],
+   "parts": [
+    "AVN-001",
+    "PWR-001"
+   ],
+   "how": "Parameter diff of the board against K09L.param after loading: Q_M_BAT_CURR_MAX 100, Q_M_BAT_IDX 0, Q_M_BAT_CURR_TC 1; H1's restrained four-motor run shows BAT.Curr <= 100 A (CR-A2-14).",
+   "value": 100.0
+  },
+  {
+   "id": "CL-F4-CRUISE-TRANS",
+   "type": "claim",
+   "title": "AIRSPEED_CRUISE over 1.3 Vs",
+   "calc": "CALC-F4-ARSPD",
+   "output": "cruise_over_trans",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "SITL S4 and flight logs: airspeed reaches 16 m/s after every pitch-over before the first turn.",
+   "value": 1.0989028389636113
+  },
+  {
+   "id": "CL-F4-ARSPD-MAX-VA",
+   "type": "claim",
+   "title": "AIRSPEED_MAX against manoeuvre speed VA",
+   "calc": "CALC-F4-ARSPD",
+   "output": "vmax",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-VA-SCHED"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Read AIRSPEED_MAX after loading; C1 re-derives VA.",
+   "value": 18.0
+  },
+  {
+   "id": "CL-F4-ARSPD-MAX-CAP",
+   "type": "claim",
+   "title": "AIRSPEED_MAX against the 22 m/s ARSPD_FBW_MAX ceiling (CR-C1-08)",
+   "calc": "CALC-F4-ARSPD",
+   "output": "vmax",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-ARSPD-CAP"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Read AIRSPEED_MAX after loading.",
+   "value": 18.0
+  },
+  {
+   "id": "CL-F4-ARSPD-MAX-VMAX",
+   "type": "claim",
+   "title": "AIRSPEED_MAX reachable in level flight at THR_MAX",
+   "calc": "CALC-F4-ARSPD",
+   "output": "vmax",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-F4-VLEVEL"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "FBWB full-stick leg on the cruise-power test.",
+   "value": 18.0
+  },
+  {
+   "id": "CL-F4-SPIN-MAX",
+   "type": "claim",
+   "title": "Q-mode motor output cap",
+   "calc": "CALC-F4-ACT-CAP",
+   "output": "a_q",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-B4-SPIN-MAX"
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Stand, fresh pack, QSTABILIZE full stick, props on: ESC telemetry rpm <= 9 350 (T-F4-STAND-RPM-CAP).",
+   "value": 0.84
+  },
+  {
+   "id": "CL-F4-FW-ACT-MAX",
+   "type": "claim",
+   "title": "FW motor output cap incl. yaw differential",
+   "calc": "CALC-F4-ACT-CAP",
+   "output": "a_fw",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-B4-SPIN-MAX"
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "SITL S4: RCOU of each motor at FBWA full throttle with full rudder stays <= 0.84 of range.",
+   "value": 0.7875
+  },
+  {
+   "id": "CL-F4-RUDD-DT-REQ",
+   "type": "claim",
+   "title": "RUDD_DT_GAIN needed for 1.0 N*m cruise yaw",
+   "calc": "CALC-F4-YAW-DT",
+   "output": "gain_req_pct",
+   "unit": "%",
+   "limit": {
+    "op": "<=",
+    "ref": "P:fsw.rudd_dt_gain_pct"
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "FBWA yaw doublet on the twin, then on K09-L at 16 m/s (T-B3-YAW-DOUBLET): yaw rate damps in < 2 cycles.",
+   "value": 30.20008352530284
+  },
+  {
+   "id": "CL-F4-YAW-LOW-SIDE",
+   "type": "claim",
+   "title": "Output of the slow side at full yaw demand in cruise",
+   "calc": "CALC-F4-YAW-DT",
+   "output": "a_low_side",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.05
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Flight log RCOU at full rudder in cruise: no motor below 5 % output.",
+   "value": 0.11938102016616846
+  },
+  {
+   "id": "CL-F4-DESCENT",
+   "type": "claim",
+   "title": "Fastest commanded vertical descent",
+   "calc": "CALC-F4-DESCENT",
+   "output": "value",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-B4-DESCENT"
+   },
+   "verifies": [
+    "R-FAILSAFES"
+   ],
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "QLAND and QHOVER full-down logs: CTUN/QTUN DCRt >= -1.2 m/s.",
+   "value": 1.2
+  },
+  {
+   "id": "CL-F4-TOUCHDOWN-SINK",
+   "type": "claim",
+   "title": "Fastest commanded descent that can reach the ground (QHOVER/QLOITER full down stick, QLAND final) against the hard-landing sink",
+   "calc": "CALC-F4-DESCENT",
+   "output": "touchdown",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "P:requirements.landing_sink_ms"
+   },
+   "verifies": [
+    "R-LANDING-IMPACT"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "QHOVER full-down-stick log from 10 m to touchdown on the twin: CTUN/QTUN CRt at contact >= -1.2 m/s (peak overshoot read from the log). QSTABILIZE has no climb-rate loop: the flight card bars landing in it (CR-F4-21).",
+   "value": 1.0
+  },
+  {
+   "id": "CL-F4-NO-RAW-MODES",
+   "type": "claim",
+   "title": "Raw-stick modes among FLTMODE1-6 and INITIAL_MODE (R-SPIRAL, D-66)",
+   "calc": "CALC-F4-FLTMODES",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0
+   },
+   "verifies": [
+    "R-SPIRAL",
+    "R-FSW-PARAMS"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Lint of K09L.param by fsw_check.py (17 / 18 / 19 / 5 / 7 / 11, boot 17) and a parameter diff of the board after loading; H3's card forbids MANUAL / ACRO / STABILIZE from the GCS.",
+   "value": 0
+  },
+  {
+   "id": "CL-F4-BODY-RATE",
+   "type": "claim",
+   "title": "Largest commanded body rate",
+   "calc": "CALC-F4-RATES",
+   "output": "value",
+   "unit": "rad/s",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-C1-PITCH-RATE"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Read the six rate limits after loading; log RATE in QAUTOTUNE.",
+   "value": 2.6179938779914944
+  },
+  {
+   "id": "CL-F4-NOTCH-LOW",
+   "type": "claim",
+   "title": "Hover 1P over the lowest notch frequency",
+   "calc": "CALC-F4-NOTCH",
+   "output": "low_ratio",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.1
+   },
+   "verifies": [
+    "R-VIBRATION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Hover FFT (INS_LOG_BAT) with the notch on: no gyro peak above the noise floor at 1P or 2P.",
+   "value": 1.2894742192936182
+  },
+  {
+   "id": "CL-F4-NOTCH-TOP",
+   "type": "claim",
+   "title": "Highest notch harmonic at the rpm cap over gyro Nyquist",
+   "calc": "CALC-F4-NOTCH",
+   "output": "top_ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "Confirm INS_GYRO_RATE on the chosen board (F3).",
+   "value": 0.935
+  },
+  {
+   "id": "CL-F4-BATT-CRT",
+   "type": "claim",
+   "title": "BATT_CRT_MAH over the 20 % reserve",
+   "calc": "CALC-F4-BATT",
+   "output": "value",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-FAILSAFES",
+    "R-MISSION"
+   ],
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "SITL S8 and props-off bench with a bench supply: low -> RTL, critical -> QLAND.",
+   "value": 1.0
+  },
+  {
+   "id": "CL-F4-BATT-LOW",
+   "type": "claim",
+   "title": "BATT_LOW_MAH set against E2's landing allowance",
+   "calc": "CALC-F4-BATT-LOW",
+   "output": "value",
+   "unit": "mAh",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-E2-BATT-LOW-MAH"
+   },
+   "verifies": [
+    "R-FAILSAFES"
+   ],
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "Read BATT_LOW_MAH after loading: 2 600 (CR-E2-20).",
+   "value": 2600.0
+  },
+  {
+   "id": "CL-F4-FENCE-ALT",
+   "type": "claim",
+   "title": "FENCE_ALT_MAX over the 400 ft ceiling",
+   "calc": "CALC-F4-FENCE",
+   "output": "alt_ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.95
+   },
+   "verifies": [
+    "R-FAILSAFES"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "SITL S9: climb through 110 m triggers RTL.",
+   "value": 0.902230971128609
+  },
+  {
+   "id": "CL-F4-FENCE-RADIUS",
+   "type": "claim",
+   "title": "FENCE_RADIUS over VLOS",
+   "calc": "CALC-F4-FENCE",
+   "output": "rad_ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "verifies": [
+    "R-FAILSAFES"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "SITL S9; H3 checks the circle sits inside the sub-field.",
+   "value": 0.5
+  },
+  {
+   "id": "CL-F4-BAT-CURR-MOTOR",
+   "type": "claim",
+   "title": "Per-motor share of the 100 A limiter against the 25 A motor rating",
+   "calc": "CALC-F4-BAT-CURR",
+   "output": "i_motor_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:propulsion.motor_max_a"
+   },
+   "verifies": [
+    "R-ESC-CURRENT"
+   ],
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "T-H1-RESTRAINED-RUN: ESC telemetry current per motor <= 25 A during the 2 s full-throttle run.",
+   "value": 25.0
+  },
+  {
+   "id": "CL-F4-LAND-SPD",
+   "type": "claim",
+   "title": "Final landing descent against the no-set touchdown speed of the foot cartridges",
+   "calc": "CALC-F4-LAND-SPD",
+   "output": "value",
+   "unit": "m/s",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-D5-V-NO-SET"
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "QLAND logs: CTUN/QTUN climb rate over the last 1 m >= -0.3 m/s; cartridge set read after 10 landings (CR-D5-21).",
+   "value": 0.3
+  },
+  {
+   "id": "CL-F4-SENSOR-POS-ERR",
+   "type": "claim",
+   "title": "INS_POS / GPS1_POS as set against F3's points and the CG",
+   "calc": "CALC-F4-SENSOR-POS",
+   "output": "err_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "value": 0.002
+   },
+   "parts": [
+    "AVN-001",
+    "AVN-002"
+   ],
+   "how": "Measure the as-built IMU and GPS centres from the CG mark (T-A3-CG-BALANCE) and reset the six lines.",
+   "value": 6.938893903907228e-18
+  },
+  {
+   "id": "CL-F4-ELEVON-PWM-ERR",
+   "type": "claim",
+   "title": "SERVO5/6 MIN/MAX as set against D6's +/-25 deg servo angles",
+   "calc": "CALC-F4-ELEVON-PWM",
+   "output": "err_us",
+   "unit": "us",
+   "limit": {
+    "op": "<=",
+    "value": 1.5
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-D6-THROW: protractor on each trailing edge at full pitch + roll demand reads +25 / -25 deg; the bench values replace these starting values.",
+   "value": 0.33333333333325754
+  },
+  {
+   "id": "CL-F4-ELEVON-PWM-SPAN",
+   "type": "claim",
+   "title": "Largest servo pulse excursion from trim",
+   "calc": "CALC-F4-ELEVON-PWM",
+   "output": "span_us",
+   "unit": "us",
+   "limit": {
+    "op": "<=",
+    "value": 500.0
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-D6-THROW; the 500 us end is D6's assumed +/-45 deg servo range (ASM-D6-SERVO-THROW).",
+   "value": 497
+  },
+  {
+   "id": "CL-F4-ARSPD-TRIP-NEED",
+   "type": "claim",
+   "title": "1.3 x the tripped stall at the gate mass, forward CG (B2 XFOIL tripped, 12.85 m/s)",
+   "calc": "CALC-F4-ARSPD-TRIP",
+   "output": "v_need",
+   "unit": "m/s",
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-B2-STALL replaces the tripped-section estimate with the measured trimmed stall.",
+   "value": 16.82326785215212
+  },
+  {
+   "id": "CL-F4-ARSPD-MIN-TRIP",
+   "type": "claim",
+   "title": "AIRSPEED_MIN against 1.3 x the tripped stall at the gate mass, forward CG (B6 baseline)",
+   "calc": "CALC-F4-ARSPD-TRIP",
+   "output": "vmin",
+   "unit": "m/s",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F4-ARSPD-TRIP-NEED"
+   },
+   "verifies": [
+    "R-STALL",
+    "R-TRANSITION"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-B2-STALL with the real LE tape seam (twin, then K09-L): AIRSPEED_MIN = ceil(1.3 x measured trimmed stall); 17 holds to 13.07 m/s, the second fallback 18 to 13.85 m/s (vs_keep, vs_keep_fb2).",
+   "value": 17.0
+  },
+  {
+   "id": "CL-F4-YAW-ACC-SET",
+   "type": "claim",
+   "title": "Q_A_ACC_Y_MAX over the hover yaw acceleration at 30 % differential",
+   "calc": "CALC-F4-YAW-ACC",
+   "output": "ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-YAW-ACC-FRAC"
+   },
+   "verifies": [
+    "R-FSW-PARAMS"
+   ],
+   "parts": [
+    "AVN-001",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Read Q_A_ACC_Y_MAX after loading (135 deg/s/s; the 4.6 name Q_A_ACCEL_Y_MAX must not load). T-B4-YAW (hanging yaw stand) measures the yaw moment per differential; re-set to 0.85 x the measured value.",
+   "value": 0.8459433083860819
+  },
+  {
+   "id": "CL-F4-RC-FS-QLAND",
+   "type": "claim",
+   "title": "RC loss to QLAND in QSTABILIZE / QHOVER / QLOITER",
+   "calc": "CALC-F4-RC-FS",
+   "output": "t_qland_s",
+   "unit": "s",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-F4-QLAND-MAX"
+   },
+   "verifies": [
+    "R-FAILSAFES"
+   ],
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "SITL S7 (measured 1.15 s on the stock tailsitter model, 2026-11-13) and T-F5-BENCH step 9: transmitter off, props off, QHOVER selected: the HUD shows QLAND within 3 s. Needs the receiver in failsafe mode No Pulses (RC-LINK.md).",
+   "value": 1.2
+  },
+  {
+   "id": "CL-F4-MIX-PITCH",
+   "type": "claim",
+   "title": "Trimmed-CLmax elevon need at the CG target over the pure-pitch travel MIXING_GAIN leaves",
+   "calc": "CALC-F4-MIX",
+   "output": "ratio",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "parts": [
+    "AVN-001"
+   ],
+   "how": "T-B2-STALL slow flight in FBWA: elevon output not at the pitch end at the stall break.",
+   "value": 0.6703584351476871
+  },
+  {
+   "id": "T-F4-SITL-NAMES",
+   "type": "test",
+   "title": "Load K09L.param in SITL and on the board; no unknown name. SITL part run 2026-11-13 (ArduPlane 4.7.3-beta1 Windows SITL): 156 of 158 names accepted and read back after a reboot; SERVO_BLH_BDMASK and SERVO_BLH_POLES are not in the SITL build (board only). Board part: T-F3-FW-LOAD",
+   "verifies": [
+    "CL-F4-MOTOR-MAP-ERR",
+    "CL-F4-SPIN-MAX"
+   ],
+   "state": "planned",
+   "procedure": "SITL-PLAN.md S1; team/F4/sitl/RESULTS.md"
+  },
+  {
+   "id": "T-F4-BENCH-MAP",
+   "type": "test",
+   "title": "Props-off motor order, rotation and elevon direction",
+   "verifies": [
+    "CL-F4-MOTOR-MAP-ERR"
+   ],
+   "state": "planned",
+   "procedure": "TUNING-PLAN.md step 1"
+  },
+  {
+   "id": "T-F4-STAND-RPM-CAP",
+   "type": "test",
+   "title": "Fresh-pack full-stick rpm and pack current on the stand",
+   "verifies": [
+    "CL-F4-SPIN-MAX"
+   ],
+   "state": "planned",
+   "procedure": "TUNING-PLAN.md step 2: ESC rpm <= 9 350, BAT.Curr <= 100 A"
+  },
+  {
+   "id": "T-F4-SITL-FAILSAFES",
+   "type": "test",
+   "title": "RC, battery, geofence, GPS/EKF, transition-fail and e-stop in SITL",
+   "verifies": [
+    "CL-F4-BATT-CRT",
+    "CL-F4-FENCE-ALT",
+    "CL-F4-FENCE-RADIUS",
+    "CL-F4-DESCENT"
+   ],
+   "state": "planned",
+   "procedure": "SITL-PLAN.md S7-S13"
+  },
+  {
+   "id": "T-F4-SITL-TRANSITION",
+   "type": "test",
+   "title": "Pitch-over 12/16 deg/s (CR-B1-12) and back-transition 20/30/50 deg/s on a sagged pack",
+   "verifies": [
+    "CL-F4-CRUISE-TRANS",
+    "CL-F4-FW-ACT-MAX"
+   ],
+   "state": "planned",
+   "procedure": "SITL-PLAN.md S4-S5"
+  },
+  {
+   "id": "T-F4-DIVE",
+   "type": "test",
+   "title": "FBWA full-down stick, idle, 20 s at >= 80 m on the twin then K09-L",
+   "verifies": [
+    "CL-F4-VDIVE-VA"
+   ],
+   "state": "planned",
+   "procedure": "TUNING-PLAN.md step 6b"
+  },
+  {
+   "id": "T-F4-TD-CUT",
+   "type": "test",
+   "title": "Touchdown cut timing on 20 twin landings",
+   "verifies": [
+    "CL-F4-TD-CUT"
+   ],
+   "state": "planned",
+   "procedure": "TUNING-PLAN.md step 5; H2 logs"
+  },
+  {
+   "id": "T-F4-HANG-YAW",
+   "type": "test",
+   "title": "Hanging yaw test before first hover (CR-B4-16b): airframe nose-up on one line, UR + LL only at low throttle; frame yaws the way of their reaction torque (-x); repeat with UL + LR (+x)",
+   "verifies": [
+    "CL-F4-CANT-SENSE-D3",
+    "CL-F4-MOTOR-MAP-ERR"
+   ],
+   "state": "planned",
+   "procedure": "TUNING-PLAN.md step 1b"
+  },
+  {
+   "id": "T-F4-THRUST-LAG",
+   "type": "test",
+   "title": "Motor thrust lag on the stand: 10 % output step, time to 63 % of the thrust change (CR-B3-19: below 30 ms the 4 Hz pitch margin falls under 6 dB)",
+   "verifies": [
+    "CL-F4-XOVER-PIT"
+   ],
+   "state": "planned",
+   "procedure": "TUNING-PLAN.md step 2"
+  },
+  {
+   "id": "T-F4-SITL-MOTOR-OUT",
+   "type": "test",
+   "title": "Motor-failure injection in hover, pitch-over and cruise",
+   "verifies": [
+    "CL-F4-YAW-LOW-SIDE"
+   ],
+   "state": "planned",
+   "procedure": "SITL-PLAN.md S11 (SIM_ENGINE_FAIL, SIM_ENGINE_MUL)"
+  }
+ ]
+}

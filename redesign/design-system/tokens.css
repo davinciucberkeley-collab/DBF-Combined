@@ -1,0 +1,189 @@
+/* DBF redesign design tokens  v1  (redesign/design-system/tokens.css)
+   One file, two themes. Load it first; everything else reads these variables.
+   Theme: <html data-theme="light|dark">; with no attribute the OS preference applies.
+   Fonts (Google Fonts, both SIL Open Font License 1.1, free for any use incl. print):
+     IBM Plex Sans  400 500 600   prose, UI, labels, callout text
+     IBM Plex Mono  400 500       numbers, units, ids, paths, code, equations
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+   Offline/print fallback is the system stack below; nothing breaks without the web fonts.
+   Contrast: every text/wash pair here is >= 4.5:1 on its panel in its theme (checked 2026-11-09). */
+
+:root {
+  /* ---------- type ---------- */
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, "SF Mono", monospace;
+
+  --text-xs: 0.75rem;    /* 12px  meta, table headers, badges, axis labels */
+  --text-sm: 0.875rem;   /* 14px  UI labels, table cells, captions */
+  --text-md: 0.9375rem;  /* 15px  body */
+  --text-lg: 1.125rem;   /* 18px  section titles, step titles */
+  --text-xl: 1.5rem;     /* 24px  page titles */
+  --text-2xl: 2rem;      /* 32px  one display line per page at most */
+  --text-value: 1.375rem;/* 22px  metric tile value (mono) */
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
+  --leading-body: 1.55;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  --tracking-tight: -0.015em;  /* titles >= 24px */
+  --tracking-caps: 0.04em;     /* small caps labels, badges */
+
+  /* ---------- spacing (4px grid) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  --measure: 68ch;          /* max prose width */
+  --page-max: 1200px;
+  --topbar-h: 52px;
+  --sidebar-w: 240px;
+  --inspector-w: 320px;
+
+  /* ---------- shape ---------- */
+  --radius-xs: 3px;   /* badges, marks */
+  --radius-sm: 5px;   /* chips, inputs, buttons */
+  --radius-md: 8px;   /* cards, panels, tables */
+  --radius-lg: 12px;  /* popovers, dialogs */
+  --border-w: 1px;
+
+  /* ---------- motion ---------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;   /* hover, focus */
+  --dur-base: 200ms;   /* panels, tabs */
+  --dur-slow: 400ms;   /* viewer mode change, explode */
+  --dur-camera: 600ms; /* 3-D camera moves */
+
+  /* ---------- figure highlight (renders, callouts, diagrams) ----------
+     Orange means "the part you act on" in every figure. It is never a UI accent. */
+  --highlight: #C2540A;
+  --highlight-strong: #E0661A;
+  --highlight-wash: #FBE9DC;
+
+  /* ---------- subsystem colours (3-D viewer, diagrams, legends; same in both themes) ----------
+     Fills for geometry; always pair with a text label. Never used for status. */
+  --sub-wng: #4C8DE0;  /* wing */
+  --sub-fus: #7F8C9E;  /* fuselage */
+  --sub-bms: #2BA6A0;  /* booms */
+  --sub-tal: #8E6FD8;  /* tail */
+  --sub-ger: #B07A3A;  /* landing gear */
+  --sub-psh: #D45C8E;  /* pusher / propulsion */
+  --sub-pwr: #E0613A;  /* power (battery, PDB, ESC) */
+  --sub-hrn: #D9A91E;  /* harness */
+  --sub-avn: #5DB24D;  /* avionics */
+
+  /* ---------- 3-D stage (behind models in viewer and renders) ---------- */
+  --stage-top: #F3F5F8;
+  --stage-bottom: #DCE1E8;
+  --stage-grid: #B9C0CA;
+}
+
+/* =========================== LIGHT (default) =========================== */
+:root, :root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #F6F7F9;          /* page */
+  --panel: #FFFFFF;       /* cards, tables, panels */
+  --panel-2: #EEF1F5;     /* hover, inline code, zebra, inputs */
+  --panel-3: #E2E6EC;     /* pressed */
+
+  --line: #E3E7ED;        /* hairline: panel borders, row rules */
+  --line-2: #CBD2DB;      /* control borders, table header rule */
+  --line-3: #9AA4B1;      /* axes, strong rules, scrollbar thumb */
+
+  --fg: #121619;          /* headings, values */
+  --fg-2: #4B5563;        /* body, labels */
+  --fg-3: #6B7280;        /* meta, captions, units */
+  --fg-inverse: #FFFFFF;
+
+  --accent: #1F5FC7;      /* here / selected / link. Never a status. */
+  --accent-hover: #174DA6;
+  --accent-wash: #E6EEFB;
+  --accent-line: #A9C3EE;
+  --on-accent: #FFFFFF;
+
+  /* status ladder (text, wash, rule). Words always accompany colour. */
+  --st-unverified: #8A5600; --st-unverified-wash: #FBEFD6; --st-unverified-line: #E6C27A;
+  --st-proposed:   #4B5563; --st-proposed-wash:   #EEF0F3; --st-proposed-line:   #C5CBD3;
+  --st-modelled:   #5B3FB5; --st-modelled-wash:   #ECE8FA; --st-modelled-line:   #BFB2EA;
+  --st-checked:    #0E6F74; --st-checked-wash:    #DDF3F2; --st-checked-line:    #8FD1D0;
+  --st-verified:   #1A6E3A; --st-verified-wash:   #DDF5E5; --st-verified-line:   #8FD4A8;
+  --st-fail:       #B42323; --st-fail-wash:       #FBE4E4; --st-fail-line:       #EBA3A3;
+
+  --shadow-pop: 0 12px 32px rgba(18, 22, 25, 0.14), 0 2px 6px rgba(18, 22, 25, 0.08);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+/* =========================== DARK =========================== */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0F1217; --panel: #161B22; --panel-2: #1D232C; --panel-3: #262D38;
+    --line: #232A34; --line-2: #313A46; --line-3: #4B5563;
+    --fg: #E6EAF0; --fg-2: #A7B0BD; --fg-3: #8891A0; --fg-inverse: #0F1217;
+    --accent: #6EA8FE; --accent-hover: #8FBCFF; --accent-wash: #17273F; --accent-line: #2E4E80; --on-accent: #0F1217;
+    --st-unverified: #F2C063; --st-unverified-wash: #3A2B0C; --st-unverified-line: #6B4F17;
+    --st-proposed:   #B4BCC8; --st-proposed-wash:   #232A34; --st-proposed-line:   #3C4552;
+    --st-modelled:   #B9A6FF; --st-modelled-wash:   #2A2250; --st-modelled-line:   #4D3F8C;
+    --st-checked:    #5CD0D4; --st-checked-wash:    #0F3537; --st-checked-line:    #1E6367;
+    --st-verified:   #6ADB94; --st-verified-wash:   #10361F; --st-verified-line:   #1F6639;
+    --st-fail:       #F58A8A; --st-fail-wash:       #43191B; --st-fail-line:       #7A3336;
+    --highlight: #FF8A3D; --highlight-strong: #FFA266; --highlight-wash: #3A2112;
+    --stage-top: #1B212A; --stage-bottom: #0F1318; --stage-grid: #3A4250;
+    --shadow-pop: 0 12px 32px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.35);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0F1217; --panel: #161B22; --panel-2: #1D232C; --panel-3: #262D38;
+  --line: #232A34; --line-2: #313A46; --line-3: #4B5563;
+  --fg: #E6EAF0; --fg-2: #A7B0BD; --fg-3: #8891A0; --fg-inverse: #0F1217;
+  --accent: #6EA8FE; --accent-hover: #8FBCFF; --accent-wash: #17273F; --accent-line: #2E4E80; --on-accent: #0F1217;
+  --st-unverified: #F2C063; --st-unverified-wash: #3A2B0C; --st-unverified-line: #6B4F17;
+  --st-proposed:   #B4BCC8; --st-proposed-wash:   #232A34; --st-proposed-line:   #3C4552;
+  --st-modelled:   #B9A6FF; --st-modelled-wash:   #2A2250; --st-modelled-line:   #4D3F8C;
+  --st-checked:    #5CD0D4; --st-checked-wash:    #0F3537; --st-checked-line:    #1E6367;
+  --st-verified:   #6ADB94; --st-verified-wash:   #10361F; --st-verified-line:   #1F6639;
+  --st-fail:       #F58A8A; --st-fail-wash:       #43191B; --st-fail-line:       #7A3336;
+  --highlight: #FF8A3D; --highlight-strong: #FFA266; --highlight-wash: #3A2112;
+  --stage-top: #1B212A; --stage-bottom: #0F1318; --stage-grid: #3A4250;
+  --shadow-pop: 0 12px 32px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+/* =========================== PRINT (build manual, SPEC one-pagers) =========================== */
+@media print {
+  :root, :root[data-theme="dark"] {
+    color-scheme: light;
+    --bg: #FFFFFF; --panel: #FFFFFF; --panel-2: #F2F3F5; --panel-3: #E6E8EB;
+    --line: #D5D9DE; --line-2: #B9BFC7; --line-3: #8A929C;
+    --fg: #111417; --fg-2: #3D444D; --fg-3: #5C646E;
+    --accent: #1F5FC7; --accent-wash: #FFFFFF; --accent-line: #1F5FC7;
+    --highlight: #C2540A; --highlight-wash: #FFFFFF;
+    --shadow-pop: none;
+  }
+}
+
+/* =========================== base reset the tokens assume =========================== */
+.ds-base, .ds-base * { box-sizing: border-box; }
+.ds-base {
+  background: var(--bg); color: var(--fg);
+  font: var(--weight-regular) var(--text-md)/var(--leading-body) var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  accent-color: var(--accent);
+}
+.ds-base ::selection { background: var(--accent-wash); color: var(--fg); }
+.ds-base :focus-visible { outline: none; box-shadow: var(--focus-ring); border-radius: var(--radius-xs); }
+.ds-base ::-webkit-scrollbar { width: 10px; height: 10px; }
+.ds-base ::-webkit-scrollbar-thumb { background: var(--line-3); border: 3px solid var(--bg); border-radius: 8px; }
+.ds-base ::-webkit-scrollbar-track { background: transparent; }
+@media (prefers-reduced-motion: reduce) { .ds-base * { transition: none !important; animation: none !important; } }

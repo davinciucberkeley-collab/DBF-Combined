@@ -1,0 +1,1 @@
+h320_pz_v_engage25_rim_t3_w2_rin1 {"rim": {"vm_max_MPa": 14.45693, "at_mm": [326.514, 10.874, 215.183]}, "aft box": {"vm_max_MPa": 16.17276, "at_mm": [319.686, -7.0, 195.65]}, "window strips": {"vm_max_MPa": 3.275956, "at_mm": [265.209, 10.95, 210.159]}, "whole shoe": {"vm_max_MPa": 23.72115, "at_mm": [320.0, -7.0, 195.65]}} 1670 s

@@ -1,0 +1,4 @@
+# Generic test aircraft (configuration-independent demo of the framework, not a design)
+ex_fuselage
+ex_wing
+ex_booms

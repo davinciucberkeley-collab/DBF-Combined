@@ -1,0 +1,2853 @@
+{
+ "source": "redesign/subsystems",
+ "mode": "material",
+ "frame": "glTF +Y up: glTF (x, y, z) = aircraft (x aft, z up, -y). explode_m in aircraft frame, metres.",
+ "files": {
+  "assembly.glb": 13483764,
+  "avionics.glb": 156944,
+  "fins.glb": 1871280,
+  "harness.glb": 2865992,
+  "landing.glb": 208612,
+  "mechanisms.glb": 444700,
+  "pod.glb": 176016,
+  "power.glb": 251548,
+  "propulsion.glb": 1195924,
+  "transport.glb": 255016,
+  "wing.glb": 6047096
+ },
+ "parts": [
+  {
+   "id": "WNG-001",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 201.9,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-006-R",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-006-L",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 1.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 102.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-004-R",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 7.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-004-L",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 7.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-005-R",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-005-L",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 4.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 47.9,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0917
+   ]
+  },
+  {
+   "id": "WNG-020",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.164
+   ]
+  },
+  {
+   "id": "WNG-011-R",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.7,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "WNG-011-L",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.7,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "WNG-012-R",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "WNG-012-L",
+   "subsystem": "wing",
+   "status": "MODELLED",
+   "mass_g": 3.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "FIN-001-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 23.33,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-001-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 23.76,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-002-R",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 35.09,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-003-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 10.67,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "FIN-004-R",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 39.97,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-013-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-013-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-006-R",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 5.45,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-007-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 2.04,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-008-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 11.59,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-009-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 4.79,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-009-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 5.18,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-010-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.24,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-010-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.09,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-011-URO",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.89,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-011-URI",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.89,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-012-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.64,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-007-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 2.04,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-008-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 11.59,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-012-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.64,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-011-LRO",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.89,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-011-LRI",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.89,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-002-L",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 35.09,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-004-L",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 39.97,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-006-L",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 5.45,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-001-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 23.33,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-007-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 2.04,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-008-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 11.59,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-009-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 4.79,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-010-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.24,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-012-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.64,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-013-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-011-ULO",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.89,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-011-ULI",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.89,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-001-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 23.76,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-007-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 2.04,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-008-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 11.59,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-009-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 5.18,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-010-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.09,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-012-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.64,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-013-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.36,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-011-LLO",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.89,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-011-LLI",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 3.89,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "FIN-003-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 10.67,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "FIN-003-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 10.67,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "FIN-003-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 10.67,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "FIN-101-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "explode_m": [
+    0.0,
+    0.0673,
+    0.081
+   ]
+  },
+  {
+   "id": "FIN-102-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "explode_m": [
+    0.0,
+    0.0673,
+    0.081
+   ]
+  },
+  {
+   "id": "FIN-103-UR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "explode_m": [
+    0.0,
+    0.068,
+    0.081
+   ]
+  },
+  {
+   "id": "FIN-101-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "explode_m": [
+    0.0,
+    -0.0673,
+    0.081
+   ]
+  },
+  {
+   "id": "FIN-101-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "explode_m": [
+    0.0,
+    0.0673,
+    -0.081
+   ]
+  },
+  {
+   "id": "FIN-101-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 1.1,
+   "explode_m": [
+    0.0,
+    -0.0673,
+    -0.081
+   ]
+  },
+  {
+   "id": "FIN-102-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "explode_m": [
+    0.0,
+    -0.0673,
+    0.081
+   ]
+  },
+  {
+   "id": "FIN-102-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "explode_m": [
+    0.0,
+    0.0673,
+    -0.081
+   ]
+  },
+  {
+   "id": "FIN-102-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.36,
+   "explode_m": [
+    0.0,
+    -0.0673,
+    -0.081
+   ]
+  },
+  {
+   "id": "FIN-103-UL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "explode_m": [
+    0.0,
+    -0.068,
+    0.081
+   ]
+  },
+  {
+   "id": "FIN-103-LR",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "explode_m": [
+    0.0,
+    0.068,
+    -0.081
+   ]
+  },
+  {
+   "id": "FIN-103-LL",
+   "subsystem": "fins",
+   "status": "MODELLED",
+   "mass_g": 0.24,
+   "explode_m": [
+    0.0,
+    -0.068,
+    -0.081
+   ]
+  },
+  {
+   "id": "POD-001",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 24.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "POD-002",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 41.2,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "POD-003",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 9.2,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0688
+   ]
+  },
+  {
+   "id": "POD-004",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 9.1,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.092
+   ]
+  },
+  {
+   "id": "POD-009",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 2.2,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0895
+   ]
+  },
+  {
+   "id": "POD-010",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 5.3,
+   "explode_m": [
+    0.06,
+    0.0,
+    0.0895
+   ]
+  },
+  {
+   "id": "POD-008",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 2.4,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0815
+   ]
+  },
+  {
+   "id": "POD-006",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 5.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "POD-007",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 39.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0622
+   ]
+  },
+  {
+   "id": "POD-005",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 5.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.1302
+   ]
+  },
+  {
+   "id": "POD-011",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 0.14,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.1289
+   ]
+  },
+  {
+   "id": "POD-012",
+   "subsystem": "pod",
+   "status": "MODELLED",
+   "mass_g": 0.05,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.1294
+   ]
+  },
+  {
+   "id": "GER-001-UR",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 9.98,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-002-UR",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 3.19,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0778
+   ]
+  },
+  {
+   "id": "GER-003-UR",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.51,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0755
+   ]
+  },
+  {
+   "id": "GER-008-LR",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.47,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0755
+   ]
+  },
+  {
+   "id": "GER-004-UR",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.71,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0778
+   ]
+  },
+  {
+   "id": "GER-007-R",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.73,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0702
+   ]
+  },
+  {
+   "id": "GER-001-UL",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 9.98,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-001-LR",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 9.98,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-001-LL",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 9.98,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-004-UL",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.71,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0778
+   ]
+  },
+  {
+   "id": "GER-004-LR",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.71,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0778
+   ]
+  },
+  {
+   "id": "GER-004-LL",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.71,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0778
+   ]
+  },
+  {
+   "id": "GER-002-UL",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 3.19,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0778
+   ]
+  },
+  {
+   "id": "GER-002-LR",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 3.19,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0778
+   ]
+  },
+  {
+   "id": "GER-002-LL",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 3.19,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0778
+   ]
+  },
+  {
+   "id": "GER-003-UL",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.51,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0755
+   ]
+  },
+  {
+   "id": "GER-008-LL",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.47,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0755
+   ]
+  },
+  {
+   "id": "GER-007-L",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.73,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0702
+   ]
+  },
+  {
+   "id": "GER-005",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 4.41,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-009",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 4.37,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-010",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.51,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-011",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 0.47,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-012",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 9.63,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-013",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 10.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "GER-006",
+   "subsystem": "landing",
+   "status": "MODELLED",
+   "mass_g": 193.2,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "PRP-001-UR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "explode_m": [
+    -0.0671,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-007-UR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "explode_m": [
+    -0.2059,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-008-UR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "explode_m": [
+    0.4799,
+    0.0,
+    0.1313
+   ]
+  },
+  {
+   "id": "PRP-004-UR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "explode_m": [
+    -0.1382,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-003-UR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "explode_m": [
+    0.554,
+    0.0,
+    0.1313
+   ]
+  },
+  {
+   "id": "PRP-005-UR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "explode_m": [
+    -0.0719,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-006-UR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "explode_m": [
+    -0.1404,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-001-UL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "explode_m": [
+    -0.0671,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-007-UL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "explode_m": [
+    -0.2059,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-008-UL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "explode_m": [
+    0.4799,
+    0.0,
+    0.1313
+   ]
+  },
+  {
+   "id": "PRP-004-UL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "explode_m": [
+    -0.1382,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-003-UL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "explode_m": [
+    0.554,
+    0.0,
+    0.1313
+   ]
+  },
+  {
+   "id": "PRP-005-UL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "explode_m": [
+    -0.0719,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-006-UL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "explode_m": [
+    -0.1404,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "PRP-001-LR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "explode_m": [
+    -0.0671,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-007-LR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "explode_m": [
+    -0.2059,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-008-LR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "explode_m": [
+    0.4799,
+    0.0,
+    0.1313
+   ]
+  },
+  {
+   "id": "PRP-004-LR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "explode_m": [
+    -0.1382,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-003-LR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "explode_m": [
+    0.554,
+    0.0,
+    0.1313
+   ]
+  },
+  {
+   "id": "PRP-005-LR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "explode_m": [
+    -0.0719,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-006-LR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "explode_m": [
+    -0.1404,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-001-LL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 81.0,
+   "explode_m": [
+    -0.0671,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-007-LL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.9,
+   "explode_m": [
+    -0.2059,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-008-LL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "explode_m": [
+    0.4799,
+    0.0,
+    0.1313
+   ]
+  },
+  {
+   "id": "PRP-004-LL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.0,
+   "explode_m": [
+    -0.1382,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-003-LL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 17.0,
+   "explode_m": [
+    0.554,
+    0.0,
+    0.1313
+   ]
+  },
+  {
+   "id": "PRP-005-LL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 3.2,
+   "explode_m": [
+    -0.0719,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-006-LL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 1.2,
+   "explode_m": [
+    -0.1404,
+    0.0,
+    -0.081
+   ]
+  },
+  {
+   "id": "PRP-002-UR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "explode_m": [
+    0.0,
+    0.06,
+    0.0
+   ]
+  },
+  {
+   "id": "PRP-002-UL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "explode_m": [
+    0.0,
+    -0.06,
+    0.0
+   ]
+  },
+  {
+   "id": "PRP-002-LR",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "explode_m": [
+    0.0,
+    0.06,
+    0.0
+   ]
+  },
+  {
+   "id": "PRP-002-LL",
+   "subsystem": "propulsion",
+   "status": "MODELLED",
+   "mass_g": 7.6,
+   "explode_m": [
+    0.0,
+    -0.06,
+    0.0
+   ]
+  },
+  {
+   "id": "MEC-001-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 15.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.072
+   ]
+  },
+  {
+   "id": "MEC-002-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "explode_m": [
+    0.0,
+    0.06,
+    -0.072
+   ]
+  },
+  {
+   "id": "MEC-003-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.64,
+   "explode_m": [
+    -0.0625,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-004-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 2.87,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-005-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.85,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-006-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 2.62,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-007-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.53,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.06
+   ]
+  },
+  {
+   "id": "MEC-008-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 3.19,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "MEC-009-RI",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 2.24,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-009-RO",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 2.93,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-010-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.57,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0762
+   ]
+  },
+  {
+   "id": "MEC-013-RI",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-013-RO",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-001-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 15.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.072
+   ]
+  },
+  {
+   "id": "MEC-002-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.6,
+   "explode_m": [
+    0.0,
+    -0.06,
+    -0.072
+   ]
+  },
+  {
+   "id": "MEC-003-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.64,
+   "explode_m": [
+    -0.0625,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-004-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 2.87,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-005-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.85,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-006-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 2.62,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-007-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 1.53,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.06
+   ]
+  },
+  {
+   "id": "MEC-008-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 3.19,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "MEC-009-LI",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 2.24,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-009-LO",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 2.93,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-010-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.57,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0762
+   ]
+  },
+  {
+   "id": "MEC-013-LI",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-013-LO",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.63,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0743
+   ]
+  },
+  {
+   "id": "MEC-011-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0652
+   ]
+  },
+  {
+   "id": "MEC-012-R",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "explode_m": [
+    0.0,
+    0.0615,
+    -0.072
+   ]
+  },
+  {
+   "id": "MEC-011-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0652
+   ]
+  },
+  {
+   "id": "MEC-012-L",
+   "subsystem": "mechanisms",
+   "status": "MODELLED",
+   "mass_g": 0.17,
+   "explode_m": [
+    0.0,
+    -0.0615,
+    -0.072
+   ]
+  },
+  {
+   "id": "PWR-001",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 550.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.087
+   ]
+  },
+  {
+   "id": "PWR-006",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 8.06,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0905
+   ]
+  },
+  {
+   "id": "PWR-003",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 28.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.1595
+   ]
+  },
+  {
+   "id": "PWR-002",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 18.6,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0905
+   ]
+  },
+  {
+   "id": "PWR-004",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 8.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0769
+   ]
+  },
+  {
+   "id": "PWR-008-UR",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 2.2,
+   "explode_m": [
+    0.0,
+    0.073,
+    0.0
+   ]
+  },
+  {
+   "id": "PWR-008-UL",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 2.2,
+   "explode_m": [
+    0.0,
+    -0.073,
+    0.0
+   ]
+  },
+  {
+   "id": "PWR-008-LR",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 2.2,
+   "explode_m": [
+    0.0,
+    0.073,
+    0.0
+   ]
+  },
+  {
+   "id": "PWR-008-LL",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 2.2,
+   "explode_m": [
+    0.0,
+    -0.073,
+    0.0
+   ]
+  },
+  {
+   "id": "PWR-107",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 1.6,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0892
+   ]
+  },
+  {
+   "id": "PWR-102",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 0.92,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0828
+   ]
+  },
+  {
+   "id": "PWR-103",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 0.08,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.1605
+   ]
+  },
+  {
+   "id": "PWR-101",
+   "subsystem": "power",
+   "status": "MODELLED",
+   "mass_g": 0.64,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0258
+   ]
+  },
+  {
+   "id": "AVN-001",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 12.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0798
+   ]
+  },
+  {
+   "id": "AVN-006",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 2.4,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0718
+   ]
+  },
+  {
+   "id": "AVN-007",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 0.4,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0134
+   ]
+  },
+  {
+   "id": "AVN-004",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 4.05,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0887
+   ]
+  },
+  {
+   "id": "AVN-005",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 4.24,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.081
+   ]
+  },
+  {
+   "id": "AVN-003",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0733
+   ]
+  },
+  {
+   "id": "AVN-002",
+   "subsystem": "avionics",
+   "status": "MODELLED",
+   "mass_g": 7.73,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.2068
+   ]
+  },
+  {
+   "id": "HRN-001",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 38.2,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0903
+   ],
+   "mass_proxy": true
+  },
+  {
+   "id": "HRN-002-R",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 44.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ],
+   "mass_proxy": true
+  },
+  {
+   "id": "HRN-002-L",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 44.3,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ],
+   "mass_proxy": true
+  },
+  {
+   "id": "HRN-113-LL",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.02
+   ]
+  },
+  {
+   "id": "HRN-113-LR",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0189
+   ]
+  },
+  {
+   "id": "HRN-113-UL",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0142
+   ]
+  },
+  {
+   "id": "HRN-113-UR",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 2.0,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0131
+   ]
+  },
+  {
+   "id": "HRN-105-1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-3",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-4",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-5",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0151
+   ]
+  },
+  {
+   "id": "HRN-105-6",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.071,
+    0.0903
+   ]
+  },
+  {
+   "id": "HRN-105-SL",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "explode_m": [
+    0.0865,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-105-SR",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.25,
+   "explode_m": [
+    0.0865,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-110-LL",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-110-LR",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-110-UL",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-110-UR",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "HRN-107-I2C",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0882,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0903
+   ]
+  },
+  {
+   "id": "HRN-107-LL-P1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-LL-P2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-LL-PH",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-LL-S",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-LR-P1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-LR-P2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-LR-PH",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-LR-S",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-PACK",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0366,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0903
+   ]
+  },
+  {
+   "id": "HRN-107-RX",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.01,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0903
+   ]
+  },
+  {
+   "id": "HRN-107-UL-P1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-UL-P2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-UL-PH",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-UL-S",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-UR-P1",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-UR-P2",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0147,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-UR-PH",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0106,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "HRN-107-UR-S",
+   "subsystem": "harness",
+   "status": "MODELLED",
+   "mass_g": 0.0054,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.2231
+   ]
+  },
+  {
+   "id": "TRN-001",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 2333.5,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0713
+   ]
+  },
+  {
+   "id": "TRN-005",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 634.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.1501
+   ]
+  },
+  {
+   "id": "TRN-002-R",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 69.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.0747
+   ]
+  },
+  {
+   "id": "TRN-002-L",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 69.8,
+   "explode_m": [
+    0.0,
+    0.0,
+    -0.3037
+   ]
+  },
+  {
+   "id": "TRN-004-R",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 37.9,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0601
+   ]
+  },
+  {
+   "id": "TRN-004-L",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 37.9,
+   "explode_m": [
+    0.0,
+    0.0,
+    0.0601
+   ]
+  },
+  {
+   "id": "TRN-003",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 149.0,
+   "explode_m": [
+    0.554,
+    0.0,
+    0.0713
+   ]
+  },
+  {
+   "id": "TRN-008",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 150.0,
+   "explode_m": [
+    0.554,
+    0.0,
+    0.1763
+   ]
+  },
+  {
+   "id": "TRN-006-L",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 45.0,
+   "explode_m": [
+    0.0,
+    -0.2975,
+    0.0713
+   ]
+  },
+  {
+   "id": "TRN-006-R",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 45.0,
+   "explode_m": [
+    0.0,
+    0.2975,
+    0.0713
+   ]
+  },
+  {
+   "id": "TRN-007-C",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 40.0,
+   "explode_m": [
+    -0.06,
+    0.0,
+    0.0713
+   ]
+  },
+  {
+   "id": "TRN-007-L",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 40.0,
+   "explode_m": [
+    0.0,
+    -0.06,
+    0.0713
+   ]
+  },
+  {
+   "id": "TRN-007-R",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 40.0,
+   "explode_m": [
+    0.0,
+    0.06,
+    0.0713
+   ]
+  },
+  {
+   "id": "TRN-102-C",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "explode_m": [
+    -0.072,
+    0.0,
+    0.0713
+   ]
+  },
+  {
+   "id": "TRN-102-L",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "explode_m": [
+    0.0,
+    -0.072,
+    0.0713
+   ]
+  },
+  {
+   "id": "TRN-102-R",
+   "subsystem": "transport",
+   "status": "MODELLED",
+   "mass_g": 4.6,
+   "explode_m": [
+    0.0,
+    0.072,
+    0.0713
+   ]
+  }
+ ],
+ "wires": [
+  "E-HRN-10",
+  "E-HRN-11",
+  "E-HRN-12",
+  "E-HRN-13",
+  "E-HRN-14",
+  "E-HRN-15",
+  "E-HRN-16",
+  "E-HRN-17",
+  "E-HRN-18",
+  "E-HRN-19",
+  "E-HRN-20",
+  "E-HRN-23",
+  "E-HRN-24",
+  "E-HRN-25",
+  "E-HRN-26",
+  "E-HRN-27",
+  "E-HRN-28",
+  "E-HRN-29",
+  "E-HRN-30",
+  "E-HRN-31",
+  "E-HRN-32",
+  "E-HRN-34",
+  "E-HRN-35",
+  "E-HRN-36",
+  "E-HRN-37"
+ ],
+ "joints": [
+  "E-FIN-05",
+  "E-FIN-06",
+  "E-FIN-07",
+  "E-FIN-08",
+  "E-FIN-101",
+  "E-FIN-102",
+  "E-FIN-103",
+  "E-FIN-104",
+  "E-FIN-105",
+  "E-FIN-106",
+  "E-FIN-107",
+  "E-FIN-108",
+  "E-FIN-109",
+  "E-FIN-110",
+  "E-FIN-111",
+  "E-FIN-112",
+  "E-FIN-113",
+  "E-FIN-114",
+  "E-FIN-115",
+  "E-FIN-116",
+  "E-FIN-61",
+  "E-FIN-62",
+  "E-FIN-63",
+  "E-FIN-64",
+  "E-GER-05",
+  "E-GER-06",
+  "E-GER-07",
+  "E-GER-08",
+  "E-MEC-05",
+  "E-MEC-06",
+  "E-MEC-07",
+  "E-MEC-08",
+  "E-MEC-09",
+  "E-MEC-10",
+  "E-MEC-101",
+  "E-MEC-102",
+  "E-MEC-103",
+  "E-MEC-104",
+  "E-MEC-105",
+  "E-MEC-106",
+  "E-MEC-107",
+  "E-MEC-108",
+  "E-MEC-35",
+  "E-MEC-36",
+  "E-POD-06",
+  "E-POD-101",
+  "E-POD-102",
+  "E-POD-103",
+  "E-POD-104",
+  "E-PRP-01",
+  "E-PRP-02",
+  "E-PRP-03",
+  "E-PRP-04",
+  "E-PRP-05",
+  "E-PRP-06",
+  "E-PRP-07",
+  "E-PRP-08",
+  "E-PRP-101",
+  "E-PRP-102",
+  "E-PRP-103",
+  "E-PRP-104",
+  "E-PRP-105",
+  "E-PRP-106",
+  "E-PRP-107",
+  "E-PRP-108",
+  "E-PRP-109",
+  "E-PRP-110",
+  "E-PRP-111",
+  "E-PRP-112",
+  "E-PRP-113",
+  "E-PRP-114",
+  "E-PRP-115",
+  "E-PRP-116",
+  "E-PRP-117",
+  "E-PRP-118",
+  "E-PRP-119",
+  "E-PRP-120",
+  "E-PRP-121",
+  "E-PRP-122",
+  "E-PRP-123",
+  "E-PRP-124",
+  "E-PRP-125",
+  "E-PRP-126",
+  "E-PRP-127",
+  "E-PRP-128",
+  "E-PWR-03",
+  "E-PWR-101",
+  "E-PWR-102",
+  "E-PWR-103",
+  "E-PWR-104",
+  "E-PWR-105",
+  "E-PWR-106",
+  "E-TRN-101",
+  "E-TRN-102",
+  "E-TRN-103",
+  "E-TRN-104",
+  "E-TRN-105",
+  "E-TRN-106",
+  "E-TRN-13",
+  "E-TRN-14",
+  "E-TRN-15",
+  "E-WNG-04",
+  "E-WNG-05",
+  "E-WNG-06",
+  "E-WNG-07"
+ ],
+ "issues": []
+}

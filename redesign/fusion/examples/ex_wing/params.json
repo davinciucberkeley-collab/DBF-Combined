@@ -1,0 +1,5 @@
+{"airfoil": "2412", "chord_m": 0.25, "le_x_m": 0.15, "chord_z_m": 0.068,
+ "root_y_m": 0.06, "tip_y_m": 0.60,
+ "spar_x_frac": 0.25, "spar_od_m": 0.012, "spar_id_m": 0.010, "spar_z_m": 0.066, "spar_half_m": 0.55,
+ "hinge_frac": 0.75, "aileron_y_m": [0.20, 0.55], "deflection_deg": 25,
+ "servo_lo_m": [0.26, -0.33, 0.061], "servo_hi_m": [0.30, -0.31, 0.081]}

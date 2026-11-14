@@ -1,0 +1,2517 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/E2/energy_claims.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-E2-OVONIC-LISTINGS",
+   "type": "source",
+   "title": "Ovonic 4S 6500 hard-case listings (mass, size)",
+   "kind": "web",
+   "url": "https://us.ovonicshop.com/products/ovonic-50c-14-8v-6500mah-4s1p-hardcase-14-deans-lipo-battery",
+   "where": "search results 2026-11-09 (pages rate-limited, not opened): Ovonic 50C 6500 4S hard case 522 g, 139 x 47 x 49 mm (us.ovonicshop.com); Ovonic 120C 6500 4S 551 g, 135 x 46 x 49 mm (ampow.com); 130C 6500 4S 545 g, 138 x 47 x 47.5 mm (rccaraction.com, Muchmore); 130C 2-pack 680 g, 157 x 48 x 43 mm, XT60 + JST-XH (rcdrone.top)",
+   "note": "none of these is the exact 130C XT60 SKU the BOM buys; weigh and measure the first pack (T-E2-WEIGH)",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-E2-OVONIC-120C-EC5",
+   "type": "source",
+   "title": "Ovonic 14.8V 120C 4S 6500 mAh hard-case LiPo, EC5, 2-pack (named SKU, D-58)",
+   "kind": "web",
+   "url": "https://www.ampow.com/products/2-pack-ovonic-4s-6500mah-120c-lipo-hardcase-ec5-1-8-rc-car",
+   "checked": "2026-11-10",
+   "where": "product page read 2026-11-10: 6500 mAh, 120C, net weight 551 g (+/-5 g) per piece, 135 x 46 x 49 mm (+/-3 mm), EC5 plug, JST-XHR-5P balance, 2 packs, in stock, EUR 98.69 shown (EU storefront; another snippet EUR 113.30). Lead gauge not stated on the page: the EC5 contact takes 8-10 AWG, so 10 AWG is inferred, not read",
+   "note": "checked = mass, size, plug and balance lead compared with the page; the lead gauge and the US price are confirmed by I1 at order (photo or seller answer) and by E2 on arrival (T-E2-WEIGH step 3a)"
+  },
+  {
+   "id": "SRC-E2-TATTU-6750",
+   "type": "source",
+   "title": "Tattu 4S 6750 mAh 25C LiPo, XT90 (fallback SKU)",
+   "kind": "web",
+   "url": "https://www.gensace.de/tattu-6750mah-14-8v-25c-4s1p-lipo-battery-with-xt90.html",
+   "where": "search results 2026-11-10 (page not opened): net weight 605 g (+/-10 g), wire gauge 10#, XT90, about 138 x 42 x 44 mm; NextFPV USD 74 sale / 83 list per pack, stock 'contact us'; Grepow 620 g",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-E2-HTRC-C150",
+   "type": "source",
+   "title": "HTRC C150 150 W AC/DC balance charger",
+   "kind": "web",
+   "url": "https://www.amazon.com/dp/B0H4QLJYHY",
+   "where": "config-study/cards/K09/cost.csv ground line ($56.99, 2026-11-01); 150 W AC rating from the BOM line",
+   "note": "maximum charge current and IR-measurement function not confirmed: read the manual on arrival",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-E2-FAA-PACKSAFE",
+   "type": "source",
+   "title": "FAA PackSafe: lithium batteries",
+   "kind": "web",
+   "url": "https://www.faa.gov/hazmat/packsafe/lithium-batteries",
+   "where": "spare lithium-ion/polymer batteries <= 100 Wh: carry-on only, no airline approval needed",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-E2-ARDUPILOT-BATT",
+   "type": "source",
+   "title": "ArduPilot battery failsafe parameters",
+   "kind": "web",
+   "url": "https://ardupilot.org/plane/docs/apms-failsafe-function.html",
+   "where": "BATT_LOW_MAH / BATT_CRT_MAH / BATT_LOW_VOLT / BATT_CRT_VOLT / BATT_FS_VOLTSRC; capacity counter assumes a full pack at boot",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-E2-ESC-EFF",
+   "type": "assumption",
+   "title": "ESC efficiency 0.95",
+   "text": "Bus power = motor input power / 0.95",
+   "basis": "K09 sizing.py ESC_EFF; the maker table is probably measured at the supply already, so this is conservative (REVIEW section 3)",
+   "value": 0.95,
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-K09-REVIEW"
+   ]
+  },
+  {
+   "id": "ASM-E2-AVIONICS-W",
+   "type": "assumption",
+   "title": "Avionics + servos 6 W",
+   "text": "FC, GPS, RX, airspeed, UBEC loss and two micro servos draw 6 W",
+   "basis": "K09 card 5 W had no servos; +1 W for two micro servos holding trim. F1/F3 replace with the bench current",
+   "value": 6.0,
+   "unit": "W",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-E2-OCV-AVG",
+   "type": "assumption",
+   "title": "Average open-circuit voltage 3.70 V/cell",
+   "text": "Mean OCV between 100 % and 20 % state of charge",
+   "basis": "LiPo OCV curve averages ~3.80 V over 100-20 %; 3.70 V nameplate is used (conservative ~3 %)",
+   "value": 3.7,
+   "unit": "V",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-OVONIC-4S6500"
+   ]
+  },
+  {
+   "id": "ASM-E2-OCV-20",
+   "type": "assumption",
+   "title": "OCV at 20 % charge 3.73 V/cell",
+   "text": "Resting voltage at the 20 % reserve line",
+   "basis": "typical LiPo rest curve (3.73-3.75 V at 20 %); measured on the first discharge test (T-E2-CAPACITY)",
+   "value": 3.73,
+   "unit": "V",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-E2-R-CELL",
+   "type": "assumption",
+   "title": "Cell resistance 4.0 mOhm at 25 degC",
+   "text": "DC internal resistance per cell of a new 4S 6500 hard-case pack",
+   "basis": "hobby 6000-6500 mAh packs measure 2.5-5 mOhm/cell new; C-rating labels (130C) are not physical. Measure with a load step (T-E2-IR)",
+   "value": 0.004,
+   "unit": "ohm",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-E2-COLD-R",
+   "type": "assumption",
+   "title": "Cold-pack resistance factor 1.5",
+   "text": "Cell resistance at 10 degC = 1.5 x the 25 degC value",
+   "basis": "LiPo IR roughly doubles from 25 to 0 degC; 10 degC is the bottom of params env.ambient_design_c (March-April 07:00 at RFS). Keeping packs in the car cabin removes most of it",
+   "value": 1.5,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-E2-HOVER-MARGIN",
+   "type": "assumption",
+   "title": "Hover wind/control factor 1.10 (pessimistic)",
+   "text": "Hover power in 5 m/s wind with station-keeping activity = 1.10 x calm hover power",
+   "basis": "16 deg lean at 5 m/s needs T/cos = 1.04 W; P ~ T^1.5 gives +6 %; +4 % for attitude-control activity. Replace with the twin's logged hover current",
+   "value": 1.1,
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-REVIEW"
+   ]
+  },
+  {
+   "id": "ASM-E2-PROFILE",
+   "type": "assumption",
+   "title": "Mission profile timings",
+   "text": "Ground 180 s at avionics power; climb and descent between 0 and 50 m AGL at 2.0 / 1.0 m/s; forward and back transitions 10 s at 1.4 / 1.3 x hover power (pessimistic 20 s each); 120 s hover; cruise to the reserve line",
+   "basis": "R-TEST-ORDER transition at >= 50 m AGL; ArduPilot Q_PILOT_SPD_UP default 2.5 m/s, land 1 m/s; tailsitter pitch-over is a few seconds at high throttle (J1 evidence); doubled for the pessimistic case",
+   "value": {
+    "ground_s": 180,
+    "alt_m": 50,
+    "climb_ms": 2.0,
+    "descent_ms": 1.0,
+    "hover_s": 120,
+    "trans_s": [
+     10,
+     20
+    ],
+    "trans_fwd_factor": 1.4,
+    "trans_back_factor": 1.3
+   },
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E2-CRUISE-AERO",
+   "type": "assumption",
+   "title": "Cruise mass scaling, circuit factor and independent cross-check model",
+   "text": "The cruise power LEVEL is B1's as-designed simulation (CL-B1V-CRUISE-P-GATE at the 2.6 kg gate; CL-B1V-CRUISE-P-PESS at A3's predicted mass CL-A3-MASS-PREDICTED; level flight, avionics included). This E2 drag model (CD0 0.0593, x1.3 pessimistic, e from params, eta_prop 0.47 / 0.35, eta_motor 0.72, trim 1.05) only scales B1's power from B1's reference mass to the budget mass (the pessimistic value up to the gate), and is reported as a cross-check. The turning (circuit) factor 1.05 multiplies B1's level-flight power",
+   "basis": "K09 sizing.json CD0 build-up; REVIEW section 4 corrected efficiencies; circuits inside one RFS sub-field spend about half the time in 30 deg banks (induced drag x1.33). CR-E2-08: B1 owns cruise power; E2 follows B1's claims through the proof chain (re-run this script after every B1 re-run)",
+   "value": {
+    "cd0": 0.0593,
+    "cd0_pess": 1.3,
+    "eta_prop": [
+     0.47,
+     0.35
+    ],
+    "eta_motor": 0.72,
+    "trim": 1.05,
+    "circuit": 1.05
+   },
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-K09-REVIEW"
+   ]
+  },
+  {
+   "id": "ASM-E2-PACK-CANDIDATES",
+   "type": "assumption",
+   "title": "4S pack candidates [name, Ah, kg, continuous A]",
+   "text": "Candidate flight packs, all 4S LiPo (KV900 motors fix 4S), plus one Li-ion option",
+   "basis": "Admiral 4000: Motion RC listing 386 g. 5000 and 8000: typical hard-case class masses (EST). 6500: params battery.mass_kg. Li-ion 4S2P 21700 (P45B class, 9 Ah, 90 A cont): 8 x 70 g + 60 g. Continuous A = realistic cell limit, not the label C",
+   "value": [
+    [
+     "Admiral 4S 4000 LiPo",
+     4.0,
+     0.386,
+     120.0
+    ],
+    [
+     "4S 5000 hard-case LiPo (EST)",
+     5.0,
+     0.46,
+     150.0
+    ],
+    [
+     "Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)",
+     6.5,
+     0.55,
+     195.0
+    ],
+    [
+     "Tattu 4S 6750 25C XT90 (605 g listed)",
+     6.75,
+     0.605,
+     168.75
+    ],
+    [
+     "Ovonic 4S 6500 130C XT60 (680 g listed, 12 AWG)",
+     6.5,
+     0.68,
+     195.0
+    ],
+    [
+     "4S 8000 hard-case LiPo (EST)",
+     8.0,
+     0.7,
+     240.0
+    ],
+    [
+     "Li-ion 4S2P 21700 9 Ah (EST)",
+     9.0,
+     0.62,
+     90.0
+    ]
+   ],
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-E2-OVONIC-120C-EC5",
+    "SRC-E2-TATTU-6750",
+    "SRC-E2-OVONIC-LISTINGS",
+    "SRC-K09-CARD"
+   ]
+  },
+  {
+   "id": "ASM-E2-PACK-SKU",
+   "type": "assumption",
+   "title": "Named flight-pack SKU (D-58): listed data",
+   "text": "Ovonic 14.8V 120C 4S 6500 mAh hard case, EC5, 2-pack: 0.551 kg +/- 0.005 per pack, 135 x 46 x 49 mm +/- 3 mm, factory discharge leads 10 AWG (inferred from the EC5 plug), JST-XH 5-pin balance lead",
+   "basis": "SRC-E2-OVONIC-120C-EC5 read 2026-11-10. The 120C label is not a physical continuous rating; the real limit is the cell IR (ASM-E2-R-CELL, T-E2-IR). Re-terminated EC5 -> AS150U on arrival as before (D-32)",
+   "value": {
+    "mass_kg": 0.551,
+    "mass_tol_kg": 0.005,
+    "size_m": [
+     0.135,
+     0.046,
+     0.049
+    ],
+    "size_tol_m": 0.003,
+    "lead_awg": 10
+   },
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-E2-OVONIC-120C-EC5"
+   ]
+  },
+  {
+   "id": "ASM-E2-PACK-LIMITS",
+   "type": "assumption",
+   "title": "Pack acceptance limits other than mass (D-15, CR-F1-14)",
+   "text": "Body fits the D2 bay 0.160 x 0.052 x 0.053 m (D-15); discharge leads 10 AWG or heavier (AWG number <= 10, CR-F1-14, CL-F1-PACKLEAD12-RISE). The mass line is not set here: it is A1's CL-A1-PACK-ACCEPT (D-64), read live",
+   "basis": "params/CHANGE-LOG.md D-15, D-64; F1 pack-lead rise rule electrical.pack_lead_rise_max_c 20 K (12 AWG 28.4 K). The D-58 601 g line is retired (D-64)",
+   "value": {
+    "bay_m": [
+     0.16,
+     0.052,
+     0.053
+    ],
+    "awg_max": 10
+   },
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E2-TESTDAY",
+   "type": "assumption",
+   "title": "Test-day window and turnaround",
+   "text": "Flying window 180 min (07:00-10:00 flight card); 20 min on the ground between sorties (log check, feet and prop inspection, pack swap, re-brief); one fully charged pack per sortie; no charging at the field",
+   "basis": "R-SITE flight card; CONFIGURATION.md morning-only; RFS mains power not confirmed, and P21 forbids car charging",
+   "value": {
+    "window_min": 180,
+    "turnaround_min": 20
+   },
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-E2-CHARGE",
+   "type": "assumption",
+   "title": "Charge profile",
+   "text": "CC at min(1C, charger W / 16.8 V) to ~85 % state of charge, then CV for 20 min",
+   "basis": "standard LiPo CC-CV; 1C is the maker's normal charge rate for hobby packs",
+   "value": {
+    "cc_end_soc": 0.85,
+    "cv_min": 20,
+    "c_max": 1.0
+   },
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-E2-BUDGET-BASE",
+   "type": "calculation",
+   "title": "Energy budget per phase, base case (sized mass)",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "budget_base",
+   "equation": "I = (Voc - sqrt(Voc^2 - 4 R P)) / (2 R) per phase ; Ah = I t ; P_cruise = P_B1(gate) x circuit x P_E2(m) / P_E2(gate) ; t_cruise = (C - 0.2 C - sum Ah_fixed) / I_cruise",
+   "inputs": {
+    "m": "CL-A1-MASS-SIZED",
+    "n": "P:propulsion.n_motors",
+    "table": "P:propulsion.thrust_table_g_w",
+    "download": "P:propulsion.download_factor",
+    "esc": "ASM-E2-ESC-EFF",
+    "avn": "ASM-E2-AVIONICS-W",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "S": "CL-A1-WING-AREA",
+    "b": "P:wing.span_m",
+    "e": "P:wing.oswald_e",
+    "V": "P:performance.cruise_ms",
+    "cells": "P:battery.cells_s",
+    "ah": "P:battery.capacity_ah",
+    "ocv": "ASM-E2-OCV-AVG",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "cold": "ASM-E2-COLD-R",
+    "hmargin": "ASM-E2-HOVER-MARGIN",
+    "prof": "ASM-E2-PROFILE",
+    "aero": "ASM-E2-CRUISE-AERO",
+    "cap_frac": "P:requirements.pack_capacity_min_frac",
+    "reserve": "P:requirements.energy_reserve_frac",
+    "pc_b": "CL-B1V-CRUISE-P-GATE",
+    "pc_p": "CL-B1V-CRUISE-P-PESS",
+    "m_ref": "P:requirements.mtow_gate_kg",
+    "m_ref_p": "CL-A3-MASS-PREDICTED"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "D": "m",
+    "S": "m2",
+    "b": "m",
+    "V": "m/s",
+    "ah": "Ah",
+    "ocv": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "pc_b": "W",
+    "pc_p": "W",
+    "m_ref": "kg",
+    "m_ref_p": "kg"
+   },
+   "assumes": [
+    "ASM-E2-ESC-EFF",
+    "ASM-E2-AVIONICS-W",
+    "ASM-E2-OCV-AVG",
+    "ASM-E2-R-CELL",
+    "ASM-E2-PROFILE",
+    "ASM-E2-CRUISE-AERO"
+   ],
+   "outputs": {
+    "phases": [
+     [
+      "ground, armed checks",
+      180,
+      6.0,
+      0.40567116224971256,
+      0.02028355811248563
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      443.0110036732609,
+      31.539551993069846,
+      0.2190246666185406
+     ],
+     [
+      "hover (mission)",
+      120,
+      380.19374523264685,
+      26.85323996646592,
+      0.8951079988821974
+     ],
+     [
+      "transition forward",
+      10,
+      532.2712433257055,
+      38.33777767078833,
+      0.10649382686330092
+     ],
+     [
+      "back-transition",
+      10,
+      494.2518688024409,
+      35.42154458967341,
+      0.09839317941575947
+     ],
+     [
+      "descent 50-0 m",
+      50.0,
+      380.19374523264685,
+      26.85323996646592,
+      0.3729616662009156
+     ],
+     [
+      "cruise",
+      719.3735606962503,
+      251.03631682705768,
+      17.453861331673387,
+      3.4877351039068003
+     ]
+    ],
+    "cruise_min": 11.989559344937504,
+    "ah_fixed": 1.7122648960931997,
+    "ah_avail": 5.2,
+    "cruise_w_b1_level": 239.0822065019597,
+    "mass_scale": 1.0,
+    "hover_w": 380.19374523264685,
+    "hover_a": 26.85323996646592,
+    "cruise_w": 251.03631682705768,
+    "cruise_a": 17.453861331673387,
+    "cruise_w_e2_model": 249.69208873826955,
+    "hover_only_min": 11.573388794102828,
+    "flight_min": 15.572892678270838,
+    "r_pack": 0.0239,
+    "i_ground_a": 0.40567116224971256,
+    "t_ground_s": 180,
+    "i_climb_a": 31.539551993069846,
+    "t_climb_s": 25.0,
+    "i_hover_a": 26.85323996646592,
+    "t_hover_s": 120,
+    "i_trans_fwd_a": 38.33777767078833,
+    "t_trans_fwd_s": 10,
+    "i_trans_back_a": 35.42154458967341,
+    "t_trans_back_s": 10,
+    "i_descent_a": 26.85323996646592,
+    "t_descent_s": 50.0,
+    "i_cruise_a": 17.453861331673387,
+    "t_cruise_s": 719.3735606962503,
+    "i_max_phase_a": 38.33777767078833
+   },
+   "input_values": {
+    "m": 2.6,
+    "n": 4,
+    "table": [
+     [
+      690,
+      89.0
+     ],
+     [
+      750,
+      104.0
+     ],
+     [
+      870,
+      133.0
+     ],
+     [
+      1580,
+      447.0
+     ]
+    ],
+    "download": 1.06,
+    "esc": 0.95,
+    "avn": 6.0,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "S": 0.368,
+    "b": 1.15,
+    "e": 0.8,
+    "V": 16.0,
+    "cells": 4,
+    "ah": 6.5,
+    "ocv": 3.7,
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "cold": 1.5,
+    "hmargin": 1.1,
+    "prof": {
+     "ground_s": 180,
+     "alt_m": 50,
+     "climb_ms": 2.0,
+     "descent_ms": 1.0,
+     "hover_s": 120,
+     "trans_s": [
+      10,
+      20
+     ],
+     "trans_fwd_factor": 1.4,
+     "trans_back_factor": 1.3
+    },
+    "aero": {
+     "cd0": 0.0593,
+     "cd0_pess": 1.3,
+     "eta_prop": [
+      0.47,
+      0.35
+     ],
+     "eta_motor": 0.72,
+     "trim": 1.05,
+     "circuit": 1.05
+    },
+    "cap_frac": 0.92,
+    "reserve": 0.2,
+    "pc_b": 239.0822065019597,
+    "pc_p": 314.8059091853597,
+    "m_ref": 2.6,
+    "m_ref_p": 2.5024393
+   }
+  },
+  {
+   "id": "CALC-E2-BUDGET-PESS",
+   "type": "calculation",
+   "title": "Energy budget per phase, pessimistic (2.6 kg gate)",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "budget_pess",
+   "equation": "as base, with m = gate, C x 0.92, R x 1.5 (10 degC), P_hover x 1.10, P_cruise = B1 as-designed pessimistic (CL-B1V-CRUISE-P-PESS at A3 predicted mass) x P_E2,pess(gate) / P_E2,pess(m_pred) x circuit, 20 s transitions",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "n": "P:propulsion.n_motors",
+    "table": "P:propulsion.thrust_table_g_w",
+    "download": "P:propulsion.download_factor",
+    "esc": "ASM-E2-ESC-EFF",
+    "avn": "ASM-E2-AVIONICS-W",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "S": "CL-A1-WING-AREA",
+    "b": "P:wing.span_m",
+    "e": "P:wing.oswald_e",
+    "V": "P:performance.cruise_ms",
+    "cells": "P:battery.cells_s",
+    "ah": "P:battery.capacity_ah",
+    "ocv": "ASM-E2-OCV-AVG",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "cold": "ASM-E2-COLD-R",
+    "hmargin": "ASM-E2-HOVER-MARGIN",
+    "prof": "ASM-E2-PROFILE",
+    "aero": "ASM-E2-CRUISE-AERO",
+    "cap_frac": "P:requirements.pack_capacity_min_frac",
+    "reserve": "P:requirements.energy_reserve_frac",
+    "pc_b": "CL-B1V-CRUISE-P-GATE",
+    "pc_p": "CL-B1V-CRUISE-P-PESS",
+    "m_ref": "P:requirements.mtow_gate_kg",
+    "m_ref_p": "CL-A3-MASS-PREDICTED"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "D": "m",
+    "S": "m2",
+    "b": "m",
+    "V": "m/s",
+    "ah": "Ah",
+    "ocv": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "pc_b": "W",
+    "pc_p": "W",
+    "m_ref": "kg",
+    "m_ref_p": "kg"
+   },
+   "assumes": [
+    "ASM-E2-ESC-EFF",
+    "ASM-E2-AVIONICS-W",
+    "ASM-E2-OCV-AVG",
+    "ASM-E2-R-CELL",
+    "ASM-E2-PROFILE",
+    "ASM-E2-CRUISE-AERO",
+    "ASM-E2-COLD-R",
+    "ASM-E2-HOVER-MARGIN"
+   ],
+   "outputs": {
+    "phases": [
+     [
+      "ground, armed checks",
+      180,
+      6.0,
+      0.4057602743694851,
+      0.020288013718474253
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      487.3121040405871,
+      35.66872519372642,
+      0.247699480511989
+     ],
+     [
+      "hover (mission)",
+      120,
+      418.2131197559116,
+      30.226972150217204,
+      1.0075657383405734
+     ],
+     [
+      "transition forward",
+      20,
+      585.4983676582762,
+      43.67148708639382,
+      0.2426193727021879
+     ],
+     [
+      "back-transition",
+      20,
+      543.677055682685,
+      40.22196500217414,
+      0.22345536112318964
+     ],
+     [
+      "descent 50-0 m",
+      50.0,
+      418.2131197559116,
+      30.226972150217204,
+      0.4198190576419056
+     ],
+     [
+      "cruise",
+      378.90927299931326,
+      335.87882565806126,
+      23.928658809779208,
+      2.518552975961681
+     ]
+    ],
+    "cruise_min": 6.315154549988554,
+    "ah_fixed": 2.1614470240383197,
+    "ah_avail": 4.680000000000001,
+    "cruise_w_b1_level": 314.8059091853597,
+    "mass_scale": 1.0161327552351318,
+    "hover_w": 418.2131197559116,
+    "hover_a": 30.226972150217204,
+    "cruise_w": 335.87882565806126,
+    "cruise_a": 23.928658809779208,
+    "cruise_w_e2_model": 404.9976035971049,
+    "hover_only_min": 9.249445091207477,
+    "flight_min": 10.231821216655222,
+    "r_pack": 0.0319,
+    "i_ground_a": 0.4057602743694851,
+    "t_ground_s": 180,
+    "i_climb_a": 35.66872519372642,
+    "t_climb_s": 25.0,
+    "i_hover_a": 30.226972150217204,
+    "t_hover_s": 120,
+    "i_trans_fwd_a": 43.67148708639382,
+    "t_trans_fwd_s": 20,
+    "i_trans_back_a": 40.22196500217414,
+    "t_trans_back_s": 20,
+    "i_descent_a": 30.226972150217204,
+    "t_descent_s": 50.0,
+    "i_cruise_a": 23.928658809779208,
+    "t_cruise_s": 378.90927299931326,
+    "i_max_phase_a": 43.67148708639382
+   },
+   "input_values": {
+    "m": 2.6,
+    "n": 4,
+    "table": [
+     [
+      690,
+      89.0
+     ],
+     [
+      750,
+      104.0
+     ],
+     [
+      870,
+      133.0
+     ],
+     [
+      1580,
+      447.0
+     ]
+    ],
+    "download": 1.06,
+    "esc": 0.95,
+    "avn": 6.0,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "S": 0.368,
+    "b": 1.15,
+    "e": 0.8,
+    "V": 16.0,
+    "cells": 4,
+    "ah": 6.5,
+    "ocv": 3.7,
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "cold": 1.5,
+    "hmargin": 1.1,
+    "prof": {
+     "ground_s": 180,
+     "alt_m": 50,
+     "climb_ms": 2.0,
+     "descent_ms": 1.0,
+     "hover_s": 120,
+     "trans_s": [
+      10,
+      20
+     ],
+     "trans_fwd_factor": 1.4,
+     "trans_back_factor": 1.3
+    },
+    "aero": {
+     "cd0": 0.0593,
+     "cd0_pess": 1.3,
+     "eta_prop": [
+      0.47,
+      0.35
+     ],
+     "eta_motor": 0.72,
+     "trim": 1.05,
+     "circuit": 1.05
+    },
+    "cap_frac": 0.92,
+    "reserve": 0.2,
+    "pc_b": 239.0822065019597,
+    "pc_p": 314.8059091853597,
+    "m_ref": 2.6,
+    "m_ref_p": 2.5024393
+   }
+  },
+  {
+   "id": "CALC-E2-SAG",
+   "type": "calculation",
+   "title": "Bus voltage at the 100 A limiter vs pack state; bracket on the thrust factor",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "sag",
+   "equation": "V_bus = Voc - R I_lim (limiter binds when I_unlim(V) = n I_148 (V/14.8)^2 > I_lim) ; thrust factor worst/fresh bracketed by (V_w/V_f) (thrust prop. to power) and (V_w/V_f)^(2/3) (ideal rotor at fixed current) ; old rule (V/V_tab)^2 kept for the record (unlimited motor) ; bracket margin = min(f_E1 - lower, upper - f_E1)",
+   "inputs": {
+    "cells": "P:battery.cells_s",
+    "i_lim": "P:performance.full_throttle_current_a",
+    "i148": "CL-E1-IMAX-148-55",
+    "n": "P:propulsion.n_motors",
+    "ocv20": "ASM-E2-OCV-20",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "cold": "ASM-E2-COLD-R",
+    "ah": "P:battery.capacity_ah",
+    "f_e1": "CL-E1-SAG-FACTOR"
+   },
+   "units": {
+    "i_lim": "A",
+    "i148": "A",
+    "ocv20": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "ah": "Ah"
+   },
+   "assumes": [
+    "ASM-E2-OCV-20",
+    "ASM-E2-R-CELL",
+    "ASM-E2-COLD-R"
+   ],
+   "outputs": {
+    "v_full_warm": 14.41,
+    "r_full_warm_ohm": 0.0239,
+    "i_unlim_full_warm": 160.8839006426103,
+    "limiter_binds_full_warm": 1.0,
+    "v_res20_warm": 12.53,
+    "r_res20_warm_ohm": 0.0239,
+    "i_unlim_res20_warm": 121.64290064007517,
+    "limiter_binds_res20_warm": 1.0,
+    "v_res20_cold": 11.73,
+    "r_res20_cold_ohm": 0.0319,
+    "i_unlim_res20_cold": 106.60575489363309,
+    "limiter_binds_res20_cold": 1.0,
+    "f_lower_thrust_prop_v": 0.8140180430256766,
+    "f_upper_ideal_rotor": 0.8718116888360824,
+    "f_old_v2_rule": 0.6281633491599707,
+    "f_e1": 0.8496852675552753,
+    "e1_bracket_margin": 0.022126421280807107,
+    "e1_exponent": 0.7915978847110052,
+    "c_peak": 15.384615384615385,
+    "sag_v_per_cell_worst": 0.7974999999999999,
+    "v_cell_worst_loaded": 2.9325
+   },
+   "input_values": {
+    "cells": 4,
+    "i_lim": 100.0,
+    "i148": 42.42756085506846,
+    "n": 4,
+    "ocv20": 3.73,
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "cold": 1.5,
+    "ah": 6.5,
+    "f_e1": 0.8496852675552753
+   }
+  },
+  {
+   "id": "CALC-E2-HEAT",
+   "type": "calculation",
+   "title": "Pack self-heating over the pessimistic mission, cold and hot mornings",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "heat",
+   "equation": "Q = sum(I^2 R t) over phases ; dT = Q / (m c) (adiabatic, c = 1000 J/kg K) ; T_end = T_amb + dT ; cold: 10 degC, R x 1.5 ; hot: 30 degC, R x 1.0",
+   "inputs": {
+    "b": "CL-E2-BUDGET-PESS-TABLE",
+    "r_cell": "ASM-E2-R-CELL",
+    "cells": "P:battery.cells_s",
+    "cold": "ASM-E2-COLD-R",
+    "m": "P:battery.mass_kg",
+    "amb": "P:env.ambient_design_c"
+   },
+   "units": {
+    "r_cell": "ohm",
+    "m": "kg",
+    "amb": "degC"
+   },
+   "assumes": [
+    "ASM-E2-R-CELL",
+    "ASM-E2-COLD-R"
+   ],
+   "outputs": {
+    "dT_cold_k": 20.710525292952365,
+    "t_end_cold_c": 30.710525292952365,
+    "p_hover_cold_w": 21.928076288880156,
+    "dT_hot_k": 13.807016861968242,
+    "t_end_hot_c": 43.80701686196824,
+    "p_hover_hot_w": 14.618717525920104,
+    "t_end_max_c": 43.80701686196824
+   },
+   "input_values": {
+    "b": [
+     [
+      "ground, armed checks",
+      180,
+      6.0,
+      0.4057602743694851,
+      0.020288013718474253
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      487.3121040405871,
+      35.66872519372642,
+      0.247699480511989
+     ],
+     [
+      "hover (mission)",
+      120,
+      418.2131197559116,
+      30.226972150217204,
+      1.0075657383405734
+     ],
+     [
+      "transition forward",
+      20,
+      585.4983676582762,
+      43.67148708639382,
+      0.2426193727021879
+     ],
+     [
+      "back-transition",
+      20,
+      543.677055682685,
+      40.22196500217414,
+      0.22345536112318964
+     ],
+     [
+      "descent 50-0 m",
+      50.0,
+      418.2131197559116,
+      30.226972150217204,
+      0.4198190576419056
+     ],
+     [
+      "cruise",
+      378.90927299931326,
+      335.87882565806126,
+      23.928658809779208,
+      2.518552975961681
+     ]
+    ],
+    "r_cell": 0.004,
+    "cells": 4,
+    "cold": 1.5,
+    "m": 0.55,
+    "amb": [
+     10,
+     30
+    ]
+   }
+  },
+  {
+   "id": "CALC-E2-PACK-TRADE",
+   "type": "calculation",
+   "title": "Pack trade: candidates against the gate and the pessimistic mission",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "pack_trade",
+   "equation": "m = m_sized - m_pack_baseline + m_cand ; pessimistic at m + (gate - m_sized) ; pass = m <= gate AND t_cruise_pess >= 5 min AND I_cont >= I_full",
+   "inputs": {
+    "cands": "ASM-E2-PACK-CANDIDATES",
+    "m_sized": "CL-A1-MASS-SIZED",
+    "m_pack": "P:battery.mass_kg",
+    "gate": "P:requirements.mtow_gate_kg",
+    "t_req": "P:requirements.cruise_time_min",
+    "i_full": "P:performance.full_throttle_current_a",
+    "n": "P:propulsion.n_motors",
+    "table": "P:propulsion.thrust_table_g_w",
+    "download": "P:propulsion.download_factor",
+    "esc": "ASM-E2-ESC-EFF",
+    "avn": "ASM-E2-AVIONICS-W",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "S": "CL-A1-WING-AREA",
+    "b": "P:wing.span_m",
+    "e": "P:wing.oswald_e",
+    "V": "P:performance.cruise_ms",
+    "cells": "P:battery.cells_s",
+    "ocv": "ASM-E2-OCV-AVG",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "cold": "ASM-E2-COLD-R",
+    "hmargin": "ASM-E2-HOVER-MARGIN",
+    "prof": "ASM-E2-PROFILE",
+    "aero": "ASM-E2-CRUISE-AERO",
+    "cap_frac": "P:requirements.pack_capacity_min_frac",
+    "reserve": "P:requirements.energy_reserve_frac",
+    "pc_b": "CL-B1V-CRUISE-P-GATE",
+    "pc_p": "CL-B1V-CRUISE-P-PESS",
+    "m_ref": "P:requirements.mtow_gate_kg",
+    "m_ref_p": "CL-A3-MASS-PREDICTED"
+   },
+   "units": {
+    "m_sized": "kg",
+    "m_pack": "kg",
+    "gate": "kg",
+    "t_req": "min",
+    "i_full": "A",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "D": "m",
+    "S": "m2",
+    "b": "m",
+    "V": "m/s",
+    "ocv": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "pc_b": "W",
+    "pc_p": "W",
+    "m_ref": "kg",
+    "m_ref_p": "kg"
+   },
+   "assumes": [
+    "ASM-E2-PACK-CANDIDATES",
+    "ASM-E2-ESC-EFF",
+    "ASM-E2-AVIONICS-W",
+    "ASM-E2-OCV-AVG",
+    "ASM-E2-R-CELL",
+    "ASM-E2-PROFILE",
+    "ASM-E2-CRUISE-AERO"
+   ],
+   "outputs": {
+    "table": [
+     [
+      "Admiral 4S 4000 LiPo",
+      4.0,
+      0.386,
+      2.436,
+      5.7,
+      2.2,
+      120.0,
+      false
+     ],
+     [
+      "4S 5000 hard-case LiPo (EST)",
+      5.0,
+      0.46,
+      2.51,
+      8.2,
+      3.9,
+      150.0,
+      false
+     ],
+     [
+      "Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)",
+      6.5,
+      0.55,
+      2.6,
+      12.0,
+      6.3,
+      195.0,
+      true
+     ],
+     [
+      "Tattu 4S 6750 25C XT90 (605 g listed)",
+      6.75,
+      0.605,
+      2.655,
+      12.3,
+      6.5,
+      168.75,
+      false
+     ],
+     [
+      "Ovonic 4S 6500 130C XT60 (680 g listed, 12 AWG)",
+      6.5,
+      0.68,
+      2.73,
+      11.1,
+      5.6,
+      195.0,
+      false
+     ],
+     [
+      "4S 8000 hard-case LiPo (EST)",
+      8.0,
+      0.7,
+      2.75,
+      15.0,
+      8.2,
+      240.0,
+      false
+     ],
+     [
+      "Li-ion 4S2P 21700 9 Ah (EST)",
+      9.0,
+      0.62,
+      2.67,
+      18.3,
+      10.4,
+      90.0,
+      false
+     ]
+    ],
+    "largest_passing_ah": 6.5,
+    "largest_passing": "Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)"
+   },
+   "input_values": {
+    "cands": [
+     [
+      "Admiral 4S 4000 LiPo",
+      4.0,
+      0.386,
+      120.0
+     ],
+     [
+      "4S 5000 hard-case LiPo (EST)",
+      5.0,
+      0.46,
+      150.0
+     ],
+     [
+      "Ovonic 4S 6500 120C hard case EC5 (named, 551 g listed)",
+      6.5,
+      0.55,
+      195.0
+     ],
+     [
+      "Tattu 4S 6750 25C XT90 (605 g listed)",
+      6.75,
+      0.605,
+      168.75
+     ],
+     [
+      "Ovonic 4S 6500 130C XT60 (680 g listed, 12 AWG)",
+      6.5,
+      0.68,
+      195.0
+     ],
+     [
+      "4S 8000 hard-case LiPo (EST)",
+      8.0,
+      0.7,
+      240.0
+     ],
+     [
+      "Li-ion 4S2P 21700 9 Ah (EST)",
+      9.0,
+      0.62,
+      90.0
+     ]
+    ],
+    "m_sized": 2.6,
+    "m_pack": 0.55,
+    "gate": 2.6,
+    "t_req": 5.0,
+    "i_full": 100.0,
+    "n": 4,
+    "table": [
+     [
+      690,
+      89.0
+     ],
+     [
+      750,
+      104.0
+     ],
+     [
+      870,
+      133.0
+     ],
+     [
+      1580,
+      447.0
+     ]
+    ],
+    "download": 1.06,
+    "esc": 0.95,
+    "avn": 6.0,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "S": 0.368,
+    "b": 1.15,
+    "e": 0.8,
+    "V": 16.0,
+    "cells": 4,
+    "ocv": 3.7,
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "cold": 1.5,
+    "hmargin": 1.1,
+    "prof": {
+     "ground_s": 180,
+     "alt_m": 50,
+     "climb_ms": 2.0,
+     "descent_ms": 1.0,
+     "hover_s": 120,
+     "trans_s": [
+      10,
+      20
+     ],
+     "trans_fwd_factor": 1.4,
+     "trans_back_factor": 1.3
+    },
+    "aero": {
+     "cd0": 0.0593,
+     "cd0_pess": 1.3,
+     "eta_prop": [
+      0.47,
+      0.35
+     ],
+     "eta_motor": 0.72,
+     "trim": 1.05,
+     "circuit": 1.05
+    },
+    "cap_frac": 0.92,
+    "reserve": 0.2,
+    "pc_b": 239.0822065019597,
+    "pc_p": 314.8059091853597,
+    "m_ref": 2.6,
+    "m_ref_p": 2.5024393
+   }
+  },
+  {
+   "id": "CALC-E2-FAILSAFE",
+   "type": "calculation",
+   "title": "Battery failsafe thresholds for the flight controller",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "failsafe",
+   "equation": "CRT_MAH = reserve C ; LOW_MAH = CRT + Ah(back-transition + descent + 60 s return cruise + 30 s landing hover), pessimistic currents, rounded up to 100 mAh",
+   "inputs": {
+    "b": "CL-E2-BUDGET-PESS-TABLE",
+    "ah": "P:battery.capacity_ah",
+    "reserve": "P:requirements.energy_reserve_frac"
+   },
+   "units": {
+    "ah": "Ah"
+   },
+   "outputs": {
+    "crt_mah": 1300,
+    "low_mah": 2600,
+    "land_need_mah": 1293.976833513225,
+    "cruise_to_low_min": 5.972321508684052
+   },
+   "input_values": {
+    "b": [
+     [
+      "ground, armed checks",
+      180,
+      6.0,
+      0.4057602743694851,
+      0.020288013718474253
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      487.3121040405871,
+      35.66872519372642,
+      0.247699480511989
+     ],
+     [
+      "hover (mission)",
+      120,
+      418.2131197559116,
+      30.226972150217204,
+      1.0075657383405734
+     ],
+     [
+      "transition forward",
+      20,
+      585.4983676582762,
+      43.67148708639382,
+      0.2426193727021879
+     ],
+     [
+      "back-transition",
+      20,
+      543.677055682685,
+      40.22196500217414,
+      0.22345536112318964
+     ],
+     [
+      "descent 50-0 m",
+      50.0,
+      418.2131197559116,
+      30.226972150217204,
+      0.4198190576419056
+     ],
+     [
+      "cruise",
+      378.90927299931326,
+      335.87882565806126,
+      23.928658809779208,
+      2.518552975961681
+     ]
+    ],
+    "ah": 6.5,
+    "reserve": 0.2
+   }
+  },
+  {
+   "id": "CALC-E2-TESTDAY",
+   "type": "calculation",
+   "title": "Sorties per test day and charge time",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "testday",
+   "equation": "sorties_window = floor(window / (t_flight + t_turn)) ; sorties = min(packs, window) (D-12: 2) ; window used = sorties t_flight + (sorties - 1) t_turn ; t_charge = (0.85 - 0.20) C / I_cc + t_cv ; I_cc = min(1C, P_chg / 16.8 V)",
+   "inputs": {
+    "b": "CL-E2-BUDGET-BASE-TABLE",
+    "td": "ASM-E2-TESTDAY",
+    "n_packs": "P:battery.n_packs",
+    "ah": "P:battery.capacity_ah",
+    "cells": "P:battery.cells_s",
+    "chg": "ASM-E2-CHARGE",
+    "p_chg": "ASM-E2-CHARGER-W",
+    "reserve": "P:requirements.energy_reserve_frac"
+   },
+   "units": {
+    "ah": "Ah",
+    "p_chg": "W"
+   },
+   "assumes": [
+    "ASM-E2-TESTDAY",
+    "ASM-E2-CHARGE"
+   ],
+   "outputs": {
+    "t_sortie_min": 18.572892678270836,
+    "sorties_window": 4,
+    "sorties_current_packs": 2,
+    "window_used_min": 57.14578535654167,
+    "packs_to_fill_window": 4,
+    "charge_min_per_pack": 58.99999999999999,
+    "charge_h_current_packs": 1.9666666666666663,
+    "charge_h_4_packs": 3.9333333333333327,
+    "i_cc_a": 6.5
+   },
+   "input_values": {
+    "b": [
+     [
+      "ground, armed checks",
+      180,
+      6.0,
+      0.40567116224971256,
+      0.02028355811248563
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      443.0110036732609,
+      31.539551993069846,
+      0.2190246666185406
+     ],
+     [
+      "hover (mission)",
+      120,
+      380.19374523264685,
+      26.85323996646592,
+      0.8951079988821974
+     ],
+     [
+      "transition forward",
+      10,
+      532.2712433257055,
+      38.33777767078833,
+      0.10649382686330092
+     ],
+     [
+      "back-transition",
+      10,
+      494.2518688024409,
+      35.42154458967341,
+      0.09839317941575947
+     ],
+     [
+      "descent 50-0 m",
+      50.0,
+      380.19374523264685,
+      26.85323996646592,
+      0.3729616662009156
+     ],
+     [
+      "cruise",
+      719.3735606962503,
+      251.03631682705768,
+      17.453861331673387,
+      3.4877351039068003
+     ]
+    ],
+    "td": {
+     "window_min": 180,
+     "turnaround_min": 20
+    },
+    "n_packs": 2,
+    "ah": 6.5,
+    "cells": 4,
+    "chg": {
+     "cc_end_soc": 0.85,
+     "cv_min": 20,
+     "c_max": 1.0
+    },
+    "p_chg": 150.0,
+    "reserve": 0.2
+   }
+  },
+  {
+   "id": "ASM-E2-CHARGER-W",
+   "type": "assumption",
+   "title": "Charger output 150 W",
+   "text": "HTRC C150 delivers 150 W into one pack on AC",
+   "basis": "BOM line 'HTRC C150 charger 150 W AC'; output vs input rating to confirm from the manual",
+   "value": 150.0,
+   "unit": "W",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-E2-HTRC-C150"
+   ]
+  },
+  {
+   "id": "CALC-E2-SKU-CHECK",
+   "type": "calculation",
+   "title": "Named pack SKU against A1's D-64 acceptance line, the bay and the lead rule",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "sku_check",
+   "equation": "accept = CL-A1-PACK-ACCEPT / 1000 (PACK_ACCEPT_KG) ; m_worst = m_listed + tol ; mass margin = accept - m_worst ; bay clearance = min_i(bay_i - (size_i + tol)) (pack length along the bay) ; lead AWG number <= awg_max",
+   "inputs": {
+    "sku": "ASM-E2-PACK-SKU",
+    "lim": "ASM-E2-PACK-LIMITS",
+    "accept_g": "CL-A1-PACK-ACCEPT"
+   },
+   "units": {
+    "accept_g": "g"
+   },
+   "assumes": [
+    "ASM-E2-PACK-SKU",
+    "ASM-E2-PACK-LIMITS"
+   ],
+   "outputs": {
+    "accept_kg": 0.5635607000000002,
+    "mass_worst_kg": 0.556,
+    "mass_margin_kg": 0.007560700000000198,
+    "bay_clear_min_m": 0.000999999999999994,
+    "bay_clear_m": [
+     0.021999999999999992,
+     0.0029999999999999957,
+     0.000999999999999994
+    ],
+    "lead_awg": 10,
+    "awg_max": 10
+   },
+   "input_values": {
+    "sku": {
+     "mass_kg": 0.551,
+     "mass_tol_kg": 0.005,
+     "size_m": [
+      0.135,
+      0.046,
+      0.049
+     ],
+     "size_tol_m": 0.003,
+     "lead_awg": 10
+    },
+    "lim": {
+     "bay_m": [
+      0.16,
+      0.052,
+      0.053
+     ],
+     "awg_max": 10
+    },
+    "accept_g": 563.5607000000002
+   }
+  },
+  {
+   "id": "CALC-E2-BUDGET-240",
+   "type": "calculation",
+   "title": "Budget sensitivity at the params cruise power (performance.cruise_power_w, 253 W since D-97; was 240 W, D-49 / D-13 rule)",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "budget_240",
+   "equation": "as CALC-E2-BUDGET-BASE / -PESS with B1's level cruise power x k, k = P_params / P_B1 (base 240 / B1V 238.9 W at the gate; pessimistic B1V 312.4 W x the same k) ; BATT_LOW count as CALC-E2-FAILSAFE",
+   "inputs": {
+    "m_b": "CL-A1-MASS-SIZED",
+    "m_p": "P:requirements.mtow_gate_kg",
+    "p_par": "P:performance.cruise_power_w",
+    "n": "P:propulsion.n_motors",
+    "table": "P:propulsion.thrust_table_g_w",
+    "download": "P:propulsion.download_factor",
+    "esc": "ASM-E2-ESC-EFF",
+    "avn": "ASM-E2-AVIONICS-W",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "S": "CL-A1-WING-AREA",
+    "b": "P:wing.span_m",
+    "e": "P:wing.oswald_e",
+    "V": "P:performance.cruise_ms",
+    "cells": "P:battery.cells_s",
+    "ah": "P:battery.capacity_ah",
+    "ocv": "ASM-E2-OCV-AVG",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "cold": "ASM-E2-COLD-R",
+    "hmargin": "ASM-E2-HOVER-MARGIN",
+    "prof": "ASM-E2-PROFILE",
+    "aero": "ASM-E2-CRUISE-AERO",
+    "cap_frac": "P:requirements.pack_capacity_min_frac",
+    "reserve": "P:requirements.energy_reserve_frac",
+    "pc_b": "CL-B1V-CRUISE-P-GATE",
+    "pc_p": "CL-B1V-CRUISE-P-PESS",
+    "m_ref": "P:requirements.mtow_gate_kg",
+    "m_ref_p": "CL-A3-MASS-PREDICTED"
+   },
+   "units": {
+    "m_b": "kg",
+    "m_p": "kg",
+    "p_par": "W",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "D": "m",
+    "S": "m2",
+    "b": "m",
+    "V": "m/s",
+    "ah": "Ah",
+    "ocv": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "pc_b": "W",
+    "pc_p": "W",
+    "m_ref": "kg",
+    "m_ref_p": "kg"
+   },
+   "assumes": [
+    "ASM-E2-ESC-EFF",
+    "ASM-E2-AVIONICS-W",
+    "ASM-E2-OCV-AVG",
+    "ASM-E2-R-CELL",
+    "ASM-E2-PROFILE",
+    "ASM-E2-CRUISE-AERO",
+    "ASM-E2-COLD-R",
+    "ASM-E2-HOVER-MARGIN"
+   ],
+   "outputs": {
+    "k": 1.0582134224946023,
+    "cruise_min_base": 11.310265184599842,
+    "cruise_min_pess": 5.947701613605093,
+    "cruise_w_base": 265.65000000000003,
+    "cruise_w_pess": 355.4314816430849,
+    "cruise_a_pess": 25.40698716493047,
+    "low_mah": 2700,
+    "cruise_to_low_min": 5.3886611110106095
+   },
+   "input_values": {
+    "m_b": 2.6,
+    "m_p": 2.6,
+    "p_par": 253.0,
+    "n": 4,
+    "table": [
+     [
+      690,
+      89.0
+     ],
+     [
+      750,
+      104.0
+     ],
+     [
+      870,
+      133.0
+     ],
+     [
+      1580,
+      447.0
+     ]
+    ],
+    "download": 1.06,
+    "esc": 0.95,
+    "avn": 6.0,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "S": 0.368,
+    "b": 1.15,
+    "e": 0.8,
+    "V": 16.0,
+    "cells": 4,
+    "ah": 6.5,
+    "ocv": 3.7,
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "cold": 1.5,
+    "hmargin": 1.1,
+    "prof": {
+     "ground_s": 180,
+     "alt_m": 50,
+     "climb_ms": 2.0,
+     "descent_ms": 1.0,
+     "hover_s": 120,
+     "trans_s": [
+      10,
+      20
+     ],
+     "trans_fwd_factor": 1.4,
+     "trans_back_factor": 1.3
+    },
+    "aero": {
+     "cd0": 0.0593,
+     "cd0_pess": 1.3,
+     "eta_prop": [
+      0.47,
+      0.35
+     ],
+     "eta_motor": 0.72,
+     "trim": 1.05,
+     "circuit": 1.05
+    },
+    "cap_frac": 0.92,
+    "reserve": 0.2,
+    "pc_b": 239.0822065019597,
+    "pc_p": 314.8059091853597,
+    "m_ref": 2.6,
+    "m_ref_p": 2.5024393
+   }
+  },
+  {
+   "id": "CALC-E2-BUDGET-V17",
+   "type": "calculation",
+   "title": "Budget at the 17 m/s fallback cruise (D-96 c; planning baseline of CDR decision B6)",
+   "script": "redesign/team/E2/energy_claims.py",
+   "function": "budget_v17",
+   "equation": "as CALC-E2-BUDGET-240 with the params cruise power replaced by E1's 17 m/s point: k = (P_E1(17 m/s) + P_avionics) / P_B1(16 m/s, gate) ; base = B1 level power x k ; pessimistic = B1 pessimistic power x the same k (EST: the pessimistic / base ratio of 16 m/s is carried to 17 m/s) ; BATT_LOW count as CALC-E2-FAILSAFE with the 17 m/s cruise current",
+   "inputs": {
+    "m_b": "CL-A1-MASS-SIZED",
+    "m_p": "P:requirements.mtow_gate_kg",
+    "p17": "CL-E1-CRUISE-P-55-V17",
+    "n": "P:propulsion.n_motors",
+    "table": "P:propulsion.thrust_table_g_w",
+    "download": "P:propulsion.download_factor",
+    "esc": "ASM-E2-ESC-EFF",
+    "avn": "ASM-E2-AVIONICS-W",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "S": "CL-A1-WING-AREA",
+    "b": "P:wing.span_m",
+    "e": "P:wing.oswald_e",
+    "V": "P:performance.cruise_ms",
+    "cells": "P:battery.cells_s",
+    "ah": "P:battery.capacity_ah",
+    "ocv": "ASM-E2-OCV-AVG",
+    "r_cell": "ASM-E2-R-CELL",
+    "r_ext": "P:electrical.r_ext_mohm",
+    "cold": "ASM-E2-COLD-R",
+    "hmargin": "ASM-E2-HOVER-MARGIN",
+    "prof": "ASM-E2-PROFILE",
+    "aero": "ASM-E2-CRUISE-AERO",
+    "cap_frac": "P:requirements.pack_capacity_min_frac",
+    "reserve": "P:requirements.energy_reserve_frac",
+    "pc_b": "CL-B1V-CRUISE-P-GATE",
+    "pc_p": "CL-B1V-CRUISE-P-PESS",
+    "m_ref": "P:requirements.mtow_gate_kg",
+    "m_ref_p": "CL-A3-MASS-PREDICTED"
+   },
+   "units": {
+    "m_b": "kg",
+    "m_p": "kg",
+    "p17": "W",
+    "g": "m/s2",
+    "rho": "kg/m3",
+    "D": "m",
+    "S": "m2",
+    "b": "m",
+    "V": "m/s",
+    "ah": "Ah",
+    "ocv": "V",
+    "r_cell": "ohm",
+    "r_ext": "mOhm",
+    "pc_b": "W",
+    "pc_p": "W",
+    "m_ref": "kg",
+    "m_ref_p": "kg"
+   },
+   "assumes": [
+    "ASM-E2-ESC-EFF",
+    "ASM-E2-AVIONICS-W",
+    "ASM-E2-OCV-AVG",
+    "ASM-E2-R-CELL",
+    "ASM-E2-PROFILE",
+    "ASM-E2-CRUISE-AERO",
+    "ASM-E2-COLD-R",
+    "ASM-E2-HOVER-MARGIN",
+    "ASM-E1-V-FALLBACK"
+   ],
+   "outputs": {
+    "k": 1.2109834692838986,
+    "p_carried_w": 289.52459987379257,
+    "cruise_min_base": 9.837875732003681,
+    "cruise_min_pess": 5.150790398640713,
+    "cruise_w_base": 304.0008298674822,
+    "cruise_w_pess": 406.7437055544007,
+    "cruise_a_pess": 29.337862126476633,
+    "low_mah": 2700,
+    "cruise_to_low_min": 4.666653728665841
+   },
+   "input_values": {
+    "m_b": 2.6,
+    "m_p": 2.6,
+    "p17": 283.52459987379257,
+    "n": 4,
+    "table": [
+     [
+      690,
+      89.0
+     ],
+     [
+      750,
+      104.0
+     ],
+     [
+      870,
+      133.0
+     ],
+     [
+      1580,
+      447.0
+     ]
+    ],
+    "download": 1.06,
+    "esc": 0.95,
+    "avn": 6.0,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "S": 0.368,
+    "b": 1.15,
+    "e": 0.8,
+    "V": 16.0,
+    "cells": 4,
+    "ah": 6.5,
+    "ocv": 3.7,
+    "r_cell": 0.004,
+    "r_ext": 7.9,
+    "cold": 1.5,
+    "hmargin": 1.1,
+    "prof": {
+     "ground_s": 180,
+     "alt_m": 50,
+     "climb_ms": 2.0,
+     "descent_ms": 1.0,
+     "hover_s": 120,
+     "trans_s": [
+      10,
+      20
+     ],
+     "trans_fwd_factor": 1.4,
+     "trans_back_factor": 1.3
+    },
+    "aero": {
+     "cd0": 0.0593,
+     "cd0_pess": 1.3,
+     "eta_prop": [
+      0.47,
+      0.35
+     ],
+     "eta_motor": 0.72,
+     "trim": 1.05,
+     "circuit": 1.05
+    },
+    "cap_frac": 0.92,
+    "reserve": 0.2,
+    "pc_b": 239.0822065019597,
+    "pc_p": 314.8059091853597,
+    "m_ref": 2.6,
+    "m_ref_p": 2.5024393
+   }
+  },
+  {
+   "id": "CL-E2-BUDGET-BASE-TABLE",
+   "type": "claim",
+   "title": "Phase table, base [phase, s, W, A, Ah]",
+   "calc": "CALC-E2-BUDGET-BASE",
+   "output": "phases",
+   "unit": "-",
+   "how": "Base phase table: compare each row with the DataFlash log (BAT.Curr, BAT.CurrTot) of a full mission; rows within +/-15 %.",
+   "value": [
+    [
+     "ground, armed checks",
+     180,
+     6.0,
+     0.40567116224971256,
+     0.02028355811248563
+    ],
+    [
+     "climb 0-50 m",
+     25.0,
+     443.0110036732609,
+     31.539551993069846,
+     0.2190246666185406
+    ],
+    [
+     "hover (mission)",
+     120,
+     380.19374523264685,
+     26.85323996646592,
+     0.8951079988821974
+    ],
+    [
+     "transition forward",
+     10,
+     532.2712433257055,
+     38.33777767078833,
+     0.10649382686330092
+    ],
+    [
+     "back-transition",
+     10,
+     494.2518688024409,
+     35.42154458967341,
+     0.09839317941575947
+    ],
+    [
+     "descent 50-0 m",
+     50.0,
+     380.19374523264685,
+     26.85323996646592,
+     0.3729616662009156
+    ],
+    [
+     "cruise",
+     719.3735606962503,
+     251.03631682705768,
+     17.453861331673387,
+     3.4877351039068003
+    ]
+   ]
+  },
+  {
+   "id": "CL-E2-BUDGET-PESS-TABLE",
+   "type": "claim",
+   "title": "Phase table, pessimistic [phase, s, W, A, Ah]",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "phases",
+   "unit": "-",
+   "how": "Pessimistic phase table: compare each row with the DataFlash log (BAT.Curr, BAT.CurrTot) of a full mission; rows within +/-15 %.",
+   "value": [
+    [
+     "ground, armed checks",
+     180,
+     6.0,
+     0.4057602743694851,
+     0.020288013718474253
+    ],
+    [
+     "climb 0-50 m",
+     25.0,
+     487.3121040405871,
+     35.66872519372642,
+     0.247699480511989
+    ],
+    [
+     "hover (mission)",
+     120,
+     418.2131197559116,
+     30.226972150217204,
+     1.0075657383405734
+    ],
+    [
+     "transition forward",
+     20,
+     585.4983676582762,
+     43.67148708639382,
+     0.2426193727021879
+    ],
+    [
+     "back-transition",
+     20,
+     543.677055682685,
+     40.22196500217414,
+     0.22345536112318964
+    ],
+    [
+     "descent 50-0 m",
+     50.0,
+     418.2131197559116,
+     30.226972150217204,
+     0.4198190576419056
+    ],
+    [
+     "cruise",
+     378.90927299931326,
+     335.87882565806126,
+     23.928658809779208,
+     2.518552975961681
+    ]
+   ]
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-BASE",
+   "type": "claim",
+   "title": "Cruise after 2 min hover to the 20 % line, base",
+   "calc": "CALC-E2-BUDGET-BASE",
+   "output": "cruise_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "verifies": [
+    "R-MISSION"
+   ],
+   "how": "Full-mission flight (R-TEST-ORDER gate 9): land when BAT.CurrTot reaches 80 % of 6 500 mAh; logged cruise time >= this value.",
+   "value": 11.989559344937504
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-PESS",
+   "type": "claim",
+   "title": "Cruise after 2 min hover to the 20 % line, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "cruise_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "verifies": [
+    "R-MISSION"
+   ],
+   "how": "Same flight; also re-run this script with the twin's logged hover and cruise currents in place of the model (ASM-E2-HOVER-MARGIN, ASM-E2-CRUISE-AERO).",
+   "value": 6.315154549988554
+  },
+  {
+   "id": "CL-E2-HOVER-ONLY-MIN-PESS",
+   "type": "claim",
+   "title": "Hover-only sortie to the 20 % line, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "hover_only_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_time_min"
+   },
+   "how": "Tethered hover (R-TEST-ORDER gate 3): log BAT.CurrTot vs time; minutes to 5 200 mAh >= this value.",
+   "value": 9.249445091207477
+  },
+  {
+   "id": "CL-E2-HOVER-I-GATE",
+   "type": "claim",
+   "title": "Hover pack current at the gate, 5 m/s wind",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "hover_a",
+   "unit": "A",
+   "how": "Tethered hover at gate mass (ballast) with the 150 A watt meter; F1 sizes wires and the disconnect on it.",
+   "value": 30.226972150217204
+  },
+  {
+   "id": "CL-E2-CRUISE-I-PESS",
+   "type": "claim",
+   "title": "Cruise pack current, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "cruise_a",
+   "unit": "A",
+   "how": "Fixed-wing tune flights: mean BAT.Curr in level cruise at 16 m/s.",
+   "value": 23.928658809779208
+  },
+  {
+   "id": "CL-E2-I-GROUND-PESS",
+   "type": "claim",
+   "title": "Ground, armed checks: pack current, pessimistic (gate, 10 degC)",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "i_ground_a",
+   "unit": "A",
+   "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
+   "value": 0.4057602743694851
+  },
+  {
+   "id": "CL-E2-T-GROUND-PESS",
+   "type": "claim",
+   "title": "Ground, armed checks: duration, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "t_ground_s",
+   "unit": "s",
+   "how": "Phase duration on the full-mission log (MODE and QTUN messages).",
+   "value": 180
+  },
+  {
+   "id": "CL-E2-I-CLIMB-PESS",
+   "type": "claim",
+   "title": "Climb 0-50 m at 2 m/s: pack current, pessimistic (gate, 10 degC)",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "i_climb_a",
+   "unit": "A",
+   "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
+   "value": 35.66872519372642
+  },
+  {
+   "id": "CL-E2-T-CLIMB-PESS",
+   "type": "claim",
+   "title": "Climb 0-50 m at 2 m/s: duration, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "t_climb_s",
+   "unit": "s",
+   "how": "Phase duration on the full-mission log (MODE and QTUN messages).",
+   "value": 25.0
+  },
+  {
+   "id": "CL-E2-I-TRANS-FWD-PESS",
+   "type": "claim",
+   "title": "Forward transition: pack current, pessimistic (gate, 10 degC)",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "i_trans_fwd_a",
+   "unit": "A",
+   "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
+   "value": 43.67148708639382
+  },
+  {
+   "id": "CL-E2-T-TRANS-FWD-PESS",
+   "type": "claim",
+   "title": "Forward transition: duration, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "t_trans_fwd_s",
+   "unit": "s",
+   "how": "Phase duration on the full-mission log (MODE and QTUN messages).",
+   "value": 20
+  },
+  {
+   "id": "CL-E2-I-TRANS-BACK-PESS",
+   "type": "claim",
+   "title": "Back-transition: pack current, pessimistic (gate, 10 degC)",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "i_trans_back_a",
+   "unit": "A",
+   "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
+   "value": 40.22196500217414
+  },
+  {
+   "id": "CL-E2-T-TRANS-BACK-PESS",
+   "type": "claim",
+   "title": "Back-transition: duration, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "t_trans_back_s",
+   "unit": "s",
+   "how": "Phase duration on the full-mission log (MODE and QTUN messages).",
+   "value": 20
+  },
+  {
+   "id": "CL-E2-I-DESCENT-PESS",
+   "type": "claim",
+   "title": "Descent 50-0 m at 1 m/s: pack current, pessimistic (gate, 10 degC)",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "i_descent_a",
+   "unit": "A",
+   "how": "DataFlash BAT.Curr mean over the phase on the full-mission log (T-E2-MISSION-LOG), within +/-15 %; F1 reads this claim for harness heating (CALC-F1-PROFILE, CL-F1-PROFILE).",
+   "value": 30.226972150217204
+  },
+  {
+   "id": "CL-E2-T-DESCENT-PESS",
+   "type": "claim",
+   "title": "Descent 50-0 m at 1 m/s: duration, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "t_descent_s",
+   "unit": "s",
+   "how": "Phase duration on the full-mission log (MODE and QTUN messages).",
+   "value": 50.0
+  },
+  {
+   "id": "CL-E2-T-HOVER-PESS",
+   "type": "claim",
+   "title": "Mission hover: duration",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "t_hover_s",
+   "unit": "s",
+   "how": "Phase duration on the full-mission log.",
+   "value": 120
+  },
+  {
+   "id": "CL-E2-T-CRUISE-PESS",
+   "type": "claim",
+   "title": "Cruise to the 20 % line: duration, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "t_cruise_s",
+   "unit": "s",
+   "how": "As CL-E2-CRUISE-MIN-PESS x 60.",
+   "value": 378.90927299931326
+  },
+  {
+   "id": "CL-E2-I-MAX-PHASE-PESS",
+   "type": "claim",
+   "title": "Highest mission-phase pack current, pessimistic",
+   "calc": "CALC-E2-BUDGET-PESS",
+   "output": "i_max_phase_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "P:performance.full_throttle_current_a"
+   },
+   "how": "Largest phase-mean BAT.Curr on the full-mission log; stays under the 100 A limiter.",
+   "value": 43.67148708639382
+  },
+  {
+   "id": "CL-E2-C-PEAK",
+   "type": "claim",
+   "title": "Peak discharge rate, all motors full",
+   "calc": "CALC-E2-SAG",
+   "output": "c_peak",
+   "unit": "1/h",
+   "limit": {
+    "op": "<=",
+    "value": 25.0
+   },
+   "how": "Limiter 100 A = 15.4C (unlimited momentary 120 A = 18.5C); any hobby 6500 pack with IR <= 5 mOhm/cell carries it (T-E2-IR). Limit 25C = realistic continuous rating of a hard-case pack labelled 100C+.",
+   "value": 15.384615384615385
+  },
+  {
+   "id": "CL-E2-SAG-BRACKET",
+   "type": "claim",
+   "title": "E1's worst/fresh thrust factor lies inside E2's physical bracket (D-35)",
+   "calc": "CALC-E2-SAG",
+   "output": "e1_bracket_margin",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "T-E1-STAND fresh and worst-state runs: measured thrust ratio between the measured bus-voltage ratio and its 2/3 power.",
+   "note": "D-35 resolved: E2 adopts E1's station model (CL-E1-SAG-FACTOR, CL-E1-TW-WORST) as the one worst-state claim. The limiter binds in every pack state, so the pack current is fixed at 100 A and thrust follows power (lower bound, thrust ~ V) or the ideal rotor (upper, ~ V^(2/3)); E1 lies between. Retires CL-E2-SAG-F-WORST and CL-E2-TW-SAG-WORST (the (V/14.8)^2 rule counted the sag twice)",
+   "value": 0.022126421280807107
+  },
+  {
+   "id": "CL-E2-LIMITER-BINDS-WORST",
+   "type": "claim",
+   "title": "Unlimited pack current at 20 % charge, 10 degC (limiter still binds)",
+   "calc": "CALC-E2-SAG",
+   "output": "i_unlim_res20_cold",
+   "unit": "A",
+   "limit": {
+    "op": ">=",
+    "ref": "P:performance.full_throttle_current_a"
+   },
+   "how": "Same stand run with Q_M_BAT_CURR_MAX disabled for one 1 s punch (props on the stand only): pack current at full duty above 100 A. If it is not, the V^2 rule applies below the limiter and D-35 re-opens.",
+   "value": 106.60575489363309
+  },
+  {
+   "id": "CL-E2-V-BUS-WORST",
+   "type": "claim",
+   "title": "Bus voltage at 100 A, 20 % charge, 10 degC pack",
+   "calc": "CALC-E2-SAG",
+   "output": "v_res20_cold",
+   "unit": "V",
+   "how": "Logged BAT.Volt during a full-throttle punch on the cold-pack stand run (T-E2-IR); F4 sets BATT_FS_VOLTSRC 1 (sag-compensated) and Q_M_BAT_VOLT_MIN below it.",
+   "value": 11.73
+  },
+  {
+   "id": "CL-E2-SAG-V-WORST",
+   "type": "claim",
+   "title": "Cell sag at 120 A, 20 % charge, 10 degC",
+   "calc": "CALC-E2-SAG",
+   "output": "sag_v_per_cell_worst",
+   "unit": "V",
+   "how": "Load-step IR test (T-E2-IR) scaled to 100 A; F4 uses it for BATT_FS_VOLTSRC 1 and Q_M_BAT_VOLT_MIN.",
+   "value": 0.7974999999999999
+  },
+  {
+   "id": "CL-E2-PACK-T-END",
+   "type": "claim",
+   "title": "Pack temperature at landing, worst morning (adiabatic)",
+   "calc": "CALC-E2-HEAT",
+   "output": "t_end_max_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "value": 50.0
+   },
+   "verifies": [
+    "R-THERMAL"
+   ],
+   "how": "IR thermometer on the pack face at landing; E3 adds the pod's heat path. 50 degC leaves 10 K to the usual 60 degC LiPo discharge limit.",
+   "value": 43.80701686196824
+  },
+  {
+   "id": "CL-E2-PACK-HEAT-HOVER",
+   "type": "claim",
+   "title": "Pack internal heat in hover, cold pack",
+   "calc": "CALC-E2-HEAT",
+   "output": "p_hover_cold_w",
+   "unit": "W",
+   "how": "E3 input; check by I^2 R from the measured IR and hover current.",
+   "value": 21.928076288880156
+  },
+  {
+   "id": "CL-E2-PACK-LARGEST",
+   "type": "claim",
+   "title": "Largest candidate pack passing gate, mission and current",
+   "calc": "CALC-E2-PACK-TRADE",
+   "output": "largest_passing_ah",
+   "unit": "Ah",
+   "limit": {
+    "op": ">=",
+    "ref": "P:battery.capacity_ah"
+   },
+   "how": "Re-run with the weighed pack masses; the 6.5 Ah choice stands while it is the largest passing pack.",
+   "value": 6.5
+  },
+  {
+   "id": "CL-E2-BATT-CRT-MAH",
+   "type": "claim",
+   "title": "BATT_CRT_MAH (critical: QLAND)",
+   "calc": "CALC-E2-FAILSAFE",
+   "output": "crt_mah",
+   "unit": "mAh",
+   "verifies": [
+    "R-FAILSAFES"
+   ],
+   "how": "SITL and bench (props off): set BATT_CAPACITY 6500, inject current, confirm QLAND at this count.",
+   "value": 1300
+  },
+  {
+   "id": "CL-E2-BATT-LOW-MAH",
+   "type": "claim",
+   "title": "BATT_LOW_MAH (low: QRTL)",
+   "calc": "CALC-E2-FAILSAFE",
+   "output": "low_mah",
+   "unit": "mAh",
+   "verifies": [
+    "R-FAILSAFES"
+   ],
+   "how": "Same bench test: QRTL at this count; landing then ends above BATT_CRT_MAH.",
+   "value": 2600
+  },
+  {
+   "id": "CL-E2-CRUISE-TO-LOW-PESS",
+   "type": "claim",
+   "title": "Mission cruise before BATT_LOW triggers, pessimistic currents",
+   "calc": "CALC-E2-FAILSAFE",
+   "output": "cruise_to_low_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "verifies": [
+    "R-MISSION"
+   ],
+   "how": "SITL with the logged currents: QRTL must not trigger before 5 min of cruise.",
+   "value": 5.972321508684052
+  },
+  {
+   "id": "CL-E2-SORTIES-WINDOW",
+   "type": "claim",
+   "title": "Full-mission sorties the 3 h window allows",
+   "calc": "CALC-E2-TESTDAY",
+   "output": "sorties_window",
+   "unit": "-",
+   "how": "Count logged sorties on the first full test day; I2 plans on it.",
+   "value": 4
+  },
+  {
+   "id": "CL-E2-SORTIES-PACKS",
+   "type": "claim",
+   "title": "Sorties per day with the packs on order",
+   "calc": "CALC-E2-TESTDAY",
+   "output": "sorties_current_packs",
+   "unit": "-",
+   "how": "= min(packs owned, window); one full pack per sortie.",
+   "value": 2
+  },
+  {
+   "id": "CL-E2-CHARGE-MIN",
+   "type": "claim",
+   "title": "Charge time per pack from the 20 % line",
+   "calc": "CALC-E2-TESTDAY",
+   "output": "charge_min_per_pack",
+   "unit": "min",
+   "how": "Time the first charge on the HTRC C150 (T-E2-CAPACITY).",
+   "value": 58.99999999999999
+  },
+  {
+   "id": "CL-E2-CHARGE-H-4",
+   "type": "claim",
+   "title": "Attended charge time for 4 packs, one port",
+   "calc": "CALC-E2-TESTDAY",
+   "output": "charge_h_4_packs",
+   "unit": "h",
+   "limit": {
+    "op": "<=",
+    "value": 5.0
+   },
+   "how": "Sum of logged charge times after a test day; must fit one attended afternoon (<= 5 h).",
+   "value": 3.9333333333333327
+  },
+  {
+   "id": "CL-E2-WINDOW-USED",
+   "type": "claim",
+   "title": "Window minutes used by the planned sorties (2 packs, D-12)",
+   "calc": "CALC-E2-TESTDAY",
+   "output": "window_used_min",
+   "unit": "min",
+   "limit": {
+    "op": "<=",
+    "value": 180.0
+   },
+   "how": "Log take-off and landing times on the first test day; I2 plans the day on it.",
+   "value": 57.14578535654167
+  },
+  {
+   "id": "CL-E2-PACK-ACCEPT-KG",
+   "type": "claim",
+   "title": "Pack acceptance line PACK_ACCEPT_KG (= CL-A1-PACK-ACCEPT, D-64)",
+   "calc": "CALC-E2-SKU-CHECK",
+   "output": "accept_kg",
+   "unit": "kg",
+   "limit": {
+    "op": ">=",
+    "value": 0.556
+   },
+   "verifies": [
+    "R-PACK-MASS"
+   ],
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "Re-run this script after every A1 / A3 re-run; T-E2-WEIGH passes a pack at or under this value.",
+   "note": "D-64: E2's acceptance line and the T-E2-WEIGH pass line follow A1's CL-A1-PACK-ACCEPT (A1 frame estimate today; A3 publishes the same figure from CL-A3-GATE-MARGIN). Limit = the SKU's listed maximum 0.556 kg: below it the named pack itself would fail acceptance. Replaces the D-58 0.601 kg",
+   "value": 0.5635607000000002
+  },
+  {
+   "id": "CL-E2-SKU-MASS-MARGIN",
+   "type": "claim",
+   "title": "Named pack (listed mass + tolerance) under the D-64 acceptance line",
+   "calc": "CALC-E2-SKU-CHECK",
+   "output": "mass_margin_kg",
+   "unit": "kg",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "verifies": [
+    "R-PACK-MASS"
+   ],
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "T-E2-WEIGH: every pack <= CL-E2-PACK-ACCEPT-KG on a 1 g scale, leads included (pack_log.csv).",
+   "value": 0.007560700000000198
+  },
+  {
+   "id": "CL-E2-SKU-BAY-CLEAR",
+   "type": "claim",
+   "title": "Named pack body (listed + 3 mm) inside the D2 bay, tightest axis",
+   "calc": "CALC-E2-SKU-CHECK",
+   "output": "bay_clear_min_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "T-E2-WEIGH step 3: calipers L x W x H against the bay 160 x 52 x 53 mm; lead exit routed per D2.",
+   "value": 0.000999999999999994
+  },
+  {
+   "id": "CL-E2-SKU-LEAD-AWG",
+   "type": "claim",
+   "title": "Named pack discharge-lead gauge (AWG number)",
+   "calc": "CALC-E2-SKU-CHECK",
+   "output": "lead_awg",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 10.0
+   },
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "T-E2-WEIGH step 3a: read the print on the lead insulation, or strip 5 mm of the cut-off end at re-termination and measure the bundle (10 AWG ~2.6 mm, 12 AWG ~2.1 mm).",
+   "note": "10 AWG inferred from the EC5 plug (the page does not state it); I1 confirms at order, E2 on arrival",
+   "value": 10
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-BASE-240",
+   "type": "claim",
+   "title": "Cruise after 2 min hover, base, at the params' cruise power (253 W, D-97) (sensitivity)",
+   "calc": "CALC-E2-BUDGET-240",
+   "output": "cruise_min_base",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "As CL-E2-CRUISE-MIN-BASE; the first tune flight's logged cruise current decides between B1 and E1.",
+   "value": 11.310265184599842
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-PESS-240",
+   "type": "claim",
+   "title": "Cruise after 2 min hover, pessimistic, at the params' cruise power (253 W, D-97) (sensitivity)",
+   "calc": "CALC-E2-BUDGET-240",
+   "output": "cruise_min_pess",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "As CL-E2-CRUISE-MIN-PESS.",
+   "value": 5.947701613605093
+  },
+  {
+   "id": "CL-E2-CRUISE-TO-LOW-PESS-240",
+   "type": "claim",
+   "title": "Cruise before BATT_LOW (2600 mAh), pessimistic, at the params' 253 W (D-97) (sensitivity)",
+   "calc": "CALC-E2-BUDGET-240",
+   "output": "cruise_to_low_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "SITL with the logged currents, as CL-E2-CRUISE-TO-LOW-PESS.",
+   "value": 5.3886611110106095
+  },
+  {
+   "id": "CL-E2-PACK-MASS",
+   "type": "claim",
+   "title": "Flight pack mass carried in the budget (not yet weighed)",
+   "unit": "kg",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-E2-PACK-ACCEPT-KG"
+   },
+   "verifies": [
+    "R-PACK-MASS"
+   ],
+   "how": "Weigh each pack on arrival on a 1 g scale (T-E2-WEIGH) and enter it in pack_log.csv, then re-run. Pass: every pack <= CL-E2-PACK-ACCEPT-KG (= CL-A1-PACK-ACCEPT, 0.5926 kg today); a pack above 0.556 kg (the listed maximum) is reported to A3 so the 550 g line is replaced; a pack above the acceptance line is returned (D-64; the Tattu fallback is not pre-approved).",
+   "cites": [
+    "SRC-E2-OVONIC-120C-EC5",
+    "SRC-E2-OVONIC-LISTINGS"
+   ],
+   "value": 0.55,
+   "status": "UNVERIFIED",
+   "note": "named SKU (D-64): Ovonic 120C 4S 6500 hard case EC5, listed 551 +/- 5 g; 0.55 kg stays the carried value until weighed"
+  },
+  {
+   "id": "T-E2-WEIGH",
+   "type": "test",
+   "title": "Weigh and measure every pack on arrival",
+   "verifies": [
+    "CL-E2-PACK-MASS",
+    "CL-E2-SKU-MASS-MARGIN",
+    "CL-E2-SKU-BAY-CLEAR",
+    "CL-E2-SKU-LEAD-AWG"
+   ],
+   "state": "planned",
+   "procedure": "1 g scale; calipers L x W x H incl. lead exit; one row per pack (E2-P1, E2-P2) in redesign/team/E2/pack_log.csv, then re-run this script and build_graph.py."
+  },
+  {
+   "id": "T-E2-CAPACITY",
+   "type": "test",
+   "title": "Discharge capacity test at 1C",
+   "verifies": [
+    "CL-E2-CRUISE-MIN-PESS",
+    "CL-E2-CHARGE-MIN"
+   ],
+   "state": "planned",
+   "procedure": "Charger discharge mode is limited in power: discharge through the thrust stand at ~6.5 A to 3.5 V/cell under load, log mAh with the watt meter; pass >= 6.0 Ah (R-PACK-MASS)."
+  },
+  {
+   "id": "T-E2-IR",
+   "type": "test",
+   "title": "Pack resistance by load step",
+   "verifies": [
+    "CL-E2-SAG-BRACKET",
+    "CL-E2-V-BUS-WORST",
+    "CL-E2-SAG-V-WORST",
+    "CL-E2-C-PEAK"
+   ],
+   "state": "planned",
+   "procedure": "Thrust stand, one motor: rest voltage, then 20 A step; R = dV / dI after 2 s; repeat at 10 degC (pack 1 h in a fridge, bagged). Pass <= 5 mOhm/cell at 25 degC."
+  },
+  {
+   "id": "T-E2-MISSION-LOG",
+   "type": "test",
+   "title": "Full-mission current log",
+   "verifies": [
+    "CL-E2-CRUISE-MIN-BASE",
+    "CL-E2-HOVER-I-GATE",
+    "CL-E2-CRUISE-I-PESS",
+    "CL-E2-PACK-T-END",
+    "CL-E2-I-CLIMB-PESS",
+    "CL-E2-I-TRANS-FWD-PESS",
+    "CL-E2-I-TRANS-BACK-PESS",
+    "CL-E2-I-DESCENT-PESS",
+    "CL-E2-I-MAX-PHASE-PESS"
+   ],
+   "state": "planned",
+   "procedure": "DataFlash BAT messages; IR thermometer on pack before/after; compare row by row with the phase table."
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-BASE-V17",
+   "type": "claim",
+   "title": "Cruise after 2 min hover to the 20 % line, base, at the 17 m/s fallback",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_min_base",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "As CL-E2-CRUISE-MIN-BASE at 17 m/s.",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 9.837875732003681
+  },
+  {
+   "id": "CL-E2-CRUISE-MIN-PESS-V17",
+   "type": "claim",
+   "title": "Cruise after 2 min hover to the 20 % line, pessimistic, at the 17 m/s fallback",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_min_pess",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "how": "As CL-E2-CRUISE-MIN-PESS at 17 m/s (T-E2-MISSION-LOG decides).",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 5.150790398640713
+  },
+  {
+   "id": "CL-E2-CRUISE-TO-LOW-PESS-V17",
+   "type": "claim",
+   "title": "Cruise at 17 m/s before BATT_LOW triggers, pessimistic",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_to_low_min",
+   "unit": "min",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.cruise_time_min"
+   },
+   "verifies": [
+    "R-MISSION"
+   ],
+   "how": "SITL with the logged currents at AIRSPEED_CRUISE 17: QRTL must not trigger before 5 min of cruise; first logged cruise current (T-E2-MISSION-LOG).",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 4.666653728665841
+  },
+  {
+   "id": "CL-E2-BATT-LOW-MAH-V17",
+   "type": "claim",
+   "title": "BATT_LOW_MAH needed with the 17 m/s cruise current (60 s return leg)",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "low_mah",
+   "unit": "mAh",
+   "how": "Compare with CL-E2-BATT-LOW-MAH; F4 sets the larger if AIRSPEED_CRUISE goes to 17.",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 2700
+  },
+  {
+   "id": "CL-E2-CRUISE-W-PESS-V17",
+   "type": "claim",
+   "title": "Cruise bus power, pessimistic, at the 17 m/s fallback",
+   "calc": "CALC-E2-BUDGET-V17",
+   "output": "cruise_w_pess",
+   "unit": "W",
+   "how": "Logged pack power in 17 m/s legs (T-E2-MISSION-LOG).",
+   "note": "17 m/s is AIRSPEED_MIN = AIRSPEED_CRUISE if the stall is the tripped 12.85 m/s (D-96 c; CDR decision B6 plans on it until T-B2-STALL). Cruise power = E1's 17 m/s point (CL-E1-CRUISE-P-55-V17) + 6 W avionics, carried through the same chain as the 253 W case; the pessimistic case scales B1's pessimistic power by the same factor (EST). performance.cruise_ms stays 16 until A1 changes it. The way out is the prop A/B on the stand (CDR-04: 11x7E, about -28 % cruise power, REVIEWER EST), not this model",
+   "value": 406.7437055544007
+  }
+ ]
+}

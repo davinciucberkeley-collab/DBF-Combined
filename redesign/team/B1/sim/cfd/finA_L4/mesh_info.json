@@ -1,0 +1,13 @@
+{
+ "cells": 146397,
+ "h1_m": 8.485281374238571e-06,
+ "s_wall_m": 0.0007778174593052024,
+ "bl_layers": 24,
+ "R_far_m": 5.5,
+ "rc": 0,
+ "attempt": 1,
+ "converged": true,
+ "wall_s": 1487.3,
+ "alpha_deg": 0.0,
+ "chord_m": 0.275
+}

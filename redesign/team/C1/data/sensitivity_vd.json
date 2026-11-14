@@ -1,0 +1,120 @@
+{
+ "note": "D-50: 'at_derived' = the envelope the claims carry (VD = max(requirements.vd_ms, 1.25 x F4's capped VH)); 'at_requirement' = the REJECTED uncapped alternative (1.25 x B1's 9 350 rpm top speed), kept to show what losing the THR_MAX cap would cost",
+ "VD_derived_ms": 27.2,
+ "VD_requirement_ms": 32.1,
+ "VD_uncapped_ms": 32.1,
+ "n_pos": [
+  3.4,
+  3.5852293312840042
+ ],
+ "n_neg": [
+  -1.5,
+  -1.5852293312840042
+ ],
+ "q_VD_Pa": [
+  453.152,
+  631.1261250000001
+ ],
+ "n_stall_VD": [
+  5.224506341440154,
+  7.276415953832383
+ ],
+ "outputs": {
+  "spar_Mb_ult": {
+   "at_derived": 19.191762739245057,
+   "at_requirement": 19.191762739245057,
+   "case": [
+    "L1-LEVEL",
+    "L1-LEVEL"
+   ]
+  },
+  "spar_Mx_ult": {
+   "at_derived": 11.999507219620783,
+   "at_requirement": 11.999507219620783,
+   "case": [
+    "G2-HANG-MOTOR",
+    "G2-HANG-MOTOR"
+   ]
+  },
+  "wing_T_ult": {
+   "at_derived": 8.451178161615642,
+   "at_requirement": 8.451178161615642,
+   "case": [
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
+   ]
+  },
+  "wing_Vz_ult": {
+   "at_derived": 33.20212880732039,
+   "at_requirement": 33.82218839348312,
+   "case": [
+    "F7-ROLLPULL-VA",
+    "F7-ROLLPULL-VA"
+   ]
+  },
+  "finjoint_M_ult": {
+   "at_derived": 15.63424783630313,
+   "at_requirement": 15.63424783630313,
+   "case": [
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
+   ]
+  },
+  "finhalf_Mb_ult": {
+   "at_derived": 12.242844430624015,
+   "at_requirement": 12.242844430624015,
+   "case": [
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
+   ]
+  },
+  "finhalf_T_ult": {
+   "at_derived": 11.903716154200492,
+   "at_requirement": 11.903716154200492,
+   "case": [
+    "L4-CORNER-SIDE-Y",
+    "L4-CORNER-SIDE-Y"
+   ]
+  },
+  "mount_F_ult": {
+   "at_derived": 31.627629418909514,
+   "at_requirement": 31.627629418909514,
+   "case": [
+    "G3-BENCH",
+    "G3-BENCH"
+   ]
+  },
+  "pod_F_ult": {
+   "at_derived": 111.64915573791856,
+   "at_requirement": 111.64915573791856,
+   "case": [
+    "L1-LEVEL",
+    "L1-LEVEL"
+   ]
+  },
+  "foot_F_ult": {
+   "at_derived": 65.92987345032114,
+   "at_requirement": 65.92987345032114,
+   "case": [
+    "L5-CORNER-SIDE-Z",
+    "L5-CORNER-SIDE-Z"
+   ]
+  },
+  "proof_P_side_lim_N": {
+   "at_derived": 24.395330630291976,
+   "at_requirement": 25.873505755411372,
+   "case": [
+    24.395330630291976,
+    25.873505755411372
+   ]
+  },
+  "proof_Mx_root_lim_Nm": {
+   "at_derived": 1.7072476170828246,
+   "at_requirement": 1.8002571272147179,
+   "case": [
+    1.7072476170828246,
+    1.8002571272147179
+   ]
+  }
+ }
+}

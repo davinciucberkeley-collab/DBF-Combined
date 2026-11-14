@@ -1,0 +1,10 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "bk_crash",
+ "_note": "DELIBERATELY BROKEN fixture: duplicate part id BRK-007; module raises.",
+ "parts": [
+  {"id": "XYZ-001", "name": "Plate", "subsystem": "bk_crash", "status": "PROPOSED", "mass_g": 5, "material": "ply", "cg_xyz_m": null, "make_or_buy": "make"},
+  {"id": "BRK-007", "name": "Duplicate id", "subsystem": "bk_crash", "status": "PROPOSED", "mass_g": 1, "material": "ply", "cg_xyz_m": null, "make_or_buy": "make"}
+ ],
+ "edges": []
+}

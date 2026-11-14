@@ -1,0 +1,17 @@
+{
+ "_note": "Demo parts for the proof-chain example only: the part ids of the generic test aircraft in redesign/fusion/examples (so the web viewer links claims to parts). The real format is redesign/interfaces/SCHEMA.md (interface keeper); build_graph.py only reads part ids from 'parts' lists or 'part_id' keys.",
+ "parts": [
+  {"id": "FUS-001", "name": "Fuselage box", "subsystem": "ex_fuselage"},
+  {"id": "FUS-002", "name": "Battery block", "subsystem": "ex_fuselage"},
+  {"id": "FUS-003", "name": "ESC 2-in-1 with BEC", "subsystem": "ex_fuselage"},
+  {"id": "WNG-001", "name": "Wing panel L", "subsystem": "ex_wing"},
+  {"id": "WNG-002", "name": "Wing panel R", "subsystem": "ex_wing"},
+  {"id": "WNG-003", "name": "Spar tube 12x10", "subsystem": "ex_wing"},
+  {"id": "WNG-004", "name": "Aileron L", "subsystem": "ex_wing"},
+  {"id": "WNG-005", "name": "Aileron servo L", "subsystem": "ex_wing"},
+  {"id": "BMS-001", "name": "Boom L", "subsystem": "ex_booms"},
+  {"id": "BMS-002", "name": "Boom R", "subsystem": "ex_booms"},
+  {"id": "BMS-003", "name": "Lift motor L", "subsystem": "ex_booms"},
+  {"id": "BMS-004", "name": "Lift motor R", "subsystem": "ex_booms"}
+ ]
+}

@@ -1,0 +1,3123 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/B4/props.py",
+ "params": [
+  "../../params/params.json",
+  "../../subsystems/fins/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-B4-VSAG",
+   "type": "assumption",
+   "title": "Pack voltage at the end of a flight, loaded",
+   "text": "4S pack at 3.4 V/cell under full-throttle load",
+   "basis": "4S 6500 130C late in the flight; same basis as the K09 review section (3.4 V/cell)",
+   "value": 13.6,
+   "unit": "V",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-REVIEW"
+   ]
+  },
+  {
+   "id": "ASM-B4-CD-TUBE",
+   "type": "assumption",
+   "title": "Cylinder drag coefficient 1.1",
+   "text": "22 mm tube in the slipstream, Re ~1.3e4 (subcritical)",
+   "basis": "Hoerner, Fluid-Dynamic Drag, ch. 3: Cd 1.0-1.2 for 1e4 < Re < 2e5",
+   "value": 1.1,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-B4-PROFILE",
+   "type": "assumption",
+   "title": "Slipstream peak-to-mean dynamic pressure 1.3",
+   "text": "A real prop loads its outer half: the tube sees about 1.3 x the mean slipstream dynamic pressure",
+   "basis": "typical blade loading peak near 0.75 R; bounds the uniform-disk value from above",
+   "value": 1.3,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-B4-FOOT",
+   "type": "assumption",
+   "title": "Foot frontal area 30 x 30 mm",
+   "text": "crushable printed foot on each fin TE tip, near the prop axis",
+   "basis": "bounds D5's GER-001 shoe over the 9.6 mm fin TE (subsystems/landing/SPEC.md: 11 x 18 mm cartridge in a sleeve); D5 publishes no frontal area",
+   "value": 0.0009,
+   "unit": "m2",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-B4-CD-STRIP",
+   "type": "assumption",
+   "title": "Sharp-edged strip and ear drag coefficient 1.2",
+   "text": "10 x 3 mm pultruded CF brace broadside to the flow with its 10 mm side along x (depth/height 3.3), and the printed collar ears (blunt prisms)",
+   "basis": "Hoerner, Fluid-Dynamic Drag, ch. 3, and Delany & Sorensen NACA TN 3038: sharp rectangular sections at depth/height 3 have Cd 1.1-1.4 (on the height) at Re 1e3-1e4",
+   "value": 1.2,
+   "unit": "-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-B4-ESC",
+   "type": "assumption",
+   "title": "ESC on its pad: 8 mm proud of the board, Cd 0.9",
+   "text": "LANRC 45 A board in heat-shrink with a 10 mm hook-and-loop strap, on the 1.2 mm PETG pad; frontal = pad height x (pad + ESC), blunt box of length/thickness ~5",
+   "basis": "E1 has not published ESC dimensions (PRP-002); typical 45 A BLHeli_S board 5 mm thick + heat-shrink and strap; Hoerner ch. 3 blunt box",
+   "value": [
+    0.0068,
+    0.9
+   ],
+   "unit": "m, -",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-B4-WAKE-SENSE",
+   "type": "assumption",
+   "title": "Cant sense per F4's motor map (k = +1)",
+   "text": "the side component of each canted thrust points toward the wing plane and outboard, so each hover wake leans away from the wing and inboard, and each disc's wing-side edge swings aft toward the tube",
+   "basis": "subsystems/flight-software/SPEC.md motor table and 'Cant sense' (CL-F4-MOTOR-MAP); D3's fin_detail.mount.cant_sense_UR +1 is the opposite (CR-B4-16)",
+   "value": 1,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-B4-MIX",
+   "type": "assumption",
+   "title": "Shear-layer spreading 0.08",
+   "text": "the slipstream edge mixing layer grows 0.08 m per metre downstream on each side",
+   "basis": "plane mixing layer vorticity thickness growth ~0.16-0.18 dx at velocity ratio 0 (Brown and Roshko 1974); half toward each side",
+   "value": 0.08,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-B4-PITOT-ERR",
+   "type": "assumption",
+   "title": "Pitot error limit 2 %",
+   "text": "thrust-dependent airspeed error at the probe tip must stay within 2 % of true airspeed (a constant bias is removed by ARSPD_RATIO; a thrust-dependent one is not)",
+   "basis": "B4 choice; ArduPilot airspeed calibration removes only a constant ratio",
+   "value": 0.02,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-B4-VRS",
+   "type": "assumption",
+   "title": "Vortex-ring onset at 0.28 v_h",
+   "text": "vortex-ring state begins at a descent rate of about 0.28 times the hover induced velocity",
+   "basis": "Leishman, Principles of Helicopter Aerodynamics 2nd ed., sec. 2.14: VRS boundary from about -0.28 v_h (onset) to -1.0 v_h; conservative lower edge",
+   "value": 0.28,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-B4-BOOM",
+   "type": "assumption",
+   "title": "Pitot boom 80 mm ahead of the pod front at z 0.045 m",
+   "text": "plug-in pitot boom on the pod nose, probe along body x, tip 80 mm ahead of the pod front face, 30 mm above the pod base",
+   "basis": "B4 placement (CR-B4-05); D2 draws POD-006; the tip x follows pod.x_le_m if the pod moves",
+   "value": [
+    0.08,
+    0.045
+   ],
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-B4-SPAN-AR",
+   "type": "assumption",
+   "title": "Fin effective aspect ratio doubles on the wing",
+   "text": "the wing acts as an end plate at the fin root inside the slipstream",
+   "basis": "image method for a plate ending on a wall",
+   "value": 2.0,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "SRC-B4-APC-PER3",
+   "type": "source",
+   "title": "APC PER3 performance files 11x4.5MR, 11x4.7SF, 11x5.5E, 12x4.5MR",
+   "kind": "datasheet",
+   "url": "https://www.apcprop.com/files/PER3_11x45MR.dat",
+   "checked": "2026-11-09",
+   "where": "tables at 5000-9000 rpm copied into redesign/team/B4/data/apc_per3_*.csv; also PER3_11x47SF.dat, PER3_11x55E.dat, PER3_12x45MR.dat",
+   "note": "APC blade-element predictions (v2022-0915), not measurements; transcription checked by CALC-B4-DATA"
+  },
+  {
+   "id": "SRC-B4-UIUC",
+   "type": "source",
+   "title": "UIUC Propeller Database vol. 1, APC 11x4.7SF and 11x5.5E",
+   "kind": "dataset",
+   "url": "https://m-selig.ae.illinois.edu/props/volume-1/propDB-volume-1.html",
+   "checked": "2026-11-09",
+   "where": "apcsf_11x4.7_static_pg0526, apcsf_11x4.7_pg0533_6004, apce_11x5.5_static_kt0467, apce_11x5.5_kt0472_6000; copied into data/uiuc_measured.csv"
+  },
+  {
+   "id": "SRC-B4-APC-RPM",
+   "type": "source",
+   "title": "APC suggested rpm limits",
+   "kind": "datasheet",
+   "url": "https://www.apcprop.com/technical-information/rpm-limits",
+   "checked": "2026-11-09",
+   "where": "MR 105,000/D(in); SF 65,000/D; Thin Electric 150,000/D"
+  },
+  {
+   "id": "SRC-B4-APC-PRODUCTS",
+   "type": "source",
+   "title": "APC product pages 11x4.5MR and 11x5.5EP",
+   "kind": "datasheet",
+   "url": "https://www.apcprop.com/product/11x5-5ep/",
+   "checked": "2026-11-09",
+   "where": "11x4.5MR LP11045MR 0.60 oz (17 g) $3.83, adapter rings not included; 11x5.5EP LP11055EP 0.81 oz (23 g) $4.17, reverse rotation, LPAR06E rings included; https://www.apcprop.com/product/11x4-5mr/"
+  },
+  {
+   "id": "SRC-B4-ZHOU-ROTOR",
+   "type": "source",
+   "title": "Zhou, Ning, Hu: rotor-to-rotor interaction of small UAV rotors (ISPIV)",
+   "kind": "paper",
+   "url": "https://journals.library.iit.edu/index.php/ISPIV/article/view/39",
+   "checked": "2026-11-09",
+   "where": "side-by-side rotors at 0.05-1.0 D tip gap: mean thrust within 2 %, thrust fluctuation +240 % and +3 dB at 0.05 D",
+   "note": "abstract and a citing review read; full paper not read",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-B4-APC-11X7E",
+   "type": "source",
+   "title": "APC PER3 performance file 11x7E and product page 11x7E (LP11070E)",
+   "kind": "datasheet",
+   "url": "https://www.apcprop.com/files/PER3_11x7E.dat",
+   "checked": "2026-11-13",
+   "where": "tables at 5000-8000 rpm copied into redesign/team/B4/data/apc_per3_11x7E.csv; product page https://www.apcprop.com/product/11x7e/ : LP11070E, $4.17, 0.81 oz (23 g), hub 0.80 in x 0.41 in, 1/4 in shaft, adapter rings LPAR06E. https://www.apcprop.com/product/11x7ep/ returns HTTP 404 and a web search on 2026-11-13 finds no 11x7EP / LP11070EP: the only reverse-rotation 11x7 found is the sport pusher LP11070P (about 40 g on retailer pages, a different blade)",
+   "note": "APC blade-element predictions (v2022-0915), not measurements; transcription checked by CALC-B4-DATA"
+  },
+  {
+   "id": "ASM-B4-AB-HOVER-MAX",
+   "type": "assumption",
+   "title": "Hover power penalty allowed for a cruise prop",
+   "text": "hover pack power <= 1.10 x the 11x5.5MR (measure M6 of the aero review: above +10 % stay on the MR)",
+   "basis": "review/CDR-2026-11-13/CDR-aero.md 'What the team must measure' M6",
+   "value": 1.1,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-B4-DATA",
+   "type": "calculation",
+   "title": "APC data transcription check",
+   "script": "redesign/team/B4/props.py",
+   "function": "data_check",
+   "equation": "Ct' = T / (rho n^2 D^4) ; Cp' = P / (rho n^3 D^5) from the printed N and W ; error = max |Ct'/Ct - 1|, |Cp'/Cp - 1| over rows with Ct, Cp >= 0.02 (4-digit rounding < 0.25 %)",
+   "inputs": {
+    "rho": "P:env.rho_kgm3"
+   },
+   "units": {
+    "rho": "kg/m3"
+   },
+   "cites": [
+    "SRC-B4-APC-PER3"
+   ],
+   "outputs": {
+    "max_rel_err": 0.0032381860360259918,
+    "rows": 459
+   },
+   "input_values": {
+    "rho": 1.225
+   }
+  },
+  {
+   "id": "CALC-B4-STATIC",
+   "type": "calculation",
+   "title": "Static operating points, five candidate props",
+   "script": "redesign/team/B4/props.py",
+   "function": "static_points",
+   "equation": "hover: T_h = k_dl m g / (4 cos cant) -> rpm, P_shaft from Ct, Cp ; FM = T^1.5 / sqrt(2 rho A) / P_shaft ; full throttle: (V - rpm/Kv)/R = Q/Kt + I0 (E1 constants, hot winding) ; T/W (bus held, no current limit) = 4 T_max cos cant / (k_dl m g) ; rpm limit = K / D_in (APC)",
+   "inputs": {
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK",
+    "tcu": "ASM-E1-TCOPPER",
+    "v": "P:battery.v_nom",
+    "v_sag": "ASM-B4-VSAG",
+    "m": "P:requirements.mtow_gate_kg",
+    "k_dl": "P:propulsion.download_factor",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "cant": "P:propulsion.stations.cant_deg"
+   },
+   "units": {
+    "v": "V",
+    "m": "kg",
+    "rho": "kg/m3",
+    "cant": "deg"
+   },
+   "assumes": [
+    "ASM-B4-VSAG"
+   ],
+   "cites": [
+    "SRC-B4-APC-PER3",
+    "SRC-B4-APC-RPM"
+   ],
+   "outputs": {
+    "tmax_n__11x4.5MR": 19.46757558485676,
+    "rpm_max__11x4.5MR": 9777.562334332626,
+    "i_max_a__11x4.5MR": 28.400844878208332,
+    "tw_unlimited__11x4.5MR": 2.8597145294155286,
+    "tmax_n_sag__11x4.5MR": 16.989759289762834,
+    "rpm_max_sag__11x4.5MR": 9134.152781312463,
+    "i_max_a_sag__11x4.5MR": 24.900560969148753,
+    "tw_unlimited_sag__11x4.5MR": 2.495732521002805,
+    "hover_rpm__11x4.5MR": 5816.191974055104,
+    "hover_shaft_w__11x4.5MR": 63.78630766755754,
+    "hover_in_w__11x4.5MR": 84.02247520563886,
+    "hover_i_motor_a__11x4.5MR": 10.770320160834824,
+    "hover_fm__11x4.5MR": 0.7184589074302256,
+    "disk_loading_npm2__11x4.5MR": 111.03157559811794,
+    "hover_torque_nm__11x4.5MR": 0.10472734956643025,
+    "rpm_limit__11x4.5MR": 9545.454545454546,
+    "rpm_limit_margin__11x4.5MR": -0.023738819650687804,
+    "hover_pack_w__11x4.5MR": 336.0899008225554,
+    "tmax_n__11x4.7SF": 21.456802281291896,
+    "rpm_max__11x4.7SF": 9019.227600049337,
+    "i_max_a__11x4.7SF": 34.48065465520818,
+    "tw_unlimited__11x4.7SF": 3.151924540944741,
+    "tmax_n_sag__11x4.7SF": 18.83683413869711,
+    "rpm_max_sag__11x4.7SF": 8450.663402327602,
+    "i_max_a_sag__11x4.7SF": 30.380311824495124,
+    "tw_unlimited_sag__11x4.7SF": 2.767060954242542,
+    "hover_rpm__11x4.7SF": 5098.275745422341,
+    "hover_shaft_w__11x4.7SF": 60.52648454328044,
+    "hover_in_w__11x4.7SF": 82.22955091152588,
+    "hover_i_motor_a__11x4.7SF": 11.584756731305397,
+    "hover_fm__11x4.7SF": 0.7571535214980422,
+    "disk_loading_npm2__11x4.7SF": 111.03157559811794,
+    "hover_torque_nm__11x4.7SF": 0.11336878996811041,
+    "rpm_limit__11x4.7SF": 5909.090909090909,
+    "rpm_limit_margin__11x4.7SF": -0.34483403999488993,
+    "hover_pack_w__11x4.7SF": 328.9182036461035,
+    "tmax_n__11x5.5MR": 20.33358490735294,
+    "rpm_max__11x5.5MR": 9319.452696615961,
+    "i_max_a__11x5.5MR": 32.07365495588465,
+    "tw_unlimited__11x5.5MR": 2.986928081578544,
+    "tmax_n_sag__11x5.5MR": 17.81008980872466,
+    "rpm_max_sag__11x5.5MR": 8722.008111444648,
+    "i_max_a_sag__11x5.5MR": 28.204855339587912,
+    "tw_unlimited_sag__11x5.5MR": 2.6162360266279703,
+    "hover_rpm__11x5.5MR": 5415.791721033196,
+    "hover_shaft_w__11x5.5MR": 64.47593612667475,
+    "hover_in_w__11x5.5MR": 86.5797545149035,
+    "hover_i_motor_a__11x5.5MR": 11.614655493239118,
+    "hover_fm__11x5.5MR": 0.7107743395272996,
+    "disk_loading_npm2__11x5.5MR": 111.03157559811794,
+    "hover_torque_nm__11x5.5MR": 0.11368602568504906,
+    "rpm_limit__11x5.5MR": 9545.454545454546,
+    "rpm_limit_margin__11x5.5MR": 0.024250549489955642,
+    "hover_pack_w__11x5.5MR": 346.319018059614,
+    "tmax_n__11x5.5E": 19.1226182319535,
+    "rpm_max__11x5.5E": 9735.262353647155,
+    "i_max_a__11x5.5E": 28.739977222425054,
+    "tw_unlimited__11x5.5E": 2.809041575825276,
+    "tmax_n_sag__11x5.5E": 16.694434919209222,
+    "rpm_max_sag__11x5.5E": 9096.196719180756,
+    "i_max_a_sag__11x5.5E": 25.20486674232803,
+    "tw_unlimited_sag__11x5.5E": 2.452350468128199,
+    "hover_rpm__11x5.5E": 5829.568812466356,
+    "hover_shaft_w__11x5.5E": 65.80851461357658,
+    "hover_in_w__11x5.5E": 86.8165712036678,
+    "hover_i_motor_a__11x5.5E": 11.059870319321448,
+    "hover_fm__11x5.5E": 0.6963816336676155,
+    "disk_loading_npm2__11x5.5E": 111.03157559811794,
+    "hover_torque_nm__11x5.5E": 0.10779957216617611,
+    "rpm_limit__11x5.5E": 13636.363636363636,
+    "rpm_limit_margin__11x5.5E": 0.4007186597549679,
+    "hover_pack_w__11x5.5E": 347.2662848146712,
+    "tmax_n__12x4.5MR": 22.06738949584861,
+    "rpm_max__12x4.5MR": 9086.739227507955,
+    "i_max_a__12x4.5MR": 33.939392552698784,
+    "tw_unlimited__12x4.5MR": 3.241617534370252,
+    "tmax_n_sag__12x4.5MR": 19.36305675594526,
+    "rpm_max_sag__12x4.5MR": 8511.763412673714,
+    "i_max_a_sag__12x4.5MR": 29.890453687338624,
+    "tw_unlimited_sag__12x4.5MR": 2.844361101746383,
+    "hover_rpm__12x4.5MR": 5065.898269446914,
+    "hover_shaft_w__12x4.5MR": 58.733478233459415,
+    "hover_in_w__12x4.5MR": 79.7158913433261,
+    "hover_i_motor_a__12x4.5MR": 11.334502944703754,
+    "hover_fm__12x4.5MR": 0.7152454687916492,
+    "disk_loading_npm2__12x4.5MR": 93.29736560675188,
+    "hover_torque_nm__12x4.5MR": 0.11071351482376936,
+    "rpm_limit__12x4.5MR": 8750.0,
+    "rpm_limit_margin__12x4.5MR": -0.03705831311726837,
+    "hover_pack_w__12x4.5MR": 318.8635653733044,
+    "tmax_n__11x7E": 19.805293901695432,
+    "rpm_max__11x7E": 9238.596616252173,
+    "i_max_a__11x7E": 32.72190376436137,
+    "tw_unlimited__11x7E": 2.9093240955016393,
+    "tmax_n_sag__11x7E": 17.358152644273098,
+    "rpm_max_sag__11x7E": 8649.024170551787,
+    "i_max_a_sag__11x7E": 28.789990712325036,
+    "tw_unlimited_sag__11x7E": 2.5498481361620247,
+    "hover_rpm__11x7E": 5437.538676176606,
+    "hover_shaft_w__11x7E": 68.05608661371154,
+    "hover_in_w__11x7E": 91.750269319298,
+    "hover_i_motor_a__11x7E": 12.164375593445623,
+    "hover_fm__11x7E": 0.6733834282297461,
+    "disk_loading_npm2__11x7E": 111.03157559811794,
+    "hover_torque_nm__11x7E": 0.11951873710270487,
+    "rpm_limit__11x7E": 13636.363636363636,
+    "rpm_limit_margin__11x7E": 0.4760211104330594,
+    "hover_pack_w__11x7E": 367.001077277192,
+    "hover_thrust_per_prop_n": 6.807524102357015
+   },
+   "input_values": {
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.024,
+     1.0
+    ],
+    "tcu": [
+     0.00393,
+     80.0
+    ],
+    "v": 14.8,
+    "v_sag": 13.6,
+    "m": 2.6,
+    "k_dl": 1.06,
+    "g": 9.80665,
+    "rho": 1.225,
+    "cant": 7.0
+   }
+  },
+  {
+   "id": "CALC-B4-CRUISE",
+   "type": "calculation",
+   "title": "Cruise operating point, five props, all four motors running",
+   "script": "redesign/team/B4/props.py",
+   "function": "cruise_points",
+   "equation": "T = m g / (L/D) / 4 ; solve rpm: Ct(J) rho n^2 D^4 = T at V ; eta_p = T V / P_shaft ; P_in = (rpm/Kv + I R) I + P_esc (E1 constants, 25 degC winding) ; total = 4 P_in",
+   "inputs": {
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK",
+    "tcu": "ASM-E1-TCOPPER",
+    "m": "P:requirements.mtow_gate_kg",
+    "ld": "P:performance.ld_cruise",
+    "V": "P:performance.cruise_ms",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3"
+   },
+   "units": {
+    "m": "kg",
+    "V": "m/s",
+    "rho": "kg/m3"
+   },
+   "cites": [
+    "SRC-B4-APC-PER3"
+   ],
+   "outputs": {
+    "thrust_per_prop_n": 1.1262053886925794,
+    "rpm__11x4.5MR": 6935.1553711331635,
+    "J__11x4.5MR": 0.49543722681358626,
+    "eta_prop__11x4.5MR": 0.3721583276682558,
+    "shaft_w__11x4.5MR": 48.4183340246084,
+    "in_w__11x4.5MR": 62.0456737989446,
+    "eta_motor__11x4.5MR": 0.7803659958872426,
+    "eta_total__11x4.5MR": 0.2904197039985692,
+    "pack_w__11x4.5MR": 248.1826951957784,
+    "pack_w_2motor__11x4.5MR": 180.60391031526757,
+    "rpm__11x4.7SF": 6353.55871455884,
+    "J__11x4.7SF": 0.5407889182990161,
+    "eta_prop__11x4.7SF": 0.34850765945350765,
+    "shaft_w__11x4.7SF": 51.70413255001966,
+    "in_w__11x4.7SF": 66.67387168535416,
+    "eta_motor__11x4.7SF": 0.7754781782288067,
+    "eta_total__11x4.7SF": 0.2702600848517914,
+    "pack_w__11x4.7SF": 266.69548674141663,
+    "pack_w_2motor__11x4.7SF": 193.5259213718837,
+    "rpm__11x5.5MR": 5994.054866878658,
+    "J__11x5.5MR": 0.5732236726062518,
+    "eta_prop__11x5.5MR": 0.4626037804105439,
+    "shaft_w__11x5.5MR": 38.9518784370716,
+    "in_w__11x5.5MR": 50.91112806055908,
+    "eta_motor__11x5.5MR": 0.7650955679225594,
+    "eta_total__11x5.5MR": 0.35393610209632803,
+    "pack_w__11x5.5MR": 203.64451224223632,
+    "pack_w_2motor__11x5.5MR": 156.99839966294923,
+    "rpm__11x5.5E": 6075.313836600537,
+    "J__11x5.5E": 0.5655566505710182,
+    "eta_prop__11x5.5E": 0.5076299692878357,
+    "shaft_w__11x5.5E": 35.49689204591465,
+    "in_w__11x5.5E": 46.6235007025042,
+    "eta_motor__11x5.5E": 0.7613519257683726,
+    "eta_total__11x5.5E": 0.3864850546950335,
+    "pack_w__11x5.5E": 186.4940028100168,
+    "pack_w_2motor__11x5.5E": 149.22923299204618,
+    "rpm__12x4.5MR": 6670.031749147211,
+    "J__12x4.5MR": 0.4722025947800456,
+    "eta_prop__12x4.5MR": 0.31214328732524665,
+    "shaft_w__12x4.5MR": 57.7276108465711,
+    "in_w__12x4.5MR": 73.95810581075297,
+    "eta_motor__12x4.5MR": 0.7805447450788813,
+    "eta_total__12x4.5MR": 0.24364180263336865,
+    "pack_w__12x4.5MR": 295.8324232430119,
+    "pack_w_2motor__12x4.5MR": 207.999487899123,
+    "rpm__11x7E": 5081.284219284704,
+    "J__11x7E": 0.6761940478659627,
+    "eta_prop__11x7E": 0.6129351716644649,
+    "shaft_w__11x7E": 29.39835573499354,
+    "in_w__11x7E": 39.4551726474193,
+    "eta_motor__11x7E": 0.7451077707276599,
+    "eta_total__11x7E": 0.4567027593594849,
+    "pack_w__11x7E": 157.8206905896772,
+    "pack_w_2motor__11x7E": 135.17373050981854
+   },
+   "input_values": {
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.024,
+     1.0
+    ],
+    "tcu": [
+     0.00393,
+     80.0
+    ],
+    "m": 2.6,
+    "ld": 5.66,
+    "V": 16.0,
+    "g": 9.80665,
+    "rho": 1.225
+   }
+  },
+  {
+   "id": "CALC-B4-PROP-AB",
+   "type": "calculation",
+   "title": "Prop A/B for the cruise leg: 11x5.5MR, 11x5.5E, 11x7E at 16 and 17 m/s, hover cost, level speed at the fixed-wing throttle cap (CDR-15, CDR-AE-08)",
+   "script": "redesign/team/B4/props.py",
+   "function": "prop_ab",
+   "equation": "CD0 = CL_c / (L/D) - k CL_c^2 at the cruise key, k = 1 / (pi AR e) ; D(V) = q S (CD0 + k CL^2) ; T = D / 4 -> rpm, P_shaft (APC), P_in (E1 motor, 25 degC) ; pack = 4 P_in ; hover as CALC-B4-STATIC ; level speed: 4 T(rpm(duty x 16.8 V, V), V) = D(V), hot winding ; THR_MAX for V_H: duty with V_level = VD / 1.25",
+   "inputs": {
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK",
+    "tcu": "ASM-E1-TCOPPER",
+    "m": "P:requirements.mtow_gate_kg",
+    "ld": "P:performance.ld_cruise",
+    "vc": "P:performance.cruise_ms",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "b": "P:wing.span_m",
+    "c": "P:wing.chord_m",
+    "e": "P:wing.oswald_e",
+    "vd": "P:requirements.vd_ms",
+    "k_dl": "P:propulsion.download_factor",
+    "cant": "P:propulsion.stations.cant_deg",
+    "ocv": "ASM-E1-OCV"
+   },
+   "units": {
+    "m": "kg",
+    "vc": "m/s",
+    "rho": "kg/m3",
+    "b": "m",
+    "c": "m",
+    "vd": "m/s",
+    "cant": "deg"
+   },
+   "assumes": [
+    "ASM-B4-AB-HOVER-MAX"
+   ],
+   "cites": [
+    "SRC-B4-APC-PER3",
+    "SRC-B4-APC-11X7E",
+    "SRC-B4-APC-RPM"
+   ],
+   "outputs": {
+    "cd0": 0.05645206298842175,
+    "k": 0.11071648215088373,
+    "vh_req": 21.759999999999998,
+    "drag_n_16": 4.504821554770318,
+    "pack_w_16__11X55MR": 203.64451224223632,
+    "eta_16__11X55MR": 0.462603780410544,
+    "rpm_16__11X55MR": 5994.054866878658,
+    "J_16__11X55MR": 0.5732236726062518,
+    "drag_n_17": 4.782286379075648,
+    "pack_w_17__11X55MR": 231.05631641031152,
+    "eta_17__11X55MR": 0.4553562973315901,
+    "rpm_17__11X55MR": 6332.047654894412,
+    "J_17__11X55MR": 0.5765402011481957,
+    "drag_n_18": 5.108273187426423,
+    "pack_w_18__11X55MR": 261.56540819108795,
+    "eta_18__11X55MR": 0.4510162439244856,
+    "rpm_18__11X55MR": 6674.816904099036,
+    "J_18__11X55MR": 0.5791059093016067,
+    "hover_pack_w__11X55MR": 346.319018059614,
+    "hover_rpm__11X55MR": 5415.791721033196,
+    "v_level_thr70__11X55MR": 24.805278493375212,
+    "thr_for_vh__11X55MR": 0.6112701912864551,
+    "rpm_level_thr70__11X55MR": 9078.270019647542,
+    "rpm_static_thr70__11X55MR": 7803.461429699268,
+    "rpm_full_fresh__11X55MR": 10278.24074296148,
+    "rpm_limit__11X55MR": 9545.454545454546,
+    "pack_w_16__11X55E": 186.4940028100168,
+    "eta_16__11X55E": 0.5076299692878358,
+    "rpm_16__11X55E": 6075.313836600537,
+    "J_16__11X55E": 0.5655566505710182,
+    "pack_w_17__11X55E": 210.1083411804962,
+    "eta_17__11X55E": 0.502736955727045,
+    "rpm_17__11X55E": 6412.100790523928,
+    "J_17__11X55E": 0.5693422714171794,
+    "pack_w_18__11X55E": 236.5908997504559,
+    "eta_18__11X55E": 0.5000397926245765,
+    "rpm_18__11X55E": 6754.974824976838,
+    "J_18__11X55E": 0.5722339479900669,
+    "hover_pack_w__11X55E": 347.2662848146712,
+    "hover_rpm__11X55E": 5829.568812466356,
+    "v_level_thr70__11X55E": 24.958281306203403,
+    "thr_for_vh__11X55E": 0.6086189625760641,
+    "rpm_level_thr70__11X55E": 9228.863189414376,
+    "rpm_static_thr70__11X55E": 8117.772636003303,
+    "rpm_full_fresh__11X55E": 10763.219684962274,
+    "rpm_limit__11X55E": 13636.363636363636,
+    "pack_w_16__11X7E": 157.8206905896772,
+    "eta_16__11X7E": 0.612935171664465,
+    "rpm_16__11X7E": 5081.284219284704,
+    "J_16__11X7E": 0.6761940478659627,
+    "pack_w_17__11X7E": 177.2719631670198,
+    "eta_17__11X7E": 0.608892353862131,
+    "rpm_17__11X7E": 5358.975978695606,
+    "J_17__11X7E": 0.6812271678667561,
+    "pack_w_18__11X7E": 199.24185634095667,
+    "eta_18__11X7E": 0.6067849142341166,
+    "rpm_18__11X7E": 5642.02620121898,
+    "J_18__11X7E": 0.6851130737100917,
+    "hover_pack_w__11X7E": 367.001077277192,
+    "hover_rpm__11X7E": 5437.538676176606,
+    "v_level_thr70__11X7E": 28.945558931167994,
+    "thr_for_vh__11X7E": 0.51915085874526,
+    "rpm_level_thr70__11X7E": 8888.53817758994,
+    "rpm_static_thr70__11X7E": 7740.733404952833,
+    "rpm_full_fresh__11X7E": 10184.35519379987,
+    "rpm_limit__11X7E": 13636.363636363636,
+    "ratio_16__11X7E_over_MR": 0.7749813086146343,
+    "ratio_16__11X55E_over_MR": 0.9157821183424826,
+    "ratio_17__11X7E_over_MR": 0.7672240513529998,
+    "ratio_17__11X55E_over_MR": 0.90933822734101,
+    "hover_ratio__11X7E_over_MR": 1.0597196750367832,
+    "hover_ratio__11X55E_over_MR": 1.0027352432458507,
+    "mass_delta_g_4props__11X7E": 24.0
+   },
+   "input_values": {
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.024,
+     1.0
+    ],
+    "tcu": [
+     0.00393,
+     80.0
+    ],
+    "m": 2.6,
+    "ld": 5.66,
+    "vc": 16.0,
+    "g": 9.80665,
+    "rho": 1.225,
+    "b": 1.15,
+    "c": 0.32,
+    "e": 0.8,
+    "vd": 27.2,
+    "k_dl": 1.06,
+    "cant": 7.0,
+    "ocv": [
+     16.8,
+     15.2,
+     14.4
+    ]
+   }
+  },
+  {
+   "id": "CALC-B4-DOWNLOAD",
+   "type": "calculation",
+   "title": "Hover download on tube, collars, braces, ESC pads, half-fins, feet and wing",
+   "script": "redesign/team/B4/props.py",
+   "function": "download",
+   "equation": "v_i = sqrt(T / 2 rho A) ; v(s) = v_i (1 + s / sqrt(s^2 + R^2)) ; r_s = R / sqrt(v/v_i) ; wake axis along the canted shaft from the hub (cant, sense k) ; item drag = Cd q A for every tube, collar, ear, brace and ESC element inside r_s and outside the motor-can shadow ; fin: 2 Cf q h_w dx over the wetted strip of the half-fin plane (top edge from the station collar to the TE tip) ; base 0.5 q t h_w (t = board x layers) ; foot q A at half speed ; wing: reach = r_s + mix s, gap = z_c - reach - z_surf ; k = 1 + D/T",
+   "inputs": {
+    "D": "P:propulsion.prop_diameter_m",
+    "x_prop": "P:propulsion.stations.x_prop_plane_m",
+    "x_mount": "P:propulsion.stations.x_mount_m",
+    "y_m": "P:propulsion.stations.y_m",
+    "z_m": "P:propulsion.stations.z_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "k": "ASM-B4-WAKE-SENSE",
+    "stack": "P:fin_detail.mount.prop_stack_m",
+    "d_tube": "P:fins.tube.od_m",
+    "tube_len": "P:fins.tube.length_m",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "fin_te": "P:fins.te_x_m",
+    "h_fin": "P:fins.half_height_m",
+    "c": "P:wing.chord_m",
+    "col_wall": "P:fin_detail.mount.collar_wall_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "m_ear": "P:fin_detail.mount.ear_len_m",
+    "m_ear_h": "P:fin_detail.mount.ear_h_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "sc_ear": "P:fin_detail.station_collar.ear_len_m",
+    "br_t": "P:fin_detail.brace.t_m",
+    "br_y": "P:fin_detail.brace.anchor_y_m",
+    "anc_proud": "P:fin_detail.anchor.proud_m",
+    "spar_x": "P:wing.spar.x_m",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_h": "P:fin_detail.esc_pad.h_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "esc_pad_t": "P:fin_detail.esc_pad.t_m",
+    "esc": "ASM-B4-ESC",
+    "cd": "ASM-B4-CD-TUBE",
+    "cd_s": "ASM-B4-CD-STRIP",
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "foot_h": "P:cg.foot_height_m",
+    "prof": "ASM-B4-PROFILE",
+    "a_foot": "ASM-B4-FOOT",
+    "mix": "ASM-B4-MIX",
+    "board_t": "P:fins.board_t_m",
+    "layers": "P:fins.layers"
+   },
+   "units": {
+    "D": "m",
+    "x_prop": "m",
+    "x_mount": "m",
+    "y_m": "m",
+    "z_m": "m",
+    "cant": "deg",
+    "stack": "m",
+    "d_tube": "m",
+    "tube_len": "m",
+    "d_motor": "m",
+    "fin_te": "m",
+    "h_fin": "m",
+    "c": "m",
+    "col_wall": "m",
+    "grip": "m",
+    "m_ear": "m",
+    "m_ear_h": "m",
+    "sc_h": "m",
+    "sc_gap": "m",
+    "sc_wall": "m",
+    "sc_ear": "m",
+    "br_t": "m",
+    "br_y": "m",
+    "anc_proud": "m",
+    "spar_x": "m",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_h": "m",
+    "esc_z": "m",
+    "esc_pad_t": "m",
+    "m": "kg",
+    "board_t": "m"
+   },
+   "assumes": [
+    "ASM-B4-CD-TUBE",
+    "ASM-B4-PROFILE",
+    "ASM-B4-FOOT",
+    "ASM-B4-MIX",
+    "ASM-B4-CD-STRIP",
+    "ASM-B4-ESC",
+    "ASM-B4-WAKE-SENSE"
+   ],
+   "cites": [
+    "SRC-S5010"
+   ],
+   "outputs": {
+    "k": 1.039550590510363,
+    "wing_gap_min_m": 0.046809630881757436,
+    "tube_n": 0.11831638763331066,
+    "collar_m_n": 0.00400224567047141,
+    "collar_s_n": 0.0038688374814557,
+    "ear_n": 0.019601065878666814,
+    "brace_n": 0.00782655491889911,
+    "esc_n": 0.01389113215787836,
+    "vi_ms": 6.514223148094837,
+    "fin_n": 0.022465188716755454,
+    "fin_base_n": 0.04051001003008613,
+    "foot_n": 0.021626796490970056,
+    "wing_n": 0.0,
+    "wing_gap_min_x_m": 0.015,
+    "fin_wetted_h_mid_m": 0.07875034324514851,
+    "fin_wetted_h_te_m": 0.08780342113789934,
+    "disc_edge_over_chord_plane_m": 0.046391335497023456,
+    "wake_lean_z_per_m": 0.10557688716276409,
+    "wake_lean_y_per_m": -0.06268627675289119,
+    "brace_len_m": 0.13531232846389005,
+    "brace_frac_in_wake": 0.47000000000000053,
+    "esc_outer_edge_over_rs": 0.91728131858235,
+    "items_n": 0.0491898361073714,
+    "tube_x_behind_disc_m": 0.0577,
+    "k_high": 1.0503979278934745,
+    "wing_gap_min_m_high": 0.046809630881757436,
+    "tube_n_high": 0.15381130392330475,
+    "collar_m_n_high": 0.005202919371612836,
+    "collar_s_n_high": 0.0050294887258924125,
+    "ear_n_high": 0.02548138564226686,
+    "brace_n_high": 0.010174521394568843,
+    "esc_n_high": 0.018058471805241866,
+    "k_alt": 1.0568257882368675,
+    "wing_gap_min_m_alt": 0.031227380527792642
+   },
+   "input_values": {
+    "D": 0.2794,
+    "x_prop": -0.0127,
+    "x_mount": 0.045,
+    "y_m": 0.32,
+    "z_m": 0.19,
+    "cant": 7.0,
+    "k": 1,
+    "stack": 0.0373,
+    "d_tube": 0.022,
+    "tube_len": 0.344,
+    "d_motor": 0.038,
+    "fin_te": 0.32,
+    "h_fin": 0.21,
+    "c": 0.32,
+    "col_wall": 0.002,
+    "grip": 0.018,
+    "m_ear": 0.009,
+    "m_ear_h": 0.012,
+    "sc_h": 0.022,
+    "sc_gap": 0.0005,
+    "sc_wall": 0.0016,
+    "sc_ear": 0.01,
+    "br_t": 0.002,
+    "br_y": 0.242,
+    "anc_proud": 0.008,
+    "spar_x": 0.08,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_h": 0.031,
+    "esc_z": 0.118,
+    "esc_pad_t": 0.0012,
+    "esc": [
+     0.0068,
+     0.9
+    ],
+    "cd": 1.1,
+    "cd_s": 1.2,
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "foot_h": 0.048,
+    "prof": 1.3,
+    "a_foot": 0.0009,
+    "mix": 0.08,
+    "board_t": 0.0048,
+    "layers": 2
+   }
+  },
+  {
+   "id": "CALC-B4-ITEMS-CRUISE",
+   "type": "calculation",
+   "title": "Cruise drag of the R3 fin hardware (collars, ears, braces, ESC pads)",
+   "script": "redesign/team/B4/props.py",
+   "function": "items_cruise",
+   "equation": "T = m g / (L/D) / 4 ; v from T = 2 rho A v (V + v) ; inside the slipstream (r < R about the x-parallel cruise wake) u = V + v (1 + s / sqrt(s^2 + R^2)), else V ; D = sum Cd 0.5 rho u^2 A x 4 stations ; dCD0 = D / (q S), S = b c ; share = D / (m g / (L/D)) ; dP = P_cruise x share",
+   "inputs": {
+    "D": "P:propulsion.prop_diameter_m",
+    "x_prop": "P:propulsion.stations.x_prop_plane_m",
+    "x_mount": "P:propulsion.stations.x_mount_m",
+    "y_m": "P:propulsion.stations.y_m",
+    "z_m": "P:propulsion.stations.z_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "k": "ASM-B4-WAKE-SENSE",
+    "stack": "P:fin_detail.mount.prop_stack_m",
+    "d_tube": "P:fins.tube.od_m",
+    "tube_len": "P:fins.tube.length_m",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "fin_te": "P:fins.te_x_m",
+    "h_fin": "P:fins.half_height_m",
+    "c": "P:wing.chord_m",
+    "col_wall": "P:fin_detail.mount.collar_wall_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "m_ear": "P:fin_detail.mount.ear_len_m",
+    "m_ear_h": "P:fin_detail.mount.ear_h_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "sc_ear": "P:fin_detail.station_collar.ear_len_m",
+    "br_t": "P:fin_detail.brace.t_m",
+    "br_y": "P:fin_detail.brace.anchor_y_m",
+    "anc_proud": "P:fin_detail.anchor.proud_m",
+    "spar_x": "P:wing.spar.x_m",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_h": "P:fin_detail.esc_pad.h_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "esc_pad_t": "P:fin_detail.esc_pad.t_m",
+    "esc": "ASM-B4-ESC",
+    "cd": "ASM-B4-CD-TUBE",
+    "cd_s": "ASM-B4-CD-STRIP",
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "ld": "P:performance.ld_cruise",
+    "V": "P:performance.cruise_ms",
+    "b": "P:wing.span_m",
+    "Pc": "CL-B4-CRUISE-W"
+   },
+   "units": {
+    "D": "m",
+    "x_prop": "m",
+    "x_mount": "m",
+    "y_m": "m",
+    "z_m": "m",
+    "cant": "deg",
+    "stack": "m",
+    "d_tube": "m",
+    "tube_len": "m",
+    "d_motor": "m",
+    "fin_te": "m",
+    "h_fin": "m",
+    "c": "m",
+    "col_wall": "m",
+    "grip": "m",
+    "m_ear": "m",
+    "m_ear_h": "m",
+    "sc_h": "m",
+    "sc_gap": "m",
+    "sc_wall": "m",
+    "sc_ear": "m",
+    "br_t": "m",
+    "br_y": "m",
+    "anc_proud": "m",
+    "spar_x": "m",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_h": "m",
+    "esc_z": "m",
+    "esc_pad_t": "m",
+    "m": "kg",
+    "V": "m/s",
+    "b": "m",
+    "Pc": "W"
+   },
+   "assumes": [
+    "ASM-B4-CD-TUBE",
+    "ASM-B4-CD-STRIP",
+    "ASM-B4-ESC"
+   ],
+   "outputs": {
+    "tube_n": 2.463228664948035,
+    "collar_m_n": 0.05445098273980224,
+    "collar_s_n": 0.0526359499818089,
+    "ear_n": 0.26667460913645025,
+    "brace_n": 0.20833200333976343,
+    "esc_n": 0.15257602591084193,
+    "items_n": 0.7346695711086667,
+    "items_dcd0": 0.012732045306757893,
+    "items_share_of_cruise_drag": 0.1630851660107821,
+    "items_pack_w": 33.21139908620986,
+    "cruise_drag_n": 4.504821554770317,
+    "v_induced_ms": 0.45561163137425353,
+    "brace_n_each": 0.05208300083494086,
+    "brace_dcd0": 0.0036104564687043073,
+    "not_in_b1_n": 0.4737016177870944,
+    "not_in_b1_dcd0": 0.00820939194534533
+   },
+   "input_values": {
+    "D": 0.2794,
+    "x_prop": -0.0127,
+    "x_mount": 0.045,
+    "y_m": 0.32,
+    "z_m": 0.19,
+    "cant": 7.0,
+    "k": 1,
+    "stack": 0.0373,
+    "d_tube": 0.022,
+    "tube_len": 0.344,
+    "d_motor": 0.038,
+    "fin_te": 0.32,
+    "h_fin": 0.21,
+    "c": 0.32,
+    "col_wall": 0.002,
+    "grip": 0.018,
+    "m_ear": 0.009,
+    "m_ear_h": 0.012,
+    "sc_h": 0.022,
+    "sc_gap": 0.0005,
+    "sc_wall": 0.0016,
+    "sc_ear": 0.01,
+    "br_t": 0.002,
+    "br_y": 0.242,
+    "anc_proud": 0.008,
+    "spar_x": 0.08,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_h": 0.031,
+    "esc_z": 0.118,
+    "esc_pad_t": 0.0012,
+    "esc": [
+     0.0068,
+     0.9
+    ],
+    "cd": 1.1,
+    "cd_s": 1.2,
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "ld": 5.66,
+    "V": 16.0,
+    "b": 1.15,
+    "Pc": 203.64451224223632
+   }
+  },
+  {
+   "id": "CALC-B4-WAKE",
+   "type": "calculation",
+   "title": "Slipstream edge versus elevons and wing (canted, leaning hover wake)",
+   "script": "redesign/team/B4/props.py",
+   "function": "wake_vs_surfaces",
+   "equation": "hover: inner edge z = z_c(x) - r_s(s) - mix s, wake centre z_c from the hub along the canted shaft ; elevon tip z = c_e sin(delta_max) ; cruise: wake along x, r_s ~ R (lightly loaded) ; gap = edge - surface ; _alt = mirrored spin map (wake leans toward the wing)",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "x_prop": "P:propulsion.stations.x_prop_plane_m",
+    "y_m": "P:propulsion.stations.y_m",
+    "z_m": "P:propulsion.stations.z_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "k": "ASM-B4-WAKE-SENSE",
+    "stack": "P:fin_detail.mount.prop_stack_m",
+    "c": "P:wing.chord_m",
+    "tc": "P:wing.t_c",
+    "fe": "P:wing.elevon.chord_frac",
+    "defl": "P:wing.elevon.deflection_deg",
+    "mix": "ASM-B4-MIX"
+   },
+   "units": {
+    "m": "kg",
+    "D": "m",
+    "x_prop": "m",
+    "y_m": "m",
+    "z_m": "m",
+    "cant": "deg",
+    "stack": "m",
+    "c": "m"
+   },
+   "assumes": [
+    "ASM-B4-MIX",
+    "ASM-B4-WAKE-SENSE"
+   ],
+   "outputs": {
+    "hover_edge_z_hinge_m": 0.09086611001767754,
+    "hover_edge_z_te_m": 0.09366091223994273,
+    "hover_gap_elevon_m": 0.0611137843911323,
+    "hover_edge_z_hinge_m_alt": 0.043297804018044575,
+    "hover_edge_z_te_m_alt": 0.031227380527792628,
+    "hover_gap_elevon_m_alt": 0.0014750549012473857,
+    "cruise_edge_z_hinge_m": 0.02931600000000001,
+    "cruise_edge_z_te_m": 0.02368400000000001,
+    "elevon_tip_z_max_m": 0.029752325626545242,
+    "cruise_gap_elevon_m": -0.006068325626545232,
+    "cruise_gap_wing_surface_m": 0.02589200000000001
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "x_prop": -0.0127,
+    "y_m": 0.32,
+    "z_m": 0.19,
+    "cant": 7.0,
+    "k": 1,
+    "stack": 0.0373,
+    "c": 0.32,
+    "tc": 0.0982,
+    "fe": 0.22,
+    "defl": [
+     -25,
+     25
+    ],
+    "mix": 0.08
+   }
+  },
+  {
+   "id": "CALC-B4-PITOT-TIP",
+   "type": "calculation",
+   "title": "Pitot tip x station from the pod nose and the boom",
+   "script": "redesign/team/B4/props.py",
+   "function": "pitot_tip",
+   "equation": "x_tip = pod.x_le_m - boom",
+   "inputs": {
+    "pod_x": "P:pod.x_le_m",
+    "boom": "ASM-B4-BOOM"
+   },
+   "units": {
+    "pod_x": "m"
+   },
+   "assumes": [
+    "ASM-B4-BOOM"
+   ],
+   "outputs": {
+    "tip_x_m": -0.22000000000000003
+   },
+   "input_values": {
+    "pod_x": -0.14,
+    "boom": [
+     0.08,
+     0.045
+    ]
+   }
+  },
+  {
+   "id": "CALC-B4-PITOT",
+   "type": "calculation",
+   "title": "Prop-induced airspeed error at pitot candidates",
+   "script": "redesign/team/B4/props.py",
+   "function": "pitot",
+   "equation": "v from T = 2 rho A v (V + v) ; four semi-infinite vortex cylinders, gamma = 2 v, each from its canted hub along the resultant of V (+x) and v (canted shaft) ; u = u_axial e + u_radial r_hat (elliptic K, E) ; error = u_x / V ; grid: Simpson N = 100/200/400, wake length 20/40/80 R",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "D": "P:propulsion.prop_diameter_m",
+    "x_prop": "P:propulsion.stations.x_prop_plane_m",
+    "y_m": "P:propulsion.stations.y_m",
+    "z_m": "P:propulsion.stations.z_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "k": "ASM-B4-WAKE-SENSE",
+    "stack": "P:fin_detail.mount.prop_stack_m",
+    "ld": "P:performance.ld_cruise",
+    "V": "P:performance.cruise_ms",
+    "Vt": "P:performance.transition_min_ms",
+    "lim": "ASM-B4-PITOT-ERR",
+    "pod_x": "P:pod.x_le_m",
+    "tip": "P:avionics.pitot_tip_xyz_m",
+    "tip_x": "CL-B4-PITOT-TIP-X"
+   },
+   "units": {
+    "m": "kg",
+    "D": "m",
+    "x_prop": "m",
+    "y_m": "m",
+    "z_m": "m",
+    "cant": "deg",
+    "stack": "m",
+    "V": "m/s",
+    "Vt": "m/s",
+    "pod_x": "m",
+    "tip": "m",
+    "tip_x": "m"
+   },
+   "assumes": [
+    "ASM-B4-PITOT-ERR",
+    "ASM-B4-WAKE-SENSE"
+   ],
+   "outputs": {
+    "tip_x_m": -0.22,
+    "tip_y_m": -0.046,
+    "tip_z_m": 0.045,
+    "tip_ahead_of_disc_m": 0.2073,
+    "tip_x_params_minus_boom_calc_m": 2.7755575615628914e-17,
+    "selftest_centre_over_half_gamma": 0.9999213734120524,
+    "selftest_ring_divergence": 2.911906937796971e-09,
+    "cruise__pod_boom__u_ms": 0.05271431246195195,
+    "cruise__pod_boom__conv": 2.4307637348633393e-05,
+    "cruise__pod_boom__err": 0.0032946445288719968,
+    "cruise__pod_face__u_ms": 0.04440855324297761,
+    "cruise__pod_face__conv": 2.510641669397143e-05,
+    "cruise__pod_face__err": 0.0027755345776861004,
+    "cruise__pod_boom_long__u_ms": 0.050391312003335124,
+    "cruise__pod_boom_long__conv": 2.3357420187622435e-05,
+    "cruise__pod_boom_long__err": 0.0031494570002084453,
+    "cruise__pod_boom_y0__u_ms": 0.051037775908908484,
+    "cruise__pod_boom_y0__conv": 2.431047431106833e-05,
+    "cruise__pod_boom_y0__err": 0.0031898609943067802,
+    "cruise__wing_LE_y0.15__u_ms": 0.05363152464578213,
+    "cruise__wing_LE_y0.15__conv": 2.562121557472992e-05,
+    "cruise__wing_LE_y0.15__err": 0.003351970290361383,
+    "cruise__wing_LE_y0.53__u_ms": 0.03657343728790493,
+    "cruise__wing_LE_y0.53__conv": 2.5244947706566656e-05,
+    "cruise__wing_LE_y0.53__err": 0.002285839830494058,
+    "transition__pod_boom__u_ms": 0.273336753991665,
+    "transition__pod_boom__conv": 0.00012926268881268744,
+    "transition__pod_boom__err": 0.0175215867943375,
+    "transition__pod_face__u_ms": 0.23026231245801243,
+    "transition__pod_face__conv": 0.00013350955569503981,
+    "transition__pod_face__err": 0.014760404644744388,
+    "transition__pod_boom_long__u_ms": 0.26129335843211826,
+    "transition__pod_boom_long__conv": 0.00012421059713371352,
+    "transition__pod_boom_long__err": 0.01674957425846912,
+    "transition__pod_boom_y0__u_ms": 0.2646513384036565,
+    "transition__pod_boom_y0__conv": 0.00012927782568194192,
+    "transition__pod_boom_y0__err": 0.016964829384849778,
+    "transition__wing_LE_y0.15__u_ms": 0.27829303648296827,
+    "transition__wing_LE_y0.15__conv": 0.0001362458936572201,
+    "transition__wing_LE_y0.15__err": 0.017839297210446685,
+    "transition__wing_LE_y0.53__u_ms": 0.19033901179031124,
+    "transition__wing_LE_y0.53__conv": 0.0001342381483015735,
+    "transition__wing_LE_y0.53__err": 0.012201218704507131,
+    "hover__pod_boom__u_ms": 0.7535434884773058,
+    "hover__pod_boom__conv": 0.007335688063242138,
+    "hover__pod_face__u_ms": 0.6342770695792691,
+    "hover__pod_face__conv": 0.008997473491818645,
+    "hover__pod_boom_long__u_ms": 0.7206713140469536,
+    "hover__pod_boom_long__conv": 0.007374307636353148,
+    "hover__pod_boom_y0__u_ms": 0.7297492728146402,
+    "hover__pod_boom_y0__conv": 0.007575774142729094,
+    "hover__wing_LE_y0.15__u_ms": 0.7701082199751077,
+    "hover__wing_LE_y0.15__conv": 0.007559961953613253,
+    "hover__wing_LE_y0.53__u_ms": 0.5356469131431906,
+    "hover__wing_LE_y0.53__conv": 0.010706827716859888,
+    "worst_err__pod_boom": 0.0175215867943375,
+    "worst_err__pod_face": 0.014760404644744388,
+    "worst_err__pod_boom_long": 0.01674957425846912,
+    "worst_err__pod_boom_y0": 0.016964829384849778,
+    "worst_err__wing_LE_y0.15": 0.017839297210446685,
+    "worst_err__wing_LE_y0.53": 0.012201218704507131,
+    "best_candidate": 5,
+    "best_worst_err": 0.012201218704507131,
+    "max_conv": 0.0001362458936572201,
+    "pitot_margin": 0.12392066028312498
+   },
+   "input_values": {
+    "m": 2.6,
+    "g": 9.80665,
+    "rho": 1.225,
+    "D": 0.2794,
+    "x_prop": -0.0127,
+    "y_m": 0.32,
+    "z_m": 0.19,
+    "cant": 7.0,
+    "k": 1,
+    "stack": 0.0373,
+    "ld": 5.66,
+    "V": 16.0,
+    "Vt": 15.6,
+    "lim": 0.02,
+    "pod_x": -0.14,
+    "tip": [
+     -0.22,
+     -0.046,
+     0.045
+    ],
+    "tip_x": -0.22000000000000003
+   }
+  },
+  {
+   "id": "CALC-B4-SWIRL",
+   "type": "calculation",
+   "title": "Fin side force from swirl and cant, and hover yaw authority",
+   "script": "redesign/team/B4/props.py",
+   "function": "swirl",
+   "equation": "Gamma_s = Q / (rho v_i pi (R^2 - r_h^2)) ; v_t = Gamma_s / r ; v_n = v_t (normal part) + v_a e_y/e_x (canted wake lean) ; alpha = atan(v_n / v_a) ; dF = a(AR) alpha q dA (Helmbold, AR = 2 h_w / c) ; M_body = sum z dF (about the body x-axis) ; yaw factor = 1 + M_body / Q ; yaw per N of differential thrust = (Q/T) factor + r_arm sin(cant) ; half-fin root moment = F (z_cp - z_root)",
+   "inputs": {
+    "D": "P:propulsion.prop_diameter_m",
+    "x_prop": "P:propulsion.stations.x_prop_plane_m",
+    "x_mount": "P:propulsion.stations.x_mount_m",
+    "y_m": "P:propulsion.stations.y_m",
+    "z_m": "P:propulsion.stations.z_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "k": "ASM-B4-WAKE-SENSE",
+    "stack": "P:fin_detail.mount.prop_stack_m",
+    "d_tube": "P:fins.tube.od_m",
+    "tube_len": "P:fins.tube.length_m",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "fin_te": "P:fins.te_x_m",
+    "h_fin": "P:fins.half_height_m",
+    "c": "P:wing.chord_m",
+    "col_wall": "P:fin_detail.mount.collar_wall_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "m_ear": "P:fin_detail.mount.ear_len_m",
+    "m_ear_h": "P:fin_detail.mount.ear_h_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "sc_ear": "P:fin_detail.station_collar.ear_len_m",
+    "br_t": "P:fin_detail.brace.t_m",
+    "br_y": "P:fin_detail.brace.anchor_y_m",
+    "anc_proud": "P:fin_detail.anchor.proud_m",
+    "spar_x": "P:wing.spar.x_m",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_h": "P:fin_detail.esc_pad.h_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "esc_pad_t": "P:fin_detail.esc_pad.t_m",
+    "esc": "ASM-B4-ESC",
+    "cd": "ASM-B4-CD-TUBE",
+    "cd_s": "ASM-B4-CD-STRIP",
+    "Th": "CL-B4-HOVER-T",
+    "Q": "CL-B4-HOVER-Q",
+    "rho": "P:env.rho_kgm3",
+    "ar_k": "ASM-B4-SPAN-AR"
+   },
+   "units": {
+    "D": "m",
+    "x_prop": "m",
+    "x_mount": "m",
+    "y_m": "m",
+    "z_m": "m",
+    "cant": "deg",
+    "stack": "m",
+    "d_tube": "m",
+    "tube_len": "m",
+    "d_motor": "m",
+    "fin_te": "m",
+    "h_fin": "m",
+    "c": "m",
+    "col_wall": "m",
+    "grip": "m",
+    "m_ear": "m",
+    "m_ear_h": "m",
+    "sc_h": "m",
+    "sc_gap": "m",
+    "sc_wall": "m",
+    "sc_ear": "m",
+    "br_t": "m",
+    "br_y": "m",
+    "anc_proud": "m",
+    "spar_x": "m",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_h": "m",
+    "esc_z": "m",
+    "esc_pad_t": "m",
+    "rho": "kg/m3"
+   },
+   "assumes": [
+    "ASM-B4-SPAN-AR",
+    "ASM-B4-WAKE-SENSE"
+   ],
+   "outputs": {
+    "fin_side_force_n": 0.4871446634755346,
+    "half_fin_cp_z_m": 0.15640195607633248,
+    "half_fin_cp_above_root_m": 0.1433547152627283,
+    "half_fin_root_moment_nm": 0.06983448452429286,
+    "half_fin_chord_m": 0.264,
+    "half_fin_wetted_span_m": 0.07993801095809369,
+    "half_fin_aspect_ratio": 0.6055909921067704,
+    "torque_nm": 0.11368602568504906,
+    "fin_body_moment_nm": 0.07619037825972033,
+    "f_axis_recovery": 0.14396763104353735,
+    "yaw_authority_factor_mid": 1.670182441514799,
+    "yaw_authority_factor_low": 1.3350912207573995,
+    "yaw_factor_nocant": 2.6235559818960024,
+    "yaw_factor_cant3": 2.3693212326580353,
+    "fin_side_force_nocant_n": 1.2478647747414082,
+    "yaw_arm_m": 0.3721558813185679,
+    "kq_iso_m": 0.01670005481812202,
+    "k_yaw_m": 0.07324653123021987,
+    "k_yaw_low_m": 0.06765048947449988,
+    "k_yaw_cant3_m": 0.059044928387372395,
+    "k_yaw_nocant_m": 0.04381352871607518,
+    "k_yaw_r2_model_m": 0.053363739191429185,
+    "yaw_with_cant_over_isolated": 4.38600543698435,
+    "yaw_with_cant_low_over_isolated": 4.050914216226951,
+    "cant_thrust_loss": 0.007453848358678017
+   },
+   "input_values": {
+    "D": 0.2794,
+    "x_prop": -0.0127,
+    "x_mount": 0.045,
+    "y_m": 0.32,
+    "z_m": 0.19,
+    "cant": 7.0,
+    "k": 1,
+    "stack": 0.0373,
+    "d_tube": 0.022,
+    "tube_len": 0.344,
+    "d_motor": 0.038,
+    "fin_te": 0.32,
+    "h_fin": 0.21,
+    "c": 0.32,
+    "col_wall": 0.002,
+    "grip": 0.018,
+    "m_ear": 0.009,
+    "m_ear_h": 0.012,
+    "sc_h": 0.022,
+    "sc_gap": 0.0005,
+    "sc_wall": 0.0016,
+    "sc_ear": 0.01,
+    "br_t": 0.002,
+    "br_y": 0.242,
+    "anc_proud": 0.008,
+    "spar_x": 0.08,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_h": 0.031,
+    "esc_z": 0.118,
+    "esc_pad_t": 0.0012,
+    "esc": [
+     0.0068,
+     0.9
+    ],
+    "cd": 1.1,
+    "cd_s": 1.2,
+    "Th": 6.807524102357015,
+    "Q": 0.11368602568504906,
+    "rho": 1.225,
+    "ar_k": 2.0
+   }
+  },
+  {
+   "id": "CALC-B4-GEOM",
+   "type": "calculation",
+   "title": "Prop spacing and blade-to-tube gap with the canted discs, descent limit, ground effect and tones",
+   "script": "redesign/team/B4/props.py",
+   "function": "geometry",
+   "equation": "hub moved stack sin(cant) along the thrust side ; disc plane normal n = canted shaft ; blade x over a point (y, z) = x_hub + (n_y dy + n_z dz) / (-n_x) ; gap = x_face - x_blade over the tube and collars inside R ; gap_v = 2 (z_hub - R sqrt(1 - n_z^2)) ; v_h = sqrt(k m g / (8 rho A)) ; V_d,max = 0.28 v_h ; T_IGE/T = 1 / (1 - (R / 4 h)^2) ; M_tip = pi D n / a ; BPF = 2 n",
+   "inputs": {
+    "D": "P:propulsion.prop_diameter_m",
+    "x_prop": "P:propulsion.stations.x_prop_plane_m",
+    "x_mount": "P:propulsion.stations.x_mount_m",
+    "y_m": "P:propulsion.stations.y_m",
+    "z_m": "P:propulsion.stations.z_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "k": "ASM-B4-WAKE-SENSE",
+    "stack": "P:fin_detail.mount.prop_stack_m",
+    "d_tube": "P:fins.tube.od_m",
+    "tube_len": "P:fins.tube.length_m",
+    "d_motor": "P:propulsion.motor_diameter_m",
+    "fin_te": "P:fins.te_x_m",
+    "h_fin": "P:fins.half_height_m",
+    "c": "P:wing.chord_m",
+    "col_wall": "P:fin_detail.mount.collar_wall_m",
+    "grip": "P:fin_detail.mount.grip_m",
+    "m_ear": "P:fin_detail.mount.ear_len_m",
+    "m_ear_h": "P:fin_detail.mount.ear_h_m",
+    "sc_h": "P:fin_detail.station_collar.height_m",
+    "sc_gap": "P:fin_detail.station_collar.gap_m",
+    "sc_wall": "P:fin_detail.station_collar.ring_wall_m",
+    "sc_ear": "P:fin_detail.station_collar.ear_len_m",
+    "br_t": "P:fin_detail.brace.t_m",
+    "br_y": "P:fin_detail.brace.anchor_y_m",
+    "anc_proud": "P:fin_detail.anchor.proud_m",
+    "spar_x": "P:wing.spar.x_m",
+    "esc_x0": "P:fin_detail.esc_pad.x0_m",
+    "esc_len": "P:fin_detail.esc_pad.len_m",
+    "esc_h": "P:fin_detail.esc_pad.h_m",
+    "esc_z": "P:fin_detail.esc_pad.z_m",
+    "esc_pad_t": "P:fin_detail.esc_pad.t_m",
+    "esc": "ASM-B4-ESC",
+    "cd": "ASM-B4-CD-TUBE",
+    "cd_s": "ASM-B4-CD-STRIP",
+    "foot_h": "P:cg.foot_height_m",
+    "m": "P:requirements.mtow_gate_kg",
+    "kdl": "P:propulsion.download_factor",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "vrs": "ASM-B4-VRS",
+    "rpm_h": "CL-B4-HOVER-RPM",
+    "rpm_max": "CL-B4-RPM-MAX"
+   },
+   "units": {
+    "D": "m",
+    "x_prop": "m",
+    "x_mount": "m",
+    "y_m": "m",
+    "z_m": "m",
+    "cant": "deg",
+    "stack": "m",
+    "d_tube": "m",
+    "tube_len": "m",
+    "d_motor": "m",
+    "fin_te": "m",
+    "h_fin": "m",
+    "c": "m",
+    "col_wall": "m",
+    "grip": "m",
+    "m_ear": "m",
+    "m_ear_h": "m",
+    "sc_h": "m",
+    "sc_gap": "m",
+    "sc_wall": "m",
+    "sc_ear": "m",
+    "br_t": "m",
+    "br_y": "m",
+    "anc_proud": "m",
+    "spar_x": "m",
+    "esc_x0": "m",
+    "esc_len": "m",
+    "esc_h": "m",
+    "esc_z": "m",
+    "esc_pad_t": "m",
+    "m": "kg"
+   },
+   "assumes": [
+    "ASM-B4-VRS",
+    "ASM-B4-WAKE-SENSE"
+   ],
+   "outputs": {
+    "gap_tube_face_m": 0.03210786172553709,
+    "gap_collar_face_m": 0.039534685577953414,
+    "gap_tube_over_D": 0.11491718584658946,
+    "gap_vertical_m": 0.09432094149195203,
+    "gap_tube_face_m_alt": 0.05105891297125324,
+    "gap_collar_face_m_alt": 0.04715852900232349,
+    "gap_tube_over_D_alt": 0.16878500000831603,
+    "gap_vertical_m_alt": 0.10995559950385825,
+    "gap_vertical_over_D": 0.33758389939853983,
+    "gap_lateral_m": 0.36060000000000003,
+    "gap_tube_face_uncanted_m": 0.044700000000000004,
+    "vh_ms": 6.706803218864043,
+    "descent_max_ms": 1.8779049012819322,
+    "prop_height_m": 0.3807,
+    "ige_gain": 0.008487456802660276,
+    "tip_mach_hover": 0.23098982938178741,
+    "tip_mach_max": 0.397485519977175,
+    "bpf_hover_hz": 180.52639070110655,
+    "one_p_hover_hz": 90.26319535055327,
+    "bpf_max_hz": 310.64842322053204
+   },
+   "input_values": {
+    "D": 0.2794,
+    "x_prop": -0.0127,
+    "x_mount": 0.045,
+    "y_m": 0.32,
+    "z_m": 0.19,
+    "cant": 7.0,
+    "k": 1,
+    "stack": 0.0373,
+    "d_tube": 0.022,
+    "tube_len": 0.344,
+    "d_motor": 0.038,
+    "fin_te": 0.32,
+    "h_fin": 0.21,
+    "c": 0.32,
+    "col_wall": 0.002,
+    "grip": 0.018,
+    "m_ear": 0.009,
+    "m_ear_h": 0.012,
+    "sc_h": 0.022,
+    "sc_gap": 0.0005,
+    "sc_wall": 0.0016,
+    "sc_ear": 0.01,
+    "br_t": 0.002,
+    "br_y": 0.242,
+    "anc_proud": 0.008,
+    "spar_x": 0.08,
+    "esc_x0": 0.078,
+    "esc_len": 0.046,
+    "esc_h": 0.031,
+    "esc_z": 0.118,
+    "esc_pad_t": 0.0012,
+    "esc": [
+     0.0068,
+     0.9
+    ],
+    "cd": 1.1,
+    "cd_s": 1.2,
+    "foot_h": 0.048,
+    "m": 2.6,
+    "kdl": 1.06,
+    "g": 9.80665,
+    "rho": 1.225,
+    "vrs": 0.28,
+    "rpm_h": 5415.791721033196,
+    "rpm_max": 9319.452696615961
+   }
+  },
+  {
+   "id": "CALC-B4-TIP-WING",
+   "type": "calculation",
+   "title": "Exact blade-tip clearance to the wing skin and to the tube, canted disc, blade envelope (R4)",
+   "script": "redesign/team/B4/props.py",
+   "function": "tip_wing",
+   "equation": "hub = (x_prop, y + s sin(cant) t_y, z + s sin(cant) t_z) ; n = (-cos, sin t_y, sin t_z) ; for every S5010 surface point p (x 0..c, |y - y_m| <= R + 30 mm): t = -(p - hub).n (+ aft), rr = |(p - hub) - (-t) n| ; dt = max(0, -fwd - t, t - aft) ; gap = dt if rr <= R else hypot(dt, rr - R) ; min over the surface ; upper stations see the upper surface, lower stations the lower (mirror) ; same for the tube surface (z 0..L/2) ; keep-out cylinder test = rr - R for points with -(10 mm + clr) <= t <= 10 mm + clr",
+   "inputs": {
+    "D": "P:propulsion.prop_diameter_m",
+    "x_prop": "P:propulsion.stations.x_prop_plane_m",
+    "y_m": "P:propulsion.stations.y_m",
+    "z_m": "P:propulsion.stations.z_m",
+    "cant": "P:propulsion.stations.cant_deg",
+    "k": "ASM-B4-WAKE-SENSE",
+    "stack": "P:fin_detail.mount.prop_stack_m",
+    "c": "P:wing.chord_m",
+    "b": "P:wing.span_m",
+    "env": "ASM-E1-BLADE-ENV",
+    "clr": "P:requirements.prop_clearance_min_m",
+    "x_tube": "P:fins.tube.x_m",
+    "d_tube": "P:fins.tube.od_m",
+    "tube_len": "P:fins.tube.length_m",
+    "y_fin": "P:fins.y_m"
+   },
+   "units": {
+    "D": "m",
+    "x_prop": "m",
+    "y_m": "m",
+    "z_m": "m",
+    "cant": "deg",
+    "stack": "m",
+    "c": "m",
+    "b": "m",
+    "env": "m",
+    "clr": "m",
+    "x_tube": "m",
+    "d_tube": "m",
+    "tube_len": "m",
+    "y_fin": "m"
+   },
+   "assumes": [
+    "ASM-B4-WAKE-SENSE",
+    "ASM-E1-BLADE-ENV"
+   ],
+   "outputs": {
+    "wing_upper_gap_env_m": 0.035803676705295336,
+    "wing_upper_gap_sym_m": 0.03489442944122881,
+    "wing_upper_gap_midplane_m": 0.03722257431451602,
+    "wing_upper_ko_radial_gap_m": 0.031950728580867865,
+    "wing_upper_closest_xyz_m": [
+     0.02,
+     0.3243,
+     0.0141
+    ],
+    "wing_upper_closest_axial_m": 0.014307101619702386,
+    "wing_upper_closest_radial_m": 0.17452664681385857,
+    "wing_upper_ko_point_xyz_m": [
+     0.04,
+     0.3203,
+     0.0191
+    ],
+    "wing_upper_ko_point_axial_m": 0.034928722666362114,
+    "wing_upper_ko_point_radial_m": 0.17165072858086786,
+    "wing_lower_gap_env_m": 0.04282754198219888,
+    "wing_lower_gap_sym_m": 0.04267705723725361,
+    "wing_lower_gap_midplane_m": 0.04315295236055416,
+    "wing_lower_ko_radial_gap_m": 0.04266405614725999,
+    "wing_lower_closest_xyz_m": [
+     0.0148,
+     0.3223,
+     0.0055
+    ],
+    "wing_lower_closest_axial_m": 0.008323740487632236,
+    "wing_lower_closest_radial_m": 0.1824644546601865,
+    "wing_lower_ko_point_xyz_m": [
+     0.0245,
+     0.3213,
+     0.0066
+    ],
+    "wing_lower_ko_point_axial_m": 0.018181663718240162,
+    "wing_lower_ko_point_radial_m": 0.18236405614725998,
+    "tube_gap_env_m": 0.02612927090078596,
+    "tube_gap_sym_m": 0.022151495158796265,
+    "hub_xyz_m": [
+     -0.0127,
+     0.32232,
+     0.18609
+    ],
+    "tube_gap_env_fix5_m": 0.031119610478831973,
+    "wing_upper_gap_env_fix5_m": 0.03747375501048943,
+    "wing_upper_gap_env_m_alt": 0.05421177833697054,
+    "wing_upper_gap_sym_m_alt": 0.051756056618765124,
+    "wing_upper_gap_midplane_m_alt": 0.057939704659009564,
+    "wing_upper_ko_radial_gap_m_alt": 0.04681849997177076,
+    "wing_lower_gap_env_m_alt": 0.05694235079110493,
+    "wing_lower_gap_sym_m_alt": 0.05501408716428971,
+    "wing_lower_gap_midplane_m_alt": 0.060107106142707714,
+    "wing_lower_ko_radial_gap_m_alt": 0.04904962095528562,
+    "tube_gap_env_m_alt": 0.042825041759995956,
+    "tube_gap_sym_m_alt": 0.03882504175999595,
+    "hub_xyz_m_alt": [
+     -0.0127,
+     0.31768,
+     0.19391
+    ],
+    "wing_gap_env_min_m": 0.035803676705295336,
+    "wing_ko_radial_min_m": 0.031950728580867865
+   },
+   "input_values": {
+    "D": 0.2794,
+    "x_prop": -0.0127,
+    "y_m": 0.32,
+    "z_m": 0.19,
+    "cant": 7.0,
+    "k": 1,
+    "stack": 0.0373,
+    "c": 0.32,
+    "b": 1.15,
+    "env": [
+     0.01,
+     0.006
+    ],
+    "clr": 0.025,
+    "x_tube": 0.045,
+    "d_tube": 0.022,
+    "tube_len": 0.344,
+    "y_fin": 0.32
+   }
+  },
+  {
+   "id": "CALC-B4-XCHECK",
+   "type": "calculation",
+   "title": "UIUC-measured cross-check of the APC predictions",
+   "script": "redesign/team/B4/props.py",
+   "function": "uiuc_xcheck",
+   "equation": "static: Ct_UIUC / Ct_APC and Cp_UIUC / Cp_APC at J = 0, top measured rpm ; FM ratio = (Ct ratio)^1.5 / Cp ratio ; cruise: solve Ct_UIUC(J) rho n^2 D^4 = T at V ; eta = T V / P",
+   "inputs": {
+    "m": "P:requirements.mtow_gate_kg",
+    "ld": "P:performance.ld_cruise",
+    "V": "P:performance.cruise_ms",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3"
+   },
+   "units": {
+    "m": "kg",
+    "V": "m/s",
+    "rho": "kg/m3"
+   },
+   "cites": [
+    "SRC-B4-UIUC"
+   ],
+   "outputs": {
+    "ct_ratio_static__11x4.7SF": 0.9967666441820182,
+    "cp_ratio_static__11x4.7SF": 1.0422370254174762,
+    "fm_ratio_static__11x4.7SF": 0.954824924264115,
+    "J_uiuc__11x4.7SF": 0.5654194221137328,
+    "eta_prop_uiuc__11x4.7SF": 0.339084086697934,
+    "eta_prop_apc__11x4.7SF": 0.34850765945350765,
+    "eta_ratio_uiuc_over_apc__11x4.7SF": 0.9729602133555667,
+    "ct_ratio_static__11x5.5E": 0.9334114794106794,
+    "cp_ratio_static__11x5.5E": 0.9441462929835024,
+    "fm_ratio_static__11x5.5E": 0.9551474360534336,
+    "J_uiuc__11x5.5E": 0.5478037375040612,
+    "eta_prop_uiuc__11x5.5E": 0.525286850614652,
+    "eta_prop_apc__11x5.5E": 0.5076299692878357,
+    "eta_ratio_uiuc_over_apc__11x5.5E": 1.03478297656773
+   },
+   "input_values": {
+    "m": 2.6,
+    "ld": 5.66,
+    "V": 16.0,
+    "g": 9.80665,
+    "rho": 1.225
+   }
+  },
+  {
+   "id": "CALC-B4-RPMFULL",
+   "type": "calculation",
+   "title": "Unlimited full-throttle rpm on a fresh pack and the output cap that respects the APC limit",
+   "script": "redesign/team/B4/props.py",
+   "function": "rpm_full",
+   "equation": "(V - rpm/Kv)/R = Q(rpm)/Kt + I0, cold winding (lowest R, highest rpm), V = max OCV ; cap: find V_eff giving rpm = 0.98 x 105000/D_in ; duty = V_eff / V_ocv,max ; T/W at the cap = 4 T(rpm_cap) cos cant / (k_dl m g)",
+   "inputs": {
+    "kv": "ASM-E1-KV",
+    "rm": "ASM-E1-RM",
+    "i0": "ASM-E1-I0",
+    "esc": "ASM-E1-ESC",
+    "pack": "ASM-E1-PACK",
+    "tcu": "ASM-E1-TCOPPER",
+    "ocv": "ASM-E1-OCV",
+    "m": "P:requirements.mtow_gate_kg",
+    "k_dl": "P:propulsion.download_factor",
+    "g": "P:env.g_ms2",
+    "rho": "P:env.rho_kgm3",
+    "cant": "P:propulsion.stations.cant_deg"
+   },
+   "units": {
+    "m": "kg",
+    "rho": "kg/m3",
+    "cant": "deg"
+   },
+   "cites": [
+    "SRC-B4-APC-RPM"
+   ],
+   "outputs": {
+    "rpm": 10636.888430611627,
+    "rpm_cap": 9354.545454545454,
+    "spin_max_duty": 0.8494644984849183,
+    "tw_at_cap": 3.0094652194455027,
+    "t_cap_n": 20.487007016580403,
+    "rpm__11x4.5MR": 11156.137209292872,
+    "rpm_cap__11x4.5MR": 9354.545454545454,
+    "spin_max_duty__11x4.5MR": 0.8049206176464261,
+    "tw_at_cap__11x4.5MR": 2.617621652343209,
+    "t_cap_n__11x4.5MR": 17.81952248917799
+   },
+   "input_values": {
+    "kv": 900.0,
+    "rm": 0.086,
+    "i0": 0.9,
+    "esc": [
+     0.01,
+     0.5
+    ],
+    "pack": [
+     0.024,
+     1.0
+    ],
+    "tcu": [
+     0.00393,
+     80.0
+    ],
+    "ocv": [
+     16.8,
+     15.2,
+     14.4
+    ],
+    "m": 2.6,
+    "k_dl": 1.06,
+    "g": 9.80665,
+    "rho": 1.225,
+    "cant": 7.0
+   }
+  },
+  {
+   "id": "CL-B4-DATA",
+   "type": "claim",
+   "title": "APC data copied without error (worst row)",
+   "calc": "CALC-B4-DATA",
+   "output": "max_rel_err",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.005
+   },
+   "how": "Re-run props.py; every row's printed N and W reproduce its Ct and Cp within 0.5 % (a typo shows as > 1 %).",
+   "value": 0.0032381860360259918
+  },
+  {
+   "id": "CL-B4-HOVER-T",
+   "type": "claim",
+   "title": "Hover thrust per prop at the gate incl. download",
+   "calc": "CALC-B4-STATIC",
+   "output": "hover_thrust_per_prop_n",
+   "unit": "N",
+   "how": "= 1.06 x 2.6 kg x g / (4 cos 7 deg): the canted thrust lifts with cos(cant); re-check after T-B4-INSTALLED.",
+   "value": 6.807524102357015
+  },
+  {
+   "id": "CL-B4-DL",
+   "type": "claim",
+   "title": "Disk loading at the gate (11 in)",
+   "calc": "CALC-B4-STATIC",
+   "output": "disk_loading_npm2__11x5.5MR",
+   "unit": "N/m2",
+   "how": "Hand check: 6.81 N / 0.0613 m2.",
+   "value": 111.03157559811794
+  },
+  {
+   "id": "CL-B4-HOVER-RPM",
+   "type": "claim",
+   "title": "Hover rpm, 11x5.5MR",
+   "calc": "CALC-B4-STATIC",
+   "output": "hover_rpm__11x5.5MR",
+   "unit": "rpm",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "Log rpm (Bluejay bidirectional DShot telemetry) in a tethered hover at 2.6 kg.",
+   "value": 5415.791721033196
+  },
+  {
+   "id": "CL-B4-HOVER-Q",
+   "type": "claim",
+   "title": "Prop torque at hover, 11x5.5MR (reaction torque for yaw)",
+   "calc": "CALC-B4-STATIC",
+   "output": "hover_torque_nm__11x5.5MR",
+   "unit": "N*m",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "T-B4-STAND torque cell at 0.69 kgf.",
+   "value": 0.11368602568504906
+  },
+  {
+   "id": "CL-B4-FM",
+   "type": "claim",
+   "title": "Hover figure of merit, 11x5.5MR (APC data)",
+   "calc": "CALC-B4-STATIC",
+   "output": "hover_fm__11x5.5MR",
+   "unit": "-",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "T-B4-STAND: FM from measured thrust and shaft power (rpm x torque) at 0.69 kgf.",
+   "value": 0.7107743395272996
+  },
+  {
+   "id": "CL-B4-FM-OLD",
+   "type": "claim",
+   "title": "Hover figure of merit, 11x4.5MR (APC data)",
+   "calc": "CALC-B4-STATIC",
+   "output": "hover_fm__11x4.5MR",
+   "unit": "-",
+   "how": "T-B4-STAND A/B with the 11x4.5MR.",
+   "value": 0.7184589074302256
+  },
+  {
+   "id": "CL-B4-HOVER-SHAFT",
+   "type": "claim",
+   "title": "Hover shaft power per motor, 11x5.5MR",
+   "calc": "CALC-B4-STATIC",
+   "output": "hover_shaft_w__11x5.5MR",
+   "unit": "W",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "T-B4-STAND: rpm x torque at 0.69 kgf.",
+   "value": 64.47593612667475
+  },
+  {
+   "id": "CL-B4-RPM-MAX",
+   "type": "claim",
+   "title": "Full-throttle rpm, 11x5.5MR, 14.8 V bus, hot winding",
+   "calc": "CALC-B4-STATIC",
+   "output": "rpm_max__11x5.5MR",
+   "unit": "rpm",
+   "limit": {
+    "op": "<=",
+    "value": 9545.454545454546
+   },
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "T-B4-STAND at 14.8 V full throttle with rpm telemetry; must stay below the APC MR limit 9 545 rpm.",
+   "cites": [
+    "SRC-B4-APC-RPM"
+   ],
+   "value": 9319.452696615961
+  },
+  {
+   "id": "CL-B4-RPM-MAX-FULL",
+   "type": "claim",
+   "title": "Full-throttle rpm, 11x5.5MR, 16.8 V fresh pack (unlimited)",
+   "calc": "CALC-B4-RPMFULL",
+   "output": "rpm",
+   "unit": "rpm",
+   "limit": {
+    "op": "<=",
+    "value": 9545.454545454546
+   },
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "T-B4-STAND on a fully charged pack. Expected to FAIL unlimited: F4 caps the output (CL-B4-SPIN-MAX).",
+   "cites": [
+    "SRC-B4-APC-RPM"
+   ],
+   "value": 10636.888430611627
+  },
+  {
+   "id": "CL-B4-SPIN-MAX",
+   "type": "claim",
+   "title": "Motor output cap that holds 11x5.5MR rpm at 98 % of the APC limit, fresh pack",
+   "calc": "CALC-B4-RPMFULL",
+   "output": "spin_max_duty",
+   "unit": "-",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "Stand on a 16.8 V pack: at this output fraction rpm <= 9 350; F4 sets Q_M_SPIN_MAX (or the ESC limit) to it.",
+   "value": 0.8494644984849183
+  },
+  {
+   "id": "CL-B4-TW-CAP",
+   "type": "claim",
+   "title": "T/W at the rpm cap (11x5.5MR, installed, bus able to reach the cap)",
+   "calc": "CALC-B4-RPMFULL",
+   "output": "tw_at_cap",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.hover_tw_min"
+   },
+   "verifies": [
+    "R-HOVER-TW"
+   ],
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "T-B4-STAND: thrust at 9 350 rpm >= 1.40 kgf.",
+   "value": 3.0094652194455027
+  },
+  {
+   "id": "CL-B4-SF-RPM",
+   "type": "claim",
+   "title": "11x4.7SF rpm-limit margin at full throttle (negative = over limit)",
+   "calc": "CALC-B4-STATIC",
+   "output": "rpm_limit_margin__11x4.7SF",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "APC SF limit 65 000/11 = 5 909 rpm against full-throttle rpm. FAILS by design: the reason the SF is rejected.",
+   "cites": [
+    "SRC-B4-APC-RPM"
+   ],
+   "value": -0.34483403999488993
+  },
+  {
+   "id": "CL-B4-CRUISE-ETA",
+   "type": "claim",
+   "title": "Cruise prop efficiency, 11x5.5MR, cruise speed and thrust (params)",
+   "calc": "CALC-B4-CRUISE",
+   "output": "eta_prop__11x5.5MR",
+   "unit": "-",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "Logged cruise: shaft power from ESC rpm and motor model vs drag x V; or a car-top test at cruise speed.",
+   "value": 0.4626037804105439
+  },
+  {
+   "id": "CL-B4-CRUISE-ETA-OLD",
+   "type": "claim",
+   "title": "Cruise prop efficiency, 11x4.5MR, cruise speed and thrust (params)",
+   "calc": "CALC-B4-CRUISE",
+   "output": "eta_prop__11x4.5MR",
+   "unit": "-",
+   "how": "As CL-B4-CRUISE-ETA.",
+   "value": 0.3721583276682558
+  },
+  {
+   "id": "CL-B4-CRUISE-J",
+   "type": "claim",
+   "title": "Cruise advance ratio, 11x5.5MR",
+   "calc": "CALC-B4-CRUISE",
+   "output": "J__11x5.5MR",
+   "unit": "-",
+   "how": "J = V / (n D) from logged rpm and airspeed.",
+   "value": 0.5732236726062518
+  },
+  {
+   "id": "CL-B4-CRUISE-RPM",
+   "type": "claim",
+   "title": "Cruise rpm, 11x5.5MR",
+   "calc": "CALC-B4-CRUISE",
+   "output": "rpm__11x5.5MR",
+   "unit": "rpm",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "ESC rpm telemetry in steady cruise.",
+   "value": 5994.054866878658
+  },
+  {
+   "id": "CL-B4-CRUISE-SHAFT",
+   "type": "claim",
+   "title": "Cruise shaft power per motor, 11x5.5MR",
+   "calc": "CALC-B4-CRUISE",
+   "output": "shaft_w__11x5.5MR",
+   "unit": "W",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "Logged cruise: rpm and current with E1's motor constants.",
+   "value": 38.9518784370716
+  },
+  {
+   "id": "CL-B4-CRUISE-W",
+   "type": "claim",
+   "title": "Cruise pack power, 11x5.5MR, 4 motors (E1 motor constants)",
+   "calc": "CALC-B4-CRUISE",
+   "output": "pack_w__11x5.5MR",
+   "unit": "W",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "Log pack power in steady level cruise at performance.cruise_ms, 2.6 kg.",
+   "value": 203.64451224223632
+  },
+  {
+   "id": "CL-B4-CRUISE-W-OLD",
+   "type": "claim",
+   "title": "Cruise pack power, 11x4.5MR, 4 motors (E1 motor constants)",
+   "calc": "CALC-B4-CRUISE",
+   "output": "pack_w__11x4.5MR",
+   "unit": "W",
+   "how": "As CL-B4-CRUISE-W.",
+   "value": 248.1826951957784
+  },
+  {
+   "id": "CL-B4-HOVER-W",
+   "type": "claim",
+   "title": "Hover pack power at the gate, 11x5.5MR (E1 motor constants)",
+   "calc": "CALC-B4-STATIC",
+   "output": "hover_pack_w__11x5.5MR",
+   "unit": "W",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "Log pack power in a 60 s tethered hover at 2.6 kg.",
+   "value": 346.319018059614
+  },
+  {
+   "id": "CL-B4-HOVER-W-OLD",
+   "type": "claim",
+   "title": "Hover pack power at the gate, 11x4.5MR (E1 motor constants)",
+   "calc": "CALC-B4-STATIC",
+   "output": "hover_pack_w__11x4.5MR",
+   "unit": "W",
+   "how": "As CL-B4-HOVER-W.",
+   "value": 336.0899008225554
+  },
+  {
+   "id": "CL-B4-AB-CRUISE-W-MR-17",
+   "type": "claim",
+   "title": "Cruise pack power at 17 m/s (B6 baseline speed), 11x5.5MR, 4 motors",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "pack_w_17__11X55MR",
+   "unit": "W",
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "T-B1-CRUISE-POWER leg at 17 m/s; E1's own figure for 17 m/s is 283 W (D-96).",
+   "value": 231.05631641031152
+  },
+  {
+   "id": "CL-B4-AB-CRUISE-W-11X7E-16",
+   "type": "claim",
+   "title": "Cruise pack power at 16 m/s, 11x7E, 4 motors",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "pack_w_16__11X7E",
+   "unit": "W",
+   "how": "GT-02 static A/B, then a cruise leg on the twin (M6).",
+   "value": 157.8206905896772
+  },
+  {
+   "id": "CL-B4-AB-CRUISE-W-11X7E-17",
+   "type": "claim",
+   "title": "Cruise pack power at 17 m/s, 11x7E, 4 motors",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "pack_w_17__11X7E",
+   "unit": "W",
+   "how": "As CL-B4-AB-CRUISE-W-11X7E-16.",
+   "value": 177.2719631670198
+  },
+  {
+   "id": "CL-B4-AB-CRUISE-RATIO-16",
+   "type": "claim",
+   "title": "Cruise pack power, 11x7E over 11x5.5MR, 16 m/s",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "ratio_16__11X7E_over_MR",
+   "unit": "-",
+   "how": "Ratio of logged cruise power in the A/B legs.",
+   "value": 0.7749813086146343
+  },
+  {
+   "id": "CL-B4-AB-CRUISE-RATIO-17",
+   "type": "claim",
+   "title": "Cruise pack power, 11x7E over 11x5.5MR, 17 m/s",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "ratio_17__11X7E_over_MR",
+   "unit": "-",
+   "how": "As CL-B4-AB-CRUISE-RATIO-16.",
+   "value": 0.7672240513529998
+  },
+  {
+   "id": "CL-B4-AB-CRUISE-RATIO-E-17",
+   "type": "claim",
+   "title": "Cruise pack power, 11x5.5E over 11x5.5MR, 17 m/s",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "ratio_17__11X55E_over_MR",
+   "unit": "-",
+   "how": "As CL-B4-AB-CRUISE-RATIO-16.",
+   "value": 0.90933822734101
+  },
+  {
+   "id": "CL-B4-AB-ETA-11X7E-17",
+   "type": "claim",
+   "title": "Cruise prop efficiency at 17 m/s, 11x7E",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "eta_17__11X7E",
+   "unit": "-",
+   "how": "As CL-B4-CRUISE-ETA.",
+   "value": 0.608892353862131
+  },
+  {
+   "id": "CL-B4-AB-ETA-MR-17",
+   "type": "claim",
+   "title": "Cruise prop efficiency at 17 m/s, 11x5.5MR",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "eta_17__11X55MR",
+   "unit": "-",
+   "how": "As CL-B4-CRUISE-ETA.",
+   "value": 0.4553562973315901
+  },
+  {
+   "id": "CL-B4-AB-HOVER-RATIO",
+   "type": "claim",
+   "title": "Hover pack power, 11x7E over 11x5.5MR, gate mass",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "hover_ratio__11X7E_over_MR",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-B4-AB-HOVER-MAX"
+   },
+   "how": "GT-02: pack power at 0.69 kgf per prop, both props on the same motor and supply.",
+   "value": 1.0597196750367832
+  },
+  {
+   "id": "CL-B4-AB-THR-VH-11X7E",
+   "type": "claim",
+   "title": "Motor output that reaches VH 21.8 m/s in level flight with the 11x7E, fresh pack (THR_MAX would be set to this)",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "thr_for_vh__11X7E",
+   "unit": "-",
+   "how": "FBWB full-throttle level leg with the 11x7E fitted (TUNING-PLAN step 6c) before THR_MAX is frozen.",
+   "value": 0.51915085874526
+  },
+  {
+   "id": "CL-B4-AB-VLEVEL-MR-70",
+   "type": "claim",
+   "title": "Level speed at fixed-wing output 0.704, fresh pack, 11x5.5MR (B4 motor and prop model; F4 carries 21.3 m/s from B1)",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "v_level_thr70__11X55MR",
+   "unit": "m/s",
+   "how": "TUNING-PLAN step 6c.",
+   "value": 24.805278493375212
+  },
+  {
+   "id": "CL-B4-AB-THR-VH-MR",
+   "type": "claim",
+   "title": "Motor output that reaches VH 21.8 m/s in level flight with the 11x5.5MR, fresh pack (B4 motor and prop model: the prop unloads in flight, so rpm at a fixed output is higher than on the stand)",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "thr_for_vh__11X55MR",
+   "unit": "-",
+   "how": "TUNING-PLAN step 6c (FBWB full-throttle level leg, THR_MAX downward only): airspeed <= 21.8 m/s decides THR_MAX. F4's CL-F4-VLEVEL-VH scales B1's speed with the static rpm (ASM-F4-RPM-LIN); this claim is the second model and reads lower (CR-B4-20 to F4, B1).",
+   "value": 0.6112701912864551
+  },
+  {
+   "id": "CL-B4-AB-RPM-LEVEL-MR-70",
+   "type": "claim",
+   "title": "In-flight rpm at fixed-wing output 0.704 and the level speed it reaches, 11x5.5MR, fresh pack",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "rpm_level_thr70__11X55MR",
+   "unit": "rpm",
+   "limit": {
+    "op": "<=",
+    "value": 9545.454545454546
+   },
+   "how": "ESC rpm telemetry in the step-6c leg.",
+   "cites": [
+    "SRC-B4-APC-RPM"
+   ],
+   "value": 9078.270019647542
+  },
+  {
+   "id": "CL-B4-AB-VLEVEL-11X7E-70",
+   "type": "claim",
+   "title": "Level speed at fixed-wing output 0.704, fresh pack, 11x7E (THR_MAX 70 kept)",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "v_level_thr70__11X7E",
+   "unit": "m/s",
+   "how": "Information: above VH 21.8 m/s, so THR_MAX must drop to CL-B4-AB-THR-VH-11X7E if the 11x7E is flown.",
+   "value": 28.945558931167994
+  },
+  {
+   "id": "CL-B4-AB-RPM-FULL-11X7E",
+   "type": "claim",
+   "title": "Full-throttle rpm, 11x7E, 16.8 V fresh pack (unlimited), against the thin-electric limit",
+   "calc": "CALC-B4-PROP-AB",
+   "output": "rpm_full_fresh__11X7E",
+   "unit": "rpm",
+   "limit": {
+    "op": "<=",
+    "value": 13636.363636363636
+   },
+   "how": "GT-02 with rpm telemetry on a full pack.",
+   "cites": [
+    "SRC-B4-APC-RPM"
+   ],
+   "value": 10184.35519379987
+  },
+  {
+   "id": "CL-B4-UIUC-ETA",
+   "type": "claim",
+   "title": "UIUC-measured over APC-predicted cruise efficiency, 11x4.7SF (data spread)",
+   "calc": "CALC-B4-XCHECK",
+   "output": "eta_ratio_uiuc_over_apc__11x4.7SF",
+   "unit": "-",
+   "how": "The 11x5.5MR value comes from T-B4-STAND plus a car-top or flight check; this ratio is the expected spread.",
+   "value": 0.9729602133555667
+  },
+  {
+   "id": "CL-B4-UIUC-ETA-E",
+   "type": "claim",
+   "title": "UIUC-measured over APC-predicted cruise efficiency, 11x5.5E",
+   "calc": "CALC-B4-XCHECK",
+   "output": "eta_ratio_uiuc_over_apc__11x5.5E",
+   "unit": "-",
+   "how": "As CL-B4-UIUC-ETA.",
+   "value": 1.03478297656773
+  },
+  {
+   "id": "CL-B4-DOWNLOAD",
+   "type": "claim",
+   "title": "Hover download factor (modelled, mean loading, R3 fin hardware)",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "k",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:propulsion.download_factor"
+   },
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "T-B4-INSTALLED: thrust stand with the canted mount, tube, collars, brace, ESC dummy and half-fin behind the prop; installed/isolated thrust ratio at equal rpm.",
+   "value": 1.039550590510363
+  },
+  {
+   "id": "CL-B4-DOWNLOAD-HIGH",
+   "type": "claim",
+   "title": "Hover download factor (peaked loading)",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "k_high",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "P:propulsion.download_factor"
+   },
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "T-B4-INSTALLED.",
+   "value": 1.0503979278934745
+  },
+  {
+   "id": "CL-B4-ITEMS-HOVER",
+   "type": "claim",
+   "title": "Hover download of collars, ears, brace and ESC pad, one station (mean loading)",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "items_n",
+   "unit": "N",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "T-B4-INSTALLED: thrust with and without the collars, brace strip and ESC dummy.",
+   "value": 0.0491898361073714
+  },
+  {
+   "id": "CL-B4-BRACE-HOVER",
+   "type": "claim",
+   "title": "Slipstream drag on one brace in hover (mean loading; load case for C4)",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "brace_n",
+   "unit": "N",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "T-B4-INSTALLED with the brace strip on a 2-axis load cell, or by difference.",
+   "value": 0.00782655491889911
+  },
+  {
+   "id": "CL-B4-ESC-WASH",
+   "type": "claim",
+   "title": "ESC pad outer (wing-side) edge / slipstream radius, leaning hover wake",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "esc_outer_edge_over_rs",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 1.0
+   },
+   "parts": [
+    "FIN-007-UR"
+   ],
+   "how": "Tufts on the pad edge in a tethered hover; E3's ESC temperature log.",
+   "value": 0.91728131858235
+  },
+  {
+   "id": "CL-B4-ITEMS-DRAG",
+   "type": "claim",
+   "title": "Cruise drag of collars, ears, braces and ESC pads, 4 stations (B4 coefficients)",
+   "calc": "CALC-B4-ITEMS-CRUISE",
+   "output": "items_n",
+   "unit": "N",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "T-B4-CRUISE: logged cruise power with and without brace fairings, or a car-top drag rig on one fin.",
+   "value": 0.7346695711086667
+  },
+  {
+   "id": "CL-B4-ITEMS-DCD0",
+   "type": "claim",
+   "title": "Cruise CD0 increment of the R3 fin hardware (on S = b c)",
+   "calc": "CALC-B4-ITEMS-CRUISE",
+   "output": "items_dcd0",
+   "unit": "-",
+   "how": "As CL-B4-ITEMS-DRAG.",
+   "value": 0.012732045306757893
+  },
+  {
+   "id": "CL-B4-ITEMS-NOT-B1",
+   "type": "claim",
+   "title": "Cruise CD0 of the items B1 rev 3 does not carry (mount collars, ears, ESC pads)",
+   "calc": "CALC-B4-ITEMS-CRUISE",
+   "output": "not_in_b1_dcd0",
+   "unit": "-",
+   "how": "As CL-B4-ITEMS-DRAG.",
+   "value": 0.00820939194534533
+  },
+  {
+   "id": "CL-B4-ITEMS-PACK-W",
+   "type": "claim",
+   "title": "Cruise pack power for the R3 fin hardware (share of CL-B4-CRUISE-W)",
+   "calc": "CALC-B4-ITEMS-CRUISE",
+   "output": "items_pack_w",
+   "unit": "W",
+   "how": "As CL-B4-ITEMS-DRAG.",
+   "value": 33.21139908620986
+  },
+  {
+   "id": "CL-B4-ELEVON-HOVER",
+   "type": "claim",
+   "title": "Elevons outside the hover slipstream (gap; wake leaning per F4's spin map)",
+   "calc": "CALC-B4-WAKE",
+   "output": "hover_gap_elevon_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "Tufts on the elevons during a tethered hover: they stay still. Consequence: zero elevon authority in hover.",
+   "assumes": [
+    "ASM-B4-WAKE-SENSE"
+   ],
+   "value": 0.0611137843911323
+  },
+  {
+   "id": "CL-B4-ELEVON-HOVER-ALT",
+   "type": "claim",
+   "title": "Elevon gap to the hover slipstream if the spin map were mirrored (wake leans to the wing)",
+   "calc": "CALC-B4-WAKE",
+   "output": "hover_gap_elevon_m_alt",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "Only if F4 mirrors the map; same tuft test.",
+   "value": 0.0014750549012473857
+  },
+  {
+   "id": "CL-B4-ELEVON-CRUISE",
+   "type": "claim",
+   "title": "Elevon tip vs cruise slipstream edge (negative = inside the mixing layer)",
+   "calc": "CALC-B4-WAKE",
+   "output": "cruise_gap_elevon_m",
+   "unit": "m",
+   "how": "Tufts on the elevons in cruise, camera on the fin.",
+   "value": -0.006068325626545232
+  },
+  {
+   "id": "CL-B4-PITOT",
+   "type": "claim",
+   "title": "Worst prop-induced airspeed error at the chosen pitot (pod-nose boom, left channel)",
+   "calc": "CALC-B4-PITOT",
+   "output": "worst_err__pod_boom",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-B4-PITOT-ERR"
+   },
+   "parts": [
+    "AVN-005",
+    "POD-006"
+   ],
+   "how": "Fly constant GPS-groundspeed legs in calm air at two throttle settings; airspeed must not step with throttle.",
+   "value": 0.0175215867943375
+  },
+  {
+   "id": "CL-B4-PITOT-TIP-X",
+   "type": "claim",
+   "title": "Pitot tip x station (pod front - boom; = params avionics.pitot_tip_xyz_m[0])",
+   "calc": "CALC-B4-PITOT-TIP",
+   "output": "tip_x_m",
+   "unit": "m",
+   "parts": [
+    "AVN-005",
+    "POD-006"
+   ],
+   "how": "Measure the tip from the wing LE on the built airframe with the boom plugged in.",
+   "value": -0.22000000000000003
+  },
+  {
+   "id": "CL-B4-PITOT-CRUISE",
+   "type": "claim",
+   "title": "Prop-induced airspeed error at the chosen pitot in cruise",
+   "calc": "CALC-B4-PITOT",
+   "output": "cruise__pod_boom__err",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-B4-PITOT-ERR"
+   },
+   "parts": [
+    "AVN-005",
+    "POD-006"
+   ],
+   "how": "As CL-B4-PITOT.",
+   "value": 0.0032946445288719968
+  },
+  {
+   "id": "CL-B4-PITOT-Y0",
+   "type": "claim",
+   "title": "Prop-induced airspeed error with the boom on the centreline (R2 position, comparison)",
+   "calc": "CALC-B4-PITOT",
+   "output": "worst_err__pod_boom_y0",
+   "unit": "-",
+   "how": "Comparison only.",
+   "value": 0.016964829384849778
+  },
+  {
+   "id": "CL-B4-PITOT-FACE",
+   "type": "claim",
+   "title": "Prop-induced airspeed error with no boom (probe at the pod front)",
+   "calc": "CALC-B4-PITOT",
+   "output": "worst_err__pod_face",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-B4-PITOT-ERR"
+   },
+   "how": "Same flight test as CL-B4-PITOT; shows what the boom buys.",
+   "value": 0.014760404644744388
+  },
+  {
+   "id": "CL-B4-PITOT-WING",
+   "type": "claim",
+   "title": "Prop-induced airspeed error, inboard wing LE at y = 0.15 m (rejected)",
+   "calc": "CALC-B4-PITOT",
+   "output": "worst_err__wing_LE_y0.15",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-B4-PITOT-ERR"
+   },
+   "how": "Same flight test; shows why the inboard wing LE is not used.",
+   "value": 0.017839297210446685
+  },
+  {
+   "id": "CL-B4-PITOT-CONV",
+   "type": "claim",
+   "title": "Pitot model wake/grid convergence (max change, last two levels)",
+   "calc": "CALC-B4-PITOT",
+   "output": "max_conv",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.002
+   },
+   "how": "Re-run: three wake lengths and Simpson grids; change as a fraction of airspeed.",
+   "value": 0.0001362458936572201
+  },
+  {
+   "id": "CL-B4-SWIRL-FIN",
+   "type": "claim",
+   "title": "Side force on each half-fin in hover from swirl and the canted wake (same sense on both halves of a fin)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "fin_side_force_n",
+   "unit": "N",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "T-B4-YAW: side force on a half-fin mock-up (0.264 m wetted chord, R3 top edge) on its own load cell behind the canted prop at hover thrust.",
+   "value": 0.4871446634755346
+  },
+  {
+   "id": "CL-B4-SWIRL-FIN-M",
+   "type": "claim",
+   "title": "Swirl bending moment at each half-fin root (wing skin), hover",
+   "calc": "CALC-B4-SWIRL",
+   "output": "half_fin_root_moment_nm",
+   "unit": "N*m",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "As CL-B4-SWIRL-FIN, times the measured cp height.",
+   "value": 0.06983448452429286
+  },
+  {
+   "id": "CL-B4-TUBE-LOAD",
+   "type": "claim",
+   "title": "Slipstream drag on each bare motor tube in hover (mean loading)",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "tube_n",
+   "unit": "N",
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "T-B4-INSTALLED: thrust with and without the tube.",
+   "value": 0.11831638763331066
+  },
+  {
+   "id": "CL-B4-WING-GAP",
+   "type": "claim",
+   "title": "Hover slipstream (incl. mixing layer) clearance to the wing surface at the fin station",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "wing_gap_min_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "parts": [
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "T-B4-INSTALLED with a wing-section strip at the right height; tufts on the wing beside the fin in a tethered hover stay still.",
+   "value": 0.046809630881757436
+  },
+  {
+   "id": "CL-B4-WING-GAP-ALT",
+   "type": "claim",
+   "title": "Wing-surface clearance if the spin map were mirrored (wake leans to the wing)",
+   "calc": "CALC-B4-DOWNLOAD",
+   "output": "wing_gap_min_m_alt",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "how": "As CL-B4-WING-GAP.",
+   "value": 0.031227380527792642
+  },
+  {
+   "id": "CL-B4-YAW",
+   "type": "claim",
+   "title": "Hover yaw authority factor: (reaction torque + fin side-force moment about the body x-axis) / reaction torque, at the params cant",
+   "calc": "CALC-B4-SWIRL",
+   "output": "yaw_authority_factor_mid",
+   "unit": "-",
+   "how": "T-B4-YAW: fin side force and its centre of pressure on the stand; then a tethered-hover yaw step.",
+   "note": "R3: the fin side force acts 0.1-0.2 m from the body x-axis and turns the airframe WITH the reaction torque. R0-R2 counted only its moment about the motor axis (0.48), which is the wrong axis for body yaw.",
+   "value": 1.670182441514799
+  },
+  {
+   "id": "CL-B4-YAW-LOW",
+   "type": "claim",
+   "title": "Hover yaw authority factor with half the modelled fin force (sizing value)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "yaw_authority_factor_low",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "how": "As CL-B4-YAW.",
+   "value": 1.3350912207573995
+  },
+  {
+   "id": "CL-B4-YAW-NOCANT",
+   "type": "claim",
+   "title": "Hover yaw authority factor with an uncanted motor (the cant's wake lean opposes the swirl)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "yaw_factor_nocant",
+   "unit": "-",
+   "how": "T-B4-YAW with the 0 deg mount.",
+   "value": 2.6235559818960024
+  },
+  {
+   "id": "CL-B4-K-YAW",
+   "type": "claim",
+   "title": "Yaw moment per newton of differential thrust, params cant (reaction x factor + r sin cant)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "k_yaw_m",
+   "unit": "m",
+   "how": "Tethered-hover yaw step: yaw acceleration x Ixx / differential thrust.",
+   "value": 0.07324653123021987
+  },
+  {
+   "id": "CL-B4-K-YAW-LOW",
+   "type": "claim",
+   "title": "Yaw moment per newton of differential thrust, half fin force (sizing value)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "k_yaw_low_m",
+   "unit": "m",
+   "how": "As CL-B4-K-YAW.",
+   "value": 0.06765048947449988
+  },
+  {
+   "id": "CL-B4-K-YAW-3DEG",
+   "type": "claim",
+   "title": "Yaw moment per newton of differential thrust at a 3 deg cant (trade point)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "k_yaw_cant3_m",
+   "unit": "m",
+   "how": "As CL-B4-K-YAW with the 3 deg mounts.",
+   "value": 0.059044928387372395
+  },
+  {
+   "id": "CL-B4-F-AXIS",
+   "type": "claim",
+   "title": "Fin moment about the motor axis / reaction torque (what a motor-axis torque cell with the fin on it reads as 'recovery')",
+   "calc": "CALC-B4-SWIRL",
+   "output": "f_axis_recovery",
+   "unit": "-",
+   "how": "T-B4-YAW: reaction torque with and without the fin on the same cell.",
+   "value": 0.14396763104353735
+  },
+  {
+   "id": "CL-B4-YAW-CANT",
+   "type": "claim",
+   "title": "Hover yaw authority with the params motor cant (fraction of isolated, uncanted)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "yaw_with_cant_over_isolated",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "how": "T-B4-YAW then a tethered-hover yaw step with the canted mounts.",
+   "value": 4.38600543698435
+  },
+  {
+   "id": "CL-B4-YAW-CANT-LOW",
+   "type": "claim",
+   "title": "Hover yaw authority with the params cant and half the fin force (fraction of isolated)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "yaw_with_cant_low_over_isolated",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "how": "As CL-B4-YAW-CANT.",
+   "value": 4.050914216226951
+  },
+  {
+   "id": "CL-B4-CANT-LOSS",
+   "type": "claim",
+   "title": "Hover thrust lost to the cant (1 - cos cant)",
+   "calc": "CALC-B4-SWIRL",
+   "output": "cant_thrust_loss",
+   "unit": "-",
+   "how": "Geometry; included in CL-B4-HOVER-T.",
+   "value": 0.007453848358678017
+  },
+  {
+   "id": "CL-B4-DESCENT",
+   "type": "claim",
+   "title": "Maximum vertical descent rate (vortex-ring margin)",
+   "calc": "CALC-B4-GEOM",
+   "output": "descent_max_ms",
+   "unit": "m/s",
+   "how": "F4 sets Q_WP_SPEED_DN and Q_LAND_SPEED below this; watch for thrust oscillation in descent tests.",
+   "value": 1.8779049012819322
+  },
+  {
+   "id": "CL-B4-GAP-V",
+   "type": "claim",
+   "title": "Vertical prop-to-prop tip gap (canted discs)",
+   "calc": "CALC-B4-GEOM",
+   "output": "gap_vertical_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "verifies": [
+    "R-PROP-CLEAR"
+   ],
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL"
+   ],
+   "how": "Measure on the built airframe with props fitted. About 0.33 D tip gap: mean thrust change < 2 % per the cited rotor-pair data.",
+   "cites": [
+    "SRC-B4-ZHOU-ROTOR"
+   ],
+   "value": 0.09432094149195203
+  },
+  {
+   "id": "CL-B4-TIP-WING",
+   "type": "claim",
+   "title": "Blade swept volume (E1 envelope +10/-6 mm) to the wing upper skin, upper stations, exact 3D",
+   "calc": "CALC-B4-TIP-WING",
+   "output": "wing_upper_gap_env_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "verifies": [
+    "R-PROP-CLEAR"
+   ],
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL",
+    "WNG-001",
+    "WNG-003"
+   ],
+   "how": "Built airframe, props fitted: turn the blade through the wing-side position and pass a printed 25 mm gauge between the blade tip and the wing upper skin at y 0.32 (T-B4-INSTALLED; same gauge as CL-E1-TIP-GAP-TUBE).",
+   "note": "R4 action item: the 23 mm figure (0.163 m radial vs R 0.1397) does not reproduce. The least radial distance from the canted UR axis to the S5010 upper skin anywhere at the fin station is 0.171 m, and the point that sets it lies 35-50 mm behind the blade, so a radial-only number is not a clearance. The true minimum is at x 0.023, 0.6 mm aft of the 6 mm blade envelope's reach in x; agrees with E1's CAD probe (WNG-003 34.1 mm)",
+   "value": 0.035803676705295336
+  },
+  {
+   "id": "CL-B4-TIP-WING-LOWER",
+   "type": "claim",
+   "title": "Blade swept volume (E1 envelope) to the wing lower skin, lower stations, exact 3D",
+   "calc": "CALC-B4-TIP-WING",
+   "output": "wing_lower_gap_env_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "verifies": [
+    "R-PROP-CLEAR"
+   ],
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL",
+    "WNG-001",
+    "WNG-003"
+   ],
+   "how": "As CL-B4-TIP-WING at LR / LL.",
+   "value": 0.04282754198219888
+  },
+  {
+   "id": "CL-B4-TIP-WING-SYM",
+   "type": "claim",
+   "title": "Blade swept volume (A1's symmetric +/-10 mm) to the wing upper skin, exact 3D",
+   "calc": "CALC-B4-TIP-WING",
+   "output": "wing_upper_gap_sym_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "how": "As CL-B4-TIP-WING.",
+   "value": 0.03489442944122881
+  },
+  {
+   "id": "CL-B4-TIP-WING-KO",
+   "type": "claim",
+   "title": "Radial clearance of the wing upper skin inside the KO-PROP axial band (what a cylinder keep-out test of R + 25 mm, half 35 mm, sees)",
+   "calc": "CALC-B4-TIP-WING",
+   "output": "wing_upper_ko_radial_gap_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "how": "For A5: the exact surface test (check.py) against the KO-PROP-UR cylinder must give this, not a box hit.",
+   "value": 0.031950728580867865
+  },
+  {
+   "id": "CL-B4-TIP-WING-ALT",
+   "type": "claim",
+   "title": "Blade to wing upper skin if the cant sense were mirrored (R3 print)",
+   "calc": "CALC-B4-TIP-WING",
+   "output": "wing_upper_gap_env_m_alt",
+   "unit": "m",
+   "how": "Trade point only.",
+   "value": 0.05421177833697054
+  },
+  {
+   "id": "CL-B4-GAP-TUBE-ENV",
+   "type": "claim",
+   "title": "Blade swept volume (E1 envelope) to the bare CF motor tube surface, exact 3D (CR-E1-46a)",
+   "calc": "CALC-B4-TIP-WING",
+   "output": "tube_gap_env_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "verifies": [
+    "R-PROP-CLEAR"
+   ],
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL",
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "Printed 25 mm gauge between the blade trailing face at the tip and the tube, blade over the wing-side position (T-B4-INSTALLED, T-E1-MOTOR-RM).",
+   "note": "the R4 controlling prop clearance. CL-B4-GAP-TUBE is the hub mid-plane to the tube face (zero-thickness blade); the blade's aft face is 6 mm behind it. Same value as E1's CL-E1-TIP-GAP-TUBE (independent code)",
+   "value": 0.02612927090078596
+  },
+  {
+   "id": "CL-B4-GAP-TUBE-FIX5",
+   "type": "claim",
+   "title": "Blade to tube with the mount face 5 mm forward (E1 CR-E1-44, face_ahead 0.0075)",
+   "calc": "CALC-B4-TIP-WING",
+   "output": "tube_gap_env_fix5_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "how": "As CL-B4-GAP-TUBE-ENV on the R5 mount.",
+   "value": 0.031119610478831973
+  },
+  {
+   "id": "CL-B4-TIP-WING-FIX5",
+   "type": "claim",
+   "title": "Blade to wing upper skin with the mount face 5 mm forward",
+   "calc": "CALC-B4-TIP-WING",
+   "output": "wing_upper_gap_env_fix5_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "how": "As CL-B4-TIP-WING on the R5 mount.",
+   "value": 0.03747375501048943
+  },
+  {
+   "id": "CL-B4-GAP-TUBE",
+   "type": "claim",
+   "title": "Blade-to-tube axial gap, hub mid-plane (zero-thickness blade) over the bare tube face",
+   "calc": "CALC-B4-GEOM",
+   "output": "gap_tube_face_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "verifies": [
+    "R-PROP-CLEAR"
+   ],
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL",
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "On the built airframe: ruler from the blade tip, turned over the tube, to the tube face.",
+   "value": 0.03210786172553709
+  },
+  {
+   "id": "CL-B4-GAP-COLLAR",
+   "type": "claim",
+   "title": "Blade-to-collar axial gap, canted disc (minimum)",
+   "calc": "CALC-B4-GEOM",
+   "output": "gap_collar_face_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "P:requirements.prop_clearance_min_m"
+   },
+   "verifies": [
+    "R-PROP-CLEAR"
+   ],
+   "parts": [
+    "PRP-003-UR",
+    "PRP-003-UL",
+    "PRP-003-LR",
+    "PRP-003-LL",
+    "FIN-001-UR",
+    "FIN-001-UL",
+    "FIN-001-LR",
+    "FIN-001-LL"
+   ],
+   "how": "As CL-B4-GAP-TUBE at the collars.",
+   "value": 0.039534685577953414
+  },
+  {
+   "id": "CL-B4-GAP-TUBE-ALT",
+   "type": "claim",
+   "title": "Blade-to-tube gap if the spin map were mirrored (disc edge swings away from the tube)",
+   "calc": "CALC-B4-GEOM",
+   "output": "gap_tube_face_m_alt",
+   "unit": "m",
+   "how": "Trade point only.",
+   "value": 0.05105891297125324
+  },
+  {
+   "id": "CL-B4-BPF",
+   "type": "claim",
+   "title": "Hover blade-passing frequency (vibration input to C4)",
+   "calc": "CALC-B4-GEOM",
+   "output": "bpf_hover_hz",
+   "unit": "Hz",
+   "how": "FFT of the FC IMU log in hover (ArduPilot batch sampler).",
+   "value": 180.52639070110655
+  },
+  {
+   "id": "CL-B4-BPF-MAX",
+   "type": "claim",
+   "title": "Blade-passing frequency at full throttle (14.8 V)",
+   "calc": "CALC-B4-GEOM",
+   "output": "bpf_max_hz",
+   "unit": "Hz",
+   "how": "From rpm on the stand.",
+   "value": 310.64842322053204
+  },
+  {
+   "id": "CL-B4-TIPMACH",
+   "type": "claim",
+   "title": "Tip Mach number at full throttle",
+   "calc": "CALC-B4-GEOM",
+   "output": "tip_mach_max",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.5
+   },
+   "how": "From rpm on the stand.",
+   "value": 0.397485519977175
+  },
+  {
+   "id": "T-B4-STAND",
+   "type": "test",
+   "title": "Isolated static thrust A/B: 11x5.5MR and 11x4.5MR on one X3108S",
+   "verifies": [
+    "CL-B4-FM",
+    "CL-B4-HOVER-SHAFT",
+    "CL-B4-RPM-MAX",
+    "CL-B4-HOVER-Q",
+    "CL-B4-FM-OLD"
+   ],
+   "state": "planned",
+   "procedure": "H1 stand (shared with T-E1-STAND), 14.8 V, 10 % throttle steps; log thrust, torque, rpm, V, A."
+  },
+  {
+   "id": "T-B4-INSTALLED",
+   "type": "test",
+   "title": "Installed thrust with the R3 fin station mock-up and a wing strip",
+   "verifies": [
+    "CL-B4-DOWNLOAD",
+    "CL-B4-TUBE-LOAD",
+    "CL-B4-WING-GAP",
+    "CL-B4-ITEMS-HOVER",
+    "CL-B4-GAP-TUBE",
+    "CL-B4-GAP-TUBE-ENV",
+    "CL-B4-TIP-WING"
+   ],
+   "state": "planned",
+   "procedure": "Same stand; the printed 7 deg canted mount on a 22 mm tube cut to the R3 end (0.172 m from the chord plane), mount and station collars with their ears, one 10 x 3 mm brace strip to a dummy anchor, an ESC dummy (8 x 28 x 46 mm) on the pad station, a two-layer 0.21 m half-fin with the R3 top edge, and a 0.32 m S5010 wing strip at the right offset; measure the blade-tip gap over the tube by hand first; compare thrust at equal rpm with and without; repeat with the brace and ESC removed, then the fin, then the strip."
+  },
+  {
+   "id": "T-B4-YAW",
+   "type": "test",
+   "title": "Fin side force and yaw moment from swirl and cant",
+   "verifies": [
+    "CL-B4-YAW",
+    "CL-B4-SWIRL-FIN",
+    "CL-B4-F-AXIS"
+   ],
+   "state": "planned",
+   "procedure": "Stand with torque cell and the 7 deg canted mount; the half-fin mock-up on its own side-force cell (two load points give the centre of pressure); at hover thrust record reaction torque and fin side force, then with the 0 deg mount. Body-axis yaw factor = 1 + F z_cp / Q."
+  },
+  {
+   "id": "T-B4-CRUISE",
+   "type": "test",
+   "title": "Cruise prop check, car-top or flight",
+   "verifies": [
+    "CL-B4-CRUISE-ETA",
+    "CL-B4-CRUISE-W"
+   ],
+   "state": "planned",
+   "procedure": "Car-top rig at performance.cruise_ms (GPS) or logged level cruise on the twin: rpm, current, voltage; compare with CALC-B4-CRUISE."
+  }
+ ]
+}

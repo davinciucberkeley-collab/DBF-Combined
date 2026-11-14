@@ -1,0 +1,250 @@
+{
+ "id": "bms-s01",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "workbench",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 12.8,
+ "explode": 0.0,
+ "camera": {
+  "preset": "iso",
+  "az_deg": 40,
+  "el_deg": 32,
+  "ortho": false,
+  "lens_mm": 50,
+  "location_m": [
+   -0.9383,
+   -1.0478,
+   0.968
+  ],
+  "fit": "visible",
+  "frame": [
+   0.07,
+   0.93,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Step 4: Fit the motors and clamp the booms under the wing",
+  "sub": ""
+ },
+ "subject_px": [
+  114,
+  159,
+  1487,
+  843
+ ],
+ "callouts": [
+  {
+   "item": "E-BMS-03",
+   "x": 826.8,
+   "y": 790.5,
+   "title": "E-BMS-03",
+   "text": "4x M3x8 SHCS",
+   "detail": "2.5 mm hex key / snug + threadlocker",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    -0.08,
+    -0.35,
+    0.058
+   ]
+  },
+  {
+   "item": "BMS-003",
+   "x": 825.9,
+   "y": 771.0,
+   "title": "BMS-003",
+   "text": "Lift motor L",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    -0.0939,
+    -0.3605,
+    0.088
+   ]
+  },
+  {
+   "item": "E-BMS-01",
+   "x": 1083.1,
+   "y": 592.4,
+   "title": "E-BMS-01",
+   "text": "2x M3x20 SHCS + nyloc",
+   "detail": "2.5 mm hex key + 5.5 mm spanner / 0.5 N m",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2125,
+    -0.35,
+    0.058
+   ]
+  },
+  {
+   "item": "E-BMS-02",
+   "x": 430.6,
+   "y": 308.7,
+   "title": "E-BMS-02",
+   "text": "2x M3x20 SHCS + nyloc",
+   "detail": "2.5 mm hex key + 5.5 mm spanner / 0.5 N m",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2125,
+    0.35,
+    0.058
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "WNG-001",
+   "role": "context",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    726,
+    378,
+    1487,
+    766
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    199,
+    171,
+    767,
+    434
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "context",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    282,
+    233,
+    1336,
+    699
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "role": "context",
+   "name": "Aileron L",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    1014,
+    415,
+    1458,
+    612
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "role": "context",
+   "name": "Aileron servo L",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    1074,
+    498,
+    1128,
+    552
+   ]
+  },
+  {
+   "id": "BMS-001",
+   "role": "focus",
+   "name": "Boom L",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    777,
+    370,
+    1378,
+    843
+   ]
+  },
+  {
+   "id": "BMS-003",
+   "role": "focus",
+   "name": "Lift motor L",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    792,
+    732,
+    862,
+    813
+   ]
+  },
+  {
+   "id": "BMS-002",
+   "role": "focus",
+   "name": "Boom R",
+   "status": "MODELLED",
+   "mass_g": 40,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    114,
+    159,
+    757,
+    472
+   ]
+  },
+  {
+   "id": "BMS-004",
+   "role": "focus",
+   "name": "Lift motor R",
+   "status": "MODELLED",
+   "mass_g": 110,
+   "subsystem": "ex_booms",
+   "bbox_px": [
+    126,
+    387,
+    188,
+    449
+   ]
+  }
+ ],
+ "hidden": [
+  "E-FUS-03",
+  "E-FUS-04",
+  "E-FUS-05",
+  "E-FUS-06",
+  "FUS-001",
+  "FUS-002",
+  "FUS-003"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "focus"
+ ],
+ "files": {
+  "png": "bms-s01.png",
+  "jpg": "bms-s01.jpg"
+ }
+}

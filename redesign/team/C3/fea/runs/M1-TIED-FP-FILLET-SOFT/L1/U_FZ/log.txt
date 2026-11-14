@@ -1,0 +1,242 @@
+
+-------------------------------------------------------------------------
+|    ___ _   _ ___                                                      |
+|   / __| | | |_  )   Release 8.5.0 "Harrier"                           |
+|   \__ \ |_| |/ /                                                      |
+|   |___/\___//___|   Suite (Computational Fluid Dynamics Code)         |
+|                                                                       |
+-------------------------------------------------------------------------
+| SU2 Project Website: https://su2code.github.io                        |
+|                                                                       |
+| The SU2 Project is maintained by the SU2 Foundation                   |
+| (http://su2foundation.org)                                            |
+-------------------------------------------------------------------------
+| Copyright 2012-2026, SU2 Contributors                                 |
+|                                                                       |
+| SU2 is free software; you can redistribute it and/or                  |
+| modify it under the terms of the GNU Lesser General Public            |
+| License as published by the Free Software Foundation; either          |
+| version 2.1 of the License, or (at your option) any later version.    |
+|                                                                       |
+| SU2 is distributed in the hope that it will be useful,                |
+| but WITHOUT ANY WARRANTY; without even the implied warranty of        |
+| MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU      |
+| Lesser General Public License for more details.                       |
+|                                                                       |
+| You should have received a copy of the GNU Lesser General Public      |
+| License along with SU2. If not, see <http://www.gnu.org/licenses/>.   |
+-------------------------------------------------------------------------
+
+Parsing config file for zone 0
+
+----------------- Physical Case Definition ( Zone 0 ) -------------------
+Geometrically linear elasticity solver.
+Linear elastic material.
+No restart solution, initialize from undeformed configuration.
+Input mesh file name: mesh.su2
+
+--------------- Space Numerical Integration ( Zone 0 ) ------------------
+Spatial discretization using the Finite Element Method.
+
+--------------- Time Numerical Integration  ( Zone 0 ) ------------------
+Static structural analysis.
+A Conjugate Gradient method is used for solving the linear system.
+Convergence criteria of the linear solver: 1e-10.
+Max number of iterations: 200000.
+
+------------------ Convergence Criteria  ( Zone 0 ) ---------------------
+Maximum number of solver subiterations: 1.
+Begin convergence monitoring at iteration 5.
+Residual minimum value: 1e-14.
+Cauchy series min. value: 1e-10.
+Number of Cauchy elements: 100.
+Begin windowed time average at iteration 0.
+
+-------------------- Output Information ( Zone 0 ) ----------------------
+File writing frequency: 
++------------------------------------+
+|                     File| Frequency|
++------------------------------------+
+|            RESTART_ASCII|       250|
++------------------------------------+
+Writing the convergence history file every 1 inner iterations.
+Writing the screen convergence history every 1 inner iterations.
+The tabular file format is CSV (.csv).
+Convergence history file name: history.
+Forces breakdown file name: forces_breakdown.dat.
+Surface file name: surface.
+Volume file name: vol_solution.
+Restart file name: restart.csv.
+
+------------- Config File Boundary Information ( Zone 0 ) ---------------
++-----------------------------------------------------------------------+
+|                        Marker Type|                        Marker Name|
++-----------------------------------------------------------------------+
+|                   Clamped boundary|                               spar|
++-----------------------------------------------------------------------+
+|                      Load boundary|                              seg00|
+|                                   |                              seg01|
+|                                   |                              seg02|
+|                                   |                              seg03|
+|                                   |                              seg04|
+|                                   |                              seg05|
+|                                   |                              seg06|
+|                                   |                              seg07|
+|                                   |                              seg08|
+|                                   |                              seg09|
+|                                   |                              seg10|
+|                                   |                              seg11|
+|                                   |                              seg12|
+|                                   |                              seg13|
+|                                   |                              seg14|
+|                                   |                              seg15|
+|                                   |                              seg16|
+|                                   |                              seg17|
+|                                   |                              seg18|
+|                                   |                              seg19|
+|                                   |                              seg20|
+|                                   |                              seg21|
+|                                   |                              seg22|
+|                                   |                              seg23|
+|                                   |                              seg24|
+|                                   |                              seg25|
+|                                   |                              seg26|
+|                                   |                              seg27|
+|                                   |                              seg28|
+|                                   |                              seg29|
+|                                   |                              seg30|
+|                                   |                              seg31|
+|                                   |                              seg32|
+|                                   |                              seg33|
+|                                   |                              seg34|
+|                                   |                              seg35|
+|                                   |                              seg36|
+|                                   |                              seg37|
+|                                   |                              seg38|
+|                                   |                              seg39|
++-----------------------------------------------------------------------+
+
+-------------------- Output Preprocessing ( Zone 0 ) --------------------
+  Info: Ignoring the following screen output fields:
+  RMS_UTOL
+Screen output fields: INNER_ITER
+History output group(s): ITER, RMS_RES
+Convergence field(s): RMS_DISP_X
+Warning: No (valid) fields chosen for time convergence monitoring. Time convergence monitoring inactive.
+Volume output fields: COORDINATES, SOLUTION
+
+------------------- Geometry Preprocessing ( Zone 0 ) -------------------
+Two dimensional problem.
+17606 grid points.
+34524 volume elements.
+41 surface markers.
+120 boundary elements in index 0 (Marker = spar).
+3 boundary elements in index 1 (Marker = seg00).
+3 boundary elements in index 2 (Marker = seg01).
+3 boundary elements in index 3 (Marker = seg02).
+3 boundary elements in index 4 (Marker = seg03).
+3 boundary elements in index 5 (Marker = seg04).
+3 boundary elements in index 6 (Marker = seg05).
+3 boundary elements in index 7 (Marker = seg06).
+3 boundary elements in index 8 (Marker = seg07).
+3 boundary elements in index 9 (Marker = seg08).
+3 boundary elements in index 10 (Marker = seg09).
+3 boundary elements in index 11 (Marker = seg10).
+3 boundary elements in index 12 (Marker = seg11).
+3 boundary elements in index 13 (Marker = seg12).
+3 boundary elements in index 14 (Marker = seg13).
+3 boundary elements in index 15 (Marker = seg14).
+3 boundary elements in index 16 (Marker = seg15).
+3 boundary elements in index 17 (Marker = seg16).
+3 boundary elements in index 18 (Marker = seg17).
+3 boundary elements in index 19 (Marker = seg18).
+3 boundary elements in index 20 (Marker = seg19).
+3 boundary elements in index 21 (Marker = seg20).
+3 boundary elements in index 22 (Marker = seg21).
+3 boundary elements in index 23 (Marker = seg22).
+3 boundary elements in index 24 (Marker = seg23).
+3 boundary elements in index 25 (Marker = seg24).
+3 boundary elements in index 26 (Marker = seg25).
+3 boundary elements in index 27 (Marker = seg26).
+3 boundary elements in index 28 (Marker = seg27).
+3 boundary elements in index 29 (Marker = seg28).
+4 boundary elements in index 30 (Marker = seg29).
+5 boundary elements in index 31 (Marker = seg30).
+7 boundary elements in index 32 (Marker = seg31).
+7 boundary elements in index 33 (Marker = seg32).
+7 boundary elements in index 34 (Marker = seg33).
+7 boundary elements in index 35 (Marker = seg34).
+7 boundary elements in index 36 (Marker = seg35).
+7 boundary elements in index 37 (Marker = seg36).
+7 boundary elements in index 38 (Marker = seg37).
+7 boundary elements in index 39 (Marker = seg38).
+15 boundary elements in index 40 (Marker = seg39).
+34524 triangles.
+Setting point connectivity.
+Renumbering points (Reverse Cuthill McKee Ordering).
+Recomputing point connectivity.
+Setting element connectivity.
+Checking the numerical grid orientation.
+All volume elements are correctly oriented.
+There has been a re-orientation of 120 LINE surface elements.
+Identifying edges and vertices.
+Setting the control volume structure.
+Area of the computational grid: 0.018949.
+Searching for the closest normal neighbors to the surfaces.
+Storing a mapping from global to local point index.
+Surface area = 0.269031 m.
+Area projection in the x-plane = 0.0219193 m, y-plane = 0.0222222 m.
+Max. coordinate in the x-direction = 0.091 m, y-direction = 0.0198 m.
+Min. coordinate in the x-direction = -0.1352 m, y-direction = -0.00435553 m.
+Computing wall distances.
+
+-------------------- Solver Preprocessing ( Zone 0 ) --------------------
+Filename: props.dat.
+Initialize Jacobian structure (Non-Linear Elasticity).
+
+------------------- Numerics Preprocessing ( Zone 0 ) -------------------
+
+----------------- Integration Preprocessing ( Zone 0 ) ------------------
+
+------------------- Iteration Preprocessing ( Zone 0 ) ------------------
+FEM iteration.
+
+------------------------------ Begin Solver -----------------------------
+
+Simulation Run using the Single-zone Driver
++------------+
+|  Inner_Iter|
++------------+
+|           0|
+
+----------------------------- Solver Exit -------------------------------
+All convergence criteria satisfied.
++-----------------------------------------------------------------------+
+|      Convergence Field     |     Value    |   Criterion  |  Converged |
++-----------------------------------------------------------------------+
+|                  rms[DispX]|       -12.213|         < -14|          No|
++-----------------------------------------------------------------------+
+-------------------------------------------------------------------------
++-----------------------------------------------------------------------+
+|        File Writing Summary       |              Filename             |
++-----------------------------------------------------------------------+
+|SU2 ASCII restart                  |restart.csv                        |
++-----------------------------------------------------------------------+
+
+--------------------------- Finalizing Solver ---------------------------
+Deleted CNumerics container.
+Deleted CIntegration container.
+Deleted CSolver container.
+Deleted CIteration container.
+Deleted CInterface container.
+Deleted CGeometry container.
+Deleted CFreeFormDefBox class.
+Deleted CSurfaceMovement class.
+Deleted CVolumetricMovement class.
+Deleted CConfig container.
+Deleted nInst container.
+Deleted COutput class.
+-------------------------------------------------------------------------
+
+------------------------- Exit Success (SU2_CFD) ------------------------
+

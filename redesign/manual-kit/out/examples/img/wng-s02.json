@@ -1,0 +1,186 @@
+{
+ "id": "wng-s02",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "workbench",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 12.78,
+ "explode": 0.0,
+ "camera": {
+  "preset": "closeup",
+  "az_deg": 160,
+  "el_deg": 35,
+  "ortho": false,
+  "lens_mm": 70,
+  "location_m": [
+   1.0832,
+   -0.6428,
+   0.6047
+  ],
+  "fit": [
+   "WNG-004",
+   "WNG-005"
+  ],
+  "frame": [
+   0.14,
+   0.86,
+   0.12,
+   0.88
+  ]
+ },
+ "caption": {
+  "title": "Step 3: Fit the servo and hinge the aileron",
+  "sub": ""
+ },
+ "subject_px": [
+  -37,
+  -207,
+  3121,
+  742
+ ],
+ "callouts": [
+  {
+   "item": "WNG-005",
+   "x": 887.8,
+   "y": 318.9,
+   "title": "WNG-005",
+   "text": "Aileron servo L",
+   "detail": null,
+   "role": "focus",
+   "occluded": true,
+   "world_m": [
+    0.28,
+    -0.32,
+    0.071
+   ]
+  },
+  {
+   "item": "E-WNG-05",
+   "x": 887.3,
+   "y": 344.9,
+   "title": "E-WNG-05",
+   "text": "2x M2x8 pan self-tapping",
+   "detail": "PH0 screwdriver / snug",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.28,
+    -0.32,
+    0.061
+   ]
+  },
+  {
+   "item": "E-WNG-04",
+   "x": 789.0,
+   "y": 442.9,
+   "title": "E-WNG-04",
+   "text": "tape hinge",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.3446,
+    -0.3775,
+    0.0764
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "WNG-001",
+   "role": "context",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    -37,
+    25,
+    1676,
+    615
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "context",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    1668,
+    -207,
+    3121,
+    223
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "context",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    144,
+    -135,
+    2762,
+    375
+   ]
+  },
+  {
+   "id": "WNG-004",
+   "role": "focus",
+   "name": "Aileron L",
+   "status": "MODELLED",
+   "mass_g": 30,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    223,
+    324,
+    1378,
+    742
+   ]
+  },
+  {
+   "id": "WNG-005",
+   "role": "focus",
+   "name": "Aileron servo L",
+   "status": "MODELLED",
+   "mass_g": 20,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    837,
+    258,
+    940,
+    382
+   ]
+  }
+ ],
+ "hidden": [
+  "BMS-001",
+  "BMS-002",
+  "BMS-003",
+  "BMS-004",
+  "E-FUS-03",
+  "E-FUS-04",
+  "E-FUS-05",
+  "E-FUS-06",
+  "FUS-001",
+  "FUS-002",
+  "FUS-003"
+ ],
+ "clipped": [],
+ "legend": [
+  "context",
+  "focus"
+ ],
+ "files": {
+  "png": "wng-s02.png",
+  "jpg": "wng-s02.jpg"
+ }
+}

@@ -1,0 +1,169 @@
+{
+ "_note": "Written by team/B1/sim_to_params.py from sim/cfd/cfd_results.json and sim/vlm_xfoil_results.json. Do not edit by hand.",
+ "b1sim": {
+  "cfd": {
+   "fin_a_cd": {
+    "value": 0.047206,
+    "unit": "-",
+    "source": "SRC-B1-SIM-CFD",
+    "note": "fin section through the motor tube (22 mm tube + 9.6 mm board, 3 mm fillet, square TE), SA, 16 m/s, on the 0.275 m fin chord, L4 grid"
+   },
+   "fin_b_cd": {
+    "value": 0.03639,
+    "unit": "-",
+    "source": "SRC-B1-SIM-CFD",
+    "note": "bare 9.6 mm board, square LE and TE, SA, on the fin chord, L3 grid"
+   },
+   "fin_a_gci_pct": {
+    "value": 5.810546,
+    "unit": "%",
+    "source": "SRC-B1-SIM-CFD",
+    "note": "Celik GCI, fine grid, Fs 1.25, levels L2-L4"
+   },
+   "fin_b_gci_pct": {
+    "value": 2.086485,
+    "unit": "%",
+    "source": "SRC-B1-SIM-CFD",
+    "note": "Celik GCI, fine grid, Fs 1.25"
+   },
+   "s5010_cd_sa": {
+    "value": 0.011889,
+    "unit": "-",
+    "source": "SRC-B1-SIM-CFD",
+    "note": "S5010, alpha 2.5 deg, fully turbulent SA, L3"
+   },
+   "s5010_cl_sa": {
+    "value": 0.370509,
+    "unit": "-",
+    "source": "SRC-B1-SIM-CFD",
+    "note": "S5010, alpha 2.5 deg, fully turbulent SA, L3"
+   },
+   "s5010_gci_pct": {
+    "value": 1.966181,
+    "unit": "%",
+    "source": "SRC-B1-SIM-CFD",
+    "note": "Celik GCI on cd, fine grid"
+   }
+  },
+  "xfoil": {
+   "cd_trip_a2p5": {
+    "value": 0.01354,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "XFOIL S5010 alpha 2.5 deg, transition forced at 2 % c both sides (like-for-like with SU2 SA)"
+   },
+   "cl_trip_a2p5": {
+    "value": 0.3743,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "as cd_trip_a2p5"
+   },
+   "cd_free_a2p5": {
+    "value": 0.00801,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "XFOIL S5010 alpha 2.5 deg, free transition Ncrit 9"
+   },
+   "panel_spread_pct": {
+    "value": 0.236822,
+    "unit": "%",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "cd at cruise cl, 160/240/320 panels"
+   }
+  },
+  "avl": {
+   "e_cruise": {
+    "value": 1.046,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "AVL span efficiency, trimmed at the as-designed cruise CL, A3 predicted CG, wing + fins, finest lattice is L3; this is L2 (medium)"
+   },
+   "cdi_cruise": {
+    "value": 0.014748,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "AVL trimmed induced drag at cruise CL (L2)"
+   },
+   "cla_per_rad": {
+    "value": 3.407762,
+    "unit": "1/rad",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "AVL trimmed lift slope (L2)"
+   },
+   "xnp_m": {
+    "value": 0.070816,
+    "unit": "m",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "AVL neutral point, wing + fins, props off (L2)"
+   },
+   "elevon_cruise_deg": {
+    "value": -3.50384,
+    "unit": "deg",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "trim elevon at cruise, + TE down"
+   },
+   "alpha_cruise_deg": {
+    "value": 7.27553,
+    "unit": "deg",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "trimmed alpha at cruise"
+   },
+   "lattice_spread_pct": {
+    "value": 0.664036,
+    "unit": "%",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "spread of e over the 3 lattices"
+   }
+  },
+  "wing": {
+   "cd0_fit": {
+    "value": 0.007117,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "CD_wing = A + K CL^2 fit, AVL CDi + XFOIL strip profile drag, Ncrit 9, CL 0.3-0.7, trimmed"
+   },
+   "k_fit": {
+    "value": 0.09571,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "as cd0_fit"
+   },
+   "cd0_fit_ncrit5": {
+    "value": 0.007055,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "as cd0_fit, Ncrit 5"
+   },
+   "k_fit_ncrit5": {
+    "value": 0.096625,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "as cd0_fit, Ncrit 5"
+   },
+   "cd0_fit_tripped": {
+    "value": 0.012599,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "as cd0_fit, transition forced at 2 % c (fully turbulent bound)"
+   },
+   "k_fit_tripped": {
+    "value": 0.094675,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "as cd0_fit_tripped"
+   },
+   "clmax_trim": {
+    "value": 0.862248,
+    "unit": "-",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "critical-section trimmed CLmax at the A3 predicted CG, XFOIL clmax at the stall Re per strip and elevon deflection"
+   },
+   "elevon_at_clmax_deg": {
+    "value": -8.234185,
+    "unit": "deg",
+    "source": "SRC-B1-SIM-VLMXF",
+    "note": "trim elevon at CLmax"
+   }
+  }
+ }
+}

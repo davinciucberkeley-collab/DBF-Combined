@@ -1,0 +1,577 @@
+{
+ "concept": "U01 wing-assisted quad (tilt-body hybrid), Holybro X500 V2 + class-S stations + 1.2 m foam wing",
+ "status": "CHECKED (calc only; every input ESTIMATE/UNVERIFIED as tagged in sizing.py)",
+ "mass_kg": {
+  "groups": {
+   "frame": 0.61,
+   "propulsion": 0.67,
+   "avionics": 0.095,
+   "power_wiring": 0.11,
+   "wing": 0.337,
+   "battery": 0.64,
+   "growth": 0.25
+  },
+  "MTOW": 2.712,
+  "MTOW_without_growth": 2.462
+ },
+ "wing": {
+  "span_m": 1.2,
+  "chord_m": 0.22,
+  "area_m2": 0.264,
+  "AR": 5.45,
+  "incidence_deg": 25.0,
+  "wing_loading_N_m2": 100.8,
+  "wing_loading_g_dm2": 102.7,
+  "stall_speed_wing_alone_m_s": 12.8,
+  "note": "the wing never carries the full weight; stall speed is informative only"
+ },
+ "hover": {
+  "disk_area_m2": 0.2452,
+  "disk_loading_N_m2": 111.7,
+  "P_elec_W": 355.9,
+  "I_A": 24.0,
+  "T_W_max": 2.21,
+  "T_W_gate_1p6": true,
+  "endurance_min_80pct": 13.0
+ },
+ "cruise": {
+  "V_m_s": 14,
+  "V": 14,
+  "theta_deg": 16.5,
+  "T_N": 14.17,
+  "wing_lift_N": 12.98,
+  "wing_lift_frac": 0.488,
+  "drag_N": 4.02,
+  "alpha_wing_deg": 2.5,
+  "P_elec_W": 139.6,
+  "I_A": 9.4,
+  "trim_resid_N": -0.04,
+  "within_angle_max": true,
+  "no_wing_I_A": 18.0,
+  "current_saving_vs_bare_quad": 0.478,
+  "endurance_min_80pct": 33.1,
+  "screen_condition_20pct_at_12_m_s": 0.525
+ },
+ "mission_MA": {
+  "usable_Wh": 77.0,
+  "E_threshold_Wh": 23.5,
+  "E_objective_Wh": 35.1,
+  "threshold_met": true,
+  "objective_met": true,
+  "cruise_min_after_2min_hover": 28.0,
+  "pack_C_at_hover": 3.7
+ },
+ "gust_check_hover_5_to_8_m_s": {
+  "trim_at_5": {
+   "V": 5.0,
+   "theta_deg": 1.0,
+   "T_N": 27.37,
+   "wing_lift_N": -0.88,
+   "wing_lift_frac": -0.033,
+   "drag_N": 0.48,
+   "alpha_wing_deg": -5.9,
+   "P_elec_W": 324.3,
+   "I_A": 21.9,
+   "trim_resid_N": -0.12,
+   "within_angle_max": true
+  },
+  "dLift_N": -1.36,
+  "dLift_over_W": -0.051,
+  "dDrag_N": 0.74,
+  "dDrag_bare_quad_N": 0.6,
+  "upper_bound_wing_outside_inflow": {
+   "alpha_deg": 24.0,
+   "dLift_N": 5.36,
+   "dLift_over_W": 0.201,
+   "dDrag_N": 2.31
+  },
+  "note": "headwind only; tail/quartering wind on a 25 deg wing with no yaw weathervane in ArduCopter is worse and not modelled"
+ },
+ "pitch_authority": {
+  "M_avail_Nm": 3.95,
+  "M_wing_cruise_Nm": 0.82,
+  "fraction_used": 0.21
+ },
+ "sensitivity_pessimistic": {
+  "inputs": {
+   "CD0_WING": 0.04,
+   "CDA_BODY": 0.035,
+   "K_UPWASH": 1.0,
+   "FM": 0.55,
+   "CL_MAX": 0.8
+  },
+  "by_speed": {
+   "10": {
+    "theta_deg": 6.1,
+    "alpha_wing_deg": -2.8,
+    "I_wing_A": 22.6,
+    "I_bare_A": 22.8,
+    "saving": 0.009
+   },
+   "12": {
+    "theta_deg": 10.1,
+    "alpha_wing_deg": -0.9,
+    "I_wing_A": 19.5,
+    "I_bare_A": 23.0,
+    "saving": 0.152
+   },
+   "14": {
+    "theta_deg": 14.1,
+    "alpha_wing_deg": -1.0,
+    "I_wing_A": 20.6,
+    "I_bare_A": 23.9,
+    "saving": 0.138
+   },
+   "16": {
+    "theta_deg": 17.5,
+    "alpha_wing_deg": -1.8,
+    "I_wing_A": 24.5,
+    "I_bare_A": 25.9,
+    "saving": 0.054
+   }
+  }
+ },
+ "packing": {
+  "frame_props_off_m": [
+   0.39,
+   0.39,
+   0.27
+  ],
+  "wing_half_m": [
+   0.6,
+   0.22,
+   0.03
+  ],
+  "box_m": [
+   0.65,
+   0.44,
+   0.38
+  ],
+  "fits_1_2x0_5x0_4_box": true,
+  "boxes": 1,
+  "longest_piece_m": 0.6,
+  "longest_piece": "wing half with its glued 0.55 m spar stub"
+ },
+ "sweep": [
+  {
+   "V": 0,
+   "wing": {
+    "V": 0,
+    "theta_deg": 0.0,
+    "T_N": 26.6,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 0.0,
+    "alpha_wing_deg": null,
+    "P_elec_W": 340.4,
+    "I_A": 23.0,
+    "trim_resid_N": 0,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 0,
+    "theta_deg": 0.0,
+    "T_N": 26.6,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 0.0,
+    "alpha_wing_deg": null,
+    "P_elec_W": 340.4,
+    "I_A": 23.0,
+    "trim_resid_N": 0,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.0
+  },
+  {
+   "V": 4,
+   "wing": {
+    "V": 4,
+    "theta_deg": 0.8,
+    "T_N": 28.61,
+    "wing_lift_N": -1.91,
+    "wing_lift_frac": -0.072,
+    "drag_N": 0.4,
+    "alpha_wing_deg": -12.9,
+    "P_elec_W": 358.7,
+    "I_A": 24.2,
+    "trim_resid_N": 0.09,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 4,
+    "theta_deg": 0.5,
+    "T_N": 28.08,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 0.25,
+    "alpha_wing_deg": null,
+    "P_elec_W": 347.9,
+    "I_A": 23.5,
+    "trim_resid_N": 1.47,
+    "within_angle_max": true
+   },
+   "current_saving_frac": -0.03
+  },
+  {
+   "V": 6,
+   "wing": {
+    "V": 6,
+    "theta_deg": 1.5,
+    "T_N": 25.95,
+    "wing_lift_N": 0.96,
+    "wing_lift_frac": 0.036,
+    "drag_N": 0.68,
+    "alpha_wing_deg": -0.8,
+    "P_elec_W": 287.7,
+    "I_A": 19.4,
+    "trim_resid_N": 0.3,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 6,
+    "theta_deg": 1.2,
+    "T_N": 26.32,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 0.55,
+    "alpha_wing_deg": null,
+    "P_elec_W": 293.7,
+    "I_A": 19.8,
+    "trim_resid_N": -0.29,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.02
+  },
+  {
+   "V": 8,
+   "wing": {
+    "V": 8,
+    "theta_deg": 4.0,
+    "T_N": 20.65,
+    "wing_lift_N": 5.99,
+    "wing_lift_frac": 0.225,
+    "drag_N": 1.44,
+    "alpha_wing_deg": 4.8,
+    "P_elec_W": 187.2,
+    "I_A": 12.6,
+    "trim_resid_N": -0.02,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 8,
+    "theta_deg": 2.1,
+    "T_N": 26.74,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 0.98,
+    "alpha_wing_deg": null,
+    "P_elec_W": 280.4,
+    "I_A": 18.9,
+    "trim_resid_N": 0.12,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.333
+  },
+  {
+   "V": 10,
+   "wing": {
+    "V": 10,
+    "theta_deg": 8.2,
+    "T_N": 16.43,
+    "wing_lift_N": 10.41,
+    "wing_lift_frac": 0.391,
+    "drag_N": 2.34,
+    "alpha_wing_deg": 5.7,
+    "P_elec_W": 133.4,
+    "I_A": 9.0,
+    "trim_resid_N": 0.06,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 10,
+    "theta_deg": 3.3,
+    "T_N": 26.6,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 1.53,
+    "alpha_wing_deg": null,
+    "P_elec_W": 263.1,
+    "I_A": 17.8,
+    "trim_resid_N": -0.05,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.494
+  },
+  {
+   "V": 12,
+   "wing": {
+    "V": 12,
+    "theta_deg": 12.7,
+    "T_N": 14.43,
+    "wing_lift_N": 12.64,
+    "wing_lift_frac": 0.475,
+    "drag_N": 3.17,
+    "alpha_wing_deg": 4.3,
+    "P_elec_W": 123.7,
+    "I_A": 8.4,
+    "trim_resid_N": 0.11,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 12,
+    "theta_deg": 4.7,
+    "T_N": 26.91,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 2.21,
+    "alpha_wing_deg": null,
+    "P_elec_W": 262.0,
+    "I_A": 17.7,
+    "trim_resid_N": 0.22,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.525
+  },
+  {
+   "V": 13,
+   "wing": {
+    "V": 13,
+    "theta_deg": 14.7,
+    "T_N": 14.14,
+    "wing_lift_N": 13.03,
+    "wing_lift_frac": 0.49,
+    "drag_N": 3.59,
+    "alpha_wing_deg": 3.4,
+    "P_elec_W": 129.3,
+    "I_A": 8.7,
+    "trim_resid_N": 0.1,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 13,
+    "theta_deg": 5.6,
+    "T_N": 26.52,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 2.59,
+    "alpha_wing_deg": null,
+    "P_elec_W": 257.1,
+    "I_A": 17.4,
+    "trim_resid_N": -0.21,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.5
+  },
+  {
+   "V": 14,
+   "wing": {
+    "V": 14,
+    "theta_deg": 16.5,
+    "T_N": 14.17,
+    "wing_lift_N": 12.98,
+    "wing_lift_frac": 0.488,
+    "drag_N": 4.02,
+    "alpha_wing_deg": 2.5,
+    "P_elec_W": 139.6,
+    "I_A": 9.4,
+    "trim_resid_N": -0.04,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 14,
+    "theta_deg": 6.4,
+    "T_N": 26.92,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 3.0,
+    "alpha_wing_deg": null,
+    "P_elec_W": 266.2,
+    "I_A": 18.0,
+    "trim_resid_N": 0.15,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.478
+  },
+  {
+   "V": 15,
+   "wing": {
+    "V": 15,
+    "theta_deg": 18.0,
+    "T_N": 14.57,
+    "wing_lift_N": 12.83,
+    "wing_lift_frac": 0.482,
+    "drag_N": 4.5,
+    "alpha_wing_deg": 1.8,
+    "P_elec_W": 155.2,
+    "I_A": 10.5,
+    "trim_resid_N": 0.08,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 15,
+    "theta_deg": 7.4,
+    "T_N": 26.75,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 3.45,
+    "alpha_wing_deg": null,
+    "P_elec_W": 269.8,
+    "I_A": 18.2,
+    "trim_resid_N": -0.08,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.423
+  },
+  {
+   "V": 16,
+   "wing": {
+    "V": 16,
+    "theta_deg": 19.3,
+    "T_N": 15.19,
+    "wing_lift_N": 12.46,
+    "wing_lift_frac": 0.468,
+    "drag_N": 5.02,
+    "alpha_wing_deg": 1.1,
+    "P_elec_W": 174.8,
+    "I_A": 11.8,
+    "trim_resid_N": 0.2,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 16,
+    "theta_deg": 8.4,
+    "T_N": 26.83,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 3.92,
+    "alpha_wing_deg": null,
+    "P_elec_W": 279.4,
+    "I_A": 18.9,
+    "trim_resid_N": -0.06,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.376
+  },
+  {
+   "V": 17,
+   "wing": {
+    "V": 17,
+    "theta_deg": 20.5,
+    "T_N": 15.91,
+    "wing_lift_N": 11.67,
+    "wing_lift_frac": 0.438,
+    "drag_N": 5.57,
+    "alpha_wing_deg": 0.4,
+    "P_elec_W": 197.3,
+    "I_A": 13.3,
+    "trim_resid_N": -0.04,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 17,
+    "theta_deg": 9.4,
+    "T_N": 27.09,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 4.43,
+    "alpha_wing_deg": null,
+    "P_elec_W": 293.7,
+    "I_A": 19.8,
+    "trim_resid_N": 0.13,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.328
+  },
+  {
+   "V": 18,
+   "wing": {
+    "V": 18,
+    "theta_deg": 21.5,
+    "T_N": 16.84,
+    "wing_lift_N": 10.86,
+    "wing_lift_frac": 0.408,
+    "drag_N": 6.17,
+    "alpha_wing_deg": -0.2,
+    "P_elec_W": 224.3,
+    "I_A": 15.2,
+    "trim_resid_N": -0.08,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 18,
+    "theta_deg": 10.6,
+    "T_N": 26.97,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 4.96,
+    "alpha_wing_deg": null,
+    "P_elec_W": 305.7,
+    "I_A": 20.7,
+    "trim_resid_N": -0.09,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.266
+  },
+  {
+   "V": 20,
+   "wing": {
+    "V": 20,
+    "theta_deg": 23.1,
+    "T_N": 19.14,
+    "wing_lift_N": 8.98,
+    "wing_lift_frac": 0.338,
+    "drag_N": 7.51,
+    "alpha_wing_deg": -1.1,
+    "P_elec_W": 290.9,
+    "I_A": 19.7,
+    "trim_resid_N": -0.02,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 20,
+    "theta_deg": 13.0,
+    "T_N": 27.23,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 6.13,
+    "alpha_wing_deg": null,
+    "P_elec_W": 343.9,
+    "I_A": 23.2,
+    "trim_resid_N": -0.07,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.151
+  },
+  {
+   "V": 22,
+   "wing": {
+    "V": 22,
+    "theta_deg": 24.3,
+    "T_N": 21.92,
+    "wing_lift_N": 6.85,
+    "wing_lift_frac": 0.258,
+    "drag_N": 9.02,
+    "alpha_wing_deg": -1.8,
+    "P_elec_W": 375.0,
+    "I_A": 25.3,
+    "trim_resid_N": 0.23,
+    "within_angle_max": true
+   },
+   "no_wing": {
+    "V": 22,
+    "theta_deg": 15.6,
+    "T_N": 27.56,
+    "wing_lift_N": 0.0,
+    "wing_lift_frac": 0.0,
+    "drag_N": 7.41,
+    "alpha_wing_deg": null,
+    "P_elec_W": 393.7,
+    "I_A": 26.6,
+    "trim_resid_N": -0.06,
+    "within_angle_max": true
+   },
+   "current_saving_frac": 0.049
+  }
+ ]
+}

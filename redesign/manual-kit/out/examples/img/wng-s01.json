@@ -1,0 +1,156 @@
+{
+ "id": "wng-s01",
+ "size": [
+  1600,
+  1000
+ ],
+ "scene": "workbench",
+ "engine": "CYCLES",
+ "device": "GPU",
+ "samples": 48,
+ "render_s": 12.7,
+ "explode": 0.0,
+ "camera": {
+  "preset": "iso",
+  "az_deg": 30,
+  "el_deg": 30,
+  "ortho": false,
+  "lens_mm": 50,
+  "location_m": [
+   -1.1194,
+   -0.8544,
+   0.9608
+  ],
+  "fit": "visible",
+  "frame": [
+   0.07,
+   0.93,
+   0.07,
+   0.93
+  ]
+ },
+ "caption": {
+  "title": "Step 2: Bond the spar into both wing panels",
+  "sub": ""
+ },
+ "subject_px": [
+  115,
+  263,
+  1487,
+  739
+ ],
+ "callouts": [
+  {
+   "item": "WNG-003",
+   "x": 680.3,
+   "y": 472.8,
+   "title": "WNG-003",
+   "text": "Spar tube 12x10",
+   "detail": null,
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2075,
+    0.025,
+    0.0693
+   ]
+  },
+  {
+   "item": "E-WNG-02",
+   "x": 1123.0,
+   "y": 574.6,
+   "title": "E-WNG-02",
+   "text": "epoxy bond",
+   "detail": "spar bonded in panel bore",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2149,
+    -0.3612,
+    0.0873
+   ]
+  },
+  {
+   "item": "E-WNG-03",
+   "x": 432.2,
+   "y": 375.6,
+   "title": "E-WNG-03",
+   "text": "epoxy bond",
+   "detail": "spar bonded in panel bore",
+   "role": "focus",
+   "occluded": false,
+   "world_m": [
+    0.2181,
+    0.2875,
+    0.0874
+   ]
+  }
+ ],
+ "shown": [
+  {
+   "id": "WNG-001",
+   "role": "focus",
+   "name": "Wing panel L",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    732,
+    422,
+    1487,
+    739
+   ]
+  },
+  {
+   "id": "WNG-002",
+   "role": "focus",
+   "name": "Wing panel R",
+   "status": "MODELLED",
+   "mass_g": 220,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    115,
+    263,
+    727,
+    497
+   ]
+  },
+  {
+   "id": "WNG-003",
+   "role": "focus",
+   "name": "Spar tube 12x10",
+   "status": "MODELLED",
+   "mass_g": 60,
+   "subsystem": "ex_wing",
+   "bbox_px": [
+    200,
+    328,
+    1369,
+    680
+   ]
+  }
+ ],
+ "hidden": [
+  "BMS-001",
+  "BMS-002",
+  "BMS-003",
+  "BMS-004",
+  "E-FUS-03",
+  "E-FUS-04",
+  "E-FUS-05",
+  "E-FUS-06",
+  "FUS-001",
+  "FUS-002",
+  "FUS-003",
+  "WNG-004",
+  "WNG-005"
+ ],
+ "clipped": [],
+ "legend": [
+  "focus"
+ ],
+ "files": {
+  "png": "wng-s01.png",
+  "jpg": "wng-s01.jpg"
+ }
+}

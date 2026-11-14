@@ -1,0 +1,1638 @@
+{
+ "files": [
+  "blk_L1O.json",
+  "blk_L2O.json",
+  "blk_L3O.json"
+ ],
+ "files_sensitivity": [
+  "dist_L2O.json"
+ ],
+ "levels_present": {
+  "1": [
+   "F1-PULLUP-VD/MC-C/O",
+   "G2-HANG-MOTOR/MC-P/O",
+   "L1-LEVEL/MC-C/O",
+   "L4-CORNER-SIDE-Y/MC-C/O"
+  ],
+  "2": [
+   "F1-PULLUP-VD/MC-C/O",
+   "G2-HANG-MOTOR/MC-P/O",
+   "L1-LEVEL/MC-C/O",
+   "L4-CORNER-SIDE-Y/MC-C/O"
+  ],
+  "3": [
+   "F1-PULLUP-VD/MC-C/O",
+   "G2-HANG-MOTOR/MC-P/O",
+   "L1-LEVEL/MC-C/O",
+   "L4-CORNER-SIDE-Y/MC-C/O"
+  ]
+ },
+ "stats": {
+  "2": {
+   "level": 2,
+   "nth": 64,
+   "nr": 3,
+   "h_near": 0.0011,
+   "h_far": 0.005,
+   "hy": 0.00625,
+   "nodes": 154313,
+   "elements": 250827,
+   "hex": 19008,
+   "wedge": 231819,
+   "layers": 99,
+   "section_nodes": 1975,
+   "patches": 144,
+   "min_signed_volume": -9.161153416799684e-08,
+   "build_s": 15.4,
+   "wall_s": 1472.3
+  },
+  "1": {
+   "level": 1,
+   "nth": 32,
+   "nr": 2,
+   "h_near": 0.0022,
+   "h_far": 0.01,
+   "hy": 0.0125,
+   "nodes": 36510,
+   "elements": 51955,
+   "hex": 3456,
+   "wedge": 48499,
+   "layers": 54,
+   "section_nodes": 853,
+   "patches": 144,
+   "min_signed_volume": -7.090263747464454e-07,
+   "build_s": 0.9,
+   "wall_s": 116.1
+  },
+  "3": {
+   "level": 3,
+   "nth": 96,
+   "nr": 4,
+   "h_near": 0.00075,
+   "h_far": 0.0033,
+   "hy": 0.0042,
+   "nodes": 424852,
+   "elements": 724746,
+   "hex": 56064,
+   "wedge": 668682,
+   "layers": 146,
+   "section_nodes": 3605,
+   "patches": 144,
+   "min_signed_volume": -2.6373713364003326e-08,
+   "build_s": 38.0,
+   "wall_s": 5436.7
+  }
+ },
+ "validation": {
+  "pcg": {
+   "shear": {
+    "w_fe_mm": 1.600393758856337,
+    "w_beam_mm": 1.638641566100277,
+    "err": -0.023341167486043868
+   },
+   "torque": {
+    "twist_fe_deg": 0.14643141784322866,
+    "twist_beam_deg": 0.14596088880048672,
+    "err": 0.003223665233945683
+   },
+   "mesh": {
+    "level": 2,
+    "nodes": 20736,
+    "elements": 15360
+   }
+  },
+  "su2": {
+   "shear": {
+    "w_fe_mm": 1.6003936859825658,
+    "w_beam_mm": 1.638641566100277,
+    "err": -0.02334121195810701,
+    "sigma_fe_mpa": 0.0,
+    "sigma_beam_mpa": 7.450207150767998,
+    "sigma_err": -1.0
+   },
+   "torque": {
+    "twist_fe_deg": 0.14641840955252428,
+    "twist_beam_deg": 0.14596088880048672,
+    "err": 0.003134543478033658
+   },
+   "mesh": {
+    "level": 2,
+    "elements": 15360,
+    "nodes": 20736
+   }
+  }
+ },
+ "h_mm": {
+  "2": 2.419986219579694,
+  "1": 4.090049252471176,
+  "3": 1.6990612891589463
+ },
+ "convergence": {
+  "w_tip_G2": {
+   "f": [
+    -2.4862052520647344,
+    -2.478458242827756,
+    -2.480668033775307
+   ],
+   "h_mm": [
+    4.090049252471176,
+    2.419986219579694,
+    1.6990612891589463
+   ],
+   "p": 2.5960037536116554,
+   "f_ext": -2.4821366236203883,
+   "gci_fine": 0.0007400173184632698,
+   "monotone": false,
+   "r21": 1.4243077839632339,
+   "r32": 1.6901126210468835,
+   "rel_change_fine": 0.0008908047822054112
+  },
+  "u_tip_L1": {
+   "f": [
+    -1.8318247228660707,
+    -1.8326139735603442,
+    -1.8335599258324402
+   ],
+   "h_mm": [
+    4.090049252471176,
+    2.419986219579694,
+    1.6990612891589463
+   ],
+   "p": 2.264935364392943,
+   "f_ext": -1.8343302851773344,
+   "gci_fine": 0.0005251800977712065,
+   "monotone": true,
+   "r21": 1.4243077839632339,
+   "r32": 1.6901126210468835,
+   "rel_change_fine": 0.0005159102022076402
+  },
+  "twist_tip_L4": {
+   "f": [
+    -3.0615206735244787,
+    -3.0588909211325,
+    -3.0644613653434947
+   ],
+   "h_mm": [
+    4.090049252471176,
+    2.419986219579694,
+    1.6990612891589463
+   ],
+   "p": 3.5272611684831943,
+   "f_ext": -3.0667059043867475,
+   "gci_fine": 0.0009155520235286528,
+   "monotone": false,
+   "r21": 1.4243077839632339,
+   "r32": 1.6901126210468835,
+   "rel_change_fine": 0.0018177563842023963
+  },
+  "spar_sigma_L1": {
+   "f": [
+    19.35154643164935,
+    19.419774088542013,
+    19.291442186188927
+   ],
+   "h_mm": [
+    4.090049252471176,
+    2.419986219579694,
+    1.6990612891589463
+   ],
+   "p": 2.863678337833479,
+   "f_ext": 19.218252584298586,
+   "gci_fine": 0.00474236200072305,
+   "monotone": false,
+   "r21": 1.4243077839632339,
+   "r32": 1.6901126210468835,
+   "rel_change_fine": 0.006652271049230356
+  },
+  "w_tip_G2_O": {
+   "f": [
+    -2.4862052520647344,
+    -2.478458242827756,
+    -2.480668033775307
+   ],
+   "h_mm": [
+    4.090049252471176,
+    2.419986219579694,
+    1.6990612891589463
+   ],
+   "p": 2.5960037536116554,
+   "f_ext": -2.4821366236203883,
+   "gci_fine": 0.0007400173184632698,
+   "monotone": false,
+   "r21": 1.4243077839632339,
+   "r32": 1.6901126210468835,
+   "rel_change_fine": 0.0008908047822054112
+  },
+  "twist_tip_L4_O": {
+   "f": [
+    -3.0615206735244787,
+    -3.0588909211325,
+    -3.0644613653434947
+   ],
+   "h_mm": [
+    4.090049252471176,
+    2.419986219579694,
+    1.6990612891589463
+   ],
+   "p": 3.5272611684831943,
+   "f_ext": -3.0667059043867475,
+   "gci_fine": 0.0009155520235286528,
+   "monotone": false,
+   "r21": 1.4243077839632339,
+   "r32": 1.6901126210468835,
+   "rel_change_fine": 0.0018177563842023963
+  },
+  "foam_s1_L4_O": {
+   "f": [
+    48.148658806427065,
+    40.95461526351109,
+    38.80142523541595
+   ],
+   "h_mm": [
+    4.090049252471176,
+    2.419986219579694,
+    1.6990612891589463
+   ],
+   "p": 1.80215571038642,
+   "f_ext": 36.386319348223715,
+   "gci_fine": 0.07780338842385646,
+   "monotone": true,
+   "r21": 1.4243077839632339,
+   "r32": 1.6901126210468835,
+   "rel_change_fine": 0.0554925499522584
+  },
+  "foam_tau_L4_O": {
+   "f": [
+    30.899810218232794,
+    27.693390409514038,
+    27.16472987409716
+   ],
+   "h_mm": [
+    4.090049252471176,
+    2.419986219579694,
+    1.6990612891589463
+   ],
+   "p": 3.0747122426045648,
+   "f_ext": 26.895937058852105,
+   "gci_fine": 0.012368649370472778,
+   "monotone": true,
+   "r21": 1.4243077839632339,
+   "r32": 1.6901126210468835,
+   "rel_change_fine": 0.01946128446213565
+  },
+  "foam_peak_L4_O": {
+   "f": [
+    162.30242898275665,
+    175.66231108664203,
+    176.06956582081935
+   ],
+   "h_mm": [
+    4.090049252471176,
+    2.419986219579694,
+    1.6990612891589463
+   ],
+   "p": 6.514304621467551,
+   "f_ext": 176.1147443712501,
+   "gci_fine": 0.00032074360935206416,
+   "monotone": true,
+   "r21": 1.4243077839632339,
+   "r32": 1.6901126210468835,
+   "rel_change_fine": 0.0023130331030165956
+  }
+ },
+ "cases": {
+  "L1-LEVEL/MC-C/O": {
+   "level": 3,
+   "w_tip_mm": 0.054199560838719546,
+   "u_tip_mm": -1.8335599258324402,
+   "twist_tip_deg": -0.7222785307209234,
+   "w_max_mm": 0.054199560838719546,
+   "spar_sigma_max_mpa": 19.291442186188927,
+   "spar_sigma_y_m": 0.0227857,
+   "foam": {
+    "s1_max_pa": 78352.91054821011,
+    "s1_at": [
+     0.24936374576104547,
+     0.07207692307692308,
+     -0.00289647908411667
+    ],
+    "s3_min_pa": -26045.658714047444,
+    "s3_at": [
+     0.00650969045727114,
+     0.010357142857142858,
+     -0.003593494076489566
+    ],
+    "tau_max_pa": 35834.814549787785,
+    "tau_at": [
+     0.24936374576104547,
+     0.07207692307692308,
+     -0.00289647908411667
+    ],
+    "s1_p995_pa": 22803.722941279553,
+    "tau_p995_pa": 11697.354071744474,
+    "vm_max_pa": 69165.53103143499,
+    "vm_at": [
+     0.24936374576104547,
+     0.07207692307692308,
+     -0.00289647908411667
+    ]
+   },
+   "petg": {
+    "s1_max_pa": 444526.7748190544,
+    "s1_at": [
+     0.073477641445335,
+     0.3038583333333334,
+     0.01569787912124894
+    ],
+    "s3_min_pa": -394907.994588851,
+    "s3_at": [
+     0.07237615276106733,
+     0.23275,
+     0.01285672973350968
+    ],
+    "tau_max_pa": 312789.40659796254,
+    "tau_at": [
+     0.07677154828045905,
+     0.3038583333333334,
+     0.017281612034158133
+    ],
+    "s1_p995_pa": 265845.67909488006,
+    "tau_p995_pa": 233328.20070898283,
+    "vm_max_pa": 546135.0609157403,
+    "vm_at": [
+     0.07677154828045905,
+     0.3038583333333334,
+     0.017281612034158133
+    ]
+   },
+   "cg_iter": 1015,
+   "rel_residual": 7.043333333964905e-09,
+   "root_reaction_N": [
+    37.8972000192634,
+    -0.529100000173949,
+    -0.9846000017283694
+   ],
+   "applied_N": [
+    -37.8972000000015,
+    0.5290999999996074,
+    0.9846000000001204
+   ]
+  },
+  "G2-HANG-MOTOR/MC-P/O": {
+   "level": 3,
+   "w_tip_mm": -2.480668033775307,
+   "u_tip_mm": 0.35135144012943614,
+   "twist_tip_deg": 0.38527596367346373,
+   "w_max_mm": 2.480668033775307,
+   "spar_sigma_max_mpa": 25.544922972300277,
+   "spar_sigma_y_m": 0.300925,
+   "foam": {
+    "s1_max_pa": 47889.256537445755,
+    "s1_at": [
+     0.02839219935099729,
+     0.30092499999999994,
+     0.016339064855923895
+    ],
+    "s3_min_pa": -32661.50527174992,
+    "s3_at": [
+     0.028699669728330074,
+     0.30092499999999994,
+     -0.006436101436399511
+    ],
+    "tau_max_pa": 19990.796586360553,
+    "tau_at": [
+     0.02839219935099729,
+     0.30092499999999994,
+     0.016339064855923895
+    ],
+    "s1_p995_pa": 10517.64652839218,
+    "tau_p995_pa": 6665.9960752608295,
+    "vm_max_pa": 37939.55165032112,
+    "vm_at": [
+     0.02839219935099729,
+     0.30092499999999994,
+     0.016339064855923895
+    ]
+   },
+   "petg": {
+    "s1_max_pa": 1062804.7581602372,
+    "s1_at": [
+     0.07182495533364443,
+     0.3038583333333334,
+     0.014261950376754902
+    ],
+    "s3_min_pa": -940829.4411983793,
+    "s3_at": [
+     0.073477641445335,
+     0.3359916666666667,
+     0.01569787912124894
+    ],
+    "tau_max_pa": 614080.5891064835,
+    "tau_at": [
+     0.06886059316087588,
+     0.3038583333333334,
+     0.006964666421923769
+    ],
+    "s1_p995_pa": 692004.9888108561,
+    "tau_p995_pa": 448805.06157450593,
+    "vm_max_pa": 1063622.9346815345,
+    "vm_at": [
+     0.06886059316087588,
+     0.3038583333333334,
+     0.006964666421923769
+    ]
+   },
+   "cg_iter": 959,
+   "rel_residual": 1.1142194095556447e-09,
+   "root_reaction_N": [
+    0.6229999950749341,
+    -31.148699999867283,
+    -14.941599977883074
+   ],
+   "applied_N": [
+    -0.623000000000038,
+    31.14870000000003,
+    14.941600000000369
+   ]
+  },
+  "L4-CORNER-SIDE-Y/MC-C/O": {
+   "level": 3,
+   "w_tip_mm": 2.4801602425401232,
+   "u_tip_mm": 1.2884105752899158,
+   "twist_tip_deg": -3.0644613653434947,
+   "w_max_mm": 2.4801602425401232,
+   "spar_sigma_max_mpa": 35.029238482056556,
+   "spar_sigma_y_m": 0.300925,
+   "foam": {
+    "s1_max_pa": 176069.56582081935,
+    "s1_at": [
+     0.028699669728330074,
+     0.30092499999999994,
+     -0.006436101436399511
+    ],
+    "s3_min_pa": -151366.85028168827,
+    "s3_at": [
+     0.09741641194861116,
+     0.30092499999999994,
+     -0.008178378869804855
+    ],
+    "tau_max_pa": 74270.68333976388,
+    "tau_at": [
+     0.027000249687443453,
+     0.30092499999999994,
+     -0.00645967866249269
+    ],
+    "s1_p995_pa": 38801.42523541595,
+    "tau_p995_pa": 27164.729874097156,
+    "vm_max_pa": 144648.66597866706,
+    "vm_at": [
+     0.027000249687443453,
+     0.30092499999999994,
+     -0.00645967866249269
+    ]
+   },
+   "petg": {
+    "s1_max_pa": 2419616.66024194,
+    "s1_at": [
+     0.06886095490527876,
+     0.3038583333333334,
+     0.0062353454203617235
+    ],
+    "s3_min_pa": -1945070.2230063882,
+    "s3_at": [
+     0.09254363838852635,
+     0.32394166666666663,
+     0.022508990944874064
+    ],
+    "tau_max_pa": 1357802.8359323847,
+    "tau_at": [
+     0.0695383054885277,
+     0.3038583333333334,
+     0.01052588673766429
+    ],
+    "s1_p995_pa": 1389183.0911306813,
+    "tau_p995_pa": 998055.4987074636,
+    "vm_max_pa": 2395095.963917349,
+    "vm_at": [
+     0.06897580724152082,
+     0.3038583333333334,
+     0.00842010159070444
+    ]
+   },
+   "cg_iter": 983,
+   "rel_residual": 8.248022788102748e-10,
+   "root_reaction_N": [
+    32.7963999862128,
+    27.67579999985176,
+    14.523899975172508
+   ],
+   "applied_N": [
+    -32.796399999999494,
+    -27.675799999999832,
+    -14.523899999999221
+   ]
+  },
+  "F1-PULLUP-VD/MC-C/O": {
+   "level": 3,
+   "w_tip_mm": 0.8845606651252141,
+   "u_tip_mm": -0.07320288204059246,
+   "twist_tip_deg": 1.1702798484228971,
+   "w_max_mm": 0.8845606651252141,
+   "spar_sigma_max_mpa": 7.557392229745199,
+   "spar_sigma_y_m": 0.0227857,
+   "foam": {
+    "s1_max_pa": 37984.79661280498,
+    "s1_at": [
+     0.027000249687443453,
+     0.339,
+     -0.00645967866249269
+    ],
+    "s3_min_pa": -39058.55364654278,
+    "s3_at": [
+     0.027554954010530926,
+     0.339,
+     0.015856764034784022
+    ],
+    "tau_max_pa": 19070.094578189597,
+    "tau_at": [
+     0.07409664950673202,
+     0.4979487179487179,
+     0.01609526423018264
+    ],
+    "s1_p995_pa": 13653.658976926656,
+    "tau_p995_pa": 9137.747458855785,
+    "vm_max_pa": 34098.31281120947,
+    "vm_at": [
+     0.027000249687443453,
+     0.339,
+     -0.00645967866249269
+    ]
+   },
+   "petg": {
+    "s1_max_pa": 282227.4049918688,
+    "s1_at": [
+     0.0741072707550964,
+     0.3038583333333334,
+     -0.0028609436565653922
+    ],
+    "s3_min_pa": -238093.0544508748,
+    "s3_at": [
+     0.07472382509751911,
+     0.3038583333333334,
+     0.016452596598465524
+    ],
+    "tau_max_pa": 191249.0992009166,
+    "tau_at": [
+     0.07890104695095383,
+     0.2352,
+     -0.00452949469616746
+    ],
+    "s1_p995_pa": 177780.06167957725,
+    "tau_p995_pa": 153359.49325467125,
+    "vm_max_pa": 332219.1955774567,
+    "vm_at": [
+     0.07890104695095383,
+     0.2352,
+     -0.00452949469616746
+    ]
+   },
+   "cg_iter": 1047,
+   "rel_residual": 1.2145985643833153e-08,
+   "root_reaction_N": [
+    -0.020499999167279404,
+    -0.41280000008953827,
+    -17.948300006546894
+   ],
+   "applied_N": [
+    0.020500000000051716,
+    0.4128000000000821,
+    17.948300000000135
+   ]
+  }
+ },
+ "beam_compare": {
+  "L1-LEVEL/MC-C": {
+   "w": {
+    "fea": 5.419956083871955e-05,
+    "beam_tape0": 8.958523249051846e-05,
+    "beam_tape50": 8.803727534888418e-05,
+    "level": 3,
+    "ratio_fea_beam0": 0.6050055274953484
+   },
+   "u": {
+    "fea": -0.0018335599258324402,
+    "beam_tape0": -0.0018219038547575412,
+    "beam_tape50": -0.001437665931760931,
+    "level": 3,
+    "ratio_fea_beam0": 1.0063977421445494
+   },
+   "twist": {
+    "fea": -0.012606138477547126,
+    "beam_tape0": -0.017648717744287917,
+    "beam_tape50": -0.015240025454639034,
+    "level": 3,
+    "ratio_fea_beam0": 0.7142807007396986
+   }
+  },
+  "G2-HANG-MOTOR/MC-P": {
+   "w": {
+    "fea": -0.002480668033775307,
+    "beam_tape0": -0.002600463307549527,
+    "beam_tape50": -0.0025639796280648016,
+    "level": 3,
+    "ratio_fea_beam0": 0.9539331036025631
+   },
+   "u": {
+    "fea": 0.00035135144012943617,
+    "beam_tape0": 0.0003680429423109274,
+    "beam_tape50": 0.0002865091010596046,
+    "level": 3,
+    "ratio_fea_beam0": 0.9546479492944875
+   },
+   "twist": {
+    "fea": 0.00672433409489601,
+    "beam_tape0": 0.007970527209081785,
+    "beam_tape50": 0.006858653187836865,
+    "level": 3,
+    "ratio_fea_beam0": 0.843649851321524
+   }
+  },
+  "L4-CORNER-SIDE-Y/MC-C": {
+   "w": {
+    "fea": 0.0024801602425401233,
+    "beam_tape0": 0.002555427864990968,
+    "beam_tape50": 0.0025260035231687377,
+    "level": 3,
+    "ratio_fea_beam0": 0.9705459803886459
+   },
+   "u": {
+    "fea": 0.0012884105752899158,
+    "beam_tape0": 0.001140327811836464,
+    "beam_tape50": 0.0008741034892042598,
+    "level": 3,
+    "ratio_fea_beam0": 1.129859819182143
+   },
+   "twist": {
+    "fea": -0.053484940625404834,
+    "beam_tape0": -0.06419932792471739,
+    "beam_tape50": -0.05557694334236505,
+    "level": 3,
+    "ratio_fea_beam0": 0.8331074849899262
+   }
+  },
+  "F1-PULLUP-VD/MC-C": {
+   "w": {
+    "fea": 0.0008845606651252142,
+    "beam_tape0": 0.0008594000700907835,
+    "beam_tape50": 0.0008400652164773098,
+    "level": 3,
+    "ratio_fea_beam0": 1.0292769292324735
+   },
+   "u": {
+    "fea": -7.320288204059246e-05,
+    "beam_tape0": -6.138967890818609e-05,
+    "beam_tape50": -4.858456201066651e-05,
+    "level": 3,
+    "ratio_fea_beam0": 1.1924297918233795
+   },
+   "twist": {
+    "fea": 0.020425236524719722,
+    "beam_tape0": 0.02055336057444276,
+    "beam_tape50": 0.017199195021267318,
+    "level": 3,
+    "ratio_fea_beam0": 0.9937662724662966
+   }
+  }
+ },
+ "su2_vs_pcg": {
+  "distributed L1 L1-LEVEL/MC-C/B": {
+   "w": {
+    "su2": 2.1327907895655744e-05,
+    "pcg": 2.1327908974565238e-05,
+    "rel": -5.058674505679442e-08
+   },
+   "u": {
+    "su2": -0.0017799859948128005,
+    "pcg": -0.001779985984351466,
+    "rel": 5.877200484507833e-09
+   },
+   "twist": {
+    "su2": -0.0027089277007815503,
+    "pcg": -0.002708927700684485,
+    "rel": 3.58315768380046e-11
+   },
+   "linsol": {
+    "iter": 12067,
+    "resid_log10": -8.001747
+   },
+   "su2_s": 1401.0
+  },
+  "distributed L1 L1-LEVEL/MC-C/T": {
+   "w": {
+    "su2": 0.0001833948331624189,
+    "pcg": 0.0001833948336139128,
+    "rel": -2.461868025997752e-09
+   },
+   "u": {
+    "su2": -0.003252775403584042,
+    "pcg": -0.0032527754057898426,
+    "rel": -6.781287888423283e-10
+   },
+   "twist": {
+    "su2": -0.01338350120770046,
+    "pcg": -0.01338350120488851,
+    "rel": 2.1010573259696087e-10
+   },
+   "linsol": {
+    "iter": 11161,
+    "resid_log10": -8.008075
+   },
+   "su2_s": 1298.0
+  },
+  "distributed L1 G2-HANG-MOTOR/MC-P/B": {
+   "w": {
+    "su2": -0.00223791487871136,
+    "pcg": -0.002237914841876052,
+    "rel": 1.645965571082772e-08
+   },
+   "u": {
+    "su2": 0.00037638363851477625,
+    "pcg": 0.00037638363304499955,
+    "rel": 1.4532450999001905e-08
+   },
+   "twist": {
+    "su2": 0.007213662539441463,
+    "pcg": 0.007213662503759154,
+    "rel": 4.946489893545512e-09
+   },
+   "linsol": {
+    "iter": 12002,
+    "resid_log10": -8.00294
+   },
+   "su2_s": 1398.7
+  },
+  "distributed L1 G2-HANG-MOTOR/MC-P/T": {
+   "w": {
+    "su2": -0.017982371360788094,
+    "pcg": -0.01798237124507072,
+    "rel": 6.435045278877247e-09
+   },
+   "u": {
+    "su2": 0.00048077541390760737,
+    "pcg": 0.00048077540819872115,
+    "rel": 1.1874330758473764e-08
+   },
+   "twist": {
+    "su2": 0.020383804767980487,
+    "pcg": 0.020383804606107694,
+    "rel": 7.941245320760463e-09
+   },
+   "linsol": {
+    "iter": 11154,
+    "resid_log10": -8.003932
+   },
+   "su2_s": 1287.3
+  },
+  "distributed L1 L4-CORNER-SIDE-Y/MC-C/B": {
+   "w": {
+    "su2": 0.0010752329951505062,
+    "pcg": 0.0010752329996335057,
+    "rel": -4.169328393605772e-09
+   },
+   "u": {
+    "su2": 0.00033697546250055884,
+    "pcg": 0.0003369754650377314,
+    "rel": -7.529250136776223e-09
+   },
+   "twist": {
+    "su2": -0.012521037417537705,
+    "pcg": -0.012521037449078998,
+    "rel": -2.5190639362392233e-09
+   },
+   "linsol": {
+    "iter": 12171,
+    "resid_log10": -8.002007
+   },
+   "su2_s": 1426.7
+  },
+  "distributed L1 L4-CORNER-SIDE-Y/MC-C/T": {
+   "w": {
+    "su2": 0.009628886036741951,
+    "pcg": 0.009628886197461202,
+    "rel": -1.6691364620204678e-08
+   },
+   "u": {
+    "su2": 0.0007425972277790982,
+    "pcg": 0.0007425972384602798,
+    "rel": -1.4383546127583321e-08
+   },
+   "twist": {
+    "su2": -0.059672308511467397,
+    "pcg": -0.05967230868141592,
+    "rel": -2.848029920235518e-09
+   },
+   "linsol": {
+    "iter": 11125,
+    "resid_log10": -8.000409
+   },
+   "su2_s": 1301.1
+  },
+  "distributed L1 F1-PULLUP-VD/MC-C/B": {
+   "w": {
+    "su2": 0.0009678913263327018,
+    "pcg": 0.0009678913220192195,
+    "rel": 4.4565770959105405e-09
+   },
+   "u": {
+    "su2": -6.183657316184314e-05,
+    "pcg": -6.183657262057336e-05,
+    "rel": 8.753230512114695e-09
+   },
+   "twist": {
+    "su2": 0.006126673883396243,
+    "pcg": 0.00612667388372163,
+    "rel": -5.3109799113382e-11
+   },
+   "linsol": {
+    "iter": 12263,
+    "resid_log10": -8.009583
+   },
+   "su2_s": 1406.7
+  },
+  "distributed L1 F1-PULLUP-VD/MC-C/T": {
+   "w": {
+    "su2": 0.007255703704771822,
+    "pcg": 0.007255703746775261,
+    "rel": -5.7890234203864094e-09
+   },
+   "u": {
+    "su2": -5.105298333357022e-05,
+    "pcg": -5.105298245654039e-05,
+    "rel": 1.717881680627221e-08
+   },
+   "twist": {
+    "su2": 0.019492841198217408,
+    "pcg": 0.019492841200676684,
+    "rel": -1.2616302637521735e-10
+   },
+   "linsol": {
+    "iter": 11245,
+    "resid_log10": -8.008576
+   },
+   "su2_s": 1312.6
+  },
+  "block L1 L1-LEVEL/MC-C/B": {
+   "w": {
+    "su2": 6.0369376050685096e-05,
+    "pcg": 6.0369376053737464e-05,
+    "rel": -5.056152851420145e-11
+   },
+   "u": {
+    "su2": -0.0017386757669515024,
+    "pcg": -0.0017386757566885728,
+    "rel": 5.902727735502249e-09
+   },
+   "twist": {
+    "su2": -0.0022073286492901153,
+    "pcg": -0.002207328648952461,
+    "rel": 1.52969692021172e-10
+   },
+   "linsol": {
+    "iter": 11983,
+    "resid_log10": -8.011324
+   },
+   "su2_s": 734.7
+  },
+  "block L1 G2-HANG-MOTOR/MC-P/B": {
+   "w": {
+    "su2": -0.0023129718887597846,
+    "pcg": -0.0023129718722528676,
+    "rel": 7.1366699807772866e-09
+   },
+   "u": {
+    "su2": 0.0003346121719959795,
+    "pcg": 0.0003346121735773646,
+    "rel": -4.72602377575246e-09
+   },
+   "twist": {
+    "su2": 0.0010587529892414369,
+    "pcg": 0.0010587529994433274,
+    "rel": -9.635760704325815e-09
+   },
+   "linsol": {
+    "iter": 11891,
+    "resid_log10": -8.006258
+   },
+   "su2_s": 732.0
+  },
+  "block L1 L4-CORNER-SIDE-Y/MC-C/T": {
+   "w": {
+    "su2": 0.009964973632839777,
+    "pcg": 0.009964973690919773,
+    "rel": -5.828414351650491e-09
+   },
+   "u": {
+    "su2": 0.0009980342418498059,
+    "pcg": 0.0009980342403660821,
+    "rel": 1.486646123091202e-09
+   },
+   "twist": {
+    "su2": -0.04829366617247605,
+    "pcg": -0.04829366611828667,
+    "rel": 1.1220805232606917e-09
+   },
+   "linsol": {
+    "iter": 11064,
+    "resid_log10": -8.00015
+   },
+   "su2_s": 685.7
+  },
+  "block L1 F1-PULLUP-VD/MC-C/B": {
+   "w": {
+    "su2": 0.0009535093656803006,
+    "pcg": 0.0009535093581741973,
+    "rel": 7.872081385434873e-09
+   },
+   "u": {
+    "su2": -5.544016289770048e-05,
+    "pcg": -5.5440162959989264e-05,
+    "rel": -1.1235317554800177e-09
+   },
+   "twist": {
+    "su2": 0.006039605689725621,
+    "pcg": 0.006039605689628562,
+    "rel": 1.6070504962112443e-11
+   },
+   "linsol": {
+    "iter": 12075,
+    "resid_log10": -8.005104
+   },
+   "su2_s": 739.2
+  }
+ },
+ "margins": {
+  "spar_sigma_ult_pa": {
+   "value": 52543857.72308484,
+   "allow": 350000000.0,
+   "case": "L4-CORNER-SIDE-Y/MC-C/O",
+   "MS": 5.661102080562112
+  },
+  "foam_s1_p995_ult_pa": {
+   "value": 58202.13785312392,
+   "allow": 150000.0,
+   "case": "L4-CORNER-SIDE-Y/MC-C/O",
+   "MS": 1.5772249187569827
+  },
+  "foam_s1_p995_ult_pa_BT": {
+   "value": 0.0,
+   "allow": 150000.0,
+   "case": null,
+   "MS": Infinity
+  },
+  "foam_tau_p995_ult_pa": {
+   "value": 40747.09481114573,
+   "allow": 100000.0,
+   "case": "L4-CORNER-SIDE-Y/MC-C/O",
+   "MS": 1.4541626946283923
+  },
+  "foam_tau_p995_ult_pa_BT": {
+   "value": 0.0,
+   "allow": 100000.0,
+   "case": null,
+   "MS": Infinity
+  },
+  "foam_s1_peak_ult_pa": {
+   "value": 264104.348731229,
+   "allow": 150000.0,
+   "case": "L4-CORNER-SIDE-Y/MC-C/O",
+   "MS": -0.4320426728275859
+  },
+  "foam_s1_peak_ult_pa_BT": {
+   "value": 0.0,
+   "allow": 150000.0,
+   "case": null,
+   "MS": Infinity
+  },
+  "foam_s3_peak_ult_pa": {
+   "value": 227050.2754225324,
+   "allow": 120000.0,
+   "case": "L4-CORNER-SIDE-Y/MC-C/O",
+   "MS": -0.4714826935281875
+  },
+  "foam_s3_peak_ult_pa_BT": {
+   "value": 0.0,
+   "allow": 120000.0,
+   "case": null,
+   "MS": Infinity
+  },
+  "foam_tau_peak_ult_pa": {
+   "value": 111406.02500964582,
+   "allow": 100000.0,
+   "case": "L4-CORNER-SIDE-Y/MC-C/O",
+   "MS": -0.10238247894275243
+  },
+  "foam_tau_peak_ult_pa_BT": {
+   "value": 0.0,
+   "allow": 100000.0,
+   "case": null,
+   "MS": Infinity
+  },
+  "petg_vm_peak_ult_pa": {
+   "value": 3592643.9458760237,
+   "allow": 20000000.0,
+   "case": "L4-CORNER-SIDE-Y/MC-C/O",
+   "MS": 4.566930734385156
+  },
+  "petg_vm_peak_ult_pa_BT": {
+   "value": 0.0,
+   "allow": 20000000.0,
+   "case": null,
+   "MS": Infinity
+  }
+ },
+ "sensitivity_distributed": {
+  "G2-HANG-MOTOR/MC-P/O": {
+   "level": 2,
+   "foam_s1_p995_ult_pa": 163173.38554256002,
+   "foam_tau_p995_ult_pa": 137468.2396317316,
+   "foam_s1_peak_ult_pa": 699591.2576529662,
+   "s1_at": [
+    0.2486646604431119,
+    0.339,
+    -0.0034185795151935056
+   ],
+   "foam_tau_peak_ult_pa": 482655.6954988501,
+   "tau_at": [
+    0.2510366317318434,
+    0.339,
+    0.004607875224530798
+   ],
+   "w_tip_mm": -2.4303668271860763,
+   "twist_tip_deg": 1.1372716056784082,
+   "spar_sigma_max_mpa": 21.804369145321875
+  },
+  "L4-CORNER-SIDE-Y/MC-C/O": {
+   "level": 2,
+   "foam_s1_p995_ult_pa": 252594.3973234542,
+   "foam_tau_p995_ult_pa": 292618.55763571075,
+   "foam_s1_peak_ult_pa": 2281539.0007974925,
+   "s1_at": [
+    0.30840193791016934,
+    0.339,
+    -0.0006976795428576219
+   ],
+   "foam_tau_peak_ult_pa": 1392495.1094416052,
+   "tau_at": [
+    0.3059414508268672,
+    0.339,
+    -0.0008428856844282488
+   ],
+   "w_tip_mm": 2.2156705104295416,
+   "twist_tip_deg": -3.963717703303182,
+   "spar_sigma_max_mpa": 23.21004249169922
+  }
+ },
+ "tip_defl_frac": 0.004316759345426763,
+ "d68": {
+  "measure": "avg",
+  "levels": {
+   "d68/L1": {
+    "h_mm": 1.6,
+    "stats": {
+     "h_local_mm": 1.6,
+     "section_nodes": 2517,
+     "layers": 55,
+     "nodes": 115918,
+     "elements": 194607,
+     "bead_elements": 1745,
+     "min_signed_volume": -3.55986824397442e-08,
+     "max_morph_shift_mm": 3.0,
+     "cuts": [
+      0.27,
+      0.37
+     ],
+     "setup_s": 32.6,
+     "wall_s": 988.9
+    },
+    "pocket_foam_s1_lim_pa": 208133.22184829623,
+    "pocket_foam_s1_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s1_at": [
+     0.029206048938127848,
+     0.29775,
+     -0.006756840393924901
+    ],
+    "pocket_foam_s1_avg_lim_pa": 166208.23402070272,
+    "pocket_foam_s1_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_lim_pa": -135045.1455179522,
+    "pocket_foam_s3_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_at": [
+     0.0959626607981854,
+     0.29775,
+     -0.00778902641045199
+    ],
+    "pocket_foam_s3_avg_lim_pa": -119392.21403493732,
+    "pocket_foam_s3_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_lim_pa": 88050.1400575155,
+    "pocket_foam_tau_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_at": [
+     0.02954095864946996,
+     0.29775,
+     -0.006370448671228251
+    ],
+    "pocket_foam_tau_avg_lim_pa": 75219.87758051853,
+    "pocket_foam_tau_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "bead_s1_lim_pa": 1943936.8955229141,
+    "bead_vm_lim_pa": 1792524.93773797,
+    "petg_vm_lim_pa": 2584516.7726565725,
+    "cutout_foam_s1_dist_lim_pa": 1172029.7392632256,
+    "cutout_foam_s1_dist_case": "distributed/L4-CORNER-SIDE-Y/MC-C",
+    "cutout_foam_s1_dist_at": [
+     0.2532298526909567,
+     0.3395000000000001,
+     -0.003475499517586609
+    ],
+    "cutout_foam_s1_lim_pa": 9181.92046910392,
+    "cutout_foam_tau_dist_lim_pa": 588951.5925504179,
+    "cutout_foam_tau_dist_case": "distributed/L4-CORNER-SIDE-Y/MC-C",
+    "cutout_foam_tau_dist_at": [
+     0.25254908555051075,
+     0.3395000000000001,
+     -0.003310919500788862
+    ],
+    "cutout_foam_tau_lim_pa": 14674.987147524223,
+    "equilibrium_max_N": 4.7575113759634746e-07
+   },
+   "d68/L2": {
+    "h_mm": 1.1,
+    "stats": {
+     "h_local_mm": 1.1,
+     "section_nodes": 3424,
+     "layers": 63,
+     "nodes": 186040,
+     "elements": 324790,
+     "bead_elements": 3414,
+     "min_signed_volume": -3.203348554976864e-08,
+     "max_morph_shift_mm": 3.0,
+     "cuts": [
+      0.27,
+      0.37
+     ],
+     "setup_s": 61.7,
+     "wall_s": 1733.0
+    },
+    "pocket_foam_s1_lim_pa": 221094.18149642262,
+    "pocket_foam_s1_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s1_at": [
+     0.029594792295016558,
+     0.29849999999999993,
+     -0.006776275649963657
+    ],
+    "pocket_foam_s1_avg_lim_pa": 189377.3812526486,
+    "pocket_foam_s1_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_lim_pa": -160665.45153245077,
+    "pocket_foam_s3_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_at": [
+     0.09604844068965919,
+     0.29849999999999993,
+     -0.00805401937145348
+    ],
+    "pocket_foam_s3_avg_lim_pa": -128890.76668811942,
+    "pocket_foam_s3_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_lim_pa": 94010.81994130925,
+    "pocket_foam_tau_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_at": [
+     0.09566213264240513,
+     0.29849999999999993,
+     0.022316928556752064
+    ],
+    "pocket_foam_tau_avg_lim_pa": 84153.85458295024,
+    "pocket_foam_tau_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "bead_s1_lim_pa": 1573651.187305762,
+    "bead_vm_lim_pa": 1504536.0555004044,
+    "petg_vm_lim_pa": 2931230.565496763,
+    "cutout_foam_s1_dist_lim_pa": 1142367.8443888824,
+    "cutout_foam_s1_dist_case": "distributed/L4-CORNER-SIDE-Y/MC-C",
+    "cutout_foam_s1_dist_at": [
+     0.252686889401555,
+     0.3395000000000001,
+     -0.003589146284849872
+    ],
+    "cutout_foam_s1_lim_pa": 9643.420132656036,
+    "cutout_foam_tau_dist_lim_pa": 583533.9128181542,
+    "cutout_foam_tau_dist_case": "distributed/L4-CORNER-SIDE-Y/MC-C",
+    "cutout_foam_tau_dist_at": [
+     0.252686889401555,
+     0.3395000000000001,
+     -0.003589146284849872
+    ],
+    "cutout_foam_tau_lim_pa": 14642.239441828122,
+    "equilibrium_max_N": 1.009142593488832e-06
+   },
+   "asdrawn/L1": {
+    "h_mm": 1.6,
+    "stats": {
+     "h_local_mm": 1.6,
+     "section_nodes": 2517,
+     "layers": 55,
+     "nodes": 115918,
+     "elements": 194607,
+     "bead_elements": 0,
+     "min_signed_volume": -3.55986824397442e-08,
+     "max_morph_shift_mm": 0.0,
+     "cuts": [
+      0.27,
+      0.37
+     ],
+     "setup_s": 31.8,
+     "wall_s": 479.3
+    },
+    "pocket_foam_s1_lim_pa": 198122.2194055493,
+    "pocket_foam_s1_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s1_at": [
+     0.028314941532207472,
+     0.3013875,
+     -0.0066947455461805055
+    ],
+    "pocket_foam_s1_avg_lim_pa": 169590.22354517874,
+    "pocket_foam_s1_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_lim_pa": -154944.38341712288,
+    "pocket_foam_s3_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_at": [
+     0.09779533840116629,
+     0.3013875,
+     -0.008351828273930675
+    ],
+    "pocket_foam_s3_avg_lim_pa": -133666.3950038818,
+    "pocket_foam_s3_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_lim_pa": 86967.7826731971,
+    "pocket_foam_tau_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_at": [
+     0.027554954010530926,
+     0.3013875,
+     -0.006349835124528972
+    ],
+    "pocket_foam_tau_avg_lim_pa": 71822.03629808745,
+    "pocket_foam_tau_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "bead_s1_lim_pa": 0.0,
+    "bead_vm_lim_pa": 0.0,
+    "petg_vm_lim_pa": 2650904.3240404855,
+    "cutout_foam_s1_dist_lim_pa": 0.0,
+    "cutout_foam_s1_dist_case": null,
+    "cutout_foam_s1_dist_at": null,
+    "cutout_foam_s1_lim_pa": 6219.727863494164,
+    "cutout_foam_tau_dist_lim_pa": 0.0,
+    "cutout_foam_tau_dist_case": null,
+    "cutout_foam_tau_dist_at": null,
+    "cutout_foam_tau_lim_pa": 14761.335760779655,
+    "equilibrium_max_N": 3.804511123917109e-07
+   },
+   "asdrawn/L2": {
+    "h_mm": 1.1,
+    "stats": {
+     "h_local_mm": 1.1,
+     "section_nodes": 3424,
+     "layers": 63,
+     "nodes": 186040,
+     "elements": 324790,
+     "bead_elements": 0,
+     "min_signed_volume": -3.203348554976864e-08,
+     "max_morph_shift_mm": 0.0,
+     "cuts": [
+      0.27,
+      0.37
+     ],
+     "setup_s": 99.8,
+     "wall_s": 2270.5
+    },
+    "pocket_foam_s1_lim_pa": 195355.18202727867,
+    "pocket_foam_s1_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s1_at": [
+     0.02835986918423064,
+     0.3013875,
+     -0.006690297021569057
+    ],
+    "pocket_foam_s1_avg_lim_pa": 165532.02718434774,
+    "pocket_foam_s1_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_lim_pa": -167881.34939700604,
+    "pocket_foam_s3_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_at": [
+     0.09761000140765168,
+     0.3013875,
+     -0.008406346745494923
+    ],
+    "pocket_foam_s3_avg_lim_pa": -132477.65626761602,
+    "pocket_foam_s3_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_lim_pa": 93036.84933848829,
+    "pocket_foam_tau_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_at": [
+     0.027668061158915333,
+     0.3013875,
+     -0.006311358849125118
+    ],
+    "pocket_foam_tau_avg_lim_pa": 73031.4643777467,
+    "pocket_foam_tau_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "bead_s1_lim_pa": 0.0,
+    "bead_vm_lim_pa": 0.0,
+    "petg_vm_lim_pa": 2880116.3749812255,
+    "cutout_foam_s1_dist_lim_pa": 0.0,
+    "cutout_foam_s1_dist_case": null,
+    "cutout_foam_s1_dist_at": null,
+    "cutout_foam_s1_lim_pa": 6958.313928852747,
+    "cutout_foam_tau_dist_lim_pa": 0.0,
+    "cutout_foam_tau_dist_case": null,
+    "cutout_foam_tau_dist_at": null,
+    "cutout_foam_tau_lim_pa": 15384.140800157606,
+    "equilibrium_max_N": 1.7192473222849003e-07
+   },
+   "d68g/L1": {
+    "h_mm": 1.6,
+    "stats": {
+     "h_local_mm": 1.6,
+     "section_nodes": 2529,
+     "layers": 55,
+     "nodes": 115588,
+     "elements": 191699,
+     "bead_elements": 1691,
+     "min_signed_volume": -3.55986824397442e-08,
+     "max_morph_shift_mm": 3.0,
+     "cuts": [
+      0.27,
+      0.37
+     ],
+     "setup_s": 31.2,
+     "wall_s": 459.7
+    },
+    "pocket_foam_s1_lim_pa": 209942.2698250664,
+    "pocket_foam_s1_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s1_at": [
+     0.029206048938127904,
+     0.29775,
+     -0.0067568403939248685
+    ],
+    "pocket_foam_s1_avg_lim_pa": 167687.2532351438,
+    "pocket_foam_s1_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_lim_pa": -153328.59330474865,
+    "pocket_foam_s3_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_at": [
+     0.0959626607981854,
+     0.29775,
+     -0.00778902641045199
+    ],
+    "pocket_foam_s3_avg_lim_pa": -136910.37481769765,
+    "pocket_foam_s3_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_lim_pa": 88699.48520263388,
+    "pocket_foam_tau_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_at": [
+     0.029540958649470216,
+     0.29775,
+     -0.006370448671228085
+    ],
+    "pocket_foam_tau_avg_lim_pa": 75822.2634188685,
+    "pocket_foam_tau_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "bead_s1_lim_pa": 1960909.8533286056,
+    "bead_vm_lim_pa": 1808626.2288751223,
+    "petg_vm_lim_pa": 2608412.3615182354,
+    "cutout_foam_s1_dist_lim_pa": 0.0,
+    "cutout_foam_s1_dist_case": null,
+    "cutout_foam_s1_dist_at": null,
+    "cutout_foam_s1_lim_pa": 5102.927738199799,
+    "cutout_foam_tau_dist_lim_pa": 0.0,
+    "cutout_foam_tau_dist_case": null,
+    "cutout_foam_tau_dist_at": null,
+    "cutout_foam_tau_lim_pa": 14698.916487776622,
+    "equilibrium_max_N": 7.921160545265593e-07
+   },
+   "d68g/L2": {
+    "h_mm": 1.1,
+    "stats": {
+     "h_local_mm": 1.1,
+     "section_nodes": 3466,
+     "layers": 63,
+     "nodes": 187636,
+     "elements": 324997,
+     "bead_elements": 3374,
+     "min_signed_volume": -3.203348554976864e-08,
+     "max_morph_shift_mm": 3.0,
+     "cuts": [
+      0.27,
+      0.37
+     ],
+     "setup_s": 98.7,
+     "wall_s": 2237.9
+    },
+    "pocket_foam_s1_lim_pa": 224108.98316157382,
+    "pocket_foam_s1_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s1_at": [
+     0.029585852317167576,
+     0.29849999999999993,
+     -0.006782368425331291
+    ],
+    "pocket_foam_s1_avg_lim_pa": 192260.7276027846,
+    "pocket_foam_s1_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_lim_pa": -180116.81618600793,
+    "pocket_foam_s3_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_at": [
+     0.09604844068965919,
+     0.29849999999999993,
+     -0.00805401937145348
+    ],
+    "pocket_foam_s3_avg_lim_pa": -145802.0943033969,
+    "pocket_foam_s3_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_lim_pa": 94496.45006323201,
+    "pocket_foam_tau_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_at": [
+     0.029585852317167576,
+     0.29849999999999993,
+     -0.006782368425331291
+    ],
+    "pocket_foam_tau_avg_lim_pa": 83083.3655179267,
+    "pocket_foam_tau_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "bead_s1_lim_pa": 1567034.4026832464,
+    "bead_vm_lim_pa": 1464408.6312181097,
+    "petg_vm_lim_pa": 2944982.5251695304,
+    "cutout_foam_s1_dist_lim_pa": 0.0,
+    "cutout_foam_s1_dist_case": null,
+    "cutout_foam_s1_dist_at": null,
+    "cutout_foam_s1_lim_pa": 4964.487026864678,
+    "cutout_foam_tau_dist_lim_pa": 0.0,
+    "cutout_foam_tau_dist_case": null,
+    "cutout_foam_tau_dist_at": null,
+    "cutout_foam_tau_lim_pa": 14182.436256255718,
+    "equilibrium_max_N": 5.997459169293506e-07
+   }
+  },
+  "params": {
+   "d68_corner_s1_ult_pa": [
+    284066.0718789729,
+    "Pa",
+    "foam tension peak at the R 3 mm block-pocket corners + beads, ultimate, d68 submodel, finest level, avg"
+   ],
+   "d68_corner_s3_ult_pa": [
+    193336.15003217914,
+    "Pa",
+    "foam compression peak, same, ultimate, avg"
+   ],
+   "d68_corner_tau_ult_pa": [
+    126230.78187442536,
+    "Pa",
+    "foam shear peak, same, ultimate, avg"
+   ],
+   "d68_bead_s1_ult_pa": [
+    2360476.780958643,
+    "Pa",
+    "microballoon bead max principal, ultimate"
+   ],
+   "d68_petg_vm_ult_pa": [
+    4396845.848245145,
+    "Pa",
+    "PETG block von Mises peak (rounded block), ultimate"
+   ],
+   "d68_cutout_tau_dist_ult_pa": [
+    875300.8692272312,
+    "Pa",
+    "foam shear peak at the R 3 mm elevon cut-out corners, fillet-carries-load sensitivity, ultimate, avg"
+   ],
+   "d68_cutout_s1_dist_ult_pa": [
+    1713551.7665833235,
+    "Pa",
+    "foam tension peak at the same corners, sensitivity, ultimate, avg"
+   ],
+   "d68_cutout_tau_ult_pa": [
+    21963.359162742185,
+    "Pa",
+    "foam shear peak at the cut-out corners, primary path, ultimate, avg"
+   ],
+   "d68_corner_gci": [
+    0.13939831181324003,
+    "-",
+    "TWO LEVELS ONLY (local level 3 not finished): largest relative change level 1 -> 2 of the three pocket-corner foam peaks; not a GCI"
+   ],
+   "d68_cut_sens": [
+    0.007296835051575634,
+    "-",
+    "submodel cut planes 0.27/0.37 -> 0.28/0.36 m: largest relative change of the corner peaks"
+   ],
+   "asdrawn_corner_s1_ult_pa": [
+    248298.0407765216,
+    "Pa",
+    "as-drawn (sharp, no bead) pocket corner foam tension, same submodel, avg"
+   ],
+   "asdrawn_corner_s3_ult_pa": [
+    198716.48440142404,
+    "Pa",
+    "as-drawn pocket corner foam compression, same submodel, avg"
+   ],
+   "d68g_corner_s1_ult_pa": [
+    288391.0914041769,
+    "Pa",
+    "foam tension peak at the pocket corners with the ESC grooves and open slot seams (d68g), ultimate, avg"
+   ],
+   "d68g_corner_s3_ult_pa": [
+    218703.14145509538,
+    "Pa",
+    "foam compression peak, same (d68g), ultimate, avg"
+   ],
+   "d68g_over_d68_s1": [
+    1.015225399839537,
+    "-",
+    "corner tension with the cuts / without, same local level L2"
+   ],
+   "d68_g431_corner_s1_ult_pa": [
+    234372.70090438338,
+    "Pa",
+    "foam tension peak at the pocket corners, tube G 4.31 GPa (GT-16 pass line) instead of 3 GPa, ultimate"
+   ],
+   "d68_g431_corner_s3_ult_pa": [
+    145231.50789284543,
+    "Pa",
+    "foam compression peak, same, tube G 4.31 GPa, ultimate"
+   ]
+  },
+  "convergence": {},
+  "cut_check": {
+   "s1": {
+    "far": 189377.3812526486,
+    "near": 190759.23676614853,
+    "rel": 0.007296835051575634
+   },
+   "s3": {
+    "far": 128890.76668811942,
+    "near": 129141.16604821075,
+    "rel": 0.0019427253520589716
+   },
+   "tau": {
+    "far": 84153.85458295024,
+    "near": 84277.07544711657,
+    "rel": 0.001464233156959871
+   }
+  },
+  "g431_levels": {
+   "d68/L2": {
+    "h_mm": 1.1,
+    "stats": {
+     "h_local_mm": 1.1,
+     "section_nodes": 3424,
+     "layers": 63,
+     "nodes": 186040,
+     "elements": 324790,
+     "bead_elements": 3414,
+     "min_signed_volume": -3.203348554976864e-08,
+     "max_morph_shift_mm": 3.0,
+     "cuts": [
+      0.27,
+      0.37
+     ],
+     "setup_s": 40.1,
+     "wall_s": 2669.9
+    },
+    "pocket_foam_s1_lim_pa": 182900.88052810583,
+    "pocket_foam_s1_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s1_at": [
+     0.029594792295016558,
+     0.29849999999999993,
+     -0.006776275649963657
+    ],
+    "pocket_foam_s1_avg_lim_pa": 156248.46726958893,
+    "pocket_foam_s1_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_lim_pa": -120456.4528202705,
+    "pocket_foam_s3_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_s3_at": [
+     0.09604844068965919,
+     0.29849999999999993,
+     -0.00805401937145348
+    ],
+    "pocket_foam_s3_avg_lim_pa": -96821.00526189696,
+    "pocket_foam_s3_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_lim_pa": 76751.88097734687,
+    "pocket_foam_tau_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "pocket_foam_tau_at": [
+     0.029594792295016558,
+     0.29849999999999993,
+     -0.006776275649963657
+    ],
+    "pocket_foam_tau_avg_lim_pa": 67561.6854049544,
+    "pocket_foam_tau_avg_case": "block/L4-CORNER-SIDE-Y/MC-C",
+    "bead_s1_lim_pa": 1531703.4498244866,
+    "bead_vm_lim_pa": 1485072.8545465176,
+    "petg_vm_lim_pa": 2634641.2076098267,
+    "cutout_foam_s1_dist_lim_pa": 1143379.795404545,
+    "cutout_foam_s1_dist_case": "distributed/L4-CORNER-SIDE-Y/MC-C",
+    "cutout_foam_s1_dist_at": [
+     0.252686889401555,
+     0.3395000000000001,
+     -0.003589146284849872
+    ],
+    "cutout_foam_s1_lim_pa": 9723.64993142324,
+    "cutout_foam_tau_dist_lim_pa": 583871.6024200274,
+    "cutout_foam_tau_dist_case": "distributed/L4-CORNER-SIDE-Y/MC-C",
+    "cutout_foam_tau_dist_at": [
+     0.252686889401555,
+     0.3395000000000001,
+     -0.003589146284849872
+    ],
+    "cutout_foam_tau_lim_pa": 12624.84607092118,
+    "equilibrium_max_N": 5.959338196248609e-07
+   }
+  }
+ }
+}

@@ -1,0 +1,1 @@
+h320_py gov 32.87 MPa (k 0.5576 MPa/N) {"rim": {"vm_max_MPa": 32.87452, "at_mm": [326.229, 10.933, 201.876]}, "aft box": {"vm_max_MPa": 13.06792, "at_mm": [317.802, -5.9, 200.6]}, "window and open-end zone": {"vm_max_MPa": 28.7099, "at_mm": [297.843, -10.933, 201.876]}, "whole shoe": {"vm_max_MPa": 36.70862, "at_mm": [320.0, -5.0, 200.6]}} 1121 s

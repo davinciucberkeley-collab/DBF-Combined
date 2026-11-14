@@ -1,0 +1,155 @@
+{
+ "_note": "Written by team/B2/sim/stall_zcg.py (B2-R4): AVL critical-section stall with the CG height as the moment reference (D-62). Do not edit by hand.",
+ "b2sim": {
+  "zcg": {
+   "x_grid_m": {
+    "value": [
+     0.0446,
+     0.0466,
+     0.049,
+     0.0514,
+     0.0536
+    ],
+    "unit": "m",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "CG x (real aircraft); AVL Xref = x + dprop_m (props + pod NP term)"
+   },
+   "z_grid_m": {
+    "value": [
+     0.0,
+     0.01,
+     0.0185,
+     0.025
+    ],
+    "unit": "m",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "CG height above the chord plane (AVL Zref)"
+   },
+   "clmax_grid": {
+    "value": [
+     [
+      0.777088122605364,
+      0.7804633204633205,
+      0.7832558139534884,
+      0.7853125
+     ],
+     [
+      0.780383141762452,
+      0.7837065637065637,
+      0.7864591439688716,
+      0.788470588235294
+     ],
+     [
+      0.7843243243243243,
+      0.7876264591439688,
+      0.7903124999999999,
+      0.7923622047244094
+     ],
+     [
+      0.7882945736434108,
+      0.7915625,
+      0.799323644518114,
+      0.8112267652715985
+     ],
+     [
+      0.7920622568093385,
+      0.8048206641567441,
+      0.8207016842608473,
+      0.8332870248610437
+     ]
+    ],
+    "unit": "-",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "trimmed CLmax [x index][z index], critical section, B2 envelope, cm_t trim, lattice 12x1"
+   },
+   "elevon_grid": {
+    "value": [
+     [
+      -15.24029448275862,
+      -14.133105637065636,
+      -13.222688604651163,
+      -12.544165312499999
+     ],
+     [
+      -14.167499501915708,
+      -13.076515945945944,
+      -12.17939439688716,
+      -11.51091188235294
+     ],
+     [
+      -12.872095135135135,
+      -11.801069416342411,
+      -10.920166406249999,
+      -10.265108031496062
+     ],
+     [
+      -11.56777930232558,
+      -10.517119843749999,
+      -9.705159533501718,
+      -9.134205125799504
+     ],
+     [
+      -10.36570887159533,
+      -9.438598281369517,
+      -8.67835941242164,
+      -8.07448341651255
+     ]
+    ],
+    "unit": "deg",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "elevon at the trimmed CLmax [x][z]"
+   },
+   "dprop_m": {
+    "value": 0.002909180832893876,
+    "unit": "m",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "props + pod NP term used: CL-B3-V-XNP-AERO - CL-B3-V-XNP at the run"
+   },
+   "recon_clmax": {
+    "value": {
+     "W0": 0.8540085567584336,
+     "W1": 0.852457725541131,
+     "W2": 0.830653611880131,
+     "W3": 0.7932271943266552,
+     "W4": 0.8196706921554439
+    },
+    "unit": "-",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "CR-B1-23 waterfall at x 0.0536 z 0.018: W0 B1 set-up, W1 B2 raw stall-Re table, W2 B2 envelope, W3 + cm_t, W4 + props/pod shift"
+   },
+   "recon_elevon": {
+    "value": {
+     "W0": -8.441481729306577,
+     "W1": -8.425400384998758,
+     "W2": -8.199363379913798,
+     "W3": -10.088318401822919,
+     "W4": -8.728952233538797
+    },
+    "unit": "deg",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "same steps"
+   },
+   "xnp_aero_z0185_cruise": {
+    "value": 0.07089619999999999,
+    "unit": "m",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "props-off effective NP at CL 0.414 (B1 cruise), CG z 0.0185, Xref 0.0490+dprop"
+   },
+   "xnp_aero_z0_cruise": {
+    "value": 0.0744604,
+    "unit": "m",
+    "source": "SRC-B2-AVL",
+    "status": "MODELLED",
+    "note": "same, CG on the chord plane"
+   }
+  }
+ }
+}

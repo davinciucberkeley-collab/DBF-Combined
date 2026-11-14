@@ -1,0 +1,16 @@
+# Build order for redesign/subsystems/<key>/fusion/*.py, K09-L (one subsystem folder name per line). Keeper: A5.
+# Rule: a module builds only after every part it joins to exists (structure -> things mounted on it -> wiring).
+# The datum sheet (k09kit.build_datums, DATUMS.md) is registered before line 1. Unlisted modules build last with a
+# WARN; listed names without a module are reported as "not built yet". Change the order via team/A5/CHANGE-REQUESTS.md.
+wing          # 1 D1  core, spar, elevon panels: primary structure, everything references DP-SPAR / DP-HINGE
+fins          # 2 D3  half-fins, motor tubes through the core, through-core blocks, mounts
+pod           # 3 D2  shell, tray, hatch, GPS mast: on the upper skin
+landing       # 4 D5  feet on the fin TE tips; registers the hover ground keep-out (KO-GROUND)
+propulsion    # 5 E1  motors on the fin mounts, ESCs on the fin pads, props; registers the prop keep-outs
+mechanisms    # 6 D6  servos in wing pockets, horns on elevons, pushrods
+power         # 7 F1  pack in the pod tray, disconnect, distribution, UBEC
+avionics      # 8 F3  FC, GPS, RX, airspeed + pitot on the pod / wing
+harness       # 9 F2  every wire between the parts above (needs both ends built)
+transport     # 10 D7 box and cradles, flight: false (excluded from mass, floating, keep-out, envelope)
+# flight-software (F4) has no CAD module. A module in a hyphenated folder still imports (the module name is
+# generated), but it would build last with a WARN: add it here if F4 ever ships one.

@@ -1,0 +1,1 @@
+h400_pz_v_rim_t3_ws1 gov 50.34 MPa (k 0.8539 MPa/N) {"rim": {"vm_max_MPa": 36.53273, "at_mm": [326.4, 11.474, 214.383]}, "aft box": {"vm_max_MPa": 50.33984, "at_mm": [317.645, -5.9, 200.8]}, "window and open-end zone": {"vm_max_MPa": 25.26627, "at_mm": [305.085, -5.9, 200.8]}, "whole shoe": {"vm_max_MPa": 97.17574, "at_mm": [320.0, -5.8, 200.8]}} 828 s

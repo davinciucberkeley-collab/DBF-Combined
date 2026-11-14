@@ -1,0 +1,43 @@
+group,item,qty,unit_usd_pretax,line_usd,vendor,source,date_seen,flag
+Propulsion,SunnySky X3108S KV900 lift motor (4 + 1 spare),5,24.99,124.95,SunnySky USA,https://sunnyskyusa.com/collections/multirotor-motors/products/sunnysky-x3108s-motors via docs/research/budget-lift.md,2026-11-01,
+Propulsion,LANRC BLHeli_S 45A ESC 4-pack (4 lift + pusher + 3 spare),2,30.00,60.00,Amazon,https://www.amazon.com/dp/B0D2HS4Y4J via docs/research/bom-savings.md,2026-11-01,
+Propulsion,"APC 11x4.5MR lift prop (4 flying + 8 spare, CW/CCW mix)",12,3.83,45.96,APC Propellers,https://www.apcprop.com/product/11x4-5mr/,2026-11-01,
+Propulsion,SunnySky X2814 900KV pusher motor,1,29.99,29.99,ReadyMadeRC,https://www.readymaderc.com/products/details/sunny-sky-x2814-900kv,2026-11-09,
+Propulsion,APC 11x5.5EP pusher prop (1 + 2 spare),3,4.50,13.50,APC Propellers,"https://www.apcprop.com (price ESTIMATE, cost_model.py)",2026-11-09,ESTIMATE
+Servos,EMAX ES3005HV 8 kg.cm (2 aileron + 2 ruddervator + 1 spare),5,19.99,99.95,EMAX USA,https://shop.emax-usa.com/products/es3005hv-high-voltage-servo,2026-11-01,
+Energy,4S 6500 mAh LiPo (3 packs; Ovonic 2-pack/2),3,45.42,136.26,Ampow/Amazon,cost_model.py P['pack_S'] (Ampow out of stock; single-pack list $59.91 = +$43.47 if no 2-pack),2026-11-09,ESTIMATE
+Avionics,CoreWing F405 Wing V2 flight controller (Plane beta target),1,67.26,67.26,ReadyMadeRC,https://readymaderc.com/products/details/85786-speedybee-f405-wing-app-fixed-wing-flight-controller,2026-11-01,backorder Nov 2026
+Avionics,HGLRC M100-5883 GPS + compass,1,20.49,20.49,RaceDayQuads,https://www.racedayquads.com/products/hglrc-m100-5883-gps-module-10th-gen,2026-11-01,
+Avionics,Holybro MS5525 airspeed sensor + pitot (speed-scheduled transition),1,59.99,59.99,Holybro,cost_model.py AIRSPEED,2026-11-09,
+Avionics,NewBeeDrone BeeID Remote ID module (conditional: only if flown outside RFS FRIA),1,39.99,39.99,NewBeeDrone,https://newbeedrone.com via bom-savings.md,2026-11-01,conditional
+Avionics,Amass AS150U anti-spark connector set,1,17.26,17.26,Neu Racing,https://neuracing.us/product/as150u/,2026-11-01,
+Radio,RadioMaster Pocket Crush ELRS transmitter,1,64.99,64.99,RadioMaster,https://www.radiomasterrc.com/products/pocket-crush-radio-controller,2026-11-01,
+Radio,RadioMaster RP3 V2 ELRS receiver,1,19.99,19.99,RadioMaster,https://www.radiomasterrc.com/products/rp3-expresslrs-2-4ghz-nano-receiver,2026-11-01,
+Airframe,Owens Corning Foamular XPS 2 in x 4 x 8 ft (wing cores),1,59.97,59.97,Lowe's,https://www.lowes.com/search?searchTerm=foamular%20xps%202%20in,2026-11-01,
+Airframe,"Owens Corning Foamular XPS 1 in x 4 x 8 ft (pod, spare panels)",1,30.97,30.97,Lowe's,budget-airframe.md 2b,2026-11-01,
+Airframe,"Foam board 20x30 in (tail panels, U04 test panel) x6",6,1.25,7.50,Dollar Tree,dollartree.com (ESTIMATE),2026-11-09,ESTIMATE
+Airframe,CF tube 25x22x1000 mm boom,2,40.99,81.98,Amazon,https://www.amazon.com/s?k=carbon+fiber+tube+22mm+1000mm via budget-airframe.md,2026-11-01,overseas lead time
+Airframe,CF tube 22x20x1000 mm (wing joiner 0.40 m + spares),1,28.32,28.32,Amazon,same as above,2026-11-01,overseas lead time
+Airframe,"SUNLU PETG 4 kg (mounts, nodes, saddles, nose, feet)",1,39.99,39.99,Amazon,https://www.amazon.com/dp/B0D1KC72YP,2026-11-01,
+Airframe,"Packing-tape skin, 6 rolls",1,19.98,19.98,Amazon/Home Depot,cost_model.py AIRFRAME S,2026-11-09,ESTIMATE
+Airframe,Foam-safe glue (Gorilla clear / UHU Por class),1,12.99,12.99,Amazon,cost_model.py AIRFRAME S,2026-11-09,ESTIMATE
+Hardware,"Wiring, connectors, screws, heat-set inserts, horns, pushrods, hinge tape, UBEC, epoxy",1,124.01,124.01,various,cost_model.py HARDWARE_MIN,2026-11-09,ESTIMATE
+Ground,HTRC C150 150 W AC charger,1,56.99,56.99,Pyrodrone/Amazon,bom-savings.md,2026-11-01,
+Ground,LiPo bags x2,2,9.99,19.98,Pyrodrone,cost_model.py GROUND,2026-11-09,
+Ground,Ammo can (Harbor Freight 63750),1,19.99,19.99,Harbor Freight,https://www.harborfreight.com/50-caliber-metal-ammo-can-63750.html,2026-11-01,
+Ground,Watt meter 150 A,1,12.99,12.99,Amazon,B0F13JWDFV via budget-energy-test.md,2026-11-01,
+Ground,IR thermometer,1,8.98,8.98,Amazon,B0BN317X6Z via budget-energy-test.md,2026-11-01,
+Ground,Thrust stand: 20 kg load cell + HX711 + Nano clone,1,17.97,17.97,Amazon,budget-energy-test.md,2026-11-01,
+Ground,Pinecil V2 soldering iron + USB-C PD supply,1,45.99,45.99,Pine64/Amazon,cost_model.py GROUND (supply ESTIMATE),2026-11-09,ESTIMATE
+Ground,Multimeter + solder/flux/wick,1,40.00,40.00,Amazon,cost_model.py GROUND,2026-11-09,ESTIMATE
+Ground,Hot-wire: 30 V 10 A supply + Ni80 wire,1,41.73,41.73,Amazon,bom-savings.md B0CRSS744F + B0CP9V3DBX,2026-11-01,
+
+TOTAL,Goods subtotal,,,1470.91,,,,
+TOTAL,"Sales tax 10.25 % (Berkeley, CDTFA 2026-10-01)",,,150.77,,cost_model.py TAX,2026-11-09,
+TOTAL,"Shipping, all carriers",,,120.00,,cost_model.py SHIPPING['S'],2026-11-09,ESTIMATE
+TOTAL,Spend at order time,,,1741.68,,,,
+TOTAL,"Crash reserve left of $2,000 (target >= $150; one bad crash ~ $266 incl. tax per cost_model.py)",,,258.32,,,,
+OPTION,K21 hexa: +2 lift stations (motor+ESC share+2 props+printed mounts) incl. tax,,,102.49,,cost_model.py prices,2026-11-09,ESTIMATE
+OPTION,K04 folding lift props (3 SunnySky Eolo folding pairs replace APC) incl. tax,,,103.82,,configurations.md 2.5,2026-10-25,ESTIMATE
+OPTION,K05 printed prop fairings + magnetic detent incl. tax,,,24.26,,SCREENING.md K05,2026-11-09,ESTIMATE
+OPTION,"B03 X-UAV Mini Talon EPO kit (out of stock) minus XPS/CF joiner/glue saved, incl. tax",,,53.68,,MORPH.md B03 listing,2026-11-09,UNVERIFIED stock

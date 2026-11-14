@@ -1,0 +1,134 @@
+{
+  "concept": "K19 flying-wing (tailless) quadplane 4+1, scratch XPS foam, class S 4S",
+  "status": "PROPOSED",
+  "mission": "M-A default (REQUIREMENTS s3): hover 2 min, cruise >=5/10 min, 20 % reserve, +0.25 kg growth",
+  "geometry": {
+    "span_m": 1.6,
+    "area_m2": 0.496,
+    "AR": 5.16,
+    "root_chord_m": 0.42,
+    "tip_chord_m": 0.2,
+    "MAC_m": 0.323,
+    "x_cg_behind_root_LE_m": 0.219,
+    "static_margin_MAC": 0.08,
+    "lift_motor_x_m": [
+      -0.161,
+      0.599
+    ],
+    "boom_y_m": 0.22,
+    "outer_panel_span_m": 0.58,
+    "pusher_to_rear_disc_clearance_m": 0.027
+  },
+  "mass_g": {
+    "propulsion": {
+      "4 x SunnySky X3108S KV900 (81 g SRC)": 324,
+      "4 x LANRC 45A ESC (6.6 g SRC) + 18 AWG leads": 74.4,
+      "4 x APC 11x4.5MR (~18 g) ESTIMATE": 72,
+      "4 x printed PETG motor mounts ESTIMATE": 48,
+      "pusher SunnySky X2814 900KV ESTIMATE 107 g + ESC + 9x6E prop + mount": 161
+    },
+    "structure": {
+      "wing foam (CALC below)": 422,
+      "tape skin (CALC below)": 61,
+      "spar/joiner 22x20 CF, 0.74 m": 75,
+      "2 booms 22x20 CF, 0.86 m": 175,
+      "boom-to-spar printed saddles + ply hard-point plates ESTIMATE": 90,
+      "centre body: ply battery tray, hatch, printed nose ESTIMATE": 140,
+      "2 winglets, 3 mm depron/coroplast + plug ESTIMATE": 60,
+      "elevons: hinge tape, horns, pushrods ESTIMATE": 30,
+      "4 printed feet ESTIMATE": 60,
+      "joint pins, nylon bolts, magnets, glue ESTIMATE": 60
+    },
+    "systems": {
+      "2 x EMAX ES3005HV elevon servos (43.2 g SRC)": 86.4,
+      "FC CoreWing F405 Wing V2 + GPS + RX + RID ESTIMATE": 62,
+      "airspeed MS5525 + pitot ESTIMATE": 15,
+      "power wiring: 10 AWG, AS150U/XT90, bus, UBEC, servo extensions ESTIMATE": 130
+    },
+    "battery": {
+      "Ovonic 4S 6500 mAh 50C (14.8 V nominal)": 560
+    },
+    "allowances": {
+      "growth allowance (REQUIREMENTS s3)": 250
+    }
+  },
+  "mass_group_totals_g": {
+    "propulsion": 679,
+    "structure": 1173,
+    "systems": 293,
+    "battery": 560,
+    "allowances": 250
+  },
+  "contingency_g": 147,
+  "mtow_kg": 3.102,
+  "mass_gate_kg_(+5%)": 3.258,
+  "wing_loading_N_m2": 61.4,
+  "wing_loading_kg_m2": 6.25,
+  "stall_mps": 11.56,
+  "transition_min_1p3Vs_mps": 15.02,
+  "cruise_mps": 16.0,
+  "hover": {
+    "thrust_per_motor_g": 799.0,
+    "disk_loading_N_m2": 127.8,
+    "P_momentum_per_motor_W": 120.1,
+    "P_maker_table_per_motor_W": 121.9,
+    "P_total_W": 542.0,
+    "I_pack_A": 38.7,
+    "T_W": 2.04
+  },
+  "cruise": {
+    "CL": 0.391,
+    "CD0": 0.0416,
+    "CDA_extras_m2": 0.0128,
+    "k": 0.0771,
+    "L_D": 7.3,
+    "L_D_max": 8.8,
+    "V_best_LD_mps": 11.7,
+    "drag_N": 4.15,
+    "P_elec_W": 165.0,
+    "I_pack_A": 11.1
+  },
+  "transition": {
+    "P_peak_W": 864.0,
+    "I_peak_A": 64.0,
+    "I_all_motors_full_A": 145
+  },
+  "battery": {
+    "pack": "Ovonic 4S 6500 mAh 50C (14.8 V nominal)",
+    "E_Wh": 96.2,
+    "E_usable_Wh": 77.0,
+    "E_hover_Wh": 18.1,
+    "E_transitions_Wh": 9.6,
+    "cruise_endurance_min": 17.4,
+    "hover_only_endurance_min": 8.5,
+    "meets_threshold_5min": true,
+    "meets_objective_10min": true
+  },
+  "packing": {
+    "centre_section_with_booms_LxWxH_m": [
+      1.06,
+      0.48,
+      0.27
+    ],
+    "outer_panel_LxWxH_m_each": [
+      0.58,
+      0.36,
+      0.06
+    ],
+    "box_m": [
+      1.2,
+      0.5,
+      0.4
+    ],
+    "fits_one_box": true,
+    "longest_piece_m": 1.06,
+    "flight_pack_separate": "LiPo travels in bag/ammo can (D12)"
+  },
+  "x8_shell_variant": {
+    "mtow_kg_builder_reported": 5.1,
+    "T_W_class_S": 1.24,
+    "stall_mps": 11.7,
+    "verdict": "fails T/W 1.6 on class-S stations; needs 6S class-M stations -> over budget (see CARD.md)",
+    "note": "kit airframe mass ESTIMATE; builder X8 quadplane 5.1 kg (configurations.md S33)"
+  }
+}

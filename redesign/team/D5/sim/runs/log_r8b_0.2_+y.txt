@@ -1,0 +1,1 @@
+h200_py gov 31.56 MPa (k 0.5327 MPa/N) {"rim": {"vm_max_MPa": 30.41525, "at_mm": [326.4, 6.546, 202.41]}, "aft box": {"vm_max_MPa": 10.49708, "at_mm": [317.814, 6.74, 202.438]}, "window and open-end zone": {"vm_max_MPa": 31.56335, "at_mm": [297.5, -9.55, 208.213]}, "whole shoe": {"vm_max_MPa": 42.33532, "at_mm": [320.0, 5.0, 201.2]}} 818 s

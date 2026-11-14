@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" font-family="IBM Plex Sans, system-ui, sans-serif">
+<line x1="90" y1="440.0" x2="850" y2="440.0" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="82" y="444.0" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">0.60</text>
+<line x1="90" y1="340.0" x2="850" y2="340.0" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="82" y="344.0" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">0.80</text>
+<line x1="90" y1="240.0" x2="850" y2="240.0" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="82" y="244.0" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">1.0</text>
+<line x1="90" y1="140.0" x2="850" y2="140.0" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="82" y="144.0" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">1.2</text>
+<line x1="90" y1="40.0" x2="850" y2="40.0" stroke="#E3E7ED" stroke-width="0.75"/>
+<text x="82" y="44.0" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="end">1.4</text>
+<line x1="90.0" y1="440" x2="90.0" y2="445" stroke="#9AA4B1" stroke-width="1"/>
+<text x="90.0" y="460" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">0</text>
+<line x1="327.5" y1="440" x2="327.5" y2="445" stroke="#9AA4B1" stroke-width="1"/>
+<text x="327.5" y="460" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">1</text>
+<line x1="565.0" y1="440" x2="565.0" y2="445" stroke="#9AA4B1" stroke-width="1"/>
+<text x="565.0" y="460" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">2</text>
+<line x1="802.5" y1="440" x2="802.5" y2="445" stroke="#9AA4B1" stroke-width="1"/>
+<text x="802.5" y="460" font-size="12" font-family="IBM Plex Mono, monospace" fill="#6B7280" text-anchor="middle">3</text>
+<line x1="90" y1="440" x2="850" y2="440" stroke="#9AA4B1" stroke-width="1"/>
+<line x1="90" y1="40" x2="90" y2="440" stroke="#9AA4B1" stroke-width="1"/>
+<text x="470.0" y="480" font-size="12" fill="#4B5563" text-anchor="middle">mesh level (0 coarsest … 3 finest; h halves per level)</text>
+<text x="90" y="28" font-size="12" fill="#4B5563">value / finest-mesh value</text>
+<line x1="90" y1="240.0" x2="850" y2="240.0" stroke="#9AA4B1" stroke-width="1.25" stroke-dasharray="2 3"/>
+<text x="846" y="234.0" font-size="12" fill="#9AA4B1" text-anchor="end"></text>
+<polyline points="90.0,265.3 327.5,277.3 565.0,256.8 802.5,240.0" fill="none" stroke="#1F5FC7" stroke-width="1.75"/>
+<line x1="880" y1="70" x2="910" y2="70" stroke="#1F5FC7" stroke-width="2"/>
+<text x="918" y="74" font-size="12" fill="#4B5563">bond R design (d0)  GCI 18.9 %</text>
+<polyline points="90.0,218.5 327.5,261.3 565.0,256.3 802.5,240.0" fill="none" stroke="#3D6FCF" stroke-width="1.75"/>
+<line x1="880" y1="96" x2="910" y2="96" stroke="#3D6FCF" stroke-width="2"/>
+<text x="918" y="100" font-size="12" fill="#4B5563">bond R crash +z (d0)  GCI -5.9 %</text>
+<polyline points="90.0,203.2 327.5,220.6 565.0,228.6 802.5,240.0" fill="none" stroke="#5B85D8" stroke-width="1.75"/>
+<line x1="880" y1="122" x2="910" y2="122" stroke="#5B85D8" stroke-width="2"/>
+<text x="918" y="126" font-size="12" fill="#4B5563">overhang face, crash  GCI -9.5 %</text>
+<polyline points="90.0,282.0 327.5,237.7 565.0,242.5 802.5,240.0" fill="none" stroke="#121619" stroke-width="1.75"/>
+<line x1="880" y1="148" x2="910" y2="148" stroke="#121619" stroke-width="2"/>
+<text x="918" y="152" font-size="12" fill="#4B5563">aft stop fillet peak  GCI n/a</text>
+<polyline points="90.0,293.7 327.5,249.7 565.0,243.0 802.5,240.0" fill="none" stroke="#4B5563" stroke-width="1.75"/>
+<line x1="880" y1="174" x2="910" y2="174" stroke="#4B5563" stroke-width="2"/>
+<text x="918" y="178" font-size="12" fill="#4B5563">aft tray bending peak  GCI 0.6 %</text>
+<polyline points="90.0,271.3 327.5,247.9 565.0,242.1 802.5,240.0" fill="none" stroke="#6B7280" stroke-width="1.75"/>
+<line x1="880" y1="200" x2="910" y2="200" stroke="#6B7280" stroke-width="2"/>
+<text x="918" y="204" font-size="12" fill="#4B5563">board peel, solid tray (d0)  GCI 0.3 %</text>
+<polyline points="90.0,245.3 327.5,242.7 565.0,240.5 802.5,240.0" fill="none" stroke="#B42323" stroke-width="1.75" stroke-dasharray="6 4"/>
+<line x1="880" y1="226" x2="910" y2="226" stroke="#B42323" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="918" y="230" font-size="12" fill="#4B5563">bond peel raw, design  GCI 0.0 %</text>
+<text x="880" y="270" font-size="11" fill="#6B7280">dashed: singular corner value, not a design number</text>
+</svg>

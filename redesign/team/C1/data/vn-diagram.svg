@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" width="1200" height="560">
+<line x1="80" y1="500.0" x2="1160" y2="500.0" stroke="#E3E7ED" stroke-width="1"/>
+<text x="70" y="504.0" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">-2</text>
+<line x1="80" y1="421.7" x2="1160" y2="421.7" stroke="#E3E7ED" stroke-width="1"/>
+<text x="70" y="425.7" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">-1</text>
+<line x1="80" y1="343.3" x2="1160" y2="343.3" stroke="#E3E7ED" stroke-width="1"/>
+<text x="70" y="347.3" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">0</text>
+<line x1="80" y1="265.0" x2="1160" y2="265.0" stroke="#E3E7ED" stroke-width="1"/>
+<text x="70" y="269.0" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">1</text>
+<line x1="80" y1="186.7" x2="1160" y2="186.7" stroke="#E3E7ED" stroke-width="1"/>
+<text x="70" y="190.7" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">2</text>
+<line x1="80" y1="108.3" x2="1160" y2="108.3" stroke="#E3E7ED" stroke-width="1"/>
+<text x="70" y="112.3" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">3</text>
+<line x1="80" y1="30.0" x2="1160" y2="30.0" stroke="#E3E7ED" stroke-width="1"/>
+<text x="70" y="34.0" text-anchor="end" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">4</text>
+<text x="80.0" y="520" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">0</text>
+<text x="260.0" y="520" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">5</text>
+<text x="440.0" y="520" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">10</text>
+<text x="620.0" y="520" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">15</text>
+<text x="800.0" y="520" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">20</text>
+<text x="980.0" y="520" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">25</text>
+<text x="1160.0" y="520" text-anchor="middle" fill="#6B7280" font-family="IBM Plex Mono, monospace" font-size="12">30</text>
+<line x1="80" y1="343.3" x2="1160" y2="343.3" stroke="#9AA4B1" stroke-width="1"/>
+<line x1="80" y1="30" x2="80" y2="500" stroke="#9AA4B1" stroke-width="1"/>
+<text x="640.0" y="548" text-anchor="middle" fill="#4B5563" font-family="IBM Plex Mono, monospace" font-size="12">airspeed m/s (EAS)</text>
+<text x="20" y="280.0" fill="#4B5563" font-family="IBM Plex Mono, monospace" font-size="12" transform="rotate(-90 20 280.0)" text-anchor="middle">load factor n</text>
+<path d="M508.4,265.0 L512.0,263.7 L515.6,262.3 L519.2,261.0 L522.9,259.6 L526.5,258.2 L530.1,256.9 L533.7,255.5 L537.3,254.1 L540.9,252.6 L544.6,251.2 L548.2,249.8 L551.8,248.3 L555.4,246.9 L559.0,245.4 L562.6,243.9 L566.2,242.4 L569.9,240.9 L573.5,239.4 L577.1,237.9 L580.7,236.3 L584.3,234.8 L587.9,233.2 L591.6,231.6 L595.2,230.1 L598.8,228.5 L602.4,226.9 L606.0,225.2 L609.6,223.6 L613.2,222.0 L616.9,220.3 L620.5,218.7 L624.1,217.0 L627.7,215.3 L631.3,213.6 L634.9,211.9 L638.6,210.2 L642.2,208.4 L645.8,206.7 L649.4,205.0 L653.0,203.2 L656.6,201.4 L660.2,199.6 L663.9,197.8 L667.5,196.0 L671.1,194.2 L674.7,192.4 L678.3,190.5 L681.9,188.7 L685.5,186.8 L689.2,184.9 L692.8,183.1 L696.4,181.2 L700.0,179.3 L703.6,177.3 L707.2,175.4 L710.9,173.5 L714.5,171.5 L718.1,169.5 L721.7,167.6 L725.3,165.6 L728.9,163.6 L732.5,161.6 L736.2,159.6 L739.8,157.5 L743.4,155.5 L747.0,153.4 L750.6,151.4 L754.2,149.3 L757.9,147.2 L761.5,145.1 L765.1,143.0 L768.7,140.9 L772.3,138.8 L775.9,136.6 L779.5,134.5 L783.2,132.3 L786.8,130.1 L790.4,127.9 L794.0,125.7 L797.6,123.5 L801.2,121.3 L804.9,119.1 L808.5,116.8 L812.1,114.6 L815.7,112.3 L819.3,110.0 L822.9,107.7 L826.5,105.5 L830.2,103.1 L833.8,100.8 L837.4,98.5 L841.0,96.1 L844.6,93.8 L848.2,91.4 L851.9,89.0 L855.5,86.7 L859.1,84.3 L862.7,81.9 L866.3,79.4 L869.9,77.0 L1059.2,77.0 L1059.2,460.8 L787.0,460.8 L787.0,460.8 L784.2,459.9 L781.4,459.0 L778.6,458.1 L775.8,457.2 L773.0,456.2 L770.2,455.3 L767.5,454.4 L764.7,453.5 L761.9,452.6 L759.1,451.8 L756.3,450.9 L753.5,450.0 L750.7,449.1 L748.0,448.2 L745.2,447.4 L742.4,446.5 L739.6,445.6 L736.8,444.8 L734.0,443.9 L731.2,443.0 L728.5,442.2 L725.7,441.3 L722.9,440.5 L720.1,439.7 L717.3,438.8 L714.5,438.0 L711.7,437.2 L709.0,436.3 L706.2,435.5 L703.4,434.7 L700.6,433.9 L697.8,433.1 L695.0,432.3 L692.2,431.5 L689.5,430.7 L686.7,429.9 L683.9,429.1 L681.1,428.3 L678.3,427.5 L675.5,426.7 L672.7,425.9 L670.0,425.2 L667.2,424.4 L664.4,423.6 L661.6,422.9 L658.8,422.1 L656.0,421.3 L653.2,420.6 L650.5,419.8 L647.7,419.1 L644.9,418.4 L642.1,417.6 L639.3,416.9 L636.5,416.2 L633.7,415.4 L631.0,414.7 L628.2,414.0 L625.4,413.3 L622.6,412.6 L619.8,411.8 L617.0,411.1 L614.3,410.4 L611.5,409.7 L608.7,409.0 L605.9,408.4 L603.1,407.7 L600.3,407.0 L597.5,406.3 L594.8,405.6 L592.0,405.0 L589.2,404.3 L586.4,403.6 L583.6,403.0 L580.8,402.3 L578.0,401.6 L575.3,401.0 L572.5,400.4 L569.7,399.7 L566.9,399.1 L564.1,398.4 L561.3,397.8 L558.5,397.2 L555.8,396.5 L553.0,395.9 L550.2,395.3 L547.4,394.7 L544.6,394.1 L541.8,393.5 L539.0,392.9 L536.3,392.3 L533.5,391.7 L530.7,391.1 L527.9,390.5 L525.1,389.9 L522.3,389.3 L519.5,388.8 L516.8,388.2 L514.0,387.6 L511.2,387.0 L508.4,386.5 Z" fill="#E6EEFB" fill-opacity="0.6" stroke="#1F5FC7" stroke-width="1.5"/>
+<path d="M508.4,265.0 L517.6,261.6 L526.8,258.1 L535.9,254.6 L545.1,251.0 L554.3,247.3 L563.5,243.6 L572.7,239.7 L581.8,235.8 L591.0,231.9 L600.2,227.8 L609.4,223.7 L618.6,219.5 L627.7,215.3 L636.9,210.9 L646.1,206.5 L655.3,202.1 L664.5,197.5 L673.6,192.9 L682.8,188.2 L692.0,183.5 L701.2,178.6 L710.4,173.7 L719.5,168.8 L728.7,163.7 L737.9,158.6 L747.1,153.4 L756.3,148.1 L765.4,142.8 L774.6,137.4 L783.8,131.9 L793.0,126.4 L802.2,120.7 L811.3,115.0 L820.5,109.3 L829.7,103.4 L838.9,97.5 L848.1,91.5 L857.2,85.5 L866.4,79.4 L875.6,73.2 L884.8,66.9 L894.0,60.5 L903.1,54.1 L912.3,47.6 L921.5,41.1 L930.7,34.5 L939.9,30.0 L949.0,30.0 L958.2,30.0 L967.4,30.0 L976.6,30.0 L985.8,30.0 L994.9,30.0 L1004.1,30.0 L1013.3,30.0 L1022.5,30.0 L1031.7,30.0 L1040.8,30.0 L1050.0,30.0 L1059.2,30.0" fill="none" stroke="#6B7280" stroke-width="0.75" stroke-dasharray="6 4"/>
+<line x1="80.0" y1="265.0" x2="656.0" y2="85.4" stroke="#4B5563" stroke-width="0.75"/>
+<line x1="80.0" y1="265.0" x2="1059.2" y2="112.3" stroke="#4B5563" stroke-width="0.75"/>
+<line x1="80.0" y1="265.0" x2="656.0" y2="444.6" stroke="#4B5563" stroke-width="0.75"/>
+<line x1="80.0" y1="265.0" x2="1059.2" y2="417.7" stroke="#4B5563" stroke-width="0.75"/>
+<line x1="508.4" y1="500.0" x2="508.4" y2="30.0" stroke="#9AA4B1" stroke-width="0.75" stroke-dasharray="6 4"/>
+<text x="512.4" y="44" fill="#121619" font-family="IBM Plex Mono, monospace" font-size="12">Vs 11.9</text>
+<line x1="869.9" y1="500.0" x2="869.9" y2="30.0" stroke="#9AA4B1" stroke-width="0.75" stroke-dasharray="6 4"/>
+<text x="873.9" y="44" fill="#121619" font-family="IBM Plex Mono, monospace" font-size="12">VA 21.9</text>
+<line x1="656.0" y1="500.0" x2="656.0" y2="30.0" stroke="#9AA4B1" stroke-width="0.75" stroke-dasharray="6 4"/>
+<text x="660.0" y="44" fill="#121619" font-family="IBM Plex Mono, monospace" font-size="12">VC 16.0</text>
+<line x1="1059.2" y1="500.0" x2="1059.2" y2="30.0" stroke="#9AA4B1" stroke-width="0.75" stroke-dasharray="6 4"/>
+<text x="1063.2" y="44" fill="#121619" font-family="IBM Plex Mono, monospace" font-size="12">VD 27.2</text>
+<circle cx="862.2" cy="83.4" r="5" fill="#C2540A"/>
+<text x="854.2" y="103.4" text-anchor="end" fill="#121619" font-family="IBM Plex Mono, monospace" font-size="12">gust peak n 3.32</text>
+<text x="1053.2" y="69.0" text-anchor="end" fill="#1F5FC7" font-family="IBM Plex Mono, monospace" font-size="12">n+ 3.40</text>
+<text x="1053.2" y="478.8" text-anchor="end" fill="#1F5FC7" font-family="IBM Plex Mono, monospace" font-size="12">n- -1.50</text>
+</svg>

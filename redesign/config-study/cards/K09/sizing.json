@@ -1,0 +1,315 @@
+{
+  "concept": "K09 quad tailsitter, flat flying wing, motor-only (U03 = K09); options K11, U06",
+  "mission": "REQUIREMENTS.md section 3 M-A: hover 2 min, cruise >=5/10 min, 20 % reserve, 0 payload + 0.25 kg growth",
+  "status": "PROPOSED; every number ESTIMATE unless a datasheet is named in sizing.py",
+  "pack_choice": {
+    "name": "Ovonic 4S 6500 130C XT60",
+    "source": "us.ovonicshop.com 2-pack $79.25 (seen 2026-11-09); 680 g per pack from a reseller listing UNVERIFIED (car-style pack; K01 used 0.56 kg for a 50C soft pack)",
+    "rule": "lightest 4S pack meeting the 10 min objective in the pessimistic cruise case"
+  },
+  "baseline": {
+    "label": "baseline",
+    "pack": "Ovonic 4S 6500 130C XT60",
+    "mtow_kg": 2.382,
+    "mass_groups_kg": {
+      "wing core XPS (hot-wired, calc from geometry)": 0.211,
+      "wing skin, packing tape 2 sides": 0.045,
+      "spar CF 22x20 (1 m stock, 102 g/m calc)": 0.102,
+      "2 fins, 2 x 3/16 in foam board sandwich": 0.122,
+      "2 vertical motor tubes CF 22x20 (cut from stock)": 0.086,
+      "printed PETG: 4 motor mounts, 2 tube-spar saddles, 4 crushable feet (ESTIMATE)": 0.126,
+      "centre pod: foam-board/XPS hatch + printed FC/battery tray (ESTIMATE)": 0.07,
+      "4 stations: X3108S 81 g (SunnySky) + LANRC 45A 6.6 g + APC 11x4.5MR ~20 g": 0.43,
+      "motor/ESC wiring 4 x 0.5 m 16 AWG pairs + bullet connectors (ESTIMATE)": 0.06,
+      "battery 4S pack (see PACKS)": 0.68,
+      "avionics: CoreWing F405 Wing V2, M100 GPS, RP3 RX, RID, AS150U, 12 AWG harness (ESTIMATE)": 0.14,
+      "glue, Velcro straps, cable ties, labels (ESTIMATE)": 0.06
+    },
+    "growth_kg": 0.25,
+    "span_m": 1.15,
+    "chord_m": 0.3,
+    "n_wings": 1,
+    "wing_area_m2": 0.345,
+    "AR": 3.83,
+    "wing_loading_N_m2": 67.7,
+    "wing_loading_kg_m2": 6.9,
+    "stall_mps": 11.08,
+    "transition_min_mps_1p3Vs": 14.41,
+    "cruise_mps": 14.5,
+    "disk_loading_N_m2": 95.3,
+    "thrust_per_motor_hover_g": 607.0,
+    "hover_frac_of_max_thrust": 0.38,
+    "TW_table": 2.65,
+    "TW_with_sag": 2.47,
+    "hover_power_W_table": 335.0,
+    "hover_power_W_momentum_FM": 309.0,
+    "FM_implied_by_table": 0.6,
+    "hover_current_A": 22.6,
+    "hover_current_per_motor_A": 5.6,
+    "full_throttle_current_A": 120.0,
+    "connector_need_A_1p25x_transition": 37.0,
+    "CD0": 0.0593,
+    "CD0_parts": {
+      "wing": 0.0176,
+      "fins": 0.0174,
+      "motor_tubes": 0.0167,
+      "motors": 0.0053,
+      "pod": 0.0023
+    },
+    "CL_cruise": 0.526,
+    "LD_cruise": 5.97,
+    "LD_cruise_pess": 4.97,
+    "drag_N": 3.91,
+    "cruise_power_W": 140.0,
+    "cruise_power_W_pess": 261.0,
+    "cruise_current_A": 9.5,
+    "pack_Wh": 96.2,
+    "usable_Wh_after_reserve": 77.0,
+    "hover_Wh_2min": 11.2,
+    "cruise_min_after_2min_hover": 26.9,
+    "cruise_min_after_2min_hover_pess": 14.5,
+    "hover_only_endurance_min": 13.8,
+    "cruise_only_endurance_min": 31.6,
+    "gust_tilt_deg": {
+      "5mps": 16.1,
+      "8mps": 36.5
+    },
+    "max_lean_from_TW_deg": 66.1,
+    "gust_8mps_exceeds_Q_ANGLE_MAX": true,
+    "stance_tipover_deg": {
+      "narrow": 39.0,
+      "wide": 53.7,
+      "cg_height_m": 0.235
+    },
+    "speed_sweep": [
+      {
+        "V": 12.0,
+        "LD": 6.37,
+        "P_W": 110.0
+      },
+      {
+        "V": 13.0,
+        "LD": 6.31,
+        "P_W": 119.9
+      },
+      {
+        "V": 14.0,
+        "LD": 6.11,
+        "P_W": 132.8
+      },
+      {
+        "V": 15.0,
+        "LD": 5.82,
+        "P_W": 148.6
+      },
+      {
+        "V": 16.0,
+        "LD": 5.49,
+        "P_W": 167.5
+      },
+      {
+        "V": 17.0,
+        "LD": 5.13,
+        "P_W": 189.6
+      },
+      {
+        "V": 18.0,
+        "LD": 4.78,
+        "P_W": 215.0
+      },
+      {
+        "V": 19.0,
+        "LD": 4.44,
+        "P_W": 243.8
+      },
+      {
+        "V": 20.0,
+        "LD": 4.11,
+        "P_W": 276.3
+      },
+      {
+        "V": 21.0,
+        "LD": 3.81,
+        "P_W": 312.5
+      },
+      {
+        "V": 22.0,
+        "LD": 3.53,
+        "P_W": 352.6
+      }
+    ]
+  },
+  "variants": [
+    {
+      "label": "baseline",
+      "pack": "Ovonic 4S 6500 130C XT60",
+      "mtow_kg": 2.382,
+      "span_m": 1.15,
+      "wing_area_m2": 0.345,
+      "TW_table": 2.65,
+      "stall_mps": 11.08,
+      "cruise_mps": 14.5,
+      "LD_cruise": 5.97,
+      "cruise_power_W": 140.0,
+      "hover_current_A": 22.6,
+      "cruise_min_after_2min_hover": 26.9,
+      "cruise_min_after_2min_hover_pess": 14.5,
+      "hover_only_endurance_min": 13.8,
+      "gust_tilt_deg": {
+        "5mps": 16.1,
+        "8mps": 36.5
+      }
+    },
+    {
+      "label": "fallback pack Admiral 4S 4000 (lighter; check pess column)",
+      "pack": "Admiral 4S 4000 40C XT60",
+      "mtow_kg": 2.088,
+      "span_m": 1.15,
+      "wing_area_m2": 0.345,
+      "TW_table": 3.03,
+      "stall_mps": 10.38,
+      "cruise_mps": 14.0,
+      "LD_cruise": 5.84,
+      "cruise_power_W": 122.0,
+      "hover_current_A": 19.9,
+      "cruise_min_after_2min_hover": 17.0,
+      "cruise_min_after_2min_hover_pess": 9.1,
+      "hover_only_endurance_min": 9.7,
+      "gust_tilt_deg": {
+        "5mps": 18.3,
+        "8mps": 40.2
+      }
+    },
+    {
+      "label": "pessimistic (eta_prop 0.35, CD0 x1.3): read cruise_min_after_2min_hover only",
+      "pack": "Ovonic 4S 6500 130C XT60",
+      "mtow_kg": 2.382,
+      "span_m": 1.15,
+      "wing_area_m2": 0.345,
+      "TW_table": 2.65,
+      "stall_mps": 11.08,
+      "cruise_mps": 14.5,
+      "LD_cruise": 4.97,
+      "cruise_power_W": 261.0,
+      "hover_current_A": 22.6,
+      "cruise_min_after_2min_hover": 14.5,
+      "cruise_min_after_2min_hover_pess": 11.9,
+      "hover_only_endurance_min": 13.8,
+      "gust_tilt_deg": {
+        "5mps": 16.1,
+        "8mps": 36.5
+      }
+    },
+    {
+      "label": "sensitivity: +0.30 kg mass growth",
+      "pack": "Ovonic 4S 6500 130C XT60",
+      "mtow_kg": 2.682,
+      "span_m": 1.15,
+      "wing_area_m2": 0.345,
+      "TW_table": 2.36,
+      "stall_mps": 11.76,
+      "cruise_mps": 15.5,
+      "LD_cruise": 5.94,
+      "cruise_power_W": 169.0,
+      "hover_current_A": 25.4,
+      "cruise_min_after_2min_hover": 21.8,
+      "cruise_min_after_2min_hover_pess": 11.7,
+      "hover_only_endurance_min": 12.3,
+      "gust_tilt_deg": {
+        "5mps": 14.4,
+        "8mps": 33.3
+      }
+    },
+    {
+      "label": "K11 biplane Box Kite 0.80 m (2 x 0.80 x 0.22)",
+      "pack": "Ovonic 4S 6500 130C XT60",
+      "mtow_kg": 2.37,
+      "span_m": 0.8,
+      "wing_area_m2": 0.352,
+      "TW_table": 2.67,
+      "stall_mps": 10.95,
+      "cruise_mps": 14.5,
+      "LD_cruise": 4.98,
+      "cruise_power_W": 167.0,
+      "hover_current_A": 22.5,
+      "cruise_min_after_2min_hover": 22.6,
+      "cruise_min_after_2min_hover_pess": 12.2,
+      "hover_only_endurance_min": 13.9,
+      "gust_tilt_deg": {
+        "5mps": 12.5,
+        "8mps": 29.7
+      }
+    },
+    {
+      "label": "U06 folding outer panels (phase 2)",
+      "pack": "Ovonic 4S 6500 130C XT60",
+      "mtow_kg": 2.472,
+      "span_m": 1.15,
+      "wing_area_m2": 0.345,
+      "TW_table": 2.56,
+      "stall_mps": 11.29,
+      "cruise_mps": 15.0,
+      "LD_cruise": 5.91,
+      "cruise_power_W": 152.0,
+      "hover_current_A": 23.5,
+      "cruise_min_after_2min_hover": 24.6,
+      "cruise_min_after_2min_hover_pess": 13.2,
+      "hover_only_endurance_min": 13.3,
+      "gust_tilt_deg": {
+        "5mps": 8.8,
+        "8mps": 21.7
+      }
+    }
+  ],
+  "K11_biplane_sigma": 0.244,
+  "packing": {
+    "envelope_props_off_m": [
+      1.15,
+      0.445,
+      0.39
+    ],
+    "box_m": [
+      1.2,
+      0.5,
+      0.4
+    ],
+    "fits_one_box": true,
+    "envelope_props_on_height_m": 0.659,
+    "pieces": 1,
+    "structural_field_joints": 0,
+    "longest_piece_m": 1.15,
+    "field_steps": "4 prop nuts (or leave props in a separate tray), battery in + strap, arm check",
+    "assembly_min_ESTIMATE": 5,
+    "people": 1,
+    "box_mass_kg_ESTIMATE": "aircraft ~2 kg + foam-lined box ~3 kg = ~5 kg"
+  },
+  "packing_K11": {
+    "envelope_props_off_m": [
+      0.8,
+      0.365,
+      0.39
+    ],
+    "note": "one piece, 0.8 m: fits a back seat or a 0.8 m box"
+  },
+  "cost": {
+    "goods": 1277.56,
+    "tax": 130.95,
+    "shipping": 120.0,
+    "total": 1528.51,
+    "reserve_total": 471.49,
+    "planned_crash_reserve": 150.0,
+    "unallocated": 321.49,
+    "passes_G1_1850": true
+  },
+  "gates": {
+    "G1_cost_le_1850": true,
+    "G3_one_box": true,
+    "G6_TW_ge_1p6": true,
+    "TW_ge_2p0_recommended": true,
+    "cruise_threshold_5min": true,
+    "cruise_objective_10min": true,
+    "cruise_objective_10min_pess": true,
+    "AS150U_70A_cont_ok_for_transition": true,
+    "hover_in_8mps_gust_within_Q_ANGLE_MAX": false
+  }
+}

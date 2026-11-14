@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DBF design system — components</title>
+<script>
+  // theme: ?theme=dark|light overrides, then saved choice, then OS
+  try {
+    const q = new URLSearchParams(location.search).get('theme');
+    const t = q || localStorage.getItem('dbf-theme');
+    if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+  /* showcase-only layout */
+  html, body { margin: 0; }
+  body { min-height: 100vh; }
+  .shell { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); overflow-x: clip; max-width: var(--page-max); margin: 0 auto; }
+  .rail { position: sticky; top: var(--topbar-h); align-self: start; height: calc(100vh - var(--topbar-h)); overflow: auto; padding: var(--space-5) var(--space-4) var(--space-5) var(--space-5); border-right: 1px solid var(--line); }
+  .rail .ds-label { margin: var(--space-4) 0 var(--space-2); }
+  .rail .ds-label:first-child { margin-top: 0; }
+  .rail a { display: block; padding: 5px 8px; border-radius: var(--radius-sm); font-size: var(--text-sm); color: var(--fg-2); text-decoration: none; }
+  .rail a:hover { background: var(--panel-2); color: var(--fg); }
+  main { padding: var(--space-6) var(--space-7) var(--space-8); display: flex; flex-direction: column; gap: var(--space-8); min-width: 0; }
+  .intro { display: grid; gap: var(--space-3); max-width: 70ch; }
+  section.c { display: grid; gap: var(--space-4); scroll-margin-top: calc(var(--topbar-h) + 16px); }
+  section.c > header { display: grid; gap: 4px; }
+  section.c > header .use { color: var(--fg-2); font-size: var(--text-sm); max-width: var(--measure); }
+  section.c > header .use code { font: inherit; font-family: var(--font-mono); color: var(--fg); }
+  .sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
+  .sw div { border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: var(--panel); }
+  .sw i { display: block; height: 44px; }
+  .sw b { display: block; padding: 6px 8px 0; font-size: var(--text-xs); font-weight: var(--weight-medium); color: var(--fg); }
+  .sw small { display: block; padding: 0 8px 7px; font: var(--weight-regular) 11px/1.3 var(--font-mono); color: var(--fg-3); }
+  .type-scale { display: grid; gap: 10px; }
+  .type-scale > div { display: grid; grid-template-columns: 170px 1fr; gap: 16px; align-items: baseline; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+  .type-scale > div:last-child { border-bottom: 0; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); align-items: start; }
+  .viewerbar { display: flex; align-items: center; gap: var(--space-3); padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--panel); flex-wrap: wrap; }
+  .viewerbar .ds-meta { margin-left: auto; }
+  @media (max-width: 960px) { .shell { grid-template-columns: minmax(0, 1fr); } .type-scale > div { grid-template-columns: 1fr; gap: 4px; } .sw { grid-template-columns: repeat(3, 1fr); } .ds-badge[data-status="UNVERIFIED"].top { display: none; } .rail { display: none; } main { padding: var(--space-5) var(--space-4) var(--space-7); } .two { grid-template-columns: 1fr; } .ds-search { display: none; } }
+</style>
+</head>
+<body class="ds-base">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- icons: 1.75px stroke, 24 grid -->
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.6 2.6L16 9.5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l9 16H3z"/><path d="M12 10v4M12 17v.5"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M8 3h8l5 5v8l-5 5H8l-5-5V8z"/><path d="M12 8v5M12 16v.5"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></symbol>
+    <symbol id="i-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h18M12 13V5M7 13l-2 6M17 13l2 6"/><circle cx="7" cy="5" r="2"/><circle cx="17" cy="5" r="2"/></symbol>
+
+    <!-- concept sketches: top views, stroke only, currentColor -->
+    <symbol id="sk-quadplane" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="10" y="50" width="140" height="12" rx="3"/><rect x="72" y="20" width="16" height="78" rx="5"/>
+      <path d="M40 24v62M120 24v62"/><circle cx="40" cy="22" r="13"/><circle cx="40" cy="88" r="13"/><circle cx="120" cy="22" r="13"/><circle cx="120" cy="88" r="13"/>
+      <path d="M62 96h36"/>
+    </symbol>
+    <symbol id="sk-tailsitter" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M12 40h136l-8 22H20z"/><circle cx="52" cy="34" r="15"/><circle cx="108" cy="34" r="15"/><path d="M80 40v50M62 90h36M52 62v18M108 62v18"/>
+    </symbol>
+    <symbol id="sk-tiltrotor" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="10" y="48" width="140" height="12" rx="3"/><rect x="72" y="16" width="16" height="84" rx="5"/>
+      <path d="M22 44a14 14 0 0 1 0 20M138 44a14 14 0 0 0 0 20"/><circle cx="22" cy="54" r="14"/><circle cx="138" cy="54" r="14"/><path d="M60 98h40"/>
+    </symbol>
+    <symbol id="sk-tiltwing" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M12 46h136v16H12z" stroke-dasharray="4 3"/><rect x="72" y="16" width="16" height="84" rx="5"/><circle cx="44" cy="54" r="14"/><circle cx="116" cy="54" r="14"/><path d="M60 98h40"/>
+    </symbol>
+    <symbol id="sk-multirotor" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="66" y="42" width="28" height="26" rx="4"/><path d="M66 48L36 26M94 48l30-22M66 62L36 84M94 62l30 22"/><circle cx="36" cy="26" r="13"/><circle cx="124" cy="26" r="13"/><circle cx="36" cy="84" r="13"/><circle cx="124" cy="84" r="13"/>
+    </symbol>
+    <symbol id="sk-wheels" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M30 40h100"/><path d="M50 40v30M110 40v30M80 40v36"/><circle cx="50" cy="78" r="9"/><circle cx="110" cy="78" r="9"/><circle cx="80" cy="84" r="9"/></symbol>
+    <symbol id="sk-skids" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M30 40h100"/><path d="M50 40v34M110 40v34M30 78q0-4 4-4h92q4 0 4 4"/><path d="M24 82h112"/></symbol>
+    <symbol id="sk-legs" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M30 40h100"/><path d="M45 40l-10 40M115 40l10 40M80 40v40"/><path d="M30 80h10M110 80h20M74 80h12"/></symbol>
+    <symbol id="sk-foam" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 70q60-40 120-30v24H20z"/><path d="M40 60l80-10" stroke-dasharray="3 3"/></symbol>
+    <symbol id="sk-print" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="40" y="36" width="80" height="40" rx="4"/><path d="M40 46h80M40 56h80M40 66h80" opacity=".5"/></symbol>
+    <symbol id="sk-ply" viewBox="0 0 160 110" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M30 60l50-26 50 26-50 26z"/><path d="M30 60v8l50 26v-8M130 60v8l-50 26"/></symbol>
+  </defs>
+</svg>
+
+<header class="ds-topbar">
+  <a class="ds-brand" href="#"><svg class="mark"><use href="#i-brand"/></svg>DBF VTOL <span class="ver">redesign v1</span></a>
+  <nav class="ds-nav" aria-label="Outputs">
+    <a href="#" aria-current="page">Configuration</a><a href="#">Build manual</a><a href="#">Viewer</a><a href="#">Proofs</a>
+  </nav>
+  <span class="spacer"></span>
+  <div class="ds-search" role="search"><svg><use href="#i-search"/></svg>Search parts, numbers, claims<span class="ds-kbd">Ctrl K</span></div>
+  <span class="ds-badge top" data-status="UNVERIFIED">UNVERIFIED</span>
+  <button class="ds-iconbtn" id="theme" type="button" aria-label="Switch theme"><svg><use href="#i-moon"/></svg></button>
+</header>
+
+<div class="shell">
+<aside class="rail" aria-label="Sections">
+  <div class="ds-label">Foundations</div>
+  <a href="#colour">Colour</a><a href="#type">Type</a>
+  <div class="ds-label">Navigation</div>
+  <a href="#nav">Top bar, tabs, modes</a>
+  <div class="ds-label">Status</div>
+  <a href="#badges">Status badges</a><a href="#chips">Part chips</a><a href="#legend">Legends</a>
+  <div class="ds-label">Data</div>
+  <a href="#metrics">Metric tiles</a><a href="#table">Data table</a><a href="#code">Code and equations</a>
+  <div class="ds-label">Configuration study</div>
+  <a href="#morph">Morphological chart</a><a href="#concepts">Concept cards</a><a href="#trade">Trade matrix</a>
+  <div class="ds-label">Build manual</div>
+  <a href="#step">Step card</a><a href="#callouts">Callouts</a>
+  <div class="ds-label">Viewer</div>
+  <a href="#part">Part panel</a><a href="#graph">Proof graph nodes</a>
+</aside>
+
+<main>
+  <div class="intro">
+    <h1 class="ds-display">Components</h1>
+    <p class="ds-body">Every piece the configuration page, build manual, 3-D viewer, proof graph and docs need, drawn once. Load <code class="ds-inline">tokens.css</code> then <code class="ds-inline">components.css</code>; copy the markup. Toggle the theme in the top bar; both must look finished.</p>
+  </div>
+
+  <!-- ================= COLOUR ================= -->
+  <section class="c" id="colour">
+    <header><h2 class="ds-h2">Colour</h2><p class="use">Neutrals carry the page. Blue means <em>here or selected</em>. Orange means <em>the part you act on</em> in a figure. The status ladder means exactly what its word says. Subsystem hues colour geometry only.</p></header>
+    <div class="ds-stack">
+      <div class="ds-label">Surfaces and text</div>
+      <div class="sw">
+        <div><i style="background:var(--bg)"></i><b>bg</b><small>page</small></div>
+        <div><i style="background:var(--panel)"></i><b>panel</b><small>cards, tables</small></div>
+        <div><i style="background:var(--panel-2)"></i><b>panel-2</b><small>hover, code</small></div>
+        <div><i style="background:var(--panel-3)"></i><b>panel-3</b><small>pressed</small></div>
+        <div><i style="background:var(--line)"></i><b>line</b><small>hairline</small></div>
+        <div><i style="background:var(--line-2)"></i><b>line-2</b><small>controls</small></div>
+        <div><i style="background:var(--line-3)"></i><b>line-3</b><small>axes</small></div>
+        <div><i style="background:var(--fg)"></i><b>fg</b><small>headings, values</small></div>
+        <div><i style="background:var(--fg-2)"></i><b>fg-2</b><small>body</small></div>
+        <div><i style="background:var(--fg-3)"></i><b>fg-3</b><small>meta, units</small></div>
+        <div><i style="background:var(--accent)"></i><b>accent</b><small>here / selected</small></div>
+        <div><i style="background:var(--highlight)"></i><b>highlight</b><small>act on (figures)</small></div>
+      </div>
+      <div class="ds-label">Status ladder</div>
+      <div class="sw">
+        <div><i style="background:var(--st-unverified)"></i><b>UNVERIFIED</b><small>no source / blocker</small></div>
+        <div><i style="background:var(--st-proposed)"></i><b>PROPOSED</b><small>idea, no calc</small></div>
+        <div><i style="background:var(--st-modelled)"></i><b>MODELLED</b><small>in Fusion script</small></div>
+        <div><i style="background:var(--st-checked)"></i><b>CHECKED</b><small>passes check / calc</small></div>
+        <div><i style="background:var(--st-verified)"></i><b>VERIFIED</b><small>bench evidence</small></div>
+        <div><i style="background:var(--st-fail)"></i><b>FAIL</b><small>negative margin</small></div>
+      </div>
+      <div class="ds-label">Subsystems (geometry, diagrams, legends)</div>
+      <div class="sw">
+        <div><i style="background:var(--sub-wng)"></i><b>WNG</b><small>wing</small></div>
+        <div><i style="background:var(--sub-fus)"></i><b>FUS</b><small>fuselage</small></div>
+        <div><i style="background:var(--sub-bms)"></i><b>BMS</b><small>booms</small></div>
+        <div><i style="background:var(--sub-tal)"></i><b>TAL</b><small>tail</small></div>
+        <div><i style="background:var(--sub-ger)"></i><b>GER</b><small>landing gear</small></div>
+        <div><i style="background:var(--sub-psh)"></i><b>PSH</b><small>pusher</small></div>
+        <div><i style="background:var(--sub-pwr)"></i><b>PWR</b><small>power</small></div>
+        <div><i style="background:var(--sub-hrn)"></i><b>HRN</b><small>harness</small></div>
+        <div><i style="background:var(--sub-avn)"></i><b>AVN</b><small>avionics</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TYPE ================= -->
+  <section class="c" id="type">
+    <header><h2 class="ds-h2">Type</h2><p class="use">IBM Plex Sans for words, IBM Plex Mono for anything measured, cited or coded. Tabular numerals everywhere. One display line per page, at most.</p></header>
+    <div class="ds-panel type-scale" style="padding: var(--space-4) var(--space-5)">
+      <div><span class="ds-meta">display · 32 / 600</span><span class="ds-display">Configuration study</span></div>
+      <div><span class="ds-meta">h1 · 24 / 600</span><span class="ds-h1">Wing — SPEC</span></div>
+      <div><span class="ds-meta">h2 · 18 / 600</span><span class="ds-h2">Key numbers</span></div>
+      <div><span class="ds-meta">h3 · 15 / 600</span><span class="ds-h3">Mass budget vs allocation</span></div>
+      <div><span class="ds-meta">body · 15 / 400</span><span class="ds-body">Hot-wire XPS cores, 1.2 mm ply shear web, 10 mm CF spar tube. Wing joiner releases with two M4 thumb screws for transport.</span></div>
+      <div><span class="ds-meta">value · mono 22 / 500</span><span class="ds-num" style="font-size:var(--text-value);font-weight:500">7.42<span class="ds-unit">kg</span></span></div>
+      <div><span class="ds-meta">source · mono 12</span><span class="ds-source"><b>Source</b> params.json#mass.mtow_kg · calc/mass_rollup.py</span></div>
+      <div><span class="ds-meta">label · 12 / 500 caps</span><span class="ds-label">Interfaces</span></div>
+    </div>
+  </section>
+
+  <!-- ================= NAV ================= -->
+  <section class="c" id="nav">
+    <header><h2 class="ds-h2">Top bar, sub-tabs, viewer modes</h2><p class="use">The top bar above is the real component: brand, four outputs, search, the project's overall status, theme. Sub-tabs split one page; a segmented control switches viewer modes.</p></header>
+    <div class="ds-stack">
+      <div class="ds-tabs" role="tablist"><button role="tab" aria-selected="true">Summary</button><button role="tab">Key numbers</button><button role="tab">Parts</button><button role="tab">Interfaces</button><button role="tab">Mass</button><button role="tab">Verify</button></div>
+      <div class="viewerbar">
+        <div class="ds-seg" role="group" aria-label="View mode"><button aria-pressed="true">Whole</button><button>Inside &amp; wiring</button><button>Structure</button><button>Exploded</button></div>
+        <div class="ds-seg" role="group" aria-label="Camera"><button aria-pressed="true">Iso</button><button>Top</button><button>Front</button><button>Side</button></div>
+        <button class="ds-btn">Reset view</button>
+        <button class="ds-btn primary">Open part</button>
+        <span class="ds-meta ds-mono">212 parts · 7.42 kg · 2026-11-09</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BADGES ================= -->
+  <section class="c" id="badges">
+    <header><h2 class="ds-h2">Status badges</h2><p class="use"><code>&lt;span class="ds-badge" data-status="CHECKED"&gt;CHECKED&lt;/span&gt;</code>. The word is always printed; colour alone is never a status. Dot variant for dense tables, outline variant on coloured stages.</p></header>
+    <div class="ds-row">
+      <span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span>
+      <span class="ds-badge" data-status="PROPOSED">PROPOSED</span>
+      <span class="ds-badge" data-status="MODELLED">MODELLED</span>
+      <span class="ds-badge" data-status="CHECKED">CHECKED</span>
+      <span class="ds-badge" data-status="VERIFIED">VERIFIED</span>
+      <span class="ds-badge" data-status="FAIL">FAIL · margin −12 %</span>
+    </div>
+    <div class="ds-row">
+      <span class="ds-badge outline" data-status="UNVERIFIED">UNVERIFIED</span>
+      <span class="ds-badge outline" data-status="CHECKED">CHECKED</span>
+      <span class="ds-badge dot" data-status="VERIFIED" title="VERIFIED"></span><span class="ds-meta">dot: VERIFIED</span>
+      <span class="ds-mark" data-status="UNVERIFIED">EST</span><span class="ds-meta">inline estimate mark</span>
+    </div>
+  </section>
+
+  <!-- ================= CHIPS ================= -->
+  <section class="c" id="chips">
+    <header><h2 class="ds-h2">Part chips</h2><p class="use">Subsystem square, id in mono, name, status dot. Click opens the part in the viewer. <code>data-sub</code> and <code>data-status</code> colour it.</p></header>
+    <div class="ds-row">
+      <a class="ds-chip" href="#" data-sub="WNG" data-status="MODELLED"><i class="sub"></i><span class="id">WNG-003</span>Spar tube 10×8 CF<i class="st"></i></a>
+      <a class="ds-chip" href="#" data-sub="PWR" data-status="CHECKED"><i class="sub"></i><span class="id">PWR-001</span>Battery 6S 5000 mAh<i class="st"></i></a>
+      <a class="ds-chip" href="#" data-sub="BMS" data-status="PROPOSED"><i class="sub"></i><span class="id">BMS-002</span>Boom tube 16×14 CF<i class="st"></i></a>
+      <a class="ds-chip" href="#" data-sub="AVN" data-status="VERIFIED" aria-current="true"><i class="sub"></i><span class="id">AVN-001</span>Flight controller<i class="st"></i></a>
+      <a class="ds-chip" href="#" data-sub="GER" data-status="UNVERIFIED"><i class="sub"></i><span class="id">GER-004</span>Skid, printed PETG<i class="st"></i></a>
+    </div>
+  </section>
+
+  <!-- ================= LEGEND ================= -->
+  <section class="c" id="legend">
+    <header><h2 class="ds-h2">Legends</h2><p class="use">One line, below the figure, same colours as the geometry. A legend never repeats what a label already says.</p></header>
+    <div class="ds-stack">
+      <div class="ds-legend">
+        <span><i data-sub="WNG" style="background:var(--sub-wng)"></i>Wing</span><span><i style="background:var(--sub-fus)"></i>Fuselage</span><span><i style="background:var(--sub-bms)"></i>Booms</span><span><i style="background:var(--sub-tal)"></i>Tail</span><span><i style="background:var(--sub-ger)"></i>Gear</span><span><i style="background:var(--sub-psh)"></i>Pusher</span><span><i style="background:var(--sub-pwr)"></i>Power</span><span><i style="background:var(--sub-hrn)"></i>Harness</span><span><i style="background:var(--sub-avn)"></i>Avionics</span>
+      </div>
+      <div class="ds-legend">
+        <span><i class="highlight"></i>Part you act on</span><span><i style="background:var(--fg-2)"></i>Already built</span><span><i class="ghost"></i>Ghosted (context)</span><span><i class="line"></i>Visible edge</span><span><i class="line dashed"></i>Hidden edge</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= METRICS ================= -->
+  <section class="c" id="metrics">
+    <header><h2 class="ds-h2">Metric tiles</h2><p class="use">A key figure, its unit, its limit and its status, in one strip at the top of a SPEC or page. Four to six tiles; never a wall of numbers.</p></header>
+    <div class="ds-metrics">
+      <div class="ds-metric" data-status="CHECKED"><span class="k">MTOW <span class="ds-badge dot" data-status="CHECKED"></span></span><span class="v">7.42<span class="ds-unit">kg</span></span><span class="lim">limit ≤ 7.75 · <b>margin 4.3 %</b></span></div>
+      <div class="ds-metric" data-status="CHECKED"><span class="k">Hover T/W <span class="ds-badge dot" data-status="CHECKED"></span></span><span class="v">1.84</span><span class="lim">limit ≥ 1.6 · <b>margin 15 %</b></span></div>
+      <div class="ds-metric" data-status="UNVERIFIED"><span class="k">Cruise L/D <span class="ds-badge dot" data-status="UNVERIFIED"></span></span><span class="v">9.1</span><span class="lim">no source · <b>UNVERIFIED</b></span></div>
+      <div class="ds-metric" data-status="FAIL"><span class="k">Cost <span class="ds-badge dot" data-status="FAIL"></span></span><span class="v">2 118<span class="ds-unit">USD</span></span><span class="lim">limit ≤ 2 000 · <b>over by 5.9 %</b></span></div>
+      <div class="ds-metric" data-status="PROPOSED"><span class="k">Span <span class="ds-badge dot" data-status="PROPOSED"></span></span><span class="v">2.2<span class="ds-unit">m</span></span><span class="lim">fits car: 1.1 m halves</span></div>
+    </div>
+  </section>
+
+  <!-- ================= TABLE ================= -->
+  <section class="c" id="table">
+    <header><h2 class="ds-h2">Data table</h2><p class="use">Units in the header, numbers right-aligned in mono, a source column, a status per row. Caption says what the table is. This is the SPEC.md "key numbers" table.</p></header>
+    <table class="ds-table sortable">
+      <caption>Key numbers — wing</caption>
+      <thead><tr><th>Parameter</th><th class="num" aria-sort="none">Value</th><th>Unit</th><th>Source</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Span</td><td class="num">2.20</td><td>m</td><td class="src">params.json#wing.span_m</td><td><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></td></tr>
+        <tr><td>Area</td><td class="num">0.46</td><td>m²</td><td class="src">calc/wing_geom.py</td><td><span class="ds-badge" data-status="CHECKED">CHECKED</span></td></tr>
+        <tr><td>Spar bending margin</td><td class="num">1.9</td><td>—</td><td class="src">analysis/structures/spar.py · 3.5 g</td><td><span class="ds-badge" data-status="CHECKED">CHECKED</span></td></tr>
+        <tr><td>Core mass (both halves)</td><td class="num">412</td><td>g</td><td class="src">parts.csv · XPS 30 kg/m³</td><td><span class="ds-badge" data-status="UNVERIFIED">UNVERIFIED</span></td></tr>
+        <tr><td>Joiner pull-out</td><td class="num">—</td><td>N</td><td class="src">T-WNG-02 planned</td><td><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></td></tr>
+        <tr class="total"><td>Subsystem mass</td><td class="num">1 180</td><td>g</td><td class="src">allocation 1 250 g</td><td class="delta-ok">−70 g</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ================= CODE ================= -->
+  <section class="c" id="code">
+    <header><h2 class="ds-h2">Code and equations</h2><p class="use">One equation per block with a number, then "where" in mono. Code blocks name the file in the first comment line.</p></header>
+    <div class="two">
+      <div class="ds-eq">
+        <span class="expr">T<sub>hover</sub> = n · k<sub>T</sub> · ρ · n<sub>rpm</sub><sup>2</sup> · D<sup>4</sup></span><span class="eqno">(3)</span>
+        <span class="where"><b>n</b> rotors = 4 · <b>k_T</b> 0.11 (APC 15×5.5, UIUC) · <b>ρ</b> 1.19 kg/m³ · <b>D</b> 0.381 m</span>
+      </div>
+      <pre class="ds-code"><span class="c"># redesign/analysis/propulsion/hover.py</span>
+<span class="k">def</span> hover_tw(params):
+    t = <span class="n">4</span> * params[<span class="n">"rotor.kt"</span>] * rho * rpm**<span class="n">2</span> * d**<span class="n">4</span>
+    <span class="k">return</span> t / (params[<span class="n">"mass.mtow_kg"</span>] * g)   <span class="c"># CL-PROP-HOVER-TW</span></pre>
+    </div>
+  </section>
+
+  <!-- ================= MORPH ================= -->
+  <section class="c" id="morph">
+    <header><h2 class="ds-h2">Morphological chart</h2><p class="use">Rows are functions, cells are options. Three states: <b>chosen</b> (accent ring), <b>runner-up</b> (dashed), <b>rejected</b> (faded, struck). Hover restores a rejected cell so it stays readable; the reason lives in the trade matrix, not here.</p></header>
+    <div class="ds-morph" style="--cols:4">
+      <div class="row">
+        <div class="fn"><b>Lift</b><span>how it hovers</span></div>
+        <div class="ds-cell chosen"><span class="tag">CHOSEN</span><div class="pic"><svg><use href="#sk-quadplane"/></svg></div><span class="name">4 fixed lift rotors</span></div>
+        <div class="ds-cell runner"><span class="tag">RUNNER-UP</span><div class="pic"><svg><use href="#sk-tailsitter"/></svg></div><span class="name">Tailsitter, 2 rotors</span></div>
+        <div class="ds-cell rejected"><span class="tag">OUT</span><div class="pic"><svg><use href="#sk-tiltrotor"/></svg></div><span class="name">Tilt-rotor</span></div>
+        <div class="ds-cell rejected"><span class="tag">OUT</span><div class="pic"><svg><use href="#sk-tiltwing"/></svg></div><span class="name">Tilt-wing</span></div>
+      </div>
+      <div class="row">
+        <div class="fn"><b>Landing</b><span>what touches ground</span></div>
+        <div class="ds-cell chosen"><span class="tag">CHOSEN</span><div class="pic"><svg><use href="#sk-skids"/></svg></div><span class="name">Skids on booms</span></div>
+        <div class="ds-cell runner"><span class="tag">RUNNER-UP</span><div class="pic"><svg><use href="#sk-legs"/></svg></div><span class="name">4 printed legs</span></div>
+        <div class="ds-cell rejected"><span class="tag">OUT</span><div class="pic"><svg><use href="#sk-wheels"/></svg></div><span class="name">Tricycle wheels</span></div>
+        <div class="ds-cell rejected"><span class="tag">OUT</span><div class="pic"><svg><use href="#sk-multirotor"/></svg></div><span class="name">Belly, no gear</span></div>
+      </div>
+      <div class="row">
+        <div class="fn"><b>Wing build</b><span>material and process</span></div>
+        <div class="ds-cell chosen"><span class="tag">CHOSEN</span><div class="pic"><svg><use href="#sk-foam"/></svg></div><span class="name">Hot-wire XPS + CF spar</span></div>
+        <div class="ds-cell rejected"><span class="tag">OUT</span><div class="pic"><svg><use href="#sk-print"/></svg></div><span class="name">Printed LW-PLA sections</span></div>
+        <div class="ds-cell runner"><span class="tag">RUNNER-UP</span><div class="pic"><svg><use href="#sk-ply"/></svg></div><span class="name">Laser-cut balsa ribs</span></div>
+        <div class="ds-cell rejected"><span class="tag">OUT</span><div class="pic"><svg><use href="#sk-ply"/></svg></div><span class="name">Moulded composite</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONCEPTS ================= -->
+  <section class="c" id="concepts">
+    <header><h2 class="ds-h2">Concept cards</h2><p class="use">One sketch, one name, three numbers, one verdict sentence. The chosen concept gets the accent ring; nothing else changes.</p></header>
+    <div class="ds-grid">
+      <article class="ds-concept chosen">
+        <figure><svg><use href="#sk-quadplane"/></svg><span class="rank ds-badge" data-status="CHECKED">RANK 1</span></figure>
+        <div class="body">
+          <div class="title"><span class="id">C-04</span><b>QuadPlane, pusher</b></div>
+          <dl><div><dt>Mass</dt><dd>7.4 kg</dd></div><div><dt>Cost</dt><dd>$1 640</dd></div><div><dt>Build</dt><dd>110 h</dd></div></dl>
+          <p class="verdict">Simplest transition; all parts bought or foam. Chosen.</p>
+        </div>
+      </article>
+      <article class="ds-concept">
+        <figure><svg><use href="#sk-tailsitter"/></svg><span class="rank ds-badge" data-status="PROPOSED">RANK 2</span></figure>
+        <div class="body">
+          <div class="title"><span class="id">C-11</span><b>Twin-rotor tailsitter</b></div>
+          <dl><div><dt>Mass</dt><dd>4.1 kg</dd></div><div><dt>Cost</dt><dd>$1 210</dd></div><div><dt>Build</dt><dd>70 h</dd></div></dl>
+          <p class="verdict">Lightest and cheapest; transition tuning is the schedule risk.</p>
+        </div>
+      </article>
+      <article class="ds-concept">
+        <figure><svg><use href="#sk-tiltrotor"/></svg><span class="rank ds-badge" data-status="UNVERIFIED">RANK 5</span></figure>
+        <div class="body">
+          <div class="title"><span class="id">C-07</span><b>Tilt-rotor</b></div>
+          <dl><div><dt>Mass</dt><dd>6.2 kg</dd></div><div><dt>Cost</dt><dd>$1 980</dd></div><div><dt>Build</dt><dd>160 h</dd></div></dl>
+          <p class="verdict">Two tilt mechanisms to design and test; no budget reserve.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= TRADE ================= -->
+  <section class="c" id="trade">
+    <header><h2 class="ds-h2">Trade matrix</h2><p class="use">Criteria with weights in the header, one bar per score, the weighted total at the right. Bars are neutral; only the chosen row takes the accent. Scores 0–5.</p></header>
+    <table class="ds-trade">
+      <thead><tr><th>Concept</th><th>Buildability<span class="w">w 0.30</span></th><th>Cost<span class="w">w 0.25</span></th><th>Transition risk<span class="w">w 0.20</span></th><th>Transport<span class="w">w 0.15</span></th><th>Crash repair<span class="w">w 0.10</span></th><th style="text-align:right">Total</th></tr></thead>
+      <tbody>
+        <tr class="chosen"><td class="concept"><span class="id">C-04</span>QuadPlane</td>
+          <td><div class="score"><div class="bar"><i style="--v:90%"></i></div><span class="ds-num">4.5</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:70%"></i></div><span class="ds-num">3.5</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:90%"></i></div><span class="ds-num">4.5</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:60%"></i></div><span class="ds-num">3.0</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:80%"></i></div><span class="ds-num">4.0</span></div></td>
+          <td class="total">4.05<span class="ds-badge" data-status="CHECKED">CHOSEN</span></td></tr>
+        <tr><td class="concept"><span class="id">C-11</span>Tailsitter</td>
+          <td><div class="score"><div class="bar"><i style="--v:80%"></i></div><span class="ds-num">4.0</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:90%"></i></div><span class="ds-num">4.5</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:40%"></i></div><span class="ds-num">2.0</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:90%"></i></div><span class="ds-num">4.5</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:60%"></i></div><span class="ds-num">3.0</span></div></td>
+          <td class="total">3.78</td></tr>
+        <tr class="rejected"><td class="concept"><span class="id">C-07</span>Tilt-rotor</td>
+          <td><div class="score"><div class="bar"><i style="--v:40%"></i></div><span class="ds-num">2.0</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:30%"></i></div><span class="ds-num">1.5</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:40%"></i></div><span class="ds-num">2.0</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:70%"></i></div><span class="ds-num">3.5</span></div></td>
+          <td><div class="score"><div class="bar"><i style="--v:40%"></i></div><span class="ds-num">2.0</span></div></td>
+          <td class="total">2.23</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ================= STEP ================= -->
+  <section class="c" id="step">
+    <header><h2 class="ds-h2">Step card</h2><p class="use">One render, one thing to do. Numbered actions match the orange callouts in the figure. Parts and tools for this step only. Every step ends with a CHECK the student can do in a minute.</p></header>
+    <article class="ds-step">
+      <figure>
+        <svg viewBox="0 0 520 300" width="520" height="300" role="img" aria-label="Render placeholder: boom clamped to wing with callouts 1 to 3">
+          <g fill="none" stroke="var(--fg-3)" stroke-width="1.5" opacity=".45"><rect x="60" y="130" width="400" height="40" rx="6"/><path d="M60 150h400"/></g>
+          <g fill="none" stroke="var(--fg)" stroke-width="2" stroke-linejoin="round"><rect x="214" y="90" width="92" height="120" rx="8"/><rect x="150" y="138" width="220" height="24" rx="12" fill="var(--panel)"/></g>
+          <g fill="var(--highlight)" stroke="var(--fg)" stroke-width="2"><rect x="230" y="118" width="60" height="64" rx="6"/><circle cx="246" cy="134" r="4" fill="var(--fg)" stroke="none"/><circle cx="274" cy="134" r="4" fill="var(--fg)" stroke="none"/><circle cx="246" cy="166" r="4" fill="var(--fg)" stroke="none"/><circle cx="274" cy="166" r="4" fill="var(--fg)" stroke="none"/></g>
+          <!-- callouts: halo + leader + numbered dot -->
+          <g stroke-linecap="round">
+            <path d="M246 134L170 70" stroke="var(--panel)" stroke-width="5"/><path d="M246 134L170 70" stroke="var(--fg)" stroke-width="1.5"/>
+            <path d="M290 150L400 90" stroke="var(--panel)" stroke-width="5"/><path d="M290 150L400 90" stroke="var(--fg)" stroke-width="1.5"/>
+            <path d="M260 182L300 250" stroke="var(--panel)" stroke-width="5"/><path d="M260 182L300 250" stroke="var(--fg)" stroke-width="1.5"/>
+          </g>
+          <g font-family="IBM Plex Mono, monospace" font-size="13" font-weight="600" text-anchor="middle" fill="#fff">
+            <circle cx="170" cy="70" r="12" fill="var(--highlight)" stroke="var(--panel)" stroke-width="2"/><text x="170" y="74.5">1</text>
+            <circle cx="400" cy="90" r="12" fill="var(--highlight)" stroke="var(--panel)" stroke-width="2"/><text x="400" y="94.5">2</text>
+            <circle cx="300" cy="250" r="12" fill="var(--highlight)" stroke="var(--panel)" stroke-width="2"/><text x="300" y="254.5">3</text>
+          </g>
+        </svg>
+        <span class="fig-id">FIG BMS-07 · iso 50 mm</span>
+      </figure>
+      <div>
+        <div class="step-head"><span class="step-no"><small>STEP</small>7</span><span class="step-title">Clamp the left boom to the spar</span><span class="time">15 min</span></div>
+        <ol class="ds-actions">
+          <li><span>Slide clamp <b>BMS-004</b> onto the boom, open side up, <span class="ds-num">310 mm</span> from the root mark.</span></li>
+          <li><span>Seat the boom in the saddle; the laser line on the boom faces aft.</span></li>
+          <li><span>Fit 4× <b>M3×16</b> into the heat-set inserts. Tighten in a cross, <span class="ds-num">0.6 N·m</span>, then blue threadlocker.</span></li>
+        </ol>
+        <div class="ds-kit">
+          <div><h3>Parts</h3><ul><li><span class="q">1×</span>BMS-004 boom clamp (PETG)</li><li><span class="q">4×</span>M3×16 SHCS A2</li><li><span class="q">4×</span>M3 brass insert (pre-fitted, step 5)</li></ul></div>
+          <div><h3>Tools</h3><ul><li><span class="q"></span>2.5 mm hex driver, torque</li><li><span class="q"></span>Threadlocker, blue</li><li><span class="q"></span>Steel rule 500 mm</li></ul></div>
+        </div>
+        <div class="ds-check"><svg><use href="#i-check"/></svg><span><b>CHECK</b> Boom does not rotate by hand; clamp-to-root distance <span class="ds-num">310 ± 1 mm</span> both sides. Write the measured value in the build log.</span></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ================= CALLOUTS ================= -->
+  <section class="c" id="callouts">
+    <header><h2 class="ds-h2">Callouts</h2><p class="use">Four kinds, each with its icon and a bold lead word. Note for context, caution for damage or rework, stop for safety (LiPo, props, hot wire), check for a pass criterion.</p></header>
+    <div class="ds-stack">
+      <div class="ds-callout"><svg><use href="#i-info"/></svg><span><b>Note</b> Cure epoxy 12 h at ≥ 20 °C before loading the joint. Overnight at Jacobs Hall is enough.</span></div>
+      <div class="ds-callout caution"><svg><use href="#i-warn"/></svg><span><b>Caution</b> Do not exceed 0.6 N·m on M3 into brass inserts in PETG; the insert pulls out at about 1.2 N·m.</span></div>
+      <div class="ds-callout stop"><svg><use href="#i-stop"/></svg><span><b>Stop</b> Props off before any bench power-up. Battery in the LiPo bag until the arming checklist is complete.</span></div>
+      <div class="ds-callout check"><svg><use href="#i-check"/></svg><span><b>Check</b> Wing joiner slides fully home with hand pressure and releases with the thumb screws loosened; no play at the tip.</span></div>
+    </div>
+  </section>
+
+  <!-- ================= PART PANEL ================= -->
+  <section class="c" id="part">
+    <header><h2 class="ds-h2">Part panel</h2><p class="use">The viewer inspector: id, name, status, the numbers from parts.csv, interfaces from interfaces.json, and the claims that depend on this part. Everything links.</p></header>
+    <div class="two">
+      <aside class="ds-part" data-sub="WNG">
+        <header>
+          <div class="id"><i class="sub"></i>WNG-003 · wing · parts.csv row 3</div>
+          <div class="name">Spar tube 10×8 CF <span class="ds-badge" data-status="MODELLED">MODELLED</span></div>
+        </header>
+        <section><h3>Numbers</h3><dl class="ds-kv"><dt>Mass</dt><dd>96 g</dd><dt>Material</dt><dd>CF pultruded</dd><dt>Make / buy</dt><dd>buy · $18.40</dd><dt>CG x y z</dt><dd>0.31, 0, 0.08 m</dd><dt>Vendor</dt><dd>cstsales.com</dd></dl></section>
+        <section><h3>Interfaces (4)</h3><ul class="ds-iface">
+          <li><a href="#" data-sub="WNG"><i></i>WNG-001 core L</a><span class="via">epoxy bond · E-WNG-03</span></li>
+          <li><a href="#" data-sub="WNG"><i></i>WNG-002 core R</a><span class="via">epoxy bond · E-WNG-04</span></li>
+          <li><a href="#" data-sub="FUS"><i></i>FUS-006 saddle</a><span class="via">2× M4 thumb · E-FUS-02</span></li>
+          <li><a href="#" data-sub="BMS"><i></i>BMS-004 clamp L</a><span class="via">4× M3×16 · E-BMS-01</span></li>
+        </ul></section>
+        <section><h3>Claims about this part (2)</h3><ul class="ds-iface">
+          <li><a href="#">Spar bending margin 1.9</a><span class="ds-badge" data-status="CHECKED">CHECKED</span></li>
+          <li><a href="#">Joiner pull-out ≥ 400 N</a><span class="ds-badge" data-status="PROPOSED">PROPOSED</span></li>
+        </ul></section>
+        <section class="ds-row"><button class="ds-btn primary">Focus</button><button class="ds-btn">Isolate</button><button class="ds-btn">Open SPEC</button></section>
+      </aside>
+      <div class="ds-stack">
+        <div class="ds-card">
+          <header><h3 class="ds-h3">Card</h3><span class="ds-meta ds-mono">generic</span></header>
+          <p class="ds-body">A card is a titled panel: header row, content, optional footer. It never nests another card and never carries a coloured left border.</p>
+          <div class="ds-row"><button class="ds-btn">Secondary</button><button class="ds-btn primary">Primary</button><button class="ds-btn" disabled>Disabled</button></div>
+        </div>
+        <div class="ds-card selected">
+          <header><h3 class="ds-h3">Selected card</h3><span class="ds-badge" data-status="VERIFIED">VERIFIED</span></header>
+          <p class="ds-body">Selection is a 1 px accent ring inside the border. No glow, no shadow.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= GRAPH ================= -->
+  <section class="c" id="graph">
+    <header><h2 class="ds-h2">Proof graph nodes</h2><p class="use">Shape says node type, fill says status, size says importance. Evidence flows left to right: source → parameter → calculation → claim → requirement. Edges are neutral; a failing edge is red.</p></header>
+    <div class="ds-panel" style="padding: var(--space-4) var(--space-5); display:grid; gap: var(--space-4)">
+      <div class="ds-nodes">
+        <span><svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z" fill="var(--st-checked-wash)" stroke="var(--st-checked)" stroke-width="1.75"/></svg>source</span>
+        <span><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" fill="var(--st-checked-wash)" stroke="var(--st-checked)" stroke-width="1.75"/></svg>parameter</span>
+        <span><svg viewBox="0 0 24 24"><path d="M12 3l9 9-9 9-9-9z" fill="var(--st-checked-wash)" stroke="var(--st-checked)" stroke-width="1.75"/></svg>calculation</span>
+        <span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="var(--st-checked-wash)" stroke="var(--st-checked)" stroke-width="1.75"/></svg>claim</span>
+        <span><svg viewBox="0 0 24 24"><path d="M7 3h10l5 9-5 9H7l-5-9z" fill="var(--st-checked-wash)" stroke="var(--st-checked)" stroke-width="1.75"/></svg>requirement</span>
+        <span><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="5" fill="var(--st-proposed-wash)" stroke="var(--st-proposed)" stroke-width="1.75"/></svg>assumption</span>
+        <span><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18" stroke="var(--st-verified)" stroke-width="2"/><circle cx="12" cy="12" r="9" fill="none" stroke="var(--st-verified)" stroke-width="1.75"/></svg>test</span>
+      </div>
+      <svg viewBox="0 0 760 120" width="100%" role="img" aria-label="Example chain: datasheet to parameter to calculation to claim to requirement">
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z" fill="var(--line-3)"/></marker></defs>
+        <g stroke="var(--line-3)" stroke-width="1.5" marker-end="url(#arr)"><path d="M118 60h70"/><path d="M276 60h70"/><path d="M440 60h70"/><path d="M604 60h60"/></g>
+        <g font-family="IBM Plex Sans, sans-serif" font-size="12" fill="var(--fg-2)" text-anchor="middle">
+          <path d="M40 40h56l20 20v30H40z" fill="var(--st-checked-wash)" stroke="var(--st-checked)" stroke-width="1.75"/><text x="78" y="110">UIUC prop data</text>
+          <rect x="200" y="42" width="52" height="36" fill="var(--st-checked-wash)" stroke="var(--st-checked)" stroke-width="1.75"/><text x="226" y="110">P:rotor.kt</text>
+          <path d="M392 36l24 24-24 24-24-24z" fill="var(--st-checked-wash)" stroke="var(--st-checked)" stroke-width="1.75"/><text x="392" y="110">CALC-PROP-HOVER</text>
+          <circle cx="552" cy="60" r="26" fill="var(--st-unverified-wash)" stroke="var(--st-unverified)" stroke-width="1.75"/><text x="552" y="64" font-family="IBM Plex Mono, monospace" fill="var(--st-unverified)" font-weight="600">1.84</text><text x="552" y="110">CL hover T/W</text>
+          <path d="M690 36h30l14 24-14 24h-30l-14-24z" fill="var(--st-unverified-wash)" stroke="var(--st-unverified)" stroke-width="1.75"/><text x="705" y="110">R-03 ≥ 1.6</text>
+        </g>
+      </svg>
+      <span class="ds-meta">The claim is UNVERIFIED because one input (ρ) has no source; the requirement inherits the worst status.</span>
+    </div>
+  </section>
+</main>
+</div>
+
+<script>
+  const btn = document.getElementById('theme');
+  const sync = () => {
+    const dark = document.documentElement.dataset.theme === 'dark' || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+    btn.querySelector('use').setAttribute('href', dark ? '#i-sun' : '#i-moon');
+  };
+  btn.addEventListener('click', () => {
+    const dark = document.documentElement.dataset.theme === 'dark' || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('dbf-theme', document.documentElement.dataset.theme); } catch (e) {}
+    sync();
+  });
+  sync();
+</script>
+</body>
+</html>

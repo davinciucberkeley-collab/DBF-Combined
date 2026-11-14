@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aircraft viewer</title>
+<meta name="description" content="3-D viewer of the DBF redesign assembly: modes, part browser, interfaces, claims, mass and CG.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2 13l9-2 2-8h2l-1 8 8 2v2l-8 1-1 5h-2l-1-5-8-1z' fill='%231F5FC7'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<link rel="stylesheet" href="viewer.css">
+</head>
+<body class="ds-base">
+<header class="ds-topbar">
+  <a class="ds-brand" href="./"><svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 13l9-2 2-8h2l-1 8 8 2v2l-8 1-1 5h-2l-1-5-8-1z" fill="currentColor"/></svg>Aircraft viewer <span class="ver" id="dataset"></span></a>
+  <div class="ds-seg" id="modes" role="group" aria-label="View mode">
+    <button data-mode="whole" aria-pressed="true" title="Whole aircraft (1)">Whole</button>
+    <button data-mode="inside" aria-pressed="false" title="Inside and wiring: x-ray skin (2)">Inside &amp; wiring</button>
+    <button data-mode="structure" aria-pressed="false" title="Load-carrying parts only (3)">Structure</button>
+    <button data-mode="exploded" aria-pressed="false" title="Exploded (4)">Exploded</button>
+  </div>
+  <span class="spacer"></span>
+  <span class="ds-meta ds-mono" id="counts"></span>
+  <button class="ds-iconbtn" id="theme" title="Light / dark" aria-label="Toggle light or dark theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></button>
+</header>
+
+<div class="v-note" id="note" hidden></div>
+
+<main class="v-main">
+  <!-- part browser -->
+  <nav class="v-side ds-panel" aria-label="Parts">
+    <label class="ds-search v-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input id="search" type="search" placeholder="Search id, name, material" autocomplete="off" spellcheck="false"><span class="ds-kbd">/</span></label>
+    <div class="v-tree" id="tree"></div>
+    <details class="v-warn" id="warnings" hidden><summary></summary><ul></ul></details>
+  </nav>
+
+  <!-- 3-D stage -->
+  <section class="v-stage" id="stage" aria-label="3-D model">
+    <canvas id="canvas" tabindex="0"></canvas>
+    <div class="v-labels" id="labels"></div>
+
+    <div class="v-toolbar">
+      <div class="ds-seg" id="colours" role="group" aria-label="Colour by">
+        <button data-colour="subsystem" aria-pressed="true">Subsystem</button>
+        <button data-colour="material" aria-pressed="false">Material</button>
+        <button data-colour="status" aria-pressed="false">Status</button>
+      </div>
+      <span class="spacer"></span>
+      <div class="ds-seg" id="views" role="group" aria-label="View">
+        <button data-view="persp" aria-pressed="true" title="Perspective">3-D</button>
+        <button data-view="top" aria-pressed="false" title="Top (plan)">Top</button>
+        <button data-view="front" aria-pressed="false" title="Front">Front</button>
+        <button data-view="side" aria-pressed="false" title="Side (left)">Side</button>
+      </div>
+      <button class="ds-btn v-small" id="fit" title="Fit all (Home)">Fit</button>
+      <button class="ds-btn v-small" id="measure" aria-pressed="false" title="Measure point to point (M)">Measure</button>
+      <button class="ds-btn v-small" id="cg" aria-pressed="false" title="Mass and CG overlay (C)">Mass / CG</button>
+    </div>
+
+    <div class="v-legend ds-legend" id="legend"></div>
+    <div class="v-explode ds-panel" id="explode" hidden>
+      <button class="ds-iconbtn" id="explode-play" title="Animate" aria-label="Animate explode"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+      <label class="ds-label" for="explode-range">Explode</label>
+      <input id="explode-range" type="range" min="0" max="100" value="0">
+      <span class="ds-mono ds-meta" id="explode-val">0 %</span>
+    </div>
+    <div class="v-hint ds-meta" id="hint"></div>
+    <div class="v-cgpanel ds-panel" id="cgpanel" hidden></div>
+
+    <div class="v-loading" id="loading">
+      <div class="v-loadbox">
+        <div class="ds-label" id="load-title">Loading model</div>
+        <div class="v-bar"><i id="load-bar"></i></div>
+        <div class="ds-meta ds-mono" id="load-text">starting</div>
+        <div id="load-action"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- part panel -->
+  <aside class="v-insp" id="inspector" aria-live="polite"></aside>
+</main>
+
+<script src="vendor/three.bundle.js"></script>
+<script src="model.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

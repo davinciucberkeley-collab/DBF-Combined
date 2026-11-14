@@ -1,0 +1,1 @@
+test_id,date,motor_sn,mass_g,bolt_pattern_mm,hole_depth_mm,lead_len_mm,body_len_mm,rm_ab_mohm,rm_bc_mohm,rm_ca_mohm,winding_c,rm_25c_mohm,v_noload,i0_a,rpm_noload,kv_rpmv,accept,notes

@@ -1,0 +1,859 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/D1/wing_claims.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "ASM-D1-PART-MASSES",
+   "type": "assumption",
+   "title": "Wing part masses (CAD estimate)",
+   "text": "Declared mass of every wing instance node in subsystems/wing/interfaces.json: WNG-001, WNG-002, WNG-003, WNG-004-R, WNG-004-L, WNG-005-R, WNG-005-L, WNG-006-R, WNG-006-L, WNG-011-R, WNG-011-L, WNG-012-R, WNG-012-L, WNG-020",
+   "basis": "team/D1/wing_data.py: XPS volume x 30 kg/m3, tape arc length x 0.065 kg/m2, spar 0.102 kg/m, C2 plug and slot-fill masses",
+   "value": [
+    201.9,
+    102.0,
+    47.9,
+    7.0,
+    7.0,
+    4.0,
+    4.0,
+    1.0,
+    1.0,
+    3.7,
+    3.7,
+    3.5,
+    3.5,
+    0.5
+   ],
+   "unit": "g",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010",
+    "SRC-XPS-F250",
+    "SRC-CF-TUBE"
+   ]
+  },
+  {
+   "id": "ASM-D1-PART-CGX",
+   "type": "assumption",
+   "title": "Wing part CG x (CAD)",
+   "text": "CG x of every wing instance node, same order as ASM-D1-PART-MASSES",
+   "basis": "subsystems/wing/interfaces.json cg_xyz_m (CAD volume centroids, tape by area)",
+   "value": [
+    0.1187,
+    0.08,
+    0.1329,
+    0.08,
+    0.08,
+    0.08,
+    0.08,
+    0.0625,
+    0.0625,
+    0.2769,
+    0.2769,
+    0.2776,
+    0.2776,
+    0.1651
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "ASM-D1-ELEVON-GAP",
+   "type": "assumption",
+   "title": "Elevon end gap",
+   "text": "Gap at each end of each panel to the core cut-out (hot-wire kerf)",
+   "basis": "subsystems/wing/params.json elevon.end_gap_m",
+   "value": 0.001,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "ASM-D1-GEOM-CAD",
+   "type": "assumption",
+   "title": "Wing CAD read-outs",
+   "text": "[min foam over the closed spar bore, wall from the aft ESC groove to the spar slot, deepest groove / local thickness, foam over the servo pocket ceiling, lower-bevel clearance to the core at full down, at full up] (m, -)",
+   "basis": "subsystems/wing/fusion/wing.py#layout() via team/D1/wing_data.py#readouts (S5010, params, fins / pod / harness params)",
+   "value": [
+    0.004051,
+    0.003,
+    0.10389,
+    0.004169,
+    0.001067,
+    0.008933
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "ASM-D1-TUBE-COVER",
+   "type": "assumption",
+   "title": "Foam + skin over D6's torque-tube groove",
+   "text": "Upper skin height minus the groove ceiling at the groove walls",
+   "basis": "team/D1/wing_data.py#readouts (mechanisms params mec.tube)",
+   "value": 0.001095,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "ASM-D1-POCKET-AREA",
+   "type": "assumption",
+   "title": "Servo pocket bond surface",
+   "text": "Floor + four walls of one servo pocket (bare foam the D6 frame bonds to)",
+   "basis": "team/D1/wing_data.py#readouts from subsystems/wing/params.json servo_pocket",
+   "value": 3195.2,
+   "unit": "mm2",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "ASM-D1-SPAR-BOND",
+   "type": "assumption",
+   "title": "Spar bore bond area",
+   "text": "Bore surface in contact with the slot fill over both half-spans (open windows and pockets excluded)",
+   "basis": "team/D1/wing_data.py#readouts",
+   "value": 62153.0,
+   "unit": "mm2",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "ASM-D1-RECESS",
+   "type": "assumption",
+   "title": "Pod recess cut",
+   "text": "Recess front x (upper skin = pod base), aft x, max depth, foam left under the floor at the aft end",
+   "basis": "subsystems/wing/fusion/wing.py#layout() (CR-D2-04)",
+   "value": [
+    0.02257,
+    0.065,
+    0.00692,
+    0.02348
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "ASM-D1-D68-GEOM",
+   "type": "assumption",
+   "title": "Wing structure-fix geometry (D-68, D-69, CR-B2-17, CR-F2-14)",
+   "text": "[block-pocket corner radius, lip-bead leg, lip-bead length along x, elevon cut-out corner radius at the fin-root tab, foremost LE-strip edge x, recess-step fillet floor leg, step leg, foam wall JR recess to servo pocket, foam under the JR recess floor] (m)",
+   "basis": "subsystems/wing/fusion/wing.py#layout() via team/D1/wing_data.py#readouts (fins block.edge_r_m + bond gap, wing params block_pocket, elevon.cutout_corner_r_m, skin.le_strip_*, recess.step_fillet_legs_m, jr_recess)",
+   "value": [
+    0.00315,
+    0.003,
+    0.0693,
+    0.003,
+    0.045527,
+    0.005,
+    0.0048,
+    0.0042,
+    0.019293
+   ],
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "ASM-D1-PROP-GAP",
+   "type": "assumption",
+   "title": "Wing surface outside the upper prop keep-outs (CAD)",
+   "text": "Lower bound of the gap from the core and tape surfaces to KO-PROP-UR/UL (keep-out radius already includes requirements.prop_clearance_min_m)",
+   "basis": "team/D1/wing_claims.py#_prop_gap: all modules stub-built, wing section polygons sampled densely against the canted keep-out cylinders registered by subsystems/propulsion/fusion/propulsion.py",
+   "value": 0.00653,
+   "unit": "m",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-K09-CARD",
+    "SRC-S5010"
+   ]
+  },
+  {
+   "id": "CALC-D1-PROP-GAP",
+   "type": "calculation",
+   "title": "prop gap",
+   "script": "redesign/team/D1/wing_claims.py",
+   "function": "prop_gap",
+   "equation": "gap = min over sampled wing surface points of max(|a| - half, rad - R) to each KO-PROP-U*",
+   "inputs": {
+    "g": "ASM-D1-PROP-GAP"
+   },
+   "outputs": {
+    "gap": 0.00653
+   },
+   "input_values": {
+    "g": 0.00653
+   }
+  },
+  {
+   "id": "CALC-D1-MASS",
+   "type": "calculation",
+   "title": "mass",
+   "script": "redesign/team/D1/wing_claims.py",
+   "function": "mass",
+   "equation": "wing mass = sum of the CAD part masses; CG x = sum(m x) / sum(m)",
+   "inputs": {
+    "m": "ASM-D1-PART-MASSES",
+    "x": "ASM-D1-PART-CGX"
+   },
+   "outputs": {
+    "mass_g": 390.7,
+    "cg_x": 0.11377335551574098
+   },
+   "input_values": {
+    "m": [
+     201.9,
+     102.0,
+     47.9,
+     7.0,
+     7.0,
+     4.0,
+     4.0,
+     1.0,
+     1.0,
+     3.7,
+     3.7,
+     3.5,
+     3.5,
+     0.5
+    ],
+    "x": [
+     0.1187,
+     0.08,
+     0.1329,
+     0.08,
+     0.08,
+     0.08,
+     0.08,
+     0.0625,
+     0.0625,
+     0.2769,
+     0.2769,
+     0.2776,
+     0.2776,
+     0.1651
+    ]
+   }
+  },
+  {
+   "id": "CALC-D1-ELEVON",
+   "type": "calculation",
+   "title": "elevon",
+   "script": "redesign/team/D1/wing_claims.py",
+   "function": "elevon",
+   "equation": "frac = 2 sum(span_i - 2 gap) x chord_frac x c / (b c)",
+   "inputs": {
+    "yi": "P:wing.elevon.inboard_y_m",
+    "yo": "P:wing.elevon.outboard_y_m",
+    "cf": "P:wing.elevon.chord_frac",
+    "b": "P:wing.span_m",
+    "gap": "ASM-D1-ELEVON-GAP"
+   },
+   "outputs": {
+    "frac": 0.17064347826086956,
+    "span_m": 0.892
+   },
+   "input_values": {
+    "yi": [
+     0.07,
+     0.3
+    ],
+    "yo": [
+     0.34,
+     0.56
+    ],
+    "cf": 0.22,
+    "b": 1.15,
+    "gap": 0.001
+   }
+  },
+  {
+   "id": "CALC-D1-CAD",
+   "type": "calculation",
+   "title": "cad",
+   "script": "redesign/team/D1/wing_claims.py",
+   "function": "cad",
+   "equation": "read-outs of wing.py#layout(): spar cover, groove wall, groove depth fraction, pocket floor, hinge clearances",
+   "inputs": {
+    "g": "ASM-D1-GEOM-CAD"
+   },
+   "outputs": {
+    "cover": 0.004051,
+    "groove_wall": 0.003,
+    "groove_frac": 0.10389,
+    "pocket_floor": 0.004169,
+    "clr_down": 0.001067,
+    "clr_up": 0.008933
+   },
+   "input_values": {
+    "g": [
+     0.004051,
+     0.003,
+     0.10389,
+     0.004169,
+     0.001067,
+     0.008933
+    ]
+   }
+  },
+  {
+   "id": "CALC-D1-AREAS",
+   "type": "calculation",
+   "title": "areas",
+   "script": "redesign/team/D1/wing_claims.py",
+   "function": "areas",
+   "equation": "pass-through of the CAD bond surfaces",
+   "inputs": {
+    "pocket": "ASM-D1-POCKET-AREA",
+    "spar": "ASM-D1-SPAR-BOND"
+   },
+   "outputs": {
+    "pocket_mm2": 3195.2,
+    "spar_mm2": 62153.0
+   },
+   "input_values": {
+    "pocket": 3195.2,
+    "spar": 62153.0
+   }
+  },
+  {
+   "id": "CALC-D1-TUBE-COVER",
+   "type": "calculation",
+   "title": "tube cover",
+   "script": "redesign/team/D1/wing_claims.py",
+   "function": "tube_cover",
+   "equation": "cover = z_upper(groove walls) - groove ceiling",
+   "inputs": {
+    "c": "ASM-D1-TUBE-COVER"
+   },
+   "outputs": {
+    "cover": 0.001095
+   },
+   "input_values": {
+    "c": 0.001095
+   }
+  },
+  {
+   "id": "CALC-D1-RECESS",
+   "type": "calculation",
+   "title": "recess",
+   "script": "redesign/team/D1/wing_claims.py",
+   "function": "recess",
+   "equation": "read-outs of the pod recess",
+   "inputs": {
+    "r": "ASM-D1-RECESS"
+   },
+   "outputs": {
+    "x0": 0.02257,
+    "x1": 0.065,
+    "depth": 0.00692,
+    "under": 0.02348
+   },
+   "input_values": {
+    "r": [
+     0.02257,
+     0.065,
+     0.00692,
+     0.02348
+    ]
+   }
+  },
+  {
+   "id": "CALC-D1-D68",
+   "type": "calculation",
+   "title": "d68",
+   "script": "redesign/team/D1/wing_claims.py",
+   "function": "d68",
+   "equation": "read-outs of the D-68 / D-69 cuts, beads, fillet, LE strip and JR recess",
+   "inputs": {
+    "g": "ASM-D1-D68-GEOM"
+   },
+   "outputs": {
+    "pocket_r": 0.00315,
+    "bead_leg": 0.003,
+    "bead_len": 0.0693,
+    "cutout_r": 0.003,
+    "le_seam_x": 0.045527,
+    "fillet_floor": 0.005,
+    "fillet_step": 0.0048,
+    "jr_wall": 0.0042,
+    "jr_under": 0.019293
+   },
+   "input_values": {
+    "g": [
+     0.00315,
+     0.003,
+     0.0693,
+     0.003,
+     0.045527,
+     0.005,
+     0.0048,
+     0.0042,
+     0.019293
+    ]
+   }
+  },
+  {
+   "id": "CL-D1-WING-MASS",
+   "type": "claim",
+   "title": "Wing subsystem mass (CAD estimate)",
+   "calc": "CALC-D1-MASS",
+   "output": "mass_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "P:mass.allocation_g.wing"
+   },
+   "verifies": [
+    "R-MASS-ALLOC"
+   ],
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003",
+    "WNG-004-R",
+    "WNG-004-L",
+    "WNG-005-R",
+    "WNG-005-L",
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-011-R",
+    "WNG-011-L",
+    "WNG-012-R",
+    "WNG-012-L",
+    "WNG-020"
+   ],
+   "how": "T-D1-WEIGH: weigh the cut core, the tube, the plugs, the tape used and the finished wing on a 1 g scale.",
+   "value": 390.7
+  },
+  {
+   "id": "CL-D1-WING-CG-X",
+   "type": "claim",
+   "title": "Wing subsystem CG x (CAD estimate)",
+   "calc": "CALC-D1-MASS",
+   "output": "cg_x",
+   "unit": "m",
+   "parts": [
+    "WNG-001",
+    "WNG-002",
+    "WNG-003",
+    "WNG-004-R",
+    "WNG-004-L",
+    "WNG-005-R",
+    "WNG-005-L",
+    "WNG-006-R",
+    "WNG-006-L",
+    "WNG-011-R",
+    "WNG-011-L",
+    "WNG-012-R",
+    "WNG-012-L",
+    "WNG-020"
+   ],
+   "how": "Balance the finished bare wing (no pod, fins) on two knife edges along the span; read x from the LE.",
+   "value": 0.11377335551574098
+  },
+  {
+   "id": "CL-D1-ELEVON-FRAC",
+   "type": "claim",
+   "title": "Elevon area fraction as built (end gaps off)",
+   "calc": "CALC-D1-ELEVON",
+   "output": "frac",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 0.15
+   },
+   "verifies": [
+    "R-ELEVON-AREA"
+   ],
+   "parts": [
+    "WNG-011-L",
+    "WNG-011-R",
+    "WNG-012-L",
+    "WNG-012-R"
+   ],
+   "how": "Measure the four cut panels (span x chord) and divide by 1.15 x 0.32 m.",
+   "value": 0.17064347826086956
+  },
+  {
+   "id": "CL-D1-SPAR-COVER",
+   "type": "claim",
+   "title": "Minimum foam over the spar bore (S5010 at x 0.080, z +0.0066)",
+   "calc": "CALC-D1-CAD",
+   "output": "cover",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "ASM-A5-MIN-COVER"
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-002"
+   ],
+   "how": "Cut a 20 mm slice off a test core with the slot: calipers from the bore to each skin.",
+   "value": 0.004051
+  },
+  {
+   "id": "CL-D1-GROOVE-WALL",
+   "type": "claim",
+   "title": "Foam wall from the aft ESC-lead groove to the spar slot",
+   "calc": "CALC-D1-CAD",
+   "output": "groove_wall",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.003
+   },
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "Calipers on the first core before skinning (F2 CR-F2-04 asks 3 mm).",
+   "value": 0.003
+  },
+  {
+   "id": "CL-D1-GROOVE-DEPTH-FRAC",
+   "type": "claim",
+   "title": "Deepest groove / local section thickness between x 0.06 and 0.10",
+   "calc": "CALC-D1-CAD",
+   "output": "groove_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.5
+   },
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "C2 CR-C2-01 rule; depth gauge on the cut grooves.",
+   "value": 0.10389
+  },
+  {
+   "id": "CL-D1-POCKET-ROOF",
+   "type": "claim",
+   "title": "Foam over the servo-pocket ceiling (pocket open below)",
+   "calc": "CALC-D1-CAD",
+   "output": "pocket_floor",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.003
+   },
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "Depth gauge in the cut pocket; ceiling-to-upper-skin by subtraction from the local thickness.",
+   "value": 0.004169
+  },
+  {
+   "id": "CL-D1-POCKET-BOND",
+   "type": "claim",
+   "title": "Servo pocket bare-foam surface for the D6 frame",
+   "calc": "CALC-D1-AREAS",
+   "output": "pocket_mm2",
+   "unit": "mm2",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C6-LINK-BOND-AREA-MIN"
+   },
+   "parts": [
+    "WNG-001",
+    "MEC-008-L",
+    "MEC-008-R"
+   ],
+   "how": "D6 shows the frame's bonded area; the pocket offers this much bare foam.",
+   "value": 3195.2
+  },
+  {
+   "id": "CL-D1-SPAR-BOND-AREA",
+   "type": "claim",
+   "title": "Spar-to-core bond area",
+   "calc": "CALC-D1-AREAS",
+   "output": "spar_mm2",
+   "unit": "mm2",
+   "parts": [
+    "WNG-001",
+    "WNG-002"
+   ],
+   "how": "Input to C2's slot-bond shear (CL-C2-SPAR-BOND-TAU); visual check of the fill along the slot before the cap goes on.",
+   "value": 62153.0
+  },
+  {
+   "id": "CL-D1-HINGE-CLEAR-DOWN",
+   "type": "claim",
+   "title": "Elevon lower bevel clear of the core at full down",
+   "calc": "CALC-D1-CAD",
+   "output": "clr_down",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0005
+   },
+   "parts": [
+    "WNG-011-R",
+    "WNG-012-R",
+    "WNG-001"
+   ],
+   "how": "T-D1-THROW: hinge taped, panel to +25 deg on a protractor: a 0.5 mm feeler passes at the lower edge.",
+   "value": 0.001067
+  },
+  {
+   "id": "CL-D1-HINGE-CLEAR-UP",
+   "type": "claim",
+   "title": "Elevon lower bevel clear of the core at full up",
+   "calc": "CALC-D1-CAD",
+   "output": "clr_up",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0005
+   },
+   "parts": [
+    "WNG-011-R",
+    "WNG-012-R",
+    "WNG-001"
+   ],
+   "how": "T-D1-THROW at -25 deg.",
+   "value": 0.008933
+  },
+  {
+   "id": "CL-D1-TUBE-GROOVE-COVER",
+   "type": "claim",
+   "title": "Foam over the elevon torque-tube groove",
+   "calc": "CALC-D1-TUBE-COVER",
+   "output": "cover",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.001
+   },
+   "parts": [
+    "WNG-011-R",
+    "WNG-012-R"
+   ],
+   "how": "Calipers on a panel offcut with the groove routed; no crack on the upper face.",
+   "value": 0.001095
+  },
+  {
+   "id": "CL-D1-RECESS-X1",
+   "type": "claim",
+   "title": "Pod recess aft end (4 mm of foam ahead of the spar)",
+   "calc": "CALC-D1-RECESS",
+   "output": "x1",
+   "unit": "m",
+   "parts": [
+    "WNG-001",
+    "POD-001"
+   ],
+   "how": "Steel rule from the LE on the cut recess (CR-D2-04: 0.065).",
+   "value": 0.065
+  },
+  {
+   "id": "CL-D1-RECESS-UNDER",
+   "type": "claim",
+   "title": "Foam under the pod recess floor at its aft end",
+   "calc": "CALC-D1-RECESS",
+   "output": "under",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.01
+   },
+   "parts": [
+    "WNG-001",
+    "POD-001"
+   ],
+   "how": "Depth gauge in the recess; subtract from the local thickness.",
+   "value": 0.02348
+  },
+  {
+   "id": "CL-D1-PROP-SURF-GAP",
+   "type": "claim",
+   "title": "Wing surface outside the upper prop keep-outs (real surface, not bounding box)",
+   "calc": "CALC-D1-PROP-GAP",
+   "output": "gap",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.0
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "PRP-001-UR",
+    "PRP-001-UL"
+   ],
+   "how": "On the first assembled wing: rule from each upper prop tip, turned by hand, to the upper skin near the LE at |y| 0.30-0.34; must exceed requirements.prop_clearance_min_m plus this gap.",
+   "value": 0.00653
+  },
+  {
+   "id": "CL-D1-POCKET-CORNER-R",
+   "type": "claim",
+   "title": "Block-pocket plan-form corner radius (D3 block R 3 mm + 0.15 mm bond gap)",
+   "calc": "CALC-D1-D68",
+   "output": "pocket_r",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.003
+   },
+   "parts": [
+    "WNG-001",
+    "FIN-004-L",
+    "FIN-004-R"
+   ],
+   "how": "Radius gauge on the cut pocket corners; the block drops in with no corner contact.",
+   "value": 0.00315
+  },
+  {
+   "id": "CL-D1-POCKET-BEAD-LEG",
+   "type": "claim",
+   "title": "Lip bead along the inboard and outboard block-pocket edges, both surfaces (leg)",
+   "calc": "CALC-D1-D68",
+   "output": "bead_leg",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.003
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-006-L",
+    "WNG-006-R"
+   ],
+   "how": "Depth gauge on the chamfer before filling (3 mm on the wall, 3 mm on the surface); bead sanded flush, doubler over it.",
+   "value": 0.003
+  },
+  {
+   "id": "CL-D1-CUTOUT-CORNER-R",
+   "type": "claim",
+   "title": "Elevon cut-out corner radius at the fin-root tab (y +/-0.30, +/-0.34)",
+   "calc": "CALC-D1-D68",
+   "output": "cutout_r",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.003
+   },
+   "parts": [
+    "WNG-001",
+    "WNG-003",
+    "WNG-011-L",
+    "WNG-011-R",
+    "WNG-012-L",
+    "WNG-012-R"
+   ],
+   "how": "Radius gauge on the four corners after step 9; tab tape folded round the edge; T-D1-THROW shows no panel contact.",
+   "value": 0.003
+  },
+  {
+   "id": "CL-D1-LE-SEAM-X",
+   "type": "claim",
+   "title": "Foremost tape edge on the LE (LE strip edges; nothing ahead of it but the strip)",
+   "calc": "CALC-D1-D68",
+   "output": "le_seam_x",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.032
+   },
+   "parts": [
+    "WNG-003",
+    "WNG-001"
+   ],
+   "how": "Rule from the LE on the taped wing at five stations each side: both strip edges aft of 32 mm (x/c 0.10).",
+   "value": 0.045527
+  },
+  {
+   "id": "CL-D1-JR-RECESS-WALL",
+   "type": "claim",
+   "title": "Foam between F2's JR recess and the servo pocket",
+   "calc": "CALC-D1-D68",
+   "output": "jr_wall",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "value": 0.003
+   },
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "Calipers between the recess aft wall (x 0.168) and the pocket front (x 0.1722).",
+   "value": 0.0042
+  },
+  {
+   "id": "T-D1-WEIGH",
+   "type": "test",
+   "title": "Weigh every wing part",
+   "verifies": [
+    "CL-D1-WING-MASS",
+    "CL-D1-WING-CG-X"
+   ],
+   "state": "planned",
+   "procedure": "1 g scale: core after cutting and pocketing, spar, 4 plugs, a cured 20 cm3 cup of the bead mix (<= 13 g), tape roll before / after skinning, each elevon, finished wing; knife-edge balance of the bare wing for CG x"
+  },
+  {
+   "id": "T-D1-FIT",
+   "type": "test",
+   "title": "First-core fit checks",
+   "verifies": [
+    "CL-D1-SPAR-COVER",
+    "CL-D1-GROOVE-WALL",
+    "CL-D1-GROOVE-DEPTH-FRAC",
+    "CL-D1-POCKET-ROOF",
+    "CL-D1-TUBE-GROOVE-COVER",
+    "CL-D1-RECESS-X1",
+    "CL-D1-RECESS-UNDER",
+    "CL-D1-ELEVON-FRAC",
+    "CL-D1-POCKET-CORNER-R",
+    "CL-D1-POCKET-BEAD-LEG",
+    "CL-D1-CUTOUT-CORNER-R",
+    "CL-D1-LE-SEAM-X",
+    "CL-D1-JR-RECESS-WALL"
+   ],
+   "state": "planned",
+   "procedure": "Spar slides in the slot with 0.1-0.3 mm per side; both blocks drop into their pockets; anchor saddles seat on the spar; pod shell sits flat in the recess; grooves and pocket gauged against BUILD.md step checks; pocket and cut-out corner radii by gauge, lip-bead chamfer depth, square recess-step corner (no fillet, D-103), LE strip edges by rule"
+  },
+  {
+   "id": "T-D1-THROW",
+   "type": "test",
+   "title": "Elevon throw and clearance",
+   "verifies": [
+    "CL-D1-HINGE-CLEAR-DOWN",
+    "CL-D1-HINGE-CLEAR-UP"
+   ],
+   "state": "planned",
+   "procedure": "Hinge taped, each panel moved by hand to +/-25 deg on a protractor; no contact with the core; feeler 0.5 mm"
+  }
+ ]
+}

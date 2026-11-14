@@ -1,0 +1,52 @@
+wp,kind,id,item,qty,unit,steps,make_or_buy,vendor_or_file
+WP1,part,FUS-001,Fuselage box,1,pcs,FUS-S01,make,laser-cut DXF (example)
+WP1,part,FUS-003,ESC 2-in-1 with BEC,1,pcs,FUS-S01,buy,any 2-in-1 30 A ESC with 5 V BEC (example)
+WP1,fastener,,M3x10 SHCS A2-70,4,pcs,FUS-S01,buy,
+WP1,fastener,,M3 nylon washer,4,pcs,FUS-S01,buy,
+WP1,fastener,,M3x5.7 brass heat-set,4,pcs,FUS-S01,buy,
+WP1,consumable,,"Threadlocker, medium strength (blue)",4,drops,FUS-S01,buy,
+WP1,tool,,2.5 mm hex key,1,pcs,FUS-S01,shop,
+WP1,tool,,Heat-proof mat,1,pcs,FUS-S01,shop,
+WP1,tool,,Soldering iron with an M3 insert tip,1,pcs,FUS-S01,shop,
+WP2,part,WNG-001,Wing panel L,1,pcs,WNG-S01,make,hot-wire template (example)
+WP2,part,WNG-002,Wing panel R,1,pcs,WNG-S01,make,hot-wire template (example)
+WP2,part,WNG-003,Spar tube 12x10,1,pcs,WNG-S01,buy,12x10 mm pultruded CF tube 1 m (example)
+WP2,part,WNG-004,Aileron L,1,pcs,WNG-S02,make,cut from WNG-001 core
+WP2,part,WNG-005,Aileron servo L,1,pcs,WNG-S02,buy,any 9 g digital micro servo (example)
+WP2,fastener,,"M2x8 pan self-tapping steel, zinc",2,pcs,WNG-S02,buy,
+WP2,fastener,,servo grommets,2,pcs,WNG-S02,buy,
+WP2,consumable,,30 min laminating epoxy,15,g,WNG-S01,buy,
+WP2,consumable,,Sandpaper 120 grit,1,sheet,WNG-S01,buy,
+WP2,consumable,,Isopropyl alcohol,10,ml,WNG-S01,buy,
+WP2,consumable,,Masking tape 24 mm,0.5,m,WNG-S01,buy,
+WP2,consumable,,Clear packing tape 48 mm,0.6,m,WNG-S02,buy,
+WP2,tool,,Flat table >= 1.3 m,1,pcs,WNG-S01,shop,
+WP2,tool,,Mixing card and stick,1,pcs,WNG-S01,shop,
+WP2,tool,,PH0 screwdriver,1,pcs,WNG-S02,shop,
+WP2,tool,,Protractor or throw gauge,1,pcs,WNG-S02,shop,
+WP2,tool,,Servo tester,1,pcs,WNG-S02,shop,
+WP2,tool,,Steel rule 1 m,1,pcs,WNG-S01,shop,
+WP3,part,BMS-001,Boom L,1,pcs,BMS-S01,buy,16x14 mm roll-wrapped CF tube (example)
+WP3,part,BMS-002,Boom R,1,pcs,BMS-S01,buy,16x14 mm roll-wrapped CF tube (example)
+WP3,part,BMS-003,Lift motor L,1,pcs,BMS-S01,buy,any 2810-class outrunner (example)
+WP3,part,BMS-004,Lift motor R,1,pcs,BMS-S01,buy,any 2810-class outrunner (example)
+WP3,fastener,,M3x8 SHCS A2-70,8,pcs,BMS-S01,buy,
+WP3,fastener,,M3x20 SHCS A2-70,4,pcs,BMS-S01,buy,
+WP3,fastener,,M3 nyloc,4,pcs,BMS-S01,buy,
+WP3,fastener,,M3 washer,4,pcs,BMS-S01,buy,
+WP3,consumable,,"Threadlocker, medium strength (blue)",8,drops,BMS-S01,buy,
+WP3,tool,,2.5 mm hex key,1,pcs,BMS-S01,shop,
+WP3,tool,,5.5 mm spanner,1,pcs,BMS-S01,shop,
+WP3,tool,,Calipers 150 mm,1,pcs,BMS-S01,shop,
+WP3,tool,,Torque screwdriver,1,pcs,BMS-S01,shop,
+WP4,part,FUS-002,Battery block,1,pcs,FUS-S02,buy,any 4S 3000 mAh LiPo (example)
+WP4,fastener,,M4x30 SHCS A2-70,2,pcs,WNG-S03,buy,
+WP4,fastener,,M4 nyloc,2,pcs,WNG-S03,buy,
+WP4,fastener,,M4 washer,2,pcs,WNG-S03,buy,
+WP4,consumable,,Zip ties 100 mm,6,pcs,FUS-S02,buy,
+WP4,tool,,3 mm hex key,1,pcs,WNG-S03,shop,
+WP4,tool,,7 mm spanner,1,pcs,WNG-S03,shop,
+WP4,tool,,Kitchen scale 5 kg x 1 g,1,pcs,FUS-S02,shop,
+WP4,tool,,Multimeter,1,pcs,FUS-S02,shop,
+WP4,tool,,Torque screwdriver,1,pcs,WNG-S03,shop,
+WP4,tool,,Transmitter (bound),1,pcs,FUS-S02,shop,

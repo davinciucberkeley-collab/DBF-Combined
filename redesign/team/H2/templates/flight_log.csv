@@ -1,0 +1,1 @@
+flight_id,date,gate,aircraft,pilot,spotter,site_subfield,start_time,wind_mean_ms,wind_gust_ms,anemometer_height_m,pack_id,pack_start_v,mah_used,mode_sequence,duration_s,max_alt_m,max_dist_m,lean_max_deg,hover_current_a,vibe_max_ms2,clips,lq_min,rssi_min_dbm,params_file_sha,bin_file,pass,notes

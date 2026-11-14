@@ -1,0 +1,22 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "bk_frame",
+ "_note": "DELIBERATELY BROKEN fixture. Every defect below must be caught by check.py / merge_check.py (tests/test_framework.py).",
+ "parts": [
+  {"id": "BRK-001", "name": "Frame", "subsystem": "bk_frame", "status": "MODELLED", "mass_g": 100, "material": "PETG", "cg_xyz_m": [0.05, 0, 0.005], "make_or_buy": "make"},
+  {"id": "BRK-002", "name": "Bracket (no material, 10 mm gap)", "subsystem": "bk_frame", "status": "MODELLED", "mass_g": 10, "material": "", "cg_xyz_m": [0.13, 0, 0.005], "make_or_buy": "make"},
+  {"id": "BRK-003", "name": "Block with no edges (floating)", "subsystem": "bk_frame", "status": "MODELLED", "mass_g": 50, "material": "PETG", "cg_xyz_m": [1.0, 1.0, 1.0], "make_or_buy": "make"},
+  {"id": "BRK-004", "name": "Motor never wired (unconnected)", "subsystem": "bk_frame", "status": "PROPOSED", "mass_g": 100, "material": "motor", "cg_xyz_m": null, "make_or_buy": "buy", "electrical": "sink"},
+  {"id": "BRK-007", "name": "Spare (id duplicated by bk_crash)", "subsystem": "bk_frame", "status": "PROPOSED", "mass_g": 1, "material": "ply", "cg_xyz_m": null, "make_or_buy": "make", "flight": false},
+  {"id": "BRK-006", "name": "Servo declared MODELLED but never built", "subsystem": "bk_frame", "status": "MODELLED", "mass_g": 20, "material": "servo", "cg_xyz_m": [0, 0, 0], "make_or_buy": "buy"}
+ ],
+ "edges": [
+  {"id": "E-BRK-01", "part_a": "BRK-002", "part_b": "BRK-001", "via": "CT-M3-SHCS-INSERT", "owner": "bk_frame", "notes": "torque missing; engagement below minimum",
+   "joint_stack": {"fastener": "M3x6 SHCS", "count": 2, "grade": "A2-70", "hole": "3.4", "insert": "M3 heat-set", "engagement_mm": 2.0,
+    "min_engagement_mm": 4.5, "washer_nut": "none", "tool": "2.5 mm hex key", "access": "+z", "install_order": 1, "removal_order": 1}},
+  {"id": "E-BRK-02", "part_a": "BRK-001", "part_b": "BRK-999", "via": "CT-EPOXY", "owner": "bk_frame", "notes": "dangling: BRK-999 does not exist"},
+  {"id": "E-BRK-03", "part_a": "BRK-001", "part_b": "BRK-002", "via": "CT-EPOXY", "owner": "bk_frame", "notes": "never registered in CAD"},
+  {"id": "E-BRK-04", "part_a": "BRK-001", "part_b": "XYZ-001", "via": "CT-EPOXY", "owner": "bk_frame", "notes": "bk_crash never acknowledges"},
+  {"id": "E-BRK-05", "part_a": "BRK-001", "part_b": "BRK-006", "via": "CT-M3-SHCS-NYLOC", "owner": "bk_frame", "notes": "no joint stack at all"}
+ ]
+}

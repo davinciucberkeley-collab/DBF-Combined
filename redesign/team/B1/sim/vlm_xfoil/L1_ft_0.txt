@@ -1,0 +1,32 @@
+ ---------------------------------------------------------------
+ Vortex Lattice Output -- Total Forces
+
+ Configuration: K09-L as designed (B1 verification) - team/B1/vlm_xfoil.py  
+     # Surfaces =   4
+     # Strips   =  58
+     # Vortices = 432
+
+  Sref = 0.36800       Cref = 0.32000       Bref =  1.1500    
+  Xref = 0.53590E-01   Yref =  0.0000       Zref = 0.18000E-01
+
+ Standard axis orientation,  X fwd, Z down         
+
+ Run case:  -unnamed-                              
+
+  Alpha =   7.26248     pb/2V =  -0.00000     p'b/2V =  -0.00000
+  Beta  =   0.00000     qc/2V =   0.00000
+  Mach  =     0.000     rb/2V =  -0.00000     r'b/2V =  -0.00000
+
+  CXtot =   0.03755     Cltot =  -0.00000     Cl'tot =  -0.00000
+  CYtot =   0.00000     Cmtot =   0.00000
+  CZtot =  -0.41256     Cntot =  -0.00000     Cn'tot =   0.00000
+
+  CLtot =   0.41400
+  CDtot =   0.01490
+  CDvis =   0.00000     CDind = 0.0149032
+  CLff  =   0.41590     CDff  = 0.0147363    | Trefftz
+  CYff  =   0.00000         e =    1.0397    | Plane  
+
+   elevator        =  -3.53582
+
+ ---------------------------------------------------------------

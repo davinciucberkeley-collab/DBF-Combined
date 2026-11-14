@@ -1,0 +1,1948 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/F1/power.py",
+ "params": [
+  "../../params/params.json",
+  "../../subsystems/power/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-F1-AS150U-LCSC",
+   "type": "source",
+   "title": "Amass AS150U-M.055 15 Ohm (LCSC datasheet listing)",
+   "kind": "datasheet",
+   "url": "https://lcsc.com/datasheet/lcsc_datasheet_2409041651_Changzhou-Amass-Elec-AS150U-M-055-15R_C30170236.pdf",
+   "where": "part name gives the anti-spark pre-charge resistor, 15 Ohm",
+   "note": "ratings not read from the PDF (search summary only); open before ordering",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F1-SPEEDYBEE-WING",
+   "type": "source",
+   "title": "SpeedyBee F405 WING APP manual (EN)",
+   "kind": "datasheet",
+   "url": "https://www.kiwiquads.co.nz/wp-content/uploads/SpeedyBee_F405_WING_APP_Manual-EN.pdf",
+   "where": "PDB board: current sensor 90 A continuous / 215 A peak, ArduPilot 50 A/V; servo BEC (Vx) 4.5 A continuous / 5.5 A peak (spec sheet; manual says 5 A); FC BEC 5 V 2.4 A",
+   "note": "search summary 2026-11-09, manual PDF not opened; candidate FC only (F3 decides)",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F1-EMAX-ES3054",
+   "type": "source",
+   "title": "EMAX ES3054 / ES3054HV listings",
+   "kind": "web",
+   "url": "https://alofthobbies.com/products/emax-es3054-hv-servo-4-7kg-65-27-oz-in-13-sec-20-3-grams",
+   "where": "17-20 g metal-gear servo, 3.5 kgf cm at 6 V; HV listing: max current 1.0 A (1.3 A high-torque setting); no stall-current figure for the standard version",
+   "note": "the class D6 is choosing from (>= 3.04 kgf cm, B2 CR-B2-05); stall current to be measured",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F1-COREWING-V2",
+   "type": "source",
+   "title": "CoreWing F405 Wing V2 User Manual V2.1 (Coolwing Technology) + ArduPilot CoreWingF405WingV2 hardware page",
+   "kind": "datasheet",
+   "url": "https://ardupilot.org/copter/docs/common-corewing-f405-wing-v2.html",
+   "where": "PDB parameter table p. 7 and power logic p. 4-5: servo BEC 5 / 6 / 7.2 V by jumper, 8 A continuous / 14 A peak; FC BEC 5.2 V 4 A; current sense 90 A cont / 215 A peak, 64 A/V (ArduPilot)",
+   "note": "summarised in subsystems/power/SPEC.md; ratings checked on the bench at BOARD-CHECK.md step 7",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F1-XT30U",
+   "type": "source",
+   "title": "Amass XT30U connector manual / listing",
+   "kind": "datasheet",
+   "url": "https://www.amass.com.cn/",
+   "where": "XT30U: 20 A continuous (16 AWG, dT < 85 K), contact resistance <= 1.2 mOhm per contact",
+   "note": "per harness SPEC.md (D-74); open the maker sheet before ordering (I1 H06)",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-F1-IEC60028",
+   "type": "source",
+   "title": "IEC 60028 international standard of resistance for copper",
+   "kind": "standard",
+   "url": "https://webstore.iec.ch/publication/1",
+   "where": "annealed copper 1.7241e-8 Ohm m at 20 degC, alpha 0.00393 /K"
+  },
+  {
+   "id": "SRC-F1-INCROPERA",
+   "type": "source",
+   "title": "Incropera & DeWitt, Fundamentals of Heat and Mass Transfer, 6th ed., eq. 9.34",
+   "kind": "book",
+   "where": "Churchill-Chu correlation, free convection from a long horizontal cylinder"
+  },
+  {
+   "id": "ASM-F1-GROUND",
+   "type": "assumption",
+   "title": "Ground phase before take-off",
+   "text": "[duration s, pack current A] armed on the ground (FC, RX, GPS, servos idle)",
+   "basis": "E2's pessimistic budget ground row (team/E2/ENERGY.md); E2 emits no claim for it. It does not move any wire result (0.4 A)",
+   "value": [
+    180,
+    0.41
+   ],
+   "unit": "s,A",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F1-PUNCH",
+   "type": "assumption",
+   "title": "Short-time current cases",
+   "text": "durations: limited full-throttle punch 5 s, unlimited momentary 5 s, single-ESC asymmetric burst 2 s",
+   "basis": "P:electrical.peak_current_a says < 5 s; a single motor at full throttle while the others are low (yaw/roll saturation) lasts about one control correction; F4 to confirm from SITL",
+   "value": [
+    5.0,
+    5.0,
+    2.0
+   ],
+   "unit": "s",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F1-GAUGES",
+   "type": "assumption",
+   "title": "Chosen gauges",
+   "text": "AWG for [ESC power lead, ESC alternative checked]; the main jumper gauge is P:power.jumper_awg (10 AWG, PWR-R1). D-74: no UBEC feed or servo bus wire (the servo rail is the FC Vx header)",
+   "basis": "F1 choice; the alternative (18 AWG) is computed to answer CR-A3-06",
+   "value": [
+    16,
+    18
+   ],
+   "unit": "AWG",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F1-BUNDLE",
+   "type": "assumption",
+   "title": "Short bundled ESC-lead sections (F2 routing, CR-F2-02)",
+   "text": "[name, length m, cooling factor] for sections where more than one pair shares a passage",
+   "basis": "F2: LR/LL pairs together through the P1 straw (~0.05 m) and two twisted pairs stacked 8 mm in the pod crossing (~0.09 m). Factor = fraction of free-air convection + radiation kept: straw enclosed in foam 0.3 (four conductors, little radiation out), pod crossing 0.6 (twisted 0.85 x stacked ~0.7). Judgement, conservative; T-F1-WIRE-HEAT checks the straw",
+   "value": [
+    [
+     "P1 straw, LR + LL pairs",
+     0.05,
+     0.3
+    ],
+    [
+     "pod crossing, 2 twisted pairs stacked",
+     0.09,
+     0.6
+    ]
+   ],
+   "unit": "-,m,-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-F1-INCROPERA"
+   ]
+  },
+  {
+   "id": "ASM-F1-WIRE-OD",
+   "type": "assumption",
+   "title": "Silicone wire outside diameter by gauge",
+   "text": "[AWG, OD mm] for high-strand silicone hobby wire",
+   "basis": "typical maker tables (BNTECHGO, Turnigy) +/-0.2 mm; measure the reel",
+   "value": [
+    [
+     8,
+     6.0
+    ],
+    [
+     10,
+     4.8
+    ],
+    [
+     12,
+     4.0
+    ],
+    [
+     14,
+     3.2
+    ],
+    [
+     16,
+     2.6
+    ],
+    [
+     18,
+     2.0
+    ],
+    [
+     20,
+     1.7
+    ],
+    [
+     22,
+     1.4
+    ],
+    [
+     28,
+     0.9
+    ]
+   ],
+   "unit": "AWG,mm",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F1-COOLING",
+   "type": "assumption",
+   "title": "Cooling derates",
+   "text": "[f_pod, f_channel, f_pair, emissivity]: f_pod 1.0 in the vented pod (still air); f_channel 0.75 for a lead in a tape-covered surface groove in the wing; f_pair 0.85 for a twisted +/- pair (pod only; in the wing + and - lie in two grooves 5 mm apart, f 1.0); silicone emissivity 0.9",
+   "basis": "engineering judgement: a covered groove halves convection but keeps radiation to the tape and foam (~0.75 overall); a twisted pair shields ~15 % of each conductor's surface. Prop wash over the wing in hover is not credited. T-F1-WIRE-HEAT measures it",
+   "value": [
+    1.0,
+    0.75,
+    0.85,
+    0.9
+   ],
+   "unit": "-",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-F1-INCROPERA"
+   ]
+  },
+  {
+   "id": "ASM-F1-R-CONTACT",
+   "type": "assumption",
+   "title": "Contact resistance per mated contact",
+   "text": "AS150U contact 0.8 mOhm (two in the path)",
+   "basis": "reseller values 0.40 and <= 0.8 mOhm; the larger is used",
+   "value": 0.0008,
+   "unit": "ohm",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-J1-AS150U"
+   ]
+  },
+  {
+   "id": "ASM-F1-R-BOARD",
+   "type": "assumption",
+   "title": "Current shunt, board copper and solder joints",
+   "text": "0.6 mOhm in the common path (sensor shunt ~0.25, copper and four solder joints ~0.35)",
+   "basis": "typical 0.2-0.3 mOhm hobby PDB shunts; measured by T-F1-DROP",
+   "value": 0.0006,
+   "unit": "ohm",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-F1-SERVO-STALL",
+   "type": "assumption",
+   "title": "Servo stall current 1.4 A at 6 V",
+   "text": "per elevon servo, Savox SH-0255MG+ (D6), rated 4.8-6.0 V (not HV)",
+   "basis": "D6 CR-D6-06: retailer data 1.2 A at 4.8 V / 1.4 A at 6.0 V (was 1.3 A class value); measured by T-F1-SERVO-STALL on the delivered servos",
+   "value": 1.4,
+   "unit": "A",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-D6-SH0255-STALL"
+   ]
+  },
+  {
+   "id": "ASM-F1-SENSOR-TOL",
+   "type": "assumption",
+   "title": "Current-sensor tolerance 5 %",
+   "text": "BATT_AMP_PERVLT calibrated within +/-5 % at 24-30 A (R-AVIONICS-POWER)",
+   "basis": "requirement value; the 100 A limiter acts on the sensed current",
+   "value": 0.05,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F1-R-XT30U",
+   "type": "assumption",
+   "title": "XT30U in each ESC branch (D-74, WB-03)",
+   "text": "one mated XT30U pair per ESC branch at the pod side exit: 2 contacts x 1.2 mOhm in the branch loop",
+   "basis": "Amass maximum contact resistance (harness SPEC.md); T-F1-DROP measures the branch with the plugs in",
+   "value": 0.0024,
+   "unit": "ohm",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-F1-XT30U"
+   ]
+  },
+  {
+   "id": "ASM-F1-PMOD-CONDUCTORS",
+   "type": "assumption",
+   "title": "Board-to-board link (W-PMOD, case S): 28 AWG conductors per role",
+   "text": "[FC-BEC 5 V, SERVO-BEC Vx, GND] conductors in parallel; BATT_VOLT and BATT_CURR one each (10 wired). Vx gets 4 (all four SERVO-BEC contacts) so the servo terminal voltage holds 5.7 V (F2 CL-F2-SERVO-V)",
+   "basis": "CoreWing manual PDB pin figure (power SPEC.md: FC-BEC x several, SERVO-BEC x 4, GND x several); 10 of them so the folded ribbon fits D2's 10 mm under-pack channel beside the RX and airspeed leads (F2 CL-F2-FILL); pin map measured at BOARD-CHECK.md step 4",
+   "value": [
+    1,
+    4,
+    3
+   ],
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-F1-ESC-CAP",
+   "type": "assumption",
+   "title": "Bus capacitance per ESC 1 000 uF",
+   "text": "LANRC 45 A input capacitor plus the added low-ESR 680 uF at each ESC (0.5 m leads)",
+   "basis": "leads beyond ~0.15 m need added capacitance at the ESC; value = ripple practice, checked by T-F1-RIPPLE",
+   "value": 0.001,
+   "unit": "F",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-F1-PROFILE",
+   "type": "calculation",
+   "title": "Pessimistic mission current profile from E2's phase claims",
+   "script": "redesign/team/F1/power.py",
+   "function": "mission_profile",
+   "equation": "table [phase, t_phase, I_phase] in flight order (ground, climb, hover, transition forward, cruise, back-transition, descent)",
+   "inputs": {
+    "ground": "ASM-F1-GROUND",
+    "i_climb": "CL-E2-I-CLIMB-PESS",
+    "t_climb": "CL-E2-T-CLIMB-PESS",
+    "i_hover": "CL-E2-HOVER-I-GATE",
+    "t_hover": "CL-E2-T-HOVER-PESS",
+    "i_fwd": "CL-E2-I-TRANS-FWD-PESS",
+    "t_fwd": "CL-E2-T-TRANS-FWD-PESS",
+    "i_cruise": "CL-E2-CRUISE-I-PESS",
+    "t_cruise": "CL-E2-T-CRUISE-PESS",
+    "i_back": "CL-E2-I-TRANS-BACK-PESS",
+    "t_back": "CL-E2-T-TRANS-BACK-PESS",
+    "i_desc": "CL-E2-I-DESCENT-PESS",
+    "t_desc": "CL-E2-T-DESCENT-PESS"
+   },
+   "units": {
+    "i_climb": "A",
+    "i_hover": "A",
+    "i_fwd": "A",
+    "i_cruise": "A",
+    "i_back": "A",
+    "i_desc": "A",
+    "t_climb": "s",
+    "t_hover": "s",
+    "t_fwd": "s",
+    "t_cruise": "s",
+    "t_back": "s",
+    "t_desc": "s"
+   },
+   "outputs": {
+    "profile": [
+     [
+      "ground",
+      180,
+      0.41
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      35.66872519372642
+     ],
+     [
+      "hover",
+      120,
+      30.226972150217204
+     ],
+     [
+      "transition forward",
+      20,
+      43.67148708639382
+     ],
+     [
+      "cruise",
+      378.90927299931326,
+      23.928658809779208
+     ],
+     [
+      "back-transition",
+      20,
+      40.22196500217414
+     ],
+     [
+      "descent",
+      50.0,
+      30.226972150217204
+     ]
+    ]
+   },
+   "input_values": {
+    "ground": [
+     180,
+     0.41
+    ],
+    "i_climb": 35.66872519372642,
+    "t_climb": 25.0,
+    "i_hover": 30.226972150217204,
+    "t_hover": 120,
+    "i_fwd": 43.67148708639382,
+    "t_fwd": 20,
+    "i_cruise": 23.928658809779208,
+    "t_cruise": 378.90927299931326,
+    "i_back": 40.22196500217414,
+    "t_back": 20,
+    "i_desc": 30.226972150217204,
+    "t_desc": 50.0
+   }
+  },
+  {
+   "id": "CALC-F1-I-DESIGN",
+   "type": "calculation",
+   "title": "Design currents for the pack path",
+   "script": "redesign/team/F1/power.py",
+   "function": "design_currents",
+   "equation": "I_cont = max(I_hover, I_cruise, P_vclimb / V_nom) ; I_short = max profile phase <= 60 s ; I_req = k I",
+   "inputs": {
+    "i_hover": "CL-E2-HOVER-I-GATE",
+    "i_cruise": "CL-E2-CRUISE-I-PESS",
+    "p_climb": "CL-B1-VCLIMB-P",
+    "v": "P:battery.v_nom",
+    "k": "P:requirements.disconnect_factor",
+    "profile": "CL-F1-PROFILE",
+    "ilim": "P:performance.full_throttle_current_a",
+    "tol": "ASM-F1-SENSOR-TOL"
+   },
+   "units": {
+    "i_hover": "A",
+    "i_cruise": "A",
+    "p_climb": "W",
+    "v": "V",
+    "ilim": "A"
+   },
+   "outputs": {
+    "i_cont_a": 30.272755043992028,
+    "i_req_cont_a": 37.84094380499003,
+    "i_short_a": 43.67148708639382,
+    "i_req_short_a": 54.58935885799227,
+    "i_lim_worst_a": 105.26315789473685
+   },
+   "input_values": {
+    "i_hover": 30.226972150217204,
+    "i_cruise": 23.928658809779208,
+    "p_climb": 448.03677465108206,
+    "v": 14.8,
+    "k": 1.25,
+    "profile": [
+     [
+      "ground",
+      180,
+      0.41
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      35.66872519372642
+     ],
+     [
+      "hover",
+      120,
+      30.226972150217204
+     ],
+     [
+      "transition forward",
+      20,
+      43.67148708639382
+     ],
+     [
+      "cruise",
+      378.90927299931326,
+      23.928658809779208
+     ],
+     [
+      "back-transition",
+      20,
+      40.22196500217414
+     ],
+     [
+      "descent",
+      50.0,
+      30.226972150217204
+     ]
+    ],
+    "ilim": 100.0,
+    "tol": 0.05
+   }
+  },
+  {
+   "id": "CALC-F1-WIRES",
+   "type": "calculation",
+   "title": "Wire derating: steady rise, mission-profile peak, drop, mass",
+   "script": "redesign/team/F1/power.py",
+   "function": "wires",
+   "equation": "see module docstring; ESC lead current = I_pack / n x 2s/(1+s) (heavier pair at the hover split s, applied to every branch); R_ext = R_common + 1/sum(1/R_branch_i); drop = I R_common + I_esc R_branch,max",
+   "inputs": {
+    "i_cont": "CL-F1-I-CONT",
+    "profile": "CL-F1-PROFILE",
+    "punch": "ASM-F1-PUNCH",
+    "gauges": "ASM-F1-GAUGES",
+    "od": "ASM-F1-WIRE-OD",
+    "g_main": "P:power.jumper_awg",
+    "l_main": "P:power.jumper_len_m",
+    "k_cu": "P:power.k_cu_w_mk",
+    "l_ur": "CL-F2-ESC-LEN-UR",
+    "l_ul": "CL-F2-ESC-LEN-UL",
+    "l_lr": "CL-F2-ESC-LEN-LR",
+    "l_ll": "CL-F2-ESC-LEN-LL",
+    "bundle": "ASM-F1-BUNDLE",
+    "cool": "ASM-F1-COOLING",
+    "amb": "P:env.ambient_design_c",
+    "n": "P:propulsion.n_motors",
+    "split": "P:requirements.hover_split_max",
+    "ilim": "P:performance.full_throttle_current_a",
+    "ipeak": "P:electrical.peak_current_a",
+    "i_esc_lim": "P:propulsion.current_max_per_motor_a",
+    "i_esc_asym": "CL-E1-IMAX-168-55",
+    "r_contact": "ASM-F1-R-CONTACT",
+    "r_board": "ASM-F1-R-BOARD",
+    "v": "P:battery.v_nom",
+    "r_xt30": "ASM-F1-R-XT30U",
+    "drop_allow": "CL-E1-DROP-ALLOW"
+   },
+   "units": {
+    "ilim": "A",
+    "ipeak": "A",
+    "i_esc_lim": "A",
+    "v": "V",
+    "l_main": "m",
+    "k_cu": "W/m/K",
+    "l_ur": "m",
+    "l_ul": "m",
+    "l_lr": "m",
+    "l_ll": "m",
+    "drop_allow": "%"
+   },
+   "outputs": {
+    "main_awg": 10,
+    "main_len_m": 0.08,
+    "main_i_cont_a": 30.272755043992028,
+    "main_rise_long_c": 16.37110345286638,
+    "main_rise_c": 0.46521406220468364,
+    "main_peak_normal_c": 18.024843725912724,
+    "main_peak_fault_c": 20.51158252393538,
+    "main_r_loop_mohm": 0.5902395822486407,
+    "main_mass_g": 9.796363398955664,
+    "main_od_mm": 4.8,
+    "main_gpm": 61.227271243472906,
+    "esc_awg": 16,
+    "esc_len_m": 0.7006309677718234,
+    "esc_i_cont_a": 8.409098623331118,
+    "esc_rise_long_c": 9.165983839554954,
+    "esc_rise_c": 9.165983839554954,
+    "esc_peak_normal_c": 13.882508146011737,
+    "esc_peak_fault_c": 17.62803781167566,
+    "esc_r_loop_mohm": 20.247990235437417,
+    "esc_mass_g": 81.69368596148429,
+    "esc_od_mm": 2.6000000000000005,
+    "esc_gpm": 16.15937672414052,
+    "esc18_awg": 18,
+    "esc18_len_m": 0.7006309677718234,
+    "esc18_i_cont_a": 8.409098623331118,
+    "esc18_rise_long_c": 16.401796147986758,
+    "esc18_rise_c": 16.401796147986758,
+    "esc18_peak_normal_c": 31.151055300470027,
+    "esc18_peak_fault_c": 41.94435704559345,
+    "esc18_r_loop_mohm": 33.04697263986427,
+    "esc18_mass_g": 50.22970380070188,
+    "esc18_od_mm": 2.0,
+    "esc18_gpm": 9.935660227648604,
+    "esc_r_loop_max_mohm": 22.647990235437415,
+    "esc_r_loop_min_mohm": 18.696030067670257,
+    "esc_len_total_m": 2.527748667417412,
+    "bundle0_rise_c": 9.523708897783688,
+    "bundle0_rise_long_c": 21.486683906061074,
+    "bundle0_peak_fault_c": 25.17405587738903,
+    "bundle1_rise_c": 9.507536299968553,
+    "bundle1_rise_long_c": 11.267951276206247,
+    "bundle1_peak_fault_c": 18.910563056174425,
+    "bundle_rise_max_c": 9.523708897783688,
+    "bundle_peak_max_c": 25.17405587738903,
+    "r_common_mohm": 2.7902395822486405,
+    "r_ext_mohm": 7.924661645438626,
+    "drop_cont_pct": 1.8575501547128186,
+    "drop_peak_pct": 5.680365649079135,
+    "main_loss_w_cont": 2.557086319973969,
+    "esc_len_5pct_m": 0.560136307190062,
+    "esc_len_allow_m": 1.9066410806505474,
+    "esc_len_max_m": 0.7006309677718234,
+    "drop_peak_over_5pct": 0.6803656490791354,
+    "xt30_drop_pct": 0.4021621621621621
+   },
+   "input_values": {
+    "i_cont": 30.272755043992028,
+    "profile": [
+     [
+      "ground",
+      180,
+      0.41
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      35.66872519372642
+     ],
+     [
+      "hover",
+      120,
+      30.226972150217204
+     ],
+     [
+      "transition forward",
+      20,
+      43.67148708639382
+     ],
+     [
+      "cruise",
+      378.90927299931326,
+      23.928658809779208
+     ],
+     [
+      "back-transition",
+      20,
+      40.22196500217414
+     ],
+     [
+      "descent",
+      50.0,
+      30.226972150217204
+     ]
+    ],
+    "punch": [
+     5.0,
+     5.0,
+     2.0
+    ],
+    "gauges": [
+     16,
+     18
+    ],
+    "od": [
+     [
+      8,
+      6.0
+     ],
+     [
+      10,
+      4.8
+     ],
+     [
+      12,
+      4.0
+     ],
+     [
+      14,
+      3.2
+     ],
+     [
+      16,
+      2.6
+     ],
+     [
+      18,
+      2.0
+     ],
+     [
+      20,
+      1.7
+     ],
+     [
+      22,
+      1.4
+     ],
+     [
+      28,
+      0.9
+     ]
+    ],
+    "g_main": 10,
+    "l_main": [
+     0.03,
+     0.05
+    ],
+    "k_cu": 400.0,
+    "l_ur": 0.6704500845244779,
+    "l_ul": 0.5638832883852334,
+    "l_lr": 0.7006309677718234,
+    "l_ll": 0.592784326735877,
+    "bundle": [
+     [
+      "P1 straw, LR + LL pairs",
+      0.05,
+      0.3
+     ],
+     [
+      "pod crossing, 2 twisted pairs stacked",
+      0.09,
+      0.6
+     ]
+    ],
+    "cool": [
+     1.0,
+     0.75,
+     0.85,
+     0.9
+    ],
+    "amb": [
+     10,
+     30
+    ],
+    "n": 4,
+    "split": 1.25,
+    "ilim": 100.0,
+    "ipeak": 120.0,
+    "i_esc_lim": 24.8,
+    "i_esc_asym": 51.56136196434739,
+    "r_contact": 0.0008,
+    "r_board": 0.0006,
+    "v": 14.8,
+    "r_xt30": 0.0024,
+    "drop_allow": 11.520643492002746
+   }
+  },
+  {
+   "id": "ASM-F1-PACKLEAD",
+   "type": "assumption",
+   "title": "Pack's own leads: gauge and length after re-termination",
+   "text": "[assumed maker gauge AWG, alternative gauge AWG, length one way m]",
+   "basis": "the Ovonic listing does not give the lead gauge (open the product sheet / measure); 4S 6500 130C packs ship with 10 or 12 AWG. Length: D2 CR-D2-07 needs >= 90 mm from the pack aft face to the parked connector; cut to 0.10 m when the AS150U is fitted",
+   "value": [
+    10,
+    12,
+    0.1
+   ],
+   "unit": "AWG,AWG,m",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-OVONIC-4S6500"
+   ]
+  },
+  {
+   "id": "CALC-F1-PACKLEAD",
+   "type": "calculation",
+   "title": "Pack's own leads: steady and mission-peak rise",
+   "script": "redesign/team/F1/power.py",
+   "function": "packlead",
+   "equation": "same wire model as CALC-F1-WIRES, pod still air, side-by-side pair (f_pair)",
+   "inputs": {
+    "i_cont": "CL-F1-I-CONT",
+    "lead": "ASM-F1-PACKLEAD",
+    "profile": "CL-F1-PROFILE",
+    "punch": "ASM-F1-PUNCH",
+    "od": "ASM-F1-WIRE-OD",
+    "cool": "ASM-F1-COOLING",
+    "amb": "P:env.ambient_design_c",
+    "ipeak": "P:electrical.peak_current_a"
+   },
+   "units": {
+    "amb": "degC",
+    "ipeak": "A"
+   },
+   "outputs": {
+    "lead_awg": 10,
+    "lead_rise_c": 16.37110345286638,
+    "lead_peak_fault_c": 20.51158252393538,
+    "lead_r_loop_mohm": 0.7377994778108008,
+    "lead_alt_awg": 12,
+    "lead_alt_rise_c": 28.45784867501736,
+    "lead_alt_peak_fault_c": 43.89717124736177,
+    "lead_alt_r_loop_mohm": 1.2236397044591412
+   },
+   "input_values": {
+    "i_cont": 30.272755043992028,
+    "lead": [
+     10,
+     12,
+     0.1
+    ],
+    "profile": [
+     [
+      "ground",
+      180,
+      0.41
+     ],
+     [
+      "climb 0-50 m",
+      25.0,
+      35.66872519372642
+     ],
+     [
+      "hover",
+      120,
+      30.226972150217204
+     ],
+     [
+      "transition forward",
+      20,
+      43.67148708639382
+     ],
+     [
+      "cruise",
+      378.90927299931326,
+      23.928658809779208
+     ],
+     [
+      "back-transition",
+      20,
+      40.22196500217414
+     ],
+     [
+      "descent",
+      50.0,
+      30.226972150217204
+     ]
+    ],
+    "punch": [
+     5.0,
+     5.0,
+     2.0
+    ],
+    "od": [
+     [
+      8,
+      6.0
+     ],
+     [
+      10,
+      4.8
+     ],
+     [
+      12,
+      4.0
+     ],
+     [
+      14,
+      3.2
+     ],
+     [
+      16,
+      2.6
+     ],
+     [
+      18,
+      2.0
+     ],
+     [
+      20,
+      1.7
+     ],
+     [
+      22,
+      1.4
+     ],
+     [
+      28,
+      0.9
+     ]
+    ],
+    "cool": [
+     1.0,
+     0.75,
+     0.85,
+     0.9
+    ],
+    "amb": [
+     10,
+     30
+    ],
+    "ipeak": 120.0
+   }
+  },
+  {
+   "id": "CALC-F1-SERVO-BEC",
+   "type": "calculation",
+   "title": "Servo supply requirement (power-board servo BEC, D-74)",
+   "script": "redesign/team/F1/power.py",
+   "function": "servo_bec",
+   "equation": "I_req = k_bec x n_servo x I_stall",
+   "inputs": {
+    "k": "P:requirements.ubec_factor",
+    "i_stall": "ASM-F1-SERVO-STALL"
+   },
+   "units": {
+    "i_stall": "A"
+   },
+   "outputs": {
+    "i_req_a": 5.6,
+    "i_bus_stall_a": 2.8
+   },
+   "input_values": {
+    "k": 2.0,
+    "i_stall": 1.4
+   }
+  },
+  {
+   "id": "CALC-F1-PRECHARGE",
+   "type": "calculation",
+   "title": "Anti-spark pre-charge time",
+   "script": "redesign/team/F1/power.py",
+   "function": "precharge",
+   "equation": "tau = R_pre x n x C_esc ; 3 tau to 95 % ; I_inrush = V_full / R_pre",
+   "inputs": {
+    "n": "P:propulsion.n_motors",
+    "c": "ASM-F1-ESC-CAP",
+    "cells": "P:battery.cells_s"
+   },
+   "units": {
+    "c": "F"
+   },
+   "outputs": {
+    "t95_ms": 180.0,
+    "i_inrush_a": 1.12
+   },
+   "input_values": {
+    "n": 4,
+    "c": 0.001,
+    "cells": 4
+   }
+  },
+  {
+   "id": "CALC-F1-MASS",
+   "type": "calculation",
+   "title": "Power mass excluding the pack, against the allocation left after the pack",
+   "script": "redesign/team/F1/power.py",
+   "function": "power_mass",
+   "equation": "m = CL-PWR-MASS-NONPACK (PWR-R1 + D-74 parts: AS150U half + 10 AWG jumpers, power board, bus board, frame, 4 caps; no UBEC, no fuse); budget = allocation - pack",
+   "inputs": {
+    "nonpack": "CL-PWR-MASS-NONPACK",
+    "alloc": "P:mass.allocation_g.power",
+    "pack": "P:battery.mass_kg"
+   },
+   "units": {
+    "nonpack": "g",
+    "alloc": "g",
+    "pack": "kg"
+   },
+   "outputs": {
+    "mass_g": 73.9,
+    "budget_g": 77.0
+   },
+   "input_values": {
+    "nonpack": 73.9,
+    "alloc": 627,
+    "pack": 0.55
+   }
+  },
+  {
+   "id": "CALC-F1-PMOD",
+   "type": "calculation",
+   "title": "Power-board link (W-PMOD, 28 AWG ribbon, case S): conductor heating per role",
+   "script": "redesign/team/F1/power.py",
+   "function": "pmod",
+   "equation": "same steady wire model as CALC-F1-WIRES, 28 AWG, pod still air, f_pair for the ribbon; per conductor: 5 V I_5V / n_5V, Vx I_stall / n_Vx, GND (I_5V + I_stall) / n_GND; I_5V = CL-F3-5V-REQ (2 x the FC 5 V load), I_stall = CL-F1-SERVO-STALL-BUS (both servos stalled, D-74)",
+   "inputs": {
+    "i_5v": "CL-F3-5V-REQ",
+    "i_stall": "CL-F1-SERVO-STALL-BUS",
+    "od": "ASM-F1-WIRE-OD",
+    "cool": "ASM-F1-COOLING",
+    "amb": "P:env.ambient_design_c",
+    "n": "ASM-F1-PMOD-CONDUCTORS"
+   },
+   "units": {
+    "i_5v": "A",
+    "i_stall": "A",
+    "amb": "degC"
+   },
+   "outputs": {
+    "rise_5v_c": 2.694592888827316,
+    "rise_stall_c": 1.8078361436349013,
+    "rise_gnd_c": 5.1374090841570705,
+    "i_vx_a": 0.7,
+    "i_gnd_a": 1.222
+   },
+   "input_values": {
+    "i_5v": 0.866,
+    "i_stall": 2.8,
+    "od": [
+     [
+      8,
+      6.0
+     ],
+     [
+      10,
+      4.8
+     ],
+     [
+      12,
+      4.0
+     ],
+     [
+      14,
+      3.2
+     ],
+     [
+      16,
+      2.6
+     ],
+     [
+      18,
+      2.0
+     ],
+     [
+      20,
+      1.7
+     ],
+     [
+      22,
+      1.4
+     ],
+     [
+      28,
+      0.9
+     ]
+    ],
+    "cool": [
+     1.0,
+     0.75,
+     0.85,
+     0.9
+    ],
+    "amb": [
+     10,
+     30
+    ],
+    "n": [
+     1,
+     4,
+     3
+    ]
+   }
+  },
+  {
+   "id": "CL-F1-PROFILE",
+   "type": "claim",
+   "title": "Mission current profile used for wire heating (E2 pessimistic phases)",
+   "calc": "CALC-F1-PROFILE",
+   "output": "profile",
+   "unit": "s,A",
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004"
+   ],
+   "how": "Phase means of BAT.Curr on the full-mission log (T-E2-MISSION-LOG) inside E2's +/-15 %.",
+   "note": "Replaces ASM-F1-PROFILE (copied table, retired in R3) per CR-E2-19.",
+   "value": [
+    [
+     "ground",
+     180,
+     0.41
+    ],
+    [
+     "climb 0-50 m",
+     25.0,
+     35.66872519372642
+    ],
+    [
+     "hover",
+     120,
+     30.226972150217204
+    ],
+    [
+     "transition forward",
+     20,
+     43.67148708639382
+    ],
+    [
+     "cruise",
+     378.90927299931326,
+     23.928658809779208
+    ],
+    [
+     "back-transition",
+     20,
+     40.22196500217414
+    ],
+    [
+     "descent",
+     50.0,
+     30.226972150217204
+    ]
+   ]
+  },
+  {
+   "id": "CL-F1-I-CONT",
+   "type": "claim",
+   "title": "Continuous design current, pack path",
+   "calc": "CALC-F1-I-DESIGN",
+   "output": "i_cont_a",
+   "unit": "A",
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004"
+   ],
+   "how": "Mean BAT.Curr over a 60 s hover and a 60 s cruise segment at the gate mass (T-E2-MISSION-LOG); the larger must be <= this value.",
+   "value": 30.272755043992028
+  },
+  {
+   "id": "CL-F1-DISC-REQ-CONT",
+   "type": "claim",
+   "title": "Required disconnect continuous rating",
+   "calc": "CALC-F1-I-DESIGN",
+   "output": "i_req_cont_a",
+   "unit": "A",
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-002"
+   ],
+   "how": "1.25 x CL-F1-I-CONT; re-run after any change to E2/B1 currents.",
+   "value": 37.84094380499003
+  },
+  {
+   "id": "CL-F1-DISC-REQ-SHORT",
+   "type": "claim",
+   "title": "Required disconnect short-time (<= 60 s) rating",
+   "calc": "CALC-F1-I-DESIGN",
+   "output": "i_req_short_a",
+   "unit": "A",
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-002"
+   ],
+   "how": "1.25 x the transition current (20 s); logged in the first transitions (T-B1-TRANSITION-LOG).",
+   "value": 54.58935885799227
+  },
+  {
+   "id": "CL-F1-ILIM-WORST",
+   "type": "claim",
+   "title": "Limited peak with a 5 % sensor under-read",
+   "calc": "CALC-F1-I-DESIGN",
+   "output": "i_lim_worst_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-F1-AS150U-BURST"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-002",
+    "PWR-003"
+   ],
+   "how": "Clamp meter vs BAT.Curr at 25-30 A (T-F1-SENSOR-CAL); then a 2 s full-throttle restrained run reads <= 100 A on the clamp.",
+   "value": 105.26315789473685
+  },
+  {
+   "id": "CL-F1-AS150U-CONT",
+   "type": "claim",
+   "title": "Main disconnect AS150U continuous rating",
+   "unit": "A",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F1-DISC-REQ-CONT"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-002"
+   ],
+   "how": "Open the Amass AS150U sheet before ordering; heat run 38 A for 10 min, connector rise <= 30 degC (T-F1-CONN-HEAT).",
+   "cites": [
+    "SRC-J1-AS150U",
+    "SRC-J1-HOLYBRO-CONN"
+   ],
+   "value": 70.0,
+   "note": "Decision for CR-A2-08, CR-A4-09, CR-J1-04: AS150U, not XT60. XT60 35 A (Amass) / 30 A (Holybro) is below the 37.7 A required here and has no cited rating >= 120 A for 5 s."
+  },
+  {
+   "id": "CL-F1-AS150U-SHORT",
+   "type": "claim",
+   "title": "AS150 one-minute rating vs transition",
+   "unit": "A",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F1-DISC-REQ-SHORT"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-002"
+   ],
+   "how": "Holybro table (AS150 75 A cont / 150 A 1 min); AS150U shares the 7 mm contact.",
+   "cites": [
+    "SRC-J1-HOLYBRO-CONN"
+   ],
+   "value": 150.0
+  },
+  {
+   "id": "CL-F1-AS150U-BURST",
+   "type": "claim",
+   "title": "Main disconnect momentary rating vs the 120 A case",
+   "unit": "A",
+   "limit": {
+    "op": ">=",
+    "ref": "P:electrical.peak_current_a"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-002"
+   ],
+   "how": "Maker sheet before ordering; inspect the pre-charge pin after every full-throttle stand run (forum melt report on the anti-spark contact).",
+   "cites": [
+    "SRC-J1-AS150U",
+    "SRC-F1-AS150U-LCSC"
+   ],
+   "value": 140.0,
+   "note": "Supersedes CL-J1-XT60-BURST (XT60 60 A / 1 min vs 120 A): the XT60 is not used; the 120 A < 5 s unlimited case and the 105 A limited case are inside 140 A."
+  },
+  {
+   "id": "CL-F1-PRECHARGE-T95",
+   "type": "claim",
+   "title": "Anti-spark pre-charge time to 95 %",
+   "calc": "CALC-F1-PRECHARGE",
+   "output": "t95_ms",
+   "unit": "ms",
+   "parts": [
+    "PWR-002"
+   ],
+   "how": "Plug in slowly: hold at the first detent >= 0.5 s. Scope the bus while plugging (T-F1-PRECHARGE).",
+   "value": 180.0
+  },
+  {
+   "id": "CL-F1-INRUSH",
+   "type": "claim",
+   "title": "Pre-charge inrush current",
+   "calc": "CALC-F1-PRECHARGE",
+   "output": "i_inrush_a",
+   "unit": "A",
+   "parts": [
+    "PWR-002"
+   ],
+   "how": "Same scope trace: no visible spark at the main pins.",
+   "value": 1.12
+  },
+  {
+   "id": "CL-F1-MAIN-RISE",
+   "type": "claim",
+   "title": "Main jumpers 10 AWG (<= 0.05 m), steady rise above their terminals",
+   "calc": "CALC-F1-WIRES",
+   "output": "main_rise_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004"
+   ],
+   "how": "T-F1-WIRE-HEAT: 30 A through the built stack in the closed pod mock-up, 10 min, thermocouples at the W-MAIN-2 mid-point and at both solder joints; mid minus joint <= 10 degC.",
+   "note": "Fin result with convection; agrees with CL-PWR-JUMPER-RISE (conduction only). The terminals sit at the AS150U / pack-lead / board temperature (CL-F1-PACKLEAD-RISE, T-F1-CONN-HEAT). A long 10 AWG run would rise CL-F1-MAIN-RISE-LONG: never extend the jumpers.",
+   "value": 0.46521406220468364
+  },
+  {
+   "id": "CL-F1-MAIN-RISE-LONG",
+   "type": "claim",
+   "title": "Main path 10 AWG, long-wire steady rise (bound, not the design case)",
+   "calc": "CALC-F1-WIRES",
+   "output": "main_rise_long_c",
+   "unit": "degC",
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004"
+   ],
+   "how": "Not tested: shows why the jumpers stay <= 0.05 m (above the 10 degC limit if run long).",
+   "value": 16.37110345286638
+  },
+  {
+   "id": "CL-F1-MAIN-PEAK",
+   "type": "claim",
+   "title": "Main path, peak rise over the mission with 120 A punches (long-wire, conservative)",
+   "calc": "CALC-F1-WIRES",
+   "output": "main_peak_fault_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_short_max_c"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004"
+   ],
+   "how": "Log the jumper temperature over a full flight profile on the stand (T-F1-WIRE-HEAT).",
+   "value": 20.51158252393538
+  },
+  {
+   "id": "CL-F1-MAIN-MASS",
+   "type": "claim",
+   "title": "Main jumper wire mass (two conductors, both jumpers)",
+   "calc": "CALC-F1-WIRES",
+   "output": "main_mass_g",
+   "unit": "g",
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004"
+   ],
+   "how": "Weigh the finished jumpers.",
+   "note": "Booked inside CL-PWR-MASS-NONPACK (PWR-002); listed here for the derating table only.",
+   "value": 9.796363398955664
+  },
+  {
+   "id": "CL-F1-ESC-RISE",
+   "type": "claim",
+   "title": "ESC lead 16 AWG, steady rise at the heavier pair's hover share (open groove run)",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_rise_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "T-F1-WIRE-HEAT: 8.4 A through a 0.65 m 16 AWG pair in a taped XPS groove mock-up, 10 min.",
+   "value": 9.165983839554954
+  },
+  {
+   "id": "CL-F1-ESC-PEAK",
+   "type": "claim",
+   "title": "ESC lead 16 AWG, peak rise with 51.6 A single-ESC bursts",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_peak_fault_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_short_max_c"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Same rig: profile replay incl. 2 s at 50 A.",
+   "value": 17.62803781167566
+  },
+  {
+   "id": "CL-F1-BUNDLE-RISE",
+   "type": "claim",
+   "title": "ESC leads in the bundled sections (P1 straw, pod crossing), steady rise",
+   "calc": "CALC-F1-WIRES",
+   "output": "bundle_rise_max_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "T-F1-WIRE-HEAT: two 16 AWG pairs at 8.4 A each through a 50 mm straw in XPS, thermocouple at the straw mid-point, 10 min.",
+   "note": "Answer to CR-F2-02: both bundles accepted; axial conduction to the open run carries most of the extra heat over sections this short.",
+   "value": 9.523708897783688
+  },
+  {
+   "id": "CL-F1-BUNDLE-PEAK",
+   "type": "claim",
+   "title": "Bundled sections, peak rise with 51.6 A bursts (no axial credit, conservative)",
+   "calc": "CALC-F1-WIRES",
+   "output": "bundle_peak_max_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_short_max_c"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Same straw rig, profile replay incl. 2 s at 50 A.",
+   "value": 25.17405587738903
+  },
+  {
+   "id": "CL-F1-ESC18-RISE",
+   "type": "claim",
+   "title": "ESC lead 18 AWG alternative, steady rise (rejected)",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc18_rise_c",
+   "unit": "degC",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Same rig with 18 AWG if A3 asks again.",
+   "note": "Answer to CR-A3-06: above the 10 degC limit, so 18 AWG is not used; 16 AWG stays.",
+   "value": 16.401796147986758
+  },
+  {
+   "id": "CL-F1-ESC-MASS",
+   "type": "claim",
+   "title": "ESC power leads, 4 pairs at F2's routed lengths",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_mass_g",
+   "unit": "g",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Weigh the four cut pairs before soldering.",
+   "note": "Harness mass is F2's (HRN-101/102, CL-F2-MASS); F2 reads the per-metre value CL-F1-W16-GPM instead of dividing this by 4.0 m (CR-F1-23).",
+   "value": 81.69368596148429
+  },
+  {
+   "id": "CL-F1-ESC-LEN-MAX",
+   "type": "claim",
+   "title": "Longest routed 16 AWG ESC lead (F2 cut list)",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_len_max_m",
+   "unit": "m",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Tape measure on the cut pairs; = max of CL-F2-ESC-LEN-UR / UL / LR / LL.",
+   "value": 0.7006309677718234
+  },
+  {
+   "id": "CL-F1-ESC-LEN-ALLOW",
+   "type": "claim",
+   "title": "Longest 16 AWG ESC lead that keeps the 100 A drop within E1's allowable",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_len_allow_m",
+   "unit": "m",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F1-ESC-LEN-MAX"
+   },
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "F2 cut list: every ESC lead <= this length (CR-F1-25); T-F1-DROP on the longest branch.",
+   "note": "CDR-03 / CDR-EL-04 (2026-11-13): the limit is back. The length is now the one at which the farthest ESC's 100 A drop reaches CL-E1-DROP-ALLOW (the drop at which R-HOVER-TW is just held, on the more pessimistic of E1's two motor bounds), and it must be at least F2's longest lead. R5 had removed the limit when the XT30U (D-74) put the 5 % guideline length below the longest lead; that length is CL-F1-ESC-LEN-5PCT.",
+   "value": 1.9066410806505474
+  },
+  {
+   "id": "CL-F1-ESC-LEN-5PCT",
+   "type": "claim",
+   "title": "Longest 16 AWG ESC lead for a 5 % drop at 100 A (WB-11 guideline, not met)",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_len_5pct_m",
+   "unit": "m",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Information: compare with CL-F1-ESC-LEN-MAX. T-F1-DROP on the longest branch.",
+   "note": "All four routed leads (0.564-0.701 m, D-85...D-89) are longer than this: the 5 % guideline is exceeded and accepted (D-74, D-117). No limit here; the limit is on CL-F1-ESC-LEN-ALLOW. Do not go to 14 AWG on the right pair (+26 g REVIEWER EST, CDR-EL-04) unless T-F1-DROP or the stand shows a thrust shortfall.",
+   "value": 0.560136307190062
+  },
+  {
+   "id": "CL-F1-W16-GPM",
+   "type": "claim",
+   "title": "16 AWG silicone wire mass per metre of one conductor",
+   "calc": "CALC-F1-WIRES",
+   "output": "esc_gpm",
+   "unit": "g/m",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Weigh 1 m of the delivered reel.",
+   "value": 16.15937672414052
+  },
+  {
+   "id": "CL-F1-PACKLEAD-RISE",
+   "type": "claim",
+   "title": "Pack's own leads (10 AWG assumed), steady rise at the continuous current",
+   "calc": "CALC-F1-PACKLEAD",
+   "output": "lead_rise_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.pack_lead_rise_max_c"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "Read the lead gauge on the delivered pack (printed on the silicone); T-F1-WIRE-HEAT: 30 A for 10 min from the pack in the pod mock-up, thermocouple mid-lead.",
+   "note": "12 AWG leads would rise ~28 degC (CL-F1-PACKLEAD12-RISE): buy packs with >= 10 AWG leads (CR-F1-14).",
+   "value": 16.37110345286638
+  },
+  {
+   "id": "CL-F1-PACKLEAD-PEAK",
+   "type": "claim",
+   "title": "Pack's own leads (10 AWG), mission peak with 120 A punches",
+   "calc": "CALC-F1-PACKLEAD",
+   "output": "lead_peak_fault_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_short_max_c"
+   },
+   "verifies": [
+    "R-DISCONNECT"
+   ],
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "Same rig, profile replay.",
+   "value": 20.51158252393538
+  },
+  {
+   "id": "CL-F1-PACKLEAD12-RISE",
+   "type": "claim",
+   "title": "Pack's own leads if 12 AWG, steady rise (not accepted)",
+   "calc": "CALC-F1-PACKLEAD",
+   "output": "lead_alt_rise_c",
+   "unit": "degC",
+   "parts": [
+    "PWR-001"
+   ],
+   "how": "Only if the delivered pack has 12 AWG leads: same heat run; above 20 degC the pack is returned.",
+   "note": "above P:electrical.pack_lead_rise_max_c 20 degC: a 12 AWG pack is not accepted.",
+   "value": 28.45784867501736
+  },
+  {
+   "id": "CL-F1-R-EXT",
+   "type": "claim",
+   "title": "Resistance pack terminals to ESC pads (equivalent, hot)",
+   "calc": "CALC-F1-WIRES",
+   "output": "r_ext_mohm",
+   "unit": "mOhm",
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "T-F1-DROP: 20 A load step, read pack-terminal and ESC-pad voltages with one meter, XT30U plugs in.",
+   "note": "R5: + one XT30U per branch (2.4 mOhm, D-74), +0.6 mOhm on the equivalent; P:electrical.r_ext_mohm (A1) follows (CR-F1-24).",
+   "value": 7.924661645438626
+  },
+  {
+   "id": "CL-F1-DROP-CONT",
+   "type": "claim",
+   "title": "Voltage drop pack to the farthest ESC at the continuous current",
+   "calc": "CALC-F1-WIRES",
+   "output": "drop_cont_pct",
+   "unit": "%",
+   "limit": {
+    "op": "<=",
+    "value": 2.0
+   },
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "T-F1-DROP at 30 A.",
+   "value": 1.8575501547128186
+  },
+  {
+   "id": "CL-F1-DROP-PEAK",
+   "type": "claim",
+   "title": "Voltage drop pack to the farthest ESC at the 100 A limiter",
+   "calc": "CALC-F1-WIRES",
+   "output": "drop_peak_pct",
+   "unit": "%",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-E1-DROP-ALLOW"
+   },
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "T-F1-DROP scaled with the XT30U plugs in; stand log at full throttle. Go to 14 AWG on the right-hand leads only if the measured drop costs real thrust (WB-11).",
+   "note": "CDR-03 / CDR-EL-04 (2026-11-13): the limit is back, derived from E1's thrust need: CL-E1-DROP-ALLOW is the 100 A drop at which R-HOVER-TW is just held (worst pack T/W 1.6, fresh 2.0) on the more pessimistic of E1's two motor bounds. Comparing the FARTHEST branch with it is conservative: E1's limit is for the equivalent path of all four. D-74 accepted the XT30U over F1's 5 % guideline (WB-11); R5 then removed the limit instead of replacing it. The guideline is exceeded by CL-F1-DROP-OVER-5PCT and stays F1's design target.",
+   "value": 5.680365649079135
+  },
+  {
+   "id": "CL-F1-DROP-OVER-5PCT",
+   "type": "claim",
+   "title": "100 A drop above the 5 % guideline (WB-11), percentage points",
+   "calc": "CALC-F1-WIRES",
+   "output": "drop_peak_over_5pct",
+   "unit": "%",
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004",
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL"
+   ],
+   "how": "Information: T-F1-DROP. Positive = the guideline is exceeded.",
+   "note": "No limit: WB-11 makes 5 % a guideline and D-74 accepted the XT30U. The hard limit is on CL-F1-DROP-PEAK.",
+   "value": 0.6803656490791354
+  },
+  {
+   "id": "CL-F1-XT30U-DROP",
+   "type": "claim",
+   "title": "Drop across one ESC branch's XT30U at the per-motor limit",
+   "calc": "CALC-F1-WIRES",
+   "output": "xt30_drop_pct",
+   "unit": "%",
+   "parts": [
+    "PRP-002-UR",
+    "PRP-002-UL",
+    "PRP-002-LR",
+    "PRP-002-LL",
+    "HRN-001"
+   ],
+   "how": "T-F1-DROP: meter across a mated XT30U at 20 A, scale to the per-motor limit.",
+   "assumes": [
+    "ASM-F1-R-XT30U"
+   ],
+   "value": 0.4021621621621621
+  },
+  {
+   "id": "CL-F1-SERVO-BEC-REQ",
+   "type": "claim",
+   "title": "Servo supply rating required",
+   "calc": "CALC-F1-SERVO-BEC",
+   "output": "i_req_a",
+   "unit": "A",
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003"
+   ],
+   "how": "T-F1-SERVO-STALL: measure each servo's stall current at 6 V; re-run with the measured value.",
+   "note": "5.6 A with D6's 1.4 A stall (CR-D6-06) = 2 x 2 x 1.4 A; carried by the CoreWing power board's servo BEC, 8 A cont / 14 A peak on the 6 V jumper (CL-F1-SERVO-BEC-RATING, margin 43 %). The 4.5 A once carried was the SpeedyBee column of CoreWing's comparison table (D-74): UBEC and fuse deleted.",
+   "value": 5.6
+  },
+  {
+   "id": "CL-F1-SERVO-STALL-BUS",
+   "type": "claim",
+   "title": "Servo rail current, both servos stalled",
+   "calc": "CALC-F1-SERVO-BEC",
+   "output": "i_bus_stall_a",
+   "unit": "A",
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003",
+    "AVN-001"
+   ],
+   "how": "T-F1-SERVO-STALL, both servos blocked together, meter in the Vx line at the FC header.",
+   "value": 2.8
+  },
+  {
+   "id": "CL-F1-SERVO-BEC-RATING",
+   "type": "claim",
+   "title": "Power-board servo BEC continuous rating (6 V jumper)",
+   "unit": "A",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F1-SERVO-BEC-REQ"
+   },
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003"
+   ],
+   "how": "BOARD-CHECK.md step 7: two 2.2 Ohm loads (~5.4 A) on S5/S6, Vx >= 5.8 V at the header, no cut-out, board <= 70 degC after 60 s; repeated with the real servos stalled (T-F1-SERVO-STALL).",
+   "cites": [
+    "SRC-F1-COREWING-V2"
+   ],
+   "value": 8.0,
+   "note": "D-74 replaces CL-F1-UBEC-RATING. Never on the 7.2 V jumper (SH-0255MG+ is a 4.8-6.0 V servo). Fallback if step 7 fails: a named 4S-input 6 V UBEC (BOM gate X12)"
+  },
+  {
+   "id": "CL-F1-SENSOR-PEAK",
+   "type": "claim",
+   "title": "Current sensor peak range vs 120 A",
+   "unit": "A",
+   "limit": {
+    "op": ">=",
+    "ref": "P:electrical.peak_current_a"
+   },
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003"
+   ],
+   "how": "CoreWing V2 power board (manual V2.1 p. 7); any replacement needs >= 120 A peak and >= 38 A continuous.",
+   "cites": [
+    "SRC-F1-COREWING-V2"
+   ],
+   "value": 215.0
+  },
+  {
+   "id": "CL-F1-SENSOR-CONT",
+   "type": "claim",
+   "title": "Current sensor continuous rating",
+   "unit": "A",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-F1-DISC-REQ-CONT"
+   },
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003"
+   ],
+   "how": "As CL-F1-SENSOR-PEAK; T-F1-SENSOR-CAL.",
+   "cites": [
+    "SRC-F1-COREWING-V2"
+   ],
+   "value": 90.0
+  },
+  {
+   "id": "CL-F1-POWER-MASS",
+   "type": "claim",
+   "title": "Power subsystem mass excluding the pack",
+   "calc": "CALC-F1-MASS",
+   "output": "mass_g",
+   "unit": "g",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-F1-POWER-BUDGET"
+   },
+   "parts": [
+    "PWR-001",
+    "PWR-002",
+    "PWR-003",
+    "PWR-004"
+   ],
+   "how": "Weigh each item on arrival (T-PWR-ARRIVAL); A3 replaces the EST rows.",
+   "note": "D-74: UBEC 13 g and fuse 3.5 g deleted, deck 56 mm (+0.7 g). Power board 28 g EST (one retailer lists the PDB alone at 11.4 g, kept at 28 until weighed).",
+   "value": 73.9
+  },
+  {
+   "id": "CL-F1-POWER-BUDGET",
+   "type": "claim",
+   "title": "Power allocation left after the pack",
+   "calc": "CALC-F1-MASS",
+   "output": "budget_g",
+   "unit": "g",
+   "how": "P:mass.allocation_g.power minus P:battery.mass_kg; follows A1's allocation.",
+   "value": 77.0
+  },
+  {
+   "id": "CL-F1-PMOD-RISE",
+   "type": "claim",
+   "title": "Power-board link 28 AWG FC-BEC 5 V conductors, steady rise at 2 x FC 5 V load",
+   "calc": "CALC-F1-PMOD",
+   "output": "rise_5v_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003",
+    "AVN-001"
+   ],
+   "how": "T-F1-SERVO-STALL: meter in the 5 V lines of the link while the FC, GPS, RX and airspeed run.",
+   "assumes": [
+    "ASM-F1-PMOD-CONDUCTORS"
+   ],
+   "value": 2.694592888827316
+  },
+  {
+   "id": "CL-F1-PMOD-SERVO-RISE",
+   "type": "claim",
+   "title": "Power-board link Vx conductors, steady rise with both servos stalled",
+   "calc": "CALC-F1-PMOD",
+   "output": "rise_stall_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003",
+    "AVN-001"
+   ],
+   "how": "T-F1-SERVO-STALL: both servos stalled 60 s, touch-probe the ribbon; Vx >= 5.8 V at the servo header.",
+   "assumes": [
+    "ASM-F1-PMOD-CONDUCTORS"
+   ],
+   "note": "D-74: the servo BEC on the power board reaches the FC Vx rail through the board-to-board link (case S: SERVO-BEC conductors in parallel; case U: the stacked pin header, no cable). Supersedes CR-F1-29.",
+   "value": 1.8078361436349013
+  },
+  {
+   "id": "CL-F1-PMOD-GND-RISE",
+   "type": "claim",
+   "title": "Power-board link GND conductors, steady rise at 5 V load + servo stall",
+   "calc": "CALC-F1-PMOD",
+   "output": "rise_gnd_c",
+   "unit": "degC",
+   "limit": {
+    "op": "<=",
+    "ref": "P:electrical.wire_temp_rise_max_c"
+   },
+   "verifies": [
+    "R-AVIONICS-POWER"
+   ],
+   "parts": [
+    "PWR-003",
+    "AVN-001"
+   ],
+   "how": "Same bench run as CL-F1-PMOD-SERVO-RISE.",
+   "assumes": [
+    "ASM-F1-PMOD-CONDUCTORS"
+   ],
+   "value": 5.1374090841570705
+  },
+  {
+   "id": "T-F1-WIRE-HEAT",
+   "type": "test",
+   "title": "Wire heat runs",
+   "verifies": [
+    "CL-F1-MAIN-RISE",
+    "CL-F1-MAIN-PEAK",
+    "CL-F1-ESC-RISE",
+    "CL-F1-ESC-PEAK",
+    "CL-F1-BUNDLE-RISE",
+    "CL-F1-BUNDLE-PEAK",
+    "CL-F1-PACKLEAD-RISE",
+    "CL-F1-PACKLEAD-PEAK"
+   ],
+   "state": "planned",
+   "procedure": "Bench supply (>= 40 A) + load; built power stack (10 AWG jumpers) in a closed pod mock-up at 30 A, 16 AWG pair in a taped XPS groove at 8.4 A, two pairs through a 50 mm straw at 8.4 A each, each 10 min; K-type thermocouples mid-lead under foam tape; then 50 A for 2 s on the 16 AWG. Pass: rise <= 10 degC steady (jumpers: above their joints), <= 30 degC peak, pack leads <= 20 degC."
+  },
+  {
+   "id": "T-F1-CONN-HEAT",
+   "type": "test",
+   "title": "AS150U heat run",
+   "verifies": [
+    "CL-F1-AS150U-CONT"
+   ],
+   "state": "planned",
+   "procedure": "38 A for 10 min through a mated pair; IR thermometer on the housing; rise <= 30 degC."
+  },
+  {
+   "id": "T-F1-DROP",
+   "type": "test",
+   "title": "Path resistance",
+   "verifies": [
+    "CL-F1-R-EXT",
+    "CL-F1-DROP-CONT",
+    "CL-F1-DROP-PEAK",
+    "CL-F1-XT30U-DROP"
+   ],
+   "state": "planned",
+   "procedure": "20 A load step from the pack; meter across pack terminals and across one ESC's pads; R = dV/dI. Pass: drop <= 2 % at 30 A."
+  },
+  {
+   "id": "T-F1-SENSOR-CAL",
+   "type": "test",
+   "title": "Current sensor calibration",
+   "verifies": [
+    "CL-F1-ILIM-WORST",
+    "CL-F1-SENSOR-CONT"
+   ],
+   "state": "planned",
+   "procedure": "Clamp meter on the main lead at 5, 15, 25, 30 A (motors on the restrained frame); set BATT_AMP_PERVLT so BAT.Curr is within 5 %; record the value for F4."
+  },
+  {
+   "id": "T-F1-SERVO-STALL",
+   "type": "test",
+   "title": "Servo stall current and rail voltage",
+   "verifies": [
+    "CL-F1-SERVO-BEC-REQ",
+    "CL-F1-PMOD-RISE",
+    "CL-F1-SERVO-BEC-RATING",
+    "CL-F1-PMOD-SERVO-RISE",
+    "CL-F1-PMOD-GND-RISE"
+   ],
+   "state": "planned",
+   "procedure": "Each servo blocked at full deflection 2 s on the power-board servo BEC (6 V jumper), meter in series; both together: Vx >= 5.8 V at the servo and FC 5 V rail >= 4.8 V (as BOARD-CHECK.md step 7, with the real servos)."
+  },
+  {
+   "id": "T-F1-PRECHARGE",
+   "type": "test",
+   "title": "Anti-spark behaviour",
+   "verifies": [
+    "CL-F1-PRECHARGE-T95",
+    "CL-F1-INRUSH"
+   ],
+   "state": "planned",
+   "procedure": "Scope on the bus while plugging the AS150U slowly; bus >= 95 % before the main pins close; no spark marks after 20 plug cycles."
+  },
+  {
+   "id": "T-F1-RIPPLE",
+   "type": "test",
+   "title": "ESC supply ripple",
+   "verifies": [
+    "CL-F1-DROP-PEAK"
+   ],
+   "state": "planned",
+   "procedure": "Scope at each ESC's pads, full-throttle 2 s punch on the stand: ripple <= 1.0 V p-p, no spikes above 21 V (ESC caps 25 V)."
+  }
+ ]
+}

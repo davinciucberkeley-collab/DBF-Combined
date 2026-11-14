@@ -1,0 +1,405 @@
+vergence failed at 117  side 1    Res =  0.7065E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1313E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1207E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1039E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5584E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 173   rms: 0.5773E+05   max: -.1218E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43970   =>   CDf =  0.00471    CDp =  1.43499
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7103E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1314E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1208E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1041E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5593E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 174   rms: 0.5738E+05   max: -.1215E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43969   =>   CDf =  0.00471    CDp =  1.43498
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7160E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1316E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1210E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1042E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5599E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 175   rms: 0.8217E+05   max: -.1729E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43969   =>   CDf =  0.00471    CDp =  1.43498
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7206E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1317E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1211E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1043E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5604E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 176   rms: 0.9952E+05   max: -.2138E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43969   =>   CDf =  0.00471    CDp =  1.43498
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7247E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1319E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1212E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1044E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5610E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 177   rms: 0.8562E+05   max: -.1812E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43969   =>   CDf =  0.00471    CDp =  1.43498
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7305E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1320E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1213E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1045E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5617E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 178   rms: 0.6104E+05   max: -.1349E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43968   =>   CDf =  0.00471    CDp =  1.43497
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7331E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1322E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1215E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1046E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5623E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 179   rms: 0.6663E+05   max: -.1453E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43968   =>   CDf =  0.00471    CDp =  1.43497
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7383E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1323E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1216E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1047E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5627E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 180   rms: 0.9254E+05   max: -.1937E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43968   =>   CDf =  0.00471    CDp =  1.43498
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7431E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1325E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1217E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1048E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5634E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 181   rms: 0.1112E+06   max: -.2391E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43968   =>   CDf =  0.00471    CDp =  1.43497
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7462E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1326E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1219E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1050E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5642E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 182   rms: 0.6982E+05   max: -.1512E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43968   =>   CDf =  0.00471    CDp =  1.43497
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7510E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1328E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1220E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1051E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5648E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 183   rms: 0.7515E+05   max: -.1596E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43968   =>   CDf =  0.00471    CDp =  1.43497
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7550E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1329E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1221E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1052E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5653E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 184   rms: 0.9925E+05   max: -.2112E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43967   =>   CDf =  0.00471    CDp =  1.43497
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7592E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1330E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1222E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1053E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5658E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 185   rms: 0.6629E+05   max: -.1406E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43967   =>   CDf =  0.00471    CDp =  1.43496
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7633E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1331E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1224E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1054E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5662E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 186   rms: 0.8097E+05   max: -.1697E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43967   =>   CDf =  0.00471    CDp =  1.43496
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7668E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1333E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1225E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1055E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5668E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 187   rms: 0.7907E+05   max: -.1711E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43967   =>   CDf =  0.00471    CDp =  1.43496
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7713E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1334E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1226E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1056E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5675E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 188   rms: 0.5642E+05   max: -.1110E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43967   =>   CDf =  0.00471    CDp =  1.43496
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7753E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1336E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1228E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1057E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5677E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 189   rms: 0.8724E+05   max: -.1827E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43967   =>   CDf =  0.00471    CDp =  1.43496
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7804E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1338E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1229E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1059E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5688E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 190   rms: 0.9753E+05   max: -.2037E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43966   =>   CDf =  0.00471    CDp =  1.43496
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7844E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1339E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1230E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1060E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5693E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 191   rms: 0.6422E+05   max: -.1425E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43966   =>   CDf =  0.00471    CDp =  1.43496
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7890E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1340E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1231E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1061E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5700E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 192   rms: 0.7113E+05   max: -.1527E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43966   =>   CDf =  0.00471    CDp =  1.43495
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7935E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1342E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1233E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1062E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5705E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 193   rms: 0.7278E+05   max: -.1549E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43966   =>   CDf =  0.00471    CDp =  1.43495
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.7964E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1343E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1234E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1063E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5710E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 194   rms: 0.6950E+05   max: -.1461E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43966   =>   CDf =  0.00471    CDp =  1.43495
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8010E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1345E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1236E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1064E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5717E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 195   rms: 0.5171E+05   max: -.1111E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43965   =>   CDf =  0.00471    CDp =  1.43494
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8057E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1346E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1237E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1065E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5723E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 196   rms: 0.5602E+05   max: -.1128E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43965   =>   CDf =  0.00471    CDp =  1.43494
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8117E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1348E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1238E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1066E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5727E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 197   rms: 0.5361E+05   max: -.1077E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43965   =>   CDf =  0.00471    CDp =  1.43494
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8169E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1350E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1240E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1068E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5734E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 198   rms: 0.7755E+05   max: -.1634E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43965   =>   CDf =  0.00471    CDp =  1.43494
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8206E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1351E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1241E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1069E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5743E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 199   rms: 0.6491E+05   max: -.1346E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43964   =>   CDf =  0.00471    CDp =  1.43493
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8264E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1353E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1243E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1070E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5749E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 200   rms: 0.6337E+05   max: -.1265E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43964   =>   CDf =  0.00471    CDp =  1.43493
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8310E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1355E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1245E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1071E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5756E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 201   rms: 0.9406E+05   max: -.1908E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43964   =>   CDf =  0.00471    CDp =  1.43493
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8349E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1356E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1246E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1073E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5762E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 202   rms: 0.6435E+05   max: -.1328E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43964   =>   CDf =  0.00471    CDp =  1.43493
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8395E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1358E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1247E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1074E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5769E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 203   rms: 0.7310E+05   max: -.1495E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43964   =>   CDf =  0.00471    CDp =  1.43493
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8447E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1360E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1249E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1075E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5774E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 204   rms: 0.1019E+06   max: -.2140E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43964   =>   CDf =  0.00471    CDp =  1.43493
+
+ MRCHDU: Convergence failed at 117  side 1    Res =  0.8477E-02
+ MRCHDU: Convergence failed at 118  side 1    Res =  0.1361E+02
+ MRCHDU: Convergence failed at 119  side 1    Res =  0.1250E+02
+ MRCHDU: Convergence failed at 120  side 1    Res =  0.1076E+02
+ MRCHDU: Convergence failed at 121  side 1    Res =  0.5782E+01
+ Side 1  free  transition at x/c =  0.0238   23
+ Side 2 forced transition at x/c =  1.0000  101
+
+ 205   rms: 0.5957E+05   max: -.1210E+07   C at  121  1   RLX: 0.000
+       a = 14.000      CL =  2.4478
+      Cm = -0.4328     CD =  1.43963   =>   CDf =  0.00471    CDp =  1.43492
+ VISCAL:  Convergence failed
+
+ Sequence halted since previous  4 points did not converge
+ Last-converged  alpha =  12.000    CL =   0.95396
+
+.OPERva   c>  
+ Polar accumulation disabled
+
+.OPERv   c>  
+ XFOIL   c>  

@@ -1,0 +1,38 @@
+group,item,qty,unit_usd,line_usd,vendor_source,date_seen,tag
+Propulsion,"SunnySky X3108S KV900 lift motor (4 + 1 spare)",5,24.99,124.95,"SunnySky USA sunnyskyusa.com/products/sunnysky-x3108s-motors (via docs/research/budget-lift.md)",2026-11-01,
+Propulsion,"LANRC BLHeli_S 45A ESC 4-pack (4 lift + pusher + 3 spare)",2,30.00,60.00,"Amazon B0D2HS4Y4J (docs/research/bom-savings.md)",2026-11-01,
+Propulsion,"APC 11x4.5MR / MRP lift prop (4 fitted + 8 spare)",12,3.83,45.96,"APC apcprop.com/product/11x4-5mr (budget-lift.md)",2026-11-01,
+Propulsion,"SunnySky X2814 900KV pusher motor",1,29.99,29.99,"SunnySky USA (cost_model.py P[cruise_S])",2026-11-09,ESTIMATE
+Propulsion,"APC 9x6E pusher prop (1 + 2 spare)",3,4.50,13.50,"APC apcprop.com (price class from cost_model.py)",2026-11-09,ESTIMATE
+Control,"EMAX ES3005HV elevon servo (2 + 1 spare)",3,19.99,59.97,"EMAX USA shop.emax-usa.com/products/es3005hv-high-voltage-servo",2026-11-01,
+Battery,"Ovonic 4S 6500 mAh LiPo (3 flight packs)",3,45.42,136.26,"Ampow Ovonic 2-pack $90.84/2 (cost_model.py; listing OOS 2026-11-09, US price may be $60-78)",2026-11-09,UNVERIFIED
+Avionics,"CoreWing F405 Wing V2 flight controller",1,67.26,67.26,"ReadyMadeRC 85786 (budget-avionics.md)",2026-11-01,
+Avionics,"HGLRC M100-5883 GPS + compass",1,20.49,20.49,"RaceDayQuads (budget-avionics.md)",2026-11-01,
+Avionics,"Holybro MS5525DSO airspeed + pitot (recommended for flying-wing transition)",1,59.99,59.99,"Holybro holybro.com/products/digital-air-speed-sensor-standard",2026-11-01,
+Avionics,"NewBeeDrone BeeID v1.1 Remote ID (CONDITIONAL: only if a non-FRIA site is used)",1,39.99,39.99,"newbeedrone.com (bom-savings.md)",2026-11-01,CONDITIONAL
+Avionics,"RadioMaster Pocket Crush ELRS transmitter",1,64.99,64.99,"RadioMaster radiomasterrc.com/products/pocket-crush-radio-controller",2026-11-01,
+Avionics,"RadioMaster RP3 V2 ELRS receiver",1,19.99,19.99,"RadioMaster radiomasterrc.com/products/rp3-expresslrs-2-4ghz-nano-receiver",2026-11-01,
+Airframe,"Owens Corning FOAMULAR NGX F-250 2 in x 4 x 8 ft (wing, hot-wire)",1,59.97,59.97,"Home Depot El Cerrito 52DDNGX (budget-airframe.md)",2026-11-01,
+Airframe,"FOAMULAR NGX F-150 1 in x 4 x 8 ft (centre body, winglets)",1,30.97,30.97,"Home Depot 20WENGX (budget-airframe.md)",2026-11-01,
+Airframe,"Carbon tube 22 x 20 x 1000 mm (2 booms + 1 spar/joiner)",3,28.32,84.96,"Amazon 'High Strength 3K' (budget-airframe.md; overseas lead time)",2026-11-01,
+Airframe,"SUNLU PETG 4 kg (mounts, saddles, feet, nose)",1,39.99,39.99,"Amazon B0D1KC72YP",2026-11-01,
+Airframe,"Scotch Heavy Duty packing tape 6 rolls (skin)",1,19.98,19.98,"Amazon B000087KUA",2026-11-01,
+Airframe,"Foam-safe glue 4 oz",1,12.99,12.99,"Amazon B0FRM9N2CS",2026-11-01,
+Airframe,"1/8 in birch ply 12 x 24 in (battery tray, hard-point plates)",1,12.00,12.00,"Amazon / local hobby (not checked)",2026-11-09,ESTIMATE
+Hardware,"Wiring + hardware kit (10 AWG, AS150U/XT90, screws, heat-set inserts, horns, pushrods, hinge tape, UBEC, epoxy)",1,124.01,124.01,"budget-airframe.md minimum kit (Amazon lines)",2026-11-01,
+Ground,"HTRC C150 charger (150 W AC)",1,56.99,56.99,"Pyrodrone / Amazon (bom-savings.md)",2026-11-01,
+Ground,"LiPo safety bag",2,9.99,19.98,"Pyrodrone (cost_model.py)",2026-11-01,
+Ground,"Ammo can for LiPo transport (Harbor Freight 63750)",1,19.99,19.99,"Harbor Freight",2026-11-01,
+Ground,"Watt meter 150 A",1,12.99,12.99,"Amazon (cost_model.py)",2026-11-01,
+Ground,"IR thermometer",1,8.98,8.98,"Amazon (cost_model.py)",2026-11-01,
+Ground,"Thrust stand: 20 kg load cell + HX711 + Arduino Nano",1,17.97,17.97,"Amazon (cost_model.py)",2026-11-01,
+Ground,"Pinecil V2 soldering iron + USB-C PD supply",1,45.99,45.99,"Pine64 / Amazon (cost_model.py; supply ESTIMATE $20)",2026-11-01,ESTIMATE
+Ground,"Multimeter",1,25.00,25.00,"any (cost_model.py)",2026-11-01,ESTIMATE
+Ground,"Solder, flux, wick",1,15.00,15.00,"any (cost_model.py)",2026-11-01,ESTIMATE
+Ground,"Hot-wire: NICE-POWER 30 V 10 A supply + Ni80 24 AWG wire",1,41.73,41.73,"Amazon B0CRSS744F + B0CP9V3DBX (bom-savings.md)",2026-11-01,
+Subtotal,"Goods pre-tax",,,1392.83,,,
+Tax,"Berkeley sales tax 10.25 % on goods (CDTFA eff. 2026-10-01, cost_model.py)",,,142.77,,,
+Shipping,"All carriers incl. CF tube delivery and LiPo ground shipping",,,120.00,"cost_model.py SHIPPING[S]",2026-11-09,ESTIMATE
+Total,"Spend at order time",,,1655.60,,,
+Reserve,"Crash reserve = $2,000 - total (planning floor $150; one bad crash ~= $310 with tax, cost_model.py)",,,344.40,,,
+Check,"Without the conditional Remote ID module",,,1611.51,"reserve 388.49",,

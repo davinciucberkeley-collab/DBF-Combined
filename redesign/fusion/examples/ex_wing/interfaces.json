@@ -1,0 +1,26 @@
+{
+ "schema": "dbf-interfaces/1",
+ "subsystem": "ex_wing",
+ "parts": [
+  {"id": "WNG-001", "name": "Wing panel L", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 220, "material": "XPS foam + tape skin", "cg_xyz_m": [0.243, -0.33, 0.072], "make_or_buy": "make"},
+  {"id": "WNG-002", "name": "Wing panel R", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 220, "material": "XPS foam + tape skin", "cg_xyz_m": [0.243, 0.33, 0.072], "make_or_buy": "make"},
+  {"id": "WNG-003", "name": "Spar tube 12x10", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 60, "material": "CF tube (bought)", "cg_xyz_m": [0.212, 0.0, 0.066], "make_or_buy": "buy"},
+  {"id": "WNG-004", "name": "Aileron L", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 30, "material": "XPS foam + tape skin", "cg_xyz_m": [0.36, -0.375, 0.07], "make_or_buy": "make"},
+  {"id": "WNG-005", "name": "Aileron servo L", "subsystem": "ex_wing", "status": "MODELLED", "mass_g": 20, "material": "servo (bought)", "cg_xyz_m": [0.28, -0.32, 0.071], "make_or_buy": "buy", "electrical": "sink"}
+ ],
+ "edges": [
+  {"id": "E-WNG-01", "part_a": "WNG-003", "part_b": "FUS-001", "via": "CT-M4-SHCS-NYLOC", "owner": "ex_wing", "notes": "spar saddle on fuselage top; the one transport joint",
+   "joint_stack": {"fastener": "M4x30 SHCS", "count": 2, "grade": "A2-70", "hole": "4.5 mm clearance through saddle and spar", "insert": "none",
+    "engagement_mm": 6.0, "min_engagement_mm": 4.0, "washer_nut": "M4 washer + M4 nyloc (2 full threads proud)",
+    "torque": "1.0 N m (check tube crush)", "tool": "3 mm hex key + 7 mm spanner", "access": "from above (+z), nut inside fuselage",
+    "install_order": 1, "removal_order": 1}},
+  {"id": "E-WNG-02", "part_a": "WNG-001", "part_b": "WNG-003", "via": "CT-EPOXY", "owner": "ex_wing", "notes": "spar bonded in panel bore"},
+  {"id": "E-WNG-03", "part_a": "WNG-002", "part_b": "WNG-003", "via": "CT-EPOXY", "owner": "ex_wing", "notes": "spar bonded in panel bore"},
+  {"id": "E-WNG-04", "part_a": "WNG-004", "part_b": "WNG-001", "via": "CT-TAPE-HINGE", "owner": "ex_wing", "notes": "", "motion": {"axis": "Y", "range_deg": [-25, 25]}},
+  {"id": "E-WNG-05", "part_a": "WNG-005", "part_b": "WNG-001", "via": "CT-M2-SCREW-PLASTIC", "owner": "ex_wing", "notes": "servo in foam pocket on a printed frame",
+   "joint_stack": {"fastener": "M2x8 pan self-tapping", "count": 2, "grade": "steel, zinc", "hole": "1.6 mm pilot in printed frame", "insert": "none",
+    "engagement_mm": 5.0, "min_engagement_mm": 3.0, "washer_nut": "servo grommets", "torque": "snug", "tool": "PH0 screwdriver",
+    "access": "from below (-z) through the servo hatch", "install_order": 3, "removal_order": 2}}
+ ],
+ "acknowledges": ["E-FUS-06", "E-BMS-01", "E-BMS-02"]
+}

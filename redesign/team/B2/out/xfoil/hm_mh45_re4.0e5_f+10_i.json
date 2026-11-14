@@ -1,0 +1,1 @@
+{"key": "mh45 Re=400000 flap=10.0 visc=False xh=0.7800 yt=0.9 npan=220 a=[-4.0, -2.0, 0.0, 2.0, 4.0, 6.0, 8.0]", "alpha": [-4.0, -2.0, 0.0, 2.0, 4.0, 6.0, 8.0], "hmom_qc2": [0.001989, 0.002725, 0.003451, 0.004164, 0.00486, 0.005536, 0.006189], "cl": [NaN, NaN, NaN, NaN, NaN, NaN, NaN], "converged": [true, true, true, true, true, true, true]}

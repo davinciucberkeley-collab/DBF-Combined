@@ -1,0 +1,801 @@
+{
+ "_note": "Mechanisms subsystem (MEC) local numbers, owner D6, revision D6-R2 (2026-11-09; R1 the same day). Read by fusion/mechanisms.py (ctx.local), make_mechanisms.py and team/D6/mech_calcs.py (P:mec.*). Shared numbers (hinge line, chord, elevon spans and travel, fin plane and thickness, VD, torque factor) come from params/params.json and are not repeated. Frame: params.json#frame (x aft, y right, z up, metres). Stations are given for the RIGHT side; the left side is the exact mirror through DP-SYM. Horn and arm outlines are in mm in the hinge frame: X aft from the hinge line, Z up from the hinge axis (upper skin at the hinge).",
+ "mec": {
+  "servo": {
+   "model": {
+    "value": "Savox SH-0255MG+ (micro, metal gear, aluminium case, 6.0 V)",
+    "unit": "-",
+    "source": "SRC-D6-SH0255",
+    "status": "PROPOSED",
+    "note": "one per side drives both panels of that side (params wing.elevon.panels_per_side 2). Fallback EMAX ES3054 (3.5 kgf cm, 17-20 g) only if F4's envelope (CR-F4-12) is accepted as the VD case"
+   },
+   "case_m": {
+    "value": [
+     0.0228,
+     0.012,
+     0.0254
+    ],
+    "unit": "m",
+    "source": "SRC-D6-SH0255",
+    "status": "UNVERIFIED",
+    "note": "L along x, W along z, case height along y (spline boss excluded; listing H 29.4 mm includes it). Measure one servo"
+   },
+   "spline_boss_m": {
+    "value": 0.004,
+    "unit": "m",
+    "source": "SRC-D6-SH0255",
+    "status": "UNVERIFIED",
+    "note": "29.4 - 25.4 mm"
+   },
+   "ear_span_m": {
+    "value": 0.0325,
+    "unit": "m",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED",
+    "note": "tip to tip of the mounting ears along x; measure"
+   },
+   "ear_t_m": {
+    "value": 0.0025,
+    "unit": "m",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED"
+   },
+   "ear_y_from_base_m": {
+    "value": 0.017,
+    "unit": "m",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED",
+    "note": "ear plane height from the case base (along y)"
+   },
+   "shaft_from_aft_end_m": {
+    "value": 0.0062,
+    "unit": "m",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED",
+    "note": "output shaft centre from the case end nearest the hinge; shaft on the case mid-width"
+   },
+   "mass_g": {
+    "value": 15.8,
+    "unit": "g",
+    "source": "SRC-D6-SH0255",
+    "status": "UNVERIFIED",
+    "note": "listing 15.8 g, distributor sheet 16 g; with its own 150 mm lead; weigh (T-D6-WEIGH)"
+   },
+   "stall_torque_6v_kgfcm": {
+    "value": 3.9,
+    "unit": "kgf*cm",
+    "source": "SRC-D6-SH0255",
+    "status": "UNVERIFIED",
+    "note": "rated stall at 6.0 V; the UBEC rail is 6 V (F1), 5.75 V at the servo with both stalled (CL-F2-SERVO-V)"
+   },
+   "stall_torque_48v_kgfcm": {
+    "value": 3.1,
+    "unit": "kgf*cm",
+    "source": "SRC-D6-SH0255",
+    "status": "UNVERIFIED"
+   },
+   "stall_current_6v_a": {
+    "value": 1.4,
+    "unit": "A",
+    "source": "SRC-D6-SH0255-STALL",
+    "status": "UNVERIFIED",
+    "note": "retailer sheet, 1.2 A at 4.8 V; F1 bench T-F1-SERVO-STALL"
+   },
+   "throw_deg": {
+    "value": 45.0,
+    "unit": "deg",
+    "source": "ASM-D6-SERVO-THROW",
+    "status": "UNVERIFIED",
+    "note": "+/- output angle at 1000 / 2000 us; the linkage needs <= this for +/-25 deg surface (bench T-D6-THROW)"
+   },
+   "backlash_deg": {
+    "value": 1.0,
+    "unit": "deg",
+    "source": "ASM-D6-BACKLASH",
+    "status": "UNVERIFIED",
+    "note": "free play at the output spline, metal-gear micro servo, worst new"
+   },
+   "unit_cost_usd": {
+    "value": 41.99,
+    "unit": "USD",
+    "source": "SRC-D6-SH0255-PRICE",
+    "status": "UNVERIFIED"
+   }
+  },
+  "station": {
+   "shaft_x_m": {
+    "value": 0.195,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "servo shaft 54.6 mm ahead of the hinge; case x 0.178-0.201 where the core is 20.4-24.2 mm deep (12 mm servo + >= 6 mm foam above)"
+   },
+   "shaft_above_skin_m": {
+    "value": 0.006,
+    "unit": "m",
+    "source": "SRC-D6-SH0255",
+    "status": "UNVERIFIED",
+    "note": "case base flush with the lower skin; shaft on the case mid-width (W/2)"
+   },
+   "arm_plane_y_m": {
+    "value": 0.285,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "servo arm, pushrod and inboard horn share this plane: straight pushrod along x; 15 mm inboard of the inboard panel end (0.30)"
+   },
+   "outboard_horn_y_m": {
+    "value": 0.355,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "15 mm outboard of the outboard panel start (0.34)"
+   }
+  },
+  "arm": {
+   "r_m": {
+    "value": 0.0156,
+    "unit": "m",
+    "source": "team/D6/mech_calcs.py#CALC-D6-KIN",
+    "status": "PROPOSED",
+    "note": "0.61 x horn radius: +/-25 deg surface at about +/-44 deg servo; hole drilled 1.6 mm in the supplied single arm at 15.6 mm"
+   },
+   "t_m": {
+    "value": 0.0025,
+    "unit": "m",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED"
+   },
+   "w_m": {
+    "value": 0.006,
+    "unit": "m",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED"
+   },
+   "mass_g": {
+    "value": 0.6,
+    "unit": "g",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED",
+    "note": "supplied with the servo; counted here as its own part"
+   }
+  },
+  "horn": {
+   "r_m": {
+    "value": 0.0255,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "clevis pin hole straight below the hinge axis; 16 mm below the lower skin at the hinge so the 4 mm clevis clears the rod boss by >= 1 mm through the travel"
+   },
+   "bridge_r_m": {
+    "value": 0.0165,
+    "unit": "m",
+    "source": "team/D6/mech_calcs.py#CALC-D6-CLEAR",
+    "status": "PROPOSED",
+    "note": "inter-panel rod centre below the hinge axis; feasible band 13.8-18.9 mm in D3's 24 x 12 mm notch; 16.5 centres the sweep"
+   },
+   "plate_t_m": {
+    "value": 0.0024,
+    "unit": "m",
+    "source": "G3 practice",
+    "status": "PROPOSED",
+    "note": "6 perimeters at 0.4 mm, 100 % infill, PETG; slot cut 2.5 mm through the panel"
+   },
+   "outline_mm": {
+    "value": [
+     [
+      30.0,
+      -8.0
+     ],
+     [
+      8.0,
+      -9.2
+     ],
+     [
+      1.5,
+      -13.0
+     ],
+     [
+      -4.0,
+      -15.5
+     ],
+     [
+      -4.0,
+      -19.0
+     ],
+     [
+      -2.2,
+      -22.0
+     ],
+     [
+      -3.0,
+      -28.0
+     ],
+     [
+      -2.0,
+      -29.0
+     ],
+     [
+      4.0,
+      -29.0
+     ],
+     [
+      30.0,
+      -11.5
+     ]
+    ],
+    "unit": "mm",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "arm below the panel in the hinge frame (X aft, Z up from the hinge axis), closed polygon; the in-panel blade is added from the section"
+   },
+   "blade_x_mm": {
+    "value": [
+     0.0,
+     40.0
+    ],
+    "unit": "mm",
+    "source": "D6 choice; params/CHANGE-LOG.md#D-82 (front 6 -> 0 mm)",
+    "status": "PROPOSED",
+    "note": "in-panel blade, skin to skin. D-82: the front edge follows the panel's lower bevel (subsystems/wing/params.json#elevon.bevel_deg) shifted aft by blade_bevel_gap_m, never ahead of xh + blade_x[0]; the wing's horn slot opens from the hinge line. With the old vertical front at 6 mm the 5 mm torque-tube bore (front 5.0 mm aft of the hinge) broke out of the blade edge"
+   },
+   "blade_bevel_gap_m": {
+    "value": 0.0002,
+    "unit": "m",
+    "source": "params/CHANGE-LOG.md#D-82; G3 practice (print clearance)",
+    "status": "PROPOSED",
+    "note": "blade front edge this far aft of the panel bevel line, so the blade never sits ahead of the panel it replaces (same TE-down clearance as the panel); leaves >= 1.2 mm of blade wall ahead of the torque-tube bore"
+   },
+   "flange_mm": {
+    "value": [
+     8.0,
+     38.0,
+     14.0,
+     1.2
+    ],
+    "unit": "mm",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "lower flange: X from, X to, width along y, thickness; bonded to bare foam (tape cut back). D6-R2: width 20 -> 14 mm (bond area still >= C6 minimum)"
+   },
+   "backplate_mm": {
+    "value": [
+     14.0,
+     38.0,
+     12.0,
+     1.0
+    ],
+    "unit": "mm",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "upper backplate, 1.5 mm aft of the 25 mm hinge tape; bonded to bare foam. D6-R2: width 16 -> 12 mm"
+   },
+   "boss_od_m": {
+    "value": 0.007,
+    "unit": "m",
+    "source": "G3 practice",
+    "status": "PROPOSED"
+   },
+   "boss_len_m": {
+    "value": 0.01,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "on the face toward the fin; the link rod is bonded over this length (fixed end)"
+   },
+   "pin_hole_d_m": {
+    "value": 0.0016,
+    "unit": "m",
+    "source": "SRC-D6-CLEVIS",
+    "status": "UNVERIFIED",
+    "note": "printed 1.4, drilled to the clevis pin"
+   },
+   "bore_d_m": {
+    "value": 0.0033,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "3.175 mm rod + 0.06 mm epoxy each side"
+   }
+  },
+  "link": {
+   "d_m": {
+    "value": 0.003175,
+    "unit": "m",
+    "source": "SRC-D6-CFROD",
+    "status": "PROPOSED",
+    "note": "1/8 in (3.18 mm) pultruded unidirectional CF rod (D6-R2, was 1/8 in music wire: -6.6 g); a 3.0 mm metric rod also fits the 3.3 mm bore (loss 8.3 %)"
+   },
+   "e_pa": {
+    "value": 110000000000.0,
+    "unit": "Pa",
+    "source": "SRC-D6-CFROD",
+    "status": "UNVERIFIED",
+    "note": "longitudinal modulus of pultruded CF rod, low end (makers list 120-140 GPa); T-D6-TWIST measures the lag"
+   },
+   "steel_gcc": {
+    "value": 7.85,
+    "unit": "g/cm3",
+    "source": "SRC-D6-WIRE",
+    "status": "PROPOSED",
+    "note": "music wire / 2-56 steel rod density: used for the pushrod MEC-003"
+   },
+   "rod_gcc": {
+    "value": 1.6,
+    "unit": "g/cm3",
+    "source": "SRC-D6-CFROD",
+    "status": "UNVERIFIED",
+    "note": "pultruded CF rod, 60 % fibre"
+   },
+   "trade_d_e": {
+    "value": [
+     [
+      0.002381,
+      200000000000.0
+     ],
+     [
+      0.002,
+      110000000000.0
+     ],
+     [
+      0.003175,
+      200000000000.0
+     ]
+    ],
+    "unit": "m, Pa",
+    "source": "SRC-D6-WIRE, SRC-D6-CFROD",
+    "status": "PROPOSED",
+    "note": "rods considered for MEC-005 (D6-R2 trade, CALC-D6-ROD-TRADE): 3/32 in music wire (A1 D-48 fallback), 2 mm CF rod (A3 suggestion), 1/8 in music wire (R1)"
+   }
+  },
+  "pushrod": {
+   "d_m": {
+    "value": 0.00183,
+    "unit": "m",
+    "source": "SRC-D6-CLEVIS",
+    "status": "UNVERIFIED",
+    "note": "2-56 threaded-end steel rod (0.072 in); Z-bend at the servo arm, steel 2-56 clevis + silicone keeper at the horn"
+   },
+   "clevis_mm": {
+    "value": [
+     14.0,
+     4.8,
+     4.0,
+     5.0
+    ],
+    "unit": "mm",
+    "source": "SRC-D6-CLEVIS",
+    "status": "UNVERIFIED",
+    "note": "length from the pin along the rod, width across the jaws (y), height (in the x-z plane), slot depth from the pin; measure the delivered clevis"
+   },
+   "clevis_g": {
+    "value": 0.7,
+    "unit": "g",
+    "source": "SRC-D6-CLEVIS",
+    "status": "UNVERIFIED"
+   },
+   "hole_play_mm": {
+    "value": [
+     0.05,
+     0.05
+    ],
+    "unit": "mm",
+    "source": "ASM-D6-HOLE-PLAY",
+    "status": "PROPOSED",
+    "note": "diametral play: Z-bend in the arm hole drilled 1.6 mm with a pin vise, clevis pin in the drilled horn hole"
+   },
+   "e_pa": {
+    "value": 200000000000.0,
+    "unit": "Pa",
+    "source": "SRC-D6-WIRE",
+    "status": "PROPOSED",
+    "note": "2-56 steel rod (was read from mec.link.e_pa until D6-R2 made the link CF)"
+   }
+  },
+  "tube": {
+   "od_id_m": {
+    "value": [
+     0.005,
+     0.004
+    ],
+    "unit": "m",
+    "source": "SRC-D6-CFTUBE",
+    "status": "UNVERIFIED",
+    "note": "roll-wrapped CF tube 5 x 4 mm, one per panel along the panel LE; inboard tube shortened (cover_frac)"
+   },
+   "x_aft_of_hinge_m": {
+    "value": 0.0075,
+    "unit": "m",
+    "source": "team/D6/mech_calcs.py#CALC-D6-CLEAR",
+    "status": "PROPOSED",
+    "note": "front of the tube 1 mm aft of D1's 30 deg bevel line (wing/params.json#elevon.bevel_deg) at the tube's lower edge; tube on the local mid-thickness (cover about 1.5 mm)"
+   },
+   "end_inset_m": {
+    "value": 0.005,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED"
+   },
+   "g_pa": {
+    "value": 5000000000.0,
+    "unit": "Pa",
+    "source": "ASM-D6-TUBE-G",
+    "status": "UNVERIFIED",
+    "note": "in-plane shear modulus, 0/90 roll-wrapped (low end; +/-45 tubes reach 20 GPa); T-D6-TWIST measures panel twist"
+   },
+   "cf_gcc": {
+    "value": 1.55,
+    "unit": "g/cm3",
+    "source": "SRC-D6-CFTUBE",
+    "status": "PROPOSED"
+   },
+   "fill_g_per_m": {
+    "value": 3.0,
+    "unit": "g/m",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED",
+    "note": "epoxy + microballoon fill of the routed groove"
+   },
+   "cover_frac": {
+    "value": [
+     0.7,
+     1.0
+    ],
+    "unit": "-",
+    "source": "team/D6/mech_calcs.py#CALC-D6-BRIDGE",
+    "status": "PROPOSED",
+    "note": "fraction of the drive-to-far-end length the tube covers, [inboard, outboard] panel, measured from the horn. Inboard tube runs 0.150 m inboard of the horn (|y| 0.135-0.295, 160 mm with the 10 mm past the horn): the torque near the far end is small (loss 6.8 -> 7.1 %). Outboard tube kept full length: wing tip, ground handling, tip stiffness"
+   }
+  },
+  "panel": {
+   "foam_g_pa": {
+    "value": 8000000.0,
+    "unit": "Pa",
+    "source": "ASM-D6-XPS-G",
+    "status": "UNVERIFIED",
+    "note": "XPS F-250 shear modulus, mid of 5-12 MPa published range for 25-35 kg/m3 XPS"
+   },
+   "skin_t_m": {
+    "value": 5e-05,
+    "unit": "m",
+    "source": "params.json#wing.skin",
+    "status": "UNVERIFIED",
+    "note": "one layer of packing tape; the panel skin is closed into a torsion box by taping the LE bevel face (BUILD step)"
+   },
+   "skin_g_eff_pa": {
+    "value": 500000000.0,
+    "unit": "Pa",
+    "source": "ASM-D6-TAPE-G",
+    "status": "UNVERIFIED",
+    "note": "BOPP G about 1 GPa, 50 % credit for adhesive shear lag and overlaps"
+   }
+  },
+  "frame": {
+   "wall_m": {
+    "value": 0.0012,
+    "unit": "m",
+    "source": "G3 practice",
+    "status": "PROPOSED",
+    "note": "3 perimeters, PETG"
+   },
+   "clear_m": {
+    "value": 0.0003,
+    "unit": "m",
+    "source": "G3 practice",
+    "status": "PROPOSED",
+    "note": "servo case to frame wall, each side"
+   },
+   "ear_slot_clear_m": {
+    "value": 0.0002,
+    "unit": "m",
+    "source": "G3 practice",
+    "status": "PROPOSED"
+   },
+   "window_rim_m": {
+    "value": 0.004,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "D6-R2: the frame top plate is a 4 mm rim with a window over the servo case (-0.9 g per frame); the case bears on the rim, the bond area stays >= the C6 minimum (CL-D6-BOND-FRAME)"
+   }
+  },
+  "cover": {
+   "t_m": {
+    "value": 0.0008,
+    "unit": "m",
+    "source": "G3 practice",
+    "status": "PROPOSED",
+    "note": "printed PETG, 2 perimeters"
+   },
+   "lip_m": {
+    "value": 0.004,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "cover overlap on the frame flange each side"
+   },
+   "screw": {
+    "value": "M2 x 6 self-tapping, pan head (2 per cover)",
+    "unit": "-",
+    "source": "team/C6/JOINTS.md (M2 only as servo-class screws)",
+    "status": "PROPOSED"
+   }
+  },
+  "tape": {
+   "width_m": {
+    "value": 0.025,
+    "unit": "m",
+    "source": "D6 choice",
+    "status": "PROPOSED",
+    "note": "one strip per panel on the upper skin, centred on the hinge line"
+   },
+   "areal_kgm2": {
+    "value": 0.05,
+    "unit": "kg/m2",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED",
+    "note": "one layer of 50 um BOPP packing tape with adhesive"
+   }
+  },
+  "print": {
+   "petg_gcc": {
+    "value": 1.27,
+    "unit": "g/cm3",
+    "source": "SRC-D6-PETG",
+    "status": "PROPOSED"
+   },
+   "fill": {
+    "value": 0.9,
+    "unit": "-",
+    "source": "G3 practice",
+    "status": "PROPOSED",
+    "note": "thin parts print almost solid (perimeters dominate)"
+   },
+   "bond_g": {
+    "value": 0.3,
+    "unit": "g",
+    "source": "D6 estimate",
+    "status": "UNVERIFIED",
+    "note": "epoxy per bonded printed part"
+   }
+  },
+  "clear_min_m": {
+   "value": 0.001,
+   "unit": "m",
+   "source": "ASM-D6-CLEAR-MIN",
+   "status": "PROPOSED",
+   "note": "minimum gap through full mechanical travel"
+  },
+  "slop_max_deg": {
+   "value": 1.0,
+   "unit": "deg",
+   "source": "ASM-D6-SLOP-MAX",
+   "status": "PROPOSED",
+   "note": "surface free play, worst-case sum, new parts"
+  },
+  "mech_stop_deg": {
+   "value": 30.0,
+   "unit": "deg",
+   "source": "D6 choice",
+   "status": "PROPOSED",
+   "note": "mechanical stops 5 deg beyond wing.elevon.deflection_deg: TE down = D1's 30 deg panel bevel on the core TE face (wing/params.json#elevon.bevel_deg), TE up = the arm on the cover slot end"
+  },
+  "section": {
+   "x_m": {
+    "value": [
+     0.17,
+     0.1725,
+     0.175,
+     0.1775,
+     0.18,
+     0.1825,
+     0.185,
+     0.1875,
+     0.19,
+     0.1925,
+     0.195,
+     0.1975,
+     0.2,
+     0.2025,
+     0.205,
+     0.2075,
+     0.21,
+     0.2125,
+     0.215,
+     0.2175,
+     0.22,
+     0.2225,
+     0.225,
+     0.2275,
+     0.23,
+     0.2325,
+     0.235,
+     0.2375,
+     0.24,
+     0.2425,
+     0.245,
+     0.2475,
+     0.25,
+     0.2525,
+     0.255,
+     0.2575,
+     0.26,
+     0.2625,
+     0.265,
+     0.2675,
+     0.27,
+     0.2725,
+     0.275,
+     0.2775,
+     0.28,
+     0.2825,
+     0.285,
+     0.2875,
+     0.29,
+     0.2925,
+     0.295,
+     0.2975,
+     0.3,
+     0.3025,
+     0.305,
+     0.3075,
+     0.31,
+     0.3125,
+     0.315,
+     0.3175,
+     0.32
+    ],
+    "unit": "m",
+    "source": "k09kit.surface_z",
+    "status": "CHECKED",
+    "note": "GENERATED by make_mechanisms.py from k09kit.surface_z (subsystems/wing/s5010.dat, chord wing.chord_m)"
+   },
+   "zu_m": {
+    "value": [
+     0.016916,
+     0.016594,
+     0.016271,
+     0.015948,
+     0.015625,
+     0.015274,
+     0.014921,
+     0.014568,
+     0.014215,
+     0.013862,
+     0.01351,
+     0.013149,
+     0.012779,
+     0.012409,
+     0.012039,
+     0.011669,
+     0.011299,
+     0.010929,
+     0.010558,
+     0.010187,
+     0.009816,
+     0.009445,
+     0.009073,
+     0.008702,
+     0.008342,
+     0.007985,
+     0.007629,
+     0.007272,
+     0.006916,
+     0.006559,
+     0.006218,
+     0.005886,
+     0.005554,
+     0.005222,
+     0.00489,
+     0.004565,
+     0.004273,
+     0.003986,
+     0.0037,
+     0.003414,
+     0.003128,
+     0.002861,
+     0.00262,
+     0.00238,
+     0.00214,
+     0.0019,
+     0.001689,
+     0.001509,
+     0.001328,
+     0.001147,
+     0.000977,
+     0.000858,
+     0.000739,
+     0.00062,
+     0.00053,
+     0.000461,
+     0.000392,
+     0.000348,
+     0.000315,
+     0.000301,
+     0.0003
+    ],
+    "unit": "m",
+    "source": "k09kit.surface_z",
+    "status": "CHECKED",
+    "note": "GENERATED by make_mechanisms.py from k09kit.surface_z (subsystems/wing/s5010.dat, chord wing.chord_m)"
+   },
+   "zl_m": {
+    "value": [
+     -0.007052,
+     -0.006967,
+     -0.006883,
+     -0.006798,
+     -0.006713,
+     -0.006628,
+     -0.006544,
+     -0.006453,
+     -0.006361,
+     -0.006268,
+     -0.006176,
+     -0.006084,
+     -0.005991,
+     -0.005898,
+     -0.005799,
+     -0.005701,
+     -0.005602,
+     -0.005503,
+     -0.005404,
+     -0.005305,
+     -0.005204,
+     -0.0051,
+     -0.004997,
+     -0.004893,
+     -0.00479,
+     -0.004686,
+     -0.004581,
+     -0.004473,
+     -0.004365,
+     -0.004256,
+     -0.004148,
+     -0.00404,
+     -0.00393,
+     -0.003817,
+     -0.003704,
+     -0.003599,
+     -0.003498,
+     -0.003397,
+     -0.003292,
+     -0.003187,
+     -0.003081,
+     -0.002976,
+     -0.002871,
+     -0.00276,
+     -0.002648,
+     -0.002536,
+     -0.002424,
+     -0.002308,
+     -0.002186,
+     -0.002063,
+     -0.001941,
+     -0.001808,
+     -0.001663,
+     -0.001519,
+     -0.001368,
+     -0.00119,
+     -0.001013,
+     -0.000827,
+     -0.000635,
+     -0.000456,
+     -0.0003
+    ],
+    "unit": "m",
+    "source": "k09kit.surface_z",
+    "status": "CHECKED",
+    "note": "GENERATED by make_mechanisms.py from k09kit.surface_z (subsystems/wing/s5010.dat, chord wing.chord_m)"
+   }
+  },
+  "mass_total_g": {
+   "value": 72.6,
+   "unit": "g",
+   "source": "subsystems/mechanisms/make_mechanisms.py",
+   "status": "UNVERIFIED",
+   "note": "GENERATED: sum of the 22 declared part masses (EST until weighed, T-D6-WEIGH)"
+  }
+ }
+}

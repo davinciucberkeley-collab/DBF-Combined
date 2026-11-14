@@ -1,0 +1,2693 @@
+{
+ "schema": "proofs/1",
+ "generated_by": "redesign/team/H1/ground_tests.py",
+ "params": [
+  "../../params/params.json"
+ ],
+ "nodes": [
+  {
+   "id": "SRC-H1-HX711",
+   "type": "source",
+   "title": "Avia Semiconductor HX711 24-bit load-cell ADC datasheet",
+   "kind": "datasheet",
+   "url": "https://cdn.sparkfun.com/datasheets/Sensors/ForceFlex/hx711_english.pdf",
+   "where": "p.1-2: 10/80 SPS, gain 128 = +/-20 mV full scale; noise is set by the cell and wiring, so the 1 g (20 kg cell) and 0.5 g (1 kg cell) noise used here are assumptions confirmed by T-H1-STAND-CAL",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-H1-ELRS-RANGE",
+   "type": "source",
+   "title": "ExpressLRS: range and power settings (pre-flight range check at reduced power)",
+   "kind": "web",
+   "url": "https://www.expresslrs.org/quick-start/transmitters/tx-prep/",
+   "where": "power levels 10-250 mW selectable in the Lua script; LQ shown in telemetry",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "SRC-H1-COMPASSMOT",
+   "type": "source",
+   "title": "ArduPilot: compass-motor calibration (compassmot)",
+   "kind": "web",
+   "url": "https://ardupilot.org/copter/docs/common-compass-setup-advanced.html#compassmot-compensation-for-interference-from-the-power-wires-escs-and-motors",
+   "where": "interference < 30 % acceptable, 31-60 % grey zone, > 60 % unacceptable",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-H1-THRUST-CELL",
+   "type": "assumption",
+   "title": "Thrust cell 20 kgf bar cell + HX711",
+   "text": "Bar load cell rated 20 kgf on the thrust axis, read by an HX711 at 80 SPS; noise +/-1 gf after averaging 8 samples.",
+   "basis": "E1 CR-E1-11 asks for a 20 kg cell + HX711; 1 gf noise is typical of a shielded 20 kg bar cell",
+   "value": {
+    "cap_kgf": 20.0,
+    "noise_gf": 1.0
+   },
+   "unit": "kgf,gf",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-H1-HX711"
+   ]
+  },
+  {
+   "id": "ASM-H1-TORQUE-CELL",
+   "type": "assumption",
+   "title": "Torque cell 1 kgf bar cell at 100 mm arm",
+   "text": "Motor mount on a bearing axle coaxial with the shaft; reaction torque restrained by an arm of 0.100 m pressing a 1 kgf bar cell (second HX711); noise +/-0.5 gf.",
+   "basis": "B4 CR-B4-09 asks for a torque cell; a lever on a bar cell is the cheapest stand design that separates torque from thrust",
+   "value": {
+    "cap_kgf": 1.0,
+    "arm_m": 0.1,
+    "noise_gf": 0.5
+   },
+   "unit": "kgf,m,gf",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-H1-HX711"
+   ]
+  },
+  {
+   "id": "ASM-H1-RANGE-FACTOR",
+   "type": "assumption",
+   "title": "Cell range >= 1.25 x the largest expected load",
+   "text": "Each cell's rated capacity covers 1.25 x the peak load it should see, so an over-prediction of 25 % does not overload it.",
+   "basis": "common instrumentation practice (load at <= 80 % of rated capacity)",
+   "value": 1.25,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-SCALE",
+   "type": "assumption",
+   "title": "Two 5 kg x 1 g scales, 0.1 % after calibration",
+   "text": "Two identical kitchen/shipping scales, 5 kg capacity, 1 g display step, calibrated against a 2.000 kg check mass (water in a sealed bottle weighed on the Jacobs lab balance) to +/-0.1 % of reading.",
+   "basis": "1 g step is what A1 (T-A1-WEIGH) and A3 (T-A3-WEIGH-PARTS) specify; 0.1 % after a check-mass calibration is conservative for strain-gauge scales",
+   "value": {
+    "res_g": 1.0,
+    "cal_frac": 0.001
+   },
+   "unit": "g,-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-H1-CG-JIG",
+   "type": "assumption",
+   "title": "CG jig: two pin pairs 0.220 m apart in x",
+   "text": "Two bridges, one per scale, each with two padded pins under the wing outboard of the fins (|y| = 0.45 m): front pins at x = 0.010 m, rear pins at x = 0.230 m (ahead of the elevon hinge). Pin x set with a steel rule and square to +/-0.5 mm.",
+   "basis": "the lower half-fins and lower motors block any support inboard of |y| 0.34 m; the rear pins must stay off the elevons (hinge x 0.2496 m)",
+   "value": {
+    "x1_m": 0.01,
+    "x2_m": 0.23,
+    "pos_tol_m": 0.0005
+   },
+   "unit": "m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-RESTRAINT-SF",
+   "type": "assumption",
+   "title": "Tie-down factor 2.0",
+   "text": "The restrained-frame run (four motors, props on) is tied down for 2.0 x the net upward force if the limiter fails and all four motors reach C1's limit thrust.",
+   "basis": "props-on bench runs are the highest-energy ground test; 2.0 covers a snatch load on a slack strap",
+   "value": 2.0,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-ESC-BURST",
+   "type": "assumption",
+   "title": "ESC 55 A for 10 s",
+   "text": "LANRC BLHeli_S 45 A ESC burst rating 55 A for 10 s; a full-throttle step on the stand is held <= 2 s.",
+   "basis": "params.json#propulsion.esc listing text",
+   "value": 55.0,
+   "unit": "A",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-LANRC-45A"
+   ]
+  },
+  {
+   "id": "ASM-H1-RES-MAX",
+   "type": "assumption",
+   "title": "Thrust and torque resolution <= 0.5 % / 2 % of hover",
+   "text": "The A/B prop comparison must resolve B1's 1.9 % hover-power difference (CL-B1-HOVER-PROP-RATIO 1.019): thrust noise <= 0.5 % of hover thrust, torque noise <= 2 % of hover torque.",
+   "basis": "resolution 4 x finer than the difference to detect",
+   "value": {
+    "thrust": 0.005,
+    "torque": 0.02
+   },
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-H1-STAND",
+   "type": "calculation",
+   "title": "stand range",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "stand_range",
+   "equation": "F_req = k T_lim / g ; Ftq_req = k Q_lim / (arm g) ; res_T = noise_T / (T_h/g) ; res_Q = noise_Q g arm / Q_h",
+   "inputs": {
+    "t_lim": "CL-C1-T-LIMIT",
+    "q_lim": "CL-C1-MOTOR-TORQUE",
+    "t_hover": "CL-B4-HOVER-T",
+    "q_hover": "CL-B4-HOVER-Q",
+    "k": "ASM-H1-RANGE-FACTOR",
+    "cell": "ASM-H1-THRUST-CELL",
+    "tq": "ASM-H1-TORQUE-CELL",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "g": "m/s2"
+   },
+   "outputs": {
+    "thrust_cap_req_kgf": 2.689501511729286,
+    "torque_cell_req_kgf": 0.5358339917253988,
+    "thrust_res_frac": 0.001440560452309611,
+    "torque_res_frac": 0.0043130410887825075,
+    "torque_force_hover_gf": 115.92748358006969
+   },
+   "input_values": {
+    "t_lim": 21.1,
+    "q_lim": 0.42037891319631054,
+    "t_hover": 6.807524102357015,
+    "q_hover": 0.11368602568504906,
+    "k": 1.25,
+    "cell": {
+     "cap_kgf": 20.0,
+     "noise_gf": 1.0
+    },
+    "tq": {
+     "cap_kgf": 1.0,
+     "arm_m": 0.1,
+     "noise_gf": 0.5
+    },
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CALC-H1-LIMITS",
+   "type": "calculation",
+   "title": "rig limits",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "rig_limits",
+   "equation": "limits read from the rig assumptions",
+   "inputs": {
+    "cell": "ASM-H1-THRUST-CELL",
+    "tq": "ASM-H1-TORQUE-CELL",
+    "res": "ASM-H1-RES-MAX"
+   },
+   "outputs": {
+    "thrust_cap_kgf": 20.0,
+    "torque_cap_kgf": 1.0,
+    "thrust_res_max": 0.005,
+    "torque_res_max": 0.02
+   },
+   "input_values": {
+    "cell": {
+     "cap_kgf": 20.0,
+     "noise_gf": 1.0
+    },
+    "tq": {
+     "cap_kgf": 1.0,
+     "arm_m": 0.1,
+     "noise_gf": 0.5
+    },
+    "res": {
+     "thrust": 0.005,
+     "torque": 0.02
+    }
+   }
+  },
+  {
+   "id": "CL-H1-THRUST-CAP",
+   "type": "claim",
+   "title": "Thrust cell rating",
+   "calc": "CALC-H1-LIMITS",
+   "output": "thrust_cap_kgf",
+   "unit": "kgf",
+   "how": "Cell label and calibration T-H1-STAND-CAL.",
+   "value": 20.0
+  },
+  {
+   "id": "CL-H1-TORQUE-CAP",
+   "type": "claim",
+   "title": "Torque cell rating",
+   "calc": "CALC-H1-LIMITS",
+   "output": "torque_cap_kgf",
+   "unit": "kgf",
+   "how": "Cell label and calibration T-H1-STAND-CAL.",
+   "value": 1.0
+  },
+  {
+   "id": "CL-H1-THRUST-RES-MAX",
+   "type": "claim",
+   "title": "Thrust resolution needed",
+   "calc": "CALC-H1-LIMITS",
+   "output": "thrust_res_max",
+   "unit": "-",
+   "how": "From ASM-H1-RES-MAX (A/B prop comparison).",
+   "value": 0.005
+  },
+  {
+   "id": "CL-H1-TORQUE-RES-MAX",
+   "type": "claim",
+   "title": "Torque resolution needed",
+   "calc": "CALC-H1-LIMITS",
+   "output": "torque_res_max",
+   "unit": "-",
+   "how": "From ASM-H1-RES-MAX (A/B prop comparison).",
+   "value": 0.02
+  },
+  {
+   "id": "CL-H1-THRUST-CELL-REQ",
+   "type": "claim",
+   "title": "Thrust cell range needed",
+   "calc": "CALC-H1-STAND",
+   "output": "thrust_cap_req_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-THRUST-CAP"
+   },
+   "how": "T-H1-STAND-CAL: hang 0.5, 1.0, 2.0, 2.5 kg on the thrust axis; linear within 0.5 % FS.",
+   "value": 2.689501511729286
+  },
+  {
+   "id": "CL-H1-TORQUE-CELL-REQ",
+   "type": "claim",
+   "title": "Torque cell range needed",
+   "calc": "CALC-H1-STAND",
+   "output": "torque_cell_req_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-TORQUE-CAP"
+   },
+   "how": "T-H1-STAND-CAL: 50, 100, 200, 500 g at the 0.100 m arm; linear within 1 % FS.",
+   "value": 0.5358339917253988
+  },
+  {
+   "id": "CL-H1-THRUST-RES",
+   "type": "claim",
+   "title": "Thrust noise / hover thrust",
+   "calc": "CALC-H1-STAND",
+   "output": "thrust_res_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-THRUST-RES-MAX"
+   },
+   "how": "T-H1-STAND-CAL: 60 s of zero-load samples, 2 sigma noise; repeat at 690 gf hanging mass.",
+   "value": 0.001440560452309611
+  },
+  {
+   "id": "CL-H1-TORQUE-RES",
+   "type": "claim",
+   "title": "Torque noise / hover torque",
+   "calc": "CALC-H1-STAND",
+   "output": "torque_res_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-TORQUE-RES-MAX"
+   },
+   "how": "T-H1-STAND-CAL: 60 s of zero-load samples on the torque cell, 2 sigma noise.",
+   "value": 0.0043130410887825075
+  },
+  {
+   "id": "CL-H1-TORQUE-F-HOVER",
+   "type": "claim",
+   "title": "Torque-cell force at hover",
+   "calc": "CALC-H1-STAND",
+   "output": "torque_force_hover_gf",
+   "unit": "gf",
+   "how": "Read on the stand at 690 gf thrust (T-B4-STAND).",
+   "value": 115.92748358006969
+  },
+  {
+   "id": "CALC-H1-CURRENT",
+   "type": "calculation",
+   "title": "stand current",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "stand_current",
+   "equation": "I_supply = 1.05 I_max(14.8 V) ; I_step = I_max(16.8 V, unlimited)",
+   "inputs": {
+    "i148": "CL-E1-IMAX-148-55",
+    "i168": "CL-E1-IMAX-168-55"
+   },
+   "outputs": {
+    "supply_req_a": 44.548938897821884,
+    "step_a": 51.56136196434739
+   },
+   "input_values": {
+    "i148": 42.42756085506846,
+    "i168": 51.56136196434739
+   }
+  },
+  {
+   "id": "CL-H1-SUPPLY-REQ",
+   "type": "claim",
+   "title": "Bench supply current for 14.8 V sweeps",
+   "calc": "CALC-H1-CURRENT",
+   "output": "supply_req_a",
+   "unit": "A",
+   "how": "Supply label; if it cannot hold 14.8 V at this current, run 70-100 % steps on a flight pack and log V.",
+   "value": 44.548938897821884
+  },
+  {
+   "id": "CL-H1-STEP-I",
+   "type": "claim",
+   "title": "Unlimited 16.8 V full-throttle step current",
+   "calc": "CALC-H1-CURRENT",
+   "output": "step_a",
+   "unit": "A",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-H1-ESC-BURST"
+   },
+   "how": "T-C1-THRUST-FRESH logs it; hold the step <= 2 s; abort above 55 A.",
+   "value": 51.56136196434739
+  },
+  {
+   "id": "CALC-H1-TW-PASS",
+   "type": "calculation",
+   "title": "tw pass",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "tw_pass",
+   "equation": "T_pass = TW m g k_dl / (n g) [kgf] ; T_pred_sag = T_max x sag",
+   "inputs": {
+    "tw": "P:requirements.hover_tw_min",
+    "tw_sag": "P:requirements.hover_tw_min_sag",
+    "m": "P:requirements.mtow_gate_kg",
+    "k_dl": "P:propulsion.download_factor",
+    "n": "P:propulsion.n_motors",
+    "t_max": "P:propulsion.thrust_max_per_motor_kg",
+    "sag": "P:propulsion.voltage_sag"
+   },
+   "units": {
+    "m": "kg",
+    "t_max": "kg"
+   },
+   "outputs": {
+    "pass_fresh_kgf": 1.3780000000000001,
+    "pass_sag_kgf": 1.1024,
+    "pred_sag_kgf": 1.377,
+    "pred_fresh_kgf": 1.62
+   },
+   "input_values": {
+    "tw": 2.0,
+    "tw_sag": 1.6,
+    "m": 2.6,
+    "k_dl": 1.06,
+    "n": 4,
+    "t_max": 1.62,
+    "sag": 0.85
+   }
+  },
+  {
+   "id": "CL-H1-T-PRED-FRESH",
+   "type": "claim",
+   "title": "Predicted thrust, limiter, fresh",
+   "calc": "CALC-H1-TW-PASS",
+   "output": "pred_fresh_kgf",
+   "unit": "kgf",
+   "how": "E1 CL-E1-ILIM-TW-FRESH via params; measured by T-A1-THRUST-STATION.",
+   "value": 1.62
+  },
+  {
+   "id": "CL-H1-T-PRED-SAG",
+   "type": "claim",
+   "title": "Predicted thrust, worst pack state",
+   "calc": "CALC-H1-TW-PASS",
+   "output": "pred_sag_kgf",
+   "unit": "kgf",
+   "how": "params.json thrust_max x voltage_sag; measured on a 3.6 V/cell 10 degC pack.",
+   "value": 1.377
+  },
+  {
+   "id": "CL-H1-T-PASS-FRESH",
+   "type": "claim",
+   "title": "Stand pass line, fresh pack (T/W 2.0)",
+   "calc": "CALC-H1-TW-PASS",
+   "output": "pass_fresh_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-T-PRED-FRESH"
+   },
+   "how": "Card GT-02d: isolated full-throttle thrust at the per-motor limiter share (25 A) on a 16.8 V pack must be >= CL-H1-T-FRESH-ACCEPT.",
+   "value": 1.3780000000000001
+  },
+  {
+   "id": "CL-H1-T-PASS-SAG",
+   "type": "claim",
+   "title": "Stand pass line, worst pack (T/W 1.6)",
+   "calc": "CALC-H1-TW-PASS",
+   "output": "pass_sag_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-T-PRED-SAG"
+   },
+   "how": "Card GT-02e: full-throttle thrust on a 3.6 V/cell (20 %) pack at 10 degC must be >= CL-H1-T-SAG-ACCEPT.",
+   "value": 1.1024
+  },
+  {
+   "id": "ASM-H1-CAL-U",
+   "type": "assumption",
+   "title": "Calibrated thrust-cell U95 = 0.5 % of the 2.5 kgf calibration span",
+   "text": "After T-H1-STAND-CAL the thrust reading is within 0.5 % of the 2.5 kgf dead-weight span (12.5 gf) anywhere in that span, including drift between the start and end calibration.",
+   "basis": "GT-01 pass lines: linearity <= 0.5 % FS and start/end drift <= 0.5 %",
+   "value": 0.005,
+   "unit": "-",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-CAL-SPAN",
+   "type": "assumption",
+   "title": "Thrust-cell calibration span 2.5 kgf",
+   "text": "Dead weights 0.5/1.0/2.0/2.5 kg on the thrust axis (GT-01 step 2); the top weight covers 1.25 x the 21.1 N limit thrust (2.69 kgf) within 7 %.",
+   "basis": "largest water-jug/dead-weight set that can be hung on the axle cord safely",
+   "value": 2.5,
+   "unit": "kgf",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-H1-GUARD",
+   "type": "calculation",
+   "title": "guard",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "guard",
+   "equation": "U = u_cal span ; T_peak_acc = T_lim - U g ; T_fresh_acc = T_pass_fresh + U ; T_sag_acc = T_pass_sag + U",
+   "inputs": {
+    "u": "ASM-H1-CAL-U",
+    "span": "ASM-H1-CAL-SPAN",
+    "t_lim": "P:requirements.thrust_limit_per_motor_n",
+    "pf": "CL-H1-T-PASS-FRESH",
+    "ps": "CL-H1-T-PASS-SAG",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "t_lim": "N",
+    "g": "m/s2"
+   },
+   "outputs": {
+    "u_kgf": 0.0125,
+    "u_n": 0.122583125,
+    "peak_accept_n": 20.977416875000003,
+    "fresh_accept_kgf": 1.3905,
+    "sag_accept_kgf": 1.1149
+   },
+   "input_values": {
+    "u": 0.005,
+    "span": 2.5,
+    "t_lim": 21.1,
+    "pf": 1.3780000000000001,
+    "ps": 1.1024,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CL-H1-T-U95",
+   "type": "claim",
+   "title": "Thrust-cell U95 after calibration",
+   "calc": "CALC-H1-GUARD",
+   "output": "u_n",
+   "unit": "N",
+   "how": "T-H1-STAND-CAL: linearity and drift of the 2.5 kg dead-weight set.",
+   "value": 0.122583125
+  },
+  {
+   "id": "CL-H1-T-PEAK-ACCEPT",
+   "type": "claim",
+   "title": "GT-02d peak-thrust acceptance (limit thrust minus U95)",
+   "calc": "CALC-H1-GUARD",
+   "output": "peak_accept_n",
+   "unit": "N",
+   "how": "Card GT-02d: max of 3 unlimited steps at the F4 cap, rho-corrected, <= this value passes; between this and 21.1 N is a retest (5 more steps); above 21.1 N C1 re-runs the loads (CR-H1-01).",
+   "value": 20.977416875000003
+  },
+  {
+   "id": "CL-H1-T-FRESH-ACCEPT",
+   "type": "claim",
+   "title": "GT-02d limited-thrust acceptance, fresh pack",
+   "calc": "CALC-H1-GUARD",
+   "output": "fresh_accept_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-T-PRED-FRESH"
+   },
+   "how": "Card GT-02d step 3: thrust with the 25 A per-motor limiter share >= this value.",
+   "value": 1.3905
+  },
+  {
+   "id": "CL-H1-T-SAG-ACCEPT",
+   "type": "claim",
+   "title": "GT-02e cold-pack acceptance, 3.6 V/cell at 10 degC",
+   "calc": "CALC-H1-GUARD",
+   "output": "sag_accept_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-T-PRED-SAG"
+   },
+   "how": "Card GT-02e: full-throttle thrust with the limiter share on the cold 20 % pack >= this value.",
+   "value": 1.1149
+  },
+  {
+   "id": "CALC-H1-WEIGH",
+   "type": "calculation",
+   "title": "weigh unc",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "weigh_unc",
+   "equation": "U95 = 2 sqrt((res/sqrt12)^2 + (cal m)^2) ; frac = U95 / gate margin",
+   "inputs": {
+    "scale": "ASM-H1-SCALE",
+    "m": "P:requirements.mtow_gate_kg",
+    "margin": "CL-A3-GATE-MARGIN"
+   },
+   "units": {
+    "m": "kg"
+   },
+   "outputs": {
+    "u95_g": 5.231953108862248,
+    "u_frac": 0.08652761993762106,
+    "accept_max_kg": 2.594768046891138
+   },
+   "input_values": {
+    "scale": {
+     "res_g": 1.0,
+     "cal_frac": 0.001
+    },
+    "m": 2.6,
+    "margin": 0.0604657000000004
+   }
+  },
+  {
+   "id": "CL-H1-WEIGH-U95",
+   "type": "claim",
+   "title": "Weigh uncertainty (95 %)",
+   "calc": "CALC-H1-WEIGH",
+   "output": "u95_g",
+   "unit": "g",
+   "how": "T-H1-SCALE-CAL: weigh the 2.000 kg check mass 10 times on each scale.",
+   "value": 5.231953108862248
+  },
+  {
+   "id": "CL-H1-WEIGH-U-FRAC",
+   "type": "claim",
+   "title": "Weigh uncertainty / A3 gate margin",
+   "calc": "CALC-H1-WEIGH",
+   "output": "u_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.1
+   },
+   "how": "Re-run after A3 updates CL-A3-GATE-MARGIN.",
+   "value": 0.08652761993762106
+  },
+  {
+   "id": "CL-H1-WEIGH-ACCEPT",
+   "type": "claim",
+   "title": "Weigh-in acceptance line (guard-banded)",
+   "calc": "CALC-H1-WEIGH",
+   "output": "accept_max_kg",
+   "unit": "kg",
+   "how": "Card GT-06: ready-to-fly mass must read <= this value (gate minus U95).",
+   "value": 2.594768046891138
+  },
+  {
+   "id": "CALC-H1-CG",
+   "type": "calculation",
+   "title": "cg unc",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "cg_unc",
+   "equation": "x = x1 + d W2/W ; U95 = 2 sqrt(e^2 + (W2/W sqrt2 e)^2 + (d sqrt2 u_W / W)^2)",
+   "inputs": {
+    "jig": "ASM-H1-CG-JIG",
+    "scale": "ASM-H1-SCALE",
+    "m": "P:requirements.mtow_gate_kg",
+    "xr": "P:cg.x_range_m",
+    "xt": "P:cg.x_target_m"
+   },
+   "units": {
+    "m": "kg",
+    "xr": "m",
+    "xt": "m"
+   },
+   "outputs": {
+    "u95_m": 0.0006092823008252251,
+    "u_frac_half_range": 0.10240038669331514,
+    "accept_fwd_m": 0.040009282300825226,
+    "accept_aft_m": 0.05069071769917477,
+    "w2_frac": 0.17727272727272728
+   },
+   "input_values": {
+    "jig": {
+     "x1_m": 0.01,
+     "x2_m": 0.23,
+     "pos_tol_m": 0.0005
+    },
+    "scale": {
+     "res_g": 1.0,
+     "cal_frac": 0.001
+    },
+    "m": 2.6,
+    "xr": [
+     0.0394,
+     0.0513
+    ],
+    "xt": 0.049
+   }
+  },
+  {
+   "id": "CL-H1-CG-U95",
+   "type": "claim",
+   "title": "CG-x uncertainty on the two-scale jig (95 %)",
+   "calc": "CALC-H1-CG",
+   "output": "u95_m",
+   "unit": "m",
+   "how": "T-H1-SCALE-CAL: place a 1.000 kg mass at a ruled x on the empty jig, recover x within U95.",
+   "value": 0.0006092823008252251
+  },
+  {
+   "id": "CL-H1-CG-U-FRAC",
+   "type": "claim",
+   "title": "CG uncertainty / half the CG range",
+   "calc": "CALC-H1-CG",
+   "output": "u_frac_half_range",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.5
+   },
+   "how": "Re-run after B3 changes cg.x_range_m.",
+   "value": 0.10240038669331514
+  },
+  {
+   "id": "CL-H1-CG-ACCEPT-FWD",
+   "type": "claim",
+   "title": "CG acceptance, forward line (guard-banded)",
+   "calc": "CALC-H1-CG",
+   "output": "accept_fwd_m",
+   "unit": "m",
+   "how": "Card GT-07: measured x must be >= this value.",
+   "value": 0.040009282300825226
+  },
+  {
+   "id": "CL-H1-CG-ACCEPT-AFT",
+   "type": "claim",
+   "title": "CG acceptance, aft line (guard-banded)",
+   "calc": "CALC-H1-CG",
+   "output": "accept_aft_m",
+   "unit": "m",
+   "how": "Card GT-07: measured x must be <= this value.",
+   "value": 0.05069071769917477
+  },
+  {
+   "id": "CALC-H1-PROOF",
+   "type": "calculation",
+   "title": "proof loads",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "proof_loads",
+   "equation": "m_i = P_i,lim / g at y_i (C1 tree) ; sum_err = |sum P_i - P_side| / P_side ; y_c = sum P_i y_i / sum P_i ; m_R = R / g ; step 2: m_3', m_4' = P'_3,4 / g ; hanger = 2 sum P_i ; d_max = k b/2 ; F_mount = F_ult/SF ; F_fin = M_fin_ult / (SF z_station)",
+   "inputs": {
+    "p1": "CL-C1-PROOF-P1-LIM",
+    "p2": "CL-C1-PROOF-P2-LIM",
+    "p3": "CL-C1-PROOF-P3-LIM",
+    "p4": "CL-C1-PROOF-P4-LIM",
+    "y1": "CL-C1-PROOF-Y1",
+    "y2": "CL-C1-PROOF-Y2",
+    "y3": "CL-C1-PROOF-Y3",
+    "y4": "CL-C1-PROOF-Y4",
+    "p_side": "CL-C1-PROOF-P-SIDE-LIM",
+    "r": "CL-C1-PROOF-R-LIM",
+    "s2p3": "CL-C1-PROOF-OUT-P3-LIM",
+    "s2p4": "CL-C1-PROOF-OUT-P4-LIM",
+    "sf": "P:requirements.safety_factor_ult",
+    "k_def": "P:requirements.spar_deflection_max",
+    "b": "P:wing.span_m",
+    "f_mount_ult": "CL-C1-MOUNT-F-ULT",
+    "m_fin_ult": "CL-C1-FINHALF-MB-ULT",
+    "z_st": "P:propulsion.stations.z_m",
+    "f_pack": "CL-C1-PACK-CRASH-LOAD",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "b": "m",
+    "z_st": "m",
+    "g": "m/s2"
+   },
+   "outputs": {
+    "wing_p_n": 24.395330630291976,
+    "wing_p_kg": 2.487631416466579,
+    "wing_y_m": 0.2736113137968142,
+    "sum_err": 0.0,
+    "hanger_n": 48.79066126058395,
+    "pad1_kg": 0.7897667159228651,
+    "pad2_kg": 0.6201525445684279,
+    "pad3_kg": 0.45455887662828215,
+    "pad4_kg": 0.6231532793470038,
+    "relief_kg": 2.05128,
+    "s2_pad3_kg": 0.5022933894232309,
+    "s2_pad4_kg": 1.6719371269673227,
+    "wing_defl_max_m": 0.028749999999999998,
+    "mount_f_n": 21.08508627927301,
+    "mount_f_kg": 2.1500804331013152,
+    "fin_f_n": 42.95734887938251,
+    "fin_f_kg": 4.380430511885558,
+    "pack_pull_n": 73.75,
+    "pack_pull_kg": 7.5204070707122215
+   },
+   "input_values": {
+    "p1": 7.744965764704965,
+    "p2": 6.081618951191974,
+    "p3": 4.457699807486743,
+    "p4": 6.111046106908295,
+    "y1": 0.11,
+    "y2": 0.23,
+    "y3": 0.355,
+    "y4": 0.465,
+    "p_side": 24.395330630291976,
+    "r": 20.116185012000003,
+    "s2p3": 4.925815467387327,
+    "s2p4": 16.396102226174094,
+    "sf": 1.5,
+    "k_def": 0.05,
+    "b": 1.15,
+    "f_mount_ult": 31.627629418909514,
+    "m_fin_ult": 12.242844430624015,
+    "z_st": 0.19,
+    "f_pack": 73.75,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CL-H1-WING-PROOF-P",
+   "type": "claim",
+   "title": "Wing proof load per side (limit, sum of C1's four pads)",
+   "calc": "CALC-H1-PROOF",
+   "output": "wing_p_n",
+   "unit": "N",
+   "parts": [
+    "WNG-001"
+   ],
+   "how": "Card GT-08 step 1: four padded sandbags per side at CL-C1-PROOF-Y1..Y4, masses CL-H1-WP-M1..M4.",
+   "value": 24.395330630291976
+  },
+  {
+   "id": "CL-H1-WP-SUM-ERR",
+   "type": "claim",
+   "title": "Pad sum vs C1's per-side total (consistency of C1's published pads)",
+   "calc": "CALC-H1-PROOF",
+   "output": "sum_err",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.005
+   },
+   "how": "Re-run after C1 re-publishes; a mismatch means a pad or the total moved without the other.",
+   "value": 0.0
+  },
+  {
+   "id": "CL-H1-WING-PROOF-Y",
+   "type": "claim",
+   "title": "Wing proof load centroid per side",
+   "calc": "CALC-H1-PROOF",
+   "output": "wing_y_m",
+   "unit": "m",
+   "limit": {
+    "op": "<=",
+    "value": 0.575
+   },
+   "how": "Moment centroid of C1's pads; equals CL-C1-PROOF-PIVOT-Y.",
+   "value": 0.2736113137968142
+  },
+  {
+   "id": "CL-H1-WP-HANGER",
+   "type": "claim",
+   "title": "Whiffletree hanger load, both sides (if the tree is used)",
+   "calc": "CALC-H1-PROOF",
+   "output": "hanger_n",
+   "unit": "N",
+   "how": "Card GT-08 option B: bucket of sand at the hanger, tree mass counted in it.",
+   "value": 48.79066126058395
+  },
+  {
+   "id": "CL-H1-WP-M1",
+   "type": "claim",
+   "title": "Wing proof pad 1 mass per side (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "pad1_kg",
+   "unit": "kg",
+   "how": "Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.",
+   "value": 0.7897667159228651
+  },
+  {
+   "id": "CL-H1-WP-M2",
+   "type": "claim",
+   "title": "Wing proof pad 2 mass per side (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "pad2_kg",
+   "unit": "kg",
+   "how": "Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.",
+   "value": 0.6201525445684279
+  },
+  {
+   "id": "CL-H1-WP-M3",
+   "type": "claim",
+   "title": "Wing proof pad 3 mass per side (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "pad3_kg",
+   "unit": "kg",
+   "how": "Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.",
+   "value": 0.45455887662828215
+  },
+  {
+   "id": "CL-H1-WP-M4",
+   "type": "claim",
+   "title": "Wing proof pad 4 mass per side (limit; C1 claim CL-C1-PROOF-P4-LIM)",
+   "calc": "CALC-H1-PROOF",
+   "output": "pad4_kg",
+   "unit": "kg",
+   "how": "Card GT-08: weigh each sandbag on the calibrated 1 g scale to +/-5 g.",
+   "value": 0.6231532793470038
+  },
+  {
+   "id": "CL-H1-WP-RELIEF-M",
+   "type": "claim",
+   "title": "Relief counterweight at each motor tube (limit, upward over a pulley)",
+   "calc": "CALC-H1-PROOF",
+   "output": "relief_kg",
+   "unit": "kg",
+   "how": "Card GT-08 step 1: ball-bearing pulley; spring-scale check of the sling tension within 3 % before loading.",
+   "value": 2.05128
+  },
+  {
+   "id": "CL-H1-WP-S2-M3",
+   "type": "claim",
+   "title": "Step 2 (outboard, V-block at y 0.32 m): pad 3 mass (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "s2_pad3_kg",
+   "unit": "kg",
+   "how": "Card GT-08 step 2, each side in turn (CR-C1-27).",
+   "value": 0.5022933894232309
+  },
+  {
+   "id": "CL-H1-WP-S2-M4",
+   "type": "claim",
+   "title": "Step 2 (outboard, V-block at y 0.32 m): pad 4 mass (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "s2_pad4_kg",
+   "unit": "kg",
+   "how": "Card GT-08 step 2, each side in turn (CR-C1-27).",
+   "value": 1.6719371269673227
+  },
+  {
+   "id": "CL-H1-WING-DEFL-MAX",
+   "type": "claim",
+   "title": "Tip deflection allowed at limit",
+   "calc": "CALC-H1-PROOF",
+   "output": "wing_defl_max_m",
+   "unit": "m",
+   "how": "Card GT-08: dial gauge or ruler at the tip; and no permanent set after unloading.",
+   "value": 0.028749999999999998
+  },
+  {
+   "id": "CL-H1-MOUNT-PROOF-F",
+   "type": "claim",
+   "title": "Motor-mount proof load (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "mount_f_n",
+   "unit": "N",
+   "how": "Card GT-09: hang from each mount in -x and in y.",
+   "value": 21.08508627927301
+  },
+  {
+   "id": "CL-H1-FIN-PROOF-F",
+   "type": "claim",
+   "title": "Fin + tube proof load at the station (limit)",
+   "calc": "CALC-H1-PROOF",
+   "output": "fin_f_n",
+   "unit": "N",
+   "how": "Card GT-09: hang at the motor station, side-load in y, wing held at the spar.",
+   "value": 42.95734887938251
+  },
+  {
+   "id": "CL-H1-PACK-PULL-F",
+   "type": "claim",
+   "title": "Pack retention pull (ultimate, dummy pack)",
+   "calc": "CALC-H1-PROOF",
+   "output": "pack_pull_n",
+   "unit": "N",
+   "how": "Card GT-10: pack-size dummy at the heaviest GT-05 pack mass; pulled in x, y, z to this value.",
+   "value": 73.75
+  },
+  {
+   "id": "CALC-H1-RESTRAINT",
+   "type": "calculation",
+   "title": "restraint",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "restraint",
+   "equation": "F_tie = SF (n T_lim - m g)",
+   "inputs": {
+    "n": "P:propulsion.n_motors",
+    "t_lim": "CL-C1-T-LIMIT",
+    "m": "P:requirements.mtow_gate_kg",
+    "g": "P:env.g_ms2",
+    "sf": "ASM-H1-RESTRAINT-SF"
+   },
+   "units": {
+    "m": "kg",
+    "g": "m/s2"
+   },
+   "outputs": {
+    "tie_n": 117.80542000000001,
+    "tie_kg": 12.01280967506743,
+    "per_tie_n": 29.451355000000003
+   },
+   "input_values": {
+    "n": 4,
+    "t_lim": 21.1,
+    "m": 2.6,
+    "g": 9.80665,
+    "sf": 2.0
+   }
+  },
+  {
+   "id": "CL-H1-RESTRAINT-F",
+   "type": "claim",
+   "title": "Tie-down force, restrained four-motor run",
+   "calc": "CALC-H1-RESTRAINT",
+   "output": "tie_n",
+   "unit": "N",
+   "how": "T-H1-RESTRAINT-PULL: pull each of the 4 straps to the per-strap value.",
+   "value": 117.80542000000001
+  },
+  {
+   "id": "CL-H1-RESTRAINT-PER-TIE",
+   "type": "claim",
+   "title": "Tie-down force per strap (4 straps)",
+   "calc": "CALC-H1-RESTRAINT",
+   "output": "per_tie_n",
+   "unit": "N",
+   "how": "Spring scale on each strap before the run.",
+   "value": 29.451355000000003
+  },
+  {
+   "id": "CALC-H1-PACK",
+   "type": "calculation",
+   "title": "pack lines",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "pack_lines",
+   "equation": "C_min = frac C_nom ; R_10C = R_25C k_cold",
+   "inputs": {
+    "c": "P:battery.capacity_ah",
+    "frac": "P:requirements.pack_capacity_min_frac",
+    "r": "ASM-E2-R-CELL",
+    "k_cold": "ASM-E2-COLD-R"
+   },
+   "units": {
+    "c": "Ah"
+   },
+   "outputs": {
+    "cap_min_ah": 5.98,
+    "ir25_max_mohm": 5.0,
+    "ir10_max_mohm": 7.5,
+    "ir25_expect_mohm": 4.0,
+    "ir10_expect_mohm": 6.0
+   },
+   "input_values": {
+    "c": 6.5,
+    "frac": 0.92,
+    "r": 0.004,
+    "k_cold": 1.5
+   }
+  },
+  {
+   "id": "CL-H1-PACK-CAP-MIN",
+   "type": "claim",
+   "title": "Pack capacity acceptance (1C to 3.5 V/cell)",
+   "calc": "CALC-H1-PACK",
+   "output": "cap_min_ah",
+   "unit": "Ah",
+   "how": "Card GT-05 (T-E2-CAPACITY); pack_log.csv capacity_mah.",
+   "value": 5.98
+  },
+  {
+   "id": "CL-H1-PACK-IR10-MAX",
+   "type": "claim",
+   "title": "Pack IR acceptance at 10 degC",
+   "calc": "CALC-H1-PACK",
+   "output": "ir10_max_mohm",
+   "unit": "mOhm/cell",
+   "how": "Card GT-05 (T-E2-IR): E2's 5 mOhm/cell at 25 degC x the cold factor; pack_log.csv ir_mohm_cell_10c.",
+   "value": 7.5
+  },
+  {
+   "id": "SRC-H1-JACOBS-EQUIP",
+   "type": "source",
+   "title": "Jacobs Institute, UC Berkeley: Labs and equipment",
+   "kind": "web",
+   "url": "https://jacobsinstitute.berkeley.edu/our-spaces-at-a-glance/labs-and-equipment/",
+   "where": "Electronics Lab (studio 110): soldering irons, oscilloscopes and power supplies, multi-meters, Saleae logic analyzer, heat guns. Woodshop: Delta variable-speed drill press, band saw, table saw. Metal shop: Clausing drill press, Bailey 20-ton press, hand tools. No tool-lending list on the page; use in the lab is with a Maker Pass. Read 2026-11-09.",
+   "status": "CHECKED"
+  },
+  {
+   "id": "ASM-H1-OPTLEVER",
+   "type": "assumption",
+   "title": "Mount-stiffness rig: optical lever and load steps",
+   "text": "T-C4-MOUNT-STIFF read by a laser pointer reflected off a 10 mm mirror bonded to the motor can, onto mm paper on a wall L = 5.0 m away (spot moves 2 theta L); a second mirror on the collar subtracts tube and stub rotation. Spot centre read to +/-0.3 mm from a tripod phone photo against a 1 mm grid. Loads 0.5, 1.0, 1.7 kg at the prop nut (CDR-28: top step 1.5 -> 1.7 kg, so the U95 at the pass line is under 10 %; still under 0.8 x the mount proof load). For comparison, C4's two dial gauges (0.01 mm) are 0.030 m apart.",
+   "basis": "optical lever is the standard way to read sub-milliradian rotations without a fine gauge; R3: wall 3.0 -> 5.0 m (a corridor) and photo read-out, because C4's need rose to ~1 970 N m/rad (15:01 re-publish) and the spot shrinks with it; laser pointer and mirror are team-owned",
+   "value": {
+    "L_m": 5.0,
+    "read_mm": 0.3,
+    "load_kg": [
+     0.5,
+     1.0,
+     1.7
+    ],
+    "dial_res_mm": 0.01,
+    "gauge_s_m": 0.03
+   },
+   "unit": "m,mm,kg,mm,m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-MSTIFF-PASS",
+   "type": "assumption",
+   "title": "Mount rocking-stiffness pass level: floor 1 100 N m/rad (both axes)",
+   "text": "GT-17 passes a mount whose measured rocking stiffness is >= max(1 100, CL-C4-D3-MOUNT-K-REQ) about y and about z.",
+   "basis": "CR-C4-41 set 1 100 over C4's 1 030; C4's 15:01 re-publish raised the need above that floor, so the card follows the live claim and the floor only stops it falling below CR-C4-41",
+   "value": 1100.0,
+   "unit": "N m/rad",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-H1-MOUNT-STIFF",
+   "type": "calculation",
+   "title": "mount stiff",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "mount_stiff",
+   "equation": "k_pass = max(k_floor, k_req) ; a = x_mount - x_prop ; theta = F a / k_pass ; spot = 2 theta L ; u_k = read / spot_pass ; dial = theta(0.5 kg) s",
+   "inputs": {
+    "k_floor": "ASM-H1-MSTIFF-PASS",
+    "k_req": "CL-C4-D3-MOUNT-K-REQ",
+    "k_nom": "ASM-C4-MOUNT-K-ROCK",
+    "xm": "P:propulsion.stations.x_mount_m",
+    "xp": "P:propulsion.stations.x_prop_plane_m",
+    "rig": "ASM-H1-OPTLEVER",
+    "f_proof": "CL-H1-MOUNT-PROOF-F",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "xm": "m",
+    "xp": "m",
+    "g": "m/s2"
+   },
+   "outputs": {
+    "k_pass": 1641.8574642609717,
+    "arm_m": 0.0577,
+    "spot_pass_mm": 5.858817342180084,
+    "spot_nom_mm": 4.372428629545454,
+    "spot_accept_mm": 5.558817342180085,
+    "u_k_frac": 0.051204873352199275,
+    "dial_diff_um": 5.16954471368831,
+    "load_frac": 0.7906680949362853,
+    "nom_over_pass": 1.3399457918171098
+   },
+   "input_values": {
+    "k_floor": 1100.0,
+    "k_req": 1641.8574642609717,
+    "k_nom": 2200.0,
+    "xm": 0.045,
+    "xp": -0.0127,
+    "rig": {
+     "L_m": 5.0,
+     "read_mm": 0.3,
+     "load_kg": [
+      0.5,
+      1.0,
+      1.7
+     ],
+     "dial_res_mm": 0.01,
+     "gauge_s_m": 0.03
+    },
+    "f_proof": 21.08508627927301,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CL-H1-MSTIFF-K-PASS",
+   "type": "claim",
+   "title": "GT-17 rocking-stiffness pass level",
+   "calc": "CALC-H1-MOUNT-STIFF",
+   "output": "k_pass",
+   "unit": "N m/rad",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C4-D3-MOUNT-K-REQ"
+   },
+   "how": "CR-C4-41; re-run whenever C4 re-publishes CL-C4-D3-MOUNT-K-REQ.",
+   "value": 1641.8574642609717
+  },
+  {
+   "id": "CL-H1-MSTIFF-SPOT-ACCEPT",
+   "type": "claim",
+   "title": "T-C4-MOUNT-STIFF acceptance: spot travel at the top load step, 1.7 kg (can minus collar)",
+   "calc": "CALC-H1-MOUNT-STIFF",
+   "output": "spot_accept_mm",
+   "unit": "mm",
+   "how": "Card GT-17: net spot travel at 1.7 kg <= this value in y and in z passes k >= CL-H1-MSTIFF-K-PASS.",
+   "value": 5.558817342180085
+  },
+  {
+   "id": "CL-H1-MSTIFF-SPOT-NOM",
+   "type": "claim",
+   "title": "Spot travel expected at C4's rocking-stiffness estimate",
+   "calc": "CALC-H1-MOUNT-STIFF",
+   "output": "spot_nom_mm",
+   "unit": "mm",
+   "how": "Informational: what the mount as estimated reads on GT-17.",
+   "value": 4.372428629545454
+  },
+  {
+   "id": "CL-H1-MSTIFF-NOM-RATIO",
+   "type": "claim",
+   "title": "C4's stiffness estimate / GT-17 pass level",
+   "calc": "CALC-H1-MOUNT-STIFF",
+   "output": "nom_over_pass",
+   "unit": "-",
+   "how": "Informational: below 1 the mount as estimated is expected to fail GT-17; D-91 (18 mm grip) closes CR-H1-24 at 2 200 / 1 455 N m/rad.",
+   "value": 1.3399457918171098
+  },
+  {
+   "id": "CL-H1-MSTIFF-U",
+   "type": "claim",
+   "title": "Mount stiffness relative U95 at the pass line",
+   "calc": "CALC-H1-MOUNT-STIFF",
+   "output": "u_k_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.1
+   },
+   "how": "T-H1-RIG-CHECK: read a 1.00 mm shim step on the wall.",
+   "value": 0.051204873352199275
+  },
+  {
+   "id": "CL-H1-MSTIFF-DIAL-UM",
+   "type": "claim",
+   "title": "Dial-gauge difference at C4's 0.5 kg load, at the pass stiffness",
+   "calc": "CALC-H1-MOUNT-STIFF",
+   "output": "dial_diff_um",
+   "unit": "um",
+   "how": "Informational: below one 10 um division, so C4's dial-gauge readout cannot resolve the pass line (CR-H1-10); GT-17 uses the optical lever.",
+   "value": 5.16954471368831
+  },
+  {
+   "id": "CL-H1-MSTIFF-LOAD-FRAC",
+   "type": "claim",
+   "title": "Largest mount-stiffness load / mount proof load",
+   "calc": "CALC-H1-MOUNT-STIFF",
+   "output": "load_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.8
+   },
+   "how": "Load steps set in ASM-H1-OPTLEVER.",
+   "value": 0.7906680949362853
+  },
+  {
+   "id": "ASM-H1-TAP",
+   "type": "assumption",
+   "title": "Tap-test acquisition",
+   "text": "FFT of FC raw IMU (INS_LOG_BAT_MASK, batch sampler) at 1 000 Hz or more; the sampling rate must be >= 2.5 x the highest frequency to be read (anti-alias margin). A phone accelerometer app (typically ~400 Hz) is used only for the wing modes below 80 Hz.",
+   "basis": "Nyquist 2 x plus a 25 % roll-off margin of the IMU's digital low-pass",
+   "value": {
+    "fs_fc_hz": 1000.0,
+    "fs_phone_hz": 400.0,
+    "k_fs": 2.5
+   },
+   "unit": "Hz,Hz,-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-H1-TAP",
+   "type": "calculation",
+   "title": "tap",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "tap",
+   "equation": "f_op = n/60 x {1, 2} at hover, cruise, cap ; window = f_op (1 +/- s) ; fs_req = k max(f_pred, top window)",
+   "inputs": {
+    "n_h": "CL-B4-HOVER-RPM",
+    "n_c": "CL-B4-CRUISE-RPM",
+    "n_cap": "P:propulsion.rpm_max",
+    "s": "P:requirements.vibration_sep_frac",
+    "f_up": "CL-C4-D3-F1-UP",
+    "f_lo": "CL-C4-D3-F1-LO",
+    "acq": "ASM-H1-TAP"
+   },
+   "units": {
+    "n_cap": "rpm"
+   },
+   "outputs": {
+    "windows": [
+     [
+      "1P hover",
+      90.3,
+      72.2,
+      108.3
+     ],
+     [
+      "2P hover",
+      180.5,
+      144.4,
+      216.6
+     ],
+     [
+      "1P cruise",
+      99.9,
+      79.9,
+      119.9
+     ],
+     [
+      "2P cruise",
+      199.8,
+      159.8,
+      239.8
+     ],
+     [
+      "1P cap",
+      155.8,
+      124.7,
+      187.0
+     ],
+     [
+      "2P cap",
+      311.7,
+      249.3,
+      374.0
+     ]
+    ],
+    "top_hz": 374.0,
+    "fs_req_hz": 935.0,
+    "fs_fc_hz": 1000.0,
+    "phone_max_hz": 160.0
+   },
+   "input_values": {
+    "n_h": 5415.791721033196,
+    "n_c": 5994.054866878658,
+    "n_cap": 9350,
+    "s": 0.2,
+    "f_up": 249.20747724267386,
+    "f_lo": 243.3468317141885,
+    "acq": {
+     "fs_fc_hz": 1000.0,
+     "fs_phone_hz": 400.0,
+     "k_fs": 2.5
+    }
+   }
+  },
+  {
+   "id": "CL-H1-TAP-FS-FC",
+   "type": "claim",
+   "title": "FC raw-IMU sampling rate used for tap tests",
+   "calc": "CALC-H1-TAP",
+   "output": "fs_fc_hz",
+   "unit": "Hz",
+   "how": "F4/F3 log setting; confirm in the .bin header (T-H1-RIG-CHECK).",
+   "value": 1000.0
+  },
+  {
+   "id": "CL-H1-TAP-FS-REQ",
+   "type": "claim",
+   "title": "Tap-test sampling rate needed",
+   "calc": "CALC-H1-TAP",
+   "output": "fs_req_hz",
+   "unit": "Hz",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-TAP-FS-FC"
+   },
+   "how": "T-H1-RIG-CHECK: log a 200 Hz tuning-fork / phone-speaker tone on the FC raw IMU and find it in the FFT.",
+   "value": 935.0
+  },
+  {
+   "id": "CL-H1-TAP-PHONE-MAX",
+   "type": "claim",
+   "title": "Highest frequency a ~400 Hz phone accelerometer reads",
+   "calc": "CALC-H1-TAP",
+   "output": "phone_max_hz",
+   "unit": "Hz",
+   "how": "Informational: the fin-station modes (~273-281 Hz) and 2P at the cap (312 Hz) are above it (CR-H1-11).",
+   "value": 160.0
+  },
+  {
+   "id": "ASM-H1-BEND",
+   "type": "assumption",
+   "title": "Tube bend rig",
+   "text": "Span 0.80 m on two 22 mm dowels, centre load 0.5-4.0 kg through a printed 22 mm saddle; deflection by a dial indicator on a magnetic base (0.01 mm) if Jacobs lends one, else a digital caliper depth rod against a fixed reference bar (0.02 mm read, +/-0.03 mm U95).",
+   "basis": "C4's T-C4-TUBE-BEND procedure; caliper fallback from the borrow list",
+   "value": {
+    "span_m": 0.8,
+    "load_kg": 4.0,
+    "u_defl_mm": 0.03
+   },
+   "unit": "m,kg,mm",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "CALC-H1-BEND",
+   "type": "calculation",
+   "title": "bend",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "bend",
+   "equation": "I = pi/64 (D^4 - d^4) ; delta = F L^3 / (48 E I) ; sigma = F L D / (8 I) ; u_E = u_delta / delta",
+   "inputs": {
+    "od": "P:fins.tube.od_m",
+    "idm": "P:fins.tube.id_m",
+    "e_lo": "ASM-C4-E-TUBE-LO",
+    "e_req": "CL-C4-D3-TUBE-E-REQ",
+    "rig": "ASM-H1-BEND",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "od": "m",
+    "idm": "m",
+    "g": "m/s2",
+    "e_req": "Pa"
+   },
+   "outputs": {
+    "I_m4": 3.645032876327555e-09,
+    "defl_elo_mm": 1.6398718117157305,
+    "e_pass_pa": 78631845509.55621,
+    "defl_pass_mm": 1.4598541605659054,
+    "defl_accept_mm": 1.4298541605659054,
+    "sigma_mpa": 23.675649281645853,
+    "u_e_frac": 0.020549997945254094
+   },
+   "input_values": {
+    "od": 0.022,
+    "idm": 0.02,
+    "e_lo": 70000000000.0,
+    "e_req": 78631845509.55621,
+    "rig": {
+     "span_m": 0.8,
+     "load_kg": 4.0,
+     "u_defl_mm": 0.03
+    },
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CL-H1-TUBE-E-PASS",
+   "type": "claim",
+   "title": "GT-16 tube axial modulus pass line (C4's live requirement)",
+   "calc": "CALC-H1-BEND",
+   "output": "e_pass_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C4-D3-TUBE-E-REQ"
+   },
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Re-run whenever C4 re-publishes CL-C4-D3-TUBE-E-REQ (as CL-H1-MSTIFF-K-PASS does for the mount).",
+   "note": "CDR-19: was written for E >= 70 GPa (ASM-C4-E-TUBE-LO); a 72 GPa tube passed the card and failed the station-mode separation. Now max(70 GPa, CL-C4-D3-TUBE-E-REQ)",
+   "value": 78631845509.55621
+  },
+  {
+   "id": "CL-H1-TUBE-DEFL-ACCEPT",
+   "type": "claim",
+   "title": "Aloft tube bend acceptance: centre deflection at 4 kg at the E pass line",
+   "calc": "CALC-H1-BEND",
+   "output": "defl_accept_mm",
+   "unit": "mm",
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Card GT-16 (T-C4-TUBE-BEND on BOM line W03 by 10 Dec): slope of 8 load steps; deflection at 4 kg <= this value passes; result to I1 (CR-I1-08) and C4.",
+   "value": 1.4298541605659054
+  },
+  {
+   "id": "CL-H1-TUBE-SIGMA",
+   "type": "claim",
+   "title": "Bend-test peak stress at 4 kg",
+   "calc": "CALC-H1-BEND",
+   "output": "sigma_mpa",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "value": 100.0
+   },
+   "how": "Far below any CF tube strength: the spare tube stays usable after the test.",
+   "value": 23.675649281645853
+  },
+  {
+   "id": "CL-H1-TUBE-E-U",
+   "type": "claim",
+   "title": "Tube modulus relative U95 from the deflection read",
+   "calc": "CALC-H1-BEND",
+   "output": "u_e_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.05
+   },
+   "how": "T-H1-RIG-CHECK: read a 1.00 mm gauge block.",
+   "value": 0.020549997945254094
+  },
+  {
+   "id": "ASM-H1-TORSION",
+   "type": "assumption",
+   "title": "Tube torsion rig: two lasers 0.30 m apart, 0.30 m lever, 2.0 kg",
+   "text": "0.40 m of the bend specimen clamped in printed V-blocks at one end; a 0.30 m lever clamped at the other end loaded 0.5-2.0 kg in 0.5 kg steps, both senses. Two laser pointers in printed clamps on the tube 0.30 m apart (gauge length) throw spots on a wall 3.0 m away; twist over the gauge length = atan(s2/L) - atan(s1/L). Spots read to +/-1 mm.",
+   "basis": "the relative twist between two stations removes grip slip and lever-clamp rotation, which dominate a single-laser reading on a printed grip",
+   "value": {
+    "lever_m": 0.3,
+    "load_kg": 2.0,
+    "gauge_m": 0.3,
+    "wall_m": 3.0,
+    "read_mm": 1.0
+   },
+   "unit": "m,kg,m,m,mm",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-RING",
+   "type": "assumption",
+   "title": "Ring-crush coupon for the tube hoop modulus",
+   "text": "A 20 mm long ring cut from the tube offcut, crushed between flat plates on the 20 kgf cell under the Jacobs drill press to 20 N in 4 N steps; diametral deflection by dial indicator (0.01 mm) on the upper plate. Thin-ring result: delta = 0.1488 P R^3 / (E_hoop I), I = b t^3 / 12.",
+   "basis": "Roark, thin circular ring under diametral load (case of two opposite point loads); a standard way to get the hoop modulus of a wound tube without a strain gauge",
+   "value": {
+    "b_m": 0.02,
+    "p_n": 20.0,
+    "dial_mm": 0.01
+   },
+   "unit": "m,N,mm",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-H1-TORSION",
+   "type": "calculation",
+   "title": "torsion",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "torsion",
+   "equation": "J = pi/32 (D^4 - d^4) ; T = m g l ; dtheta = T L_g / (G J) ; s = L_w dtheta ; u_GJ = sqrt2 read / s(G_hi) ; tau = T (D/2) / J ; ring: R = (D+d)/4, t = (D-d)/2, I = b t^3/12, delta = 0.1488 P R^3 / (E_t I), sigma = 0.318 P R (t/2) / I",
+   "inputs": {
+    "od": "P:fins.tube.od_m",
+    "idm": "P:fins.tube.id_m",
+    "g_lo": "ASM-C4-G-TUBE-LO",
+    "g_nom": "ASM-C4-G-TUBE",
+    "g_hi": "ASM-C4-G-TUBE-HI",
+    "e_t": "ASM-C2-TUBE-ET",
+    "g_req": "CL-C4-D3-TUBE-G-REQ",
+    "rig": "ASM-H1-TORSION",
+    "ring": "ASM-H1-RING",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "od": "m",
+    "idm": "m",
+    "g": "m/s2",
+    "g_req": "Pa"
+   },
+   "outputs": {
+    "J_m4": 7.29006575265511e-09,
+    "torque_nm": 5.88399,
+    "gj_lo": 21.87019725796533,
+    "gj_nom": 36.45032876327555,
+    "g_pass_pa": 4312333453.765495,
+    "gj_pass": 31.437194425324765,
+    "dtheta_pass_deg": 3.2171553460152493,
+    "dtheta_lo_deg": 4.6244822081940224,
+    "spot_hi_mm": 72.64119665959524,
+    "u_gj": 0.019468478320921086,
+    "tau_mpa": 8.878368480617196,
+    "ring_defl_mm": 0.2583819000000006,
+    "ring_u": 0.05473346091088779,
+    "ring_sigma_mpa": 20.034000000000034
+   },
+   "input_values": {
+    "od": 0.022,
+    "idm": 0.02,
+    "g_lo": 3000000000.0,
+    "g_nom": 5000000000.0,
+    "g_hi": 10000000000.0,
+    "e_t": 8000000000.0,
+    "g_req": 4312333453.765495,
+    "rig": {
+     "lever_m": 0.3,
+     "load_kg": 2.0,
+     "gauge_m": 0.3,
+     "wall_m": 3.0,
+     "read_mm": 1.0
+    },
+    "ring": {
+     "b_m": 0.02,
+     "p_n": 20.0,
+     "dial_mm": 0.01
+    },
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CL-H1-TORS-GJ-LO",
+   "type": "claim",
+   "title": "Tube GJ at C4's low corner (G 3 GPa)",
+   "calc": "CALC-H1-TORSION",
+   "output": "gj_lo",
+   "unit": "N m2",
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Card GT-16 step 4 (T-C4-TUBE-TORSION, CR-C2-15): measured GJ = T L_g / dtheta from the slope of 4 steps, both senses; report GJ and G = GJ / J; >= this value keeps C4's low corner conservative.",
+   "value": 21.87019725796533
+  },
+  {
+   "id": "CL-H1-TUBE-G-PASS",
+   "type": "claim",
+   "title": "GT-16 tube shear modulus pass line (C4's live requirement)",
+   "calc": "CALC-H1-TORSION",
+   "output": "g_pass_pa",
+   "unit": "Pa",
+   "limit": {
+    "op": ">=",
+    "ref": "CL-C4-D3-TUBE-G-REQ"
+   },
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Re-run whenever C4 re-publishes CL-C4-D3-TUBE-G-REQ.",
+   "note": "CDR-19: the card used to report GJ against C4's low corner (G 3 GPa) only",
+   "value": 4312333453.765495
+  },
+  {
+   "id": "CL-H1-TORS-GJ-PASS",
+   "type": "claim",
+   "title": "GT-16 torsion pass: GJ at the G pass line",
+   "calc": "CALC-H1-TORSION",
+   "output": "gj_pass",
+   "unit": "N m2",
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Card GT-16 step 4: measured GJ minus its U95 (CL-H1-TORS-U) >= this value passes; below it the +/-45 deg fallback tube is ordered (BOM, I1).",
+   "value": 31.437194425324765
+  },
+  {
+   "id": "CL-H1-TORS-TWIST-PASS",
+   "type": "claim",
+   "title": "GT-16 torsion pass: twist over the 0.30 m gauge at 2.0 kg at the G pass line",
+   "calc": "CALC-H1-TORSION",
+   "output": "dtheta_pass_deg",
+   "unit": "deg",
+   "parts": [
+    "WNG-002"
+   ],
+   "how": "Card GT-16 step 4: measured twist <= this value (less the read U95) passes.",
+   "value": 3.2171553460152493
+  },
+  {
+   "id": "CL-H1-TORS-U",
+   "type": "claim",
+   "title": "GJ relative U95 at the stiffest corner (G 10 GPa, smallest spot)",
+   "calc": "CALC-H1-TORSION",
+   "output": "u_gj",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.05
+   },
+   "how": "T-H1-RIG-CHECK: both lasers on a 1.00 mm shim step.",
+   "value": 0.019468478320921086
+  },
+  {
+   "id": "CL-H1-TORS-TAU",
+   "type": "claim",
+   "title": "Torsion-test peak shear stress at 2.0 kg",
+   "calc": "CALC-H1-TORSION",
+   "output": "tau_mpa",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "value": 30.0
+   },
+   "how": "Far below any CF tube shear strength: the spare tube stays usable.",
+   "value": 8.878368480617196
+  },
+  {
+   "id": "CL-H1-RING-DEFL",
+   "type": "claim",
+   "title": "Ring-crush deflection at 20 N for E_hoop 8 GPa",
+   "calc": "CALC-H1-TORSION",
+   "output": "ring_defl_mm",
+   "unit": "mm",
+   "how": "Card GT-16 step 5: E_hoop = 0.1488 P R^3 / (delta I) from the slope; to C2 for ASM-C2-TUBE-ET.",
+   "value": 0.2583819000000006
+  },
+  {
+   "id": "CL-H1-RING-U",
+   "type": "claim",
+   "title": "Ring-crush E_hoop relative U95 (dial read)",
+   "calc": "CALC-H1-TORSION",
+   "output": "ring_u",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.1
+   },
+   "how": "Borrowed 0.01 mm dial indicator; a caliper cannot read this.",
+   "value": 0.05473346091088779
+  },
+  {
+   "id": "CL-H1-RING-SIGMA",
+   "type": "claim",
+   "title": "Ring-crush peak bending stress at 20 N",
+   "calc": "CALC-H1-TORSION",
+   "output": "ring_sigma_mpa",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "value": 100.0
+   },
+   "how": "Elastic: the ring is not damaged.",
+   "value": 20.034000000000034
+  },
+  {
+   "id": "ASM-H1-LEVER",
+   "type": "assumption",
+   "title": "Coupon lever frame 20:1 / 15:1 / 9:1, water jugs to 20 kg",
+   "text": "2x4 (38 x 89 mm) lever 1.0 m long on an M8 pivot; coupon clevis at 0.045 m (20:1, CDR-28), 0.060 m (15:1) or 0.100 m (9:1) from the pivot, jug hook at 0.900 m. Pivot and the three clevis holes in a pair of 3 mm steel side plates 40 x 200 mm, each plate held to the lever by 6 x M6 through-bolts (was 4: the 20:1 hole raises the pivot load and 4 bolts would bear on the wood at 4.5 MPa against 4.3); lever tare balanced by a counterweight on the short side. Water filled slowly from a hose; jug weighed after failure.",
+   "basis": "CR-C6-39 asks >= 2 660 N for the strip anchor; 15:1 x 20 kg = 2 940 N. The 9:1 hole keeps resolution for the 40-300 N coupons. Steel plates because bare wood across the grain does not carry the pivot bearing (CALC-H1-LEVER)",
+   "value": {
+    "arm_jug_m": 0.9,
+    "arm_hi_m": 0.06,
+    "arm_lo_m": 0.1,
+    "jug_max_kg": 20.0,
+    "b_m": 0.038,
+    "h_m": 0.089,
+    "bolt_m": 0.008,
+    "plate_t_m": 0.003,
+    "n_m6": 6,
+    "m6_m": 0.006,
+    "arm_20_m": 0.045
+   },
+   "unit": "m,m,m,kg,m,m,m,m,-,m,m",
+   "status": "PROPOSED"
+  },
+  {
+   "id": "ASM-H1-WOOD",
+   "type": "assumption",
+   "title": "Construction lumber allowables (Douglas fir-larch No. 2)",
+   "text": "Bending 6.0 MPa, compression perpendicular to grain 4.3 MPa (bolt bearing across the grain).",
+   "basis": "NDS supplement reference design values for DF-L No. 2 (Fb 900 psi, Fc-perp 625 psi), rounded down",
+   "value": {
+    "fb_mpa": 6.0,
+    "fcp_mpa": 4.3
+   },
+   "unit": "MPa",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-H1-LEVER",
+   "type": "calculation",
+   "title": "lever",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "lever",
+   "equation": "F_cap = (a_jug / a_coupon) m_jug g ; F_need,15 = 1.25 max(F_anchor, F_anchor,est, F_insert) ; F_need,9 = 1.25 F_anchor ; sigma = m_jug g a_jug / (b h^2/6) ; F_pivot = F_cap + m_jug g ; p_wood = F_pivot / (d b) ; p_plate = F_pivot / (2 d t) ; p_m6 = F_pivot / (n d6 b)",
+   "inputs": {
+    "lev": "ASM-H1-LEVER",
+    "f_strip": "CL-C6-STRIP-ANCHOR-F",
+    "f_est": "CL-C6-STRIP-ANCHOR-F-EST",
+    "f_ins": "ASM-C6-INSERT-PULL",
+    "k": "ASM-H1-RANGE-FACTOR",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "g": "m/s2"
+   },
+   "outputs": {
+    "cap_n": 2941.995,
+    "cap9_n": 1765.197,
+    "cap20_n": 3922.66,
+    "fail_headroom_20": 2.8024798634168233,
+    "need_n": 1749.6379060585991,
+    "need9_n": 1749.0008670283783,
+    "sigma_mpa": 3.5186884962690783,
+    "wood_brg_mpa": 13.548661184210523,
+    "plate_brg_mpa": 85.80818749999999,
+    "m6_brg_mpa": 3.0108135964912277
+   },
+   "input_values": {
+    "lev": {
+     "arm_jug_m": 0.9,
+     "arm_hi_m": 0.06,
+     "arm_lo_m": 0.1,
+     "jug_max_kg": 20.0,
+     "b_m": 0.038,
+     "h_m": 0.089,
+     "bolt_m": 0.008,
+     "plate_t_m": 0.003,
+     "n_m6": 6,
+     "m6_m": 0.006,
+     "arm_20_m": 0.045
+    },
+    "f_strip": 1399.2006936227026,
+    "f_est": 1399.7103248468793,
+    "f_ins": 300.0,
+    "k": 1.25,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CL-H1-LEVER-CAP",
+   "type": "claim",
+   "title": "Coupon lever capacity, 15:1 hole",
+   "calc": "CALC-H1-LEVER",
+   "output": "cap_n",
+   "unit": "N",
+   "how": "T-H1-LEVER-CAL: 3.000 kg check mass at the 15:1 clevis balances 0.200 kg at the jug hook within 2 %.",
+   "value": 2941.995
+  },
+  {
+   "id": "CL-H1-LEVER-NEED",
+   "type": "claim",
+   "title": "Coupon load the 15:1 hole must reach (1.25 x strip anchor estimate, CR-C6-39)",
+   "calc": "CALC-H1-LEVER",
+   "output": "need_n",
+   "unit": "N",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-LEVER-CAP"
+   },
+   "how": "Re-run when C6/C4 change the anchor force.",
+   "value": 1749.6379060585991
+  },
+  {
+   "id": "CL-H1-LEVER-CAP9",
+   "type": "claim",
+   "title": "Coupon lever capacity, 9:1 hole",
+   "calc": "CALC-H1-LEVER",
+   "output": "cap9_n",
+   "unit": "N",
+   "how": "T-H1-LEVER-CAL: 2.000 kg at the 9:1 clevis balances 0.222 kg within 2 %.",
+   "value": 1765.197
+  },
+  {
+   "id": "CL-H1-LEVER-NEED9",
+   "type": "claim",
+   "title": "Load the 9:1 hole would need for the strip anchor (record, CR-C6-33)",
+   "calc": "CALC-H1-LEVER",
+   "output": "need9_n",
+   "unit": "N",
+   "how": "None: the strip anchor runs on the 20:1 hole; the 9:1 hole is for the 40-300 N coupons.",
+   "note": "CDR-28: limit retired. The 9:1 hole was never used for the strip anchor after CR-C6-39, so this was a standing failure for a test that does not exist",
+   "value": 1749.0008670283783
+  },
+  {
+   "id": "CL-H1-LEVER-CAP20",
+   "type": "claim",
+   "title": "Coupon lever capacity, 20:1 hole (CDR-28)",
+   "calc": "CALC-H1-LEVER",
+   "output": "cap20_n",
+   "unit": "N",
+   "how": "T-H1-LEVER-CAL: 4.000 kg check mass at the 20:1 clevis balances 0.200 kg at the jug hook within 2 %.",
+   "value": 3922.66
+  },
+  {
+   "id": "CL-H1-LEVER-FAIL-HEADROOM",
+   "type": "claim",
+   "title": "20:1 hole capacity / strip-anchor design force (room to reach failure)",
+   "calc": "CALC-H1-LEVER",
+   "output": "fail_headroom_20",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.5
+   },
+   "how": "T-C6-STRIP-ANCHOR is taken to failure on the 20:1 hole; the failure load / design force is the measured RF.",
+   "note": "CDR-28: the 15:1 hole had 5 % over 1.25 x the design force, so a joint that passed could not be taken to failure and its real RF stayed unknown",
+   "value": 2.8024798634168233
+  },
+  {
+   "id": "CL-H1-LEVER-SIGMA",
+   "type": "claim",
+   "title": "Lever bending stress at full jug",
+   "calc": "CALC-H1-LEVER",
+   "output": "sigma_mpa",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "value": 6.0
+   },
+   "how": "ASM-H1-WOOD Fb; inspect the 2x4 for knots at the plates.",
+   "value": 3.5186884962690783
+  },
+  {
+   "id": "CL-H1-LEVER-WOOD-BRG",
+   "type": "claim",
+   "title": "Pivot bearing on bare wood (why the steel plates are required)",
+   "calc": "CALC-H1-LEVER",
+   "output": "wood_brg_mpa",
+   "unit": "MPa",
+   "how": "Informational: above 4.3 MPa across the grain, so the M8 never bears on the wood directly.",
+   "value": 13.548661184210523
+  },
+  {
+   "id": "CL-H1-LEVER-PLATE-BRG",
+   "type": "claim",
+   "title": "Pivot bearing on the two 3 mm steel plates",
+   "calc": "CALC-H1-LEVER",
+   "output": "plate_brg_mpa",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "value": 150.0
+   },
+   "how": "Mild steel; holes drilled, not punched.",
+   "value": 85.80818749999999
+  },
+  {
+   "id": "CL-H1-LEVER-M6-BRG",
+   "type": "claim",
+   "title": "Plate-to-lever M6 bolt bearing on the wood across the grain",
+   "calc": "CALC-H1-LEVER",
+   "output": "m6_brg_mpa",
+   "unit": "MPa",
+   "limit": {
+    "op": "<=",
+    "value": 4.3
+   },
+   "how": "ASM-H1-WOOD Fc-perp; washers both sides.",
+   "value": 3.0108135964912277
+  },
+  {
+   "id": "CALC-H1-D5",
+   "type": "calculation",
+   "title": "d5",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "d5",
+   "equation": "F_req = k F_peak,U / g [kgf] ; u_ratio = sqrt2 U_cell / F_plateau,L ; theta_acc = atan(mu_max) - u_theta (D-105: mu is an upper bound)",
+   "inputs": {
+    "f_pk": "CL-D5-F-PEAK-UPPER",
+    "f_l": "CL-D5-F-PLATEAU-LOWER",
+    "k": "ASM-H1-RANGE-FACTOR",
+    "u_t": "CL-H1-T-U95",
+    "mu": "ASM-D5-PAD-MU",
+    "inc": "ASM-H1-INCLINO",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "g": "m/s2"
+   },
+   "outputs": {
+    "cell_req_kgf": 4.995485206467041,
+    "ratio_u": 0.004845279811940523,
+    "mu_angle_deg": 21.80140948635181,
+    "mu_accept_deg": 21.50140948635181
+   },
+   "input_values": {
+    "f_pk": 39.19118,
+    "f_l": 35.778886797385326,
+    "k": 1.25,
+    "u_t": 0.122583125,
+    "mu": 0.4,
+    "inc": 0.3,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "ASM-H1-INCLINO",
+   "type": "assumption",
+   "title": "Phone inclinometer U95 0.3 deg on a tilt board",
+   "text": "Phone level app on the board face, zeroed on the flat board, read at the moment of slip from video; U95 0.3 deg.",
+   "basis": "typical phone MEMS inclinometer after a two-way zero",
+   "value": 0.3,
+   "unit": "deg",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CL-H1-D5-CELL-REQ",
+   "type": "claim",
+   "title": "Thrust cell range needed for the D5 crush coupon",
+   "calc": "CALC-H1-D5",
+   "output": "cell_req_kgf",
+   "unit": "kgf",
+   "limit": {
+    "op": "<=",
+    "ref": "CL-H1-THRUST-CAP"
+   },
+   "how": "Card GT-15 D5 block: the 20 kgf cell under the drill-press table carries the crush.",
+   "value": 4.995485206467041
+  },
+  {
+   "id": "CL-H1-D5-RATIO-U",
+   "type": "claim",
+   "title": "U95 of the U/L plateau ratio",
+   "calc": "CALC-H1-D5",
+   "output": "ratio_u",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.01
+   },
+   "how": "Against D5's bias tolerance 0.01 (CL-D5-BIAS-ERR); from T-H1-STAND-CAL.",
+   "value": 0.004845279811940523
+  },
+  {
+   "id": "CL-H1-MU-ANGLE-ACCEPT",
+   "type": "claim",
+   "title": "T-D5-PAD-MU acceptance slip angle (mu <= 0.40 less U95)",
+   "calc": "CALC-H1-D5",
+   "output": "mu_accept_deg",
+   "unit": "deg",
+   "how": "Card GT-15: every one of 5 runs on the landing mat (dry) and 5 with the mat damp slides at or below this angle; that passes mu <= requirements.pad_mu_max (D-105, CDR decision B1).",
+   "note": "D-105: the pass used to be a LOWER bound (slip angle >= 35.3 deg, mu >= 0.7, to stand parked in 8 m/s). The pad face now caps the foot side load, so the test is an upper bound and the parked aircraft is laid flat or tied",
+   "value": 21.50140948635181
+  },
+  {
+   "id": "ASM-H1-GPS-U",
+   "type": "assumption",
+   "title": "Phone GPS distance U95 5 m",
+   "text": "Distance to the 100 m point from two phone GPS fixes (or a pace count checked against a 30 m tape); U95 5 m.",
+   "basis": "consumer GPS open-sky CEP",
+   "value": 5.0,
+   "unit": "m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-H1-LOG-DT",
+   "type": "assumption",
+   "title": "Output log step 0.1 s",
+   "text": "RCOU / ESC rpm are read from the DataFlash log at 10 Hz or faster; the stop time is resolved to 0.1 s.",
+   "basis": "ArduPilot default log rates",
+   "value": 0.1,
+   "unit": "s",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-H1-FIELD",
+   "type": "calculation",
+   "title": "field",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "field",
+   "equation": "d_walk = d_min + U_gps ; t_stop_acc = t_max - dt_log",
+   "inputs": {
+    "d": "P:requirements.range_check_min_m",
+    "u": "ASM-H1-GPS-U",
+    "t": "P:requirements.estop_time_max_s",
+    "dt": "ASM-H1-LOG-DT"
+   },
+   "units": {
+    "d": "m",
+    "t": "s"
+   },
+   "outputs": {
+    "walk_m": 105.0,
+    "stop_accept_s": 0.9
+   },
+   "input_values": {
+    "d": 100.0,
+    "u": 5.0,
+    "t": 1.0,
+    "dt": 0.1
+   }
+  },
+  {
+   "id": "CL-H1-RANGE-WALK",
+   "type": "claim",
+   "title": "T-F5-RANGE walk-out distance (guard-banded)",
+   "calc": "CALC-H1-FIELD",
+   "output": "walk_m",
+   "unit": "m",
+   "how": "Card GT-14: read RSSI/LQ at >= this distance, 25 mW, 8 positions; pass LQ >= 0.9 and best RSSI >= P:requirements.rc_rssi_check_min_dbm (-93.8 dBm) in every position.",
+   "value": 105.0
+  },
+  {
+   "id": "CL-H1-ESTOP-ACCEPT",
+   "type": "claim",
+   "title": "Arm/kill acceptance: switch to zero output in the log",
+   "calc": "CALC-H1-FIELD",
+   "output": "stop_accept_s",
+   "unit": "s",
+   "how": "Card GT-12 (T-H1-ARM-KILL): <= this value from the switch edge to all RCOU at the disarmed value, 5 trials.",
+   "value": 0.9
+  },
+  {
+   "id": "ASM-H1-FP-PRED",
+   "type": "assumption",
+   "title": "C4's 3-D predictions at the two gauge sites, 1.0 x L4 (limit)",
+   "text": "Paper face 5 mm below the shoe leg edge at x ~0.30 m: 3.4-4.3 MPa at E_face 4 GPa; CF edge strip 10 mm forward of the collar cheek: 88 MPa at E 110 GPa.",
+   "basis": "team/C4/CHANGE-REQUESTS.md CR-C4-38 (S1 3-D FE, shoe as drawn); not yet published as claims",
+   "value": {
+    "face_mpa": [
+     3.4,
+     4.3
+    ],
+    "e_face_gpa": 4.0,
+    "strip_mpa": 88.0,
+    "e_strip_gpa": 110.0
+   },
+   "unit": "MPa,GPa,MPa,GPa",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-H1-SG",
+   "type": "assumption",
+   "title": "Strain-gauge read-out: half bridge (active + dummy) on an HX711 at reduced excitation",
+   "text": "350 ohm foil gauges, gauge factor 2.0 +/-1 %, grid 3 x 2.5 mm (I1 G13). Each active gauge is paired with a dummy gauge bonded on an unloaded offcut of the same material beside the article (temperature compensation), completed by two 350 ohm 0.1 % resistors; one HX711 per bridge (G06 and G12 boards), channel A gain 128. The HX711's 4.3 V excitation is dropped to the bridge through 1.5 kohm in each lead (self-heating on paper over foam). Noise 0.1 uV rms after averaging (2 x the datasheet's 50 nV at 10 SPS for the leads). Shunt calibration: 100 kohm across the dummy arm.",
+   "basis": "Vishay TN-502 self-heating guidance: <= 0.05 W/in2 (78 W/m2) on poor heat sinks such as plastics and foam laminates; a dummy gauge on the same substrate cancels apparent strain",
+   "value": {
+    "gf": 2.0,
+    "r_ohm": 350.0,
+    "grid_m2": 7.5e-06,
+    "v_hx_v": 4.3,
+    "r_series_ohm": 1500.0,
+    "noise_v": 1e-07,
+    "r_shunt_ohm": 100000.0,
+    "p_dens_max_wm2": 78.0
+   },
+   "unit": "-,ohm,m2,V,ohm,V,ohm,W/m2",
+   "status": "UNVERIFIED",
+   "cites": [
+    "SRC-H1-HX711"
+   ]
+  },
+  {
+   "id": "ASM-H1-SG-STACK",
+   "type": "assumption",
+   "title": "Gauge + adhesive stiffness vs the paper face (reinforcement estimate)",
+   "text": "Polyimide carrier 25 um at 3 GPa plus 10 um cyanoacrylate at 3 GPa, constantan foil 5 um at 160 GPa over half the grid; foam-board paper face 0.20 mm at 4 GPa.",
+   "basis": "typical foil-gauge construction; face thickness from a caliper read of the board (to confirm)",
+   "value": {
+    "et_gauge_npm": 505000.00000000006,
+    "et_face_npm": 800000.0
+   },
+   "unit": "N/m",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-H1-DIAL",
+   "type": "assumption",
+   "title": "Dial indicator 25 mm travel, 0.01 mm",
+   "text": "Borrowed long-travel dial indicator on a magnetic base clamped to the test frame, plunger on the shoe pad along the L4 resultant.",
+   "basis": "Jacobs metal shop hand tools (to ask); fallback caliper depth rod 0.02 mm",
+   "value": 25.0,
+   "unit": "mm",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "CALC-H1-FINPROOF",
+   "type": "calculation",
+   "title": "finproof",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "finproof",
+   "equation": "eps = sigma / E ; V_b = V_hx R / (R + 2 R_s) ; V_out = V_b GF eps / 4 ; eps_res = 4 (2 noise) / (GF V_b) ; P_g = (V_b/2)^2 / R / A_grid ; eps_shunt = R / (GF (R + R_sh)) ; d_split = sqrt(d_3D d_shell) ; travel_req = 1.25 d_shell (dial to 1.0 x; rule above) ; reinf = Et_g / Et_face",
+   "inputs": {
+    "pred": "ASM-H1-FP-PRED",
+    "sg": "ASM-H1-SG",
+    "stack": "ASM-H1-SG-STACK",
+    "dial": "ASM-H1-DIAL",
+    "d3": "CL-C4-SIM-FOOT-DEFL",
+    "dsh": "CL-C4-D3-FOOT-DEFL",
+    "sf": "P:requirements.safety_factor_ult"
+   },
+   "outputs": {
+    "eps_face_lim_ue": [
+     850.0,
+     1075.0
+    ],
+    "eps_face_ult_ue": 1612.5,
+    "eps_strip_lim_ue": 800.0,
+    "eps_strip_ult_ue": 1200.0,
+    "vb_v": 0.44925373134328356,
+    "v_face_ult_uv": 362.2108208955224,
+    "res_frac": 0.0010474887629470394,
+    "res_ue": 0.8903654485049833,
+    "p_dens_wm2": 19.2218014405584,
+    "p_dens_bare_wm2": 1760.9523809523807,
+    "shunt_ue": 1743.8963627304436,
+    "d_split_mm": 6.942182132611486,
+    "d3_mm": 4.102570372906769,
+    "dsh_mm": 11.747243406382726,
+    "travel_req_mm": 14.684054257978406,
+    "travel_mm": 25.0,
+    "d_shell_ult_mm": 17.62086510957409,
+    "reinf": 0.6312500000000001
+   },
+   "input_values": {
+    "pred": {
+     "face_mpa": [
+      3.4,
+      4.3
+     ],
+     "e_face_gpa": 4.0,
+     "strip_mpa": 88.0,
+     "e_strip_gpa": 110.0
+    },
+    "sg": {
+     "gf": 2.0,
+     "r_ohm": 350.0,
+     "grid_m2": 7.5e-06,
+     "v_hx_v": 4.3,
+     "r_series_ohm": 1500.0,
+     "noise_v": 1e-07,
+     "r_shunt_ohm": 100000.0,
+     "p_dens_max_wm2": 78.0
+    },
+    "stack": {
+     "et_gauge_npm": 505000.00000000006,
+     "et_face_npm": 800000.0
+    },
+    "dial": 25.0,
+    "d3": 0.004102570372906769,
+    "dsh": 0.011747243406382725,
+    "sf": 1.5
+   }
+  },
+  {
+   "id": "CL-H1-FP-EPS-FACE-ULT",
+   "type": "claim",
+   "title": "Face gauge strain predicted at 1.5 x L4 (upper end of C4's band)",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "eps_face_ult_ue",
+   "unit": "ue",
+   "how": "Card GT-09 FP step 4; the limit-level reading (step 3) is the one compared with C4.",
+   "value": 1612.5
+  },
+  {
+   "id": "CL-H1-FP-EPS-STRIP-LIM",
+   "type": "claim",
+   "title": "Strip gauge strain predicted at 1.0 x L4",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "eps_strip_lim_ue",
+   "unit": "ue",
+   "how": "Card GT-09 FP step 3 (CR-C4-38).",
+   "value": 800.0
+  },
+  {
+   "id": "CL-H1-SG-RES-FRAC",
+   "type": "claim",
+   "title": "Gauge 2-sigma resolution / smallest predicted limit strain",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "res_frac",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.01
+   },
+   "how": "T-H1-RIG-CHECK: 60 s zero record on each bridge, then the shunt step.",
+   "value": 0.0010474887629470394
+  },
+  {
+   "id": "CL-H1-SG-PDENS",
+   "type": "claim",
+   "title": "Gauge self-heating power density at the reduced excitation",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "p_dens_wm2",
+   "unit": "W/m2",
+   "limit": {
+    "op": "<=",
+    "value": 78.0
+   },
+   "how": "Zero drift <= 5 ue over 10 min with the article unloaded (T-H1-RIG-CHECK).",
+   "value": 19.2218014405584
+  },
+  {
+   "id": "CL-H1-SG-PDENS-BARE",
+   "type": "claim",
+   "title": "Self-heating with the HX711's 4.3 V straight on the bridge (why the 1.5 kohm leads)",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "p_dens_bare_wm2",
+   "unit": "W/m2",
+   "how": "Informational: 20 x over the foam-laminate guidance; the reading would drift as the face warms.",
+   "value": 1760.9523809523807
+  },
+  {
+   "id": "CL-H1-SG-SHUNT",
+   "type": "claim",
+   "title": "Shunt-calibration step (100 kohm across the dummy arm)",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "shunt_ue",
+   "unit": "ue",
+   "how": "Card GT-09 FP step 1: each bridge reads this within 1 % before loading.",
+   "value": 1743.8963627304436
+  },
+  {
+   "id": "CL-H1-SG-REINF",
+   "type": "claim",
+   "title": "Gauge stack / paper-face membrane stiffness (reinforcement estimate)",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "reinf",
+   "unit": "-",
+   "how": "Informational: the face gauge reads low by up to ~1/(1+ratio); its factor comes from a gauged T-C4-BOARD-COUPON in 4-point bend (GT-15), not from this estimate.",
+   "value": 0.6312500000000001
+  },
+  {
+   "id": "CL-H1-FP-DEFL-SPLIT",
+   "type": "claim",
+   "title": "Pad deflection at 1.0 x L4 that splits the 3-D and shell predictions",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "d_split_mm",
+   "unit": "mm",
+   "how": "Card GT-09 FP step 3: geometric mean of the two predictions (model errors are multiplicative); below it, the 3-D load path (strips clamped in the cheeks) is the one built.",
+   "value": 6.942182132611486
+  },
+  {
+   "id": "CL-H1-FP-TRAVEL-REQ",
+   "type": "claim",
+   "title": "Dial travel needed to the 1.0 x step (1.25 x the shell pad deflection at limit)",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "travel_req_mm",
+   "unit": "mm",
+   "limit": {
+    "op": "<=",
+    "ref": "ASM-H1-DIAL"
+   },
+   "how": "Borrowed 25 mm indicator, removed before the 1.5 x step; above 1.0 x a steel rule on a fixed bar (0.5 mm) reads the pad.",
+   "value": 14.684054257978406
+  },
+  {
+   "id": "CL-H1-FP-DEFL-SHELL-ULT",
+   "type": "claim",
+   "title": "Pad deflection at 1.5 x L4 if the shell path is right",
+   "calc": "CALC-H1-FINPROOF",
+   "output": "d_shell_ult_mm",
+   "unit": "mm",
+   "how": "Informational: sizes the rule and the frame clearance.",
+   "value": 17.62086510957409
+  },
+  {
+   "id": "ASM-H1-ESC-DUMMY",
+   "type": "assumption",
+   "title": "Heated aluminium ESC dummy for T-E3-ESC-PAD-CFD",
+   "text": "45 x 20 x 6 mm aluminium block (14.6 g), a 10 ohm 5 W resistor in a 3 mm slot run at 3.0 W (5.5 V, power from V and I on two DMMs, +/-1 %), painted matte black (emissivity 0.90 +/- 0.05, as heat-shrink), on 3 mm XPS (k 0.033 W/m K +/- 10 %) in place of the hook-and-loop so the height above the pad stays the same, held by the flight strap (same 320 mm2 covered). Thermocouple 1 in a hole at the block centre, thermocouple 2 on the pad under the XPS, thermocouple 3 in the inflow; same spool, zero offset checked at ambient (differential +/-0.3 K). Exposed area +/-2.5 % (strap edges).",
+   "basis": "CR-E3-17 (E3's rig) with the conduction path made measurable; solid aluminium is isothermal (Bi < 0.01)",
+   "value": {
+    "p_w": 3.0,
+    "l_m": 0.045,
+    "w_m": 0.02,
+    "h_m": 0.006,
+    "eps": 0.9,
+    "rho": 2700.0,
+    "cp": 900.0,
+    "t_k": 313.0,
+    "k_xps": 0.033,
+    "t_xps_m": 0.003,
+    "u_dt_k": 0.3,
+    "u_p": 0.01,
+    "u_a": 0.025,
+    "u_kxps": 0.1,
+    "u_eps": 0.05,
+    "u_fit": 0.005
+   },
+   "unit": "W,m,m,m,-,kg/m3,J/kg K,K,W/m K,m,K,-,-,-,-,-",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "ASM-H1-AIR",
+   "type": "assumption",
+   "title": "Air at 300 K",
+   "text": "nu 15.89e-6 m2/s, k 0.0263 W/m K, Pr 0.707.",
+   "basis": "Incropera Table A.4 (as E3)",
+   "value": {
+    "nu": 1.589e-05,
+    "k": 0.0263,
+    "pr": 0.707
+   },
+   "unit": "m2/s,W/m K,-",
+   "status": "PROPOSED",
+   "cites": [
+    "SRC-E3-INCROPERA"
+   ]
+  },
+  {
+   "id": "CALC-H1-ESC-CFD",
+   "type": "calculation",
+   "title": "esc cfd",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "esc_cfd",
+   "equation": "h_lam = 0.664 Re^0.5 Pr^1/3 k/L, Re = U L/nu ; h_pass = h_lam sqrt(f_design) ; A = L w + 2 h (L + w) - A_strap ; h_r = 4 eps sigma T^3 ; G = k_xps L w / t ; dT = P / (A (h + h_r) + G) ; tau = m c / (A (h + h_r) + G) ; u_h = rss(dT, P, A, conduction, radiation, fit) ; f_acc = f_d (1 + u_h)^2",
+   "inputs": {
+    "feq": "CL-E3-CFD-FEQ",
+    "u": "CL-E3-CFD-U",
+    "h_exp": "CL-E3-CFD-H-HOV",
+    "strap": "ASM-E3-ESC-STRAP",
+    "d": "ASM-H1-ESC-DUMMY",
+    "air": "ASM-H1-AIR"
+   },
+   "outputs": {
+    "h_lam": 60.74007762461778,
+    "h_pass": 64.60712233973065,
+    "area_m2": 0.00136,
+    "dt_pass_k": 28.227803891806655,
+    "dt_exp_k": 22.69853331719907,
+    "cond_share": 0.09315175284296195,
+    "tau_s": 123.46841422276232,
+    "run_s": 617.3420711138116,
+    "u_h": 0.03191972945048134,
+    "f_accept": 1.2047638890991343,
+    "f_design": 1.131384201435432
+   },
+   "input_values": {
+    "feq": [
+     1.131384201435432,
+     1.3722365338096265,
+     2.285872862313591,
+     2.60137761811015
+    ],
+    "u": [
+     10.9,
+     16.0
+    ],
+    "h_exp": 83.64310504567904,
+    "strap": 0.00032,
+    "d": {
+     "p_w": 3.0,
+     "l_m": 0.045,
+     "w_m": 0.02,
+     "h_m": 0.006,
+     "eps": 0.9,
+     "rho": 2700.0,
+     "cp": 900.0,
+     "t_k": 313.0,
+     "k_xps": 0.033,
+     "t_xps_m": 0.003,
+     "u_dt_k": 0.3,
+     "u_p": 0.01,
+     "u_a": 0.025,
+     "u_kxps": 0.1,
+     "u_eps": 0.05,
+     "u_fit": 0.005
+    },
+    "air": {
+     "nu": 1.589e-05,
+     "k": 0.0263,
+     "pr": 0.707
+    }
+   }
+  },
+  {
+   "id": "CL-H1-ESCCFD-H-PASS",
+   "type": "claim",
+   "title": "Film coefficient at the pass line (f = CL-E3-CFD-FEQ design hover)",
+   "calc": "CALC-H1-ESC-CFD",
+   "output": "h_pass",
+   "unit": "W/m2 K",
+   "parts": [
+    "PRP-002-UR",
+    "FIN-007-UR"
+   ],
+   "how": "Card GT-04 step 2b: h = (P - G dT_xps - A h_r dT) / (A dT) at steady state.",
+   "value": 64.60712233973065
+  },
+  {
+   "id": "CL-H1-ESCCFD-DT-PASS",
+   "type": "claim",
+   "title": "Dummy rise above inflow at the pass line, 3.0 W",
+   "calc": "CALC-H1-ESC-CFD",
+   "output": "dt_pass_k",
+   "unit": "K",
+   "limit": {
+    "op": "<=",
+    "value": 53.0
+   },
+   "how": "Limit: 30 degC lab + rise stays under the ASA pad's 83 degC (HDT 93 - 10 K).",
+   "value": 28.227803891806655
+  },
+  {
+   "id": "CL-H1-ESCCFD-DT-EXP",
+   "type": "claim",
+   "title": "Dummy rise expected at E3's CFD film (SST, fine grid)",
+   "calc": "CALC-H1-ESC-CFD",
+   "output": "dt_exp_k",
+   "unit": "K",
+   "how": "Informational: what a CFD-consistent run reads.",
+   "value": 22.69853331719907
+  },
+  {
+   "id": "CL-H1-ESCCFD-RUN",
+   "type": "claim",
+   "title": "Hover-power hold needed to reach steady state (5 tau)",
+   "calc": "CALC-H1-ESC-CFD",
+   "output": "run_s",
+   "unit": "s",
+   "how": "Card GT-04 step 2b holds hover thrust this long; E3's ~5 min is about 2 tau (CR-H1-21).",
+   "value": 617.3420711138116
+  },
+  {
+   "id": "CL-H1-ESCCFD-U-H",
+   "type": "claim",
+   "title": "Film coefficient relative U95 on the dummy",
+   "calc": "CALC-H1-ESC-CFD",
+   "output": "u_h",
+   "unit": "-",
+   "limit": {
+    "op": "<=",
+    "value": 0.05
+   },
+   "how": "T-H1-RIG-CHECK: thermocouple zero offsets at ambient; DMM checks.",
+   "value": 0.03191972945048134
+  },
+  {
+   "id": "CL-H1-ESCCFD-F-ACCEPT",
+   "type": "claim",
+   "title": "T-E3-ESC-PAD-CFD acceptance: f_meas (guard-banded)",
+   "calc": "CALC-H1-ESC-CFD",
+   "output": "f_accept",
+   "unit": "-",
+   "how": "Card GT-04 step 2b: f_meas = (h_meas / h_lam)^2 >= this value passes CL-E3-CFD-FEQ (design hover).",
+   "value": 1.2047638890991343
+  },
+  {
+   "id": "CALC-H1-SIDE-POD",
+   "type": "calculation",
+   "title": "side pod",
+   "script": "redesign/team/H1/ground_tests.py",
+   "function": "side_pod",
+   "equation": "m = F / g ; SF_rim(F) = SF_D5 x F_D5 / F (linear; D5's FEA is worked at C5's 59.25 N ult, CR-H1-22 closed by D-101); flight pod brackets at limit +x / -z (C3 design row / 2.156), crash force on test articles only (CR-H1-23, D-102)",
+   "inputs": {
+    "f_side": "CL-C1-FOOT-SIDE-DESIGN-ULT",
+    "sf_rim": "CL-D5-SIDE-RIM-SF",
+    "f_d5": "CL-C5-SIM3D-SIDE-ULT",
+    "f_px": "CL-C3-BRACKET-PROOF-LIMIT-X",
+    "f_pz": "CL-C3-BRACKET-PROOF-LIMIT-Z",
+    "f_crash": "CL-C3-BRACKET-CRASH-F",
+    "g": "P:env.g_ms2"
+   },
+   "units": {
+    "g": "m/s2"
+   },
+   "outputs": {
+    "side_n": 36.75,
+    "side_kg": 3.7474570826938867,
+    "rim_sf_at_side": 1.200371795200472,
+    "pod_x_n": 76.21620962710105,
+    "pod_x_kg": 7.7718904648479405,
+    "pod_z_n": 51.37029604285736,
+    "pod_z_kg": 5.238312374037757,
+    "pod_crash_n": 204.69804269769435,
+    "pod_crash_kg": 20.873391290368716
+   },
+   "input_values": {
+    "f_side": 36.75,
+    "sf_rim": 1.200371795200472,
+    "f_d5": 36.75,
+    "f_px": 76.21620962710105,
+    "f_pz": 51.37029604285736,
+    "f_crash": 204.69804269769435,
+    "g": 9.80665
+   }
+  },
+  {
+   "id": "CL-H1-D5-SIDE-F",
+   "type": "claim",
+   "title": "T-D5-SIDE load at the pad (ultimate basis, CL-C1-FOOT-SIDE-DESIGN-ULT)",
+   "calc": "CALC-H1-SIDE-POD",
+   "output": "side_n",
+   "unit": "N",
+   "parts": [
+    "GER-001-UR",
+    "GER-002-UR"
+   ],
+   "how": "Card GT-09: jugs over a pulley, along y then z, insert pushed 4 mm in; 3 s hold.",
+   "value": 36.75
+  },
+  {
+   "id": "CL-H1-D5-SIDE-RIM-SF",
+   "type": "claim",
+   "title": "D5 shoe RF at the T-D5-SIDE load (D5 FEA of the drawn R8 shoe, D-101)",
+   "calc": "CALC-H1-SIDE-POD",
+   "output": "rim_sf_at_side",
+   "unit": "-",
+   "limit": {
+    "op": ">=",
+    "value": 1.0
+   },
+   "parts": [
+    "GER-001-UR",
+    "GER-002-UR"
+   ],
+   "how": "T-D5-SIDE 60 N at the pad of two R8 shoes, +y on one and +z on the other, insert pushed 4-5 mm in; inspect the inboard snap-window corners and the rim; no crack.",
+   "value": 1.200371795200472
+  },
+  {
+   "id": "CL-H1-POD-BRACKET-F",
+   "type": "claim",
+   "title": "T-C3-POD-PROOF bracket limit load on the flight pod, +x (CR-H1-23, D-102)",
+   "calc": "CALC-H1-SIDE-POD",
+   "output": "pod_x_n",
+   "unit": "N",
+   "parts": [
+    "POD-007"
+   ],
+   "how": "Card GT-09: strap round each handle-foot bracket, jugs over a pulley; 25 % steps to this limit load, 10 s hold; stop at the first audible crack.",
+   "value": 76.21620962710105
+  },
+  {
+   "id": "CL-H1-POD-BRACKET-F-Z",
+   "type": "claim",
+   "title": "T-C3-POD-PROOF bracket limit load on the flight pod, -z (CR-H1-23, D-102)",
+   "calc": "CALC-H1-SIDE-POD",
+   "output": "pod_z_n",
+   "unit": "N",
+   "parts": [
+    "POD-007"
+   ],
+   "how": "Card GT-09, as CL-H1-POD-BRACKET-F along -z.",
+   "value": 51.37029604285736
+  },
+  {
+   "id": "CL-H1-POD-BRACKET-CRASH-F",
+   "type": "claim",
+   "title": "Bracket crash force, test articles only (T-C3-BRACKET-CRASH, D-102)",
+   "calc": "CALC-H1-SIDE-POD",
+   "output": "pod_crash_n",
+   "unit": "N",
+   "parts": [
+    "POD-007"
+   ],
+   "how": "T-C3-BRACKET-CRASH on two test articles (printed foot + bracket bonded to a wall offcut and a spar stub), never the flight pod.",
+   "value": 204.69804269769435
+  },
+  {
+   "id": "T-H1-STAND-CAL",
+   "type": "test",
+   "title": "Thrust stand calibration and noise",
+   "verifies": [
+    "CL-H1-THRUST-CELL-REQ",
+    "CL-H1-TORQUE-CELL-REQ",
+    "CL-H1-THRUST-RES",
+    "CL-H1-TORQUE-RES"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-01: dead weights 0.5/1.0/2.0/2.5 kg on the thrust axis via a pulley-free hook, 50/100/200/500 g at the 0.100 m torque arm; 60 s zero-load noise; before and after every session.",
+   "evidence": "redesign/team/H1/logs/T-H1-STAND-CAL.csv"
+  },
+  {
+   "id": "T-H1-SCALE-CAL",
+   "type": "test",
+   "title": "Scale and CG-jig calibration",
+   "verifies": [
+    "CL-H1-WEIGH-U95",
+    "CL-H1-WEIGH-U-FRAC",
+    "CL-H1-CG-U95",
+    "CL-H1-CG-U-FRAC"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-06/07: 2.000 kg check mass 10 times per scale; 1.000 kg at a ruled x on the jig, recover x; record in logs/T-H1-SCALE-CAL.csv.",
+   "evidence": "redesign/team/H1/logs/T-H1-SCALE-CAL.csv"
+  },
+  {
+   "id": "T-H1-RESTRAINT-PULL",
+   "type": "test",
+   "title": "Restraint pull before props-on runs",
+   "verifies": [
+    "CL-H1-RESTRAINT-F",
+    "CL-H1-RESTRAINT-PER-TIE"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-13: spring scale (or the lever frame) on each strap to the per-strap force, no slip at the table anchor.",
+   "evidence": "redesign/team/H1/logs/T-H1-RESTRAINT-PULL.csv"
+  },
+  {
+   "id": "T-H1-RESTRAINED-RUN",
+   "type": "test",
+   "title": "Restrained four-motor run (CR-A2-25)",
+   "verifies": [
+    "CL-E1-ILIM-I",
+    "CL-F4-SPIN-MAX",
+    "CL-F4-BAT-CURR-MAX",
+    "CL-H1-RESTRAINT-F"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-13: aircraft strapped at the four root eyes after T-H1-RESTRAINT-PULL; fresh pack; QSTABILIZE, 2 s full throttle: BAT.Curr <= 100 A, each ESC rpm <= the cap (Q_M_SPIN_MAX 0.84), per-motor current <= 25 A from ESC telemetry; then 30 s at hover throttle for compassmot (T-F3-COMPASSMOT).",
+   "evidence": "redesign/team/H1/logs/T-H1-RESTRAINED-RUN.csv"
+  },
+  {
+   "id": "T-H1-PACK-PULL",
+   "type": "test",
+   "title": "Pack retention pull with a dummy pack (GT-10)",
+   "verifies": [
+    "CL-H1-PACK-PULL-F"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-10: pack-size plywood/sand dummy at the heaviest GT-05 pack mass, strapped as flown; pull CL-H1-PACK-PULL-F in +-x, +-y, +z with jugs over a pulley or a luggage scale, 10 s each; slip <= 5 mm, hatch stays closed. Never a LiPo.",
+   "evidence": "redesign/team/H1/logs/T-H1-PACK-PULL.csv"
+  },
+  {
+   "id": "T-H1-ARM-KILL",
+   "type": "test",
+   "title": "Arm refusal and kill switch, props off (GT-12)",
+   "verifies": [
+    "CL-H1-ESTOP-ACCEPT"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-12: arm refused with each failed pre-arm check; kill switch at 50 % throttle, 5 trials, switch edge to all RCOU at disarm in the log <= CL-H1-ESTOP-ACCEPT.",
+   "evidence": "redesign/team/H1/logs/T-H1-ARM-KILL.csv"
+  },
+  {
+   "id": "T-H1-LEVER-CAL",
+   "type": "test",
+   "title": "Coupon lever calibration, both holes",
+   "verifies": [
+    "CL-H1-LEVER-CAP",
+    "CL-H1-LEVER-NEED",
+    "CL-H1-LEVER-CAP9",
+    "CL-H1-LEVER-NEED9",
+    "CL-H1-LEVER-SIGMA",
+    "CL-H1-LEVER-PLATE-BRG",
+    "CL-H1-LEVER-M6-BRG"
+   ],
+   "state": "planned",
+   "procedure": "Card GT-15 step 0: tare the lever with the short-side counterweight (jug hook empty, lever level); 3.000 kg check mass at the 15:1 clevis, balance with water at the jug hook, ratio = 3.000 / jug mass, 3x, within 2 % of 15.0; same with 2.000 kg at the 9:1 clevis, within 2 % of 9.0. Then a 20 kg jug on the 15:1 hole against a steel bar coupon for 60 s: no crack at the plates, no bolt set.",
+   "evidence": "redesign/team/H1/logs/T-H1-LEVER-CAL.csv"
+  },
+  {
+   "id": "T-H1-RIG-CHECK",
+   "type": "test",
+   "title": "Readout checks: optical lever, tube deflection and twist, tap acquisition, inclinometer, strain-gauge bridges, ESC-dummy thermocouples",
+   "verifies": [
+    "CL-H1-MSTIFF-U",
+    "CL-H1-TUBE-E-U",
+    "CL-H1-TORS-U",
+    "CL-H1-RING-U",
+    "CL-H1-TAP-FS-REQ",
+    "CL-H1-D5-RATIO-U",
+    "CL-H1-D5-CELL-REQ",
+    "CL-H1-SG-RES-FRAC",
+    "CL-H1-SG-PDENS",
+    "CL-H1-SG-SHUNT",
+    "CL-H1-ESCCFD-U-H"
+   ],
+   "state": "planned",
+   "procedure": "Optical lever: 1.00 mm shim under the mirror base edge, spot step matches 2 L t/b; both torsion lasers on the same shim; caliper or dial on a 1.00 mm gauge block; FC raw IMU logs a 200 Hz phone-speaker tone at the right bin; phone inclinometer against a 30 deg printed wedge; each gauge bridge: 60 s zero (2 sigma), 10 min drift <= 5 ue unloaded, shunt step within 1 % of CL-H1-SG-SHUNT; three thermocouples together in still air read within 0.3 K.",
+   "evidence": "redesign/team/H1/logs/T-H1-RIG-CHECK.csv"
+  }
+ ]
+}

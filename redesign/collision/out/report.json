@@ -1,0 +1,389 @@
+{
+ "bodies": 1177,
+ "defects": [
+  "PWR-004 body \"lap solder joint\": zero-width spike / repeated point in a loop (removed in the export)"
+ ],
+ "kinks": [],
+ "parts": 220,
+ "poses": [
+  {
+   "hits": [
+    {
+     "a": "E-HRN-11",
+     "at_mm": [
+      -3.12,
+      -44.66,
+      45.48
+     ],
+     "b": "E-HRN-12",
+     "bodies": [
+      "E-HRN-12 \"wire strand 1 (4.8 mm)\" x E-HRN-11 \"wire strand 0 (4.8 mm)\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "E-HRN-28#3",
+     "at_mm": [
+      53.97,
+      56.78,
+      35.7
+     ],
+     "b": "E-HRN-28#4",
+     "bodies": [
+      "E-HRN-28 \"wire strand 3 (0.9 mm)\" x E-HRN-28 \"wire strand 4 (1.3 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.01
+    },
+    {
+     "a": "E-HRN-28#4",
+     "at_mm": [
+      52.68,
+      56.35,
+      35.45
+     ],
+     "b": "E-HRN-28#5",
+     "bodies": [
+      "E-HRN-28 \"wire strand 4 (1.3 mm)\" x E-HRN-28 \"wire strand 5 (1.3 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.012
+    },
+    {
+     "a": "E-HRN-29#3",
+     "at_mm": [
+      53.94,
+      61.27,
+      36.58
+     ],
+     "b": "E-HRN-29#4",
+     "bodies": [
+      "E-HRN-29 \"wire strand 3 (0.9 mm)\" x E-HRN-29 \"wire strand 4 (1.3 mm)\" 0.02 mm"
+     ],
+     "depth_mm": 0.02
+    },
+    {
+     "a": "E-HRN-29#4",
+     "at_mm": [
+      52.76,
+      60.85,
+      36.71
+     ],
+     "b": "E-HRN-29#5",
+     "bodies": [
+      "E-HRN-29 \"wire strand 4 (1.3 mm)\" x E-HRN-29 \"wire strand 5 (1.3 mm)\" 0.01 mm"
+     ],
+     "depth_mm": 0.015
+    },
+    {
+     "a": "E-HRN-29",
+     "at_mm": [
+      109.23,
+      96.79,
+      22.34
+     ],
+     "b": "WNG-003",
+     "bodies": [
+      "E-HRN-29 \"wire strand 5 (1.3 mm)\" x WNG-003 \"tape skin upper\" 0.02 mm"
+     ],
+     "depth_mm": 0.018
+    },
+    {
+     "a": "FIN-001-UR",
+     "at_mm": [
+      117.22,
+      325.62,
+      21.98
+     ],
+     "b": "WNG-001",
+     "bodies": [
+      "FIN-001-UR \"root fillet\" x WNG-001 \"xps core y0.305-0.335 aft\" 0.03 mm",
+      "FIN-001-UR \"root fillet\" x WNG-001 \"xps core y0.305-0.335 aft\" 0.03 mm",
+      "WNG-001 \"xps core y0.337-0.338 aft\" x FIN-001-UR \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.336-0.337 aft\" x FIN-001-UR \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.305-0.335 aft\" x FIN-001-UR \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.335-0.336 aft\" x FIN-001-UR \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.302-0.303 aft\" x FIN-001-UR \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.303-0.304 aft\" x FIN-001-UR \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.304-0.305 aft\" x FIN-001-UR \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.305-0.335 aft\" x FIN-001-UR \"root fillet\" 0.02 mm",
+      "FIN-001-UR \"half-fin laminate (2 boards)\" x WNG-001 \"xps core y0.305-0.335 aft\" 0.01 mm"
+     ],
+     "depth_mm": 0.026
+    },
+    {
+     "a": "FIN-001-UL",
+     "at_mm": [
+      117.22,
+      -325.62,
+      21.98
+     ],
+     "b": "WNG-001",
+     "bodies": [
+      "FIN-001-UL \"root fillet\" x WNG-001 \"xps core y0.305-0.335 aft\" 0.03 mm",
+      "FIN-001-UL \"root fillet\" x WNG-001 \"xps core y0.305-0.335 aft\" 0.03 mm",
+      "WNG-001 \"xps core y0.337-0.338 aft\" x FIN-001-UL \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.336-0.337 aft\" x FIN-001-UL \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.305-0.335 aft\" x FIN-001-UL \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.335-0.336 aft\" x FIN-001-UL \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.302-0.303 aft\" x FIN-001-UL \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.303-0.304 aft\" x FIN-001-UL \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.304-0.305 aft\" x FIN-001-UL \"root fillet\" 0.02 mm",
+      "WNG-001 \"xps core y0.305-0.335 aft\" x FIN-001-UL \"root fillet\" 0.02 mm",
+      "FIN-001-UL \"half-fin laminate (2 boards)\" x WNG-001 \"xps core y0.305-0.335 aft\" 0.01 mm"
+     ],
+     "depth_mm": 0.026
+    },
+    {
+     "a": "WNG-001",
+     "at_mm": [
+      283.68,
+      -338.12,
+      1.79
+     ],
+     "b": "WNG-003",
+     "bodies": [
+      "WNG-001 \"xps core y0.302-0.303 aft\" x WNG-003 \"tape skin aft upper\" 0.02 mm",
+      "WNG-001 \"xps core y0.337-0.338 aft\" x WNG-003 \"tape skin aft upper\" 0.02 mm",
+      "WNG-001 \"xps core y0.302-0.303 aft\" x WNG-003 \"tape skin aft upper\" 0.02 mm",
+      "WNG-001 \"xps core y0.337-0.338 aft\" x WNG-003 \"tape skin aft upper\" 0.02 mm",
+      "WNG-001 \"xps core y0.000-0.029\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.029-0.032\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.032-0.040\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.040-0.053\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.053-0.065\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.065-0.070\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.029-0.032\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.032-0.040\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.040-0.053\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.053-0.065\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.065-0.070\" x WNG-003 \"tape skin centre aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.300-0.301\" x WNG-003 \"tape skin aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.301-0.302\" x WNG-003 \"tape skin aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.338-0.339\" x WNG-003 \"tape skin aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.339-0.340\" x WNG-003 \"tape skin aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.300-0.301\" x WNG-003 \"tape skin aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.301-0.302\" x WNG-003 \"tape skin aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.338-0.339\" x WNG-003 \"tape skin aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.339-0.340\" x WNG-003 \"tape skin aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.560-0.575\" x WNG-003 \"tape skin aft upper\" 0.01 mm",
+      "WNG-001 \"xps core y0.560-0.575\" x WNG-003 \"tape skin aft upper\" 0.01 mm"
+     ],
+     "depth_mm": 0.019
+    },
+    {
+     "a": "MEC-013-LI",
+     "at_mm": [
+      283.6,
+      -283.5,
+      1.79
+     ],
+     "b": "WNG-011-L",
+     "bodies": [
+      "WNG-011-L \"xps elevon\" x MEC-013-LI \"upper backplate\" 0.02 mm",
+      "WNG-011-L \"xps elevon\" x MEC-013-LI \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "MEC-004-L",
+     "at_mm": [
+      283.6,
+      -285.0,
+      1.79
+     ],
+     "b": "MEC-013-LI",
+     "bodies": [
+      "MEC-004-L \"horn blade\" x MEC-013-LI \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.022
+    },
+    {
+     "a": "MEC-013-LO",
+     "at_mm": [
+      283.6,
+      -352.75,
+      1.79
+     ],
+     "b": "WNG-012-L",
+     "bodies": [
+      "WNG-012-L \"xps elevon\" x MEC-013-LO \"upper backplate\" 0.02 mm",
+      "WNG-012-L \"xps elevon\" x MEC-013-LO \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "MEC-006-L",
+     "at_mm": [
+      283.6,
+      -355.0,
+      1.79
+     ],
+     "b": "MEC-013-LO",
+     "bodies": [
+      "MEC-006-L \"horn blade\" x MEC-013-LO \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.022
+    },
+    {
+     "a": "MEC-013-RI",
+     "at_mm": [
+      283.6,
+      283.5,
+      1.79
+     ],
+     "b": "WNG-011-R",
+     "bodies": [
+      "WNG-011-R \"xps elevon\" x MEC-013-RI \"upper backplate\" 0.02 mm",
+      "WNG-011-R \"xps elevon\" x MEC-013-RI \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "MEC-004-R",
+     "at_mm": [
+      283.6,
+      285.0,
+      1.79
+     ],
+     "b": "MEC-013-RI",
+     "bodies": [
+      "MEC-004-R \"horn blade\" x MEC-013-RI \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.022
+    },
+    {
+     "a": "MEC-013-RO",
+     "at_mm": [
+      283.6,
+      352.75,
+      1.79
+     ],
+     "b": "WNG-012-R",
+     "bodies": [
+      "WNG-012-R \"xps elevon\" x MEC-013-RO \"upper backplate\" 0.02 mm",
+      "WNG-012-R \"xps elevon\" x MEC-013-RO \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.024
+    },
+    {
+     "a": "MEC-006-R",
+     "at_mm": [
+      283.6,
+      355.0,
+      1.79
+     ],
+     "b": "MEC-013-RO",
+     "bodies": [
+      "MEC-006-R \"horn blade\" x MEC-013-RO \"upper backplate\" 0.02 mm"
+     ],
+     "depth_mm": 0.022
+    },
+    {
+     "a": "GER-007-L",
+     "at_mm": [
+      305.74,
+      -563.75,
+      -1.32
+     ],
+     "b": "WNG-001",
+     "bodies": [
+      "WNG-001 \"xps core y0.560-0.575\" x GER-007-L \"cap U\" 0.04 mm"
+     ],
+     "depth_mm": 0.043
+    },
+    {
+     "a": "GER-007-R",
+     "at_mm": [
+      305.74,
+      561.88,
+      -1.32
+     ],
+     "b": "WNG-001",
+     "bodies": [
+      "WNG-001 \"xps core y0.560-0.575\" x GER-007-R \"cap U\" 0.04 mm"
+     ],
+     "depth_mm": 0.043
+    }
+   ],
+   "moved": null,
+   "name": "static",
+   "not_swept_against": null
+  },
+  {
+   "hits": [],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "MEC-005-L",
+    "MEC-005-R",
+    "MEC-006-L",
+    "MEC-006-R",
+    "MEC-009-LI",
+    "MEC-009-LO",
+    "MEC-009-RI",
+    "MEC-009-RO",
+    "MEC-013-LI",
+    "MEC-013-LO",
+    "MEC-013-RI",
+    "MEC-013-RO",
+    "WNG-011-L",
+    "WNG-011-R",
+    "WNG-012-L",
+    "WNG-012-R"
+   ],
+   "name": "elevons at lower limit (E-WNG-06 -25, E-WNG-04 -25, E-WNG-07 -25, E-WNG-05 -25)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "MEC-010-L",
+    "MEC-010-R"
+   ]
+  },
+  {
+   "hits": [],
+   "moved": [
+    "MEC-004-L",
+    "MEC-004-R",
+    "MEC-005-L",
+    "MEC-005-R",
+    "MEC-006-L",
+    "MEC-006-R",
+    "MEC-009-LI",
+    "MEC-009-LO",
+    "MEC-009-RI",
+    "MEC-009-RO",
+    "MEC-013-LI",
+    "MEC-013-LO",
+    "MEC-013-RI",
+    "MEC-013-RO",
+    "WNG-011-L",
+    "WNG-011-R",
+    "WNG-012-L",
+    "WNG-012-R"
+   ],
+   "name": "elevons at upper limit (E-WNG-06 +25, E-WNG-04 +25, E-WNG-07 +25, E-WNG-05 +25)",
+   "not_swept_against": [
+    "MEC-003-L",
+    "MEC-003-R",
+    "MEC-010-L",
+    "MEC-010-R"
+   ]
+  }
+ ],
+ "seconds": 757.0,
+ "skipped": [
+  [
+   "HRN-001",
+   "mass proxy"
+  ],
+  [
+   "HRN-002-L",
+   "mass proxy"
+  ],
+  [
+   "HRN-002-R",
+   "mass proxy"
+  ]
+ ],
+ "wire_ends": [],
+ "wire_strands": 63
+}

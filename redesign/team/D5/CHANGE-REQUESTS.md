@@ -1,0 +1,70 @@
+# D5 change requests
+
+## Round R8 (2026-11-13, revision D5-R8; answers CR-H1-22)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-D5-34 | H1 (cc C6, A1) | **Answer to CR-H1-22.** `CALC-H1-SIDE-POD`: drop the ×35 / F scaling; `CL-D5-SIDE-RIM-SF` is already at C5's 59.25 N ult (`CL-C5-SIM3D-SIDE-ULT`), so `rim_sf_at_side` = `CL-D5-SIDE-RIM-SF` × `CL-C5-SIM3D-SIDE-ULT` / `CL-C1-FOOT-SIDE-DESIGN-ULT` (= 1.27 today) with limit ≥ 1.0. `T-D5-SIDE` stays 60 N on two R8 shoes (+y on one, +z on the other), insert pushed 4–5 mm in. Inspect the inboard snap-window corners first (the h 0.2 FEA peak, 31.6 MPa) | R7 rim was RF 1.06 at 59.25 N, not 0.62; R8 1.27 | `CL-D5-SIDE-RIM-SF` 1.27, `CL-D5-SIDE-TINE-SF` 1.23 |
+| CR-D5-35 | A3 (cc A1, G4) | Landing **59.08 → 58.94 g** (−0.14 g): shoe 9.93 → 9.98 g, piston 3.28 → 3.19 g. R7 shoes and pistons do not mix with R8 (1.4 mm chamfer vs R 2.0 fillet): print R8 only | `CL-D5-MASS-TOTAL` |
+| CR-D5-36 | C4, C6 (cc C5) | Nothing moves at the fin: sleeve 19.1 × 14.4 mm, legs, cheeks, collar length, glue gap and the step (x 0.2614, \|z\| 0.2010) are unchanged; bond 1 657 mm², RF 1.43. The rim is aft of the TE. No C4 3-D re-run needed for R8. C5: `CL-C5-FEA-SHOE-SF` is a record of the R6 stack; re-run `fea_shoe.py` on R8 only if you want your own cross-check | `CL-D5-FIN-STEP-*`, `CL-D5-BOND-SF` |
+
+## Round R7 (2026-11-11, revision D5-R7, D-75 / D-76 / D-78; BR-00, BR-01 / SW-02)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-D5-32 | I1 (cc H1, A1) | Add one **2 in FOAMULAR 400** XPS board (or an insulation-supplier offcut ≥ 0.3 × 0.3 m) and one **5/32 in K&S brass tube** (12 in); drop the 7/32 in tube. Buy early: `T-D5-COUPON` on F-400 gates the shoe print. | D-76: 40 psi foam lets the cartridge shrink to 14.5 × 9.8 mm and the feet to 59.1 g (−10.8 g). Fallback is the R6 F-250 set (+11 g, CG +1.1 mm). Price not known (EST, I1 quotes). |
+| CR-D5-33 | C5, C4, C6, H1 (cc C1) | Re-run on D5-R7. **C5**: `CALC-C5-FEA-SHOE-D5R6` on the 19.1 × 14.4 mm sleeve, rim 3.4 (D5's FEA: +y 37.6, +z 31.0 MPa at 59.25 N, RF 1.06); the 3-D sim inputs move only by A3's mass (plateaus 39.2 / 35.8 N). **C4**: fin-station model on the D-75 tip (step x 0.2614, \|z\| 0.2010, shoe on the fin 58.6 mm, cheeks from 0.2536), CR-C6-38. **C6**: strip pins, 11 per half to x 0.249 (was 12 to 0.264); shoe bond 1 657 mm², RF 1.44. **H1**: `T-D5-COUPON` on F-400 (same pass bands), `T-D5-SIDE` 60 N on two R7 shoes. | `CL-D5-FIN-STEP-*`, `CL-D5-SIDE-RIM-SF`, `CL-D5-BOND-*`, `CL-D5-F-PLATEAU-*`. CR-D5-31 (R6 step at 0.2616) was never logged; D-75 supersedes it. |
+| CR-D5-11 | D3 | **Re-opened and closed by D-75**: `tip_square_m` 0.0586, `tip_step_z_m` 0.2010, `tip_clear_x_m` 0.2536 applied 2026-11-11, `make_fins.py` re-run, `CL-D3-TIP-STEP-MISMATCH` 0. | — |
+
+## Round R5 (2026-11-09, revision D5-R5, answers CR-A4-39, CR-A5-25, CR-A1-46)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-D5-28 | D1 | Add **`E-GER-21`, `E-GER-22`** to `subsystems/wing/interfaces.json` `acknowledges`. | Corner caps `GER-007-R/L` (TPU, 0.73 g each, `CT-GER-CAP-TAPE`) now sit on `WNG-001` at y 0.5615–0.575 m; `check.py` and `merge_check.py` show `one-sided` WARN on both edges until you acknowledge. |
+| CR-D5-29 | A3, A4 (cc D7) | Ground kit `GER-005`, `-006`, `-009…013` are now `MODELLED`, `"flight": false`, one CAD unit per line at y 0.85 m (`landing.kit`, layout only; the kit travels in `TRN-108`). Ground masses per unit: inserts 4.61 / 4.55 g, cartridges 0.66 / 0.60 g, shoe 5.33 g, **neoprene sheet 193.2 g** (was 0, whole 12 × 12 in sheet at 1300 kg/m³), **brass tube 15.1 g** (was 0, 12 in K&S 7/32 × 0.014 in). Flight mass unchanged: 42.50 g. | Clears the 7 `missing` WARN. D7: add 193 + 15 g to the field-tote mass if `TRN-108` is weighed. |
+| CR-D5-30 | C6, H1 (cc C5, C1) | Re-run on the R5 feet numbers: C1 ult bound now 59.6 N, so the bond design is **85.7 N**, RF **1.57** (was 87.4 / 1.54), flange SF 2.74. C5's side load rose to **22.8 N** limit (was 20.4), **34.2 N** ult: rim SF **1.05** (was 1.18), tine SF 3.14. H1: **`T-D5-SIDE` is now 35 N** (was 32 N, below the new ult). C6: re-run `joints.py` (`CALC-C6-FOAM-BONDS` drifts on `CL-D5-BOND-SF`); H1: re-run `ground_tests.py` (`CALC-H1-D5` drifts). | `CL-D5-BOND-SF`, `-FLANGE-SF`, `-SIDE-RIM-SF`. |
+| CR-D5-11 | D3 | **CLOSED 2026-11-10 (R5a)**: `subsystems/fins/params.json` now reads `tip_square_m` 0.0454, `tip_step_z_m` 0.2005 (D3 R4). Was: decided by A1 (D-54); D3 to apply: `fin_detail.fin.tip_square_m` 0.040 → 0.0454, step at \|z\| 0.2005 m from x 0.2746 m, strips end at x 0.2746, re-run `make_fins.py`. `subsystems/fins/params.json` still reads 0.040. | `CL-D5-FIN-STEP-Z/-X/-DEPTH`. |
+
+## Round R4 (2026-11-09, revision D5-R4, answers CR-C5-10 revised, CR-A3-18, CR-H1-14)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-D5-21 | F4 (cc C5, H2, H3) | Set **`Q_LAND_SPEED` 30 cm/s** (was 50; `Q_LAND_FINAL_ALT` unchanged). | With C5-R3's pre-crushed cartridges the four columns return only 0.133 J elastically (2 % strain, `ASM-D5-XPS-ELASTIC-STRAIN`); a 0.5 m/s touchdown (0.325 J) crushes **1.28 mm** per landing (`CL-D5-SET-NORMAL`), so the 3 mm replace mark is reached in **2.3 landings** (`CL-D5-LANDINGS-PER-CART`). Below **0.32 m/s** (`CL-D5-V-NO-SET`) no permanent crush: cartridges are spent only by hard landings. Cost: ≈ +8 s per landing from a 6 m final. R3's 0.17 mm set credited the 5 % knee as elastic; it was optimistic. |
+| CR-D5-22 | C5 (cc C1, H1) | R4 adopts CR-C5-10 (revised): pre-crush **1 mm per segment** (two segments in series, so both must be pressed), plateau **U 39.6 N / L 35.4 N, mean 37.49 N** (`CL-D5-F-MEAN-ERR` 0.03 %), bias **1.056** (target 1.05; 7/32 in bore is the nearest stock tube; 3/16 in gives 1.041). Section is **17.3 × 13.3 mm** (y × z) with a bore for type L, not your 11 × 20.8 / 11 × 18.8 (same areas within 0.5 %): one piston and one shoe for both types, and the fin step stays 9.5 mm. Re-run `landing_calc.py` on `CL-D5-F-PLATEAU` 37.49, `CL-D5-F-PEAK` 37.49 (peak = plateau, your `ASM-C5-PRECRUSH-PEAK`), `CL-D5-ETA` 0.903, `CL-D5-SET-NORMAL` 1.28 mm (your `CL-C5-LANDINGS-PER-CARTRIDGE` ≥ 5 fails at 0.5 m/s until CR-D5-21). | `CL-D5-F-PLATEAU-UPPER/-LOWER`, `-BIAS-ERR` 0.006, `-STRAIN-MARGIN` 0.11 (40 mm crushed of 91 mm incl. pre-crush). |
+| CR-D5-23 | C1 (cc C4, C6) | Per-type feet at R4: upper peak **39.6 N** limit / **59.4 N** ult (was 40.3 / 60.4), lower 35.4 N limit; inside your 41.2 / 60.8 N bound. D5 still sizes the flange and bond to your 60.8 N. `CL-D5-ETA` is now 0.903 (your `CALC-C1-LANDING` drifts on it). | `CL-D5-F-PEAK-UPPER`, `CL-D5-F-ULT-UPPER`. |
+| CR-D5-24 | C6 | Bond block `E-GER-01…04`: area **1 350 mm²** (legs 10 → 7 mm to pay for the wider cartridge), design 87.4 N, RF **1.54** at 0.10 MPa. Rim lip SF **1.18** (sleeve 21.1 mm wide, was 19.8): review `CALC-D5-SIDE`. | `CL-D5-BOND-AREA`, `-BOND-SF`, `-SIDE-RIM-SF`. |
+| CR-D5-25 | H1 (cc G3) | Answer to CR-H1-14: the **claims.json lines govern** (CR-D5-08 is retired) and they change at R4: `T-D5-COUPON` pre-crushed pairs, 40 mm, mean force 5–35 mm **U 38.2–40.2 N, L 34.6–36.3 N** (C5-R3 −3/+2 %), U/L 1.09–1.14, peak ≤ 1.05 × plateau. `T-D5-PROOF` 88 N, `T-D5-SIDE` 32 N unchanged. Add to H2's log: flange gap before/after 10 landings at 30 cm/s (`CL-D5-V-NO-SET`). | `T-D5-COUPON` in `team/D5/claims.json`. |
+| CR-D5-26 | A3 (cc A4) | Answer to CR-A3-18: landing **42.50 g** `EST` (was 42.05; `CL-D5-MASS-TOTAL`), margin 0.50 g on 43 g. Ground lines `GER-005`, `-006`, `-009…013` are now nodes in `subsystems/landing/interfaces.json` with **`"flight": false`** (one node per kit line, qty in `parts.csv`; no CAD, so `check.py` lists them as PROPOSED/missing WARN). The A3 adder `GER-E02` can go: `parts.csv` carries the 48 mm feet. | `CALC-D5-MASS`. |
+| CR-D5-27 | I1 | BOM change: bore cutter **7/32 in** K&S brass tube (`GER-013`, was 1/4 in), ~$3. Neoprene sheet unchanged. | `subsystems/landing/parts.csv`. |
+| CR-D5-11 | D3 | **Still open** and unchanged by R4 (cartridge grew in y only): square tip 45.4 mm, step at \|z\| 0.2005 m from x 0.2746 m, strips end at x 0.2746. Your CR-D3-19 (flat 0.210 tip, strips end at x 0.280) predates it; the R3/R4 foot does not fit that tip. | `CL-D5-FIN-STEP-Z/-X/-DEPTH`. |
+| Note | A1 | The D5 task text still quotes the R0 feet (x 0.30–0.31, z ±0.19, 24 g, tip-over 37° at 0.25 m). D5 works to `params.json` A1-R3 (feet 48 mm, contact ±0.218, 43 g, ≥ 30°). | — |
+
+## Round R3 (2026-11-09, revision D5-R3, answers CR-A1-34 / D-30): superseded in part by R4 (CR-D5-12 → 24, -14 → 23, -15 → 22, -17 → 26, -19 → 25, -20 → 27)
+
+| Id | To | What | Why / numbers |
+|---|---|---|---|
+| CR-D5-11 | D3 (cc C4, B3, A1) | **Half-fin tip for the R3 foot.** `fin_detail.fin.tip_square_m` 0.040 → **0.0454 m** (square tip x 0.2746–0.320); cut the square tip down to a **flat step at \|z\| 0.2005 m** (9.5 mm below the 0.21 tip); end both edge strips at x 0.2746 (their end faces meet the step front). Nothing else on x ≥ 0.2666 m, \|z\| ≥ 0.196 m (collar cheeks). Re-run `make_fins.py`. | With the pad edge kept at z ±0.219 (D-30) and a 38 mm stroke, the sleeve (17.1 mm deep) must overlap the fin in x and cannot sit above a 0.21 m tip. Twin sleeves beside the fin were sized and rejected: ≈ 15.6 g per foot (62 g vs 43 g). The step removes 431 mm² of board per half-fin, replaced in the same plane by the shoe side walls (17 × 51 mm). `CL-D5-FIN-STEP-Z/-X/-DEPTH`. C4: strip termination now bonded into the shoe (back wall + cheeks, CR-C4-09). B3: no loss of projected fin area. |
+| CR-D5-12 | C6 | Replace the `E-GER-01…04` bond block: area **1 621 mm²**, design **87.4 N** (upper foot ult 60.4 N × 1.4375), RF **1.85** at your 0.10 MPa. Review the rim lip model (`CALC-D5-SIDE`: R = F(a+e)/(e+s0) = 98.8 N, fixed-ended beam, SF 1.24) and the cap tape joint `CT-GER-CAP-TAPE`. Snap fingers are 6.5 mm (1.7 %, `CL-D5-SNAP-*`), closing CR-C6-12. | `CL-D5-BOND-AREA`, `CL-D5-BOND-SF`, `CL-D5-SIDE-RIM-SF`. |
+| CR-D5-13 | A4 (cc A5, A3) | Merge D5-R3: 18 parts. **New** `GER-007-R/L` (corner caps), **`GER-008-LR/LL`** (type-L cartridge) replaces `GER-003-LR/LL` (one part number per geometry); `E-GER-11/12` and `E-GER-19/20` now have `part_a` `GER-008-LR/LL`; **new** `E-GER-21/22` (cap ↔ `WNG-001`, `CT-GER-CAP-TAPE`). A5: `DX-FOOT-*` = pad contact x 0.368, z ±0.218 (CR-A1-38). | `subsystems/landing/interfaces.json`. `E-GER-21/22` dangle until D1 declares `WNG-001` (same as `E-POD-01`, `E-TRN-*`). |
+| CR-D5-14 | C1 (cc C4) | Carry the **biased feet** per type in `loads.py`: upper foot peak **40.3 N** limit / **60.4 N** ult, lower 34.3 N limit; mean 37.3 N; side load at the pad 20.4 N limit (C5 mat). Your R3 `CL-C1-FOOT-MAX` 41.2 N covers the upper foot by 2 % (`CL-D5-F-PEAK-UPPER`); D5 sizes the flange and bond to your 60.8 N ult. | `CL-D5-F-PLATEAU-UPPER/-LOWER`, `CL-D5-F-ULT-UPPER`. C4: fin face check at 60.8 N on the upper tips. |
+| CR-D5-15 | C5 | Re-run `landing_calc.py`: `CL-D5-F-PLATEAU` (mean) 33.9 N (was 34.1), `CL-D5-CART-LEN` 89 mm, stroke 38 mm, `CL-D5-SET-NORMAL` 0.17 mm. Achieved bias ×1.080 / ×0.920 (U/L 1.175 vs your 1.167) from a 6.35 mm bore in the type-L cartridge: confirm the pitch case or ask for a 6.0 mm bore (×1.071). | `CL-D5-BIAS-UPPER`, `CL-D5-BIAS-ERR` 0.003. Usable 35 mm vs your 31.5 mm pair-first (`CL-D5-STROKE-USABLE`). |
+| CR-D5-16 | A1 (cc D7, A2) | (a) `transport.envelope_props_off_m` span 1.15 → **1.152 m** (corner caps 0.8 mm each side, `CL-D5-ENVELOPE-SPAN-GROWTH`); height 0.438 unchanged. (b) README feet row: "shoe on a 9.5 mm step of a 45.4 mm square tip; pad contact ±0.218; 42.1 g". (c) Wording: CR-A1-34 says "≥ 38 mm usable"; `requirements.foot_crush_stroke_min_m` is the flange-to-sleeve **gap** (38 mm); usable after C5's 3 mm guard is 35 mm. A 38 mm usable stroke would need a 51 mm foot. | Box slack in height 52 mm (`CL-D5-BOX-SLACK`). |
+| CR-D5-17 | A3 | Landing **42.05 g** `EST` from CAD volumes (`CL-D5-MASS-TOTAL`; 4 feet 40.60 + 2 caps 1.45) against 43 g, margin 0.95 g; per-instance masses and CGs in `subsystems/landing/interfaces.json`; spares are ground items. | `CALC-D5-MASS`. |
+| CR-D5-18 | D6, D1 | Outboard elevon (`WNG-012-L/R`): one wrap of 12 mm filament tape round the outboard 25 mm of the elevon TE (scuff guard; C5 roll case touches 2 mm inboard of the tip). The TPU cap sits on the fixed tip y 0.5615–0.575 only, clear of the elevon end gap. D1: declare `WNG-001` so `E-GER-21/22` close. | CR-C5-04 asked for 40 mm; only 15 mm of fixed tip exists outboard of the elevon (`k9.elevon_spans` 0.56). |
+| CR-D5-19 | H1 (cc G3) | Plan `T-D5-COUPON` (3 pairs per type, 40 mm, pass U 34.5–38.5 N, L 29.5–33.0 N, U/L 1.15–1.19), `T-D5-PROOF` (88 N along x on a stepped two-layer offcut), `T-D5-SIDE` (32 N sideways at the pad, insert pushed 4 mm). | All strength and crush claims are `UNVERIFIED` until these run. |
+| CR-D5-20 | I1 | BOM: 1/4 in K&S brass tube ~$3 (`GER-013`), TPU 95A (~2 g), orange + blue paint markers, orange and blue PETG (shop stock); neoprene sheet stays (`GER-006`). Field kit: 4 + 4 spare inserts, 16 + 16 loose cartridges (CR-C5-06), 2 spare shoes. | `subsystems/landing/parts.csv`. |
+
+## Earlier rounds
+
+| Id | To | State |
+|---|---|---|
+| CR-D5-01 | A1 | closed (D-30, D-31: envelope 0.438, `CL-A1-TIPOVER` on the contact z) |
+| CR-D5-02 | A5 | open, carried in CR-D5-13 (`DX-FOOT-*` at ±0.218) |
+| CR-D5-03 | D3 | superseded by CR-D5-11 (square tip 45.4 mm with a step) |
+| CR-D5-04 | C6 | answered by CR-C6-12 (0.10 MPa, 6 mm fingers); updated numbers in CR-D5-12 |
+| CR-D5-05 | C5 | answered (CR-C5-01, CR-C5-10) |
+| CR-D5-06 | A3 | superseded by CR-D5-17 |
+| CR-D5-07 | A4 | superseded by CR-D5-13 |
+| CR-D5-08 | H1 | superseded by CR-D5-19 |
+| CR-D5-09 | F4 | open (`Q_LAND_SPEED` ≤ 0.5 m/s; set 0.17 mm per landing) |
+| CR-D5-10 | I1 | superseded by CR-D5-20 |

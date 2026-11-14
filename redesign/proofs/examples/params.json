@@ -1,0 +1,48 @@
+{
+ "_note": "Generic TEST aircraft for the proof-chain demo (fuselage box, wing + spar, two booms with four lift motors, battery block, aileron, a few wires). NOT the redesign configuration. 'example estimate' values are illustrative; values with a SRC id are real catalogue numbers.",
+ "env": {
+  "rho_kgm3": {"value": 1.225, "unit": "kg/m3", "source": "SRC-EX-ISA"},
+  "g_ms2": {"value": 9.80665, "unit": "m/s2", "source": "SRC-EX-ISA"}
+ },
+ "requirements": {
+  "hover_tw_min": {"value": 1.6, "unit": "-", "source": "REQUIREMENTS.md D11 (config study)"},
+  "disconnect_factor": {"value": 1.25, "unit": "-", "source": "REQUIREMENTS.md D9 (config study)"},
+  "stall_max_ms": {"value": 13.0, "unit": "m/s", "source": "example choice"},
+  "mtow_max_kg": {"value": 5.5, "unit": "kg", "source": "example mass budget"},
+  "load_factor": {"value": 3.0, "unit": "-", "source": "example choice (gust + pull-up)"},
+  "safety_factor": {"value": 1.5, "unit": "-", "source": "example choice (aerospace practice)"}
+ },
+ "mass": {
+  "fuselage_box_kg": {"value": 0.90, "unit": "kg", "source": "example estimate"},
+  "wing_panels_kg": {"value": 0.90, "unit": "kg", "source": "example estimate"},
+  "spar_kg": {"value": 0.38, "unit": "kg", "source": "example estimate: 20 x 1.5 mm 6061 tube, 1.6 m, 2.70 g/cm3"},
+  "booms_kg": {"value": 0.50, "unit": "kg", "source": "example estimate"},
+  "lift_motor_kg": {"value": 0.165, "unit": "kg", "source": "SRC-EX-X4110S"},
+  "prop_kg": {"value": 0.040, "unit": "kg", "source": "example estimate"},
+  "esc_kg": {"value": 0.050, "unit": "kg", "source": "example estimate"},
+  "battery_kg": {"value": 0.82, "unit": "kg", "source": "SRC-EX-OVONIC", "status": "UNVERIFIED", "note": "820 g is not on the listing (source audit 2026-11-01); weigh the pack"},
+  "avionics_kg": {"value": 0.35, "unit": "kg", "source": "example estimate"},
+  "wiring_kg": {"value": 0.25, "unit": "kg", "source": "example estimate"},
+  "servos_kg": {"value": 0.08, "unit": "kg", "source": "example estimate"}
+ },
+ "wing": {
+  "span_m": {"value": 1.6, "unit": "m", "source": "example choice"},
+  "chord_m": {"value": 0.30, "unit": "m", "source": "example choice"},
+  "spar_od_mm": {"value": 20.0, "unit": "mm", "source": "example choice"},
+  "spar_wall_mm": {"value": 1.5, "unit": "mm", "source": "example choice"},
+  "spar_yield_mpa": {"value": 240, "unit": "MPa", "source": "SRC-EX-6061", "note": "minimum T6 yield, not the typical 270 MPa"}
+ },
+ "propulsion": {
+  "n_lift": {"value": 4, "unit": "-", "source": "example choice (2 booms x 2 motors)"},
+  "thrust_table": {"unit": "A,gf", "source": "SRC-EX-X4110S", "note": "SunnySky X4110S KV400, 17x5.8 prop, 22.2 V: [current A, thrust gf] per row",
+   "value": [[1.6, 500], [2.9, 750], [4.4, 1000], [6.1, 1250], [8.1, 1500], [10.3, 1750], [13.1, 2000], [16.4, 2300], [19.9, 2600], [27.7, 3130]]}
+ },
+ "battery": {
+  "v_nom": {"value": 22.2, "unit": "V", "source": "SRC-EX-OVONIC"},
+  "capacity_ah": {"value": 6.5, "unit": "Ah", "source": "SRC-EX-OVONIC"}
+ },
+ "harness": {
+  "main_disconnect_a": {"value": 70, "unit": "A", "source": "SRC-EX-AS150U"},
+  "esc_connector_a": {"value": 30, "unit": "A", "source": "SRC-EX-PM02"}
+ }
+}

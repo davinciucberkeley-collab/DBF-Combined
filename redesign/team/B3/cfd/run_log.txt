@@ -1,0 +1,33 @@
+  reset L1_SA_dm10_a4: rc 1, 4551 iterations
+  reset L2_SA_dp0_a4: rc 1, 555 iterations
+  reset L2_SA_dm10_a4: rc 1, 4456 iterations
+  reset L3_SA_dp0_a4: rc 1, 968 iterations
+  reset L3_SA_dm10_a4: rc 1, 980 iterations
+  L2_SA_dp0_a4: cl -14386489550087290.0000 cm 4820608484525430.0000 usable False 1443 s
+  L1_SA_dm10_a4: cl 0.6193 cm -0.2598 usable False 2076 s
+  L3_SA_dp0_a4: cl -91343548458863328.0000 cm 355450551333913344.0000 usable False 2193 s
+  L3_SA_dm10_a4: cl -2940263466094666.5000 cm -92749334938022992.0000 usable False 2193 s
+  L2_SA_dm10_a4: cl -0.1566 cm 0.0961 usable True 2800 s
+  L1_SA_dm10_a4: cl -0.0431 cm 0.0985 usable True 732 s
+  L2_SA_dp0_a4: cl 0.5383 cm 0.0009 usable True 1858 s
+  L3_SA_dm10_a4: cl -0.0430 cm 0.0998 usable True 3467 s
+  L3_SA_dp0_a4: cl 0.4461 cm 0.0327 usable True 3468 s
+Traceback (most recent call last):
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\B3\cfd_elevon.py", line 474, in <module>
+    print({n: {k: v for k, v in r.items() if k.startswith("eta")} for n, r in xf.items()})
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\B3\cfd_elevon.py", line 415, in main
+    res = [run_case(s, parse_only=True) for s in specs]
+           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dillo\Downloads\Berkeley\Fall\Capstone\DBF-Combined\redesign\team\B3\cfd_elevon.py", line 312, in run_case
+    done = json.loads((d / "done.json").read_text()) if (d / "done.json").exists() else {}
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dillo\AppData\Local\Python\pythoncore-3.14-64\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\dillo\AppData\Local\Python\pythoncore-3.14-64\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dillo\AppData\Local\Python\pythoncore-3.14-64\Lib\json\decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
